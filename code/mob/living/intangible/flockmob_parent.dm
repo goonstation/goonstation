@@ -20,7 +20,7 @@
 	..()
 	src.appearance_flags |= NO_CLIENT_COLOR
 	src.blend_mode = BLEND_ADD
-	src.invisibility = 9
+	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_FLOCKMIND)
 	src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	src.see_invisible = 15
 	src.see_in_dark = SEE_DARK_FULL
@@ -153,12 +153,8 @@
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 	logTheThing("diary", src, null, ": [message]", "say")
 
-	if (dd_hasprefix(message, ":lh") || dd_hasprefix(message, ":rh") || dd_hasprefix(message, ":in"))
-		message = copytext(message, 4)
-	else if (dd_hasprefix(message, ":"))
-		message = copytext(message, 3)
-	else if (dd_hasprefix(message, ";"))
-		message = copytext(message, 2)
+	var/prefixAndMessage = separate_radio_prefix_and_message(message)
+	message = prefixAndMessage[2]
 
 	flock_speak(src, message, src.flock)
 
@@ -181,7 +177,7 @@
 			if (src.emote_check(voluntary, 50))
 				message = "<span class='emote'><b>[src]</B> caws!</span>"
 				m_type = 2
-				playsound(get_turf(src), "sound/misc/flockmind/flockmind_caw.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src, "sound/misc/flockmind/flockmind_caw.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 
 	if (message)
 		logTheThing("say", src, null, "EMOTE: [message]")

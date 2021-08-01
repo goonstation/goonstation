@@ -178,7 +178,7 @@
 						if(prob(50))
 							random_brute_damage(M, rand(1,5))
 							M.flash(10)
-						M.changeStatus("weakened", 5)
+						M.changeStatus("weakened", 0.5 SECONDS)
 						sleep(rand(1,5))
 						hooting++
 
@@ -207,7 +207,7 @@
 				SPAWN_DBG(rand(30,50)) //Let's stagger out the vomitting a bit
 					M.visible_message("<span class='alert'><B>[M] is violently sick everywhere!</B></span>")
 					random_brute_damage(M, rand(5,30))
-					M.changeStatus("weakened", 5)
+					M.changeStatus("weakened", 0.5 SECONDS)
 					var/turf/T = get_turf(M)
 					playsound(T, pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
 					if(prob(1)) //Oh no you rolled poorly. Welcome to the *instant death raffle!!*
@@ -253,24 +253,24 @@ proc/badstone(var/mob/user, var/obj/item/W, var/obj/item/clothing/B)
 	W.set_loc(null) //<-- this sets the location to null
 	sleep(5 SECONDS)
 
-	playsound(get_turf(user), 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
+	playsound(user, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 	boutput(user,"<span class='alert'><B>The [B] cracks slightly around the stone.</B></span>")
 	sleep(20 SECONDS)
 	boutput(user,"<span class='alert'><B>The [B] feels really tight on your arm all of a sudden.</B></span>")
 	sleep(10 SECONDS)
-	playsound(get_turf(user), 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
+	playsound(user, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 	boutput(user,"<span class='alert'><B>Like really tight!</B></span>")
 	sleep(10 SECONDS)
-	playsound(get_turf(user), 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
+	playsound(user, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
 	user.emote("scream")
 	sleep(5 SECONDS)
-	playsound(get_turf(user), 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
+	playsound(user, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 	sleep(10 SECONDS)
-	playsound(get_turf(user), 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
+	playsound(user, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 	user.visible_message("<span class='alert'><B>The [B] begins to glow!</B></span>")
 	sleep(2 SECONDS)
 	boutput(user, "<span class='alert'><B>The [B] tightens hard around your hand and begins to move on its own!</B></span>")
-	playsound(get_turf(user), 'sound/impact_sounds/Flesh_Crush_1.ogg', 50, 1)
+	playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 50, 1)
 	sleep(5 SECONDS)
 
 	//Everything turns to gold

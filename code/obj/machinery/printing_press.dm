@@ -1,7 +1,7 @@
 /obj/machinery/printing_press //this makes books
 	name = "printing press"
 	desc = "Some machinery that's supposed to be able to write on a lot of pages super quickly. It looks pretty old."
-	icon = 'icons/obj/64x32.dmi'
+	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "printing_press" //proper icon is set in update_icon
 	anchored = 1
 	density = 1
@@ -281,7 +281,7 @@
 						if ("bible")
 							book_cover = "bible"
 						if ("old")
-							book_cover = "bookkiy"
+							book_cover = "oldbook"
 						else
 							book_cover = "book0"
 				boutput(user, "Book cover set.")

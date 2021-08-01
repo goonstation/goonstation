@@ -88,21 +88,28 @@
 
 /proc/assess_ghostdrone_eligibility(var/datum/mind/M)
 	if(!istype(M))
-		return 0
+		return FALSE
 
 	var/mob/dead/G = M.current
 	if (!istype(G))
-		return 0
+		return FALSE
+
 	if (!G.client)
-		return 0
+		return FALSE
+
 	if (jobban_isbanned(G, "Ghostdrone"))
-		return 0
+		return FALSE
+
 	if (G.client.player)
 		var/round_num = G.client.player.get_rounds_participated()
 		if (!isnull(round_num) && round_num < 20)
 			boutput(G, "<span class='alert'>You only have [round_num] rounds played. You need 20 rounds to play this role.")
-			return 0
-	return 1
+			return FALSE
+
+	if (!G.can_respawn_as_ghost_critter())
+		return FALSE
+
+	return TRUE
 
 #define GHOSTDRONE_BUILD_INTERVAL 1000
 
@@ -193,7 +200,7 @@ var/global/list/ghostdrone_candidates = list()
 			if (prob(40))
 				SPAWN_DBG(0)
 					src.shake(rand(4,6))
-				playsound(get_turf(src), pick("sound/impact_sounds/Wood_Hit_1.ogg", "sound/impact_sounds/Metal_Hit_Heavy_1.ogg"), 30, 1, -3)
+				playsound(src, pick("sound/impact_sounds/Wood_Hit_1.ogg", "sound/impact_sounds/Metal_Hit_Heavy_1.ogg"), 30, 1, -3)
 			if (prob(40))
 				var/list/sound_list = pick(ghostly_sounds, sounds_engine, sounds_enginegrump, sounds_sparks)
 				if (!sound_list.len)
@@ -201,7 +208,7 @@ var/global/list/ghostdrone_candidates = list()
 				var/chosen_sound = pick(sound_list)
 				if (!chosen_sound)
 					return
-				playsound(get_turf(src), chosen_sound, rand(20,40), 1)
+				playsound(src, chosen_sound, rand(20,40), 1)
 
 		else if (!ghostdrone_factory_working)
 			if (src.factory_section == 1 || src.single_system)
@@ -262,7 +269,7 @@ var/global/list/ghostdrone_candidates = list()
 			src.current_assembly.stage = src.single_system ? 3 : src.factory_section
 			src.current_assembly.icon_state = "drone-stage[src.current_assembly.stage]"
 			src.current_assembly.set_loc(get_turf(src))
-			playsound(get_turf(src), "sound/machines/warning-buzzer.ogg", 50, 1)
+			playsound(src, "sound/machines/warning-buzzer.ogg", 50, 1)
 			src.visible_message("[src] ejects [src.current_assembly]!")
 			src.current_assembly = null
 

@@ -570,7 +570,8 @@ THROWING DARTS
 					throwjunk += I
 
 			SPAWN_DBG(0) //Delete the overlay when finished with it.
-				source?.gib()
+				if(!QDELETED(source))
+					source?.gib()
 
 				for(var/obj/O in throwjunk) //Throw this junk around
 					var/edge = get_edge_target_turf(T, pick(alldirs))
@@ -1630,6 +1631,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 	hit_type = DAMAGE_STAB
 	casing = /obj/item/casing/small
 	icon_turf_hit = "bhole-small"
+	shot_number = 1
 	//silentshot = 1
 	var/obj/item/implant/my_implant = null
 	var/mob/implant_master = null

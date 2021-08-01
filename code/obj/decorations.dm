@@ -222,6 +222,16 @@
 			. = ..()
 			src.dir = pick(alldirs)
 
+
+//It'll show up on multitools
+/obj/shrub/syndicateplant
+	var/net_id
+	New()
+		. = ..()
+		var/turf/T = get_turf(src.loc)
+		var/obj/machinery/power/data_terminal/link = locate() in T
+		link.master = src
+
 /obj/shrub/captainshrub
 	name = "\improper Captain's bonsai tree"
 	icon = 'icons/misc/worlds.dmi'
@@ -631,7 +641,7 @@
 		desc = "A nearby Earthlike moon orbiting the gas giant. The stormy, humid atmosphere is quite breathable and the surface has been extensively seeded by terraforming efforts."
 
 	x4
-		icon = 'icons/obj/160x160.dmi'
+		icon = 'icons/obj/large/160x160.dmi'
 		icon_state = "bigasteroid_1"
 		name = "X4"
 		desc = "A jagged little moonlet or a really big asteroid. It's fairly close to your orbit, you can see the lights of Outpost Kappa."
@@ -815,7 +825,7 @@ obj/decoration/ceilingfan
 	name = "rusty krab sign"
 	desc = "It's one of those old neon signs that diners used to have."
 	icon_state = "rustykrab"
-	icon = 'icons/obj/64x32.dmi'
+	icon = 'icons/obj/large/64x32.dmi'
 	density = 0
 	opacity = 0
 	anchored = 2
@@ -841,7 +851,7 @@ obj/decoration/ceilingfan
 	name = "tabletop shelf"
 	desc = "It's a shelf full of things that you'll need to play your favourite tabletop campaigns. Mainly a lot of dice that can only roll 1's."
 	icon_state = "tabletopfull"
-	icon = 'icons/obj/64x32.dmi'
+	icon = 'icons/obj/large/64x32.dmi'
 	anchored = 2
 	density = 0
 	layer = DECAL_LAYER
@@ -948,7 +958,7 @@ obj/decoration/ceilingfan
 	anchored = 2
 	density = 1
 	desc = "Assortment of two metal crates, both of them sealed shut."
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "ntcrate1"
 	layer = EFFECTS_LAYER_1
 	appearance_flags = TILE_BOUND
@@ -968,6 +978,7 @@ obj/decoration/ceilingfan
 	anchored = 2
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "frontwalldamage"
+	mouse_opacity = 0
 
 /obj/decoration/damagedchair
 	anchored = 2
@@ -978,7 +989,7 @@ obj/decoration/ceilingfan
 	anchored = 2
 	name = "syndicate corpse"
 	icon = 'icons/obj/decoration.dmi'
-	desc = "Whoever this was, you're pretty sure they've had better days. Makes you wonder where the other half is.."
+	desc = "Whoever this was, you're pretty sure they've had better days. Makes you wonder where the other half is..."
 	icon_state = "syndcorpse5"
 
 /obj/decoration/syndcorpse10
@@ -1005,3 +1016,212 @@ obj/decoration/ceilingfan
 
 	examine()
 		return list()
+
+//fake guns for shooting range prefab
+
+/obj/item/gun/laser_pistol
+	name = "laser pistol"
+	icon = 'icons/obj/decoration.dmi'
+	desc = "A terribly cheap and discontinued old model of laser pistol."
+	icon_state = "laser_pistol"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	item_state = "protopistol"
+	stamina_damage = 0
+	stamina_cost = 4
+	stamina_crit_chance = 0
+	throwforce = 0
+
+	attack_hand(mob/user as mob)
+		if ((user.r_hand == src || user.l_hand == src) && src.contents && length(src.contents))
+			user.visible_message("The cell on this is corroded. Good luck getting this thing to fire ever again!")
+			src.add_fingerprint(user)
+		else
+			return ..()
+
+/obj/item/gun/laser_pistol/prototype
+	name = "prototype laser pistol"
+	icon = 'icons/obj/decoration.dmi'
+	desc = "You've never heard of this pistol before... who made it?"
+	icon_state = "e_laser_pistol"
+
+//stolen code for anchorable and movable target sheets. cannot get projectile tracking on them to work right now so. oh well. help appreciated!
+/obj/item/caution/target_sheet
+	desc = "A paper silhouette target sheet with a cardboard backing."
+	name = "paper target"
+	icon = 'icons/obj/decoration.dmi'
+	icon_state = "target_paper"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "table_parts"
+	density = 1
+	force = 1.0
+	throwforce = 3.0
+	throw_speed = 1
+	throw_range = 5
+	w_class = W_CLASS_SMALL
+	flags = FPRINT | TABLEPASS
+	stamina_damage = 0
+	stamina_cost = 4
+	stamina_crit_chance = 0
+	var/list/proj_impacts = list()
+	var/image/proj_image = null
+	var/last_proj_update_time = null
+
+	New()
+		..()
+		BLOCK_SETUP(BLOCK_SOFT)
+
+	attackby(obj/item/W, mob/user, params)
+		if(iswrenchingtool(W))
+			actions.start(new /datum/action/bar/icon/anchor_or_unanchor(src, W, duration=2 SECONDS), user)
+			return
+		. = ..()
+
+	get_desc()
+		if (islist(src.proj_impacts) && length(src.proj_impacts))
+			var/shots_taken = 0
+			for (var/i in src.proj_impacts)
+				shots_taken ++
+			. += "<br>[src] has [shots_taken] hole[s_es(shots_taken)] in it."
+
+	proc/update_projectile_image(var/update_time)
+		if (src.proj_impacts.len > 10)
+			return
+		if (src.last_proj_update_time && (src.last_proj_update_time + 1) < ticker.round_elapsed_ticks)
+			return
+		if (!src.proj_image)
+			src.proj_image = image('icons/obj/projectiles.dmi', "bhole-small")
+		src.proj_image.overlays = null
+		for (var/image/i in src.proj_impacts)
+			src.proj_image.overlays += i
+		src.UpdateOverlays(src.proj_image, "projectiles")
+
+//Walp Decor
+
+/obj/decoration/regallamp
+	name = "golden candelabra"
+	desc = "Fancy."
+	icon = 'icons/misc/walp_decor.dmi'
+	icon_state = "lamp_regal_unlit"
+	density = 0
+	anchored = 0
+	opacity = 0
+	var/parts_type = /obj/item/furniture_parts/decor/regallamp
+	var/icon_off = "lamp_regal_unlit"
+	var/icon_on = "lamp_regal_lit"
+	var/brightness = 1
+	var/col_r = 0.5
+	var/col_g = 0.3
+	var/col_b = 0.0
+	var/lit = 0
+	var/securable = 1
+	var/datum/light/light
+	var/deconstructable = 1
+
+	New()
+		..()
+		light = new /datum/light/point
+		light.set_brightness(brightness)
+		light.set_color(col_r, col_g, col_b)
+		update_icon()
+		light.attach(src)
+
+	proc/update_icon()
+		if (src.lit == 1)
+			src.icon_state = src.icon_on
+			light.enable()
+
+		else
+			src.lit = 0
+			src.icon_state = src.icon_off
+			light.disable()
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (!src.lit)
+			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
+				boutput(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
+				src.lit = 1
+				update_icon()
+
+			if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
+				boutput(user, "<span class='alert'>Did [user] just light \his [src] with [W]? Holy Shit.</span>")
+				src.lit = 1
+				update_icon()
+
+			if (istype(W, /obj/item/device/igniter))
+				boutput(user, "<span class='alert'><b>[user]</b> fumbles around with [W]; a small flame erupts from [src].</span>")
+				src.lit = 1
+				update_icon()
+
+			if (istype(W, /obj/item/device/light/zippo) && W:on)
+				boutput(user, "<span class='alert'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
+				src.lit = 1
+				update_icon()
+
+			if ((istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on)
+				boutput(user, "<span class='alert'><b>[user] lights [src] with [W].</span>")
+				src.lit = 1
+				update_icon()
+
+			if (W.burning)
+				boutput(user, "<span class='alert'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
+				src.lit = 1
+				update_icon ()
+
+	attack_hand(mob/user as mob)
+		if (src.lit)
+			var/fluff = pick("snuff", "blow")
+			src.lit = 0
+			update_icon()
+			user.visible_message("<b>[user]</b> [fluff]s out the [src].",\
+			"You [fluff] out the [src].")
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (iswrenchingtool(W) && src.deconstructable)
+			actions.start(new /datum/action/bar/icon/furniture_deconstruct(src, W, 30), user)
+			return
+		else if (isscrewingtool(W) && src.securable)
+			src.toggle_secure(user)
+			return
+		else
+			return ..()
+
+	proc/toggle_secure(mob/user as mob)
+		if (user)
+			user.visible_message("<b>[user]</b> [src.anchored ? "loosens" : "tightens"] the floor bolts of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
+		playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
+		src.anchored = !(src.anchored)
+		src.p_class = src.anchored ? initial(src.p_class) : 2
+		return
+
+	disposing()
+		if (light)
+			light.dispose()
+		..()
+
+	proc/deconstruct()
+		if (!src.deconstructable)
+			return
+		if (ispath(src.parts_type))
+			var/obj/item/furniture_parts/P = new src.parts_type(src.loc)
+			if (P && src.material)
+				P.setMaterial(src.material)
+		else
+			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+			var/obj/item/sheet/S = new (src.loc)
+			if (src.material)
+				S.setMaterial(src.material)
+			else
+				var/datum/material/M = getMaterial("steel")
+				S.setMaterial(M)
+		qdel(src)
+		return
+
+
+obj/decoration/floralarrangement
+	name = "floral arrangement"
+	desc = "These look... Very plastic. Huh."
+	icon = 'icons/misc/walp_decor.dmi'
+	icon_state = "floral_arrange"
+	anchored = 1
+	density = 1
+

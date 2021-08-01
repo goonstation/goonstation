@@ -212,7 +212,7 @@ var/mutable_appearance/fluid_ma
 		//floor overrides some construction clicks
 		if (istype(W,/obj/item/rcd) || istype(W,/obj/item/tile) || istype(W,/obj/item/sheet) || ispryingtool(W) || istype(W,/obj/item/pen))
 			var/turf/T = get_turf(src)
-			T.attackby(W,user)
+			T.Attackby(W,user)
 			W.afterattack(T,user)
 			return
 
@@ -297,7 +297,7 @@ var/mutable_appearance/fluid_ma
 		if (!src.group || !src.group.reagents || !length(src.group.members)) return
 		src.group.last_temp_change = world.time
 		//reduce exposed temperature by amt of members in the group
-		src.group.reagents.temperature_reagents(exposed_temperature, exposed_volume, (70 - (35 / (src.group.members.len))), 15)
+		src.group.reagents.temperature_reagents(exposed_temperature, exposed_volume, 100, 15, 1)
 
 	ex_act()
 		src.removed()
@@ -752,7 +752,7 @@ var/mutable_appearance/fluid_ma
 						"<span class='alert'>You slip on [F]!</span>")
 				if(-1) //space lube. this code bit is shit but i'm too lazy to make it Real right now. the proper implementation should also make exceptions for ice and stuff.
 					src.pulling = null
-					src.changeStatus("weakened", 35)
+					src.changeStatus("weakened", 3.5 SECONDS)
 					boutput(src, "<span class='notice'>You slipped on [F]!</span>")
 					playsound(T, "sound/misc/slip.ogg", 50, 1, -3)
 					var/atom/target = get_edge_target_turf(src, src.dir)

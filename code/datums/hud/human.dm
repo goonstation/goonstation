@@ -305,7 +305,7 @@
 
 			master?.update_equipment_screen_loc()
 
-	clicked(id, mob/user, list/params)
+	relay_click(id, mob/user, list/params)
 		switch (id)
 			if ("invtoggle")
 				var/obj/item/I = master.equipped()
@@ -324,14 +324,15 @@
 					autoequip_slot(slot_head, head)
 					autoequip_slot(slot_back, back)
 
-
-					for (var/datum/hud/storage/S in user.huds) //ez storage stowing
-						S.master.attackby(I, user, params)
+					if (!istype(master.belt,/obj/item/storage) || istype(I,/obj/item/storage)) // belt BEFORE trying storages, and only swap if its not a storage swap
+						autoequip_slot(slot_belt, belt)
 						if (master.equipped() != I)
 							return
 
-					if (!istype(master.belt,/obj/item/storage) || istype(I,/obj/item/storage)) // belt AFTER trying storages, and only swap if its not a storage swap
-						autoequip_slot(slot_belt, belt)
+					for (var/datum/hud/storage/S in user.huds) //ez storage stowing
+						S.master.Attackby(I, user, params)
+						if (master.equipped() != I)
+							return
 
 					//ONLY do these if theyre actually empty, we dont want to pocket swap.
 					if (!master.l_store)
@@ -382,13 +383,15 @@
 					autoequip_slot(slot_head, head)
 					autoequip_slot(slot_back, back)
 
-					for (var/datum/hud/storage/S in user.huds) //ez storage stowing
-						S.master.attackby(I, user, params)
+					if (!istype(master.belt,/obj/item/storage) || istype(I,/obj/item/storage)) // belt BEFORE trying storages, and only swap if its not a storage swap
+						autoequip_slot(slot_belt, belt)
 						if (master.equipped() != I)
 							return
 
-					if (!istype(master.belt,/obj/item/storage) || istype(I,/obj/item/storage)) // belt AFTER trying storages, and only swap if its not a storage swap
-						autoequip_slot(slot_belt, belt)
+					for (var/datum/hud/storage/S in user.huds) //ez storage stowing
+						S.master.Attackby(I, user, params)
+						if (master.equipped() != I)
+							return
 
 					//ONLY do these if theyre actually empty, we dont want to pocket swap.
 					if (!master.l_store)
@@ -844,7 +847,7 @@
 			var/datum/bioEffect/power/P
 			for(var/ID in master.bioHolder.effects)
 				P = master.bioHolder.GetEffect(ID)
-				if (!istype(P, /datum/bioEffect/power/) || !istype(P.ability) || !istype(P.ability.object))
+				if (!istype(P, /datum/bioEffect/power/) || !istype(P.ability) || !istype(P.ability.object) || P.removed)
 					continue
 				var/datum/targetable/geneticsAbility/POWER = P.ability
 				var/atom/movable/screen/ability/topBar/genetics/BUTTON = POWER.object
@@ -901,17 +904,17 @@
 			switch (brutedam)
 				if (-INFINITY to 0) // this goes the other way around from the normal health indicator since it's determined by how much of whatever damage you have
 					stage = 0 // bright green
-				if (1 to 15)
+				if (0 to 15)
 					stage = 1 // green
-				if (16 to 30)
+				if (15 to 30)
 					stage = 2 // yellow
-				if (31 to 45)
+				if (30 to 45)
 					stage = 3 // orange
-				if (46 to 60)
+				if (45 to 60)
 					stage = 4 // dark orange
-				if (61 to 75)
+				if (60 to 75)
 					stage = 5 // red
-				if (76 to INFINITY)
+				if (75 to INFINITY)
 					stage = 6 // crit
 
 			health_brute.name = "Brute Damage"
@@ -921,17 +924,17 @@
 			switch (burndam)
 				if (-INFINITY to 0)
 					stage = 0 // bright green
-				if (1 to 15)
+				if (0 to 15)
 					stage = 1 // green
-				if (16 to 30)
+				if (15 to 30)
 					stage = 2 // yellow
-				if (31 to 45)
+				if (30 to 45)
 					stage = 3 // orange
-				if (46 to 60)
+				if (45 to 60)
 					stage = 4 // dark orange
-				if (61 to 75)
+				if (60 to 75)
 					stage = 5 // red
-				if (76 to INFINITY)
+				if (75 to INFINITY)
 					stage = 6 // crit
 
 			health_burn.name = "Burn Damage"
@@ -941,17 +944,17 @@
 			switch (toxdam)
 				if (-INFINITY to 0)
 					stage = 0 // bright green
-				if (1 to 15)
+				if (0 to 15)
 					stage = 1 // green
-				if (16 to 30)
+				if (15 to 30)
 					stage = 2 // yellow
-				if (31 to 45)
+				if (30 to 45)
 					stage = 3 // orange
-				if (46 to 60)
+				if (45 to 60)
 					stage = 4 // dark orange
-				if (61 to 75)
+				if (60 to 75)
 					stage = 5 // red
-				if (76 to INFINITY)
+				if (75 to INFINITY)
 					stage = 6 // crit
 
 			health_tox.name = "Toxin Damage"
@@ -961,17 +964,17 @@
 			switch (oxydam)
 				if (-INFINITY to 0)
 					stage = 0 // bright green
-				if (1 to 15)
+				if (0 to 15)
 					stage = 1 // green
-				if (16 to 30)
+				if (15 to 30)
 					stage = 2 // yellow
-				if (31 to 45)
+				if (30 to 45)
 					stage = 3 // orange
-				if (46 to 60)
+				if (45 to 60)
 					stage = 4 // dark orange
-				if (61 to 75)
+				if (60 to 75)
 					stage = 5 // red
-				if (76 to INFINITY)
+				if (75 to INFINITY)
 					stage = 6 // crit
 
 			health_oxy.name = "Oxygen Damage"

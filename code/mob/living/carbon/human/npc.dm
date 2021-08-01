@@ -536,7 +536,7 @@
 
 	// wear clothes
 	if(src.hand && IS_NPC_CLOTHING(src.equipped()) && prob(80) && (!(src.equipped().flags & ONBELT) || prob(0.1)))
-		src.hud.clicked("invtoggle", src, list())
+		src.hud.relay_click("invtoggle", src, list())
 		if(src.equipped())
 			throw_equipped |= prob(80)
 
@@ -640,9 +640,10 @@
 	. = ..()
 	if(!src.ai_active)
 		return
-	if(src.ai_state == AI_FLEEING && ai_incapacitated())
-		src.ai_state = AI_PASSIVE
-		walk_away(src, null)
+	if(ai_incapacitated())
+		walk(src, null)
+		if(src.ai_state == AI_FLEEING)
+			src.ai_state = AI_PASSIVE
 
 
 /mob/living/carbon/human/proc/ai_pickupstuff()
@@ -751,7 +752,7 @@
 		else if(src.back && istype(src.back,/obj/item/storage/backpack))
 			var/obj/item/storage/backpack/B = src.back
 			if(B.contents.len < 7)
-				B.attackby(GN,src)
+				B.Attackby(GN,src)
 
 	var/obj/item/pickup
 
@@ -927,17 +928,17 @@
 
 		if((locate(/obj/window) in get_step(src,dir))  && !acted)
 			var/obj/window/W = (locate(/obj/window) in get_step(src,dir))
-			W.attackby(src.r_hand, src)
+			W.Attackby(src.r_hand, src)
 			acted = 1
 		else if((locate(/obj/window) in get_turf(src.loc))  && !acted)
 			var/obj/window/W = (locate(/obj/window) in get_turf(src.loc))
-			W.attackby(src.r_hand, src)
+			W.Attackby(src.r_hand, src)
 			acted = 1
 
 		if((locate(/obj/grille) in get_step(src,dir))  && !acted)
 			var/obj/grille/G = (locate(/obj/grille) in get_step(src,dir))
 			if(!G.ruined)
-				G.attackby(src.r_hand, src)
+				G.Attackby(src.r_hand, src)
 				acted = 1
 
 	if((locate(/obj/machinery/door) in get_step(src,dir)))

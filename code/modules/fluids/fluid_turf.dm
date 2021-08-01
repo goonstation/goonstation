@@ -229,7 +229,7 @@
 	Entered(atom/movable/A as mob|obj) //MBC : I was too hurried and lazy to make this actually apply reagents on touch. this is a note to myself. FUCK YOUUU
 		..()
 		if(A.getStatusDuration("burning"))
-			A.changeStatus("burning", -500)
+			A.changeStatus("burning", -50 SECONDS)
 
 		//nah disable for now i dont wanna do istype checks on enter
 		//else if(isitem(A))
@@ -528,6 +528,7 @@
 				for(var/obj/machinery/computer/sea_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
 					active = 1
 					C.visible_message("<span class='alert'>The elevator begins to move!</span>")
+					playsound(C.loc, "sound/machines/elevator_move.ogg", 100, 0)
 				SPAWN_DBG(5 SECONDS)
 					call_shuttle()
 

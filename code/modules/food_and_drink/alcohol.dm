@@ -10,8 +10,6 @@
 	label = "alcohol1"
 	initial_volume = 50
 	initial_reagents = list("beer"=30)
-	module_research = list("vice" = 5)
-	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
 /obj/item/reagent_containers/food/drinks/bottle/beer/borg
 	unbreakable = 1
@@ -22,8 +20,6 @@
 	icon_state = "bottle-green"
 	initial_volume = 50
 	initial_reagents = list("beer"=25,"ethanol"=5)
-	module_research = list("vice" = 5)
-	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
 	New()
 		..()
@@ -58,8 +54,6 @@
 	label = "wine"
 	initial_volume = 50
 	initial_reagents = list("wine"=30)
-	module_research = list("vice" = 5)
-	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine
 	name = "fortified wine"
@@ -74,8 +68,6 @@
 	var/safe = 0
 	initial_volume = 50
 	initial_reagents = list("wine"=20,"ethanol"=5)
-	module_research = list("vice" = 5)
-	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
 	New()
 		..()
@@ -117,8 +109,7 @@
 	g_amt = 60
 	initial_volume = 50
 	initial_reagents = list("champagne"=30)
-	module_research = list("vice" = 5)
-	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
+	var/makes_shards_on_break = 1
 
 	afterattack(obj/O as obj, mob/user as mob)
 		if (istype(O, /obj/machinery/vehicle) || istype(O, /obj/vehicle) && user.a_intent == "harm")
@@ -129,8 +120,9 @@
 			if (prob(50))
 				user.visible_message("<span class='alert'><b>[user]</b> hits [O] with [src], shattering it open!</span>")
 				playsound(U, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-				G.set_loc(U)
+				if (makes_shards_on_break)
+					var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+					G.set_loc(U)
 				src.broken = 1
 				src.reagents.reaction(U)
 				src.create_reagents(0)
@@ -157,9 +149,9 @@
 		g_amt = 60
 		initial_volume = 50
 		initial_reagents = list("champagne"=30)
-		module_research = list("vice" = 5)
-		module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
+	breakaway_glass
+		makes_shards_on_break = 0
 
 /obj/item/reagent_containers/food/drinks/bottle/cider
 	name = "cider"
@@ -171,8 +163,6 @@
 	label = "alcohol1"
 	initial_volume = 50
 	initial_reagents = list("cider"=30)
-	module_research = list("vice" = 5)
-	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
 /obj/item/reagent_containers/food/drinks/bottle/rum
 	name = "rum"
@@ -184,8 +174,6 @@
 	heal_amt = 1
 	initial_volume = 50
 	initial_reagents = list("rum"=30)
-	module_research = list("vice" = 5)
-	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
 /obj/item/reagent_containers/food/drinks/rum_spaced
 	name = "spaced rum"
@@ -194,8 +182,6 @@
 	heal_amt = 1
 	initial_volume = 60
 	initial_reagents = list("rum"=30,"yobihodazine"=30)
-	module_research = list("vice" = 5)
-	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
 /obj/item/reagent_containers/food/drinks/grog
 	name = "Ye Olde Grogge"
@@ -204,7 +190,6 @@
 	heal_amt = 0
 	initial_volume = 60
 	initial_reagents = "grog"
-	module_research = list("vice" = 5)
 
 /obj/item/reagent_containers/food/drinks/bottle/mead
 	name = "mead"
@@ -216,8 +201,6 @@
 	label = "alcohol5"
 	initial_volume = 50
 	initial_reagents = list("mead"=30)
-	module_research = list("vice" = 5)
-	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
 /obj/item/reagent_containers/food/drinks/bottle/vintage
 	name = "2010 Vintage"
@@ -229,7 +212,6 @@
 	label = "alcohol5"
 	initial_volume = 50
 	initial_reagents = list("urine"=30)
-	module_research = list("vice" = 2)
 
 /obj/item/reagent_containers/food/drinks/bottle/vodka
 	name = "vodka"
@@ -242,8 +224,6 @@
 	g_amt = 60
 	initial_volume = 50
 	initial_reagents = list("vodka"=30)
-	module_research = list("vice" = 5)
-	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
 /obj/item/reagent_containers/food/drinks/bottle/vodka/vr
 	icon_state = "vr_vodka"
@@ -261,8 +241,6 @@
 	g_amt = 60
 	initial_volume = 50
 	initial_reagents = list("tequila"=30)
-	module_research = list("vice" = 5)
-	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
 /obj/item/reagent_containers/food/drinks/bottle/gin
 	name = "gin"
@@ -276,8 +254,6 @@
 	g_amt = 60
 	initial_volume = 50
 	initial_reagents = list("gin"=30)
-	module_research = list("vice" = 5)
-	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
 /obj/item/reagent_containers/food/drinks/bottle/ntbrew
 	name = "NanoTrasen Brew"
@@ -291,7 +267,6 @@
 	g_amt = 60
 	initial_volume = 250
 	initial_reagents = list("wine"=40,"charcoal"=20)
-	module_research = list("vice" = 2)
 
 /obj/item/reagent_containers/food/drinks/bottle/thegoodstuff
 	name = "Stinkeye's Special Reserve"
@@ -305,7 +280,6 @@
 	g_amt = 60
 	initial_volume = 250
 	initial_reagents = list("champagne"=30,"wine"=30,"cider"=30,"vodka"=30,"ethanol"=30,"eyeofnewt"=30)
-	module_research = list("vice" = 10)
 
 /obj/item/reagent_containers/food/drinks/bottle/bojackson
 	name = "Bo Jack Daniel's"
@@ -319,8 +293,6 @@
 	g_amt = 40
 	initial_volume = 60
 	initial_reagents = "bojack"
-	module_research = list("vice" = 5)
-	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
 /obj/item/reagent_containers/food/drinks/moonshine
 	name = "jug of moonshine"
@@ -330,7 +302,6 @@
 	rc_flags = RC_FULLNESS
 	initial_volume = 250
 	initial_reagents = "moonshine"
-	module_research = list("vice" = 100)
 
 /obj/item/reagent_containers/food/drinks/curacao
 	name = "curaçao liqueur"
@@ -340,7 +311,6 @@
 	rc_flags = RC_FULLNESS
 	initial_volume = 50
 	initial_reagents = "curacao"
-	module_research = list("vice" = 5)
 
 /obj/item/reagent_containers/food/drinks/dehab
 	name = "Dehab"

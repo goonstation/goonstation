@@ -520,7 +520,7 @@
 /obj/decal/fakeobjects/biggerrock
 	name = "big rock"
 	desc = "Seriously big rocks."
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "bigrock"
 	anchored = 1
 	density = 1
@@ -562,7 +562,7 @@
 /obj/decal/fakeobjects/cultiststatue
 	name = "statue of a hooded figure"
 	desc = "TEMP"
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "cultiststatue"
 	anchored = 1
 	density = 1
@@ -571,7 +571,7 @@
 /obj/decal/fakeobjects/crossinverted
 	name = "inverted cross"
 	desc = "TEMP"
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "cross"
 	anchored = 1
 	density = 1
@@ -649,7 +649,7 @@
 	name = "altar"
 	desc = "TEMP"
 	icon_state = "altar"
-	icon = 'icons/obj/64x96.dmi'
+	icon = 'icons/obj/large/64x96.dmi'
 	density = 1
 	anchored = 1
 
@@ -666,7 +666,7 @@
 				if (!G.affecting.hasStatus("weakened"))
 					G.affecting.changeStatus("weakened", 4 SECONDS)
 				src.visible_message("<span class='alert'><b>[G.assailant] slams [G.affecting] onto \the [src]!</b></span>")
-				playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+				playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
 				if (src.material)
 					src.material.triggerOnAttacked(src, G.assailant, G.affecting, src)
 			else
@@ -970,7 +970,7 @@
 /obj/decal/fakeobjects/mantacontainer
 	name = "container"
 	desc = "These huge containers are used to transport goods from one place to another."
-	icon = 'icons/obj/64x96.dmi'
+	icon = 'icons/obj/large/64x96.dmi'
 	icon_state = "manta"
 	anchored = 2
 	density = 1
@@ -991,7 +991,7 @@
 /obj/decal/fakeobjects/mantacontainer/upwards
 		name = "container"
 		desc = "These huge containers are used to transport goods from one place to another."
-		icon = 'icons/obj/96x64.dmi'
+		icon = 'icons/obj/large/96x64.dmi'
 		icon_state = "manta"
 		anchored = 2
 		density = 1
@@ -1073,7 +1073,7 @@
 /obj/decal/fakeobjects/turbinetest
 		name = "TEMP"
 		desc = "TEMP"
-		icon = 'icons/obj/96x160.dmi'
+		icon = 'icons/obj/large/96x160.dmi'
 		icon_state = "turbine_main"
 		anchored = 2
 		density = 1
@@ -1083,7 +1083,7 @@
 /obj/decal/fakeobjects/nuclearcomputertest
 		name = "TEMP"
 		desc = "TEMP"
-		icon = 'icons/obj/32x96.dmi'
+		icon = 'icons/obj/large/32x96.dmi'
 		icon_state = "nuclearcomputer"
 		anchored = 2
 		density = 1
@@ -1129,7 +1129,7 @@
 				var/mob/living/carbon/human/user = usr
 				user.visible_message("<span class='alert'><B>[user] fumbles the catch and is clonked on the head!</B></span>")
 				playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
-				user.changeStatus("stunned", 50)
+				user.changeStatus("stunned", 5 SECONDS)
 				user.changeStatus("weakened", 3 SECONDS)
 				user.changeStatus("paralysis", 2 SECONDS)
 				user.force_laydown_standup()
@@ -1142,7 +1142,7 @@
 				var/hos = (istype(user.head, /obj/item/clothing/head/hosberet) || istype(user.head, /obj/item/clothing/head/hos_hat))
 				if(hos)
 					var/mob/living/carbon/human/H = hit_atom
-					H.changeStatus("stunned", 90)
+					H.changeStatus("stunned", 9 SECONDS)
 					H.changeStatus("weakened", 2 SECONDS)
 					H.force_laydown_standup()
 					//H.paralysis++
@@ -1305,7 +1305,7 @@
 
 	onStart()
 		..()
-		playsound(get_turf(thecrate), "sound/machines/click.ogg", 60, 1)
+		playsound(thecrate, "sound/machines/click.ogg", 60, 1)
 		owner.visible_message("<span class='notice'>[owner] starts to calibrate the cargo teleporter in a suspicious manner.</span>")
 	onEnd()
 		..()
@@ -1314,4 +1314,4 @@
 		qdel(thecrate)
 		message_admins("One of the NT supply crates has been succesfully teleported!")
 		boutput(owner, "<span class='notice'>You have successfully teleported one of the supply crates to the Syndicate.</span>")
-		playsound(get_turf(thecrate), "sound/machines/click.ogg", 60, 1)
+		playsound(thecrate, "sound/machines/click.ogg", 60, 1)

@@ -31,6 +31,7 @@
 			W.set_loc(src)
 			W.dropped()
 			boutput(user, "<span class='notice'>You put [W] in [src].</span>")
+			W.add_fingerprint(user)
 			if (src.contents.len == src.maxitems) boutput(user, "<span class='notice'>[src] is now full!</span>")
 			src.satchel_updateicon()
 			tooltip_rebuild = 1
@@ -41,6 +42,7 @@
 			var/turf/T = user.loc
 			for (var/obj/item/I in src.contents)
 				I.set_loc(T)
+				I.add_fingerprint(user)
 			boutput(user, "<span class='notice'>You empty out [src].</span>")
 			src.satchel_updateicon()
 			tooltip_rebuild = 1
@@ -130,6 +132,7 @@
 				if (I in user)
 					continue
 				I.set_loc(src)
+				I.add_fingerprint(user)
 				if (!(interval++ % 5))
 					src.satchel_updateicon()
 					sleep(0.2 SECONDS)
@@ -245,13 +248,13 @@
 		// clicky open close
 		proc/open_it_up(var/open)
 			if (open && icon_state == "figurinecase")
-				playsound(get_turf(src), "sound/misc/lightswitch.ogg", 50, pitch = 1.2)
+				playsound(src, "sound/misc/lightswitch.ogg", 50, pitch = 1.2)
 				icon_state = "figurinecase-open"
 				sleep(0.4 SECONDS)
 
 			else if (!open && icon_state == "figurinecase-open")
 				sleep(0.5 SECONDS)
-				playsound(get_turf(src), "sound/misc/lightswitch.ogg", 50, pitch = 0.9)
+				playsound(src, "sound/misc/lightswitch.ogg", 50, pitch = 0.9)
 				icon_state = "figurinecase"
 
 /obj/item/satchel/figurines/full

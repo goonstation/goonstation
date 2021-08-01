@@ -825,6 +825,16 @@ proc/debug_map_apc_count(delim,zlim)
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
 			img.app.color = theTurf.checkinghasentered ? "#0f0" : "#f00"
 
+	blocked_dirs
+		name = "blocked dirs"
+		help = "Displays dir flags of blocked turf exits"
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			if (theTurf.blocked_dirs)
+				img.app.overlays = list(src.makeText(theTurf.blocked_dirs))
+				img.app.color = "#0000ff"
+			else
+				img.app.alpha = 0
+
 	checkinghasproximity
 		name = "checkinghasproximity"
 		help = "Green = yes."
@@ -849,6 +859,16 @@ proc/debug_map_apc_count(delim,zlim)
 			img.app.overlays = list(src.makeText("[temp]", RESET_ALPHA | RESET_COLOR))
 			var/p = clamp(temp / (T0C * 2), 0, 1)
 			img.app.color = rgb(round(p * 255), 0, round((1-p) * 255))
+
+	unrestricted_hotboxing
+		name = "unrestricted hotboxing"
+		help = "Red = unrestricted"
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			if (theTurf.allow_unrestricted_hotbox)
+				img.app.overlays = list(src.makeText(theTurf.allow_unrestricted_hotbox))
+				img.app.color = "#f00"
+			else
+				img.app.alpha = 0
 
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
 	process_cell_operations

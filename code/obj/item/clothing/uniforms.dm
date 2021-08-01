@@ -19,6 +19,7 @@
 	burn_output = 800
 	burn_possible = 1
 	health = 50
+	var/team_num
 
 	duration_remove = 6.5 SECONDS
 
@@ -190,6 +191,7 @@
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_pride.dmi'
 	icon_state = "gay"
 	item_state = "gay"
+	burn_possible = 0
 
 	ace
 		name = "ace pride jumpsuit"
@@ -235,7 +237,7 @@
 
 	poly
 		name = "poly pride jumpsuit"
-		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the polysexual pride flag."
+		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the polysexual pride flag. Previously mistaken for polyamorous in uniform fabricators - the responsible employee was promptly terminated under all applicable versions of Space Law."
 		icon_state ="poly"
 		item_state = "poly"
 
@@ -319,7 +321,6 @@
 
 	dress
 		icon_state = "hop-dress"
-		item_state = "hop-dress"
 
 /obj/item/clothing/under/rank/head_of_securityold
 	name = "head of security's uniform"
@@ -728,12 +729,36 @@
 	desc = "Non-descript, slightly suspicious civilian clothing."
 	icon_state = "syndicate"
 	item_state = "syndicate"
+	team_num = TEAM_SYNDICATE
+	#ifdef MAP_OVERRIDE_POD_WARS
+	attack_hand(mob/user)
+		if (get_pod_wars_team_num(user) == team_num)
+			..()
+		else
+			boutput(user, "<span class='alert'>The jumpsuit <b>explodes</b> as you reach out to grab it!</span>")
+			make_fake_explosion(src)
+			user.u_equip(src)
+			src.dropped(user)
+			qdel(src)
+	#endif
 
 /obj/item/clothing/under/misc/turds
 	name = "NT-SO Jumpsuit"
 	desc = "A Nanotrasen Special Operations jumpsuit."
 	icon_state = "turdsuit"
 	item_state = "turdsuit"
+	team_num = TEAM_NANOTRASEN
+	#ifdef MAP_OVERRIDE_POD_WARS
+	attack_hand(mob/user)
+		if (get_pod_wars_team_num(user) == team_num)
+			..()
+		else
+			boutput(user, "<span class='alert'>The jumpsuit <b>explodes</b> as you reach out to grab it!</span>")
+			make_fake_explosion(src)
+			user.u_equip(src)
+			src.dropped(user)
+			qdel(src)
+	#endif
 
 /obj/item/clothing/under/misc/NT
 	name = "nanotrasen jumpsuit"
@@ -1102,7 +1127,6 @@
 
 	dress
 		icon_state = "suitT-dress"
-		item_state = "suitT-dress"
 
 /obj/item/clothing/under/suit/hos
 	name = "\improper Head of Security's suit"
@@ -1317,8 +1341,8 @@
 	item_state = "princess"
 
 /obj/item/clothing/under/gimmick/cosby
-	name = "cosby sweater"
-	desc = "Symbol of a legendary 80's sitcom dad."
+	name = "comfy sweater"
+	desc = "A colourful and cozy jumper."
 	icon_state = "cosby1"
 	item_state = "cosby1"
 	New()

@@ -41,7 +41,7 @@
 			logTheThing("combat", target, ownerMob, "was enveloped by [constructTarget(ownerMob,"combat")] (mob) at [log_loc(ownerMob)].")
 			for (var/mob/O in AIviewers(ownerMob))
 				O.show_message("<span class='combat'><B>[ownerMob]</B> completely envelops [target]!</span>", 1)
-			playsound(get_turf(ownerMob), "sound/impact_sounds/Slimy_Hit_4.ogg", 50, 1)
+			playsound(ownerMob, "sound/impact_sounds/Slimy_Hit_4.ogg", 50, 1)
 			ownerMob.health = ownerMob.max_health
 			if (target == owner)
 				boutput(owner, "<span class='success'>Good. Job.</span>")

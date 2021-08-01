@@ -7,6 +7,9 @@
 	icon_state = "kidneys"
 	failure_disease = /datum/ailment/disease/kidney_failure
 	var/chem_metabolism_modifier = 1
+	// this is just used for setting them, so I will use the *100 values
+	var/min_chem_metabolism_modifier = 100
+	var/max_chem_metabolism_modifier = 100
 
 	on_life(var/mult = 1)
 		if (!..())
@@ -96,6 +99,14 @@
 		else
 			return 0
 
+	/// sets the chem_metabolism_modifier for this kidney, clamping it to the min and max value and dividing it by 100
+	proc/set_chem_metabolism_modifier(var/new_modifier)
+		src.chem_metabolism_modifier = clamp(new_modifier, src.min_chem_metabolism_modifier, src.max_chem_metabolism_modifier)/100
+
+	/// randomizes the kidneys chem_metabolism_modifier to a value between its min and max
+	proc/randomize_modifier()
+		src.set_chem_metabolism_modifier(rand(src.min_chem_metabolism_modifier, src.max_chem_metabolism_modifier))
+
 /obj/item/organ/kidney/left
 	name = "left kidney"
 	organ_name = "kidney_L"
@@ -112,6 +123,16 @@
 	body_side = R_ORGAN
 	failure_disease = /datum/ailment/disease/kidney_failure/right
 
+/obj/item/organ/kidney/synth
+	name = "synthkidney"
+	organ_name = "synthkidney"
+	icon_state = "plant"
+	desc = "A bean based kidney!"
+	synthetic = 1
+	New()
+		..()
+		src.icon_state = pick("plant_appendix", "plant_appendix_bloom")
+
 /obj/item/organ/kidney/cyber
 	name = "cyberkidney"
 	desc = "A fancy robotic kidney to replace one that someone's lost!"
@@ -122,6 +143,8 @@
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0
 	mats = 6
+	min_chem_metabolism_modifier = 75
+	max_chem_metabolism_modifier = 150
 
 	emag_act(mob/user, obj/item/card/emag/E)
 		. = ..()
@@ -162,10 +185,38 @@
 
 	attackby(obj/item/W, mob/user)
 		if(ispulsingtool(W)) //TODO kyle's robotics configuration console/machine/thing
-			chem_metabolism_modifier = input(user, "Enter a percentage to clock the cyberkidney at, from 75 to 150.", "Organ clocking", "100") as num
-			chem_metabolism_modifier = clamp(chem_metabolism_modifier, 75, 150) / 100
+			var/new_modifier = input(user, \
+			"Enter a percentage to clock the cyberkidney at, from [src.min_chem_metabolism_modifier] to [src.max_chem_metabolism_modifier].",\
+			 "Organ clocking", src.chem_metabolism_modifier*100) as num
+			src.set_chem_metabolism_modifier(new_modifier)
 		else
 			. = ..()
+
+/obj/item/organ/kidney/synth/left
+	name = "left kidney"
+	desc = "A bean based kidney! It's the left kidney!"
+	synthetic = 1
+	icon_state = "plant"
+	organ_name = "synthkidney_L"
+	organ_holder_name = "left_kidney"
+	body_side = L_ORGAN
+	failure_disease = /datum/ailment/disease/kidney_failure/left
+	New()
+		..()
+		src.icon_state = pick("plant_kidney_L", "plant_kidney_L_bloom")
+
+/obj/item/organ/kidney/synth/right
+	name = "right kidney"
+	desc = "A bean based kidney! It's the right kidney!"
+	synthetic = 1
+	icon_state = "plant"
+	organ_name = "synthkidney_R"
+	organ_holder_name = "right_kidney"
+	body_side = R_ORGAN
+	failure_disease = /datum/ailment/disease/kidney_failure/right
+	New()
+		..()
+		src.icon_state = pick("plant_kidney_R", "plant_kidney_R_bloom")
 
 /obj/item/organ/kidney/cyber/left
 	name = "left kidney"

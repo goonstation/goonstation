@@ -12,8 +12,6 @@
 	item_state = "brain"
 	var/datum/mind/owner = null
 	edible = 0
-	module_research = list("medicine" = 1, "efficiency" = 10)
-	module_research_type = /obj/item/organ/brain
 	FAIL_DAMAGE = 120
 	MAX_DAMAGE = 120
 	tooltip_flags = REBUILD_ALWAYS //fuck it, nobody examines brains that often
@@ -99,8 +97,6 @@
 	name = "synthbrain"
 	item_state = "plant"
 	desc = "An artificial mass of grey matter. Not actually, as one might assume, very good at thinking."
-	made_from = "pharosium"
-
 	New()
 		..()
 		src.icon_state = pick("plant_brain", "plant_brain_bloom")

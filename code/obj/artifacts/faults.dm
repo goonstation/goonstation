@@ -42,7 +42,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 		if (..())
 			return
 		boutput(user, "<span class='alert'>You feel strange.</span>")
-		user.changeStatus("radiation", (src.rads_amount)*10, 3)
+		user.changeStatus("radiation", (src.rads_amount) SECONDS, 3)
 
 /datum/artifact_fault/shutdown
 	// deactivates the artifact
@@ -188,10 +188,13 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 		if (..())
 			return
 		if(src.say_instead)
+			var/msg = "[prob(20)?"":";"][generate_message(O, user)]"
 			if(prob(20))
 				user.say(";[generate_message(O, user)]")
 			else
 				user.say(generate_message(O, user))
+			var/datum/artifact/A = O.artifact
+			logTheThing("say", src, null, "SAY: [html_encode(msg)] [log_loc(user)] (was forced to speak by artifact of type [A.type] due to fault [src.type])")
 			return
 		switch(text_style)
 			if ("small")

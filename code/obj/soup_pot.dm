@@ -114,13 +114,13 @@
 				return
 
 			else
-				pot.attackby(W,user)
+				pot.Attackby(W,user)
 				if(!pot.my_soup)
 					W.afterattack(pot,user) // ????
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/soup_pot) && in_interact_range(W, user) && in_interact_range(src, user))
-			return src.attackby(W, user)
+			return src.Attackby(W, user)
 		return ..()
 
 	attack_hand(mob/user as mob)
@@ -420,7 +420,7 @@
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
 		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
-			return src.attackby(W, user)
+			return src.Attackby(W, user)
 		return ..()
 
 	MouseDrop(atom/over_object, src_location, over_location)

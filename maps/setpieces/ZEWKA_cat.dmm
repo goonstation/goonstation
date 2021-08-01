@@ -2758,7 +2758,7 @@
 "gC" = (
 /obj/rack,
 /obj/item/reagent_containers/food/drinks/bottle/vodka,
-/obj/item/reagent_containers/food/drinks/bottle/lime,
+/obj/item/reagent_containers/food/drinks/bottle/soda/lime,
 /obj/item/reagent_containers/food/drinks/bottle/thegoodstuff,
 /turf/unsimulated/floor/specialroom/bar,
 /area/jones/bar)
@@ -2766,14 +2766,14 @@
 /obj/rack,
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
 /obj/item/reagent_containers/food/drinks/bottle/mead,
-/obj/item/reagent_containers/food/drinks/bottle/blue,
+/obj/item/reagent_containers/food/drinks/bottle/soda/blue,
 /obj/item/reagent_containers/food/drinks/bottle/wine,
 /turf/unsimulated/floor/specialroom/bar,
 /area/jones/bar)
 "gE" = (
 /obj/rack,
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
-/obj/item/reagent_containers/food/drinks/bottle/pink,
+/obj/item/reagent_containers/food/drinks/bottle/soda/pink,
 /obj/item/reagent_containers/food/drinks/bottle/vintage,
 /obj/item/reagent_containers/food/drinks/bottle/beer,
 /turf/unsimulated/floor/specialroom/bar,
@@ -3404,7 +3404,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A really big A/C unit, sorta, except it also filters and processes air.  So not really at all like an A/C unit.";
-	icon = 'icons/obj/64x96.dmi';
+	icon = 'icons/obj/large/64x96.dmi';
 	icon_state = "air_gizmo";
 	name = "industrial atmospheric processor"
 	},

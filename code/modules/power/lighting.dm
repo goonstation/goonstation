@@ -53,6 +53,7 @@
 //MBC : moving lights to consume power inside as an area-wide process() instead of each individual light processing its own shit
 /obj/machinery/light_area_manager
 	#define LIGHTING_POWER_FACTOR 40
+	name = "Area Lighting"
 	event_handler_flags = IMMUNE_SINGULARITY | USE_FLUID_ENTER
 	invisibility = 100
 	var/area/my_area = null
@@ -128,14 +129,19 @@
 			light.dispose()
 		..()
 
-	proc/autoposition()
+	proc/autoposition(setdir = null)
 		//auto position these lights so i don't have to mess with dirs in the map editor that's annoying!!!
 		if (nostick == 0) // unless nostick is set to true in which case... dont
 			SPAWN_DBG(1 DECI SECOND) //wait for the wingrille spawners to complete when map is loading (ugly i am sorry)
 				var/turf/T = null
-				for (var/dir in cardinal)
+				var/list/directions = null
+				if (setdir)
+					directions = list(setdir)
+				else
+					directions = cardinal
+				for (var/dir in directions)
 					T = get_step(src,dir)
-					if (istype(T,/turf/simulated/wall) || (locate(/obj/wingrille_spawn) in T) || (locate(/obj/window) in T))
+					if (istype(T,/turf/simulated/wall) || istype(T,/turf/unsimulated/wall) || (locate(/obj/wingrille_spawn) in T) || (locate(/obj/window) in T))
 						var/is_jen_wall = 0 // jen walls' ceilings are narrower, so let's move the lights a bit further inward!
 						if (istype(T, /turf/simulated/wall/auto/jen) || istype(T, /turf/simulated/wall/auto/reinforced/jen))
 							is_jen_wall = 1
@@ -618,28 +624,22 @@
 /obj/machinery/light/attackby(obj/item/W, mob/user)
 
 	if (istype(W, /obj/item/lamp_manufacturer)) //deliberately placed above the borg check
-
+		var/obj/item/lamp_manufacturer/M = W
+		if (M.removing_toggled)
+			return //This stuff gets handled in the manufacturer's after_attack
 		if (removable_bulb == 0)
 			boutput(user, "This fitting isn't user-serviceable.")
 			return
 
-		var/obj/item/lamp_manufacturer/M = W
-		var/obj/item/light/L = null
-
-		if (issilicon(user))
-			var/mob/living/silicon/S = user
-			if (S.cell)
-				if (!inserted_lamp)
-					S.cell.charge -= M.cost_empty
-				else
-					S.cell.charge -= M.cost_broken
+		if (!inserted_lamp) //Taking charge/sheets
+			if (!M.check_ammo(user, M.cost_empty))
+				return
+			M.take_ammo(user, M.cost_empty)
 		else
-			if (M.metal_ammo > 0)
-				M.metal_ammo--
-				M.inventory_counter.update_number(M.metal_ammo)
-			else
-				boutput(user, "You need to load up some metal sheets.")
-				return // Stop lights from being made if a human user lacks materials.
+			if (!M.check_ammo(user, M.cost_broken))
+				return
+			M.take_ammo(user, M.cost_broken)
+		var/obj/item/light/L = null
 
 		if (fitting == "tube")
 			L = new M.dispensing_tube()
@@ -783,6 +783,8 @@
 		else
 			prot = 1
 
+		if (!in_interact_range(src, user))
+			return
 		if (prot > 0 || user.is_heat_resistant())
 			boutput(user, "You remove the light [fitting].")
 		else

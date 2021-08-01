@@ -73,7 +73,7 @@
 	if(src.client)
 		boutput(src, "<span class='alert'>You cease to exist abruptly.</span>")
 	src.flock?.removeTrace(src)
-	src.invisibility = 0
+	REMOVE_MOB_PROPERTY(src, PROP_INVISIBILITY, src)
 	src.icon_state = "blank"
 	src.canmove = 0
 	flick("flocktrace-death", src)

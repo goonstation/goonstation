@@ -63,7 +63,7 @@
 			return
 
 		src.duration = max(0.5 SECONDS, rod.fishing_speed + (pick(1, -1) * (rand(0,40) / 10) SECONDS)) //translates to rod duration +- (0,4) seconds, minimum of 0.5 seconds
-		playsound(get_turf(src.user), "sound/items/fishing_rod_cast.ogg", 50, 1)
+		playsound(src.user, "sound/items/fishing_rod_cast.ogg", 50, 1)
 		src.user.visible_message("[src.user] starts fishing.")
 		src.rod.is_fishing = true
 		src.rod.update_icon()
@@ -97,4 +97,30 @@
 		else //lets restart the action
 			src.onRestart()
 
+// portable fishing portal currently found in a prefab in space
+/obj/item/fish_portal
+	name = "Fishing Portal Generator"
+	desc = "A small device that creates a portal you can fish in."
+	icon = 'icons/obj/items/fishing_gear.dmi'
+	icon_state = "fish_portal"
+	mats = 11
 
+	attack_self(mob/user as mob)
+		new /obj/machinery/active_fish_portal(get_turf(user))
+		playsound(src.loc, 'sound/items/miningtool_on.ogg', 40)
+		user.visible_message("[user] flips on the [src].", "You turn on the [src].")
+		user.u_equip(src)
+		qdel(src)
+
+/obj/machinery/active_fish_portal
+	name = "Fishing Portal"
+	desc = "A portal you can fish in. It's not big enough to go through."
+	anchored = 1
+	icon = 'icons/obj/items/fishing_gear.dmi'
+	icon_state = "fish_portal-active"
+
+	attack_hand(mob/user as mob)
+		new /obj/item/fish_portal(get_turf(src))
+		playsound(src.loc, 'sound/items/miningtool_off.ogg', 40)
+		user.visible_message("[user] flips off the [src].", "You turn off the [src].")
+		qdel(src)

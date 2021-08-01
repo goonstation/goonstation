@@ -85,7 +85,7 @@
 				S.satchel.satchel_updateicon()
 				if (S.satchel.contents.len >= S.satchel.maxitems)
 					boutput(H, "<span class='alert'>Your ore scoop's satchel is full!</span>")
-					playsound(get_turf(H), "sound/machines/chime.ogg", 20, 1)
+					playsound(H, "sound/machines/chime.ogg", 20, 1)
 		else if (istype(AM,/obj/machinery/vehicle/))
 			var/obj/machinery/vehicle/V = AM
 			if (istype(V.sec_system,/obj/item/shipcomponent/secondary_system/orescoop))
@@ -332,7 +332,7 @@
 			if (bombturf)
 				var/bombarea = bombturf.loc.name
 				logTheThing("combat", null, null, "Erebite detonated by an explosion in [bombarea] ([showCoords(bombturf.x, bombturf.y, bombturf.z)]). Last touched by: [src.fingerprintslast]")
-				message_admins("Erebite detonated by an explosion in [bombarea] ([showCoords(bombturf.x, bombturf.y, bombturf.z)]). Last touched by: [src.fingerprintslast]")
+				message_admins("Erebite detonated by an explosion in [bombarea] ([showCoords(bombturf.x, bombturf.y, bombturf.z)]). Last touched by: [key_name(src.fingerprintslast)]")
 
 		qdel(src)
 
@@ -346,7 +346,7 @@
 			var/bombarea = istype(bombturf) ? bombturf.loc.name : "a blank, featureless void populated only by your own abandoned dreams and wasted potential"
 
 			logTheThing("combat", null, null, "Erebite detonated by heat in [bombarea]. Last touched by: [src.fingerprintslast]")
-			message_admins("Erebite detonated by heat in [bombarea]. Last touched by: [src.fingerprintslast]")
+			message_admins("Erebite detonated by heat in [bombarea]. Last touched by: [key_name(src.fingerprintslast)]")
 
 		qdel(src)
 
@@ -458,6 +458,7 @@
 		src.color = "#00f"
 		name = "Blue Telecrystal"
 		desc = "[desc] It's all shiny and blue now."
+
 
 /obj/item/raw_material/miracle
 	name = "miracle matter"
@@ -789,7 +790,7 @@
 				var/obj/item/wizard_crystal/wc = M
 				wc.setMaterial(getMaterial(wc.assoc_material),0,0,1,0)
 
-			if (!istype(M.material) || !(M.material.material_flags & MATERIAL_CRYSTAL) && !(M.material.material_flags & MATERIAL_METAL) && !(M.material.material_flags & MATERIAL_RUBBER))
+			if (!istype(M.material))
 				M.set_loc(src.loc)
 				src.reject = 1
 				continue
@@ -915,11 +916,11 @@
 			//But loading a container is more noticable and there should be less
 			if (.)
 				user.visible_message("<b>[user.name]</b> loads [W] into [src].")
-				playsound(get_turf(src), sound_load, 40, 1)
+				playsound(src, sound_load, 40, 1)
 
 		else if (load_reclaim(W, user))
 			boutput(user, "You load [W] into [src].")
-			playsound(get_turf(src), sound_load, 40, 1)
+			playsound(src, sound_load, 40, 1)
 
 		else
 			. = ..()
@@ -1026,7 +1027,7 @@
 					continue
 
 			M.set_loc(src)
-			playsound(get_turf(src), sound_load, 40, 1)
+			playsound(src, sound_load, 40, 1)
 			sleep(0.5)
 			if (user.loc != staystill) break
 		boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")

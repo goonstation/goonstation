@@ -380,7 +380,7 @@
 		if (prob(40))
 			new /obj/item/reagent_containers/glass/bottle/ethanol(src)
 
-		switch (pickweight(list("gloves" = 20, "mask" = 20, "autoinjector" = 10, "both" = 10)))
+		switch (weighted_pick(list("gloves" = 20, "mask" = 20, "autoinjector" = 10, "both" = 10)))
 			if ("gloves")
 				new /obj/item/clothing/gloves/latex(src)
 			if ("mask")

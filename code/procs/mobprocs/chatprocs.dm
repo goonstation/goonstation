@@ -152,6 +152,13 @@
 	else
 		boutput(src, "<span class='notice'>You can't emote when you're dead! How would that even work!?</span>")
 */
+/mob/proc/try_render_chat_to_admin(client/C, message)
+	if (C.holder && C.deadchat && !C.player_mode)
+		if (src.mind)
+			message = "<span class='adminHearing' data-ctx='[C.chatOutput.getContextFlags()]'>[message]</span>"
+		boutput(C, message)
+		return 1
+
 /mob/proc/say_dead(var/message, wraith = 0)
 	var/name = src.real_name
 	var/alt_name = ""
@@ -196,23 +203,19 @@
 	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
 	//logit( "chat", 0, "([name])", src, message )
 	for (var/client/C)
+		if (C.deadchatoff) continue
 		if (!C.mob) continue
 		var/mob/M = C.mob
-		if (istype(M, /mob/new_player))
-			continue
-		if (M.client && M.client.deadchatoff)
-			continue
-		if (istype(M,/mob/dead/target_observer/hivemind_observer))
-			continue
-		if (istype(M,/mob/dead/target_observer/mentor_mouse_observer))
+		if (istype(M, /mob/new_player)) continue
+
+		if(try_render_chat_to_admin(C, rendered))
 			continue
 
-		//admins can toggle deadchat on and off. This is a proc in admin.dm and is only give to Administrators and above
-		if (isdead(M) || iswraith(M) || (M.client && M.client.holder && M.client.deadchat && !M.client.player_mode) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M) || istype(M, /mob/living/seanceghost))
-			var/thisR = rendered
-			if (M.client && (istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
-				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
-			boutput(M, thisR)
+		if (istype(M,/mob/dead/target_observer/hivemind_observer)) continue
+		if (istype(M,/mob/dead/target_observer/mentor_mouse_observer)) continue
+
+		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M) || istype(M, /mob/living/seanceghost))
+			boutput(M, rendered)
 
 //changeling hivemind say
 /mob/proc/say_hive(var/message, var/datum/abilityHolder/changeling/hivemind_owner)
@@ -259,33 +262,15 @@
 
 	var/rendered = "<span class='game hivesay'><span class='prefix'>HIVEMIND:</span> <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
 
-
-	//show message to admins (Follow rules of their deadchat toggle)
-	for (var/client/C)
-		if (!C.mob) continue
-		var/mob/M = C.mob
-
-		if (M.client && M.client.holder && M.client.deadchat && !M.client.player_mode)
-			var/thisR = rendered
-			if (M.client && (istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
-				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
-			boutput(M, thisR)
 	//show to hivemind
-	for (var/mob/M in hivemind_owner.hivemind)
-		if ((isdead(M) || istype(M,/mob/living/critter/changeling)) && !(M.client && M.client.holder && M.client.deadchat && !M.client.player_mode))
-			var/thisR = rendered
-			if (M.client && (istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
-				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
-			boutput(M, thisR)
-	//show to hivemind owner
-	if (!(hivemind_owner.owner.client && hivemind_owner.owner.client.holder && hivemind_owner.owner.client.deadchat && !hivemind_owner.owner.client.player_mode))
-		var/thisR = rendered
-		if (hivemind_owner.owner.client && hivemind_owner.owner.client.holder && src.mind)
-			thisR = "<span class='adminHearing' data-ctx='[hivemind_owner.owner.client.chatOutput.getContextFlags()]'>[rendered]</span>"
-		boutput(hivemind_owner.owner, thisR)
+	for (var/client/C in clients)
+		try_render_chat_to_admin(C, rendered)
+	for (var/mob/M in (hivemind_owner.hivemind + hivemind_owner.owner))
+		if (M.client?.holder && M.client.deadchat && !M.client.player_mode) continue
+		if (isdead(M) || istype(M,/mob/living/critter/changeling) || (M == hivemind_owner.owner))
+			boutput(M, rendered)
 
-
-//changeling hivemind say
+//vampire ghoul say
 /mob/proc/say_ghoul(var/message, var/datum/abilityHolder/vampire/owner)
 	var/name = src.real_name
 	var/alt_name = ""
@@ -312,28 +297,12 @@
 
 	var/rendered = "<span class='game ghoulsay'><span class='prefix'>GHOULSPEAK:</span> <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
 
-
-	//show message to admins (Follow rules of their deadchat toggle)
-	for (var/client/C)
-		if (!C.mob) continue
-		var/mob/M = C.mob
-		if (M.client && M.client.holder && M.client.deadchat && !M.client.player_mode)
-			var/thisR = rendered
-			if (M.client && (istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
-				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
-			boutput(M, thisR)
 	//show to ghouls
-	for (var/mob/M in owner.ghouls)
-		var/thisR = rendered
-		if (M.client && (istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
-			thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
-		boutput(M, thisR)
-	//show to ghoul owner
-	if (ismob(owner.owner) && !(owner.owner.client && owner.owner.client.holder && owner.owner.client.deadchat && !owner.owner.client.player_mode))
-		var/thisR = rendered
-		if (owner.owner.client && src.mind)
-			thisR = "<span class='adminHearing' data-ctx='[owner.owner.client.chatOutput.getContextFlags()]'>[rendered]</span>"
-		boutput(owner.owner, thisR)
+	for (var/client/C in clients)
+		try_render_chat_to_admin(C, rendered)
+	for (var/mob/M in (owner.ghouls + owner.owner))
+		if ((M.client?.holder && M.client.deadchat && !M.client.player_mode)) continue
+		boutput(M, rendered)
 
 //kudzu hivemind say
 /mob/proc/say_kudzu(var/message, var/datum/abilityHolder/kudzu/owner)
@@ -360,17 +329,9 @@
 	//show message to admins (Follow rules of their deadchat toggle)
 	for (var/client/C)
 		if (!C.mob) continue
-		var/mob/M = C.mob
-		if (M.client.holder && M.client.deadchat && !M.client.player_mode)
-			var/thisR = rendered
-			if (M.client && (istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
-				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
-			boutput(M, thisR)
-		else
-			if (src.mind && istype(M.abilityHolder, /datum/abilityHolder/kudzu))
-				var/thisR = rendered
-				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
-				boutput(M, thisR)
+		if (try_render_chat_to_admin(C, rendered)) continue
+		if (istype(C.mob.abilityHolder, /datum/abilityHolder/kudzu))
+			boutput(C, rendered)
 		//////////////////////////////////
 
 /mob/proc/say_understands(var/mob/other, var/forced_language)
@@ -774,10 +735,16 @@
 	return language
 
 /mob/proc/process_language(var/message, var/forced_language = null)
+	// Separate the radio prefix (if it exists) and message so the language can't destroy the prefix
+	var/prefixAndMessage = separate_radio_prefix_and_message(message)
+	var/prefix = prefixAndMessage[1]
+	message = prefixAndMessage[2]
+
 	var/datum/language/L = languages.language_cache[get_language_id(forced_language)]
 	if (!L)
 		L = languages.language_cache["english"]
-	return L.get_messages(message)
+
+	return prefix + L.get_messages(message)
 
 /mob/proc/get_special_language(var/secure_mode)
 	return null

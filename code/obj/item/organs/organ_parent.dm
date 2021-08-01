@@ -22,8 +22,6 @@
 	stamina_damage = 5
 	stamina_cost = 5
 	edible = 1	// currently overridden by material settings
-	module_research = list("medicine" = 2) // why would you put this below the throw_impact() stuff
-	module_research_type = /obj/item/organ // were you born in a fuckin barn
 	var/mob/living/carbon/human/donor = null // if I can't use "owner" I can at least use this
 	/// Whoever had this organ first, the original owner
 	var/mob/living/carbon/human/donor_original = null // So people'll know if a lizard's wearing someone else's tail
@@ -102,7 +100,7 @@
 			user.lastattacked = src
 			attack_particle(user,src)
 			hit_twitch(src)
-			playsound(get_turf(src), "sound/impact_sounds/Flesh_Stab_2.ogg", 100, 1)
+			playsound(src, "sound/impact_sounds/Flesh_Stab_2.ogg", 100, 1)
 			src.splat(get_turf(src))
 			if(W.hit_type == DAMAGE_BURN)
 				src.take_damage(0, W.force, 0, W.hit_type)

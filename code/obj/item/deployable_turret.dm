@@ -168,6 +168,7 @@
 
 
 	attackby(obj/item/W, mob/user)
+		user.lastattacked = src
 		if (isweldingtool(W) && !(src.active))
 			var/turf/T = user.loc
 			if(!W:try_weld(user, 1))
@@ -292,6 +293,8 @@
 
 		else
 			src.health = src.health - W.force
+			playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 25, 1)
+			attack_particle(user,src)
 			src.check_health()
 			..()
 
@@ -543,6 +546,9 @@
 	health = 125
 	icon_tag = "nt"
 	quick_deploy_fuel = 0
+	mats = list("INS-1"=10, "CON-1"=10, "CRY-1"=3, "MET-2"=2)
+	is_syndicate = 1
+	
 
 	spawn_turret(var/direct)
 		var/obj/deployable_turret/riot/turret = new /obj/deployable_turret/riot(src.loc,direction=direct)

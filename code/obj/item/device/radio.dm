@@ -370,6 +370,8 @@ var/list/headset_channel_lookup
 
 	// Receiving mobs
 	for (var/mob/R in receive)
+		if(isnewplayer(R))
+			continue
 		if (R.say_understands(M, lang_id))
 			if (!isghostdrone(R) && (!ishuman(M) || (ishuman(M) && M.wear_mask && M.wear_mask.vchange))) //istype(M.wear_mask, /obj/item/clothing/mask/gas/voice))
 				heard_masked += R

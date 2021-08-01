@@ -176,8 +176,8 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 	New()
 		..()
-		src.exp_deva *= rand(3,5)
-		src.exp_hevy *= rand(4,6)
+		src.exp_deva *= rand(2,4)
+		src.exp_hevy *= rand(3,5)
 		src.exp_lite *= rand(5,7)
 		src.explode_delay *= 2 // I added some more stuff so hopefully people will know it's a bomb now!
 

@@ -281,7 +281,7 @@
 			src.last_power = 2
 
 			src.has_thermal = 1
-			APPLY_MOB_PROPERTY(src.owner, PROP_THERMALSIGHT_MK2, src)
+			APPLY_MOB_PROPERTY(src.owner, PROP_THERMALVISION_MK2, src)
 			boutput(src.owner, __blue("<h3>Your vampiric vision has improved (thermal)!</h3>"))
 
 			src.addAbility(/datum/targetable/vampire/mark_coffin)
@@ -298,13 +298,13 @@
 
 			src.removeAbility(/datum/targetable/vampire/phaseshift_vampire)
 			src.addAbility(/datum/targetable/vampire/phaseshift_vampire/mk2)
+			src.addAbility(/datum/targetable/vampire/plague_touch)
 
 		if (src.last_power == 4 && src.vamp_blood >= src.level5)
 			src.last_power = 5
 
 			src.removeAbility(/datum/targetable/vampire/vampire_scream)
 			src.addAbility(/datum/targetable/vampire/vampire_scream/mk2)
-			src.addAbility(/datum/targetable/vampire/plague_touch)
 
 		if (src.last_power == 5 && src.vamp_blood >= src.level6)
 			src.last_power = 6

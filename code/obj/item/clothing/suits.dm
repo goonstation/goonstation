@@ -18,6 +18,7 @@
 	w_class = W_CLASS_NORMAL
 	var/restrain_wearer = 0
 	var/bloodoverlayimage = 0
+	var/team_num
 
 
 	setupProperties()
@@ -57,11 +58,61 @@
 			src.icon_state = "hoodie[src.hcolor ? "-[hcolor]" : null]"
 			src.item_state = "hoodie[src.hcolor ? "-[hcolor]" : null]"
 
-/obj/item/clothing/suit/hoodie/blue
-	desc = "Would fit well on a skeleton."
-	icon_state = "hoodie-blue"
-	item_state = "hoodie-blue"
-	hcolor = "blue"
+	blue
+		desc = "Would fit well on a skeleton."
+		icon_state = "hoodie-blue"
+		item_state = "hoodie-blue"
+		hcolor = "blue"
+
+	darkblue
+		icon_state = "hoodie-darkblue"
+		item_state = "hoodie-darkblue"
+		hcolor = "darkblue"
+
+	white
+		icon_state = "hoodie-white"
+		item_state = "hoodie-white"
+		hcolor = "white"
+
+	pink
+		icon_state = "hoodie-pink"
+		item_state = "hoodie-pink"
+		hcolor = "pink"
+
+	black
+		icon_state = "hoodie-black"
+		item_state = "hoodie-black"
+		hcolor = "black"
+
+	grey
+		icon_state = "hoodie-grey"
+		item_state = "hoodie-grey"
+		hcolor = "grey"
+
+	dullgrey
+		icon_state = "hoodie-dullgrey"
+		item_state = "hoodie-dullgrey"
+		hcolor = "dullgrey"
+
+	magenta
+		icon_state = "hoodie-magenta"
+		item_state = "hoodie-magenta"
+		hcolor = "magenta"
+
+	green
+		icon_state = "hoodie-green"
+		item_state = "hoodie-green"
+		hcolor = "green"
+
+	yellow
+		icon_state = "hoodie-yellow"
+		item_state = "hoodie-yellow"
+		hcolor = "yellow"
+
+	red
+		icon_state = "hoodie-red"
+		item_state = "hoodie-red"
+		hcolor = "red"
 
 /obj/item/clothing/suit/hoodie/random
 	New()
@@ -180,7 +231,7 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
 	var/armored = 0
 	body_parts_covered = TORSO|LEGS|ARMS
-	permeability_coefficient = 0.01
+	permeability_coefficient = 0.005
 	over_hair = 1
 
 	setupProperties()
@@ -303,7 +354,7 @@
 	wear_image_icon = 'icons/mob/overcoats/worn_suit_hazard.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
 	body_parts_covered = TORSO|LEGS|ARMS
-	permeability_coefficient = 0.005
+	permeability_coefficient = 0.02
 	over_hair = 1
 
 	New()
@@ -312,7 +363,7 @@
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 0.6)
+		setProperty("movespeed", 0.45)
 		setProperty("radprot", 50)
 		setProperty("coldprot", 15)
 		setProperty("heatprot", 15)
@@ -835,7 +886,7 @@
 	setupProperties()
 		..()
 		setProperty("coldprot", 20)
-		setProperty("heatprot", 50)
+		setProperty("heatprot", 45)
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.5)
 		setProperty("movespeed", 1)
@@ -963,9 +1014,16 @@
 	item_state = "s_suit"
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
-	permeability_coefficient = 0.02
+	permeability_coefficient = 0.1
 	protective_temperature = 1000
 	over_hair = 1
+
+	New()
+		..()
+		if(!istype(get_area(src), /area/station))
+			var/nt_wear_state = "[src.wear_state || src.icon_state]-nt"
+			if(nt_wear_state in icon_states(src.wear_image_icon))
+				src.wear_state = nt_wear_state
 
 	onMaterialChanged()
 		if(src.material)
@@ -984,9 +1042,9 @@
 				setProperty("viralprot", 40)
 
 			if(material.hasProperty("density"))
-				var/prot = round(material.getProperty("density") / 17)
+				var/prot = round(material.getProperty("density") / 13)
 				setProperty("meleeprot", prot)
-				setProperty("rangedprot", (0.1 + round(prot/10)))
+				setProperty("rangedprot", (0.2 + round(prot/10, 0.1)))
 			else
 				setProperty("meleeprot", 2)
 				setProperty("rangedprot", 0.4)
@@ -999,7 +1057,7 @@
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.5)
 
-		setProperty("space_movespeed", 0.8)
+		setProperty("space_movespeed", 0.6)
 
 /obj/item/clothing/suit/space/emerg
 	name = "emergency suit"
@@ -1012,14 +1070,7 @@
 
 	setupProperties()
 		..()
-		setProperty("space_movespeed", 2)
-
-	snow // bleh whatever!!!
-		name = "snow suit"
-		desc = "A thick padded suit that protects against extreme cold temperatures."
-		icon_state = "snowcoat"
-		item_state = "snowcoat"
-		rip = -1
+		setProperty("space_movespeed", 1.5)
 
 /obj/item/clothing/suit/space/emerg/proc/ripcheck(var/mob/user)
 	if(rip >= 36 && rip != -1 && prob(10))  //upped from rip >= 14 by Buttes
@@ -1040,7 +1091,7 @@
 
 	setupProperties()
 		..()
-		setProperty("space_movespeed", 0.4)
+		setProperty("space_movespeed", 0.3)
 
 	blue
 		icon_state = "spacecap-blue"
@@ -1056,6 +1107,18 @@
 	item_state = "space_suit_syndicate"
 	desc = "A suit that protects against low pressure environments. Issued to syndicate operatives."
 	contraband = 3
+	team_num = TEAM_SYNDICATE
+	#ifdef MAP_OVERRIDE_POD_WARS
+	attack_hand(mob/user)
+		if (get_pod_wars_team_num(user) == team_num)
+			..()
+		else
+			boutput(user, "<span class='alert'>The space suit <b>explodes</b> as you reach out to grab it!</span>")
+			make_fake_explosion(src)
+			user.u_equip(src)
+			src.dropped(user)
+			qdel(src)
+	#endif
 	item_function_flags = IMMUNE_TO_ACID
 
 	setupProperties()
@@ -1066,6 +1129,18 @@
 		name = "commander's great coat"
 		icon_state = "commissar_greatcoat"
 		desc = "A fear-inspiring, black-leather great coat, typically worn by a Syndicate Nuclear Operative Commander. So scary even the vacuum of space doesn't dare claim the wearer."
+		team_num = TEAM_SYNDICATE
+		#ifdef MAP_OVERRIDE_POD_WARS
+		attack_hand(mob/user)
+			if (get_pod_wars_team_num(user) == team_num)
+				..()
+			else
+				boutput(user, "<span class='alert'>The coat <b>explodes</b> as you reach out to grab it!</span>")
+				make_fake_explosion(src)
+				user.u_equip(src)
+				src.dropped(user)
+				qdel(src)
+		#endif
 
 		setupProperties()
 			..()
@@ -1084,7 +1159,7 @@
 			setProperty("meleeprot", 6)
 			setProperty("rangedprot", 1)
 			setProperty("exploprot", 30)
-			setProperty("space_movespeed", 1.2)
+			setProperty("space_movespeed", 0.9)
 			setProperty("disorient_resist", 65)
 
 	specialist
@@ -1105,8 +1180,8 @@
 			icon_state = "syndie_specialist-medic"
 			item_state = "syndie_specialist-medic"
 
-		body_parts_covered = TORSO|LEGS|ARMS
-		permeability_coefficient = 0.01
+			body_parts_covered = TORSO|LEGS|ARMS
+			permeability_coefficient = 0.01
 
 		setupProperties()
 			..()
@@ -1117,6 +1192,11 @@
 			desc = "A syndicate issue combat dress system, pressurized for space travel."
 			icon_state = "syndie_specialist-infiltrator"
 			item_state = "syndie_specialist-infiltrator"
+
+		setupProperties()
+			..()
+			setProperty("space_movespeed", -0.25)
+
 
 		firebrand
 			name = "specialist operative firesuit"
@@ -1243,6 +1323,7 @@
 	syndicate
 		name = "\improper Syndicate command armor"
 		desc = "An armored space suit, not for your average expendable chumps. No sir."
+		is_syndicate = 1
 		icon_state = "indusred"
 		item_state = "indusred"
 		setupProperties()
@@ -1252,6 +1333,7 @@
 
 		specialist
 			name = "specialist heavy operative combat armor"
+			is_syndicate = 0
 			desc = "A syndicate issue heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
 			icon_state = "syndie_specialist-heavy"
 			item_state = "syndie_specialist-heavy"
@@ -1260,6 +1342,7 @@
 
 	name = "NT-SO heavy operative combat armor"
 	desc = "A Nanotrasen special forces heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
+	is_syndicate = 0
 	icon_state = "ntso_specialist-heavy"
 	item_state = "ntso_specialist-heavy"
 	cant_self_remove = 1
@@ -1283,11 +1366,58 @@
 		setProperty("meleeprot", 5)
 		setProperty("rangedprot", 2)
 
+//NT pod wars suits
 /obj/item/clothing/suit/space/nanotrasen
 	name = "Nanotrasen Heavy Armor"
 	icon_state = "ntarmor2"
 	item_state = "ntarmor2"
 	desc = "Heavy armor used by certain Nanotrasen bodyguards."
+
+	pilot
+		name = "NT space suit"
+		icon_state = "nanotrasen_pilot"
+		item_state = "nanotrasen_pilot"
+		desc = "A suit that protects against low pressure environments. Issued to nanotrasen pilots."
+		team_num = TEAM_NANOTRASEN
+		#ifdef MAP_OVERRIDE_POD_WARS
+		attack_hand(mob/user)
+			if (get_pod_wars_team_num(user) == team_num)
+				..()
+			else
+				boutput(user, "<span class='alert'>The space suit <b>explodes</b> as you reach out to grab it!</span>")
+				make_fake_explosion(src)
+				user.u_equip(src)
+				src.dropped(user)
+				qdel(src)
+		#endif
+
+		setupProperties()
+			..()
+			setProperty("space_movespeed", 0)  // syndicate space suits don't suffer from slowdown
+
+		commander
+			name = "commander's great coat"
+			icon_state = "ntcommander_coat"
+			item_state = "ntcommander_coat"
+			desc = "A fear-inspiring, blue-ish-leather great coat, typically worn by a NanoTrasen Pod Commander. Why does it look like it's been dyed painted blue?"
+			team_num = TEAM_NANOTRASEN
+			#ifdef MAP_OVERRIDE_POD_WARS
+			attack_hand(mob/user)
+				if (get_pod_wars_team_num(user) == team_num)
+					..()
+				else
+					boutput(user, "<span class='alert'>The coat <b>explodes</b> as you reach out to grab it!</span>")
+					make_fake_explosion(src)
+					user.u_equip(src)
+					src.dropped(user)
+					qdel(src)
+			#endif
+
+			setupProperties()
+				..()
+				setProperty("exploprot", 40)
+				setProperty("meleeprot", 6)
+				setProperty("rangedprot", 3)
 
 /obj/item/clothing/suit/cultist
 	name = "cultist robe"
@@ -1302,7 +1432,7 @@
 	over_hair = TRUE
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
-	permeability_coefficient = 0.01
+	permeability_coefficient = 0.50
 
 	setupProperties()
 		..()
@@ -1341,7 +1471,7 @@
 	wear_layer = MOB_OVERLAY_BASE
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
-	permeability_coefficient = 0.01
+	permeability_coefficient = 0.50
 
 /obj/item/clothing/suit/wizrobe
 	name = "blue wizard robe"
@@ -1539,3 +1669,22 @@
 			. = "It's your war medal, you remember when you got this for saving a man's life during the war."
 		else
 			. = "It's the HoS's old war medal, you heard they got it for their acts of heroism in the war."
+
+/obj/item/clothing/suit/snow
+	name = "snow suit"
+	desc = "A thick padded suit that protects against extreme cold temperatures."
+	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
+	wear_image_icon = 'icons/mob/overcoats/worn_suit_hazard.dmi'
+	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
+	icon_state = "snowcoat"
+	item_state = "snowcoat"
+	body_parts_covered = TORSO|LEGS|ARMS
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 50)
+		setProperty("heatprot", 10)
+		setProperty("meleeprot", 3)
+		setProperty("rangedprot", 0.5)
+		setProperty("movespeed", 0.5)
+		setProperty("disorient_resist", 15)

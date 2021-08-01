@@ -90,7 +90,7 @@
 
 		//Commence owie
 		take_bleeding_damage(target, null, rand(8, 16), DAMAGE_BLUNT)	//My
-		playsound(get_turf(target), "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1) //head,
+		playsound(target, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1) //head,
 		target.emote("scream") 									//FUCKING
 		target.TakeDamage("head", rand(12, 18), 0) 				//OW!
 		target.changeStatus("weakened", 4 SECONDS)
@@ -105,7 +105,7 @@
 	w_class = W_CLASS_NORMAL
 	see_face = 0.0
 	item_state = "gas_mask"
-	permeability_coefficient = 0.01
+	permeability_coefficient = 0.05
 	color_r = 0.8 // green tint
 	color_g = 1
 	color_b = 0.8
@@ -274,7 +274,7 @@
 			spam_flag = 1
 			src.add_fingerprint(user)
 			user?.visible_message("<B>[user]</B> honks the nose on [his_or_her(user)] [src.name]!")
-			playsound(get_turf(src), islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
+			playsound(src, islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
 			SPAWN_DBG(src.spam_timer)
 				spam_flag = 0
 			return 1
@@ -376,7 +376,7 @@
 	item_state = "s_mask"
 	w_class = W_CLASS_TINY
 	c_flags = COVERSMOUTH
-	permeability_coefficient = 0.05
+	permeability_coefficient = 0.1
 	path_prot = 0
 
 	setupProperties()

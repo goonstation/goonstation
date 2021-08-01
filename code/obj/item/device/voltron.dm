@@ -93,7 +93,6 @@
 	var/on_cooldown = 0
 	var/power = 100
 	var/power_icon = ""
-	module_research = list("devices" = 5, "energy" = 20, "miniaturization" = 20)
 	var/list/cableimgs = list()
 	var/vision_radius = 2
 	New()
@@ -211,7 +210,7 @@
 					boutput(target, "<span class='alert'>The [src] is out of energy.</span>")
 					var/mob/old_trg = target
 					deactivate()
-					old_trg.changeStatus("stunned", 200)
+					old_trg.changeStatus("stunned", 20 SECONDS)
 				sleep(1 SECOND)
 
 	proc/deactivate()
@@ -260,7 +259,7 @@
 
 			activating = 1
 
-			playsound(get_turf(src), "sound/effects/singsuck.ogg", 40, 1)
+			playsound(src, "sound/effects/singsuck.ogg", 40, 1)
 			var/obj/overlay/O = new/obj/overlay(get_turf(user))
 			O.name = "Energy"
 			O.anchored = 1

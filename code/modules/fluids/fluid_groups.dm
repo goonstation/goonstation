@@ -64,13 +64,13 @@
 			if(my_group.last_depth_level == 4)
 				.= "very deep"
 
-	temperature_reagents()
+	temperature_reagents(exposed_temperature, exposed_volume = 100, exposed_heat_capacity = 100, change_cap = 15, change_min = 0.0000001, loud = 0)
 		..()
 		src.update_total()
 
 	play_mix_sound(var/mix_sound) //play sound at random locs
 		for (var/i = 0, i < length(my_group.members) / 20, i++)
-			playsound(get_turf(pick(my_group.members)), mix_sound, 80, 1)
+			playsound(pick(my_group.members), mix_sound, 80, 1)
 			if (i > 8) break
 
 //We use datum/controller/process/fluid_group to do evaporation
@@ -453,9 +453,8 @@
 			if (force)
 				fluids_to_create = force
 
-			var/list/created = src.spread(fluids_to_create)
-			if (length(created) && !src.qdeled)
-				src.members += created
+			var/created = src.spread(fluids_to_create)
+			if (created && !src.qdeled)
 				return
 
 		LAGCHECK(LAG_HIGH)
@@ -593,19 +592,19 @@
 		return 1
 
 	proc/spread(var/fluids_to_create) //spread in respect to members
-		.= list() //return created fluids
-		var/created = 0
+		.= 0 //return created fluids
 		var/obj/fluid/F
 		src.waitforit = 1 //don't breathe in the gas on inital spread - causes runtimes with small volumes
-		for (var/i = 1, i <= length(src.members), i++)
+		var/membercount = length(src.members)
+		for (var/i = 1, i <= membercount, i++)
 			LAGCHECK(LAG_HIGH)
 			if (src.qdeled) return
-			if (i > length(src.members)) continue
+			if (i > membercount) continue
 			F = members[i]
 			if (!F || F.group != src) continue //This can happen if a fluid is deleted/caught with its pants down during an update loop.
 
 			if (F.blocked_dirs < 4) //skip that update if we were blocked (not an edge tile)
-				amt_per_tile = contained_amt / (length(src.members) + created)
+				amt_per_tile = contained_amt / (membercount + .)
 
 				for (var/obj/fluid/C as anything in F.update())
 					LAGCHECK(LAG_HIGH)
@@ -621,13 +620,13 @@
 					if (F.blood_type && !C.blood_type)
 						C.blood_type = F.blood_type
 
-					.+= C
-					created++
+					members += C
+					.++
 
-				if ((length(members) + created)<=0) //this can happen somehow
+				if ((membercount + .)<=0) //this can happen somehow
 					continue
 
-				amt_per_tile = contained_amt / (length(members) + created)
+				amt_per_tile = contained_amt / (membercount + .)
 
 			if (F.touched_other_group && src != F.touched_other_group)
 				if (src.join(F.touched_other_group))
@@ -635,7 +634,7 @@
 					break
 				F.touched_other_group = 0
 
-			if (created >= fluids_to_create)
+			if (. >= fluids_to_create)
 				break
 		src.waitforit = 0
 

@@ -95,7 +95,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(ismob(entering))
 			var/mob/M = entering
 			if(owner.material)
-				M.changeStatus("radiation", max(round(owner.material.getProperty("radioactive") / 15),1)*10, 3)
+				M.changeStatus("radiation", max(round(owner.material.getProperty("radioactive") / 15),1) SECONDS, 3)
 		return
 
 /datum/materialProc/n_radioactive_on_enter
@@ -105,7 +105,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(ismob(entering))
 			var/mob/M = entering
 			if(owner.material)
-				M.changeStatus("n_radiation", max(round(owner.material.getProperty("n_radioactive") / 15),1)*10, 3)
+				M.changeStatus("n_radiation", max(round(owner.material.getProperty("n_radioactive") / 15),1) SECONDS, 3)
 		return
 
 /datum/materialProc/generic_reagent_onattacked
@@ -147,13 +147,13 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		explode_limit = limit
 		..()
 
-	execute(var/obj/item/owner, var/mob/attacker, var/mob/attacked, var/obj/attackobj, var/meleeorthrow)
+	execute(var/obj/item/owner)
 		if(explode_limit && explode_count >= explode_limit) return
 		if(world.time - lastTrigger < 50) return
 		lastTrigger = world.time
 		if(prob(trigger_chance))
 			explode_count++
-			var/turf/tloc = get_turf(attacked)
+			var/turf/tloc = get_turf(owner)
 			explosion(owner, tloc, 0, 1, 2, 3, 1)
 			tloc.visible_message("<span class='alert'>[owner] explodes!</span>")
 			qdel(owner)
@@ -358,7 +358,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 	execute(var/location) //exp and temp both have the location as first argument so i can use this for both.
 		var/turf/T = get_turf(location)
-		if(T.density)
+		if(!T || T.density)
 			return
 		if(total_plasma <= 0)
 			if(prob(2) && src.owner.owner)
@@ -384,12 +384,16 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		owner.material.triggerTemp(locate(owner))
 
 /datum/materialProc/molitz_temp
-	var/total_oxygen = 200
-
+	var/unresonant = 1
+	var/iterations = 4 // big issue I had was that with the strat that Im designing this for (teleporting crystals in and out of engine) one crystal could last you for like, 50 minutes, I didnt want to keep on reducing total amount as itd nerf agent b collection hard. So instead I drastically reduced amount and drastically upped output. This would speed up farming agent b to 3 minutes per crystal, which Im fine with
 	execute(var/atom/location, var/temp, var/agent_b=FALSE)
-		if(total_oxygen <= 0) return
 		var/turf/target = get_turf(location)
-		if(ON_COOLDOWN(target, "molitz_oxy_generate", 8 SECONDS)) return
+		if(owner.hasProperty("resonance"))
+			if(unresonant == 1)
+				iterations = max(iterations, 2)
+				unresonant -= 1
+		if(iterations <= 0) return
+		if(ON_COOLDOWN(location, "molitz_gas_generate", 30 SECONDS)) return
 
 		var/datum/gas_mixture/air = target.return_air()
 		if(!air) return
@@ -401,23 +405,24 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(agent_b && temp > 500 && air.toxins > MINIMUM_REACT_QUANTITY )
 			var/datum/gas/oxygen_agent_b/trace_gas = payload.get_or_add_trace_gas_by_type(/datum/gas/oxygen_agent_b)
 			payload.temperature = T0C // Greatly reduce temperature to simulate an endothermic reaction
+			// Itr: .18 Agent B, 20 oxy, 1.3 minutes per iteration, realisticly around 7-8 minutes per crystal.
 
-			// Itr 1: 0.125 Agent B, 10 Oxy
-			// Itr 2: 0.0605 Agent B
-			// 0.1855moles/12cells=0.0155moles per cell
-			// At 0.0155 moles per cell it will take 20 iterations for reaction rate to drop below MINIMUM_REACT_QUANTITY
-			// Providing 1.3 minutes of catalyst assuming 4 sec ATMOS for a 12 cell burn chamber
-			trace_gas.moles += min(total_oxygen/1024,0.125)
-			total_oxygen -= min(trace_gas.moles*1024,total_oxygen)
-			animate_flash_color_fill_inherit(location,"#FF0000",4, 2 SECONDS)
+			animate_flash_color_fill_inherit(location,"#ff0000",4, 2 SECONDS)
+			playsound(location, "sound/effects/leakagentb.ogg", 50, 1, 8)
+			if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparklesagentb, location))
+				particleMaster.SpawnSystem(new /datum/particleSystem/sparklesagentb(location))
+			trace_gas.moles += 0.18
+			iterations -= 1
+			payload.oxygen = 20
+
+			target.assume_air(payload)
 		else
 			animate_flash_color_fill_inherit(location,"#0000FF",4, 2 SECONDS)
+			playsound(location, "sound/effects/leakoxygen.ogg", 50, 1, 5)
+			payload.oxygen = 80
+			iterations -= 1
 
-		payload.oxygen = min(total_oxygen,10)
-		total_oxygen -= payload.oxygen
-
-		target.assume_air(payload)
-		return
+			target.assume_air(payload)
 
 /datum/materialProc/molitz_temp/agent_b
 	execute(var/atom/location, var/temp)
@@ -425,14 +430,18 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/molitz_exp
+	var/maxexplode = 1
 	execute(var/atom/location, var/sev)
+		if(maxexplode <= 0) return
 		var/turf/target = get_turf(location)
-		if(sev > 0 && sev < 4)
+		if(sev > 0 && sev < 4) // Use pipebombs not canbombs!
 			var/datum/gas_mixture/payload = unpool(/datum/gas_mixture)
-			payload.oxygen = 25
+			payload.oxygen = 50
 			payload.temperature = T20C
-			payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 			target.assume_air(payload)
+			maxexplode -= 1
+			if(owner)
+				owner.setProperty("resonance", 10)
 
 /datum/materialProc/molitz_on_hit
 	execute(var/atom/owner, var/obj/attackobj)
@@ -451,13 +460,13 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/radioactive_life
 	execute(var/mob/M, var/obj/item/I, mult)
 		if(I.material)
-			M.changeStatus("radiation", (max(round(I.material.getProperty("radioactive") / 20),1))*10 * mult, 2)
+			M.changeStatus("radiation", (max(round(I.material.getProperty("radioactive") / 20),1)) SECONDS * mult, 2)
 		return
 
 /datum/materialProc/radioactive_pickup
 	execute(var/mob/M, var/obj/item/I)
 		if(I.material)
-			M.changeStatus("radiation", (max(round(I.material.getProperty("radioactive") / 5),1))*10, 4)
+			M.changeStatus("radiation", (max(round(I.material.getProperty("radioactive") / 5),1)) SECONDS, 4)
 		return
 
 /datum/materialProc/n_radioactive_add
@@ -468,13 +477,13 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/n_radioactive_life
 	execute(var/mob/M, var/obj/item/I, mult)
 		if(I.material)
-			M.changeStatus("n_radiation", (max(round(I.material.getProperty("n_radioactive") / 20),1))*10 * mult, 2)
+			M.changeStatus("n_radiation", (max(round(I.material.getProperty("n_radioactive") / 20),1)) SECONDS * mult, 2)
 		return
 
 /datum/materialProc/n_radioactive_pickup
 	execute(var/mob/M, var/obj/item/I)
 		if(I.material)
-			M.changeStatus("n_radiation", (max(round(I.material.getProperty("n_radioactive") / 5),1))*10, 4)
+			M.changeStatus("n_radiation", (max(round(I.material.getProperty("n_radioactive") / 5),1)) SECONDS, 4)
 		return
 
 /datum/materialProc/erebite_flash
@@ -527,7 +536,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			var/mob/living/L = entering
 			if(L.slip())
 				boutput(L, "You slip on the icy floor!")
-				playsound(get_turf(owner), "sound/misc/slip.ogg", 30, 1)
+				playsound(owner, "sound/misc/slip.ogg", 30, 1)
 		return
 
 /datum/materialProc/ice_life
@@ -607,7 +616,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				wall_owner.dismantle_wall(1)
 
 /datum/materialProc/cardboard_on_hit // MARK: add to ignorant children
-	execute(var/atom/owner, var/mob/attacker, var/obj/attackobj, var/meleeorthrow)
+	execute(var/atom/owner, var/obj/attackobj, var/mob/attacker, var/meleeorthrow)
 		if (meleeorthrow == 1) //if it was a melee attack
 			if (issnippingtool(attackobj)||iscuttingtool(attackobj))
 				if (isExploitableObject(owner))
@@ -633,6 +642,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(crumple)
 			if (istype(owner, /obj))
 				owner.visible_message("<span class='alert'>[owner] crumples!</span>", "<span class='alert'>You hear a crumpling sound.</span>")
+				if(istype(owner, /obj/storage))
+					var/obj/storage/S = owner
+					S.dump_contents()
 				qdel(owner)
 			else if (istype(owner, /turf))
 				if (istype(owner, /turf/simulated/wall))

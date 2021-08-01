@@ -112,7 +112,7 @@
 				if (issnippingtool(W))
 					..()
 				else
-					src.loc.attackby(user.equipped(), user)
+					src.loc.Attackby(user.equipped(), user)
 
 			reagent_act(var/reagent_id,var/volume)
 				..()
@@ -385,7 +385,7 @@
 		if ((src.material && src.material.hasProperty("electrical") && src.material.getProperty("electrical") > 30))
 			dmg_mod = 60 - src.material.getProperty("electrical")
 
-		if (OSHA_is_crying && shock(user, 100 - dmg_mod))
+		if (OSHA_is_crying && IN_RANGE(src, user, 1) && shock(user, 100 - dmg_mod))
 			return
 
 		// Things that will electrocute you
@@ -398,6 +398,7 @@
 		else if (isscrewingtool(W) && (istype(src.loc, /turf/simulated) || src.anchored))
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			src.anchored = !( src.anchored )
+			src.stops_space_move = !(src.stops_space_move)
 			src.visible_message("<span class='alert'><b>[usr]</b> [src.anchored ? "fastens" : "unfastens"] [src].</span>")
 			return
 

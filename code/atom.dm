@@ -25,6 +25,9 @@
 	/// Anything can speak... if it can speak
 	var/obj/chat_maptext_holder/chat_text
 
+	/// A multiplier that changes how an atom stands up from resting. Yes.
+	var/rest_mult = 0
+
 	/// Gets the atoms name with all the ugly prefixes things remove
 	proc/clean_name()
 		return strip_special(name)
@@ -204,20 +207,10 @@
 			boutput(user, "<span class='alert'>[A] is full!</span>") // Notify the user, then exit the process.
 			return
 
-		var/T //Placeholder for total volume transferred
-
-		if ((A.reagents.total_volume + src.reagents.total_volume) > A.reagents.maximum_volume) // Check to make sure that both containers content's combined won't overfill the destination container.
-			T = (A.reagents.maximum_volume - A.reagents.total_volume) // Dump only what fills up the destination container.
-			logTheThing("combat", user, null, "transfers chemicals from [src] [log_reagents(src)] to [A] at [log_loc(A)].") // This wasn't logged. Call before trans_to (Convair880).
-			src.reagents.trans_to(A, T) // Dump the amount of reagents.
-			boutput(user, "<span class='notice'>You transfer [T] units into [A].</span>") // Tell the user they did a thing.
-			return
-		else
-			T = src.reagents.total_volume // Just make T the whole dang amount then.
-			logTheThing("combat", user, null, "transfers chemicals from [src] [log_reagents(src)] to [A] at [log_loc(A)].") // Ditto (Convair880).
-			src.reagents.trans_to(A, T) // Dump it all!
-			boutput(user, "<span class='notice'>You transfer [T] units into [A].</span>")
-			return
+		logTheThing("combat", user, null, "transfers chemicals from [src] [log_reagents(src)] to [A] at [log_loc(A)].") // Ditto (Convair880).
+		var/T = src.reagents.trans_to(A, src.reagents.total_volume) // Dump it all!
+		boutput(user, "<span class='notice'>You transfer [T] units into [A].</span>")
+		return
 
 /atom/proc/signal_event(var/event) // Right now, we only signal our container
 	if(src.loc)
@@ -315,7 +308,7 @@
 /atom/movable/overlay/attackby(a, b)
 	//Wire note: hascall check below added as fix for: undefined proc or verb /datum/targetable/changeling/monkey/attackby() (lmao)
 	if (src.master && hascall(src.master, "attackby"))
-		return src.master.attackby(a, b)
+		return src.master.Attackby(a, b)
 
 /atom/movable/overlay/attack_hand(a, b, c, d, e)
 	if (src.master)
@@ -639,10 +632,17 @@
 /atom/proc/attack_ai(mob/user as mob)
 	return
 
-//mbc : sorry, i added a 'is_special' arg to this proc to avoid race conditions.
-/atom/proc/attackby(obj/item/W as obj, mob/user as mob, params, is_special = 0)
+///wrapper proc for /atom/proc/attackby so that signals are always sent. Call this, but do not override it.
+/atom/proc/Attackby(obj/item/W as obj, mob/user as mob, params, is_special = 0)
+	SHOULD_NOT_OVERRIDE(1)
 	if(SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user))
 		return
+	src.attackby(W, user, params, is_special)
+
+//mbc : sorry, i added a 'is_special' arg to this proc to avoid race conditions.
+///internal proc for when an atom is attacked by an item. Override this, but do not call it,
+/atom/proc/attackby(obj/item/W as obj, mob/user as mob, params, is_special = 0)
+	PROTECTED_PROC(TRUE)
 	src.material?.triggerOnHit(src, W, user, 1)
 	if (user && W && !(W.flags & SUPPRESSATTACK))  //!( istype(W, /obj/item/grab)  || istype(W, /obj/item/spraybottle) || istype(W, /obj/item/card/emag)))
 		user.visible_message("<span class='combat'><B>[user] hits [src] with [W]!</B></span>")

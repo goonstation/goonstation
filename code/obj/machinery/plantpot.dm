@@ -68,6 +68,7 @@
 	name = "hydroponics tray"
 	desc = "A tray filled with nutrient solution capable of sustaining plantlife... Made of plants."
 	icon_state = "kudzutray"
+	power_usage = 0
 
 	attackby(var/obj/item/W as obj, var/mob/user as mob)
 		//Can only attempt to destroy the plant pot if the plant in it is dead or empty.
@@ -94,9 +95,11 @@
 	anchored = 0
 	density = 1
 	mats = 2
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR
 	flags = NOSPLASH
 	processing_tier = PROCESSING_SIXTEENTH
 	machine_registry_idx = MACHINES_PLANTPOTS
+	power_usage = 25
 	var/datum/plant/current = null // What is currently growing in the plant pot
 	var/datum/plantgenes/plantgenes = null // Set this up in New
 	var/tickcount = 0  // Automatic. Tracks how many ticks have elapsed, for CPU efficiency things.
@@ -151,6 +154,7 @@
 		..()
 
 	proc/post_alert(var/alert_msg)
+		if(status & (NOPOWER|BROKEN)) return
 
 		var/datum/radio_frequency/frequency = radio_controller.return_frequency("[report_freq]")
 
@@ -196,6 +200,10 @@
 	on_reagent_change()
 		src.do_update_water_icon = 1
 		src.update_water_level()
+
+	power_change()
+		. = ..()
+		update_icon()
 
 	process()
 		..()
@@ -382,7 +390,8 @@
 			update_icon()
 			update_name()
 
-		return
+		if(!HAS_FLAG(status, NOPOWER))
+			use_power(power_usage)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(src.current)
@@ -755,7 +764,7 @@
 			if(get_dist(user, over_object) > 1)
 				boutput(user, "<span class='alert'>[over_object] is too far away!</span>")
 				return
-			src.attackby(over_object, user)  // Activates the same command as would be used with a seed in hand on the tray.
+			src.Attackby(over_object, user)  // Activates the same command as would be used with a seed in hand on the tray.
 			return
 		else // if it's not a seed...
 			return ..() // call our parents and ask what to do.
@@ -814,6 +823,8 @@
 			UpdateOverlays(null, "health_display")
 			UpdateOverlays(null, "plant")
 			UpdateOverlays(null, "plantdeath")
+			if(status & (NOPOWER|BROKEN))
+				UpdateOverlays(null, "water_meter")
 			return
 
 		var/datum/plant/growing = src.current
@@ -859,6 +870,12 @@
 		src.plant_sprite.icon_state = planticon
 		src.plant_sprite.layer = 4
 		UpdateOverlays(plant_sprite, "plant")
+
+		if(status & (NOPOWER|BROKEN))
+			UpdateOverlays(null, "water_meter")
+			UpdateOverlays(null, "harvest_display")
+			UpdateOverlays(null, "health_display")
+			UpdateOverlays(null, "plantdeath")
 
 	proc/update_name()
 		if(!src.current)
@@ -1013,7 +1030,7 @@
 			// with greater chances for an extra harvest if this is the case.
 			// The cap is defined in hydro_controls and can be edited by coders on the fly.
 
-		getamount = max(getamount, 0)
+		getamount = round(max(getamount, 0))
 
 		if(getamount < 1)
 			boutput(user, "<span class='alert'>You aren't able to harvest anything worth salvaging.</span>")
@@ -1295,15 +1312,18 @@
 					if(istype(I,/obj/item/seed/))
 						if(!satchelpick || satchelpick == "Seeds Only")
 							I.set_loc(SA)
+							I.add_fingerprint(user)
 					else
 						if(!satchelpick || satchelpick == "Produce Only")
 							I.set_loc(SA)
+							I.add_fingerprint(user)
 				SA.satchel_updateicon()
 
 			// if the satchel got filled up this will dump any unharvested items on the floor
 			// if we're harvesting by hand it'll just default to this anyway! truly magical~
 			for(var/obj/I in src.contents)
 				I.set_loc(user.loc)
+				I.add_fingerprint(user)
 
 		// Now we determine the harvests remaining or grant extra ones.
 		if(!HYPCheckCommut(DNA,/datum/plant_gene_strain/immortal))
@@ -1339,7 +1359,6 @@
 			// Severity is basically a multiplier to odds and amounts.
 		var/datum/plant/growing = src.current
 		var/datum/plantgenes/DNA = src.plantgenes
-
 		if(!istype(growing) || !istype(DNA))
 			return
 
@@ -1648,7 +1667,7 @@ proc/HYPgeneticanalysis(var/mob/user as mob,var/obj/scanned,var/datum/plant/P,va
 	boutput(user, message)
 	return
 
-proc/HYPnewmutationcheck(var/datum/plant/P,var/datum/plantgenes/DNA,var/obj/machinery/plantpot/PP)
+proc/HYPnewmutationcheck(var/datum/plant/P,var/datum/plantgenes/DNA,var/obj/machinery/plantpot/PP, var/frequencymult = 1)
 	// The check to see if a new mutation will be generated. The criteria check for whether
 	// or not the mutation will actually appear is HYPmutationcheck_full.
 	if(!P || !DNA)
@@ -1664,7 +1683,7 @@ proc/HYPnewmutationcheck(var/datum/plant/P,var/datum/plantgenes/DNA,var/obj/mach
 						chance -= M.chance_mod
 					else
 						chance += M.chance_mod
-			chance = max(0,min(chance,100))
+			chance = max(0,min(chance*frequencymult,100))
 			if(prob(chance))
 				if(HYPmutationcheck_full(P,DNA,MUT))
 					DNA.mutation = HY_get_mutation_from_path(MUT.type)
@@ -1681,7 +1700,7 @@ proc/HYPCheckCommut(var/datum/plantgenes/DNA,var/searchtype)
 			if(X.type == searchtype) return 1
 	return 0
 
-proc/HYPnewcommutcheck(var/datum/plant/P,var/datum/plantgenes/DNA)
+proc/HYPnewcommutcheck(var/datum/plant/P,var/datum/plantgenes/DNA, var/frequencymult = 1)
 	// This is the proc for checking if a new random gene strain will appear in the plant.
 	if(!P || !DNA) return
 	if(HYPCheckCommut(DNA,/datum/plant_gene_strain/stabilizer))
@@ -1691,7 +1710,7 @@ proc/HYPnewcommutcheck(var/datum/plant/P,var/datum/plantgenes/DNA)
 		for (var/datum/plant_gene_strain/X in P.commuts)
 			if(HYPCheckCommut(DNA,X.type))
 				continue
-			if(prob(X.chance))
+			if(prob(X.chance*frequencymult))
 				MUT = X
 				break
 		if(MUT)
@@ -1765,6 +1784,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 	mats = 6
 	var/active = 0
 	var/datum/light/light
+	power_usage = 100
 
 	New()
 		..()
@@ -1781,7 +1801,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 
 	process()
 		..()
-		if(src.active)
+		if(src.active && powered())
 			for (var/obj/machinery/plantpot/P in view(2,src))
 				if(!P.current || P.dead)
 					continue
@@ -1790,16 +1810,25 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 					var/datum/plantgenes/DNA = P.plantgenes
 					if(HYPCheckCommut(DNA,/datum/plant_gene_strain/photosynthesis))
 						P.growth += 4
+			use_power(power_usage)
 
 	attack_hand(var/mob/user as mob)
 		src.add_fingerprint(user)
 		src.active = !src.active
 		user.visible_message("<b>[user]</b> switches [src.name] [src.active ? "on" : "off"].")
 		src.icon_state = "growlamp[src.active]"
-		if(src.active)
+		if(src.active && !HAS_FLAG(status, (NOPOWER|BROKEN)))
 			light.enable()
 		else
 			light.disable()
+
+	power_change()
+		. = ..()
+		if(HAS_FLAG(status, NOPOWER))
+			light.disable()
+		else if(src.active)
+			light.enable()
+
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(isscrewingtool(W) || iswrenchingtool(W))
@@ -1877,7 +1906,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 				src.visible_message("\The [src] goes quiet.")
 
 		src.icon_state = "fogmachine[src.active]"
-		playsound(get_turf(src), "sound/misc/lightswitch.ogg", 50, 1)
+		playsound(src, "sound/misc/lightswitch.ogg", 50, 1)
 
 	is_open_container()
 		return 1 // :I

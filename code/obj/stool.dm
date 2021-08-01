@@ -102,7 +102,7 @@
 	proc/toggle_secure(mob/user as mob)
 		if (user)
 			user.visible_message("<b>[user]</b> [src.anchored ? "loosens" : "tightens"] the castors of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
-		playsound(get_turf(src), "sound/items/Screwdriver.ogg", 100, 1)
+		playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
 		src.anchored = !(src.anchored)
 		src.p_class = src.anchored ? initial(src.p_class) : 2
 		return
@@ -284,7 +284,7 @@
 		scoot_sounds = list( 'sound/misc/chair/office/scoot1.ogg', 'sound/misc/chair/office/scoot2.ogg', 'sound/misc/chair/office/scoot3.ogg', 'sound/misc/chair/office/scoot4.ogg', 'sound/misc/chair/office/scoot5.ogg' )
 
 	Move()
-		if(src.buckled_guy.loc != src.loc)
+		if(src.buckled_guy?.loc != src.loc)
 			src.unbuckle()
 		. = ..()
 		if (. && src.buckled_guy)
@@ -325,6 +325,9 @@
 
 		if (!ticker)
 			user.show_text("You can't buckle anyone in before the game starts.", "red")
+			return 0
+		if (C.buckled)
+			boutput(user, "They're already buckled into something!", "red")
 			return 0
 		if (src.security)
 			user.show_text("There's nothing you can buckle them to!", "red")
@@ -369,7 +372,7 @@
 		to_buckle.set_loc(src.loc)
 
 		to_buckle.set_clothing_icon_dirty()
-		playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
+		playsound(src, "sound/misc/belt_click.ogg", 50, 1)
 		to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
 
 	unbuckle()
@@ -379,7 +382,7 @@
 			buckled_guy.buckled = null
 			buckled_guy.force_laydown_standup()
 			src.buckled_guy = null
-			playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
+			playsound(src, "sound/misc/belt_click.ogg", 50, 1)
 
 	proc/tuck_sheet(var/obj/item/clothing/suit/bedsheet/newSheet as obj, var/mob/user as mob)
 		if (!newSheet || newSheet.cape || (src.Sheet == newSheet && newSheet.loc == src.loc)) // if we weren't provided a new bedsheet, the new bedsheet we got is tied into a cape, or the new bedsheet is actually the one we already have and is still in the same place as us...
@@ -554,7 +557,7 @@
 			return
 		if (user)
 			user.visible_message("<b>[user]</b> [src.anchored ? "unscrews [src] from" : "secures [src] to"] the floor.")
-		playsound(get_turf(src), "sound/items/Screwdriver.ogg", 100, 1)
+		playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
 		src.anchored = !(src.anchored)
 		src.p_class = src.anchored ? initial(src.p_class) : 2
 		return
@@ -674,6 +677,9 @@
 		if (!ticker)
 			boutput(user, "You can't buckle anyone in before the game starts.")
 			return 0
+		if (M.buckled)
+			boutput(user, "They're already buckled into something!", "red")
+			return 0
 		if (!( iscarbon(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || !isalive(user))
 			return 0
 		if(src.buckled_guy && src.buckled_guy.buckled == src && src.buckled_guy != M)
@@ -722,14 +728,20 @@
 			src.buckledIn = 1
 			to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
 		if (has_butt)
-			playsound(get_turf(src), (has_butt.sound_fart ? has_butt.sound_fart : 'sound/voice/farts/fart1.ogg'), 50, 1)
+			playsound(src, (has_butt.sound_fart ? has_butt.sound_fart : 'sound/voice/farts/fart1.ogg'), 50, 1)
 		else
-			playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
+			playsound(src, "sound/misc/belt_click.ogg", 50, 1)
+		RegisterSignal(to_buckle, COMSIG_MOVABLE_SET_LOC, .proc/maybe_unbuckle)
 
+	proc/maybe_unbuckle(source, turf/oldloc)
+		if(!isturf(buckled_guy.loc) || !IN_RANGE(src, oldloc, 1))
+			UnregisterSignal(buckled_guy, COMSIG_MOVABLE_SET_LOC)
+			unbuckle()
 
 	unbuckle()
 		..()
 		if(!src.buckled_guy) return
+		UnregisterSignal(buckled_guy, COMSIG_MOVABLE_SET_LOC)
 
 		var/mob/living/M = src.buckled_guy
 		var/mob/living/carbon/human/H = src.buckled_guy
@@ -753,7 +765,7 @@
 			SPAWN_DBG(0.5 SECONDS)
 				src.buckledIn = 0
 
-		playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
+		playsound(src, "sound/misc/belt_click.ogg", 50, 1)
 
 	ex_act(severity)
 		for (var/mob/M in src.loc)
@@ -896,10 +908,13 @@
 		return
 
 /obj/item/chair/folded/attack(atom/target, mob/user as mob)
+	var/oldcrit = src.stamina_crit_chance
+	if(iswrestler(user))
+		src.stamina_crit_chance = 100
 	if (ishuman(target))
-		//M.TakeDamage("chest", 5, 0) //what???? we have 'force' var
 		playsound(src.loc, pick(sounds_punch), 100, 1)
 	..()
+	src.stamina_crit_chance = oldcrit
 
 /* ====================================================== */
 /* -------------------- Comfy Chairs -------------------- */
@@ -982,6 +997,16 @@
 		arm_icon_state = "arm-purple"
 		parts_type = /obj/item/furniture_parts/comfy_chair/purple
 
+/obj/stool/chair/comfy/throne_gold
+	name = "golden throne"
+	desc = "This throne commands authority and respect. Everyone is super envious of whoever sits in this chair."
+	icon_state = "thronegold"
+	arm_icon_state = "thronegold-arm"
+	comfort_value = 7
+	anchored = 0
+	deconstructable = 1
+	parts_type = /obj/item/furniture_parts/throne_gold
+
 /* ======================================================== */
 /* -------------------- Shuttle Chairs -------------------- */
 /* ======================================================== */
@@ -1050,7 +1075,7 @@
 				"<span class='alert'>You're tossed out of [src] as it tips [T ? "while rolling over [T]" : "over"]!</span>")
 				var/turf/target = get_edge_target_turf(src, src.dir)
 				M.throw_at(target, 5, 1)
-				M.changeStatus("stunned", 80)
+				M.changeStatus("stunned", 8 SECONDS)
 				M.changeStatus("weakened", 5 SECONDS)
 			else
 				src.visible_message("<span class='alert'>[src] tips [T ? "as it rolls over [T]" : "over"]!</span>")
@@ -1085,6 +1110,10 @@
 			REMOVE_MOVEMENT_MODIFIER(src.buckled_guy, /datum/movement_modifier/wheelchair, src.type)
 		return ..()
 
+	set_loc(newloc)
+		. = ..()
+		unbuckle()
+
 /* ======================================================= */
 /* -------------------- Wooden Chairs -------------------- */
 /* ======================================================= */
@@ -1097,6 +1126,13 @@
 	anchored = 0
 	//deconstructable = 0
 	parts_type = /obj/item/furniture_parts/wood_chair
+
+	regal
+		name = "regal chair"
+		desc = "Much more comfortable than the average dining chair, and much more expensive."
+		icon_state = "regalchair"
+		comfort_value = 7
+		parts_type = /obj/item/furniture_parts/wood_chair/regal
 
 /* ============================================== */
 /* -------------------- Pews -------------------- */
@@ -1302,7 +1338,7 @@
 	toggle_secure(mob/user as mob)
 		if (user)
 			user.visible_message("<b>[user]</b> [src.anchored ? "loosens" : "tightens"] the castors of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
-		playsound(get_turf(src), "sound/items/Screwdriver.ogg", 100, 1)
+		playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
 		src.anchored = !(src.anchored)
 		return
 

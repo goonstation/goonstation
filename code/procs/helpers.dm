@@ -445,6 +445,25 @@ proc/get_angle(atom/a, atom/b)
 		. = findtext(text, suffix, start, null) //was findtextEx
 
 /**
+ * Given a message, returns a list containing the radio prefix and the message,
+ * so that the message can be manipulated seperately in various functions.
+ */
+/proc/separate_radio_prefix_and_message(var/message)
+	var/prefix = null
+
+	if (dd_hasprefix(message, ":lh") || dd_hasprefix(message, ":rh") || dd_hasprefix(message, ":in"))
+		prefix = copytext(message, 1, 4)
+		message = copytext(message, 4)
+	else if (dd_hasprefix(message, ":"))
+		prefix = copytext(message, 1, 3)
+		message = copytext(message, 3)
+	else if (dd_hasprefix(message, ";"))
+		prefix = ";"
+		message = copytext(message, 2)
+
+	return list(prefix, message)
+
+/**
 	* Given a list, returns a text string representation of the list's contents.
 	*/
 /proc/english_list(var/list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "," )
@@ -898,6 +917,42 @@ proc/get_angle(atom/a, atom/b)
 	var/x = min(world.maxx, max(1, A.x + dx))
 	var/y = min(world.maxy, max(1, A.y + dy))
 	return locate(x,y,A.z)
+
+
+/// Returns the turf facing the fab for cardinal directions (which should also be the user's turf),
+///		but for diagonals it returns a neighbouring turf depending on where you click
+/// Just in case you're attacking a corner diagonally. (made initially for lamp manufacturers, probably behaves funky above range 1)
+proc/get_adjacent_floor(atom/W, mob/user, px, py)
+	var/dir_temp = get_dir(user, W) //Our W is to the ___ of the user
+	//These two expressions divide a 32*32 turf into diagonal halves
+	var/diag1 = (px > py) //up-left vs down-right
+	var/diag2 = ((px + py) > 32) //up-right vs down-left
+	switch(dir_temp)
+		if (NORTH)
+			return get_turf(get_step(W,SOUTH))
+		if (NORTHEAST)
+			if (diag1)
+				return get_turf(get_step(W,SOUTH))
+			return get_turf(get_step(W,WEST))
+		if (EAST)
+			return get_turf(get_step(W,WEST))
+		if (SOUTHEAST)
+			if (diag2)
+				return get_turf(get_step(W,NORTH))
+			return get_turf(get_step(W,WEST))
+		if (SOUTH)
+			return get_turf(get_step(W,NORTH))
+		if (SOUTHWEST)
+			if (diag1)
+				return get_turf(get_step(W,EAST))
+			return get_turf(get_step(W,NORTH))
+		if (WEST)
+			return get_turf(get_step(W,EAST))
+		if (NORTHWEST)
+			if (diag2)
+				return get_turf(get_step(W,EAST))
+			return get_turf(get_step(W,SOUTH))
+
 
 // extends pick() to associated lists
 /proc/alist_pick(var/list/L)
@@ -2193,7 +2248,7 @@ var/global/list/allowed_restricted_z_areas
 	if (new_tone == "Custom...")
 		var/tone = input(user, "Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Skin tone picker") as null|num
 		if (!isnull(tone))
-			tone = 35 - min(max(tone, 1), 220)
+			tone = 35 - min(max(tone, 1), 220) // range is 34 to -194
 			//new_tone = rgb(220 + tone, 220 + tone, 220 + tone)
 			new_tone = blend_skintone(tone,tone,tone)
 		else
@@ -2208,9 +2263,9 @@ var/global/list/allowed_restricted_z_areas
   */
 /proc/blend_skintone(var/r1, var/g1, var/b1)
 	//I expect we will only need to darken the already pale white image.
-	var/r = min(r1 + 255, 255) //ff
-	var/g = min(g1 + 202, 255) //ca
-	var/b = min(b1 + 149, 255) //95
+	var/r = min(r1 + 255, 255) //ff min 61 max 255
+	var/g = min(g1 + 202, 255) //ca min 8 max 236
+	var/b = min(b1 + 149, 255) //95 min 0 max 183
 	return rgb(r,g,b)
 
 /**
@@ -2352,16 +2407,10 @@ proc/getIconSize()
   * Finds a client by ckey, throws exception if not found
   */
 proc/getClientFromCkey(ckey)
-	var/client/C
-	for (var/client/LC in clients)
-		if (LC.ckey == ckey)
-			C = LC
-			break
-
-	if (!C)
+	var/datum/player/player = find_player(ckey)
+	if(!player?.client)
 		throw EXCEPTION("Client not found")
-
-	return C
+	return player.client
 
 /**
 	* Returns true if the given atom is within src's contents (deeply/recursively)
@@ -2373,80 +2422,6 @@ proc/getClientFromCkey(ckey)
 	for(var/atom/found = A.loc, found, found = found.loc)
 		if(found == src)
 			return TRUE
-
-/**
-  * Returns the vector magnitude of an x value and a y value
-  */
-proc/vector_magnitude(x,y)
-	//can early out
-	.= sqrt(x*x + y*y);
-
-/**
-  * Transforms a supplied vector x & y to a direction
-  */
-proc/vector_to_dir(x,y)
-	.= angle_to_dir(arctan(y,x))
-
-/**
-  * Transforms a given angle to a cardinal/ordinal direction
-  */
-proc/angle_to_dir(angle)
-	.= 0
-	if (angle >= 360)
-		return angle_to_dir(angle-360)
-	if (angle >= 0)
-		if (angle < 22.5)
-			.= NORTH
-		else if (angle <= 67.5)
-			.= NORTHEAST
-		else if (angle < 112.5)
-			.= EAST
-		else if (angle <= 157.5)
-			.= SOUTHEAST
-		else
-			.= SOUTH
-	else if (angle < 0)
-		if (angle > -22.5)
-			.= NORTH
-		else if (angle >= -67.5)
-			.= NORTHWEST
-		else if (angle > -112.5)
-			.= WEST
-		else if (angle >= -157.5)
-			.= SOUTHWEST
-		else
-			.= SOUTH
-
-/**
-  * Transforms a cardinal/ordinal direction to an angle
-  */
-proc/dir_to_angle(dir)
-	.= 0
-	switch(dir)
-		if(NORTH)
-			.= 0
-		if(NORTHEAST)
-			.= 45
-		if(EAST)
-			.= 90
-		if(SOUTHEAST)
-			.= 135
-		if(SOUTH)
-			.= 180
-		if(SOUTHWEST)
-			.= 225
-		if(WEST)
-			.= 270
-		if(NORTHWEST)
-			.= 315
-
-/**
-  * Transforms a given angle to vec2 in a list
-  */
-proc/angle_to_vector(ang)
-	.= list()
-	. += cos(ang)
-	. += sin(ang)
 
 /**
   * Removes non-whitelisted reagents from the reagents of TA
@@ -2559,12 +2534,8 @@ proc/inline_bicon(the_thing, height=32)
 	</span>"}
 
 
-/// fucking clients.len doesnt work, filled with null values
 proc/total_clients()
-	.= 0
-	for (var/C in clients)
-		if (C)
-			.++
+	return length(clients)
 
 
 //total clients used for player cap (which pretends admins don't exist)
@@ -2585,41 +2556,6 @@ proc/client_has_cap_grace(var/client/C)
 	if (C.ckey in player_cap_grace)
 		.= (player_cap_grace[C.ckey] > TIME)
 
-
-/**
-	* Returns the maximal subtype (i.e. the most subby) in a list of given types
-	*/
-proc/maximal_subtype(var/list/L)
-	if (!(length(L)))
-		.= null
-	else
-		.= L[1]
-		for (var/t in L)
-			if (ispath(t, .))
-				.= t
-			else if (!(ispath(., t)))
-				return null // paths in L aren't linearly ordered
-
-/**
- * Takes associative list of the form list(thing = weight), returns weighted random choice of keys based on weights.
- */
-proc/weighted_pick(list/choices)
-	var/total = 0
-	for(var/key in choices)
-		total += choices[key]
-	var/weighted_num = rand(1, total)
-	var/running_total = 0
-	for(var/key in choices)
-		running_total += choices[key]
-		if(weighted_num <= running_total)
-			return key
-	return
-
-proc/keep_truthy(some_list)
-	. = list()
-	for(var/x in some_list)
-		if(x)
-			. += x
 
 //TODO: refactor the below two into one proc
 

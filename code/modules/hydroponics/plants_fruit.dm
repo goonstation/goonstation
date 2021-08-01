@@ -90,7 +90,7 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 	harvests = 5
 	endurance = 5
 	genome = 19
-	assoc_reagents = list("water")
+	assoc_reagents = list("juice_watermelon")
 	nectarlevel = 15
 	mutations = list(/datum/plantmutation/melon/george, /datum/plantmutation/melon/bowling)
 	commuts = list(/datum/plant_gene_strain/immortal,/datum/plant_gene_strain/seedless)

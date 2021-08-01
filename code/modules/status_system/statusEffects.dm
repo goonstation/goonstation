@@ -47,6 +47,7 @@
 		* optional {optional} - arg from setStatus (passed in)
 		*/
 	proc/onAdd(optional=null)
+		SHOULD_CALL_PARENT(TRUE)
 		if (movement_modifier && ismob(owner))
 			var/mob/mob_owner = owner
 			APPLY_MOVEMENT_MODIFIER(mob_owner, movement_modifier, src.type)
@@ -57,6 +58,7 @@
 		* Called when the status is removed from the object. owner is still set at this point.
 		*/
 	proc/onRemove()
+		SHOULD_CALL_PARENT(TRUE)
 		if (movement_modifier && ismob(owner))
 			var/mob/mob_owner = owner
 			REMOVE_MOVEMENT_MODIFIER(mob_owner, movement_modifier, src.type)
@@ -131,10 +133,12 @@
 			. = "Your stamina regen is [change > 0 ? "increased":"reduced"] by [abs(change)]."
 
 		onAdd(optional=null)
+			..()
 			var/mob/M = owner
 			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, id, change)
 
 		onRemove()
+			..()
 			var/mob/M = owner
 			REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, id)
 
@@ -147,6 +151,7 @@
 		var/change = 1 //Effective change to maxHealth
 
 		onAdd(optional=null) //Optional is change.
+			..()
 			if(ismob(owner) && optional != 0)
 				var/mob/M = owner
 				change = optional
@@ -154,6 +159,7 @@
 				health_update_queue |= M
 
 		onRemove()
+			..()
 			if(ismob(owner))
 				var/mob/M = owner
 				M.max_health -= change
@@ -210,6 +216,45 @@
 					var/mob/M = owner
 					M.HealDamage("All", heal_brute, heal_burn, heal_tox)
 			return
+
+
+	acided
+		id = "acid"
+		var/filter
+		var/leave_cleanable = 0
+		var/mob_owner = null
+
+		onAdd(optional=null)
+			. = ..()
+			var/list/statusargs = optional
+			owner.filters += filter(type="displace", icon=icon('icons/effects/distort.dmi', "acid"), size=0)
+			src.filter = owner.filters[length(owner.filters)]
+			if(length(statusargs))
+				src.leave_cleanable = statusargs["leave_cleanable"]
+				src.mob_owner = statusargs["mob_owner"]
+			owner.color = list(0.8, 0, 0,\
+								0, 0.8, 0,\
+								0, 0, 0.8,\
+								0.1, 0.4, 0.1)
+
+			animate(filter, size=8, time=duration, easing=SINE_EASING)
+
+		onRemove()
+			. = ..()
+			owner.filters -= filter
+			filter = null
+			if(src.leave_cleanable)
+				var/obj/decal/cleanable/molten_item/I = make_cleanable(/obj/decal/cleanable/molten_item,get_turf(owner))
+				I.desc = "Looks like this was \an [owner] some time ago."
+
+			if(src.mob_owner && owner.loc == src.mob_owner)
+				var/obj/item/clothing/C = owner
+				var/mob/M = mob_owner
+				C.dropped(M)
+				M.u_equip(C)
+			for(var/mob/M in AIviewers(5, owner))
+				boutput(M, "<span class='alert'>\the [owner] melts.</span>")
+			qdel(owner)
 
 	simplehot/stimulants
 		id = "stimulants"
@@ -296,32 +341,15 @@
 		damage_type = DAMAGE_BURN
 
 		var/howMuch = ""
-		var/stage = 0
-		var/counter = 0
-		var/stageTime = 10 SECONDS
+		var/stage = 1
 
 		getTooltip()
-			. = "You are [howMuch]irradiated.<br>Taking [damage_tox] toxin damage every [tickSpacing/(1 SECOND)] sec.<br>Damage reduced by radiation resistance on gear."
+			. = "You are [howMuch]irradiated.<br>Taking [round(damage_tox, 0.1)] toxin damage every [tickSpacing/(1 SECOND)] sec.<br>Damage reduced by radiation resistance on gear."
 
 		preCheck(var/atom/A)
 			. = 1
 			if(issilicon(A) || isobserver(A) || isintangible(A))
 				. = 0
-
-		onAdd(optional=null)
-			. = ..()
-			if(!isnull(optional) && optional >= stage)
-				stage = optional
-			else
-				stage = 5
-			icon_state = "radiation[stage]"
-
-		onChange(optional=null)
-			if(!isnull(optional) && optional >= stage)
-				stage = optional
-			else
-				stage = 5
-			icon_state = "radiation[stage]"
 
 		onUpdate(timePassed)
 			if(locate(/obj/item/implant/health) in owner)
@@ -329,78 +357,47 @@
 			else
 				src.visible = 0
 
-			counter += timePassed
-			if(counter >= stageTime)
-				counter -= stageTime
-				stage = max(stage-1, 1)
 
 			var/mob/M = null
 			if(ismob(owner))
 				M = owner
-				SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, stage)
-				if(locate(/obj/item/implant/health) in M)
-					src.visible = 1
-				else
-					src.visible = 0
 
 			var/prot = 1
 			if(istype(owner, /mob/living))
 				var/mob/living/L = owner
 				prot = (1 - (L.get_rad_protection() / 100))
 
-			switch(stage)
-				if(1)
-					damage_tox = (1 * prot)
+			damage_tox = (sqrt(duration/20 + 5) - 1) * prot
+			switch(duration/(1 SECOND))
+				if(0 to 10)
 					howMuch = ""
-
-				if(2)
-					damage_tox = (2 * prot)
+					stage = 1
+				if(10 to 20)
 					howMuch = "significantly "
-					var/chance = (2 * prot)
-					if(prob(chance) && M)
-						if (M.bioHolder && !M.bioHolder.HasEffect("revenant"))
-							M.changeStatus("weakened", 3 SECONDS)
-							boutput(M, "<span class='alert'>You feel weak.</span>")
-							M.emote("collapse")
-				if(3)
-					damage_tox = (3 * prot)
+					stage = 2
+				if(20 to 45)
 					howMuch = "very much "
-					if (M)
-						var/mutChance = (1 * prot)
-
-						if (M.traitHolder?.hasTrait("stablegenes"))
-							mutChance = 0
-						if (mutChance < 1) mutChance = 0
-
-						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
-							boutput(M, "<span class='alert'>You mutate!</span>")
-							M.bioHolder.RandomEffect("either")
-				if(4)
-					damage_tox = (4 * prot)
+					stage = 3
+				if(45 to 90)
 					howMuch = "extremely "
-					if (M)
-						var/mutChance = (2 * prot)
-
-						if (M.traitHolder?.hasTrait("stablegenes"))
-							mutChance = (1 * prot)
-						if (mutChance < 1) mutChance = 0
-
-						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
-							boutput(M, "<span class='alert'>You mutate!</span>")
-							M.bioHolder.RandomEffect("either")
-				if(5)
-					damage_tox = (4.5 * prot)
+					stage = 4
+				if(90 to INFINITY)
 					howMuch = "horribly "
-					if (M)
-						var/mutChance = (3 * prot)
+					stage = 5
 
-						if (M.traitHolder?.hasTrait("stablegenes"))
-							mutChance = (2 * prot)
-						if (mutChance < 1) mutChance = 0
-
-						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
-							boutput(M, "<span class='alert'>You mutate!</span>")
-							M.bioHolder.RandomEffect("either")
+			if(M)
+				SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, stage)
+				if(locate(/obj/item/implant/health) in M)
+					src.visible = 1
+				else
+					src.visible = 0
+				if (prob((stage - 2 - !!(M.traitHolder?.hasTrait("stablegenes"))) * prot) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
+					boutput(M, "<span class='alert'>You mutate!</span>")
+					M.bioHolder.RandomEffect("either")
+				if(prob((stage - 1) * prot) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
+					M.changeStatus("weakened", 3 SECONDS)
+					boutput(M, "<span class='alert'>You feel weak.</span>")
+					M.emote("collapse")
 
 			icon_state = "radiation[stage]"
 
@@ -421,12 +418,10 @@
 		damage_type = DAMAGE_STAB | DAMAGE_BURN
 
 		var/howMuch = ""
-		var/stage = 0
-		var/counter = 0
-		var/stageTime = 20 SECONDS
+		var/stage = 1
 
 		getTooltip()
-			. = "You are [howMuch]irradiated by neutrons.<br>Taking [damage_tox] toxin damage every [tickSpacing/(1 SECOND)] sec and [damage_brute] brute damage every [tickSpacing/(1 SECOND)] sec.<br>Damage reduced by radiation resistance on gear."
+			. = "You are [howMuch]irradiated by neutrons.<br>Taking [round(damage_tox, 0.1)] toxin damage every [tickSpacing/(1 SECOND)] sec and [round(damage_brute, 0.1)] brute damage every [tickSpacing/(1 SECOND)] sec.<br>Damage reduced by radiation resistance on gear."
 
 		preCheck(var/atom/A)
 			. = 1
@@ -442,13 +437,8 @@
 				else
 					owner.add_medium_light("neutron_rad", list(4, 62, 155, stage * 50))
 
-
 		onAdd(optional=null)
 			. = ..()
-			if(!isnull(optional) && optional >= stage)
-				stage = optional
-			else
-				stage = 5
 			update_lights()
 
 		onRemove()
@@ -456,80 +446,52 @@
 			. = ..()
 
 		onChange(optional=null)
-			if(!isnull(optional) && optional >= stage)
-				stage = optional
-			else
-				stage = 5
-			icon_state = "nradiation[stage]"
+			. = ..()
 			update_lights()
 
 		onUpdate(timePassed)
-			counter += timePassed
-
-			if(counter >= stageTime)
-				counter -= stageTime
-				stage = max(stage-1, 1)
-				update_lights()
 
 			var/mob/M = null
-			if(ismob(owner))
-				M = owner
-				SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, stage)
-				if(locate(/obj/item/implant/health) in M)
-					src.visible = 1
-				else
-					src.visible = 0
 
 			var/prot = 1
 			if(istype(owner, /mob/living))
 				var/mob/living/L = owner
 				prot = (1 - (L.get_rad_protection() / 100))
 
-			damage_tox = (stage * prot)
-			damage_brute = ((stage/2) * prot)
+			damage_tox = (sqrt(duration/20 + 5) - 0.5) * prot
+			damage_brute = damage_tox/2
 
-			switch(stage)
-				if(1)
+			switch(duration/(1 SECOND))
+				if(0 to 10)
 					howMuch = ""
-				if(2)
+					stage = 1
+				if(10 to 20)
 					howMuch = "significantly "
-					var/chance = (2 * prot)
-					if(prob(chance) && M)
-						if (M.bioHolder && !M.bioHolder.HasEffect("revenant"))
-							M.changeStatus("weakened", 5 SECONDS)
-							boutput(M, "<span class='alert'>You feel weak.</span>")
-							M.emote("collapse")
-				if(3)
+					stage = 2
+				if(20 to 30)
 					howMuch = "very much "
-					if (M)
-						var/mutChance = (3 * prot)
-						if (M.traitHolder?.hasTrait("stablegenes"))
-							mutChance = 0
-						if (mutChance < 1) mutChance = 0
-						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
-							boutput(M, "<span class='alert'>You mutate!</span>")
-							M.bioHolder.RandomEffect("either")
-				if(4)
+					stage = 3
+				if(30 to 60)
 					howMuch = "extremely "
-					if (M)
-						var/mutChance = (4 * prot)
-						if (M.traitHolder?.hasTrait("stablegenes"))
-							mutChance = (3 * prot)
-						if (mutChance < 1) mutChance = 0
-						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
-							boutput(M, "<span class='alert'>You mutate!</span>")
-							M.bioHolder.RandomEffect("either")
-				if(5)
+					stage = 4
+				if(60 to INFINITY)
 					howMuch = "horribly "
-					if (M)
-						var/mutChance = (5 * prot)
-						if (M.traitHolder?.hasTrait("stablegenes"))
-							mutChance = (4 * prot)
-						if (mutChance < 1) mutChance = 0
-						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
-							boutput(M, "<span class='alert'>You mutate!</span>")
-							M.bioHolder.RandomEffect("either")
+					stage = 5
 
+			if(M)
+				SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, stage)
+				if(locate(/obj/item/implant/health) in M)
+					src.visible = 1
+				else
+					src.visible = 0
+				if (prob((stage - !!(M.traitHolder?.hasTrait("stablegenes"))) * prot) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
+					boutput(M, "<span class='alert'>You mutate!</span>")
+					M.bioHolder.RandomEffect("either")
+				if(prob((stage-1) * prot) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
+					M.changeStatus("weakened", 5 SECONDS)
+					boutput(M, "<span class='alert'>You feel weak.</span>")
+					M.emote("collapse")
+			update_lights()
 			icon_state = "nradiation[stage]"
 
 			return ..(timePassed)
@@ -592,6 +554,7 @@
 				switchStage(getStage())
 
 		onRemove()
+			..()
 			if(!owner) return //owner got in our del queue
 			if(istype(owner, /mob/living))
 				var/mob/living/L = owner
@@ -601,11 +564,11 @@
 
 		proc/getStage()
 			. = 1
-			if(counter < BURNING_LV2)
+			if(min(duration*2, counter) < BURNING_LV2)
 				return
-			else if (counter >= BURNING_LV2 && counter < BURNING_LV3)
+			else if (min(duration*2, counter) >= BURNING_LV2 && min(duration*2, counter) < BURNING_LV3)
 				return 2
-			else if (counter >= BURNING_LV3)
+			else if (min(duration*2, counter) >= BURNING_LV3)
 				return 3
 
 		proc/switchStage(var/toStage)
@@ -702,12 +665,12 @@
 
 			onAdd(optional=null)
 				. = ..()
-				if (ismob(owner))
+				if (ismob(owner) && !QDELETED(owner))
 					var/mob/mob_owner = owner
 					APPLY_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
 
 			onRemove()
-				if (ismob(owner))
+				if (ismob(owner) && !QDELETED(owner))
 					var/mob/mob_owner = owner
 					REMOVE_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
 				. = ..()
@@ -722,12 +685,12 @@
 
 			onAdd(optional=null)
 				. = ..()
-				if (ismob(owner))
+				if (ismob(owner) && !QDELETED(owner))
 					var/mob/mob_owner = owner
 					APPLY_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
 
 			onRemove()
-				if (ismob(owner))
+				if (ismob(owner) && !QDELETED(owner))
 					var/mob/mob_owner = owner
 					REMOVE_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
 				. = ..()
@@ -779,12 +742,12 @@
 
 			onAdd(optional=null)
 				. = ..()
-				if (ismob(owner))
+				if (ismob(owner) && !QDELETED(owner))
 					var/mob/mob_owner = owner
 					APPLY_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
 
 			onRemove()
-				if (ismob(owner))
+				if (ismob(owner) && !QDELETED(owner))
 					var/mob/mob_owner = owner
 					REMOVE_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
 				. = ..()
@@ -864,7 +827,7 @@
 			counter += timePassed
 			if (counter >= count && owner && !owner.hasStatus(list("weakened", "paralysis")) )
 				counter -= count
-				playsound(get_turf(owner), sound, 17, 1, 0.4, 1.6)
+				playsound(owner, sound, 17, 1, 0.4, 1.6)
 				violent_twitch(owner)
 			. = ..(timePassed)
 
@@ -885,7 +848,7 @@
 			counter += timePassed
 			if (counter >= count && owner)
 				counter -= count
-				playsound(get_turf(owner), sound, 17, 1, 0.4, 1.6)
+				playsound(owner, sound, 17, 1, 0.4, 1.6)
 				violent_twitch(owner)
 			. = ..(timePassed)
 
@@ -952,6 +915,7 @@
 			animate(owner, alpha=30, flags=ANIMATION_PARALLEL, time=30)
 
 		onRemove()
+			. = ..()
 			animate(owner,alpha=255, flags=ANIMATION_PARALLEL, time=30)
 
 		onUpdate(timePassed)
@@ -989,6 +953,7 @@
 				owner:add_stam_mod_max("fitness_max", change)
 
 		onRemove()
+			. = ..()
 			if(hascall(owner, "remove_stam_mod_max"))
 				owner:remove_stam_mod_max("fitness_max")
 
@@ -1065,6 +1030,7 @@
 
 		onAdd(optional=null)
 			. = ..()
+			ON_COOLDOWN(owner, "lying_bullet_dodge_cheese", 0.5 SECONDS)
 			if (isliving(owner))
 				L = owner
 				if (L.getStatusDuration("burning"))
@@ -1116,6 +1082,7 @@
 					gang = M.mind.gang
 
 		onRemove()
+			. = ..()
 			H.max_health -= max_health
 			health_update_queue |= H
 			H.remove_stam_mod_max("ganger_max")
@@ -1176,6 +1143,7 @@
 				owner.delStatus("janktank")
 
 		onRemove()
+			. = ..()
 			if(ismob(owner))
 				owner.changeStatus("janktank_withdrawl", 10 MINUTES)
 				var/mob/M = owner
@@ -1248,6 +1216,7 @@
 			APPLY_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "mutiny_regen", regen_stam)
 
 		onRemove()
+			. = ..()
 			H.max_health -= max_health
 			health_update_queue |= H
 			H.remove_stam_mod_max("mutiny_max")
@@ -1281,6 +1250,7 @@
 			APPLY_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "revspirit_regen", regen_stam)
 
 		onRemove()
+			. = ..()
 			H.max_health -= max_health
 			health_update_queue |= H
 			H.remove_stam_mod_max("revspirit_max")
@@ -1574,3 +1544,47 @@
 				if(how_miasma > 4)
 					. += " You might get sick."
 				#endif
+
+/datum/statusEffect/dripping_paint
+	id = "marker_painted"
+	name = "Dripping with Paint"
+	desc = "You're leaving behind a trail of paint!"
+	icon_state = "painted"
+
+
+	onAdd(optional)
+		. = ..()
+		var/color2 = list(
+			0.5, 0, 0,
+			0, 0.5, 0,
+			0, 0, 0.5,
+			0.5, 0.25, 0.0625)
+		var/oldcol = owner.color
+		owner.color = color2
+		owner.onVarChanged("color", oldcol, color2)
+		if(istype(owner, /mob/living))
+			RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/track_paint)
+
+	onRemove()
+		. = ..()
+		if(istype(owner, /mob/living))
+			UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+
+
+	proc/track_paint(mob/living/M, oldLoc, direct)
+		var/turf/T = get_turf(M)
+		var/obj/decal/cleanable/paint/P
+		if (T.messy > 0)
+			P = locate(/obj/decal/cleanable/paint) in T
+		if(!P)
+			P = make_cleanable(/obj/decal/cleanable/paint, T)
+
+		var/list/states = M.get_step_image_states()
+
+		if (states[1] || states[2])
+			if (states[1])
+				P.create_overlay(states[1], "#ff8820", direct, 'icons/effects/blood.dmi')
+			if (states[2])
+				P.create_overlay(states[2], "#ff8820", direct, 'icons/effects/blood.dmi')
+		else
+			P.create_overlay("smear2", "#ff8820", direct, 'icons/effects/blood.dmi')

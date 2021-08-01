@@ -38,8 +38,8 @@
 		HH.name = "tentacles"
 
 	setup_healths()
-		add_hh_flesh(-35, 35, 0.5)
-		add_hh_flesh_burn(-35, 35, 1)
+		add_hh_flesh(35, 0.5)
+		add_hh_flesh_burn(35, 1)
 		add_health_holder(/datum/healthHolder/toxin)
 		//add_health_holder(/datum/healthHolder/suffocation) // this is broken as hell
 		var/datum/healthHolder/Brain = add_health_holder(/datum/healthHolder/brain)
@@ -75,12 +75,10 @@
 			return
 		if (dd_hasprefix(message, "*"))
 			return
-		else if (dd_hasprefix(message, ":lh") || dd_hasprefix(message, ":rh") || dd_hasprefix(message, ":in"))
-			message = copytext(message, 4)
-		else if (dd_hasprefix(message, ":"))
-			message = copytext(message, 3)
-		else if (dd_hasprefix(message, ";"))
-			message = copytext(message, 2)
+
+		// Strip the radio prefix (if it exists) and just get the message
+		var/prefixAndMessage = separate_radio_prefix_and_message(message)
+		message = prefixAndMessage[2]
 
 		// martian telepathy to all martians
 		// cirr edit: i have moved this to a proc at the bottom of this file
@@ -92,11 +90,11 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/voice/screams/martian_screech.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, "sound/voice/screams/martian_screech.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> emits a psychic screech!"
 			if ("growl")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/voice/screams/martian_growl.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, "sound/voice/screams/martian_growl.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> gives a guttural psionic growl!"
 		return null
 
@@ -270,8 +268,8 @@ proc/martian_speak(var/mob/speaker, var/message as text, var/speak_as_admin=0)
 		HH.limb_name = "right tentacles"
 
 	setup_healths()
-		add_hh_flesh(-50, 50, 0.5)
-		add_hh_flesh_burn(-50, 50, 1)
+		add_hh_flesh(50, 0.5)
+		add_hh_flesh_burn(50, 1)
 		add_health_holder(/datum/healthHolder/toxin)
 		var/datum/healthHolder/Brain = add_health_holder(/datum/healthHolder/brain)
 		Brain.maximum_value = 0

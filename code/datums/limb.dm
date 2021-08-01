@@ -84,18 +84,13 @@
 	proc/attack_range(atom/target, var/mob/user, params)
 		if(user.a_intent == "disarm")
 			if(disarm_special)
-				for (var/obj/item/cloaking_device/I in user)
-					if (I.active)
-						I.deactivate(user)
-						user.visible_message("<span class='notice'><b>[user]'s cloak is disrupted!</b></span>")
+				SEND_SIGNAL(user, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
 				disarm_special.pixelaction(target,params,user)
 				.= 1
 		else if (user.a_intent == "harm")
 			if(harm_special)
 				for (var/obj/item/cloaking_device/I in user)
-					if (I.active)
-						I.deactivate(user)
-						user.visible_message("<span class='notice'><b>[user]'s cloak is disrupted!</b></span>")
+					SEND_SIGNAL(user, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
 				harm_special.pixelaction(target,params,user)
 				.= 1
 		else
@@ -312,7 +307,7 @@
 		reload_time = 1 SECOND
 
 /datum/limb/mouth
-	var/sound_attack = "sound/weapons/werewolf_attack1.ogg"
+	var/sound_attack = "sound/voice/animal/werewolf_attack1.ogg"
 	var/dam_low = 3
 	var/dam_high = 9
 	var/custom_msg = null
@@ -376,7 +371,7 @@
 /datum/limb/item
 	attack_hand(atom/target, var/mob/user, var/reach, params, location, control)
 		if (holder?.remove_object && istype(holder.remove_object))
-			target.attackby(holder.remove_object, user, params, location, control)
+			target.Attackby(holder.remove_object, user, params, location, control)
 			if (target)
 				holder.remove_object.afterattack(target, src, reach)
 
@@ -631,7 +626,7 @@
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
 		if (prob(60))
-			target.changeStatus("weakened",20)
+			target.changeStatus("weakened", 2 SECONDS)
 		user.lastattacked = target
 
 /datum/limb/wendigo
@@ -708,7 +703,7 @@
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
 		if (prob(35 * quality))
-			target.changeStatus("weakened", (4 * quality)*10)
+			target.changeStatus("weakened", (4 * quality) SECONDS)
 		user.lastattacked = target
 
 // Currently used by the High Fever disease which is obtainable from the "Too Much" chem which only shows up in sickly pears, which are currently commented out. Go there to make use of this.
@@ -1289,6 +1284,8 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 	/obj/machinery/weapon_stand,\
 	/obj/dummy/chameleon,\
 	/obj/machinery/light,\
+	/obj/machinery/phone,\
+	/obj/machinery/atmospherics/valve,\
 	/obj/machinery/vending,\
 	/obj/machinery/nuclearbomb,\
 	/obj/item/gun/kinetic/airzooka,\

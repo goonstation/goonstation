@@ -11,8 +11,6 @@
 	stamina_cost = 23
 	stamina_crit_chance = 5
 	skintoned = 1
-	module_research = list("medicine" = 1)
-	module_research_type = /obj/item/parts/human_parts
 	var/original_DNA = null
 	var/original_fprints = null
 	var/show_on_examine = 0
@@ -391,7 +389,7 @@
 			holder.emote(pick("trip", "collapse"))
 		else if(prob(rebelliousness)) //Slow down
 			boutput(holder, "<span class='alert'><b>Your [src.name] is slowing you down!</b></span>")
-			holder.setStatus("slowed", max(holder.getStatusDuration("slowed"), 10))
+			holder.setStatus("slowed", max(holder.getStatusDuration("slowed"), 1 SECOND))
 		else if(prob(rebelliousness)) //Stumble around
 			boutput(holder, "<span class='alert'><b>Your [src.name] won't do what you tell it to!</b></span>")
 			if (holder.misstep_chance < 20)

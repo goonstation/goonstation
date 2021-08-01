@@ -317,7 +317,7 @@
 					var/g = hex2num(copytext(color, 4, 6))
 					var/b = hex2num(copytext(color, 6))
 					var/hsv = rgb2hsv(r,g,b)
-					organ_color = hsv2rgb( hsv[1], hsv[2], 1 )
+					organ_color = hsv2rgb( hsv[1], hsv[2], 100 )
 
 					if (istype(T, /turf/space))
 						return // Do not deploy on space.

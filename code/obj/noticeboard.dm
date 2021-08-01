@@ -17,7 +17,7 @@
 
 /obj/noticeboard/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (istype(O, /obj/item/paper))
-		if (src.notices < 5)
+		if (src.notices < 15)
 			O.add_fingerprint(user)
 			src.add_fingerprint(user)
 			user.drop_item()
@@ -31,7 +31,7 @@
 
 
 /obj/noticeboard/proc/update_icon()
-	src.icon_state = "nboard0[src.notices]"
+	src.icon_state = "nboard0[min(src.notices, 5)]"
 
 
 /obj/noticeboard/attack_hand(mob/user as mob)
@@ -68,11 +68,11 @@
 		if((P && P.loc == src)) //if the paper's on the board
 			if (istype(usr.r_hand, /obj/item/pen)) //and you're holding a pen
 				src.add_fingerprint(usr)
-				P.attackby(usr.r_hand, usr) //then do ittttt
+				P.Attackby(usr.r_hand, usr) //then do ittttt
 			else
 				if (istype(usr.l_hand, /obj/item/pen)) //check other hand for pen
 					src.add_fingerprint(usr)
-					P.attackby(usr.l_hand, usr)
+					P.Attackby(usr.l_hand, usr)
 				else
 					boutput(usr, "<span class='alert'>You'll need something to write with!</span>")
 
@@ -138,5 +138,5 @@ proc/save_noticeboards()
 		return
 	fdel(some_board.file_name)
 	var/json_data = json_encode(some_board.data)
-	logTheThing("debug", null, null, "Persistent noticeboard save data: [json_data]")
+//	logTheThing("debug", null, null, "Persistent noticeboard save data: [json_data]")
 	text2file(json_data, some_board.file_name)

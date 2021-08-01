@@ -51,7 +51,7 @@
 		A.name = corruptText(A.name,10)
 		A.alpha = rand(100,255)
 		A.color = rgb(rand(0,255),rand(0,255),rand(0,255))
-		playsound(get_turf(src), pick(glitchy_noises), 80, 0, 0, src.get_age_pitch())
+		playsound(src, pick(glitchy_noises), 80, 0, 0, src.get_age_pitch())
 
 		switch(rand(1,5))
 			if(1)

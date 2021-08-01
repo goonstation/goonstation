@@ -121,7 +121,7 @@ datum
 				var/mob/living/L = M
 				var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
 				if(istype(L) && burn)
-					L.changeStatus("burning", 20 * src.volume)
+					L.changeStatus("burning", 2 * src.volume SECONDS)
 					burn.counter += 10 * src.volume
 					holder?.del_reagent(src.id)
 				..()
@@ -142,7 +142,7 @@ datum
 						var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
 						L.changeStatus("slowed", 2 SECONDS, optional = 4)
 						if(istype(L) && burn) //double up on the extra burny, not blockable by biosuits/etc either
-							L.changeStatus("burning", 10 * src.volume)
+							L.changeStatus("burning", src.volume SECONDS)
 							burn.counter += 5 * src.volume
 
 		combustible/kerosene
@@ -216,7 +216,7 @@ datum
 				if(method == TOUCH)
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
-						L.changeStatus("burning", 100)
+						L.changeStatus("burning", 10 SECONDS)
 				return
 
 			reaction_turf(var/turf/T, var/volume)
@@ -236,7 +236,7 @@ datum
 
 					T.reagents.add_reagent("thermite", volume, null)
 					if (T.active_hotspot)
-						T.reagents.temperature_reagents(T.active_hotspot.temperature, T.active_hotspot.volume, 10, 300)
+						T.reagents.temperature_reagents(T.active_hotspot.temperature, T.active_hotspot.volume, 350, 300, 1)
 				return
 
 
@@ -258,7 +258,11 @@ datum
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				var/datum/reagents/myholder = holder
-				if(!ignited)
+				if(!holder?.my_atom?.is_open_container())
+					if(holder.my_atom)
+						for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
+							boutput(M, "<span class='notice'>With nowhere to go, the smoke settles.</span>")
+				else if(!ignited)
 					ignited = 1
 					var/vol = volume
 					SPAWN_DBG(1 DECI SECOND)
@@ -283,7 +287,11 @@ datum
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				var/datum/reagents/myholder = holder
-				if(!ignited)
+				if(!holder?.my_atom?.is_open_container())
+					if(holder.my_atom)
+						for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
+							boutput(M, "<span class='notice'>With nowhere to go, the smoke settles.</span>")
+				else if(!ignited)
 					ignited = TRUE
 					var/vol = volume
 					SPAWN_DBG(1 DECI SECOND)
@@ -459,7 +467,7 @@ datum
 
 				var/mob/living/L = M
 				if(istype(L) && L.getStatusDuration("burning"))
-					L.changeStatus("burning", 100 * mult)
+					L.changeStatus("burning", 10 SECONDS * mult)
 				..()
 
 		combustible/foof // this doesn't work yet
@@ -648,6 +656,8 @@ datum
 			transparency = 230
 			viscosity = 0.2
 			minimum_reaction_temperature = T0C + 200
+			depletion_rate = 0.6
+			heat_capacity = 5
 
 			var/max_radius = 7
 			var/min_radius = 0
@@ -687,13 +697,13 @@ datum
 								if(holder.my_atom)
 									holder.my_atom.visible_message("<span class='alert'><b>[holder.my_atom] explodes!</b></span>")
 									// Added log entries (Convair880).
-									message_admins("Fuel tank explosion ([holder.my_atom], reagent type: [id]) at [log_loc(holder.my_atom)]. Last touched by: [holder.my_atom.fingerprintslast ? "[holder.my_atom.fingerprintslast]" : "*null*"].")
-									logTheThing("bombing", holder.my_atom.fingerprintslast, null, "Fuel tank explosion ([holder.my_atom], reagent type: [id]) at [log_loc(holder.my_atom)]. Last touched by: [holder.my_atom.fingerprintslast ? "[holder.my_atom.fingerprintslast]" : "*null*"].")
+									message_admins("Welding Fuel explosion (inside [holder.my_atom], reagent type: [id]) at [log_loc(holder.my_atom)]. Last touched by: [holder.my_atom.fingerprintslast ? "[key_name(holder.my_atom.fingerprintslast)]" : "*null*"] (usr: [ismob(usr) ? key_name(usr) : usr]).")
+									logTheThing("bombing", holder.my_atom.fingerprintslast, null, "Welding Fuel explosion (inside [holder.my_atom], reagent type: [id]) at [log_loc(holder.my_atom)]. Last touched by: [holder.my_atom.fingerprintslast ? "[key_name(holder.my_atom.fingerprintslast)]" : "*null*"] (usr: [ismob(usr) ? key_name(usr) : usr]).")
 								else
 									turf.visible_message("<span class='alert'><b>[holder.my_atom] explodes!</b></span>")
 									// Added log entries (Convair880).
-									message_admins("Fuel explosion ([turf], reagent type: [id]) at [log_loc(turf)].")
-									logTheThing("bombing", null, null, "Fuel explosion ([turf], reagent type: [id]) at [log_loc(turf)].")
+									message_admins("Welding Fuel explosion ([turf], reagent type: [id]) at [log_loc(turf)].")
+									logTheThing("bombing", null, null, "Welding Fuel explosion ([turf], reagent type: [id]) at [log_loc(turf)].")
 
 								var/boomrange = min(max(min_explosion_radius, round((volume/covered.len) * volume_explosion_radius_multiplier + volume_explosion_radius_modifier)), max_explosion_radius)
 								explosion(holder.my_atom, turf, -1,-1,boomrange,1)
@@ -708,35 +718,23 @@ datum
 				if(method == TOUCH)
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
-						L.changeStatus("burning", 300)
+						L.changeStatus("burning", 30 SECONDS)
 				return 1
 
 			on_mob_life(var/mob/M, var/mult = 1)
-
-				var/mob/living/L = M
-				if(istype(L) && L.getStatusDuration("burning"))
-					L.changeStatus("burning", 20 * mult)
+				if (!M)
+					M = holder.my_atom
+				if(istype(M, /mob/living/) && M.getStatusDuration("burning"))
+					M.changeStatus("burning", 2 SECONDS * mult)
+				if((M.health > 20) && (prob(33)))
+					M.take_toxin_damage(1 * mult)
+				if(probmult(1))
+					M.visible_message("<span class='alert'>[M] pukes all over \himself.</span>", "<span class='alert'>You puke all over yourself!</span>")
+					M.vomit()
 				..()
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				P.HYPdamageplant("poison", 1)
-
-			epichlorohydrin
-				name = "epichlorohydrin"
-				id = "epichlorohydrin"
-				description = "A highly reactive, flammable, mildly toxic compound."
-				reagent_state = LIQUID
-				fluid_r = 220
-				fluid_g = 220
-				fluid_b = 255
-				transparency = 128
-				max_radius = 4
-				min_radius = 0
-				minimum_reaction_temperature = T0C + 385
-				volume_radius_multiplier = 0.05
-				explosion_threshold = 1000
-				volume_explosion_radius_modifier = -4.5
-				volatility = 2.5
 
 		// cogwerks - gunpowder test. IS THIS A TERRIBLE GODDAMN IDEA? PROBABLY
 
@@ -825,6 +823,11 @@ datum
 						D.desc = "Uh oh. Someone better clean this up!"
 						if(!D.reagents) D.create_reagents(10)
 						D.reagents.add_reagent("blackpowder", 5, null)
+				return
+			reaction_mob(var/mob/living/carbon/human/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if (ishuman(M) && volume >= 10)
+					M.gunshot_residue = 1
 				return
 
 		combustible/nitrogentriiodide

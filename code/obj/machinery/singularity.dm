@@ -45,7 +45,7 @@ Contains:
 
 		// Did you know this thing still works? And wasn't logged (Convair880)?
 		logTheThing("bombing", src.fingerprintslast, null, "A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
-		message_admins("A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
+		message_admins("A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [key_name(src.fingerprintslast)]")
 
 		var/turf/T = src.loc
 		playsound(T, 'sound/machines/satcrash.ogg', 100, 0, 3, 0.8)
@@ -265,7 +265,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 					else
 						gain = 50
 
-		L.gib()
+		L.ghostize()
+		qdel(L)
 
 	else if (isobj(A))
 		//if (istype(A, /obj/item/graviton_grenade))
@@ -321,20 +322,17 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /////////////////////////////////////////////Controls which "event" is called
 /obj/machinery/the_singularity/proc/event()
-	var/numb = rand(1,4)
+	var/numb = rand(1,3)
 	if(prob(25))
 		grow()
 	switch (numb)
-		if (1)//EMP
-			Zzzzap()
-			return
-		if (2)//Eats the turfs around it
+		if (1)//Eats the turfs around it
 			BHolerip()
 			return
-		if (3)//tox damage all carbon mobs in area
+		if (2)//tox damage all carbon mobs in area
 			Toxmob()
 			return
-		if (4)//Stun mobs who lack optic scanners
+		if (3)//Stun mobs who lack optic scanners
 			Mezzer()
 			return
 
@@ -346,8 +344,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			var/mob/living/carbon/human/H = M
 			if (H.wear_suit)
 				return
-		M.take_toxin_damage(3)
-		M.changeStatus("radiation", 20*(radius+1))
+		M.take_toxin_damage(12)
+		M.changeStatus("radiation", 4*(radius+1) SECONDS)
 		M.show_text("You feel odd.", "red")
 
 /obj/machinery/the_singularity/proc/Mezzer()
@@ -358,7 +356,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			if (istype(H.glasses,/obj/item/clothing/glasses/meson))
 				M.show_text("You look directly into [src.name], good thing you had your protective eyewear on!", "green")
 				return
-		M.changeStatus("stunned", 3 SECONDS)
+		M.changeStatus("stunned", 7 SECONDS)
 		M.visible_message("<span class='alert'><B>[M] stares blankly at [src]!</B></span>",\
 		"<B>You look directly into [src]!<br><span class='alert'>You feel weak!</span></B>")
 
@@ -394,33 +392,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			else
 				T.ReplaceWithFloor()
 	return
-
-/obj/machinery/the_singularity/proc/Zzzzap()///Pulled from wizard spells might edit later
-	var/turf/T = src.get_center()
-
-	var/obj/overlay/pulse = new/obj/overlay(T)
-	pulse.icon = 'icons/effects/effects.dmi'
-	pulse.icon_state = "emppulse"
-	pulse.name = "emp pulse"
-	pulse.anchored = 1
-	SPAWN_DBG(2 SECONDS)
-		if (pulse)
-			qdel(pulse)
-
-	for (var/mob/M in all_viewers(world.view-1, T))
-
-		if (!isliving(M))
-			continue
-
-		//if (M == usr) // what
-			//continue // what?????
-
-		M.emp_act()
-
-	for (var/obj/machinery/M in range(world.view-1, T))
-		M.emp_act()
 #endif
-
 //////////////////////////////////////// Field generator /////////////////////////////////////////
 
 /obj/machinery/field_generator
@@ -631,6 +603,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			state = WRENCHED
 			playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
 			boutput(user, "You secure the external reinforcing bolts to the floor.")
+			desc = "Projects an energy field when active. It has been bolted to the floor."
 			src.anchored = 1
 			return
 
@@ -638,6 +611,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			state = UNWRENCHED
 			playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
 			boutput(user, "You undo the external reinforcing bolts.")
+			desc = "Projects an energy field when active."
 			src.anchored = 0
 			return
 
@@ -646,7 +620,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			if(!W:try_weld(user, 1, noisy = 2))
 				return
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/field_generator/proc/weld_action,\
-			list(user), W.icon, W.icon_state, "[user] finishes using their [W.name] on the field generator.")
+			list(user), W.icon, W.icon_state, "[user] finishes using their [W.name] on the field generator.", null)
 		if(state == WRENCHED)
 			boutput(user, "You start to weld the field generator to the floor.")
 			return
@@ -675,12 +649,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		state = WELDED
 		src.get_link() //Set up a link, now that we're secure!
 		boutput(user, "You weld the field generator to the floor.")
+		desc = "Projects an energy field when active. It has been bolted and welded to the floor."
 	else if(state == WELDED)
 		state = WRENCHED
 		if(src.link) //Clear active link.
 			src.link.master = null
 			src.link = null
 		boutput(user, "You cut the field generator free from the floor.")
+		desc = "Projects an energy field when active. It has been bolted to the floor."
 
 /obj/machinery/field_generator/proc/cleanup(var/NSEW)
 	var/obj/machinery/containment_field/F
@@ -865,8 +841,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		var/mob/living/L = user
 		L.Virus_ShockCure(100)
 		L.shock_cyberheart(100)
-	if(user.getStatusDuration("stunned") < shock_damage * 10)	user.changeStatus("stunned", shock_damage * 10)
-	if(user.getStatusDuration("weakened") < shock_damage * 10)	user.changeStatus("weakened", shock_damage * 10)
+	if(user.getStatusDuration("stunned") < shock_damage * 10)	user.changeStatus("stunned", shock_damage SECONDS)
+	if(user.getStatusDuration("weakened") < shock_damage * 10)	user.changeStatus("weakened", shock_damage SECONDS)
 
 	if(user.get_burn_damage() >= 500) //This person has way too much BURN, they've probably been shocked a lot! Let's destroy them!
 		user.visible_message("<span style=\"color:red;font-weight:bold;\">[user.name] was disintegrated by the [src.name]!</span>")
@@ -1051,7 +1027,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			if(!W:try_weld(user, 1, noisy = 2))
 				return
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/emitter/proc/weld_action,\
-			list(user), W.icon, W.icon_state, "[user] finishes using their [W.name] on the emitter.")
+			list(user), W.icon, W.icon_state, "[user] finishes using their [W.name] on the emitter.", null)
 		if(state == WRENCHED)
 			boutput(user, "You start to weld the emitter to the floor.")
 			return

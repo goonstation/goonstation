@@ -671,7 +671,7 @@
 		if(!owner.stat && can_act(owner) && istype(owner.loc, /turf/space))
 			if(prob(2))
 				owner.emote("faint")
-				owner.changeStatus("paralysis", 80)
+				owner.changeStatus("paralysis", 8 SECONDS)
 			else if (prob(8))
 				owner.emote("scream")
 				owner.changeStatus("stunned", 2 SECONDS)
@@ -1063,10 +1063,9 @@ obj/trait/pilot
 	isPositive = 0
 
 /obj/trait/allears
-	name = "All Ears (0) \[Trinkets\]"
+	name = "All Ears (0)"
 	cleanName="All ears"
 	desc = "You lost your headset on the way to work."
-	category = "trinkets"
 	id = "allears"
 	points = 0
 	isPositive = 0

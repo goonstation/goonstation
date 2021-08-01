@@ -49,7 +49,6 @@ MATERIAL
 	stamina_cost = 23
 	stamina_crit_chance = 10
 	var/datum/material/reinforcement = null
-	module_research = list("metals" = 5)
 	rand_pos = 1
 	inventory_counter_enabled = 1
 
@@ -120,6 +119,8 @@ MATERIAL
 	attack_hand(mob/user as mob)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many sheets do you want to take from the stack?","Stack of [src.amount]",1) as num)
+			if(src.loc != user)
+				return
 			splitnum = round(clamp(splitnum, 0, src.amount))
 			if(amount == 0)
 				return
@@ -268,6 +269,7 @@ MATERIAL
 				L["tcomputer"] = "Computer Terminal Frame (3 Sheets)"
 				L["computer"] = "Console Frame (5 Sheets)"
 				L["hcomputer"] = "Computer Frame (5 Sheets)"
+				L["vending"] = "Vending Machine Frame (3 Sheets)"
 		if (src?.material.material_flags & MATERIAL_CRYSTAL)
 			L["smallwindow"] = "Thin Window"
 			L["bigwindow"] = "Large Window (2 Sheets)"
@@ -303,6 +305,12 @@ MATERIAL
 					return
 			else
 				return
+//You can't build! The if is to stop compiler warnings
+#if defined(MAP_OVERRIDE_POD_WARS)
+		if (src)
+			boutput(usr, "<span class='alert'>What are you gonna do with this? You have a very particular set of skills, and building is not one of them...</span>")
+			return
+#endif
 
 		if (href_list["make"])
 			if (src.amount < 1)
@@ -482,9 +490,18 @@ MATERIAL
 					a_icon_state = "0"
 					a_name = "a terminal frame"
 
+				if("vending")
+					if (!amount_check(3,usr)) return
+					a_type = /obj/machinery/vendingframe
+					a_amount = 1
+					a_cost = 3
+					a_icon = 'icons/obj/vending.dmi'
+					a_icon_state = "standard-frame"
+					a_name = "a vending machine frame"
 				if("construct")
 					var/turf/T = get_turf(usr)
 					var/area/A = get_area (usr)
+
 					if (!istype(T, /turf/simulated/floor))
 						boutput(usr, "<span class='alert'>You can't build girders here.</span>")
 						return
@@ -716,6 +733,7 @@ MATERIAL
 				var/makemetal = round(src.amount / 2)
 				boutput(user, "<span class='notice'>You could make up to [makemetal] sheets by welding this stack.</span>")
 				weldinput = input("How many sheets do you want to make?","Welding",1) as num
+				makemetal = round(src.amount / 2) // could have changed during input()
 				if (weldinput < 1) return
 				if (weldinput > makemetal) weldinput = makemetal
 			var/obj/item/sheet/M = new /obj/item/sheet/steel(user.loc)
@@ -930,7 +948,7 @@ MATERIAL
 
 		user.visible_message("<span class='alert'><b>[user] headbutts the spike, impaling [his_or_her(user)] head on it!</b></span>")
 		user.TakeDamage("head", 50, 0)
-		user.changeStatus("stunned", 500)
+		user.changeStatus("stunned", 50 SECONDS)
 		playsound(src.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
 		if(prob(40)) user.emote("scream")
 
@@ -985,7 +1003,7 @@ MATERIAL
 		src.pixel_y = rand(0, 14)
 		SPAWN_DBG(0)
 			update_stack_appearance()
-			src.inventory_counter.update_number(amount)
+			src.inventory_counter?.update_number(amount)
 		return
 
 	check_valid_stack(atom/movable/O as obj)
@@ -1082,6 +1100,11 @@ MATERIAL
 		boutput(user, "<span class='notice'>You finish stacking tiles.</span>")
 
 	proc/build(turf/S as turf)
+//for now, any turf can't be built on.
+#if defined(MAP_OVERRIDE_POD_WARS)
+		boutput(usr, "you can't build in this mode, you don't know how or something...")
+		return
+#else
 		if (src.amount < 1)
 			return FALSE
 		var/turf/simulated/floor/W = S.ReplaceWithFloor()
@@ -1097,6 +1120,7 @@ MATERIAL
 			W.setMaterial(src.material)
 		src.change_stack_amount(-1)
 		return TRUE
+#endif
 
 /obj/item/tile/steel
 

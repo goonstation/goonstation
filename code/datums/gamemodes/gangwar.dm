@@ -984,6 +984,9 @@
 
 		//gun score
 		else if (istype(item, /obj/item/gun))
+			if(istype(item, /obj/item/gun/kinetic/foamdartgun))
+				boutput(user, "<span class='alert'><b>You cant stash toy guns in the locker<b></span>")
+				return 0
 			// var/obj/item/gun/gun = item
 			gang.score_gun += round(300)
 			gang.spendable_points += round(300)
@@ -1258,7 +1261,7 @@
 			boutput(target, "<span class='alert'>That gang is full!</span>")
 			return
 
-		var/joingang = alert(target,"Do you wish to join [src.gang.gang_name]?", "Gang", "No", "Yes")
+		var/joingang = tgui_alert(target, "Do you wish to join [src.gang.gang_name]?", "[src]", list("Yes", "No"), timeout = 10 SECONDS)
 		if (joingang == "No") return
 
 		target.mind.gang = gang

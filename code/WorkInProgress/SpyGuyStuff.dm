@@ -77,7 +77,7 @@ Fibre wire
 				being_mean = 0
 				return
 			H.emote("faint")
-			H.changeStatus("paralysis", 150)
+			H.changeStatus("paralysis", 15 SECONDS)
 			H.show_text("<I><font size=5>You feel your mind drifting away from your body!</font></I>", "red")
 
 			playsound(src.loc, 'sound/effects/ghost.ogg', 50, 1)
@@ -129,7 +129,7 @@ proc/Create_Tommyname()
 	//Set up the new appearance
 	var/datum/appearanceHolder/AH = new
 	AH.gender = "male"
-	AH.customization_first = "Dreadlocks"
+	AH.customization_first = new /datum/customization_style/hair/long/dreads
 	AH.gender = "male"
 	AH.s_tone = "#FAD7D0"
 	AH.owner = src
@@ -214,10 +214,10 @@ proc/Create_Tommyname()
 	m_amt = 4000
 	rechargeable = 1
 	force = 0.0
+	cell_type = /obj/item/ammo/power_cell/high_power
 	desc = "It smells of cheap cologne and..."
 
 	New()
-		cell = new/obj/item/ammo/power_cell/high_power
 		set_current_projectile(new/datum/projectile/tommy)
 		projectiles = list(new/datum/projectile/tommy)
 		..()
@@ -232,8 +232,8 @@ proc/Create_Tommyname()
 		return ..(target, start, user)
 
 	update_icon()
-		if(cell)
-			src.icon_state = "tommygun[src.cell.charge <= 0 ? "-empty" : ""]"
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE)
+			src.icon_state = "tommygun[(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE) ? "" : "-empty"]"
 			return
 
 ///////////////////////////////////////Analysis datum for the spectrometer
@@ -396,8 +396,7 @@ proc/Create_Tommyname()
 			var/mob/living/carbon/human/H = hit
 			if(!istype(H.head, /obj/item/clothing/head/wig))
 				var/obj/item/clothing/head/wig/W = H.create_wig()
-				H.bioHolder.mobAppearance.customization_first = "None"
-				H.cust_one_state = customization_styles["None"]
+				H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
 				H.drop_from_slot(H.head)
 				H.force_equip(W, H.slot_head)
 				H.update_colorful_parts()
@@ -407,8 +406,8 @@ proc/Create_Tommyname()
 	desc = "You can tell this gun has been fired!"
 	icon = 'icons/obj/instruments.dmi'
 	icon_state = "trumpet"
+	cell_type = /obj/item/ammo/power_cell/high_power
 	New()
-		cell = new/obj/item/ammo/power_cell/high_power
 		set_current_projectile(new/datum/projectile/energy_bolt_v/trumpet)
 		projectiles = list(new/datum/projectile/energy_bolt_v/trumpet)
 		..()
