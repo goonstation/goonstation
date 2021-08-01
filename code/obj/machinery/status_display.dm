@@ -19,8 +19,6 @@
 	mats = 14
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 
-	maptext = {"<span class='ol vm c' style="font-family: StatusDisp; font-size: 6px;  color: #09f">AB12<BR/>21BA</span>"}
-
 	var/mode = 1	// 0 = Blank
 					// 1 = Shuttle timer
 					// 2 = Arbitrary message(s)
@@ -58,6 +56,7 @@
 		crt_image.appearance_flags = NO_CLIENT_COLOR | RESET_ALPHA | KEEP_APART
 		crt_image.alpha = 255
 		crt_image.mouse_opacity = 0
+		UpdateOverlays(crt_image, "crt")
 
 		SPAWN_DBG(0.5 SECONDS)	// must wait for map loading to finish
 			if(radio_controller)
