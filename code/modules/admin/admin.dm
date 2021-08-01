@@ -213,7 +213,7 @@ var/global/noir = 0
 						usr.client.holder.audible_ahelps = PM_NO_ALERT
 				src.show_pref_window(usr)
 		if ("toggle_atags")
-			if (src.level >= LEVEL_ADMIN)
+			if (src.level >= LEVEL_SA)
 				usr.client.toggle_atags()
 				src.show_pref_window(usr)
 		if ("toggle_buildmode_view")
