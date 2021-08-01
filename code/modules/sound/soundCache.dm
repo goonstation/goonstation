@@ -415,6 +415,7 @@ var/global/list/soundCache = list(
  	"sound/items/coindrop.ogg" = 'sound/items/coindrop.ogg',\
  	"sound/items/Crowbar.ogg" = 'sound/items/Crowbar.ogg',\
  	"sound/items/Deconstruct.ogg" = 'sound/items/Deconstruct.ogg',\
+ 	"sound/items/defib_charge.ogg" = 'sound/items/defib_charge.ogg',\
  	"sound/items/dicedrop.ogg" = 'sound/items/dicedrop.ogg',\
  	"sound/items/drink.ogg" = 'sound/items/drink.ogg',\
  	"sound/items/eatfood.ogg" = 'sound/items/eatfood.ogg',\
