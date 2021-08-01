@@ -9,8 +9,6 @@
 // // Alert status
 // // And arbitrary messages set by comms computer
 
-var/list/status_display_text_images = list()
-
 #define MAX_LEN 5
 /obj/machinery/status_display
 	icon = 'icons/obj/status_display.dmi'
@@ -27,9 +25,9 @@ var/list/status_display_text_images = list()
 					// 1 = Shuttle timer
 					// 2 = Arbitrary message(s)
 					// 3 = alert picture
-					// 4 = Supply shuttle timer
+					// 4 = Supply shuttle timer  -- NO LONGER SUPPORTED
 					// 5 = Research station destruct timer
-					// 6 = Mining Ore Score Tracking
+					// 6 = Mining Ore Score Tracking -- NO LONGER SUPPORTED
 
 	var/picture_state	// icon_state of alert picture
 	var/message1 = ""	// message line 1
@@ -47,8 +45,6 @@ var/list/status_display_text_images = list()
 
 	var/repeat_update = 0		// true if we are going to update again this ptick
 
-	var/image/text_image = null
-	var/image/temp_image = null
 	var/image/crt_image = null
 
 	// new display
@@ -62,8 +58,6 @@ var/list/status_display_text_images = list()
 		crt_image.appearance_flags = NO_CLIENT_COLOR | RESET_ALPHA | KEEP_APART
 		crt_image.alpha = 255
 		crt_image.mouse_opacity = 0
-
-		UpdateOverlays(crt_image, "crt")
 
 		SPAWN_DBG(0.5 SECONDS)	// must wait for map loading to finish
 			if(radio_controller)
@@ -86,8 +80,10 @@ var/list/status_display_text_images = list()
 
 	// set what is displayed
 	proc/update()
+
 		switch(mode)
 			if(0)
+				maptext = ""
 				ClearAllOverlays()
 				return
 
@@ -115,7 +111,6 @@ var/list/status_display_text_images = list()
 							repeat_update = 0
 					return
 				else
-					ClearAllOverlays()
 					set_picture("default")
 
 
@@ -151,27 +146,6 @@ var/list/status_display_text_images = list()
 
 				update_display_lines(line1,line2)
 
-			if(4)		// supply shuttle timer
-				var/disp1
-				var/disp2
-				var/supply_shuttle_moving = FALSE //delete me
-				var/supply_shuttle_at_station = FALSE // delete me
-				if(supply_shuttle_moving)
-					disp1 = get_supply_shuttle_timer()
-					if(length(disp1) > MAX_LEN)
-						disp1 = "**~**"
-					disp2 = null
-
-				else
-					if(supply_shuttle_at_station)
-						disp1 = "SPPLY"
-						disp2 = "STATN"
-					else
-						disp1 = "SPPLY"
-						disp2 = "DOCK"
-
-				update_display_lines(disp1, disp2)
-
 			else
 				return
 
@@ -191,6 +165,8 @@ var/list/status_display_text_images = list()
 			index2 = 0
 		repeat_update = 1
 		desc = "[message1] [message2]"
+		lastdisplayline1 = null
+		lastdisplayline2 = null
 
 #undef MAX_LEN
 
@@ -204,12 +180,15 @@ var/list/status_display_text_images = list()
 		src.maptext = ""
 		picture_state = state
 		UpdateOverlays(image('icons/obj/status_display.dmi', icon_state=picture_state), "picture")
+		UpdateOverlays(null, "overlay_image")
+		UpdateOverlays(crt_image, "crt")
 
 	proc/set_picture_overlay(var/state, var/overlay)
 		src.maptext = ""
 		picture_state = state+overlay
-		UpdateOverlays(image('icons/obj/status_display.dmi', icon_state=state), "state_image")
+		UpdateOverlays(image('icons/obj/status_display.dmi', icon_state=state), "picture")
 		UpdateOverlays(image('icons/obj/status_display.dmi', icon_state=overlay), "overlay_image")
+		UpdateOverlays(crt_image, "crt")
 
 
 	proc/update_display_lines(var/line1, var/line2, var/image/override = null)
@@ -225,10 +204,8 @@ var/list/status_display_text_images = list()
 		lastdisplayline2 = line2
 
 		UpdateOverlays(null, "picture")
-		UpdateOverlays(null, "state_image")
 		UpdateOverlays(null, "overlay_image")
 		UpdateOverlays(null, "text")
-
 		set_maptext(line1, line2)
 		UpdateOverlays(crt_image, "crt")
 
@@ -237,44 +214,8 @@ var/list/status_display_text_images = list()
 		var/timeleft = emergency_shuttle.timeleft()
 		if(timeleft)
 			return "[add_zero(num2text((timeleft / 60) % 60),2)]~[add_zero(num2text(timeleft % 60), 2)]"
-			// note ~ translates into a blinking :
+			// note ~ translates into a smaller :
 		return ""
-
-	proc/get_supply_shuttle_timer()
-		// if(supply_shuttle_moving)
-		// 	var/timeleft = round((supply_shuttle_time - world.timeofday) / 10,1)
-		// 	return "[add_zero(num2text((timeleft / 60) % 60),2)]~[add_zero(num2text(timeleft % 60), 2)]"
-		// 	// note ~ translates into a blinking :
-		return ""
-
-	// applies overlay images to form a time text string (tn)
-	// valid characters are 0-9 and :
-	// px, py are pixel offsets
-	proc/texticon(var/tn, var/px = 0, var/py = 0)
-		if(!temp_image) temp_image = image('icons/obj/status_display.dmi', "blank")
-
-		var/len = length(tn)
-
-		temp_image.overlays.Cut()
-		for(var/d = 1 to len)
-
-
-			var/char = copytext(tn, len-d+1, len-d+2)
-
-			if(char == " ")
-				continue
-
-			var/image/ID = status_display_text_images[char]
-			if (!ID)
-				status_display_text_images[char] = image('icons/obj/status_display.dmi', icon_state=char)
-				ID = status_display_text_images[char]
-
-			ID.pixel_x = -(d-1)*5 + px
-			ID.pixel_y = py
-
-			temp_image.overlays += ID
-
-		return temp_image
 
 	receive_signal(datum/signal/signal)
 
@@ -293,10 +234,6 @@ var/list/status_display_text_images = list()
 				mode = 3
 				set_picture(signal.data["picture_state"])
 
-			if("supply")
-				if(display_type & 1)
-					mode = 4
-
 			if("destruct")
 				if(display_type & 2)
 					mode = 5
@@ -310,7 +247,7 @@ var/list/status_display_text_images = list()
 
 /obj/machinery/status_display/supply_shuttle
 	name = "status display"
-	display_type = 1
+
 
 /obj/machinery/status_display/research
 	name = "status display"
