@@ -54,6 +54,8 @@ var/list/prefab_shuttles = list()
 		prefab_path = "assets/maps/shuttles/cog1/cog1-zenshuttle.dmm"
 	disaster
 		prefab_path = "assets/maps/shuttles/cog1/cog1-disaster.dmm"
+	royal
+		prefab_path = "assets/maps/shuttles/cog1/cog1-royal.dmm"
 
 /datum/prefab_shuttle/cog2
 	prefab_path = "assets/maps/shuttles/cog2/cog2_default.dmm"
@@ -97,6 +99,8 @@ var/list/prefab_shuttles = list()
 		prefab_path = "assets/maps/shuttles/donut3/donut3-cave.dmm"
 	disaster
 		prefab_path = "assets/maps/shuttles/donut3/donut3-disaster.dmm"
+	royal
+		prefab_path = "assets/maps/shuttles/donut3/donut3-royal.dmm"
 
 /datum/prefab_shuttle/destiny
 	prefab_path = "assets/maps/shuttles/destiny/destiny_default.dmm"
