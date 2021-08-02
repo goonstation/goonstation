@@ -1,20 +1,29 @@
-/datum/component/arable_turf
+/**
+  * Makes a [turf] or [atom/movable] hold a plant datum by attaching an invisible plantpot ([/obj/machinery/plantpot/bareplant])
+  *
+  * Seed will then be planted and then grow out of target and become interactible through clicking directly for atom/movable
+  *
+  *   Note: Bareplant pots are less effective than typical plantpots so hydroponics trays are goto.
+  */
+/datum/component/arable
 	var/auto_water = TRUE
 	var/multi_plant = TRUE
 	var/obj/machinery/plantpot/bareplant/P
 
+	/** Component will destoy itself after plantpot is destroyed */
 	single_use
 		multi_plant = FALSE
 
+	/** Plantpot must be watered manually (interacted with like a hydroponics tray clicking directly on the plant) */
 	manual_water
 		auto_water = FALSE
 
-/datum/component/arable_turf/Initialize()
+/datum/component/arable/Initialize()
 	if(!istype(parent, /turf) && !istype(parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, list(COMSIG_ATTACKBY), .proc/plant_seed)
 
-/datum/component/arable_turf/proc/plant_seed(atom/A, obj/item/I, mob/user)
+/datum/component/arable/proc/plant_seed(atom/A, obj/item/I, mob/user)
 	PRIVATE_PROC(TRUE)
 	if(P?.disposed)
 		if(istype(A, /atom/movable))
@@ -84,7 +93,7 @@
 			return TRUE
 
 
-/datum/component/arable_turf/proc/remove_plantpot()
+/datum/component/arable/proc/remove_plantpot()
 	PRIVATE_PROC(TRUE)
 	if(istype(parent, /atom/movable))
 		var/atom/movable/AM = parent
@@ -96,6 +105,6 @@
 	if(!multi_plant)
 		UnregisterFromParent()
 
-/datum/component/arable_turf/UnregisterFromParent()
+/datum/component/arable/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ATTACKBY)
 	. = ..()
