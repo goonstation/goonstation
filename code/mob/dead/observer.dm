@@ -834,3 +834,4 @@ mob/dead/observer/proc/insert_welder_observer(var/atom/target) //aaaaaa i had to
 	set_loc(newobs)
 	if (isghostrestrictedz(newobs.z) && !restricted_z_allowed(newobs, get_turf(newobs)) && !(src.client && src.client.holder))
 		newobs.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
+	return newobs

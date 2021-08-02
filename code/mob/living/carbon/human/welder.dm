@@ -229,19 +229,19 @@
 				var/mob/living/carbon/human/welder/W = src
 				W.incorporealize()
 
+			if (M.mind)
+				O.Browse(grabResource("html/welder_possession.html"),"window=welder_possession;size=600x440;title=Welder Possession")
 			var/mob/dead/observer/O = M.ghostize()
 			boutput(O, "<span class='bold' style='color:red;font-size:150%'>You have been temporarily removed from your body!</span>")
-			if (O.mind)
-				O.Browse(grabResource("html/welder_possession.html"),"window=welder_possession;size=600x440;title=Welder Possession")
 			usr.mind.swap_with(M)
-			O.insert_welder_observer(M)
-			O.mind.dnr = 1
-			O.verbs -= list(/mob/verb/setdnr)
+			var/mob/dead/target_observer/welder_ghost/WG = O.insert_welder_observer(M)
+			WG.mind.dnr = 1
+			WG.verbs -= list(/mob/verb/setdnr)
 			sleep(45 SECONDS)
 			M.mind.swap_with(usr)
 			sleep(5 DECI SECONDS)
-			O.mind.dnr = 0
-			O.verbs += list(/mob/verb/setdnr)
+			WG.mind.dnr = 0
+			WG.verbs += list(/mob/verb/setdnr)
 			if(M.loc)
 				O.mind.transfer_to(M)
 
@@ -417,14 +417,14 @@ ABSTRACT_TYPE(/datum/targetable/welder)
 			if(isdead(H))
 				boutput(usr, "<span class='alert'>You cannot possess a corpse.</span>")
 				return 1
-			if(H.client)
-				boutput(usr, "<b>You begin to possess [H].</b>")
-				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
-				H.playsound_local(H.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
-				return W.take_control(H)
-			else
+			//if(H.client)
+			boutput(usr, "<b>You begin to possess [H].</b>")
+			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
+			H.playsound_local(H.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
+			return W.take_control(H)
+			/*else
 				boutput(usr, "<b>The target must have a consciousness to be possessed.</b>")
-				return 1
+				return 1*/
 		else
 			boutput(usr, "<span class='alert'>You cannot possess a non-human.</span>")
 			return 1
