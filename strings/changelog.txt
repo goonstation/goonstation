@@ -1,5 +1,9 @@
 
 (t)mon aug 02 21
+(u)Flaborized
+(p)5653
+(e)🎨|sprites
+(+)Resprited the crusher.
 (u)zjdtmkhzt
 (p)5587
 (e)|
