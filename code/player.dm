@@ -149,23 +149,23 @@
 
 	/// Downloads cloud data from goonhub
 	proc/cloud_fetch()
-		var/list/ret = cloud_fetch_target_ckey(src.ckey)
-		if (ret)
-			cloudsaves = ret["saves"]
-			clouddata = ret["cdata"]
+		var/list/data = cloud_fetch_target_ckey(src.ckey)
+		if (data)
+			cloudsaves = data["saves"]
+			clouddata = data["cdata"]
 			return TRUE
 
 	/// returns the clouddata of a target ckey in list form
 	proc/cloud_fetch_target_data_only(target)
-		var/list/ret = cloud_fetch_target_ckey(target)
-		if (ret)
-			return ret["cdata"]
+		var/list/data = cloud_fetch_target_ckey(target)
+		if (data)
+			return data["cdata"]
 
 	/// returns the cloudsaves of a target ckey in list form
 	proc/cloud_fetch_target_saves_only(target)
-		var/list/ret = cloud_fetch_target_ckey(target)
-		if (ret)
-			return ret["saves"]
+		var/list/data = cloud_fetch_target_ckey(target)
+		if (data)
+			return data["saves"]
 
 	/// Returns cloud data and saves from goonhub for the target ckey in list form
 	proc/cloud_fetch_target_ckey(target)
