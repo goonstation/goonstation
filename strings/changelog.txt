@@ -1,4 +1,9 @@
 
+(t)mon aug 02 21
+(u)zjdtmkhzt
+(p)5587
+(e)|
+(+)The right click interact option should now hit stuff with held objects instead of dropping the current object and picking the other one up.
 (t)sat jul 31 21
 (u)Walpvrgis
 (p)5616
