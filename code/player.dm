@@ -121,7 +121,7 @@
 		request.begin_async()
 		return TRUE // I guess
 
-	/// Sets a cloud key value pair and send it to goonhub for a target ckey
+	/// Sets a cloud key value pair and sends it to goonhub for a target ckey
 	proc/cloud_put_target(target, key, value)
 		var/list/data = cloud_fetch_target_data_only(target)
 		if(!data)
