@@ -501,9 +501,9 @@
 		AP.remove_from_attached()
 		removed++
 	if(removed == 1)
-		T.visible_message("The artifact form that was attached falls to the ground.")
+		src.visible_message("The artifact form that was attached falls to the ground.")
 	else if(removed > 1)
-		T.visible_message("All the artifact forms that were attached fall to the ground.")
+		src.visible_message("All the artifact forms that were attached fall to the ground.")
 
 /obj/proc/ArtifactDestroyed()
 	// Call this rather than straight disposing() on an artifact if you want to destroy it. This way, artifacts can have their own
