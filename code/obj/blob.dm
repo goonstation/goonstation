@@ -589,9 +589,9 @@
 	anim_overlay = "nucleus_blink"
 	special_icon = 1
 	desc = "The core of the blob. Destroying all nuclei effectively stops the organism dead in its tracks."
-	armor = 3
-	health_max = 250
-	health = 250
+	armor = 1.5
+	health_max = 500
+	health = 500
 	temp_tolerance = 1200
 	fire_coefficient = 0.5
 	poison_coefficient = 0.5
