@@ -169,7 +169,7 @@
 
 	/// Returns cloud data and saves from goonhub for the target ckey in list form
 	proc/cloud_fetch_target_ckey(target)
-		if(!cdn ) return
+		if(!cdn) return
 		target = ckey(target)
 		if (!target) return
 
