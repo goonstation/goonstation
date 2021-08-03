@@ -88,6 +88,7 @@
 
 		SPAWN_DBG(1 SECOND)
 			broadcast_sound(signal_intro)
+			sleep(8 SECONDS)
 			play_all_numbers()
 			broadcast_sound(signal_intro)
 
@@ -195,8 +196,8 @@
 				if (M.client.ignore_sound_flags)
 					if (M.client.ignore_sound_flags & SOUND_ALL)
 						continue
-				M << sound(soundfile, volume = 30, channel = sound_channel, wait = 1)
-
+				M.playsound_local(M, soundfile, 30, 0, flags = SOUND_IGNORE_SPACE)
+				sleep(1.2 SECONDS)
 
 	proc/play_all_numbers()
 		var/batch = 0
