@@ -493,6 +493,12 @@
 		src.ArtifactDestroyed()
 	return
 
+/// Removes all artifact forms attached to this and makes them fall to the floor
+/// Because artifacts often like to disappear in mysterious ways
+/obj/proc/remove_artifact_forms()
+	for(var/obj/item/sticker/postit/artifact_paper/AP in src.vis_contents)
+		AP.fall_off()
+
 /obj/proc/ArtifactDestroyed()
 	// Call this rather than straight disposing() on an artifact if you want to destroy it. This way, artifacts can have their own
 	// version of this for ones that will deliver a payload if broken.
@@ -514,6 +520,8 @@
 				T.visible_message("<span class='alert'><B>[src] warps in on itself and vanishes!</B></span>")
 			if("precursor")
 				T.visible_message("<span class='alert'><B>[src] implodes, crushing itself into dust!</B></span>")
+
+	src.remove_artifact_forms()
 
 	src.ArtifactDeactivated()
 
