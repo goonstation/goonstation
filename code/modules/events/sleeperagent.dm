@@ -92,7 +92,7 @@
 			play_all_numbers()
 			broadcast_sound(signal_intro)
 
-			sleep(30 SECONDS) //30s to let the signal play
+			sleep(2 SECONDS)
 			var/mob/living/carbon/human/H = null
 			num_agents = min(num_agents,candidates.len)
 			for(var/i = 0, i<num_agents,i++)
