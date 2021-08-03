@@ -1,4 +1,9 @@
 
+(t)tue aug 03 21
+(u)Walpvrgis
+(p)5646
+(e)🆕🎨|feature, sprites
+(*)The Cranial Keratin Formation gene now randomly chooses sets of horns from several different sprite options.
 (t)mon aug 02 21
 (u)Flaborized
 (p)5653
