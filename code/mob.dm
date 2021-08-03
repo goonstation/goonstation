@@ -3029,12 +3029,4 @@
 
 // to check if someone is abusing cameras with stuff like artifacts, power gloves, etc
 /mob/proc/in_real_view_range(var/turf/T)
-	var/view_range = 10
-	if (src.client)
-		if(istext(src.client.view))
-			var/list/ranges = splittext(src.client.view, "x")
-			// need to divide by two, since is the entire length/width of the screen
-			view_range = text2num(max(ranges)) / 2
-		else
-			view_range = src.client.view
-	return src.client && IN_RANGE(T, src, view_range)
+	return src.client && IN_RANGE(T, src, WIDE_TILE_WIDTH)
