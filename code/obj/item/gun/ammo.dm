@@ -126,7 +126,7 @@
 		else if (A.caliber in K.caliber) // Some guns can have multiple calibers.
 			check = 1
 		else if (K.caliber == null) // Special treatment for zip guns, huh.
-			if (A.caliber == 1.58)  // Prevent MRPT rocket
+			if (A.caliber > 0.70) // Prevent Shotgun, Grenade, and RPG
 				check = 0
 			else
 				check = 1
@@ -201,7 +201,7 @@
 		else if (A.caliber in K.caliber)
 			check = 1
 		else if (K.caliber == null)
-			if (A.caliber > 1) // Prevent MRPT rocket
+			if (A.caliber > 0.70) // Prevent Shotgun, Grenade, and RPG
 				check = 0
 			else
 				check = 1 // For zip guns.

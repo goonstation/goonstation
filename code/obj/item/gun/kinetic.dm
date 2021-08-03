@@ -787,18 +787,16 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "zipgun"
 	force = MELEE_DMG_PISTOL
 	contraband = 6
-	caliber = null // use any ammo at all BA HA HA HA HA
+	caliber = null /// Caliber validated in /obj/item/ammo/bullets/proc/loadammo
 	max_ammo_capacity = 2
 	var/failure_chance = 6
 	var/failured = 0
 
 	New()
-
 		ammo = new/obj/item/ammo/bullets/bullet_22
 		ammo.amount_left = 0 // start empty
 		set_current_projectile(new/datum/projectile/bullet/bullet_22)
 		..()
-
 
 	shoot(var/target,var/start ,var/mob/user)
 		if(failured)
@@ -1304,29 +1302,30 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 
 	New()
-		set_current_projectile(new/datum/projectile/bullet/nails)
+		set_current_projectile(new/datum/projectile/bullet/a12)
 		ammo = new /obj/item/ammo/bullets/a12
 		ammo.amount_left = 0 // Spawn empty.
 		..()
 
 	attack_self(mob/user as mob)
 		if (src.icon_state == "slamgun-ready")
-			w_class = W_CLASS_NORMAL
-			if (src.ammo.amount_left > 0 || src.casings_to_eject > 0)
-				src.icon_state = "slamgun-open-loaded"
-			else
-				src.icon_state = "slamgun-open"
-			update_icon()
-			two_handed = 0
-			user.updateTwoHanded(src, 0)
+			if(user.updateTwoHanded(src, FALSE)) // should never fail, but respect error codes
+				w_class = W_CLASS_NORMAL
+				if (src.ammo.amount_left > 0 || src.casings_to_eject > 0)
+					src.icon_state = "slamgun-open-loaded"
+				else
+					src.icon_state = "slamgun-open"
+				update_icon()
+				two_handed = 0
+
 			user.update_inhands()
 		else
-			w_class = W_CLASS_BULKY
-			src.icon_state = "slamgun-ready"
-			update_icon()
-			two_handed = 1
-			user.updateTwoHanded(src, 1)
-			user.update_inhands()
+			if(user.updateTwoHanded(src, TRUE))
+				w_class = W_CLASS_BULKY
+				src.icon_state = "slamgun-ready"
+				update_icon()
+				two_handed = 1
+				user.update_inhands()
 		..()
 
 	canshoot()
@@ -1336,9 +1335,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			return 0
 
 	attack_hand(mob/user as mob)
-		if ((src.loc == user) && user.find_in_hand(src))
-			return // Not unloading like that.
+		. = src.casings_to_eject
 		..()
+		if(. != src.casings_to_eject)
+			update_icon()
 
 	update_icon()
 		if(src.icon_state == "slamgun-ready")
@@ -1356,47 +1356,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isghostcritter(usr))
 			return ..()
 		if (over_object == usr && src.icon_state == "slamgun-open-loaded") // sorry for doing it like this, but i have no idea how to do it cleaner.
-			src.add_fingerprint(usr)
-			if (src.sanitycheck(0, 1) == 0)
-				usr.show_text("You can't unload this gun.", "red")
-				return
-			if (src.ammo.amount_left <= 0)
-				if ((src.casings_to_eject > 0))
-					if (src.sanitycheck(1, 0) == 0)
-						src.casings_to_eject = 0
-						return
-					else
-						usr.show_text("You eject [src.casings_to_eject] casings from [src].", "red")
-						src.ejectcasings()
-						src.casings_to_eject = 0 // needed for bullets that don't have casings (???)
-						src.update_icon()
-						return
-				else
-					usr.show_text("[src] is empty!", "red")
-					return
-
-			// Make a copy here to avoid item teleportation issues.
-			var/obj/item/ammo/bullets/ammoHand = new src.ammo.type
-			ammoHand.amount_left = src.ammo.amount_left
-			ammoHand.name = src.ammo.name
-			ammoHand.icon = src.ammo.icon
-			ammoHand.icon_state = src.ammo.icon_state
-			ammoHand.ammo_type = src.ammo.ammo_type
-			ammoHand.delete_on_reload = 1 // No duplicating empty magazines, please (Convair880).
-			ammoHand.update_icon()
-			usr.put_in_hand_or_drop(ammoHand)
-
-			// The gun may have been fired; eject casings if so.
-			src.ejectcasings()
-			src.casings_to_eject = 0
-
-			src.ammo.amount_left = 0
-			src.update_icon()
-
-			src.add_fingerprint(usr)
-			ammoHand.add_fingerprint(usr)
-
-			usr.visible_message("<span class='alert'>[usr] unloads [src].</span>", "<span class='alert'>You unload [src].</span>")
+			attack_hand(usr)
 			return
 		..()
 

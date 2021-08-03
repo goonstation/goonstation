@@ -1394,6 +1394,16 @@ PIPE BOMBS + CONSTRUCTION
 		return
 
 	attackby(obj/item/W, mob/user)
+		if(istype(W, /obj/item/pipebomb/frame))
+			var/obj/item/pipebomb/frame/other_frame = W
+			if((src.state + other_frame.state == 3)) // one of pipes is welded, other one is not
+				user.u_equip(src)
+				user.u_equip(W)
+				playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
+				var/obj/item/gun/kinetic/slamgun/S = new/obj/item/gun/kinetic/slamgun
+				user.put_in_hand_or_drop(S)
+				qdel(W)
+				qdel(src)
 
 		if(isweldingtool(W) && state == 1)
 			if(!W:try_weld(user, 1))

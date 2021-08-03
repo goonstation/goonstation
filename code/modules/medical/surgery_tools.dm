@@ -322,9 +322,9 @@ CONTAINS:
 				user.show_text("You combine [F] and [src]. This looks pretty unsafe!")
 				user.u_equip(F)
 				user.u_equip(src)
-				var/turf/T = get_turf(src)
-				playsound(T, "sound/items/Deconstruct.ogg", 50, 1)
-				new/obj/item/gun/kinetic/zipgun(T)
+				playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
+				var/obj/item/gun/kinetic/zipgun/Z = new/obj/item/gun/kinetic/zipgun
+				user.put_in_hand_or_drop(Z)
 				qdel(F)
 				qdel(src)
 
