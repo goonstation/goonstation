@@ -23,7 +23,7 @@
 	var/field_strength = 2
 
 	get_artifact_type()
-		return field_type == HEALING ? ART_HEALING_NAME : ART_HARMING_NAME
+		return field_type == ART_HEALING ? ART_HEALING_NAME : ART_HARMING_NAME
 
 	New()
 		..()

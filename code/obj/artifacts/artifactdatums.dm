@@ -189,7 +189,7 @@ ABSTRACT_TYPE(/datum/artifact/)
 	/// get the artifact type name
 	/// an artifact may have different ones depending on the values
 	/// for instance, healing aura artifacts are referred to differently from damage aura ones
-	/proc/get_artifact_type()
+	proc/get_artifact_type()
 		return src.type_name
 
 // SPECIFIC DATUMS
