@@ -25,18 +25,25 @@
 	probability = 99
 	msgGain = "A pair of horns erupt from your head."
 	msgLose = "Your horns crumble away into nothing."
+	var/hornstyle = "random"
 
 	OnAdd()
 		if (ishuman(owner))
-			var/hornstyle = pick("horns","horns_ram","horns_ramblk","horns_dark","horns_beige","horns_light","horns_sml","horns_unicorn")
-
-			if (id == "demon_horns")
-				hornstyle = pick("horns_devil","horns_ramblk","horns_sml","horns_dark")
+			if(hornstyle == "random")
+				hornstyle = pick("horns","horns_ram","horns_ramblk","horns_dark","horns_beige","horns_light","horns_sml","horns_unicorn")
 
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[hornstyle]", layer = MOB_LAYER)
 			if (ismonkey(owner))
 				overlay_image.pixel_y = -6
 		..()
+
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		if(variable == "hornstyle")
+			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[newval]", layer = MOB_LAYER)
+			if(ismonkey(owner))
+				overlay_image.pixel_y = -6
+			owner.UpdateOverlays(overlay_image, id)
 
 /datum/bioEffect/horns/evil //this is just for /proc/soulcheck
 	occur_in_genepools = 0
@@ -49,6 +56,7 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 	id = "demon_horns"
+	hornstyle = "horns_devil"
 
 /datum/bioEffect/particles
 	name = "Dermal Glitter"
