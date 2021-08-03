@@ -82,9 +82,6 @@
 					num_agents = 1
 				else
 					num_agents = 0
-		if(!num_agents)
-			cleanup_event()
-			return
 
 		SPAWN_DBG(1 SECOND)
 			broadcast_sound(signal_intro)
@@ -93,13 +90,16 @@
 			broadcast_sound(signal_intro)
 
 			sleep(2 SECONDS)
-			var/mob/living/carbon/human/H = null
-			num_agents = min(num_agents,candidates.len)
-			for(var/i = 0, i<num_agents,i++)
-				H = pick(candidates)
-				candidates -= H
-				if(istype(H))
-					awaken_sleeper_agent(H)
+			if (length(candidates))
+				var/mob/living/carbon/human/H = null
+				num_agents = min(num_agents,length(candidates))
+				for(var/i = 0, i<num_agents,i++)
+					H = pick(candidates)
+					candidates -= H
+					if(istype(H))
+						awaken_sleeper_agent(H)
+			else
+				message_admins("No valid candidates to wake for sleeper event.")
 
 			if (src.centcom_headline && src.centcom_message && random_events.announce_events)
 				sleep(src.message_delay)
