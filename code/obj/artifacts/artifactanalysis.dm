@@ -117,10 +117,18 @@
 		if (!params["hasPen"])
 			boutput(usr, "You can't write without a pen!")
 			return FALSE
+
+		var/obj/O = null
+		if(isobj(src.loc))
+			O = src.loc
 		switch(action)
 			if("origin")
 				artifactOrigin = params["newOrigin"]
 			if("type")
+				// update the displayed label in the name of the object
+				if(O)
+					O.remove_suffixes("([artifactType])")
+					O.name_suffix("([params["newType"]])")
 				artifactType = params["newType"]
 			if("trigger")
 				artifactTriggers = params["newTriggers"]
@@ -129,8 +137,8 @@
 			if("detail")
 				artifactDetails = params["newDetail"]
 		. = TRUE
-		if(isobj(src.loc))
-			src.checkArtifactVars(src.loc)
+		if(O)
+			src.checkArtifactVars(O)
 
 	ui_data(mob/user)
 		var/obj/item/pen/P = user.find_type_in_hand(/obj/item/pen)
