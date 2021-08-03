@@ -28,13 +28,12 @@
 	var/hornstyle = "random"
 
 	OnAdd()
-		if (ishuman(owner))
-			if(hornstyle == "random")
-				hornstyle = pick("horns","horns_ram","horns_ramblk","horns_dark","horns_beige","horns_light","horns_sml","horns_unicorn")
+		if(hornstyle == "random")
+			hornstyle = pick("horns","horns_ram","horns_ramblk","horns_dark","horns_beige","horns_light","horns_sml","horns_unicorn")
 
-			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[hornstyle]", layer = MOB_LAYER)
-			if (ismonkey(owner))
-				overlay_image.pixel_y = -6
+		overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[hornstyle]", layer = MOB_LAYER)
+		if (ismonkey(owner))
+			overlay_image.pixel_y = -6
 		..()
 
 	onVarChanged(variable, oldval, newval)
