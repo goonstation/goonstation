@@ -185,6 +185,13 @@ ABSTRACT_TYPE(/datum/artifact/)
 	proc/get_rarity_modifier()
 		return src.rarity_weight ? 0.995**src.rarity_weight : 0.2
 
+
+	/// get the artifact type name
+	/// an artifact may have different ones depending on the values
+	/// for instance, healing aura artifacts are referred to differently from damage aura ones
+	/proc/get_artifact_type()
+		return src.type_name
+
 // SPECIFIC DATUMS
 
 ABSTRACT_TYPE(/datum/artifact/art)
