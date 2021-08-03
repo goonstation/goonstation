@@ -28,8 +28,12 @@
 
 	OnAdd()
 		if (ishuman(owner))
-			var/hstyle = pick("horns","horns_ram","horns_ramblk","horns_dark","horns_beige","horns_light","horns_sml","horns_unicorn")
-			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[hstyle]", layer = MOB_LAYER)
+			var/hornstyle = pick("horns","horns_ram","horns_ramblk","horns_dark","horns_beige","horns_light","horns_sml","horns_unicorn")
+
+			if (id == "demon_horns")
+				hornstyle = pick("horns_devil","horns_ramblk","horns_sml","horns_dark")
+
+			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[hornstyle]", layer = MOB_LAYER)
 			if (ismonkey(owner))
 				overlay_image.pixel_y = -6
 		..()
