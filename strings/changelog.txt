@@ -1,5 +1,8 @@
 
 (t)tue aug 03 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Ectothermid adjustment - protection efficiency decreases if blocking lots of damage in a short time, and releases stored heat in a medium-sized fireflash on death.
 (u)Walpvrgis
 (p)5646
 (e)🆕🎨|feature, sprites
