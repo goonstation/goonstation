@@ -246,7 +246,7 @@
 			for(var/obj/item/A in src) // For each item(A) in the rack(src) ...
 				if(!istype(A, contained_weapon)) // Check if the item(A) is not(!) accepted in this kind of rack(contained_weapon) and then...
 					continue // It's not accepted here! Vamoose! Skidaddle! Git outta here! (Move on without executing any further code in this proc.)
-				A:charge(10) //You passed the if test, charge the item(A) in increments of a number(10) (Rechargers charge by 20, so this makes racks half as fast.)
+				SEND_SIGNAL(A, COMSIG_CELL_CHARGE, 10)
 
 	Topic(href, href_list)
 		if(get_dist(usr,src) > 1 && !issilicon(usr) && !isAI(usr))

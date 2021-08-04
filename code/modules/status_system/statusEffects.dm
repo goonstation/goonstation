@@ -1030,6 +1030,7 @@
 
 		onAdd(optional=null)
 			. = ..()
+			ON_COOLDOWN(owner, "lying_bullet_dodge_cheese", 0.5 SECONDS)
 			if (isliving(owner))
 				L = owner
 				if (L.getStatusDuration("burning"))

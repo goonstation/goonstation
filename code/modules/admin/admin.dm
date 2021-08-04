@@ -212,6 +212,10 @@ var/global/noir = 0
 					if (PM_DECTALK_ALERT)
 						usr.client.holder.audible_ahelps = PM_NO_ALERT
 				src.show_pref_window(usr)
+		if ("toggle_atags")
+			if (src.level >= LEVEL_SA)
+				usr.client.toggle_atags()
+				src.show_pref_window(usr)
 		if ("toggle_buildmode_view")
 			if (src.level >= LEVEL_PA)
 				usr.client.holder.buildmode_view = !usr.client.holder.buildmode_view

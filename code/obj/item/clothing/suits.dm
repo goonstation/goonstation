@@ -363,7 +363,7 @@
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 0.6)
+		setProperty("movespeed", 0.45)
 		setProperty("radprot", 50)
 		setProperty("coldprot", 15)
 		setProperty("heatprot", 15)

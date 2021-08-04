@@ -132,7 +132,7 @@ datum
 			if(loud)
 				boutput(world,"composite_heat_capacity: [composite_heat_capacity]")
 
-			var/new_temperature = (total_temperature*total_volume*composite_heat_capacity + exposed_temp*exposed_volume*exposed_heat_capacity)/(total_volume*composite_heat_capacity + exposed_volume*exposed_heat_capacity)
+			var/new_temperature = (total_temperature*total_volume*composite_heat_capacity + exposed_temp*exposed_volume*exposed_heat_capacity)/max(total_volume*composite_heat_capacity + exposed_volume*exposed_heat_capacity, 1)
 
 			if(loud)
 				boutput(world,"new_temperature = ([total_temperature]*[total_volume]*[composite_heat_capacity] + [exposed_temp]*[exposed_volume]*[exposed_heat_capacity])/([total_volume]*[composite_heat_capacity] + [exposed_volume]*[exposed_heat_capacity])")

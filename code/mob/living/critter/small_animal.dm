@@ -2626,7 +2626,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	butcherable = 1
 	health_brute = 15
 	health_burn = 15
-	pet_text = list("gently snips", "rubs with a soft claw", "cuddles")
+	pet_text = list("gently pets", "rubs", "cuddles")
 
 	New()
 		..()

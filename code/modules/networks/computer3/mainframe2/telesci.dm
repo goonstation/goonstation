@@ -1002,7 +1002,7 @@ proc/is_teleportation_allowed(var/turf/T)
 				else
 					src.attack_hand(M)
 
-		if (issilicon(usr))
+		if (issilicon(usr) || isAIeye(usr))
 			if (!(usr in nearby))
 				if (usr.using_dialog_of(src))
 					if (updateReadout)

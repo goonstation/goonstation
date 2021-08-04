@@ -1182,18 +1182,21 @@
 				return 0 // cant touch that, sorry
 			else
 				var/list/ret = list()
-				SEND_SIGNAL(budgun, COMSIG_CELL_CHECK_CHARGE, ret)
-				if (ret["charge"] < ret["max_charge"]) // is our gun not full?
-					if (src.cell.charge > (GUARDBOT_LOWPOWER_ALERT_LEVEL - 10 + (ret["max_charge"] - ret["charge"]))) // Can we charge it without tanking our battery?
-						src.cell.charge -= (ret["max_charge"] - ret["charge"]) // discharge us
-						SEND_SIGNAL(budgun, COMSIG_CELL_CHARGE, ret["max_charge"])
-						return 1 // and we're good2shoot
-					else if (CheckMagCellWhatever()) // is there enough charge left in the gun?
-						return 0 // cool, but we're not gonna charge it
-					else // welp
-						return DischargeAndTakeANap()
-				else // gun's full or something?
-					return 1 // cool beans
+				if(SEND_SIGNAL(budgun, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+					if (ret["charge"] < ret["max_charge"]) // is our gun not full?
+						if (src.cell.charge > (GUARDBOT_LOWPOWER_ALERT_LEVEL - 10 + (ret["max_charge"] - ret["charge"]))) // Can we charge it without tanking our battery?
+							src.cell.charge -= (ret["max_charge"] - ret["charge"]) // discharge us
+							SEND_SIGNAL(budgun, COMSIG_CELL_CHARGE, ret["max_charge"])
+							return 1 // and we're good2shoot
+						else if (CheckMagCellWhatever()) // is there enough charge left in the gun?
+							return 0 // cool, but we're not gonna charge it
+						else // welp
+							return DischargeAndTakeANap()
+					else // gun's full or something?
+						return 1 // cool beans
+				else//bad cell???
+					return 0
+
 
 	proc/DischargeAndTakeANap()
 		if(!src.budgun || !src.cell)

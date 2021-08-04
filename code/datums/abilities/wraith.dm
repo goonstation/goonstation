@@ -728,6 +728,7 @@
 		lucky_dude.special_role = "poltergeist"
 		lucky_dude.dnr = 1
 		lucky_dude.transfer_to(P)
+		ticker.mode.Agimmicks |= lucky_dude
 		//P.ckey = lucky_dude.ckey
 		P.antagonist_overlay_refresh(1, 0)
 		message_admins("[lucky_dude.key] respawned as a poltergeist for [src.holder.owner].")

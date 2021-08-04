@@ -22012,7 +22012,7 @@
 /area/station/medical/medbay/lobby)
 "bjl" = (
 /obj/decoration/decorativeplant/plant7,
-/obj/item_dispenser/perscription_glasses,
+/obj/item_dispenser/prescription_glasses,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
 "bjn" = (
@@ -41091,13 +41091,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/diner/hangar)
-"oBb" = (
-/obj/machinery/door/airlock/pyro/engineering{
-	dir = 4;
-	name = "Mining"
-	},
-/turf/space/fluid/manta/nospawn,
-/area/station/shield_zone/manta)
 "oEq" = (
 /obj/decal/tile_edge/line/black{
 	dir = 9;
@@ -118317,7 +118310,7 @@ aaa
 aaa
 aaa
 aaa
-oBb
+act
 act
 aBr
 aBr
