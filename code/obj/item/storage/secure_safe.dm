@@ -711,7 +711,7 @@
 /obj/item/storage/secure/ssafe/candy_shop
 	configure_mode = 0
 	random_code = 1
-	spawn_contents = list(/obj/item/robot_foodsynthesizer,\
+	spawn_contents = list(/obj/item/robot_donut_synthesizer,\
 	/obj/item/spacecash/thousand,\
 	/obj/item/gun/kinetic/derringer/empty)
 
