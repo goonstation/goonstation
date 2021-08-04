@@ -7,6 +7,25 @@
 #define ARTEMIS_MAP_SHIP_PIXEL_RATIO 29.7 //3804 pixel diameter circle for rendering ship object, compared to a 128 pixel circle for map object movement; scale diff is 29.7
 #define ARTEIMS_MAP_VIEW_SIZE 31 // 31x31 tiles
 
+/datum/artemis_engine_controller
+	var/malfunction = FALSE
+	//Abstract Engine Health into 1:NW, 2:NE, 3:SW, 4:SE, 5-8:S
+	var/list/engine_health = list(1,1,1,1,1,1,1,1)
+	var/list/engine_list = list()
+
+	proc/engine_check()
+		. = !src.malfunction && TRUE //check that requipment power is on
+
+	proc/use_power(list/banks, stress)
+		for(var/bank in banks)
+			for(var/obj/machinery/shuttle/engine/propulsion/P in engine_list[bank])
+				P.use_power(500)
+
+	proc/add_engine(obj/machinery/shuttle/engine/propulsion/P)
+		if(!src.engine_list[P.id])
+			src.engine_list[P.id] = list()
+		src.engine_list[P.id] |= P
+
 /obj/artemis
 	name = "Artemis"
 	desc = "Artemis"
@@ -78,20 +97,19 @@
 
 	var/control_lock = 0
 
-	var/engine_ok = TRUE
 	var/full_throttle = FALSE
-	var/list/engine_health = list(1,1,1,1,1,1,1,1)
-
 	var/buoy_count = 3
 
 	var/bottom_x_offset = 57 // tile offset for duplicated bottom
 
 	var/obj/machinery/sim/vr_bed/flight_chair/controls
 	var/datum/movement_controller/artemis/controller
+	var/datum/artemis_engine_controller/engines
 	var/controller_type = null
 
 	New()
 		..()
+		src.engines = new(src)
 		if(controller_type)
 			var/path = text2path("/datum/movement_controller/artemis/[controller_type]")
 			controller = new path(src)
@@ -142,6 +160,12 @@
 	get_movement_controller()
 		return controller
 
+	proc/engine_check()
+		. = engines.engine_check()
+
+	proc/use_power(var/list/banks, var/stress)
+		engines.use_power(banks, stress)
+
 	proc/link_landmark()
 		for(var/turf/T in landmarks[LANDMARK_SHIPS])
 			if(landmarks[LANDMARK_SHIPS][T] == src.stars_id)
@@ -151,9 +175,6 @@
 		if(!is_syndicate && !special_places.Find(src.name))
 		 	special_places.Add(src.name)
 #endif
-
-	proc/engine_check()
-		return src.engine_ok
 
 	proc/gen_stars()
 		var/map_max_r = map_size*16*sqrt(2) // circle than inscribes the map view square
@@ -498,7 +519,7 @@
 		while(do_process)
 			if(vel_mag)
 				calc_new_coords()
-				if(engine_check()) // ENGINE CHECK HERE LATER
+				if(src.engine_check()) // ENGINE CHECK HERE LATER
 					if(!back.icon_state)
 						back.icon_state = "[icon_base]_thruster_back"
 				else

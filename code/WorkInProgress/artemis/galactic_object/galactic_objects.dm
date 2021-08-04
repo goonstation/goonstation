@@ -337,7 +337,7 @@
 					SPAWN_DBG(0)
 						var/old_mag = ship.vel_mag
 						var/old_angle = ship.vel_angle
-						ship.engine_ok = FALSE
+						ship.engines.malfunction = TRUE
 						ship.vel_mag = 300
 						ship.vel_angle += rand()*90 - (45)
 						ship.accelerating = 1
@@ -348,7 +348,7 @@
 						ship.update_my_stuff()
 						sleep(2 SECONDS)
 						ship.accelerating = 0
-						ship.engine_ok = TRUE
+						ship.engines.malfunction = FALSE
 			else if(squared_pixel_distance < 2600 ) //1600
 				var/theta = arctan(src.actual_y, src.actual_x)
 				theta += ship.ship_angle

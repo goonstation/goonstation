@@ -30,16 +30,18 @@
 					ship.accel *= 2
 					src.ship.controls.myhud.throttle_stick.icon_state = "throttle_up"
 
-					animate(ship.back, transform=matrix().Scale(1.2), loop=-1, time=3)
-					animate(transform=matrix(), loop=-1, time=4)
-					ship.back.color = "#f0f"
+					if(ship.back)
+						animate(ship.back, transform=matrix().Scale(1.2), loop=-1, time=3)
+						animate(transform=matrix(), loop=-1, time=4)
+						ship.back.color = "#f0f"
 			else
 				if(ship.full_throttle)
 					ship.full_throttle = FALSE
 					ship.accel = initial(ship.accel)
 					src.ship.controls.myhud.throttle_stick.icon_state = "throttle_down"
-					animate(ship.back, transform=matrix(), loop=0, time=6)
-					ship.back.color = "#fff"
+					if(ship.back)
+						animate(ship.back, transform=matrix(), loop=0, time=6)
+						ship.back.color = "#fff"
 
 			if((keys & KEY_FORWARD) && !(keys & KEY_BACKWARD))
 
@@ -78,6 +80,8 @@
 
 					if(ship.back_left)
 						flick("[ship.icon_base]_thruster_back_l",ship.back_left)
+					ship.engines.use_power(list("sw", "se", "s"), ship.full_throttle)
+
 
 					SPAWN_DBG(ship.animation_speed)
 						ship.accelerating = 0
@@ -103,6 +107,7 @@
 						flick("[ship.icon_base]_thruster_front_l",ship.front_left)
 					if(ship.front_right)
 						flick("[ship.icon_base]_thruster_front_r",ship.front_right)
+					ship.engines.use_power(list("nw", "ne"))
 
 					SPAWN_DBG(ship.animation_speed)
 						ship.accelerating = 0
@@ -129,6 +134,7 @@
 
 					if(ship.front_right)
 						flick("[ship.icon_base]_thruster_front_r",ship.front_right)
+					ship.engines.use_power(list("ne", "sw"))
 
 					SPAWN_DBG(ship.animation_speed)
 						ship.rotating = 0
@@ -155,6 +161,7 @@
 
 					if(ship.back_right)
 						flick("[ship.icon_base]_thruster_back_r",ship.back_right)
+					ship.engines.use_power(list("nw", "se"))
 
 					SPAWN_DBG(ship.animation_speed)
 						ship.rotating = 0
@@ -207,6 +214,7 @@
 					M.accelerating = 1
 
 					M.update_my_stuff()
+					M.engines.use_power(list("s"))
 
 					SPAWN_DBG(M.animation_speed)
 						M.accelerating = 0
@@ -223,6 +231,7 @@
 					M.accelerating = 1
 
 					M.update_my_stuff()
+					M.engines.use_power(list("nw", "ne"))
 
 					SPAWN_DBG(M.animation_speed)
 						M.accelerating = 0

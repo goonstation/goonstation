@@ -136,7 +136,8 @@
 /area/ship/artemis)
 "dl" = (
 /obj/machinery/shuttle/engine/propulsion{
-	icon_state = "alt_propulsion"
+	icon_state = "alt_propulsion";
+	id = "s"
 	},
 /turf/background_canvas,
 /area/ship/artemis)
@@ -239,6 +240,13 @@
 /obj/access_spawn/public,
 /turf/simulated/floor/black,
 /area/ship/arjuna)
+"fE" = (
+/obj/machinery/shuttle/engine/propulsion{
+	icon_state = "alt_propulsion";
+	id = "sw"
+	},
+/turf/background_canvas,
+/area/ship/artemis)
 "fI" = (
 /obj/landmark/destination_landmark{
 	destination_name = "asteroid6"
@@ -337,6 +345,14 @@
 "iy" = (
 /turf/simulated/floor/circuit/off,
 /area/ship/arjuna)
+"iM" = (
+/obj/machinery/shuttle/engine/propulsion{
+	dir = 9;
+	icon_state = "alt_propulsion";
+	id = "ne"
+	},
+/turf/background_canvas,
+/area/ship/artemis)
 "iV" = (
 /obj/rack,
 /obj/item/clothing/suit/rad,
@@ -372,7 +388,8 @@
 "ju" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 9;
-	icon_state = "alt_propulsion"
+	icon_state = "alt_propulsion";
+	id = "nw"
 	},
 /turf/background_canvas,
 /area/ship/artemis)
@@ -948,13 +965,6 @@
 	},
 /turf/simulated/floor/bluegreen,
 /area/ship/arjuna)
-"Bh" = (
-/obj/machinery/shuttle/engine/propulsion{
-	dir = 5;
-	icon_state = "alt_propulsion"
-	},
-/turf/background_canvas,
-/area/ship/artemis)
 "Bl" = (
 /obj/magnet_target_marker/asteroid{
 	height = 13;
@@ -1227,6 +1237,13 @@
 	},
 /turf/space,
 /area/map_gen/planet/gamma)
+"GN" = (
+/obj/machinery/shuttle/engine/propulsion{
+	icon_state = "alt_propulsion";
+	id = "se"
+	},
+/turf/background_canvas,
+/area/ship/artemis)
 "GP" = (
 /obj/decal/fakeobjects/shuttlethruster,
 /obj/decal/fakeobjects/shuttlethruster,
@@ -5848,7 +5865,7 @@ uv
 GV
 po
 ao
-dl
+fE
 Sz
 Sz
 Sz
@@ -6150,7 +6167,7 @@ st
 sU
 po
 Ar
-dl
+fE
 Sz
 Sz
 Sz
@@ -6452,7 +6469,7 @@ CR
 st
 po
 to
-dl
+fE
 Sz
 Sz
 Sz
@@ -12492,7 +12509,7 @@ CB
 CB
 po
 ao
-dl
+GN
 Sz
 Sz
 Sz
@@ -12794,7 +12811,7 @@ CB
 sL
 po
 Ar
-dl
+GN
 Sz
 Sz
 Sz
@@ -13096,7 +13113,7 @@ nz
 uZ
 po
 to
-dl
+GN
 Sz
 Sz
 Sz
@@ -25158,7 +25175,7 @@ Sz
 Sz
 Sz
 Sz
-Bh
+ju
 Ki
 po
 Tt
@@ -28178,7 +28195,7 @@ Sz
 Sz
 Sz
 Sz
-ju
+iM
 hb
 po
 uc
@@ -28480,7 +28497,7 @@ Sz
 Sz
 Sz
 Sz
-Bh
+iM
 Ki
 po
 po

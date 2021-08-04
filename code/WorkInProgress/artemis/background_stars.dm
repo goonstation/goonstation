@@ -68,6 +68,7 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 			parallax_multi = 3  + (1*((rand()*2)-1))
 
 	proc/process()
+		SHOULD_NOT_SLEEP(TRUE) // Check that this isn't being slept
 		var/animate = 0
 		//while(start)
 		if(!rot_mag && !vel_mag)
