@@ -787,7 +787,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "zipgun"
 	force = MELEE_DMG_PISTOL
 	contraband = 6
-	caliber = null /// Caliber validated in /obj/item/ammo/bullets/proc/loadammo
+	caliber = null /// Caliber validated in [/obj/item/ammo/bullets/proc/loadammo]
 	max_ammo_capacity = 2
 	var/failure_chance = 6
 	var/failured = 0
