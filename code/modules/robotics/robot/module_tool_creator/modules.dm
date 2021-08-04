@@ -13,6 +13,7 @@
 	definitions = list(
 		/obj/item/noisemaker,
 		/obj/item/robot_foodsynthesizer,
+		/obj/item/robot_donut_synthesizer,
 		/obj/item/reagent_containers/food/drinks/bottle/beer/borg,
 		/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 		/obj/item/pen/crayon/random/robot,
