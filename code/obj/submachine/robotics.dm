@@ -382,6 +382,71 @@
 		user.show_text("Selection cleared.", "red")
 		return
 
+/obj/item/robot_donut_synthesizer
+	name = "Donut synthesizer"
+	desc = "A portable randomized donut synthesizer."
+	icon = 'icons/obj/kitchen.dmi'
+	icon_state = "synthesizer"
+	var/last_use = 0
+	var/donut_name = "something"
+	var/pick_donut = 0
+
+	attack_self(var/mob/user as mob)
+
+		if (src.last_use && world.time < src.last_use + 50)
+			user.show_text("The synthesizer is recharging!", "red")
+			return
+
+		else
+			src.pick_donut = rand(1, 10)
+			switch(pick_donut)
+				if(1, 2)
+					new /obj/item/reagent_containers/food/snacks/donut(get_turf(src))
+					src.donut_name = "a unfrosted donut"
+				if(3, 4)
+					new /obj/item/reagent_containers/food/snacks/donut/custom/cinnamon(get_turf(src))
+					src.donut_name = "a cinnamon donut"
+				if(5, 6)
+					new /obj/item/reagent_containers/food/snacks/donut/custom/frosted(get_turf(src))
+					src.donut_name = "a frosted donut"
+				if(7, 8)
+					new /obj/item/reagent_containers/food/snacks/bagel(get_turf(src))
+					src.donut_name = "a bagel... is that really donut?"
+				if(9)
+					new /obj/item/reagent_containers/food/snacks/donut/custom/robust(get_turf(src))
+					src.donut_name = "a robust Donut"
+				else
+					user.visible_message("<span class='notice'>The Donut Synthesizer malfuctions! who knows what its gonna dispense?!</span>")
+					playsound(src.loc, "sound/machines/engine_grump1.ogg", 50, 1)
+					var/pick_baddonut = rand(1, 6)
+					switch(pick_baddonut)
+						if(1)
+							new /obj/item/reagent_containers/food/snacks/cookie(get_turf(src))
+						if(2)
+							new /obj/item/reagent_containers/food/snacks/popcorn(get_turf(src))
+						if(3)
+							new /obj/item/reagent_containers/food/snacks/cookie/bacon(get_turf(src))
+						if(4)
+							new /obj/item/reagent_containers/food/snacks/ice_cream/goodrandom(get_turf(src))
+						if(5)
+							new /obj/item/reagent_containers/food/snacks/candy/negativeonebar(get_turf(src))
+						if(6)
+							new /obj/item/reagent_containers/food/snacks/moon_pie/jaffa(get_turf(src))
+
+			if (isrobot(user)) // Carbon mobs might end up using the synthesizer somehow, I guess?
+				var/mob/living/silicon/robot/R = user
+				if (R.cell) R.cell.charge -= 100
+
+			if (src.donut_name != "something")
+				user.visible_message("<span class='notice'>[user] dispenses [src.donut_name]!</span>", "<span class='notice'>You dispense [src.donut_name]!</span>")
+				playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+				src.donut_name = "something"
+
+
+
+			src.last_use = world.time
+			return
+
 /obj/item/reagent_containers/glass/oilcan
 	name = "oil can"
 	desc = "Contains oil intended for use on cyborgs and robots."
