@@ -40,7 +40,8 @@ export const LongRangeTeleporter = (props, context) => {
             )) : (
               <LabeledList.Item>
                 No destinations are currently available.
-              </LabeledList.Item>)}
+              </LabeledList.Item>
+            )}
           </LabeledList>
         </Section>
       </Window.Content>
