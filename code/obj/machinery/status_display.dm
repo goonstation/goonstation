@@ -41,7 +41,7 @@
 
 	var/display_type = 0		// bitmask of messages types to display: 0=normal  1=supply shuttle  2=reseach stn destruct
 
-	var/repeat_update = 0		// true if we are going to update again this ptick
+	var/repeat_update = FALSE	// true if we are going to update again this ptick
 
 	var/image/crt_image = null
 
@@ -49,9 +49,9 @@
 	// register for radio system
 	New()
 		..()
-
+		src.layer -= 0.2
 		crt_image = SafeGetOverlayImage("crt", src.icon, "crt")
-		crt_image.layer = src.layer + 0.2
+		crt_image.layer = src.layer + 0.1
 		crt_image.plane = PLANE_DEFAULT
 		crt_image.appearance_flags = NO_CLIENT_COLOR | RESET_ALPHA | KEEP_APART
 		crt_image.alpha = 255
@@ -84,7 +84,6 @@
 			if(0)
 				maptext = ""
 				ClearAllOverlays()
-				return
 
 			if(1)	// shuttle timer
 				if(emergency_shuttle.online)
@@ -100,18 +99,20 @@
 
 					update_display_lines(displayloc, displaytime)
 
-					if(!repeat_update)
+					if(repeat_update)
 						var/delay = src.base_tick_spacing * PROCESSING_TIER_MULTI(src)
-						SPAWN_DBG(0) //0.5 SECONDS
-							repeat_update = 1
-							for(var/i in 1 to (delay/5)-1)
-								sleep(0.5 SECONDS)
-								update()		// set to update again in 5 ticks
-							repeat_update = 0
-					return
+						SPAWN_DBG(0.5 SECONDS)
+							repeat_update = FALSE
+							var/iterations = round(delay/5)
+							for(var/i in 1 to iterations)
+								if(mode != 1 || repeat_update) // kill early if message or mode changed
+									break
+								update()
+								if(i != iterations)
+									sleep(0.5 SECONDS) // set to update again in 5 ticks
+							repeat_update = TRUE
 				else
 					set_picture("default")
-
 
 			if(2)
 				var/line1
@@ -136,17 +137,18 @@
 				if((index1 || index2) && repeat_update)	// if either line is scrolling
 														// and we haven't forced an update yet
 					var/delay = src.base_tick_spacing * PROCESSING_TIER_MULTI(src)
-					SPAWN_DBG(0) //0.5 SECONDS
-						repeat_update = 0
-						for(var/i in 1 to delay/5)
-							sleep(0.5 SECONDS)
-							update()		// set to update again in 5 ticks
-						repeat_update = 1
+					SPAWN_DBG(0.5 SECONDS)
+						repeat_update = FALSE
+						var/iterations = round(delay/5)
+						for(var/i in 1 to iterations)
+							if(mode != 2 || repeat_update) // kill early if message or mode changed
+								break
+							update()
+							if(i != iterations)
+								sleep(0.5 SECONDS) // set to update again in 5 ticks
+						repeat_update = TRUE
 
 				update_display_lines(line1,line2)
-
-			else
-				return
 
 	proc/set_message(var/m1, var/m2)
 		if(m1)
@@ -162,7 +164,7 @@
 		else
 			message2 = null
 			index2 = 0
-		repeat_update = 1
+		repeat_update = TRUE
 		desc = "[message1] [message2]"
 		lastdisplayline1 = null
 		lastdisplayline2 = null
@@ -171,11 +173,14 @@
 
 	proc/set_maptext(var/line1, var/line2)
 		if(!line2)
-			src.maptext = {"<span class='ol vm c' style="font-family: StatusDisp; font-size: 6px;  color: #09f">[line1]</span>"}
+			src.maptext = {"<span class='vm c' style="font-family: StatusDisp; font-size: 6px;  color: #09f">[line1]</span>"}
 		else
-			src.maptext = {"<span class='ol vm c' style="font-family: StatusDisp; font-size: 6px;  color: #09f">[line1]<BR/>[line2]</span>"}
+			src.maptext = {"<span class='vm c' style="font-family: StatusDisp; font-size: 6px;  color: #09f">[line1]<BR/>[line2]</span>"}
 
 	proc/set_picture(var/state)
+		var/image/previous = GetOverlayImage("picture")
+		if(previous?.icon_state == state)
+			return
 		src.maptext = ""
 		picture_state = state
 		UpdateOverlays(image('icons/obj/status_display.dmi', icon_state=picture_state), "picture")
@@ -183,30 +188,29 @@
 		UpdateOverlays(crt_image, "crt")
 
 	proc/set_picture_overlay(var/state, var/overlay)
+		var/image/previous_state = GetOverlayImage("picture")
+		var/image/previous_overlay = GetOverlayImage("overlay_image")
+		if(previous_state?.icon_state == state && previous_overlay?.icon_state == overlay)
+			return
 		src.maptext = ""
 		picture_state = state+overlay
 		UpdateOverlays(image('icons/obj/status_display.dmi', icon_state=state), "picture")
 		UpdateOverlays(image('icons/obj/status_display.dmi', icon_state=overlay), "overlay_image")
 		UpdateOverlays(crt_image, "crt")
 
-
 	proc/update_display_lines(var/line1, var/line2, var/image/override = null)
-
-		if(override) //Ok, we're gonna use our own image entirely, sidestepping the image building process
-			DEBUG_MESSAGE("[UpdateOverlays(override, "text") ? "Success" : "Failure"]")
-			return
-
 		if(line1 == lastdisplayline1 && line2 == lastdisplayline2)
 			return			// no change, no need to update
 
 		lastdisplayline1 = line1
 		lastdisplayline2 = line2
 
-		UpdateOverlays(null, "picture")
-		UpdateOverlays(null, "overlay_image")
-		UpdateOverlays(null, "text")
 		set_maptext(line1, line2)
-		UpdateOverlays(crt_image, "crt")
+
+		if(GetOverlayImage("picture") || GetOverlayImage("overlay_image") || !GetOverlayImage("crt"))
+			UpdateOverlays(null, "picture")
+			UpdateOverlays(null, "overlay_image")
+			UpdateOverlays(crt_image, "crt")
 
 	// return shuttle timer as text
 	proc/get_shuttle_timer()
@@ -224,6 +228,7 @@
 
 			if("shuttle")
 				mode = 1
+				repeat_update = TRUE
 
 			if("message")
 				mode = 2
