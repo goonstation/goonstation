@@ -34737,12 +34737,8 @@
 /area/station/maintenance/disposal)
 "bXF" = (
 /obj/table/glass/auto,
-/obj/machinery/light/incandescent/netural{
-	dir = 1;
-	pixel_y = 20
-	},
-/obj/item/decoration/flower_vase/vase7,
 /obj/decal/tile_edge/flowers,
+/obj/item/decoration/flower_vase,
 /turf/simulated/floor/grass/random,
 /area/station/hallway/portlowerhallway)
 "bZu" = (
