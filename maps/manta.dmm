@@ -34739,6 +34739,10 @@
 /obj/table/glass/auto,
 /obj/decal/tile_edge/flowers,
 /obj/item/decoration/flower_vase,
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	pixel_y = 20
+	},
 /turf/simulated/floor/grass/random,
 /area/station/hallway/portlowerhallway)
 "bZu" = (
