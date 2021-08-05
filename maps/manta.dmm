@@ -34736,11 +34736,15 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "bXF" = (
-/obj/stool/chair/couch{
-	dir = 8
+/obj/table/glass/auto,
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	pixel_y = 20
 	},
-/turf/simulated/floor/grey,
-/area/station/hydroponics/bay)
+/obj/item/decoration/flower_vase/vase7,
+/obj/decal/tile_edge/flowers,
+/turf/simulated/floor/grass/random,
+/area/station/hallway/portlowerhallway)
 "bZu" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -34760,13 +34764,6 @@
 	anchored = 1
 	},
 /turf/simulated/floor/grass/random,
-/area/station/hydroponics/bay)
-"cdd" = (
-/obj/stool/chair/couch{
-	dir = 4
-	},
-/obj/decal/cleanable/cobweb2,
-/turf/simulated/floor/grey,
 /area/station/hydroponics/bay)
 "cea" = (
 /obj/decal/tile_edge/check{
@@ -35164,7 +35161,11 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/grass/random,
+/obj/decal/tile_edge/line/green{
+	dir = 4;
+	icon_state = "line1"
+	},
+/turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
 "cRU" = (
 /obj/loudspeaker,
@@ -35936,17 +35937,6 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/private)
-"evI" = (
-/obj/machinery/plantpot{
-	anchored = 1
-	},
-/obj/machinery/light/incandescent/blueish{
-	dir = 4;
-	nostick = 1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/grey,
-/area/station/hydroponics/bay)
 "ewf" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -36575,17 +36565,6 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
-"fwq" = (
-/obj/ladder{
-	desc = "You see light coming from above";
-	icon_state = "ladder_wall";
-	id = "botany";
-	layer = 2.5;
-	name = "basement ladder";
-	pixel_y = 32
-	},
-/turf/simulated/floor/grey,
-/area/station/hydroponics/bay)
 "fwH" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin,
@@ -36793,6 +36772,13 @@
 	},
 /turf/simulated/floor,
 /area/station/seaturtlebridge)
+"fTw" = (
+/obj/decal/tile_edge/line/green{
+	dir = 4;
+	icon_state = "line1"
+	},
+/turf/simulated/floor,
+/area/station/hallway/portlowerhallway)
 "fWd" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -37516,7 +37502,7 @@
 	tag = ""
 	},
 /obj/decal/tile_edge/line/green{
-	dir = 1;
+	dir = 5;
 	icon_state = "line1"
 	},
 /turf/simulated/floor,
@@ -37928,6 +37914,9 @@
 	dir = 6
 	},
 /area/station/security/secoffquarters)
+"hZi" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/hallway/portlowerhallway)
 "iab" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -39130,16 +39119,11 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/submachine/ATM/atm_alt{
-	pixel_y = 32
-	},
-/obj/machinery/light/incandescent/netural{
+/obj/decal/tile_edge/line/green{
 	dir = 4;
-	nostick = 1;
-	pixel_x = 10;
-	pixel_y = 10
+	icon_state = "line1"
 	},
-/turf/simulated/floor/grass/random,
+/turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
 "kIf" = (
 /obj/cable,
@@ -39524,10 +39508,6 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/decal/tile_edge/line/green{
-	dir = 4;
-	icon_state = "line1"
-	},
 /turf/simulated/floor/special/escapedown,
 /area/station/hallway/portlowerhallway)
 "lNE" = (
@@ -39726,6 +39706,17 @@
 /obj/machinery/fluid_canister,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
+"mhZ" = (
+/obj/submachine/ATM/atm_alt{
+	pixel_x = 6;
+	pixel_y = 32
+	},
+/obj/decal/tile_edge/line/green{
+	dir = 4;
+	icon_state = "line1"
+	},
+/turf/simulated/floor,
+/area/station/hallway/portlowerhallway)
 "mkL" = (
 /obj/decal/tile_edge/check{
 	dir = 8;
@@ -39995,10 +39986,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/decal/tile_edge/line/green{
-	dir = 4;
-	icon_state = "line1"
-	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
 "mIx" = (
@@ -40240,6 +40227,15 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/starboard)
+"npg" = (
+/obj/stool/chair/blue{
+	dir = 1
+	},
+/obj/decal/tile_edge/flowers{
+	dir = 4
+	},
+/turf/simulated/floor/grass/random,
+/area/station/hallway/portlowerhallway)
 "nqf" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/north,
 /obj/decal/tile_edge/line/blue{
@@ -40388,6 +40384,12 @@
 	dir = 4
 	},
 /area/station/ranch)
+"nCb" = (
+/obj/decal/tile_edge/flowers{
+	dir = 1
+	},
+/turf/simulated/floor/grass/random,
+/area/station/hallway/portlowerhallway)
 "nCe" = (
 /obj/machinery/manufacturer/hangar,
 /obj/disposalpipe/segment{
@@ -40558,6 +40560,13 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
+"nRp" = (
+/obj/stool/chair/blue{
+	dir = 4
+	},
+/obj/decal/tile_edge/flowers,
+/turf/simulated/floor/grass/random,
+/area/station/hallway/portlowerhallway)
 "nSv" = (
 /obj/iv_stand,
 /obj/item_dispenser/latex_gloves,
@@ -40650,8 +40659,10 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
 "ohN" = (
-/turf/simulated/floor/grey,
-/area/station/hydroponics/bay)
+/obj/stool/chair/blue,
+/obj/decal/tile_edge/flowers,
+/turf/simulated/floor/grass/random,
+/area/station/hallway/portlowerhallway)
 "ohO" = (
 /obj/lattice{
 	dir = 6;
@@ -41432,11 +41443,12 @@
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
 "puY" = (
-/obj/machinery/plantpot{
-	anchored = 1
-	},
-/turf/simulated/floor/grey,
-/area/station/hydroponics/bay)
+/obj/table/glass/auto,
+/obj/machinery/light/incandescent/netural,
+/obj/item/decoration/flower_vase,
+/obj/decal/tile_edge/flowers,
+/turf/simulated/floor/grass/random,
+/area/station/hallway/portlowerhallway)
 "pwc" = (
 /obj/rack,
 /obj/item/rubberduck,
@@ -41590,16 +41602,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperport)
-"pXT" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/decal/tile_edge/line/green{
-	dir = 6;
-	icon_state = "line1"
-	},
-/turf/simulated/floor,
-/area/station/hallway/portlowerhallway)
 "qai" = (
 /obj/table/auto,
 /obj/item/remote/porter/port_a_nanomed,
@@ -42614,11 +42616,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperport)
-"rZh" = (
-/obj/machinery/hydro_growlamp,
-/obj/decal/cleanable/dirt/dirt2,
-/turf/simulated/floor/grey,
-/area/station/hydroponics/bay)
 "rZK" = (
 /obj/submachine/chem_extractor,
 /obj/decal/tile_edge/line/black{
@@ -42899,14 +42896,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/port)
-"sGP" = (
-/obj/disposalpipe/segment/mail,
-/obj/decal/tile_edge/line/green{
-	dir = 5;
-	icon_state = "line1"
-	},
-/turf/simulated/floor,
-/area/station/hallway/portlowerhallway)
 "sKg" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -43333,13 +43322,6 @@
 	dir = 1;
 	pixel_y = 20
 	},
-/turf/simulated/floor,
-/area/station/hallway/portlowerhallway)
-"tSV" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon10,
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
 "tTX" = (
@@ -43796,6 +43778,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/sec_foyer)
+"uSi" = (
+/obj/decal/tile_edge/flowers{
+	dir = 8
+	},
+/turf/simulated/floor/grass/random,
+/area/station/hallway/portlowerhallway)
 "uSx" = (
 /obj/machinery/door_control{
 	id = "securitylobby";
@@ -43879,6 +43867,13 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/captain)
+"vaJ" = (
+/obj/stool/chair/blue{
+	dir = 8
+	},
+/obj/decal/tile_edge/flowers,
+/turf/simulated/floor/grass/random,
+/area/station/hallway/portlowerhallway)
 "vcA" = (
 /obj/machinery/sleeper/compact{
 	dir = 4
@@ -44713,6 +44708,10 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/port)
+"wHq" = (
+/obj/decal/tile_edge/flowers,
+/turf/simulated/floor/grass/random,
+/area/station/hallway/portlowerhallway)
 "wHu" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
@@ -44939,13 +44938,10 @@
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "xre" = (
-/obj/item/seed/cannabis{
-	pixel_x = -9;
-	pixel_y = -2
-	},
-/obj/decal/cleanable/dirt/dirt3,
-/turf/simulated/floor/grey,
-/area/station/hydroponics/bay)
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon10,
+/obj/decal/tile_edge/flowers,
+/turf/simulated/floor/grass/random,
+/area/station/hallway/portlowerhallway)
 "xrm" = (
 /obj/decal/tile_edge/line/purple{
 	icon_state = "line1"
@@ -45243,13 +45239,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/inner)
-"xRL" = (
-/obj/item/device/multitool{
-	pixel_x = 7;
-	pixel_y = -4
-	},
-/turf/simulated/floor/grey,
-/area/station/hydroponics/bay)
 "xSi" = (
 /obj/cable,
 /obj/cable{
@@ -84867,12 +84856,12 @@ aUR
 bgy
 aWr
 bgy
-tSV
 bgy
-pXT
+bgy
+bgy
 mIa
 lMj
-sGP
+ber
 btY
 buY
 buY
@@ -85169,9 +85158,9 @@ aFS
 aNq
 aIT
 aCM
-aGV
-aGV
-aGV
+mhZ
+fTw
+fTw
 kHe
 cQR
 hkZ
@@ -85471,12 +85460,12 @@ aGE
 aDd
 xxz
 aCM
-fwq
+nRp
 xre
-aGV
-aGV
-aGV
-aGV
+nCb
+wHq
+nRp
+hZi
 iNV
 bxr
 bww
@@ -85774,11 +85763,11 @@ aDd
 aNC
 aCM
 bXF
-ohN
-ohN
+npg
+uSi
 ohN
 puY
-aGV
+hZi
 ogC
 ogC
 byP
@@ -86075,12 +86064,12 @@ aGI
 aDd
 blG
 aCM
-cdd
-xRL
-evI
-rZh
-puY
-aGV
+vaJ
+wHq
+wHq
+wHq
+vaJ
+hZi
 fLG
 qrl
 byQ

@@ -9563,6 +9563,11 @@
 /obj/item/reagent_containers/glass/wateringcan,
 /turf/unsimulated/floor/grime,
 /area/dank_trench)
+"yV" = (
+/obj/machinery/hydro_growlamp,
+/obj/decal/cleanable/dirt/dirt2,
+/turf/unsimulated/floor/grey,
+/area/station/hydroponics/bay)
 "yY" = (
 /obj/sea_plant/seaweed,
 /obj/item/crowbar/red,
@@ -10227,6 +10232,13 @@
 /obj/sea_plant/seaweed,
 /turf/space/fluid/noexplosion/nospawn,
 /area/dank_trench)
+"Fn" = (
+/obj/stool/chair/couch{
+	dir = 4
+	},
+/obj/decal/cleanable/cobweb2,
+/turf/unsimulated/floor/grey,
+/area/station/hydroponics/bay)
 "FH" = (
 /obj/decal/cleanable/dirt,
 /obj/stool/chair/office{
@@ -10306,6 +10318,19 @@
 "Ip" = (
 /turf/unsimulated/wall/trench,
 /area/dank_trench)
+"Ix" = (
+/obj/decal/cleanable/dirt/dirt3,
+/obj/item/seed/cannabis{
+	pixel_x = -9;
+	pixel_y = -2
+	},
+/obj/machinery/light/incandescent/blueish{
+	dir = 8;
+	nostick = 1;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor/grey,
+/area/station/hydroponics/bay)
 "IF" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/decal/cleanable/dirt/jen,
@@ -10341,6 +10366,17 @@
 	},
 /turf/space/fluid/noexplosion,
 /area/dank_trench)
+"Jr" = (
+/obj/machinery/light/incandescent/blueish{
+	dir = 4;
+	nostick = 1;
+	pixel_x = 10
+	},
+/obj/machinery/plantpot{
+	anchored = 1
+	},
+/turf/unsimulated/floor/grey,
+/area/station/hydroponics/bay)
 "Ju" = (
 /obj/item/seed/cannabis,
 /turf/unsimulated/floor/grime,
@@ -10653,6 +10689,13 @@
 	},
 /turf/space/fluid/noexplosion,
 /area/dank_trench)
+"QJ" = (
+/obj/item/device/multitool{
+	pixel_x = 7;
+	pixel_y = -4
+	},
+/turf/unsimulated/floor/grey,
+/area/station/hydroponics/bay)
 "QN" = (
 /obj/decal/cleanable/dirt,
 /obj/table/wood/auto,
@@ -10697,6 +10740,12 @@
 /obj/storage/crate/trench_loot/drug,
 /turf/space/fluid/noexplosion/nospawn,
 /area/dank_trench)
+"Rf" = (
+/obj/stool/chair/couch{
+	dir = 8
+	},
+/turf/unsimulated/floor/grey,
+/area/station/hydroponics/bay)
 "Rs" = (
 /obj/machinery/hydro_growlamp,
 /turf/unsimulated/floor/plating,
@@ -10731,6 +10780,17 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
+"Sz" = (
+/obj/ladder{
+	desc = "You see light coming from above";
+	icon_state = "ladder_wall";
+	id = "botany";
+	layer = 2.5;
+	name = "basement ladder";
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/grey,
+/area/station/hydroponics/bay)
 "Tu" = (
 /obj/decal/cleanable/machine_debris{
 	icon_state = "gib7"
@@ -10740,6 +10800,12 @@
 "TQ" = (
 /turf/space/fluid/noexplosion,
 /area/dank_trench)
+"Ua" = (
+/obj/machinery/plantpot{
+	anchored = 1
+	},
+/turf/unsimulated/floor/grey,
+/area/station/hydroponics/bay)
 "Ug" = (
 /obj/machinery/power/furnace,
 /obj/cable{
@@ -10838,6 +10904,9 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
+"Yi" = (
+/turf/unsimulated/wall/auto/supernorn,
+/area/station/hydroponics/bay)
 "YJ" = (
 /obj/decal/cleanable/machine_debris{
 	icon_state = "gib7"
@@ -10878,6 +10947,9 @@
 /obj/decal/cleanable/rust,
 /turf/unsimulated/wall/auto/supernorn,
 /area/dank_trench)
+"ZO" = (
+/turf/unsimulated/floor/grey,
+/area/station/hydroponics/bay)
 "ZU" = (
 /obj/storage/crate{
 	name = "furnace fuel crate"
@@ -26327,12 +26399,12 @@ Ip
 Ip
 Ip
 ab
-gW
-gW
-gW
-gW
-gW
-gW
+ab
+ab
+ab
+ab
+ab
+ab
 gW
 gW
 gW
@@ -26629,14 +26701,14 @@ Ip
 Ip
 Ip
 ab
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
+ab
+Yi
+Yi
+Yi
+Yi
+ab
+ab
+ab
 gW
 gW
 gW
@@ -26931,14 +27003,14 @@ Ip
 Ip
 Ip
 ab
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
+ab
+Yi
+Sz
+Ix
+Yi
+Yi
+Yi
+ab
 gW
 gW
 gW
@@ -27233,14 +27305,14 @@ Ip
 Ip
 Ip
 ab
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
+ab
+Yi
+Rf
+ZO
+Ua
+Ua
+Yi
+ab
 gW
 gW
 gW
@@ -27535,14 +27607,14 @@ Ip
 Ip
 Ip
 ab
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
+ab
+Yi
+Fn
+ZO
+ZO
+yV
+Yi
+ab
 gW
 gW
 gW
@@ -27837,14 +27909,14 @@ Ip
 Ip
 Ip
 ab
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
+ab
+Yi
+Yi
+QJ
+Jr
+Ua
+Yi
+ab
 gW
 gW
 gW
@@ -28139,14 +28211,14 @@ yY
 Ip
 Ip
 ab
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
+ab
+ab
+Yi
+Yi
+Yi
+Yi
+Yi
+ab
 gW
 gW
 gW
@@ -28442,13 +28514,13 @@ Ip
 Ip
 ab
 gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 gW
 gW
 gW
