@@ -1,4 +1,9 @@
 
+(t)thu aug 05 21
+(u)112358sam
+(p)5565
+(e)🆕|feature
+(*)Added a MedTrak Scanner PDA program for scanning people to search for their medical record.
 (t)tue aug 03 21
 (u)Tarmunora
 (e)⚖|balance
