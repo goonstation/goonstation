@@ -668,6 +668,12 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/ladder{
+	desc = "Where does this thing even lead?";
+	id = "botany";
+	layer = 2;
+	name = "basement ladder"
+	},
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
 "abU" = (
@@ -17943,13 +17949,16 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen/freezer)
 "aZa" = (
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
+/obj/ladder{
+	desc = "You see light coming from above";
+	icon_state = "ladder_wall";
+	id = "botany";
+	layer = 2.5;
+	name = "basement ladder";
+	pixel_y = 32
 	},
 /turf/simulated/floor/grey,
-/area/station/hydroponics)
+/area/station/hydroponics/bay)
 "aZb" = (
 /turf/simulated/wall/auto/reinforced/supernorn/blackred,
 /area/station/security/checkpoint/sec_foyer)
@@ -18049,7 +18058,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/grey,
-/area/station/hydroponics)
+/area/station/hydroponics/bay)
 "aZo" = (
 /obj/machinery/computer/genetics{
 	dir = 4
@@ -18231,12 +18240,6 @@
 "aZL" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/kitchen/therustykrab)
-"aZM" = (
-/obj/machinery/plantpot{
-	anchored = 1
-	},
-/turf/simulated/floor/grey,
-/area/station/hydroponics)
 "aZN" = (
 /obj/disposalpipe/segment/mail{
 	dir = 1;
@@ -19308,7 +19311,7 @@
 	},
 /obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor/grey,
-/area/station/hydroponics)
+/area/station/hydroponics/bay)
 "bcU" = (
 /obj/potted_plant/potted_plant4{
 	dir = 1;
@@ -19429,7 +19432,7 @@
 /obj/machinery/hydro_growlamp,
 /obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/grey,
-/area/station/hydroponics)
+/area/station/hydroponics/bay)
 "bdh" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -25115,7 +25118,7 @@
 /area/station/hallway/portlowerhallway)
 "bqM" = (
 /turf/simulated/floor/grey,
-/area/station/hydroponics)
+/area/station/hydroponics/bay)
 "bqN" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -25690,10 +25693,11 @@
 /turf/simulated/floor/grass/random,
 /area/station/hallway/portlowerhallway)
 "bse" = (
-/obj/storage/secure/closet/civilian/hydro,
-/obj/item/clothing/under/misc/hydroponics,
+/obj/machinery/plantpot{
+	anchored = 1
+	},
 /turf/simulated/floor/grey,
-/area/station/hydroponics)
+/area/station/hydroponics/bay)
 "bsf" = (
 /obj/shrub,
 /obj/disposalpipe/segment,
@@ -25953,9 +25957,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
-"bte" = (
-/turf/simulated/wall/auto/supernorn,
-/area/station/hydroponics)
 "btg" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -35796,23 +35797,6 @@
 "cYe" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/portlowerhallway)
-"cYV" = (
-/obj/decal/tile_edge/line/green{
-	dir = 4;
-	icon_state = "line1"
-	},
-/obj/machinery/door/airlock/pyro{
-	dir = 8;
-	name = "Hydroponics";
-	req_access_txt = null
-	},
-/obj/access_spawn/hydro,
-/obj/firedoor_spawn,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/grey,
-/area/station/hydroponics)
 "cZW" = (
 /obj/decal/tile_edge/line/blue{
 	icon_state = "line3"
@@ -36437,14 +36421,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/decal/tile_edge/line/green{
-	dir = 4;
-	icon_state = "line1"
-	},
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon10,
-/obj/cable{
-	icon_state = "2-4"
-	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
 "eoz" = (
@@ -39407,16 +39384,6 @@
 	dir = 1
 	},
 /area/station/crewquarters/garbagegarbs)
-"kuV" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/decal/tile_edge/line/green{
-	dir = 4;
-	icon_state = "line1"
-	},
-/turf/simulated/floor,
-/area/station/hallway/portlowerhallway)
 "kwr" = (
 /obj/storage/closet/office,
 /obj/machinery/light_switch/auto{
@@ -39683,7 +39650,7 @@
 	},
 /obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/grey,
-/area/station/hydroponics)
+/area/station/hydroponics/bay)
 "lfN" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -42266,7 +42233,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/grey,
-/area/station/hydroponics)
+/area/station/hydroponics/bay)
 "qNm" = (
 /obj/decal/tile_edge/line/green{
 	dir = 8;
@@ -43373,6 +43340,11 @@
 /obj/disposalpipe/junction/right/south,
 /turf/simulated/floor,
 /area/station/hallway/seaturtlehallway)
+"tyY" = (
+/obj/storage/secure/closet/civilian/hydro,
+/obj/item/clothing/under/misc/hydroponics,
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
 "tAG" = (
 /obj/shrub{
 	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
@@ -44685,16 +44657,12 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "wnC" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
 /obj/item/device/multitool{
 	pixel_x = 7;
 	pixel_y = -4
 	},
 /turf/simulated/floor/grey,
-/area/station/hydroponics)
+/area/station/hydroponics/bay)
 "woI" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -82247,7 +82215,7 @@ biL
 biL
 aPp
 bjJ
-auv
+tyY
 bqo
 bqm
 brV
@@ -82549,7 +82517,7 @@ biK
 biK
 aPp
 biL
-biK
+auv
 bqo
 bqm
 brV
@@ -84963,10 +84931,10 @@ aTq
 aUR
 bgy
 aWr
-ugF
+bgy
 enO
-kuV
-kuV
+bgy
+ugF
 bqD
 bsa
 mAe
@@ -85266,9 +85234,9 @@ aFS
 aNq
 aIT
 aCM
-cYV
-bte
-bte
+aGV
+aGV
+aGV
 bqL
 bsd
 dCs
@@ -85570,10 +85538,10 @@ xxz
 aCM
 aZa
 bcS
-bte
-bte
-bte
-bte
+aGV
+aGV
+aGV
+aGV
 iNV
 bxr
 bww
@@ -85875,7 +85843,7 @@ bqM
 bqM
 bqM
 bse
-bte
+aGV
 ogC
 ogC
 byP
@@ -86176,8 +86144,8 @@ lfJ
 wnC
 qNl
 bdg
-aZM
-bte
+bse
+aGV
 fLG
 qrl
 byQ
