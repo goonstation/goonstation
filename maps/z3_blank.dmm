@@ -10295,6 +10295,10 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/grime,
 /area/dank_trench)
+"HS" = (
+/obj/critter/nicespider,
+/turf/unsimulated/floor/grey,
+/area/station/hydroponics/bay)
 "HY" = (
 /obj/decal/cleanable/dirt,
 /obj/stool/chair/comfy{
@@ -27610,7 +27614,7 @@ ab
 ab
 Yi
 Fn
-ZO
+HS
 ZO
 yV
 Yi
