@@ -1,5 +1,8 @@
 
 (t)thu aug 05 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Riot launchers are now a bulky item.
 (u)112358sam
 (p)5565
 (e)🆕|feature
