@@ -509,7 +509,7 @@
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && G && get_dist(owner, target) <= 1 || get_dist(owner,T) > 1)
+		if(owner && ownerMob && target && G && get_dist(owner, target) <= 1 && get_dist(owner,T) <= 1)
 			G.upgrade_to_pin(T)
 		else
 			interrupt(INTERRUPT_ALWAYS)
