@@ -25,7 +25,8 @@ export const LongRangeTeleporter = (props, context) => {
                 {send_allowed && (
                   <Button
                     icon="sign-out-alt"
-                    onClick={() => act("send", { target: d["ref"], name: d["destination"] })} >
+                    onClick={() => act("send", { target: d["ref"], name: d["destination"] })}
+                  >
                     Send
                   </Button>
                 )}
