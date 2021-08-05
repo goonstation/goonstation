@@ -248,6 +248,9 @@
 		update_icon()
 
 	proc/upgrade_to_kill(var/msg_overridden = 0)
+		if (!assailant || !affecting)
+			return
+
 		icon_state = "disarm/kill"
 		logTheThing("combat", src.assailant, src.affecting, "chokes [constructTarget(src.affecting,"combat")]")
 		choke_count = 0
@@ -279,6 +282,9 @@
 			src.affecting:was_harmed(src.assailant)
 
 	proc/upgrade_to_pin(var/turf/T)
+		if (!assailant || !affecting)
+			return
+
 		icon_state = "pin"
 		logTheThing("combat", src.assailant, src.affecting, "pins [constructTarget(src.affecting,"combat")]")
 
