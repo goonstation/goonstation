@@ -232,7 +232,7 @@ proc/build_syndi_buylist_cache()
 	cost = 12
 	desc = "Think you're tough shit buddy?"
 	not_in_crates = 1 //see /datum/syndicate_buylist/surplus/bighat
-	blockedmode = list(/datum/game_mode/spy_theft)
+	blockedmode = list(/datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
 //////////////////////////////////////////////////// Standard items (traitor uplink) ///////////////////////////////////
 
@@ -582,6 +582,14 @@ This is basically useless for anyone but miners.
 	cost = 7
 	desc = "This old earth beauty is made by hand with strict attention to detail. Unlike today's competing botanical chainsaw, it actually cuts things!"
 	not_in_crates = 1
+	job = list("Botanist")
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
+
+/datum/syndicate_buylist/traitor/hotbox_lighter
+	name = "Hotbox Lighter"
+	item = /obj/item/device/light/zippo/syndicate
+	cost = 1
+	desc = "The unique fuel mixture gives this lighter a unique flame capable of creating a much denser smoke when burning piles of herbs compared to any normal lighter!"
 	job = list("Botanist")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
 

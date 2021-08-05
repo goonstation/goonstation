@@ -353,7 +353,7 @@
 	electric_expose(var/power = 1) //lets throw in ANOTHER hack to the temp expose one above
 		if (reagents)
 			for (var/i = 0, i < 3, i++)
-				reagents.temperature_reagents(power*500, power*125, 10, 500, 1)
+				reagents.temperature_reagents(power*500, power*400, 1000, 1000, 1)
 
 /obj/reagent_dispensers/heliumtank
 	name = "heliumtank"

@@ -869,7 +869,7 @@
 			if (href_list["write"])
 				var/obj/item/P = locate(href_list["write"])
 				if ((P && P.loc == src))
-					P.attackby(available_pen, usr)
+					P.Attackby(available_pen, usr)
 
 			else if (href_list["title"])
 				if (istype(available_pen, /obj/item/pen/odd))
@@ -1091,7 +1091,7 @@
 				src.display_booklet_contents(usr,page_num - 1)
 			if ("write")
 				if (istype(usr.equipped(), /obj/item/pen))
-					cur_page.attackby(usr.equipped(),usr)
+					cur_page.Attackby(usr.equipped(),usr)
 					src.display_booklet_contents(usr,page_num)
 			if ("title_page")
 				if (cur_page.loc.loc == usr)
@@ -1165,7 +1165,7 @@
 		"You stick a sticky note to [T].")
 		var/obj/item/pen/pen = user.find_type_in_hand(/obj/item/pen)
 		if (pen)
-			P.attackby(pen, user)
+			P.Attackby(pen, user)
 		src.amount --
 		if (src.amount < 0)
 			qdel(src)
@@ -1213,9 +1213,9 @@
 			playsound(src.loc, "sound/machines/printer_thermal.ogg", 30, 0, pitch=0.7)
 			src.stored_paper = new/obj/item/paper/thermal/portable_printer(src)
 			src.update_icon()
-			src.stored_paper.attackby(src.pen, user)
+			src.stored_paper.Attackby(src.pen, user)
 		else
-			src.stored_paper.attackby(src.pen, user)
+			src.stored_paper.Attackby(src.pen, user)
 
 	attack_hand(mob/user)
 		if(src.loc == user && src.stored_paper)

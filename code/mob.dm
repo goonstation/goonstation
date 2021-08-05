@@ -2340,6 +2340,10 @@
 /mob/onVarChanged(variable, oldval, newval)
 	update_clothing()
 
+/mob/proc/throw_item(atom/target, list/params)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MOB_THROW_ITEM, target, params)
+
 /mob/throw_impact(atom/hit, datum/thrown_thing/thr)
 	if(!isturf(hit) || hit.density)
 		if (thr?.get_throw_travelled() <= 410)
@@ -3001,7 +3005,9 @@
 /mob/living/verb/interact_verb(atom/A as mob|obj|turf in view(1))
 	set name = "Pick Up / Left Click"
 	set category = "Local"
-	A.interact(src)
+
+	if(src.client)
+		src.client.Click(A, get_turf(A))
 
 /mob/living/verb/pickup_verb()
 	set name = "Pick Up"
@@ -3026,3 +3032,7 @@
 		..(0)
 	else
 		..(newdensity)
+
+// to check if someone is abusing cameras with stuff like artifacts, power gloves, etc
+/mob/proc/in_real_view_range(var/turf/T)
+	return src.client && IN_RANGE(T, src, WIDE_TILE_WIDTH)

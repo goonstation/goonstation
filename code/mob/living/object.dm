@@ -215,7 +215,7 @@
 				if(!isitem(src.item))
 					src.item.attack_hand(src)
 				else //This shouldnt ever happen.
-					src.item.attackby(src.item, src)
+					src.item.Attackby(src.item, src)
 		else
 			if(src.a_intent == INTENT_GRAB && istype(target, /atom/movable) && get_dist(src, target) <= 1)
 				var/atom/movable/M = target

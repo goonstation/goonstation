@@ -1577,7 +1577,14 @@ datum
 							src.data = cheating.data
 
 				if (src.data && M.bioHolder && progress_timer <= 10)
-
+					if(istype(src.data, /datum/bioHolder))
+						var/datum/bioHolder/tocopy = data
+						if(tocopy?.mobAppearance?.mutant_race?.dna_mutagen_banned)
+							return ..()
+					if(ishuman(M))
+						var/mob/living/carbon/human/H = M
+						if(H.mutantrace?.dna_mutagen_banned)
+							return ..()
 					M.bioHolder.StaggeredCopyOther(data, progress_timer+=(1 * mult))
 					if (probmult(50) && progress_timer > 7)
 						boutput(M, "<span class='notice'>You feel a little [pick("unlike yourself", "out of it", "different", "strange")].</span>")

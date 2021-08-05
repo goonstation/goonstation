@@ -42,7 +42,7 @@
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.sims)
-				H.sims.affectMotive("Hunger", heal_amt * 2)
+				H.sims.affectMotive("Hunger", heal_amt * 6)
 				H.sims.affectMotive("Bladder", -heal_amt * 0.2)
 
 		if (quality >= 5)
@@ -89,8 +89,6 @@
 	festivity = 0
 	rc_flags = 0
 	edible = 1
-	module_research = list("cuisine" = 6)
-	module_research_type = /obj/item/reagent_containers/food/snacks
 	rand_pos = 1
 	var/has_cigs = 0
 
@@ -398,8 +396,6 @@
 	festivity = 0
 	rc_flags = 0
 	edible = 1
-	module_research = list("cuisine" = 6)
-	module_research_type = /obj/item/reagent_containers/food/snacks
 	rand_pos = 1
 	var/did_react = 0
 

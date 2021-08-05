@@ -275,6 +275,32 @@
 			activator.set_clothing_icon_dirty()
 			M.wear_layer = MOB_BACK_LAYER_SATCHEL
 
+		else if (istype(activator.back, /obj/item/storage/backpack/turtlegreen) || activator.back.icon_state == "bp_turtle_green")
+			var/obj/item/storage/backpack/M = activator.back
+			M.icon = 'icons/obj/items/storage.dmi'
+			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
+			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
+			M.wear_image_icon = 'icons/mob/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.icon_state = "sat_turtle_green"
+			M.name = "green turtle shell satchel"
+			M.real_name = "green turtle shell backpack"
+			M.desc = "A satchel that looks like a green turtleshell. Cowabunga! (Base Item: green turtle shell backpack)"
+			activator.set_clothing_icon_dirty()
+			M.wear_layer = MOB_BACK_LAYER_SATCHEL
+
+		else if (istype(activator.back, /obj/item/storage/backpack/turtlebrown) || activator.back.icon_state == "bp_turtle_brown")
+			var/obj/item/storage/backpack/M = activator.back
+			M.icon = 'icons/obj/items/storage.dmi'
+			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
+			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
+			M.wear_image_icon = 'icons/mob/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.icon_state = "sat_turtle_brown"
+			M.name = "brown turtle shell satchel"
+			M.real_name = "brown turtle shell backpack"
+			M.desc = "A satchel that looks like a brown turtleshell. How childish! (Base Item: brown turtle shell backpack)"
+
 		else if (istype(activator.back, /obj/item/storage/backpack/blue) || activator.back.icon_state == "backpackb")
 			var/obj/item/storage/backpack/M = activator.back
 			M.icon = 'icons/obj/items/storage.dmi'

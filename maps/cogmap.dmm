@@ -241,7 +241,7 @@
 /turf/simulated/shuttle/wall,
 /area/shuttle/arrival/station)
 "aaQ" = (
-/obj/machinery/sleeper,
+/obj/machinery/sleeper/compact,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -1047,7 +1047,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "adw" = (
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 8
 	},
 /turf/simulated/floor/grime,
@@ -1057,9 +1057,6 @@
 /obj/machinery/light/small{
 	dir = 1;
 	status = 2
-	},
-/obj/machinery/sleep_console{
-	dir = 8
 	},
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/construction)
@@ -2025,7 +2022,6 @@
 /area/station/crew_quarters/clown)
 "age" = (
 /obj/decal/cleanable/dirt,
-/obj/creepy_sound_trigger,
 /obj/item/bananapeel,
 /obj/cable{
 	icon_state = "1-2"
@@ -5316,7 +5312,6 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/creepy_sound_trigger,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -14716,21 +14711,18 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/sleeper{
-	dir = 8
-	},
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
+	},
+/obj/machinery/sleeper/compact{
+	dir = 8
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
 /area/station/medical/medbooth)
 "aNg" = (
-/obj/machinery/sleep_console{
-	dir = 8
-	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -19272,13 +19264,6 @@
 "aXE" = (
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/east)
-"aXF" = (
-/obj/creepy_sound_trigger,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aXG" = (
 /obj/disposalpipe/trunk{
@@ -43413,9 +43398,6 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "cew" = (
-/obj/machinery/sleep_console{
-	dir = 4
-	},
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
@@ -43432,7 +43414,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 4
 	},
 /turf/simulated/floor/bluewhite,
@@ -44335,16 +44317,10 @@
 /obj/machinery/door/window/eastright,
 /turf/simulated/floor/wood,
 /area/station/medical/medbay/lobby)
-"cgY" = (
-/obj/machinery/sleep_console{
-	dir = 4
-	},
-/turf/simulated/floor/bluewhite,
-/area/station/medical/medbay/lobby)
 "cgZ" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 4
 	},
 /turf/simulated/floor/bluewhite,
@@ -51476,13 +51452,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/sleeper{
-	dir = 8
-	},
-/turf/simulated/floor/white,
-/area/station/medical/cdc)
-"cxM" = (
-/obj/machinery/sleep_console{
+/obj/machinery/sleeper/compact{
 	dir = 8
 	},
 /turf/simulated/floor/white,
@@ -101803,7 +101773,7 @@ omh
 cxk
 cxt
 cxC
-cxM
+cxp
 vfr
 cyj
 cyl
@@ -103292,7 +103262,7 @@ cbQ
 cbQ
 cew
 cev
-cgY
+cCa
 cif
 cjt
 ckP
@@ -122557,7 +122527,7 @@ aTN
 aVb
 bcg
 aXN
-aXF
+bbH
 aYP
 baE
 bbG
@@ -125251,12 +125221,12 @@ awI
 awI
 azp
 eJd
-atV
+avj
 awB
 axQ
 azn
 aAW
-atV
+avj
 awI
 azp
 awI

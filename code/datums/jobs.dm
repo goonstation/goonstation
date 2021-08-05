@@ -1927,9 +1927,10 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	wages = PAY_UNTRAINED
 	limit = 1
 	change_name_on_spawn = 1
-	slot_head = list(/obj/item/clothing/head/green)
+	slot_head = list(/obj/item/clothing/head/biglizard)
 	slot_ears = list(/obj/item/device/radio/headset)
 	slot_jump = list(/obj/item/clothing/under/color/green)
+	slot_suit = list(/obj/item/clothing/suit/gimmick/dinosaur)
 	slot_belt = list(/obj/item/device/pda2)
 	slot_poc1 = list(/obj/item/toy/figure)
 	slot_poc2 = list(/obj/item/toy/figure)
@@ -2089,7 +2090,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_foot = list(/obj/item/clothing/shoes/tourist)
 	slot_belt = list(/obj/item/storage/belt/utility/superhero)
 	slot_back = list()
-	slot_poc2 = list(/obj/item/device/pda2
+	slot_poc2 = list(/obj/item/device/pda2)
 
 	New()
 		..()
@@ -2220,7 +2221,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 		else
 			M.real_name = "Syndicate Agent"
 
-		bad_traitorify(M, "Syndicate Agent")
+		antagify(M, "Syndicate Agent", 0)
 
 		equip_syndicate(M)
 		return
@@ -2246,7 +2247,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
-		bad_traitorify(M, "Syndicate Agent")
+		antagify(M, "Syndicate Agent", 0)
 
 /datum/job/special/syndicate_weak/no_ammo
 	name = "Poorly Equipped Junior Syndicate Operative"
@@ -2298,7 +2299,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 		..()
 		if (!M)
 			return
-		bad_traitorify(M, "Syndicate Agent")
+		antagify(M, "Syndicate Agent", 0)
 		M.show_text("<b>The assault has begun! Head over to the station and kill any and all Nanotrasen personnel you encounter!</b>", "red")
 
 /datum/job/special/juicer_specialist

@@ -10062,18 +10062,12 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "axv" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay/lobby)
-"axw" = (
-/obj/machinery/sleep_console{
+/obj/machinery/sleeper/compact{
 	dir = 8
 	},
 /turf/simulated/floor/white,
@@ -24638,7 +24632,7 @@
 	icon_state = "sideWall";
 	name = "organic wall"
 	},
-/obj/item/storage/box/donkpocket_w_kit,
+/obj/item/storage/box/donkpocket_kit,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/bar)
 "bjr" = (
@@ -97422,8 +97416,8 @@ aoS
 atN
 ave
 cfh
-axw
-axw
+awe
+awe
 azC
 aAS
 atw

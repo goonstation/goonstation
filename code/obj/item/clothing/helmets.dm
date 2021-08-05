@@ -213,6 +213,7 @@
 	desc = "The standard space helmet of the dreaded Syndicate."
 	item_function_flags = IMMUNE_TO_ACID
 	team_num = TEAM_SYNDICATE
+	blocked_from_petasusaphilic = TRUE
 	#ifdef MAP_OVERRIDE_POD_WARS
 	attack_hand(mob/user)
 		if (get_pod_wars_team_num(user) == team_num)
@@ -295,8 +296,10 @@
 					if (istype(H.head, /obj/item/clothing/head/helmet/space/syndicate/specialist/engineer)) //handling of the rest is done in life.dm
 						if (src.on)
 							H.vision.set_scan(1)
+							APPLY_MOB_PROPERTY(toggler, PROP_MESONVISION, src)
 						else
 							H.vision.set_scan(0)
+							REMOVE_MOB_PROPERTY(toggler, PROP_MESONVISION, src)
 
 			equipped(var/mob/living/user, var/slot)
 				..()
@@ -304,12 +307,14 @@
 					return
 				if (slot == SLOT_HEAD && on)
 					user.vision.set_scan(1)
+					APPLY_MOB_PROPERTY(user, PROP_MESONVISION, src)
 
 			unequipped(var/mob/living/user)
 				..()
 				if(!isliving(user))
 					return
 				user.vision.set_scan(0)
+				REMOVE_MOB_PROPERTY(user, PROP_MESONVISION, src)
 
 		medic
 			name = "specialist health monitor"

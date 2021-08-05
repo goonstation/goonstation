@@ -861,17 +861,17 @@
 	two_handed = 0
 
 	w_class = W_CLASS_NORMAL
-	force = 15
-	throwforce = 5
+	force = 20
+	throwforce = 10
 	throw_speed = 2
 	throw_range = 4
-	stamina_damage = 30
-	stamina_cost = 20
-	stamina_crit_chance = 2
+	stamina_damage = 25
+	stamina_cost = 15
+	stamina_crit_chance = 5
 
 	proc/set_values()
 		if(two_handed)
-			src.click_delay = 15
+			src.click_delay = COMBAT_CLICK_DELAY * 1.5
 			force = 40
 			throwforce = 25
 			throw_speed = 4
@@ -880,7 +880,7 @@
 			stamina_cost = 25
 			stamina_crit_chance = 10
 		else
-			src.click_delay = 10
+			src.click_delay = COMBAT_CLICK_DELAY
 			force = 20
 			throwforce = 10
 			throw_speed = 2

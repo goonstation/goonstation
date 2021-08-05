@@ -150,14 +150,14 @@
 	var/obj/machinery/light/newfitting = new dispensing_fitting(B)
 	newfitting.nostick = 0 //regular tube lights don't do autoposition for some reason.
 	newfitting.autoposition(get_dir(B,A))
-	newfitting.attackby(src, user) //plop in an appropriate colour lamp
+	newfitting.Attackby(src, user) //plop in an appropriate colour lamp
 	if (!isghostdrone(user))
 		elecflash(user)
 	take_ammo(user, cost_fitting)
 
 /obj/item/lamp_manufacturer/proc/add_floor_light(turf/A, mob/user)
 	var/obj/machinery/light/newfitting = new /obj/machinery/light/small/floor(A)
-	newfitting.attackby(src, user) //plop in an appropriate colour lamp
+	newfitting.Attackby(src, user) //plop in an appropriate colour lamp
 	if (!isghostdrone(user))
 		elecflash(user)
 	take_ammo(user, cost_fitting)

@@ -985,7 +985,8 @@
 	src.update_cursor()
 	hud.update_throwing()
 
-/mob/living/carbon/human/proc/throw_item(atom/target, list/params)
+/mob/living/carbon/human/throw_item(atom/target, list/params)
+	..()
 	var/turf/thrown_from = get_turf(src)
 	src.throw_mode_off()
 	if (src.stat)
@@ -2876,7 +2877,9 @@
 
 	for(var/slot in valid_slots)
 		var/obj/item/slot_item = src.get_slot(slot)
-		if(slot_item?.flags & HAS_EQUIP_CLICK && slot_item.equipment_click(src, target, params, location, control, origParams, slot))
+		if (slot_item?.flags & HAS_EQUIP_CLICK &&\
+		 	src.in_real_view_range(get_turf(target)) &&\
+		 	slot_item.equipment_click(src, target, params, location, control, origParams, slot))
 			return
 
 	if (src.lying)

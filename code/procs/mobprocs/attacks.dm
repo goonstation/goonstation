@@ -44,7 +44,7 @@
 			if (G.state >= 2 && G.affecting != user)
 				safe = G.affecting
 		if (safe)
-			safe.attackby(W, user, params, is_special, src)
+			safe.Attackby(W, user, params, is_special, src)
 
 			//after attackby so the attack message itself displays first
 			if(prob(20))
