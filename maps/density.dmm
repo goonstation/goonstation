@@ -5100,7 +5100,7 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/obj/lrteleporter{
+/obj/machinery/lrteleporter{
 	layer = 3
 	},
 /turf/simulated/floor/engine{

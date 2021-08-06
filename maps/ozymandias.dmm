@@ -72668,7 +72668,7 @@
 /turf/simulated/floor/engine,
 /area/station/science/lab)
 "tuV" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/circuit/white,
 /area/station/science/teleporter)
 "tuZ" = (
