@@ -13,7 +13,8 @@
 	item_state = "ljacket"
 	wear_layer = MOB_ARMOR_LAYER
 	var/fire_resist = T0C+100
-	var/over_hair = 0
+	/// If TRUE the suit will hide whoever is wearing it's hair
+	var/over_hair = FALSE
 	flags = FPRINT | TABLEPASS
 	w_class = W_CLASS_NORMAL
 	var/restrain_wearer = 0
