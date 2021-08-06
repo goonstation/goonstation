@@ -2239,7 +2239,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		return
 
 	var/mob/living/rider = src.rider
-	..()
+	..(ejectall = 0)
 
 	boutput(rider, "You get out of [src].")
 

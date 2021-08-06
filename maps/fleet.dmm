@@ -1249,7 +1249,7 @@
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "cU" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},

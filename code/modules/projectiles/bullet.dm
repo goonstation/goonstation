@@ -492,6 +492,68 @@ toxic - poisons
 			// impact_image_effect("K", hit)
 				//take_bleeding_damage(hit, null, round(src.power / 3), src.hit_type)
 
+/datum/projectile/bullet/cryo
+	name = "cryogenic slug"
+	shot_sound = 'sound/weapons/shotgunshot.ogg'
+	power = 10
+	ks_ratio = 1
+	dissipation_rate = 2
+	dissipation_delay = 1
+	implanted = null
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	caliber = 0.72
+	icon_turf_hit = null
+	casing = /obj/item/casing/shotgun/blue
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		. = ..()
+		if(isliving(hit))
+			var/mob/living/L = hit
+			L.bodytemperature = max(50, L.bodytemperature - proj.power * 5)
+			var/obj/icecube/I = new/obj/icecube(get_turf(L), L)
+			I.health = proj.power / 2
+
+/datum/projectile/bullet/saltshot_pellet
+	name = "rock salt"
+	shot_sound = 'sound/weapons/shotgunshot.ogg'
+	icon_state = "trace"
+	power = 3
+	ks_ratio = 1
+	dissipation_rate = 1
+	dissipation_delay = 2
+	implanted = null
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	caliber = 0.72
+	icon_turf_hit = "bhole"
+	casing = /obj/item/casing/shotgun/gray
+
+	on_hit(atom/hit, direction, obj/projectile/P)
+		. = ..()
+		if(isliving(hit))
+			var/mob/living/L = hit
+			if(!ON_COOLDOWN(L, "saltshot_scream", 1 SECOND))
+				L.emote("scream")
+			L.take_eye_damage(P.power / 2)
+			L.change_eye_blurry(P.power, 40)
+			L.setStatus("salted", 15 SECONDS, P.power * 2)
+
+/datum/projectile/special/spreader/buckshot_burst/salt
+	name = "rock salt"
+	sname = "rock salt"
+	shot_sound = 'sound/weapons/shotgunshot.ogg'
+	power = 20
+	implanted = null
+	caliber = 0.72
+	casing = /obj/item/casing/shotgun/gray
+	spread_projectile_type = /datum/projectile/bullet/saltshot_pellet
+	speed_min = 28
+	speed_max = 36
+	dissipation_variance = 64
+	spread_angle_variance = 7.5
+	pellets_to_fire = 4
+
 /datum/projectile/bullet/minigun
 	name = "bullet"
 	shot_sound = 'sound/weapons/minigunshot.ogg'
