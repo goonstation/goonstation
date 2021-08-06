@@ -1755,7 +1755,7 @@
 	initial_reagents = list("coconut_milk"=20)
 
 /obj/item/reagent_containers/food/drinks/energyshake
-	name = "Brotien Shake - Dragon Balls flavor"
+	name = "Brotein Shake - Dragon Balls flavor"
 	desc = {"Do you want to get PUMPED UP? Try this 100% NATURAL shake FRESH from the press!
 	We guarantee FULL ACTIVATION of midi-whatevers to EHNANCE your performance on and off the field.
 	Embrace the STRENGTH and POWER of the dragon WITHIN YOU! Spread your newfound wings and ELEVATE your soul!

@@ -32,6 +32,9 @@
 /datum/movement_modifier/status_slowed // these are instantiated by the status effect and the slowdown adjusted there
 	additive_slowdown = 10
 
+/datum/movement_modifier/status_salted // these are instantiated by the status effect and the slowdown adjusted there
+	health_deficiency_adjustment = 10
+
 /datum/movement_modifier/staggered_or_blocking
 	additive_slowdown = 0.4
 

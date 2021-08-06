@@ -334,9 +334,10 @@
 				amount *= fire_coefficient
 				//search for ectothermids.
 				if (amount)
-					for (var/obj/blob/ectothermid/T in range(3, src))
-						if (T && amount > 0)
-							amount = 0
+					for_by_tcl(T, /obj/blob/ectothermid)
+						if (IN_RANGE(src, T, T.protect_range) && amount > 0)
+							amount *= T.absorb(min(amount * damage_mult, src.health))
+							break
 			if ("laser")
 				ignore_armor = 1
 			if ("poison","self_poison")
@@ -588,9 +589,9 @@
 	anim_overlay = "nucleus_blink"
 	special_icon = 1
 	desc = "The core of the blob. Destroying all nuclei effectively stops the organism dead in its tracks."
-	armor = 3
-	health_max = 250
-	health = 250
+	armor = 1.5
+	health_max = 500
+	health = 500
 	temp_tolerance = 1200
 	fire_coefficient = 0.5
 	poison_coefficient = 0.5
@@ -1072,13 +1073,20 @@
 	name = "ectothermid"
 	state_overlay = "ectothermid"
 	special_icon = 1
-	desc = "It's a giant energy converting cell. It seems to disperse matter using heat energy."
+	desc = "It's a giant energy converting cell. It seems to store heat energy."
 	armor = 0
 	gen_rate_value = 1
 	can_absorb = 0
 	runOnLife = 1
 	var/protect_range = 3
+	var/temptemp = 0
+	var/absorbed_temp = 0
 	var/removed = 0
+	var/dead = 0
+
+	New()
+		. = ..()
+		START_TRACKING
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		if (temperature > T20C)
@@ -1092,6 +1100,7 @@
 
 	disposing()
 		..()
+		STOP_TRACKING
 		if (overmind)
 			overmind.gen_rate_bonus += removed
 			removed = 0
@@ -1099,11 +1108,30 @@
 	Life()
 		if (..())
 			return 1
+		absorbed_temp += temptemp * 0.25 + 50
+		temptemp *= 0.75
+		temptemp -= 50
 		for (var/turf/simulated/floor/T in range(protect_range,src))
 			var/datum/gas_mixture/air = T.air
 			if (air.temperature > T20C)
 				air.temperature /= 2
 				air.temperature -= 100
+				if(air.temperature > T20C)
+					absorbed_temp += log(2, air.temperature)
+
+	proc/absorb(amount)
+		if(!dead)
+			temptemp += amount
+			return clamp(0.0005 * (temptemp - 100), 0, 1)
+		else
+			return 1
+
+	onKilled()
+		. = ..()
+		dead = 1
+		if(absorbed_temp > 1000)
+			fireflash_s(get_turf(src), protect_range + 1, absorbed_temp, absorbed_temp/protect_range)
+
 
 /obj/blob/plasmaphyll
 	name = "plasmaphyll"

@@ -811,6 +811,25 @@
 				movement_modifier.additive_slowdown = optional
 			. = ..(optional)
 
+	salted
+		id = "salted"
+		name = "Salted"
+		desc = "AAAAA! SALT!<br>THIS HURTS!"
+		icon_state = "slowed"
+		unique = 0
+		visible = 0
+		movement_modifier = new /datum/movement_modifier/status_salted
+
+		onAdd(optional=null)
+			if(optional)
+				movement_modifier.health_deficiency_adjustment = optional
+			. = ..(optional)
+
+		onChange(optional=null)
+			if(optional)
+				movement_modifier.health_deficiency_adjustment = optional
+			. = ..(optional)
+
 	disorient
 		id = "disorient"
 		name = "Disoriented"

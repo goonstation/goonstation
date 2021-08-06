@@ -1,4 +1,34 @@
 
+(t)fri aug 06 21
+(u)Azrun
+(p)5611
+(e)🗺⚖|mapping, balance
+(+)Silicon folks can now use the Long Range Teleporter and Quantum Telescope from a distance.
+(t)thu aug 05 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Riot launchers are now a bulky item.
+(u)112358sam
+(p)5565
+(e)🆕|feature
+(*)Added a MedTrak Scanner PDA program for scanning people to search for their medical record.
+(t)tue aug 03 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Ectothermid adjustment - protection efficiency decreases if blocking lots of damage in a short time, and releases stored heat in a medium-sized fireflash on death.
+(u)Walpvrgis
+(p)5646
+(e)🆕🎨|feature, sprites
+(*)The Cranial Keratin Formation gene now randomly chooses sets of horns from several different sprite options.
+(t)mon aug 02 21
+(u)Flaborized
+(p)5653
+(e)🎨|sprites
+(+)Resprited the crusher.
+(u)zjdtmkhzt
+(p)5587
+(e)|
+(+)The right click interact option should now hit stuff with held objects instead of dropping the current object and picking the other one up.
 (t)sat jul 31 21
 (u)Walpvrgis
 (p)5616
