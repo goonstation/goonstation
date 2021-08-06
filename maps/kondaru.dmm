@@ -33279,7 +33279,7 @@
 	},
 /area/station/science/chemistry)
 "bSE" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/circuit/purple,
 /area/station/science/teleporter)
 "bSF" = (

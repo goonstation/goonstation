@@ -51176,7 +51176,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/caution,
 /area/station/science/teleporter)
 "vUe" = (
