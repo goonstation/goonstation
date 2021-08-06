@@ -44,10 +44,10 @@
 
 /datum/biome/snow/forest
 	flora_types = list(/obj/tree1/elm_random = 50, /obj/shrub/snow = 100, /obj/shrub/random = 50, /obj/stone/random = 10, /obj/decal/fakeobjects/smallrocks = 10)
-	flora_density = 30
+	flora_density = 20
 
 /datum/biome/snow/forest/thick
-	flora_density = 40
+	flora_density = 30
 
 /datum/biome/snow/rough
 	turf_type = /turf/unsimulated/floor/auto/snow/rough
@@ -78,6 +78,9 @@
 
 /datum/biome/water/ice
 	turf_type = /turf/unsimulated/floor/auto/water/ice
+
+/datum/biome/water/ice/rough
+	turf_type = /turf/unsimulated/floor/auto/water/ice/rough
 
 /datum/biome/mountain
 	turf_type = /turf/simulated/wall/asteroid/mountain

@@ -1013,13 +1013,18 @@
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_WATER
 	icon_state_edge = "swampedge"
 
+	New()
+		. = ..()
+		if (prob(8))
+			src.icon_state = "swamp[rand(1, 4)]"
+
+
 /turf/unsimulated/floor/auto/water/ice
 	name = "ice"
 	desc = "Frozen water."
 	icon = 'icons/turf/water.dmi'
 	icon_state = "ice"
-	edge_priority_level = 0
-	icon_state_edge = null
+	icon_state_edge = "ice_edge"
 	mat_appearances_to_ignore = list("ice")
 
 	New()
@@ -1027,9 +1032,18 @@
 		setMaterial(getMaterial("ice"))
 		name = initial(name)
 
+/turf/unsimulated/floor/auto/water/ice/rough
+	name = "ice"
+	desc = "Rough frozen water."
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "ice1"
+
 	New()
-		. = ..()
+		..()
 		src.icon_state = "ice[rand(1, 6)]"
+
+	edge_overlays()
+		return
 
 /turf/unsimulated/floor/auto/swamp
 	name = "swamp"

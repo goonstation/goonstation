@@ -8,7 +8,7 @@
 		BIOME_LOW_HUMIDITY = /datum/biome/mudlands,
 		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/snow/rocky,
 		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/snow/rough,
-		BIOME_HIGH_HUMIDITY = /datum/biome/water/ice
+		BIOME_HIGH_HUMIDITY = /datum/biome/water/ice/rough
 		),
 
 	BIOME_LOWMEDIUM_HEAT = list(
@@ -58,11 +58,11 @@
 			switch(heat)
 				if(0 to 0.35)
 					heat_level = BIOME_LOW_HEAT
-				if(0.35 to 0.6)
+				if(0.35 to 0.65)
 					heat_level = BIOME_LOWMEDIUM_HEAT
-				if(0.6 to 0.85)
+				if(0.65 to 0.9)
 					heat_level = BIOME_HIGHMEDIUM_HEAT
-				if(0.85 to 1)
+				if(0.9 to 1)
 					heat_level = BIOME_HIGH_HEAT
 			switch(humidity)
 				if(0 to 0.20)
