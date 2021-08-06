@@ -184,6 +184,15 @@ var/global/IP_alerts = 1
 	src.holder.hear_prayers = !src.holder.hear_prayers
 	boutput(usr, "<span class='notice'>Toggled prayers [src.holder.hear_prayers ?"on":"off"]!</span>")
 
+/client/proc/toggle_atags()
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set name = "Toggle ATags"
+	set desc = "Toggle local atags on or off"
+	admin_only
+
+	src.holder.see_atags = !src.holder.see_atags
+	boutput(usr, "<span class='notice'>Toggled ATags [src.holder.see_atags ?"on":"off"]!</span>")
+
 /client/proc/toggle_buildmode_view()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Buildmode View"

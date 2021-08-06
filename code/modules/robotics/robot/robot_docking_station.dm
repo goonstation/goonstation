@@ -675,7 +675,7 @@
 		return
 
 	if (isitem(O) && !user.stat)
-		src.attackby(O, user)
+		src.Attackby(O, user)
 		return
 
 	if (isliving(O) && src.occupant)

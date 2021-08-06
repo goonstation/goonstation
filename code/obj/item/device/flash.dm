@@ -65,7 +65,22 @@
 		src.desc = "A device that emits an extremely bright light when used. Useful for briefly stunning people or starting a dance party."
 		return 1
 
-
+	get_desc()
+		. = ..()
+		if (src.status == 0)
+			. += "\nThe bulb has been burnt out"
+		else
+			switch(src.use)
+				if(0 to 4)
+					. += "\nThe bulb is in perfect condition."
+				if(4 to 6)
+					. += "\nThe bulb is in good condition"
+				if(6 to 8)
+					. += "\nThe bulb is in decent condition"
+				if(8 to 10)
+					. += "\nThe bulb is in bad condition"
+				else
+					. += "\nThe bulb is in terrible condition"
 
 //I split attack and flash_mob into seperate procs so the rev_flash code is cleaner
 /obj/item/device/flash/attack(mob/living/M as mob, mob/user as mob)
@@ -295,7 +310,8 @@
 
 
 /obj/item/device/flash/proc/process_burnout(mob/user as mob)
-	if (use > 1 && prob(max(0,(use*1.2) + burn_mod)))
+	tooltip_rebuild = 1
+	if (prob(max(0,((use-5)*10) + burn_mod)))
 		status = 0
 		boutput(user, "<span class='alert'><b>The bulb has burnt out!</b></span>")
 		set_icon_state("flash3")
@@ -321,20 +337,6 @@
 	else if (isscrewingtool(W))
 		boutput(user, "<span class='notice'>You [src.secure ? "unscrew" : "secure"] the access panel.</span>")
 		secure = !secure
-	else if (ispulsingtool(W))
-		if (src.status == 0)
-			boutput(user, "<span class='alert'>The bulb has been burnt out.</span>")
-		else
-			if (src.use <= 0)
-				boutput(user, "<span class='notice'>The bulb is in perfect condition.</span>")
-			else if (src.use>0 && src.use<5)
-				boutput(user, "<span class='notice'>The bulb is in good condition.</span>")
-			else if (src.use>5 && src.use<10)
-				boutput(user, "<span class='notice'>The bulb is in decent condition.</span>")
-			else if (src.use>10 && src.use<15)
-				boutput(user, "<span class='notice'>The bulb is in bad condition.</span>")
-			else
-				boutput(user, "<span class='notice'>The bulb is in terrible condition.</span>")
 	else
 		return ..()
 

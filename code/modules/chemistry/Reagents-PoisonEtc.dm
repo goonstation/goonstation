@@ -102,7 +102,7 @@ datum
 				if (istype(O,/obj/item/clothing/head/chemhood || /obj/item/clothing/suit/chemsuit))
 					return 1
 				if (isitem(O) && prob(40))
-					var/obj/item/toMelt
+					var/obj/item/toMelt = O
 					if (!(toMelt.item_function_flags & IMMUNE_TO_ACID))
 						if(!O.hasStatus("acid"))
 							O.changeStatus("acid", 5 SECONDS, list("leave_cleanable" = 1))
@@ -1580,6 +1580,10 @@ datum
 					if(istype(src.data, /datum/bioHolder))
 						var/datum/bioHolder/tocopy = data
 						if(tocopy?.mobAppearance?.mutant_race?.dna_mutagen_banned)
+							return ..()
+					if(ishuman(M))
+						var/mob/living/carbon/human/H = M
+						if(H.mutantrace?.dna_mutagen_banned)
 							return ..()
 					M.bioHolder.StaggeredCopyOther(data, progress_timer+=(1 * mult))
 					if (probmult(50) && progress_timer > 7)

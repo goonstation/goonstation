@@ -42,7 +42,7 @@ datum
 		var/viscosity = 0 // determines interactions in fluids. 0 for least viscous, 1 for most viscous. use decimals!
 		var/block_slippy = 0 //fluid flag for slippage control
 		var/list/target_organs
-		var/heat_capacity = 100 /* how much heat a reagent can hold */
+		var/heat_capacity = 100 /* how much heat a reagent can hold */ // ACTUALLY, THIS IS SPECIFIC HEAT CAPACITY, HOPE THIS HELPS!! - Emily
 		var/blocks_sight_gas = 0 //opacity
 		var/pierces_outerwear = 0//whether or not this penetrates outerwear that may protect the victim(e.g. biosuit)
 		var/stun_resist = 0

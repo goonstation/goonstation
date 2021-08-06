@@ -1675,7 +1675,7 @@
 /area/station/maintenance/solar/west)
 "adU" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/machinery/computer/stockexchange{
 	icon_state = "QMreq";
@@ -1966,7 +1966,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -2716,7 +2716,7 @@
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/janitor/office)
@@ -2771,7 +2771,7 @@
 /area/station/hallway/primary/north)
 "age" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/machinery/light/small{
 	dir = 1;
@@ -3337,7 +3337,7 @@
 /obj/item/storage/box/mousetraps,
 /obj/item/storage/box/mousetraps,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/grime,
 /area/station/janitor/office)
@@ -7382,7 +7382,7 @@
 /area/station/turret_protected/ai_upload_foyer)
 "aqb" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/machinery/light/small{
 	tag = "icon-bulb1 (WEST)";
@@ -9478,7 +9478,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/machinery/light/small{
 	tag = "icon-bulb1 (WEST)";
@@ -19860,7 +19860,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/purple,
 /area/station/science/teleporter)
 "aPM" = (
@@ -32783,7 +32783,7 @@
 /area/station/quartermaster/office)
 "bqX" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/machinery/light,
 /turf/simulated/floor/orangeblack/side,

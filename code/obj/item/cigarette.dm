@@ -1069,6 +1069,7 @@
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "zippo"
 	item_state = "zippo"
+	var/item_state_base = "zippo"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	w_class = W_CLASS_TINY
 	throwforce = 4
@@ -1101,29 +1102,37 @@
 				if (!reagents.get_reagent_amount("fuel"))
 					user.show_text("Out of fuel.", "red")
 					return
-				src.on = 1
-				src.firesource = TRUE
-				set_icon_state(src.icon_on)
-				src.item_state = "zippoon"
-				user.visible_message("<span class='alert'>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
-				playsound(user, 'sound/items/zippo_open.ogg', 30, 1)
-				light.enable()
-
-				processing_items |= src
+				src.activate(user)
 			else
-				src.on = 0
-				src.firesource = FALSE
-				set_icon_state(src.icon_off)
-				src.item_state = "zippo"
-				user.visible_message("<span class='alert'>You hear a quiet click, as [user] shuts off [src] without even looking what they're doing. Wow.</span>")
-				playsound(user, 'sound/items/zippo_close.ogg', 30, 1)
-				light.disable()
-
-				processing_items.Remove(src)
+				src.deactivate(user)
 			user.update_inhands()
 		else
 			return ..()
 		return
+
+	proc/activate(mob/user as mob)
+		src.on = 1
+		src.firesource = TRUE
+		set_icon_state(src.icon_on)
+		src.item_state = "[item_state_base]on"
+		light.enable()
+		processing_items |= src
+		if (user != null)
+			user.visible_message("<span class='alert'>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
+			playsound(user, 'sound/items/zippo_open.ogg', 30, 1)
+			user.update_inhands()
+
+	proc/deactivate(mob/user as mob)
+		src.on = 0
+		src.firesource = FALSE
+		set_icon_state(src.icon_off)
+		src.item_state = "[item_state_base]"
+		light.disable()
+		processing_items.Remove(src)
+		if (user != null)
+			user.visible_message("<span class='alert'>You hear a quiet click, as [user] shuts off [src] without even looking what they're doing. Wow.</span>")
+			playsound(user, 'sound/items/zippo_close.ogg', 30, 1)
+			user.update_inhands()
 
 	attack(mob/target, mob/user as mob)
 		if (ishuman(target))
@@ -1193,6 +1202,10 @@
 	process()
 		if (src.on)
 			if (!reagents)
+				if (ismob(src.loc))
+					src.deactivate(src.loc)
+				else
+					src.deactivate(null)
 				return
 			if (!infinite_fuel && reagents.get_reagent_amount("fuel"))
 				reagents.remove_reagent("fuel", 1)
@@ -1205,12 +1218,10 @@
 			if (T)
 				T.hotspot_expose(700,5)
 			if (!reagents.get_reagent_amount("fuel"))
-				src.on = 0
-				set_icon_state(src.icon_off)
-				src.item_state = "zippo"
-				light.disable()
-
-				processing_items -= src
+				if (ismob(src.loc))
+					src.deactivate(src.loc)
+				else
+					src.deactivate(null)
 				return
 			//sleep(1 SECOND)
 
@@ -1266,3 +1277,29 @@
 
 /obj/item/device/light/zippo/borg
 	infinite_fuel = 1
+
+/obj/item/device/light/zippo/syndicate
+	desc = "A sleek black lighter with a red stripe."
+	icon_state = "syndie_zippo"
+	icon_off = "syndie_zippo"
+	icon_on = "syndie_zippoon"
+	item_state = "syndi-zippo"
+	item_state_base = "syndi-zippo"
+	infinite_fuel = 1
+	col_r = 0.298
+	col_g = 0.658
+	col_b = 0
+	is_syndicate = 1
+
+	New()
+		. = ..()
+		RegisterSignal(src, list(COMSIG_MOVABLE_SET_LOC, COMSIG_MOVABLE_MOVED), .proc/update_hotbox_flag)
+
+	proc/update_hotbox_flag(thing, previous_loc, direction)
+		if (!firesource) return
+		if (isturf(src.loc))
+			var/turf/T = src.loc
+			T.allow_unrestricted_hotbox++
+		if (isturf(previous_loc))
+			var/turf/T = previous_loc
+			T.allow_unrestricted_hotbox = max(0, T.allow_unrestricted_hotbox - 1)

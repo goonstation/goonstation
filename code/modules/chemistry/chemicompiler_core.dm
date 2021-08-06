@@ -696,7 +696,7 @@
 			reservoirs[resId] = null
 		else
 			var/obj/item/reagent_containers/glass/B = reservoirs[resId]
-			B.attackby(usr.equipped(), usr)
+			B.Attackby(usr.equipped(), usr)
 
 	else
 		// Putting SOMETHING in
@@ -831,7 +831,9 @@
 	if(next_temp_change >= max_temp_change)																	// Check if this tick will cause the temperature to overshoot if heated/cooled at full power. Use >= to prevent reheating in the case the values line up perfectly
 		element_temp = (((R.total_temperature - (R.total_temperature-temp)*h_divisor) * (R.total_volume+h_exposed_volume)) - (R.total_temperature*R.total_volume))/h_exposed_volume
 		heating_in_progress = 0
-	
+
+	h_divisor = 35/h_divisor*100 // quick hack because idk wtf is going on here - Emily
+
 	R.temperature_reagents(element_temp, h_exposed_volume, h_divisor, h_change_cap)
 
 	return heating_in_progress

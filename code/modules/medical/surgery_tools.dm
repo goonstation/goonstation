@@ -401,7 +401,7 @@ CONTAINS:
 			SPAWN_DBG(src.charge_time)
 				src.charged = 1
 				set_icon_state("[src.icon_base]-on")
-				playsound(user.loc, "sound/weapons/flash.ogg", 75, 1, pitch = 0.88)
+				playsound(user.loc, "sound/items/defib_charge.ogg", 90, 0)
 
 	attack_self(mob/user as mob)
 		user.show_text("You [talk2me ? "disable" : "enable"] the [src]'s verbal alert system.")
@@ -419,7 +419,7 @@ CONTAINS:
 		SPAWN_DBG(src.charge_time)
 			src.charged = 1
 			set_icon_state("[src.icon_base]-on")
-			playsound(src.loc, "sound/weapons/flash.ogg", 75, 1, pitch = 0.88)
+			playsound(src.loc, "sound/items/defib_charge.ogg", 90, 0)
 		return 1
 
 	proc/speak(var/message)	// lifted entirely from bot_parent.dm

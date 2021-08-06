@@ -933,6 +933,14 @@
 	icon_state = "sneakmans"
 	item_state = "sneakmans"
 
+/obj/item/clothing/suit/armor/sneaking_suit/costume
+	desc = "On closer inspection this is a cheap cosplay outfit with an obvious zipper."
+
+	setupProperties()
+		..()
+		setProperty("meleeprot", 2)
+		delProperty("rangedprot")
+
 /obj/item/clothing/suit/bio_suit/beekeeper
 	name = "apiculturist's suit"
 	desc = "A suit that protects against bees. Not space bees, but like the tiny, regular kind. This thing doesn't do <i>shit</i> to protect you from space bees."
@@ -1642,3 +1650,51 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	icon_state = "labcoat-long"
 	item_state = "labcoat-long"
 	body_parts_covered = TORSO|LEGS|ARMS
+
+//monkey island reference
+
+/obj/item/clothing/under/gimmick/guybrush
+	name = "wannabe pirate outfit"
+	desc = "It smells like monkeys."
+	icon_state = "guybrush"
+	item_state = "guybrush"
+
+//fake lizard stuff
+
+/obj/item/clothing/suit/gimmick/dinosaur
+	name = "dinosaur pajamas"
+	desc = "It has a little hood you can flip up and down. Rawr!"
+	icon_state = "dinosaur"
+	item_state = "dinosaur"
+	var/hood = 0
+
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 25)
+
+	attack_self(mob/user as mob)
+		src.hood = !(src.hood)
+		user.show_text("You flip [src]'s hood [src.hood ? "up" : "down"].")
+		if (src.hood)
+			src.over_hair = 1
+			src.icon_state = "dinosaur-up"
+			src.item_state = "dinosaur-up"
+		else
+			src.over_hair = 0
+			src.icon_state = "dinosaur"
+			src.item_state = "dinosaur"
+
+/obj/item/clothing/head/biglizard
+	name = "giant novelty lizard head"
+	desc = "Wow! It's just like the real thing!"
+	icon_state = "big_lizard"
+	item_state = "big_lizard"
+
+//sock hats
+
+/obj/item/clothing/head/link
+	name = "hero hat"
+	desc = "What kind of hero would wear this dumb thing?"
+	icon_state = "link"
+	item_state = "link"

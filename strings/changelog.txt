@@ -1,9 +1,115 @@
 
+(t)fri aug 06 21
+(u)Azrun
+(p)5611
+(e)🗺⚖|mapping, balance
+(+)Silicon folks can now use the Long Range Teleporter and Quantum Telescope from a distance.
+(t)thu aug 05 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Riot launchers are now a bulky item.
+(u)112358sam
+(p)5565
+(e)🆕|feature
+(*)Added a MedTrak Scanner PDA program for scanning people to search for their medical record.
+(t)tue aug 03 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Ectothermid adjustment - protection efficiency decreases if blocking lots of damage in a short time, and releases stored heat in a medium-sized fireflash on death.
+(u)Walpvrgis
+(p)5646
+(e)🆕🎨|feature, sprites
+(*)The Cranial Keratin Formation gene now randomly chooses sets of horns from several different sprite options.
+(t)mon aug 02 21
+(u)Flaborized
+(p)5653
+(e)🎨|sprites
+(+)Resprited the crusher.
+(u)zjdtmkhzt
+(p)5587
+(e)|
+(+)The right click interact option should now hit stuff with held objects instead of dropping the current object and picking the other one up.
+(t)sat jul 31 21
+(u)Walpvrgis
+(p)5616
+(e)🆕🎨|feature, sprites
+(*)Three new furniture crates are now available for Quartermasters to purchase at Cargo; a fancy red-tableclothed table, a set of regal furniture, and a golden throne.
+(u)Walpvrgis
+(p)5567
+(e)🎨|sprites
+(*)The Floor and Wall Planner now has a few new flooring designs to choose from. Check the PR link above for preview images.
+(u)Arthur Holiday
+(p)5635
+(e)⚖🗺|balance, mapping
+(+)A certain box of syndicate donkpockets on a certain ship now contains normal donk pockets
+(t)fri jul 30 21
+(u)Sovexe
+(p)5631
+(e)⚖|balance
+(*)Roaches are now a little more durable to crushing and blunt damage. Roach vulnerability to crush / blunt reduced from 166% to 150%.
+(t)thu jul 29 21
+(u)Janonas + jigjagboi45
+(p)5580
+(e)⚖🆕🎨|balance, feature, sprites
+(*)Added Rafflesias (corpseflowers) to the game. - Admire how pretty they look! Make them stink up the place! Wear them on your head like a silly person!
+(+)The hydroponic trays are now open containers, as they should be.
+(t)wed jul 28 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Projectiles bypass ground hit/miss rolls when passing over a mob within the first half-second of resting (other sources of resting (stunned/etc) not affected). i.e.: frame-perfect rest-dodging tasers will be less/not possible, while not affecting ground-hit system much outside of that case
+(t)tue jul 27 21
+(u)Flappybat
+(p)5609
+(e)|
+(+)Supply requests are now shown with their price.
+(u)Sovexe
+(p)5606
+(e)⚖🆕🎨|balance, feature, sprites
+(*)There is now a per herb hardcap on the reagents transferred into smoke when burning herbs.
+(*)Traitor botanists can now purchase a hotbox lighter for 1 credit. This lighter has unlimited fuel, bypasses the herb hardcap, and gives a bonus multiplier to the reagent volume of the smoke. Sprite by DimWhat.
+(t)sun jul 25 21
+(u)DimWhat
+(p)5597
+(e)🎨|sprites
+(*)Added several more monkey clothing sprites. Go bananas!
+(+)Made sprite edits for many monkey jumpsuit sprites.
+(u)Flappybat
+(p)5530
+(e)⚖|balance
+(+)Gifts and duck eggs now give a costume version of the sneaking suit.
+(t)fri jul 23 21
+(u)DisturbHerb
+(p)5574
+(e)|
+(+)(Most) PDAs will start with writing utensils in them by default.
+(u)Azrun
+(p)4861
+(e)⚖🆕🎨📄|balance, feature, sprites, tgui
+(*)Extreme-Pressure Pressurization Device™: the latest in emergency pressurization equipment can now be ordered from cargo.
+(u)Emily
+(p)5591
+(e)⚖🆕|balance, feature
+(*)Implements heat capacity for reagents. This changes basically all reagent temperature exposures.
+(+)Heat capacity water 4x, heat capacity weldingful 0.05x, heat capacity cryostylane 6x
+(t)wed jul 21 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Adjust blob spread cooldown stuff again.
+(+)Revert buff to base spread cooldown (1.1s -> 1.6s base)
+(+)Change size-based cooldown increase to instead act as as multiplier to distance from nearest nucleus (1x penalty up to 400 tiles, +1x penalty for each 200 tiles past 400 [i.e.: if you try to spread 50 tiles away from nearest nucleus while at size 600, the cooldown penalty is as if you tried to spread 100 tiles from nearest nucleus at size 400])
+(u)Tarmunora
+(e)⚖|balance
+(+)Flashes always get 5 uses before burnout scaling begins; flash burnout scaling is much more agressive.
+(u)Kobold Commando & DimWhat
+(p)5424
+(e)🎨|sprites
+(*)Added several new clothing items to the clothing booth and two backpacks to Geoff Honkington.
+(+)Changed the clothing of a certain lizardy halloween role
 (t)tue jul 20 21
 (u)Tarmunora
 (e)⚖|balance
 (+)Adjust radiation statuseffect to deal damage based on remaining duration.
-(+)🤏radbow buff
+(+)~~🤏radbow buff~~ reverted
 (t)sun jul 18 21
 (u)TTerc
 (p)5483
