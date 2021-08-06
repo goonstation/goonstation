@@ -92,8 +92,8 @@
 			sleep(2 SECONDS)
 			if (length(candidates))
 				var/mob/living/carbon/human/H = null
-				num_agents = min(num_agents,length(candidates))
-				for(var/i = 0, i<num_agents,i++)
+				num_agents = min(num_agents, length(candidates))
+				for(var/i in 0 to num_agents)
 					H = pick(candidates)
 					candidates -= H
 					if(istype(H))
