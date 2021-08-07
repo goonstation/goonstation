@@ -1195,11 +1195,9 @@
 			if (ispath(checkpath, /datum/mutantrace) && ishuman(src))
 				var/mob/living/carbon/human/H = src
 				if (H.mutantrace)
-					var/icon/I = new(H.mutantrace.icon, H.mutantrace.icon_state)
-					src.static_image = getTexturedImage(I, "static", ICON_OVERLAY)
+					src.static_image = getTexturedImage(icon(H.mutantrace.icon, H.mutantrace.icon_state), "static", ICON_OVERLAY)
 			else
-				var/icon/I = new(src.icon, src.icon_state)
-				src.static_image = getTexturedImage(src.default_static_icon ? src.default_static_icon : I, "static", ICON_OVERLAY)
+				src.static_image = getTexturedImage(src.default_static_icon ? src.default_static_icon : icon(src.icon, src.icon_state), "static", ICON_OVERLAY)
 			if (src.static_image)
 				default_mob_static_icons[checkpath] = image(src.static_image)
 				src.static_image.override = 1
