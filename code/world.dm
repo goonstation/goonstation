@@ -440,6 +440,10 @@ var/f_color_selector_handler/F_Color_Selector
 	SPAWN_DBG(0)
 		init()
 
+#ifdef UNIT_TESTS
+	RunUnitTests()
+#endif
+
 #define UPDATE_TITLE_STATUS(x) if (game_start_countdown) game_start_countdown.update_status(x)
 
 /world/proc/init()
@@ -657,6 +661,11 @@ var/f_color_selector_handler/F_Color_Selector
 	SPAWN_DBG(10 SECONDS)
 		Reboot_server()
 #endif
+#ifdef UNIT_TESTS
+	SPAWN_DBG(10 SECONDS) // 10 SECONDS ?
+		Reboot_server()
+#endif
+
 #undef UPDATE_TITLE_STATUS
 	return
 
@@ -724,6 +733,12 @@ var/f_color_selector_handler/F_Color_Selector
 #endif
 	shutdown()
 #endif
+
+#ifdef UNIT_TESTS
+	shutdown()
+#endif
+
+
 	SPAWN_DBG(world.tick_lag)
 		for (var/client/C)
 			if (C.mob)
