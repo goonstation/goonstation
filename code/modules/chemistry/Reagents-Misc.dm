@@ -1161,7 +1161,7 @@ datum
 
 			reaction_turf(var/turf/target, var/volume)
 				var/turf/simulated/T = target
-				if (istype(T) && T.wet) //Wire: fix for Undefined variable /turf/space/var/wet (&& T.wet)
+				if (istype(T)) //Wire: fix for Undefined variable /turf/space/var/wet (&& T.wet)
 					if (T.wet >= 2) return
 					var/wet = image('icons/effects/water.dmi',"wet_floor")
 					T.UpdateOverlays(wet, "wet_overlay")
