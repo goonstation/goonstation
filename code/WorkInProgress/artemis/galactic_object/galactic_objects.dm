@@ -179,7 +179,7 @@
 
 	New()
 		..()
-		for_by_tcl(L, /obj/lrteleporter)
+		for_by_tcl(L, /obj/machinery/lrteleporter)
 			if(L.z == Z_LEVEL_STATION)
 				if(!src.landing_zones) src.landing_zones = list()
 				src.landing_zones["SS13"] = get_turf(L)

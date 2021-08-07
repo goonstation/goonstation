@@ -226,7 +226,7 @@
 /turf/simulated/floor/black,
 /area/ship/arjuna)
 "fi" = (
-/obj/lrteleporter/planetary_teleporter,
+/obj/machinery/lrteleporter/planetary_teleporter,
 /obj/landmark/lrt{
 	name = "Artemis"
 	},
@@ -625,7 +625,7 @@
 	},
 /area/ship/artemis)
 "pE" = (
-/obj/lrteleporter/planetary_teleporter{
+/obj/machinery/lrteleporter/planetary_teleporter{
 	ship_id = "arjuna"
 	},
 /turf/simulated/floor/engine,
