@@ -3,5 +3,5 @@
 /datum/unit_test/deletion_regressions
 
 /datum/unit_test/deletion_regressions/Run()
-	Fail("Unknown chemical id \"[id]\" in recipe (required_reagents or inhibitor) [R.type]")
+	Fail("Forced failure for testing... remove this.")
 
