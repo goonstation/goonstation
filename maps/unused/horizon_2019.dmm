@@ -26183,7 +26183,7 @@
 	},
 /area/station/science/teleporter)
 "bho" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;

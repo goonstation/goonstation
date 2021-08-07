@@ -54688,7 +54688,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/construction)
 "cmH" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/circuit/green,
 /area/station/science/teleporter)
 "cmI" = (

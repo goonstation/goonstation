@@ -5,50 +5,245 @@
 "ab" = (
 /turf/background_canvas,
 /area)
-"ad" = (
-/turf/unsimulated/wall/setpieces/leadwindow/gray{
-	dir = 8;
-	icon_state = "leadwindow_gray_1"
-	},
+"bl" = (
+/obj/stool/chair,
+/turf/simulated/floor/blue/checker,
+/area)
+"bt" = (
+/obj/table/auto,
+/obj/item/storage/box/cutlery,
+/obj/item/storage/box/plates,
+/turf/simulated/floor/blue/checker,
+/area)
+"cx" = (
+/obj/machinery/door/airlock/gannets/glass/medical,
+/turf/simulated/floor/bluegreen,
 /area/ship/arjuna)
-"ag" = (
-/obj/machinery/computer/communications,
-/obj/machinery/power/data_terminal,
+"en" = (
+/obj/machinery/bathtub{
+	anchored = 1;
+	dir = 4
+	},
+/turf/simulated/floor/purple,
+/area/ship/arjuna)
+"eM" = (
+/obj/stool/chair/couch/red{
+	dir = 4;
+	icon_state = "chair_couch-red"
+	},
 /turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fblue4"
+	dir = 5;
+	icon_state = "red2"
 	},
 /area/ship/arjuna)
-"ah" = (
-/obj/machinery/sim/vr_bed/flight_chair{
-	stars_id = "arjuna"
+"eV" = (
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "red2"
 	},
+/area/ship/arjuna)
+"fA" = (
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "red3"
+	},
+/area/ship/arjuna)
+"gk" = (
+/obj/decal/fakeobjects/shuttlethruster,
+/obj/decal/fakeobjects/shuttlethruster,
+/turf/space,
+/area/ship/arjuna)
+"gU" = (
+/obj/machinery/lrteleporter/planetary_teleporter{
+	ship_id = "arjuna"
+	},
+/turf/simulated/floor/engine,
+/area/ship/arjuna)
+"he" = (
+/obj/machinery/communications_dish,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/circuit/off,
+/area/ship/arjuna)
+"hl" = (
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "green3"
+	},
+/area/ship/arjuna)
+"ic" = (
 /turf/simulated/floor/carpet{
 	dir = 10;
-	icon_state = "fblue1"
+	icon_state = "red3"
 	},
 /area/ship/arjuna)
-"ai" = (
-/obj/machinery/computer/announcement,
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fblue4"
-	},
+"iz" = (
+/obj/storage/closet/biohazard,
+/obj/item/clothing/head/rad_hood,
+/obj/item/clothing/suit/rad,
+/turf/simulated/floor/engine,
 /area/ship/arjuna)
-"aj" = (
-/turf/unsimulated/wall/auto/lead/gray{
-	desc = "Seems pretty sturdy.";
-	name = "shielded wall"
-	},
+"iJ" = (
+/obj/machinery/power/rtg,
+/turf/simulated/floor/engine,
 /area/ship/arjuna)
-"al" = (
+"iK" = (
+/obj/machinery/door/airlock/gannets/chemistry,
+/turf/simulated/floor/black,
+/area/ship/arjuna)
+"iQ" = (
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fblue2"
 	},
 /area/ship/arjuna)
-"am" = (
+"jm" = (
+/obj/machinery/optable,
+/obj/item/surgical_spoon,
+/obj/item/suture,
+/obj/item/scalpel,
+/obj/item/circular_saw,
+/turf/simulated/floor/specialroom/medbay,
+/area/ship/arjuna)
+"jx" = (
+/obj/decal/fakeobjects/shuttlethruster,
+/turf/space,
+/area/ship/arjuna)
+"jO" = (
+/obj/machinery/vending/cola/blue,
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "green2"
+	},
+/area/ship/arjuna)
+"kE" = (
+/obj/machinery/clonepod,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/bluegreen,
+/area/ship/arjuna)
+"kG" = (
+/obj/machinery/networked/mainframe,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/circuit/off,
+/area/ship/arjuna)
+"lt" = (
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "green2"
+	},
+/area/ship/arjuna)
+"lC" = (
+/obj/machinery/power/smes,
+/turf/simulated/floor/engine,
+/area/ship/arjuna)
+"lZ" = (
+/obj/stool/chair{
+	dir = 1;
+	icon_state = "chair"
+	},
+/turf/simulated/floor/blue/checker,
+/area/ship/arjuna)
+"mC" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "red";
+	icon_state = "bedsheet-red"
+	},
+/turf/simulated/floor/carpet{
+	dir = 2;
+	icon_state = "red2"
+	},
+/area/ship/arjuna)
+"mU" = (
+/obj/table/wood/auto,
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "fblue3"
+	},
+/area/ship/arjuna)
+"nn" = (
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "fblue2"
+	},
+/area/ship/arjuna)
+"nr" = (
+/obj/machinery/door/airlock/gannets/chemistry,
+/turf/simulated/floor/purple,
+/area/ship/arjuna)
+"ns" = (
+/obj/submachine/laundry_machine,
+/turf/simulated/floor/purple,
+/area/ship/arjuna)
+"op" = (
+/obj/stool/chair/comfy/blue{
+	dir = 4
+	},
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fblue2"
+	},
+/area/ship/arjuna)
+"oM" = (
+/turf/unsimulated/wall/setpieces/leadwindow/gray,
+/area/ship/arjuna)
+"oT" = (
+/obj/storage/secure/closet/fridge,
+/turf/simulated/floor/blue/checker,
+/area/ship/arjuna)
+"qi" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4;
+	pixel_x = -8
+	},
+/turf/simulated/floor/blue/checker,
+/area/ship/arjuna)
+"qA" = (
+/obj/landmark/ship_marker{
+	ship_id = "arjuna"
+	},
+/turf/simulated/floor/black,
+/area/ship/arjuna)
+"rg" = (
+/obj/machinery/door/airlock/gannets/glass/command/alt,
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fblue4"
+	},
+/area/ship/arjuna)
+"rB" = (
+/obj/machinery/door/airlock/gannets/command/alt,
+/turf/simulated/floor/black,
+/area/ship/arjuna)
+"rJ" = (
+/obj/machinery/door/airlock/gannets/glass,
+/turf/simulated/floor/black,
+/area/ship/arjuna)
+"rT" = (
+/obj/table/wood/auto,
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "fblue3"
+	},
+/area/ship/arjuna)
+"sM" = (
+/turf/simulated/floor/bluegreen,
+/area/ship/arjuna)
+"tz" = (
+/turf/simulated/floor/carpet{
+	dir = 1;
+	icon_state = "green2"
+	},
+/area/ship/arjuna)
+"tM" = (
+/obj/machinery/door/airlock/gannets/engineering/alt,
+/turf/simulated/floor/black,
+/area/ship/arjuna)
+"tP" = (
+/obj/table/auto,
+/obj/submachine/mixer,
+/turf/simulated/floor/blue/checker,
+/area/ship/arjuna)
+"tQ" = (
 /obj/stool/chair/office/blue{
 	dir = 1;
 	icon_state = "office_chair_blue"
@@ -58,36 +253,344 @@
 	icon_state = "fblue2"
 	},
 /area/ship/arjuna)
-"an" = (
+"uT" = (
+/turf/simulated/floor/stairs{
+	dir = 1
+	},
+/area/ship/arjuna)
+"ww" = (
+/obj/stool/chair/office{
+	dir = 1;
+	icon_state = "office_chair"
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/ship/arjuna)
+"wF" = (
+/turf/simulated/floor/specialroom/medbay,
+/area/ship/arjuna)
+"xo" = (
+/obj/table/auto,
+/obj/machinery/chem_master,
+/turf/simulated/floor/specialroom/medbay,
+/area/ship/arjuna)
+"xs" = (
+/obj/machinery/clonegrinder,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/bluegreen,
+/area/ship/arjuna)
+"xR" = (
+/obj/storage/secure/closet/medical,
+/turf/simulated/floor/specialroom/medbay,
+/area/ship/arjuna)
+"zH" = (
+/turf/simulated/floor/blue/checker,
+/area/ship/arjuna)
+"zI" = (
+/obj/machinery/vending/kitchen,
+/turf/simulated/floor/blue/checker,
+/area/ship/arjuna)
+"As" = (
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "red2"
+	},
+/area/ship/arjuna)
+"AL" = (
+/obj/machinery/vending/coffee,
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "green2"
+	},
+/area/ship/arjuna)
+"AN" = (
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "red2"
+	},
+/area/ship/arjuna)
+"AY" = (
+/obj/machinery/vending/snack,
+/turf/simulated/floor/blue/checker,
+/area/ship/arjuna)
+"CE" = (
+/obj/stool/chair/office{
+	dir = 4;
+	icon_state = "office_chair"
+	},
+/turf/simulated/floor/bluegreen,
+/area/ship/arjuna)
+"Dk" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "green";
+	icon_state = "bedsheet-green"
+	},
+/turf/simulated/floor/carpet{
+	dir = 2;
+	icon_state = "green2"
+	},
+/area/ship/arjuna)
+"Dn" = (
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fblue2"
 	},
 /area/ship/arjuna)
-"ao" = (
-/obj/stool/chair/comfy/blue{
-	dir = 4
-	},
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fblue2"
-	},
+"Ea" = (
+/obj/table/auto,
+/obj/machinery/chem_dispenser,
+/turf/simulated/floor/specialroom/medbay,
 /area/ship/arjuna)
-"ap" = (
-/obj/table/wood/auto,
+"EX" = (
+/obj/machinery/door/airlock/gannets/glass/medical,
+/turf/simulated/floor/black,
+/area/ship/arjuna)
+"Fd" = (
+/obj/machinery/vending/cigarette,
 /turf/simulated/floor/carpet{
 	dir = 6;
+	icon_state = "red2"
+	},
+/area/ship/arjuna)
+"Fh" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "green";
+	icon_state = "bedsheet-green"
+	},
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "green2"
+	},
+/area/ship/arjuna)
+"Fk" = (
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "green2"
+	},
+/area/ship/arjuna)
+"FK" = (
+/turf/simulated/floor/black,
+/area/ship/arjuna)
+"GH" = (
+/obj/table/wood/auto,
+/turf/simulated/floor/carpet{
+	dir = 9;
 	icon_state = "fblue3"
 	},
 /area/ship/arjuna)
-"aq" = (
+"HI" = (
+/obj/machinery/door/airlock/gannets/glass/security,
+/turf/simulated/floor/black,
+/area/ship/arjuna)
+"HQ" = (
 /obj/table/wood/auto,
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fblue3"
 	},
 /area/ship/arjuna)
-"ar" = (
+"Ip" = (
+/obj/stool/chair/couch/green{
+	dir = 8;
+	icon_state = "chair_couch-green"
+	},
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "green2"
+	},
+/area/ship/arjuna)
+"JI" = (
+/obj/stool/chair/couch/red{
+	dir = 8;
+	icon_state = "chair_couch-red"
+	},
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "red2"
+	},
+/area/ship/arjuna)
+"Ku" = (
+/obj/storage/secure/closet/engineering,
+/turf/simulated/floor/engine,
+/area/ship/arjuna)
+"Ky" = (
+/obj/machinery/clone_scanner,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/bluegreen,
+/area/ship/arjuna)
+"KA" = (
+/obj/machinery/computer/communications,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fblue4"
+	},
+/area/ship/arjuna)
+"KM" = (
+/obj/table/auto,
+/obj/machinery/chem_heater,
+/turf/simulated/floor/specialroom/medbay,
+/area/ship/arjuna)
+"KS" = (
+/obj/table/auto,
+/obj/item/storage/box/syringes,
+/obj/item/remote/porter/port_a_nanomed,
+/turf/simulated/floor/specialroom/medbay,
+/area/ship/arjuna)
+"Ms" = (
+/obj/submachine/chef_oven{
+	dir = 4;
+	icon_state = "oven_off"
+	},
+/turf/simulated/floor/blue/checker,
+/area/ship/arjuna)
+"MI" = (
+/obj/machinery/door/airlock/gannets/glass/toxins,
+/turf/simulated/floor/engine,
+/area/ship/arjuna)
+"NN" = (
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "green2"
+	},
+/area/ship/arjuna)
+"Op" = (
+/obj/table/auto,
+/obj/item/storage/box/iv_box,
+/obj/item/storage/box/patchbox,
+/obj/item/kitchen/food_box/lollipop,
+/turf/simulated/floor/specialroom/medbay,
+/area/ship/arjuna)
+"OI" = (
+/obj/machinery/vending/port_a_nanomed,
+/turf/simulated/floor/specialroom/medbay,
+/area/ship/arjuna)
+"OP" = (
+/obj/storage/closet/fire,
+/turf/simulated/floor/engine,
+/area/ship/arjuna)
+"Pd" = (
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "fblue2"
+	},
+/area/ship/arjuna)
+"Pu" = (
+/turf/simulated/floor/purple,
+/area/ship/arjuna)
+"PP" = (
+/obj/machinery/vending/cola/red,
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "red2"
+	},
+/area/ship/arjuna)
+"QL" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "red";
+	icon_state = "bedsheet-red"
+	},
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "red2"
+	},
+/area/ship/arjuna)
+"QM" = (
+/turf/unsimulated/wall/setpieces/leadwindow/gray{
+	dir = 8;
+	icon_state = "leadwindow_gray_1"
+	},
+/area/ship/arjuna)
+"QO" = (
+/obj/item/storage/toilet{
+	dir = 4;
+	icon_state = "toilet"
+	},
+/turf/simulated/floor/purple,
+/area/ship/arjuna)
+"So" = (
+/obj/machinery/computer/announcement,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fblue4"
+	},
+/area/ship/arjuna)
+"SG" = (
+/turf/simulated/floor/engine,
+/area/ship/arjuna)
+"SP" = (
+/obj/stool/chair/couch/green{
+	dir = 4;
+	icon_state = "chair_couch-green"
+	},
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "green2"
+	},
+/area/ship/arjuna)
+"Te" = (
+/obj/machinery/door/airlock/gannets/glass/command/alt,
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fblue4"
+	},
+/area/ship/arjuna)
+"Tl" = (
+/turf/simulated/floor/circuit/off,
+/area/ship/arjuna)
+"Tw" = (
+/turf/unsimulated/wall/auto/lead/gray{
+	desc = "Seems pretty sturdy.";
+	name = "shielded wall"
+	},
+/area/ship/arjuna)
+"TV" = (
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "green3"
+	},
+/area/ship/arjuna)
+"UA" = (
+/turf/simulated/floor/carpet{
+	dir = 2;
+	icon_state = "fblue2"
+	},
+/area/ship/arjuna)
+"UC" = (
+/obj/machinery/sim/vr_bed/flight_chair{
+	stars_id = "arjuna"
+	},
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "fblue1"
+	},
+/area/ship/arjuna)
+"UU" = (
+/obj/storage/secure/closet/research/chemical,
+/turf/simulated/floor/specialroom/medbay,
+/area/ship/arjuna)
+"VL" = (
+/obj/machinery/door/airlock/gannets/glass,
+/turf/simulated/floor/blue/checker,
+/area/ship/arjuna)
+"VS" = (
+/turf/simulated/floor/carpet{
+	dir = 1;
+	icon_state = "red2"
+	},
+/area/ship/arjuna)
+"Xn" = (
+/obj/machinery/computer/cloning{
+	dir = 8;
+	icon_state = "dna"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/bluegreen,
+/area/ship/arjuna)
+"XY" = (
 /obj/stool/chair/comfy/blue{
 	dir = 8
 	},
@@ -96,513 +599,10 @@
 	icon_state = "fblue2"
 	},
 /area/ship/arjuna)
-"as" = (
-/turf/unsimulated/wall/setpieces/leadwindow/gray,
-/area/ship/arjuna)
-"at" = (
-/obj/lrteleporter/planetary_teleporter{
-	ship_id = "arjuna"
-	},
-/turf/simulated/floor/engine,
-/area/ship/arjuna)
-"au" = (
-/obj/table/wood/auto,
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "fblue3"
-	},
-/area/ship/arjuna)
-"av" = (
-/obj/table/wood/auto,
-/turf/simulated/floor/carpet{
-	dir = 9;
-	icon_state = "fblue3"
-	},
-/area/ship/arjuna)
-"aw" = (
-/turf/simulated/floor/engine,
-/area/ship/arjuna)
-"ax" = (
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "fblue2"
-	},
-/area/ship/arjuna)
-"ay" = (
-/turf/simulated/floor/carpet{
-	dir = 2;
-	icon_state = "fblue2"
-	},
-/area/ship/arjuna)
-"az" = (
-/turf/simulated/floor/carpet{
-	dir = 6;
-	icon_state = "fblue2"
-	},
-/area/ship/arjuna)
-"aA" = (
-/obj/machinery/door/airlock/gannets/glass/toxins,
-/turf/simulated/floor/engine,
-/area/ship/arjuna)
-"aC" = (
-/obj/machinery/door/airlock/gannets/glass/command/alt,
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fblue4"
-	},
-/area/ship/arjuna)
-"aD" = (
-/obj/machinery/door/airlock/gannets/glass/command/alt,
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fblue4"
-	},
-/area/ship/arjuna)
-"aE" = (
-/turf/simulated/floor/black,
-/area/ship/arjuna)
-"aF" = (
-/obj/machinery/clonegrinder,
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/bluegreen,
-/area/ship/arjuna)
-"aG" = (
-/obj/landmark/ship_marker{
-	ship_id = "arjuna"
-	},
-/turf/simulated/floor/black,
-/area/ship/arjuna)
-"aH" = (
-/turf/simulated/floor/bluegreen,
-/area/ship/arjuna)
-"aI" = (
-/obj/machinery/clonepod,
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/bluegreen,
-/area/ship/arjuna)
-"aL" = (
-/obj/stool/chair/office{
-	dir = 4;
-	icon_state = "office_chair"
-	},
-/turf/simulated/floor/bluegreen,
-/area/ship/arjuna)
-"aM" = (
-/obj/machinery/computer/cloning{
-	dir = 8;
-	icon_state = "dna"
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/bluegreen,
-/area/ship/arjuna)
-"aP" = (
-/obj/machinery/clone_scanner,
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/bluegreen,
-/area/ship/arjuna)
-"aS" = (
-/obj/machinery/door/airlock/gannets/glass,
-/turf/simulated/floor/black,
-/area/ship/arjuna)
-"aT" = (
-/obj/machinery/door/airlock/gannets/glass/medical,
-/turf/simulated/floor/bluegreen,
-/area/ship/arjuna)
-"aV" = (
-/turf/simulated/floor/blue/checker,
-/area/ship/arjuna)
-"aW" = (
-/obj/storage/secure/closet/fridge,
-/turf/simulated/floor/blue/checker,
-/area/ship/arjuna)
-"aX" = (
-/obj/machinery/vending/port_a_nanomed,
-/turf/simulated/floor/specialroom/medbay,
-/area/ship/arjuna)
-"aY" = (
-/turf/simulated/floor/specialroom/medbay,
-/area/ship/arjuna)
-"aZ" = (
-/obj/table/auto,
-/obj/machinery/chem_master,
-/turf/simulated/floor/specialroom/medbay,
-/area/ship/arjuna)
-"ba" = (
-/obj/table/auto,
-/obj/machinery/chem_dispenser,
-/turf/simulated/floor/specialroom/medbay,
-/area/ship/arjuna)
-"bb" = (
-/obj/table/auto,
-/obj/machinery/chem_heater,
-/turf/simulated/floor/specialroom/medbay,
-/area/ship/arjuna)
-"be" = (
-/obj/submachine/chef_sink/chem_sink{
-	dir = 4;
-	pixel_x = -8
-	},
-/turf/simulated/floor/blue/checker,
-/area/ship/arjuna)
-"bf" = (
-/obj/storage/secure/closet/research/chemical,
-/turf/simulated/floor/specialroom/medbay,
-/area/ship/arjuna)
-"bg" = (
-/obj/stool/chair/office{
-	dir = 1;
-	icon_state = "office_chair"
-	},
-/turf/simulated/floor/specialroom/medbay,
-/area/ship/arjuna)
-"bh" = (
-/turf/simulated/floor/circuit/off,
-/area/ship/arjuna)
-"bi" = (
-/obj/machinery/communications_dish,
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/circuit/off,
-/area/ship/arjuna)
-"bk" = (
-/obj/submachine/chef_oven{
-	dir = 4;
-	icon_state = "oven_off"
-	},
-/turf/simulated/floor/blue/checker,
-/area/ship/arjuna)
-"bl" = (
-/obj/stool/chair,
-/turf/simulated/floor/blue/checker,
-/area)
-"bm" = (
-/obj/storage/secure/closet/medical,
-/turf/simulated/floor/specialroom/medbay,
-/area/ship/arjuna)
-"bn" = (
-/obj/machinery/optable,
-/obj/item/surgical_spoon,
-/obj/item/suture,
-/obj/item/scalpel,
-/obj/item/circular_saw,
-/turf/simulated/floor/specialroom/medbay,
-/area/ship/arjuna)
-"bo" = (
-/obj/machinery/door/airlock/gannets/glass/medical,
-/turf/simulated/floor/black,
-/area/ship/arjuna)
-"bp" = (
-/obj/machinery/door/airlock/gannets/command/alt,
-/turf/simulated/floor/black,
-/area/ship/arjuna)
-"bs" = (
-/obj/machinery/vending/kitchen,
-/turf/simulated/floor/blue/checker,
-/area/ship/arjuna)
-"bt" = (
-/obj/table/auto,
-/obj/item/storage/box/cutlery,
-/obj/item/storage/box/plates,
-/turf/simulated/floor/blue/checker,
-/area)
-"bu" = (
-/obj/machinery/door/airlock/gannets/chemistry,
-/turf/simulated/floor/black,
-/area/ship/arjuna)
-"bv" = (
-/obj/table/auto,
-/obj/item/storage/box/iv_box,
-/obj/item/storage/box/patchbox,
-/obj/item/kitchen/food_box/lollipop,
-/turf/simulated/floor/specialroom/medbay,
-/area/ship/arjuna)
-"bw" = (
-/obj/table/auto,
-/obj/item/storage/box/syringes,
-/obj/item/remote/porter/port_a_nanomed,
-/turf/simulated/floor/specialroom/medbay,
-/area/ship/arjuna)
-"bx" = (
+"Yo" = (
 /obj/table/auto,
 /obj/item/storage/box/beakerbox,
 /turf/simulated/floor/specialroom/medbay,
-/area/ship/arjuna)
-"by" = (
-/obj/machinery/networked/mainframe,
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/circuit/off,
-/area/ship/arjuna)
-"bz" = (
-/obj/stool/chair{
-	dir = 1;
-	icon_state = "chair"
-	},
-/turf/simulated/floor/blue/checker,
-/area/ship/arjuna)
-"bA" = (
-/obj/machinery/bathtub{
-	anchored = 1;
-	dir = 4
-	},
-/turf/simulated/floor/purple,
-/area/ship/arjuna)
-"bB" = (
-/turf/simulated/floor/purple,
-/area/ship/arjuna)
-"bC" = (
-/obj/submachine/laundry_machine,
-/turf/simulated/floor/purple,
-/area/ship/arjuna)
-"bD" = (
-/obj/stool/chair/couch/red{
-	dir = 8;
-	icon_state = "chair_couch-red"
-	},
-/turf/simulated/floor/carpet{
-	dir = 9;
-	icon_state = "red2"
-	},
-/area/ship/arjuna)
-"bE" = (
-/obj/stool/chair/couch/red{
-	dir = 4;
-	icon_state = "chair_couch-red"
-	},
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "red2"
-	},
-/area/ship/arjuna)
-"bF" = (
-/obj/stool/chair/couch/green{
-	dir = 8;
-	icon_state = "chair_couch-green"
-	},
-/turf/simulated/floor/carpet{
-	dir = 9;
-	icon_state = "green2"
-	},
-/area/ship/arjuna)
-"bG" = (
-/obj/stool/chair/couch/green{
-	dir = 4;
-	icon_state = "chair_couch-green"
-	},
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "green2"
-	},
-/area/ship/arjuna)
-"bH" = (
-/obj/machinery/vending/snack,
-/turf/simulated/floor/blue/checker,
-/area/ship/arjuna)
-"bI" = (
-/obj/item/storage/toilet{
-	dir = 4;
-	icon_state = "toilet"
-	},
-/turf/simulated/floor/purple,
-/area/ship/arjuna)
-"bJ" = (
-/obj/machinery/door/airlock/gannets/chemistry,
-/turf/simulated/floor/purple,
-/area/ship/arjuna)
-"bK" = (
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "red2"
-	},
-/area/ship/arjuna)
-"bL" = (
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "red3"
-	},
-/area/ship/arjuna)
-"bM" = (
-/turf/simulated/floor/carpet{
-	dir = 1;
-	icon_state = "red2"
-	},
-/area/ship/arjuna)
-"bN" = (
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "red2"
-	},
-/area/ship/arjuna)
-"bO" = (
-/obj/machinery/door/airlock/gannets/glass/security,
-/turf/simulated/floor/black,
-/area/ship/arjuna)
-"bP" = (
-/turf/simulated/floor/carpet{
-	dir = 9;
-	icon_state = "green2"
-	},
-/area/ship/arjuna)
-"bQ" = (
-/turf/simulated/floor/carpet{
-	dir = 1;
-	icon_state = "green2"
-	},
-/area/ship/arjuna)
-"bR" = (
-/turf/simulated/floor/carpet{
-	dir = 9;
-	icon_state = "green3"
-	},
-/area/ship/arjuna)
-"bS" = (
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "green2"
-	},
-/area/ship/arjuna)
-"bT" = (
-/obj/machinery/door/airlock/gannets/glass,
-/turf/simulated/floor/blue/checker,
-/area/ship/arjuna)
-"bU" = (
-/obj/table/auto,
-/obj/submachine/mixer,
-/turf/simulated/floor/blue/checker,
-/area/ship/arjuna)
-"bV" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "red";
-	icon_state = "bedsheet-red"
-	},
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "red2"
-	},
-/area/ship/arjuna)
-"bW" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "red";
-	icon_state = "bedsheet-red"
-	},
-/turf/simulated/floor/carpet{
-	dir = 2;
-	icon_state = "red2"
-	},
-/area/ship/arjuna)
-"bX" = (
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "red3"
-	},
-/area/ship/arjuna)
-"bY" = (
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "red2"
-	},
-/area/ship/arjuna)
-"bZ" = (
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "green2"
-	},
-/area/ship/arjuna)
-"ca" = (
-/turf/simulated/floor/carpet{
-	dir = 6;
-	icon_state = "green3"
-	},
-/area/ship/arjuna)
-"cb" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "green";
-	icon_state = "bedsheet-green"
-	},
-/turf/simulated/floor/carpet{
-	dir = 2;
-	icon_state = "green2"
-	},
-/area/ship/arjuna)
-"cc" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "green";
-	icon_state = "bedsheet-green"
-	},
-/turf/simulated/floor/carpet{
-	dir = 6;
-	icon_state = "green2"
-	},
-/area/ship/arjuna)
-"cd" = (
-/obj/decal/fakeobjects/shuttlethruster,
-/turf/space,
-/area/ship/arjuna)
-"cf" = (
-/obj/machinery/vending/cola/red,
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "red2"
-	},
-/area/ship/arjuna)
-"cg" = (
-/obj/machinery/vending/cigarette,
-/turf/simulated/floor/carpet{
-	dir = 6;
-	icon_state = "red2"
-	},
-/area/ship/arjuna)
-"ch" = (
-/obj/machinery/door/airlock/gannets/engineering/alt,
-/turf/simulated/floor/black,
-/area/ship/arjuna)
-"ci" = (
-/obj/machinery/vending/coffee,
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "green2"
-	},
-/area/ship/arjuna)
-"cj" = (
-/obj/machinery/vending/cola/blue,
-/turf/simulated/floor/carpet{
-	dir = 6;
-	icon_state = "green2"
-	},
-/area/ship/arjuna)
-"ck" = (
-/obj/machinery/power/rtg,
-/turf/simulated/floor/engine,
-/area/ship/arjuna)
-"cl" = (
-/turf/simulated/floor/stairs{
-	dir = 1
-	},
-/area/ship/arjuna)
-"cm" = (
-/obj/storage/closet/fire,
-/turf/simulated/floor/engine,
-/area/ship/arjuna)
-"cn" = (
-/obj/storage/closet/biohazard,
-/obj/item/clothing/head/rad_hood,
-/obj/item/clothing/suit/rad,
-/turf/simulated/floor/engine,
-/area/ship/arjuna)
-"co" = (
-/obj/storage/secure/closet/engineering,
-/turf/simulated/floor/engine,
-/area/ship/arjuna)
-"cp" = (
-/obj/machinery/power/smes,
-/turf/simulated/floor/engine,
-/area/ship/arjuna)
-"cq" = (
-/obj/decal/fakeobjects/shuttlethruster,
-/obj/decal/fakeobjects/shuttlethruster,
-/turf/space,
 /area/ship/arjuna)
 
 (1,1,1) = {"
@@ -1196,10 +1196,10 @@ ab
 ab
 ab
 ab
-aj
-as
-as
-aj
+Tw
+oM
+oM
+Tw
 ab
 ab
 ab
@@ -1240,14 +1240,14 @@ ab
 ab
 ab
 ab
-aj
-as
-aj
-aj
-bA
-bI
-aj
-cd
+Tw
+oM
+Tw
+Tw
+en
+QO
+Tw
+jx
 ab
 ab
 ab
@@ -1285,16 +1285,16 @@ ab
 ab
 ab
 ab
-aj
-as
-aj
-aE
-aE
-bu
-bB
-bB
-aj
-cd
+Tw
+oM
+Tw
+FK
+FK
+iK
+Pu
+Pu
+Tw
+jx
 ab
 ab
 ab
@@ -1330,18 +1330,18 @@ ab
 ab
 ab
 ab
-aj
-as
-aj
-aE
-aE
-aE
-aj
-aj
-bC
-bB
-aj
-cd
+Tw
+oM
+Tw
+FK
+FK
+FK
+Tw
+Tw
+ns
+Pu
+Tw
+jx
 ab
 ab
 ab
@@ -1376,19 +1376,19 @@ ab
 ab
 ab
 ab
-aj
-aj
-aE
-aE
-aE
-aj
-aj
-aj
-aj
-aj
-bJ
-aj
-aj
+Tw
+Tw
+FK
+FK
+FK
+Tw
+Tw
+Tw
+Tw
+Tw
+nr
+Tw
+Tw
 ab
 ab
 ab
@@ -1422,20 +1422,20 @@ ab
 ab
 ab
 ab
-aj
-aj
-aE
-aE
-aj
-aj
-aj
-bf
-bm
-aj
-bD
-bK
-bV
-ad
+Tw
+Tw
+FK
+FK
+Tw
+Tw
+Tw
+UU
+xR
+Tw
+JI
+AN
+QL
+QM
 ab
 ab
 ab
@@ -1468,21 +1468,21 @@ ab
 ab
 ab
 ab
-aj
-aj
-aE
-aE
-aj
-aj
-aj
-aX
-aY
-bn
-aj
-bE
-bL
-bW
-ad
+Tw
+Tw
+FK
+FK
+Tw
+Tw
+Tw
+OI
+wF
+jm
+Tw
+eM
+fA
+mC
+QM
 ab
 ab
 ab
@@ -1514,23 +1514,23 @@ ab
 ab
 ab
 ab
-aj
-aj
-aE
-aE
-aj
-aj
-aH
-aT
-aY
-aY
-aY
-aj
-aj
-bM
-bW
-aj
-aj
+Tw
+Tw
+FK
+FK
+Tw
+Tw
+sM
+cx
+wF
+wF
+wF
+Tw
+Tw
+VS
+mC
+Tw
+Tw
 ab
 ab
 ab
@@ -1558,26 +1558,26 @@ ab
 ab
 ab
 ab
-aj
-as
-aj
-aj
-aE
-aE
-aj
-aj
-aH
-aH
-aj
-aZ
-aY
-aY
-bv
-aj
-bM
-bX
-cf
-ad
+Tw
+oM
+Tw
+Tw
+FK
+FK
+Tw
+Tw
+sM
+sM
+Tw
+xo
+wF
+wF
+Op
+Tw
+VS
+ic
+PP
+QM
 ab
 ab
 ab
@@ -1604,30 +1604,30 @@ ab
 ab
 ab
 ab
-aj
-aj
-at
-aw
-aA
-aE
-aj
-aj
-aH
-aL
-aH
-aj
-ba
-bg
-aY
-bw
-aj
-bN
-bY
-cg
-aj
-as
-aj
-aj
+Tw
+Tw
+gU
+SG
+MI
+FK
+Tw
+Tw
+sM
+CE
+sM
+Tw
+Ea
+ww
+wF
+KS
+Tw
+eV
+As
+Fd
+Tw
+oM
+Tw
+Tw
 ab
 ab
 ab
@@ -1650,32 +1650,32 @@ ab
 ab
 ab
 ab
-aj
-aj
-aj
-as
-aj
-aj
-aE
-aj
-aF
-aI
-aM
-aP
-aj
-bb
-aY
-aY
-bx
-aj
-bO
-aj
-aj
-aj
-cm
-co
-aj
-cd
+Tw
+Tw
+Tw
+oM
+Tw
+Tw
+FK
+Tw
+xs
+kE
+Xn
+Ky
+Tw
+KM
+wF
+wF
+Yo
+Tw
+HI
+Tw
+Tw
+Tw
+OP
+Ku
+Tw
+jx
 ab
 ab
 ab
@@ -1696,33 +1696,33 @@ ab
 ab
 ab
 ab
-aj
-aj
-al
-ao
-ao
-ax
-aj
-aE
-aj
-aj
-aj
-as
-aj
-aj
-aj
-as
-bo
-aj
-aj
-aE
-aE
-aj
-ck
-aw
-aw
-aj
-cd
+Tw
+Tw
+iQ
+op
+op
+nn
+Tw
+FK
+Tw
+Tw
+Tw
+oM
+Tw
+Tw
+Tw
+oM
+EX
+Tw
+Tw
+FK
+FK
+Tw
+iJ
+SG
+SG
+Tw
+jx
 ab
 ab
 ab
@@ -1743,33 +1743,33 @@ ab
 ab
 ab
 ab
-ad
-ag
-am
-ap
-au
-ay
-aC
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-ch
-cl
-aw
-cp
-aj
-cd
+QM
+KA
+tQ
+mU
+rT
+UA
+rg
+FK
+FK
+FK
+FK
+FK
+FK
+FK
+FK
+FK
+FK
+FK
+FK
+FK
+FK
+tM
+uT
+SG
+lC
+Tw
+jx
 ab
 ab
 ab
@@ -1790,33 +1790,33 @@ ab
 ab
 ab
 ab
-ad
-ah
-am
-aq
-av
-ay
-aD
-aE
-aE
-aE
-aE
-aE
-aE
-aG
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-ch
-cl
-aw
-cp
-aj
-cd
+QM
+UC
+tQ
+HQ
+GH
+UA
+Te
+FK
+FK
+FK
+FK
+FK
+FK
+qA
+FK
+FK
+FK
+FK
+FK
+FK
+FK
+tM
+uT
+SG
+lC
+Tw
+jx
 ab
 ab
 ab
@@ -1837,33 +1837,33 @@ ab
 ab
 ab
 ab
-ad
-ai
-am
-aq
-av
-ay
-aD
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-ch
-cl
-aw
-cp
-aj
-cd
+QM
+So
+tQ
+HQ
+GH
+UA
+Te
+FK
+FK
+FK
+FK
+FK
+FK
+FK
+FK
+FK
+FK
+FK
+FK
+FK
+FK
+tM
+uT
+SG
+lC
+Tw
+jx
 ab
 ab
 ab
@@ -1884,33 +1884,33 @@ ab
 ab
 ab
 ab
-aj
-aj
-an
-ar
-ar
-az
-aj
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-aj
-as
-bp
-aj
-aj
-aE
-aE
-aj
-ck
-aw
-aw
-aj
-cq
+Tw
+Tw
+Dn
+XY
+XY
+Pd
+Tw
+FK
+FK
+FK
+FK
+FK
+FK
+FK
+Tw
+oM
+rB
+Tw
+Tw
+FK
+FK
+Tw
+iJ
+SG
+SG
+Tw
+gk
 ab
 ab
 ab
@@ -1932,32 +1932,32 @@ ab
 ab
 ab
 ab
-aj
-aj
-aj
-al
-ax
-aj
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-aj
-bh
-bh
-bh
-aj
-aS
-aj
-aj
-aj
-cn
-co
-aj
-cd
+Tw
+Tw
+Tw
+iQ
+nn
+Tw
+FK
+FK
+FK
+FK
+FK
+FK
+FK
+Tw
+Tl
+Tl
+Tl
+Tw
+rJ
+Tw
+Tw
+Tw
+iz
+Ku
+Tw
+jx
 ab
 ab
 ab
@@ -1980,30 +1980,30 @@ ab
 ab
 ab
 ab
-aj
-aj
-an
-az
-aj
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-aj
-bi
-bh
-by
-aj
-bP
-bZ
-ci
-aj
-as
-aj
-aj
+Tw
+Tw
+Dn
+Pd
+Tw
+FK
+FK
+FK
+FK
+FK
+FK
+FK
+Tw
+he
+Tl
+kG
+Tw
+lt
+Fk
+AL
+Tw
+oM
+Tw
+Tw
 ab
 ab
 ab
@@ -2028,26 +2028,26 @@ ab
 ab
 ab
 ab
-aj
-as
-aj
-aj
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-aj
-aj
-aj
-aj
-aj
-bQ
-ca
-cj
-ad
+Tw
+oM
+Tw
+Tw
+FK
+FK
+FK
+FK
+FK
+FK
+FK
+Tw
+Tw
+Tw
+Tw
+Tw
+tz
+TV
+jO
+QM
 ab
 ab
 ab
@@ -2078,23 +2078,23 @@ ab
 ab
 ab
 ab
-aj
-aj
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-aj
-aj
-bQ
-cb
-aj
-aj
+Tw
+Tw
+FK
+FK
+FK
+FK
+FK
+FK
+FK
+FK
+FK
+Tw
+Tw
+tz
+Dk
+Tw
+Tw
 ab
 ab
 ab
@@ -2126,21 +2126,21 @@ ab
 ab
 ab
 ab
-aj
-aj
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-aj
-bF
-bR
-cb
-ad
+Tw
+Tw
+FK
+FK
+FK
+FK
+FK
+FK
+FK
+FK
+Tw
+Ip
+hl
+Dk
+QM
 ab
 ab
 ab
@@ -2174,20 +2174,20 @@ ab
 ab
 ab
 ab
-aj
-aj
-aE
-aE
-aj
-aj
-aj
-aj
-aj
-aj
-bG
-bS
-cc
-ad
+Tw
+Tw
+FK
+FK
+Tw
+Tw
+Tw
+Tw
+Tw
+Tw
+SP
+NN
+Fh
+QM
 ab
 ab
 ab
@@ -2222,19 +2222,19 @@ ab
 ab
 ab
 ab
-aj
-aj
-aE
-aS
-aV
-be
-bk
-bs
-aj
-aj
-bT
-aj
-aj
+Tw
+Tw
+FK
+rJ
+zH
+qi
+Ms
+zI
+Tw
+Tw
+VL
+Tw
+Tw
 ab
 ab
 ab
@@ -2270,18 +2270,18 @@ ab
 ab
 ab
 ab
-aj
-as
-aj
-aW
-aV
-aV
-aV
-aV
-aV
-aV
-aj
-cd
+Tw
+oM
+Tw
+oT
+zH
+zH
+zH
+zH
+zH
+zH
+Tw
+jx
 ab
 ab
 ab
@@ -2319,16 +2319,16 @@ ab
 ab
 ab
 ab
-aj
-as
-aj
+Tw
+oM
+Tw
 bl
 bt
-bz
-aV
-aV
-aj
-cd
+lZ
+zH
+zH
+Tw
+jx
 ab
 ab
 ab
@@ -2368,14 +2368,14 @@ ab
 ab
 ab
 ab
-aj
-as
-aj
-aj
-bH
-bU
-aj
-cd
+Tw
+oM
+Tw
+Tw
+AY
+tP
+Tw
+jx
 ab
 ab
 ab
@@ -2418,10 +2418,10 @@ ab
 ab
 ab
 ab
-aj
-as
-as
-aj
+Tw
+oM
+oM
+Tw
 ab
 ab
 ab

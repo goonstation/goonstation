@@ -15466,7 +15466,7 @@
 	icon_state = "tube1";
 	dir = 8
 	},
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "aKx" = (

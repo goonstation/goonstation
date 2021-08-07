@@ -78,6 +78,9 @@
 		if (!surgeryCheck(M, user))
 			return 0
 
+		if (!can_act(user))
+			return 0
+
 		var/mob/living/carbon/human/H = M
 		if (!H.organHolder || !ishuman(H))
 			return 0
