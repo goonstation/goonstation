@@ -445,11 +445,9 @@
 
 	station_bounties[/obj/item/clothing/glasses/blindfold] = 1
 	station_bounties[/obj/item/clothing/glasses/meson] = 1
-	station_bounties[/obj/item/clothing/glasses/sunglasses/tanning] = 1
 	station_bounties[/obj/item/clothing/glasses/sunglasses/sechud] = 2
 	station_bounties[/obj/item/clothing/glasses/sunglasses] = 1
 	station_bounties[/obj/item/clothing/glasses/visor] = 1
-	station_bounties[/obj/item/clothing/glasses/healthgoggles/upgraded] = 1
 	station_bounties[/obj/item/clothing/glasses/healthgoggles] = 1
 
 	station_bounties[/obj/item/clothing/suit/space/santa] = 1
