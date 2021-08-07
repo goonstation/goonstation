@@ -1,3 +1,6 @@
+(t)fri aug 6 21
+(u)Zamujasa
+(*)Adventure View will now show antag overlays even if you aren't a ghost.
 (t)fri jul 9 21
 (u)Zonespace
 (*)Hotboxes are now logged, showing the turf, the fire source, and the last person to touch it.
