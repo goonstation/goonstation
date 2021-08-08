@@ -11,11 +11,16 @@ So, you want to contribute sprite art to Goonstation. Great! This set of guideli
 * Programs for making sprite are preference, and using better programs will for the most part make spriting *faster* rather than *better*. The most essential feature is a 1px size pencil tool, and beyond that layers and fill buckets are incredibly useful. 
 
 * The Byond sprite editor is usable but doesn't have layers and can be pretty clunky. Some free editors include piskel, paint.net, and GIMP. Aseprite is also good and free if compiled yourself, it otherwise costs money. Even photoshop can be used if you're already comfortable with it. 
+
+## Human Base 🧍
+![](https://cdn.discordapp.com/attachments/659599207946256416/873919587761156106/unknown.png)
+
+* The above human base is useful for drawing clothing items or in-hands by layering them over the base to ensure sprites line-up.
 # Basic Style 😎
 
 ## Perspective ⬜
 
-* Sprites should generally be in three-quarter perspective (3/4 perspective for short), with few exceptions. 3/4 perspecrtive essentially means that objects have one face and the top visible, facing head on. This includes item sprites for most cases.
+* Sprites should generally be in three-quarter perspective (3/4 perspective for short), with few exceptions. 3/4 perspective essentially means that objects have one face and the top visible, facing head on. This includes item sprites for most cases.
 
 ![](https://cdn.discordapp.com/attachments/799118122899996754/872975960058781726/perspective.png)
 
@@ -88,4 +93,4 @@ So, you want to contribute sprite art to Goonstation. Great! This set of guideli
 # Meta :left_speech_bubble: 
 * Do not be precious about your work. Be open to criticism and change both from other developers and players. 
 * Most untrained people can visually identify when something looks wrong or bad, it's your responsibility as the artist to parse that criticism and find a solution. 
-* If you'd like more feedback on your sprites or pointers on spriting, check out the #imspriter channel on the Goonstation discord. 
+* If you'd like more feedback on your sprites or pointers on spriting, check out the #imspriter channel on the [Goonstation discord.](https://discord.gg/zd8t6pY) 
