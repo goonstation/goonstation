@@ -2976,14 +2976,14 @@
 //MOB VERBS ARE FASTER THAN OBJ VERBS, ELIMINATE ALL OBJ VERBS WHERE U CAN
 // ALSO EXCLUSIVE VERBS (LIKE ADMIN VERBS) ARE BAD FOR RCLICK TOO, TRY NOT TO USE THOSE OK
 
-/mob/verb/point(atom/A as mob|obj|turf in view())
+/mob/verb/point(atom/A as mob|obj|turf in view(,get_turf(usr)))
 	set name = "Point"
 	src.point_at(A)
 
 /mob/proc/point_at(var/atom/target) //overriden by living and dead
 	.=0
 
-/mob/verb/pull_verb(atom/movable/A as mob|obj in view(1))
+/mob/verb/pull_verb(atom/movable/A as mob|obj in view(1, get_turf(usr)))
 	set name = "Pull / Unpull"
 	set category = "Local"
 
@@ -2994,7 +2994,7 @@
 		A.pull()
 
 
-/mob/verb/examine_verb(atom/A as mob|obj|turf in view())
+/mob/verb/examine_verb(atom/A as mob|obj|turf in view(,get_turf(usr)))
 	set name = "Examine"
 	set category = "Local"
 	var/list/result = A.examine(src)
@@ -3002,7 +3002,7 @@
 	boutput(src, result.Join("\n"))
 
 
-/mob/living/verb/interact_verb(atom/A as mob|obj|turf in view(1))
+/mob/living/verb/interact_verb(atom/A as mob|obj|turf in view(1, get_turf(usr)))
 	set name = "Pick Up / Left Click"
 	set category = "Local"
 
