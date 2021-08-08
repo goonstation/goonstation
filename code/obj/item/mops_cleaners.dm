@@ -295,6 +295,8 @@ WET FLOOR SIGN
 		. += "<span class='notice'>[src] is wet!</span>"
 
 /obj/item/mop/afterattack(atom/A, mob/user as mob)
+	if (ismob(A))
+		return
 	if ((src.reagents.total_volume < 1 || mopcount >= 9) && !istype(A, /obj/fluid))
 		boutput(user, "<span class='notice'>Your mop is dry!</span>", group = "mop")
 		return
