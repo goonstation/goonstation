@@ -58224,7 +58224,7 @@
 	name = "Artifact Lounge"
 	})
 "cAZ" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/white,
 /area/station/science/artifact{
 	name = "Artifact Lounge"

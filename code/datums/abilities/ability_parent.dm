@@ -1248,6 +1248,8 @@
 		return A
 
 	removeAbility(var/abilityType)
+		if (istext(abilityType))
+			abilityType = text2path(abilityType)
 		if (!ispath(abilityType))
 			return
 		for (var/datum/abilityHolder/H in holders)

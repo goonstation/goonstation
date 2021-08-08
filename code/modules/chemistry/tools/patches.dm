@@ -52,6 +52,8 @@
 			if (src.reagents && src.reagents.total_temperature < src.reagents.temperature_min)
 				src.reagents.total_temperature = src.reagents.temperature_min
 
+	proc/can_operate_on(atom/A)
+		.= (iscarbon(A) || ismobcritter(A))
 
 	proc/clamp_reagents()
 		if (src.reagents.total_temperature > src.reagents.temperature_cap)
@@ -106,16 +108,16 @@
 			user.show_text("This item is not designed with organic users in mind.", "red")
 			return
 
-		if (iscarbon(user) || ismobcritter(user))
+		if (can_operate_on(user))
 			user.visible_message("[user] applies [src] to [himself_or_herself(user)].",\
 			"<span class='notice'>You apply [src] to yourself.</span>")
 			logTheThing("combat", user, null, "applies a patch to themself [log_reagents(src)] at [log_loc(user)].")
-			user.attackby(src, user)
+			user.Attackby(src, user)
 		return
 
 	throw_impact(atom/M, datum/thrown_thing/thr)
 		..()
-		if (src.medical && !borg && !src.in_use && (iscarbon(M) || ismobcritter(M)))
+		if (src.medical && !borg && !src.in_use && (can_operate_on(M)))
 			if (prob(30) || good_throw && prob(70))
 				src.in_use = 1
 				M.visible_message("<span class='alert'>[src] lands on [M] sticky side down!</span>")
@@ -133,8 +135,7 @@
 			return
 
 		// No src.reagents check here because empty patches can be used to counteract bleeding.
-
-		if (iscarbon(M) || ismobcritter(M))
+		if (can_operate_on(M))
 			src.in_use = 1
 			if (M == user)
 				//M.show_text("You put [src] on your arm.", "blue")
@@ -213,6 +214,8 @@
 
 	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)
 		.= 0
+		if(!can_operate_on(A))
+			return
 		if (!attached && ismob(A) && medical)
 			//do image stuff
 			var/pox = src.pixel_x
@@ -405,7 +408,7 @@
 	attackby(var/obj/item/W, var/mob/user)
 		if (patches.len)
 			var/obj/item/reagent_containers/patch/P = patches[patches.len]
-			P.attackby(W, user)
+			P.Attackby(W, user)
 
 	attack_self(var/mob/user)
 		if (patches.len)

@@ -313,7 +313,7 @@
 
 /mob/living/projCanHit(datum/projectile/P)
 	if (!P) return 0
-	if (!src.lying || (src:lying && prob(P.hit_ground_chance))) return 1
+	if (!src.lying || GET_COOLDOWN(src, "lying_bullet_dodge_cheese") || (src:lying && prob(P.hit_ground_chance))) return 1
 	return 0
 
 /mob/living/proc/hand_attack(atom/target, params, location, control, origParams)
@@ -338,7 +338,7 @@
 			usingInner = 1
 
 	if (reach)
-		target.attackby(W, src, params)
+		target.Attackby(W, src, params)
 	if (W && (equipped() == W || usingInner))
 		var/pixelable = isturf(target)
 		if (!pixelable)
