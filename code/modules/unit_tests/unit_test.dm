@@ -9,10 +9,83 @@ You may use /New() and /Destroy() for setup/teardown respectively
 
 You can use the run_loc_floor_bottom_left and run_loc_floor_top_right to get turfs for testing
 
+Based on Unit Test Framework by: Cyberboss
+
 */
-var/global/datum/unit_test/current_test
-var/global/failed_any_test = FALSE
-var/global/test_log
+
+
+#define LANDMARK_BOTTOM_LEFT "bottom_left"
+#define LANDMARK_TOP_RIGHT "top_right"
+
+var/global/datum/unit_test_controller/unit_tests = new()
+/datum/unit_test_controller
+	var/datum/unit_test/current_test
+	var/failed_any_test = FALSE
+	var/test_log
+	var/dmm_suite/reservation
+
+/datum/unit_test_controller/proc/log_test(text)
+	if(src.test_log)
+		src.test_log << "\[[time2text(world.timeofday,"hh:mm:ss")]]: [text]"
+	world.log << text
+
+/datum/unit_test_controller/proc/run_tests()
+	if (isnull(reservation))
+		var/loaded = file2text('code/modules/unit_tests/unit_tests.dmm')
+		reservation = new/dmm_suite()
+		reservation.read_map(loaded, 1, 1, 1,'code/modules/unit_tests/unit_tests.dmm', DMM_OVERWRITE_MOBS | DMM_OVERWRITE_OBJS)
+		sleep(0)
+	LAGCHECK(LAG_HIGH)
+
+	var/tests_to_run = childrentypesof(/datum/unit_test)
+	for (var/_test_to_run in tests_to_run)
+		var/datum/unit_test/test_to_run = _test_to_run
+		if (initial(test_to_run.focus))
+			tests_to_run = list(test_to_run)
+			break
+
+	var/list/test_results = list()
+
+	for(var/I in tests_to_run)
+		var/datum/unit_test/test = new I
+
+		src.current_test = test
+		var/duration = TIME
+
+		test.Run()
+
+		duration = TIME - duration
+		src.current_test = null
+		src.failed_any_test |= !test.succeeded
+
+		var/list/log_entry = list("[test.succeeded ? "PASS" : "FAIL"]: [I] [duration / 10]s")
+		var/list/fail_reasons = test.fail_reasons
+
+		for(var/J in 1 to length(fail_reasons))
+			log_entry += "\tREASON #[J]: [fail_reasons[J]]"
+		var/message = log_entry.Join("\n")
+		log_test(message)
+
+		test_results[I] = list("status" = test.succeeded ? UNIT_TEST_PASSED : UNIT_TEST_FAILED, "message" = message, "name" = I)
+
+		qdel(test)
+
+		LAGCHECK(LAG_HIGH)
+
+	var/file_name = "data/unit_tests.json"
+	fdel(file_name)
+	file(file_name) << json_encode(test_results)
+
+	//Fail Automaton
+	if(src.failed_any_test)
+		for(var/test in test_results)
+			if(test_results[test]["status"]==UNIT_TEST_FAILED)
+				text2file("[test_results[test]["message"]]", "errors.log")
+
+	//We done, lets bail when mapSwitcher awakens
+	while(!mapSwitcher)
+		sleep(1)
+	Reboot_server()
 
 /datum/unit_test
 	//Bit of metadata for the future maybe
@@ -30,33 +103,26 @@ var/global/test_log
 	var/list/allocated
 	var/list/fail_reasons
 
-	////var/static/datum/space_level/reservation
-
 /datum/unit_test/New()
 	..()
-	// if (isnull(reservation))
-	// 	var/datum/map_template/unit_tests/template = new
-	// 	reservation = template.load_new_z()
-
 	allocated = new
-	//run_loc_floor_bottom_left = get_turf(locate(/obj/effect/landmark/unit_test_bottom_left) in GLOB.landmarks_list)
-	//run_loc_floor_top_right = get_turf(locate(/obj/effect/landmark/unit_test_top_right) in GLOB.landmarks_list)
+	run_loc_floor_bottom_left = landmarks[LANDMARK_BOTTOM_LEFT]
+	run_loc_floor_top_right = landmarks[LANDMARK_TOP_RIGHT]
 
-	//TEST_ASSERT(isfloorturf(run_loc_floor_bottom_left), "run_loc_floor_bottom_left was not a floor ([run_loc_floor_bottom_left])")
-	//TEST_ASSERT(isfloorturf(run_loc_floor_top_right), "run_loc_floor_top_right was not a floor ([run_loc_floor_top_right])")
+	TEST_ASSERT(isturf(run_loc_floor_bottom_left), "run_loc_floor_bottom_left was not a floor ([run_loc_floor_bottom_left])")
+	TEST_ASSERT(isturf(run_loc_floor_top_right), "run_loc_floor_top_right was not a floor ([run_loc_floor_top_right])")
 
 /datum/unit_test/proc/Destroy()
 	for(var/elem in allocated)
 		qdel(elem)
 	allocated.len = 0
 
-	//QDEL_LIST(allocated)
 	// clear the test area
-	// for (var/turf/turf in block(locate(1, 1, run_loc_floor_bottom_left.z), locate(world.maxx, world.maxy, run_loc_floor_bottom_left.z)))
-	// 	for (var/content in turf.contents)
-	// 		if (istype(content, /obj/effect/landmark))
-	// 			continue
-	// 		qdel(content)
+	for (var/turf/turf in block(locate(1, 1, run_loc_floor_bottom_left.z), locate(world.maxx, world.maxy, run_loc_floor_bottom_left.z)))
+		for (var/content in turf.contents)
+			if (istype(content, /obj/landmark))
+				continue
+			qdel(content)
 	return
 
 /datum/unit_test/proc/Run()
@@ -82,59 +148,13 @@ var/global/test_log
 	allocated += instance
 	return instance
 
-/proc/RunUnitTests()
-	LAGCHECK(LAG_HIGH)
+/area/testroom
+/obj/landmark/unit_test_top_right
+	name = LANDMARK_TOP_RIGHT
 
-	var/tests_to_run = childrentypesof(/datum/unit_test)
-	for (var/_test_to_run in tests_to_run)
-		var/datum/unit_test/test_to_run = _test_to_run
-		if (initial(test_to_run.focus))
-			tests_to_run = list(test_to_run)
-			break
+/obj/landmark/unit_test_bottom_left
+	name = LANDMARK_BOTTOM_LEFT
 
-	var/list/test_results = list()
 
-	for(var/I in tests_to_run)
-		var/datum/unit_test/test = new I
-
-		current_test = test
-		var/duration = TIME
-
-		test.Run()
-
-		duration = TIME - duration
-		current_test = null
-		failed_any_test |= !test.succeeded
-
-		var/list/log_entry = list("[test.succeeded ? "PASS" : "FAIL"]: [I] [duration / 10]s")
-		var/list/fail_reasons = test.fail_reasons
-
-		for(var/J in 1 to length(fail_reasons))
-			log_entry += "\tREASON #[J]: [fail_reasons[J]]"
-		var/message = log_entry.Join("\n")
-		log_test(message)
-
-		test_results[I] = list("status" = test.succeeded ? UNIT_TEST_PASSED : UNIT_TEST_FAILED, "message" = message, "name" = I)
-
-		qdel(test)
-
-		LAGCHECK(LAG_HIGH)
-
-	var/file_name = "data/unit_tests.json"
-	fdel(file_name)
-	file(file_name) << json_encode(test_results)
-
-	//Fail Automaton
-	if(failed_any_test)
-		for(var/test in test_results)
-			if(test_results[test]["status"]==UNIT_TEST_FAILED)
-				text2file("[test_results[test]["message"]]", "errors.log")
-
-/proc/log_test(text)
-	if(test_log)
-		test_log << "\[[time2text(world.timeofday,"hh:mm:ss")]]: [text]"
-	world.log << text
-
-// /datum/map_template/unit_tests
-// 	name = "Unit Tests Zone"
-// 	mappath = "_maps/templates/unit_tests.dmm"
+#undef LANDMARK_BOTTOM_LEFT
+#undef LANDMARK_TOP_RIGHT

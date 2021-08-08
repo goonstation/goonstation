@@ -3,5 +3,5 @@
 /datum/unit_test/deletion_regressions
 
 /datum/unit_test/deletion_regressions/Run()
-	Fail("Forced failure for testing... remove this.")
+
 
