@@ -208,17 +208,19 @@ WET FLOOR SIGN
 
 	if(src.reagents.has_reagent("water") || src.reagents.has_reagent("cleaner"))
 		JOB_XP(user, "Janitor", 2)
+	playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
+	// Make sure we clean an item that was sprayed directly in case it is in contents
+	if (!isturf(A.loc))
+		if (istype(A, /obj/item))
+			src.reagents.reaction(A, TOUCH, 5)
+			src.reagents.remove_any(5)
+			return
 	var/obj/decal/D = new/obj/decal(get_turf(src))
 	D.name = "chemicals"
 	D.icon = 'icons/obj/chemical.dmi'
 	D.icon_state = "chempuff"
 	D.create_reagents(5) // cogwerks: lowered from 10 to 5
 	src.reagents.trans_to(D, 5)
-	playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
-	// Direct cleaning for objects or items directly sprayed in containers are not cleaned
-	if (istype(A, /obj/item))
-		D.reagents.reaction(A)
-		D.reagents.remove_any(1)
 	var/log_reagents = log_reagents(src)
 	var/travel_distance = max(min(get_dist(get_turf(src), A), 3), 1)
 	SPAWN_DBG(0)
