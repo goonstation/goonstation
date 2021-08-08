@@ -45,6 +45,7 @@ var/list/popup_verbs_to_toggle = list(\
 // if it's in Toggles (Server) it should be in here, ya dig?
 var/list/server_toggles_tab_verbs = list(\
 /client/proc/toggle_attack_messages,\
+/client/proc/toggle_rp_word_filtering,\
 /client/proc/toggle_toggles,\
 /client/proc/toggle_jobban_announcements,\
 /client/proc/toggle_banlogin_announcements,\
@@ -174,6 +175,18 @@ var/global/IP_alerts = 1
 
 	src.holder.attacktoggle = !src.holder.attacktoggle
 	boutput(usr, "<span class='notice'>Toggled attack log messages [src.holder.attacktoggle ?"on":"off"]!</span>")
+
+/client/proc/toggle_rp_word_filtering()
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set name = "Toggle \"Low RP\" Word Alerts"
+	set desc = "Toggles notifications for players saying \"fail-rp\" words (sussy, poggers, etc)"
+	admin_only
+	src.holder.rp_word_filtering = !src.holder.rp_word_filtering
+	if(src.holder.rp_word_filtering)
+		src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_SUSSY_PHRASE, .proc/sussy_boutput)
+	else
+		src.UnregisterSignal(GLOBAL_SIGNAL, COMSIG_SUSSY_PHRASE)
+	boutput(usr, "<span class='notice'>Toggled RP word filter notifications [src.holder.rp_word_filtering ?"on":"off"]!</span>")
 
 /client/proc/toggle_hear_prayers()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)

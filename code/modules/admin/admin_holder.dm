@@ -11,6 +11,7 @@
 	var/servertoggles_toggle = 0
 	var/animtoggle = 1
 	var/attacktoggle = 1
+	var/rp_word_filtering = 0
 	var/auto_stealth = 0
 	var/auto_stealth_name = null
 	var/auto_alt_key = 0
@@ -125,6 +126,7 @@
 		if (src.owner:holder:level >= LEVEL_PA)
 			HTML += "<b>Hide Atom Verbs \[old\]?: <a href='?src=\ref[src];action=toggle_atom_verbs'>[(src.animtoggle ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Hide Attack Alerts?: <a href='?src=\ref[src];action=toggle_attack_messages'>[(src.attacktoggle ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Receive Alerts For \"Low RP\" Words?: <a href='?src=\ref[src];action=toggle_rp_word_filtering'>[(src.rp_word_filtering ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>See Prayers?: <a href='?src=\ref[src];action=toggle_hear_prayers'>[(src.hear_prayers ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Audible Prayers?: <a href='?src=\ref[src];action=toggle_audible_prayers'>[list("No", "Yes", "Dectalk")[src.audible_prayers + 1]]</a></b><br>"
 		HTML += "<b>Audible Admin Helps?: <a href='?src=\ref[src];action=toggle_audible_ahelps'>[src.audible_ahelps ? (src.audible_ahelps == PM_DECTALK_ALERT ? "Dectalk" : "Yes") : "No"]</a></b><br>"
@@ -186,6 +188,14 @@
 		if (saved_attacktoggle == 0 && attacktoggle != 0)
 			src.owner:toggle_attack_messages()
 		attacktoggle = saved_attacktoggle
+
+		var/saved_rp_word_filtering
+		AP["[ckey]_rp_word_filtering"] >> saved_rp_word_filtering
+		if (isnull(saved_rp_word_filtering))
+			saved_rp_word_filtering = 0
+		if (saved_rp_word_filtering == 1 && rp_word_filtering != 1)
+			src.owner:toggle_rp_word_filtering()
+		rp_word_filtering = saved_rp_word_filtering
 
 		var/saved_auto_stealth
 		var/saved_auto_stealth_name
@@ -279,6 +289,7 @@
 		AP["[ckey]_servertoggles_toggle"] << servertoggles_toggle
 		AP["[ckey]_animtoggle"] << animtoggle
 		AP["[ckey]_attacktoggle"] << attacktoggle
+		AP["[ckey]_rp_word_filtering"] << rp_word_filtering
 		AP["[ckey]_auto_stealth"] << auto_stealth
 		AP["[ckey]_auto_stealth_name"] << auto_stealth_name
 		AP["[ckey]_auto_alt_key"] << auto_alt_key
