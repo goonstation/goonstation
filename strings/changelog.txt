@@ -1,5 +1,8 @@
 
 (t)sun aug 08 21
+(u)Emily
+(e)⛔|removal
+(+)Removed meathead trait. I doubt anyone will notice.
 (u)Tarmunora
 (e)⚖|balance
 (*)Red chainsaw provides disarm resistance.
