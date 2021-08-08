@@ -270,7 +270,7 @@
 			spam_flag = 1
 			src.add_fingerprint(user)
 			user?.visible_message("<B>[user]</B> honks the nose on [his_or_her(user)] [src.name]!")
-			playsound(src, pick('sound/musical_instruments/Bikehorn_bonk1.ogg', 'sound/musical_instruments/Bikehorn_bonk2.ogg', 'sound/musical_instruments/Bikehorn_bonk3.ogg'), 50, 1, -1)
+			playsound(src, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1)
 			SPAWN_DBG(2 SECONDS)
 				spam_flag = 0
 			return 1
@@ -296,7 +296,7 @@
 			spam_flag = 1
 			src.add_fingerprint(user)
 			user?.visible_message("<B>[user]</B> honks the nose on [his_or_her(user)] [src.name]!")
-			playsound(src, pick('sound/musical_instruments/Bikehorn_bonk1.ogg', 'sound/musical_instruments/Bikehorn_bonk2.ogg', 'sound/musical_instruments/Bikehorn_bonk3.ogg'), 50, 1, -1)
+			playsound(src, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1)
 			SPAWN_DBG(2 SECONDS)
 				spam_flag = 0
 			return 1
