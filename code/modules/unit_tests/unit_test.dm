@@ -106,8 +106,10 @@ var/global/datum/unit_test_controller/unit_tests = new()
 /datum/unit_test/New()
 	..()
 	allocated = new
-	run_loc_floor_bottom_left = landmarks[LANDMARK_BOTTOM_LEFT]
-	run_loc_floor_top_right = landmarks[LANDMARK_TOP_RIGHT]
+	if(landmarks[LANDMARK_BOTTOM_LEFT])
+		run_loc_floor_bottom_left = landmarks[LANDMARK_BOTTOM_LEFT][1]
+	if(landmarks[LANDMARK_TOP_RIGHT])
+		run_loc_floor_top_right = landmarks[LANDMARK_TOP_RIGHT][1]
 
 	TEST_ASSERT(isturf(run_loc_floor_bottom_left), "run_loc_floor_bottom_left was not a floor ([run_loc_floor_bottom_left])")
 	TEST_ASSERT(isturf(run_loc_floor_top_right), "run_loc_floor_top_right was not a floor ([run_loc_floor_top_right])")
