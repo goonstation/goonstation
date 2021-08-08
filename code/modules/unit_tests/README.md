@@ -69,4 +69,4 @@ You can find more information about all of these from their respective doc comme
 - Make sure that your tests don't accidentally call RNG functions like `prob`. Since RNG is seeded during tests, you may not realize you have until someone else makes a PR and the tests fail!
 - Do your best not to change the behavior of non-testing code during tests. While it may sometimes be necessary in the case of situations such as the above, it is still a slippery slope that can lead to the code you're testing being too different from the production environment to be useful.
 
-Ported from TG Station from the blessing of the great Cyberboss and Mothblocks.
+Ported from TG Station with the blessing of the great Cyberboss and Mothblocks.
