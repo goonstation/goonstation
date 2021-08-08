@@ -233,7 +233,6 @@
 	var/armored = 0
 	body_parts_covered = TORSO|LEGS|ARMS
 	permeability_coefficient = 0.005
-	over_hair = 1
 
 	setupProperties()
 		..()
@@ -356,7 +355,6 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
 	body_parts_covered = TORSO|LEGS|ARMS
 	permeability_coefficient = 0.02
-	over_hair = 1
 
 	New()
 		. = ..()
@@ -1017,7 +1015,6 @@
 	body_parts_covered = TORSO|LEGS|ARMS
 	permeability_coefficient = 0.1
 	protective_temperature = 1000
-	over_hair = 1
 
 	New()
 		..()
@@ -1472,6 +1469,7 @@
 	wear_layer = MOB_OVERLAY_BASE
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
+	over_hair = TRUE
 	permeability_coefficient = 0.50
 
 /obj/item/clothing/suit/wizrobe
@@ -1634,7 +1632,6 @@
 	item_state = "chem_suit"
 	body_parts_covered = TORSO|LEGS|ARMS
 	permeability_coefficient = 0
-	over_hair = 1
 
 /obj/item/clothing/suit/security_badge
 	name = "Security Badge"
