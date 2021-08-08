@@ -264,18 +264,14 @@
 	see_face = 0.0
 
 	var/spam_flag = 0
-	var/spam_timer = 100
-	var/list/sounds_instrument = list('sound/musical_instruments/Bikehorn_1.ogg')
-	var/volume = 50
-	var/randomized_pitch = 1
 
 	proc/honk_nose(mob/user as mob)
 		if (!spam_flag)
 			spam_flag = 1
 			src.add_fingerprint(user)
 			user?.visible_message("<B>[user]</B> honks the nose on [his_or_her(user)] [src.name]!")
-			playsound(src, islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
-			SPAWN_DBG(src.spam_timer)
+			playsound(src, pick('sound/musical_instruments/Bikehorn_bonk1.ogg', 'sound/musical_instruments/Bikehorn_bonk2.ogg', 'sound/musical_instruments/Bikehorn_bonk3.ogg'), 50, 1, -1)
+			SPAWN_DBG(2 SECONDS)
 				spam_flag = 0
 			return 1
 		return 0
@@ -294,18 +290,14 @@
 	var/mob/living/carbon/human/victim
 
 	var/spam_flag = 0
-	var/spam_timer = 100
-	var/list/sounds_instrument = list('sound/musical_instruments/Bikehorn_1.ogg')
-	var/volume = 50
-	var/randomized_pitch = 1
 
 	proc/honk_nose(mob/user as mob)
 		if (!spam_flag)
 			spam_flag = 1
 			src.add_fingerprint(user)
 			user?.visible_message("<B>[user]</B> honks the nose on [his_or_her(user)] [src.name]!")
-			playsound(src, islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
-			SPAWN_DBG(src.spam_timer)
+			playsound(src, pick('sound/musical_instruments/Bikehorn_bonk1.ogg', 'sound/musical_instruments/Bikehorn_bonk2.ogg', 'sound/musical_instruments/Bikehorn_bonk3.ogg'), 50, 1, -1)
+			SPAWN_DBG(2 SECONDS)
 				spam_flag = 0
 			return 1
 		return 0
