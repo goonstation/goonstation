@@ -126,7 +126,7 @@
 		if (src.owner:holder:level >= LEVEL_PA)
 			HTML += "<b>Hide Atom Verbs \[old\]?: <a href='?src=\ref[src];action=toggle_atom_verbs'>[(src.animtoggle ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Hide Attack Alerts?: <a href='?src=\ref[src];action=toggle_attack_messages'>[(src.attacktoggle ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Recieve Alerts For \"Low RP\" Words?: <a href='?src=\ref[src];action=toggle_rp_word_filtering'>[(src.rp_word_filtering ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Receive Alerts For \"Low RP\" Words?: <a href='?src=\ref[src];action=toggle_rp_word_filtering'>[(src.rp_word_filtering ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>See Prayers?: <a href='?src=\ref[src];action=toggle_hear_prayers'>[(src.hear_prayers ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Audible Prayers?: <a href='?src=\ref[src];action=toggle_audible_prayers'>[list("No", "Yes", "Dectalk")[src.audible_prayers + 1]]</a></b><br>"
 		HTML += "<b>Audible Admin Helps?: <a href='?src=\ref[src];action=toggle_audible_ahelps'>[src.audible_ahelps ? (src.audible_ahelps == PM_DECTALK_ALERT ? "Dectalk" : "Yes") : "No"]</a></b><br>"
