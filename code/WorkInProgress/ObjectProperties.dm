@@ -193,14 +193,6 @@ var/list/globalPropList = null
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "+[propVal]% block chance"
 
-	deflection
-		name = "Deflection"
-		id = "deflection"
-		desc = "Improves chance to resist being disarmed." //Value is extra block chance.
-		tooltipImg = "block.png"
-		defaultValue = 10
-		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "+[propVal]% additional chance to deflect disarm attempts"
 	pierceprot
 		name = "Piercing Resistance"
 		id = "pierceprot"
@@ -568,5 +560,17 @@ to say if there's demand for that.
 		return "[propVal] stamina regen."
 
 	ASSOCIATE_MOB_PROPERTY(PROP_STAMINA_REGEN_BONUS)
+
+/datum/objectProperty/equipment/deflection
+	name = "Deflection"
+	id = "deflection"
+	desc = "Improves chance to resist being disarmed." //Value is extra block chance.
+	tooltipImg = "block.png"
+	defaultValue = 10
+
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "+[propVal]% additional chance to deflect disarm attempts"
+
+	ASSOCIATE_MOB_PROPERTY(PROP_DISARM_RESIST)
 
 #undef ASSOCIATE_MOB_PROPERTY
