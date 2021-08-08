@@ -1035,17 +1035,17 @@
 			H.abilityHolder.removeAbility(/datum/targetable/critter/zombify)
 		..()
 
-/datum/mutantrace/vamp_zombie
-	name = "vampiric zombie"
-	icon = 'icons/mob/vamp_zombie.dmi'
+/datum/mutantrace/vampiric_thrall
+	name = "vampiric thrall"
+	icon = 'icons/mob/vampiric_thrall.dmi'
 	icon_state = "body_m"
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/vamp_zombie/right
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/vamp_zombie/left
-	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/vamp_zombie/right
-	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/vamp_zombie/left
-	mutant_folder = 'icons/mob/vamp_zombie.dmi'
-	special_head = HEAD_VAMPZOMBIE
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/vampiric_thrall/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/vampiric_thrall/left
+	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/vampiric_thrall/right
+	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/vampiric_thrall/left
+	mutant_folder = 'icons/mob/vampiric_thrall.dmi'
+	special_head = HEAD_VAMPTHRALL
 	jerk = 1
 
 	var/blood_points = 0
@@ -1057,17 +1057,17 @@
 		..()
 		if(ishuman(mob))
 			src.add_ability(mob)
-			M.add_stam_mod_max("vamp_zombie", 100)
-			//APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "vamp_zombie", 15)
+			M.add_stam_mod_max("vampiric_thrall", 100)
+			//APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "vampiric_thrall", 15)
 
 	disposing()
 		if (ishuman(mob))
-			mob.remove_stam_mod_max("vamp_zombie")
-			//REMOVE_MOB_PROPERTY(mob, PROP_STAMINA_REGEN_BONUS, "vamp_zombie")
+			mob.remove_stam_mod_max("vampiric_thrall")
+			//REMOVE_MOB_PROPERTY(mob, PROP_STAMINA_REGEN_BONUS, "vampiric_thrall")
 		..()
 
 	proc/add_ability(var/mob/living/carbon/human/H)
-		H.make_vampiric_zombie()
+		H.make_vampiric_thrall()
 
 	onLife(var/mult = 1)
 		..()
@@ -1100,7 +1100,7 @@
 			..()
 
 	onDeath(gibbed)
-		var/datum/abilityHolder/vampiric_zombie/abil = mob.get_ability_holder(/datum/abilityHolder/vampiric_zombie)
+		var/datum/abilityHolder/vampiric_thrall/abil = mob.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 		if (abil)
 			if (abil.master)
 				abil.master.remove_thrall(mob)
