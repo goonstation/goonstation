@@ -93,7 +93,6 @@
 	var/on_cooldown = 0
 	var/power = 100
 	var/power_icon = ""
-	module_research = list("devices" = 5, "energy" = 20, "miniaturization" = 20)
 	var/list/cableimgs = list()
 	var/vision_radius = 2
 	New()

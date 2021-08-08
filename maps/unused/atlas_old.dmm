@@ -16010,7 +16010,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
 "LM" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";

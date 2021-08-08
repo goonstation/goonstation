@@ -82,23 +82,24 @@
 					num_agents = 1
 				else
 					num_agents = 0
-		if(!num_agents)
-			cleanup_event()
-			return
 
 		SPAWN_DBG(1 SECOND)
 			broadcast_sound(signal_intro)
+			sleep(8 SECONDS)
 			play_all_numbers()
 			broadcast_sound(signal_intro)
 
-			sleep(30 SECONDS) //30s to let the signal play
-			var/mob/living/carbon/human/H = null
-			num_agents = min(num_agents,candidates.len)
-			for(var/i = 0, i<num_agents,i++)
-				H = pick(candidates)
-				candidates -= H
-				if(istype(H))
-					awaken_sleeper_agent(H)
+			sleep(2 SECONDS)
+			if (length(candidates))
+				var/mob/living/carbon/human/H = null
+				num_agents = min(num_agents, length(candidates))
+				for(var/i in 0 to num_agents)
+					H = pick(candidates)
+					candidates -= H
+					if(istype(H))
+						awaken_sleeper_agent(H)
+			else
+				message_admins("No valid candidates to wake for sleeper event.")
 
 			if (src.centcom_headline && src.centcom_message && random_events.announce_events)
 				sleep(src.message_delay)
@@ -195,8 +196,8 @@
 				if (M.client.ignore_sound_flags)
 					if (M.client.ignore_sound_flags & SOUND_ALL)
 						continue
-				M << sound(soundfile, volume = 30, channel = sound_channel, wait = 1)
-
+				M.playsound_local(M, soundfile, 30, 0, flags = SOUND_IGNORE_SPACE)
+		sleep(1 SECOND)
 
 	proc/play_all_numbers()
 		var/batch = 0

@@ -600,7 +600,7 @@
 	else if (src.traitHolder && src.traitHolder.hasTrait("loyalist"))
 		trinket = new/obj/item/clothing/head/NTberet(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("petasusaphilic"))
-		var/picked = pick(concrete_typesof(/obj/item/clothing/head) - hat_blacklist)
+		var/picked = pick(filtered_concrete_typesof(/obj/item/clothing/head, /proc/filter_trait_hats))
 		trinket = new picked(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("conspiracytheorist"))
 		trinket = new/obj/item/clothing/head/tinfoil_hat
@@ -730,22 +730,31 @@
 
 	return
 
-// this proc is shit, make a better one 2day
-proc/bad_traitorify(mob/H, traitor_role="hard-mode traitor")
-	var/list/eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/) - /datum/objective/regular/
-	var/num_objectives = rand(1,3)
-	var/datum/objective/new_objective = null
-	for(var/i = 0, i < num_objectives, i++)
-		var/select_objective = pick(eligible_objectives)
-		new_objective = new select_objective
-		new_objective.owner = H.mind
-		new_objective.set_up()
-		H.mind.objectives += new_objective
-
-	H.mind.special_role = traitor_role
-	H << browse(grabResource("html/traitorTips/traitorhardTips.html"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
-	if(!(H.mind in ticker.mode.traitors))
-		ticker.mode.traitors += H.mind
+// Convert mob to generic hard mode traitor or alternatively agimmick
+proc/antagify(mob/H, var/traitor_role, var/agimmick)
+	if (!(H.mind))
+		message_admins("Attempted to antagify [H] but could not find mind")
+		logTheThing("debug", H, null, "Attempted to antagify [H] but could not find mind.")
+		return
+	if (!agimmick)
+		var/list/eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/) - /datum/objective/regular/
+		var/num_objectives = rand(1,3)
+		var/datum/objective/new_objective = null
+		for(var/i = 0, i < num_objectives, i++)
+			var/select_objective = pick(eligible_objectives)
+			new_objective = new select_objective
+			new_objective.owner = H.mind
+			new_objective.set_up()
+			H.mind.objectives += new_objective
+			H << browse(grabResource("html/traitorTips/traitorhardTips.html"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
+			ticker.mode.traitors |= H.mind
+	else
+		ticker.mode.Agimmicks |= H.mind
+		H << browse(grabResource("html/traitorTips/traitorGenericTips.html"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
+	if (traitor_role)
+		H.mind.special_role = traitor_role
+	else
+		H.mind.special_role = H.name
 	if (H.mind.current)
 		H.mind.current.antagonist_overlay_refresh(1, 0)
 
@@ -781,10 +790,3 @@ var/list/trinket_safelist = list(/obj/item/basketball,/obj/item/instrument/bikeh
 /obj/item/toy/plush/small/bee, /obj/item/paper/book/from_file/the_trial, /obj/item/paper/book/from_file/deep_blue_sea, /obj/item/clothing/suit/bedsheet/cape/red, /obj/item/disk/data/cartridge/clown,
 /obj/item/clothing/mask/cigarette/cigar, /obj/item/device/light/sparkler, /obj/item/toy/sponge_capsule, /obj/item/reagent_containers/food/snacks/plant/pear, /obj/item/reagent_containers/food/snacks/donkpocket/honk/warm,
 /obj/item/seed/alien)
-
-
-
-////////////////////////////////////
-// hat blacklist for trinket hats //
-////////////////////////////////////
-var/list/hat_blacklist = list(typesof(/obj/item/clothing/head/bighat, /obj/item/clothing/head/helmet/space/syndicate, /obj/item/clothing/head/barrette))

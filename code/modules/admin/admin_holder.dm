@@ -18,6 +18,7 @@
 	var/level = 0
 	var/drunk = 0 //I find adding this var pretty hilarious in itself really
 	var/hear_prayers = 0 //Ok
+	var/see_atags = TRUE //atags toggle
 	var/audible_prayers = 0 // 0 = silent, 1 = ping, 2 = dectalk (oh god why)
 	var/audible_ahelps = PM_NO_ALERT
 	var/buildmode_view = 0 //change view when using buildmode?
@@ -127,6 +128,7 @@
 		HTML += "<b>See Prayers?: <a href='?src=\ref[src];action=toggle_hear_prayers'>[(src.hear_prayers ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Audible Prayers?: <a href='?src=\ref[src];action=toggle_audible_prayers'>[list("No", "Yes", "Dectalk")[src.audible_prayers + 1]]</a></b><br>"
 		HTML += "<b>Audible Admin Helps?: <a href='?src=\ref[src];action=toggle_audible_ahelps'>[src.audible_ahelps ? (src.audible_ahelps == PM_DECTALK_ALERT ? "Dectalk" : "Yes") : "No"]</a></b><br>"
+		HTML += "<b>Hide ATags?: <a href='?src=\ref[src];action=toggle_atags'>[(src.see_atags ? "No" : "Yes")]</a></b><br>"
 		HTML += "<b>Change view when using buildmode?: <a href='?src=\ref[src];action=toggle_buildmode_view'>[(src.buildmode_view ? "No" : "Yes")]</a></b><br>"
 		HTML += "<b>Spawn verb spawns in your loc?: <a href='?src=\ref[src];action=toggle_spawn_in_loc'>[(src.spawn_in_loc ? "Yes" : "No")]</a></b><br>"
 		HTML += "<hr>"
@@ -229,6 +231,12 @@
 			saved_audible_ahelps = 0
 		audible_ahelps = saved_audible_ahelps
 
+		var/saved_atags
+		AP["[ckey]_atags"] >> saved_atags
+		if (isnull(saved_atags))
+			saved_atags = 1
+		see_atags = saved_atags
+
 		var/saved_buildmode_view
 		AP["[ckey]_buildmode_view"] >> saved_buildmode_view
 		if (isnull(saved_buildmode_view))
@@ -277,6 +285,7 @@
 		AP["[ckey]_auto_alt_key_name"] << auto_alt_key_name
 		AP["[ckey]_hear_prayers"] << hear_prayers
 		AP["[ckey]_audible_prayers"] << audible_prayers
+		AP["[ckey]_atags"] << see_atags
 		AP["[ckey]_audible_ahelps"] << audible_ahelps
 		AP["[ckey]_buildmode_view"] << buildmode_view
 		AP["[ckey]_spawn_in_loc"] << spawn_in_loc

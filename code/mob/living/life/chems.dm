@@ -10,7 +10,7 @@
 		if (owner.reagents)
 			var/reagent_time_multiplier = get_multiplier()
 
-			owner.reagents.temperature_reagents(owner.bodytemperature, 100, 35/reagent_time_multiplier, 15*reagent_time_multiplier)
+			owner.reagents.temperature_reagents(owner.bodytemperature, 100*reagent_time_multiplier, 100, 15*reagent_time_multiplier)
 
 			if (blood_system && owner.reagents.get_reagent("[owner.blood_id]"))
 				var/blood2absorb = min(owner.blood_absorption_rate, owner.reagents.get_reagent_amount("[owner.blood_id]")) * reagent_time_multiplier

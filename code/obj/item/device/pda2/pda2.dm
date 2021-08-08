@@ -9,8 +9,6 @@
 	w_class = W_CLASS_SMALL
 	rand_pos = 0
 	flags = FPRINT | TABLEPASS | ONBELT
-	module_research = list("science" = 1, "miniaturization" = 5, "devices" = 5, "efficiency" = 3)
-	module_research_type = /obj/item/device/pda2
 	wear_layer = MOB_BELT_LAYER
 	var/obj/item/card/id/ID_card = null // slap an ID card into that thang
 	var/obj/item/pen = null // slap a pen into that thang
@@ -46,6 +44,7 @@
 	var/linkbg_color = "#565D4B"
 	var/graphic_mode = 0
 
+	var/setup_default_pen = /obj/item/pen //PDAs can contain writing implements by default
 	var/setup_default_cartridge = null //Cartridge contains job-specific programs
 	var/setup_drive_size = 32 //PDAs don't have much work room at all, really.
 	// 2020 zamu update: 24 -> 32
@@ -100,18 +99,21 @@
 /obj/item/device/pda2
 	captain
 		icon_state = "pda-c"
+		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/captain
 		setup_drive_size = 32
 		mailgroups = list(MGD_COMMAND,MGD_PARTY)
 
 	heads
 		icon_state = "pda-h"
+		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/head
 		setup_drive_size = 32
 		mailgroups = list(MGD_COMMAND,MGD_PARTY)
 
 	hos
 		icon_state = "pda-hos"
+		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/hos
 		setup_default_module = /obj/item/device/pda_module/alert
 		setup_drive_size = 32
@@ -120,6 +122,7 @@
 
 	ntso
 		icon_state = "pda-nt"
+		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/hos //hos cart gives access to manifest compared to regular sec cart, useful for NTSO
 		setup_default_module = /obj/item/device/pda_module/alert
 		setup_drive_size = 32
@@ -128,6 +131,7 @@
 
 	ai
 		icon_state = "pda-h"
+		setup_default_pen = null // ai don't need no pens
 		setup_default_cartridge = /obj/item/disk/data/cartridge/ai
 		ejectable_cartridge = 0
 		setup_drive_size = 1024
@@ -145,6 +149,7 @@
 
 	cyborg
 		icon_state = "pda-h"
+		setup_default_pen = null // you don't even have hands
 		setup_default_cartridge = /obj/item/disk/data/cartridge/cyborg
 		ejectable_cartridge = 0
 		setup_drive_size = 1024
@@ -155,12 +160,14 @@
 
 	research_director
 		icon_state = "pda-rd"
+		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/research_director
 		setup_drive_size = 32
 		mailgroups = list(MGD_SCIENCE,MGD_COMMAND,MGD_PARTY)
 
 	medical_director
 		icon_state = "pda-md"
+		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/medical_director
 		setup_drive_size = 32
 		mailgroups = list(MGD_MEDRESEACH,MGD_MEDBAY,MGD_COMMAND,MGD_PARTY)
@@ -192,6 +199,7 @@
 
 	forensic
 		icon_state = "pda-s"
+		setup_default_pen = /obj/item/clothing/mask/cigarette
 		setup_default_cartridge = /obj/item/disk/data/cartridge/forensic
 		mailgroups = list(MGD_SECURITY,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS, MGA_TRACKING)
@@ -210,6 +218,7 @@
 	clown
 		icon_state = "pda-clown"
 		desc = "A portable microcomputer by Thinktronic Systems, LTD. The surface is coated with polytetrafluoroethylene and banana drippings."
+		setup_default_pen = /obj/item/pen/crayon/random
 		setup_default_cartridge = /obj/item/disk/data/cartridge/clown
 		event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
@@ -338,6 +347,19 @@
 		src.net_id = format_net_id("\ref[src]")
 
 		radio_controller?.add_object(src, "[frequency]")
+
+		if (src.setup_default_pen)
+			src.pen = new src.setup_default_pen(src)
+			if(istype(src.pen, /obj/item/clothing/mask/cigarette))
+				src.UpdateOverlays(image(src.icon, "cig"), "pen")
+			else if(istype(src.pen, /obj/item/pen/crayon))
+				var/image/pen_overlay = image(src.icon, "crayon")
+				pen_overlay.color = pen.color
+				src.UpdateOverlays(pen_overlay, "pen")
+			else if(istype(src.pen, /obj/item/pen/pencil))
+				src.UpdateOverlays(image(src.icon, "pencil"), "pen")
+			else
+				src.UpdateOverlays(image(src.icon, "pen"), "pen")
 
 		if (src.setup_default_cartridge)
 			src.cartridge = new src.setup_default_cartridge(src)

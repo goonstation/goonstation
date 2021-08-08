@@ -999,6 +999,8 @@ var/datum/action_controller/actions
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
+		logTheThing("combat", owner, target, "attempts to handcuff [constructTarget(target,"combat")] with [cuffs] at [log_loc(owner)].")
+
 		duration *= cuffs.apply_multiplier
 
 		if(ishuman(owner))
@@ -1624,7 +1626,7 @@ var/datum/action_controller/actions
 		onEnd()
 			..()
 			if (can_reach(owner,over_object) && ismob(owner) && owner:equipped() == target)
-				over_object.attackby(target, owner, params)
+				over_object.Attackby(target, owner, params)
 
 /// general purpose action to anchor or unanchor stuff
 /datum/action/bar/icon/anchor_or_unanchor

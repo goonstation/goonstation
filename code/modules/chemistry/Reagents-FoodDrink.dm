@@ -111,8 +111,9 @@ datum
 			thirst_value = 0.3
 			value = 3
 
-			on_add(var/mob/M, var/mult = 1)
-				if(probmult(20))
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
+				if(isliving(M) && method == INGEST && prob(20))
 					var/mob/living/L = M
 					L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
 

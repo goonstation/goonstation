@@ -85,11 +85,11 @@ var/global/list/datum/client_image_group/client_image_groups
 		for (var/image/I in mob_to_associated_images_lookup[invis_updated_mob])
 			if (invis_updated_mob.invisibility) // mob is invisible, remove their icons for other mobs
 				for (var/mob/iterated_mob as() in subscribed_mobs_with_subcount)
-					if ((iterated_mob != invis_updated_mob) && !(istype(iterated_mob, /mob/dead/observer))) // do nothing for the same person or ghosts
+					if ((iterated_mob != invis_updated_mob) && (invis_updated_mob.invisibility > iterated_mob.see_invisible)) // do nothing for the same person or ghosts
 						iterated_mob.client?.images.Remove(I)
 			else // mob is visible, add their icons to other mobs
 				for (var/mob/iterated_mob as() in subscribed_mobs_with_subcount)
-					if ((iterated_mob != invis_updated_mob) && !(istype(iterated_mob, /mob/dead/observer))) // do nothing for the same person or ghosts
+					if ((iterated_mob != invis_updated_mob) && (invis_updated_mob.invisibility <= iterated_mob.see_invisible)) // do nothing for the same person or ghosts
 						iterated_mob.client?.images.Add(I)
 
 /// Returns the client image group for a given "key" argument. If one doesn't yet exist, creates it.

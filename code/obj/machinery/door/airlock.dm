@@ -203,9 +203,12 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 			var/area/station/A = get_area(src)
 			src.name = A.name
 		src.net_access_code = rand(1, NET_ACCESS_OPTIONS)
-		if(deconstruct_flags & DECON_BUILT)
-			req_access = list()
 		START_TRACKING
+
+
+	was_built_from_frame(mob/user, newly_built)
+		. = ..()
+		req_access = list()
 
 	disposing()
 		. = ..()
@@ -1785,6 +1788,14 @@ obj/machinery/door/airlock
 			SPAWN_DBG(30 SECONDS)
 				src.secondsElectrified = 0
 	return
+
+/obj/machinery/door/airlock/emag_act(mob/user, obj/item/card/emag/E)
+	. = ..()
+	if(src.welded && !src.locked)
+		audible_message("<span class='alert'>[src] lets out a loud whirring and grinding noise!</span>")
+		animate_shake(src, 5, 2, 2, src.pixel_x, src.pixel_y)
+		playsound(src, 'sound/items/mining_drill.ogg', 25, 1, 0, 0.8)
+		src.take_damage(src.health * 0.8)
 
 /obj/machinery/door/airlock/receive_silicon_hotkey(var/mob/user)
 	..()

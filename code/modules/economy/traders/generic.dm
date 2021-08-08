@@ -22,6 +22,7 @@
 	/datum/commodity/trader/generic/telecrystal,
 	/datum/commodity/trader/generic/glowstick,
 	/datum/commodity/trader/generic/gasmask,
+	/datum/commodity/trader/generic/monkey,
 	/datum/commodity/trader/ringtone_dogs)
 	/*
 	/datum/commodity/trader/synthmodule/bacteria,
@@ -88,6 +89,14 @@
 	price_boundary = list(200, 500)
 	possible_names = list("We have a surplus of gas masks. Need any?",
 	"We seem to have ordered too many gas masks, so we're putting the extras up for sale.")
+
+/datum/commodity/trader/generic/monkey
+	comname = "Monkeys"
+	comtype = /mob/living/carbon/human/npc/monkey
+	amount = 4
+	price_boundary = list(250, 1000)
+	possible_names = list("We found a few stowaway monkeys on our ship. Feel free to take them off our hands.",
+	"We seem to have a simian situation, and are selling them for a cheap price.")
 
 /datum/commodity/trader/synthmodule
 	comname = "Synth-O-Matic module"

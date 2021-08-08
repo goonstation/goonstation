@@ -161,6 +161,12 @@ To remove:
 	SEND_SIGNAL(target, COMSIG_MOB_PROP_INVISIBILITY, old_val); \
 	} while(0)
 
+#define PROP_UPDATE_SIGHT(target, prop, old_val) do {\
+	if(!isliving(target)) return; \
+	var/mob/living/_living_mob = target; \
+	var/datum/lifeprocess/sight/_sightprocess = _living_mob.lifeprocesses?[/datum/lifeprocess/sight]; \
+	_sightprocess?.process(); \
+} while(0)
 
 // Property defines
 //
@@ -173,8 +179,14 @@ To remove:
 	#define PROP_TESTPRIO(x) x("test_prio", APPLY_MOB_PROPERTY_PRIORITY, REMOVE_MOB_PROPERTY_PRIORITY)
 */
 
-#define PROP_THERMALSIGHT(x) x("thermalsight", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
-#define PROP_THERMALSIGHT_MK2(x) x("thermalsightmk2", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE) // regular thermal sight + see through walls
+// Vision properties
+#define PROP_NIGHTVISION(x) x("nightvision", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE, PROP_UPDATE_SIGHT)
+#define PROP_MESONVISION(x) x("mesonvision", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE, PROP_UPDATE_SIGHT)
+#define PROP_GHOSTVISION(x) x("ghostvision", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE, PROP_UPDATE_SIGHT)
+#define PROP_THERMALVISION(x) x("thermalvision", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE, PROP_UPDATE_SIGHT)
+#define PROP_THERMALVISION_MK2(x) x("thermalvisionmk2", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE, PROP_UPDATE_SIGHT) // regular thermal sight + see mobs through walls
+#define PROP_SPECTRO(x) x("spectrovision", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE, PROP_UPDATE_SIGHT)
+
 #define PROP_CANTMOVE(x) x("cantmove", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
 #define PROP_CANTSPRINT(x) x("cantsprint", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
 #define PROP_NO_MOVEMENT_PUFFS(x) x("nomovementpuffs", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
@@ -189,8 +201,8 @@ To remove:
 #define PROP_COLDPROT(x) x("coldprot", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM)
 #define PROP_HEATPROT(x) x("heatprot", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM)
 #define PROP_EXPLOPROT(x) x("exploprot", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM)
+#define PROP_DISARM_RESIST(x) x("disarm_resist", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM)
 #define PROP_REFLECTPROT(x) x("reflection", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
-#define PROP_SPECTRO(x) x("spectrovision", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
 #define PROP_METABOLIC_RATE(x) x("chem_metabolism", APPLY_MOB_PROPERTY_PRODUCT, REMOVE_MOB_PROPERTY_PRODUCT)
 #define PROP_DIGESTION_EFFICIENCY(x) x("digestion_efficiency", APPLY_MOB_PROPERTY_PRODUCT, REMOVE_MOB_PROPERTY_PRODUCT)
 #define PROP_CHEM_PURGE(x) x("chem_purging", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM)
