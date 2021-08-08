@@ -45,6 +45,10 @@
 	cyborg
 		takes_damage = 0
 
+	active
+		active = 1
+		force = 12
+
 	New()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
