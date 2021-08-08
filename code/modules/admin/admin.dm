@@ -194,6 +194,10 @@ var/global/noir = 0
 			if (src.level >= LEVEL_MOD)
 				usr.client.toggle_attack_messages()
 				src.show_pref_window(usr)
+		if ("toggle_rp_word_filtering")
+			if (src.level >= LEVEL_MOD)
+				usr.client.toggle_rp_word_filtering()
+				src.show_pref_window(usr)
 		if ("toggle_hear_prayers")
 			if (src.level >= LEVEL_MOD)
 				usr.client.holder.hear_prayers = !usr.client.holder.hear_prayers
