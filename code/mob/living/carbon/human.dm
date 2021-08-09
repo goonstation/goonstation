@@ -485,8 +485,8 @@
 /mob/living/carbon/human/proc/is_vampire()
 	return get_ability_holder(/datum/abilityHolder/vampire)
 
-/mob/living/carbon/human/proc/is_vampiric_zombie()
-	return get_ability_holder(/datum/abilityHolder/vampiric_zombie)
+/mob/living/carbon/human/proc/is_vampiric_thrall()
+	return get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 
 /mob/living/carbon/human/disposing()
 	for(var/obj/item/I in src)

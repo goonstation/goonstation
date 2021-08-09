@@ -149,17 +149,17 @@
 /datum/movement_modifier/revenant
 	maximum_slowdown = 2
 
-/datum/movement_modifier/vamp_zombie
+/datum/movement_modifier/vampiric_thrall
 	ask_proc = 1
 
-/datum/movement_modifier/vamp_zombie/modifiers(mob/user, move_target, running)
+/datum/movement_modifier/vampiric_thrall/modifiers(mob/user, move_target, running)
 	. = list(4,0)
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
-		var/datum/mutantrace/vamp_zombie/vamp_zombie = H.mutantrace
-		if (!istype(vamp_zombie))
+		var/datum/mutantrace/vampiric_thrall/vampiric_thrall = H.mutantrace
+		if (!istype(vampiric_thrall))
 			return
-		switch (vamp_zombie.blood_points)
+		switch (vampiric_thrall.blood_points)
 			if (151 to INFINITY)
 				.[1] = 0.7
 			if (101 to 151)

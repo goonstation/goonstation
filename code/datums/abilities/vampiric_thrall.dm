@@ -2,31 +2,31 @@
 // the opportunity to do some clean-up as well (Convair880).
 
 /* 	/		/		/		/		/		/		Setup		/		/		/		/		/		/		/		/		*/
-/mob/proc/make_vampiric_zombie()
+/mob/proc/make_vampiric_thrall()
 	if (ishuman(src))
-		var/datum/abilityHolder/vampiric_zombie/A = src.get_ability_holder(/datum/abilityHolder/vampiric_zombie)
+		var/datum/abilityHolder/vampiric_thrall/A = src.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 		if (A && istype(A))
 			return
 
-		var/datum/abilityHolder/vampiric_zombie/V = src.add_ability_holder(/datum/abilityHolder/vampiric_zombie)
+		var/datum/abilityHolder/vampiric_thrall/V = src.add_ability_holder(/datum/abilityHolder/vampiric_thrall)
 
-		V.addAbility(/datum/targetable/vampiric_zombie/speak)
+		V.addAbility(/datum/targetable/vampiric_thrall/speak)
 		V.addAbility(/datum/targetable/vampire/vampire_bite/thrall)
 
 
 		V.transferOwnership(src)
 
 		if (src.mind && src.mind.special_role != "omnitraitor")
-			SHOW_VAMPZOMBIE_TIPS(src)
+			SHOW_VAMPTHRALL_TIPS(src)
 
 	else return
 
 
 /* 	/		/		/		/		/		/		Ability Holder	/		/		/		/		/		/		/		/		*/
 
-/atom/movable/screen/ability/topBar/vampiric_zombie
+/atom/movable/screen/ability/topBar/vampiric_thrall
 	clicked(params)
-		var/datum/targetable/vampiric_zombie/spell = owner
+		var/datum/targetable/vampiric_thrall/spell = owner
 		var/datum/abilityHolder/holder = owner.holder
 
 		if (!istype(spell))
@@ -61,7 +61,7 @@
 				spell.handleCast()
 		return
 
-/datum/abilityHolder/vampiric_zombie
+/datum/abilityHolder/vampiric_thrall
 	usesPoints = 0
 	regenRate = 0
 	tabName = "Thrall"
@@ -77,8 +77,8 @@
 		.= 0
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (istype(H.mutantrace, /datum/mutantrace/vamp_zombie))
-				var/datum/mutantrace/vamp_zombie/V = H.mutantrace
+			if (istype(H.mutantrace, /datum/mutantrace/vampiric_thrall))
+				var/datum/mutantrace/vampiric_thrall/V = H.mutantrace
 
 				if (last_blood_points != V.blood_points)
 					last_blood_points = V.blood_points
@@ -90,29 +90,29 @@
 		.= list()
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (istype(H.mutantrace, /datum/mutantrace/vamp_zombie))
-				var/datum/mutantrace/vamp_zombie/V = H.mutantrace
+			if (istype(H.mutantrace, /datum/mutantrace/vampiric_thrall))
+				var/datum/mutantrace/vampiric_thrall/V = H.mutantrace
 				.["Blood:"] = V.blood_points
 				.["Max HP:"] = H.max_health
 
 	proc/msg_to_master(var/msg)
 		if (master)
-			master.transmit_ghoul_msg(msg,owner)
+			master.transmit_thrall_msg(msg,owner)
 
 
-/datum/targetable/vampiric_zombie
+/datum/targetable/vampiric_thrall
 	icon = 'icons/mob/spell_buttons.dmi'
 	icon_state = "vampire-template"
 	cooldown = 0
 	last_cast = 0
 	pointCost = 0
-	preferred_holder_type = /datum/abilityHolder/vampiric_zombie
+	preferred_holder_type = /datum/abilityHolder/vampiric_thrall
 	var/when_stunned = 1 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
 	var/not_when_handcuffed = 0
 	var/unlock_message = null
 
 	New()
-		var/atom/movable/screen/ability/topBar/vampiric_zombie/B = new /atom/movable/screen/ability/topBar/vampiric_zombie(null)
+		var/atom/movable/screen/ability/topBar/vampiric_thrall/B = new /atom/movable/screen/ability/topBar/vampiric_thrall(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -130,7 +130,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /atom/movable/screen/ability/topBar/vampiric_zombie()
+			src.object = new /atom/movable/screen/ability/topBar/vampiric_thrall()
 			object.icon = src.icon
 			object.owner = src
 		if (src.last_cast > world.time)

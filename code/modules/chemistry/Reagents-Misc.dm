@@ -2973,8 +2973,8 @@ datum
 				if (method == INGEST)
 					if (M.mind)
 						var/mob/living/carbon/human/H = M
-						if (istype(H.mutantrace, /datum/mutantrace/vamp_zombie))
-							var/datum/mutantrace/vamp_zombie/V = H.mutantrace
+						if (istype(H.mutantrace, /datum/mutantrace/vampiric_thrall))
+							var/datum/mutantrace/vampiric_thrall/V = H.mutantrace
 							var/bloodget = volume_passed / 4
 							V.blood_points += bloodget
 
