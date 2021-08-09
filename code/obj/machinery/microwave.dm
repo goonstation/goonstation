@@ -23,7 +23,7 @@
 	var/operating = 0 // Is it on?
 	var/dirty = 0 // Does it need cleaning?
 	var/broken = 0 // How broken is it???
-	var/cook_time = 100 // The time to wait before spawning the item - Adjusted by mult
+	var/cook_time = 200 // The time to wait before spawning the item
 	var/list/available_recipes = list() // List of the recipes you can use
 	var/datum/recipe/cooked_recipe = null // The recipe being cooked
 	var/obj/item/reagent_containers/food/snacks/being_cooked = null // The item being cooked
@@ -246,7 +246,7 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 					if(src.egg_amount == R.egg_amount && src.flour_amount == R.flour_amount && src.monkeymeat_amount == R.monkeymeat_amount && src.synthmeat_amount == R.synthmeat_amount && src.humanmeat_amount == R.humanmeat_amount && src.donkpocket_amount == R.donkpocket_amount) // Check if it's an accepted recipe
 						if(R.extra_item == null || (src.extra_item && src.extra_item.type == R.extra_item)) // Just in case the recipe doesn't have an extra item in it
 							src.cooked_recipe = R
-							src.cooked_item = R.creates // Store the item that will be created
+							cooked_item = R.creates // Store the item that will be created
 
 				if(cooked_item == "") //Oops that wasn't a recipe dummy!!!
 					if(src.flour_amount > 0 || src.water_amount > 0 || src.monkeymeat_amount > 0 || src.synthmeat_amount > 0 || src.humanmeat_amount > 0 || src.donkpocket_amount > 0 && src.extra_item == null) //Make sure there's something inside though to dirty it
