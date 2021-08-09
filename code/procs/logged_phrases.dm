@@ -85,7 +85,7 @@ var/global/datum/phrase_log/phrase_log = new
 			@"ligma",
 			@"ඞ"
 		)
-		sussy_words = regex(jointext(sussy_word_list, "|"))
+		sussy_words = regex(jointext(sussy_word_list, "|"), "i")
 
 	proc/load()
 		if(fexists(src.uncool_words_filename))
