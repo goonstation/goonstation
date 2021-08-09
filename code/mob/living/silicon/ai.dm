@@ -116,7 +116,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/mob/dead/aieye/eyecam = null
 
 	var/deployed_to_eyecam = 0
-	var/list/holograms
+	var/holograms
 	var/const/max_holograms = 8
 	var/list/hologramContextActions
 
@@ -205,8 +205,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	hud = new(src)
 	src.attach_hud(hud)
 	src.eyecam.attach_hud(hud)
-
-	holograms = list()
 
 	src.hologramContextActions = list()
 	for(var/actionType in childrentypesof(/datum/contextAction/ai_hologram))
