@@ -2,6 +2,7 @@
 
 #define CHARS_PER_HOLOGRAM_POINT 4
 #define CHARS_PER_HOLOGRAM (CHARS_PER_HOLOGRAM_POINT*3)
+#define MAX_TILES_PER_HOLOGRAM 3
 /mob/living/silicon/ai
 	contextLayout = new /datum/contextLayout/experimentalcircle(36)
 
@@ -171,8 +172,9 @@
 
 /obj/hologram/text
 	var/message
-	var/static/index = 0
-	var/image/clickable_overlay
+	var/original_color
+	var/hsv
+
 
 	New(loc, owner, msg)
 		src.hologram_value = round((length(msg) + (CHARS_PER_HOLOGRAM_POINT-1)) / CHARS_PER_HOLOGRAM_POINT)
@@ -180,44 +182,31 @@
 		if(msg)
 			message = copytext(adminscrub(msg), 1, src.owner?.max_holograms * CHARS_PER_HOLOGRAM_POINT)
 
-		maptext_width = 96
-		maptext_x = -(96 / 2) + 16
-		maptext = {"<span class='vm c ps2p sh'>[message]</span>"}
+		var/original_color = src.color ? src.color : "#fff"
+		var/rgb = hex_to_rgb_list(original_color)
+		src.hsv = rgb2hsv(rgb[1], rgb[2], rgb[3])
 
-		if(owner)
-			var/matrix/M = matrix()
-			M.Scale(max(length(msg)/4,1),1)
-			src.clickable_overlay = image(src.icon, src, "write_ai_overlay", src.layer)
-			clickable_overlay.transform = M
+		maptext_width = MAX_TILES_PER_HOLOGRAM * 32
+		maptext_x = -(maptext_width / 2) + 16
 
-			usr << src.clickable_overlay
+		maptext = {"<a href="#"><span class='vm c ps2p sh' style='color:white;'>[message]</span></a>"}
 
 		SPAWN_DBG(rand(1 SECOND, 10 SECONDS))
 			// Lame Glitch Text
-			animate(src, pixel_x = 2, time = 5, easing = ELASTIC_EASING, loop=-1, flags=ANIMATION_PARALLEL)
-			animate(pixel_x = 0, time = 20, easing = SINE_EASING)
-			animate(time = rand(30,50))
+			animate(src, pixel_x = 2, time = 0.5 SECONDS, easing = ELASTIC_EASING, loop=-1, flags=ANIMATION_PARALLEL)
+			animate(pixel_x = 0, time = 2 SECONDS, easing = SINE_EASING)
+			animate(time = rand(4 SECONDS,5 SECONDS))
 
 			if(prob(50))
 				// Hue Shift
-				var/orig_color = src.color
-				var/rgb = hex_to_rgb_list(orig_color)
-				var/hsv = rgb2hsv(rgb[1], rgb[2], rgb[3])
-				var/new_color = hsv2rgb( hsv[1]+rand(30,70)%360, hsv[2], hsv[3] )
+				var/new_color = hsv2rgb( hsv[1]+rand(30,70)%360, max(hsv[2],30), max(hsv[3],20) ) // Avoid black and white so it actually shifts hue
 
-				animate(src, color=new_color, alpha=140, time = 30, easing = LINEAR_EASING, loop=-1, flags=ANIMATION_PARALLEL)
-				animate(color=orig_color, alpha=180, time = 10, easing = SINE_EASING)
-				animate(time=rand(30,50))
+				animate(src, color=new_color, alpha=140, time = 3 SECONDS, easing = LINEAR_EASING, loop=-1, flags=ANIMATION_PARALLEL)
+				animate(color=original_color, alpha=180, time = 1 SECOND, easing = SINE_EASING)
+				animate(time=rand(3 SECONDS,5 SECONDS))
 
 			else
 				// Oscilate alpha
-				animate(src, alpha=120, time=50, easing = LINEAR_EASING, loop=-1, flags=ANIMATION_PARALLEL)
-				animate(alpha=180, time=15, easing = CUBIC_EASING)
-				animate(time=rand(10,30))
-
-	disposing()
-		del(clickable_overlay)
-		. = ..()
-
-
-
+				animate(src, alpha=120, time=5 SECONDS, easing = LINEAR_EASING, loop=-1, flags=ANIMATION_PARALLEL)
+				animate(alpha=180, time=1.5 SECONDS, easing = CUBIC_EASING)
+				animate(time=rand(1 SECONDS,3 SECONDS))
