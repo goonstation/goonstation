@@ -70,6 +70,7 @@
 		. = ..()
 		if(isobj(A))
 			checkArtifactVars(A)
+			src.updateTypeLabel()
 
 	attackby(obj/item/W, mob/living/user)
 		if(istype(W, /obj/item/pen)) // write on it
@@ -125,10 +126,7 @@
 			if("origin")
 				artifactOrigin = params["newOrigin"]
 			if("type")
-				// update the displayed label in the name of the object
-				if(O)
-					O.remove_suffixes("([artifactType])")
-					O.name_suffix("([params["newType"]])")
+				src.updateTypeLabel(params["newType"])
 				artifactType = params["newType"]
 			if("trigger")
 				artifactTriggers = params["newTriggers"]
@@ -151,6 +149,19 @@
 			"artifactDetails" = artifactDetails,
 			"hasPen" = P
 		)
+
+	/// updates the label that shows what type the artifact supposedly is
+	proc/updateTypeLabel(var/newtype = null)
+		if(isobj(src.attached))
+			var/obj/O = src.attached
+			O.remove_suffixes("([src.artifactType])")
+			O.name_suffix("([newtype])")
+
+	/// removes the label that shows what type the arifact supposedly is
+	proc/removeTypeLabel()
+		if(isobj(src.attached))
+			var/obj/O = src.attached
+			O.remove_suffixes("([src.artifactType])")
 
 /obj/artifact_paper_dispenser
 	name = "artifact analysis form tray"
