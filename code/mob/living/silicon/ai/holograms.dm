@@ -180,6 +180,7 @@
 		src.hologram_value = round((length(msg) + (CHARS_PER_HOLOGRAM_POINT-1)) / CHARS_PER_HOLOGRAM_POINT)
 		..(owner, null)
 		if(msg)
+			phrase_log.log_phrase("holograms", msg)
 			message = copytext(adminscrub(msg), 1, src.owner?.max_holograms * CHARS_PER_HOLOGRAM_POINT)
 
 		var/original_color = src.color ? src.color : "#fff"
@@ -204,7 +205,6 @@
 				animate(src, color=new_color, alpha=140, time = 3 SECONDS, easing = LINEAR_EASING, loop=-1, flags=ANIMATION_PARALLEL)
 				animate(color=original_color, alpha=180, time = 1 SECOND, easing = SINE_EASING)
 				animate(time=rand(3 SECONDS,5 SECONDS))
-
 			else
 				// Oscilate alpha
 				animate(src, alpha=120, time=5 SECONDS, easing = LINEAR_EASING, loop=-1, flags=ANIMATION_PARALLEL)
