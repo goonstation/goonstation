@@ -485,7 +485,7 @@
 				//Make them fall over, they lost their balance.
 				C.changeStatus("weakened", 2 SECONDS)
 		else
-			actions.start(new /datum/action/bar/icon/drinkingglass_chug(C, src), C)
+			actions.start(new /datum/action/bar/icon/chug(C, src), C)
 		return
 
 	//Wow, we copy+pasted the heck out of this... (Source is chemistry-tools dm)
@@ -1290,14 +1290,14 @@
 		src.smash(A)
 
 //this action accepts a target that is not the owner, incase we want to allow forced chugging.
-/datum/action/bar/icon/drinkingglass_chug
+/datum/action/bar/icon/chug
 	duration = 0.5 SECONDS
-	id = "drinkingglass chugging"
+	id = "chugging"
 	var/mob/glassholder
 	var/mob/target
-	var/obj/item/reagent_containers/food/drinks/drinkingglass/glass
+	var/obj/item/reagent_containers/food/drinks/glass
 
-	New(mob/Target, obj/item/reagent_containers/food/drinks/drinkingglass/Glass)
+	New(mob/Target, obj/item/reagent_containers/food/drinks/Glass)
 		..()
 		target = Target
 		glass = Glass
