@@ -81,7 +81,9 @@ var/global/datum/phrase_log/phrase_log = new
 			@"feels.*man",
 			@"imposter",
 			@"shitsec",
-			@"shitcurity"
+			@"shitcurity",
+			@"ligma",
+			@"ඞ"
 		)
 		sussy_words = regex(jointext(sussy_word_list, "|"))
 
