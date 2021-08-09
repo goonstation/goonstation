@@ -23,8 +23,9 @@
 	var/operating = 0 // Is it on?
 	var/dirty = 0 // Does it need cleaning?
 	var/broken = 0 // How broken is it???
-	var/cook_time = 200 // The time to wait before spawning the item
+	var/cook_time = 100 // The time to wait before spawning the item - Adjusted by mult
 	var/list/available_recipes = list() // List of the recipes you can use
+	var/datum/recipe/cooked_recipe = null // The recipe being cooked
 	var/obj/item/reagent_containers/food/snacks/being_cooked = null // The item being cooked
 	var/obj/item/extra_item // One non food item that can be added
 	mats = 12
@@ -77,41 +78,26 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(src.broken > 0)
 		if (isscrewingtool(O) && src.broken == 2)
 			src.visible_message("<span class='notice'>[user] starts to fix part of the microwave.</span>")
-			sleep(2 SECONDS)
-			src.visible_message("<span class='notice'>[user] fixes part of the microwave.</span>")
-			src.broken = 1 // Fix it a bit
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/microwave/proc/repair, list(user), 'icons/obj/items/tools/screwdriver.dmi', "screwdriver", "", null)
 		else if (src.broken == 1 && iswrenchingtool(O))
 			src.visible_message("<span class='notice'>[user] starts to fix part of the microwave.</span>")
-			sleep(2 SECONDS)
-			src.visible_message("<span class='notice'>[user] fixes the microwave!</span>")
-			src.icon_state = "mw"
-			src.broken = 0 // Fix it!
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/microwave/proc/repair, list(user), 'icons/obj/items/tools/wrench.dmi', "wrench", "", null)
 		else
-			boutput(user, "It's broken!")
+			boutput(user, "It's broken! It could be fixed with some common tools.")
 			return
 	else if(src.dirty) // The microwave is all dirty so can't be used!
-		if(istype(O, /obj/item/spraybottle) || istype(O, /obj/item/sponge)) // If they're trying to clean it then let them
+		if(istype(O, /obj/item/spraybottle))
 			src.visible_message("<span class='notice'>[user] starts to clean the microwave.</span>")
-			sleep(2 SECONDS)
-			src.visible_message("<span class='notice'>[user] has cleaned the microwave!</span>")
-			src.dirty = 0 // It's cleaned!
-			src.icon_state = "mw"
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/microwave/proc/clean, list(user), 'icons/obj/janitor.dmi', "cleaner", "", null)
+
+		else if(istype(O, /obj/item/sponge))
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/microwave/proc/clean, list(user), 'icons/obj/janitor.dmi', "sponge", "", null)
+
 		else //Otherwise bad luck!!
-			boutput(user, "It's dirty!")
+			boutput(user, "It's dirty! It could be cleaned with a sponge or spray bottle")
 			return
 	else if (O.cant_drop) //For borg held items, if the microwave is clean and functioning
 		boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
-	else if(istype(O,/obj/item/dice))
-		var/obj/item/dice/die = O
-		if(die.dicePals.len)
-			boutput(user,"<span class='alert'><b>If you put all these dice in the microwave, they'd all melt together!</b></span>")
-			return
-		else
-			user.u_equip(die)
-			extra_item = die
-			die.set_loc(src)
-			die.dropped(user)
-			src.visible_message("<span class='notice'>[user] adds [die] to the microwave.</span>")
 	else if (isghostdrone(user))
 		boutput(user, "<span class='alert'>\The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 		return
@@ -167,11 +153,26 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		else
 			boutput(user, "There already seems to be an unusual item inside, so you don't add this one too.") //Let them know it failed for a reason though
 
+/obj/machinery/microwave/proc/repair(mob/user as mob)
+	if (src.broken == 2)
+		src.visible_message("<span class='notice'>[user] fixes part of the [src].</span>")
+		src.broken = 1 // Fix it a bit
+	else if (src.broken == 1)
+		src.visible_message("<span class='notice'>[user] fixes the [src]!</span>")
+		src.icon_state = "mw"
+		src.broken = 0 // Fix it!
+
+/obj/machinery/microwave/proc/clean(mob/user as mob)
+	if (src.dirty)
+		src.visible_message("<span class='notice'>[user] finishes cleaning the [src].</span>")
+		src.dirty = 0
+		src.icon_state = "mw"
+
 /*******************
 *   Microwave Menu
 ********************/
 
-/obj/machinery/microwave/attack_hand(mob/user as mob) // The microwave Menu
+/obj/machinery/microwave/attack_hand(mob/user as mob)
 	if (isghostdrone(user))
 		boutput(user, "<span class='alert'>\The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 		return
@@ -200,6 +201,7 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		<B>Synth-Meat:</B>[src.synthmeat_amount] slabs of meat<BR>
 		<B>Meat Turnovers:</B>[src.donkpocket_amount] turnovers<BR>
 		<B>Other Meat:</B>[src.humanmeat_amount] slabs of meat<BR><HR>
+		<B>Unusual Item:</B>[src.extra_item]<BR><HR>
 		<BR>
 		<A href='?src=\ref[src];cook=1'>Turn on!<BR>
 		<A href='?src=\ref[src];cook=2'>Empty contents!<BR>
@@ -236,7 +238,6 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 						diceinside = 1
 					D.load()
 				if(diceinside)
-					message_admins("Dice")
 					src.cook(MW_COOK_BREAK)
 					for(var/obj/item/dice/d in src.contents)
 						d.set_loc(get_turf(src))
@@ -244,19 +245,15 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				for(var/datum/recipe/R in src.available_recipes) //Look through the recipe list we made above
 					if(src.egg_amount == R.egg_amount && src.flour_amount == R.flour_amount && src.monkeymeat_amount == R.monkeymeat_amount && src.synthmeat_amount == R.synthmeat_amount && src.humanmeat_amount == R.humanmeat_amount && src.donkpocket_amount == R.donkpocket_amount) // Check if it's an accepted recipe
 						if(R.extra_item == null || (src.extra_item && src.extra_item.type == R.extra_item)) // Just in case the recipe doesn't have an extra item in it
+							cooked_recipe = R
 							cooked_item = R.creates // Store the item that will be created
-							message_admins("Found [R.creates]")
 
 				if(cooked_item == "") //Oops that wasn't a recipe dummy!!!
-					message_admins("Invalid recipe")
 					if(src.flour_amount > 0 || src.water_amount > 0 || src.monkeymeat_amount > 0 || src.synthmeat_amount > 0 || src.humanmeat_amount > 0 || src.donkpocket_amount > 0 && src.extra_item == null) //Make sure there's something inside though to dirty it
-						message_admins("Dirty")
 						src.cook(MW_COOK_DIRTY)
 					else if(src.egg_amount > 0) // egg was inserted alone
-						message_admins("Egg")
 						src.cook(MW_COOK_EGG)
 					else if(src.extra_item != null) // However if there's a weird item inside we want to break it, not dirty it
-						message_admins("Break")
 						src.cook(MW_COOK_BREAK)
 					else //Otherwise it was empty, so just turn it on then off again with nothing happening
 						src.visible_message("<span class='notice'>You're grilling nothing!</span>")
@@ -271,13 +268,11 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			if(operation == 2) // If dispose was pressed, empty the microwave
 				if (length(src.contents))
 					for(var/obj/item/I in src.contents)
-						message_admins("Disposing of [I]")
 						I.set_loc(get_turf(src))
 				src.clean_up()
 				boutput(usr, "You empty the contents out of the microwave.")
 
 /obj/machinery/microwave/proc/cook(var/result)
-	message_admins("COOK TIME")
 	src.operating = 1 // Turn it on
 	src.icon_state = "mw1"
 	src.updateUsrDialog()
@@ -297,7 +292,11 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 					src.being_cooked:cooltime()
 				if (src.emagged)
 					src.being_cooked.reagents.add_reagent("radium", 25)
+				if((src.extra_item && src.extra_item.type == cooked_recipe.extra_item))
+					qdel(src.extra_item)
 				src.being_cooked.set_loc(get_turf(src)) // Create the new item
+				src.extra_item = null
+				src.cooked_recipe = null
 				src.being_cooked = null // We're done!
 		if(MW_COOK_BREAK)
 			sleep(6 SECONDS) // Wait a while
@@ -308,6 +307,7 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			src.visible_message("<span class='alert'>The microwave breaks!</span>")
 			src.broken = 2
 			src.extra_item.set_loc(get_turf(src)) // Eject the extra item so important shit like the disk can't be destroyed in there
+			src.extra_item = null
 		if(MW_COOK_EGG)
 			sleep(4 SECONDS)
 			if(isnull(src))
