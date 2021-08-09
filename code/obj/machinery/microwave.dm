@@ -245,8 +245,8 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				for(var/datum/recipe/R in src.available_recipes) //Look through the recipe list we made above
 					if(src.egg_amount == R.egg_amount && src.flour_amount == R.flour_amount && src.monkeymeat_amount == R.monkeymeat_amount && src.synthmeat_amount == R.synthmeat_amount && src.humanmeat_amount == R.humanmeat_amount && src.donkpocket_amount == R.donkpocket_amount) // Check if it's an accepted recipe
 						if(R.extra_item == null || (src.extra_item && src.extra_item.type == R.extra_item)) // Just in case the recipe doesn't have an extra item in it
-							cooked_recipe = R
-							cooked_item = R.creates // Store the item that will be created
+							src.cooked_recipe = R
+							src.cooked_item = R.creates // Store the item that will be created
 
 				if(cooked_item == "") //Oops that wasn't a recipe dummy!!!
 					if(src.flour_amount > 0 || src.water_amount > 0 || src.monkeymeat_amount > 0 || src.synthmeat_amount > 0 || src.humanmeat_amount > 0 || src.donkpocket_amount > 0 && src.extra_item == null) //Make sure there's something inside though to dirty it
@@ -292,7 +292,7 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 					src.being_cooked:cooltime()
 				if (src.emagged)
 					src.being_cooked.reagents.add_reagent("radium", 25)
-				if((src.extra_item && src.extra_item.type == cooked_recipe.extra_item))
+				if((src.extra_item && src.extra_item.type == src.cooked_recipe.extra_item))
 					qdel(src.extra_item)
 				src.being_cooked.set_loc(get_turf(src)) // Create the new item
 				src.extra_item = null
