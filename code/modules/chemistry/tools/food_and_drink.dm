@@ -460,6 +460,34 @@
 			src.reagents.reaction(get_turf(user), TOUCH)
 			src.reagents.clear_reagents()
 
+	MouseDrop(atom/over_object)
+		..()
+		if(!(usr == over_object)) return
+		if(!istype(usr, /mob/living/carbon)) return
+		var/mob/living/carbon/C = usr
+
+		var/maybe_too_clumsy = FALSE
+		var/maybe_too_tipsy = FALSE
+		var/too_drunk = FALSE
+		if(C.bioHolder)
+			maybe_too_clumsy = C.bioHolder.HasEffect("clumsy") && prob(50)
+		if(C.reagents.reagent_list["ethanol"])
+			maybe_too_tipsy = (C.reagents.reagent_list["ethanol"].volume >= 50) && prob(50)
+			too_drunk = C.reagents.reagent_list["ethanol"].volume >= 150
+
+		if(too_drunk || maybe_too_tipsy || maybe_too_clumsy)
+			C.visible_message("[C.name] was too energetic, and threw the [src.name] backwards instead of chugging it!")
+			src.set_loc(get_turf(C))
+			C.u_equip(src)
+			var/target = get_steps(C, turn(C.dir, 180), 7) //7 tiles seems appropriate.
+			src.throw_at(target, 7, 1)
+			if (!C.hasStatus("weakened"))
+				//Make them fall over, they lost their balance.
+				C.changeStatus("weakened", 2 SECONDS)
+		else
+			actions.start(new /datum/action/bar/icon/drinkingglass_chug(C, src), C)
+		return
+
 	//Wow, we copy+pasted the heck out of this... (Source is chemistry-tools dm)
 	attack_self(mob/user as mob)
 		if (src.splash_all_contents)
@@ -1256,34 +1284,6 @@
 			src.wedge.set_loc(src.loc)
 			src.wedge = null
 		qdel(src)
-
-	MouseDrop(atom/over_object)
-		..()
-		if(!(usr == over_object)) return
-		if(!istype(usr, /mob/living/carbon)) return
-		var/mob/living/carbon/C = usr
-
-		var/maybe_too_clumsy = FALSE
-		var/maybe_too_tipsy = FALSE
-		var/too_drunk = FALSE
-		if(C.bioHolder)
-			maybe_too_clumsy = C.bioHolder.HasEffect("clumsy") && prob(50)
-		if(C.reagents.reagent_list["ethanol"])
-			maybe_too_tipsy = (C.reagents.reagent_list["ethanol"].volume >= 50) && prob(50)
-			too_drunk = C.reagents.reagent_list["ethanol"].volume >= 150
-
-		if(too_drunk || maybe_too_tipsy || maybe_too_clumsy)
-			C.visible_message("[C.name] was too energetic, and threw the [src.name] backwards instead of chugging it!")
-			src.set_loc(get_turf(C))
-			C.u_equip(src)
-			var/target = get_steps(C, turn(C.dir, 180), 7) //7 tiles seems appropriate.
-			src.throw_at(target, 7, 1)
-			if (!C.hasStatus("weakened"))
-				//Make them fall over, they lost their balance.
-				C.changeStatus("weakened", 2 SECONDS)
-		else
-			actions.start(new /datum/action/bar/icon/drinkingglass_chug(C, src), C)
-		return
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
