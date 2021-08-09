@@ -66,7 +66,7 @@ var/global/datum/phrase_log/phrase_log = new
 			"suicide",
 			"turn yourself",
 			"murder")
-		non_freeform_laws = regex(jointext(non_freeform_laws_list, "|"))
+		non_freeform_laws = regex(jointext(non_freeform_laws_list, "|"), "i")
 		var/list/sussy_word_list = list(
 			@"\bsus(:?|sy)\b",
 			@"\bpog(:?|gers|gies)\b",
