@@ -259,6 +259,12 @@
 			return
 		..()
 
+	MouseDrop(mob/user)
+		if (is_sealed)
+			boutput(user, "<span class='alert'>You can't drink out of a sealed can!</span>")
+			return
+		..()
+
 	attack_self(mob/user as mob)
 		var/drop_this_shit = 0 //i promise this is useful
 		if (src.is_sealed)
