@@ -1522,6 +1522,11 @@
 	var/image/powered_overlay = null
 	var/sound/hitsound_charged = 'sound/impact_sounds/Stone_Cut_1.ogg'
 	var/sound/hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
+	var/base_item_state = null	// item_state without the 1 or 0 on the end
+	var/dig_strength_charged = null
+	var/dig_strength_uncharged = null
+	var/force_charged = null
+	var/force_uncharged = null
 
 	New()
 		..()
@@ -1558,6 +1563,18 @@
 
 	proc/power_up()
 		src.status = 1
+		message_admins("PU")
+		if(force_charged)
+			src.force = force_charged
+		if(dig_strength_charged)
+			src.dig_strength = dig_strength_charged
+		if(base_item_state)
+			src.item_state = base_item_state + "1"
+		src.tooltip_rebuild = 1
+		if(ismob(src.loc))
+			var/mob/M = src.loc
+			M.update_inhands()
+			playsound(src.loc, 'sound/items/miningtool_on.ogg', 30, 1)
 		if (powered_overlay)
 			src.overlays += powered_overlay
 			signal_event("icon_updated")
@@ -1565,6 +1582,18 @@
 
 	proc/power_down()
 		src.status = 0
+		message_admins("PD")
+		if(force_uncharged)
+			src.force = force_uncharged
+		if(dig_strength_uncharged)
+			src.dig_strength = dig_strength_uncharged
+		if(base_item_state)
+			src.item_state = base_item_state + "0"
+		src.tooltip_rebuild = 1
+		if(ismob(src.loc))
+			var/mob/M = src.loc
+			M.update_inhands()
+			playsound(src.loc, 'sound/items/miningtool_off.ogg', 30, 1)
 		if (powered_overlay)
 			src.overlays = null
 			signal_event("icon_updated")
@@ -1604,6 +1633,11 @@ obj/item/clothing/gloves/concussive
 	cell_type = /obj/item/ammo/power_cell
 	hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
+	base_item_state = "ppick"
+	dig_strength_charged = 2
+	dig_strength_uncharged = 1
+	force_charged = 15
+	force_uncharged = 7
 
 	New()
 		..()
@@ -1611,34 +1645,15 @@ obj/item/clothing/gloves/concussive
 		src.power_up()
 
 	attack_self(var/mob/user as mob)
-		tooltip_rebuild = 1
 		if (src.process_charges(0))
 			if (!src.status)
 				boutput(user, "<span class='notice'>You power up [src].</span>")
 				src.power_up()
-				item_state = "ppick1"
-				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_on.ogg", 30, 1)
 			else
 				boutput(user, "<span class='notice'>You power down [src].</span>")
 				src.power_down()
-				item_state = "ppick0"
-				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
 		else
 			boutput(user, "<span class='alert'>No charge left in [src].</span>")
-
-
-	power_up()
-		..()
-		src.force = 15
-		src.dig_strength = 2
-
-	power_down()
-		..()
-		src.force = 7
-		src.dig_strength = 1
-
 
 	borg
 		process_charges(var/use)
