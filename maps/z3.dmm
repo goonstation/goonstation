@@ -856,14 +856,14 @@
 /turf/simulated/floor/orangeblack,
 /area/radiostation/hallway)
 "acE" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /obj/machinery/light_switch/north{
 	pixel_y = 30
 	},
 /turf/simulated/floor/bot,
 /area/radiostation/hallway)
 "acF" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /turf/simulated/floor/delivery,
 /area/radiostation/hallway)
 "acG" = (
@@ -900,11 +900,11 @@
 /turf/unsimulated/floor,
 /area/space_hive)
 "acJ" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor/delivery,
 /area/radiostation/hallway)
 "acK" = (
-/obj/machinery/vending/cola/blue,
+/obj/machinery/dispensing/vending/cola/blue,
 /turf/simulated/floor/bot,
 /area/radiostation/hallway)
 "acL" = (
@@ -1732,7 +1732,7 @@
 /turf/space,
 /area/space)
 "afa" = (
-/obj/machinery/vending/cola/blue{
+/obj/machinery/dispensing/vending/cola/blue{
 	credit = 12
 	},
 /turf/unsimulated/floor/setpieces/hivefloor,
@@ -2939,7 +2939,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/machinery/processor,
+/obj/machinery/dispensing/processor,
 /turf/simulated/floor/grime,
 /area/mining/refinery)
 "aiB" = (
@@ -2950,7 +2950,7 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/light,
-/obj/machinery/nanofab/refining,
+/obj/machinery/dispensing/nanofab/refining,
 /turf/simulated/floor/grime,
 /area/mining/refinery)
 "aiD" = (
@@ -2959,7 +2959,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/nanofab/mining,
+/obj/machinery/dispensing/nanofab/mining,
 /turf/simulated/floor/grime,
 /area/mining/refinery)
 "aiE" = (
@@ -3579,11 +3579,11 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/buddyfactory)
 "akw" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor/bot,
 /area/mining/dock)
 "akx" = (
-/obj/machinery/vending/cola/red,
+/obj/machinery/dispensing/vending/cola/red,
 /turf/simulated/floor/bot,
 /area/mining/dock)
 "aky" = (
@@ -3999,7 +3999,7 @@
 /area/mining/dock)
 "alx" = (
 /obj/map/light/white,
-/obj/machinery/manufacturer/hangar,
+/obj/machinery/dispensing/manufacturer/hangar,
 /turf/simulated/floor/plating/damaged2,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
@@ -4159,7 +4159,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/ore_cloud_storage_container,
+/obj/machinery/dispensing/ore_cloud_storage_container,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "alP" = (
@@ -5216,7 +5216,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/mining/mainasteroid)
 "aop" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/dispensing/portable_reclaimer,
 /turf/simulated/floor/caution/north,
 /area/mining/manufacturing)
 "aoq" = (
@@ -5260,7 +5260,7 @@
 /turf/simulated/floor/grime,
 /area/mining/manufacturing)
 "aoy" = (
-/obj/machinery/manufacturer/mining,
+/obj/machinery/dispensing/manufacturer/mining,
 /obj/cable,
 /turf/simulated/floor/grime,
 /area/mining/manufacturing)
@@ -5273,7 +5273,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/h7/crew)
 "aoA" = (
-/obj/machinery/manufacturer/mining,
+/obj/machinery/dispensing/manufacturer/mining,
 /obj/cable,
 /turf/simulated/floor,
 /area/mining/manufacturing)
@@ -5484,7 +5484,7 @@
 	network = "Mining";
 	tag = ""
 	},
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/simulated/floor/bot,
 /area/mining/manufacturing)
 "apc" = (
@@ -5563,7 +5563,7 @@
 /turf/simulated/floor/plating,
 /area/h7/crew)
 "apn" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /turf/simulated/floor/bot,
 /area/mining/manufacturing)
 "apo" = (
@@ -5860,7 +5860,7 @@
 /turf/simulated/floor/plating,
 /area/h7/lab)
 "aqb" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/dispensing/manufacturer/general,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -5878,7 +5878,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/mining/hangar)
 "aqe" = (
-/obj/machinery/manufacturer/hangar,
+/obj/machinery/dispensing/manufacturer/hangar,
 /turf/simulated/floor/delivery,
 /area/mining/hangar)
 "aqf" = (
@@ -7089,7 +7089,7 @@
 "asR" = (
 /obj/decal/cleanable/machine_debris,
 /obj/decal/cleanable/oil,
-/obj/machinery/chem_master,
+/obj/machinery/dispensing/chem_master,
 /turf/simulated/floor/plating/damaged1,
 /area/salyut)
 "asS" = (
@@ -7917,7 +7917,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/buddyfactory)
 "auV" = (
-/obj/machinery/vending/cola/red,
+/obj/machinery/dispensing/vending/cola/red,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/buddyfactory)
 "auW" = (
@@ -8273,7 +8273,7 @@
 /turf/simulated/floor/grime,
 /area/tech_outpost)
 "avR" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /obj/machinery/light_switch{
 	name = "N light switch";
 	pixel_y = 24
@@ -8281,7 +8281,7 @@
 /turf/simulated/floor/grime,
 /area/tech_outpost)
 "avS" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor/grime,
 /area/tech_outpost)
 "avT" = (
@@ -8445,13 +8445,13 @@
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "awu" = (
-/obj/machinery/vending/computer3{
+/obj/machinery/dispensing/vending/computer3{
 	profit = 0
 	},
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "awv" = (
-/obj/machinery/vending/floppy{
+/obj/machinery/dispensing/vending/floppy{
 	profit = 0
 	},
 /obj/machinery/light/small{
@@ -8489,7 +8489,7 @@
 /turf/simulated/floor/grime,
 /area/tech_outpost)
 "awA" = (
-/obj/machinery/manufacturer/hangar,
+/obj/machinery/dispensing/manufacturer/hangar,
 /turf/simulated/floor/caution/east,
 /area/tech_outpost)
 "awB" = (
@@ -8566,7 +8566,7 @@
 /turf/simulated/floor/grime,
 /area/tech_outpost)
 "awL" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/dispensing/portable_reclaimer,
 /turf/simulated/floor/caution/east,
 /area/tech_outpost)
 "awM" = (
@@ -8696,15 +8696,15 @@
 /turf/simulated/floor/yellow/side,
 /area/tech_outpost)
 "axf" = (
-/obj/machinery/vending/standard,
+/obj/machinery/dispensing/vending/standard,
 /turf/simulated/floor/yellow/side,
 /area/tech_outpost)
 "axg" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/dispensing/portable_reclaimer,
 /turf/simulated/floor/yellow/side,
 /area/tech_outpost)
 "axh" = (
-/obj/machinery/manufacturer/mechanic,
+/obj/machinery/dispensing/manufacturer/mechanic,
 /turf/simulated/floor/yellow/side,
 /area/tech_outpost)
 "axi" = (
@@ -8713,7 +8713,7 @@
 /turf/simulated/floor/yellow/side,
 /area/tech_outpost)
 "axj" = (
-/obj/machinery/vending/mechanics,
+/obj/machinery/dispensing/vending/mechanics,
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
@@ -10129,7 +10129,7 @@
 /obj/decal/fakeobjects/apc_broken{
 	pixel_y = 24
 	},
-/obj/machinery/vending/hydroponics/mean_solarium_bullshit,
+/obj/machinery/dispensing/vending/hydroponics/mean_solarium_bullshit,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -13713,7 +13713,7 @@
 	})
 "aKg" = (
 /obj/map/light/white,
-/obj/machinery/manufacturer/mining,
+/obj/machinery/dispensing/manufacturer/mining,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
@@ -14264,7 +14264,7 @@
 /turf/space,
 /area/space)
 "aLz" = (
-/obj/machinery/vending/pathology,
+/obj/machinery/dispensing/vending/pathology,
 /turf/simulated/floor/airless/scorched,
 /area/abandonedmedicalship)
 "aLA" = (
@@ -14877,7 +14877,7 @@
 	},
 /area/space)
 "aMS" = (
-/obj/machinery/manufacturer/mechanic,
+/obj/machinery/dispensing/manufacturer/mechanic,
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/orangeblack,
 /area/derelict_ai_sat)
@@ -15199,7 +15199,7 @@
 /turf/simulated/floor/scorched,
 /area/derelict_ai_sat)
 "aNP" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/dispensing/portable_reclaimer,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -17366,7 +17366,7 @@
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
 "aTb" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/dispensing/chem_dispenser,
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
 "aTc" = (
@@ -18115,7 +18115,7 @@
 /turf/simulated/floor/grime,
 /area/iss)
 "aVk" = (
-/obj/machinery/vending/standard,
+/obj/machinery/dispensing/vending/standard,
 /turf/simulated/floor/grime,
 /area/iss)
 "aVl" = (
@@ -18245,7 +18245,7 @@
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "aVE" = (
-/obj/machinery/manufacturer/robotics,
+/obj/machinery/dispensing/manufacturer/robotics,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "aVF" = (
@@ -20848,7 +20848,7 @@
 /turf/simulated/floor/plating,
 /area/iss)
 "bbF" = (
-/obj/machinery/manufacturer/gas,
+/obj/machinery/dispensing/manufacturer/gas,
 /turf/simulated/floor/plating,
 /area/iss)
 "bbG" = (
