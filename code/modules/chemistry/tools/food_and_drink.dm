@@ -438,6 +438,7 @@
 	doants = 0
 	throw_speed = 1
 	var/can_recycle = 1
+	var/can_chug = 1
 
 	New()
 		..()
@@ -469,6 +470,9 @@
 		var/maybe_too_clumsy = FALSE
 		var/maybe_too_tipsy = FALSE
 		var/too_drunk = FALSE
+		if(!can_chug)
+			boutput(C, "<span class='alert'>You try to lift the [src.name] and attempt to chug from it but it's too heavy!</span>")
+			return
 		if(C.bioHolder)
 			maybe_too_clumsy = C.bioHolder.HasEffect("clumsy") && prob(50)
 		if(C.reagents.reagent_list["ethanol"])
@@ -1662,6 +1666,7 @@
 	icon_state = "carafe-eng"
 	item_state = "carafe-eng"
 	initial_volume = 100
+	can_chug = 0
 	var/smashed = 0
 	var/shard_amt = 1
 	var/image/fluid_image
@@ -1785,6 +1790,7 @@
 	icon_state = "cocktailshaker"
 	initial_volume = 120
 	can_recycle = 0
+	can_chug = 0
 
 	New()
 		..()
