@@ -34,18 +34,14 @@
 			M.visible_message("<span class='alert'>You seem to attack [target]!</span>")
 			return 1
 
-		if (M.invisibility > 0)
-			for (var/obj/item/cloaking_device/I in M)
-				if (I.active)
-					I.deactivate(M)
-					M.visible_message("<span class='notice'><b>[M]'s cloak is disrupted!</b></span>")
+		SEND_SIGNAL(M, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
 
 		M.emote("scream")
 		M.emote("flip")
-		M.dir = turn(M.dir, 90)
+		M.set_dir(turn(M.dir, 90))
 
 		for (var/mob/C in oviewers(M))
-			shake_camera(C, 8, 3)
+			shake_camera(C, 8, 24)
 
 		M.visible_message("<span class='alert'><B>[M.name] [pick_string("wrestling_belt.txt", "kick")]-kicks [target]!</B></span>")
 		if (!fake)

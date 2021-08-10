@@ -31,7 +31,7 @@
 				return
 
 			if(!isghost && src.body)
-				if(isdead(src.body) || !src.body:network_device)
+				if(!istype(src.body, /mob/dead/aieye) && isdead(src.body) || !src.body:network_device)
 					src.gib()
 					return
 		return
@@ -89,7 +89,7 @@
 				return
 		..()
 
-	whisper(message as text)
+	whisper(message as text, forced=FALSE)
 		if (isghost)
 			boutput(usr, "You may not use that emote as a Virtual Spectre.")
 			return
@@ -134,7 +134,7 @@
 
 
 
-/obj/screen/ability/topBar/virtual
+/atom/movable/screen/ability/topBar/virtual
 	clicked(params)
 		var/datum/targetable/virtual/spell = owner
 		//var/datum/abilityHolder/holder = owner.holder

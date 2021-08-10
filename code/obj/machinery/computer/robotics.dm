@@ -6,57 +6,24 @@
 	object_flags = CAN_REPROGRAM_ACCESS
 	desc = "A computer that allows an authorized user to have an overview of the cyborgs on the station."
 	power_usage = 500
-
-	var/id = 0.0
+	circuit_type = /obj/item/circuitboard/robotics
+	id = 0
 	var/perma = 0
 
-	lr = 0.85
-	lg = 0.86
-	lb = 1
+	light_r =0.85
+	light_g = 0.86
+	light_b = 1
 
 
 /obj/machinery/computer/robotics/attackby(obj/item/I as obj, user as mob)
-	if (isscrewingtool(I))
-		if (perma)
-			boutput(user, "<span class='alert'>The screws are all weird safety-bit types! You can't turn them!</span>")
-			return
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 20))
-			if (src.status & BROKEN)
-				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-				G.set_loc(src.loc)
-				var/obj/item/circuitboard/robotics/M = new /obj/item/circuitboard/robotics( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				M.id = src.id
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				qdel(src)
-			else
-				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/circuitboard/robotics/M = new /obj/item/circuitboard/robotics( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				M.id = src.id
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				qdel(src)
-
-	else
-		src.attack_hand(user)
+	if (perma && isscrewingtool(I))
+		boutput(user, "<span class='alert'>The screws are all weird safety-bit types! You can't turn them!</span>")
+		return
+	..()
 	return
 
-/obj/machinery/computer/robotics/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
+/obj/machinery/computer/robotics/special_deconstruct(obj/computerframe/frame as obj)
+	frame.circuit.id = src.id
 
 /obj/machinery/computer/robotics/process()
 	..()
@@ -72,7 +39,7 @@
 		return
 	src.add_dialog(user)
 	var/dat = "Located AI Units<BR><BR>"
-	for(var/mob/living/silicon/ai/A in by_type[/mob/living/silicon/ai])
+	for_by_tcl(A, /mob/living/silicon/ai)
 		dat += "[A.name] |"
 		if(A.stat)
 			dat += "ERROR: Not Responding!<BR>"
@@ -89,7 +56,9 @@
 			if(!A.killswitch)
 				dat += "<A href='?src=\ref[src];gib=1;ai=\ref[A]'>Kill Switch AI *Swipe ID*</A><BR>"
 			else
-				dat += "Time left:[A.killswitch_time]"
+				var/timeleft = round((A.killswitch_at - TIME)/10, 1)
+				timeleft = "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
+				dat += "Time left:[timeleft]"
 				if (!isAI(user))
 					dat += " | <A href='?src=\ref[src];gib=2;ai=\ref[A]'>Cancel</A>"
 				dat += "<BR>"
@@ -97,9 +66,13 @@
 		dat += "<BR> Connected Cyborgs<BR>"
 		dat += " *------------------------------------------------*<BR>"
 
-		for(var/mob/living/silicon/robot/R in A:connected_robots)
+		for(var/mob/living/silicon/robot/R in A.connected_robots)
 			dat += "[R.name] |"
-			if(R.stat)
+			if(R.disposed)
+				dat += " Missing |"
+			else if(isnull(R.brain))
+				dat += " Intelligence Cortex Missing |"
+			else if(R.stat)
 				dat += " Not Responding |"
 			else
 				dat += " Operating Normally |"
@@ -123,7 +96,9 @@
 				if(!R.killswitch)
 					dat += "<A href='?src=\ref[src];gib=1;bot=\ref[R]'>Kill Switch *Swipe ID*</A><BR>"
 				else
-					dat += "Time left:[R.killswitch_time] | "
+					var/timeleft = round((R.killswitch_at - TIME)/10, 1)
+					timeleft = "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
+					dat += "Time left:[timeleft] | "
 					dat += "<A href='?src=\ref[src];gib=2;bot=\ref[R]'>Cancel</A><BR>"
 			dat += "*----------*<BR>"
 
@@ -134,7 +109,7 @@
 /obj/machinery/computer/robotics/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 
 	var/mob/living/silicon/robot/R = locate(href_list["bot"])
@@ -151,30 +126,31 @@
 							logTheThing("combat", usr, R, "has activated the robot killswitch process on [constructTarget(R,"combat")]")
 							if(R.client)
 								boutput(R, "<span class='alert'><b>Killswitch process activated.</b></span>")
-							R.killswitch = 1
-							R.killswitch_time = 60
+								boutput(R, "<span class='alert'><b>Killswitch will engage in 1 minute.</b></span>")
+							R.killswitch = TRUE
+							R.killswitch_at = TIME + 1 MINUTE
 						else if(istype(A))
 							var/mob/message = A.get_message_mob()
 							message_admins("<span class='alert'>[key_name(usr)] has activated the AI self destruct on [key_name(message)].</span>")
 							logTheThing("combat", usr, message, "has activated the AI killswitch process on [constructTarget(message,"combat")]")
 							if(message.client)
 								boutput(message, "<span class='alert'><b>AI Killswitch process activated.</b></span>")
-								boutput(message, "<span class='alert'><b>Killswitch will engage in 60 seconds.</b></span>") // more like 180 really but whatever
-							A.killswitch = 1
-							A.killswitch_time = 60
+								boutput(message, "<span class='alert'><b>Killswitch will engage in 3 minutes.</b></span>")
+							A.killswitch = TRUE
+							A.killswitch_at = TIME + 3 MINUTES
 					else
 						boutput(usr, "<span class='alert'>Access Denied.</span>")
 
 			if("2")
 				if(istype(R))
-					R.killswitch_time = 60
+					R.killswitch_at = 0
 					R.killswitch = 0
 					message_admins("<span class='alert'>[key_name(usr)] has stopped the robot self destruct on [key_name(R, 1, 1)].</span>")
 					logTheThing("combat", usr, R, "has stopped the robot killswitch process on [constructTarget(R,"combat")].")
 					if(R.client)
 						boutput(R, "<span class='notice'><b>Killswitch process deactivated.</b></span>")
 				else if(istype(A))
-					A.killswitch_time = 60
+					A.killswitch_at = 0
 					A.killswitch = 0
 					var/mob/message = A.get_message_mob()
 					message_admins("<span class='alert'>[key_name(usr)] has stopped the AI self destruct on [key_name(message, 1, 1)].</span>")

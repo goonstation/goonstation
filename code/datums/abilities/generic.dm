@@ -44,13 +44,20 @@
 	icon = null
 	icon_state = null
 	var/extrarange = 0 //affects next flip only
+	var/dist = 0
 
+	proc/check_mutantrace(mob/user)
+		if(isfrog(user))
+			dist = 6 + extrarange
+		else
+			dist = 3 + extrarange
 
 	flip_callback()
-		var/turf/T = get_turf(holder.owner)
-		var/dist = 3 + extrarange
+		var/mob/M = holder.owner
+		var/turf/T = get_turf(M)
+		check_mutantrace(M)
 		while (T && dist > 0)
-			T = get_step(T,holder.owner.dir)
+			T = get_step(T,M.dir)
 			dist -= 1
 
 		src.cast(T)
@@ -59,12 +66,11 @@
 		..()
 
 		var/mob/M = holder.owner
-
-
-		if (get_dist(M,target) > 3 + extrarange)
+		check_mutantrace(M)
+		if (get_dist(M,target) > dist)
 			var/steps = 0
 			var/turf/T = get_turf(M)
-			while (steps < 3 + extrarange)
+			while (steps < dist)
 				T = get_step(T,get_dir(T,target))
 				steps += 1
 
@@ -77,7 +83,7 @@
 			var/obj/stool/chair/C = M.buckled
 			M.buckled.unbuckle()
 			C.buckledIn = 0
-			C.buckled_guy = 0
+			C.buckled_guy = null
 		M.pixel_y = 0
 		M.buckled = null
 		reset_anchored(M)

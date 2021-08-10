@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/unary/cryo_cell
-	name = "cryo cell"
+	name = "cryogenic healing pod"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "celltop-P"
 	density = 1
@@ -67,10 +67,12 @@
 				if (!ishuman(occupant))
 					src.go_out() // stop turning into cyborgs thanks
 				if (occupant.health < occupant.max_health || occupant.bioHolder.HasEffect("premature_clone"))
+
 					process_occupant()
 				else
-					src.go_out()
-					playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+					if(occupant.mind)
+						src.go_out()
+						playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
 
 		if(air_contents)
 			ARCHIVED(temperature) = air_contents.temperature
@@ -219,7 +221,7 @@
 			logTheThing("combat", user, null, "adds a beaker [log_reagents(G)] to [src] at [log_loc(src)].") // Rigging cryo is advertised in the 'Tip of the Day' list (Convair880).
 			src.add_fingerprint(user)
 		else if(istype(G, /obj/item/grab))
-			push_in(G)
+			push_in(G, user)
 		else if (istype(G, /obj/item/reagent_containers/syringe))
 			//this is in syringe.dm
 			logTheThing("combat", user, null, "injects [log_reagents(G)] to [src] at [log_loc(src)].")
@@ -324,7 +326,7 @@
 				return
 			occupant.bodytemperature += 50*(air_contents.temperature - occupant.bodytemperature)*current_heat_capacity/(current_heat_capacity + HEAT_CAPACITY(air_contents))
 			occupant.bodytemperature = max(occupant.bodytemperature, air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
-			occupant.changeStatus("burning",-100)
+			occupant.changeStatus("burning", -10 SECONDS)
 			var/mob/living/carbon/human/H = 0
 			if (ishuman(occupant))
 				H = occupant

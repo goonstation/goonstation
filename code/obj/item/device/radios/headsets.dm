@@ -6,14 +6,16 @@
 	icon_state = "headset"
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	item_state = "headset"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	rand_pos = 0
 	var/protective_temperature = 0
 	speaker_range = 0
 	desc = "A standard-issue device that can be worn on a crewmember's ear to allow hands-free communication with the rest of the crew."
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	icon_override = "civ"
+	wear_layer = MOB_EARS_LAYER
 	var/haswiretap
+	hardened = 0
 
 	attackby(obj/item/R as obj, mob/user as mob)
 		if (istype(R, /obj/item/device/radio_upgrade))
@@ -79,18 +81,10 @@
 	secure_frequencies = list(
 		"h" = R_FREQ_COMMAND,
 		"g" = R_FREQ_SECURITY,
-		"e" = R_FREQ_ENGINEERING,
-		"r" = R_FREQ_RESEARCH,
-		"m" = R_FREQ_MEDICAL,
-		"c" = R_FREQ_CIVILIAN,
 		)
 	secure_classes = list(
 		"h" = RADIOCL_COMMAND,
 		"g" = RADIOCL_SECURITY,
-		"e" = RADIOCL_ENGINEERING,
-		"r" = RADIOCL_RESEARCH,
-		"m" = RADIOCL_MEDICAL,
-		"c" = RADIOCL_CIVILIAN,
 		)
 	icon_override = "nt"
 
@@ -217,6 +211,20 @@
 		)
 	icon_override = "sec"
 
+/obj/item/device/radio/headset/detective
+	name = "Detective's Headset"
+	desc = "A radio headset that is also capable of communicating over the Security radio channels."
+	icon_state = "sec headset" //I see no use for a special sprite for the det headset itself.
+	secure_frequencies = list(
+		"g" = R_FREQ_SECURITY,
+		"d" = R_FREQ_DETECTIVE,
+		)
+	secure_classes = list(
+		"g" = RADIOCL_SECURITY,
+		"d" = RADIOCL_DETECTIVE,
+		)
+	icon_override = "det" //neat little magnifying glass sprite I made
+
 /obj/item/device/radio/headset/engineer
 	name = "Engineering Headset"
 	desc = "A radio headset that is also capable of communicating over the Engineering radio channels."
@@ -268,6 +276,19 @@
 		"c" = RADIOCL_CIVILIAN,
 		)
 	icon_override = "qm"
+
+/obj/item/device/radio/headset/mail
+	name = "Mailman's Headset"
+	desc = "A radio headset that is also capable of communicating over the Engineering and Command channels."
+	icon_state = "command headset"
+	secure_frequencies = list(
+	"h" = R_FREQ_COMMAND,
+	"e" = R_FREQ_ENGINEERING)
+	secure_classes = list(
+		"h" = RADIOCL_COMMAND,
+		"e" = RADIOCL_ENGINEERING,
+		)
+	icon_override = "mail"
 
 /obj/item/device/radio/headset/clown
 	name = "Clown's Headset"
@@ -343,7 +364,7 @@ Secure Frequency:
 /obj/item/device/radio/headset/multifreq/Topic(href, href_list)
 	if (usr.stat)
 		return
-	if ((usr.contents.Find(src) || in_range(src, usr) && istype(src.loc, /turf)) || (usr.loc == src.loc) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || in_interact_range(src, usr) && istype(src.loc, /turf)) || (usr.loc == src.loc) || (issilicon(usr)))
 		src.add_dialog(usr)
 		if (href_list["sfreq"])
 			var/new_frequency = sanitize_frequency(text2num("[secure_frequencies["h"]]") + text2num(href_list["sfreq"]))
@@ -355,4 +376,6 @@ Secure Frequency:
 	desc = "An illegal device capable of picking up and sending all secure station radio signals. Can be installed in a radio headset. Does not actually work by wiretapping."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "syndie_upgr"
-	w_class = 1
+	w_class = W_CLASS_TINY
+	is_syndicate = 1
+	mats = 12

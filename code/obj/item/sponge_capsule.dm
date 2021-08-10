@@ -2,7 +2,7 @@
 	desc = "Just add water!"
 	icon = 'icons/obj/items/sponge_capsule.dmi'
 	icon_state = "sponge"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 1
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	throw_speed = 4
@@ -84,7 +84,7 @@
 	desc = "What was once a toy to be enjoyed by children across the galaxy is now a work of biological engineering brilliance! Patent pending."
 	icon = 'icons/obj/items/sponge_capsule.dmi'
 	icon_state = "spongecaps"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 2
 	flags = TABLEPASS | FPRINT | SUPPRESSATTACK
 	stamina_damage = 0

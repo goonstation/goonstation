@@ -14,12 +14,24 @@
 			donor.contract_disease(failure_disease,null,null,1)
 		return 1
 
+/obj/item/organ/appendix/synth
+	name = "synthappendix"
+	organ_name = "synthappendix"
+	icon_state = "plant"
+	desc = "A plant-based alternative to the normal appendix..."
+	synthetic = 1
+	New()
+		..()
+		src.icon_state = pick("plant_appendix", "plant_appendix_bloom")
+
 /obj/item/organ/appendix/cyber
 	name = "cyberappendix"
 	desc = "A fancy robotic appendix to replace one that someone's lost!"
 	icon_state = "cyber-appendix"
 	// item_state = "cyber-"
 	robotic = 1
+	created_decal = /obj/decal/cleanable/oil
+	made_from = "pharosium"
 	edible = 0
 	mats = 6
 
@@ -27,12 +39,27 @@
 	on_life(var/mult = 1)
 		if (!..())
 			return 0
-		if (src.get_damage() < FAIL_DAMAGE && prob(percentmult(10, mult)))
+		if (src.get_damage() < FAIL_DAMAGE && prob(percentmult(10, mult)) && donor.health <= donor.max_health)
 			var/reagID = pick("saline", "salbutamol", "salicylic_acid", "charcoal")
-			donor.reagents.add_reagent(reagID, reagID == "salicyclic_acid" ? 3 : 4) //salicyclic has very low depletion, reduce chances of overdose
+			donor.reagents.add_reagent(reagID, reagID == "salicyclic_acid" ? 2 : 4) //salicyclic has very low depletion, reduce chances of overdose
+			if(donor.health <= donor.max_health * 0.9)
+				src.take_damage(0, 0, 1)
 
 		if(emagged && !broken && donor.health < 0) //emagged and we're in crit
 			src.take_damage(200, 200, 200)
+		return 1
+
+	on_broken(var/mult = 1)
+		if (!..())
+			return
+		if(emagged)
+			donor.reagents.add_reagent("toxin", 0.5 * mult) //Will really start to feel it after the omnizine wears off
+			if (prob(20))
+				donor.emote(pick("twitch", "groan"))
+
+	breakme()
+		. = ..()
+		if(emagged)
 			donor.emote("collapse")
 			donor.setStatus("weakened", 3 SECONDS)
 
@@ -44,12 +71,3 @@
 			add_pathogens(donor, 30) //oh no
 			#endif
 			boutput(donor, "<span class='alert'>Your appendix has burst! It has given you medical help... though you might want to see a doctor very soon.</span>")
-		return 1
-
-	on_broken(var/mult = 1)
-		if (!..())
-			return
-		if(emagged)
-			donor.reagents.add_reagent("toxin", 1 * mult) //Will really start to feel it after the omnizine wears off
-			if (prob(20))
-				donor.emote(pick("twitch", "groan"))

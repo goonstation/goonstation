@@ -23,6 +23,11 @@
 	var/base_move_delay = 2
 	var/base_walk_delay = 3
 	var/stepsound = null
+	///area where the mob ai is registered when hibernating
+	var/area/registered_area = null
+	///time when mob last awoke from hibernation
+	var/last_hibernation_wake_tick = 0
+	var/is_hibernating = TRUE
 
 	var/can_burn = 1
 	var/can_throw = 0
@@ -73,7 +78,7 @@
 	var/last_life_process = 0
 	var/use_stunned_icon = 1
 
-	var/pull_w_class = 2
+	var/pull_w_class = W_CLASS_SMALL
 
 	blood_id = "blood"
 
@@ -121,7 +126,7 @@
 		health_update_queue |= src
 
 		src.abilityHolder = new /datum/abilityHolder/critter(src)
-		if (islist(src.add_abilities) && src.add_abilities.len)
+		if (islist(src.add_abilities) && length(src.add_abilities))
 			for (var/abil in src.add_abilities)
 				if (ispath(abil))
 					abilityHolder.addAbility(abil)
@@ -162,7 +167,23 @@
 			hh.dispose()
 		healthlist.len = 0
 		healthlist = null
+
+		if (src.is_npc)
+			src.registered_area?.registered_mob_critters -= src
+			src.registered_area = null
+		if (ai)
+			qdel(ai)
+			ai = null
 		..()
+
+	///enables mob ai that was disabled by a hibernation task
+	proc/wake_from_hibernation()
+		if(src.is_npc)
+			src.ai?.enabled = TRUE
+			src.last_hibernation_wake_tick = TIME
+			src.registered_area?.registered_mob_critters -= src
+			src.registered_area = null
+			src.is_hibernating = FALSE
 
 	proc/setup_healths()
 		// add_health_holder(/datum/healthHolder/flesh)
@@ -354,8 +375,6 @@
 		if (!I || !isitem(I) || I.cant_drop)
 			return
 
-		u_equip(I)
-
 		if (istype(I, /obj/item/grab))
 			var/obj/item/grab/G = I
 			I = G.handle_throw(src,target)
@@ -364,6 +383,8 @@
 			if (!I) return
 
 		I.set_loc(src.loc)
+
+		u_equip(I)
 
 		if (isitem(I))
 			I.dropped(src) // let it know it's been dropped
@@ -397,13 +418,13 @@
 		if (!src.ghost_spawned) //if its an admin or wizard made critter, just let them pull everythang
 			return 1
 		if (ismob(A))
-			return (src.pull_w_class >= 3)
+			return (src.pull_w_class >= W_CLASS_NORMAL)
 		else if (isobj(A))
 			if (istype(A,/obj/item))
 				var/obj/item/I = A
 				return (pull_w_class >= I.w_class)
 			else
-				return (src.pull_w_class >= 4)
+				return (src.pull_w_class >= W_CLASS_BULKY)
 		return 0
 
 	click(atom/target, list/params)
@@ -456,7 +477,7 @@
 						playsound(NewLoc, src.stepsound, 50, 1)
 				else
 					playsound(NewLoc, src.stepsound, 20, 1)
-		..()
+		. = ..()
 
 	update_clothing()
 		equipment_image.overlays.len = 0
@@ -509,15 +530,22 @@
 		if (new_hand == active_hand)
 			return 1
 		if (new_hand > 0 && new_hand <= hands.len)
+			var/obj/item/old = src.equipped()
 			active_hand = new_hand
 			hand = active_hand
 			hud.update_hands()
+			if(old != src.equipped())
+				if(old)
+					SEND_SIGNAL(old, COMSIG_ITEM_SWAP_AWAY, src)
+				if(src.equipped())
+					SEND_SIGNAL(src.equipped(), COMSIG_ITEM_SWAP_TO, src)
 			return 1
 		return 0
 
 	swap_hand()
 		if (!handcheck())
 			return
+		var/obj/item/old = src.equipped()
 		if (active_hand < hands.len)
 			active_hand++
 			hand = active_hand
@@ -525,6 +553,11 @@
 			active_hand = 1
 			hand = active_hand
 		hud.update_hands()
+		if(old != src.equipped())
+			if(old)
+				SEND_SIGNAL(old, COMSIG_ITEM_SWAP_AWAY, src)
+			if(src.equipped())
+				SEND_SIGNAL(src.equipped(), COMSIG_ITEM_SWAP_TO, src)
 
 	hand_range_attack(atom/target, params)
 		.= 0
@@ -534,6 +567,11 @@
 			ch.set_cooldown_overlay()
 			.= 1
 			src.lastattacked = src
+
+	weapon_attack(atom/target, obj/item/W, reach, params)
+		if(issmallanimal(src) && src.ghost_spawned && (ghostcritter_blocked[target.type] || ghostcritter_blocked[W.type]))
+			return
+		. = ..()
 
 	hand_attack(atom/target, params)
 		if (src.fits_under_table && (istype(target, /obj/machinery/optable) || istype(target, /obj/table) || istype(target, /obj/stool/bed)))
@@ -597,6 +635,7 @@
 		var/pmsg = islist(src.pet_text) ? pick(src.pet_text) : src.pet_text
 		src.visible_message("<span class='notice'><b>[user] [pmsg] [src]!</b></span>",\
 		"<span class='notice'><b>[user] [pmsg] you!</b></span>")
+		user.add_karma(0.5)
 		return
 
 	proc/get_active_hand()
@@ -630,6 +669,7 @@
 		reagents = R
 
 	equipped()
+		RETURN_TYPE(/obj/item)
 		if (active_hand)
 			if (hands.len >= active_hand)
 				var/datum/handHolder/HH = hands[active_hand]
@@ -653,8 +693,11 @@
 				clothing = 1
 		if (clothing)
 			update_clothing()
+		if(isitem(I))
+			I.dropped(src)
 
-		I.dropped(src)
+	has_any_hands()
+		. = length(hands)
 
 	put_in_hand(obj/item/I, t_hand)
 		if (!hands.len)
@@ -670,6 +713,7 @@
 				if(I.w_class > L.max_wclass && !istype(I,/obj/item/grab)) //shitty grab check
 					return 0
 			HH.item = I
+			I.set_loc(src)
 			hud.add_object(I, HUD_LAYER+2, HH.screenObj.screen_loc)
 			update_inhands()
 			I.pickup(src) // attempted fix for flashlights not working - cirr
@@ -683,6 +727,7 @@
 				if(I.w_class > L.max_wclass && !istype(I,/obj/item/grab)) //shitty grab check
 					return 0
 			HH.item = I
+			I.set_loc(src)
 			hud.add_object(I, HUD_LAYER+2, HH.screenObj.screen_loc)
 			update_inhands()
 			I.pickup(src) // attempted fix for flashlights not working - cirr
@@ -697,8 +742,7 @@
 			var/obj/item/organ/O = src.organHolder.get_organ("brain")
 			if (O)
 				O.set_loc(src)
-		if(src.mind)
-			src.mind.register_death() // it'd be nice if critters get a time of death too tbh
+		src.mind?.register_death() // it'd be nice if critters get a time of death too tbh
 		set_density(0)
 		if (src.can_implant)
 			for (var/obj/item/implant/H in src.implants)
@@ -714,7 +758,7 @@
 		empty_hands()
 		if (do_drop_equipment)
 			drop_equipment()
-		hud.update_health()
+		hud?.update_health()
 		update_stunned_icon(canmove=1)//force it to go away
 		return ..(gibbed)
 
@@ -723,7 +767,16 @@
 			return healthlist[assoc]
 		return null
 
-	TakeDamage(zone, brute, burn)
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
+		. = ..()
+		src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
+		random_brute_damage(src, AM.throwforce, TRUE)
+		if (src.client)
+			logTheThing("combat", src, null, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
+		if(thr?.user)
+			src.was_harmed(thr.user, AM)
+
+	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 		hit_twitch(src)
 		if (nodamage)
 			return
@@ -962,7 +1015,7 @@
 						if (istype(src.loc,/obj/))
 							var/obj/container = src.loc
 							boutput(src, "<span class='alert'>You leap and slam your head against the inside of [container]! Ouch!</span>")
-							src.changeStatus("paralysis", 30)
+							src.changeStatus("paralysis", 3 SECONDS)
 							src.changeStatus("weakened", 4 SECONDS)
 							container.visible_message("<span class='alert'><b>[container]</b> emits a loud thump and rattles a bit.</span>")
 							playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
@@ -1101,14 +1154,14 @@
 				var/obj/item/clothing/suit/S = EH.item
 				if (istype(S))
 					ret += S.getProperty("exploprot")
-		return ret
+		return ret/100
 
 	ex_act(var/severity)
 		..() // Logs.
 		var/ex_res = get_explosion_resistance()
-		if (ex_res >= 15 && prob(ex_res * 3.5))
+		if (ex_res >= 0.35 && prob(ex_res * 100))
 			severity++
-		if (ex_res >= 30 && prob(ex_res * 1.5))
+		if (ex_res >= 0.80 && prob(ex_res * 75))
 			severity++
 		switch(severity)
 			if (1)
@@ -1155,8 +1208,18 @@
 		..()
 		src.update_inhands()
 
+	proc/on_sleep()
+		return
+
 	proc/on_wake()
 		return
+
+/mob/living/critter/Bump(atom/A, yes)
+	var/atom/movable/AM = A
+	if(issmallanimal(src) && src.ghost_spawned && istype(AM) && !AM.anchored)
+		return
+	. = ..()
+
 
 /mob/living/critter/hotkey(name)
 	switch (name)
@@ -1255,7 +1318,7 @@
 			for (var/mob/O in viewers(src, null))
 				O.show_message("<span class='alert'><B>The blob has knocked down [src]!</B></span>", 1, "<span class='alert'>You hear someone fall.</span>", 2)
 		else
-			src.changeStatus("stunned", 50)
+			src.changeStatus("stunned", 5 SECONDS)
 			for (var/mob/O in viewers(src, null))
 				if (O.client)	O.show_message("<span class='alert'><B>The blob has stunned [src]!</B></span>", 1)
 		if (isalive(src))

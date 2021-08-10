@@ -2,15 +2,14 @@
 	name = "artifact noisy thing"
 	associated_datum = /datum/artifact/noisy_thing
 
-	ArtifactDeactivated()
-		return // hahaha nope
-
 /datum/artifact/noisy_thing
 	associated_object = /obj/machinery/artifact/noisy_thing
-	rarity_class = 1
+	type_name = "Noisemaker"
+	rarity_weight = 450
 	validtypes = list("ancient","martian","wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch)
+	fault_blacklist = list(ITEM_ONLY_FAULTS, TOUCH_ONLY_FAULTS)
 	activated = 0
 	activ_text = "begins making horrible noises!"
 	deact_text = "shuts down, falling silent. Thank god for that."
@@ -28,7 +27,7 @@
 	'sound/machines/signal.ogg','sound/machines/ufo_move.ogg','sound/machines/modem.ogg','sound/effects/creaking_metal1.ogg','sound/ambience/spooky/Void_Screaming.ogg','sound/ambience/industrial/Precursor_Choir.ogg',
 	'sound/voice/animal/cat.ogg')
 
-	New(var/loc, var/forceartitype)
+	New(var/loc, var/forceartiorigin)
 		..()
 		src.react_heat[2] = "HIGH INTERNAL CONVECTION"
 		src.spamsound = pick(sounds)
@@ -49,6 +48,7 @@
 				src.times_to_play = 10
 
 	post_setup()
+		. = ..()
 		var/harmprob = 5
 		if (src.artitype.name == "eldritch")
 			harmprob += 20
@@ -76,8 +76,6 @@
 					continue
 				if (!M.ears_protected_from_sound())
 					boutput(M, "<span class='alert'>The loud, horrible noises painfully batter your eardrums!</span>")
-				else
-					continue
 
 				var/weak = 0
 				var/ear_damage = 2
@@ -86,5 +84,6 @@
 					weak = 2
 
 				M.apply_sonic_stun(weak, 0, 0, 0, 0, ear_damage, ear_tempdeaf)
+				O.ArtifactFaultUsed(M)
 
 		return

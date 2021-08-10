@@ -1,32 +1,32 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/space,
-/area)
+/area/space)
 "ab" = (
 /turf/simulated/wall{
 	name = "Insulating Wall";
 	icon_state = "CCWall";
 	thermal_conductivity = 0
 	},
-/area)
+/area/space)
 "ac" = (
 /turf/simulated/wall,
-/area)
+/area/space)
 "ad" = (
 /turf/simulated/floor,
-/area)
+/area/space)
 "ae" = (
 /obj/machinery/door/window{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "af" = (
 /turf/simulated/floor{
 	name = "Plasma Spawn";
 	toxins = 40
 	},
-/area)
+/area/space)
 "ag" = (
 /obj/window{
 	dir = 4
@@ -35,13 +35,13 @@
 	name = "Plasma Spawn";
 	toxins = 40
 	},
-/area)
+/area/space)
 "ah" = (
 /obj/window{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "ai" = (
 /obj/machinery/door/window{
 	dir = 4
@@ -50,11 +50,11 @@
 	name = "Plasma Spawn";
 	toxins = 40
 	},
-/area)
+/area/space)
 "aj" = (
 /obj/machinery/door/airlock,
 /turf/simulated/floor,
-/area)
+/area/space)
 "ak" = (
 /turf/simulated/floor{
 	name = "FAE Mixture";
@@ -62,18 +62,18 @@
 	nitrogen = 0;
 	toxins = 11
 	},
-/area)
+/area/space)
 "al" = (
 /obj/machinery/door/airlock,
 /turf/space,
-/area)
+/area/space)
 "am" = (
 /obj/machinery/door/airlock,
 /turf/simulated/floor{
 	name = "Plasma Spawn";
 	toxins = 40
 	},
-/area)
+/area/space)
 "an" = (
 /obj/window{
 	dir = 1
@@ -82,21 +82,21 @@
 	name = "Plasma Spawn";
 	toxins = 40
 	},
-/area)
+/area/space)
 "ao" = (
 /obj/window,
 /turf/simulated/floor{
 	name = "Plasma Spawn";
 	toxins = 40
 	},
-/area)
+/area/space)
 "ap" = (
 /obj/machinery/door/window,
 /turf/simulated/floor{
 	name = "Plasma Spawn";
 	toxins = 40
 	},
-/area)
+/area/space)
 "aq" = (
 /obj/window{
 	dir = 4
@@ -106,13 +106,13 @@
 	name = "Plasma Spawn";
 	toxins = 40
 	},
-/area)
+/area/space)
 "ar" = (
 /obj/window{
 	dir = 1
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "as" = (
 /obj/machinery/atmospherics/pipe/tank/oxygen,
 /turf/simulated/floor{
@@ -121,7 +121,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "at" = (
 /obj/machinery/atmospherics/pipe/tank/nitrogen,
 /turf/simulated/floor{
@@ -130,7 +130,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "au" = (
 /turf/simulated/floor{
 	name = "Vacuum";
@@ -138,7 +138,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "av" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 6;
@@ -150,7 +150,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "aw" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
@@ -162,7 +162,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "ax" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
@@ -174,7 +174,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "ay" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
@@ -187,7 +187,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "az" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10;
@@ -199,7 +199,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "aA" = (
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor{
@@ -208,7 +208,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "aB" = (
 /obj/machinery/atmospherics/pipe/tank,
 /turf/simulated/floor{
@@ -217,7 +217,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "aC" = (
 /obj/machinery/atmospherics/valve,
 /turf/simulated/floor{
@@ -226,7 +226,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "aD" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 8;
@@ -238,7 +238,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "aE" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9;
@@ -251,7 +251,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "aF" = (
 /obj/machinery/atmospherics/binary/pump,
 /turf/simulated/floor{
@@ -260,7 +260,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "aG" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/machinery/meter,
@@ -270,7 +270,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "aH" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9;
@@ -282,11 +282,11 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "aI" = (
 /obj/machinery/atmospherics/pipe/vent,
 /turf/space,
-/area)
+/area/space)
 "aJ" = (
 /obj/machinery/atmospherics/pipe/manifold,
 /turf/simulated/floor{
@@ -295,7 +295,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "aK" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;
@@ -307,21 +307,21 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "aL" = (
 /obj/machinery/atmospherics/pipe/vent{
 	dir = 4;
 	initialize_directions = 4
 	},
 /turf/space,
-/area)
+/area/space)
 "aM" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
 	initialize_directions = 11
 	},
 /turf/space,
-/area)
+/area/space)
 "aN" = (
 /obj/machinery/atmospherics/mixer,
 /turf/simulated/floor{
@@ -330,7 +330,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "aO" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 1
@@ -341,7 +341,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "aP" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 8;
@@ -353,7 +353,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "aQ" = (
 /obj/machinery/atmospherics/oxygen_generator{
 	dir = 8;
@@ -365,7 +365,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "aR" = (
 /obj/machinery/atmospherics/valve{
 	dir = 4;
@@ -377,7 +377,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "aS" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
@@ -389,7 +389,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "aT" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 6;
@@ -401,7 +401,7 @@
 	nitrogen = 0;
 	toxins = 11
 	},
-/area)
+/area/space)
 "aU" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
@@ -413,7 +413,7 @@
 	nitrogen = 0;
 	toxins = 11
 	},
-/area)
+/area/space)
 "aV" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
@@ -424,7 +424,7 @@
 	icon_state = "CCWall";
 	thermal_conductivity = 0
 	},
-/area)
+/area/space)
 "aW" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
@@ -434,7 +434,7 @@
 	name = "Plasma Spawn";
 	toxins = 40
 	},
-/area)
+/area/space)
 "aX" = (
 /obj/window{
 	dir = 4
@@ -447,14 +447,14 @@
 	name = "Plasma Spawn";
 	toxins = 40
 	},
-/area)
+/area/space)
 "aY" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
 	initialize_directions = 12
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "aZ" = (
 /obj/window{
 	dir = 4
@@ -464,7 +464,7 @@
 	initialize_directions = 12
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "ba" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	icon_state = "12";
@@ -472,7 +472,7 @@
 	initialize_directions = 12
 	},
 /turf/space,
-/area)
+/area/space)
 "bb" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	icon_state = "10";
@@ -480,14 +480,14 @@
 	initialize_directions = 10
 	},
 /turf/space,
-/area)
+/area/space)
 "bc" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 6;
 	initialize_directions = 6
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "bd" = (
 /obj/window{
 	dir = 4
@@ -497,7 +497,7 @@
 	initialize_directions = 12
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "be" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10;
@@ -507,14 +507,14 @@
 	name = "Plasma Spawn";
 	toxins = 40
 	},
-/area)
+/area/space)
 "bf" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 8;
 	initialize_directions = 7
 	},
 /turf/space,
-/area)
+/area/space)
 "bg" = (
 /obj/window{
 	dir = 1
@@ -528,7 +528,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "bh" = (
 /obj/window{
 	dir = 1
@@ -540,7 +540,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "bi" = (
 /obj/window{
 	dir = 1
@@ -554,7 +554,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "bj" = (
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor{
@@ -563,7 +563,7 @@
 	nitrogen = 0;
 	toxins = 11
 	},
-/area)
+/area/space)
 "bk" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	icon_state = "6";
@@ -571,29 +571,29 @@
 	initialize_directions = 6
 	},
 /turf/space,
-/area)
+/area/space)
 "bl" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /turf/space,
-/area)
+/area/space)
 "bm" = (
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor,
-/area)
+/area/space)
 "bn" = (
 /obj/window{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/tank,
 /turf/simulated/floor,
-/area)
+/area/space)
 "bo" = (
 /obj/machinery/atmospherics/outlet/vent_scrubber,
 /turf/simulated/floor{
 	name = "Plasma Spawn";
 	toxins = 40
 	},
-/area)
+/area/space)
 "bp" = (
 /obj/machinery/atmospherics/outlet/vent_pump{
 	dir = 1;
@@ -603,7 +603,7 @@
 	name = "Plasma Spawn";
 	toxins = 40
 	},
-/area)
+/area/space)
 "bq" = (
 /obj/machinery/atmospherics/binary/passive_gate,
 /turf/simulated/floor{
@@ -612,7 +612,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "br" = (
 /obj/window{
 	dir = 8
@@ -627,7 +627,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "bs" = (
 /obj/window{
 	dir = 4
@@ -639,14 +639,14 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "bt" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;
 	initialize_directions = 5
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "bu" = (
 /obj/window{
 	dir = 4
@@ -656,7 +656,7 @@
 	initialize_directions = 13
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "bv" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9;
@@ -666,7 +666,7 @@
 	name = "Plasma Spawn";
 	toxins = 40
 	},
-/area)
+/area/space)
 "bw" = (
 /obj/window,
 /obj/window{
@@ -678,7 +678,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "bx" = (
 /obj/window,
 /obj/machinery/atmospherics/pipe/simple,
@@ -688,7 +688,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "by" = (
 /obj/window,
 /obj/window{
@@ -700,7 +700,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "bz" = (
 /obj/machinery/atmospherics/pipe/tank{
 	dir = 1;
@@ -710,7 +710,7 @@
 	name = "Plasma Spawn";
 	toxins = 40
 	},
-/area)
+/area/space)
 "bA" = (
 /obj/window{
 	dir = 1
@@ -721,14 +721,14 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "bB" = (
 /obj/machinery/atmospherics/pipe/vent{
 	dir = 1;
 	initialize_directions = 1
 	},
 /turf/space,
-/area)
+/area/space)
 "bC" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 1
@@ -739,7 +739,7 @@
 	nitrogen = 0;
 	toxins = 11
 	},
-/area)
+/area/space)
 "bD" = (
 /obj/machinery/atmospherics/binary/pump,
 /turf/simulated/floor{
@@ -748,7 +748,7 @@
 	nitrogen = 0;
 	toxins = 11
 	},
-/area)
+/area/space)
 "bE" = (
 /obj/window{
 	dir = 1
@@ -761,7 +761,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "bF" = (
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/wall{
@@ -769,35 +769,35 @@
 	icon_state = "CCWall";
 	thermal_conductivity = 0
 	},
-/area)
+/area/space)
 "bG" = (
 /obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
 	dir = 4;
 	initialize_directions = 4
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "bH" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
 	initialize_directions = 14
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "bI" = (
 /obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
 	dir = 8;
 	initialize_directions = 8
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "bJ" = (
 /obj/machinery/atmospherics/oxygen_generator{
 	dir = 4;
 	initialize_directions = 4
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "bK" = (
 /obj/machinery/atmospherics/outlet/vent_pump{
 	dir = 8;
@@ -809,7 +809,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "bL" = (
 /obj/window{
 	dir = 8
@@ -820,7 +820,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "bM" = (
 /obj/window{
 	dir = 4
@@ -831,7 +831,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "bN" = (
 /obj/machinery/atmospherics/pipe/vent{
 	dir = 1;
@@ -843,7 +843,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "bO" = (
 /obj/window{
 	dir = 4
@@ -857,7 +857,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "bP" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6;
@@ -869,7 +869,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "bQ" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4;
@@ -880,14 +880,14 @@
 	icon_state = "CCWall";
 	thermal_conductivity = 0
 	},
-/area)
+/area/space)
 "bR" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4;
 	initialize_directions = 12
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "bS" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 10;
@@ -895,30 +895,30 @@
 	},
 /obj/machinery/meter,
 /turf/simulated/floor,
-/area)
+/area/space)
 "bT" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/machinery/meter,
 /turf/simulated/floor,
-/area)
+/area/space)
 "bU" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
 	initialize_directions = 11
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "bV" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 8;
 	initialize_directions = 7
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "bW" = (
 /obj/machinery/atmospherics/outlet/vent_scrubber,
 /turf/simulated/floor,
-/area)
+/area/space)
 "bX" = (
 /obj/machinery/atmospherics/pipe/tank/oxygen{
 	dir = 1;
@@ -930,7 +930,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "bY" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor{
@@ -939,29 +939,29 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "bZ" = (
 /obj/machinery/atmospherics/binary/circulator,
 /turf/simulated/floor,
-/area)
+/area/space)
 "ca" = (
 /obj/machinery/power/generator,
 /turf/simulated/floor,
-/area)
+/area/space)
 "cb" = (
 /obj/machinery/atmospherics/binary/circulator{
 	icon_state = "circ2-off";
 	dir = 1
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "cc" = (
 /obj/machinery/atmospherics/pipe/tank{
 	dir = 1;
 	initialize_directions = 1
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "cd" = (
 /obj/machinery/alarm,
 /turf/simulated/floor{
@@ -970,7 +970,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "ce" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6;
@@ -981,7 +981,7 @@
 	icon_state = "CCWall";
 	thermal_conductivity = 0
 	},
-/area)
+/area/space)
 "cf" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 9;
@@ -989,7 +989,7 @@
 	},
 /obj/machinery/meter,
 /turf/simulated/floor,
-/area)
+/area/space)
 "cg" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;
@@ -997,32 +997,32 @@
 	},
 /obj/machinery/meter,
 /turf/simulated/floor,
-/area)
+/area/space)
 "ch" = (
 /obj/machinery/atmospherics/pipe/manifold,
 /turf/simulated/floor,
-/area)
+/area/space)
 "ci" = (
 /obj/machinery/atmospherics/valve{
 	dir = 4;
 	initialize_directions = 12
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "cj" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10;
 	initialize_directions = 10
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "ck" = (
 /obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
 	dir = 1;
 	initialize_directions = 1
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "cl" = (
 /obj/machinery/atmospherics/pipe/tank/nitrogen{
 	dir = 4;
@@ -1034,7 +1034,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "cm" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
@@ -1047,7 +1047,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "cn" = (
 /obj/machinery/atmospherics/pipe/tank{
 	dir = 8;
@@ -1059,7 +1059,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "co" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 8;
@@ -1070,21 +1070,21 @@
 	icon_state = "CCWall";
 	thermal_conductivity = 0
 	},
-/area)
+/area/space)
 "cp" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
 	initialize_directions = 12
 	},
 /turf/simulated/wall,
-/area)
+/area/space)
 "cq" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 8;
 	initialize_directions = 12
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "cr" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	icon_state = "5";
@@ -1092,7 +1092,7 @@
 	initialize_directions = 5
 	},
 /turf/space,
-/area)
+/area/space)
 "cs" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	icon_state = "9";
@@ -1100,7 +1100,7 @@
 	initialize_directions = 9
 	},
 /turf/space,
-/area)
+/area/space)
 "ct" = (
 /obj/window,
 /turf/simulated/floor{
@@ -1109,7 +1109,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "cu" = (
 /obj/machinery/atmospherics/pipe/tank{
 	dir = 1;
@@ -1121,7 +1121,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "cv" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/wall{
@@ -1129,7 +1129,7 @@
 	icon_state = "CCWall";
 	thermal_conductivity = 0
 	},
-/area)
+/area/space)
 "cw" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 4;
@@ -1141,7 +1141,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "cx" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 5;
@@ -1152,7 +1152,7 @@
 	icon_state = "CCWall";
 	thermal_conductivity = 0
 	},
-/area)
+/area/space)
 "cy" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4;
@@ -1160,14 +1160,14 @@
 	},
 /obj/machinery/meter,
 /turf/simulated/floor,
-/area)
+/area/space)
 "cz" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 10;
 	initialize_directions = 10
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "cA" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	icon_state = "12";
@@ -1179,7 +1179,7 @@
 	icon_state = "CCWall";
 	thermal_conductivity = 0
 	},
-/area)
+/area/space)
 "cB" = (
 /obj/machinery/atmospherics/pipe/simple/junction{
 	dir = 8;
@@ -1191,15 +1191,15 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "cC" = (
 /obj/machinery/atmospherics/valve,
 /turf/simulated/floor,
-/area)
+/area/space)
 "cD" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor,
-/area)
+/area/space)
 "cE" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 10;
@@ -1212,7 +1212,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "cF" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 5;
@@ -1224,14 +1224,14 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "cG" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 4;
 	initialize_directions = 12
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "cH" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
@@ -1239,7 +1239,7 @@
 	},
 /obj/machinery/meter,
 /turf/simulated/floor,
-/area)
+/area/space)
 "cI" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4;
@@ -1251,7 +1251,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "cJ" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 9;
@@ -1263,7 +1263,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "cK" = (
 /obj/machinery/atmospherics/binary/circulator,
 /turf/simulated/floor{
@@ -1272,7 +1272,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "cL" = (
 /obj/machinery/power/generator,
 /turf/simulated/floor{
@@ -1281,7 +1281,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "cM" = (
 /obj/machinery/atmospherics/binary/circulator{
 	icon_state = "circ2-off";
@@ -1293,7 +1293,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "cN" = (
 /obj/machinery/atmospherics/pipe/simple/junction,
 /turf/simulated/floor{
@@ -1302,7 +1302,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "cO" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;
@@ -1315,7 +1315,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "cP" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /turf/simulated/wall{
@@ -1323,7 +1323,7 @@
 	icon_state = "CCWall";
 	thermal_conductivity = 0
 	},
-/area)
+/area/space)
 "cQ" = (
 /obj/machinery/atmospherics/valve,
 /turf/simulated/wall{
@@ -1331,7 +1331,7 @@
 	icon_state = "CCWall";
 	thermal_conductivity = 0
 	},
-/area)
+/area/space)
 "cR" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	icon_state = "5";
@@ -1343,7 +1343,7 @@
 	nitrogen = 0;
 	toxins = 11
 	},
-/area)
+/area/space)
 "cS" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	icon_state = "12";
@@ -1355,7 +1355,7 @@
 	nitrogen = 0;
 	toxins = 11
 	},
-/area)
+/area/space)
 "cT" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	icon_state = "10";
@@ -1367,7 +1367,7 @@
 	nitrogen = 0;
 	toxins = 11
 	},
-/area)
+/area/space)
 "cU" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 8;
@@ -1379,7 +1379,7 @@
 	nitrogen = 0;
 	toxins = 11
 	},
-/area)
+/area/space)
 "cV" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
@@ -1390,21 +1390,21 @@
 	icon_state = "CCWall";
 	thermal_conductivity = 0
 	},
-/area)
+/area/space)
 "cW" = (
 /obj/machinery/alarm,
 /turf/simulated/floor{
 	name = "Plasma Spawn";
 	toxins = 40
 	},
-/area)
+/area/space)
 "cX" = (
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor{
 	name = "Plasma Spawn";
 	toxins = 40
 	},
-/area)
+/area/space)
 "cY" = (
 /obj/window{
 	dir = 4
@@ -1414,14 +1414,14 @@
 	initialize_directions = 1
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "cZ" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 5;
 	initialize_directions = 5
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "da" = (
 /obj/machinery/atmospherics/pipe/simple/junction{
 	dir = 4;
@@ -1432,7 +1432,7 @@
 	nitrogen = 0;
 	toxins = 11
 	},
-/area)
+/area/space)
 "db" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	icon_state = "6";
@@ -1444,7 +1444,7 @@
 	nitrogen = 0;
 	toxins = 11
 	},
-/area)
+/area/space)
 "dc" = (
 /obj/machinery/atmospherics/pipe/simple/junction{
 	dir = 8;
@@ -1455,12 +1455,12 @@
 	nitrogen = 0;
 	toxins = 11
 	},
-/area)
+/area/space)
 "dd" = (
 /obj/machinery/atmospherics/pipe/manifold,
 /obj/machinery/meter,
 /turf/simulated/floor,
-/area)
+/area/space)
 "de" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 6;
@@ -1471,7 +1471,7 @@
 	icon_state = "CCWall";
 	thermal_conductivity = 0
 	},
-/area)
+/area/space)
 "df" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4;
@@ -1482,7 +1482,7 @@
 	nitrogen = 0;
 	toxins = 11
 	},
-/area)
+/area/space)
 "dg" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 4;
@@ -1493,7 +1493,7 @@
 	nitrogen = 0;
 	toxins = 11
 	},
-/area)
+/area/space)
 "dh" = (
 /obj/machinery/atmospherics/pipe/vent{
 	dir = 8;
@@ -1504,7 +1504,7 @@
 	nitrogen = 0;
 	toxins = 11
 	},
-/area)
+/area/space)
 "di" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /turf/simulated/floor/engine{
@@ -1512,13 +1512,13 @@
 	nitrogen = 0;
 	toxins = 11
 	},
-/area)
+/area/space)
 "dj" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 1
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "dk" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;
@@ -1529,7 +1529,7 @@
 	icon_state = "CCWall";
 	thermal_conductivity = 0
 	},
-/area)
+/area/space)
 "dl" = (
 /obj/machinery/atmospherics/pipe/vent{
 	dir = 1;
@@ -1539,14 +1539,14 @@
 	name = "Plasma Spawn";
 	toxins = 40
 	},
-/area)
+/area/space)
 "dm" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6;
 	initialize_directions = 6
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "dn" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 10;
@@ -1557,7 +1557,7 @@
 	nitrogen = 0;
 	toxins = 11
 	},
-/area)
+/area/space)
 "do" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6;
@@ -1568,7 +1568,7 @@
 	nitrogen = 0;
 	toxins = 11
 	},
-/area)
+/area/space)
 "dp" = (
 /obj/window{
 	dir = 4
@@ -1578,7 +1578,7 @@
 	initialize_directions = 6
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "dq" = (
 /obj/machinery/atmospherics/pipe/vent{
 	dir = 8;
@@ -1590,7 +1590,7 @@
 	nitrogen = 0;
 	temperature = 0
 	},
-/area)
+/area/space)
 "dr" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	icon_state = "9";
@@ -1602,11 +1602,11 @@
 	nitrogen = 0;
 	toxins = 11
 	},
-/area)
+/area/space)
 "ds" = (
 /obj/machinery/atmospherics/pipe/tank/oxygen_agent_b,
 /turf/simulated/floor,
-/area)
+/area/space)
 "dt" = (
 /obj/machinery/atmospherics/pipe/vent{
 	dir = 1;
@@ -1617,21 +1617,21 @@
 	nitrogen = 0;
 	toxins = 11
 	},
-/area)
+/area/space)
 "du" = (
 /obj/machinery/atmospherics/pipe/vent,
 /turf/simulated/floor{
 	name = "Plasma Spawn";
 	toxins = 40
 	},
-/area)
+/area/space)
 "dv" = (
 /obj/window{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor,
-/area)
+/area/space)
 "dw" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;
@@ -1641,21 +1641,21 @@
 	name = "Plasma Spawn";
 	toxins = 40
 	},
-/area)
+/area/space)
 "dx" = (
 /obj/window{
 	dir = 4
 	},
 /obj/machinery/alarm,
 /turf/simulated/floor,
-/area)
+/area/space)
 "dy" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9;
 	initialize_directions = 9
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "dz" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/machinery/meter,
@@ -1663,21 +1663,21 @@
 	name = "Plasma Spawn";
 	toxins = 40
 	},
-/area)
+/area/space)
 "dA" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 9;
 	initialize_directions = 9
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "dB" = (
 /obj/machinery/atmospherics/pipe/tank/oxygen_agent_b{
 	dir = 1;
 	initialize_directions = 1
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "dC" = (
 /obj/window,
 /obj/machinery/atmospherics/pipe/simple,
@@ -1685,11 +1685,11 @@
 	name = "Plasma Spawn";
 	toxins = 40
 	},
-/area)
+/area/space)
 "dD" = (
 /obj/machinery/atmospherics/binary/pump,
 /turf/simulated/floor,
-/area)
+/area/space)
 "dE" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 9;
@@ -1700,7 +1700,7 @@
 	icon_state = "CCWall";
 	thermal_conductivity = 0
 	},
-/area)
+/area/space)
 "dF" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 6;
@@ -1708,11 +1708,11 @@
 	},
 /obj/machinery/meter,
 /turf/simulated/floor,
-/area)
+/area/space)
 "dG" = (
 /obj/machinery/atmospherics/filter,
 /turf/simulated/floor,
-/area)
+/area/space)
 "dH" = (
 /obj/machinery/atmospherics/pipe/vent{
 	dir = 4;
@@ -1722,7 +1722,7 @@
 	name = "Plasma Spawn";
 	toxins = 40
 	},
-/area)
+/area/space)
 "dI" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
@@ -1734,7 +1734,7 @@
 	icon_state = "CCWall";
 	thermal_conductivity = 0
 	},
-/area)
+/area/space)
 "dJ" = (
 /obj/machinery/atmospherics/filter{
 	dir = 4;
@@ -1742,7 +1742,7 @@
 	filter_type = 1
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "dK" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
@@ -1750,7 +1750,7 @@
 	},
 /obj/machinery/meter,
 /turf/simulated/floor,
-/area)
+/area/space)
 "dL" = (
 /obj/machinery/atmospherics/filter{
 	dir = 4;
@@ -1758,25 +1758,25 @@
 	filter_type = 2
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "dM" = (
 /obj/machinery/atmospherics/pipe/tank{
 	dir = 8;
 	initialize_directions = 8
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "dN" = (
 /obj/machinery/alarm,
 /turf/simulated/floor,
-/area)
+/area/space)
 "dO" = (
 /obj/machinery/atmospherics/pipe/tank/toxins{
 	dir = 1;
 	initialize_directions = 1
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "dP" = (
 /obj/window{
 	dir = 4
@@ -1787,7 +1787,7 @@
 	},
 /obj/machinery/meter,
 /turf/simulated/floor,
-/area)
+/area/space)
 "dQ" = (
 /obj/machinery/atmospherics/mixer{
 	dir = 8;
@@ -1796,32 +1796,32 @@
 	node2_concentration = 0.1
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "dR" = (
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/wall,
-/area)
+/area/space)
 "dS" = (
 /obj/machinery/atmospherics/pipe/tank/toxins{
 	dir = 4;
 	initialize_directions = 4
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "dT" = (
 /obj/machinery/atmospherics/pipe/tank/toxins{
 	dir = 8;
 	initialize_directions = 8
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "dU" = (
 /obj/indicator,
 /turf/simulated/floor{
 	name = "Plasma Spawn";
 	toxins = 40
 	},
-/area)
+/area/space)
 "dV" = (
 /obj/window{
 	dir = 4
@@ -1831,7 +1831,7 @@
 	name = "Plasma Spawn";
 	toxins = 40
 	},
-/area)
+/area/space)
 "dW" = (
 /obj/indicator,
 /turf/simulated/floor{
@@ -1840,7 +1840,7 @@
 	nitrogen = 0;
 	toxins = 11
 	},
-/area)
+/area/space)
 "dX" = (
 /obj/machinery/firealarm,
 /turf/simulated/floor{
@@ -1849,7 +1849,7 @@
 	nitrogen = 0;
 	toxins = 11
 	},
-/area)
+/area/space)
 "dY" = (
 /obj/machinery/firealarm,
 /turf/simulated/floor{
@@ -1889,7 +1889,7 @@
 	name = "Plasma Spawn";
 	toxins = 40
 	},
-/area)
+/area/space)
 "ed" = (
 /obj/machinery/door/window,
 /obj/indicator,
@@ -1897,7 +1897,7 @@
 	name = "Plasma Spawn";
 	toxins = 40
 	},
-/area)
+/area/space)
 "ee" = (
 /obj/window{
 	dir = 4
@@ -1908,14 +1908,14 @@
 	name = "Plasma Spawn";
 	toxins = 40
 	},
-/area)
+/area/space)
 "ef" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor{
 	name = "Plasma Spawn";
 	toxins = 40
 	},
-/area)
+/area/space)
 "eg" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor{
@@ -1937,7 +1937,7 @@
 	dir = 1
 	},
 /turf/unsimulated/floor,
-/area)
+/area/space)
 "ej" = (
 /obj/window{
 	dir = 1
@@ -1949,10 +1949,10 @@
 	name = "Plasma Spawn";
 	toxins = 40
 	},
-/area)
+/area/space)
 "ek" = (
 /turf/unsimulated/floor,
-/area)
+/area/space)
 "el" = (
 /turf/unsimulated/floor,
 /area/start)
@@ -1961,7 +1961,7 @@
 	dir = 4
 	},
 /turf/unsimulated/floor,
-/area)
+/area/space)
 
 (1,1,1) = {"
 aa

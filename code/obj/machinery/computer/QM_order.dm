@@ -5,10 +5,11 @@
 	var/temp = null
 	var/obj/item/card/id/scan = null
 	var/console_location = null
+	circuit_type = /obj/item/circuitboard/qmorder
 
-	lr = 1
-	lg = 0.7
-	lb = 0.03
+	light_r =1
+	light_g = 0.7
+	light_b = 0.03
 
 	New()
 		..()
@@ -25,9 +26,6 @@
 /obj/machinery/computer/ordercomp/console_lower
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "qmreq1"
-
-/obj/machinery/computer/ordercomp/attackby(I as obj, user as mob)
-	return src.attack_hand(user)
 
 /obj/machinery/computer/ordercomp/attack_ai(var/mob/user as mob)
 	boutput(user, "<span class='alert'>AI Interfacing with this computer has been disabled.</span>")
@@ -62,7 +60,7 @@
 	onclose(user, "computer_[src]")
 	return
 
-/obj/machinery/computer/ordercomp/attackby(var/obj/item/I as obj, user as mob)
+/obj/machinery/computer/ordercomp/attackby(var/obj/item/I as obj, mob/user as mob)
 	if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 		if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
 		boutput(user, "<span class='notice'>You swipe the ID card.</span>")
@@ -79,8 +77,8 @@
 		else
 			boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
 			src.scan = null
-	else src.attack_hand(user)
-	return
+	else
+		..()
 
 /obj/machinery/computer/ordercomp/proc/view_requests()
 	. = "<B>Current Requests:</B><BR><BR>"
@@ -93,7 +91,7 @@
 	if(..())
 		return
 
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 
 	if (href_list["order"])
@@ -170,7 +168,7 @@
 					// pda alert ////////
 					var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 					var/datum/signal/pdaSignal = get_free_signal()
-					pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=MGD_CARGO, "sender"="00000000", "message"="Notification: [O.object] ordered by [O.orderedby] using personal account at [O.console_location].")
+					pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Notification: [O.object] ordered by [O.orderedby] using personal account at [O.console_location].")
 					pdaSignal.transmission_method = TRANSMISSION_RADIO
 					if(transmit_connection != null)
 						transmit_connection.post_signal(src, pdaSignal)
@@ -185,7 +183,7 @@
 				// pda alert ////////
 				var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 				var/datum/signal/pdaSignal = get_free_signal()
-				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=MGD_CARGO, "sender"="00000000", "message"="Notification: [O.object] requested by [O.orderedby] at [O.console_location].")
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_CARGOREQUEST), "sender"="00000000", "message"="Notification: [O.object] requested by [O.orderedby] at [O.console_location].")
 				pdaSignal.transmission_method = TRANSMISSION_RADIO
 				if(transmit_connection != null)
 					transmit_connection.post_signal(src, pdaSignal)
@@ -261,7 +259,7 @@
 				////// PDA NOTIFY/////
 				var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 				var/datum/signal/pdaSignal = get_free_signal()
-				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=MGD_CARGO, "sender"="00000000", "message"="Notification: [transaction] credits transfered to shipping budget from [src.scan.registered].")
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Notification: [transaction] credits transfered to shipping budget from [src.scan.registered].")
 				pdaSignal.transmission_method = TRANSMISSION_RADIO
 				if(transmit_connection != null)
 					transmit_connection.post_signal(src, pdaSignal)

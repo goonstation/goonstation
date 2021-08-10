@@ -15,6 +15,7 @@
 	var/list/rare_items2spawn = list() // things that only rarely appear, independent of how big or small the main item list is
 	var/list/guaranteed = list() // things that will always spawn from this - set to a number to spawn that many of the thing
 
+	// TODO: initialize
 	New()
 		..()
 		SPAWN_DBG(1 DECI SECOND)
@@ -23,7 +24,7 @@
 			qdel(src)
 
 	proc/spawn_items()
-		if (islist(src.guaranteed) && src.guaranteed.len)
+		if (islist(src.guaranteed) && length(src.guaranteed))
 			for (var/obj/new_item in src.guaranteed)
 				if (!ispath(new_item))
 					logTheThing("debug", src, null, "has a non-path item in its guaranteed list, [new_item]")
@@ -35,11 +36,11 @@
 				for (amt, amt>0, amt--)
 					closet_check_spawn(new_item)
 
-		if (!islist(src.items2spawn) || !src.items2spawn.len)
+		if (!islist(src.items2spawn) || !length(src.items2spawn))
 			logTheThing("debug", src, null, "has an invalid items2spawn list")
 			return
 		if (rare_chance)
-			if (!islist(src.rare_items2spawn) || !src.rare_items2spawn.len)
+			if (!islist(src.rare_items2spawn) || !length(src.rare_items2spawn))
 				logTheThing("debug", src, null, "has an invalid rare_items2spawn list")
 				return
 		if (amt2spawn == 0)
@@ -77,7 +78,7 @@
 	icon_state = "rand_snacks"
 	min_amt2spawn = 1
 	max_amt2spawn = 1
-	items2spawn = list(/obj/item/reagent_containers/food/snacks/candy,
+	items2spawn = list(/obj/item/reagent_containers/food/snacks/candy/regular,
 	/obj/item/reagent_containers/food/snacks/candy/chocolate,
 	/obj/item/reagent_containers/food/snacks/candy/nougat,
 	/obj/item/reagent_containers/food/snacks/candy/butterscotch,
@@ -538,7 +539,7 @@
 	/obj/item/paper_bin,
 	/obj/decal/cleanable/generic,
 	/obj/item/reagent_containers/food/drinks/mug/random_color,
-	/obj/item/postit_stack,
+	/obj/item/item_box/postit,
 	/obj/item/staple_gun/red)
 
 	one
@@ -604,7 +605,7 @@
 	/obj/item/paper,
 	/obj/decal/cleanable/generic,
 	/obj/item/reagent_containers/food/drinks/mug/random_color,
-	/obj/item/postit_stack,
+	/obj/item/item_box/postit,
 	/obj/item/staple_gun/red)
 
 	one
@@ -670,7 +671,7 @@
 	/obj/item/paper,
 	/obj/decal/cleanable/generic,
 	/obj/item/reagent_containers/food/drinks/mug/random_color,
-	/obj/item/postit_stack,
+	/obj/item/item_box/postit,
 	/obj/item/staple_gun/red)
 
 	one
@@ -797,7 +798,6 @@
 	/obj/item/device/radio,
 	/obj/item/device/timer,
 	/obj/item/folder,
-	/obj/item/hairball,
 	/obj/item/hand_labeler,
 	/obj/item/light/bulb/neutral,
 	/obj/item/light/tube/neutral,
@@ -1097,8 +1097,7 @@
 	/obj/item/parts/robot_parts/leg/right/treads,
 	/obj/item/parts/robot_parts/leg/left/treads,
 	/obj/item/organ/eye/cyber/prodoc,
-	/obj/item/organ/eye/cyber/nightvision,
-	/obj/item/organ/eye/cyber/sechud)
+	/obj/item/organ/eye/cyber/nightvision)
 
 /obj/random_item_spawner/critter
 	name = "random critter spawner"
@@ -1426,8 +1425,7 @@
 	icon_state = "rand_mask"
 	min_amt2spawn = 5
 	max_amt2spawn = 10
-	items2spawn = list(/obj/item/clothing/mask/hunter,
-						/obj/item/clothing/mask/owl_mask,
+	items2spawn = list(/obj/item/clothing/mask/owl_mask,
 						/obj/item/clothing/mask/smile,
 						/obj/item/clothing/mask/batman,
 						/obj/item/clothing/mask/clown_hat,
@@ -1601,29 +1599,30 @@
 	icon_state = "rand_shoes"
 	min_amt2spawn = 5
 	max_amt2spawn = 10
-	items2spawn = list(/obj/item/clothing/shoes/cleats,
+	items2spawn = list(/obj/item/clothing/shoes/bootsblk,
+						/obj/item/clothing/shoes/bootsblu,
 						/obj/item/clothing/shoes/cowboy,
 						/obj/item/clothing/shoes/cyborg,
 						/obj/item/clothing/shoes/dress_shoes,
+						/obj/item/clothing/shoes/heels/dancin,
 						/obj/item/clothing/shoes/flippers,
 						/obj/item/clothing/shoes/fuzzy,
-						/obj/item/clothing/shoes/galoshes,
 						/obj/item/clothing/shoes/gogo,
 						/obj/item/clothing/shoes/heels,
-						/obj/item/clothing/shoes/jetpack,
 						/obj/item/clothing/shoes/macho,
-						/obj/item/clothing/shoes/magnetic,
 						/obj/item/clothing/shoes/mj_shoes,
+						/obj/item/clothing/shoes/mjblack,
+						/obj/item/clothing/shoes/mjwhite,
 						/obj/item/clothing/shoes/moon,
 						/obj/item/clothing/shoes/rocket,
 						/obj/item/clothing/shoes/rollerskates,
 						/obj/item/clothing/shoes/sailormoon,
-						/obj/item/clothing/shoes/sandal,
 						/obj/item/clothing/shoes/swat,
 						/obj/item/clothing/shoes/thong,
 						/obj/item/clothing/shoes/tourist,
 						/obj/item/clothing/shoes/utenashoes,
 						/obj/item/clothing/shoes/virtual,
+						/obj/item/clothing/shoes/witchfinder,
 						/obj/item/clothing/shoes/ziggy)
 
 	one
@@ -1749,18 +1748,10 @@
 	name = "firearm spawner"
 	icon_state = "rand_gun"
 	amt2spawn = 1
-	items2spawn = list(/obj/item/gun/kinetic/minigun,
-						/obj/item/gun/kinetic/revolver,
-						/obj/item/gun/kinetic/derringer,
-						/obj/item/gun/kinetic/detectiverevolver,
-						/obj/item/gun/kinetic/spes,
-						/obj/item/gun/kinetic/riotgun,
-						/obj/item/gun/kinetic/ak47,
-						/obj/item/gun/kinetic/hunting_rifle,
-						/obj/item/gun/kinetic/silenced_22,
-						/obj/item/gun/kinetic/pistol,
-						/obj/item/gun/kinetic/assault_rifle,
-						/obj/item/gun/kinetic/light_machine_gun)
+	items2spawn = null
+	New()
+		items2spawn = concrete_typesof(/obj/item/gun/kinetic) - /obj/item/gun/kinetic/meowitzer //No, just no
+		. = ..()
 
 /obj/random_item_spawner/ai_experimental //used to spawn 'experimental' AI law modules
 //intended to add random chance to what pre-fab 'gimmicky' law modules are available at round-start, such as Equality
@@ -1819,3 +1810,37 @@
 		var/obj/storage/S = locate(/obj/storage) in K.loc
 		if (S)
 			K.set_loc(S)
+
+/obj/random_item_spawner/organs
+	name = "random organ spawner"
+	icon_state = "rand_organ"
+	min_amt2spawn = 1
+	max_amt2spawn = 1
+	items2spawn = list(/obj/item/organ/eye/left,
+	/obj/item/organ/eye/right,
+	/obj/item/organ/heart,
+	/obj/item/organ/lung/left,
+	/obj/item/organ/lung/right,
+	/obj/item/organ/kidney/left,
+	/obj/item/organ/kidney/right,
+	/obj/item/organ/liver,
+	/obj/item/organ/stomach,
+	/obj/item/organ/intestines,
+	/obj/item/organ/spleen,
+	/obj/item/organ/pancreas,
+	/obj/item/organ/appendix,
+	)
+
+	one_to_three
+		min_amt2spawn = 1
+		max_amt2spawn = 3
+
+/obj/random_item_spawner/organs/bloody
+	New()
+		. = ..()
+		SPAWN_DBG(1 DECI SECOND) //sync with the organs spawn
+			make_cleanable(/obj/decal/cleanable/blood/gibs, src.loc)
+
+	one_to_three
+		min_amt2spawn = 1
+		max_amt2spawn = 3

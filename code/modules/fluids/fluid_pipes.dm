@@ -167,7 +167,7 @@ proc/make_fluid_networks()
 
 	// Populate all edges
 	// TODO in future: We dont need to do this every time we remake the fluid networks, only update the moved pipes.
-	for(var/obj/fluid_pipe/node in by_type[/obj/fluid_pipe])
+	for_by_tcl(node, /obj/fluid_pipe)
 		node.populate_edges()
 
 	var/obj/fluid_pipe/root = find_unvisited_node()
@@ -181,7 +181,7 @@ proc/make_fluid_networks()
 	while(root)
 
 proc/find_unvisited_node()
-	for(var/obj/fluid_pipe/pipe in by_type[/obj/fluid_pipe])
+	for_by_tcl(pipe, /obj/fluid_pipe)
 		if(!pipe.network)
 			return pipe
 	return 0
@@ -239,7 +239,7 @@ proc/ford_fulkerson(var/datum/flow_network/FN)
 	FN.clear_DFS_flags()
 	path = find_augmenting_path(FN)
 	DEBUG_MESSAGE("Augmenting path: [print_pipe_list(path)]")
-	while(path && path.len > 0)
+	while(length(path))
 		flow_through(path, DEFAULT_FLUID_CAPACITY / FN.sources.len)
 		path = find_augmenting_path(FN)
 		DEBUG_MESSAGE("Augmenting path: [print_pipe_list(path)]")

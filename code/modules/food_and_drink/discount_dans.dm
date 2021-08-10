@@ -7,6 +7,7 @@
 	heal_amt = 1
 	var/activated = 0
 	initial_volume = 60
+	can_recycle = FALSE
 	initial_reagents = list("chickensoup"=10,"msg"=9,"salt"=10,"nicotine"=8)
 
 	New()
@@ -241,7 +242,7 @@
 				src.desc = "A self-heating burrito that purports to contain elm-smoked meat. Of some sort. Probably from an animal."
 				src.initial_reagents["beff"] = 3
 				src.initial_reagents["synthflesh"] = 2
-				src.initial_reagents["tongueofdog"] = 5
+				src.initial_reagents["eyeofnewt"] = 5
 
 			if (8)
 				src.real_name = "Sconto Danilo's Burritos - 50% Real Mozzarella Pepperoni Pizza Party Flavor"
@@ -364,7 +365,7 @@
 	desc = "A box containing a self-heating TV dinner."
 	icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 	icon_state = "tvdinnerc"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 2
 	var/full = 1
 	var/traytype = 0
@@ -409,6 +410,7 @@
 		if (user.find_in_hand(src))//r_hand == src || user.l_hand == src)
 			if (src.full == 0)
 				user.show_text("The box is empty[prob(20) ? " (much like your head)" : null].", "red")
+				user.add_karma(-0.1)
 				return
 			else
 				var/obj/item/reagent_containers/food/snacks/tvdinner/W = new /obj/item/reagent_containers/food/snacks/tvdinner(null, src.traytype)
@@ -548,6 +550,7 @@
 			reagents.add_reagent("radium", 1) //Self Microwaving?!
 			reagents.handle_reactions()
 		boutput(user, "You twist the tray, activating the heater mechanism.")
+		user.add_karma(-6)
 		return
 
 	heal(var/mob/M)

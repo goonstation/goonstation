@@ -4,28 +4,17 @@
  * @license MIT
  */
 
-// Polyfills
-import 'core-js/es';
-import 'core-js/web/immediate';
-import 'core-js/web/queue-microtask';
-import 'core-js/web/timers';
-import 'regenerator-runtime/runtime';
-import 'tgui-polyfill/html5shiv';
-import 'tgui-polyfill/ie8';
-import 'tgui-polyfill/dom4';
-import 'tgui-polyfill/css-om';
-import 'tgui-polyfill/inferno';
-
 // Themes
 import './styles/main.scss';
-import './styles/themes/abductor.scss';
-import './styles/themes/cardtable.scss';
-import './styles/themes/hackerman.scss';
-import './styles/themes/malfunction.scss';
-import './styles/themes/neutral.scss';
+// import './styles/themes/abductor.scss';
+// import './styles/themes/cardtable.scss';
+import './styles/themes/genetek.scss';
+// import './styles/themes/hackerman.scss';
+// import './styles/themes/malfunction.scss';
+// import './styles/themes/neutral.scss';
 import './styles/themes/ntos.scss';
 import './styles/themes/paper.scss';
-import './styles/themes/retro.scss';
+import './styles/themes/retro-dark.scss';
 import './styles/themes/syndicate.scss';
 
 import { perf } from 'common/perf';
@@ -82,6 +71,7 @@ const setupApp = () => {
     setupHotReloading();
     module.hot.accept([
       './components',
+      './debug',
       './layouts',
       './routes',
     ], () => {

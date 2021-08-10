@@ -1,5 +1,3 @@
-#define QDELETED(thing) (!thing || thing.disposed)
-
 /datum
 	/**
 		* Components attached to this datum
@@ -341,8 +339,7 @@
 		var/proctype = C.signal_procs[src][sigtype]
 		return 0 | CallAsync(C, proctype, arguments)
 	. = 0
-	for(var/I in target)
-		var/datum/C = I
+	for (var/datum/C as anything in target)
 		if(!C.signal_enabled)
 			continue
 		var/proctype = C.signal_procs[src][sigtype]
@@ -465,8 +462,7 @@
 					var/list/arguments = raw_args.Copy()
 					arguments[1] = new_comp
 					var/make_new_component = TRUE
-					for(var/i in GetComponents(new_type))
-						var/datum/component/C = i
+					for (var/datum/component/C as anything in GetComponents(new_type))
 						if(C.CheckDupeComponent(arglist(arguments)))
 							make_new_component = FALSE
 							qdel(new_comp)
@@ -582,8 +578,3 @@
 
 /datum/proc/AdminAddComponent(...)
 	_AddComponent(args)
-
-//for being appended to tooltips.    //Never iterate over all components on an item when making a tooltip, at least until someone refactors my code -Tarmunora
-/datum/component/proc/getTooltipDesc()
-	SHOULD_CALL_PARENT(1)
-	return list()

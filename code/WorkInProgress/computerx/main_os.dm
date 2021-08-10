@@ -99,7 +99,7 @@
 						temp_icon.action_tag = "system"
 						temp_icon.action_arg = "root"
 						temp_icon.icon_state = "arrow"
-						temp_icon.dir = 1
+						temp_icon.set_dir(1)
 						temp_icon.name = ""
 						temp_icon.no_drag = 1
 

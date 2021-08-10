@@ -16,13 +16,15 @@
 		if(!holder)
 			return
 
-		holder.owner.say("GHEIT AUT")
+		if(!istype(get_area(holder.owner), /area/sim/gunsim))
+			holder.owner.say("GHEIT AUT")
 		..()
 
 		if (target.traitHolder.hasTrait("training_chaplain"))
 			boutput(holder.owner, "<span class='alert'>[target] has divine protection from magic.</span>")
 			playsound(target.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
 			target.visible_message("<span class='alert'>The spell fails to work on [target]!</span>")
+			JOB_XP(target, "Chaplain", 2)
 			return
 
 		if (iswizard(target))

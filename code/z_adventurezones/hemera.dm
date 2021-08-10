@@ -410,7 +410,7 @@ Obsidian Crown
 
 				if(isrestrictedz(host.z))
 					for(var/turf/T in view(M, 4))
-						if (T.loc != get_area(M) && T.loc.type != /area) //If we're in a telesci area and this is a change in area.
+						if (T.loc != get_area(M) && T.loc.type != /area/space) //If we're in a telesci area and this is a change in area.
 							continue
 						if(T.density)
 							continue
@@ -508,7 +508,7 @@ Obsidian Crown
 		for(var/mob/N in viewers(host, null))
 			N.flash(3 SECONDS)
 			if(N.client)
-				shake_camera(N, 6, 4)
+				shake_camera(N, 6, 32)
 				N.show_message("<span class='combat'><b>A blinding light envelops [host]!</b></span>")
 
 		playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)

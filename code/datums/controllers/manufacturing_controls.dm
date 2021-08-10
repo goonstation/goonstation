@@ -8,8 +8,7 @@ var/datum/manufacturing_controller/manuf_controls
 	proc/set_up()
 		for (var/M in childrentypesof(/datum/manufacture))
 			src.normal_schematics += new M
-		for (var/x in by_type[/obj/machinery/manufacturer])
-			var/obj/machinery/manufacturer/M = x
+		for_by_tcl(M, /obj/machinery/manufacturer)
 			src.manufacturing_units += M
 			M.set_up_schematics()
 
@@ -30,7 +29,7 @@ var/datum/manufacturing_controller/manuf_controls
 	if (!istext(schematic_name))
 		logTheThing("debug", null, null, "<b>Manufacturer:</b> Attempt to find schematic with non-string")
 		return null
-	if (!manuf_controls.normal_schematics.len && !manuf_controls.custom_schematics.len)
+	if (!manuf_controls.normal_schematics.len && !length(manuf_controls.custom_schematics))
 		logTheThing("debug", null, null, "<b>Manufacturer:</b> Cant find schematic due to empty schematic lists")
 		return null
 	for (var/datum/manufacture/M in (manuf_controls.normal_schematics + manuf_controls.custom_schematics))
@@ -50,4 +49,17 @@ var/datum/manufacturing_controller/manuf_controls
 		if (schematic_name == M.name)
 			return M
 	logTheThing("debug", null, null, "<b>Manufacturer:</b> Schematic with name \"[schematic_name]\" not found")
+	return null
+
+/proc/get_schematic_from_path_in_custom(var/schematic_path)
+	if (!ispath(schematic_path))
+		logTheThing("debug", null, null, "<b>Manufacturer:</b> Attempt to find schematic with null path")
+		return null
+	if (!length(manuf_controls.custom_schematics))
+		logTheThing("debug", null, null, "<b>Manufacturer:</b> Cant find schematic due to empty schematic list")
+		return null
+	for (var/datum/manufacture/mechanics/M in manuf_controls.custom_schematics)
+		if (schematic_path == M.frame_path)
+			return M
+	logTheThing("debug", null, null, "<b>Manufacturer:</b> Schematic \"[schematic_path]\" not found")
 	return null

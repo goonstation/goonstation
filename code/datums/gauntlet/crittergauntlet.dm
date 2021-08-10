@@ -44,7 +44,7 @@
 
 /mob/proc/is_in_gauntlet()
 	var/area/A = get_area(src)
-	if (A && A.type == /area/gauntlet)
+	if (A?.type == /area/gauntlet)
 		return 1
 	return 0
 
@@ -280,7 +280,7 @@
 		announceAll("The Critter Gauntlet match concluded at level [current_level].")
 		if (current_level > 50)
 			var/command_report = "A Critter Gauntlet match has concluded at level [current_level]. Congratulations to: [moblist_names]."
-			for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
+			for_by_tcl(C, /obj/machinery/communications_dish)
 				C.add_centcom_report("[command_name()] Update", command_report)
 
 			command_alert(command_report, "Critter Gauntlet match finished")
@@ -619,7 +619,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 	inactive_artifact
 		name = "An Artifact"
 		minimum_level = 20
-		supplies = list(/obj/artifact/bomb, /obj/artifact/darkness_field, /obj/artifact/healer_bio, /obj/artifact/forcefield_generator, /obj/artifact/power_giver)
+		supplies = list(/obj/machinery/artifact/bomb, /obj/artifact/darkness_field, /obj/artifact/healer_bio, /obj/artifact/forcefield_generator, /obj/artifact/power_giver)
 		max_amount = 1
 
 	hamburgers
@@ -649,7 +649,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		point_cost = -3
 		minimum_level = 20
 		probability =  20
-		supplies = list(/obj/item/chem_grenade/very_incendiary/vr, /obj/item/gun/kinetic/spes/vr, /obj/item/gun/energy/laser_gun/virtual)
+		supplies = list(/obj/item/chem_grenade/very_incendiary/vr, /obj/item/gun/kinetic/spes, /obj/item/gun/energy/laser_gun/virtual)
 
 	welding
 		name = "Welders"
@@ -673,7 +673,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		minimum_level = 25
 		min_percent = 0.25
 		max_percent = 0.5
-		supplies = list(/obj/item/gun/kinetic/spes/vr)
+		supplies = list(/obj/item/gun/kinetic/spes)
 
 	rifle
 		name = "Hunting Rifles"
@@ -681,7 +681,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		minimum_level = 25
 		min_percent = 0.25
 		max_percent = 0.5
-		supplies = list(/obj/item/gun/kinetic/hunting_rifle/vr)
+		supplies = list(/obj/item/gun/kinetic/hunting_rifle)
 
 	ak47
 		name = "An AK47"
@@ -690,7 +690,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		min_percent = 0.25
 		max_percent = 0.5
 		max_amount = 1
-		supplies = list(/obj/item/gun/kinetic/ak47/vr)
+		supplies = list(/obj/item/gun/kinetic/ak47)
 
 	bfg
 		name = "The BFG"
@@ -871,7 +871,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 				if (prob(10))
 					if (!M.getStatusDuration("burning"))
 						boutput(M, "<span class='alert'>You spontaneously combust!</span>")
-					M.changeStatus("burning", 70)
+					M.changeStatus("burning", 7 SECONDS)
 
 		tearDown()
 			for (var/turf/T in gauntlet_controller.gauntlet)

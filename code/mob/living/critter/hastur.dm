@@ -58,12 +58,12 @@ var/HasturPresent = 0
 	Move()
 		if(dir != lastdir)
 			if(dir == NORTHEAST || dir == SOUTHWEST || dir == SOUTHEAST || dir == NORTHWEST)
-				dir = lastdir
+				set_dir(lastdir)
 				changeIcon()
 			else
 				lastdir = dir
 				changeIcon()
-		..()
+		. = ..()
 
 	set_loc(var/newloc as turf|mob|obj in world)
 		..(newloc)
@@ -121,7 +121,7 @@ var/HasturPresent = 0
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/misc/hastur/growl.ogg" , 60, 1)
+					playsound(src, "sound/misc/hastur/growl.ogg" , 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>Something growls menacingly under [src]'s robe!</b>"
 		return null
 
@@ -227,7 +227,7 @@ var/HasturPresent = 0
 		var/mob/living/critter/hastur/H = src.holder.owner
 		if (stage == 1)
 			H.set_density(1)
-			H.invisibility = 0
+			REMOVE_MOB_PROPERTY(H, PROP_INVISIBILITY, src)
 			H.alpha = 255
 			H.stepsound = "sound/misc/hastur/tentacle_walk.ogg"
 			H.visible_message(pick("<span class='alert'>A horrible apparition fades into view!</span>", "<span class='alert'>A pool of shadow forms and manifests into shape!</span>"), pick("<span class='alert'>Void manifests around you, giving you your physical form back.</span>", "<span class='alert'>Energies of the void allow you to manifest back in a physical form.</span>"))
@@ -235,7 +235,7 @@ var/HasturPresent = 0
 		else
 			H.visible_message(pick("<span class='alert'>[H] vanishes from sight!</span>", "<span class='alert'>[H] dissolves into the void!</span>"), pick("<span class='notice'>You are enveloped by the void, hiding your physical manifestation.</span>", "<span class='notice'>You fade into the void!</span>"))
 			H.set_density(0)
-			H.invisibility = 10
+			APPLY_MOB_PROPERTY(H, PROP_INVISIBILITY, src, INVIS_GHOST)
 			H.alpha = 160
 			H.stepsound = null
 			H.see_invisible = 16
@@ -301,7 +301,7 @@ var/HasturPresent = 0
 
 			playsound(user, "sound/misc/hastur/tentacle_hit.ogg", 50, 1)
 			user.visible_message("<span class='alert'><B>[user] sends a sharp tentacle flying!</B></span>")
-			user.dir = get_dir(user, target)
+			user.set_dir(get_dir(user, target))
 
 			var/list/affected = DrawLine(user, target_r, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"WholeTentacle",1,1,"HalfStartTentacle","HalfEndTentacle",OBJ_LAYER,1)
 
@@ -371,7 +371,7 @@ var/HasturPresent = 0
 
 			playsound(user, "sound/misc/hastur/tentacle_hit.ogg", 50, 1)
 			user.visible_message("<span class='alert'><B>[user] sends a grabbing tentacle flying!</B></span>")
-			user.dir = get_dir(user, target)
+			user.set_dir(get_dir(user, target))
 
 			var/list/affected = DrawLine(user, target_r, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"WholeTentacle",1,1,"HalfStartTentacle","HalfEndTentacle",OBJ_LAYER,1)
 

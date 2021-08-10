@@ -31,8 +31,7 @@ var/global/list/datum/keybind_style/keybind_styles = null
 		keybind_styles.Add(/datum/keybind_style) //So the base is at the top, and not the bottom.
 		keybind_styles.Add(childrentypesof(/datum/keybind_style))
 
-	for (var/found in keybind_styles)
-		var/datum/keybind_style/found_style = found
+	for (var/datum/keybind_style/found_style as anything in keybind_styles)
 		if (initial(found_style.name) == style_name)
 			return found_style
 	logTheThing("debug", null, null, "<B>ZeWaka/Keybinds:</B> No keybind style found with the name [style_name].")
@@ -44,7 +43,7 @@ var/global/list/datum/keybind_style/keybind_styles = null
 /client/proc/apply_keys(datum/keybind_style/style)
 	PROTECTED_PROC(TRUE)
 
-	if (applied_keybind_styles.Find(initial(style.name)))
+	if (initial(style.name) in applied_keybind_styles)
 		logTheThing("debug", null, null, "<B>ZeWaka/Keybinds:</B> Attempted to apply [initial(style.name)] to [src] when already present.")
 		return
 	src.applied_keybind_styles.Add(initial(style.name))

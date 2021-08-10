@@ -5,21 +5,39 @@
 # In the event that multiple members are to be informed of changes
 # to the same file or dir, add them to the end under Multiple Owners
 
+# Adharainspace
+#/_std/ @Adharainspace
+
+# Flourish
+/code/obj/item/toys.dm @flrsh
+/maps/manta.dmm @flrsh
+/maps/oshan.dmm @flrsh
+
 # Kyle
 /code/WorkInProgress/JobXpRewards.dm @Kyle2143
-/code/obj/item/organs/ @Kyle2143
-/code/obj/item/organ_holder.dm @Kyle2143
 /code/modules/events/gimmick/kudzu.dm @Kyle2143
 /code/datums/abilities/kudzumen.dm @Kyle2143
 /code/datums/gamemodes/gangwar.dm @Kyle2143
-/code/procs/jobprocs.dm @Kyle2143
 
 # Mordent (mordent-goonstation)
 /code/modules/robotics/ @mordent-goonstation
 
+# Tarmunora
+/code/modules/projectiles/projectile_parent.dm @Tarmunora
+
+# Virvatuli
+/sound/ @virvatuli-gh
+
 # ZeWaka
 *.md @ZeWaka
-# /maps/ @ZeWaka
+/.github/ @ZeWaka
+/tools/ @ZeWaka
+
+# Pali
+#/code/datums/components/ @pali6
+#/code/obj/artifacts/ @pali6
+#/code/datums/controllers/artifact_controls.dm @pali6
+#/code/WorkInProgress/pali.dm @pali6
 
 # Multiple Owners
 /tgui/ @mordent-goonstation @ZeWaka

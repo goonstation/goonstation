@@ -5,15 +5,15 @@
  * @license ISC
  */
 
-import { Flex, Section, Tabs, Button } from '../../../components';
-import EmptyPlaceholder from '../EmptyPlaceholder';
-import Module from './Module';
+import { Button, Flex, Section, Tabs } from '../../../components';
+import { EmptyPlaceholder } from '../EmptyPlaceholder';
+import { Module } from './Module';
 
 // width hard-coded to allow display of widest current module name
 // without resizing when ejected/reset
 const ModuleListWidth = 18;
 
-const ModuleView = props => {
+export const ModuleView = props => {
   const {
     modules: {
       available = [],
@@ -74,7 +74,8 @@ const ModuleView = props => {
                         key={moduleRef}
                         onClick={() => onSelectModule(moduleRef)}
                         rightSlot={ejectButton}
-                        selected={moduleRef === selectedModuleRef}>
+                        selected={moduleRef === selectedModuleRef}
+                      >
                         {name}
                       </Tabs.Tab>
                     );
@@ -111,5 +112,3 @@ const ModuleView = props => {
       )
   );
 };
-
-export default ModuleView;

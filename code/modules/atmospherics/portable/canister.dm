@@ -6,6 +6,7 @@
 	var/health = 100.0
 	flags = FPRINT | CONDUCT | TGUI_INTERACTIVE
 	p_class = 2
+	status = REQ_PHYSICAL_ACCESS
 
 	var/has_valve = 1
 	var/valve_open = 0
@@ -23,8 +24,8 @@
 	var/overlay_state = null
 	var/dialog_update_enabled = 1 //For preventing the DAMNABLE window taking focus when manually inputting pressure
 
-	var/global/image/atmos_dmi = image('icons/obj/atmospherics/atmos.dmi')
-	var/global/image/bomb_dmi = image('icons/obj/canisterbomb.dmi')
+	var/image/atmos_dmi
+	var/image/bomb_dmi
 
 	onMaterialChanged()
 		..()
@@ -82,6 +83,8 @@
 
 /obj/machinery/portable_atmospherics/canister/New()
 	..()
+	atmos_dmi = image('icons/obj/atmospherics/atmos.dmi')
+	bomb_dmi = image('icons/obj/canisterbomb.dmi')
 
 /obj/machinery/portable_atmospherics/canister/update_icon()
 
@@ -314,7 +317,7 @@
 					if(A.anchored) continue
 					if(ismob(A))
 						var/mob/M = A
-						M.changeStatus("weakened", 80)
+						M.changeStatus("weakened", 8 SECONDS)
 						random_brute_damage(M, 20)//armor won't save you from the pressure wave or something
 						var/atom/targetTurf = get_edge_target_turf(M, get_dir(src, get_step_away(M, src)))
 						M.throw_at(targetTurf, 200, 4)
@@ -343,7 +346,7 @@
 				overlay_state = "overlay_safety_on"
 				src.det = Det
 				src.det.attachedTo = src
-				src.det.builtBy = usr
+				src.det.builtBy = user
 				logTheThing("bombing", user, null, "builds a canister bomb [log_atmos(src)] at [log_loc(src)].")
 				message_admins("[key_name(user)] builds a canister bomb at [log_loc(src)]. See bombing logs for atmos readout.")
 				tgui_process.update_uis(src)
@@ -385,60 +388,59 @@
 		ui.open()
 
 /obj/machinery/portable_atmospherics/canister/ui_data(mob/user)
-	var/list/data = list()
-	data["pressure"] = MIXTURE_PRESSURE(src.air_contents)
-	data["maxPressure"] = src.maximum_pressure
-	data["connected"] = src.connected_port ? TRUE : FALSE
-	data["releasePressure"] = src.release_pressure
-	data["minRelease"] = PORTABLE_ATMOS_MIN_RELEASE_PRESSURE
-	data["maxRelease"] = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE
-	data["valveIsOpen"] = src.valve_open
-	data["hasValve"] = src.has_valve ? TRUE : FALSE
-
-	data["holding"] = null // need to explicitly tell the client it doesn't exist so it renders properly
-	if(src.holding)
-		data["holding"] = list()
-		data["holding"]["name"] = src.holding.name
-		data["holding"]["pressure"] = MIXTURE_PRESSURE(src.holding.air_contents)
-		data["holding"]["maxPressure"] = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE
-
-	data["detonator"] = null
-	if(src.det)
-		data["detonator"] = list()
-		data["detonator"]["wireNames"] = src.det.WireNames
-		data["detonator"]["wireStatus"] = src.det.WireStatus
-		data["detonator"]["safetyIsOn"] = src.det.safety
-		data["detonator"]["isAnchored"] = src.anchored
-		data["detonator"]["isPrimed"] = src.det.part_fs.timing ? TRUE : FALSE
-		data["detonator"]["time"] = src.det.part_fs.time * 10 // using tenths of a second on the client
-
-		data["detonator"]["trigger"] = null
-		if(src.det.trigger)
-			data["detonator"]["trigger"] = src.det.trigger.name
-
-	return data
-
-/obj/machinery/portable_atmospherics/canister/ui_static_data(mob/user)
-	var/list/static_data = list()
-
-	if(src?.det?.attachments)
-		static_data["detonatorAttachments"] = list()
-		for(var/obj/item/I in src.det.attachments)
-			static_data["detonatorAttachments"] += I.name
-
-	return static_data
-
-/obj/machinery/portable_atmospherics/canister/ui_state(mob/user)
-	return tgui_physical_state
-
-/obj/machinery/portable_atmospherics/canister/ui_status(mob/user)
-  return min(
-		tgui_physical_state.can_use_topic(src, user),
-		tgui_not_incapacitated_state.can_use_topic(src, user)
+	. = list(
+		"pressure" = MIXTURE_PRESSURE(src.air_contents),
+		"maxPressure" = src.maximum_pressure,
+		"connected" = src.connected_port ? TRUE : FALSE,
+		"releasePressure" = src.release_pressure,
+		"valveIsOpen" = src.valve_open,
+		"hasValve" = src.has_valve ? TRUE : FALSE,
+		"holding" = null, // need to explicitly tell the client it doesn't exist so it renders properly
+		"detonator" = null,
 	)
 
+	if(src.holding)
+		. += list(
+			"holding" = list(
+				"name" = src.holding.name,
+				"pressure" = MIXTURE_PRESSURE(src.holding.air_contents),
+				"maxPressure" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
+			)
+		)
+
+	if(src.det)
+		. += list(
+			"detonator" = list(
+				"wireNames" = src.det.WireNames,
+				"wireStatus" = src.det.WireStatus,
+				"safetyIsOn" = src.det.safety,
+				"isAnchored" = src.anchored,
+				"isPrimed" = src.det.part_fs.timing ? TRUE : FALSE,
+				"time" = src.det.part_fs.time * 10, // using tenths of a second on the client
+				"trigger" = src.det.trigger ? src.det.trigger.name : null,
+			)
+		)
+
+/obj/machinery/portable_atmospherics/canister/ui_static_data(mob/user)
+	. = list(
+		"minRelease" = PORTABLE_ATMOS_MIN_RELEASE_PRESSURE,
+		"maxRelease" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
+	)
+	if(src?.det?.attachments)
+		var/list/attach_names = list()
+		for(var/obj/item/I as anything in src.det.attachments)
+			attach_names += I.name
+		. += list("detonatorAttachments" = attach_names)
+
+		var/has_paper = false
+		for(var/obj/item/paper/sheet in src.det.attachments)
+			. += list("paperData" = sheet.ui_static_data())
+			has_paper = true
+		. += list("hasPaper" = has_paper)
+
 /obj/machinery/portable_atmospherics/canister/ui_act(action, params)
-	if(..())
+	. = ..()
+	if (.)
 		return
 	switch(action)
 		if("toggle-valve")
@@ -520,13 +522,13 @@
 
 	if(tool == TOOL_SNIPPING)
 		if(!user.find_tool_in_hand(tool))
-			usr.show_message("<span class='alert'>You need to have a snipping tool equipped for this.</span>")
+			user.show_message("<span class='alert'>You need to have a snipping tool equipped for this.</span>")
 		else
 			if(src.det.shocked)
 				var/mob/living/carbon/human/H = user
 				H.show_message("<span class='alert'>You tried to cut a wire on the bomb, but got burned by it.</span>")
 				H.TakeDamage("chest", 0, 30)
-				H.changeStatus("stunned", 150)
+				H.changeStatus("stunned", 15 SECONDS)
 			else
 				src.visible_message("<b><font color=#B7410E>[user.name] cuts the [src.det.WireNames[which_wire]] on the detonator.</font></b>")
 				switch(src.det.WireFunctions[which_wire])
@@ -580,17 +582,17 @@
 
 				src.det.WireStatus[which_wire] = 0
 	else if(tool == TOOL_PULSING)
-		if (!usr.find_tool_in_hand(TOOL_PULSING))
-			usr.show_message("<span class='alert'>You need to have a multitool or similar equipped for this.</span>")
+		if (!user.find_tool_in_hand(TOOL_PULSING))
+			user.show_message("<span class='alert'>You need to have a multitool or similar equipped for this.</span>")
 		else
 			if (src.det.shocked)
-				var/mob/living/carbon/human/H = usr
+				var/mob/living/carbon/human/H = user
 				H.show_message("<span class='alert'>You tried to pulse a wire on the bomb, but got burned by it.</span>")
 				H.TakeDamage("chest", 0, 30)
-				H.changeStatus("stunned", 150)
+				H.changeStatus("stunned", 15 SECONDS)
 				H.UpdateDamageIcon()
 			else
-				src.visible_message("<b><font color=#B7410E>[usr.name] pulses the [src.det.WireNames[which_wire]] on the detonator.</font></b>")
+				src.visible_message("<b><font color=#B7410E>[user.name] pulses the [src.det.WireNames[which_wire]] on the detonator.</font></b>")
 				switch (src.det.WireFunctions[which_wire])
 					if ("detonate")
 						if (src.det.part_fs.timing)
@@ -708,10 +710,7 @@
 
 	..()
 
-	var/datum/gas/sleeping_agent/trace_gas = new
-	if(!air_contents.trace_gases)
-		air_contents.trace_gases = list()
-	air_contents.trace_gases += trace_gas
+	var/datum/gas/sleeping_agent/trace_gas = air_contents.get_or_add_trace_gas_by_type(/datum/gas/sleeping_agent)
 	trace_gas.moles = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
 	src.update_icon()

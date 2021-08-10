@@ -5,6 +5,8 @@
 	desc = "A remote control switch for a door."
 	var/id = null
 	var/timer = 0
+	var/cooldown = 0 SECONDS
+	var/inuse = FALSE
 	anchored = 1.0
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_NOSHADOW_ABOVE
@@ -256,6 +258,135 @@
 					pixel_y = -19
 				west
 					pixel_x = -24
+		t1d1
+			id = "hangar_t1d1"
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 24
+				south
+					pixel_y = -19
+				west
+					pixel_x = -24
+
+		t1d2
+			id = "hangar_t1d2"
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 24
+				south
+					pixel_y = -19
+				west
+					pixel_x = -24
+
+		t1d3
+			id = "hangar_t1d3"
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 24
+				south
+					pixel_y = -19
+				west
+					pixel_x = -24
+
+		t1d4
+			id = "hangar_t1d4"
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 24
+				south
+					pixel_y = -19
+				west
+					pixel_x = -24
+
+		t1condoor
+			id = "hangar_t1condoor"
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 24
+				south
+					pixel_y = -19
+				west
+					pixel_x = -24
+
+		t2d1
+			id = "hangar_t2d1"
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 24
+				south
+					pixel_y = -19
+				west
+					pixel_x = -24
+
+		t2d2
+			id = "hangar_t2d2"
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 24
+				south
+					pixel_y = -19
+				west
+					pixel_x = -24
+
+		t2d3
+			id = "hangar_t2d3"
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 24
+				south
+					pixel_y = -19
+				west
+					pixel_x = -24
+
+		t2d4
+			id = "hangar_t2d4"
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 24
+				south
+					pixel_y = -19
+				west
+					pixel_x = -24
+
+		t2condoor
+			id = "hangar_t2condoor"
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 24
+				south
+					pixel_y = -19
+				west
+					pixel_x = -24
 
 /obj/machinery/door_control/New()
 	..()
@@ -270,7 +401,7 @@
 	return src.attack_hand(user)
 
 /obj/machinery/door_control/attack_hand(mob/user as mob)
-	if(status & (NOPOWER|BROKEN))
+	if((status & (NOPOWER|BROKEN)) || inuse)
 		return
 
 	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
@@ -304,7 +435,7 @@
 			else
 				M.close()
 
-	for (var/obj/machinery/conveyor/M in machine_registry[MACHINES_CONVEYORS]) // Workaround for the stacked conveyor belt issue (Convair880).
+	for (var/obj/machinery/conveyor/M as anything in machine_registry[MACHINES_CONVEYORS]) // Workaround for the stacked conveyor belt issue (Convair880).
 		if (M.id == src.id)
 			if (M.operating)
 				M.operating = 0
@@ -318,10 +449,15 @@
 						M.operating = 0
 			M.setdir()
 
+	if(src.cooldown)
+		inuse = TRUE
+		sleep(src.cooldown)
+		inuse = FALSE
+
 	SPAWN_DBG(1.5 SECONDS)
 		if(!(status & NOPOWER))
 			icon_state = "doorctrl0"
-	src.add_fingerprint(usr)
+	src.add_fingerprint(user)
 
 /obj/machinery/door_control/power_change()
 	..()
@@ -369,7 +505,7 @@
 
 	sleep(2 SECONDS)
 
-	for(var/obj/machinery/mass_driver/M in machine_registry[MACHINES_MASSDRIVERS])
+	for(var/obj/machinery/mass_driver/M as anything in machine_registry[MACHINES_MASSDRIVERS])
 		if(M.id == src.id)
 			M.drive()
 
@@ -658,7 +794,145 @@
 					pixel_y = -19
 				west
 					pixel_x = -22
+		t1d1
+			id = "hangar_t1d1"
+			access_type = -1
 
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 22
+				south
+					pixel_y = -19
+				west
+					pixel_x = -22
+
+		t1d2
+			id = "hangar_t1d2"
+			access_type = -1
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 22
+				south
+					pixel_y = -19
+				west
+					pixel_x = -22
+
+		t1d3
+			id = "hangar_t1d3"
+			access_type = -1
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 22
+				south
+					pixel_y = -19
+				west
+					pixel_x = -22
+
+		t1d4
+			id = "hangar_t1d4"
+			access_type = -1
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 22
+				south
+					pixel_y = -19
+				west
+					pixel_x = -22
+
+		t1condoor
+			id = "hangar_t1condoor"
+			access_type = -1
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 22
+				south
+					pixel_y = -19
+				west
+					pixel_x = -22
+
+		t2d1
+			id = "hangar_t2d1"
+			access_type = -1
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 22
+				south
+					pixel_y = -19
+				west
+					pixel_x = -22
+
+		t2d2
+			id = "hangar_t2d2"
+			access_type = -1
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 22
+				south
+					pixel_y = -19
+				west
+					pixel_x = -22
+
+		t2d3
+			id = "hangar_t2d3"
+			access_type = -1
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 22
+				south
+					pixel_y = -19
+				west
+					pixel_x = -22
+
+		t2d4
+			id = "hangar_t2d4"
+			access_type = -1
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 22
+				south
+					pixel_y = -19
+				west
+					pixel_x = -22
+
+		t2condoor
+			id = "hangar_t2condoor"
+			access_type = -1
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 22
+				south
+					pixel_y = -19
+				west
+					pixel_x = -22
 	New()
 		..()
 		UnsubscribeProcess()

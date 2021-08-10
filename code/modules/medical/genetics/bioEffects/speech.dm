@@ -98,6 +98,7 @@
 	lockedDiff = 2
 	lockedChars = list("G","C")
 	lockedTries = 3
+	var/danny_index = 0
 
 	OnSpeak(var/message)
 		if (!istext(message))
@@ -192,7 +193,7 @@
 
 /datum/bioEffect/speech/comic
 	name = "Frontal Gyrus Alteration Type-CS"
-	desc = "Causes the speech center of the subject's brain to become, uh. Well, <i>something</i> happens to it."
+	desc = "Causes the speech center of the subject's brain to become, uh. Well, SOMETHING happens to it."
 	id = "accent_comic"
 	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
@@ -209,6 +210,35 @@
 		var/mob/living/L = owner
 		if (istype(L))
 			L.speechpopupstyle = "font-family: 'Comic Sans MS'; font-size: 8px;"
+
+	OnRemove()
+		var/mob/living/L = owner
+		if (istype(L))
+			L.speechpopupstyle = ""
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		return message
+		// just let this one handle itself for now
+
+/datum/bioEffect/speech/badmin
+	name = "Frontal Gyrus Alteration Type-Badmin"
+	desc = "Spooky. Red."
+	id = "accent_badmin"
+	effectType = EFFECT_TYPE_POWER
+	isBad = 0
+	msgGain = "You now speak with black and red text."
+	msgLose = "Back to normal text."
+	probability = 0 // NO
+	occur_in_genepools = 0 // NO ALSO
+	can_make_injector = 0
+	can_copy = 0
+
+	OnAdd()
+		var/mob/living/L = owner
+		if (istype(L))
+			L.speechpopupstyle = "font-family: 'XFont 6x9'; font-size: 6px; color: black !important; -dm-text-outline: 1px #ff0000;"
 
 	OnRemove()
 		var/mob/living/L = owner
@@ -548,7 +578,7 @@
 			return ""
 
 		var/list/speech_list = splittext(message, " ")
-		if(!speech_list || !speech_list.len)
+		if(!speech_list || !length(speech_list))
 			return ""
 
 		var/num_butts = rand(1,4)
@@ -599,7 +629,9 @@
 	isBad = 1
 	msgGain = "Oh nyo. uwu"
 	msgLose = "Nyo more funny talking."
-	probability = 10 // yes... ha ha ha... YES
+	occur_in_genepools = 0
+	acceptable_in_mutini = 0
+	probability = 0 // Should not be player accessible
 	reclaim_fail = 10
 	lockProb = 25
 	lockedGaps = 2
@@ -637,7 +669,7 @@
 			return ""
 
 		var/list/speech_list = splittext(message, " ")
-		if(!speech_list || !speech_list.len)
+		if(!speech_list || !length(speech_list))
 			return ""
 
 		var/o = 1
@@ -717,4 +749,29 @@
 		if (!istext(message))
 			return ""
 		message = scoobify(message)
+		return message
+
+/datum/bioEffect/speech/scoob/less_dog
+	name = "Frontal Gyrus Alteration Type-BD" // bad dog 3=
+	desc = "Influences select language centers of the subject's brain to bark out sentences like a dog."
+	id = "accent_scoob_nerf"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = 1
+	msgGain = "You feel like you're talking through a dog's snout."
+	msgLose = "You feel less vocally canine."
+	probability = 0
+	occur_in_genepools = 0
+	scanner_visibility = 0
+	can_research = 0
+	can_make_injector = 0
+	can_copy = 0
+	can_reclaim = 0
+	can_scramble = 0
+	curable_by_mutadone = 0
+	acceptable_in_mutini = 0
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		message = scoobify(message, 1)
 		return message

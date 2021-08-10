@@ -1,4 +1,4 @@
-/obj/screen/ability/chaplain
+/atom/movable/screen/ability/chaplain
 	clicked(params)
 		var/datum/targetable/chaplain/spell = owner
 		if (!istype(spell))
@@ -16,7 +16,7 @@
 			SPAWN_DBG(0)
 				spell.handleCast()
 
-/obj/screen/ability/topBar/chaplain
+/atom/movable/screen/ability/topBar/chaplain
 	tens_offset_x = 19
 	tens_offset_y = 7
 	secs_offset_x = 23
@@ -48,7 +48,7 @@
 	var/disabled = 0
 
 	New()
-		var/obj/screen/ability/chaplain/B = new /obj/screen/ability/chaplain(null)
+		var/atom/movable/screen/ability/chaplain/B = new /atom/movable/screen/ability/chaplain(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src

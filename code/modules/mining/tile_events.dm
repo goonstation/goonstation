@@ -36,6 +36,21 @@
 		I.quality = AST.quality + rand(-50,50)
 		I.name = "[getGemQualityName(I.quality)] [I.name]"
 
+/datum/ore/event/gem/molitz_b
+	analysis_string = "Small unusual crystalline deposit detected."
+	excavation_string = "Something unusual tumbles out of the collapsing rock!"
+
+	set_up(var/datum/ore/parent)
+		if (..())
+			return
+		gem_type = /obj/item/raw_material/molitz_beta
+
+	onExcavate(var/turf/simulated/wall/asteroid/AST)
+		var/quantity = rand(2,3)
+		for(var/i in 1 to quantity)
+			..()
+
+
 /datum/ore/event/rock_worm
 	analysis_string = "Caution! Life signs detected!"
 	excavation_string = "A rock worm jumps out of the collapsing rock!"
@@ -126,10 +141,10 @@
 		if (..())
 			return
 		for (var/mob/living/L in range(1,AST))
-			L.changeStatus("radiation", 50, 2)
+			L.changeStatus("radiation", 5 SECONDS, 2)
 
 	onExcavate(var/turf/simulated/wall/asteroid/AST)
 		if (..())
 			return
 		for (var/mob/living/L in range(1,AST))
-			L.changeStatus("radiation", 100, 2)
+			L.changeStatus("radiation", 10 SECONDS, 2)

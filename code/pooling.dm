@@ -77,7 +77,7 @@ proc/unpool(var/type=null)
 		return new type
 
 	var/datum/thing = l[l.len]
-	if (!thing) //This should not happen, but I guess it did.
+	if (!thing || !thing.pooled) //This should not happen, but I guess it did.
 		l.len-- // = 0
 		#ifdef DETAILED_POOL_STATS
 		increment_pool_stats(type, POOL_MISS_COUNT)
@@ -125,7 +125,7 @@ proc/getPoolingJson()
 	for(var/type in pool_stats)
 		var/count = 0
 		var/list/L = object_pools[type]
-		if(L) count = L.len
+		if(L) count = length(L)
 		L = pool_stats[type]
 
 		json += ",{path:'[type]',count:[count],hits:[L[POOL_HIT_COUNT]],misses:[L[POOL_MISS_COUNT]],poolings:[L[POOLINGS]],unpoolings:[L[UNPOOLINGS]],evictions:[L[EVICTIONS]]}"

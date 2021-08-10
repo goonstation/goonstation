@@ -2,7 +2,7 @@
 /mob/living/silicon/ai/process_move()
 	if(has_feet)
 		return ..()
-	return
+	return FALSE
 
 /mob/living/silicon/ai/keys_changed(keys, changed)
 	if(has_feet)

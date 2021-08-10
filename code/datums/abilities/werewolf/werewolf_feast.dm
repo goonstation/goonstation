@@ -33,8 +33,8 @@
 			boutput(M, __red("[target] probably wouldn't taste very good."))
 			return 1
 
-		if (target.canmove)
-			boutput(M, __red("[target] is moving around too much."))
+		if (!target.lying)
+			boutput(M, __red("[target] needs to be lying on the ground first."))
 			return 1
 
 		logTheThing("combat", M, target, "starts to maul [constructTarget(target,"combat")] at [log_loc(M)].")
@@ -49,8 +49,8 @@
 	icon_state = "devour_over"
 	var/mob/living/target
 	var/datum/targetable/werewolf/werewolf_feast/feast
-	var/last_complete = 0
-	var/do_we_get_points = 0 // For the specialist objective. Did we feed on the target long enough?
+	var/times_attacked = 0
+	var/do_we_get_points = FALSE // For the specialist objective. Did we feed on the target enough times?
 
 	New(Target, Feast)
 		target = Target
@@ -67,14 +67,18 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		// It's okay when the victim expired half-way through the feast, but plain corpses are too cheap.
+		// What do we do if the body is dead?
 		if (target.stat == 2)
-			boutput(M, __red("Urgh, this cadaver tasted horrible. Better find some fresh meat."))
-			//target.visible_message("<span class='alert'><B>[M] completely rips [target]'s corpse to pieces!</B></span>")
-			//target.gib()
-			//nah this sucks for the guy being eaten.
-			interrupt(INTERRUPT_ALWAYS)
-			return
+			if (target.reagents)
+				if (target.reagents.has_reagent("formaldehyde", 15))
+					boutput(M, __red("Urgh, this cadaver tastes horrible. Better find some chemical free meat."))
+					return
+
+			var/mob/living/carbon/human/H = target
+			//If they are at the decay or greater decomp stage, no eat
+			if (istype(H) && H.decomp_stage >= 2)
+				boutput(M, __red("Urgh, this cadaver tastes horrible. Better find some fresh meat."))
+				return
 
 		A.locked = 1
 		playsound(M.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
@@ -87,77 +91,17 @@
 		var/datum/abilityHolder/A = feast.holder
 		var/mob/living/carbon/human/HH = target
 
-		if (!feast || get_dist(M, target) > feast.max_range || target == null || M == null || !ishuman(target) || !ishuman(M) || !A || !istype(A))
+		if (!feast || get_dist(M, HH) > feast.max_range || HH == null || M == null || !ishuman(HH) || !ishuman(M) || !A || !istype(A) || (!HH.lying))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		var/done = world.time - started
-		var/complete = max(min((done / duration), 1), 0)
+		if (!GET_COOLDOWN(M, "ww feast"))
+			M.werewolf_attack(HH, "feast")
+			ON_COOLDOWN(M, "ww feast", 2.5 SECONDS) // Enough time between attacks for them to happen 9 times
+			times_attacked += 1
 
-		if (complete >= 0.1 && last_complete < 0.1)
-			if (M.werewolf_attack(target, "feast") != 1)
-				boutput(M, __red("[target] is moving around too much."))
-				interrupt(INTERRUPT_ALWAYS)
-				return
-
-		if (complete >= 0.2 && last_complete < 0.2)
-			if (M.werewolf_attack(target, "feast") != 1)
-				boutput(M, __red("[target] is moving around too much."))
-				interrupt(INTERRUPT_ALWAYS)
-				return
-
-		if (complete >= 0.3 && last_complete < 0.3)
-			if (M.werewolf_attack(target, "feast") != 1)
-				boutput(M, __red("[target] is moving around too much."))
-				interrupt(INTERRUPT_ALWAYS)
-				return
-
-		if (complete >= 0.4 && last_complete < 0.4)
-			if (M.werewolf_attack(target, "feast") != 1)
-				boutput(M, __red("[target] is moving around too much."))
-				interrupt(INTERRUPT_ALWAYS)
-				return
-
-		if (complete >= 0.5 && last_complete < 0.5)
-			if (M.werewolf_attack(target, "feast") != 1)
-				boutput(M, __red("[target] is moving around too much."))
-				interrupt(INTERRUPT_ALWAYS)
-				return
-
-		if (complete >= 0.6 && last_complete < 0.6)
-			if (M.werewolf_attack(target, "feast") != 1)
-				boutput(M, __red("[target] is moving around too much."))
-				interrupt(INTERRUPT_ALWAYS)
-				return
-
-		if (complete >= 0.7 && last_complete < 0.7)
-			if (M.werewolf_attack(target, "feast") != 1)
-				boutput(M, __red("[target] is moving around too much."))
-				interrupt(INTERRUPT_ALWAYS)
-				return
-
-			if (HH.decomp_stage <= 2 && !(ismonkey(target) || target.bioHolder && target.bioHolder.HasEffect("monkey"))) // Can't farm monkeys.
-				src.do_we_get_points = 1
-
-		if (complete >= 0.8 && last_complete < 0.8)
-			if (M.werewolf_attack(target, "feast") != 1)
-				boutput(M, __red("[target] is moving around too much."))
-				interrupt(INTERRUPT_ALWAYS)
-				return
-
-			if (HH.decomp_stage <= 2 && !(ismonkey(target) || target.bioHolder && target.bioHolder.HasEffect("monkey")))
-				src.do_we_get_points = 1
-
-		if (complete >= 0.9 && last_complete < 0.9)
-			if (M.werewolf_attack(target, "feast") != 1)
-				boutput(M, __red("[target] is moving around too much."))
-				interrupt(INTERRUPT_ALWAYS)
-				return
-
-			if (HH.decomp_stage <= 2 && !(ismonkey(target) || target.bioHolder && target.bioHolder.HasEffect("monkey")))
-				src.do_we_get_points = 1
-
-		last_complete = complete
+		if (HH.decomp_stage <= 2 && !(isnpcmonkey(HH)) && (times_attacked >= 7)) // Can't farm npc monkeys.
+			src.do_we_get_points = TRUE
 
 	onEnd()
 		..()
@@ -176,7 +120,7 @@
 						if (!W.feed_objective.mobs_fed_on.Find(HH.bioHolder.Uid))
 							W.feed_objective.mobs_fed_on.Add(HH.bioHolder.Uid)
 							W.feed_objective.feed_count++
-							M.add_stam_mod_regen("feast-[W.feed_objective.feed_count]", 2)
+							APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "feast-[W.feed_objective.feed_count]", 2)
 							M.add_stam_mod_max("feast-[W.feed_objective.feed_count]", 10)
 							M.max_health += 10
 							health_update_queue |= M
@@ -211,7 +155,7 @@
 						if (!W.feed_objective.mobs_fed_on.Find(HH.bioHolder.Uid))
 							W.feed_objective.mobs_fed_on.Add(HH.bioHolder.Uid)
 							W.feed_objective.feed_count++
-							M.add_stam_mod_regen("feast-[W.feed_objective.feed_count]", 1)
+							APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "feast-[W.feed_objective.feed_count]", 1)
 							M.add_stam_mod_max("feast-[W.feed_objective.feed_count]", 5)
 							M.max_health += 10
 							health_update_queue |= M

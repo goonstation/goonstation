@@ -19,7 +19,7 @@
 
 		var/command = null
 		var/list/initlist = splittext(initparams, " ")
-		if (!initparams || !initlist.len)
+		if (!initparams || !length(initlist))
 			command = "index"
 		else
 			command = ckey(initlist[1])
@@ -116,7 +116,7 @@
 			return newMail
 
 		send_mail_to(var/datum/computer/file/record/mail)
-			if (!istype(mail) || !mail.fields.len)
+			if (!istype(mail) || !length(mail.fields))
 				return 1
 
 			var/list/mailHeader = params2list(mail.fields[1])
@@ -176,14 +176,14 @@
 				if (!check_read_permission(emailRec, useracc))
 					continue
 
-				if ((emailRec.fields.len >= 2) && lowertext(emailRec.fields[2]) == "*all")
+				if ((length(emailRec.fields) >= 2) && lowertext(emailRec.fields[2]) == "*all")
 					mailList += emailRec
 					continue
 
-				if (groupTargets && groupTargets.len)
+				if (length(groupTargets))
 					var/success = 0
 					for (var/groupMember in groupTargets)
-						if (emailRec.fields.len >= 2 && (lowertext(groupMember) ==  lowertext(emailRec.fields[2])))
+						if (length(emailRec.fields) >= 2 && (lowertext(groupMember) ==  lowertext(emailRec.fields[2])))
 							mailList += emailRec
 							success = 1
 							break
@@ -230,7 +230,7 @@
 					mailSubjs[mailSubjs.len] = copytext(emailRec.fields[6], 1, 33)
 					continue
 
-				if (groupTargets && groupTargets.len)
+				if (length(groupTargets))
 					var/success = 0
 					for (var/groupMember in groupTargets)
 						if (lowertext(groupMember) == lowertext(emailRec.fields[2]))

@@ -55,8 +55,7 @@
 		access_type_secondary = 2
 
 	opencomputer(mob/user as mob)
-		if(ship.intercom)
-			ship.intercom.attack_self(user)
+		ship.intercom?.attack_self(user)
 		return
 
 	deactivate()
@@ -101,8 +100,7 @@
 	New()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
-			if(radio_controller)
-				radio_controller.add_object(src, "[frequency]")
+			radio_controller?.add_object(src, "[frequency]")
 
 			src.net_id = format_net_id("\ref[src]")
 
@@ -133,7 +131,7 @@
 		//	qdel(signal)
 
 	proc/open_hangar(mob/user as mob)
-		var/pass = input(usr, "Please enter panel access number.", "Access Number") as text
+		var/pass = input(user, "Please enter panel access number.", "Access Number") as text
 		pass = copytext(html_encode(pass), 1, 32)
 		if(!pass)
 			return

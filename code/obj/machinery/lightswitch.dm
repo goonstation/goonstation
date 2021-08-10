@@ -54,7 +54,12 @@
 	if(status & NOPOWER)
 		icon_state = "light-p"
 		light.disable()
+		src.UpdateOverlays(null, "light")
 	else
+		var/mutable_appearance/light_ov = mutable_appearance(src.icon, "light-light")
+		light_ov.plane = PLANE_LIGHTING
+		light_ov.alpha = 70
+		src.UpdateOverlays(light_ov, "light")
 		if (icon_state == "light-p")
 			light.enable()
 		if(on)
@@ -64,9 +69,9 @@
 			icon_state = "light0"
 			light.set_color(1, 0.50, 0.50)
 
-/obj/machinery/light_switch/examine(mob/user)
+/obj/machinery/light_switch/get_desc(dist, mob/user)
 	if(user && !user.stat)
-		return list("A light switch. It is [on? "on" : "off"].")
+		return "A light switch. It is [on? "on" : "off"]."
 
 /obj/machinery/light_switch/attack_hand(mob/user)
 
@@ -78,14 +83,19 @@
 
 	interact_particle(user,src)
 
-	for(var/obj/machinery/light_switch/L in area)
+	for(var/obj/machinery/light_switch/L in area.machines)
 		L.on = on
 		L.updateicon()
-		LAGCHECK(LAG_MED)
 
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[on ? "lightOn":"lightOff"]")
 
-	playsound(get_turf(src), "sound/misc/lightswitch.ogg", 50, 1)
+	playsound(src, "sound/misc/lightswitch.ogg", 50, 1)
+
+	if(on)
+		for_by_tcl(S, /obj/critter/turtle)
+			if(get_area(S) == src.area && S.rigged)
+				S.explode()
+
 
 /obj/machinery/light_switch/power_change()
 

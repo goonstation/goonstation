@@ -118,10 +118,10 @@ var/global/first_adminhelp_happened = 0
 /proc/log_tgui(user, message, context,
 		datum/tgui_window/window,
 		datum/src_object)
-	var/entry = "tgui: "
+	var/entry = "\[tgui\] " // |GOONSTATION-CHANGE| (tgui:->\[tgui\])
 	// Insert user info
 	if(!user)
-		entry += "<nobody>"
+		entry += "(nobody)" // |GOONSTATION-CHANGE| (<nobody>->(nobody))
 	else if(istype(user, /mob))
 		var/mob/mob = user
 		entry += "[mob.ckey] (as [mob] at [mob.x],[mob.y],[mob.z])"
@@ -134,7 +134,7 @@ var/global/first_adminhelp_happened = 0
 	else if(window)
 		entry += " in [window.id]"
 	// Resolve src_object
-	if(!src_object && window && window.locked_by)
+	if(!src_object && window?.locked_by)
 		src_object = window.locked_by.src_object
 	// Insert src_object info
 	if(src_object)
@@ -142,6 +142,7 @@ var/global/first_adminhelp_happened = 0
 	// Insert message
 	if(message)
 		entry += "<br>[message]" // |GOONSTATION-CHANGE| (\n->br)
+	entry += "<br>" // |GOONSTATION-CHANGE| (br)
 	WRITE_LOG(roundLog_name, entry)
 
 /* Close open log handles. This should be called as late as possible, and no logging should hapen after. */
@@ -245,7 +246,26 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 	//Wire: Added this so I don't get a bunch of logs for fukken drones shooting pods WHO CARES
 	if (istype(P.shooter, /obj/critter/))
 		return
+
+//Pod wars friendly fire check
+#if defined(MAP_OVERRIDE_POD_WARS)
+	var/friendly_fire = 0
+	if (shooter_data != SHOT)
+		//if you shoot a teammate
+		if (ismob(SHOT) && get_pod_wars_team_num(shooter_data) == get_pod_wars_team_num(SHOT))
+			friendly_fire = 1
+
+	if (friendly_fire)
+		logTheThing("combat", shooter_data, SHOT, "<span class='alert'>Friendly Fire!</span>[vehicle ? "driving [V.name] " : ""]shoots [constructTarget(SHOT,"combat")][P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+		if (istype(ticker.mode, /datum/game_mode/pod_wars))
+			var/datum/game_mode/pod_wars/mode = ticker.mode
+			mode.stats_manager?.inc_friendly_fire(shooter_data)
+	else
+		logTheThing("combat", shooter_data, SHOT, "[vehicle ? "driving [V.name] " : ""]shoots [constructTarget(SHOT,"combat")][P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+#else
 	logTheThing("combat", shooter_data, SHOT, "[vehicle ? "driving [V.name] " : ""]shoots [constructTarget(SHOT,"combat")][P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+#endif
+
 
 /proc/log_reagents(var/atom/A as turf|obj|mob)
 	var/log_reagents = ""
@@ -303,7 +323,7 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 		nameRegex = searchString
 		logTheThing("debug", null, null, "Tried to search logs with invalid regex, switching to plain text: [searchString]")
 
-	var/dat = "<table>"
+	var/list/dat = list("<table>")
 
 	logType = replacetext(logType, "_string", "")
 	logType = replacetext(logType, "_log", "")
@@ -317,7 +337,7 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 			if(log == "audit") continue
 			var/list/logList = logs[log]
 			prettyLogName = replacetext(log, "_", " ")
-			var/searchData
+			var/list/searchData = list()
 			var/found
 			for (var/l in logList)
 				if (findtext(l, nameRegex, 1, null))
@@ -325,7 +345,7 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 					found = 1
 					foundCount++
 			if (found) dat += "<tr><td colspan='3' class='header [log]'>[prettyLogName] logs</td></tr>"
-			dat += searchData
+			dat += searchData.Join()
 	else
 		var/list/logList = logs[logType]
 		dat += "<tr><td colspan='3' class='header [logType]'>[prettyLogName] logs</td></tr>"
@@ -345,9 +365,9 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 					foundCount++
 		dat += "</table>"
 
-	dat = "<tr><td colspan='3' class='header text-normal [logType]'><b>Logs</b>[searchString ? " (Searched for '[searchString]')" : ""]. Found <b>[foundCount]</b> results.</td></tr>" + dat
-	dat = replacetext(dat, "%admin_ref%", "\ref[requesting_admin]")
+	var/str_dat = "<tr><td colspan='3' class='header text-normal [logType]'><b>Logs</b>[searchString ? " (Searched for '[searchString]')" : ""]. Found <b>[foundCount]</b> results.</td></tr>" + dat.Join()
+	str_dat = replacetext(str_dat, "%admin_ref%", "\ref[requesting_admin]")
 	var/adminLogHtml = grabResource("html/admin/admin_log.html")
-	adminLogHtml = replacetext(adminLogHtml, "<!-- TABLE GOES HERE -->", "[dat]")
+	adminLogHtml = replacetext(adminLogHtml, "<!-- TABLE GOES HERE -->", str_dat)
 
 	return adminLogHtml

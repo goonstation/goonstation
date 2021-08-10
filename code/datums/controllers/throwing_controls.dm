@@ -70,10 +70,7 @@ var/global/datum/controller/throwing/throwing_controller = new
 	for(var/_thr in thrown)
 		var/datum/thrown_thing/thr = _thr
 		var/atom/movable/thing = thr.thing
-#if ASS_JAM
-		if(thing.throwing_paused)//timestop effect
-			continue
-#endif
+
 		var/end_throwing = FALSE
 		var/int_speed = round(thr.speed + thr.speed_error)
 		thr.speed_error += thr.speed - int_speed
@@ -122,8 +119,10 @@ var/global/datum/controller/throwing/throwing_controller = new
 					continue
 			if(!thing || thing.disposed)
 				continue
-			animate(thing, transform=thr.transform_original)
+			animate(thing)
+
 			thing.throw_end(thr.params, thrown_from=thr.thrown_from)
+			SEND_SIGNAL(thing, COMSIG_MOVABLE_THROW_END, thr)
 
 			if(thr.hitAThing)
 				thr.params = null// if we hit something don't use the pixel x/y from the click params

@@ -1,6 +1,5 @@
 
-// Inedible Produce
-
+/// Inedible Produce
 /obj/item/plant/
 	name = "plant"
 	var/crop_suffix = ""
@@ -20,8 +19,7 @@
 			src.create_reagents(100)
 
 	unpooled()
-		if(src.reagents)
-			src.reagents.clear_reagents()
+		src.reagents?.clear_reagents()
 		..()
 		make_reagents()
 		// hopefully prevent issues of "jumbo perfect large incredible nice perfect superb strawberry"
@@ -35,7 +33,7 @@
 /obj/item/plant/herb
 	name = "herb base"
 	burn_point = 330
-	burn_output = 800
+	burn_output = 9
 	burn_possible = 2
 	crop_suffix	= " leaf"
 
@@ -55,8 +53,7 @@
 			pool (W)
 			pool (src)
 			user.put_in_hand_or_drop(P)
-			if (prob(20))
-				JOB_XP(user, "Botanist", 2)
+			JOB_XP(user, "Botanist", 1)
 
 		else if (istype(W, /obj/item/bluntwrap))
 			boutput(user, "<span class='alert'>You roll [src] up in [W] and make a fat doink.</span>")
@@ -74,8 +71,7 @@
 			qdel(W)
 			pool(src)
 			user.put_in_hand_or_drop(doink)
-			if (prob(20))
-				JOB_XP(user, "Botanist", 3)
+			JOB_XP(user, "Botanist", 2)
 
 	combust_ended()
 		smoke_reaction(src.reagents, 1, get_turf(src), do_sfx = 0)
@@ -93,7 +89,7 @@
 	module_research = list("vice" = 10)
 	module_research_type = /obj/item/plant/herb/cannabis
 	contraband = 1
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 /obj/item/plant/herb/cannabis/spawnable
 	make_reagents()
@@ -353,7 +349,7 @@
 	// module_research_type = /obj/item/plant/herb/cannabis
 	attack_hand(var/mob/user as mob)
 		if (iswerewolf(user))
-			user.changeStatus("weakened",80)
+			user.changeStatus("weakened", 8 SECONDS)
 			user.take_toxin_damage(-10)
 			boutput(user, "<span class='alert'>You try to pick up [src], but it hurts and you fall over!</span>")
 			return
@@ -362,7 +358,7 @@
 	HasEntered(AM as mob|obj)
 		var/mob/M = AM
 		if(iswerewolf(M))
-			M.changeStatus("weakened",30)
+			M.changeStatus("weakened", 3 SECONDS)
 			M.force_laydown_standup()
 			M.take_toxin_damage(-10)
 			M.visible_message("<span class='alert'>The [M] steps too close to [src] and falls down!</span>")
@@ -425,6 +421,14 @@
 	attack_hand(mob/user as mob)
 		var/mob/living/carbon/human/H = user
 		if(src.thorned)
+			if (H.hand)//gets active arm - left arm is 1, right arm is 0
+				if (istype(H.limbs.l_arm,/obj/item/parts/robot_parts))
+					..()
+					return
+			else
+				if (istype(H.limbs.r_arm,/obj/item/parts/robot_parts))
+					..()
+					return
 			if(istype(H))
 				if(H.gloves)
 					..()

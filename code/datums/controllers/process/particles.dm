@@ -1,12 +1,18 @@
-datum/controller/process/particles
+
+/// Controls the particle system
+/datum/controller/process/particles
 	var/datum/particleMaster/master
 
 	setup()
 		name = "Particles"
-		schedule_interval = 10
+		schedule_interval = 1 SECOND
 
 		// putting this in a var so main loop varedit can get into the particleMaster
 		master = particleMaster
+
+	copyStateFrom(datum/controller/process/target)
+		var/datum/controller/process/particles/old_particles = target
+		src.master = old_particles.master
 
 	doWork()
 		// TODO roll the "loop" code from particleMaster back into this system

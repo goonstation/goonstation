@@ -1,58 +1,69 @@
 /proc/AStar(start, end, adjacent, heuristic, maxtraverse = 30, adjacent_param = null, exclude = null)
-	var/list/open = list(start), list/nodeG = list(), list/nodeParent = list(), P = 0
-	while (P++ < open.len)
-		var/T = open[P], TG = nodeG[T]
-		if (T == end)
-			var/list/R = list()
-			while (T)
-				R.Insert(1, T)
-				T = nodeParent[T]
-			return R
-		var/list/other = call(T, adjacent)(adjacent_param)
-		for (var/next in other)
-			if (open.Find(next) || next == exclude) continue
-			var/G = TG + other[next], F = G + call(next, heuristic)(end)
-			for (var/i = P; i <= open.len;)
-				if (i++ == open.len || open[open[i]] >= F)
-					open.Insert(i, next)
-					open[next] = F
-					break
-			nodeG[next] = G
-			nodeParent[next] = T
+	if(isnull(end) || isnull(start))
+		return
+	var/list/turf/open = list(start)
+	var/list/turf/nodeParent = list()
+	var/list/nodeGcost = list()
 
-		if (P > maxtraverse)
-			return
+	var/traverseNum = 0
+	while (traverseNum++ < length(open))
+		var/turf/current = open[traverseNum]
+		var/tentativeGScore = nodeGcost[current]
+		if (current == end)
+			var/list/reconstructed_path = list()
+			while (current)
+				reconstructed_path.Insert(1, current)
+				current = nodeParent[current]
+			return reconstructed_path
+
+		var/list/neighbors = call(current, adjacent)(adjacent_param)
+		for (var/neighbor in neighbors)
+			if ((neighbor in open) || neighbor == exclude)
+				continue
+			var/gScore = tentativeGScore + neighbors[neighbor]
+			var/fScore = gScore + call(neighbor, heuristic)(end)
+
+			for (var/i = traverseNum; i <= length(open);)
+				if (i++ == length(open) || open[open[i]] >= fScore)
+					open.Insert(i, neighbor)
+					open[neighbor] = fScore
+					break
+			nodeGcost[neighbor] = gScore
+			nodeParent[neighbor] = current
+
+		if (traverseNum > maxtraverse)
+			return null // if we reach this part, there's no more nodes left to explore
 
 
 //#define DEBUG_ASTAR
 
-/proc/cirrAstar(turf/start, turf/goal, var/min_dist=0, adjacent, heuristic, maxtraverse = 30, adjacent_param = null, exclude = null)
+/proc/cirrAstar(turf/start, atom/goal, min_dist=0, maxtraverse=30, heuristic=null, heuristic_args=null)
 	#ifdef DEBUG_ASTAR
 	clearAstarViz()
 	#endif
 
-	var/list/closedSet = list()
-	var/list/openSet = list(start)
-	var/list/cameFrom = list()
+	var/list/turf/closedSet = list()
+	var/list/turf/openSet = list(start)
+	var/list/turf/cameFrom = list()
 
 	var/list/gScore = list()
 	var/list/fScore = list()
 	gScore[start] = 0
-	fScore[start] = heuristic(start, goal)
+	fScore[start] = GET_MANHATTAN_DIST(start, goal)
 	var/traverse = 0
 
-	while(openSet.len > 0)
-		var/current = pickLowest(openSet, fScore)
-		if(distance(current, goal) <= min_dist)
+	while(length(openSet))
+		var/turf/current = pickLowest(openSet, fScore)
+		if(get_dist(current, goal) <= min_dist)
 			return reconstructPath(cameFrom, current)
 
 		openSet -= current
 		closedSet += current
-		var/list/neighbors = getNeighbors(current, alldirs)
-		for(var/neighbor in neighbors)
+		var/list/turf/neighbors = getNeighbors(current, alldirs, heuristic, heuristic_args)
+		for(var/turf/neighbor as anything in neighbors)
 			if(neighbor in closedSet)
 				continue // already checked this one
-			var/tentativeGScore = gScore[current] + distance(current, neighbor)
+			var/tentativeGScore = gScore[current] + get_dist(current, neighbor)
 			if(!(neighbor in openSet))
 				openSet += neighbor
 			else if(tentativeGScore >= (gScore[neighbor] || 1.#INF))
@@ -60,7 +71,7 @@
 
 			cameFrom[neighbor] = current
 			gScore[neighbor] = tentativeGScore
-			fScore[neighbor] = gScore[neighbor] + heuristic(neighbor, goal)
+			fScore[neighbor] = gScore[neighbor] + get_dist(neighbor, goal)
 		traverse += 1
 		if(traverse > maxtraverse)
 			return null // it's taking too long, abandon
@@ -68,21 +79,8 @@
 	return null // if we reach this part, there's no more nodes left to explore
 
 
-
-/proc/heuristic(turf/start, turf/goal)
-	if(!start || !goal)
-		return null // yes, null, not a number, i need to track down why nulls are being passed in as turfs so i'm throwing this up the stack
-	return GET_MANHATTAN_DIST(start, goal)
-
-/proc/distance(turf/start, turf/goal) //get_dist??
-	if(!start || !goal)
-		return null
-	var/dx = goal.x - start.x
-	var/dy = goal.y - start.y
-	return sqrt(dx*dx + dy*dy)
-
 /proc/pickLowest(list/options, list/values)
-	if(options.len == 0)
+	if(!length(options))
 		return null // you idiot
 	var/lowestScore = 1.#INF
 	for(var/option in options)
@@ -99,14 +97,14 @@
 		totalPath += current
 	// reverse the path
 	. = list()
-	for(var/i = totalPath.len to 1 step -1)
+	for(var/i = length(totalPath) to 1 step -1)
 		. += totalPath[i]
 	#ifdef DEBUG_ASTAR
 	addAstarViz(.)
 	#endif
 	return .
 
-/proc/getNeighbors(turf/current, list/directions)
+/proc/getNeighbors(turf/current, list/directions, heuristic, heuristic_args)
 	. = list()
 	// handle cardinals straightforwardly
 	var/list/cardinalTurfs = list()
@@ -114,14 +112,14 @@
 		if(direction in directions)
 			var/turf/T = get_step(current, direction)
 			cardinalTurfs["[direction]"] = 0 // can't pass
-			if(T && checkTurfPassable(T))
+			if(T && checkTurfPassable(T, heuristic, heuristic_args, current))
 				. += T
 				cardinalTurfs["[direction]"] = 1 // can pass
 	 //diagonals need to avoid the leaking problem
 	for(var/direction in ordinal)
 		if(direction in directions)
 			var/turf/T = get_step(current, direction)
-			if(T && checkTurfPassable(T))
+			if(T && checkTurfPassable(T, heuristic, heuristic_args, current))
 				// check relevant cardinals
 				var/clear = 1
 				for(var/cardinal in cardinal)
@@ -132,26 +130,93 @@
 				if(clear)
 					. += T
 
-// shamelessly stolen from further down and modified
-/proc/checkTurfPassable(turf/T)
-	if(!T)
-		return 0 // can't go on a turf that doesn't exist!!
-	if(T.density) // simplest case
-		return 0
-	for(var/atom/O in T.contents)
-		if (O.density) // && !(O.flags & ON_BORDER)) -- fuck you, windows, you're dead to me
-			if (istype(O, /obj/machinery/door))
-				var/obj/machinery/door/D = O
-				if (D.isblocked())
-					return 0 // a blocked door is a blocking door
-			if (ismob(O))
-				var/mob/M = O
-				if (M.anchored)
-					return 0 // an anchored mob is a blocking mob
-				else
-			return 0 // not a special case, so this is a blocking object
-	return 1
+/// Returns false if there is a dense atom on the turf, unless a custom hueristic is passed.
+/proc/checkTurfPassable(turf/T, heuristic = null, heuristic_args = null, turf/source = null)
+	. = TRUE
+	if(T.density || !T.pathable) // simplest case
+		return FALSE
+	// if a source turf was included check for directional blocks between the two turfs
+	if (source && (T.blocked_dirs || source.blocked_dirs))
+		var/direction = get_dir(source, T)
 
+		// do either of these turfs explicitly block entry or exit to the other?
+		if (HAS_FLAG(T.blocked_dirs, turn(direction, 180)))
+			return FALSE
+		else if (source && HAS_FLAG(source.blocked_dirs, direction))
+			return FALSE
+
+		if (direction in ordinal) // ordinal? That complicates things...
+			if (source.blocked_dirs && T.blocked_dirs)
+				// check for "wall" blocks
+				// ex. trying to move NE source blocking north exit and destination (T) blocking south entry
+				if (HAS_FLAG(source.blocked_dirs, turn(direction, 45)) && HAS_FLAG(T.blocked_dirs, turn(direction, -135)))
+					return FALSE
+				else if (HAS_FLAG(source.blocked_dirs, turn(direction, -45)) && HAS_FLAG(T.blocked_dirs, turn(direction, 135)))
+					return FALSE
+
+			var/turf/corner_1 = get_step(source, turn(direction, 45))
+			var/turf/corner_2 = get_step(source, turn(direction, -45))
+
+			// check for potential blocks form the two corners
+			if (corner_1.blocked_dirs && corner_2.blocked_dirs)
+				if (HAS_FLAG(corner_1.blocked_dirs, turn(direction, -45)))
+					if (HAS_FLAG(corner_2.blocked_dirs, turn(direction, 45)))
+						return FALSE // entry to dest blocked by corners
+					else if (HAS_FLAG(corner_2.blocked_dirs, turn(direction, 135)))
+						// check for "wall" blocks
+						// ex. trying to move NE with C1 blocking south entry and C2 blocking north exit
+						return FALSE
+				if (HAS_FLAG(corner_1.blocked_dirs, turn(direction, -135)))
+					if (HAS_FLAG(corner_2.blocked_dirs, turn(direction, 135)))
+						return FALSE // exit from source blocked by corners
+					else if (HAS_FLAG(corner_2.blocked_dirs, turn(direction, 45)))
+						return FALSE // "wall" block
+
+			// we got past the combinations of the two corners ok, but what about the corners combined with the source and destination?
+			// entry blocked by an object in destination and in one or more of the corners
+			if (T.blocked_dirs && (corner_1.blocked_dirs || corner_2.blocked_dirs))
+				if (HAS_FLAG(corner_1.blocked_dirs, turn(direction, -45)) && HAS_FLAG(T.blocked_dirs, turn(direction, -135)))
+					return FALSE
+				else if (HAS_FLAG(corner_2.blocked_dirs, turn(direction, 45)) && HAS_FLAG(T.blocked_dirs, turn(direction, 135)))
+					return FALSE
+			// entry blocked by an object in source and in one or more of the corners
+			if (source.blocked_dirs && (corner_1.blocked_dirs || corner_2.blocked_dirs))
+				if (HAS_FLAG(corner_1.blocked_dirs, turn(direction, -135)) && HAS_FLAG(source.blocked_dirs, turn(direction, -45)))
+					return FALSE
+				else if (HAS_FLAG(corner_2.blocked_dirs, turn(direction, 135)) && HAS_FLAG(source.blocked_dirs, turn(direction, 45)))
+					return FALSE
+	for(var/atom/A in T.contents)
+		if (isobj(A))
+			var/obj/O = A
+			// only skip if we did the source check, otherwise fall back to normal density checks
+			if (source && HAS_FLAG(O.object_flags, HAS_DIRECTIONAL_BLOCKING))
+				continue // we already handled these above with the blocked_dirs
+			if (istype(A, /obj/overlay) || istype(A, /obj/effects)) continue
+		if (heuristic) // Only use a custom hueristic if we were passed one
+			. = min(., call(heuristic)(A, heuristic_args))
+			if (!.) // early return if we encountered a failing atom
+				return
+		else if (A.density)
+			return FALSE // not a special case, so this is a blocking object
+
+/proc/hueristic_IsPassableMob(atom/A, mob/M)
+	. = FALSE
+	if (!A.density) // Not dense? Don't care!
+		return TRUE
+
+	if (isobj(A))
+		var/obj/O = A
+		. = !O.density //lots of objects are dense and will stop you
+		if (O.object_flags & BOTS_DIRBLOCK) //NEW - are we a door-like-openable-thing?
+			if (O.has_access_requirements()) //are we a door w/ access?
+				if (O.allowed(M) == 2) // do you have explicit access
+					return TRUE
+				else
+					return FALSE
+			else //we must be a public door
+				return TRUE
+	else if (ismob(A)) //We can pass by mobs, who cares if they're dense.
+		return TRUE
 
 
 #ifdef DEBUG_ASTAR
@@ -184,50 +249,58 @@
 // Navigation procs
 // Used for A-star pathfinding
 
-// Returns the surrounding cardinal turfs with open links
-// Including through doors openable with the ID
-/turf/proc/CardinalTurfsWithAccess(var/obj/item/card/id/ID)
-	var/L[] = new()
-
-	//	for(var/turf/simulated/t in oview(src,1))
+/// Returns the surrounding cardinal turfs with open links
+/// Including through doors openable with the ID
+/turf/proc/CardinalTurfsWithAccess(obj/item/card/id/ID)
+	. = list()
 
 	for(var/d in cardinal)
 		var/turf/simulated/T = get_step(src, d)
-		//if(istype(T) && !T.density)
-		if (T && T.pathable && !T.density)
+		if (T?.pathable && !T.density)
 			if(!LinkBlockedWithAccess(src, T, ID))
-				L.Add(T)
-	return L
+				. += T
 
-/turf/proc/AllDirsTurfsWithAccess(var/obj/item/card/id/ID)
-	var/L[] = new()
-
-	//	for(var/turf/simulated/t in oview(src,1))
+/// Returns surrounding card+ord turfs with open links
+/turf/proc/AllDirsTurfsWithAccess(obj/item/card/id/ID)
+	. = list()
 
 	for(var/d in alldirs)
 		var/turf/simulated/T = get_step(src, d)
 		//if(istype(T) && !T.density)
-		if (T && T.pathable && !T.density)
+		if (T?.pathable && !T.density)
 			if(!LinkBlockedWithAccess(src, T, ID))
-				L.Add(T)
-	return L
+				. += T
+
+// Fixes floorbots being terrified of space
+turf/proc/CardinalTurfsAndSpaceWithAccess(obj/item/card/id/ID)
+	. = list()
+
+	for(var/d in cardinal)
+		var/turf/T = get_step(src, d)
+		if (T && (T.pathable || istype(T, /turf/space)) && !T.density)
+			if(!LinkBlockedWithAccess(src, T, ID))
+				. += T
+
+var/static/obj/item/card/id/ALL_ACCESS_CARD = new /obj/item/card/id/captains_spare()
+
+/turf/proc/AllDirsTurfsWithAllAccess()
+	return AllDirsTurfsWithAccess(ALL_ACCESS_CARD)
 
 /turf/proc/CardinalTurfsSpace()
-	var/L[] = new()
+	. = list()
 
 	for (var/d in cardinal)
 		var/turf/T = get_step(src, d)
 		if (T && (T.pathable || istype(T, /turf/space)) && !T.density)
 			if (!LinkBlockedWithAccess(src, T))
-				L.Add(T)
-
-	return L
+				. += T
 
 // Returns true if a link between A and B is blocked
 // Movement through doors allowed if ID has access
 /proc/LinkBlockedWithAccess(turf/A, turf/B, obj/item/card/id/ID)
-
-	if(A == null || B == null) return 1
+	. = FALSE
+	if(A == null || B == null)
+		return 1
 	var/adir = get_dir(A,B)
 	var/rdir = get_dir(B,A)
 	if((adir & (NORTH|SOUTH)) && (adir & (EAST|WEST)))	//	diagonal
@@ -264,13 +337,11 @@
 			else
 				return 1
 
-	return 0
-
 // Returns true if direction is accessible from loc
 // If we found a door we could open, return 2 instead of 1.
 // Checks doors against access with given ID
 /proc/DirWalkableWithAccess(turf/loc,var/dir,var/obj/item/card/id/ID, var/exiting_this_tile = 0)
-	.= 1
+	. = TRUE
 	for (var/obj/O in loc)
 		if (O.density)
 			if (O.object_flags & BOTS_DIRBLOCK)
@@ -319,25 +390,19 @@
 
 /turf/proc
 	AdjacentTurfs()
-		var/L[] = new()
+		. = list()
 		for(var/turf/simulated/t in oview(src,1))
 			if(!t.density)
 				if(!LinkBlocked(src, t) && !TurfBlockedNonWindow(t))
-					L.Add(t)
-		return L
-	Distance(turf/t)
-		if(get_dist(src,t) == 1)
-			var/cost = (src.x - t.x) * (src.x - t.x) + (src.y - t.y) * (src.y - t.y)
-			cost *= (pathweight+t.pathweight)/2
-			return cost
-		else
-			return get_dist(src,t)
+					. += t
+
 	AdjacentTurfsSpace()
-		var/L[] = new()
+		. = list()
 		for(var/turf/t in oview(src,1))
 			if(!t.density)
 				if(!LinkBlocked(src, t) && !TurfBlockedNonWindow(t))
-					L.Add(t)
-		return L
+					. += t
 
+	Distance(turf/t)
+		return sqrt((src.x - t.x) ** 2 + (src.y - t.y) ** 2)
 

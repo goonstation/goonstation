@@ -1,13 +1,13 @@
 /datum/random_event/major/radiation
 	name = "Radiation Storm"
 	centcom_headline = "Radioactive Anomaly"
-	centcom_message = {"Radioactive anomalies have been detected on the station. Evacuate any areas containing abnormal green energy fields. Medical personnel are advised to prepare potassium iodide and anti-toxin treatments, and remain on standby to treat cases of irradiation."}
+	centcom_message = {"Radioactive anomalies have been detected on the station. Evacuate any areas containing abnormal green or blue energy fields. Medical personnel are advised to prepare potassium iodide and anti-toxin treatments, and remain on standby to treat cases of irradiation."}
 	var/min_pulses_per_event = 30
 	var/max_pulses_per_event = 100
 	var/min_delay_between_pulses = 2
 	var/max_delay_between_pulses = 8
-	var/min_pulse_lifespan = 8
-	var/max_pulse_lifespan = 25
+	var/min_pulse_lifespan = 10
+	var/max_pulse_lifespan = 100
 
 	event_effect()
 		..()
@@ -16,11 +16,14 @@
 		var/pulse_lifespan = null
 		var/turf/pulseloc = null
 
-		for (var/pulses = pulse_amt, pulses > 0, pulses--)
-			pulseloc = pick(wormholeturfs)
-			pulse_lifespan = rand(min_pulse_lifespan,max_pulse_lifespan)
-			new /obj/anomaly/radioactive_burst(pulseloc,lifespan = pulse_lifespan)
-			sleep(pulse_delay)
+		SPAWN_DBG(0)
+			for (var/pulses = pulse_amt, pulses > 0, pulses--)
+				pulseloc = pick(wormholeturfs)
+				pulse_lifespan = rand(min_pulse_lifespan,max_pulse_lifespan)
+				pick(prob(90); new /obj/anomaly/radioactive_burst(pulseloc,lifespan = pulse_lifespan), prob(50); new /obj/anomaly/neutron_burst(pulseloc,lifespan = pulse_lifespan))
+				sleep(pulse_delay)
+
+
 
 /obj/anomaly/radioactive_burst
 	name = "shimmering anomaly"
@@ -36,14 +39,14 @@
 	var/mutate_prob = 25
 	var/bad_mut_prob = 75
 
-	New(var/loc,var/lifespan = 45)
+	New(var/loc,var/lifespan = 120)
 		..()
 		animate(src, alpha = 0, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 		animate(alpha = 100, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 		if(!particleMaster.CheckSystemExists(/datum/particleSystem/rads_warning, src))
 			particleMaster.SpawnSystem(new /datum/particleSystem/rads_warning(src))
 		sleep(lifespan)
-		playsound(get_turf(src),pulse_sound,50,1)
+		playsound(src,pulse_sound,50,1)
 		irradiate_turf(get_turf(src))
 		for (var/turf/T in circular_range(src,pulse_range))
 			irradiate_turf(T)
@@ -59,14 +62,75 @@
 	proc/irradiate_turf(var/turf/T)
 		if (!isturf(T))
 			return
+		//spatial interdictor: nullify radiation pulses
+		//consumes 100 units of charge per tile protected
+		for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
+			if (IN_RANGE(IX,T,IX.interdict_range) && IX.expend_interdict(100,1))
+				animate_flash_color_fill_inherit(T,"#FFDD00",1,5)
+				return
 		animate_flash_color_fill_inherit(T,"#00FF00",1,5)
 		for (var/mob/living/carbon/M in T.contents)
-			changeStatus("radiation", (rad_strength)*10, 3)
+			M.changeStatus("radiation", (rad_strength) SECONDS, 3)
 			if (prob(mutate_prob) && M.bioHolder)
 				if (prob(bad_mut_prob))
 					M.bioHolder.RandomEffect("bad")
 				else
 					M.bioHolder.RandomEffect("good")
+
+/obj/anomaly/neutron_burst
+	name = "iridescent anomaly"
+	desc = "Looking at this anomaly makes you feel ill, like something is pushing at the back your eyes."
+	icon = 'icons/effects/particles.dmi'
+	icon_state = "32x32circle"
+	color = "#0084ff"
+	density = 0
+	alpha = 100
+	var/sound/pulse_sound = 'sound/weapons/ACgun1.ogg'
+	var/rad_strength = 10
+	var/pulse_range = 3
+	var/mutate_prob = 10
+	var/bad_mut_prob = 90
+
+	New(var/loc,var/lifespan = 45)
+		..()
+		animate(src, alpha = 0, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
+		animate(alpha = 100, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
+		if(!particleMaster.CheckSystemExists(/datum/particleSystem/rads_warning, src))
+			particleMaster.SpawnSystem(new /datum/particleSystem/rads_warning(src))
+		sleep(lifespan)
+		playsound(src,pulse_sound,50,1)
+		irradiate_turf(get_turf(src))
+		for (var/turf/T in circular_range(src,pulse_range))
+			irradiate_turf(T)
+		SPAWN_DBG(0)
+			qdel(src)
+		return
+
+	disposing()
+		if(particleMaster.CheckSystemExists(/datum/particleSystem/rads_warning, src))
+			particleMaster.RemoveSystem(/datum/particleSystem/rads_warning)
+		..()
+
+	proc/irradiate_turf(var/turf/T)
+		if (!isturf(T))
+			return
+		//spatial interdictor: nullify radiation pulses
+		//consumes 150 units of charge per tile protected
+		for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
+			if (IN_RANGE(IX,T,IX.interdict_range) && IX.expend_interdict(150,1))
+				animate_flash_color_fill_inherit(T,"#FFDD00",1,5)
+				return
+		animate_flash_color_fill_inherit(T,"#0084ff",1,5)
+		for (var/atom/A in T.contents)
+			A.changeStatus("n_radiation", (rad_strength) SECONDS, 3)
+			if(iscarbon(A))
+				var/mob/living/carbon/M = A
+				if (prob(mutate_prob) && M.bioHolder)
+					if (prob(bad_mut_prob))
+						M.bioHolder.RandomEffect("bad")
+					else
+						M.bioHolder.RandomEffect("good")
+
 
 // Oldest version of event - just unavoidably puts radiation on everyone
 

@@ -229,7 +229,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 	icon = 'icons/obj/decals/posters.dmi'
 	icon_state = "wall_poster_nt"
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 3
 	throw_range = 15
 	layer = OBJ_LAYER+1
@@ -255,7 +255,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 
 	examine(mob/user)
 		if (src.popup_win)
-			src.show_popup_win(usr)
+			src.show_popup_win(user)
 			return list()
 		else
 			return ..()
@@ -500,7 +500,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			boutput(user, "<span class='alert'>\The [src] buzzes grumpily!</span>")
 			return
 		src.papers --
-		playsound(get_turf(src), "sound/machines/printer_dotmatrix.ogg", 30, 1)
+		playsound(src, "sound/machines/printer_dotmatrix.ogg", 30, 1)
 		var/obj/item/poster/titled_photo/P = new (src.loc)
 		P.name = "Wanted: [src.plist["name"]]"
 		P.line_title = "NAME: [src.plist["name"]]"
@@ -555,7 +555,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			if (!istype(R))
 				boutput(usr, "<span class='alert'>No record found for \"[ptext]\".</span>")
 				return
-			if (!islist(R.fields) || !R.fields.len)
+			if (!islist(R.fields) || !length(R.fields))
 				boutput(usr, "<span class='alert'>Records for \"[ptext]\" are corrupt.</span>")
 				return
 			var/datum/computer/file/image/IMG = R.fields["file_photo"]

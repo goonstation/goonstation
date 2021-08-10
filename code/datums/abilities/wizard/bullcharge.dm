@@ -13,7 +13,8 @@
 	cast()
 		if(!holder)
 			return
-		holder.owner.say("RAMI TIN")
+		if(!istype(get_area(holder.owner), /area/sim/gunsim))
+			holder.owner.say("RAMI TIN")
 		..()
 
 		var/list/path = list()
@@ -32,7 +33,7 @@
 		var/list/affected = list()
 		var/obj/effects/bullshead/B = new/obj/effects/bullshead(first)
 		for(var/turf/T in path)
-			B.dir = get_dir(B, T)
+			B.set_dir(get_dir(B, T))
 			B.set_loc(T)
 			animate_bullspellground(T, "#5599ff")
 			for (var/atom/movable/M in T)

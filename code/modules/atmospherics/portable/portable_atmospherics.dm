@@ -44,8 +44,7 @@
 		if(contained) return
 		if(!connected_port) //only react when pipe_network will ont it do it for you
 			//Allow for reactions
-			if (air_contents) //ZeWaka: Fix for null.react()
-				air_contents.react()
+			air_contents?.react() //ZeWaka: Fix for null.react()
 
 	disposing()
 		if (air_contents)
@@ -90,8 +89,7 @@
 				return 0
 
 			var/datum/pipe_network/network = connected_port.return_network(src)
-			if(network)
-				network.gases -= air_contents
+			network?.gases -= air_contents
 
 			anchored = 0
 

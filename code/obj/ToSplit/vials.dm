@@ -23,7 +23,7 @@
 	throw_speed = 1
 	throw_range = 8
 	force = 3.0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	initial_volume = 30
 
 	amount_per_transfer_from_this = 5
@@ -61,7 +61,6 @@
 	var/A = src
 
 	var/atom/sourceloc = get_turf(src.loc)
-	src = null
 	qdel(A)
 	var/obj/overlay/O = new /obj/overlay( sourceloc )
 	var/obj/overlay/O2 = new /obj/overlay( sourceloc )
@@ -94,8 +93,6 @@
 //Generic Vial Drink
 /obj/item/reagent_containers/glass/vial/proc/drink(user)
 	var/A = src
-
-	src = null
 	qdel(A)
 	if(istype(src.contained,/datum/ailment/))
 		var/mob/living/M = user
@@ -111,7 +108,6 @@
 /obj/item/reagent_containers/glass/vial/blue/drink(user)
 	var/A = src
 	var/atom/sourceloc = get_turf(src.loc)
-	src = null
 	qdel(A)
 
 	var/obj/overlay/O = new /obj/overlay( sourceloc )
@@ -140,7 +136,6 @@
 
 	var/A = src
 	var/atom/sourceloc = get_turf(src.loc)
-	src = null
 	qdel(A)
 
 	var/obj/overlay/O = new /obj/overlay( sourceloc )

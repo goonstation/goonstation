@@ -4,48 +4,22 @@
 	icon_state = "robot_module_rewriter"
 	anchored = 1
 	density = 1
-	lr = 1
-	lg = 0.4
-	lb = 0
+	light_r =1
+	light_g = 0.4
+	light_b = 0
+	circuit_type = /obj/item/circuitboard/robot_module_rewriter
 	var/list/obj/item/robot_module/modules = null
 	var/obj/item/robot_module/selectedModule = null
 
 /obj/machinery/computer/robot_module_rewriter/attackby(obj/item/I as obj, mob/user as mob)
-	if (isscrewingtool(I))
-		playsound(get_turf(src), "sound/items/Screwdriver.ogg", 50, 1)
-		if (do_after(user, 20))
-			var/obj/computerframe/computer = new /obj/computerframe(src.loc)
-			var/obj/item/circuitboard/robot_module_rewriter/circuitboard = new /obj/item/circuitboard/robot_module_rewriter(computer)
-			computer.circuit = circuitboard
-			computer.anchored = 1
-			if (src.material)
-				computer.setMaterial(src.material)
-			if (src.status & BROKEN)
-				boutput(user, "<span class=\"notice\">The broken glass falls out.</span>")
-				var/obj/item/raw_material/shard/glass/glassShard = unpool(/obj/item/raw_material/shard/glass)
-				glassShard.set_loc(src.loc)
-				computer.state = 3
-				computer.icon_state = "3"
-			else
-				boutput(user, "<span class=\"notice\">You disconnect the monitor.</span>")
-				computer.state = 4
-				computer.icon_state = "4"
-			for (var/obj/containedItem in src)
-				containedItem.set_loc(src.loc)
-			qdel(src)
-	else if (istype(I, /obj/item/robot_module))
+	if (istype(I, /obj/item/robot_module))
 		user.drop_item()
 		I.set_loc(src)
 		LAZYLISTADD(src.modules, I)
-		boutput(user, "<span class=\"notice\">You insert [I] into the [src].</span>")
+		boutput(user, "<span class=\"notice\">You insert [I] into \the [src].</span>")
 		tgui_process.update_uis(src)
 	else
-		src.attack_hand(user)
-
-/obj/machinery/computer/robot_module_rewriter/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
-
-// INTERFACE
+		..()
 
 /obj/machinery/computer/robot_module_rewriter/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
@@ -54,7 +28,6 @@
 		ui.open()
 
 /obj/machinery/computer/robot_module_rewriter/ui_data(mob/user)
-	var/list/data = list()
 	var/list/modulesData = list()
 
 	var/list/availableModulesData = list()
@@ -80,13 +53,13 @@
 		selectedModuleData["tools"] = selectedModuleToolsData
 	modulesData["selected"] = selectedModuleData
 
-	// "modules" is the only field on the "data" object, so could be flattened,
+	// "modules" is the only key in our return list, so could be flattened,
 	// but there is intent to add more features in the near future
-	data["modules"] = modulesData
-	return data
+	. = list("modules" = modulesData)
 
 /obj/machinery/computer/robot_module_rewriter/ui_act(action, list/params, datum/tgui/ui)
-	if (..())
+	. = ..()
+	if (.)
 		return
 
 	var/mob/user = ui.user

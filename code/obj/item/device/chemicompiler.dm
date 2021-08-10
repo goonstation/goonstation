@@ -21,6 +21,11 @@
 	New()
 		..()
 		executor = new(src, /datum/chemicompiler_core/portableCore)
+		processing_items += src
+
+	disposing()
+		. = ..()
+		processing_items -= src
 
 	attack_self(mob/user as mob)
 		executor.panel()
@@ -29,3 +34,7 @@
 		if(src.loc != usr || (executor.core.running && action != "getUIState"))
 			return 0
 		return 1
+
+	process()
+		. = ..()
+		executor?.on_process()

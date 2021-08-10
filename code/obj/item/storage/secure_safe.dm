@@ -2,8 +2,8 @@
 
 /obj/item/storage/secure
 	name = "storage/secure"
-	var/obj/screen/storage/boxes = null
-	var/obj/screen/close/closer = null
+	var/atom/movable/screen/storage/boxes = null
+	var/atom/movable/screen/close/closer = null
 	var/icon_locking = "secureb"
 	var/icon_sparking = "securespark"
 	var/icon_open = "secure0"
@@ -15,7 +15,7 @@
 	var/emagged = 0
 	var/open = 0
 	var/hackable = 0
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	burn_possible = 0
 	var/random_code = 0 // sets things to already have a randomized code on spawning
 
@@ -50,8 +50,8 @@
 		user.show_text("You repair the lock on [src].", "blue")
 	return 1
 
-/obj/item/storage/secure/attackby(obj/item/W as obj, mob/user as mob)
-	if ((W.w_class > 3 || istype(W, /obj/item/storage/secure)))
+/obj/item/storage/secure/attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
+	if ((W.w_class > W_CLASS_NORMAL || istype(W, /obj/item/storage/secure)))
 		return
 	//Waluigi hates this
 	if (hackable)
@@ -389,13 +389,14 @@
 	name = "secure briefcase"
 	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "secure"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "sec-case"
 	desc = "A large briefcase with a digital locking system."
 	flags = FPRINT | TABLEPASS
 	force = 8.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	mats = 8
 	spawn_contents = list(/obj/item/paper,\
 	/obj/item/pen)
@@ -450,7 +451,7 @@
 	icon_sparking = "safespark"
 	flags = FPRINT | TABLEPASS
 	force = 8.0
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	anchored = 1.0
 	density = 0
 	mats = 8
@@ -570,6 +571,54 @@
 		- <i>[iou_name]</i>"}
 		return
 
+/obj/item/storage/secure/ssafe/vonrickenstorage
+	configure_mode = 0
+	random_code = 1
+
+	New()
+		..()
+		var/loot = rand(1,2)
+		switch (loot)
+			if (1)
+				new /obj/item/storage/firstaid/brain(src)
+				new /obj/item/storage/firstaid/toxin(src)
+				new /obj/item/storage/firstaid/old(src)
+				new /obj/item/parts/robot_parts/head(src)
+			if (2)
+				new /obj/item/injector_belt(src)
+				new /obj/item/reagent_containers/glass/bottle/morphine(src)
+				new /obj/item/reagent_containers/syringe(src)
+
+/obj/item/storage/secure/ssafe/vonricken
+	configure_mode = 0
+	random_code = 1
+	spawn_contents = list(/obj/item/clothing/shoes/cyborg, /obj/item/clothing/suit/cyborg_suit, /obj/item/clothing/gloves/cyborg, /obj/item/paper/thevonricken)
+
+
+/obj/item/paper/thevonricken
+	name = "This is hell! Oh god!"
+
+	New()
+		..()
+		src.icon_state = "paper_singed"
+		src.desc = "It looks like someone had jotted stuff down on it in frantic haste!"
+		src.info = {"<center><h1>My doom? Yes.</h1></center>
+		<hr>
+		Wow...then I thought boarding a space-cruise would be fun...but now? I heard these over-the-top-armed-beasts-of-robots tread into the room next door.
+		<br>
+		I doubt Marvin is anymore.
+		<br>
+		I doubt I will be either.
+		<br>
+		Never leave the room. Never. Never...yes...someone will come...rescue me,...
+		<br>
+		<b>Why did I not pack a spare radio? Fuck!</b>
+		<br>
+		<br>
+		Whoever reads this...destroy this facility! It is not what it seems to be!
+		<hr>
+		<b>Space-Cruise? My butt!</b>"}
+
 /obj/item/storage/secure/ssafe/theorangeroom
 	configure_mode = 0
 	random_code = 1
@@ -581,7 +630,8 @@
 			if (1)
 				new /obj/item/storage/pill_bottle/cyberpunk(src)
 				new /obj/item/storage/pill_bottle/ipecac(src)
-				new /obj/item/gun/kinetic/pistol(src)
+				new /obj/item/gun/kinetic/pistol/empty(src)
+				new /obj/item/ammo/bullets/bullet_9mm/five_shots(src)
 				new /obj/item/paper/orangeroomsafe(src)
 			if (2)
 				new /obj/item/storage/pill_bottle/bathsalts(src)
@@ -657,6 +707,20 @@
 	spawn_contents = list(/obj/item/gun/kinetic/revolver,
 	/obj/item/chilly_orb, // a thing to confuse people
 	/obj/item/spacecash/thousand = 3)
+
+/obj/item/storage/secure/ssafe/candy_shop
+	configure_mode = 0
+	random_code = 1
+	spawn_contents = list(/obj/item/robot_foodsynthesizer,\
+	/obj/item/spacecash/thousand,\
+	/obj/item/gun/kinetic/derringer/empty)
+
+/obj/item/storage/secure/ssafe/shooting_range //prefab safe
+	configure_mode = 0
+	random_code = 1
+	spawn_contents = list(/obj/item/spacecash/thousand,\
+	/obj/item/gun/energy/raygun,\
+	/obj/item/paper/shooting_range_note2)
 
 /obj/item/storage/secure/ssafe/marsvault
 	name = "secure vault"

@@ -87,7 +87,7 @@
 	set category = "Batman"
 	set name = "Batsmoke \[Support]"
 
-	playsound(get_turf(usr), "sound/weapons/launcher.ogg", 70, 0, 0)
+	playsound(usr, "sound/weapons/launcher.ogg", 70, 0, 0)
 	usr.visible_message("<span class='alert'>[usr] drops a smoke bomb!</span>", "<span class='alert'>You drop a smoke bomb!</span>")
 
 	var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
@@ -98,7 +98,7 @@
 	set category = "Batman"
 	set name = "Batarang \[Combat]"
 	usr.visible_message("<span class='alert'>[usr] tosses a batarang at [T]!</span>", "<span class='alert'>You toss a batarang at [T]!</span>")
-	playsound(get_turf(usr), pick("sound/effects/sword_unsheath1.ogg","sound/effects/sword_unsheath2.ogg"), 70, 0, 0)
+	playsound(usr, pick("sound/effects/sword_unsheath1.ogg","sound/effects/sword_unsheath2.ogg"), 70, 0, 0)
 	var/obj/overlay/A = new /obj/overlay( usr.loc )
 	A.icon_state = "batarang"
 	A.icon = 'icons/effects/effects.dmi'
@@ -109,7 +109,7 @@
 	for(i=0, i<100, i++)
 		step_to(A,T,0)
 		if (get_dist(A,T) < 1)
-			playsound(get_turf(T), "sound/impact_sounds/Blade_Small_Bloody.ogg", 70, 0, 0)
+			playsound(T, "sound/impact_sounds/Blade_Small_Bloody.ogg", 70, 0, 0)
 			random_brute_damage(T, 7)
 			take_bleeding_damage(T, usr, 5, DAMAGE_STAB, 0)
 			bleed(T, 3, 1)
@@ -205,26 +205,26 @@
 		usr.visible_message("<span class='alert'><B>[usr] begins kicking [T] in the face rapidly!</B></span>", "<span class='alert'><B>You begin kicking [T] in the face rapidly!</B></span>")
 		for(var/i = 0, i < 5, i++)
 			usr.pixel_y -= 4
-			usr.dir = NORTH
+			usr.set_dir(NORTH)
 			T.TakeDamage("head", 1, 0)
 			usr.visible_message("<span class='alert'><B>[usr] kicks [T] in the face!</B></span>", "<span class='alert'><B>You kick [T] in the face!</B></span>")
 			playsound(T.loc, "swing_hit", 25, 1, -1)
 			sleep(0.1 SECONDS)
-			usr.dir = EAST
+			usr.set_dir(EAST)
 			T.TakeDamage("head", 1, 0)
 			usr.visible_message("<span class='alert'><B>[usr] kicks [T] in the face!</B></span>", "<span class='alert'><B>You kick [T] in the face!</B></span>")
 			playsound(T.loc, "swing_hit", 25, 1, -1)
 			sleep(0.1 SECONDS)
-			usr.dir = SOUTH
+			usr.set_dir(SOUTH)
 			T.TakeDamage("head", 1, 0)
 			usr.visible_message("<span class='alert'><B>[usr] kicks [T] in the face!</B></span>", "<span class='alert'><B>You kick [T] in the face!</B></span>")
 			playsound(T.loc, "swing_hit", 25, 1, -1)
 			sleep(0.1 SECONDS)
-			usr.dir = WEST
+			usr.set_dir(WEST)
 			T.TakeDamage("head", 1, 0)
 			usr.visible_message("<span class='alert'><B>[usr] kicks [T] in the face!</B></span>", "<span class='alert'><B>You kick [T] in the face!</B></span>")
 			playsound(T.loc, "swing_hit", 25, 1, -1)
-		usr.dir = get_dir(usr, T)
+		usr.set_dir(get_dir(usr, T))
 		usr.visible_message("<span class='alert'><B>[usr] stares deeply at [T]!</B></span>", "<span class='alert'><B>You stares deeply at [T]!</B></span>")
 		sleep(0.8 SECONDS)
 		usr.visible_message("<span class='alert'><B>[usr] unleashes a tremendous kick to the jaw towards [T]!</B></span>", "<span class='alert'><B>You unleash a tremendous kick to the jaw towards [T]!</B></span>")
@@ -275,32 +275,32 @@
 		usr.visible_message("<span class='alert'><B>[usr] starts spinning [T] around!</B></span>", "<span class='alert'><B>You start spinning [T] around!</B></span>")
 		playsound(usr.loc, "sound/effects/bionic_sound.ogg", 50)
 		for(var/i = 0, i < 2, i++)
-			T.dir = NORTH
+			T.set_dir(NORTH)
 			sleep(0.5 SECONDS)
-			T.dir = EAST
+			T.set_dir(EAST)
 			sleep(0.5 SECONDS)
-			T.dir = SOUTH
+			T.set_dir(SOUTH)
 			sleep(0.5 SECONDS)
-			T.dir = WEST
+			T.set_dir(WEST)
 			sleep(0.5 SECONDS)
 		for(var/i = 0, i < 1, i++)
-			T.dir = NORTH
+			T.set_dir(NORTH)
 			sleep(0.2 SECONDS)
-			T.dir = EAST
+			T.set_dir(EAST)
 			sleep(0.2 SECONDS)
-			T.dir = SOUTH
+			T.set_dir(SOUTH)
 			sleep(0.2 SECONDS)
-			T.dir = WEST
+			T.set_dir(WEST)
 			sleep(0.2 SECONDS)
 		boutput(T, "<span class='alert'>YOU'RE GOING TOO FAST!!!</span>")
 		for(var/i = 0, i < 10, i++)
-			T.dir = NORTH
+			T.set_dir(NORTH)
 			sleep(0.1 SECONDS)
-			T.dir = EAST
+			T.set_dir(EAST)
 			sleep(0.1 SECONDS)
-			T.dir = SOUTH
+			T.set_dir(SOUTH)
 			sleep(0.1 SECONDS)
-			T.dir = WEST
+			T.set_dir(WEST)
 			sleep(0.1 SECONDS)
 		playsound(usr.loc, "sound/weapons/rocket.ogg", 50)
 		usr.visible_message("<span class='alert'><B>[src] flings [T] with all of his might!</B></span>")

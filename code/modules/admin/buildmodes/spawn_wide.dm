@@ -23,7 +23,7 @@ change the direction of created objects.<br>
 
 	click_mode_right(var/ctrl, var/alt, var/shift)
 		if(ctrl)
-			cinematic = (input("Cinematic spawn mode") as null|anything in list("Telepad", "Blink", "None", "Fancy and Inefficient yet Laggy Telepad", "Supplydrop", "Supplydrop (no lootbox)")) || cinematic
+			cinematic = (input("Cinematic spawn mode") as null|anything in list("Telepad", "Blink", "None", "Fancy and Inefficient yet Laggy Telepad", "Supplydrop", "Supplydrop (no lootbox)", "Lethal Supplydrop", "Lethal Supplydrop (no lootbox)")) || cinematic
 			return
 		if(alt)
 			delete_area = !delete_area
@@ -50,11 +50,10 @@ change the direction of created objects.<br>
 				return
 			update_button_text("Spawning...")
 			var/cnt = 0
-			var/area_of_block = (abs(A.x - B.x) * abs(A.y - B.y))
 			for (var/turf/Q in block(A,B))
 				//var/atom/sp = new objpath(Q)
 				//if (isobj(sp) || ismob(sp) || isturf(sp))
-					//sp.dir = holder.dir
+					//sp.set_dir(holder.dir)
 					//sp.onVarChanged("dir", 2, holder.dir)
 				switch(cinematic)
 					if("Telepad")
@@ -79,7 +78,7 @@ change the direction of created objects.<br>
 								A = new objpath(Q)
 
 							if (isobj(A) || ismob(A))
-								A.dir = holder.dir
+								A.set_dir(holder.dir)
 								A.onVarChanged("dir", SOUTH, A.dir)
 							sleep(0.5 SECONDS)
 							mtx.Reset()
@@ -113,7 +112,7 @@ change the direction of created objects.<br>
 								A = new objpath(Q)
 
 							if (isobj(A) || ismob(A))
-								A.dir = holder.dir
+								A.set_dir(holder.dir)
 								A.onVarChanged("dir", SOUTH, A.dir)
 							sleep(0.5 SECONDS)
 							mtx.Reset()
@@ -133,17 +132,25 @@ change the direction of created objects.<br>
 							A = new objpath(Q)
 
 						if (isobj(A) || ismob(A))
-							A.dir = holder.dir
+							A.set_dir(holder.dir)
 							A.onVarChanged("dir", SOUTH, A.dir)
 							blink(Q)
 					if("Supplydrop")
-						SPAWN_DBG(rand(0, min(area_of_block*5, 200)))
+						SPAWN_DBG(rand(0, min(200, (length(block(A,B))))))
 							if (ispath(objpath, /atom/movable))
 								new/obj/effect/supplymarker/safe(Q, 3 SECONDS, objpath)
 					if("Supplydrop (no lootbox)")
-						SPAWN_DBG(rand(0, min(area_of_block*5, 200)))
+						SPAWN_DBG(rand(0, min(200, (length(block(A,B))))))
 							if (ispath(objpath, /atom/movable))
 								new/obj/effect/supplymarker/safe(Q, 3 SECONDS, objpath, TRUE)
+					if("Lethal Supplydrop")
+						SPAWN_DBG(rand(0, min(200, (length(block(A,B))))))
+							if (ispath(objpath, /atom/movable))
+								new/obj/effect/supplymarker(Q, 3 SECONDS, objpath)
+					if("Lethal Supplydrop (no lootbox)")
+						SPAWN_DBG(rand(0, min(200, (length(block(A,B))))))
+							if (ispath(objpath, /atom/movable))
+								new/obj/effect/supplymarker(Q, 3 SECONDS, objpath, TRUE)
 					else
 						var/atom/A = 0
 						if(ispath(objpath, /turf))
@@ -152,7 +159,7 @@ change the direction of created objects.<br>
 							A = new objpath(Q)
 
 						if (isobj(A) || ismob(A))
-							A.dir = holder.dir
+							A.set_dir(holder.dir)
 							A.onVarChanged("dir", SOUTH, A.dir)
 				cnt++
 				if (cnt > 499)

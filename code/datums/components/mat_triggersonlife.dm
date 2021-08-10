@@ -1,38 +1,10 @@
-/datum/component/holdertargeting/mat_triggersonlife
+/datum/component/loctargeting/mat_triggersonlife
 	dupe_mode = COMPONENT_DUPE_UNIQUE
+	proctype = .proc/triggerMatOnLife
+	signals = list(COMSIG_LIVING_LIFE_TICK)
+	loctype = /mob/living
 
-/datum/component/holdertargeting/mat_triggersonlife/RegisterWithParent()
-	..()
-	var/obj/item/I = parent
-	if (ismob(I.loc))
-		var/mob/user = I.loc
-		user.mob_flags |= MAT_TRIGGER_LIFE
-
-/datum/component/holdertargeting/mat_triggersonlife/UnregisterFromParent()
-	var/obj/item/I = parent
-
-	if (ismob(I.loc))
-		var/mob/user = I.loc
-		user.mob_flags &= ~MAT_TRIGGER_LIFE
-		for (var/thing in user)
-			var/atom/movable/A = thing
-
-			if (A != src && A.GetComponent(/datum/component/holdertargeting/mat_triggersonlife))
-				user.mob_flags |= MAT_TRIGGER_LIFE
-	..()
-
-/datum/component/holdertargeting/mat_triggersonlife/on_pickup(datum/source, mob/user)
-	. = ..()
-	//var/obj/item/I = parent
-	if (user)
-		user.mob_flags |= MAT_TRIGGER_LIFE
-
-/datum/component/holdertargeting/mat_triggersonlife/on_dropped(datum/source, mob/user)
-	var/obj/item/I = parent
-	if (user && I.loc != user)
-		user.mob_flags &= ~MAT_TRIGGER_LIFE
-		for (var/thing in user)
-			var/atom/movable/A = thing
-			if (A != src && A.GetComponent(/datum/component/holdertargeting/mat_triggersonlife))
-				user.mob_flags |= MAT_TRIGGER_LIFE
-	. = ..()
+/datum/component/loctargeting/mat_triggersonlife/proc/triggerMatOnLife(mob/M, mult)
+	if(istype(parent, /atom/movable))
+		var/atom/movable/AM = parent
+		AM.material?.triggerOnLife(M, AM, mult)

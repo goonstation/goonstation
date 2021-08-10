@@ -53,14 +53,16 @@
 	if(src.occupant)
 		boutput(user, "<span class='alert'>The gibber is full, empty it first!</span>")
 		return
-	if (!( istype(G, /obj/item/grab)) || !(ishuman(G.affecting)))
+	if (!(istype(G, /obj/item/grab)) || !ishuman(G.affecting))
 		boutput(user, "<span class='alert'>This item is not suitable for the gibber!</span>")
 		return
-
+	if (!isdead(G.affecting))
+		boutput(user, "<span class='alert'>[G.affecting] needs to be dead first!</span>")
+		return
 	user.visible_message("<span class='alert'>[user] starts to put [G.affecting] into the gibber!</span>")
 	src.add_fingerprint(user)
 	sleep(3 SECONDS)
-	if(G && G.affecting)
+	if(G?.affecting)
 		user.visible_message("<span class='alert'>[user] stuffs [G.affecting] into the gibber!</span>")
 		logTheThing("combat", user, G.affecting, "forced [constructTarget(G.affecting,"combat")] into a gibber at [log_loc(src)].")
 		message_admins("[key_name(user)] forced [key_name(G.affecting, 1)] ([isdead(G.affecting) ? "dead" : "alive"]) into a gibber at [log_loc(src)].")

@@ -7,6 +7,16 @@
 	anchored = 1.0
 	dir = EAST
 
+	disposing()
+		src.connected?.connected = null
+		qdel(src.connected)
+		src.connected = null
+		if (length(src.contents))
+			var/turf/T = get_turf(src)
+			for (var/atom/movable/AM in contents)
+				AM.set_loc(T)
+		. = ..()
+
 /obj/morgue/proc/update()
 	if (src.connected.loc != src)
 		src.icon_state = "morgue0"
@@ -79,7 +89,7 @@
 			return
 		if (user.equipped() != P)
 			return
-		if ((!in_range(src, usr) && src.loc != user))
+		if ((!in_interact_range(src, user) && src.loc != user))
 			return
 		t = copytext(adminscrub(t),1,128)
 		if (t)
@@ -120,6 +130,12 @@
 	anchored = 1.0
 	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
 
+	disposing()
+		src.connected?.connected = null
+		qdel(src.connected)
+		src.connected = null
+		. = ..()
+
 /obj/m_tray/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if (istype(mover, /obj/item/dummy))
 		return 1
@@ -135,7 +151,6 @@
 		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 		src.connected.update()
 		add_fingerprint(user)
-		//SN src = null
 		src.set_loc(src.connected)
 		return
 	return
@@ -143,7 +158,7 @@
 /obj/m_tray/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 	if (!(isobj(O) || ismob(O)) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(O)) //user.contents.Find(src) WHY WERE WE LOOKING FOR THE MORGUE TRAY IN THE USER
 		return
-	if (istype(O, /obj/screen) || istype(O, /obj/effects) || istype(O, /obj/ability_button) || istype(O, /obj/item/grab))
+	if (istype(O, /atom/movable/screen) || istype(O, /obj/effects) || istype(O, /obj/ability_button) || istype(O, /obj/item/grab))
 		return
 	O.set_loc(src.loc)
 	if (user != O)
@@ -163,12 +178,22 @@
 	var/cremating = 0
 	var/id = 1
 	var/locked = 0
+	var/obj/machinery/crema_switch/igniter = null
 
 	New()
 		. = ..()
 		START_TRACKING
 
 	disposing()
+		src.igniter?.crematoriums -= src
+		src.igniter = null
+		src.connected?.connected = null
+		qdel(src.connected)
+		src.connected = null
+		if (length(src.contents))
+			var/turf/T = get_turf(src)
+			for (var/atom/movable/AM in contents)
+				AM.set_loc(T)
 		. = ..()
 		STOP_TRACKING
 
@@ -252,7 +277,7 @@
 			return
 		if (user.equipped() != P)
 			return
-		if ((!in_range(src, usr) > 1 && src.loc != user))
+		if ((!in_interact_range(src, user) > 1 && src.loc != user))
 			return
 		t = copytext(adminscrub(t),1,128)
 		if (t)
@@ -288,7 +313,7 @@
 		return
 	if (src.cremating)
 		return //don't let you cremate something twice or w/e
-	if (!src.contents || !src.contents.len)
+	if (!src.contents || !length(src.contents))
 		src.visible_message("<span class='alert'>You hear a hollow crackle, but nothing else happens.</span>")
 		return
 
@@ -301,7 +326,7 @@
 		if (M == src.connected) continue //no cremating the tray tyvm
 		if (isliving(M))
 			var/mob/living/L = M
-			SPAWN_DBG (0)
+			SPAWN_DBG(0)
 				L.changeStatus("stunned", 10 SECONDS)
 
 				var/i
@@ -348,6 +373,13 @@
 	var/datum/light/light //Only used for tanning beds.
 	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
 
+	disposing()
+		src.connected?.connected = null
+		src.light = null
+		qdel(src.connected)
+		src.connected = null
+		. = ..()
+
 /obj/c_tray/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if (istype(mover, /obj/item/dummy))
 		return 1
@@ -362,7 +394,6 @@
 		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 		src.connected.update()
 		add_fingerprint(user)
-		//SN src = null
 		src.set_loc(src.connected)
 		return
 	return
@@ -370,7 +401,7 @@
 /obj/c_tray/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 	if (!(isobj(O) || ismob(O)) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(O))
 		return
-	if (istype(O, /obj/screen) || istype(O, /obj/effects) || istype(O, /obj/ability_button) || istype(O, /obj/item/grab))
+	if (istype(O, /atom/movable/screen) || istype(O, /obj/effects) || istype(O, /obj/ability_button) || istype(O, /obj/item/grab))
 		return
 	O.set_loc(src.loc)
 	if (user != O)
@@ -389,7 +420,13 @@
 	var/area/area = null
 	var/otherarea = null
 	var/id = 1
-	var/list/crematoriums = null
+	var/list/obj/crematorium/crematoriums = null
+
+	disposing()
+		for (var/obj/crematorium/O in src.crematoriums)
+			O.igniter = null
+		src.crematoriums = null
+		. = ..()
 
 /obj/machinery/crema_switch/New()
 	..()
@@ -399,11 +436,11 @@
 	if (src.allowed(user))
 		if (!islist(src.crematoriums))
 			src.crematoriums = list()
-			for (var/X in by_type[/obj/crematorium])
-				var/obj/crematorium/C = X
+			for_by_tcl(C, /obj/crematorium)
 				if (C.id == src.id)
 					src.crematoriums.Add(C)
-		for (var/obj/crematorium/C in src.crematoriums)
+					C.igniter = src
+		for (var/obj/crematorium/C as anything in src.crematoriums)
 			if (!C.cremating)
 				C.cremate(user)
 	else
@@ -426,6 +463,12 @@
 	var/settime = 10 //How long? (s)
 	var/tanningcolor = rgb(205,88,34) //Change to tan people into hillarious colors!
 	var/tanningmodifier = 0.03 //How fast do you want to go to your tanningcolor?
+	var/obj/machinery/computer/tanning/linked = null
+
+	disposing()
+		src.linked?.linked = null
+		src.linked = null
+		. = ..()
 
 	update()
 		if (src.contents.len)
@@ -445,7 +488,7 @@
 
 	attack_hand(mob/user as mob)
 		if (cremating)
-			boutput(usr, "<span class='alert'>It's locked.</span>")
+			boutput(user, "<span class='alert'>It's locked.</span>")
 			return
 		if ((src.connected && src.connected.loc != src) && (src.locked == 0))
 			for(var/atom/movable/A as mob|obj in src.connected.loc)
@@ -481,7 +524,7 @@
 				return
 			if (user.equipped() != P)
 				return
-			if ((!in_range(src, usr) > 1 && src.loc != user))
+			if ((!in_interact_range(src, user) > 1 && src.loc != user))
 				return
 			t = copytext(adminscrub(t),1,128)
 			if (t)
@@ -516,7 +559,7 @@
 			return
 		if (src.cremating)
 			return //don't let you cremate something twice or w/e
-		if (!src.contents || !src.contents.len)
+		if (!src.contents || !length(src.contents))
 			src.visible_message("<span class='alert'>You hear the lights turn on for a second, then turn off.</span>")
 			return
 
@@ -554,6 +597,7 @@
 							H.set_body_icon_dirty()
 							if (H.limbs)
 								H.limbs.reset_stone()
+							H.update_colorful_parts()
 				if (emagged && isdead(M))
 					qdel(M)
 					make_cleanable( /obj/decal/cleanable/ash,src)
@@ -608,11 +652,16 @@
 
 		send_new_tancolor(tanningtubecolor)
 
+	disposing()
+		src.tanningtube = null
+		src.trayoverlay = null
+		. = ..()
+
 	attackby(var/obj/item/P as obj, mob/user as mob)
 		..()
-		if (istype(P, /obj/item/light/tube) && !src.contents.len)
+		if (istype(P, /obj/item/light/tube) && !length(src.contents))
 			var/obj/item/light/tube/G = P
-			boutput(usr, "<span class='notice'>You put \the [G.name] into \the [src.name].</span>")
+			boutput(user, "<span class='notice'>You put \the [G.name] into \the [src.name].</span>")
 			user.drop_item()
 			G.set_loc(src)
 			src.tanningtube = G
@@ -623,8 +672,8 @@
 				light.set_color(tanningtube.color_r, tanningtube.color_g, tanningtube.color_b)
 				light.set_brightness(0.5)
 
-		if (ispryingtool(P) && src.contents.len) //pry out the tube with a crowbar
-			boutput(usr, "<span class='notice'>You pry out \the [src.tanningtube.name] from \the [src.name].</span>")
+		if (ispryingtool(P) && length(src.contents)) //pry out the tube with a crowbar
+			boutput(user, "<span class='notice'>You pry out \the [src.tanningtube.name] from \the [src.name].</span>")
 			src.tanningtube.set_loc(src.loc)
 			src.tanningtube = null
 			generate_overlay_icon() //nulling overlay
@@ -640,7 +689,7 @@
 	desc = "Used to control a tanning bed."
 	icon = 'icons/obj/stationobjs.dmi'
 	mats = 20
-	var/id = 2
+	id = 2
 	icon_state = "tanconsole"
 	var/state_str = ""
 	var/obj/crematorium/tanning/linked = null //The linked tanning bed
@@ -650,10 +699,16 @@
 		..()
 		get_link()
 
+	disposing()
+		src.linked?.linked = null
+		src.linked = null
+		. = ..()
+
 	proc/get_link()
 		for(var/obj/crematorium/tanning/C in by_type[/obj/crematorium])
 			if(C.z == src.z && C.id == src.id && C != src)
 				linked = C
+				C.linked = src
 				break
 
 	proc/find_tray_tube()

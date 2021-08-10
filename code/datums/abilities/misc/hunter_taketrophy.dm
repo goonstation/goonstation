@@ -45,7 +45,7 @@
 
 			else
 				var/mob/living/carbon/human/HH = target
-				if (!ischangeling(HH) && (ismonkey(HH) || HH.bioHolder && HH.bioHolder.HasEffect("monkey"))) // Lesser form doesn't count.
+				if (isnpcmonkey(HH)) // Lesser form doesn't count.
 					boutput(M, __red("This pitiful creature isn't worth your time."))
 					return 1
 

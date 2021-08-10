@@ -270,7 +270,7 @@
 				if (T.active_liquid && T.active_liquid.group && T.active_liquid.group.reagents)
 					T.active_liquid.group.drain(T.active_liquid,slurp,src)
 					if (prob(80))
-						playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 50, 0.1, 0.7)
+						playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 0.1, 0.7)
 				update_icon()
 
 		else if (pissing)
@@ -389,7 +389,7 @@
 		set category = "Local"
 
 		if (!og_ladder_item)
-			if (linked_ladder && linked_ladder.og_ladder_item)
+			if (linked_ladder?.og_ladder_item)
 				og_ladder_item = linked_ladder.og_ladder_item
 			else
 				og_ladder_item = new /obj/item/sea_ladder(src.loc)
@@ -421,7 +421,7 @@
 	icon = 'icons/obj/fluid.dmi'
 	icon_state = "ladder_off"
 	item_state = "folded_chair"
-	w_class = 4.0
+	w_class = W_CLASS_NORMAL
 	throwforce = 10
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 9
@@ -434,27 +434,36 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
-		BLOCK_LARGE
+		BLOCK_SETUP(BLOCK_LARGE)
 
 	afterattack(atom/target, mob/user as mob)
 		if (istype(target,/turf/space/fluid/warp_z5))
 			var/turf/space/fluid/warp_z5/hole = target
 			hole.try_build_turf_list() //in case we dont have one yet
 
-			user.show_text("You deploy [src].")
-			playsound(src.loc, "sound/effects/airbridge_dpl.ogg", 60, 1)
-
-			var/obj/sea_ladder_deployed/L = new /obj/sea_ladder_deployed(hole)
-			L.linked_ladder = new /obj/sea_ladder_deployed(pick(hole.L))
-			L.linked_ladder.linked_ladder = L
-
-			user.drop_item()
-			src.set_loc(L)
-			L.og_ladder_item = src
-			L.linked_ladder.og_ladder_item = src
+			deploy_ladder(hole, pick(hole.L), user)
 
 			..()
+		else if(istype(target, /turf/space/fluid))
+			var/turf/space/fluid/T = target
+			if(T.linked_hole)
+				deploy_ladder(T, T.linked_hole, user)
+			else if(istype(T.loc, /area/trench_landing))
+				deploy_ladder(T, pick(by_type[/turf/space/fluid/warp_z5/edge]), user)
+			..()
 
+	proc/deploy_ladder(turf/source, turf/dest, mob/user)
+		user.show_text("You deploy [src].")
+		playsound(src.loc, "sound/effects/airbridge_dpl.ogg", 60, 1)
+
+		var/obj/sea_ladder_deployed/L = new /obj/sea_ladder_deployed(source)
+		L.linked_ladder = new /obj/sea_ladder_deployed(dest)
+		L.linked_ladder.linked_ladder = L
+
+		user.drop_item()
+		src.set_loc(L)
+		L.og_ladder_item = src
+		L.linked_ladder.og_ladder_item = src
 
 /obj/naval_mine
 	name = "naval mine"
@@ -475,34 +484,13 @@
 
 	var/boom_str = 26
 
-	var/datum/light/point/light = 0
-	var/init = 0
-
 	New()
 		..()
 		animate_bumble(src)
-		if (current_state == GAME_STATE_PLAYING)
-			initialize()
-
-	disposing()
-		light = 0
-		..()
-
-	initialize()
-		..()
-		if (!init)
-			init = 1
-			if (!light)
-				light = new
-				light.attach(src)
-			light.set_brightness(1)
-			light.set_color(1, 0.4, 0.4)
-			light.set_height(3)
-			light.enable()
+		add_simple_light("naval_mine", list(255, 102, 102, 40))
 
 	get_desc()
 		. += "It is [active ? "armed" : "disarmed"]."
-
 
 	ex_act(severity)
 		return //nah

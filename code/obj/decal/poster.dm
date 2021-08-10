@@ -522,7 +522,7 @@
 			icon_state = "ptoe"
 
 		poster_y4nt
-			name = "\improper NanoTrasen poster"
+			name = "\improper NanoTrasen recruitment poster"
 			desc = "A huge poster that reads 'I want YOU for NT!'"
 			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "you_4_nt"
@@ -632,29 +632,95 @@
 
 		teaparty
 			name = "Weird poster"
-			desc = "Huh."
+			desc = "Seems to be a poster of some sort."
 			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "teaparty"
 
 			New()
 				..()
-				var/which = rand(1, 4)
+
+				var/which = pick(
+					// old contest winners
+					10;"tea1",
+					10;"tea2",
+					10;"tea3",
+					// the fuck II poster
+					30;"fuckII",
+					// new contest winners
+					50;"contest1",
+					50;"contest2",
+					50;"contest3",
+					50;"contest4",
+					50;"contest5",
+					// new contest not-winners but cool nonetheless
+					5 ;"contest-other1",
+					5 ;"contest-other2",
+					5 ;"contest-other3",
+					5 ;"contest-other4",
+					5 ;"contest-other5",
+					5 ;"contest-other6",
+					5 ;"contest-other7"
+					)
 				switch(which)
-					if(1)
+					if("tea1")
 						src.name = "Tea Hell and Back"
 						src.desc = "<i>Starring Camryn Stern, Edgar Palmer, Ryan Yeets, Jebediah Hawkins, and Frederick Cooper.</i>"
-					if(2)
+					if("tea2")
 						src.icon_state = "teaparty2"
 						src.name = "It Came from the Void"
 						src.desc = "<i>Starring William Carr, Bruce Isaman, and Julio Hayhurst.</i>"
-					if(3)
+					if("tea3")
 						src.icon_state = "teaparty3"
 						src.name = "Afterlife Activity"
 						src.desc = "<i>Starring Marmalade Addison, Lily White, cockroach, and Darcey Paynter.</i>"
-					if (4)
+					if("fuckII")
 						src.name = "\proper fuck II"
 						src.desc = "A poster for \"<em>fuck II: Plumb Fuckled.\"</em>"
 						src.icon_state = "fuckII"
+					if("contest1")
+						src.name = "Explore the Trench"
+						src.icon_state = "explore_the_trench"
+					if("contest2")
+						src.name = "🐟"
+						src.icon_state = "fish_hook"
+					if("contest3")
+						src.name = "Bird Up!"
+						src.icon_state = "bird_up"
+					if("contest4")
+						src.name = "A New You"
+						src.icon_state = "a_new_you"
+					if("contest5")
+						src.name = "Work! Ranch"
+						src.icon_state = "work_ranch"
+					if("contest-other1")
+						src.name = "Pack Smart"
+						src.icon_state = "pack_smart"
+					if("contest-other2")
+						src.name = "Mindslaver Device Poster"
+						src.icon_state = "mindslaver"
+					if("contest-other3")
+						src.name = "Edit Wiki"
+						src.icon_state = "edit_wiki"
+					if("contest-other4")
+						src.name = "Join Us For Boom"
+						src.icon_state = "join_us_for_boom"
+					if("contest-other5")
+						src.name = "Grow Food Not Weed"
+						src.icon_state = "grow_food_not_weed"
+					if("contest-other6")
+						src.name = "More Laser Power"
+						src.icon_state = "more_laser_power"
+					if("contest-other7")
+						src.name = "Code"
+						src.icon_state = "code"
+
+			attack_hand(mob/user)
+				. = ..()
+				switch(src.icon_state)
+					if("code")
+						user << link("https://github.com/goonstation/goonstation")
+					if("edit_wiki")
+						user << link("https://wiki.ss13.co/")
 
 		fuck1 //do not add this to the random sign rotation, fuck I is a long-lost relic overshadowed entirely by its successor
 			name = "\proper fuck"
@@ -680,7 +746,7 @@
 		landscape
 			desc = "A beautiful painting of a landscape that is engulfed by flames."
 			name = "painting"
-			icon = 'icons/obj/64x32.dmi'
+			icon = 'icons/obj/large/64x32.dmi'
 			icon_state = "landscape"
 
 		garbagegarbssign
@@ -702,25 +768,35 @@
 // AZUNGAR'S HEAD OF DEPARTMENT ITEMS// + FIREBARRAGE HELPED TOO BUT HE SMELLS
 ///////////////////////////////////////
 
-		medal
-			name = "framed medal"
-			desc = "A dusty old war medal."
+		framed_award
+			name = "A framed award"
+			desc = "Just some generic award"
 			var/award_text = null
-			var/usageState = 0
-			icon_state = "medal"
+			var/obj/item/award_type = /obj/item/rddiploma
+			var/award_name ="diploma"
+			var/usage_state = 0		// 0 = GLASS, AWARD 1 = GLASS OFF, AWARD IN CASE, 2 = GLASS OFF, AWARD GONE,
+			var/owner_job = "Research Director"
+			var/icon_glass = "rddiploma1"
+			var/icon_award = "rddiploma"
+			var/icon_empty = "frame"
+			icon_state = "rddiploma"
 			pixel_y = -6
 
-			// 0 = GLASS, MEDAL 1 = GLASS OFF, MEDAL IN CASE, 2 = GLASS OFF, MEDAL GONE,
+			New()
+				..()
+				var/obj/item/M = new award_type(src.loc)
+				M.desc = src.desc
+				src.contents.Add(M)
 
 			get_desc()
 				if(award_text)
 					return award_text
 				else
-					// Do we have a hos?
+					// Do we have a player of the right job?
 					for(var/mob/living/carbon/human/player in mobs)
 						if(!player.mind)
 							continue
-						if(player.mind.assigned_role == "Head of Security")
+						if(player.mind.assigned_role == owner_job)
 							award_text = src.get_award_text(player.mind)
 							return award_text
 
@@ -729,11 +805,11 @@
 				if (user.stat || isghostdrone(user) || !isliving(user))
 					return
 
-				switch (usageState)
+				switch (usage_state)
 					if (0)
 						if (issilicon(user)) return
-						src.usageState = 1
-						src.icon_state = "medal1"
+						src.usage_state = 1
+						src.icon_state = icon_glass
 						user.visible_message("[user] takes off the glass frame.", "You take off the glass frame.")
 						var/obj/item/sheet/glass/G = new /obj/item/sheet/glass()
 						G.amount = 1
@@ -742,51 +818,72 @@
 
 					if (1)
 						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-						var/obj/item/hosmedal/M = new /obj/item/hosmedal()
-						M.desc = src.desc
-						user.put_in_hand_or_drop(M)
-						user.visible_message("[user] takes the medal from the frame.", "You take the medal out of the frame.")
-						src.icon_state = "frame"
-						src.add_fingerprint(user)
-						src.usageState = 2
+						var/obj/item/award_item = locate(award_type) in src
+						if(award_item)
+							award_item.desc = src.desc
+							user.put_in_hand_or_drop(award_item)
+							user.visible_message("[user] takes the [award_name] from the frame.", "You take the [award_name] out of the frame.")
+							src.icon_state = icon_empty
+							src.add_fingerprint(user)
+							src.usage_state = 2
 
 			attackby(obj/item/W as obj, mob/user as mob)
 				if (user.stat)
 					return
 
-				if (istype(W, /obj/item/diary))
-					var/obj/item/paper/book/space_law/first/newbook = new /obj/item/paper/book/space_law/first
-					user.u_equip(W)
-					user.put_in_hand_or_drop(newbook)
-					boutput(user, "<span class='alert'>Beepsky's private journal transforms into Space Law 1st Print.</span>")
-					qdel(W)
-
-				if (src.usageState == 2)
-					if (istype(W, /obj/item/hosmedal))
+				if (src.usage_state == 2)
+					if (istype(W, award_type))
 						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
 						user.u_equip(W)
-						qdel(W)
-						user.visible_message("[user] places the medal back in the frame.", "You place the medal back in the frame.")
-						src.usageState = 1
-						src.icon_state = "medal1"
+						W.set_loc(src)
+						user.visible_message("[user] places the [award_name] back in the frame.", "You place the [award_name] back in the frame.")
+						src.usage_state = 1
+						src.icon_state = icon_glass
 
-				if (src.usageState == 1)
+				if (src.usage_state == 1)
 					if (istype(W, /obj/item/sheet/glass))
 						if (W.amount >= 1)
 							playsound(src.loc, "sound/machines/click.ogg", 50, 1)
 							user.u_equip(W)
 							qdel(W)
 							user.visible_message("[user] places glass back in the frame.", "You place the glass back in the frame.")
-							src.usageState = 0
-							src.icon_state = "medal"
+							src.usage_state = 0
+							src.icon_state = icon_award
 
 
 			proc/get_award_text(var/datum/mind/M)
+				. = "Awarded to some chump for achieving something."
+
+		framed_award/hos_medal
+			name = "framed medal"
+			desc = "A dusty old war medal."
+			award_type = /obj/item/clothing/suit/hosmedal/
+			award_name = "medal"
+			owner_job = "Head of Security"
+			icon_glass = "medal1"
+			icon_award = "medal"
+			icon_empty = "frame"
+			icon_state = "medal"
+
+			attackby(obj/item/W as obj, mob/user as mob)
+				if (user.stat)
+					return
+
+				if (istype(W, /obj/item/diary))
+					var/obj/item/paper/book/from_file/space_law/first/newbook = new /obj/item/paper/book/from_file/space_law/first
+					user.u_equip(W)
+					user.put_in_hand_or_drop(newbook)
+					boutput(user, "<span class='alert'>Beepsky's private journal transforms into Space Law 1st Print.</span>")
+					qdel(W)
+
+				..()
+
+			get_award_text(var/datum/mind/M)
 				var/hosname = "Anonymous"
-				if(M && M.current && M.current.client && M.current.client.preferences && M.current.client.preferences.name_last)
+				if(M?.current?.client?.preferences?.name_last)
 					hosname = M.current.client.preferences.name_last
 				var/hosage = 50
-				if(M && M.current && M.current.bioHolder && M.current.bioHolder.age)
+				if(M?.current?.bioHolder?.age)
 					hosage = M.current.bioHolder.age
 				. = "Awarded to [pick("Pvt.","Sgt","Cpl.","Maj.","Cpt.","Col.","Gen.")] "
 				. += "[hosname] for [pick("Outstanding","Astounding","Incredible")] "
@@ -794,213 +891,158 @@
 				. += "[pick("Great","Scary","Bloody","")] [pick("War","Battle","Massacre","Riot","Kerfuffle","Undeclared Conflict")] of "
 				. += "'[(CURRENT_SPACE_YEAR - rand((hosage - 18),hosage)) % 100]."
 
-		firstbill
+		framed_award/firstbill
 			name = "framed space currency"
-			desc = "A single space currency in a glass frame."
-			var/award_text_hop = null
-			var/usageState = 0
+			desc = "A single bill of space currency."
+			award_type = /obj/item/firstbill/
+			award_name = "first bill"
+			owner_job = "Head of Personnel"
+			icon_glass = "hopcredit1"
+			icon_award = "hopcredit"
+			icon_empty = "frame"
 			icon_state = "hopcredit"
-			pixel_y = -6
 
-			get_desc()
-				if(award_text_hop)
-					return award_text_hop
-				else
-					// Do we have a hop?
-					for(var/mob/living/carbon/human/player in mobs)
-						if(!player.mind)
-							continue
-						if(player.mind.assigned_role == "Head of Personnel")
-							award_text_hop = src.get_award_text_hop(player.mind)
-							return award_text_hop
-
-			attack_hand(mob/user as mob)
-				if (user.stat || isghostdrone(user) || !isliving(user))
-					return
-
-				switch (usageState)
-					if (0)
-						if (issilicon(user)) return
-						src.usageState = 1
-						src.icon_state = "hopcredit1"
-						user.visible_message("[user] takes off the glass frame.", "You take off the glass frame.")
-						var/obj/item/sheet/glass/G = new /obj/item/sheet/glass()
-						G.amount = 1
-						src.add_fingerprint(user)
-						user.put_in_hand_or_drop(G)
-
-					if (1)
-						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-						var/obj/item/firstbill/M = new /obj/item/firstbill()
-						M.desc = src.desc
-						user.put_in_hand_or_drop(M)
-						user.visible_message("[user] takes the first bill from the frame.", "You take the first bill out of the frame.")
-						src.icon_state = "frame"
-						src.add_fingerprint(user)
-						src.usageState = 2
-
-			attackby(obj/item/W as obj, mob/user as mob)
-				if (user.stat)
-					return
-
-				if (src.usageState == 2)
-					if (istype(W, /obj/item/firstbill))
-						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-						user.u_equip(W)
-						qdel(W)
-						user.visible_message("[user] places the first bill back in the frame.", "You place the first bill back in the frame.")
-						src.usageState = 1
-						src.icon_state = "hopcredit1"
-
-				if (src.usageState == 1)
-					if (istype(W, /obj/item/sheet/glass))
-						if (W.amount >= 1)
-							playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-							user.u_equip(W)
-							qdel(W)
-							user.visible_message("[user] places glass back in the frame.", "You place the glass back in the frame.")
-							src.usageState = 0
-							src.icon_state = "hopcredit"
-
-			proc/get_award_text_hop(var/datum/mind/M)
+			get_award_text(var/datum/mind/M)
 				var/hopname = "Anonymous"
-				if(M && M.current && M.current.client && M.current.client.preferences && M.current.client.preferences.name_last)
+				if(M?.current?.client?.preferences?.name_last)
 					hopname = M.current.client.preferences.name_last
 				. = "The first [pick("Space","NT", "Golden","Silver")] "
-				. += "[pick("Dollar","Doubloon","Buck","Peso","Credit")] earned by [hopname]"
-				. += "for selling a [pick("Amazing","Mediocre","Suspicious","Quality","Decent","Odd")]"
+				. += "[pick("Dollar","Doubloon","Buck","Peso","Credit")] earned by [hopname] "
+				. += "for selling a [pick("Amazing","Mediocre","Suspicious","Quality","Decent","Odd")] "
 				. += "[pick("Time share","Hamburger", "Clown shoe","Corporate secrets")]"
 
-
-
-		rddiploma
+		framed_award/rddiploma
 			name = "research directors diploma"
-			desc = "A fancy space diploma in a glass frame."
-			var/award_text_rd = null
-			var/usageState = 0
-			icon_state = "rddiploma"
-			pixel_y = -6
+			desc = "A fancy space diploma."
+			award_type = /obj/item/rddiploma/
 
 			get_desc(dist)
-				if(award_text_rd)
-					return award_text_rd
+				if(award_text)
+					return award_text
 				if (dist <= 1 & prob(50))
 					. += ".. Upon closer inspection this degree seems to be fake! Who could have guessed!"
 				else
 					// Do we have a rd?
-					for(var/mob/living/carbon/human/player in mobs)
-						if(!player.mind)
-							continue
-						if(player.mind.assigned_role == "Research Director")
-							award_text_rd = src.get_award_text_rd(player.mind)
-							return award_text_rd
+					..()
 
-			attack_hand(mob/user as mob)
-				if (user.stat || isghostdrone(user) || !isliving(user))
-					return
-
-				switch (usageState)
-					if (0)
-						if (issilicon(user)) return
-						src.usageState = 1
-						src.icon_state = "rddiploma1"
-						user.visible_message("[user] takes off the glass frame.", "You take off the glass frame.")
-						var/obj/item/sheet/glass/G = new /obj/item/sheet/glass()
-						G.amount = 1
-						src.add_fingerprint(user)
-						user.put_in_hand_or_drop(G)
-
-					if (1)
-						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-						var/obj/item/rddiploma/M = new /obj/item/rddiploma()
-						user.put_in_hand_or_drop(M)
-						user.visible_message("[user] takes the diploma from the frame.", "You take the diploma out of the frame.")
-						src.icon_state = "frame"
-						src.add_fingerprint(user)
-						src.usageState = 2
-
-			attackby(obj/item/W as obj, mob/user as mob)
-				if (user.stat)
-					return
-
-				if (src.usageState == 2)
-					if (istype(W, /obj/item/rddiploma))
-						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-						user.u_equip(W)
-						qdel(W)
-						user.visible_message("[user] places the diploma back in the frame.", "You place the diploma back in the frame.")
-						src.usageState = 1
-						src.icon_state = "rddiploma1"
-
-				if (src.usageState == 1)
-					if (istype(W, /obj/item/sheet/glass))
-						if (W.amount >= 1)
-							playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-							user.u_equip(W)
-							qdel(W)
-							user.visible_message("[user] places glass back in the frame.", "You place the glass back in the frame.")
-							src.usageState = 0
-							src.icon_state = "rddiploma"
-
-			proc/get_award_text_rd(var/datum/mind/M)
+			get_award_text(var/datum/mind/M)
 				var/rdname = "Anonymous"
-				if(M && M.current && M.current.client && M.current.client.preferences && M.current.client.preferences.name_last)
+				if(M?.current?.client?.preferences?.name_last)
 					rdname = M.current.client.preferences.name_last
-				. += "It says \ [rdname] has been awarded the degree of [pick("Associate", "Bachelor")] of [pick("arts","science")]"
-				. += "Master of [pick("arts","science")],"
+				. += "It says \ [rdname] has been awarded the degree of [pick("Associate", "Bachelor")] of [pick("arts","science")] "
+				. += "Master of [pick("arts","science")], "
 				. += "in [pick("Superstition","Quantum","Avian","Simian","Relative","Absolute","Computational","Philosophical","Practical","Inadvisably-applied","Impractical","Hyper", "Mega", "Giga", "Probabilistic")] [pick("Physics","Astronomy","Plasmatology", "Astrology","Cosmetology", "Dentistry","Botany","Science","Ologylogy","Wumbology")].\""
 
-		mdlicense
+		framed_award/mdlicense
 			name = "medical directors medical license"
 			desc = "There's just no way this is real."
+			award_name = "medical license"
+			owner_job = "Medical Director"
+			icon_glass = "mdlicense1"
+			icon_award = "mdlicense"
+			icon_empty = "frame"
 			icon_state = "mdlicense"
-			var/usageState = 0
-			pixel_y = -6
 
-			attack_hand(mob/user as mob)
-				if (user.stat || isghostdrone(user) || !isliving(user))
-					return
+			get_award_text(var/datum/mind/M)
+				var/mdname = "Anonymous"
+				if(M?.current?.client?.preferences?.name_last)
+					mdname = M.current.client.preferences.name_last
+				. += "It says \ [mdname] has been granted a license as a Physician and Surgeon entitled to practice the profession of medicine in space."
 
-				switch (usageState)
-					if (0)
-						if (issilicon(user)) return
-						src.usageState = 1
-						src.icon_state = "mdlicense1"
-						user.visible_message("[user] takes off the glass frame.", "You take off the glass frame.")
-						var/obj/item/sheet/glass/G = new /obj/item/sheet/glass()
-						G.amount = 1
-						src.add_fingerprint(user)
-						user.put_in_hand_or_drop(G)
+/obj/decal/poster/wallsign/pod_build
+	name = "poster"
+	icon = 'icons/obj/decals/posters_64x32.dmi'
+	icon_state = "nt-pod-poster"
+	popup_win = 1
 
-					if (1)
-						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-						var/obj/item/mdlicense/M = new /obj/item/mdlicense()
-						M.desc = src.desc
-						user.put_in_hand_or_drop(M)
-						user.visible_message("[user] takes the medical license from the frame.", "You take the medical license out of the frame.")
-						src.icon_state = "frame"
-						src.add_fingerprint(user)
-						src.usageState = 2
+	show_popup_win(var/client/C)
+		if (!C || !src.popup_win)
+			return
+		C.Browse(grabResource("html/how_to_build_a_pod.html"),"window=how_to_build_a_pod;size=[imgw]x[imgh];title=How to Build a Space Pod")
 
-			attackby(obj/item/W as obj, mob/user as mob)
-				if (user.stat)
-					return
+/obj/decal/poster/wallsign/pod_build/nt
+	icon_state = "nt-pod-poster"
+/obj/decal/poster/wallsign/pod_build/sy
+	icon_state = "sy-pod-poster"
 
-				if (src.usageState == 2)
-					if (istype(W, /obj/item/mdlicense))
-						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-						user.u_equip(W)
-						qdel(W)
-						user.visible_message("[user] places the medical license back in the frame.", "You place the medical license back in the frame.")
-						src.usageState = 1
-						src.icon_state = "mdlicense1"
+/obj/decal/poster/wallsign/pw_map
+	name = "Map"
+	desc = "A map affixed to the wall!'."
+	icon = 'icons/obj/decals/posters.dmi'
+	icon_state = "pw_map"
+	popup_win = 1
+	imgw = 702
+	imgh = 702
 
-				if (src.usageState == 1)
-					if (istype(W, /obj/item/sheet/glass))
-						if (W.amount >= 1)
-							playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-							user.u_equip(W)
-							qdel(W)
-							user.visible_message("[user] places glass back in the frame.", "You place the glass back in the frame.")
-							src.usageState = 0
-							src.icon_state = "mdlicense"
+	show_popup_win(var/client/C)
+		if (!C || !src.popup_win)
+			return
+
+		C.Browse("<img src=\"[resource("images/pw_map.png")]\">","window=Map;size=[imgw]x[imgh];title=Map")
+
+/obj/decal/poster/banner
+	name = "banner"
+	desc = "An unfinished banner, try adding some color to it by using a crayon!"
+	icon = 'icons/obj/decals/banners.dmi'
+	icon_state = "banner_base"
+	popup_win = 0
+	var/colored = FALSE
+	var/chosen_overlay
+	var/static/list/choosable_overlays = list("Horizontal Stripes","Vertical Stripes","Diagonal Stripes","Cross","Diagonal Cross","Full","Full Gradient",
+	"Left Line","Middle Line","Right Line","Northwest Line","Northeast Line","Southwest Line","Southeast Line","Big Ball","Medium Ball","Small Ball",
+	"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","0","1","2","3","4","5","6","7","8","9","+","-","=")
+
+	proc/clear_banner()
+		if (src.material)
+			src.color = src.material.color
+		else
+			src.color = "#ffffff" // In case the material is null
+		src.overlays = null
+		src.colored = FALSE
+		usr.visible_message("<span class='alert'>[usr] clears the [src.name].</span>", "<span class='alert'>You clear the [src.name].</span>")
+
+	New()
+		. = ..()
+		var/static/image/banner_holder = image(src.icon, "banner_holder")
+		banner_holder.appearance_flags = RESET_COLOR
+		src.underlays.Add(banner_holder)
+
+	attackby(obj/item/W, mob/user)
+		if(istype(W,/obj/item/pen/crayon))
+			if(src.colored)
+				chosen_overlay = tgui_input_list(user, "What do you want to draw?", "Drawings Options", choosable_overlays)
+				if (!chosen_overlay) return
+				var/mutable_appearance/new_overlay = mutable_appearance(src.icon, chosen_overlay)
+				new_overlay.appearance_flags = RESET_COLOR
+				new_overlay.color = W.color
+				src.overlays.Add(new_overlay)
+				logTheThing("station", user, null, "Drew a [chosen_overlay] in the [src] with [W] at [log_loc(user)].")
+				desc = "A banner, colored and decorated"
+				if(istype(W,/obj/item/pen/crayon/rainbow))
+					var/obj/item/pen/crayon/rainbow/R = W
+					R.font_color = random_saturated_hex_color(1)
+					R.color_name = hex2color_name(R.font_color)
+					R.color = R.font_color
+
+			else
+				src.color = W.color
+				src.colored = TRUE
+				desc = "A colored banner, try adding some drawings to it with a crayon!"
+
+		if(istool(W,TOOL_SNIPPING | TOOL_CUTTING | TOOL_SAWING))
+			user.visible_message("<span class='alert'>[user] cuts off the [src.name] with [W].</span>", "<span class='alert'>You cut off the [src.name] with [W].</span>")
+			var/obj/item/material_piece/cloth/C = new(user.loc)
+			if (src.material) C.setMaterial(src.material)
+			else C.setMaterial(getMaterial("cotton")) // In case the material is null
+			qdel(src)
+
+	MouseDrop(atom/over_object, src_location, over_location)
+		..()
+		if (usr.stat || usr.restrained() || !can_reach(usr, src))
+			return
+
+		else
+			if(tgui_alert(usr, "Are you sure you want to clear the banner?", "Confirmation", list("Yes", "No")) == "Yes")
+				clear_banner()
+			else
+				return

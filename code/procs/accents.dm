@@ -120,13 +120,11 @@
 	if (!istext(text))
 		CRASH("YOU HAVE TO PASS TEXT TO THE FUNCTIONS THAT DEAL WITH TEXT, IDIOT.")
 
-	var/regex/R = regex(@"([^&]|&(?:[a-z0-9_-]+|#x?[0-9a-f]+);)", "gi")
-	var/list/C = new()
+	var/regex/our_regex = regex(@"([^&]|&(?:[a-z0-9_-]+|#x?[0-9a-f]+);)", "gi")
+	. = list()
 
-	while (R.Find(text) != 0)
-		C.Add(R.group[1])
-
-	return C
+	while (our_regex.Find(text) != 0)
+		. += our_regex.group[1]
 
 
 /proc/elvis_parse(var/datum/text_roamer/R)
@@ -792,7 +790,7 @@
 
 		// That legendary harsh R
 		if("r")
-			if(lowertext(R.next_char) != "r")
+			if(lowertext(R.next_char) != "r" && R.prev_char != ":") //stop duplicating the research radio shortcut
 				new_string = "rr"
 				used = 1
 		if("i")
@@ -2338,7 +2336,7 @@ var/list/zalgo_mid = list(
 // this whole thing was originally copied over from the Scots entry
 // so its also gonna use a strings file: strings/language/scoob.txt
 
-/proc/scoobify(var/string)
+/proc/scoobify(var/string, var/less_shit)
 
 	var/list/tokens = splittext(string, " ")
 	var/list/modded_tokens = list()
@@ -2363,7 +2361,10 @@ var/list/zalgo_mid = list(
 			var/datum/text_roamer/T = new/datum/text_roamer(original_word)
 			for(var/i = 0, i < length(original_word), i=i)
 				var/datum/parse_result/P = scoob_parse(T)
-				modified_token += P.string
+				if(less_shit && prob(50))
+					modified_token = T.string
+				else
+					modified_token += P.string
 				i += P.chars_used
 				T.curr_char_pos = T.curr_char_pos + P.chars_used
 				T.update()

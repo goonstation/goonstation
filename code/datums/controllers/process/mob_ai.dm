@@ -1,12 +1,15 @@
-// handles critters
+
+/// handles mobcritters
 datum/controller/process/mob_ai
 	setup()
 		name = "Mob AI"
-		schedule_interval = 16 // 1.6 seconds
+		schedule_interval = 1.6 SECONDS
 
 	doWork()
 		for(var/X in ai_mobs)
 			var/mob/M = X
+
+			last_object = X
 
 			if (!M)
 				continue
@@ -32,7 +35,7 @@ datum/controller/process/mob_ai
 					scheck()
 
 			var/mob/living/L = M
-			if((isliving(M) && L.is_npc || !isliving(M)))
+			if((isliving(M) && (L.is_npc || L.ai_active) || !isliving(M)))
 				if(istype(X, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = X
 					if(H.uses_mobai && H.ai)

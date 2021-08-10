@@ -74,7 +74,8 @@ dmm_suite
 			coordShifts.Add(list(list(grid.group[1], grid.group[2], grid.group[3])))
 			maxZFound = max(maxZFound, text2num(grid.group[3]))
 		// Create all Atoms at map location, from model key
-		world.maxz = max(world.maxz, coordZ+maxZFound-1)
+		if ((coordZ+maxZFound-1) > world.maxz)
+			world.setMaxZ(coordZ+maxZFound-1)
 		for(var/posZ = 1 to gridLevels.len)
 			var zGrid = gridLevels[posZ]
 			// Reverse Y coordinate
@@ -93,9 +94,9 @@ dmm_suite
 				world.maxx = xMax
 				logTheThing( "debug", null, null, "[tag] caused map resize (X) during prefab placement" )
 
-			props.maxX = xMax
+			props.maxX = max(length(exampleLine)/key_len, gridLevels.len)+(coordX-1)
 			props.maxY = yMax
-			props.maxZ = world.maxz
+			props.maxZ = coordZ
 
 			var/gridCoordX = text2num(coordShifts[posZ][1]) + coordX - 1
 			var/gridCoordY = text2num(coordShifts[posZ][2])  + coordY - 1
@@ -149,10 +150,10 @@ dmm_suite
 				of type paths of the same construction as those contained in a .dmm file, and
 				instantiates them.*/
 			// Store quoted portions of text in text_strings, and replace them with an index to that list.
-			var /list/originalStrings = list()
-			var /regex/noStrings = regex(@{"(["])(?:(?=(\\?))\2(.|\n))*?\1"})
-			var stringIndex = 1
-			var found
+			var/list/originalStrings = list()
+			var/regex/noStrings = regex(@{"(["])(?:(?=(\\?))\2(.|\n))*?\1"})
+			var/stringIndex = 1
+			var/found
 			do
 				found = noStrings.Find(models, noStrings.next)
 				if(found)
@@ -165,23 +166,28 @@ dmm_suite
 			// Identify each object's data, instantiate it, & reconstitues its fields.
 			var /list/turfStackTypes = list()
 			var /list/turfStackAttributes = list()
-			for(var/atomModel in splittext(models, comma_delim))
-				var bracketPos = findtext(atomModel, "{")
-				var atomPath = text2path(copytext(atomModel, 1, bracketPos))
-				var /list/attributes
-				if(bracketPos)
-					attributes = new()
-					var attributesText = copytext(atomModel, bracketPos+1, -1)
-					var /list/paddedAttributes = splittext(attributesText, semicolon_delim) // "Key = Value"
-					for(var/paddedAttribute in paddedAttributes)
-						key_value_regex.Find(paddedAttribute)
-						attributes[key_value_regex.group[1]] = key_value_regex.group[2]
-				if(!ispath(atomPath, /turf))
-					loadModel(atomPath, attributes, originalStrings, xcrd, ycrd, zcrd)
-				else
-					turfStackTypes.Insert(1, atomPath)
-					turfStackAttributes.Insert(1, null)
-					turfStackAttributes[1] = attributes
+			for(var/areaDone = 0 to 1)
+				for(var/atomModel in splittext(models, comma_delim))
+					var bracketPos = findtext(atomModel, "{")
+					var atomPath = text2path(copytext(atomModel, 1, bracketPos))
+					var /list/attributes
+					if(bracketPos)
+						attributes = new()
+						var attributesText = copytext(atomModel, bracketPos+1, -1)
+						var /list/paddedAttributes = splittext(attributesText, semicolon_delim) // "Key = Value"
+						for(var/paddedAttribute in paddedAttributes)
+							key_value_regex.Find(paddedAttribute)
+							attributes[key_value_regex.group[1]] = key_value_regex.group[2]
+					// load areas first
+					if(!areaDone)
+						if(ispath(atomPath, /area))
+							loadModel(atomPath, attributes, originalStrings, xcrd, ycrd, zcrd)
+					else if(!ispath(atomPath, /turf))
+						loadModel(atomPath, attributes, originalStrings, xcrd, ycrd, zcrd)
+					else
+						turfStackTypes.Insert(1, atomPath)
+						turfStackAttributes.Insert(1, null)
+						turfStackAttributes[1] = attributes
 			// Layer all turf appearances into final turf
 			if(!turfStackTypes.len) return
 			var /turf/topTurf = loadModel(turfStackTypes[1], turfStackAttributes[1], originalStrings, xcrd, ycrd, zcrd)
@@ -217,9 +223,11 @@ dmm_suite
 			else
 				if(ispath(atomPath, /turf))
 					//instance = new atomPath(location)
-					instance = location.ReplaceWith(atomPath, keep_old_material = 0, handle_air = 0, handle_dir = 0)
+					instance = location.ReplaceWith(atomPath, keep_old_material = 0, handle_air = 0, handle_dir = 0, force = 1)
+					instance.set_dir(initial(instance.dir))
 				else
-					instance = new atomPath(location)
+					if (atomPath)
+						instance = new atomPath(location)
 			// Handle cases where Atom/New was redifined without calling Super()
 			if(preloader && instance) // Atom could delete itself in New()
 				preloader.load(instance)

@@ -26,7 +26,7 @@
 	on_transplant(var/mob/M as mob)
 		..()
 		if (src.robotic)
-			src.donor.add_stam_mod_regen(icon_state, 2)
+			APPLY_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, icon_state, 2)
 			src.donor.add_stam_mod_max(icon_state, 10)
 		return
 
@@ -34,7 +34,7 @@
 		..()
 		if (donor)
 			if (src.robotic)
-				src.donor.remove_stam_mod_regen(icon_state)
+				REMOVE_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, icon_state)
 				src.donor.remove_stam_mod_max(icon_state)
 		return
 
@@ -122,17 +122,30 @@
 	name = "cyberlungs"
 	desc = "Fancy robotic lungs!"
 	icon_state = "cyber-lungs_L"
+	made_from = "pharosium"
 	robotic = 1
+	created_decal = /obj/decal/cleanable/oil
 	edible = 0
 	mats = 6
 	temp_tolerance = T0C+500
 	var/overloading = 0
 
+/obj/item/organ/lung/synth
+	name = "synthlungs"
+	icon_state = "plant"
+	desc = "Surprisingly, doesn't produce its own oxygen. Luckily, it works just as well at moving oxygen to the bloodstream."
+	synthetic = 1
+	failure_disease = /datum/ailment/disease/respiratory_failure
+	var/overloading = 0
+	New()
+		..()
+		src.icon_state = pick("plant_lung_t", "plant_lung_t_bloom")
+
 	add_ability(var/datum/abilityHolder/aholder, var/abil)
 		if (!ispath(abil, /datum/targetable/organAbility/rebreather) || !aholder)
 			return ..()
 		var/datum/targetable/organAbility/rebreather/OA = aholder.getAbility(abil)//addAbility(abil)
-		if (istype(OA)) // already has an emagged lung. You need both for the ability to function 
+		if (istype(OA)) // already has an emagged lung. You need both for the ability to function
 			OA.linked_organ = list(OA.linked_organ, src)
 		else
 			OA = aholder.addAbility(abil)
@@ -157,7 +170,7 @@
 	on_life(var/mult = 1)
 		if(!..())
 			return 0
-			
+
 		if(overloading)
 			src.take_damage(0, 1 * mult)
 		return 1
@@ -166,7 +179,7 @@
 		if(donor)
 			REMOVE_MOB_PROPERTY(donor, PROP_REBREATHING, "cyberlungs")
 		..()
-		
+
 	emag_act(mob/user, obj/item/card/emag/E)
 		..()
 		organ_abilities = list(/datum/targetable/organAbility/rebreather)
@@ -174,6 +187,28 @@
 	demag(mob/user)
 		..()
 		organ_abilities = initial(organ_abilities)
+
+/obj/item/organ/lung/synth/left
+	name = "left lung"
+	organ_name = "synthlung_L"
+	icon_state = "plant"
+	desc = "Surprisingly, doesn't produce its own oxygen. Luckily, it works just as well at moving oxygen to the bloodstream. This is a left lung, since it has three lobes. Hopefully whoever used to have this one doesn't need it anymore."
+	synthetic = 1
+	failure_disease = /datum/ailment/disease/respiratory_failure
+	New()
+		..()
+		src.icon_state = pick("plant_lung_L", "plant_lung_L_bloom")
+
+/obj/item/organ/lung/synth/right
+	name = "right lung"
+	organ_name = "synthlung_R"
+	icon_state = "plant"
+	desc = "Surprisingly, doesn't produce its own oxygen. Luckily, it works just as well at moving oxygen to the bloodstream. This is a right lung, since it has two lobes and a cardiac notch, where the heart would be. Hopefully whoever used to have this one doesn't need it anymore."
+	synthetic = 1
+	failure_disease = /datum/ailment/disease/respiratory_failure
+	New()
+		..()
+		src.icon_state = pick("plant_lung_R", "plant_lung_R_bloom")
 
 /obj/item/organ/lung/cyber/left
 	name = "left lung"

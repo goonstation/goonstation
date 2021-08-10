@@ -17,7 +17,7 @@
 /datum/game_mode/malfunction/post_setup()
 	for(var/turf/T in landmarks[LANDMARK_MALF_GEAR_CLOSET])
 		new /obj/storage/closet/syndicate/malf(T)
-	for (var/mob/living/silicon/ai/aiplayer in by_type[/mob/living/silicon/ai])
+	for_by_tcl(aiplayer, /mob/living/silicon/ai)
 		malf_ai += aiplayer.mind
 
 	/*if(malf_ai.len < 1)
@@ -60,7 +60,7 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(ticker.minds))
 
-	for (var/obj/machinery/computer/communications/comm in machine_registry[MACHINES_COMMSCONSOLES])
+	for (var/obj/machinery/computer/communications/comm as anything in machine_registry[MACHINES_COMMSCONSOLES])
 		if (!(comm.status & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/paper/intercept = new /obj/item/paper( comm.loc )
 			intercept.name = "paper- 'Cent. Com. Status Summary'"

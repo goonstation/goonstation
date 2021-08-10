@@ -48,7 +48,7 @@
 			padding: 0.25em;
 		}
 		.optionGroup .l {
-			width: 100px;
+			width: 120px;
 			float: left;
 			clear: both;
 			font-weight: bold;
@@ -117,7 +117,6 @@
 						<a href='?action=priv_msg&target=[M.ckey]'>PM</a> &bull;
 						<a href='[playeropt_link(M, "subtlemsg")]'>Subtle PM</a> &bull;
 						<a href='[playeropt_link(M, "plainmsg")]'>Plain Message</a> &bull;
-						<a href='[playeropt_link(M, "forcespeech")]'>Force Say</a> &bull;
 						<a href='[playeropt_link(M, "adminalert")]'>Alert</a> &bull;
 						<a href='[playeropt_link(M, "showrules")]'>Show Rules</a>
 					</div>
@@ -141,7 +140,6 @@
 						[(M.stat == 2 || M.max_health == 0) ? "Dead" : "[round(100 * M.health / M.max_health)]%"]
 					</div>
 					"} : ""]
-				[!ishuman(M) ? "" : {"
 					<div class='l'>Reagents<a href='?src=\ref[src];action=secretsfun;type=reagent_help'>*</a></div>
 					<div class='r'>
 						<a href='[playeropt_link(M, "checkreagent")]'>Check</a> &bull;
@@ -154,13 +152,16 @@
 						<a href='[playeropt_link(M, "addbioeffect")]'>Add</a> &bull;
 						<a href='[playeropt_link(M, "removebioeffect")]'>Remove</a>
 					</div>
-					"}]
 					<div class='l'>Abilities</div>
 					<div class='r'>
 						<a href='[playeropt_link(M, "manageabils")]'>Manage</a> &bull;
 						<a href='[playeropt_link(M, "addabil")]'>Add</a> &bull;
 						<a href='[playeropt_link(M, "removeabil")]'>Remove</a> &bull;
 						<a href='[playeropt_link(M, "abilholder")]'>New Holder</a>
+				 	</div>
+					<div class='l'>StatusEffects<a href='?src=\ref[src];action=secretsfun;type=statuseffect_help'>*</a></div>
+					<div class='r'>
+						<a href='[playeropt_link(M, "setstatuseffect")]'>Set</a>
 				 	</div>
 					<div class='l'>Contents</div>
 					<div class='r'>
@@ -185,7 +186,11 @@
 						<a href='[playeropt_link(M, "tysongib")]'>Tyson</a> &bull;
 						<a href='[playeropt_link(M, "damn")]'>(Un)Damn</a>
 					</div>
-				 </div>
+					<div class='l'>Misc</div>
+					<div class='r'>
+						<a href='[playeropt_link(M, "forcespeech")]'>Force Say</a>
+					</div>
+				</div>
 			</div>
 				"}
 
@@ -292,7 +297,8 @@
 						[iswraith(M) ? "<em>Is Wraith</em>" : "<a href='[playeropt_link(M, "makewraith")]'>Wraith</a>"] &bull;
 						[isblob(M) ? "<em>Is Blob</em>" : "<a href='[playeropt_link(M, "makeblob")]'>Blob</a>"] &bull;
 						[istype(M, /mob/living/carbon/human/machoman) ? "<em>Is Macho Man</em>" : "<a href='[playeropt_link(M, "makemacho")]'>Macho Man</a>"] &bull;
-						[isflock(M) ? "<em>Is Flock</em>" : "<a href='[playeropt_link(M, "makeflock")]'>Flock</a>"]
+						[isflock(M) ? "<em>Is Flock</em>" : "<a href='[playeropt_link(M, "makeflock")]'>Flock</a>"] &bull;
+						[isfloorgoblin(M) ? "<em>Is Floor Goblin</em>" : "<a href='[playeropt_link(M, "makefloorgoblin")]'>Floor Goblin</a>"]
 					</div>
 				</div>
 			</div>

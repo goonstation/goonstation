@@ -1,4 +1,4 @@
-"a" = (/turf/variableTurf/clear,/area)
+"a" = (/turf/variableTurf/clear,/area/space)
 "b" = (/obj/item/skull,/obj/item/clothing/mask/breath,/obj/item/raw_material/uqill,/turf/variableTurf/clear,/area/noGenerate)
 
 (1,1,1) = {"

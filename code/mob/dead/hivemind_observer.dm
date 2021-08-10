@@ -32,8 +32,7 @@
 
 	disposing()
 		observers -= src
-		if(hivemind_owner)
-			hivemind_owner.hivemind -= src
+		hivemind_owner?.hivemind -= src
 		..()
 
 	click(atom/target, params)
@@ -48,7 +47,7 @@
 			if (proj) //ZeWaka: Fix for null.launch()
 				proj.launch()
 				last_attack = world.time
-				playsound(get_turf(src), 'sound/weapons/flaregun.ogg', 40, 0.1, 0, 2.6)
+				playsound(src, 'sound/weapons/flaregun.ogg', 30, 0.1, 0, 2.6)
 				.= 1
 
 	proc/boot()

@@ -19,24 +19,18 @@
 		"ckey" = player
 	)
 
-	var/query = "[config.player_notes_baseurl]/?[list2params(data)]"
-	var/http[] = world.Export(query)
+	// Fetch notes via HTTP
+	var/datum/http_request/request = new()
+	request.prepare(RUSTG_HTTP_METHOD_GET, "[config.player_notes_baseurl]/?[list2params(data)]", "", "")
+	request.begin_async()
+	UNTIL(request.is_complete())
+	var/datum/http_response/response = request.into_response()
 
-	if(!http)
-		alert("Query Failed.")
+	if (response.errored || !response.body)
+		logTheThing("debug", null, null, "viewPlayerNotes: Failed to fetch notes of player: [player].")
 		return
 
-	var/key
-	var/contentExists = 0
-	for (key in http)
-		if (key == "CONTENT")
-			contentExists = 1
-
-	if (0 == contentExists)
-		alert("Query Failed.")
-		return
-
-	var/content = file2text(http["CONTENT"])
+	var/content = response.body
 	var/deletelinkpre = "<A href='?src=\ref[src];action=notes2;target=[player];type=del;id="
 	var/deletelinkpost = "'>(DEL)"
 
@@ -67,8 +61,10 @@
 		"note" = note
 	)
 
-	var/query = "[config.player_notes_baseurl]/?[list2params(data)]"
-	world.Export(query)
+	// Send data
+	var/datum/http_request/request = new()
+	request.prepare(RUSTG_HTTP_METHOD_GET, "[config.player_notes_baseurl]/?[list2params(data)]", "", "")
+	request.begin_async()
 
 
 // Deleting a player note
@@ -86,5 +82,7 @@
 		"id" = id
 	)
 
-	var/query = "[config.player_notes_baseurl]/?[list2params(data)]"
-	world.Export(query)
+	// Send data
+	var/datum/http_request/request = new()
+	request.prepare(RUSTG_HTTP_METHOD_GET, "[config.player_notes_baseurl]/?[list2params(data)]", "", "")
+	request.begin_async()

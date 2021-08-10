@@ -30,11 +30,9 @@
 			//Actually transfer the gas
 			var/datum/gas_mixture/removed = air1.remove(transfer_moles)
 
-			if(network1)
-				network1.update = 1
+			network1?.update = 1
 
-			if(network2)
-				network2.update = 1
+			network2?.update = 1
 
 			return removed
 
@@ -49,7 +47,9 @@
 		if(status & (BROKEN|NOPOWER))
 			icon_state = "circ[side]-p"
 		else if(last_pressure_delta > 0)
-			if(last_pressure_delta > ONE_ATMOSPHERE)
+			if(last_pressure_delta > ONE_ATMOSPHERE * 10000)
+				icon_state = "circ[side]-fast"
+			else if(last_pressure_delta > ONE_ATMOSPHERE)
 				icon_state = "circ[side]-run"
 			else
 				icon_state = "circ[side]-slow"

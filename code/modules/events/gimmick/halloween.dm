@@ -9,7 +9,7 @@
 		..()
 		if(halloween_mode)
 			return
-		if(emergency_shuttle && emergency_shuttle.location) //it's too late!
+		if(emergency_shuttle?.location) //it's too late!
 			return
 		halloween_mode = 1
 
@@ -19,7 +19,7 @@
 		var/list/spooky_major = list(///obj/item/storage/toolbox/memetic, //naw!
 		/obj/item/unkill_shield,
 		// /obj/submachine/mind_switcher,
-		/*/obj/item/camera_test/haunted,*/ // This thing is broken.
+		/*/obj/item/camera/haunted,*/ // This thing is broken.
 		/obj/item/relic,
 		/obj/item/clothing/head/void_crown,
 		// /obj/haunted_television

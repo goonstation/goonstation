@@ -38,9 +38,10 @@
 			// so that if it's getting created by the map it works, and if it isn't this will just return
 			src.setFloorUnderlay('icons/turf/floors.dmi', "plating", 0, 100, 0, "plating")
 			if (src.can_be_auto)
-				sleep(1 SECOND)
 				for (var/turf/simulated/wall/auto/W in orange(1,src))
 					W.update_icon()
+				for (var/obj/grille/G in orange(1,src))
+					G.update_icon()
 
 	Del()
 		src.RL_SetSprite(null)
@@ -125,7 +126,7 @@
 				F.name = floorname1
 				F.icon = flooricon1
 				F.icon_state = flooricon_state1
-				F.intact = floorintact1
+				F.setIntact(floorintact1)
 				F.burnt = floorburnt1
 				//a false wall turns into a sheet of metal and displaced girders
 				var/atom/A = new /obj/item/sheet(F)
@@ -166,7 +167,7 @@
 			src.update_air_properties()
 			src.RL_SetOpacity(0)
 			if(!floorintact)
-				src.intact = 0
+				src.setIntact(FALSE)
 				src.levelupdate()
 			if(checkForMultipleDoors())
 				update_nearby_tiles()
@@ -185,7 +186,7 @@
 		src.update_air_properties()
 		if (src.visible)
 			src.RL_SetOpacity(1)
-		src.intact = 1
+		src.setIntact(TRUE)
 		update_nearby_tiles()
 		SPAWN_DBG(delay)
 			//we want to return 1 without waiting for the animation to finish - the textual cue seems sloppy if it waits
@@ -215,6 +216,8 @@
 						dirs |= dir
 					if (W.light_mod) //If the walls have a special light overlay, apply it.
 						src.RL_SetSprite("[W.light_mod][num2text(dirs)]")
+			var/turf/simulated/wall/auto/T = wall_path
+			mod = initial(T.mod)
 			src.icon_state = "[mod][num2text(dirs)]"
 		return src.icon_state
 
@@ -242,7 +245,7 @@
 		if (src.visible)
 			src.opacity = 0
 			src.RL_SetOpacity(1)
-		src.intact = 1
+		src.setIntact(TRUE)
 		update_nearby_tiles()
 		if(src.was_rwall)
 			src.ReplaceWithRWall()

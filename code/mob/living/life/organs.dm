@@ -5,7 +5,7 @@
 			owner.handle_organs(get_multiplier())
 
 		//the master vore loop
-		if (owner.stomach_contents && owner.stomach_contents.len)
+		if (owner.stomach_contents && length(owner.stomach_contents))
 			SPAWN_DBG(0)
 				for (var/mob/M in owner.stomach_contents)
 					if (M.loc != owner)

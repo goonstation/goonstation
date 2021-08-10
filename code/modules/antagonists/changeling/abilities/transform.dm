@@ -10,7 +10,7 @@
 
 	onAttach(var/datum/abilityHolder/H)
 		..()
-		if (H && H.owner) //Wire note: Fix for Cannot read null.real_name
+		if (H?.owner) //Wire note: Fix for Cannot read null.real_name
 			last_used_name = H.owner.real_name
 
 	cast(atom/target)
@@ -29,7 +29,7 @@
 				H.transforming = 1
 				H.canmove = 0
 				H.icon = null
-				H.invisibility = 101
+				APPLY_MOB_PROPERTY(H, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 				var/atom/movable/overlay/animation = new /atom/movable/overlay( usr.loc )
 				animation.icon_state = "blank"
 				animation.icon = 'icons/mob/mob.dmi'
@@ -42,11 +42,12 @@
 				H.transforming = 0
 				H.canmove = 1
 				H.icon = initial(H.icon)
-				H.invisibility = initial(H.invisibility)
+				REMOVE_MOB_PROPERTY(H, PROP_INVISIBILITY, "transform")
 				H.update_face()
 				H.update_body()
 				H.update_clothing()
 				H.real_name = last_used_name
+				H.abilityHolder.updateButtons()
 				logTheThing("combat", H, null, "leaves lesser form as a changeling, [log_loc(H)].")
 				return 0
 			else if (isabomination(H))
@@ -59,7 +60,10 @@
 			if (alert("Are we sure?","Assume lesser form?","Yes","No") != "Yes")
 				return 1
 			last_used_name = H.real_name
+			if (H.hasStatus("handcuffed"))
+				H.handcuffs.drop_handcuffs(H)
 			H.monkeyize()
+			H.abilityHolder.updateButtons()
 			logTheThing("combat", H, null, "enters lesser form as a changeling, [log_loc(H)].")
 			return 0
 
@@ -92,18 +96,19 @@
 			boutput(holder.owner, __blue("We change our mind."))
 			return 1
 
-		var/datum/bioHolder/D = H.absorbed_dna[target_name]
-
 		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner] transforms!</B></span>"))
 		logTheThing("combat", holder.owner, target_name, "transforms into [target_name] as a changeling [log_loc(holder.owner)].")
 		var/mob/living/carbon/human/C = holder.owner
-		C.real_name = target_name
+		var/datum/bioHolder/D = H.absorbed_dna[target_name]
 		C.bioHolder.CopyOther(D)
+		C.real_name = target_name
 		C.bioHolder.RemoveEffect("husk")
+		C.organHolder.head.update_icon()
 		if (C.bioHolder?.mobAppearance?.mutant_race)
-			C.set_mutantrace(C.bioHolder.mobAppearance.mutant_race)
+			C.set_mutantrace(C.bioHolder.mobAppearance.mutant_race.type)
 		else
 			C.set_mutantrace(null)
+
 		C.update_face()
 		C.update_body()
 		C.update_clothing()

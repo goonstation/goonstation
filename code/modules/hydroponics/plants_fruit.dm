@@ -90,7 +90,7 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 	harvests = 5
 	endurance = 5
 	genome = 19
-	assoc_reagents = list("water")
+	assoc_reagents = list("juice_watermelon")
 	nectarlevel = 15
 	mutations = list(/datum/plantmutation/melon/george, /datum/plantmutation/melon/bowling)
 	commuts = list(/datum/plant_gene_strain/immortal,/datum/plant_gene_strain/seedless)
@@ -312,7 +312,7 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 	commuts = list(/datum/plant_gene_strain/quality)
 
 
-	#if ASS_JAM
+/*
 	mutations = list(/datum/plantmutation/pear/sickly)
 	HYPinfusionP(var/obj/item/seed/S,var/reagent)
 		..()
@@ -321,7 +321,7 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 		if(reagent == "urine")
 			if (prob(50))
 				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/pear/sickly)
-	#endif
+*/
 
 /datum/plant/fruit/peach
 	name = "Peach"

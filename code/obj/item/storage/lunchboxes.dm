@@ -7,7 +7,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_lunchboxes.dmi'
 	throw_speed = 1
 	throw_range = 8
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 
 	New()
 		..()
@@ -41,7 +41,7 @@
 
 	food5
 		spawn_contents = list(/obj/item/reagent_containers/food/snacks/taco/complete,\
-		/obj/item/reagent_containers/food/snacks/donut/cinnamon,\
+		/obj/item/reagent_containers/food/snacks/donut/custom/cinnamon,\
 		/obj/item/reagent_containers/food/snacks/plant/cherry,\
 		/obj/item/paper/lunchbox_note)
 
