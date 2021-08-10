@@ -1,4 +1,4 @@
-/obj/machinery/chem_dispenser
+/obj/machinery/dispensing/chem_dispenser
 	name = "chem dispenser"
 	density = 1
 	anchored = 1
@@ -23,7 +23,6 @@
 	var/obj/item/card/id/user_id = null
 	var/datum/reagent_group_account/current_account = null
 	var/list/accounts = list()
-	var/output_target = null
 	var/dispense_sound = 'sound/effects/zzzt.ogg'
 
 	New()
@@ -171,32 +170,11 @@
 		else
 			src.icon_state = "[src.icon_base][rand(1,5)]"
 
-	MouseDrop(over_object, src_location, over_location)
-		if(!isliving(usr))
-			boutput(usr, "<span class='alert'>Only living mobs are able to set the dispenser's output target.</span>")
-			return
-
-		if(get_dist(over_object,src) > 1)
-			boutput(usr, "<span class='alert'>The dispenser is too far away from the target!</span>")
-			return
-
-		if(get_dist(over_object,usr) > 1)
-			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
-			return
-
-		else if (istype(over_object,/turf/simulated/floor/))
-			src.output_target = over_object
-			boutput(usr, "<span class='notice'>You set the dispenser to output to [over_object]!</span>")
-
-		else
-			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
-		return
-
 	proc/take_damage(var/damage_amount = 5)
 		src.health -= damage_amount
 		if (src.health <= 0)
 			if (beaker)
-				beaker.set_loc(src.output_target ? src.output_target : get_turf(src))
+				beaker.set_loc(src.output_target)
 				beaker = null
 			src.visible_message("<span class='alert'><b>[name] falls apart into useless debris!</b></span>")
 			robogibs(src.loc,null)

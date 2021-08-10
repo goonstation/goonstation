@@ -1,6 +1,6 @@
 #define MAX_QUEUE_LENGTH 20
 
-/obj/machinery/manufacturer
+/obj/machinery/dispensing/manufacturer
 	name = "Manufacturing Unit"
 	desc = "A standard fabricator unit capable of producing certain items from various materials."
 	icon = 'icons/obj/manufacturer.dmi'
@@ -34,7 +34,6 @@
 	var/obj/item/reagent_containers/glass/beaker = null
 	var/list/resource_amounts = list()
 	var/area_name = null
-	var/output_target = null
 	var/list/materials_in_use = list()
 	var/list/available = list()
 	var/list/download = list()
@@ -1085,48 +1084,6 @@
 				boutput(usr, "<span class='alert'>No bank account associated with this ID found.</span>")
 				src.scan = null
 		return 0
-
-	MouseDrop(over_object, src_location, over_location)
-		if(!isliving(usr))
-			boutput(usr, "<span class='alert'>Only living mobs are able to set the manufacturer's output target.</span>")
-			return
-
-		if(get_dist(over_object,src) > 1)
-			boutput(usr, "<span class='alert'>The manufacturing unit is too far away from the target!</span>")
-			return
-
-		if(get_dist(over_object,usr) > 1)
-			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
-			return
-
-		if (istype(over_object,/obj/storage/crate/))
-			var/obj/storage/crate/C = over_object
-			if (C.locked || C.welded)
-				boutput(usr, "<span class='alert'>You can't use a currently unopenable crate as an output target.</span>")
-			else
-				src.output_target = over_object
-				boutput(usr, "<span class='notice'>You set the manufacturer to output to [over_object]!</span>")
-
-		else if (istype(over_object,/obj/storage/cart/))
-			var/obj/storage/cart/C = over_object
-			if (C.locked || C.welded)
-				boutput(usr, "<span class='alert'>You can't use a currently unopenable cart as an output target.</span>")
-			else
-				src.output_target = over_object
-				boutput(usr, "<span class='notice'>You set the manufacturer to output to [over_object]!</span>")
-
-		else if (istype(over_object,/obj/table/) || istype(over_object,/obj/rack/))
-			var/obj/O = over_object
-			src.output_target = O.loc
-			boutput(usr, "<span class='notice'>You set the manufacturer to output on top of [O]!</span>")
-
-		else if (istype(over_object,/turf/simulated/floor/) || istype(over_object,/turf/unsimulated/floor/))
-			src.output_target = over_object
-			boutput(usr, "<span class='notice'>You set the manufacturer to output to [over_object]!</span>")
-
-		else
-			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
-		return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (!O || !user)
