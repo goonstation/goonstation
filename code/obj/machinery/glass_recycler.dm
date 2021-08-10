@@ -205,7 +205,7 @@
 			src.visible_message("<span class='notice'>[src] manufactures \a [G]!</span>")
 			return
 
-/obj/machinery/glass_recycler/chemistry //Chemistry doesn't really need all of the drinking glass options and such so I'm limiting it down a notch.
+/obj/machinery/dispensing/glass_recycler/chemistry //Chemistry doesn't really need all of the drinking glass options and such so I'm limiting it down a notch.
 	name = "chemistry glass recycler"
 
 	attack_hand(mob/user as mob)

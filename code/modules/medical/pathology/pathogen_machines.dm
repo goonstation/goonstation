@@ -1703,7 +1703,7 @@
 			for (var/mob/M in range(7))
 				boutput(M, "<span class='notice'>The machine steams up and begins cleaning.</span>")
 
-/obj/machinery/vending/pathology
+/obj/machinery/dispensing/vending/pathology
 	name = "Path-o-Matic"
 	desc = "Pathology equipment dispenser."
 	icon_state = "path"

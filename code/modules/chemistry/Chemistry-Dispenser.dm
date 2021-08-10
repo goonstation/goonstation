@@ -367,7 +367,7 @@
 						update_static_data(usr,ui)
 				return
 
-/obj/machinery/chem_dispenser/alcohol
+/obj/machinery/dispensing/chem_dispenser/alcohol
 	name = "alcohol dispenser"
 	desc = "You see a small, fading warning label on the side of the machine:<br>WARNING: Contents artificially produced using industrial ethanol. Not recommended for human consumption."
 	dispensable_reagents = list("beer", "cider", "gin", "wine", "champagne", \
@@ -383,7 +383,7 @@
 
 
 // Dispenses any drink you want. Designed for the afterlife bar
-/obj/machinery/chem_dispenser/alcohol/ultra
+/obj/machinery/dispensing/chem_dispenser/alcohol/ultra
 	name = "alcohol dispenser"
 	desc = "A heavenly booze dispenser. Makes any drink you want instantly! Cool!"
 	dispensable_reagents = list("bilk","beer","cider","mead","wine","champagne","rum","vodka","bourbon", \
@@ -404,7 +404,7 @@
 
 	dispense_sound = 'sound/misc/pourdrink2.ogg'
 
-/obj/machinery/chem_dispenser/alcohol/hydro
+/obj/machinery/dispensing/chem_dispenser/alcohol/hydro
 	name = "ULTRA DISPENSER"
 	desc = "The most powerful bar dispenser to ever exist."
 	dispensable_reagents = list("bilk","beer","cider","mead","wine","champagne","rum","vodka","bourbon", \
@@ -421,7 +421,7 @@
 						"coconut_milk", "sugar", "water", "vanilla", "tea","mint")
 
 
-/obj/machinery/chem_dispenser/soda
+/obj/machinery/dispensing/chem_dispenser/soda
 	name = "soda fountain"
 	desc = "A soda fountain that definitely does not have a suspicious similarity to the alcohol and chemical dispensers. No sir."
 	dispensable_reagents = list("cola", "juice_lime", "juice_lemon", "juice_orange", \
@@ -435,7 +435,7 @@
 
 	dispense_sound = 'sound/misc/pourdrink2.ogg'
 
-/obj/machinery/chem_dispenser/chef
+/obj/machinery/dispensing/chem_dispenser/chef
 	name = "kitchen fountain"
 	desc = "A soda fountain that definitely does not have a suspicious similarity to the alcohol and chemical dispensers OR the soda fountain. No sir."
 	dispensable_reagents = list("cola", "juice_lime", "juice_lemon", "juice_orange", "mint", "mustard", "pepper", \

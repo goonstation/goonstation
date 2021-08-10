@@ -150,8 +150,8 @@
 				if (istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
 					qdel(O)
 					return
-				if (istype(O,/obj/machinery/vending))
-					var/obj/machinery/vending/V = O
+				if (istype(O,/obj/machinery/dispensing/vending))
+					var/obj/machinery/dispensing/vending/V = O
 					V.fall(src)
 					return
 				if (istype(O,/obj/machinery/portable_atmospherics/canister))

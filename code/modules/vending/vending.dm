@@ -149,37 +149,13 @@
 	proc/create_products()
 		return
 
-	proc/get_output_location()
-		if (!src.output_target)
-			return src.loc
-
-		if (get_dist(src.output_target,src) > 1)
-			src.output_target = null
-			return src.loc
-
-		if (istype(src.output_target,/obj/storage/crate/))
-			var/obj/storage/crate/C = src.output_target
-			if (C.locked || C.welded)
-				src.output_target = null
-				return src.loc
-			else
-				if (C.open)
-					return C.loc
-				else
-					return C
-
-		else if (istype(src.output_target,/turf/simulated/floor/))
-			return src.output_target
-
-		else
-			return src.loc
 
 #define WIRE_EXTEND 1
 #define WIRE_SCANID 2
 #define WIRE_SHOCK 3
 #define WIRE_SHOOTINV 4
 
-/obj/machinery/vending/ex_act(severity)
+/obj/machinery/dispensing/vending/ex_act(severity)
 	switch(severity)
 		if(1.0)
 			qdel(src)
@@ -201,7 +177,7 @@
 		else
 	return
 
-/obj/machinery/vending/blob_act(var/power)
+/obj/machinery/dispensing/vending/blob_act(var/power)
 	if (prob(power * 1.25))
 		SPAWN_DBG(0)
 			if (prob(power / 3) && can_fall == 2)
@@ -216,7 +192,7 @@
 
 	return
 
-/obj/machinery/vending/emag_act(var/mob/user, var/obj/item/card/emag/E)
+/obj/machinery/dispensing/vending/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (!src.emagged)
 		src.emagged = 1
 		if(user)
@@ -224,7 +200,7 @@
 		return 1
 	return 0
 
-/obj/machinery/vending/demag(var/mob/user)
+/obj/machinery/dispensing/vending/demag(var/mob/user)
 	if (!src.emagged)
 		return 0
 	if (user)
@@ -232,7 +208,7 @@
 	src.emagged = 0
 	return 1
 
-/obj/machinery/vending/proc/scan_card(var/obj/item/card/id/card as obj, var/mob/user as mob)
+/obj/machinery/dispensing/vending/proc/scan_card(var/obj/item/card/id/card as obj, var/mob/user as mob)
 	if (!card || !user || !src.acceptcard)
 		return
 	boutput(user, "<span class='notice'>You swipe [card].</span>")
@@ -250,7 +226,7 @@
 		boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
 		src.scan = null
 
-/obj/machinery/vending/proc/generate_HTML(var/update_vending = 0, var/update_wire = 0)
+/obj/machinery/dispensing/vending/proc/generate_HTML(var/update_vending = 0, var/update_wire = 0)
 	src.HTML = ""
 
 	if (!src.wire_HTML || update_wire)
@@ -264,7 +240,7 @@
 
 	src.updateUsrDialog()
 
-/obj/machinery/vending/proc/generate_vending_HTML()
+/obj/machinery/dispensing/vending/proc/generate_vending_HTML()
 	var/list/html_parts = list()
 	html_parts += "<b>Welcome!</b><br>"
 
@@ -306,7 +282,7 @@
 			else
 				html_parts += "<tr><td>[R.product_name]</a></td><td colspan='2' style='text-align: center;'><strong>SOLD OUT</strong></td></tr>"
 		if (player_list)
-			var/obj/machinery/vending/player/T = src
+			var/obj/machinery/dispensing/vending/player/T = src
 			for (var/datum/data/vending_product/player_product/R in src.player_list)
 				var/obj/item/productholder = R.contents[1]
 				var/nextproduct = html_encode(sanitize(productholder.name))
@@ -326,7 +302,7 @@
 	src.vending_HTML = jointext(html_parts, "")
 
 
-/obj/machinery/vending/proc/generate_wire_HTML()
+/obj/machinery/dispensing/vending/proc/generate_wire_HTML()
 	src.vendwires = list("Violet" = 1,\
 		"Orange" = 2,\
 		"Goldenrod" = 3,\
@@ -353,7 +329,7 @@
 	html_parts += "</small></td></tr></tbody></table></TT><br>"
 	src.wire_HTML = jointext(html_parts, "")
 
-/obj/machinery/vending/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/dispensing/vending/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W,/obj/item/electronics/scanner) || istype(W,/obj/item/deconstructor)) // So people don't end up making the vending machines fall on them when they try to scan/deconstruct it
 		return
 	if (istype(W, /obj/item/spacecash))
@@ -417,9 +393,9 @@
 	if (istype(W, /obj/item/vending/restock_cartridge))
 		//check if cartridge type matches the vending machine
 		var/obj/item/vending/restock_cartridge/Q = W
-		if (istype(src, text2path("/obj/machinery/vending/[Q.vendingType]")))
+		if (istype(src, text2path("/obj/machinery/dispensing/vending/[Q.vendingType]")))
 
-		// if (istype(src, text2path("/obj/machinery/vending/[W:vendingType]")))
+		// if (istype(src, text2path("/obj/machinery/dispensing/vending/[W:vendingType]")))
 			//remove all producs, reinitialize array and then create the products like new
 			src.product_list = new()
 			src.create_products()
@@ -441,17 +417,17 @@
 		if (W?.force >= 5 && prob(4 + (W.force - 5)))
 			src.fall(user)
 
-/obj/machinery/vending/hitby(atom/movable/M, datum/thrown_thing/thr)
+/obj/machinery/dispensing/vending/hitby(atom/movable/M, datum/thrown_thing/thr)
 	if (iscarbon(M) && M.throwing && prob(25))
 		src.fall(M)
 		return
 
 	..()
 
-/obj/machinery/vending/attack_ai(mob/user as mob)
+/obj/machinery/dispensing/vending/attack_ai(mob/user as mob)
 	return attack_hand(user)
 
-/obj/machinery/vending/attack_hand(mob/user as mob)
+/obj/machinery/dispensing/vending/attack_hand(mob/user as mob)
 	if (status & (BROKEN|NOPOWER))
 		return
 	src.add_dialog(user)
@@ -477,7 +453,7 @@
 	interact_particle(user,src)
 	return
 
-/obj/machinery/vending/Topic(href, href_list)
+/obj/machinery/dispensing/vending/Topic(href, href_list)
 	if (status & (BROKEN|NOPOWER))
 		return
 	if (usr.stat || usr.restrained())
@@ -579,7 +555,7 @@
 					wagesystem.shipping_budget += round(R.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
 				else
 					//Players get 90% of profit from player vending machines QMs get 10%
-					var/obj/machinery/vending/player/T = src
+					var/obj/machinery/dispensing/vending/player/T = src
 					T.owneraccount.fields["current_money"] += round(R.product_cost * profit)
 					wagesystem.shipping_budget += round(R.product_cost * (1 - profit))
 				if(R.product_amount <= 0 && !isplayer == 0)
@@ -672,7 +648,7 @@
 		return
 	return
 
-/obj/machinery/vending/process()
+/obj/machinery/dispensing/vending/process()
 	if (status & BROKEN)
 		return
 	..()
@@ -696,7 +672,7 @@
 
 	return
 
-/obj/machinery/vending/proc/speak(var/message)
+/obj/machinery/dispensing/vending/proc/speak(var/message)
 	if (status & NOPOWER)
 		return
 
@@ -711,15 +687,15 @@
 
 	return
 
-/obj/machinery/vending/proc/prevend_effect()
+/obj/machinery/dispensing/vending/proc/prevend_effect()
 	playsound(src.loc, 'sound/machines/driveclick.ogg', 30, 1, 0.1)
 	return
 
-/obj/machinery/vending/proc/postvend_effect()
+/obj/machinery/dispensing/vending/proc/postvend_effect()
 	playsound(src.loc, 'sound/machines/ping.ogg', 20, 1, 0.1)
 	return
 
-/obj/machinery/vending/power_change()
+/obj/machinery/dispensing/vending/power_change()
 	if (can_fall == 2)
 		icon_state = icon_fallen ? icon_fallen : "[initial(icon_state)]-fallen"
 		light.disable()
@@ -739,7 +715,7 @@
 				status |= NOPOWER
 				light.disable()
 
-/obj/machinery/vending/proc/fall(mob/living/carbon/victim)
+/obj/machinery/dispensing/vending/proc/fall(mob/living/carbon/victim)
 	if (can_fall != 1)
 		return
 	can_fall = 2
@@ -767,7 +743,7 @@
 	return
 
 //Oh no we're malfunctioning!  Dump out some product and break.
-/obj/machinery/vending/proc/malfunction()
+/obj/machinery/dispensing/vending/proc/malfunction()
 	for(var/datum/data/vending_product/R in src.product_list)
 		if (R.product_amount <= 0) //Try to use a record that actually has something to dump.
 			continue
@@ -792,7 +768,7 @@
 	return
 
 //Somebody cut an important wire and now we're following a new definition of "pitch."
-/obj/machinery/vending/proc/throw_item(var/item_name_to_throw = "")
+/obj/machinery/dispensing/vending/proc/throw_item(var/item_name_to_throw = "")
 	var/mob/living/target = locate() in view(7,src)
 	if(!target)
 		return null
@@ -815,7 +791,7 @@
 			throw_item_act(vending_product, target)
 			return vending_product
 
-/obj/machinery/vending/proc/throw_item_act(var/datum/data/vending_product/R, var/mob/living/target)
+/obj/machinery/dispensing/vending/proc/throw_item_act(var/datum/data/vending_product/R, var/mob/living/target)
 	var/obj/throw_item = null
 	//Big if/else trying to create the object properly
 	if (ispath(R.product_path))
@@ -859,15 +835,15 @@
 	return 0
 
 
-/obj/machinery/vending/proc/isWireColorCut(var/wireColor)
+/obj/machinery/dispensing/vending/proc/isWireColorCut(var/wireColor)
 	var/wireFlag = APCWireColorToFlag[wireColor]
 	return ((src.wires & wireFlag) == 0)
 
-/obj/machinery/vending/proc/isWireCut(var/wireIndex)
+/obj/machinery/dispensing/vending/proc/isWireCut(var/wireIndex)
 	var/wireFlag = APCIndexToFlag[wireIndex]
 	return ((src.wires & wireFlag) == 0)
 
-/obj/machinery/vending/proc/cut(var/wireColor)
+/obj/machinery/dispensing/vending/proc/cut(var/wireColor)
 	var/wireFlag = APCWireColorToFlag[wireColor]
 	var/wireIndex = APCWireColorToIndex[wireColor]
 	src.wires &= ~wireFlag
@@ -885,7 +861,7 @@
 				src.ai_control_enabled = 0
 	src.generate_HTML(0, 1)
 
-/obj/machinery/vending/proc/mend(var/wireColor)
+/obj/machinery/dispensing/vending/proc/mend(var/wireColor)
 	var/wireFlag = APCWireColorToFlag[wireColor]
 	var/wireIndex = APCWireColorToIndex[wireColor] //not used in this function
 	src.wires |= wireFlag
@@ -898,7 +874,7 @@
 			src.shoot_inventory = 0
 	src.generate_HTML(0, 1)
 
-/obj/machinery/vending/proc/pulse(var/wireColor)
+/obj/machinery/dispensing/vending/proc/pulse(var/wireColor)
 	var/wireIndex = APCWireColorToIndex[wireColor]
 	switch (wireIndex)
 		if (WIRE_EXTEND)
@@ -914,7 +890,7 @@
 	src.generate_HTML(0, 1)
 
 //"Borrowed" airlock shocking code.
-/obj/machinery/vending/proc/shock(mob/user, prb)
+/obj/machinery/dispensing/vending/proc/shock(mob/user, prb)
 	if (!prob(prb))
 		return 0
 
@@ -926,7 +902,7 @@
 	else
 		return 0
 
-/obj/machinery/vending/electrocute(mob/user, netnum)
+/obj/machinery/dispensing/vending/electrocute(mob/user, netnum)
 	if (!netnum)		// unconnected cable is unpowered
 		return 0
 
@@ -952,7 +928,7 @@
 	id = "right_vendor"
 	icon = 'icons/obj/items/tools/crowbar.dmi'
 	icon_state = "crowbar"
-	var/obj/machinery/vending/vendor = null
+	var/obj/machinery/dispensing/vending/vendor = null
 
 	New(vending_machine, var/Owner)
 		src.vendor = vending_machine
@@ -995,7 +971,7 @@
 #undef WIRE_SHOCK
 #undef WIRE_SHOOTINV
 
-/obj/machinery/vending/coffee
+/obj/machinery/dispensing/vending/coffee
 	name = "coffee machine"
 	desc = "A Robust Coffee vending machine."
 	pay = 1
@@ -1017,7 +993,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/covfefe, 10, cost=PAY_TRADESMAN, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola, rand(1, 6), cost=PAY_UNTRAINED/5, hidden=1)
 
-/obj/machinery/vending/snack
+/obj/machinery/dispensing/vending/snack
 	name = "snack machine"
 	desc = "Tasty treats for crewman eats."
 	pay = 1
@@ -1048,7 +1024,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/tvdinner, 10, cost=PAY_UNTRAINED/6)
 
 
-/obj/machinery/vending/cigarette
+/obj/machinery/dispensing/vending/cigarette
 	name = "cigarette machine"
 	desc = "If you want to get cancer, might as well do it in style!"
 	pay = 1
@@ -1081,7 +1057,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/cigpacket/random, rand(0, 1), hidden=1, cost=420)
 		product_list += new/datum/data/vending_product(/obj/item/cigpacket/cigarillo/juicer, rand(6, 9), hidden=1, cost=69)
 
-/obj/machinery/vending/medical
+/obj/machinery/dispensing/vending/medical
 	name = "NanoMed Plus"
 	desc = "Medical drug dispenser."
 	icon_state = "med"
@@ -1138,7 +1114,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/vape/medical, 1, hidden=1, cost=400)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/bath_bomb, rand(7, 13), hidden=1, cost=100)
 
-/obj/machinery/vending/medical_public
+/obj/machinery/dispensing/vending/medical_public
 	name = "Public MiniMed"
 	desc = "Medical supplies for everyone! Almost nearly as good as what the professionals use, kinda!"
 	pay = 1
@@ -1187,7 +1163,7 @@
 		else
 			slogan_list += "ERROR: OUT OF COFFEE!"
 
-/obj/machinery/vending/security
+/obj/machinery/dispensing/vending/security
 	name = "SecTech"
 	desc = "A security equipment vendor."
 	icon_state = "sec"
@@ -1219,7 +1195,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/device/flash/turbo, rand(1, 6), hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38, rand(1, 2), hidden=1) // Obtaining a backpack full of lethal ammo required no effort whatsoever, hence why nobody ordered AP speedloaders from the Syndicate (Convair880).
 
-/obj/machinery/vending/security_ammo //ass jam time yes
+/obj/machinery/dispensing/vending/security_ammo //ass jam time yes
 	name = "AmmoTech"
 	desc = "A restricted ammunition vendor."
 	icon_state = "sec"
@@ -1244,7 +1220,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts, 3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts/anti_mutant, 3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12/weak, 1, hidden=1) // this may be a bad idea, but it's only one box //Maybe don't put the delimbing version in here
-/obj/machinery/vending/cola
+/obj/machinery/dispensing/vending/cola
 	name = "soda machine"
 	pay = 1
 
@@ -1299,7 +1275,7 @@
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater, 10, cost=PAY_UNTRAINED/4)
 			product_list += new/datum/data/vending_product("/obj/item/reagent_containers/food/drinks/cola/random", 10, cost=PAY_UNTRAINED/10)
 
-/obj/machinery/vending/electronics
+/obj/machinery/dispensing/vending/electronics
 	name = "ElecTek Vendomaticotron"
 	desc = "Dispenses electronics equipment."
 	icon_state = "generic"
@@ -1328,7 +1304,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/electronics/bulb, 30)
 		product_list += new/datum/data/vending_product(/obj/item/electronics/relay, 30)
 
-/obj/machinery/vending/mechanics
+/obj/machinery/dispensing/vending/mechanics
 	name = "MechComp Dispenser"
 	desc = "Dispenses electronics equipment."
 	icon_state = "generic"
@@ -1384,7 +1360,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/wificomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/wifisplit, 30)
 
-/obj/machinery/vending/computer3
+/obj/machinery/dispensing/vending/computer3
 	name = "CompTech"
 	desc = "A computer equipment vendor."
 	icon_state = "comp"
@@ -1413,7 +1389,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/peripheral/drive/tape_reader, rand(1, 6), hidden=1)
 
 //cogwerks- adding a floppy disk vendor
-/obj/machinery/vending/floppy
+/obj/machinery/dispensing/vending/floppy
 	name = "SoftTech"
 	desc = "A computer software vendor."
 	icon_state = "software"
@@ -1444,7 +1420,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy, rand(5,8), cost=PAY_UNTRAINED/5)
 
 
-/obj/machinery/vending/pda //cogwerks: vendor to clean up the pile of PDA carts a bit
+/obj/machinery/dispensing/vending/pda //cogwerks: vendor to clean up the pile of PDA carts a bit
 	name = "CartyParty"
 	desc = "A PDA cartridge vendor."
 	icon_state = "pda"
@@ -1485,7 +1461,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/head, 1, cost=PAY_IMPORTANT/3, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/clown, 1, cost=PAY_DUMBCLOWN, hidden=1)
 
-/obj/machinery/vending/book //cogwerks: eventually this oughta have some of the wiki job guides available in it
+/obj/machinery/dispensing/vending/book //cogwerks: eventually this oughta have some of the wiki job guides available in it
 	name = "Books4u"
 	desc = "A printed text vendor."
 	icon_state = "books"
@@ -1528,7 +1504,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/critter_compendium, 1, cost=PAY_UNTRAINED/5, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/syndies_guide, 1, cost=PAY_UNTRAINED/5, hidden=1)
 
-/obj/machinery/vending/kitchen
+/obj/machinery/dispensing/vending/kitchen
 	name = "FoodTech"
 	desc = "Food storage unit."
 	icon_state = "food"
@@ -1619,7 +1595,7 @@
 /obj/item/machineboard/vending
 	name = "vending machine module"
 	desc = "An assembly used in the construction of a vending machine."
-	machinepath = "/obj/machinery/vending/player"
+	machinepath = "/obj/machinery/dispensing/vending/player"
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "base-module"
 
@@ -1628,11 +1604,11 @@
 
 /obj/item/machineboard/vending/monkeys
 	name = "Valuchimp module"
-	machinepath = "/obj/machinery/vending/monkey"
+	machinepath = "/obj/machinery/dispensing/vending/monkey"
 	icon_state = "monkey-module"
 	mats = 0 //No!!
 
-/obj/machinery/vendingframe
+/obj/machinery/dispensing/vendingframe
 	name = "vending machine frame"
 	desc = "A generic vending machine frame."
 	icon = 'icons/obj/vending.dmi'
@@ -1735,20 +1711,20 @@
 		if (iswrenchingtool(target))
 			if (!wrenched)
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/dispensing/vendingframe/proc/setFrameState,\
 				list("WRENCHED", user), target.icon, target.icon_state, null, null)
 			else if (!boardinstalled && wrenched)
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/dispensing/vendingframe/proc/setFrameState,\
 				list("UNWRENCHED", user), target.icon, target.icon_state, null, null)
 		else if (istype(target, /obj/item/machineboard/vending))
 			if (wrenched && !boardinstalled)
-				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/dispensing/vendingframe/proc/setFrameState,\
 				list("BOARDINSTALLED", user, target), target.icon, target.icon_state, null, null)
 		else if (istype(target, /obj/item/cable_coil) && boardinstalled && !wiresinstalled)
 			var/obj/item/cable_coil/targetcoil = target
 			if (targetcoil.amount >= 5)
-				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/dispensing/vendingframe/proc/setFrameState,\
 				list("WIRESINSTALLED", user, target), target.icon, target.icon_state, null, null)
 			else if (!wiresinstalled && boardinstalled)
 				boutput(user, "<span class='alert'>You need at least five pieces of cable to wire the vending machine.</span>")
@@ -1759,7 +1735,7 @@
 			setFrameState("GLASSINSTALLED", user, target)
 		else if (isscrewingtool(target) && glassed)
 			boutput(user, "<span class='notice'>You connect the screen.</span>")
-			var/obj/machinery/vending/B = new vendingtype(src.loc)
+			var/obj/machinery/dispensing/vending/B = new vendingtype(src.loc)
 			logTheThing("station", user, null, "assembles [B] [log_loc(B)]")
 			qdel(src)
 		else if (ispryingtool(target))
@@ -1772,11 +1748,11 @@
 		else if (isweldingtool(target) && !wrenched)
 			var/obj/item/weldingtool/T = target
 			if (T.try_weld(user,0,-1,0,1))
-				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/dispensing/vendingframe/proc/setFrameState,\
 				list("DECONSTRUCTED", user, target), target.icon, target.icon_state, null, null)
 		else . = ..()
 
-/obj/machinery/vending/player
+/obj/machinery/dispensing/vending/player
 	name = "Build-A-Vend" // Thanks Eagletanker
 	icon_state = "player"
 	desc = "A vending machine offering presumably legal goods sold by other crewmembers."
@@ -2004,13 +1980,13 @@
 			//Vends can change the name of list entries so generate HTML
 			src.generate_HTML(1, 0)
 
-/obj/machinery/vending/player/fallen
+/obj/machinery/dispensing/vending/player/fallen
 	New()
 		. = ..()
 		src.fall()
 //Somewhere out in the vast nothingness of space, a chef (and an admin) is crying.
 
-/obj/machinery/vending/pizza
+/obj/machinery/dispensing/vending/pizza
 	name = "pizza vending machine"
 	icon_state = "pizza"
 	desc = "A vending machine that serves... pizza?"
@@ -2113,12 +2089,12 @@
 			updateUsrDialog()
 		return
 
-/obj/machinery/vending/pizza/fallen
+/obj/machinery/dispensing/vending/pizza/fallen
 	New()
 		. = ..()
 		src.fall()
 
-/obj/machinery/vending/monkey
+/obj/machinery/dispensing/vending/monkey
 	name = "ValuChimp"
 	desc = "More fun than a barrel of monkeys! Monkeys may or may not be synthflesh replicas, may or may not contain partially-hydrogenated banana oil."
 	icon_state = "monkey"
@@ -2141,7 +2117,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/banana, rand(1,20), hidden=1)
 
 
-/obj/machinery/vending/magivend
+/obj/machinery/dispensing/vending/magivend
 	name = "MagiVend"
 	desc = "A magic vending machine."
 	icon_state = "wiz"
@@ -2171,7 +2147,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe/necro, 1, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/staff/crystal, 1)
 
-/obj/machinery/vending/standard
+/obj/machinery/dispensing/vending/standard
 	desc = "A standard vending machine."
 	icon_state = "standard"
 	icon_panel = "standard-panel"
@@ -2198,7 +2174,7 @@
 
 
 
-/obj/machinery/vending/hydroponics
+/obj/machinery/dispensing/vending/hydroponics
 	name = "GardenGear"
 	desc = "A vendor for Hydroponics related equipment."
 	icon_state = "gardengear"
@@ -2237,13 +2213,13 @@
 		if (prob(25))
 			product_list += new/datum/data/vending_product(/obj/item/seed/alien, 1, hidden=1)
 
-/obj/machinery/vending/hydroponics/mean_solarium_bullshit
-	mechanics_type_override = /obj/machinery/vending/hydroponics
+/obj/machinery/dispensing/vending/hydroponics/mean_solarium_bullshit
+	mechanics_type_override = /obj/machinery/dispensing/vending/hydroponics
 	create_products()
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/device/key/cheget,1, 954, 1)
 
-/obj/machinery/vending/fortune
+/obj/machinery/dispensing/vending/fortune
 #ifdef HALLOWEEN
 	name = "Necromancer Zoldorf"
 	icon_state = "hfortuneteller"
@@ -2397,7 +2373,7 @@
 		else
 			..()
 
-/obj/machinery/vending/alcohol
+/obj/machinery/dispensing/vending/alcohol
 	name = "Cap'n Bubs' Booze-O-Mat"
 	desc = "A vending machine filled with various kinds of alcoholic beverages and things for fancying up drinks."
 	pay = 1
@@ -2435,7 +2411,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff, 1, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/abg, 2, cost=PAY_TRADESMAN, hidden=1)
 
-/obj/machinery/vending/chem
+/obj/machinery/dispensing/vending/chem
 	name = "ChemDepot"
 	desc = "Some odd machine that dispenses little vials and packets of chemicals for exorbitant amounts of money. Is this thing even working right?"
 	icon_state = "chem"
@@ -2474,7 +2450,7 @@
 		for (var/i = 0, i < lock3, i++)
 			product_list += new/datum/data/vending_product(/obj/item/cigpacket/random, 1, cost = rand(1000, 10000), hidden=1)
 
-/obj/machinery/vending/cards
+/obj/machinery/dispensing/vending/cards
 	name = "gaming machine"
 	desc = "A machine that sells various kinds of recreational items, notably Spacemen the Grifening trading cards and dice!"
 	pay = 1
@@ -2510,7 +2486,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/dice/weighted, rand(1,3), cost=PAY_TRADESMAN/2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/dice/d1, rand(0,1), cost=PAY_TRADESMAN/3, hidden=1)
 
-/obj/machinery/vending/clothing
+/obj/machinery/dispensing/vending/clothing
 	name = "FancyPantsCo Sew-O-Matic"
 	desc = "A clothing vendor."
 	icon_state = "clothes"
@@ -2578,7 +2554,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/dress_shoes, 1, cost=PAY_IMPORTANT/5, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/ring/gold, 2, cost=PAY_IMPORTANT, hidden=1)
 
-/obj/machinery/vending/janitor
+/obj/machinery/dispensing/vending/janitor
 	name = "JaniTech Vendor"
 	desc = "One stop shop for all your custodial needs."
 	icon_state = "janitor"
@@ -2608,7 +2584,7 @@
 
 		product_list += new/datum/data/vending_product(/obj/item/sponge/cheese, 2, hidden=1)
 
-/obj/machinery/vending/air_vendor
+/obj/machinery/dispensing/vending/air_vendor
 	name = "Oxygen Vending Machine"
 	desc = "Here, you can buy the oxygen that you need to live."
 	icon_state = "O2vend"

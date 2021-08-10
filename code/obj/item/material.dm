@@ -878,8 +878,8 @@
 		BAR.setMaterial(MAT)
 		BAR.change_stack_amount(amount - 1)
 
-		if (istype(output_location, /obj/machinery/manufacturer))
-			var/obj/machinery/manufacturer/M = output_location
+		if (istype(output_location, /obj/machinery/dispensing/manufacturer))
+			var/obj/machinery/dispensing/manufacturer/M = output_location
 			M.load_item(BAR)
 		else
 			BAR.set_loc(output_location)
@@ -976,25 +976,3 @@
 			if (user.loc != staystill) break
 		boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
 		return
-
-	proc/get_output_location()
-		if (!output_location)
-			return src.loc
-
-		if (!IN_RANGE(src.output_location, src, 1))
-			output_location = null
-			return src.loc
-
-		if (istype(output_location,/obj/machinery/manufacturer))
-			var/obj/machinery/manufacturer/M = output_location
-			if (M.status & NOPOWER || M.status & BROKEN | M.dismantle_stage > 0)
-				return M.loc
-			return M
-
-		if (istype(output_location,/obj/storage))
-			var/obj/storage/S = output_location
-			if (S.locked || S.welded || S.open)
-				return S.loc
-			return S
-
-		return output_location

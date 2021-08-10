@@ -419,7 +419,7 @@
 			return
 
 		if(over_object == src)
-			output_location = null
+			output_target = null
 			boutput(usr, "<span class='notice'>You reset the [src]'s output target.</span>")
 			return
 
@@ -436,7 +436,7 @@
 			if (C.locked || C.welded)
 				boutput(usr, "<span class='alert'>You can't use a currently unopenable crate as an output target.</span>")
 			else
-				src.output_location = over_object
+				src.output_target = over_object
 				boutput(usr, "<span class='notice'>You set the [src] to output to [over_object]!</span>")
 
 		else if (istype(over_object,/obj/storage/cart/))
@@ -444,35 +444,62 @@
 			if (C.locked || C.welded)
 				boutput(usr, "<span class='alert'>You can't use a currently unopenable cart as an output target.</span>")
 			else
-				src.output_location = over_object
+				src.output_target = over_object
 				boutput(usr, "<span class='notice'>You set the [src] to output to [over_object]!</span>")
 
-		else if (istype(over_object,/obj/machinery/manufacturer/))
-			var/obj/machinery/manufacturer/M = over_object
+		else if (istype(over_object,/obj/machinery/dispensing/manufacturer/))
+			var/obj/machinery/dispensing/manufacturer/M = over_object
 			if (M.status & BROKEN || M.status & NOPOWER || M.dismantle_stage > 0)
 				boutput(usr, "<span class='alert'>You can't use a non-functioning manufacturer as an output target.</span>")
 			else
-				src.output_location = M
+				src.output_target = M
 				boutput(usr, "<span class='notice'>You set the [src] to output to [over_object]!</span>")
 
-		else if (istype(over_object, /obj/machinery/nanofab))
-			var/obj/machinery/nanofab/N = over_object
+		else if (istype(over_object, /obj/machinery/dispensing/nanofab))
+			var/obj/machinery/dispensing/nanofab/N = over_object
 			if (N.status & BROKEN || N.status & NOPOWER)
 				boutput(usr, "<span class='alert'>You can't use a non-functioning nano-fabricator as an output target.</span>")
 			else
-				src.output_location = N
+				src.output_target = N
 				boutput(usr, "<span class='notice'>You set the [src] to output to [over_object]!</span>")
 
 		else if (istype(over_object,/obj/table/) && istype(over_object,/obj/rack/))
 			var/obj/O = over_object
-			src.output_location = O.loc
+			src.output_target = O.loc
 			boutput(usr, "<span class='notice'>You set the [src] to output on top of [O]!</span>")
 
 		else if (istype(over_object,/turf/simulated/floor/))
-			src.output_location = over_object
+			src.output_target = over_object
 			boutput(usr, "<span class='notice'>You set the [src] to output to [over_object]!</span>")
 
 		else
 
 			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
+
+	proc/get_output_location(var/atom/A, var/ejection = 0)
+		if (isnull(output_target))
+			return src.loc
+
+		if (!IN_RANGE(src.output_target, src, 1))
+			output_target = null
+			return src.loc
+
+		if (istype(src.output_target,/obj/machinery/dispensing/manufacturer))
+			var/obj/machinery/dispensing/manufacturer/M = src.output_target
+			if (M.status & BROKEN || M.status & NOPOWER || M.dismantle_stage > 0)
+				src.output_target = null
+				return src.loc
+			if (A && istype(A,M.base_material_class))
+				return M
+			else
+				return M.loc
+
+		if (istype(output_target,/obj/storage))
+			var/obj/storage/C = output_target
+			if (C.locked || C.welded || C.open)
+				return C.loc
+			return C
+		
+
+		return output_target

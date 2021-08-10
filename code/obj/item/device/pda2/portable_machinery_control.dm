@@ -137,8 +137,8 @@
 				. += "\[<A href='byond://?src=\ref[src];op=return'>Send to home turf</A>\]<BR>"
 				. += "<HR><A href='byond://?src=\ref[src];op=machinerylist'>Return to list</A>"
 
-			else if (istype(src.active, /obj/machinery/vending/port_a_nanomed/))
-				var/obj/machinery/vending/port_a_nanomed/P2 = src.active
+			else if (istype(src.active, /obj/machinery/dispensing/vending/port_a_nanomed/))
+				var/obj/machinery/dispensing/vending/port_a_nanomed/P2 = src.active
 
 				. += "Location: [get_area(P2)] (Home: [P2.homeloc ? "[get_area(P2.homeloc)]" : "N/A"])"
 
@@ -325,7 +325,7 @@
 
 /datum/computer/file/pda_program/portable_machinery_control/portananomed
 	name = "NanoMed Remote" // Damn forced line breaks.
-	our_machinery = /obj/machinery/vending/port_a_nanomed/
+	our_machinery = /obj/machinery/dispensing/vending/port_a_nanomed/
 	machinery_name = "Port-a-NanoMed"
 	size = 4
 
@@ -333,7 +333,7 @@
 		if (!src.master)
 			return
 
-		for (var/obj/machinery/vending/port_a_nanomed/M in portable_machinery)
+		for (var/obj/machinery/dispensing/vending/port_a_nanomed/M in portable_machinery)
 			var/turf/M_loc = get_turf(M)
 			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
 				continue

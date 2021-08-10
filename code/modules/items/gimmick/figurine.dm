@@ -770,7 +770,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 			return
 		..()
 
-/obj/machinery/vending/capsule
+/obj/machinery/dispensing/vending/capsule
 	name = "capsule machine"
 	desc = "A little figure in every capsule, guaranteed*!"
 	pay = 1

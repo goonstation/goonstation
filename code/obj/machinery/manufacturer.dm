@@ -513,7 +513,7 @@
 				dat+="<B>Current Funds</B>: [account.fields["current_money"]] Credits<br>"
 		dat+= src.temp
 		dat += "<HR><B>Ores Available for Purchase:</B><br><small>"
-		for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
+		for_by_tcl(S, /obj/machinery/dispensing/ore_cloud_storage_container)
 			if(S.broken)
 				continue
 			dat += "<B>[S.name] at [get_area(S)]:</B><br>"
@@ -772,7 +772,7 @@
 					src.scan_card(I)
 
 			if (href_list["purchase"])
-				var/obj/machinery/ore_cloud_storage_container/storage = locate(href_list["storage"])
+				var/obj/machinery/dispensing/ore_cloud_storage_container/storage = locate(href_list["storage"])
 				var/ore = href_list["ore"]
 				var/datum/ore_cloud_data/OCD = storage.ores[ore]
 				var/price = OCD.price
@@ -1800,49 +1800,6 @@
 		else
 			logTheThing("debug", null, null, "<b>obj/manufacturer:</b> [src.name]-[src.type] empty free resources list!")
 
-	proc/get_output_location(var/atom/A,var/ejection = 0)
-		if (!src.output_target)
-			return src.loc
-
-		if (get_dist(src.output_target,src) > 1)
-			src.output_target = null
-			return src.loc
-
-		if (istype(src.output_target,/obj/storage/crate/))
-			var/obj/storage/crate/C = src.output_target
-			if (C.locked || C.welded)
-				src.output_target = null
-				return src.loc
-			else
-				if (C.open)
-					return C.loc
-				else
-					return C
-		if (istype(src.output_target,/obj/storage/cart/))
-			var/obj/storage/cart/C = src.output_target
-			if (C.locked || C.welded)
-				src.output_target = null
-				return src.loc
-			else
-				if (C.open)
-					return C.loc
-				else
-					return C
-		else if (istype(src.output_target,/obj/machinery/manufacturer))
-			var/obj/machinery/manufacturer/M = src.output_target
-			if (M.status & BROKEN || M.status & NOPOWER || M.dismantle_stage > 0)
-				src.output_target = null
-				return src.loc
-			if (A && istype(A,M.base_material_class))
-				return M
-			else
-				return M.loc
-
-		else if (istype(src.output_target,/turf/simulated/floor/) || istype(src.output_target,/turf/unsimulated/floor/))
-			return src.output_target
-
-		else
-			return src.loc
 
 // Blueprints
 
@@ -1977,7 +1934,7 @@
 
 // Fabricator Defines
 
-/obj/machinery/manufacturer/general
+/obj/machinery/dispensing/manufacturer/general
 	name = "General Manufacturer"
 	desc = "A manufacturing unit calibrated to produce tools and general purpose items."
 	free_resource_amt = 5
@@ -2038,7 +1995,7 @@
 		/datum/manufacture/bullet_smoke,
 		/datum/manufacture/stapler)
 
-/obj/machinery/manufacturer/robotics
+/obj/machinery/dispensing/manufacturer/robotics
 	name = "Robotics Fabricator"
 	desc = "A manufacturing unit calibrated to produce robot-related equipment."
 	icon_state = "fab-robotics"
@@ -2138,7 +2095,7 @@
 	/datum/manufacture/cyberbutt,
 	/datum/manufacture/robup_expand)
 
-/obj/machinery/manufacturer/medical
+/obj/machinery/dispensing/manufacturer/medical
 	name = "Medical Fabricator"
 	desc = "A manufacturing unit calibrated to produce medical equipment."
 	icon_state = "fab-med"
@@ -2204,7 +2161,7 @@
 	hidden = list(/datum/manufacture/cyberheart,
 	/datum/manufacture/cybereye)
 
-/obj/machinery/manufacturer/mining
+/obj/machinery/dispensing/manufacturer/mining
 	name = "Mining Fabricator"
 	desc = "A manufacturing unit calibrated to produce mining related equipment."
 	icon_state = "fab-mining"
@@ -2255,7 +2212,7 @@
 	/datum/manufacture/RCDammolarge,
 	/datum/manufacture/sds)
 
-/obj/machinery/manufacturer/hangar
+/obj/machinery/dispensing/manufacturer/hangar
 	name = "Ship Component Fabricator"
 	desc = "A manufacturing unit calibrated to produce parts for ships."
 	icon_state = "fab-hangar"
@@ -2300,7 +2257,7 @@
 		/datum/manufacture/pod/srs
 		)
 
-/obj/machinery/manufacturer/uniform // add more stuff to this as needed, but it should be for regular uniforms the HoP might hand out, not tons of gimmicks. -cogwerks
+/obj/machinery/dispensing/manufacturer/uniform // add more stuff to this as needed, but it should be for regular uniforms the HoP might hand out, not tons of gimmicks. -cogwerks
 	name = "Uniform Manufacturer"
 	desc = "A manufacturing unit calibrated to produce workplace uniforms."
 	icon_state = "fab-jumpsuit"
@@ -2358,7 +2315,7 @@
 
 /// cogwerks - a gas extractor for the engine
 
-/obj/machinery/manufacturer/gas
+/obj/machinery/dispensing/manufacturer/gas
 	name = "Gas Extractor"
 	desc = "A manufacturing unit that can produce gas canisters from certain ores."
 	icon_state = "fab-mining"
@@ -2374,7 +2331,7 @@
 
 // a blank manufacturer for mechanics
 
-/obj/machinery/manufacturer/mechanic
+/obj/machinery/dispensing/manufacturer/mechanic
 	name = "Reverse-Engineering Fabricator"
 	desc = "A manufacturing unit designed to create new things from blueprints."
 	icon_state = "fab-hangar"
@@ -2384,7 +2341,7 @@
 		/obj/item/material_piece/copper,
 		/obj/item/material_piece/glass)
 
-/obj/machinery/manufacturer/personnel
+/obj/machinery/dispensing/manufacturer/personnel
 	name = "Personnel Equipment Manufacturer"
 	desc = "A manufacturing unit that produces important identification and access equipment."
 	icon_state = "fab-access"
@@ -2398,7 +2355,7 @@
 
 //combine personnel + uniform manufactuer here. this is 'cause destiny doesn't have enough room! arrg!
 //and i hate this, i do, but you're gonna have to update this list whenever you update /personnel or /uniform
-/obj/machinery/manufacturer/hop_and_uniform
+/obj/machinery/dispensing/manufacturer/hop_and_uniform
 	name = "Personnel Manufacturer"
 	desc = "A manufacturing unit calibrated to produce workplace uniforms and identification equipment."
 	icon_state = "fab-access"
@@ -2452,7 +2409,7 @@
 	/datum/manufacture/patch,
 	/datum/manufacture/hat_ltophat)
 
-/obj/machinery/manufacturer/qm // This manufacturer just creates different crated and boxes for the QM. Lets give their boring lives at least something more interesting.
+/obj/machinery/dispensing/manufacturer/qm // This manufacturer just creates different crated and boxes for the QM. Lets give their boring lives at least something more interesting.
 	name = "Crate Manufacturer"
 	desc = "A manufacturing unit calibrated to produce different crates and boxes."
 	icon_state = "fab-crates"
@@ -2469,7 +2426,7 @@
 
 	hidden = list(/datum/manufacture/classcrate)
 
-/obj/machinery/manufacturer/zombie_survival
+/obj/machinery/dispensing/manufacturer/zombie_survival
 	name = "Uber-Extreme Survival Manufacturer"
 	desc = "A manufacturing unit calibrated to produce items useful in surviving extreme scenarios."
 	icon_state = "fab-crates"
@@ -2527,7 +2484,7 @@
 /datum/action/bar/manufacturer
 	duration = 1000
 	id = "manufacturer"
-	var/obj/machinery/manufacturer/MA
+	var/obj/machinery/dispensing/manufacturer/MA
 	var/completed = 0
 
 	New(machine, dur)

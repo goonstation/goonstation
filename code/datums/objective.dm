@@ -533,7 +533,7 @@ proc/create_fluff(datum/mind/target)
 			if ("cyborg recharge stations")
 				target_equipment = /obj/machinery/recharge_station
 			if ("chem dispensers")
-				target_equipment = /obj/machinery/chem_dispenser
+				target_equipment = /obj/machinery/dispensing/chem_dispenser
 			if ("plasma canisters")
 				target_equipment = /obj/machinery/portable_atmospherics/canister/toxins
 			if ("nano-crucibles")

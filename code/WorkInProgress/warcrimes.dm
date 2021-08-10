@@ -59,7 +59,7 @@ var/fartcount = 0
 
 
 
-/obj/machinery/vending/meat //MEAT VENDING MACHINE
+/obj/machinery/dispensing/vending/meat //MEAT VENDING MACHINE
 	name = "Meat4cash"
 	desc = "An exotic meat vendor."
 	icon_state = "steak"

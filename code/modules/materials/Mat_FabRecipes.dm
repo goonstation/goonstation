@@ -52,7 +52,7 @@
 		required_parts.Add(new/datum/matfab_part/variable {part_name = "Hard material"; required_amount = 5; required_value = 70; greater_than = 1; required_property = "hard"; proper_name = "hardness"} ())
 		required_parts.Add(new/datum/matfab_part/variable {part_name = "Dense material"; required_amount = 2; required_value = 60; greater_than = 1; required_property = "density"; proper_name = "density"} ())
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/clothing/suit/space/suit = new()
 			suit.set_loc(getOutputLocation(owner))
@@ -69,7 +69,7 @@
 		required_parts.Add(new/datum/matfab_part/metal {part_name = "Reinforcement"; required_amount = 3} ())
 		required_parts.Add(new/datum/matfab_part/crystal {part_name = "Visor"; required_amount = 2} ())
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/clothing/suit/space/suit = new()
 			var/obj/item/clothing/head/helmet/space/helmet = new()
@@ -91,7 +91,7 @@
 		required_parts.Add(new/datum/matfab_part/radiocative_material {part_name = "Internal"; required_amount = 45} ())
 		required_parts.Add(new/datum/matfab_part/charge {part_name = "Charge"; required_amount = 1} ())
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/mining_mod/conc/newObj = new()
 			newObj.set_loc(getOutputLocation(owner))
@@ -106,7 +106,7 @@
 		..()
 		required_parts.Add(new/datum/matfab_part/anymat {part_name = "Base"; required_amount = 5} ())
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/mining_head/pick/newObj = new()
 			var/obj/item/source = getObjectByPartName("Base")
@@ -126,7 +126,7 @@
 		..()
 		required_parts.Add(new/datum/matfab_part/anymat {part_name = "Base"; required_amount = 5} ())
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/mining_head/blaster/newObj = new()
 			var/obj/item/source = getObjectByPartName("Base")
@@ -145,7 +145,7 @@
 		..()
 		required_parts.Add(new/datum/matfab_part/anymat {part_name = "Base"; required_amount = 5} ())
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/mining_head/hammer/newObj = new()
 			var/obj/item/source = getObjectByPartName("Base")
@@ -164,7 +164,7 @@
 		..()
 		required_parts.Add(new/datum/matfab_part/anymat {part_name = "Base"; required_amount = 5} ())
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/mining_head/drill/newObj = new()
 			var/obj/item/source = getObjectByPartName("Base")
@@ -185,7 +185,7 @@
 		required_parts.Add(new/datum/matfab_part/optionalmat_mining {part_name = "Tool Mod"; required_amount = 1} ())
 		..()
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/newtype = null
 			var/obj/item/mining_tools/newObj
@@ -238,7 +238,7 @@
 		required_parts.Add(new/datum/matfab_part/metal {part_name = "Coil"; required_amount = 1} ())
 		..()
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/coil/small/newObj = new()
 			var/obj/item/source = getObjectByPartName("Coil")
@@ -257,7 +257,7 @@
 		required_parts.Add(new/datum/matfab_part/metal {part_name = "Coil"; required_amount = 2} ())
 		..()
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/coil/large/newObj = new()
 			var/obj/item/source = getObjectByPartName("Coil")
@@ -276,7 +276,7 @@
 		required_parts.Add(new/datum/matfab_part/metalorcrystalororganic {part_name = "Arrowhead"; required_amount = 1} ())
 		..()
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		var/obj/item/arrowhead/newObj = new()
 		var/obj/item/source = getObjectByPartName("Arrowhead")
 		if(source?.material)
@@ -295,7 +295,7 @@
 		required_parts.Add(new/datum/matfab_part/arrowhead {part_name = "Head"; required_amount = 1} ())
 		..()
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/experimental/melee/spear/newObj = new()
 			var/obj/item/shaft = getObjectByPartName("Shaft")
@@ -318,7 +318,7 @@
 		required_parts.Add(new/datum/matfab_part/metalororganic {part_name = "Shaft"; required_amount = 1} ())
 		..()
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		var/obj/item/arrow/newObj = new()
 		var/obj/item/arrowhead = getObjectByPartName("Arrowhead")
 		var/obj/item/shaft = getObjectByPartName("Shaft")
@@ -341,7 +341,7 @@
 		required_parts.Add(new/datum/matfab_part/metalororganic {part_name = "Bow"; required_amount = 3} ())
 		..()
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/gun/bow/newObj = new()
 			var/obj/item/source = getObjectByPartName("Bow")
@@ -360,7 +360,7 @@
 		required_parts.Add(new/datum/matfab_part/clothorrubber {part_name = "Quiver"; required_amount = 2} ())
 		..()
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/quiver/newObj = new()
 			var/obj/item/source = getObjectByPartName("Quiver")
@@ -379,7 +379,7 @@
 		required_parts.Add(new/datum/matfab_part/crystal {part_name = "Lens"; required_amount = 1} ())
 		..()
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/lens/newObj = new()
 			var/obj/item/source = getObjectByPartName("Lens")
@@ -398,7 +398,7 @@
 		required_parts.Add(new/datum/matfab_part/metal {part_name = "Gears"; required_amount = 1} ())
 		..()
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/gears/newObj = new()
 			var/obj/item/source = getObjectByPartName("Gears")
@@ -417,7 +417,7 @@
 		required_parts.Add(new/datum/matfab_part/metal {part_name = "Tripod"; required_amount = 1} ())
 		..()
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/tripod/newObj = new()
 			var/obj/item/source = getObjectByPartName("Tripod")
@@ -436,7 +436,7 @@
 		required_parts.Add(new/datum/matfab_part/metalorcrystal {part_name = "Armor"; required_amount = 1} ())
 		..()
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/aplate/newObj = new()
 			var/obj/item/source = getObjectByPartName("Armor")
@@ -455,7 +455,7 @@
 		required_parts.Add(new/datum/matfab_part/crystal {part_name = "Glasses"; required_amount = 1} ())
 		..()
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/clothing/glasses/crafted/newObj = new()
 			var/obj/item/source = getObjectByPartName("Glasses")
@@ -477,7 +477,7 @@
 		required_parts.Add(new/datum/matfab_part/clothororganicorrubber {part_name = "Jumpsuit"; required_amount = 3} ())
 		..()
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/clothing/under/crafted/newObj = new()
 			var/obj/item/source = getObjectByPartName("Jumpsuit")
@@ -496,7 +496,7 @@
 		required_parts.Add(new/datum/matfab_part/clothororganicorrubber {part_name = "Gloves"; required_amount = 2} ())
 		..()
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/clothing/gloves/crafted/insulating/newObj = new()
 			var/obj/item/source = getObjectByPartName("Gloves")
@@ -515,7 +515,7 @@
 		required_parts.Add(new/datum/matfab_part/clothororganicorrubber {part_name = "Gloves"; required_amount = 2} ())
 		..()
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/clothing/gloves/crafted/armored/newObj = new()
 			var/obj/item/source = getObjectByPartName("Gloves")
@@ -536,7 +536,7 @@
 		required_parts.Add(new/datum/matfab_part/optionalanymat {part_name = "Optional Toe Tip"; required_amount = 2} ())
 		..()
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/clothing/shoes/crafted/newObj = new()
 			var/obj/item/upper = getObjectByPartName("Upper")
@@ -562,7 +562,7 @@
 		required_parts.Add(new/datum/matfab_part/lens {part_name = "Lens"; required_amount = 1} ())
 		..()
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/lensObj = getObjectByPartName("Lens")
 			var/obj/item/casingObj = getObjectByPartName("Casing")
@@ -591,7 +591,7 @@
 		required_parts.Add(new/datum/matfab_part/lens {part_name = "Lens"; required_amount = 1} ())
 		..()
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		for(var/i=0, i<amount*1, i++)
 			var/obj/item/light/tube/newObj = new()
 			var/obj/item/lensObj = getObjectByPartName("Lens")
@@ -617,7 +617,7 @@
 		required_parts.Add(new/datum/matfab_part/lens {part_name = "Lens"; required_amount = 1} ())
 		..()
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		for(var/i=0, i<amount*1, i++)
 			var/obj/item/light/bulb/newObj = new()
 			var/obj/item/lensObj = getObjectByPartName("Lens")
@@ -643,7 +643,7 @@
 		required_parts.Add(new/datum/matfab_part/lens {part_name = "Lens"; required_amount = 1} ())
 		..()
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		for(var/i=0, i<amount*1, i++)
 			var/obj/item/tripod_bulb/light/newObj = new()
 			var/obj/item/lensObj = getObjectByPartName("Lens")
@@ -665,7 +665,7 @@
 		required_parts.Add(new/datum/matfab_part/metalorcrystal {part_name = "Sheet"; required_amount = 1} ())
 		..()
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		var/num = round(amount/5)
 		amount = amount%5
 		var/obj/item/source = getObjectByPartName("Sheet")
@@ -691,7 +691,7 @@
 		required_parts.Add(new/datum/matfab_part/energy {part_name = "Core"; required_amount = 2} ())
 		..()
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/ammo/power_cell/self_charging/custom/newObj = new()
 			var/obj/item/source = getObjectByPartName("Core")
@@ -710,7 +710,7 @@
 		required_parts.Add(new/datum/matfab_part/energy {part_name = "Core"; required_amount = 4} ())
 		..()
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/cell/custom/newObj = new()
 			var/obj/item/source = getObjectByPartName("Core")
@@ -731,7 +731,7 @@
 		required_parts.Add(new/datum/matfab_part/starstone {part_name = "Starstone"; required_amount = 1} ())
 		..()
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/refined = getObjectByPartName("Unprocessed Material")
 			var/obj/item/chemical = getObjectByPartName("Chemical")
@@ -768,7 +768,7 @@
 		required_parts.Add(new/datum/matfab_part/fissile {part_name = "Fissile Fuel 1"; required_amount = 1} ())
 		..()
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/fuel_1 = getObjectByPartName("Fissile Fuel 1")
 			var/obj/item/nuke/rod/new_rod = new()
@@ -788,7 +788,7 @@
 		required_parts.Add(new/datum/matfab_part/radiocative_material {part_name = "Flux Catalyst"; required_amount = 1} ())
 		..()
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		//TODO
 		return
 
@@ -839,7 +839,7 @@
 		return 1
 
 	/// Actually create and place the object.
-	proc/build(var/amount = 1, var/obj/machinery/nanofab/owner)
+	proc/build(var/amount = 1, var/obj/machinery/dispensing/nanofab/owner)
 		return
 
 	/// Clear everything. used to reset the recipe
@@ -856,7 +856,7 @@
 		return null
 
 	/// Figures out if we should place the result on the ground or inside the fab.
-	proc/getOutputLocation(var/obj/machinery/nanofab/owner)
+	proc/getOutputLocation(var/obj/machinery/dispensing/nanofab/owner)
 		var/atom/output = owner.loc
 		if(owner.outputInternal)
 			output = owner
@@ -952,7 +952,7 @@
 						finishMaterial = P
 					required_parts.Add(P)
 
-	build(amount, var/obj/machinery/nanofab/owner)
+	build(amount, var/obj/machinery/dispensing/nanofab/owner)
 		if(!ispath(result)) return //You beefed it.
 
 		if(stack)

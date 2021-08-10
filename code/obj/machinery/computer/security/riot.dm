@@ -130,7 +130,7 @@
 			for(var/obj/O in armory_area)
 				if (istype(O,/obj/storage/secure/crate))
 					O.req_access = list(access_security)
-				else if (istype(O,/obj/machinery/vending))
+				else if (istype(O,/obj/machinery/dispensing/vending))
 					O.req_access = list(access_security)
 
 				LAGCHECK(LAG_REALTIME)
@@ -150,7 +150,7 @@
 				for(var/obj/O in armory_area)
 					if (istype(O,/obj/storage/secure/crate))
 						O.req_access = list(access_maxsec)
-					else if (istype(O,/obj/machinery/vending))
+					else if (istype(O,/obj/machinery/dispensing/vending))
 						O.req_access = list(access_maxsec)
 
 				LAGCHECK(LAG_REALTIME)

@@ -338,7 +338,7 @@
 /datum/progress/rooms/robotics
 	name = "Robotics Lab"
 	is_abstract = 0
-	required = list(/obj/machinery/manufacturer/robotics = 1, /obj/machinery/optable = 1, /obj/machinery/recharge_station = 1)
+	required = list(/obj/machinery/dispensing/manufacturer/robotics = 1, /obj/machinery/optable = 1, /obj/machinery/recharge_station = 1)
 	minimum_width = 7
 	minimum_height = 7
 
@@ -362,7 +362,7 @@
 /datum/progress/rooms/chemistry
 	name = "Chemistry Lab"
 	is_abstract = 0
-	required = list(/obj/machinery/chem_master = 2, /obj/machinery/chem_dispenser = 2, /obj/machinery/chem_heater = 2, /obj/submachine/chem_extractor = 1, /obj/machinery/vending/monkey = 1)
+	required = list(/obj/machinery/dispensing/chem_master = 2, /obj/machinery/dispensing/chem_dispenser = 2, /obj/machinery/dispensing/chem_heater = 2, /obj/submachine/chem_extractor = 1, /obj/machinery/dispensing/vending/monkey = 1)
 	minimum_width = 7
 	minimum_height = 7
 
@@ -374,7 +374,7 @@
 /datum/progress/rooms/medbay
 	name = "Medical Bay"
 	is_abstract = 0
-	required = list(/obj/machinery/optable = 1, /obj/machinery/vending/medical = 2)
+	required = list(/obj/machinery/optable = 1, /obj/machinery/dispensing/vending/medical = 2)
 	minimum_width = 9
 	minimum_height = 9
 
@@ -386,7 +386,7 @@
 /datum/progress/rooms/mechanics
 	name = "Mechanics Lab"
 	is_abstract = 0
-	required = list(/obj/machinery/rkit = 1, /obj/machinery/manufacturer/mechanic = 1, /obj/machinery/vending/mechanics = 1)
+	required = list(/obj/machinery/rkit = 1, /obj/machinery/dispensing/manufacturer/mechanic = 1, /obj/machinery/dispensing/vending/mechanics = 1)
 	minimum_width = 9
 	minimum_height = 9
 
@@ -422,7 +422,7 @@
 /datum/progress/rooms/hydroponics
 	name = "Hydroponics"
 	is_abstract = 0
-	required = list(/obj/machinery/plantpot = 6, /obj/machinery/vending/hydroponics = 1, /obj/submachine/chem_extractor = 1, /obj/submachine/seed_vendor = 1, /obj/submachine/seed_manipulator = 1)
+	required = list(/obj/machinery/plantpot = 6, /obj/machinery/dispensing/vending/hydroponics = 1, /obj/submachine/chem_extractor = 1, /obj/submachine/seed_vendor = 1, /obj/submachine/seed_manipulator = 1)
 	minimum_width = 9
 	minimum_height = 9
 

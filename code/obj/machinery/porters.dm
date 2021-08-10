@@ -249,7 +249,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		if (!src)
 			return
 
-		for (var/obj/machinery/vending/port_a_nanomed/M in portable_machinery)
+		for (var/obj/machinery/dispensing/vending/port_a_nanomed/M in portable_machinery)
 			var/turf/M_loc = get_turf(M)
 			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
 				continue
@@ -820,7 +820,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 //////////////////////////////////////// Port-a-NanoMed ///////////////////////////////////////////
 
-/obj/machinery/vending/port_a_nanomed
+/obj/machinery/dispensing/vending/port_a_nanomed
 	name = "Port-A-NanoMed"
 	desc = "A compact and portable version of the NanoMed Plus."
 	icon = 'icons/obj/porters.dmi'

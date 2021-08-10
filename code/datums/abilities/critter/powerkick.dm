@@ -45,8 +45,8 @@
 						var/obj/machinery/door/D = O
 						D.try_force_open(src)
 						return
-					else if (istype(O,/obj/machinery/vending))
-						var/obj/machinery/vending/V = O
+					else if (istype(O,/obj/machinery/dispensing/vending))
+						var/obj/machinery/dispensing/vending/V = O
 						V.fall(src)
 						return
 					else if (istype(O,/obj/machinery/portable_atmospherics/canister))

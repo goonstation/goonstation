@@ -73,8 +73,8 @@
 					P.change_stack_amount(out_amount - P.amount)
 					mat_id = P.material.mat_id
 
-				if (istype(output_location, /obj/machinery/manufacturer))
-					var/obj/machinery/manufacturer/M = output_location
+				if (istype(output_location, /obj/machinery/dispensing/manufacturer))
+					var/obj/machinery/dispensing/manufacturer/M = output_location
 					M.update_resource_amount(mat_id, out_amount * 10)
 
 				//If the input was a cable coil, output the conductor too
@@ -97,8 +97,8 @@
 						PC.change_stack_amount(out_amount - PC.amount)
 						second_mat_id = PC.material.mat_id
 
-					if (istype(output_location, /obj/machinery/manufacturer))
-						var/obj/machinery/manufacturer/M = output_location
+					if (istype(output_location, /obj/machinery/dispensing/manufacturer))
+						var/obj/machinery/dispensing/manufacturer/M = output_location
 						M.update_resource_amount(second_mat_id, out_amount * 10)
 
 			//Delete items in processor and output leftovers
@@ -218,35 +218,7 @@
 		boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
 		return
 
-	proc/get_output_location()
-		if (isnull(output_location))
-			return src.loc
-
-		if (get_dist(src.output_location,src) > 1)
-			output_location = null
-			return src.loc
-
-		if (istype(output_location,/obj/machinery/manufacturer))
-			var/obj/machinery/manufacturer/M = output_location
-			if (M.status & NOPOWER || M.status & BROKEN | M.dismantle_stage > 0)
-				return M.loc
-			return M
-
-		else if (istype(output_location,/obj/storage/crate))
-			var/obj/storage/crate/C = output_location
-			if (C.locked || C.welded || C.open)
-				return C.loc
-			return C
-
-		else if (istype(output_location,/obj/storage/cart))
-			var/obj/storage/cart/C = output_location
-			if (C.locked || C.welded || C.open)
-				return C.loc
-			return C
-
-		return output_location
-
-/obj/machinery/processor/portable
+/obj/machinery/dispensing/processor/portable
 	name = "Portable material processor"
 	icon = 'icons/obj/scrap.dmi'
 	icon_state = "reclaimer"

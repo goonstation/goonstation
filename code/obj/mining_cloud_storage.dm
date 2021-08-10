@@ -281,37 +281,3 @@
 			leaveresidual(eject_location)
 
 		update_ore_amount(ore,-amount_ejected)
-
-	proc/get_output_location()
-		if (!src.output_target)
-			return src.loc
-
-		if (get_dist(src.output_target,src) > 1)
-			src.output_target = null
-			return src.loc
-
-		if (istype(src.output_target,/obj/storage/crate/))
-			var/obj/storage/crate/C = src.output_target
-			if (C.locked || C.welded)
-				src.output_target = null
-				return src.loc
-			else
-				if (C.open)
-					return C.loc
-				else
-					return C
-		if (istype(src.output_target,/obj/storage/cart/))
-			var/obj/storage/cart/C = src.output_target
-			if (C.locked || C.welded)
-				src.output_target = null
-				return src.loc
-			else
-				if (C.open)
-					return C.loc
-				else
-					return C
-
-		if (istype(src.output_target,/turf/))
-			return src.output_target
-
-		return src.loc

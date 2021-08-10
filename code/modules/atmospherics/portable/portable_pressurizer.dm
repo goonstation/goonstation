@@ -18,7 +18,7 @@
 #define BLAST_EFFECT_RATIO (0.7)
 
 /** Portable Pressurization Device
- *  Acts as a [/obj/machinery/portable_atmospherics/pump] + [/obj/machinery/manufacturer/gas]
+ *  Acts as a [/obj/machinery/portable_atmospherics/pump] + [/obj/machinery/dispensing/manufacturer/gas]
  * 	Allows for input/output of enviromental air and will convert objects made of materials that produce gas to.. gas.
  * 	Once sufficient pressure has been reached it can be released spreading it across the current airgroup with a minor stun explosion.
   */
