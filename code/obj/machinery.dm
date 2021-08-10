@@ -420,11 +420,11 @@
 
 		if(over_object == src)
 			output_location = null
-			boutput(usr, "<span class='notice'>You reset the processor's output target.</span>")
+			boutput(usr, "<span class='notice'>You reset the [src]'s output target.</span>")
 			return
 
 		if(get_dist(over_object,src) > 1)
-			boutput(usr, "<span class='alert'>The processor is too far away from the target!</span>")
+			boutput(usr, "<span class='alert'>The [src] is too far away from the target!</span>")
 			return
 
 		if(get_dist(over_object,usr) > 1)
@@ -437,7 +437,7 @@
 				boutput(usr, "<span class='alert'>You can't use a currently unopenable crate as an output target.</span>")
 			else
 				src.output_location = over_object
-				boutput(usr, "<span class='notice'>You set the processor to output to [over_object]!</span>")
+				boutput(usr, "<span class='notice'>You set the [src] to output to [over_object]!</span>")
 
 		else if (istype(over_object,/obj/storage/cart/))
 			var/obj/storage/cart/C = over_object
@@ -445,7 +445,7 @@
 				boutput(usr, "<span class='alert'>You can't use a currently unopenable cart as an output target.</span>")
 			else
 				src.output_location = over_object
-				boutput(usr, "<span class='notice'>You set the processor to output to [over_object]!</span>")
+				boutput(usr, "<span class='notice'>You set the [src] to output to [over_object]!</span>")
 
 		else if (istype(over_object,/obj/machinery/manufacturer/))
 			var/obj/machinery/manufacturer/M = over_object
@@ -453,7 +453,7 @@
 				boutput(usr, "<span class='alert'>You can't use a non-functioning manufacturer as an output target.</span>")
 			else
 				src.output_location = M
-				boutput(usr, "<span class='notice'>You set the processor to output to [over_object]!</span>")
+				boutput(usr, "<span class='notice'>You set the [src] to output to [over_object]!</span>")
 
 		else if (istype(over_object, /obj/machinery/nanofab))
 			var/obj/machinery/nanofab/N = over_object
@@ -461,16 +461,16 @@
 				boutput(usr, "<span class='alert'>You can't use a non-functioning nano-fabricator as an output target.</span>")
 			else
 				src.output_location = N
-				boutput(usr, "<span class='notice'>You set the processor to output to [over_object]!</span>")
+				boutput(usr, "<span class='notice'>You set the [src] to output to [over_object]!</span>")
 
 		else if (istype(over_object,/obj/table/) && istype(over_object,/obj/rack/))
 			var/obj/O = over_object
 			src.output_location = O.loc
-			boutput(usr, "<span class='notice'>You set the processor to output on top of [O]!</span>")
+			boutput(usr, "<span class='notice'>You set the [src] to output on top of [O]!</span>")
 
 		else if (istype(over_object,/turf/simulated/floor/))
 			src.output_location = over_object
-			boutput(usr, "<span class='notice'>You set the processor to output to [over_object]!</span>")
+			boutput(usr, "<span class='notice'>You set the [src] to output to [over_object]!</span>")
 
 		else
 
