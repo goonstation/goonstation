@@ -15177,7 +15177,7 @@
 /turf/simulated/floor/plating,
 /area/station2/engine/gas)
 "aIj" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
@@ -33200,7 +33200,7 @@
 	name = "Artifact Lounge"
 	})
 "bwc" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/white,
 /area/station/science/artifact{
 	name = "Artifact Lounge"

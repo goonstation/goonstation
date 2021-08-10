@@ -828,7 +828,7 @@
 	var/datum/gang/gang_to_see = null
 	var/PWT_to_see = null
 
-	if (isadminghost(src))
+	if (isadminghost(src) || src.client?.adventure_view)
 		see_everything = 1
 	else
 		if (istype(ticker.mode, /datum/game_mode/revolution))
