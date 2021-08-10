@@ -734,7 +734,8 @@
 		RegisterSignal(to_buckle, COMSIG_MOVABLE_SET_LOC, .proc/maybe_unbuckle)
 
 	proc/maybe_unbuckle(source, turf/oldloc)
-		if(!isturf(buckled_guy.loc) || !IN_RANGE(src, oldloc, 1))
+		// unbuckle if the guy is not on a turf, or if their chair is out of range and it's not a shuttle situation
+		if(!isturf(buckled_guy.loc) || (!IN_RANGE(src, oldloc, 1) && (!istype(get_area(src), /area/shuttle || !istype(get_area(oldloc), /area/shuttle)))))
 			UnregisterSignal(buckled_guy, COMSIG_MOVABLE_SET_LOC)
 			unbuckle()
 
