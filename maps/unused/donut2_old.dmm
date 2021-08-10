@@ -203,7 +203,7 @@
 	},
 /area/wizard_station)
 "aaF" = (
-/obj/machinery/vending/magivend,
+/obj/machinery/dispensing/vending/magivend,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor5"
 	},
@@ -1152,15 +1152,15 @@
 /turf/simulated/floor/plating,
 /area/zeta)
 "acz" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/simulated/floor,
 /area/zeta)
 "acA" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor,
 /area/zeta)
 "acB" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /turf/simulated/floor,
 /area/zeta)
 "acC" = (
@@ -1254,7 +1254,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/ai_monitored/storage/secure)
 "acP" = (
-/obj/machinery/chem_master,
+/obj/machinery/dispensing/chem_master,
 /turf/simulated/floor/white,
 /area/chemistry)
 "acQ" = (
@@ -1405,7 +1405,7 @@
 /turf/simulated/floor,
 /area/zeta)
 "adi" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/dispensing/chem_dispenser,
 /obj/machinery/camera{
 	c_tag = "Chemistry";
 	dir = 4;
@@ -1605,7 +1605,7 @@
 	name = "Local Air Monitor";
 	pixel_x = -29
 	},
-/obj/machinery/chem_heater,
+/obj/machinery/dispensing/chem_heater,
 /turf/simulated/floor/white,
 /area/chemistry)
 "adD" = (
@@ -1916,7 +1916,7 @@
 /turf/simulated/floor,
 /area/zeta)
 "aef" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/dispensing/chem_dispenser,
 /obj/machinery/light{
 	tag = "icon-tube1 (WEST)";
 	icon_state = "tube1";
@@ -2161,7 +2161,7 @@
 /turf/simulated/floor,
 /area/zeta)
 "aeG" = (
-/obj/machinery/chem_master,
+/obj/machinery/dispensing/chem_master,
 /turf/simulated/floor/bot/white,
 /area/chemistry)
 "aeH" = (
@@ -5914,7 +5914,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/machinery/manufacturer/general,
+/obj/machinery/dispensing/manufacturer/general,
 /turf/simulated/floor,
 /area/quartermaster/storage)
 "alK" = (
@@ -6486,7 +6486,7 @@
 	},
 /area/hallway/secondary/shuttle)
 "amR" = (
-/obj/machinery/vending/cola/blue,
+/obj/machinery/dispensing/vending/cola/blue,
 /turf/simulated/floor/escape{
 	dir = 5
 	},
@@ -10166,7 +10166,7 @@
 /turf/simulated/floor,
 /area/hallway/primary/north)
 "auL" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/simulated/floor,
 /area/hallway/primary/north)
 "auM" = (
@@ -10402,7 +10402,7 @@
 	dir = 4;
 	pixel_y = 0
 	},
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor,
 /area/hallway/primary/north)
 "avl" = (
@@ -10720,7 +10720,7 @@
 /turf/simulated/floor,
 /area/hallway/primary/north)
 "avV" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /turf/simulated/floor,
 /area/hallway/primary/north)
 "avW" = (
@@ -12400,7 +12400,7 @@
 /turf/simulated/wall/r_wall,
 /area/storage/tech)
 "azu" = (
-/obj/machinery/vending/computer3,
+/obj/machinery/dispensing/vending/computer3,
 /turf/simulated/floor/plating,
 /area/storage/tech)
 "azv" = (
@@ -13564,7 +13564,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/fsmaint)
 "aBO" = (
-/obj/machinery/vending/pizza,
+/obj/machinery/dispensing/vending/pizza,
 /turf/simulated/floor/plating,
 /area/maintenance/fsmaint)
 "aBP" = (
@@ -13758,7 +13758,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/simulated/floor/grass{
 	name = "astroturf";
 	tag = "icon-grass1"
@@ -14722,7 +14722,7 @@
 /turf/simulated/floor/plating,
 /area/medical/robotics)
 "aDW" = (
-/obj/machinery/manufacturer/robotics,
+/obj/machinery/dispensing/manufacturer/robotics,
 /turf/simulated/floor,
 /area/medical/robotics)
 "aDX" = (
@@ -19117,7 +19117,7 @@
 	},
 /area/bridge)
 "aMd" = (
-/obj/machinery/vending/medical,
+/obj/machinery/dispensing/vending/medical,
 /turf/simulated/floor/white,
 /area/medical/medbay)
 "aMe" = (
@@ -22912,7 +22912,7 @@
 /turf/simulated/wall,
 /area/crew_quarters/bar)
 "aTW" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /obj/cable{
 	icon_state = "1-2";
 	d1 = 1;
@@ -23032,11 +23032,11 @@
 /turf/simulated/floor/plating,
 /area/maintenance/inner)
 "aUi" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /turf/simulated/floor,
 /area/hallway/primary/south)
 "aUj" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor,
 /area/hallway/primary/south)
 "aUk" = (
@@ -23336,7 +23336,7 @@
 	dir = 4;
 	pixel_y = 0
 	},
-/obj/machinery/vending/cola/red,
+/obj/machinery/dispensing/vending/cola/red,
 /turf/simulated/floor/specialroom/bar,
 /area/crew_quarters/bar)
 "aUN" = (
@@ -24571,7 +24571,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/crew_quarters/bar)
 "aXn" = (
-/obj/machinery/chem_dispenser/alcohol,
+/obj/machinery/dispensing/chem_dispenser/alcohol,
 /turf/simulated/floor/specialroom/bar,
 /area/crew_quarters/bar)
 "aXo" = (
@@ -24717,7 +24717,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/obj/machinery/vending/security,
+/obj/machinery/dispensing/vending/security,
 /turf/simulated/floor,
 /area/security/main)
 "aXF" = (
@@ -24761,7 +24761,7 @@
 /turf/simulated/floor,
 /area/security/main)
 "aXJ" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/simulated/floor,
 /area/security/main)
 "aXK" = (
@@ -24838,7 +24838,7 @@
 /turf/simulated/floor/sanitary,
 /area/crew_quarters/kitchen)
 "aXV" = (
-/obj/machinery/vending/kitchen,
+/obj/machinery/dispensing/vending/kitchen,
 /turf/simulated/floor/sanitary,
 /area/crew_quarters/kitchen)
 "aXW" = (
@@ -26255,7 +26255,7 @@
 /turf/simulated/wall/r_wall,
 /area/crew_quarters/bar)
 "baR" = (
-/obj/machinery/chem_dispenser/soda,
+/obj/machinery/dispensing/chem_dispenser/soda,
 /turf/simulated/floor/specialroom/bar,
 /area/crew_quarters/bar)
 "baS" = (
@@ -26668,7 +26668,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/machinery/manufacturer/general,
+/obj/machinery/dispensing/manufacturer/general,
 /turf/simulated/floor,
 /area/storage/autolathe)
 "bbO" = (
@@ -29395,7 +29395,7 @@
 	dir = 4;
 	pixel_y = 0
 	},
-/obj/machinery/vending/cola/blue,
+/obj/machinery/dispensing/vending/cola/blue,
 /turf/simulated/floor,
 /area/hallway/primary/south)
 "bhn" = (
@@ -30415,7 +30415,7 @@
 /turf/simulated/floor,
 /area/maintenance/apmaint)
 "bjr" = (
-/obj/machinery/vending/standard,
+/obj/machinery/dispensing/vending/standard,
 /turf/simulated/floor,
 /area/maintenance/apmaint)
 "bjs" = (
@@ -30567,7 +30567,7 @@
 	icon_state = "tube1";
 	dir = 8
 	},
-/obj/machinery/vending/standard,
+/obj/machinery/dispensing/vending/standard,
 /turf/simulated/floor,
 /area/storage/tools)
 "bjN" = (
@@ -30816,7 +30816,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/south)
 "bko" = (
-/obj/machinery/vending/electronics,
+/obj/machinery/dispensing/vending/electronics,
 /turf/simulated/floor,
 /area/engine/elect)
 "bkp" = (
@@ -32189,7 +32189,7 @@
 	},
 /area/syndicate_station)
 "bmM" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
@@ -35674,7 +35674,7 @@
 	},
 /area/meteor/dock)
 "buC" = (
-/obj/machinery/vending/computer3,
+/obj/machinery/dispensing/vending/computer3,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -37157,7 +37157,7 @@
 	},
 /area/sim/area2)
 "bxZ" = (
-/obj/machinery/vending/cigarette{
+/obj/machinery/dispensing/vending/cigarette{
 	name = "virtual cigarette machine"
 	},
 /turf/unsimulated/floor{
@@ -37444,28 +37444,28 @@
 	},
 /area/racing_entry)
 "byB" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/unsimulated/floor{
 	icon = 'racing.dmi';
 	icon_state = "track_1"
 	},
 /area/racing_entry)
 "byC" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/unsimulated/floor{
 	icon = 'racing.dmi';
 	icon_state = "track_1"
 	},
 /area/racing_entry)
 "byD" = (
-/obj/machinery/vending/cola/red,
+/obj/machinery/dispensing/vending/cola/red,
 /turf/unsimulated/floor{
 	icon = 'racing.dmi';
 	icon_state = "track_1"
 	},
 /area/racing_entry)
 "byE" = (
-/obj/machinery/vending/cola/blue,
+/obj/machinery/dispensing/vending/cola/blue,
 /turf/unsimulated/floor{
 	icon = 'racing.dmi';
 	icon_state = "track_1"
@@ -44159,7 +44159,7 @@
 /area/derelict/evilreaver/genetics)
 "bPl" = (
 /obj/machinery/door/window/northright,
-/obj/machinery/chem_dispenser,
+/obj/machinery/dispensing/chem_dispenser,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -52971,7 +52971,7 @@
 /turf/simulated/floor,
 /area/factory)
 "chX" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor,
 /area/factory)
 "chY" = (
@@ -53044,7 +53044,7 @@
 /turf/simulated/wall,
 /area/factory)
 "cie" = (
-/obj/machinery/vending/cola/red,
+/obj/machinery/dispensing/vending/cola/red,
 /turf/simulated/floor,
 /area/factory)
 "cif" = (
@@ -56549,7 +56549,7 @@
 /turf/simulated/wall,
 /area/mining/exit_west)
 "cpD" = (
-/obj/machinery/manufacturer/mining,
+/obj/machinery/dispensing/manufacturer/mining,
 /obj/cable,
 /turf/simulated/floor,
 /area/mining/manufacturing)
@@ -64872,7 +64872,7 @@
 /turf/simulated/floor,
 /area/crunch)
 "cGl" = (
-/obj/machinery/vending/cola/blue{
+/obj/machinery/dispensing/vending/cola/blue{
 	credit = 12
 	},
 /turf/simulated/floor/airless,

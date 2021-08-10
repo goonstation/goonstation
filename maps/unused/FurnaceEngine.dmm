@@ -2090,7 +2090,7 @@
 	},
 /area/space)
 "fo" = (
-/obj/machinery/vending/electronics,
+/obj/machinery/dispensing/vending/electronics,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -2194,7 +2194,7 @@
 	},
 /area/space)
 "fA" = (
-/obj/machinery/vending/electronics,
+/obj/machinery/dispensing/vending/electronics,
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},

@@ -1801,7 +1801,7 @@
 /area/station/medical/research)
 "aeb" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/white,
 /area/station/medical/research)
@@ -2230,7 +2230,7 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "aeS" = (
-/obj/machinery/chem_master,
+/obj/machinery/dispensing/chem_master,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "aeT" = (
@@ -2469,7 +2469,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/obj/machinery/chem_dispenser,
+/obj/machinery/dispensing/chem_dispenser,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "afv" = (
@@ -5265,7 +5265,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "akV" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "akW" = (
@@ -5273,7 +5273,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "akX" = (
@@ -5293,7 +5293,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /obj/machinery/light{
 	dir = 1;
 	pixel_x = -1
@@ -9469,7 +9469,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "asv" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /obj/machinery/camera{
 	c_tag = "West Hallway North"
 	},
@@ -11046,7 +11046,7 @@
 "avq" = (
 /obj/displaycase{
 	displayed = new /obj/item/captaingun
-},
+	},
 /turf/simulated/floor,
 /area/station/bridge)
 "avr" = (
@@ -19898,11 +19898,11 @@
 /turf/simulated/floor/airless/plating/scorched,
 /area/station/engine/storage)
 "aLq" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "aLr" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "aLs" = (
@@ -19914,7 +19914,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "aLt" = (
-/obj/machinery/vending/cola/red,
+/obj/machinery/dispensing/vending/cola/red,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "aLu" = (
@@ -24688,15 +24688,15 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "aUX" = (
-/obj/machinery/vending/cola/blue,
+/obj/machinery/dispensing/vending/cola/blue,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "aUY" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "aUZ" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "aVa" = (
@@ -25560,7 +25560,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/observatory)
 "aWM" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /turf/simulated/floor,
 /area/station/crew_quarters/observatory)
 "aWN" = (
@@ -27048,7 +27048,7 @@
 /obj/item/storage/lightbox,
 /obj/item/storage/mousetraps,
 /obj/item/storage/mousetraps,
-/obj/machinery/vending/monkey,
+/obj/machinery/dispensing/vending/monkey,
 /obj/machinery/camera{
 	c_tag = "Custodial Closet";
 	dir = 4;
@@ -28807,7 +28807,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/fitness)
 "bcV" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor,
 /area/station/crew_quarters/fitness)
 "bcW" = (
@@ -28979,12 +28979,12 @@
 	icon_state = "1-8"
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/fitness)
 "bdm" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /turf/simulated/floor,
 /area/station/crew_quarters/fitness)
 "bdn" = (
@@ -30120,7 +30120,7 @@
 	},
 /area/syndicate_station)
 "bfy" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
@@ -31230,16 +31230,16 @@
 /turf/space,
 /area/space)
 "bhM" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /obj/machinery/light/small,
 /turf/simulated/floor,
 /area/station/security/prison)
 "bhN" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor,
 /area/station/security/prison)
 "bhO" = (
-/obj/machinery/vending/security,
+/obj/machinery/dispensing/vending/security,
 /turf/simulated/floor,
 /area/station/security/prison)
 "bhP" = (
@@ -33009,7 +33009,7 @@
 	},
 /area/meteor/dock)
 "bmJ" = (
-/obj/machinery/vending/computer3,
+/obj/machinery/dispensing/vending/computer3,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -36868,19 +36868,19 @@
 	name = "Research Outpost Gamma"
 	})
 "btS" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/simulated/floor,
 /area/space{
 	name = "Research Outpost Gamma"
 	})
 "btT" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor,
 /area/space{
 	name = "Research Outpost Gamma"
 	})
 "btU" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /turf/simulated/floor,
 /area/space{
 	name = "Research Outpost Gamma"
@@ -37650,7 +37650,7 @@
 	name = "Research Outpost Gamma"
 	})
 "bvo" = (
-/obj/machinery/vending/security,
+/obj/machinery/dispensing/vending/security,
 /turf/simulated/floor,
 /area/space{
 	name = "Research Outpost Gamma"
@@ -39109,7 +39109,7 @@
 	name = "Engineering Outpost"
 	})
 "bxU" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor,
 /area/station/science/chemistry{
 	name = "Engineering Outpost"
@@ -39237,7 +39237,7 @@
 	name = "Engineering Outpost"
 	})
 "bye" = (
-/obj/machinery/vending/cola/blue,
+/obj/machinery/dispensing/vending/cola/blue,
 /turf/simulated/floor,
 /area/station/science/chemistry{
 	name = "Engineering Outpost"
