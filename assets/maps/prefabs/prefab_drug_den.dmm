@@ -241,7 +241,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/drug_den)
 "pw" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /turf/simulated/floor/wood,
 /area/prefab/drug_den/party)
 "pP" = (
@@ -905,7 +905,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/ne,
 /area/prefab/drug_den/party)
 "VU" = (
-/obj/machinery/vending/kitchen{
+/obj/machinery/dispensing/vending/kitchen{
 	freestuff = 1;
 	req_access_txt = null
 	},

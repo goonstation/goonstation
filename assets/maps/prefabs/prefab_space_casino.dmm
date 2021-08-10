@@ -42,7 +42,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/prefab/space_casino)
 "dB" = (
-/obj/machinery/vending/kitchen,
+/obj/machinery/dispensing/vending/kitchen,
 /turf/simulated/floor/blackwhite/whitegrime,
 /area/prefab/space_casino)
 "dR" = (
@@ -116,7 +116,7 @@
 /turf/simulated/floor/blackwhite/whitegrime,
 /area/prefab/space_casino)
 "op" = (
-/obj/machinery/glass_recycler,
+/obj/machinery/dispensing/glass_recycler,
 /obj/table/auto,
 /turf/simulated/floor/black,
 /area/prefab/space_casino)
@@ -138,7 +138,7 @@
 /area/prefab/space_casino)
 "pe" = (
 /obj/table/auto,
-/obj/machinery/glass_recycler,
+/obj/machinery/dispensing/glass_recycler,
 /turf/simulated/floor/blackwhite/whitegrime,
 /area/prefab/space_casino)
 "po" = (
@@ -151,7 +151,7 @@
 /turf/simulated/floor/carpet/red/fancy/edge/west,
 /area/prefab/space_casino)
 "qO" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/dispensing/vending/alcohol,
 /turf/simulated/floor/black,
 /area/prefab/space_casino)
 "qU" = (
@@ -182,7 +182,7 @@
 /turf/simulated/floor/blackwhite/whitegrime,
 /area/prefab/space_casino)
 "tm" = (
-/obj/machinery/chem_heater,
+/obj/machinery/dispensing/chem_heater,
 /turf/simulated/floor/black,
 /area/prefab/space_casino)
 "tB" = (
@@ -447,7 +447,7 @@
 /turf/simulated/floor/carpet/red/fancy,
 /area/prefab/space_casino)
 "Xq" = (
-/obj/machinery/chem_master,
+/obj/machinery/dispensing/chem_master,
 /turf/simulated/floor/black,
 /area/prefab/space_casino)
 "XV" = (
