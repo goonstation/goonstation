@@ -3472,7 +3472,7 @@
 /turf/simulated/wall,
 /area/storage/tools)
 "hH" = (
-/obj/machinery/vending{
+/obj/machinery/dispensing/vending{
 	desc = "A standard vending machine.";
 	product_amounts = "5;3;4;1";
 	product_hidden = "/obj/item/device/light/flashlight;/obj/item/device/timer";
@@ -3528,7 +3528,7 @@
 /turf/simulated/wall,
 /area/storage/tools)
 "hP" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/dispensing/manufacturer/general,
 /turf/simulated/floor/plating,
 /area/storage/tools)
 "hQ" = (
@@ -4598,11 +4598,11 @@
 /turf/simulated/floor,
 /area/hallway/primary/central)
 "kE" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/simulated/floor,
 /area/hallway/primary/east)
 "kF" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /turf/simulated/floor,
 /area/hallway/primary/east)
 "kG" = (
@@ -5366,7 +5366,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/obj/machinery/vending/medical,
+/obj/machinery/dispensing/vending/medical,
 /turf/simulated/floor/airless/white,
 /area/medical/medbay)
 "ml" = (
@@ -5483,7 +5483,7 @@
 /turf/simulated/wall,
 /area/toxins/lab)
 "mB" = (
-/obj/machinery/chem_heater,
+/obj/machinery/dispensing/chem_heater,
 /turf/simulated/floor/white,
 /area/toxins/lab)
 "mC" = (
@@ -5940,7 +5940,7 @@
 /turf/simulated/floor,
 /area/hallway/primary/central)
 "nD" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor,
 /area/hallway/primary/central)
 "nE" = (
@@ -6467,11 +6467,11 @@
 /turf/simulated/floor,
 /area/crew_quarters/quarters)
 "oR" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/dispensing/chem_dispenser,
 /turf/simulated/floor/white,
 /area/chemistry)
 "oS" = (
-/obj/machinery/chem_master,
+/obj/machinery/dispensing/chem_master,
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -7191,7 +7191,7 @@
 /turf/simulated/floor,
 /area/security/main)
 "qs" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/simulated/floor,
 /area/security/main)
 "qt" = (
@@ -8012,7 +8012,7 @@
 /turf/simulated/floor,
 /area/security/main)
 "sq" = (
-/obj/machinery/vending/security,
+/obj/machinery/dispensing/vending/security,
 /turf/simulated/floor,
 /area/security/main)
 "sr" = (
@@ -8377,7 +8377,7 @@
 	},
 /area/syndicate_station)
 "ti" = (
-/obj/machinery/vending/cola/red,
+/obj/machinery/dispensing/vending/cola/red,
 /turf/simulated/floor/specialroom/bar,
 /area/crew_quarters/bar)
 "tj" = (
@@ -8633,7 +8633,7 @@
 	},
 /area/syndicate_station)
 "tM" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
@@ -9211,7 +9211,7 @@
 /turf/simulated/wall,
 /area/hydroponics)
 "va" = (
-/obj/machinery/vending/seeds,
+/obj/machinery/dispensing/vending/seeds,
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor,
 /area/hydroponics)
@@ -10382,7 +10382,7 @@
 	},
 /area/wizard_station)
 "xw" = (
-/obj/machinery/vending{
+/obj/machinery/dispensing/vending{
 	desc = "A magic vending machine.";
 	name = "MagiVend";
 	product_amounts = "1;1;1;2";
@@ -11519,7 +11519,7 @@
 	},
 /area/meteor/dock)
 "Ag" = (
-/obj/machinery/vending/computer3,
+/obj/machinery/dispensing/vending/computer3,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -14039,15 +14039,15 @@
 /turf/simulated/floor/plating,
 /area/zeta)
 "FK" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/simulated/floor,
 /area/zeta)
 "FL" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor,
 /area/zeta)
 "FM" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /turf/simulated/floor,
 /area/zeta)
 "FN" = (
@@ -14126,7 +14126,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/ai_monitored/storage/secure)
 "FY" = (
-/obj/machinery/chem_heater,
+/obj/machinery/dispensing/chem_heater,
 /turf/simulated/floor/white,
 /area/chemistry)
 "FZ" = (
@@ -14268,7 +14268,7 @@
 /turf/simulated/floor,
 /area/zeta)
 "Gq" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/dispensing/chem_dispenser,
 /obj/machinery/camera{
 	c_tag = "Chemistry";
 	dir = 4;
@@ -14458,7 +14458,7 @@
 /turf/simulated/floor,
 /area/zeta)
 "GJ" = (
-/obj/machinery/chem_master,
+/obj/machinery/dispensing/chem_master,
 /turf/simulated/floor/white,
 /area/chemistry)
 "GK" = (
@@ -19311,7 +19311,7 @@
 /turf/simulated/floor,
 /area/engine/miningoutpost)
 "Qh" = (
-/obj/machinery/manufacturer/mining,
+/obj/machinery/dispensing/manufacturer/mining,
 /obj/cable,
 /turf/simulated/floor,
 /area/engine/miningoutpost)
