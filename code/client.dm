@@ -1145,8 +1145,10 @@ var/global/curr_day = null
 /client/proc/cloud_available()
 	return src.player.cloud_available()
 
-/client/proc/sussy_boutput(source, message)
-	boutput(src, message)
+/client/proc/message_one_admin(source, message)
+	if(!src.holder)
+		return
+	boutput(src, replacetext(replacetext(message, "%admin_ref%", "\ref[src.holder]"), "%client_ref%", "\ref[src]"))
 
 /proc/add_test_screen_thing()
 	var/client/C = input("For who", "For who", null) in clients
