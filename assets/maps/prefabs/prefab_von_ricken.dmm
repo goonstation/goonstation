@@ -876,7 +876,7 @@
 /area/prefab/von_ricken)
 "DI" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/machinery/vending/cola/red,
+/obj/machinery/dispensing/vending/cola/red,
 /turf/simulated/floor/specialroom/medbay,
 /area/prefab/von_ricken)
 "Ee" = (
@@ -989,7 +989,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/prefab/von_ricken)
 "HI" = (
-/obj/machinery/manufacturer/robotics,
+/obj/machinery/dispensing/manufacturer/robotics,
 /turf/simulated/floor/black,
 /area/prefab/von_ricken)
 "HP" = (
@@ -1100,7 +1100,7 @@
 /turf/simulated/floor/plating,
 /area/prefab/von_ricken)
 "KX" = (
-/obj/machinery/vending/medical,
+/obj/machinery/dispensing/vending/medical,
 /turf/simulated/floor/black,
 /area/prefab/von_ricken)
 "Lf" = (
@@ -1185,7 +1185,7 @@
 /area/prefab/von_ricken)
 "OH" = (
 /obj/machinery/light/incandescent/netural,
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor/specialroom/medbay,
 /area/prefab/von_ricken)
 "OO" = (
@@ -1576,7 +1576,7 @@
 /turf/simulated/floor/plating,
 /area/prefab/von_ricken)
 "ZE" = (
-/obj/machinery/manufacturer/hangar,
+/obj/machinery/dispensing/manufacturer/hangar,
 /turf/simulated/floor/airless/neutral,
 /area/prefab/von_ricken)
 "ZO" = (

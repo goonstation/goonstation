@@ -1,4 +1,4 @@
-/obj/machinery/chem_dispenser
+/obj/machinery/dispensing/chem_dispenser
 	name = "chem dispenser"
 	density = 1
 	anchored = 1
@@ -23,7 +23,6 @@
 	var/obj/item/card/id/user_id = null
 	var/datum/reagent_group_account/current_account = null
 	var/list/accounts = list()
-	var/output_target = null
 	var/dispense_sound = 'sound/effects/zzzt.ogg'
 
 	New()
@@ -171,32 +170,11 @@
 		else
 			src.icon_state = "[src.icon_base][rand(1,5)]"
 
-	MouseDrop(over_object, src_location, over_location)
-		if(!isliving(usr))
-			boutput(usr, "<span class='alert'>Only living mobs are able to set the dispenser's output target.</span>")
-			return
-
-		if(get_dist(over_object,src) > 1)
-			boutput(usr, "<span class='alert'>The dispenser is too far away from the target!</span>")
-			return
-
-		if(get_dist(over_object,usr) > 1)
-			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
-			return
-
-		else if (istype(over_object,/turf/simulated/floor/))
-			src.output_target = over_object
-			boutput(usr, "<span class='notice'>You set the dispenser to output to [over_object]!</span>")
-
-		else
-			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
-		return
-
 	proc/take_damage(var/damage_amount = 5)
 		src.health -= damage_amount
 		if (src.health <= 0)
 			if (beaker)
-				beaker.set_loc(src.output_target ? src.output_target : get_turf(src))
+				beaker.set_loc(src.output_target)
 				beaker = null
 			src.visible_message("<span class='alert'><b>[name] falls apart into useless debris!</b></span>")
 			robogibs(src.loc,null)
@@ -389,7 +367,7 @@
 						update_static_data(usr,ui)
 				return
 
-/obj/machinery/chem_dispenser/alcohol
+/obj/machinery/dispensing/chem_dispenser/alcohol
 	name = "alcohol dispenser"
 	desc = "You see a small, fading warning label on the side of the machine:<br>WARNING: Contents artificially produced using industrial ethanol. Not recommended for human consumption."
 	dispensable_reagents = list("beer", "cider", "gin", "wine", "champagne", \
@@ -405,7 +383,7 @@
 
 
 // Dispenses any drink you want. Designed for the afterlife bar
-/obj/machinery/chem_dispenser/alcohol/ultra
+/obj/machinery/dispensing/chem_dispenser/alcohol/ultra
 	name = "alcohol dispenser"
 	desc = "A heavenly booze dispenser. Makes any drink you want instantly! Cool!"
 	dispensable_reagents = list("bilk","beer","cider","mead","wine","champagne","rum","vodka","bourbon", \
@@ -426,7 +404,7 @@
 
 	dispense_sound = 'sound/misc/pourdrink2.ogg'
 
-/obj/machinery/chem_dispenser/alcohol/hydro
+/obj/machinery/dispensing/chem_dispenser/alcohol/hydro
 	name = "ULTRA DISPENSER"
 	desc = "The most powerful bar dispenser to ever exist."
 	dispensable_reagents = list("bilk","beer","cider","mead","wine","champagne","rum","vodka","bourbon", \
@@ -443,7 +421,7 @@
 						"coconut_milk", "sugar", "water", "vanilla", "tea","mint")
 
 
-/obj/machinery/chem_dispenser/soda
+/obj/machinery/dispensing/chem_dispenser/soda
 	name = "soda fountain"
 	desc = "A soda fountain that definitely does not have a suspicious similarity to the alcohol and chemical dispensers. No sir."
 	dispensable_reagents = list("cola", "juice_lime", "juice_lemon", "juice_orange", \
@@ -457,7 +435,7 @@
 
 	dispense_sound = 'sound/misc/pourdrink2.ogg'
 
-/obj/machinery/chem_dispenser/chef
+/obj/machinery/dispensing/chem_dispenser/chef
 	name = "kitchen fountain"
 	desc = "A soda fountain that definitely does not have a suspicious similarity to the alcohol and chemical dispensers OR the soda fountain. No sir."
 	dispensable_reagents = list("cola", "juice_lime", "juice_lemon", "juice_orange", "mint", "mustard", "pepper", \

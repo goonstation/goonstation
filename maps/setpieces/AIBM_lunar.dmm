@@ -1813,7 +1813,7 @@
 /turf/unsimulated/floor,
 /area/moon/underground)
 "eE" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -3037,7 +3037,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "hK" = (
-/obj/machinery/vending/cola/red,
+/obj/machinery/dispensing/vending/cola/red,
 /turf/unsimulated/floor{
 	icon_state = "carpetW"
 	},
@@ -4389,7 +4389,7 @@
 	},
 /area/moon/museum)
 "kg" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -4419,7 +4419,7 @@
 	},
 /area/moon/museum)
 "kj" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -5761,7 +5761,7 @@
 	},
 /area/moon/museum)
 "mY" = (
-/obj/machinery/vending/cola/red,
+/obj/machinery/dispensing/vending/cola/red,
 /turf/unsimulated/floor/grey/checker,
 /area/moon/museum)
 "mZ" = (
@@ -6113,13 +6113,13 @@
 	},
 /area/station/crew_quarters/kitchen)
 "nN" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/dispensing/chem_dispenser,
 /turf/simulated/floor{
 	icon_state = "carpetN"
 	},
 /area/station/crew_quarters/kitchen)
 "nO" = (
-/obj/machinery/chem_heater,
+/obj/machinery/dispensing/chem_heater,
 /turf/simulated/floor{
 	icon_state = "carpetN"
 	},
@@ -6130,7 +6130,7 @@
 	},
 /area/station/crew_quarters/kitchen)
 "nQ" = (
-/obj/machinery/chem_master,
+/obj/machinery/dispensing/chem_master,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -6858,7 +6858,7 @@
 /turf/simulated/floor/caution/north,
 /area/station/crew_quarters/kitchen)
 "pC" = (
-/obj/machinery/vending/electronics,
+/obj/machinery/dispensing/vending/electronics,
 /turf/simulated/floor{
 	icon_state = "carpetW"
 	},
@@ -7168,7 +7168,7 @@
 	},
 /area/station/crew_quarters/kitchen)
 "qr" = (
-/obj/machinery/vending/paint/broken,
+/obj/machinery/dispensing/vending/paint/broken,
 /turf/simulated/floor{
 	icon_state = "carpetS"
 	},
@@ -7295,7 +7295,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/sim/area1)
 "qI" = (
-/obj/machinery/vending/kitchen,
+/obj/machinery/dispensing/vending/kitchen,
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 1

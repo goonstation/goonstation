@@ -1,4 +1,4 @@
-/obj/machinery/nanofab/refining
+/obj/machinery/dispensing/nanofab/refining
 	name = "Nano-fabricator (Refining)"
 	blueprints = list(/datum/matfab_recipe/coilsmall,
 	/datum/matfab_recipe/coillarge,
@@ -37,7 +37,7 @@
 	/datum/matfab_recipe/aplates
 	*/
 
-/obj/machinery/nanofab/mining
+/obj/machinery/dispensing/nanofab/mining
 	name = "Nano-fabricator (Mining)"
 	color = "#f4a742"
 	blueprints = list(/datum/matfab_recipe/mining_tool,
@@ -48,7 +48,7 @@
 	/datum/matfab_recipe/mining_mod_conc,
 	/datum/matfab_recipe/spacesuit)
 
-/obj/machinery/nanofab/prototype
+/obj/machinery/dispensing/nanofab/prototype
 	name = "Nano-fabricator (Protoype)"
 	color = "#496ba3"
 	blueprints = list(/datum/matfab_recipe/mining_tool,
@@ -59,12 +59,12 @@
 	/datum/matfab_recipe/mining_mod_conc,
 	/datum/matfab_recipe/spacesuit)
 
-/obj/machinery/nanofab/artifactengine
+/obj/machinery/dispensing/nanofab/artifactengine
 	name = "Nano-fabricator (Protoype)"
 	color = "#496ba3"
 
 /// Material science fabricator
-/obj/machinery/nanofab
+/obj/machinery/dispensing/nanofab
 	name = "Nano-fabricator"
 	desc = "'Nano' means it's high-tech stuff."
 	icon = 'icons/obj/manufacturer.dmi'
@@ -93,8 +93,6 @@
 
 	var/list/blueprints = list()
 
-	var/output_target = null
-
 	New()
 		for(var/R in blueprints)
 			recipes.Add(new R())
@@ -103,70 +101,6 @@
 	attack_hand(mob/user as mob)
 		user.Browse(buildHtml(), "window=nfab;size=550x650;title=Nano-fabricator;fade_in=0;can_resize=0", 1)
 		return
-
-	MouseDrop(over_object, src_location, over_location)
-		if(over_object == src)
-			boutput(usr, "<span class='notice'>You reset the output location of [src]!</span>")
-			src.output_target = src.loc
-			return
-
-		if(!istype(usr,/mob/living/))
-			boutput(usr, "<span class='alert'>Only living mobs are able to set the output target for [src].</span>")
-			return
-
-		if(get_dist(over_object,src) > 1)
-			boutput(usr, "<span class='alert'>[src] is too far away from the target!</span>")
-			return
-
-		if(get_dist(over_object,usr) > 1)
-			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
-			return
-
-		if (istype(over_object,/obj/storage/crate/))
-			var/obj/storage/crate/C = over_object
-			if (C.locked || C.welded)
-				boutput(usr, "<span class='alert'>You can't use a currently unopenable crate as an output target.</span>")
-			else
-				src.output_target = over_object
-				boutput(usr, "<span class='notice'>You set [src] to output to [over_object]!</span>")
-
-		else if (istype(over_object,/obj/table/) || istype(over_object,/obj/rack/))
-			var/obj/O = over_object
-			src.output_target = O.loc
-			boutput(usr, "<span class='notice'>You set [src] to output on top of [O]!</span>")
-
-		else if (istype(over_object,/turf) && !over_object:density)
-			src.output_target = over_object
-			boutput(usr, "<span class='notice'>You set [src] to output to [over_object]!</span>")
-
-		else
-			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
-		return
-
-	proc/get_output_location()
-		if (!src.output_target)
-			return src.loc
-
-		if (get_dist(src.output_target,src) > 1)
-			src.output_target = null
-			return src.loc
-
-		if (istype(src.output_target,/obj/storage/crate/))
-			var/obj/storage/crate/C = src.output_target
-			if (C.locked || C.welded)
-				src.output_target = null
-				return src.loc
-			else
-				if (C.open)
-					return C.loc
-				else
-					return C
-
-		else if (istype(src.output_target,/turf/simulated/floor/))
-			return src.output_target
-
-		else
-			return src.loc
 
 	proc/buildHtml()
 		var/html = list()

@@ -1275,7 +1275,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 	/obj/item/reagent_containers/food/snacks/prison_loaf,\
 	/obj/item/reagent_containers/food/snacks/einstein_loaf,\
 	/obj/reagent_dispensers,\
-	/obj/machinery/chem_dispenser,\
+	/obj/machinery/dispensing/chem_dispenser,\
 	/obj/machinery/portable_atmospherics/canister,\
 	/obj/machinery/networked/teleconsole,\
 	/obj/storage/crate, /obj/storage/closet,\
@@ -1286,7 +1286,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 	/obj/machinery/light,\
 	/obj/machinery/phone,\
 	/obj/machinery/atmospherics/valve,\
-	/obj/machinery/vending,\
+	/obj/machinery/dispensing/vending,\
 	/obj/machinery/nuclearbomb,\
 	/obj/item/gun/kinetic/airzooka,\
 	/obj/machinery/computer,\

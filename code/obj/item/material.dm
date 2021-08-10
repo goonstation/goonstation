@@ -756,7 +756,7 @@
 
 // Material-related Machinery
 
-/obj/machinery/portable_reclaimer
+/obj/machinery/dispensing/portable_reclaimer
 	name = "portable reclaimer"
 	desc = "A sophisticated piece of machinery that quickly processes minerals into bars."
 	icon = 'icons/obj/scrap.dmi'
@@ -771,7 +771,6 @@
 	var/sound/sound_load = sound('sound/items/Deconstruct.ogg')
 	var/sound/sound_process = sound('sound/effects/pop.ogg')
 	var/sound/sound_grump = sound('sound/machines/buzz-two.ogg')
-	var/atom/output_location = null
 
 	attack_hand(var/mob/user as mob)
 		if (active)
@@ -879,8 +878,8 @@
 		BAR.setMaterial(MAT)
 		BAR.change_stack_amount(amount - 1)
 
-		if (istype(output_location, /obj/machinery/manufacturer))
-			var/obj/machinery/manufacturer/M = output_location
+		if (istype(output_location, /obj/machinery/dispensing/manufacturer))
+			var/obj/machinery/dispensing/manufacturer/M = output_location
 			M.load_item(BAR)
 		else
 			BAR.set_loc(output_location)
@@ -924,61 +923,6 @@
 
 		else
 			. = ..()
-
-	MouseDrop(over_object, src_location, over_location)
-		if(!isliving(usr))
-			boutput(usr, "<span class='alert'>Get your filthy dead fingers off that!</span>")
-			return
-
-		if(over_object == src)
-			output_location = null
-			boutput(usr, "<span class='notice'>You reset the reclaimer's output target.</span>")
-			return
-
-		if(get_dist(over_object,src) > 1)
-			boutput(usr, "<span class='alert'>The reclaimer is too far away from the target!</span>")
-			return
-
-		if(get_dist(over_object,usr) > 1)
-			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
-			return
-
-		if (istype(over_object,/obj/storage/crate/))
-			var/obj/storage/crate/C = over_object
-			if (C.locked || C.welded)
-				boutput(usr, "<span class='alert'>You can't use a currently unopenable crate as an output target.</span>")
-			else
-				src.output_location = over_object
-				boutput(usr, "<span class='notice'>You set the reclaimer to output to [over_object]!</span>")
-
-		else if (istype(over_object,/obj/storage/cart/))
-			var/obj/storage/cart/C = over_object
-			if (C.locked || C.welded)
-				boutput(usr, "<span class='alert'>You can't use a currently unopenable cart as an output target.</span>")
-			else
-				src.output_location = over_object
-				boutput(usr, "<span class='notice'>You set the reclaimer to output to [over_object]!</span>")
-
-		else if (istype(over_object,/obj/machinery/manufacturer/))
-			var/obj/machinery/manufacturer/M = over_object
-			if (M.status & BROKEN || M.status & NOPOWER || M.dismantle_stage > 0)
-				boutput(usr, "<span class='alert'>You can't use a non-functioning manufacturer as an output target.</span>")
-			else
-				src.output_location = M
-				boutput(usr, "<span class='notice'>You set the reclaimer to output to [over_object]!</span>")
-
-		else if (istype(over_object,/obj/table/) && istype(over_object,/obj/rack/))
-			var/obj/O = over_object
-			src.output_location = O.loc
-			boutput(usr, "<span class='notice'>You set the reclaimer to output on top of [O]!</span>")
-
-		else if (istype(over_object,/turf/simulated/floor/))
-			src.output_location = over_object
-			boutput(usr, "<span class='notice'>You set the reclaimer to output to [over_object]!</span>")
-
-		else
-			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
-		return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (!O || !user)
@@ -1032,25 +976,3 @@
 			if (user.loc != staystill) break
 		boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
 		return
-
-	proc/get_output_location()
-		if (!output_location)
-			return src.loc
-
-		if (!IN_RANGE(src.output_location, src, 1))
-			output_location = null
-			return src.loc
-
-		if (istype(output_location,/obj/machinery/manufacturer))
-			var/obj/machinery/manufacturer/M = output_location
-			if (M.status & NOPOWER || M.status & BROKEN | M.dismantle_stage > 0)
-				return M.loc
-			return M
-
-		if (istype(output_location,/obj/storage))
-			var/obj/storage/S = output_location
-			if (S.locked || S.welded || S.open)
-				return S.loc
-			return S
-
-		return output_location

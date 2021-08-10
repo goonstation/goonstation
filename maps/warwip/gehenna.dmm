@@ -225,7 +225,7 @@
 /turf/simulated/floor/black,
 /area/station/mining/refinery)
 "aJ" = (
-/obj/machinery/chem_dispenser/soda,
+/obj/machinery/dispensing/chem_dispenser/soda,
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
 	dir = 1;
@@ -235,11 +235,11 @@
 /turf/simulated/floor/black/grime,
 /area/station/mining/refinery)
 "aK" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/dispensing/chem_dispenser,
 /turf/simulated/floor/black/grime,
 /area/station/mining/refinery)
 "aL" = (
-/obj/machinery/chem_dispenser/alcohol,
+/obj/machinery/dispensing/chem_dispenser/alcohol,
 /turf/simulated/floor/black/grime,
 /area/station/mining/refinery)
 "aM" = (
@@ -267,7 +267,7 @@
 /turf/simulated/floor,
 /area/station/mining/refinery)
 "aQ" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/dispensing/vending/alcohol,
 /turf/simulated/floor/black,
 /area/station/mining/refinery)
 "aR" = (
@@ -279,7 +279,7 @@
 	icon_state = "tile1";
 	dir = 8
 	},
-/obj/machinery/glass_recycler{
+/obj/machinery/dispensing/glass_recycler{
 	pixel_y = 16
 	},
 /turf/simulated/floor/carpet/red,
@@ -614,13 +614,13 @@
 /turf/simulated/floor,
 /area/station/mining/refinery)
 "bR" = (
-/obj/machinery/vending/coffee{
+/obj/machinery/dispensing/vending/coffee{
 	pixel_y = 8
 	},
 /turf/simulated/floor,
 /area/station/mining/refinery)
 "bS" = (
-/obj/machinery/vending/cigarette{
+/obj/machinery/dispensing/vending/cigarette{
 	pixel_y = 8
 	},
 /turf/simulated/floor,
@@ -736,7 +736,7 @@
 	},
 /area/station/mining/refinery)
 "ci" = (
-/obj/machinery/vending/kitchen,
+/obj/machinery/dispensing/vending/kitchen,
 /turf/simulated/floor/white,
 /area/station/mining/refinery)
 "cj" = (
@@ -1080,7 +1080,7 @@
 /turf/simulated/floor/specialroom/freezer/blue,
 /area/station/mining/refinery)
 "di" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/dispensing/vending/monkey,
 /turf/simulated/floor/specialroom/freezer/blue,
 /area/station/mining/refinery)
 "dj" = (
@@ -1297,11 +1297,11 @@
 /turf/simulated/floor,
 /area/station/mining/refinery)
 "dX" = (
-/obj/machinery/vending/book,
+/obj/machinery/dispensing/vending/book,
 /turf/simulated/floor,
 /area/station/mining/refinery)
 "dY" = (
-/obj/machinery/vending/pda,
+/obj/machinery/dispensing/vending/pda,
 /turf/simulated/floor,
 /area/station/mining/refinery)
 "dZ" = (
@@ -1316,7 +1316,7 @@
 	},
 /area/gehenna)
 "ea" = (
-/obj/machinery/vending/floppy,
+/obj/machinery/dispensing/vending/floppy,
 /turf/simulated/floor,
 /area/station/mining/refinery)
 "eb" = (
@@ -1333,7 +1333,7 @@
 	icon_state = "tile1";
 	dir = 4
 	},
-/obj/machinery/glass_recycler{
+/obj/machinery/dispensing/glass_recycler{
 	pixel_y = 16
 	},
 /turf/gehenna/desert/plating{
@@ -2372,7 +2372,7 @@
 	},
 /area/space)
 "hC" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/dispensing/chem_dispenser,
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
 	dir = 8;
@@ -2385,7 +2385,7 @@
 	},
 /area/space)
 "hD" = (
-/obj/machinery/chem_master,
+/obj/machinery/dispensing/chem_master,
 /turf/simulated/floor/blueblack{
 	icon_state = "blueblack";
 	dir = 1
@@ -2756,7 +2756,7 @@
 	},
 /area/space)
 "iD" = (
-/obj/machinery/chem_heater,
+/obj/machinery/dispensing/chem_heater,
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
 	dir = 8;

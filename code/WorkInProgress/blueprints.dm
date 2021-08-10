@@ -364,7 +364,7 @@
 	"/obj/rack", \
 	"/obj/structure",
 	"/obj/disposalpipe", \
-//	"/obj/machinery/vending", \ //No cheap buckshot/oddcigs/chemdepots. Use a mechscanner
+//	"/obj/machinery/dispensing/vending", \ //No cheap buckshot/oddcigs/chemdepots. Use a mechscanner
 	"/obj/machinery/light", \
 	"/obj/machinery/door_control", \
 	"/obj/machinery/light_switch", \
@@ -386,7 +386,7 @@
 	"/obj/machinery/optable",
 	"/obj/machinery/mass_driver", \
 //	"/obj/reagent_dispensers", \ //No free helium/fuel/omni/raj/etc from abcu
-	"/obj/machinery/manufacturer", \
+	"/obj/machinery/dispensing/manufacturer", \
 	"/obj/machinery/sleeper", \
 	"/obj/machinery/sleep_console", \
 	"/obj/submachine/slot_machine", \

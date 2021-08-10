@@ -9,7 +9,7 @@
 // Removed quite a bit of of duplicate code here (Convair880).
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-/obj/machinery/chem_heater
+/obj/machinery/dispensing/chem_heater
 	name = "Reagent Heater/Cooler"
 	density = 1
 	anchored = 1
@@ -22,14 +22,12 @@
 	var/obj/beaker = null
 	var/active = 0
 	var/target_temp = T0C
-	var/output_target = null
 	var/mob/roboworking = null
 	var/static/image/icon_beaker = image('icons/obj/chemical.dmi', "heater-beaker")
 	// The chemistry APC was largely meaningless, so I made dispensers/heaters require a power supply (Convair880).
 
 	New()
 		..()
-		output_target = src.loc
 
 	attackby(var/obj/item/reagent_containers/glass/B as obj, var/mob/user as mob)
 
@@ -265,31 +263,10 @@
 		else
 			src.icon_state = "heater"
 
-	MouseDrop(over_object, src_location, over_location)
-		if(!isliving(usr))
-			boutput(usr, "<span class='alert'>Only living mobs are able to set the Reagent Heater/Cooler's output target.</span>")
-			return
-
-		if(get_dist(over_object,src) > 1)
-			boutput(usr, "<span class='alert'>The Reagent Heater/Cooler is too far away from the target!</span>")
-			return
-
-		if(get_dist(over_object,usr) > 1)
-			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
-			return
-
-		else if (istype(over_object,/turf/simulated/floor/))
-			src.output_target = over_object
-			boutput(usr, "<span class='notice'>You set the Reagent Heater/Cooler to output to [over_object]!</span>")
-
-		else
-			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
-		return
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/obj/machinery/chem_master
+/obj/machinery/dispensing/chem_master
 	name = "CheMaster 3000"
 	density = 1
 	anchored = 1
@@ -303,13 +280,11 @@
 	var/emagged = 0
 	var/patch_box = 1
 	var/pill_bottle = 1
-	var/output_target = null
 
 	New()
 		..()
 		if (!src.emagged && islist(chem_whitelist) && length(chem_whitelist))
 			src.whitelist = chem_whitelist
-		output_target = src.loc
 
 	ex_act(severity)
 		switch (severity)
@@ -643,27 +618,6 @@
 			P.color_overlay.alpha = P.color_overlay_alpha
 			P.overlays += P.color_overlay
 			return
-
-	MouseDrop(over_object, src_location, over_location)
-		if(!isliving(usr))
-			boutput(usr, "<span class='alert'>Only living mobs are able to set the CheMaster 3000's output target.</span>")
-			return
-
-		if(get_dist(over_object,src) > 1)
-			boutput(usr, "<span class='alert'>The CheMaster 3000 is too far away from the target!</span>")
-			return
-
-		if(get_dist(over_object,usr) > 1)
-			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
-			return
-
-		else if (istype(over_object,/turf/simulated/floor/))
-			src.output_target = over_object
-			boutput(usr, "<span class='notice'>You set the CheMaster 3000 to output to [over_object]!</span>")
-
-		else
-			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
-		return
 
 datum/chemicompiler_core/stationaryCore
 	statusChangeCallback = "statusChange"

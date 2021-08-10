@@ -115,7 +115,7 @@
 /turf/simulated/floor/grime,
 /area/prefab/sea_mining)
 "ay" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/dispensing/manufacturer/general,
 /turf/simulated/floor/shuttlebay,
 /area/prefab/sea_mining)
 "az" = (
@@ -143,7 +143,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/prefab/sea_mining)
 "aF" = (
-/obj/machinery/manufacturer/hangar,
+/obj/machinery/dispensing/manufacturer/hangar,
 /turf/simulated/floor/shuttlebay,
 /area/prefab/sea_mining)
 "aG" = (
@@ -199,7 +199,7 @@
 /turf/simulated/floor/grime,
 /area/prefab/sea_mining)
 "aQ" = (
-/obj/machinery/manufacturer/mining,
+/obj/machinery/dispensing/manufacturer/mining,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6;
 	icon_state = "xtra_bigstripe-corner2"
@@ -227,7 +227,7 @@
 /turf/simulated/floor/grime,
 /area/prefab/sea_mining)
 "aV" = (
-/obj/machinery/manufacturer/mining,
+/obj/machinery/dispensing/manufacturer/mining,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10;
 	icon_state = "xtra_bigstripe-corner2"
@@ -235,7 +235,7 @@
 /turf/simulated/floor,
 /area/prefab/sea_mining)
 "aW" = (
-/obj/machinery/manufacturer/qm,
+/obj/machinery/dispensing/manufacturer/qm,
 /turf/simulated/floor/grime,
 /area/prefab/sea_mining)
 "aX" = (
@@ -247,19 +247,19 @@
 /turf/simulated/floor/bot,
 /area/prefab/sea_mining)
 "aZ" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /turf/simulated/floor/bot,
 /area/prefab/sea_mining)
 "ba" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/simulated/floor/bot,
 /area/prefab/sea_mining)
 "bb" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/dispensing/portable_reclaimer,
 /turf/simulated/floor/bot,
 /area/prefab/sea_mining)
 "bc" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor/bot,
 /area/prefab/sea_mining)
 "bd" = (
@@ -346,7 +346,7 @@
 /turf/simulated/floor/damaged2,
 /area/prefab/sea_mining)
 "rD" = (
-/obj/machinery/ore_cloud_storage_container,
+/obj/machinery/dispensing/ore_cloud_storage_container,
 /turf/simulated/floor/shuttlebay,
 /area/prefab/sea_mining)
 "UC" = (

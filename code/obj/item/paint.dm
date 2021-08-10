@@ -19,7 +19,7 @@
 	add_fingerprint(user)
 	return
 
-/obj/machinery/vending/paint
+/obj/machinery/dispensing/vending/paint
 	name = "paint dispenser"
 	desc = "Dispenses paint. Derp."
 	icon = 'icons/obj/vending.dmi'
@@ -67,7 +67,7 @@
 //////////////////// broken paint vending machine
 
 //This is me being mean to the players.
-/obj/machinery/vending/paint/broken
+/obj/machinery/dispensing/vending/paint/broken
 	name = "Broken Paint Dispenser"
 	desc = "Would dispense paint, if it were not broken."
 	icon = 'icons/obj/vending.dmi'
@@ -217,7 +217,7 @@
 						repair_stage = 8
 						if(prob(100))
 							user.visible_message("[user] secures the maintenance panel!", "You secure the maintenance panel.")
-							new /obj/machinery/vending/paint(src.loc)
+							new /obj/machinery/dispensing/vending/paint(src.loc)
 							qdel(src)
 							return
 						user.visible_message("<span class='alert'><b>[user] slips, knocking the paint dispenser over!.</b></span>")
@@ -271,7 +271,7 @@ var/list/cached_colors = new/list()
 		generate_icon()
 
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
-		if(target == loc || get_dist(src,target) > 1 || istype(target,/obj/machinery/vending/paint) ) return
+		if(target == loc || get_dist(src,target) > 1 || istype(target,/obj/machinery/dispensing/vending/paint) ) return
 
 		if(!uses)
 			boutput(user, "It's empty.")
@@ -389,7 +389,7 @@ var/list/cached_colors = new/list()
 		currentpattern = 1
 
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
-		if(target == loc || get_dist(src,target) > 1 || istype(target,/obj/machinery/vending/paint) ) return
+		if(target == loc || get_dist(src,target) > 1 || istype(target,/obj/machinery/dispensing/vending/paint) ) return
 
 		if(!uses)
 			boutput(user, "It's empty.")

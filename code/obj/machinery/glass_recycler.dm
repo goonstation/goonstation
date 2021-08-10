@@ -1,6 +1,6 @@
 #define PLATE_COST 2
 
-/obj/machinery/glass_recycler
+/obj/machinery/dispensing/glass_recycler
 	name = "glass recycler"//"Kitchenware Recycler"
 	desc = "A machine that recycles glass shards into drinking glasses, beakers, or other glass things."
 	icon = 'icons/obj/kitchen.dmi'
@@ -137,67 +137,66 @@
 			return
 
 		var/obj/item/G
-
 		switch(object)
 			if("beaker")
-				G = new /obj/item/reagent_containers/glass/beaker(get_turf(src))
+				G = new /obj/item/reagent_containers/glass/beaker(output_target)
 				src.glass_amt -= 1
 			if("largebeaker")
-				G = new /obj/item/reagent_containers/glass/beaker/large(get_turf(src))
+				G = new /obj/item/reagent_containers/glass/beaker/large(output_target)
 				src.glass_amt -= 2
 			if("bottle")
-				G = new /obj/item/reagent_containers/glass/bottle(get_turf(src))
+				G = new /obj/item/reagent_containers/glass/bottle(output_target)
 				src.glass_amt -= 1
 			if("vial")
-				G = new /obj/item/reagent_containers/glass/vial(get_turf(src))
+				G = new /obj/item/reagent_containers/glass/vial(output_target)
 				src.glass_amt -= 1
 			if("drinkbottle")
-				G = new /obj/item/reagent_containers/food/drinks/bottle/soda(get_turf(src))
+				G = new /obj/item/reagent_containers/food/drinks/bottle/soda(output_target)
 				src.glass_amt -= 1
 			if("longbottle")
-				G = new /obj/item/reagent_containers/food/drinks/bottle/empty/long(get_turf(src))
+				G = new /obj/item/reagent_containers/food/drinks/bottle/empty/long(output_target)
 				src.glass_amt -= 1
 			if("tallbottle")
-				G = new /obj/item/reagent_containers/food/drinks/bottle/empty/tall(get_turf(src))
+				G = new /obj/item/reagent_containers/food/drinks/bottle/empty/tall(output_target)
 				src.glass_amt -= 1
 			if("rectangularbottle")
-				G = new /obj/item/reagent_containers/food/drinks/bottle/empty/rectangular(get_turf(src))
+				G = new /obj/item/reagent_containers/food/drinks/bottle/empty/rectangular(output_target)
 				src.glass_amt -= 1
 			if("squarebottle")
-				G = new /obj/item/reagent_containers/food/drinks/bottle/empty/square(get_turf(src))
+				G = new /obj/item/reagent_containers/food/drinks/bottle/empty/square(output_target)
 				src.glass_amt -= 1
 			if("masculinebottle")
-				G = new /obj/item/reagent_containers/food/drinks/bottle/empty/masculine(get_turf(src))
+				G = new /obj/item/reagent_containers/food/drinks/bottle/empty/masculine(output_target)
 				src.glass_amt -= 1
 			if("plate")
-				G = new /obj/item/plate(get_turf(src))
+				G = new /obj/item/plate(output_target)
 				src.glass_amt -= PLATE_COST
 			if("bowl")
-				G = new /obj/item/reagent_containers/food/drinks/bowl(get_turf(src))
+				G = new /obj/item/reagent_containers/food/drinks/bowl(output_target)
 				src.glass_amt -= 1
 			if("drinking")
-				G = new /obj/item/reagent_containers/food/drinks/drinkingglass(get_turf(src))
+				G = new /obj/item/reagent_containers/food/drinks/drinkingglass(output_target)
 				src.glass_amt -= 1
 			if("shot")
-				G = new /obj/item/reagent_containers/food/drinks/drinkingglass/shot(get_turf(src))
+				G = new /obj/item/reagent_containers/food/drinks/drinkingglass/shot(output_target)
 				src.glass_amt -= 1
 			if("oldf")
-				new /obj/item/reagent_containers/food/drinks/drinkingglass/oldf(get_turf(src))
+				new /obj/item/reagent_containers/food/drinks/drinkingglass/oldf(output_target)
 				src.glass_amt -= 1
 			if("round")
-				new /obj/item/reagent_containers/food/drinks/drinkingglass/round(get_turf(src))
+				new /obj/item/reagent_containers/food/drinks/drinkingglass/round(output_target)
 				src.glass_amt -= 2
 			if("wine")
-				G = new /obj/item/reagent_containers/food/drinks/drinkingglass/wine(get_turf(src))
+				G = new /obj/item/reagent_containers/food/drinks/drinkingglass/wine(output_target)
 				src.glass_amt -= 1
 			if("cocktail")
-				G = new /obj/item/reagent_containers/food/drinks/drinkingglass/cocktail(get_turf(src))
+				G = new /obj/item/reagent_containers/food/drinks/drinkingglass/cocktail(output_target)
 				src.glass_amt -= 1
 			if("flute")
-				G = new /obj/item/reagent_containers/food/drinks/drinkingglass/flute(get_turf(src))
+				G = new /obj/item/reagent_containers/food/drinks/drinkingglass/flute(output_target)
 				src.glass_amt -= 1
 			if("pitcher")
-				G = new /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher(get_turf(src))
+				G = new /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher(output_target)
 				src.glass_amt -= 2
 			else
 				return
@@ -206,7 +205,7 @@
 			src.visible_message("<span class='notice'>[src] manufactures \a [G]!</span>")
 			return
 
-/obj/machinery/glass_recycler/chemistry //Chemistry doesn't really need all of the drinking glass options and such so I'm limiting it down a notch.
+/obj/machinery/dispensing/glass_recycler/chemistry //Chemistry doesn't really need all of the drinking glass options and such so I'm limiting it down a notch.
 	name = "chemistry glass recycler"
 
 	attack_hand(mob/user as mob)

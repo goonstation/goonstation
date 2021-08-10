@@ -492,7 +492,7 @@
 	},
 /area/prefab/sequestered_cloner)
 "Bk" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor/plating,
 /area/prefab/sequestered_cloner)
 "Bv" = (
@@ -728,7 +728,7 @@
 /turf/simulated/floor/red/redblackchecker,
 /area/prefab/sequestered_cloner)
 "NM" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/simulated/floor/plating,
 /area/prefab/sequestered_cloner)
 "NY" = (
@@ -922,7 +922,7 @@
 /turf/simulated/floor/blue/checker,
 /area/prefab/sequestered_cloner)
 "Uf" = (
-/obj/machinery/vending/monkey{
+/obj/machinery/dispensing/vending/monkey{
 	icon_state = "monkey-broken";
 	status = 1
 	},

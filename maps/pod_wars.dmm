@@ -164,7 +164,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation)
 "aJ" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/unsimulated/floor/red/side{
 	dir = 9
 	},
@@ -235,7 +235,7 @@
 /area/pod_wars/spacejunk/snackstand)
 "aZ" = (
 /obj/table/auto,
-/obj/machinery/glass_recycler/chemistry,
+/obj/machinery/dispensing/glass_recycler/chemistry,
 /obj/item/storage/box/beakerbox{
 	pixel_x = -8;
 	pixel_y = 15
@@ -302,7 +302,7 @@
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation)
 "bp" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/dispensing/portable_reclaimer,
 /turf/unsimulated/floor/yellow/side{
 	dir = 10
 	},
@@ -421,7 +421,7 @@
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
 "bO" = (
-/obj/machinery/processor,
+/obj/machinery/dispensing/processor,
 /turf/unsimulated/floor/yellow/side{
 	dir = 9
 	},
@@ -487,7 +487,7 @@
 /turf/unsimulated/floor/yellow/side,
 /area/pod_wars/team1/starboardhall)
 "cb" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/miningoutpost/crewquarters)
 "cc" = (
@@ -638,7 +638,7 @@
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation)
 "cE" = (
-/obj/machinery/nanofab/mining,
+/obj/machinery/dispensing/nanofab/mining,
 /obj/decal/tile_edge{
 	icon_state = "mule_dropoff"
 	},
@@ -755,7 +755,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/landingpads)
 "cZ" = (
-/obj/machinery/vending/cola/blue,
+/obj/machinery/dispensing/vending/cola/blue,
 /turf/simulated/floor/blue/side{
 	dir = 9
 	},
@@ -776,7 +776,7 @@
 /turf/space,
 /area/space)
 "dh" = (
-/obj/machinery/vending/medical,
+/obj/machinery/dispensing/vending/medical,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team1/medbay)
 "di" = (
@@ -796,7 +796,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "dm" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/dispensing/portable_reclaimer,
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
@@ -832,7 +832,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/maintdock)
 "dt" = (
-/obj/machinery/chem_dispenser/soda,
+/obj/machinery/dispensing/chem_dispenser/soda,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
 "dv" = (
@@ -876,7 +876,7 @@
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/mining)
 "dE" = (
-/obj/machinery/manufacturer/qm,
+/obj/machinery/dispensing/manufacturer/qm,
 /obj/decal/tile_edge{
 	icon_state = "mule_dropoff"
 	},
@@ -933,7 +933,7 @@
 /area/pod_wars/spacejunk/fstation/secdock)
 "dN" = (
 /obj/table/auto,
-/obj/machinery/glass_recycler/chemistry,
+/obj/machinery/dispensing/glass_recycler/chemistry,
 /obj/item/storage/box/beakerbox{
 	pixel_x = -8;
 	pixel_y = 15
@@ -961,7 +961,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/chem_master{
+/obj/machinery/dispensing/chem_master{
 	dir = 8
 	},
 /turf/unsimulated/floor/white,
@@ -1419,7 +1419,7 @@
 	},
 /area/pod_wars/team1/mining)
 "fr" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/red/side{
 	dir = 8
@@ -1434,7 +1434,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation/primary)
 "fu" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor/green/side,
 /area/pod_wars/spacejunk/fstation/mess)
 "fw" = (
@@ -1580,7 +1580,7 @@
 	},
 /area/pod_wars/spacejunk/fstation)
 "fU" = (
-/obj/machinery/manufacturer/pod_wars/syndicate,
+/obj/machinery/dispensing/manufacturer/pod_wars/syndicate,
 /obj/decal/tile_edge{
 	icon_state = "mule_dropoff"
 	},
@@ -1816,7 +1816,7 @@
 /area/pod_wars/spacejunk/uvb67/central)
 "gJ" = (
 /obj/machinery/light/incandescent/netural,
-/obj/machinery/chem_dispenser/medical,
+/obj/machinery/dispensing/chem_dispenser/medical,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/medbay)
 "gM" = (
@@ -1832,7 +1832,7 @@
 /obj/decal/tile_edge{
 	icon_state = "mule_dropoff"
 	},
-/obj/machinery/manufacturer/general/pod_wars,
+/obj/machinery/dispensing/manufacturer/general/pod_wars,
 /turf/unsimulated/floor/yellow/side{
 	dir = 1
 	},
@@ -1846,7 +1846,7 @@
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/porthall)
 "gQ" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/dispensing/portable_reclaimer,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/mining)
 "gT" = (
@@ -1947,7 +1947,7 @@
 /turf/space,
 /area/space)
 "hn" = (
-/obj/machinery/nanofab/mining,
+/obj/machinery/dispensing/nanofab/mining,
 /turf/unsimulated/floor/yellow/side{
 	dir = 9
 	},
@@ -1961,7 +1961,7 @@
 /area/pod_wars/spacejunk/uvb67/central)
 "hr" = (
 /obj/table/auto,
-/obj/machinery/glass_recycler/chemistry,
+/obj/machinery/dispensing/glass_recycler/chemistry,
 /obj/item/storage/box/beakerbox,
 /turf/simulated/floor/white,
 /area/pod_wars/spacejunk/fstation/medbay)
@@ -2038,7 +2038,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation/secdock)
 "hA" = (
-/obj/machinery/vending/kitchen{
+/obj/machinery/dispensing/vending/kitchen{
 	req_access_txt = null
 	},
 /turf/unsimulated/floor/specialroom/bar,
@@ -2144,7 +2144,7 @@
 "hT" = (
 /obj/machinery/light/incandescent/netural,
 /obj/table/reinforced/bar/auto,
-/obj/machinery/glass_recycler{
+/obj/machinery/dispensing/glass_recycler{
 	density = 1
 	},
 /obj/item/storage/box/glassbox{
@@ -2163,7 +2163,7 @@
 /obj/decal/tile_edge{
 	icon_state = "mule_dropoff"
 	},
-/obj/machinery/manufacturer/general/pod_wars,
+/obj/machinery/dispensing/manufacturer/general/pod_wars,
 /turf/unsimulated/floor/blue/side{
 	dir = 9
 	},
@@ -2398,14 +2398,14 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "iV" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/dispensing/portable_reclaimer,
 /obj/item_dispenser/bandage,
 /turf/unsimulated/floor/blue/side{
 	dir = 5
 	},
 /area/pod_wars/team1/manufacturing)
 "iW" = (
-/obj/machinery/vending/cola/blue,
+/obj/machinery/dispensing/vending/cola/blue,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "jc" = (
@@ -2529,7 +2529,7 @@
 /area/pod_wars/spacejunk/fstation)
 "jC" = (
 /obj/machinery/light/incandescent/netural,
-/obj/machinery/chem_dispenser/medical/fortuna,
+/obj/machinery/dispensing/chem_dispenser/medical/fortuna,
 /turf/simulated/floor/white,
 /area/pod_wars/spacejunk/fstation/medbay)
 "jD" = (
@@ -2704,7 +2704,7 @@
 /turf/unsimulated/floor/airless,
 /area/space)
 "ko" = (
-/obj/machinery/manufacturer/qm,
+/obj/machinery/dispensing/manufacturer/qm,
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/yellow/side{
 	dir = 6
@@ -2891,7 +2891,7 @@
 	},
 /area/pod_wars/team1/manufacturing)
 "la" = (
-/obj/machinery/nanofab/refining,
+/obj/machinery/dispensing/nanofab/refining,
 /turf/unsimulated/floor/yellow/side{
 	dir = 10
 	},
@@ -3079,7 +3079,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "lN" = (
-/obj/machinery/processor,
+/obj/machinery/dispensing/processor,
 /turf/unsimulated/floor/yellow/side{
 	dir = 10
 	},
@@ -3119,7 +3119,7 @@
 /turf/unsimulated/floor/airless,
 /area/pod_wars/team1/porthall)
 "lV" = (
-/obj/machinery/processor,
+/obj/machinery/dispensing/processor,
 /turf/unsimulated/floor/yellow/side{
 	dir = 9
 	},
@@ -3195,13 +3195,13 @@
 	},
 /area/pod_wars/team1/bridge)
 "mj" = (
-/obj/machinery/processor,
+/obj/machinery/dispensing/processor,
 /turf/unsimulated/floor/yellow/side{
 	dir = 10
 	},
 /area/pod_wars/team2/mining)
 "mm" = (
-/obj/machinery/chem_dispenser/soda,
+/obj/machinery/dispensing/chem_dispenser/soda,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/power)
 "mo" = (
@@ -3583,7 +3583,7 @@
 	},
 /area/pod_wars/team1/bridge)
 "nG" = (
-/obj/machinery/chem_dispenser/alcohol,
+/obj/machinery/dispensing/chem_dispenser/alcohol,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/power)
@@ -4015,7 +4015,7 @@
 	},
 /area/pod_wars/team1/bridge)
 "pl" = (
-/obj/machinery/vending/medical,
+/obj/machinery/dispensing/vending/medical,
 /turf/simulated/floor/white,
 /area/pod_wars/spacejunk/fstation/medbay)
 "pm" = (
@@ -4430,7 +4430,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation/primary)
 "qv" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor/blue/side{
 	dir = 5
 	},
@@ -4710,7 +4710,7 @@
 	},
 /area/pod_wars/team2/power)
 "rw" = (
-/obj/machinery/vending/medical_public,
+/obj/machinery/dispensing/vending/medical_public,
 /turf/simulated/floor/white,
 /area/pod_wars/spacejunk/fstation/medbay)
 "rx" = (
@@ -5020,7 +5020,7 @@
 	},
 /area/pod_wars/spacejunk/fstation)
 "sP" = (
-/obj/machinery/chem_master,
+/obj/machinery/dispensing/chem_master,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/cloning)
 "sQ" = (
@@ -5075,7 +5075,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/dorgun)
 "ta" = (
-/obj/machinery/chem_dispenser/alcohol,
+/obj/machinery/dispensing/chem_dispenser/alcohol,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
@@ -5315,7 +5315,7 @@
 "ua" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/light/incandescent/netural,
-/obj/machinery/glass_recycler{
+/obj/machinery/dispensing/glass_recycler{
 	density = 1
 	},
 /obj/item/storage/box/glassbox{
@@ -5687,7 +5687,7 @@
 	},
 /area/pod_wars/spacejunk/uvb67/crew)
 "vm" = (
-/obj/machinery/vending/pizza,
+/obj/machinery/dispensing/vending/pizza,
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
@@ -5814,7 +5814,7 @@
 /obj/decal/tile_edge{
 	icon_state = "mule_dropoff"
 	},
-/obj/machinery/manufacturer/mining/pod_wars/nanotrasen,
+/obj/machinery/dispensing/manufacturer/mining/pod_wars/nanotrasen,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -6168,7 +6168,7 @@
 	},
 /area/pod_wars/team1/hangar)
 "wQ" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/dispensing/portable_reclaimer,
 /turf/unsimulated/floor/blue/side{
 	dir = 9
 	},
@@ -6364,7 +6364,7 @@
 /obj/decal/tile_edge{
 	icon_state = "mule_dropoff"
 	},
-/obj/machinery/manufacturer/mining/pod_wars/syndicate,
+/obj/machinery/dispensing/manufacturer/mining/pod_wars/syndicate,
 /turf/unsimulated/floor/yellow/side{
 	dir = 9
 	},
@@ -6471,7 +6471,7 @@
 	},
 /area/pod_wars/spacejunk/snackstand)
 "xM" = (
-/obj/machinery/manufacturer/pod_wars/syndicate,
+/obj/machinery/dispensing/manufacturer/pod_wars/syndicate,
 /obj/decal/tile_edge{
 	icon_state = "mule_dropoff"
 	},
@@ -6570,13 +6570,13 @@
 /obj/decal/tile_edge{
 	icon_state = "mule_dropoff"
 	},
-/obj/machinery/manufacturer/general/pod_wars,
+/obj/machinery/dispensing/manufacturer/general/pod_wars,
 /turf/unsimulated/floor/yellow/side{
 	dir = 4
 	},
 /area/pod_wars/team2/mining)
 "yk" = (
-/obj/machinery/chem_dispenser/soda,
+/obj/machinery/dispensing/chem_dispenser/soda,
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
@@ -7105,7 +7105,7 @@
 	},
 /area/pod_wars/spacejunk/fstation)
 "At" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -7195,7 +7195,7 @@
 /obj/decal/tile_edge{
 	icon_state = "mule_dropoff"
 	},
-/obj/machinery/manufacturer/mining/pod_wars/syndicate,
+/obj/machinery/dispensing/manufacturer/mining/pod_wars/syndicate,
 /turf/unsimulated/floor/yellow/side{
 	dir = 10
 	},
@@ -7211,7 +7211,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/primary)
 "AR" = (
-/obj/machinery/vending/cola/red,
+/obj/machinery/dispensing/vending/cola/red,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -7236,7 +7236,7 @@
 /area/pod_wars/spacejunk/fstation/secdock)
 "AU" = (
 /obj/table/auto,
-/obj/machinery/glass_recycler/chemistry,
+/obj/machinery/dispensing/glass_recycler/chemistry,
 /obj/item/storage/box/beakerbox{
 	pixel_x = -8;
 	pixel_y = 15
@@ -7279,7 +7279,7 @@
 /area/space)
 "Bb" = (
 /obj/machinery/light/incandescent/netural,
-/obj/machinery/chem_master{
+/obj/machinery/dispensing/chem_master{
 	dir = 4;
 	pixel_x = -4
 	},
@@ -7633,7 +7633,7 @@
 	},
 /area/pod_wars/team1/mining)
 "Cr" = (
-/obj/machinery/nanofab/mining,
+/obj/machinery/dispensing/nanofab/mining,
 /turf/unsimulated/floor/yellow/side{
 	dir = 9
 	},
@@ -7748,7 +7748,7 @@
 	},
 /area/pod_wars/team1/manufacturing)
 "CT" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/unsimulated/floor/blue/side{
 	dir = 10
 	},
@@ -7881,7 +7881,7 @@
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/nancy/powergen)
 "Dz" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/blue/side{
 	dir = 1
@@ -8047,7 +8047,7 @@
 	},
 /area/pod_wars/spacejunk/nancy)
 "Ed" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "Ee" = (
@@ -8055,7 +8055,7 @@
 /obj/decal/tile_edge{
 	icon_state = "mule_dropoff"
 	},
-/obj/machinery/manufacturer/general/pod_wars,
+/obj/machinery/dispensing/manufacturer/general/pod_wars,
 /turf/unsimulated/floor/blue/side{
 	dir = 5
 	},
@@ -8091,7 +8091,7 @@
 	},
 /area/pod_wars/team1/hangar)
 "Ej" = (
-/obj/machinery/chem_dispenser/alcohol,
+/obj/machinery/dispensing/chem_dispenser/alcohol,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "Ek" = (
@@ -8326,7 +8326,7 @@
 	},
 /area/pod_wars/spacejunk/restaurant)
 "Fe" = (
-/obj/machinery/vending/cola/blue,
+/obj/machinery/dispensing/vending/cola/blue,
 /turf/unsimulated/floor/blue/side{
 	dir = 6
 	},
@@ -8433,7 +8433,7 @@
 /area/pod_wars/spacejunk/fstation/command)
 "Fz" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/glass_recycler,
+/obj/machinery/dispensing/glass_recycler,
 /obj/item/storage/box/glassbox,
 /obj/item/storage/box/glassbox,
 /turf/unsimulated/floor/wood/seven,
@@ -8526,7 +8526,7 @@
 /area/pod_wars/spacejunk/brightwell)
 "FT" = (
 /obj/machinery/light/small/floor/netural,
-/obj/machinery/manufacturer/pod_wars/nanotrasen,
+/obj/machinery/dispensing/manufacturer/pod_wars/nanotrasen,
 /obj/decal/tile_edge{
 	icon_state = "mule_dropoff"
 	},
@@ -8651,7 +8651,7 @@
 /turf/simulated/floor/airless/black,
 /area/pod_wars/spacejunk/reliant/landingpads)
 "Gw" = (
-/obj/machinery/vending/kitchen{
+/obj/machinery/dispensing/vending/kitchen{
 	req_access_txt = null
 	},
 /turf/simulated/floor/green/side{
@@ -8758,7 +8758,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation/maintdock)
 "GQ" = (
-/obj/machinery/chem_master{
+/obj/machinery/dispensing/chem_master{
 	dir = 4;
 	pixel_x = -4
 	},
@@ -8865,7 +8865,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/spacejunk/fstation/secdock)
 "Hp" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
 "Hq" = (
@@ -9271,7 +9271,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/maintdock)
 "IN" = (
-/obj/machinery/processor,
+/obj/machinery/dispensing/processor,
 /obj/decal/tile_edge{
 	icon_state = "mule_dropoff"
 	},
@@ -9921,7 +9921,7 @@
 /turf/unsimulated/floor/red,
 /area/pod_wars/team2/bridge)
 "Lf" = (
-/obj/machinery/vending/medical,
+/obj/machinery/dispensing/vending/medical,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/cloning)
 "Lg" = (
@@ -9952,7 +9952,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team1/hangar)
 "Ln" = (
-/obj/machinery/vending/cola/red,
+/obj/machinery/dispensing/vending/cola/red,
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -10260,7 +10260,7 @@
 	},
 /area/pod_wars/team1/starboardhall)
 "MI" = (
-/obj/machinery/vending/cola/blue,
+/obj/machinery/dispensing/vending/cola/blue,
 /turf/simulated/floor/blue/side{
 	dir = 1
 	},
@@ -10297,7 +10297,7 @@
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/restaurant)
 "MN" = (
-/obj/machinery/nanofab/refining,
+/obj/machinery/dispensing/nanofab/refining,
 /turf/unsimulated/floor/yellow/side{
 	dir = 1
 	},
@@ -10536,7 +10536,7 @@
 /area/pod_wars/spacejunk/fstation/primary)
 "NV" = (
 /obj/table/auto,
-/obj/machinery/glass_recycler,
+/obj/machinery/dispensing/glass_recycler,
 /obj/item/storage/box/glassbox,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
@@ -10567,7 +10567,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/secdock)
 "NY" = (
-/obj/machinery/vending/kitchen,
+/obj/machinery/dispensing/vending/kitchen,
 /obj/item_dispenser/bandage,
 /turf/simulated/floor/yellow,
 /area/pod_wars/spacejunk/restaurant)
@@ -10600,7 +10600,7 @@
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
 "Od" = (
-/obj/machinery/chem_dispenser/soda,
+/obj/machinery/dispensing/chem_dispenser/soda,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 /turf/unsimulated/floor/wood/seven,
 /area/pod_wars/spacejunk/fstation/bar)
@@ -10717,7 +10717,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/uvb67/power)
 "Ow" = (
-/obj/machinery/manufacturer/medical/pod_wars,
+/obj/machinery/dispensing/manufacturer/medical/pod_wars,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team1/medbay)
 "Ox" = (
@@ -10994,7 +10994,7 @@
 /turf/simulated/floor/airless/grey,
 /area/pod_wars/spacejunk/greatwreck)
 "PE" = (
-/obj/machinery/manufacturer/pod_wars/nanotrasen,
+/obj/machinery/dispensing/manufacturer/pod_wars/nanotrasen,
 /obj/decal/tile_edge{
 	icon_state = "mule_dropoff"
 	},
@@ -11370,7 +11370,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "QV" = (
-/obj/machinery/chem_dispenser/alcohol,
+/obj/machinery/dispensing/chem_dispenser/alcohol,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 /turf/unsimulated/floor/wood/seven,
 /area/pod_wars/spacejunk/fstation/bar)
@@ -11539,7 +11539,7 @@
 	},
 /area/pod_wars/team1/manufacturing)
 "RK" = (
-/obj/machinery/manufacturer/medical/pod_wars,
+/obj/machinery/dispensing/manufacturer/medical/pod_wars,
 /turf/simulated/floor/white,
 /area/pod_wars/spacejunk/fstation/medbay)
 "RL" = (
@@ -11609,7 +11609,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/chem_dispenser/medical,
+/obj/machinery/dispensing/chem_dispenser/medical,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team1/medbay)
 "Sb" = (
@@ -11637,7 +11637,7 @@
 	},
 /area/pod_wars/team2/hangar)
 "Sf" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
 "Sg" = (
@@ -11824,7 +11824,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/spacejunk/nancy)
 "SL" = (
-/obj/machinery/chem_dispenser/medical,
+/obj/machinery/dispensing/chem_dispenser/medical,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/cloning)
 "SM" = (
@@ -11836,7 +11836,7 @@
 	},
 /area/pod_wars/team2/central_hallway)
 "SP" = (
-/obj/machinery/vending/cola/blue,
+/obj/machinery/dispensing/vending/cola/blue,
 /turf/simulated/floor/green/side,
 /area/pod_wars/spacejunk/fstation/mess)
 "SR" = (
@@ -12026,7 +12026,7 @@
 	},
 /area/pod_wars/spacejunk/fstation)
 "Tx" = (
-/obj/machinery/chem_master,
+/obj/machinery/dispensing/chem_master,
 /turf/simulated/floor/white,
 /area/pod_wars/spacejunk/fstation/medbay)
 "Ty" = (
@@ -12121,7 +12121,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team2/hangar)
 "TR" = (
-/obj/machinery/vending/cola/red,
+/obj/machinery/dispensing/vending/cola/red,
 /turf/unsimulated/floor/red/side{
 	dir = 10
 	},
@@ -12157,7 +12157,7 @@
 /turf/unsimulated/floor/yellow/corner,
 /area/pod_wars/team1/mining)
 "Ua" = (
-/obj/machinery/vending/kitchen{
+/obj/machinery/dispensing/vending/kitchen{
 	req_access_txt = null
 	},
 /turf/unsimulated/floor/specialroom/bar,
@@ -12236,7 +12236,7 @@
 	},
 /area/pod_wars/team2/central_hallway)
 "Uq" = (
-/obj/machinery/manufacturer/mining/pod_wars,
+/obj/machinery/dispensing/manufacturer/mining/pod_wars,
 /obj/decal/tile_edge{
 	icon_state = "mule_dropoff"
 	},
@@ -12587,7 +12587,7 @@
 	},
 /area/pod_wars/team2/hangar)
 "VE" = (
-/obj/machinery/chem_dispenser/medical,
+/obj/machinery/dispensing/chem_dispenser/medical,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team1/medbay)
 "VF" = (
@@ -12796,7 +12796,7 @@
 	},
 /area/pod_wars/spacejunk/uvb67/crew)
 "Wq" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/dispensing/portable_reclaimer,
 /turf/unsimulated/floor/yellow/side{
 	dir = 5
 	},
@@ -12806,7 +12806,7 @@
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/powergen)
 "Ws" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/simulated/floor/green/side{
 	dir = 10
 	},
@@ -13103,7 +13103,7 @@
 /area/pod_wars/spacejunk/miningoutpost/crewquarters)
 "XH" = (
 /obj/machinery/light/incandescent/netural,
-/obj/machinery/manufacturer/medical/pod_wars,
+/obj/machinery/dispensing/manufacturer/medical/pod_wars,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/medbay)
 "XJ" = (
@@ -13121,7 +13121,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation)
 "XM" = (
-/obj/machinery/nanofab/refining,
+/obj/machinery/dispensing/nanofab/refining,
 /obj/decal/tile_edge{
 	icon_state = "mule_dropoff"
 	},
@@ -13546,7 +13546,7 @@
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/uvb67/power)
 "Zk" = (
-/obj/machinery/manufacturer/pod_wars/syndicate,
+/obj/machinery/dispensing/manufacturer/pod_wars/syndicate,
 /obj/decal/tile_edge{
 	icon_state = "mule_dropoff"
 	},
@@ -13731,7 +13731,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "ZY" = (
-/obj/machinery/vending/cola/blue,
+/obj/machinery/dispensing/vending/cola/blue,
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/miningoutpost/crewquarters)
 "ZZ" = (

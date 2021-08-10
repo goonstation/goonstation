@@ -510,19 +510,19 @@
 	big_station_bounties[/obj/machinery/computer/supplycomp] = 1
 	big_station_bounties[/obj/machinery/computer3/generic/communications] = 1
 	big_station_bounties[/obj/machinery/computer3/terminal/zeta] = 1
-	big_station_bounties[/obj/machinery/chem_dispenser] = 2
+	big_station_bounties[/obj/machinery/dispensing/chem_dispenser] = 2
 	big_station_bounties[/obj/machinery/computer/announcement] = 2
 	big_station_bounties[/obj/machinery/computer/card] = 2
 	big_station_bounties[/obj/machinery/computer/genetics] = 2
 	big_station_bounties[/obj/machinery/computer/robotics] = 2
 	big_station_bounties[/obj/machinery/computer/aiupload] = 3
 
-	big_station_bounties[/obj/machinery/vending/medical] = 1
-	big_station_bounties[/obj/machinery/vending/port_a_nanomed] = 1
-	big_station_bounties[/obj/machinery/vending/fortune] = 1
-	big_station_bounties[/obj/machinery/vending/standard] = 1
-	big_station_bounties[/obj/machinery/vending/monkey] = 1
-	big_station_bounties[/obj/machinery/vending/security] = 2
+	big_station_bounties[/obj/machinery/dispensing/vending/medical] = 1
+	big_station_bounties[/obj/machinery/dispensing/vending/port_a_nanomed] = 1
+	big_station_bounties[/obj/machinery/dispensing/vending/fortune] = 1
+	big_station_bounties[/obj/machinery/dispensing/vending/standard] = 1
+	big_station_bounties[/obj/machinery/dispensing/vending/monkey] = 1
+	big_station_bounties[/obj/machinery/dispensing/vending/security] = 2
 
 	big_station_bounties[/obj/morgue] = 1
 	big_station_bounties[/obj/machinery/optable] = 2
@@ -538,9 +538,9 @@
 	big_station_bounties[/obj/machinery/sleeper/port_a_medbay] = 1
 	big_station_bounties[/obj/machinery/port_a_brig] = 3
 
-	big_station_bounties[/obj/machinery/manufacturer/robotics] = 1
-	big_station_bounties[/obj/machinery/manufacturer/medical] = 1
-	big_station_bounties[/obj/machinery/manufacturer/general] = 1
+	big_station_bounties[/obj/machinery/dispensing/manufacturer/robotics] = 1
+	big_station_bounties[/obj/machinery/dispensing/manufacturer/medical] = 1
+	big_station_bounties[/obj/machinery/dispensing/manufacturer/general] = 1
 
 	big_station_bounties[/obj/submachine/chef_oven] = 1
 	big_station_bounties[/obj/machinery/gibber] = 1

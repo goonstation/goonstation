@@ -50,7 +50,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 			qdel(src)
 			return
 
-	proc/modify_output(var/obj/machinery/manufacturer/M, var/atom/A,var/list/materials)
+	proc/modify_output(var/obj/machinery/dispensing/manufacturer/M, var/atom/A,var/list/materials)
 		// use this if you want the outputted item to be customised in any way by the manufacturer
 		if (M.malfunction && M.text_bad_output_adjective.len > 0 && prob(66))
 			A.name = "[pick(M.text_bad_output_adjective)] [A.name]"
@@ -66,7 +66,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	item_outputs = list(/obj/item/electronics/frame)
 	var/frame_path = null
 
-	modify_output(var/obj/machinery/manufacturer/M, var/atom/A)
+	modify_output(var/obj/machinery/dispensing/manufacturer/M, var/atom/A)
 		if (!(..()))
 			return
 
@@ -485,7 +485,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	category = "Resource"
 	apply_material = 1
 
-	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
+	modify_output(var/obj/machinery/dispensing/manufacturer/M, var/atom/A, var/list/materials)
 		..()
 		var/obj/item/sheet/S = A
 		S.set_reinforcement(getMaterial(materials["MET-1"]))
@@ -510,7 +510,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	category = "Resource"
 	apply_material = 1
 
-	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
+	modify_output(var/obj/machinery/dispensing/manufacturer/M, var/atom/A, var/list/materials)
 		..()
 		var/obj/item/sheet/S = A
 		S.set_reinforcement(getMaterial(materials["CRY-1"]))
@@ -524,7 +524,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	category = "Resource"
 	apply_material = 1
 
-	modify_output(var/obj/machinery/manufacturer/M, var/atom/A)
+	modify_output(var/obj/machinery/dispensing/manufacturer/M, var/atom/A)
 		..()
 		var/obj/item/sheet/S = A // this way they are instantly stacked rather than just 2 rods
 		S.amount = 2
@@ -625,7 +625,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	category = "Resource"
 	apply_material = 0
 
-	modify_output(var/obj/machinery/manufacturer/M, var/atom/A,var/list/materials)
+	modify_output(var/obj/machinery/dispensing/manufacturer/M, var/atom/A,var/list/materials)
 		..()
 		var/obj/item/cable_coil/coil = A
 		coil.setInsulator(getMaterial(materials["INS-1"]))

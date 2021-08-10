@@ -329,7 +329,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	desc = "x1 Kitchenware Recycler, a tabletop machine allowing you to recycle reclaimed glass into many different types of glassware"
 	category = "Civilian Department"
 	contains = list(/obj/item/electronics/soldering)
-	frames = list(/obj/machinery/glass_recycler)
+	frames = list(/obj/machinery/dispensing/glass_recycler)
 	cost = 3000
 	containertype =/obj/storage/crate
 	containername = "Recycling Initiative Crate"
@@ -828,7 +828,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Reclaimed Reclaimer"
 	desc = "Jeez, be more careful with it next time!"
 	category = "Basic Materials"
-	contains = list(/obj/machinery/portable_reclaimer)
+	contains = list(/obj/machinery/dispensing/portable_reclaimer)
 	cost = 1000
 	containertype = /obj/storage/crate/packing
 	containername = "Reclaimed Reclaimer"
@@ -1344,8 +1344,8 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	contains = list(/obj/item/electronics/scanner,
 					/obj/item/electronics/soldering)
 	frames = list(/obj/machinery/rkit,
-					/obj/machinery/manufacturer/mechanic,
-					/obj/machinery/portable_reclaimer)
+					/obj/machinery/dispensing/manufacturer/mechanic,
+					/obj/machinery/dispensing/portable_reclaimer)
 	cost = 35000
 	containertype = /obj/storage/crate
 	containername = "Mechanics Reconstruction Kit"
@@ -1380,11 +1380,11 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	name = "Manufacturer Kit"
 	desc = "Frames: 1x General Manufacturer, 1x Mining Manufacturer, 1x Gas Extractor, 1x Clothing Manufacturer, 1x Reclaimer"
 	category = "Engineering Department"
-	frames = list(/obj/machinery/manufacturer/general,
-					/obj/machinery/manufacturer/mining,
-					/obj/machinery/manufacturer/gas,
-					/obj/machinery/manufacturer/uniform,
-					/obj/machinery/portable_reclaimer)
+	frames = list(/obj/machinery/dispensing/manufacturer/general,
+					/obj/machinery/dispensing/manufacturer/mining,
+					/obj/machinery/dispensing/manufacturer/gas,
+					/obj/machinery/dispensing/manufacturer/uniform,
+					/obj/machinery/dispensing/portable_reclaimer)
 	cost = 8000
 	containertype = /obj/storage/crate
 	containername = "Manufacturer Kit"
@@ -1409,8 +1409,8 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 /datum/supply_packs/complex/pod_kit
 	name = "Pod Production Kit"
 	desc = "Frames: 1x Ship Component Fabricator, 1x Reclaimer"
-	frames = list(/obj/machinery/manufacturer/hangar,
-					/obj/machinery/portable_reclaimer)
+	frames = list(/obj/machinery/dispensing/manufacturer/hangar,
+					/obj/machinery/dispensing/portable_reclaimer)
 	cost = 5000
 	containertype = /obj/storage/crate
 	containername = "Pod Production Kit"
@@ -1468,7 +1468,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 					/obj/machinery/networked/storage,
 					/obj/machinery/networked/radio,
 					/obj/machinery/power/data_terminal = 3,
-					/obj/machinery/vending/computer3)
+					/obj/machinery/dispensing/vending/computer3)
 	cost = 150000
 	hidden = 1
 	containertype = /obj/storage/crate
@@ -1510,8 +1510,8 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 					/obj/submachine/chef_sink,
 					/obj/machinery/deep_fryer,
 					/obj/submachine/foodprocessor,
-					/obj/machinery/vending/monkey,
-					/obj/machinery/vending/kitchen,
+					/obj/machinery/dispensing/vending/monkey,
+					/obj/machinery/dispensing/vending/kitchen,
 					/obj/kitchenspike,
 					/obj/machinery/gibber)
 	cost = 50000
@@ -1524,10 +1524,10 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	category = "Civilian Department"
 	contains = list(/obj/item/storage/box/glassbox = 2)
 	frames = list(/obj/machinery/microwave,
-					/obj/machinery/chem_dispenser/alcohol,
-					/obj/machinery/chem_dispenser/soda,
+					/obj/machinery/dispensing/chem_dispenser/alcohol,
+					/obj/machinery/dispensing/chem_dispenser/soda,
 					/obj/submachine/ice_cream_dispenser,
-					/obj/machinery/glass_recycler)
+					/obj/machinery/dispensing/glass_recycler)
 	cost = 25000
 	containertype = /obj/storage/crate
 	containername = "Bar Kit"
@@ -1571,7 +1571,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 					/obj/item/storage/belt/medical,
 					/obj/item/reagent_containers/hypospray = 2)
 	frames = list(/obj/machinery/optable,
-					/obj/machinery/vending/medical)
+					/obj/machinery/dispensing/vending/medical)
 	cost = 10000
 	containertype = /obj/storage/crate
 	containername = "Medbay kit"
@@ -1588,9 +1588,9 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 					/obj/item/scissors/surgical_scissors,
 					/obj/item/suture,
 					/obj/item/surgical_spoon)
-	frames = list(/obj/machinery/manufacturer/medical,
+	frames = list(/obj/machinery/dispensing/manufacturer/medical,
 					/obj/machinery/optable,
-					/obj/machinery/vending/medical)
+					/obj/machinery/dispensing/vending/medical)
 	cost = 15000
 	containertype = /obj/storage/crate
 	containername = "Operating Room kit"
@@ -1603,7 +1603,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 					/obj/item/scalpel,
 					/obj/item/circular_saw,
 					/obj/item/circuitboard/robot_module_rewriter)
-	frames = list(/obj/machinery/manufacturer/robotics,
+	frames = list(/obj/machinery/dispensing/manufacturer/robotics,
 					/obj/machinery/optable,
 					/obj/machinery/recharge_station)
 	cost = 20000

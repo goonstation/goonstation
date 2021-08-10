@@ -623,8 +623,8 @@
 					var/obj/table/table = target
 					table.deconstruct()
 
-				if (istype(O,/obj/machinery/vending))
-					var/obj/machinery/vending/V = O
+				if (istype(O,/obj/machinery/dispensing/vending))
+					var/obj/machinery/dispensing/vending/V = O
 					V.fall(src)
 				if (istype(O,/obj/machinery/portable_atmospherics/canister))
 					var/obj/machinery/portable_atmospherics/canister/C = O

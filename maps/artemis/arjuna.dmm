@@ -243,7 +243,7 @@
 /turf/simulated/floor/blue/checker,
 /area)
 "aX" = (
-/obj/machinery/vending/port_a_nanomed,
+/obj/machinery/dispensing/vending/port_a_nanomed,
 /turf/simulated/floor/specialroom/medbay,
 /area)
 "aY" = (
@@ -251,17 +251,17 @@
 /area)
 "aZ" = (
 /obj/table/auto,
-/obj/machinery/chem_master,
+/obj/machinery/dispensing/chem_master,
 /turf/simulated/floor/specialroom/medbay,
 /area)
 "ba" = (
 /obj/table/auto,
-/obj/machinery/chem_dispenser,
+/obj/machinery/dispensing/chem_dispenser,
 /turf/simulated/floor/specialroom/medbay,
 /area)
 "bb" = (
 /obj/table/auto,
-/obj/machinery/chem_heater,
+/obj/machinery/dispensing/chem_heater,
 /turf/simulated/floor/specialroom/medbay,
 /area)
 "be" = (
@@ -322,7 +322,7 @@
 /turf/simulated/floor/black,
 /area)
 "bs" = (
-/obj/machinery/vending/kitchen,
+/obj/machinery/dispensing/vending/kitchen,
 /turf/simulated/floor/blue/checker,
 /area)
 "bt" = (
@@ -420,7 +420,7 @@
 	},
 /area)
 "bH" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor/blue/checker,
 /area)
 "bI" = (
@@ -568,14 +568,14 @@
 /turf/space,
 /area)
 "cf" = (
-/obj/machinery/vending/cola/red,
+/obj/machinery/dispensing/vending/cola/red,
 /turf/simulated/floor/carpet{
 	icon_state = "red2";
 	dir = 10
 	},
 /area)
 "cg" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /turf/simulated/floor/carpet{
 	icon_state = "red2";
 	dir = 6
@@ -586,14 +586,14 @@
 /turf/simulated/floor/black,
 /area)
 "ci" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "green2"
 	},
 /area)
 "cj" = (
-/obj/machinery/vending/cola/blue,
+/obj/machinery/dispensing/vending/cola/blue,
 /turf/simulated/floor/carpet{
 	icon_state = "green2";
 	dir = 6

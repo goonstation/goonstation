@@ -3,7 +3,7 @@
 	var/price
 	var/for_sale
 
-/obj/machinery/ore_cloud_storage_container
+/obj/machinery/dispensing/ore_cloud_storage_container
 	name = "Rockbox™ Ore Cloud Storage Container"
 	desc = "This thing stores ore in \"the cloud\" for the station to use. Best not to think about it too hard."
 	icon = 'icons/obj/mining_cloud_storage.dmi'
@@ -18,8 +18,6 @@
 	var/broken = 0
 	var/sound/sound_load = sound('sound/items/Deconstruct.ogg')
 
-	var/output_target = null
-
 	New()
 		. = ..()
 		START_TRACKING
@@ -27,48 +25,6 @@
 	disposing()
 		. = ..()
 		STOP_TRACKING
-
-	MouseDrop(over_object, src_location, over_location)
-		if(!istype(usr,/mob/living/))
-			boutput(usr, "<span class='alert'>Only living mobs are able to set the output target for [src].</span>")
-			return
-
-		if(get_dist(over_object,src) > 1)
-			boutput(usr, "<span class='alert'>[src] is too far away from the target!</span>")
-			return
-
-		if(get_dist(over_object,usr) > 1)
-			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
-			return
-
-		if (istype(over_object,/obj/storage/crate/))
-			var/obj/storage/crate/C = over_object
-			if (C.locked || C.welded)
-				boutput(usr, "<span class='alert'>You can't use a currently unopenable crate as an output target.</span>")
-			else
-				src.output_target = over_object
-				boutput(usr, "<span class='notice'>You set [src] to output to [over_object]!</span>")
-
-		if (istype(over_object,/obj/storage/cart/))
-			var/obj/storage/cart/C = over_object
-			if (C.locked || C.welded)
-				boutput(usr, "<span class='alert'>You can't use a currently unopenable cart as an output target.</span>")
-			else
-				src.output_target = over_object
-				boutput(usr, "<span class='notice'>You set [src] to output to [over_object]!</span>")
-
-		else if (istype(over_object,/obj/table/) || istype(over_object,/obj/rack/))
-			var/obj/O = over_object
-			src.output_target = O.loc
-			boutput(usr, "<span class='notice'>You set [src] to output on top of [O]!</span>")
-
-		else if (istype(over_object,/turf) && !over_object:density)
-			src.output_target = over_object
-			boutput(usr, "<span class='notice'>You set [src] to output to [over_object]!</span>")
-
-		else
-			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
-		return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 
@@ -325,37 +281,3 @@
 			leaveresidual(eject_location)
 
 		update_ore_amount(ore,-amount_ejected)
-
-	proc/get_output_location()
-		if (!src.output_target)
-			return src.loc
-
-		if (get_dist(src.output_target,src) > 1)
-			src.output_target = null
-			return src.loc
-
-		if (istype(src.output_target,/obj/storage/crate/))
-			var/obj/storage/crate/C = src.output_target
-			if (C.locked || C.welded)
-				src.output_target = null
-				return src.loc
-			else
-				if (C.open)
-					return C.loc
-				else
-					return C
-		if (istype(src.output_target,/obj/storage/cart/))
-			var/obj/storage/cart/C = src.output_target
-			if (C.locked || C.welded)
-				src.output_target = null
-				return src.loc
-			else
-				if (C.open)
-					return C.loc
-				else
-					return C
-
-		if (istype(src.output_target,/turf/))
-			return src.output_target
-
-		return src.loc

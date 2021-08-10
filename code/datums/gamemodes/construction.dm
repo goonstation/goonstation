@@ -96,7 +96,7 @@
 			doorx = bx
 			manx = bx + 9
 			doory = by + 1
-	var/list/manufacturers = list(/obj/machinery/manufacturer/general, /obj/machinery/manufacturer/hangar,  /obj/machinery/portable_reclaimer, /obj/storage/crate/abcumarker, /obj/machinery/abcu, /obj/machinery/abcu)
+	var/list/manufacturers = list(/obj/machinery/dispensing/manufacturer/general, /obj/machinery/dispensing/manufacturer/hangar,  /obj/machinery/dispensing/portable_reclaimer, /obj/storage/crate/abcumarker, /obj/machinery/abcu, /obj/machinery/abcu)
 	var/list/amounted = list(/obj/item/tile/steel, /obj/item/sheet/steel, /obj/item/rods/steel, /obj/item/sheet/glass)
 	var/list/item_class_1 = list(/obj/item/crowbar, /obj/item/weldingtool, /obj/item/screwdriver, /obj/item/wrench, /obj/item/device/multitool, /obj/item/tank/air) + amounted
 	var/list/item_class_2 = list(/obj/item/storage/toolbox/mechanical, /obj/item/storage/toolbox/electrical, /obj/item/storage/toolbox/emergency, /obj/item/tank/oxygen) + amounted

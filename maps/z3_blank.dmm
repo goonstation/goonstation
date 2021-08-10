@@ -9364,13 +9364,13 @@
 /area/space)
 "xm" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/glass_recycler,
+/obj/machinery/dispensing/glass_recycler,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
 /area/space)
 "xn" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/dispensing/vending/alcohol,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -9409,13 +9409,13 @@
 /turf/simulated/floor/carpet/green/fancy/edge/east,
 /area/space)
 "xw" = (
-/obj/machinery/chem_dispenser/soda,
+/obj/machinery/dispensing/chem_dispenser/soda,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
 /area/space)
 "xx" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/dispensing/chem_dispenser,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -9436,7 +9436,7 @@
 /turf/simulated/floor/carpet/green/fancy,
 /area/space)
 "xB" = (
-/obj/machinery/chem_dispenser/alcohol,
+/obj/machinery/dispensing/chem_dispenser/alcohol,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -9569,7 +9569,7 @@
 /turf/space/fluid/noexplosion/nospawn,
 /area/dank_trench)
 "zl" = (
-/obj/machinery/vending/snack{
+/obj/machinery/dispensing/vending/snack{
 	credit = 43
 	},
 /obj/machinery/light/emergency{
@@ -10114,7 +10114,7 @@
 /area/mantavault)
 "CB" = (
 /obj/decal/cleanable/dirt,
-/obj/machinery/manufacturer/general{
+/obj/machinery/dispensing/manufacturer/general{
 	desc = "It's covered top to bottom in a thin layer of sticky gunk. You are absolutely certain it has never been cleaned.";
 	free_resource_amt = 0;
 	free_resources = null;
@@ -10791,7 +10791,7 @@
 /turf/unsimulated/floor/grime,
 /area/dank_trench)
 "Wh" = (
-/obj/machinery/chem_master,
+/obj/machinery/dispensing/chem_master,
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
@@ -10834,7 +10834,7 @@
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
 "Xx" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/dispensing/portable_reclaimer,
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
@@ -10868,7 +10868,7 @@
 /area/dank_trench)
 "Zo" = (
 /obj/decal/cleanable/dirt,
-/obj/machinery/vending/standard,
+/obj/machinery/dispensing/vending/standard,
 /obj/cable{
 	icon_state = "0-4"
 	},

@@ -492,7 +492,7 @@ MATERIAL
 
 				if("vending")
 					if (!amount_check(3,usr)) return
-					a_type = /obj/machinery/vendingframe
+					a_type = /obj/machinery/dispensing/vendingframe
 					a_amount = 1
 					a_cost = 3
 					a_icon = 'icons/obj/vending.dmi'

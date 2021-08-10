@@ -1,4 +1,4 @@
-/obj/machinery/manufacturer/pod_wars
+/obj/machinery/dispensing/manufacturer/pod_wars
 	name = "Ship Component Fabricator"
 	desc = "A manufacturing unit calibrated to produce parts for ships."
 	icon_state = "fab-hangar"
@@ -56,7 +56,7 @@
 
 		..()
 
-/obj/machinery/manufacturer/pod_wars/nanotrasen
+/obj/machinery/dispensing/manufacturer/pod_wars/nanotrasen
 	name = "NanoTrasen Ship Component Fabricator"
 	team_num = TEAM_NANOTRASEN
 	add_team_armor()
@@ -64,7 +64,7 @@
 		/datum/manufacture/pod_wars/pod/armor_light/nt,
 		/datum/manufacture/pod_wars/pod/armor_robust/nt
 		)
-/obj/machinery/manufacturer/pod_wars/syndicate
+/obj/machinery/dispensing/manufacturer/pod_wars/syndicate
 	name = "Syndicate Ship Component Fabricator"
 	team_num = TEAM_SYNDICATE
 	add_team_armor()
@@ -241,7 +241,7 @@
 	time = 60 SECONDS
 	category = "Ammo"
 
-/obj/machinery/manufacturer/mining/pod_wars/
+/obj/machinery/dispensing/manufacturer/mining/pod_wars/
 	New()
 		available -= /datum/manufacture/ore_accumulator
 		available -= /datum/manufacture/jetpack
@@ -252,19 +252,19 @@
 		hidden = list()
 		..()
 
-/obj/machinery/manufacturer/mining/pod_wars/syndicate
+/obj/machinery/dispensing/manufacturer/mining/pod_wars/syndicate
 	New()
 		available += /datum/manufacture/pod_wars/accumulator/syndicate
 		available += /datum/manufacture/pod_wars/jetpack/syndicate
 		..()
 
-/obj/machinery/manufacturer/mining/pod_wars/nanotrasen
+/obj/machinery/dispensing/manufacturer/mining/pod_wars/nanotrasen
 	New()
 		available += /datum/manufacture/pod_wars/accumulator/nanotrasen
 		available += /datum/manufacture/pod_wars/jetpack
 		..()
 
-/obj/machinery/manufacturer/medical/pod_wars
+/obj/machinery/dispensing/manufacturer/medical/pod_wars
 	New()
 		available += /datum/manufacture/medical_backpack
 		available += /datum/manufacture/pod_wars/medical_refill
@@ -370,7 +370,7 @@
 	category = "Weapon"
 
 
-/obj/machinery/chem_dispenser/medical
+/obj/machinery/dispensing/chem_dispenser/medical
 	name = "medical reagent dispenser"
 	desc = "It dispenses chemicals. Mostly harmless ones, but who knows?"
 	dispensable_reagents = list("antihol", "charcoal", "epinephrine", "mutadone", "proconvertin", "atropine",\
@@ -384,14 +384,14 @@
 	dispenser_name = "Medical"
 
 
-/obj/machinery/chem_dispenser/medical/fortuna
+/obj/machinery/dispensing/chem_dispenser/medical/fortuna
 	dispensable_reagents = list("antihol", "charcoal", "epinephrine", "mutadone", "proconvertin", "filgrastim", "atropine",\
 	"salbutamol", "perfluorodecalin", "synaptizine", "anti_rad",\
 	"oculine", "mannitol", "penteticacid", "saline",\
 	"salicylic_acid", "blood", \
 	"menthol", "antihistamine", "smelling_salt")
 
-/obj/machinery/manufacturer/general/pod_wars
+/obj/machinery/dispensing/manufacturer/general/pod_wars
 	New()
 		#ifdef RP_MODE
 		available += /datum/manufacture/pod_wars/handcuffs

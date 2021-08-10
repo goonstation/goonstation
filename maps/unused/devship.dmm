@@ -883,7 +883,7 @@
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/clown)
 "cE" = (
-/obj/machinery/processor,
+/obj/machinery/dispensing/processor,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0;
 	dir = 8;
@@ -954,11 +954,11 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "cP" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/dispensing/vending/monkey,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "cQ" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/dispensing/vending/alcohol,
 /obj/machinery/light{
 	layer = 3
 	},
@@ -1031,7 +1031,7 @@
 /turf/simulated/grimycarpet,
 /area/station/chapel/office)
 "db" = (
-/obj/machinery/nanofab,
+/obj/machinery/dispensing/nanofab,
 /turf/simulated/floor/engine{
 	dir = 4;
 	icon_state = "engine_caution_corners"
@@ -1163,7 +1163,7 @@
 	},
 /area/station/medical/medbay/surgery)
 "dy" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/dispensing/portable_reclaimer,
 /turf/simulated/floor/engine{
 	dir = 1;
 	icon_state = "engine_caution_corners"
@@ -1196,15 +1196,15 @@
 	},
 /area/station/quartermaster/office)
 "dD" = (
-/obj/machinery/manufacturer/gas,
+/obj/machinery/dispensing/manufacturer/gas,
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/office)
 "dE" = (
-/obj/machinery/manufacturer/hangar,
+/obj/machinery/dispensing/manufacturer/hangar,
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/office)
 "dF" = (
-/obj/machinery/manufacturer/mining,
+/obj/machinery/dispensing/manufacturer/mining,
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/office)
 "dG" = (
@@ -1221,15 +1221,15 @@
 	},
 /area/station/quartermaster/office)
 "dH" = (
-/obj/machinery/manufacturer/medical,
+/obj/machinery/dispensing/manufacturer/medical,
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/office)
 "dI" = (
-/obj/machinery/manufacturer/robotics,
+/obj/machinery/dispensing/manufacturer/robotics,
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/office)
 "dJ" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/dispensing/manufacturer/general,
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/office)
 "dK" = (
@@ -1275,7 +1275,7 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
 "dP" = (
-/obj/machinery/vending/kitchen,
+/obj/machinery/dispensing/vending/kitchen,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "dQ" = (
@@ -1505,7 +1505,7 @@
 	},
 /area/station/mining/staff_room)
 "ew" = (
-/obj/machinery/manufacturer/mining,
+/obj/machinery/dispensing/manufacturer/mining,
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -1528,7 +1528,7 @@
 	},
 /area/space)
 "ey" = (
-/obj/machinery/vending/mechanics,
+/obj/machinery/dispensing/vending/mechanics,
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
@@ -1770,7 +1770,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "fi" = (
-/obj/machinery/chem_dispenser/alcohol,
+/obj/machinery/dispensing/chem_dispenser/alcohol,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -1778,7 +1778,7 @@
 	},
 /area/station/crew_quarters/bar)
 "fj" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/dispensing/chem_dispenser,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/light{
 	dir = 1;
@@ -2183,7 +2183,7 @@
 	},
 /area/station/engine/hotloop)
 "gk" = (
-/obj/machinery/vending/cola/blue,
+/obj/machinery/dispensing/vending/cola/blue,
 /turf/simulated/floor/blue/side{
 	dir = 9;
 	icon_state = "blue"
@@ -2904,7 +2904,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
 "hQ" = (
-/obj/machinery/chem_heater,
+/obj/machinery/dispensing/chem_heater,
 /obj/machinery/light{
 	dir = 1;
 	icon_state = "tube1"
@@ -3064,7 +3064,7 @@
 	},
 /area/station/security/main)
 "ii" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor/orangeblack,
 /area/shuttle/escape/station)
 "ij" = (
@@ -4748,7 +4748,7 @@
 	},
 /area/station/turret_protected/Zeta)
 "lX" = (
-/obj/machinery/vending/hydroponics,
+/obj/machinery/dispensing/vending/hydroponics,
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
 "lY" = (
@@ -5750,7 +5750,7 @@
 	},
 /area/station/science/chemistry)
 "os" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/dispensing/chem_dispenser,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
@@ -5859,7 +5859,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/machinery/vending/monkey,
+/obj/machinery/dispensing/vending/monkey,
 /turf/simulated/floor/white/checker2{
 	dir = 5
 	},
@@ -6079,7 +6079,7 @@
 /turf/simulated/floor/purplewhite,
 /area/station/science/chemistry)
 "ph" = (
-/obj/machinery/chem_master{
+/obj/machinery/dispensing/chem_master{
 	dir = 8
 	},
 /turf/simulated/floor/purplewhite{
@@ -6326,7 +6326,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/artifact)
 "pL" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "pM" = (
@@ -6335,7 +6335,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "pN" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "pO" = (
@@ -6574,7 +6574,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/medbay/lobby)
 "qt" = (
-/obj/machinery/vending/medical,
+/obj/machinery/dispensing/vending/medical,
 /turf/simulated/floor/bluewhite{
 	dir = 10
 	},
@@ -6626,7 +6626,7 @@
 	},
 /area/station/medical/robotics)
 "qB" = (
-/obj/machinery/manufacturer/robotics,
+/obj/machinery/dispensing/manufacturer/robotics,
 /turf/simulated/floor/circuit{
 	dir = 2
 	},
@@ -6650,7 +6650,7 @@
 	},
 /area/station/crew_quarters/lounge)
 "qF" = (
-/obj/machinery/vending/fortune,
+/obj/machinery/dispensing/vending/fortune,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fred2"
@@ -6927,7 +6927,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "rn" = (
-/obj/machinery/chem_dispenser/soda,
+/obj/machinery/dispensing/chem_dispenser/soda,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 /obj/machinery/light_switch/auto,
 /obj/machinery/firealarm{
@@ -7205,7 +7205,7 @@
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "rR" = (
-/obj/machinery/vending/cards,
+/obj/machinery/dispensing/vending/cards,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fred2"
@@ -7555,7 +7555,7 @@
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "sI" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/simulated/floor/orangeblack,
 /area/shuttle/escape/station)
 "sJ" = (
@@ -8018,7 +8018,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
 "tR" = (
-/obj/machinery/vending/pathology,
+/obj/machinery/dispensing/vending/pathology,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -8227,7 +8227,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/research)
 "uu" = (
-/obj/machinery/vending/cola/blue,
+/obj/machinery/dispensing/vending/cola/blue,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -9705,7 +9705,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "xu" = (
-/obj/machinery/vending/security,
+/obj/machinery/dispensing/vending/security,
 /turf/simulated/floor/red/side{
 	dir = 10
 	},
@@ -10876,7 +10876,7 @@
 /turf/simulated/floor/grey/whitegrime,
 /area/station/engine/gas)
 "zI" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor/blue/side{
 	dir = 10
 	},
@@ -11462,7 +11462,7 @@
 	},
 /area/station/crew_quarters/lounge)
 "AN" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor/white/checker,
 /area/station/hangar/arrivals)
@@ -12116,7 +12116,7 @@
 /turf/simulated/floor/purplewhite,
 /area/station/science/lab)
 "BZ" = (
-/obj/machinery/vending/standard,
+/obj/machinery/dispensing/vending/standard,
 /turf/simulated/floor/purplewhite{
 	dir = 6
 	},
@@ -12522,7 +12522,7 @@
 	},
 /area/station/security/secwing)
 "CS" = (
-/obj/machinery/vending/medical,
+/obj/machinery/dispensing/vending/medical,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -13073,7 +13073,7 @@
 	},
 /area/station/medical/cdc)
 "DT" = (
-/obj/machinery/manufacturer/robotics,
+/obj/machinery/dispensing/manufacturer/robotics,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -13347,7 +13347,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/lounge)
 "Eu" = (
-/obj/machinery/vending/capsule,
+/obj/machinery/dispensing/vending/capsule,
 /obj/machinery/light{
 	dir = 4;
 	icon_state = "tube1";
@@ -13384,7 +13384,7 @@
 /turf/simulated/floor/blue,
 /area/station/bridge/customs)
 "Ex" = (
-/obj/machinery/manufacturer/hop_and_uniform,
+/obj/machinery/dispensing/manufacturer/hop_and_uniform,
 /obj/machinery/door_control{
 	id = "lockdown";
 	name = "Bridge Lockdown Control";

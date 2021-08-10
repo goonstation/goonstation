@@ -276,7 +276,7 @@
 /area/space)
 "aN" = (
 /obj/table/wood/round/auto,
-/obj/machinery/glass_recycler{
+/obj/machinery/dispensing/glass_recycler{
 	density = 1;
 	glass_amt = 10;
 	pixel_y = 8
@@ -445,7 +445,7 @@
 	name = "Tenebrae Solar Array"
 	})
 "bc" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/maru)
 "bd" = (
@@ -538,7 +538,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bl" = (
-/obj/machinery/chem_master{
+/obj/machinery/dispensing/chem_master{
 	dir = 8
 	},
 /turf/simulated/floor/engine/vacuum,
@@ -820,7 +820,7 @@
 /area/space)
 "bP" = (
 /obj/table/wood/round/auto,
-/obj/machinery/glass_recycler{
+/obj/machinery/dispensing/glass_recycler{
 	density = 1;
 	glass_amt = 10;
 	pixel_y = 8
@@ -869,7 +869,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/tenebrae)
 "bT" = (
-/obj/machinery/vending/medical_public,
+/obj/machinery/dispensing/vending/medical_public,
 /obj/item/storage/wall/fire{
 	pixel_y = 32
 	},
@@ -901,7 +901,7 @@
 	name = "Meridian Primary Zone"
 	})
 "bY" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/tenebrae)
 "bZ" = (
@@ -966,7 +966,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost/indigo_rye)
 "cg" = (
-/obj/machinery/chem_heater,
+/obj/machinery/dispensing/chem_heater,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "ch" = (
@@ -976,7 +976,7 @@
 /turf/space,
 /area/space)
 "ci" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/dispensing/chem_dispenser,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
@@ -1003,7 +1003,7 @@
 	name = "Meridian Primary Zone"
 	})
 "cl" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/tenebrae)
 "cm" = (
@@ -1107,7 +1107,7 @@
 	name = "Meridian Maintenance"
 	})
 "cy" = (
-/obj/machinery/manufacturer/uniform,
+/obj/machinery/dispensing/manufacturer/uniform,
 /obj/machinery/light/small,
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/grey,
@@ -1511,7 +1511,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/machinery/chem_master{
+/obj/machinery/dispensing/chem_master{
 	dir = 8
 	},
 /turf/simulated/floor/specialroom/arcade,
@@ -2589,7 +2589,7 @@
 	},
 /area/station/science/tenebrae)
 "fy" = (
-/obj/machinery/manufacturer/hangar,
+/obj/machinery/dispensing/manufacturer/hangar,
 /turf/simulated/floor,
 /area/station/science/tenebrae)
 "fz" = (
@@ -2698,7 +2698,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/maru)
 "fM" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/dispensing/manufacturer/general,
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/plating,
 /area/station/science/construction{
@@ -2784,7 +2784,7 @@
 	},
 /area/mining/magnet)
 "fX" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/dispensing/portable_reclaimer,
 /obj/machinery/door_control{
 	id = "tene_crusher";
 	name = "Tenebrae Crusher Door";
@@ -3466,7 +3466,7 @@
 /area/station/quartermaster/office)
 "hr" = (
 /obj/machinery/light/small,
-/obj/machinery/vending/standard,
+/obj/machinery/dispensing/vending/standard,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/maru)
 "hs" = (
@@ -3591,7 +3591,7 @@
 	name = "Hammer Defense Zone"
 	})
 "hM" = (
-/obj/machinery/manufacturer/mechanic,
+/obj/machinery/dispensing/manufacturer/mechanic,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -3655,7 +3655,7 @@
 	name = "Hammer Defense Zone"
 	})
 "hQ" = (
-/obj/machinery/manufacturer/medical,
+/obj/machinery/dispensing/manufacturer/medical,
 /obj/machinery/phone/wall{
 	pixel_y = 32
 	},
@@ -3685,7 +3685,7 @@
 	},
 /area/station/engine/elect)
 "hU" = (
-/obj/machinery/vending/mechanics,
+/obj/machinery/dispensing/vending/mechanics,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
@@ -3739,7 +3739,7 @@
 	},
 /area/station/quartermaster/office)
 "ia" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/dispensing/portable_reclaimer,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -3921,7 +3921,7 @@
 /turf/simulated/floor,
 /area/station/engine/elect)
 "it" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/dispensing/portable_reclaimer,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -3974,7 +3974,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/machinery/manufacturer/robotics,
+/obj/machinery/dispensing/manufacturer/robotics,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "iA" = (
@@ -4036,7 +4036,7 @@
 /area/research_outpost/indigo_rye)
 "iK" = (
 /obj/table/wood/round/auto,
-/obj/machinery/glass_recycler{
+/obj/machinery/dispensing/glass_recycler{
 	density = 1;
 	glass_amt = 10;
 	pixel_y = 8
@@ -4191,7 +4191,7 @@
 /turf/simulated/floor,
 /area/station/engine/elect)
 "iX" = (
-/obj/machinery/manufacturer/mechanic,
+/obj/machinery/dispensing/manufacturer/mechanic,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -4250,11 +4250,11 @@
 	},
 /area/station/quartermaster/office)
 "jd" = (
-/obj/machinery/manufacturer/mining,
+/obj/machinery/dispensing/manufacturer/mining,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "je" = (
-/obj/machinery/manufacturer/mining,
+/obj/machinery/dispensing/manufacturer/mining,
 /turf/simulated/floor/orangeblack,
 /area/station/mining/staff_room)
 "jf" = (
@@ -4478,15 +4478,15 @@
 	},
 /area/station/quartermaster/office)
 "jF" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/dispensing/manufacturer/general,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "jG" = (
-/obj/machinery/nanofab/mining,
+/obj/machinery/dispensing/nanofab/mining,
 /turf/simulated/floor/orangeblack,
 /area/station/mining/staff_room)
 "jH" = (
-/obj/machinery/processor,
+/obj/machinery/dispensing/processor,
 /turf/simulated/floor/orangeblack,
 /area/station/mining/staff_room)
 "jI" = (
@@ -4524,7 +4524,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/mining/staff_room)
 "jM" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
@@ -4603,7 +4603,7 @@
 	},
 /area/station/security/secwing)
 "jV" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/locker{
 	name = "Hammer Crew Quarters"
@@ -4860,7 +4860,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/mining/staff_room)
 "ko" = (
-/obj/machinery/ore_cloud_storage_container,
+/obj/machinery/dispensing/ore_cloud_storage_container,
 /turf/simulated/floor/plating/airless,
 /area/station/mining/staff_room)
 "kp" = (
@@ -4895,7 +4895,7 @@
 /turf/simulated/floor/black,
 /area/station/security/secwing)
 "kt" = (
-/obj/machinery/manufacturer/uniform,
+/obj/machinery/dispensing/manufacturer/uniform,
 /obj/machinery/light/small,
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/grey,
@@ -5391,7 +5391,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/vending/medical_public,
+/obj/machinery/dispensing/vending/medical_public,
 /turf/simulated/floor/orangeblack/side,
 /area/station/engine/engineering{
 	name = "Maru Primary Zone"
@@ -5412,7 +5412,7 @@
 	name = "Maru Primary Zone"
 	})
 "ln" = (
-/obj/machinery/manufacturer/hangar,
+/obj/machinery/dispensing/manufacturer/hangar,
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
@@ -5505,7 +5505,7 @@
 	},
 /area/station/security/secwing)
 "lx" = (
-/obj/machinery/vending/security,
+/obj/machinery/dispensing/vending/security,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -5560,7 +5560,7 @@
 	},
 /area/space)
 "lC" = (
-/obj/machinery/vending/security,
+/obj/machinery/dispensing/vending/security,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "lD" = (
@@ -5931,7 +5931,7 @@
 	name = "Maru Primary Zone"
 	})
 "mx" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/dispensing/manufacturer/general,
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/plating,
 /area/station/maintenance/storage{
@@ -6241,7 +6241,7 @@
 	name = "Maru Primary Zone"
 	})
 "na" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/dispensing/portable_reclaimer,
 /obj/machinery/door_control{
 	id = "maru_crusher";
 	name = "Maru Crusher Door";
@@ -6397,7 +6397,7 @@
 	name = "Hammer Command"
 	})
 "nm" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor/black/grime,
 /area/station/security/secwing)
 "nn" = (
@@ -7365,7 +7365,7 @@
 	name = "Hammer Primary Concourse"
 	})
 "pc" = (
-/obj/machinery/vending/medical_public,
+/obj/machinery/dispensing/vending/medical_public,
 /turf/simulated/floor/redblack,
 /area/station/security/main{
 	name = "Hammer Primary Concourse"
@@ -7382,7 +7382,7 @@
 	name = "Hammer Primary Concourse"
 	})
 "pe" = (
-/obj/machinery/manufacturer/hangar,
+/obj/machinery/dispensing/manufacturer/hangar,
 /obj/cable,
 /obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/red/side{
@@ -7733,7 +7733,7 @@
 	name = "Hammer Primary Concourse"
 	})
 "pU" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/dispensing/portable_reclaimer,
 /obj/machinery/door_control{
 	id = "ham_crusher";
 	name = "Hammer Crusher Door";
@@ -8187,7 +8187,7 @@
 /area/station/garden/owlery)
 "qR" = (
 /obj/table/wood/round/auto,
-/obj/machinery/glass_recycler{
+/obj/machinery/dispensing/glass_recycler{
 	density = 1;
 	glass_amt = 10;
 	pixel_y = 8
@@ -8309,7 +8309,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
 "rb" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor/grey,
 /area/station/medical/staff{
 	name = "Asclepius Quarters"
@@ -8431,7 +8431,7 @@
 	name = "Dionysus Solar Array"
 	})
 "rm" = (
-/obj/machinery/chem_heater,
+/obj/machinery/dispensing/chem_heater,
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost/indigo_rye)
 "rn" = (
@@ -8500,7 +8500,7 @@
 	name = "Maru Bridge"
 	})
 "rr" = (
-/obj/machinery/manufacturer/robotics,
+/obj/machinery/dispensing/manufacturer/robotics,
 /turf/simulated/floor/caution/south,
 /area/station/medical/robotics)
 "rs" = (
@@ -8509,7 +8509,7 @@
 	name = "Asclepius Quarters"
 	})
 "rt" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/simulated/floor/grey,
 /area/station/medical/staff{
 	name = "Asclepius Quarters"
@@ -8647,7 +8647,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "rK" = (
-/obj/machinery/manufacturer/uniform,
+/obj/machinery/dispensing/manufacturer/uniform,
 /obj/machinery/light/small,
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/grey,
@@ -9003,7 +9003,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "sv" = (
-/obj/machinery/vending/standard,
+/obj/machinery/dispensing/vending/standard,
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/robotics)
 "sw" = (
@@ -9039,7 +9039,7 @@
 	name = "Maru Solar Array"
 	})
 "sy" = (
-/obj/machinery/vending/medical,
+/obj/machinery/dispensing/vending/medical,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -9181,7 +9181,7 @@
 	name = "Erebus Solar Array"
 	})
 "sM" = (
-/obj/machinery/manufacturer/uniform,
+/obj/machinery/dispensing/manufacturer/uniform,
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/utility{
@@ -9338,7 +9338,7 @@
 	name = "Asclepius Primary Zone"
 	})
 "tb" = (
-/obj/machinery/manufacturer/medical,
+/obj/machinery/dispensing/manufacturer/medical,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -9438,7 +9438,7 @@
 	})
 "tl" = (
 /obj/machinery/light/small,
-/obj/machinery/vending/air_vendor,
+/obj/machinery/dispensing/vending/air_vendor,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/utility{
 	name = "Dionysus Cryocore"
@@ -9560,7 +9560,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "tv" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/dispensing/vending/monkey,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "tw" = (
@@ -9620,7 +9620,7 @@
 	name = "Asclepius Primary Zone"
 	})
 "tC" = (
-/obj/machinery/vending/port_a_nanomed,
+/obj/machinery/dispensing/vending/port_a_nanomed,
 /turf/simulated/floor/white,
 /area/station/medical/medbay{
 	name = "Asclepius Primary Zone"
@@ -9663,7 +9663,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/bar)
 "tH" = (
-/obj/machinery/vending/kitchen,
+/obj/machinery/dispensing/vending/kitchen,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/cafeteria{
 	name = "Dionysus Primary Zone"
@@ -9955,14 +9955,14 @@
 	name = "Dionysus Primary Zone"
 	})
 "ul" = (
-/obj/machinery/chem_dispenser/alcohol,
+/obj/machinery/dispensing/chem_dispenser/alcohol,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria{
 	name = "Dionysus Primary Zone"
 	})
 "um" = (
-/obj/machinery/chem_dispenser/soda,
-/obj/machinery/glass_recycler{
+/obj/machinery/dispensing/chem_dispenser/soda,
+/obj/machinery/dispensing/glass_recycler{
 	density = 1;
 	glass_amt = 50;
 	pixel_y = 32
@@ -10005,14 +10005,14 @@
 	name = "Dionysus Primary Zone"
 	})
 "up" = (
-/obj/machinery/vending/hydroponics,
+/obj/machinery/dispensing/vending/hydroponics,
 /obj/machinery/phone/wall{
 	pixel_y = 32
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "uq" = (
-/obj/machinery/chem_master,
+/obj/machinery/dispensing/chem_master,
 /obj/blind_switch/area/north,
 /turf/simulated/floor/green/side{
 	dir = 4
@@ -10042,7 +10042,7 @@
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "uu" = (
-/obj/machinery/manufacturer/gas,
+/obj/machinery/dispensing/manufacturer/gas,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
@@ -10392,7 +10392,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/bar)
 "uU" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
@@ -10405,13 +10405,13 @@
 	name = "Hammer Crew Quarters"
 	})
 "uV" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/dispensing/chem_dispenser,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria{
 	name = "Dionysus Primary Zone"
 	})
 "uW" = (
-/obj/machinery/chem_master,
+/obj/machinery/dispensing/chem_master,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -10517,7 +10517,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "vi" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/dispensing/portable_reclaimer,
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria{
 	name = "Dionysus Primary Zone"
@@ -10958,7 +10958,7 @@
 	},
 /area/station/hydroponics/bay)
 "vX" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/dispensing/manufacturer/general,
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria{
 	name = "Dionysus Primary Zone"
@@ -11106,7 +11106,7 @@
 	name = "Hammer Defense Zone"
 	})
 "wk" = (
-/obj/machinery/vending/medical_public,
+/obj/machinery/dispensing/vending/medical_public,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay{
 	name = "Asclepius Primary Zone"
@@ -11167,7 +11167,7 @@
 	name = "Asclepius Primary Zone"
 	})
 "wq" = (
-/obj/machinery/vending/medical,
+/obj/machinery/dispensing/vending/medical,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/blue/side{
 	dir = 8
@@ -11646,7 +11646,7 @@
 	name = "Dionysus Primary Zone"
 	})
 "xj" = (
-/obj/machinery/vending/medical_public,
+/obj/machinery/dispensing/vending/medical_public,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria{
 	name = "Dionysus Primary Zone"
@@ -11752,7 +11752,7 @@
 	name = "Asclepius Primary Zone"
 	})
 "xt" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/dispensing/manufacturer/general,
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/plating,
 /area/station/medical/maintenance{
@@ -12028,7 +12028,7 @@
 	name = "Asclepius Primary Zone"
 	})
 "xV" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/dispensing/portable_reclaimer,
 /obj/machinery/door_control{
 	id = "asc_crusher";
 	name = "Asclepius Crusher Door";
@@ -12107,25 +12107,25 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
 "yd" = (
-/obj/machinery/vending/cards,
+/obj/machinery/dispensing/vending/cards,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria{
 	name = "Dionysus Primary Zone"
 	})
 "ye" = (
-/obj/machinery/vending/cola/blue,
+/obj/machinery/dispensing/vending/cola/blue,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria{
 	name = "Dionysus Primary Zone"
 	})
 "yf" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria{
 	name = "Dionysus Primary Zone"
 	})
 "yg" = (
-/obj/machinery/vending/capsule,
+/obj/machinery/dispensing/vending/capsule,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria{
 	name = "Dionysus Primary Zone"
@@ -12294,7 +12294,7 @@
 	name = "Dionysus Primary Zone"
 	})
 "yt" = (
-/obj/machinery/vending/cola/red,
+/obj/machinery/dispensing/vending/cola/red,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria{
 	name = "Dionysus Primary Zone"
@@ -12744,7 +12744,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost/indigo_rye)
 "zl" = (
-/obj/machinery/vending/security_ammo,
+/obj/machinery/dispensing/vending/security_ammo,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -13815,7 +13815,7 @@
 /turf/simulated/floor/redblack,
 /area/station/security/secwing)
 "Bn" = (
-/obj/machinery/vending/medical_public,
+/obj/machinery/dispensing/vending/medical_public,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/captain{
 	name = "Meridian Primary Zone"
@@ -14723,7 +14723,7 @@
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
 "Db" = (
-/obj/machinery/vending/floppy,
+/obj/machinery/dispensing/vending/floppy,
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
 "Dc" = (
@@ -15002,7 +15002,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "DC" = (
-/obj/machinery/vending/computer3,
+/obj/machinery/dispensing/vending/computer3,
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
 "DD" = (
@@ -16045,7 +16045,7 @@
 	name = "Meridian Primary Zone"
 	})
 "Fy" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/dispensing/manufacturer/general,
 /turf/simulated/floor/caution/south,
 /area/station/maintenance/west{
 	name = "Meridian Maintenance"
@@ -16299,7 +16299,7 @@
 	name = "Meridian Primary Zone"
 	})
 "FY" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/dispensing/portable_reclaimer,
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west{
@@ -16625,7 +16625,7 @@
 	})
 "GE" = (
 /obj/machinery/light/small,
-/obj/machinery/vending/paint/broken,
+/obj/machinery/dispensing/vending/paint/broken,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west{
 	name = "Meridian Maintenance"
@@ -16773,7 +16773,7 @@
 	name = "Demeter Primary Zone"
 	})
 "GU" = (
-/obj/machinery/vending/book,
+/obj/machinery/dispensing/vending/book,
 /turf/simulated/floor/grass,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
@@ -17189,7 +17189,7 @@
 	name = "Demeter Operations Room"
 	})
 "HL" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/dispensing/manufacturer/general,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -17430,7 +17430,7 @@
 /turf/space,
 /area/space)
 "Ik" = (
-/obj/machinery/chem_master,
+/obj/machinery/dispensing/chem_master,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -18033,7 +18033,7 @@
 /turf/simulated/floor/orangeblack,
 /area/listeningpost)
 "Jr" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/dispensing/vending/alcohol,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
@@ -18069,7 +18069,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
@@ -18087,11 +18087,11 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "Jz" = (
-/obj/machinery/vending/standard,
+/obj/machinery/dispensing/vending/standard,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "JA" = (
-/obj/machinery/vending/floppy{
+/obj/machinery/dispensing/vending/floppy{
 	profit = 0
 	},
 /turf/simulated/floor/black,
@@ -18337,7 +18337,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "Ke" = (
-/obj/machinery/vending/computer3{
+/obj/machinery/dispensing/vending/computer3{
 	profit = 0
 	},
 /turf/simulated/floor/black,
@@ -18380,7 +18380,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "Kk" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -18666,7 +18666,7 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/obj/machinery/manufacturer/general{
+/obj/machinery/dispensing/manufacturer/general{
 	free_resource_amt = 1
 	},
 /turf/simulated/floor/plating,
@@ -18706,7 +18706,7 @@
 /turf/simulated/floor/purplewhite,
 /area/research_outpost/indigo_rye)
 "Ld" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -18853,11 +18853,11 @@
 /turf/simulated/floor/purpleblack,
 /area/research_outpost/indigo_rye)
 "Lv" = (
-/obj/machinery/vending/pizza,
+/obj/machinery/dispensing/vending/pizza,
 /turf/simulated/floor/purpleblack,
 /area/research_outpost/indigo_rye)
 "Lw" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor/purpleblack/corner{
 	dir = 4
 	},
@@ -19019,7 +19019,7 @@
 	},
 /area/research_outpost/indigo_rye)
 "LS" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/simulated/floor/purpleblack/corner{
 	dir = 1
 	},
@@ -20484,7 +20484,7 @@
 	name = "Dionysus Primary Zone"
 	})
 "Oo" = (
-/obj/machinery/chem_heater,
+/obj/machinery/dispensing/chem_heater,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -20804,7 +20804,7 @@
 /turf/simulated/floor/caution/south,
 /area/station/medical/robotics)
 "OG" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/dispensing/vending/alcohol,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -21256,7 +21256,7 @@
 	name = "Meridian Primary Zone"
 	})
 "Pl" = (
-/obj/machinery/manufacturer/hangar,
+/obj/machinery/dispensing/manufacturer/hangar,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
@@ -22098,7 +22098,7 @@
 	name = "Tenebrae Solar Array"
 	})
 "Qp" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/dispensing/chem_dispenser,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -22907,12 +22907,12 @@
 	name = "Erebus Maintenance Room"
 	})
 "Sj" = (
-/obj/machinery/chem_heater,
+/obj/machinery/dispensing/chem_heater,
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "Sl" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/dispensing/portable_reclaimer,
 /obj/machinery/door_control{
 	id = "erebus_crusher";
 	name = "Erebus Crusher Door";
@@ -23615,7 +23615,7 @@
 	name = "Erebus Solar Array"
 	})
 "Uv" = (
-/obj/machinery/manufacturer/gas,
+/obj/machinery/dispensing/manufacturer/gas,
 /turf/simulated/floor/engine,
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
@@ -24317,7 +24317,7 @@
 	name = "Erebus Plasmitics Zone"
 	})
 "WB" = (
-/obj/machinery/vending/standard,
+/obj/machinery/dispensing/vending/standard,
 /turf/simulated/floor/darkpurple,
 /area/station/hallway/primary/east{
 	name = "Erebus Primary Zone"
@@ -24564,7 +24564,7 @@
 	name = "Erebus Plasmitics Zone"
 	})
 "Xn" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/utility{
 	name = "Dionysus Cryocore"
@@ -24926,7 +24926,7 @@
 	d2 = 4;
 	icon_state = "5-8"
 	},
-/obj/machinery/vending/medical_public,
+/obj/machinery/dispensing/vending/medical_public,
 /turf/simulated/floor,
 /area/station/hallway/primary/east{
 	name = "Erebus Primary Zone"
@@ -24976,7 +24976,7 @@
 	name = "Erebus Primary Zone"
 	})
 "Yx" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/dispensing/manufacturer/general,
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest{

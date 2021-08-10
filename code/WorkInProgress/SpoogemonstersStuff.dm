@@ -61,7 +61,7 @@
 		json += "],\"temp\":[temp]}"
 		return json
 
-/obj/machinery/chem_dispenser_admin/
+/obj/machinery/dispensing/chem_dispenser_admin/
 	name = "chem dispenser"
 	density = 1
 	anchored = 1

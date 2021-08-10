@@ -1,5 +1,5 @@
 /// This serves as a bridge between old materials pieces and new ones. Eventually old ones should just be updated.
-/obj/machinery/processor
+/obj/machinery/dispensing/processor
 	name = "Material processor"
 	desc = "Turns raw materials, and objects containing materials, into processed pieces."
 	icon = 'icons/obj/crafting.dmi'
@@ -10,8 +10,6 @@
 	mats = 20
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
-
-	var/atom/output_location = null
 
 	New()
 		..()
@@ -75,8 +73,8 @@
 					P.change_stack_amount(out_amount - P.amount)
 					mat_id = P.material.mat_id
 
-				if (istype(output_location, /obj/machinery/manufacturer))
-					var/obj/machinery/manufacturer/M = output_location
+				if (istype(output_location, /obj/machinery/dispensing/manufacturer))
+					var/obj/machinery/dispensing/manufacturer/M = output_location
 					M.update_resource_amount(mat_id, out_amount * 10)
 
 				//If the input was a cable coil, output the conductor too
@@ -99,8 +97,8 @@
 						PC.change_stack_amount(out_amount - PC.amount)
 						second_mat_id = PC.material.mat_id
 
-					if (istype(output_location, /obj/machinery/manufacturer))
-						var/obj/machinery/manufacturer/M = output_location
+					if (istype(output_location, /obj/machinery/dispensing/manufacturer))
+						var/obj/machinery/dispensing/manufacturer/M = output_location
 						M.update_resource_amount(second_mat_id, out_amount * 10)
 
 			//Delete items in processor and output leftovers
@@ -157,70 +155,6 @@
 			W.dropped()
 			return
 
-		return
-
-	MouseDrop(over_object, src_location, over_location)
-		if(!isliving(usr))
-			boutput(usr, "<span class='alert'>Get your filthy dead fingers off that!</span>")
-			return
-
-		if(over_object == src)
-			output_location = null
-			boutput(usr, "<span class='notice'>You reset the processor's output target.</span>")
-			return
-
-		if(get_dist(over_object,src) > 1)
-			boutput(usr, "<span class='alert'>The processor is too far away from the target!</span>")
-			return
-
-		if(get_dist(over_object,usr) > 1)
-			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
-			return
-
-		if (istype(over_object,/obj/storage/crate/))
-			var/obj/storage/crate/C = over_object
-			if (C.locked || C.welded)
-				boutput(usr, "<span class='alert'>You can't use a currently unopenable crate as an output target.</span>")
-			else
-				src.output_location = over_object
-				boutput(usr, "<span class='notice'>You set the processor to output to [over_object]!</span>")
-
-		else if (istype(over_object,/obj/storage/cart/))
-			var/obj/storage/cart/C = over_object
-			if (C.locked || C.welded)
-				boutput(usr, "<span class='alert'>You can't use a currently unopenable cart as an output target.</span>")
-			else
-				src.output_location = over_object
-				boutput(usr, "<span class='notice'>You set the processor to output to [over_object]!</span>")
-
-		else if (istype(over_object,/obj/machinery/manufacturer/))
-			var/obj/machinery/manufacturer/M = over_object
-			if (M.status & BROKEN || M.status & NOPOWER || M.dismantle_stage > 0)
-				boutput(usr, "<span class='alert'>You can't use a non-functioning manufacturer as an output target.</span>")
-			else
-				src.output_location = M
-				boutput(usr, "<span class='notice'>You set the processor to output to [over_object]!</span>")
-
-		else if (istype(over_object, /obj/machinery/nanofab))
-			var/obj/machinery/nanofab/N = over_object
-			if (N.status & BROKEN || N.status & NOPOWER)
-				boutput(usr, "<span class='alert'>You can't use a non-functioning nano-fabricator as an output target.</span>")
-			else
-				src.output_location = N
-				boutput(usr, "<span class='notice'>You set the processor to output to [over_object]!</span>")
-
-		else if (istype(over_object,/obj/table/) && istype(over_object,/obj/rack/))
-			var/obj/O = over_object
-			src.output_location = O.loc
-			boutput(usr, "<span class='notice'>You set the processor to output on top of [O]!</span>")
-
-		else if (istype(over_object,/turf/simulated/floor/))
-			src.output_location = over_object
-			boutput(usr, "<span class='notice'>You set the processor to output to [over_object]!</span>")
-
-		else
-
-			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
@@ -284,35 +218,7 @@
 		boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
 		return
 
-	proc/get_output_location()
-		if (isnull(output_location))
-			return src.loc
-
-		if (get_dist(src.output_location,src) > 1)
-			output_location = null
-			return src.loc
-
-		if (istype(output_location,/obj/machinery/manufacturer))
-			var/obj/machinery/manufacturer/M = output_location
-			if (M.status & NOPOWER || M.status & BROKEN | M.dismantle_stage > 0)
-				return M.loc
-			return M
-
-		else if (istype(output_location,/obj/storage/crate))
-			var/obj/storage/crate/C = output_location
-			if (C.locked || C.welded || C.open)
-				return C.loc
-			return C
-
-		else if (istype(output_location,/obj/storage/cart))
-			var/obj/storage/cart/C = output_location
-			if (C.locked || C.welded || C.open)
-				return C.loc
-			return C
-
-		return output_location
-
-/obj/machinery/processor/portable
+/obj/machinery/dispensing/processor/portable
 	name = "Portable material processor"
 	icon = 'icons/obj/scrap.dmi'
 	icon_state = "reclaimer"

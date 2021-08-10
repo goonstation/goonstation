@@ -530,7 +530,7 @@
 /turf/unsimulated/floor/black,
 /area/owlery/staffhall)
 "by" = (
-/obj/machinery/manufacturer/medical,
+/obj/machinery/dispensing/manufacturer/medical,
 /obj/item/storage/wall/medical_wear,
 /turf/unsimulated/floor/bluewhite{
 	dir = 9
@@ -1160,14 +1160,14 @@
 	dir = 1;
 	name = "light fixture"
 	},
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /turf/unsimulated/floor/blackwhite{
 	icon_state = "darkwhite";
 	dir = 1
 	},
 /area/owlery/staffhall)
 "cW" = (
-/obj/machinery/vending/cola/red,
+/obj/machinery/dispensing/vending/cola/red,
 /turf/unsimulated/floor/blackwhite{
 	icon_state = "darkwhite";
 	dir = 1
@@ -1202,7 +1202,7 @@
 	},
 /area/owlery/staffhall)
 "cZ" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/unsimulated/floor/blackwhite{
 	icon_state = "darkwhite";
 	dir = 1
@@ -1282,7 +1282,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/owlery/staffhall)
 "dj" = (
-/obj/machinery/vending/kitchen,
+/obj/machinery/dispensing/vending/kitchen,
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/staffhall)
 "dk" = (
@@ -1474,7 +1474,7 @@
 	},
 /area/owlery/staffhall)
 "dI" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/dispensing/vending/alcohol,
 /obj/decal/tile_edge/line/grey{
 	icon_state = "noedge-tile1"
 	},
@@ -1881,7 +1881,7 @@
 	},
 /area/owlery/staffhall)
 "eF" = (
-/obj/machinery/vending/pizza,
+/obj/machinery/dispensing/vending/pizza,
 /turf/unsimulated/floor/greenwhite{
 	icon_state = "greenwhite";
 	dir = 8
@@ -1931,7 +1931,7 @@
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "eK" = (
-/obj/machinery/vending/chem,
+/obj/machinery/dispensing/vending/chem,
 /turf/unsimulated/floor/black,
 /area/owlery/office)
 "eL" = (
@@ -1948,7 +1948,7 @@
 /area/owlery/gangzone)
 "eN" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/chem_heater{
+/obj/machinery/dispensing/chem_heater{
 	pixel_y = 8
 	},
 /turf/unsimulated/floor/black,
@@ -1960,7 +1960,7 @@
 /turf/unsimulated/floor/sanitary/blue,
 /area/owlery/Owlmait)
 "eQ" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/dispensing/chem_dispenser,
 /turf/unsimulated/floor/black,
 /area/owlery/office)
 "eR" = (
@@ -2429,7 +2429,7 @@
 	},
 /area/owlery/Owlopen)
 "fW" = (
-/obj/machinery/chem_master{
+/obj/machinery/dispensing/chem_master{
 	icon_state = "mixer0";
 	dir = 4
 	},
@@ -2699,7 +2699,7 @@
 	},
 /area/owlery/gangzone)
 "gy" = (
-/obj/machinery/vending/security,
+/obj/machinery/dispensing/vending/security,
 /turf/unsimulated/floor/redblack/corner,
 /area/owlery/Owlopen)
 "gz" = (
@@ -5494,7 +5494,7 @@
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "drip5"
 	},
-/obj/machinery/vending/fortune,
+/obj/machinery/dispensing/vending/fortune,
 /turf/unsimulated/floor/greenwhite{
 	icon_state = "greenwhite";
 	dir = 9
@@ -5840,7 +5840,7 @@
 /turf/unsimulated/floor/specialroom/arcade,
 /area/owlery/owllock)
 "nx" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /obj/decal/fakeobjects/lightbulb_broken{
 	dir = 8
 	},
@@ -6316,7 +6316,7 @@
 /turf/unsimulated/floor/greenwhite,
 /area/owlery/owleryhall)
 "oJ" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line1";
 	dir = 4
@@ -7181,7 +7181,7 @@
 	},
 /area/owlery/gangzone)
 "qO" = (
-/obj/machinery/vending/pizza,
+/obj/machinery/dispensing/vending/pizza,
 /obj/decal/fakeobjects/lightbulb_broken{
 	dir = 4
 	},
@@ -9701,7 +9701,7 @@
 	name = "table"
 	},
 /obj/item/device/radio/intercom/adventure/syndcommand{
-
+	
 	},
 /turf/unsimulated/floor/black,
 /area/owlery/office)
@@ -10187,12 +10187,6 @@
 	dir = 1
 	},
 /obj/structure/woodwall,
-/turf/unsimulated/floor/yellowblack{
-	icon_state = "yellowblack";
-	dir = 1
-	},
-/area/owlery/gangzone)
-"wD" = (
 /turf/unsimulated/floor/yellowblack{
 	icon_state = "yellowblack";
 	dir = 1
@@ -27020,7 +27014,7 @@ uS
 qm
 nz
 wo
-wD
+qI
 qZ
 xg
 xB

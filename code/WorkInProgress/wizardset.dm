@@ -588,7 +588,7 @@ ABSTRACT_TYPE(/obj/item/wizard_crystal)
 	var/assoc_material = "wiz_quartz"
 	icon = 'icons/turf/adventure.dmi'
 
-	proc/create_bar(var/obj/machinery/portable_reclaimer/creator)
+	proc/create_bar(var/obj/machinery/dispensing/portable_reclaimer/creator)
 		var/datum/material/MAT = new assoc_material()
 		var/bar_type = getProcessedMaterialForm(MAT)
 		var/obj/item/material_piece/BAR = new bar_type(creator.get_output_location())

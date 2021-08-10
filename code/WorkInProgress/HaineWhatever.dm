@@ -856,8 +856,8 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 /mob/living/carbon/human/npc/diner_bartender
 	var/im_mad = 0
-	var/obj/machinery/chem_dispenser/alcohol/booze = null
-	var/obj/machinery/chem_dispenser/soda/soda = null
+	var/obj/machinery/dispensing/chem_dispenser/alcohol/booze = null
+	var/obj/machinery/dispensing/chem_dispenser/soda/soda = null
 	var/last_dispenser_search = null
 	var/list/glassware = list()
 
@@ -1042,11 +1042,11 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			return
 		src.last_dispenser_search = ticker.elapsed_ticks
 		if (!src.booze)
-			var/obj/machinery/chem_dispenser/alcohol/new_booze = locate() in view(7, src)
+			var/obj/machinery/dispensing/chem_dispenser/alcohol/new_booze = locate() in view(7, src)
 			if (new_booze)
 				src.booze = new_booze
 		if (!src.soda)
-			var/obj/machinery/chem_dispenser/soda/new_soda = locate() in view(7, src)
+			var/obj/machinery/dispensing/chem_dispenser/soda/new_soda = locate() in view(7, src)
 			if (new_soda)
 				src.soda = new_soda
 

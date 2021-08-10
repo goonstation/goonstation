@@ -2276,7 +2276,7 @@
 "aeF" = (
 /obj/rack,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/crew_quarters/market)
@@ -2624,7 +2624,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/fsmaint)
@@ -3380,7 +3380,7 @@
 	icon_state = "tube1";
 	dir = 4
 	},
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /turf/simulated/floor,
 /area/hallway/primary/north)
 "agx" = (
@@ -3456,7 +3456,7 @@
 /turf/simulated/floor,
 /area/crew_quarters/market)
 "agJ" = (
-/obj/machinery/vending/cola/red,
+/obj/machinery/dispensing/vending/cola/red,
 /turf/simulated/floor,
 /area/hallway/primary/north)
 "agK" = (
@@ -3486,7 +3486,7 @@
 	dir = 1
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/janitor)
@@ -3530,7 +3530,7 @@
 /area/maintenance/fsmaint)
 "agU" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/disposal)
@@ -4160,7 +4160,7 @@
 /obj/item/storage/mousetraps,
 /obj/item/storage/mousetraps,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/grime,
 /area/janitor)
@@ -4472,7 +4472,7 @@
 /turf/simulated/floor/plating,
 /area/storage/autolathe)
 "aiK" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/dispensing/manufacturer/general,
 /turf/simulated/floor,
 /area/storage/autolathe)
 "aiL" = (
@@ -5887,13 +5887,13 @@
 /area/quartermaster/storage)
 "alp" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/machinery/light,
 /turf/simulated/floor,
 /area/quartermaster/storage)
 "alq" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/dispensing/manufacturer/general,
 /obj/cable{
 	icon_state = "0-4";
 	d2 = 4
@@ -6579,7 +6579,7 @@
 /turf/simulated/floor/plating,
 /area/chapel/main)
 "amu" = (
-/obj/machinery/vending/computer3,
+/obj/machinery/dispensing/vending/computer3,
 /turf/simulated/floor/plating,
 /area/storage/tech)
 "amv" = (
@@ -6897,7 +6897,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/fpmaint)
 "amV" = (
-/obj/machinery/vending/floppy,
+/obj/machinery/dispensing/vending/floppy,
 /turf/simulated/floor/plating,
 /area/maintenance/fpmaint)
 "amW" = (
@@ -8042,7 +8042,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/fpmaint)
 "apr" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/simulated/floor,
 /area/hallway/primary/central)
 "aps" = (
@@ -8418,11 +8418,11 @@
 /turf/simulated/wall/r_wall,
 /area/hallway/primary/central)
 "aqm" = (
-/obj/machinery/vending/cola/blue,
+/obj/machinery/dispensing/vending/cola/blue,
 /turf/simulated/floor/purple,
 /area/hallway/primary/central)
 "aqn" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /turf/simulated/floor/purple,
 /area/hallway/primary/central)
 "aqo" = (
@@ -8649,7 +8649,7 @@
 	dir = 8
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/purple/side{
 	dir = 9
@@ -10816,7 +10816,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/maintenance/east)
@@ -11890,7 +11890,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/east)
 "axx" = (
-/obj/machinery/manufacturer/robotics,
+/obj/machinery/dispensing/manufacturer/robotics,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4";
@@ -11903,7 +11903,7 @@
 /turf/simulated/floor,
 /area/medical/robotics)
 "axy" = (
-/obj/machinery/manufacturer/robotics,
+/obj/machinery/dispensing/manufacturer/robotics,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2";
@@ -11921,7 +11921,7 @@
 /turf/simulated/floor,
 /area/medical/robotics)
 "axz" = (
-/obj/machinery/manufacturer/robotics,
+/obj/machinery/dispensing/manufacturer/robotics,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -12246,7 +12246,7 @@
 	},
 /area/hallway/primary/central)
 "ayh" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /obj/machinery/light{
 	tag = "icon-tube1 (EAST)";
 	icon_state = "tube1";
@@ -15632,7 +15632,7 @@
 /turf/simulated/floor/white,
 /area/medical/medbay)
 "aEC" = (
-/obj/machinery/vending/medical,
+/obj/machinery/dispensing/vending/medical,
 /turf/simulated/floor/white,
 /area/medical/medbay)
 "aED" = (
@@ -15674,7 +15674,7 @@
 /turf/simulated/floor/white,
 /area/chemistry)
 "aEI" = (
-/obj/machinery/chem_master,
+/obj/machinery/dispensing/chem_master,
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture"
@@ -15688,11 +15688,11 @@
 	},
 /area/chemistry)
 "aEJ" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/dispensing/chem_dispenser,
 /turf/simulated/floor/caution/south,
 /area/chemistry)
 "aEK" = (
-/obj/machinery/chem_heater,
+/obj/machinery/dispensing/chem_heater,
 /turf/simulated/floor{
 	tag = "icon-corner_east";
 	icon_state = "corner_east";
@@ -16846,25 +16846,25 @@
 /area/chemistry)
 "aGQ" = (
 /obj/machinery/light,
-/obj/machinery/chem_master,
+/obj/machinery/dispensing/chem_master,
 /turf/simulated/floor/caution/corner/nw{
 	dir = 1
 	},
 /area/chemistry)
 "aGR" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/dispensing/chem_dispenser,
 /turf/simulated/floor/caution/north{
 	dir = 8
 	},
 /area/chemistry)
 "aGS" = (
-/obj/machinery/chem_heater,
+/obj/machinery/dispensing/chem_heater,
 /turf/simulated/floor/caution/corner/ne{
 	dir = 1
 	},
 /area/chemistry)
 "aGT" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/dispensing/vending/monkey,
 /turf/simulated/floor/white,
 /area/chemistry)
 "aGU" = (
@@ -18145,7 +18145,7 @@
 	name = "Research Sector"
 	})
 "aJb" = (
-/obj/machinery/vending/standard,
+/obj/machinery/dispensing/vending/standard,
 /turf/simulated/floor,
 /area/zeta{
 	name = "Research Sector"
@@ -18810,7 +18810,7 @@
 /turf/simulated/floor/plating,
 /area/hydroponics)
 "aKm" = (
-/obj/machinery/vending/hydroponics,
+/obj/machinery/dispensing/vending/hydroponics,
 /turf/simulated/floor,
 /area/hydroponics)
 "aKn" = (
@@ -19797,7 +19797,7 @@
 /turf/simulated/floor/plating,
 /area/engine/elect)
 "aMm" = (
-/obj/machinery/vending/electronics,
+/obj/machinery/dispensing/vending/electronics,
 /obj/machinery/light{
 	dir = 1;
 	pixel_x = -1
@@ -19805,7 +19805,7 @@
 /turf/simulated/floor,
 /area/engine/elect)
 "aMn" = (
-/obj/machinery/vending/electronics,
+/obj/machinery/dispensing/vending/electronics,
 /turf/simulated/floor,
 /area/engine/elect)
 "aMo" = (
@@ -20313,7 +20313,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/apmaint)
 "aNd" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/simulated/floor/black,
 /area/crew_quarters/quarters)
 "aNe" = (
@@ -20328,7 +20328,7 @@
 /turf/simulated/floor/black,
 /area/crew_quarters/quarters)
 "aNh" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor,
 /area/hallway/primary/south)
 "aNi" = (
@@ -20424,7 +20424,7 @@
 	name = "Medbay Lobby"
 	})
 "aNs" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/simulated/floor,
 /area/zeta{
 	name = "Research Sector"
@@ -20435,7 +20435,7 @@
 	frequency = 1445;
 	name = "Station Intercom (Medical)"
 	},
-/obj/machinery/vending/cola/blue,
+/obj/machinery/dispensing/vending/cola/blue,
 /turf/simulated/floor,
 /area/zeta{
 	name = "Research Sector"
@@ -20840,7 +20840,7 @@
 /turf/simulated/floor/black,
 /area/crew_quarters/quarters)
 "aOa" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /obj/machinery/camera{
 	c_tag = "Crew Quarters - Maint";
 	dir = 1
@@ -21148,7 +21148,7 @@
 /turf/simulated/floor,
 /area/crew_quarters/bar)
 "aOz" = (
-/obj/machinery/vending/cola/red,
+/obj/machinery/dispensing/vending/cola/red,
 /turf/simulated/floor/grass{
 	name = "astroturf";
 	tag = "icon-grass1"
@@ -21427,11 +21427,11 @@
 /turf/simulated/floor/specialroom/bar,
 /area/crew_quarters/bar)
 "aPd" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/simulated/floor/specialroom/bar,
 /area/crew_quarters/bar)
 "aPe" = (
-/obj/machinery/vending/cola/blue,
+/obj/machinery/dispensing/vending/cola/blue,
 /obj/machinery/light{
 	dir = 1;
 	pixel_x = -1
@@ -22072,7 +22072,7 @@
 /turf/simulated/floor/plating,
 /area/crew_quarters/bar)
 "aQd" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /turf/simulated/floor/specialroom/bar,
 /area/crew_quarters/bar)
 "aQe" = (
@@ -24411,7 +24411,7 @@
 	name = "Mixing Room"
 	})
 "aUi" = (
-/obj/machinery/vending/paint/broken,
+/obj/machinery/dispensing/vending/paint/broken,
 /turf/simulated/floor/specialroom/bar,
 /area/crew_quarters/bar)
 "aUj" = (
@@ -24868,7 +24868,7 @@
 /area/crew_quarters/bar)
 "aVd" = (
 /obj/disposalpipe/segment,
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/simulated/floor{
 	icon_state = "carpet2"
 	},
@@ -25346,7 +25346,7 @@
 /area/crew_quarters/bar)
 "aVZ" = (
 /obj/table/reinforced/bar,
-/obj/machinery/glass_recycler,
+/obj/machinery/dispensing/glass_recycler,
 /obj/machinery/door/window,
 /obj/machinery/door/window/northleft,
 /obj/window{
@@ -25794,7 +25794,7 @@
 /turf/simulated/wall/r_wall,
 /area/toxins/storage)
 "aWW" = (
-/obj/machinery/chem_dispenser/alcohol,
+/obj/machinery/dispensing/chem_dispenser/alcohol,
 /turf/simulated/floor/black,
 /area/crew_quarters/bar)
 "aWX" = (
@@ -26078,7 +26078,7 @@
 /turf/simulated/floor/plating,
 /area/toxins/storage)
 "aXH" = (
-/obj/machinery/chem_dispenser/soda,
+/obj/machinery/dispensing/chem_dispenser/soda,
 /turf/simulated/floor/black,
 /area/crew_quarters/bar)
 "aXI" = (
@@ -26652,7 +26652,7 @@
 	},
 /area/crew_quarters/kitchen)
 "aZa" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/dispensing/vending/monkey,
 /obj/cable{
 	icon_state = "4-8";
 	d1 = 4;
@@ -26854,7 +26854,7 @@
 /turf/simulated/floor,
 /area/storage/primary)
 "aZr" = (
-/obj/machinery/vending/standard,
+/obj/machinery/dispensing/vending/standard,
 /turf/simulated/floor,
 /area/storage/primary)
 "aZs" = (
@@ -27593,7 +27593,7 @@
 /turf/simulated/floor/sanitary,
 /area/crew_quarters/bar)
 "baP" = (
-/obj/machinery/vending/kitchen,
+/obj/machinery/dispensing/vending/kitchen,
 /turf/simulated/floor/specialroom/cafeteria{
 	dir = 8
 	},
@@ -27879,7 +27879,7 @@
 /turf/simulated/wall/false_wall,
 /area/hallway/primary/west)
 "bbq" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor/carpet/arcade,
 /area/crew_quarters/arcade)
 "bbr" = (
@@ -28218,7 +28218,7 @@
 /turf/simulated/aprilfools,
 /area/hallway/primary/west)
 "bbY" = (
-/obj/machinery/vending/pizza,
+/obj/machinery/dispensing/vending/pizza,
 /turf/simulated/aprilfools,
 /area/hallway/primary/west)
 "bbZ" = (
@@ -28827,7 +28827,7 @@
 /turf/simulated/floor,
 /area/security/main)
 "bcU" = (
-/obj/machinery/vending/security,
+/obj/machinery/dispensing/vending/security,
 /turf/simulated/floor,
 /area/security/main)
 "bcV" = (
@@ -29303,7 +29303,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/apmaint)
 "bdO" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -30931,7 +30931,7 @@
 /turf/simulated/floor,
 /area/bridge)
 "bgu" = (
-/obj/machinery/vending/security,
+/obj/machinery/dispensing/vending/security,
 /turf/simulated/floor,
 /area/security/brig)
 "bgv" = (
@@ -32815,7 +32815,7 @@
 	},
 /area/wizard_station)
 "bjO" = (
-/obj/machinery/vending/magivend,
+/obj/machinery/dispensing/vending/magivend,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor5"
 	},
@@ -34279,7 +34279,7 @@
 	},
 /area/sim/area2)
 "bnh" = (
-/obj/machinery/vending/cigarette{
+/obj/machinery/dispensing/vending/cigarette{
 	name = "virtual cigarette machine"
 	},
 /turf/unsimulated/floor{
@@ -34553,28 +34553,28 @@
 	},
 /area/racing_entry)
 "bnH" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/unsimulated/floor{
 	icon = 'racing.dmi';
 	icon_state = "track_1"
 	},
 /area/racing_entry)
 "bnI" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/unsimulated/floor{
 	icon = 'racing.dmi';
 	icon_state = "track_1"
 	},
 /area/racing_entry)
 "bnJ" = (
-/obj/machinery/vending/cola/red,
+/obj/machinery/dispensing/vending/cola/red,
 /turf/unsimulated/floor{
 	icon = 'racing.dmi';
 	icon_state = "track_1"
 	},
 /area/racing_entry)
 "bnK" = (
-/obj/machinery/vending/cola/blue,
+/obj/machinery/dispensing/vending/cola/blue,
 /turf/unsimulated/floor{
 	icon = 'racing.dmi';
 	icon_state = "track_1"
@@ -38503,7 +38503,7 @@
 	},
 /area/syndicate_station)
 "bwM" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
@@ -40152,7 +40152,7 @@
 /turf/simulated/floor,
 /area/crunch)
 "bAP" = (
-/obj/machinery/vending/cola/blue{
+/obj/machinery/dispensing/vending/cola/blue{
 	credit = 12
 	},
 /turf/simulated/floor/airless,
@@ -41028,7 +41028,7 @@
 	},
 /area/meteor/dock)
 "bCJ" = (
-/obj/machinery/vending/computer3,
+/obj/machinery/dispensing/vending/computer3,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -43187,7 +43187,7 @@
 	},
 /area/centcom)
 "bHw" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -43251,7 +43251,7 @@
 /turf/unsimulated/floor,
 /area/centcom)
 "bHD" = (
-/obj/machinery/vending/cola/blue,
+/obj/machinery/dispensing/vending/cola/blue,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -43799,7 +43799,7 @@
 	sd_lighting = 0
 	})
 "bJa" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -43833,7 +43833,7 @@
 /turf/simulated/floor/delivery,
 /area/crunch)
 "bJg" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -43942,7 +43942,7 @@
 	},
 /area/centcom)
 "bJq" = (
-/obj/machinery/vending/cola/red,
+/obj/machinery/dispensing/vending/cola/red,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -52841,19 +52841,19 @@
 	name = "Research Outpost Zeta"
 	})
 "cbD" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/simulated/floor,
 /area/ab_res{
 	name = "Research Outpost Zeta"
 	})
 "cbE" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/simulated/floor,
 /area/ab_res{
 	name = "Research Outpost Zeta"
 	})
 "cbF" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /turf/simulated/floor,
 /area/ab_res{
 	name = "Research Outpost Zeta"
@@ -52959,7 +52959,7 @@
 	name = "Research Outpost Zeta"
 	})
 "cbR" = (
-/obj/machinery/chem_heater,
+/obj/machinery/dispensing/chem_heater,
 /turf/simulated/floor/white,
 /area/ab_res{
 	name = "Research Outpost Zeta"
@@ -53101,7 +53101,7 @@
 	name = "Research Outpost Zeta"
 	})
 "ccf" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/dispensing/chem_dispenser,
 /obj/machinery/camera{
 	c_tag = "Chemistry";
 	dir = 4;
@@ -53332,7 +53332,7 @@
 	name = "Research Outpost Zeta"
 	})
 "ccy" = (
-/obj/machinery/chem_master,
+/obj/machinery/dispensing/chem_master,
 /obj/machinery/alarm{
 	dir = 8;
 	name = "Local Air Monitor";
@@ -59979,7 +59979,7 @@
 /turf/simulated/wall,
 /area/mining/exit_west)
 "cox" = (
-/obj/machinery/manufacturer/mining,
+/obj/machinery/dispensing/manufacturer/mining,
 /obj/cable,
 /turf/simulated/floor,
 /area/mining/manufacturing)

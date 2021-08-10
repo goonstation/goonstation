@@ -105,7 +105,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
 "ap" = (
-/obj/machinery/manufacturer/mining,
+/obj/machinery/dispensing/manufacturer/mining,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aq" = (
@@ -113,7 +113,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "ar" = (
-/obj/machinery/manufacturer/gas,
+/obj/machinery/dispensing/manufacturer/gas,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "as" = (
@@ -137,11 +137,11 @@
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
 "av" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/dispensing/manufacturer/general,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aw" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/dispensing/portable_reclaimer,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "ax" = (
@@ -165,7 +165,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aA" = (
-/obj/machinery/manufacturer/mechanic,
+/obj/machinery/dispensing/manufacturer/mechanic,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aB" = (
@@ -201,7 +201,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aF" = (
-/obj/machinery/vending/floppy{
+/obj/machinery/dispensing/vending/floppy{
 	profit = 0
 	},
 /turf/simulated/floor/shuttle,
@@ -243,7 +243,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aL" = (
-/obj/machinery/vending/computer3{
+/obj/machinery/dispensing/vending/computer3{
 	profit = 0
 	},
 /turf/simulated/floor/shuttle,
@@ -334,11 +334,11 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aX" = (
-/obj/machinery/nanofab/refining,
+/obj/machinery/dispensing/nanofab/refining,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aY" = (
-/obj/machinery/nanofab/mining,
+/obj/machinery/dispensing/nanofab/mining,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aZ" = (
@@ -466,7 +466,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "bo" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "bp" = (
@@ -492,7 +492,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "bs" = (
-/obj/machinery/vending/cola,
+/obj/machinery/dispensing/vending/cola,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "bt" = (
@@ -502,7 +502,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
 "bu" = (
-/obj/machinery/vending/pizza{
+/obj/machinery/dispensing/vending/pizza{
 	anchored = 1
 	},
 /turf/simulated/floor/shuttle,

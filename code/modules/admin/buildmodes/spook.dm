@@ -110,8 +110,8 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 				toggle()
 			else .=..()
 */
-/obj/machinery/vending/spookTypes = "Throw Item"
-/obj/machinery/vending/spook_act(what)
+/obj/machinery/dispensing/vending/spookTypes = "Throw Item"
+/obj/machinery/dispensing/vending/spook_act(what)
 	switch(what)
 		if("Throw Item")
 			throw_item()

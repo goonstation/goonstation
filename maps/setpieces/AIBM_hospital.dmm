@@ -578,7 +578,7 @@
 /turf/unsimulated/floor/white,
 /area/hospital)
 "bP" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/dispensing/chem_dispenser,
 /turf/unsimulated/floor/white,
 /area/hospital)
 "bQ" = (
@@ -2229,7 +2229,7 @@
 /area/hospital)
 "go" = (
 /obj/table/auto,
-/obj/machinery/glass_recycler,
+/obj/machinery/dispensing/glass_recycler,
 /turf/unsimulated/floor/specialroom/freezer,
 /area/hospital)
 "gp" = (
@@ -2893,7 +2893,7 @@
 	},
 /area/hospital/underground)
 "hS" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/dispensing/portable_reclaimer,
 /turf/unsimulated/floor{
 	name = "plating"
 	},
@@ -3812,13 +3812,13 @@
 	},
 /area/station/crew_quarters/kitchen)
 "jR" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/dispensing/chem_dispenser,
 /turf/simulated/floor{
 	icon_state = "carpetN"
 	},
 /area/station/crew_quarters/kitchen)
 "jS" = (
-/obj/machinery/chem_heater,
+/obj/machinery/dispensing/chem_heater,
 /turf/simulated/floor{
 	icon_state = "carpetN"
 	},
@@ -3829,7 +3829,7 @@
 	},
 /area/station/crew_quarters/kitchen)
 "jU" = (
-/obj/machinery/chem_master,
+/obj/machinery/dispensing/chem_master,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -4557,7 +4557,7 @@
 /turf/simulated/floor/caution/north,
 /area/station/crew_quarters/kitchen)
 "lG" = (
-/obj/machinery/vending/electronics,
+/obj/machinery/dispensing/vending/electronics,
 /turf/simulated/floor{
 	icon_state = "carpetW"
 	},
@@ -4867,7 +4867,7 @@
 	},
 /area/station/crew_quarters/kitchen)
 "mv" = (
-/obj/machinery/vending/paint/broken,
+/obj/machinery/dispensing/vending/paint/broken,
 /turf/simulated/floor{
 	icon_state = "carpetS"
 	},
@@ -4987,7 +4987,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/sim/area1)
 "mL" = (
-/obj/machinery/vending/kitchen,
+/obj/machinery/dispensing/vending/kitchen,
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 1
