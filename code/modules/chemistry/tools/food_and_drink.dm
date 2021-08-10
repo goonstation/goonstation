@@ -471,7 +471,7 @@
 		var/maybe_too_tipsy = FALSE
 		var/too_drunk = FALSE
 		if(!can_chug)
-			boutput(C, "<span class='alert'>You try to lift the [src.name] and attempt to chug from it but it's too heavy!</span>")
+			boutput(C, "<span class='alert'>You can't seem to chug from [src.name]! How odd.</span>")
 			return
 		if(C.bioHolder)
 			maybe_too_clumsy = C.bioHolder.HasEffect("clumsy") && prob(50)
