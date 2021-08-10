@@ -543,7 +543,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/space)
 "bU" = (
-/obj/machinery/vending/hydroponics,
+/obj/machinery/dispensing/vending/hydroponics,
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
 /area/space)
 "bV" = (

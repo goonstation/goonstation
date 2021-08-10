@@ -1393,13 +1393,13 @@
 	},
 /area/solarium)
 "dy" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/dispensing/chem_dispenser,
 /turf/simulated/floor{
 	icon_state = "carpetN"
 	},
 /area/solarium)
 "dz" = (
-/obj/machinery/chem_heater,
+/obj/machinery/dispensing/chem_heater,
 /turf/simulated/floor{
 	icon_state = "carpetN"
 	},
@@ -1410,7 +1410,7 @@
 	},
 /area/solarium)
 "dB" = (
-/obj/machinery/chem_master,
+/obj/machinery/dispensing/chem_master,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -2073,7 +2073,7 @@
 /turf/simulated/floor/caution/north,
 /area/solarium)
 "fc" = (
-/obj/machinery/vending/electronics,
+/obj/machinery/dispensing/vending/electronics,
 /turf/simulated/floor{
 	icon_state = "carpetW"
 	},
@@ -2357,7 +2357,7 @@
 /turf/simulated/wall,
 /area/sim/area1)
 "fM" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/dispensing/vending/monkey,
 /turf/simulated/floor{
 	icon_state = "carpetSW"
 	},
@@ -2368,7 +2368,7 @@
 	},
 /area/solarium)
 "fO" = (
-/obj/machinery/vending/paint/broken,
+/obj/machinery/dispensing/vending/paint/broken,
 /turf/simulated/floor{
 	icon_state = "carpetS"
 	},
@@ -2439,7 +2439,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/sim/area1)
 "gb" = (
-/obj/machinery/vending/kitchen,
+/obj/machinery/dispensing/vending/kitchen,
 /obj/machinery/light{
 	tag = "icon-tube1 (NORTH)";
 	icon_state = "tube1";
@@ -4018,7 +4018,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/buddyfactory)
 "jx" = (
-/obj/machinery/vending/cola/red,
+/obj/machinery/dispensing/vending/cola/red,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/buddyfactory)
 "jy" = (

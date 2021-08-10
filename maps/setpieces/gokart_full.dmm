@@ -2096,7 +2096,7 @@
 	},
 /area/sim/area2)
 "eX" = (
-/obj/machinery/vending/cigarette{
+/obj/machinery/dispensing/vending/cigarette{
 	name = "virtual cigarette machine"
 	},
 /turf/unsimulated/floor{
@@ -2405,28 +2405,28 @@
 	},
 /area/racing_entry)
 "fB" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/unsimulated/floor{
 	icon = 'racing.dmi';
 	icon_state = "track_1"
 	},
 /area/racing_entry)
 "fC" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/unsimulated/floor{
 	icon = 'racing.dmi';
 	icon_state = "track_1"
 	},
 /area/racing_entry)
 "fD" = (
-/obj/machinery/vending/cola/red,
+/obj/machinery/dispensing/vending/cola/red,
 /turf/unsimulated/floor{
 	icon = 'racing.dmi';
 	icon_state = "track_1"
 	},
 /area/racing_entry)
 "fE" = (
-/obj/machinery/vending/cola/blue,
+/obj/machinery/dispensing/vending/cola/blue,
 /turf/unsimulated/floor{
 	icon = 'racing.dmi';
 	icon_state = "track_1"

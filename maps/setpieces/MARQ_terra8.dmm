@@ -1300,7 +1300,7 @@
 /turf/unsimulated/floor/setpieces/clouds,
 /area/terraeight/fog/ground/lv4)
 "dn" = (
-/obj/machinery/processor,
+/obj/machinery/dispensing/processor,
 /turf/unsimulated/floor/plating,
 /area/bunker/lv1)
 "do" = (
@@ -2826,7 +2826,7 @@
 /turf/unsimulated/floor/plating,
 /area/bunker/lv1)
 "gq" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line-broken1"
 	},
@@ -3227,7 +3227,7 @@
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line-broken1"
 	},
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/unsimulated/floor/concrete{
 	icon_state = "floor-notile"
 	},
@@ -4118,7 +4118,7 @@
 /turf/unsimulated/floor/moss,
 /area/terraeight/fog/ground)
 "iW" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line-broken1";
 	dir = 8
@@ -6088,7 +6088,7 @@
 	dir = 4;
 	mouse_opacity = 0
 	},
-/obj/machinery/vending/coffee{
+/obj/machinery/dispensing/vending/coffee{
 	can_fall = 0;
 	density = 0;
 	pixel_y = 24
@@ -8470,7 +8470,7 @@
 /turf/unsimulated/floor/black,
 /area/bunker/lv00)
 "qO" = (
-/obj/machinery/vending/medical,
+/obj/machinery/dispensing/vending/medical,
 /turf/unsimulated/floor/concrete,
 /area/bunker/lv0)
 "qP" = (
@@ -11576,7 +11576,7 @@
 /turf/unsimulated/floor/concrete,
 /area/space)
 "uL" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/dispensing/manufacturer/general,
 /turf/unsimulated/floor/concrete,
 /area/space)
 "uM" = (

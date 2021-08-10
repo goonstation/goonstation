@@ -2791,7 +2791,7 @@
 	},
 /area/wizard_station)
 "gd" = (
-/obj/machinery/vending/magivend,
+/obj/machinery/dispensing/vending/magivend,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor5"
 	},
@@ -3085,13 +3085,13 @@
 	},
 /area/station/crew_quarters/kitchen)
 "gT" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/dispensing/chem_dispenser,
 /turf/simulated/floor{
 	icon_state = "carpetN"
 	},
 /area/station/crew_quarters/kitchen)
 "gU" = (
-/obj/machinery/chem_heater,
+/obj/machinery/dispensing/chem_heater,
 /turf/simulated/floor{
 	icon_state = "carpetN"
 	},
@@ -3102,7 +3102,7 @@
 	},
 /area/station/crew_quarters/kitchen)
 "gW" = (
-/obj/machinery/chem_master,
+/obj/machinery/dispensing/chem_master,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -3876,7 +3876,7 @@
 /turf/simulated/floor/caution/north,
 /area/station/crew_quarters/kitchen)
 "iJ" = (
-/obj/machinery/vending/electronics,
+/obj/machinery/dispensing/vending/electronics,
 /turf/simulated/floor{
 	icon_state = "carpetW"
 	},
@@ -4187,7 +4187,7 @@
 	},
 /area/station/crew_quarters/kitchen)
 "jy" = (
-/obj/machinery/vending/paint/broken,
+/obj/machinery/dispensing/vending/paint/broken,
 /turf/simulated/floor{
 	icon_state = "carpetS"
 	},
@@ -4315,7 +4315,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/sim/area1)
 "jO" = (
-/obj/machinery/vending/kitchen,
+/obj/machinery/dispensing/vending/kitchen,
 /obj/machinery/light{
 	tag = "icon-tube1 (NORTH)";
 	icon_state = "tube1";
@@ -4723,7 +4723,7 @@
 /turf/unsimulated/wall/setpieces/leadwall/gray,
 /area/crypt/sigma/crew)
 "kP" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/unsimulated/floor/wood{
 	dir = 2
 	},
@@ -4752,7 +4752,7 @@
 	},
 /area/crypt/sigma/crew)
 "kV" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/unsimulated/floor/wood{
 	dir = 2
 	},

@@ -2482,7 +2482,7 @@
 /turf/unsimulated/floor/specialroom/bar,
 /area/jones/bar)
 "fV" = (
-/obj/machinery/chem_dispenser/alcohol,
+/obj/machinery/dispensing/chem_dispenser/alcohol,
 /turf/unsimulated/floor/wood{
 	dir = 2
 	},
@@ -2500,7 +2500,7 @@
 /turf/unsimulated/floor/specialroom/bar,
 /area/jones/bar)
 "fX" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/dispensing/chem_dispenser,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 /obj/item/reagent_containers/food/drinks/drinkingglass,
 /obj/item/reagent_containers/food/drinks/drinkingglass,
@@ -2652,7 +2652,7 @@
 	},
 /area/jones/alley)
 "gn" = (
-/obj/machinery/chem_master{
+/obj/machinery/dispensing/chem_master{
 	dir = 4;
 	pixel_x = -4
 	},
@@ -2701,7 +2701,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/jones/bar)
 "gt" = (
-/obj/machinery/vending/snack,
+/obj/machinery/dispensing/vending/snack,
 /turf/unsimulated/floor/concrete,
 /area/jones)
 "gu" = (
@@ -2748,11 +2748,11 @@
 	},
 /area/jones/alley)
 "gA" = (
-/obj/machinery/chem_heater,
+/obj/machinery/dispensing/chem_heater,
 /turf/simulated/floor/specialroom/bar,
 /area/jones/bar)
 "gB" = (
-/obj/machinery/vending/kitchen,
+/obj/machinery/dispensing/vending/kitchen,
 /turf/unsimulated/floor/specialroom/bar,
 /area/jones/bar)
 "gC" = (
@@ -2779,7 +2779,7 @@
 /turf/unsimulated/floor/specialroom/bar,
 /area/jones/bar)
 "gF" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/dispensing/vending/alcohol,
 /turf/unsimulated/floor/specialroom/bar,
 /area/jones/bar)
 "gG" = (
@@ -2871,7 +2871,7 @@
 	},
 /area/jones/complex)
 "gT" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/dispensing/vending/coffee,
 /turf/unsimulated/floor/wood{
 	dir = 2
 	},
@@ -2899,7 +2899,7 @@
 	},
 /area/jones/complex)
 "gW" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/dispensing/vending/cigarette,
 /turf/unsimulated/floor/wood{
 	dir = 2
 	},
@@ -3422,7 +3422,7 @@
 	},
 /area/jones)
 "if" = (
-/obj/machinery/vending/cola/blue,
+/obj/machinery/dispensing/vending/cola/blue,
 /turf/unsimulated/floor{
 	name = "plating"
 	},
