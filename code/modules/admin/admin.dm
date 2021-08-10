@@ -4592,10 +4592,13 @@ var/global/noir = 0
 				SHOW_TRAITOR_HARDMODE_TIPS(M)
 				M.show_text("<h2><font color=red><B>You have become a floor goblin!</B></font></h2>", "red")
 			if("energy_vampire")
+#ifdef SECRETS_ENABLED
 				M.mind.special_role = "energy_vampire"
 				M.make_energy_vampire()
 				M.show_text("<h2><font color=red><B>You feel starved for power!</B></font></h2>", "red")
-
+#else
+				M.show_text("<h2><font color=red><B>NOTHING TO SEE HERE!</B></font></h2>", "red")
+#endif
 			if("gang leader")
 				// hi so this tried in the past to make someone a gang leader without, uh, giving them a gang
 				// seeing as gang leaders are only allowed during the gang gamemode, this should work
