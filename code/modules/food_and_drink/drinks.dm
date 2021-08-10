@@ -244,6 +244,7 @@
 	heal_amt = 1
 	rc_flags = RC_FULLNESS
 	initial_volume = 50
+	can_chug = 0
 	initial_reagents = list("cola"=20,"VHFCS"=10)
 	var/is_sealed = 1 //can you drink out of it?
 	var/standard_override //is this a random cola or a standard cola (for crushed icons)
@@ -259,17 +260,12 @@
 			return
 		..()
 
-	MouseDrop(mob/user)
-		if (is_sealed)
-			boutput(user, "<span class='alert'>You can't drink out of a sealed can!</span>")
-			return
-		..()
-
 	attack_self(mob/user as mob)
 		var/drop_this_shit = 0 //i promise this is useful
 		if (src.is_sealed)
 			user.visible_message("[user] pops the tab on \the [src]!", "You pop \the [src] open!")
 			is_sealed = 0
+			can_chug = 1
 			playsound(src.loc, "sound/items/can_open.ogg", 50, 1)
 			return
 		if (!src.reagents || !src.reagents.total_volume)
