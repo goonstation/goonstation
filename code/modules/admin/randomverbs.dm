@@ -2739,8 +2739,14 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 				var/image/I = new /image/ambient
 				var/datum/map_generator/jungle_generator/map_generator = new
 				var/list/space = list()
+				var/area_overlay_set = FALSE
 				for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 					space += S
+					if(!area_overlay_set)
+						var/area/A = S.loc
+						var/icon/weather = icon('icons/turf/water.dmi',"rain")
+						A.UpdateOverlays(I, "weather")
+						area_overlay_set = TRUE
 				map_generator.generate_terrain(space)
 				for (var/turf/S in space)
 					I.color = ambient_light
