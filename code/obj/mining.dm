@@ -1556,9 +1556,6 @@
 			return
 		if (src.process_charges(0))
 			if (!src.status)
-				if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, digcost) & CELL_SUFFICIENT_CHARGE))
-					boutput(user, "<span class='notice'>Insufficient charge left in [src].</span>")
-					return
 				boutput(user, "<span class='notice'>You power up [src].</span>")
 				src.power_up()
 				playsound(user.loc, "sound/items/miningtool_on.ogg", 30, 1)
