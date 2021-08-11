@@ -34,7 +34,7 @@
 			user.show_text("You cannot control this door.", "red")
 			return
 		else
-			return src.attackby(null, user)
+			return src.Attackby(null, user)
 
 	attackby(obj/item/I as obj, mob/user as mob)
 		if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat || user.restrained())

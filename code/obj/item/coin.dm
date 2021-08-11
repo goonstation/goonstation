@@ -7,8 +7,6 @@
 	w_class = W_CLASS_TINY
 	stamina_damage = 0
 	stamina_cost = 0
-	module_research = list("vice" = 3, "efficiency" = 1)
-	module_research_type = /obj/item/coin
 	flags = FPRINT | TABLEPASS  | ATTACK_SELF_DELAY
 	click_delay = 1 SECOND
 	var/emagged = FALSE

@@ -27,7 +27,7 @@
 //SUPPLY PACKS
 //NOTE: only secure crate types use the access var (and are lockable)
 //NOTE: hidden packs only show up when the computer has been hacked.
-
+ABSTRACT_TYPE(/datum/supply_packs)
 /datum/supply_packs
 	var/name = null
 	var/desc = null
@@ -398,6 +398,7 @@
 	cost = 2500
 	containertype = /obj/storage/secure/crate/medical/monkey
 	containername = "Lab Monkey Crate"
+	hidden = 1
 
 /datum/supply_packs/bee
 	name = "Honey Production Kit"
@@ -1035,6 +1036,32 @@
 	containertype = /obj/storage/crate/wooden
 	containername = "Furnishings Crate"
 
+/datum/supply_packs/furniture_eventtablered
+	name = "Red Event Table Crate"
+	desc = "A flat-packed set of tables, each with a fancy red tablecloth."
+	contains = list(/obj/item/furniture_parts/table/clothred = 5)
+	cost = 25000
+	containertype = /obj/storage/crate/wooden
+	containername = "Red Event Table Crate"
+
+/datum/supply_packs/furniture_regal
+	name = "Regal Furnishings Crate"
+	desc = "A set of very fancy flat-packed, regal furniture."
+	contains = list(/obj/item/furniture_parts/wood_chair/regal = 4,
+					/obj/item/furniture_parts/table/regal = 4,
+					/obj/item/furniture_parts/decor/regallamp = 2)
+	cost = 80000
+	containertype = /obj/storage/crate/wooden
+	containername = "Regal Furnishings Crate"
+
+/datum/supply_packs/furniture_throne
+	name = "Golden Throne"
+	desc = "A flat-packed throne. It can't be real gold for that price..."
+	contains = list(/obj/item/furniture_parts/throne_gold)
+	cost = 150000
+	containertype = /obj/storage/crate/wooden
+	containername = "Throne Crate"
+
 /datum/supply_packs/hat
 	name = "Haberdasher's Crate"
 	desc = "A veritable smörgåsbord of head ornaments."
@@ -1042,6 +1069,18 @@
 	cost = 5000
 	containertype = /obj/storage/crate/packing
 	containername = "Haberdasher's Crate"
+
+/datum/supply_packs/headbands
+	name = "Bargain Bows and Bands Box"
+	desc = "Headbands for all occasions."
+	cost = 2000
+	contains = list(/obj/item/clothing/head/headband/giraffe = 1,
+					/obj/item/clothing/head/headband/antlers = 1,
+					/obj/item/clothing/head/headband/nyan/tiger = 1,
+					/obj/item/clothing/head/headband/nyan/leopard = 1,
+					/obj/item/clothing/head/headband/nyan/snowleopard = 1,
+					/obj/item/clothing/head/headband/bee = 2,
+					/obj/item/clothing/head/headband/nyan/random = 1)
 
 /datum/supply_packs/mask
 	name = "Masquerade Crate"
@@ -1111,7 +1150,8 @@
 					/obj/item/vending/restock_cartridge/cola,
 					/obj/item/vending/restock_cartridge/kitchen,
 					/obj/item/vending/restock_cartridge/monkey,
-					/obj/item/vending/restock_cartridge/standard)
+					/obj/item/vending/restock_cartridge/standard,
+					/obj/item/vending/restock_cartridge/capsule)
 	cost = 3000
 	containertype = /obj/storage/crate
 	containername = "Necessities Vending Machine Restocking Pack"
@@ -1247,7 +1287,7 @@
 /* ================================================= */
 /* -------------------- Complex -------------------- */
 /* ================================================= */
-
+ABSTRACT_TYPE(/datum/supply_packs/complex)
 /datum/supply_packs/complex
 	hidden = 0
 	var/list/blueprints = list()
@@ -1397,6 +1437,15 @@
 	hidden = 1
 	containertype = /obj/storage/crate
 	containername = "AI Kit"
+
+/datum/supply_packs/complex/eppd_kit
+	name = "Emergency Pressurzation Kit"
+	desc = "Frames: 1x Extreme-Pressure Pressurization Device"
+	category = "Engineering Department"
+	frames = list(/obj/machinery/portable_atmospherics/pressurizer)
+	cost = 5000
+	containertype = /obj/storage/crate
+	containername = "Prototype EPPD Kit"
 
 /datum/supply_packs/complex/basic_power_kit
 	name = "Basic Power Kit"

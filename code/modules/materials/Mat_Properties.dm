@@ -376,3 +376,28 @@
 				return "dangerously fissile"
 			if(90 to INFINITY)
 				return "supercritically fissile"
+
+/datum/material_property/resonance // Just for molitz, not used for anything else and doubt it will be. Could tie instance boosts to resonance and give other mats resonance for purposes of being good to alloy with molitz.
+	name = "Resonance"
+	id = "resonance"
+	min_value = 1
+	max_value = 100
+	default_value = 1
+
+	prefix_high_min = 25
+	prefix_low_max = 75
+
+	getAdjective(var/datum/material/M)
+		switch(M.getProperty(id))
+			if(1 to 10)
+				return "barely harmonic"
+			if(11 to 25)
+				return "somewhat harmonic"
+			if(26 to 50)
+				return "harmonic"
+			if(51 to 75)
+				return "very harmonic"
+			if(76 to 90)
+				return "dangerously harmonic"
+			if(90 to INFINITY)
+				return "supercritically harmonic"

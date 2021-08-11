@@ -1433,7 +1433,6 @@
 						/obj/item/clothing/mask/balaclava,
 						/obj/item/clothing/mask/spiderman,
 						/obj/item/clothing/mask/horse_mask,
-						/obj/item/clothing/mask/gas/inquis,
 						/obj/item/clothing/mask/gas/plague,
 						/obj/item/clothing/mask/skull,
 						/obj/item/clothing/mask/niccage,

@@ -423,11 +423,10 @@
 		return msgs
 
 	if (is_shove) return msgs
-	var/disarm_prob = 37 * lerp(clamp(200 - target_stamina, 0, 100)/100, 1, 0.5) * mult
-	message_admins("[disarm_prob]")
-	var/disarm_success = prob(disarm_prob)
-	if (target.check_block() && !(HAS_MOB_PROPERTY(target, PROP_CANTMOVE)) && prob(80))
+	var/disarm_success = prob(40 * lerp(clamp(200 - target_stamina, 0, 100)/100, 1, 0.5) * mult)
+	if (disarm_success && target.check_block() && !(HAS_MOB_PROPERTY(target, PROP_CANTMOVE)))
 		disarm_success = 0
+		msgs.stamina_target -= STAMINA_DEFAULT_BLOCK_COST * 2
 	var/list/obj/item/limbs = list()
 	var/list/obj/item/loose = list()
 	var/list/obj/item/fixed_in_place = list()
@@ -975,7 +974,7 @@
 						var/prev_intent = target.a_intent
 						target.a_intent = INTENT_HARM
 
-						target.attackby(I, target)
+						target.Attackby(I, target)
 
 						target.a_intent = prev_intent
 						if (old_zone_sel)

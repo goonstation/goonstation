@@ -241,7 +241,7 @@
 /turf/simulated/shuttle/wall,
 /area/shuttle/arrival/station)
 "aaQ" = (
-/obj/machinery/sleeper,
+/obj/machinery/sleeper/compact,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -1047,7 +1047,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "adw" = (
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 8
 	},
 /turf/simulated/floor/grime,
@@ -1057,9 +1057,6 @@
 /obj/machinery/light/small{
 	dir = 1;
 	status = 2
-	},
-/obj/machinery/sleep_console{
-	dir = 8
 	},
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/construction)
@@ -2025,7 +2022,6 @@
 /area/station/crew_quarters/clown)
 "age" = (
 /obj/decal/cleanable/dirt,
-/obj/creepy_sound_trigger,
 /obj/item/bananapeel,
 /obj/cable{
 	icon_state = "1-2"
@@ -5316,7 +5312,6 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/creepy_sound_trigger,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -14716,21 +14711,18 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/sleeper{
-	dir = 8
-	},
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
+	},
+/obj/machinery/sleeper/compact{
+	dir = 8
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
 /area/station/medical/medbooth)
 "aNg" = (
-/obj/machinery/sleep_console{
-	dir = 8
-	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -19272,13 +19264,6 @@
 "aXE" = (
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/east)
-"aXF" = (
-/obj/creepy_sound_trigger,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aXG" = (
 /obj/disposalpipe/trunk{
@@ -33715,10 +33700,7 @@
 /obj/cable/brown{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/monitor{
-	dir = 4;
-	name = "Station Power Grid Monitoring"
-	},
+/obj/storage/secure/crate/eng/interdictor,
 /turf/simulated/floor,
 /area/station/engine/power)
 "bHm" = (
@@ -34505,11 +34487,11 @@
 /turf/simulated/floor/plating/jen,
 /area/station/engine/power)
 "bJk" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
 /obj/cable,
 /obj/machinery/power/apc/autoname_south,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/power)
 "bJl" = (
@@ -34978,7 +34960,7 @@
 	},
 /area/station/science/teleporter)
 "bKi" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "bKj" = (
@@ -43416,9 +43398,6 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "cew" = (
-/obj/machinery/sleep_console{
-	dir = 4
-	},
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
@@ -43435,7 +43414,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 4
 	},
 /turf/simulated/floor/bluewhite,
@@ -44338,16 +44317,10 @@
 /obj/machinery/door/window/eastright,
 /turf/simulated/floor/wood,
 /area/station/medical/medbay/lobby)
-"cgY" = (
-/obj/machinery/sleep_console{
-	dir = 4
-	},
-/turf/simulated/floor/bluewhite,
-/area/station/medical/medbay/lobby)
 "cgZ" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 4
 	},
 /turf/simulated/floor/bluewhite,
@@ -51479,13 +51452,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/sleeper{
-	dir = 8
-	},
-/turf/simulated/floor/white,
-/area/station/medical/cdc)
-"cxM" = (
-/obj/machinery/sleep_console{
+/obj/machinery/sleeper/compact{
 	dir = 8
 	},
 /turf/simulated/floor/white,
@@ -54567,6 +54534,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/core)
+"dZY" = (
+/obj/stool/chair/yellow{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/engine/engineering)
 "ebe" = (
 /obj/item/device/radio/intercom/cargo{
 	dir = 8
@@ -55480,6 +55456,18 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
+"fDa" = (
+/obj/landmark/start{
+	name = "Engineer"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/station/engine/engineering)
 "fDy" = (
 /obj/landmark/gps_waypoint,
 /obj/decal/tile_edge/stripe/big{
@@ -56618,6 +56606,7 @@
 /obj/item/device/radio/intercom/engineering{
 	dir = 1
 	},
+/obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "hCk" = (
@@ -62833,9 +62822,6 @@
 	dir = 5
 	},
 /obj/cable/brown{
-	icon_state = "4-8"
-	},
-/obj/cable/brown{
 	icon_state = "1-8"
 	},
 /turf/simulated/floor,
@@ -63371,12 +63357,6 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/cafeteria)
 "tSs" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "engineering";
-	mailgroup = "engineer";
-	message = "1";
-	name = "mail chute-'Engineering'"
-	},
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
@@ -63388,9 +63368,7 @@
 	can_rupture = 0;
 	dir = 10
 	},
-/obj/cable/brown{
-	icon_state = "4-8"
-	},
+/obj/machinery/disposal/mail/autoname/engineering,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -64802,14 +64780,18 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/reagent_dispensers/watertank/fountain,
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
 	dir = 6
 	},
+/obj/machinery/power/data_terminal,
 /obj/cable/brown{
-	icon_state = "4-8"
+	icon_state = "0-4"
 	},
+/obj/cable/brown{
+	icon_state = "0-8"
+	},
+/obj/machinery/computer/atmosphere/pumpcontrol,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -65150,10 +65132,10 @@
 /area/station/security/main)
 "xpg" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/atmosphere/pumpcontrol,
-/obj/cable/brown{
-	icon_state = "0-8"
+/obj/cable{
+	icon_state = "0-2"
 	},
+/obj/machinery/power/monitor,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -101791,7 +101773,7 @@ omh
 cxk
 cxt
 cxC
-cxM
+cxp
 vfr
 cyj
 cyl
@@ -103280,7 +103262,7 @@ cbQ
 cbQ
 cew
 cev
-cgY
+cCa
 cif
 cjt
 ckP
@@ -114434,8 +114416,8 @@ bEo
 rEe
 bsN
 xpg
-bHr
-bIo
+dZY
+fDa
 bJu
 bMc
 jbi
@@ -122545,7 +122527,7 @@ aTN
 aVb
 bcg
 aXN
-aXF
+bbH
 aYP
 baE
 bbG
@@ -125239,12 +125221,12 @@ awI
 awI
 azp
 eJd
-atV
+avj
 awB
 axQ
 azn
 aAW
-atV
+avj
 awI
 azp
 awI

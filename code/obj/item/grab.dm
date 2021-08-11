@@ -248,6 +248,9 @@
 		update_icon()
 
 	proc/upgrade_to_kill(var/msg_overridden = 0)
+		if (!assailant || !affecting)
+			return
+
 		icon_state = "disarm/kill"
 		logTheThing("combat", src.assailant, src.affecting, "chokes [constructTarget(src.affecting,"combat")]")
 		choke_count = 0
@@ -279,6 +282,9 @@
 			src.affecting:was_harmed(src.assailant)
 
 	proc/upgrade_to_pin(var/turf/T)
+		if (!assailant || !affecting)
+			return
+
 		icon_state = "pin"
 		logTheThing("combat", src.assailant, src.affecting, "pins [constructTarget(src.affecting,"combat")]")
 
@@ -408,7 +414,7 @@
 		var/mob/hostage = null
 		if(src.affecting && src.state >= 2 && P.shooter != src.affecting) //If you grab someone they can still shoot you
 			hostage = src.affecting
-		if (hostage && (!hostage.lying || prob(P.proj_data?.hit_ground_chance)))
+		if (hostage && (!hostage.lying || GET_COOLDOWN(hostage, "lying_bullet_dodge_cheese") || prob(P.proj_data?.hit_ground_chance)))
 			P.collide(hostage)
 			//moved here so that it displays after the bullet hit message
 			if(prob(25)) //This should probably not be bulletproof, har har
@@ -509,7 +515,7 @@
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && G && get_dist(owner, target) <= 1 || get_dist(owner,T) > 1)
+		if(owner && ownerMob && target && G && get_dist(owner, target) <= 1 && get_dist(owner,T) <= 1)
 			G.upgrade_to_pin(T)
 		else
 			interrupt(INTERRUPT_ALWAYS)
@@ -792,7 +798,7 @@
 
 			var/prop = DAMAGE_TYPE_TO_STRING(hit_type)
 			if(real_hit && prop == "burn" && I?.reagents)
-				I.reagents.temperature_reagents(2000,10)
+				I.reagents.temperature_reagents(4000,10)
 			.= src.getProperty("I_block_[prop]")
 		if(real_hit)
 			SEND_SIGNAL(src, COMSIG_BLOCK_BLOCKED)
@@ -814,7 +820,7 @@
 	handle_throw(var/mob/living/user,var/atom/target)
 		if (isturf(user.loc) && target)
 			var/turf/T = user.loc
-			if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE) && !(user.lying))
+			if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE) && !(user.lying) && can_act(user))
 				user.changeStatus("weakened", max(user.movement_delay()*2, 0.5 SECONDS))
 				user.force_laydown_standup()
 

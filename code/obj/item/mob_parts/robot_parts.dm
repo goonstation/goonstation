@@ -8,8 +8,6 @@
 	streak_descriptor = "oily"
 	var/appearanceString = "generic"
 	var/icon_state_base = ""
-	module_research = list("medicine" = 1, "efficiency" = 8)
-	module_research_type = /obj/item/parts/robot_parts
 	accepts_normal_human_overlays = 0
 	skintoned = 0
 	/// Robot limbs shouldn't get replaced through mutant race changes

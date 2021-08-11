@@ -71,7 +71,6 @@
 	var/uses = 6
 	var/emagged = 0
 	burn_possible = 0
-	module_research = list("efficiency" = 10)
 	step_sound = "step_plating"
 	step_priority = STEP_PRIORITY_LOW
 
@@ -176,10 +175,8 @@
 	desc = "Keeps the wearer firmly anchored to the ground. Provided the ground is metal, of course."
 	icon_state = "magboots"
 	// c_flags = NOSLIP
-	permeability_coefficient = 0.05
 	mats = 8
 	burn_possible = 0
-	module_research = list("efficiency" = 5, "engineering" = 5)
 	laces = LACES_NONE
 	kick_bonus = 2
 	step_sound = "step_plating"
@@ -204,11 +201,10 @@
 	desc = "Sandals blessed by the all-powerful goddess of victory and footwear."
 	icon_state = "wizard" //TODO: replace with custom sprite, thinking winged sandals
 	c_flags = NOSLIP
-	permeability_coefficient = 0.05
+	permeability_coefficient = 1
 	mats = 0
 	magical = 1
 	burn_possible = 0
-	module_research = list("efficiency" = 5, "engineering" = 5)
 	laces = LACES_NONE
 	step_sound = "step_flipflop"
 	step_priority = STEP_PRIORITY_LOW
@@ -227,10 +223,8 @@
 	name = "mechanised boots"
 	desc = "Industrial-grade boots fitted with mechanised balancers and stabilisers to increase running speed under a heavy workload."
 #endif
-	permeability_coefficient = 0.05
 	mats = 12
 	burn_possible = 0
-	module_research = list("efficiency" = 5, "engineering" = 5, "mining" = 10)
 	laces = LACES_NONE
 	kick_bonus = 2
 
@@ -264,7 +258,6 @@
 	item_state = "clown_shoes"
 	step_sound = "clownstep"
 	compatible_species = list("human", "cow")
-	module_research = list("audio" = 5)
 	step_lots = 1
 	step_priority = 999
 	var/list/crayons = list() // stonepillar's crayon project
@@ -482,7 +475,6 @@
 	icon_state = "rocketboots"
 	laces = LACES_NONE
 	burn_possible = 0
-	module_research = list("efficiency" = 20)
 	step_sound = "step_plating"
 	step_priority = STEP_PRIORITY_LOW
 	var/on = 1
@@ -574,7 +566,6 @@
 	name = "witchfinder general's boots"
 	desc = "You can almost hear the authority in each step."
 	icon_state = "witchfinder"
-	permeability_coefficient = 0.30
 	kick_bonus = 1
 	step_sound = "step_wood"
 	step_priority = STEP_PRIORITY_LOW

@@ -19525,7 +19525,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/heads)
 "WS" = (
-/obj/lrteleporter{
+/obj/machinery/lrteleporter{
 	layer = 4
 	},
 /obj/decal/fakeobjects{

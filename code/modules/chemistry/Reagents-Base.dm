@@ -731,6 +731,7 @@ datum
 			taste = "bland"
 			minimum_reaction_temperature = -INFINITY
 			target_organs = list("left_kidney", "right_kidney")
+			heat_capacity = 400
 #ifdef UNDERWATER_MAP
 			block_slippy = 1
 			description = "A little strange. Not like any water you've seen. But definitely OSHA approved."

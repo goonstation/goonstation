@@ -158,35 +158,35 @@
 	name = "Light NT Pod Armor"
 	item_paths = list("MET-3","CON-1")
 	item_amounts = list(50,50)
-	item_outputs = list(/obj/item/pod/armor_light)
+	item_outputs = list(/obj/item/podarmor/armor_light)
 	time = 20 SECONDS
 	create = 1
 	category = "Component"
 
 /datum/manufacture/pod_wars/pod/armor_light/nt
 	name = "Light NT Pod Armor"
-	item_outputs = list(/obj/item/pod/nt_light)
+	item_outputs = list(/obj/item/podarmor/nt_light)
 
 /datum/manufacture/pod_wars/pod/armor_light/sy
 	name = "Light Syndicate Pod Armor"
-	item_outputs = list(/obj/item/pod/sy_light)
+	item_outputs = list(/obj/item/podarmor/sy_light)
 
 /datum/manufacture/pod_wars/pod/armor_robust
 	name = "Heavy Pod Armor"
 	item_paths = list("MET-3","CON-2", "DEN-3")
 	item_amounts = list(50,30, 10)
-	item_outputs = list(/obj/item/pod/armor_heavy)
+	item_outputs = list(/obj/item/podarmor/armor_heavy)
 	time = 30 SECONDS
 	create = 1
 	category = "Component"
 
 /datum/manufacture/pod_wars/pod/armor_robust/nt
 	name = "Robust NT Pod Armor"
-	item_outputs = list(/obj/item/pod/nt_robust)
+	item_outputs = list(/obj/item/podarmor/nt_robust)
 
 /datum/manufacture/pod_wars/pod/armor_robust/sy
 	name = "Robust Syndicate Pod Armor"
-	item_outputs = list(/obj/item/pod/sy_robust)
+	item_outputs = list(/obj/item/podarmor/sy_robust)
 
 //costs a good bit more than the standard jetpack. for balance reasons here. to make jetpacks a commodity.
 /datum/manufacture/pod_wars/jetpack
@@ -233,6 +233,14 @@
 	name = "NanoTrasen Mineral Accumulator"
 	item_outputs = list(/obj/machinery/oreaccumulator/pod_wars/nanotrasen)
 
+/datum/manufacture/pod_wars/medical_refill
+	name = "NanoMed Refill Cartridge"
+	item_outputs = list(/obj/item/vending/restock_cartridge/medical)
+	item_paths = list("MET-1","FAB-1","DEN-1")
+	item_amounts = list(25,25,20)
+	time = 60 SECONDS
+	category = "Ammo"
+
 /obj/machinery/manufacturer/mining/pod_wars/
 	New()
 		available -= /datum/manufacture/ore_accumulator
@@ -259,6 +267,7 @@
 /obj/machinery/manufacturer/medical/pod_wars
 	New()
 		available += /datum/manufacture/medical_backpack
+		available += /datum/manufacture/pod_wars/medical_refill
 		..()
 
 
@@ -365,8 +374,8 @@
 	name = "medical reagent dispenser"
 	desc = "It dispenses chemicals. Mostly harmless ones, but who knows?"
 	dispensable_reagents = list("antihol", "charcoal", "epinephrine", "mutadone", "proconvertin", "atropine",\
-		"silver_sulfadiazine", "salbutamol", "anti_rad",\
-		"oculine", "mannitol", "styptic_powder", "saline",\
+		 "salbutamol", "anti_rad",\
+		"oculine", "mannitol", "saline",\
 		"salicylic_acid", "blood",\
 		"menthol", "antihistamine")
 
@@ -377,9 +386,9 @@
 
 /obj/machinery/chem_dispenser/medical/fortuna
 	dispensable_reagents = list("antihol", "charcoal", "epinephrine", "mutadone", "proconvertin", "filgrastim", "atropine",\
-	"silver_sulfadiazine", "salbutamol", "perfluorodecalin", "synaptizine", "anti_rad",\
-	"oculine", "mannitol", "penteticacid", "styptic_powder", "saline",\
-	"salicylic_acid", "blood", "synthflesh",\
+	"salbutamol", "perfluorodecalin", "synaptizine", "anti_rad",\
+	"oculine", "mannitol", "penteticacid", "saline",\
+	"salicylic_acid", "blood", \
 	"menthol", "antihistamine", "smelling_salt")
 
 /obj/machinery/manufacturer/general/pod_wars

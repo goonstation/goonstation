@@ -707,16 +707,14 @@
 					return
 
 			if (href_list["ejectbeaker"])
-				var/obj/item/reagent_containers/glass/beaker/B = locate(href_list["ejectbeaker"])
-				if (!istype(B,/obj/item/reagent_containers/glass/beaker/))
-					return
-				src.beaker.set_loc(get_output_location(B,1))
+				if (src.beaker)
+					src.beaker.set_loc(get_output_location(beaker,1))
 				src.beaker = null
 
 			if (href_list["transto"])
 				// reagents are going into beaker
-				var/obj/item/reagent_containers/glass/beaker/B = locate(href_list["transto"])
-				if (!istype(B,/obj/item/reagent_containers/glass/beaker/))
+				var/obj/item/reagent_containers/glass/B = locate(href_list["transto"])
+				if (!istype(B,/obj/item/reagent_containers/glass/))
 					return
 				var/howmuch = input("Transfer how much to [B]?","[src.name]",B.reagents.maximum_volume - B.reagents.total_volume) as null|num
 				if (!howmuch || !B || B != src.beaker )
@@ -725,8 +723,8 @@
 
 			if (href_list["transfrom"])
 				// reagents are being drawn from beaker
-				var/obj/item/reagent_containers/glass/beaker/B = locate(href_list["transfrom"])
-				if (!istype(B,/obj/item/reagent_containers/glass/beaker/))
+				var/obj/item/reagent_containers/glass/B = locate(href_list["transfrom"])
+				if (!istype(B,/obj/item/reagent_containers/glass/))
 					return
 				var/howmuch = input("Transfer how much from [B]?","[src.name]",B.reagents.total_volume) as null|num
 				if (!howmuch)
@@ -1036,6 +1034,10 @@
 			user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>", "<span class='notice'>You load [W] into the [src].</span>")
 			src.load_item(W,user)
 
+		else if (src.panelopen && (issnippingtool(W) || ispulsingtool(W)))
+			src.attack_hand(user)
+			return
+
 		else if(scan_card(W))
 			return
 
@@ -1144,7 +1146,7 @@
 
 
 		if (istype(O, /obj/item/paper/manufacturer_blueprint))
-			src.attackby(O, user)
+			src.Attackby(O, user)
 
 		if (istype(O, /obj/storage/crate/) || istype(O, /obj/storage/cart/) && src.accept_loading(user,1))
 			if (O:welded || O:locked)
@@ -2306,10 +2308,17 @@
 		/obj/item/material_piece/copper,
 		/obj/item/material_piece/glass)
 	available = list(
+#ifdef UNDERWATER_MAP
+		/datum/manufacture/sub/engine,
+		/datum/manufacture/sub/boards,
+		/datum/manufacture/sub/control,
+		/datum/manufacture/sub/parts,
+#else
 		/datum/manufacture/putt/engine,
 		/datum/manufacture/putt/boards,
 		/datum/manufacture/putt/control,
 		/datum/manufacture/putt/parts,
+#endif
 		/datum/manufacture/pod/engine,
 		/datum/manufacture/pod/boards,
 		/datum/manufacture/pod/armor_light,
@@ -2377,7 +2386,13 @@
 	/datum/manufacture/hat_orange,
 	/datum/manufacture/hat_tophat,
 	/datum/manufacture/backpack,
-	/datum/manufacture/satchel)
+	/datum/manufacture/backpack_red,
+	/datum/manufacture/backpack_green,
+	/datum/manufacture/backpack_blue,
+	/datum/manufacture/satchel,
+	/datum/manufacture/satchel_red,
+	/datum/manufacture/satchel_green,
+	/datum/manufacture/satchel_blue)
 
 	hidden = list(/datum/manufacture/breathmask,
 	/datum/manufacture/patch,

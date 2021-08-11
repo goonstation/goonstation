@@ -144,10 +144,10 @@ obj/structure/ex_act(severity)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
-		if (istype(source) && the_tool != source.equipped())
+		if (istype(source) && !equipped_or_holding(the_tool, source))
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (istype(source) && the_tool != source.equipped() && the_tool.amount >= 2 && interaction == GIRDER_PLATE)
+		if (istype(source) && !equipped_or_holding(the_tool, source) && the_tool.amount >= 2 && interaction == GIRDER_PLATE)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

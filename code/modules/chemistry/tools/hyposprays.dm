@@ -19,8 +19,6 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 	icon_state = "hypo0"
 	amount_per_transfer_from_this = 5
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | ONBELT | NOSPLASH
-	module_research = list("science" = 3, "medicine" = 2)
-	module_research_type = /obj/item/reagent_containers/hypospray
 	var/list/whitelist = list()
 	var/inj_amount = 5
 	var/safe = 1

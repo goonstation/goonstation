@@ -84,8 +84,8 @@ todo: add more small animals!
 		..()
 
 	setup_healths()
-		add_hh_flesh(-(src.health_brute), src.health_brute, src.health_brute_vuln)
-		add_hh_flesh_burn(-(src.health_burn), src.health_burn, src.health_burn_vuln)
+		add_hh_flesh(src.health_brute, src.health_brute_vuln)
+		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 		add_health_holder(/datum/healthHolder/toxin)
 		add_health_holder(/datum/healthHolder/brain)
 
@@ -2626,7 +2626,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	butcherable = 1
 	health_brute = 15
 	health_burn = 15
-	pet_text = list("gently snips", "rubs with a soft claw", "cuddles")
+	pet_text = list("gently pets", "rubs", "cuddles")
 
 	New()
 		..()

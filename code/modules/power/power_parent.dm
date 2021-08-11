@@ -44,6 +44,19 @@
 	if(powernet)
 		powernet.newavail += amount
 
+#ifdef MACHINE_PROCESSING_DEBUG
+	var/area/A = get_area(src)
+	var/list/machines = detailed_machine_power[A]
+	if(!machines)
+		detailed_machine_power[A] = list()
+		machines = detailed_machine_power[A]
+	var/list/machine = machines[src]
+	if(!machine)
+		machines[src] = list()
+		machine = machines[src]
+	machine += amount
+#endif
+
 /obj/machinery/power/proc/add_load(var/amount)
 	if(powernet)
 		powernet.newload += amount

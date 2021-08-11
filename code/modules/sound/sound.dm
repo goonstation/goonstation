@@ -46,9 +46,9 @@
 			//if (istype(T, /turf/space))
 			//	return 0 // in space nobody can hear you fart
 		if (T.turf_flags & IS_TYPE_SIMULATED) //danger :)
-			var/turf/simulated/sim_T = T
-			if (sim_T.air)
-				attenuate *= MIXTURE_PRESSURE(sim_T.air) / ONE_ATMOSPHERE
+			var/datum/gas_mixture/air = T.return_air()
+			if (air)
+				attenuate *= MIXTURE_PRESSURE(air) / ONE_ATMOSPHERE
 				attenuate = min(1, max(0, attenuate))
 
 	return attenuate

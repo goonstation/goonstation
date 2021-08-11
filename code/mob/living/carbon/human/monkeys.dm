@@ -163,6 +163,7 @@
 		..()
 		SPAWN_DBG(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/under/rank/hydroponics, slot_w_uniform)
+			src.equip_new_if_possible(/obj/item/clothing/suit/apron/botanist, slot_wear_suit)
 
 /mob/living/carbon/human/npc/monkey/stirstir
 	name = "Monsieur Stirstir"
@@ -513,8 +514,10 @@
 		if(get_dist(source, target) > 1 || target == null || source == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-
 		var/obj/item/I = target.get_slot(slot)
+		if(!I)
+			interrupt(INTERRUPT_ALWAYS)
+			return
 
 		if(I.handle_other_remove(source, target))
 			logTheThing("combat", source, target, "successfully pickpockets \an [I] from [constructTarget(target,"combat")]!")
@@ -558,7 +561,7 @@
 			var/head = pick(/obj/item/clothing/head/bandana/red, /obj/item/clothing/head/bandana/random_color)
 			src.equip_new_if_possible(/obj/item/clothing/shoes/tourist, slot_shoes)
 			src.equip_new_if_possible(head, slot_head)
-			var/weap = pick(/obj/item/storage/toolbox/emergency, /obj/item/extinguisher, /obj/item/ratstick, /obj/item/razor_blade, /obj/item/bat, /obj/item/kitchen/utensil/knife, /obj/item/nunchucks, /obj/item/rubber_hammer, /obj/item/storage/toolbox/mechanical, /obj/item/kitchen/rollingpin)
+			var/weap = pick(/obj/item/saw/active, /obj/item/extinguisher, /obj/item/ratstick, /obj/item/razor_blade, /obj/item/bat, /obj/item/kitchen/utensil/knife/cleaver, /obj/item/nunchucks, /obj/item/tinyhammer, /obj/item/storage/toolbox/mechanical/empty, /obj/item/kitchen/rollingpin)
 			src.put_in_hand_or_drop(new weap)
 		APPLY_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "angry_monkey", 5)
 		src.add_stam_mod_max("angry_monkey", 100)
