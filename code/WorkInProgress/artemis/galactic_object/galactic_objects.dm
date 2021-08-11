@@ -43,6 +43,12 @@
 		generate_name(G)
 		..()
 
+	proc/random_range_and_bearing(datum/galaxy/G, min_range=0, max_range=10)
+		var/theta = rand(360)
+		var/r = G.xor_randf(min_range,max_range)
+
+		src.galactic_x += r*sin(theta)
+		src.galactic_y += r*cos(theta)
 
 	proc/generate_name(datum/galaxy/G)
 		. = ""

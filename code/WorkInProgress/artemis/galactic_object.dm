@@ -67,26 +67,65 @@ var/global/datum/galaxy/GALAXY = new
 				return item
 		return null
 
-	// TODO
-	proc/generate_solar_system()
-		//var/sector_x = rand() * 10
-		//var/sector_y = rand() * 10
+/*
+	 Make me a Galaxy!
+
+	 Sector -> Generate Star(s)
+	    |
+	   Planetary Bodies (Origin is Primary Star of Sector)
+	         |           |           |
+	       Planets      Stars     Asteroids
+	          |
+	          Moons (Origin is Planet)
+*/
+	proc/populate_galaxy()
+		var/i
+		var/j
+		for(i in 1 to 10)
+			for(j in 1 to 10)
+				if(xor_prob(80))
+					generate_solar_system(i,j)
+				else
+					generate_empty_sector(i,j)
+
+	proc/generate_solar_system(x,y)
+		var/datum/galactic_object/star/primary
+		var/sector_x = xor_rand() * 10 + (x * 10)
+		var/sector_y = xor_rand() * 10 + (y * 10)
+
+		primary = new/datum/galactic_object/star/random(src)
+		primary.galactic_x = sector_x
+		primary.galactic_y = sector_y
+		src.bodies += primary
 
 		if(xor_prob(50))
-			src.bodies += new/datum/galactic_object/star/random()
-		else
 		//Binary System
-			src.bodies += new/datum/galactic_object/star/random()
-			src.bodies += new/datum/galactic_object/star/random()
+			src.bodies += new/datum/galactic_object/star/random(src, primary)
 
 			//Trinary System!!!
 			if(prob(5))
-				src.bodies += new/datum/galactic_object/star/random()
+				src.bodies += new/datum/galactic_object/star/random(src, primary)
 
+		var/planet_count = xor_rand(0,8)
 		//GENERATE N PLANETS
+		for(var/i in 1 to planet_count)
+			src.bodies += new/datum/galactic_object/planet/random(src, primary)
 		// at range and bearing from sector center
 
 			// Add moon(s) based on size of planet
+
+	proc/generate_empty_sector(x, y)
+		var/asteroid_count = xor_rand(0,6)
+		var/datum/galactic_object/asteroid/A
+
+		for(var/i in 1 to asteroid_count)
+			var/sector_x = xor_rand() * 10 + (x * 10)
+			var/sector_y = xor_rand() * 10 + (y * 10)
+			A = new/datum/galactic_object/asteroid
+			A.galactic_x = sector_x
+			A.galactic_y = sector_y
+			src.bodies += A
+
 
 
 /datum/asteroid_controller
@@ -127,6 +166,8 @@ var/global/datum/galaxy/GALAXY = new
 		GALAXY.asteroids.asteroid_markers[src.name] = src
 		SPAWN_DBG(1 SECOND)
 			construct()
+
+
 
 /datum/galactic_object
 	var/name
@@ -260,7 +301,6 @@ var/global/datum/galaxy/GALAXY = new
 		G.on_unload()
 		qdel(G)
 		return
-
 
 /obj/background_star/galactic_object
 	name = "TEST OBJECT"
