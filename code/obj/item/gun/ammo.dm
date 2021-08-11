@@ -910,7 +910,7 @@
 		..()
 
 	emp_act()
-		SEND_SIGNAL(src, COMSIG_CELL_USE, INFINITY, TRUE)
+		SEND_SIGNAL(src, COMSIG_CELL_USE, INFINITY)
 		return
 
 	update_icon()

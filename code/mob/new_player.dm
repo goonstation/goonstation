@@ -751,7 +751,7 @@ a.latejoin-card:hover {
 
 #ifdef SECRETS_ENABLED
 			if ("energy vampire")
-				traitor.special_role = "energy_vampire"
+				traitor.special_role = "energy vampire"
 				traitormob.make_energy_vampire()
 			#ifdef RP_MODE
 				objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))

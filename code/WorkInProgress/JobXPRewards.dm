@@ -314,7 +314,7 @@ mob/verb/checkrewards()
 			src.claimedNumbers[usr.key] --
 			return
 		//Don't let em get get a charged power cell for a spent one. Spend the difference
-		SEND_SIGNAL(LG, COMSIG_CELL_USE, max_charge - charge, TRUE)
+		SEND_SIGNAL(LG, COMSIG_CELL_USE, max_charge - charge)
 
 		LG.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand(LG)
