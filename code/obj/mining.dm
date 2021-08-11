@@ -1522,11 +1522,6 @@
 	var/image/powered_overlay = null
 	var/sound/hitsound_charged = 'sound/impact_sounds/Stone_Cut_1.ogg'
 	var/sound/hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
-	var/base_item_state = null	// item_state without the 1 or 0 on the end
-	var/dig_strength_charged = null
-	var/dig_strength_uncharged = null
-	var/force_charged = null
-	var/force_uncharged = null
 
 	New()
 		..()
@@ -1556,44 +1551,36 @@
 			T.visible_message("<span class='alert'>[src] runs out of charge and powers down!</span>")
 		return 1
 
+	attack_self(var/mob/user as mob)
+		if (!digcost)
+			return
+		if (src.process_charges(0))
+			if (!src.status)
+				boutput(user, "<span class='notice'>You power up [src].</span>")
+				src.power_up()
+				playsound(user.loc, "sound/items/miningtool_on.ogg", 30, 1)
+			else
+				boutput(user, "<span class='notice'>You power down [src].</span>")
+				src.power_down()
+		else
+			boutput(user, "<span class='alert'>No charge left in [src].</span>")
+
 	afterattack(target as mob, mob/user as mob)
 		..()
 		if (src.status && !isturf(target))
 			src.process_charges(digcost*5)
 
 	proc/power_up()
-		src.status = 1
-		message_admins("PU")
-		if(force_charged)
-			src.force = force_charged
-		if(dig_strength_charged)
-			src.dig_strength = dig_strength_charged
-		if(base_item_state)
-			src.item_state = base_item_state + "1"
 		src.tooltip_rebuild = 1
-		if(ismob(src.loc))
-			var/mob/M = src.loc
-			M.update_inhands()
-			playsound(src.loc, 'sound/items/miningtool_on.ogg', 30, 1)
+		src.status = 1
 		if (powered_overlay)
 			src.overlays += powered_overlay
 			signal_event("icon_updated")
 		return
 
 	proc/power_down()
-		src.status = 0
-		message_admins("PD")
-		if(force_uncharged)
-			src.force = force_uncharged
-		if(dig_strength_uncharged)
-			src.dig_strength = dig_strength_uncharged
-		if(base_item_state)
-			src.item_state = base_item_state + "0"
 		src.tooltip_rebuild = 1
-		if(ismob(src.loc))
-			var/mob/M = src.loc
-			M.update_inhands()
-			playsound(src.loc, 'sound/items/miningtool_off.ogg', 30, 1)
+		src.status = 0
 		if (powered_overlay)
 			src.overlays = null
 			signal_event("icon_updated")
@@ -1602,6 +1589,7 @@
 
 	proc/update_icon()
 		return
+
 obj/item/clothing/gloves/concussive
 	name = "concussion gauntlets"
 	desc = "These gloves enable miners to punch through solid rock with their hands instead of using tools."
@@ -1633,27 +1621,30 @@ obj/item/clothing/gloves/concussive
 	cell_type = /obj/item/ammo/power_cell
 	hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
-	base_item_state = "ppick"
-	dig_strength_charged = 2
-	dig_strength_uncharged = 1
-	force_charged = 15
-	force_uncharged = 7
 
 	New()
 		..()
 		powered_overlay = image('icons/obj/items/mining.dmi', "pp-glow")
 		src.power_up()
 
-	attack_self(var/mob/user as mob)
-		if (src.process_charges(0))
-			if (!src.status)
-				boutput(user, "<span class='notice'>You power up [src].</span>")
-				src.power_up()
-			else
-				boutput(user, "<span class='notice'>You power down [src].</span>")
-				src.power_down()
-		else
-			boutput(user, "<span class='alert'>No charge left in [src].</span>")
+	power_up()
+		..()
+		src.force = 15
+		src.dig_strength = 2
+		if(ismob(src.loc))
+			var/mob/user = src.loc
+			item_state = "ppick1"
+			user.update_inhands()
+
+	power_down()
+		..()
+		src.force = 7
+		src.dig_strength = 1
+		item_state = "ppick0"
+		if(ismob(src.loc))
+			var/mob/user = src.loc
+			user.update_inhands()
+			playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
 
 	borg
 		process_charges(var/use)
@@ -1704,6 +1695,10 @@ obj/item/clothing/gloves/concussive
 		src.force = 20
 		dig_strength = 3
 		weakener = 1
+		item_state = "phammer1"
+		if(ismob(src.loc))
+			var/mob/user = src.loc
+			user.update_inhands()
 		src.setItemSpecial(/datum/item_special/slam)
 
 	power_down()
@@ -1711,25 +1706,12 @@ obj/item/clothing/gloves/concussive
 		src.force = 9
 		dig_strength = 1
 		weakener = 0
+		item_state = "phammer0"
+		if(ismob(src.loc))
+			var/mob/user = src.loc
+			user.update_inhands()
+			playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
 		src.setItemSpecial(/datum/item_special/simple)
-
-	attack_self(var/mob/user as mob)
-		tooltip_rebuild = 1
-		if (src.process_charges(0))
-			if (!src.status)
-				boutput(user, "<span class='notice'>You power up [src].</span>")
-				src.power_up()
-				item_state = "phammer1"
-				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_on.ogg", 30, 1)
-			else
-				boutput(user, "<span class='notice'>You power down [src].</span>")
-				src.power_down()
-				item_state = "phammer0"
-				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
-		else
-			boutput(user, "<span class='alert'>No charge left in [src].</span>")
 
 	borg
 		process_charges(var/use)
@@ -1762,33 +1744,24 @@ obj/item/clothing/gloves/concussive
 		powered_overlay = image('icons/obj/sealab_power.dmi', "ps-glow")
 		src.power_up()
 
-	attack_self(var/mob/user as mob)
-		tooltip_rebuild = 1
-		if (src.process_charges(0))
-			if (!src.status)
-				boutput(user, "<span class='notice'>You power up [src].</span>")
-				src.power_up()
-				item_state = "pshovel1"
-				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_on.ogg", 30, 1)
-			else
-				boutput(user, "<span class='notice'>You power down [src].</span>")
-				src.power_down()
-				item_state = "pshovel0"
-				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
-		else
-			boutput(user, "<span class='alert'>No charge left in [src].</span>")
-
 	power_up()
 		..()
 		src.force = 8
 		src.dig_strength = 0
+		item_state = "pshovel1"
+		if(ismob(src.loc))
+			var/mob/user = src.loc
+			user.update_inhands()
 
 	power_down()
 		..()
 		src.force = 4
 		src.dig_strength = 0
+		item_state = "pshovel0"
+		if(ismob(src.loc))
+			var/mob/user = src.loc
+			user.update_inhands()
+			playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
 
 	borg
 		process_charges(var/use)
