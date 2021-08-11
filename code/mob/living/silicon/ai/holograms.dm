@@ -170,11 +170,26 @@
 		..()
 
 
+/obj/effect/distort/hologram
+	icon = 'icons/misc/holograms.dmi' // move to effects?
+	icon_state = "d_slow"
+	var/distort_size = 2
+
+
+	glitch
+		icon_state = "d_glitch1"
+
+		New()
+			..()
+			if(prob(33))
+				icon_state = pick("d_glitch2", "d_glitch3")
+				distort_size = 10
+
 /obj/hologram/text
 	var/message
 	var/original_color
 	var/hsv
-
+	var/obj/effect/distort/hologram/E
 
 	New(loc, owner, msg)
 		src.hologram_value = round((length(msg) + (CHARS_PER_HOLOGRAM_POINT-1)) / CHARS_PER_HOLOGRAM_POINT)
@@ -190,8 +205,16 @@
 		maptext_width = MAX_TILES_PER_HOLOGRAM * 32
 		maptext_x = -(maptext_width / 2) + 16
 
-		maptext = {"<a href="#"><span class='vm c ps2p sh' style='color:white;'>[message]</span></a>"}
+		maptext = {"<a href="#"><span class='vm c ps2p sh' style='color:white;text-shadow: silver;'>[message]</span></a>"}
 
+		// Add displacement filter for scanline/glitch
+		SPAWN_DBG(1) //delayed to resolve issue where color didn't settle yet
+			E = new
+			src.vis_contents += E
+			src.filters += filter(type="displace", size=E.distort_size, render_source = E.render_target)
+
+		/*
+		Alternative animations
 		SPAWN_DBG(rand(1 SECOND, 10 SECONDS))
 			// Lame Glitch Text
 			animate(src, pixel_x = 2, time = 0.5 SECONDS, easing = ELASTIC_EASING, loop=-1, flags=ANIMATION_PARALLEL)
@@ -210,3 +233,4 @@
 				animate(src, alpha=120, time=5 SECONDS, easing = LINEAR_EASING, loop=-1, flags=ANIMATION_PARALLEL)
 				animate(alpha=180, time=1.5 SECONDS, easing = CUBIC_EASING)
 				animate(time=rand(1 SECONDS,3 SECONDS))
+				*/
