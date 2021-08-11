@@ -1,4 +1,9 @@
 
+(t)tue aug 10 21
+(u)TTerc
+(p)5709
+(e)🆕|feature
+(+)You can now chug from all the drinking containers, not just glasses and pitchers (with a few exceptions).
 (t)sun aug 08 21
 (u)Emily
 (e)⛔|removal
