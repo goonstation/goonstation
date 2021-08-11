@@ -212,7 +212,7 @@ var/mutable_appearance/fluid_ma
 		//floor overrides some construction clicks
 		if (istype(W,/obj/item/rcd) || istype(W,/obj/item/tile) || istype(W,/obj/item/sheet) || ispryingtool(W) || istype(W,/obj/item/pen))
 			var/turf/T = get_turf(src)
-			T.attackby(W,user)
+			T.Attackby(W,user)
 			W.afterattack(T,user)
 			return
 
@@ -297,7 +297,7 @@ var/mutable_appearance/fluid_ma
 		if (!src.group || !src.group.reagents || !length(src.group.members)) return
 		src.group.last_temp_change = world.time
 		//reduce exposed temperature by amt of members in the group
-		src.group.reagents.temperature_reagents(exposed_temperature, exposed_volume, (70 - (35 / (src.group.members.len))), 15)
+		src.group.reagents.temperature_reagents(exposed_temperature, exposed_volume, 100, 15, 1)
 
 	ex_act()
 		src.removed()

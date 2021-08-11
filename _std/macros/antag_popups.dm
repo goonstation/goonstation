@@ -45,7 +45,7 @@
 
 // vampire (thrall uses the mindslave popup)
 #define SHOW_VAMPIRE_TIPS(M) M.Browse(grabResource("html/traitorTips/vampireTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_VAMPZOMBIE_TIPS(M) M.Browse(grabResource("html/traitorTips/vampiriczombieTips.html"), ANTAG_TIPS_WINDOW)
+#define SHOW_VAMPTHRALL_TIPS(M) M.Browse(grabResource("html/traitorTips/vampiricthrallTips.html"), ANTAG_TIPS_WINDOW)
 
 // changeling
 #define SHOW_CHANGELING_TIPS(M) M.Browse(grabResource("html/traitorTips/changelingTips.html"), ANTAG_TIPS_WINDOW)
@@ -229,9 +229,7 @@
 			if ("vampire")
 				SHOW_VAMPIRE_TIPS(M)
 			if ("vampthrall")
-				SHOW_MINDSLAVE_TIPS(M)
-			if ("vampzombie")
-				SHOW_VAMPZOMBIE_TIPS(M)
+				SHOW_VAMPTHRALL_TIPS(M)
 			if ("changeling")
 				SHOW_CHANGELING_TIPS(M)
 			if ("handspider")

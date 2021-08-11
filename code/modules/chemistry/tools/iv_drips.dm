@@ -270,7 +270,7 @@
 			src.update_icon()
 			return
 		else if (src.IV)
-			//src.IV.attackby(W, user)
+			//src.IV.Attackby(W, user)
 			W.afterattack(src.IV, user)
 			return
 		else

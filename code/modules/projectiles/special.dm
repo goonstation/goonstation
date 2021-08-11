@@ -378,7 +378,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		var/turf/T = get_turf(A)
 		playsound(A, "sound/effects/ExplosionFirey.ogg", 60, 1)
 		if(!src.impacted)
-			world << sound('sound/weapons/energy/howitzer_impact.ogg', volume = 70)
+			playsound_global(world, 'sound/weapons/energy/howitzer_impact.ogg', 60)
 			src.impacted = 1
 			SPAWN_DBG(1 DECI SECOND)
 				for(var/mob/living/M in mobs)
@@ -386,8 +386,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 		SPAWN_DBG(0)
 			explosion_new(null, T, 30, 1)
-		if(prob(50))
-			world << sound('sound/effects/creaking_metal1.ogg', volume = 60)
+		if(prob(10))
+			playsound_global(world, 'sound/effects/creaking_metal1.ogg', 40)
 
 // A weapon by Sovexe
 /datum/projectile/special/meowitzer //what have I done
@@ -635,7 +635,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = "mysterious mystery mist"
 	icon_state = "vamp_travel"
 	auto_find_targets = 0
-	max_speed = 2
+	max_speed = 6
 	start_speed = 0.1
 
 
@@ -698,7 +698,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	max_speed = 2
 	goes_through_walls = 0 // It'll stop homing when it hits something, then go bouncy
 	var/max_bounce_count = 3 // putting the I in ICEE BEEYEM
-	var/weaken_length = 5 SECONDS
+	var/weaken_length = 4 SECONDS
 	var/slam_text = "The magic missile SLAMS into you!"
 	var/hit_sound = 'sound/effects/mag_magmisimpact_bounce.ogg'
 	var/cat_sound = 'sound/voice/animal/cat.ogg'
@@ -756,7 +756,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	min_speed = 2
 	max_speed = 2
 	max_bounce_count = 2 // putting the Y in ICEE BEEYEM
-	weaken_length = 3 SECONDS
+	weaken_length = 2 SECONDS
 	slam_text = "The magic missile bumps into you!"
 
 /datum/projectile/special/homing/orbiter
@@ -868,7 +868,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/spreader/tasershotgunspread //Used in Azungar's taser shotgun.
 	name = "energy bolt"
 	sname = "shotgun spread"
-	cost = 37.5
+	cost = 25
 	power = 45 //a chunky pointblank
 	ks_ratio = 0
 	damage_type = D_SPECIAL

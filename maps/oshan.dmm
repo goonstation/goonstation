@@ -9321,7 +9321,7 @@
 	},
 /obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/darkpurple/side,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "avI" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 8
@@ -9630,7 +9630,7 @@
 "awx" = (
 /obj/machinery/bot/cleanbot,
 /turf/simulated/floor/darkpurple/side,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "awy" = (
 /obj/cable{
 	d1 = 4;
@@ -9671,7 +9671,7 @@
 	pixel_x = 6
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "awB" = (
 /obj/machinery/atmospherics/valve,
 /turf/simulated/floor/blue,
@@ -10062,18 +10062,12 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "axv" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay/lobby)
-"axw" = (
-/obj/machinery/sleep_console{
+/obj/machinery/sleeper/compact{
 	dir = 8
 	},
 /turf/simulated/floor/white,
@@ -12540,7 +12534,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "aDs" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/science/teleporter)
@@ -12953,10 +12947,6 @@
 	icon_state = "engine_caution_corners"
 	},
 /area/station/science/teleporter)
-"aEt" = (
-/obj/wingrille_spawn/auto/crystal,
-/turf/simulated/floor/plating/random,
-/area/space)
 "aEu" = (
 /obj/table/glass/reinforced/auto,
 /obj/item/clothing/gloves/latex,
@@ -18113,7 +18103,7 @@
 /turf/simulated/floor/darkpurple/side{
 	dir = 4
 	},
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "aRl" = (
 /obj/machinery/disposal_pipedispenser/mobile{
 	dir = 4
@@ -19847,7 +19837,7 @@
 	},
 /obj/machinery/light/small/floor/warm,
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "aWg" = (
 /obj/stool/bed,
 /obj/item/device/radio/electropack,
@@ -24642,7 +24632,7 @@
 	icon_state = "sideWall";
 	name = "organic wall"
 	},
-/obj/item/storage/box/donkpocket_w_kit,
+/obj/item/storage/box/donkpocket_kit,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/bar)
 "bjr" = (
@@ -35663,7 +35653,7 @@
 "bJY" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/supernorn,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bJZ" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/firedoor_spawn,
@@ -35671,19 +35661,19 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/delivery,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bKa" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bKb" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bKc" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bKd" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/radio/lab)
@@ -36178,22 +36168,22 @@
 /obj/disposalpipe/segment/mail,
 /obj/machinery/vending/cola/blue,
 /turf/simulated/floor/black/corner,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bLv" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bLw" = (
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bLx" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/black/corner{
 	dir = 4
 	},
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bLy" = (
 /obj/table/glass/reinforced/auto,
 /obj/item/kitchen/food_box/donut_box{
@@ -36541,7 +36531,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bMF" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -36552,7 +36542,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bMG" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -36560,7 +36550,7 @@
 	pixel_y = 1
 	},
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bMH" = (
 /obj/table/glass/reinforced/auto,
 /obj/item/matchbook,
@@ -37047,11 +37037,11 @@
 /turf/simulated/floor/black/corner{
 	dir = 8
 	},
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bNS" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bNT" = (
 /obj/shrub{
 	dir = 10
@@ -37059,7 +37049,7 @@
 /turf/simulated/floor/black/corner{
 	dir = 1
 	},
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bNU" = (
 /obj/table/glass/reinforced/auto,
 /obj/item/clipboard,
@@ -37397,14 +37387,14 @@
 /area/station/maintenance/south)
 "bOS" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bOT" = (
 /obj/disposalpipe/segment/mail{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bOU" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Arrivals"
@@ -37418,7 +37408,7 @@
 /obj/firedoor_spawn,
 /obj/forcefield/energyshield/perma,
 /turf/simulated/floor/delivery,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bOV" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment/mail{
@@ -37426,7 +37416,7 @@
 	},
 /obj/forcefield/energyshield/perma,
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bOW" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -37437,13 +37427,13 @@
 /obj/firedoor_spawn,
 /obj/forcefield/energyshield/perma,
 /turf/simulated/floor/delivery,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bOX" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bOY" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -37788,7 +37778,7 @@
 /turf/simulated/floor/darkpurple/side{
 	dir = 1
 	},
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bPR" = (
 /obj/table/glass/auto,
 /obj/shrub{
@@ -37810,7 +37800,7 @@
 /turf/simulated/floor/darkpurple/side{
 	dir = 1
 	},
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bPS" = (
 /obj/machinery/light/incandescent/warm,
 /obj/cable{
@@ -37821,7 +37811,7 @@
 /turf/simulated/floor/darkpurple/side{
 	dir = 1
 	},
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bPT" = (
 /obj/cable{
 	d1 = 1;
@@ -37836,7 +37826,7 @@
 /turf/simulated/floor/caution/corner/misc{
 	dir = 6
 	},
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bPU" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -37855,7 +37845,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/caution/south,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bPV" = (
 /obj/cable{
 	d1 = 2;
@@ -37865,13 +37855,13 @@
 /turf/simulated/floor/caution/corner/misc{
 	dir = 10
 	},
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bPW" = (
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/darkpurple/side{
 	dir = 1
 	},
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bPX" = (
 /obj/table/glass/auto,
 /obj/shrub{
@@ -37891,7 +37881,7 @@
 /turf/simulated/floor/darkpurple/side{
 	dir = 1
 	},
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bPY" = (
 /obj/storage/closet/emergency,
 /obj/item/tank/emergency_oxygen,
@@ -37902,7 +37892,7 @@
 /turf/simulated/floor/darkpurple/side{
 	dir = 1
 	},
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bPZ" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right,
@@ -38297,12 +38287,12 @@
 	pixel_x = -24
 	},
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bQU" = (
 /turf/simulated/floor/caution/east{
 	dir = 8
 	},
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bQV" = (
 /obj/table/glass/auto,
 /obj/cable{
@@ -38317,13 +38307,13 @@
 /turf/simulated/floor/darkblue{
 	dir = 10
 	},
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bQW" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/caution/west,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bQX" = (
 /obj/table/wood,
 /obj/item/storage/box/cutlery,
@@ -38812,26 +38802,26 @@
 /turf/simulated/floor/darkblue{
 	dir = 10
 	},
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bSb" = (
 /obj/cable{
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/caution/west,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bSc" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bSd" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/navbeacon/tour/oshan/tour1,
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bSe" = (
 /obj/machinery/light/small/floor/greenish,
 /turf/simulated/floor/plating/random,
@@ -39227,15 +39217,15 @@
 /turf/simulated/floor/darkblue{
 	dir = 10
 	},
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bTd" = (
 /obj/machinery/navbeacon/tour/oshan/tour0,
 /turf/simulated/floor/caution/west,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bTe" = (
 /obj/forcefield/energyshield/perma,
 /turf/simulated/floor/shuttlebay,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bTf" = (
 /turf/simulated/floor/stairs/wood/wide{
 	dir = 8
@@ -39678,7 +39668,7 @@
 /area/skeleton_trader)
 "bUf" = (
 /turf/space/fluid,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bUg" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -39729,10 +39719,10 @@
 /obj/item/storage/toolbox/emergency,
 /obj/item/crowbar,
 /turf/simulated/floor/darkpurple/side,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bUn" = (
 /turf/simulated/floor/darkpurple/side,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bUo" = (
 /obj/item/caution{
 	desc = "Caution! Construction Zone!";
@@ -39743,7 +39733,7 @@
 	icon_state = "xtra_bigstripe-corner2"
 	},
 /turf/simulated/floor/darkpurple/side,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bUp" = (
 /obj/machinery/drainage/big,
 /turf/simulated/floor,
@@ -39758,7 +39748,7 @@
 	icon_state = "xtra_bigstripe-corner2"
 	},
 /turf/simulated/floor/darkpurple/side,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bUr" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/radio/bathroom)
@@ -40149,12 +40139,12 @@
 /turf/simulated/floor/darkpurple/side{
 	dir = 8
 	},
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bVq" = (
 /turf/simulated/floor/darkpurple/side{
 	dir = 4
 	},
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bVr" = (
 /obj/item/device/radio/beacon,
 /obj/cable{
@@ -40163,7 +40153,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bVs" = (
 /obj/item/seed/alien/rocks,
 /obj/item/seed/alien/rocks,
@@ -40496,7 +40486,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bWn" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/box/trackimp_kit2,
@@ -41112,10 +41102,10 @@
 "bXI" = (
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/shuttlebay,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bXJ" = (
 /turf/simulated/floor/shuttlebay,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bXK" = (
 /obj/decal/cleanable/dirt,
 /obj/item/weldingtool,
@@ -41213,7 +41203,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bYa" = (
 /obj/machinery/light/incandescent/blueish,
 /turf/simulated/floor/plating/random,
@@ -41232,7 +41222,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "bYd" = (
 /obj/cable{
 	d1 = 2;
@@ -43556,7 +43546,7 @@
 "cfs" = (
 /obj/landmark/start/latejoin,
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/oshan_arrivals)
 "cft" = (
 /obj/cable{
 	d1 = 1;
@@ -88075,7 +88065,7 @@ clw
 clB
 aDr
 aDr
-ckw
+aDr
 aig
 aEV
 aqn
@@ -88681,7 +88671,7 @@ aig
 aEV
 aEV
 aEV
-aEt
+aEV
 aqn
 aqn
 aqn
@@ -88982,7 +88972,7 @@ cht
 aig
 aEV
 aqn
-aEt
+aqn
 aqn
 aqn
 aqn
@@ -97426,8 +97416,8 @@ aoS
 atN
 ave
 cfh
-axw
-axw
+awe
+awe
 azC
 aAS
 atw

@@ -120,12 +120,8 @@
 				if (istype(src, /obj/machinery/disposal/mail) && !GM.canRideMailchutes())
 					boutput(user, "<span class='alert'>That won't fit!</span>")
 					return
-				GM.set_loc(src)
-				user.visible_message("<span class='alert'><b>[user.name] stuffs [GM.name] into [src]!</b></span>")
+				actions.start(new/datum/action/bar/icon/shoveMobIntoChute(src, GM, user), user)
 				qdel(G)
-				logTheThing("combat", user, GM, "places [constructTarget(GM,"combat")] into [src] at [log_loc(src)].")
-				actions.interrupt(G.affecting, INTERRUPT_MOVE)
-				actions.interrupt(user, INTERRUPT_ACT)
 		else
 			if (istype(mag))
 				actions.stopId("magpickerhold", user)
@@ -151,35 +147,7 @@
 				boutput(user, "<span class='alert'>That won't fit!</span>")
 				return
 
-		var/msg
-		var/turf/Q = target.loc
-		sleep (5)
-		//heyyyy maybe we should check distance AFTER the sleep??											//If you get stunned while *climbing* into a chute, you can still go in
-		if (target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || (is_incapacitated(user) && user != target))
-			return
-
-		if(target == user && !user.stat)	// if drop self, then climbed in
-												// must be awake
-			msg = "[user.name] climbs into the [src]."
-			boutput(user, "You climb into the [src].")
-		else if(target != user && !user.restrained() && Q == target.loc)
-			msg = "[user.name] stuffs [target.name] into the [src]!"
-			boutput(user, "You stuff [target.name] into the [src]!")
-			logTheThing("combat", user, target, "places [constructTarget(target,"combat")] into [src] at [log_loc(src)].")
-		else
-			return
-		actions.interrupt(target, INTERRUPT_MOVE)
-		actions.interrupt(user, INTERRUPT_ACT)
-		target.set_loc(src)
-
-		if (msg)
-			src.visible_message(msg)
-
-		if (target == user && !istype(src,/obj/machinery/disposal/transport))
-			src.ui_interact(user)
-
-		update()
-		return
+		actions.start(new/datum/action/bar/icon/shoveMobIntoChute(src, target, user), user)
 
 	hitby(atom/movable/MO, datum/thrown_thing/thr)
 		// This feature interferes with mail delivery, i.e. objects bouncing back into the chute.
@@ -660,6 +628,71 @@
 
 	attack_hand(mob/user as mob)
 		return
+
+
+/datum/action/bar/icon/shoveMobIntoChute
+	duration = 0.2 SECONDS
+	interrupt_flags =  INTERRUPT_STUNNED | INTERRUPT_ACT
+	id = "shoveMobIntoChute"
+	icon = 'icons/obj/disposal.dmi'
+	icon_state = "shoveself-disposal" //varies, see below
+	var/obj/machinery/disposal/chute
+	var/mob/user
+	var/mob/target
+
+	New(var/obj/machinery/disposal/chute, var/mob/target, var/mob/user)
+		..()
+		src.chute = chute
+		src.user = user
+		src.target = target
+		icon_state = "shoveself-[chute.icon_style]"
+		if(target != user) icon_state = "shoveother-[chute.icon_style]"
+
+	onStart()
+		..()
+		if(!checkStillValid()) return
+
+
+	onUpdate()
+		..()
+		if(!checkStillValid()) return
+
+	onEnd()
+		if(checkStillValid())
+			if (target.buckled || get_dist(user, chute) > 1 || get_dist(user, target) > 1 || ((is_incapacitated(user) && user != target)))
+				..()
+				return
+
+			var/msg
+			if(target == user)
+				msg = "[user.name] climbs into the [chute]."
+				boutput(user, "You climb into the [chute].")
+			else if(target != user && !user.restrained())
+				msg = "[user.name] stuffs [target.name] into the [chute]!"
+				boutput(user, "You stuff [target.name] into the [chute]!")
+				logTheThing("combat", user, target, "places [constructTarget(target,"combat")] into [chute] at [log_loc(chute)].")
+			else
+				..()
+				return
+			actions.interrupt(target, INTERRUPT_MOVE)
+			target.set_loc(chute)
+
+			if (msg)
+				chute.visible_message(msg)
+
+			chute.ui_interact(user)
+
+			chute.update()
+		..()
+
+	onDelete()
+		..()
+
+	proc/checkStillValid()
+		if(isnull(user) || isnull(target) || isnull(chute))
+			interrupt(INTERRUPT_ALWAYS)
+			return false
+		return true
 
 #undef DISPOSAL_CHUTE_OFF
 #undef DISPOSAL_CHUTE_CHARGING

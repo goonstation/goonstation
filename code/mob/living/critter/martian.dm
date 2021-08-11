@@ -38,8 +38,8 @@
 		HH.name = "tentacles"
 
 	setup_healths()
-		add_hh_flesh(-35, 35, 0.5)
-		add_hh_flesh_burn(-35, 35, 1)
+		add_hh_flesh(35, 0.5)
+		add_hh_flesh_burn(35, 1)
 		add_health_holder(/datum/healthHolder/toxin)
 		//add_health_holder(/datum/healthHolder/suffocation) // this is broken as hell
 		var/datum/healthHolder/Brain = add_health_holder(/datum/healthHolder/brain)
@@ -268,8 +268,8 @@ proc/martian_speak(var/mob/speaker, var/message as text, var/speak_as_admin=0)
 		HH.limb_name = "right tentacles"
 
 	setup_healths()
-		add_hh_flesh(-50, 50, 0.5)
-		add_hh_flesh_burn(-50, 50, 1)
+		add_hh_flesh(50, 0.5)
+		add_hh_flesh_burn(50, 1)
 		add_health_holder(/datum/healthHolder/toxin)
 		var/datum/healthHolder/Brain = add_health_holder(/datum/healthHolder/brain)
 		Brain.maximum_value = 0

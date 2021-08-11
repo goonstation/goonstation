@@ -3237,7 +3237,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom/engineering{
-
+	
 	},
 /obj/machinery/light,
 /turf/simulated/floor,
@@ -17534,7 +17534,7 @@
 /obj/item/storage/box/lightbox/tubes,
 /obj/item/device/radio,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/janitor/office)
@@ -30065,7 +30065,7 @@
 /turf/simulated/floor,
 /area/station/science/teleporter)
 "brZ" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor,
 /area/station/science/teleporter)
 "bsa" = (

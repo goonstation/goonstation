@@ -334,11 +334,11 @@
 
 	attackby(obj/item/W, mob/M)
 		dispel(1)
-		if(owner) owner.attackby(W,M)
+		if(owner) owner.Attackby(W,M)
 
 	attack_hand(mob/M)
 		dispel(1)
-		if(owner) owner.attackby(M)
+		if(owner) owner.Attackby(M)
 
 
 	firepoof

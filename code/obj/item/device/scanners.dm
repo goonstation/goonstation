@@ -21,8 +21,6 @@ Contains:
 	item_state = "electronic"
 	m_amt = 150
 	mats = 5
-	module_research = list("analysis" = 2, "engineering" = 2, "devices" = 1)
-	module_research_type = /obj/item/device/t_scanner
 
 	attack_self(mob/user)
 		on = !on
@@ -246,8 +244,6 @@ that cannot be itched
 	var/organ_upgrade = 0
 	var/organ_scan = 0
 	var/image/scanner_status
-	module_research = list("analysis" = 2, "medicine" = 2, "devices" = 1)
-	module_research_type = /obj/item/device/analyzer/healthanalyzer
 	hide_attack = 2
 
 	New()
@@ -391,8 +387,6 @@ that cannot be itched
 	m_amt = 200
 	mats = 5
 	var/scan_results = null
-	module_research = list("analysis" = 2, "science" = 2, "devices" = 1)
-	module_research_type = /obj/item/device/reagentscanner
 	hide_attack = 2
 	tooltip_flags = REBUILD_DIST
 
@@ -444,8 +438,6 @@ that cannot be itched
 	throw_speed = 4
 	throw_range = 20
 	mats = 3
-	module_research = list("analysis" = 2, "atmospherics" = 2, "devices" = 1)
-	module_research_type = /obj/item/device/analyzer/atmospheric
 	var/analyzer_upgrade = 0
 
 	// Distance upgrade action code

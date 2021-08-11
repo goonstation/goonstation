@@ -205,7 +205,6 @@
 	heal_amt = 1
 	initial_volume = 50
 	initial_reagents = list("coffee"=30)
-	module_research = list("vice" = 5)
 
 /obj/item/reagent_containers/food/drinks/eggnog
 	name = "Egg Nog"
@@ -216,8 +215,6 @@
 	rc_flags = RC_FULLNESS
 	initial_volume = 50
 	initial_reagents = list("eggnog"=40)
-	module_research = list("vice" = 5)
-	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
 /obj/item/reagent_containers/food/drinks/chickensoup
 	name = "Chicken Soup"
@@ -247,6 +244,7 @@
 	heal_amt = 1
 	rc_flags = RC_FULLNESS
 	initial_volume = 50
+	can_chug = 0
 	initial_reagents = list("cola"=20,"VHFCS"=10)
 	var/is_sealed = 1 //can you drink out of it?
 	var/standard_override //is this a random cola or a standard cola (for crushed icons)
@@ -267,6 +265,7 @@
 		if (src.is_sealed)
 			user.visible_message("[user] pops the tab on \the [src]!", "You pop \the [src] open!")
 			is_sealed = 0
+			can_chug = 1
 			playsound(src.loc, "sound/items/can_open.ogg", 50, 1)
 			return
 		if (!src.reagents || !src.reagents.total_volume)

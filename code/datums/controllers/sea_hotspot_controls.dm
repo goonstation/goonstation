@@ -60,7 +60,7 @@
 					else if (T.name == "trench floor" || T.name == "\proper space")
 						turf_color = "empty"
 					else
-						if (T.loc && (T.loc.type == /area/shuttle/sea_elevator || T.loc.type == /area/shuttle/sea_elevator/lower))
+						if (T.loc && (T.loc.type == /area/shuttle/sea_elevator || T.loc.type == /area/shuttle/sea_elevator/lower || T.loc.type == /area/prefab/sea_mining))
 							turf_color = "station"
 						else
 							turf_color = "other"
@@ -372,7 +372,7 @@
 			fireflash(phenomena_point,1)
 
 		if (phenomena_flags & PH_EX)
-			explosion(0, phenomena_point, -1, -1, 2, 3)
+			explosion(src, phenomena_point, -1, -1, 2, 3)
 
 		if ((phenomena_flags & PH_EX) || (phenomena_flags & PH_FIRE_WEAK) || (phenomena_flags & PH_FIRE))
 			playsound(phenomena_point, 'sound/misc/ground_rumble_big.ogg', 65, 1, 0.1, 0.7)
@@ -785,7 +785,7 @@
 				return
 		else
 			if (istype(W,/obj/item/cable_coil))
-				src.loc.attackby(W,user)
+				src.loc.Attackby(W,user)
 				return
 		..()
 

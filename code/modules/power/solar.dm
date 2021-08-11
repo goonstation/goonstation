@@ -72,6 +72,7 @@
 	density = 1
 	directwired = 1
 	processing_tier = PROCESSING_32TH // Uncomment this and line 175 for an experimental optimization
+	power_usage = 10
 	var/health = 10.0
 	var/id = 1
 	var/obscured = 0
@@ -179,6 +180,7 @@
 		var/max_move = rand(8, 12)
 		adir = (360 + adir + clamp(ndir - adir, -max_move, max_move)) % 360
 		if(adir != old_adir)
+			use_power(power_usage)
 			updateicon()
 
 		update_solar_exposure()

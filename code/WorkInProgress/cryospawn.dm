@@ -145,6 +145,9 @@
 				if (L.client)
 					L.addOverlayComposition(/datum/overlayComposition/blinded)
 					L.updateOverlaysClient(L.client)
+				for (var/obj/machinery/computer/announcement/A as anything in machine_registry[MACHINES_ANNOUNCEMENTS])
+					if (!A.status && A.announces_arrivals)
+						A.announce_departure(L)
 				return 1
 
 		stored_mobs += L
@@ -157,6 +160,9 @@
 		if (L.client)
 			L.addOverlayComposition(/datum/overlayComposition/blinded)
 			L.updateOverlaysClient(L.client)
+		for (var/obj/machinery/computer/announcement/A as anything in machine_registry[MACHINES_ANNOUNCEMENTS])
+			if (!A.status && A.announces_arrivals)
+				A.announce_departure(L)
 		if (ishuman(L))
 			var/mob/living/carbon/human/H = L
 			if (H.sims)
@@ -251,9 +257,9 @@
 
 	attack_hand(var/mob/user as mob)
 		if(isgrab(user.l_hand))
-			src.attackby(user.l_hand, user)
+			src.Attackby(user.l_hand, user)
 		else if(isgrab(user.r_hand))
-			src.attackby(user.r_hand, user)
+			src.Attackby(user.r_hand, user)
 		else if (!enter_prompt(user))
 			return ..()
 

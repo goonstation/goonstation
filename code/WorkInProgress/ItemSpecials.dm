@@ -373,7 +373,7 @@
 				for(var/atom/A in lastTurf)
 					if(A in attacked) continue
 					if(isTarget(A, user) && A != user)
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						attacked += A
 						hit = 1
 
@@ -448,7 +448,7 @@
 				var/hit = 0
 				for(var/atom/A in turf)
 					if(isTarget(A))
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						hit = 1
 						break
 
@@ -506,7 +506,7 @@
 					for(var/atom/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
-							A.attackby(master, user, params, 1)
+							A.Attackby(master, user, params, 1)
 							attacked += A
 							hit = 1
 
@@ -603,7 +603,7 @@
 					for(var/atom/movable/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
-							A.attackby(master, user, params, 1)
+							A.Attackby(master, user, params, 1)
 							attacked += A
 							hit = 1
 					if(ignition)
@@ -657,6 +657,57 @@
 				if(master)
 					overrideStaminaDamage = master.stamina_damage * 0.8
 				return
+
+	launch_projectile
+		cooldown = 3 SECONDS
+		staminaCost = 30
+		moveDelay = 0
+		requiresStaminaToFire = TRUE
+		staminaReqAmt = 30
+		/// projectile datum containing data for projectile objects
+		var/datum/projectile/projectile = null
+		/// type path of the special effect
+		var/special_effect_type = /obj/itemspecialeffect/simple
+
+		image = "simple"
+		name = "Cast"
+		desc = "Utilize the power of your wand to cast a bolt of magic."
+
+		pixelaction(atom/target, params, mob/user, reach)
+			. = ..()
+			if (!projectile) return
+			var/turf/T = get_turf(target)
+			if(!T) return
+			if(!usable(user)) return
+			if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+				preUse(user)
+				var/pox = text2num(params["icon-x"]) - 16
+				var/poy = text2num(params["icon-y"]) - 16
+				var/obj/itemspecialeffect/S = unpool(special_effect_type)
+				S.setup(get_step(user, get_dir(user, target)))
+				shoot_projectile_ST_pixel(user, projectile, target, pox, poy)
+				afterUse(user)
+
+		disposing()
+			projectile = null
+			. = ..()
+
+		fireball
+			projectile = new/datum/projectile/fireball
+
+		monkey_organ
+			projectile = new/datum/projectile/special/spawner
+			New()
+				. = ..()
+				var/datum/projectile/special/spawner/P = projectile
+				P.damage_type = D_KINETIC
+				P.power = 5
+				P.typetospawn = /obj/random_item_spawner/organs/bloody/one_to_three
+				P.icon = 'icons/mob/monkey.dmi'
+				P.icon_state = "monkey"
+				P.shot_sound = "sound/voice/screams/monkey_scream.ogg"
+				P.hit_sound = "sound/impact_sounds/Slimy_Splat_1.ogg"
+				P.name = "monkey"
 
 	slam
 		cooldown = 50
@@ -716,12 +767,12 @@
 					shake_camera(M, 8, 24)
 
 				for(var/turf/T in list(one, two, three, four, twoB, threeB, fourB))
-					animate_shake(T)
+					animate_shake(T,5,2,2,T.pixel_x,T.pixel_y)
 					for(var/atom/movable/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
 							if(master)
-								A.attackby(master, user, params, 1)
+								A.Attackby(master, user, params, 1)
 							else
 								A.attack_hand(user, params)
 							attacked += A
@@ -764,7 +815,7 @@
 					shake_camera(M, 8, 24)
 
 				for(var/turf/T in list(one, two, three, four, twoB, threeB, fourB))
-					animate_shake(T)
+					animate_shake(T,5,2,2,T.pixel_x,T.pixel_y)
 					for(var/atom/movable/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
@@ -799,7 +850,7 @@
 					for(var/atom/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
-							A.attackby(master, usr, params, 1)
+							A.Attackby(master, usr, params, 1)
 							attacked += A
 
 				showEffect("whirlwind", NORTH)
@@ -1072,7 +1123,7 @@
 				var/hit = 0
 				for(var/atom/A in turf)
 					if(isTarget(A))
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						hit = 1
 						break
 				if (!hit)
@@ -1087,7 +1138,7 @@
 					hit = 0
 					for(var/atom/A in turf)
 						if(isTarget(A))
-							A.attackby(master, user, params, 1)
+							A.Attackby(master, user, params, 1)
 							hit = 1
 							break
 					if (!hit)
@@ -1145,7 +1196,7 @@
 				var/hit = 0
 				for(var/atom/A in turf)
 					if(isTarget(A))
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						hit = 1
 						break
 
@@ -1336,7 +1387,7 @@
 					if(isTarget(A))
 						on_hit(A)
 						//fake harmbaton it
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						hit = 1
 						playsound(master, 'sound/effects/sparks6.ogg', 70, 0)
 						break
@@ -1466,7 +1517,7 @@
 					if(isTarget(A))
 						on_hit(A)
 						attacked += A
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						// hit = 1
 						break
 				afterUse(user)
@@ -1648,16 +1699,16 @@
 					for(var/atom/movable/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
-							A.attackby(master, user, params, 1)
+							A.Attackby(master, user, params, 1)
 							attacked += A
 							hit = 1
 
 				for(var/atom/movable/A in one)
 					if(A in attacked) continue
 					if(isTarget(A))
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						SPAWN_DBG(0.5 SECONDS)
-							A.attackby(master, user, params, 1)
+							A.Attackby(master, user, params, 1)
 						attacked += A
 						hit = 1
 
@@ -1697,7 +1748,7 @@
 				var/hit = 0
 				for(var/atom/A in turf)
 					if(isTarget(A))
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						hit = 1
 						break
 

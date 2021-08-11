@@ -11,7 +11,6 @@
 	m_amt = 50
 	g_amt = 20
 	mats = list("CRY-1", "CON-2")
-	module_research = list("tools" = 5, "devices" = 2)
 
 
 	New()

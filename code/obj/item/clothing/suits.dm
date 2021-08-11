@@ -13,7 +13,8 @@
 	item_state = "ljacket"
 	wear_layer = MOB_ARMOR_LAYER
 	var/fire_resist = T0C+100
-	var/over_hair = 0
+	/// If TRUE the suit will hide whoever is wearing it's hair
+	var/over_hair = FALSE
 	flags = FPRINT | TABLEPASS
 	w_class = W_CLASS_NORMAL
 	var/restrain_wearer = 0
@@ -33,7 +34,7 @@
 	icon_state = "hoodie"
 	uses_multiple_icon_states = 1
 	item_state = "hoodie"
-	body_parts_covered = HEAD|TORSO|ARMS
+	body_parts_covered = TORSO|ARMS
 	var/hood = 0
 	var/hcolor = null
 
@@ -51,18 +52,70 @@
 		user.show_text("You flip [src]'s hood [src.hood ? "up" : "down"].")
 		if (src.hood)
 			src.over_hair = 1
+			src.body_parts_covered = HEAD|TORSO|ARMS
 			src.icon_state = "hoodie[src.hcolor ? "-[hcolor]" : null]-up"
 			src.item_state = "hoodie[src.hcolor ? "-[hcolor]" : null]-up"
 		else
 			src.over_hair = 0
+			src.body_parts_covered = TORSO|ARMS
 			src.icon_state = "hoodie[src.hcolor ? "-[hcolor]" : null]"
 			src.item_state = "hoodie[src.hcolor ? "-[hcolor]" : null]"
 
-/obj/item/clothing/suit/hoodie/blue
-	desc = "Would fit well on a skeleton."
-	icon_state = "hoodie-blue"
-	item_state = "hoodie-blue"
-	hcolor = "blue"
+	blue
+		desc = "Would fit well on a skeleton."
+		icon_state = "hoodie-blue"
+		item_state = "hoodie-blue"
+		hcolor = "blue"
+
+	darkblue
+		icon_state = "hoodie-darkblue"
+		item_state = "hoodie-darkblue"
+		hcolor = "darkblue"
+
+	white
+		icon_state = "hoodie-white"
+		item_state = "hoodie-white"
+		hcolor = "white"
+
+	pink
+		icon_state = "hoodie-pink"
+		item_state = "hoodie-pink"
+		hcolor = "pink"
+
+	black
+		icon_state = "hoodie-black"
+		item_state = "hoodie-black"
+		hcolor = "black"
+
+	grey
+		icon_state = "hoodie-grey"
+		item_state = "hoodie-grey"
+		hcolor = "grey"
+
+	dullgrey
+		icon_state = "hoodie-dullgrey"
+		item_state = "hoodie-dullgrey"
+		hcolor = "dullgrey"
+
+	magenta
+		icon_state = "hoodie-magenta"
+		item_state = "hoodie-magenta"
+		hcolor = "magenta"
+
+	green
+		icon_state = "hoodie-green"
+		item_state = "hoodie-green"
+		hcolor = "green"
+
+	yellow
+		icon_state = "hoodie-yellow"
+		item_state = "hoodie-yellow"
+		hcolor = "yellow"
+
+	red
+		icon_state = "hoodie-red"
+		item_state = "hoodie-red"
+		hcolor = "red"
 
 /obj/item/clothing/suit/hoodie/random
 	New()
@@ -181,8 +234,7 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
 	var/armored = 0
 	body_parts_covered = TORSO|LEGS|ARMS
-	permeability_coefficient = 0.01
-	over_hair = 1
+	permeability_coefficient = 0.005
 
 	setupProperties()
 		..()
@@ -304,8 +356,7 @@
 	wear_image_icon = 'icons/mob/overcoats/worn_suit_hazard.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
 	body_parts_covered = TORSO|LEGS|ARMS
-	permeability_coefficient = 0.005
-	over_hair = 1
+	permeability_coefficient = 0.02
 
 	New()
 		. = ..()
@@ -313,7 +364,7 @@
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 0.6)
+		setProperty("movespeed", 0.45)
 		setProperty("radprot", 50)
 		setProperty("coldprot", 15)
 		setProperty("heatprot", 15)
@@ -964,9 +1015,8 @@
 	item_state = "s_suit"
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
-	permeability_coefficient = 0.02
+	permeability_coefficient = 0.1
 	protective_temperature = 1000
-	over_hair = 1
 
 	New()
 		..()
@@ -1130,8 +1180,8 @@
 			icon_state = "syndie_specialist-medic"
 			item_state = "syndie_specialist-medic"
 
-		body_parts_covered = TORSO|LEGS|ARMS
-		permeability_coefficient = 0.01
+			body_parts_covered = TORSO|LEGS|ARMS
+			permeability_coefficient = 0.01
 
 		setupProperties()
 			..()
@@ -1382,7 +1432,7 @@
 	over_hair = TRUE
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
-	permeability_coefficient = 0.01
+	permeability_coefficient = 0.50
 
 	setupProperties()
 		..()
@@ -1421,7 +1471,8 @@
 	wear_layer = MOB_OVERLAY_BASE
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
-	permeability_coefficient = 0.01
+	over_hair = TRUE
+	permeability_coefficient = 0.50
 
 /obj/item/clothing/suit/wizrobe
 	name = "blue wizard robe"
@@ -1583,7 +1634,6 @@
 	item_state = "chem_suit"
 	body_parts_covered = TORSO|LEGS|ARMS
 	permeability_coefficient = 0
-	over_hair = 1
 
 /obj/item/clothing/suit/security_badge
 	name = "Security Badge"
