@@ -2007,7 +2007,7 @@ obj/item/clothing/gloves/concussive
 				var/mob/living/silicon/robot/R = user
 				R.cell.charge -= cost * 10
 			else
-				var/ret = SEND_SIGNAL(src, COMSIG_CELL_USE, cost, TRUE)
+				var/ret = SEND_SIGNAL(src, COMSIG_CELL_USE, cost)
 				if (ret & CELL_INSUFFICIENT_CHARGE)
 					boutput(user, "<span class='alert'>Transfer successful. The transporter is now out of charge.</span>")
 				else
@@ -2050,7 +2050,7 @@ obj/item/clothing/gloves/concussive
 			T.set_loc(src.target)
 			if(hasvar(T, "welded")) T:welded = 1
 			elecflash(src)
-			var/ret = SEND_SIGNAL(src, COMSIG_CELL_USE, cost, TRUE)
+			var/ret = SEND_SIGNAL(src, COMSIG_CELL_USE, cost)
 			if (ret & CELL_INSUFFICIENT_CHARGE)
 				boutput(user, "<span class='alert'>Transfer successful. The transporter is now out of charge.</span>")
 			else
