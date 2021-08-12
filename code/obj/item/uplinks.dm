@@ -100,7 +100,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 						src.items_general.Add(S)
 
 				if (ownermind || istype(ownermind))
-					if (ownermind.special_role != "nukeop" && istype(S, /datum/syndicate_buylist/traitor))
+					if (ownermind.special_role != ROLE_NUKEOP && istype(S, /datum/syndicate_buylist/traitor))
 						if (!S.objective && !S.job && !src.items_general.Find(S))
 							src.items_general.Add(S)
 
@@ -743,7 +743,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			src.ui_update()
 			return
 
-		if (user.mind && user.mind.special_role != "spy_thief")
+		if (user.mind && user.mind.special_role != ROLE_SPY_THIEF)
 			user.show_text("You cannot claim a bounty! The PDA doesn't recognize you!", "red")
 			return 0
 
@@ -780,7 +780,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 						M.drop_from_slot(delivery,get_turf(M))
 
 				qdel(delivery)
-				if (user.mind && user.mind.special_role == "spy_thief")
+				if (user.mind && user.mind.special_role == ROLE_SPY_THIEF)
 					user.mind.spy_stolen_items += B.name
 
 				if (req_bounties() > 1)

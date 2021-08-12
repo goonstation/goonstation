@@ -1021,12 +1021,12 @@ var/list/fun_images = list()
 	// You now get to chose (mostly) if you want to send the target to the arrival shuttle (Convair880).
 	var/send_to_arrival_shuttle = 0
 	if (iswraith(M))
-		if (M.mind && M.mind.special_role == "wraith")
+		if (M.mind && M.mind.special_role == ROLE_WRAITH)
 			remove_antag(M, src, 0, 1) // Can't complete specialist objectives as a human. Also, the proc takes care of the rest.
 			return
 		send_to_arrival_shuttle = 1
 	else if (isintangible(M))
-		if (M.mind && M.mind.special_role == "blob")
+		if (M.mind && M.mind.special_role == ROLE_BLOB)
 			remove_antag(M, src, 0, 1) // Ditto.
 			return
 		send_to_arrival_shuttle = 1

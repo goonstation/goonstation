@@ -50,13 +50,13 @@
 				if(2)
 					waldo.special_role = "odlaw"
 				if(3)
-					waldo.special_role = "wizard"
+					waldo.special_role = ROLE_WIZARD
 			waldo.current.resistances += list(/datum/ailment/disease/dnaspread, /datum/ailment/disease/clowning_around, /datum/ailment/disease/cluwneing_around, /datum/ailment/disease/enobola, /datum/ailment/disease/robotic_transformation)
 			if(!job_start_locations["wizard"])
 				boutput(waldo.current, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
 			else
 				waldo.current.set_loc(pick(job_start_locations["wizard"]))
-			if(waldo.special_role in list("odlaw", "wizard"))
+			if(waldo.special_role in list("odlaw", ROLE_WIZARD))
 				switch(rand(1,100))
 					if(1 to 30)
 						var/datum/objective/assassinate/kill_objective = new
@@ -110,7 +110,7 @@
 				if("odlaw")
 					boutput(waldo.current, "<B><span class='alert'>You are Odlaw!</span></B>")
 					waldo.current.real_name = "Odlaw"
-				if("wizard")
+				if(ROLE_WIZARD)
 					boutput(waldo.current, "<B><span class='alert'>You are Wizard Whitebeard!</span></B>")
 					waldo.current.real_name = "Wizard Whitebeard"
 			equip_waldo(waldo.current)
@@ -179,7 +179,7 @@
 				waldo_mob.head.cant_other_remove = 1
 				equip_traitor(waldo_mob)
 
-			if("wizard")
+			if(ROLE_WIZARD)
 				waldo_mob.verbs += /client/proc/invisibility
 				waldo_mob.verbs += /client/proc/mass_teleport
 
