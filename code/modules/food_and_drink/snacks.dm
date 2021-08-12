@@ -340,7 +340,7 @@
 
 	peanut
 		name = "peanut butter cookie"
-		desc = "Its delicious and nutritious... probably"
+		desc = "It's delicious and nutritious... probably."
 		icon_state = "cookie-peanut"
 		frosted = 1
 		initial_volume = 25
