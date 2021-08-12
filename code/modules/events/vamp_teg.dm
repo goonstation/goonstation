@@ -456,7 +456,7 @@ datum/teg_transformation/vampire
 
 				target.real_name = "zombie [target.real_name]"
 				if (target.mind)
-					target.mind.special_role = "vampthrall"
+					target.mind.special_role = ROLE_VAMPTHRALL
 					target.mind.master = src.teg
 					if (!(target.mind in ticker.mode.Agimmicks))
 						ticker.mode.Agimmicks += target.mind

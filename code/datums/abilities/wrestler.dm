@@ -95,7 +95,7 @@
 					health_update_queue |= src
 
 
-		if (belt_check != 1 && (src.mind && src.mind.special_role != "omnitraitor" && src.mind.special_role != "Faustian Wrestler"))
+		if (belt_check != 1 && (src.mind && src.mind.special_role != ROLE_OMNITRAITOR && src.mind.special_role != "Faustian Wrestler"))
 			SHOW_WRESTLER_TIPS(src)
 
 	else return

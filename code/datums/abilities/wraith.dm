@@ -725,7 +725,7 @@
 
 		//add poltergeist to master's list is done in /mob/wraith/potergeist/New
 		var/mob/wraith/poltergeist/P = new /mob/wraith/poltergeist(T, W, marker)
-		lucky_dude.special_role = "poltergeist"
+		lucky_dude.special_role = ROLE_POLTERGEIST
 		lucky_dude.dnr = 1
 		lucky_dude.transfer_to(P)
 		ticker.mode.Agimmicks |= lucky_dude

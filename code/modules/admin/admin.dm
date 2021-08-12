@@ -1770,7 +1770,7 @@ var/global/noir = 0
 					for (var/datum/objective/objective in mind.objectives)
 						boutput(Wr, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 						obj_count++
-				mind.special_role = "wraith"
+				mind.special_role = ROLE_WRAITH
 				ticker.mode.Agimmicks += mind
 				Wr.antagonist_overlay_refresh(1, 0)
 
@@ -1787,7 +1787,7 @@ var/global/noir = 0
 				var/mob/B = M.blobize()
 				if (B)
 					if (B.mind)
-						B.mind.special_role = "blob"
+						B.mind.special_role = ROLE_BLOB
 						ticker.mode.bestow_objective(B,/datum/objective/specialist/blob)
 						//Bl.owner = B.mind
 						//B.mind.objectives = list(Bl)
@@ -1897,7 +1897,7 @@ var/global/noir = 0
 					else
 						F = mind.current
 				if(istype(F, /mob/living/intangible/flock/flockmind))
-					mind.special_role = "flockmind"
+					mind.special_role = ROLE_FLOCKMIND
 				else if(istype(F, /mob/living/intangible/flock/trace))
 					mind.special_role = "flocktrace"
 				ticker.mode.Agimmicks += mind
@@ -4461,7 +4461,7 @@ var/global/noir = 0
 	if(checktraitor(M))
 		boutput(usr, "<span class='alert'>That person is already an antagonist.</span>")
 		return
-	if(!(ticker?.mode && istype(ticker.mode, /datum/game_mode/gang)) && traitor_type == "gang leader")
+	if(!(ticker?.mode && istype(ticker.mode, /datum/game_mode/gang)) && traitor_type == ROLE_GANG_LEADER)
 		boutput(usr, "<span class='alert'>Gang Leaders are currently restricted to gang mode only.</span>")
 		return
 
@@ -4487,22 +4487,22 @@ var/global/noir = 0
 			/datum/objective/escape/survive,/datum/objective/escape/kamikaze)
 			/*if (isrobot(M))
 				eligible_objectives += /datum/objective/regular/borgdeath*/
-			traitor_type = "traitor"
+			traitor_type = ROLE_TRAITOR
 		switch(traitor_type)
-			if ("changeling")
+			if (ROLE_CHANGELING)
 				eligible_objectives += /datum/objective/specialist/absorb
-			if ("werewolf")
+			if (ROLE_WEREWOLF)
 				eligible_objectives += /datum/objective/specialist/werewolf/feed
-			if ("vampire")
+			if (ROLE_VAMPIRE)
 				eligible_objectives += /datum/objective/specialist/drinkblood
-			if ("hunter")
+			if (ROLE_HUNTER)
 				eligible_objectives += /datum/objective/specialist/hunter/trophy
-			if ("grinch")
+			if (ROLE_GRINCH)
 				eligible_objectives += /datum/objective/specialist/ruin_xmas
-			if ("gang leader")
+			if (ROLE_GANG_LEADER)
 				var/datum/objective/gangObjective = new /datum/objective/specialist/gang(  )
 				gangObjective.owner = M.mind
-				M.mind.special_role = "gang_leader"
+				M.mind.special_role = ROLE_GANG_LEADER
 				M.mind.objectives += gangObjective
 		var/done = 0
 		var/select_objective = null
@@ -4547,59 +4547,59 @@ var/global/noir = 0
 		R.handle_robot_antagonist_status("admin", 0, usr)
 	else if (ishuman(M) || ismobcritter(M))
 		switch(traitor_type)
-			if("traitor")
+			if(ROLE_TRAITOR)
 				M.show_text("<h2><font color=red><B>You have defected and become a traitor!</B></font></h2>", "red")
 				if(special != "hardmode")
-					M.mind.special_role = "traitor"
+					M.mind.special_role = ROLE_TRAITOR
 					M.verbs += /client/proc/gearspawn_traitor
 					SHOW_TRAITOR_RADIO_TIPS(M)
 				else
-					M.mind.special_role = "hard-mode traitor"
+					M.mind.special_role = ROLE_HARDMODE_TRAITOR
 					SHOW_TRAITOR_HARDMODE_TIPS(M)
-			if("changeling")
-				M.mind.special_role = "changeling"
+			if(ROLE_CHANGELING)
+				M.mind.special_role = ROLE_CHANGELING
 				M.show_text("<h2><font color=red><B>You have mutated into a changeling!</B></font></h2>", "red")
 				M.make_changeling()
-			if("wizard")
-				M.mind.special_role = "wizard"
+			if(ROLE_WIZARD)
+				M.mind.special_role = ROLE_WIZARD
 				M.show_text("<h2><font color=red><B>You have been seduced by magic and become a wizard!</B></font></h2>", "red")
 				SHOW_ADMINWIZARD_TIPS(M)
 				M.verbs += /client/proc/gearspawn_wizard
-			if("vampire")
-				M.mind.special_role = "vampire"
+			if(ROLE_VAMPIRE)
+				M.mind.special_role = ROLE_VAMPIRE
 				M.show_text("<h2><font color=red><B>You have joined the ranks of the undead and are now a vampire!</B></font></h2>", "red")
 				M.make_vampire()
-			if("hunter")
-				M.mind.special_role = "hunter"
+			if(ROLE_HUNTER)
+				M.mind.special_role = ROLE_HUNTER
 				M.mind.assigned_role = "Hunter"
 				M.show_text("<h2><font color=red><B>You have become a hunter!</B></font></h2>", "red")
 				M.make_hunter()
-			if("wrestler")
-				M.mind.special_role = "wrestler"
+			if(ROLE_WRESTLER)
+				M.mind.special_role = ROLE_WRESTLER
 				M.show_text("<h2><font color=red><B>You feel an urgent need to wrestle!</B></font></h2>", "red")
 				M.make_wrestler(1)
-			if("werewolf")
-				M.mind.special_role = "werewolf"
+			if(ROLE_WEREWOLF)
+				M.mind.special_role = ROLE_WEREWOLF
 				M.show_text("<h2><font color=red><B>You have become a werewolf!</B></font></h2>", "red")
 				M.make_werewolf(1)
-			if("grinch")
-				M.mind.special_role = "grinch"
+			if(ROLE_GRINCH)
+				M.mind.special_role = ROLE_GRINCH
 				M.make_grinch()
 				M.show_text("<h2><font color=red><B>You have become a grinch!</B></font></h2>", "red")
-			if("floor_goblin")
-				M.mind.special_role = "floor_goblin"
+			if(ROLE_FLOOR_GOBLIN)
+				M.mind.special_role = ROLE_FLOOR_GOBLIN
 				M.make_floor_goblin()
 				SHOW_TRAITOR_HARDMODE_TIPS(M)
 				M.show_text("<h2><font color=red><B>You have become a floor goblin!</B></font></h2>", "red")
-			if("energy vampire")
+			if(ROLE_ENERGY_VAMPIRE)
 #ifdef SECRETS_ENABLED
-				M.mind.special_role = "energy vampire"
+				M.mind.special_role = ROLE_ENERGY_VAMPIRE
 				M.make_energy_vampire()
 				M.show_text("<h2><font color=red><B>You feel starved for power!</B></font></h2>", "red")
 #else
 				M.show_text("<h2><font color=red><B>NOTHING TO SEE HERE!</B></font></h2>", "red")
 #endif
-			if("gang leader")
+			if(ROLE_GANG_LEADER)
 				// hi so this tried in the past to make someone a gang leader without, uh, giving them a gang
 				// seeing as gang leaders are only allowed during the gang gamemode, this should work
 				// error checks included anyways
@@ -4620,8 +4620,8 @@ var/global/noir = 0
 				boutput(M, "<span class='alert'>Your objectives are to <b>kill the opposing gang leaders</b>, and <b>stash guns, drugs and cash in your locker</b>.</span>")
 				M.verbs += /client/proc/set_gang_base
 				alert(M, "Use the Set Gang Base verb to claim a home turf, and start recruiting people with flyers from the locker!", "You are a gang leader!")
-			if("omnitraitor")
-				M.mind.special_role = "omnitraitor"
+			if(ROLE_OMNITRAITOR)
+				M.mind.special_role = ROLE_OMNITRAITOR
 				M.verbs += /client/proc/gearspawn_traitor
 				M.verbs += /client/proc/gearspawn_wizard
 				M.make_changeling()
@@ -4631,11 +4631,11 @@ var/global/noir = 0
 				M.make_grinch()
 				M.show_text("<h2><font color=red><B>You have become an omnitraitor!</B></font></h2>", "red")
 				SHOW_TRAITOR_OMNI_TIPS(M)
-			if("spy_thief")
+			if(ROLE_SPY_THIEF)
 				if (M.stat || !isliving(M) || isintangible(M) || !ishuman(M) || !M.mind)
 					return
 				M.show_text("<h1><font color=red><B>You have defected to a Spy Thief!</B></font></h1>", "red")
-				M.mind.special_role = "spy_thief"
+				M.mind.special_role = ROLE_SPY_THIEF
 				var/mob/living/carbon/human/tmob = M
 				var/objective_set_path = /datum/objective_set/spy_theft
 				new objective_set_path(M.mind)

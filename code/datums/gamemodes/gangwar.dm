@@ -73,10 +73,10 @@
 		logTheThing("admin", tplayer.current, null, "successfully redeems an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeems an antag token.")
 
-	var/list/chosen_leader = antagWeighter.choose(pool = leaders_possible, role = "gang_leader", amount = num_teams, recordChosen = 1)
+	var/list/chosen_leader = antagWeighter.choose(pool = leaders_possible, role = ROLE_GANG_LEADER, amount = num_teams, recordChosen = 1)
 	leaders |= chosen_leader
 	for (var/datum/mind/leader in leaders)
-		leader.special_role = "gang_leader"
+		leader.special_role = ROLE_GANG_LEADER
 		leaders_possible.Remove(leader)
 
 	return 1
@@ -1267,7 +1267,7 @@
 		target.mind.gang = gang
 		src.gang.members += target.mind
 		if (!target.mind.special_role)
-			target.mind.special_role = "gang_member"
+			target.mind.special_role = ROLE_GANG_MEMBER
 		SHOW_GANG_MEMBER_TIPS(target)
 		var/datum/objective/gangObjective = new /datum/objective/specialist/gang(  )
 		gangObjective.owner = target.mind
@@ -1376,7 +1376,7 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 		if(!haspaint)
 			user.put_in_hand_or_drop(new /obj/item/spray_paint(user.loc))
 
-		if(user.mind.special_role == "gang_leader")
+		if(user.mind.special_role == ROLE_GANG_LEADER)
 			var/obj/item/storage/box/gang_flyers/case = new /obj/item/storage/box/gang_flyers(user.loc)
 			case.name = "[user.mind.gang.gang_name] recruitment material"
 			case.desc = "A briefcase full of flyers advertising the [user.mind.gang.gang_name] gang."

@@ -711,9 +711,9 @@
 
 	if (src.mind) // I think this is kinda important (Convair880).
 		src.mind.register_death()
-		if (src.mind.special_role == "mindslave")
+		if (src.mind.special_role == ROLE_MINDSLAVE)
 			remove_mindslave_status(src, "mslave", "death")
-		else if (src.mind.special_role == "vampthrall")
+		else if (src.mind.special_role == ROLE_VAMPTHRALL)
 			remove_mindslave_status(src, "vthrall", "death")
 		else if (src.mind.master)
 			remove_mindslave_status(src, "otherslave", "death")
