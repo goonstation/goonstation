@@ -1913,7 +1913,7 @@ var/global/noir = 0
 			var/mob/M = locate(href_list["target"])
 			if (!M) return
 			if (alert("Make [M] a floor goblin?", "Make Floor Goblin", "Yes", "No") == "Yes")
-				evilize(M, "floor_goblin")
+				evilize(M, ROLE_FLOOR_GOBLIN)
 
 		if ("remove_traitor")
 			if ( src.level < LEVEL_SA )
@@ -2012,31 +2012,31 @@ var/global/noir = 0
 					return
 				if(antagonize == "Yes")
 					if (issilicon(M))
-						evilize(M, "traitor")
+						evilize(M, ROLE_TRAITOR)
 					else if (ismobcritter(M))
 						// The only role that works for all critters at this point is hard-mode traitor, really. The majority of existing
 						// roles don't work for them, most can't wear clothes and some don't even have arms and/or can pick things up.
 						// That said, certain roles are mostly compatible and thus selectable.
-						var/list/traitor_types = list("Hard-mode traitor", "Wrestler", "Grinch")
-						var/selection = input(usr, "Select traitor type.", "Traitorize", "Traitor") as null|anything in traitor_types
+						var/list/traitor_types = list(ROLE_HARDMODE_TRAITOR, ROLE_WRESTLER, ROLE_GRINCH)
+						var/selection = input(usr, "Select traitor type.", "Traitorize", ROLE_HARDMODE_TRAITOR) as null|anything in traitor_types
 						switch (selection)
-							if ("Hard-mode traitor")
-								evilize(M, "traitor", "hardmode")
+							if (ROLE_HARDMODE_TRAITOR)
+								evilize(M, ROLE_TRAITOR, "hardmode")
 							else
 								evilize(M, selection)
 						/*	else
 								SPAWN_DBG(0) alert("An error occurred, please try again.")*/
 					else
-						var/list/traitor_types = list("Traitor", "Wizard", "Changeling", "Vampire", "Werewolf", "Hunter", "Wrestler", "Grinch", "Omnitraitor", "Spy_Thief", "Energy Vampire")
+						var/list/traitor_types = list(ROLE_TRAITOR, ROLE_WIZARD, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_WEREWOLF, ROLE_HUNTER, ROLE_WRESTLER, ROLE_GRINCH, ROLE_OMNITRAITOR, ROLE_SPY_THIEF, ROLE_ENERGY_VAMPIRE)
 						if(ticker?.mode && istype(ticker.mode, /datum/game_mode/gang))
-							traitor_types += "Gang Leader"
-						var/selection = input(usr, "Select traitor type.", "Traitorize", "Traitor") as null|anything in traitor_types
+							traitor_types += ROLE_GANG_LEADER
+						var/selection = input(usr, "Select traitor type.", "Traitorize", ROLE_TRAITOR) as null|anything in traitor_types
 						switch(selection)
-							if("Traitor")
+							if(ROLE_TRAITOR)
 								if (alert("Hard Mode?","Treachery","Yes","No") == "Yes")
-									evilize(M, "traitor", "hardmode")
+									evilize(M, ROLE_TRAITOR, "hardmode")
 								else
-									evilize(M, "traitor")
+									evilize(M, ROLE_TRAITOR)
 							else
 								evilize(M, selection)
 							/*else
@@ -2457,11 +2457,11 @@ var/global/noir = 0
 								alert("The game hasn't started yet!")
 								return
 
-							var/which_traitor = input("What kind of traitor?","Everyone's a Traitor") as null|anything in list("Traitor","Wizard","Changeling","Werewolf","Vampire","Energy Vampire","Hunter","Wrestler","Grinch","Omnitraitor")
+							var/which_traitor = input("What kind of traitor?","Everyone's a Traitor") as null|anything in list(ROLE_TRAITOR,ROLE_WIZARD,ROLE_CHANGELING,ROLE_WEREWOLF,ROLE_VAMPIRE,ROLE_ENERGY_VAMPIRE,ROLE_HUNTER,ROLE_WRESTLER,ROLE_GRINCH,ROLE_OMNITRAITOR)
 							if(!which_traitor)
 								return
 							var/hardmode = null
-							if (which_traitor == "Traitor")
+							if (which_traitor == ROLE_TRAITOR)
 								if (alert("Hard Mode?","Everyone's a Traitor","Yes","No") == "Yes")
 									hardmode = "hardmode"
 							var/custom_objective = input("What should the objective be?","Everyone's a Traitor") as null|text
