@@ -518,6 +518,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/cookie_chocolate_chip(src)
 			src.recipes += new /datum/cookingrecipe/cookie_iron(src)
 			src.recipes += new /datum/cookingrecipe/cookie_butter(src)
+			src.recipes += new /datum/cookingrecipe/cookie_peanut(src)
 			src.recipes += new /datum/cookingrecipe/cookie(src)
 			src.recipes += new /datum/cookingrecipe/moon_pie_spooky(src)
 			src.recipes += new /datum/cookingrecipe/moon_pie_jaffa(src)
