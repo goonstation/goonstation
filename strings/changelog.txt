@@ -1,4 +1,8 @@
 
+(t)fri aug 06 21
+(u)Tarmunora
+(e)⚖|balance
+(*)removed melee meatshielding. bet you didn't know it existed in the first place
 (t)tue aug 10 21
 (u)TTerc
 (p)5709
