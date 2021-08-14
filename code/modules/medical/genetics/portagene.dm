@@ -4,7 +4,6 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "PAG_0"
 	anchored = 0
-	circuit_type = /obj/item/circuitboard/portagene
 	var/mob/occupant = null
 	var/datum/character_preview/multiclient/occupant_preview = null
 	var/locked = 0
@@ -161,8 +160,14 @@
 			qdel(G)
 			return
 		else
-			..()
+			src.attack_hand(user)
 		return
+
+	set_broken()
+		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+		smoke.set_up(5, 0, src)
+		smoke.start()
+		qdel(src)
 
 	power_change()
 		return
