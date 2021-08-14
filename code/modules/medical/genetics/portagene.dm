@@ -137,13 +137,16 @@
 				A.anchored = 1
 				qdel(src)
 
-		else if (istype(W,/obj/item/genetics_injector/dna_activator))
-			var/obj/item/genetics_injector/dna_activator/DNA = W
-			if (DNA.expended_properly)
-				user.drop_item()
-				qdel(DNA)
-				activated_bonus(user)
-			else if (DNA.uses < 1)
+		else if (istype(W,/obj/item/genetics_injector))
+			var/obj/item/genetics_injector/DNA = W
+			if (istype(W,/obj/item/genetics_injector/dna_activator))
+				var/obj/item/genetics_injector/dna_activator/DNA_A = W
+				if (DNA_A.expended_properly)
+					user.drop_item()
+					qdel(DNA_A)
+					activated_bonus(user)
+					return
+			if (DNA.uses < 1)
 				// You get nothing from these but at least let people clean em up
 				boutput(user, "You dispose of the [DNA].")
 				user.drop_item()
