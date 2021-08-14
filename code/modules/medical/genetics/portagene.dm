@@ -4,6 +4,7 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "PAG_0"
 	anchored = 0
+	circuit_type = /obj/item/circuitboard/portagene
 	var/mob/occupant = null
 	var/datum/character_preview/multiclient/occupant_preview = null
 	var/locked = 0
@@ -119,25 +120,7 @@
 		.= 1
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (isscrewingtool(W) && (src.status & BROKEN))
-			src.icon_state = "PAG_broken"
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-			if(do_after(user, 2 SECONDS))
-				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-				G.set_loc(src.loc)
-				var/obj/item/circuitboard/genetics/M = new /obj/item/circuitboard/genetics( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				qdel(src)
-
-		else if (istype(W,/obj/item/genetics_injector/dna_activator))
+		if (istype(W,/obj/item/genetics_injector/dna_activator))
 			var/obj/item/genetics_injector/dna_activator/DNA = W
 			if (DNA.expended_properly)
 				user.drop_item()
@@ -178,7 +161,7 @@
 			qdel(G)
 			return
 		else
-			src.attack_hand(user)
+			..()
 		return
 
 	power_change()
