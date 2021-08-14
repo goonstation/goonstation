@@ -50,14 +50,23 @@
 	icon_state = "tree" // changed from 0.0
 	anchored = 1
 	layer = EFFECTS_LAYER_UNDER_3
+
 	pixel_x = -20
 	density = 1
 	opacity = 0 // this causes some of the super ugly lighting issues too
 
 	elm_random
+		layer = EFFECTS_LAYER_UNDER_1 // match shrubs
 		New()
 			. = ..()
 			src.dir = pick(cardinal - SOUTH)
+
+	snow_random
+		icon_state = "snowtree"
+		layer = EFFECTS_LAYER_UNDER_1 // match shrubs
+		New()
+			. = ..()
+			src.dir = pick(cardinal)
 
 // what the hell is all this and why wasn't it just using a big icon? the lighting system gets all fucked up with this stuff
 
