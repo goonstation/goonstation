@@ -282,6 +282,35 @@
 
 		shipped_thing.throw_at(target, 100, 1)
 
+	proc/clear_path_to_market(list/obj/objs, list/turf/turfs)
+		var/turf/T
+		sleep(5 SECONDS)
+		var/list/bounds = get_area_turfs(/area/supply/delivery_point)
+		bounds += get_area_turfs(/area/supply/sell_point)
+		bounds += get_area_turfs(/area/supply/spawn_point)
+		var/min_x = INFINITY
+		var/max_x = 0
+		var/min_y = INFINITY
+		var/max_y = 0
+		for(T in bounds)
+			min_x = min(min_x, T.x)
+			min_y = min(min_y, T.y)
+			max_x = max(max_x, T.x)
+			max_y = max(max_y, T.y)
+		var/list/turf/to_clear = block(locate(min_x, min_y, Z_LEVEL_STATION), locate(max_x, max_y, Z_LEVEL_STATION))
+		for(T in to_clear)
+			//Wacks asteroids and skip normal turfs that belong
+			if(istype(T, /turf/simulated/wall/asteroid))
+				T.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid, force=TRUE)
+			else if(!istype(T, /turf/unsimulated))
+				continue
+
+			//Uh, make sure we don't block the shipping lanes!
+			for(var/atom/A in T)
+				if(A.density)
+					qdel(A)
+
+
 // Debugging and admin verbs (mostly coder)
 
 /client/proc/cmd_modify_market_variables()
