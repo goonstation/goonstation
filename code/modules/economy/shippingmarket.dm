@@ -282,7 +282,7 @@
 
 		shipped_thing.throw_at(target, 100, 1)
 
-	proc/clear_path_to_market(list/obj/objs, list/turf/turfs)
+	proc/clear_path_to_market()
 		var/turf/T
 		var/list/bounds = get_area_turfs(/area/supply/delivery_point)
 		bounds += get_area_turfs(/area/supply/sell_point)
@@ -301,6 +301,7 @@
 			//Wacks asteroids and skip normal turfs that belong
 			if(istype(T, /turf/simulated/wall/asteroid))
 				T.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid, force=TRUE)
+				continue
 			else if(!istype(T, /turf/unsimulated))
 				continue
 
