@@ -118,8 +118,40 @@
 
 		.= 1
 
+	set_broken()
+		if (status & BROKEN)
+			return
+		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+		smoke.set_up(5, 0, src)
+		smoke.start()
+		src.go_out()
+		icon_state = "PAG_broken"
+		light.disable()
+		status |= BROKEN
+
+	attack_hand(mob/user as mob)
+		if (src.status & BROKEN)
+			boutput(user, "<span class='notice'>The Port-A-Gene is busted! You'll need at least two sheets of glass to fix it.</span>")
+			return
+		. = ..()
+
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W,/obj/item/genetics_injector/dna_activator))
+		if (istype(W, /obj/item/sheet) && (src.status & BROKEN))
+			var/obj/item/sheet/S = W
+			if (S.material && S.material.material_flags & MATERIAL_CRYSTAL)
+				if (S.amount >= 2)
+					W.change_stack_amount(-2)
+					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+					src.status &= !BROKEN
+					src.icon_state = "PAG_0"
+					light.enable()
+					boutput(user, "<span class='notice'>You repair the Port-A-Gene!</span>")
+				else
+					boutput(user, "<span class='alert'>You need at least two sheets of glass to repair the Port-A-Gene.</span>")
+			else
+				boutput(user, "<span class='alert'>This is the wrong kind of material. You'll need a type of glass or crystal.</span>")
+
+		else if (istype(W,/obj/item/genetics_injector/dna_activator))
 			var/obj/item/genetics_injector/dna_activator/DNA = W
 			if (DNA.expended_properly)
 				user.drop_item()
@@ -163,12 +195,6 @@
 			src.attack_hand(user)
 		return
 
-	set_broken()
-		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
-		smoke.set_up(5, 0, src)
-		smoke.start()
-		qdel(src)
-
 	power_change()
 		return
 
@@ -193,6 +219,9 @@
 		set src in oview(1)
 		set category = "Local"
 
+		if (src.status & BROKEN)
+			boutput(usr, "<span class='alert'>It's broken! You'll need to repair it first.</span>")
+			return
 		if (!isalive(usr))
 			return
 		if (src.locked)
@@ -250,6 +279,9 @@
 			return
 
 		if (src.locked)
+			return
+
+		if (src.status & BROKEN)
 			return
 
 		src.ui_interact(M, null)
