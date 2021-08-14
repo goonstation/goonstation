@@ -2736,19 +2736,25 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 	if(src.holder.level >= LEVEL_ADMIN)
 		switch(alert("Turn space into a swamp? This is probably going to lag a bunch when it happens and there's no easy undo!",,"Yes","No"))
 			if("Yes")
+				var/rain = alert("Should it be raining?",,"Yes", "No", "Particles!")
+				rain = (rain == "No") ? null : rain
+				var/image/weather = image('icons/turf/water.dmi',"fast_rain", layer = EFFECTS_LAYER_BASE)
+				weather.alpha = 200
+				weather.plane = PLANE_NOSHADOW_ABOVE
 				var/image/I = new /image/ambient
 				var/datum/map_generator/jungle_generator/map_generator = new
 				var/list/space = list()
-				var/area_overlay_set = FALSE
 				for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 					space += S
-					if(!area_overlay_set)
-						var/area/A = S.loc
-						var/icon/weather = icon('icons/turf/water.dmi',"fast_rain")
-						A.overlays += weather
-						area_overlay_set = TRUE
 				map_generator.generate_terrain(space)
 				for (var/turf/S in space)
+					if(rain)
+						if(istype(S,/turf/unsimulated/floor/auto/swamp))
+							S.ReplaceWith(/turf/unsimulated/floor/auto/swamp/rain, force=TRUE)
+						if(rain == "Yes")
+							S.UpdateOverlays(weather, "rain")
+						else
+							new /obj/effects/rain/sideways/tile(S)
 					I.color = ambient_light
 					S.UpdateOverlays(I, "ambient")
 				logTheThing("admin", src, null, "turned space into a swamp.")
