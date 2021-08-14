@@ -64,6 +64,8 @@
 	snow_random
 		icon_state = "snowtree"
 		layer = EFFECTS_LAYER_UNDER_1 // match shrubs
+		plane = PLANE_NOSHADOW_ABOVE // sprites have their own shadow and the shadow rendering mucks with blending
+		pixel_x = -32
 		New()
 			. = ..()
 			src.dir = pick(cardinal)

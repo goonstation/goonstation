@@ -43,7 +43,7 @@
 	flora_density = 5
 
 /datum/biome/snow/forest
-	flora_types = list(/obj/tree1/elm_random = 50, /obj/tree1/snow_random = 50, /obj/shrub/snow = 100, /obj/shrub/random = 50, /obj/stone/random = 10, /obj/decal/fakeobjects/smallrocks = 10)
+	flora_types = list(/obj/tree1/snow_random = 50, /obj/shrub/snow = 100, /obj/stone/random = 10, /obj/decal/fakeobjects/smallrocks = 10)
 	flora_density = 20
 
 /datum/biome/snow/forest/thick
