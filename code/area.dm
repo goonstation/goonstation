@@ -3165,7 +3165,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 
 	CanEnter( var/atom/movable/A )
 		var/mob/living/M = A
-		if( istype(M) && M.mind && M.mind.special_role != "wizard" && isliving(M) )
+		if( istype(M) && M.mind && M.mind.special_role != ROLE_WIZARD && isliving(M) )
 			if(M.client && M.client.holder)
 				return 1
 			boutput( M, "<span class='alert'>A magical barrier prevents you from entering!</span>" ) //or something

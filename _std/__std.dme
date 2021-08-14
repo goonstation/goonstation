@@ -52,6 +52,7 @@
 #include "defines\projectiles.dm"
 #include "defines\radio.dm"
 #include "defines\robot.dm"
+#include "defines\roles.dm"
 #include "defines\shuttle.dm"
 #include "defines\sight.dm"
 #include "defines\singing.dm"

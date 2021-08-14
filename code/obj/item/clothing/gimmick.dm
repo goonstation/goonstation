@@ -693,6 +693,7 @@
 	icon_state = "adeptus"
 	item_state = "adeptus"
 	permeability_coefficient = 0.50
+	over_hair = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
 	wear_layer = MOB_OVERLAY_BASE
 
@@ -852,6 +853,7 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "monkey"
 	item_state = "monkey"
+	over_hair = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
 	c_flags = COVERSMOUTH | COVERSEYES
 
@@ -888,6 +890,7 @@
 	item_state = "light_borg"
 	body_parts_covered = TORSO|LEGS|ARMS
 	c_flags = COVERSMOUTH | COVERSEYES
+	over_hair = TRUE
 	see_face = 0.0
 
 /obj/item/clothing/under/gimmick/utena //YJHTGHTFH's utena suit
@@ -1330,6 +1333,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	icon_state = "joyful"
 	body_parts_covered = TORSO|LEGS|ARMS
 	wear_layer = MOB_OVERLAY_BASE
+	over_hair = TRUE
 
 /obj/item/clothing/head/rando
 	name = "red skull mask and cowl"
@@ -1478,6 +1482,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	body_parts_covered = HEAD|TORSO|LEGS|ARMS
 	wear_layer = MOB_OVERLAY_BASE
 	icon_state = "hotdogsuit"
+	over_hair = TRUE
 
 /obj/item/clothing/under/gimmick/vampire
 	name = "absurdly stylish suit and vest"

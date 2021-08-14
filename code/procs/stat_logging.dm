@@ -130,15 +130,15 @@
 		message["traitor_type"] = traitor_type
 		var/special
 		switch(traitor_type)
-			if ("changeling")
+			if (ROLE_CHANGELING)
 				if (M.current)
 					var/datum/abilityHolder/changeling/C = M.current.get_ability_holder(/datum/abilityHolder/changeling)
 					if (C && istype(C))
 						special = C.absorbtions
-			if ("vampire")
+			if (ROLE_VAMPIRE)
 				if (M.current)
 					special = M.current.get_vampire_blood(1)
-			if ("wizard")
+			if (ROLE_WIZARD)
 				if (M.current)
 					var/datum/abilityHolder/wizard/W = M.current.get_ability_holder(/datum/abilityHolder/wizard)
 					if (W && istype(W))
@@ -147,11 +147,11 @@
 							if (spells != "")
 								spells += ", "
 							spells += S.name
-			if ("werewolf")
+			if (ROLE_WEREWOLF)
 				for (var/datum/objective/specialist/werewolf/feed/O in M.objectives)
 					if (O && istype(O, /datum/objective/specialist/werewolf/feed/))
 						special = length(O.mobs_fed_on)
-			if ("vampthrall")
+			if (ROLE_VAMPTHRALL)
 				if (M.master)
 					var/mob/mymaster = whois_ckey_to_mob_reference(M.master)
 					if (mymaster) special = mymaster.real_name
@@ -159,16 +159,16 @@
 				if (M.master)
 					var/mob/mymaster = whois_ckey_to_mob_reference(M.master)
 					if (mymaster) special = mymaster.real_name
-			if ("mindslave")
+			if (ROLE_MINDSLAVE)
 				if (M.master)
 					var/mob/mymaster = whois_ckey_to_mob_reference(M.master)
 					if (mymaster) special = mymaster.real_name
-			if ("nukeop")
+			if (ROLE_NUKEOP)
 				if (istype(ticker.mode, /datum/game_mode/nuclear))
 					special = syndicate_name()
 					if (ticker.mode:nuke_detonated)
 						message["success"] = 1
-			if ("spy_thief")
+			if (ROLE_SPY_THIEF)
 				special = "Bounties claimed: "
 				for(var/stolen_item_name in M.spy_stolen_items)
 					if (stolen_item_name != "")

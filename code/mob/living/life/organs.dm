@@ -62,8 +62,8 @@
 	else if (oH.brain.loc != src)
 		oH.brain = null
 
-	if (!oH.heart && !src.nodamage)
-		if (!ischangeling(src))
+	if (!oH.heart)
+		if (!ischangeling(src) && !src.nodamage)
 			if (src.get_oxygen_deprivation())
 				src.take_brain_damage(3)
 			else if (prob(10))
