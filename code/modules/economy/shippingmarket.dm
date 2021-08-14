@@ -284,7 +284,6 @@
 
 	proc/clear_path_to_market(list/obj/objs, list/turf/turfs)
 		var/turf/T
-		sleep(5 SECONDS)
 		var/list/bounds = get_area_turfs(/area/supply/delivery_point)
 		bounds += get_area_turfs(/area/supply/sell_point)
 		bounds += get_area_turfs(/area/supply/spawn_point)
