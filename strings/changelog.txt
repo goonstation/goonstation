@@ -1,9 +1,9 @@
 
-(t)sat aug 07 21
+(t)sun aug 15 21
 (u)Tarmunora
 (e)⚖|balance
 (+)port a sci remote costs a telecrystal to print
-(t)fri aug 06 21
+(t)fri aug 13 21
 (u)Tarmunora
 (e)⚖|balance
 (*)removed melee meatshielding. bet you didn't know it existed in the first place
