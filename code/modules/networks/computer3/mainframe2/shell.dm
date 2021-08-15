@@ -221,7 +221,7 @@
 						if (pipetemp)
 							echo_text = pipetemp
 
-						var/add_newline = 1
+						var/add_newline = TRUE
 						if (command_list[1] == "-n")
 							add_newline = 0
 							command_list.Cut(1,2)
