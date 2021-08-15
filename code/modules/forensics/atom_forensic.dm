@@ -177,10 +177,8 @@
 /atom/proc/clean_forensic()
 	if (!src)
 		return
-
 	if (!(src.flags & FPRINT))
 		return
-
 	// The first version accidently looped through everything for every atom. Consequently, cleaner grenades caused horrendous lag on my local server. Woops.
 	if (!ismob(src)) // Mobs are a special case.
 		if (isobj(src))
@@ -201,6 +199,9 @@
 				#else
 				CI.UpdateOverlays(null, "blood_splatter")
 				#endif
+		if (istype(src, /obj/item/clothing))
+			var/obj/item/clothing/C = src
+			C.clean_stains()
 
 		else if (istype(src, /obj/decal/cleanable) || istype(src, /obj/reagent_dispensers/cleanable))
 			pool(src)
@@ -238,6 +239,9 @@
 						#else
 						check.UpdateOverlays(null, "blood_splatter")
 						#endif
+				if (istype(check, /obj/item/clothing))
+					var/obj/item/clothing/C = check
+					C.clean_stains()
 
 			if (isnull(M.gloves)) // Can't clean your hands when wearing gloves.
 				M.add_forensic_trace("bDNA", M.blood_DNA)
