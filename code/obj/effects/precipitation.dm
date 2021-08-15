@@ -1,43 +1,3 @@
-particles/snow
-	width = 672
-	height = 480
-	count = 2500    // 2500 particles
-	spawning = 12    // 12 new particles per 0.1s
-	bound1 = list(-1000, -240, -1000)   // end particles at Y=-240
-	lifespan = 600  // live for 60s max
-	fade = 50       // fade out over the last 5s if still on screen
-	// spawn within a certain x,y,z space
-	position = generator("box", list(-350,50,0), list(300,350,50))
-	// control how the snow falls
-	gravity = list(0, -1)
-	friction = 0.3  // shed 30% of velocity and drift every 0.1s
-	drift = generator("sphere", 0, 2)
-
-	dense
-		spawning = 48
-
-	mega_dense
-		spawning = 100
-		count = 5000
-
-	grey
-		color = generator("color", "#FFF", "#AAA")
-		spawning = 100
-		count = 5000
-
-obj/effects/snow
-	particles = new/particles/snow
-	plane = PLANE_NOSHADOW_ABOVE
-	client_attach
-		screen_loc = "CENTER"
-	dense
-		particles = new/particles/snow/dense
-	mega_dense
-		particles = new/particles/snow/mega_dense
-	grey
-		particles = new/particles/snow/grey
-
-
 particles/rain
 	width = 672
 	height = 480
@@ -93,4 +53,3 @@ obj/effects/rain
 			// Offset pixel position to align bounding boxes and visual area
 			pixel_y = 16
 			pixel_x = -16
-
