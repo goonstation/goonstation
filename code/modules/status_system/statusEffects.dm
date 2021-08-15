@@ -1607,3 +1607,28 @@
 				P.create_overlay(states[2], "#ff8820", direct, 'icons/effects/blood.dmi')
 		else
 			P.create_overlay("smear2", "#ff8820", direct, 'icons/effects/blood.dmi')
+
+/datum/statusEffect/magnetized
+	id = "magnetized"
+	name = "Magnetized"
+	desc = "You've been given a magnetic charge"
+	icon_state = "magnetized"
+	unique = TRUE
+	maxDuration = 3 MINUTES
+	var/charge = null
+
+	onAdd(optional)
+		. = ..()
+		if (!ismob(owner)) return
+		var/mob/M = owner
+		if (optional)
+			src.charge = optional
+		else
+			src.charge = pick("magnets_pos", "magnets_neg")
+		M.bioHolder.AddEffect(src.charge)
+
+	onRemove()
+		. = ..()
+		if (!ismob(owner)) return
+		var/mob/M = owner
+		M.bioHolder.RemoveEffect(charge)
