@@ -1,5 +1,9 @@
 
 (t)sun aug 15 21
+(u)DoctorStupid
+(p)5694
+(e)|
+(+)Donut boxes, egg cartons, and lollipop bowls are easier to move around in your inventory and can be re-closed by clicking/activating them in hand.
 (u)Tarmunora
 (e)⚖|balance
 (+)port a sci remote costs a telecrystal to print
