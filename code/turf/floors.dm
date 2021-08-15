@@ -1028,7 +1028,9 @@ DEFINE_FLOORS(marble/border_wb,
 		src.set_dir(pick(cardinal))
 
 /turf/simulated/floor/snow/snowball
+
 	New()
+		..()
 		AddComponent(/datum/component/snowballs)
 
 /turf/simulated/floor/snow/green
