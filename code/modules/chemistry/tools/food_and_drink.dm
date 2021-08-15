@@ -245,7 +245,7 @@
 						var/obj/item/reagent_containers/food/snacks/plant/P = src
 						var/doseed = 1
 						var/datum/plantgenes/SRCDNA = P.plantgenes
-						if (!SRCDNA || HYPCheckCommut(SRCDNA,"Seedless")) doseed = 0
+						if (!SRCDNA || HYPCheckCommut(SRCDNA, /datum/plant_gene_strain/seedless)) doseed = 0
 						if (doseed)
 							var/datum/plant/stored = P.planttype
 							if (istype(stored) && !stored.isgrass)
