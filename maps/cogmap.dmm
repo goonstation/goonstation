@@ -16079,7 +16079,9 @@
 	},
 /area/station/security/main)
 "aQa" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 8
+	},
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "aQb" = (
