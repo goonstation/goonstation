@@ -104,6 +104,7 @@ var/global/datum/unit_test_controller/unit_tests = new()
 	var/list/fail_reasons
 
 /datum/unit_test/New()
+	SHOULD_CALL_PARENT(TRUE)
 	..()
 	allocated = new
 	if(landmarks[LANDMARK_BOTTOM_LEFT])
@@ -114,7 +115,7 @@ var/global/datum/unit_test_controller/unit_tests = new()
 	TEST_ASSERT(isturf(run_loc_floor_bottom_left), "run_loc_floor_bottom_left was not a floor ([run_loc_floor_bottom_left])")
 	TEST_ASSERT(isturf(run_loc_floor_top_right), "run_loc_floor_top_right was not a floor ([run_loc_floor_top_right])")
 
-/datum/unit_test/proc/Destroy()
+/datum/unit_test/disposing()
 	for(var/elem in allocated)
 		qdel(elem)
 	allocated.len = 0
@@ -125,7 +126,7 @@ var/global/datum/unit_test_controller/unit_tests = new()
 			if (istype(content, /obj/landmark))
 				continue
 			qdel(content)
-	return
+	return ..()
 
 /datum/unit_test/proc/Run()
 	Fail("Run() called parent or not implemented")

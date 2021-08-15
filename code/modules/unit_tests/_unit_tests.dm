@@ -35,10 +35,6 @@
 /// Constants indicating unit test completion status
 #define UNIT_TEST_PASSED 0
 #define UNIT_TEST_FAILED 1
-#define UNIT_TEST_SKIPPED 2
-
-/// A trait source when adding traits through unit tests
-#define TRAIT_SOURCE_UNIT_TESTS "unit_tests"
 
 #include "deletions.dm"
 #include "reagent_id_typos.dm"
