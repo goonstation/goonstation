@@ -213,7 +213,7 @@
 				src.item.attack_self(src)
 			else
 				if(!isitem(src.item))
-					src.item.attack_hand(src)
+					src.item.Attackhand(src)
 				else //This shouldnt ever happen.
 					src.item.Attackby(src.item, src)
 		else

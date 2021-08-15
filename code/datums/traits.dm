@@ -1001,7 +1001,7 @@ obj/trait/pilot
 			if(!owner.equipped())
 				for(var/obj/item/I in view(1, owner))
 					if(!I.anchored && isturf(I.loc))
-						I.attack_hand(owner)
+						I.Attackhand(owner)
 						if(prob(12))
 							owner.emote(pick("grin", "smirk", "chuckle", "smug"))
 						break

@@ -3372,7 +3372,7 @@
 				src.changeStatus("stunned", 3 SECONDS)
 
 		else
-			AM.attack_hand(src)	// nice catch, hayes. don't ever fuckin do it again
+			AM.Attackhand(src)	// nice catch, hayes. don't ever fuckin do it again
 			src.visible_message("<span class='alert'>[src] catches the [AM.name]!</span>")
 			logTheThing("combat", src, null, "catches [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
 			src.throw_mode_off()

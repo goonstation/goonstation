@@ -1035,7 +1035,7 @@
 			src.load_item(W,user)
 
 		else if (src.panelopen && (issnippingtool(W) || ispulsingtool(W)))
-			src.attack_hand(user)
+			src.Attackhand(user)
 			return
 
 		else if(scan_card(W))

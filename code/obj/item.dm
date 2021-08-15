@@ -1070,9 +1070,9 @@
 	if (M.equipped())
 		M.drop_item()
 		SPAWN_DBG(1 DECI SECOND)
-			src.attack_hand(M)
+			src.Attackhand(M)
 	else
-		src.attack_hand(M)
+		src.Attackhand(M)
 	M.next_click = world.time + src.click_delay
 
 /obj/item/get_desc()

@@ -37,9 +37,7 @@
 	proc/attack_hand(atom/target, var/mob/user, var/reach, params, location, control)
 		if(!target) // fix runtime Cannot execute null.attack hand().
 			return
-		if(SEND_SIGNAL(target, COMSIG_ATTACKHAND, user))
-			return
-		target.attack_hand(user, params, location, control)
+		target.Attackhand(user, params, location, control)
 
 	proc/harm(mob/living/target, var/mob/living/user)
 		if (special_next)
@@ -382,7 +380,7 @@
 			return
 
 		if (!istype(user))
-			target.attack_hand(user, params, location, control)
+			target.Attackhand(user, params, location, control)
 			return
 
 		if (ismob(target))
@@ -441,7 +439,7 @@
 			return
 
 		if (!istype(user))
-			target.attack_hand(user, params, location, control)
+			target.Attackhand(user, params, location, control)
 			return
 
 		if (ismob(target))
@@ -495,7 +493,7 @@
 			else if(istype(target, /obj/structure/woodwall))
 				var/obj/window/O = target
 				user.lastattacked = O
-				O.attack_hand(user)
+				O.Attackhand(user)
 
 			else if(istype(target, /obj/machinery/bot))
 				var/obj/machinery/bot/O = target
@@ -527,7 +525,7 @@
 			return
 
 		if (!istype(user) || !ismob(target))
-			target.attack_hand(user)
+			target.Attackhand(user)
 			return
 
 		if(check_target_immunity( target ))
@@ -574,7 +572,7 @@
 			return
 
 		if (!istype(user))
-			target.attack_hand(user)
+			target.Attackhand(user)
 			return
 
 		if (ismob(target))
@@ -639,7 +637,7 @@
 		var/quality = src.holder.quality
 
 		if (!istype(user))
-			target.attack_hand(user, params, location, control)
+			target.Attackhand(user, params, location, control)
 			return
 
 		if (isobj(target))
@@ -717,7 +715,7 @@
 
 
 		if (!istype(user))
-			target.attack_hand(user, params, location, control)
+			target.Attackhand(user, params, location, control)
 			return
 
 		if (isitem(target))
@@ -798,7 +796,7 @@
 			return 0
 
 		if (!istype(user))
-			target.attack_hand(user, params, location, control)
+			target.Attackhand(user, params, location, control)
 			return
 
 		if (istype(target, /obj/critter))
@@ -850,7 +848,7 @@
 		if (isobj(target))
 			switch (user.smash_through(target, list("window", "grille", "door")))
 				if (0)
-					target.attack_hand(user, params, location, control)
+					target.Attackhand(user, params, location, control)
 					return
 				if (1)
 					user.lastattacked = target
@@ -873,7 +871,7 @@
 			return
 
 		if (!istype(user) || !ismob(target))
-			target.attack_hand(user)
+			target.Attackhand(user)
 			return
 
 		if(check_target_immunity( target ))
@@ -900,7 +898,7 @@
 			return
 
 		if (!istype(user) || !ismob(target))
-			target.attack_hand(user)
+			target.Attackhand(user)
 			return
 
 		if(check_target_immunity( target ))
@@ -1006,7 +1004,7 @@
 			return
 
 		if (!istype(user) || !ismob(target))
-			target.attack_hand(user)
+			target.Attackhand(user)
 			return
 		if(check_target_immunity( target ))
 			return 0
@@ -1110,13 +1108,13 @@
 		if(check_target_immunity( target ))
 			return 0
 		if (!istype(user))
-			target.attack_hand(user, params, location, control)
+			target.Attackhand(user, params, location, control)
 			return
 
 		if (isobj(target))
 			switch (user.smash_through(target, list("door")))
 				if (0)
-					target.attack_hand(user, params, location, control)
+					target.Attackhand(user, params, location, control)
 					return
 				if (1)
 					return
@@ -1130,7 +1128,7 @@
 		if(check_target_immunity( target ))
 			return 0
 		if (!istype(user) || !ismob(target))
-			target.attack_hand(user)
+			target.Attackhand(user)
 			return
 
 		if (ismob(target))
@@ -1149,7 +1147,7 @@
 		//var/quality = src.holder.quality
 
 		if (!istype(user))
-			target.attack_hand(user, params, location, control)
+			target.Attackhand(user, params, location, control)
 			return
 
 		if (isobj(target))
@@ -1227,7 +1225,7 @@
 			return
 
 		if (!istype(user))
-			target.attack_hand(user, params, location, control)
+			target.Attackhand(user, params, location, control)
 			return
 
 		if (isobj(target))
@@ -1316,7 +1314,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 		if(check_target_immunity( target ))
 			return
 		if (!istype(user))
-			target.attack_hand(user, params, location, control)
+			target.Attackhand(user, params, location, control)
 			return
 		if (isobj(target))
 			if (isitem(target))
@@ -1429,7 +1427,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 		//var/quality = src.holder.quality
 
 		if (!istype(user))
-			target.attack_hand(user, params, location, control)
+			target.Attackhand(user, params, location, control)
 			return
 		..()
 

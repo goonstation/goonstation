@@ -231,7 +231,7 @@
 				src.scan = I
 				src.accessed_record = FindBankAccountByName(src.scan.registered)
 				src.updateUsrDialog()
-		else src.attack_hand(user)
+		else src.Attackhand(user)
 		return
 
 	attack_hand(var/mob/user as mob)

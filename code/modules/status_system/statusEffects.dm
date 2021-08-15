@@ -1020,7 +1020,7 @@
 
 		clicked(list/params)
 			if(H.buckled)
-				H.buckled.attack_hand(H)
+				H.buckled.Attackhand(H)
 
 		onUpdate(timePassed)
 			if (H && !H.buckled)
