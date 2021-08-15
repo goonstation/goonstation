@@ -37,7 +37,8 @@
 	proc/attack_hand(atom/target, var/mob/user, var/reach, params, location, control)
 		if(!target) // fix runtime Cannot execute null.attack hand().
 			return
-
+		if(SEND_SIGNAL(target, COMSIG_ATTACKHAND, user))
+			return
 		target.attack_hand(user, params, location, control)
 
 	proc/harm(mob/living/target, var/mob/living/user)
