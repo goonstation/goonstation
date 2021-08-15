@@ -223,7 +223,7 @@
 
 						var/add_newline = TRUE
 						if (command_list[1] == "-n")
-							add_newline = 0
+							add_newline = FALSE
 							command_list.Cut(1,2)
 
 						if(istype(command_list) && (command_list.len > 0))
