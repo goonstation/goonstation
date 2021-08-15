@@ -104,7 +104,6 @@ var/global/datum/unit_test_controller/unit_tests = new()
 	var/list/fail_reasons
 
 /datum/unit_test/New()
-	SHOULD_CALL_PARENT(TRUE)
 	..()
 	allocated = new
 	if(landmarks[LANDMARK_BOTTOM_LEFT])
