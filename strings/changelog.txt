@@ -1,5 +1,9 @@
 
 (t)sun aug 15 21
+(u)Arthur Holiday
+(p)5667
+(e)🐛⚖|bug, balance
+(+)Hemostats now will fix EVERY bleeding caused by surgery, instead of only a few of them.
 (u)DoctorStupid
 (p)5694
 (e)|
