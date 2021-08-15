@@ -100,7 +100,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		surgeon, "<span class='alert'>You make a [fluff]cut into [patient]'s [target_area] with [src]!</span>")
 
 		patient.TakeDamage(surgeon.zone_sel.selecting, damage, 0)
-		take_bleeding_damage(patient, surgeon, damage, surgery_bleed = 1)
+		take_bleeding_damage(patient, surgeon, damage)
 		UNPOOL_BLOOD_SPLOOSH(patient)
 
 		patient.visible_message("<span class='alert'><b>Blood gushes from the incision!</b> That can't have been the correct thing to do!</span>")
