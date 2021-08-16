@@ -1173,6 +1173,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/LSD, rand(1, 6), hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/vape/medical, 1, hidden=1, cost=400)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/bath_bomb, rand(7, 13), hidden=1, cost=100)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/mender_refill_cartridge/both, 1, hidden=1)
 
 /obj/machinery/vending/medical_public
 	name = "Public MiniMed"

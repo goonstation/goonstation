@@ -878,6 +878,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 		//Hidden
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/random, rand(1, 3), hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/mender_refill_cartridge/both, rand(1,2), hidden=1)
 
 	disposing()
 		if (islist(portable_machinery))
