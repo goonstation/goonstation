@@ -615,6 +615,7 @@
 			setProperty("meleeprot_head", 6)
 			setProperty("disorient_resist_eye", 100)
 			setProperty("movespeed", 0.2)
+			setProperty("exploprot", 40)
 
 	postpossession
 		name = "worn welding mask"

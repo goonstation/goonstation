@@ -4,6 +4,7 @@
 
 	New(loc)
 		..()
+	//	RegisterSignal(src, COMSIG_MOB_WELDER_DEATH, .proc/moveMindsBack)
 		src.gender = MALE //you might argue it's a spirit and has no gender, but William DeFoe or whatever the fuck his name was, was a male.
 		src.abilityHolder = new /datum/abilityHolder/welder(src)
 		src.addAllAbilities()
@@ -25,6 +26,15 @@
 	Life()
 		var/turf/T = get_turf(src)
 		if(!src.density && T && isrestrictedz(T.z))
+			src.delStatus("incorporeal")
+			src.set_density(1)
+			REMOVE_MOB_PROPERTY(src, PROP_INVISIBILITY, src)
+			REMOVE_MOB_PROPERTY(src, PROP_NEVER_DENSE, src)
+			REMOVE_MOB_PROPERTY(src, PROP_NO_MOVEMENT_PUFFS, src)
+			src.alpha = 254
+			src.see_invisible = 0
+			src.nodamage = FALSE
+			src.client.flying = 0
 			src.gib() //not taking any risks here with noclip
 		else if((!src.density && T.z == 3) || (!src.density && T.z == 5))
 			src.corporealize() //we can afford to be less stringent on these
@@ -183,6 +193,7 @@
 			return
 
 		take_control(var/mob/living/carbon/human/M)
+			var/mob/living/carbon/human/welder/W = src
 			if(!src || !istype(src) || !M || !istype(M))
 				return
 
@@ -219,33 +230,53 @@
 			M.visible_message("<span class='alert'>A brown apron and welding mask form out of the shadows on [M]!</span>")
 			M.drop_from_slot(M.slot_head)
 			M.drop_from_slot(M.slot_wear_suit)
+			M.drop_from_slot(M.slot_shoes)
 			M.equip_new_if_possible(/obj/item/clothing/head/helmet/welding/unremovable, M.slot_head)
 			M.equip_new_if_possible(/obj/item/clothing/suit/apron/welder, M.slot_wear_suit)
 			M.equip_new_if_possible(/obj/item/clothing/shoes/welder_shoes/noslip, M.slot_shoes)
 			M.equip_new_if_possible(/obj/item/clothing/under/color/unremovable, M.slot_w_uniform)
-			M.equip_new_if_possible(/obj/item/welder_machete, M.slot_r_hand)
+			M.equip_new_if_possible(/obj/item/welder_machete/possessed, M.slot_r_hand)
 			M.equip_new_if_possible(/obj/item/clothing/gloves/black/welder, slot_gloves)
 			if(src.density)
-				var/mob/living/carbon/human/welder/W = src
 				W.incorporealize()
+				W.client.flying = 0
 
-			if (M.mind)
-				O.Browse(grabResource("html/welder_possession.html"),"window=welder_possession;size=600x440;title=Welder Possession")
 			var/mob/dead/observer/O = M.ghostize()
 			boutput(O, "<span class='bold' style='color:red;font-size:150%'>You have been temporarily removed from your body!</span>")
-			usr.mind.swap_with(M)
+			if (O.mind)
+				O.Browse(grabResource("html/welder_possession.html"),"window=welder_possession;size=600x440;title=Welder Possession")
+		//	usr.mind.swap_with(M)
+			M.mind = W.mind
 			var/mob/dead/target_observer/welder_ghost/WG = O.insert_welder_observer(M)
 			WG.mind.dnr = 1
 			WG.verbs -= list(/mob/verb/setdnr)
 			sleep(45 SECONDS)
-			M.mind.swap_with(usr)
-			sleep(5 DECI SECONDS)
-			WG.mind.dnr = 0
-			WG.verbs += list(/mob/verb/setdnr)
-			if(M.loc)
-				O.mind.transfer_to(M)
-
-
+			if(!M || !M.loc) //TEMPORARY BANDAID FIX INCOMING
+				if(WG)
+					var/mob/dead/observer/O2 = WG.welder_ghostize()
+					O2.set_loc(src) //a bit of a hack but it works
+					if(O2.mind.dnr)
+						O2.mind.dnr = 0
+						O2.verbs += list(/mob/verb/setdnr)
+				qdel(src) //bit of a bandaid fix, don't get gibbed
+			else
+				if(M.mind)
+					usr.mind = M.mind
+					M.mind = WG.mind //HEY FUCKO GUESS WHAT YOU FOLLOWED KYLES INSTRUCTIONS, BETTER MAKE SURE THIS WORKS SOMETIME
+					qdel(WG)
+					sleep(5 DECI SECONDS)
+					if(M.mind.dnr)
+						M.mind.dnr = 0
+						M.verbs += list(/mob/verb/setdnr)
+					src.client.flying = 1
+			/*	if(M.mind)
+					M.mind.swap_with(usr)
+					sleep(5 DECI SECONDS)
+					WG.mind.dnr = 0
+					WG.verbs += list(/mob/verb/setdnr)
+					if(M.loc)
+						WG.mind.transfer_to(M)
+					src.client.flying = 1*/
 
 			for(var/obj/item/clothing/suit/apron/welder/A in M)
 				qdel(A)
@@ -417,14 +448,14 @@ ABSTRACT_TYPE(/datum/targetable/welder)
 			if(isdead(H))
 				boutput(usr, "<span class='alert'>You cannot possess a corpse.</span>")
 				return 1
-			//if(H.client)
-			boutput(usr, "<b>You begin to possess [H].</b>")
-			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
-			H.playsound_local(H.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
-			return W.take_control(H)
-			/*else
+			if(H.client)
+				boutput(usr, "<b>You begin to possess [H].</b>")
+				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
+				H.playsound_local(H.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
+				return W.take_control(H)
+			else
 				boutput(usr, "<b>The target must have a consciousness to be possessed.</b>")
-				return 1*/
+				return 1
 		else
 			boutput(usr, "<span class='alert'>You cannot possess a non-human.</span>")
 			return 1

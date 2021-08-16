@@ -690,3 +690,9 @@
 		cant_self_remove = 1
 		cant_other_remove = 1
 		step_sound = "step_lattice"
+
+		setupProperties()
+			..()
+			setProperty("coldprot", 5)
+			setProperty("heatprot", 5)
+			setProperty("exploprot", 15)

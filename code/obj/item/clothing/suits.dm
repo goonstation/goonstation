@@ -455,6 +455,7 @@
 		setProperty("coldprot", 75)
 		setProperty("heatprot", 75)
 		setProperty("movespeed", 0.2)
+		setProperty("exploprot", 30)
 
 
 	postpossession

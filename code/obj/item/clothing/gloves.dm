@@ -242,6 +242,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			..()
 			setProperty("heatprot", 15)
 			setProperty("conductivity", 0)
+			setProperty("exploprot", 10)
 
 /obj/item/clothing/gloves/black/attackby(obj/item/W, mob/user)
 	if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
