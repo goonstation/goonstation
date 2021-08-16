@@ -851,6 +851,8 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		//Products
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/bruise, 20)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/burn, 20)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/mender_refill_cartridge/brute, 5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/mender_refill_cartridge/burn, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/epinephrine, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/charcoal, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/saline, 10)

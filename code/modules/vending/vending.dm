@@ -7,7 +7,7 @@
 	var/product_hidden
 	var/logged_on_vend
 
-	var/static/list/product_name_cache = list(/obj/item/reagent_containers/mender/brute = "brute auto-mender", /obj/item/reagent_containers/mender/burn = "burn auto-mender")
+	var/static/list/product_name_cache = list(/obj/item/reagent_containers/mender_refill_cartridge/brute = "brute auto-mender refill", /obj/item/reagent_containers/mender_refill_cartridge/burn = "burn auto-mender refill")
 
 
 	New(productpath, amount=0, cost=0, hidden=0, logged_on_vend=FALSE)
@@ -1138,8 +1138,8 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe, 12)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/bruise, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/burn, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/mender/brute, 3)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/mender/burn, 3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/mender_refill_cartridge/brute, 7)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/mender_refill_cartridge/burn, 7)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/antitoxin, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/epinephrine, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/morphine, 4)

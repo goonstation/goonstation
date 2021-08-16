@@ -50,7 +50,7 @@
 	desc = "A medical kit that contains several medical patches and pills for treating brute injuries. Contains one epinephrine syringe for emergency use and a health analyzer."
 	kit_styles = list("brute1", "brute2", "brute3", "brute4")
 	spawn_contents = list(\
-	/obj/item/reagent_containers/mender/brute,\
+	/obj/item/reagent_containers/mender_refill_cartridge/brute,\
 	/obj/item/reagent_containers/patch/mini/bruise = 2,\
 	/obj/item/reagent_containers/pill/salicylic_acid,\
 	/obj/item/device/analyzer/healthanalyzer,\
@@ -64,7 +64,7 @@
 	desc = "A medical kit that contains several medical patches and pills for treating burns. Contains one epinephrine syringe for emergency use and a health analyzer."
 	kit_styles = list("burn1", "burn2", "burn3", "burn4")
 	spawn_contents = list(\
-	/obj/item/reagent_containers/mender/burn,\
+	/obj/item/reagent_containers/mender_refill_cartridge/burn,\
 	/obj/item/reagent_containers/patch/mini/burn = 2,\
 	/obj/item/device/analyzer/healthanalyzer,\
 	/obj/item/reagent_containers/emergency_injector/epinephrine,\
