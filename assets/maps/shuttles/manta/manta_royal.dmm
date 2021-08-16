@@ -1,12 +1,74 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aR" = (
+/obj/table/regal/auto,
+/obj/machinery/light/small/floor/netural,
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = -7;
+	pixel_y = 14
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = -7
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = -2;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/food/snacks/plant/apple{
+	pixel_x = 6;
+	pixel_y = -9
+	},
+/obj/item/reagent_containers/food/snacks/plant/grape/green{
+	pixel_x = 10;
+	pixel_y = 14
+	},
+/obj/item/reagent_containers/food/snacks/plant/grape{
+	pixel_x = 8;
+	pixel_y = 7
+	},
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom/manta)
 "df" = (
 /obj/machinery/shuttle/engine/heater/seaheater_middle,
 /turf/space/fluid,
+/area/shuttle/escape/centcom/manta)
+"dx" = (
+/obj/item/storage/wall/medical{
+	dir = 4
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
+	},
 /area/shuttle/escape/centcom/manta)
 "et" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "3"
 	},
+/area/shuttle/escape/centcom/manta)
+"eA" = (
+/obj/stool/chair/wooden/regal{
+	anchored = 1;
+	dir = 4
+	},
+/turf/unsimulated/floor/marble/border_bw{
+	dir = 10
+	},
+/area/shuttle/escape/centcom/manta)
+"fn" = (
+/obj/table/regal/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = 2;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = -2;
+	pixel_y = 17
+	},
+/obj/item/reagent_containers/food/drinks/bottle/wine{
+	pixel_x = 7;
+	pixel_y = 19
+	},
+/obj/machinery/light/small/floor/netural,
+/turf/unsimulated/floor/carpet/regalcarpet/border,
 /area/shuttle/escape/centcom/manta)
 "fu" = (
 /turf/unsimulated/wall{
@@ -17,16 +79,80 @@
 	opacity = 0
 	},
 /area/centcom)
+"fJ" = (
+/obj/stool/chair/wooden/regal{
+	anchored = 1;
+	dir = 1
+	},
+/turf/unsimulated/floor/marble/border_wb{
+	dir = 1
+	},
+/area/shuttle/escape/centcom/manta)
 "gx" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/firstaid/regular,
-/turf/unsimulated/floor/shuttle,
+/obj/decoration/regallamp{
+	anchored = 1;
+	lit = 1
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom/manta)
+"gM" = (
+/obj/table/regal/auto,
+/obj/item/storage/toolbox/emergency{
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/food/drinks/bottle/mead{
+	pixel_x = -8;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/drinks/bottle/mead{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = 7;
+	pixel_y = 9
+	},
+/turf/unsimulated/floor/marble/border_bw{
+	dir = 1
+	},
+/area/shuttle/escape/centcom/manta)
+"gS" = (
+/obj/decal/lightshaft,
+/obj/shrub{
+	dir = 10
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor/marble/border_bw{
+	dir = 6
+	},
 /area/shuttle/escape/centcom/manta)
 "hE" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/toolbox/emergency,
-/obj/item/device/radio,
-/turf/unsimulated/floor/shuttle,
+/obj/decoration/regallamp{
+	anchored = 1;
+	lit = 1
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom/manta)
+"hM" = (
+/turf/unsimulated/floor/marble/border_bw{
+	dir = 5
+	},
+/area/shuttle/escape/centcom/manta)
+"hW" = (
+/turf/unsimulated/floor/marble/border_bw{
+	dir = 10
+	},
 /area/shuttle/escape/centcom/manta)
 "jj" = (
 /obj/machinery/shuttle/engine/heater{
@@ -34,12 +160,6 @@
 	},
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/manta)
-"jq" = (
-/obj/machinery/door/airlock/pyro/medical,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor3"
-	},
 /area/shuttle/escape/centcom/manta)
 "jz" = (
 /obj/indestructible/shuttle_corner{
@@ -53,17 +173,42 @@
 	},
 /turf/space/fluid,
 /area/shuttle/escape/centcom/manta)
+"kT" = (
+/obj/stool/chair/wooden/regal{
+	anchored = 1
+	},
+/turf/unsimulated/floor/marble/border_wb,
+/area/shuttle/escape/centcom/manta)
 "lg" = (
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "14"
+/obj/table/regal/auto,
+/obj/decoration/floralarrangement,
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom/manta)
+"lp" = (
+/obj/shrub{
+	dir = 6
+	},
+/turf/unsimulated/floor/marble/border_bw{
+	dir = 9
 	},
 /area/shuttle/escape/centcom/manta)
 "lK" = (
-/obj/stool/chair/comfy/shuttle/red{
-	dir = 1
+/obj/decal/lightshaft,
+/obj/shrub{
+	dir = 8
 	},
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor4"
+/turf/unsimulated/floor/marble/border_bw{
+	dir = 9
+	},
+/area/shuttle/escape/centcom/manta)
+"mf" = (
+/turf/unsimulated/floor/marble/border_bw{
+	dir = 6
+	},
+/area/shuttle/escape/centcom/manta)
+"nD" = (
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 4
 	},
 /area/shuttle/escape/centcom/manta)
 "oY" = (
@@ -71,10 +216,21 @@
 	icon_state = "11"
 	},
 /area/shuttle/escape/centcom/manta)
+"pn" = (
+/obj/stool/chair/comfy/throne_gold{
+	anchored = 1
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/innercorner{
+	dir = 5
+	},
+/area/shuttle/escape/centcom/manta)
 "qC" = (
-/obj/machinery/door/airlock/pyro/security,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor4"
+/obj/stool/chair/wooden/regal{
+	anchored = 1;
+	dir = 8
+	},
+/turf/unsimulated/floor/marble/border_bw{
+	dir = 4
 	},
 /area/shuttle/escape/centcom/manta)
 "sb" = (
@@ -89,58 +245,101 @@
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom/manta)
-"tH" = (
-/obj/item/storage/wall/emergency,
+"tw" = (
+/obj/item/storage/wall/emergency{
+	dir = 8
+	},
 /turf/simulated/wall/auto/shuttle{
-	icon_state = "12"
+	icon_state = "3"
 	},
 /area/shuttle/escape/centcom/manta)
 "tO" = (
-/obj/table/auto,
-/obj/item/storage/firstaid/oxygen{
-	pixel_x = -6
+/obj/shrub{
+	dir = 1
 	},
-/obj/item/storage/firstaid/fire{
-	pixel_x = 2
-	},
-/obj/item/storage/firstaid/brute{
-	pixel_x = 9
-	},
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor3"
+/turf/unsimulated/floor/marble/border_bw{
+	dir = 5
 	},
 /area/shuttle/escape/centcom/manta)
 "uE" = (
 /turf/space/fluid,
 /area/centcom)
+"vP" = (
+/obj/decal/lightshaft,
+/obj/shrub{
+	dir = 1
+	},
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom/manta)
+"wv" = (
+/turf/unsimulated/floor/marble/border_wb{
+	dir = 6
+	},
+/area/shuttle/escape/centcom/manta)
 "wC" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
 	},
-/turf/unsimulated/floor/shuttle,
+/turf/unsimulated/floor/marble/black,
 /area/shuttle/escape/centcom/manta)
-"yl" = (
-/obj/stool/chair/comfy/shuttle/pilot{
+"xx" = (
+/turf/unsimulated/floor/marble/border_wb{
 	dir = 1
 	},
-/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/manta)
+"yg" = (
+/obj/shrub{
+	dir = 8
+	},
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom/manta)
+"yl" = (
+/obj/stool/chair/comfy/throne_gold{
+	anchored = 1
+	},
+/obj/item/clothing/head/crown,
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 1
+	},
+/area/shuttle/escape/centcom/manta)
+"yn" = (
+/turf/unsimulated/floor/marble/border_bw{
+	dir = 9
+	},
+/area/shuttle/escape/centcom/manta)
+"yu" = (
+/obj/table/regal/auto,
+/obj/decoration/floralarrangement{
+	pixel_x = 16
+	},
+/obj/random_item_spawner/med_kit/two,
+/obj/item/storage/toolbox/emergency,
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 10
+	},
+/area/shuttle/escape/centcom/manta)
+"yN" = (
+/obj/shrub{
+	dir = 4
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/item/clothing/head/crown,
+/turf/unsimulated/floor/marble/border_bw{
+	dir = 10
+	},
 /area/shuttle/escape/centcom/manta)
 "AF" = (
-/obj/item/storage/wall/medical{
-	pixel_y = 32
-	},
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor3"
-	},
+/turf/unsimulated/floor/marble,
 /area/shuttle/escape/centcom/manta)
 "AL" = (
 /turf/space/fluid,
 /area/shuttle/escape/centcom/manta)
 "Bn" = (
 /obj/indestructible/shuttle_corner,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor4"
-	},
+/turf/unsimulated/floor/marble/black,
 /area/shuttle/escape/centcom/manta)
 "Cd" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -149,17 +348,34 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/manta)
 "CC" = (
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor3"
+/obj/stool/chair/wooden/regal{
+	anchored = 1;
+	dir = 4
+	},
+/turf/unsimulated/floor/marble/border_bw{
+	dir = 8
 	},
 /area/shuttle/escape/centcom/manta)
 "Dt" = (
-/obj/machinery/sleeper/compact{
-	dir = 8
+/obj/table/regal/auto,
+/obj/machinery/light/small/floor/netural,
+/obj/item/reagent_containers/food/snacks/croissant{
+	pixel_x = 10;
+	pixel_y = 11
 	},
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor3"
+/obj/item/reagent_containers/food/snacks/croissant{
+	pixel_x = 10;
+	pixel_y = -3
 	},
+/obj/item/reagent_containers/food/drinks/bottle/wine{
+	pixel_x = -6;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/turf/unsimulated/floor/marble/black,
 /area/shuttle/escape/centcom/manta)
 "Dx" = (
 /obj/indestructible/shuttle_corner{
@@ -168,15 +384,85 @@
 /turf/space/fluid,
 /area/shuttle/escape/centcom/manta)
 "Dy" = (
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor4"
+/obj/table/regal/auto,
+/obj/machinery/light/small/floor/netural,
+/obj/item/reagent_containers/food/snacks/croissant{
+	pixel_x = -10;
+	pixel_y = -3
 	},
+/obj/item/reagent_containers/food/snacks/croissant{
+	pixel_x = -10;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/food/snacks/garlicbread,
+/obj/item/reagent_containers/food/snacks/garlicbread_ch{
+	pixel_y = 12
+	},
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom/manta)
+"DQ" = (
+/obj/stool/chair/wooden/regal{
+	anchored = 1
+	},
+/turf/unsimulated/floor/marble/black,
 /area/shuttle/escape/centcom/manta)
 "DW" = (
-/obj/machinery/light/small/floor,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor4"
+/turf/unsimulated/floor/marble/border_wb{
+	dir = 9
 	},
+/area/shuttle/escape/centcom/manta)
+"Fg" = (
+/obj/stool/chair/wooden/regal{
+	anchored = 1;
+	dir = 8
+	},
+/turf/unsimulated/floor/marble/border_bw{
+	dir = 5
+	},
+/area/shuttle/escape/centcom/manta)
+"Gs" = (
+/obj/table/regal/auto,
+/obj/random_item_spawner/med_kit/two,
+/obj/item/storage/toolbox/emergency,
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 6
+	},
+/area/shuttle/escape/centcom/manta)
+"Gx" = (
+/obj/table/regal/auto,
+/obj/item/reagent_containers/food/snacks/croissant{
+	pixel_x = 10;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/food/snacks/croissant{
+	pixel_x = 10;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/food/snacks/plant/pear{
+	pixel_x = -6;
+	pixel_y = 22
+	},
+/obj/item/reagent_containers/food/snacks/plant/strawberry{
+	pixel_x = -8;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/food/snacks/plant/grape/green{
+	pixel_x = 2;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/food/snacks/plant/grape{
+	pixel_x = -8
+	},
+/obj/item/reagent_containers/food/snacks/plant/cherry{
+	pixel_y = -8
+	},
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom/manta)
+"HT" = (
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom/manta)
+"HY" = (
+/turf/unsimulated/floor/carpet/regalcarpet/border,
 /area/shuttle/escape/centcom/manta)
 "Il" = (
 /obj/machinery/shuttle/engine/heater{
@@ -187,12 +473,7 @@
 /area/shuttle/escape/centcom/manta)
 "IJ" = (
 /obj/machinery/computer/shuttle,
-/turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/manta)
-"IR" = (
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "12"
-	},
+/turf/unsimulated/floor/marble/black,
 /area/shuttle/escape/centcom/manta)
 "Jj" = (
 /obj/machinery/shuttle/engine/propulsion/sea_propulsion,
@@ -202,8 +483,29 @@
 /obj/indestructible/shuttle_corner{
 	dir = 1
 	},
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor3"
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom/manta)
+"JJ" = (
+/obj/decoration/regallamp{
+	anchored = 1;
+	lit = 1
+	},
+/turf/unsimulated/floor/marble/border_bw{
+	dir = 9
+	},
+/area/shuttle/escape/centcom/manta)
+"JM" = (
+/obj/decoration/regallamp{
+	anchored = 1;
+	lit = 1
+	},
+/turf/unsimulated/floor/marble/border_bw{
+	dir = 8
+	},
+/area/shuttle/escape/centcom/manta)
+"JU" = (
+/turf/unsimulated/floor/marble/border_wb{
+	dir = 10
 	},
 /area/shuttle/escape/centcom/manta)
 "KM" = (
@@ -211,11 +513,31 @@
 	dir = 6
 	},
 /area/centcom)
-"LV" = (
-/obj/stool/chair/comfy/shuttle/brown{
-	dir = 1
+"LO" = (
+/obj/decoration/regallamp{
+	anchored = 1;
+	lit = 1
 	},
-/turf/unsimulated/floor/shuttle,
+/turf/unsimulated/floor/marble/border_bw{
+	dir = 4
+	},
+/area/shuttle/escape/centcom/manta)
+"LV" = (
+/obj/stool/chair/comfy/throne_gold{
+	anchored = 1
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 9
+	},
+/area/shuttle/escape/centcom/manta)
+"Mw" = (
+/obj/stool/chair/wooden/regal{
+	anchored = 1;
+	dir = 8
+	},
+/turf/unsimulated/floor/marble/border_bw{
+	dir = 6
+	},
 /area/shuttle/escape/centcom/manta)
 "MK" = (
 /obj/machinery/shuttle/engine/propulsion{
@@ -223,21 +545,91 @@
 	},
 /turf/space/fluid,
 /area/shuttle/escape/centcom/manta)
+"Nb" = (
+/obj/table/regal/auto,
+/obj/machinery/light/small/floor/netural,
+/obj/item/reagent_containers/food/snacks/croissant{
+	pixel_x = -10;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/food/snacks/croissant{
+	pixel_x = -10;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/food/drinks/bottle/wine{
+	pixel_x = 9;
+	pixel_y = 20
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = 2;
+	pixel_y = 16
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/snacks/plant/apple{
+	pixel_x = 5;
+	pixel_y = -5
+	},
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom/manta)
 "Nu" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8
 	},
-/turf/unsimulated/floor/shuttle,
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom/manta)
+"Ob" = (
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 8
+	},
+/area/shuttle/escape/centcom/manta)
+"OL" = (
+/obj/table/regal/auto,
+/obj/decoration/floralarrangement{
+	pixel_x = 16
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = 4;
+	pixel_y = 17
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/food/drinks/bottle/wine{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/obj/machinery/light/small/floor/netural,
+/turf/unsimulated/floor/carpet/regalcarpet/border,
 /area/shuttle/escape/centcom/manta)
 "Pb" = (
-/obj/stool/chair/comfy/shuttle{
-	dir = 1
+/obj/decoration/regallamp{
+	anchored = 1;
+	lit = 1
 	},
-/turf/unsimulated/floor/shuttle,
+/turf/unsimulated/floor/marble/black,
 /area/shuttle/escape/centcom/manta)
 "Pd" = (
-/obj/wingrille_spawn/auto,
-/turf/unsimulated/floor/plating,
+/obj/wingrille_spawn/auto/crystal,
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom/manta)
+"Pn" = (
+/obj/decal/lightshaft,
+/obj/shrub{
+	dir = 6
+	},
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom/manta)
+"PC" = (
+/obj/shrub{
+	dir = 4
+	},
+/obj/item/clothing/head/crown,
+/turf/unsimulated/floor/marble/border_bw{
+	dir = 5
+	},
 /area/shuttle/escape/centcom/manta)
 "PZ" = (
 /turf/unsimulated/wall/setpieces/leadwall{
@@ -248,6 +640,27 @@
 /obj/indestructible/shuttle_corner,
 /turf/space/fluid,
 /area/shuttle/escape/centcom/manta)
+"RB" = (
+/obj/table/regal/auto,
+/obj/machinery/light/small/floor/netural,
+/obj/item/reagent_containers/food/snacks/croissant{
+	pixel_x = 10;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/food/snacks/croissant{
+	pixel_x = 10;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/food/snacks/breadloaf/corn/sweet{
+	pixel_x = -2;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/snacks/breadloaf/banana{
+	pixel_x = -2;
+	pixel_y = 1
+	},
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom/manta)
 "RD" = (
 /turf/unsimulated/wall{
 	icon = 'icons/misc/worlds.dmi';
@@ -255,13 +668,73 @@
 	},
 /area/centcom)
 "RQ" = (
-/obj/machinery/door/airlock/pyro/command,
-/turf/unsimulated/floor/shuttle,
+/turf/unsimulated/floor/carpet/regalcarpet,
+/area/shuttle/escape/centcom/manta)
+"Se" = (
+/obj/decoration/regallamp{
+	anchored = 1;
+	lit = 1
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 5
+	},
+/area/shuttle/escape/centcom/manta)
+"SL" = (
+/obj/stool/chair/wooden/regal{
+	anchored = 1;
+	dir = 1
+	},
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom/manta)
+"SW" = (
+/obj/stool/chair/comfy/throne_gold{
+	anchored = 1
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 5
+	},
+/area/shuttle/escape/centcom/manta)
+"SZ" = (
+/obj/table/regal/auto,
+/obj/machinery/light/small/floor/netural,
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = 10;
+	pixel_y = 20
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = -7;
+	pixel_y = 15
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = -2;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/food/snacks/plant/grape{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom/manta)
+"Tj" = (
+/obj/stool/chair/wooden/regal{
+	anchored = 1;
+	dir = 4
+	},
+/turf/unsimulated/floor/marble/border_bw{
+	dir = 9
+	},
 /area/shuttle/escape/centcom/manta)
 "VK" = (
-/obj/machinery/light/small/floor,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor3"
+/turf/unsimulated/floor/marble/border_wb{
+	dir = 5
+	},
+/area/shuttle/escape/centcom/manta)
+"Wu" = (
+/obj/stool/chair/comfy/throne_gold{
+	anchored = 1
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/innercorner{
+	dir = 1
 	},
 /area/shuttle/escape/centcom/manta)
 "Ww" = (
@@ -270,22 +743,65 @@
 	},
 /area/shuttle/escape/centcom/manta)
 "XK" = (
-/obj/stool/chair/comfy/shuttle/green,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor3"
+/obj/decoration/regallamp{
+	anchored = 1;
+	lit = 1
+	},
+/turf/unsimulated/floor/marble/border_bw{
+	dir = 5
 	},
 /area/shuttle/escape/centcom/manta)
 "XR" = (
-/obj/machinery/light/small/floor,
-/turf/unsimulated/floor/shuttle,
+/obj/decoration/regallamp{
+	anchored = 1;
+	lit = 1
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 9
+	},
 /area/shuttle/escape/centcom/manta)
 "XY" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 10
 	},
 /area/centcom)
+"Yx" = (
+/obj/table/regal/auto,
+/obj/item/reagent_containers/food/snacks/croissant{
+	pixel_x = -10;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/food/snacks/croissant{
+	pixel_x = -10;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/food/snacks/danish_apple{
+	pixel_x = 5;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/snacks/danish_blueb{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/food/snacks/danish_blueb{
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/snacks/danish_weed{
+	pixel_x = 6;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/food/snacks/danish_cherry{
+	pixel_x = 6;
+	pixel_y = -12
+	},
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom/manta)
 "Zh" = (
-/turf/unsimulated/floor/shuttle,
+/obj/shrub{
+	dir = 10
+	},
+/turf/unsimulated/floor/marble/black,
 /area/shuttle/escape/centcom/manta)
 
 (1,1,1) = {"
@@ -297,10 +813,10 @@ uE
 QE
 Pd
 Pd
-et
+Pd
 Cd
-Ww
-et
+Pd
+Pd
 Dx
 sb
 RD
@@ -312,13 +828,13 @@ AL
 QE
 Ww
 et
-et
+dx
 oY
 Nu
+gS
+LO
+HT
 Pb
-Zh
-XR
-IR
 tO
 JA
 Dx
@@ -331,13 +847,13 @@ AL
 Pd
 Nu
 gx
-Pd
+yg
 Pb
-Zh
-Pb
-Zh
-Pb
-IR
+mf
+hM
+AF
+hW
+yn
 AF
 XK
 JA
@@ -350,16 +866,16 @@ AL
 Pd
 Zh
 LV
-Pd
-Pb
-XR
-Pb
-Zh
-Zh
-jq
+Ob
+yu
+DW
+hW
+wv
+eA
+Tj
 CC
-VK
-XK
+mf
+PC
 JA
 Dx
 AL
@@ -368,17 +884,17 @@ AL
 Pd
 Pd
 XR
-LV
-IR
-Pb
-Zh
-Pb
-Zh
-Pb
-IR
+Wu
+RQ
+fn
+DW
+AF
+DQ
+RB
+Gx
 Dt
-Dt
-CC
+SL
+AF
 XK
 jj
 MK
@@ -387,55 +903,55 @@ MK
 Pd
 IJ
 yl
-Zh
 RQ
-Zh
-Zh
-Zh
-Zh
-Pb
+RQ
+HY
+xx
+kT
+aR
 lg
-et
-et
-et
-et
+lg
+lg
+SZ
+fJ
+gM
 Il
 MK
 "}
 (7,1,1) = {"
 Pd
 Pd
-XR
-LV
-IR
-Pb
-Zh
-Pb
-Zh
-Pb
-IR
+Se
+pn
+RQ
+OL
+VK
+AF
+DQ
+Nb
+Yx
 Dy
-Dy
-Dy
-lK
+SL
+AF
+JJ
 sL
 MK
 "}
 (8,1,1) = {"
 AL
 Pd
-Zh
-LV
-Pd
-Pb
-XR
-Pb
-Zh
-Zh
+vP
+SW
+nD
+Gs
+VK
+mf
+JU
+Mw
+Fg
 qC
-Dy
-DW
-lK
+hW
+lp
 Bn
 jz
 AL
@@ -445,15 +961,15 @@ AL
 Pd
 wC
 hE
-Pd
+Pn
 Pb
-Zh
-Pb
-Zh
-Pb
-tH
-Dy
-lK
+hW
+yn
+AF
+mf
+hM
+AF
+JJ
 Bn
 df
 Jj
@@ -464,13 +980,13 @@ AL
 jM
 oY
 et
-et
+tw
 Ww
 wC
+yN
+JM
+HT
 Pb
-Zh
-XR
-IR
 lK
 Bn
 jz
@@ -487,10 +1003,10 @@ uE
 jM
 Pd
 Pd
-et
+Pd
 Cd
-oY
-et
+Pd
+Pd
 jz
 PZ
 RD
