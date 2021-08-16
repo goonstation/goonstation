@@ -44,7 +44,7 @@
 		..()
 
 	proc/random_range_and_bearing(datum/galaxy/G, min_range=0, max_range=10)
-		var/theta = rand(360)
+		var/theta = G.xor_rand(360)
 		var/r = G.xor_randf(min_range,max_range)
 
 		src.galactic_x += r*sin(theta)
@@ -196,6 +196,15 @@
 		destination_name = R.name
 
 // Stars
+/particles/artemis/star
+	width = 400
+	height = 400
+	count = 35
+	spawning = 7
+
+	lifespan = generator("num", 5, 15, LINEAR_RAND)
+	drift = generator("sphere", 0.5, 2, LINEAR_RAND)
+	fade = 25
 
 /datum/galactic_object/star
 	name = "Star"
@@ -214,7 +223,7 @@
 		New(datum/galaxy/G)
 			galactic_x = G.xor_randf(-1,1) //19?
 			galactic_y = G.xor_randf(-1,1) //19?
-			scale = G.xor_randf(0.90,1.4)
+			scale = G.xor_randf(0.90,1.2)
 			color = G.xor_pick(list("#fffb00", "#FF5D06", "#009ae7", "#9b59b6", "#FF69B4", "#ffffff"))
 			..()
 
@@ -271,6 +280,15 @@
 			var/datum/galactic_object/star/random/R = master
 			color = R.color
 			name = R.name
+
+			SPAWN_DBG(1)
+				if(src.galaxy_icon)
+					var/obj/effects/E = new
+					E.particles = new/particles/artemis/star
+					E.filters = filter(type="bloom", threshold="#000", size=10, offset=1, alpha=200)
+
+					src.galaxy_icon.filters = filter(type="bloom", threshold="#ccc", size=2, alpha=100)
+					src.galaxy_icon.vis_contents += E
 			if(scale)
 				REMOVE_FLAG(appearance_flags, PIXEL_SCALE)
 
