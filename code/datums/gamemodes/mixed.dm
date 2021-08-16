@@ -11,7 +11,7 @@
 	var/has_werewolves = 1
 	var/has_blobs = 1
 
-	var/list/traitor_types = list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_SPY_THIEF, ROLE_WEREWOLF)
+	var/list/traitor_types = list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_SPY_THIEF, ROLE_WEREWOLF, ROLE_ENERGY_VAMPIRE)
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
@@ -50,6 +50,7 @@
 	var/num_blobs = 0
 	var/num_spy_thiefs = 0
 	var/num_werewolves = 0
+	var/num_energy_vampires = 0
 #ifdef XMAS
 	src.traitor_types += ROLE_GRINCH
 	src.latejoin_antag_roles += ROLE_GRINCH
@@ -66,6 +67,8 @@
 		if(has_wizards && prob(10)) // powerful combat roles
 			num_wizards++
 			// if any combat roles end up in this mode they go here ok
+		else if (prob(10) && !num_energy_vampires)
+			num_energy_vampires++ //starting off slow as we see how EV's play out
 		else // more stealthy roles
 			switch(pick(src.traitor_types))
 				if(ROLE_TRAITOR) num_traitors++
@@ -119,6 +122,10 @@
 				traitors += tplayer
 				token_players.Remove(tplayer)
 				tplayer.special_role = ROLE_WEREWOLF
+			if(ROLE_ENERGY_VAMPIRE)
+				traitors += tplayer
+				token_players.Remove(tplayer)
+				tplayer.special_role = ROLE_ENERGY_VAMPIRE
 
 		logTheThing("admin", tplayer.current, null, "successfully redeemed an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token.")
@@ -195,6 +202,14 @@
 			traitors += wolf
 			wolf.special_role = ROLE_WEREWOLF
 			possible_werewolves.Remove(wolf)
+
+	if(num_energy_vampires)
+		var/list/possible_energy_vampires = get_possible_enemies(ROLE_ENERGY_VAMPIRE,num_energy_vampires)
+		var/list/chosen_energy_vampires = antagWeighter.choose(pool = possible_energy_vampires, role = ROLE_ENERGY_VAMPIRE, amount = num_energy_vampires, recordChosen = 1)
+		for (var/datum/mind/energy_vampire in chosen_energy_vampires)
+			traitors += energy_vampire
+			energy_vampire.special_role = ROLE_ENERGY_VAMPIRE
+			possible_energy_vampires.Remove(energy_vampire)
 
 	if(!traitors) return 0
 
@@ -300,6 +315,16 @@
 				objective_set_path = /datum/objective_set/werewolf
 				traitor.current.make_werewolf()
 
+			if (ROLE_ENERGY_VAMPIRE) // TODO: EV objectives
+			#ifdef RP_MODE
+				objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
+			#else
+				objective_set_path = pick(typesof(/datum/objective_set/traitor))
+			#endif
+			#ifdef SECRETS_ENABLED
+				traitor.current.make_energy_vampire()
+			#endif
+
 		if (!isnull(objective_set_path)) // Cannot create objects of type null. [wraiths use a special proc]
 			new objective_set_path(traitor)
 		var/obj_count = 1
@@ -336,6 +361,8 @@
 					if(player.client.preferences.be_spy) candidates += player.mind
 				if(ROLE_WEREWOLF)
 					if(player.client.preferences.be_werewolf) candidates += player.mind
+				if(ROLE_ENERGY_VAMPIRE)
+					if(player.client.preferences.be_energy_vampire) candidates += player.mind
 				else
 					if(player.client.preferences.be_misc) candidates += player.mind
 
