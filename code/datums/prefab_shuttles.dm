@@ -90,6 +90,8 @@ var/list/prefab_shuttles = list()
 
 	disaster
 		prefab_path = "assets/maps/shuttles/donut2/donut2_disaster.dmm"
+	syndicate
+		prefab_path =  "assets/maps/shuttles/donut2/donut2_syndicate.dmm"
 
 /datum/prefab_shuttle/donut3
 	prefab_path = "assets/maps/shuttles/donut3/donut3_default.dmm"

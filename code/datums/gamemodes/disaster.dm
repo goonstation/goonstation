@@ -23,7 +23,7 @@
 	if (candidates.len == 0)
 		return 0
 	var/datum/mind/twraith = pick(candidates) // Just one for now
-	twraith.special_role = "wraith"
+	twraith.special_role = ROLE_WRAITH
 	Agimmicks += twraith
 
 	return 1

@@ -27345,7 +27345,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "hHU" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/industrial,
 /area/station/quartermaster/refinery)
 "hHY" = (
@@ -38935,7 +38935,7 @@
 	},
 /area/station/maintenance/outer/west)
 "loj" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /obj/landmark{
 	name = "shitty_bill_respawn"
 	},

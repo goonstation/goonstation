@@ -39,10 +39,10 @@
 		logTheThing("admin", tplayer.current, null, "successfully redeemed an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token.")
 
-	var/list/chosen_conspirator = antagWeighter.choose(pool = potentialAntags, role = "conspirator", amount = numConspirators, recordChosen = 1)
+	var/list/chosen_conspirator = antagWeighter.choose(pool = potentialAntags, role = ROLE_CONSPIRATOR, amount = numConspirators, recordChosen = 1)
 	traitors |= chosen_conspirator
 	for (var/datum/mind/conspirator in traitors)
-		conspirator.special_role = "conspirator"
+		conspirator.special_role = ROLE_CONSPIRATOR
 		potentialAntags.Remove(conspirator)
 
 	agent_radiofreq = random_radio_frequency()

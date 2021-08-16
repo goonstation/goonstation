@@ -12141,7 +12141,7 @@
 	},
 /area/station/science/teleporter)
 "aIl" = (
-/obj/lrteleporter{
+/obj/machinery/lrteleporter{
 	layer = 3
 	},
 /turf/simulated/floor/orangeblack/side/white{
@@ -32387,7 +32387,7 @@
 /obj/item/device/audio_log,
 /obj/item/device/detective_scanner,
 /obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/wood/six,
+/turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office_manta/detectives_bedroom)
 "bLW" = (
 /obj/machinery/firealarm{

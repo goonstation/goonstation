@@ -1,4 +1,66 @@
 
+(t)sun aug 15 21
+(u)Arthur Holiday
+(p)5667
+(e)🐛⚖|bug, balance
+(+)Hemostats now will fix EVERY bleeding caused by surgery, instead of only a few of them.
+(u)DoctorStupid
+(p)5694
+(e)|
+(+)Donut boxes, egg cartons, and lollipop bowls are easier to move around in your inventory and can be re-closed by clicking/activating them in hand.
+(u)Tarmunora
+(e)⚖|balance
+(+)port a sci remote costs a telecrystal to print
+(t)fri aug 13 21
+(u)Tarmunora
+(e)⚖|balance
+(*)removed melee meatshielding. bet you didn't know it existed in the first place
+(u)Emily
+(e)🆕|feature
+(*)New Chicken Breed! See Minor Changes for a hint!
+(+)La vie est de la merde, petit clown. Fume avec moi. [Gen 2] [From Clown Chickens]
+(t)tue aug 10 21
+(u)TTerc
+(p)5709
+(e)🆕|feature
+(+)You can now chug from all the drinking containers, not just glasses and pitchers (with a few exceptions).
+(t)sun aug 08 21
+(u)Emily
+(e)⛔|removal
+(+)Removed meathead trait. I doubt anyone will notice.
+(u)Tarmunora
+(e)⚖|balance
+(*)Red chainsaw provides disarm resistance.
+(t)fri aug 06 21
+(u)Azrun
+(p)5611
+(e)🗺⚖|mapping, balance
+(+)Silicon folks can now use the Long Range Teleporter and Quantum Telescope from a distance.
+(t)thu aug 05 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Riot launchers are now a bulky item.
+(u)112358sam
+(p)5565
+(e)🆕|feature
+(*)Added a MedTrak Scanner PDA program for scanning people to search for their medical record.
+(t)tue aug 03 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Ectothermid adjustment - protection efficiency decreases if blocking lots of damage in a short time, and releases stored heat in a medium-sized fireflash on death.
+(u)Walpvrgis
+(p)5646
+(e)🆕🎨|feature, sprites
+(*)The Cranial Keratin Formation gene now randomly chooses sets of horns from several different sprite options.
+(t)mon aug 02 21
+(u)Flaborized
+(p)5653
+(e)🎨|sprites
+(+)Resprited the crusher.
+(u)zjdtmkhzt
+(p)5587
+(e)|
+(+)The right click interact option should now hit stuff with held objects instead of dropping the current object and picking the other one up.
 (t)sat jul 31 21
 (u)Walpvrgis
 (p)5616

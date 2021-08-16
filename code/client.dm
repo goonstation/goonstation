@@ -6,6 +6,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 #else
 	preload_rsc = 1
 #endif
+	parent_type = /datum
 	var/datum/player/player = null
 	var/datum/admins/holder = null
 	var/datum/preferences/preferences = null
@@ -1143,6 +1144,11 @@ var/global/curr_day = null
 /// Returns 1 if you can set or retrieve cloud data on the client
 /client/proc/cloud_available()
 	return src.player.cloud_available()
+
+/client/proc/message_one_admin(source, message)
+	if(!src.holder)
+		return
+	boutput(src, replacetext(replacetext(message, "%admin_ref%", "\ref[src.holder]"), "%client_ref%", "\ref[src]"))
 
 /proc/add_test_screen_thing()
 	var/client/C = input("For who", "For who", null) in clients

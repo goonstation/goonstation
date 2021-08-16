@@ -811,6 +811,25 @@
 				movement_modifier.additive_slowdown = optional
 			. = ..(optional)
 
+	salted
+		id = "salted"
+		name = "Salted"
+		desc = "AAAAA! SALT!<br>THIS HURTS!"
+		icon_state = "slowed"
+		unique = 0
+		visible = 0
+		movement_modifier = new /datum/movement_modifier/status_salted
+
+		onAdd(optional=null)
+			if(optional)
+				movement_modifier.health_deficiency_adjustment = optional
+			. = ..(optional)
+
+		onChange(optional=null)
+			if(optional)
+				movement_modifier.health_deficiency_adjustment = optional
+			. = ..(optional)
+
 	disorient
 		id = "disorient"
 		name = "Disoriented"
@@ -1588,3 +1607,32 @@
 				P.create_overlay(states[2], "#ff8820", direct, 'icons/effects/blood.dmi')
 		else
 			P.create_overlay("smear2", "#ff8820", direct, 'icons/effects/blood.dmi')
+
+/datum/statusEffect/magnetized
+	id = "magnetized"
+	name = "Magnetized"
+	desc = "You've been given a magnetic charge"
+	icon_state = "magnetized"
+	unique = TRUE
+	maxDuration = 3 MINUTES
+	var/charge = null
+
+	onAdd(optional)
+		. = ..()
+		if (!ismob(owner)) return
+		var/mob/M = owner
+		if (!M.bioHolder || M.bioHolder.HasEffect("resist_electric") || M.traitHolder.hasTrait("unionized"))
+			SPAWN_DBG(0)
+				M.delStatus("magnetized")
+			return
+		if (optional)
+			src.charge = optional
+		else
+			src.charge = pick("magnets_pos", "magnets_neg")
+		M.bioHolder.AddEffect(src.charge)
+
+	onRemove()
+		. = ..()
+		if (!ismob(owner)) return
+		var/mob/M = owner
+		M.bioHolder.RemoveEffect(charge)

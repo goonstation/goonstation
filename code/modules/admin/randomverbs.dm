@@ -379,7 +379,7 @@
 		// More info would be nice (Convair880).
 		var/dat = ""
 		for (var/mob/living/silicon/S in mobs)
-			if (S.mind && S.mind.special_role == "vampthrall" && ismob(whois_ckey_to_mob_reference(S.mind.master)))
+			if (S.mind && S.mind.special_role == ROLE_VAMPTHRALL && ismob(whois_ckey_to_mob_reference(S.mind.master)))
 				dat += "<br>[S] is a vampire's thrall, only obeying [whois_ckey_to_mob_reference(S.mind.master)]."
 			else
 				if (isAI(S)) continue // Rogue AIs modify the global lawset.
@@ -1749,11 +1749,11 @@
 			E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 
 	switch (former_role)
-		if ("mindslave") return
-		if ("vampthrall") return
+		if (ROLE_MINDSLAVE) return
+		if (ROLE_VAMPTHRALL) return
 		if ("spyslave") return
-		if ("blob") M.humanize(1)
-		if ("wraith") M.humanize(1)
+		if (ROLE_BLOB) M.humanize(1)
+		if (ROLE_WRAITH) M.humanize(1)
 		else
 			if (ishuman(M))
 				// They could be in a pod or whatever, which would have unfortunate results when respawned.
@@ -2736,6 +2736,11 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 	if(src.holder.level >= LEVEL_ADMIN)
 		switch(alert("Turn space into a swamp? This is probably going to lag a bunch when it happens and there's no easy undo!",,"Yes","No"))
 			if("Yes")
+				var/rain = alert("Should it be raining?",,"Yes", "No", "Particles!")
+				rain = (rain == "No") ? null : rain
+				var/image/weather = image('icons/turf/water.dmi',"fast_rain", layer = EFFECTS_LAYER_BASE)
+				weather.alpha = 200
+				weather.plane = PLANE_NOSHADOW_ABOVE
 				var/image/I = new /image/ambient
 				var/datum/map_generator/jungle_generator/map_generator = new
 				var/list/space = list()
@@ -2743,6 +2748,13 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 					space += S
 				map_generator.generate_terrain(space)
 				for (var/turf/S in space)
+					if(rain)
+						if(istype(S,/turf/unsimulated/floor/auto/swamp))
+							S.ReplaceWith(/turf/unsimulated/floor/auto/swamp/rain, force=TRUE)
+						if(rain == "Yes")
+							S.UpdateOverlays(weather, "rain")
+						else
+							new /obj/effects/rain/sideways/tile(S)
 					I.color = ambient_light
 					S.UpdateOverlays(I, "ambient")
 				logTheThing("admin", src, null, "turned space into a swamp.")

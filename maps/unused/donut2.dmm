@@ -889,7 +889,7 @@
 	},
 /area/station/science/teleporter)
 "acm" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 5
 	},
