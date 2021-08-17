@@ -10,7 +10,7 @@
 #define ROLE_WRAITH "wraith"
 #define ROLE_HEAD_REV "head_rev"
 #define ROLE_CONSPIRATOR "conspirator"
-#define ROLE_ENERGY_VAMPIRE "energy vampire"
+#define ROLE_ARCFIEND "arcfiend"
 
 // special antagonist roles
 #define ROLE_GANG_MEMBER "gang_member"
