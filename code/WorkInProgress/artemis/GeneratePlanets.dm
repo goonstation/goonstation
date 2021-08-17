@@ -256,6 +256,13 @@ ABSTRACT_TYPE(/datum/generatorPlanetPrefab)
 		prefabSizeX = 13
 		prefabSizeY = 10
 
+	corn_n_weed
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_corn_and_weed.dmm"
+		prefabSizeX = 15
+		prefabSizeY = 16
+
 
 /obj/landmark/artemis_planets
 	name = "zlevel"

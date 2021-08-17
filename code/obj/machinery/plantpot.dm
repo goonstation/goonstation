@@ -102,38 +102,38 @@
 	var/auto_water = TRUE
 
 	New()
-		var/datum/plant/P
-		//Adjust processing tier to slow down server burden unless necessary
-		if(spawn_plant)
-			P = new spawn_plant()
-			if(!P.special_proc)
-				processing_tier = PROCESSING_32TH
-		..()
-		status |= BROKEN
+		SPAWN_DBG(0) // delay for prefab attribute assignment
+			var/datum/plant/P
+			//Adjust processing tier to slow down server burden unless necessary
+			if(spawn_plant)
+				P = new spawn_plant()
+				if(!P.special_proc)
+					processing_tier = PROCESSING_32TH
+			..()
+			status |= BROKEN
 
-		if(P)
-			var/obj/item/seed/S = unpool(/obj/item/seed)
+			if(P)
+				var/obj/item/seed/S = unpool(/obj/item/seed)
 
-			S.generic_seed_setup(P)
-			src.HYPnewplant(S)
+				S.generic_seed_setup(P)
+				src.HYPnewplant(S)
 
-			for(var/commutes in spawn_commuts)
-				HYPaddCommut(src.current, src.plantgenes, commutes)
+				for(var/commutes in spawn_commuts)
+					HYPaddCommut(src.current, src.plantgenes, commutes)
 
-			if(spawn_growth)
-				src.grow_level = spawn_growth
+				if(spawn_growth)
+					src.grow_level = spawn_growth
+				else
+					src.grow_level = pick(3,4,4)
+				switch(grow_level)
+					if(2)
+						src.growth = (src.current.growtime - src.plantgenes.growtime) / 2
+					if(3)
+						src.growth = src.current.growtime - src.plantgenes.growtime
+					if(4)
+						src.growth = src.current.harvtime - src.plantgenes.harvtime
+				update_icon()
 			else
-				src.grow_level = pick(3,4,4)
-			switch(grow_level)
-				if(2)
-					src.growth = (src.current.growtime - src.plantgenes.growtime) / 2
-				if(3)
-					src.growth = src.current.growtime - src.plantgenes.growtime
-				if(4)
-					src.growth = src.current.harvtime - src.plantgenes.harvtime
-			update_icon()
-		else
-			SPAWN_DBG(1 SECOND)
 				if(!src.current)
 					qdel(src)
 
