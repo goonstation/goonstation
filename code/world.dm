@@ -440,6 +440,10 @@ var/f_color_selector_handler/F_Color_Selector
 	SPAWN_DBG(0)
 		init()
 
+#ifdef UNIT_TESTS
+	unit_tests.run_tests()
+#endif
+
 #define UPDATE_TITLE_STATUS(x) if (game_start_countdown) game_start_countdown.update_status(x)
 
 /world/proc/init()
@@ -657,6 +661,11 @@ var/f_color_selector_handler/F_Color_Selector
 	SPAWN_DBG(10 SECONDS)
 		Reboot_server()
 #endif
+#ifdef UNIT_TESTS
+	SPAWN_DBG(10 SECONDS)
+		Reboot_server()
+#endif
+
 #undef UPDATE_TITLE_STATUS
 	return
 
@@ -701,7 +710,7 @@ var/f_color_selector_handler/F_Color_Selector
 	save_tetris_highscores()
 	if (current_state < GAME_STATE_FINISHED)
 		current_state = GAME_STATE_FINISHED
-#ifdef RUNTIME_CHECKING
+#if defined(RUNTIME_CHECKING) || defined(UNIT_TESTS)
 	for (var/client/C in clients)
 		ehjax.send(C, "browseroutput", "hardrestart")
 
@@ -724,6 +733,7 @@ var/f_color_selector_handler/F_Color_Selector
 #endif
 	shutdown()
 #endif
+
 	SPAWN_DBG(world.tick_lag)
 		for (var/client/C)
 			if (C.mob)
