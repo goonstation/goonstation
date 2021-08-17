@@ -346,7 +346,7 @@
 	var/datum/computer/file/pda_program/records/medical/record_prog = locate(/datum/computer/file/pda_program/records/medical) in programs
 	if (!record_prog)
 		return "<span class='alert'>ERROR: NO MEDICAL RECORD FILE</span>"
-	pda.active_program = record_prog
+	pda.run_program(record_prog)
 	record_prog.active1 = GR
 	record_prog.active2 = MR
 	record_prog.mode = 1

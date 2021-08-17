@@ -1,4 +1,36 @@
 
+(t)sun aug 15 21
+(u)Arthur Holiday
+(p)5667
+(e)🐛⚖|bug, balance
+(+)Hemostats now will fix EVERY bleeding caused by surgery, instead of only a few of them.
+(u)DoctorStupid
+(p)5694
+(e)|
+(+)Donut boxes, egg cartons, and lollipop bowls are easier to move around in your inventory and can be re-closed by clicking/activating them in hand.
+(u)Tarmunora
+(e)⚖|balance
+(+)port a sci remote costs a telecrystal to print
+(t)fri aug 13 21
+(u)Tarmunora
+(e)⚖|balance
+(*)removed melee meatshielding. bet you didn't know it existed in the first place
+(u)Emily
+(e)🆕|feature
+(*)New Chicken Breed! See Minor Changes for a hint!
+(+)La vie est de la merde, petit clown. Fume avec moi. [Gen 2] [From Clown Chickens]
+(t)tue aug 10 21
+(u)TTerc
+(p)5709
+(e)🆕|feature
+(+)You can now chug from all the drinking containers, not just glasses and pitchers (with a few exceptions).
+(t)sun aug 08 21
+(u)Emily
+(e)⛔|removal
+(+)Removed meathead trait. I doubt anyone will notice.
+(u)Tarmunora
+(e)⚖|balance
+(*)Red chainsaw provides disarm resistance.
 (t)fri aug 06 21
 (u)Azrun
 (p)5611

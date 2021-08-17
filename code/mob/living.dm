@@ -205,9 +205,9 @@
 	var/youdied = "You have died!"
 	if (prob(1))
 		if (gibbed)
-			youdied = pick("Cleanup on aisle 5", "What a mess...", "Nice and creamy", "Salsa con [src.real_name]", "Someone get the janitor!", "Gib and let gib", "Rest In Pieces")
+			youdied = pick("Cleanup on aisle 5", "What a mess...", "Nice and creamy", "Salsa con [src.real_name]", "Someone get the janitor!", "Gib and let gib", "Rest In Pieces", "Chunky!", "Quite a concept, being everywhere at once!", "Splat!")
 		else
-			youdied = pick("Congratulations on your recent death!", "Welp, so much for that.", "You are dead. Not big surprise.", "You are no longer alive.", "haha you died loser.", "R.I.P. [src.real_name]", "well, shit.", "Better luck next time.", "MISSING: Life, 100 credit reward")
+			youdied = pick("Congratulations on your recent death!", "Welp, so much for that.", "You are dead. Not big surprise.", "You are no longer alive.", "haha you died loser.", "R.I.P. [src.real_name]", "well, shit.", "Better luck next time.", "MISSING: Life, 100 credit reward", "w a s t e d", "Lost to the Zone", "Your Story Has Ended...", "Game over, man!")
 
 	boutput(src, {"
 	<div style="border: 3px solid red; padding: 3px;">

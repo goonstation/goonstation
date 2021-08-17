@@ -1036,12 +1036,6 @@
 	src.set_loc(T)
 */
 
-/obj/item/interact(mob/user)
-	if (user.equipped() == src)
-		src.attack_self(user)
-	else
-		src.pick_up_by(user)
-
 /obj/item/proc/pick_up_by(var/mob/M)
 
 	if (world.time < M.next_click)
@@ -1179,7 +1173,7 @@
 		logTheThing("combat", user, M, "uses [src] ([type], object name: [initial(name)]) on [constructTarget(M,"combat")]")
 		return
 
-	if (user.mind && user.mind.special_role == "vampthrall" && isvampire(M) && user.is_mentally_dominated_by(M))
+	if (user.mind && user.mind.special_role == ROLE_VAMPTHRALL && isvampire(M) && user.is_mentally_dominated_by(M))
 		boutput(user, "<span class='alert'>You cannot harm your master!</span>") //This message was previously sent to the attacking item. YEP.
 		return
 

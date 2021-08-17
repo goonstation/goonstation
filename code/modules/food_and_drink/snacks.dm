@@ -338,6 +338,15 @@
 		initial_volume = 25
 		initial_reagents = list("butter"=10)
 
+	peanut
+		name = "peanut butter cookie"
+		desc = "It's delicious and nutritious... probably."
+		icon_state = "cookie-peanut"
+		frosted = 1
+		initial_volume = 25
+		initial_reagents = list("sugar"=20)
+		food_effects = list("food_deep_burp")
+
 /obj/item/reagent_containers/food/snacks/moon_pie
 	name = "sugar moon pie"
 	desc = "A confection consisting of a creamy filling sandwiched between two cookies."

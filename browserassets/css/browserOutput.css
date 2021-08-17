@@ -294,7 +294,7 @@ img.emoji {
 .bugsay {color: #EA5D17;}
 .deadsay {color: #5c00e6;}
 .hivesay {color: #663500;}
-.ghoulsay {color: #600f89;}
+.thrallsay {color: #600f89;}
 .kudzusay {color: #005c0e;}
 .astralsay {color: #2AABA4;}
 .martiansay {color: #E89235;} /* #BD33D9 is the telepathy colour, possibly more suitable? */
@@ -427,7 +427,7 @@ body.theme-dark .blobsay {color: #4ec44e;}
 body.theme-dark .bugsay {color: #EA5D17;}
 body.theme-dark .deadsay {color: #b27eff;}
 body.theme-dark .hivesay {color: #e2a059;}
-body.theme-dark .ghoulsay {color: #9347b9;}
+body.theme-dark .thrallsay {color: #9347b9;}
 body.theme-dark .kudzusay {color: #4bc75e;}
 body.theme-dark .astralsay {color: #60d4cf;}
 body.theme-dark .martiansay {color: #E89235;} /* #BD33D9 is the telepathy colour, possibly more suitable? */

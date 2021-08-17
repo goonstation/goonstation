@@ -50,7 +50,7 @@
 		return 0
 
 	emp_act()
-		SEND_SIGNAL(src, COMSIG_CELL_USE, INFINITY, TRUE)
+		SEND_SIGNAL(src, COMSIG_CELL_USE, INFINITY)
 		src.update_icon()
 		return
 
@@ -79,10 +79,8 @@
 
 	canshoot()
 		if(src.current_projectile)
-			var/list/ret = list()
-			if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-				if(ret["charge"] >= current_projectile.cost)
-					return 1
+			if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, current_projectile.cost) & CELL_SUFFICIENT_CHARGE)
+				return 1
 		return 0
 
 	process_ammo(var/mob/user)
@@ -94,9 +92,9 @@
 					return 1
 			return 0
 		else
-			if(src.current_projectile)
-				if(SEND_SIGNAL(src, COMSIG_CELL_USE, src.current_projectile.cost) & CELL_SUFFICIENT_CHARGE)
-					return 1
+			if(canshoot())
+				SEND_SIGNAL(src, COMSIG_CELL_USE, src.current_projectile.cost)
+				return 1
 			boutput(user, "<span class='alert'>*click* *click*</span>")
 			if (!src.silenced)
 				playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)

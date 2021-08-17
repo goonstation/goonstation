@@ -28,7 +28,7 @@
 
 		src.resistances += /datum/ailment/disease/lycanthropy
 
-		if (src.mind && src.mind.special_role != "omnitraitor")
+		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
 			SHOW_WEREWOLF_TIPS(src)
 
 	else return
@@ -377,7 +377,7 @@
 	onAbilityStat() // In the 'Werewolf' tab.
 		..()
 		.= list()
-		if (src.owner && src.owner.mind && src.owner.mind.special_role == "werewolf")
+		if (src.owner && src.owner.mind && src.owner.mind.special_role == ROLE_WEREWOLF)
 			for (var/datum/objective/specialist/werewolf/feed/O in src.owner.mind.objectives)
 				src.feed_objective = O
 

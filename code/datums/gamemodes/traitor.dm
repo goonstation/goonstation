@@ -2,7 +2,7 @@
 	name = "traitor"
 	config_tag = "traitor"
 	latejoin_antag_compatible = 1
-	latejoin_antag_roles = list("traitor")
+	latejoin_antag_roles = list(ROLE_TRAITOR)
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
@@ -50,7 +50,7 @@
 			var/datum/mind/twraith = pick(token_players) //Randomly pick from the token list so the first person to ready up doesn't always get it.
 			traitors += twraith
 			token_players.Remove(twraith)
-			twraith.special_role = "wraith"
+			twraith.special_role = ROLE_WRAITH
 		else
 			traitors += tplayer
 			token_players.Remove(tplayer)
@@ -59,18 +59,18 @@
 		/*num_traitors--
 		num_traitors = max(num_traitors, 0)*/
 
-	var/list/chosen_traitors = antagWeighter.choose(pool = possible_traitors, role = "traitor", amount = num_traitors, recordChosen = 1)
+	var/list/chosen_traitors = antagWeighter.choose(pool = possible_traitors, role = ROLE_TRAITOR, amount = num_traitors, recordChosen = 1)
 	traitors |= chosen_traitors
 	for (var/datum/mind/traitor in traitors)
-		traitor.special_role = "traitor"
+		traitor.special_role = ROLE_TRAITOR
 		possible_traitors.Remove(traitor)
 
 	if(num_wraiths)
 		var/list/possible_wraiths = get_possible_wraiths(num_wraiths)
-		var/list/chosen_wraiths = antagWeighter.choose(pool = possible_wraiths, role = "wraith", amount = num_wraiths, recordChosen = 1)
+		var/list/chosen_wraiths = antagWeighter.choose(pool = possible_wraiths, role = ROLE_WRAITH, amount = num_wraiths, recordChosen = 1)
 		for (var/datum/mind/wraith in chosen_wraiths)
 			traitors += wraith
-			wraith.special_role = "wraith"
+			wraith.special_role = ROLE_WRAITH
 			possible_wraiths.Remove(wraith)
 
 	return 1
@@ -81,7 +81,7 @@
 		objective_set_path = null // Gotta reset this.
 
 		switch(traitor.special_role)
-			if("traitor")
+			if(ROLE_TRAITOR)
 			#ifdef RP_MODE
 				objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
 			#else
@@ -95,7 +95,7 @@
 				for(var/datum/objective/objective in traitor.objectives)
 					boutput(traitor.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 					obj_count++
-			if ("wraith")
+			if (ROLE_WRAITH)
 				generate_wraith_objectives(traitor)
 
 	SPAWN_DBG (rand(waittime_l, waittime_h))
