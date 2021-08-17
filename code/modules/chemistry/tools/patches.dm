@@ -669,6 +669,7 @@
 		src.onRestart()
 
 //basically the same as ecig_refill_cartridge, but there's no point subtyping it...
+ABSTRACT_TYPE(/obj/item/reagent_containers/mender_refill_cartridge)
 /obj/item/reagent_containers/mender_refill_cartridge
 	name = "auto-mender refill cartridge"
 	desc = "A container designed to be able to quickly refill medical auto-menders."
@@ -724,12 +725,7 @@
 		initial_volume = 500
 
 /obj/item/reagent_containers/mender_refill_cartridge/both
-	name = "burn auto-mender refill cartridge"
-	initial_reagents = "synthflesh"
-	high_capacity
-		initial_volume = 500
-
-/obj/item/reagent_containers/mender/both
+	name = "synthflesh auto-mender refill cartridge"
 	initial_reagents = "synthflesh"
 	high_capacity
 		initial_volume = 500

@@ -310,7 +310,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/medicalchems
 	name = "Medical: Medical Reservoir Crate"
-	desc = "x4 Assorted reservoir tanks, x2 Sedative bottles, x2 Hyposprays, x1 Auto-menders, x2 Brute/Burn Auto-mender Refill Cartridges, x1 Syringe Kit"
+	desc = "x4 Assorted reservoir tanks, x2 Sedative bottles, x2 Hyposprays, x1 Auto-mender, x2 Brute Auto-mender Refill Cartridges, x2 Burn Auto-mender Refill Cartridges, x1 Syringe Kit"
 	category = "Medical Department"
 	contains = list(/obj/item/reagent_containers/glass/beaker/large/antitox,
 					/obj/item/reagent_containers/glass/beaker/large/epinephrine,
