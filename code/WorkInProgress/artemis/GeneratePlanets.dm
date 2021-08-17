@@ -263,6 +263,13 @@ ABSTRACT_TYPE(/datum/generatorPlanetPrefab)
 		prefabSizeX = 15
 		prefabSizeY = 16
 
+	organic_organs
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_organic_organs.dmm"
+		prefabSizeX = 15
+		prefabSizeY = 15
+
 
 /obj/landmark/artemis_planets
 	name = "zlevel"
