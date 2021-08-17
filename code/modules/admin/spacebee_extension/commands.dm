@@ -102,7 +102,7 @@
 
 /datum/spacebee_extension_command/boot
 	name = "boot"
-	server_targeting = COMMAND_TARGETING_MAIN_SERVER
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
 	help_message = "Boot a given ckey off the specified server."
 	argument_types = list(/datum/command_argument/string/ckey="ckey")
 
@@ -118,7 +118,7 @@
 
 /datum/spacebee_extension_command/where_is
 	name = "whereis"
-	server_targeting = COMMAND_TARGETING_MAIN_SERVER
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
 	help_message = "Get where a given ckey is currently located ingame."
 	argument_types = list(/datum/command_argument/string/ckey="ckey")
 
