@@ -1,6 +1,9 @@
 
 (t)tue aug 16 21
 (u)Flourish
+(e)⚖|balance
+(+)Security barriers now provide slight disarm resistance when activated. Let me know how this feels and if you think it makes a difference.
+(u)Flourish
 (+)Large mop buckets now have a capacity of 400 units. Handheld mop buckets have a capacity of 120 units.
 (t)sun aug 15 21
 (u)Arthur Holiday
