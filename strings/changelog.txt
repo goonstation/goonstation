@@ -1,5 +1,9 @@
 
 (t)tue aug 17 21
+(u)Sovexe
+(p)5748
+(e)🆕|feature
+(*)A new antagonist type, the Arcfiend joins the fray. Be sure to enable it in your job preferences to be amog the first to play!
 (u)Walpvrgis
 (p)5703
 (e)🎨|sprites
