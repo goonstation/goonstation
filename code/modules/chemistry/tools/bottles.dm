@@ -39,7 +39,7 @@
 /* =================================================== */
 
 /obj/item/reagent_containers/glass/bottle/epinephrine
-	name = "bottle (epinephrine)"
+	name = "epinephrine bottle"
 	desc = "A small bottle. Contains epinephrine - used to stabilize patients."
 	bottle_style = "1"
 	amount_per_transfer_from_this = 10
@@ -53,60 +53,25 @@
 	initial_reagents = "toxin"
 
 /obj/item/reagent_containers/glass/bottle/atropine
-	name = "bottle (atropine)"
+	name = "atropine bottle"
 	desc = "A small bottle containing atropine, used for cardiac emergencies."
 	bottle_style = "2"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "atropine"
 
 /obj/item/reagent_containers/glass/bottle/saline
-	name = "bottle (saline-glucose)"
+	name = "saline-glucose bottle"
 	desc = "A small bottle containing saline-glucose solution."
 	bottle_style = "2"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "saline"
 
 /obj/item/reagent_containers/glass/bottle/aspirin
-	name = "bottle (salicylic acid)"
+	name = "salicylic acid bottle"
 	desc = "A small bottle containing medicine for pain and fevers."
 	bottle_style = "2"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "salicylic_acid"
-
-/obj/item/reagent_containers/glass/bottle/insulin
-	name = "bottle (insulin)"
-	desc = "A small bottle of insulin, for treating hyperglycaemic shock."
-	bottle_style = "2"
-	amount_per_transfer_from_this = 5
-	initial_reagents = "insulin"
-
-/obj/item/reagent_containers/glass/bottle/heparin
-	name = "bottle (heparin)"
-	desc = "A small bottle of anticoagulants, for helping with blood clots and heart disease."
-	bottle_style = "2"
-	amount_per_transfer_from_this = 5
-	initial_reagents = "heparin"
-
-/obj/item/reagent_containers/glass/bottle/proconvertin
-	name = "bottle (proconvertin)"
-	desc = "A small bottle of coagulants, for helping with blood loss and blood pressure."
-	bottle_style = "2"
-	amount_per_transfer_from_this = 5
-	initial_reagents = "proconvertin"
-
-/obj/item/reagent_containers/glass/bottle/filgrastim
-	name = "bottle (filgrastim)"
-	desc = "A small bottle of filgrastim, for stimulating blood production."
-	bottle_style = "2"
-	amount_per_transfer_from_this = 5
-	initial_reagents = "filgrastim"
-
-/obj/item/reagent_containers/glass/bottle/calomel
-	name = "bottle (calomel)"
-	desc = "A small bottle of calomel, for flushing chemicals from the blood stream."
-	bottle_style = "2"
-	amount_per_transfer_from_this = 5
-	initial_reagents = "calomel"
 
 /// cogwerks - adding some new bottles for traitor medics
 // haine - I added beedril/royal beedril to these, and my heart-related disease reagents. yolo (remove these if they're a dumb idea, idk)
@@ -136,7 +101,7 @@
 		initial_reagents = "neurotoxin"
 
 /obj/item/reagent_containers/glass/bottle/morphine
-	name = "bottle (morphine)"
+	name = "morphine bottle"
 	desc = "A small bottle of morphine, a powerful painkiller."
 	bottle_style = "4"
 	amount_per_transfer_from_this = 5
@@ -187,7 +152,7 @@
 	initial_reagents = "sulfonal"
 
 /obj/item/reagent_containers/glass/bottle/synaptizine
-	name = "bottle (synaptizine)"
+	name = "synaptizine bottle"
 	desc = "A small bottle."
 	bottle_style = "3"
 	amount_per_transfer_from_this = 5
@@ -201,28 +166,28 @@
 	initial_reagents = "pancuronium"
 
 /obj/item/reagent_containers/glass/bottle/antitoxin
-	name = "bottle (charcoal)"
+	name = "charcoal bottle"
 	desc = "A small bottle."
 	bottle_style = "3"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "charcoal"
 
 /obj/item/reagent_containers/glass/bottle/antihistamine
-	name = "bottle (antihistamine)"
+	name = "antihistamine bottle"
 	desc = "A small bottle of allergy medication."
 	bottle_style = "1"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "antihistamine"
 
 /obj/item/reagent_containers/glass/bottle/eyedrops
-	name = "bottle (oculine)"
+	name = "oculine bottle"
 	desc = "A small bottle of combined eye and ear medication."
 	bottle_style = "1"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "oculine"
 
 /obj/item/reagent_containers/glass/bottle/antirad
-	name = "bottle (potassium iodide)"
+	name = "potassium iodide bottle"
 	desc = "A small bottle of potassium iodide."
 	bottle_style = "3"
 	amount_per_transfer_from_this = 5
