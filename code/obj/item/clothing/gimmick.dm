@@ -1269,6 +1269,17 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "tuxjacket"
 
+/obj/item/clothing/suit/guards_coat
+	name = "guard`s coat"
+	desc = "A formal double breasted overcoat of British origin."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "guardscoat"
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 35)
+
 /obj/item/clothing/under/rank/bartender/tuxedo // look I really want to make the clothes vendor just produce clothing directly and not have to spawn this in a box with a custom name or something
 	name = "dress shirt and bowtie"
 	desc = "A nice, crisp shirt, dress pants and a black bowtie. Fancy."
