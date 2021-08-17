@@ -2757,6 +2757,8 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 							new /obj/effects/rain/sideways/tile(S)
 					I.color = ambient_light
 					S.UpdateOverlays(I, "ambient")
+				shippingmarket.clear_path_to_market()
+
 				logTheThing("admin", src, null, "turned space into a swamp.")
 				logTheThing("diary", src, null, "turned space into a swamp.", "admin")
 				message_admins("[key_name(src)] turned space into a swamp.")
@@ -2831,6 +2833,7 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 						created_loot.initialize()
 
 					LAGCHECK(LAG_MED)
+				shippingmarket.clear_path_to_market()
 				logTheThing("admin", src, null, "generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].")
 				logTheThing("diary", src, null, "generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].", "admin")
 				message_admins("[key_name(src)] generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].")
