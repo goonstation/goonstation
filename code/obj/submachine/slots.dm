@@ -17,6 +17,7 @@
 	var/emagged = 0
 	///break-even point for slots when this is set to 2500. make lower to make slots pay out better, or higher to give the house an edge
 	var/max_roll = 2250
+	var/wager = 20
 
 	New()
 		AddComponent(/datum/component/mechanics_holder)
@@ -42,6 +43,7 @@
 		"money" = available_funds,
 		"account_funds" = src.accessed_record?.fields["current_money"],
 		"plays" = plays,
+		"wager" = wager,
 	)
 
 /obj/submachine/slot_machine/ui_state(mob/user)
@@ -67,7 +69,6 @@
 		if ("play")
 			if (src.working || !src.accessed_record)
 				return TRUE
-			var/wager = clamp(round(params["bet"]), 20, 1000)
 			if (src.available_funds < wager)
 				src.visible_message("<span class='subtle'><b>[src]</b> says, 'Insufficient money to play!'</span>")
 				return TRUE
@@ -109,6 +110,8 @@
 			src.available_funds = 0
 			boutput(usr, "<span class='notice'>Funds transferred.</span>")
 
+		if("set_wager")
+			src.wager = clamp(round(params["bet"]), 20, 1000)
 
 
 	src.add_fingerprint(usr)
@@ -151,7 +154,7 @@
 	if(wager <= 250)
 		roll = max(5, roll)
 	if(src.emagged)
-		roll = max(roll, 200)
+		roll = min(roll * 2, max_roll)
 
 	if (roll == 1) //1
 		win_sound = "sound/misc/airraid_loop_short.ogg"

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: ISC
  */
 
-import { useBackend, useSharedState } from '../backend';
+import { useBackend } from '../backend';
 import { Box, Button, NoticeBox, Divider, BlockQuote, Icon, NumberInput } from '../components';
 import { Window } from '../layouts';
 
@@ -49,13 +49,12 @@ const InsertCard = (props, context) => {
 
 const SlotWindow = (props, context) => {
   const { act, data } = useBackend(context);
-  const { scannedCard, money, account_funds, plays } = data;
-  const [wager, setWager] = useSharedState(context, 'wager', 20);
+  const { scannedCard, money, account_funds, plays, wager } = data;
 
   return (
     <Box>
       <NoticeBox success>
-        <marquee> Twenty credits to play! </marquee>
+        <marquee> Wager some credits! </marquee>
       </NoticeBox>
       <Box mb="0.5em">
         <strong>Your card: </strong>
@@ -89,7 +88,9 @@ const SlotWindow = (props, context) => {
           maxValue={1000}
           value={wager}
           format={value => "$" + value}
-          onDrag={(e, value) => setWager(value)}
+          onDrag={(e, value) => act('set_wager', {
+            bet: value,
+          })}
         />
       </Box>
       <Box mb="0.75em">
