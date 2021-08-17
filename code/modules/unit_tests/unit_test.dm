@@ -142,7 +142,7 @@ var/global/datum/unit_test_controller/unit_tests = new()
 /// Instances allocated through this proc will be destroyed when the test is over
 /datum/unit_test/proc/allocate(type, ...)
 	var/list/arguments = args.Copy(2)
-	if (!length(arguments)
+	if (!length(arguments))
 		arguments = list(run_loc_floor_bottom_left)
 	else if (arguments[1] == null)
 		arguments[1] = run_loc_floor_bottom_left
