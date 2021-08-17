@@ -750,9 +750,9 @@ a.latejoin-card:hover {
 				generate_wraith_objectives(traitor)
 
 #ifdef SECRETS_ENABLED
-			if (ROLE_ENERGY_VAMPIRE)
-				traitor.special_role = ROLE_ENERGY_VAMPIRE
-				traitormob.make_energy_vampire()
+			if (ROLE_ARCFIEND)
+				traitor.special_role = ROLE_ARCFIEND
+				traitormob.make_arcfiend()
 			#ifdef RP_MODE
 				objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
 			#else
