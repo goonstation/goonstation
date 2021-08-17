@@ -112,6 +112,7 @@
 
 		if("set_wager")
 			src.wager = clamp(round(params["bet"]), 20, 1000)
+			. = TRUE
 
 
 	src.add_fingerprint(usr)
