@@ -1,4 +1,9 @@
 
+(t)tue aug 17 21
+(u)Walpvrgis
+(p)5703
+(e)🎨|sprites
+(+)The cow mutantrace has had a few visual adjustments.
 (t)tue aug 16 21
 (u)Flourish
 (e)⚖|balance
