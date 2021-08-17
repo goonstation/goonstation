@@ -283,7 +283,6 @@
 		shipped_thing.throw_at(target, 100, 1)
 
 	proc/clear_path_to_market()
-		var/turf/T
 		var/list/bounds = get_area_turfs(/area/supply/delivery_point)
 		bounds += get_area_turfs(/area/supply/sell_point)
 		bounds += get_area_turfs(/area/supply/spawn_point)
@@ -291,13 +290,14 @@
 		var/max_x = 0
 		var/min_y = INFINITY
 		var/max_y = 0
-		for(T in bounds)
-			min_x = min(min_x, T.x)
-			min_y = min(min_y, T.y)
-			max_x = max(max_x, T.x)
-			max_y = max(max_y, T.y)
+		for(var/turf/boundry as anything in bounds)
+			min_x = min(min_x, boundry.x)
+			min_y = min(min_y, boundry.y)
+			max_x = max(max_x, boundry.x)
+			max_y = max(max_y, boundry.y)
+
 		var/list/turf/to_clear = block(locate(min_x, min_y, Z_LEVEL_STATION), locate(max_x, max_y, Z_LEVEL_STATION))
-		for(T in to_clear)
+		for(var/turf/T as anything in to_clear)
 			//Wacks asteroids and skip normal turfs that belong
 			if(istype(T, /turf/simulated/wall/asteroid))
 				T.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid, force=TRUE)
