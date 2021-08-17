@@ -112,7 +112,7 @@
 				del(C)
 				logTheThing("admin", "[user] (Discord)", null, "booted [constructTarget(C,"admin")].")
 				logTheThing("diary", "[user] (Discord)", null, "booted [constructTarget(C,"diary")].", "admin")
-				system.reply("Booted [ckey].")
+				system.reply("Booted [ckey].", user)
 				return
 		system.reply("Could not locate [ckey].", user)
 
@@ -128,7 +128,7 @@
 			system.reply("Could not locate [ckey].", user)
 			return
 		var/area/A = get_area(M)
-		system.reply("[key_name(target)] is at A.x, A.y, A.z in [A].")
+		system.reply("[key_name(target)] is at A.x, A.y, A.z in [A].", user)
 
 /datum/spacebee_extension_command/announce
 	name = "announce"
