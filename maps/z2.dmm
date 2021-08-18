@@ -67043,12 +67043,7 @@
 	dir = 1
 	},
 /obj/table/regal/auto,
-/turf/unsimulated/floor/wood/two{
-	desc = " It is made of cloth.";
-	icon = 'icons/turf/carpet.dmi';
-	icon_state = "fred1";
-	name = "carpet"
-	},
+/turf/unsimulated/floor/carpet/red/standard,
 /area/centcom/offices/questx)
 "dBl" = (
 /obj/item/reagent_containers/food/drinks/bottle/gin{
@@ -67092,12 +67087,7 @@
 	pixel_y = -4
 	},
 /obj/table/regal/auto,
-/turf/unsimulated/floor/wood/two{
-	desc = " It is made of cloth.";
-	icon = 'icons/turf/carpet.dmi';
-	icon_state = "fred1";
-	name = "carpet"
-	},
+/turf/unsimulated/floor/carpet/red/standard,
 /area/centcom/offices/questx)
 "dBm" = (
 /obj/item/reagent_containers/food/drinks/bottle/tequila{
@@ -67140,12 +67130,7 @@
 	pixel_y = -3
 	},
 /obj/table/regal/auto,
-/turf/unsimulated/floor/wood/two{
-	desc = " It is made of cloth.";
-	icon = 'icons/turf/carpet.dmi';
-	icon_state = "fred1";
-	name = "carpet"
-	},
+/turf/unsimulated/floor/carpet/red/standard,
 /area/centcom/offices/questx)
 "dBn" = (
 /obj/item/reagent_containers/food/drinks/bottle/beer{
@@ -67187,12 +67172,7 @@
 	pixel_y = -2
 	},
 /obj/table/regal/auto,
-/turf/unsimulated/floor/wood/two{
-	desc = " It is made of cloth.";
-	icon = 'icons/turf/carpet.dmi';
-	icon_state = "fred1";
-	name = "carpet"
-	},
+/turf/unsimulated/floor/carpet/red/standard,
 /area/centcom/offices/questx)
 "dBo" = (
 /obj/machinery/light{
@@ -67443,12 +67423,7 @@
 /obj/stool/chair/comfy/throne_gold{
 	dir = 8
 	},
-/turf/unsimulated/floor/wood/two{
-	desc = " It is made of cloth.";
-	icon = 'icons/turf/carpet.dmi';
-	icon_state = "fred1";
-	name = "carpet"
-	},
+/turf/unsimulated/floor/carpet/red/standard,
 /area/centcom/offices/questx)
 "dBT" = (
 /obj/stool/chair/office{
@@ -67606,12 +67581,7 @@
 	pixel_y = 13
 	},
 /obj/table/regal/auto,
-/turf/unsimulated/floor/wood/two{
-	desc = " It is made of cloth.";
-	icon = 'icons/turf/carpet.dmi';
-	icon_state = "fred1";
-	name = "carpet"
-	},
+/turf/unsimulated/floor/carpet/red/standard,
 /area/centcom/offices/questx)
 "dCm" = (
 /obj/item/reagent_containers/food/drinks/bottle/beer{
@@ -67654,12 +67624,7 @@
 	},
 /obj/machinery/light,
 /obj/table/regal/auto,
-/turf/unsimulated/floor/wood/two{
-	desc = " It is made of cloth.";
-	icon = 'icons/turf/carpet.dmi';
-	icon_state = "fred1";
-	name = "carpet"
-	},
+/turf/unsimulated/floor/carpet/red/standard,
 /area/centcom/offices/questx)
 "dCn" = (
 /obj/machinery/light,
@@ -77245,12 +77210,7 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/cogmap)
 "mAM" = (
-/turf/unsimulated/floor/wood/two{
-	desc = " It is made of cloth.";
-	icon = 'icons/turf/carpet.dmi';
-	icon_state = "fred1";
-	name = "carpet"
-	},
+/turf/unsimulated/floor/carpet/red/standard,
 /area/centcom/offices/questx)
 "mBL" = (
 /obj/grille/steel,
@@ -78410,12 +78370,7 @@
 	pixel_y = 12
 	},
 /obj/table/regal/auto,
-/turf/unsimulated/floor/wood/two{
-	desc = " It is made of cloth.";
-	icon = 'icons/turf/carpet.dmi';
-	icon_state = "fred1";
-	name = "carpet"
-	},
+/turf/unsimulated/floor/carpet/red/standard,
 /area/centcom/offices/questx)
 "png" = (
 /obj/table/auto,
@@ -79198,8 +79153,8 @@
 	desc = "This was one of the first batons to be turned off and grabbed by the head to enable more robust beatings. It is certainly the most imposing baton you've ever seen.";
 	flipped = 1;
 	force = 15;
-	name = "\improper Harmbaton of Porter Starboard";
-	is_active = 0
+	is_active = 0;
+	name = "\improper Harmbaton of Porter Starboard"
 	},
 /obj/machinery/light/incandescent/warm/very{
 	dir = 4
@@ -79595,12 +79550,7 @@
 	pixel_y = -3
 	},
 /obj/table/regal/auto,
-/turf/unsimulated/floor/wood/two{
-	desc = " It is made of cloth.";
-	icon = 'icons/turf/carpet.dmi';
-	icon_state = "fred1";
-	name = "carpet"
-	},
+/turf/unsimulated/floor/carpet/red/standard,
 /area/centcom/offices/questx)
 "slL" = (
 /obj/decal/fakeobjects/pipe{
