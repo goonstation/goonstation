@@ -4,10 +4,10 @@
 
 /datum/unit_test/deletion_regressions/Run()
 
-#define UNIT_TEST_FULL_SUITE
+/// MUST BE OPTED INTO AS THIS TAKES 12min
+//#define UNIT_TEST_FULL_SUITE
 #if defined(UNIT_TEST_FULL_SUITE)
 /// This loops through all objects creates them and then deletes them
-/// MUST BE OPTED INTO AS THIS TAKES 12min
 /datum/unit_test/deletion_and_creation
 	var/prev_runtimes = 0
 	var/checks = 0
