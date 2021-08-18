@@ -1211,6 +1211,7 @@ proc/riffle_shuffle(list/deck)
 	// Makes two lists, one for each half of the deck, then clears the original deck.
 	var/list/D1 = deck.Copy(1, splitLoc)
 	var/list/D2 = deck.Copy(splitLoc)
+	deck.len = 0
 
 	// Markovian model of the shuffle
 	var/currentStack = rand() > 0.5
