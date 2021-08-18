@@ -78371,14 +78371,11 @@
 /turf/unsimulated/floor/delivery,
 /area/centcom)
 "pmV" = (
-/obj/table/regal/auto{
-	icon_state = "12";
-	vis_flags = 0
-	},
+/obj/table/regal/auto,
 /obj/item/reagent_containers/food/drinks/bottle/beer{
 	pixel_x = -14;
 	pixel_y = 13;
-	vis_flags = 0
+	
 	},
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
 	pixel_x = -6;
@@ -78387,7 +78384,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/beer{
 	pixel_x = -4;
 	pixel_y = -2;
-	vis_flags = 0
+	
 	},
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
 	pixel_x = -11;
