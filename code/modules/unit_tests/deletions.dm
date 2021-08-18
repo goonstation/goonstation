@@ -25,7 +25,7 @@
 		ignore_hash[type] = TRUE
 
 	/// These types are expected to crash due to error handling
-	var/list/expected_crash = list(/obj/wingrille_spawn, /obj/item/aiModule/random=20)
+	var/list/expected_crash = list(/obj/wingrille_spawn, /obj/item/paper/book/from_file/pocketguide, /obj/item/paper/from_file, /obj/item/paper/book/from_file,  /obj/item/aiModule/random=20)
 	for(var/crash_type in expected_crash)
 		crash_hash[crash_type] = expected_crash[crash_type] || 1
 
