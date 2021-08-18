@@ -67405,21 +67405,6 @@
 	icon_state = "blue"
 	})
 "dBS" = (
-/obj/item/reagent_containers/food/drinks/bottle/beer{
-	pixel_x = -8;
-	pixel_y = -14
-	},
-/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
-	pixel_y = -13
-	},
-/obj/item/reagent_containers/food/drinks/bottle/beer{
-	pixel_x = 5;
-	pixel_y = -14
-	},
-/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
-	pixel_x = 11;
-	pixel_y = -14
-	},
 /obj/stool/chair/comfy/throne_gold{
 	dir = 8
 	},
@@ -67585,45 +67570,47 @@
 /area/centcom/offices/questx)
 "dCm" = (
 /obj/item/reagent_containers/food/drinks/bottle/beer{
-	pixel_x = -15;
-	pixel_y = 14
+	pixel_x = -12;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = -13;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = -8;
+	pixel_y = 13
 	},
 /obj/item/reagent_containers/food/drinks/bottle/beer{
-	pixel_x = -13
-	},
-/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
-	pixel_x = 11;
-	pixel_y = -1
-	},
-/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
 	pixel_x = -7;
 	pixel_y = -1
 	},
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = -2;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
 	pixel_x = -1;
 	pixel_y = -1
 	},
 /obj/item/reagent_containers/food/drinks/bottle/beer{
-	pixel_x = 4
+	pixel_x = 5;
+	pixel_y = 13
 	},
-/obj/item/reagent_containers/food/drinks/bottle/cider{
-	pixel_x = -10;
-	pixel_y = 6
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = 6;
+	pixel_y = -1
 	},
-/obj/item/reagent_containers/food/drinks/bottle/cider{
-	pixel_x = -4;
-	pixel_y = 11
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = 13;
+	pixel_y = -2
 	},
-/obj/item/reagent_containers/food/drinks/bottle/cider{
-	pixel_x = 2;
-	pixel_y = 11
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = 11;
+	pixel_y = 13
 	},
-/obj/item/reagent_containers/food/drinks/bottle/cider{
-	pixel_x = 7;
-	pixel_y = 9
-	},
-/obj/machinery/light,
 /obj/table/regal/auto,
+/obj/machinery/light,
 /turf/unsimulated/floor/carpet/red/standard,
 /area/centcom/offices/questx)
 "dCn" = (
