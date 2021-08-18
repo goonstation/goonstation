@@ -128,7 +128,7 @@
 			system.reply("Could not locate [ckey].", user)
 			return
 		var/area/A = get_area(M)
-		system.reply("[key_name(M)] is at A.x, A.y, A.z in [A].", user)
+		system.reply("[ckey] ([mob]) is at [A.x], [A.y], [A.z] in [A].", user)
 
 /datum/spacebee_extension_command/announce
 	name = "announce"
