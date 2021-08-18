@@ -23,9 +23,8 @@
 	var/style = "patch"
 	initial_volume = 30
 	event_handler_flags = HANDLE_STICKER | USE_FLUID_ENTER
+	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | EXTRADELAY
 	rc_flags = RC_SPECTRO		// only spectroscopic analysis
-	module_research = list("medicine" = 1, "science" = 1)
-	module_research_type = /obj/item/reagent_containers/patch
 	var/in_use = 0
 	var/good_throw = 0
 
@@ -53,6 +52,8 @@
 			if (src.reagents && src.reagents.total_temperature < src.reagents.temperature_min)
 				src.reagents.total_temperature = src.reagents.temperature_min
 
+	proc/can_operate_on(atom/A)
+		.= (iscarbon(A) || ismobcritter(A))
 
 	proc/clamp_reagents()
 		if (src.reagents.total_temperature > src.reagents.temperature_cap)
@@ -100,25 +101,23 @@
 		return
 
 	attack_self(mob/user as mob)
-		if (src.in_use)
+		if (ON_COOLDOWN(user, "self-patch", user.combat_click_delay))
 			return
 
 		if (src.borg == 1 && !issilicon(user))
 			user.show_text("This item is not designed with organic users in mind.", "red")
 			return
 
-		if (iscarbon(user) || ismobcritter(user))
-			src.in_use = 1
+		if (can_operate_on(user))
 			user.visible_message("[user] applies [src] to [himself_or_herself(user)].",\
 			"<span class='notice'>You apply [src] to yourself.</span>")
 			logTheThing("combat", user, null, "applies a patch to themself [log_reagents(src)] at [log_loc(user)].")
-			apply_to(user,0,user=user)
-			attach_sticker_manual(user)
+			user.Attackby(src, user)
 		return
 
 	throw_impact(atom/M, datum/thrown_thing/thr)
 		..()
-		if (src.medical && !borg && !src.in_use && (iscarbon(M) || ismobcritter(M)))
+		if (src.medical && !borg && !src.in_use && (can_operate_on(M)))
 			if (prob(30) || good_throw && prob(70))
 				src.in_use = 1
 				M.visible_message("<span class='alert'>[src] lands on [M] sticky side down!</span>")
@@ -136,8 +135,7 @@
 			return
 
 		// No src.reagents check here because empty patches can be used to counteract bleeding.
-
-		if (iscarbon(M) || ismobcritter(M))
+		if (can_operate_on(M))
 			src.in_use = 1
 			if (M == user)
 				//M.show_text("You put [src] on your arm.", "blue")
@@ -216,6 +214,8 @@
 
 	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)
 		.= 0
+		if(!can_operate_on(A))
+			return
 		if (!attached && ismob(A) && medical)
 			//do image stuff
 			var/pox = src.pixel_x
@@ -313,7 +313,6 @@
 	desc = "What is this?"
 	icon_state = "patch_LSD"
 	initial_reagents = list("LSD"=20)
-	module_research = list("vice" = 10)
 
 	cyborg
 		borg = 1
@@ -323,7 +322,6 @@
 	desc = "A highly potent hallucinogenic substance. It smells like honey."
 	icon_state = "patch_LSBee"
 	initial_reagents = list("lsd_bee"=20)
-	module_research = list("vice" = 10)
 
 /obj/item/reagent_containers/patch/vr
 	icon = 'icons/effects/VR.dmi'
@@ -410,7 +408,7 @@
 	attackby(var/obj/item/W, var/mob/user)
 		if (patches.len)
 			var/obj/item/reagent_containers/patch/P = patches[patches.len]
-			P.attackby(W, user)
+			P.Attackby(W, user)
 
 	attack_self(var/mob/user)
 		if (patches.len)
@@ -465,8 +463,6 @@
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | ONBELT | NOSPLASH | ATTACK_SELF_DELAY
 	click_delay = 0.7 SECONDS
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
-	module_research = list("medicine" = 4, "science" = 4)
-	module_research_type = /obj/item/reagent_containers/patch
 
 	var/list/whitelist = list()
 	var/use_volume = 8
@@ -648,7 +644,7 @@
 		M.apply_to(target,user, multiply, silent = (looped >= 1))
 
 	onEnd()
-		if(get_dist(user, target) > 1 || user == null || target == null)
+		if(get_dist(user, target) > 1 || user == null || target == null || !user.find_in_hand(M))
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			return

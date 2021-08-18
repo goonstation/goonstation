@@ -70,8 +70,7 @@
 			src.link = null
 
 	proc/spacket(var/datum/mechanicsMessage/input)
-		if(!isReady()) return
-		unReady()
+		if(ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		post_raw(input.signal, input.data_file?.copy_file())
 		return
 

@@ -28,10 +28,10 @@
 
 	equipped(mob/user)
 		. = ..()
-		APPLY_MOB_PROPERTY(user, PROP_THERMALSIGHT_MK2, src)
+		APPLY_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
 
 	unequipped(mob/user)
-		REMOVE_MOB_PROPERTY(user, PROP_THERMALSIGHT_MK2, src)
+		REMOVE_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
 		. = ..()
 
 /obj/item/clothing/under/gimmick/hunter
@@ -659,7 +659,6 @@
 	name = "super happy funtime cat head"
 	desc = "This cat head was built to the highest ethical standards.  50% less child labor used in production than competing novelty cat heads."
 	icon_state = "genki"
-	permeability_coefficient = 0.01
 	c_flags = COVERSEYES | COVERSMOUTH | MASKINTERNALS
 
 //birdman for nieks
@@ -694,6 +693,7 @@
 	icon_state = "adeptus"
 	item_state = "adeptus"
 	permeability_coefficient = 0.50
+	over_hair = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
 	wear_layer = MOB_OVERLAY_BASE
 
@@ -853,6 +853,7 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "monkey"
 	item_state = "monkey"
+	over_hair = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
 	c_flags = COVERSMOUTH | COVERSEYES
 
@@ -889,6 +890,7 @@
 	item_state = "light_borg"
 	body_parts_covered = TORSO|LEGS|ARMS
 	c_flags = COVERSMOUTH | COVERSEYES
+	over_hair = TRUE
 	see_face = 0.0
 
 /obj/item/clothing/under/gimmick/utena //YJHTGHTFH's utena suit
@@ -933,6 +935,14 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
 	icon_state = "sneakmans"
 	item_state = "sneakmans"
+
+/obj/item/clothing/suit/armor/sneaking_suit/costume
+	desc = "On closer inspection this is a cheap cosplay outfit with an obvious zipper."
+
+	setupProperties()
+		..()
+		setProperty("meleeprot", 2)
+		delProperty("rangedprot")
 
 /obj/item/clothing/suit/bio_suit/beekeeper
 	name = "apiculturist's suit"
@@ -1323,6 +1333,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	icon_state = "joyful"
 	body_parts_covered = TORSO|LEGS|ARMS
 	wear_layer = MOB_OVERLAY_BASE
+	over_hair = TRUE
 
 /obj/item/clothing/head/rando
 	name = "red skull mask and cowl"
@@ -1471,6 +1482,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	body_parts_covered = HEAD|TORSO|LEGS|ARMS
 	wear_layer = MOB_OVERLAY_BASE
 	icon_state = "hotdogsuit"
+	over_hair = TRUE
 
 /obj/item/clothing/under/gimmick/vampire
 	name = "absurdly stylish suit and vest"
@@ -1524,7 +1536,6 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 /obj/item/clothing/shoes/rollerskates
 	name = "rollerskates"
 	desc = "A pair of rollerskates, invented when experimental teleportation technology fused a pair of tacky boots and a shopping cart."
-	c_flags = NOSLIP
 	icon_state = "rollerskates"
 
 /obj/item/clothing/under/gimmick/itsyourcousin
@@ -1644,3 +1655,51 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	icon_state = "labcoat-long"
 	item_state = "labcoat-long"
 	body_parts_covered = TORSO|LEGS|ARMS
+
+//monkey island reference
+
+/obj/item/clothing/under/gimmick/guybrush
+	name = "wannabe pirate outfit"
+	desc = "It smells like monkeys."
+	icon_state = "guybrush"
+	item_state = "guybrush"
+
+//fake lizard stuff
+
+/obj/item/clothing/suit/gimmick/dinosaur
+	name = "dinosaur pajamas"
+	desc = "It has a little hood you can flip up and down. Rawr!"
+	icon_state = "dinosaur"
+	item_state = "dinosaur"
+	var/hood = 0
+
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 25)
+
+	attack_self(mob/user as mob)
+		src.hood = !(src.hood)
+		user.show_text("You flip [src]'s hood [src.hood ? "up" : "down"].")
+		if (src.hood)
+			src.over_hair = 1
+			src.icon_state = "dinosaur-up"
+			src.item_state = "dinosaur-up"
+		else
+			src.over_hair = 0
+			src.icon_state = "dinosaur"
+			src.item_state = "dinosaur"
+
+/obj/item/clothing/head/biglizard
+	name = "giant novelty lizard head"
+	desc = "Wow! It's just like the real thing!"
+	icon_state = "big_lizard"
+	item_state = "big_lizard"
+
+//sock hats
+
+/obj/item/clothing/head/link
+	name = "hero hat"
+	desc = "What kind of hero would wear this dumb thing?"
+	icon_state = "link"
+	item_state = "link"

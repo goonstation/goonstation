@@ -6,6 +6,7 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 	name = "quantum telescope"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
+	circuit_type = /obj/item/circuitboard/telescope
 
 	var/mob/using = null
 
@@ -21,13 +22,10 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 			rebuildEventList(using)
 
 	proc/boot_if_away()
-		if(using && (!using.client || using.client.inactivity >= 600 || get_dist(src, using) > 1))
+		if(using && (!using.client || using.client.inactivity >= 600 || !in_interact_range(src, using)))
 			using.Browse(null, "window=qtelescope;override_setting=1")
 			using = null
 		return
-
-	attack_ai(mob/user as mob)
-		return attack_hand(user)
 
 	attack_hand(mob/user as mob)
 		if(status & (BROKEN|NOPOWER))

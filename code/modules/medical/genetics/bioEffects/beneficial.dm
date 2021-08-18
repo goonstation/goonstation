@@ -293,6 +293,7 @@
 	msgLose = "You feel more comfortable in your own skin."
 	heal_per_tick = 2
 	regrow_prob = 50
+	acceptable_in_mutini = 0 // fun is banned
 
 	OnAdd()
 		. = ..()
@@ -545,6 +546,12 @@ var/list/radio_brains = list()
 	degrade_to = "bad_eyesight"
 	icon_state  = "eye"
 
+	OnAdd()
+		APPLY_MOB_PROPERTY(owner, PROP_NIGHTVISION, src)
+
+	OnRemove()
+		REMOVE_MOB_PROPERTY(owner, PROP_NIGHTVISION, src)
+
 /datum/bioEffect/toxic_farts
 	name = "High Decay Digestion"
 	desc = "Causes the subject's digestion to create a significant amount of noxious gas."
@@ -631,6 +638,7 @@ var/list/radio_brains = list()
 	can_research = 0
 	can_make_injector = 0
 	can_copy = 0
+	acceptable_in_mutini = 0
 	icon_state  = "tk"
 
 	OnAdd()

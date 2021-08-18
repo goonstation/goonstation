@@ -112,14 +112,14 @@
 		if(direction in directions)
 			var/turf/T = get_step(current, direction)
 			cardinalTurfs["[direction]"] = 0 // can't pass
-			if(T && checkTurfPassable(T, heuristic, heuristic_args))
+			if(T && checkTurfPassable(T, heuristic, heuristic_args, current))
 				. += T
 				cardinalTurfs["[direction]"] = 1 // can pass
 	 //diagonals need to avoid the leaking problem
 	for(var/direction in ordinal)
 		if(direction in directions)
 			var/turf/T = get_step(current, direction)
-			if(T && checkTurfPassable(T, heuristic, heuristic_args))
+			if(T && checkTurfPassable(T, heuristic, heuristic_args, current))
 				// check relevant cardinals
 				var/clear = 1
 				for(var/cardinal in cardinal)
@@ -131,12 +131,67 @@
 					. += T
 
 /// Returns false if there is a dense atom on the turf, unless a custom hueristic is passed.
-/proc/checkTurfPassable(turf/T, heuristic = null, heuristic_args = null)
+/proc/checkTurfPassable(turf/T, heuristic = null, heuristic_args = null, turf/source = null)
 	. = TRUE
 	if(T.density || !T.pathable) // simplest case
 		return FALSE
+	// if a source turf was included check for directional blocks between the two turfs
+	if (source && (T.blocked_dirs || source.blocked_dirs))
+		var/direction = get_dir(source, T)
+
+		// do either of these turfs explicitly block entry or exit to the other?
+		if (HAS_FLAG(T.blocked_dirs, turn(direction, 180)))
+			return FALSE
+		else if (source && HAS_FLAG(source.blocked_dirs, direction))
+			return FALSE
+
+		if (direction in ordinal) // ordinal? That complicates things...
+			if (source.blocked_dirs && T.blocked_dirs)
+				// check for "wall" blocks
+				// ex. trying to move NE source blocking north exit and destination (T) blocking south entry
+				if (HAS_FLAG(source.blocked_dirs, turn(direction, 45)) && HAS_FLAG(T.blocked_dirs, turn(direction, -135)))
+					return FALSE
+				else if (HAS_FLAG(source.blocked_dirs, turn(direction, -45)) && HAS_FLAG(T.blocked_dirs, turn(direction, 135)))
+					return FALSE
+
+			var/turf/corner_1 = get_step(source, turn(direction, 45))
+			var/turf/corner_2 = get_step(source, turn(direction, -45))
+
+			// check for potential blocks form the two corners
+			if (corner_1.blocked_dirs && corner_2.blocked_dirs)
+				if (HAS_FLAG(corner_1.blocked_dirs, turn(direction, -45)))
+					if (HAS_FLAG(corner_2.blocked_dirs, turn(direction, 45)))
+						return FALSE // entry to dest blocked by corners
+					else if (HAS_FLAG(corner_2.blocked_dirs, turn(direction, 135)))
+						// check for "wall" blocks
+						// ex. trying to move NE with C1 blocking south entry and C2 blocking north exit
+						return FALSE
+				if (HAS_FLAG(corner_1.blocked_dirs, turn(direction, -135)))
+					if (HAS_FLAG(corner_2.blocked_dirs, turn(direction, 135)))
+						return FALSE // exit from source blocked by corners
+					else if (HAS_FLAG(corner_2.blocked_dirs, turn(direction, 45)))
+						return FALSE // "wall" block
+
+			// we got past the combinations of the two corners ok, but what about the corners combined with the source and destination?
+			// entry blocked by an object in destination and in one or more of the corners
+			if (T.blocked_dirs && (corner_1.blocked_dirs || corner_2.blocked_dirs))
+				if (HAS_FLAG(corner_1.blocked_dirs, turn(direction, -45)) && HAS_FLAG(T.blocked_dirs, turn(direction, -135)))
+					return FALSE
+				else if (HAS_FLAG(corner_2.blocked_dirs, turn(direction, 45)) && HAS_FLAG(T.blocked_dirs, turn(direction, 135)))
+					return FALSE
+			// entry blocked by an object in source and in one or more of the corners
+			if (source.blocked_dirs && (corner_1.blocked_dirs || corner_2.blocked_dirs))
+				if (HAS_FLAG(corner_1.blocked_dirs, turn(direction, -135)) && HAS_FLAG(source.blocked_dirs, turn(direction, -45)))
+					return FALSE
+				else if (HAS_FLAG(corner_2.blocked_dirs, turn(direction, 135)) && HAS_FLAG(source.blocked_dirs, turn(direction, 45)))
+					return FALSE
 	for(var/atom/A in T.contents)
-		if (istype(A, /obj/overlay) || istype(A, /obj/effects)) continue
+		if (isobj(A))
+			var/obj/O = A
+			// only skip if we did the source check, otherwise fall back to normal density checks
+			if (source && HAS_FLAG(O.object_flags, HAS_DIRECTIONAL_BLOCKING))
+				continue // we already handled these above with the blocked_dirs
+			if (istype(A, /obj/overlay) || istype(A, /obj/effects)) continue
 		if (heuristic) // Only use a custom hueristic if we were passed one
 			. = min(., call(heuristic)(A, heuristic_args))
 			if (!.) // early return if we encountered a failing atom

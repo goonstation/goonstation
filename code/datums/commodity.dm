@@ -557,7 +557,7 @@
 
 /datum/commodity/podparts/blackarmor
 	comname = "Strange Armor Plating"
-	comtype = /obj/item/pod/armor_black
+	comtype = /obj/item/podarmor/armor_black
 	desc = "NT Special Ops vehicular armor plating, almost certainly stolen."
 	price = 50000
 	baseprice = 50000
@@ -566,7 +566,7 @@
 
 /datum/commodity/podparts/redarmor
 	comname = "Syndicate Pod Armor"
-	comtype = /obj/item/pod/armor_red
+	comtype = /obj/item/podarmor/armor_red
 	desc = "A kit of Syndicate pod armor plating."
 	price = 25000
 	baseprice = 25000
@@ -575,7 +575,7 @@
 
 /datum/commodity/podparts/goldarmor
 	comname = "Gold Pod Armor"
-	comtype = /obj/item/pod/armor_gold
+	comtype = /obj/item/podarmor/armor_gold
 	desc = "A kit of gold-plated pod armor plating."
 	price = 32500
 	baseprice = 32500
@@ -2168,6 +2168,42 @@
 	comname = "Alternate Mime Clothes."
 	comtype = /obj/item/storage/box/costume/mime/alt
 	desc = "This stuff will give you an edge in charades."
+
+/datum/commodity/backpack/breadpack
+	comname = "Bag-uette"
+	comtype = /obj/item/storage/backpack/breadpack
+	desc = "A bread-themed backpack...? It kind of smells like bread too! Unfortunately inedible."
+	price = 600
+	baseprice = 100
+	upperfluc = 150
+	lowerfluc = -100
+
+/datum/commodity/backpack/bearpack
+	comname = "Bearpack"
+	comtype = /obj/item/storage/backpack/bearpack
+	desc = "A teddy bear backpack; perfect for hugs AND carries your gear for you, how helpful!"
+	price = 500
+	baseprice = 100
+	upperfluc = 150
+	lowerfluc = -100
+
+/datum/commodity/backpack/turtlebrown
+	comname = "Brown Turtle Shell Backpack"
+	comtype = /obj/item/storage/backpack/turtlebrown
+	desc = "All the hip teenage mutants have one of these turtle shell backpacks."
+	price = 650
+	baseprice = 100
+	upperfluc = 150
+	lowerfluc = -100
+
+/datum/commodity/backpack/turtlegreen
+	comname = "Green Turtle Shell Backpack"
+	comtype = /obj/item/storage/backpack/turtlegreen
+	desc = "All the hip teenage mutants have one of these turtle shell backpacks."
+	price = 650
+	baseprice = 100
+	upperfluc = 150
+	lowerfluc = -100
 
 /datum/commodity/balloons //no it ain't a costume kit but it's going in Geoff's wares so idgaf tOt fite me
 	comname = "box of balloons"

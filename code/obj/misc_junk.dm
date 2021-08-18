@@ -235,7 +235,7 @@
 	name = "E-Meter"
 	desc = "A device for measuring Body Thetan levels."
 	icon = 'icons/obj/items/device.dmi'
-	icon_state = "securotronOld"
+	icon_state = "emeter"
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if (ismob(M))
@@ -257,7 +257,6 @@
 	throwforce = 5
 	var/spam_flag = 0
 	var/pitch = 0
-	module_research = list("audio" = 20, "eldritch" = 3)
 
 /obj/item/hell_horn/attack_self(mob/user as mob)
 	if (spam_flag == 0)

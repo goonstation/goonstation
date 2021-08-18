@@ -25435,7 +25435,7 @@
 	},
 /obj/table/wood/auto,
 /obj/item/device/radio/intercom/medical{
-
+	
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "fblue2";
@@ -27568,7 +27568,7 @@
 	},
 /area/station/science/teleporter)
 "aWY" = (
-/obj/lrteleporter{
+/obj/machinery/lrteleporter{
 	layer = 3
 	},
 /turf/simulated/floor/white,

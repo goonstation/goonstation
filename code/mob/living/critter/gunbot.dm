@@ -76,8 +76,8 @@
 		HH.limb_name = "gunbot hands"
 
 	setup_healths()
-		add_hh_robot(-75, 75, 1)
-		add_hh_robot_burn(-50, 50, 1)
+		add_hh_robot(75, 1)
+		add_hh_robot_burn(50, 1)
 
 	get_melee_protection(zone, damage_type)
 		return 6

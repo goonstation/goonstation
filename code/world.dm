@@ -440,6 +440,10 @@ var/f_color_selector_handler/F_Color_Selector
 	SPAWN_DBG(0)
 		init()
 
+#ifdef UNIT_TESTS
+	unit_tests.run_tests()
+#endif
+
 #define UPDATE_TITLE_STATUS(x) if (game_start_countdown) game_start_countdown.update_status(x)
 
 /world/proc/init()
@@ -574,7 +578,7 @@ var/f_color_selector_handler/F_Color_Selector
 	build_supply_pack_cache()
 	build_syndi_buylist_cache()
 	build_camera_network()
-	//build_manufacturer_icons()
+	build_manufacturer_icons()
 	clothingbooth_setup()
 
 	Z_LOG_DEBUG("World/Init", "Loading fishing spots...")
@@ -657,6 +661,11 @@ var/f_color_selector_handler/F_Color_Selector
 	SPAWN_DBG(10 SECONDS)
 		Reboot_server()
 #endif
+#ifdef UNIT_TESTS
+	SPAWN_DBG(10 SECONDS)
+		Reboot_server()
+#endif
+
 #undef UPDATE_TITLE_STATUS
 	return
 
@@ -701,7 +710,7 @@ var/f_color_selector_handler/F_Color_Selector
 	save_tetris_highscores()
 	if (current_state < GAME_STATE_FINISHED)
 		current_state = GAME_STATE_FINISHED
-#ifdef RUNTIME_CHECKING
+#if defined(RUNTIME_CHECKING) || defined(UNIT_TESTS)
 	for (var/client/C in clients)
 		ehjax.send(C, "browseroutput", "hardrestart")
 
@@ -724,6 +733,7 @@ var/f_color_selector_handler/F_Color_Selector
 #endif
 	shutdown()
 #endif
+
 	SPAWN_DBG(world.tick_lag)
 		for (var/client/C)
 			if (C.mob)
@@ -1547,8 +1557,8 @@ var/f_color_selector_handler/F_Color_Selector
 
 			if ("version")
 				var/ircmsg[] = new()
-				ircmsg["major"] = ci_dm_version_major
-				ircmsg["minor"] = ci_dm_version_minor
+				ircmsg["major"] = world.byond_version
+				ircmsg["minor"] = world.byond_build
 				ircmsg["goonhub_api"] = config.goonhub_api_version ? config.goonhub_api_version : 0
 				return ircbot.response(ircmsg)
 

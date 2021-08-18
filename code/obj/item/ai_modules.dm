@@ -412,6 +412,7 @@ AI MODULES
 
 
 /obj/machinery/computer/aiupload
+	circuit_type = /obj/item/circuitboard/aiupload
 	attack_hand(mob/user as mob)
 		if (src.status & NOPOWER)
 			boutput(user, "\The [src] has no power.")
@@ -443,41 +444,17 @@ AI MODULES
 
 		boutput(user, jointext(lawOut, "<br>"))
 
+	special_deconstruct(obj/computerframe/frame as obj)
+		if(src.status & BROKEN)
+			logTheThing("station", usr, null, "disassembles [src] (broken) [log_loc(src)]")
+		else
+			logTheThing("station", usr, null, "disassembles [src] [log_loc(src)]")
+
 
 	attackby(obj/item/I as obj, mob/user as mob)
 		if (istype(I, /obj/item/aiModule) && !isghostdrone(user))
 			var/obj/item/aiModule/AIM = I
 			AIM.install(src, user)
-		else if (isscrewingtool(I))
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-			if(do_after(user, 2 SECONDS))
-				if (src.status & BROKEN)
-					boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-					var/obj/computerframe/A = new /obj/computerframe(src.loc)
-					if(src.material) A.setMaterial(src.material)
-					var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-					G.set_loc(src.loc)
-					var/obj/item/circuitboard/aiupload/M = new /obj/item/circuitboard/aiupload(A)
-					for (var/obj/C in src)
-						C.set_loc(src.loc)
-					A.circuit = M
-					A.state = 3
-					A.icon_state = "3"
-					A.anchored = 1
-					qdel(src)
-				else
-					boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
-					logTheThing("station", user, null, "disconnects the AI upload at [log_loc(src)].")
-					var/obj/computerframe/A = new /obj/computerframe(src.loc)
-					if(src.material) A.setMaterial(src.material)
-					var/obj/item/circuitboard/aiupload/M = new /obj/item/circuitboard/aiupload(A)
-					for (var/obj/C in src)
-						C.set_loc(src.loc)
-					A.circuit = M
-					A.state = 4
-					A.icon_state = "4"
-					A.anchored = 1
-					qdel(src)
 		else if (istype(I, /obj/item/clothing/mask/moustache/))
 			for_by_tcl(M, /mob/living/silicon/ai)
 				M.moustache_mode = 1

@@ -112,7 +112,7 @@
 				if (issnippingtool(W))
 					..()
 				else
-					src.loc.attackby(user.equipped(), user)
+					src.loc.Attackby(user.equipped(), user)
 
 			reagent_act(var/reagent_id,var/volume)
 				..()
@@ -398,6 +398,7 @@
 		else if (isscrewingtool(W) && (istype(src.loc, /turf/simulated) || src.anchored))
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			src.anchored = !( src.anchored )
+			src.stops_space_move = !(src.stops_space_move)
 			src.visible_message("<span class='alert'><b>[usr]</b> [src.anchored ? "fastens" : "unfastens"] [src].</span>")
 			return
 

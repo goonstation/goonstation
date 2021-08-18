@@ -69,16 +69,16 @@
 
 	setup_healths()
 		..()
-		add_hh_flesh(-health_brute, health_brute, health_brute_vuln)
-		add_hh_flesh_burn(-health_burn, health_burn, health_burn_vuln)
+		add_hh_flesh(health_brute, health_brute_vuln)
+		add_hh_flesh_burn(health_burn, health_burn_vuln)
 		add_health_holder(/datum/healthHolder/toxin)
 		add_health_holder(/datum/healthHolder/brain)
 
 	on_pet()
 		if (..())
 			return 1
-		if (prob(33))
-			playsound(src, "sound/voice/babynoise.ogg", 50, 1)
+		if (prob(15) && !ON_COOLDOWN(src, "playsound", 3 SECONDS))
+			playsound(src, "sound/voice/babynoise.ogg", 30, 1)
 			src.visible_message("<span class='notice'><b>[src]</b> coos!</span>",\
 			"<span class='notice'>You coo!</span>")
 

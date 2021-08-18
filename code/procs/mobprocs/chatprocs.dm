@@ -270,8 +270,8 @@
 		if (isdead(M) || istype(M,/mob/living/critter/changeling) || (M == hivemind_owner.owner))
 			boutput(M, rendered)
 
-//vampire ghoul say
-/mob/proc/say_ghoul(var/message, var/datum/abilityHolder/vampire/owner)
+//vampire thrall say
+/mob/proc/say_thrall(var/message, var/datum/abilityHolder/vampire/owner)
 	var/name = src.real_name
 	var/alt_name = ""
 
@@ -284,9 +284,9 @@
 	if (isvampire(src))
 		name = src.real_name
 		alt_name = " (VAMPIRE)"
-	else if (isvampiriczombie(src))
+	else if (isvampiricthrall(src))
 		name = src.real_name
-		alt_name = " (GHOUL)"
+		alt_name = " (THRALL)"
 
 #ifdef DATALOGGER
 	game_stats.ScanText(message)
@@ -300,7 +300,7 @@
 	//show to ghouls
 	for (var/client/C in clients)
 		try_render_chat_to_admin(C, rendered)
-	for (var/mob/M in (owner.ghouls + owner.owner))
+	for (var/mob/M in (owner.thralls + owner.owner))
 		if ((M.client?.holder && M.client.deadchat && !M.client.player_mode)) continue
 		boutput(M, rendered)
 
@@ -735,10 +735,16 @@
 	return language
 
 /mob/proc/process_language(var/message, var/forced_language = null)
+	// Separate the radio prefix (if it exists) and message so the language can't destroy the prefix
+	var/prefixAndMessage = separate_radio_prefix_and_message(message)
+	var/prefix = prefixAndMessage[1]
+	message = prefixAndMessage[2]
+
 	var/datum/language/L = languages.language_cache[get_language_id(forced_language)]
 	if (!L)
 		L = languages.language_cache["english"]
-	return L.get_messages(message)
+
+	return prefix + L.get_messages(message)
 
 /mob/proc/get_special_language(var/secure_mode)
 	return null

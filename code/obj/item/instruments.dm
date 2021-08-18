@@ -33,8 +33,6 @@
 	var/affect_fun = 5
 	var/special_index = 0
 
-	module_research = list("audio" = 7)
-
 	New()
 		..()
 		if (!pick_random_note)
@@ -115,7 +113,7 @@
 	volume = 100
 	note_time = 200
 	affect_fun = 15 // a little higher, why not?
-	module_research = list("audio" = 14) // I don't think this is even relevant without being able to pick up the thing and also the research thing isn't even enabled atm but well. why not?
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 
 	attack_hand(mob/user as mob)
 		src.add_fingerprint(user)
@@ -204,7 +202,6 @@
 	icon_state = "sax"
 	item_state = "sax"
 	desc_sound = list("sexy", "sensuous", "libidinous","spicy", "flirtatious", "salacious","sizzling", "carnal", "hedonistic")
-	module_research = list("audio" = 7, "metals" = 3)
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
 	randomized_pitch = 0
@@ -234,7 +231,6 @@
 	item_state = "bagpipe"
 	sounds_instrument = list('sound/musical_instruments/Bagpipes_1.ogg', 'sound/musical_instruments/Bagpipes_2.ogg','sound/musical_instruments/Bagpipes_3.ogg')
 	desc_sound = list("patriotic", "rowdy", "wee", "grand", "free", "Glaswegian", "sizzling", "carnal", "hedonistic")
-	module_research = list("audio" = 7, "metals" = 3)
 	pick_random_note = 1
 
 	New()
@@ -281,7 +277,6 @@
 	sounds_instrument = list('sound/musical_instruments/Bikehorn_1.ogg')
 	desc_verb = list("honks")
 	note_time = 8
-	module_research = list("audio" = 8)
 	pick_random_note = 1
 
 	show_play_message(mob/user as mob)
@@ -481,7 +476,6 @@
 	icon_state = "trumpet"
 	item_state = "trumpet"
 	desc_sound = list("slick", "egotistical", "snazzy", "technical", "impressive")
-	module_research = list("audio" = 7, "metals" = 3)
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
 	randomized_pitch = 0

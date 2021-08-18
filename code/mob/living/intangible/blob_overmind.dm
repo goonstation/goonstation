@@ -12,7 +12,7 @@
 	use_stamina = 0
 	mob_flags = SPEECH_BLOB
 
-	var/datum/tutorial/blob/tutorial
+	var/datum/tutorial_base/blob/tutorial
 	var/attack_power = 1
 	var/bio_points = 0
 	var/bio_points_max = 1
@@ -21,7 +21,7 @@
 	var/gen_rate_bonus = 0
 	var/gen_rate_used = 0
 	var/evo_points = 0
-	var/next_evo_point = 20
+	var/next_evo_point = 25
 	var/spread_upgrade = 0
 	var/spread_mitigation = 0
 	var/list/upgrades = list()
@@ -39,6 +39,8 @@
 	var/upgrade_id = 1
 	var/nucleus_reflectivity = 0
 	var/image/nucleus_overlay
+	var/total_placed = 0
+	var/next_pity_point = 100
 
 	var/datum/blob_ability/shift_power = null
 	var/datum/blob_ability/ctrl_power = null
@@ -166,6 +168,11 @@
 			evo_points++
 			boutput(src, "<span class='notice'><b>You have expanded enough to earn one evo point! You will be granted another at size [next_evo_point]. Good luck!</b></span>")
 
+		if (total_placed >= next_pity_point)
+			next_pity_point += initial(next_pity_point)
+			evo_points++
+			boutput(src, "<span class='notice'><b>You have perfomed enough spreads to earn one evo point! You will be granted another after placing [next_pity_point] tiles. Good luck!</b></span>")
+
 		if (blobs.len >= next_extra_nucleus)
 			next_extra_nucleus += initial(next_extra_nucleus)
 			extra_nuclei++
@@ -221,8 +228,10 @@
 			stat("Generation Rate:", "[base_gen_rate + gen_rate_bonus - gen_rate_used]/[base_gen_rate + gen_rate_bonus] BP")
 
 		stat("Blob Size:", blobs.len)
+		stat("Total spreads:", total_placed)
 		stat("Evo Points:", evo_points)
 		stat("Next Evo Point at size:", next_evo_point)
+		stat("Total spreads needed for additional point:", next_pity_point)
 		stat("Living nuclei:", nuclei.len)
 		stat("Unplaced extra nuclei:", extra_nuclei)
 		stat("Next Extra Nucleus at size:", next_extra_nucleus)
@@ -322,6 +331,8 @@
 		src.gen_rate_used = 0
 		src.evo_points = 0
 		src.next_evo_point = initial(src.next_evo_point)
+		src.next_pity_point = initial(src.next_pity_point)
+		src.total_placed = 0
 		src.spread_upgrade = 0
 		src.spread_mitigation = 0
 		src.viewing_upgrades = 1

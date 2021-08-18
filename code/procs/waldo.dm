@@ -95,7 +95,7 @@
 
 		var/list/mob/teleportees = list()
 		for(var/mob/living/M in orange(usr, 4))
-			if(!isdead(M) && M.mind && (M.mind.special_role in list("waldo", "odlaw", "wizard")))
+			if(!isdead(M) && M.mind && (M.mind.special_role in list("waldo", "odlaw", ROLE_WIZARD)))
 				teleportees.Add(M)
 
 		usr.set_loc(pick(L))

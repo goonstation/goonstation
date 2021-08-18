@@ -221,6 +221,7 @@
 		icon_empty = "patchbox-med-empty"
 		var/icon_color = "patchbox-med-coloring"
 		var/image/box_color
+		flags = FPRINT | TABLEPASS | EXTRADELAY
 
 		proc/build_overlay(var/datum/color/average = null) //ChemMasters provide average for medical boxes
 			var/obj/item/reagent_containers/patch/temp = src.take_from()
@@ -409,6 +410,8 @@
 			if (!istype(thing, src.contained_item))
 				continue
 			if (thing in user)
+				continue
+			if (thing in src)
 				continue
 			src.add_to(thing, user, 0)
 			sleep(0.2 SECONDS)

@@ -22,8 +22,6 @@
 	stamina_damage = 5
 	stamina_cost = 5
 	edible = 1	// currently overridden by material settings
-	module_research = list("medicine" = 2) // why would you put this below the throw_impact() stuff
-	module_research_type = /obj/item/organ // were you born in a fuckin barn
 	var/mob/living/carbon/human/donor = null // if I can't use "owner" I can at least use this
 	/// Whoever had this organ first, the original owner
 	var/mob/living/carbon/human/donor_original = null // So people'll know if a lizard's wearing someone else's tail
@@ -334,6 +332,9 @@
 			return 0
 
 		if (user.zone_sel.selecting != src.organ_holder_location)
+			return 0
+
+		if (!can_act(user))
 			return 0
 
 		if (!surgeryCheck(M, user))

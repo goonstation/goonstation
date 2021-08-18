@@ -209,6 +209,7 @@
 				return
 			G.affecting.set_loc(src.loc)
 			if (user.a_intent == "harm")
+				logTheThing("combat", user, G.affecting, "slams [constructTarget(G.affecting,"combat")] onto a table")
 				if (istype(src, /obj/table/folding))
 					if (!G.affecting.hasStatus("weakened"))
 						G.affecting.changeStatus("weakened", 4 SECONDS)
@@ -273,7 +274,7 @@
 			return
 
 		else if (istype(W, /obj/item/device/key/filing_cabinet) && src.desk_drawer)
-			src.desk_drawer.attackby(W, user)
+			src.desk_drawer.Attackby(W, user)
 			return
 
 		else if (istype(W) && src.place_on(W, user, params))
@@ -388,7 +389,7 @@
 			duration += 1 SECOND
 		return target
 
-	do_bunp()
+	do_bump()
 		return FALSE // no bunp
 
 	proc/unset_tablepass_callback(datum/thrown_thing/thr)
@@ -453,6 +454,26 @@
 	icon = 'icons/obj/furniture/table_wood_round.dmi'
 	auto_type = /obj/table/wood/round/auto
 	parts_type = /obj/item/furniture_parts/table/wood/round
+
+	auto
+		auto = 1
+
+/obj/table/regal
+	name = "regal table"
+	desc = "Fancy."
+	icon = 'icons/obj/furniture/table_regal.dmi'
+	auto_type = /obj/table/regal/auto
+	parts_type = /obj/item/furniture_parts/table/regal
+
+	auto
+		auto = 1
+
+/obj/table/clothred
+	name = "red event table"
+	desc = "A regular table in disguise."
+	icon = 'icons/obj/furniture/table_clothred.dmi'
+	auto_type = /obj/table/clothred/auto
+	parts_type = /obj/item/furniture_parts/table/clothred
 
 	auto
 		auto = 1
@@ -571,6 +592,10 @@
 /* ---------------------------------------- */
 /* ======================================== */
 
+#define GLASS_INTACT 0
+#define GLASS_BROKEN 1
+#define GLASS_REFORMING 2
+
 /obj/table/glass
 	name = "glass table"
 	desc = "A table made of glass. It looks like it might shatter if you set something down on it too hard."
@@ -578,7 +603,7 @@
 	mat_appearances_to_ignore = list("glass")
 	parts_type = /obj/item/furniture_parts/table/glass
 	auto_type = /obj/table/glass // has to be the base type here or else regular glass tables won't connect to reinforced ones
-	var/glass_broken = 0
+	var/glass_broken = GLASS_INTACT
 	var/reinforced = 0
 	var/default_material = "glass"
 
@@ -588,7 +613,7 @@
 	frame
 		name = "glass table frame"
 		parts_type = /obj/item/furniture_parts/table/glass/frame
-		glass_broken = 1
+		glass_broken = GLASS_BROKEN
 
 		auto
 			auto = 1
@@ -624,19 +649,59 @@
 			return
 		src.visible_message("<span class='alert'>\The [src] shatters!</span>")
 		playsound(src, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
-		for (var/i=rand(3,4), i>0, i--)
-			var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-			G.set_loc(src.loc)
-			if (src.material)
-				G.setMaterial(src.material)
-		src.glass_broken = 1
-		src.removeMaterial()
-		src.parts_type = /obj/item/furniture_parts/table/glass/frame
+		if (src.material?.mat_id in list("gnesis", "gnesisglass"))
+			gnesis_smash()
+		else
+			for (var/i=rand(3,4), i>0, i--)
+				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+				G.set_loc(src.loc)
+				if (src.material)
+					G.setMaterial(src.material)
+			src.glass_broken = GLASS_BROKEN
+			src.removeMaterial()
+			src.parts_type = /obj/item/furniture_parts/table/glass/frame
+			src.set_density(0)
+			src.set_up()
+
+	proc/gnesis_smash()
+		var/color = "#fff"
+		if(src.color)
+			color = src.color
+		src.glass_broken = GLASS_BROKEN
 		src.set_density(0)
 		src.set_up()
+		SPAWN_DBG(rand(2 SECONDS, 3 SECONDS))
+			if(src.glass_broken == GLASS_BROKEN)
+				src.glass_broken = GLASS_REFORMING
+				src.set_up()
+				src.set_density(initial(src.density))
+				src.visible_message("<span class='alert'>\The [src] starts to reform!</span>")
+
+				var/filter
+				var/size=rand()*2.5+4
+				var/regrow_duration = rand(8 SECONDS, 12 SECONDS)
+				var/loops = 5
+				var/duration= round(regrow_duration / loops, 2)
+
+				// Ripple inwards
+				src.filters += filter(type="ripple", x=0, y=0, size=size, repeat=rand()*2.5+3, radius=0, flags=WAVE_BOUNDED)
+				filter = src.filters[src.filters.len]
+				animate(filter, size=0, time=0, loop=loops, radius=12, flags=ANIMATION_PARALLEL)
+				animate(size=size, radius=0, time=duration)
+
+				// Flash
+				animate(src, color = "#2ca", time = duration/2, loop = loops, easing = SINE_EASING, flags=ANIMATION_PARALLEL)
+				animate(color = "#298", time = duration/2, loop = loops, easing = SINE_EASING)
+				sleep(regrow_duration)
+
+				// Remove filter and reset color
+				src.filters -= filter
+				animate(src, loop=0, color=color, time=duration/2)
+				src.visible_message("<span class='alert'>\The [src] fully reforms!</span>")
+				src.glass_broken = GLASS_INTACT
 
 	proc/repair()
-		src.glass_broken = 0
+		src.glass_broken = GLASS_INTACT
 		src.UpdateName()
 		src.parts_type = src.reinforced ? /obj/item/furniture_parts/table/glass/reinforced : /obj/item/furniture_parts/table/glass
 		src.set_density(initial(src.density))
@@ -688,7 +753,7 @@
 			src.smash()
 
 	attackby(obj/item/W as obj, mob/user as mob, params)
-		if (src.glass_broken)
+		if (src.glass_broken == GLASS_BROKEN)
 			if (istype(W, /obj/item/sheet))
 				var/obj/item/sheet/S = W
 				if (!S.material || !(S.material.material_flags & MATERIAL_CRYSTAL))
@@ -713,6 +778,7 @@
 				boutput(user, "<span class='alert'>You need a tighter grip!</span>")
 				return
 			if (user.a_intent == "harm")
+				logTheThing("combat", user, G.affecting, "slams [constructTarget(G.affecting,"combat")] onto a glass table")
 				G.affecting.set_loc(src.loc)
 				G.affecting.changeStatus("weakened", 4 SECONDS)
 				src.visible_message("<span class='alert'><b>[G.assailant] slams [G.affecting] onto \the [src]!</b></span>")
@@ -782,6 +848,7 @@
 		if (ismob(AM))
 			var/mob/M = AM
 			if ((prob(src.reinforced ? 60 : 80)))
+				logTheThing("combat", thr.user, M, "throws [constructTarget(M,"combat")] into a glass table, breaking it")
 				src.visible_message("<span class='alert'>[M] smashes through [src]!</span>")
 				playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
 				src.smash()
@@ -808,7 +875,7 @@
 				dirs |= direction
 		icon_state = num2text(dirs)
 
-		if (src.glass_broken)
+		if (src.glass_broken == GLASS_BROKEN)
 			src.UpdateOverlays(null, "tabletop")
 			src.UpdateOverlays(null, "SWcorner")
 			src.UpdateOverlays(null, "SEcorner")
@@ -876,6 +943,10 @@
 				src.UpdateOverlays(working_image, "NWcorner")
 		else
 			src.UpdateOverlays(null, "NWcorner")
+
+#undef GLASS_INTACT
+#undef GLASS_BROKEN
+#undef GLASS_REFORMING
 
 /* ======================================== */
 /* ---------------------------------------- */

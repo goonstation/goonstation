@@ -158,7 +158,7 @@ datum
 				var/datum/reagents/silver_fulminate_holder = holder
 				var/silver_fulminate_volume = volume
 				silver_fulminate_holder.del_reagent("silver_fulminate")
-				silver_fulminate_holder.temperature_reagents(silver_fulminate_holder.total_temperature + silver_fulminate_volume*20,10,1,500)
+				silver_fulminate_holder.temperature_reagents(silver_fulminate_holder.total_temperature + silver_fulminate_volume*20,400,3500,500, 1)
 
 			reaction_temperature(var/exposed_temperature, var/exposed_volume)
 				if (exposed_temperature >= T0C + 30)
@@ -1083,7 +1083,9 @@ datum
 
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 				..()
-				M.clean_forensic()
+				if(method == TOUCH)
+					M.clean_forensic()
+					M.delStatus("marker_painted")
 
 		luminol // OOC. Weaseldood. oh that stuff from CSI, the glowy blue shit that they spray on blood
 			name = "luminol"
@@ -1159,7 +1161,7 @@ datum
 
 			reaction_turf(var/turf/target, var/volume)
 				var/turf/simulated/T = target
-				if (istype(T) && T.wet) //Wire: fix for Undefined variable /turf/space/var/wet (&& T.wet)
+				if (istype(T)) //Wire: fix for Undefined variable /turf/space/var/wet (&& T.wet)
 					if (T.wet >= 2) return
 					var/wet = image('icons/effects/water.dmi',"wet_floor")
 					T.UpdateOverlays(wet, "wet_overlay")
@@ -1538,9 +1540,11 @@ datum
 				else
 					boutput(M, "<span class='alert'>Oh god! It smells horrific! What the fuck IS this?!</span>")
 					if (prob(50))
-						SPAWN_DBG(1 SECOND)
-							M.visible_message("<span class='alert'>[M] pukes violently!</span>")
-							M.vomit()
+						boutput(M, "<span class='alert'>Ah fuck! Some got into your mouth!</span>")
+						var/amt = min(volume/100,1)
+						src.holder.remove_reagent("sewage",amt)
+						M.reagents.add_reagent("sewage",amt)
+						src.reaction_mob(M,INGEST,amt)
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1565,8 +1569,11 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
-				boutput(M, "<span class='alert'><b>OH SHIT ANTS!!!!</b></span>")
-				M.emote("scream")
+				if (method == TOUCH)
+					. = 0 // for depleting fluid pools
+				if(!ON_COOLDOWN(M, "ants_scream", 3 SECONDS))
+					boutput(M, "<span class='alert'><b>OH SHIT ANTS!!!!</b></span>")
+					M.emote("scream")
 				random_brute_damage(M, 4)
 				return
 
@@ -1591,11 +1598,14 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
-				if (method == TOUCH)
-					boutput(M, "<span class='alert'><b>OH [pick("SHIT", "FUCK", "GOD")] SPIDERS[pick("", " ON MY FACE", " EVERYWHERE")]![pick("", "!", "!!", "!!!", "!!!!")]</b></span>")
-				if (method == INGEST)
-					boutput(M, "<span class='alert'><b>OH [pick("SHIT", "FUCK", "GOD")] SPIDERS[pick("", " IN MY BLOOD", " IN MY VEINS")]![pick("", "!", "!!", "!!!", "!!!!")]</b></span>")
-				M.emote("scream")
+				if(method == TOUCH)
+					. = 0 // for depleting fluid pools
+				if (!ON_COOLDOWN(M, "spiders_scream", 3 SECONDS))
+					M.emote("scream")
+					if (method == INGEST || method == INJECT)
+						boutput(M, "<span class='alert'><b>OH [pick("SHIT", "FUCK", "GOD")] SPIDERS[pick("", " IN MY BLOOD", " IN MY VEINS")]![pick("", "!", "!!", "!!!", "!!!!")]</b></span>")
+					else
+						boutput(M, "<span class='alert'><b>OH [pick("SHIT", "FUCK", "GOD")] SPIDERS[pick("", " ON MY FACE", " EVERYWHERE")]![pick("", "!", "!!", "!!!", "!!!!")]</b></span>")
 				random_brute_damage(M, 2)
 				if (ishuman(M))
 					if (!M:spiders)
@@ -2692,8 +2702,7 @@ datum
 				var/vol = max(1,volume_passed)
 				if (method == TOUCH)
 					M.shock(src.holder.my_atom, min(7500 * multiplier, vol * 100 * multiplier), "chest", 1, 1)
-				if(istype(holder, /datum/reagents/fluid_group))
-					holder.remove_reagent(src.id, vol)
+					. = 0
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if (reacting)
@@ -2831,6 +2840,10 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1) // cogwerks note. making atrazine toxic
 				if (!M) M = holder.my_atom
 				M.take_toxin_damage(2 * mult)
+				if(holder.has_reagent("THC"))
+					holder.remove_reagent("THC", 1)
+				if(holder.has_reagent("CBD"))
+					holder.remove_reagent("CBD", 1)
 				..()
 				return
 
@@ -2960,8 +2973,8 @@ datum
 				if (method == INGEST)
 					if (M.mind)
 						var/mob/living/carbon/human/H = M
-						if (istype(H.mutantrace, /datum/mutantrace/vamp_zombie))
-							var/datum/mutantrace/vamp_zombie/V = H.mutantrace
+						if (istype(H.mutantrace, /datum/mutantrace/vampiric_thrall))
+							var/datum/mutantrace/vampiric_thrall/V = H.mutantrace
 							var/bloodget = volume_passed / 4
 							V.blood_points += bloodget
 
@@ -3182,14 +3195,17 @@ datum
 			viscosity = 0.7
 
 			pierces_outerwear = 1//shoo, biofool
-			reaction_turf(var/turf/T, var_volume)
-				T.ex_act(1)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
 				if(istype(M, /mob/dead))
 					return
+				#ifdef SECRETS_ENABLED
+				one_with_everything(M)
+				#else
 				M.ex_act(1)
+				#endif
+
 
 			reaction_obj(var/obj/O, var/volume)
 				//if (!istype(O, /obj/effects/foam)
@@ -3199,8 +3215,13 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
+				#ifdef SECRETS_ENABLED
+				one_with_everything(M)
+				#else
 				M.ex_act(1)
 				M.gib()
+				#endif
+				M.reagents.del_reagent(src.id)
 
 		cyclopentanol
 			name = "cyclopentanol"
@@ -3329,8 +3350,8 @@ datum
 					M << sound('sound/misc/yee_music.ogg', repeat = 1, wait = 0, channel = 391, volume = 50) // play them tunes
 					if (M.bioHolder && ishuman(M))			// All mobs get the tunes, only "humans" get the scales
 						var/mob/living/carbon/human/H = M
-						src.the_bioeffect_you_had_before_it_was_affected_by_yee = H?.mutantrace.name			// then write down what your whatsit was
-						src.the_mutantrace_you_were_before_yee_overwrote_it = H?.mutantrace.type		// write that down too
+						src.the_bioeffect_you_had_before_it_was_affected_by_yee = H?.mutantrace?.name			// then write down what your whatsit was
+						src.the_mutantrace_you_were_before_yee_overwrote_it = H?.mutantrace?.type		// write that down too
 						if (src.the_bioeffect_you_had_before_it_was_affected_by_yee != "lizard")				// Dont make me a lizard if im already a lizard
 							H.bioHolder.AddEffect("lizard", timeleft = 180)
 						else

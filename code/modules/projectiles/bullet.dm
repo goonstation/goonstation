@@ -62,7 +62,7 @@ toxic - poisons
 /datum/projectile/bullet/bullet_22
 	name = "bullet"
 	power = 22
-	shot_sound = "sound/weapons/smallcaliber.ogg" //quieter when fired from a silenced weapon!
+	shot_sound = 'sound/weapons/smallcaliber.ogg' //quieter when fired from a silenced weapon!
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	implanted = /obj/item/implant/projectile/bullet_22
@@ -89,7 +89,11 @@ toxic - poisons
 	icon_turf_hit = "bhole-small"
 
 	smartgun
+		dissipation_delay = 6
+		dissipation_rate = 3
 		power = 15
+		shot_sound = 'sound/weapons/smartgun.ogg'
+		shot_volume = 70
 
 	smg
 		power = 15
@@ -169,7 +173,7 @@ toxic - poisons
 	hit_ground_chance = 75
 	dissipation_rate = 2
 	dissipation_delay = 8
-	projectile_speed = 36
+	projectile_speed = 48
 	caliber = 0.355
 	icon_turf_hit = "bhole-small"
 	hit_type = DAMAGE_BLUNT
@@ -233,7 +237,7 @@ toxic - poisons
 	shot_sound = 'sound/weapons/railgun.ogg'
 	dissipation_delay = 10
 	dissipation_rate = 0 //70 damage AP at all-ranges is fine, come to think of it
-	projectile_speed = 56
+	projectile_speed = 72
 	max_range = 100
 	casing = /obj/item/casing/rifle_loud
 	caliber = 0.308
@@ -487,6 +491,68 @@ toxic - poisons
 			//if (src.hit_type)
 			// impact_image_effect("K", hit)
 				//take_bleeding_damage(hit, null, round(src.power / 3), src.hit_type)
+
+/datum/projectile/bullet/cryo
+	name = "cryogenic slug"
+	shot_sound = 'sound/weapons/shotgunshot.ogg'
+	power = 10
+	ks_ratio = 1
+	dissipation_rate = 2
+	dissipation_delay = 1
+	implanted = null
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	caliber = 0.72
+	icon_turf_hit = null
+	casing = /obj/item/casing/shotgun/blue
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		. = ..()
+		if(isliving(hit))
+			var/mob/living/L = hit
+			L.bodytemperature = max(50, L.bodytemperature - proj.power * 5)
+			var/obj/icecube/I = new/obj/icecube(get_turf(L), L)
+			I.health = proj.power / 2
+
+/datum/projectile/bullet/saltshot_pellet
+	name = "rock salt"
+	shot_sound = 'sound/weapons/shotgunshot.ogg'
+	icon_state = "trace"
+	power = 3
+	ks_ratio = 1
+	dissipation_rate = 1
+	dissipation_delay = 2
+	implanted = null
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	caliber = 0.72
+	icon_turf_hit = "bhole"
+	casing = /obj/item/casing/shotgun/gray
+
+	on_hit(atom/hit, direction, obj/projectile/P)
+		. = ..()
+		if(isliving(hit))
+			var/mob/living/L = hit
+			if(!ON_COOLDOWN(L, "saltshot_scream", 1 SECOND))
+				L.emote("scream")
+			L.take_eye_damage(P.power / 2)
+			L.change_eye_blurry(P.power, 40)
+			L.setStatus("salted", 15 SECONDS, P.power * 2)
+
+/datum/projectile/special/spreader/buckshot_burst/salt
+	name = "rock salt"
+	sname = "rock salt"
+	shot_sound = 'sound/weapons/shotgunshot.ogg'
+	power = 20
+	implanted = null
+	caliber = 0.72
+	casing = /obj/item/casing/shotgun/gray
+	spread_projectile_type = /datum/projectile/bullet/saltshot_pellet
+	speed_min = 28
+	speed_max = 36
+	dissipation_variance = 64
+	spread_angle_variance = 7.5
+	pellets_to_fire = 4
 
 /datum/projectile/bullet/minigun
 	name = "bullet"
@@ -959,6 +1025,7 @@ toxic - poisons
 	caliber = 1.57 // 40mm grenade shell
 	icon_turf_hit = "bhole-large"
 	casing = /obj/item/casing/grenade
+	implanted = null
 
 	var/list/smokeLocs = list()
 	var/smokeLength = 100
@@ -990,6 +1057,30 @@ toxic - poisons
 		startSmoke(hit, dirflag, projectile)
 		return
 
+/datum/projectile/bullet/marker
+	name = "marker grenade"
+	sname = "paint"
+	window_pass = 0
+	icon_state = "40mmR"
+	damage_type = D_KINETIC
+	power = 15
+	dissipation_delay = 10
+	cost = 1
+	shot_sound = 'sound/weapons/launcher.ogg'
+	ks_ratio = 1.0
+	caliber = 1.57 // 40mm grenade shell
+	icon_turf_hit = "bhole-large"
+	casing = /obj/item/casing/grenade
+	hit_type = DAMAGE_BLUNT
+	hit_mob_sound = "sound/misc/splash_1.ogg"
+	hit_object_sound = "sound/misc/splash_1.ogg"
+	implanted = null
+
+
+	on_hit(atom/hit, dirflag, atom/projectile)
+		..()
+		hit.setStatus("marker_painted", 30 SECONDS)
+
 /datum/projectile/bullet/pbr //direct less-lethal 40mm option
 	name = "plastic baton round"
 	shot_sound = 'sound/weapons/launcher.ogg'
@@ -1004,6 +1095,7 @@ toxic - poisons
 	caliber = 1.57
 	icon_turf_hit = "bhole-large"
 	casing = /obj/item/casing/grenade
+	implanted = null
 
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
 		if (ishuman(hit))
@@ -1139,6 +1231,7 @@ toxic - poisons
 	caliber = 1.57 // 40mm grenade shell
 	icon_turf_hit = "bhole-large"
 	casing = /obj/item/casing/grenade
+	implanted = null
 
 	var/has_grenade = 0
 	var/obj/item/chem_grenade/CHEM = null
@@ -1146,6 +1239,7 @@ toxic - poisons
 	var/has_det = 0 //have we detonated a grenade yet?
 
 	proc/get_nade()
+		RETURN_TYPE(/obj/item)
 		if (src.has_grenade != 0)
 			if (src.CHEM != null)
 				return src.CHEM
@@ -1196,18 +1290,18 @@ toxic - poisons
 	proc/det(var/turf/T)
 		if (T && src.has_det == 0 && src.has_grenade != 0)
 			if (src.CHEM != null)
-				src.CHEM.set_loc(T)
+				var/obj/item/chem_grenade/C = SEMI_DEEP_COPY(CHEM)
+				C.set_loc(T)
 				src.has_det = 1
 				SPAWN_DBG(1 DECI SECOND)
-					src.CHEM.explode()
-				src.has_grenade = 0
+					C.explode()
 				return
 			else if (src.OLD != null)
-				src.OLD.set_loc(T)
+				var/obj/item/old_grenade/O = SEMI_DEEP_COPY(OLD)
+				O.set_loc(T)
 				src.has_det = 1
 				SPAWN_DBG(1 DECI SECOND)
-					src.OLD.prime()
-				src.has_grenade = 0
+					O.prime()
 				return
 			else //what the hell happened
 				return
@@ -1357,7 +1451,7 @@ toxic - poisons
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_STAB
 	shot_sound = null
-	projectile_speed = 8
+	projectile_speed = 12
 	implanted = null
 
 /datum/projectile/bullet/foamdart
@@ -1366,7 +1460,7 @@ toxic - poisons
 	icon_state = "foamdart"
 	shot_sound = 'sound/effects/syringeproj.ogg'
 	icon_turf_hit = null
-	projectile_speed = 20
+	projectile_speed = 26
 	implanted = null
 	power = 0
 	ks_ratio = 0

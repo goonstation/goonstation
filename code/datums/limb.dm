@@ -307,7 +307,7 @@
 		reload_time = 1 SECOND
 
 /datum/limb/mouth
-	var/sound_attack = "sound/weapons/werewolf_attack1.ogg"
+	var/sound_attack = "sound/voice/animal/werewolf_attack1.ogg"
 	var/dam_low = 3
 	var/dam_high = 9
 	var/custom_msg = null
@@ -371,7 +371,7 @@
 /datum/limb/item
 	attack_hand(atom/target, var/mob/user, var/reach, params, location, control)
 		if (holder?.remove_object && istype(holder.remove_object))
-			target.attackby(holder.remove_object, user, params, location, control)
+			target.Attackby(holder.remove_object, user, params, location, control)
 			if (target)
 				holder.remove_object.afterattack(target, src, reach)
 
@@ -1285,6 +1285,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 	/obj/dummy/chameleon,\
 	/obj/machinery/light,\
 	/obj/machinery/phone,\
+	/obj/machinery/atmospherics/valve,\
 	/obj/machinery/vending,\
 	/obj/machinery/nuclearbomb,\
 	/obj/item/gun/kinetic/airzooka,\
