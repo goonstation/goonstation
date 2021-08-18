@@ -79153,8 +79153,8 @@
 	desc = "This was one of the first batons to be turned off and grabbed by the head to enable more robust beatings. It is certainly the most imposing baton you've ever seen.";
 	flipped = 1;
 	force = 15;
-	is_active = 0;
-	name = "\improper Harmbaton of Porter Starboard"
+	name = "\improper Harmbaton of Porter Starboard";
+	is_active = 0
 	},
 /obj/machinery/light/incandescent/warm/very{
 	dir = 4
