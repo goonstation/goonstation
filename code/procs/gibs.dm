@@ -4,7 +4,7 @@
 	var/list/gibs = new()
 	if(!location)
 		location = usr
-	if(!location.z) // we care not for null gibs
+	if(!location?.z) // we care not for null gibs
 		return
 	playsound(location, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
 
