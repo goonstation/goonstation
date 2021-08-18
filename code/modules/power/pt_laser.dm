@@ -496,7 +496,7 @@
 	light.enable()
 
 	SPAWN_DBG(0)
-		alpha = clamp(((log(10, src.power) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
+		alpha = clamp(((log(10, max(src.power,1)) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
 		if(active)
 			if(istype(src.loc, /turf) && power > 5e7)
 				src.loc:hotspot_expose(power/1e5,5) //1000K at 100MW

@@ -375,7 +375,7 @@
 		src.y = T.y
 
 	proc/process()
-		while (!disposed)
+		while (!disposed && tysontarget2)
 			if (tysoncantreach >= timelimit)
 				if (tysoncantreach >= 20)
 					qdel(src)

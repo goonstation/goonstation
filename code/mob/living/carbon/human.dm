@@ -747,7 +747,7 @@
 				if(locate(/obj/neon_lining) in T.contents)
 					src.unlock_medal("Party Hard", 1)
 
-	ticker.mode.check_win()
+	ticker.mode?.check_win()
 
 #ifdef RESTART_WHEN_ALL_DEAD
 	var/cancel

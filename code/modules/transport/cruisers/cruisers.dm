@@ -184,7 +184,7 @@
 			damageArmor(damage, D_KINETIC)
 			shakeCruiser(6, 2, 0.2)
 
-		if(shields <= 0 && prob(75))
+		if(length(src.interior_area.contents) && shields <= 0 && prob(75))
 			var/atom/source = pick(src.interior_area.contents)
 			explosion_new(source, source, max(min(1,4-severity), 5))
 		return

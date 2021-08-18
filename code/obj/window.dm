@@ -895,7 +895,10 @@
 				var/turf/T = get_step(src, dir)
 				if ((!locate(/obj/wingrille_spawn) in T) && (!locate(/obj/grille) in T))
 					var/obj/window/new_win = text2path("[src.win_path]/[dir2text(dir)]")
-					new new_win(src.loc)
+					if(new_win)
+						new new_win(src.loc)
+					else
+						CRASH("Invalid path: [src.win_path]/[dir2text(dir)]")
 		if (src.full_win)
 			if(!no_dirs || !locate(text2path(src.win_path)) in get_turf(src))
 				// if we have directional windows, there's already a window (or windows) from directional windows

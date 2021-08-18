@@ -1275,7 +1275,7 @@
 		var/image/ov = image('icons/mob/blob_organs.dmi')
 		ov.appearance_flags |= RESET_COLOR
 		ov.plane = PLANE_SELFILLUM + 1
-		ov.color = overmind.organ_color
+		ov.color = overmind?.organ_color
 		ov.icon_state = "deposit-material"
 		UpdateOverlays(ov, name)
 

@@ -41,7 +41,7 @@ Custom Books
 		user.suiciding = 0
 		return 1
 
-
+ABSTRACT_TYPE(/obj/item/paper/book/from_file)
 /obj/item/paper/book/from_file //books from txt strings
 	var/file_path = null
 
@@ -51,6 +51,7 @@ Custom Books
 			CRASH("from_file book has no file path")
 		src.info = file2text(src.file_path)
 
+ABSTRACT_TYPE(/obj/item/paper/from_file)
 /obj/item/paper/from_file
 	var/file_path = null
 
@@ -65,6 +66,7 @@ Custom Books
 
 /****Pocket Guides****/
 
+ABSTRACT_TYPE(/obj/item/paper/book/from_file/pocketguide)
 /obj/item/paper/book/from_file/pocketguide
 	icon_state = "book0"
 	desc = "A condensed guide of job responsibilities and tips for new crewmembers."

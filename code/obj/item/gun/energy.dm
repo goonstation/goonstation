@@ -226,8 +226,8 @@
 			src.set_current_projectile(new /datum/projectile/laser)
 		if (isnull(src.projectiles))
 			src.projectiles = list(src.current_projectile)
-		src.update_icon()
 		..()
+		src.update_icon()
 
 	update_icon()
 		..()
@@ -487,8 +487,8 @@
 	New()
 		set_current_projectile(new/datum/projectile/disruptor)
 		projectiles = list(current_projectile,new/datum/projectile/disruptor/burst,new/datum/projectile/disruptor/high)
-		src.update_icon()
 		..()
+		src.update_icon()
 
 	update_icon()
 		..()

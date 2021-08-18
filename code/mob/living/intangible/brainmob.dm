@@ -115,9 +115,9 @@
 
 	ghostize()
 		var/mob/dead/observer/O = ..()
-
-		O.icon = 'icons/obj/surgery.dmi'
-		O.icon_state = "cool_brain"
-		O.alpha = 155
+		if(O)
+			O.icon = 'icons/obj/surgery.dmi'
+			O.icon_state = "cool_brain"
+			O.alpha = 155
 
 		return O

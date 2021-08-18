@@ -46,7 +46,7 @@
 	proc/smash(var/turf/T)
 		if (!T)
 			T = src.loc
-		src.reagents.reaction(T)
+		src.reagents?.reaction(T)
 		if (ismob(T)) // we've reacted with whatever we've hit, but if what we hit is a mob, let's not stick glass in their contents
 			T = get_turf(T)
 		T.visible_message("<span class='alert'>[src] shatters!</span>")

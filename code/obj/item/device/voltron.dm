@@ -12,13 +12,14 @@
 	var/vision_radius = 3
 	var/mob/the_user = null
 	//Prolonged use causes damage.
-	New(mob/target, atom/location)
+	New(atom/location, mob/target)
 		..()
 		src.set_loc(location)
-		the_user = target
-		target.set_loc(src)
-		img = image('icons/effects/effects.dmi',src ,"energyorb")
-		target << img
+		if(target)
+			the_user = target
+			target.set_loc(src)
+			img = image('icons/effects/effects.dmi',src ,"energyorb")
+			target << img
 
 		//SPAWN_DBG(0) check() but why
 
@@ -59,7 +60,7 @@
 		return
 
 	disposing()
-		the_user.client.images -= cableimgs
+		the_user?.client.images -= cableimgs
 		the_user = null
 		return ..()
 
@@ -271,7 +272,7 @@
 			user.transforming = 0
 			qdel(O)
 
-			D = new/obj/dummy/voltron(user, get_turf(src))
+			D = new/obj/dummy/voltron(get_turf(src), user)
 
 			target = user
 			active = 1
