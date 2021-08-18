@@ -440,6 +440,8 @@ var/datum/action_controller/actions
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	/// set to the path of the proc that will be called if the action bar finishes
 	var/proc_path = null
+	/// set to datum to perform callback on if seperate from owner or target
+	var/call_proc_on = null
 	/// what the target of the action is, if any
 	var/target = null
 	/// what string is broadcast once the action bar finishes
@@ -449,7 +451,7 @@ var/datum/action_controller/actions
 	/// a list of args for the proc thats called once the action bar finishes, if needed.
 	var/list/proc_args = null
 
-	New(owner, target, duration, proc_path, proc_args, icon, icon_state, end_message, interrupt_flags)
+	New(owner, target, duration, proc_path, proc_args, icon, icon_state, end_message, interrupt_flags, call_proc_on)
 		..()
 		if (owner)
 			src.owner = owner
@@ -465,6 +467,8 @@ var/datum/action_controller/actions
 			src.proc_path = proc_path
 		else //no proc, dont do the thing
 			CRASH("no proc was specified to be called once the action bar ends")
+		if(call_proc_on)
+			src.call_proc_on = call_proc_on
 		if (proc_args)
 			src.proc_args = proc_args
 		if (icon) //optional, dont always want an icon
@@ -509,7 +513,9 @@ var/datum/action_controller/actions
 
 		if (end_message)
 			src.owner.visible_message("[src.end_message]")
-		if (src.target)
+		if (src.call_proc_on)
+			INVOKE_ASYNC(arglist(list(src.call_proc_on, src.proc_path) + src.proc_args))
+		else if (src.target)
 			INVOKE_ASYNC(arglist(list(src.target, src.proc_path) + src.proc_args))
 		else
 			INVOKE_ASYNC(arglist(list(src.owner, src.proc_path) + src.proc_args))

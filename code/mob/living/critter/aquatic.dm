@@ -522,7 +522,7 @@
 		return
 
 	if (!istype(user))
-		target.attack_hand(user, params, location, control)
+		target.Attackhand(user, params, location, control)
 		return
 
 	if (isobj(target))

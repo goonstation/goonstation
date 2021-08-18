@@ -1582,7 +1582,7 @@ var/linenums = 0
 		flow_to_turf(gas2, ngas2, T)
 
 /obj/machinery/valve/dvalve/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/valve/dvalve/attack_hand(mob/user)
 	..()

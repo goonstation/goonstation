@@ -620,7 +620,7 @@
 	meteorhit(var/obj/O as obj)
 		return
 
-	//called from the action bar completion in src.attack_hand()
+	//called from the action bar completion in src.Attackhand()
 	proc/capture(var/mob/user)
 		var/team_num = get_pod_wars_team_num(user)
 		owner_team = team_num

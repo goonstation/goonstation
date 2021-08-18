@@ -442,7 +442,7 @@
 				boutput(user, "<span class='notice'>[bicon(W)] Regular electrical response received from access panel.</span>")
 		return
 	else if (src.panel_open && (issnippingtool(W) || ispulsingtool(W)))
-		src.attack_hand(user)
+		src.Attackhand(user)
 		return
 	else if (ispryingtool(W))
 		if (src.status & BROKEN) //if the vendor is broken

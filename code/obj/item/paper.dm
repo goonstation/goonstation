@@ -1187,7 +1187,7 @@ as it may become compromised.
 
 /obj/item/paper_bin/attack_self(mob/user as mob)
 	..()
-	src.attack_hand(user)
+	src.Attackhand(user)
 
 /obj/item/paper_bin/attackby(obj/item/paper/P as obj, mob/user as mob) // finally you can write on all the paper AND put it back in the bin to mess with whoever shows up after you ha ha
 	if (istype(P))

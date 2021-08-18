@@ -187,7 +187,7 @@
 	return
 
 /obj/machinery/door/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/door/attack_hand(mob/user as mob)
 	interact_particle(user,src)
@@ -641,7 +641,7 @@
 	cant_emag = 1
 
 /obj/machinery/door/unpowered/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/door/unpowered/attack_hand(mob/user as mob)
 	return src.Attackby(null, user)

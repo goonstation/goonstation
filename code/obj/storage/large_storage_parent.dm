@@ -420,7 +420,7 @@
 
 	attack_ai(mob/user)
 		if (can_reach(user, src) <= 1 && (isrobot(user) || isshell(user)))
-			. = src.attack_hand(user)
+			. = src.Attackhand(user)
 
 	alter_health()
 		. = get_turf(src)
