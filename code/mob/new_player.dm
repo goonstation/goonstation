@@ -837,6 +837,9 @@ a.latejoin-card:hover {
 
 		if (ticker)
 			if (ticker.mode)
+				if(ticker.pregame_timeleft <= 1 SECOND)
+					boutput(usr, "<span class='alert'>It is too close to roundstart for you to unready. Please wait until setup finishes.</span>")
+						return
 				if (istype(ticker.mode, /datum/game_mode/construction))
 					var/datum/game_mode/construction/C = ticker.mode
 					if (C.in_setup)
