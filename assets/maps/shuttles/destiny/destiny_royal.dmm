@@ -134,22 +134,27 @@
 /obj/machinery/light/small/floor/netural,
 /obj/item/reagent_containers/food/drinks/bottle/wine{
 	pixel_x = 3;
-	pixel_y = 16
+	pixel_y = 16;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/wine{
 	pixel_x = -7;
-	pixel_y = 14
+	pixel_y = 14;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/wine{
 	pixel_x = -2;
-	pixel_y = 8
+	pixel_y = 8;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/drinks/bottle/champagne{
 	pixel_x = 8;
-	pixel_y = 10
+	pixel_y = 10;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/plant/pear{
-	pixel_x = -8
+	pixel_x = -8;
+	rand_pos = 0
 	},
 /turf/unsimulated/floor/marble/black,
 /area/shuttle/escape/centcom/destiny)
@@ -207,26 +212,32 @@
 /obj/table/regal/auto,
 /obj/machinery/light/small/floor/netural,
 /obj/item/reagent_containers/food/drinks/bottle/champagne{
-	pixel_y = 20
+	pixel_y = 20;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/drinks/bottle/wine{
 	pixel_x = -8;
-	pixel_y = 7
+	pixel_y = 7;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/wine{
 	pixel_x = 3;
-	pixel_y = 4
+	pixel_y = 4;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/wine{
 	pixel_x = 9;
-	pixel_y = 13
+	pixel_y = 13;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/plant/apple{
 	pixel_x = 8;
-	pixel_y = -8
+	pixel_y = -8;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/plant/banana{
-	pixel_x = -6
+	pixel_x = -6;
+	rand_pos = 0
 	},
 /turf/unsimulated/floor/marble/black,
 /area/shuttle/escape/centcom/destiny)
@@ -455,34 +466,44 @@
 /obj/table/regal/auto,
 /obj/item/reagent_containers/food/snacks/plant/grape{
 	pixel_x = -5;
-	pixel_y = 19
+	pixel_y = 19;
+	rand_pos = 0
 	},
-/obj/item/reagent_containers/food/snacks/plant/grape,
+/obj/item/reagent_containers/food/snacks/plant/grape{
+	rand_pos = 0
+	},
 /obj/item/reagent_containers/food/snacks/croissant{
 	pixel_x = 6;
-	pixel_y = 8
+	pixel_y = 8;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/painauchocolat{
 	pixel_x = -6;
-	pixel_y = 8
+	pixel_y = 8;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/danish_apple{
 	pixel_x = 8;
-	pixel_y = -10
+	pixel_y = -10;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/danish_blueb{
-	pixel_x = -6
+	pixel_x = -6;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/danish_cherry{
 	pixel_x = 6;
-	pixel_y = 4
+	pixel_y = 4;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/danish_weed{
 	pixel_x = -7;
-	pixel_y = -10
+	pixel_y = -10;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/garlicbread{
-	pixel_y = -13
+	pixel_y = -13;
+	rand_pos = 0
 	},
 /turf/unsimulated/floor/marble/black,
 /area/shuttle/escape/centcom/destiny)
@@ -537,15 +558,18 @@
 /obj/decoration/floralarrangement,
 /obj/item/reagent_containers/food/snacks/danish_weed{
 	pixel_x = -6;
-	pixel_y = -10
+	pixel_y = -10;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/fairybread{
 	pixel_x = 8;
-	pixel_y = -12
+	pixel_y = -12;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/plant/cherry{
 	pixel_x = 8;
-	pixel_y = 29
+	pixel_y = 29;
+	rand_pos = 0
 	},
 /turf/unsimulated/floor/marble/black,
 /area/shuttle/escape/centcom/destiny)
@@ -558,26 +582,32 @@
 /obj/table/regal/auto,
 /obj/item/reagent_containers/food/snacks/plant/apple{
 	pixel_x = -7;
-	pixel_y = -5
+	pixel_y = -5;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/plant/grape{
 	pixel_x = 12;
-	pixel_y = -3
+	pixel_y = -3;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/croissant{
-	pixel_x = -5
+	pixel_x = -5;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/danish_apple{
 	pixel_x = 5;
-	pixel_y = 13
+	pixel_y = 13;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/danish_blueb{
 	pixel_x = 6;
-	pixel_y = 9
+	pixel_y = 9;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/danish_cherry{
 	pixel_x = -6;
-	pixel_y = 10
+	pixel_y = 10;
+	rand_pos = 0
 	},
 /turf/unsimulated/floor/marble/black,
 /area/shuttle/escape/centcom/destiny)

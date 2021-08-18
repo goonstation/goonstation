@@ -45,7 +45,8 @@
 	},
 /obj/item/reagent_containers/food/drinks/bottle/wine{
 	pixel_x = -6;
-	pixel_y = 5
+	pixel_y = 5;
+	rand_pos = 0
 	},
 /obj/machinery/light/small/floor/netural,
 /turf/unsimulated/floor/marble/border_bw{
@@ -57,7 +58,9 @@
 /obj/shrub{
 	dir = 4
 	},
-/obj/item/reagent_containers/food/snacks/donut/custom/frosted,
+/obj/item/reagent_containers/food/snacks/donut/custom/frosted{
+	rand_pos = 0
+	},
 /turf/unsimulated/floor/marble/border_bw{
 	dir = 1
 	},
@@ -158,7 +161,8 @@
 /obj/table/regal/auto,
 /obj/item/reagent_containers/food/snacks/donut/custom/frosted{
 	pixel_x = 3;
-	pixel_y = 12
+	pixel_y = 12;
+	rand_pos = 0
 	},
 /obj/decoration/floralarrangement,
 /turf/unsimulated/floor/marble,
@@ -312,15 +316,18 @@
 	},
 /obj/item/reagent_containers/food/drinks/bottle/champagne{
 	pixel_x = -5;
-	pixel_y = 3
+	pixel_y = 3;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/drinks/bottle/wine{
 	pixel_x = 7;
-	pixel_y = 5
+	pixel_y = 5;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/wine{
 	pixel_x = 4;
-	pixel_y = -3
+	pixel_y = -3;
+	rand_pos = 0
 	},
 /turf/unsimulated/floor/marble/border_bw{
 	dir = 4
@@ -540,36 +547,48 @@
 /obj/table/regal/auto,
 /obj/item/reagent_containers/food/snacks/croissant{
 	pixel_x = -15;
-	pixel_y = 11
+	pixel_y = 11;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/croissant{
 	pixel_x = -8;
-	pixel_y = 11
+	pixel_y = 11;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/croissant{
-	pixel_y = 11
+	pixel_y = 11;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/croissant{
 	pixel_x = 7;
-	pixel_y = 11
+	pixel_y = 11;
+	rand_pos = 0
 	},
 /obj/decoration/floralarrangement{
 	pixel_x = 17
 	},
-/obj/item/reagent_containers/food/snacks/danish_apple,
-/obj/item/reagent_containers/food/snacks/danish_blueb,
+/obj/item/reagent_containers/food/snacks/danish_apple{
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/danish_blueb{
+	rand_pos = 0
+	},
 /obj/item/reagent_containers/food/snacks/danish_cherry{
-	pixel_x = -9
+	pixel_x = -9;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/danish_weed{
-	pixel_x = -16
+	pixel_x = -16;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/danish_apple{
 	pixel_x = -17;
-	pixel_y = 6
+	pixel_y = 6;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/danish_blueb{
-	pixel_x = -19
+	pixel_x = -19;
+	rand_pos = 0
 	},
 /turf/unsimulated/floor/carpet/regalcarpet,
 /area/shuttle/escape/centcom/donut2)
@@ -577,38 +596,47 @@
 /obj/table/regal/auto,
 /obj/item/reagent_containers/food/snacks/croissant{
 	pixel_x = -6;
-	pixel_y = -3
+	pixel_y = -3;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/croissant{
 	pixel_x = 1;
-	pixel_y = -3
+	pixel_y = -3;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/croissant{
 	pixel_x = 8;
-	pixel_y = -3
+	pixel_y = -3;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/croissant{
 	pixel_x = 15;
-	pixel_y = -3
+	pixel_y = -3;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/plant/apple{
 	pixel_x = -7;
-	pixel_y = 14
+	pixel_y = 14;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/plant/grape{
-	pixel_y = 14
+	pixel_y = 14;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/plant/grape/green{
 	pixel_x = 9;
-	pixel_y = 13
+	pixel_y = 13;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/plant/strawberry{
 	pixel_x = 16;
-	pixel_y = 12
+	pixel_y = 12;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/plant/banana{
 	pixel_x = 16;
-	pixel_y = 11
+	pixel_y = 11;
+	rand_pos = 0
 	},
 /turf/unsimulated/floor/carpet/regalcarpet,
 /area/shuttle/escape/centcom/donut2)
@@ -629,26 +657,32 @@
 /obj/machinery/light/small/floor/netural,
 /obj/item/reagent_containers/food/drinks/bottle/champagne{
 	pixel_x = -7;
-	pixel_y = 21
+	pixel_y = 21;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/flute{
 	pixel_x = -2;
-	pixel_y = 10
+	pixel_y = 10;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/flute{
 	pixel_x = 3;
-	pixel_y = 18
+	pixel_y = 18;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/flute{
 	pixel_x = 4;
-	pixel_y = 8
+	pixel_y = 8;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/drinks/bottle/champagne{
 	pixel_x = -4;
-	pixel_y = 9
+	pixel_y = 9;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/donut/custom/frosted{
-	pixel_x = 5
+	pixel_x = 5;
+	rand_pos = 0
 	},
 /turf/unsimulated/floor/carpet/regalcarpet,
 /area/shuttle/escape/centcom/donut2)
@@ -715,26 +749,32 @@
 /obj/machinery/light/small/floor/netural,
 /obj/item/reagent_containers/food/drinks/bottle/wine{
 	pixel_x = -7;
-	pixel_y = 19
+	pixel_y = 19;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/drinks/bottle/wine{
 	pixel_x = -3;
-	pixel_y = 7
+	pixel_y = 7;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/wine{
 	pixel_x = 4;
-	pixel_y = 18
+	pixel_y = 18;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/wine{
 	pixel_x = 9;
-	pixel_y = 14
+	pixel_y = 14;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/wine{
 	pixel_x = 5;
-	pixel_y = 11
+	pixel_y = 11;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/donut/custom/frosted{
-	pixel_x = 6
+	pixel_x = 6;
+	rand_pos = 0
 	},
 /turf/unsimulated/floor/carpet/regalcarpet,
 /area/shuttle/escape/centcom/donut2)
