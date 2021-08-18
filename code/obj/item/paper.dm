@@ -1449,7 +1449,8 @@ as it may become compromised.
 
 /obj/item/paper/folded/ball/attack(mob/M as mob, mob/user as mob)
 	if (iscarbon(M) && M == user)
-		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and and eats it.</span>")
+		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and eats it.</span>")
+		playsound(M,"sound/misc/gulp.ogg", 30, 1)
 		eat_twitch(M)
 		var/obj/item/paper/P = src
 		user.u_equip(P)
