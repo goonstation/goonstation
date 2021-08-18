@@ -21,10 +21,6 @@
 /datum/component/snowballs/proc/form_snowball(mob/user)
 	user.visible_message("<b>[user]</b> gathers up some snow and rolls it into a snowball!", "You gather up some snow and roll it into a snowball!")
 	var/obj/item/reagent_containers/food/snacks/snowball/S = new /obj/item/reagent_containers/food/snacks/snowball(user.loc)
-	var/datum/reagents/R = source_turf.active_liquid?.group?.reagents
-	if(R)
-		S.color = R.get_average_color().to_rgb()
-	else
-		S.color = source_turf.color
+	S.color = source_turf.color
 	user.put_in_hand_or_drop(S)
 	return
