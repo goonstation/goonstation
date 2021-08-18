@@ -1541,7 +1541,7 @@
 		return
 
 	logTheThing("diary", src, null, "(WHISPER): [message]", "whisper")
-	logTheThing("whisper", src, null, "SAY: [message] (Whispered)")
+	logTheThing("whisper", src, null, "SAY: [message] (WHISPER) [log_loc(src)]")
 
 	if (src.client && !src.client.holder && url_regex?.Find(message))
 		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")

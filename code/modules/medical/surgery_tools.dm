@@ -1251,22 +1251,23 @@ CONTAINS:
 			if (user.a_intent == INTENT_HELP)
 				return
 			return ..()
-		H.tri_message("<span class='alert'><b>[user]</b> begins clamping the bleeders in [H == user ? "[his_or_her(H)]" : "[H]'s"] incision with [src].</span>",\
-		user, "<span class='alert'>You begin clamping the bleeders in [user == H ? "your" : "[H]'s"] incision with [src].</span>",\
-		H, "<span class='alert'>[H == user ? "You begin" : "<b>[user]</b> begins"] clamping the bleeders in your incision with [src].</span>")
-
-		if (!do_mob(user, H, clamp(surgery_status * 4, 0, 100)))
-			user.visible_message("<span class='alert'><b>[user]</b> was interrupted!</span>",\
-			"<span class='alert'>You were interrupted!</span>")
-			return
-
-		H.tri_message("<span class='notice'><b>[user]</b> clamps the bleeders in [H == user ? "[his_or_her(H)]" : "[H]'s"] incision with [src].</span>",\
-		user, "<span class='notice'>You clamp the bleeders in [user == H ? "your" : "[H]'s"] incision with [src].</span>",\
-		H, "<span class='notice'>[H == user ? "You clamp" : "<b>[user]</b> clamps"] the bleeders in your incision with [src].</span>")
-
 		if (H.bleeding)
-			repair_bleeding_damage(H, 50, rand(2,5))
-		return
+			H.tri_message("<span class='alert'><b>[user]</b> begins clamping the bleeders in [H == user ? "[his_or_her(H)]" : "[H]'s"] incision with [src].</span>",\
+			user, "<span class='alert'>You begin clamping the bleeders in [user == H ? "your" : "[H]'s"] incision with [src].</span>",\
+			H, "<span class='alert'>[H == user ? "You begin" : "<b>[user]</b> begins"] clamping the bleeders in your incision with [src].</span>")
+
+			if (!do_mob(user, H, clamp(surgery_status * 4, 0, 100)))
+				user.visible_message("<span class='alert'><b>[user]</b> was interrupted!</span>",\
+				"<span class='alert'>You were interrupted!</span>")
+				return
+
+			H.tri_message("<span class='notice'><b>[user]</b> clamps the bleeders in [H == user ? "[his_or_her(H)]" : "[H]'s"] incision with [src].</span>",\
+			user, "<span class='notice'>You clamp the bleeders in [user == H ? "your" : "[H]'s"] incision with [src].</span>",\
+			H, "<span class='notice'>[H == user ? "You clamp" : "<b>[user]</b> clamps"] the bleeders in your incision with [src].</span>")
+
+			if (H.bleeding)
+				repair_bleeding_damage(H, 50, rand(2,5))
+			return
 
 /* ======================================================= */
 /* -------------------- Reflex Hammer -------------------- */

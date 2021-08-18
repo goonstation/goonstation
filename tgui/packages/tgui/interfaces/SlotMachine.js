@@ -4,7 +4,7 @@
  */
 
 import { useBackend } from '../backend';
-import { Box, Button, NoticeBox, Divider, BlockQuote, Icon } from '../components';
+import { Box, Button, NoticeBox, Divider, BlockQuote, Icon, NumberInput } from '../components';
 import { Window } from '../layouts';
 
 export const SlotMachine = (props, context) => {
@@ -14,7 +14,7 @@ export const SlotMachine = (props, context) => {
     <Window
       title="Slot Machine"
       width={375}
-      height={190}>
+      height={215}>
       <Window.Content>
         { !scannedCard ? (
           <InsertCard />
@@ -49,12 +49,12 @@ const InsertCard = (props, context) => {
 
 const SlotWindow = (props, context) => {
   const { act, data } = useBackend(context);
-  const { scannedCard, money, account_funds, plays } = data;
+  const { scannedCard, money, account_funds, plays, wager } = data;
 
   return (
     <Box>
       <NoticeBox success>
-        <marquee> Twenty credits to play! </marquee>
+        <marquee> Wager some credits! </marquee>
       </NoticeBox>
       <Box mb="0.5em">
         <strong>Your card: </strong>
@@ -81,6 +81,18 @@ const SlotWindow = (props, context) => {
           tooltipPosition="right"
           onClick={() => act('cashout')} />
       </Box>
+      <Box>
+        Amount Wagered:
+        <NumberInput
+          minValue={20}
+          maxValue={1000}
+          value={wager}
+          format={value => "$" + value}
+          onDrag={(e, value) => act('set_wager', {
+            bet: value,
+          })}
+        />
+      </Box>
       <Box mb="0.75em">
         <strong>Credits Remaining:</strong>
         <Icon name="dollar-sign" /> { money }
@@ -94,7 +106,9 @@ const SlotWindow = (props, context) => {
         content="Play!"
         tooltip="Pull the lever"
         tooltipPosition="right"
-        onClick={() => act('play')} />
+        onClick={() => act('play', {
+          bet: wager,
+        })} />
     </Box>
   );
 };

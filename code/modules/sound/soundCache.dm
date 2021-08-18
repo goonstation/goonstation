@@ -749,6 +749,7 @@ var/global/list/soundCache = list(
  	"sound/misc/gnomechuckle.ogg" = 'sound/misc/gnomechuckle.ogg',\
  	"sound/misc/ground_rumble.ogg" = 'sound/misc/ground_rumble.ogg',\
  	"sound/misc/ground_rumble_big.ogg" = 'sound/misc/ground_rumble_big.ogg',\
+	"sound/misc/gulp.ogg" = 'sound/misc/gulp.ogg',\
  	"sound/misc/handle_click.ogg" = 'sound/misc/handle_click.ogg',\
  	"sound/misc/jaws.ogg" = 'sound/misc/jaws.ogg',\
  	"sound/misc/jester_laugh.ogg" = 'sound/misc/jester_laugh.ogg',\

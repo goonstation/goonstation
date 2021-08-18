@@ -170,7 +170,7 @@
 			if(prob(40))
 				holder.emote("scream")
 		holder.TakeDamage("chest",20,0)
-		take_bleeding_damage(holder, null, 15, DAMAGE_STAB)
+		take_bleeding_damage(holder, tool.the_mob, 15, DAMAGE_STAB, surgery_bleed = 1)
 
 		return 1
 
