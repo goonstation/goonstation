@@ -294,7 +294,7 @@
 		if(length(types))
 			Artifact_Spawn(src.loc, forceartitype = pick(src.types))
 		else
-			CRASH("No artifact type provided.")
+			CRASH("No artifact types provided.")
 		qdel(src)
 		return
 

@@ -270,8 +270,8 @@
 				//src.UpdateOverlays(null, "batpoof_cloak")
 
 	proc/dispel(var/forced = 0)
-		if (forced)
-			owner?.stamina = max(owner?.stamina - 40, STAMINA_SPRINT)
+		if (forced && owner)
+			owner.stamina = max(owner.stamina - 40, STAMINA_SPRINT)
 
 		var/obj/itemspecialeffect/poof/P = unpool(/obj/itemspecialeffect/poof)
 		P.setup(src.loc, forced)
