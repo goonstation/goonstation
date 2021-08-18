@@ -78374,8 +78374,7 @@
 /obj/table/regal/auto,
 /obj/item/reagent_containers/food/drinks/bottle/beer{
 	pixel_x = -14;
-	pixel_y = 13;
-	
+	pixel_y = 13
 	},
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
 	pixel_x = -6;
@@ -78383,8 +78382,7 @@
 	},
 /obj/item/reagent_containers/food/drinks/bottle/beer{
 	pixel_x = -4;
-	pixel_y = -2;
-	
+	pixel_y = -2
 	},
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
 	pixel_x = -11;
