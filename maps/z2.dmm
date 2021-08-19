@@ -67003,21 +67003,176 @@
 	icon_state = "blue"
 	})
 "dBk" = (
-/obj/trait/swedish,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/questx)
-"dBl" = (
+/obj/item/reagent_containers/food/drinks/bottle/vodka{
+	pixel_x = -10;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/bottle/tequila{
+	pixel_x = -2;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = 5;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/rum{
+	pixel_x = 11;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/bottle/gin{
+	pixel_x = -11;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = -5;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/food/drinks/bottle/vodka{
+	pixel_x = 8;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/rum{
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/tequila{
+	pixel_x = 15;
+	pixel_y = -2
+	},
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/unsimulated/floor/wood/two,
+/obj/table/regal/auto,
+/turf/unsimulated/floor/carpet/red/standard,
+/area/centcom/offices/questx)
+"dBl" = (
+/obj/item/reagent_containers/food/drinks/bottle/gin{
+	pixel_x = -13;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/vodka{
+	pixel_x = 13;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/bojackson{
+	pixel_x = -7;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = -1;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/drinks/bottle/gin{
+	pixel_x = 2;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/drinks/bottle/tequila{
+	pixel_x = 8;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/drinks/bottle/vodka{
+	pixel_x = -11;
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/food/drinks/bottle/rum{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/food/drinks/bottle/gin{
+	pixel_x = 2;
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = 15;
+	pixel_y = -4
+	},
+/obj/table/regal/auto,
+/turf/unsimulated/floor/carpet/red/standard,
 /area/centcom/offices/questx)
 "dBm" = (
-/obj/item/item_box/swedish_bag,
-/turf/unsimulated/floor/wood/two,
+/obj/item/reagent_containers/food/drinks/bottle/tequila{
+	pixel_x = -12;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/vodka{
+	pixel_x = -14;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/tequila{
+	pixel_x = -8;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/food/drinks/bottle/rum{
+	pixel_x = -4;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/bottle/vodka{
+	pixel_x = 16;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/tequila{
+	pixel_x = 7;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/vodka{
+	pixel_x = 3;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/food/drinks/bottle/tequila{
+	pixel_x = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = 8;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/food/drinks/bottle/bojackson{
+	pixel_x = -2;
+	pixel_y = -3
+	},
+/obj/table/regal/auto,
+/turf/unsimulated/floor/carpet/red/standard,
 /area/centcom/offices/questx)
 "dBn" = (
-/turf/unsimulated/floor/wood/two,
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = -12;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = -6;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = -12
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = -6;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = 1;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = 6;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = 7;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = 13;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = 14;
+	pixel_y = -2
+	},
+/obj/table/regal/auto,
+/turf/unsimulated/floor/carpet/red/standard,
 /area/centcom/offices/questx)
 "dBo" = (
 /obj/machinery/light{
@@ -67250,8 +67405,10 @@
 	icon_state = "blue"
 	})
 "dBS" = (
-/obj/item/reagent_containers/food/snacks/swedishmeatball,
-/turf/unsimulated/floor/wood/two,
+/obj/stool/chair/comfy/throne_gold{
+	dir = 8
+	},
+/turf/unsimulated/floor/carpet/red/standard,
 /area/centcom/offices/questx)
 "dBT" = (
 /obj/stool/chair/office{
@@ -67368,12 +67525,93 @@
 	},
 /area/centcom/offices/atomicthumbs)
 "dCl" = (
-/obj/item/reagent_containers/food/snacks/swedish_fish,
-/turf/unsimulated/floor/wood/two,
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = -12;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = -13;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = -8;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = -7;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = -2;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = -1;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = 5;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = 6;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = 13;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = 11;
+	pixel_y = 13
+	},
+/obj/table/regal/auto,
+/turf/unsimulated/floor/carpet/red/standard,
 /area/centcom/offices/questx)
 "dCm" = (
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = -12;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = -13;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = -8;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = -7;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = -2;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = -1;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = 5;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = 6;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = 13;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = 11;
+	pixel_y = 13
+	},
+/obj/table/regal/auto,
 /obj/machinery/light,
-/turf/unsimulated/floor/wood/two,
+/turf/unsimulated/floor/carpet/red/standard,
 /area/centcom/offices/questx)
 "dCn" = (
 /obj/machinery/light,
@@ -76958,6 +77196,9 @@
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/cogmap)
+"mAM" = (
+/turf/unsimulated/floor/carpet/red/standard,
+/area/centcom/offices/questx)
 "mBL" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -78076,6 +78317,48 @@
 	},
 /turf/unsimulated/floor/delivery,
 /area/centcom)
+"pmV" = (
+/obj/table/regal/auto,
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = -14;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = -6;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = -4;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = -11;
+	pixel_y = 1
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = 2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = 14;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = 12;
+	pixel_y = 14
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = 6;
+	pixel_y = 12
+	},
+/obj/table/regal/auto,
+/turf/unsimulated/floor/carpet/red/standard,
+/area/centcom/offices/questx)
 "png" = (
 /obj/table/auto,
 /obj/item/storage/belt/medical,
@@ -79221,6 +79504,41 @@
 	icon_state = "wall3"
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
+"siD" = (
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = -11;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/drinks/bottle/tequila{
+	pixel_x = -8;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/rum{
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = 9;
+	pixel_y = 14
+	},
+/obj/item/reagent_containers/food/drinks/bottle/rum{
+	pixel_x = -13;
+	pixel_y = -5
+	},
+/obj/item/reagent_containers/food/drinks/bottle/tequila{
+	pixel_x = -5;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/rum{
+	pixel_x = 11;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/gin{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/table/regal/auto,
+/turf/unsimulated/floor/carpet/red/standard,
+/area/centcom/offices/questx)
 "slL" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 10;
@@ -158671,7 +158989,7 @@ dAd
 dAI
 wel
 dBk
-dBn
+mAM
 dBn
 wel
 dCI
@@ -158973,7 +159291,7 @@ dAe
 ciY
 wel
 dBl
-dBn
+mAM
 dCl
 wel
 dCJ
@@ -159275,8 +159593,8 @@ dAg
 dAJ
 wel
 dBm
-dBn
-dBn
+mAM
+pmV
 wel
 dCK
 dDu
@@ -159576,7 +159894,7 @@ dzz
 dAg
 dAK
 wel
-dBn
+siD
 dBS
 dCm
 wel
