@@ -1,4 +1,7 @@
 
+(t)wed aug 18 21
+(u)Sord + Flourish
+(+)Replaced the prefilled syringes in the Nanomed Plus with bottles. Reorganized the inventory a little.
 (t)tue aug 17 21
 (u)Tarmunora
 (p)5754
@@ -12,7 +15,6 @@
 (p)5703
 (e)🎨|sprites
 (+)The cow mutantrace has had a few visual adjustments.
-(t)tue aug 16 21
 (u)Flourish
 (e)⚖|balance
 (+)Security barriers now provide slight disarm resistance when activated. Let me know how this feels and if you think it makes a difference.
