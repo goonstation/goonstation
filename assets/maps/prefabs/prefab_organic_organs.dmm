@@ -3,8 +3,8 @@
 /turf/space,
 /area/allowGenerate)
 "b" = (
-/mob/living/carbon/human/npc{
-	mutantrace = null
+/mob/living/carbon/human/npc/mutantrace{
+	spawn_mutantrace = "/datum/mutantrace/lizard"
 	},
 /turf/space,
 /area/allowGenerate)
