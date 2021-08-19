@@ -1691,7 +1691,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		else
 			for(var/mob/M in viewers(1, src))
 				if (M.using_dialog_of(src))
-					src.attack_hand(M)
+					src.Attackhand(M)
 
 	return
 

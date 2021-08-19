@@ -156,7 +156,7 @@
 	return 0
 
 /obj/machinery/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/attack_hand(mob/user as mob)
 	. = ..()

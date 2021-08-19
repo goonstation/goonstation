@@ -1129,7 +1129,7 @@
 				continue*/
 
 	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_hand(var/mob/user as mob)
 		src.add_dialog(user)
@@ -1286,7 +1286,7 @@
 			boutput(user, "You [src.panelopen ? "open" : "close"] the maintenance panel.")
 			src.updateUsrDialog()
 		else if (src.panelopen && (issnippingtool(W) || ispulsingtool(W)))
-			src.attack_hand(user)
+			src.Attackhand(user)
 		else ..()
 
 	proc/isWireColorCut(var/wireColor)

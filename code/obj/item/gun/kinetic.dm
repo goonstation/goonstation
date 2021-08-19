@@ -573,7 +573,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				src.shoot_point_blank(user, user)
 				user.force_laydown_standup()
 			else
-				src.attack_hand(usr)
+				src.Attackhand(usr)
 			return
 		else
 			var/mob/M = hit_atom
@@ -882,7 +882,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	name = "Riot launcher"
 	icon_state = "40mm"
 	item_state = "40mm"
-	force = MELEE_DMG_SMG
+	force = MELEE_DMG_LARGE
+	w_class = W_CLASS_BULKY
 	contraband = 7
 	caliber = 1.57
 	max_ammo_capacity = 1

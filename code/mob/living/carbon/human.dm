@@ -485,8 +485,8 @@
 /mob/living/carbon/human/proc/is_vampire()
 	return get_ability_holder(/datum/abilityHolder/vampire)
 
-/mob/living/carbon/human/proc/is_vampiric_zombie()
-	return get_ability_holder(/datum/abilityHolder/vampiric_zombie)
+/mob/living/carbon/human/proc/is_vampiric_thrall()
+	return get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 
 /mob/living/carbon/human/disposing()
 	for(var/obj/item/I in src)
@@ -711,9 +711,9 @@
 
 	if (src.mind) // I think this is kinda important (Convair880).
 		src.mind.register_death()
-		if (src.mind.special_role == "mindslave")
+		if (src.mind.special_role == ROLE_MINDSLAVE)
 			remove_mindslave_status(src, "mslave", "death")
-		else if (src.mind.special_role == "vampthrall")
+		else if (src.mind.special_role == ROLE_VAMPTHRALL)
 			remove_mindslave_status(src, "vthrall", "death")
 		else if (src.mind.master)
 			remove_mindslave_status(src, "otherslave", "death")
@@ -1541,7 +1541,7 @@
 		return
 
 	logTheThing("diary", src, null, "(WHISPER): [message]", "whisper")
-	logTheThing("whisper", src, null, "SAY: [message] (Whispered)")
+	logTheThing("whisper", src, null, "SAY: [message] (WHISPER) [log_loc(src)]")
 
 	if (src.client && !src.client.holder && url_regex?.Find(message))
 		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
@@ -1727,10 +1727,10 @@
 			hud.set_visible(hud.twohandr, 0)
 
 	if (W == src.wear_suit)
+		src.update_hair_layer()
 		src.wear_suit = null
 		W.unequipped(src)
 		src.update_clothing()
-		src.update_hair_layer()
 	else if (W == src.w_uniform)
 		W.unequipped(src)
 		W = src.r_store
@@ -1773,9 +1773,9 @@
 		src.update_clothing()
 	else if (W == src.head)
 		W.unequipped(src)
+		src.update_hair_layer()
 		src.head = null
 		src.update_clothing()
-		src.update_hair_layer()
 	else if (W == src.ears)
 		W.unequipped(src)
 		src.ears = null
@@ -2877,7 +2877,9 @@
 
 	for(var/slot in valid_slots)
 		var/obj/item/slot_item = src.get_slot(slot)
-		if(slot_item?.flags & HAS_EQUIP_CLICK && slot_item.equipment_click(src, target, params, location, control, origParams, slot))
+		if (slot_item?.flags & HAS_EQUIP_CLICK &&\
+		 	src.in_real_view_range(get_turf(target)) &&\
+		 	slot_item.equipment_click(src, target, params, location, control, origParams, slot))
 			return
 
 	if (src.lying)
@@ -3370,7 +3372,7 @@
 				src.changeStatus("stunned", 3 SECONDS)
 
 		else
-			AM.attack_hand(src)	// nice catch, hayes. don't ever fuckin do it again
+			AM.Attackhand(src)	// nice catch, hayes. don't ever fuckin do it again
 			src.visible_message("<span class='alert'>[src] catches the [AM.name]!</span>")
 			logTheThing("combat", src, null, "catches [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
 			src.throw_mode_off()

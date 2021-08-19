@@ -308,7 +308,7 @@
 			if("zombie")
 				boutput(user, "Hair is hair, even if it is mashed full of rotted skin and attached to someone who wants to eat your brain.")
 				return 1
-			if("vampiric zombie")
+			if("vampiric thrall")
 				boutput(user, "Hair is hair, even if it is attached to someone who wants to drink your blood.")
 				return 1
 			if("skeleton")

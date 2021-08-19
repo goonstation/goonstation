@@ -33,7 +33,7 @@
 			else if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/conspiracy)) && J.cant_spawn_as_con)
 				continue
 
-		if (!J.allow_traitors && player.mind.special_role || !J.allow_spy_theft && player.mind.special_role == "spy_thief")
+		if (!J.allow_traitors && player.mind.special_role || !J.allow_spy_theft && player.mind.special_role == ROLE_SPY_THIEF)
 			continue
 		if (J.needs_college && !player.has_medal("Unlike the director, I went to college"))
 			continue
@@ -173,7 +173,7 @@
 			continue
 		if (JOB.requires_whitelist && !NT.Find(ckey(player.mind.key)))
 			continue
-		if (!JOB.allow_traitors && player.mind.special_role ||  !JOB.allow_spy_theft && player.mind.special_role == "spy_thief")
+		if (!JOB.allow_traitors && player.mind.special_role ||  !JOB.allow_spy_theft && player.mind.special_role == ROLE_SPY_THIEF)
 			continue
 		// If there's an open job slot for it, give the player the job and remove them from
 		// the list of unassigned players, hey presto everyone's happy (except clarks probly)
@@ -730,22 +730,31 @@
 
 	return
 
-// this proc is shit, make a better one 2day
-proc/bad_traitorify(mob/H, traitor_role="hard-mode traitor")
-	var/list/eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/) - /datum/objective/regular/
-	var/num_objectives = rand(1,3)
-	var/datum/objective/new_objective = null
-	for(var/i = 0, i < num_objectives, i++)
-		var/select_objective = pick(eligible_objectives)
-		new_objective = new select_objective
-		new_objective.owner = H.mind
-		new_objective.set_up()
-		H.mind.objectives += new_objective
-
-	H.mind.special_role = traitor_role
-	H << browse(grabResource("html/traitorTips/traitorhardTips.html"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
-	if(!(H.mind in ticker.mode.traitors))
-		ticker.mode.traitors += H.mind
+// Convert mob to generic hard mode traitor or alternatively agimmick
+proc/antagify(mob/H, var/traitor_role, var/agimmick)
+	if (!(H.mind))
+		message_admins("Attempted to antagify [H] but could not find mind")
+		logTheThing("debug", H, null, "Attempted to antagify [H] but could not find mind.")
+		return
+	if (!agimmick)
+		var/list/eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/) - /datum/objective/regular/
+		var/num_objectives = rand(1,3)
+		var/datum/objective/new_objective = null
+		for(var/i = 0, i < num_objectives, i++)
+			var/select_objective = pick(eligible_objectives)
+			new_objective = new select_objective
+			new_objective.owner = H.mind
+			new_objective.set_up()
+			H.mind.objectives += new_objective
+			H << browse(grabResource("html/traitorTips/traitorhardTips.html"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
+			ticker.mode.traitors |= H.mind
+	else
+		ticker.mode.Agimmicks |= H.mind
+		H << browse(grabResource("html/traitorTips/traitorGenericTips.html"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
+	if (traitor_role)
+		H.mind.special_role = traitor_role
+	else
+		H.mind.special_role = H.name
 	if (H.mind.current)
 		H.mind.current.antagonist_overlay_refresh(1, 0)
 

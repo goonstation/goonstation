@@ -661,7 +661,7 @@ obj/item/contract/vampire
 		if(!..())
 			return 0
 		SPAWN_DBG(1 DECI SECOND)
-			user.mind.special_role = "vampire"
+			user.mind.special_role = ROLE_VAMPIRE
 			user.make_vampire(1)
 			ticker.mode.Agimmicks.Add(user)
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")

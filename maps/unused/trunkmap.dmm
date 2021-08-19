@@ -20037,7 +20037,7 @@
 	dir = 8;
 	tag = "icon-tube1 (WEST)"
 	},
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "bmU" = (

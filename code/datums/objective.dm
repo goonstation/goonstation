@@ -33,7 +33,7 @@ ABSTRACT_TYPE(/datum/objective)
 				// 1) Wizard marked as another wizard's target.
 				// 2) Presence of wizard is revealed to other antagonists at round start.
 				// Both are bad.
-				if (possible_target.special_role == "wizard")
+				if (possible_target.special_role == ROLE_WIZARD)
 					continue
 				if (possible_target.current.mind && possible_target.current.mind.is_target) // Cannot read null.is_target
 					continue
@@ -1065,7 +1065,7 @@ proc/create_fluff(datum/mind/target)
 
 		for(var/datum/mind/possible_target in ticker.minds)
 			if (possible_target && (possible_target != owner) && ishuman(possible_target.current))
-				if (possible_target.special_role == "wizard")
+				if (possible_target.special_role == ROLE_WIZARD)
 					continue
 				if (!possible_target.current.client)
 					continue

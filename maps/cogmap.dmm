@@ -7704,9 +7704,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/locker)
 "avL" = (
-/obj/shrub{
-	dir = 6
-	},
+/obj/machinery/manufacturer/uniform,
 /turf/simulated/floor/neutral/side{
 	dir = 10
 	},
@@ -16079,7 +16077,9 @@
 	},
 /area/station/security/main)
 "aQa" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 8
+	},
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "aQb" = (
@@ -34960,7 +34960,7 @@
 	},
 /area/station/science/teleporter)
 "bKi" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "bKj" = (

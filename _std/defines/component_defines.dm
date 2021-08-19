@@ -182,6 +182,8 @@
 
 /// Attacking wiht an item in-hand
 #define COMSIG_ATTACKBY "attackby"
+/// Attacking wihtout an item in-hand
+#define COMSIG_ATTACKHAND "attackhand"
 
 
 // ---- projectile signals ----
@@ -274,3 +276,5 @@
 #define COMSIG_AREA_ACTIVATED "area_activated"
 /// area's active var set to false (when all clients leave)
 #define COMSIG_AREA_DEACTIVATED "area_deactivated"
+
+#define COMSIG_SUSSY_PHRASE "sussy"

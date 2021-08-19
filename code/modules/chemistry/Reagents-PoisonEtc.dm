@@ -102,7 +102,7 @@ datum
 				if (istype(O,/obj/item/clothing/head/chemhood || /obj/item/clothing/suit/chemsuit))
 					return 1
 				if (isitem(O) && prob(40))
-					var/obj/item/toMelt
+					var/obj/item/toMelt = O
 					if (!(toMelt.item_function_flags & IMMUNE_TO_ACID))
 						if(!O.hasStatus("acid"))
 							O.changeStatus("acid", 5 SECONDS, list("leave_cleanable" = 1))

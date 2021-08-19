@@ -170,7 +170,7 @@
 			if(prob(40))
 				holder.emote("scream")
 		holder.TakeDamage("chest",20,0)
-		take_bleeding_damage(holder, null, 15, DAMAGE_STAB)
+		take_bleeding_damage(holder, tool.the_mob, 15, DAMAGE_STAB, surgery_bleed = 1)
 
 		return 1
 
@@ -1651,45 +1651,45 @@
 //// VAMPIRE ZOMBIE LIMBS ////
 ///// PARENT /////
 
-/obj/item/parts/human_parts/arm/mutant/vamp_zombie
-	icon = 'icons/mob/vamp_zombie.dmi'
-	partIcon = 'icons/mob/vamp_zombie.dmi'
+/obj/item/parts/human_parts/arm/mutant/vampiric_thrall
+	icon = 'icons/mob/vampiric_thrall.dmi'
+	partIcon = 'icons/mob/vampiric_thrall.dmi'
 	kind_of_limb = (LIMB_MUTANT | LIMB_ZOMBIE)
 
-/obj/item/parts/human_parts/leg/mutant/vamp_zombie
-	icon = 'icons/mob/vamp_zombie.dmi'
-	partIcon = 'icons/mob/vamp_zombie.dmi'
+/obj/item/parts/human_parts/leg/mutant/vampiric_thrall
+	icon = 'icons/mob/vampiric_thrall.dmi'
+	partIcon = 'icons/mob/vampiric_thrall.dmi'
 	kind_of_limb = (LIMB_MUTANT | LIMB_ZOMBIE)
 
 //// LIMBS ////
-/obj/item/parts/human_parts/arm/mutant/vamp_zombie/left
-	name = "left zombie arm"
-	desc = "A zombie's left arm."
+/obj/item/parts/human_parts/arm/mutant/vampiric_thrall/left
+	name = "left vampiric thrall arm"
+	desc = "A vampiric thrall's left arm."
 	icon_state = "arm_left"
 	slot = "l_arm"
 	side = "left"
 	handlistPart = "hand_left"
 
-/obj/item/parts/human_parts/arm/mutant/vamp_zombie/right
-	name = "right zombie arm"
-	desc = "A zombie's right arm."
+/obj/item/parts/human_parts/arm/mutant/vampiric_thrall/right
+	name = "right vampiric thrall arm"
+	desc = "A vampiric thrall's right arm."
 	icon_state = "arm_right"
 	slot = "r_arm"
 	side = "right"
 	handlistPart = "hand_right"
 
-/obj/item/parts/human_parts/leg/mutant/vamp_zombie/left
-	name = "left zombie leg"
-	desc = "A zombie's left leg."
+/obj/item/parts/human_parts/leg/mutant/vampiric_thrall/left
+	name = "left vampiric thrall leg"
+	desc = "A vampiric thrall's left leg."
 	icon_state = "leg_left"
 	slot = "l_leg"
 	side = "left"
 	partlistPart = "foot_left"
 	step_image_state = "footprintsL"
 
-/obj/item/parts/human_parts/leg/mutant/vamp_zombie/right
-	name = "right zombie leg"
-	desc = "A zombie's right leg."
+/obj/item/parts/human_parts/leg/mutant/vampiric_thrall/right
+	name = "right vampiric thrall leg"
+	desc = "A vampiric thrall's right leg."
 	icon_state = "leg_right"
 	slot = "r_leg"
 	side = "right"

@@ -112,7 +112,7 @@
 
 	attack_hand(mob/M)
 		if (src.door)
-			src.door.attack_hand(M)
+			src.door.Attackhand(M)
 
 	attack_ai(mob/user)
 		if (src.door)

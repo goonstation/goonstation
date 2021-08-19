@@ -13,7 +13,8 @@
 	item_state = "ljacket"
 	wear_layer = MOB_ARMOR_LAYER
 	var/fire_resist = T0C+100
-	var/over_hair = 0
+	/// If TRUE the suit will hide whoever is wearing it's hair
+	var/over_hair = FALSE
 	flags = FPRINT | TABLEPASS
 	w_class = W_CLASS_NORMAL
 	var/restrain_wearer = 0
@@ -33,7 +34,7 @@
 	icon_state = "hoodie"
 	uses_multiple_icon_states = 1
 	item_state = "hoodie"
-	body_parts_covered = HEAD|TORSO|ARMS
+	body_parts_covered = TORSO|ARMS
 	var/hood = 0
 	var/hcolor = null
 
@@ -51,10 +52,12 @@
 		user.show_text("You flip [src]'s hood [src.hood ? "up" : "down"].")
 		if (src.hood)
 			src.over_hair = 1
+			src.body_parts_covered = HEAD|TORSO|ARMS
 			src.icon_state = "hoodie[src.hcolor ? "-[hcolor]" : null]-up"
 			src.item_state = "hoodie[src.hcolor ? "-[hcolor]" : null]-up"
 		else
 			src.over_hair = 0
+			src.body_parts_covered = TORSO|ARMS
 			src.icon_state = "hoodie[src.hcolor ? "-[hcolor]" : null]"
 			src.item_state = "hoodie[src.hcolor ? "-[hcolor]" : null]"
 
@@ -232,7 +235,6 @@
 	var/armored = 0
 	body_parts_covered = TORSO|LEGS|ARMS
 	permeability_coefficient = 0.005
-	over_hair = 1
 
 	setupProperties()
 		..()
@@ -355,7 +357,6 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
 	body_parts_covered = TORSO|LEGS|ARMS
 	permeability_coefficient = 0.02
-	over_hair = 1
 
 	New()
 		. = ..()
@@ -363,7 +364,7 @@
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 0.6)
+		setProperty("movespeed", 0.45)
 		setProperty("radprot", 50)
 		setProperty("coldprot", 15)
 		setProperty("heatprot", 15)
@@ -1016,7 +1017,6 @@
 	body_parts_covered = TORSO|LEGS|ARMS
 	permeability_coefficient = 0.1
 	protective_temperature = 1000
-	over_hair = 1
 
 	New()
 		..()
@@ -1471,6 +1471,7 @@
 	wear_layer = MOB_OVERLAY_BASE
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
+	over_hair = TRUE
 	permeability_coefficient = 0.50
 
 /obj/item/clothing/suit/wizrobe
@@ -1633,7 +1634,6 @@
 	item_state = "chem_suit"
 	body_parts_covered = TORSO|LEGS|ARMS
 	permeability_coefficient = 0
-	over_hair = 1
 
 /obj/item/clothing/suit/security_badge
 	name = "Security Badge"

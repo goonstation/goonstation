@@ -141,7 +141,7 @@
 		var/list/goods_for_purchase = goods_sell.Copy()
 		// Illegal goods for syndicate traitors
 		if (illegal)
-			if(usr.mind && (usr.mind.special_role == "traitor" || usr.mind.special_role == "spy_thief" || usr.mind.special_role == "nukeop" ||	usr.mind.special_role == "sleeper agent" || usr.mind.special_role == "hard-mode traitor" ||	usr.mind.special_role == "omnitraitor"))
+			if(usr.mind && (usr.mind.special_role == ROLE_TRAITOR || usr.mind.special_role == ROLE_SPY_THIEF || usr.mind.special_role == ROLE_NUKEOP ||	usr.mind.special_role == ROLE_SLEEPER_AGENT || usr.mind.special_role == ROLE_HARDMODE_TRAITOR ||	usr.mind.special_role == ROLE_OMNITRAITOR))
 				goods_for_purchase += goods_illegal
 		if (href_list["purchase"])
 			src.temp =buy_dialogue + "<HR><BR>"

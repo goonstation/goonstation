@@ -1231,7 +1231,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	desc = "Standard exterior plating for vehicle pods."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
-	overlay_state = "skinB"
+	overlay_state = "pod_skinB"
 	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/nt_light,
 		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/nt_light)
 
@@ -1240,7 +1240,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	desc = "Standard exterior plating for vehicle pods."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
-	overlay_state = "skinBF"
+	overlay_state = "pod_skinBF"
 	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/nt_robust,
 		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/nt_robust)
 
@@ -1249,7 +1249,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	desc = "Standard exterior plating for vehicle pods."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
-	overlay_state = "skinR"
+	overlay_state = "pod_skinR"
 	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/sy_light,
 		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/sy_light)
 
@@ -1258,7 +1258,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	desc = "Standard exterior plating for vehicle pods."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
-	overlay_state = "skinRF"
+	overlay_state = "pod_skinRF"
 	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/sy_robust,
 		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/sy_robust)
 
