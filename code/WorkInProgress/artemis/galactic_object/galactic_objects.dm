@@ -287,8 +287,11 @@
 					E.particles = new/particles/artemis/star
 					E.filters = filter(type="bloom", threshold="#000", size=10, offset=1, alpha=200)
 
-					src.galaxy_icon.filters = filter(type="bloom", threshold="#ccc", size=2, alpha=100)
-					src.galaxy_icon.vis_contents += E
+					src.galaxy_icon.filters += filter(type="rays", size=25, density=15, factor=1, offset=rand(1000), threshold=0, color=src.color, x=0, y=0)
+					var/f = src.galaxy_icon.filters[length(src.galaxy_icon.filters)]
+					animate(f, offset=f:offset + 100, time=5 MINUTES, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=-1)
+					src.galaxy_icon.vis_contents |= E
+
 			if(scale)
 				REMOVE_FLAG(appearance_flags, PIXEL_SCALE)
 
