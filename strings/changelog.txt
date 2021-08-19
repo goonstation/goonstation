@@ -2,7 +2,7 @@
 (t)thu aug 19 21
 (u)Sovexe
 (e)🐛⚖|bug, balance
-(*)Resolved an issue with Arcfiend's discharge ability that was causing it to apply stamina damage twice per cast. Discharge, and Jolt will now produce sparks when in use.
+(*)Resolved an issue with Arcfiend's discharge ability that was causing it to apply stamina damage twice per cast. Discharge and Jolt will now produce sparks when in use.
 (t)wed aug 18 21
 (u)Flourish
 (+)Charcoal pills now contain 20u. Analgesic and menthol pills now contain 10u.
