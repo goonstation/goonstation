@@ -1140,6 +1140,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/mender/brute, 2)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/mender/burn, 2)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/antihistamine, 3)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/atropine, 3)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/calomel, 3)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/antitoxin, 5)
