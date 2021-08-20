@@ -29,6 +29,9 @@ var/global/datum/galaxy/GALAXY = new
 
 	/// Random Integer from (L,H) otherwise 0-1
 	proc/xor_rand(L, H)
+		if(L && isnull(H))
+			H = L
+			L = 0
 		if(!isnull(L) && !isnull(H))
 			. = round(xor_randf(L, H+0.99))
 		else
@@ -90,6 +93,7 @@ var/global/datum/galaxy/GALAXY = new
 
 	proc/generate_solar_system(x,y)
 		var/datum/galactic_object/star/primary
+
 		var/sector_x = xor_rand() * 10 + (x * 10)
 		var/sector_y = xor_rand() * 10 + (y * 10)
 
@@ -183,13 +187,19 @@ var/global/datum/galaxy/GALAXY = new
 	var/loud = 0
 	var/navigable = 0 // Can be detected on long distance nav
 	var/scale
+	var/list/random_range = null
 
 
 	New(datum/galaxy/G, datum/galactic_object/ref_obj)
 		..()
 		if(ref_obj)
-			src.galactic_x += ref_obj.galactic_x
-			src.galactic_y += ref_obj.galactic_y
+			src.galactic_x = ref_obj.galactic_x
+			src.galactic_y = ref_obj.galactic_y
+		if(random_range)
+			if(length(random_range))
+				src.random_range_and_bearing(G, random_range[1], random_range[2])
+			else
+				CRASH("[src] random range incorrectly assigned.")
 
 	proc/check_distance(ship_x, ship_y)
 		var/squared_distance = (ship_x-galactic_x)**2 + (ship_y-galactic_y)**2
@@ -198,6 +208,13 @@ var/global/datum/galaxy/GALAXY = new
 		if(squared_distance <= max_r_squared_galactic)
 			return 1
 		return 0
+
+	proc/random_range_and_bearing(datum/galaxy/G, min_range=0, max_range=10)
+		var/theta = G.xor_rand(360)
+		var/r = G.xor_randf(min_range,max_range)
+
+		src.galactic_x += r*sin(theta)
+		src.galactic_y += r*cos(theta)
 
 	proc/load_map_body(obj/artemis/ship)
 

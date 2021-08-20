@@ -11,10 +11,9 @@
 	var/dir = null
 	var/light_value
 	var/list/biome_seed = list()
+	random_range = list(1,3)
 
 	New(datum/galaxy/G)
-		galactic_x = G.xor_randf(1,3) //19?
-		galactic_y = G.xor_randf(1,3) //19?
 		scale =  G.xor_randf(0.75, 1)
 		icon_state = G.xor_weighted_pick(list("mono_planets"=100,"planet_1"=10,"planet_2"=3,"planet_3"=2))
 		switch(icon_state)
@@ -46,13 +45,6 @@
 
 		generate_name(G)
 		..()
-
-	proc/random_range_and_bearing(datum/galaxy/G, min_range=0, max_range=10)
-		var/theta = G.xor_rand(360)
-		var/r = G.xor_randf(min_range,max_range)
-
-		src.galactic_x += r*sin(theta)
-		src.galactic_y += r*cos(theta)
 
 	proc/generate_name(datum/galaxy/G)
 		. = ""
@@ -225,10 +217,9 @@
 		body_path_map = /obj/background_star/galactic_object/star/random
 		body_path_ship = /obj/background_star/galactic_object/large/star/random
 		var/color = null
+		random_range = list(0,1)
 
 		New(datum/galaxy/G)
-			galactic_x = G.xor_randf(-1,1) //19?
-			galactic_y = G.xor_randf(-1,1) //19?
 			scale = G.xor_randf(0.90,1.1)
 			if(G.xor_prob(80))
 				color = G.xor_pick(list("#fffb00", "#FF5D06", "#009ae7", "#9b59b6", "#FF69B4", "#ffffff"))
@@ -290,8 +281,8 @@
 			var/datum/galactic_object/star/random/R = master
 			color = R.color
 			name = R.name
-			if(dir)
-				dir = dir
+			if(R.dir)
+				dir = R.dir
 
 			SPAWN_DBG(1)
 				if(src.galaxy_icon)
@@ -333,6 +324,8 @@
 			var/datum/galactic_object/star/random/R = master
 			color = R.color
 			name = R.name
+			if(dir)
+				dir = R.dir
 
 // Black Hole
 
@@ -422,18 +415,19 @@
 	var/rarity_mod = 0
 	var/encounter_generated = FALSE
 	var/obj/magnet_target_marker/asteroid/marker
-	var/variant
+	var/dir
 
 	random
+		random_range = list(1,1.5)
+
 		New(datum/galaxy/G)
 			..()
-			galactic_x = 1
-			galactic_y = 1
+			dir = G.xor_pick(alldirs)
 
 /obj/background_star/galactic_object/asteroid
 	name = "Asteroid"
 	icon = 'icons/misc/artemis/galactic_object_map.dmi'
-	icon_state = "ast_group_1"
+	icon_state = "small_ast"
 
 	New()
 		..()
@@ -472,6 +466,12 @@
 				A.set_destination()
 		else
 			boutput(usr, "Uh oh, something's gotten really fucked up with the asteroid system. Please report this to a coder! (ERROR: NO ENCOUNTER)")
+
+	on_load()
+		var/datum/galactic_object/star/random/R = master
+		name = R.name
+		if(dir)
+			dir = R.dir
 
 	on_unload()
 		var/datum/galactic_object/asteroid/M = master
