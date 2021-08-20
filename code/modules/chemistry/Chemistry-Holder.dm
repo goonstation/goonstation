@@ -44,7 +44,6 @@ datum
 		var/defer_reactions = 0 //Set internally to prevent reactions inside reactions.
 		var/deferred_reaction_checks = 0
 		var/processing_reactions = 0
-		var/desc = null		//(Inexact) description of the reagents. If null, needs refreshing.
 		var/inert = 0 //Do not react. At all. Do not pass go, do not collect $200. Halt. Stop right there, son.
 
 		var/list/addiction_tally = null
@@ -872,7 +871,6 @@ datum
 		proc/reagents_changed(var/add = 0) // add will be 1 if reagents were just added
 			if (my_atom)
 				my_atom.on_reagent_change(add)
-			desc = null			// mark the description as needing refresh
 			return
 
 		proc/is_full() // li'l tiny helper thing vOv
@@ -927,24 +925,23 @@ datum
 			.= get_fullness(total_volume / maximum_volume * 100)
 
 		proc/get_inexact_description(var/rc_flags=0)
-			if(desc) return desc
 			if(rc_flags == 0)
 				return null
 
 
-			// rebuild description
+			. = list()
 
 
 			var/full_text = get_reagents_fullness()
 
 			if(full_text == "empty")
 				if(rc_flags & (RC_SCALE | RC_VISIBLE | RC_FULLNESS) )
-					desc = "<span class='notice'>It is empty.</span>"
-				return desc
+					. += "<span class='notice'>It is empty.</span>"
+				return
 
 			var/datum/color/c = get_average_color()
 
-			//desc+= "([c.r],[c.g],[c.b];[c.a])"
+			//. += "([c.r],[c.g],[c.b];[c.a])"
 
 			var/nearest_color_text = get_nearest_color(c)
 
@@ -961,17 +958,17 @@ datum
 
 			if(rc_flags & RC_VISIBLE)
 				if(rc_flags & RC_SCALE)
-					desc += "<span class='notice'>It contains [total_volume] units of \a [t]-colored [state_text].</span>"
+					. += "<span class='notice'>It contains [total_volume] units of \a [t]-colored [state_text].</span>"
 				else
-					desc += "<span class='notice'>It is [full_text] of \a [t]-colored [state_text].</span>"
+					. += "<span class='notice'>It is [full_text] of \a [t]-colored [state_text].</span>"
 			else
 				if(rc_flags & RC_SCALE)
-					desc += "<span class='notice'>It contains [total_volume] units.</span>"
+					. += "<span class='notice'>It contains [total_volume] units.</span>"
 				else
 					if(rc_flags & RC_FULLNESS)
-						desc += "<span class='notice'>It is [full_text].</span>"
+						. += "<span class='notice'>It is [full_text].</span>"
 
-			return desc
+			return .
 
 
 		// returns the average color of the reagents
