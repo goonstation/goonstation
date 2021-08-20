@@ -1028,18 +1028,10 @@ DEFINE_FLOORS(marble/border_wb,
 		src.set_dir(pick(cardinal))
 
 /turf/simulated/floor/snow/snowball
-	var/last_gather_time
 
-	attack_hand(mob/user)
-		if ((last_gather_time + 40) >= world.time)
-			return
-		else
-			user.visible_message("<b>[user]</b> gathers up some snow and rolls it into a snowball!",\
-			"You gather up some snow and roll it into a snowball!")
-			var/obj/item/reagent_containers/food/snacks/snowball/S = new /obj/item/reagent_containers/food/snacks/snowball(user.loc)
-			user.put_in_hand_or_drop(S)
-			src.last_gather_time = world.time
-			return
+	New()
+		..()
+		AddComponent(/datum/component/snowballs)
 
 /turf/simulated/floor/snow/green
 	name = "snow-covered floor"

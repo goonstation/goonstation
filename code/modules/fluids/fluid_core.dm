@@ -220,7 +220,7 @@ var/mutable_appearance/fluid_ma
 
 	attack_hand(mob/user)
 		var/turf/T = src.loc
-		T.attack_hand(user)
+		T.Attackhand(user)
 
 	proc/add_reagents(var/datum/reagents/R, var/volume) //should be called right after new() on inital group creation
 		if (!src.group) return

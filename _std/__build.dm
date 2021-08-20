@@ -109,6 +109,9 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_WRESTLEMAP   // Wrestlemap by Overtone
 // #define MAP_OVERRIDE_POD_WARS   // 500x500 Pod Wars map
 
+//////////// Unit Test Framework
+
+//#define UNIT_TESTS
 
 #define MAP_OVERRIDE_ARTEMIS   // Artemis WIP
 
@@ -126,9 +129,6 @@ o+`        `-` ``..-:yooos-..----------..`
 var/global/vcs_revision = "1"
 var/global/vcs_author = "bob"
 
-var/global/ci_dm_version_major = "1"
-var/global/ci_dm_version_minor = "100"
-
 // The following describe when the server was compiled
 #define BUILD_TIME_TIMEZONE_ALPHA "EST" // Server is EST
 #define BUILD_TIME_TIMEZONE_OFFSET -0500
@@ -140,8 +140,6 @@ var/global/ci_dm_version_minor = "100"
 #define BUILD_TIME_MINUTE 31
 #define BUILD_TIME_SECOND 30
 #define BUILD_TIME_UNIX 1234567890 // Unix epoch, second precision
-
-#define SERVER_NUMBER 0
 
 // Uncomment and set to a URL with a zip of the RSC to offload RSC sending to an external webserver/CDN.
 //#define PRELOAD_RSC_URL ""

@@ -7704,9 +7704,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/locker)
 "avL" = (
-/obj/shrub{
-	dir = 6
-	},
+/obj/machinery/manufacturer/uniform,
 /turf/simulated/floor/neutral/side{
 	dir = 10
 	},

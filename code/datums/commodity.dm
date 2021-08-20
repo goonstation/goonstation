@@ -1070,16 +1070,16 @@
 //NT stuff
 
 /datum/commodity/contraband/ntso_uniform
-	comname = "NT-SO uniform"
+	comname = "Surplus tactical uniform"
 	comtype = /obj/item/clothing/under/misc/turds
-	desc = "Freshly salvaged from an NT transport craft. Best not to ask too many questions."
+	desc = "A rather smelly tactical uniform sold off from an NT warehouse."
 	price = 1500
 	baseprice = 1500
 	upperfluc = 500
 	lowerfluc = -500
 
 /datum/commodity/contraband/ntso_beret
-	comname = "NT-SO beret"
+	comname = "Surplus NT beret"
 	comtype = /obj/item/clothing/head/NTberet
 	desc = "Fancy. Possibly salvaged, possibly stolen, what's it to you?"
 	price = 2500
@@ -1088,11 +1088,11 @@
 	lowerfluc = -500
 
 /datum/commodity/contraband/ntso_vest
-	comname = "NT-SO vest"
+	comname = "Surplus armored vest"
 	comtype = /obj/item/clothing/suit/armor/NT_alt
-	desc = "Sure is a pretty shade of blue. Other than that, it's really just a standard armor vest."
-	price = 2500
-	baseprice = 2500
+	desc = "A surplus blue armored vest, well worn and definitely not drycleaned."
+	price = 3500
+	baseprice = 3500
 	upperfluc = 500
 	lowerfluc = -500
 

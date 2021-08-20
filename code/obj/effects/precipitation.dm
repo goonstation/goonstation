@@ -23,8 +23,10 @@ particles/rain
 		drift = generator("box", list(0.1, -1, 0), list(0.4, 0, 0))
 
 		tile
-			count = 8
-			spawning = 2.5
+			count = 5
+			spawning = 1.1
+			fade = 5
+			lifespan = generator("num", 4, 6, LINEAR_RAND)
 			position = generator("box", list(-96,32,0), list(300,64,50))
 			bound1 = list(-32, -48, -1000)
 			bound2 = list(32, 64, 1000)
@@ -34,10 +36,12 @@ particles/rain
 			width = 96
 			height = 96
 
+
 obj/effects/rain
 	particles = new/particles/rain
 	plane = PLANE_NOSHADOW_ABOVE
 	alpha = 200
+	var/static/list/particles/z_particles
 
 	client_attach
 		screen_loc = "CENTER"
@@ -49,7 +53,16 @@ obj/effects/rain
 		particles = new/particles/rain/sideways
 
 		tile
-			particles = new/particles/rain/sideways/tile
+			particles = null
 			// Offset pixel position to align bounding boxes and visual area
 			pixel_y = 16
 			pixel_x = -16
+
+			New()
+				..()
+				LAZYLISTINIT(z_particles)
+				var/z_level_str = "\"[src.loc.z]\""
+				if(!z_particles[z_level_str])
+					z_particles[z_level_str] = new/particles/rain/sideways/tile
+				particles = z_particles[z_level_str]
+

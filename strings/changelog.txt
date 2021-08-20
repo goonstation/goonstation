@@ -1,4 +1,27 @@
 
+(t)wed aug 18 21
+(u)Flourish
+(+)Charcoal pills now contain 20u. Analgesic and menthol pills now contain 10u.
+(u)Sord + Flourish
+(+)Replaced the prefilled syringes in the Nanomed Plus with bottles. Reorganized the inventory a little.
+(t)tue aug 17 21
+(u)Tarmunora
+(p)5754
+(e)⚖📄|balance, tgui
+(*)The house no longer takes such a massive loss on slot machines, and you can wager up to 1000 credits at once instead of just 20 (minimum bet 20 credits).
+(u)Sovexe
+(p)5748
+(e)🆕|feature
+(*)A new antagonist type, the Arcfiend joins the fray. Be sure to enable it in your job preferences to be among the first to play!
+(u)Walpvrgis
+(p)5703
+(e)🎨|sprites
+(+)The cow mutantrace has had a few visual adjustments.
+(u)Flourish
+(e)⚖|balance
+(+)Security barriers now provide slight disarm resistance when activated. Let me know how this feels and if you think it makes a difference.
+(u)Flourish
+(+)Large mop buckets now have a capacity of 400u. Handheld mop buckets have a capacity of 120u.
 (t)sun aug 15 21
 (u)Arthur Holiday
 (p)5667

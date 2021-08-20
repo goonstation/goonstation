@@ -456,6 +456,7 @@
 	target_anything = 1
 	targeted = 1
 	max_range = 3000
+	can_target_ghosts = 1
 
 	castcheck(var/mob/M)
 		if (M.client && M.client.holder)
