@@ -8,6 +8,7 @@
 	var/color = null
 	var/destination_name = null
 	var/icon_state = null
+	var/dir = null
 	var/light_value
 	var/list/biome_seed = list()
 
@@ -15,8 +16,11 @@
 		galactic_x = G.xor_randf(1,3) //19?
 		galactic_y = G.xor_randf(1,3) //19?
 		scale =  G.xor_randf(0.75, 1)
-		color = G.xor_weighted_pick(list("#fffb00"=1, "#FF5D06"=1, "#009ae7"=1, "#03c53d"=1, "#9b59b6"=1, "#272e30"=1, "#FF69B4"=1, "#633221"=1, "#ffffff"=4))
-		icon_state = G.xor_weighted_pick(list("planet_1"=10,"planet_2"=3,"planet_3"=2))
+		icon_state = G.xor_weighted_pick(list("mono_planets"=100,"planet_1"=10,"planet_2"=3,"planet_3"=2))
+		switch(icon_state)
+			if("mono_planets")
+				dir = G.xor_pick(cardinal)
+				color = G.xor_weighted_pick(list("#fffb00"=1, "#FF5D06"=1, "#009ae7"=1, "#03c53d"=1, "#9b59b6"=1, "#272e30"=1, "#FF69B4"=1, "#633221"=1, "#ffffff"=4))
 		light_value = clamp((log(G.xor_rand())*0.675)+0.997,0,1)
 		biome_seed += G.xor_rand()*50000
 		biome_seed += G.xor_rand()*50000
@@ -68,17 +72,17 @@
 /obj/background_star/galactic_object/planet/random
 	name = "F1X-M3"
 	icon = 'icons/misc/artemis/galactic_object_map.dmi'
-	icon_state = "planet_1"
+	icon_state = "mono_planets"
 
 	New()
 		..()
 		flags |= HAS_ARTEMIS_SCAN
 
 	artemis_scan(var/mob/pilot, var/obj/artemis/ship)
-		var/dat = {"<span class='alert'><b>DON'T <i>FUCKING</i> TOUCH ME.</b></span>"}
+		var/dat = {"<span class='alert'>Planet Composition:</b></span>"}
 
 		var/turf_total = 0
-		var/list/biome_distro = list("Jungle"=0, "Grassland"=0, "Desert"=0, "Mountains"=0, "Water"=0, "Other"=0)
+		var/list/biome_distribution = list("Jungle"=0, "Grassland"=0, "Desert"=0, "Mountains"=0, "Water"=0, "Other"=0)
 		var/key
 		if(src.my_ship_body?.landing_zones)
 			var/area/map_gen/planet/A = get_area(src.my_ship_body.landing_zones[src.my_ship_body.landing_zones[1]])
@@ -99,26 +103,25 @@
 						biome_name="Water"
 					if(/datum/biome/plains)
 						biome_name="Grassland"
-				biome_distro[biome_name] += length(A.biome_turfs[key])
+				biome_distribution[biome_name] += length(A.biome_turfs[key])
 		else
-			//PsuedoRandom Generation Based on Galactic X/Y so reproducable
 			var/datum/galactic_object/planet/random/R = master
 			for(var/i in 1 to 15)
 				if(round(R.biome_seed[2]) % i == 0) continue
-				key = biome_distro[round((R.biome_seed[1] * i) % length(biome_distro))+ 1]
-				biome_distro[key] += abs(R.biome_seed[1])
+				key = biome_distribution[round((R.biome_seed[1] * i) % length(biome_distribution))+ 1]
+				biome_distribution[key] += abs(R.biome_seed[1])
 				turf_total += abs(R.biome_seed[1])
 			for(var/i in 1 to 15)
 				if(round(R.biome_seed[1] ) % i == 0) continue
-				key = biome_distro[round((R.biome_seed[2] * i) % length(biome_distro))+ 1]
-				biome_distro[key] += abs(R.biome_seed[2])
+				key = biome_distribution[round((R.biome_seed[2] * i) % length(biome_distribution))+ 1]
+				biome_distribution[key] += abs(R.biome_seed[2])
 				turf_total += abs(R.biome_seed[2])
 
-		for(key in biome_distro)
-			biome_distro[key] = round(biome_distro[key]/turf_total*100)
+		for(key in biome_distribution)
+			biome_distribution[key] = round(biome_distribution[key]/turf_total*100)
 			. += "<BR/>"
-			if(biome_distro[key] >= 5)
-				. += "[key]: [biome_distro[key]]%"
+			if(biome_distribution[key] >= 5)
+				. += "[key]: [biome_distribution[key]]%"
 			else
 				. += "[key]: <5%"
 
@@ -131,6 +134,7 @@
 		color = R.color
 		name = R.name
 		icon_state = R.icon_state
+		dir = R.dir
 		if(scale)
 			REMOVE_FLAG(appearance_flags, PIXEL_SCALE)
 
@@ -204,6 +208,7 @@
 
 	lifespan = generator("num", 5, 15, LINEAR_RAND)
 	drift = generator("sphere", 0.5, 2, LINEAR_RAND)
+	position = list(32,32,0)
 	fade = 25
 
 /datum/galactic_object/star
@@ -214,6 +219,7 @@
 	navigable = 0
 	galactic_x = 0.2
 	galactic_y = 0.05
+	var/dir = null
 
 	random
 		body_path_map = /obj/background_star/galactic_object/star/random
@@ -224,13 +230,17 @@
 			galactic_x = G.xor_randf(-1,1) //19?
 			galactic_y = G.xor_randf(-1,1) //19?
 			scale = G.xor_randf(0.90,1.1)
-			color = G.xor_pick(list("#fffb00", "#FF5D06", "#009ae7", "#9b59b6", "#FF69B4", "#ffffff"))
+			if(G.xor_prob(80))
+				color = G.xor_pick(list("#fffb00", "#FF5D06", "#009ae7", "#9b59b6", "#FF69B4", "#ffffff"))
+				dir = G.xor_pick(cardinal - SOUTH)
 			..()
 
 /obj/background_star/galactic_object/star
 	name = "Star"
-	icon = 'icons/misc/artemis/galactic_object_map.dmi'
+	icon = 'icons/misc/artemis/96x96.dmi'
 	icon_state = "star"
+	pixel_x = -32
+	pixel_y = -32
 
 	New()
 		..()
@@ -280,6 +290,8 @@
 			var/datum/galactic_object/star/random/R = master
 			color = R.color
 			name = R.name
+			if(dir)
+				dir = dir
 
 			SPAWN_DBG(1)
 				if(src.galaxy_icon)
@@ -287,7 +299,7 @@
 					E.particles = new/particles/artemis/star
 					E.filters = filter(type="bloom", threshold="#000", size=10, offset=1, alpha=200)
 
-					src.galaxy_icon.filters += filter(type="rays", size=25, density=15, factor=1, offset=rand(1000), threshold=0, color=src.color, x=0, y=0)
+					src.galaxy_icon.filters += filter(type="rays", size=50, density=15, factor=1, offset=rand(1000), threshold=0, color=src.color, x=0, y=0)
 					var/f = src.galaxy_icon.filters[length(src.galaxy_icon.filters)]
 					animate(f, offset=f:offset + 100, time=5 MINUTES, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=-1)
 					src.galaxy_icon.vis_contents |= E
@@ -302,7 +314,6 @@
 
 	New()
 		..()
-		//animate_wave(src, 2)
 
 	animate_stars()
 		..()
@@ -336,8 +347,10 @@
 
 /obj/background_star/galactic_object/bhole
 	name = "Black Hole"
-	icon = 'icons/misc/artemis/galactic_object_map.dmi'
+	icon = 'icons/misc/artemis/96x96.dmi'
 	icon_state = "bhole"
+	pixel_x = -32
+	pixel_y = -32
 
 	New()
 		..()
