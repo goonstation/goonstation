@@ -719,6 +719,7 @@
 	icon = null
 	anchored = 2
 	density = 0
+	plane = PLANE_HUD - 1
 
 	var/datum/monitored = null
 	var/monitored_var = null
