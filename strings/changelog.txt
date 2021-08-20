@@ -1,4 +1,11 @@
 
+(t)fri aug 20 21
+(u)Emily
+(p)5768
+(e)|
+(*)Auto Call Time shortened from 120 minutes to 90 minutes
+(*)RP Respawn Time shortened from 15 minutes to 10 minutes
+(*)You can now leave Industrial Cryo after only 5 minutes (prev. 15)
 (t)thu aug 19 21
 (u)Sovexe
 (e)🐛⚖|bug, balance
