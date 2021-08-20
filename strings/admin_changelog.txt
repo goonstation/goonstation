@@ -1,3 +1,7 @@
+(t)fri aug 20 21
+(u)Zamujasa
+(*)Stealth mode can now fully hide you from Who and other things - enter your fake name as a single space to become invisible. Spooky!
+(*)Playing music while hidden this way will not display the "Now playing music. (Stop music)" message. (Note that DJ announcements will still fire, so don't do that)
 (t)fri aug 6 21
 (u)Zamujasa
 (*)Adventure View will now show antag overlays even if you aren't a ghost.
