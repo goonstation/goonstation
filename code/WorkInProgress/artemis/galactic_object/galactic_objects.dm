@@ -1,10 +1,20 @@
 #ifdef ENABLE_ARTEMIS
+
+/datum/galactic_object/centeroid
+	navigable = TRUE
+	body_path_map = /obj/background_star/galactic_object/centeroid
+	body_path_ship = /obj/background_star/galactic_object/centeroid
+
+/obj/background_star/galactic_object/centeroid
+	alpha = 0
+
+
 /datum/galactic_object/planet/random
 	name = "Randomized Planet"
 	body_path_map = /obj/background_star/galactic_object/planet/random
 	body_path_ship = /obj/background_star/galactic_object/planet/large/random
 	sector = "A"
-	navigable = 1
+	navigable = TRUE
 	var/color = null
 	var/destination_name = null
 	var/icon_state = null
@@ -25,8 +35,8 @@
 		biome_seed += G.xor_rand()*50000
 		biome_seed += G.xor_rand()*50000
 
-		if(G.xor_prob(10))
-			navigable = 0
+		if(G.xor_prob(95))
+			navigable = FALSE
 
 		if(G && length(G.available_planets))
 			destination_name = G.xor_pick(G.available_planets)
@@ -60,6 +70,7 @@
 			. += "[G.xor_rand(2, 99)]"
 
 		src.name = .
+
 
 /obj/background_star/galactic_object/planet/random
 	name = "F1X-M3"
@@ -144,6 +155,33 @@
 		name = R.name
 		icon_state = R.icon_state
 
+/datum/galactic_object/moon/random
+	name = "Randomized Moon"
+	body_path_map = /obj/background_star/galactic_object/moon/random
+	body_path_ship = /obj/background_star/galactic_object/moon/random
+	sector = "A"
+	var/icon_state
+	var/dir
+	var/color
+	random_range = list(0.05,0.20)
+
+	New(datum/galaxy/G)
+		..()
+		color = G.xor_pick("#fff", "#ccc", "#aaa", "#850000", "#040", "#448")
+		dir = G.xor_pick(cardinal)
+
+/obj/background_star/galactic_object/moon/random
+	name = "F1X-M3"
+	icon = 'icons/misc/artemis/galactic_object_map.dmi'
+	icon_state = "moon"
+	destination_name = "3rr0r"
+
+	on_load()
+		var/datum/galactic_object/planet/random/R = master
+		color = R.color
+		name = R.name
+		dir = R.dir
+
 // Space Station / Abzu
 
 /datum/galactic_object/station
@@ -151,7 +189,7 @@
 	body_path_map = /obj/background_star/galactic_object/station
 	body_path_ship = /obj/background_star/galactic_object/large/station
 	sector = "A"
-	navigable = 1
+	navigable = TRUE
 	galactic_x = 0.01
 	galactic_y = 0.05
 
@@ -208,7 +246,7 @@
 	body_path_map = /obj/background_star/galactic_object/star
 	body_path_ship = /obj/background_star/galactic_object/large/star
 	sector = "A"
-	navigable = 0
+	navigable = FALSE
 	galactic_x = 0.2
 	galactic_y = 0.05
 	var/dir = null
@@ -334,7 +372,7 @@
 	body_path_map = /obj/background_star/galactic_object/bhole
 	body_path_ship = /obj/background_star/galactic_object/large/bhole
 	sector = "A"
-	navigable = 1
+	navigable = TRUE
 	galactic_x = -0.2
 	galactic_y = 0.2
 
@@ -418,7 +456,7 @@
 	var/dir
 
 	random
-		random_range = list(1,1.5)
+		random_range = list(1,1)
 
 		New(datum/galaxy/G)
 			..()
@@ -508,7 +546,7 @@
 	galactic_x = 10
 	galactic_y = 20
 	sector = "A"
-	navigable = 1
+	navigable = TRUE
 
 /obj/background_star/galactic_object/test
 	name = "F1X-M3"
@@ -542,7 +580,7 @@
 	galactic_x = 0
 	galactic_y = 20
 	sector = "A"
-	navigable = 1
+	navigable = TRUE
 	var/intro_played = 0
 
 /obj/background_star/galactic_object/eyesenhower_map

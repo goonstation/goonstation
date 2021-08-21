@@ -21,11 +21,13 @@ var/global/datum/galaxy/GALAXY = new
 		src.bodies += new/datum/galactic_object/star
 		src.bodies += new/datum/galactic_object/asteroid
 
-		for(var/i in 1 to 3)
-			src.bodies += new/datum/galactic_object/star/random(src)
+		// for(var/i in 1 to 3)
+		// 	src.bodies += new/datum/galactic_object/star/random(src)
 
-		for(var/i in 1 to 10)
-			src.bodies += new/datum/galactic_object/planet/random(src)
+		// for(var/i in 1 to 10)
+		// 	src.bodies += new/datum/galactic_object/planet/random(src)
+		SPAWN_DBG(20 SECONDS)
+			populate_galaxy()
 
 	/// Random Integer from (L,H) otherwise 0-1
 	proc/xor_rand(L, H)
@@ -93,6 +95,9 @@ var/global/datum/galaxy/GALAXY = new
 
 	proc/generate_solar_system(x,y)
 		var/datum/galactic_object/star/primary
+		var/datum/galactic_object/O
+		var/datum/galactic_object/centeroid/C = new
+		var/star_count
 
 		var/sector_x = xor_rand() * 10 + (x * 10)
 		var/sector_y = xor_rand() * 10 + (y * 10)
@@ -101,22 +106,41 @@ var/global/datum/galaxy/GALAXY = new
 		primary.galactic_x = sector_x
 		primary.galactic_y = sector_y
 		src.bodies += primary
+		C.galactic_x += primary.galactic_x
+		C.galactic_y += primary.galactic_y
+		star_count++
 
 		if(xor_prob(50))
 		//Binary System
-			src.bodies += new/datum/galactic_object/star/random(src, primary)
+			O = new/datum/galactic_object/star/random{random_range = list(0.1,0.3)}(src, primary)
+			src.bodies += O
+			C.galactic_x += O.galactic_x
+			C.galactic_y += O.galactic_y
+			star_count++
 
 			//Trinary System!!!
 			if(prob(5))
-				src.bodies += new/datum/galactic_object/star/random(src, primary)
+				O = new/datum/galactic_object/star/random{random_range = list(0.3,0.6)}(src, primary)
+				src.bodies += O
+				C.galactic_x += O.galactic_x
+				C.galactic_y += O.galactic_y
+				star_count++
+
+		C.galactic_x /= star_count
+		C.galactic_y /= star_count
+		C.name = "Sector [x]:[y]"
+		src.bodies += C
 
 		var/planet_count = xor_rand(0,8)
 		//GENERATE N PLANETS
 		for(var/i in 1 to planet_count)
-			src.bodies += new/datum/galactic_object/planet/random(src, primary)
-		// at range and bearing from sector center
+			O = new/datum/galactic_object/planet/random(src, C)
+			src.bodies += O
 
-			// Add moon(s) based on size of planet
+			// Moooons
+			var/moon_count = xor_prob(66) ? xor_rand(1,4) : 0
+			for(var/j in 1 to moon_count)
+				src.bodies +=new/datum/galactic_object/moon/random(src, O)
 
 	proc/generate_empty_sector(x, y)
 		var/asteroid_count = xor_rand(0,6)
@@ -125,11 +149,10 @@ var/global/datum/galaxy/GALAXY = new
 		for(var/i in 1 to asteroid_count)
 			var/sector_x = xor_rand() * 10 + (x * 10)
 			var/sector_y = xor_rand() * 10 + (y * 10)
-			A = new/datum/galactic_object/asteroid
+			A = new/datum/galactic_object/asteroid/random(src)
 			A.galactic_x = sector_x
 			A.galactic_y = sector_y
 			src.bodies += A
-
 
 
 /datum/asteroid_controller
@@ -185,7 +208,7 @@ var/global/datum/galaxy/GALAXY = new
 	var/sector
 	var/list/obj/artemis/nearby_ships = list() // holds references to generated map bodies
 	var/loud = 0
-	var/navigable = 0 // Can be detected on long distance nav
+	var/navigable = FALSE // Can be detected on long distance nav
 	var/scale
 	var/list/random_range = null
 
