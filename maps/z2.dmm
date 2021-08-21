@@ -66944,23 +66944,6 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-"dBc" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/table/wood/round/auto,
-/obj/random_item_spawner/medicine,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/souricelle)
-"dBd" = (
-/obj/table/wood/round/auto,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/souricelle)
-"dBe" = (
-/obj/table/wood/round/auto,
-/obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/souricelle)
 "dBf" = (
 /obj/machinery/light{
 	dir = 1
@@ -67348,35 +67331,6 @@
 	},
 /turf/unsimulated/floor/black,
 /area/centcom/offices/hydro)
-"dBK" = (
-/obj/machinery/door/unpowered/wood{
-	dir = 1;
-	icon = 'icons/obj/doors/door_office.dmi';
-	lock_dir = 4
-	},
-/turf/unsimulated/floor/black,
-/area/centcom/offices/souricelle)
-"dBL" = (
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/souricelle)
-"dBM" = (
-/obj/item/pen{
-	desc = "It's a normal black ink pen. Looks like it has been chewed on."
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/souricelle)
-"dBN" = (
-/obj/stool/chair/office/blue{
-	dir = 4
-	},
-/obj/critter/mouse,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/souricelle)
-"dBO" = (
-/obj/table/wood/round/auto,
-/obj/random_item_spawner/tableware,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/souricelle)
 "dBP" = (
 /obj/critter/dog/george/shiba,
 /turf/unsimulated/floor{
@@ -67496,22 +67450,12 @@
 /obj/stool/bar,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/hydro)
-"dCi" = (
-/obj/shrub{
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant";
-	layer = 3;
-	pixel_y = -3
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/souricelle)
 "dCj" = (
 /obj/machinery/light,
-/obj/potted_plant{
-	dir = 4
-	},
 /turf/unsimulated/floor/wood/two,
-/area/centcom/offices/souricelle)
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "dCk" = (
 /obj/machinery/light,
 /obj/pool{
@@ -79140,8 +79084,8 @@
 	desc = "This was one of the first batons to be turned off and grabbed by the head to enable more robust beatings. It is certainly the most imposing baton you've ever seen.";
 	flipped = 1;
 	force = 15;
-	name = "\improper Harmbaton of Porter Starboard";
-	is_active = 0
+	is_active = 0;
+	name = "\improper Harmbaton of Porter Starboard"
 	},
 /obj/machinery/light/incandescent/warm/very{
 	dir = 4
@@ -156562,7 +156506,7 @@ dvy
 wel
 dvW
 dvW
-dvW
+dCj
 wel
 dzM
 dAt
@@ -156574,7 +156518,7 @@ fMq
 wel
 dvW
 dvW
-dvW
+dCj
 wel
 dCs
 dDf
@@ -157164,7 +157108,7 @@ dRC
 dvy
 dvy
 wel
-dvW
+dvX
 dvW
 dvW
 wel
@@ -157176,7 +157120,7 @@ qMN
 fUa
 tGB
 wel
-dvW
+dvX
 dvW
 dvW
 wel
@@ -159282,7 +159226,7 @@ dxZ
 dxZ
 dxZ
 wel
-dvW
+dvX
 dvW
 dvW
 wel
@@ -159888,7 +159832,7 @@ dzb
 wel
 dvW
 dvW
-dvW
+dCj
 wel
 dzz
 dAg
@@ -166543,7 +166487,7 @@ dDr
 wel
 wel
 wel
-dBK
+dEL
 wel
 wel
 aaa
@@ -166844,9 +166788,9 @@ dCV
 dCX
 dCX
 wel
-dBc
-dBL
-dCi
+dvW
+dvW
+dvW
 wel
 aaa
 dkG
@@ -167146,9 +167090,9 @@ dCW
 dDC
 dDX
 wel
-dBd
-dBM
-dBL
+dvX
+dvW
+dvW
 wel
 aaa
 dkG
@@ -167448,9 +167392,9 @@ dCX
 dCX
 dCX
 wel
-dBe
-dBN
-dBL
+dvW
+dvW
+dvW
 wel
 aaa
 dkG
@@ -167750,8 +167694,8 @@ dCY
 dCX
 dDY
 wel
-dBe
-dBO
+dvW
+dvW
 dCj
 wel
 aaa
@@ -168053,7 +167997,7 @@ dwu
 wel
 wel
 wel
-dwu
+wel
 wel
 wel
 aaa

@@ -657,15 +657,15 @@ datum
 						if(temp_to_burn_with > H.base_body_temp + (H.temp_tolerance * 4) && !H.is_heat_resistant())
 							if (chem_helmet_check(H, "hot"))
 								boutput(H, "<span class='alert'>You are scalded by the hot chemicals!</span>")
-								H.TakeDamage("head", 0, round(log(max((temp_to_burn_with - (H.base_body_temp + (H.temp_tolerance * 4))), 1) / 50) * 10) * dmg_multiplier, 0, DAMAGE_BURN) // lol this caused brute damage
+								H.TakeDamage("head", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN) // lol this caused brute damage
 								H.emote("scream")
-								H.bodytemperature += min(max((temp_to_burn_with - (H.base_body_temp + (H.temp_tolerance * 4))) - 20, 5),500)
+								H.bodytemperature += clamp((temp_to_burn_with - (H.base_body_temp + (H.temp_tolerance * 4))) - 20, 5, 500)
 						else if(temp_to_burn_with < H.base_body_temp - (H.temp_tolerance * 4) && !H.is_cold_resistant())
 							if (chem_helmet_check(H, "cold"))
 								boutput(H, "<span class='alert'>You are frostbitten by the freezing cold chemicals!</span>")
-								H.TakeDamage("head", 0, round(log(max(((H.base_body_temp - (H.temp_tolerance * 4)) - temp_to_burn_with), 1) / 50) * 10) * dmg_multiplier, 0, DAMAGE_BURN)
+								H.TakeDamage("head", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN)
 								H.emote("scream")
-								H.bodytemperature -= min(max((H.base_body_temp - (H.temp_tolerance * 4)) - temp_to_burn_with - 20, 5), 500)
+								H.bodytemperature -= clamp((H.base_body_temp - (H.temp_tolerance * 4)) - temp_to_burn_with - 20, 5, 500)
 
 					for(var/current_id in reagent_list)
 						var/datum/reagent/current_reagent = reagent_list[current_id]
@@ -712,11 +712,12 @@ datum
 								if(temp_to_burn_with > C.base_body_temp + (C.temp_tolerance * 4) && !C.is_heat_resistant())
 									boutput(C, "<span class='alert'>You scald yourself trying to consume the boiling hot substance!</span>")
 									C.TakeDamage("chest", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN)
-									C.bodytemperature += min(max((temp_to_burn_with - T0C) - 20, 5),700)
+									C.bodytemperature += clamp((temp_to_burn_with - T0C) - 20, 5, 700)
 								else if(temp_to_burn_with < C.base_body_temp - (C.temp_tolerance * 4) && !C.is_cold_resistant())
 									boutput(C, "<span class='alert'>You frostburn yourself trying to consume the freezing cold substance!</span>")
 									C.TakeDamage("chest", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN)
-									C.bodytemperature -= min(max((temp_to_burn_with - T0C) - 20, 5),700)
+									C.bodytemperature -= clamp((temp_to_burn_with - T0C) - 20, 5, 700)
+
 
 					// These spawn calls were breaking stuff elsewhere. Since they didn't appear to be necessary and
 					// I didn't come across problems in local testing, I've commented them out as an experiment. If you've come
