@@ -24133,6 +24133,12 @@
 /obj/item/device/radio,
 /turf/simulated/floor/plating,
 /area/spyshack)
+"bkI" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "bkJ" = (
 /obj/lattice{
 	dir = 5;
@@ -24165,7 +24171,11 @@
 /turf/simulated/floor/plating,
 /area/space)
 "bkO" = (
-/obj/machinery/light/flamp,
+/obj/storage/crate/internals,
+/obj/item/tank/oxygen,
+/obj/item/tank/oxygen,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
 /turf/simulated/floor/plating,
 /area/space)
 "bkP" = (
@@ -24188,15 +24198,11 @@
 /turf/simulated/floor/plating,
 /area/spyshack)
 "bkR" = (
-/obj/decal/tile_edge/line/black{
-	dir = 1;
-	icon_state = "tile1"
-	},
 /obj/machinery/door/unpowered/shuttle{
 	autoclose = 1;
 	color = "gray"
 	},
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/plating,
 /area/space)
 "bkS" = (
 /obj/cable{
@@ -24241,7 +24247,7 @@
 /area/space)
 "bla" = (
 /obj/table/reinforced/industrial/auto,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/machinery/light/lamp,
 /turf/simulated/floor/plating,
 /area/space)
 "ble" = (
@@ -24484,6 +24490,8 @@
 /area/space)
 "blL" = (
 /obj/table/reinforced/industrial/auto,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
 /turf/simulated/floor/plating,
 /area/space)
 "blN" = (
@@ -24999,12 +25007,6 @@
 /obj/item/reagent_containers/food/snacks/breakfast,
 /turf/simulated/floor/caution/west,
 /area/mining/quarters)
-"cek" = (
-/obj/critter/gunbot/drone/cutterdrone,
-/turf/simulated/floor/plating/airless/asteroid{
-	stone_color = "#D1E6FF"
-	},
-/area/space)
 "cSD" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle{
@@ -25012,16 +25014,45 @@
 	},
 /turf/simulated/floor,
 /area/radiostation/studio)
+"ecv" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "fkT" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/black,
 /area/radiostation/studio)
-"fCq" = (
-/obj/item/storage/belt/hunter,
-/obj/item/clothing/under/misc/tourist,
+"fIO" = (
+/obj/grille/steel,
+/obj/decal/poster/wallsign/warning1,
+/turf/simulated/floor/plating,
+/area/space)
+"gqP" = (
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
+"gZz" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
+"hAl" = (
+/obj/critter/gunbot/drone/cutterdrone,
+/turf/simulated/floor/plating/airless/asteroid{
+	stone_color = "#D1E6FF"
+	},
+/area/space)
 "hOL" = (
 /obj/item/storage/secure/ssafe{
 	configure_mode = 0;
@@ -25076,13 +25107,10 @@
 	},
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
-"lIb" = (
-/obj/critter/gunbot/drone/heavydrone,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
-"muc" = (
-/obj/lattice{
-	icon_state = "lattice-dir"
+"lUu" = (
+/obj/decal/tile_edge/stripe{
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
@@ -25120,6 +25148,10 @@
 	},
 /turf/space,
 /area/space)
+"qHK" = (
+/obj/critter/gunbot/drone/heavydrone,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "rdq" = (
 /obj/decal/cleanable/gangtag{
 	icon_state = "gangtag22";
@@ -25131,23 +25163,20 @@
 	},
 /turf/simulated/floor/black,
 /area/mining/quarters)
-"rtw" = (
-/obj/grille/steel,
-/obj/decal/poster/wallsign/warning1,
-/turf/simulated/floor/plating,
-/area/space)
 "rzX" = (
 /turf/simulated/floor/plating/airless/asteroid{
 	stone_color = "#575A5E"
 	},
 /area/space)
-"rXW" = (
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/abandonedship)
 "sFV" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/timewarp/ship)
+"sPi" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "uto" = (
 /obj/storage/crate,
 /obj/item/paper/book/from_file/deep_blue_sea,
@@ -25164,13 +25193,6 @@
 /obj/stool/chair,
 /turf/simulated/floor/black,
 /area/mining/quarters)
-"vUz" = (
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
-	},
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "wfJ" = (
 /obj/storage/secure/closet/personal,
 /obj/item/clothing/under/gimmick/cosby,
@@ -25180,6 +25202,11 @@
 	icon_state = "fred2"
 	},
 /area/radiostation/bedroom)
+"xJN" = (
+/obj/item/storage/belt/hunter,
+/obj/item/clothing/under/misc/tourist,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/abandonedship)
 "xOl" = (
 /turf/simulated/floor/plating/airless/asteroid{
 	stone_color = "#D1E6FF"
@@ -40197,7 +40224,7 @@ aaa
 aaa
 aaz
 aac
-lIb
+qHK
 aaa
 aMF
 aaa
@@ -49489,7 +49516,7 @@ aaa
 aaa
 aAm
 biN
-rXW
+gqP
 aGv
 aGD
 aaa
@@ -49791,7 +49818,7 @@ aaa
 aaa
 aGv
 bkD
-fCq
+xJN
 aGv
 aGD
 aaa
@@ -53720,8 +53747,8 @@ bjh
 bkA
 bkF
 bkN
-rtw
-muc
+fIO
+gZz
 aMk
 aab
 aab
@@ -54023,7 +54050,7 @@ bkB
 bkL
 bkL
 bkR
-aac
+sPi
 aac
 aab
 aab
@@ -54325,7 +54352,7 @@ bkC
 bkL
 bkB
 bkR
-aac
+sPi
 aac
 aab
 aab
@@ -54626,8 +54653,8 @@ bjO
 bjO
 bkB
 bkO
-rtw
-muc
+fIO
+gZz
 aMk
 aab
 aab
@@ -54929,7 +54956,7 @@ bkM
 bkM
 bkM
 aMk
-aac
+sPi
 aac
 aab
 aab
@@ -55227,11 +55254,11 @@ aab
 aab
 aab
 bkE
-aac
-aac
-vUz
-aac
-aac
+bkI
+bkI
+ecv
+bkI
+lUu
 aac
 aab
 aab
@@ -90919,7 +90946,7 @@ aIL
 xOl
 aIL
 xOl
-cek
+hAl
 xOl
 aIL
 xOl
