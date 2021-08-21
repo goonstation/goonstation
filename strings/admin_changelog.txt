@@ -1,3 +1,6 @@
+(t)fri aug 21 21
+(u)Sovexe
+(*)Wide Area Spawn's marked tile now has a visual indicator
 (t)fri aug 20 21
 (u)Zamujasa
 (*)Stealth mode can now fully hide you from Who and other things - enter your fake name as a single space to become invisible. Spooky!
