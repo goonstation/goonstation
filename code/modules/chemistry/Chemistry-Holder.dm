@@ -928,10 +928,6 @@ datum
 			if(rc_flags == 0)
 				return null
 
-
-			. = list()
-
-
 			var/full_text = get_reagents_fullness()
 
 			if(full_text == "empty")
