@@ -691,6 +691,7 @@
 	New()
 		..()
 		src.build_buttons()
+		src.setItemSpecial(/datum/item_special/rangestab) //more of a stab than a swing cuz its a sword you stab with
 
 	dropped(mob/user)
 		..()
