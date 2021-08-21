@@ -3,6 +3,8 @@
 (u)Tarmunora
 (e)⚖|balance
 (*)DOC has come to its senses, and has stopped buying cyberorgans, and buys normal parts for about 20% of what it used to
+(+)MDir's Doctor Bag comes with surgical scissors
+(*)Beds now count as regular tables for surgery instead of surgical tables
 (u)Kyle, Virva, Flab
 (p)5747
 (e)🗺🎨|mapping, sprites
