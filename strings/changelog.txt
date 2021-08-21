@@ -7,6 +7,8 @@
 (u)Flourish
 (e)⚖|balance
 (+)Removed the first aid kit from the sec support pool. Added a new type of donuts to the robust donut kit - robusted donuts. Robusted donuts contain salb, epi, saline, and salicylic, which are helpful for when you're in crit.
+(u)Flourish
+(+)You can now find menthol pills in public minimeds.
 (t)fri aug 20 21
 (u)Tarmunora
 (e)⚖|balance
