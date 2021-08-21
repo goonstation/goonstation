@@ -1,4 +1,9 @@
 
+(t)sat aug 21 21
+(u)Kyle, Virva, Flab
+(p)5747
+(e)🗺🎨|mapping, sprites
+(*)Greatly reduce the availability of Auto-Menders for non-doctors. Adds Auto-Mender Refill Cartridges for brute/burn to vendors.
 (t)fri aug 20 21
 (u)Tarmunora
 (e)⚖|balance
