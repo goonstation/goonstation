@@ -43,7 +43,7 @@ var/global/list/datum/client_image_group/client_image_groups
 	proc/add_mob(mob/added_mob)
 		subscribed_mobs_with_subcount[added_mob] += 1
 		if (subscribed_mobs_with_subcount[added_mob] == 1) // mob added for the first time, adding images to client and registering signals
-			for (var/image/I in images)
+			for (var/image/I as() in images)
 				if (!I.loc.invisibility || (I.loc == added_mob) || istype(added_mob, /mob/dead/observer))
 					added_mob.client?.images.Add(I)
 
@@ -64,7 +64,7 @@ var/global/list/datum/client_image_group/client_image_groups
 	/// Registered on MOB_LOGIN, when a client enters the mob adds the images to it.
 	proc/add_images_to_client_of_mob(mob/target_mob)
 		PRIVATE_PROC(TRUE)
-		for (var/image/I in images)
+		for (var/image/I as() in images)
 			if (!I.loc.invisibility || (I.loc == target_mob) || istype(target_mob, /mob/dead/observer))
 				target_mob.client?.images.Add(I)
 
