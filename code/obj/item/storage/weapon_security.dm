@@ -36,6 +36,12 @@
 	desc = "Contains two robust donuts, for security use"
 	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donut/custom/robust = 2)
 
+/obj/item/storage/box/robusteddonuts
+	name = "robusted donuts box"
+	icon_state = "box"
+	desc = "Contains two robusted donuts, for security use"
+	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donut/custom/robusted = 2)
+
 // For sec officers and the HoS. Really love spawning with a full backpack (Convair880).
 /obj/item/storage/box/security_starter_kit
 	name = "security starter kit"

@@ -39,7 +39,7 @@
 		/obj/item/device/analyzer/healthanalyzer/borg,\
 		/obj/item/reagent_containers/emergency_injector/epinephrine)
 
-	sec_support_spawn
+	emergency
 		spawn_contents = list(/obj/item/item_box/medical_patches/mini_styptic,\
 		/obj/item/item_box/medical_patches/mini_silver_sulf,\
 		/obj/item/reagent_containers/pill/menthol,\

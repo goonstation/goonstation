@@ -4,6 +4,9 @@
 (p)5747
 (e)🗺🎨|mapping, sprites
 (*)Greatly reduce the availability of Auto-Menders for non-doctors. Adds Auto-Mender Refill Cartridges for brute/burn to vendors.
+(u)Flourish
+(e)⚖|balance
+(+)Replaced the first aid kit from the sec support pool with a box of robusted donuts. Robusted donuts contain salb, epi, saline, and salicylic, which are helpful for when you're in crit.
 (t)fri aug 20 21
 (u)Tarmunora
 (e)⚖|balance
