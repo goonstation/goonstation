@@ -156,7 +156,7 @@ datum
 				if (method == TOUCH)
 					. = 0
 					if (volume >= 50 && prob(75))
-						M.TakeDamage("head", 5, 15, 0, DAMAGE_BURN)
+						M.TakeDamage("head", 0, 10, 0, DAMAGE_BURN)
 						M.emote("scream")
 						boutput(M, "<span class='alert'>Your face has become disfigured!</span>")
 						M.real_name = "Unknown"
@@ -817,7 +817,7 @@ datum
 								else
 									H.visible_message("<span class='alert>The blueish acidic substance slides off \the [D] harmlessly.</span>", "<span class='alert'>Your [H.head] protects you from the acid!</span>")
 								blocked = 1
-							if (!(H.head?.c_flags & SPACEWEAR))
+							if (!(H.head?.c_flags & SPACEWEAR) || !(H.head?.item_function_flags & IMMUNE_TO_ACID))
 								if (H.wear_mask)
 									var/obj/item/clothing/mask/K = H.wear_mask
 									if (!(K.item_function_flags & IMMUNE_TO_ACID))
@@ -859,6 +859,7 @@ datum
 
 							if (blocked)
 								return
+						M.TakeDamage("head", 0, clamp((volume - 5) * 2, 8, 50), 0, DAMAGE_BURN)
 				else if (volume >= 5)
 					M.emote("scream")
 					M.TakeDamage("All", 0, clamp((volume - 5) * 3, 8, 75), 0, DAMAGE_BURN)
