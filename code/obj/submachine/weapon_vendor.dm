@@ -262,12 +262,12 @@
 /datum/materiel/utility/donuts
 	name = "Robust Donuts"
 	path = /obj/item/storage/box/robustdonuts
-	description = "Two Robust Donuts, which are loaded with helpful chemicals which help you resist stuns!"
+	description = "Four Robust Donuts, which are loaded with helpful chemicals which help you resist stuns!"
 
 /datum/materiel/utility/donuts_robusted
 	name = "Robusted Donuts"
 	path = /obj/item/storage/box/robusteddonuts
-	description = "Two Robusted Donuts, which are loaded with helpful chemicals which heal you!"
+	description = "Four Robusted Donuts, which are loaded with helpful chemicals which heal you!"
 
 /datum/materiel/utility/crowdgrenades
 	name = "Crowd Dispersal Grenades"
