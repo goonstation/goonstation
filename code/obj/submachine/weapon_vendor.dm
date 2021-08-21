@@ -110,7 +110,6 @@
 		materiel_stock += new/datum/materiel/loadout/justabaton
 		materiel_stock += new/datum/materiel/utility/morphineinjectors
 		materiel_stock += new/datum/materiel/utility/donuts
-		materiel_stock += new/datum/materiel/utility/donuts_robusted
 		materiel_stock += new/datum/materiel/utility/crowdgrenades
 		materiel_stock += new/datum/materiel/utility/detscanner
 		materiel_stock += new/datum/materiel/utility/medcappowercell
@@ -260,14 +259,9 @@
 	description = "Four Morphine Autoinjectors, capable of ensuring you move at the best possible speed while injured without slowdowns...or used as a makeshift tranquilizer if overdosed."
 
 /datum/materiel/utility/donuts
-	name = "Robust Donuts"
+	name = "Robust(ed) Donuts"
 	path = /obj/item/storage/box/robustdonuts
-	description = "Two Robust Donuts, which are loaded with helpful chemicals which help you resist stuns!"
-
-/datum/materiel/utility/donuts_robusted
-	name = "Robusted Donuts"
-	path = /obj/item/storage/box/robusteddonuts
-	description = "Two Robusted Donuts, which are loaded with helpful chemicals which heal you!"
+	description = "Two Robust Donuts and two Robusted Donuts, which are loaded with helpful chemicals that help you resist stuns and heal you!"
 
 /datum/materiel/utility/crowdgrenades
 	name = "Crowd Dispersal Grenades"
