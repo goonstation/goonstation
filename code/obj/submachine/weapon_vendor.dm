@@ -276,7 +276,7 @@
 
 /datum/materiel/utility/firstaidsec
 	name = "First Aid Kit"
-	path = /obj/item/storage/firstaid/regular/doctor_spawn
+	path = /obj/item/storage/firstaid/regular/sec_support_spawn
 	description = "An advanced first aid kit, typically used in first responder scenarios before doctors arrive."
 
 /datum/materiel/utility/medcappowercell

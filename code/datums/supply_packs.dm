@@ -310,17 +310,19 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/medicalchems
 	name = "Medical: Medical Reservoir Crate"
-	desc = "x4 Assorted reservoir tanks, x2 Sedative bottles, x2 Hyposprays, 2x Automenders, x1 Syringe Kit"
+	desc = "x4 Assorted reservoir tanks, x2 Sedative bottles, x2 Hyposprays, x1 Auto-mender, x2 Brute Auto-mender Refill Cartridges, x2 Burn Auto-mender Refill Cartridges, x1 Syringe Kit"
 	category = "Medical Department"
 	contains = list(/obj/item/reagent_containers/glass/beaker/large/antitox,
 					/obj/item/reagent_containers/glass/beaker/large/epinephrine,
 					/obj/item/reagent_containers/food/drinks/reserve/brute,
 					/obj/item/reagent_containers/food/drinks/reserve/burn,
 					/obj/item/reagent_containers/glass/bottle/morphine = 2,
-					/obj/item/reagent_containers/mender = 2,
+					/obj/item/reagent_containers/mender,
+					/obj/item/reagent_containers/mender_refill_cartridge/brute = 2,
+					/obj/item/reagent_containers/mender_refill_cartridge/burn = 2,
 					/obj/item/reagent_containers/hypospray = 2,
 					/obj/item/storage/box/syringes)
-	cost = 1750
+	cost = 2300
 	containertype = /obj/storage/crate/medical
 	containername = "Medical Crate"
 
