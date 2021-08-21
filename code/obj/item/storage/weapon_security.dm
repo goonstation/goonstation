@@ -33,14 +33,14 @@
 /obj/item/storage/box/robustdonuts
 	name = "robust donuts box"
 	icon_state = "box"
-	desc = "Contains two robust donuts, for security use"
-	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donut/custom/robust = 2)
+	desc = "Contains four robust donuts, for security use"
+	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donut/custom/robust = 4)
 
 /obj/item/storage/box/robusteddonuts
 	name = "robusted donuts box"
 	icon_state = "box"
-	desc = "Contains two robusted donuts, for security use"
-	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donut/custom/robusted = 2)
+	desc = "Contains four robusted donuts, for security use"
+	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donut/custom/robusted = 4)
 
 // For sec officers and the HoS. Really love spawning with a full backpack (Convair880).
 /obj/item/storage/box/security_starter_kit
