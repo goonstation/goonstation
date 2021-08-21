@@ -70,6 +70,9 @@ datum
 				. = ..()
 				if (method == TOUCH)
 					. = 0
+					var/stack_mult = 1
+					if(ON_COOLDOWN(M, "basic_acid_stack_check", 0.1 SECONDS))
+						stack_mult = 0.5
 					if (volume > 25)
 						if (ishuman(M))
 							var/mob/living/carbon/human/H = M
@@ -81,19 +84,20 @@ datum
 								return
 
 						if (prob(75))
-							M.TakeDamage("head", 5, 10, 0, DAMAGE_BURN)
+							M.TakeDamage("head", 0, 10 * stack_mult, 0, DAMAGE_BURN)
 							M.emote("scream")
 							boutput(M, "<span class='alert'>Your face has become disfigured!</span>")
 							M.real_name = "Unknown"
 							M.unlock_medal("Red Hood", 1)
 						else
-							M.TakeDamage("All", 5, 10, 0, DAMAGE_BURN)
+							M.TakeDamage("All", 0, 10 * stack_mult, 0, DAMAGE_BURN)
 					else
-						M.TakeDamage("All", min(1, volume * 0.1), min (5, volume * 0.5), 0, DAMAGE_BURN)
+
+						M.TakeDamage("All", 0, min(5, volume * 0.5) * stack_mult, 0, DAMAGE_BURN)
 				else
 					boutput(M, "<span class='alert'>The greenish acidic substance stings[volume < 10 ? " you, but isn't concentrated enough to harm you" : null]!</span>")
 					if (volume >= 10)
-						M.TakeDamage("All", 0, min(max(4, (volume - 10) * 2), 20), 0, DAMAGE_BURN)
+						M.TakeDamage("All", 0, clamp((volume - 10) * 2, 4, 20), 0, DAMAGE_BURN)
 						M.emote("scream")
 
 			reaction_obj(var/obj/O, var/volume)
@@ -150,7 +154,7 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
 				if (method == TOUCH)
-					. = 9
+					. = 0
 					if (volume >= 50 && prob(75))
 						M.TakeDamage("head", 5, 15, 0, DAMAGE_BURN)
 						M.emote("scream")
@@ -158,11 +162,11 @@ datum
 						M.real_name = "Unknown"
 						M.unlock_medal("Red Hood", 1)
 					else
-						random_brute_damage(M, min(5, volume * 0.25))
+						random_burn_damage(M, min(5, volume * 0.25))
 				else
 					boutput(M, "<span class='alert'>The transparent acidic substance stings[volume < 25 ? " you, but isn't concentrated enough to harm you" : null]!</span>")
 					if (volume >= 25)
-						random_brute_damage(M, 2)
+						random_burn_damage(M, 2)
 						M.emote("scream")
 
 			on_plant_life(var/obj/machinery/plantpot/P)
@@ -797,7 +801,7 @@ datum
 						var/mob/living/carbon/human/H = M
 						var/blocked = 0
 						if (!H.wear_mask && !H.head)
-							H.TakeDamage("head", 0, min(max(8, (volume - 5) * 3), 75), 0, DAMAGE_BURN)
+							H.TakeDamage("head", 0, clamp((volume - 5) * 2, 8, 50), 0, DAMAGE_BURN)
 							H.emote("scream")
 							boutput(H, "<span class='alert'>Your face has become disfigured!</span>")
 							H.real_name = "Unknown"
@@ -857,7 +861,7 @@ datum
 								return
 				else if (volume >= 5)
 					M.emote("scream")
-					M.TakeDamage("All", 0, min(max(8, (volume - 5) * 4), 75), 0, DAMAGE_BURN)
+					M.TakeDamage("All", 0, clamp((volume - 5) * 3, 8, 75), 0, DAMAGE_BURN)
 
 				boutput(M, "<span class='alert'>The blueish acidic substance stings[volume < 5 ? " you, but isn't concentrated enough to harm you" : null]!</span>")
 				return

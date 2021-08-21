@@ -654,16 +654,18 @@ datum
 							if ("dmg_multiplier" in paramslist)
 								dmg_multiplier = paramslist["dmg_multiplier"]
 
+						dmg_multiplier *= (min(react_volume, 10) / 10) //reduced damage for small splashes
+
 						if(temp_to_burn_with > H.base_body_temp + (H.temp_tolerance * 4) && !H.is_heat_resistant())
 							if (chem_helmet_check(H, "hot"))
 								boutput(H, "<span class='alert'>You are scalded by the hot chemicals!</span>")
-								H.TakeDamage("head", 0, round(log(max((temp_to_burn_with - (H.base_body_temp + (H.temp_tolerance * 4))), 1) / 50) * 10) * dmg_multiplier, 0, DAMAGE_BURN) // lol this caused brute damage
+								H.TakeDamage("head", 0, round(log(max((temp_to_burn_with - (H.base_body_temp + (H.temp_tolerance * 4))), 1) / 50) * 5) * dmg_multiplier, 0, DAMAGE_BURN) // lol this caused brute damage
 								H.emote("scream")
 								H.bodytemperature += min(max((temp_to_burn_with - (H.base_body_temp + (H.temp_tolerance * 4))) - 20, 5),500)
 						else if(temp_to_burn_with < H.base_body_temp - (H.temp_tolerance * 4) && !H.is_cold_resistant())
 							if (chem_helmet_check(H, "cold"))
 								boutput(H, "<span class='alert'>You are frostbitten by the freezing cold chemicals!</span>")
-								H.TakeDamage("head", 0, round(log(max(((H.base_body_temp - (H.temp_tolerance * 4)) - temp_to_burn_with), 1) / 50) * 10) * dmg_multiplier, 0, DAMAGE_BURN)
+								H.TakeDamage("head", 0, round(log(max(((H.base_body_temp - (H.temp_tolerance * 4)) - temp_to_burn_with), 1) / 50) * 5) * dmg_multiplier, 0, DAMAGE_BURN)
 								H.emote("scream")
 								H.bodytemperature -= min(max((H.base_body_temp - (H.temp_tolerance * 4)) - temp_to_burn_with - 20, 5), 500)
 
