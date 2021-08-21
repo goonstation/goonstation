@@ -613,7 +613,7 @@
 /turf/space/fluid/attack_hand(var/mob/user)
 	var/obj/item/heat_dowsing/H = locate() in src
 	if (H)
-		H.attack_hand(user)
+		H.Attackhand(user)
 
 /turf/space/fluid/attackby(var/obj/item/W, var/mob/user)
 	if (istype(W,/obj/item/shovel) || istype(W,/obj/item/slag_shovel))

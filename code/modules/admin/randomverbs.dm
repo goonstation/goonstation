@@ -2736,6 +2736,11 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 	if(src.holder.level >= LEVEL_ADMIN)
 		switch(alert("Turn space into a swamp? This is probably going to lag a bunch when it happens and there's no easy undo!",,"Yes","No"))
 			if("Yes")
+				var/rain = alert("Should it be raining?",,"Yes", "No", "Particles!")
+				rain = (rain == "No") ? null : rain
+				var/image/weather = image('icons/turf/water.dmi',"fast_rain", layer = EFFECTS_LAYER_BASE)
+				weather.alpha = 200
+				weather.plane = PLANE_NOSHADOW_ABOVE
 				var/image/I = new /image/ambient
 				var/datum/map_generator/jungle_generator/map_generator = new
 				var/list/space = list()
@@ -2743,8 +2748,17 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 					space += S
 				map_generator.generate_terrain(space)
 				for (var/turf/S in space)
+					if(rain)
+						if(istype(S,/turf/unsimulated/floor/auto/swamp))
+							S.ReplaceWith(/turf/unsimulated/floor/auto/swamp/rain, force=TRUE)
+						if(rain == "Yes")
+							S.UpdateOverlays(weather, "rain")
+						else
+							new /obj/effects/rain/sideways/tile(S)
 					I.color = ambient_light
 					S.UpdateOverlays(I, "ambient")
+				shippingmarket.clear_path_to_market()
+
 				logTheThing("admin", src, null, "turned space into a swamp.")
 				logTheThing("diary", src, null, "turned space into a swamp.", "admin")
 				message_admins("[key_name(src)] turned space into a swamp.")
@@ -2819,6 +2833,7 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 						created_loot.initialize()
 
 					LAGCHECK(LAG_MED)
+				shippingmarket.clear_path_to_market()
 				logTheThing("admin", src, null, "generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].")
 				logTheThing("diary", src, null, "generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].", "admin")
 				message_admins("[key_name(src)] generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].")

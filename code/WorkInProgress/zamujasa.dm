@@ -719,6 +719,7 @@
 	icon = null
 	anchored = 2
 	density = 0
+	plane = PLANE_HUD - 1
 
 	var/datum/monitored = null
 	var/monitored_var = null
@@ -766,6 +767,12 @@
 			var/datum/thing = locate(src.monitored_ref)
 			if (thing)
 				src.monitored = thing
+			else
+				// Try again with [] enclosing it. who knows. maybe it will work
+				thing = locate("\[[src.monitored_ref]]")
+				if (thing)
+					src.monitored = thing
+
 			src.monitored_ref = null
 
 		if (monitored)
@@ -796,7 +803,7 @@
 				if (src.ding_on_change)
 					playsound(src, src.ding_sound, 33, 0)
 		catch(var/exception/e)
-			src.maptext = "<span class='c pixel sh'>(Err: [e])</span>"
+			src.maptext = "<span class='c pixel sh'>[src.monitored]\n(Err: [e])</span>"
 
 
 	proc/get_value()
@@ -820,16 +827,128 @@
 			if ("round")
 				return round(val)
 
+			if ("time")
+				val /= 10
+				var/sign = ""
+				if (val < 0)
+					val *= -1
+					sign = "-"
+				// @TODO: formatting times like this surely has to be a proc somewhere already, right
+				switch (val)
+					if (3600 to INFINITY)
+						return "[sign][round(val / 3600)]:[add_zero(val / 60 % 60, 2)]:[add_zero(val % 60, 2)]"
+					if (0 to 3600)
+						return "[sign][round(val / 60 % 60)]:[add_zero(val % 60, 2)]"
+			if ("fulltime")
+				val /= 10
+				var/sign = ""
+				if (val < 0)
+					val *= -1
+					sign = "-"
+				return "[sign][round(val / 3600)]:[add_zero(val / 60 % 60, 2)]:[add_zero(val % 60, 2)]"
+
+			if ("time2")
+				// some things use centiseconds. some things dont. fart!
+				var/sign = ""
+				if (val < 0)
+					val *= -1
+					sign = "-"
+				// @TODO: formatting times like this surely has to be a proc somewhere already, right
+				switch (val)
+					if (3600 to INFINITY)
+						return "[sign][round(val / 3600)]:[add_zero(val / 60 % 60, 2)]:[add_zero(val % 60, 2)]"
+					if (0 to 3600)
+						return "[sign][round(val / 60 % 60)]:[add_zero(val % 60, 2)]"
+			if ("fulltime2")
+				var/sign = ""
+				if (val < 0)
+					val *= -1
+					sign = "-"
+				return "[sign][round(val / 3600)]:[add_zero(val / 60 % 60, 2)]:[add_zero(val % 60, 2)]"
+
+			if ("timer")
+				val /= 10
+				return "[round(val)].[val * 10 % 10]"
+
+			if ("timer2")
+				return "[round(val / 10)].[val % 10]"
+
 		return val
 
 
 	ex_act()
 		return
 
+	proc_monitor
+		require_var_or_list = 0
+		var/monitored_proc = null
+		var/datum/effective_callee = null
+		var/list/monitored_args = list()
+
+		validate_monitored()
+			// Do we have a working ref, at least?
+			if (!..())
+				// If not, get out
+				return 0
+			if (!src.monitored_proc)
+				// no proc to check.
+				return 0
+			if (src.monitored_var && !istype(src.monitored[monitored_var], /datum))
+				// If we're calling a proc on a var it better be something we can call a proc on
+				return 0
+
+			// So what ARE we calling this proc on then?
+			src.effective_callee = (src.monitored_var ? src.monitored[src.monitored_var] : src.monitored)
+
+			if (!hascall(src.effective_callee, monitored_proc))
+				// does it have this proc?
+				return 0
+
+			// If we've gotten here then we can probably rest assured that
+			// we can at least call whatever it is. Baby steps.
+			return 1
+
+		get_value()
+			// validate_monitored should handle most of the checks for us
+			// so we can probably just call it
+			if (!src.effective_callee)
+				// no! how did you even get here. jesus
+				return
+
+			return call(src.effective_callee, src.monitored_proc)(src.monitored_args)
+
+
+		emergency_shuttle
+			// remember those radio-controlled displays? i miss those.
+			// we should bring those back.
+			maptext_prefix = "<span class='c pixel sh'>Emergency Shuttle\n<span class='vga'>"
+			display_mode = "time2"
+			update_delay = 1 SECOND
+
+			New()
+				src.monitored = emergency_shuttle
+				src.monitored_proc = "timeleft"
+				..()
+
+			format_value(var/val)
+				// lord have mercy for this one.
+				// get_value will return the seconds, which is passed here.
+				// but we want to see the direction, not just the timer.
+				// so we override this and call the parent to format the time properly
+				switch (emergency_shuttle.location)
+					if (SHUTTLE_LOC_CENTCOM, SHUTTLE_LOC_RETURNED, SHUTTLE_LOC_TRANSIT)
+						if (!emergency_shuttle.online)
+							return "Idle"
+						return "ETA [..(val)]"
+
+					if (SHUTTLE_LOC_STATION)
+						return "Departing in [..(val)]"
+
+
 
 	location
 		require_var_or_list = 0
-		maptext_prefix = "<span class='c pixel sh'><span class='vga'>"
+		maptext_prefix = "<span class='c pixel sh'><span class='xfont'>"
 		maptext_suffix = "</span>"
 
 		get_value()
@@ -838,6 +957,27 @@
 				. = "Unknown</span>\n(?, ?, ?)"
 			else
 				. = "[where.loc]</span>\n([where.x], [where.y], [where.z])"
+
+
+		gps
+			// Automated GPS! Wow!
+			appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | PIXEL_SCALE
+			update_delay = 1
+
+			New()
+				..()
+				src.pixel_y += 34
+
+				var/atom/movable/home = src.loc
+				// Put it inside something to make it constantly show its location.
+				if (istype(home))
+					home.vis_contents += src
+				else
+					// if we are not home then we are gone, bye
+					qdel(src)
+					return
+				src.monitored = src.loc
+				set_loc(null)
 
 
 	stats
@@ -895,6 +1035,7 @@
 		display_mode = "round"
 		monitored_var = "station_budget"
 		maptext_prefix = "<span class='c pixel sh'>Station Budget:\n<span class='vga'>$"
+		ding_sound = "sound/misc/cashregister.ogg"
 
 		station
 			// the default, but explicit...

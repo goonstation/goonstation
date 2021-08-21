@@ -1,8 +1,58 @@
 
-(t)fri aug 06 21
+(t)fri aug 20 21
+(u)Emily
+(p)5768
+(e)|
+(*)Auto Call Time shortened from 120 minutes to 90 minutes
+(*)RP Respawn Time shortened from 15 minutes to 10 minutes
+(*)You can now leave Industrial Cryo after only 5 minutes (prev. 15)
+(t)thu aug 19 21
+(u)Sovexe
+(e)🐛⚖|bug, balance
+(*)Resolved an issue with Arcfiend's discharge ability that was causing it to apply stamina damage twice per cast. Discharge and Jolt will now produce sparks when in use.
+(t)wed aug 18 21
+(u)Flourish
+(+)Charcoal pills now contain 20u. Analgesic and menthol pills now contain 10u.
+(u)Sord + Flourish
+(+)Replaced the prefilled syringes in the Nanomed Plus with bottles. Reorganized the inventory a little.
+(t)tue aug 17 21
+(u)Tarmunora
+(p)5754
+(e)⚖📄|balance, tgui
+(*)The house no longer takes such a massive loss on slot machines, and you can wager up to 1000 credits at once instead of just 20 (minimum bet 20 credits).
+(u)Sovexe
+(p)5748
+(e)🆕|feature
+(*)A new antagonist type, the Arcfiend joins the fray. Be sure to enable it in your job preferences to be among the first to play!
+(u)Walpvrgis
+(p)5703
+(e)🎨|sprites
+(+)The cow mutantrace has had a few visual adjustments.
+(u)Flourish
+(e)⚖|balance
+(+)Security barriers now provide slight disarm resistance when activated. Let me know how this feels and if you think it makes a difference.
+(u)Flourish
+(+)Large mop buckets now have a capacity of 400u. Handheld mop buckets have a capacity of 120u.
+(t)sun aug 15 21
+(u)Arthur Holiday
+(p)5667
+(e)🐛⚖|bug, balance
+(+)Hemostats now will fix EVERY bleeding caused by surgery, instead of only a few of them.
+(u)DoctorStupid
+(p)5694
+(e)|
+(+)Donut boxes, egg cartons, and lollipop bowls are easier to move around in your inventory and can be re-closed by clicking/activating them in hand.
+(u)Tarmunora
+(e)⚖|balance
+(+)port a sci remote costs a telecrystal to print
+(t)fri aug 13 21
 (u)Tarmunora
 (e)⚖|balance
 (*)removed melee meatshielding. bet you didn't know it existed in the first place
+(u)Emily
+(e)🆕|feature
+(*)New Chicken Breed! See Minor Changes for a hint!
+(+)La vie est de la merde, petit clown. Fume avec moi. [Gen 2] [From Clown Chickens]
 (t)tue aug 10 21
 (u)TTerc
 (p)5709

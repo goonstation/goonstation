@@ -156,7 +156,7 @@
 			src.current_tickets++
 			src.updateUsrDialog()
 		else
-			src.attack_hand(user)
+			src.Attackhand(user)
 		return
 
 	attack_hand(var/mob/user as mob)

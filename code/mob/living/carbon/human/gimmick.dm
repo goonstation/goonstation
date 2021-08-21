@@ -329,7 +329,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			else if(W)
 				W.attack(picked, src, ran_zone("chest"))
 			else
-				picked.attack_hand(src)
+				picked.Attackhand(src)
 
 		.= picked
 
@@ -486,7 +486,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 						if(W)
 							W.attack(target, src, ran_zone("chest"))
 						else
-							target.attack_hand(src)
+							target.Attackhand(src)
 			else if(ai_aggressive)
 				a_intent = INTENT_HARM
 				for(var/mob/M in oview(5, src))

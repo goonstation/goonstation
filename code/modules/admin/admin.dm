@@ -2027,7 +2027,7 @@ var/global/noir = 0
 						/*	else
 								SPAWN_DBG(0) alert("An error occurred, please try again.")*/
 					else
-						var/list/traitor_types = list(ROLE_TRAITOR, ROLE_WIZARD, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_WEREWOLF, ROLE_HUNTER, ROLE_WRESTLER, ROLE_GRINCH, ROLE_OMNITRAITOR, ROLE_SPY_THIEF, ROLE_ENERGY_VAMPIRE)
+						var/list/traitor_types = list(ROLE_TRAITOR, ROLE_WIZARD, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_WEREWOLF, ROLE_HUNTER, ROLE_WRESTLER, ROLE_GRINCH, ROLE_OMNITRAITOR, ROLE_SPY_THIEF, ROLE_ARCFIEND)
 						if(ticker?.mode && istype(ticker.mode, /datum/game_mode/gang))
 							traitor_types += ROLE_GANG_LEADER
 						var/selection = input(usr, "Select traitor type.", "Traitorize", ROLE_TRAITOR) as null|anything in traitor_types
@@ -2457,7 +2457,7 @@ var/global/noir = 0
 								alert("The game hasn't started yet!")
 								return
 
-							var/which_traitor = input("What kind of traitor?","Everyone's a Traitor") as null|anything in list(ROLE_TRAITOR,ROLE_WIZARD,ROLE_CHANGELING,ROLE_WEREWOLF,ROLE_VAMPIRE,ROLE_ENERGY_VAMPIRE,ROLE_HUNTER,ROLE_WRESTLER,ROLE_GRINCH,ROLE_OMNITRAITOR)
+							var/which_traitor = input("What kind of traitor?","Everyone's a Traitor") as null|anything in list(ROLE_TRAITOR,ROLE_WIZARD,ROLE_CHANGELING,ROLE_WEREWOLF,ROLE_VAMPIRE,ROLE_ARCFIEND,ROLE_HUNTER,ROLE_WRESTLER,ROLE_GRINCH,ROLE_OMNITRAITOR)
 							if(!which_traitor)
 								return
 							var/hardmode = null
@@ -3262,7 +3262,7 @@ var/global/noir = 0
 				switch(href_list["type"])
 					if("check_antagonist")
 						if (ticker?.mode && current_state >= GAME_STATE_PLAYING)
-							var/dat = "<html><head><title>Round Status</title></head><body><h1><B>Round Status</B></h1>"
+							var/dat = "<html><head><title>Round Status</title></head><body><h1><B>Round Status</B></h1><A href='?src=\ref[src];action=secretsadmin;type=check_antagonist'>Refresh</A><br><br>"
 							dat += "Current Game Mode: <B>[ticker.mode.name]</B><BR>"
 							dat += "Round Duration: <B>[round(world.time / 36000)]:[add_zero(world.time / 600 % 60, 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B><BR>"
 
@@ -3377,7 +3377,7 @@ var/global/noir = 0
 									if (!M) continue
 									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdead(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 									dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td>"
-									dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[M]'>Show Objective</A></td></tr>"
+									dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[M]'>([M.mind.special_role])</A></td></tr>"
 								dat += "</table>"
 
 							if(ticker.mode.Agimmicks.len > 0)
@@ -3387,7 +3387,7 @@ var/global/noir = 0
 									if(!M) continue
 									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdead(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 									dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td>"
-									dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[M]'>Show Objective</A></td></tr>"
+									dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[M]'>([M.mind.special_role])</A></td></tr>"
 								dat += "</table>"
 
 							if(miscreants.len > 0)
@@ -3504,7 +3504,7 @@ var/global/noir = 0
 
 		if ("view_logs_web")
 			if ((src.level >= LEVEL_MOD) && !src.tempmin)
-				usr << link("https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html")
+				usr << link("http://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html")
 
 		if ("view_logs")
 			if ((src.level >= LEVEL_MOD) && !src.tempmin)
@@ -4591,10 +4591,10 @@ var/global/noir = 0
 				M.make_floor_goblin()
 				SHOW_TRAITOR_HARDMODE_TIPS(M)
 				M.show_text("<h2><font color=red><B>You have become a floor goblin!</B></font></h2>", "red")
-			if(ROLE_ENERGY_VAMPIRE)
+			if(ROLE_ARCFIEND)
 #ifdef SECRETS_ENABLED
-				M.mind.special_role = ROLE_ENERGY_VAMPIRE
-				M.make_energy_vampire()
+				M.mind.special_role = ROLE_ARCFIEND
+				M.make_arcfiend()
 				M.show_text("<h2><font color=red><B>You feel starved for power!</B></font></h2>", "red")
 #else
 				M.show_text("<h2><font color=red><B>NOTHING TO SEE HERE!</B></font></h2>", "red")

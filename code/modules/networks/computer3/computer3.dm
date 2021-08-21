@@ -726,7 +726,7 @@ function lineEnter (ev)
 			src.dispose()
 
 	else
-		src.attack_hand(user)
+		src.Attackhand(user)
 
 	return
 
@@ -1131,7 +1131,7 @@ function lineEnter (ev)
 			return
 
 		else
-			src.attack_hand(user)
+			src.Attackhand(user)
 
 		return
 

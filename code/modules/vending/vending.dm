@@ -7,7 +7,7 @@
 	var/product_hidden
 	var/logged_on_vend
 
-	var/static/list/product_name_cache = list(/obj/item/reagent_containers/mender_refill_cartridge/brute = "brute auto-mender refill", /obj/item/reagent_containers/mender_refill_cartridge/burn = "burn auto-mender refill")
+	var/static/list/product_name_cache = list(/obj/item/reagent_containers/mender/brute = "brute auto-mender", /obj/item/reagent_containers/mender/burn = "burn auto-mender")
 
 
 	New(productpath, amount=0, cost=0, hidden=0, logged_on_vend=FALSE)
@@ -442,7 +442,7 @@
 				boutput(user, "<span class='notice'>[bicon(W)] Regular electrical response received from access panel.</span>")
 		return
 	else if (src.panel_open && (issnippingtool(W) || ispulsingtool(W)))
-		src.attack_hand(user)
+		src.Attackhand(user)
 		return
 	else if (ispryingtool(W))
 		if (src.status & BROKEN) //if the vendor is broken
@@ -1135,37 +1135,34 @@
 
 	create_products()
 		..()
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe, 12)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/bruise, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/burn, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/mender_refill_cartridge/brute, 7)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/mender_refill_cartridge/burn, 7)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/antitoxin, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/epinephrine, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/morphine, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/antihistamine, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/aspirin, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/antirad, 3)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/saline, 5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/bruise, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/burn, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/mender/brute, 2)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/mender/burn, 2)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/antihistamine, 3)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/atropine, 3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/calomel, 3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/antitoxin, 5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/epinephrine, 5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/filgrastim, 3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/heparin, 3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/morphine, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/eyedrops, 3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/antirad, 3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/proconvertin, 3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/aspirin, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/saline, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/synaptizine, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/eyedrops, 2)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/antiviral, 6)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/insulin, 6)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/synaptizine, 6)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/calomel, 10)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/heparin, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/proconvertin, 6)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/filgrastim, 8)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/salbutamol, 8)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/mannitol, 8)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/mutadone, 5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/salbutamol, 8)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/ipecac, 8)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/ampoule/smelling_salts, 2, cost=50)
-		product_list += new/datum/data/vending_product(/obj/item/bandage, 4)
-		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer, 4)
-		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer_upgrade, 4)
-		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer_organ_upgrade, 3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/ampoule/smelling_salts, 5)
+		product_list += new/datum/data/vending_product(/obj/item/bandage, 5)
+		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer, 5)
+		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer_upgrade, 5)
+		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer_organ_upgrade, 5)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/medical_surgery_guide, 2)
 
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/sulfonal, rand(1, 2), hidden=1)
@@ -1173,7 +1170,6 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/LSD, rand(1, 6), hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/vape/medical, 1, hidden=1, cost=400)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/bath_bomb, rand(7, 13), hidden=1, cost=100)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/mender_refill_cartridge/both, 1, hidden=1)
 
 /obj/machinery/vending/medical_public
 	name = "Public MiniMed"

@@ -52,7 +52,7 @@
 /datum/spacebee_extension_command/ban
 	name = "ban"
 	server_targeting = COMMAND_TARGETING_MAIN_SERVER
-	help_message = "Bans a given ckey. Arguments in the order of ckey, length (number of minutes, or put \"hour\", \"day\", \"week\", or \"perma\"), and ban reason. Make sure you specify the server that the person is on. Also keep in mind that this bans them from all servers. e.g. ban1 flourish perma Lol rip."
+	help_message = "Bans a given ckey. Arguments in the order of ckey, length (number of minutes, or put \"hour\", \"day\", \"week\", \"month\",or \"perma\"), and ban reason. Make sure you specify the server that the person is on. Also keep in mind that this bans them from all servers. e.g. ban1 shelterfrog perma Lol rip."
 	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/string="length",
 	/datum/command_argument/the_rest="reason")
 	execute(user, ckey, length, reason)
@@ -84,6 +84,8 @@
 			length = 1440
 		else if (length == "week")
 			length = 10080
+		else if (length == "month")
+			length = 43200
 		else if (length == "perma")
 			length = 0
 		else
@@ -99,6 +101,36 @@
 		ircmsg["name"] = user
 		ircmsg["msg"] = "Banned [ckey] from all servers for [length] minutes, reason: [reason]"
 		ircbot.export("admin", ircmsg)
+
+/datum/spacebee_extension_command/boot
+	name = "boot"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	help_message = "Boot a given ckey off the specified server."
+	argument_types = list(/datum/command_argument/string/ckey="ckey")
+
+	execute(user, ckey)
+		for(var/client/C)
+			if (C.ckey == ckey)
+				del(C)
+				logTheThing("admin", "[user] (Discord)", null, "booted [constructTarget(C,"admin")].")
+				logTheThing("diary", "[user] (Discord)", null, "booted [constructTarget(C,"diary")].", "admin")
+				system.reply("Booted [ckey].", user)
+				return
+		system.reply("Could not locate [ckey].", user)
+
+/datum/spacebee_extension_command/where_is
+	name = "whereis"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	help_message = "Get where a given ckey is currently located ingame."
+	argument_types = list(/datum/command_argument/string/ckey="ckey")
+
+	execute(user, ckey)
+		var/mob/M = whois_ckey_to_mob_reference(ckey)
+		if (!M)
+			system.reply("Could not locate [ckey].", user)
+			return
+		var/area/A = get_area(M)
+		system.reply("[ckey] ([M]) is at [A.x], [A.y], [A.z] in [A].", user)
 
 /datum/spacebee_extension_command/announce
 	name = "announce"
