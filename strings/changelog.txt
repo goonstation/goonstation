@@ -10,6 +10,7 @@
 (u)Tarmunora
 (e)⚖|balance
 (*)Wizard hats are acidproof.
+(+)Prismatic spray projectiles have reduced chance to hit downed targets (90% -> 10)
 (u)Emily
 (p)5768
 (e)|
