@@ -2184,7 +2184,8 @@ datum
 			stun_resist = 25
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
-				M.take_brain_damage(2 * mult)
+				if(M.get_brain_damage() < 60)
+					M.take_brain_damage(2 * mult)
 
 		fooddrink/coffee/espresso/decaf
 			name = "decaf espresso"
