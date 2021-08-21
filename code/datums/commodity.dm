@@ -14,6 +14,8 @@
 	var/hidden = 0 //Sometimes traders won't say if they will buy something
 	var/haggleattempts = 0
 	var/amount = -1 // Used for QM traders - how much of a thing they have for sale, unlim if -1
+	///if true, subtypes of this item will be accepted by NPC traders
+	var/subtype_valid = FALSE
 	// if its in the shopping cart, this is how many you're buying instead
 
 /*
@@ -1517,6 +1519,7 @@
 /datum/commodity/bodyparts
 	desc = "It's best not to ask too many questions."
 	onmarket = 0
+	subtype_valid = FALSE
 
 /datum/commodity/bodyparts/armL
 	comname = "Human Arm - Left"
