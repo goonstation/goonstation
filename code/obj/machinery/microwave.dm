@@ -23,7 +23,7 @@
 	var/operating = 0 // Is it on?
 	var/dirty = 0 // Does it need cleaning?
 	var/broken = 0 // How broken is it???
-	var/cook_time = 200 // The time to wait before spawning the item
+	var/cook_time = 20 SECONDS // The time to wait before spawning the item
 	var/list/available_recipes = list() // List of the recipes you can use
 	var/datum/recipe/cooked_recipe = null // The recipe being cooked
 	var/obj/item/reagent_containers/food/snacks/being_cooked = null // The item being cooked
