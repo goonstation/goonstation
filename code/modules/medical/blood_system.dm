@@ -137,7 +137,7 @@ this is already used where it needs to be used, you can probably ignore it.
 
 	var/mob/living/H = some_idiot
 
-	if (some_jerk?.find_type_in_hand(/obj/item/hemostat) && (surgery_bleed)) // Surgery bleeding gets fixed by hemostats
+	if (ismob(some_jerk) && some_jerk?.find_type_in_hand(/obj/item/hemostat) && (surgery_bleed)) // Surgery bleeding gets fixed by hemostats
 		boutput(some_jerk, "<b class='notice'> You clamp the bleeders with the hemostat.</span>")
 		return
 
