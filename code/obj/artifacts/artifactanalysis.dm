@@ -61,7 +61,7 @@
 	attack_hand(mob/user)
 		var/obj/attachedobj = src.attached
 		if(istype(attachedobj) && attachedobj.artifact) // touch artifact we are attached to
-			src.attached.attack_hand(user)
+			src.attached.Attackhand(user)
 			user.lastattacked = user
 		else // do sticker things
 			..()
@@ -82,7 +82,7 @@
 		else
 			var/obj/attachedobj = src.attached
 			if(istype(attachedobj) && attachedobj.artifact) // hit artifact we are attached to
-				src.attached.attackby(W, user)
+				src.attached.Attackby(W, user)
 				user.lastattacked = user
 			else // just sticker things
 				..()

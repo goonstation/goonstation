@@ -437,7 +437,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	icon_state = "bucket"
 	item_state = "bucket"
 	amount_per_transfer_from_this = 10
-	initial_volume = 50
+	initial_volume = 120
 	flags = FPRINT | OPENCONTAINER | SUPPRESSATTACK
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	can_recycle = FALSE

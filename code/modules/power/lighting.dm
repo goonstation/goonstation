@@ -660,7 +660,7 @@
 	if (issilicon(user) && !isghostdrone(user))
 		return
 		/*if (isghostdrone(user))
-			return src.attack_hand(user)
+			return src.Attackhand(user)
 		else
 			return*/
 
@@ -670,7 +670,7 @@
 	if (istype(W, /obj/item/magtractor))
 		mag = W
 		if (!mag.holding)
-			return src.attack_hand(user)
+			return src.Attackhand(user)
 		else
 			W = mag.holding
 

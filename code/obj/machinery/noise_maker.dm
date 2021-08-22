@@ -2,7 +2,7 @@
 /obj/machinery/noise_switch/attackby(obj/item/W, mob/user as mob)
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/noise_switch/attack_hand(mob/user as mob)
 	if(status & (NOPOWER|BROKEN))
@@ -17,7 +17,7 @@
 	src.add_fingerprint(user)
 
 /obj/machinery/noise_switch/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/noise_switch/attackby(obj/item/W, mob/user)
 	user.visible_message("<span class='alert'>The [src.name] has been hit with the [W.name] by [user.name]!</span>", "<span class='alert'>You hit the [src.name] with your [W.name]!</span>")

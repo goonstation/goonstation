@@ -1,4 +1,4 @@
-#define CRYOSLEEP_DELAY 15 MINUTES
+#define CRYOSLEEP_DELAY 5 MINUTES
 #define CRYOTRON_MESSAGE_DELAY 3 SECONDS
 
 /obj/cryotron_spawner
@@ -257,9 +257,9 @@
 
 	attack_hand(var/mob/user as mob)
 		if(isgrab(user.l_hand))
-			src.attackby(user.l_hand, user)
+			src.Attackby(user.l_hand, user)
 		else if(isgrab(user.r_hand))
-			src.attackby(user.r_hand, user)
+			src.Attackby(user.r_hand, user)
 		else if (!enter_prompt(user))
 			return ..()
 

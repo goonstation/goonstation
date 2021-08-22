@@ -43,8 +43,8 @@ var/global/list/datum/client_image_group/client_image_groups
 	proc/add_mob(mob/added_mob)
 		subscribed_mobs_with_subcount[added_mob] += 1
 		if (subscribed_mobs_with_subcount[added_mob] == 1) // mob added for the first time, adding images to client and registering signals
-			for (var/image/I in images)
-				if (!I.loc.invisibility || (I.loc == added_mob) || istype(added_mob, /mob/dead/observer))
+			for (var/image/I as() in images)
+				if (I.loc && !I.loc.invisibility || (I.loc == added_mob) || istype(added_mob, /mob/dead/observer))
 					added_mob.client?.images.Add(I)
 
 			RegisterSignal(added_mob, COMSIG_MOB_LOGIN, .proc/add_images_to_client_of_mob)
@@ -64,8 +64,8 @@ var/global/list/datum/client_image_group/client_image_groups
 	/// Registered on MOB_LOGIN, when a client enters the mob adds the images to it.
 	proc/add_images_to_client_of_mob(mob/target_mob)
 		PRIVATE_PROC(TRUE)
-		for (var/image/I in images)
-			if (!I.loc.invisibility || (I.loc == target_mob) || istype(target_mob, /mob/dead/observer))
+		for (var/image/I as() in images)
+			if (I.loc && !I.loc.invisibility || (I.loc == target_mob) || istype(target_mob, /mob/dead/observer))
 				target_mob.client?.images.Add(I)
 
 	/// Registered on MOB_LOGOUT, when a client leaves the mob removes the images from it.
@@ -85,11 +85,11 @@ var/global/list/datum/client_image_group/client_image_groups
 		for (var/image/I in mob_to_associated_images_lookup[invis_updated_mob])
 			if (invis_updated_mob.invisibility) // mob is invisible, remove their icons for other mobs
 				for (var/mob/iterated_mob as() in subscribed_mobs_with_subcount)
-					if ((iterated_mob != invis_updated_mob) && !(istype(iterated_mob, /mob/dead/observer))) // do nothing for the same person or ghosts
+					if ((iterated_mob != invis_updated_mob) && (invis_updated_mob.invisibility > iterated_mob.see_invisible)) // do nothing for the same person or ghosts
 						iterated_mob.client?.images.Remove(I)
 			else // mob is visible, add their icons to other mobs
 				for (var/mob/iterated_mob as() in subscribed_mobs_with_subcount)
-					if ((iterated_mob != invis_updated_mob) && !(istype(iterated_mob, /mob/dead/observer))) // do nothing for the same person or ghosts
+					if ((iterated_mob != invis_updated_mob) && (invis_updated_mob.invisibility <= iterated_mob.see_invisible)) // do nothing for the same person or ghosts
 						iterated_mob.client?.images.Add(I)
 
 /// Returns the client image group for a given "key" argument. If one doesn't yet exist, creates it.

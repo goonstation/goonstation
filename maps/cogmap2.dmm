@@ -14037,7 +14037,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 4
 	},
 /turf/unsimulated/floor{
@@ -15386,7 +15386,7 @@
 	},
 /area/shuttle/arrival/station)
 "aIN" = (
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 4
 	},
 /turf/unsimulated/floor{
@@ -18927,7 +18927,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 8
 	},
 /turf/simulated/floor/bluewhite{
@@ -18938,9 +18938,6 @@
 /obj/disposalpipe/segment/mail/bent/north,
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
-/obj/machinery/sleep_console{
-	dir = 8
-	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbooth)
 "aRt" = (
@@ -47304,19 +47301,11 @@
 /obj/machinery/light,
 /obj/cable,
 /obj/machinery/power/data_terminal,
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 8
 	},
 /turf/simulated/floor/carpet{
 	dir = 10;
-	icon_state = "fred2"
-	},
-/area/station/security/main)
-"bYB" = (
-/obj/machinery/sleep_console{
-	dir = 8
-	},
-/turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},
 /area/station/security/main)
@@ -53300,7 +53289,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/construction)
 "cmH" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/circuit/green,
 /area/station/science/teleporter)
 "cmI" = (
@@ -62174,13 +62163,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/obj/machinery/sleeper{
-	dir = 8
-	},
-/turf/simulated/floor/specialroom/medbay,
-/area/station/medical/medbay/lobby)
-"cGF" = (
-/obj/machinery/sleep_console{
+/obj/machinery/sleeper/compact{
 	dir = 8
 	},
 /turf/simulated/floor/specialroom/medbay,
@@ -62255,9 +62238,6 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/machinery/sleep_console{
-	dir = 4
-	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
 "cGQ" = (
@@ -62271,7 +62251,7 @@
 	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/medbay,
@@ -72390,7 +72370,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 8
 	},
 /turf/simulated/floor/bluewhite{
@@ -72403,9 +72383,6 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
-	},
-/obj/machinery/sleep_console{
-	dir = 8
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
@@ -73411,7 +73388,7 @@
 "deZ" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 8
 	},
 /turf/simulated/floor/bluewhite,
@@ -73419,9 +73396,6 @@
 "dfa" = (
 /obj/cable{
 	icon_state = "1-2"
-	},
-/obj/machinery/sleep_console{
-	dir = 8
 	},
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
@@ -112159,7 +112133,7 @@ cAz
 cCb
 cDy
 cFm
-cGF
+cAL
 cHZ
 cHZ
 cHZ
@@ -134778,7 +134752,7 @@ bSH
 bUi
 bYY
 bXm
-bYB
+bYx
 bZP
 caY
 cch

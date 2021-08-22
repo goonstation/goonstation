@@ -1600,7 +1600,10 @@
 /turf/simulated/floor/grime,
 /area/abandonedmedicalship/robot_trader)
 "afo" = (
-/obj/machinery/manufacturer/robotics,
+/obj/decal/cleanable/machine_debris{
+	icon_state = "gib7";
+	name = "smashed fabricator"
+	},
 /turf/simulated/floor/grime,
 /area/abandonedmedicalship/robot_trader)
 "afp" = (
@@ -3825,8 +3828,8 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "amF" = (
-/obj/machinery/sleeper{
-	dir = 8
+/obj/machinery/sleeper/compact{
+	dir = 4
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
@@ -6630,7 +6633,7 @@
 /area/station/quartermaster/cargobay)
 "atR" = (
 /obj/table/auto,
-/obj/item/reagent_containers/mender,
+/obj/item/reagent_containers/mender_refill_cartridge/brute,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -12141,7 +12144,7 @@
 	},
 /area/station/science/teleporter)
 "aIl" = (
-/obj/lrteleporter{
+/obj/machinery/lrteleporter{
 	layer = 3
 	},
 /turf/simulated/floor/orangeblack/side/white{
@@ -22012,7 +22015,7 @@
 /area/station/medical/medbay/lobby)
 "bjl" = (
 /obj/decoration/decorativeplant/plant7,
-/obj/item_dispenser/perscription_glasses,
+/obj/item_dispenser/prescription_glasses,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
 "bjn" = (
@@ -24574,20 +24577,11 @@
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
 "bps" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/bluewhite,
-/area/station/medical/medbay/lobby)
-"bpt" = (
-/obj/machinery/sleep_console{
+/obj/machinery/sleeper/compact{
 	dir = 8
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
@@ -24607,10 +24601,10 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
 "bpx" = (
-/obj/machinery/sleeper{
+/obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/disposalpipe/segment/mail{
+/obj/machinery/sleeper/compact{
 	dir = 4
 	},
 /turf/simulated/floor/bluewhite,
@@ -32396,7 +32390,7 @@
 /obj/item/device/audio_log,
 /obj/item/device/detective_scanner,
 /obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/wood/six,
+/turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office_manta/detectives_bedroom)
 "bLW" = (
 /obj/machinery/firealarm{
@@ -39250,15 +39244,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/visitation)
-"khe" = (
-/obj/machinery/sleep_console{
-	dir = 4
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/turf/simulated/floor/bluewhite,
-/area/station/medical/medbay/lobby)
 "kkK" = (
 /obj/machinery/light_switch/auto{
 	pixel_y = 24
@@ -41109,13 +41094,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/diner/hangar)
-"oBb" = (
-/obj/machinery/door/airlock/pyro/engineering{
-	dir = 4;
-	name = "Mining"
-	},
-/turf/space/fluid/manta/nospawn,
-/area/station/shield_zone/manta)
 "oEq" = (
 /obj/decal/tile_edge/line/black{
 	dir = 9;
@@ -95677,7 +95655,7 @@ bhq
 blR
 biq
 bkh
-bpt
+bpu
 bhq
 bsx
 bsl
@@ -96583,7 +96561,7 @@ bkT
 arp
 kpZ
 bkh
-khe
+bpu
 bhq
 bsx
 bkN
@@ -118335,7 +118313,7 @@ aaa
 aaa
 aaa
 aaa
-oBb
+act
 act
 aBr
 aBr

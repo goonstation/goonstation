@@ -1964,8 +1964,8 @@ proc/countJob(rank)
 
 			remove_antag(M, null, 1, 0)
 			if (M.mind && ticker.mode && !(M.mind in ticker.mode.former_antagonists))
-				if (!M.mind.former_antagonist_roles.Find("mindslave"))
-					M.mind.former_antagonist_roles.Add("mindslave")
+				if (!M.mind.former_antagonist_roles.Find(ROLE_MINDSLAVE))
+					M.mind.former_antagonist_roles.Add(ROLE_MINDSLAVE)
 				ticker.mode.former_antagonists += M.mind
 
 		if ("vthrall")
@@ -1977,8 +1977,8 @@ proc/countJob(rank)
 
 			remove_antag(M, null, 1, 0)
 			if (M.mind && ticker.mode && !(M.mind in ticker.mode.former_antagonists))
-				if (!M.mind.former_antagonist_roles.Find("vampthrall"))
-					M.mind.former_antagonist_roles.Add("vampthrall")
+				if (!M.mind.former_antagonist_roles.Find(ROLE_VAMPTHRALL))
+					M.mind.former_antagonist_roles.Add(ROLE_VAMPTHRALL)
 				ticker.mode.former_antagonists += M.mind
 
 		// This is only used for spy slaves and mindslaved antagonists at the moment.
@@ -2001,8 +2001,8 @@ proc/countJob(rank)
 			else
 				M.mind.master = null
 			if (M.mind && ticker.mode && !(M.mind in ticker.mode.former_antagonists))
-				if (!M.mind.former_antagonist_roles.Find("mindslave"))
-					M.mind.former_antagonist_roles.Add("mindslave")
+				if (!M.mind.former_antagonist_roles.Find(ROLE_MINDSLAVE))
+					M.mind.former_antagonist_roles.Add(ROLE_MINDSLAVE)
 				ticker.mode.former_antagonists += M.mind
 
 		else

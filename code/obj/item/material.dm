@@ -332,7 +332,7 @@
 			if (bombturf)
 				var/bombarea = bombturf.loc.name
 				logTheThing("combat", null, null, "Erebite detonated by an explosion in [bombarea] ([showCoords(bombturf.x, bombturf.y, bombturf.z)]). Last touched by: [src.fingerprintslast]")
-				message_admins("Erebite detonated by an explosion in [bombarea] ([showCoords(bombturf.x, bombturf.y, bombturf.z)]). Last touched by: [src.fingerprintslast]")
+				message_admins("Erebite detonated by an explosion in [bombarea] ([showCoords(bombturf.x, bombturf.y, bombturf.z)]). Last touched by: [key_name(src.fingerprintslast)]")
 
 		qdel(src)
 
@@ -346,7 +346,7 @@
 			var/bombarea = istype(bombturf) ? bombturf.loc.name : "a blank, featureless void populated only by your own abandoned dreams and wasted potential"
 
 			logTheThing("combat", null, null, "Erebite detonated by heat in [bombarea]. Last touched by: [src.fingerprintslast]")
-			message_admins("Erebite detonated by heat in [bombarea]. Last touched by: [src.fingerprintslast]")
+			message_admins("Erebite detonated by heat in [bombarea]. Last touched by: [key_name(src.fingerprintslast)]")
 
 		qdel(src)
 
@@ -795,6 +795,10 @@
 				src.reject = 1
 				continue
 
+			else if (istype(M, /obj/item/raw_material/shard))
+				if (output_bar_from_item(M, 10))
+					pool(M)
+
 			else if (istype(M, /obj/item/raw_material))
 				output_bar_from_item(M)
 				pool(M)
@@ -815,10 +819,6 @@
 				var/obj/item/cable_coil/C = M
 				if (output_bar_from_item(M, 30, C.conductor.mat_id))
 					qdel(C)
-
-			else if (istype(M, /obj/item/raw_material/shard))
-				if (output_bar_from_item(M, 10))
-					qdel(M)
 
 			else if (istype(M, /obj/item/wizard_crystal))
 				if (output_bar_from_item(M))

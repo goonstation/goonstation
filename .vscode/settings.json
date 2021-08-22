@@ -28,5 +28,23 @@
 	"workbench.editorAssociations": {
 		"*.dmi": "imagePreview.previewEditor"
 	},
+<<<<<<< HEAD
 	"gitlens.advanced.blame.customArguments": ["-w"],
+=======
+	// Ignore whitespace for blame
+	"gitlens.advanced.blame.customArguments": [
+		"-w"
+	],
+	"diffEditor.codeLens": true,
+	"vscode-as-git-mergetool.settingsAssistantOnStartup": false,
+	"errorLens.enabledDiagnosticLevels": [
+		"error",
+		"warning",
+		"info"
+	],
+	"tgstationTestExplorer.project.DMEName": "goonstation.dme",
+    "tgstationTestExplorer.project.defines": [
+        "#define UNIT_TESTS"
+    ]
+>>>>>>> 5a598246ae1462167775e738982e329129788d7c
 }

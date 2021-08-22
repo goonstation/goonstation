@@ -50,22 +50,17 @@
 			var/mob/living/carbon/human/H = src
 
 			if (remove_powers == 1)
-				var/datum/abilityHolder/wrestler/A3 = H.get_ability_holder(/datum/abilityHolder/wrestler)
+				var/datum/abilityHolder/wrestler/A3 = H.get_ability_holder(fake_wrestler ? /datum/abilityHolder/wrestler/fake : /datum/abilityHolder/wrestler)
 				if (istype(A3))
 					if (belt_check == 1 && A3.is_inherent == 1) // Wrestler/omnitraitor vs wrestling belt.
 						return
-					H.remove_ability_holder(/datum/abilityHolder/wrestler)
-				else if (fake_wrestler && istype(H.get_ability_holder(/datum/abilityHolder/wrestler/fake), /datum/abilityHolder/wrestler/fake))
-					H.remove_ability_holder(/datum/abilityHolder/wrestler)
-
-				else
 					if (!isnull(H.abilityHolder))
 						H.abilityHolder.removeAbility("/datum/targetable/wrestler/kick[fake_wrestler ? "/fake" : ""]")
 						H.abilityHolder.removeAbility("/datum/targetable/wrestler/strike[fake_wrestler ? "/fake" : ""]")
 						H.abilityHolder.removeAbility("/datum/targetable/wrestler/drop[fake_wrestler ? "/fake" : ""]")
 						H.abilityHolder.removeAbility("/datum/targetable/wrestler/throw[fake_wrestler ? "/fake" : ""]")
 						H.abilityHolder.removeAbility("/datum/targetable/wrestler/slam[fake_wrestler ? "/fake" : ""]")
-
+					H.remove_ability_holder(fake_wrestler ? /datum/abilityHolder/wrestler/fake : /datum/abilityHolder/wrestler)
 
 				return
 
@@ -100,7 +95,7 @@
 					health_update_queue |= src
 
 
-		if (belt_check != 1 && (src.mind && src.mind.special_role != "omnitraitor" && src.mind.special_role != "Faustian Wrestler"))
+		if (belt_check != 1 && (src.mind && src.mind.special_role != ROLE_OMNITRAITOR && src.mind.special_role != "Faustian Wrestler"))
 			SHOW_WRESTLER_TIPS(src)
 
 	else return

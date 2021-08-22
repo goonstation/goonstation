@@ -101,13 +101,13 @@
 		if (O in src.contents)
 			user.drop_item()
 			SPAWN_DBG(1 DECI SECOND)
-				O.attack_hand(user)
+				O.Attackhand(user)
 		else if (isitem(O) && !istype(O, /obj/item/storage) && !O.anchored)
 			user.swap_hand()
 			if(user.equipped() == null)
-				O.attack_hand(user)
+				O.Attackhand(user)
 				if(O in user.equipped_list())
-					src.attackby(O, user, O.loc)
+					src.Attackby(O, user, O.loc)
 			else
 				boutput(user, __blue("Your hands are full!"))
 			user.swap_hand()
@@ -148,7 +148,7 @@
 				var/obj/item/storage/S = W
 				for (var/obj/item/I in S.get_contents())
 					if(src.check_can_hold(I) > 0)
-						src.attackby(I, user, S)
+						src.Attackby(I, user, S)
 				return
 			switch (canhold)
 				if(0)

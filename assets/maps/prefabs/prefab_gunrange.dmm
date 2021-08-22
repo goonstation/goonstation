@@ -498,7 +498,7 @@
 /turf/simulated/floor/wood/three,
 /area/prefab/shooting_range)
 "JB" = (
-/obj/item_dispenser/perscription_glasses,
+/obj/item_dispenser/prescription_glasses,
 /turf/simulated/floor/wood/three,
 /area/prefab/shooting_range)
 "JH" = (

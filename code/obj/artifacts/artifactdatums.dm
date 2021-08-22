@@ -152,7 +152,7 @@ ABSTRACT_TYPE(/datum/artifact/)
 	proc/effect_click_tile(var/obj/O,var/mob/living/user,var/turf/T)
 		if (!O || !user || !T)
 			return 1
-		if (user.client && get_dist(T,user) > (istext(user.client.view) ? 10 : user.client.view)) // shitty hack // we cannot see that far, we're probably being a butt and trying to do something through a camera
+		if (!user.in_real_view_range(T))
 			return 1
 		else if (!user.client && get_dist(T,user) > world.view) // idk, SOMEhow someone would find a way
 			return 1
@@ -244,6 +244,7 @@ ABSTRACT_TYPE(/datum/artifact/art)
 // for use with the wizard spell prismatic_spray
 /datum/projectile/artifact/prismatic_projectile
 	is_magical = 1
+	hit_ground_chance = 10
 
 	New()
 		..()

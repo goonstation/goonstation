@@ -245,7 +245,7 @@
 						var/obj/item/reagent_containers/food/snacks/plant/P = src
 						var/doseed = 1
 						var/datum/plantgenes/SRCDNA = P.plantgenes
-						if (!SRCDNA || HYPCheckCommut(SRCDNA,"Seedless")) doseed = 0
+						if (!SRCDNA || HYPCheckCommut(SRCDNA, /datum/plant_gene_strain/seedless)) doseed = 0
 						if (doseed)
 							var/datum/plant/stored = P.planttype
 							if (istype(stored) && !stored.isgrass)
@@ -438,6 +438,7 @@
 	doants = 0
 	throw_speed = 1
 	var/can_recycle = 1
+	var/can_chug = 1
 
 	New()
 		..()
@@ -459,6 +460,37 @@
 			logTheThing("combat", user, null, "spills the contents of [src] [log_reagents(src)] all over [him_or_her(user)]self at [log_loc(user)].")
 			src.reagents.reaction(get_turf(user), TOUCH)
 			src.reagents.clear_reagents()
+
+	MouseDrop(atom/over_object)
+		..()
+		if(!(usr == over_object)) return
+		if(!istype(usr, /mob/living/carbon)) return
+		var/mob/living/carbon/C = usr
+
+		var/maybe_too_clumsy = FALSE
+		var/maybe_too_tipsy = FALSE
+		var/too_drunk = FALSE
+		if(!can_chug)
+			boutput(C, "<span class='alert'>You can't seem to chug from [src.name]! How odd.</span>")
+			return
+		if(C.bioHolder)
+			maybe_too_clumsy = C.bioHolder.HasEffect("clumsy") && prob(50)
+		if(C.reagents.reagent_list["ethanol"])
+			maybe_too_tipsy = (C.reagents.reagent_list["ethanol"].volume >= 50) && prob(50)
+			too_drunk = C.reagents.reagent_list["ethanol"].volume >= 150
+
+		if(too_drunk || maybe_too_tipsy || maybe_too_clumsy)
+			C.visible_message("[C.name] was too energetic, and threw the [src.name] backwards instead of chugging it!")
+			src.set_loc(get_turf(C))
+			C.u_equip(src)
+			var/target = get_steps(C, turn(C.dir, 180), 7) //7 tiles seems appropriate.
+			src.throw_at(target, 7, 1)
+			if (!C.hasStatus("weakened"))
+				//Make them fall over, they lost their balance.
+				C.changeStatus("weakened", 2 SECONDS)
+		else
+			actions.start(new /datum/action/bar/icon/chug(C, src), C)
+		return
 
 	//Wow, we copy+pasted the heck out of this... (Source is chemistry-tools dm)
 	attack_self(mob/user as mob)
@@ -517,7 +549,7 @@
 */
 			if (src.reagents.total_volume)
 				logTheThing("combat", user, M, "[user == M ? "takes a sip from" : "makes [constructTarget(M,"combat")] drink from"] [src] [log_reagents(src)] at [log_loc(user)].")
-				src.reagents.reaction(M, INGEST, gulp_size)
+				src.reagents.reaction(M, INGEST, min(reagents.total_volume, gulp_size, (M.reagents?.maximum_volume-M.reagents?.total_volume)))
 				SPAWN_DBG(0.5 SECONDS)
 					if (src?.reagents && M?.reagents)
 						src.reagents.trans_to(M, min(reagents.total_volume, gulp_size))
@@ -879,7 +911,7 @@
 					playsound(U, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 					var/damage = rand(5,15)
 					random_brute_damage(user, damage)
-					take_bleeding_damage(user, damage)
+					take_bleeding_damage(user, null, damage)
 			else
 				src.shatter++
 				user.visible_message("<span class='alert'><b>[user]</b> [pick("shanks","stabs","attacks")] [target] with the broken [src]!</span>")
@@ -887,7 +919,7 @@
 				playsound(target, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
 				var/damage = rand(1,10)
 				random_brute_damage(target, damage)//shiv that nukie/secHoP
-				take_bleeding_damage(target, damage)
+				take_bleeding_damage(target, null, damage)
 		..()
 
 	proc/smash_on_thing(mob/user as mob, atom/target as turf|obj|mob) // why did I have this as a proc on tables?  jeez, babbycoder haine, you really didn't know shit about nothin
@@ -1257,47 +1289,19 @@
 			src.wedge = null
 		qdel(src)
 
-	MouseDrop(atom/over_object)
-		..()
-		if(!(usr == over_object)) return
-		if(!istype(usr, /mob/living/carbon)) return
-		var/mob/living/carbon/C = usr
-
-		var/maybe_too_clumsy = FALSE
-		var/maybe_too_tipsy = FALSE
-		var/too_drunk = FALSE
-		if(C.bioHolder)
-			maybe_too_clumsy = C.bioHolder.HasEffect("clumsy") && prob(50)
-		if(C.reagents.reagent_list["ethanol"])
-			maybe_too_tipsy = (C.reagents.reagent_list["ethanol"].volume >= 50) && prob(50)
-			too_drunk = C.reagents.reagent_list["ethanol"].volume >= 150
-
-		if(too_drunk || maybe_too_tipsy || maybe_too_clumsy)
-			C.visible_message("[C.name] was too energetic, and threw the [src.name] backwards instead of chugging it!")
-			src.set_loc(get_turf(C))
-			C.u_equip(src)
-			var/target = get_steps(C, turn(C.dir, 180), 7) //7 tiles seems appropriate.
-			src.throw_at(target, 7, 1)
-			if (!C.hasStatus("weakened"))
-				//Make them fall over, they lost their balance.
-				C.changeStatus("weakened", 2 SECONDS)
-		else
-			actions.start(new /datum/action/bar/icon/drinkingglass_chug(C, src), C)
-		return
-
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
 		src.smash(A)
 
 //this action accepts a target that is not the owner, incase we want to allow forced chugging.
-/datum/action/bar/icon/drinkingglass_chug
+/datum/action/bar/icon/chug
 	duration = 0.5 SECONDS
-	id = "drinkingglass chugging"
+	id = "chugging"
 	var/mob/glassholder
 	var/mob/target
-	var/obj/item/reagent_containers/food/drinks/drinkingglass/glass
+	var/obj/item/reagent_containers/food/drinks/glass
 
-	New(mob/Target, obj/item/reagent_containers/food/drinks/drinkingglass/Glass)
+	New(mob/Target, obj/item/reagent_containers/food/drinks/Glass)
 		..()
 		target = Target
 		glass = Glass
@@ -1337,7 +1341,7 @@
 	onEnd()
 
 		if (glass.reagents.total_volume) //Take a sip
-			glass.reagents.reaction(target, INGEST, glass.gulp_size)
+			glass.reagents.reaction(target, INGEST, min(glass.reagents.total_volume, glass.gulp_size, (target.reagents?.maximum_volume-target.reagents?.total_volume)))
 			glass.reagents.trans_to(target, min(glass.reagents.total_volume, glass.gulp_size))
 			playsound(target.loc,"sound/items/drink.ogg", rand(10,50), 1)
 			target.urine += 0.1
@@ -1662,6 +1666,7 @@
 	icon_state = "carafe-eng"
 	item_state = "carafe-eng"
 	initial_volume = 100
+	can_chug = 0
 	var/smashed = 0
 	var/shard_amt = 1
 	var/image/fluid_image
@@ -1755,7 +1760,7 @@
 	initial_reagents = list("coconut_milk"=20)
 
 /obj/item/reagent_containers/food/drinks/energyshake
-	name = "Brotien Shake - Dragon Balls flavor"
+	name = "Brotein Shake - Dragon Balls flavor"
 	desc = {"Do you want to get PUMPED UP? Try this 100% NATURAL shake FRESH from the press!
 	We guarantee FULL ACTIVATION of midi-whatevers to EHNANCE your performance on and off the field.
 	Embrace the STRENGTH and POWER of the dragon WITHIN YOU! Spread your newfound wings and ELEVATE your soul!
@@ -1785,6 +1790,7 @@
 	icon_state = "cocktailshaker"
 	initial_volume = 120
 	can_recycle = 0
+	can_chug = 0
 
 	New()
 		..()

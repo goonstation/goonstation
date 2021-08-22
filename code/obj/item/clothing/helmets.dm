@@ -213,6 +213,7 @@
 	desc = "The standard space helmet of the dreaded Syndicate."
 	item_function_flags = IMMUNE_TO_ACID
 	team_num = TEAM_SYNDICATE
+	blocked_from_petasusaphilic = TRUE
 	#ifdef MAP_OVERRIDE_POD_WARS
 	attack_hand(mob/user)
 		if (get_pod_wars_team_num(user) == team_num)

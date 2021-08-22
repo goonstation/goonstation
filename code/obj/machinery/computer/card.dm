@@ -9,6 +9,15 @@
 	var/mode = 0.0
 	var/printing = null
 	var/list/scan_access = null
+	var/list/custom_names = list("Custom 1", "Custom 2", "Custom 3")
+	var/custom_access_list = list(list(),list(),list())
+	var/list/civilian_access_list = list(access_morgue, access_maint_tunnels, access_chapel_office, access_tech_storage, access_bar, access_janitor, access_crematorium, access_kitchen, access_hydro, access_ranch)
+	var/list/engineering_access_list = list(access_external_airlocks, access_construction, access_engineering, access_engineering_storage, access_engineering_power, access_engineering_engine, access_engineering_mechanic, access_engineering_atmos, access_engineering_control)
+	var/list/supply_access_list = list(access_hangar, access_cargo, access_supply_console, access_mining, access_mining_shuttle, access_mining_outpost)
+	var/list/research_access_list = list(access_medical, access_tox, access_tox_storage, access_medlab, access_medical_lockers, access_research, access_robotics, access_chemistry, access_pathology)
+	var/list/security_access_list = list(access_security, access_brig, access_forensics_lockers, access_maxsec, access_securitylockers, access_carrypermit, access_contrabandpermit)
+	var/list/command_access_list = list(access_research_director, access_emergency_storage, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_engineering_chief, access_medical_director, access_head_of_personnel, access_ghostdrone)
+	var/list/allowed_access_list
 	req_access = list(access_change_ids)
 	desc = "A computer that allows an authorized user to change the identification of other ID cards."
 
@@ -16,6 +25,10 @@
 	light_r =0.7
 	light_g = 1
 	light_b = 0.1
+
+/obj/machinery/computer/card/New()
+	..()
+	src.allowed_access_list = civilian_access_list + engineering_access_list + supply_access_list + research_access_list + command_access_list + security_access_list - access_maxsec
 
 
 /obj/machinery/computer/card/console_upper
@@ -117,27 +130,20 @@
 			for(var/job in commandjobs)
 				body += " <a href='?src=\ref[src];assign=[job];colour=green'>[replacetext(job, " ", "&nbsp")]</a>"
 
+			body += "<br>Custom:"
+			for (var/i = 1, i <= custom_names.len, i++)
+				body += " [src.custom_names[i]] <a href='?src=\ref[src];save=[i]'>save</a> <a href='?src=\ref[src];apply=[i]'>apply</a>"
+
 			//Change access to individual areas
 			body += "<br><br><u>Access</u>"
 
 			//Organised into sections
 			var/civilian_access = list("<br>Staff:")
-			var/list/civilian_access_list = list(access_morgue, access_maint_tunnels, access_chapel_office, access_tech_storage, access_bar, access_janitor, access_crematorium, access_kitchen, access_hydro, access_ranch)
 			var/engineering_access = list("<br>Engineering:")
-			/* Conor12: I removed some unused accesses as the page is large enough, add these if they ever get used:
-			3 (access_armory). Replaced by HoS-exclusive access_maxsec.
-			21 (access_all_personal_lockers). Current personal lockers don't have a master key.
-			36 (access_mail)
-			42 (access_engineering_eva)*/
-			var/list/engineering_access_list = list(access_external_airlocks, access_construction, access_engineering, access_engineering_storage, access_engineering_power, access_engineering_engine, access_engineering_mechanic, access_engineering_atmos, access_engineering_control)
 			var/supply_access = list("<br>Supply:")
-			var/list/supply_access_list = list(access_hangar, access_cargo, access_supply_console, access_mining, access_mining_shuttle, access_mining_outpost)
 			var/research_access = list("<br>Science and Medical:")
-			var/list/research_access_list = list(access_medical, access_tox, access_tox_storage, access_medlab, access_medical_lockers, access_research, access_robotics, access_chemistry, access_pathology)
 			var/security_access = list("<br>Security:")
-			var/list/security_access_list = list(access_security, access_brig, access_forensics_lockers, access_maxsec, access_securitylockers, access_carrypermit, access_contrabandpermit)
 			var/command_access = list("<br>Command:")
-			var/list/command_access_list = list(access_research_director, access_emergency_storage, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_engineering_chief, access_medical_director, access_head_of_personnel, access_ghostdrone)
 
 			for(var/A in access_name_lookup)
 				if(access_name_lookup[A] in src.modify.access)
@@ -344,6 +350,19 @@
 				src.modify.icon_state = "id_sec"
 			if (newcolour == "green")
 				src.modify.icon_state = "id_com"
+	if (href_list["save"])
+		var/slot = text2num(href_list["save"])
+		if (!src.modify.assignment)
+			src.custom_names[slot] = "Custom [slot]"
+		else
+			src.custom_names[slot] = src.modify.assignment
+		src.custom_access_list[slot] = src.modify.access.Copy()
+		src.custom_access_list[slot] &= allowed_access_list //prevent saving non-allowed accesses
+	if (href_list["apply"])
+		var/slot = text2num(href_list["apply"])
+		src.modify.assignment = src.custom_names[slot]
+		var/list/selected_access_list = src.custom_access_list[slot]
+		src.modify.access = selected_access_list.Copy()
 	if (src.modify)
 		src.modify.name = "[src.modify.registered]'s ID Card ([src.modify.assignment])"
 	if (src.eject)
