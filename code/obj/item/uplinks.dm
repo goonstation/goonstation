@@ -1295,9 +1295,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			spell_group[SP.eqtype] = list("<center><b>[SP.eqtype]</b></center>")
 
 		if (!unusable)
-			link = "<a href='byond://?src=\ref[src];buyspell=\ref[SP]'><span class='spelllink [rowclass]'>[SP.name]</span></a>"
+			link = "<a href='byond://?src=\ref[src];buyspell=\ref[SP]'><span class='spelllink [rowclass]'>[SP.name] - cost: [SP.cost]</span></a>"
 		else
-			link = "<span class='spelllink [rowclass]'>[SP.name]</span>"
+			link = "<span class='spelllink [rowclass]'>[SP.name] - cost: [SP.cost]</span>"
 
 		spell_group[SP.eqtype] += "<div class='spell'>[link]<em>[rowtext]</em><div>[SP.desc][cooldown ? "<br><b>Cooldown: [cooldown / 10] sec.</b>" : ""]</div></div>"
 
