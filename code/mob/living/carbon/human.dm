@@ -681,8 +681,24 @@
 				HS.changeling.transferOwnership(HS)
 				HS.changeling.owner = HS
 				HS.changeling.reassign_hivemind_target_mob()
-				var/obj/head = src.organHolder.drop_organ("head")
-				qdel(head)
+				if(src.wear_mask)
+					var/obj/item/dropped_mask = src.wear_mask
+					src.u_equip(dropped_mask)
+					dropped_mask.set_loc(src.loc)
+				if(src.glasses)
+					var/obj/item/dropped_glasses = src.glasses
+					src.u_equip(dropped_glasses)
+					dropped_glasses.set_loc(src.loc)
+				if(src.head)
+					var/obj/item/dropped_headwear = src.head
+					src.u_equip(dropped_headwear)
+					dropped_headwear.set_loc(src.loc)
+				if(src.ears)
+					var/obj/item/dropped_earwear = src.ears
+					src.u_equip(dropped_earwear)
+					dropped_earwear.set_loc(src.loc)
+				var/obj/item/organ/head/organ_head = src.organHolder.drop_organ("head")
+				qdel(organ_head)
 
 				//HS.process() //A little kickstart to get you out into the big world (and some chump), li'l guy! O7
 
