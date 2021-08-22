@@ -1021,6 +1021,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 1
 	category = "Resource"
 
+#ifdef ENABLE_ARTEMIS
 /******************** Artemis **************************/
 
 /datum/manufacture/nav_sat
@@ -1031,6 +1032,8 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	time = 45 SECONDS
 	create = 1
 	category = "Component"
+
+#endif
 
 /******************** Robotics **************************/
 

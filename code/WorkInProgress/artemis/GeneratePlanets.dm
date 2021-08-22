@@ -4,6 +4,7 @@ var/planetZLevel = null
 var/list/planetModifiers = list()
 var/list/planetModifiersUsed = list()//Assoc list, type:times used
 
+#ifdef ENABLE_ARTEMIS
 /proc/makePlanetLevel()
 	var/list/turf/planetZ = list()
 	var/startTime = world.timeofday
@@ -280,3 +281,4 @@ ABSTRACT_TYPE(/datum/generatorPlanetPrefab)
 		if(!planetZLevel)
 			planetZLevel = src.z
 		..()
+#endif

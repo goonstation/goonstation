@@ -191,6 +191,7 @@
 			else
 				return 0
 
+#ifdef ENABLE_ARTEMIS
 /* Artemis Dialogue */
 
 /datum/dialogueMaster/telescopeArtemis
@@ -219,7 +220,7 @@
 				return 1
 			else
 				return 0
-
+#endif
 
 /* GENERIC ASTEROID DIALOGUE BELOW */
 

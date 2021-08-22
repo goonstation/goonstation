@@ -2553,6 +2553,7 @@
 	/datum/manufacture/fireaxe,
 	/datum/manufacture/shovel)
 
+#ifdef ENABLE_ARTEMIS
 /obj/machinery/manufacturer/artemis
 	name = "Scout Vessel Manufacturer"
 	desc = "A manufacturing unit that can produce equipment for scouting vessels."
@@ -2561,6 +2562,7 @@
 	accept_blueprints = 0
 	available = list(
 	/datum/manufacture/nav_sat)
+#endif
 
 #undef WIRE_EXTEND
 #undef WIRE_POWER
