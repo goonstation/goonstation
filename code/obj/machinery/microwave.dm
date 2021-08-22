@@ -4,6 +4,10 @@
 #define MW_COOK_DIRTY 4
 #define MW_COOK_EMPTY 5
 
+#define MW_STATE_WORKING 0
+#define MW_STATE_BROKEN_1 1
+#define MW_STATE_BROKEN_2 2
+
 /obj/machinery/microwave
 	name = "Microwave"
 	icon = 'icons/obj/kitchen.dmi'
@@ -11,32 +15,49 @@
 	icon_state = "mw"
 	density = 1
 	anchored = 1
-	var/egg_amount = 0 //Current number of eggs inside
-	var/flour_amount = 0 //Current amount of flour inside
-	var/water_amount = 0 //Current amount of water inside
+	/// Current number of eggs inside the microwave
+	var/egg_amount = 0
+	/// Current amount of flour inside the microwave
+	var/flour_amount = 0
+	/// Current amount of water inside the microwave
+	var/water_amount = 0
+	/// Current total of monkey meat inside the microwave
 	var/monkeymeat_amount = 0
+	/// Current total of synth meat inside the microwave
 	var/synthmeat_amount = 0
+	/// Current total of human meat inside the microwave
 	var/humanmeat_amount = 0
+	/// Current total of donk pockets inside the microwave
 	var/donkpocket_amount = 0
+	/// Stored name of human meat for cooked recipe
 	var/humanmeat_name = ""
+	/// Stored job of human meat for cooked recipe
 	var/humanmeat_job = ""
-	var/operating = 0 // Is it on?
-	var/dirty = 0 // Does it need cleaning?
-	var/broken = 0 // How broken is it???
-	var/cook_time = 20 SECONDS // The time to wait before spawning the item
-	var/list/available_recipes = list() // List of the recipes you can use
-	var/datum/recipe/cooked_recipe = null // The recipe being cooked
-	var/obj/item/reagent_containers/food/snacks/being_cooked = null // The item being cooked
-	var/obj/item/extra_item // One non food item that can be added
+	/// Microwave is currently running
+	var/operating = FALSE
+	/// If dirty the microwave cannot be used until cleaned
+	var/dirty = FALSE
+	/// Microwave damage, cannot be used until repaired
+	var/microwave_state = MW_STATE_WORKING
+	/// The time to wait before spawning the item
+	var/cook_time = 20 SECONDS
+	/// List of the recipes the microwave will check
+	var/list/available_recipes = list()
+	/// The current recipe being cooked
+	var/datum/recipe/cooked_recipe = null
+	/// The item to create when finished cooking
+	var/obj/item/reagent_containers/food/snacks/being_cooked = null
+	/// Single non food item that can be added to the microwave
+	var/obj/item/extra_item
 	mats = 12
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
-	var/emagged = 0
+	var/emagged = FALSE
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (src.emagged)
 			if (user)
 				user.show_text("You use the card to change the internal radiation setting to \"IONIZING\"", "blue")
-			src.emagged = 1
+			src.emagged = TRUE
 			return 1
 		else
 			if (user)
@@ -48,10 +69,11 @@
 			return 0
 		if (user)
 			user.show_text("You reset the radiation levels to a more food-safe setting.", "blue")
-		src.emagged = false
+		src.emagged = FALSE
 		return 1
 
-/obj/machinery/microwave/New() // *** After making the recipe in datums\recipes.dm, add it in here! ***
+/// After making the recipe in datums\recipes.dm, add it in here!
+/obj/machinery/microwave/New()
 	..()
 	src.available_recipes += new /datum/recipe/donut(src)
 	src.available_recipes += new /datum/recipe/synthburger(src)
@@ -69,17 +91,18 @@
 	src.available_recipes += new /datum/recipe/popcorn(src)
 	UnsubscribeProcess()
 
-
-/*******************
-*   Item Adding
-********************/
+/**
+	*  Item Adding
+	*/
 
 obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if(src.broken > 0)
-		if (isscrewingtool(O) && src.broken == 2)
+	if(src.operating)
+		return
+	if(src.microwave_state > 0)
+		if (isscrewingtool(O) && src.microwave_state == MW_STATE_BROKEN_2)
 			src.visible_message("<span class='notice'>[user] starts to fix part of the microwave.</span>")
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/microwave/proc/repair, list(user), 'icons/obj/items/tools/screwdriver.dmi', "screwdriver", "", null)
-		else if (src.broken == 1 && iswrenchingtool(O))
+		else if (src.microwave_state == MW_STATE_BROKEN_1 && iswrenchingtool(O))
 			src.visible_message("<span class='notice'>[user] starts to fix part of the microwave.</span>")
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/microwave/proc/repair, list(user), 'icons/obj/items/tools/wrench.dmi', "wrench", "", null)
 		else
@@ -154,32 +177,34 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			boutput(user, "There already seems to be an unusual item inside, so you don't add this one too.") //Let them know it failed for a reason though
 
 /obj/machinery/microwave/proc/repair(mob/user as mob)
-	if (src.broken == 2)
+	if (src.microwave_state == MW_STATE_BROKEN_2)
 		src.visible_message("<span class='notice'>[user] fixes part of the [src].</span>")
-		src.broken = 1 // Fix it a bit
-	else if (src.broken == 1)
+		src.microwave_state = MW_STATE_BROKEN_1 // Fix it a bit
+	else if (src.microwave_state == MW_STATE_BROKEN_1)
 		src.visible_message("<span class='notice'>[user] fixes the [src]!</span>")
 		src.icon_state = "mw"
-		src.broken = 0 // Fix it!
+		src.microwave_state = 0 // Fix it!
 
 /obj/machinery/microwave/proc/clean(mob/user as mob)
 	if (src.dirty)
 		src.visible_message("<span class='notice'>[user] finishes cleaning the [src].</span>")
-		src.dirty = 0
+		src.dirty = FALSE
 		src.icon_state = "mw"
 
-/*******************
-*   Microwave Menu
-********************/
+/**
+	*  Microwave Menu
+	*/
 
 /obj/machinery/microwave/attack_hand(mob/user as mob)
 	if (isghostdrone(user))
 		boutput(user, "<span class='alert'>\The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 		return
 	var/dat
-	if(src.broken > 0)
+	if(src.microwave_state > 0)
 		dat = {"
-		<TT>Bzzzzttttt</TT>
+		<TT>Bzzzzttttt<BR>
+		It's broken! It could be fixed with some common tools.</TT><BR>
+		<BR>
 				"}
 	else if(src.operating)
 		dat = {"
@@ -212,10 +237,9 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	return
 
 
-
-/***********************************
-*   Microwave Menu Handling/Cooking
-************************************/
+/**
+	*  Microwave Menu Selection Handling
+	*/
 
 /obj/machinery/microwave/Topic(href, href_list)
 	if(..())
@@ -229,7 +253,8 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			var/operation = text2num(href_list["cook"])
 			var/cooked_item = ""
 
-			if(operation == 1) // If cook was pressed
+			/// If cook was pressed in the menu
+			if(operation == 1)
 				src.visible_message("<span class='notice'>The microwave turns on.</span>")
 				playsound(src.loc, 'sound/machines/microwave_start.ogg', 50, 0)
 				var/diceinside = 0
@@ -265,15 +290,20 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 						src.being_cooked = new cooking(src)
 						src.cook(MW_COOK_VALID_RECIPE)
 
-			if(operation == 2) // If dispose was pressed, empty the microwave
+			/// If empty was selected in the menu
+			if(operation == 2)
 				if (length(src.contents))
 					for(var/obj/item/I in src.contents)
 						I.set_loc(get_turf(src))
 				src.clean_up()
 				boutput(usr, "You empty the contents out of the microwave.")
 
+/**
+	*  Microwave Cooking
+	*/
+
 /obj/machinery/microwave/proc/cook(var/result)
-	src.operating = 1 // Turn it on
+	src.operating = TRUE
 	src.icon_state = "mw1"
 	src.updateUsrDialog()
 	switch(result)
@@ -305,7 +335,7 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			elecflash(src,power=2)
 			icon_state = "mwb"
 			src.visible_message("<span class='alert'>The microwave breaks!</span>")
-			src.broken = 2
+			src.microwave_state = MW_STATE_BROKEN_2
 			src.extra_item.set_loc(get_turf(src)) // Eject the extra item so important shit like the disk can't be destroyed in there
 			src.extra_item = null
 		if(MW_COOK_EGG)
@@ -319,7 +349,7 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				return
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 			src.visible_message("<span class='alert'>The microwave gets covered in cooked egg!</span>")
-			src.dirty = 1
+			src.dirty = TRUE
 			src.icon_state = "mweggexplode"
 		if(MW_COOK_DIRTY)
 			sleep(4 SECONDS)
@@ -332,7 +362,7 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				return
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 			src.visible_message("<span class='alert'>The microwave gets covered in muck!</span>")
-			src.dirty = 1
+			src.dirty = TRUE
 			src.icon_state = "mwbloody"
 		if(MW_COOK_EMPTY)
 			sleep(8 SECONDS)
@@ -341,8 +371,11 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			src.icon_state = "mw"
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 	src.clean_up()
-	src.operating = 0
+	src.operating = FALSE
 
+/**
+	*  Disposing of microwave contents
+	*/
 
 /obj/machinery/microwave/proc/clean_up()
 	src.egg_amount = 0
@@ -376,3 +409,6 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 #undef MW_COOK_BREAK
 #undef MW_COOK_EGG
 #undef MW_COOK_DIRTY
+#undef MW_STATE_WORKING
+#undef MW_STATE_BROKEN_1
+#undef MW_STATE_BROKEN_2
