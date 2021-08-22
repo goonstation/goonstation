@@ -119,3 +119,6 @@
 	hopid
 		icon_state = "hopcase"
 		item_state = "hopcase"
+	hopidC
+		icon_state = "hopcaseC"
+		item_state = "hopcaseC"
