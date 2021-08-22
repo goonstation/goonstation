@@ -1292,8 +1292,16 @@
 			desc = "It's like an energy bar, but in donut form! Contains some chemicals known for partial stun time reduction and boosted stamina regeneration."
 			icon_state = "donut4"
 			amount = 6
-			initial_volume = 36
-			initial_reagents = list("sugar"=12,"synaptizine"=12,"epinephrine"=12)
+			initial_volume = 48
+			initial_reagents = list("sugar"=12,"synaptizine"=12,"epinephrine"=12,"salicylic_acid"=12)
+
+		robusted
+			name = "robusted donut"
+			desc = "A donut for those critical moments."
+			icon_state = "donut5"
+			amount = 6
+			initial_volume = 48
+			initial_reagents = list("salbutamol"=12,"epinephrine"=12,"saline"=12,"salicylic_acid"=12)
 
 		random
 			New()

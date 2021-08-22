@@ -876,6 +876,8 @@ var/f_color_selector_handler/F_Color_Selector
 	else if(T == "players")
 		var/n = 0
 		for(var/client/C)
+			if (C.stealth && !C.fakekey) // stealthed admins don't count
+				continue
 			n++
 		return n
 
@@ -924,6 +926,8 @@ var/f_color_selector_handler/F_Color_Selector
 		s["elapsed"] = elapsed
 		var/n = 0
 		for(var/client/C in clients)
+			if (C.stealth && !C.fakekey) // stealthed admins don't count
+				continue
 			s["player[n]"] = "[(C.stealth || C.alt_key) ? C.fakekey : C.key]"
 			n++
 		s["players"] = n

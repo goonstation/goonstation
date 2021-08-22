@@ -1,4 +1,47 @@
 
+(t)sat aug 21 21
+(u)Flourish
+(+)You can now buy packs of power cells (the large kind that fits in APCs) from QM.
+(u)Ikea
+(p)5778
+(e)|
+(+)Incapacitators now have an unswappable battery.
+(u)Tarmunora
+(e)⚖|balance
+(*)DOC has come to its senses, and has stopped buying cyberorgans, and buys normal parts for about 20% of what it used to
+(+)MDir's Doctor Bag comes with surgical scissors
+(*)Beds now count as somewhere inbetween regular tables and surgical tables. They require the patient to either by unconcious, or for them to be have ethanol/morphine in their system (same thresholds as standing self-surgery)
+(u)Kyle, Virva, Flab
+(p)5747
+(e)🗺🎨|mapping, sprites
+(*)Greatly reduce the availability of Auto-Menders for non-doctors. Adds Auto-Mender Refill Cartridges for brute/burn to vendors.
+(u)Flourish
+(e)⚖|balance
+(+)Removed the first aid kit from the sec support pool. Added a new type of donuts to the robust donut kit - robusted donuts. Robusted donuts contain salb, epi, saline, and salicylic, which are helpful for when you're in crit.
+(u)Flourish
+(+)You can now find menthol pills in public minimeds.
+(t)fri aug 20 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Expresso will cease causing BRAIN damage past 60
+(*)Chem contact damage changes (see minor)
+(+)Reduce max acid contact damage by 1/3
+(+)Basic acids (sulferic, hydrochloric, nitric) have diminishing returns on touch reaction damage when used together
+(+)Hot/Cold chem contact damage changed to a flat 7 BURN, matching hot/cold chem ingestion damage
+(u)Tarmunora
+(e)⚖|balance
+(*)Wizard hats are acidproof.
+(+)Prismatic spray projectiles have reduced chance to hit downed targets (90% -> 10)
+(u)Emily
+(p)5768
+(e)|
+(*)Auto Call Time shortened from 120 minutes to 90 minutes
+(*)RP Respawn Time shortened from 15 minutes to 10 minutes
+(*)You can now leave Industrial Cryo after only 5 minutes (prev. 15)
+(t)thu aug 19 21
+(u)Sovexe
+(e)🐛⚖|bug, balance
+(*)Resolved an issue with Arcfiend's discharge ability that was causing it to apply stamina damage twice per cast. Discharge and Jolt will now produce sparks when in use.
 (t)wed aug 18 21
 (u)Flourish
 (+)Charcoal pills now contain 20u. Analgesic and menthol pills now contain 10u.

@@ -3262,7 +3262,7 @@ var/global/noir = 0
 				switch(href_list["type"])
 					if("check_antagonist")
 						if (ticker?.mode && current_state >= GAME_STATE_PLAYING)
-							var/dat = "<html><head><title>Round Status</title></head><body><h1><B>Round Status</B></h1>"
+							var/dat = "<html><head><title>Round Status</title></head><body><h1><B>Round Status</B></h1><A href='?src=\ref[src];action=secretsadmin;type=check_antagonist'>Refresh</A><br><br>"
 							dat += "Current Game Mode: <B>[ticker.mode.name]</B><BR>"
 							dat += "Round Duration: <B>[round(world.time / 36000)]:[add_zero(world.time / 600 % 60, 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B><BR>"
 
@@ -3377,7 +3377,7 @@ var/global/noir = 0
 									if (!M) continue
 									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdead(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 									dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td>"
-									dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[M]'>Show Objective</A></td></tr>"
+									dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[M]'>([M.mind.special_role])</A></td></tr>"
 								dat += "</table>"
 
 							if(ticker.mode.Agimmicks.len > 0)
@@ -3387,7 +3387,7 @@ var/global/noir = 0
 									if(!M) continue
 									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdead(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 									dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td>"
-									dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[M]'>Show Objective</A></td></tr>"
+									dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[M]'>([M.mind.special_role])</A></td></tr>"
 								dat += "</table>"
 
 							if(miscreants.len > 0)
@@ -3504,7 +3504,7 @@ var/global/noir = 0
 
 		if ("view_logs_web")
 			if ((src.level >= LEVEL_MOD) && !src.tempmin)
-				usr << link("https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html")
+				usr << link("http://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html")
 
 		if ("view_logs")
 			if ((src.level >= LEVEL_MOD) && !src.tempmin)

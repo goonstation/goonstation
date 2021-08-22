@@ -19424,7 +19424,10 @@
 	name = "Genetic Research"
 	})
 "aUP" = (
-/obj/machinery/manufacturer/robotics,
+/obj/decal/cleanable/machine_debris{
+	icon_state = "gib7";
+	name = "smashed fabricator"
+	},
 /turf/simulated/floor/grime,
 /area/iss)
 "aUQ" = (

@@ -320,6 +320,9 @@
 			src.close()
 		return
 
+	if(istype(I, /obj/item/card/emag) && !src.cant_emag)
+		return
+
 	if (src.allowed(user))
 		if (src.density)
 			src.last_used = world.time

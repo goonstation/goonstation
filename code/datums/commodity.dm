@@ -14,6 +14,8 @@
 	var/hidden = 0 //Sometimes traders won't say if they will buy something
 	var/haggleattempts = 0
 	var/amount = -1 // Used for QM traders - how much of a thing they have for sale, unlim if -1
+	///if true, subtypes of this item will be accepted by NPC traders
+	var/subtype_valid = FALSE
 	// if its in the shopping cart, this is how many you're buying instead
 
 /*
@@ -1517,54 +1519,55 @@
 /datum/commodity/bodyparts
 	desc = "It's best not to ask too many questions."
 	onmarket = 0
+	subtype_valid = FALSE
 
 /datum/commodity/bodyparts/armL
 	comname = "Human Arm - Left"
 	comtype = /obj/item/parts/human_parts/arm/left
-	price = 2500
-	baseprice = 2500
-	upperfluc = 1500
-	lowerfluc = -500
+	price = 500
+	baseprice = 500
+	upperfluc = 300
+	lowerfluc = -100
 
 /datum/commodity/bodyparts/armR
 	comname = "Human Arm - Right"
 	comtype = /obj/item/parts/human_parts/arm/right
-	price = 2500
-	baseprice = 2500
-	upperfluc = 1500
-	lowerfluc = -500
+	price = 500
+	baseprice = 500
+	upperfluc = 300
+	lowerfluc = -100
 
 /datum/commodity/bodyparts/legL
 	comname = "Human Leg - Left"
 	comtype = /obj/item/parts/human_parts/leg/left
-	price = 2500
-	baseprice = 2500
-	upperfluc = 1500
-	lowerfluc = -500
+	price = 500
+	baseprice = 500
+	upperfluc = 300
+	lowerfluc = -100
 
 /datum/commodity/bodyparts/legR
 	comname = "Human Leg - Right"
 	comtype = /obj/item/parts/human_parts/leg/right
-	price = 2500
-	baseprice = 2500
-	upperfluc = 1500
-	lowerfluc = -500
+	price = 500
+	baseprice = 500
+	upperfluc = 300
+	lowerfluc = -100
 
 /datum/commodity/bodyparts/brain
 	comname = "Brain"
 	comtype = /obj/item/organ/brain
-	price = 5000
-	baseprice = 5000
-	upperfluc = 2500
-	lowerfluc = -1000
+	price = 1000
+	baseprice = 1000
+	upperfluc = 500
+	lowerfluc = -200
 
 /datum/commodity/bodyparts/synthbrain
 	comname = "Synthetic Brain"
 	comtype = /obj/item/organ/brain/synth
-	price = 500
-	baseprice = 500
-	upperfluc = 250
-	lowerfluc = -250
+	price = 100
+	baseprice = 100
+	upperfluc = 50
+	lowerfluc = -50
 
 /datum/commodity/bodyparts/aibrain
 	comname = "AI Neural Net Processor"
@@ -1577,18 +1580,18 @@
 /datum/commodity/bodyparts/butt
 	comname = "Human Butt"
 	comtype = /obj/item/clothing/head/butt
-	price = 5000
-	baseprice = 5000
-	upperfluc = 2500
-	lowerfluc = -2500
+	price = 1000
+	baseprice = 1000
+	upperfluc = 500
+	lowerfluc = -200
 
 /datum/commodity/bodyparts/synthbutt
 	comname = "Synthetic Butt"
 	comtype = /obj/item/clothing/head/butt/synth
-	price = 300
-	baseprice = 300
-	upperfluc = 300
-	lowerfluc = -150
+	price = 100
+	baseprice = 100
+	upperfluc = 50
+	lowerfluc = -50
 
 /datum/commodity/bodyparts/cyberbutt
 	comname = "Robutt"
@@ -1601,18 +1604,18 @@
 /datum/commodity/bodyparts/heart
 	comname = "Human Heart"
 	comtype = /obj/item/organ/heart
-	price = 5000
-	baseprice = 5000
-	upperfluc = 2500
-	lowerfluc = -2500
+	price = 1000
+	baseprice = 1000
+	upperfluc = 500
+	lowerfluc = -200
 
 /datum/commodity/bodyparts/synthheart
 	comname = "Synthetic Heart"
 	comtype = /obj/item/organ/heart/synth
-	price = 500
-	baseprice = 500
-	upperfluc = 250
-	lowerfluc = -250
+	price = 100
+	baseprice = 100
+	upperfluc = 50
+	lowerfluc = -50
 
 /datum/commodity/bodyparts/cyberheart
 	comname = "Cyberheart"
@@ -1625,26 +1628,26 @@
 /datum/commodity/bodyparts/l_eye
 	comname = "Left Human Eye"
 	comtype = /obj/item/organ/eye/left
-	price = 2500
-	baseprice = 2500
-	upperfluc = 1000
-	lowerfluc = -1000
+	price = 500
+	baseprice = 500
+	upperfluc = 200
+	lowerfluc = -100
 
 /datum/commodity/bodyparts/r_eye
 	comname = "Right Human Eye"
 	comtype = /obj/item/organ/eye/right
-	price = 2500
-	baseprice = 2500
-	upperfluc = 1000
-	lowerfluc = -1000
+	price = 500
+	baseprice = 500
+	upperfluc = 200
+	lowerfluc = -100
 
 /datum/commodity/bodyparts/syntheye
 	comname = "Synthetic Eye"
 	comtype = /obj/item/organ/eye/synth
-	price = 250
-	baseprice = 250
-	upperfluc = 100
-	lowerfluc = -100
+	price = 50
+	baseprice = 50
+	upperfluc = 30
+	lowerfluc = -10
 
 /datum/commodity/bodyparts/cybereye
 	comname = "Cybereye"
@@ -1737,18 +1740,18 @@
 /datum/commodity/bodyparts/l_lung
 	comname = "Left Human Lung"
 	comtype = /obj/item/organ/lung/left
-	price = 2500
-	baseprice = 2500
-	upperfluc = 1000
-	lowerfluc = -1000
+	price = 500
+	baseprice = 500
+	upperfluc = 200
+	lowerfluc = -100
 
 /datum/commodity/bodyparts/r_lung
 	comname = "Right Human Lung"
 	comtype = /obj/item/organ/lung/right
-	price = 2500
-	baseprice = 2500
-	upperfluc = 1000
-	lowerfluc = -1000
+	price = 500
+	baseprice = 500
+	upperfluc = 200
+	lowerfluc = -100
 
 /datum/commodity/bodyparts/l_cyberlung
 	comname = "Left Cyberlung"
@@ -1771,23 +1774,23 @@
 /datum/commodity/bodyparts/l_kidney
 	comname = "Left Human Kidney"
 	comtype = /obj/item/organ/kidney/left
-	price = 2200
-	baseprice = 2200
-	upperfluc = 900
-	lowerfluc = -900
+	price = 440
+	baseprice = 440
+	upperfluc = 180
+	lowerfluc = -180
 
 /datum/commodity/bodyparts/r_kidney
 	comname = "Right Human Kidney"
 	comtype = /obj/item/organ/kidney/right
-	price = 2200
-	baseprice = 2200
-	upperfluc = 900
-	lowerfluc = -900
+	price = 440
+	baseprice = 440
+	upperfluc = 180
+	lowerfluc = -180
 
 /datum/commodity/bodyparts/l_cyberkidney
 	comname = "Left Cyberkidney"
 	comtype = /obj/item/organ/kidney/cyber/left
-	price = 1000
+	price = 1200
 	baseprice = 1000
 	upperfluc = 500
 	lowerfluc = -500
@@ -1805,10 +1808,10 @@
 /datum/commodity/bodyparts/liver
 	comname = "Human Liver"
 	comtype = /obj/item/organ/liver
-	price = 3500
-	baseprice = 3500
-	upperfluc = 1500
-	lowerfluc = -1500
+	price = 700
+	baseprice = 700
+	upperfluc = 300
+	lowerfluc = -300
 
 /datum/commodity/bodyparts/cyberliver
 	comname = "Cyberliver"
@@ -1821,10 +1824,10 @@
 /datum/commodity/bodyparts/spleen
 	comname = "Human Spleen"
 	comtype = /obj/item/organ/spleen
-	price = 2200
-	baseprice = 2200
-	upperfluc = 1000
-	lowerfluc = -1000
+	price = 440
+	baseprice = 440
+	upperfluc = 200
+	lowerfluc = -200
 
 /datum/commodity/bodyparts/cyberspleen
 	comname = "Cyberspleen"
@@ -1837,10 +1840,10 @@
 /datum/commodity/bodyparts/pancreas
 	comname = "Human Pancreas"
 	comtype = /obj/item/organ/pancreas
-	price = 1100
-	baseprice = 1100
-	upperfluc = 200
-	lowerfluc = -200
+	price = 220
+	baseprice = 220
+	upperfluc = 20
+	lowerfluc = -20
 
 /datum/commodity/bodyparts/cyberpancreas
 	comname = "Cyberpancreas"
@@ -1853,10 +1856,10 @@
 /datum/commodity/bodyparts/appendix
 	comname = "Human Appendix"
 	comtype = /obj/item/organ/appendix
-	price = 100
-	baseprice = 100
-	upperfluc = 100
-	lowerfluc = -99
+	price = 20
+	baseprice = 20
+	upperfluc = 20
+	lowerfluc = -19
 
 /datum/commodity/bodyparts/cyberappendix
 	comname = "Cyberappendix"
@@ -1869,10 +1872,10 @@
 /datum/commodity/bodyparts/stomach
 	comname = "Human Stomach"
 	comtype = /obj/item/organ/stomach
-	price = 2500
-	baseprice = 2500
-	upperfluc = 1000
-	lowerfluc = -1000
+	price = 500
+	baseprice = 500
+	upperfluc = 200
+	lowerfluc = -200
 
 /datum/commodity/bodyparts/cyberstomach
 	comname = "Cyberstomach"
@@ -1885,10 +1888,10 @@
 /datum/commodity/bodyparts/intestines
 	comname = "Human Intestines"
 	comtype = /obj/item/organ/intestines
-	price = 2500
-	baseprice = 2500
-	upperfluc = 1000
-	lowerfluc = -1000
+	price = 500
+	baseprice = 500
+	upperfluc = 200
+	lowerfluc = -200
 
 /datum/commodity/bodyparts/cyberintestines
 	comname = "Cyberintestines"
