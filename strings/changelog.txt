@@ -1,5 +1,7 @@
 
 (t)sat aug 21 21
+(u)Flourish
+(+)You can now buy packs of power cells (the large kind that fits in APCs) from QM.
 (u)Ikea
 (p)5778
 (e)|
