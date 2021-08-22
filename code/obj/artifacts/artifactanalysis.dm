@@ -70,7 +70,7 @@
 		. = ..()
 		if(isobj(A))
 			checkArtifactVars(A)
-			src.updateTypeLabel()
+			src.updateTypeLabel(src.artifactType)
 
 	attackby(obj/item/W, mob/living/user)
 		if(istype(W, /obj/item/pen)) // write on it
@@ -150,18 +150,27 @@
 			"hasPen" = P
 		)
 
+	remove_from_attached()
+		src.removeTypeLabel()
+		. = ..()
+
 	/// updates the label that shows what type the artifact supposedly is
-	proc/updateTypeLabel(var/newtype = null)
+	proc/updateTypeLabel(var/newtype)
+		// nothing to set, so no need!
+		if(newtype == "")
+			return
 		if(isobj(src.attached))
 			var/obj/O = src.attached
-			O.remove_suffixes("([src.artifactType])")
-			O.name_suffix("([newtype])")
+			O.remove_suffixes("\[[src.artifactType]\]")
+			O.name_suffix("\[[newtype]\]")
+			O.UpdateName()
 
-	/// removes the label that shows what type the arifact supposedly is
+	/// removes the label that shows what type the artifact supposedly is
 	proc/removeTypeLabel()
 		if(isobj(src.attached))
 			var/obj/O = src.attached
-			O.remove_suffixes("([src.artifactType])")
+			O.remove_suffixes("\[[src.artifactType]\]")
+			O.UpdateName()
 
 /obj/artifact_paper_dispenser
 	name = "artifact analysis form tray"
