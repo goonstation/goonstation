@@ -24,7 +24,7 @@
 			lastAnalysis++
 
 		// check type
-		if(A.get_artifact_type() == src.artifactType)
+		if(A.type_name == src.artifactType)
 			lastAnalysis++
 
 		// if a trigger would be redundant, let's just say it's cool!

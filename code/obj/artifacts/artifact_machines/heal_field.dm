@@ -4,8 +4,6 @@
 
 #define ART_HEALING 0
 #define ART_HARMING 1
-#define ART_HEALING_NAME "Healing Energy Field"
-#define ART_HARMING_NAME "Harming Energy Field"
 /datum/artifact/bio_damage_field_generator
 	associated_object = /obj/machinery/artifact/bio_damage_field_generator
 	type_name = list(ART_HEALING_NAME, ART_HARMING_NAME)
@@ -21,9 +19,6 @@
 	var/field_radius = 7
 	var/field_type = ART_HEALING
 	var/field_strength = 2
-
-	get_artifact_type()
-		return field_type == ART_HEALING ? ART_HEALING_NAME : ART_HARMING_NAME
 
 	New()
 		..()
@@ -55,5 +50,3 @@
 
 #undef ART_HEALING
 #undef ART_HARMING
-#undef ART_HEALING_NAME
-#undef ART_HARMING_NAME
