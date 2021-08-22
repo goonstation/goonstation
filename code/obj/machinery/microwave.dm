@@ -409,6 +409,7 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 #undef MW_COOK_BREAK
 #undef MW_COOK_EGG
 #undef MW_COOK_DIRTY
+#undef MW_COOK_EMPTY
 #undef MW_STATE_WORKING
 #undef MW_STATE_BROKEN_1
 #undef MW_STATE_BROKEN_2
