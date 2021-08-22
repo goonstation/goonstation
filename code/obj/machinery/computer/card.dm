@@ -25,7 +25,6 @@
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "id2"
 
-<<<<<<< HEAD
 /obj/machinery/computer/card/portable
   name = "Portable Id Computer"
   icon_state = "idport"
@@ -37,8 +36,7 @@
 /obj/machinery/computer/card/attack_ai(var/mob/user as mob)
 	return src.attack_hand(user)
 
-=======
->>>>>>> 4fbed5a96bef56a2cc72455ce5c13861ce971119
+
 /obj/machinery/computer/card/attack_hand(var/mob/user as mob)
 	if(..())
 		return
