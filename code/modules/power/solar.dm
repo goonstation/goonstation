@@ -72,6 +72,7 @@
 	density = 1
 	directwired = 1
 	processing_tier = PROCESSING_32TH // Uncomment this and line 175 for an experimental optimization
+	power_usage = 10
 	var/health = 10.0
 	var/id = 1
 	var/obscured = 0
@@ -158,7 +159,9 @@
 
 	sunfrac = cos(p_angle) ** 2
 
-#define SOLARGENRATE 1500
+// Previous SOLARGENRATE was 1500 WATTS processed every 3.3 SECONDS.  This provides 454.54 WATTS every second
+// Adjust accordingly based on machine proc rate
+#define SOLARGENRATE (454.54 * MACHINE_PROCS_PER_SEC)
 
 /obj/machinery/power/solar/process()
 
@@ -167,7 +170,7 @@
 
 	if(!obscured)
 		var/sgen = SOLARGENRATE * sunfrac
-		sgen *= 1<<(current_processing_tier-1) // twice the power for half processing, 4 times for quarter etc.
+		sgen *= PROCESSING_TIER_MULTI(src)
 		add_avail(sgen)
 		if(powernet && control && powernet == control.powernet)
 			control.gen += sgen
@@ -177,6 +180,7 @@
 		var/max_move = rand(8, 12)
 		adir = (360 + adir + clamp(ndir - adir, -max_move, max_move)) % 360
 		if(adir != old_adir)
+			use_power(power_usage)
 			updateicon()
 
 		update_solar_exposure()

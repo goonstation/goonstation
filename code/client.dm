@@ -6,6 +6,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 #else
 	preload_rsc = 1
 #endif
+	parent_type = /datum
 	var/datum/player/player = null
 	var/datum/admins/holder = null
 	var/datum/preferences/preferences = null
@@ -312,8 +313,13 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 								<title>VPN or Proxy Detected</title>
 							</head>
 							<body>
-								<h1>Please disable your VPN, close the game, and rejoin.</h1><br>
-								If you are not using a VPN please join <a href="https://discord.com/invite/zd8t6pY">our Discord server</a> and ask an admin for help.
+								<h1>Warning: VPN or proxy connection detected</h1>
+
+                                Please disable your VPN or proxy, close the game, and rejoin.<br>
+                                <h2>Not using a VPN or proxy / Having trouble connecting?</h2>
+								If you are not using a VPN or proxy please join <a href="https://discord.com/invite/zd8t6pY">our Discord server</a> and request an admins assistance with  whitelisting your account.
+                                 <br> <br>
+                                 If an admin is not immediately available you may also use the <b><u>/report</u></b> command in our discord server to submit a ticket to the administration. Please be sure to include your byond ckey (aka your username), and the name of your ISP in your ticket to avoid delays.
 							</body>
 						</html>
 					"}
@@ -340,7 +346,6 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 			var/list/data
 			try
 				data = apiHandler.queryAPI("vpncheck", list("ip" = src.address, "ckey" = src.ckey), 1, 1, 1)
-
 				// Goonhub API error encountered
 				if (data["error"])
 					logTheThing("admin", src, null, "unable to check VPN status of [src.address] because: [data["error"]]")
@@ -348,7 +353,8 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 				// Successful Goonhub API query
 				else
-					if (data["whitelisted"])
+					var/result = dpi(data)
+					if (result == 2 || data["whitelisted"])
 						// User is explicitly whitelisted from VPN checks, ignore
 						global.vpn_ip_checks["[src.address]"] = false
 
@@ -366,13 +372,13 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 						// Successful VPN check
 						// IP is a known VPN, cache locally and kick
-						else if (data["vpn"] == true || data["tor"] == true)
+						else if (result || ((data["vpn"] == true || data["tor"] == true) && data["fraud_score"] > 75))
 							global.vpn_ip_checks["[src.address]"] = true
 							addPlayerNote(src.ckey, "VPN Blocker", "[src.address] attempted to connect via vpn or proxy. Info: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]")
 							logTheThing("admin", src, null, "[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]")
 							logTheThing("diary", src, null, "[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]", "admin")
-							message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
-							ircbot.export("admin", list(key="VPN Blocker", name="[src.key]", msg="[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]"))
+							message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked! VPN info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]], fraud score: [data["fraud_score"]]")
+							ircbot.export("admin", list(key="VPN Blocker", name="[src.key]", msg="[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]], fraud score: [data["fraud_score"]]"))
 							if(do_compid_analysis)
 								do_computerid_test(src) //Will ban yonder fucker in case they are prix
 								check_compid_list(src) //Will analyze their computer ID usage patterns for aberrations
@@ -1139,6 +1145,11 @@ var/global/curr_day = null
 /client/proc/cloud_available()
 	return src.player.cloud_available()
 
+/client/proc/message_one_admin(source, message)
+	if(!src.holder)
+		return
+	boutput(src, replacetext(replacetext(message, "%admin_ref%", "\ref[src.holder]"), "%client_ref%", "\ref[src]"))
+
 /proc/add_test_screen_thing()
 	var/client/C = input("For who", "For who", null) in clients
 	var/wavelength_shift = input("Shift wavelength bounds by <x> nm, should be in the range of -370 to 370", "Wavelength shift", 0) as num
@@ -1476,6 +1487,12 @@ if([removeOnFinish])
 </body>
 </html>
 	"}, "window=pregameBrowser")
+
+#ifndef SECRETS_ENABLED
+/client/proc/dpi(list/data)
+	return
+#endif
+
 /world/proc/showCinematic(var/name, var/removeOnFinish = 0)
 	for(var/client/C)
 		C.showCinematic(name, removeOnFinish)

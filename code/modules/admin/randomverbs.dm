@@ -379,7 +379,7 @@
 		// More info would be nice (Convair880).
 		var/dat = ""
 		for (var/mob/living/silicon/S in mobs)
-			if (S.mind && S.mind.special_role == "vampthrall" && ismob(whois_ckey_to_mob_reference(S.mind.master)))
+			if (S.mind && S.mind.special_role == ROLE_VAMPTHRALL && ismob(whois_ckey_to_mob_reference(S.mind.master)))
 				dat += "<br>[S] is a vampire's thrall, only obeying [whois_ckey_to_mob_reference(S.mind.master)]."
 			else
 				if (isAI(S)) continue // Rogue AIs modify the global lawset.
@@ -772,21 +772,24 @@
 			src.tf_holder.mobAppearance.flavor_text = new_text
 
 		else if (href_list["customization_first"])
-			var/new_style = input(usr, "Please select style", "Polymorph Menu")  as null|anything in (customization_styles + customization_styles_gimmick)
+			var/list/customization_types = concrete_typesof(/datum/customization_style)
+			var/new_style = select_custom_style(customization_types, usr)
 
 			if (new_style)
 				src.tf_holder.mobAppearance.customization_first = new_style
 				src.tf_holder.mobAppearance.customization_first_original = new_style
 
 		else if (href_list["customization_second"])
-			var/new_style = input(usr, "Please select style", "Polymorph Menu")  as null|anything in (customization_styles + customization_styles_gimmick)
+			var/list/customization_types = concrete_typesof(/datum/customization_style)
+			var/new_style = select_custom_style(customization_types, usr)
 
 			if (new_style)
 				src.tf_holder.mobAppearance.customization_second = new_style
 				src.tf_holder.mobAppearance.customization_second_original = new_style
 
 		else if (href_list["customization_third"])
-			var/new_style = input(usr, "Please select style", "Polymorph Menu")  as null|anything in (customization_styles + customization_styles_gimmick)
+			var/list/customization_types = concrete_typesof(/datum/customization_style)
+			var/new_style = select_custom_style(customization_types, usr)
 
 			if (new_style)
 				src.tf_holder.mobAppearance.customization_third = new_style
@@ -927,13 +930,13 @@
 
 		dat += "<hr><b>Bottom Detail</b><br>"
 		dat += "<a href='byond://?src=\ref[src];hair=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.customization_first_color]\"><table bgcolor=\"[src.tf_holder.mobAppearance.customization_first_color]\"><tr><td>C1</td></tr></table></font>"
-		dat += "Style: <a href='byond://?src=\ref[src];customization_first=input'>[src.tf_holder.mobAppearance.customization_first]</a>"
+		dat += "Style: <a href='byond://?src=\ref[src];customization_first=input'>[src.tf_holder.mobAppearance.customization_first.name]</a>"
 		dat += "<hr><b>Mid Detail</b><br>"
 		dat += "<a href='byond://?src=\ref[src];facial=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.customization_second_color]\"><table bgcolor=\"[src.tf_holder.mobAppearance.customization_second_color]\"><tr><td>C2</td></tr></table></font>"
-		dat += "Style: <a href='byond://?src=\ref[src];customization_second=input'>[src.tf_holder.mobAppearance.customization_second]</a>"
+		dat += "Style: <a href='byond://?src=\ref[src];customization_second=input'>[src.tf_holder.mobAppearance.customization_second.name]</a>"
 		dat += "<hr><b>Top Detail</b><br>"
 		dat += "<a href='byond://?src=\ref[src];detail=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.customization_third_color]\"><table bgcolor=\"[src.tf_holder.mobAppearance.customization_third_color]\"><tr><td>C3</td></tr></table></font>"
-		dat += "Style: <a href='byond://?src=\ref[src];customization_third=input'>[src.tf_holder.mobAppearance.customization_third]</a>"
+		dat += "Style: <a href='byond://?src=\ref[src];customization_third=input'>[src.tf_holder.mobAppearance.customization_third.name]</a>"
 
 		dat += "<hr><b>Eyes</b><br>"
 		dat += "<a href='byond://?src=\ref[src];eyes=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.e_color]\"><table bgcolor=\"[src.tf_holder.mobAppearance.e_color]\"><tr><td>EC</td></tr></table></font>"
@@ -1015,15 +1018,15 @@
 		if (AH.customization_first_color == null)
 			AH.customization_first_color = "#101010"
 		if (AH.customization_first == null)
-			AH.customization_first = "None"
+			AH.customization_first = new /datum/customization_style/none
 		if (AH.customization_second_color == null)
 			AH.customization_second_color = "#101010"
 		if (AH.customization_second == null)
-			AH.customization_second = "None"
+			AH.customization_second = new /datum/customization_style/none
 		if (AH.customization_third_color == null)
 			AH.customization_third_color = "#101010"
 		if (AH.customization_third == null)
-			AH.customization_third = "None"
+			AH.customization_third = new /datum/customization_style/none
 		if (AH.e_color == null)
 			AH.e_color = "#101010"
 		if (AH.u_color == null)
@@ -1069,31 +1072,25 @@
 			src.preview_icon.Blend(eyes_s, ICON_OVERLAY)
 
 		if(!src.mutantrace?.override_hair)
-			customization_first_r = customization_styles[src.tf_holder.mobAppearance.customization_first]
+			customization_first_r = src.tf_holder.mobAppearance.customization_first.id
 			if(!customization_first_r)
-				customization_first_r = customization_styles_gimmick[src.tf_holder.mobAppearance.customization_first]
-				if(!customization_first_r)
-					customization_first_r = "None"
+				customization_first_r = "none"
 			var/icon/hair_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = customization_first_r)
 			hair_s.Blend(src.tf_holder.mobAppearance.customization_first_color, ICON_MULTIPLY)
 			eyes_s.Blend(hair_s, ICON_OVERLAY)
 
 		if(!src.mutantrace?.override_beard)
-			customization_second_r = customization_styles[src.tf_holder.mobAppearance.customization_second]
+			customization_second_r = src.tf_holder.mobAppearance.customization_second.id
 			if(!customization_second_r)
-				customization_second_r = customization_styles_gimmick[src.tf_holder.mobAppearance.customization_second]
-				if(!customization_second_r)
-					customization_second_r = "None"
+				customization_second_r = "none"
 			var/icon/facial_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = customization_second_r)
 			facial_s.Blend(src.tf_holder.mobAppearance.customization_second_color, ICON_MULTIPLY)
 			eyes_s.Blend(facial_s, ICON_OVERLAY)
 
 		if(!src.mutantrace?.override_detail)
-			customization_third_r = customization_styles[src.tf_holder.mobAppearance.customization_third]
+			customization_third_r = src.tf_holder.mobAppearance.customization_third.id
 			if(!customization_third_r)
-				customization_third_r = customization_styles_gimmick[src.tf_holder.mobAppearance.customization_third]
-				if(!customization_third_r)
-					customization_third_r = "none"
+				customization_third_r = "none"
 			var/icon/detail_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = customization_third_r)
 			detail_s.Blend(src.tf_holder.mobAppearance.customization_third_color, ICON_MULTIPLY)
 			eyes_s.Blend(detail_s, ICON_OVERLAY)
@@ -1752,11 +1749,11 @@
 			E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 
 	switch (former_role)
-		if ("mindslave") return
-		if ("vampthrall") return
+		if (ROLE_MINDSLAVE) return
+		if (ROLE_VAMPTHRALL) return
 		if ("spyslave") return
-		if ("blob") M.humanize(1)
-		if ("wraith") M.humanize(1)
+		if (ROLE_BLOB) M.humanize(1)
+		if (ROLE_WRAITH) M.humanize(1)
 		else
 			if (ishuman(M))
 				// They could be in a pod or whatever, which would have unfortunate results when respawned.
@@ -2739,6 +2736,11 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 	if(src.holder.level >= LEVEL_ADMIN)
 		switch(alert("Turn space into a swamp? This is probably going to lag a bunch when it happens and there's no easy undo!",,"Yes","No"))
 			if("Yes")
+				var/rain = alert("Should it be raining?",,"Yes", "No", "Particles!")
+				rain = (rain == "No") ? null : rain
+				var/image/weather = image('icons/turf/water.dmi',"fast_rain", layer = EFFECTS_LAYER_BASE)
+				weather.alpha = 200
+				weather.plane = PLANE_NOSHADOW_ABOVE
 				var/image/I = new /image/ambient
 				var/datum/map_generator/jungle_generator/map_generator = new
 				var/list/space = list()
@@ -2746,8 +2748,17 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 					space += S
 				map_generator.generate_terrain(space)
 				for (var/turf/S in space)
+					if(rain)
+						if(istype(S,/turf/unsimulated/floor/auto/swamp))
+							S.ReplaceWith(/turf/unsimulated/floor/auto/swamp/rain, force=TRUE)
+						if(rain == "Yes")
+							S.UpdateOverlays(weather, "rain")
+						else
+							new /obj/effects/rain/sideways/tile(S)
 					I.color = ambient_light
 					S.UpdateOverlays(I, "ambient")
+				shippingmarket.clear_path_to_market()
+
 				logTheThing("admin", src, null, "turned space into a swamp.")
 				logTheThing("diary", src, null, "turned space into a swamp.", "admin")
 				message_admins("[key_name(src)] turned space into a swamp.")
@@ -2822,6 +2833,7 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 						created_loot.initialize()
 
 					LAGCHECK(LAG_MED)
+				shippingmarket.clear_path_to_market()
 				logTheThing("admin", src, null, "generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].")
 				logTheThing("diary", src, null, "generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].", "admin")
 				message_admins("[key_name(src)] generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].")

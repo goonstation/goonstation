@@ -34,6 +34,9 @@ var/datum/action_controller/actions
 		return
 
 	proc/start(var/datum/action/A, var/atom/owner) //Starts a new action.
+		if(!owner)
+			qdel(A)
+			return
 		if(!(owner in running))
 			running.Add(owner)
 			running[owner] = list(A)
@@ -129,11 +132,17 @@ var/datum/action_controller/actions
 /datum/action/bar //This subclass has a progressbar that attaches to the owner to show how long we need to wait.
 	var/obj/actions/bar/bar
 	var/obj/actions/border/border
+	var/obj/actions/bar/target_bar
+	var/obj/actions/border/target_border
 	var/bar_icon_state = "bar"
 	var/border_icon_state = "border"
 	var/color_active = "#4444FF"
 	var/color_success = "#00CC00"
 	var/color_failure = "#CC0000"
+	/// By default the bar is put on the owner, define this on the progress bar as the place you want to put it on.
+	var/atom/movable/place_to_put_bar = null
+	/// In case we want the owner to have no visible action bar but still want to make the bar.
+	var/bar_on_owner = TRUE
 
 	onStart()
 		..()
@@ -146,23 +155,42 @@ var/datum/action_controller/actions
 			bar.pixel_y = 5
 			bar.pixel_x = 0
 			border.pixel_y = 5
-			A.vis_contents += bar
-			A.vis_contents += border
+			if (bar_on_owner)
+				A.vis_contents += bar
+				A.vis_contents += border
+			if (place_to_put_bar)
+				target_bar = unpool(/obj/actions/bar)
+				target_border = unpool(/obj/actions/border)
+				target_border.set_icon_state(src.border_icon_state)
+				target_bar.set_icon_state(src.bar_icon_state)
+				target_bar.pixel_y = 5
+				target_bar.pixel_x = 0
+				target_border.pixel_y = 5
+				place_to_put_bar.vis_contents += target_bar
+				place_to_put_bar.vis_contents += target_border
+
 			// this will absolutely obviously cause no problems.
 			bar.color = src.color_active
+			if (target_bar)
+				target_bar.color = src.color_active
 			updateBar()
 
 	onRestart()
 		//Start the bar back at 0
 		bar.transform = matrix(0, 0, -15, 0, 1, 0)
+		if (target_bar)
+			target_bar.transform = matrix(0, 0, -15, 0, 1, 0)
 		..()
 
 	onDelete()
 		..()
 		var/atom/movable/A = owner
-		if (owner != null)
+		if (owner && bar_on_owner)
 			A.vis_contents -= bar
 			A.vis_contents -= border
+		if (place_to_put_bar)
+			place_to_put_bar.vis_contents -= target_bar
+			place_to_put_bar.vis_contents -= target_border
 		SPAWN_DBG(0.5 SECONDS)
 			if (bar)
 				bar.set_loc(null)
@@ -172,12 +200,23 @@ var/datum/action_controller/actions
 				border.set_loc(null)
 				pool(border)
 				border = null
+			if (target_bar)
+				target_bar.set_loc(null)
+				pool(target_bar)
+				target_bar = null
+			if (target_border)
+				target_border.set_loc(null)
+				pool(target_border)
+				target_border = null
 
 	disposing()
 		var/atom/movable/A = owner
-		if (owner != null)
+		if (owner && bar_on_owner)
 			A.vis_contents -= bar
 			A.vis_contents -= border
+		if (place_to_put_bar)
+			place_to_put_bar.vis_contents -= target_bar
+			place_to_put_bar.vis_contents -= target_border
 		if (bar)
 			bar.set_loc(null)
 			pool(bar)
@@ -186,6 +225,14 @@ var/datum/action_controller/actions
 			border.set_loc(null)
 			pool(border)
 			border = null
+		if (target_bar)
+			target_bar.set_loc(null)
+			pool(target_bar)
+			target_bar = null
+		if (target_border)
+			target_border.set_loc(null)
+			pool(target_border)
+			target_border = null
 		..()
 
 	onEnd()
@@ -193,6 +240,10 @@ var/datum/action_controller/actions
 			bar.color = "#FFFFFF"
 			animate( bar, color = src.color_success, time = 2.5 , flags = ANIMATION_END_NOW)
 			bar.transform = matrix() //Tiny cosmetic fix. Makes it so the bar is completely filled when the action ends.
+		if (target_bar)
+			target_bar.color = "#FFFFFF"
+			animate( target_bar, color = src.color_success, time = 2.5 , flags = ANIMATION_END_NOW)
+			target_bar.transform = matrix() //Tiny cosmetic fix. Makes it so the target's bar is completely filled when the action ends.
 		..()
 
 	onInterrupt(var/flag)
@@ -201,12 +252,19 @@ var/datum/action_controller/actions
 				updateBar(0)
 				bar.color = "#FFFFFF"
 				animate( bar, color = src.color_failure, time = 2.5 )
+			if (target_bar)
+				updateBar(0)
+				target_bar.color = "#FFFFFF"
+				animate( target_bar, color = src.color_failure, time = 2.5 )
 		..()
 
 	onResume()
 		if (bar)
 			updateBar()
 			bar.color = src.color_active
+		if (target_bar)
+			updateBar()
+			target_bar.color = src.color_active
 		..()
 
 	onUpdate()
@@ -222,10 +280,16 @@ var/datum/action_controller/actions
 		var/remain = max(0, fakeduration - done)
 		var/complete = clamp(done / fakeduration, 0, 1)
 		bar.transform = matrix(complete, 0, -15 * (1 - complete), 0, 1, 0)
+		if (target_bar)
+			target_bar.transform = matrix(complete, 0, -15 * (1 - complete), 0, 1, 0)
 		if (animate)
 			animate( bar, transform = matrix(1, 0, 0, 0, 1, 0), time = remain )
+			if (target_bar)
+				animate( target_bar, transform = matrix(1, 0, 0, 0, 1, 0), time = remain )
 		else
 			animate( bar, flags = ANIMATION_END_NOW )
+			if (target_bar)
+				animate( target_bar, flags = ANIMATION_END_NOW )
 		return
 
 /datum/action/bar/blob_health // WOW HACK
@@ -340,6 +404,8 @@ var/datum/action_controller/actions
 	var/icon_x_off = 0
 	var/image/icon_image
 	var/icon_plane = PLANE_HUD
+	/// Is the icon also on the target if we have one? if this is TRUE, make sure the target only handles overlays by using the UpdateOverlays proc.
+	var/icon_on_target = FALSE
 
 	onStart()
 		..()
@@ -349,11 +415,15 @@ var/datum/action_controller/actions
 			icon_image.pixel_x = icon_x_off
 			icon_image.plane = icon_plane
 			icon_image.filters += filter(type="outline", size=0.5, color=rgb(255,255,255))
-			border.overlays += icon_image
+			border.UpdateOverlays(icon_image, "action_icon")
+			if (icon_on_target && place_to_put_bar)
+				target_border.UpdateOverlays(icon_image, "action_icon")
 
 	onDelete()
-		if (bar)
-			bar.overlays.Cut()
+		if (icon_on_target && place_to_put_bar && target_border)
+			target_border.UpdateOverlays(null, "action_icon")
+		if (border)
+			border.UpdateOverlays(null, "action_icon")
 		if (icon_image)
 			del(icon_image)
 		..()
@@ -370,6 +440,8 @@ var/datum/action_controller/actions
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	/// set to the path of the proc that will be called if the action bar finishes
 	var/proc_path = null
+	/// set to datum to perform callback on if seperate from owner or target
+	var/call_proc_on = null
 	/// what the target of the action is, if any
 	var/target = null
 	/// what string is broadcast once the action bar finishes
@@ -379,7 +451,7 @@ var/datum/action_controller/actions
 	/// a list of args for the proc thats called once the action bar finishes, if needed.
 	var/list/proc_args = null
 
-	New(owner, target, duration, proc_path, proc_args, icon, icon_state, end_message)
+	New(owner, target, duration, proc_path, proc_args, icon, icon_state, end_message, interrupt_flags, call_proc_on)
 		..()
 		if (owner)
 			src.owner = owner
@@ -395,6 +467,8 @@ var/datum/action_controller/actions
 			src.proc_path = proc_path
 		else //no proc, dont do the thing
 			CRASH("no proc was specified to be called once the action bar ends")
+		if(call_proc_on)
+			src.call_proc_on = call_proc_on
 		if (proc_args)
 			src.proc_args = proc_args
 		if (icon) //optional, dont always want an icon
@@ -405,7 +479,8 @@ var/datum/action_controller/actions
 			CRASH("icon state set for action bar, but no icon was set")
 		if (end_message)
 			src.end_message = end_message
-
+		if (interrupt_flags)
+			src.interrupt_flags = interrupt_flags
 		//generate a id
 		if (src.proc_path)
 			src.id = "[src.proc_path]"
@@ -438,7 +513,9 @@ var/datum/action_controller/actions
 
 		if (end_message)
 			src.owner.visible_message("[src.end_message]")
-		if (src.target)
+		if (src.call_proc_on)
+			INVOKE_ASYNC(arglist(list(src.call_proc_on, src.proc_path) + src.proc_args))
+		else if (src.target)
 			INVOKE_ASYNC(arglist(list(src.target, src.proc_path) + src.proc_args))
 		else
 			INVOKE_ASYNC(arglist(list(src.owner, src.proc_path) + src.proc_args))
@@ -928,6 +1005,8 @@ var/datum/action_controller/actions
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
+		logTheThing("combat", owner, target, "attempts to handcuff [constructTarget(target,"combat")] with [cuffs] at [log_loc(owner)].")
+
 		duration *= cuffs.apply_multiplier
 
 		if(ishuman(owner))
@@ -1128,7 +1207,7 @@ var/datum/action_controller/actions
 	pooled()
 		loc = null
 		attached_objs = list()
-		overlays.len = 0
+		ClearAllOverlays()
 		..()
 
 	set_icon_state(new_state)
@@ -1154,7 +1233,7 @@ var/datum/action_controller/actions
 	pooled()
 		loc = null
 		attached_objs = list()
-		overlays.len = 0
+		ClearAllOverlays()
 		..()
 
 	set_icon_state(new_state)
@@ -1553,7 +1632,7 @@ var/datum/action_controller/actions
 		onEnd()
 			..()
 			if (can_reach(owner,over_object) && ismob(owner) && owner:equipped() == target)
-				over_object.attackby(target, owner, params)
+				over_object.Attackby(target, owner, params)
 
 /// general purpose action to anchor or unanchor stuff
 /datum/action/bar/icon/anchor_or_unanchor

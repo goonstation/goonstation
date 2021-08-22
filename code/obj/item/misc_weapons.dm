@@ -311,8 +311,8 @@
 		else
 			user.visible_message("<b>[user]</b> loads a glowstick into [src].")
 			loaded_glowstick = W
-			user.u_equip(W)
 			W.set_loc(src)
+			user.u_equip(W)
 			var/datum/component/holdertargeting/simple_light/light_c = src.GetComponent(/datum/component/holdertargeting/simple_light)
 			switch(src.loaded_glowstick.color_name)
 				if("red")
@@ -861,17 +861,17 @@
 	two_handed = 0
 
 	w_class = W_CLASS_NORMAL
-	force = 15
-	throwforce = 5
+	force = 20
+	throwforce = 10
 	throw_speed = 2
 	throw_range = 4
-	stamina_damage = 30
-	stamina_cost = 20
-	stamina_crit_chance = 2
+	stamina_damage = 25
+	stamina_cost = 15
+	stamina_crit_chance = 5
 
 	proc/set_values()
 		if(two_handed)
-			src.click_delay = 15
+			src.click_delay = COMBAT_CLICK_DELAY * 1.5
 			force = 40
 			throwforce = 25
 			throw_speed = 4
@@ -880,7 +880,7 @@
 			stamina_cost = 25
 			stamina_crit_chance = 10
 		else
-			src.click_delay = 10
+			src.click_delay = COMBAT_CLICK_DELAY
 			force = 20
 			throwforce = 10
 			throw_speed = 2
@@ -1193,6 +1193,7 @@
 	desc = "It can clean a bloodied katana, and also allows for easier storage of a katana"
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "katana_sheathed"
+	wear_layer = MOB_SHEATH_LAYER
 	uses_multiple_icon_states = 1
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "sheathedhand"
@@ -1454,7 +1455,7 @@ obj/item/whetstone
 /obj/item/heavy_power_sword
 	name = "Hadar heavy power-sword"
 	desc = "A heavy cyalume saber variant, builds generator charge when used in combat & supports multiple attack types."
-	icon = 'icons/obj/64x32.dmi'
+	icon = 'icons/obj/large/64x32.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi'
 	wear_image_icon = 'icons/mob/back.dmi'
 	icon_state = "hadar_sword2"
@@ -1541,7 +1542,7 @@ obj/item/whetstone
 	two_handed = 1
 	click_delay = 30
 
-	force = 25 //this number is multiplied by 4 when attacking doors.
+	force = 30 //this number is multiplied by 4 when attacking doors.
 	stamina_damage = 60
 	stamina_cost = 30
 

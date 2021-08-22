@@ -43,7 +43,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	/// The color that was set by the player's preferences
 	var/customization_first_color_original = "#101010"
 	/// The hair style / detail thing that gets displayed on your spaceperson
-	var/customization_first = "Trimmed"
+	var/datum/customization_style/customization_first = new /datum/customization_style/hair/short/short
 	/// The hair style / detail thing that was set by the player in their settings
 	var/customization_first_original = "None"
 	/// The Y offset to display this image
@@ -51,13 +51,13 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	var/customization_second_color = "#101010"
 	var/customization_second_color_original = "#101010"
-	var/customization_second = "None"
+	var/datum/customization_style/customization_second =  new /datum/customization_style/none
 	var/customization_second_original = "None"
 	var/customization_second_offset_y = 0
 
 	var/customization_third_color = "#101010"
 	var/customization_third_color_original = "#101010"
-	var/customization_third = "None"
+	var/datum/customization_style/customization_third = new /datum/customization_style/none
 	var/customization_third_original = "None"
 	var/customization_third_offset_y = 0
 
@@ -230,7 +230,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		e_offset_y = toCopy.e_offset_y
 		e_color_original = toCopy.e_color_original
 
-		s_tone = toCopy.s_tone_original // *usually* we want to have a normal skintone by default. *usually*
+		s_tone = toCopy.s_tone
 		s_tone_original = toCopy.s_tone_original
 
 		underwear = toCopy.underwear
@@ -656,6 +656,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 				newEffect.can_scramble = 0
 				newEffect.can_reclaim = 0
 				newEffect.degrade_to = null
+				newEffect.can_copy = 0
 
 			effects[newEffect.id] = newEffect
 			newEffect.owner = owner
@@ -671,6 +672,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 				else
 					boutput(owner, "<span class='notice'>[newEffect.msgGain]</span>")
 			mobAppearance.UpdateMob()
+			logTheThing("combat", owner, null, "gains the [newEffect] mutation at [log_loc(owner)].")
 			return newEffect
 
 		return 0
@@ -700,6 +702,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			else
 				boutput(owner, "<span class='notice'>[BE.msgGain]</span>")
 		mobAppearance.UpdateMob()
+		logTheThing("combat", owner, null, "gains the [BE] mutation at [log_loc(owner)].")
 		return BE
 
 	proc/RemoveEffect(var/id)
@@ -721,6 +724,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 					boutput(owner, "<span class='alert'>[D.msgLose]</span>")
 			if (mobAppearance)
 				mobAppearance.UpdateMob()
+			logTheThing("combat", owner, null, "loses the [D] mutation at [log_loc(owner)].")
 			return effects.Remove(D.id)
 
 		return 0

@@ -9,11 +9,17 @@
 	name = "personal locker"
 	desc = "The first card swiped gains control."
 	personal = 1
-	spawn_contents = list(/obj/item/storage/backpack,
-	/obj/item/storage/backpack/satchel,
-	/obj/item/device/radio/signaler,
+	spawn_contents = list(/obj/item/device/radio/signaler,
 	/obj/item/pen,
 	/obj/item/device/radio/headset)
+
+	make_my_stuff() //Let's spawn the backpack/satchel in random colours!
+		. = ..()
+		if (. == 1) //if we've not spawned stuff before
+			var/backwear = pick(/obj/item/storage/backpack,/obj/item/storage/backpack/blue,/obj/item/storage/backpack/red,/obj/item/storage/backpack/green)
+			new backwear(src)
+			backwear = pick(/obj/item/storage/backpack/satchel,/obj/item/storage/backpack/satchel/blue,/obj/item/storage/backpack/satchel/red,/obj/item/storage/backpack/satchel/green)
+			new backwear(src)
 
 /obj/storage/secure/closet/personal/empty
 	spawn_contents = list()
@@ -115,6 +121,7 @@
 	/obj/item/clothing/shoes/brown,
 	/obj/item/gun/implanter,
 	/obj/item/gun/reagent/syringe/NT,
+	/obj/item/reagent_containers/mender/both,
 	/obj/item/gun/kinetic/dart_rifle,
 	/obj/item/ammo/bullets/tranq_darts,
 	/obj/item/ammo/bullets/tranq_darts/anti_mutant,
@@ -515,6 +522,7 @@
 	name = "\improper Mechanic's locker"
 	req_access = list(access_engineering_mechanic)
 	spawn_contents = list(/obj/item/storage/toolbox/electrical,
+	/obj/item/device/accessgun/lite,
 	/obj/item/clothing/suit/wintercoat/engineering,
 	/obj/item/storage/box/clothing/mechanic,
 	/obj/item/clothing/gloves/yellow,
@@ -546,6 +554,7 @@
 	/obj/item/storage/box/clothing/engineer,
 	/obj/item/clothing/suit/wintercoat/engineering,
 	/obj/item/clothing/mask/gas,
+	/obj/item/old_grenade/oxygen,
 	/obj/item/clothing/head/helmet/hardhat,
 	/obj/item/clothing/glasses/meson,
 	/obj/item/pen/infrared,

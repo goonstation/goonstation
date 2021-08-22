@@ -779,11 +779,11 @@ var/global/datum/simsControl/simsController = new()
 	// relay procs
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (owner)
-			owner.attackby(W, user)
+			owner.Attackby(W, user)
 
 	attack_hand(mob/user as mob)
 		if (owner)
-			owner.attack_hand(user)
+			owner.Attackhand(user)
 
 	attack_ai(mob/user as mob)
 		if (owner)

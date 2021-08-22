@@ -9,6 +9,7 @@
 	plane = PLANE_NOSHADOW_ABOVE
 	deconstruct_flags = DECON_WIRECUTTERS | DECON_MULTITOOL
 	machine_registry_idx = MACHINES_FIREALARMS
+	power_usage = 10
 	var/alarm_frequency = "1437"
 	var/detecting = 1.0
 	var/working = 1.0
@@ -66,7 +67,7 @@
 	return
 
 /obj/machinery/firealarm/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/firealarm/bullet_act(BLAH)
 	return src.alarm()
@@ -95,7 +96,7 @@
 	if(status & (NOPOWER|BROKEN))
 		return
 
-	use_power(10, ENVIRON)
+	use_power(power_usage, ENVIRON)
 
 
 /obj/machinery/firealarm/power_change()

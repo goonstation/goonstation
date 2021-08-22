@@ -5,6 +5,8 @@
 	desc = "A remote control switch for a door."
 	var/id = null
 	var/timer = 0
+	var/cooldown = 0 SECONDS
+	var/inuse = FALSE
 	anchored = 1.0
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_NOSHADOW_ABOVE
@@ -391,15 +393,15 @@
 	UnsubscribeProcess()
 
 /obj/machinery/door_control/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/door_control/attackby(obj/item/W, mob/user as mob)
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/door_control/attack_hand(mob/user as mob)
-	if(status & (NOPOWER|BROKEN))
+	if((status & (NOPOWER|BROKEN)) || inuse)
 		return
 
 	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
@@ -447,6 +449,11 @@
 						M.operating = 0
 			M.setdir()
 
+	if(src.cooldown)
+		inuse = TRUE
+		sleep(src.cooldown)
+		inuse = FALSE
+
 	SPAWN_DBG(1.5 SECONDS)
 		if(!(status & NOPOWER))
 			icon_state = "doorctrl0"
@@ -472,13 +479,13 @@
 //////////////Mass Driver Button	///////////////////
 ///////////////////////////////////////////////////////
 /obj/machinery/driver_button/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/driver_button/attackby(obj/item/W, mob/user as mob)
 
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/driver_button/attack_hand(mob/user as mob)
 
@@ -976,12 +983,12 @@
 			return ..()
 
 	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
 	attackby(obj/item/W, mob/user as mob)
 		if(istype(W, /obj/item/device/detective_scanner))
 			return
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_hand(mob/user as mob)
 		boutput(user, "<span class='notice'>The password is \[[src.pass]\]</span>")

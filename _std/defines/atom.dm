@@ -12,6 +12,7 @@
 #define IS_LIMB_ITEM 32 				//im a limb
 #define HAS_KUDZU 64					//if a turf has kudzu.
 #define HAS_NBGG 128					//if a turf has NBGG.
+#define BEING_CRUSHERED 256				//if an atom/movable is in the crusher (so conveyors don't push it around)
 
 //event_handler_flags
 #define USE_PROXIMITY 1 	//Atom implements HasProximity() call in some way.

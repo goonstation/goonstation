@@ -339,7 +339,7 @@
 			else
 				if (src.occupant.mind && ticker.mode)
 					if (!src.occupant.mind.special_role)
-						src.occupant.mind.special_role = "mindslave"
+						src.occupant.mind.special_role = ROLE_MINDSLAVE
 					if (!(src.occupant.mind in ticker.mode.Agimmicks))
 						ticker.mode.Agimmicks += src.occupant.mind
 					src.occupant.mind.master = implant_master.ckey
@@ -671,6 +671,8 @@
 		set name = "Toggle Auto Mode"
 		set category = "Local"
 
+		if (!isalive(usr) && !isAIeye(usr))
+			return
 		src.auto_mode = 1 - src.auto_mode
 		boutput(usr, "<span class='notice'>\The [src] will [src.auto_mode ? "automatically" : "no longer"] automatically prepare new bodies for clones.</span>")
 		add_fingerprint(usr)

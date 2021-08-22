@@ -43,10 +43,10 @@
 		message_admins("[key_name(tplayer.current)] successfully redeems an antag token.")
 		//num_blobs = max(0, num_blobs - 1)
 
-	var/list/chosen_blobs = antagWeighter.choose(pool = possible_blobs, role = "blob", amount = num_blobs, recordChosen = 1)
+	var/list/chosen_blobs = antagWeighter.choose(pool = possible_blobs, role = ROLE_BLOB, amount = num_blobs, recordChosen = 1)
 	traitors |= chosen_blobs
 	for (var/datum/mind/blob in traitors)
-		blob.special_role = "blob"
+		blob.special_role = ROLE_BLOB
 		blob.assigned_role = "MODE"
 		possible_blobs.Remove(blob)
 
@@ -104,7 +104,7 @@
 	for (var/datum/mind/M in traitors)
 		if (!M)
 			continue
-		if (M.special_role != "blob")
+		if (M.special_role != ROLE_BLOB)
 			continue
 		if (isblob(M.current))
 			var/mob/living/intangible/blob_overmind/O = M.current
@@ -113,7 +113,7 @@
 	for (var/datum/mind/M in Agimmicks)
 		if (!M)
 			continue
-		if (M.special_role != "blob")
+		if (M.special_role != ROLE_BLOB)
 			continue
 		if (isblob(M.current))
 			var/mob/living/intangible/blob_overmind/O = M.current

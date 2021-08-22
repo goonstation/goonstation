@@ -193,14 +193,6 @@ var/list/globalPropList = null
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "+[propVal]% block chance"
 
-	deflection
-		name = "Deflection"
-		id = "deflection"
-		desc = "Improves chance to resist being disarmed." //Value is extra block chance.
-		tooltipImg = "block.png"
-		defaultValue = 10
-		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "+[propVal]% additional chance to deflect disarm attempts"
 	pierceprot
 		name = "Piercing Resistance"
 		id = "pierceprot"
@@ -337,7 +329,8 @@ var/list/globalPropList = null
 			. = ..()
 			for(var/datum/objectProperty/P in owner.properties)
 				if(P.id == "enchant") continue
-				owner.setProperty(P.id, owner.getProperty(P.id)*(1+(value/10)))
+				var/val = owner.getProperty(P.id)
+				owner.setProperty(P.id, val * (1+(P.goodDirection * sign(val) * (value/10))))
 			owner.force *= (1+value/10)
 
 		onChange(obj/item/owner, oldValue, newValue)
@@ -349,7 +342,8 @@ var/list/globalPropList = null
 			. = ..()
 			for(var/datum/objectProperty/P in owner.properties)
 				if(P.id == "enchant") continue
-				owner.setProperty(P.id, owner.getProperty(P.id)/(1+(value/10)))
+				var/val = owner.getProperty(P.id)
+				owner.setProperty(P.id, val / (1+(P.goodDirection * sign(val) * (value/10))))
 			owner.force /= (1+value/10)
 
 	inline //Seriously, if anyone has a better idea, tell me.
@@ -566,5 +560,17 @@ to say if there's demand for that.
 		return "[propVal] stamina regen."
 
 	ASSOCIATE_MOB_PROPERTY(PROP_STAMINA_REGEN_BONUS)
+
+/datum/objectProperty/equipment/deflection
+	name = "Deflection"
+	id = "deflection"
+	desc = "Improves chance to resist being disarmed." //Value is extra block chance.
+	tooltipImg = "block.png"
+	defaultValue = 10
+
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "+[propVal]% additional chance to deflect disarm attempts"
+
+	ASSOCIATE_MOB_PROPERTY(PROP_DISARM_RESIST)
 
 #undef ASSOCIATE_MOB_PROPERTY

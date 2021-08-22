@@ -15,6 +15,7 @@
 	var/arrival_announcements_enabled = 1
 	var/say_language = "english"
 	var/arrivalalert = "$NAME has signed up as $JOB."
+	var/departurealert = "$NAME the $JOB has entered cryogenic storage."
 	var/obj/item/device/radio/intercom/announcement_radio = null
 	var/voice_message = "broadcasts"
 	var/voice_name = "Announcement Computer"
@@ -202,6 +203,18 @@
 			src.announcement_radio = new(src)
 
 		var/message = replacetext(replacetext(replacetext(src.arrivalalert, "$STATION", "[station_name()]"), "$JOB", person.mind.assigned_role), "$NAME", person.real_name)
+		message = replacetext(replacetext(replacetext(message, "$THEY", "[he_or_she(person)]"), "$THEM", "[him_or_her(person)]"), "$THEIR", "[his_or_her(person)]")
+
+		var/list/messages = process_language(message)
+		src.announcement_radio.talk_into(src, messages, 0, src.name, src.say_language)
+		logTheThing("station", src, null, "ANNOUNCES: [message]")
+		return 1
+
+	proc/announce_departure(var/mob/living/person)
+		if (!src.announcement_radio)
+			src.announcement_radio = new(src)
+
+		var/message = replacetext(replacetext(replacetext(src.departurealert, "$STATION", "[station_name()]"), "$JOB", person.mind.assigned_role), "$NAME", person.real_name)
 		message = replacetext(replacetext(replacetext(message, "$THEY", "[he_or_she(person)]"), "$THEM", "[him_or_her(person)]"), "$THEIR", "[his_or_her(person)]")
 
 		var/list/messages = process_language(message)

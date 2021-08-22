@@ -8,6 +8,7 @@
 	w_class = 3.0
 	force = 8.0
 	mats = 0
+	cell_type = /obj/item/ammo/power_cell/self_charging/pod_wars_basic
 
 	var/image/indicator_display = null
 	var/display_color =	"#00FF00"
@@ -46,27 +47,35 @@
 
 
 	New()
-		var/obj/item/ammo/power_cell/self_charging/pod_wars_basic/PC = new/obj/item/ammo/power_cell/self_charging/pod_wars_basic()
-		cell = PC
 		current_projectile = new initial_proj
 		projectiles = list(current_projectile)
 		src.indicator_display = image('icons/obj/items/gun.dmi', "")
+		if(istype(loc, /mob/living))
+			RegisterSignal(loc, COMSIG_MOB_DEATH, .proc/stop_charging)
 		..()
 
 
 	update_icon()
 		..()
 		// src.overlays = null
-
-		if (src.cell)
-			var/maxCharge = (src.cell.max_charge > 0 ? src.cell.max_charge : 0)
-			var/ratio = min(1, src.cell.charge / maxCharge)
+		var/list/ret = list()
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			var/ratio = min(1, ret["charge"] / ret["max_charge"])
 			ratio = round(ratio, 0.25) * 100
 			if (ratio == 0)
 				return
 			indicator_display.icon_state = "pw_pistol_power-[ratio]"
 			indicator_display.color = display_color
 			UpdateOverlays(indicator_display, "ind_dis")
+
+	proc/stop_charging()
+		var/turf/T = get_turf(src)
+		var/fluff = pick("boop", "beep", "warble", "buzz", "bozzle", "wali", "hum", "whistle")
+		T.visible_message("<span class='notice'>[src] lets out a sad [fluff]</span>", "<span class='notice'>You hear a sad [fluff]</span>")
+		src.can_swap_cell = 0
+		src.rechargeable = 0
+
+		AddComponent(/datum/component/cell_holder, list(null, null, 0), 0, null, 0)
 
 	nanotrasen
 		muzzle_flash = "muzzle_flash_plaser"
@@ -172,7 +181,6 @@
 			if(src.custom_projectile_type)
 				PJ.spread_projectile_type = src.custom_projectile_type
 				PJ.pellet_shot_volume = 75 / PJ.pellets_to_fire
-			message_admins(initial(custom_projectile_type.power))
 			//if you're on top of it, eat all the shots. Deal 1/4 damage per shot. Doesn't make sense logically, but w/e.
 			var/mob/living/L = locate(/mob/living) in get_turf(src)
 			if (istype(L))
@@ -223,7 +231,7 @@
 			var/mob/living/L = locate(/mob/living) in get_turf(src)
 			if (istype(L))
 				L.do_disorient(stamina_damage = 120, weakened = 60, stunned = 0, disorient = 0, remove_stamina_below_zero = 0)
-				L.TakeDamage("chest", rand(20, 40)/L.get_melee_protection(), 0, 0, DAMAGE_BLUNT)
+				L.TakeDamage("chest", rand(20, 40)/max(1, L.get_melee_protection()), 0, 0, DAMAGE_BLUNT)
 				L.emote("twitch_v")
 			else
 

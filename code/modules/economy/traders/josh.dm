@@ -160,7 +160,7 @@
 	"Want to look as cool as me? Grab a pair of fingerless gloves.")
 
 /datum/commodity/trader/josh/energydrink
-	comname = "Brotien Shake"
+	comname = "Brotein Shake"
 	comtype = /obj/item/reagent_containers/food/drinks/energyshake
 	amount = 2
 	price_boundary = list(700,1400)

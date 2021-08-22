@@ -42,7 +42,7 @@
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.sims)
-				H.sims.affectMotive("Hunger", heal_amt * 2)
+				H.sims.affectMotive("Hunger", heal_amt * 6)
 				H.sims.affectMotive("Bladder", -heal_amt * 0.2)
 
 		if (quality >= 5)
@@ -89,8 +89,6 @@
 	festivity = 0
 	rc_flags = 0
 	edible = 1
-	module_research = list("cuisine" = 6)
-	module_research_type = /obj/item/reagent_containers/food/snacks
 	rand_pos = 1
 	var/has_cigs = 0
 
@@ -247,7 +245,7 @@
 						var/obj/item/reagent_containers/food/snacks/plant/P = src
 						var/doseed = 1
 						var/datum/plantgenes/SRCDNA = P.plantgenes
-						if (!SRCDNA || HYPCheckCommut(SRCDNA,"Seedless")) doseed = 0
+						if (!SRCDNA || HYPCheckCommut(SRCDNA, /datum/plant_gene_strain/seedless)) doseed = 0
 						if (doseed)
 							var/datum/plant/stored = P.planttype
 							if (istype(stored) && !stored.isgrass)
@@ -398,8 +396,6 @@
 	festivity = 0
 	rc_flags = 0
 	edible = 1
-	module_research = list("cuisine" = 6)
-	module_research_type = /obj/item/reagent_containers/food/snacks
 	rand_pos = 1
 	var/did_react = 0
 
@@ -440,7 +436,9 @@
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	var/splash_all_contents = 1
 	doants = 0
+	throw_speed = 1
 	var/can_recycle = 1
+	var/can_chug = 1
 
 	New()
 		..()
@@ -462,6 +460,37 @@
 			logTheThing("combat", user, null, "spills the contents of [src] [log_reagents(src)] all over [him_or_her(user)]self at [log_loc(user)].")
 			src.reagents.reaction(get_turf(user), TOUCH)
 			src.reagents.clear_reagents()
+
+	MouseDrop(atom/over_object)
+		..()
+		if(!(usr == over_object)) return
+		if(!istype(usr, /mob/living/carbon)) return
+		var/mob/living/carbon/C = usr
+
+		var/maybe_too_clumsy = FALSE
+		var/maybe_too_tipsy = FALSE
+		var/too_drunk = FALSE
+		if(!can_chug)
+			boutput(C, "<span class='alert'>You can't seem to chug from [src.name]! How odd.</span>")
+			return
+		if(C.bioHolder)
+			maybe_too_clumsy = C.bioHolder.HasEffect("clumsy") && prob(50)
+		if(C.reagents.reagent_list["ethanol"])
+			maybe_too_tipsy = (C.reagents.reagent_list["ethanol"].volume >= 50) && prob(50)
+			too_drunk = C.reagents.reagent_list["ethanol"].volume >= 150
+
+		if(too_drunk || maybe_too_tipsy || maybe_too_clumsy)
+			C.visible_message("[C.name] was too energetic, and threw the [src.name] backwards instead of chugging it!")
+			src.set_loc(get_turf(C))
+			C.u_equip(src)
+			var/target = get_steps(C, turn(C.dir, 180), 7) //7 tiles seems appropriate.
+			src.throw_at(target, 7, 1)
+			if (!C.hasStatus("weakened"))
+				//Make them fall over, they lost their balance.
+				C.changeStatus("weakened", 2 SECONDS)
+		else
+			actions.start(new /datum/action/bar/icon/chug(C, src), C)
+		return
 
 	//Wow, we copy+pasted the heck out of this... (Source is chemistry-tools dm)
 	attack_self(mob/user as mob)
@@ -520,7 +549,7 @@
 */
 			if (src.reagents.total_volume)
 				logTheThing("combat", user, M, "[user == M ? "takes a sip from" : "makes [constructTarget(M,"combat")] drink from"] [src] [log_reagents(src)] at [log_loc(user)].")
-				src.reagents.reaction(M, INGEST, gulp_size)
+				src.reagents.reaction(M, INGEST, min(reagents.total_volume, gulp_size, (M.reagents?.maximum_volume-M.reagents?.total_volume)))
 				SPAWN_DBG(0.5 SECONDS)
 					if (src?.reagents && M?.reagents)
 						src.reagents.trans_to(M, min(reagents.total_volume, gulp_size))
@@ -662,7 +691,6 @@
 	icon_state = "bowl"
 	item_state = "zippo"
 	initial_volume = 50
-	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 
 	var/image/fluid_image = null
 
@@ -760,7 +788,6 @@
 	var/shatter = 0
 	initial_volume = 50
 	g_amt = 60
-	rc_flags = RC_VISIBLE | RC_FULLNESS | RC_SPECTRO
 
 	New()
 		..()
@@ -884,7 +911,7 @@
 					playsound(U, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 					var/damage = rand(5,15)
 					random_brute_damage(user, damage)
-					take_bleeding_damage(user, damage)
+					take_bleeding_damage(user, null, damage)
 			else
 				src.shatter++
 				user.visible_message("<span class='alert'><b>[user]</b> [pick("shanks","stabs","attacks")] [target] with the broken [src]!</span>")
@@ -892,7 +919,7 @@
 				playsound(target, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
 				var/damage = rand(1,10)
 				random_brute_damage(target, damage)//shiv that nukie/secHoP
-				take_bleeding_damage(target, damage)
+				take_bleeding_damage(target, null, damage)
 		..()
 
 	proc/smash_on_thing(mob/user as mob, atom/target as turf|obj|mob) // why did I have this as a proc on tables?  jeez, babbycoder haine, you really didn't know shit about nothin
@@ -961,7 +988,6 @@
 	icon_state = "glass-drink"
 	item_state = "glass-drink"
 	var/icon_style = "drink"
-	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	g_amt = 30
 	var/glass_style = "drink"
 	var/salted = 0
@@ -1191,7 +1217,7 @@
 					H.urine -= 2
 				else
 					H.sims.affectMotive("Bladder", 100)
-				src.reagents.add_reagent("urine", 20)
+				src.reagents.add_reagent("urine", 8)
 			else
 				boutput(H, "<span class='alert'>You don't feel like you need to go.</span>")
 			return
@@ -1263,47 +1289,19 @@
 			src.wedge = null
 		qdel(src)
 
-	MouseDrop(atom/over_object)
-		..()
-		if(!(usr == over_object)) return
-		if(!istype(usr, /mob/living/carbon)) return
-		var/mob/living/carbon/C = usr
-
-		var/maybe_too_clumsy = FALSE
-		var/maybe_too_tipsy = FALSE
-		var/too_drunk = FALSE
-		if(C.bioHolder)
-			maybe_too_clumsy = C.bioHolder.HasEffect("clumsy") && prob(50)
-		if(C.reagents.reagent_list["ethanol"])
-			maybe_too_tipsy = (C.reagents.reagent_list["ethanol"].volume >= 50) && prob(50)
-			too_drunk = C.reagents.reagent_list["ethanol"].volume >= 150
-
-		if(too_drunk || maybe_too_tipsy || maybe_too_clumsy)
-			C.visible_message("[C.name] was too energetic, and threw the [src.name] backwards instead of chugging it!")
-			src.set_loc(get_turf(C))
-			C.u_equip(src)
-			var/target = get_steps(C, turn(C.dir, 180), 7) //7 tiles seems appropriate.
-			src.throw_at(target, 7, 1)
-			if (!C.hasStatus("weakened"))
-				//Make them fall over, they lost their balance.
-				C.changeStatus("weakened", 2 SECONDS)
-		else
-			actions.start(new /datum/action/bar/icon/drinkingglass_chug(C, src), C)
-		return
-
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
 		src.smash(A)
 
 //this action accepts a target that is not the owner, incase we want to allow forced chugging.
-/datum/action/bar/icon/drinkingglass_chug
+/datum/action/bar/icon/chug
 	duration = 0.5 SECONDS
-	id = "drinkingglass chugging"
+	id = "chugging"
 	var/mob/glassholder
 	var/mob/target
-	var/obj/item/reagent_containers/food/drinks/drinkingglass/glass
+	var/obj/item/reagent_containers/food/drinks/glass
 
-	New(mob/Target, obj/item/reagent_containers/food/drinks/drinkingglass/Glass)
+	New(mob/Target, obj/item/reagent_containers/food/drinks/Glass)
 		..()
 		target = Target
 		glass = Glass
@@ -1343,7 +1341,7 @@
 	onEnd()
 
 		if (glass.reagents.total_volume) //Take a sip
-			glass.reagents.reaction(target, INGEST, glass.gulp_size)
+			glass.reagents.reaction(target, INGEST, min(glass.reagents.total_volume, glass.gulp_size, (target.reagents?.maximum_volume-target.reagents?.total_volume)))
 			glass.reagents.trans_to(target, min(glass.reagents.total_volume, glass.gulp_size))
 			playsound(target.loc,"sound/items/drink.ogg", rand(10,50), 1)
 			target.urine += 0.1
@@ -1423,7 +1421,6 @@
 	initial_volume = 50
 	amount_per_transfer_from_this = 5
 	can_recycle = FALSE
-	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	var/image/chem = new /image('icons/obj/foodNdrink/food.dmi',"icing_tube_chem")
 
 	on_reagent_change()
@@ -1588,7 +1585,6 @@
 	desc = "A thing which you can drink fluids out of. Um. It's made from a skull. Considering how many holes are in skulls, this is perhaps a questionable design."
 	icon_state = "skullchalice"
 	item_state = "skullchalice"
-	rc_flags = RC_SPECTRO
 	can_recycle = FALSE
 
 /obj/item/reagent_containers/food/drinks/mug
@@ -1596,7 +1592,6 @@
 	desc = "A standard mug, for coffee or tea or whatever you wanna drink."
 	icon_state = "mug"
 	item_state = "mug"
-	rc_flags = RC_SPECTRO
 
 	dan
 		name = "odd mug"
@@ -1639,7 +1634,6 @@
 	desc = "A cup made of paper. It's not that complicated."
 	icon_state = "paper_cup"
 	item_state = "drink_glass"
-	rc_flags = RC_SPECTRO
 	initial_volume = 15
 	can_recycle = 0
 
@@ -1648,7 +1642,6 @@
 	desc = "A fancy espresso cup, for sipping in the finest establishments." //*tip
 	icon_state = "fancycoffee"
 	item_state = "coffee"
-	rc_flags = RC_SPECTRO | RC_FULLNESS | RC_VISIBLE //see _setup.dm
 	initial_volume = 20
 	gulp_size = 2.5
 	g_amt = 2.5 //might be broken still, Whatever
@@ -1672,8 +1665,8 @@
 	desc = null
 	icon_state = "carafe-eng"
 	item_state = "carafe-eng"
-	rc_flags = RC_SPECTRO | RC_FULLNESS | RC_VISIBLE
 	initial_volume = 100
+	can_chug = 0
 	var/smashed = 0
 	var/shard_amt = 1
 	var/image/fluid_image
@@ -1761,21 +1754,19 @@
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	icon_state = "coconut"
 	item_state = "drink_glass"
-	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	g_amt = 30
 	initial_volume = 50
 	can_recycle = FALSE
 	initial_reagents = list("coconut_milk"=20)
 
 /obj/item/reagent_containers/food/drinks/energyshake
-	name = "Brotien Shake - Dragon Balls flavor"
+	name = "Brotein Shake - Dragon Balls flavor"
 	desc = {"Do you want to get PUMPED UP? Try this 100% NATURAL shake FRESH from the press!
 	We guarantee FULL ACTIVATION of midi-whatevers to EHNANCE your performance on and off the field.
 	Embrace the STRENGTH and POWER of the dragon WITHIN YOU! Spread your newfound wings and ELEVATE your soul!
 	When you are off on your long journey, who do you turn to? Brotien Shake's brand new flavor: DRAGON BALLS!"}
 	icon_state = "energy"
 	item_state = "drink_glass"
-	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	g_amt = 10
 	initial_volume = 25
 	initial_reagents = list("energydrink"=20)
@@ -1787,7 +1778,6 @@
 	icon = 'icons/obj/foodNdrink/bottle.dmi'
 	icon_state = "detflask"
 	item_state = "detflask"
-	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	g_amt = 5
 	initial_volume = 40
 	can_recycle = FALSE
@@ -1800,6 +1790,7 @@
 	icon_state = "cocktailshaker"
 	initial_volume = 120
 	can_recycle = 0
+	can_chug = 0
 
 	New()
 		..()

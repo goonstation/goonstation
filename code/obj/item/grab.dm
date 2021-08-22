@@ -102,7 +102,7 @@
 		..()
 		dropped += 1
 		if(src.assailant)
-			REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src.type)
+			REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src)
 			qdel(src)
 
 	process(var/mult = 1)
@@ -195,13 +195,13 @@
 		switch (src.state)
 			if (GRAB_PASSIVE)
 				if (src.affecting.buckled)
-					src.affecting.buckled.attack_hand(src.assailant)
+					src.affecting.buckled.Attackhand(src.assailant)
 					src.affecting.force_laydown_standup() //safety because buckle code is a mess
 					if (src.affecting.targeting_ability == src.affecting.chair_flip_ability) //fuCKKK
 						src.affecting.end_chair_flip_targeting()
 					src.affecting.buckled = null
 
-				else if (user.is_hulk() || prob(75))
+				else
 					logTheThing("combat", src.assailant, src.affecting, "'s grip upped to aggressive on [constructTarget(src.affecting,"combat")]")
 					for(var/mob/O in AIviewers(src.assailant, null))
 						O.show_message("<span class='alert'>[src.assailant] has grabbed [src.affecting] aggressively (now hands)!</span>", 1)
@@ -211,10 +211,6 @@
 						set_affected_loc()
 
 					user.next_click = world.time + user.combat_click_delay //+ rand(6,11) //this was utterly disgusting, leaving it here in memorial
-				else
-					for(var/mob/O in AIviewers(src.assailant, null))
-						O.show_message("<span class='alert'>[src.assailant] has failed to grab [src.affecting] aggressively!</span>", 1)
-					user.next_click = world.time + user.combat_click_delay
 			if (GRAB_AGGRESSIVE)
 				if (ishuman(src.affecting))
 					var/mob/living/carbon/human/H = src.affecting
@@ -252,6 +248,9 @@
 		update_icon()
 
 	proc/upgrade_to_kill(var/msg_overridden = 0)
+		if (!assailant || !affecting)
+			return
+
 		icon_state = "disarm/kill"
 		logTheThing("combat", src.assailant, src.affecting, "chokes [constructTarget(src.affecting,"combat")]")
 		choke_count = 0
@@ -265,7 +264,7 @@
 				for (var/mob/O in AIviewers(src.assailant, null))
 					O.show_message("<span class='alert'>[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck!</span>", 1)
 		src.state = GRAB_KILL
-		REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src.type)
+		REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src)
 		src.assailant.lastattacked = src.affecting
 		src.affecting.lastattacker = src.assailant
 		src.affecting.lastattackertime = world.time
@@ -283,6 +282,9 @@
 			src.affecting:was_harmed(src.assailant)
 
 	proc/upgrade_to_pin(var/turf/T)
+		if (!assailant || !affecting)
+			return
+
 		icon_state = "pin"
 		logTheThing("combat", src.assailant, src.affecting, "pins [constructTarget(src.affecting,"combat")]")
 
@@ -304,7 +306,7 @@
 
 		if (ishuman(src.assailant))
 			var/mob/living/carbon/human/H = src.assailant
-			APPLY_MOB_PROPERTY(H, PROP_CANTMOVE, src.type)
+			APPLY_MOB_PROPERTY(H, PROP_CANTMOVE, src)
 			H.update_canmove()
 
 		if (isliving(src.affecting))
@@ -412,10 +414,10 @@
 		var/mob/hostage = null
 		if(src.affecting && src.state >= 2 && P.shooter != src.affecting) //If you grab someone they can still shoot you
 			hostage = src.affecting
-		if (hostage)
+		if (hostage && (!hostage.lying || GET_COOLDOWN(hostage, "lying_bullet_dodge_cheese") || prob(P.proj_data?.hit_ground_chance)))
 			P.collide(hostage)
 			//moved here so that it displays after the bullet hit message
-			if(prob(20)) //This should probably not be bulletproof, har har
+			if(prob(25)) //This should probably not be bulletproof, har har
 				hostage.visible_message("<span class='combat bold'>[hostage] is knocked out of [owner]'s grip by the force of the [P.name]!</span>")
 				qdel(src)
 
@@ -513,7 +515,7 @@
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && G && get_dist(owner, target) <= 1 || get_dist(owner,T) > 1)
+		if(owner && ownerMob && target && G && get_dist(owner, target) <= 1 && get_dist(owner,T) <= 1)
 			G.upgrade_to_pin(T)
 		else
 			interrupt(INTERRUPT_ALWAYS)
@@ -796,7 +798,7 @@
 
 			var/prop = DAMAGE_TYPE_TO_STRING(hit_type)
 			if(real_hit && prop == "burn" && I?.reagents)
-				I.reagents.temperature_reagents(2000,10)
+				I.reagents.temperature_reagents(4000,10)
 			.= src.getProperty("I_block_[prop]")
 		if(real_hit)
 			SEND_SIGNAL(src, COMSIG_BLOCK_BLOCKED)
@@ -818,7 +820,7 @@
 	handle_throw(var/mob/living/user,var/atom/target)
 		if (isturf(user.loc) && target)
 			var/turf/T = user.loc
-			if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE) && !(user.lying))
+			if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE) && !(user.lying) && can_act(user))
 				user.changeStatus("weakened", max(user.movement_delay()*2, 0.5 SECONDS))
 				user.force_laydown_standup()
 

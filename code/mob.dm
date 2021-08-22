@@ -227,7 +227,7 @@
 	return 0 //0=couldnt do it(other hand full etc), 1=worked just fine.
 
 // mob procs
-/mob/New(var/loc, var/datum/appearanceHolder/AH_passthru)	// I swear Adhara is the reason half my code even comes close to working
+/mob/New(loc, datum/appearanceHolder/AH_passthru)	// I swear Adhara is the reason half my code even comes close to working
 	src.AH_we_spawned_with = AH_passthru
 	src.loc = loc
 	hallucinations = new
@@ -238,17 +238,18 @@
 	huds = new
 	render_special = new
 	traitHolder = new(src)
+
 	if (!src.bioHolder)
-		src.bioHolder = new /datum/bioHolder ( src )
+		src.bioHolder = new /datum/bioHolder(src)
 		src.initializeBioholder()
 	attach_hud(render_special)
-	. = ..()
 	mobs.Add(src)
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
 	mob_properties = list()
 	src.chat_text = new
 	START_TRACKING
+	. = ..()
 
 /// do you want your mob to have custom hairstyles and stuff? don't use spawns but set all of those properties here
 /mob/proc/initializeBioholder()
@@ -942,7 +943,7 @@
 				mode.team_NT.members -= src.mind
 				mode.team_SY.members -= src.mind
 				message_admins("[src]([src.ckey]) just set DNR and was removed from their team. which was probably [src.mind.special_role]!")
-#else 
+#else
 	if (confirm == "Yes")
 		if (src.mind)
 			src.verbs -= list(/mob/verb/setdnr)
@@ -987,19 +988,6 @@
 	return
 
 /mob/living/get_unequippable()
-	var/list/obj/item/LI = list()
-
-	for (var/obj/item/W in src)
-		if (istype(W, /obj/item/parts) && W:holder == src)
-			continue
-
-		if (istype(W, /obj/item/reagent_containers/food/snacks/bite))
-			continue
-		LI += W
-
-	.= LI
-
-/mob/living/carbon/human/get_unequippable()
 	var/list/obj/item/LI = list()
 
 	for (var/obj/item/W in src)
@@ -1247,15 +1235,17 @@
 			actions.stopId("magpickerhold", src)
 
 //throw the dropped item
-/mob/proc/drop_item_throw()
-	var/obj/item/W = src.equipped()
-	if (src.drop_item())
+/mob/proc/drop_item_throw(obj/item/W)
+	if(!W)
+		W = src.equipped()
+	if (src.drop_item(W))
 		var/turf/T = get_edge_target_turf(src, pick(alldirs))
 		W.throw_at(T,rand(0,5),1)
 
-/mob/proc/drop_item_throw_dir(dir)
-	var/obj/item/W = src.equipped()
-	if (src.drop_item())
+/mob/proc/drop_item_throw_dir(dir, obj/item/W)
+	if(!W)
+		W = src.equipped()
+	if (src.drop_item(W))
 		var/turf/T = get_edge_target_turf(src, dir)
 		W.throw_at(T,7,1)
 
@@ -1531,7 +1521,7 @@
 		if (D_BURNING)
 			TakeDamage("All", 0, damage)
 		if (D_RADIOACTIVE)
-			src.changeStatus("radiation", (damage)*1 SECOND)
+			src.changeStatus("radiation", (damage) SECONDS)
 			src.stuttering += stun
 			src.drowsyness += stun
 		if (D_TOXIC)
@@ -2062,7 +2052,7 @@
 		sleep(duration+5)
 		src.death(1)
 		var/mob/dead/observer/newmob = ghostize()
-		newmob.corpse = null
+		newmob?.corpse = null
 
 		qdel(floorcluwne)
 		qdel(src)
@@ -2349,6 +2339,10 @@
 
 /mob/onVarChanged(variable, oldval, newval)
 	update_clothing()
+
+/mob/proc/throw_item(atom/target, list/params)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MOB_THROW_ITEM, target, params)
 
 /mob/throw_impact(atom/hit, datum/thrown_thing/thr)
 	if(!isturf(hit) || hit.density)
@@ -2982,14 +2976,14 @@
 //MOB VERBS ARE FASTER THAN OBJ VERBS, ELIMINATE ALL OBJ VERBS WHERE U CAN
 // ALSO EXCLUSIVE VERBS (LIKE ADMIN VERBS) ARE BAD FOR RCLICK TOO, TRY NOT TO USE THOSE OK
 
-/mob/verb/point(atom/A as mob|obj|turf in view())
+/mob/verb/point(atom/A as mob|obj|turf in view(,get_turf(usr)))
 	set name = "Point"
 	src.point_at(A)
 
 /mob/proc/point_at(var/atom/target) //overriden by living and dead
 	.=0
 
-/mob/verb/pull_verb(atom/movable/A as mob|obj in view(1))
+/mob/verb/pull_verb(atom/movable/A as mob|obj in view(1, get_turf(usr)))
 	set name = "Pull / Unpull"
 	set category = "Local"
 
@@ -3000,7 +2994,7 @@
 		A.pull()
 
 
-/mob/verb/examine_verb(atom/A as mob|obj|turf in view())
+/mob/verb/examine_verb(atom/A as mob|obj|turf in view(,get_turf(usr)))
 	set name = "Examine"
 	set category = "Local"
 	var/list/result = A.examine(src)
@@ -3008,10 +3002,12 @@
 	boutput(src, result.Join("\n"))
 
 
-/mob/living/verb/interact_verb(atom/A as mob|obj|turf in view(1))
+/mob/living/verb/interact_verb(atom/A as mob|obj|turf in view(1, get_turf(usr)))
 	set name = "Pick Up / Left Click"
 	set category = "Local"
-	A.interact(src)
+
+	if(src.client)
+		src.client.Click(A, get_turf(A))
 
 /mob/living/verb/pickup_verb()
 	set name = "Pick Up"
@@ -3023,7 +3019,7 @@
 			items += I
 	if (items.len)
 		var/atom/A = input(usr, "What do you want to pick up?") as anything in items
-		A.interact(src)
+		src.client.Click(A, get_turf(A))
 
 /mob/proc/can_eat(var/atom/A)
 	return 1
@@ -3036,3 +3032,7 @@
 		..(0)
 	else
 		..(newdensity)
+
+// to check if someone is abusing cameras with stuff like artifacts, power gloves, etc
+/mob/proc/in_real_view_range(var/turf/T)
+	return src.client && IN_RANGE(T, src, WIDE_TILE_WIDTH)
