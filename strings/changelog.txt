@@ -1,5 +1,8 @@
 
 (t)sat aug 21 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Wizards get 6 spells up from 4. Staff of Cthulu, Fireball, Prismatic Spray, Clowns Revenge, Baleful Polymorph, Rathens Secret, Teleport, Doppenganger, and Summon Golem cost raised (1 -> 2)
 (u)Flourish
 (+)You can now buy packs of power cells (the large kind that fits in APCs) from QM.
 (u)Ikea
