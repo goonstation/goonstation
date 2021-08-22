@@ -12159,7 +12159,7 @@
 "aBm" = (
 /obj/stool/bed,
 /obj/decal/cleanable/dirt,
-/obj/item/paper/book/the_trial,
+/obj/item/paper/book/from_file/the_trial,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -14854,8 +14854,8 @@
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/paper/book/hydroponicsguide,
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "aHe" = (
@@ -18040,7 +18040,7 @@
 	},
 /obj/table/wood/auto,
 /obj/item/storage/box/tapebox,
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "aNv" = (
@@ -19314,11 +19314,11 @@
 /area/station/turret_protected/Zeta)
 "aPU" = (
 /obj/table/wood/auto,
-/obj/item/paper/book/guardbot_guide{
+/obj/item/paper/book/from_file/guardbot_guide{
 	pixel_x = 6;
 	pixel_y = 5
 	},
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /turf/simulated/floor,
 /area/station/science/lobby)
 "aPV" = (
@@ -23553,7 +23553,7 @@
 /obj/item/kitchen/utensil/fork,
 /obj/item/kitchen/utensil/spoon,
 /obj/item/kitchen/utensil/knife,
-/obj/item/paper/book/cookbook,
+/obj/item/paper/book/from_file/cookbook,
 /obj/item/reagent_containers/glass/bottle/icing,
 /obj/item/reagent_containers/glass/bottle/icing,
 /obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,

@@ -84,8 +84,8 @@ todo: add more small animals!
 		..()
 
 	setup_healths()
-		add_hh_flesh(-(src.health_brute), src.health_brute, src.health_brute_vuln)
-		add_hh_flesh_burn(-(src.health_burn), src.health_burn, src.health_burn_vuln)
+		add_hh_flesh(src.health_brute, src.health_brute_vuln)
+		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 		add_health_holder(/datum/healthHolder/toxin)
 		add_health_holder(/datum/healthHolder/brain)
 
@@ -503,9 +503,9 @@ todo: add more small animals!
 			return 1
 		if (prob(30))
 			src.icon_state = "[src.dogtype]-lying"
-			src.setStatus("paralysis", 100)
-			src.setStatus("stunned", 100)
-			src.setStatus("weakened", 100)
+			src.setStatus("paralysis", 10 SECONDS)
+			src.setStatus("stunned", 10 SECONDS)
+			src.setStatus("weakened", 10 SECONDS)
 			src.visible_message("<span class='notice'>[src] flops on [his_or_her(src)] back! Scratch that belly!</span>",\
 			"<span class='notice'>You flop on your back!</span>")
 			SPAWN_DBG(3 SECONDS)
@@ -645,9 +645,9 @@ todo: add more small animals!
 			return
 		else
 			setunconscious(src)
-			src.setStatus("paralysis", 100)
-			src.setStatus("stunned", 100)
-			src.setStatus("weakened", 100)
+			src.setStatus("paralysis", 10 SECONDS)
+			src.setStatus("stunned", 10 SECONDS)
+			src.setStatus("weakened", 10 SECONDS)
 			src.sleeping = 10
 			src.playing_dead--
 			src.hud.update_health()
@@ -1169,15 +1169,13 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 20
 
 /mob/living/critter/small_animal/bird/timberdoodle/strong
-	health_brute = 50
-	health_burn = 50
+	health_brute = 35
+	health_burn = 35
 	good_grip = 1
 
 	New()
 		. = ..()
 		src.remove_stam_mod_max("small_animal")
-		src.add_stam_mod_max("wrestledoodle", 30)
-		APPLY_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "wrestledoodle", 5)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		if(act == "flip" && istype(src.equipped(), /obj/item/grab))
@@ -1625,9 +1623,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			return
 		else
 			setunconscious(src)
-			src.setStatus("paralysis", 60)
-			src.setStatus("stunned", 60)
-			src.setStatus("weakened", 60)
+			src.setStatus("paralysis", 6 SECONDS)
+			src.setStatus("stunned", 6 SECONDS)
+			src.setStatus("weakened", 6 SECONDS)
 			src.sleeping = 10
 			src.playing_dead--
 			src.hud.update_health()

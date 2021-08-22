@@ -9,7 +9,7 @@
 /obj/machinery/shield_generator
 	name = "shield generator"
 	desc = "Some kinda thing what generates a big ol' shield around everything."
-	icon = 'icons/obj/32x96.dmi'
+	icon = 'icons/obj/large/32x96.dmi'
 	icon_state = "shieldgen0"
 	anchored = 1
 	density = 1

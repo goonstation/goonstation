@@ -108,6 +108,13 @@
 /// After an item's itemspecial is used (user)
 #define COMSIG_ITEM_SPECIAL_POST "itm_special_post"
 
+// ---- cloaking device signal ----
+/// Make cloaking devices turn off
+#define COMSIG_CLOAKING_DEVICE_DEACTIVATE "cloak_deactivate"
+
+// ---- disguiser device signal ----
+/// Make disguiser devices turn off
+#define COMSIG_DISGUISER_DEACTIVATE "disguiser_deactivate"
 
 // ---- implant signals ----
 /// When implanted

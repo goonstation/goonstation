@@ -27,7 +27,7 @@
 //SUPPLY PACKS
 //NOTE: only secure crate types use the access var (and are lockable)
 //NOTE: hidden packs only show up when the computer has been hacked.
-
+ABSTRACT_TYPE(/datum/supply_packs)
 /datum/supply_packs
 	var/name = null
 	var/desc = null
@@ -276,6 +276,15 @@
 	containertype = /obj/storage/crate
 	containername = "Firefighting Supplies Crate"
 
+/datum/supply_packs/engineering_grenades
+	name = "Station Pressurization Crate"
+	desc = "4x Red Oxygen Grenades, x4 Metal Foam Grenades"
+	category = "Engineering Department"
+	contains = list(/obj/item/old_grenade/oxygen = 4, /obj/item/chem_grenade/metalfoam = 4)
+	cost = 1200
+	containertype = /obj/storage/crate
+	containername = "Station Pressurization Crate"
+
 /datum/supply_packs/generator
 	name = "Experimental Local Generator"
 	desc = "x1 Experimental Local Generator"
@@ -389,6 +398,7 @@
 	cost = 2500
 	containertype = /obj/storage/secure/crate/medical/monkey
 	containername = "Lab Monkey Crate"
+	hidden = 1
 
 /datum/supply_packs/bee
 	name = "Honey Production Kit"
@@ -953,6 +963,7 @@
 	cost = 5000
 	containertype = /obj/storage/crate/wooden
 	containername = "Spare XL Air Mix Canister Crate"
+
 /datum/supply_packs/oxygen_canister
 	name = "Spare Oxygen Canister"
 	desc = "Spare oxygen canister, for resupplying Engineering's fuel or refilling oxygen tanks."
@@ -1033,6 +1044,18 @@
 	containertype = /obj/storage/crate/packing
 	containername = "Haberdasher's Crate"
 
+/datum/supply_packs/headbands
+	name = "Bargain Bows and Bands Box"
+	desc = "Headbands for all occasions."
+	cost = 2000
+	contains = list(/obj/item/clothing/head/headband/giraffe = 1,
+					/obj/item/clothing/head/headband/antlers = 1,
+					/obj/item/clothing/head/headband/nyan/tiger = 1,
+					/obj/item/clothing/head/headband/nyan/leopard = 1,
+					/obj/item/clothing/head/headband/nyan/snowleopard = 1,
+					/obj/item/clothing/head/headband/bee = 2,
+					/obj/item/clothing/head/headband/nyan/random = 1)
+
 /datum/supply_packs/mask
 	name = "Masquerade Crate"
 	desc = "For hosting a masked ball in the bar."
@@ -1101,7 +1124,8 @@
 					/obj/item/vending/restock_cartridge/cola,
 					/obj/item/vending/restock_cartridge/kitchen,
 					/obj/item/vending/restock_cartridge/monkey,
-					/obj/item/vending/restock_cartridge/standard)
+					/obj/item/vending/restock_cartridge/standard,
+					/obj/item/vending/restock_cartridge/capsule)
 	cost = 3000
 	containertype = /obj/storage/crate
 	containername = "Necessities Vending Machine Restocking Pack"
@@ -1237,7 +1261,7 @@
 /* ================================================= */
 /* -------------------- Complex -------------------- */
 /* ================================================= */
-
+ABSTRACT_TYPE(/datum/supply_packs/complex)
 /datum/supply_packs/complex
 	hidden = 0
 	var/list/blueprints = list()

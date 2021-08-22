@@ -113,18 +113,21 @@ datum
 				if(current_reagent && src.total_temperature >= current_reagent.minimum_reaction_temperature)
 					current_reagent.reaction_temperature(src.total_temperature, 100)
 
-		proc/temperature_reagents(exposed_temperature, exposed_volume, divisor = 35, change_cap = 15) //This is what you use to change the temp of a reagent holder.
-			                                                      //Do not manually change the reagent unless you know what youre doing.
+		proc/temperature_reagents(exposed_temperature, exposed_volume = 100, divisor = 35, change_cap = 15, change_min = 0.0000001)
+			///This is what you use to change the temp of a reagent holder.
+			///Do not manually change the reagent unless you know what youre doing.
 			if (!src.can_be_heated)
 				return
 			last_temp = total_temperature
-			var/difference = abs(total_temperature - exposed_temperature)
+			var/exposed_temp = max(exposed_temperature,0)
+			var/target_temp = ((total_volume*total_temperature)+(exposed_volume*exposed_temp))/(total_volume+exposed_volume)
+			var/difference = abs(total_temperature - target_temp)
 			if (!difference)
 				return
-			var/change = min(max((difference / divisor), 1), change_cap)
-			if(exposed_temperature > total_temperature)
+			var/change = clamp((difference / divisor), change_min, change_cap)
+			if(target_temp > total_temperature)
 				total_temperature += change
-			else if (exposed_temperature < total_temperature)
+			else if (target_temp < total_temperature)
 				total_temperature -= change
 
 			total_temperature = clamp(total_temperature, temperature_min, temperature_cap) //Cap for the moment.
@@ -274,6 +277,7 @@ datum
 				target.reagents = new
 
 			var/datum/reagents/target_reagents = target.reagents
+			amount = min(amount, target_reagents.maximum_volume - target_reagents.total_volume)
 
 			if (do_fluid_react && issimulatedturf(target))
 				var/turf/simulated/T = target
@@ -392,7 +396,7 @@ datum
 						continue
 
 					if(C.required_temperature != -1)
-						if(C.required_temperature < 0) //total_temperature needs to be lower than absolute value of this temp
+						if(C.required_temperature <= 0) //total_temperature needs to be lower than absolute value of this temp
 							if(abs(C.required_temperature) < total_temperature) continue //Not the right temp.
 						else if(C.required_temperature > total_temperature) continue
 						//Min / max temp intervals
@@ -406,7 +410,7 @@ datum
 					var/total_matching_reagents = 0
 					var/created_volume = src.maximum_volume
 					for(var/B in C.required_reagents)
-						var/B_required_volume = max(1, C.required_reagents[B])
+						var/B_required_volume = max(CHEM_EPSILON, C.required_reagents[B])
 
 
 						//var/amount = get_reagent_amount(B)

@@ -283,6 +283,7 @@
 				beaker.reagents.handle_reactions()
 				src.update_icon()
 				playsound(src.loc, dispense_sound, 50, 1, 0.3)
+				use_power(10)
 				. = TRUE
 			if ("eject")
 				if (beaker)
@@ -370,6 +371,7 @@
 							beaker.reagents.add_reagent(reagent,amt)
 							beaker.reagents.handle_reactions()
 					src.update_icon()
+					use_power(length(group.reagents) * 10)
 				playsound(src.loc, dispense_sound, 50, 1, 0.3)
 				. = TRUE
 			if ("card")

@@ -16,7 +16,6 @@
 	incompatible_with_chem_dispensers = 1
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 	rc_flags = RC_SCALE
-	module_research = list("science" = 2, "engineering" = 2, "fuels" = 10)
 	initial_volume = 400
 	can_recycle = FALSE
 	initial_reagents = "fuel"

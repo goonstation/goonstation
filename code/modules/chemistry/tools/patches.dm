@@ -23,9 +23,8 @@
 	var/style = "patch"
 	initial_volume = 30
 	event_handler_flags = HANDLE_STICKER | USE_FLUID_ENTER
+	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | EXTRADELAY
 	rc_flags = RC_SPECTRO		// only spectroscopic analysis
-	module_research = list("medicine" = 1, "science" = 1)
-	module_research_type = /obj/item/reagent_containers/patch
 	var/in_use = 0
 	var/good_throw = 0
 
@@ -100,7 +99,7 @@
 		return
 
 	attack_self(mob/user as mob)
-		if (src.in_use)
+		if (ON_COOLDOWN(user, "self-patch", user.combat_click_delay))
 			return
 
 		if (src.borg == 1 && !issilicon(user))
@@ -108,12 +107,10 @@
 			return
 
 		if (iscarbon(user) || ismobcritter(user))
-			src.in_use = 1
 			user.visible_message("[user] applies [src] to [himself_or_herself(user)].",\
 			"<span class='notice'>You apply [src] to yourself.</span>")
 			logTheThing("combat", user, null, "applies a patch to themself [log_reagents(src)] at [log_loc(user)].")
-			apply_to(user,0,user=user)
-			attach_sticker_manual(user)
+			user.attackby(src, user)
 		return
 
 	throw_impact(atom/M, datum/thrown_thing/thr)
@@ -313,7 +310,6 @@
 	desc = "What is this?"
 	icon_state = "patch_LSD"
 	initial_reagents = list("LSD"=20)
-	module_research = list("vice" = 10)
 
 	cyborg
 		borg = 1
@@ -323,7 +319,6 @@
 	desc = "A highly potent hallucinogenic substance. It smells like honey."
 	icon_state = "patch_LSBee"
 	initial_reagents = list("lsd_bee"=20)
-	module_research = list("vice" = 10)
 
 /obj/item/reagent_containers/patch/vr
 	icon = 'icons/effects/VR.dmi'
@@ -465,8 +460,6 @@
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | ONBELT | NOSPLASH | ATTACK_SELF_DELAY
 	click_delay = 0.7 SECONDS
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
-	module_research = list("medicine" = 4, "science" = 4)
-	module_research_type = /obj/item/reagent_containers/patch
 
 	var/list/whitelist = list()
 	var/use_volume = 8
@@ -648,7 +641,7 @@
 		M.apply_to(target,user, multiply, silent = (looped >= 1))
 
 	onEnd()
-		if(get_dist(user, target) > 1 || user == null || target == null)
+		if(get_dist(user, target) > 1 || user == null || target == null || !user.find_in_hand(M))
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			return

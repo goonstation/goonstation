@@ -32,7 +32,7 @@
 "aF" = (/obj/machinery/manufacturer/hangar,/turf/simulated/floor/shuttlebay,/area/prefab/sea_mining)
 "aG" = (/obj/table/auto,/obj/item/sheet/glass/fullstack,/obj/item/sheet/glass/reinforced/fullstack,/turf/simulated/floor/caution/north,/area/prefab/sea_mining)
 "aH" = (/turf/simulated/floor/caution/north,/area/prefab/sea_mining)
-"aI" = (/obj/table/auto,/obj/item/clothing/gloves/yellow,/obj/item/paper/book/minerals,/turf/simulated/floor/caution/north,/area/prefab/sea_mining)
+"aI" = (/obj/table/auto,/obj/item/clothing/gloves/yellow,/obj/item/paper/book/from_file/minerals,/turf/simulated/floor/caution/north,/area/prefab/sea_mining)
 "aJ" = (/obj/table/reinforced/auto,/obj/item/shipcomponent/sensor/mining,/obj/item/shipcomponent/sensor/mining,/turf/simulated/floor/shuttlebay,/area/prefab/sea_mining)
 "aK" = (/obj/table/reinforced/auto,/obj/item/shipcomponent/secondary_system/repair,/obj/machinery/light/small/floor/harsh,/turf/simulated/floor/shuttlebay,/area/prefab/sea_mining)
 "aL" = (/obj/table/reinforced/auto,/obj/item/wrench,/obj/item/clothing/shoes/magnetic,/turf/simulated/floor/shuttlebay,/area/prefab/sea_mining)

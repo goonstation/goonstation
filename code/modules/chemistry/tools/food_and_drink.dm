@@ -42,7 +42,7 @@
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.sims)
-				H.sims.affectMotive("Hunger", heal_amt * 2)
+				H.sims.affectMotive("Hunger", heal_amt * 6)
 				H.sims.affectMotive("Bladder", -heal_amt * 0.2)
 
 		if (quality >= 5)
@@ -89,8 +89,6 @@
 	festivity = 0
 	rc_flags = 0
 	edible = 1
-	module_research = list("cuisine" = 6)
-	module_research_type = /obj/item/reagent_containers/food/snacks
 	rand_pos = 1
 	var/has_cigs = 0
 
@@ -398,8 +396,6 @@
 	festivity = 0
 	rc_flags = 0
 	edible = 1
-	module_research = list("cuisine" = 6)
-	module_research_type = /obj/item/reagent_containers/food/snacks
 	rand_pos = 1
 	var/did_react = 0
 
@@ -440,6 +436,7 @@
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	var/splash_all_contents = 1
 	doants = 0
+	throw_speed = 1
 	var/can_recycle = 1
 
 	New()
@@ -662,7 +659,6 @@
 	icon_state = "bowl"
 	item_state = "zippo"
 	initial_volume = 50
-	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 
 	var/image/fluid_image = null
 
@@ -760,7 +756,6 @@
 	var/shatter = 0
 	initial_volume = 50
 	g_amt = 60
-	rc_flags = RC_VISIBLE | RC_FULLNESS | RC_SPECTRO
 
 	New()
 		..()
@@ -961,7 +956,6 @@
 	icon_state = "glass-drink"
 	item_state = "glass-drink"
 	var/icon_style = "drink"
-	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	g_amt = 30
 	var/glass_style = "drink"
 	var/salted = 0
@@ -1191,7 +1185,7 @@
 					H.urine -= 2
 				else
 					H.sims.affectMotive("Bladder", 100)
-				src.reagents.add_reagent("urine", 20)
+				src.reagents.add_reagent("urine", 8)
 			else
 				boutput(H, "<span class='alert'>You don't feel like you need to go.</span>")
 			return
@@ -1423,7 +1417,6 @@
 	initial_volume = 50
 	amount_per_transfer_from_this = 5
 	can_recycle = FALSE
-	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	var/image/chem = new /image('icons/obj/foodNdrink/food.dmi',"icing_tube_chem")
 
 	on_reagent_change()
@@ -1588,7 +1581,6 @@
 	desc = "A thing which you can drink fluids out of. Um. It's made from a skull. Considering how many holes are in skulls, this is perhaps a questionable design."
 	icon_state = "skullchalice"
 	item_state = "skullchalice"
-	rc_flags = RC_SPECTRO
 	can_recycle = FALSE
 
 /obj/item/reagent_containers/food/drinks/mug
@@ -1596,7 +1588,6 @@
 	desc = "A standard mug, for coffee or tea or whatever you wanna drink."
 	icon_state = "mug"
 	item_state = "mug"
-	rc_flags = RC_SPECTRO
 
 	dan
 		name = "odd mug"
@@ -1639,7 +1630,6 @@
 	desc = "A cup made of paper. It's not that complicated."
 	icon_state = "paper_cup"
 	item_state = "drink_glass"
-	rc_flags = RC_SPECTRO
 	initial_volume = 15
 	can_recycle = 0
 
@@ -1648,7 +1638,6 @@
 	desc = "A fancy espresso cup, for sipping in the finest establishments." //*tip
 	icon_state = "fancycoffee"
 	item_state = "coffee"
-	rc_flags = RC_SPECTRO | RC_FULLNESS | RC_VISIBLE //see _setup.dm
 	initial_volume = 20
 	gulp_size = 2.5
 	g_amt = 2.5 //might be broken still, Whatever
@@ -1672,7 +1661,6 @@
 	desc = null
 	icon_state = "carafe-eng"
 	item_state = "carafe-eng"
-	rc_flags = RC_SPECTRO | RC_FULLNESS | RC_VISIBLE
 	initial_volume = 100
 	var/smashed = 0
 	var/shard_amt = 1
@@ -1761,7 +1749,6 @@
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	icon_state = "coconut"
 	item_state = "drink_glass"
-	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	g_amt = 30
 	initial_volume = 50
 	can_recycle = FALSE
@@ -1775,7 +1762,6 @@
 	When you are off on your long journey, who do you turn to? Brotien Shake's brand new flavor: DRAGON BALLS!"}
 	icon_state = "energy"
 	item_state = "drink_glass"
-	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	g_amt = 10
 	initial_volume = 25
 	initial_reagents = list("energydrink"=20)
@@ -1787,7 +1773,6 @@
 	icon = 'icons/obj/foodNdrink/bottle.dmi'
 	icon_state = "detflask"
 	item_state = "detflask"
-	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	g_amt = 5
 	initial_volume = 40
 	can_recycle = FALSE

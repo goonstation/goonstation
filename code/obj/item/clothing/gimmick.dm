@@ -28,10 +28,10 @@
 
 	equipped(mob/user)
 		. = ..()
-		APPLY_MOB_PROPERTY(user, PROP_THERMALSIGHT_MK2, src)
+		APPLY_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
 
 	unequipped(mob/user)
-		REMOVE_MOB_PROPERTY(user, PROP_THERMALSIGHT_MK2, src)
+		REMOVE_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
 		. = ..()
 
 /obj/item/clothing/under/gimmick/hunter
@@ -659,7 +659,6 @@
 	name = "super happy funtime cat head"
 	desc = "This cat head was built to the highest ethical standards.  50% less child labor used in production than competing novelty cat heads."
 	icon_state = "genki"
-	permeability_coefficient = 0.01
 	c_flags = COVERSEYES | COVERSMOUTH | MASKINTERNALS
 
 //birdman for nieks
@@ -773,10 +772,8 @@
 
 			boutput(H, "<span class='alert'><b>You suddenly feel whiny and ineffectual.</b></span>")
 			H.real_name = "Mike Dawson"
-			H.bioHolder.mobAppearance.customization_first = "Bedhead"
-			H.bioHolder.mobAppearance.customization_second = "Selleck"
-			H.cust_one_state = "bedhead"
-			H.cust_two_state = "selleck"
+			H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/long/bedhead
+			H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/moustache/selleck
 			H.bioHolder.mobAppearance.e_color = "#321E14"
 			H.bioHolder.mobAppearance.customization_first_color = "#412819"
 			H.bioHolder.mobAppearance.customization_second_color = "#412819"
@@ -970,6 +967,18 @@
 	desc = "A little ruffle with lace, to wear on the head. It gives you super cleaning powers*!<br><small>*Does not actually bestow any powers.</small>"
 	icon_state = "maid"
 	item_state = "maid"
+
+/obj/item/clothing/under/gimmick/dinerdress_mint
+	name = "Mint Diner Waitress's Dress"
+	desc = "Can I getcha somethin', sugar?"
+	icon_state = "dinerdress-mint"
+	item_state = "dinerdress-mint"
+
+/obj/item/clothing/under/gimmick/dinerdress_pink
+	name = "Pink Diner Waitress's Dress"
+	desc = "Y'all come back now, ya hear?"
+	icon_state = "dinerdress-pink"
+	item_state = "dinerdress-pink"
 
 /obj/item/clothing/under/gimmick/kilt
 	name = "kilt"
@@ -1514,7 +1523,6 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 /obj/item/clothing/shoes/rollerskates
 	name = "rollerskates"
 	desc = "A pair of rollerskates, invented when experimental teleportation technology fused a pair of tacky boots and a shopping cart."
-	c_flags = NOSLIP
 	icon_state = "rollerskates"
 
 /obj/item/clothing/under/gimmick/itsyourcousin

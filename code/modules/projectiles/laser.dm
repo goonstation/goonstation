@@ -102,7 +102,9 @@ toxic - poisons
 	power = 75
 	cost = 65
 	dissipation_delay = 5
-	dissipation_rate = 5
+	dissipation_rate = 0
+	max_range = 30
+	projectile_speed = 20
 	sname = "assault laser"
 	shot_sound = 'sound/weapons/Laser.ogg'
 	color_red = 0
@@ -110,15 +112,11 @@ toxic - poisons
 	color_blue = 1
 
 	on_hit(atom/hit)
-		if (isliving(hit))
-			fireflash(get_turf(hit), 0)
-		else if (isturf(hit))
-			fireflash(hit, 0)
-			SPAWN_DBG(1 DECI SECOND)
-				if(prob(40) && istype(hit, /turf/simulated))
-					hit.meteorhit(src)
+		fireflash(get_turf(hit), 0)
+		if((istype(hit, /turf/simulated) || istype(hit, /obj/structure/girder)))
+			hit.ex_act(2)
 		else
-			fireflash(get_turf(hit), 0)
+			hit.ex_act(3)
 
 /datum/projectile/laser/light // for the drones
 	name = "phaser bolt"
@@ -255,7 +253,7 @@ toxic - poisons
 	color_green = 0
 	color_blue = 1
 	icon_turf_hit = "burn2"
-	projectile_speed = 32
+	projectile_speed = 42
 
 /datum/projectile/laser/precursor // for precursor traps
 	name = "energy bolt"
@@ -375,10 +373,17 @@ toxic - poisons
 
 	on_hit(atom/hit)
 		..()
+		//have turret shots slow mobs it hits...
 		if (turret && isliving(hit))
 			var/mob/living/L = hit
 			L.changeStatus("slowed", 2 SECONDS)
 
+	//lower power when they hit vehicles by half
+	get_power(obj/projectile/P, atom/A)
+		var/mult = 1
+		if (!turret && istype(A, /obj/machinery/vehicle))
+			mult = 0.5
+		return ..(P, A) * mult
 
 /datum/projectile/laser/blaster/pod_pilot/blue_NT
 	name = "blue blaster bolt"

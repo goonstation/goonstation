@@ -109,14 +109,11 @@
 			signal.source = src.master
 			signal.transmission_method = 1
 
-			if (mechanic_controls.rkit_addresses.len)
-				last_address = pick(mechanic_controls.rkit_addresses)
-
-			signal.data["address_1"] = last_address
+			signal.data["address_1"] = "TRANSRKIT"
 			signal.data["command"] = "add"
 
 			signal.data_file = theScan
-			post_signal(signal)
+			post_signal(signal, 1467)
 
 /datum/computer/file/electronics_scan
 	name = "scanfile"
@@ -124,6 +121,13 @@
 	var/scannedName = null
 	var/scannedPath = null
 	var/scannedMats = null
+
+/datum/computer/file/electronics_bundle
+	name = "Ruckingenur Data"
+	extension = "DSCN"
+	var/datum/mechanic_controller/ruckData = null
+	var/target = null
+	var/known_rucks = null
 
 /datum/computer/file/genetics_scan
 	name = "DNA Scan"

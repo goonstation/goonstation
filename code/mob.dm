@@ -227,7 +227,7 @@
 	return 0 //0=couldnt do it(other hand full etc), 1=worked just fine.
 
 // mob procs
-/mob/New(var/loc, var/datum/appearanceHolder/AH_passthru)	// I swear Adhara is the reason half my code even comes close to working
+/mob/New(loc, datum/appearanceHolder/AH_passthru)	// I swear Adhara is the reason half my code even comes close to working
 	src.AH_we_spawned_with = AH_passthru
 	src.loc = loc
 	hallucinations = new
@@ -238,17 +238,18 @@
 	huds = new
 	render_special = new
 	traitHolder = new(src)
+
 	if (!src.bioHolder)
-		src.bioHolder = new /datum/bioHolder ( src )
+		src.bioHolder = new /datum/bioHolder(src)
 		src.initializeBioholder()
 	attach_hud(render_special)
-	. = ..()
 	mobs.Add(src)
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
 	mob_properties = list()
 	src.chat_text = new
 	START_TRACKING
+	. = ..()
 
 /// do you want your mob to have custom hairstyles and stuff? don't use spawns but set all of those properties here
 /mob/proc/initializeBioholder()
@@ -942,7 +943,7 @@
 				mode.team_NT.members -= src.mind
 				mode.team_SY.members -= src.mind
 				message_admins("[src]([src.ckey]) just set DNR and was removed from their team. which was probably [src.mind.special_role]!")
-#else 
+#else
 	if (confirm == "Yes")
 		if (src.mind)
 			src.verbs -= list(/mob/verb/setdnr)
@@ -987,19 +988,6 @@
 	return
 
 /mob/living/get_unequippable()
-	var/list/obj/item/LI = list()
-
-	for (var/obj/item/W in src)
-		if (istype(W, /obj/item/parts) && W:holder == src)
-			continue
-
-		if (istype(W, /obj/item/reagent_containers/food/snacks/bite))
-			continue
-		LI += W
-
-	.= LI
-
-/mob/living/carbon/human/get_unequippable()
 	var/list/obj/item/LI = list()
 
 	for (var/obj/item/W in src)
@@ -1247,15 +1235,17 @@
 			actions.stopId("magpickerhold", src)
 
 //throw the dropped item
-/mob/proc/drop_item_throw()
-	var/obj/item/W = src.equipped()
-	if (src.drop_item())
+/mob/proc/drop_item_throw(obj/item/W)
+	if(!W)
+		W = src.equipped()
+	if (src.drop_item(W))
 		var/turf/T = get_edge_target_turf(src, pick(alldirs))
 		W.throw_at(T,rand(0,5),1)
 
-/mob/proc/drop_item_throw_dir(dir)
-	var/obj/item/W = src.equipped()
-	if (src.drop_item())
+/mob/proc/drop_item_throw_dir(dir, obj/item/W)
+	if(!W)
+		W = src.equipped()
+	if (src.drop_item(W))
 		var/turf/T = get_edge_target_turf(src, dir)
 		W.throw_at(T,7,1)
 
@@ -1531,7 +1521,7 @@
 		if (D_BURNING)
 			TakeDamage("All", 0, damage)
 		if (D_RADIOACTIVE)
-			src.changeStatus("radiation", (damage)*1 SECOND)
+			src.changeStatus("radiation", (damage) SECONDS)
 			src.stuttering += stun
 			src.drowsyness += stun
 		if (D_TOXIC)
@@ -2062,7 +2052,7 @@
 		sleep(duration+5)
 		src.death(1)
 		var/mob/dead/observer/newmob = ghostize()
-		newmob.corpse = null
+		newmob?.corpse = null
 
 		qdel(floorcluwne)
 		qdel(src)

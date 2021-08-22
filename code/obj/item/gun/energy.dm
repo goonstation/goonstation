@@ -172,7 +172,6 @@
 	force = 1.0
 	cell_type = /obj/item/ammo/power_cell/med_power
 	desc = "A weapon that produces an cohesive electrical charge that stuns its target."
-	module_research = list("weapons" = 4, "energy" = 4, "miniaturization" = 2)
 	muzzle_flash = "muzzle_flash_elec"
 
 	New()
@@ -227,7 +226,6 @@
 	cell_type = /obj/item/ammo/power_cell/med_plus_power
 	force = 7.0
 	desc = "A gun that produces a harmful laser, causing substantial damage."
-	module_research = list("weapons" = 4, "energy" = 4)
 	muzzle_flash = "muzzle_flash_laser"
 
 	New()
@@ -290,7 +288,6 @@
 	item_state = "phaser"
 	force = 7.0
 	desc = "A gun that produces a harmful phaser bolt, causing substantial damage."
-	module_research = list("weapons" = 4, "energy" = 4)
 	muzzle_flash = "muzzle_flash_phaser"
 
 	New()
@@ -325,7 +322,6 @@
 	silenced = 1 // No conspicuous text messages, please (Convair880).
 	hide_attack = 1
 	custom_cell_max_capacity = 100 // Those self-charging ten-shot radbows were a bit overpowered (Convair880)
-	module_research = list("medicine" = 2, "science" = 2, "weapons" = 2, "energy" = 2, "miniaturization" = 10)
 	muzzle_flash = null
 
 	New()
@@ -355,7 +351,6 @@
 	item_state = "egun"
 	force = 5.0
 	mats = list("MET-1"=15, "CON-1"=5, "POW-1"=5)
-	module_research = list("weapons" = 5, "energy" = 4, "miniaturization" = 5)
 	var/nojobreward = 0 //used to stop people from scanning it and then getting both a lawbringer/sabre AND an egun.
 	muzzle_flash = "muzzle_flash_elec"
 
@@ -431,7 +426,7 @@
 	icon_state = "tasers100"
 	desc = "A weapon that produces an cohesive electrical charge that stuns its target. Now in a shotgun format."
 	item_state = "tasers"
-	cell_type = /obj/item/ammo/power_cell/high_power
+	cell_type = /obj/item/ammo/power_cell/med_power
 	force = 8.0
 	two_handed = 1
 	can_dual_wield = 0
@@ -545,11 +540,10 @@
 	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "wavegun100"
 	item_state = "wave"
-	cell_type = /obj/item/ammo/power_cell/high_power
+	cell_type = /obj/item/ammo/power_cell/med_power
 	uses_multiple_icon_states = 1
 	m_amt = 4000
 	force = 6.0
-	module_research = list("weapons" = 2, "energy" = 2, "miniaturization" = 3)
 	muzzle_flash = "muzzle_flash_wavep"
 
 	New()
@@ -591,7 +585,6 @@
 	m_amt = 4000
 	force = 6.0
 	desc = "I think it stands for Banned For Griefing?"
-	module_research = list("weapons" = 25, "energy" = 25)
 
 	New()
 		cell = new/obj/item/ammo/power_cell/high_power
@@ -626,7 +619,6 @@
 	mats = 0
 	var/obj/item/our_target = null
 	var/obj/machinery/computer/teleporter/our_teleporter = null // For checks before firing (Convair880).
-	module_research = list("weapons" = 3, "energy" = 2, "science" = 10)
 
 	New()
 		cell = new/obj/item/ammo/power_cell/med_power
@@ -743,7 +735,6 @@
 	throw_speed = 2
 	throw_range = 10
 	mats = 0
-	module_research = list("weapons" = 1, "energy" = 5, "science" = 10)
 	muzzle_flash = "muzzle_flash_waveg"
 
 	New()
@@ -1061,6 +1052,7 @@
 	uses_multiple_icon_states = 1
 	force = 5.0
 	muzzle_flash = "muzzle_flash_plaser"
+	mats = list("MET-3"=7, "CRY-1"=13, "POW-2"=10)
 
 	New()
 		..()
@@ -1102,7 +1094,6 @@
 	hide_attack = 1
 	mats = 100 //yeah no, you can do it if you REALLY want to
 	custom_cell_max_capacity = 100
-	module_research = list("medicine" = 2, "science" = 2, "weapons" = 2, "energy" = 2, "miniaturization" = 10)
 	var/obj/item/heldItem = null
 	tooltip_flags = REBUILD_DIST
 
@@ -1194,7 +1185,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "alastor100"
 	item_state = "alastor"
-	icon = 'icons/obj/38x38.dmi'
+	icon = 'icons/obj/large/38x38.dmi'
 	uses_multiple_icon_states = 1
 	force = 7.0
 	can_dual_wield = 0
@@ -1531,7 +1522,6 @@
 	is_syndicate = 1
 	silenced = 1
 	custom_cell_max_capacity = 100
-	module_research = list("science" = 2, "weapons" = 2, "energy" = 2, "miniaturization" = 10, "hydroponics" = 10) //deprecated in current code
 
 	New()
 		set_current_projectile(new/datum/projectile/special/spreader/quadwasp)
@@ -1540,7 +1530,6 @@
 
 // HOWIZTER GUN
 // dumb meme admin item. not remotely fair, will probably kill person firing it.
-
 /obj/item/gun/energy/howitzer
 	name = "man-portable plasma howitzer"
 	desc = "How can you even lift this?"
@@ -1566,7 +1555,6 @@
 	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_signifer
 	can_swap_cell = 0
 	var/shotcount = 0
-
 
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt/signifer_tase)
@@ -1640,7 +1628,7 @@
 	muzzle_flash = "muzzle_flash_elec"
 
 	New()
-		cell = new/obj/item/ammo/power_cell/high_power
+		cell = new/obj/item/ammo/power_cell/med_power
 		set_current_projectile(new/datum/projectile/energy_bolt/smgburst)
 
 		projectiles = list(current_projectile,new/datum/projectile/energy_bolt/smgauto)
@@ -1665,3 +1653,33 @@
 		else
 			spread_angle = 2
 		update_icon()
+
+///////////////////////////////////////Ray Gun
+/obj/item/gun/energy/raygun
+	name = "Experimental Ray Gun"
+	icon_state = "raygun"
+	desc = "A weapon that looks vaguely like a cheap toy and is definitely unsafe."
+	item_state = "raygun"
+	force = 5.0
+	can_dual_wield = 0
+	muzzle_flash = "muzzle_flash_laser"
+
+	New()
+		set_current_projectile(new/datum/projectile/energy_bolt/raybeam)
+		projectiles = list(new/datum/projectile/energy_bolt/raybeam)
+		..()
+
+	update_icon()
+		..()
+		return
+
+	shoot(var/target,var/start,var/mob/user) //it's experimental for a reason; use at your own risk!
+		if (canshoot())
+			if (GET_COOLDOWN(src, "raygun_cooldown"))
+				return
+			if (prob(30))
+				user.TakeDamage("chest", 0, rand(5, 15), 0, DAMAGE_BURN, 1)
+				boutput(user, "<span class='alert'>This piece of junk Ray Gun backfired! Ouch!</span>")
+				user.do_disorient(stamina_damage = 20, disorient = 3 SECONDS)
+				ON_COOLDOWN(src, "raygun_cooldown", 2 SECONDS)
+		return ..(target, start, user)

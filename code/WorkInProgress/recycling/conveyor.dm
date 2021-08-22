@@ -46,11 +46,15 @@
 	..()
 	basedir = dir
 	setdir()
-	UnsubscribeProcess()
 
 /obj/machinery/conveyor/initialize()
 	..()
 	setdir()
+
+/obj/machinery/conveyor/process()
+	if(status & NOPOWER || !operating)
+		return
+	use_power(power_usage)
 
 /obj/machinery/conveyor/disposing()
 	for(var/obj/machinery/conveyor/C in range(1,src))
@@ -93,7 +97,7 @@
 
 
 /obj/machinery/conveyor/proc/move_thing(var/atom/movable/A)
-	if (A.anchored)
+	if (A.anchored || A.temp_flags & BEING_CRUSHERED)
 		return
 	if(isobserver(A))
 		return
@@ -603,5 +607,5 @@
 				break
 
 	proc/update_icon()
-		var/ico = (speedup / speedup_max) * icon_levels
+		var/ico = clamp(((speedup / speedup_max) * icon_levels), 0, 6)
 		icon_state = "[icon_base][round(ico)]"

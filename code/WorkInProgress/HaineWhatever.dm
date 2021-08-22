@@ -1091,8 +1091,8 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	item_state = "sailormoon"
 
 /obj/item/clothing/head/sailormoon
-	name = "hair clips"
-	desc = "Shiny red hair clips to keep your hair in a very specific style and are about useless for anything else."
+	name = "red hairclips"
+	desc = "Shiny red hairclips to keep your hair in a very specific style and are about useless for anything else."
 	icon_state = "sailormoon"
 
 /obj/item/clothing/glasses/sailormoon
@@ -1223,7 +1223,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 /mob/living/carbon/human/proc/sailormoon_reshape() // stolen from Spy's tommyize stuff
 	var/datum/appearanceHolder/AH = new
 	AH.gender = "female"
-	AH.customization_first = "Sailor Moon"
+	AH.customization_first = new /datum/customization_style/hair/gimmick/sailor_moon
 	AH.customization_first_color = "#FFD700"
 	AH.owner = src
 	AH.parentHolder = src.bioHolder
@@ -1525,7 +1525,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 /obj/item/bang_gun/ak47
 	name = "ak-477"
-	icon = 'icons/obj/48x32.dmi'
+	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "ak47"
 	item_state = "ak47"
 	desc = "There are 30 bullets left! Each shot will currently use 3 bullets!"
@@ -1534,7 +1534,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 /obj/item/bang_gun/hunting_rifle
 	name = "Old Hunting Rifle"
-	icon = 'icons/obj/48x32.dmi'
+	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "ohr"
 	item_state = "ohr"
 	desc = "There are 4 bullets left! Each shot will currently use 1 bullet!"

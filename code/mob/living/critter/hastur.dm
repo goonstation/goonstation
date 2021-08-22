@@ -110,8 +110,8 @@ var/HasturPresent = 0
 		HH.can_range_attack = 1
 
 	setup_healths()
-		add_hh_flesh(-35, 6500, 0.5)
-		add_hh_flesh_burn(-35, 6500, 0.5)
+		add_hh_flesh(6500, 0.5)
+		add_hh_flesh_burn(6500, 0.5)
 		add_health_holder(/datum/healthHolder/toxin)
 
 	death(var/gibbed)

@@ -671,6 +671,8 @@
 		set name = "Toggle Auto Mode"
 		set category = "Local"
 
+		if (!isalive(usr) && !isAIeye(usr))
+			return
 		src.auto_mode = 1 - src.auto_mode
 		boutput(usr, "<span class='notice'>\The [src] will [src.auto_mode ? "automatically" : "no longer"] automatically prepare new bodies for clones.</span>")
 		add_fingerprint(usr)
@@ -1073,7 +1075,7 @@
 			boutput(user, "<span class='alert'>There is already somebody in there.</span>")
 			return
 
-		else if (G?.affecting && !src.emagged && !isdead(G.affecting) && !ismonkey(G.affecting))
+		else if (G?.affecting && !src.emagged && !isdead(G.affecting) && (!isnpcmonkey(G.affecting) || G.affecting.client))
 			user.visible_message("<span class='alert'>[user] tries to stuff [G.affecting] into [src], but it beeps angrily as the safety overrides engage!</span>")
 			return
 
