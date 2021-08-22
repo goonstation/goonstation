@@ -9970,6 +9970,15 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aAm" = (
+/obj/structure/girder/reinforced,
+/turf/simulated/wall/asteroid,
+/area/space)
+"aAn" = (
+/obj/structure/girder/reinforced,
+/obj/decal/poster/wallsign/warning1,
+/turf/simulated/wall/asteroid,
+/area/space)
+"aAo" = (
 /obj/decal/floatingtiles{
 	icon_state = "floattiles2"
 	},
@@ -9981,20 +9990,6 @@
 	},
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
-"aAn" = (
-/obj/machinery/door/unpowered/shuttle{
-	autoclose = 1;
-	color = "gray"
-	},
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
-"aAo" = (
-/obj/item/caution{
-	desc = "Caution! No trespassing!";
-	name = "no trespassing sign"
-	},
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "aAp" = (
 /obj/decal/cleanable/robot_debris{
 	icon_state = "gib3"
@@ -10076,7 +10071,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aAA" = (
 /obj/submachine/seed_manipulator,
@@ -14527,10 +14522,6 @@
 	dir = 4;
 	icon_state = "wall3_space"
 	},
-/area/space)
-"aMk" = (
-/obj/structure/girder/reinforced,
-/turf/simulated/wall/asteroid,
 /area/space)
 "aMl" = (
 /obj/lattice{
@@ -23569,9 +23560,12 @@
 /turf/space,
 /area/space)
 "biN" = (
-/obj/item/seed/alien,
-/turf/simulated/floor/airless/damaged2,
-/area/abandonedship)
+/obj/machinery/door/unpowered/shuttle{
+	autoclose = 1;
+	color = "gray"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "biO" = (
 /obj/decal/cleanable/dirt,
 /obj/computerframe,
@@ -23716,7 +23710,7 @@
 "bjh" = (
 /obj/table/reinforced/industrial/auto,
 /obj/machinery/glass_recycler,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/longtile/black,
 /area/space)
 "bjk" = (
 /turf/simulated/wall/r_wall{
@@ -23890,7 +23884,7 @@
 /area/salyut)
 "bjO" = (
 /obj/reagent_dispensers/beerkeg,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/longtile/black,
 /area/space)
 "bjR" = (
 /obj/storage/crate,
@@ -24087,34 +24081,35 @@
 /area/space)
 "bkA" = (
 /obj/machinery/bathtub,
-/turf/simulated/floor/plating,
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe,
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe,
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe,
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe,
+/turf/simulated/floor/longtile/black,
 /area/space)
 "bkB" = (
-/turf/simulated/floor/plating,
+/obj/machinery/light/small/floor/cool,
+/turf/simulated/floor/longtile/black,
 /area/space)
 "bkC" = (
 /obj/stool,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/longtile/black,
 /area/space)
 "bkD" = (
-/obj/decal/cleanable/dirt,
-/obj/computerframe,
-/obj/item/storage/secure/ssafe/pilot_cargo3{
-	pixel_y = 32
+/obj/item/caution{
+	desc = "Caution! No trespassing!";
+	name = "no trespassing sign"
 	},
-/turf/simulated/floor/airless/plating/damaged1,
-/area/abandonedship)
-"bkE" = (
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
-	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
+"bkE" = (
+/obj/item/seed/alien,
+/turf/simulated/floor/airless/damaged2,
+/area/abandonedship)
 "bkF" = (
 /obj/machinery/bathtub,
-/turf/simulated/floor/plating,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/longtile/black,
+/turf/space,
 /area/space)
 "bkG" = (
 /obj/lattice{
@@ -24157,18 +24152,21 @@
 /turf/space,
 /area/space)
 "bkL" = (
-/turf/simulated/floor/plating,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/longtile/black,
+/turf/space,
 /area/space)
 "bkM" = (
-/obj/grille/steel,
+/obj/wingrille_spawn/reinforced/full,
 /turf/simulated/floor/plating,
 /area/space)
 "bkN" = (
 /obj/item/storage/box/beer,
 /obj/item/storage/box/beer,
 /obj/storage/crate/wooden,
-/turf/simulated/floor/plating,
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
+/turf/simulated/floor/longtile/black,
 /area/space)
 "bkO" = (
 /obj/storage/crate/internals,
@@ -24176,7 +24174,7 @@
 /obj/item/tank/oxygen,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/longtile/black,
 /area/space)
 "bkP" = (
 /obj/lattice{
@@ -24202,7 +24200,7 @@
 	autoclose = 1;
 	color = "gray"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/longtile/black,
 /area/space)
 "bkS" = (
 /obj/cable{
@@ -24246,10 +24244,13 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bla" = (
-/obj/table/reinforced/industrial/auto,
-/obj/machinery/light/lamp,
-/turf/simulated/floor/plating,
-/area/space)
+/obj/decal/cleanable/dirt,
+/obj/computerframe,
+/obj/item/storage/secure/ssafe/pilot_cargo3{
+	pixel_y = 32
+	},
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedship)
 "ble" = (
 /obj/item/electronics/resistor,
 /turf/space,
@@ -24489,10 +24490,11 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "blL" = (
-/obj/table/reinforced/industrial/auto,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/turf/simulated/floor/plating,
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "blN" = (
 /obj/item/raw_material/rock,
@@ -24502,8 +24504,9 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/abandonedship)
 "blP" = (
-/obj/decal/cleanable/robot_debris/limb,
-/turf/simulated/floor/plating/airless/asteroid,
+/obj/table/reinforced/industrial/auto,
+/obj/item/device/radio,
+/turf/simulated/floor/longtile/black,
 /area/space)
 "blQ" = (
 /obj/decal/cleanable/blood/splatter{
@@ -24572,8 +24575,11 @@
 /turf/simulated/floor/airless/circuit,
 /area/abandonedmedicalship)
 "bmb" = (
-/obj/decal/cleanable/robot_debris/gib,
-/turf/simulated/floor/plating/airless/asteroid,
+/obj/table/reinforced/industrial/auto,
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
+/turf/simulated/floor/longtile/black,
 /area/space)
 "bme" = (
 /obj/item/paper/brad_punchcard,
@@ -25014,14 +25020,32 @@
 	},
 /turf/simulated/floor,
 /area/radiostation/studio)
+"duy" = (
+/turf/simulated/floor/longtile/black,
+/area/space)
+"exM" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/abandonedship)
+"eGz" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "fkT" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/black,
 /area/radiostation/studio)
-"fMl" = (
-/obj/critter/gunbot/drone/heavydrone,
-/turf/simulated/floor/plating/airless/asteroid,
+"hmp" = (
+/turf/unsimulated/floor/stairs/dark{
+	dir = 8
+	},
 /area/space)
 "hOL" = (
 /obj/item/storage/secure/ssafe{
@@ -25056,6 +25080,10 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/radiostation/bedroom)
+"iIc" = (
+/obj/critter/gunbot/drone/heavydrone,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "kag" = (
 /obj/decal/tile_edge/stripe{
 	dir = 10;
@@ -25063,12 +25091,6 @@
 	},
 /turf/simulated/floor/red/side,
 /area/radiostation/hallway)
-"kVl" = (
-/obj/critter/gunbot/drone/cutterdrone,
-/turf/simulated/floor/plating/airless/asteroid{
-	stone_color = "#D1E6FF"
-	},
-/area/space)
 "lbt" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/electrical,
@@ -25076,15 +25098,12 @@
 /obj/item/paper/book/from_file/minerals,
 /turf/simulated/floor/grime,
 /area/mining/manufacturing)
-"lcJ" = (
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
+"lpI" = (
+/obj/machinery/door/unpowered/shuttle{
+	autoclose = 1;
+	color = "gray"
 	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 8
-	},
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/grey/side,
 /area/space)
 "lwM" = (
 /obj/table/auto,
@@ -25093,10 +25112,8 @@
 	},
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
-"mKJ" = (
-/obj/grille/steel,
-/obj/decal/poster/wallsign/warning1,
-/turf/simulated/floor/plating,
+"mHM" = (
+/turf/simulated/floor/grey/side,
 /area/space)
 "npm" = (
 /obj/wingrille_spawn/auto,
@@ -25105,10 +25122,8 @@
 	},
 /turf/simulated/floor,
 /area/radiostation/studio)
-"nwG" = (
-/obj/decal/tile_edge/stripe/big{
-	dir = 1
-	},
+"oeL" = (
+/obj/decal/cleanable/robot_debris/limb,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "oNd" = (
@@ -25154,38 +25169,34 @@
 	stone_color = "#575A5E"
 	},
 /area/space)
-"sxY" = (
-/obj/item/storage/belt/hunter,
-/obj/item/clothing/under/misc/tourist,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/abandonedship)
+"rRX" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/simulated/wall/asteroid,
+/area/space)
 "sFV" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/timewarp/ship)
-"sLN" = (
-/obj/lattice{
-	icon_state = "lattice-dir"
+"sRW" = (
+/obj/reagent_dispensers/still,
+/turf/simulated/floor/longtile/black,
+/area/space)
+"txH" = (
+/obj/critter/gunbot/drone/cutterdrone,
+/turf/simulated/floor/plating/airless/asteroid{
+	stone_color = "#D1E6FF"
 	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 1
-	},
+/area/space)
+"utd" = (
+/obj/decal/cleanable/robot_debris/gib,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
-"tTK" = (
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/abandonedship)
 "uto" = (
 /obj/storage/crate,
 /obj/item/paper/book/from_file/deep_blue_sea,
 /obj/item/paper/bores_part_two,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
-"uAT" = (
-/obj/decal/tile_edge/stripe{
-	dir = 9;
-	icon_state = "xtra_bigstripe-corner2"
-	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "uIh" = (
@@ -25194,6 +25205,11 @@
 	stone_color = "#575A5E"
 	},
 /area/space)
+"vel" = (
+/obj/item/storage/belt/hunter,
+/obj/item/clothing/under/misc/tourist,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/abandonedship)
 "vrI" = (
 /obj/stool/chair,
 /turf/simulated/floor/black,
@@ -40224,7 +40240,7 @@ aaa
 aaa
 aaz
 aac
-fMl
+iIc
 aaa
 aMF
 aaa
@@ -49514,9 +49530,9 @@ aaa
 aaa
 aaa
 aaa
-aAm
-biN
-tTK
+aAo
+bkE
+exM
 aGv
 aGD
 aaa
@@ -49817,8 +49833,8 @@ aaa
 aaa
 aaa
 aGv
-bkD
-sxY
+bla
+vel
 aGv
 aGD
 aaa
@@ -52837,10 +52853,10 @@ aaa
 aab
 aab
 aab
-aMk
+aAm
 aab
 aab
-aMk
+aAm
 aab
 aab
 aab
@@ -53139,10 +53155,10 @@ aab
 aab
 aab
 aab
-bkE
-aab
-aab
-bkE
+blL
+aac
+aac
+blL
 aab
 aab
 aab
@@ -53440,12 +53456,12 @@ aaa
 aab
 aab
 aab
-aMk
+afR
 bkM
 bkM
 bkM
 bkM
-aMk
+afR
 aab
 aab
 aab
@@ -53740,16 +53756,16 @@ aaa
 aaa
 aab
 aab
-aMk
+aAm
 aAz
 bkM
 bjh
 bkA
 bkF
 bkN
-mKJ
-sLN
-aMk
+afR
+afR
+afR
 aab
 aab
 aab
@@ -54043,15 +54059,15 @@ aac
 aab
 aab
 aab
-aab
+aac
 bkM
-bla
+blP
 bkB
 bkL
 bkL
 bkR
-nwG
-aac
+mHM
+afR
 aab
 aab
 aab
@@ -54345,15 +54361,15 @@ aac
 aac
 aab
 aab
-aab
+aac
 bkM
-blL
+bmb
 bkC
 bkL
-bkB
+duy
 bkR
-nwG
-aac
+mHM
+afR
 aab
 aab
 aab
@@ -54646,16 +54662,16 @@ aab
 aac
 aac
 aab
-aMk
+aAm
 aAz
 bkM
 bjO
 bjO
-bkB
+sRW
 bkO
-mKJ
-sLN
-aMk
+afR
+hmp
+afR
 aab
 aab
 aab
@@ -54950,14 +54966,14 @@ aab
 aab
 aab
 aab
-aMk
+afR
 bkM
 bkM
 bkM
 bkM
-aMk
-nwG
-aac
+afR
+lpI
+afR
 aab
 aab
 aab
@@ -55253,13 +55269,13 @@ aab
 aab
 aab
 aab
-bkE
+rRX
 bkI
 bkI
-lcJ
+eGz
 bkI
-uAT
-aac
+bkI
+bkI
 aab
 aab
 aaa
@@ -55555,10 +55571,10 @@ aab
 aab
 aab
 aab
-aMk
+aAm
 aac
 aab
-aMk
+aAm
 aab
 aac
 aab
@@ -56157,9 +56173,9 @@ aab
 aab
 aab
 aab
-aMk
-aAn
-aMk
+aAm
+biN
+aAm
 aab
 aab
 aab
@@ -57063,9 +57079,9 @@ aab
 aab
 aab
 aab
-aMk
 aAn
-aMk
+biN
+aAn
 aab
 aab
 aab
@@ -57366,7 +57382,7 @@ aab
 aab
 aab
 aab
-aAo
+bkD
 aab
 aab
 aab
@@ -57971,7 +57987,7 @@ aab
 aab
 aac
 aac
-blP
+oeL
 aab
 aab
 aaa
@@ -58273,7 +58289,7 @@ aab
 aab
 aac
 aab
-bmb
+utd
 aab
 aac
 aaa
@@ -90946,7 +90962,7 @@ aIL
 xOl
 aIL
 xOl
-kVl
+txH
 xOl
 aIL
 xOl
