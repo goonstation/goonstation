@@ -3,6 +3,7 @@
 (u)Tarmunora
 (e)⚖|balance
 (*)Wizards get 6 spells up from 4. Staff of Cthulu, Fireball, Prismatic Spray, Clowns Revenge, Baleful Polymorph, Rathens Secret, Teleport, Doppenganger, and Summon Golem cost raised (1 -> 2)
+(+)Forcewall cooldown doubled (10s -> 20s)
 (u)Flourish
 (+)You can now buy packs of power cells (the large kind that fits in APCs) from QM.
 (u)Ikea
