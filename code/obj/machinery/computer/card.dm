@@ -24,6 +24,14 @@
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "id2"
 
+/obj/machinery/computer/card/portable
+  name = "Portable Id Computer"
+  icon_state = "idport"
+
+  New()
+    ..()
+    src.AddComponent(/datum/component/foldable, /obj/item/objBriefcase/hopid)
+
 /obj/machinery/computer/card/attack_ai(var/mob/user as mob)
 	return src.attack_hand(user)
 
