@@ -1,4 +1,9 @@
 
+(t)sun aug 22 21
+(u)kyle
+(p)5781
+(e)|
+(*)Buff the brute/burn medkits, replace the refill carts with normal patches. Menders now need gold to manufacture not electrum.
 (t)sat aug 21 21
 (u)Tarmunora
 (e)⚖|balance
