@@ -1,5 +1,9 @@
 
 (t)sat aug 21 21
+(u)Ikea
+(p)5778
+(e)|
+(+)Incapacitators now have an unswappable battery.
 (u)Tarmunora
 (e)⚖|balance
 (*)DOC has come to its senses, and has stopped buying cyberorgans, and buys normal parts for about 20% of what it used to
