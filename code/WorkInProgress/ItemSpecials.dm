@@ -658,6 +658,57 @@
 					overrideStaminaDamage = master.stamina_damage * 0.8
 				return
 
+	launch_projectile
+		cooldown = 3 SECONDS
+		staminaCost = 30
+		moveDelay = 0
+		requiresStaminaToFire = TRUE
+		staminaReqAmt = 30
+		/// projectile datum containing data for projectile objects
+		var/datum/projectile/projectile = null
+		/// type path of the special effect
+		var/special_effect_type = /obj/itemspecialeffect/simple
+
+		image = "simple"
+		name = "Cast"
+		desc = "Utilize the power of your wand to cast a bolt of magic."
+
+		pixelaction(atom/target, params, mob/user, reach)
+			. = ..()
+			if (!projectile) return
+			var/turf/T = get_turf(target)
+			if(!T) return
+			if(!usable(user)) return
+			if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+				preUse(user)
+				var/pox = text2num(params["icon-x"]) - 16
+				var/poy = text2num(params["icon-y"]) - 16
+				var/obj/itemspecialeffect/S = unpool(special_effect_type)
+				S.setup(get_step(user, get_dir(user, target)))
+				shoot_projectile_ST_pixel(user, projectile, target, pox, poy)
+				afterUse(user)
+
+		disposing()
+			projectile = null
+			. = ..()
+
+		fireball
+			projectile = new/datum/projectile/fireball
+
+		monkey_organ
+			projectile = new/datum/projectile/special/spawner
+			New()
+				. = ..()
+				var/datum/projectile/special/spawner/P = projectile
+				P.damage_type = D_KINETIC
+				P.power = 5
+				P.typetospawn = /obj/random_item_spawner/organs/bloody/one_to_three
+				P.icon = 'icons/mob/monkey.dmi'
+				P.icon_state = "monkey"
+				P.shot_sound = "sound/voice/screams/monkey_scream.ogg"
+				P.hit_sound = "sound/impact_sounds/Slimy_Splat_1.ogg"
+				P.name = "monkey"
+
 	slam
 		cooldown = 50
 		staminaCost = 30
@@ -716,7 +767,7 @@
 					shake_camera(M, 8, 24)
 
 				for(var/turf/T in list(one, two, three, four, twoB, threeB, fourB))
-					animate_shake(T)
+					animate_shake(T,5,2,2,T.pixel_x,T.pixel_y)
 					for(var/atom/movable/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
@@ -764,7 +815,7 @@
 					shake_camera(M, 8, 24)
 
 				for(var/turf/T in list(one, two, three, four, twoB, threeB, fourB))
-					animate_shake(T)
+					animate_shake(T,5,2,2,T.pixel_x,T.pixel_y)
 					for(var/atom/movable/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))

@@ -68,10 +68,6 @@ ABSTRACT_TYPE(/datum/artifact/)
 	/// An additional message displayed when examining, to hint at the artifact type (mainly used for more dangerous types)
 	var/examine_hint = null
 
-	// These are used for module research
-	var/list/module_research = list()
-	var/module_research_insight = 1 // insight level into the origin of the artifact
-
 	/// The health of the artifact, can be damaged by stimuli, chems, etc
 	/// When it hits 0, the artifact will be destroyed (after triggering ArtifactDestroyed())
 	var/health = 100

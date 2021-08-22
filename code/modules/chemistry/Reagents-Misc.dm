@@ -158,7 +158,7 @@ datum
 				var/datum/reagents/silver_fulminate_holder = holder
 				var/silver_fulminate_volume = volume
 				silver_fulminate_holder.del_reagent("silver_fulminate")
-				silver_fulminate_holder.temperature_reagents(silver_fulminate_holder.total_temperature + silver_fulminate_volume*20,10,1,500)
+				silver_fulminate_holder.temperature_reagents(silver_fulminate_holder.total_temperature + silver_fulminate_volume*20,10,1,500, 1)
 
 			reaction_temperature(var/exposed_temperature, var/exposed_volume)
 				if (exposed_temperature >= T0C + 30)
@@ -1569,8 +1569,11 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
-				boutput(M, "<span class='alert'><b>OH SHIT ANTS!!!!</b></span>")
-				M.emote("scream")
+				if (method == TOUCH)
+					. = 0 // for depleting fluid pools
+				if(!ON_COOLDOWN(M, "ants_scream", 3 SECONDS))
+					boutput(M, "<span class='alert'><b>OH SHIT ANTS!!!!</b></span>")
+					M.emote("scream")
 				random_brute_damage(M, 4)
 				return
 
@@ -1595,11 +1598,14 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
-				if (method == TOUCH)
-					boutput(M, "<span class='alert'><b>OH [pick("SHIT", "FUCK", "GOD")] SPIDERS[pick("", " ON MY FACE", " EVERYWHERE")]![pick("", "!", "!!", "!!!", "!!!!")]</b></span>")
-				if (method == INGEST)
-					boutput(M, "<span class='alert'><b>OH [pick("SHIT", "FUCK", "GOD")] SPIDERS[pick("", " IN MY BLOOD", " IN MY VEINS")]![pick("", "!", "!!", "!!!", "!!!!")]</b></span>")
-				M.emote("scream")
+				if(method == TOUCH)
+					. = 0 // for depleting fluid pools
+				if (!ON_COOLDOWN(M, "spiders_scream", 3 SECONDS))
+					M.emote("scream")
+					if (method == INGEST || method == INJECT)
+						boutput(M, "<span class='alert'><b>OH [pick("SHIT", "FUCK", "GOD")] SPIDERS[pick("", " IN MY BLOOD", " IN MY VEINS")]![pick("", "!", "!!", "!!!", "!!!!")]</b></span>")
+					else
+						boutput(M, "<span class='alert'><b>OH [pick("SHIT", "FUCK", "GOD")] SPIDERS[pick("", " ON MY FACE", " EVERYWHERE")]![pick("", "!", "!!", "!!!", "!!!!")]</b></span>")
 				random_brute_damage(M, 2)
 				if (ishuman(M))
 					if (!M:spiders)
@@ -2696,8 +2702,7 @@ datum
 				var/vol = max(1,volume_passed)
 				if (method == TOUCH)
 					M.shock(src.holder.my_atom, min(7500 * multiplier, vol * 100 * multiplier), "chest", 1, 1)
-				if(istype(holder, /datum/reagents/fluid_group))
-					holder.remove_reagent(src.id, vol)
+					. = 0
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if (reacting)
@@ -2835,6 +2840,10 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1) // cogwerks note. making atrazine toxic
 				if (!M) M = holder.my_atom
 				M.take_toxin_damage(2 * mult)
+				if(holder.has_reagent("THC"))
+					holder.remove_reagent("THC", 1)
+				if(holder.has_reagent("CBD"))
+					holder.remove_reagent("CBD", 1)
 				..()
 				return
 
@@ -3186,14 +3195,17 @@ datum
 			viscosity = 0.7
 
 			pierces_outerwear = 1//shoo, biofool
-			reaction_turf(var/turf/T, var_volume)
-				T.ex_act(1)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
 				if(istype(M, /mob/dead))
 					return
+				#ifdef SECRETS_ENABLED
+				one_with_everything(M)
+				#else
 				M.ex_act(1)
+				#endif
+
 
 			reaction_obj(var/obj/O, var/volume)
 				//if (!istype(O, /obj/effects/foam)
@@ -3203,8 +3215,13 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
+				#ifdef SECRETS_ENABLED
+				one_with_everything(M)
+				#else
 				M.ex_act(1)
 				M.gib()
+				#endif
+				M.reagents.del_reagent(src.id)
 
 		cyclopentanol
 			name = "cyclopentanol"

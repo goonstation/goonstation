@@ -11,7 +11,6 @@
 	throw_speed = 2
 	m_amt = 100
 	mats = 15
-	module_research = list("tools" = 2, "devices" = 10)
 
 	New()
 		..()

@@ -639,11 +639,6 @@
 	var/obj/machinery/disposal/chute
 	var/mob/user
 	var/mob/target
-	var/target_old_loc
-	var/target_old_pixel_x
-	var/target_old_pixel_y
-	var/target_old_transform
-	var/target_old_alpha
 
 	New(var/obj/machinery/disposal/chute, var/mob/target, var/mob/user)
 		..()
@@ -652,21 +647,10 @@
 		src.target = target
 		icon_state = "shoveself-[chute.icon_style]"
 		if(target != user) icon_state = "shoveother-[chute.icon_style]"
-		target_old_loc = target.loc
-		target_old_pixel_x = target.pixel_x
-		target_old_pixel_y = target.pixel_y
-		target_old_transform = target.transform
-		target_old_alpha = target.alpha
 
 	onStart()
 		..()
 		if(!checkStillValid()) return
-		var/diff_x = (chute.x - target.x) * 32
-		var/diff_y = (chute.y - target.y) * 32
-		var/fade = max(target.alpha - 178, 0)
-		var/matrix/t_size = matrix()
-		t_size.Scale(1,0.4)
-		animate(target, transform = t_size, alpha = fade, pixel_x = diff_x, pixel_y = diff_y, time = duration, easing = LINEAR_EASING)
 
 
 	onUpdate()
@@ -702,18 +686,10 @@
 		..()
 
 	onDelete()
-		animate(target) //force-complete the current animation
-		target.pixel_x = target_old_pixel_x
-		target.pixel_y = target_old_pixel_y
-		target.transform = target_old_transform
-		target.alpha = target_old_alpha
 		..()
 
 	proc/checkStillValid()
 		if(isnull(user) || isnull(target) || isnull(chute))
-			interrupt(INTERRUPT_ALWAYS)
-			return false
-		if(target_old_loc != target.loc)
 			interrupt(INTERRUPT_ALWAYS)
 			return false
 		return true

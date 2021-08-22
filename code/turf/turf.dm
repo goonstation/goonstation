@@ -568,6 +568,8 @@
 				new_turf = new map_settings.walls (src)
 			else
 				new_turf = new /turf/simulated/wall(src)
+		if ("Unsimulated Floor")
+			new_turf = new /turf/unsimulated/floor(src)
 		else
 			new_turf = new /turf/space(src)
 

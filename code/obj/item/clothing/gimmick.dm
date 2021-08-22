@@ -28,10 +28,10 @@
 
 	equipped(mob/user)
 		. = ..()
-		APPLY_MOB_PROPERTY(user, PROP_THERMALSIGHT_MK2, src)
+		APPLY_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
 
 	unequipped(mob/user)
-		REMOVE_MOB_PROPERTY(user, PROP_THERMALSIGHT_MK2, src)
+		REMOVE_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
 		. = ..()
 
 /obj/item/clothing/under/gimmick/hunter
@@ -659,7 +659,6 @@
 	name = "super happy funtime cat head"
 	desc = "This cat head was built to the highest ethical standards.  50% less child labor used in production than competing novelty cat heads."
 	icon_state = "genki"
-	permeability_coefficient = 0.01
 	c_flags = COVERSEYES | COVERSMOUTH | MASKINTERNALS
 
 //birdman for nieks

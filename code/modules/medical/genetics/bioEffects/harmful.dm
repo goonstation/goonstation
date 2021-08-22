@@ -841,6 +841,9 @@
 
 	OnLife(var/mult)
 		if(..()) return
+		var/turf/T = get_turf(owner)
+		if(isrestrictedz(T?.z))
+			return
 		if (probmult(proc_prob))
 			var/list/potential_victims = list()
 			for(var/mob/living/carbon/human/H in range(7,owner))

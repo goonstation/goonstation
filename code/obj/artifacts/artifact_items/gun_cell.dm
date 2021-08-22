@@ -6,7 +6,6 @@
 	max_charge = 400.0
 	var/chargeCap = 400.0
 	recharge_rate = 0.0
-	module_research_no_diminish = 1
 	mat_changename = 0
 	mat_changedesc = 0
 
@@ -70,8 +69,6 @@
 	react_elec = list("equal",0,0)
 	react_xray = list(8,80,95,11,"SEGMENTED")
 	examine_hint = "It kinda looks like it's supposed to be inserted into something."
-	module_research = list("energy" = 15, "weapons" = 1, "miniaturization" = 15)
-	module_research_insight = 1
 
 	New()
 		..()

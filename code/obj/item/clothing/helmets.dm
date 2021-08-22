@@ -23,6 +23,7 @@
 	desc = "Helps protect against vacuum."
 	seal_hair = 1
 	path_prot = 0
+	permeability_coefficient = 0.2
 
 	onMaterialChanged()
 		if(src.material)
@@ -294,8 +295,10 @@
 					if (istype(H.head, /obj/item/clothing/head/helmet/space/syndicate/specialist/engineer)) //handling of the rest is done in life.dm
 						if (src.on)
 							H.vision.set_scan(1)
+							APPLY_MOB_PROPERTY(toggler, PROP_MESONVISION, src)
 						else
 							H.vision.set_scan(0)
+							REMOVE_MOB_PROPERTY(toggler, PROP_MESONVISION, src)
 
 			equipped(var/mob/living/user, var/slot)
 				..()
@@ -303,12 +306,14 @@
 					return
 				if (slot == SLOT_HEAD && on)
 					user.vision.set_scan(1)
+					APPLY_MOB_PROPERTY(user, PROP_MESONVISION, src)
 
 			unequipped(var/mob/living/user)
 				..()
 				if(!isliving(user))
 					return
 				user.vision.set_scan(0)
+				REMOVE_MOB_PROPERTY(user, PROP_MESONVISION, src)
 
 		medic
 			name = "specialist health monitor"
@@ -316,51 +321,20 @@
 			item_state = "syndie_specialist"
 			permeability_coefficient = 0.01
 			c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
-			var/client/assigned = null
 
 			setupProperties()
 				..()
 				setProperty("viralprot", 50)
 
-			process()
-				if (assigned)
-					assigned.images.Remove(health_mon_icons)
-					src.addIcons()
-
-					if (loc != assigned.mob)
-						assigned.images.Remove(health_mon_icons)
-						assigned = null
-
-					//sleep(2 SECONDS)
-				else
-					processing_items.Remove(src)
-
-			proc/addIcons()
-				if (assigned)
-					for (var/image/I in health_mon_icons)
-						if (!I || !I.loc || !src)
-							continue
-						if (I.loc.invisibility && I.loc != src.loc)
-							continue
-						else
-							assigned.images.Add(I)
-
 			equipped(var/mob/user, var/slot)
 				..()
 				if (slot == SLOT_HEAD)
-					assigned = user.client
-					SPAWN_DBG(-1)
-						//updateIcons()
-						processing_items |= src
-				return
+					get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(user)
 
 			unequipped(var/mob/user)
+				if(src.equipped_in_slot == SLOT_HEAD)
+					get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(user)
 				..()
-				if (assigned)
-					assigned.images.Remove(health_mon_icons)
-					assigned = null
-					processing_items.Remove(src)
-				return
 
 		sniper
 			name = "specialist combat cover"
@@ -864,4 +838,3 @@
 		setProperty("heatprot", 15)
 		setProperty("disorient_resist_eye", 8)
 		setProperty("disorient_resist_ear", 8)
-

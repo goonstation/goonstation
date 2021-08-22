@@ -80,5 +80,5 @@
 		HH.icon_state = "handr"
 
 	setup_healths()
-		add_hh_flesh(-50, 50, 1)
-		add_hh_flesh_burn(-50, 50, 0.7)
+		add_hh_flesh(50, 1)
+		add_hh_flesh_burn(50, 0.7)

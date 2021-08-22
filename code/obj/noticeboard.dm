@@ -138,5 +138,5 @@ proc/save_noticeboards()
 		return
 	fdel(some_board.file_name)
 	var/json_data = json_encode(some_board.data)
-	logTheThing("debug", null, null, "Persistent noticeboard save data: [json_data]")
+//	logTheThing("debug", null, null, "Persistent noticeboard save data: [json_data]")
 	text2file(json_data, some_board.file_name)

@@ -2291,7 +2291,7 @@ Returns:
 		var/list/listargs = list()
 
 		for(var/i=0, i<argnum, i++)
-			var/class = input("Type of Argument #[i]","Variable Type", null) in list("text","num","type","reference","mob reference", "icon","file", "*triggering object*","cancel")
+			var/class = input("Type of Argument #[i]","Variable Type", null) in list("text","num","type","json","ref","reference","mob reference", "icon","file", "*triggering object*","cancel")
 			switch(class)
 				if("-cancel-")
 					return
@@ -2307,6 +2307,15 @@ Returns:
 
 				if("type")
 					listargs += input("Enter type:","Type", null) in typesof(/obj,/mob,/area,/turf)
+
+				if("json")
+					listargs += list(json_decode(input("Enter json:") as null|text))
+
+				if ("ref")
+					var/input = input("Enter ref:") as null|text
+					var/ref_target = locate(input)
+					if (!ref_target) ref_target = locate("\[[input]\]")
+					listargs += ref_target
 
 				if("reference")
 					listargs += input("Select reference:","Reference", null) as mob|obj|turf|area in world

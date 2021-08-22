@@ -148,7 +148,6 @@
 	desc = "A fancy electronic eye. It has a Security HUD system installed."
 	icon_state = "eye-sec"
 	mats = 7
-	var/client/assigned = null
 	made_from = "pharosium"
 	color_r = 0.975 // darken a little, kinda red
 	color_g = 0.95
@@ -156,46 +155,21 @@
 	change_iris = 0
 
 	process()
-		if (assigned)
-			assigned.images.Remove(arrestIconsAll)
-			if (src.broken)
-				processing_items.Remove(src)
-				return
-			addIcons()
-
-			if (loc != assigned.mob)
-				assigned.images.Remove(arrestIconsAll)
-				assigned = null
-		else
+		if (src.broken)
 			processing_items.Remove(src)
-
-	proc/addIcons()
-		if (assigned)
-			for (var/image/I in arrestIconsAll)
-				if (!I || !I.loc || !src)
-					continue
-				if (I.loc.invisibility && I.loc != src.loc)
-					continue
-				else
-					assigned.images.Add(I)
+			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(donor)
 
 	on_transplant(var/mob/M as mob)
 		..()
 		if (src.broken)
 			return
-		if (M.client)
-			src.assigned = M.client
-			SPAWN_DBG(-1)
-				processing_items |= src
-		return
+		processing_items |= src
+		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(donor)
 
 	on_removal()
 		..()
-		if (assigned)
-			assigned.images.Remove(arrestIconsAll)
-			assigned = null
-			processing_items.Remove(src)
-		return
+		processing_items.Remove(src)
+		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(donor)
 
 /obj/item/organ/eye/cyber/thermal
 	name = "thermal imager cybereye"
@@ -211,10 +185,10 @@
 
 	on_transplant(mob/M)
 		. = ..()
-		APPLY_MOB_PROPERTY(M, PROP_THERMALSIGHT, src)
+		APPLY_MOB_PROPERTY(M, PROP_THERMALVISION, src)
 
 	on_removal()
-		REMOVE_MOB_PROPERTY(donor, PROP_THERMALSIGHT, src)
+		REMOVE_MOB_PROPERTY(donor, PROP_THERMALVISION, src)
 		. = ..()
 
 /obj/item/organ/eye/cyber/meson
@@ -240,9 +214,11 @@
 			src.assigned = M
 			if (src.on)
 				src.assigned.vision.set_scan(1)
+				APPLY_MOB_PROPERTY(M, PROP_MESONVISION, src)
 
 	on_removal()
 		..()
+		REMOVE_MOB_PROPERTY(donor, PROP_MESONVISION, src)
 		if (istype(assigned.glasses, /obj/item/clothing/glasses/visor))
 			return
 		else
@@ -253,8 +229,10 @@
 		playsound(assigned, "sound/items/mesonactivate.ogg", 30, 1)
 		if (src.on)
 			assigned.vision.set_scan(1)
+			APPLY_MOB_PROPERTY(donor, PROP_MESONVISION, src)
 		else
 			assigned.vision.set_scan(0)
+			REMOVE_MOB_PROPERTY(donor, PROP_MESONVISION, src)
 
 /obj/item/organ/eye/cyber/spectro
 	name = "spectroscopic imager cybereye"
@@ -282,7 +260,6 @@
 	desc = "A fancy electronic eye. It's fitted with an advanced miniature sensor array that allows you to quickly determine the physical condition of others."
 	icon_state = "eye-prodoc"
 	mats = 7
-	var/client/assigned = null
 	made_from = "pharosium"
 	color_r = 0.925
 	color_g = 1
@@ -291,45 +268,22 @@
 
 	// stolen from original prodocs
 	process()
-		if (assigned)
-			assigned.images.Remove(health_mon_icons)
-			if (src.broken)
-				processing_items.Remove(src)
-				return
-			addIcons()
-
-			if (loc != assigned.mob)
-				assigned.images.Remove(health_mon_icons)
-				assigned = null
-		else
+		if (src.broken)
 			processing_items.Remove(src)
-
-	proc/addIcons()
-		if (assigned)
-			for (var/image/I in health_mon_icons)
-				if (!I || !I.loc || !src)
-					continue
-				if (I.loc.invisibility && I.loc != src.loc)
-					continue
-				else
-					assigned.images.Add(I)
+			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(donor)
 
 	on_transplant(var/mob/M as mob)
 		..()
 		if (src.broken)
 			return
-		if (M.client)
-			src.assigned = M.client
-			SPAWN_DBG(-1)
-				processing_items |= src
+		processing_items |= src
+		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(M)
 		return
 
 	on_removal()
 		..()
-		if (assigned)
-			assigned.images.Remove(health_mon_icons)
-			assigned = null
-			processing_items.Remove(src)
+		processing_items.Remove(src)
+		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(donor)
 		return
 
 /obj/item/organ/eye/cyber/ecto
@@ -343,6 +297,14 @@
 	color_g = 1
 	color_b = 0.925
 	change_iris = 0
+
+	on_transplant(mob/M)
+		. = ..()
+		APPLY_MOB_PROPERTY(M, PROP_GHOSTVISION, src)
+
+	on_removal()
+		REMOVE_MOB_PROPERTY(donor, PROP_GHOSTVISION, src)
+		. = ..()
 
 /obj/item/organ/eye/cyber/camera
 	name = "camera cybereye"
@@ -378,6 +340,14 @@
 	color_g = 1
 	color_b = 0.7
 	change_iris = 0
+
+	on_transplant(mob/M)
+		. = ..()
+		APPLY_MOB_PROPERTY(M, PROP_NIGHTVISION, src)
+
+	on_removal()
+		REMOVE_MOB_PROPERTY(donor, PROP_NIGHTVISION, src)
+		. = ..()
 
 /obj/item/organ/eye/cyber/laser
 	name = "laser cybereye"

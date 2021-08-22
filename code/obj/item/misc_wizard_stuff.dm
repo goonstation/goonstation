@@ -216,13 +216,23 @@
 			src.do_brainmelt(user, 2)
 			return
 
+/obj/item/staff/monkey_staff
+	name = "staff of monke"
+	desc = "A staff with a cute monkey head carved into the wood."
+	icon_state = "staffmonkey"
+	item_state = "staffmonkey"
+
+	New()
+		. = ..()
+		src.setItemSpecial(/datum/item_special/launch_projectile/monkey_organ)
+
 /////////////////////////////////////////////////////////// Magic mirror /////////////////////////////////////////////
 
 /obj/magicmirror
 	desc = "An old mirror. A bit eeky and ooky."
 	name = "Magic Mirror"
 	icon = 'icons/obj/decals/misc.dmi'
-	icon_state = "rip"
+	icon_state = "wizard_mirror"
 	anchored = 1.0
 	opacity = 0
 	density = 0
