@@ -183,7 +183,7 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	else if (src.microwave_state == MW_STATE_BROKEN_1)
 		src.visible_message("<span class='notice'>[user] fixes the [src]!</span>")
 		src.icon_state = "mw"
-		src.microwave_state = 0 // Fix it!
+		src.microwave_state = MW_STATE_WORKING // Fix it!
 
 /obj/machinery/microwave/proc/clean(mob/user as mob)
 	if (src.dirty)
