@@ -64,7 +64,6 @@
 	snow_random
 		icon_state = "snowtree"
 		layer = EFFECTS_LAYER_UNDER_1 // match shrubs
-		plane = PLANE_NOSHADOW_ABOVE // sprites have their own shadow and the shadow rendering mucks with blending
 		pixel_x = -32
 		New()
 			. = ..()
@@ -132,6 +131,16 @@
 		New()
 			. = ..()
 			src.dir = pick(alldirs)
+
+	snow
+		icon = 'icons/turf/snow.dmi'
+		icon_state = "snowstone"
+		plane = PLANE_NOSHADOW_BELOW // has snow accents to meld with turf
+
+		random
+			New()
+				. = ..()
+				src.dir = pick(alldirs)
 
 /obj/shrub
 	name = "shrub"
@@ -236,6 +245,11 @@
 	snow
 		icon = 'icons/turf/snow.dmi'
 		icon_state = "snowshrub"
+
+		random
+			New()
+				. = ..()
+				src.dir = pick(cardinal)
 
 
 //It'll show up on multitools
