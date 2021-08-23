@@ -384,7 +384,7 @@ mob/verb/checkrewards()
 			return
 
 
-//Head of Personal
+//Head of Personnel
 
 //Detective
 

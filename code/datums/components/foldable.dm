@@ -116,9 +116,9 @@
 				fold_component.the_briefcase = null
 			src.thingInside = null
 		..()
-	idcomputercase
+	blue_stripe
 		icon_state = "hopcase"
 		item_state = "hopcase"
-	idcomputercaseC
+	blue_green_stripe
 		icon_state = "hopcaseC"
 		item_state = "hopcaseC"
