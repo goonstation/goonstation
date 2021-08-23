@@ -599,6 +599,7 @@ var/global/list/soundCache = list(
  	"sound/machines/lavamoon_rotors_stopping.ogg" = 'sound/machines/lavamoon_rotors_stopping.ogg',\
  	"sound/machines/loom.ogg" = 'sound/machines/loom.ogg',\
  	"sound/machines/lrteleport.ogg" = 'sound/machines/lrteleport.ogg',\
+ 	"sound/machines/microwave_start.ogg" = 'sound/machines/microwave_start.ogg',\
  	"sound/machines/milk_horn.ogg" = 'sound/machines/milk_horn.ogg',\
  	"sound/machines/milk_horn_far.ogg" = 'sound/machines/milk_horn_far.ogg',\
  	"sound/machines/mixer.ogg" = 'sound/machines/mixer.ogg',\
