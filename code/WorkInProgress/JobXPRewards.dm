@@ -386,37 +386,6 @@ mob/verb/checkrewards()
 
 //Head of Personal
 
-/datum/jobXpReward/colorfulID
-	name = "Blue ID briefcase"
-	desc = "Trade out your plain brown briefcase for a colorful blue one! BE SURE TO REMOVE CARDS BEFORE CLAIMING THIS, IT WILL DESTROY THOSE INSIDE!"
-	required_levels = list("Head of Personnel"=0)
-	claimable = 1
-	claimPerRound = 1
-	icon_state = "?"
-	var/sacrifice_path = /obj/item/objBriefcase/hopid
-	var/reward_path = /obj/machinery/computer/card/portableC
-	var/sacrifice_name = "portable ID computer"
-
-	activate(var/client/C)
-		var/found = 0
-		var/O = locate(sacrifice_path) in C.mob.contents
-		if (istype(O, sacrifice_path))
-			var/obj/item/objBriefcase/hopid/K = O
-
-			C.mob.remove_item(K)
-			found = 1
-			qdel(K)
-			boutput(C.mob, "Your briefcase swaps colors! What the fuck!")
-			var/obj/machinery/computer/card/portableC/T = new/obj/machinery/computer/card/portableC()
-			T.set_loc(get_turf(C.mob))
-			return
-
-
-		if (!found)
-			boutput(C.mob, "You need to be holding a [sacrifice_name] in order to claim this reward.")
-			src.claimedNumbers[usr.key] --
-			return
-
 //Detective
 
 /datum/jobXpReward/detective

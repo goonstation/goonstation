@@ -39,20 +39,20 @@
 	icon_state = "id2"
 
 /obj/machinery/computer/card/portable
-  name = "Portable Id Computer"
+  name = "Portable Identification Computer"
   icon_state = "idport"
 
   New()
     ..()
-    src.AddComponent(/datum/component/foldable, /obj/item/objBriefcase/hopid)
+    src.AddComponent(/datum/component/foldable, /obj/item/objBriefcase/idcomputercase)
 
 /obj/machinery/computer/card/portableC
-  name = "Portable Id Computer"
+  name = "Portable Identification Computer"
   icon_state = "idportC"
 
   New()
     ..()
-    src.AddComponent(/datum/component/foldable, /obj/item/objBriefcase/hopidC)
+    src.AddComponent(/datum/component/foldable, /obj/item/objBriefcase/idcomputercaseC)
 
 /obj/machinery/computer/card/attack_ai(var/mob/user as mob)
 	return src.attack_hand(user)
