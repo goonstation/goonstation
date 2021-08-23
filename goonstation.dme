@@ -115,6 +115,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\powernet_data.dm"
 #include "code\datums\prefab_shuttles.dm"
 #include "code\datums\preferences.dm"
+#include "code\datums\rand.dm"
 #include "code\datums\recipes.dm"
 #include "code\datums\roboresearch.dm"
 #include "code\datums\savefile.dm"
