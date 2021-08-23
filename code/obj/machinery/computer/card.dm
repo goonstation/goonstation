@@ -40,11 +40,11 @@
 
 /obj/machinery/computer/card/portable
   name = "portable identification computer"
-  icon_state = "idport"
+  icon_state = "idportC"
 
   New()
     ..()
-    src.AddComponent(/datum/component/foldable, /obj/item/objBriefcase/idcomputercase)
+    src.AddComponent(/datum/component/foldable, /obj/item/objBriefcase/idcomputercaseC)
 
 
 
