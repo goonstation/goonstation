@@ -11,7 +11,7 @@
 /datum/component/foldable/Initialize(var/briefcase_path = /obj/item/objBriefcase)
 	if(!istype(parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
-	if(!ispath(briefcase_path, /obj/item.objBriefcase))
+	if(!ispath(briefcase_path,/obj/item.objBriefcase))
 		return COMPONENT_INCOMPATIBLE
 	src.briefcase_path = briefcase_path
 
