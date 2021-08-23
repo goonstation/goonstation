@@ -1,5 +1,9 @@
 
 (t)mon aug 23 21
+(u)TTerc
+(p)5794
+(e)⚖|balance
+(+)The MD now spawns with a medkit containing a brute and a burn automender, meaning that they have three menders total.
 (u)Flappybat
 (p)5661
 (e)🔄|rework
