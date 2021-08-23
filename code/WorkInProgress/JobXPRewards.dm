@@ -553,6 +553,26 @@ mob/verb/checkrewards()
 		return
 
 /////////////Bartender////////////////
+/datum/jobXpReward/bartender/bargun
+	name = "Sawn off Shotgun"
+	desc = "Now you too can go back to the wild west with this old school shotgun."
+	required_levels = list("Bartender"=0)
+	icon_state = "?"
+	claimable = 1
+	var/path_to_spawn = /obj/item/storage/box/bargun
+
+	activate(var/client/C)
+		var/gun = C.mob.find_type_in_hand(/obj/item/gun/kinetic/riotgun)
+
+		if(!(gun))
+			boutput(C.mob, "You need to be holding a riotshotgun to claim this reward")
+			return
+		C.mob.remove_item(gun)
+		qdel(gun)
+		var/obj/item/I = new path_to_spawn()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand_or_drop(I)
+		boutput(C.mob, "Your riot shotgun morphs into a gun case! What the fuck!?")
 
 /datum/jobXpReward/bartender/spectromonocle
 	name = "Spectroscopic Monocle"

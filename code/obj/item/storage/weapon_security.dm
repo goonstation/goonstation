@@ -57,6 +57,13 @@
 	/obj/item/ammo/bullets/a357 = 3,\
 	/obj/item/ammo/bullets/a357/AP = 2)
 
+/obj/item/storage/box/bargun //for the job reward
+	name = "Sawn off Shotgun case"
+	icon_state = "hard_case"
+	desc = "A box containing a Sawn Off Shotgun and ammo."
+	spawn_contents = list(/obj/item/gun/kinetic/bargun,\
+	/obj/item/ammo/bullets/abg = 1)
+
 /obj/item/storage/box/detectivegun
 	name = ".38 revolver box"
 	icon_state = "hard_case"
