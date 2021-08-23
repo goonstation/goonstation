@@ -39,7 +39,7 @@
 	icon_state = "id2"
 
 /obj/machinery/computer/card/portable
-  name = "Portable Id Computer"
+  name = "portable identification computer"
   icon_state = "idport"
 
   New()
