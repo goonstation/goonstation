@@ -1788,9 +1788,6 @@
 	icon = 'icons/obj/foodNdrink/bottle.dmi'
 	icon_state = "detflask"
 	item_state = "detflask"
-	g_amt = 5
-	initial_volume = 40
-	can_recycle = FALSE
 	initial_reagents = list("bojack"=40)
 
 /obj/item/reagent_containers/food/drinks/cocktailshaker
