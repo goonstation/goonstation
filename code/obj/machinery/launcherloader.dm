@@ -352,7 +352,7 @@
 			else
 				boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
 				src.scan = null
-		else src.attack_hand(user)
+		else src.Attackhand(user)
 		return
 
 

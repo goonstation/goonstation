@@ -1688,10 +1688,10 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 
 /datum/manufacture/mender
 	name = "Auto Mender"
-	item_paths = list("MET-1","CRY-1")
-	item_amounts = list(3,4)
+	item_paths = list("MET-2","CRY-1", "gold")
+	item_amounts = list(5,4, 5)
 	item_outputs = list(/obj/item/reagent_containers/mender)
-	time = 10 SECONDS
+	time = 30 SECONDS
 	create = 2
 	category = "Resource"
 

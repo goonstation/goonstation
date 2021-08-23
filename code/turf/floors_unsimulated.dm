@@ -1060,6 +1060,13 @@
 		else
 			src.icon_state = "swamp0"
 
+/turf/unsimulated/floor/auto/swamp/rain
+	New()
+		. = ..()
+		var/image/R = image('icons/turf/water.dmi', "ripple", dir=pick(alldirs),pixel_x=rand(-10,10),pixel_y=rand(-10,10))
+		R.alpha = 180
+		src.UpdateOverlays(R, "ripple")
+
 /turf/unsimulated/floor/auto/snow
 	name = "snow"
 	desc = "Snow. Soft and fluffy."

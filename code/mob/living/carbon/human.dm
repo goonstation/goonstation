@@ -1541,7 +1541,7 @@
 		return
 
 	logTheThing("diary", src, null, "(WHISPER): [message]", "whisper")
-	logTheThing("whisper", src, null, "SAY: [message] (Whispered)")
+	logTheThing("whisper", src, null, "SAY: [message] (WHISPER) [log_loc(src)]")
 
 	if (src.client && !src.client.holder && url_regex?.Find(message))
 		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
@@ -3372,7 +3372,7 @@
 				src.changeStatus("stunned", 3 SECONDS)
 
 		else
-			AM.attack_hand(src)	// nice catch, hayes. don't ever fuckin do it again
+			AM.Attackhand(src)	// nice catch, hayes. don't ever fuckin do it again
 			src.visible_message("<span class='alert'>[src] catches the [AM.name]!</span>")
 			logTheThing("combat", src, null, "catches [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
 			src.throw_mode_off()

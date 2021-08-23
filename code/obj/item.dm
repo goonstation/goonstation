@@ -1036,12 +1036,6 @@
 	src.set_loc(T)
 */
 
-/obj/item/interact(mob/user)
-	if (user.equipped() == src)
-		src.attack_self(user)
-	else
-		src.pick_up_by(user)
-
 /obj/item/proc/pick_up_by(var/mob/M)
 
 	if (world.time < M.next_click)
@@ -1076,9 +1070,9 @@
 	if (M.equipped())
 		M.drop_item()
 		SPAWN_DBG(1 DECI SECOND)
-			src.attack_hand(M)
+			src.Attackhand(M)
 	else
-		src.attack_hand(M)
+		src.Attackhand(M)
 	M.next_click = world.time + src.click_delay
 
 /obj/item/get_desc()

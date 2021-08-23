@@ -2182,9 +2182,16 @@ datum
 			id = "expresso"
 			description = "An expresso is a strong black coffee with more stupid."
 			stun_resist = 25
+			var/killer = 0
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
-				M.take_brain_damage(2 * mult)
+				if(M.get_brain_damage() < 60 || killer)
+					M.take_brain_damage(2 * mult)
+
+			killer
+				id = "expresso_killer"
+				random_chem_blacklisted = 1
+				killer = 1
 
 		fooddrink/coffee/espresso/decaf
 			name = "decaf espresso"

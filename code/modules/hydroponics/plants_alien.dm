@@ -28,8 +28,8 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 
 		if (POT.growth > (P.harvtime + DNA.harvtime) && prob(20))
 			POT.visible_message("<span class='alert'><b>[POT.name]</b> vomits profusely!</span>")
-			playsound(POT.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
-			if(!locate(/obj/decal/cleanable/vomit) in POT.loc) make_cleanable( /obj/decal/cleanable/vomit,POT.loc)
+			playsound(POT, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+			if(!locate(/obj/decal/cleanable/vomit) in get_turf(POT)) make_cleanable( /obj/decal/cleanable/vomit,get_turf(POT))
 
 /datum/plant/artifact/peeker
 	name = "Peeker"
@@ -223,7 +223,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 			POT.visible_message("<span class='alert'><b>[POT.name]</b> meows!</span>")
 
 		if (POT.growth > (P.harvtime + DNA.harvtime + 10))
-			var/obj/critter/cat/synth/C = new(POT.loc)
+			var/obj/critter/cat/synth/C = new(get_turf(POT))
 			C.health = POT.health
 			POT.visible_message("<span class='notice'>The synthcat climbs out of the tray!</span>")
 			POT.HYPdestroyplant()
@@ -266,7 +266,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 			var/MEspeech = pick("Feed me!", "I'm hungryyyy...", "Give me blood!", "I'm starving!", "What's for dinner?")
 			for(var/mob/M in hearers(POT, null)) M.show_message("<B>Man-Eating Plant</B> gurgles, \"[MEspeech]\"")
 		if (POT.growth > (P.harvtime + DNA.harvtime))
-			var/obj/critter/maneater/ME = new(POT.loc)
+			var/obj/critter/maneater/ME = new(get_turf(POT))
 			ME.health = POT.health * 3
 			ME.friends = ME.friends | POT.contributors
 			POT.visible_message("<span class='notice'>The man-eating plant climbs out of the tray!</span>")

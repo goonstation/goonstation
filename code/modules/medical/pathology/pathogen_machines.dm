@@ -127,7 +127,7 @@
 					src.process_pathogen = P
 					src.process_source = S
 					counter = 25
-		src.attack_hand(usr)
+		src.Attackhand(usr)
 
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
 		if (istype(O, /obj/item/bloodslide))

@@ -1,4 +1,4 @@
-#define CRYOSLEEP_DELAY 15 MINUTES
+#define CRYOSLEEP_DELAY 5 MINUTES
 #define CRYOTRON_MESSAGE_DELAY 3 SECONDS
 
 /obj/cryotron_spawner

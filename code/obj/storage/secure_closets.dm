@@ -121,6 +121,7 @@
 	/obj/item/clothing/shoes/brown,
 	/obj/item/gun/implanter,
 	/obj/item/gun/reagent/syringe/NT,
+	/obj/item/reagent_containers/mender/both,
 	/obj/item/gun/kinetic/dart_rifle,
 	/obj/item/ammo/bullets/tranq_darts,
 	/obj/item/ammo/bullets/tranq_darts/anti_mutant,

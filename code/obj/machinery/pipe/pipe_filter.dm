@@ -159,12 +159,12 @@
 		src.overlays += image('pipes2.dmi', "filter-spark")
 		sleep(0.6 SECONDS)
 		src.updateicon()
-		return src.attack_hand(user)
-	return src.attack_hand(user)
+		return src.Attackhand(user)
+	return src.Attackhand(user)
 
 // pipefilter interact/topic
 /obj/machinery/pipefilter/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/pipefilter/attack_hand(mob/user as mob)
 /*	if(status & NOPOWER)

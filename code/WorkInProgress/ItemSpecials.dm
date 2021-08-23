@@ -774,7 +774,7 @@
 							if(master)
 								A.Attackby(master, user, params, 1)
 							else
-								A.attack_hand(user, params)
+								A.Attackhand(user, params)
 							attacked += A
 							A.throw_at(get_edge_target_turf(A,direction), 5, 3)
 
@@ -900,7 +900,7 @@
 				var/hit = 0
 				for(var/atom/A in turf)
 					if(isTarget(A))
-						A.attack_hand(user,params)
+						A.Attackhand(user,params)
 						hit = 1
 						break
 
@@ -948,7 +948,7 @@
 				var/hit = 0
 				for(var/atom/A in turf)
 					if(isTarget(A))
-						A.attack_hand(user,params)
+						A.Attackhand(user,params)
 						hit = 1
 						break
 
@@ -998,7 +998,7 @@
 					for(var/atom/movable/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
-							A.attack_hand(user,params)
+							A.Attackhand(user,params)
 							attacked += A
 							hit = 1
 
@@ -1648,7 +1648,7 @@
 					if(A in attacked) continue
 					if(isTarget(A))
 						attacked += A
-						A.attack_hand(user,params)
+						A.Attackhand(user,params)
 						// hit = 1
 						break
 
