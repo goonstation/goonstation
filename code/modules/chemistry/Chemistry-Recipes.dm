@@ -294,6 +294,18 @@ datum
 			result_amount = 1
 			mix_phrase = "Stinging vapors rise from the solution."
 
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				var/location = get_turf(holder.my_atom)
+
+				var/list/mob/living/carbon/mobs_affected = list()
+				for(var/mob/living/carbon/C in range(location, 1))
+					if(!issmokeimmune(C))
+						mobs_affected += C
+				for(var/mob/living/carbon/C as anything in mobs_affected)
+					C.reagents.add_reagent("chlorine", (0.5 * created_volume) / length(mobs_affected))
+				return
+
+
 		/*tricalomel
 			name = "Pentetic Acid"
 			id = "tricalomel"
@@ -1965,6 +1977,20 @@ datum
 			required_temperature = T0C + 275
 			mix_phrase = "It smells like a bad hangover in here."
 
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				var/location = get_turf(holder.my_atom)
+
+				for(var/mob/M in all_viewers(null, location))
+					boutput(M, "<span class='alert'>The solution generates a strong vapor!</span>")
+
+				var/list/mob/living/carbon/mobs_affected = list()
+				for(var/mob/living/carbon/C in range(location, 1))
+					if(!issmokeimmune(C))
+						mobs_affected += C
+				for(var/mob/living/carbon/C as anything in mobs_affected)
+					C.reagents.add_reagent("acetaldehyde", (0.4 * created_volume) / length(mobs_affected))
+				return
+
 		acetic_acid
 			name = "Acetic Acid"
 			id = "acetic_acid"
@@ -2009,6 +2035,21 @@ datum
 			required_temperature = T0C + 150 // really more like 620 but fuck it
 			result_amount = 2
 			mix_phrase = "Ugh, it smells like the morgue in here."
+
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				var/location = get_turf(holder.my_atom)
+
+				for(var/mob/M in all_viewers(null, location))
+					boutput(M, "<span class='alert'>The solution generates a strong vapor!</span>")
+
+				var/list/mob/living/carbon/mobs_affected = list()
+				for(var/mob/living/carbon/C in range(location, 1))
+					if(!issmokeimmune(C))
+						mobs_affected += C
+				for(var/mob/living/carbon/C as anything in mobs_affected)
+					C.reagents.add_reagent("formaldehyde", (0.25 * created_volume) / length(mobs_affected))
+				return
+
 
 		haloperidol // COGWERKS CHEM REVISION PROJECT: marked for revision - antipsychotic
 			name = "Haloperidol"
@@ -3112,6 +3153,22 @@ datum
 			required_reagents = list("morphine" = 1, "antihistamine" = 1, "cleaner" = 1, "phosphorus" = 1, "potassium" = 1, "fuel" = 1)
 			mix_phrase = "The mixture dries into a pale blue powder."
 			mix_sound = 'sound/misc/fuse.ogg'
+
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				var/location = get_turf(holder.my_atom)
+
+				for(var/mob/M in all_viewers(null, location))
+					boutput(M, "<span class='alert'>The solution generates a strong vapor!</span>")
+
+				var/list/mob/living/carbon/mobs_affected = list()
+				for(var/mob/living/carbon/C in range(location, 1))
+					if(!issmokeimmune(C))
+						mobs_affected += C
+				for(var/mob/living/carbon/C as anything in mobs_affected)
+					C.reagents.add_reagent("krokodil", (0.2 * created_volume) / length(mobs_affected))
+				return
+
+
 
 	/*	helldrug // the worst thing. if splashed on floor, create void turf. if ingested, replace mob with crunch critter and teleport user to hell
 			name = "Cthonium"

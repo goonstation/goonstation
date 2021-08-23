@@ -403,7 +403,21 @@ datum
 			minimum_reaction_temperature = T0C+400
 
 			reaction_temperature(exposed_temperature, exposed_volume)
+				var/location = get_turf(holder.my_atom)
 				var/myvol = volume
+
+				for(var/mob/M in all_viewers(null, location))
+					boutput(M, "<span class='alert'>The solution generates a strong vapor!</span>")
+
+				var/list/mob/living/carbon/mobs_affected = list()
+				for(var/mob/living/carbon/C in range(location, 1))
+					if(!issmokeimmune(C))
+						mobs_affected += C
+				for(var/mob/living/carbon/C as anything in mobs_affected)
+					C.reagents.add_reagent("neurotoxin", (0.1 * myvol) / length(mobs_affected))
+					C.reagents.add_reagent("space_drugs", (0.1 * myvol) / length(mobs_affected))
+
+
 				holder.del_reagent(id)
 				holder.add_reagent("neurotoxin", myvol, null)
 
