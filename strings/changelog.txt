@@ -1,5 +1,9 @@
 
 (t)sun aug 22 21
+(u)Waffleloffle
+(p)5776
+(e)🎨|sprites
+(+)Resprited the large tree found in most Owleries.
 (u)kyle
 (p)5781
 (e)|
