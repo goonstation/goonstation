@@ -383,9 +383,6 @@ mob/verb/checkrewards()
 			src.claimedNumbers[usr.key] --
 			return
 
-
-//Head of Personnel
-
 //Detective
 
 /datum/jobXpReward/detective
