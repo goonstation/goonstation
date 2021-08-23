@@ -1636,3 +1636,119 @@
 		if (!ismob(owner)) return
 		var/mob/M = owner
 		M.bioHolder.RemoveEffect(charge)
+
+#define LIMB = "limb"
+#define ORGAN = "organ"
+//I call it regrow limb, but it can regrow any limb/organ that a changer can make a spider from. (apart from headspider obviously)
+/datum/statusEffect/changeling_regrow_body_part
+	id = "c_regrow"
+	name = "Regrowing Part: "
+	desc = ""
+	icon_state = "fire1"
+	maxDuration = 90 SECONDS
+	unique = 0
+	var/regrow_target_name = null
+	var/counter = 1
+	var/mob/living/carbon/human/H
+	var/limb_or_organ = "limb"		//Acceptable values: "limb" or "organ"
+
+///atom/proc/setStatus("c_regrow_body_part", 90 SECONDS, optional)
+
+	getTooltip()
+		. = "We are currently regrowing [regrow_target_name]. [duration SECONDS] Seconds left."
+	preCheck(atom/A)
+		. = 1
+		if(issilicon(A))
+			. = 0
+
+	//Optional needs to be an acceptable value in organHolder.receive_organ or limb for this to work.
+	onAdd(optional = null)
+		. = ..()
+		if(isnull(optional))
+			owner.delStatus(id)
+		
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			get_target_name(optional)
+			if (isnull(get_target_name))
+				message_admins("Kyle-change thing broken")
+				delStatus(id)
+				return
+
+
+	//gets the human readable name from the target id.
+	proc/get_target_name(limb_name)
+		switch(limb_name)
+			if("l_arm") regrow_target_name = left arm
+			if("r_arm") regrow_target_name = right arm
+			if("l_leg") regrow_target_name = left leg
+			if("r_leg") regrow_target_name = right leg
+			if ("left_eye") regrow_target_name = left eye
+			if ("right_eye") regrow_target_name = right eye
+			if ("left_lung") regrow_target_name = left lung
+			if ("right_lung") regrow_target_name = right lung
+			if ("butt") regrow_target_name = butt
+			if ("left_kidney") regrow_target_name = left kidney
+			if ("right_kidney") regrow_target_name = right kidney
+			if ("liver") regrow_target_name = liver
+			if ("stomach") regrow_target_name = stomach
+			if ("intestines") regrow_target_name = intestines
+			if ("spleen") regrow_target_name = spleen
+			if ("pancreas") regrow_target_name = pancreas
+			if ("appendix") regrow_target_name = appendix
+		name += regrow_target_name
+
+	onRemove()
+		..()
+		//if it is removed before the time runs out (i.e. if you manually replaced this limb/organ), then don't regrow...
+		if (duration > 0)
+			boutput(owner, "We stop regrowing")
+			return
+		else
+			if (ishuman(owner))
+			regrow_from_name(owner, regrow_target_name)
+
+	proc/regrow_from_name(var/mob/living/carbon/human/H,  var/name)
+
+		switch(name)
+			if("l_arm")
+					H.limbs.replace_with(name, /obj/item/parts/human_parts/arm/left, show_message = 0)
+			if("r_arm")
+					H.limbs.replace_with(name, /obj/item/parts/human_parts/arm/right, show_message = 0)
+			if("l_leg")
+					H.limbs.replace_with(name, /obj/item/parts/human_parts/leg/left, show_message = 0)
+			if("r_leg")
+					H.limbs.replace_with(name, /obj/item/parts/human_parts/leg/right, show_message = 0)
+
+			if ("left_eye")
+				H.organHolder.receive_organ(new/obj/item/organ/eye/left(H), name)
+			if ("right_eye")
+				H.organHolder.receive_organ(new/obj/item/organ/eye/right(H), name)
+			if ("left_lung")
+				H.organHolder.receive_organ(new/obj/item/organ/lung/left(H), name)
+			if ("right_lung")
+				H.organHolder.receive_organ(new/obj/item/organ/lung/right(H), name)
+			if ("butt")
+				H.organHolder.receive_organ(new/obj/item/clothing/head/butt(H), name)
+			if ("left_kidney")
+				H.organHolder.receive_organ(new/obj/item/organ/kidney/left(H), name)
+			if ("right_kidney")
+				H.organHolder.receive_organ(new/obj/item/organ/kidney/right(H), name)
+			if ("liver")
+				H.organHolder.receive_organ(new/obj/item/organ/liver(H), name)
+			if ("stomach")
+				H.organHolder.receive_organ(new/obj/item/organ/stomach(H), name)
+			if ("intestines")
+				H.organHolder.receive_organ(new/obj/item/organ/intestines(H), name)
+			if ("spleen")
+				H.organHolder.receive_organ(new/obj/item/organ/spleen(H), name)
+			if ("pancreas")
+				H.organHolder.receive_organ(new/obj/item/organ/pancreas(H), name)
+			if ("appendix")
+				H.organHolder.receive_organ(new/obj/item/organ/appendix(H), name)
+			//idk if this one would work...
+			// if ("tail")
+			// 	H.organHolder.receive_organ(new/obj/item/organ/tail(H), name)
+
+#undef LIMB
+#undef ORGAN
