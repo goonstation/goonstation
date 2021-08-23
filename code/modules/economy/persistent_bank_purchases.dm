@@ -14,6 +14,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/human_item/trumpet,\
 	new /datum/bank_purchaseable/human_item/fiddle,\
 	new /datum/bank_purchaseable/human_item/gold_zippo,\
+	new /datum/bank_purchaseable/human_item/drinking_flask,\
 	new /datum/bank_purchaseable/human_item/toy_sword,\
 	new /datum/bank_purchaseable/human_item/sound_synth,\
 	new /datum/bank_purchaseable/human_item/record,\
@@ -226,6 +227,11 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			name = "Gold Zippo"
 			cost = 500
 			path = /obj/item/device/light/zippo/gold
+
+		drinking_flask
+			name = "Drinking Flask"
+			cost = 400
+			path = /obj/item/reagent_containers/food/drinks/flask
 
 		toy_sword
 			name = "Toy Sword"
