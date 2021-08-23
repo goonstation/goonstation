@@ -565,7 +565,7 @@ mob/verb/checkrewards()
 		var/gun = C.mob.find_type_in_hand(/obj/item/gun/kinetic/riotgun)
 
 		if(!(gun))
-			boutput(C.mob, "You need to be holding a riotshotgun to claim this reward")
+			boutput(C.mob, "You need to be holding a riot shotgun to claim this reward")
 			return
 		C.mob.remove_item(gun)
 		qdel(gun)
