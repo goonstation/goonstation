@@ -230,7 +230,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 		drinking_flask
 			name = "Drinking Flask"
-			cost = 0 //400
+			cost = 400
 			path = /obj/item/reagent_containers/food/drinks/flask
 
 		toy_sword
