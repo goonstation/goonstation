@@ -1,4 +1,10 @@
 
+(t)mon aug 23 21
+(u)Flappybat
+(p)5661
+(e)🔄|rework
+(+)Microwaves now let you empty out the contents instead of throwing them away.
+(+)Microwaves now can be cleaned with a sponge.
 (t)sun aug 22 21
 (u)Waffleloffle
 (p)5776
