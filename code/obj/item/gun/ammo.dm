@@ -527,6 +527,10 @@
 	icon_empty = "bg-0"
 	sound_load = 'sound/weapons/gunload_click.ogg'
 
+/obj/item/ammo/bullets/abg/two //spawns in the break action
+	amount_left = 2
+	max_amount = 2
+
 /obj/item/ammo/bullets/ak47
 	sname = ".308 Auto" // This makes little sense, but they're all chambered in the same caliber, okay (Convair880)?
 	name = "AK magazine"
