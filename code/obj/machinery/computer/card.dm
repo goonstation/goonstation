@@ -54,8 +54,6 @@
     ..()
     src.AddComponent(/datum/component/foldable, /obj/item/objBriefcase/hopidC)
 
-/obj/machinery/computer/card/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
 
 
 /obj/machinery/computer/card/attack_hand(var/mob/user as mob)
