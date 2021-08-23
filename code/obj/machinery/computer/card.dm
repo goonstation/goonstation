@@ -46,13 +46,6 @@
     ..()
     src.AddComponent(/datum/component/foldable, /obj/item/objBriefcase/hopid)
 
-/obj/machinery/computer/card/portableC
-  name = "Portable Id Computer"
-  icon_state = "idportC"
-
-  New()
-    ..()
-    src.AddComponent(/datum/component/foldable, /obj/item/objBriefcase/hopidC)
 
 
 
