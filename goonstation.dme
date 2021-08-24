@@ -1539,6 +1539,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\machinery\owlhoot.dm"
 #include "code\obj\machinery\partyalarm.dm"
 #include "code\obj\machinery\phone.dm"
+#include "code\obj\machinery\phosphorizer.dm"
 #include "code\obj\machinery\photocopier.dm"
 #include "code\obj\machinery\plantpot.dm"
 #include "code\obj\machinery\portapuke.dm"
