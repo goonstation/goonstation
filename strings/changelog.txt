@@ -1,4 +1,9 @@
 
+(t)tue aug 24 21
+(u)zjdtmkhzt
+(p)5774
+(e)|
+(+)Clicking on the mailgroup name to reply to a message to a group should now actually work for replying to it.
 (t)mon aug 23 21
 (u)TTerc
 (p)5794
