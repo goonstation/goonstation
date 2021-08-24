@@ -983,6 +983,31 @@
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_DIRT
 	icon_state_edge = "dirtedge"
 
+/turf/unsimulated/floor/auto/sand
+	name = "sand"
+	desc = "finest earth."
+	icon = 'icons/turf/outdoors.dmi'
+	icon_state = "sand_other"
+	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_DIRT + 1
+	icon_state_edge = "sand_edge"
+
+
+	rough
+		New()
+			..()
+			icon_state_edge = "sand_r_edge"
+			edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_DIRT + 2
+			switch(rand(1,3))
+				if(1)
+					icon_state = "sand_other_texture"
+					src.set_dir(pick(alldirs))
+				if(2)
+					icon_state = "sand_other_texture2"
+					src.set_dir(pick(alldirs))
+				if(3)
+					icon_state = "sand_other_texture3"
+					src.set_dir(pick(cardinal))
+
 /turf/unsimulated/floor/auto/swamp
 	name = "swamp"
 	desc = "Who knows what could be hiding in there."

@@ -27,6 +27,15 @@
 	flora_types = list(/obj/stone/random = 100, /obj/decal/fakeobjects/smallrocks = 100)
 	flora_density = 3
 
+/datum/biome/desert
+	turf_type = /turf/unsimulated/floor/auto/sand
+	flora_types = list(/obj/stone/random = 100, /obj/decal/fakeobjects/smallrocks = 100)
+	flora_density = 1
+
+/datum/biome/desert/rough
+	turf_type = /turf/unsimulated/floor/auto/sand/rough
+	flora_density = 5
+
 /datum/biome/plains
 	turf_type = /turf/unsimulated/floor/auto/grass/swamp_grass
 	flora_types = list(/obj/tree1/elm_random = 50, /obj/shrub/random = 100, /obj/stone/random = 100, /obj/decal/fakeobjects/smallrocks = 100)
@@ -48,3 +57,6 @@
 
 /datum/biome/mountain
 	turf_type = /turf/simulated/wall/asteroid/mountain
+
+/datum/biome/mountain/desert
+	turf_type = /turf/simulated/wall/asteroid/mountain/desert
