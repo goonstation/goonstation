@@ -1646,7 +1646,6 @@
 	desc = ""
 	icon_state = "fire1"
 	maxDuration = 90 SECONDS
-	unique = 0
 	var/regrow_target_name = null
 	var/counter = 1
 	var/mob/living/carbon/human/H
@@ -1656,6 +1655,7 @@
 
 	getTooltip()
 		. = "We are currently regrowing [regrow_target_name]. [duration SECONDS] Seconds left."
+	
 	preCheck(atom/A)
 		. = 1
 		if(issilicon(A))
