@@ -9969,14 +9969,9 @@
 /obj/critter/gunbot/drone/cutterdrone,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
-"aAm" = (
-/obj/structure/girder/reinforced,
-/turf/simulated/wall/asteroid,
-/area/space)
 "aAn" = (
 /obj/structure/girder/reinforced,
-/obj/decal/poster/wallsign/warning1,
-/turf/simulated/wall/asteroid,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aAo" = (
 /obj/decal/floatingtiles{
@@ -24088,8 +24083,9 @@
 /turf/simulated/floor/longtile/black,
 /area/space)
 "bkB" = (
-/obj/machinery/light/small/floor/cool,
-/turf/simulated/floor/longtile/black,
+/obj/structure/girder/reinforced,
+/obj/decal/poster/wallsign/warning1,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bkC" = (
 /obj/stool,
@@ -24166,15 +24162,15 @@
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
+/obj/machinery/light/small/cool,
 /turf/simulated/floor/longtile/black,
 /area/space)
 "bkO" = (
-/obj/storage/crate/internals,
-/obj/item/tank/oxygen,
-/obj/item/tank/oxygen,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/turf/simulated/floor/longtile/black,
+/obj/machinery/light/small/cool{
+	dir = 8;
+	pixel_x = -16
+	},
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bkP" = (
 /obj/lattice{
@@ -25098,12 +25094,16 @@
 /obj/item/paper/book/from_file/minerals,
 /turf/simulated/floor/grime,
 /area/mining/manufacturing)
+"lhF" = (
+/obj/machinery/portable_atmospherics/pump,
+/turf/simulated/floor/airless/caution/northsouth,
+/area/space)
 "lpI" = (
 /obj/machinery/door/unpowered/shuttle{
 	autoclose = 1;
 	color = "gray"
 	},
-/turf/simulated/floor/grey/side,
+/turf/simulated/floor/plating,
 /area/space)
 "lwM" = (
 /obj/table/auto,
@@ -25113,7 +25113,8 @@
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
 "mHM" = (
-/turf/simulated/floor/grey/side,
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/longtile/black,
 /area/space)
 "npm" = (
 /obj/wingrille_spawn/auto,
@@ -25170,15 +25171,20 @@
 	},
 /area/space)
 "rRX" = (
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
+/obj/reagent_dispensers/beerkeg,
+/obj/machinery/light/small/cool{
+	dir = 1;
+	pixel_y = 16
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/floor/longtile/black,
 /area/space)
 "sFV" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/timewarp/ship)
+"sKq" = (
+/obj/machinery/space_heater,
+/turf/simulated/floor/airless/caution/northsouth,
+/area/space)
 "sRW" = (
 /obj/reagent_dispensers/still,
 /turf/simulated/floor/longtile/black,
@@ -25204,6 +25210,14 @@
 	name = "weak compacted stone";
 	stone_color = "#575A5E"
 	},
+/area/space)
+"uSZ" = (
+/obj/storage/crate/internals,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/turf/simulated/floor/longtile/black,
 /area/space)
 "vel" = (
 /obj/item/storage/belt/hunter,
@@ -52853,10 +52867,10 @@ aaa
 aab
 aab
 aab
-aAm
+aAn
 aab
 aab
-aAm
+aAn
 aab
 aab
 aab
@@ -53462,8 +53476,8 @@ bkM
 bkM
 bkM
 afR
-aab
-aab
+bkM
+afR
 aab
 aab
 aaa
@@ -53756,7 +53770,7 @@ aaa
 aaa
 aab
 aab
-aAm
+aAn
 aAz
 bkM
 bjh
@@ -53764,9 +53778,9 @@ bkA
 bkF
 bkN
 afR
+uSZ
 afR
 afR
-aab
 aab
 aab
 aaa
@@ -54062,13 +54076,13 @@ aab
 aac
 bkM
 blP
-bkB
+duy
 bkL
 bkL
 bkR
 mHM
+sKq
 afR
-aab
 aab
 aab
 aaa
@@ -54368,9 +54382,9 @@ bkC
 bkL
 duy
 bkR
-mHM
+duy
+lhF
 afR
-aab
 aab
 aab
 aaa
@@ -54662,17 +54676,17 @@ aab
 aac
 aac
 aab
-aAm
+aAn
 aAz
 bkM
-bjO
+rRX
 bjO
 sRW
-bkO
+sRW
 afR
 hmp
 afR
-aab
+afR
 aab
 aab
 aaa
@@ -55268,8 +55282,8 @@ aab
 aab
 aab
 aab
-aab
-rRX
+aac
+blL
 bkI
 bkI
 eGz
@@ -55570,11 +55584,11 @@ aab
 aab
 aab
 aab
-aab
-aAm
+aac
+aAn
 aac
 aab
-aAm
+aAn
 aab
 aac
 aab
@@ -55873,7 +55887,7 @@ aab
 aab
 aab
 aac
-aac
+blL
 aac
 aab
 aab
@@ -56173,9 +56187,9 @@ aab
 aab
 aab
 aab
-aAm
+bkB
 biN
-aAm
+bkB
 aab
 aab
 aab
@@ -57084,7 +57098,7 @@ biN
 aAn
 aab
 aab
-aab
+aac
 aac
 aaa
 aaa
@@ -57381,12 +57395,12 @@ aab
 aab
 aab
 aab
-aab
+bkO
 bkD
+bkO
 aab
 aab
-aab
-aaa
+aac
 aaa
 aaa
 aaa
@@ -57682,13 +57696,13 @@ aaa
 aab
 aab
 aab
-aab
+aac
+aac
 aac
 aac
 aab
 aab
-aab
-aaa
+aac
 aaa
 aaa
 aaa
@@ -57990,7 +58004,7 @@ aac
 oeL
 aab
 aab
-aaa
+aac
 aaa
 aaa
 aaa
@@ -58291,8 +58305,8 @@ aac
 aab
 utd
 aab
-aac
-aaa
+aab
+aab
 aaa
 aaa
 aaa
