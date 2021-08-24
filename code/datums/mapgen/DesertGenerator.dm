@@ -67,9 +67,9 @@
 					humidity_level = BIOME_LOW_HUMIDITY
 				if(0.35 to 0.5)
 					humidity_level = BIOME_LOWMEDIUM_HUMIDITY
-				if(0.5 to 0.85)
+				if(0.5 to 0.9)
 					humidity_level = BIOME_HIGHMEDIUM_HUMIDITY
-				if(0.85 to 1)
+				if(0.9 to 1)
 					humidity_level = BIOME_HIGH_HUMIDITY
 			selected_biome = possible_biomes[heat_level][humidity_level]
 		else //Over 0.85; It's a mountain
