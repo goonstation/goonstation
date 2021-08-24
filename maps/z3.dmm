@@ -9971,6 +9971,7 @@
 /area/space)
 "aAn" = (
 /obj/structure/girder/reinforced,
+/obj/decal/tile_edge/line/black,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aAo" = (
@@ -10065,6 +10066,9 @@
 "aAz" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
@@ -24083,9 +24087,10 @@
 /turf/simulated/floor/longtile/black,
 /area/space)
 "bkB" = (
-/obj/structure/girder/reinforced,
-/obj/decal/poster/wallsign/warning1,
-/turf/simulated/floor/plating/airless/asteroid,
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/turf/simulated/wall/asteroid,
 /area/space)
 "bkC" = (
 /obj/stool,
@@ -24095,6 +24100,9 @@
 /obj/item/caution{
 	desc = "Caution! No trespassing!";
 	name = "no trespassing sign"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
@@ -24125,9 +24133,9 @@
 /turf/simulated/floor/plating,
 /area/spyshack)
 "bkI" = (
-/obj/decal/tile_edge/stripe/big{
-	dir = 8
-	},
+/obj/structure/girder/reinforced,
+/obj/decal/poster/wallsign/warning1,
+/obj/decal/tile_edge/line/black,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bkJ" = (
@@ -24169,6 +24177,9 @@
 /obj/machinery/light/small/cool{
 	dir = 8;
 	pixel_x = -16
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
@@ -24489,6 +24500,9 @@
 /obj/lattice{
 	dir = 4;
 	icon_state = "lattice-dir"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
@@ -25019,25 +25033,26 @@
 "duy" = (
 /turf/simulated/floor/longtile/black,
 /area/space)
+"elM" = (
+/obj/decal/tile_edge/stripe/big,
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "exM" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
-"eGz" = (
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
-	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 8
-	},
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "fkT" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/black,
 /area/radiostation/studio)
+"fWR" = (
+/obj/machinery/space_heater,
+/turf/simulated/floor/airless/caution/northsouth,
+/area/space)
 "hmp" = (
 /turf/unsimulated/floor/stairs/dark{
 	dir = 8
@@ -25094,10 +25109,6 @@
 /obj/item/paper/book/from_file/minerals,
 /turf/simulated/floor/grime,
 /area/mining/manufacturing)
-"lhF" = (
-/obj/machinery/portable_atmospherics/pump,
-/turf/simulated/floor/airless/caution/northsouth,
-/area/space)
 "lpI" = (
 /obj/machinery/door/unpowered/shuttle{
 	autoclose = 1;
@@ -25113,8 +25124,10 @@
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
 "mHM" = (
-/obj/machinery/light/small/floor/netural,
-/turf/simulated/floor/longtile/black,
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "npm" = (
 /obj/wingrille_spawn/auto,
@@ -25123,6 +25136,19 @@
 	},
 /turf/simulated/floor,
 /area/radiostation/studio)
+"odf" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "oeL" = (
 /obj/decal/cleanable/robot_debris/limb,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -25171,19 +25197,29 @@
 	},
 /area/space)
 "rRX" = (
-/obj/reagent_dispensers/beerkeg,
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
+"sFV" = (
+/turf/unsimulated/wall/auto/lead/blue,
+/area/timewarp/ship)
+"sQW" = (
+/obj/storage/crate/internals,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
 /obj/machinery/light/small/cool{
 	dir = 1;
 	pixel_y = 16
 	},
 /turf/simulated/floor/longtile/black,
-/area/space)
-"sFV" = (
-/turf/unsimulated/wall/auto/lead/blue,
-/area/timewarp/ship)
-"sKq" = (
-/obj/machinery/space_heater,
-/turf/simulated/floor/airless/caution/northsouth,
 /area/space)
 "sRW" = (
 /obj/reagent_dispensers/still,
@@ -25211,14 +25247,6 @@
 	stone_color = "#575A5E"
 	},
 /area/space)
-"uSZ" = (
-/obj/storage/crate/internals,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/turf/simulated/floor/longtile/black,
-/area/space)
 "vel" = (
 /obj/item/storage/belt/hunter,
 /obj/item/clothing/under/misc/tourist,
@@ -25228,6 +25256,10 @@
 /obj/stool/chair,
 /turf/simulated/floor/black,
 /area/mining/quarters)
+"wav" = (
+/obj/machinery/portable_atmospherics/pump,
+/turf/simulated/floor/airless/caution/northsouth,
+/area/space)
 "wfJ" = (
 /obj/storage/secure/closet/personal,
 /obj/item/clothing/under/gimmick/cosby,
@@ -25237,6 +25269,14 @@
 	icon_state = "fred2"
 	},
 /area/radiostation/bedroom)
+"wNJ" = (
+/obj/reagent_dispensers/beerkeg,
+/obj/machinery/light/small/cool{
+	dir = 1;
+	pixel_y = 16
+	},
+/turf/simulated/floor/longtile/black,
+/area/space)
 "xOl" = (
 /turf/simulated/floor/plating/airless/asteroid{
 	stone_color = "#D1E6FF"
@@ -51962,9 +52002,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -52263,14 +52303,14 @@ aaa
 aaa
 aab
 aab
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -52570,10 +52610,10 @@ aab
 aab
 aab
 aab
-aaa
-aaa
-aaa
-aaa
+aab
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -52874,8 +52914,8 @@ aAn
 aab
 aab
 aab
-aaa
-aaa
+aab
+aab
 aaa
 aaa
 aaa
@@ -53173,11 +53213,11 @@ blL
 aac
 aac
 blL
+aac
+aac
 aab
 aab
 aab
-aab
-aaa
 aaa
 aaa
 aaa
@@ -53480,7 +53520,7 @@ bkM
 afR
 aab
 aab
-aaa
+aab
 aaa
 aaa
 aaa
@@ -53778,7 +53818,7 @@ bkA
 bkF
 bkN
 afR
-uSZ
+sQW
 afR
 afR
 aab
@@ -54080,12 +54120,12 @@ duy
 bkL
 bkL
 bkR
-mHM
-sKq
+duy
+fWR
 afR
 aab
 aab
-aaa
+aab
 aaa
 aaa
 aaa
@@ -54372,7 +54412,7 @@ aaa
 aaa
 aac
 aac
-aac
+aab
 aab
 aab
 aac
@@ -54383,11 +54423,11 @@ bkL
 duy
 bkR
 duy
-lhF
+wav
 afR
 aab
 aab
-aaa
+aab
 aaa
 aaa
 aaa
@@ -54674,12 +54714,12 @@ aaa
 aaa
 aab
 aac
-aac
+aab
 aab
 aAn
 aAz
 bkM
-rRX
+wNJ
 bjO
 sRW
 sRW
@@ -54689,7 +54729,7 @@ afR
 afR
 aab
 aab
-aaa
+aab
 aaa
 aaa
 aaa
@@ -54975,7 +55015,7 @@ aaa
 aaa
 aab
 aab
-aac
+aab
 aab
 aab
 aab
@@ -55283,13 +55323,13 @@ aab
 aab
 aab
 aac
-blL
-bkI
-bkI
-eGz
-bkI
-bkI
-bkI
+rRX
+aac
+aac
+rRX
+aac
+aac
+aac
 aab
 aab
 aaa
@@ -55885,9 +55925,9 @@ aab
 aab
 aab
 aab
-aab
-aac
-blL
+bkB
+mHM
+odf
 aac
 aab
 aab
@@ -56180,16 +56220,16 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aac
 aab
 aab
 aab
 aab
 aab
 aab
-bkB
+bkI
 biN
-bkB
+bkI
 aab
 aab
 aab
@@ -56482,15 +56522,15 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+aac
+aac
 aab
 aab
 aab
 aab
 aab
 bkX
-aac
+elM
 bkX
 aab
 aab
@@ -56785,14 +56825,14 @@ aab
 aaa
 aaa
 aaa
-aaa
+aac
 aab
 aab
 aab
 aab
 aab
 bkX
-aac
+elM
 bkX
 aab
 aab
@@ -57087,8 +57127,8 @@ aab
 aaa
 aaa
 aaa
-aaa
-aad
+aac
+aac
 aab
 aab
 aab
@@ -57389,8 +57429,8 @@ aab
 aaa
 aaa
 aaa
-aaa
-aaa
+aac
+aac
 aab
 aab
 aab
@@ -57691,8 +57731,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+aac
+aac
 aab
 aab
 aab
@@ -57993,8 +58033,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+aac
+aac
 aac
 aab
 aab
@@ -58294,9 +58334,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+aac
+aac
+aac
 aac
 aab
 aab
@@ -59815,9 +59855,9 @@ aac
 aac
 aac
 aab
+aab
 aac
-aab
-aab
+aac
 aab
 aab
 aaa
@@ -60101,7 +60141,7 @@ aaa
 aaa
 aaa
 aaa
-aab
+aaa
 aab
 aab
 aab
@@ -60417,12 +60457,12 @@ aab
 aac
 aac
 aac
-aab
+aac
 aab
 aac
 aac
-aab
-aab
+aac
+aac
 aaa
 aaa
 aaa
@@ -60724,7 +60764,7 @@ aac
 aac
 aab
 aab
-aab
+aac
 aaa
 blj
 aaa
@@ -61013,7 +61053,7 @@ aab
 aab
 aab
 aab
-aac
+aGh
 aac
 aac
 aab
@@ -61612,8 +61652,8 @@ aaa
 aaa
 aaa
 aaa
-aab
-aab
+aaa
+aaa
 aab
 aab
 aab
@@ -61915,11 +61955,11 @@ aaa
 aaa
 aaa
 aaa
+aaa
 aab
 aab
 aab
 aab
-aac
 aac
 aab
 bkX
@@ -62217,12 +62257,12 @@ aaa
 aaa
 aaa
 aaa
+aaa
+aaa
 aab
 aab
 aab
 aab
-aac
-aac
 aab
 aab
 aac
@@ -62519,20 +62559,20 @@ aaa
 aaa
 aaa
 aaa
+aaa
+aaa
+aaa
 aab
 aab
 aab
-aab
-aac
-aab
-aab
-aab
-aac
 aab
 aab
 aac
 aab
 aab
+aac
+aac
+aac
 aab
 aab
 aab
@@ -62823,18 +62863,18 @@ aaa
 aaa
 aaa
 aaa
-aac
-aac
-aac
+aaa
+aaa
 aab
 aab
 aab
-aac
-aGh
-aac
-aac
 aab
-aab
+aac
+aac
+aac
+aac
+aac
+aac
 aab
 aab
 aaa
@@ -63126,17 +63166,17 @@ aaa
 aaa
 aaa
 aaa
+aaa
+aaa
+aab
+aab
+aab
+aab
+aab
+aab
+aab
 aab
 aac
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
 aab
 aab
 aaa
@@ -63428,8 +63468,8 @@ aaa
 aaa
 aaa
 aaa
-aab
-aab
+aaa
+aaa
 aab
 aab
 aab
@@ -63731,7 +63771,7 @@ aaa
 aaa
 aaa
 aaa
-aab
+aaa
 aaa
 aab
 aab
@@ -64040,10 +64080,10 @@ aaa
 aab
 aab
 aab
-aab
-aab
 aac
-aab
+aac
+aac
+aac
 aaa
 aaa
 aaa
@@ -64340,9 +64380,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aab
 aab
+aac
 aaa
 aaa
 aaa
@@ -64643,7 +64683,7 @@ aaa
 aaa
 aaa
 aaa
-aab
+aaa
 aaa
 aaa
 aaa
