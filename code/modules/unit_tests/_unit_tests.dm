@@ -36,6 +36,7 @@
 #define UNIT_TEST_PASSED 0
 #define UNIT_TEST_FAILED 1
 
+#include "rand.dm"
 #include "deletions.dm"
 #include "reagent_id_typos.dm"
 #include "unit_test.dm"
