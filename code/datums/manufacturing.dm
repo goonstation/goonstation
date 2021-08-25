@@ -1479,7 +1479,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	category = "Component"
 
 /datum/manufacture/robup_visualizer
-	name = "Constuction Visualizer"
+	name = "Construction Visualizer"
 	item_paths = list("CRY-1","CON-1")
 	item_amounts = list(4,6)
 	item_outputs = list(/obj/item/roboupgrade/visualizer)
