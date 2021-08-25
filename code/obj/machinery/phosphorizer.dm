@@ -67,7 +67,7 @@
 		phos_target.desc = "A light [nameadjust] that has been coated with a phosphor to change its hue. A small label is marked '[ctrl_R]-[ctrl_G]-[ctrl_B]'."
 
 		phos_target.pixel_x = -4
-		phos_target.pixel_y = -8
+		phos_target.pixel_y = -8 //move bulb more towards output chute
 		phos_target.set_loc(src.loc)
 
 		playsound(src.loc, sound_process, 80, 1)
@@ -148,7 +148,7 @@
 			if(src.contents.len)
 				for (var/obj/item/M in src.contents)
 					M.pixel_x = -4
-					M.pixel_y = 2
+					M.pixel_y = 2 //bulb being blorfed out the input slot
 					M.set_loc(src.loc)
 				ui_interact(usr, ui)
 
