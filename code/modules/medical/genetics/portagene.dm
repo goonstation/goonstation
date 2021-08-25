@@ -131,7 +131,7 @@
 
 	attack_hand(mob/user as mob)
 		if (src.status & BROKEN)
-			boutput(user, "<span class='notice'>The Port-A-Gene is busted! You'll need at least two sheets of glass to fix it.</span>")
+			boutput(user, "<span class='notice'>The [src] is busted! You'll need at least two sheets of glass to fix it.</span>")
 			return
 		. = ..()
 
@@ -145,9 +145,9 @@
 					src.status &= !BROKEN
 					src.icon_state = "PAG_0"
 					light.enable()
-					boutput(user, "<span class='notice'>You repair the Port-A-Gene!</span>")
+					boutput(user, "<span class='notice'>You repair the [src]!</span>")
 				else
-					boutput(user, "<span class='alert'>You need at least two sheets of glass to repair the Port-A-Gene.</span>")
+					boutput(user, "<span class='alert'>You need at least two sheets of glass to repair the [src].</span>")
 			else
 				boutput(user, "<span class='alert'>This is the wrong kind of material. You'll need a type of glass or crystal.</span>")
 
