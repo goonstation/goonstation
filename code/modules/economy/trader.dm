@@ -806,7 +806,7 @@
 					src.goods_illegal += new /datum/commodity/contraband/stealthstorage(src)
 				if (carlsell >= 5 && carlsell <= 8)
 					src.goods_illegal += new /datum/commodity/contraband/voicechanger(src)
-				if (carlsell <= 9)
+				if (carlsell >= 9)
 					src.goods_illegal += new /datum/commodity/contraband/radiojammer(src)
 					src.goods_illegal += new /datum/commodity/contraband/stealthstorage(src)
 					src.goods_illegal += new /datum/commodity/contraband/voicechanger(src)
