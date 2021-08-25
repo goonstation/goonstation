@@ -2253,9 +2253,10 @@
 		switch(mod)
 			if("Brobocop")
 				src.freemodule = 0
-				boutput(src, "<span class='notice'>You chose the Brobocop module. It comes with a free Security HUD Upgrade.</span>")
+				boutput(src, "<span class='notice'>You chose the Brobocop module. It comes with a free Security HUD and Thermal Optics Upgrade.</span>")
 				src.set_module(new /obj/item/robot_module/brobocop(src))
 				src.upgrades += new /obj/item/roboupgrade/sechudgoggles(src)
+				src.upgrades += new /obj/item/roboupgrade/thermaloptics(src)
 			if("Chemistry")
 				src.freemodule = 0
 				boutput(src, "<span class='notice'>You chose the Chemistry module. It comes with a free Spectroscopic Scanner Upgrade.</span>")

@@ -71,7 +71,7 @@
 				if (sight_constr)
 					robot_owner.see_invisible = 9
 				else
-					robot_owner.see_invisible = 2
+					robot_owner.see_invisible = 1
 
 				robot_owner.sight &= ~SEE_OBJS
 				robot_owner.see_in_dark = SEE_DARK_FULL

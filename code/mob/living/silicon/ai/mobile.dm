@@ -125,7 +125,7 @@
 					vision.set_color_mod("#ffffff")
 					src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS
 					src.see_in_dark = SEE_DARK_FULL
-					src.see_invisible = 2
+					src.see_invisible = 1
 				else
 					vision.set_color_mod("#000000")
 					src.sight = src.sight & ~(SEE_TURFS | SEE_MOBS | SEE_OBJS)
