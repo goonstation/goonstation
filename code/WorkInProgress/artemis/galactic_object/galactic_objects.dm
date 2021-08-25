@@ -24,22 +24,22 @@
 	random_range = list(1,3)
 
 	New(datum/galaxy/G)
-		scale =  G.xor_randf(0.75, 1)
-		icon_state = G.xor_weighted_pick(list("mono_planets"=100,"planet_1"=10,"planet_2"=3,"planet_3"=2))
+		scale =  G.Rand.xor_randf(0.75, 1)
+		icon_state = G.Rand.xor_weighted_pick(list("mono_planets"=100,"planet_1"=10,"planet_2"=3,"planet_3"=2))
 		switch(icon_state)
 			if("mono_planets")
-				dir = G.xor_pick(cardinal)
-				color = G.xor_weighted_pick(list("#fffb00"=1, "#FF5D06"=1, "#009ae7"=1, "#03c53d"=1, "#9b59b6"=1, "#272e30"=1, "#FF69B4"=1, "#633221"=1, "#ffffff"=4))
-		light_value = clamp((log(G.xor_rand())*0.675)+0.997,0,1)
-		biome_seed += G.xor_rand()*50000
-		biome_seed += G.xor_rand()*50000
-		biome_seed += G.xor_rand()*50000
+				dir = G.Rand.xor_pick(cardinal)
+				color = G.Rand.xor_weighted_pick(list("#fffb00"=1, "#FF5D06"=1, "#009ae7"=1, "#03c53d"=1, "#9b59b6"=1, "#272e30"=1, "#FF69B4"=1, "#633221"=1, "#ffffff"=4))
+		light_value = clamp((log(G.Rand.xor_rand())*0.675)+0.997,0,1)
+		biome_seed += G.Rand.xor_rand()*50000
+		biome_seed += G.Rand.xor_rand()*50000
+		biome_seed += G.Rand.xor_rand()*50000
 
-		if(G.xor_prob(95))
+		if(G.Rand.xor_prob(95))
 			navigable = FALSE
 
 		if(G && length(G.available_planets))
-			destination_name = G.xor_pick(G.available_planets)
+			destination_name = G.Rand.xor_pick(G.available_planets)
 			G.available_planets -= destination_name
 
 			SPAWN_DBG(1 SECOND)
@@ -58,16 +58,16 @@
 
 	proc/generate_name(datum/galaxy/G)
 		. = ""
-		if (G.xor_prob(50))
+		if (G.Rand.xor_prob(50))
 			. += pick_string("station_name.txt", "greek")
 		else
 			. += pick_string("station_name.txt", "militaryLetters")
 		. += " "
 
-		if (G.xor_prob(30))
+		if (G.Rand.xor_prob(30))
 			. += pick_string("station_name.txt", "romanNum")
 		else
-			. += "[G.xor_rand(2, 99)]"
+			. += "[G.Rand.xor_rand(2, 99)]"
 
 		src.name = .
 
@@ -167,8 +167,8 @@
 
 	New(datum/galaxy/G)
 		..()
-		color = G.xor_pick("#fff", "#ccc", "#aaa", "#850000", "#040", "#448")
-		dir = G.xor_pick(cardinal)
+		color = G.Rand.xor_pick("#fff", "#ccc", "#aaa", "#850000", "#040", "#448")
+		dir = G.Rand.xor_pick(cardinal)
 
 /obj/background_star/galactic_object/moon/random
 	name = "F1X-M3"
@@ -258,10 +258,10 @@
 		random_range = list(0,1)
 
 		New(datum/galaxy/G)
-			scale = G.xor_randf(0.90,1.1)
-			if(G.xor_prob(80))
-				color = G.xor_pick(list("#fffb00", "#FF5D06", "#009ae7", "#9b59b6", "#FF69B4", "#ffffff"))
-				dir = G.xor_pick(cardinal - SOUTH)
+			scale = G.Rand.xor_randf(0.90,1.1)
+			if(G.Rand.xor_prob(80))
+				color = G.Rand.xor_pick(list("#fffb00", "#FF5D06", "#009ae7", "#9b59b6", "#FF69B4", "#ffffff"))
+				dir = G.Rand.xor_pick(cardinal - SOUTH)
 			..()
 
 /obj/background_star/galactic_object/star
@@ -460,7 +460,7 @@
 
 		New(datum/galaxy/G)
 			..()
-			dir = G.xor_pick(alldirs)
+			dir = G.Rand.xor_pick(alldirs)
 
 /obj/background_star/galactic_object/asteroid
 	name = "Asteroid"
@@ -536,7 +536,6 @@
 				if(landmarks[LANDMARK_PLANETS][T] == M.marker.name)
 					if(!landing_zones) landing_zones = list()
 					src.landing_zones["Asteroid"] = T
-					T.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid, FALSE, TRUE, FALSE, TRUE)
 
 
 /datum/galactic_object/test

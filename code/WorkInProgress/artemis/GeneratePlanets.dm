@@ -18,7 +18,7 @@ var/list/planetModifiersUsed = list()//Assoc list, type:times used
 		if(T.z == planetZLevel)
 			planetZ.Add(T)
 
-	var/num_to_place = PLANET_NUMPREFABS + GALAXY.xor_rand(0, PLANET_NUMPREFABSEXTRA)
+	var/num_to_place = PLANET_NUMPREFABS + GALAXY.Rand.xor_rand(0, PLANET_NUMPREFABSEXTRA)
 	for (var/n = 1, n <= num_to_place, n++)
 		game_start_countdown?.update_status("Setting up mining level...\n(Prefab [n]/[num_to_place])")
 		var/datum/generatorPlanetPrefab/M = pickPlanetPrefab()
@@ -29,7 +29,7 @@ var/list/planetModifiersUsed = list()//Assoc list, type:times used
 			var/count= 0
 			var/maxTries = (M.required ? 200:33)
 			while (!stop && count < maxTries) //Kinda brute forcing it. Dumb but whatever.
-				var/turf/target = locate(GALAXY.xor_rand(1+PLANET_MAPBORDER, maxX), GALAXY.xor_rand(1+PLANET_MAPBORDER,maxY), planetZLevel)
+				var/turf/target = locate(GALAXY.Rand.xor_rand(1+PLANET_MAPBORDER, maxX), GALAXY.Rand.xor_rand(1+PLANET_MAPBORDER,maxY), planetZLevel)
 				var/area/A = get_area(target)
 				var/ret = M.applyTo(target)
 				if (ret == 0)
@@ -132,9 +132,9 @@ var/list/planetModifiersUsed = list()//Assoc list, type:times used
 		if(src.map_generator_path)
 			map_generator = new map_generator_path()
 
-		var/height_seed = GALAXY.xor_rand(0, 50000)
-		var/humidity_seed = GALAXY.xor_rand(0, 50000)
-		var/heat_seed = GALAXY.xor_rand(0, 50000)
+		var/height_seed = GALAXY.Rand.xor_rand(0, 50000)
+		var/humidity_seed = GALAXY.Rand.xor_rand(0, 50000)
+		var/heat_seed = GALAXY.Rand.xor_rand(0, 50000)
 		map_generator.generate_terrain(get_area_turfs(src), height_seed, humidity_seed, heat_seed)
 
 	proc/colorize_planet(color)

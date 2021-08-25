@@ -8,10 +8,11 @@ var/global/datum/galaxy/GALAXY = new
 	var/datum/asteroid_controller/asteroids = new
 	var/seed
 	var/mangled_rand
+	var/datum/xor_rand_generator/Rand
 
 	New()
 		..()
-		seed = 513//rand(3, 50000)
+		Rand = new(513)//rand(3, 50000)
 
 		src.bodies += new/datum/galactic_object/test()
 		src.bodies += new/datum/galactic_object/eyesenhower()
@@ -21,7 +22,10 @@ var/global/datum/galaxy/GALAXY = new
 		src.bodies += new/datum/galactic_object/star
 		src.bodies += new/datum/galactic_object/asteroid
 
-		// for(var/i in 1 to 3)
+		for(var/i in 1 to 5)
+			src.bodies += new/datum/galactic_object/asteroid/random(src)
+
+// for(var/i in 1 to 3)
 		// 	src.bodies += new/datum/galactic_object/star/random(src)
 
 		// for(var/i in 1 to 10)
@@ -30,47 +34,6 @@ var/global/datum/galaxy/GALAXY = new
 			populate_galaxy()
 
 	/// Random Integer from (L,H) otherwise 0-1
-	proc/xor_rand(L, H)
-		if(L && isnull(H))
-			H = L
-			L = 0
-		if(!isnull(L) && !isnull(H))
-			. = round(xor_randf(L, H+0.99))
-		else
-			. = xor_randf()
-
-	/// Random float from (L,H)
-	proc/xor_randf(L, H)
-		if(!src.mangled_rand)
-			mangled_rand = seed
-		mangled_rand ^= mangled_rand << 13
-		mangled_rand ^= mangled_rand >> 7
-		mangled_rand ^= mangled_rand << 17
-
-		. = mangled_rand / 0xFFFFFF
-		if(!isnull(L) && !isnull(H))
-			. = L + ( (H-L) * (.) )
-
-	proc/xor_prob(P)
-		. = xor_rand() < (P/100)
-
-	proc/xor_pick(list/L)
-		var/index = round( xor_rand() * length(L) ) + 1
-		return L[index]
-
-	proc/xor_weighted_pick(list/L)
-		var/total = 0
-		var/item
-		for(item in L)
-			if(isnull(L[item]))
-				stack_trace("weighted_pick given null weight: [json_encode(L)]")
-			total += L[item]
-		total = xor_rand() * total
-		for(item in L)
-			total -= L[item]
-			if(total <= 0)
-				return item
-		return null
 
 /*
 	 Make me a Galaxy!
@@ -88,7 +51,7 @@ var/global/datum/galaxy/GALAXY = new
 		var/j
 		for(i in 1 to 10)
 			for(j in 1 to 10)
-				if(xor_prob(80))
+				if(Rand.xor_prob(80))
 					generate_solar_system(i,j)
 				else
 					generate_empty_sector(i,j)
@@ -99,8 +62,8 @@ var/global/datum/galaxy/GALAXY = new
 		var/datum/galactic_object/centeroid/C = new
 		var/star_count
 
-		var/sector_x = xor_rand() * 10 + (x * 10)
-		var/sector_y = xor_rand() * 10 + (y * 10)
+		var/sector_x = Rand.xor_rand() * 10 + (x * 10)
+		var/sector_y = Rand.xor_rand() * 10 + (y * 10)
 
 		primary = new/datum/galactic_object/star/random(src)
 		primary.galactic_x = sector_x
@@ -110,7 +73,7 @@ var/global/datum/galaxy/GALAXY = new
 		C.galactic_y += primary.galactic_y
 		star_count++
 
-		if(xor_prob(50))
+		if(Rand.xor_prob(50))
 		//Binary System
 			O = new/datum/galactic_object/star/random{random_range = list(0.1,0.3)}(src, primary)
 			src.bodies += O
@@ -131,24 +94,24 @@ var/global/datum/galaxy/GALAXY = new
 		C.name = "Sector [x]:[y]"
 		src.bodies += C
 
-		var/planet_count = xor_rand(0,8)
+		var/planet_count = Rand.xor_rand(0,8)
 		//GENERATE N PLANETS
 		for(var/i in 1 to planet_count)
 			O = new/datum/galactic_object/planet/random(src, C)
 			src.bodies += O
 
 			// Moooons
-			var/moon_count = xor_prob(66) ? xor_rand(1,4) : 0
+			var/moon_count = Rand.xor_prob(66) ? Rand.xor_rand(1,4) : 0
 			for(var/j in 1 to moon_count)
 				src.bodies +=new/datum/galactic_object/moon/random(src, O)
 
 	proc/generate_empty_sector(x, y)
-		var/asteroid_count = xor_rand(0,6)
+		var/asteroid_count = Rand.xor_rand(0,6)
 		var/datum/galactic_object/asteroid/A
 
 		for(var/i in 1 to asteroid_count)
-			var/sector_x = xor_rand() * 10 + (x * 10)
-			var/sector_y = xor_rand() * 10 + (y * 10)
+			var/sector_x = Rand.xor_rand() * 10 + (x * 10)
+			var/sector_y = Rand.xor_rand() * 10 + (y * 10)
 			A = new/datum/galactic_object/asteroid/random(src)
 			A.galactic_x = sector_x
 			A.galactic_y = sector_y
@@ -195,7 +158,6 @@ var/global/datum/galaxy/GALAXY = new
 			construct()
 
 
-
 /datum/galactic_object
 	var/name
 	var/galactic_x
@@ -233,8 +195,8 @@ var/global/datum/galaxy/GALAXY = new
 		return 0
 
 	proc/random_range_and_bearing(datum/galaxy/G, min_range=0, max_range=10)
-		var/theta = G.xor_rand(360)
-		var/r = G.xor_randf(min_range,max_range)
+		var/theta = G.Rand.xor_rand(360)
+		var/r = G.Rand.xor_randf(min_range,max_range)
 
 		src.galactic_x += r*sin(theta)
 		src.galactic_y += r*cos(theta)
