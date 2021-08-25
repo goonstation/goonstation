@@ -41,6 +41,7 @@
 /obj/machinery/computer/card/portable
   name = "portable identification computer"
   icon_state = "idportC"
+  density = 0
 
   New()
     ..()
