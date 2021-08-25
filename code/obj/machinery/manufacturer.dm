@@ -2155,7 +2155,7 @@
 	/datum/manufacture/robup_fireshield,
 	/datum/manufacture/robup_teleport,
 	/datum/manufacture/robup_visualizer,
-	/*/datum/manufacture/robup_thermal,*/
+	/datum/manufacture/robup_thermal,
 	/datum/manufacture/robup_efficiency,
 	/datum/manufacture/robup_repair,
 	/datum/manufacture/implant_robotalk,

@@ -1442,16 +1442,6 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	time = 90 SECONDS
 	create = 1
 	category = "Component"
-/* shit done be broked
-/datum/manufacture/robup_thermal
-	name = "Optical Thermal Upgrade"
-	item_paths = list("CRY-1","CON-1")
-	item_amounts = list(4,8)
-	item_outputs = list(/obj/item/roboupgrade/opticthermal)
-	time = 90 SECONDS
-	create = 1
-	category = "Component"
-*/
 /datum/manufacture/robup_healthgoggles
 	name = "ProDoc Healthgoggle Upgrade"
 	item_paths = list("CRY-1","CON-1")
@@ -1484,6 +1474,15 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	item_paths = list("CRY-1","CON-1")
 	item_amounts = list(5,10)
 	item_outputs = list(/obj/item/roboupgrade/thermaloptics)
+	time = 90 SECONDS
+	create = 1
+	category = "Component"
+
+/datum/manufacture/robup_visualizer
+	name = "Spectroscopic Scanner Upgrade"
+	item_paths = list("CRY-1","CON-1")
+	item_amounts = list(4,6)
+	item_outputs = list(/obj/item/roboupgrade/visualizer)
 	time = 90 SECONDS
 	create = 1
 	category = "Component"
