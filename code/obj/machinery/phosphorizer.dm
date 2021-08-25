@@ -79,7 +79,6 @@
 	proc/start_phos()
 		src.phosphorizing = true
 		var/image/O_panel = SafeGetOverlayImage("operatebar", 'icons/obj/machines/phosphorizer.dmi', "activelight")
-		O_panel.plane = PLANE_OVERLAY_EFFECTS
 		UpdateOverlays(O_panel, "operatebar", 0, 1)
 		sleep(phos_delay)
 
@@ -102,7 +101,7 @@
 
 /obj/machinery/phosphorizer/power_change()
 	var/image/I_panel = SafeGetOverlayImage("statuspanel", 'icons/obj/machines/phosphorizer.dmi', "powerpanel")
-	I_panel.plane = PLANE_OVERLAY_EFFECTS
+	I_panel.plane = PLANE_SELFILLUM
 	I_panel.alpha = 128
 	if (status & BROKEN)
 		UpdateOverlays(null, "statuspanel", 0, 1)
