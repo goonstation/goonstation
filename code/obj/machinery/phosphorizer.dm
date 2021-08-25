@@ -106,17 +106,14 @@
 	if (status & BROKEN)
 		UpdateOverlays(null, "statuspanel", 0, 1)
 		if(src.phosphorizing) src.stop_phos()
-		//light.disable()
 	else
 		if ( powered() )
 			UpdateOverlays(I_panel, "statuspanel", 0, 1)
 			status &= ~NOPOWER
-			//light.enable()
 		else
 			SPAWN_DBG(rand(0, 15))
 				UpdateOverlays(null, "statuspanel", 0, 1)
 				status |= NOPOWER
-				//light.disable()
 
 /obj/machinery/phosphorizer/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
@@ -127,7 +124,6 @@
 /obj/machinery/phosphorizer/ui_data(mob/user)
 	. = list(
 		"tubes" = src.contents.len,
-		"busy"  = src.phosphorizing,
 		"hostR" = src.ctrl_R,
 		"hostG" = src.ctrl_G,
 		"hostB" = src.ctrl_B,
