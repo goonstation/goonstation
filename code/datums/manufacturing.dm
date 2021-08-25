@@ -2583,6 +2583,15 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 1
 	category = "Resource"
 
+/datum/manufacture/acesscase
+	name = "ID Briefcase"
+	item_paths = list("CON-1","CRY-1","MET-1")
+	item_amounts = list(9,5,15)
+	item_outputs = list(/obj/machinery/computer/card/portable)
+	time = 75 SECONDS
+	create = 1
+	category = "Resource"
+
 /datum/manufacture/implant_access_infinite
 	name = "Electronic Access Implant (Unlimited Charge)"
 	item_paths = list("CON-1","CRY-1")

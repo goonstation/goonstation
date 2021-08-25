@@ -89,7 +89,6 @@
 	/obj/item/clothing/suit/armor/vest,
 	/obj/item/stamp/hop,
 	/obj/item/device/radio/headset/command/hop,
-	/obj/machinery/computer/card/portable,
 	/obj/item/device/accessgun)
 
 /obj/storage/secure/closet/command/research_director

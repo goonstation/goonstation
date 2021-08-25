@@ -39,13 +39,13 @@
 	icon_state = "id2"
 
 /obj/machinery/computer/card/portable
-  name = "portable identification computer"
-  icon_state = "idportC"
-  density = 0
+	name = "portable identification computer"
+	icon_state = "idportC"
+	density = 0
 
-  New()
-    ..()
-    src.AddComponent(/datum/component/foldable,/obj/item/objBriefcase/blue_green_stripe)
+	New()
+		..()
+		src.AddComponent(/datum/component/foldable,/obj/item/objBriefcase/blue_green_stripe)
 
 /obj/machinery/computer/card/attack_hand(var/mob/user as mob)
 	if(..())
