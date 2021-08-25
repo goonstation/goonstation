@@ -30,7 +30,7 @@ const OperateWindow = (props, context) => {
   return (
     <Box>
       <NoticeBox success>
-        <marquee> Please insert only standard, non-colored light tubes and bulbs for colorization </marquee>
+        <marquee> Please insert only standard light tubes and bulbs </marquee>
       </NoticeBox>
       <Box>
         <strong># Loaded Lights:</strong>
