@@ -1,5 +1,5 @@
 /obj/item/roboupgrade/thermaloptics
-	name = "cyborg Thermal Vision Upgrade"
+	name = "cyborg thermal vision upgrade"
 	desc = "An advanced vision array that allows a cyborg to see further in the dark, in addition to fully cloaked beings."
 	icon_state = "up-thermal"
 	drainrate = 10
