@@ -81,7 +81,7 @@ const OperateWindow = (props, context) => {
         icon="eject"
         content="Eject"
         tooltip="Remove contents without colorizing."
-        tooltipPosition="right"
+        tooltipPosition="bottom"
         onClick={() => act('eject', {})} />
     </Box>
   );
