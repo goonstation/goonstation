@@ -17,11 +17,6 @@
 	var/ctrl_G = 255
 	var/ctrl_B = 255
 
-	attack_hand(mob/user as mob)
-		for(var/obj/item/AQ in src.contents)
-			src.colorize_bulb(AQ)
-		..()
-
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(load_bulb(W,user))
 			boutput(user, "You load [W] into [src].")
@@ -60,29 +55,29 @@
 
 		playsound(src.loc, sound_process, 40, 1)
 
+	proc/stop_phos()
+		src.phosphorizing = false
+		var/image/O_panel = SafeGetOverlayImage("operatebar", 'icons/obj/machines/phosphorizer.dmi', "activelight")
+		O_panel.plane = PLANE_OVERLAY_EFFECTS
+		UpdateOverlays(null, "operatebar", 0, 1)
+
 /obj/machinery/phosphorizer/power_change()
 	var/image/I_panel = SafeGetOverlayImage("statuspanel", 'icons/obj/machines/phosphorizer.dmi', "powerpanel")
 	I_panel.plane = PLANE_OVERLAY_EFFECTS
 	I_panel.alpha = 128
-	var/image/O_panel = SafeGetOverlayImage("operatebar", 'icons/obj/machines/phosphorizer.dmi', "activelight")
-	O_panel.plane = PLANE_OVERLAY_EFFECTS
 	if (status & BROKEN)
 		UpdateOverlays(null, "statuspanel", 0, 1)
-		UpdateOverlays(null, "operatebar", 0, 1)
+		if(src.phosphorizing) src.stop_phos()
 		//light.disable()
 	else
 		if ( powered() )
 			UpdateOverlays(I_panel, "statuspanel", 0, 1)
 			status &= ~NOPOWER
-			if(phosphorizing)
-				UpdateOverlays(O_panel, "operatebar", 0, 1)
-			else
-				UpdateOverlays(null, "operatebar", 0, 1)
 			//light.enable()
 		else
 			SPAWN_DBG(rand(0, 15))
 				UpdateOverlays(null, "statuspanel", 0, 1)
-				UpdateOverlays(null, "operatebar", 0, 1)
+				if(src.phosphorizing) src.stop_phos()
 				status |= NOPOWER
 				//light.disable()
 
@@ -90,7 +85,11 @@
 	if (status & BROKEN)
 		return
 	if (src.phosphorizing)
-		use_power(src.power_usage)
+		if(src.contents)
+			src.colorize_bulb(src.contents[src.contents.len])
+			use_power(src.power_usage)
+		else
+			src.stop_phos()
 
 /obj/machinery/phosphorizer/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
@@ -118,5 +117,12 @@
 				if("G") src.ctrl_G = clamp(round(params["output"]), 20, 255)
 				if("B") src.ctrl_B = clamp(round(params["output"]), 20, 255)
 			. = TRUE
+		if("process")
+			if(status | BROKEN && powered() && src.contents.len)
+				src.phosphorizing = true
+				var/image/O_panel = SafeGetOverlayImage("operatebar", 'icons/obj/machines/phosphorizer.dmi', "activelight")
+				O_panel.plane = PLANE_OVERLAY_EFFECTS
+				UpdateOverlays(O_panel, "operatebar", 0, 1)
+				ui_interact(usr, ui)
 
 	src.add_fingerprint(usr)

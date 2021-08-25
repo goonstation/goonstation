@@ -29,13 +29,13 @@ const OperateWindow = (props, context) => {
 
   return (
     <Box>
-      <NoticeBox
-        success
-        color="rgba(hostR,hostG,hostB,1)">
-        Current Color
-      </NoticeBox>
       <Box>
-        Tune Spectrum
+        <strong># Loaded Lights:</strong>
+        {' '}{ tubes }
+      </Box>
+      <Box>
+        Color Tuning:
+        {' '}
         <NumberInput
           minValue={20}
           maxValue={255}
@@ -69,8 +69,8 @@ const OperateWindow = (props, context) => {
       </Box>
       <Divider />
       <Button
-        content="Start Phosphorization"
-        tooltip="Begin converting contents to chosen color."
+        content="Phosphorize"
+        tooltip="Begin applying a colored \ncoating to contents."
         tooltipPosition="right"
         onClick={() => act('process', {})} />
     </Box>
