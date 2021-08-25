@@ -8,18 +8,19 @@
 	mats = 20
 	power_usage = 150
 
-	var/mode = "ready"
+	var/phosphorizing = false
 	var/sound/sound_load = sound('sound/items/Deconstruct.ogg')
 	var/sound/sound_process = sound('sound/effects/pop.ogg')
 
 	//color values to install into the bulb
-	var/ctrl_R = 1.0
-	var/ctrl_G = 0.2
-	var/ctrl_B = 0
+	var/ctrl_R = 255
+	var/ctrl_G = 255
+	var/ctrl_B = 255
 
 	attack_hand(mob/user as mob)
 		for(var/obj/item/AQ in src.contents)
 			src.colorize_bulb(AQ)
+		..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(load_bulb(W,user))
@@ -37,14 +38,15 @@
 			. = TRUE
 
 	proc/colorize_bulb(var/obj/item/light/phos_target)
-		phos_target.color_r = ctrl_R
-		phos_target.color_g = ctrl_G
-		phos_target.color_b = ctrl_B
+		//this gets it to come out to a finite point but god I hate it
+		phos_target.color_r = min(ctrl_R * 0.004,1)
+		phos_target.color_g = min(ctrl_G * 0.004,1)
+		phos_target.color_b = min(ctrl_B * 0.004,1)
 
 		//partial color adjustment for the bulb itself, probably overfancy but it's a cool trick
-		var/colr2 = num2hex(round((510 + ctrl_R * 255) / 3),2)
-		var/colg2 = num2hex(round((510 + ctrl_G * 255) / 3),2)
-		var/colb2 = num2hex(round((510 + ctrl_B * 255) / 3),2)
+		var/colr2 = num2hex(round((510 + ctrl_R) / 3),2)
+		var/colg2 = num2hex(round((510 + ctrl_G) / 3),2)
+		var/colb2 = num2hex(round((510 + ctrl_B) / 3),2)
 		phos_target.color = "#[colr2][colg2][colb2]"
 
 		var/nameadjust = istype_exact(phos_target,/obj/item/light/tube) ? "tube" : "bulb"
@@ -62,22 +64,59 @@
 	var/image/I_panel = SafeGetOverlayImage("statuspanel", 'icons/obj/machines/phosphorizer.dmi', "powerpanel")
 	I_panel.plane = PLANE_OVERLAY_EFFECTS
 	I_panel.alpha = 128
+	var/image/O_panel = SafeGetOverlayImage("operatebar", 'icons/obj/machines/phosphorizer.dmi', "activelight")
+	O_panel.plane = PLANE_OVERLAY_EFFECTS
 	if (status & BROKEN)
 		UpdateOverlays(null, "statuspanel", 0, 1)
+		UpdateOverlays(null, "operatebar", 0, 1)
 		//light.disable()
 	else
 		if ( powered() )
 			UpdateOverlays(I_panel, "statuspanel", 0, 1)
 			status &= ~NOPOWER
+			if(phosphorizing)
+				UpdateOverlays(O_panel, "operatebar", 0, 1)
+			else
+				UpdateOverlays(null, "operatebar", 0, 1)
 			//light.enable()
 		else
 			SPAWN_DBG(rand(0, 15))
 				UpdateOverlays(null, "statuspanel", 0, 1)
+				UpdateOverlays(null, "operatebar", 0, 1)
 				status |= NOPOWER
 				//light.disable()
 
 /obj/machinery/phosphorizer/process(mult)
 	if (status & BROKEN)
 		return
-	if (src.mode == "working")
+	if (src.phosphorizing)
 		use_power(src.power_usage)
+
+/obj/machinery/phosphorizer/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user, src, "Phosphorizer", name)
+		ui.open()
+
+/obj/machinery/phosphorizer/ui_data(mob/user)
+	. = list(
+		"tubes" = src.contents.len,
+		"busy"  = src.phosphorizing,
+		"hostR" = src.ctrl_R,
+		"hostG" = src.ctrl_G,
+		"hostB" = src.ctrl_B,
+	)
+
+/obj/machinery/phosphorizer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if (.)
+		return
+	switch(action)
+		if("tune_hue")
+			switch(params["hue"])
+				if("R") src.ctrl_R = clamp(round(params["output"]), 20, 255)
+				if("G") src.ctrl_G = clamp(round(params["output"]), 20, 255)
+				if("B") src.ctrl_B = clamp(round(params["output"]), 20, 255)
+			. = TRUE
+
+	src.add_fingerprint(usr)
