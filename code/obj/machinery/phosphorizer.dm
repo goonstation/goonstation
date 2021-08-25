@@ -50,7 +50,7 @@
 			. = TRUE
 
 	proc/colorize_bulb(var/obj/item/light/phos_target)
-		//this gets it to come out to a finite point but god I hate it
+		//this gets it to come out to a finite point, but at what cost
 		phos_target.color_r = min(ctrl_R * 0.004,1)
 		phos_target.color_g = min(ctrl_G * 0.004,1)
 		phos_target.color_b = min(ctrl_B * 0.004,1)
@@ -84,8 +84,9 @@
 		sleep(phos_delay)
 
 		for (var/obj/item/M in src.contents)
-			if(!powered() || src.phosphorizing == false)
+			if(status & NOPOWER || src.phosphorizing == false)
 				failbreak = true
+				break
 			use_power(src.power_usage)
 			colorize_bulb(M)
 
@@ -147,6 +148,13 @@
 		if("process")
 			if(status | BROKEN && powered() && src.contents.len)
 				src.start_phos()
+				ui_interact(usr, ui)
+		if("eject")
+			if(src.contents.len)
+				for (var/obj/item/M in src.contents)
+					M.pixel_x = -4
+					M.pixel_y = 2
+					M.set_loc(src.loc)
 				ui_interact(usr, ui)
 
 	src.add_fingerprint(usr)
