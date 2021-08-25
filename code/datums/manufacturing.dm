@@ -1479,19 +1479,10 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	category = "Component"
 
 /datum/manufacture/robup_visualizer
-	name = "Spectroscopic Scanner Upgrade"
+	name = "Constuction Visualizer"
 	item_paths = list("CRY-1","CON-1")
 	item_amounts = list(4,6)
 	item_outputs = list(/obj/item/roboupgrade/visualizer)
-	time = 90 SECONDS
-	create = 1
-	category = "Component"
-
-/datum/manufacture/robup_sechudgoggles
-	name = "Security HUD Upgrade"
-	item_paths = list("CRY-1","CON-1")
-	item_amounts = list(4,6)
-	item_outputs = list(/obj/item/roboupgrade/sechudgoggles)
 	time = 90 SECONDS
 	create = 1
 	category = "Component"
