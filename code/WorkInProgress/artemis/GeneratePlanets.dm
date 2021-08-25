@@ -191,6 +191,7 @@ ABSTRACT_TYPE(/datum/generatorPlanetPrefab)
 	var/required = 0   //If 1 we will try to always place thing thing no matter what. Required prefabs will only ever be placed once.
 	var/std_prefab_path
 	var/underwater
+	var/list/required_biomes // ensure area has these biomes somewhere...
 
 	proc/applyTo(var/turf/target)
 		var/adjustX = target.x
@@ -204,6 +205,9 @@ ABSTRACT_TYPE(/datum/generatorPlanetPrefab)
 			adjustY -= ((adjustY + prefabSizeY) - (world.maxy - PLANET_MAPBORDER))
 
 		var/turf/T = locate(adjustX, adjustY, target.z)
+
+		if(!check_biome_requirements(T))
+			return 0
 
 		for(var/x=0, x<prefabSizeX; x++)
 			for(var/y=0, y<prefabSizeY; y++)
@@ -221,6 +225,15 @@ ABSTRACT_TYPE(/datum/generatorPlanetPrefab)
 			convertSpace(T, prefabSizeX, prefabSizeY)
 			return 1
 		else return 0
+
+	proc/check_biome_requirements(turf/T)
+		. = TRUE
+		var/area/map_gen/planet/A = get_area(T)
+		if(length(required_biomes) && istype(A))
+			for(var/biome in A.biome_turfs)
+				if(!(biome in required_biomes))
+					. = FALSE
+					break
 
 	proc/convertSpace(turf/start, prefabSizeX, prefabSizeY)
 		for(var/x=0, x<prefabSizeX; x++)
