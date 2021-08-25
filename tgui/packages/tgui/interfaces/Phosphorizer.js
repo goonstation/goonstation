@@ -16,8 +16,8 @@ export const Phosphorizer = (props, context) => {
             <BusyWindow />
           ) : (
             <OperateWindow />
-           )}
-          </Box>
+          )}
+        </Box>
       </Window.Content>
     </Window>
   );
