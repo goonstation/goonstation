@@ -342,8 +342,8 @@
 		burn *= src.mutantrace.firevuln
 		tox *= src.mutantrace.toxvuln
 
-	if (is_heat_resistant())
-		burn = 0
+	if (src.is_heat_resistant())
+		burn *= 0.5
 
 	//if (src.bioHolder && src.bioHolder.HasEffect("resist_toxic"))
 		//tox = 0
@@ -353,9 +353,6 @@
 	//tox = max(0, burn)
 
 	if (brute + burn + tox <= 0) return
-
-	if (src.is_heat_resistant())
-		burn = 0 //mostly covered by individual procs that cause burn damage, but just in case
 
 	//Bandaid fix for tox damage being mysteriously unhooked in here.
 	if (tox)
