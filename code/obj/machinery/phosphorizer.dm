@@ -8,9 +8,13 @@
 	mats = 20
 	power_usage = 150
 
-	var/phosphorizing = false
+	var/phosphorizing = false //whether the phosphorizer is currently operating
+	var/failbreak = false //set to true if phosphorizing ended without processing all bulbs
+	var/phos_delay = 12 //delay between bulb processing
+
 	var/sound/sound_load = sound('sound/items/Deconstruct.ogg')
 	var/sound/sound_process = sound('sound/effects/pop.ogg')
+	var/sound/sound_grump = sound('sound/machines/buzz-two.ogg')
 
 	//color values to install into the bulb
 	var/ctrl_R = 255
@@ -18,9 +22,22 @@
 	var/ctrl_B = 255
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(load_bulb(W,user))
+		if (istype(W,/obj/item/storage/))
+			var/obj/item/storage/S = W
+			var/items = S.get_contents()
+			for(var/obj/item/O in items)
+				if (load_bulb(O))
+					. = TRUE
+					if (istype(S))
+						S.hud.remove_object(O)
+			if (.)
+				user.visible_message("<b>[user.name]</b> loads [W] into [src].")
+				playsound(src, sound_load, 40, 1)
+				attack_hand(user)
+		else if(load_bulb(W,user))
 			boutput(user, "You load [W] into [src].")
 			playsound(src, sound_load, 40, 1)
+			attack_hand(user)
 		else
 			. = ..()
 
@@ -50,16 +67,37 @@
 		phos_target.desc = "A light [nameadjust] that has been coated with a phosphor to change its hue. A small label is marked '[ctrl_R]-[ctrl_G]-[ctrl_B]'."
 
 		phos_target.pixel_x = -4
-		phos_target.pixel_y = 8
+		phos_target.pixel_y = -8
 		phos_target.set_loc(src.loc)
 
-		playsound(src.loc, sound_process, 40, 1)
+		playsound(src.loc, sound_process, 80, 1)
 
 	proc/stop_phos()
 		src.phosphorizing = false
+		UpdateOverlays(null, "operatebar", 0, 1)
+
+	proc/start_phos()
+		src.phosphorizing = true
 		var/image/O_panel = SafeGetOverlayImage("operatebar", 'icons/obj/machines/phosphorizer.dmi', "activelight")
 		O_panel.plane = PLANE_OVERLAY_EFFECTS
-		UpdateOverlays(null, "operatebar", 0, 1)
+		UpdateOverlays(O_panel, "operatebar", 0, 1)
+		sleep(phos_delay)
+
+		for (var/obj/item/M in src.contents)
+			if(!powered() || src.phosphorizing == false)
+				failbreak = true
+			use_power(src.power_usage)
+			colorize_bulb(M)
+
+			sleep(phos_delay)
+
+		if(failbreak)
+			failbreak = false
+			src.visible_message("<b>[src]</b> stops operating.")
+			playsound(src.loc, sound_grump, 40, 1)
+		else
+			src.visible_message("<b>[src]</b> finishes working and shuts down.")
+		if(src.phosphorizing) stop_phos()
 
 /obj/machinery/phosphorizer/power_change()
 	var/image/I_panel = SafeGetOverlayImage("statuspanel", 'icons/obj/machines/phosphorizer.dmi', "powerpanel")
@@ -77,19 +115,8 @@
 		else
 			SPAWN_DBG(rand(0, 15))
 				UpdateOverlays(null, "statuspanel", 0, 1)
-				if(src.phosphorizing) src.stop_phos()
 				status |= NOPOWER
 				//light.disable()
-
-/obj/machinery/phosphorizer/process(mult)
-	if (status & BROKEN)
-		return
-	if (src.phosphorizing)
-		if(src.contents)
-			src.colorize_bulb(src.contents[src.contents.len])
-			use_power(src.power_usage)
-		else
-			src.stop_phos()
 
 /obj/machinery/phosphorizer/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
@@ -119,10 +146,7 @@
 			. = TRUE
 		if("process")
 			if(status | BROKEN && powered() && src.contents.len)
-				src.phosphorizing = true
-				var/image/O_panel = SafeGetOverlayImage("operatebar", 'icons/obj/machines/phosphorizer.dmi', "activelight")
-				O_panel.plane = PLANE_OVERLAY_EFFECTS
-				UpdateOverlays(O_panel, "operatebar", 0, 1)
+				src.start_phos()
 				ui_interact(usr, ui)
 
 	src.add_fingerprint(usr)

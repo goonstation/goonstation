@@ -29,6 +29,9 @@ const OperateWindow = (props, context) => {
 
   return (
     <Box>
+      <NoticeBox success>
+        <marquee> Please insert only standard, non-colored light tubes and bulbs for colorization </marquee>
+      </NoticeBox>
       <Box>
         <strong># Loaded Lights:</strong>
         {' '}{ tubes }
@@ -69,10 +72,17 @@ const OperateWindow = (props, context) => {
       </Box>
       <Divider />
       <Button
+        icon="power-off"
         content="Phosphorize"
-        tooltip="Begin applying a colored \ncoating to contents."
+        tooltip="Begin applying a colored coating to contents."
         tooltipPosition="right"
         onClick={() => act('process', {})} />
+      <Button
+        icon="eject"
+        content="Eject"
+        tooltip="Remove contents without colorizing."
+        tooltipPosition="right"
+        onClick={() => act('eject', {})} />
     </Box>
   );
 };
