@@ -180,6 +180,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 /obj/item/remote/porter/port_a_brig
 	name = "Port-A-Brig Remote"
+	icon_state = "pbrig"
 	desc = "A remote that summons a Port-A-Brig."
 	machinery_name = "Port-a-Brig"
 
@@ -223,6 +224,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	item_state = "electronic"
 	desc = "A remote that summons a Port-A-Sci."
 	machinery_name = "Port-a-Sci"
+	mats = list("MET-1" = 5, "CON-1" = 5, "telecrystal" = 10)
 
 	get_machinery()
 		if (!src)

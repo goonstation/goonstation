@@ -296,7 +296,7 @@ var/f_color_selector_handler/F_Color_Selector
 		Z_LOG_DEBUG("Preload", "  disease_controls")
 		disease_controls = new /datum/disease_controller()
 		Z_LOG_DEBUG("Preload", "  mechanic_controls")
-		mechanic_controls = new /datum/mechanic_controller()
+		mechanic_controls = null //A ruck kit will fill this in
 		Z_LOG_DEBUG("Preload", "  artifact_controls")
 		artifact_controls = new /datum/artifact_controller()
 		Z_LOG_DEBUG("Preload", "  mining_controls")
@@ -440,6 +440,10 @@ var/f_color_selector_handler/F_Color_Selector
 	SPAWN_DBG(0)
 		init()
 
+#ifdef UNIT_TESTS
+	unit_tests.run_tests()
+#endif
+
 #define UPDATE_TITLE_STATUS(x) if (game_start_countdown) game_start_countdown.update_status(x)
 
 /world/proc/init()
@@ -574,7 +578,7 @@ var/f_color_selector_handler/F_Color_Selector
 	build_supply_pack_cache()
 	build_syndi_buylist_cache()
 	build_camera_network()
-	//build_manufacturer_icons()
+	build_manufacturer_icons()
 	clothingbooth_setup()
 
 	Z_LOG_DEBUG("World/Init", "Loading fishing spots...")
@@ -657,6 +661,11 @@ var/f_color_selector_handler/F_Color_Selector
 	SPAWN_DBG(10 SECONDS)
 		Reboot_server()
 #endif
+#ifdef UNIT_TESTS
+	SPAWN_DBG(10 SECONDS)
+		Reboot_server()
+#endif
+
 #undef UPDATE_TITLE_STATUS
 	return
 
@@ -701,27 +710,30 @@ var/f_color_selector_handler/F_Color_Selector
 	save_tetris_highscores()
 	if (current_state < GAME_STATE_FINISHED)
 		current_state = GAME_STATE_FINISHED
-#ifdef RUNTIME_CHECKING
+#if defined(RUNTIME_CHECKING) || defined(UNIT_TESTS)
 	for (var/client/C in clients)
 		ehjax.send(C, "browseroutput", "hardrestart")
 
 	logTheThing("diary", null, "Shutting down after testing for runtimes.", "admin")
 	if (isnull(runtimeDetails))
-		world.log << "Runtime checking failed due to missing runtimeDetails global list"
+		text2file("Runtime checking failed due to missing runtimeDetails global list", "errors.log")
 	else if (length(runtimeDetails) > 0)
-		world.log << "[length(runtimeDetails)] runtimes generated:"
+		text2file("[length(runtimeDetails)] runtimes generated:", "errors.log")
 		for (var/idx in runtimeDetails)
 			var/list/details = runtimeDetails[idx]
 			var/timestamp = details["seen"]
 			var/file = details["file"]
 			var/line = details["line"]
 			var/name = details["name"]
-			world.log << "\[[timestamp]\] [file],[line]: [name]"
+			text2file("\[[timestamp]\] [file],[line]: [name]", "errors.log")
 #ifndef PREFAB_CHECKING
-	text2file(debug_map_apc_count("\n", zlim=Z_LEVEL_STATION), "no_runtimes.txt")
+	var/apc_error_str = debug_map_apc_count("\n", zlim=Z_LEVEL_STATION)
+	if (!is_blank_string(apc_error_str))
+		text2file(apc_error_str, "errors.log")
 #endif
 	shutdown()
 #endif
+
 	SPAWN_DBG(world.tick_lag)
 		for (var/client/C)
 			if (C.mob)
@@ -1545,8 +1557,8 @@ var/f_color_selector_handler/F_Color_Selector
 
 			if ("version")
 				var/ircmsg[] = new()
-				ircmsg["major"] = ci_dm_version_major
-				ircmsg["minor"] = ci_dm_version_minor
+				ircmsg["major"] = world.byond_version
+				ircmsg["minor"] = world.byond_build
 				ircmsg["goonhub_api"] = config.goonhub_api_version ? config.goonhub_api_version : 0
 				return ircbot.response(ircmsg)
 

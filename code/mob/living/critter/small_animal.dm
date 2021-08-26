@@ -84,8 +84,8 @@ todo: add more small animals!
 		..()
 
 	setup_healths()
-		add_hh_flesh(-(src.health_brute), src.health_brute, src.health_brute_vuln)
-		add_hh_flesh_burn(-(src.health_burn), src.health_burn, src.health_burn_vuln)
+		add_hh_flesh(src.health_brute, src.health_brute_vuln)
+		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 		add_health_holder(/datum/healthHolder/toxin)
 		add_health_holder(/datum/healthHolder/brain)
 
@@ -1169,15 +1169,13 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 20
 
 /mob/living/critter/small_animal/bird/timberdoodle/strong
-	health_brute = 50
-	health_burn = 50
+	health_brute = 35
+	health_burn = 35
 	good_grip = 1
 
 	New()
 		. = ..()
 		src.remove_stam_mod_max("small_animal")
-		src.add_stam_mod_max("wrestledoodle", 30)
-		APPLY_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "wrestledoodle", 5)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		if(act == "flip" && istype(src.equipped(), /obj/item/grab))
@@ -2628,7 +2626,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	butcherable = 1
 	health_brute = 15
 	health_burn = 15
-	pet_text = list("gently snips", "rubs with a soft claw", "cuddles")
+	pet_text = list("gently pets", "rubs", "cuddles")
 
 	New()
 		..()

@@ -50,6 +50,8 @@
 
 	if (src.occupant)
 		src.process_occupant(mult)
+
+	use_power(power_usage)
 	return 1
 
 /obj/machinery/recharge_station/allow_drop()
@@ -673,7 +675,7 @@
 		return
 
 	if (isitem(O) && !user.stat)
-		src.attackby(O, user)
+		src.Attackby(O, user)
 		return
 
 	if (isliving(O) && src.occupant)

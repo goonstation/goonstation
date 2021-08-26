@@ -118,7 +118,7 @@
 			if (randomContent != src)
 				randomContent.throw_impact(hit_atom)
 
-			hit_atom.attackby(randomContent, thr?.user)
+			hit_atom.Attackby(randomContent, thr?.user)
 
 			if (ismob(hit_atom))
 				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)

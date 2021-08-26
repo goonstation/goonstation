@@ -338,6 +338,15 @@
 		initial_volume = 25
 		initial_reagents = list("butter"=10)
 
+	peanut
+		name = "peanut butter cookie"
+		desc = "It's delicious and nutritious... probably."
+		icon_state = "cookie-peanut"
+		frosted = 1
+		initial_volume = 25
+		initial_reagents = list("sugar"=20)
+		food_effects = list("food_deep_burp")
+
 /obj/item/reagent_containers/food/snacks/moon_pie
 	name = "sugar moon pie"
 	desc = "A confection consisting of a creamy filling sandwiched between two cookies."
@@ -2525,3 +2534,67 @@
 		..()
 		reagents.add_reagent("epinephrine",8)
 		reagents.add_reagent("synaptizine",8)
+
+// Pastries
+
+/obj/item/reagent_containers/food/snacks/croissant
+	name = "croissant"
+	desc = "Flakey and buttery. Often eaten for breakfast."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "croissant"
+	amount = 2
+	heal_amt = 2
+	food_color = "#cd692b"
+	food_effects = list("food_brute")
+
+/obj/item/reagent_containers/food/snacks/painauchocolat
+	name = "pain au chocolat"
+	desc = "A delicious little parcel of pastry and chocolate."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "painauchoc"
+	amount = 2
+	heal_amt = 2
+	food_color = "#cd692b"
+	food_effects = list("food_brute","food_energized")
+
+/obj/item/reagent_containers/food/snacks/danish_apple
+	name = "apple danish"
+	desc = "A delicious little parcel of pastry and sweet apples."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "danish_apple"
+	amount = 2
+	heal_amt = 2
+	food_color = "#40C100"
+	food_effects = list("food_brute","food_refreshed")
+
+/obj/item/reagent_containers/food/snacks/danish_cherry
+	name = "cherry danish"
+	desc = "A delicious little parcel of pastry and sweet cherries."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "danish_cherry"
+	amount = 2
+	heal_amt = 2
+	food_color = "#CC0000"
+	food_effects = list("food_burn","food_refreshed")
+
+/obj/item/reagent_containers/food/snacks/danish_blueb
+	name = "blueberry danish"
+	desc = "A delicious little parcel of pastry and sweet blueberries."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "danish_blueb"
+	amount = 2
+	heal_amt = 2
+	food_color = "#0000FF"
+	food_effects = list("food_burn","food_energized")
+
+/obj/item/reagent_containers/food/snacks/danish_weed
+	name = "cannadanish"
+	desc = "A delicious little parcel of pastry and sweetened...Weed. Huh."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "danish_weed"
+	amount = 2
+	heal_amt = 2
+	food_color = "#a4c215"
+	initial_volume = 20
+	initial_reagents = list("THC"=10,"CBD"=10)
+	food_effects = list("food_brute","food_burn")

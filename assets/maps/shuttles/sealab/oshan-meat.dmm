@@ -116,7 +116,9 @@
 /turf/unsimulated/floor/setpieces/bloodfloor/stomach,
 /area/shuttle/escape/centcom/sealab)
 "qJ" = (
-/obj/machinery/door/unpowered/martian/meat,
+/obj/machinery/door/unpowered/martian/meat{
+	opacity = 0
+	},
 /turf/unsimulated/floor/setpieces/bloodfloor{
 	icon_state = "bloodfloor_2";
 	name = "Fleshy Floor"
@@ -197,7 +199,9 @@
 	},
 /area/shuttle/escape/centcom/sealab)
 "xA" = (
-/obj/machinery/door/unpowered/martian/meat,
+/obj/machinery/door/unpowered/martian/meat{
+	opacity = 0
+	},
 /turf/unsimulated/floor/setpieces/bloodfloor,
 /area/shuttle/escape/centcom/sealab)
 "xL" = (
@@ -373,7 +377,17 @@
 "Xb" = (
 /turf/unsimulated/wall/setpieces/bloodwall{
 	icon_state = "bloodwall_2";
-	name = "Meaty Wall"
+	name = "Meaty Wall";
+	opacity = 0
+	},
+/area/shuttle/escape/centcom/sealab)
+"XZ" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 8
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
 	},
 /area/shuttle/escape/centcom/sealab)
 "Yv" = (
@@ -538,8 +552,8 @@ PX
 YK
 "}
 (9,1,1) = {"
-Xb
-PX
+Mk
+Yx
 Yx
 Yx
 HZ
@@ -551,11 +565,11 @@ Yv
 Fs
 jh
 Yx
-PX
-Xb
+Yx
+Mk
 "}
 (10,1,1) = {"
-Mk
+YK
 Yx
 lO
 Yx
@@ -569,11 +583,11 @@ ru
 OR
 lO
 Yx
-Mk
+YK
 "}
 (11,1,1) = {"
-Xb
-PX
+Mk
+Yx
 Yx
 Yx
 Yw
@@ -585,8 +599,8 @@ HZ
 Yv
 OR
 Yx
-PX
-Xb
+Yx
+Mk
 "}
 (12,1,1) = {"
 YK
@@ -619,7 +633,7 @@ YK
 Xb
 Xb
 Yx
-Yx
+PX
 YK
 "}
 (14,1,1) = {"
@@ -642,7 +656,7 @@ Xb
 (15,1,1) = {"
 Xb
 Xb
-Yx
+XZ
 Xb
 ww
 vZ
@@ -652,24 +666,24 @@ ww
 vZ
 ww
 Xb
-Yx
+XZ
 Xb
 Xb
 "}
 (16,1,1) = {"
 We
 Xb
-Xb
-Xb
-YK
-YK
 YK
 Xb
 YK
 YK
 YK
 Xb
+YK
+YK
+YK
 Xb
+YK
 Xb
 We
 "}

@@ -157,8 +157,8 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/welded_icon_state = "welded"
 
 	explosion_resistance = 2
-	health = 1200
-	health_max = 1200
+	health = 600
+	health_max = 600
 
 	var/ai_no_access = 0 //This is the dumbest var.
 	var/aiControlDisabled = 0 //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
@@ -204,6 +204,11 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 			src.name = A.name
 		src.net_access_code = rand(1, NET_ACCESS_OPTIONS)
 		START_TRACKING
+
+
+	was_built_from_frame(mob/user, newly_built)
+		. = ..()
+		req_access = list()
 
 	disposing()
 		. = ..()
@@ -325,8 +330,8 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	icon_state = "com_closed"
 	icon_base = "com"
 	req_access = list(access_heads)
-	health = 1600
-	health_max = 1600
+	health = 800
+	health_max = 800
 
 /obj/machinery/door/airlock/pyro/command/alt
 	icon_state = "com2_closed"
@@ -536,7 +541,10 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	sound_airlock = 'sound/machines/windowdoor.ogg'
 	has_panel = 0
 	has_crush = 0
+	health = 500
+	health_max = 500
 	layer = 3.5
+	object_flags = BOTS_DIRBLOCK | CAN_REPROGRAM_ACCESS | HAS_DIRECTIONAL_BLOCKING
 
 	bumpopen(mob/user as mob)
 		if (src.density)
@@ -1780,6 +1788,14 @@ obj/machinery/door/airlock
 			SPAWN_DBG(30 SECONDS)
 				src.secondsElectrified = 0
 	return
+
+/obj/machinery/door/airlock/emag_act(mob/user, obj/item/card/emag/E)
+	. = ..()
+	if(src.welded && !src.locked)
+		audible_message("<span class='alert'>[src] lets out a loud whirring and grinding noise!</span>")
+		animate_shake(src, 5, 2, 2, src.pixel_x, src.pixel_y)
+		playsound(src, 'sound/items/mining_drill.ogg', 25, 1, 0, 0.8)
+		src.take_damage(src.health * 0.8)
 
 /obj/machinery/door/airlock/receive_silicon_hotkey(var/mob/user)
 	..()

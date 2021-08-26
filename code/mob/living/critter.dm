@@ -171,6 +171,9 @@
 		if (src.is_npc)
 			src.registered_area?.registered_mob_critters -= src
 			src.registered_area = null
+		if (ai)
+			qdel(ai)
+			ai = null
 		..()
 
 	///enables mob ai that was disabled by a hibernation task
@@ -222,44 +225,36 @@
 				health += HH.maximum_value
 
 	// begin convenience procs
-	proc/add_hh_flesh(var/min, var/max, var/mult)
+	proc/add_hh_flesh(var/max, var/mult)
 		var/datum/healthHolder/Brute = add_health_holder(/datum/healthHolder/flesh)
 		Brute.maximum_value = max
 		Brute.value = max
 		Brute.last_value = max
 		Brute.damage_multiplier = mult
-		Brute.depletion_threshold = min
-		Brute.minimum_value = min
 		return Brute
 
-	proc/add_hh_flesh_burn(var/min, var/max, var/mult)
+	proc/add_hh_flesh_burn(var/max, var/mult)
 		var/datum/healthHolder/Burn = add_health_holder(/datum/healthHolder/flesh_burn)
 		Burn.maximum_value = max
 		Burn.value = max
 		Burn.last_value = max
 		Burn.damage_multiplier = mult
-		Burn.depletion_threshold = min
-		Burn.minimum_value = min
 		return Burn
 
-	proc/add_hh_robot(var/min, var/max, var/mult)
+	proc/add_hh_robot(var/max, var/mult)
 		var/datum/healthHolder/Brute = add_health_holder(/datum/healthHolder/structure)
 		Brute.maximum_value = max
 		Brute.value = max
 		Brute.last_value = max
 		Brute.damage_multiplier = mult
-		Brute.depletion_threshold = min
-		Brute.minimum_value = min
 		return Brute
 
-	proc/add_hh_robot_burn(var/min, var/max, var/mult)
+	proc/add_hh_robot_burn(var/max, var/mult)
 		var/datum/healthHolder/Burn = add_health_holder(/datum/healthHolder/wiring)
 		Burn.maximum_value = max
 		Burn.value = max
 		Burn.last_value = max
 		Burn.damage_multiplier = mult
-		Burn.depletion_threshold = min
-		Burn.minimum_value = min
 		return Burn
 
 	// end convenience procs
@@ -275,7 +270,7 @@
 		var/obj/item/I = equipped()
 		var/obj/item/W = EH.item
 		if (I && W)
-			W.attackby(I, src) // fix runtime for null.find_type_in_hand - cirr
+			W.Attackby(I, src) // fix runtime for null.find_type_in_hand - cirr
 		else if (I)
 			if (EH.can_equip(I))
 				u_equip(I)
@@ -360,7 +355,8 @@
 		src.update_cursor()
 		hud.update_throwing()
 
-	proc/throw_item(atom/target, list/params)
+	throw_item(atom/target, list/params)
+		..()
 		if (!can_throw)
 			return
 		src.throw_mode_off()

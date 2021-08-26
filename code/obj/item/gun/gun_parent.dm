@@ -348,8 +348,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 		P.forensic_ID = src.forensic_ID // Was missing (Convair880).
 		if(get_dist(user,M) <= 1)
-			hit_with_existing_projectile(P, M) // Includes log entry.
 			P.was_pointblank = 1
+			hit_with_existing_projectile(P, M) // Includes log entry.
 		else
 			P.launch()
 
@@ -430,6 +430,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 		var/turf/T = target
 		src.log_shoot(user, T, P)
+
+	SEND_SIGNAL(user, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
 
 	if (ismob(user))
 		var/mob/M = user

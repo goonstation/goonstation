@@ -108,6 +108,7 @@
 		if (!message || !length(message))
 			return
 		var/msg = replacetext(message, "%src%", "<b>[src]</b>")
+		msg = replacetext(msg, "%target%", "[target]")
 		msg = replacetext(msg, "[constructTarget(target,"combat")]", "[target]")
 		src.visible_message("<span class='alert'>[msg]</span>")
 

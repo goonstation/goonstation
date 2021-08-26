@@ -126,7 +126,12 @@
 	var/cuff_threat_threshold = 5
 	/// Obey the threat threshold. Otherwise, just cuff em
 	var/warn_minor_crime = 0
-
+	/// How long has the bot been sitting in the time-out locker? (process cycles spent inside a locked/welded storage object)
+	var/container_cool_off_counter = 0
+	/// When the bot's been stuck in a locker this long, they'll forget who they were mad at
+	/// Note, this is in process() calls, not seconds, so it could vary quite a bit
+	var/container_cool_off_max = 30
+	var/added_to_records = FALSE
 	/// Set a bot to guard an area, and they'll go there and mill around
 	var/area/guard_area
 	/// Arrest anyone who arent security / heads if they're in this area?
@@ -202,25 +207,6 @@
 	name = "Beep-o-Lantern"
 	desc = "A little security robot, apparently carved out of a pumpkin.  He looks...spooky?"
 	icon = 'icons/misc/halloween.dmi'
-
-/obj/machinery/bot/secbot/brute
-	name = "Komisarz Beepinarska"
-	desc = "This little security robot seems to have a particularly large chip on its... shoulder? ...head?"
-	our_baton_type = /obj/item/baton/classic
-	loot_baton_type = /obj/item/baton/classic
-	stun_type = "harm_classic"
-	emagged = 2
-	control_freq = 0
-
-	demag()
-		//Nope
-		return
-
-/obj/machinery/bot/secbot/stamina_test
-	name = "test secbot"
-	desc = "stamina test"
-	our_baton_type = /obj/item/baton/stamina
-	loot_baton_type = /obj/item/baton/stamina
 
 /obj/item/secbot_assembly
 	name = "helmet/signaler assembly"
@@ -529,7 +515,7 @@
 		// Not charged when dropped (ran on Beepsky's internal battery or whatever).
 		if (istype(loot_baton_type, /obj/item/baton)) // Now we can drop *any* baton!
 			var/obj/item/baton/B = new loot_baton_type(Tsec)
-			B.status = 0
+			B.is_active = FALSE
 			B.process_charges(-INFINITY)
 			if (src.is_beepsky == IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON || src.is_beepsky == IS_NOT_BEEPSKY_BUT_HAS_HIS_SPECIAL_BATON)	// Holding Beepsky's baton doesnt make you him, but it does mean you're holding his baton
 				B.name = "Beepsky's stun baton"
@@ -561,10 +547,7 @@
 
 			// No need for unnecessary hassle, just make it ignore charges entirely for the time being.
 			if (src.our_baton && istype(src.our_baton))
-				if (src.our_baton.uses_electricity == 0)
-					src.our_baton.uses_electricity = 1
-				if (src.our_baton.uses_charges != 0)
-					src.our_baton.uses_charges = 0
+				src.our_baton.cost_normal = 0
 			else
 				src.our_baton = new src.our_baton_type(src)
 
@@ -740,6 +723,26 @@
 		if(src.moving || src.cuffing || src.baton_charging)
 			return
 
+		/// We inside something?
+		if(istype(src.loc, /obj/storage))
+			var/obj/storage/C = src.loc
+			if(C.locked || C.welded)
+				src.weeoo()
+				if(prob(50 + (src.emagged * 15)))
+					for(var/mob/M in hearers(C, null))
+						M.show_text("<font size=[max(0, 5 - get_dist(get_turf(src), M))]>THUD, thud!</font>")
+					playsound(C, "sound/impact_sounds/Wood_Hit_1.ogg", 15, 1, -3)
+					animate_storage_thump(C)
+				src.container_cool_off_counter++
+				if(src.container_cool_off_counter >= src.container_cool_off_max) // Give him some time to cool off
+					src.KillPathAndGiveUp(kpagu)
+					src.container_cool_off_counter = 0
+				return // please stop zapping people from inside lockers
+			else
+				C.open() // just nudge it open, you goof
+
+		src.container_cool_off_counter = 0
+
 		/// Tango!
 		if(src.target)
 			/// Tango in batonning distance?
@@ -843,9 +846,9 @@
 		process()	// ensure bot quickly responds to a perp
 
 	proc/YellAtPerp()
+		var/saything = pick('sound/voice/bcriminal.ogg', 'sound/voice/bjustice.ogg', 'sound/voice/bfreeze.ogg')
 		src.point(src.target, 1)
 		src.speak("Level [src.threatlevel] infraction alert!")
-		var/saything = pick('sound/voice/bcriminal.ogg', 'sound/voice/bjustice.ogg', 'sound/voice/bfreeze.ogg')
 		switch(saything)
 			if('sound/voice/bcriminal.ogg')
 				src.speak("CRIMINAL DETECTED.")
@@ -853,7 +856,7 @@
 				src.speak("PREPARE FOR JUSTICE.")
 			if('sound/voice/bfreeze.ogg')
 				src.speak("FREEZE. SCUMBAG.")
-		playsound(src.loc, saything, 50, 0)
+		playsound(src, saything, 50, 0)
 
 	proc/weeoo()
 		if(weeooing)
@@ -861,7 +864,7 @@
 		SPAWN_DBG(0)
 			weeooing = 1
 			var/weeoo = 10
-			playsound(src.loc, "sound/machines/siren_police.ogg", 50, 1)
+			playsound(src, "sound/machines/siren_police.ogg", 50, 1)
 			while (weeoo)
 				add_simple_light("secbot", list(255 * 0.9, 255 * 0.1, 255 * 0.1, 0.8 * 255))
 				sleep(0.3 SECONDS)
@@ -1234,7 +1237,7 @@
 
 	onUpdate()
 		..()
-		if (!IN_RANGE(master, master.target, 1) || !master.target || master.target.hasStatus("handcuffed") || master.moving)
+		if (src.failchecks())
 			master.weeoo()
 			interrupt(INTERRUPT_ALWAYS)
 			return
@@ -1242,7 +1245,7 @@
 	onStart()
 		..()
 		master.cuffing = 1
-		if (!IN_RANGE(master, master.target, 1) || !master.target || master.target.hasStatus("handcuffed") || master.moving)
+		if (src.failchecks())
 			master.weeoo()
 			interrupt(INTERRUPT_ALWAYS)
 			return
@@ -1315,6 +1318,14 @@
 					master.KillPathAndGiveUp(KPAGU_RETURN_TO_GUARD)
 				else
 					master.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
+
+	proc/failchecks()
+		if (!IN_RANGE(master, master.target, 1))
+			return 1
+		if (!master.target || master.target.hasStatus("handcuffed") || master.moving)
+			return 1
+		if (!isturf(master.loc) || !isturf(master.target?.loc)) // Most often, inside a locker
+			return 1 // cant cuff people through lockers... and not enough room to cuff if both are in that locker
 
 //secbot stunner bar thing
 /datum/action/bar/icon/secbot_stun

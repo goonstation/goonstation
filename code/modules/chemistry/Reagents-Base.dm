@@ -154,9 +154,10 @@ datum
 				if(!M) M = holder.my_atom
 				if (isliving(M))
 					var/mob/living/H = M
-					if(H?.reagents.has_reagent("moonshine"))
-						mult *= 3
 					var/ethanol_amt = holder.get_reagent_amount(src.id)
+					if(H?.reagents.has_reagent("moonshine"))
+						mult *= 7
+						ethanol_amt *= 2
 					var/liver_damage = 0
 					if (!isalcoholresistant(H) || H?.reagents.has_reagent("moonshine"))
 						if (ethanol_amt >= 15)
@@ -203,7 +204,8 @@ datum
 						if (HH.organHolder && HH.organHolder.liver)			//Hax here, lazy. currently only organ is liver. fix when adding others. -kyle
 							if (HH.organHolder.liver.robotic)
 								M.take_toxin_damage(-liver_damage * 3 * mult)
-								HH.organHolder.heal_organ(liver_damage *mult, liver_damage *mult, liver_damage *mult, "liver")
+								if(!HH.organHolder.liver.emagged)
+									HH.organHolder.heal_organ(liver_damage *mult, liver_damage *mult, liver_damage *mult, "liver")
 							else
 								if (ethanol_amt < 40 && HH.organHolder.liver.get_damage() < 10)
 									HH.organHolder.damage_organ(0, 0, liver_damage*mult, "liver")
@@ -729,6 +731,7 @@ datum
 			taste = "bland"
 			minimum_reaction_temperature = -INFINITY
 			target_organs = list("left_kidney", "right_kidney")
+			heat_capacity = 400
 #ifdef UNDERWATER_MAP
 			block_slippy = 1
 			description = "A little strange. Not like any water you've seen. But definitely OSHA approved."
@@ -841,7 +844,7 @@ datum
 							boutput(M, "<span class='notice'>You feel insulted... and wet.</span>")
 						else
 							boutput(M, "<span class='notice'>You feel somewhat purified... but mostly just wet.</span>")
-							M.take_brain_damage(-10)
+							M.take_brain_damage(0 - clamp(volume, 0, 10))
 						for (var/datum/ailment_data/disease/V in M.ailments)
 							if(prob(1))
 								M.cure_disease(V)

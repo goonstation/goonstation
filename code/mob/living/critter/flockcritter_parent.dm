@@ -35,8 +35,8 @@
 	can_lie = 0 // no rotate when dead
 
 /mob/living/critter/flock/setup_healths()
-	add_hh_robot(-(src.health_brute), src.health_brute, src.health_brute_vuln)
-	add_hh_robot_burn(-(src.health_burn), src.health_burn, src.health_burn_vuln)
+	add_hh_robot(src.health_brute, src.health_brute_vuln)
+	add_hh_robot_burn(src.health_burn, src.health_burn_vuln)
 
 /mob/living/critter/flock/New(var/atom/L, var/datum/flock/F=null)
 	..()
@@ -86,12 +86,9 @@
 		return
 	if (dd_hasprefix(message, "*"))
 		return
-	else if (dd_hasprefix(message, ":lh") || dd_hasprefix(message, ":rh") || dd_hasprefix(message, ":in"))
-		message = copytext(message, 4)
-	else if (dd_hasprefix(message, ":"))
-		message = copytext(message, 3)
-	else if (dd_hasprefix(message, ";"))
-		message = copytext(message, 2)
+
+	var/prefixAndMessage = separate_radio_prefix_and_message(message)
+	message = prefixAndMessage[2]
 
 	if(!src.is_npc)
 		message = gradientText("#3cb5a3", "#124e43", message)

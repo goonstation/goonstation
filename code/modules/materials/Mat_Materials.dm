@@ -801,6 +801,7 @@
 		addTrigger(triggersOnAttack, new /datum/materialProc/telecrystal_onattack())
 		return ..()
 
+
 /datum/material/crystal/miracle
 	mat_id = "miracle"
 	name = "miraclium"

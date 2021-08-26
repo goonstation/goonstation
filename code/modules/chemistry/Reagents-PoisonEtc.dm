@@ -69,6 +69,7 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
 				if (method == TOUCH)
+					. = 0
 					if (volume > 25)
 						if (ishuman(M))
 							var/mob/living/carbon/human/H = M
@@ -101,13 +102,10 @@ datum
 				if (istype(O,/obj/item/clothing/head/chemhood || /obj/item/clothing/suit/chemsuit))
 					return 1
 				if (isitem(O) && prob(40))
-					var/obj/item/toMelt
+					var/obj/item/toMelt = O
 					if (!(toMelt.item_function_flags & IMMUNE_TO_ACID))
-						var/obj/decal/cleanable/molten_item/I = make_cleanable(/obj/decal/cleanable/molten_item,O.loc)
-						I.desc = "Looks like this was \an [O] some time ago."
-						for(var/mob/M in AIviewers(5, O))
-							boutput(M, "<span class='alert'>\the [O] melts.</span>")
-						qdel(O)
+						if(!O.hasStatus("acid"))
+							O.changeStatus("acid", 5 SECONDS, list("leave_cleanable" = 1))
 					else
 						O.visible_message("The acidic substance slides off \the [O] harmlessly.")
 
@@ -152,6 +150,7 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
 				if (method == TOUCH)
+					. = 9
 					if (volume >= 50 && prob(75))
 						M.TakeDamage("head", 5, 15, 0, DAMAGE_BURN)
 						M.emote("scream")
@@ -254,20 +253,39 @@ datum
 			penetrates_skin = 1
 			blob_damage = 5
 			value = 7 // 3 2 1 heat
+			var/counter = 1
+
+			pooled()
+				..()
+				counter = 1
 
 			on_mob_life(var/mob/M, var/mult = 1) // -cogwerks. previous version
 				if (!M) M = holder.my_atom
+				if (!counter) counter = 1
 				M.take_toxin_damage(1.5 * mult)
 				if (probmult(8))
 					M.emote("drool")
-				if (prob(10))
+				if (prob(15))
 					boutput(M, "<span class='alert'>You cannot breathe!</span>")
 					M.losebreath += (1 * mult)
 					M.emote("gasp")
-				if (prob(8))
-					boutput(M, "<span class='alert'>You feel horribly weak.</span>")
-					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 3 SECONDS * mult))
-					M.take_toxin_damage(2 * mult)
+				switch(counter += (1 * mult))
+					if (20 to 30)
+						if (prob(15))
+							boutput(M, "<span class='alert'>You feel weak.</span>")
+							M.setStatus("stunned", max(M.getStatusDuration("stunned"), 0.5 SECONDS * mult))
+							M.take_toxin_damage(0.5 * mult)
+					if (30 to 45)
+						if (prob(20))
+							boutput(M, "<span class='alert'>You feel very weak.</span>")
+							M.setStatus("stunned", max(M.getStatusDuration("stunned"), 1 SECONDS * mult))
+							M.take_toxin_damage(1 * mult)
+					if (45 to INFINITY)
+						if (prob(25))
+							boutput(M, "<span class='alert'>You feel horribly weak.</span>")
+							M.setStatus("stunned", max(M.getStatusDuration("stunned"), 2 SECONDS * mult))
+							M.take_toxin_damage(1.5 * mult)
+
 				..()
 				return
 
@@ -772,10 +790,12 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				if(method == TOUCH)
+					. = 0
 				if (method == TOUCH && volume >= 10)
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
-						var/melted = 0
+						var/blocked = 0
 						if (!H.wear_mask && !H.head)
 							H.TakeDamage("head", 0, min(max(8, (volume - 5) * 3), 75), 0, DAMAGE_BURN)
 							H.emote("scream")
@@ -787,57 +807,53 @@ datum
 							if (H.head)
 								var/obj/item/clothing/head/D = H.head
 								if (!(D.item_function_flags & IMMUNE_TO_ACID))
-									boutput(M, "<span class='alert'>Your [H.head] melts into uselessness!</span>")
-									D.dropped(H)
-									H.u_equip(D)
-									qdel(D)
+									if(!D.hasStatus("acid"))
+										boutput(M, "<span class='alert'>Your [H.head] begins to melt!</span>")
+										D.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
 								else
-									H.visible_message("<span class='alert'>The blueish acidic substance slides off \the [D] harmlessly.</span>", "<span class='alert'>Your [H.head] protects you from the acid!</span>")
-								melted = 1
+									H.visible_message("<span class='alert>The blueish acidic substance slides off \the [D] harmlessly.</span>", "<span class='alert'>Your [H.head] protects you from the acid!</span>")
+								blocked = 1
 							if (!(H.head?.c_flags & SPACEWEAR))
 								if (H.wear_mask)
 									var/obj/item/clothing/mask/K = H.wear_mask
 									if (!(K.item_function_flags & IMMUNE_TO_ACID))
-										boutput(M, "<span class='alert'>Your [H.wear_mask] melts away!</span>")
-										K.dropped(H)
-										H.u_equip(K)
-										qdel(K)
+										if(!K.hasStatus("acid"))
+											boutput(M, "<span class='alert'>Your [H.wear_mask] begins to melt away!</span>")
+											K.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
 									else
 										H.visible_message("<span class='alert'>The blueish acidic substance slides off \the [K] harmlessly.</span>", "<span class='alert'>Your [H.wear_mask] protects you from the acid!</span>")
-									melted = 1
+									blocked = 1
 
-							if (melted)
+							if (blocked)
 								return
 					else
 						random_brute_damage(M, min(15,volume))
 				else if (method == TOUCH && volume <= 10 && prob(20))
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
-						var/melted = 0
+						var/blocked = 0
 						if (H.wear_mask || H.head)
 							if (H.head)
 								var/obj/item/clothing/head/D = H.head
 								if (!(D.item_function_flags & IMMUNE_TO_ACID))
-									boutput(M, "<span class='alert'>Your [H.head] melts into uselessness!</span>")
-									D.dropped(H)
-									H.u_equip(D)
-									qdel(D)
+									if(!D.hasStatus("acid"))
+										boutput(M, "<span class='alert'>Your [H.head] begins to melt!</span>")
+										D.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
 								else
 									H.visible_message("<span class='alert>The blueish acidic substance slides off \the [D] harmlessly.</span>", "<span class='alert'>Your [H.head] protects you from the acid!</span>")
-								melted = 1
-							if (!(H?.head.c_flags & SPACEWEAR))
+								blocked = 1
+							if (!(H.head?.c_flags & SPACEWEAR))
 								if (H.wear_mask)
 									var/obj/item/clothing/mask/K = H.wear_mask
 									if (!(K.item_function_flags & IMMUNE_TO_ACID))
-										boutput(M, "<span class='alert'>Your [H.wear_mask] melts away!</span>")
-										K.dropped(H)
-										H.u_equip(K)
-										qdel(K)
+										if(!K.hasStatus("acid"))
+											boutput(M, "<span class='alert'>Your [H.wear_mask] begins to melt away!</span>")
+											K.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
 									else
 										H.visible_message("<span class='alert'>The blueish acidic substance slides off \the [K] harmlessly.</span>", "<span class='alert'>Your [H.wear_mask] protects you from the acid!</span>")
-									melted = 1
+									blocked = 1
 
-							if (melted)
+							if (blocked)
 								return
 				else if (volume >= 5)
 					M.emote("scream")
@@ -856,11 +872,8 @@ datum
 				if (isitem(O) && volume > O:w_class)
 					var/obj/item/toMelt = O
 					if (!(toMelt.item_function_flags & IMMUNE_TO_ACID))
-						var/obj/decal/cleanable/molten_item/I = make_cleanable(/obj/decal/cleanable/molten_item,O.loc)
-						I.desc = "Looks like this was \an [O] some time ago."
-						for(var/mob/M in AIviewers(5, O))
-							boutput(M, "<span class='alert'>\the [O] melts.</span>")
-						qdel(O)
+						if(!O.hasStatus("acid"))
+							O.changeStatus("acid", 5 SECONDS, list("leave_cleanable" = 1))
 					else
 						O.visible_message("The blueish acidic substance slides off \the [O] harmlessly.")
 
@@ -1564,7 +1577,14 @@ datum
 							src.data = cheating.data
 
 				if (src.data && M.bioHolder && progress_timer <= 10)
-
+					if(istype(src.data, /datum/bioHolder))
+						var/datum/bioHolder/tocopy = data
+						if(tocopy?.mobAppearance?.mutant_race?.dna_mutagen_banned)
+							return ..()
+					if(ishuman(M))
+						var/mob/living/carbon/human/H = M
+						if(H.mutantrace?.dna_mutagen_banned)
+							return ..()
 					M.bioHolder.StaggeredCopyOther(data, progress_timer+=(1 * mult))
 					if (probmult(50) && progress_timer > 7)
 						boutput(M, "<span class='notice'>You feel a little [pick("unlike yourself", "out of it", "different", "strange")].</span>")

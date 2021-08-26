@@ -191,6 +191,7 @@
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_pride.dmi'
 	icon_state = "gay"
 	item_state = "gay"
+	burn_possible = 0
 
 	ace
 		name = "ace pride jumpsuit"
@@ -236,7 +237,7 @@
 
 	poly
 		name = "poly pride jumpsuit"
-		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the polysexual pride flag."
+		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the polysexual pride flag. Previously mistaken for polyamorous in uniform fabricators - the responsible employee was promptly terminated under all applicable versions of Space Law."
 		icon_state ="poly"
 		item_state = "poly"
 
@@ -320,7 +321,6 @@
 
 	dress
 		icon_state = "hop-dress"
-		item_state = "hop-dress"
 
 /obj/item/clothing/under/rank/head_of_securityold
 	name = "head of security's uniform"
@@ -1127,7 +1127,6 @@
 
 	dress
 		icon_state = "suitT-dress"
-		item_state = "suitT-dress"
 
 /obj/item/clothing/under/suit/hos
 	name = "\improper Head of Security's suit"

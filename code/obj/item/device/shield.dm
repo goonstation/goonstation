@@ -9,7 +9,6 @@
 	throw_range = 5
 	w_class = W_CLASS_SMALL
 	mats = 10
-	module_research = list("energy" = 10, "efficiency" = 10, "protection" = 10)
 
 /obj/item/device/shield/attack_self(mob/user as mob)
 	src.active = !( src.active )
