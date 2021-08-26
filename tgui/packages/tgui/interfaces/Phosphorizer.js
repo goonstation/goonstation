@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, NoticeBox, Divider, BlockQuote, Icon, NumberInput } from '../components';
+import { Box, Button, NoticeBox, Divider, ColorBox, NumberInput } from '../components';
 import { Window } from '../layouts';
 
 export const Phosphorizer = (props, context) => {
@@ -8,8 +8,8 @@ export const Phosphorizer = (props, context) => {
   return (
     <Window
       title="Phosphorizer"
-      width={375}
-      height={215}>
+      width={360}
+      height={190}>
       <Window.Content>
         <Box>
           { busy ? (
@@ -25,12 +25,12 @@ export const Phosphorizer = (props, context) => {
 
 const OperateWindow = (props, context) => {
   const { act, data } = useBackend(context);
-  const { tubes, hostR, hostG, hostB } = data;
+  const { tubes, online, hostR, hostG, hostB } = data;
 
   return (
     <Box>
       <NoticeBox success>
-        <marquee> Please insert only standard light tubes and bulbs </marquee>
+        Please insert only standard light tubes and bulbs.
       </NoticeBox>
       <Box>
         <strong># Loaded Lights:</strong>
@@ -69,12 +69,15 @@ const OperateWindow = (props, context) => {
             output: value,
           })}
         />
+        {' '}
+        <ColorBox
+          color={`rgba(${hostR}, ${hostG}, ${hostB}, 1)`} />
       </Box>
       <Divider />
       <Button
         icon="power-off"
-        content="Phosphorize"
-        tooltip="Begin applying a colored coating to contents."
+        content={online ? "Stop Phosphorizing" : "Start Phosphorizing"}
+        tooltip={online ? "Abort current processing." : "Begin applying chosen color to contents."}
         tooltipPosition="right"
         onClick={() => act('process', {})} />
       <Button

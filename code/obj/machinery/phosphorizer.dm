@@ -5,7 +5,6 @@
 	icon_state = "baseunit"
 	anchored = 1
 	density = 1
-	mats = 20
 	power_usage = 150
 
 	var/phosphorizing = false //whether the phosphorizer is currently operating
@@ -14,7 +13,8 @@
 
 	var/sound/sound_load = sound('sound/items/Deconstruct.ogg')
 	var/sound/sound_process = sound('sound/effects/pop.ogg')
-	var/sound/sound_grump = sound('sound/machines/buzz-two.ogg')
+	var/sound/sound_grump = sound('sound/machines/buzz-sigh.ogg')
+	var/sound/sound_happi = sound('sound/machines/chime.ogg')
 
 	//color values to install into the bulb
 	var/ctrl_R = 255
@@ -93,10 +93,11 @@
 
 		if(failbreak)
 			failbreak = false
-			src.visible_message("<b>[src]</b> stops operating.")
-			playsound(src.loc, sound_grump, 40, 1)
+			src.visible_message("<b>[src]</b> abruptly stops operating.")
+			playsound(src.loc, sound_grump, 20, 1)
 		else
 			src.visible_message("<b>[src]</b> finishes working and shuts down.")
+			playsound(src.loc, sound_happi, 20, 1)
 		if(src.phosphorizing) stop_phos()
 
 /obj/machinery/phosphorizer/power_change()
@@ -111,7 +112,7 @@
 			UpdateOverlays(I_panel, "statuspanel", 0, 1)
 			status &= ~NOPOWER
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN_DBG(rand(0, 5))
 				UpdateOverlays(null, "statuspanel", 0, 1)
 				status |= NOPOWER
 
@@ -124,6 +125,7 @@
 /obj/machinery/phosphorizer/ui_data(mob/user)
 	. = list(
 		"tubes" = src.contents.len,
+		"online" = src.phosphorizing,
 		"hostR" = src.ctrl_R,
 		"hostG" = src.ctrl_G,
 		"hostB" = src.ctrl_B,
@@ -142,10 +144,16 @@
 			. = TRUE
 		if("process")
 			if(status | BROKEN && powered() && src.contents.len)
-				src.start_phos()
+				if(!src.phosphorizing)
+					src.start_phos()
+					boutput(usr, "You activate [src].")
+				else
+					src.stop_phos()
+					boutput(usr, "You deactivate [src].")
 				ui_interact(usr, ui)
 		if("eject")
 			if(src.contents.len)
+				if(src.phosphorizing) stop_phos()
 				for (var/obj/item/M in src.contents)
 					M.pixel_x = -4
 					M.pixel_y = 2 //bulb being blorfed out the input slot
