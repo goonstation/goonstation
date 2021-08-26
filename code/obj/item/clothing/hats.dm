@@ -644,6 +644,7 @@ proc/filter_trait_hats(var/type)
 	icon_state = "wizard"
 	item_state = "wizard"
 	magical = 1
+	item_function_flags = IMMUNE_TO_ACID
 
 	setupProperties()
 		..()

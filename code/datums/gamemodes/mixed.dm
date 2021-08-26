@@ -11,7 +11,7 @@
 	var/has_werewolves = 1
 	var/has_blobs = 1
 
-	var/list/traitor_types = list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_SPY_THIEF, ROLE_WEREWOLF, ROLE_ARCFIEND)
+	var/list/traitor_types = list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_SPY_THIEF, ROLE_WEREWOLF)
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
@@ -67,8 +67,10 @@
 		if(has_wizards && prob(10)) // powerful combat roles
 			num_wizards++
 			// if any combat roles end up in this mode they go here ok
+#ifndef RP_MODE
 		else if (prob(10) && !num_arcfiends)
 			num_arcfiends++ //starting off slow as we see how EV's play out
+#endif
 		else // more stealthy roles
 			switch(pick(src.traitor_types))
 				if(ROLE_TRAITOR) num_traitors++
@@ -77,6 +79,11 @@
 				if(ROLE_GRINCH) num_grinches++
 				if(ROLE_SPY_THIEF) num_spy_thiefs++
 				if(ROLE_WEREWOLF) num_werewolves++
+				if(ROLE_ARCFIEND)
+					if(!num_arcfiends) //only allow 1 for now
+						num_arcfiends++
+					else
+						num_traitors++
 
 	token_players = antag_token_list()
 	for(var/datum/mind/tplayer in token_players)

@@ -51149,6 +51149,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/security)
+"mWm" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon2,
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "mXc" = (
 /obj/machinery/recharge_station,
 /obj/landmark/start{
@@ -113336,7 +113343,7 @@ ltn
 bAt
 tah
 bCz
-bDA
+mWm
 bEv
 bGl
 cov

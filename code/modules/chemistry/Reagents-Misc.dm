@@ -3223,6 +3223,37 @@ datum
 				#endif
 				M.reagents.del_reagent(src.id)
 
+		gib_juice
+			// old qgp
+			name = "gib juice"
+			id = "gib_juice"
+			description = "oof ouch owie my bones"
+			random_chem_blacklisted = 1
+			reagent_state = LIQUID
+			fluid_r = 255
+			fluid_g = 0
+			fluid_b = 0
+			transparency = 255
+			viscosity = 0.7
+
+			pierces_outerwear = 1//shoo, biofool
+
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if(istype(M, /mob/dead))
+					return
+				M.ex_act(1)
+
+
+			reaction_obj(var/obj/O, var/volume)
+				O.ex_act(1)
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				..()
+				M.ex_act(1)
+				M.gib()
+				M.reagents.del_reagent(src.id)
+
 		cyclopentanol
 			name = "cyclopentanol"
 			id = "cyclopentanol"

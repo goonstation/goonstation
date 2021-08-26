@@ -299,6 +299,8 @@
 /obj/item/assembly/detonator/proc/failsafe_engage()
 	if (src.part_fs.timing)
 		return
+	if (!src.attachedTo || !src.master) // if the detonator assembly isn't wired to anything, then no need to prime it
+		return
 	src.safety = 0
 	src.part_fs.timing = 1
 	src.part_fs.c_state(1)

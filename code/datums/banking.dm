@@ -466,7 +466,7 @@
 	var/payroll_rate_limit_time = 0 //for preventing coammand message spam
 
 	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_hand(mob/user as mob)
 		if(..())

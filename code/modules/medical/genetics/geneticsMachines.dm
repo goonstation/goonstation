@@ -65,7 +65,7 @@
 			user.drop_item()
 			qdel(DNA)
 		else
-			src.attack_hand(user)
+			src.Attackhand(user)
 	else
 		var/obj/item/device/pda2/PDA = W
 		if (istype(PDA) && PDA.ID_card)

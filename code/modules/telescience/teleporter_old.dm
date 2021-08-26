@@ -27,7 +27,7 @@
 		light.attach(src)
 
 	attack_ai()
-		src.attack_hand()
+		src.Attackhand()
 
 	Bumped(M as mob|obj)
 		SPAWN_DBG( 0 )
@@ -94,7 +94,7 @@
 		find_links()
 
 	attack_ai()
-		src.attack_hand()
+		src.Attackhand()
 
 	attack_hand()
 		if(engaged)
@@ -103,7 +103,7 @@
 			src.engage()
 
 	attackby(var/obj/item/W)
-		src.attack_hand()
+		src.Attackhand()
 
 	power_change()
 		..()

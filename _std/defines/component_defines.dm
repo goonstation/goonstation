@@ -182,6 +182,8 @@
 
 /// Attacking wiht an item in-hand
 #define COMSIG_ATTACKBY "attackby"
+/// Attacking wihtout an item in-hand
+#define COMSIG_ATTACKHAND "attackhand"
 
 
 // ---- projectile signals ----

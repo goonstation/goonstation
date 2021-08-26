@@ -317,7 +317,7 @@
 	return 0
 
 /mob/living/proc/hand_attack(atom/target, params, location, control, origParams)
-	target.attack_hand(src, params, location, control, origParams)
+	target.Attackhand(src, params, location, control, origParams)
 
 /mob/living/proc/hand_range_attack(atom/target, params, location, control, origParams)
 	.= 0
@@ -1323,7 +1323,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 		if (!src.grabbed_by || !src.grabbed_by.len && !struggled_grab)
 			if (src.buckled)
-				src.buckled.attack_hand(src)
+				src.buckled.Attackhand(src)
 				src.force_laydown_standup() //safety because buckle code is a mess
 				if (src.targeting_ability == src.chair_flip_ability) //fuCKKK
 					src.targeting_ability = null

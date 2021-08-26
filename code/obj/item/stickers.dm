@@ -129,7 +129,7 @@
 				src.add_fingerprint(user)
 				user.put_in_hand_or_drop(src)
 			else
-				src.attached.attack_hand(user)
+				src.attached.Attackhand(user)
 				user.lastattacked = user
 		else
 			return ..()
