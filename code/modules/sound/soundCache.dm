@@ -1616,6 +1616,7 @@ var/global/list/soundCache = list(
  	"sound/weapons/armbomb.ogg" = 'sound/weapons/armbomb.ogg',\
  	"sound/weapons/blaster_a.ogg" = 'sound/weapons/blaster_a.ogg',\
  	"sound/weapons/casing.ogg" = 'sound/weapons/casing.ogg',\
+ 	"sound/weapons/conc_grenade.ogg" = 'sound/weapons/conc_grenade.ogg',\
  	"sound/weapons/cutter.ogg" = 'sound/weapons/cutter.ogg',\
  	"sound/weapons/deagle.ogg" = 'sound/weapons/deagle.ogg',\
  	"sound/weapons/derringer.ogg" = 'sound/weapons/derringer.ogg',\
