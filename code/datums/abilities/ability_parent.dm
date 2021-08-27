@@ -158,12 +158,12 @@
 			abilitystat.owner = src
 
 		var/msg = ""
-		var/style = "font-size: 7px;"
+		//var/style = "font-size: 7px;"
 		var/list/stats = onAbilityStat()
 		for (var/x in stats)
 			msg += "[x] [stats[x]]<br>"
 
-		abilitystat.maptext = "<span class='ps2p l vt ol' style=\"[style]\">[msg] </span>"
+		abilitystat.maptext = "<span class='vga l vt ol'>[msg] </span>"
 
 	proc/deepCopy()
 		var/datum/abilityHolder/copy = new src.type
@@ -277,6 +277,12 @@
 			return
 		if (A in src.abilities)
 			src.abilities -= A
+			if (A == src.altPower)
+				src.altPower = null
+			if (A == src.ctrlPower)
+				src.ctrlPower = null
+			if (A == src.shiftPower)
+				src.shiftPower = null
 			qdel(A)
 			return
 		src.updateButtons()
@@ -1153,7 +1159,7 @@
 			abilitystat.owner = src
 
 		var/msg = ""
-		var/style = "font-size: 7px;"
+		//var/style = "font-size: 7px;"
 
 		var/i = 0
 		for (var/datum/abilityHolder/H in holders)
@@ -1163,7 +1169,7 @@
 					msg += "[x] [stats[x]]<br>"
 					i++
 
-		abilitystat.maptext = "<span class='ps2p l vt ol' style=\"[style]\">[msg] </span>"
+		abilitystat.maptext = "<span class='vga l vt ol'>[msg] </span>"
 
 		if (i > 2)
 			abilitystat.maptext_height = ((i+1) % 2) * 32
@@ -1242,6 +1248,8 @@
 		return A
 
 	removeAbility(var/abilityType)
+		if (istext(abilityType))
+			abilityType = text2path(abilityType)
 		if (!ispath(abilityType))
 			return
 		for (var/datum/abilityHolder/H in holders)

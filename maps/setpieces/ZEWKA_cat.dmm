@@ -792,13 +792,6 @@
 	dir = 4
 	},
 /area/jones/radiation)
-"bU" = (
-/obj/map/light/green,
-/obj/table/reinforced/auto,
-/obj/item/toolbox_arm,
-/obj/item/camera_test,
-/turf/unsimulated/floor/concrete,
-/area/jones/radiation)
 "bV" = (
 /obj/map/light/green,
 /obj/decal/cleanable/molten_item,
@@ -2363,13 +2356,6 @@
 	dir = 2
 	},
 /area/jones/bar)
-"fD" = (
-/obj/table/reinforced/bar/auto,
-/obj/item/card_box/plain,
-/turf/unsimulated/floor/wood{
-	dir = 2
-	},
-/area/jones/bar)
 "fE" = (
 /obj/stool/chair{
 	icon_state = "chair";
@@ -2728,12 +2714,6 @@
 "gv" = (
 /turf/unsimulated/floor/plating/scorched,
 /area/jones)
-"gw" = (
-/obj/item/stg_booster,
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/jones)
 "gx" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/skeleton{
@@ -2778,7 +2758,7 @@
 "gC" = (
 /obj/rack,
 /obj/item/reagent_containers/food/drinks/bottle/vodka,
-/obj/item/reagent_containers/food/drinks/bottle/lime,
+/obj/item/reagent_containers/food/drinks/bottle/soda/lime,
 /obj/item/reagent_containers/food/drinks/bottle/thegoodstuff,
 /turf/unsimulated/floor/specialroom/bar,
 /area/jones/bar)
@@ -2786,14 +2766,14 @@
 /obj/rack,
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
 /obj/item/reagent_containers/food/drinks/bottle/mead,
-/obj/item/reagent_containers/food/drinks/bottle/blue,
+/obj/item/reagent_containers/food/drinks/bottle/soda/blue,
 /obj/item/reagent_containers/food/drinks/bottle/wine,
 /turf/unsimulated/floor/specialroom/bar,
 /area/jones/bar)
 "gE" = (
 /obj/rack,
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
-/obj/item/reagent_containers/food/drinks/bottle/pink,
+/obj/item/reagent_containers/food/drinks/bottle/soda/pink,
 /obj/item/reagent_containers/food/drinks/bottle/vintage,
 /obj/item/reagent_containers/food/drinks/bottle/beer,
 /turf/unsimulated/floor/specialroom/bar,
@@ -3424,7 +3404,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A really big A/C unit, sorta, except it also filters and processes air.  So not really at all like an A/C unit.";
-	icon = 'icons/obj/64x96.dmi';
+	icon = 'icons/obj/large/64x96.dmi';
 	icon_state = "air_gizmo";
 	name = "industrial atmospheric processor"
 	},
@@ -4423,6 +4403,26 @@
 	name = "security cordon"
 	},
 /area/jones)
+"kf" = (
+/obj/map/light/green,
+/obj/table/reinforced/auto,
+/obj/item/toolbox_arm,
+/obj/item/camera,
+/turf/unsimulated/floor/concrete,
+/area/jones/radiation)
+"GT" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/card_box/plain,
+/turf/unsimulated/floor/wood{
+	dir = 2
+	},
+/area/jones/bar)
+"GU" = (
+/obj/item/stg_booster,
+/turf/unsimulated/floor{
+	name = "plating"
+	},
+/area/jones)
 
 (1,1,1) = {"
 aa
@@ -4937,7 +4937,7 @@ am
 af
 bj
 bF
-bU
+kf
 af
 aQ
 cJ
@@ -4955,7 +4955,7 @@ ew
 dR
 dR
 fr
-fD
+GT
 fM
 fY
 gr
@@ -6322,7 +6322,7 @@ ed
 eq
 dP
 gc
-gw
+GU
 gI
 gL
 gM

@@ -35,7 +35,7 @@
 		return
 
 	split_stack(var/toRemove)
-		if(toRemove >= amount) return 0
+		if(toRemove >= amount || toRemove < 1) return 0
 		var/obj/item/material_piece/P = unpool(src.type)
 		P.set_loc(src.loc)
 		P.setMaterial(copyMaterial(src.material))
@@ -43,12 +43,24 @@
 		P.change_stack_amount(toRemove - P.amount)
 		return P
 
-	attackby(var/obj/item/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/material_piece) && W.material)
+	attack_hand(mob/user as mob)
+		if(user.is_in_hands(src) && src.amount > 1)
+			var/splitnum = round(input("How many material pieces do you want to take from the stack?","Stack of [src.amount]",1) as num)
+			if (splitnum >= amount || splitnum < 1)
+				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
+				return
+			var/obj/item/material_piece/new_stack = split_stack(splitnum)
+			user.put_in_hand_or_drop(new_stack)
+			new_stack.add_fingerprint(user)
+		else
+			..(user)
 
-			if(src.stack_item(W))
-				boutput(user, "<span class='notice'>You stack \the [W]!</span>")
-		return
+	attackby(obj/item/W, mob/user)
+		if(W.type == src.type)
+			stack_item(W)
+			if(!user.is_in_hands(src))
+				user.put_in_hand(src)
+			boutput(user, "<span class='notice'>You add the material to the stack. It now has [src.amount] pieces.</span>")
 
 	MouseDrop(over_object, src_location, over_location) //src dragged onto over_object
 		if (isobserver(usr))
@@ -165,6 +177,16 @@
 			else
 				return ..()
 
+		afterattack(turf/simulated/A, mob/user)
+			if(locate(/obj/decal/poster/banner, A))
+				return
+			else if(istype(A, /turf/simulated/wall/))
+				var/obj/decal/poster/banner/B = new(A)
+				if (src.material) B.setMaterial(src.material)
+				logTheThing("station", user, null, "Hangs up a banner (<b>Material:</b> [B.material && B.material.mat_id ? "[B.material.mat_id]" : "*UNKNOWN*"]) in [A] at [log_loc(user)].")
+				src.change_stack_amount(-1)
+				user.visible_message("<span class='notice'>[user] hangs up a [B.name] in [A]!.</span>", "<span class='notice'>You hang up a [B.name] in [A]!</span>")
+
 /obj/item/material_piece/fart
 	icon_state = "fart"
 	name = "frozen fart"
@@ -264,6 +286,8 @@
 				change_stack_amount(-1)
 			else
 				qdel (src)
+		else
+			..()
 
 /obj/item/material_piece/organic/bamboo
 	name = "bamboo stalk"
@@ -280,6 +304,8 @@
 				change_stack_amount(-1)
 			else
 				qdel (src)
+		else
+			..()
 
 /obj/item/material_piece/cloth/spidersilk
 	name = "space spider silk"

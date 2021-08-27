@@ -16,7 +16,7 @@ Contains:
 	var/state = 0.0
 	var/visible = 0.0
 	flags = FPRINT | TABLEPASS| CONDUCT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	item_state = "electronic"
 	m_amt = 150
 	mats = 3

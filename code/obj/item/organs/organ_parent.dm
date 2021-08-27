@@ -15,15 +15,13 @@
 	item_state = "brain"
 	flags = TABLEPASS
 	force = 1.0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 1.0
 	throw_speed = 3
 	throw_range = 5
 	stamina_damage = 5
 	stamina_cost = 5
 	edible = 1	// currently overridden by material settings
-	module_research = list("medicine" = 2) // why would you put this below the throw_impact() stuff
-	module_research_type = /obj/item/organ // were you born in a fuckin barn
 	var/mob/living/carbon/human/donor = null // if I can't use "owner" I can at least use this
 	/// Whoever had this organ first, the original owner
 	var/mob/living/carbon/human/donor_original = null // So people'll know if a lizard's wearing someone else's tail
@@ -50,10 +48,6 @@
 	var/brute_dam = 0
 	var/burn_dam = 0
 	var/tox_dam = 0
-
-	/// How much damage does this take if someone takes a bite out of it?
-	/// Set to 0 to default to 110% of FAIL_DAMAGE
-	var/bite_damage = 0
 
 	var/robotic = 0
 	var/emagged = 0
@@ -106,7 +100,7 @@
 			user.lastattacked = src
 			attack_particle(user,src)
 			hit_twitch(src)
-			playsound(get_turf(src), "sound/impact_sounds/Flesh_Stab_2.ogg", 100, 1)
+			playsound(src, "sound/impact_sounds/Flesh_Stab_2.ogg", 100, 1)
 			src.splat(get_turf(src))
 			if(W.hit_type == DAMAGE_BURN)
 				src.take_damage(0, W.force, 0, W.hit_type)
@@ -137,9 +131,6 @@
 			src.blood_color = src.donor.bioHolder?.bloodColor
 			src.blood_reagent = src.donor.blood_id
 		src.setMaterial(getMaterial(made_from), appearance = 0, setname = 0)
-		if(src.bite_damage == 0)
-			src.bite_damage = src.FAIL_DAMAGE * 1.1
-		src.AddComponent(/datum/component/consume/bitemask)
 
 	disposing()
 		if (src.holder)
@@ -160,8 +151,6 @@
 			bones.dispose()
 
 		holder = null
-		var/datum/component/D = src.GetComponent(/datum/component/consume/bitemask)
-		D?.RemoveComponent(/datum/component/consume/bitemask)
 		..()
 
 	proc/splat(turf/T)
@@ -345,6 +334,9 @@
 		if (user.zone_sel.selecting != src.organ_holder_location)
 			return 0
 
+		if (!can_act(user))
+			return 0
+
 		if (!surgeryCheck(M, user))
 			return 0
 
@@ -402,8 +394,3 @@
 			for (var/abil in src.organ_abilities)
 				src.add_ability(A, abil)
 		src.broken = 0
-
-	get_desc()
-		. = ..()
-		if(src.broken || src.get_damage() > src.FAIL_DAMAGE)
-			. +="<br>It looks pretty banged up."

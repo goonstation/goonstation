@@ -46,7 +46,7 @@
 		gem_type = /obj/item/raw_material/molitz_beta
 
 	onExcavate(var/turf/simulated/wall/asteroid/AST)
-		var/quantity = rand(3,5)
+		var/quantity = rand(2,3)
 		for(var/i in 1 to quantity)
 			..()
 
@@ -141,10 +141,10 @@
 		if (..())
 			return
 		for (var/mob/living/L in range(1,AST))
-			L.changeStatus("radiation", 50, 2)
+			L.changeStatus("radiation", 5 SECONDS, 2)
 
 	onExcavate(var/turf/simulated/wall/asteroid/AST)
 		if (..())
 			return
 		for (var/mob/living/L in range(1,AST))
-			L.changeStatus("radiation", 100, 2)
+			L.changeStatus("radiation", 10 SECONDS, 2)

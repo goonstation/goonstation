@@ -11,10 +11,10 @@ import './styles/main.scss';
 import './styles/themes/genetek.scss';
 // import './styles/themes/hackerman.scss';
 // import './styles/themes/malfunction.scss';
-import './styles/themes/neutral.scss';
+// import './styles/themes/neutral.scss';
 import './styles/themes/ntos.scss';
 import './styles/themes/paper.scss';
-// import './styles/themes/retro.scss';
+import './styles/themes/retro-dark.scss';
 import './styles/themes/syndicate.scss';
 
 import { perf } from 'common/perf';

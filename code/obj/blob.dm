@@ -31,8 +31,8 @@
 	var/datum/action/bar/blob_health/healthbar //Hack.
 	var/static/image/poisoned_image
 	var/fire_coefficient = 1
-	var/poison_coefficient = 0.5
-	var/poison_spread_coefficient = 1
+	var/poison_coefficient = 1
+	var/poison_spread_coefficient = 0.5
 	var/poison_depletion = 1
 	var/heat_divisor = 15
 	var/temp_tolerance = 40
@@ -135,11 +135,15 @@
 		particleMaster.SpawnSystem(new /datum/particleSystem/blobattack(T,overmind.color))
 		if (T?.density)
 			T.blob_act(overmind.attack_power * 20)
+			T.material?.triggerOnBlobHit(T, overmind.attack_power * 20)
+
 		else
 			for (var/mob/M in T.contents)
 				M.blob_act(overmind.attack_power * 20)
 			for (var/obj/O in T.contents)
 				O.blob_act(overmind.attack_power * 20)
+				O.material?.triggerOnBlobHit(O, overmind.attack_power * 20)
+
 
 	proc/attack_random()
 		var/list/allowed = list()
@@ -232,7 +236,7 @@
 		if(temp_difference > tolerance)
 			temp_difference = abs(temp_difference - tolerance)
 
-			src.take_damage(temp_difference / heat_divisor * volume / CELL_VOLUME, 1, "burn")
+			src.take_damage(temp_difference / heat_divisor * min(1, volume / (CELL_VOLUME/3)), 1, "burn")
 
 	attack_hand(var/mob/user)
 		user.lastattacked = src
@@ -330,9 +334,10 @@
 				amount *= fire_coefficient
 				//search for ectothermids.
 				if (amount)
-					for (var/obj/blob/ectothermid/T in range(3, src))
-						if (T && amount > 0)
-							amount -= T.consume(amount)
+					for_by_tcl(T, /obj/blob/ectothermid)
+						if (IN_RANGE(src, T, T.protect_range) && amount > 0)
+							amount *= T.absorb(min(amount * damage_mult, src.health))
+							break
 			if ("laser")
 				ignore_armor = 1
 			if ("poison","self_poison")
@@ -343,13 +348,14 @@
 				amount *= poison_coefficient
 				//handle poison overlay
 				if (amount && damtype == "poison")
-					src.poison += amount
+					src.poison += amount * damage_mult
 					updatePoisonOverlay()
 					if (!overmind)
 						SPAWN_DBG(1 SECOND)
 							while (poison)
 								Life()
 								sleep(1 SECOND)
+					return
 			if ("chaos")
 				ignore_armor = 1
 		if (!ignore_armor && armor_value > 0)
@@ -467,7 +473,7 @@
 			if (!overmind.tutorial.PerformSilentAction("blob-life", src))
 				return 0
 		if (src.poison)
-			var/damage_taken = min(5, src.poison)
+			var/damage_taken = min(10, src.poison)
 			take_damage(damage_taken, 1, "self_poison")
 			src.poison -= damage_taken * poison_depletion
 			src.poison = max(src.poison, 0)
@@ -518,12 +524,15 @@
 			src.name = "[material.name] [initial(src.name)]"
 
 			// ARBITRARY MATH TIME! WOO!
-			var/om_tough = overmind.initial_material.getProperty("density")
-			var/c_tough = material.getProperty("density")
+			var/om_tough = max(overmind.initial_material.getProperty("density"), 1) * max(overmind.initial_material.getProperty("hard"), 1)
+			var/c_tough = max(material.getProperty("density"), 1) * max(material.getProperty("hard"), 1)
 			var/hm_orig = initial(health_max)
+			var/new_tough = (c_tough/om_tough)
+			if(new_tough > 2)
+				new_tough = 1 + sqrt(new_tough-1)
 
 			if (om_tough)
-				var/hm_new = hm_orig * (c_tough / om_tough)
+				var/hm_new = hm_orig * new_tough
 				var/perc_change = hm_new / health_max
 				health_max = hm_new
 				health *= perc_change
@@ -580,9 +589,9 @@
 	anim_overlay = "nucleus_blink"
 	special_icon = 1
 	desc = "The core of the blob. Destroying all nuclei effectively stops the organism dead in its tracks."
-	armor = 3
-	health_max = 250
-	health = 250
+	armor = 1.5
+	health_max = 500
+	health = 500
 	temp_tolerance = 1200
 	fire_coefficient = 0.5
 	poison_coefficient = 0.5
@@ -1029,6 +1038,8 @@
 	gen_rate_value = 0
 	can_absorb = 0
 	runOnLife = 1
+	poison_coefficient = 2
+	poison_spread_coefficient = 1
 	var/heal_range = 2
 	var/heal_amount = 4
 
@@ -1062,57 +1073,65 @@
 	name = "ectothermid"
 	state_overlay = "ectothermid"
 	special_icon = 1
-	desc = "It's a giant energy converting cell. It seems to disperse matter using heat energy."
+	desc = "It's a giant energy converting cell. It seems to store heat energy."
 	armor = 0
 	gen_rate_value = 1
 	can_absorb = 0
 	runOnLife = 1
 	var/protect_range = 3
-	var/damage_per_biopoint = 50
-	var/max_biopoints_per_tick = 40
-	var/damage_credit = 0
-	var/points_used = 0
+	var/temptemp = 0
+	var/absorbed_temp = 0
+	var/removed = 0
+	var/dead = 0
 
-	proc/consume(var/amt)
-		if (amt <= 0)
-			return 0
-		while (amt)
-			if (damage_credit >= amt)
-				damage_credit -= amt
-				return amt
-			else
-				if (points_used < max_biopoints_per_tick)
-					if (!overmind.hasPoints(1))
-						var/turf/T = get_turf(src)
-						set_loc(null)
-						var/obj/blob/B = new /obj/blob(T)
-						B.overmind = overmind
-						overmind.blobs += B
-						B.color = overmind.color
-						qdel(src)
-					damage_credit += damage_per_biopoint
-					points_used++
-					overmind.usePoints(1)
-				else
-					var/ret = damage_credit
-					damage_credit = 0
-					return ret
-		return 0
+	New()
+		. = ..()
+		START_TRACKING
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		if (temperature > T20C)
-			temperature -= consume(temperature - T20C)
+			temperature = T20C
 		..(air, temperature, volume)
+
+	onAttach(var/mob/living/intangible/blob_overmind/O)
+		..()
+		O.gen_rate_bonus -= 0.5
+		removed = 0.5
+
+	disposing()
+		..()
+		STOP_TRACKING
+		if (overmind)
+			overmind.gen_rate_bonus += removed
+			removed = 0
 
 	Life()
 		if (..())
 			return 1
-		points_used = 0
-		damage_credit = 0
+		absorbed_temp += temptemp * 0.25 + 50
+		temptemp *= 0.75
+		temptemp -= 50
 		for (var/turf/simulated/floor/T in range(protect_range,src))
 			var/datum/gas_mixture/air = T.air
 			if (air.temperature > T20C)
-				air.temperature -= 200
+				air.temperature /= 2
+				air.temperature -= 100
+				if(air.temperature > T20C)
+					absorbed_temp += log(2, air.temperature)
+
+	proc/absorb(amount)
+		if(!dead)
+			temptemp += amount
+			return clamp(0.0005 * (temptemp - 100), 0, 1)
+		else
+			return 1
+
+	onKilled()
+		. = ..()
+		dead = 1
+		if(absorbed_temp > 1000)
+			fireflash_s(get_turf(src), protect_range + 1, absorbed_temp, absorbed_temp/protect_range)
+
 
 /obj/blob/plasmaphyll
 	name = "plasmaphyll"
@@ -1123,6 +1142,7 @@
 	gen_rate_value = 1
 	can_absorb = 0
 	runOnLife = 1
+	poison_coefficient = 0.5
 	var/protect_range = 3
 	var/consume_per_tick = 5.5
 	var/plasma_per_point = 2
@@ -1149,6 +1169,8 @@
 	desc = "It's an energy storage cell. It stores biopoints."
 	armor = 0
 	can_absorb = 0
+	poison_coefficient = 0
+	poison_spread_coefficient = 3
 
 	onAttach(var/mob/living/intangible/blob_overmind/O)
 		..()
@@ -1171,6 +1193,7 @@
 	state_overlay = "ribosome"
 	special_icon = 1
 	desc = "It's a protein sequencing cell. It enhances the blob's ability to spread."
+	poison_spread_coefficient = 1
 	armor = 0
 	can_absorb = 0
 	var/added = 0
@@ -1265,7 +1288,7 @@
 		if (!B)
 			qdel(src)
 			return
-		B.attackby(W, user)
+		B.Attackby(W, user)
 
 /////////////////////////
 /// BLOB RELATED PROCS //

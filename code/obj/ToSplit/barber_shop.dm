@@ -1,10 +1,13 @@
 #define HAIRCUT 1
 #define SHAVE 2
-#define HAIR_1 1
-#define HAIR_2 2
-#define HAIR_3 3
+
+// hairea options
+#define BOTTOM_DETAIL 1
+#define MIDDLE_DETAIL 2
+#define TOP_DETAIL 3
 #define ALL_HAIR 4
 #define EYES 5
+
 #define HAIR_1_FUCKED 1
 #define HAIR_2_FUCKED 2
 #define HAIR_3_FUCKED 4
@@ -30,7 +33,7 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	tool_flags = TOOL_SNIPPING
 	force = 8.0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	throwforce = 5.0
@@ -74,7 +77,7 @@
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	tool_flags = TOOL_CUTTING
 	force = 7.0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 	throwforce = 5.0
@@ -130,12 +133,12 @@
 		src.hair_group = hair_group >= 5 ? 1 : hair_group + 1
 		var/which_part
 		switch (hair_group)
-			if (HAIR_1)
-				which_part = "first group of hair"
-			if (HAIR_2)
+			if (BOTTOM_DETAIL)
+				which_part = "bottom group of hair"
+			if (MIDDLE_DETAIL)
 				which_part = "middle group of hair"
-			if (HAIR_3)
-				which_part = "last group of hair"
+			if (TOP_DETAIL)
+				which_part = "top group of hair"
 			if (ALL_HAIR)
 				which_part = "entire coiffure"
 			if (EYES)
@@ -233,36 +236,17 @@
 
 		if(passed_dye_roll)
 			switch(bottle.hair_group)
-				if(HAIR_1)
-					if(is_barber || prob(60))
-						M.bioHolder.mobAppearance.customization_first_color = bottle.customization_first_color
-					else
+				if(BOTTOM_DETAIL, MIDDLE_DETAIL, TOP_DETAIL)
+					if(!is_barber && prob(25))
 						boutput(M, "<span class='alert'>Oh no, you dyed the wrong thing!</span> Maybe they won't notice?")
-						if(prob(50))
-							M.bioHolder.mobAppearance.customization_second_color = bottle.customization_first_color
-						else
-							M.bioHolder.mobAppearance.customization_third_color = bottle.customization_first_color
-
-				if(HAIR_2)
-					if(is_barber || prob(60))
-						M.bioHolder.mobAppearance.customization_second_color = bottle.customization_first_color
-					else
-						boutput(M, "<span class='alert'>Oh no, you dyed the wrong thing!</span> Maybe they won't notice?")
-						if(prob(50))
+						bottle.hair_group = pick(list(BOTTOM_DETAIL, MIDDLE_DETAIL, TOP_DETAIL) - bottle.hair_group)
+					switch(bottle.hair_group)
+						if(BOTTOM_DETAIL)
 							M.bioHolder.mobAppearance.customization_first_color = bottle.customization_first_color
-						else
-							M.bioHolder.mobAppearance.customization_third_color = bottle.customization_first_color
-
-				if(HAIR_3)
-					if(is_barber || prob(60))
-						M.bioHolder.mobAppearance.customization_third_color = bottle.customization_first_color
-					else
-						boutput(M, "<span class='alert'>Oh no, you dyed the wrong thing!</span> Maybe they won't notice?")
-						if(prob(50))
+						if(MIDDLE_DETAIL)
 							M.bioHolder.mobAppearance.customization_second_color = bottle.customization_first_color
-						else
-							M.bioHolder.mobAppearance.customization_first_color = bottle.customization_first_color
-
+						if(TOP_DETAIL)
+							M.bioHolder.mobAppearance.customization_third_color = bottle.customization_first_color
 				if(ALL_HAIR)
 					if(src.uses_left < 3)
 						boutput(M, "<span class='notice'>This dyejob's going to need a full bottle!</span>")
@@ -278,7 +262,7 @@
 					result_msg2 ="<span class='notice'>You dump the [src] in [M]'s eyes.</span>"
 					result_msg3 ="<span class='alert'>[user] dumps the [src] into your eyes!</span>"
 					if(user.mind.assigned_role == "Barber")
-						SPAWN_DBG(20)
+						SPAWN_DBG(2 SECONDS)
 							boutput(M, "Huh, that actually didn't hurt that much. What a great [pick("barber", "stylist", "bangmangler")]!")
 					else
 						M.emote("scream", 0)
@@ -291,8 +275,8 @@
 				src.uses_left = 0
 				src.icon_state= "dye-e"
 			else if(src.uses_left > 1 && is_barber && bottle.hair_group != ALL_HAIR)
-				boutput(user, "Hey, there's still some dye left in the bottle! Looks about ")
 				src.uses_left --
+				boutput(user, "Hey, there's still some dye left in the bottle! Looks about [get_english_num(src.uses_left)] third\s full!")
 			else
 				boutput(user, "You used the whole bottle!")
 				src.uses_left = 0
@@ -344,7 +328,7 @@
 		return
 
 	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_hand(mob/user as mob)
 		if(status & BROKEN)
@@ -417,7 +401,7 @@
 			src.add_fingerprint(usr)
 			for(var/mob/M in viewers(1, src))
 				if (M.using_dialog_of(src))
-					src.attack_hand(M)
+					src.Attackhand(M)
 		else
 			usr.Browse(null, "window=dye_dispenser")
 			return
@@ -426,9 +410,9 @@
 
 // Barber stuff
 
-#undef HAIR_1
-#undef HAIR_2
-#undef HAIR_3
+#undef BOTTOM_DETAIL
+#undef MIDDLE_DETAIL
+#undef TOP_DETAIL
 #undef ALL_HAIR
 #undef EYES
 #undef HAIR_1_FUCKED

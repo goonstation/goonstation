@@ -13,6 +13,7 @@ import { BioEffect } from "../BioEffect";
 export const MutationsTab = (props, context) => {
   const { data } = useBackend(context);
   const [sortMode, setSortMode] = useSharedState(context, "mutsortmode", "time");
+  const [showSequence, toggleShowSequence] = useSharedState(context, 'showSequence', false);
   const bioEffects = (data.bioEffects || []).slice(0);
 
   if (sortMode === "time") {
@@ -39,11 +40,18 @@ export const MutationsTab = (props, context) => {
           onClick={() => setSortMode(sortMode === "time" ? "alpha" : "time")}>
           Sort Mode
         </Button>
+        <Button.Checkbox
+          inline
+          content="Show Sequence"
+          checked={showSequence}
+          onClick={() => toggleShowSequence(!showSequence)}
+        />
       </Section>
       {bioEffects.map(be => (
         <BioEffect
           key={be.ref}
-          gene={be} />
+          gene={be}
+          showSequence={showSequence} />
       ))}
     </Fragment>
   );

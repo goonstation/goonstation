@@ -11,8 +11,6 @@
 	icon_state = "beaker"
 	item_state = "beaker"
 	initial_volume = 50
-	module_research = list("science" = 2, "medicine" = 2)
-	module_research_type = /obj/item/reagent_containers/glass/beaker
 	var/image/fluid_image
 	var/icon_style = "beaker"
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
@@ -146,7 +144,7 @@
 	desc = "A specialized reserve tank."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "largebottle"
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	initial_volume = 400
 	amount_per_transfer_from_this = 25
 	incompatible_with_chem_dispensers = 1

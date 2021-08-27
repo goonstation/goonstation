@@ -426,7 +426,7 @@
 				return
 			else
 				// we've opened a HUD, do a fake HUD click, because i am dedicated to this whole puppetry schtick
-				container_target.hud.clicked("boxes", F, dummy_params)
+				container_target.hud.relay_click("boxes", F, dummy_params)
 				if(isitem(F.equipped()))
 					// we got an item from the thing, THROW IT
 					// we can't actually fake a throw command because we don't have a client (no, so do a bit more trickery to simulate it)

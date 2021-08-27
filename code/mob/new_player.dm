@@ -10,8 +10,6 @@ mob/new_player
 	var/twitch_bill_spawn = 0
 #endif
 
-	invisibility = 101
-
 	density = 0
 	stat = 2
 	canmove = 0
@@ -19,6 +17,10 @@ mob/new_player
 	anchored = 1	//  don't get pushed around
 
 	var/chui/window/spend_spacebux/bank_menu
+
+	New()
+		. = ..()
+		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_ALWAYS)
 
 	// How could this even happen? Regardless, no log entries for unaffected mobs (Convair880).
 	ex_act(severity)
@@ -242,6 +244,10 @@ mob/new_player
 			if (ticker?.mode)
 				var/mob/living/silicon/S = locate(href_list["SelectedJob"]) in mobs
 				if (S)
+					if(jobban_isbanned(src.mind, "Cyborg"))
+						boutput(usr, "<span class='notice'>Sorry, you are banned from playing silicons.</span>")
+						close_spawn_windows()
+						return
 					var/obj/item/organ/brain/latejoin/latejoin = IsSiliconAvailableForLateJoin(S)
 					if(latejoin)
 						close_spawn_windows()
@@ -319,6 +325,9 @@ mob/new_player
 			if(istype(ticker.mode, /datum/game_mode/football))
 				var/datum/game_mode/football/F = ticker.mode
 				F.init_player(character, 0, 1)
+			else if(istype(ticker.mode, /datum/game_mode/pod_wars))
+				var/datum/game_mode/pod_wars/mode = ticker.mode
+				mode.add_latejoin_to_team(character.mind, JOB)
 
 			else if (character.traitHolder && character.traitHolder.hasTrait("immigrant"))
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived in a nondescript container! Good luck!</h3>")
@@ -340,11 +349,7 @@ mob/new_player
 					starting_loc = pick_landmark(LANDMARK_LATEJOIN, locate(1, 1, 1))
 					character.set_loc(starting_loc)
 			else if (map_settings?.arrivals_type == MAP_SPAWN_MISSILE)
-				var/obj/arrival_missile/M = unpool(/obj/arrival_missile)
-				var/turf/T = pick_landmark(LANDMARK_LATEJOIN_MISSILE)
-				var/missile_dir = landmarks[LANDMARK_LATEJOIN_MISSILE][T]
-				M.set_loc(T)
-				SPAWN_DBG(0) M.lunch(character, missile_dir)
+				latejoin_missile_spawn(character)
 			else if(istype(ticker.mode, /datum/game_mode/battle_royale))
 				var/datum/game_mode/battle_royale/battlemode = ticker.mode
 				if(ticker.round_elapsed_ticks > 3000) // no new people after 5 minutes
@@ -353,7 +358,7 @@ mob/new_player
 				character.set_loc(pick_landmark(LANDMARK_BATTLE_ROYALE_SPAWN))
 				equip_battler(character)
 				character.mind.assigned_role = "MODE"
-				character.mind.special_role = "battler"
+				character.mind.special_role = ROLE_BATTLER
 				battlemode.living_battlers.Add(character.mind)
 				DEBUG_MESSAGE("Adding a new battler")
 				battlemode.battle_shuttle_spawn(character.mind)
@@ -529,7 +534,7 @@ a.latejoin-card:hover {
 
 		// deal with it
 		dat += ""
-		if (ticker.mode && !istype(ticker.mode, /datum/game_mode/construction) && !istype(ticker.mode,/datum/game_mode/battle_royale) && !istype(ticker.mode,/datum/game_mode/football))
+		if (ticker.mode && !istype(ticker.mode, /datum/game_mode/construction) && !istype(ticker.mode,/datum/game_mode/battle_royale) && !istype(ticker.mode,/datum/game_mode/football) && !istype(ticker.mode,/datum/game_mode/pod_wars))
 			dat += {"<div class='fuck'><table class='latejoin'><tr><th colspan='2'>Command/Security</th></tr>"}
 			for(var/datum/job/command/J in job_controls.staple_jobs)
 				dat += LateJoinLink(J)
@@ -580,6 +585,16 @@ a.latejoin-card:hover {
 		else if(istype(ticker.mode,/datum/game_mode/football))
 			//ahahaha you get no choices im going to just shove you in the game now good luck
 			AttemptLateSpawn(new /datum/job/football)
+			return
+		else if(istype(ticker.mode,/datum/game_mode/pod_wars))
+			//Go to the team with less members
+			var/datum/game_mode/pod_wars/mode = ticker.mode
+
+			if (mode?.team_NT?.members?.len > mode?.team_SY?.members?.len)
+				AttemptLateSpawn(new /datum/job/special/pod_wars/syndicate, 1)
+			else
+				AttemptLateSpawn(new /datum/job/special/pod_wars/nanotrasen, 1)
+
 			return
 		else
 			var/datum/game_mode/construction/C = ticker.mode
@@ -632,7 +647,7 @@ a.latejoin-card:hover {
 		mind.transfer_to(new_character)
 
 		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/assday))
-			var/bad_type = "traitor"
+			var/bad_type = ROLE_TRAITOR
 			makebad(new_character, bad_type)
 			new_character.mind.late_special_role = 1
 			logTheThing("debug", new_character, null, "<b>Late join</b>: assigned antagonist role: [bad_type].")
@@ -654,7 +669,7 @@ a.latejoin-card:hover {
 					if (islist(ticker.mode.latejoin_antag_roles) && length(ticker.mode.latejoin_antag_roles))
 						bad_type = pick(ticker.mode.latejoin_antag_roles)
 					else
-						bad_type = "traitor"
+						bad_type = ROLE_TRAITOR
 
 					if ((!livingtraitor && prob(40)) || (livingtraitor && ticker.mode.latejoin_only_if_all_antags_dead == 0 && prob(4)))
 						makebad(new_character, bad_type)
@@ -691,51 +706,62 @@ a.latejoin-card:hover {
 		var/objective_set_path = null
 		switch (type)
 
-			if ("traitor")
-				traitor.special_role = "traitor"
+			if (ROLE_TRAITOR)
+				traitor.special_role = ROLE_TRAITOR
 			#ifdef RP_MODE
 				objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
 			#else
 				objective_set_path = pick(typesof(/datum/objective_set/traitor))
 			#endif
 
-			if ("changeling")
-				traitor.special_role = "changeling"
+			if (ROLE_CHANGELING)
+				traitor.special_role = ROLE_CHANGELING
 				objective_set_path = /datum/objective_set/changeling
 				traitormob.make_changeling()
 
-			if ("vampire")
-				traitor.special_role = "vampire"
+			if (ROLE_VAMPIRE)
+				traitor.special_role = ROLE_VAMPIRE
 				objective_set_path = /datum/objective_set/vampire
 				traitormob.make_vampire()
 
-			if ("wrestler")
-				traitor.special_role = "wrestler"
+			if (ROLE_WRESTLER)
+				traitor.special_role = ROLE_WRESTLER
 				objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
 				traitormob.make_wrestler(1)
 
-			if ("grinch")
-				traitor.special_role = "grinch"
+			if (ROLE_GRINCH)
+				traitor.special_role = ROLE_GRINCH
 				objective_set_path = /datum/objective_set/grinch
 				traitormob.make_grinch()
 
-			if ("hunter")
-				traitor.special_role = "hunter"
+			if (ROLE_HUNTER)
+				traitor.special_role = ROLE_HUNTER
 				objective_set_path = /datum/objective_set/hunter
 				traitormob.make_hunter()
 
-			if ("werewolf")
-				traitor.special_role = "werewolf"
+			if (ROLE_WEREWOLF)
+				traitor.special_role = ROLE_WEREWOLF
 				objective_set_path = /datum/objective_set/werewolf
 				traitormob.make_werewolf()
 
-			if ("wraith")
-				traitor.special_role = "wraith"
+			if (ROLE_WRAITH)
+				traitor.special_role = ROLE_WRAITH
 				traitormob.make_wraith()
 				generate_wraith_objectives(traitor)
 
+#ifdef SECRETS_ENABLED
+			if (ROLE_ARCFIEND)
+				traitor.special_role = ROLE_ARCFIEND
+				traitormob.make_arcfiend()
+			#ifdef RP_MODE
+				objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
+			#else
+				objective_set_path = pick(typesof(/datum/objective_set/traitor))
+			#endif
+#endif
+
 			else // Fallback if role is unrecognized.
-				traitor.special_role = "traitor"
+				traitor.special_role = ROLE_TRAITOR
 			#ifdef RP_MODE
 				objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
 			#else
@@ -810,6 +836,9 @@ a.latejoin-card:hover {
 		set name = ".cancel_ready"
 
 		if (ticker)
+			if(ticker.pregame_timeleft <= 1 SECOND)
+				boutput(usr, "<span class='alert'>It is too close to roundstart for you to unready. Please wait until setup finishes.</span>")
+				return
 			if (ticker.mode)
 				if (istype(ticker.mode, /datum/game_mode/construction))
 					var/datum/game_mode/construction/C = ticker.mode

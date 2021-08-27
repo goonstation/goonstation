@@ -17,7 +17,7 @@ TRAYS
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 7
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	desc = "A wooden tube, used to roll dough flat in order to make various edible objects. It's pretty sturdy."
 	stamina_damage = 40
 	stamina_cost = 15
@@ -39,7 +39,7 @@ TRAYS
 /obj/item/kitchen/utensil
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	force = 5.0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
@@ -102,7 +102,7 @@ TRAYS
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if (user?.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span style='color:red'><b>[user]</b> fumbles [src] and jabs [his_or_her(user)]self.</span>")
+			user.visible_message("<span style='color:red'><b>[user]</b> fumbles [src] and jabs [himself_or_herself(user)].</span>")
 			random_brute_damage(user, 5)
 		if (!spoon_surgery(M,user))
 			return ..()
@@ -274,7 +274,7 @@ TRAYS
 	name = "package of plastic silverware"
 	desc = "These don't look very clean..."
 	icon_state = "plasticpackage"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/list/messages = list("The packaging decides to not open at this time. How rude.", "The plastic is just too strong for your fumbly fingers!", "Almost open! Wait...Nevermind.", "Almost there.....")
 
 	attack_self(mob/user as mob)
@@ -315,7 +315,7 @@ TRAYS
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	icon_state = "chop_closed"
 	item_state = "chop"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 	attack_self(mob/user as mob)
 		if(src.icon_state == "chop_closed")
@@ -362,21 +362,6 @@ TRAYS
 	throwforce = 3.0
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
-
-	attack(mob/living/carbon/human/target as mob, mob/user as mob)
-		if(user?.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and cuts \himself.</span>")
-			random_brute_damage(user, 20)
-			JOB_XP(user, "Clown", 1)
-		if(prob(5))
-			user.changeStatus("weakened", 4 SECONDS)
-			user.visible_message("<span class='alert'><b>[user]</b>'s hand slips from the [src] and accidentally cuts [himself_or_herself(user)]. </span>")
-			random_brute_damage(user, 20)
-			take_bleeding_damage(user, null, 10, DAMAGE_CUT)
-			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
-		else
-			return ..()
-
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(iscarbon(A))
@@ -440,7 +425,9 @@ TRAYS
 	amount = 6
 	var/max_amount = 6
 	var/box_type = "donutbox"
+	var/has_closed_state = 1
 	var/contained_food = /obj/item/reagent_containers/food/snacks/donut/custom/random
+	var/allowed_food = /obj/item/reagent_containers/food/snacks/donut
 	var/contained_food_name = "donut"
 	tooltip_flags = REBUILD_DIST
 
@@ -456,6 +443,7 @@ TRAYS
 		max_amount = 12
 		box_type = "eggbox"
 		contained_food = /obj/item/reagent_containers/food/snacks/ingredient/egg
+		allowed_food = /obj/item/reagent_containers/food/snacks/ingredient/egg
 		contained_food_name = "egg"
 
 	lollipop
@@ -465,8 +453,11 @@ TRAYS
 		amount = 8
 		max_amount = 8
 		box_type = "lpop"
+		has_closed_state = 0
 		contained_food = /obj/item/reagent_containers/food/snacks/lollipop/random_medical
+		allowed_food = /obj/item/reagent_containers/food/snacks/lollipop
 		contained_food_name = "lollipop"
+		w_class = W_CLASS_SMALL
 
 	New()
 		..()
@@ -482,10 +473,10 @@ TRAYS
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(src.amount >= src.max_amount)
-			boutput(user, "You can't fit anything else in this box!")
+			boutput(user, "You can't fit anything else in [src]!")
 			return
 		else
-			if(istype(W, src.contained_food))
+			if(istype(W, src.allowed_food))
 				user.drop_item()
 				W.set_loc(src)
 				src.amount ++
@@ -501,9 +492,13 @@ TRAYS
 				return ..()
 
 	attack_hand(mob/user as mob)
+		if((!istype(src.loc, /turf) && !user.is_in_hands(src)) || src.amount == 0)
+			..()
+			return
 		src.add_fingerprint(user)
-		var/obj/item/reagent_containers/food/snacks/myFood = locate(src.contained_food) in src
-		if(myFood)
+		var/list/obj/item/reagent_containers/food/snacks/myFoodList = src.contents
+		if(myFoodList.len >= 1)
+			var/obj/item/reagent_containers/food/snacks/myFood = myFoodList[myFoodList.len]
 			if(src.amount >= 1)
 				src.amount--
 				tooltip_rebuild = 1
@@ -517,6 +512,15 @@ TRAYS
 				user.put_in_hand_or_drop(newFood)
 				boutput(user, "You take [newFood] out of [src].")
 		src.update()
+
+	attack_self(mob/user as mob)
+		if(!src.has_closed_state) return
+		if(src.icon_state == "[src.box_type]")
+			src.icon_state = "[src.box_type][src.amount]"
+			boutput(user, "You open [src].")
+		else
+			src.icon_state = "[src.box_type]"
+			boutput(user, "You close [src].")
 
 	proc/update()
 		src.icon_state = "[src.box_type][src.amount]"
@@ -591,7 +595,7 @@ TRAYS
 	proc/unique_attack_garbage_fuck(mob/M as mob, mob/user as mob)
 		attack_particle(user,M)
 		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
-		playsound(get_turf(src), "sound/impact_sounds/plate_break.ogg", 50, 1)
+		playsound(src, "sound/impact_sounds/plate_break.ogg", 50, 1)
 
 		var/turf/shardturf = get_turf(M)
 
@@ -676,7 +680,7 @@ TRAYS
 		if(ordered_contents.len == max_food)
 			boutput(user, "That won't fit, \the [src] is too full!")
 			return
-		if(W.w_class > 3)
+		if(W.w_class > W_CLASS_NORMAL)
 			boutput(user, "You try to think of a way to put [W] on \the [src] but it's not possible! It's too large!")
 			return
 		user.drop_item()
@@ -750,7 +754,7 @@ TRAYS
 			unique_attack_garbage_fuck(M, user)
 		else
 			M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
-			playsound(get_turf(src), src.hit_sound, 30, 1)
+			playsound(src, src.hit_sound, 30, 1)
 			logTheThing("combat", user, M, "taps [constructTarget(M,"combat")] over the head with [src].")
 
 	attack_hand(mob/user as mob)
@@ -803,7 +807,7 @@ TRAYS
 	throw_speed = 3
 	throw_range = 4
 	force = 10
-	w_class = 4.0 //no trays of loaves in a backpack for you
+	w_class = W_CLASS_BULKY //no trays of loaves in a backpack for you
 	max_food = 30
 	throw_dist = 5
 	two_handed = 1 //decomment this line when porting over please
@@ -891,7 +895,7 @@ TRAYS
 
 	unique_attack_garbage_fuck(mob/M as mob, mob/user as mob)
 		M.TakeDamageAccountArmor("head", src.force, 0, 0, DAMAGE_BLUNT)
-		playsound(get_turf(src), "sound/weapons/trayhit.ogg", 50, 1)
+		playsound(src, "sound/weapons/trayhit.ogg", 50, 1)
 		src.visible_message("\The [src] falls out of [user]'s hands due to the impact!")
 		user.drop_item(src)
 
@@ -911,7 +915,7 @@ TRAYS
 	name = "rolling mat"
 	desc = "a bamboo mat for rolling sushi"
 	icon_state = "roller-0"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 	var/seaweed //0 or 1, storage variable for checking if there's a seaweed overlay without using resources pulling image files
 	var/rice //same :)
@@ -1089,7 +1093,7 @@ TRAYS
 	inhand_image_icon = 'icons/obj/foodNdrink/platestackinhand.dmi'
 	icon_state = "platestack1"
 	item_state = "platestack1"
-	w_class = 4 // why the fuck would you put a stack of plates in your backpack, also prevents shenanigans
+	w_class = W_CLASS_BULKY // why the fuck would you put a stack of plates in your backpack, also prevents shenanigans
 	var/platenum = 1 // used for targeting icon_states
 
 	var/platemax = 8

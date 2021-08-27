@@ -1,4 +1,4 @@
-#define CRYOSLEEP_DELAY 15 MINUTES
+#define CRYOSLEEP_DELAY 5 MINUTES
 #define CRYOTRON_MESSAGE_DELAY 3 SECONDS
 
 /obj/cryotron_spawner
@@ -16,7 +16,7 @@
 	desc = "The terminus of a large underfloor cryogenic storage complex."
 	anchored = 1
 	density = 1
-	icon = 'icons/obj/64x96.dmi'
+	icon = 'icons/obj/large/64x96.dmi'
 	icon_state = "cryotron_up"
 	bound_width = 96
 	bound_x = -32
@@ -145,6 +145,9 @@
 				if (L.client)
 					L.addOverlayComposition(/datum/overlayComposition/blinded)
 					L.updateOverlaysClient(L.client)
+				for (var/obj/machinery/computer/announcement/A as anything in machine_registry[MACHINES_ANNOUNCEMENTS])
+					if (!A.status && A.announces_arrivals)
+						A.announce_departure(L)
 				return 1
 
 		stored_mobs += L
@@ -157,6 +160,9 @@
 		if (L.client)
 			L.addOverlayComposition(/datum/overlayComposition/blinded)
 			L.updateOverlaysClient(L.client)
+		for (var/obj/machinery/computer/announcement/A as anything in machine_registry[MACHINES_ANNOUNCEMENTS])
+			if (!A.status && A.announces_arrivals)
+				A.announce_departure(L)
 		if (ishuman(L))
 			var/mob/living/carbon/human/H = L
 			if (H.sims)
@@ -216,10 +222,17 @@
 		if (isnum(entered)) // fix for cannot compare 614825 to "involuntary" (sadly there is no fix for spy sassing me about a runtime HE CAUSED, THE BUTT)
 			var/time_of_day = world.timeofday + ((world.timeofday < entered) ? 864000 : 0) //Offset the time of day in case of midnight rollover
 			if ((entered + CRYOSLEEP_DELAY) > time_of_day) // is the time entered plus 15 minutes greater than the current time? the mob hasn't waited long enough
-				var/time_left = round((entered + CRYOSLEEP_DELAY - time_of_day)/600) // format this so it's nice and clear how many minutes are left to wait
-
+				var/time_left = entered + CRYOSLEEP_DELAY - time_of_day
 				if (time_left >= 0)
-					boutput(user, "<b>You must wait [time_left] minute[s_es(time_left)] before you can leave cryosleep.</b>")
+					var/minutes = round(time_left / (1 MINUTE))
+					var/seconds = round((time_left % (1 MINUTE)) / (1 SECOND))
+
+					var/time_left_message = "[seconds] second[s_es(seconds)]"
+
+					if(minutes >= 1)
+						time_left_message = "[minutes] minute[s_es(minutes)] and [time_left_message]"
+
+					boutput(user, "<b>You must wait at least [time_left_message] until you can leave cryosleep.</b>")
 					user.last_cryotron_message = ticker.round_elapsed_ticks
 					return 0
 		if (alert(user, "Would you like to leave cryogenic storage?", "Confirmation", "Yes", "No") == "No")
@@ -244,9 +257,9 @@
 
 	attack_hand(var/mob/user as mob)
 		if(isgrab(user.l_hand))
-			src.attackby(user.l_hand, user)
+			src.Attackby(user.l_hand, user)
 		else if(isgrab(user.r_hand))
-			src.attackby(user.r_hand, user)
+			src.Attackby(user.r_hand, user)
 		else if (!enter_prompt(user))
 			return ..()
 

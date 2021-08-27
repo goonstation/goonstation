@@ -13,7 +13,7 @@
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	m_amt = 50000
 	mats = 12
 	stamina_damage = 15
@@ -64,7 +64,7 @@
 			out(user, "<span class='alert'>\The [src] is already holding \the [src.holding]!</span>")
 			return 0
 
-		if (W.anchored || W.w_class >= 4) //too bulky for backpacks, too bulky for this
+		if (W.anchored || W.w_class >= W_CLASS_BULKY) //too bulky for backpacks, too bulky for this
 			out(user, "<span class='notice'>\The [src] can't possibly hold that heavy an item!</span>")
 			return 0
 
@@ -98,7 +98,7 @@
 				return 0
 			var/obj/item/target = A
 
-			if (target.anchored || target.w_class == 4) //too bulky for backpacks, too bulky for this
+			if (target.anchored || target.w_class == W_CLASS_BULKY) //too bulky for backpacks, too bulky for this
 				out(user, "<span class='notice'>\The [src] can't possibly hold that heavy an item!</span>")
 				return 0
 
@@ -197,7 +197,7 @@
 
 		src.holding = W
 		src.processHeld = 1
-		src.w_class = 4.0 //bulky
+		src.w_class = W_CLASS_BULKY //bulky
 		src.useInnerItem = 1
 		src.icon_state = "magtractor-active"
 
@@ -232,7 +232,7 @@
 		if (isitem(src.holding) && usr)
 			src.holding.dropped(usr)
 		src.working = 1
-		src.w_class = 3.0 //normal
+		src.w_class = W_CLASS_NORMAL //normal
 		src.useInnerItem = 0
 		var/turf/T = get_turf(src)
 

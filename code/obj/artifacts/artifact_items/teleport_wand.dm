@@ -3,7 +3,6 @@
 	artifact = 1
 	associated_datum = /datum/artifact/telewand
 	flags =  FPRINT | CONDUCT | EXTRADELAY
-	module_research_no_diminish = 1
 
 	// this is necessary so that this returns null
 	// else afterattack will not be called when out of range
@@ -24,7 +23,6 @@
 				A.effect_click_tile(src,user,U)
 			else
 				boutput(user, "<b>[src]</b> [A.error_phrase]")
-			src.ArtifactFaultUsed(user)
 
 /datum/artifact/telewand
 	associated_object = /obj/item/artifact/teleport_wand
@@ -40,8 +38,6 @@
 	var/recharge_phrase = ""
 	var/error_phrase = ""
 	examine_hint = "It seems to have a handle you're supposed to hold it by."
-	module_research = list("energy" = 15, "engineering" = 3, "science" = 8)
-	module_research_insight = 4
 
 	New()
 		..()
@@ -72,9 +68,12 @@
 		var/turf/start_loc = get_turf(user)
 		playsound(start_loc, wand_sound, 50, 1, -1)
 		particleMaster.SpawnSystem(new /datum/particleSystem/tele_wand(T,particle_sprite,particle_color))
+		O.ArtifactFaultUsed(user)
 		return
 
 	proc/can_teleport_here(var/turf/T)
+		if(isrestrictedz(T.z))
+			return 0
 		if (!istype(T,/turf/simulated/floor/))
 			return 0
 		if (T.density)

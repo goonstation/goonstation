@@ -168,7 +168,7 @@
 				icon_state = "engine2"
 				base_icon_state = "engine2"
 			manta_computer
-				icon = 'icons/obj/32x96.dmi'
+				icon = 'icons/obj/large/32x96.dmi'
 				icon_state = "nuclearcomputer"
 				anchored = 2
 				density = 1
@@ -679,6 +679,7 @@ function lineEnter (ev)
 			var/obj/computer3frame/A = new setup_frame_type( src.loc )
 			if(src.material) A.setMaterial(src.material)
 			A.created_icon_state = src.base_icon_state
+			A.set_dir(src.dir)
 			if (src.status & BROKEN)
 				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
@@ -714,7 +715,7 @@ function lineEnter (ev)
 			src.dispose()
 
 	else
-		src.attack_hand(user)
+		src.Attackhand(user)
 
 	return
 
@@ -984,7 +985,7 @@ function lineEnter (ev)
 	force = 8.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	var/obj/machinery/computer3/luggable/luggable = null
 	var/luggable_type = /obj/machinery/computer3/luggable
 
@@ -1119,7 +1120,7 @@ function lineEnter (ev)
 			return
 
 		else
-			src.attack_hand(user)
+			src.Attackhand(user)
 
 		return
 
@@ -1147,6 +1148,7 @@ function lineEnter (ev)
 	desc = "This fine piece of hardware sports an incredible 2 kilobytes of RAM, all for a price slightly higher than the whole economy of greece."
 	icon_state = "oldlapshut"
 	luggable_type = /obj/machinery/computer3/luggable/personal
+	w_class = W_CLASS_NORMAL
 
 
 /obj/machinery/computer3/luggable/personal

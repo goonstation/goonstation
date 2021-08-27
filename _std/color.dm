@@ -4,105 +4,13 @@
 
 #define hex2num(X) text2num(X, 16)
 
-/proc/hsv2rgb(var/hue, var/sat, var/val)
-	var/hh
-	var/p
-	var/q
-	var/t
-	var/ff
-	var/i
-	if(sat <= 0)
-		return rgb(val*255,val*255,val*255)
-	hh = hue
-	hh %= 360
-	hh /= 60
-	i = round(hh)
-	ff = hh - i
-	p = val * (1-sat)
-	q = val * (1 - (sat * ff))
-	t = val * (1 - (sat * (1 - ff)))
-	switch(i)
-		if(0)
-			return rgb(val * 255, t * 255, p * 255)
-		if(1)
-			return rgb(q*255, val*255, p*255)
-		if(2)
-			return rgb(p*255, val*255, t*255)
-		if(3)
-			return rgb(p*255, q*255, val*255)
-		if(4)
-			return rgb(t*255, p*255, val*255)
-		else
-			return rgb(val*255, p*255, q*255)
+#define hsv2rgb(hue, sat, val) rgb(h=hue,s=sat,v=val)
 
-/proc/hsv2rgblist(var/hue, var/sat, var/val)//gross but mah efficiency
-	var/hh
-	var/p
-	var/q
-	var/t
-	var/ff
-	var/i
-	if(sat <= 0)
-		return list(val*255,val*255,val*255)
-	hh = hue
-	hh %= 360
-	hh /= 60
-	i = round(hh)
-	ff = hh - i
-	p = val * (1-sat)
-	q = val * (1 - (sat * ff))
-	t = val * (1 - (sat * (1 - ff)))
-	switch(i)
-		if(0)
-			return list(val * 255, t * 255, p * 255)
-		if(1)
-			return list(q*255, val*255, p*255)
-		if(2)
-			return list(p*255, val*255, t*255)
-		if(3)
-			return list(p*255, q*255, val*255)
-		if(4)
-			return list(t*255, p*255, val*255)
-		else
-			return list(val*255, p*255, q*255)
+#define hsv2rgblist(hue, sat, val) rgb2num(hsv2rgb(hue, sat, val))
 
-/proc/rgb2hsv(r, g, b)
-	var/value = max(r,g,b)
-	var/minc = value - min(r,g,b)
-	var/hue = minc && ( (value==r) ? (g-b)/minc : ( (value==g) ? 2+(b-r)/minc : 4+(r-g)/minc ) )
-	. = list(60*(hue<0 ? hue+6 : hue), value && minc/value, value)
+#define rgb2hsv(r, g, b) rgb2num(rgb(r, g, b), COLORSPACE_HSV)
 
-/proc/hex_to_rgb_list(var/hex)
-	if(copytext(hex, 1, 2) != "#")
-		return null
-	switch(length(hex))
-		if(7) // #rrggbb
-			return list(
-				hex2num(copytext(hex, 2, 4)),
-				hex2num(copytext(hex, 4, 6)),
-				hex2num(copytext(hex, 6, 8))
-			)
-		if(4) // #rgb
-			return list(
-				hex2num(copytext(hex, 2, 3)) * 0x11,
-				hex2num(copytext(hex, 3, 4)) * 0x11,
-				hex2num(copytext(hex, 4, 5)) * 0x11
-			)
-		if(9) // #rrggbbaa
-			return list(
-				hex2num(copytext(hex, 2, 4)),
-				hex2num(copytext(hex, 4, 6)),
-				hex2num(copytext(hex, 6, 8)),
-				hex2num(copytext(hex, 8, 10)),
-			)
-		if(5) // #rgba
-			return list(
-				hex2num(copytext(hex, 2, 3)) * 0x11,
-				hex2num(copytext(hex, 3, 4)) * 0x11,
-				hex2num(copytext(hex, 4, 5)) * 0x11,
-				hex2num(copytext(hex, 5, 6)) * 0x11
-			)
-	return null
+#define hex_to_rgb_list(hex) rgb2num(hex)
 
 /proc/random_color()
 	return rgb(rand(0, 255), rand(0, 255), rand(0, 255))
@@ -110,7 +18,11 @@
 // This proc converts a hex color value ("#420CAB") to an RGB list
 // Clamps each of the RGB values between 50 and 190
 /proc/fix_colors(var/hex)
+	if(length(hex) != 7)
+		hex = fix_hex(hex)
 	var/list/L = hex_to_rgb_list(hex)
+	if(isnull(L))
+		return rgb(22, 210, 22)
 	for (var/i in 1 to 3)
 		L[i] = min(L[i], 190)
 		L[i] = max(L[i], 50)
@@ -118,6 +30,8 @@
 		return rgb(L[1], L[2], L[3])
 	return rgb(22, 210, 22)
 
+/proc/fix_hex(hex)
+	return copytext(hex + "000000", 1, 8)
 
 #define COLOR_MATRIX_PROTANOPIA_LABEL "protanopia"
 #define COLOR_MATRIX_PROTANOPIA list(0.55, 0.45, 0.00, 0.00,\

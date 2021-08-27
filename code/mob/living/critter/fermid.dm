@@ -72,8 +72,8 @@
   HH.can_hold_items = 0
 
 /mob/living/critter/fermid/setup_healths()
-  add_hh_flesh(-unified_health, unified_health, brutevuln)
-  add_hh_flesh_burn(-unified_health, unified_health, firevuln)
+  add_hh_flesh(unified_health, brutevuln)
+  add_hh_flesh_burn(unified_health, firevuln)
   add_health_holder(/datum/healthHolder/toxin)
   add_health_holder(/datum/healthHolder/brain)
 
@@ -81,11 +81,11 @@
   switch (act)
     if ("scream","hiss","chitter")
       if (src.emote_check(voluntary, 50))
-        playsound(get_turf(src), "sound/voice/animal/bugchitter.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+        playsound(src, "sound/voice/animal/bugchitter.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
         return "<b>[src]</b> chitters!"
     if ("snap","clack","click","clak")
       if (src.emote_check(voluntary, 50))
-        playsound(get_turf(src), "sound/items/Scissor.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+        playsound(src, "sound/items/Scissor.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
         return "<span class='alert'><b>[src]</b> claks!</span>"
   return null
 

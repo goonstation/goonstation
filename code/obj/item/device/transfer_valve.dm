@@ -15,7 +15,7 @@
 	var/toggle = 1
 	var/force_dud = 0
 
-	w_class = 6 /// HEH
+	w_class = W_CLASS_GIGANTIC /// HEH
 	p_class = 3 /// H E H
 	mats = 5
 
@@ -156,7 +156,8 @@
 				else
 					flags &= ~ONBACK
 					var/turf/location = get_turf(src)
-					new /obj/item/cable_coil/cut/small(location)
+					var/obj/item/cable_coil/cut/C = new /obj/item/cable_coil/cut(location)
+					C.amount = 2
 					boutput(usr, "<span class='notice'>You detach the loops of wire from [src]!</span>")
 					update_icon()
 
@@ -242,7 +243,7 @@
 		toggle_valve()
 			src.valve_open = !valve_open
 			if(valve_open && force_dud)
-				message_admins("A bomb valve would have opened at [log_loc(src)] but was forced to dud! Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
+				message_admins("A bomb valve would have opened at [log_loc(src)] but was forced to dud! Last touched by: [key_name(src.fingerprintslast)]")
 				logTheThing("bombing", null, null, "A bomb valve would have opened at [log_loc(src)] but was forced to dud! Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
 				return
 
@@ -267,7 +268,7 @@
 					return
 				else if (power < 0.50)
 					visible_message("<span class='combat'>\The [src] farts [pick_string("descriptors.txt", "mopey")]</span>")
-					playsound(get_turf(src), 'sound/voice/farts/poo2.ogg', 30, 2, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/farts/poo2.ogg', 30, 2, channel=VOLUME_CHANNEL_EMOTE)
 					return
 
 				var/stun_time = 6 * power
@@ -276,14 +277,14 @@
 				var/throw_repeat = 6 * power
 				var/sound_volume = 100 * power
 
-				playsound(get_turf(src), 'sound/voice/farts/superfart.ogg', sound_volume, 2, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src, 'sound/voice/farts/superfart.ogg', sound_volume, 2, channel=VOLUME_CHANNEL_EMOTE)
 				visible_message("<span class='combat bold' style='font-size:[100 + (100*(power-0.5))]%;'>\The [src] farts loudly!</span>")
 
 				for(var/mob/living/L in hearers(get_turf(src), fart_range))
 					shake_camera(L,10,32)
 					boutput(L, "<span class='alert'>You are sent flying!</span>")
 
-					L.changeStatus("weakened", stun_time * 10)
+					L.changeStatus("weakened", stun_time SECONDS)
 					while (throw_repeat > 0)
 						throw_repeat--
 						step_away(L,get_turf(src),throw_speed)

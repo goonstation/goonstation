@@ -8,6 +8,7 @@
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 	var/finish_counter = 0
+	escape_possible = 0
 
 /datum/game_mode/blob/announce()
 	boutput(world, "<B>The current game mode is - <font color='green'>Blob</font>!</B>")
@@ -42,10 +43,10 @@
 		message_admins("[key_name(tplayer.current)] successfully redeems an antag token.")
 		//num_blobs = max(0, num_blobs - 1)
 
-	var/list/chosen_blobs = antagWeighter.choose(pool = possible_blobs, role = "blob", amount = num_blobs, recordChosen = 1)
+	var/list/chosen_blobs = antagWeighter.choose(pool = possible_blobs, role = ROLE_BLOB, amount = num_blobs, recordChosen = 1)
 	traitors |= chosen_blobs
 	for (var/datum/mind/blob in traitors)
-		blob.special_role = "blob"
+		blob.special_role = ROLE_BLOB
 		blob.assigned_role = "MODE"
 		possible_blobs.Remove(blob)
 
@@ -98,26 +99,28 @@
 		return 1
 	if (no_automatic_ending)
 		return 0
+	var/blobcount = 0
+	var/tilecount = 0
 	for (var/datum/mind/M in traitors)
 		if (!M)
 			continue
-		if (M.special_role != "blob")
+		if (M.special_role != ROLE_BLOB)
 			continue
 		if (isblob(M.current))
 			var/mob/living/intangible/blob_overmind/O = M.current
-			if (O.blobs.len < 500)
-				finish_counter = 0
-				return 0
+			blobcount += 1
+			tilecount += O.blobs.len
 	for (var/datum/mind/M in Agimmicks)
 		if (!M)
 			continue
-		if (M.special_role != "blob")
+		if (M.special_role != ROLE_BLOB)
 			continue
 		if (isblob(M.current))
 			var/mob/living/intangible/blob_overmind/O = M.current
-			if (O.blobs.len < 500)
-				finish_counter = 0
-				return 0
+			blobcount += 1
+			tilecount += O.blobs.len
+	if(tilecount < 500*blobcount)
+		return 0
 	return 1
 
 /datum/game_mode/blob/declare_completion()

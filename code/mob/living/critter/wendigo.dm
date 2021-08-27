@@ -17,7 +17,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/voice/animal/wendigo_roar.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, "sound/voice/animal/wendigo_roar.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] howls!</span></b>"
 		return null
 
@@ -55,7 +55,7 @@
 		abilityHolder.addAbility(/datum/targetable/critter/frenzy)
 
 	setup_healths()
-		add_hh_flesh(-100, 100, 0.85)
-		add_hh_flesh_burn(-100, 100, 1.4)
+		add_hh_flesh(100, 0.85)
+		add_hh_flesh_burn(100, 1.4)
 		add_health_holder(/datum/healthHolder/toxin)
 		add_health_holder(/datum/healthHolder/brain)

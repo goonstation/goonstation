@@ -850,7 +850,7 @@
 			return
 
 		var/driver_id = signal_program(1, list("command"=DWAINE_COMMAND_DGET, "dnetid"=current_device_id))
-		if (!driver_id & ESIG_DATABIT)
+		if (!(driver_id & ESIG_DATABIT))
 			return
 
 		driver_id &= ~ESIG_DATABIT
@@ -1412,7 +1412,7 @@
 					src.dynamicUpdate(M, forceUpdate|entryUpdateFlags)
 					entryUpdateFlags = REASON_NONE
 				else
-					src.attack_hand(M)
+					src.Attackhand(M)
 
 		if (issilicon(usr))
 			if (!(usr in nearby))

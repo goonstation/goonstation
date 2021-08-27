@@ -51,6 +51,11 @@
 	..()
 	setdir()
 
+/obj/machinery/conveyor/process()
+	if(status & NOPOWER || !operating)
+		return
+	use_power(power_usage)
+
 /obj/machinery/conveyor/disposing()
 	for(var/obj/machinery/conveyor/C in range(1,src))
 		if (C.next_conveyor == src)
@@ -81,30 +86,18 @@
 
 	if(!operable)
 		operating = 0
-	if(!operating)
-		for(var/atom/A in loc.contents)
+	if(!operating || (status & NOPOWER))
+		for(var/atom/movable/A in loc.contents)
 			walk(A, 0)
+	else
+		for(var/atom/movable/A in loc.contents)
+			move_thing(A)
 
 	icon_state = "conveyor[(operating != 0) && !(status & NOPOWER)]"
 
 
-	// machine process
-	// move items to the target location
-/obj/machinery/conveyor/process()
-	if(status & (BROKEN | NOPOWER))
-		return
-	if(!operating)
-		return
-	if(!loc)
-		return
-
-	..()
-
-	for(var/atom/A in loc.contents)
-		move_thing(A)
-
 /obj/machinery/conveyor/proc/move_thing(var/atom/movable/A)
-	if (A.anchored)
+	if (A.anchored || A.temp_flags & BEING_CRUSHERED)
 		return
 	if(isobserver(A))
 		return
@@ -113,12 +106,9 @@
 	if(istype(A, /obj/critter) && A:flying)		//They are flying above it, ok.
 		return
 	var/movedir = dir	// base movement dir
-	if(divert && dir==divdir)	// update if diverter present
+	if(divert && dir == divdir)	// update if diverter present
 		movedir = divert
 
-	/* if (A.l_move_time == world.timeofday)
-		continue // already moved by another conveyor
-		*/
 	var/mob/M = A
 	if(istype(M) && M.buckled == src)
 		M.glide_size = (32 / move_lag) * world.tick_lag
@@ -143,7 +133,6 @@
 		return
 	if(!loc)
 		return
-	//DEBUG_MESSAGE("[AM] entered conveyor at [showCoords(src.x, src.y, src.z)] and is being moved.")
 	move_thing(AM)
 
 /obj/machinery/conveyor/HasExited(var/atom/movable/AM, var/atom/newloc)
@@ -157,7 +146,6 @@
 
 	if(src.next_conveyor && src.next_conveyor.loc == newloc)
 		//Ok, they will soon walk() according to the new conveyor
-		//DEBUG_MESSAGE("[AM] exited conveyor at [showCoords(src.x, src.y, src.z)] onto another conveyor! Wow!.")
 		var/mob/M = AM
 		if(istype(M) && M.buckled == src) //Transfer the buckle
 			M.buckled = next_conveyor
@@ -167,7 +155,6 @@
 
 	else
 		//Stop walking, we left the belt
-		//DEBUG_MESSAGE("[AM] exited conveyor at [showCoords(src.x, src.y, src.z)] onto the cold, hard floor.")
 		var/mob/M = AM
 		if(istype(M) && M.buckled == src) //Unbuckle
 			M.buckled = null
@@ -620,5 +607,5 @@
 				break
 
 	proc/update_icon()
-		var/ico = (speedup / speedup_max) * icon_levels
+		var/ico = clamp(((speedup / speedup_max) * icon_levels), 0, 6)
 		icon_state = "[icon_base][round(ico)]"

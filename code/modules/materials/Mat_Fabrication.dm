@@ -8,9 +8,7 @@
 	/datum/matfab_recipe/bow,
 	/datum/matfab_recipe/quiver,
 	/datum/matfab_recipe/lens,
-	/datum/matfab_recipe/gears,
 	/datum/matfab_recipe/tripod,
-	/datum/matfab_recipe/aplates,
 	/datum/matfab_recipe/glasses,
 	/datum/matfab_recipe/jumpsuit,
 	/datum/matfab_recipe/glovesins,
@@ -30,9 +28,14 @@
 	/datum/matfab_recipe/simple/insbag,
 	/datum/matfab_recipe/simple/insrod,
 	/datum/matfab_recipe/infusion,
+	/datum/matfab_recipe/spacesuit)
+	/*
+	Note: the following items were removed from the refining nanofab due to the unfinished state of matsci and the resulting lack of any use for those:
 	/datum/matfab_recipe/fuel_rod,
 	/datum/matfab_recipe/fuel_rod_4,
-	/datum/matfab_recipe/spacesuit)
+	/datum/matfab_recipe/gears,
+	/datum/matfab_recipe/aplates
+	*/
 
 /obj/machinery/nanofab/mining
 	name = "Nano-fabricator (Mining)"

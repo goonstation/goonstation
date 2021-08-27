@@ -12,7 +12,7 @@
 		if (ismob(hit_atom) && src.splat)
 			var/mob/M = hit_atom
 			src.visible_message("<span class='alert'>[src] splats in [M]'s face!</span>")
-			playsound(get_turf(src), "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+			playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
 			M.change_eye_blurry(rand(5,10))
 			M.take_eye_damage(rand(0, 2), 1)
 			if (prob(40))
@@ -55,7 +55,7 @@
 			src.has_key = 1
 		return
 
-	on_bite(obj/item/I, mob/M, mob/user)
+	heal(var/mob/M)
 		..()
 		if (has_key)
 			src.has_key = 0
@@ -118,7 +118,7 @@
 			if (randomContent != src)
 				randomContent.throw_impact(hit_atom)
 
-			hit_atom.attackby(randomContent, thr?.user)
+			hit_atom.Attackby(randomContent, thr?.user)
 
 			if (ismob(hit_atom))
 				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
@@ -149,7 +149,7 @@
 	food_effects = list("food_sweaty", "food_hp_up_big", "food_cold")
 
 
-	on_bite(obj/item/I, mob/M, mob/user)
+	heal(var/mob/M)
 		M.nutrition += 500
 		return
 

@@ -35,49 +35,12 @@
 	icon_state = "tetris"
 	desc = "Instructions: Left/Right Arrows: Move, Up Arrow/W/R: Turn CW, Q: Turn CCW, Down Arrow/S: Soft Drop, Space: Hard Drop | HIGHSCORE: 0"
 	machine_registry_idx = MACHINES_MISC
+	circuit_type = /obj/item/circuitboard/tetris
 	var/datum/game/tetris
-
-/obj/machinery/computer/tetris/attackby(I as obj, user as mob)
-	if(istype(I, /obj/item/screwdriver))
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 2 SECONDS))
-			if (src.status & BROKEN)
-				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-				G.set_loc(src.loc)
-				var/obj/item/circuitboard/tetris/M = new /obj/item/circuitboard/tetris( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				qdel(src)
-			else
-				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/circuitboard/tetris/M = new /obj/item/circuitboard/tetris( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				qdel(src)
-	else
-		src.attack_hand(user)
-		src.add_fingerprint(user)
-	return
 
 /obj/machinery/computer/tetris/New()
 	..()
 	src.tetris = new /datum/game/tetris(src)
-
-/obj/machinery/computer/tetris/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
 
 /obj/machinery/computer/tetris/attack_hand(mob/user as mob)
 	if(..())
@@ -127,6 +90,8 @@ ABSTRACT_TYPE(/datum/game)
 			return
 		if (href_list["highscore"])
 			if (text2num(href_list["highscore"]))
+				if (text2num(href_list["highscore"]) >= 30000)
+					usr.unlock_medal("Block Stacker", 1)
 				if (text2num(href_list["highscore"]) > highscore)
 					highscore = text2num(href_list["highscore"])
 					highscorekey = usr.key

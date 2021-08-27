@@ -27,18 +27,3 @@
 
 /// like [ON_COOLDOWN] but only gets the cooldown, doesn't refresh it
 #define GET_COOLDOWN(COOLDOWN_OWNER, ID) (isnull(COOLDOWN_OWNER.cooldowns) ? 0 : max(COOLDOWN_OWNER.cooldowns[ID] - TIME, 0))
-
-#ifdef SPACEMAN_DMM // spacemandmm can't understand the fine art of the "many dots" syntax
-/// the [same thing][ON_COOLDOWN] but uses src as the cooldown owner and generates the ID based on the current proc's / verb's path
-#define PROC_ON_COOLDOWN(DELAY) UNLINT(FALSE)
-#else
-#define PROC_ON_COOLDOWN(DELAY) ON_COOLDOWN(src, "[....]", DELAY)
-#endif
-
-/* Example use:
-/mob/verb/spam_chat()
-	if(PROC_ON_COOLDOWN(1 MINUTE))
-		boutput(src, "Verb on cooldown for [time_to_text(PROC_ON_COOLDOWN(0))].")
-		return
-	actually_spam_the_chat()
-*/

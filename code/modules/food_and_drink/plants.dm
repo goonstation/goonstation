@@ -228,6 +228,15 @@
 	force = 0
 	food_color = "#77AA77"
 
+/obj/item/reagent_containers/food/snacks/plant/peas/ammonia
+	name = "golden pea pod"
+	desc = "Golden peas. Like green peas, but not."
+	crop_prefix = "golden "
+	icon_state = "goldenpeapod"
+	food_color = "#bdbd35"
+	plant_reagent = "ammonia"
+	brew_result = "ammonia"
+
 /obj/item/reagent_containers/food/snacks/plant/soylent
 	name = "soylent chartreuse"
 	crop_suffix = " chartreuse"
@@ -285,12 +294,17 @@
 			pool (src)
 		..()
 
+/obj/item/reagent_containers/food/snacks/plant/orange/blood
+	name = "blood orange"
+	desc = "Juicy."
+	plant_reagent = "bloodc"
+
 /obj/item/reagent_containers/food/snacks/plant/orange/wedge
 	name = "orange wedge"
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	initial_volume = 6
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	amount = 1
 	validforhat = 0
 
@@ -309,7 +323,7 @@
 	get_desc()
 		. += "[pick("The time is", "It's", "It's currently", "It reads", "It says")] [o_clock_time()]."
 
-	on_bite(obj/item/I, mob/M, mob/user)
+	heal(var/mob/living/M)
 		..()
 		boutput(M, "<span class='alert'>Eating that was a terrible idea!</span>")
 		random_brute_damage(M, rand(5, 15))
@@ -376,7 +390,7 @@
 	name = "grapefruit wedge"
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	amount = 1
 	initial_volume = 6
 
@@ -403,7 +417,7 @@
 	icon_state = "melon"
 	planttype = /datum/plant/fruit/melon
 	throwforce = 8
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	edible = 0
 	food_color = "#7FFF00"
 	validforhat = 1
@@ -439,7 +453,7 @@
 	icon_state = "melon-slice"
 	planttype = /datum/plant/fruit/melon
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	amount = 1
 	heal_amt = 2
 	food_color = "#7FFF00"
@@ -451,7 +465,7 @@
 	desc = "Sometime in the year 2472 these melons were required to have their name legally changed to protect the not-so-innocent. Also for tax evasion reasons."
 	icon_state = "george-melon"
 	throwforce = 0
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	edible = 0
 	initial_volume = 60
 
@@ -492,7 +506,7 @@
 			playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 100, 1)
 			random_brute_damage(M, 10)//armour won't save you from George Melons
 			if (iscarbon(M))
-				M.changeStatus("paralysis", 30)
+				M.changeStatus("paralysis", 3 SECONDS)
 				M.changeStatus("stunned", 6 SECONDS)
 				M.take_brain_damage(15)
 			pool (src)
@@ -502,7 +516,7 @@
 	desc = "A slice of a particularly special melon. Previously went by a different name but then it got married or something THIS IS HOW MELON NAMES WORK OKAY"
 	icon_state = "george-melon-slice"
 	throwforce = 5
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	amount = 1
 	heal_amt = 2
 	plant_reagent = "george_melonium"
@@ -519,7 +533,7 @@
 	icon_state = "bowling-melon"
 	var/base_icon_state = "bowling-melon"
 	var/already_burst = 0
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	force = 5
 	throw_speed = 1
 
@@ -615,7 +629,7 @@
 	desc = "Caution: May or may not be red hot."
 	icon_state = "chili"
 	planttype = /datum/plant/fruit/chili
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	amount = 1
 	heal_amt = 2
 	plant_reagent = "capsaicin"
@@ -633,7 +647,7 @@
 	desc = "It's cold to the touch."
 	icon_state = "chilly"
 	//planttype = /datum/plant/fruit/chili
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	amount = 1
 	heal_amt = 2
 	food_color = "#00CED1"
@@ -645,7 +659,7 @@
 		var/datum/plantgenes/DNA = src.plantgenes
 		reagents.add_reagent("cryostylane", DNA.potency)
 
-	on_bite(obj/item/I, mob/M, mob/user)
+	heal(var/mob/M)
 		M:emote("shiver")
 		var/datum/plantgenes/DNA = src.plantgenes
 		M.bodytemperature -= DNA.potency
@@ -657,7 +671,7 @@
 	desc = "Naga Jolokia, or Ghost Chili, is a chili pepper previously recognized by Guinness World Records as the hottest pepper in the world. This one, found in space, is even hotter."
 	icon_state = "ghost_chili"
 	//planttype = /datum/plant/fruit/chili
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	amount = 1
 	heal_amt = 1
 	food_color = "#FFFF00"
@@ -668,7 +682,7 @@
 		..()
 		reagents.add_reagent("ghostchilijuice",25)
 
-	on_bite(obj/item/I, mob/M, mob/user)
+	heal(var/mob/M)
 		M:emote("twitch")
 		var/datum/plantgenes/DNA = src.plantgenes
 		boutput(M, "<span class='alert'>Fuck! Your mouth feels like it's on fire!</span>")
@@ -681,7 +695,7 @@
 	desc = "The go-to staple green vegetable in every good space diet, unlike Spinach."
 	icon_state = "lettuce-leaf"
 	planttype = /datum/plant/veg/lettuce
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	amount = 1
 	heal_amt = 1
 	food_color = "#008000"
@@ -691,7 +705,7 @@
 	desc = "A widely-cultivated gourd, often served on sandwiches or pickled.  Not actually known for saving any kingdoms."
 	icon_state = "cucumber"
 	planttype = /datum/plant/veg/cucumber
-	w_class = 1
+	w_class = W_CLASS_TINY
 	amount = 2
 	heal_amt = 1
 	food_color = "#008000"
@@ -779,7 +793,7 @@
 	validforhat = 1
 	food_effects = list("food_cold", "food_refreshed")
 
-	on_bite(obj/item/I, mob/M, mob/user)
+	heal(var/mob/M)
 		M.HealDamage("All", src.heal_amt, src.heal_amt)
 		M.take_toxin_damage(0 - src.heal_amt)
 		M.take_oxygen_deprivation(0 - src.heal_amt)
@@ -863,7 +877,7 @@
 	validforhat = 1
 	food_effects = list("food_cold", "food_refreshed")
 
-	on_bite(obj/item/I, mob/M, mob/user)
+	heal(var/mob/M)
 		if (src.icon_state == "banana")
 			M.visible_message("<span class='alert'>[M] eats [src] without peeling it. What a dumb beast!</span>")
 			M.take_toxin_damage(5)
@@ -893,7 +907,7 @@
 	desc = "Think of how many snowmen were mutilated to power the carrot industry."
 	icon_state = "carrot"
 	planttype = /datum/plant/veg/carrot
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	amount = 3
 	heal_amt = 1
 	food_color = "#FF9900"
@@ -981,7 +995,7 @@
 	name = "lime wedge"
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	amount = 1
 	initial_volume = 6
 	validforhat = 0
@@ -1025,7 +1039,7 @@
 	name = "lemon wedge"
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	amount = 1
 	initial_volume = 6
 	validforhat = 0
@@ -1124,7 +1138,7 @@
 				qdel (src)
 		else ..()
 
-	on_bite(obj/item/I, mob/M, mob/user)
+	heal(var/mob/M)
 		boutput(M, "<span class='alert'>Raw potato tastes pretty nasty...</span>")
 
 /obj/item/reagent_containers/food/snacks/plant/onion
@@ -1202,7 +1216,7 @@
 	icon_state = "coconut"
 	planttype = /datum/plant/fruit/coconut
 	throwforce = 9
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	edible = 0
 	food_color = "#4D2600"
 	validforhat = 1
@@ -1274,7 +1288,7 @@
 	icon_state = "pineapple"
 	planttype = /datum/plant/fruit/pineapple
 	throwforce = 7
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	edible = 0
 	food_color = "#F8D016"
 	validforhat = 1
@@ -1371,6 +1385,17 @@
 	make_reagents()
 		..()
 		reagents.add_reagent("yuck", 20)
+
+/obj/item/reagent_containers/food/snacks/plant/purplegoop/orangegoop
+	name = "orange goop"
+	desc = "Some sort of pulsating orange goop...."
+	icon_state = "yuckorange"
+	food_color = "#ff9900"
+	initial_volume = 30
+
+	make_reagents()
+		..()
+		reagents.add_reagent("oil", 10)
 
 /obj/item/reagent_containers/food/snacks/plant/glowfruit
 	name = "glowing fruit"

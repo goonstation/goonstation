@@ -131,7 +131,7 @@
 
 		if(!src.donor_appearance || makeshitup || !src.donor)
 			AHead = new/datum/appearanceHolder()
-			randomize_look(AHead, 0, 0, 0, 0, 0, 0)
+			randomize_look(AHead, 0, 0, 0, 0, 0, 0, src.donor)
 			src.donor_appearance = AHead
 			src.transplanted = FALSE // just in case
 		else
@@ -171,11 +171,9 @@
 		src.head_image_special_three = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
 
 		// Then apply whatever hair things they should have
-		var/list/hair_list = customization_styles + customization_styles_gimmick
-
-		src.head_image_cust_one = image(icon = 'icons/mob/human_hair.dmi', icon_state = hair_list[AHead.customization_first], layer = MOB_HAIR_LAYER2)
-		src.head_image_cust_two = image(icon = 'icons/mob/human_hair.dmi', icon_state = hair_list[AHead.customization_second], layer = MOB_HAIR_LAYER2)
-		src.head_image_cust_three = image(icon = 'icons/mob/human_hair.dmi', icon_state = hair_list[AHead.customization_third], layer = MOB_HAIR_LAYER2)
+		src.head_image_cust_one = image(icon = 'icons/mob/human_hair.dmi', icon_state = AHead.customization_first.id, layer = AHead.customization_first.default_layer)
+		src.head_image_cust_two = image(icon = 'icons/mob/human_hair.dmi', icon_state = AHead.customization_second.id, layer = AHead.customization_second.default_layer)
+		src.head_image_cust_three = image(icon = 'icons/mob/human_hair.dmi', icon_state = AHead.customization_third.id, layer = AHead.customization_third.default_layer)
 
 		src.head_image_cust_one.color = AHead.customization_first_color
 		src.head_image_cust_two.color = AHead.customization_second_color
@@ -233,16 +231,16 @@
 		src.overlays += src.head_image_eyes
 
 		if (src.glasses && src.glasses.wear_image_icon)
-			src.overlays += image(src.glasses.wear_image_icon, src.glasses.icon_state)
+			src.overlays += image(src.glasses.wear_image_icon, src.glasses.icon_state, layer = MOB_GLASSES_LAYER)
 
 		if (src.wear_mask && src.wear_mask.wear_image_icon)
-			src.overlays += image(src.wear_mask.wear_image_icon, src.wear_mask.icon_state)
+			src.overlays += image(src.wear_mask.wear_image_icon, src.wear_mask.icon_state, layer = MOB_HEAD_LAYER2)
 
 		if (src.ears && src.ears.wear_image_icon)
-			src.overlays += image(src.ears.wear_image_icon, src.ears.icon_state)
+			src.overlays += image(src.ears.wear_image_icon, src.ears.icon_state, layer = MOB_EARS_LAYER)
 
 		if (src.head && src.head.wear_image_icon)
-			src.overlays += image(src.head.wear_image_icon, src.head.icon_state)
+			src.overlays += image(src.head.wear_image_icon, src.head.icon_state, layer = MOB_HEAD_LAYER2)
 
 		if(!(src.head && src.head.seal_hair))
 			if(src.donor_appearance?.mob_appearance_flags & HAS_HUMAN_HAIR || src.donor?.hair_override)
@@ -341,30 +339,30 @@
 			// scalpel surgery
 			if (istype(W, /obj/item/scalpel) || istype(W, /obj/item/razor_blade) || istype(W, /obj/item/knife/butcher) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/raw_material/shard))
 				if (src.right_eye && src.right_eye.op_stage == 1.0 && user.find_in_hand(W) == user.r_hand)
-					playsound(get_turf(src), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+					playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 					user.visible_message("<span class='alert'><b>[user]</b> cuts away the flesh holding [src]'s right eye in with [W]!</span>",\
 					"<span class='alert'>You cut away the flesh holding [src]'s right eye in with [W]!</span>")
 					src.right_eye.op_stage = 2.0
 				else if (src.left_eye && src.left_eye.op_stage == 1.0 && user.find_in_hand(W) == user.l_hand)
-					playsound(get_turf(src), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+					playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 					user.visible_message("<span class='alert'><b>[user]</b> cuts away the flesh holding [src]'s left eye in with [W]!</span>",\
 					"<span class='alert'>You cut away the flesh holding [src]'s left eye in with [W]!</span>")
 					src.left_eye.op_stage = 2.0
 				else if (src.brain)
 					if (src.brain.op_stage == 0.0)
-						playsound(get_turf(src), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+						playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 						user.visible_message("<span class='alert'><b>[user]</b> cuts [src] open with [W]!</span>",\
 						"<span class='alert'>You cut [src] open with [W]!</span>")
 						src.brain.op_stage = 1.0
 					else if (src.brain.op_stage == 2.0)
-						playsound(get_turf(src), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+						playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 						user.visible_message("<span class='alert'><b>[user]</b> removes the connections to [src]'s brain with [W]!</span>",\
 						"<span class='alert'>You remove [src]'s connections to [src]'s brain with [W]!</span>")
 						src.brain.op_stage = 3.0
 					else
 						return ..()
 				else if (src.skull && src.skull.op_stage == 0.0)
-					playsound(get_turf(src), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+					playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 					user.visible_message("<span class='alert'><b>[user]</b> cuts [src]'s skull away from the skin with [W]!</span>",\
 					"<span class='alert'>You cut [src]'s skull away from the skin with [W]!</span>")
 					src.skull.op_stage = 1.0
@@ -375,12 +373,12 @@
 			else if (istype(W, /obj/item/circular_saw) || istype(W, /obj/item/saw) || istype(W, /obj/item/kitchen/utensil/fork))
 				if (src.brain)
 					if (src.brain.op_stage == 1.0)
-						playsound(get_turf(src), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+						playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 						user.visible_message("<span class='alert'><b>[user]</b> saws open [src]'s skull with [W]!</span>",\
 						"<span class='alert'>You saw open [src]'s skull with [W]!</span>")
 						src.brain.op_stage = 2.0
 					else if (src.brain.op_stage == 3.0)
-						playsound(get_turf(src), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+						playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 						user.visible_message("<span class='alert'><b>[user]</b> saws open [src]'s skull with [W]!</span>",\
 						"<span class='alert'>You saw open [src]'s skull with [W]!</span>")
 						src.brain.set_loc(get_turf(src))
@@ -388,7 +386,7 @@
 					else
 						return ..()
 				else if (src.skull && src.skull.op_stage == 1.0)
-					playsound(get_turf(src), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+					playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 					user.visible_message("<span class='alert'><b>[user]</b> saws [src]'s skull out with [W]!</span>",\
 					"<span class='alert'>You saw [src]'s skull out with [W]!</span>")
 					src.skull.set_loc(get_turf(src))
@@ -399,23 +397,23 @@
 			// spoon surgery
 			else if (istype(W, /obj/item/surgical_spoon) || istype(W, /obj/item/kitchen/utensil/spoon))
 				if (src.right_eye && src.right_eye.op_stage == 0.0 && user.find_in_hand(W) == user.r_hand)
-					playsound(get_turf(src), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+					playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 					user.visible_message("<span class='alert'><b>[user]</b> inserts [W] into [src]'s right eye socket!</span>",\
 					"<span class='alert'>You insert [W] into [src]'s right eye socket!</span>")
 					src.right_eye.op_stage = 1.0
 				else if (src.left_eye && src.left_eye.op_stage == 0.0 && user.find_in_hand(W) == user.l_hand)
-					playsound(get_turf(src), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+					playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 					user.visible_message("<span class='alert'><b>[user]</b> inserts [W] into [src]'s left eye socket!</span>",\
 					"<span class='alert'>You insert [W] into [src]'s left eye socket!</span>")
 					src.left_eye.op_stage = 1.0
 				else if (src.right_eye && src.right_eye.op_stage == 2.0 && user.find_in_hand(W) == user.r_hand)
-					playsound(get_turf(src), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+					playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 					user.visible_message("<span class='alert'><b>[user]</b> removes [src]'s right eye with [W]!</span>",\
 					"<span class='alert'>You remove [src]'s right eye with [W]!</span>")
 					src.right_eye.set_loc(get_turf(src))
 					src.right_eye = null
 				else if (src.left_eye && src.left_eye.op_stage == 2.0 && user.find_in_hand(W) == user.l_hand)
-					playsound(get_turf(src), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+					playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 					user.visible_message("<span class='alert'><b>[user]</b> removes [src]'s left eye with [W]!</span>",\
 					"<span class='alert'>You remove [src]'s left eye with [W]!</span>")
 					src.left_eye.set_loc(get_turf(src))
@@ -529,8 +527,8 @@
 					src.organ_name = "shelterfrog head"
 					src.desc = "CroOoOoOooak."
 
-				if(HEAD_VAMPZOMBIE)
-					src.organ_name = "zombie head"
+				if(HEAD_VAMPTHRALL)
+					src.organ_name = "vampiric thrall head"
 					src.desc = "Deader than undead."
 
 				if(HEAD_RELI)
@@ -552,6 +550,10 @@
 				if(HEAD_VIRTUAL)
 					src.organ_name = "virtual head"
 					src.desc = "W311, 5h17." // 1337 5p34k
+
+				if(HEAD_FLASHY)
+					src.organ_name = "psychedelic head"
+					src.desc = "Well, that's trippy."
 
 		src.update_icon(makeshitup = 0)	// so our head actually looks like the thing its supposed to be
 		// though if our head's a transplant, lets run it anyway, in case their hair changed or something

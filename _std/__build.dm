@@ -106,8 +106,12 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_ICARUS
 //#define MAP_OVERRIDE_GEHENNA			// Warcrimes WIP do not use
 //#define MAP_OVERRIDE_PAMGOC			// Pamgoc
-//#define MAP_OVERRIDE_WRESTLEMAP		// Wrestlemap by Overtone
+//#define MAP_OVERRIDE_WRESTLEMAP   // Wrestlemap by Overtone
+// #define MAP_OVERRIDE_POD_WARS   // 500x500 Pod Wars map
 
+//////////// Unit Test Framework
+
+//#define UNIT_TESTS
 
 //////////// HOLIDAYS AND OTHER SUCH TOGGLES
 
@@ -122,9 +126,6 @@ o+`        `-` ``..-:yooos-..----------..`
 
 var/global/vcs_revision = "1"
 var/global/vcs_author = "bob"
-
-var/global/ci_dm_version_major = "1"
-var/global/ci_dm_version_minor = "100"
 
 // The following describe when the server was compiled
 #define BUILD_TIME_TIMEZONE_ALPHA "EST" // Server is EST

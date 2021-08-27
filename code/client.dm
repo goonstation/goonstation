@@ -6,6 +6,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 #else
 	preload_rsc = 1
 #endif
+	parent_type = /datum
 	var/datum/player/player = null
 	var/datum/admins/holder = null
 	var/datum/preferences/preferences = null
@@ -127,6 +128,8 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	return
 
 /client/Del()
+	src.mob?.move_dir = 0
+
 	if (player_capa && src.login_success)
 		player_cap_grace[src.ckey] = TIME + 2 MINUTES
 	/* // THIS THING IS BREAKING THE REST OF THE PROC FOR SOME REASON AND I HAVE NO IDEA WHY
@@ -300,11 +303,6 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 					alert(src, "You won't be able to play without updating, sorry!")
 					del(src)
 					return
-
-// Let's throw it here, why not! -ZeWaka
-#if DM_BUILD < 1526 && !defined(SPACEMAN_DMM)
-#error Please update your BYOND version to the latest stable release.
-#endif
 
 		else
 			if (noir)
@@ -846,12 +844,15 @@ var/global/curr_day = null
 
 				if (src.holder)
 					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)]</b>: <span class='message'>[t]</span></span>")
+					M.playsound_local(M, "sound/misc/mentorhelp.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 					boutput(src.mob, "<span class='mhelp'><b>MENTOR PM: TO [key_name(M,0,0,1)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[src.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
 				else
 					if (M.client && M.client.holder)
 						boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
+						M.playsound_local(M, "sound/misc/mentorhelp.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 					else
 						boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)]</b>: <span class='message'>[t]</span></span>")
+						M.playsound_local(M, "sound/misc/mentorhelp.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 					boutput(usr, "<span class='mhelp'><b>MENTOR PM: TO [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>")
 
 				logTheThing("mentor_help", src.mob, M, "Mentor PM'd [constructTarget(M,"mentor_help")]: [t]")
@@ -894,7 +895,7 @@ var/global/curr_day = null
 			ehjax.topic("main", href_list, src)
 
 		if("resourcePreloadComplete")
-			bout(src, "<span class='notice'><b>Preload completed.</b></span>")
+			boutput(src, "<span class='notice'><b>Preload completed.</b></span>")
 			src.Browse(null, "window=resourcePreload")
 			return
 
@@ -930,6 +931,11 @@ var/global/curr_day = null
 /// Returns 1 if you can set or retrieve cloud data on the client
 /client/proc/cloud_available()
 	return src.player.cloud_available()
+
+/client/proc/message_one_admin(source, message)
+	if(!src.holder)
+		return
+	boutput(src, replacetext(replacetext(message, "%admin_ref%", "\ref[src.holder]"), "%client_ref%", "\ref[src]"))
 
 /proc/add_test_screen_thing()
 	var/client/C = input("For who", "For who", null) in clients
@@ -1268,6 +1274,12 @@ if([removeOnFinish])
 </body>
 </html>
 	"}, "window=pregameBrowser")
+
+#ifndef SECRETS_ENABLED
+/client/proc/dpi(list/data)
+	return
+#endif
+
 /world/proc/showCinematic(var/name, var/removeOnFinish = 0)
 	for(var/client/C)
 		C.showCinematic(name, removeOnFinish)

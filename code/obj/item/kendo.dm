@@ -59,7 +59,7 @@
 	icon_state = "shinai"
 	item_state = "shinai-light"
 
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	two_handed = 1
 	throwforce = 4.0
 	throw_range = 4
@@ -183,7 +183,7 @@
 	icon_state = "shinaibag-closed"
 	item_state = "shinaibag-closed"
 	flags = ONBACK | FPRINT | TABLEPASS
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	var/open = 0
 	var/shinai = 2
 
@@ -233,7 +233,7 @@
 			..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/shinai) && open && (length((shinai + src.contents) < 2)))
+		if(istype(W, /obj/item/shinai) && open && shinai + length(src.contents) < 2)
 			user.u_equip(W)
 			W.set_loc(src)
 			update_sprite(user)

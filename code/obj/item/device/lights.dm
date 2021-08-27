@@ -45,7 +45,7 @@
 	item_state = "flight"
 	icon_on = "flight1"
 	icon_off = "flight0"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
 	m_amt = 50
 	g_amt = 20
@@ -55,7 +55,6 @@
 	col_r = 0.9
 	col_g = 0.8
 	col_b = 0.7
-	module_research = list("science" = 1, "devices" = 1)
 	light_type = null
 	brightness = 4.6
 
@@ -95,7 +94,7 @@
 			return
 
 		src.on = !src.on
-		playsound(get_turf(src), "sound/items/penclick.ogg", 30, 1)
+		playsound(src, "sound/items/penclick.ogg", 30, 1)
 		if (src.on)
 			set_icon_state(src.icon_on)
 			if (src.emagged) // Burn them all!
@@ -126,7 +125,7 @@
 	var/base_state = "glowstick-green"
 	name = "emergency glowstick"
 	desc = "For emergency use only. Not for use in illegal lightswitch raves."
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	flags = ONBELT | TABLEPASS
 	var/heated = 0
 	col_r = 0.0
@@ -418,7 +417,7 @@
 		if(src.on && !src.did_thing)
 			src.did_thing = 1
 			//what should it do, other than this sound?? i tried a particle system but it didn't work :{
-			playsound(get_turf(src), pick('sound/ambience/station/Station_SpookyAtmosphere1.ogg','sound/ambience/station/Station_SpookyAtmosphere2.ogg'), 65, 0)
+			playsound(src, pick('sound/ambience/station/Station_SpookyAtmosphere1.ogg','sound/ambience/station/Station_SpookyAtmosphere2.ogg'), 65, 0)
 
 		return
 
@@ -438,7 +437,7 @@
 	icon_state = "lava_lamp0"
 	icon_on = "lava_lamp1"
 	icon_off = "lava_lamp0"
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	desc = "An ancient relic from a simpler, more funky time."
 	col_r = 0.85
 	col_g = 0.45
@@ -446,7 +445,7 @@
 	brightness = 0.8
 
 	attack_self(mob/user as mob)
-		playsound(get_turf(src), "sound/items/penclick.ogg", 30, 1)
+		playsound(src, "sound/items/penclick.ogg", 30, 1)
 		src.on = !src.on
 		user.visible_message("<b>[user]</b> flicks [src.on ? "on" : "off"] the [src].")
 		if (src.on)

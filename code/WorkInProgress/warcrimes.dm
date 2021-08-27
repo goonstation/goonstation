@@ -8,6 +8,9 @@ var/fartcount = 0
 	icon_state = "green"
 	name = "Big Yank's Cheap Tug"
 
+/area/diner/jucer_trader
+	icon_state = "green"
+	name = "Placeholder Paul's $STORE_NAME.shuttle"
 
 /obj/item/clothing/head/paper_hat/john
 	name = "John Bill's paper bus captain hat"
@@ -155,11 +158,11 @@ var/fartcount = 0
 		..()
 
 	initializeBioholder()
-		bioHolder.mobAppearance.customization_first = "Tramp"
+		bioHolder.mobAppearance.customization_first = new /datum/customization_style/beard/tramp
 		bioHolder.mobAppearance.customization_first_color = "#281400"
-		bioHolder.mobAppearance.customization_second = "Pompadour"
+		bioHolder.mobAppearance.customization_second = new /datum/customization_style/hair/short/pomp
 		bioHolder.mobAppearance.customization_second_color = "#241200"
-		bioHolder.mobAppearance.customization_third = "Tramp: Beard Stains"
+		bioHolder.mobAppearance.customization_third = new /datum/customization_style/beard/trampstains
 		bioHolder.mobAppearance.customization_third_color = "#663300"
 		bioHolder.age = 63
 		bioHolder.bloodType = "A+"
@@ -202,7 +205,7 @@ var/fartcount = 0
 						if(W)
 							W.attack(target, src, ran_zone("chest"))
 						else
-							target.attack_hand(src)
+							target.Attackhand(src)
 			else if(ai_aggressive)
 				a_intent = INTENT_HARM
 				for(var/mob/M in oview(5, src))
@@ -606,8 +609,6 @@ Urs' Hauntdog critter
 		if (H.reagents)
 			H.reagents.add_reagent("ectoplasm", 10)
 		H.update_icon()
-		H.AddComponent(/datum/component/consume/foodheal, H.heal_amt)
-
 
 		qdel(src)
 

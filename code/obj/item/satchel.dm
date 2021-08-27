@@ -4,7 +4,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "satchel"
 	flags = ONBELT
-	w_class = 1
+	w_class = W_CLASS_TINY
 	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
 	var/maxitems = 50
 	var/list/allowed = list(/obj/item/)
@@ -19,7 +19,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		var/proceed = 0
 		for(var/check_path in src.allowed)
-			if(istype(W, check_path) && W.w_class < 4)
+			if(istype(W, check_path) && W.w_class < W_CLASS_BULKY)
 				proceed = 1
 				break
 		if (!proceed)
@@ -31,6 +31,7 @@
 			W.set_loc(src)
 			W.dropped()
 			boutput(user, "<span class='notice'>You put [W] in [src].</span>")
+			W.add_fingerprint(user)
 			if (src.contents.len == src.maxitems) boutput(user, "<span class='notice'>[src] is now full!</span>")
 			src.satchel_updateicon()
 			tooltip_rebuild = 1
@@ -41,6 +42,7 @@
 			var/turf/T = user.loc
 			for (var/obj/item/I in src.contents)
 				I.set_loc(T)
+				I.add_fingerprint(user)
 			boutput(user, "<span class='notice'>You empty out [src].</span>")
 			src.satchel_updateicon()
 			tooltip_rebuild = 1
@@ -114,7 +116,7 @@
 		var/proceed = 0
 		for(var/check_path in src.allowed)
 			var/obj/item/W = O
-			if(istype(O, check_path) && W.w_class < 4)
+			if(istype(O, check_path) && W.w_class < W_CLASS_BULKY)
 				proceed = 1
 				break
 		if (!proceed)
@@ -130,6 +132,7 @@
 				if (I in user)
 					continue
 				I.set_loc(src)
+				I.add_fingerprint(user)
 				if (!(interval++ % 5))
 					src.satchel_updateicon()
 					sleep(0.2 SECONDS)
@@ -215,7 +218,7 @@
 		maxitems = 30
 		allowed = list(/obj/item/toy/figure)
 		flags = null
-		w_class = 3
+		w_class = W_CLASS_NORMAL
 
 		satchel_updateicon()
 			return
@@ -245,13 +248,13 @@
 		// clicky open close
 		proc/open_it_up(var/open)
 			if (open && icon_state == "figurinecase")
-				playsound(get_turf(src), "sound/misc/lightswitch.ogg", 50, pitch = 1.2)
+				playsound(src, "sound/misc/lightswitch.ogg", 50, pitch = 1.2)
 				icon_state = "figurinecase-open"
 				sleep(0.4 SECONDS)
 
 			else if (!open && icon_state == "figurinecase-open")
 				sleep(0.5 SECONDS)
-				playsound(get_turf(src), "sound/misc/lightswitch.ogg", 50, pitch = 0.9)
+				playsound(src, "sound/misc/lightswitch.ogg", 50, pitch = 0.9)
 				icon_state = "figurinecase"
 
 /obj/item/satchel/figurines/full

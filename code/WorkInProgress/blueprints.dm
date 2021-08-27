@@ -344,7 +344,7 @@
 	item_state = "gun"
 
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 	var/prints_left = 5
 
@@ -386,22 +386,23 @@
 	"/obj/machinery/optable",
 	"/obj/machinery/mass_driver", \
 //	"/obj/reagent_dispensers", \ //No free helium/fuel/omni/raj/etc from abcu
-	"/obj/machinery/manufacturer", \
 	"/obj/machinery/sleeper", \
 	"/obj/machinery/sleep_console", \
 	"/obj/submachine/slot_machine", \
 	"/obj/machinery/deep_fryer",
 	"/obj/submachine/ATM", \
-	"/obj/submachine/slot_machine",
 	"/obj/submachine/ice_cream_dispenser",
 	"/obj/machinery/portable_atmospherics", \
 	"/obj/machinery/ai_status_display",
-	"/obj/noticeboard",
 	"/obj/securearea",
 	"/obj/submachine/mixer",
 	"/obj/submachine/foodprocessor"
 	)
 
+	var/list/blacklistedObjectTypes = list(\
+	"/obj/disposalpipe/loafer",
+	"/obj/submachine/slot_machine/item",
+	"/obj/machinery/portable_atmospherics/canister")
 	var/list/permittedTileTypes = list("/turf/simulated")
 
 	var/savefile/save = new/savefile("data/blueprints.dat")
@@ -524,8 +525,10 @@
 			save["state"] << curr.icon_state
 
 			for(var/obj/o in curr)
-				if (istype(o, /obj/disposalpipe/loafer)) // Sorry.
-					continue
+				for(var/p in blacklistedObjectTypes)
+					var/type = text2path(p)
+					if(istype(o, type))
+						break//no
 				var/permitted = 0
 				for(var/p in permittedObjectTypes)
 					var/type = text2path(p)

@@ -39,7 +39,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/voice/MEraaargh.ogg", 70, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, "sound/voice/MEraaargh.ogg", 70, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] roars!</span></b>"
 		return null
 
@@ -73,6 +73,6 @@
 			..()
 
 	setup_healths()
-		add_hh_flesh(-25, 25, 1)
-		add_hh_flesh_burn(-25, 25, 1.25)
+		add_hh_flesh(25, 1)
+		add_hh_flesh_burn(25, 1.25)
 		add_health_holder(/datum/healthHolder/toxin)

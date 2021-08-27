@@ -38,9 +38,9 @@
 				fill -= W.reagents.total_volume
 				W.reagents.add_reagent("water", fill)
 				user.show_text("You wet [W].", "blue")
-				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 100, 1)
+				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
 		else if (istype(W, /obj/item/grab))
-			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 100, 1)
+			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
 			user.visible_message(__blue("[user] dunks [W:affecting]'s head in the sink!"))
 		else if (W.burning)
 			W.combust_ended()
@@ -54,7 +54,7 @@
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
 		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
-			return src.attackby(W, user)
+			return src.Attackby(W, user)
 		return ..()
 
 	attack_hand(var/mob/user as mob)
@@ -62,7 +62,7 @@
 		user.lastattacked = src
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
-			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 100, 1)
+			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
 			if (H.gloves)
 				user.visible_message("<span class='notice'>[user] cleans [his_or_her(user)] gloves.</span>")
 				H.gloves.clean_forensic() // Ditto (Convair880).
@@ -221,7 +221,7 @@
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
 		if ((istype(W, /obj/item/reagent_containers/food/snacks/ice_cream_cone) || istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/)) && in_interact_range(W, user) && in_interact_range(src, user))
-			return src.attackby(W, user)
+			return src.Attackby(W, user)
 		return ..()
 
 	proc/update_icon()
@@ -385,14 +385,16 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/elviswich_p_h(src)
 			src.recipes += new /datum/cookingrecipe/elviswich_p(src)
 			src.recipes += new /datum/cookingrecipe/sandwich_mb(src)
+			src.recipes += new /datum/cookingrecipe/sandwich_mbalt(src)
 			src.recipes += new /datum/cookingrecipe/sandwich_egg(src)
 			src.recipes += new /datum/cookingrecipe/sandwich_bm(src)
-			//src.recipes += new /datum/cookingrecipe/sandwich_m_h(src)
-			//src.recipes += new /datum/cookingrecipe/sandwich_m_m(src)
-			//src.recipes += new /datum/cookingrecipe/sandwich_m_s(src)
-			//src.recipes += new /datum/cookingrecipe/sandwich_c(src)
-			//src.recipes += new /datum/cookingrecipe/sandwich_p_h(src)
-			//src.recipes += new /datum/cookingrecipe/sandwich_p(src)
+			src.recipes += new /datum/cookingrecipe/sandwich_bmalt(src)
+			src.recipes += new /datum/cookingrecipe/sandwich_m_h(src)
+			src.recipes += new /datum/cookingrecipe/sandwich_m_m(src)
+			src.recipes += new /datum/cookingrecipe/sandwich_m_s(src)
+			src.recipes += new /datum/cookingrecipe/sandwich_c(src)
+			src.recipes += new /datum/cookingrecipe/sandwich_p_h(src)
+			src.recipes += new /datum/cookingrecipe/sandwich_p(src)
 			src.recipes += new /datum/cookingrecipe/sandwich_custom(src)
 			src.recipes += new /datum/cookingrecipe/onionchips(src)
 			src.recipes += new /datum/cookingrecipe/mint_chutney(src)
@@ -421,6 +423,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/superchili(src)
 			src.recipes += new /datum/cookingrecipe/chili(src)
 			src.recipes += new /datum/cookingrecipe/queso(src)
+			src.recipes += new /datum/cookingrecipe/cheeseborger(src)
 			src.recipes += new /datum/cookingrecipe/roburger(src)
 			src.recipes += new /datum/cookingrecipe/swede_mball(src)
 			src.recipes += new /datum/cookingrecipe/honkpocket(src)
@@ -443,6 +446,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/crumpet(src)
 			src.recipes += new /datum/cookingrecipe/ice_cream_cone(src)
 			src.recipes += new /datum/cookingrecipe/waffles(src)
+			src.recipes += new /datum/cookingrecipe/lasagna(src)
 			src.recipes += new /datum/cookingrecipe/spaghetti_pg(src)
 			src.recipes += new /datum/cookingrecipe/spaghetti_m(src)
 			src.recipes += new /datum/cookingrecipe/spaghetti_s(src)
@@ -467,6 +471,17 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/cereal_honey(src)
 			src.recipes += new /datum/cookingrecipe/b_cupcake(src)
 			src.recipes += new /datum/cookingrecipe/beefood(src)
+
+			src.recipes += new /datum/cookingrecipe/baguette(src)
+			src.recipes += new /datum/cookingrecipe/garlicbread_ch(src)
+			src.recipes += new /datum/cookingrecipe/garlicbread(src)
+			src.recipes += new /datum/cookingrecipe/fairybread(src)
+			src.recipes += new /datum/cookingrecipe/danish_apple(src)
+			src.recipes += new /datum/cookingrecipe/danish_cherry(src)
+			src.recipes += new /datum/cookingrecipe/danish_blueb(src)
+			src.recipes += new /datum/cookingrecipe/danish_weed(src)
+			src.recipes += new /datum/cookingrecipe/painauchocolat(src)
+			src.recipes += new /datum/cookingrecipe/croissant(src)
 
 			src.recipes += new /datum/cookingrecipe/pie_apple(src)
 			src.recipes += new /datum/cookingrecipe/pie_lime(src)
@@ -503,6 +518,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/cookie_chocolate_chip(src)
 			src.recipes += new /datum/cookingrecipe/cookie_iron(src)
 			src.recipes += new /datum/cookingrecipe/cookie_butter(src)
+			src.recipes += new /datum/cookingrecipe/cookie_peanut(src)
 			src.recipes += new /datum/cookingrecipe/cookie(src)
 			src.recipes += new /datum/cookingrecipe/moon_pie_spooky(src)
 			src.recipes += new /datum/cookingrecipe/moon_pie_jaffa(src)
@@ -661,7 +677,6 @@ table#cooktime a#start {
 						if (src.emagged)
 							F.from_emagged_oven = 1
 						F.set_loc(src.loc)
-						F.AddComponent(/datum/component/consume/foodheal, F.heal_amt)
 				else
 					var/obj/item/reagent_containers/food/snacks/F
 					if (ispath(output))
@@ -689,9 +704,6 @@ table#cooktime a#start {
 								F.unlock_medal_when_eaten = "That tasted funny"
 							else
 								F.unlock_medal_when_eaten = "Space Ham" //replace the old fat person method
-					F.AddComponent(/datum/component/consume/foodheal, F.heal_amt)
-					F.AddComponent(/datum/component/consume/unlock_medal_on_eaten, F.unlock_medal_when_eaten)
-
 				src.icon_state = "oven_off"
 				src.working = 0
 				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
@@ -779,8 +791,8 @@ table#cooktime a#start {
 		src.updateUsrDialog()
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
-			return src.attackby(W, user)
+		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user) && W.w_class <= W_CLASS_HUGE && !W.anchored)
+			return src.Attackby(W, user)
 		return ..()
 
 	proc/OVEN_checkitem(var/recipeitem, var/recipecount)
@@ -907,7 +919,7 @@ table#cooktime a#start {
 				if (/obj/item/reagent_containers/food/snacks/condiment/cream)
 					new/obj/item/reagent_containers/food/snacks/ingredient/butter(src.loc)
 					qdel( P )
-				if (/obj/item/reagent_containers/food/snacks/candy)
+				if (/obj/item/reagent_containers/food/snacks/candy/regular)
 					new/obj/item/reagent_containers/food/snacks/condiment/chocchips(src.loc)
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/plant/corn)
@@ -1106,7 +1118,7 @@ var/list/mixer_recipes = list()
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
 		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
-			return src.attackby(W, user)
+			return src.Attackby(W, user)
 		return ..()
 
 	Topic(href, href_list)

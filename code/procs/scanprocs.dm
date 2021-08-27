@@ -17,6 +17,8 @@
 	var/health_percent = round(100 * M.health / M.max_health)
 
 	var/colored_health
+	if(M.max_health <= 0)
+		colored_health = "<span class='alert'>???</span>"
 	if (health_percent >= 51 && health_percent <= 100)
 		colored_health = "<span style='color:#138015'>[health_percent]</span>"
 	else if (health_percent >= 1 && health_percent <= 50)
@@ -106,7 +108,7 @@
 
 			var/bad_stuff = 0
 			if (L.implant && L.implant.len > 0)
-				for (var/obj/item/implant/I in L)
+				for (var/obj/item/implant/I in L.implant)
 					if (istype(I, /obj/item/implant/projectile))
 						bad_stuff ++
 
@@ -299,6 +301,57 @@
 			break
 	return
 
+// output a health pop-up overhead thing to the client
+/proc/scan_health_overhead(var/mob/M as mob, var/mob/C as mob) // M is who we're scanning, C is who to give the overhead to
+	if (C.client && !C.client.preferences?.flying_chat_hidden)
+
+		var/image/chat_maptext/chat_text = null
+		var/h_pct = M.max_health ? round(100 * M.health / M.max_health) : M.health
+		if(M.max_health <= 0)
+			h_pct = "???"
+		var/oxy = round(M.get_oxygen_deprivation())
+		var/tox = round(M.get_toxin_damage())
+		var/burn = round(M.get_burn_damage())
+		var/brute = round(M.get_brute_damage())
+
+		var/popup_text = "<span class='ol c pixel'><span class='vga'>[h_pct]%</span>\n<span style='color: #40b0ff;'>[oxy]</span> - <span style='color: #33ff33;'>[tox]</span> - <span style='color: #ffee00;'>[burn]</span> - <span style='color: #ff6666;'>[brute]</span></span>"
+		chat_text = make_chat_maptext(M, popup_text, force = 1)
+		if(chat_text)
+			chat_text.measure(C.client)
+			for(var/image/chat_maptext/I in C.chat_text.lines)
+				if(I != chat_text)
+					I.bump_up(chat_text.measured_height)
+			chat_text.show_to(C.client)
+
+/proc/scan_medrecord(var/obj/item/device/pda2/pda, var/mob/M as mob, var/visible = 0)
+	if (!M)
+		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
+
+	if (!ishuman(M))
+		return "<span class='alert'>ERROR: INVALID DATA FROM SUBJECT</span>"
+
+	if(visible)
+		animate_scanning(M, "#0AEFEF")
+
+	var/mob/living/carbon/human/H = M
+	var/datum/data/record/GR = FindRecordByFieldValue(data_core.general, "name", H.name)
+	var/datum/data/record/MR = FindRecordByFieldValue(data_core.medical, "name", H.name)
+	if (!MR)
+		return "<span class='alert'>ERROR: NO RECORD FOUND</span>"
+
+	//Find medical records program
+	var/list/programs = null
+	for (var/obj/item/disk/data/mod in pda.contents)
+		programs += mod.root.contents.Copy()
+	var/datum/computer/file/pda_program/records/medical/record_prog = locate(/datum/computer/file/pda_program/records/medical) in programs
+	if (!record_prog)
+		return "<span class='alert'>ERROR: NO MEDICAL RECORD FILE</span>"
+	pda.run_program(record_prog)
+	record_prog.active1 = GR
+	record_prog.active2 = MR
+	record_prog.mode = 1
+	pda.attack_self(usr)
+
 /proc/scan_reagents(var/atom/A as turf|obj|mob, var/show_temp = 1, var/single_line = 0, var/visible = 0, var/medical = 0)
 	if (!A)
 		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
@@ -386,7 +439,7 @@
 
 		if (H.implant && H.implant.len > 0)
 			var/wounds = null
-			for (var/obj/item/implant/I in H)
+			for (var/obj/item/implant/I in H.implant)
 				if (istype(I, /obj/item/implant/projectile))
 					wounds ++
 			if (wounds)

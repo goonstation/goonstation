@@ -247,7 +247,7 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 	m_amt = 2000
 	force = 10.0
 	throwforce = 5
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 4
 	throw_range = 6
 	contraband = 0

@@ -1,6 +1,6 @@
 
 /obj/item/reagent_containers/food/drinks/bottle/beer
-	name = "Space Beer"
+	name = "space beer"
 	desc = "Beer. in space."
 	icon_state = "bottle-brown"
 	item_state = "beer"
@@ -10,20 +10,16 @@
 	label = "alcohol1"
 	initial_volume = 50
 	initial_reagents = list("beer"=30)
-	module_research = list("vice" = 5)
-	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
 /obj/item/reagent_containers/food/drinks/bottle/beer/borg
 	unbreakable = 1
 
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer
-	name = "Fancy Beer"
+	name = "fancy beer"
 	desc = "Some kind of fancy-pants IPA or lager or ale. Some sort of beer-type thing."
 	icon_state = "bottle-green"
 	initial_volume = 50
 	initial_reagents = list("beer"=25,"ethanol"=5)
-	module_research = list("vice" = 5)
-	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
 	New()
 		..()
@@ -49,7 +45,7 @@
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
 /obj/item/reagent_containers/food/drinks/bottle/wine
-	name = "Wine"
+	name = "wine"
 	desc = "Not to be confused with pubbie tears."
 	icon_state = "bottle-wine"
 	heal_amt = 1
@@ -58,8 +54,6 @@
 	label = "wine"
 	initial_volume = 50
 	initial_reagents = list("wine"=30)
-	module_research = list("vice" = 5)
-	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine
 	name = "fortified wine"
@@ -74,8 +68,6 @@
 	var/safe = 0
 	initial_volume = 50
 	initial_reagents = list("wine"=20,"ethanol"=5)
-	module_research = list("vice" = 5)
-	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
 	New()
 		..()
@@ -117,8 +109,7 @@
 	g_amt = 60
 	initial_volume = 50
 	initial_reagents = list("champagne"=30)
-	module_research = list("vice" = 5)
-	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
+	var/makes_shards_on_break = 1
 
 	afterattack(obj/O as obj, mob/user as mob)
 		if (istype(O, /obj/machinery/vehicle) || istype(O, /obj/vehicle) && user.a_intent == "harm")
@@ -129,8 +120,9 @@
 			if (prob(50))
 				user.visible_message("<span class='alert'><b>[user]</b> hits [O] with [src], shattering it open!</span>")
 				playsound(U, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-				G.set_loc(U)
+				if (makes_shards_on_break)
+					var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+					G.set_loc(U)
 				src.broken = 1
 				src.reagents.reaction(U)
 				src.create_reagents(0)
@@ -157,12 +149,12 @@
 		g_amt = 60
 		initial_volume = 50
 		initial_reagents = list("champagne"=30)
-		module_research = list("vice" = 5)
-		module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
+	breakaway_glass
+		makes_shards_on_break = 0
 
 /obj/item/reagent_containers/food/drinks/bottle/cider
-	name = "Cider"
+	name = "cider"
 	desc = "Made from apples."
 	icon_state = "bottle-green"
 	heal_amt = 1
@@ -171,11 +163,9 @@
 	label = "alcohol1"
 	initial_volume = 50
 	initial_reagents = list("cider"=30)
-	module_research = list("vice" = 5)
-	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
 /obj/item/reagent_containers/food/drinks/bottle/rum
-	name = "Rum"
+	name = "rum"
 	desc = "Yo ho ho and all that."
 	bottle_style = "spicedrum"
 	fluid_style = "spicedrum"
@@ -184,18 +174,14 @@
 	heal_amt = 1
 	initial_volume = 50
 	initial_reagents = list("rum"=30)
-	module_research = list("vice" = 5)
-	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
 /obj/item/reagent_containers/food/drinks/rum_spaced
-	name = "Spaced Rum"
+	name = "spaced rum"
 	desc = "Rum which has been exposed to cosmic radiation. Don't worry, radiation does everything!"
 	icon_state = "rum"
 	heal_amt = 1
 	initial_volume = 60
 	initial_reagents = list("rum"=30,"yobihodazine"=30)
-	module_research = list("vice" = 5)
-	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
 /obj/item/reagent_containers/food/drinks/grog
 	name = "Ye Olde Grogge"
@@ -204,10 +190,9 @@
 	heal_amt = 0
 	initial_volume = 60
 	initial_reagents = "grog"
-	module_research = list("vice" = 5)
 
 /obj/item/reagent_containers/food/drinks/bottle/mead
-	name = "Mead"
+	name = "mead"
 	desc = "A pillager's tipple."
 	icon_state = "bottle-barf"
 	heal_amt = 1
@@ -216,8 +201,6 @@
 	label = "alcohol5"
 	initial_volume = 50
 	initial_reagents = list("mead"=30)
-	module_research = list("vice" = 5)
-	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
 /obj/item/reagent_containers/food/drinks/bottle/vintage
 	name = "2010 Vintage"
@@ -229,10 +212,9 @@
 	label = "alcohol5"
 	initial_volume = 50
 	initial_reagents = list("urine"=30)
-	module_research = list("vice" = 2)
 
 /obj/item/reagent_containers/food/drinks/bottle/vodka
-	name = "Vodka"
+	name = "vodka"
 	desc = "Russian stuff. Pretty good quality."
 	icon_state = "bottle-vodka"
 	bottle_style = "vodka"
@@ -242,15 +224,13 @@
 	g_amt = 60
 	initial_volume = 50
 	initial_reagents = list("vodka"=30)
-	module_research = list("vice" = 5)
-	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
 /obj/item/reagent_containers/food/drinks/bottle/vodka/vr
 	icon_state = "vr_vodka"
 	bottle_style = "vr_vodka"
 
 /obj/item/reagent_containers/food/drinks/bottle/tequila
-	name = "Tequila"
+	name = "tequila"
 	desc = "Guadalajara is a crazy place, man, lemme tell you."
 	icon_state = "bottle-tequila"
 	bottle_style = "tequila"
@@ -261,11 +241,9 @@
 	g_amt = 60
 	initial_volume = 50
 	initial_reagents = list("tequila"=30)
-	module_research = list("vice" = 5)
-	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
 /obj/item/reagent_containers/food/drinks/bottle/gin
-	name = "Gin"
+	name = "gin"
 	desc = "Gin is technically just a kind of alcohol that tastes strongly of juniper berries. Would juniper-flavored vodka count as a gin?"
 	icon_state = "bottle-gin"
 	bottle_style = "gin"
@@ -276,8 +254,6 @@
 	g_amt = 60
 	initial_volume = 50
 	initial_reagents = list("gin"=30)
-	module_research = list("vice" = 5)
-	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
 /obj/item/reagent_containers/food/drinks/bottle/ntbrew
 	name = "NanoTrasen Brew"
@@ -291,7 +267,6 @@
 	g_amt = 60
 	initial_volume = 250
 	initial_reagents = list("wine"=40,"charcoal"=20)
-	module_research = list("vice" = 2)
 
 /obj/item/reagent_containers/food/drinks/bottle/thegoodstuff
 	name = "Stinkeye's Special Reserve"
@@ -305,7 +280,6 @@
 	g_amt = 60
 	initial_volume = 250
 	initial_reagents = list("champagne"=30,"wine"=30,"cider"=30,"vodka"=30,"ethanol"=30,"eyeofnewt"=30)
-	module_research = list("vice" = 10)
 
 /obj/item/reagent_containers/food/drinks/bottle/bojackson
 	name = "Bo Jack Daniel's"
@@ -319,28 +293,24 @@
 	g_amt = 40
 	initial_volume = 60
 	initial_reagents = "bojack"
-	module_research = list("vice" = 5)
-	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
 /obj/item/reagent_containers/food/drinks/moonshine
-	name = "Jug of Moonshine"
+	name = "jug of moonshine"
 	desc = "A jug of an illegaly brewed alchoholic beverage, which is quite potent."
 	icon_state = "moonshine"
 	heal_amt = 1
 	rc_flags = RC_FULLNESS
 	initial_volume = 250
 	initial_reagents = "moonshine"
-	module_research = list("vice" = 100)
 
 /obj/item/reagent_containers/food/drinks/curacao
-	name = "Curacao Liqueur"
-	desc = "A bottle of curacao liqueur, made from the dried peels of the bitter orange Lahara."
+	name = "curaçao liqueur"
+	desc = "A bottle of curaçao liqueur, made from the dried peels of the bitter orange Lahara."
 	icon_state = "curacao"
 	heal_amt = 1
 	rc_flags = RC_FULLNESS
 	initial_volume = 50
 	initial_reagents = "curacao"
-	module_research = list("vice" = 5)
 
 /obj/item/reagent_containers/food/drinks/dehab
 	name = "Dehab"
@@ -367,7 +337,7 @@
 	desc = "Some kinda li'l thing to put in a cocktail. How are you seeing this?"
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	flags = FPRINT | TABLEPASS
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	rand_pos = 1
 
 	drink_umbrella
@@ -458,6 +428,5 @@
 	heal_amt = 1
 	g_amt = 60
 	initial_volume = 50
-
 
 

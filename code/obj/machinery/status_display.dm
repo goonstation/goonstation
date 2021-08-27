@@ -398,9 +398,9 @@
 
 	New()
 		..()
-		face_image = image('icons/obj/status_display.dmi', icon_state = "")
-		glow_image = image('icons/obj/status_display.dmi', icon_state = "ai_glow")
-		back_image = image('icons/obj/status_display.dmi', icon_state = "ai_white")
+		face_image = image('icons/obj/status_display.dmi', icon_state = "", layer = FLOAT_LAYER)
+		glow_image = image('icons/obj/status_display.dmi', icon_state = "ai_glow", layer = FLOAT_LAYER - 1)
+		back_image = image('icons/obj/status_display.dmi', icon_state = "ai_white", layer = FLOAT_LAYER - 2)
 
 
 		if(pixel_y == 0 && pixel_x == 0)
@@ -420,52 +420,42 @@
 		..()
 
 	process()
-		if (status & NOPOWER)
-			UpdateOverlays(null, "emotion_img")
-			UpdateOverlays(null, "back_img")
-			UpdateOverlays(null, "glow_img")
-			return
-		update()
-		if (is_on)
-			use_power(200)
-
-	proc/update()
-
-
-		if (is_on == FALSE || !owner) //Blank
+		if (status & NOPOWER || !is_on || !owner)
 			UpdateOverlays(null, "emotion_img")
 			UpdateOverlays(null, "back_img")
 			UpdateOverlays(null, "glow_img")
 			screen_glow.disable()
 			return
-		else //All the non-face stuff goes in here
-			if (!screen_glow.enabled)
-				screen_glow.enable()
+		update()
+		use_power(200)
 
-			if (face_color != owner.faceColor)
-				face_color = owner.faceColor
-				back_image.color = face_color
-				UpdateOverlays(back_image, "back_img")
-				UpdateOverlays(glow_image, "glow_img", 1) //forced so it displays on top
-				UpdateOverlays(face_image, "emotion_img", 1) //idem
+	proc/update()
+		//Update backing colour
+		if (face_color != owner.faceColor)
+			face_color = owner.faceColor
+			back_image.color = face_color
+			UpdateOverlays(back_image, "back_img")
+			//display light
+			var/colors = GetColors(face_color)
+			screen_glow.set_color(colors[1] / 255, colors[2] / 255, colors[3] / 255)
 
-				var/colors = GetColors(face_color)
-				screen_glow.set_color(colors[1] / 255, colors[2] / 255, colors[3] / 255)
+		//Update expression
+		if (src.emotion != owner.faceEmotion)
+			UpdateOverlays(owner.faceEmotion != "ai-tetris" ? glow_image : null, "glow_img")
+			face_image.icon_state = owner.faceEmotion
+			UpdateOverlays(face_image, "emotion_img")
+			emotion = owner.faceEmotion
 
-			message = owner.status_message
-			name = initial(name) + " ([owner.name])"
+		//Re-enable all the stuff if we are powering on again
+		if (!screen_glow.enabled)
+			screen_glow.enable()
+			UpdateOverlays(face_image, "emotion_img")
+			UpdateOverlays(back_image, "back_img")
+			UpdateOverlays(owner.faceEmotion != "ai-tetris" ? glow_image : null, "glow_img")
 
-		if (is_on == TRUE)	// AI emoticon
-			if (src.emotion != owner.faceEmotion)
-				src.set_picture(owner.faceEmotion)
-				emotion = owner.faceEmotion
-			return
+		message = owner.status_message
+		name = initial(name) + " ([owner.name])"
 
-	proc/set_picture(var/state)
-		if (!state)
-			return //Hoooly balls why was this not here before argh
-		face_image.icon_state = state
-		UpdateOverlays(face_image, "emotion_img")
 
 	get_desc()
 		..()
@@ -487,4 +477,5 @@
 		boutput(user, "<span class='notice'>You tune the display to your core.</span>")
 		owner = A
 		is_on = TRUE
-		update()
+		if (!(status & NOPOWER))
+			update()

@@ -2,7 +2,6 @@
 	name = "artifact attack wand"
 	associated_datum = /datum/artifact/attack_wand
 	flags =  FPRINT | CONDUCT | EXTRADELAY
-	module_research_no_diminish = 1
 
 	// this is necessary so that this returns null
 	// else afterattack will not be called when out of range
@@ -22,7 +21,6 @@
 			user.lastattacked = src
 			var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
 			A.effect_click_tile(src,user,U)
-			src.ArtifactFaultUsed(user)
 
 /datum/artifact/attack_wand
 	associated_object = /obj/item/artifact/attack_wand
@@ -39,8 +37,6 @@
 	var/recharge_phrase = ""
 	var/error_phrase = ""
 	var/list/powerVars = list()
-	module_research = list("weapons" = 5, "energy" = 5, "tools" = 5)
-	module_research_insight = 2
 
 	New()
 		..()
@@ -49,9 +45,10 @@
 		attack_type = pick("lightning","fire","ice","sonic")
 		if(prob(10))
 			attack_type = "all"
-		cooldown = rand(25,900)
-		if (prob(5))
-			cooldown = 0
+		// cooldown
+		cooldown = rand(3 SECONDS, 70 SECONDS)
+		if(attack_type == "lightning")
+			cooldown = max(30 SECONDS, cooldown)
 		// fire
 		powerVars["fireTemp"] = rand(1000,10000)
 		if(prob(10))
@@ -114,7 +111,7 @@
 					ArtifactLogs(user, M, O, "weapon", "zapping them with electricity", 0)
 
 			if("sonic")
-				playsound(T, "sound/effects/screech.ogg", 100, 1, 0)
+				playsound(T, "sound/effects/screech.ogg", 50, 1, 0)
 				particleMaster.SpawnSystem(new /datum/particleSystem/sonic_burst(T))
 
 				for (var/mob/living/M in all_hearers(world.view, T))
@@ -145,4 +142,6 @@
 
 				if (R.total_volume)
 					R.clear_reagents()
+
+		O.ArtifactFaultUsed(user)
 		return

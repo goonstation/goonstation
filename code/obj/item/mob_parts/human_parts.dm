@@ -11,8 +11,6 @@
 	stamina_cost = 23
 	stamina_crit_chance = 5
 	skintoned = 1
-	module_research = list("medicine" = 1)
-	module_research_type = /obj/item/parts/human_parts
 	var/original_DNA = null
 	var/original_fprints = null
 	var/show_on_examine = 0
@@ -172,7 +170,7 @@
 			if(prob(40))
 				holder.emote("scream")
 		holder.TakeDamage("chest",20,0)
-		take_bleeding_damage(holder, null, 15, DAMAGE_STAB)
+		take_bleeding_damage(holder, tool.the_mob, 15, DAMAGE_STAB, surgery_bleed = 1)
 
 		return 1
 
@@ -391,7 +389,7 @@
 			holder.emote(pick("trip", "collapse"))
 		else if(prob(rebelliousness)) //Slow down
 			boutput(holder, "<span class='alert'><b>Your [src.name] is slowing you down!</b></span>")
-			holder.setStatus("slowed", max(holder.getStatusDuration("slowed"), 10))
+			holder.setStatus("slowed", max(holder.getStatusDuration("slowed"), 1 SECOND))
 		else if(prob(rebelliousness)) //Stumble around
 			boutput(holder, "<span class='alert'><b>Your [src.name] won't do what you tell it to!</b></span>")
 			if (holder.misstep_chance < 20)
@@ -436,6 +434,7 @@
 	var/special_icons = 'icons/mob/human.dmi'
 	var/original_flags = 0
 	var/image/handimage = 0
+	random_limb_blacklisted = 1
 	/// No more yee eating csaber arms
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ITEM)
@@ -585,6 +584,7 @@
 	var/original_flags = 0
 	var/image/handimage = 0
 	var/special_icons = 'icons/mob/human.dmi'
+	random_limb_blacklisted = 1
 	/// Also, item arms are supposedly junk jammed into a severed limb's socket
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ITEM)
@@ -1490,10 +1490,12 @@
 /obj/item/parts/human_parts/arm/mutant/roach
 	icon = 'icons/mob/roach.dmi'
 	partIcon = 'icons/mob/roach.dmi'
+	skintoned = 1
 
 /obj/item/parts/human_parts/leg/mutant/roach
 	icon = 'icons/mob/roach.dmi'
 	partIcon = 'icons/mob/roach.dmi'
+	skintoned = 1
 
 ////// ACTUAL ROACH LIMBS //////
 /obj/item/parts/human_parts/arm/mutant/roach/left
@@ -1649,45 +1651,45 @@
 //// VAMPIRE ZOMBIE LIMBS ////
 ///// PARENT /////
 
-/obj/item/parts/human_parts/arm/mutant/vamp_zombie
-	icon = 'icons/mob/vamp_zombie.dmi'
-	partIcon = 'icons/mob/vamp_zombie.dmi'
+/obj/item/parts/human_parts/arm/mutant/vampiric_thrall
+	icon = 'icons/mob/vampiric_thrall.dmi'
+	partIcon = 'icons/mob/vampiric_thrall.dmi'
 	kind_of_limb = (LIMB_MUTANT | LIMB_ZOMBIE)
 
-/obj/item/parts/human_parts/leg/mutant/vamp_zombie
-	icon = 'icons/mob/vamp_zombie.dmi'
-	partIcon = 'icons/mob/vamp_zombie.dmi'
+/obj/item/parts/human_parts/leg/mutant/vampiric_thrall
+	icon = 'icons/mob/vampiric_thrall.dmi'
+	partIcon = 'icons/mob/vampiric_thrall.dmi'
 	kind_of_limb = (LIMB_MUTANT | LIMB_ZOMBIE)
 
 //// LIMBS ////
-/obj/item/parts/human_parts/arm/mutant/vamp_zombie/left
-	name = "left zombie arm"
-	desc = "A zombie's left arm."
+/obj/item/parts/human_parts/arm/mutant/vampiric_thrall/left
+	name = "left vampiric thrall arm"
+	desc = "A vampiric thrall's left arm."
 	icon_state = "arm_left"
 	slot = "l_arm"
 	side = "left"
 	handlistPart = "hand_left"
 
-/obj/item/parts/human_parts/arm/mutant/vamp_zombie/right
-	name = "right zombie arm"
-	desc = "A zombie's right arm."
+/obj/item/parts/human_parts/arm/mutant/vampiric_thrall/right
+	name = "right vampiric thrall arm"
+	desc = "A vampiric thrall's right arm."
 	icon_state = "arm_right"
 	slot = "r_arm"
 	side = "right"
 	handlistPart = "hand_right"
 
-/obj/item/parts/human_parts/leg/mutant/vamp_zombie/left
-	name = "left zombie leg"
-	desc = "A zombie's left leg."
+/obj/item/parts/human_parts/leg/mutant/vampiric_thrall/left
+	name = "left vampiric thrall leg"
+	desc = "A vampiric thrall's left leg."
 	icon_state = "leg_left"
 	slot = "l_leg"
 	side = "left"
 	partlistPart = "foot_left"
 	step_image_state = "footprintsL"
 
-/obj/item/parts/human_parts/leg/mutant/vamp_zombie/right
-	name = "right zombie leg"
-	desc = "A zombie's right leg."
+/obj/item/parts/human_parts/leg/mutant/vampiric_thrall/right
+	name = "right vampiric thrall leg"
+	desc = "A vampiric thrall's right leg."
 	icon_state = "leg_right"
 	slot = "r_leg"
 	side = "right"
@@ -2117,3 +2119,49 @@
 	partlistPart = "foot_right"
 	step_image_state = "footprintsR"
 
+/// PSYCHEDELIC LIMBS ///
+///// PARENT /////
+
+/obj/item/parts/human_parts/arm/mutant/flashy
+	icon = 'icons/mob/flashy.dmi'
+	partIcon = 'icons/mob/flashy.dmi'
+
+/obj/item/parts/human_parts/leg/mutant/flashy
+	icon = 'icons/mob/flashy.dmi'
+	partIcon = 'icons/mob/flashy.dmi'
+
+///// LIMBS /////
+
+/obj/item/parts/human_parts/arm/mutant/flashy/left
+	name = "psychedelic left arm"
+	desc = "A polychromatic left arm."
+	icon_state = "arm_left"
+	slot = "l_arm"
+	side = "left"
+	handlistPart = "hand_left"
+
+/obj/item/parts/human_parts/arm/mutant/flashy/right
+	name = "psychedelic right arm"
+	desc = "A polychromatic right arm."
+	icon_state = "arm_right"
+	slot = "r_arm"
+	side = "right"
+	handlistPart = "hand_right"
+
+/obj/item/parts/human_parts/leg/mutant/flashy/left
+	name = "psychedelic left leg"
+	desc = "A polychromatic left leg."
+	icon_state = "leg_left"
+	slot = "l_leg"
+	side = "left"
+	partlistPart = "foot_left"
+	step_image_state = "footprintsL"
+
+/obj/item/parts/human_parts/leg/mutant/flashy/right
+	name = "psychedelic right leg"
+	desc = "A polychromatic right leg."
+	icon_state = "leg_right"
+	slot = "r_leg"
+	side = "right"
+	partlistPart = "foot_right"
+	step_image_state = "footprintsR"

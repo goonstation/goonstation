@@ -34,6 +34,9 @@
 		var/list/wishes = list("I wish to become rich!","I wish for great power!")
 
 		var/wish = input("Make a wish?","[O]") as null|anything in wishes
+		if (user.key in wish_granted)
+			boutput(user, "<b>[O]</b> resonates, \"<big>FOOLISH MORTAL, YOU TRY TO FOOL ME???</big>\"")
+			return
 		if (!wish)
 			boutput(user, "You say nothing.")
 			boutput(user, "<b>[O]</b> resonates, \"<big>YOU MAY RETURN LATER...</big>\"")
@@ -59,7 +62,7 @@
 						N.flash(3 SECONDS)
 						if(N.client)
 							shake_camera(N, 6, 16)
-					user.become_statue(getMaterial("gold"),"A statue of someone very wealthy")
+					user.become_statue(getMaterial("gold"),"A statue of someone very wealthy", TRUE)
 
 				if("I wish for great power!")
 					O.visible_message("<span class='alert'><b>[O] discharges a massive bolt of electricity!</b></span>")

@@ -251,6 +251,7 @@
 	//Should be called before attacks begin. Make sure you call this when appropriate in your mouse procs etc.
 	//MBC : Removed Damage/Stamina modifications from preUse() and afterUse() and moved their to item.attack() to avoid race condition
 	proc/preUse(var/mob/person)
+		SHOULD_CALL_PARENT(1)
 		if(isliving(person))
 			var/mob/living/H = person
 
@@ -270,6 +271,9 @@
 
 	//Should be called after everything is done and all attacks are finished. Make sure you call this when appropriate in your mouse procs etc.
 	proc/afterUse(var/mob/person)
+		SHOULD_CALL_PARENT(1)
+		if(master)
+			SEND_SIGNAL(master, COMSIG_ITEM_SPECIAL_POST, person)
 		if(restrainDuration)
 			person.restrain_time = TIME + restrainDuration
 
@@ -369,7 +373,7 @@
 				for(var/atom/A in lastTurf)
 					if(A in attacked) continue
 					if(isTarget(A, user) && A != user)
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						attacked += A
 						hit = 1
 
@@ -384,7 +388,7 @@
 				sleep(0.2)
 
 			afterUse(user)
-			playsound(get_turf(master), 'sound/impact_sounds/Rush_Slash.ogg', 50, 0)
+			playsound(master, 'sound/impact_sounds/Rush_Slash.ogg', 50, 0)
 			return
 
 	throwing
@@ -409,7 +413,7 @@
 					copy.set_loc(step)
 					copy.throw_at(target, 20, 3, params)
 					afterUse(usr)
-					playsound(get_turf(master), 'sound/effects/swoosh.ogg', 50, 0)
+					playsound(master, 'sound/effects/swoosh.ogg', 50, 0)
 			return
 
 	simple
@@ -444,14 +448,14 @@
 				var/hit = 0
 				for(var/atom/A in turf)
 					if(isTarget(A))
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						hit = 1
 						break
 
 				afterUse(user)
 
 				if (!hit)
-					playsound(get_turf(master), 'sound/effects/swoosh.ogg', 50, 0)
+					playsound(master, 'sound/effects/swoosh.ogg', 50, 0)
 			return
 
 		kendo_light
@@ -502,13 +506,13 @@
 					for(var/atom/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
-							A.attackby(master, user, params, 1)
+							A.Attackby(master, user, params, 1)
 							attacked += A
 							hit = 1
 
 				afterUse(user)
 				if (!hit)
-					playsound(get_turf(master), 'sound/effects/swoosh.ogg', 50, 0)
+					playsound(master, 'sound/effects/swoosh.ogg', 50, 0)
 			return
 
 		kendo_thrust
@@ -599,7 +603,7 @@
 					for(var/atom/movable/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
-							A.attackby(master, user, params, 1)
+							A.Attackby(master, user, params, 1)
 							attacked += A
 							hit = 1
 					if(ignition)
@@ -615,9 +619,9 @@
 				afterUse(user)
 				if (!hit)
 					if (!ignition)
-						playsound(get_turf(master), "sound/effects/swoosh.ogg", 50, 0)
+						playsound(master, "sound/effects/swoosh.ogg", 50, 0)
 					else
-						playsound(get_turf(master), "sound/effects/flame.ogg", 50, 0)
+						playsound(master, "sound/effects/flame.ogg", 50, 0)
 			return
 
 		csaber //no stun and less damage than normal csaber hit ( see sword/attack() )
@@ -654,6 +658,57 @@
 					overrideStaminaDamage = master.stamina_damage * 0.8
 				return
 
+	launch_projectile
+		cooldown = 3 SECONDS
+		staminaCost = 30
+		moveDelay = 0
+		requiresStaminaToFire = TRUE
+		staminaReqAmt = 30
+		/// projectile datum containing data for projectile objects
+		var/datum/projectile/projectile = null
+		/// type path of the special effect
+		var/special_effect_type = /obj/itemspecialeffect/simple
+
+		image = "simple"
+		name = "Cast"
+		desc = "Utilize the power of your wand to cast a bolt of magic."
+
+		pixelaction(atom/target, params, mob/user, reach)
+			. = ..()
+			if (!projectile) return
+			var/turf/T = get_turf(target)
+			if(!T) return
+			if(!usable(user)) return
+			if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+				preUse(user)
+				var/pox = text2num(params["icon-x"]) - 16
+				var/poy = text2num(params["icon-y"]) - 16
+				var/obj/itemspecialeffect/S = unpool(special_effect_type)
+				S.setup(get_step(user, get_dir(user, target)))
+				shoot_projectile_ST_pixel(user, projectile, target, pox, poy)
+				afterUse(user)
+
+		disposing()
+			projectile = null
+			. = ..()
+
+		fireball
+			projectile = new/datum/projectile/fireball
+
+		monkey_organ
+			projectile = new/datum/projectile/special/spawner
+			New()
+				. = ..()
+				var/datum/projectile/special/spawner/P = projectile
+				P.damage_type = D_KINETIC
+				P.power = 5
+				P.typetospawn = /obj/random_item_spawner/organs/bloody/one_to_three
+				P.icon = 'icons/mob/monkey.dmi'
+				P.icon_state = "monkey"
+				P.shot_sound = "sound/voice/screams/monkey_scream.ogg"
+				P.hit_sound = "sound/impact_sounds/Slimy_Splat_1.ogg"
+				P.name = "monkey"
+
 	slam
 		cooldown = 50
 		staminaCost = 30
@@ -684,7 +739,7 @@
 			if(!isturf(target.loc) && !isturf(target)) return
 			if(!usable(user)) return
 
-			if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+			if(params["left"] && (master || user) && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
 				preUse(user)
 				var/direction = get_dir_pixel(user, target, params)
 				if(direction == NORTHEAST || direction == NORTHWEST || direction == SOUTHEAST || direction == SOUTHWEST)
@@ -692,7 +747,7 @@
 
 				var/list/attacked = list()
 
-				var/turf/one = get_step(master, direction)
+				var/turf/one = get_step((master || user), direction)
 
 				var/turf/two = get_step(one, direction)
 				var/turf/twoB = get_step(two, direction)
@@ -712,16 +767,19 @@
 					shake_camera(M, 8, 24)
 
 				for(var/turf/T in list(one, two, three, four, twoB, threeB, fourB))
-					animate_shake(T)
+					animate_shake(T,5,2,2,T.pixel_x,T.pixel_y)
 					for(var/atom/movable/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
-							A.attackby(master, user, params, 1)
+							if(master)
+								A.Attackby(master, user, params, 1)
+							else
+								A.Attackhand(user, params)
 							attacked += A
 							A.throw_at(get_edge_target_turf(A,direction), 5, 3)
 
 				afterUse(user)
-				playsound(get_turf(master), 'sound/effects/exlow.ogg', 50, 0)
+				playsound(master, 'sound/effects/exlow.ogg', 50, 0)
 			return
 
 	slam/no_item_attack //slam without item attackby
@@ -757,7 +815,7 @@
 					shake_camera(M, 8, 24)
 
 				for(var/turf/T in list(one, two, three, four, twoB, threeB, fourB))
-					animate_shake(T)
+					animate_shake(T,5,2,2,T.pixel_x,T.pixel_y)
 					for(var/atom/movable/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
@@ -768,7 +826,7 @@
 							A.throw_at(get_edge_target_turf(A,direction), 5, 3)
 
 				afterUse(user)
-				playsound(get_turf(user), 'sound/effects/exlow.ogg', 50, 0)
+				playsound(user, 'sound/effects/exlow.ogg', 50, 0)
 			return
 
 
@@ -792,12 +850,12 @@
 					for(var/atom/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
-							A.attackby(master, usr, params, 1)
+							A.Attackby(master, usr, params, 1)
 							attacked += A
 
 				showEffect("whirlwind", NORTH)
 				afterUse(usr)
-				playsound(get_turf(master), 'sound/effects/swoosh_double.ogg', 100, 0)
+				playsound(master, 'sound/effects/swoosh_double.ogg', 100, 0)
 			return
 
 	//Disarm and Harm are odd ones out. They have no master item, they are attached to a limb. As such, some vars (like all of our item damage/crit modifiers) won't affect these. See the top of the limb.dm file if you want to adjust how they are enacted
@@ -842,14 +900,14 @@
 				var/hit = 0
 				for(var/atom/A in turf)
 					if(isTarget(A))
-						A.attack_hand(user,params)
+						A.Attackhand(user,params)
 						hit = 1
 						break
 
 				afterUse(user)
 
 				if (!hit)
-					playsound(get_turf(user), 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 0)
+					playsound(user, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 0)
 			return
 
 	harm
@@ -890,14 +948,14 @@
 				var/hit = 0
 				for(var/atom/A in turf)
 					if(isTarget(A))
-						A.attack_hand(user,params)
+						A.Attackhand(user,params)
 						hit = 1
 						break
 
 				afterUse(user)
 
 				if (!hit)
-					playsound(get_turf(user), 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 0)
+					playsound(user, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 0)
 			return
 
 	swipe/limb //meant for use on limbs
@@ -940,13 +998,13 @@
 					for(var/atom/movable/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
-							A.attack_hand(user,params)
+							A.Attackhand(user,params)
 							attacked += A
 							hit = 1
 
 				afterUse(user)
 				if (!hit)
-					playsound(get_turf(user), 'sound/effects/swoosh.ogg', 50, 0)
+					playsound(user, 'sound/effects/swoosh.ogg', 50, 0)
 			return
 
 	spark
@@ -968,7 +1026,7 @@
 			if(!usable(user)) return
 			if(user.a_intent != INTENT_DISARM) return //only want this to deploy on disarm intent
 			if(master && istype(master, /obj/item/baton) && !master:can_stun())
-				playsound(get_turf(master), 'sound/weapons/Gunclick.ogg', 50, 0, 0.1, 2)
+				playsound(master, 'sound/weapons/Gunclick.ogg', 50, 0, 0.1, 2)
 				return
 
 			if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
@@ -1018,7 +1076,7 @@
 						user.show_text("The gloves have [G.uses]/[G.max_uses] charges left!", "red")
 				afterUse(user)
 				//if (!hit)
-				playsound(get_turf(master), 'sound/effects/sparks6.ogg', 70, 0)
+				playsound(master, 'sound/effects/sparks6.ogg', 70, 0)
 			return
 
 
@@ -1030,14 +1088,14 @@
 			hit.TakeDamage("chest", 0, rand(2 * mult,5 * mult), 0, DAMAGE_BLUNT)
 			hit.bodytemperature += 4 * mult
 
-			playsound(get_turf(hit), 'sound/effects/electric_shock.ogg', 60, 1, 0.1, 2.8)
+			playsound(hit, 'sound/effects/electric_shock.ogg', 60, 1, 0.1, 2.8)
 
 	double
 		cooldown = 0
 		staminaCost = 0
 		moveDelay = 5
 		moveDelayDuration = 5
-		damageMult = 0.5
+		damageMult = 0.80
 
 		image = "dagger"
 		name = "Slice"
@@ -1047,7 +1105,7 @@
 
 		onAdd()
 			if(master)
-				staminaCost = master.stamina_cost * 0.2 //Inherits from the item.
+				staminaCost = master.stamina_cost * 1.6 //Inherits from the item.
 				overrideStaminaDamage = master.stamina_damage * 0.5
 			return
 
@@ -1065,11 +1123,11 @@
 				var/hit = 0
 				for(var/atom/A in turf)
 					if(isTarget(A))
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						hit = 1
 						break
 				if (!hit)
-					playsound(get_turf(user), 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 0, 0.1, 1.4)
+					playsound(user, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 0, 0.1, 1.4)
 
 				SPAWN_DBG(secondhitdelay)
 
@@ -1080,11 +1138,11 @@
 					hit = 0
 					for(var/atom/A in turf)
 						if(isTarget(A))
-							A.attackby(master, user, params, 1)
+							A.Attackby(master, user, params, 1)
 							hit = 1
 							break
 					if (!hit)
-						playsound(get_turf(user), 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 0, 0.1, 1.4)
+						playsound(user, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 0, 0.1, 1.4)
 
 				afterUse(user)
 
@@ -1138,14 +1196,14 @@
 				var/hit = 0
 				for(var/atom/A in turf)
 					if(isTarget(A))
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						hit = 1
 						break
 
 				if (hit)
 					E.was_clashed(0)
 				else
-					playsound(get_turf(master), 'sound/items/miningtool_on.ogg', 30, 0.1, 0, 2)
+					playsound(master, 'sound/items/miningtool_on.ogg', 30, 0.1, 0, 2)
 
 				afterUse(user)
 			return
@@ -1220,19 +1278,16 @@
 							continue
 						if(ismob(A))
 							var/mob/M = A
-							if (M.getStatusDuration("burning"))
-								M.changeStatus("burning", tiny_time)
-							else
-								M.changeStatus("burning", flame_succ ? time : tiny_time)
+							M.changeStatus("burning", flame_succ ? time : tiny_time)
 						else if(iscritter(A))
 							var/obj/critter/crit = A
 							crit.blob_act(8) //REMOVE WHEN WE ADD BURNING OBJCRITTERS
 						break
 
-					playsound(get_turf(master), 'sound/effects/flame.ogg', 50, 0)
+					playsound(master, 'sound/effects/flame.ogg', 50, 0)
 				else
 					turf.hotspot_expose(T0C + 50, 50)
-					playsound(get_turf(master), 'sound/effects/spark_lighter.ogg', 50, 0)
+					playsound(master, 'sound/effects/spark_lighter.ogg', 50, 0)
 
 				afterUse(user)
 			return
@@ -1332,17 +1387,17 @@
 					if(isTarget(A))
 						on_hit(A)
 						//fake harmbaton it
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						hit = 1
-						playsound(get_turf(master), 'sound/effects/sparks6.ogg', 70, 0)
+						playsound(master, 'sound/effects/sparks6.ogg', 70, 0)
 						break
 
 				afterUse(user)
 				if (!hit)
 					if (E.type == /obj/itemspecialeffect/simple)
-						playsound(get_turf(master), 'sound/effects/swoosh.ogg', 50, 0)
+						playsound(master, 'sound/effects/swoosh.ogg', 50, 0)
 					else
-						playsound(get_turf(master), 'sound/effects/sparks1.ogg', 70, 0)
+						playsound(master, 'sound/effects/sparks1.ogg', 70, 0)
 
 			return
 
@@ -1363,7 +1418,7 @@
 				hit.TakeDamage("chest", 0/*master.force*/, rand(2 * mult,5 * mult), 0, DAMAGE_BLUNT)
 				hit.bodytemperature += 4 * mult
 
-			playsound(get_turf(hit), 'sound/effects/electric_shock.ogg', 60, 1, 0.1, 2.8)
+			playsound(hit, 'sound/effects/electric_shock.ogg', 60, 1, 0.1, 2.8)
 
 	katana_dash
 		cooldown = 9
@@ -1462,12 +1517,12 @@
 					if(isTarget(A))
 						on_hit(A)
 						attacked += A
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						// hit = 1
 						break
 				afterUse(user)
 				//if (!hit)
-				playsound(get_turf(master), 'sound/effects/sparks6.ogg', 70, 0)
+				playsound(master, 'sound/effects/sparks6.ogg', 70, 0)
 			return
 
 		proc/on_hit(var/mob/hit)
@@ -1593,13 +1648,13 @@
 					if(A in attacked) continue
 					if(isTarget(A))
 						attacked += A
-						A.attack_hand(user,params)
+						A.Attackhand(user,params)
 						// hit = 1
 						break
 
 				afterUse(user)
 				//if (!hit)
-				playsound(get_turf(user), 'sound/effects/swoosh.ogg', 40, 1, pitch = 2.3)
+				playsound(user, 'sound/effects/swoosh.ogg', 40, 1, pitch = 2.3)
 			return
 
 	nunchucks
@@ -1644,22 +1699,22 @@
 					for(var/atom/movable/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
-							A.attackby(master, user, params, 1)
+							A.Attackby(master, user, params, 1)
 							attacked += A
 							hit = 1
 
 				for(var/atom/movable/A in one)
 					if(A in attacked) continue
 					if(isTarget(A))
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						SPAWN_DBG(0.5 SECONDS)
-							A.attackby(master, user, params, 1)
+							A.Attackby(master, user, params, 1)
 						attacked += A
 						hit = 1
 
 				afterUse(user)
 				if (!hit)
-					playsound(get_turf(master), 'sound/effects/swoosh.ogg', 50, 0)
+					playsound(master, 'sound/effects/swoosh.ogg', 50, 0)
 			return
 
 
@@ -1693,7 +1748,7 @@
 				var/hit = 0
 				for(var/atom/A in turf)
 					if(isTarget(A))
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						hit = 1
 						break
 
@@ -1712,7 +1767,7 @@
 							tile.throw_at(target, tile.throw_range, tile.throw_speed, params)
 
 				if (!hit)
-					playsound(get_turf(master), 'sound/effects/swoosh.ogg', 50, 0)
+					playsound(master, 'sound/effects/swoosh.ogg', 50, 0)
 			return
 
 /obj/itemspecialeffect

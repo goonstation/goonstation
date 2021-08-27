@@ -73,10 +73,10 @@
 		logTheThing("admin", tplayer.current, null, "successfully redeems an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeems an antag token.")
 
-	var/list/chosen_leader = antagWeighter.choose(pool = leaders_possible, role = "gang_leader", amount = num_teams, recordChosen = 1)
+	var/list/chosen_leader = antagWeighter.choose(pool = leaders_possible, role = ROLE_GANG_LEADER, amount = num_teams, recordChosen = 1)
 	leaders |= chosen_leader
 	for (var/datum/mind/leader in leaders)
-		leader.special_role = "gang_leader"
+		leader.special_role = ROLE_GANG_LEADER
 		leaders_possible.Remove(leader)
 
 	return 1
@@ -97,7 +97,7 @@
 		boutput(leaderMind.current, "<h1><font color=red>You are the leader of a gang!</font></h1>")
 		boutput(leaderMind.current, "<span class='alert'>You must recruit people to your gang and compete for wealth and territory!</span>")
 		boutput(leaderMind.current, "<span class='alert'>You can harm whoever you want, but be careful - the crew can harm gang members too!</span>")
-		boutput(leaderMind.current, "<span class='alert'>To set your gang's home turf and spawn your locker, use the Set Gang Base command. Make sure to pick somewhere safe, as your locker can be broken into and looted. You can only do this once!</span>")
+		boutput(leaderMind.current, "<span class='alert'>To set your gang's home turf and spawn your locker, use the Set Gang Base ability in the top left. Make sure to pick somewhere safe, as your locker can be broken into and looted. You can only do this once!</span>")
 		boutput(leaderMind.current, "<span class='alert'>Build up a stash of cash, guns and drugs. Use the items on your locker to store them.</span>")
 		boutput(leaderMind.current, "<span class='alert'>Use recruitment flyers obtained from the locker to invite new members, up to a limit of [current_max_gang_members].</span>")
 //		boutput(leaderMind.current, "<span class='alert'>Once all active gangs are at the current maximum size, the member cap will increase, up to an absolute maximum of [absolute_max_gang_members].</span>")
@@ -656,7 +656,7 @@
 	icon_state = "spraycan"
 	item_state = "spraycan"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/in_use = 0
 
 	afterattack(target as turf|obj, mob/user as mob)
@@ -984,6 +984,9 @@
 
 		//gun score
 		else if (istype(item, /obj/item/gun))
+			if(istype(item, /obj/item/gun/kinetic/foamdartgun))
+				boutput(user, "<span class='alert'><b>You cant stash toy guns in the locker<b></span>")
+				return 0
 			// var/obj/item/gun/gun = item
 			gang.score_gun += round(300)
 			gang.spendable_points += round(300)
@@ -1186,7 +1189,7 @@
 	name = "gang recruitment flyer"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "paper_caution"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/datum/gang/gang = null
 
 	attack(mob/target as mob, mob/user as mob)
@@ -1258,13 +1261,13 @@
 			boutput(target, "<span class='alert'>That gang is full!</span>")
 			return
 
-		var/joingang = alert(target,"Do you wish to join [src.gang.gang_name]?", "Gang", "No", "Yes")
+		var/joingang = tgui_alert(target, "Do you wish to join [src.gang.gang_name]?", "[src]", list("Yes", "No"), timeout = 10 SECONDS)
 		if (joingang == "No") return
 
 		target.mind.gang = gang
 		src.gang.members += target.mind
 		if (!target.mind.special_role)
-			target.mind.special_role = "gang_member"
+			target.mind.special_role = ROLE_GANG_MEMBER
 		SHOW_GANG_MEMBER_TIPS(target)
 		var/datum/objective/gangObjective = new /datum/objective/specialist/gang(  )
 		gangObjective.owner = target.mind
@@ -1373,7 +1376,7 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 		if(!haspaint)
 			user.put_in_hand_or_drop(new /obj/item/spray_paint(user.loc))
 
-		if(user.mind.special_role == "gang_leader")
+		if(user.mind.special_role == ROLE_GANG_LEADER)
 			var/obj/item/storage/box/gang_flyers/case = new /obj/item/storage/box/gang_flyers(user.loc)
 			case.name = "[user.mind.gang.gang_name] recruitment material"
 			case.desc = "A briefcase full of flyers advertising the [user.mind.gang.gang_name] gang."

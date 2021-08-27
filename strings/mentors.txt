@@ -194,7 +194,6 @@ powmonkey
 hephasto
 bobsedgws
 leadrobot
-omjenkins
 hufflaw
 maximusrex
 sankto
@@ -365,12 +364,11 @@ starvalt
 technature
 joshkhaos
 superlagg
-lordbirb
+ladybirb
 brojob
 chronicpwnage
 drago156
 kremlins
-eristheslackwyrm
 frankstein
 internetdweller
 schwickyschwag
@@ -421,7 +419,6 @@ mechadaleearnhardt
 tarmunora
 trustworthyfella
 enakai
-carbadox
 elchorico
 ryumi
 jero1717
@@ -461,3 +458,16 @@ disturbherb
 kapu1178
 walpvrgis
 ardentspark
+deluuk
+nihisohel
+mexicat
+theangrypun
+asche
+alyasgrey
+lt3
+bartimeus973
+dataerr0r
+flappybat
+nefarious6th
+zonespace
+mysticmidgit

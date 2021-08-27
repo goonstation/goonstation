@@ -13,7 +13,7 @@ VUVUZELA
 	icon = 'icons/obj/foodNdrink/food_produce.dmi'
 	icon_state = "banana-peel"
 	item_state = "banana-peel"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 0
 	throw_speed = 4
 	throw_range = 20

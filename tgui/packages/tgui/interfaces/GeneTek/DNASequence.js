@@ -69,7 +69,7 @@ export const DNASequence = (props, context) => {
         {block.map((pair, j) => (
           <td key={j}>
             <Nucleotide
-              letter={pair.upper}
+              letter={pair.pair.charAt(0)}
               type={pair.style}
               mark={pair.marker}
               useLetterColor={allGood}
@@ -99,7 +99,7 @@ export const DNASequence = (props, context) => {
         {block.map((pair, j) => (
           <td key={j}>
             <Nucleotide
-              letter={pair.lower}
+              letter={pair.pair.charAt(1)}
               type={pair.style}
               mark={pair.marker}
               useLetterColor={allGood}

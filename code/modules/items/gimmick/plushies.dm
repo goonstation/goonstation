@@ -27,7 +27,9 @@
 	/obj/item/toy/plush/small/chris,\
 	/obj/item/toy/plush/small/fancyflippers,\
 	/obj/item/toy/plush/small/billy,\
-	/obj/item/toy/plush/small/arthur)
+	/obj/item/toy/plush/small/arthur,\
+	/obj/item/toy/plush/small/deneb,\
+	/obj/item/toy/plush/small/singuloose)
 
 /obj/submachine/claw_machine/attack_hand(var/mob/user as mob)
 	src.add_dialog(user)
@@ -57,7 +59,7 @@
 		interrupt(INTERRUPT_ALWAYS)
 		return
 	if(prob(10) && !M.traitHolder?.hasTrait("claw"))
-		playsound(get_turf(CM), 'sound/machines/claw_machine_fail.ogg', 80, 1)
+		playsound(CM, 'sound/machines/claw_machine_fail.ogg', 80, 1)
 		M.visible_message("<span class='alert'>[M] flubs up and the claw drops [his_or_her(M)] prize!</spawn>")
 		interrupt(INTERRUPT_ALWAYS)
 		return
@@ -76,7 +78,7 @@
 	if(get_dist(M, CM) > 1 || M == null || CM == null)
 		interrupt(INTERRUPT_ALWAYS)
 		return
-	playsound(get_turf(CM), 'sound/machines/capsulebuy.ogg', 80, 1)
+	playsound(CM, 'sound/machines/capsulebuy.ogg', 80, 1)
 	CM.busy = 1
 	CM.icon_state = "claw_playing"
 
@@ -87,7 +89,7 @@
 		return
 	CM.busy = 0
 	CM.icon_state = "claw"
-	playsound(get_turf(CM), 'sound/machines/claw_machine_success.ogg', 80, 1)
+	playsound(CM, 'sound/machines/claw_machine_success.ogg', 80, 1)
 	M.visible_message("<span class='notice'>[M] successfully secures their precious goodie, and it drops into the prize chute with a satisfying <i>plop</i>.</span>")
 	var/obj/item/P = pick(prob(20) ? (prob(33) ? CM.prizes_ultra_rare : CM.prizes_rare) : CM.prizes)
 	P = new P(get_turf(src.M))
@@ -100,7 +102,7 @@
 	icon_state = "bear"
 	desc = "A cute and cuddly plush toy!"
 	throwforce = 3
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	throw_speed = 2
 	throw_range = 3
 	rand_pos = 1
@@ -128,7 +130,7 @@
 /obj/item/toy/plush/small
 	name = "small plush toy"
 	desc = "You found a new friend!"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 3
 	throw_range = 5
 
@@ -218,7 +220,7 @@
 
 /obj/item/toy/plush/small/arthur/attack_self(mob/user as mob)
 	var/menuchoice = alert("What would you like to do with [src]?",,"Awoo","Say")
-	if (menuchoice == "Awoo")
+	if (menuchoice == "Awoo" && !ON_COOLDOWN(src, "playsound", 2 SECONDS))
 		playsound(user, "sound/voice/babynoise.ogg", 50, 1)
 		src.audible_message("<span class='emote'>[src] awoos!</span>")
 	else if (menuchoice == "Say")
@@ -237,3 +239,19 @@
 		boutput(user, "<span class='notice'>You feel [pick("a bit", "slightly", "a teeny bit", "somewhat", "surprisingly", "")] [pick("better", "more calm", "more composed", "less stressed")].</span>")
 	else if (menuchoice == "Say")
 		src.say_something(user)
+
+/obj/item/toy/plush/small/deneb
+	name = "Deneb the swan"
+	icon_state = "deneb"
+
+/obj/item/toy/plush/small/deneb/attack_self(mob/user as mob)
+	var/menuchoice = alert("What would you like to do with [src]?",,"Honk","Say")
+	if (menuchoice == "Honk" && !ON_COOLDOWN(src, "playsound", 2 SECONDS))
+		playsound(user, "sound/items/rubberduck.ogg", 50, 1)
+		src.audible_message("<span class='emote'>[src] honks!</span>")
+	else if (menuchoice == "Say")
+		src.say_something(user)
+
+/obj/item/toy/plush/small/singuloose
+	name = "Singuloose the Singulo"
+	icon_state = "singuloose"

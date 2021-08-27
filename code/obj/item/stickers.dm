@@ -6,9 +6,10 @@
 	event_handler_flags = HANDLE_STICKER | USE_FLUID_ENTER
 	icon = 'icons/misc/stickers.dmi'
 	icon_state = "bounds"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	force = 0
 	throwforce = 0
+	vis_flags = VIS_INHERIT_DIR
 	var/dont_make_an_overlay = 0
 	var/active = 0
 	var/overlay_key
@@ -67,7 +68,7 @@
 		src.active = 1
 		src.set_loc(A)
 
-		playsound(get_turf(src), 'sound/items/sticker.ogg', 50, 1)
+		playsound(src, 'sound/items/sticker.ogg', 50, 1)
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
@@ -120,16 +121,15 @@
 		. = "<br><span class='notice'>It says:</span><br><blockquote style='margin: 0 0 0 1em;'>[words]</blockquote>"
 
 	attack_hand(mob/user as mob)
-		//boutput(user, "fart")
 		user.lastattacked = user
 		if (src.attached)
 			if (user.a_intent == INTENT_HELP)
-				boutput(user, "You peel \the [src] off of [src.attached].")
+				boutput(user, "You peel \the [src] off of \the [src.attached].")
 				src.remove_from_attached()
 				src.add_fingerprint(user)
 				user.put_in_hand_or_drop(src)
 			else
-				src.attached.attack_hand(user)
+				src.attached.Attackhand(user)
 				user.lastattacked = user
 		else
 			return ..()
@@ -189,7 +189,7 @@
 			return
 
 		if (src.attached)
-			src.attached.attackby(W, user)
+			src.attached.Attackby(W, user)
 			user.lastattacked = user
 		else
 			..()
@@ -323,6 +323,15 @@
 /obj/item/sticker/xmas_ornament/holly
 	name = "holly ornament"
 	icon_state = "holly"
+
+/obj/item/sticker/googly_eye
+	name = "googly eye sticker"
+	icon_state = "googly1"
+	random_icons = list("googly1", "googly2")
+
+	angry
+		name = "angry googly eye sticker"
+		random_icons = list("googly_angerL", "googly_angerR")
 
 /obj/item/sticker/ribbon
 	name = "award ribbon"
@@ -539,11 +548,11 @@
 	radio_path = /obj/item/device/radio/spy/det_only
 
 /obj/item/device/camera_viewer/sticker
-	name = "Camera monitor"
+	name = "camera monitor"
 	desc = "A portable video monitor connected to a network of spy cameras."
 	icon_state = "monitor"
 	item_state = "electronic"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	network = "stickers"
 
 /obj/item/storage/box/spy_sticker_kit

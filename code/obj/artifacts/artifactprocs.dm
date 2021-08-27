@@ -103,6 +103,7 @@
 	A.activ_sound = pick(AO.activation_sounds)
 	A.fault_types |= AO.fault_types - A.fault_blacklist
 	A.internal_name = AO.generate_name()
+	A.used_names[AO.type_name] = A.internal_name
 	A.nofx = AO.nofx
 
 	ArtifactDevelopFault(10)
@@ -279,7 +280,7 @@
 
 	if(istype(W,/obj/item/baton))
 		var/obj/item/baton/BAT = W
-		if (BAT.can_stun(1, 1, user) == 1)
+		if (BAT.can_stun(1, user) == 1)
 			src.ArtifactStimulus("force", BAT.force)
 			src.ArtifactStimulus("elec", 1500)
 			playsound(src.loc, "sound/impact_sounds/Energy_Hit_3.ogg", 100, 1)
@@ -326,7 +327,7 @@
 			if (get_dist(src.loc, M.loc) > 1)
 				return
 			src.visible_message("<strong class='combat'>[A] shoves [M] against \the [src]!</strong>")
-			logTheThing("combat", A, M, "forces [constructTarget(M,"combat")] to touch \an ([A.type]) artifact at [log_loc(src)].")
+			logTheThing("combat", A, M, "forces [constructTarget(M,"combat")] to touch \an ([src.type]) artifact at [log_loc(src)].")
 			src.ArtifactTouched(M)
 			return 0
 
@@ -453,9 +454,16 @@
 
 	var/datum/artifact/A = src.artifact
 	if (istype(A,/datum/artifact/))
-		if (iscarbon(user))
+		if (ishuman(user))
+			var/mob/living/carbon/human/H = user
+			var/obj/item/parts/arm = H.hand ? H.limbs.l_arm : H.limbs.r_arm
+			if(istype(arm, /obj/item/parts/robot_parts))
+				src.ArtifactStimulus("silitouch", 1)
+			else
+				src.ArtifactStimulus("carbtouch", 1)
+		else if (iscarbon(user))
 			src.ArtifactStimulus("carbtouch", 1)
-		if (issilicon(user))
+		else if (issilicon(user))
 			src.ArtifactStimulus("silitouch", 1)
 		src.ArtifactStimulus("force", 1)
 		user.visible_message("<b>[user.name]</b> touches [src].")
@@ -553,6 +561,6 @@
 		logTheThing(type_of_action == "detonated" ? "bombing" : "station", user, target, "an artifact ([A.type]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [target && isturf(target) ? "[log_loc(target)]" : "[log_loc(O)]"].[type_of_action == "detonated" ? " Last touched by: [O.fingerprintslast ? "[O.fingerprintslast]" : "*null*"]" : ""]")
 
 	if (trigger_alert)
-		message_admins("An artifact ([A.type]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [log_loc(O)]. Last touched by: [O.fingerprintslast ? "[O.fingerprintslast]" : "*null*"]")
+		message_admins("An artifact ([A.type]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [log_loc(O)]. Last touched by: [key_name(O.fingerprintslast)]")
 
 	return

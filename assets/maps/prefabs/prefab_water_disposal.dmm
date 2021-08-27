@@ -24,7 +24,7 @@
 "x" = (/obj/disposalpipe/segment,/turf/simulated/floor/plating/scorched,/area/evilreaver/storage/engineering{name = "GLOMAR Salvager"})
 "y" = (/obj/item/cell/charged,/turf/simulated/floor/plating/scorched,/area/evilreaver/storage/engineering{name = "GLOMAR Salvager"})
 "z" = (/obj/machinery/smelter,/turf/simulated/floor/plating/scorched,/area/evilreaver/storage/engineering{name = "GLOMAR Salvager"})
-"A" = (/obj/disposalpipe/segment,/obj/item/clothing/suit/space/industrial,/turf/simulated/floor/plating/scorched,/area/evilreaver/storage/engineering{name = "GLOMAR Salvager"})
+"A" = (/obj/disposalpipe/segment,/obj/item/clothing/suit/space/industrial,/obj/item/sea_ladder,/turf/simulated/floor/plating/scorched,/area/evilreaver/storage/engineering{name = "GLOMAR Salvager"})
 "B" = (/obj/item/cell/charged,/obj/disposalpipe/segment,/turf/simulated/floor/plating/scorched,/area/evilreaver/storage/engineering{name = "GLOMAR Salvager"})
 "C" = (/obj/table,/turf/simulated/floor/plating/scorched,/area/evilreaver/storage/engineering{name = "GLOMAR Salvager"})
 "D" = (/obj/npc/trader/robot{name = "Thrifty B.O.B."; picture = "loungebuddy.png"; trader_area = "/area/evilreaver/storage/engineering"},/obj/map/light/white,/turf/simulated/floor/plating/scorched,/area/evilreaver/storage/engineering{name = "GLOMAR Salvager"})

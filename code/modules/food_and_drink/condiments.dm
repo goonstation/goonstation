@@ -7,7 +7,7 @@
 	amount = 1
 	heal_amt = 0
 
-	on_bite(obj/item/I, mob/M, mob/user)
+	heal(var/mob/M)
 		boutput(M, "<span class='alert'>It's just not good enough on its own...</span>")
 
 	afterattack(atom/target, mob/user, flag)
@@ -127,7 +127,7 @@
 	icon = 'icons/obj/foodNdrink/food.dmi'
 	icon_state = "shaker"
 	flags = FPRINT | TABLEPASS | ONBELT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	g_amt = 10
 	var/stuff = null
 	var/shakes = 0

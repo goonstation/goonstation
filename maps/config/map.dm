@@ -1,4 +1,4 @@
-#if defined(SPACE_PREFAB_RUNTIME_CHECKING)
+#if defined(SPACE_PREFAB_RUNTIME_CHECKING) || defined( UNIT_TESTS )
 #include "blank.dm"
 
 #elif defined(UNDERWATER_PREFAB_RUNTIME_CHECKING)
@@ -69,6 +69,9 @@
 
 #elif defined(MAP_OVERRIDE_WRESTLEMAP)
 #include "wrestlemap.dm"
+
+#elif defined(MAP_OVERRIDE_POD_WARS)
+#include "pod_wars.dm"
 
 #elif defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
 #include "gottagofast.dm"

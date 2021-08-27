@@ -89,17 +89,50 @@
 	ai_calm_down = FALSE
 	ai_default_intent = INTENT_HARM
 	ai_aggression_timeout = 0
+	var/preferred_card_type = /obj/item/card/id/syndicate
 
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
+			src.equip_new_if_possible(/obj/item/clothing/under/misc/syndicate, slot_w_uniform)
 			src.equip_new_if_possible(/obj/item/clothing/suit/space/syndicate, slot_wear_suit)
 			src.equip_new_if_possible(/obj/item/clothing/head/helmet/space, slot_head)
+
+			var/obj/item/card/id/ID = new/obj/item/card/id(src)
+			ID.name = "Oppenheimer's ID Card"
+			ID.assignment = "Syndicate Monkey"
+			ID.registered = "Oppenheimer"
+			ID.icon = 'icons/obj/items/card.dmi'
+			ID.icon_state = "id_syndie"
+			ID.desc = "Oppenheimer's identification card."
+
+			src.equip_if_possible(ID, slot_wear_id)
+
 
 	ai_is_valid_target(mob/M)
 		if(!isliving(M) || !isalive(M))
 			return FALSE
-		return !istype(M.get_id(), /obj/item/card/id/syndicate)
+		return !istype(M.get_id(), preferred_card_type)
+
+/mob/living/carbon/human/npc/monkey/oppenheimer/pod_wars
+	preferred_card_type = /obj/item/card/id/pod_wars/syndicate
+
+	New()
+		START_TRACKING_CAT(TR_CAT_PW_PETS)
+		..()
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_PW_PETS)
+		..()
+
+	ai_is_valid_target(mob/M)
+		var/team_num = get_pod_wars_team_num(M)
+		switch(team_num)
+			if (TEAM_NANOTRASEN)	//1
+				return TRUE
+			if (TEAM_SYNDICATE)		//2
+				return FALSE
+			else
+				return ..()
 
 /mob/living/carbon/human/npc/monkey/horse
 	name = "????"
@@ -130,6 +163,7 @@
 		..()
 		SPAWN_DBG(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/under/rank/hydroponics, slot_w_uniform)
+			src.equip_new_if_possible(/obj/item/clothing/suit/apron/botanist, slot_wear_suit)
 
 /mob/living/carbon/human/npc/monkey/stirstir
 	name = "Monsieur Stirstir"
@@ -139,7 +173,7 @@
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/under/color/orange, slot_w_uniform)
+			src.equip_new_if_possible(/obj/item/clothing/under/misc, slot_w_uniform)
 			src.equip_new_if_possible(/obj/item/clothing/head/beret/prisoner, slot_head)
 			if(prob(80)) // couldnt figure out how to hide it in the debris field, so i just chucked it in a monkey
 				var/obj/item/disk/data/cartridge/ringtone_numbers/idk = new
@@ -163,7 +197,7 @@
 		..()
 		START_TRACKING
 		if (!src.disposed)
-			src.cust_one_state = "None"
+			src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
 			src.bioHolder.AddEffect("monkey")
 			if (src.name == "monkey" || !src.name)
 				src.name = pick_string_autokey("names/monkey.txt")
@@ -253,6 +287,13 @@
 				src.emote("scream")
 		if(aggroed)
 			walk_towards(src, ai_target, ai_movedelay)
+
+	ai_is_valid_target(mob/M)
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if (istype(H.wear_suit, /obj/item/clothing/suit/monkey))
+				return FALSE
+		return ..()
 
 	proc/shot_by(var/atom/A as mob|obj)
 		if (src.ai_state == AI_ATTACKING)
@@ -385,7 +426,7 @@
 			return
 		walk_towards(src, null)
 		src.a_intent = INTENT_DISARM
-		theft_target.attack_hand(src)
+		theft_target.Attackhand(src)
 		src.a_intent = src.ai_default_intent
 
 	hear_talk(mob/M as mob, messages, heardname, lang_id)
@@ -473,8 +514,10 @@
 		if(get_dist(source, target) > 1 || target == null || source == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-
 		var/obj/item/I = target.get_slot(slot)
+		if(!I)
+			interrupt(INTERRUPT_ALWAYS)
+			return
 
 		if(I.handle_other_remove(source, target))
 			logTheThing("combat", source, target, "successfully pickpockets \an [I] from [constructTarget(target,"combat")]!")
@@ -516,7 +559,19 @@
 		..()
 		SPAWN_DBG(1 SECOND)
 			var/head = pick(/obj/item/clothing/head/bandana/red, /obj/item/clothing/head/bandana/random_color)
+			src.equip_new_if_possible(/obj/item/clothing/shoes/tourist, slot_shoes)
 			src.equip_new_if_possible(head, slot_head)
+			var/weap = pick(/obj/item/saw/active, /obj/item/extinguisher, /obj/item/ratstick, /obj/item/razor_blade, /obj/item/bat, /obj/item/kitchen/utensil/knife/cleaver, /obj/item/nunchucks, /obj/item/tinyhammer, /obj/item/storage/toolbox/mechanical/empty, /obj/item/kitchen/rollingpin)
+			src.put_in_hand_or_drop(new weap)
+		APPLY_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "angry_monkey", 5)
+		src.add_stam_mod_max("angry_monkey", 100)
+
+	get_disorient_protection()
+		. = ..()
+		return clamp(.+25, 80, .)
+
+	ai_is_valid_target(mob/M)
+		return ..() && !(istype(M, /mob/living/carbon/human/npc/monkey/angry))
 
 // sea monkeys
 /mob/living/carbon/human/npc/monkey/sea

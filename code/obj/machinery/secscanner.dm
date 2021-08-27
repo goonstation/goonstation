@@ -195,8 +195,12 @@
 				threatcount += 4
 			else if (istype(perp.mutantrace, /datum/mutantrace/cat))
 				threatcount += 3
-			else
-				threatcount += 2
+
+		if(perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird"))
+			threatcount += 5
+			for (var/datum/data/record/R as anything in data_core.security)
+				if (R.fields["name"] == perp.name)
+					threatcount -= 5
 
 		//if((isnull(perp:wear_id)) || (istype(perp:wear_id, /obj/item/card/id/syndicate)))
 		var/obj/item/card/id/perp_id = perp.equipped()

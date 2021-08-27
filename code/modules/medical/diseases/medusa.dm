@@ -26,6 +26,6 @@
 				random_brute_damage(affected_mob, 3)
 		if(5)
 			boutput(affected_mob, "<span class='alert'>You can barely move!</span>")
-			affected_mob.changeStatus("paralysis",40)
+			affected_mob.changeStatus("paralysis",4 SECONDS)
 			if(prob(40)) //So everyone can feel like robot Seth Brundle
 				affected_mob.become_statue_rock()

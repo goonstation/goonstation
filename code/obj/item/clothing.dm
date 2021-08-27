@@ -1,7 +1,7 @@
 /obj/item/clothing
 	name = "clothing"
 	//var/obj/item/clothing/master = null
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 	var/see_face = 1
 
@@ -76,6 +76,11 @@
 		if (src.can_stain && islist(src.stains) && length(src.stains))
 			for (var/i in src.stains)
 				. += i + " "
+
+	proc/clean_stains()
+		if (islist(src.stains) && length(src.stains))
+			src.stains = list()
+			src.UpdateName()
 
 /obj/item/clothing/under
 	equipped(var/mob/user, var/slot)

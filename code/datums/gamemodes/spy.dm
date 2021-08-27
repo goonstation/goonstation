@@ -243,7 +243,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/charges = 4
 
 	proc/update_icon()

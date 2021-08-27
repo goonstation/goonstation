@@ -7,7 +7,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_lunchboxes.dmi'
 	throw_speed = 1
 	throw_range = 8
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	max_wclass = 2
 
 	New()

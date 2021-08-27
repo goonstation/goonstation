@@ -24,8 +24,7 @@ var/datum/explosion_controller/explosions
 			return
 		if (epicenter.loc:sanctuary)
 			return//no boom boom in sanctuary
-
-		queued_explosions += new/datum/explosion(source, epicenter, power, brisance, angle, width)
+		queued_explosions += new/datum/explosion(source, epicenter, power, brisance, angle, width, usr)
 
 	proc/queue_damage(var/list/new_turfs)
 		var/c = 0
@@ -145,8 +144,9 @@ var/datum/explosion_controller/explosions
 	var/brisance
 	var/angle
 	var/width
+	var/user
 
-	New(atom/source, turf/epicenter, power, brisance, angle, width)
+	New(atom/source, turf/epicenter, power, brisance, angle, width, user)
 		..()
 		src.source = source
 		src.epicenter = epicenter
@@ -154,25 +154,30 @@ var/datum/explosion_controller/explosions
 		src.brisance = brisance
 		src.angle = angle
 		src.width = width
+		src.user = user
 
-	proc/logMe()
+	proc/logMe(var/power)
 		//I do not give a flying FUCK about what goes on in the colosseum. =I
 		if(!istype(get_area(epicenter), /area/colosseum))
 			// Cannot read null.name
-			var/logmsg = "Explosion with power [power] (Source: [source ? "[source.name]" : "*unknown*"])  at [log_loc(epicenter)]. Source last touched by: [source ? "[source.fingerprintslast]" : "*null*"]"
-			message_admins(logmsg)
-			logTheThing("bombing", null, null, logmsg)
-			logTheThing("diary", null, null, logmsg, "combat")
+			var/logmsg = "Explosion with power [power] (Source: [source ? "[source.name]" : "*unknown*"])  at [log_loc(epicenter)]. Source last touched by: [key_name(source?.fingerprintslast)] (usr: [ismob(user) ? key_name(user) : user])"
+			if(power > 10)
+				message_admins(logmsg)
+			if (source?.fingerprintslast)
+				logTheThing("bombing", source.fingerprintslast, null, logmsg)
+				logTheThing("diary", source.fingerprintslast, null, logmsg, "combat")
+			else
+				logTheThing("bombing", user, null, logmsg)
+				logTheThing("diary", user, null, logmsg, "combat")
 
 	proc/explode()
-		if(power > 10)
-			logMe()
+		logMe(power)
 
 		for(var/client/C in clients)
 			if(C.mob && (C.mob.z == epicenter.z) && power > 15)
 				shake_camera(C.mob, 8, 24) // remove if this is too laggy
 
-				C << sound(explosions.distant_sound)
+				playsound(C.mob, explosions.distant_sound, 100, 0)
 
 		playsound(epicenter.loc, "explosion", 100, 1, round(power, 1) )
 		if(power > 10)
@@ -232,7 +237,7 @@ var/datum/explosion_controller/explosions
 			for(var/mob/living/carbon/C in T)
 				if (!isdead(C) && C.client)
 					shake_camera(C, 3 * p, p * 4)
-				C.changeStatus("stunned", p * 10)
+				C.changeStatus("stunned", p SECONDS)
 				C.stuttering += p
 				C.lying = 1
 				C.set_clothing_icon_dirty()

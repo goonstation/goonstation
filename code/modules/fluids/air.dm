@@ -364,18 +364,6 @@ var/list/ban_from_airborne_fluid = list()
 		entered_group = 0
 
 	if (entered_group)
-		F.just_do_the_apply_thing(src)
-
-/mob/living/carbon/human/EnteredAirborneFluid(obj/fluid/airborne/F as obj, atom/oldloc)
-	.=0
-	var/entered_group = 1 //Did the entering atom cross from a non-fluid to a fluid tile?
-
-	var/turf/T = get_turf(oldloc)
-	var/turf/currentloc = get_turf(src)
-	if (currentloc != T && T?.active_airborne_liquid)
-		entered_group = 0
-
-	if (entered_group)
 		if (!src.clothing_protects_from_chems())
 			F.just_do_the_apply_thing(src, hasmask = issmokeimmune(src))
 

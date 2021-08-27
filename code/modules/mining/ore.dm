@@ -159,13 +159,13 @@
 		if (..())
 			return
 		for (var/mob/living/L in range(1,AST))
-			L.changeStatus("radiation", 50, 2)
+			L.changeStatus("radiation", 5 SECONDS, 2)
 
 	onExcavate(var/turf/simulated/wall/asteroid/AST)
 		if (..())
 			return
 		for (var/mob/living/L in range(1,AST))
-			L.changeStatus("radiation", 100, 2)
+			L.changeStatus("radiation", 10 SECONDS, 2)
 
 /datum/ore/plasmastone
 	name = "plasmastone"
@@ -218,8 +218,10 @@
 /datum/ore/erebite
 	name = "erebite"
 	output = /obj/item/raw_material/erebite
-	tiles_per_rock_min = 4
-	tiles_per_rock_max = 16
+	events = list(/datum/ore/event/volatile)
+	event_chance = 33
+	tiles_per_rock_min = 1
+	tiles_per_rock_max = 4
 	hardness_mod = 2
 	rarity_tier = 3
 	no_pick = 1

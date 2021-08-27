@@ -37,6 +37,7 @@
 				var/obj/machinery/clonepod/P = A
 				if(P.occupant)
 					scan_health(P.occupant, 0, 1)
+					scan_health_overhead(P.occupant, usr)
 					update_medical_record(P.occupant)
 
 			if (!iscarbon(A))
@@ -44,6 +45,7 @@
 			var/mob/living/carbon/C = A
 
 			. = scan_health(C, 0, 1, visible = 1)
+			scan_health_overhead(C, usr)
 			update_medical_record(C)
 
 
@@ -107,14 +109,32 @@
 			signal.source = src.master
 			signal.transmission_method = 1
 
-			if (mechanic_controls.rkit_addresses.len)
-				last_address = pick(mechanic_controls.rkit_addresses)
-
-			signal.data["address_1"] = last_address
+			signal.data["address_1"] = "TRANSRKIT"
 			signal.data["command"] = "add"
 
 			signal.data_file = theScan
-			post_signal(signal)
+			post_signal(signal, 1467)
+
+	medrecord_scan
+		name = "MedTrak Scanner"
+		size = 2
+
+		scan_atom(atom/A as mob|obj|turf|area)
+			if (..())
+				return
+
+			if (istype(A, /obj/machinery/clonepod))
+				var/obj/machinery/clonepod/P = A
+				if(P.occupant)
+					scan_medrecord(src.master, P.occupant)
+					update_medical_record(P.occupant)
+
+			if (!iscarbon(A))
+				return
+			var/mob/living/carbon/C = A
+
+			. = scan_medrecord(src.master, C, visible = 1)
+			update_medical_record(C)
 
 /datum/computer/file/electronics_scan
 	name = "scanfile"
@@ -122,6 +142,13 @@
 	var/scannedName = null
 	var/scannedPath = null
 	var/scannedMats = null
+
+/datum/computer/file/electronics_bundle
+	name = "Ruckingenur Data"
+	extension = "DSCN"
+	var/datum/mechanic_controller/ruckData = null
+	var/target = null
+	var/known_rucks = null
 
 /datum/computer/file/genetics_scan
 	name = "DNA Scan"

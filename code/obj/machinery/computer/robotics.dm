@@ -6,8 +6,8 @@
 	object_flags = CAN_REPROGRAM_ACCESS
 	desc = "A computer that allows an authorized user to have an overview of the cyborgs on the station."
 	power_usage = 500
-
-	var/id = 0.0
+	circuit_type = /obj/item/circuitboard/robotics
+	id = 0
 	var/perma = 0
 
 	light_r =0.85
@@ -16,47 +16,14 @@
 
 
 /obj/machinery/computer/robotics/attackby(obj/item/I as obj, user as mob)
-	if (isscrewingtool(I))
-		if (perma)
-			boutput(user, "<span class='alert'>The screws are all weird safety-bit types! You can't turn them!</span>")
-			return
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 2 SECONDS))
-			if (src.status & BROKEN)
-				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-				G.set_loc(src.loc)
-				var/obj/item/circuitboard/robotics/M = new /obj/item/circuitboard/robotics( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				M.id = src.id
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				qdel(src)
-			else
-				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/circuitboard/robotics/M = new /obj/item/circuitboard/robotics( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				M.id = src.id
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				qdel(src)
-
-	else
-		src.attack_hand(user)
+	if (perma && isscrewingtool(I))
+		boutput(user, "<span class='alert'>The screws are all weird safety-bit types! You can't turn them!</span>")
+		return
+	..()
 	return
 
-/obj/machinery/computer/robotics/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
+/obj/machinery/computer/robotics/special_deconstruct(obj/computerframe/frame as obj)
+	frame.circuit.id = src.id
 
 /obj/machinery/computer/robotics/process()
 	..()
@@ -159,8 +126,9 @@
 							logTheThing("combat", usr, R, "has activated the robot killswitch process on [constructTarget(R,"combat")]")
 							if(R.client)
 								boutput(R, "<span class='alert'><b>Killswitch process activated.</b></span>")
-							R.killswitch = 1
-							A.killswitch_at = TIME + 1 MINUTE
+								boutput(R, "<span class='alert'><b>Killswitch will engage in 1 minute.</b></span>")
+							R.killswitch = TRUE
+							R.killswitch_at = TIME + 1 MINUTE
 						else if(istype(A))
 							var/mob/message = A.get_message_mob()
 							message_admins("<span class='alert'>[key_name(usr)] has activated the AI self destruct on [key_name(message)].</span>")
@@ -168,7 +136,7 @@
 							if(message.client)
 								boutput(message, "<span class='alert'><b>AI Killswitch process activated.</b></span>")
 								boutput(message, "<span class='alert'><b>Killswitch will engage in 3 minutes.</b></span>")
-							A.killswitch = 1
+							A.killswitch = TRUE
 							A.killswitch_at = TIME + 3 MINUTES
 					else
 						boutput(usr, "<span class='alert'>Access Denied.</span>")

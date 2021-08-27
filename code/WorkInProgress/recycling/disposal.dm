@@ -7,6 +7,7 @@
 #define PIPEC_PRODUCE "#b2ff4f"
 #define PIPEC_TRANSPORT "#ffbef6"
 #define PIPEC_MINERAL "#a5fffc"
+#define PIPEC_CARGO "#f4ff53"
 
 // virtual disposal object
 // travels through pipes in lieu of actual items
@@ -150,7 +151,7 @@
 		if(!istype(P))
 			return
 		user.show_text("<span class='alert'>You leap and slam against the inside of [P]! Ouch!</span>")
-		user.changeStatus("paralysis", 40)
+		user.changeStatus("paralysis", 4 SECONDS)
 		user.changeStatus("weakened", 4 SECONDS)
 		src.visible_message("<span class='alert'><b>[P]</b> emits a loud thump and rattles a bit.</span>")
 
@@ -540,6 +541,11 @@
 		desc = "An underfloor mineral pipe."
 		color = PIPEC_MINERAL
 
+	cargo
+		name = "cargo pipe"
+		desc = "An underfloor cargo pipe."
+		color = PIPEC_CARGO
+
 	New()
 		..()
 		if(icon_state == "pipe-s")
@@ -832,7 +838,6 @@
 	name = "disciplinary loaf processor"
 	desc = "A pipe segment designed to convert detritus into a nutritionally-complete meal for inmates."
 	icon_state = "pipe-loaf0"
-	var/nugget_mode = 0
 	mats = 100
 	is_syndicate = 1
 	var/is_doing_stuff = FALSE
@@ -880,111 +885,60 @@
 				estein.set_loc(H)
 				goto StopLoafing
 
-			if (nugget_mode)
-				var/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/current_nugget
-				var/list/new_nuggets = list()
-				for (var/atom/movable/newIngredient in H)
-					if(istype(newIngredient, /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget))
-						continue
-					if (!current_nugget)
-						current_nugget = new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget(src)
-						new_nuggets += current_nugget
 
-					current_nugget.name = "[newIngredient] nugget"
-					current_nugget.desc = "A breaded wad of [newIngredient.name], far too processed to have a more specific label than 'nugget.'"
+			var/obj/item/reagent_containers/food/snacks/prison_loaf/newLoaf = new /obj/item/reagent_containers/food/snacks/prison_loaf(src)
+			for (var/atom/movable/newIngredient in H)
 
-					if (isliving(newIngredient))
-						playsound(src.loc, pick("sound/impact_sounds/Slimy_Splat_1.ogg","sound/impact_sounds/Liquid_Slosh_1.ogg","sound/impact_sounds/Wood_Hit_1.ogg","sound/impact_sounds/Slimy_Hit_3.ogg","sound/impact_sounds/Slimy_Hit_4.ogg","sound/impact_sounds/Flesh_Stab_1.ogg"), 50, 1)
-						var/mob/living/poorSoul = newIngredient
-						if (issilicon(poorSoul))
-							current_nugget.reagents.add_reagent("oil",10)
-							current_nugget.reagents.add_reagent("silicon",10)
-							current_nugget.reagents.add_reagent("iron",10)
-						else
-							current_nugget.reagents.add_reagent("bloodc",10) // heh
-							current_nugget.reagents.add_reagent("ectoplasm",10)
-
-						if(!isdead(poorSoul))
-							poorSoul:emote("scream")
-						sleep(0.5 SECONDS)
-						poorSoul.ghostize()
-
-					if (newIngredient.reagents)
-						var/anItem = isitem(newIngredient)
-						while (length(new_nuggets) < 50 && (newIngredient.reagents.total_volume > 0 || (anItem && newIngredient:w_class--)))
-							newIngredient.reagents.trans_to(current_nugget, current_nugget.reagents.maximum_volume)
-							if (current_nugget.reagents.total_volume >= current_nugget.reagents.maximum_volume)
-								current_nugget = new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget(src)
-
-								current_nugget.name = "[newIngredient] nugget"
-								current_nugget.desc = "A breaded wad of [newIngredient.name], far too processed to have a more specific label than 'nugget.'"
-
-								new_nuggets += current_nugget
-
-					qdel(newIngredient)
-					LAGCHECK(LAG_MED)
-
-				for (var/obj/O in new_nuggets)
-					O.set_loc(H)
-					LAGCHECK(LAG_MED)
-
-				sleep(length(new_nuggets))
-
-			else
-				var/obj/item/reagent_containers/food/snacks/prison_loaf/newLoaf = new /obj/item/reagent_containers/food/snacks/prison_loaf(src)
-
-				for (var/atom/movable/newIngredient in H)
-
-					LAGCHECK(LAG_MED)
+				LAGCHECK(LAG_MED)
 
 
 
-					if (newIngredient.reagents)
-						newIngredient.reagents.trans_to(newLoaf, 1000)
+				if (newIngredient.reagents)
+					newIngredient.reagents.trans_to(newLoaf, 1000)
 
-					if (istype(newIngredient, /obj/item/reagent_containers/food/snacks/prison_loaf))
-						var/obj/item/reagent_containers/food/snacks/prison_loaf/otherLoaf = newIngredient
-						newLoaf.loaf_factor += otherLoaf.loaf_factor * 1.2
-						newLoaf.loaf_recursion = otherLoaf.loaf_recursion + 1
-						otherLoaf = null
+				if (istype(newIngredient, /obj/item/reagent_containers/food/snacks/prison_loaf))
+					var/obj/item/reagent_containers/food/snacks/prison_loaf/otherLoaf = newIngredient
+					newLoaf.loaf_factor += otherLoaf.loaf_factor * 1.2
+					newLoaf.loaf_recursion = otherLoaf.loaf_recursion + 1
+					otherLoaf = null
 
-					else if (isliving(newIngredient))
-						playsound(src.loc, pick("sound/impact_sounds/Slimy_Splat_1.ogg","sound/impact_sounds/Liquid_Slosh_1.ogg","sound/impact_sounds/Wood_Hit_1.ogg","sound/impact_sounds/Slimy_Hit_3.ogg","sound/impact_sounds/Slimy_Hit_4.ogg","sound/impact_sounds/Flesh_Stab_1.ogg"), 50, 1)
-						var/mob/living/poorSoul = newIngredient
-						if (issilicon(poorSoul))
-							newLoaf.reagents.add_reagent("oil",10)
-							newLoaf.reagents.add_reagent("silicon",10)
-							newLoaf.reagents.add_reagent("iron",10)
-						else
-							newLoaf.reagents.add_reagent("bloodc",10) // heh
-							newLoaf.reagents.add_reagent("ectoplasm",10)
-
-						if(ishuman(newIngredient))
-							newLoaf.loaf_factor += (newLoaf.loaf_factor / 5) + 50 // good god this is a weird value
-						else
-							newLoaf.loaf_factor += (newLoaf.loaf_factor / 10) + 50
-						if(!isdead(poorSoul))
-							poorSoul:emote("scream")
-						sleep(0.5 SECONDS)
-						poorSoul.death()
-						if (poorSoul.mind || poorSoul.client)
-							poorSoul.ghostize()
-					else if (isitem(newIngredient))
-						var/obj/item/I = newIngredient
-						newLoaf.loaf_factor += I.w_class * 5
-						I = null
+				else if (isliving(newIngredient))
+					playsound(src.loc, pick("sound/impact_sounds/Slimy_Splat_1.ogg","sound/impact_sounds/Liquid_Slosh_1.ogg","sound/impact_sounds/Wood_Hit_1.ogg","sound/impact_sounds/Slimy_Hit_3.ogg","sound/impact_sounds/Slimy_Hit_4.ogg","sound/impact_sounds/Flesh_Stab_1.ogg"), 50, 1)
+					var/mob/living/poorSoul = newIngredient
+					if (issilicon(poorSoul))
+						newLoaf.reagents.add_reagent("oil",10)
+						newLoaf.reagents.add_reagent("silicon",10)
+						newLoaf.reagents.add_reagent("iron",10)
 					else
-						newLoaf.loaf_factor++
+						newLoaf.reagents.add_reagent("bloodc",10) // heh
+						newLoaf.reagents.add_reagent("ectoplasm",10)
 
-					H.contents -= newIngredient
-					newIngredient.set_loc(null)
-					newIngredient = null
+					if(ishuman(newIngredient))
+						newLoaf.loaf_factor += (newLoaf.loaf_factor / 5) + 50 // good god this is a weird value
+					else
+						newLoaf.loaf_factor += (newLoaf.loaf_factor / 10) + 50
+					if(!isdead(poorSoul))
+						poorSoul:emote("scream")
+					sleep(0.5 SECONDS)
+					poorSoul.death()
+					if (poorSoul.mind || poorSoul.client)
+						poorSoul.ghostize()
+				else if (isitem(newIngredient))
+					var/obj/item/I = newIngredient
+					newLoaf.loaf_factor += I.w_class * 5
+					I = null
+				else
+					newLoaf.loaf_factor++
 
-					//LAGCHECK(LAG_MED)
-					qdel(newIngredient)
+				H.contents -= newIngredient
+				newIngredient.set_loc(null)
+				newIngredient = null
 
-				newLoaf.update()
-				newLoaf.set_loc(H)
+				//LAGCHECK(LAG_MED)
+				qdel(newIngredient)
+
+			newLoaf.update()
+			newLoaf.set_loc(H)
 
 			StopLoafing:
 
@@ -1018,26 +972,10 @@
 		return P
 
 	welded()
-
-		/*var/obj/disposalconstruct/C = new (src.loc)
-		C.ptype = 10
-		C.set_dir(dir)
-		C.update()
-
-		qdel(src)*/
-
-		src.visible_message("<span class='alert'>[src] emits a weird noise!</span>")
-
-		src.nugget_mode = !src.nugget_mode
-		src.update()
-		return
-
+		return //can't let them unweld the loafer
 	update()
 		..()
-		if (nugget_mode)
-			src.name = "disciplinary nugget processor"
-		else
-			src.name = initial(src.name)
+		src.name = initial(src.name)
 
 #define MAXIMUM_LOAF_STATE_VALUE 10
 
@@ -1846,7 +1784,12 @@
 	src.streak_cleanable(dirs)
 
 
-
+/obj/disposaloutlet/random_range
+	var/min_range = 1
+	var/max_range = 6
+	expel(obj/disposalholder/H)
+		src.throw_range = rand(min_range, max_range)
+		. = ..()
 
 /obj/disposaloutlet/artifact
 	throw_range = 10

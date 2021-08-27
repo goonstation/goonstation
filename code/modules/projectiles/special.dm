@@ -135,7 +135,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/pellets_to_fire = 15
 	var/spread_projectile_type = /datum/projectile/bullet/flak_chunk
 	var/split_type = 0
-	var/pellet_shot_volume = 100
+	var/pellet_shot_volume = 0
 	silentshot = 1
 	// 0 = on spawn
 	// 1 = on impact
@@ -199,6 +199,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	cost = 1
 	pellets_to_fire = 10
 	spread_projectile_type = /datum/projectile/bullet/buckshot
+	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	var/speed_max = 5
 	var/speed_min = 60
 	var/spread_angle_variance = 5
@@ -337,7 +338,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/howitzer
 	name = "plasma howitzer"
 	sname = "plasma howitzer"
-	icon = 'icons/obj/32x96.dmi'
+	icon = 'icons/obj/large/32x96.dmi'
 	icon_state = "howitzer-shot"
 	shot_sound = 'sound/weapons/energy/howitzer_shot.ogg'
 	power = 10000 // blam = INF
@@ -347,7 +348,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	dissipation_rate = 300
 	ks_ratio = 0.8
 	brightness = 2
-	projectile_speed = 28
+	projectile_speed = 32
 	impact_range = 32
 	caliber = 40
 	pierces = -1
@@ -377,7 +378,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		var/turf/T = get_turf(A)
 		playsound(A, "sound/effects/ExplosionFirey.ogg", 60, 1)
 		if(!src.impacted)
-			world << sound('sound/weapons/energy/howitzer_impact.ogg', volume = 70)
+			playsound_global(world, 'sound/weapons/energy/howitzer_impact.ogg', 60)
 			src.impacted = 1
 			SPAWN_DBG(1 DECI SECOND)
 				for(var/mob/living/M in mobs)
@@ -385,8 +386,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 		SPAWN_DBG(0)
 			explosion_new(null, T, 30, 1)
-		if(prob(50))
-			world << sound('sound/effects/creaking_metal1.ogg', volume = 60)
+		if(prob(10))
+			playsound_global(world, 'sound/effects/creaking_metal1.ogg', 40)
 
 // A weapon by Sovexe
 /datum/projectile/special/meowitzer //what have I done
@@ -397,7 +398,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	icon_state = "cat1"
 	dissipation_delay = 75
 	dissipation_rate = 300
-	projectile_speed = 20
+	projectile_speed = 26
 	cost = 1
 
 	var/explosive_hits = 1
@@ -479,7 +480,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 	on_hit(atom/hit)
 		if (usr && hit)
-			hit.attack_hand(usr)
+			hit.Attackhand(usr)
 
 //mbc : hey i know homing projectiles exist already as 'seeker', but i like mine better
 /datum/projectile/special/homing
@@ -623,7 +624,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 				if (vampire.can_bite(victim,is_pointblank = 0))
 					vampire.do_bite(victim, mult = 0.3333)
 
-				vampire.owner.add_stamina(20)
+				vampire.owner?.add_stamina(20)
 				victim.remove_stamina(4)
 
 		..()
@@ -634,7 +635,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = "mysterious mystery mist"
 	icon_state = "vamp_travel"
 	auto_find_targets = 0
-	max_speed = 2
+	max_speed = 6
 	start_speed = 0.1
 
 
@@ -690,14 +691,14 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	dissipation_rate = 0
 	ks_ratio = 1
 	brightness = 2
-	projectile_speed = 1.5
+	projectile_speed = 2
 	is_magical = 1 // It passes right through them, but just for consistency
 	auto_find_targets = 0
 	min_speed = 2
 	max_speed = 2
 	goes_through_walls = 0 // It'll stop homing when it hits something, then go bouncy
 	var/max_bounce_count = 3 // putting the I in ICEE BEEYEM
-	var/weaken_length = 5 SECONDS
+	var/weaken_length = 4 SECONDS
 	var/slam_text = "The magic missile SLAMS into you!"
 	var/hit_sound = 'sound/effects/mag_magmisimpact_bounce.ogg'
 	var/cat_sound = 'sound/voice/animal/cat.ogg'
@@ -710,6 +711,10 @@ ABSTRACT_TYPE(/datum/projectile/special)
 				if(iswizard(M) || M.traitHolder?.hasTrait("training_chaplain"))
 					boutput(M, "The magic missile passes right through you!")
 					. = TRUE
+				else if(ON_COOLDOWN(M, "magic_missiled", 1 SECOND))
+					boutput(M, "The magic missile passes right through you, not wishing to add insult to injury!")
+					. = TRUE
+					O.targets -= M //Stop tracking whoever we hit to prevent the projectiles orbiting them
 
 			if(isobj(hit) || (isturf(hit) && !hit.density))
 				. = TRUE
@@ -741,17 +746,17 @@ ABSTRACT_TYPE(/datum/projectile/special)
 				else
 					playsound(T, src.hit_sound, 60, 1)
 		else
-			playsound(get_turf(A), 'sound/effects/mag_magmisimpact.ogg', 25, 1, -1)
+			playsound(A, 'sound/effects/mag_magmisimpact.ogg', 25, 1, -1)
 
 /datum/projectile/special/homing/magicmissile/weak
 	name = "magic minimissile"
 	sname = "magic minimissile"
 	power = 10
-	projectile_speed = 1
+	projectile_speed = 1.5
 	min_speed = 2
 	max_speed = 2
 	max_bounce_count = 2 // putting the Y in ICEE BEEYEM
-	weaken_length = 3 SECONDS
+	weaken_length = 2 SECONDS
 	slam_text = "The magic missile bumps into you!"
 
 /datum/projectile/special/homing/orbiter
@@ -863,7 +868,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/spreader/tasershotgunspread //Used in Azungar's taser shotgun.
 	name = "energy bolt"
 	sname = "shotgun spread"
-	cost = 37.5
+	cost = 25
 	power = 45 //a chunky pointblank
 	ks_ratio = 0
 	damage_type = D_SPECIAL

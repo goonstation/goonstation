@@ -33,8 +33,8 @@
 /obj/item/storage/box/robustdonuts
 	name = "robust donuts box"
 	icon_state = "box"
-	desc = "Contains two robust donuts, for security use"
-	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donut/custom/robust = 2)
+	desc = "Contains two robust donuts and two robusted donuts, for security use"
+	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donut/custom/robust = 2, /obj/item/reagent_containers/food/snacks/donut/custom/robusted = 2)
 
 // For sec officers and the HoS. Really love spawning with a full backpack (Convair880).
 /obj/item/storage/box/security_starter_kit
@@ -261,7 +261,7 @@
 	sneaky = 1
 	var/cloaked = 0
 	flags = FPRINT | TABLEPASS | NOSPLASH
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	max_wclass = 3
 
 	New()

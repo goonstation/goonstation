@@ -1,9 +1,10 @@
 /obj/machinery/computer/teleporter
 	name = "Teleporter"
 	icon_state = "teleport"
+	circuit_type = /obj/item/circuitboard/teleporter
 	var/obj/item/locked = null
 	var/obj/machinery/teleport/portal_generator/linkedportalgen = null
-	var/id = null
+	id = null
 	desc = "A computer that sets which beacon the connected teleporter attempts to create a portal to."
 
 	light_r =1
@@ -14,40 +15,6 @@
 	src.id = text("[]", rand(1000, 9999))
 	..()
 	return
-
-/obj/machinery/computer/teleporter/attackby(obj/item/W as obj, user as mob)
-	if (isscrewingtool(W))
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 2 SECONDS))
-			if (src.status & BROKEN)
-				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-				G.set_loc(src.loc)
-				var/obj/item/circuitboard/teleporter/M = new /obj/item/circuitboard/teleporter( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				qdel(src)
-			else
-				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/circuitboard/teleporter/M = new /obj/item/circuitboard/teleporter( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				qdel(src)
-
-	else
-		return src.attack_hand()
 
 /obj/machinery/computer/teleporter/attack_hand()
 	src.add_fingerprint(usr)
@@ -63,15 +30,14 @@
 	var/list/areaindex = list()
 
 	for_by_tcl(R, /obj/item/device/radio/beacon)
-		if (!istype(R, /obj/item/device/radio/beacon/jones))
-			var/turf/T = get_turf(R)
-			if (!T)	continue
-			var/tmpname = T.loc.name
-			if(areaindex[tmpname])
-				tmpname = "[tmpname] ([++areaindex[tmpname]])"
-			else
-				areaindex[tmpname] = 1
-			L[tmpname] = R
+		var/turf/T = get_turf(R)
+		if (!T)	continue
+		var/tmpname = T.loc.name
+		if(areaindex[tmpname])
+			tmpname = "[tmpname] ([++areaindex[tmpname]])"
+		else
+			areaindex[tmpname] = 1
+		L[tmpname] = R
 
 	for_by_tcl(I, /obj/item/implant/tracking)
 		if (!I.implanted || !ismob(I.loc))

@@ -94,6 +94,7 @@
 				if(MODE_MAINMENU)
 					. += {"<h2>PERSONAL DATA ASSISTANT</h2>
 					Owner: [src.master.owner]<br>
+					Time: [time2text(world.timeofday, "DDD MMM DD, hh:mm:ss")]<br>
 
 					<h4>General Functions</h4>
 					<ul>
@@ -690,7 +691,7 @@
 								return
 
 						else if (istype(target, /datum/computer/file/text))
-							if(!isnull(src.master.uplink) && src.master.uplink.active)
+							if(src.master.uplink?.active)
 								return
 							else
 								src.note = target:data
@@ -797,7 +798,7 @@
 						if (islist(groupAddress))
 							senderstring += " to [jointext(groupAddress,", ")]"
 						else
-							senderstring += " to <a href='byond://?src=\ref[src];input=message;[groupAddress in src.master.alertgroups ? "" : "target=[groupAddress]"];department=1'>[groupAddress]</a>"
+							senderstring += " to <a href='byond://?src=\ref[src];input=message;[(groupAddress in src.master.alertgroups) ? "" : "target=[groupAddress]"];department=1'>[groupAddress]</a>"
 
 					src.message_note += "<i><b>&larr; [senderstring]:</b></i><br>[signal.data["message"]]<br>"
 					var/alert_beep = null //Don't beep if set to silent.
@@ -825,7 +826,7 @@
 						if (islist(groupAddress))
 							displayMessage += " to [jointext(groupAddress,", ")]"
 						else
-							displayMessage += " to <a href='byond://?src=\ref[src];input=message;[groupAddress in src.master.alertgroups ? "" : "target=[groupAddress]"];department=1'>[groupAddress]</a>"
+							displayMessage += " to <a href='byond://?src=\ref[src];input=message;[(groupAddress in src.master.alertgroups) ? "" : "target=[groupAddress]"];department=1'>[groupAddress]</a>"
 					displayMessage += ":</b></i> [signal.data["message"]]"
 					src.master.display_message(displayMessage)
 

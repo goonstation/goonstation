@@ -11,12 +11,11 @@ GAUNTLET CARDS
 	icon = 'icons/obj/items/card.dmi'
 	icon_state = "id"
 	wear_image_icon = 'icons/mob/mob.dmi'
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	burn_type = 1
 	stamina_damage = 0
 	stamina_cost = 0
 	var/list/files = list("tools" = 1)
-	module_research_type = /obj/item/card
 
 	disposing()
 		if (istype(src.loc,/obj/machinery/bot))
@@ -35,8 +34,6 @@ GAUNTLET CARDS
 	is_syndicate = 1
 	mats = 8
 	contraband = 6
-	module_research = list("malfunction" = 25)
-	module_research_type = /obj/item/card/emag
 
 	afterattack(var/atom/A, var/mob/user)
 		if(!A || !user)
@@ -50,7 +47,7 @@ GAUNTLET CARDS
 //delicious fake emag
 	attack_hand(mob/user as mob)
 		boutput(user, "<span class='combat'>Turns out that card was actually a kind of [pick("deadly chameleon","spiny anteater","Discount Dan's latest product prototype","Syndicate Top Trumps Card","bag of neckbeard shavings")] in disguise! It stabs you!</span>")
-		user.changeStatus("paralysis", 100)
+		user.changeStatus("paralysis", 10 SECONDS)
 		SPAWN_DBG(1 SECOND)
 			var/obj/storage/closet/C = new/obj/storage/closet(get_turf(user))
 			user.set_loc(C)
@@ -76,14 +73,15 @@ GAUNTLET CARDS
 	desc = "A standardized NanoTrasen microchipped identification card that contains data that is scanned when attempting to access various doors and computers."
 	flags = FPRINT | TABLEPASS | ATTACK_SELF_DELAY
 	click_delay = 0.4 SECONDS
-	var/access = list()
+	wear_layer = MOB_BELT_LAYER
+	var/list/access = list()
 	var/registered = null
 	var/assignment = null
 	var/title = null
 	var/emagged = 0
 	var/datum/reagent_group_account/reagent_account = null
 	/// this determines if the icon_state of the ID changes if it is given a new job
-	var/keep_icon = FALSE 
+	var/keep_icon = FALSE
 
 	// YOU START WITH  NO  CREDITS
 	// WOW
@@ -142,7 +140,6 @@ GAUNTLET CARDS
 	registered = "Member"
 	assignment = "Member"
 	keep_icon = TRUE
-	var/jones_swiped = 0
 
 /obj/item/card/id/captains_spare
 	name = "Captain's spare ID"
@@ -154,6 +151,49 @@ GAUNTLET CARDS
 	New()
 		access = get_access("Captain")
 		..()
+
+//ABSTRACT_TYPE(/obj/item/card/id/pod_wars)
+/obj/item/card/id/pod_wars
+	desc = "An ID card to help open doors, lock pods, and identify your body."
+	var/team = 0
+#if defined(MAP_OVERRIDE_POD_WARS)
+	//You can only pick this up if you're on the correct team, otherwise it explodes.
+	attack_hand(mob/user)
+		if (get_pod_wars_team_num(user) == team)
+			..()
+		else
+			var/flavor = pick("doesn't like you", "can tell you don't deserve it", "saw into your very soul and found you wanting", "hates you", "thinks you stink", "thinks you two should start seeing other people", "doesn't trust you", "finds your lack of faith disturbing", "is just not that into you", "gently weeps")
+			//stolen from Captain's Explosive Spare ID down below...
+			boutput(user, "<span class='alert'>The ID card [flavor] and <b>explodes!</b></span>")
+			make_fake_explosion(src)
+			user.u_equip(src)
+			src.dropped(user)
+			qdel(src)
+#endif
+
+	nanotrasen
+		name = "NanoTrasen Pilot"
+		icon_state = "polaris"
+		assignment = "NanoTrasen Pilot"
+		access = list(access_heads)
+		team = 1
+
+		commander
+			name = "NanoTrasen Commander"
+			assignment = "NanoTrasen Commander"
+			access = list(access_heads, access_captain)
+
+	syndicate
+		name = "Syndicate Pilot"
+		icon_state = "id_syndie"
+		assignment = "Syndicate Pilot"
+		access = list(access_syndicate_shuttle)
+		team = 2
+
+		commander
+			name = "Syndicate Commander"
+			assignment = "Syndicate Commander"
+			access = list(access_syndicate_shuttle, access_syndicate_commander)
 
 /obj/item/card/id/dabbing_license
 	name = "Dabbing License"

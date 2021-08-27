@@ -15,7 +15,7 @@ MATERIAL
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "rods"
 	flags = FPRINT | TABLEPASS| CONDUCT
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	force = 9.0
 	throwforce = 15.0
 	throw_speed = 5
@@ -48,7 +48,7 @@ MATERIAL
 			var/obj/item/rods/new_stack = new src.type(user.loc, diff)
 			if(src.material) new_stack.setMaterial(src.material)
 			new_stack.amount = splitnum
-			new_stack.attack_hand(user)
+			new_stack.Attackhand(user)
 			new_stack.add_fingerprint(user)
 		else
 			..(user)
@@ -151,7 +151,7 @@ MATERIAL
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	flags = FPRINT | TABLEPASS | CONDUCT
 	desc = "A collection of thick metal, from which one can construct a multitude of objects."
 		//cogwerks - burn vars
@@ -183,7 +183,7 @@ MATERIAL
 			var/obj/item/sheet/metal/new_stack = new src.type(user.loc, diff)
 			if(src.material) new_stack.setMaterial(src.material)
 			new_stack.amount = splitnum
-			new_stack.attack_hand(user)
+			new_stack.Attackhand(user)
 			new_stack.add_fingerprint(user)
 		else
 			..(user)
@@ -404,7 +404,7 @@ MATERIAL
 	throwforce = 15.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	flags = FPRINT | TABLEPASS | CONDUCT
 	desc = "A collection of reinforced metal, used for making thicker walls and stronger metal objects."
 		//cogwerks - burn vars
@@ -443,7 +443,7 @@ MATERIAL
 			var/obj/item/sheet/r_metal/new_stack = new src.type(user.loc, diff)
 			if(src.material) new_stack.setMaterial(src.material)
 			new_stack.amount = splitnum
-			new_stack.attack_hand(user)
+			new_stack.Attackhand(user)
 			new_stack.add_fingerprint(user)
 		else
 			..(user)

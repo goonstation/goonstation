@@ -13,7 +13,7 @@
 	icon_state = "item_blue"
 	item_state = "electronic"
 	throwforce = 2
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 2
 	throw_range = 5
 	flags = TABLEPASS|EXTRADELAY|FPRINT|CONDUCT|ONBELT
@@ -23,6 +23,7 @@
 	rand_pos = 1
 	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
 	special_grab = /obj/item/grab
+	inventory_counter_enabled = 1
 
 	var/lining_item_color = "blue"
 
@@ -59,12 +60,14 @@
 		else
 			amount -= used
 			tooltip_rebuild = 1
+			src.updateicon()
 			return 1
 
 	proc/take(var/amt, var/newloc)
 		if (amt > amount)
 			amt = amount
 			tooltip_rebuild = 1
+			src.updateicon()
 		if (amt == amount)
 			if (ismob(loc))
 				var/mob/owner = loc
@@ -78,6 +81,7 @@
 
 	proc/updateicon()
 		set_icon_state("item_[lining_item_color]")
+		inventory_counter?.update_number(amount)
 		return
 
 /obj/item/neon_lining/cut
@@ -116,6 +120,7 @@
 		tooltip_rebuild = 1
 		take(1, user.loc)
 		boutput(user, "You cut a piece off the [base_name].")
+		src.updateicon()
 		return
 
 	else if (istype(W, /obj/item/neon_lining))
@@ -167,22 +172,17 @@
 		return
 
 	else
-		var/dirn
-
-		if (user.loc == F)
-			dirn = user.dir			//If laying on the tile we're on, lay in the direction we're facing.
-		else
-			dirn = get_dir(F, user)
+		var/dirn = user.dir
 
 		var/obj/neon_lining/C = new /obj/neon_lining(F, src)
-		if (dirn == 2)
-			C.lining_rotation = 1
-		else if (dirn == 4)
-			C.lining_rotation = 2
-		else if (dirn == 8)
-			C.lining_rotation = 3
-		else
+		if (dirn == SOUTH)
 			C.lining_rotation = 0
+		else if (dirn == EAST)
+			C.lining_rotation = 3
+		else if (dirn == WEST)
+			C.lining_rotation = 1
+		else //NORTH
+			C.lining_rotation = 2
 		boutput(user, "You set some neon lining on the floor.")
 		C.lining_color = lining_item_color
 		C.add_fingerprint(user)

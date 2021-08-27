@@ -17,7 +17,8 @@
 		if (spell_invisibility(holder.owner, 1, 0, 1, 1) != 1) // Dry run. Can we phaseshift?
 			return 1
 
-		holder.owner.say("PHEE CABUE")
+		if(!istype(get_area(holder.owner), /area/sim/gunsim))
+			holder.owner.say("PHEE CABUE")
 		..()
 
 		var/SPtime = 35
@@ -333,11 +334,11 @@
 
 	attackby(obj/item/W, mob/M)
 		dispel(1)
-		if(owner) owner.attackby(W,M)
+		if(owner) owner.Attackby(W,M)
 
 	attack_hand(mob/M)
 		dispel(1)
-		if(owner) owner.attackby(M)
+		if(owner) owner.Attackby(M)
 
 
 	firepoof

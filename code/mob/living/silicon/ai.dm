@@ -9,7 +9,27 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	"Mad" = "ai_mad",\
 	"BSOD" = "ai_bsod",\
 	"Text" = "ai_text",\
-	"Blank" = "ai_blank")
+	"Blank" = "ai_blank",\
+	"Unimpressed" = "ai_unimpressed",\
+	"Baffled" = "ai_baffled",\
+	"Cheeky" = "ai_cheeky",\
+	"Silly" = "ai_silly",\
+	"Annoyed" = "ai_annoyed",\
+	"Pensive" = "ai_pensive",\
+	"Content" = "ai_content",\
+	"Tired" = "ai_tired",\
+	"Smug" = "ai_smug",\
+	"Wink" = "ai_wink",\
+	"Heart" = "ai_heart",\
+	"Triangle" = "ai_triangle",\
+	"Spooky" = "ai_spooky",\
+	"Suspicious" = "ai_eyesemoji",\
+	"Glitch" = "ai_glitch",\
+	"Eye" = "ai_eye",\
+	"Snoozing" = "ai_zzz",\
+	"Loading Bar" = "ai_loading",\
+	"Exclamation" = "ai_exclamation",\
+	"Question" = "ai_question")
 
 /mob/living/silicon/ai
 	name = "AI"
@@ -236,6 +256,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 //Returns either the AI mainframe or the eyecam mob, depending on whther or not we are deployed
 /mob/living/silicon/ai/proc/get_message_mob()
 	RETURN_TYPE(/mob)
+
 	if (deployed_to_eyecam)
 		return src.eyecam
 	return src
@@ -673,7 +694,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/mob/vamp = src
 	if (relay_laws_for_shell && ismob(relay_laws_for_shell))
 		vamp = relay_laws_for_shell
-	if (vamp.mind && vamp.mind.special_role == "vampthrall" && vamp.mind.master)
+	if (vamp.mind && vamp.mind.special_role == ROLE_VAMPTHRALL && vamp.mind.master)
 		var/mob/mymaster = whois_ckey_to_mob_reference(vamp.mind.master)
 		if (mymaster)
 			boutput(who, "1. Only your master [mymaster.real_name] is human. Obey and serve them to the best of your ability.")
@@ -789,7 +810,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (isghostdrone(user))
 		return list()
 
-	. = list("<span class='notice'>This is [bicon(src)] <B>[src.name]</B>!</span>")
+	. = list("<span class='notice'>This is [bicon(src)] <B>[src.name]</B>!</span><br>")
+	if (src.hat)
+		. += "<span class='notice'>[src.name] is wearing the [bicon(src.hat)] [src.hat.name].</span>"
 
 	if (isdead(src))
 		. += "<span class='alert'>[src.name] is nonfunctional...</span>"
@@ -989,7 +1012,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				message = "<B>[src]</B> does a flip!"
 
 				//flick("ai-flip", src)
-				if(faceEmotion != "ai-red")
+				if(faceEmotion != "ai-red" && faceEmotion != "ai-tetris")
 					UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', "[faceEmotion]-flip", src.layer+0.2), "actual_face")
 					SPAWN_DBG(0.5 SECONDS)
 						UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', faceEmotion, src.layer+0.2), "actual_face")
@@ -1215,7 +1238,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 /mob/living/silicon/ai/process_locks()
 	if(weapon_lock)
-		src.setStatus("paralysis", 50)
+		src.setStatus("paralysis", 5 SECONDS)
 		weaponlock_time --
 		if(weaponlock_time <= 0)
 			if(src.client) boutput(src, "<span class='alert'><B>Hibernation Mode Timed Out!</B></span>")
@@ -1900,7 +1923,11 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		I.color = faceColor
 		UpdateOverlays(I, "faceplate")
 
-		UpdateOverlays(SafeGetOverlayImage("face_glow", 'icons/mob/ai.dmi', "ai-face_glow", src.layer+0.1), "face_glow")
+		if (faceEmotion != "ai-tetris")
+			UpdateOverlays(SafeGetOverlayImage("face_glow", 'icons/mob/ai.dmi', "ai-face_glow", src.layer+0.1), "face_glow")
+		else
+			UpdateOverlays(null, "face_glow")
+
 		UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', faceEmotion, src.layer+0.2), "actual_face")
 
 		if (src.power_mode == 1)
@@ -2203,10 +2230,10 @@ proc/get_mobs_trackable_by_AI()
 		if (W.material.material_flags & MATERIAL_METAL) // metal sheets
 			if (src.build_step < 1)
 				var/obj/item/sheet/M = W
-				if (M.consume_sheets(3))
+				if (M.change_stack_amount(-3))
 					src.build_step++
 					boutput(user, "You add plating to [src]!")
-					playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+					playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 					src.icon_state = "ai_frame1"
 					return
 				else
@@ -2219,10 +2246,10 @@ proc/get_mobs_trackable_by_AI()
 			if (src.build_step >= 2)
 				if (!src.has_glass)
 					var/obj/item/sheet/G = W
-					if (G.consume_sheets(1))
+					if (G.change_stack_amount(-1))
 						src.build_step++
 						boutput(user, "You add glass to [src]!")
-						playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+						playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 						src.has_glass = 1
 						if (!src.image_coverlay)
 							src.image_coverlay = image(src.icon, "ai_frame2-og", FLY_LAYER)
@@ -2251,7 +2278,7 @@ proc/get_mobs_trackable_by_AI()
 			if (coil.use(3))
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
-				playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 				src.icon_state = "ai_frame2"
 				if (coil.amount < 1)
 					user.drop_item()
@@ -2272,7 +2299,7 @@ proc/get_mobs_trackable_by_AI()
 			if (!src.cell)
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
-				playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 				src.cell = W
 				user.u_equip(W)
 				W.set_loc(src)
@@ -2297,7 +2324,7 @@ proc/get_mobs_trackable_by_AI()
 			if (src.has_radios < 3)
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
-				playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 				src.icon_state = "shell-radio"
 				src.has_radios++
 				qdel(W)
@@ -2323,7 +2350,7 @@ proc/get_mobs_trackable_by_AI()
 			if (!src.has_interface)
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
-				playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 				src.has_interface = 1
 				qdel(W)
 				if (!src.image_coverlay)

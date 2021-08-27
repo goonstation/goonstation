@@ -17,6 +17,12 @@
 	noalerts = 1
 	aidisabled = 1
 
+	initialize()
+		. = ..()
+		for(var/obj/cable/C in src.loc)
+			C.update_network()
+			break
+
 	// set channels depending on how much charge we have left
 	check_channel_thresholds()
 		if(cell.charge <= 0) // zero charge, turn all off

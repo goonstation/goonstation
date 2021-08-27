@@ -5,7 +5,7 @@
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "seeds"
 	var/seedcolor = "#000000"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/auxillary_datum = null
 	var/datum/plant/planttype = null
 	var/datum/plantgenes/plantgenes = null
@@ -14,8 +14,6 @@
 	var/generation = 0 // Keeps track of how many times a plant has been bred from the initial seed.
 	stamina_damage = 0
 	stamina_cost = 0
-	module_research = list("hydroponics" = 1, "efficiency" = 1)
-	module_research_type = /obj/item/seed
 	rand_pos = 1
 
 	New(var/loc,var/do_color = 1)

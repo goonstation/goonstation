@@ -336,5 +336,3 @@ client/proc/Browse( var/html, var/opts, var/forceChui )
 mob/proc/Browse( var/html, var/opts, var/forceChui )
 	if( src.client )
 		chui.staticinst.bbrowse( src.client, html, opts, forceChui )
-
-//#define browse #error Use --.Browse() instead.

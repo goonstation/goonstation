@@ -3,7 +3,7 @@
 	desc = "Is that a space heater? That doesn't look safe at all!"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "shittygrill_off"
-	anchored = 1
+	anchored = 0
 	density = 1
 	flags = NOSPLASH
 	mats = 20
@@ -13,6 +13,7 @@
 	var/grilltemp = 35 + T0C
 	var/max_wclass = 3
 	var/on = 0
+	var/movable = 1
 	var/datum/light/light
 	var/datum/particleSystem/barrelSmoke/smoke_part
 
@@ -30,6 +31,11 @@
 
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if(movable && istool(W, TOOL_SCREWING | TOOL_WRENCHING))
+			user.visible_message("<b>[user]</b> [anchored ? "unbolts the [src] from" : "secures the [src] to"] the floor.")
+			playsound(src.loc, "sound/items/Screwdriver.ogg", 80, 1)
+			src.anchored = !src.anchored
+			return
 		if (isghostdrone(user) || isAI(user))
 			boutput(user, "<span class='alert'>The [src] refuses to interface with you, as you are not a bus driver!</span>")
 			return
@@ -71,7 +77,7 @@
 			else
 				logTheThing("combat", user, null, "pours chemicals [log_reagents(W)] into the [src] at [log_loc(src)].") // Logging for the deep fryer (Convair880).
 				src.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
-				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 100, 1)
+				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
 				W.reagents.trans_to(src, W:amount_per_transfer_from_this)
 				if (!W.reagents.total_volume) boutput(user, "<span class='alert'><b>[W] is now empty.</b></span>")
 
@@ -256,7 +262,6 @@
 		else
 			if (istype(src.grillitem, /obj/item/reagent_containers/food/snacks))
 				shittysteak.food_effects += grillitem:food_effects
-				shittysteak.AddComponent(/datum/component/consume/food_effects, shittysteak.food_effects)
 
 		var/icon/composite = new(src.grillitem.icon, src.grillitem.icon_state)//, src.grillitem.dir, 1)
 		for(var/O in src.grillitem.underlays + src.grillitem.overlays)

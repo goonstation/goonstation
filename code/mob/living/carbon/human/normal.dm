@@ -2,7 +2,7 @@
 	New()
 		..()
 		SPAWN_DBG(0)
-			randomize_look(src, 1, 1, 1, 1, 1, 1)
+			randomize_look(src, 1, 1, 1, 1, 1, 1, src)
 			src.update_colorful_parts()
 
 		SPAWN_DBG(1 SECOND)

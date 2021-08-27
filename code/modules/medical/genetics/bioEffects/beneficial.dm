@@ -236,17 +236,25 @@
 	msgLose = "Your skin tightens."
 	var/heal_per_tick = 1
 	var/regrow_prob = 250
+	var/roundedmultremainder
 	degrade_to = "mutagenic_field"
 	icon_state  = "regen"
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		var/mob/living/L = owner
-		L.HealDamage("All", heal_per_tick, heal_per_tick)
-		if (rand(1,regrow_prob) == 1 && ishuman(L))
-			var/mob/living/carbon/human/H = L
-			if (H.limbs)
-				H.limbs.mend(1)
+		L.HealDamage("All", heal_per_tick * mult, heal_per_tick * mult)
+		var/roundedmult = round(mult)
+		roundedmultremainder += (mult % 1)
+		if (roundedmultremainder >= 1)
+			roundedmult += round(roundedmultremainder)
+			roundedmultremainder = roundedmultremainder % 1
+		for (roundedmult = roundedmult, roundedmult > 0, roundedmult --)
+			if (rand(1, regrow_prob) == 1)
+				if (ishuman(L))
+					var/mob/living/carbon/human/H = L
+					if (H.limbs)
+						H.limbs.mend(1)
 
 /datum/bioEffect/regenerator/super
 	name = "Super Regeneration"
@@ -285,6 +293,7 @@
 	msgLose = "You feel more comfortable in your own skin."
 	heal_per_tick = 2
 	regrow_prob = 50
+	acceptable_in_mutini = 0 // fun is banned
 
 	OnAdd()
 		. = ..()
@@ -488,7 +497,7 @@ var/list/radio_brains = list()
 			H.set_body_icon_dirty()
 			REMOVE_MOVEMENT_MODIFIER(H, /datum/movement_modifier/hulkstrong, src.type)
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		var/mob/living/carbon/human/H = owner
 		if (H.health <= 25)
@@ -536,6 +545,12 @@ var/list/radio_brains = list()
 	stability_loss = 25
 	degrade_to = "bad_eyesight"
 	icon_state  = "eye"
+
+	OnAdd()
+		APPLY_MOB_PROPERTY(owner, PROP_NIGHTVISION, src)
+
+	OnRemove()
+		REMOVE_MOB_PROPERTY(owner, PROP_NIGHTVISION, src)
 
 /datum/bioEffect/toxic_farts
 	name = "High Decay Digestion"
@@ -592,13 +607,13 @@ var/list/radio_brains = list()
 	stability_loss = 15
 	icon_state  = "regen"
 
-	OnLife()
+	OnLife(var/mult)
 
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 
 			if (H.blood_volume < 500 && H.blood_volume > 0)
-				H.blood_volume += 6
+				H.blood_volume += 6*mult
 
 
 ///////////////////////////
@@ -623,6 +638,7 @@ var/list/radio_brains = list()
 	can_research = 0
 	can_make_injector = 0
 	can_copy = 0
+	acceptable_in_mutini = 0
 	icon_state  = "tk"
 
 	OnAdd()
@@ -653,9 +669,14 @@ var/list/radio_brains = list()
 	stability_loss = 15
 	icon_state  = "haze"
 
-	OnLife()
-		if (prob(20))
+	OnLife(var/mult)
+		if (probmult(20))
 			src.active = !src.active
 		if (src.active)
-			owner.invisibility = 1
-		return
+			APPLY_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src, INVIS_INFRA)
+		else
+			REMOVE_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src)
+
+	OnRemove()
+		REMOVE_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src)
+		. = ..()

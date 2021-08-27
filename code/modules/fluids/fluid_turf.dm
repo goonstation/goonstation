@@ -53,6 +53,10 @@
 
 	var/captured = 0 //Thermal vent collector on my tile? (messy i know, but faster lookups later)
 
+	var/allow_hole = 1
+
+	var/linked_hole = null
+
 
 	New()
 		..()
@@ -225,7 +229,7 @@
 	Entered(atom/movable/A as mob|obj) //MBC : I was too hurried and lazy to make this actually apply reagents on touch. this is a note to myself. FUCK YOUUU
 		..()
 		if(A.getStatusDuration("burning"))
-			A.changeStatus("burning", -500)
+			A.changeStatus("burning", -50 SECONDS)
 
 		//nah disable for now i dont wanna do istype checks on enter
 		//else if(isitem(A))
@@ -261,7 +265,7 @@
 			blow_hole()
 
 	proc/blow_hole()
-		if (src.z != 5)
+		if (src.z != 5 && allow_hole)
 			src.ReplaceWith(/turf/space/fluid/warp_z5/realwarp, FALSE, TRUE, FALSE, TRUE)
 
 //////////////////////duh look below
@@ -274,12 +278,21 @@
 	randomIcon = 0
 	generateLight = 0
 
+	allow_hole = 0
+
 	color = OCEAN_COLOR
 	// fullbright = 1
 
 	edge
 		icon_state = "pit_wall"
 
+		New()
+			. = ..()
+			START_TRACKING
+
+		Del()
+			STOP_TRACKING
+			. = ..()
 
 	proc/try_build_turf_list()
 		if (!L || L.len == 0)
@@ -324,6 +337,21 @@
 			for(var/turf/space/fluid/T in range(8,locate(src.x,src.y,5)))
 				L += T
 				break
+
+			if(length(L))
+				var/needlink = 1
+				var/turf/space/fluid/picked_turf = pick(L)
+
+				for(var/turf/space/fluid/T in range(5,picked_turf))
+					if(T.linked_hole)
+						needlink = 0
+						break
+
+				if(needlink)
+					if(!picked_turf.linked_hole)
+						picked_turf.linked_hole = src
+						src.add_simple_light("trenchhole", list(120, 120, 120, 120))
+
 		..()
 
 
@@ -334,7 +362,22 @@
 	fullbright = 0
 	luminosity = 1
 	generateLight = 0
+	allow_hole = 0
 	spawningFlags = SPAWN_DECOR | SPAWN_PLANTS | SPAWN_FISH | SPAWN_LOOT | SPAWN_HALLU
+
+	blow_hole()
+		if(src.z == 5)
+			for(var/turf/space/fluid/T in range(1, locate(src.x, src.y, 1)))
+				if(T.allow_hole)
+					var/x = T.x
+					var/y = T.y
+					T.blow_hole()
+					var/turf/space/fluid/warp_z5/hole = locate(x, y, 1)
+					if(istype(hole))
+						hole.L = list(src)
+						src.linked_hole = hole
+						src.add_simple_light("trenchhole", list(120, 120, 120, 120))
+						break
 
 /turf/space/fluid/nospawn
 	spawningFlags = null
@@ -343,6 +386,7 @@
 		return
 
 /turf/space/fluid/noexplosion
+	allow_hole = 0
 	ex_act(severity)
 		return
 
@@ -359,6 +403,7 @@
 	luminosity = 1
 	generateLight = 0
 	spawningFlags = null
+	allow_hole = 0
 	icon_state = "cenote"
 	name = "cenote"
 	desc = "A deep flooded sinkhole."
@@ -391,29 +436,25 @@
 	name = "elevator shaft"
 	desc = "It looks like it goes down a long ways."
 	icon_state = "moon_shaft"
+	var/const/area_type = /area/shuttle/sea_elevator/upper
 
 	New()
 		..()
 
-		var/turf/n = null
-		var/turf/e = null
-		var/turf/w = null
-		var/turf/s = null
+		var/turf/n = get_step(src,NORTH)
+		var/turf/e = get_step(src,EAST)
+		var/turf/w = get_step(src,WEST)
+		var/turf/s = get_step(src,SOUTH)
 
-		n = get_step(src,NORTH)
-		if (!istype(n,/turf/simulated/floor/specialroom/sea_elevator_shaft))
+		if (!istype(get_area(n),area_type))
 			n = null
-		e = get_step(src,EAST)
-		if (!istype(e,/turf/simulated/floor/specialroom/sea_elevator_shaft))
+		if (!istype(get_area(e),area_type))
 			e = null
-		w = get_step(src,WEST)
-		if (!istype(w,/turf/simulated/floor/specialroom/sea_elevator_shaft))
+		if (!istype(get_area(w),area_type))
 			w = null
-		s = get_step(src,SOUTH)
-		if (!istype(s,/turf/simulated/floor/specialroom/sea_elevator_shaft))
+		if (!istype(get_area(s),area_type))
 			s = null
 
-		//have fun reading this! also fuck youu!
 		if (e && s)
 			set_dir(SOUTH)
 			e.set_dir(NORTH)
@@ -430,7 +471,6 @@
 			set_dir(EAST)
 			w.set_dir(WEST)
 			n.set_dir(NORTH)
-
 
 	ex_act(severity)
 		return
@@ -488,6 +528,7 @@
 				for(var/obj/machinery/computer/sea_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
 					active = 1
 					C.visible_message("<span class='alert'>The elevator begins to move!</span>")
+					playsound(C.loc, "sound/machines/elevator_move.ogg", 100, 0)
 				SPAWN_DBG(5 SECONDS)
 					call_shuttle()
 

@@ -43,6 +43,10 @@
 	var/tmp/checkingcanpass = 0 // "" how many implement canpass()
 	var/tmp/checkinghasentered = 0 // "" hasproximity as well as items with a mat that hasproximity
 	var/tmp/checkinghasproximity = 0
+	/// directions of this turf being blocked by directional blocking objects. So we don't need to loop through the entire contents
+	var/tmp/blocked_dirs = 0
+	/// this turf is allowing unrestricted hotbox reactions
+	var/tmp/allow_unrestricted_hotbox = 0
 	var/wet = 0
 	throw_unlimited = 0 //throws cannot stop on this tile if true (also makes space drift)
 
@@ -119,7 +123,7 @@
 		for(var/dir in (cardinal + 0))
 			var/turf/thing = get_step(src, dir)
 			var/area/fuck_everything = thing?.loc
-			if(fuck_everything?.expandable && (fuck_everything.type != /area))
+			if(fuck_everything?.expandable && (fuck_everything.type != /area/space))
 				fuck_everything.contents += src
 				return
 
@@ -133,6 +137,12 @@
 		else
 			src.intact = FALSE
 			src.layer = PLATING_LAYER
+
+	proc/UpdateDirBlocks()
+		src.blocked_dirs = 0
+		for (var/obj/O in src.contents)
+			if (HAS_FLAG(O.object_flags, HAS_DIRECTIONAL_BLOCKING))
+				ADD_FLAG(src.blocked_dirs, O.dir)
 
 /obj/overlay/tile_effect
 	name = ""
@@ -524,6 +534,7 @@
 	var/old_checkingexit = src.checkingexit
 	var/old_checkingcanpass = src.checkingcanpass
 	var/old_checkinghasentered = src.checkinghasentered
+	var/old_blocked_dirs = src.blocked_dirs
 	var/old_checkinghasproximity = src.checkinghasproximity
 
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
@@ -559,6 +570,8 @@
 				new_turf = new map_settings.walls (src)
 			else
 				new_turf = new /turf/simulated/wall(src)
+		if ("Unsimulated Floor")
+			new_turf = new /turf/unsimulated/floor(src)
 		else
 			new_turf = new /turf/space(src)
 
@@ -596,6 +609,7 @@
 	new_turf.checkingexit = old_checkingexit
 	new_turf.checkingcanpass = old_checkingcanpass
 	new_turf.checkinghasentered = old_checkinghasentered
+	new_turf.blocked_dirs = old_blocked_dirs
 	new_turf.checkinghasproximity = old_checkinghasproximity
 
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
@@ -759,6 +773,10 @@
 				W.update_icon()
 	return wall
 
+/turf/proc/is_sanctuary()
+  var/area/AR = src.loc
+  return AR.sanctuary
+
 ///turf/simulated/floor/Entered(atom/movable/A, atom/OL) //this used to run on every simulated turf (yes walls too!) -zewaka
 //	..()
 //moved step and slip functions into Carbon and Human files!
@@ -772,6 +790,7 @@
 	can_write_on = 1
 	mat_appearances_to_ignore = list("steel")
 	text = "<font color=#aaa>."
+	flags = OPENCONTAINER | FPRINT
 
 	oxygen = MOLES_O2STANDARD
 	nitrogen = MOLES_N2STANDARD
@@ -788,7 +807,7 @@
 			if (src.temp_flags & HAS_KUDZU)
 				var/obj/spacevine/K = locate(/obj/spacevine) in src.contents
 				if (K)
-					K.attackby(W, user, params)
+					K.Attackby(W, user, params)
 			return ..()
 
 /turf/simulated/aprilfools/grass
@@ -972,7 +991,7 @@
 		boutput(user, "<span class='alert'>You can't build here.</span>")
 		return
 	var/obj/item/rods/R = C
-	if (istype(R) && R.consume_rods(1))
+	if (istype(R) && R.change_stack_amount(-1))
 		boutput(user, "<span class='notice'>Constructing support lattice ...</span>")
 		playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 		ReplaceWithLattice()
@@ -989,6 +1008,17 @@
 			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 			T.build(src)
 
+#if defined(MAP_OVERRIDE_POD_WARS)
+/turf/proc/edge_step(var/atom/movable/A, var/newx, var/newy)
+
+	//testing pali's solution for getting the direction opposite of the map edge you are nearest to.
+	// A.set_loc(A.loc)
+	var/atom/target = get_edge_target_turf(A, (A.x + A.y > world.maxx ? SOUTH | WEST : NORTH | EAST) & (A.x - A.y > 0 ? NORTH | WEST : SOUTH | EAST))
+	if (!istype(A, /obj/machinery/vehicle) && target)	//Throw everything but vehicles(pods)
+		A.throw_at(target, 1, 1)
+
+	return
+#else
 /turf/proc/edge_step(var/atom/movable/A, var/newx, var/newy)
 	var/zlevel = 3 //((A.z=3)?5:3)//(3,4)
 
@@ -1007,7 +1037,7 @@
 		return
 
 	if (A.z == 1 && zlevel != A.z)
-		if (!(isitem(A) && A:w_class <= 2))
+		if (!(isitem(A) && A:w_class <= W_CLASS_SMALL))
 			for_by_tcl(C, /obj/machinery/communications_dish)
 				C.add_cargo_logs(A)
 
@@ -1019,7 +1049,7 @@
 	SPAWN_DBG(0)
 		if ((A?.loc))
 			A.loc.Entered(A)
-
+#endif
 //Vr turf is a jerk and pretends to be broken.
 /turf/unsimulated/bombvr/ex_act(severity)
 	switch(severity)
@@ -1181,3 +1211,12 @@
 	opacity = 0
 	name = "floor"
 	desc = "A holographic projector floor."
+
+/turf/unsimulated/null_hole
+	name = "expedition chute"
+	icon = 'icons/obj/delivery.dmi'
+	icon_state = "floorflush_o"
+
+	Enter(atom/movable/mover, atom/forget)
+		. = ..()
+		mover.set_loc(null)

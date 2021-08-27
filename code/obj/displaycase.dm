@@ -121,7 +121,7 @@
 		if ((user.loc == T && user.equipped() == W))
 			user.show_message("<span class='notice'>You fix the broken display case.</span>")
 			var/obj/item/sheet/glass/G = W
-			G.consume_sheets(1)
+			G.change_stack_amount(-1)
 			src.set_density(1)
 			src.destroyed = 0
 			src.health = 30
@@ -253,9 +253,7 @@
 				if (!isnull(src.our_projectile2))
 					src.our_projectiles = list(new src.our_projectile, new src.our_projectile2)
 					L.projectiles = src.our_projectiles
-				src.our_cell.set_loc(L)
-				L.cell = src.our_cell
-
+				AddComponent(/datum/component/cell_holder, our_cell)
 				// The man with the golden gun.
 				if (src.quality_counter >= src.q_threshold2)
 					L.setMaterial(getMaterial("gold"), appearance = 0, setname = 0)

@@ -10219,7 +10219,7 @@
 /area/crew_quarters/quarters)
 "atq" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/crate,
 /turf/simulated/floor{
@@ -15954,22 +15954,6 @@
 	icon_state = "carpetS"
 	},
 /area/security/detectives_office)
-"aEl" = (
-/obj/cable{
-	icon_state = "2-8";
-	d1 = 2;
-	d2 = 8
-	},
-/obj/table/woodentable,
-/obj/item/camera_test{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
-/turf/simulated/floor{
-	icon_state = "carpetS"
-	},
-/area/security/detectives_office)
 "aEm" = (
 /obj/table/woodentable{
 	dir = 6
@@ -16588,23 +16572,6 @@
 	icon_state = "snow"
 	},
 /area/crew_quarters/captain)
-"aFs" = (
-/obj/table{
-	tag = "icon-tabledir (SOUTHEAST)";
-	icon_state = "tabledir";
-	dir = 6
-	},
-/obj/machinery/recharger{
-	pixel_y = 3
-	},
-/obj/item/storage/photo_album{
-	pixel_y = -10
-	},
-/obj/item/camera_test,
-/turf/simulated/floor{
-	icon_state = "snow"
-	},
-/area/crew_quarters/captain)
 "aFt" = (
 /turf/simulated/wall/r_wall,
 /area/crew_quarters/captain)
@@ -17194,14 +17161,6 @@
 /obj/landmark/start{
 	name = "Captain"
 	},
-/turf/simulated/floor{
-	icon_state = "snow"
-	},
-/area/crew_quarters/captain)
-"aGt" = (
-/obj/displaycase{
-	displayed = new /obj/item/captaingun
-},
 /turf/simulated/floor{
 	icon_state = "snow"
 	},
@@ -29314,7 +29273,7 @@
 /area/crew_quarters/juryroom)
 "bcy" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor{
 	icon_state = "snow"
@@ -29618,7 +29577,7 @@
 "bdb" = (
 /obj/stool,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
@@ -33105,7 +33064,7 @@
 	},
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/device/radio/signaler{
 	pixel_x = 2;
@@ -58173,6 +58132,47 @@
 	},
 /turf/simulated/wall/asteroid,
 /area/space)
+"eQN" = (
+/obj/table{
+	tag = "icon-tabledir (SOUTHEAST)";
+	icon_state = "tabledir";
+	dir = 6
+	},
+/obj/machinery/recharger{
+	pixel_y = 3
+	},
+/obj/item/storage/photo_album{
+	pixel_y = -10
+	},
+/obj/item/camera,
+/turf/simulated/floor{
+	icon_state = "snow"
+	},
+/area/crew_quarters/captain)
+"fZY" = (
+/obj/cable{
+	icon_state = "2-8";
+	d1 = 2;
+	d2 = 8
+	},
+/obj/table/woodentable,
+/obj/item/camera{
+	desc = "A one use - polaroid camera. 30 photos left.";
+	name = "detectives camera";
+	pictures_left = 30
+	},
+/turf/simulated/floor{
+	icon_state = "carpetS"
+	},
+/area/security/detectives_office)
+"ljU" = (
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+	},
+/turf/simulated/floor{
+	icon_state = "snow"
+	},
+/area/crew_quarters/captain)
 
 (1,1,1) = {"
 aaa
@@ -89369,7 +89369,7 @@ auR
 aCO
 aDn
 aDN
-aEl
+fZY
 aEH
 aFc
 aFp
@@ -90737,7 +90737,7 @@ aFi
 aFq
 aFJ
 aGd
-aGt
+ljU
 aFt
 aGZ
 aHe
@@ -91415,7 +91415,7 @@ aDU
 aEt
 aEN
 aCR
-aFs
+eQN
 aFL
 aGg
 aGw

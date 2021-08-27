@@ -233,7 +233,7 @@
 		if(src.traitHolder)
 			for(var/T in src.traitHolder.traits)
 				var/obj/trait/O = getTraitById(T)
-				O.onLife(src)
+				O.onLife(src, life_mult)
 
 		update_icons_if_needed()
 
@@ -614,11 +614,6 @@
 
 		var/thermal_protection = 10 // base value
 
-		// Resistance from Bio Effects
-		if (src.bioHolder)
-			if (src.bioHolder.HasEffect("dwarf"))
-				thermal_protection += 10
-
 		// Resistance from Clothing
 		thermal_protection += GET_MOB_PROPERTY(src, PROP_COLDPROT)
 
@@ -704,23 +699,18 @@
 		var/a_zone = zone
 		if (a_zone in list("l_leg", "r_arm", "l_leg", "r_leg"))
 			a_zone = "chest"
-		if(a_zone=="All")
-			protection=(5*get_melee_protection("chest",damage_type)+get_melee_protection("head",damage_type))/6
-
-		else
-
 			//protection from clothing
-			if (a_zone == "chest")
-				protection = GET_MOB_PROPERTY(src, PROP_MELEEPROT_BODY)
-			else //can only be head
-				protection = GET_MOB_PROPERTY(src, PROP_MELEEPROT_HEAD)
-			protection += GET_MOB_PROPERTY(src, PROP_ENCHANT_ARMOR)/2
-			//protection from blocks
-			var/obj/item/grab/block/G = src.check_block()
-			if (G)
-				protection += 1
-				if (G != src.equipped()) // bare handed block is less protective
-					protection += G.can_block(damage_type)
+		if(a_zone == "All")
+			protection = (5 * GET_MOB_PROPERTY(src, PROP_MELEEPROT_BODY) + GET_MOB_PROPERTY(src, PROP_MELEEPROT_HEAD))/6
+		if (a_zone == "chest")
+			protection = GET_MOB_PROPERTY(src, PROP_MELEEPROT_BODY)
+		else //can only be head
+			protection = GET_MOB_PROPERTY(src, PROP_MELEEPROT_HEAD)
+		protection += GET_MOB_PROPERTY(src, PROP_ENCHANT_ARMOR)/2
+		//protection from blocks
+		var/obj/item/grab/block/G = src.check_block()
+		if (G && damage_type)
+			protection += G.can_block(damage_type)
 
 		if (isnull(protection)) //due to GET_MOB_PROPERTY returning null if it doesnt exist
 			protection = 0
@@ -729,16 +719,7 @@
 	get_deflection()
 		if (!src)
 			return 0
-
-		var/protection = 0
-
-		// Resistance from Clothing
-		for (var/obj/item/C as anything in src.get_equipped_items())
-			if(C.hasProperty("deflection"))
-				var/curr = C.getProperty("deflection")
-				protection += curr
-
-		return min(protection, 90-STAMINA_BLOCK_CHANCE)
+		return min(GET_MOB_PROPERTY(src, PROP_DISARM_RESIST), 90)
 
 
 	get_heat_protection()

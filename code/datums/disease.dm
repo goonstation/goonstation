@@ -527,7 +527,7 @@
 	return null
 
 /mob/living/proc/Virus_ShockCure(var/probcure = 50)
-	src.changeStatus("defibbed", (12 SECONDS * (probcure * 0.1))) // also makes it *slightly* harder to shitsec someone to death
+	src.changeStatus("defibbed", (12 * (probcure * 0.1)) SECONDS) // also makes it *slightly* harder to shitsec someone to death
 	for (var/datum/ailment_data/V in src.ailments)
 		if (V.cure == "Electric Shock" && prob(probcure))
 			src.cure_disease(V)

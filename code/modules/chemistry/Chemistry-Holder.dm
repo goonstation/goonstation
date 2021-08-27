@@ -39,11 +39,11 @@ datum
 		var/last_temp = T20C
 		var/total_temperature = T20C
 		var/total_volume = 0
+		var/composite_heat_capacity = 0
 
 		var/defer_reactions = 0 //Set internally to prevent reactions inside reactions.
 		var/deferred_reaction_checks = 0
 		var/processing_reactions = 0
-		var/desc = null		//(Inexact) description of the reagents. If null, needs refreshing.
 		var/inert = 0 //Do not react. At all. Do not pass go, do not collect $200. Halt. Stop right there, son.
 
 		var/list/addiction_tally = null
@@ -87,7 +87,7 @@ datum
 			covered_cache_volume = total_volume
 
 		proc/play_mix_sound(var/mix_sound)
-			playsound(get_turf(my_atom), mix_sound, 80, 1, 3)
+			playsound(my_atom, mix_sound, 80, 1, 3)
 
 		proc/copy_to(var/datum/reagents/target, var/multiplier = 1, var/do_not_react = 0, var/copy_temperature = 0)
 			if(!target || target == src) return
@@ -113,21 +113,48 @@ datum
 				if(current_reagent && src.total_temperature >= current_reagent.minimum_reaction_temperature)
 					current_reagent.reaction_temperature(src.total_temperature, 100)
 
-		proc/temperature_reagents(exposed_temperature, exposed_volume, divisor = 35, change_cap = 15) //This is what you use to change the temp of a reagent holder.
-			                                                      //Do not manually change the reagent unless you know what youre doing.
+		proc/temperature_reagents(exposed_temperature, exposed_volume = 100, exposed_heat_capacity = 100, change_cap = 15, change_min = 0.0000001,loud = 0)
+			///This is what you use to change the temp of a reagent holder.
+			///Do not manually change the reagent unless you know what youre doing.
 			if (!src.can_be_heated)
 				return
 			last_temp = total_temperature
-			var/difference = abs(total_temperature - exposed_temperature)
-			if (!difference)
-				return
-			var/change = min(max((difference / divisor), 1), change_cap)
-			if(exposed_temperature > total_temperature)
-				total_temperature += change
-			else if (exposed_temperature < total_temperature)
-				total_temperature -= change
+			var/exposed_temp = max(exposed_temperature,0)
+			if(loud)
+				boutput(world,"exposed_temp: [exposed_temp]")
+			exposed_volume = exposed_volume/100 //abitrary but w/e, it makes the new values similar to old ones
+			if(loud)
+				boutput(world,"exposed_volume: [exposed_volume]")
+
+			if(loud)
+				boutput(world,"total_volume: [total_volume]")
+			if(loud)
+				boutput(world,"composite_heat_capacity: [composite_heat_capacity]")
+
+			var/new_temperature = (total_temperature*total_volume*composite_heat_capacity + exposed_temp*exposed_volume*exposed_heat_capacity)/max(total_volume*composite_heat_capacity + exposed_volume*exposed_heat_capacity, 1)
+
+			if(loud)
+				boutput(world,"new_temperature = ([total_temperature]*[total_volume]*[composite_heat_capacity] + [exposed_temp]*[exposed_volume]*[exposed_heat_capacity])/([total_volume]*[composite_heat_capacity] + [exposed_volume]*[exposed_heat_capacity])")
+
+			if(loud)
+				boutput(world,"new_temperature: [new_temperature]")
+
+			var/change = new_temperature - total_temperature
+
+			if(change < 0)
+				change = -clamp(abs(change),change_min,change_cap)
+			else
+				change = clamp(abs(change),change_min,change_cap)
+
+			if(loud)
+				boutput(world,"change: [change]")
+
+			total_temperature += change
 
 			total_temperature = clamp(total_temperature, temperature_min, temperature_cap) //Cap for the moment.
+
+			update_total()
+
 			temperature_react()
 
 			handle_reactions()
@@ -274,6 +301,7 @@ datum
 				target.reagents = new
 
 			var/datum/reagents/target_reagents = target.reagents
+			amount = min(amount, target_reagents.maximum_volume - target_reagents.total_volume)
 
 			if (do_fluid_react && issimulatedturf(target))
 				var/turf/simulated/T = target
@@ -392,7 +420,7 @@ datum
 						continue
 
 					if(C.required_temperature != -1)
-						if(C.required_temperature < 0) //total_temperature needs to be lower than absolute value of this temp
+						if(C.required_temperature <= 0) //total_temperature needs to be lower than absolute value of this temp
 							if(abs(C.required_temperature) < total_temperature) continue //Not the right temp.
 						else if(C.required_temperature > total_temperature) continue
 						//Min / max temp intervals
@@ -406,7 +434,7 @@ datum
 					var/total_matching_reagents = 0
 					var/created_volume = src.maximum_volume
 					for(var/B in C.required_reagents)
-						var/B_required_volume = max(1, C.required_reagents[B])
+						var/B_required_volume = max(CHEM_EPSILON, C.required_reagents[B])
 
 
 						//var/amount = get_reagent_amount(B)
@@ -570,6 +598,7 @@ datum
 						del_reagent(current_id)
 					else
 						current_reagent.volume = max(round(current_reagent.volume, 0.001), 0.001)
+						composite_heat_capacity = total_volume/(total_volume+current_reagent.volume)*composite_heat_capacity + current_reagent.volume/(total_volume+current_reagent.volume)*current_reagent.heat_capacity
 						total_volume += current_reagent.volume
 			if(isitem(my_atom))
 				var/obj/item/I = my_atom
@@ -628,15 +657,15 @@ datum
 						if(temp_to_burn_with > H.base_body_temp + (H.temp_tolerance * 4) && !H.is_heat_resistant())
 							if (chem_helmet_check(H, "hot"))
 								boutput(H, "<span class='alert'>You are scalded by the hot chemicals!</span>")
-								H.TakeDamage("head", 0, round(log(max((temp_to_burn_with - (H.base_body_temp + (H.temp_tolerance * 4))), 1) / 50) * 10) * dmg_multiplier, 0, DAMAGE_BURN) // lol this caused brute damage
+								H.TakeDamage("head", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN) // lol this caused brute damage
 								H.emote("scream")
-								H.bodytemperature += min(max((temp_to_burn_with - (H.base_body_temp + (H.temp_tolerance * 4))) - 20, 5),500)
+								H.bodytemperature += clamp((temp_to_burn_with - (H.base_body_temp + (H.temp_tolerance * 4))) - 20, 5, 500)
 						else if(temp_to_burn_with < H.base_body_temp - (H.temp_tolerance * 4) && !H.is_cold_resistant())
 							if (chem_helmet_check(H, "cold"))
 								boutput(H, "<span class='alert'>You are frostbitten by the freezing cold chemicals!</span>")
-								H.TakeDamage("head", 0, round(log(max(((H.base_body_temp - (H.temp_tolerance * 4)) - temp_to_burn_with), 1) / 50) * 10) * dmg_multiplier, 0, DAMAGE_BURN)
+								H.TakeDamage("head", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN)
 								H.emote("scream")
-								H.bodytemperature -= min(max((H.base_body_temp - (H.temp_tolerance * 4)) - temp_to_burn_with - 20, 5), 500)
+								H.bodytemperature -= clamp((H.base_body_temp - (H.temp_tolerance * 4)) - temp_to_burn_with - 20, 5, 500)
 
 					for(var/current_id in reagent_list)
 						var/datum/reagent/current_reagent = reagent_list[current_id]
@@ -683,11 +712,12 @@ datum
 								if(temp_to_burn_with > C.base_body_temp + (C.temp_tolerance * 4) && !C.is_heat_resistant())
 									boutput(C, "<span class='alert'>You scald yourself trying to consume the boiling hot substance!</span>")
 									C.TakeDamage("chest", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN)
-									C.bodytemperature += min(max((temp_to_burn_with - T0C) - 20, 5),700)
+									C.bodytemperature += clamp((temp_to_burn_with - T0C) - 20, 5, 700)
 								else if(temp_to_burn_with < C.base_body_temp - (C.temp_tolerance * 4) && !C.is_cold_resistant())
 									boutput(C, "<span class='alert'>You frostburn yourself trying to consume the freezing cold substance!</span>")
 									C.TakeDamage("chest", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN)
-									C.bodytemperature -= min(max((temp_to_burn_with - T0C) - 20, 5),700)
+									C.bodytemperature -= clamp((temp_to_burn_with - T0C) - 20, 5, 700)
+
 
 					// These spawn calls were breaking stuff elsewhere. Since they didn't appear to be necessary and
 					// I didn't come across problems in local testing, I've commented them out as an experiment. If you've come
@@ -757,11 +787,11 @@ datum
 			if(!current_reagent.data) current_reagent.data = sdata
 
 			src.last_temp = src.total_temperature
-			src.total_temperature = src.total_temperature * src.total_volume + temp_new*new_amount
+			var/temp_temperature = src.total_temperature*src.total_volume*src.composite_heat_capacity + temp_new*new_amount*current_reagent.heat_capacity
 
-			var/divison_amount = src.total_volume + new_amount
+			var/divison_amount = src.total_volume*src.composite_heat_capacity + new_amount*current_reagent.heat_capacity
 			if (divison_amount > 0)
-				src.total_temperature = src.total_temperature / divison_amount
+				src.total_temperature = temp_temperature / divison_amount
 
 			if (!donotupdate)
 				update_total()
@@ -842,7 +872,6 @@ datum
 		proc/reagents_changed(var/add = 0) // add will be 1 if reagents were just added
 			if (my_atom)
 				my_atom.on_reagent_change(add)
-			desc = null			// mark the description as needing refresh
 			return
 
 		proc/is_full() // li'l tiny helper thing vOv
@@ -897,24 +926,19 @@ datum
 			.= get_fullness(total_volume / maximum_volume * 100)
 
 		proc/get_inexact_description(var/rc_flags=0)
-			if(desc) return desc
 			if(rc_flags == 0)
 				return null
-
-
-			// rebuild description
-
 
 			var/full_text = get_reagents_fullness()
 
 			if(full_text == "empty")
 				if(rc_flags & (RC_SCALE | RC_VISIBLE | RC_FULLNESS) )
-					desc = "<span class='notice'>It is empty.</span>"
-				return desc
+					. += "<span class='notice'>It is empty.</span>"
+				return
 
 			var/datum/color/c = get_average_color()
 
-			//desc+= "([c.r],[c.g],[c.b];[c.a])"
+			//. += "([c.r],[c.g],[c.b];[c.a])"
 
 			var/nearest_color_text = get_nearest_color(c)
 
@@ -931,17 +955,17 @@ datum
 
 			if(rc_flags & RC_VISIBLE)
 				if(rc_flags & RC_SCALE)
-					desc += "<span class='notice'>It contains [total_volume] units of \a [t]-colored [state_text].</span>"
+					. += "<span class='notice'>It contains [total_volume] units of \a [t]-colored [state_text].</span>"
 				else
-					desc += "<span class='notice'>It is [full_text] of \a [t]-colored [state_text].</span>"
+					. += "<span class='notice'>It is [full_text] of \a [t]-colored [state_text].</span>"
 			else
 				if(rc_flags & RC_SCALE)
-					desc += "<span class='notice'>It contains [total_volume] units.</span>"
+					. += "<span class='notice'>It contains [total_volume] units.</span>"
 				else
 					if(rc_flags & RC_FULLNESS)
-						desc += "<span class='notice'>It is [full_text].</span>"
+						. += "<span class='notice'>It is [full_text].</span>"
 
-			return desc
+			return .
 
 
 		// returns the average color of the reagents

@@ -31,7 +31,7 @@
 	throwforce = 2.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 /obj/item/assembly/detonator/New()
 	..()
@@ -298,6 +298,8 @@
 
 /obj/item/assembly/detonator/proc/failsafe_engage()
 	if (src.part_fs.timing)
+		return
+	if (!src.attachedTo || !src.master) // if the detonator assembly isn't wired to anything, then no need to prime it
 		return
 	src.safety = 0
 	src.part_fs.timing = 1

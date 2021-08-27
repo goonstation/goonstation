@@ -6,7 +6,7 @@
 	item_state = "electronic"
 	density = 0
 	anchored = 0.0
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 	var/charges = 1
 	var/use_sound = "sound/machines/chime.ogg"

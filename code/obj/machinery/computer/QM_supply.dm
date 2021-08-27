@@ -122,6 +122,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	req_access = list(access_supply_console)
 	object_flags = CAN_REPROGRAM_ACCESS
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_MULTITOOL
+	circuit_type = /obj/item/circuitboard/qmsupply
 	var/temp = null
 	var/last_cdc_message = null
 	var/hacked = 0
@@ -142,12 +143,6 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		radio_controller.remove_object(src, "1435")
 		..()
 
-/obj/machinery/computer/supplycomp/attackby(I as obj, user as mob)
-	return src.attack_hand(user)
-
-/obj/machinery/computer/supplycomp/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
-
 /obj/machinery/computer/supplycomp/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if(!hacked)
 		if(user)
@@ -164,11 +159,10 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	src.hacked = 0
 	return 1
 
-/obj/machinery/computer/supplycomp/attackby(I as obj, user as mob)
-	if(istype(I,/obj/item/card/emag))
+/obj/machinery/computer/supplycomp/attackby(I as obj, mob/user as mob)
+	if(!istype(I,/obj/item/card/emag))
 		//I guess you'll wanna put the emag away now instead of getting a massive popup
-	else
-		return src.attack_hand(user)
+		..()
 
 /obj/machinery/computer/supplycomp/attack_hand(var/mob/user as mob)
 	if(!src.allowed(user))
@@ -593,7 +587,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			if (null, "list")
 				. = "<h2>Current Requests</h2><br><a href='[topicLink("requests", "clear")]'>Clear all</a><br><ul>"
 				for(var/datum/supply_order/SO in shippingmarket.supply_requests)
-					. += "<li>[SO.object.name], requested by [SO.orderedby] from [SO.console_location]. <a href='[topicLink("order", "buy", list(what = "\ref[SO]"))]'>Approve</a> <a href='[topicLink("requests", "remove", list(what = "\ref[SO]"))]'>Deny</a></li>"
+					. += "<li>[SO.object.name], requested by [SO.orderedby] from [SO.console_location]. Price: [SO.object.cost] <a href='[topicLink("order", "buy", list(what = "\ref[SO]"))]'>Approve</a> <a href='[topicLink("requests", "remove", list(what = "\ref[SO]"))]'>Deny</a></li>"
 
 				. += {"</ul>"}
 				return .
@@ -851,7 +845,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				src.updateUsrDialog()
 				return
 
-			var/buy_cap = 20
+			var/buy_cap = 99
 			var/total_stuff_in_cart = 0
 
 			if (shippingmarket && istype(shippingmarket,/datum/shipping_market))
@@ -990,7 +984,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				cart_cost += C.price * C.amount
 				total_cart_amount += C.amount
 
-			var/buy_cap = 20
+			var/buy_cap = 99
 
 			if (shippingmarket && istype(shippingmarket,/datum/shipping_market))
 				buy_cap = shippingmarket.max_buy_items_at_once

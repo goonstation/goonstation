@@ -49,6 +49,8 @@
 #define GAS_IMG_PLASMA 0
 /// N20 Tile Overlay Id
 #define GAS_IMG_N2O 1
+/// Rad Particles Tile Overlay Id
+#define GAS_IMG_RAD 2
 
 /// Enables gas overlays to have continuous opacity based on molarity
 #define ALPHA_GAS_OVERLAYS

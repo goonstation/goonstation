@@ -198,33 +198,6 @@
 		jobs[rank] = C.wage
 */
 
-/obj/machinery/computer
-	var/can_reconnect = 0 //Set to 1 to make multitools call connection_scan. For consoles with associated equipment (cloner, genetek etc)
-	Topic(href, href_list)
-		if (..(href, href_list))
-			return 1
-		playsound(src.loc, 'sound/machines/keypress.ogg', 30, 1, -15)
-
-	attack_hand(var/mob/user)
-		..()
-		interact_particle(user,src)
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (can_reconnect)
-			if (istype(W, /obj/item/device/multitool) && !(status & (BROKEN|NOPOWER)))
-				boutput(user, "<span class='notice'>You pulse [src.name] to re-scan for equipment.</span>")
-				connection_scan()
-				return
-			else
-				src.attack_hand(user) //Previously the default behaviour for all affected computers
-		else
-			..()
-
-	proc/connection_scan()
-		//Placeholder so the multitool probing thing can go on this parent
-		//Put the code for finding the stuff your computer needs in this proc
-		return
-
 /obj/machinery/computer/ATM
 	name = "ATM"
 	icon_state = "atm"
@@ -279,7 +252,7 @@
 			user.client.add_to_bank(SB.amount)
 			boutput(user, "<span class='alert'>You deposit [SB.amount] spacebux into your account!</span>")
 			qdel(SB)
-		if(istype(I, /obj/item/spacecash/))
+		else if(istype(I, /obj/item/spacecash/))
 			if (src.accessed_record)
 				boutput(user, "<span class='notice'>You insert the cash into the ATM.</span>")
 
@@ -291,7 +264,7 @@
 				I.amount = 0
 				pool(I)
 			else boutput(user, "<span class='alert'>You need to log in before depositing cash!</span>")
-		if(istype(I, /obj/item/lotteryTicket))
+		else if(istype(I, /obj/item/lotteryTicket))
 			if (src.accessed_record)
 				boutput(user, "<span class='notice'>You insert the lottery ticket into the ATM.</span>")
 				if(I:winner)
@@ -309,7 +282,7 @@
 				qdel(I)
 			else boutput(user, "<span class='alert'>You need to log in before inserting a ticket!</span>")
 		else
-			src.attack_hand(user)
+			..()
 		return
 
 	attack_ai(var/mob/user as mob)
@@ -341,11 +314,7 @@
 
 					if (src.scan)
 						dat += "<BR><BR>Your balance is: $ [src.accessed_record.fields["current_money"]]."
-						dat += "<BR>Your balance on your card is: $ [src.scan.money]"
-						dat += "<BR><BR><A HREF='?src=\ref[src];operation=withdraw'>Withdraw to Card</A>"
 						dat += "<BR><A HREF='?src=\ref[src];operation=withdrawcash'>Withdraw Cash</A>"
-						dat += "<BR><A HREF='?src=\ref[src];operation=deposit'>Deposit from Card</A>"
-
 						dat += "<BR><BR><A HREF='?src=\ref[src];operation=buy'>Buy Lottery Ticket (100 credits)</A>"
 						dat += "<BR>To claim your winnings you'll need to insert your lottery ticket."
 					else
@@ -407,20 +376,6 @@
 				src.accessed_record = null
 				src.scan = null
 
-			if("withdraw")
-				if (scan.registered in FrozenAccounts)
-					boutput(usr, "<span class='alert'>This account is frozen!</span>")
-					return
-				var/amount = round(input(usr, "How much would you like to withdraw?", "Withdrawal", 0) as null|num)
-				if(amount < 1)
-					boutput(usr, "<span class='alert'>Invalid amount!</span>")
-					return
-				if(amount > src.accessed_record.fields["current_money"])
-					boutput(usr, "<span class='alert'>Insufficient funds in account.</span>")
-				else
-					src.scan.money += amount
-					src.accessed_record.fields["current_money"] -= amount
-
 			if("withdrawcash")
 				if (scan.registered in FrozenAccounts)
 					boutput(usr, "<span class='alert'>This account is frozen!</span>")
@@ -436,17 +391,6 @@
 					var/obj/item/spacecash/S = unpool(/obj/item/spacecash)
 					S.setup(src.loc, amount)
 					usr.put_in_hand_or_drop(S)
-
-			if("deposit")
-				var/amount = round(input(usr, "How much would you like to deposit?", "Deposit", 0) as null|num)
-				if(amount < 1)
-					boutput(usr, "<span class='alert'>Invalid amount!</span>")
-					return
-				if(amount > src.scan.money)
-					boutput(usr, "<span class='alert'>Insufficient funds on card.</span>")
-				else
-					src.scan.money -= amount
-					src.accessed_record.fields["current_money"] += amount
 
 			if("buy")
 				if(accessed_record.fields["current_money"] >= 100)
@@ -522,7 +466,7 @@
 	var/payroll_rate_limit_time = 0 //for preventing coammand message spam
 
 	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_hand(mob/user as mob)
 		if(..())
@@ -746,6 +690,7 @@
 		if(istype(I, /obj/item/card/id))
 			boutput(user, "<span class='notice'>You swipe your ID card in the ATM.</span>")
 			src.scan = I
+			attack_hand(user)
 			return
 		if(istype(I, /obj/item/spacecash/))
 			if (afterlife)
@@ -756,6 +701,7 @@
 				src.accessed_record.fields["current_money"] += I.amount
 				I.amount = 0
 				pool(I)
+				attack_hand(user)
 			else boutput(user, "<span class='alert'>You need to log in before depositing cash!</span>")
 			return
 		if(istype(I, /obj/item/lotteryTicket))
@@ -830,12 +776,7 @@
 
 					if (src.scan)
 						dat += "<BR><BR>Your balance is: $ [src.accessed_record.fields["current_money"]]."
-						dat += "<BR>Your balance on your card is: $ [src.scan.money]"
-						dat += "<BR><BR><A HREF='?src=\ref[src];operation=withdraw'>Withdraw to Card</A>"
 						dat += "<BR><A HREF='?src=\ref[src];operation=withdrawcash'>Withdraw Cash</A>"
-						if(!afterlife)
-							dat += "<BR><A HREF='?src=\ref[src];operation=deposit'>Deposit from Card</A>"
-
 						dat += "<BR><BR><A HREF='?src=\ref[src];operation=buy'>Buy Lottery Ticket (100 credits)</A>"
 						dat += "<BR>To claim your winnings you'll need to insert your lottery ticket."
 					else
@@ -900,20 +841,6 @@
 				src.accessed_record = null
 				src.scan = null
 
-			if("withdraw")
-				if (scan.registered in FrozenAccounts)
-					boutput(usr, "<span class='alert'>This account is frozen!</span>")
-					return
-				var/amount = round(input(usr, "How much would you like to withdraw?", "Withdrawal", 0) as null|num)
-				if(amount < 1)
-					boutput(usr, "<span class='alert'>Invalid amount!</span>")
-					return
-				if(amount > src.accessed_record.fields["current_money"])
-					boutput(usr, "<span class='alert'>Insufficient funds in account.</span>")
-				else
-					src.scan.money += amount
-					src.accessed_record.fields["current_money"] -= amount
-
 			if("withdrawcash")
 				if (scan.registered in FrozenAccounts)
 					boutput(usr, "<span class='alert'>This account is frozen!</span>")
@@ -929,17 +856,6 @@
 					var/obj/item/spacecash/S = unpool(/obj/item/spacecash)
 					S.setup(src.loc, amount)
 					usr.put_in_hand_or_drop(S)
-
-			if("deposit")
-				var/amount = round(input(usr, "How much would you like to deposit?", "Deposit", 0) as null|num)
-				if(amount < 1)
-					boutput(usr, "<span class='alert'>Invalid amount!</span>")
-					return
-				if(amount > src.scan.money)
-					boutput(usr, "<span class='alert'>Insufficient funds on card.</span>")
-				else
-					src.scan.money -= amount
-					src.accessed_record.fields["current_money"] += amount
 
 			if("buy")
 				if(accessed_record.fields["current_money"] >= 100)
@@ -1033,7 +949,7 @@
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "paper"
 
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 	// 4 numbers between 1 and 3 gives a one in 81 chance of winning. It's 3^4 possible combinations.
 	var/list/numbers = new/list(4)

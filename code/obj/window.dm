@@ -8,6 +8,7 @@
 	dir = 5 //full tile
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
 	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
+	object_flags = HAS_DIRECTIONAL_BLOCKING
 	text = "<font color=#aaf>#"
 	var/health = 30
 	var/health_max = 30
@@ -322,6 +323,7 @@
 
 		if (src && src.health <= 2 && !reinforcement)
 			src.anchored = 0
+			src.stops_space_move = 0
 			step(src, get_dir(AM, src))
 		..()
 		return
@@ -373,6 +375,7 @@
 						boutput(user, "<span class='alert'>You were interrupted.</span>")
 						return
 				src.anchored = !(src.anchored)
+				src.stops_space_move = !(src.stops_space_move)
 				user.show_text("You have [src.anchored ? "fastened the frame to" : "unfastened the frame from"] the floor.", "blue")
 				return 1
 			else
@@ -383,6 +386,7 @@
 						boutput(user, "<span class='alert'>You were interrupted.</span>")
 						return
 				src.anchored = !(src.anchored)
+				src.stops_space_move = !(src.stops_space_move)
 				user.show_text("You have [src.anchored ? "fastened the window to" : "unfastened the window from"] the floor.", "blue")
 				return 1
 
@@ -428,13 +432,11 @@
 			attack_particle(user,src)
 			playsound(src.loc, src.hitsound , 75, 1)
 			src.damage_blunt(W.force)
-			if (src.health <= 2)
-				src.anchored = 0
-				step(src, get_dir(user, src))
 			..()
 		return
 
 	proc/smash()
+		logTheThing("station", usr, null, "smashes a [src] in [src.loc?.loc] ([showCoords(src.x, src.y, src.z)])")
 		if (src.health < (src.health_max * -0.75))
 			// You managed to destroy it so hard you ERASED it.
 			qdel(src)
@@ -688,6 +690,7 @@
 	dir = 5
 	health_multiplier = 2
 	//deconstruct_time = 20
+	object_flags = 0 // so they don't inherit the HAS_DIRECTIONAL_BLOCKING flag from thindows
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
 	var/mod = null
@@ -990,6 +993,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (isscrewingtool(W))
 			src.anchored = !( src.anchored )
+			src.stops_space_move = !(src.stops_space_move)
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 75, 1)
 			user << (src.anchored ? "You have fastened [src] to the floor." : "You have unfastened [src].")
 			return

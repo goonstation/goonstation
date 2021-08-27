@@ -11,7 +11,7 @@
 	icon_state = "scroll_seal"
 	var/uses = 4.0
 	flags = FPRINT | TABLEPASS
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	throw_speed = 4
@@ -48,6 +48,8 @@
 	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))))
 		src.add_dialog(usr)
 		if (href_list["spell_teleport"])
+			if (!can_act(H))
+				return
 			if (src.uses >= 1 && usr.teleportscroll(0, 1, src) == 1)
 				src.uses -= 1
 		if (ismob(src.loc))
@@ -71,7 +73,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	object_flags = NO_ARM_ATTACH
 	var/wizard_key = "" // The owner of this staff.
@@ -114,7 +116,7 @@
 				affected_mob.visible_message("<span class='alert'>The curse upon [src] rebukes [affected_mob]!</span>")
 				boutput(affected_mob, "<span class='alert'>Horrible visions of depravity and terror flood your mind!</span>")
 				affected_mob.emote("scream")
-				affected_mob.changeStatus("paralysis", 80)
+				affected_mob.changeStatus("paralysis", 8 SECONDS)
 				affected_mob.changeStatus("stunned", 10 SECONDS)
 				affected_mob.stuttering += 20
 				affected_mob.take_brain_damage(25)
@@ -194,12 +196,20 @@
 				JOB_XP(M, "Chaplain", 2)
 				return
 
-			if (prob(20))
+			if (M.get_brain_damage() >= 30 && prob(20))
 				src.do_brainmelt(M, 1)
 			else if (prob(35))
 				src.do_brainmelt(M, 0)
 		..()
 		return
+
+	MouseDrop(atom/over_object, src_location, over_location, over_control, params)
+		if (iswizard(usr) || check_target_immunity(usr))
+			. = ..()
+		else if(isliving(usr))
+			src.do_brainmelt(usr, 1)
+		else
+			return
 
 	pull(var/mob/user)
 		if(check_target_immunity(user))
@@ -214,13 +224,23 @@
 			src.do_brainmelt(user, 2)
 			return
 
+/obj/item/staff/monkey_staff
+	name = "staff of monke"
+	desc = "A staff with a cute monkey head carved into the wood."
+	icon_state = "staffmonkey"
+	item_state = "staffmonkey"
+
+	New()
+		. = ..()
+		src.setItemSpecial(/datum/item_special/launch_projectile/monkey_organ)
+
 /////////////////////////////////////////////////////////// Magic mirror /////////////////////////////////////////////
 
 /obj/magicmirror
 	desc = "An old mirror. A bit eeky and ooky."
 	name = "Magic Mirror"
 	icon = 'icons/obj/decals/misc.dmi'
-	icon_state = "rip"
+	icon_state = "wizard_mirror"
 	anchored = 1.0
 	opacity = 0
 	density = 0
@@ -235,7 +255,7 @@
 
 		// Teamwork, perhaps? The M.is_target check that used to be here doesn't cut it in the mixed game mode (Convair880).
 		for (var/datum/mind/M in ticker.minds)
-			if (M?.special_role == "wizard" && M.current)
+			if (M?.special_role == ROLE_WIZARD && M.current)
 				W_count++
 				T += "<hr>"
 				T += "<b>[M.current.real_name]'s objectives:</b>"

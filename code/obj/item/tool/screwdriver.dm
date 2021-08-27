@@ -7,7 +7,7 @@
 
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	tool_flags = TOOL_SCREWING
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 	force = 5.0
 	throwforce = 5.0
@@ -19,7 +19,6 @@
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 
-	module_research = list("tools" = 4, "metals" = 1)
 	rand_pos = 1
 	custom_suicide = 1
 

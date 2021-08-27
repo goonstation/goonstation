@@ -95,7 +95,7 @@ proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255, force = 0)
 	else
 		// force whatever it is to be shown. for not chat tings. honk.
 		text.maptext = msg
-	if(istype(target, /atom/movable))
+	if(istype(target, /atom/movable) && target.chat_text)
 		var/atom/movable/L = target
 		text.loc = L.chat_text
 		if(length(L.chat_text.lines) && L.chat_text.lines[length(L.chat_text.lines)].maptext == text.maptext)

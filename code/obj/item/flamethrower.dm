@@ -35,7 +35,7 @@ A Flamethrower in various states of assembly
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	var/mode = FLAMER_MODE_SINGLE
 	var/processing = 0
 	var/lit = 0	//on or off
@@ -184,7 +184,7 @@ A Flamethrower in various states of assembly
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	var/obj/item/weldingtool/welder = null
 	var/obj/item/rods/rod = null
 	var/obj/item/device/igniter/igniter = null
@@ -316,7 +316,7 @@ A Flamethrower in various states of assembly
 /obj/item/gun/flamethrower/backtank/napalm
 	New()
 		..()
-		gastank.reagents.add_reagent("napalm_goo", 4000)
+		gastank.reagents.add_reagent("syndicate_napalm", 4000)
 
 /obj/item/gun/flamethrower/assembled/New()
 	..()
@@ -367,7 +367,7 @@ A Flamethrower in various states of assembly
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 /obj/item/assembly/weld_rod/New()
 	..()
@@ -388,7 +388,7 @@ A Flamethrower in various states of assembly
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 /obj/item/assembly/w_r_ignite/New()
 	..()
@@ -418,6 +418,7 @@ A Flamethrower in various states of assembly
 		var/turf/T = src.loc
 		if (ismob(T))
 			T = T.loc
+		user.show_message("<span class='notice'>You remove the rod from the welding tool.</span>", 1)
 		src.welder.set_loc(T)
 		src.rod.set_loc(T)
 		src.welder.master = null
@@ -434,6 +435,7 @@ A Flamethrower in various states of assembly
 		var/obj/item/device/igniter/I = W
 		if (!( I.status ))
 			return
+		user.show_message("<span class='notice'>You put the igniter in place, it still needs to be firmly attached.</span>", 1)
 		var/obj/item/assembly/weld_rod/S = src
 		var/obj/item/assembly/w_r_ignite/R = new /obj/item/assembly/w_r_ignite( user )
 		R.welder = S.welder
@@ -465,6 +467,7 @@ A Flamethrower in various states of assembly
 		var/turf/T = src.loc
 		if (ismob(T))
 			T = T.loc
+		user.show_message("<span class='notice'>You disassemble the [src.name]</span>", 1)
 		src.welder.set_loc(T)
 		src.rod.set_loc(T)
 		src.igniter.set_loc(T)
@@ -536,7 +539,7 @@ A Flamethrower in various states of assembly
 
 	/// dump the thing on the ground
 	var/obj/item/old_thing = (. == "tank") ? src.gastank : src.fueltank
-	playsound(get_turf(src), 'sound/weapons/gunload_light.ogg', 25, 1)
+	playsound(src, 'sound/weapons/gunload_light.ogg', 25, 1)
 	if(ismob(user))
 		user.put_in_hand_or_drop(old_thing)
 	else
@@ -547,20 +550,15 @@ A Flamethrower in various states of assembly
 		src.gastank = F
 	else
 		src.fueltank = F
-	src.inventory_counter.update_percent(src.fueltank.reagents.total_volume, src.fueltank.reagents.maximum_volume)
 
-	var/fuel = "_no_fuel"
-	if(src.fueltank)
-		fuel = "_fuel"
-	src.icon_state = "flamethrower_oxy[fuel]"
-	var/oxy = "_no_oxy"
-	if(src.gastank)
-		oxy = "_oxy"
-	src.icon_state = "flamethrower[oxy]_fuel"
+	if (src.fueltank)
+		src.inventory_counter.update_percent(src.fueltank.reagents.total_volume, src.fueltank.reagents.maximum_volume)
+
+	src.icon_state = "flamethrower[src.gastank ? "_oxy" : "_no_oxy"][src.fueltank ? "_fuel" : "_no_fuel"]"
 
 	src.updateSelfDialog()
 	SPAWN_DBG(0.5 SECONDS)
-		playsound(get_turf(src), "sound/effects/valve_creak.ogg", 40, 1)
+		playsound(src, "sound/effects/valve_creak.ogg", 40, 1)
 	return TRUE
 
 /obj/item/gun/flamethrower/assembled/attackby(obj/item/W, mob/user as mob)
@@ -614,14 +612,14 @@ A Flamethrower in various states of assembly
 		src.remove_dialog(user)
 		user.Browse(null, "window=flamethrower")
 		return
-	if(user.stat || user.restrained() || user.lying || src.loc != user)
+	if(user.stat || user.restrained() || user.lying || !(src in user.equipped_list()))
 		return
 	src.add_dialog(user)
 
 	if (href_list["light"])
 		if(!src.gastank || !src.fueltank)	return
 		lit = !(lit)
-		playsound(get_turf(src), "sound/misc/lightswitch.ogg", 20, 1)
+		playsound(src, "sound/misc/lightswitch.ogg", 20, 1)
 		if(lit)
 			icon_state = "flamethrower_ignite_on"
 			item_state = "flamethrower1"
@@ -650,13 +648,13 @@ A Flamethrower in various states of assembly
 			fuel = "_fuel"
 		icon_state = "flamethrower_no_oxy[fuel]"
 		item_state = "flamethrower0"
-		playsound(get_turf(src), "sound/effects/valve_creak.ogg", 15, 1)
+		playsound(src, "sound/effects/valve_creak.ogg", 15, 1)
 		var/remove_sound = "sound/items/pickup_[max(min(src.w_class,3),1)].ogg"
 		if(A?.pickup_sfx)
 			remove_sound = A.pickup_sfx
 		SPAWN_DBG(0.2 SECONDS)
 			if(src)
-				playsound(get_turf(src), remove_sound, 30, 1)
+				playsound(src, remove_sound, 30, 1)
 
 
 	if (href_list["removefuel"])
@@ -678,14 +676,14 @@ A Flamethrower in various states of assembly
 		var/remove_sound = "sound/items/pickup_[max(min(src.w_class,3),1)].ogg"
 		if(A?.pickup_sfx)
 			remove_sound = A.pickup_sfx
-		playsound(get_turf(src), remove_sound, 30, 1)
+		playsound(src, remove_sound, 30, 1)
 		SPAWN_DBG(0.5 SECONDS)
 			if(src)
-				playsound(get_turf(src), "sound/effects/valve_creak.ogg", 15, 1)
+				playsound(src, "sound/effects/valve_creak.ogg", 15, 1)
 
 	if (href_list["mode"])
 		mode = text2num(href_list["mode"])
-		playsound(get_turf(src), "sound/effects/valve_creak.ogg", 15, 1)
+		playsound(src, "sound/effects/valve_creak.ogg", 15, 1)
 		src.current_projectile.fullauto_valid = 1
 		src.current_projectile.shot_number = 1
 		switch(src.mode)
@@ -717,7 +715,7 @@ A Flamethrower in various states of assembly
 		else
 			var/tempnum = text2num(href_list["temp"])
 			src.base_temperature = clamp(src.base_temperature += tempnum, src.min_temperature, src.max_temperature)
-		playsound(get_turf(src), "sound/misc/lightswitch.ogg", 20, 1)
+		playsound(src, "sound/misc/lightswitch.ogg", 20, 1)
 
 	if (href_list["c_amt"])
 		if (href_list["c_amt"] == "reset")
@@ -725,7 +723,7 @@ A Flamethrower in various states of assembly
 		else
 			var/tempnum = text2num(href_list["c_amt"])
 			src.amt_chem = clamp(src.amt_chem += tempnum, FLAMER_MIN_CHEM_AMT, src.amt_chem_max)
-		playsound(get_turf(src), "sound/effects/valve_creak.ogg", 10, 0.2)
+		playsound(src, "sound/effects/valve_creak.ogg", 10, 0.2)
 
 	inventory_counter?.update_percent(src.fueltank?.reagents?.total_volume, src.fueltank?.reagents?.maximum_volume)
 	src.updateSelfDialog()

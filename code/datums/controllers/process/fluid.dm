@@ -1,4 +1,5 @@
-datum/controller/process/fluid_group
+/// Controller for fluids
+/datum/controller/process/fluid_group
 	var/tmp/list/processing_fluid_groups = list()
 	var/tmp/list/processing_fluid_spreads = list()
 	var/tmp/list/processing_fluid_drains = list()
@@ -6,8 +7,8 @@ datum/controller/process/fluid_group
 	var/group_update_interval = 40 SECONDS
 	var/last_group_update = 0
 
-	var/max_schedule_interval = 40 //4 seconds
-	var/min_schedule_interval = 5 //.5 seconds
+	var/max_schedule_interval = 4 SECONDS
+	var/min_schedule_interval = 0.5 SECONDS
 
 	setup()
 		name = "Fluid_Groups"

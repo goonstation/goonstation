@@ -7,7 +7,7 @@
 
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	tool_flags = TOOL_WRENCHING
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 	force = 5.0
 	throwforce = 7.0
@@ -16,7 +16,6 @@
 	stamina_crit_chance = 15
 
 	m_amt = 150
-	module_research = list("tools" = 4, "metals" = 2)
 	rand_pos = 1
 
 	New()
@@ -34,7 +33,6 @@
 	desc = "What the FUCK is that thing???"
 	icon_state = "wrench-monkey"
 	item_state = "wrench"
-	module_research = list("tools" = 8)
 
 /obj/item/wrench/vr
 	icon_state = "wrench-vr"
@@ -42,7 +40,7 @@
 
 /obj/item/wrench/battle //for nuke ops class
 	name = "battle wrench"
-	desc = "A heavy industrial wrench that packs a mean punch when used as a bludgeon."
+	desc = "A heavy industrial wrench that packs a mean punch when used as a bludgeon. Can be applied to the Nuclear bomb to repair it in small increments."
 	icon_state = "wrench-battle"
 	item_state = "wrench-battle"
 	force = 10.0

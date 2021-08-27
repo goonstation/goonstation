@@ -44,13 +44,7 @@ jobs:
       - name: Run Linter
         id: linter
         run: |
-          ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
-
-      - name: Annotate Linter
-        uses: yogstation13/DreamAnnotate@9f2dbe51421affdecc6973c47d34b7f1009d77d3 # v1 - security concerns and all that shit
-        if: always()
-        with:
-          outputFile: output-annotations.txt
+          ~/dreamchecker
 
   compile:
     name: Compile
@@ -86,17 +80,17 @@ jobs:
         run: |
           tools/ci/dm.sh -DCIBUILD goonstation.dme
 
-      - name: Prepare Artifacts
-        run: |
-          mkdir artifacts
-          cp goonstation.dmb artifacts
-          cp goonstation.rsc artifacts
+      # - name: Prepare Artifacts
+      #   run: |
+      #     mkdir artifacts
+      #     cp goonstation.dmb artifacts
+      #     cp goonstation.rsc artifacts
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v1
-        with:
-          name: DMB + RSC
-          path: ${{github.workspace}}/artifacts
+      # - name: Upload Artifacts
+      #   uses: actions/upload-artifact@v1
+      #   with:
+      #     name: DMB + RSC
+      #     path: ${{github.workspace}}/artifacts
 
 
   compile_ass:
@@ -197,14 +191,8 @@ jobs:
       - name: Run Linter
         id: linter
         run: |
-          ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
+          ~/dreamchecker
 
       - name: Compile
         run: |
           tools/ci/dm.sh -DCIBUILD -DTRAVIS_SUB goonstation.dme
-
-      - name: Annotate Linter
-        uses: yogstation13/DreamAnnotate@9f2dbe51421affdecc6973c47d34b7f1009d77d3 # v1 - security concerns and all that shit
-        if: always()
-        with:
-          outputFile: output-annotations.txt

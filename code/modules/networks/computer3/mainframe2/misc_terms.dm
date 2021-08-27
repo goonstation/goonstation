@@ -100,6 +100,7 @@
 
 		..()
 
+
 /obj/machinery/networked/storage
 	name = "Databank"
 	desc = "A networked data storage device."
@@ -108,7 +109,7 @@
 	icon_state = "tapedrive0"
 	device_tag = "PNET_DATA_BANK"
 	mats = 12
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	var/base_icon_state = "tapedrive"
 	var/bank_id = null //Unique Identifier for this databank.
 	var/locked = 1
@@ -1029,7 +1030,7 @@
 	desc = "A nuclear charge used as a self-destruct device. Uh oh!"
 	device_tag = "PNET_NUCCHARGE"
 	var/timing = 0
-	var/time = 60
+	var/time = 180
 	power_usage = 120
 
 	var/status_display_freq = "1435"
@@ -1037,7 +1038,7 @@
 
 #define DISARM_CUTOFF 10 //Can't disarm past this point! OH NO!
 
-	mats = 80 //haha this is a bad idea
+	mats = list("POW-3" = 27, "MET-3" = 25, "CON-2" = 13, "DEN-3" = 15) //haha this is a bad idea
 	deconstruct_flags = DECON_NONE
 	is_syndicate = 1 //^ Agreed
 
@@ -1061,8 +1062,6 @@
 	attack_hand(mob/user as mob)
 		if(..() || status & NOPOWER)
 			return
-
-		src.add_dialog(user)
 
 		var/dat = "<html><head><title>Nuclear Charge</title></head><body>"
 
@@ -1262,7 +1261,7 @@
 						if(isnull(thetime))
 							src.post_status(target,"command","term_message","data","command=status&status=noparam&session=[sessionid]")
 							return
-						thetime = max( min(thetime,440), 30)
+						thetime = clamp(thetime, MIN_NUKE_TIME, MAX_NUKE_TIME)
 						src.time = thetime
 						src.post_status(target,"command","term_message","data","command=status&status=success&session=[sessionid]")
 						return
@@ -1294,7 +1293,7 @@
 							return
 
 						src.timing = 0
-						src.time = max(src.time,30) //so we don't have some jerk letting it tick down to 11 and then saving it for later.
+						src.time = max(src.time,MIN_NUKE_TIME) //so we don't have some jerk letting it tick down to 11 and then saving it for later.
 						src.icon_state = "net_nuke0"
 						src.post_status(target,"command","term_message","data","command=status&status=success&session=[sessionid]")
 						//World announcement.
@@ -1362,7 +1361,7 @@
 	device_tag = "PNET_PR6_RADIO"
 	//var/freq = 1219
 	mats = 8
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	var/list/frequencies = list()
 	var/datum/radio_frequency/radio_connection
 	var/transmission_range = 100 //How far does our signal reach?
@@ -1690,7 +1689,7 @@
 	desc = "A networked printer.  It's designed to print."
 	anchored = 1
 	density = 1
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	icon_state = "printer0"
 	device_tag = "PNET_PRINTDEVC"
 	mats = 6
@@ -2153,6 +2152,7 @@
 	anchored = 1
 	density = 1
 	icon_state = "scanner0"
+	deconstruct_flags = DECON_DESTRUCT
 	//device_tag = "PNET_SCANDEVC"
 	var/scanning = 0 //Are we scanning RIGHT NOW?
 	var/obj/item/scanned_thing //Ideally, this would be a paper or photo.
@@ -3311,7 +3311,7 @@
 				if (1 to 3)
 					//telehop + radiation
 					if (iscarbon(hitMob))
-						hitMob.changeStatus("radiation", 1000)
+						hitMob.changeStatus("radiation", 100 SECONDS)
 						hitMob.changeStatus("weakened", 2 SECONDS)
 					telehop(hitMob, src.power, src.power > 2)
 					return
@@ -3319,7 +3319,7 @@
 				if (4)
 					//big telehop + might leave parts behind.
 					if (iscarbon(hitMob))
-						hitMob.changeStatus("radiation", 1000)
+						hitMob.changeStatus("radiation", 100 SECONDS)
 
 						random_brute_damage(hitMob, 25)
 						hitMob.changeStatus("weakened", 2 SECONDS)
@@ -3392,6 +3392,7 @@
 	//Don't forget to give devices unique device_tag values of the form "PNET_XXXXXXXXX"
 	device_tag = "PNET_TEST_APPT" //This is the device tag used to interface with the mainframe GTPIO driver.
 	mats = 8
+	deconstruct_flags = DECON_DESTRUCT
 
 	power_usage = 200
 	var/dragload = 0 // can we click-drag a machinery-type artifact into this machine?
@@ -3529,7 +3530,8 @@
 		if (status & NOPOWER)
 			return 1
 
-		use_power(200)
+		if(active)
+			use_power(power_usage)
 
 		return 0
 
@@ -3797,7 +3799,7 @@
 			else
 				return
 
-		if (I.w_class < 4)
+		if (I.w_class < W_CLASS_BULKY)
 			if (src.contents.len < src.setup_max_objects)
 				if(I.cant_drop)
 					return
@@ -4434,7 +4436,7 @@
 				heat_overlay.icon_state = "heat-1"
 			if (250 to 269)
 				heat_overlay.icon_state = "heat-2"
-			if (249 to -99)
+			if (-INFINITY to 249)
 				heat_overlay.icon_state = "heat-3"
 			else
 				heat_overlay.icon_state = ""
@@ -4727,6 +4729,7 @@
 	setup_device_name = "Gas Sensor"
 	setup_capability_value = "S"
 	active = 1
+	power_usage = 20
 
 	var/setup_tag = null
 			//Pressure, Temperature, gases, trace gases sum

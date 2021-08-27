@@ -47,7 +47,9 @@
 		if(status & (BROKEN|NOPOWER))
 			icon_state = "circ[side]-p"
 		else if(last_pressure_delta > 0)
-			if(last_pressure_delta > ONE_ATMOSPHERE)
+			if(last_pressure_delta > ONE_ATMOSPHERE * 10000)
+				icon_state = "circ[side]-fast"
+			else if(last_pressure_delta > ONE_ATMOSPHERE)
 				icon_state = "circ[side]-run"
 			else
 				icon_state = "circ[side]-slow"

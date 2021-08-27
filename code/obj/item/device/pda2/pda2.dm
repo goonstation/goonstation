@@ -6,17 +6,16 @@
 	icon = 'icons/obj/items/pda.dmi'
 	icon_state = "pda"
 	item_state = "pda"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	rand_pos = 0
 	flags = FPRINT | TABLEPASS | ONBELT
-	module_research = list("science" = 1, "miniaturization" = 5, "devices" = 5, "efficiency" = 3)
-	module_research_type = /obj/item/device/pda2
+	wear_layer = MOB_BELT_LAYER
 	var/obj/item/card/id/ID_card = null // slap an ID card into that thang
+	var/obj/item/pen = null // slap a pen into that thang
 	var/registered = null // so we don't need to replace all the dang checks for ID cards
 	var/assignment = null
 	var/access = list()
 	var/image/ID_image = null
-
 	var/owner = null
 	var/ownerAssignment = null
 	var/obj/item/disk/data/cartridge/cartridge = null //current cartridge
@@ -45,6 +44,7 @@
 	var/linkbg_color = "#565D4B"
 	var/graphic_mode = 0
 
+	var/setup_default_pen = /obj/item/pen //PDAs can contain writing implements by default
 	var/setup_default_cartridge = null //Cartridge contains job-specific programs
 	var/setup_drive_size = 32 //PDAs don't have much work room at all, really.
 	// 2020 zamu update: 24 -> 32
@@ -99,18 +99,21 @@
 /obj/item/device/pda2
 	captain
 		icon_state = "pda-c"
+		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/captain
 		setup_drive_size = 32
 		mailgroups = list(MGD_COMMAND,MGD_PARTY)
 
 	heads
 		icon_state = "pda-h"
+		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/head
 		setup_drive_size = 32
 		mailgroups = list(MGD_COMMAND,MGD_PARTY)
 
 	hos
 		icon_state = "pda-hos"
+		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/hos
 		setup_default_module = /obj/item/device/pda_module/alert
 		setup_drive_size = 32
@@ -119,6 +122,7 @@
 
 	ntso
 		icon_state = "pda-nt"
+		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/hos //hos cart gives access to manifest compared to regular sec cart, useful for NTSO
 		setup_default_module = /obj/item/device/pda_module/alert
 		setup_drive_size = 32
@@ -127,6 +131,7 @@
 
 	ai
 		icon_state = "pda-h"
+		setup_default_pen = null // ai don't need no pens
 		setup_default_cartridge = /obj/item/disk/data/cartridge/ai
 		ejectable_cartridge = 0
 		setup_drive_size = 1024
@@ -144,6 +149,7 @@
 
 	cyborg
 		icon_state = "pda-h"
+		setup_default_pen = null // you don't even have hands
 		setup_default_cartridge = /obj/item/disk/data/cartridge/cyborg
 		ejectable_cartridge = 0
 		setup_drive_size = 1024
@@ -154,12 +160,14 @@
 
 	research_director
 		icon_state = "pda-rd"
+		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/research_director
 		setup_drive_size = 32
 		mailgroups = list(MGD_SCIENCE,MGD_COMMAND,MGD_PARTY)
 
 	medical_director
 		icon_state = "pda-md"
+		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/medical_director
 		setup_drive_size = 32
 		mailgroups = list(MGD_MEDRESEACH,MGD_MEDBAY,MGD_COMMAND,MGD_PARTY)
@@ -191,6 +199,7 @@
 
 	forensic
 		icon_state = "pda-s"
+		setup_default_pen = /obj/item/clothing/mask/cigarette
 		setup_default_cartridge = /obj/item/disk/data/cartridge/forensic
 		mailgroups = list(MGD_SECURITY,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS, MGA_TRACKING)
@@ -209,6 +218,7 @@
 	clown
 		icon_state = "pda-clown"
 		desc = "A portable microcomputer by Thinktronic Systems, LTD. The surface is coated with polytetrafluoroethylene and banana drippings."
+		setup_default_pen = /obj/item/pen/crayon/random
 		setup_default_cartridge = /obj/item/disk/data/cartridge/clown
 		event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
@@ -247,6 +257,12 @@
 		icon_state = "pda-e"
 		mailgroups = list(MGO_MINING,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES)
+
+	chiefengineer
+		icon_state = "pda-ce"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/chiefengineer
+		mailgroups = list(MGO_ENGINEER,MGO_MECHANIC,MGO_MINING,MGD_STATIONREPAIR,MGD_CARGO,MGD_COMMAND,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS, MGA_SALES, MGA_CARGOREQUEST, MGA_SHIPPING, MGA_RKIT)
 
 	chef
 		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
@@ -315,6 +331,7 @@
 			src.hd.root.add_file(new /datum/computer/file/text/pda2manual)
 			src.hd.root.add_file(new /datum/computer/file/pda_program/robustris)
 			src.hd.root.add_file(new /datum/computer/file/pda_program/emergency_alert)
+			src.hd.root.add_file(new /datum/computer/file/pda_program/gps)
 			src.hd.root.add_file(new /datum/computer/file/pda_program/cargo_request(src))
 			if(length(src.default_muted_mailgroups))
 				src.host_program.muted_mailgroups = src.default_muted_mailgroups
@@ -330,6 +347,19 @@
 		src.net_id = format_net_id("\ref[src]")
 
 		radio_controller?.add_object(src, "[frequency]")
+
+		if (src.setup_default_pen)
+			src.pen = new src.setup_default_pen(src)
+			if(istype(src.pen, /obj/item/clothing/mask/cigarette))
+				src.UpdateOverlays(image(src.icon, "cig"), "pen")
+			else if(istype(src.pen, /obj/item/pen/crayon))
+				var/image/pen_overlay = image(src.icon, "crayon")
+				pen_overlay.color = pen.color
+				src.UpdateOverlays(pen_overlay, "pen")
+			else if(istype(src.pen, /obj/item/pen/pencil))
+				src.UpdateOverlays(image(src.icon, "pencil"), "pen")
+			else
+				src.UpdateOverlays(image(src.icon, "pen"), "pen")
 
 		if (src.setup_default_cartridge)
 			src.cartridge = new src.setup_default_cartridge(src)
@@ -605,19 +635,49 @@
 				src.insert_id_card(ID, user)
 				boutput(user, "<span class='notice'>You insert [ID] into [src].</span>")
 
+	else if (istype(C, /obj/item/uplink_telecrystal))
+		if (src.uplink && src.uplink.active)
+			var/crystal_amount = C.amount
+			src.uplink.uses = src.uplink.uses + crystal_amount
+			boutput(user, "You insert [crystal_amount] [syndicate_currency] into the [src].")
+			qdel(C)
+
+	else if (istype(C, /obj/item/explosive_uplink_telecrystal))
+		if (src.uplink && src.uplink.active)
+			boutput(user, "<span class='alert'>The [C] explodes!</span>")
+			var/turf/T = get_turf(C.loc)
+			if(T)
+				T.hotspot_expose(700,125)
+				explosion(C, T, -1, -1, 2, 3) //about equal to a PDA bomb
+			C.set_loc(user.loc)
+			qdel(C)
+
+	else if (istype(C, /obj/item/pen) || istype(C, /obj/item/clothing/mask/cigarette))
+		if (!src.pen)
+			src.insert_pen(C, user)
+		else
+			boutput(user, "<span class='alert'>There is already something in [src]'s pen slot!</span>")
+
 /obj/item/device/pda2/examine()
 	. = ..()
 	. += "The back cover is [src.closed ? "closed" : "open"]."
 	if (src.ID_card)
 		. += "[ID_card] has been inserted into it."
+	if (src.pen)
+		. += "[pen] is sticking out of the pen slot."
 
 /obj/item/device/pda2/receive_signal(datum/signal/signal, rx_method, rx_freq)
-	if(!signal || signal.encryption || !src.owner) return
+
+	//let programs receive encrypted signals
+	if(!signal || !src.owner) return
 
 	src.host_program?.network_hook(signal, rx_method, rx_freq)
 
 	if(src.active_program && (src.active_program != src.host_program))
 		src.active_program.network_hook(signal, rx_method, rx_freq)
+
+	if(signal.encryption) return
+
 
 
 	if(signal.data["address_1"] && signal.data["address_1"] != src.net_id)
@@ -738,6 +798,18 @@
 	eject_id_card(usr)
 	src.updateSelfDialog()
 
+/obj/item/device/pda2/verb/ejectPen()
+	set name = "Eject Pen"
+	set desc = "Eject the currently loaded writing utensil from this PDA."
+	set category = "Local"
+	set src in usr
+
+	if (is_incapacitated(usr))
+		return
+
+	eject_pen(usr)
+	src.updateSelfDialog()
+
 /obj/item/device/pda2
 
 	proc/update_colors(bg, linkbg)
@@ -830,6 +902,42 @@
 		src.underlays += src.ID_image
 		src.updateSelfDialog()
 		user.UpdateName()
+
+	proc/eject_pen(var/mob/user as mob)
+		if (src.pen)
+			if (istype(user))
+				user.put_in_hand_or_drop(src.pen)
+			else
+				var/turf/T = get_turf(src)
+				src.pen.set_loc(T)
+			src.pen = null
+			src.UpdateOverlays(null, "pen")
+			return
+
+	proc/insert_pen(obj/item/insertedPen, mob/user)
+		if (!istype(insertedPen))
+			return
+		if (user)
+			user.u_equip(insertedPen)
+			insertedPen.set_loc(src)
+			src.pen = insertedPen
+			if(istype(insertedPen, /obj/item/clothing/mask/cigarette))
+				src.UpdateOverlays(image(src.icon, "cig"), "pen")
+			else if(istype(insertedPen, /obj/item/pen/crayon))
+				var/image/pen_overlay = image(src.icon, "crayon")
+				pen_overlay.color = insertedPen.color
+				src.UpdateOverlays(pen_overlay, "pen")
+			else if(istype(insertedPen, /obj/item/pen/pencil))
+				src.UpdateOverlays(image(src.icon, "pencil"), "pen")
+			else
+				src.UpdateOverlays(image(src.icon, "pen"), "pen")
+			var/original_icon_state = src.icon_state
+			animate(src, time=0, icon_state="")
+			animate(time=2, icon_state=original_icon_state)
+			animate(time=2, transform=matrix(null, 0, -1, MATRIX_TRANSLATE))
+			animate(time=3, transform=null)
+			boutput(user, "<span class='notice'>You insert [insertedPen] into [src].</span>")
+
 /*
 	//Toggle the built-in flashlight
 	toggle_light()
@@ -925,7 +1033,7 @@
 
 	proc/bust_speaker()
 		src.visible_message("<span class='alert'>[src]'s tiny speaker explodes!</span>")
-		playsound(get_turf(src), "sound/impact_sounds/Machinery_Break_1.ogg", 20, 1)
+		playsound(src, "sound/impact_sounds/Machinery_Break_1.ogg", 20, 1)
 		elecflash(src, radius=1, power=1, exclude_center = 0)
 		src.speaker_busted = 1
 

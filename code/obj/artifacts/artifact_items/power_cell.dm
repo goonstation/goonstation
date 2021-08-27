@@ -6,7 +6,6 @@
 	genrate = 50
 	specialicon = 1
 	artifact = 1
-	module_research_no_diminish = 1
 	mat_changename = 0
 	mat_changedesc = 0
 	var/effectProbModifier = 0
@@ -47,7 +46,7 @@
 					if ("ancient")
 						src.leakChem = pick("voltagen","ash","cleaner", "oil", "thermite", "acid", "fuel", "nanites", "radium", "mercury")
 					if ("wizard")
-						src.leakChem = pick("glitter","sakuride","grassgro","glitter_harmless","glowing_fliptonium", "mugwort")
+						src.leakChem = pick("glitter","sakuride","grassgro","sparkles","glowing_fliptonium", "mugwort")
 					if ("precursor")
 						src.leakChem = pick(all_functional_reagent_ids) // no way this goes wrong
 				if(prob(10))
@@ -108,7 +107,7 @@
 			return
 		src.Artifact_reagent_act(reagent_id, volume)
 		return
-		
+
 	emp_act()
 		src.Artifact_emp_act()
 		..()
@@ -122,8 +121,6 @@
 	react_elec = list("equal",0,10)
 	react_xray = list(10,80,95,11,"SEGMENTED")
 	examine_hint = "It kinda looks like it's supposed to be inserted into something."
-	module_research = list("energy" = 15, "miniaturization" = 20)
-	module_research_insight = 1
 
 	New()
 		..()

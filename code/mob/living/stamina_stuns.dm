@@ -181,7 +181,7 @@
 		#if STAMINA_NEG_CRIT_KNOCKOUT == 1
 		if(!src.getStatusDuration("weakened"))
 			src.visible_message("<span class='alert'>[src] collapses!</span>")
-			src.changeStatus("weakened", (STAMINA_STUN_CRIT_TIME)*10)
+			src.changeStatus("weakened", (STAMINA_STUN_CRIT_TIME) SECONDS)
 		#endif
 	stamina_stun() //Just in case.
 	return
@@ -206,7 +206,7 @@
 		if(prob(chance))
 			if(!src.getStatusDuration("weakened"))
 				src.visible_message("<span class='alert'>[src] collapses!</span>")
-				src.changeStatus("weakened", (STAMINA_STUN_TIME)*10)
+				src.changeStatus("weakened", (STAMINA_STUN_TIME) SECONDS)
 				src.force_laydown_standup()
 
 //new disorient thing
@@ -284,14 +284,23 @@
 /mob/proc/force_laydown_standup() //the real force laydown lives in Life.dm
 	.=0
 
-/mob/proc/do_disorient(var/stamina_damage, var/weakened, var/stunned, var/paralysis, var/disorient = 60, var/remove_stamina_below_zero = 0, var/target_type = DISORIENT_BODY)
+/mob/proc/do_disorient(var/stamina_damage, var/weakened, var/stunned, var/paralysis, var/disorient = 60, var/remove_stamina_below_zero = 0, var/target_type = DISORIENT_BODY, stack_stuns = 1)
 	.= 1
 	if (stunned)
-		src.changeStatus("stunned", stunned)
+		if(stack_stuns)
+			src.changeStatus("stunned", stunned)
+		else if(stunned >= src.getStatusDuration("stunned"))
+			src.setStatus("stunned", stunned)
 	if (weakened)
-		src.changeStatus("weakened", weakened)
+		if(stack_stuns)
+			src.changeStatus("weakened", weakened)
+		else if(weakened >= src.getStatusDuration("weakened"))
+			src.setStatus("weakened", weakened)
 	if (paralysis)
-		src.changeStatus("paralysis", paralysis)
+		if(stack_stuns)
+			src.changeStatus("paralysis", paralysis)
+		else if(paralysis >= src.getStatusDuration("paralysis"))
+			src.setStatus("paralysis", paralysis)
 
 	src.force_laydown_standup()
 
@@ -299,7 +308,7 @@
 		.= 0
 
 //Do stamina damage + disorient above 0 stamina. Stun/Weaken/Paralyze when we hit or drop below 0.
-/mob/living/do_disorient(var/stamina_damage, var/weakened, var/stunned, var/paralysis, var/disorient = 60, var/remove_stamina_below_zero = 0, var/target_type = DISORIENT_BODY)
+/mob/living/do_disorient(var/stamina_damage, var/weakened, var/stunned, var/paralysis, var/disorient = 60, var/remove_stamina_below_zero = 0, var/target_type = DISORIENT_BODY, stack_stuns = 1)
 	if(!src.use_stamina) return ..()
 	var/protection = 0
 
@@ -332,7 +341,7 @@
 		.= 0
 		src.changeStatus("disorient", disorient)
 
-/mob/living/silicon/do_disorient(var/stamina_damage, var/weakened, var/stunned, var/paralysis, var/disorient = 60, var/remove_stamina_below_zero = 0, var/target_type = DISORIENT_BODY)
+/mob/living/silicon/do_disorient(var/stamina_damage, var/weakened, var/stunned, var/paralysis, var/disorient = 60, var/remove_stamina_below_zero = 0, var/target_type = DISORIENT_BODY, stack_stuns = 1)
 	// Apply the twitching disorient animation for as long as the maximum stun duration is.
 	src.changeStatus("cyborg-disorient", max(weakened, stunned, paralysis))
 	. = ..()

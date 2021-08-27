@@ -13,7 +13,8 @@
 	list(/mob/living/critter/small_animal/dog/pug/weak,/mob/living/critter/small_animal/dog/corgi/weak,/mob/living/critter/small_animal/dog/shiba/weak),\
 	list(/mob/living/critter/changeling/eyespider,/mob/living/critter/changeling/buttcrab),\
 	list(/mob/living/critter/small_animal/frog/weak),\
-	list(/mob/living/critter/small_animal/cockroach/robo/weak),)
+	list(/mob/living/critter/small_animal/cockroach/robo/weak),\
+	list(/mob/living/critter/bot/cleanbot, /mob/living/critter/bot/firebot),)
 
 	admin_call(var/source)
 		if (..())
@@ -58,21 +59,25 @@
 		if (candidates.len)
 			var/list/EV = list()
 
-			EV += landmarks[LANDMARK_PESTSTART]
-			EV += landmarks[LANDMARK_MONKEY]
-			EV += landmarks[LANDMARK_BLOBSTART]
-			EV += landmarks[LANDMARK_KUDZUSTART]
+			if (length(landmarks[LANDMARK_PESTSTART]))
+				EV += landmarks[LANDMARK_PESTSTART]
+			if (length(landmarks[LANDMARK_MONKEY]))
+				EV += landmarks[LANDMARK_MONKEY]
+			if (length(landmarks[LANDMARK_BLOBSTART]))
+				EV += landmarks[LANDMARK_BLOBSTART]
+			if (length(landmarks[LANDMARK_KUDZUSTART]))
+				EV += landmarks[LANDMARK_KUDZUSTART]
 			EV += job_start_locations["Clown"]
 
 			if(!EV.len)
 				EV += landmarks[LANDMARK_LATEJOIN]
 				if (!EV.len)
-					message_admins("Pests event couldn't find a pest landmark!")
+					message_admins("Pests event couldn't find any valid landmarks!")
+					logTheThing( "debug", null, null, "Failed to find any valid landmarks for a Pests event!" )
 					cleanup_event()
 					return
 
 			var/atom/pestlandmark = pick(EV)
-
 			var/list/select = list()
 			if (src.pest_type) //customized
 				select += src.pest_type

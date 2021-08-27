@@ -11,6 +11,7 @@
 #define WIFI_NOISE_COOLDOWN 5 SECONDS
 #define WIFI_NOISE_VOLUME 30
 #define LIGHT_UP_HOUSING SPAWN_DBG(0) src.light_up_housing()
+#define SEND_COOLDOWN_ID "MechComp send cooldown"
 
 // mechanics containers for mechanics components (read: portable horn [read: vuvuzela] honkers! yaaaay!)
 //
@@ -82,7 +83,7 @@
 		user.visible_message("<span class='alert'><b>[user] stares into the [src], trying to make sense of its function!</b></span>")
 		SPAWN_DBG(3 SECONDS)
 			user.visible_message("<span class='alert'><b>[user]'s brain melts!</b></span>")
-			playsound(get_turf(user), "sound/weapons/phaseroverload.ogg", 100)
+			playsound(user, "sound/weapons/phaseroverload.ogg", 100)
 			user.take_brain_damage(69*420)
 		SPAWN_DBG(20 SECONDS)
 			if (user && !isdead(user))
@@ -221,7 +222,7 @@
 									 // thinks it's not a constant and refuses to work with it.
 		desc="A rather chunky cabinet for storing up to 23 active mechanic components\
 		 at once.<br>It can only be connected to external components when bolted to the floor.<br>"
-		w_class = 4.0 //all the weight
+		w_class = W_CLASS_BULKY //all the weight
 		num_f_icons=3
 		density=1
 		anchored=false
@@ -254,7 +255,7 @@
 		desc="A massively shrunken component cabinet fitted with a handle and an external\
 		 button. Due to the average mechanic's low arm strength, it only holds 6 components." // same as above
 		 												//if you change the capacity, remember to manually update this string
-		w_class = 3.0 // fits in backpacks but not pockets. no quickdraw honk boxess
+		w_class = W_CLASS_NORMAL // fits in backpacks but not pockets. no quickdraw honk boxess
 		density=0
 		anchored=0
 		num_f_icons=1
@@ -279,7 +280,7 @@
 					src.users+=user
 				return ..() // you can just use the trigger manually from the UI
 			if(src.find_trigger() && !src.open && src.loc==user)
-				return src.the_trigger.attack_hand(user)
+				return src.the_trigger.Attackhand(user)
 			return
 #undef CONTAINER_LIGHT_TIME
 #undef MAX_CONTAINER_LIGHT_TIME
@@ -294,7 +295,7 @@
 	density = 1
 	anchored= 1
 	level=1
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
@@ -315,7 +316,7 @@
 				src.updateIcon()
 			LIGHT_UP_HOUSING
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG)
-			playsound(get_turf(src),'sound/machines/keypress.ogg',30)
+			playsound(src,'sound/machines/keypress.ogg',30)
 		else
 			qdel(src) // it's somehow been unanchored or something, kill it
 		return
@@ -341,7 +342,7 @@
 	item_state = "swat_suit"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
 	plane = PLANE_NOSHADOW_BELOW
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	level = 2
 	/// whether or not this component is prevented from being anchored in cabinets
 	var/cabinet_banned = FALSE
@@ -352,6 +353,7 @@
 	var/cooldown_time = 3 SECONDS
 	var/when_next_ready = 0
 	var/list/particle_list
+	var/mob/owner = null
 
 	New()
 		particle_list = new/list()
@@ -362,6 +364,7 @@
 
 	disposing()
 		processing_items.Remove(src)
+		clear_owner()
 		..()
 
 
@@ -378,6 +381,18 @@
 			if(istype(the_container,/obj/item/storage/mechanics)) // wew lad i hope this compiles
 				the_container.light_up()
 			return
+
+
+		clear_owner()
+			UnregisterSignal(owner, COMSIG_PARENT_PRE_DISPOSING)
+			owner = null
+
+		set_owner(mob/user)
+			RegisterSignal(user, COMSIG_PARENT_PRE_DISPOSING, .proc/clear_owner)
+			owner = user
+
+
+
 
 	process()
 		if(level == 2 || under_floor)
@@ -399,7 +414,7 @@
 		else return ..(user)
 
 	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 	proc/secure()
 	proc/loosen()
 
@@ -421,6 +436,7 @@
 					logTheThing("station", user, null, "detaches a <b>[src]</b> from the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivates it at [log_loc(src)].")
 					level = 2
 					anchored = 0
+					clear_owner()
 					loosen()
 				if(2) //Level 2 = loose
 					if(!isturf(src.loc) && !(IN_CABINET)) // allow items to be deployed inside housings, but not in other stuff like toolboxes
@@ -438,6 +454,7 @@
 					logTheThing("station", user, null, "attaches a <b>[src]</b> to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
 					level = 1
 					anchored = 1
+					set_owner(user)
 					secure()
 
 			var/turf/T = src.loc
@@ -481,15 +498,6 @@
 		updateIcon()
 		return
 
-	proc/isReady()
-		return src.when_next_ready <= world.time
-
-	proc/unReady(var/unReadyTime = null)
-		if(isnull(unReadyTime))
-			unReadyTime = src.cooldown_time
-		src.when_next_ready = world.time + unReadyTime
-		return
-
 	proc/updateIcon()
 		return
 
@@ -498,6 +506,7 @@
 	desc = ""
 	icon_state = "comp_money"
 	density = 0
+	cooldown_time = 1 SECOND
 	var/price = 100
 	var/code = null
 	var/collected = 0
@@ -580,9 +589,8 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(..(W, user)) return 1
-		if (istype(W, /obj/item/spacecash) && isReady())
+		if (istype(W, /obj/item/spacecash) && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
 			LIGHT_UP_HOUSING
-			unReady()
 			current_buffer += W.amount
 			if (src.price <= 0)
 				src.price = initial(src.price)
@@ -604,8 +612,6 @@
 
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, null)
 				flick("comp_money1", src)
-
-				unReady(0)//Make it ready now.
 				return 1
 		return 0
 
@@ -659,8 +665,7 @@
 
 	proc/flushp(var/datum/mechanicsMessage/input)
 		if(level == 2) return
-		if(input?.signal && isReady() && trunk)
-			unReady()
+		if(input?.signal && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time) && trunk)
 			for(var/atom/movable/M in src.loc)
 				if(M == src || M.anchored || isAI(M)) continue
 				M.set_loc(src)
@@ -712,9 +717,8 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Paper Name","setPaperName")
 
 	proc/print(var/datum/mechanicsMessage/input)
-		if(level == 2 || !isReady()) return
+		if(level == 2 || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		if(input)
-			unReady()
 			LIGHT_UP_HOUSING
 			flick("comp_tprint1",src)
 			playsound(src.loc, "sound/machines/printer_thermal.ogg", 60, 0)
@@ -768,11 +772,10 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(..(W, user)) return 1
-		else if (istype(W, /obj/item/paper) && isReady())
+		else if (istype(W, /obj/item/paper) && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
 			if(thermal_only && !istype(W, /obj/item/paper/thermal))
 				boutput(user, "<span class='alert'>This scanner only accepts thermal paper.</span>")
 				return 0
-			unReady()
 			LIGHT_UP_HOUSING
 			flick("comp_pscan1",src)
 			playsound(src.loc, "sound/machines/twobeep2.ogg", 90, 0)
@@ -899,9 +902,8 @@
 		return 1
 
 	attack_hand(mob/user as mob)
-		if(level != 2 && isReady())
+		if(level != 2 && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
 			if(ishuman(user) && user.bioHolder)
-				unReady()
 				LIGHT_UP_HOUSING
 				flick("comp_hscan1",src)
 				playsound(src.loc, "sound/machines/twobeep2.ogg", 90, 0)
@@ -964,7 +966,8 @@
 		if(level == 2 || AM.anchored || AM == src) return
 		if(AM.throwing) return
 		var/atom/target = get_edge_target_turf(AM, src.dir)
-		AM.throw_at(target, 50, 1)
+		var/datum/thrown_thing/thr = AM.throw_at(target, 50, 1)
+		thr?.user = (owner || usr)
 		return
 
 	HasEntered(atom/movable/AM as mob|obj)
@@ -993,8 +996,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Power","setPower")
 
 	proc/eleczap(var/datum/mechanicsMessage/input)
-		if(level == 2 || !isReady()) return
-		unReady()
+		if(level == 2 || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		LIGHT_UP_HOUSING
 		elecflash(src.loc, 0, power = zap_power, exclude_center = 0)
 
@@ -1665,9 +1667,8 @@
 		return 1
 
 	proc/relay(var/datum/mechanicsMessage/input)
-		if(level == 2 || !isReady()) return
+		if(level == 2 || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		LIGHT_UP_HOUSING
-		unReady()
 		flick("[under_floor ? "u":""]comp_relay1", src)
 		var/transmissionStyle = changesig ? COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG : COMSIG_MECHCOMP_TRANSMIT_MSG
 		SPAWN_DBG(0) SEND_SIGNAL(src,transmissionStyle,input)
@@ -1801,9 +1802,7 @@
 		if(level == 2) return
 		LIGHT_UP_HOUSING
 		var/list/converted = params2list(input.signal)
-		if(!length(converted) || !isReady()) return
-
-		unReady()
+		if(!length(converted) || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 
 		var/datum/signal/sendsig = get_free_signal()
 
@@ -1820,7 +1819,7 @@
 		SPAWN_DBG(0)
 			if(src.noise_enabled)
 				src.noise_enabled = false
-				playsound(get_turf(src), "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
+				playsound(src, "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
 				SPAWN_DBG(WIFI_NOISE_COOLDOWN)
 					src.noise_enabled = true
 			src.radio_connection.post_signal(src, sendsig, src.range)
@@ -1829,7 +1828,7 @@
 		return
 
 	receive_signal(datum/signal/signal)
-		if(!signal || signal.encryption || level == 2)
+		if(!signal || level == 2)
 			return
 
 		if((only_directed && signal.data["address_1"] == src.net_id) || !only_directed || (signal.data["address_1"] == "ping"))
@@ -1847,7 +1846,7 @@
 				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
 					if(src.noise_enabled)
 						src.noise_enabled = false
-						playsound(get_turf(src), "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
+						playsound(src, "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
 						SPAWN_DBG(WIFI_NOISE_COOLDOWN)
 							src.noise_enabled = true
 					src.radio_connection.post_signal(src, pingsignal, src.range)
@@ -1857,6 +1856,14 @@
 				for(var/d in signal.data)
 					packets += "[d]=[signal.data[d]]; "
 				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode("ERR_12939_CORRUPT_PACKET:" + stars(packets, 15)), null)
+				animate_flash_color_fill(src,"#ff0000",2, 2)
+				return
+
+			if(signal.encryption)
+				var/packets = ""
+				for(var/d in signal.data)
+					packets += "[d]=[signal.data[d]]; "
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode("[signal.encryption]" + stars(packets, 15)), null)
 				animate_flash_color_fill(src,"#ff0000",2, 2)
 				return
 
@@ -2279,8 +2286,7 @@
 		return
 
 	proc/activate(var/datum/mechanicsMessage/input)
-		if(level == 2 || !isReady()) return
-		unReady()
+		if(level == 2 || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		LIGHT_UP_HOUSING
 		flick("[under_floor ? "u":""]comp_tele1", src)
 		particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(get_turf(src.loc)))
@@ -2530,8 +2536,8 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input", "fire")
 
 	proc/fire(var/datum/mechanicsMessage/input)
-		if(level == 2 || !isReady() || !input) return
-		unReady()
+		if(level == 2 || !input) return
+		if(ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		LIGHT_UP_HOUSING
 		componentSay("[input.signal]")
 		return
@@ -2587,6 +2593,7 @@
 			flick(icon_down, src)
 			LIGHT_UP_HOUSING
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, null)
+			logTheThing("station", user, null, "presses the mechcomp button at [log_loc(src)].")
 			return 1
 		return ..(user)
 
@@ -2671,6 +2678,7 @@
 				LIGHT_UP_HOUSING
 				flick(icon_down, src)
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, src.active_buttons[selected_button])
+				logTheThing("station", user, null, "presses the mechcomp button [selected_button] at [log_loc(src)].")
 				return 1
 			else
 				boutput(user, "<span class='alert'>[src] has no active buttons - there's nothing to press!</span>")
@@ -2804,7 +2812,7 @@
 		var/obj/item/gun/energy/E = Gun
 
 		// Can't recharge the crossbow. Same as the other recharger.
-		if (!E.rechargeable)
+		if (!(SEND_SIGNAL(E, COMSIG_CELL_CAN_CHARGE) & CELL_CHARGEABLE))
 			src.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"This gun cannot be recharged manually.\"</span>")
 			playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
 			charging = 0
@@ -2812,8 +2820,8 @@
 			updateIcon()
 			return
 
-		if (E.cell)
-			if (E.cell.charge(15) != 1) // Same as other recharger.
+		else
+			if (SEND_SIGNAL(E, COMSIG_CELL_CHARGE, 15) & CELL_FULL) // Same as other recharger.
 				src.charging = 0
 				tooltip_rebuild = 1
 				src.updateIcon()
@@ -2829,8 +2837,8 @@
 		return
 
 	fire(var/datum/mechanicsMessage/input)
-		if(charging || !isReady() || level == 2) return
-		unReady()
+		if(charging || level == 2) return
+		if(ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		return ..()
 
 	updateIcon()
@@ -2907,20 +2915,25 @@
 		return 0
 
 	proc/fire(var/datum/mechanicsMessage/input)
-		if (level == 2 || !isReady() || !instrument) return
+		if (level == 2 || GET_COOLDOWN(src, SEND_COOLDOWN_ID) || !instrument) return
 		LIGHT_UP_HOUSING
 		var/signum = text2num(input.signal)
-		if (signum &&((signum >= 0.1 && signum <= 2) ||(signum <= -0.1 && signum >= -2) || pitchUnlocked))
+		var/index = round(signum)
+		if (length(sounds) > 1 && index > 0 && index <= length(sounds))
+			ON_COOLDOWN(src, SEND_COOLDOWN_ID, delay)
+			flick("comp_instrument1", src)
+			playsound(get_turf(src), sounds[index], volume, 0)
+		else if (signum &&((signum >= 0.1 && signum <= 2) || (signum <= -0.1 && signum >= -2) || pitchUnlocked))
 			var/mod_delay = delay
 			if(abs(signum) < 1)
 				mod_delay /= abs(signum)
-			unReady(mod_delay)
+			ON_COOLDOWN(src, SEND_COOLDOWN_ID, mod_delay)
 			flick("comp_instrument1", src)
-			playsound(get_turf(src), sounds, volume, 0, 0, signum)
+			playsound(src, sounds, volume, 0, 0, signum)
 		else
-			unReady(delay)
+			ON_COOLDOWN(src, SEND_COOLDOWN_ID, delay)
 			flick("comp_instrument1", src)
-			playsound(get_turf(src), sounds, volume, 1)
+			playsound(src, sounds, volume, 1)
 			return
 
 	updateIcon()

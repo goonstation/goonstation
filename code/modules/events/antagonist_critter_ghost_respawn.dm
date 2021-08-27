@@ -101,7 +101,16 @@
 				)
 			)
 		),
-
+		list(new /datum/eventSpawnedCritter(
+			critter_types = list(/mob/living/critter/bot/cleanbot/emagged, /mob/living/critter/bot/firebot/emagged),
+			drop_tables = list(
+				new /datum/event_item_drop_table(
+					potential_drop_items = list(/obj/item/property_setter/reinforce, /obj/item/property_setter/thermal, /obj/item/property_setter/speedy),
+					remove_dropped_items = 1, number_of_rolls = 3, percent_droprate = 50, pity_drop_atleast_one = 1
+					)
+				)
+			)
+		),
 	)
 
 	admin_call(var/source)
@@ -191,7 +200,7 @@
 					var/obj/item/implant/access/infinite/assistant/O = new /obj/item/implant/access/infinite/assistant(M.current)
 					O.owner = M.current
 					O.implanted = 1
-					bad_traitorify(M.current)
+					antagify(M.current, null, 1)
 				candidates -= M
 
 			command_alert("Our sensors have detected a hostile nonhuman lifeform in the vicinity of the station.", "Hostile Critter")

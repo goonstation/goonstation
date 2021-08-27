@@ -79,7 +79,7 @@
 		switch (act)
 			if ("scream", "alert")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), pick(alert_sounds) , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, pick(alert_sounds) , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> broadcasts an alert!"
 		return null
 
@@ -126,5 +126,5 @@
 		HH.can_range_attack = 1
 
 	setup_healths()
-		add_hh_robot(-50, 50, 1)
-		add_hh_robot_burn(-50, 50, 1)
+		add_hh_robot(50, 1)
+		add_hh_robot_burn(50, 1)

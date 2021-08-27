@@ -227,7 +227,7 @@
 	return 0 //0=couldnt do it(other hand full etc), 1=worked just fine.
 
 // mob procs
-/mob/New(var/loc, var/datum/appearanceHolder/AH_passthru)	// I swear Adhara is the reason half my code even comes close to working
+/mob/New(loc, datum/appearanceHolder/AH_passthru)	// I swear Adhara is the reason half my code even comes close to working
 	src.AH_we_spawned_with = AH_passthru
 	src.loc = loc
 	hallucinations = new
@@ -238,17 +238,18 @@
 	huds = new
 	render_special = new
 	traitHolder = new(src)
+
 	if (!src.bioHolder)
-		src.bioHolder = new /datum/bioHolder ( src )
+		src.bioHolder = new /datum/bioHolder(src)
 		src.initializeBioholder()
 	attach_hud(render_special)
-	. = ..()
 	mobs.Add(src)
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
 	mob_properties = list()
 	src.chat_text = new
 	START_TRACKING
+	. = ..()
 
 /// do you want your mob to have custom hairstyles and stuff? don't use spawns but set all of those properties here
 /mob/proc/initializeBioholder()
@@ -300,6 +301,7 @@
 
 /mob/disposing()
 	STOP_TRACKING
+
 	for(var/mob/dead/target_observer/TO in observers)
 		observers -= TO
 		TO.ghostize()
@@ -390,6 +392,7 @@
 	lastattacker = null
 	health_update_queue -= src
 	..()
+	src.mob_properties = null
 
 /mob/Login()
 	// drsingh for cannot read null.address (still popping up though)
@@ -503,15 +506,20 @@
 
 	src.client?.color = src.active_color_matrix
 
+	SEND_SIGNAL(src, COMSIG_MOB_LOGIN)
+
 /mob/Logout()
 
 	//logTheThing("diary", src, null, "logged out", "access") <- sometimes shits itself and has been known to out traitors. Disabling for now.
+
+	SEND_SIGNAL(src, COMSIG_MOB_LOGOUT)
 
 	tgui_process?.on_logout(src)
 
 	if (src.last_client && !src.key) // lets see if not removing the HUD from disconnecting players helps with the crashes
 		for (var/datum/hud/hud in src.huds)
 			hud.remove_client(src.last_client)
+
 
 	..()
 
@@ -570,7 +578,15 @@
 					src_effect.update_charge(-1)
 					tmob_effect.deactivate(10)
 					tmob_effect.update_charge(-1)
-					// like repels - bimp them away from each other
+					//spatial interdictor: mitigate biomagnetic discharges
+					//consumes 300 units of charge to interdict a repulsion, permitting safe discharge of the fields
+					for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
+						if (IN_RANGE(IX,src,IX.interdict_range) && IX.expend_interdict(300))
+							src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
+							var/atom/source = get_turf(tmob)
+							playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
+							return
+					// like repels - bump them away from each other
 					src.now_pushing = 0
 					var/atom/source = get_turf(tmob)
 					src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s identical magnetic fields repel each other!</span>")
@@ -605,6 +621,15 @@
 					src_effect.update_charge(-src_effect.charge)
 					tmob_effect.deactivate(10)
 					tmob_effect.update_charge(-tmob_effect.charge)
+					//spatial interdictor: mitigate biomagnetic discharges
+					//consumes 600 units of charge to interdict an attraction, permitting safe discharge of the fields
+
+					for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
+						if (IN_RANGE(IX,src,IX.interdict_range) && IX.expend_interdict(300))
+							src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
+							var/atom/source = get_turf(tmob)
+							playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
+							return
 					// opposite attracts - fling everything nearby at these dumbasses
 					src.now_pushing = 1
 					tmob.now_pushing = 1
@@ -774,13 +799,15 @@
 		C.eye = src.eye
 		C.pixel_x = src.eye_pixel_x
 		C.pixel_y = src.eye_pixel_y
+	else if(!isturf(src.loc))
+		C.eye = src.loc
 	else
 		C.eye = src
 		C.pixel_x = src.loc_pixel_x
 		C.pixel_y = src.loc_pixel_y
 
 /mob/proc/can_strip(mob/M, showInv=0)
-	if(!showInv && check_target_immunity(src, 0, M))
+	if(!showInv && check_target_immunity(M, 0, src))
 		return 0
 	return 1
 
@@ -894,11 +921,31 @@
 	var/confirm = alert("Set yourself as Do Not Resuscitate (WARNING: This is one-use only and will prevent you from being revived in any manner)", "Set Do Not Resuscitate", "Yes", "Cancel")
 	if (confirm == "Cancel")
 		return
+//So that players can leave their team and spectate. Since normal dying get's you instantly cloned.
+#if defined(MAP_OVERRIDE_POD_WARS)
+	if (confirm == "Yes")
+		if (src.mind)
+			if (isliving(src) && !isdead(src))
+				var/double_confirm = alert("Setting DNR here will kill you and remove you from your team. Do you still want to set DNR?", "Set Do Not Resuscitate", "Yes", "No")
+				if (double_confirm == "No")
+					return
+				src.death()
+			src.verbs -= list(/mob/verb/setdnr)
+			src.mind.dnr = 1
+			boutput(src, "<span class='alert'>DNR status set!</span>")
+			boutput(src, "<span class='alert'>You've been removed from your team for desertion!</span>")
+			if (istype(ticker.mode, /datum/game_mode/pod_wars))
+				var/datum/game_mode/pod_wars/mode = ticker.mode
+				mode.team_NT.members -= src.mind
+				mode.team_SY.members -= src.mind
+				message_admins("[src]([src.ckey]) just set DNR and was removed from their team. which was probably [src.mind.special_role]!")
+#else
 	if (confirm == "Yes")
 		if (src.mind)
 			src.verbs -= list(/mob/verb/setdnr)
 			src.mind.dnr = 1
 			boutput(src, "<span class='alert'>DNR status set!</span>")
+#endif
 		else
 			src << alert("There was an error setting this status. Perhaps you are a ghost?")
 	return
@@ -937,19 +984,6 @@
 	return
 
 /mob/living/get_unequippable()
-	var/list/obj/item/LI = list()
-
-	for (var/obj/item/W in src)
-		if (istype(W, /obj/item/parts) && W:holder == src)
-			continue
-
-		if (istype(W, /obj/item/reagent_containers/food/snacks/bite))
-			continue
-		LI += W
-
-	.= LI
-
-/mob/living/carbon/human/get_unequippable()
 	var/list/obj/item/LI = list()
 
 	for (var/obj/item/W in src)
@@ -1131,8 +1165,6 @@
 	if (src.suicide_alert)
 		message_attack("[key_name(src)] died shortly after spawning.")
 		src.suicide_alert = 0
-
-
 	if(src.ckey)
 		respawn_controller.subscribeNewRespawnee(src.ckey)
 
@@ -1199,15 +1231,17 @@
 			actions.stopId("magpickerhold", src)
 
 //throw the dropped item
-/mob/proc/drop_item_throw()
-	var/obj/item/W = src.equipped()
-	if (src.drop_item())
+/mob/proc/drop_item_throw(obj/item/W)
+	if(!W)
+		W = src.equipped()
+	if (src.drop_item(W))
 		var/turf/T = get_edge_target_turf(src, pick(alldirs))
 		W.throw_at(T,rand(0,5),1)
 
-/mob/proc/drop_item_throw_dir(dir)
-	var/obj/item/W = src.equipped()
-	if (src.drop_item())
+/mob/proc/drop_item_throw_dir(dir, obj/item/W)
+	if(!W)
+		W = src.equipped()
+	if (src.drop_item(W))
 		var/turf/T = get_edge_target_turf(src, dir)
 		W.throw_at(T,7,1)
 
@@ -1474,16 +1508,16 @@
 		if (D_ENERGY)
 			TakeDamage("All", 0, damage)
 			if (prob(stun))
-				src.changeStatus("paralysis", stun*15)
+				src.changeStatus("paralysis", stun*1.5 SECONDS)
 			else if (prob(90))
-				src.changeStatus("stunned", stun*15)
+				src.changeStatus("stunned", stun*1.5 SECONDS)
 			else
-				src.changeStatus("weakened", (stun/2)*15)
+				src.changeStatus("weakened", (stun/2)*1.5 SECONDS)
 			src.set_clothing_icon_dirty()
 		if (D_BURNING)
 			TakeDamage("All", 0, damage)
 		if (D_RADIOACTIVE)
-			src.changeStatus("radiation", (damage)*10)
+			src.changeStatus("radiation", (damage) SECONDS)
 			src.stuttering += stun
 			src.drowsyness += stun
 		if (D_TOXIC)
@@ -1507,11 +1541,11 @@
 	switch(P.proj_data.damage_type)
 		if (D_ENERGY)
 			if (prob(stun))
-				src.changeStatus("paralysis", stun*15)
+				src.changeStatus("paralysis", stun*1.5 SECONDS)
 			else if (prob(90))
-				src.changeStatus("stunned", stun*15)
+				src.changeStatus("stunned", stun*1.5 SECONDS)
 			else
-				src.changeStatus("weakened", (stun/2)*15)
+				src.changeStatus("weakened", (stun/2)*1.5 SECONDS)
 			src.set_clothing_icon_dirty()
 			src.show_text("<span class='alert'>You are shocked by the impact of [P]!</span>")
 		if (D_RADIOACTIVE)
@@ -1620,7 +1654,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	src.invisibility = 101
+	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		src.ghostize()
@@ -1641,7 +1675,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	src.invisibility = 101
+	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	var/bdna = null // For forensics (Convair880).
 	var/btype = null
@@ -1729,7 +1763,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	src.invisibility = 101
+	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 
 
@@ -1761,7 +1795,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	src.invisibility = 101
+	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	if (ishuman(src))
 		animation = new(src.loc)
@@ -1800,7 +1834,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	src.invisibility = 101
+	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	var/bdna = null // For forensics (Convair880).
 	var/btype = null
@@ -1846,7 +1880,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	src.invisibility = 101
+	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	var/bdna = null // For forensics (Convair880).
 	var/btype = null
@@ -1893,7 +1927,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	src.invisibility = 101
+	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 	logTheThing("combat", src, null, "is vaporized at [log_loc(src)].")
 
 	if (ishuman(src))
@@ -1931,7 +1965,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	src.invisibility = 101
+	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	if (ishuman(src))
 		animation = new(src.loc)
@@ -2014,7 +2048,7 @@
 		sleep(duration+5)
 		src.death(1)
 		var/mob/dead/observer/newmob = ghostize()
-		newmob.corpse = null
+		newmob?.corpse = null
 
 		qdel(floorcluwne)
 		qdel(src)
@@ -2030,7 +2064,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	src.invisibility = 101
+	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	var/bdna = null
 	var/btype = null
@@ -2301,6 +2335,10 @@
 
 /mob/onVarChanged(variable, oldval, newval)
 	update_clothing()
+
+/mob/proc/throw_item(atom/target, list/params)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MOB_THROW_ITEM, target, params)
 
 /mob/throw_impact(atom/hit, datum/thrown_thing/thr)
 	if(!isturf(hit) || hit.density)
@@ -2654,9 +2692,13 @@
 			else
 				if (force_instead || alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
 					if(!src.traitHolder.hasTrait("immigrant"))// stowaway entertainers shouldn't be on the manifest
-						var/datum/data/record/B = FindBankAccountByName(src.real_name)
-						if (B?.fields["name"])
-							B.fields["name"] = newname
+						for (var/L in list(data_core.bank, data_core.security, data_core.general, data_core.medical))
+							if (L)
+								var/datum/data/record/R = FindRecordByFieldValue(L, "name", src.real_name)
+								if (R)
+									R.fields["name"] = newname
+									if (R.fields["full_name"])
+										R.fields["full_name"] = newname
 						for (var/obj/item/card/id/ID in src.contents)
 							ID.registered = newname
 							ID.update_name()
@@ -2930,14 +2972,14 @@
 //MOB VERBS ARE FASTER THAN OBJ VERBS, ELIMINATE ALL OBJ VERBS WHERE U CAN
 // ALSO EXCLUSIVE VERBS (LIKE ADMIN VERBS) ARE BAD FOR RCLICK TOO, TRY NOT TO USE THOSE OK
 
-/mob/verb/point(atom/A as mob|obj|turf in view())
+/mob/verb/point(atom/A as mob|obj|turf in view(,get_turf(usr)))
 	set name = "Point"
 	src.point_at(A)
 
 /mob/proc/point_at(var/atom/target) //overriden by living and dead
 	.=0
 
-/mob/verb/pull_verb(atom/movable/A as mob|obj in view(1))
+/mob/verb/pull_verb(atom/movable/A as mob|obj in view(1, get_turf(usr)))
 	set name = "Pull / Unpull"
 	set category = "Local"
 
@@ -2948,17 +2990,20 @@
 		A.pull()
 
 
-/mob/verb/examine_verb(atom/A as mob|obj|turf in view())
+/mob/verb/examine_verb(atom/A as mob|obj|turf in view(,get_turf(usr)))
 	set name = "Examine"
 	set category = "Local"
 	var/list/result = A.examine(src)
+	SEND_SIGNAL(A, COMSIG_ATOM_EXAMINE, src, result)
 	boutput(src, result.Join("\n"))
 
 
-/mob/living/verb/interact_verb(atom/A as mob|obj|turf in view(1))
+/mob/living/verb/interact_verb(atom/A as mob|obj|turf in view(1, get_turf(usr)))
 	set name = "Pick Up / Left Click"
 	set category = "Local"
-	A.interact(src)
+
+	if(src.client)
+		src.client.Click(A, get_turf(A))
 
 /mob/living/verb/pickup_verb()
 	set name = "Pick Up"
@@ -2970,135 +3015,10 @@
 			items += I
 	if (items.len)
 		var/atom/A = input(usr, "What do you want to pick up?") as anything in items
-		A.interact(src)
+		src.client.Click(A, get_turf(A))
 
-/// 'A' is the thing being eaten, user is the thing using the thing, and src is of course the thing eating it
-/mob/proc/can_eat(var/obj/item/A, var/mob/user, var/bypass_utensils = 0)
-	if(!istype(A) || !user)
-		return FALSE // who's eating what, now?
-
-	// Apparently you could feed things to ghosts. So spooky everyone loses their appetite
-	if (isobserver(src))
-		if(isAIeye(src))
-			src.can_not_eat(A, user, "is_aieye")
-		else
-			src.can_not_eat(A, user, "is_ghost")
-		return FALSE
-
-	// Science still hasn't found a way to install a cyberstomach into a cyberperson
-	if (issilicon(src))
-		src.can_not_eat(A, user, "is_silicon")
-		return FALSE
-
-	// And just in case we're something that isnt caught by the above and isnt something that's supposed to eat things
-	if (!isliving(src))
-		src.can_not_eat(A, user, null)
-		return FALSE
-
-	// Making sure the thing actually exists and isn't cheating the bite-rate. And is also edible, so we don't get people trying to stuff multitools in their mouth
-	if(!src.bioHolder?.HasEffect("mattereater") && GET_COOLDOWN(src, "eat") && (A.edible || A.material?.edible))
-		if(!ON_COOLDOWN(src, "eat_cooldown_cooldown", EAT_COOLDOWN))
-			src.can_not_eat(A, user, "on_cooldown")
-		return FALSE
-	else if (!A.amount)
-		src.can_not_eat(A, user, "all_gone")
-		return FALSE
-
-	/// Special cases with special circumstances, mostly so awful monsters can eat awful monster food
-	var/edibility_check = SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED_PRE, src, user, A)
-	if(HAS_FLAG(edibility_check, THING_IS_EDIBLE))
-		return TRUE
-
-	/// Now we can check if the thing is actually, in fact, supposed to be edible
-	if(!(A.edible || (A.material && A.material.edible)))
-		return FALSE
-
-	/// Godmode
-	if(src != user && check_target_immunity(src))
-		src.can_not_eat(A, user, "godmode")
-		return FALSE
-
-	/// Finally, check if we have proper etiquette
-	if(HAS_FLAG(edibility_check, EATING_NEEDS_A_FORK))
-		src.can_not_eat(A, user, "lack_fork")
-		return FALSE
-	if(HAS_FLAG(edibility_check, EATING_NEEDS_A_SPOON))
-		src.can_not_eat(A, user, "lack_spoon")
-		return FALSE
-
-	/// And finally finally, if it should actually be edible, do we have somewhere to put it?
-	if (ishuman(src))
-		var/mob/living/carbon/human/H = src
-		var/obj/item/organ/stomach/tummy = H.get_organ("stomach")
-		if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.MAX_DAMAGE))
-			src.can_not_eat(A, user, "busted_guts")
-			return FALSE
-
-	/// okay eat the darn thing
-	return TRUE
-
-/// Oh no, we can't eat that! Let's tell the mob why
-/mob/proc/can_not_eat(var/atom/A, var/mob/user, var/fail_reason)
-	if(!istype(A) || !user) return
-	switch(fail_reason)
-		if("on_cooldown")
-			if(src == user)
-				boutput(src, "<span class='alert'>Hold on! You're still getting the last bit down!</span>")
-			else
-				user.tri_message("<span class='notice'>[user] tries to stuff [A] into [src]'s mouth, but it's still full!</span>",\
-				user, "<span class='notice'>You try to stuff [A] into [src]'s mouth, but it's still full!</span>",\
-				src, "<span class='notice'>[user] tries to stuff [A] into your mouth, but you're still working on the last bite!</span>")
-		if("all_gone")
-			if(src == user)
-				boutput(src, "<span class='alert'>None of [A] left, oh no!</span>")
-			else
-				user.tri_message("<span class='alert'>[user] tries to feed [A] to [src], but there's nothing left of it!</span>",\
-				user, "<span class='alert'>You try to feed [A] to [src], but there's nothing left of it!</span>",\
-				src, "<span class='alert'>[user] tries to feed [A] to you, but there's nothing left of it!</span>")
-			user.u_equip(A)
-			qdel(A)
-		if("busted_guts")
-			if(src == user)
-				boutput(src, "<span class='alert'>You can't eat that! Or anything else, at least until you fix your stomach!</span>")
-			else
-				user.tri_message("<span class='alert'>[user] tries to feed [A] to [src], but there's nowhere for it to go!</span>",\
-				user, "<span class='alert'>You try to feed [A] to [src], but [his_or_her(src)] throat seems blocked off!</span>",\
-				src, "<span class='alert'>[user] tries to feed [A] to you, but your lack of a working stomach bounces it off the back of your mouth!</span>")
-		if("lack_fork", "lack_spoon")
-			var/missing = fail_reason == "lack_fork" ? "fork" : "spoon"
-			var/literal_beast = HAS_FLAG(src.mob_flags, SHOULD_HAVE_A_TAIL)
-			user.visible_message("<span class='alert'>[user] stares glumly at [src].</span>",
-			"<span class='alert'>You can't just cram that in your [literal_beast ? "filthy snout" : "mouth"] you [literal_beast ? "literal" : "greedy"] beast! You need a [missing] to eat [A]!</span>")
-		if("godmode")
-			user.tri_message("<span class='alert'>[user] tries to feed [A] to [src], but nothing happens!</span>",\
-			user, "<span class='alert'>You try to feed [A] to [src], but nothing happens!</span>",\
-			src, "<span class='alert'>[user] tries to feed [A] to you, but nothing happens!</span>")
-		if("is_silicon")
-			var/must_scream = prob(1)
-			var/has_head = 1 // most non-borg silicons are basically just a floating headmobile
-			if(isrobot(src))
-				var/mob/living/silicon/robot/R = src
-				has_head = istype(R.part_head)
-			user.tri_message("<span class='alert'>[user] waves [A] in front of [src]'s [has_head ? "head assembly" : "mass of exposed neckwires"], but it [has_head ? "[must_scream ? "has no mouth" : "doesn't have a mouth"]" : "doesn't have a head"]!</span>",\
-			user, "<span class='alert'>You hold [A] in front of [src]'s [has_head ? "cranial unit" : "mass of exposed neckwires"], but you can't seem to find a [has_head ? "mouth" : "place to put it"]!</span>",\
-			src, "<span class='alert'>[user] wishes for you to consume [A]. [must_scream ? "You are unable to comply, as it is incompatible with your cybernetic physiology." : "<b><i>But you don't have a mouth!</b></i>"]</span>")
-			if(must_scream)
-				src.emote("scream")
-		if("is_aieye")
-			user.tri_message("<span class='notice'>[user] waves [A] at a camera.</span>",\
-			user, "<span class='notice'>You hold [A] in front of one of [src]'s cameras. You're not sure what you were expecting to happen.</span>",\
-			src, "<span class='notice'>[user] shows [his_or_her(user)] [A] to you. It looks unappetizing.</span>")
-		if("is_ghost")
-			user.tri_message("<span class='alert'>[user] waves [A] around in front of [him_or_her(user)]self...?</span>",\
-			user, "<span class='alert'>You make an offering of [A] to the restless spirit of [src]. You feel vaguely uneasy and \the [A] starts to look a bit spooky, but otherwise, nothing seems to happen.</span>",\
-			src, "<span class='alert'>[user] waggles [A] around inside your phantom head, but you're not hungry.</span>")
-			if(istype(A))
-				if(!A.reagents)
-					A.create_reagents(5)
-				var/datum/reagents/reag = A.reagents
-				reag.add_reagent("ectoplasm", 5)
-		else
-			boutput(user, "<span class='alert'>You can't eat that!</span>")
+/mob/proc/can_eat(var/atom/A)
+	return 1
 
 /mob/proc/on_eat(var/atom/A)
 	return
@@ -3108,3 +3028,7 @@
 		..(0)
 	else
 		..(newdensity)
+
+// to check if someone is abusing cameras with stuff like artifacts, power gloves, etc
+/mob/proc/in_real_view_range(var/turf/T)
+	return src.client && IN_RANGE(T, src, WIDE_TILE_WIDTH)

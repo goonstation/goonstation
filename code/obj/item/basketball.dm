@@ -6,7 +6,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bball"
 	item_state = "bball"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	force = 0
 	throw_range = 10
 	throwforce = 0
@@ -43,7 +43,7 @@
 					JOB_XP(M, "Clown", 1)
 					return
 				// catch the ball!
-				src.attack_hand(M)
+				src.Attackhand(M)
 				M.visible_message("<span class='combat'>[M] catches the [src.name]!</span>", "<span class='combat'>You catch the [src.name]!</span>")
 				logTheThing("combat", M, null, "catches [src]")
 				return
@@ -196,7 +196,7 @@
 		if (!A || isarea(A) || isturf(A))
 			return
 		src.active = 1
-		playsound(get_turf(src), "rustle", 75, 1)
+		playsound(src, "rustle", 75, 1)
 		A.invisibility = 100
 		flick("bbasket1", src)
 		SPAWN_DBG(1.5 SECONDS)
@@ -214,7 +214,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "plutonium"
 	item_state = "egg3"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	force = 0
 	throwforce = 10
 
@@ -246,7 +246,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bloodbowlball"
 	item_state = "bloodbowlball"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	force = 10
 	throw_range = 10
 	throwforce = 2
@@ -271,7 +271,7 @@
 						if(V.client)
 							V.show_message("<span class='combat'>[T] gets stabbed by one of the [src.name]'s spikes.</span>", 1)
 							playsound(src.loc, "sound/impact_sounds/Flesh_Stab_2.ogg", 65, 1)
-					T.changeStatus("stunned", 50)
+					T.changeStatus("stunned", 5 SECONDS)
 					T.TakeDamageAccountArmor("chest", 30, 0)
 					take_bleeding_damage(T, null, 15, DAMAGE_STAB)
 					return
@@ -279,11 +279,11 @@
 					src.visible_message("<span class='combat'>[T] catches the [src.name] but gets cut.</span>")
 					T.TakeDamage(T.hand == 1 ? "l_arm" : "r_arm", 15, 0)
 					take_bleeding_damage(T, null, 10, DAMAGE_CUT)
-					src.attack_hand(T)
+					src.Attackhand(T)
 					return
 				// catch the ball!
 				else
-					src.attack_hand(T)
+					src.Attackhand(T)
 					T.visible_message("<span class='combat'>[M] catches the [src.name]!</span>")
 					return
 	return

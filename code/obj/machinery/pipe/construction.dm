@@ -12,7 +12,7 @@ Buildable meters
 	icon_state = "straight"
 	item_state = "buildpipe"
 	flags = TABLEPASS|FPRINT
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	level = 2
 
 /obj/item/weapon/pipe/New()
@@ -399,7 +399,7 @@ Buildable meters
 	icon_state = "meter"
 	item_state = "buildpipe"
 	flags = TABLEPASS|FPRINT
-	w_class = 4
+	w_class = W_CLASS_BULKY
 
 /obj/item/weapon/pipe_meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if (iswrenchingtool(W))
@@ -419,7 +419,7 @@ Buildable meters
 	icon_state = "filter_control"
 	item_state = "buildpipe"
 	flags = TABLEPASS|FPRINT
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	var/control = null
 
 /obj/item/weapon/filter_control/verb/set_control()

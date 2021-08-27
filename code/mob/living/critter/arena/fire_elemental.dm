@@ -46,17 +46,24 @@
 		HH.can_range_attack = 1
 
 	setup_healths()
-		add_hh_flesh(-150, 150, 1.15)
+		add_hh_flesh(150, 1.15)
 		add_health_holder(/datum/healthHolder/brain)
 
 	New()
 		..()
 		abilityHolder.addAbility(/datum/targetable/critter/cauterize)
 		abilityHolder.addAbility(/datum/targetable/critter/flamethrower/throwing)
+		abilityHolder.addAbility(/datum/targetable/critter/fireball)
 		abilityHolder.addAbility(/datum/targetable/critter/fire_sprint)
+		var/datum/statusEffect/simplehot/S = src.setStatus("simplehot", INFINITE_STATUS)
+		S.visible = 0
+		S.heal_brute = 0.25
 
 	Life()
 		var/turf/T = src.loc
 		if (istype(T, /turf))
 			T.hotspot_expose(1500,200)
 		.=..()
+
+	get_disorient_protection_eye()
+		return(max(..(), 80))

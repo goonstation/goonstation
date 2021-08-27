@@ -111,7 +111,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 	proc/OnMobDraw() //Called when the overlays for the mob are drawn. Children should NOT run when this returns 1
 		return removed
 
-	proc/OnLife()    //Called when the life proc of the mob is called. Children should NOT run when this returns 1
+	proc/OnLife(var/mult)    //Called when the life proc of the mob is called. Children should NOT run when this returns 1
 		return removed
 
 	proc/GetCopy()

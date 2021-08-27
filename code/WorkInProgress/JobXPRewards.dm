@@ -288,12 +288,15 @@ mob/verb/checkrewards()
 
 	activate(var/client/C)
 		var/charge = 0
+		var/max_charge = 0
 		var/found = 0
 		var/O = locate(sacrifice_path) in C.mob.contents
 		if (istype(O, sacrifice_path))
 			var/obj/item/gun/energy/E = O
-			if (E.cell)
-				charge = E.cell.charge
+			var/list/ret = list()
+			if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+				charge = ret["charge"]
+				max_charge = ret["max_charge"]
 			C.mob.remove_item(E)
 			found = 1
 			qdel(E)
@@ -310,9 +313,8 @@ mob/verb/checkrewards()
 			boutput(C.mob, "Something terribly went wrong. The reward path got screwed up somehow. call 1-800-CODER. But you're an HoS! You don't need no stinkin' guns anyway!")
 			src.claimedNumbers[usr.key] --
 			return
-		//Don't let em get get a charged power cell for a spent one
-		if (charge < 200)
-			LG.cell.charge = charge
+		//Don't let em get get a charged power cell for a spent one. Spend the difference
+		SEND_SIGNAL(LG, COMSIG_CELL_USE, max_charge - charge)
 
 		LG.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand(LG)
@@ -355,10 +357,18 @@ mob/verb/checkrewards()
 				boutput(C.mob, "This [sacrifice_name] is a replica and cannot be turned into a sword legally! Only an original, unscanned energy gun will work for this!")
 				src.claimedNumbers[usr.key] --
 				return
-			if (isnull(K.cell) || K.cell.charge < K.cell.max_charge * 0.9)
-				boutput(C.mob, "The [sacrifice_name] is depleted, you'll need to charge it up first!")
+			var/list/ret = list()
+			if(SEND_SIGNAL(K, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+				var/ratio = min(1, ret["charge"] / ret["max_charge"])
+				if (ratio < 0.9)
+					boutput(C.mob, "The [sacrifice_name] is depleted, you'll need to charge it up first!")
+					src.claimedNumbers[usr.key]--
+					return
+			else
+				boutput(C.mob, "The [sacrifice_name] has no cell, you'll need to provide one first!")
 				src.claimedNumbers[usr.key]--
 				return
+
 			C.mob.remove_item(K)
 			found = 1
 			qdel(K)
@@ -586,3 +596,34 @@ mob/verb/checkrewards()
 		C.mob.put_in_hand_or_drop(I)
 		boutput(C.mob, "You look away for a second and the shaker turns into golden from top to bottom!")
 
+/////////////Mime////////////////
+
+/datum/jobXpReward/mime/mimefancy
+	name = "Fancy Mime Suit"
+	desc = "A suit perfect for more sophisticated mimes. Wait... This isn't just a bleached clown suit, is it?"
+	required_levels = list("Mime"=0)
+	icon_state = "?"
+	claimable = 1
+	claimPerRound = 1
+
+	activate(var/client/C)
+		boutput(C, "You pretend to unfold a piece of clothing, and suddenly the Fancy Mime Suit is in your hands!")
+		var/obj/item/I = new/obj/item/clothing/under/misc/mimefancy()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand(I)
+		return
+
+/datum/jobXpReward/mime/mimedress
+	name = "Mime Dress"
+	desc = "You may be trapped in an invisible box forever and ever, but at least you look stylish!"
+	required_levels = list("Mime"=0)
+	icon_state = "?"
+	claimable = 1
+	claimPerRound = 1
+
+	activate(var/client/C)
+		boutput(C, "You pretend to unfold a piece of clothing, and suddenly the Mime Dress is in your hands!")
+		var/obj/item/I = new/obj/item/clothing/under/misc/mimedress()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand(I)
+		return

@@ -1,5 +1,5 @@
 #define SUPPLY_OPEN_TIME 1 SECOND //Time it takes to open supply door in seconds.
-#define SUPPLY_CLOSE_TIME 13 SECONDS //Time it takes to close supply door in seconds.
+#define SUPPLY_CLOSE_TIME 15 SECONDS //Time it takes to close supply door in seconds.
 
 /datum/shipping_market
 
@@ -8,13 +8,15 @@
 	var/time_until_shift = 0.0
 	var/demand_multiplier = 2
 	var/list/active_traders = list()
-	var/max_buy_items_at_once = 20
+	var/max_buy_items_at_once = 99
 	var/last_market_update = 0
 
 	var/list/supply_requests = list() // Pending requests, of type /datum/supply_order
 	var/list/supply_history = list() // History of all approved requests, of type string
 
 	var/points_per_crate = 10
+
+	var/artifact_resupply_amount = 0 // amount of artifacts in next resupply crate
 
 	New()
 		..()
@@ -124,6 +126,7 @@
 		var/price = 0
 		var/modifier = sell_art_datum.get_rarity_modifier()
 
+		// calculate price
 		price = modifier*modifier * 10000
 		var/obj/item/sticker/postit/artifact_paper/pap = locate(/obj/item/sticker/postit/artifact_paper/) in sell_art.vis_contents
 		if(pap?.lastAnalysis)
@@ -131,20 +134,45 @@
 		price += rand(-50,50)
 		price = round(price, 5)
 
-		if(prob(modifier*40*pap.lastAnalysis)) // range from 0% to ~78% for fully researched t4 artifact
-			SPAWN_DBG(rand(3,8) MINUTES)
-				var/obj/storage/crate/artcrate = new /obj/storage/crate()
-				artcrate.name = "Artifact Resupply Crate"
-				new /obj/artifact_type_spawner/vurdalak(artcrate)
-				shippingmarket.receive_crate(artcrate)
+		// track score
+		if(pap)
+			score_tracker.artifacts_analyzed++
+		if(pap?.lastAnalysis >= 3)
+			score_tracker.artifacts_correctly_analyzed++
 
+		// send artifact resupply
+		if(prob(modifier*40*pap?.lastAnalysis)) // range from 0% to ~78% for fully researched t4 artifact
+			if(!src.artifact_resupply_amount)
+				SPAWN_DBG(rand(1,5) MINUTES)
+					// message
+					var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
+					var/datum/signal/pdaSignal = get_free_signal()
+					pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGD_SCIENCE), "sender"="00000000", "message"="Notification: Incoming artifact resupply crate. ([artifact_resupply_amount] objects)")
+					pdaSignal.transmission_method = TRANSMISSION_RADIO
+					if(transmit_connection != null)
+						transmit_connection.post_signal(null, pdaSignal)
+					// actual shipment
+					var/obj/storage/crate/artcrate = new /obj/storage/crate()
+					artcrate.name = "Artifact Resupply Crate"
+					for(var/i = 0 to artifact_resupply_amount)
+						new /obj/artifact_type_spawner/vurdalak(artcrate)
+					artifact_resupply_amount = 0
+					shippingmarket.receive_crate(artcrate)
+			src.artifact_resupply_amount++
+
+		// sell
 		wagesystem.shipping_budget += price
 		qdel(sell_art)
 
+		// give PDA group messages
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: [price] credits earned from last outgoing shipment.")
-
+		var/message = "Notification: [price] credits earned from outgoing artifact \'[sell_art.name]\'. "
+		if(pap)
+			message += "Analysis was [(pap.lastAnalysis/3)*100]% correct."
+		else
+			message += "Artifact was not analyzed."
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGD_SCIENCE, MGA_SALES), "sender"="00000000", "message"=message)
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		if(transmit_connection != null)
 			transmit_connection.post_signal(null, pdaSignal)
@@ -212,7 +240,7 @@
 		if(transmit_connection != null)
 			transmit_connection.post_signal(null, pdaSignal)
 
-	proc/receive_crate(obj/storage/S)
+	proc/receive_crate(atom/movable/shipped_thing)
 
 		var/turf/spawnpoint
 		for(var/turf/T in get_area_turfs(/area/supply/spawn_point))
@@ -232,11 +260,11 @@
 			logTheThing("debug", null, null, "<b>Shipping: </b> No target turfs found! Can't deliver crate")
 			return
 
-		S.set_loc(spawnpoint)
+		shipped_thing.set_loc(spawnpoint)
 
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Shipment arriving to Cargo Bay: [S.name].")
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Shipment arriving to Cargo Bay: [shipped_thing.name].")
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		transmit_connection.post_signal(null, pdaSignal)
 
@@ -252,7 +280,36 @@
 					if (P && !P.density)
 						P.close()
 
-		S.throw_at(target, 100, 1)
+		shipped_thing.throw_at(target, 100, 1)
+
+	proc/clear_path_to_market()
+		var/list/bounds = get_area_turfs(/area/supply/delivery_point)
+		bounds += get_area_turfs(/area/supply/sell_point)
+		bounds += get_area_turfs(/area/supply/spawn_point)
+		var/min_x = INFINITY
+		var/max_x = 0
+		var/min_y = INFINITY
+		var/max_y = 0
+		for(var/turf/boundry as anything in bounds)
+			min_x = min(min_x, boundry.x)
+			min_y = min(min_y, boundry.y)
+			max_x = max(max_x, boundry.x)
+			max_y = max(max_y, boundry.y)
+
+		var/list/turf/to_clear = block(locate(min_x, min_y, Z_LEVEL_STATION), locate(max_x, max_y, Z_LEVEL_STATION))
+		for(var/turf/T as anything in to_clear)
+			//Wacks asteroids and skip normal turfs that belong
+			if(istype(T, /turf/simulated/wall/asteroid))
+				T.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid, force=TRUE)
+				continue
+			else if(!istype(T, /turf/unsimulated))
+				continue
+
+			//Uh, make sure we don't block the shipping lanes!
+			for(var/atom/A in T)
+				if(A.density)
+					qdel(A)
+
 
 // Debugging and admin verbs (mostly coder)
 

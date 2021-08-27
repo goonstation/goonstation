@@ -5,7 +5,7 @@
 #define S_DRAW 0
 #define S_INJECT 1
 /obj/item/reagent_containers/syringe
-	name = "Syringe"
+	name = "syringe"
 	desc = "A syringe."
 	icon = 'icons/obj/syringe.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
@@ -14,8 +14,6 @@
 	uses_multiple_icon_states = 1
 	initial_volume = 15
 	amount_per_transfer_from_this = 5
-	module_research = list("science" = 1, "medicine" = 1)
-	module_research_type = /obj/item/reagent_containers/syringe
 	var/mode = S_DRAW
 	var/image/fluid_image
 	var/image/image_inj_dr

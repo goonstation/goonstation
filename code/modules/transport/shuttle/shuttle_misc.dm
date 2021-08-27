@@ -162,7 +162,7 @@
 /obj/item/material_piece/sphere/plasmaball // heh
 	name = "plasma round"
 	desc = "A hefty weaponized sphere of compressed plasma contained within a mesh of exotic materials."
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	force = 40
 	throw_speed = 0.3
 

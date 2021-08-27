@@ -20,6 +20,7 @@
 	item_state = "helmet"
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
 	see_face = 0
+	item_function_flags = IMMUNE_TO_ACID
 
 	New()
 		..()
@@ -27,10 +28,10 @@
 
 	equipped(mob/user)
 		. = ..()
-		APPLY_MOB_PROPERTY(user, PROP_THERMALSIGHT_MK2, src)
+		APPLY_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
 
 	unequipped(mob/user)
-		REMOVE_MOB_PROPERTY(user, PROP_THERMALSIGHT_MK2, src)
+		REMOVE_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
 		. = ..()
 
 /obj/item/clothing/under/gimmick/hunter
@@ -38,11 +39,13 @@
 	desc = "Fishnets, bandoliers and plating? What the hell?"
 	icon_state = "hunter"
 	item_state = "hunter"
+	item_function_flags = IMMUNE_TO_ACID
 
 /obj/item/clothing/shoes/cowboy/hunter
 	name = "Space Cowboy Boots"
 	desc = "Fashionable alien footwear. The sole appears to be rubberized,  preventing slipping on wet surfaces."
 	c_flags = NOSLIP // Don't slip on gibs all the time, d'oh (Convair880).
+	item_function_flags = IMMUNE_TO_ACID
 // --------------------------------------------------
 
 /obj/item/clothing/head/helmet/space/santahat
@@ -389,6 +392,10 @@
 	cant_self_remove = 1
 	cant_other_remove = 1
 
+	New()
+		..()
+		AddComponent(/datum/component/clown_disbelief_item)
+
 /obj/item/clothing/gloves/cursedclown_gloves
 	name = "cursed white gloves"
 	desc = "These things smell terrible, and they're all lumpy. Gross."
@@ -489,7 +496,7 @@
 
 /obj/item/clothing/under/gimmick/mj_clothes
 	name = "Smooth Criminal's Jumpsuit"
-	desc = "You probably shouldn't wear this around small children."
+	desc = "You've been hit by..."
 	icon_state = "moonwalker"
 	item_state = "moonwalker"
 
@@ -541,7 +548,7 @@
 	flags = FPRINT | TABLEPASS| CONDUCT
 	item_state = "vshield"
 	throwforce = 7.0
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 
 	turn_off()
 		if(user)
@@ -652,8 +659,7 @@
 	name = "super happy funtime cat head"
 	desc = "This cat head was built to the highest ethical standards.  50% less child labor used in production than competing novelty cat heads."
 	icon_state = "genki"
-	permeability_coefficient = 0.01
-	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | MASKINTERNALS
+	c_flags = COVERSEYES | COVERSMOUTH | MASKINTERNALS
 
 //birdman for nieks
 
@@ -687,8 +693,9 @@
 	icon_state = "adeptus"
 	item_state = "adeptus"
 	permeability_coefficient = 0.50
+	over_hair = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
-	over_all = 1
+	wear_layer = MOB_OVERLAY_BASE
 
 //power armor
 
@@ -766,10 +773,8 @@
 
 			boutput(H, "<span class='alert'><b>You suddenly feel whiny and ineffectual.</b></span>")
 			H.real_name = "Mike Dawson"
-			H.bioHolder.mobAppearance.customization_first = "Bedhead"
-			H.bioHolder.mobAppearance.customization_second = "Selleck"
-			H.cust_one_state = "bedhead"
-			H.cust_two_state = "selleck"
+			H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/long/bedhead
+			H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/moustache/selleck
 			H.bioHolder.mobAppearance.e_color = "#321E14"
 			H.bioHolder.mobAppearance.customization_first_color = "#412819"
 			H.bioHolder.mobAppearance.customization_second_color = "#412819"
@@ -801,12 +806,14 @@
 	desc = "'ello gents! Cracking time to hunt an elephant!"
 	icon_state = "safari"
 	item_state = "safari"
+	item_function_flags = IMMUNE_TO_ACID
 
 /obj/item/clothing/head/safari
 	name = "safari hat"
 	desc = "Keeps you cool in the hot savannah."
 	icon_state = "safari"
 	item_state = "caphat"
+	item_function_flags = IMMUNE_TO_ACID
 
 /obj/item/clothing/mask/skull
 	name = "skull mask"
@@ -824,7 +831,7 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "robuddy"
 	item_state = "robuddy"
-	over_back = 1
+	wear_layer = MOB_BACK_LAYER + 0.2
 	body_parts_covered = TORSO|LEGS|ARMS
 
 /obj/item/clothing/suit/bee
@@ -835,7 +842,7 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "bee"
 	item_state = "bee"
-	over_back = 1
+	wear_layer = MOB_BACK_LAYER + 0.2
 	body_parts_covered = TORSO|ARMS
 
 /obj/item/clothing/suit/monkey
@@ -846,6 +853,7 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "monkey"
 	item_state = "monkey"
+	over_hair = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
 	c_flags = COVERSMOUTH | COVERSEYES
 
@@ -853,7 +861,7 @@
 	name = "Nicolas Cage mask"
 	desc = "An eerily realistic mask of 20th century film actor Nicolas Cage."
 	icon_state = "niccage"
-	c_flags = SPACEWEAR | COVERSMOUTH | COVERSEYES | MASKINTERNALS
+	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
 	see_face = 0.0
 
 /obj/item/clothing/mask/waltwhite
@@ -882,6 +890,7 @@
 	item_state = "light_borg"
 	body_parts_covered = TORSO|LEGS|ARMS
 	c_flags = COVERSMOUTH | COVERSEYES
+	over_hair = TRUE
 	see_face = 0.0
 
 /obj/item/clothing/under/gimmick/utena //YJHTGHTFH's utena suit
@@ -927,6 +936,14 @@
 	icon_state = "sneakmans"
 	item_state = "sneakmans"
 
+/obj/item/clothing/suit/armor/sneaking_suit/costume
+	desc = "On closer inspection this is a cheap cosplay outfit with an obvious zipper."
+
+	setupProperties()
+		..()
+		setProperty("meleeprot", 2)
+		delProperty("rangedprot")
+
 /obj/item/clothing/suit/bio_suit/beekeeper
 	name = "apiculturist's suit"
 	desc = "A suit that protects against bees. Not space bees, but like the tiny, regular kind. This thing doesn't do <i>shit</i> to protect you from space bees."
@@ -961,6 +978,18 @@
 	desc = "A little ruffle with lace, to wear on the head. It gives you super cleaning powers*!<br><small>*Does not actually bestow any powers.</small>"
 	icon_state = "maid"
 	item_state = "maid"
+
+/obj/item/clothing/under/gimmick/dinerdress_mint
+	name = "Mint Diner Waitress's Dress"
+	desc = "Can I getcha somethin', sugar?"
+	icon_state = "dinerdress-mint"
+	item_state = "dinerdress-mint"
+
+/obj/item/clothing/under/gimmick/dinerdress_pink
+	name = "Pink Diner Waitress's Dress"
+	desc = "Y'all come back now, ya hear?"
+	icon_state = "dinerdress-pink"
+	item_state = "dinerdress-pink"
 
 /obj/item/clothing/under/gimmick/kilt
 	name = "kilt"
@@ -1303,7 +1332,8 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "joyful"
 	body_parts_covered = TORSO|LEGS|ARMS
-	over_all = 1
+	wear_layer = MOB_OVERLAY_BASE
+	over_hair = TRUE
 
 /obj/item/clothing/head/rando
 	name = "red skull mask and cowl"
@@ -1450,8 +1480,9 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	name = "hotdog suit"
 	desc = "On close inspection, you notice a small collection of bones caught in the fabric of the suit. Spooky."
 	body_parts_covered = HEAD|TORSO|LEGS|ARMS
-	over_all = 1
+	wear_layer = MOB_OVERLAY_BASE
 	icon_state = "hotdogsuit"
+	over_hair = TRUE
 
 /obj/item/clothing/under/gimmick/vampire
 	name = "absurdly stylish suit and vest"
@@ -1505,7 +1536,6 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 /obj/item/clothing/shoes/rollerskates
 	name = "rollerskates"
 	desc = "A pair of rollerskates, invented when experimental teleportation technology fused a pair of tacky boots and a shopping cart."
-	c_flags = NOSLIP
 	icon_state = "rollerskates"
 
 /obj/item/clothing/under/gimmick/itsyourcousin
@@ -1625,3 +1655,51 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	icon_state = "labcoat-long"
 	item_state = "labcoat-long"
 	body_parts_covered = TORSO|LEGS|ARMS
+
+//monkey island reference
+
+/obj/item/clothing/under/gimmick/guybrush
+	name = "wannabe pirate outfit"
+	desc = "It smells like monkeys."
+	icon_state = "guybrush"
+	item_state = "guybrush"
+
+//fake lizard stuff
+
+/obj/item/clothing/suit/gimmick/dinosaur
+	name = "dinosaur pajamas"
+	desc = "It has a little hood you can flip up and down. Rawr!"
+	icon_state = "dinosaur"
+	item_state = "dinosaur"
+	var/hood = 0
+
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 25)
+
+	attack_self(mob/user as mob)
+		src.hood = !(src.hood)
+		user.show_text("You flip [src]'s hood [src.hood ? "up" : "down"].")
+		if (src.hood)
+			src.over_hair = 1
+			src.icon_state = "dinosaur-up"
+			src.item_state = "dinosaur-up"
+		else
+			src.over_hair = 0
+			src.icon_state = "dinosaur"
+			src.item_state = "dinosaur"
+
+/obj/item/clothing/head/biglizard
+	name = "giant novelty lizard head"
+	desc = "Wow! It's just like the real thing!"
+	icon_state = "big_lizard"
+	item_state = "big_lizard"
+
+//sock hats
+
+/obj/item/clothing/head/link
+	name = "hero hat"
+	desc = "What kind of hero would wear this dumb thing?"
+	icon_state = "link"
+	item_state = "link"
