@@ -604,15 +604,15 @@ var/f_color_selector_handler/F_Color_Selector
 	makeMiningLevel()
 	#endif
 
+	UPDATE_TITLE_STATUS("Initializing biomes")
+	Z_LOG_DEBUG("World/Init", "Setting up biomes...")
+	initialize_biomes()
+
 	#ifdef ENABLE_ARTEMIS
 	UPDATE_TITLE_STATUS("Building planet level")
 	Z_LOG_DEBUG("World/Init", "Setting up planet level...")
 	makePlanetLevel()
 	#endif
-
-	UPDATE_TITLE_STATUS("Initializing biomes")
-	Z_LOG_DEBUG("World/Init", "Setting up biomes...")
-	initialize_biomes()
 
 	UPDATE_TITLE_STATUS("Generating terrain")
 	Z_LOG_DEBUG("World/Init", "Setting perlin noise terrain...")

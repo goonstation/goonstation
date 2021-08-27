@@ -17,7 +17,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 
 	proc/place()
 		if(src.z == planetZLevel)
-			new /area/allowGenerate(src)
+			return // noop
 		if (map_currently_underwater)
 			src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
 		else
@@ -48,7 +48,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		icon_state = "clear"
 		place()
 			if(src.z == planetZLevel)
-				new /area/allowGenerate(src)
+				return // noop
 			if (map_currently_underwater)
 				src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
 			else

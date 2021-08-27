@@ -3,10 +3,11 @@
 var/planetZLevel = null
 var/list/planetModifiers = list()
 var/list/planetModifiersUsed = list()//Assoc list, type:times used
+var/list/planet_seeds = list()
 
 #ifdef ENABLE_ARTEMIS
 /proc/makePlanetLevel()
-	var/list/turf/planetZ = list()
+	//var/list/turf/planetZ = list()
 	var/startTime = world.timeofday
 	if(!planetZLevel)
 		boutput(world, "<span class='alert'>Skipping Planet Generation!</span>")
@@ -14,36 +15,63 @@ var/list/planetModifiersUsed = list()//Assoc list, type:times used
 	else
 		boutput(world, "<span class='alert'>Generating Planet Level ...</span>")
 
-	for(var/turf/T)
-		if(T.z == planetZLevel)
-			planetZ.Add(T)
+	// SEED zee Planets!!!!
+	for(var/area/map_gen/planet/A in by_type[/area/map_gen])
+		if(!planet_seeds[A.name])
+			planet_seeds[A.name] = list("height"=GALAXY.Rand.xor_rand(1,50000), "humidity"=GALAXY.Rand.xor_rand(1,50000), "heat"=GALAXY.Rand.xor_rand(1,50000))
 
-	var/num_to_place = PLANET_NUMPREFABS + GALAXY.Rand.xor_rand(0, PLANET_NUMPREFABSEXTRA)
-	for (var/n = 1, n <= num_to_place, n++)
-		game_start_countdown?.update_status("Setting up mining level...\n(Prefab [n]/[num_to_place])")
-		var/datum/generatorPlanetPrefab/M = pickPlanetPrefab()
-		if (M)
-			var/maxX = (world.maxx - M.prefabSizeX - PLANET_MAPBORDER)
-			var/maxY = (world.maxy - M.prefabSizeY - PLANET_MAPBORDER)
-			var/stop = 0
-			var/count= 0
-			var/maxTries = (M.required ? 200:33)
-			while (!stop && count < maxTries) //Kinda brute forcing it. Dumb but whatever.
-				var/turf/target = locate(GALAXY.Rand.xor_rand(1+PLANET_MAPBORDER, maxX), GALAXY.Rand.xor_rand(1+PLANET_MAPBORDER,maxY), planetZLevel)
-				var/area/A = get_area(target)
-				var/ret = M.applyTo(target)
-				if (ret == 0)
-					logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to blocked area. [target] @ [showCoords(target.x, target.y, target.z)]")
-				else
-					logTheThing("debug", null, null, "Prefab placement #[n] [M.type][M.required?" (REQUIRED)":""] succeeded. [target] @ [showCoords(target.x, target.y, target.z)]")
-					stop = 1
-					if(istype(A,/area/map_gen/planet))
-						var/area/map_gen/planet/P = A
-						P.prefabs |= M
-				count++
-				if (count >= 33)
-					logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to maximum tries [maxTries][M.required?" WARNING: REQUIRED FAILED":""]. [target] @ [showCoords(target.x, target.y, target.z)]")
-		else break
+		var/seed = planet_seeds[A.name]
+		A.generate_perlin_noise_terrain(seed["height"], seed["humidity"], seed["heat"])
+
+		if(A.allow_prefab)
+			var/list/area_turfs = get_area_turfs(A)
+			var/num_to_place = PLANET_NUMPREFABS + GALAXY.Rand.xor_rand(0, PLANET_NUMPREFABSEXTRA)
+			for (var/n = 1, n <= num_to_place, n++)
+				game_start_countdown?.update_status("Setting up mining level...\n(Prefab [n]/[num_to_place])")
+				var/datum/generatorPlanetPrefab/M = pickPlanetPrefab()
+				if (M)
+					var/maxX = (world.maxx - M.prefabSizeX - PLANET_MAPBORDER)
+					var/maxY = (world.maxy - M.prefabSizeY - PLANET_MAPBORDER)
+					var/stop = 0
+					var/count= 0
+					var/maxTries = (M.required ? 200 : 33)
+					while (!stop && count < maxTries) //Kinda brute forcing it. Dumb but whatever.
+						var/turf/target = locate(GALAXY.Rand.xor_rand(1+PLANET_MAPBORDER, maxX), GALAXY.Rand.xor_rand(1+PLANET_MAPBORDER,maxY), planetZLevel)
+						target = GALAXY.Rand.xor_pick(area_turfs)
+						//var/area/A = get_area(target)
+						var/ret = M.applyTo(target)
+						if (!ret)
+							logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to blocked area. [target] @ [showCoords(target.x, target.y, target.z)]")
+						else
+							logTheThing("debug", null, null, "Prefab placement #[n] [M.type][M.required?" (REQUIRED)":""] succeeded. [target] @ [showCoords(target.x, target.y, target.z)]")
+							stop = 1
+							if(istype(A,/area/map_gen/planet))
+								var/area/map_gen/planet/P = A
+								P.prefabs |= ret
+						count++
+						if (count >= 33)
+							logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to maximum tries [maxTries][M.required?" WARNING: REQUIRED FAILED":""]. [target] @ [showCoords(target.x, target.y, target.z)]")
+				else break
+
+	for(var/area/map_gen/planet/A in by_type[/area/map_gen])
+		if(!A.allow_prefab)
+			var/area/map_gen/planet/parent_area = get_area_by_type(A.parent_type)
+			parent_area.biome_turfs += A.biome_turfs
+			parent_area.overlays += A.overlays
+			for(var/turf/T in A)
+				new parent_area.type(T)
+		else
+			for(var/datum/loadedProperties/prefab in A.prefabs)
+				var/list/turf/prefab_turfs = block(locate(prefab.sourceX, prefab.sourceY, prefab.sourceZ),locate(prefab.maxX, prefab.maxY, prefab.maxZ))
+				var/list/turf/regen_turfs = list()
+				for(var/turf/variableTurf/T in prefab_turfs)
+					regen_turfs += T
+					if(istype(T.loc, /area/space)) //space...
+						new A.type(T)
+				if(length(regen_turfs))
+					var/seed = planet_seeds[A.name]
+					A.map_generator.generate_terrain(regen_turfs, seed["height"], seed["humidity"], seed["heat"])
+
 
 	// var/datum/mapGenerator/D
 
@@ -113,7 +141,7 @@ var/list/planetModifiersUsed = list()//Assoc list, type:times used
 		return P
 	else
 		if(eligible.len)
-			var/datum/generatorPlanetPrefab/P = weighted_pick(eligible)
+			var/datum/generatorPlanetPrefab/P = GALAXY.Rand.xor_weighted_pick(eligible)
 			if(P.type in planetModifiersUsed)
 				planetModifiersUsed[P.type] = (planetModifiersUsed[P.type] + 1)
 			else
@@ -122,20 +150,26 @@ var/list/planetModifiersUsed = list()//Assoc list, type:times used
 			return P
 		else return null
 
+#define DEFINE_PLANET(_PATH, _NAME) \
+	/area/map_gen/planet/_PATH{name=_NAME};\
+	/area/map_gen/planet/_PATH/no_prefab{allow_prefab = FALSE};
+
 /area/map_gen/planet
 	name = "planet generation area"
 	var/map_generator_path = /datum/map_generator/jungle_generator
 	var/list/turf/biome_turfs = list()
-	var/list/datum/generatorPlanetPrefab/prefabs = list()
+	var/list/datum/loadedProperties/prefabs = list()
+	var/allow_prefab = TRUE
+	var/generated = FALSE
 
-	generate_perlin_noise_terrain()
+	generate_perlin_noise_terrain(height_seed, humidity_seed, heat_seed)
+		if(generated)
+			return
 		if(src.map_generator_path)
 			map_generator = new map_generator_path()
 
-		var/height_seed = GALAXY.Rand.xor_rand(0, 50000)
-		var/humidity_seed = GALAXY.Rand.xor_rand(0, 50000)
-		var/heat_seed = GALAXY.Rand.xor_rand(0, 50000)
 		map_generator.generate_terrain(get_area_turfs(src), height_seed, humidity_seed, heat_seed)
+		generated = TRUE
 
 	proc/colorize_planet(color)
 		src.ambient_light = color
@@ -152,34 +186,15 @@ var/list/planetModifiersUsed = list()//Assoc list, type:times used
 	proc/clear_biomes()
 		biome_turfs = list()
 
-	alpha
-		name = "Planet Alpha"
-
-	beta
-		name = "Planet Beta"
-
-	charlie
-		name = "Planet Charlie"
-
-	delta
-		name = "Planet Delta"
-
-	echo
-		name = "Planet Echo"
-
-	foxtrot
-		name = "Planet Foxtrot"
-
-	gamma
-		name = "Planet Gamma"
-
-	hotel
-		name = "Planet Hotel"
-
-	indigo
-		name = "Planet Indigo"
-
-
+DEFINE_PLANET(alpha, "Alpha")
+DEFINE_PLANET(beta, "Beta")
+DEFINE_PLANET(charlie, "Charlie")
+DEFINE_PLANET(delta, "Delta")
+DEFINE_PLANET(echo, "Echo")
+DEFINE_PLANET(foxtrot, "Foxtrot")
+DEFINE_PLANET(gamma, "Gamma")
+DEFINE_PLANET(hotel, "Hotel")
+DEFINE_PLANET(indigo, "Indigo")
 
 ABSTRACT_TYPE(/datum/generatorPlanetPrefab)
 /datum/generatorPlanetPrefab
@@ -207,24 +222,28 @@ ABSTRACT_TYPE(/datum/generatorPlanetPrefab)
 		var/turf/T = locate(adjustX, adjustY, target.z)
 
 		if(!check_biome_requirements(T))
-			return 0
+			return
 
 		for(var/x=0, x<prefabSizeX; x++)
 			for(var/y=0, y<prefabSizeY; y++)
 				var/turf/L = locate(T.x+x, T.y+y, T.z)
-				if(L?.loc && (!istype(L.loc , /area/allowGenerate))) // (L.loc.type != /area/space) istype(L.loc, /area/noGenerate)
-					return 0
 
+				var/area/map_gen/planet/P = get_area(L)
+				if(L?.loc && !(istype(P) && P.allow_prefab))
+					return
+				if(T.density)
+					return
+
+		var/area_type = get_area(T)
 		var/loaded = file2text(prefabPath)
-
 		if(T && loaded)
 			var/dmm_suite/D = new/dmm_suite()
-			var/datum/loadedProperties/props = D.read_map(loaded,T.x,T.y,T.z,prefabPath)
+			var/datum/loadedProperties/props = D.read_map(loaded, T.x, T.y, T.z, prefabPath, DMM_OVERWRITE_MOBS | DMM_OVERWRITE_OBJS)
 			if(prefabSizeX != props.maxX - props.sourceX + 1 || prefabSizeY != props.maxY - props.sourceY + 1)
 				CRASH("size of prefab [prefabPath] is incorrect ([prefabSizeX]x[prefabSizeY] != [props.maxX - props.sourceX + 1]x[props.maxY - props.sourceY + 1])")
-			convertSpace(T, prefabSizeX, prefabSizeY)
-			return 1
-		else return 0
+			convertSpace(T, prefabSizeX, prefabSizeY, area_type)
+			return props
+		else return
 
 	proc/check_biome_requirements(turf/T)
 		. = TRUE
@@ -235,12 +254,17 @@ ABSTRACT_TYPE(/datum/generatorPlanetPrefab)
 					. = FALSE
 					break
 
-	proc/convertSpace(turf/start, prefabSizeX, prefabSizeY)
-		for(var/x=0, x<prefabSizeX; x++)
-			for(var/y=0, y<prefabSizeY; y++)
-				var/turf/T = locate(start.x+x, start.y+y, start.z)
-				if(istype(T, /turf/space))
-					new /area/allowGenerate(T)
+	proc/convertSpace(turf/start, prefabSizeX, prefabSizeY, area/prev_area)
+		//var/list/areas_to_revert = list(/area/noGenerate, /area/allowGenerate)
+		var/child_path = "[prev_area.type]/no_prefab"
+		var/list/turf/turfs = block(locate(start.x, start.y, start.z), locate(start.x+prefabSizeX-1, start.y+prefabSizeY-1, start.z))
+		for(var/turf/T in turfs)
+			//if( T.loc.type in areas_to_revert)
+			if(istype(T.loc, /area/noGenerate))
+				new child_path(T)
+			else if(istype(T.loc, /area/allowGenerate))
+				new prev_area.type(T)
+
 
 	tomb // small little tomb
 		maxNum = 1

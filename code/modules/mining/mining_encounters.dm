@@ -53,7 +53,7 @@
 		var/area_restriction = /area/mining/magnet
 		if (target)
 			magnetic_center = target.magnetic_center
-			size = target.get_encounter_size(size,prob=40)
+			size = target.get_encounter_size(size,P=40)
 			area_restriction = null
 
 		var/rand_num = rand(1,3)
@@ -99,7 +99,7 @@
 		var/area_restriction = /area/mining/magnet
 		if (target)
 			magnetic_center = target.magnetic_center
-			size = target.get_encounter_size(size,prob=20)
+			size = target.get_encounter_size(size,P=20)
 			area_restriction = null
 
 		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/asteroid/ice, size, 0, area_restriction)

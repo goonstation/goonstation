@@ -941,12 +941,11 @@
 		. = ..()
 		src.layer += src.edge_priority_level / 1000
 		SPAWN_DBG(3 SECONDS) //give neighbors a chance to spawn in
-			edge_overlays()
+			if(istype(src))
+				edge_overlays()
 
-	proc/edge_overlays(turf/target)
+	proc/edge_overlays()
 		for (var/turf/T in orange(src,1))
-			if(target)
-				if(T != target) continue
 			if (istype(T, /turf/unsimulated/floor/auto))
 				var/turf/unsimulated/floor/auto/TA = T
 				if (TA.edge_priority_level >= src.edge_priority_level)
