@@ -914,21 +914,21 @@ var/datum/job_controller/job_controls
 				JOB.wages = src.job_creator.wages
 				JOB.limit = src.job_creator.limit
 				JOB.mob_type = src.job_creator.mob_type
-				JOB.slot_head = list(src.job_creator.slot_head)
-				JOB.slot_mask = list(src.job_creator.slot_mask)
-				JOB.slot_ears = list(src.job_creator.slot_ears)
-				JOB.slot_eyes = list(src.job_creator.slot_eyes)
-				JOB.slot_glov = list(src.job_creator.slot_glov)
-				JOB.slot_foot = list(src.job_creator.slot_foot)
-				JOB.slot_card = list(src.job_creator.slot_card)
-				JOB.slot_jump = list(src.job_creator.slot_jump)
-				JOB.slot_suit = list(src.job_creator.slot_suit)
-				JOB.slot_back = list(src.job_creator.slot_back)
-				JOB.slot_belt = list(src.job_creator.slot_belt)
-				JOB.slot_poc1 = list(src.job_creator.slot_poc1)
-				JOB.slot_poc2 = list(src.job_creator.slot_poc2)
-				JOB.slot_lhan = list(src.job_creator.slot_lhan)
-				JOB.slot_rhan = list(src.job_creator.slot_rhan)
+				JOB.slot_head = list(1=src.job_creator.slot_head)
+				JOB.slot_mask = list(1=src.job_creator.slot_mask)
+				JOB.slot_ears = list(1=src.job_creator.slot_ears)
+				JOB.slot_eyes = list(1=src.job_creator.slot_eyes)
+				JOB.slot_glov = list(1=src.job_creator.slot_glov)
+				JOB.slot_foot = list(1=src.job_creator.slot_foot)
+				JOB.slot_card = list(1=src.job_creator.slot_card)
+				JOB.slot_jump = list(1=src.job_creator.slot_jump)
+				JOB.slot_suit = list(1=src.job_creator.slot_suit)
+				JOB.slot_back = list(1=src.job_creator.slot_back)
+				JOB.slot_belt = list(1=src.job_creator.slot_belt)
+				JOB.slot_poc1 = list(1=src.job_creator.slot_poc1)
+				JOB.slot_poc2 = list(1=src.job_creator.slot_poc2)
+				JOB.slot_lhan = list(1=src.job_creator.slot_lhan)
+				JOB.slot_rhan = list(1=src.job_creator.slot_rhan)
 				JOB.access = JOB.access | src.job_creator.access
 				JOB.change_name_on_spawn = src.job_creator.change_name_on_spawn
 				JOB.special_spawn_location = src.job_creator.special_spawn_location
