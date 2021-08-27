@@ -2668,6 +2668,14 @@ datum
 			value = 3
 			viscosity = 0.4
 
+			on_add()
+				if (holder && ismob(holder.my_atom))
+					APPLY_MOB_PROPERTY(holder, PROP_GHOSTVISION, src)
+
+			on_remove()
+				if (ismob(holder.my_atom))
+					REMOVE_MOB_PROPERTY(holder, PROP_GHOSTVISION, src)
+
 		voltagen
 			name = "voltagen"
 			id = "voltagen"
