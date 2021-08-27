@@ -1,4 +1,9 @@
 
+(t)thu aug 26 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Voltgen rework - no longer shocks on touch react, instead grants retaliatory arcflashes against attackers when drunk
+(+)Adjust some bottle sizes. (sorry jan)
 (t)tue aug 24 21
 (u)zjdtmkhzt
 (p)5774
