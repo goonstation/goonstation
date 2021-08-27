@@ -111,21 +111,21 @@ var/datum/job_controller/job_controls
 		dat += "<BR>"
 		if (ispath(src.job_creator.mob_type, /mob/living/carbon/human))
 			dat += "<A href='?src=\ref[src];EditMutantrace=1'>Mutantrace:</A> [src.job_creator.starting_mutantrace]<br>"
-			dat += "<A href='?src=\ref[src];EditHeadgear=1'>Starting Headgear:</A> [src.job_creator.slot_head]<br>"
-			dat += "<A href='?src=\ref[src];EditMask=1'>Starting Mask:</A>  [src.job_creator.slot_mask]<br>"
-			dat += "<A href='?src=\ref[src];EditHeadset=1'>Starting Headset:</A> [src.job_creator.slot_ears]<br>"
-			dat += "<A href='?src=\ref[src];EditGlasses=1'>Starting Glasses:</A> [src.job_creator.slot_eyes]<br>"
-			dat += "<A href='?src=\ref[src];EditOvercoat=1'>Starting Overcoat:</A> [src.job_creator.slot_suit]<br>"
-			dat += "<A href='?src=\ref[src];EditJumpsuit=1'>Starting Jumpsuit:</A> [src.job_creator.slot_jump]<br>"
+			dat += "<A href='?src=\ref[src];EditHeadgear=1'>Starting Headgear:</A> [json_encode(src.job_creator.slot_head)]<br>"
+			dat += "<A href='?src=\ref[src];EditMask=1'>Starting Mask:</A>  [json_encode(src.job_creator.slot_mask)]<br>"
+			dat += "<A href='?src=\ref[src];EditHeadset=1'>Starting Headset:</A> [json_encode(src.job_creator.slot_ears)]<br>"
+			dat += "<A href='?src=\ref[src];EditGlasses=1'>Starting Glasses:</A> [json_encode(src.job_creator.slot_eyes)]<br>"
+			dat += "<A href='?src=\ref[src];EditOvercoat=1'>Starting Overcoat:</A> [json_encode(src.job_creator.slot_suit)]<br>"
+			dat += "<A href='?src=\ref[src];EditJumpsuit=1'>Starting Jumpsuit:</A> [json_encode(src.job_creator.slot_jump)]<br>"
 			dat += "<A href='?src=\ref[src];EditIDCard=1'>Starting ID Card:</A> [src.job_creator.slot_card]<br>"
-			dat += "<A href='?src=\ref[src];EditGloves=1'>Starting Gloves:</A> [src.job_creator.slot_glov]<br>"
-			dat += "<A href='?src=\ref[src];EditShoes=1'>Starting Shoes:</A> [src.job_creator.slot_foot]<br>"
-			dat += "<A href='?src=\ref[src];EditBack=1'>Starting Back Item:</A> [src.job_creator.slot_back]<br>"
-			dat += "<A href='?src=\ref[src];EditBelt=1'>Starting Belt Item:</A> [src.job_creator.slot_belt]<br>"
-			dat += "<A href='?src=\ref[src];EditPock1=1'>Starting 1st Pocket Item:</A> [src.job_creator.slot_poc1]<br>"
-			dat += "<A href='?src=\ref[src];EditPock2=1'>Starting 2nd Pocket Item:</A> [src.job_creator.slot_poc2]<br>"
-			dat += "<A href='?src=\ref[src];EditLhand=1'>Starting Left Hand Item:</A> [src.job_creator.slot_lhan]<br>"
-			dat += "<A href='?src=\ref[src];EditRhand=1'>Starting Right Hand Item:</A> [src.job_creator.slot_rhan]<br>"
+			dat += "<A href='?src=\ref[src];EditGloves=1'>Starting Gloves:</A> [json_encode(src.job_creator.slot_glov)]<br>"
+			dat += "<A href='?src=\ref[src];EditShoes=1'>Starting Shoes:</A> [json_encode(src.job_creator.slot_foot)]<br>"
+			dat += "<A href='?src=\ref[src];EditBack=1'>Starting Back Item:</A> [json_encode(src.job_creator.slot_back)]<br>"
+			dat += "<A href='?src=\ref[src];EditBelt=1'>Starting Belt Item:</A> [json_encode(src.job_creator.slot_belt)]<br>"
+			dat += "<A href='?src=\ref[src];EditPock1=1'>Starting 1st Pocket Item:</A> [json_encode(src.job_creator.slot_poc1)]<br>"
+			dat += "<A href='?src=\ref[src];EditPock2=1'>Starting 2nd Pocket Item:</A> [json_encode(src.job_creator.slot_poc2)]<br>"
+			dat += "<A href='?src=\ref[src];EditLhand=1'>Starting Left Hand Item:</A> [json_encode(src.job_creator.slot_lhan)]<br>"
+			dat += "<A href='?src=\ref[src];EditRhand=1'>Starting Right Hand Item:</A> [json_encode(src.job_creator.slot_rhan)]<br>"
 			dat += "<A href='?src=\ref[src];EditImpl=1'>Starting Implant:</A> [src.job_creator.recieves_implant]<br>"
 			for(var/i in 1 to 7)
 				dat += "<A href='?src=\ref[src];EditBpItem=[i]'>Starting Backpack Item [i]:</A> [src.job_creator.items_in_backpack.len >= i ? src.job_creator.items_in_backpack[i] : null]<br>"
@@ -307,7 +307,7 @@ var/datum/job_controller/job_controls
 						usr.show_text("No headgear matching that name", "red")
 						return
 
-					src.job_creator.slot_head = picker
+					src.job_creator.slot_head = list(picker)
 
 			src.job_creator()
 
@@ -334,7 +334,7 @@ var/datum/job_controller/job_controls
 						usr.show_text("No mask matching that name", "red")
 						return
 
-					src.job_creator.slot_mask = picker
+					src.job_creator.slot_mask = list(picker)
 
 			src.job_creator()
 
@@ -361,7 +361,7 @@ var/datum/job_controller/job_controls
 						usr.show_text("No headset matching that name", "red")
 						return
 
-					src.job_creator.slot_ears = picker
+					src.job_creator.slot_ears = list(picker)
 
 			src.job_creator()
 
@@ -388,7 +388,7 @@ var/datum/job_controller/job_controls
 						usr.show_text("No glasses matching that name", "red")
 						return
 
-					src.job_creator.slot_eyes = picker
+					src.job_creator.slot_eyes = list(picker)
 
 			src.job_creator()
 
@@ -415,7 +415,7 @@ var/datum/job_controller/job_controls
 						usr.show_text("No exosuit matching that name", "red")
 						return
 
-					src.job_creator.slot_suit = picker
+					src.job_creator.slot_suit = list(picker)
 
 			src.job_creator()
 
@@ -442,7 +442,7 @@ var/datum/job_controller/job_controls
 						usr.show_text("No jumpsuit matching that name", "red")
 						return
 
-					src.job_creator.slot_jump = picker
+					src.job_creator.slot_jump = list(picker)
 
 			src.job_creator()
 
@@ -498,7 +498,7 @@ var/datum/job_controller/job_controls
 						usr.show_text("No gloves matching that name", "red")
 						return
 
-					src.job_creator.slot_glov = picker
+					src.job_creator.slot_glov = list(picker)
 
 			src.job_creator()
 
@@ -525,7 +525,7 @@ var/datum/job_controller/job_controls
 						usr.show_text("No shoes matching that name", "red")
 						return
 
-					src.job_creator.slot_foot = picker
+					src.job_creator.slot_foot = list(picker)
 
 			src.job_creator()
 
@@ -563,7 +563,7 @@ var/datum/job_controller/job_controls
 							return
 						qdel(check)
 
-					src.job_creator.slot_back = picker
+					src.job_creator.slot_back = list(picker)
 
 			src.job_creator()
 
@@ -599,7 +599,7 @@ var/datum/job_controller/job_controls
 							return
 						qdel(check)
 
-					src.job_creator.slot_belt = picker
+					src.job_creator.slot_belt = list(picker)
 
 			src.job_creator()
 
@@ -635,7 +635,7 @@ var/datum/job_controller/job_controls
 							return
 						qdel(check)
 
-					src.job_creator.slot_poc1 = picker
+					src.job_creator.slot_poc1 = list(picker)
 
 			src.job_creator()
 
@@ -671,7 +671,7 @@ var/datum/job_controller/job_controls
 							return
 						qdel(check)
 
-					src.job_creator.slot_poc2 = picker
+					src.job_creator.slot_poc2 = list(picker)
 
 			src.job_creator()
 
@@ -698,7 +698,7 @@ var/datum/job_controller/job_controls
 						usr.show_text("No item matching that name", "red")
 						return
 
-					src.job_creator.slot_lhan = picker
+					src.job_creator.slot_lhan = list(picker)
 
 			src.job_creator()
 
@@ -749,7 +749,7 @@ var/datum/job_controller/job_controls
 					else if (L.len > 1)
 						picker = input(usr,"Select implant:","Job Creator",null) as null|anything in L
 					else
-						usr.show_text("No shoes implant that name", "red")
+						usr.show_text("No implant matching that name", "red")
 						return
 
 					src.job_creator.recieves_implant = picker
@@ -914,21 +914,21 @@ var/datum/job_controller/job_controls
 				JOB.wages = src.job_creator.wages
 				JOB.limit = src.job_creator.limit
 				JOB.mob_type = src.job_creator.mob_type
-				JOB.slot_head = list(1=src.job_creator.slot_head)
-				JOB.slot_mask = list(1=src.job_creator.slot_mask)
-				JOB.slot_ears = list(1=src.job_creator.slot_ears)
-				JOB.slot_eyes = list(1=src.job_creator.slot_eyes)
-				JOB.slot_glov = list(1=src.job_creator.slot_glov)
-				JOB.slot_foot = list(1=src.job_creator.slot_foot)
-				JOB.slot_card = list(1=src.job_creator.slot_card)
-				JOB.slot_jump = list(1=src.job_creator.slot_jump)
-				JOB.slot_suit = list(1=src.job_creator.slot_suit)
-				JOB.slot_back = list(1=src.job_creator.slot_back)
-				JOB.slot_belt = list(1=src.job_creator.slot_belt)
-				JOB.slot_poc1 = list(1=src.job_creator.slot_poc1)
-				JOB.slot_poc2 = list(1=src.job_creator.slot_poc2)
-				JOB.slot_lhan = list(1=src.job_creator.slot_lhan)
-				JOB.slot_rhan = list(1=src.job_creator.slot_rhan)
+				JOB.slot_head = src.job_creator.slot_head
+				JOB.slot_mask = src.job_creator.slot_mask
+				JOB.slot_ears = src.job_creator.slot_ears
+				JOB.slot_eyes = src.job_creator.slot_eyes
+				JOB.slot_glov = src.job_creator.slot_glov
+				JOB.slot_foot = src.job_creator.slot_foot
+				JOB.slot_card = src.job_creator.slot_card
+				JOB.slot_jump = src.job_creator.slot_jump
+				JOB.slot_suit = src.job_creator.slot_suit
+				JOB.slot_back = src.job_creator.slot_back
+				JOB.slot_belt = src.job_creator.slot_belt
+				JOB.slot_poc1 = src.job_creator.slot_poc1
+				JOB.slot_poc2 = src.job_creator.slot_poc2
+				JOB.slot_lhan = src.job_creator.slot_lhan
+				JOB.slot_rhan = src.job_creator.slot_rhan
 				JOB.access = JOB.access | src.job_creator.access
 				JOB.change_name_on_spawn = src.job_creator.change_name_on_spawn
 				JOB.special_spawn_location = src.job_creator.special_spawn_location
