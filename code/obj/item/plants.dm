@@ -213,6 +213,11 @@
 	desc = "A bland but healthy cereal crop. Good source of fiber."
 	icon_state = "oat"
 
+/obj/item/plant/oat/salt
+	name = "oat"
+	desc = "A salty but healthy cereal crop. Just dont eat too much without water."
+	icon_state = "saltedoat"
+
 /obj/item/plant/sugar/
 	name = "sugar cane"
 	crop_suffix	= " cane"

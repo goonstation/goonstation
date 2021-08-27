@@ -236,6 +236,15 @@
 	assoc_reagents = list("iron")
 	crop = /obj/item/plant/wheat/metal
 
+// Oat Mutations
+
+/datum/plantmutation/oat/saltoat
+	name = "Salted Oat's"
+	name_prefix = "salted "
+	iconmod = "OatSalt"
+	assoc_reagents = list("salt")
+	crop = /obj/item/plant/oat/salt
+
 // Synthmeat Mutations
 
 /datum/plantmutation/synthmeat/butt
