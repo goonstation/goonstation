@@ -182,7 +182,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 			return
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
-		if (POT.growth < (P.growtime + DNA.growtime))
+		if (POT.growth < (P.harvtime + DNA.harvtime))
 			return
 
 		for (var/obj/machinery/plantpot/otherPot in oview(1, POT))
