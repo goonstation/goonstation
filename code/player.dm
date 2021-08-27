@@ -115,16 +115,7 @@
 
 	/// Sets a cloud key value pair and sends it to goonhub for a target ckey
 	proc/cloud_put_target(target, key, value)
-		var/list/data = cloud_fetch_target_data_only(target)
-		if(!data)
-			return FALSE
-		data[key] = "[value]"
-
-		// Via rust-g HTTP
-		var/datum/http_request/request = new() //If it fails, oh well...
-		request.prepare(RUSTG_HTTP_METHOD_GET, "http://spacebee.goonhub.com/api/cloudsave?dataput&api_key=[config.ircbot_api]&ckey=[target]&key=[url_encode(key)]&value=[url_encode(data[key])]", "", "")
-		request.begin_async()
-		return TRUE // I guess
+		return TRUE
 
 	/// Returns some cloud data on the client
 	proc/cloud_get( var/key )

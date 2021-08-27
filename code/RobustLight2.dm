@@ -440,7 +440,21 @@ datum/light
 				if(T.opaque_atom_count > 0)
 					continue
 
-				RL_APPLY_LIGHT_EXPOSED_ATTEN(T, src.x, src.y, src.brightness, height2, r, g, b)
+
+				if (T.loc?:force_fullbright)
+					break
+				atten = (src.brightness*RL_Atten_Quadratic) / ((T.x - src.x)*(T.x - src.x) + (T.y - src.y)*(T.y - src.y) + height2) + RL_Atten_Constant
+				if (atten < RL_Atten_Threshold)
+					break
+
+				T.RL_LumR += r*atten
+				T.RL_LumG += g*atten
+				T.RL_LumB += b*atten
+				T.RL_AddLumR = clamp((T.RL_LumR - 1) * 0.5, 0, 0.3)
+				T.RL_AddLumG = clamp((T.RL_LumG - 1) * 0.5, 0, 0.3)
+				T.RL_AddLumB = clamp((T.RL_LumB - 1) * 0.5, 0, 0.3)
+				T.RL_NeedsAdditive = T.RL_AddLumR + T.RL_AddLumG + T.RL_AddLumB
+
 				if(atten < RL_Atten_Threshold)
 					continue
 				T.RL_ApplyGeneration = generation
