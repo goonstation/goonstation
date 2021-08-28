@@ -2780,11 +2780,11 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 	if(src.holder.level >= LEVEL_ADMIN)
 		switch(alert("Turn space into a CO2 + Ice? This is probably going to lag a bunch when it happens and there's no easy undo!",,"Yes","No"))
 			if("Yes")
-				// var/rain = alert("Should it be raining?",,"Yes", "No", "Particles!")
-				// rain = (rain == "No") ? null : rain
-				// var/image/weather = image('icons/turf/water.dmi',"fast_rain", layer = EFFECTS_LAYER_BASE)
-				// weather.alpha = 200
-				// weather.plane = PLANE_NOSHADOW_ABOVE
+				var/snow = alert("Should it be snowing?",,"Yes", "No", "Particles!")
+				snow = (snow == "No") ? null : snow
+				var/image/weather = image(icon = 'icons/turf/areas.dmi', icon_state = "snowverlay", layer = EFFECTS_LAYER_BASE)
+				weather.alpha = 200
+				weather.plane = PLANE_NOSHADOW_ABOVE
 				var/image/I
 				if(alert("Should it be pitch black?",,"Yes", "No")=="No")
 					I = new /image/ambient
@@ -2794,13 +2794,11 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 					space += S
 				map_generator.generate_terrain(space)
 				for (var/turf/S in space)
-					// if(rain)
-					// 	if(istype(S,/turf/unsimulated/floor/auto/swamp))
-					// 		S.ReplaceWith(/turf/unsimulated/floor/auto/swamp/rain, force=TRUE)
-					// 	if(rain == "Yes")
-					// 		S.UpdateOverlays(weather, "rain")
-					// 	else
-					// 		new /obj/effects/rain/sideways/tile(S)
+					if(snow)
+						if(snow == "Yes")
+							S.UpdateOverlays(weather, "snow")
+						else
+							new /obj/effects/snow/grey/tile(S)
 					if(I)
 						I.color = ambient_light
 						S.UpdateOverlays(I, "ambient")

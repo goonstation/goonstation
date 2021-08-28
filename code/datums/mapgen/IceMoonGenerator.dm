@@ -1,12 +1,14 @@
 //the random offset applied to square coordinates, causes intermingling at biome borders
 #define ICEMOON_BIOME_RANDOM_SQUARE_DRIFT 2
 
-/datum/biome/icemoon
-	turf_type = /turf/unsimulated/floor/arctic/snow
+/datum/biome/icemoon/snow
+	turf_type = /turf/unsimulated/floor/arctic/snow/autocliff
 	flora_types = list(/obj/stone/random = 10, /obj/decal/fakeobjects/smallrocks = 10)
 	flora_density = 1
 
-/datum/biome/icemoon/trees
+	fauna_types = list(/obj/critter/wendigo=5, /obj/critter/sealpup=30, /obj/critter/yeti=1)
+	fauna_density = 0.5
+/datum/biome/icemoon/snow/trees
 	flora_types = list(/obj/tree1{dir=NORTH} = 10,/obj/tree1{dir=EAST} = 10, /obj/stone/random = 10, /obj/decal/fakeobjects/smallrocks = 10)
 	flora_density = 3
 
@@ -14,8 +16,15 @@
 	turf_type = /turf/unsimulated/floor/arctic/snow/ice
 	flora_density = 0
 
+	fauna_types = list(/obj/critter/spider/ice/queen=1, /obj/critter/spider/ice/nice=5, /obj/critter/spider/ice=20, /obj/critter/wendigo=5)
+	fauna_density = 0.5
+
 /datum/biome/icemoon/icewall
 	turf_type = /turf/simulated/wall/asteroid/icemoon
+	flora_density = 0
+
+/datum/biome/icemoon/abyss
+	turf_type = /turf/unsimulated/floor/arctic/abyss
 	flora_density = 0
 
 /datum/map_generator/icemoon_generator
@@ -29,26 +38,26 @@
 		),
 	BIOME_LOWMEDIUM_HEAT = list(
 		BIOME_LOW_HUMIDITY = /datum/biome/icemoon/icewall,
-		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/icemoon,
-		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/icemoon,
-		BIOME_HIGH_HUMIDITY = /datum/biome/icemoon
+		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/icemoon/snow,
+		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/icemoon/snow,
+		BIOME_HIGH_HUMIDITY = /datum/biome/icemoon/snow
 		),
 	BIOME_HIGHMEDIUM_HEAT = list(
-		BIOME_LOW_HUMIDITY = /datum/biome/icemoon,
-		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/icemoon,
-		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/icemoon,
-		BIOME_HIGH_HUMIDITY = /datum/biome/icemoon
+		BIOME_LOW_HUMIDITY = /datum/biome/icemoon/snow,
+		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/icemoon/snow,
+		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/icemoon/snow,
+		BIOME_HIGH_HUMIDITY = /datum/biome/icemoon/snow
 		),
 	BIOME_HIGH_HEAT = list(
-		BIOME_LOW_HUMIDITY = /datum/biome/icemoon,
-		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/icemoon,
-		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/icemoon/trees,
-		BIOME_HIGH_HUMIDITY = /datum/biome/icemoon/trees
+		BIOME_LOW_HUMIDITY = /datum/biome/icemoon/snow,
+		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/icemoon/snow,
+		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/icemoon/snow/trees,
+		BIOME_HIGH_HUMIDITY = /datum/biome/icemoon/snow/trees
 		)
 	)
 	///Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
 	var/perlin_zoom = 65
-
+icemoon_generator
 ///Seeds the rust-g perlin noise with a random number.
 /datum/map_generator/icemoon_generator/generate_terrain(var/list/turfs)
 	. = ..()
@@ -90,8 +99,8 @@
 				if(0.75 to 1)
 					humidity_level = BIOME_HIGH_HUMIDITY
 			selected_biome = possible_biomes[heat_level][humidity_level]
-		else //Over 0.85; It's a mountain
-			selected_biome = /datum/biome/icemoon/icewall
+		else //Over 0.85; It's the abyss
+			selected_biome = /datum/biome/icemoon/abyss
 		selected_biome = biomes[selected_biome]
 		selected_biome.generate_turf(gen_turf)
 
@@ -120,4 +129,45 @@
 		src.levelupdate()
 
 		return src
+
+/turf/unsimulated/floor/arctic/snow/autocliff
+
+	New()
+		..()
+		SPAWN_DBG(3 SECONDS)
+			if(istype(src))
+				src.update_icon()
+
+	proc/update_icon()
+		var/dir_sum
+		for (var/dir in cardinal)
+			var/turf/T = get_step(src, dir)
+			if (T && (istype(T, /turf/unsimulated/floor/arctic/abyss)))
+				dir_sum += dir
+		if(dir_sum in alldirs)
+			src.icon = 'icons/turf/floors.dmi'
+			src.icon_state = "snow_corner"
+			src.dir |= dir_sum
+			return
+		else if(dir_sum)
+			var/list/turf/neighbors = getNeighbors(src, cardinal)
+			src.ReplaceWith(/turf/unsimulated/floor/arctic/abyss, force=TRUE)
+			for(var/turf/unsimulated/floor/arctic/snow/autocliff/cliff in neighbors)
+				cliff.update_icon()
+			return
+
+		for (var/dir in ordinal)
+			var/turf/T = get_step(src, dir)
+			if (T && (istype(T, /turf/unsimulated/floor/arctic/abyss)))
+				dir_sum += dir
+		if(dir_sum in alldirs)
+			src.icon = 'icons/turf/floors.dmi'
+			src.icon_state = "snow_cliff1"
+			src.dir |= dir_sum
+		else if(dir_sum)
+			var/list/turf/neighbors = getNeighbors(src, cardinal)
+			src.ReplaceWith(/turf/unsimulated/floor/arctic/abyss, force=TRUE)
+			for(var/turf/unsimulated/floor/arctic/snow/autocliff/cliff in neighbors)
+				cliff.update_icon()
+			return
 
