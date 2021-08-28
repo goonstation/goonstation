@@ -1717,7 +1717,14 @@
 							if (!src.reagents.has_reagent("fliptonium"))
 								animate_spin(src, prob(50) ? "L" : "R", 1, 0)
 							//TACTICOOL FLOPOUT
-							if (src.traitHolder.hasTrait("matrixflopout") && src.stance != "dodge")
+							if (src.bioHolder.HasEffect("neural_jack") && src.stance != "dodge")
+								src.remove_stamina(STAMINA_FLIP_COST * 0.5)
+								message = "<B>[src]</B> does a tacticool flip!"
+								src.stance = "dodge"
+								SPAWN_DBG(0.5 SECONDS)
+									if(src?.stance == "dodge")
+										src.stance = "normal"
+							else if (src.traitHolder.hasTrait("matrixflopout") && src.stance != "dodge")
 								src.remove_stamina(STAMINA_FLIP_COST * 2.0)
 								message = "<B>[src]</B> does a tactical flip!"
 								src.stance = "dodge"

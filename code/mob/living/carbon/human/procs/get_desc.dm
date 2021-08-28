@@ -154,6 +154,8 @@
 						. += "<br><span class='alert'><B>[src.name]'s head is barely attached!</B></span>"
 					else
 						. += "<br><span class='alert'><B>[src.name] has a huge incision across their neck!</B></span>"
+			else if (src.organHolder.enhancement_nerve)
+				. += "<br><span class='alert'>[src.name] has a small, round machine installed at the base of [t_his] skull.</span>"
 
 		else
 			. += "<br><span class='alert'><B>[src.name] has been decapitated!</B></span>"

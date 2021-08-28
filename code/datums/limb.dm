@@ -989,6 +989,7 @@
 				msgs.damage = rand(1,2)
 
 		logTheThing("combat", user, target, "diarms [constructTarget(target,"combat")] with [src.weak == 1 ? "werewolf" : "abomination"] arms at [log_loc(user)].")
+		SEND_SIGNAL(src, COMSIG_MOB_DISARM, target, src)
 
 		if (send_flying == 2)
 			msgs.after_effects += /proc/wrestler_backfist

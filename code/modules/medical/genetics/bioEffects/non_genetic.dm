@@ -261,3 +261,13 @@
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "outline", layer = MOB_LIMB_LAYER)
 			overlay_image.color = "#007BFF"
 		..()
+
+/datum/bioEffect/hidden/neural_jack
+	name = "Neural Jack"
+	desc = "The user's mental speed has been increased with the use of an illegal neural jack."
+	id = "neural_jack"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = 0
+	can_copy = 0
+	curable_by_mutadone = 0
+	occur_in_genepools = 0

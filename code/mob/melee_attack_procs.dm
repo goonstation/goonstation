@@ -129,6 +129,7 @@
 				C.on_pet(src)
 			else
 				src.visible_message("<span class='notice'>[src] shakes [target], trying to grab their attention!</span>")
+		SEND_SIGNAL(src, COMSIG_MOB_HELP, target, src)
 	hit_twitch(target)
 
 
@@ -309,6 +310,7 @@
 			target.visible_message("<span class='alert'>[src] grabs hold of [target] with [grab_item]!</span>")
 		else
 			target.visible_message("<span class='alert'>[src] grabs hold of [target]!</span>")
+		SEND_SIGNAL(src, COMSIG_MOB_GRAB, target, src)
 
 
 ///////////////////////////////////////////////////// Disarm intent ////////////////////////////////////////////////
@@ -353,12 +355,14 @@
 	if(prob(target.get_deflection())) //chance to deflect disarm attempts entirely
 		msgs.played_sound = 'sound/impact_sounds/Generic_Swing_1.ogg'
 		msgs.base_attack_message = "<span class='alert'><B>[src] shoves at [target][DISARM_WITH_ITEM_TEXT]!</B></span>"
+		SEND_SIGNAL(src, COMSIG_MOB_DISARM, target, src)
 		fuckup_attack_particle(src)
 		return msgs
 
 	if (target.lying == 1) //roll lying bodies
 		msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
 		msgs.base_attack_message = "<span class='alert'><B>[src] rolls [target] backwards[DISARM_WITH_ITEM_TEXT]!</B></span>"
+		SEND_SIGNAL(src, COMSIG_MOB_DISARM, target, src)
 		msgs.disarm_RNG_result |= "shoved"
 		msgs.disarm_RNG_result |= "handle_item_arm"
 		return msgs
@@ -400,6 +404,7 @@
 	var/stampart = round( ((STAMINA_MAX - target_stamina) / 3) )
 	if (is_shove)
 		msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target][DISARM_WITH_ITEM_TEXT]!</B></span>"
+		SEND_SIGNAL(src, COMSIG_MOB_DISARM, target, src)
 		msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
 		if (prob((stampart + 70) * mult))
 			msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target] backwards[DISARM_WITH_ITEM_TEXT]!</B></span>"
@@ -413,12 +418,14 @@
 				var/ret = P.ondisarm(target, 1)
 				if (!ret)
 					msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target][DISARM_WITH_ITEM_TEXT]!</B></span>"
+					SEND_SIGNAL(src, COMSIG_MOB_DISARM, target, src)
 					return msgs
 		msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target] to the ground[DISARM_WITH_ITEM_TEXT]!</B></span>"
 		msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
 		msgs.disarm_RNG_result |= "shoved_down"
 		msgs.disarm_RNG_result |= "drop_item"
 		msgs.disarm_RNG_result |= "handle_item_arm"
+		SEND_SIGNAL(src, COMSIG_MOB_DISARM, target, src)
 
 		return msgs
 
@@ -478,6 +485,7 @@
 	else
 		msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target][DISARM_WITH_ITEM_TEXT]!</B></span>"
 		msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
+		SEND_SIGNAL(src, COMSIG_MOB_DISARM, target, src)
 #undef ONE_OR_SOME
 
 	return msgs
@@ -612,6 +620,7 @@
 
 	var/crit_chance = STAMINA_CRIT_CHANCE
 	SEND_SIGNAL(target, COMSIG_MOB_ATTACKED_PRE, src, null)
+	SEND_SIGNAL(src, COMSIG_MOB_ATTACK, target, src)
 
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
@@ -669,6 +678,8 @@
 		msgs.logs = list("[src.kickMessage] [constructTarget(target,"combat")]")
 		if (ishuman(src))
 			var/mob/living/carbon/human/H = src
+			if (H.bioHolder.HasEffect("neural_jack"))
+				damage += 2
 			if (H.shoes)
 				damage += H.shoes.kick_bonus
 			else if (H.limbs.r_leg)

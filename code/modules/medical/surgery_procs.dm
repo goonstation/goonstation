@@ -418,6 +418,25 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			patient.organHolder.left_eye.op_stage = 2.0
 			return 1
 
+		else if (patient.organHolder.head.op_stage == 1.0)
+			playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+
+			if (prob(screw_up_prob))
+				surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+				patient.TakeDamage("head", damage_low, 0)
+				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
+				UNPOOL_BLOOD_SPLOOSH(patient)
+				return 1
+
+			patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts dwon to [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] spinal cord with [src]!</span>",\
+			surgeon, "<span class='alert'>You cut down to [surgeon == patient ? "your" : "[patient]'s"] spinal cord with [src]!</span>", \
+			patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] down to your spinal cord with [src]!</span>")
+
+			patient.TakeDamage("head", damage_low, 0)
+			take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
+			patient.organHolder.head.op_stage = 4.0
+			return 1
+
 		else if (patient.organHolder.head.scalp_op_stage <= 4.0)
 			if (patient.organHolder.head.scalp_op_stage == 0.0)
 				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
@@ -1940,6 +1959,32 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 		else
 			return 0
+
+/* ---------- SNIP - Head ---------- */
+	else if (surgeon.zone_sel.selecting == "head")
+		if (patient.organHolder.head)
+			switch (patient.organHolder.head.op_stage)
+				if (4.0)
+					playsound(patient, "sound/items/Scissor.ogg", 50, 1)
+
+					if (!patient.organHolder.enhancement_nerve)
+						src.surgeryConfusion(patient, surgeon, damage_low)
+						return 1
+
+					if (prob(screw_up_prob))
+						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+						patient.TakeDamage("head", damage_low, 0)
+						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
+						return 1
+
+					patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] nerve enhancement out with [src]!</span>",\
+					surgeon, "<span class='alert'>You cut [surgeon == patient ? "your" : "[patient]'s"] nerve enhancement out with [src]!</span>",\
+					patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] your nerve enhancement out with [src]!</span>")
+
+					patient.TakeDamage("head", damage_low, 0)
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
+					logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s nerve enhancement with [src].")
+					patient.organHolder.drop_organ("enhancement_nerve")
 
 ////////////////////////////////////////////////////////////////////
 

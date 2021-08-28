@@ -23,9 +23,10 @@
 	var/obj/item/organ/intestines = null
 	var/obj/item/organ/appendix = null
 	var/obj/item/organ/tail = null
+	var/obj/item/organ/enhancement/head/enhancement_nerve = null
 	var/lungs_changed = 2				//for changing lung stamina debuffs if it has changed since last cycle. starts at 2 for having 2 working lungs
 
-	var/list/organ_list = list("all", "head", "skull", "brain", "left_eye", "right_eye", "chest", "heart", "left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
+	var/list/organ_list = list("all", "head", "skull", "brain", "left_eye", "right_eye", "chest", "heart", "left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail", "enhancement_nerve")
 
 	var/list/organ_type_list = list(
 		"head"="/obj/item/organ/head",
@@ -46,7 +47,8 @@
 		"intestines"="/obj/item/organ/intestines",
 		"appendix"="/obj/item/organ/appendix",
 		"butt"="/obj/item/clothing/head/butt",
-		"tail"="/obj/item/organ/tail")
+		"tail"="/obj/item/organ/tail",
+		"enhancement_nerve"="/obj/item/organ/enhancement/head")
 
 	New(var/mob/living/L, var/ling)
 		..()
@@ -120,6 +122,9 @@
 		if (tail)
 			tail.donor = null
 			tail.holder = null
+		if (enhancement_nerve)
+			enhancement_nerve.donor = null
+			enhancement_nerve.holder = null
 
 		head = null
 		skull = null
@@ -140,6 +145,7 @@
 		pancreas = null
 		appendix = null
 		tail = null
+		enhancement_nerve = null
 
 		donor = null
 		..()
@@ -403,6 +409,8 @@
 				organ = "appendix"
 			else if(organ == tail)
 				organ = "tail"
+			else if(organ == enhancement_nerve)
+				organ = "enhancement_nerve"
 			else
 				return 0 // what the fuck are you trying to remove
 
@@ -712,6 +720,18 @@
 				src.donor.update_body()
 				src.organ_list["tail"] = null
 				return mytail
+
+			if ("enhancement_nerve")
+				if (!src.enhancement_nerve)
+					return 0
+				var/obj/item/organ/enhancement/head/myenhancement_nerve = src.enhancement_nerve
+				myenhancement_nerve.set_loc(location)
+				myenhancement_nerve.on_removal()
+				myenhancement_nerve.holder = null
+				src.enhancement_nerve = null
+				src.donor.update_body()
+				src.organ_list["enhancement_nerve"] = null
+				return myenhancement_nerve
 
 	/// drops the organ, then hurls it somewhere
 	proc/drop_and_throw_organ(var/organ, var/location, var/direction, var/dist, var/speed, var/showtext)
@@ -1108,6 +1128,21 @@
 				newtail.set_loc(src.donor)
 				newtail.holder = src
 				organ_list["tail"] = newtail
+				src.donor.update_body()
+				success = 1
+
+			if ("enhancement_nerve")
+				if (src.enhancement_nerve)
+					if (force)
+						qdel(src.enhancement_nerve)
+					else
+						return 0
+				var/obj/item/organ/enhancement/head/newenh = I
+				newenh.op_stage = op_stage
+				src.enhancement_nerve = newenh
+				newenh.set_loc(src.donor)
+				newenh.holder = src
+				organ_list["enhancement_nerve"] = newenh
 				src.donor.update_body()
 				success = 1
 
@@ -1616,3 +1651,38 @@
 			src.icon_state = initial(src.icon_state)
 		else
 			src.icon_state = "[initial(src.icon_state)]_cd"
+
+/datum/targetable/organAbility/combomode
+	name = "Combat Combo Mode"
+	desc = "Enable or disable your combat combo attacks."
+	cooldown = 10
+
+	cast()
+		if(..())
+			return 1
+		for(var/obj/item/organ/enhancement/head/neural_jack/N in holder.owner.contents)
+			if(N.comboattacks == TRUE)
+				boutput(holder.owner, __blue("You disable your combat enhancer."))
+			else
+				boutput(holder.owner, __blue("You enable your combat enhancer."))
+			N.comboattacks = !N.comboattacks
+
+/datum/targetable/organAbility/combohelp
+	name = "Combat Combo Help"
+	desc = "See the methods of executing combat combos."
+	cooldown = 10
+
+	cast()
+		if(..())
+			return 1
+		boutput(holder.owner, __blue("You have four combat combos available to you."))
+		sleep(5 DECI SECONDS)
+		boutput(holder.owner, __blue("Grab -> Harm: Heavy Punch, does light damage and sends your target back a few tiles."))
+		sleep(5 DECI SECONDS)
+		boutput(holder.owner, __blue("Grab -> Disarm -> Harm: Leg Sweep, stuns and knocks down a target for a medium period, then staggering them."))
+		sleep(5 DECI SECONDS)
+		boutput(holder.owner, __blue("Harm -> Harm -> Disarm -> Disarm: Rapid Kick, repeatedly kick your target for large damage and a short stun."))
+		sleep(5 DECI SECONDS)
+		boutput(holder.owner, __blue("Grab -> Grab -> Disarm -> Harm: Fling Pin, both you and your target go several tiles, before you immediately pin them."))
+		sleep(5 DECI SECONDS)
+		boutput(holder.owner, __blue("Passives: You deal extra kick damage, can parry people by blocking when they attack, and you can flip to dodge projectiles."))

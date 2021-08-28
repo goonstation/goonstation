@@ -221,6 +221,7 @@
 				var/atom/movable/M = target
 				if(ismob(target) || !M.anchored)
 					src.visible_message("<span class='alert'>[src] grabs [target]!</span>")
+					SEND_SIGNAL(src, COMSIG_MOB_GRAB, target, src)
 					M.set_loc(src.loc)
 			else
 				. = ..()

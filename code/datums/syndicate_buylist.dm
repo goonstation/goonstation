@@ -926,6 +926,14 @@ This is basically useless for anyone but miners.
 	desc = "A roll of duct tape for makeshift handcuffs. Lets you restrain someone 10 times before being used up."
 	blockedmode = list(/datum/game_mode/revolution)
 
+/datum/syndicate_buylist/traitor/neural_jack
+	name = "Neural Jack"
+	item = /obj/item/organ/enhancement/head/neural_jack
+	cost = 7
+	vr_allowed = 0
+	desc = "A highly illegal surgical enhancement which massively speeds up user reaction speed, and gives great martial prowess."
+	blockedmode = list(/datum/game_mode/revolution, /datum/game_mode/spy)
+
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
 /datum/syndicate_buylist/surplus

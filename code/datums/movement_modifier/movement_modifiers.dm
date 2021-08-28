@@ -26,6 +26,12 @@
 /datum/movement_modifier/mech_boots
 	multiplicative_slowdown = 0.50
 
+/datum/movement_modifier/pain_reducer
+	health_deficiency_adjustment = -35
+
+/datum/movement_modifier/pain_reducer_broken
+	health_deficiency_adjustment = 45
+
 /datum/movement_modifier/hulkstrong
 	pushpull_multiplier = 0
 

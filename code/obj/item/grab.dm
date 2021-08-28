@@ -211,6 +211,7 @@
 						set_affected_loc()
 
 					user.next_click = world.time + user.combat_click_delay //+ rand(6,11) //this was utterly disgusting, leaving it here in memorial
+					SEND_SIGNAL(src, COMSIG_MOB_GRAB)
 			if (GRAB_AGGRESSIVE)
 				if (ishuman(src.affecting))
 					var/mob/living/carbon/human/H = src.affecting
@@ -839,6 +840,8 @@
 					var/damage = rand(1,6)
 					if (ishuman(user))
 						var/mob/living/carbon/human/H = user
+						if (H.bioHolder.HasEffect("neural_jack"))
+							damage += 2
 						if (H.shoes)
 							damage += H.shoes.kick_bonus
 						else if (H.limbs.r_leg)

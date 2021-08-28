@@ -155,6 +155,14 @@
 #define COMSIG_MOB_ATTACKED_PRE "attacked_pre"
 /// When a mob dies
 #define COMSIG_MOB_DEATH "mob_death"
+/// When a mob helps another mob
+#define COMSIG_MOB_HELP "mob_help"
+/// When a mob disarm another mob
+#define COMSIG_MOB_DISARM "mob_disarm"
+/// When a mob attacks another mob
+#define COMSIG_MOB_GRAB "mob_grab"
+/// When a mob attacks another mob
+#define COMSIG_MOB_ATTACK "mob_attack"
 
 /// When a mob fakes death
 #define COMSIG_MOB_FAKE_DEATH "mob_fake_death"
