@@ -101,6 +101,44 @@
 		if(!src.donor.movement_modifiers.Find(/datum/movement_modifier/pain_reducer_broken))
 			APPLY_MOVEMENT_MODIFIER(src.donor, /datum/movement_modifier/pain_reducer_broken, "pain_reducer_broken")
 
+/obj/item/organ/enhancement/head/stamina_enhancer //less max health and stamina regen, at the benefit of a massive max stamina increase
+	name = "stamina enhancer"
+	organ_name = "stamina enhancer"
+	icon_state = "enhancement_stam"
+	desc = "An enhancement that modifies muscle, organ, and brain functions to prioritize energy storage over energy generation."
+
+	on_transplant(var/mob/M as mob)
+		..()
+		M.add_stam_mod_max("stamina_storage", 200)
+		M.max_health -= 35
+		APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stamina_storage", -6)
+
+	on_removal()
+		..()
+		if(!src.broken)
+			src.donor.remove_stam_mod_max("stamina_storage")
+			src.donor.max_health += 35
+			REMOVE_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, "stamina_storage")
+		else
+			REMOVE_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, "stamina_storage")
+			src.donor.max_health += 35
+
+	emp_act()
+		..()
+		if(src.broken)
+			src.donor.reagents.add_reagent("bathsalts", 10)
+			src.donor.reagents.add_reagent("methamphetamine", 10)
+			src.donor.blood_volume -= 50
+
+	on_broken(var/mult = 1)
+		if (!..())
+			return
+		src.donor.remove_stam_mod_max("stamina_storage")
+		src.donor.reagents.add_reagent("bathsalts", 3) //it thinks you're going into the negative on stamina, so it synthesizes stam-boosters forever using your blood
+		src.donor.reagents.add_reagent("methamphetamine", 3)
+		src.donor.blood_volume -= 15
+
+
 /obj/item/organ/enhancement/head/neural_jack //traitor roboticists can get matrix powers
 	name = "neural jack"
 	organ_name = "neural jack"
@@ -115,12 +153,12 @@
 
 	proc/parry_attack(mob/user, mob/living/target)
 		var/mob/M = src.donor
-		if (M && M.check_block())
+		if (M && M.check_block() && !src.broken)
 			if((isnull(usr.l_hand) || isnull(usr.r_hand))) // both hands are empty
 				if(prob(parrychance + 10))
 					M.set_dir(get_dir(M, target))
 					M.visible_message("<span class='alert'><B>[M] parries [target]'s attack, knocking them to the ground!</B></span>")
-					logTheThing("combat", M, target, "parries [constructTarget(target,"combat")]'s unarmed attack at [log_loc(M)].")
+					logTheThing("combat", M, target, "[M] parries [constructTarget(target,"combat")]'s unarmed attack at [log_loc(M)].")
 					target.changeStatus("weakened", 4 SECONDS)
 					target.force_laydown_standup()
 					playsound(M.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 65, 1)
@@ -131,7 +169,7 @@
 				if(prob(parrychance))
 					M.set_dir(get_dir(M, target))
 					M.visible_message("<span class='alert'><B>[M] parries [target]'s blow, forcing them to drop their weapon and knocking them to the ground!</B></span>")
-					logTheThing("combat", M, target, "parries [constructTarget(target,"combat")]'s armed attack at [log_loc(M)].")
+					logTheThing("combat", M, target, "[M] parries [constructTarget(target,"combat")]'s armed attack at [log_loc(M)].")
 					target.changeStatus("weakened", 3 SECONDS)
 					target.force_laydown_standup()
 					playsound(M.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 65, 1)
@@ -199,8 +237,8 @@
 			if (T && isturf(T) && get_dist(target, user) <= 1)
 				target.throw_at(T, 3, 2)
 				random_brute_damage(target, 10, 1)
-				target.changeStatus("weakened", 3 SECONDS)
-				target.changeStatus("stunned", 3 SECONDS)
+				target.changeStatus("weakened", 2 SECONDS)
+				target.changeStatus("stunned", 2 SECONDS)
 				target.force_laydown_standup()
 				logTheThing("combat", user, target, "uses a heavy punch on [constructTarget(target,"combat")] at [log_loc(user)].")
 
@@ -319,6 +357,8 @@
 			src.donor.reagents.add_reagent("lithium", 10)
 			src.donor.reagents.add_reagent("fuel", 10)
 			src.donor.reagents.add_reagent("uranium", 10)
+			src.donor.remove_stam_mod_max("neural_jack")
+			REMOVE_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, "neural_jack")
 
 
 	on_removal()
@@ -329,7 +369,8 @@
 		UnregisterSignal(src.donor, COMSIG_MOB_DISARM)
 		UnregisterSignal(src.donor, COMSIG_MOB_GRAB)
 		UnregisterSignal(src.donor, COMSIG_MOB_ATTACK)
-
+		src.donor.remove_stam_mod_max("neural_jack")
+		REMOVE_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, "neural_jack")
 
 
 #undef COMBO_HELP
