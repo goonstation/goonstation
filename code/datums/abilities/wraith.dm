@@ -510,7 +510,7 @@
 			if (1)
 				boutput(holder.owner, "<span class='notice'>You flip some light switches near the designated location!!</span>")
 				for (var/obj/machinery/light_switch/L in range(10, holder.owner))
-					L.attack_hand(holder.owner)
+					L.Attackhand(holder.owner)
 				return 0
 			if (2)
 				boutput(holder.owner, "<span class='notice'>You cause a few lights to burn out near the designated location!.</span>")

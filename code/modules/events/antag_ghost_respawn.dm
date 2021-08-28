@@ -22,7 +22,7 @@
 			message_admins("Setup of previous Antagonist Spawn hasn't finished yet, aborting.")
 			return
 
-		var/type = input(usr, "Select antagonist type.", "Antagonists", "Blob") as null|anything in list("Blob", "Blob (AI)", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Headspider")
+		var/type = input(usr, "Select antagonist type.", "Antagonists", "Blob") as null|anything in list("Blob", "Blob (AI)", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Headspider", "Arcfiend")
 		if (!type)
 			return
 		else
@@ -313,6 +313,20 @@
 				else
 					failed = 1
 
+			if ("Arcfiend")
+				var/mob/living/L = M3.humanize()
+				if (istype(L))
+#ifdef SECRETS_ENABLED
+					L.make_arcfiend()
+#endif
+					role = ROLE_ARCFIEND
+#ifdef RP_MODE
+					objective_path = /datum/objective_set/traitor/rp_friendly
+#else
+					objective_path = /datum/objective_set/traitor
+#endif
+				else
+					failed = 1
 			else
 				failed = 1
 

@@ -205,7 +205,7 @@ var/fartcount = 0
 						if(W)
 							W.attack(target, src, ran_zone("chest"))
 						else
-							target.attack_hand(src)
+							target.Attackhand(src)
 			else if(ai_aggressive)
 				a_intent = INTENT_HARM
 				for(var/mob/M in oview(5, src))

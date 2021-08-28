@@ -1600,7 +1600,10 @@
 /turf/simulated/floor/grime,
 /area/abandonedmedicalship/robot_trader)
 "afo" = (
-/obj/machinery/manufacturer/robotics,
+/obj/decal/cleanable/machine_debris{
+	icon_state = "gib7";
+	name = "smashed fabricator"
+	},
 /turf/simulated/floor/grime,
 /area/abandonedmedicalship/robot_trader)
 "afp" = (
@@ -6630,7 +6633,7 @@
 /area/station/quartermaster/cargobay)
 "atR" = (
 /obj/table/auto,
-/obj/item/reagent_containers/mender,
+/obj/item/reagent_containers/mender_refill_cartridge/brute,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -12994,12 +12997,6 @@
 	},
 /turf/simulated/floor/caution/south,
 /area/station/engine/elect)
-"aKF" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 8
-	},
-/turf/space/fluid/manta,
-/area/station/maintenance/upperport)
 "aKG" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -72987,7 +72984,7 @@ aaa
 aaa
 act
 acO
-aKF
+aMA
 acO
 acO
 ait

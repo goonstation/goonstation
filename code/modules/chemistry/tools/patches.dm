@@ -456,6 +456,7 @@
 	desc = "A small electronic device designed to topically apply healing chemicals."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mender"
+	mats = list("MET-2"=5,"CRY-1"=4, "gold"=5)
 	var/image/fluid_image
 	var/tampered = 0
 	var/borg = 0
@@ -520,6 +521,13 @@
 		if (can_operate_on(user))
 			src.attack(user,user) //do self operation
 		return
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/reagent_containers/mender_refill_cartridge))
+			var/obj/item/reagent_containers/mender_refill_cartridge/refill = W
+			refill.do_refill(src, user)
+			return
+		..()
 
 	attack(mob/M as mob, mob/user as mob)
 		if (src.borg == 1 && !issilicon(user))
@@ -659,3 +667,65 @@
 
 		looped++
 		src.onRestart()
+
+//basically the same as ecig_refill_cartridge, but there's no point subtyping it...
+ABSTRACT_TYPE(/obj/item/reagent_containers/mender_refill_cartridge)
+/obj/item/reagent_containers/mender_refill_cartridge
+	name = "auto-mender refill cartridge"
+	desc = "A container designed to be able to quickly refill medical auto-menders."
+	icon = 'icons/obj/chemical.dmi'
+	initial_volume = 200
+	initial_reagents = "nicotine"
+	// item_state = "ecigrefill"
+	icon_state = "mender-refill"
+	flags = FPRINT | TABLEPASS
+	var/image/fluid_image
+
+	New()
+		..()
+		update_icon()
+
+	proc/update_icon()
+		if (reagents.total_volume)
+			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 4), 1, 4))
+			if (!src.fluid_image)
+				src.fluid_image = image('icons/obj/chemical.dmi', "mender-refill-fluid-4", -1)
+			var/datum/color/average = reagents.get_average_color()
+			src.fluid_image.color = average.to_rgba()
+			src.fluid_image.icon_state = "mender-refill-fluid-[fluid_state]"
+			src.UpdateOverlays(src.fluid_image, "fluid")
+
+		else
+			src.ClearSpecificOverlays("fluid")
+
+		signal_event("icon_updated")
+
+	proc/do_refill(var/obj/item/reagent_containers/mender, var/mob/user)
+		if (src?.reagents.total_volume > 0)
+			src.reagents.trans_to(mender, src.reagents.total_volume)
+			src.update_icon()
+			playsound(src, 'sound/items/mender_refill_juice.ogg', 50, 1)
+			if (src.reagents.total_volume == 0)
+				boutput(user, "<span class='notice'>You refill [mender] to [mender.reagents.total_volume]u and empty [src]!</span>")
+			else
+				boutput(user, "<span class='notice'>You refill [mender] to [mender.reagents.total_volume]u!</span>")
+		else
+			boutput(user, "<span class='alert'>You attempt to refill [mender], but [src] is empty!</span>")
+
+/obj/item/reagent_containers/mender_refill_cartridge/brute
+	name = "brute auto-mender refill cartridge"
+	initial_reagents = "styptic_powder"
+	high_capacity
+		initial_volume = 500
+
+/obj/item/reagent_containers/mender_refill_cartridge/burn
+	name = "burn auto-mender refill cartridge"
+	initial_reagents = "silver_sulfadiazine"
+	high_capacity
+		initial_volume = 500
+
+/obj/item/reagent_containers/mender_refill_cartridge/both
+	name = "synthflesh auto-mender refill cartridge"
+	initial_reagents = "synthflesh"
+	high_capacity
+		initial_volume = 500

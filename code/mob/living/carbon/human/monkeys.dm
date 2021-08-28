@@ -426,7 +426,7 @@
 			return
 		walk_towards(src, null)
 		src.a_intent = INTENT_DISARM
-		theft_target.attack_hand(src)
+		theft_target.Attackhand(src)
 		src.a_intent = src.ai_default_intent
 
 	hear_talk(mob/M as mob, messages, heardname, lang_id)

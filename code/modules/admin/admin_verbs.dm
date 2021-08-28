@@ -881,7 +881,6 @@ var/list/fun_images = list()
 	if (!crossness || crossness == "Cancel")
 		return
 
-	message_admins(crossness)
 	if(!M.client)
 		alert("[M] is logged out, so you should probably ban them!")
 		return

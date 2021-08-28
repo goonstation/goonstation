@@ -33,7 +33,7 @@
 		interact_particle(user,src)
 
 	attack_ai(mob/user as mob)
-		src.attack_hand(user)
+		src.Attackhand(user)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (can_reconnect)
@@ -66,7 +66,7 @@
 				src.special_deconstruct(A)
 				qdel(src)
 		else
-			src.attack_hand(user)
+			src.Attackhand(user)
 
 	///Put the code for finding the stuff your computer needs in this proc
 	proc/connection_scan()

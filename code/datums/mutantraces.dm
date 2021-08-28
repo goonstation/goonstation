@@ -218,7 +218,7 @@
 	// custom attacks, should return attack_hand by default or bad things will happen!!
 	// ^--- Outdated, please use limb datums instead if possible.
 	proc/custom_attack(atom/target)
-		return target.attack_hand(mob)
+		return target.Attackhand(mob)
 
 	// vision modifier (see_mobs, etc i guess)
 	proc/sight_modifier()
@@ -1470,7 +1470,7 @@
 			do_table_hide(target)
 		if(istype(target, /obj/stool/bed/))
 			do_table_hide(target)
-		return target.attack_hand(mob)
+		return target.Attackhand(mob)
 
 	proc
 		do_table_hide(obj/target)
@@ -1904,7 +1904,7 @@
 		if(ishuman(target))
 			mob.visible_message("<span class='alert'><B>[mob]</B> waves its limbs at [target] threateningly!</span>")
 		else
-			return target.attack_hand(mob)
+			return target.Attackhand(mob)
 
 	say_verb()
 		return "rasps"

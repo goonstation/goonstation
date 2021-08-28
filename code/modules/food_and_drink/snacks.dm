@@ -754,6 +754,9 @@
 	heal_amt = 2
 	food_effects = list("food_energized")
 
+#define DONK_COLD 0
+#define DONK_WARM 1
+#define DONK_SCALDING 2
 /obj/item/reagent_containers/food/snacks/donkpocket
 	name = "donk-pocket"
 	desc = "The food of choice for the seasoned traitor."
@@ -761,11 +764,11 @@
 	heal_amt = 4
 	amount = 1
 	doants = 0
-	var/warm = 0
+	var/warm = DONK_COLD
 
 	warm
 		name = "warm donk-pocket"
-		warm = 1
+		warm = DONK_WARM
 
 		New()
 			..()
@@ -773,28 +776,39 @@
 			return
 
 	heal(var/mob/M)
-		if(src.warm && M.reagents)
-			M.reagents.add_reagent("omnizine",15)
+		if(src.warm == DONK_SCALDING)
+			boutput(M, "<span class='alert'>It's as hot as molten steel! Maybe try proper cookware?</span>")
+			M.TakeDamage("All", 0, 5, damage_type = DAMAGE_BURN)
+			M.reagents?.add_reagent("yuck", 10)
+		else if(src.warm == DONK_WARM)
+			M.reagents?.add_reagent("omnizine", 10)
 		else
 			boutput(M, "<span class='alert'>It's just not good enough cold..</span>")
 		..()
 
 	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-		if (!warm && exposed_temperature >= T0C+176.7) //Roughly 350 C
-			src.warm = 1
-			name = "warm [initial(src.name)]"
-			src.cooltime()
+		switch(exposed_temperature)
+			if(T0C + 176 to T0C + 260)
+				if(src.warm <= DONK_WARM)
+					src.warm = DONK_WARM
+					name = "warm [initial(src.name)]"
+					src.cooltime()
+			if(T0C + 260 to INFINITY)
+				src.warm = DONK_SCALDING
+				name = "scalding [initial(src.name)]"
+				src.cooltime()
 		return ..()
 
 	proc/cooltime()
 		if (src.warm)
 			SPAWN_DBG( 420 SECONDS )
-				src.warm = 0
+				src.warm = DONK_COLD
 				src.name = "donk-pocket"
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/reagent_containers/food/snacks/condiment/)) src.amount += 1
+#undef DONK_COLD
+#undef DONK_WARM
+#undef DONK_SCALDING
 
 /obj/item/reagent_containers/food/snacks/donkpocket_w
 	name = "donk-pocket"
@@ -1292,8 +1306,16 @@
 			desc = "It's like an energy bar, but in donut form! Contains some chemicals known for partial stun time reduction and boosted stamina regeneration."
 			icon_state = "donut4"
 			amount = 6
-			initial_volume = 36
-			initial_reagents = list("sugar"=12,"synaptizine"=12,"epinephrine"=12)
+			initial_volume = 48
+			initial_reagents = list("sugar"=12,"synaptizine"=12,"epinephrine"=12,"salicylic_acid"=12)
+
+		robusted
+			name = "robusted donut"
+			desc = "A donut for those critical moments."
+			icon_state = "donut5"
+			amount = 6
+			initial_volume = 48
+			initial_reagents = list("salbutamol"=12,"epinephrine"=12,"saline"=12,"salicylic_acid"=12)
 
 		random
 			New()

@@ -24,7 +24,7 @@
 		src.overlays += image('icons/obj/objects.dmi', "DAn-Oe")
 
 	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_hand(var/mob/user as mob)
 		src.add_dialog(user)

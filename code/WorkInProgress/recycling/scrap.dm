@@ -226,7 +226,7 @@
 	if(src.is_single_piece())
 		return ..(user)
 	var/obj/item/scrap/S = src.get_single_piece()
-	S.attack_hand(user)
+	S.Attackhand(user)
 	return
 */
 
