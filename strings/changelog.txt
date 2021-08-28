@@ -1,4 +1,8 @@
 
+(t)sat aug 28 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Full reagent container no longer provides immunity to changeling stings
 (t)thu aug 26 21
 (u)Tarmunora
 (e)⚖|balance
