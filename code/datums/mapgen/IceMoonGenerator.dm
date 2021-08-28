@@ -6,26 +6,24 @@
 	flora_types = list(/obj/stone/random = 10, /obj/decal/fakeobjects/smallrocks = 10)
 	flora_density = 1
 
-	fauna_types = list(/obj/critter/wendigo=5, /obj/critter/sealpup=30, /obj/critter/yeti=1)
+	fauna_types = list(/obj/critter/sealpup=30, /obj/critter/wendigo=5, /obj/critter/yeti=1)
 	fauna_density = 0.5
+
 /datum/biome/icemoon/snow/trees
 	flora_types = list(/obj/tree1{dir=NORTH} = 10,/obj/tree1{dir=EAST} = 10, /obj/stone/random = 10, /obj/decal/fakeobjects/smallrocks = 10)
 	flora_density = 3
 
 /datum/biome/icemoon/ice
 	turf_type = /turf/unsimulated/floor/arctic/snow/ice
-	flora_density = 0
 
 	fauna_types = list(/obj/critter/spider/ice/queen=1, /obj/critter/spider/ice/nice=5, /obj/critter/spider/ice=20, /obj/critter/wendigo=5)
 	fauna_density = 0.5
 
 /datum/biome/icemoon/icewall
 	turf_type = /turf/simulated/wall/asteroid/icemoon
-	flora_density = 0
 
 /datum/biome/icemoon/abyss
 	turf_type = /turf/unsimulated/floor/arctic/abyss
-	flora_density = 0
 
 /datum/map_generator/icemoon_generator
 	///2D list of all biomes based on heat and humidity combos.
@@ -143,31 +141,39 @@ icemoon_generator
 		for (var/dir in cardinal)
 			var/turf/T = get_step(src, dir)
 			if (T && (istype(T, /turf/unsimulated/floor/arctic/abyss)))
-				dir_sum += dir
+				dir_sum |= dir
 		if(dir_sum in alldirs)
 			src.icon = 'icons/turf/floors.dmi'
 			src.icon_state = "snow_corner"
-			src.dir |= dir_sum
+			src.dir = dir_sum
+			clear_contents()
 			return
 		else if(dir_sum)
-			var/list/turf/neighbors = getNeighbors(src, cardinal)
-			src.ReplaceWith(/turf/unsimulated/floor/arctic/abyss, force=TRUE)
-			for(var/turf/unsimulated/floor/arctic/snow/autocliff/cliff in neighbors)
-				cliff.update_icon()
+			clear_and_update_neighbors()
 			return
 
 		for (var/dir in ordinal)
 			var/turf/T = get_step(src, dir)
 			if (T && (istype(T, /turf/unsimulated/floor/arctic/abyss)))
-				dir_sum += dir
+				dir_sum |= dir
 		if(dir_sum in alldirs)
 			src.icon = 'icons/turf/floors.dmi'
 			src.icon_state = "snow_cliff1"
-			src.dir |= dir_sum
+			src.dir = dir_sum
+			clear_contents()
 		else if(dir_sum)
-			var/list/turf/neighbors = getNeighbors(src, cardinal)
-			src.ReplaceWith(/turf/unsimulated/floor/arctic/abyss, force=TRUE)
-			for(var/turf/unsimulated/floor/arctic/snow/autocliff/cliff in neighbors)
-				cliff.update_icon()
+			clear_and_update_neighbors()
 			return
+
+	proc/clear_and_update_neighbors()
+		var/list/turf/neighbors = getNeighbors(src, alldirs)
+		clear_contents()
+		src.ReplaceWith(/turf/unsimulated/floor/arctic/abyss, force=TRUE)
+		for(var/turf/unsimulated/floor/arctic/snow/autocliff/cliff in neighbors)
+			cliff.update_icon()
+
+	proc/clear_contents()
+		for(var/atom/A in src.contents)
+			if (istype(A, /obj/overlay) || istype(A, /obj/effects)) continue
+			qdel(A)
 
