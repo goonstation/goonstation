@@ -336,6 +336,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_disco_lights,
 		/client/proc/cmd_blindfold_monkeys,
 		/client/proc/cmd_swampify_station,
+		/client/proc/cmd_ice_moon_station,
 		/client/proc/cmd_trenchify_station,
 		/client/proc/cmd_special_shuttle,
 
