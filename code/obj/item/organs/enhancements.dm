@@ -11,6 +11,7 @@
 	organ_holder_required_op_stage = 0.0
 	icon_state = "enhancement"
 	robotic = 1
+	desc = "A thin, metal oval with some wires sticking out. It seems like it'd do well attached to the nervous system."
 
 /obj/item/organ/enhancement/head //second abstract parent incase other enhancement types get added
 	name = "surgical enhancement parent"
@@ -24,12 +25,12 @@
 	name = "stun blocker"
 	organ_name = "stun blocker"
 	icon_state = "enhancement_stun"
-	desc = "A thin, metal oval with some wires sticking out. It seems like it'd do well attached to the nervous system."
+	desc = "An enhancement that speeds up brain functions, allowing the user to recover from incapacitation faster."
 
 	on_transplant(var/mob/M as mob)
 		..()
 		if(!broken)
-			M.add_stun_resist_mod("stun_blocker", 2530)
+			M.add_stun_resist_mod("stun_blocker", 30)
 
 	on_removal()
 		..()
@@ -68,7 +69,7 @@
 	name = "pain reducer"
 	organ_name = "pain reducer"
 	icon_state = "enhancement_pain"
-	desc = "A thin, metal oval with some wires sticking out. It seems like it'd do well attached to the nervous system."
+	desc = "An enhancement that slows down central nerve function, reducing the effect of pain on the body."
 
 	on_transplant(var/mob/M as mob)
 		..()
@@ -104,7 +105,7 @@
 	name = "neural jack"
 	organ_name = "neural jack"
 	icon_state = "enhancement_neural"
-	desc = "A thin, metal oval with some wires sticking out. It seems like it'd do well attached to the nervous system."
+	desc = "A highly illegal enhancement for the brain, which imparts a boost in reflex speed, and knowledge of some martial moves."
 	organ_abilities = list(/datum/targetable/organAbility/combohelp, /datum/targetable/organAbility/combomode)
 	var/parrychance = 20
 	var/comboattacks = FALSE
@@ -292,7 +293,7 @@
 		if(!broken)
 			M.bioHolder.AddEffect("neural_jack")
 			M.add_stam_mod_max("neural_jack", 50)
-			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "neural_jack", 5) // might be overkill but as it stands you get rolled by getting your stamina drained
+			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "neural_jack", 5) // might be overkill but as it stands you get rolled by getting your stamina drained through melee attacks
 		else
 			src.organ_abilities = null
 
@@ -306,7 +307,7 @@
 		if(world.time - attacktime >= 10 SECONDS)
 			combotarget = null
 			lastattacks.Cut()
-		if(src.broken)
+		if(src.broken) //turns out this thing runs on uranium fuel cells, interesting, huh?
 			src.donor.reagents.add_reagent("lithium", 2)
 			src.donor.reagents.add_reagent("fuel", 2)
 			src.donor.reagents.add_reagent("uranium", 2)
@@ -315,9 +316,9 @@
 	emp_act()
 		src.take_damage(5, 5, 0) //extra reinforced
 		if(src.broken)
-			src.donor.reagents.add_reagent("lithium", 20)
-			src.donor.reagents.add_reagent("fuel", 20)
-			src.donor.reagents.add_reagent("uranium", 20)
+			src.donor.reagents.add_reagent("lithium", 10)
+			src.donor.reagents.add_reagent("fuel", 10)
+			src.donor.reagents.add_reagent("uranium", 10)
 
 
 	on_removal()

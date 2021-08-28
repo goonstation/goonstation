@@ -1660,7 +1660,7 @@
 	cast()
 		if(..())
 			return 1
-		for(var/obj/item/organ/enhancement/head/neural_jack/N in holder.owner.contents)
+		for(var/obj/item/organ/enhancement/head/neural_jack/N in holder.owner.organHolder.enhancement_nerve)
 			if(N.comboattacks == TRUE)
 				boutput(holder.owner, __blue("You disable your combat enhancer."))
 			else
@@ -1685,4 +1685,4 @@
 		sleep(5 DECI SECONDS)
 		boutput(holder.owner, __blue("Grab -> Grab -> Disarm -> Harm: Fling Pin, both you and your target go several tiles, before you immediately pin them."))
 		sleep(5 DECI SECONDS)
-		boutput(holder.owner, __blue("Passives: You deal extra kick damage, can parry people by blocking when they attack, and you can flip to dodge projectiles."))
+		boutput(holder.owner, __blue("Passives: You deal extra kick damage, can parry people by blocking when they attack, and you can flip to dodge projectiles for a short period."))

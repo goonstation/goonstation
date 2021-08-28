@@ -932,6 +932,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/organ/enhancement/head/neural_jack
 	cost = 7
 	vr_allowed = 0
+	not_in_crates = 1
 	desc = "A highly illegal surgical enhancement which massively speeds up user reaction speed, and gives great martial prowess."
 	blockedmode = list(/datum/game_mode/revolution, /datum/game_mode/spy)
 

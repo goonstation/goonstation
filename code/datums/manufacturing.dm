@@ -1003,6 +1003,24 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 1
 	category = "Component"
 
+/datum/manufacture/enhancement_stun
+	name = "Stun Resist Enhancement"
+	item_paths = list("CRY-1","MET-2","CON-2","INS-1", "electrum")
+	item_amounts = list(3,5,5,1,2)
+	item_outputs = list(/obj/item/organ/enhancement/head/stun_resist)
+	time = 80 SECONDS
+	create = 1
+	category = "Component"
+
+/datum/manufacture/enhancement_pain
+	name = "Pain Blocker Enhancement"
+	item_paths = list("CRY-1","MET-2","CON-2","INS-1", "uqill")
+	item_amounts = list(3,5,5,3,2)
+	item_outputs = list(/obj/item/organ/enhancement/head/pain_reducer)
+	time = 80 SECONDS
+	create = 1
+	category = "Component"
+
 /datum/manufacture/implant_health
 	name = "Health Monitor Implant"
 	item_paths = list("CON-1","CRY-1")
