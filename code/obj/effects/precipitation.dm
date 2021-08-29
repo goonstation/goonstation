@@ -100,11 +100,8 @@ particles/snow
 			fade = 5
 			lifespan = generator("num", 10, 30, LINEAR_RAND)
 			position = generator("box", list(-96,32,0), list(96,64,50))
-			//icon = 'icons/effects/particles.dmi'
-			//icon_state = list("particles_1"=1,"particles_2"=1,"particles_3"=1,"particles_4"=1,"none"=2)
 			bound1 = list(-32, -48, -500)
 			bound2 = list(32, 64, 60)
-			// Start up initial speed and gain for tile based emitter due to shorter travel (acceleration)
 			width = 96
 			height = 96
 
