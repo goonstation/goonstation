@@ -91,7 +91,6 @@
 
 			sleep(2 SECONDS)
 			if(num_agents)
-				var/lengthlist = length(candidates)
 				if (length(candidates))
 					var/mob/living/carbon/human/H = null
 					num_agents = min(num_agents, length(candidates))
