@@ -95,6 +95,7 @@
 			owner:contract_disease(/datum/ailment/malady/flatline,null,null,1)
 			boutput(owner, "<span class='alert'>Something is wrong with your cyberheart, it stops beating!</span>")
 
+
 /datum/bioEffect/rad_resist
 	name = "Radiation Resistance"
 	desc = "Shields the subject's cellular structure against ionizing radiation."
@@ -180,12 +181,27 @@
 		var/mob/living/carbon/human/H = owner
 		H.oxyloss = 0
 		H.losebreath = 0
-		APPLY_MOB_PROPERTY(H, PROP_BREATHLESS, src.type)
+		if(src.power == 1)
+			APPLY_MOB_PROPERTY(H, PROP_REBREATHING, src.type)
+		else
+			APPLY_MOB_PROPERTY(H, PROP_BREATHLESS, src.type)
 		health_update_queue |= H
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		if(oldval == 1)
+			REMOVE_MOB_PROPERTY(owner, PROP_REBREATHING, src.type)
+		else
+			REMOVE_MOB_PROPERTY(owner, PROP_BREATHLESS, src.type)
+		if(newval == 1)
+			APPLY_MOB_PROPERTY(owner, PROP_REBREATHING, src.type)
+		else
+			APPLY_MOB_PROPERTY(owner, PROP_BREATHLESS, src.type)
 
 	OnRemove()
 		. = ..()
 		REMOVE_MOB_PROPERTY(owner, PROP_BREATHLESS, src.type)
+		REMOVE_MOB_PROPERTY(owner, PROP_REBREATHING, src.type)
 
 /datum/bioEffect/breathless/contract
 	name = "Airless Breathing"
@@ -202,6 +218,7 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 	stability_loss = 0
+	power = 2
 
 /datum/bioEffect/psychic_resist
 	name = "Meta-Neural Enhancement"
