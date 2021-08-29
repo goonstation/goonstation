@@ -102,10 +102,11 @@
 		. = src.check_apply(BE)
 		if (.)
 			return
-
+		var/oldpower = BE.power
 		BE.power = 2
 		BE.name = "Empowered " + BE.name
 		BE.altered = 1
+		BE.onPowerChange(oldpower, BE.power)
 
 /datum/dna_chromosome/cooldown_reducer
 	name = "Energy Booster"

@@ -1288,11 +1288,12 @@ var/global/noir = 0
 			if(src.level >= LEVEL_SA)
 				var/datum/bioEffect/power/BE = locate(href_list["bioeffect"])
 				BE.altered = 1
+				var/oldpower = BE.power
 				if (BE.power > 1)
 					BE.power = 1
 				else
 					BE.power = 2
-
+				BE.onPowerChange(oldpower, BE.power)
 				usr.client.cmd_admin_managebioeffect(BE.holder.owner)
 			else
 				return
@@ -4866,9 +4867,11 @@ var/global/noir = 0
 	BE.reclaim_mats = BE.global_instance.reclaim_mats
 	BE.msgGain = BE.global_instance.msgGain
 	BE.msgLose = BE.global_instance.msgLose
+	var/oldpower = P.power
+	P.power = P.global_instance_power.power
+	P.onPowerChange(oldpower, P.power)
 	if (istype(BE, /datum/bioEffect/power)) //powers
 		P = BE
-		P.power = P.global_instance_power.power
 		P.cooldown = P.global_instance_power.cooldown
 		P.safety = P.global_instance_power.safety
 

@@ -133,6 +133,14 @@ ABSTRACT_TYPE(/datum/bioEffect)
 			else
 				return null
 
+	proc/onPowerChange(oldval, newval)
+		return
+
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		if(variable == "power")
+			src.onPowerChange(oldval, newval)
+
 /datum/dnaBlocks
 	var/datum/bioEffect/owner = null
 	/// List of CORRECT blocks for this mutation. This is global and should not be modified since it represents the correct solution.

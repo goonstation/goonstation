@@ -605,14 +605,15 @@ var/list/datum/bioEffect/mutini_effects = list()
 					if(!newCopy) continue
 
 					newCopy.timeLeft = BE.timeLeft
+					var/oldpower = newCopy.power
 					newCopy.power = BE.power
+					newCopy.onPowerChange(oldpower, newCopy.power)
 					newCopy.data = BE.data
 				else
-					var/datum/bioEffect/newCopy = AddEffect(BE.id)
+					var/datum/bioEffect/newCopy = AddEffect(BE.id, power = BE.power)
 					if(!newCopy) continue
 
 					newCopy.timeLeft = BE.timeLeft
-					newCopy.power = BE.power
 					newCopy.data = BE.data
 		return
 
