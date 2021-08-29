@@ -78119,6 +78119,7 @@
 /area/centcom/offices/sord)
 "oSl" = (
 /obj/table/reinforced/industrial/auto,
+/obj/item/gun/energy/tasersmg,
 /obj/item/kitchen/food_box/donut_box{
 	pixel_y = 4
 	},

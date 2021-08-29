@@ -1980,7 +1980,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	src.Virus_ShockCure(min(wattage / 500, 100))
 
 	var/stun = (min((shock_damage/5), 12) * stun_multiplier)* 10
-	src.do_disorient(100 + stun, weakened = stun, stunned = stun, disorient = stun + 40, remove_stamina_below_zero = 1)
+	src.do_disorient(100 * stun_multiplier + stun, weakened = stun, stunned = stun, disorient = stun + 40 * stun_multiplier, remove_stamina_below_zero = 1)
 
 	return shock_damage
 
