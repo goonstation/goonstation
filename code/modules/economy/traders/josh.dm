@@ -189,4 +189,4 @@
 	price_boundary = list(400,800)
 	possible_names = list("Dude, this thing can shoot darts for like... miles, man.",
 	"If you had like a whole lotta these you could have some sorta huge, sick ass battle or something.",
-	"I used to be an elite dart gun sniper back in my prime. You like shootin' darts, bro?")
+	"I used to be an elite dart gun sniper back in my prime. You like dart guns too?")
