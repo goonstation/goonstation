@@ -605,14 +605,14 @@ var/list/datum/bioEffect/mutini_effects = list()
 					if(!newCopy) continue
 
 					newCopy.timeLeft = BE.timeLeft
-					newCopy.variant = BE.variant
+					newCopy.power = BE.power
 					newCopy.data = BE.data
 				else
 					var/datum/bioEffect/newCopy = AddEffect(BE.id)
 					if(!newCopy) continue
 
 					newCopy.timeLeft = BE.timeLeft
-					newCopy.variant = BE.variant
+					newCopy.power = BE.power
 					newCopy.data = BE.data
 		return
 
@@ -629,7 +629,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		age += (toCopy.age - age) / (11 - progress)
 
-	proc/AddEffect(var/idToAdd, var/variant = 0, var/timeleft = 0, var/do_stability = 1, var/magical = 0)
+	proc/AddEffect(var/idToAdd, var/power = 0, var/timeleft = 0, var/do_stability = 1, var/magical = 0)
 		//Adds an effect to this holder. Returns the newly created effect if succesful else 0.
 
 		if(HasEffect(idToAdd))
@@ -648,7 +648,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 					RemoveEffect(curr.id)
 					break //Since this cleaning is always done we just ousted the only mutantrace in effects
 
-			if(variant) newEffect.variant = variant
+			if(power) newEffect.power = power
 			if(timeleft) newEffect.timeLeft = timeleft
 			if(magical)
 				newEffect.curable_by_mutadone = 0
@@ -766,15 +766,13 @@ var/list/datum/bioEffect/mutini_effects = list()
 		return 0
 
 	proc/HasEffect(var/id)
-		//Returns variant if this holder has an effect with the given ID else 0.
-		//Returns 1 if it has the effect with variant 0, special case for limb tone.
+		//Returns effect power if this holder has an effect with the given ID else 0.
 		var/datum/bioEffect/B = effects[id]
 
 		if(!B)
 			.= 0
 		else
-			.= B.variant ? B.variant : 1
-
+			.= B.power
 
 	proc/HasEffectInPool(var/id)
 		return !isnull(effectPool[id])
@@ -792,7 +790,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		var/list/temp = args & effects
 		if(temp.len)
 			var/datum/bioEffect/BE = effects[temp[1]]
-			if(BE) return BE.variant ? BE.variant : 1
+			if(BE) return BE.power
 		return 0
 
 	proc/HasAllOfTheseEffects()

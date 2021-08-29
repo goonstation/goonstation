@@ -43,7 +43,6 @@ ABSTRACT_TYPE(/datum/bioEffect)
 
 	var/timeLeft = -1//Time left for temporary effects.
 
-	var/variant = 1  //For effects with different variants.
 	var/cooldown = 0 //For effects that come with verbs
 	var/can_reclaim = 1 // Can this gene be turned into mats with the reclaimer?
 	var/can_scramble = 1 // Can this gene be scrambled with the emitter?
@@ -59,6 +58,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 	var/altered = 0
 	var/add_delay = 0
 	var/wildcard = 0
+	var/power = 1
 	var/degrade_to = null // what this mutation turns into if stability is too low
 
 	var/datum/dnaBlocks/dnaBlocks = null

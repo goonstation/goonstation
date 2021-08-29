@@ -725,9 +725,10 @@
 				if (!mut.magical && mut.reinforced)
 					added_effect.curable_by_mutadone = mut.reinforced
 
+				added_effect.power = mut.powerboosted
+
 				if (istype(added_effect, /datum/bioEffect/power/)) // apply chromosomes if provided and the mutation is a power
 					var/datum/bioEffect/power/added_power = added_effect
-					added_power.power = mut.powerboosted
 					added_power.safety = mut.synchronized
 					if (mut.energyboosted)
 						if (added_effect.cooldown != 0)

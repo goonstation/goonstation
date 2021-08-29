@@ -91,13 +91,11 @@
 	name = "Power Booster"
 	desc = "Makes abilities granted by genes more powerful."
 
-	check_apply(datum/bioEffect/power/BE)
+	check_apply(datum/bioEffect/BE)
 		if(!istype(BE))
-			return "This chromosome can only be applied to power-granting genes."
+			return "Invalid Gene."
 		if(BE.altered)
 			return "This gene has already been altered."
-		if(!BE.cooldown)
-			return "This chromosome cannot be applied to this power gene."
 		return null
 
 	apply(datum/bioEffect/power/BE)
@@ -105,7 +103,7 @@
 		if (.)
 			return
 
-		BE.power = 1
+		BE.power = 2
 		BE.name = "Empowered " + BE.name
 		BE.altered = 1
 
