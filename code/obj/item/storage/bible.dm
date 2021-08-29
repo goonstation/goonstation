@@ -19,10 +19,7 @@ var/global/list/bible_contents = list()
 	New()
 		..()
 		START_TRACKING
-		#ifdef SECRETS_ENABLED
-		ritualComponent = new/datum/ritualComponent/sanctus(src)
-		ritualComponent.autoActive = 1
-		#endif
+
 		BLOCK_SETUP(BLOCK_BOOK)
 
 	disposing()

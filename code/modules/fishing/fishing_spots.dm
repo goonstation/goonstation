@@ -79,9 +79,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/clothing/shoes/clown_shoes = 5,\
 	/obj/item/coin = 5,\
 	/mob/living/carbon/human/future = 1,\
-#ifdef SECRETS_ENABLED
-	/mob/living/carbon/human/npc/monkey/extremely_fast = 1,\
-#endif
+
 	/obj/critter/aberration = 1,\
 	/obj/critter/cat = 2,\
 	/obj/item/clothing/head/void_crown = 1,\

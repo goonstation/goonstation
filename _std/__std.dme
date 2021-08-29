@@ -1,7 +1,7 @@
 /** Standard library inclusion .dme
  * Treat this as the normal .dme, but for things in the _std folder. The inclusion paths are scoped to it.
  * This needs to be this way, otherwise DM freaks out about .dm inclusions not inside //BEGIN_INCLUDE
- * you need to manually add entries to this file - make sure theyre not being added to goonstation.dme
+ * you need to manually add entries to this file - make sure theyre not being added to coolstation.dme
  * the order that things are compiled in is important. please stick with alphabetical order unless it wont compile in alphabetical order.
  */
 
