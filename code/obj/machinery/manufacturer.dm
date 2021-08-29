@@ -32,18 +32,20 @@
 	// 0 is =>, 1 is ==
 	var/base_material_class = /obj/item/material_piece/ // please only material pieces
 	var/obj/item/reagent_containers/glass/beaker = null
+	var/obj/item/fabdisk = null
 	var/list/resource_amounts = list()
 	var/area_name = null
 	var/output_target = null
 	var/list/materials_in_use = list()
 	var/list/available = list()
 	var/list/download = list()
+	var/list/disk = list()
 	var/list/hidden = list()
 	var/list/queue = list()
 	var/last_queue_op = 0
 
 	var/category = null
-	var/list/categories = list("Tool","Clothing","Resource","Component","Machinery","Miscellaneous", "Downloaded")
+	var/list/categories = list("Tool","Clothing","Resource","Component","Machinery","Miscellaneous", "Disk", "Downloaded")
 	var/search = null
 	var/wires = 15
 	var/image/work_display = null
@@ -107,8 +109,10 @@
 		src.panel_sprite = null
 		src.output_target = null
 		src.beaker = null
+		src.fabdisk = null
 		src.available.len = 0
 		src.available = null
+		src.disk = null
 		src.download.len = 0
 		src.download = null
 		src.hidden.len = 0
@@ -443,7 +447,7 @@
 		// 	dat += " <small>(Filter: \"[html_encode(src.category)]\")</small>"
 
 		// Get the list of stuff we can print ...
-		var/list/products = src.available + src.download
+		var/list/products = src.available + src.disk + src.download
 		if (src.hacked)
 			products += src.hidden
 
@@ -543,6 +547,9 @@
 			return TRUE
 
 		if(src.download && (M in src.download))
+			return TRUE
+
+		if(src.disk && (M in src.disk))
 			return TRUE
 
 		if(src.hacked && src.hidden && (M in src.hidden))
@@ -705,6 +712,12 @@
 					src.begin_work(1)
 					src.updateUsrDialog()
 					return
+
+			if (href_list["ejectfabdisk"])
+				src.disk = null
+				if (src.fabdisk)
+					src.fabdisk.set_loc(get_output_location(fabdisk,1))
+				src.fabdisk = null
 
 			if (href_list["ejectbeaker"])
 				if (src.beaker)
@@ -1021,6 +1034,19 @@
 				boutput(user, "<span class='notice'>You insert [W].</span>")
 				W.set_loc(src)
 				src.beaker = W
+				if (user && W)
+					user.u_equip(W)
+					W.dropped()
+
+		else if (istype(W,/obj/item/fabdisk))
+			if (src.fabdisk)
+				boutput(user, "<span class='alert'>There's already a disk in the machine. You need to remove it first.</span>")
+			else
+				boutput(user, "<span class='notice'>You insert [W].</span>")
+				W.set_loc(src)
+				src.fabdisk = W
+				var/obj/item/fabdisk/FD = W
+				src.disk += FD.diskstored
 				if (user && W)
 					user.u_equip(W)
 					W.dropped()
@@ -1428,7 +1454,7 @@
 
 		var/datum/manufacture/M = src.queue[1]
 		//Wire: Fix for href exploit creating arbitrary items
-		if (!(M in src.available + src.hidden + src.download))
+		if (!(M in src.available + src.hidden + src.disk + src.download))
 			src.mode = "halt"
 			src.error = "Corrupted entry purged from production queue."
 			src.queue -= src.queue[1]
@@ -1651,6 +1677,15 @@
 		</tr>
 			"}
 
+		if (src.fabdisk)
+			dat += {"
+		<tr><th colspan='2'>Manufacturer disk</th></tr>
+			"}
+
+			dat += {"
+		<tr><td colspan='2'><a href='?src=\ref[src];ejectfabdisk=\ref[src.beaker]' class='buttonlink'>&#9167;</a> [src.fabdisk.name]</td></tr>
+		<tr><td class='c'>
+			"}
 
 		if (src.reagents.total_volume > 0)
 			dat += {"
@@ -1689,7 +1724,7 @@
 
 			if (src.beaker.reagents.total_volume > 0)
 				dat += {"
-				<a href='?src=\ref[src];transfrom=\ref[src.beaker]'>Transfer<br>Container &rarr; Machine</a>"
+				<a href='?src=\ref[src];transfrom=\ref[src.beaker]'>Transfer<br>Container &rarr; Machine</a>
 				"}
 
 			dat += {"
