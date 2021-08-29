@@ -334,14 +334,18 @@
 	lockedChars = list("G","C","A","T")
 	lockedTries = 10
 	curable_by_mutadone = 0
-	var/remove_per_tick = 5
+	var/remove_per_tick = 2.5
 	stability_loss = 15
 	degrade_to = "toxification"
 	icon_state  = "tox_res"
 
 	OnAdd()
 		. = ..()
-		APPLY_MOB_PROPERTY(owner, PROP_CHEM_PURGE, src.type, remove_per_tick)
+		APPLY_MOB_PROPERTY(owner, PROP_CHEM_PURGE, src.type, remove_per_tick * power)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		APPLY_MOB_PROPERTY(owner, PROP_CHEM_PURGE, src.type, remove_per_tick * power)
 
 	OnRemove()
 		. = ..()
