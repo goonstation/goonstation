@@ -2769,7 +2769,7 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 /client/proc/cmd_ice_moon_station()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Ice Station"
-	set desc = "Turns space into the Ice Moon..."
+	set desc = "Turns space into the Outpost Theta..."
 	admin_only
 	var/const/ambient_light = "#111"
 #ifdef UNDERWATER_MAP
@@ -2790,6 +2790,11 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 					I = new /image/ambient
 				var/datum/map_generator/icemoon_generator/map_generator = new
 				var/list/space = list()
+
+				var/list/turf/shipping_path = shippingmarket.get_path_to_market()
+				for(var/turf/space/T in shipping_path)
+					T.ReplaceWith(/turf/unsimulated/floor/arctic/snow/ice)
+
 				for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 					space += S
 				map_generator.generate_terrain(space)
@@ -2802,11 +2807,11 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 					if(I)
 						I.color = ambient_light
 						S.UpdateOverlays(I, "ambient")
-				shippingmarket.clear_path_to_market()
+				// Path to market does not need to be cleared because it was converted to ice.  Abyss will screw up everything!
 
-				logTheThing("admin", src, null, "turned space into a swamp.")
-				logTheThing("diary", src, null, "turned space into a swamp.", "admin")
-				message_admins("[key_name(src)] turned space into a swamp.")
+				logTheThing("admin", src, null, "turned space into an another outpost on Theta.")
+				logTheThing("diary", src, null, "turned space into an another outpost on Theta.", "admin")
+				message_admins("[key_name(src)] turned space into an another outpost on Theta.")
 	else
 		boutput(src, "You must be at least an Administrator to use this command.")
 #endif

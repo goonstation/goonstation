@@ -6,7 +6,7 @@
 	flora_types = list(/obj/stone/random = 10, /obj/decal/fakeobjects/smallrocks = 10)
 	flora_density = 1
 
-	fauna_types = list(/obj/critter/sealpup=30, /obj/critter/wendigo=5, /obj/critter/yeti=1)
+	fauna_types = list(/obj/critter/sealpup=15, /obj/critter/wendigo=5, /obj/critter/yeti=1)
 	fauna_density = 0.5
 
 /datum/biome/icemoon/snow/trees
@@ -70,7 +70,6 @@ icemoon_generator
 
 		var/height = text2num(rustg_noise_get_at_coordinates("[height_seed]", "[drift_x]", "[drift_y]"))
 
-
 		var/datum/biome/selected_biome
 		if(height <= 0.85) //If height is less than 0.85, we generate biomes based on the heat and humidity of the area.
 			var/humidity = text2num(rustg_noise_get_at_coordinates("[humidity_seed]", "[drift_x]", "[drift_y]"))
@@ -129,7 +128,6 @@ icemoon_generator
 		return src
 
 /turf/unsimulated/floor/arctic/snow/autocliff
-
 	New()
 		..()
 		SPAWN_DBG(3 SECONDS)
