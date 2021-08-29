@@ -251,7 +251,7 @@
 	stability_loss = 40
 	msgGain = "Your skin feels tingly and shifty."
 	msgLose = "Your skin tightens."
-	var/heal_per_tick = 1
+	var/heal_per_tick = 0.5
 	var/regrow_prob = 250
 	var/roundedmultremainder
 	degrade_to = "mutagenic_field"
@@ -260,14 +260,14 @@
 	OnLife(var/mult)
 		if(..()) return
 		var/mob/living/L = owner
-		L.HealDamage("All", heal_per_tick * mult, heal_per_tick * mult)
+		L.HealDamage("All", heal_per_tick * mult * power, heal_per_tick * power)
 		var/roundedmult = round(mult)
 		roundedmultremainder += (mult % 1)
 		if (roundedmultremainder >= 1)
 			roundedmult += round(roundedmultremainder)
 			roundedmultremainder = roundedmultremainder % 1
 		for (roundedmult = roundedmult, roundedmult > 0, roundedmult --)
-			if (rand(1, regrow_prob) == 1)
+			if (rand(1, regrow_prob) <= power)
 				if (ishuman(L))
 					var/mob/living/carbon/human/H = L
 					if (H.limbs)
