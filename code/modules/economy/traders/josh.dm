@@ -24,7 +24,8 @@
 	/datum/commodity/trader/josh/energydrink,
 	/datum/commodity/trader/josh/hoodie,
 	/datum/commodity/trader/josh/flyswatter,
-	/datum/commodity/trader/josh/robustris)
+	/datum/commodity/trader/josh/robustris,
+	/datum/commodity/trader/josh/foamgun,)
 
 	dialogue_greet = list("What's up my bro? I got some fresh stuff for ya.",
 	"Sup bro, what's shakin' the bacon? Ho boy, I got some blazing hot items today.",
@@ -181,3 +182,11 @@
 	price_boundary = list(500,1000)
 	possible_names = list("Bro this is out of the world. You can cook an omelette and play guitar on it at the same time!",
 	"Do you want to be the coolest on the block or nah?")
+
+/datum/commodity/trader/josh/foamgun
+	comname = "Totally Cool Foam Flingin' Tool"
+	comtype = /obj/item/gun/kinetic/foamdartrevolver
+	price_boundary = list(400,800)
+	possible_names = list("Dude, this thing can shoot darts for like... miles, man.",
+	"If you had like a whole lotta these you could have some sorta huge, sick ass battle or something.",
+	"I used to be an elite dart gun sniper back in my prime. You like shootin' darts, bro?")
