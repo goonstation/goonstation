@@ -1,7 +1,7 @@
 
 /datum/admins/var/datum/partmod_holder/part_modifier = null
 
-var/list/default_organ_paths = list("head" = /obj/item/organ/head, "skull" = /obj/item/skull, "brain" = /obj/item/organ/brain, "left_eye" = /obj/item/organ/eye, "right_eye" = /obj/item/organ/eye, "chest" = /obj/item/organ/chest, "heart" = /obj/item/organ/heart, "left_lung" = /obj/item/organ/lung, "right_lung" = /obj/item/organ/lung, "butt" = /obj/item/clothing/head/butt, "liver" = /obj/item/organ/liver, "stomach" = /obj/item/organ/stomach, "intestines" = /obj/item/organ/intestines, "pancreas" = /obj/item/organ/pancreas, "spleen" = /obj/item/organ/spleen, "appendix" = /obj/item/organ/appendix, "left_kidney" = /obj/item/organ/kidney, "right_kidney" = /obj/item/organ/kidney, "tail" = /obj/item/organ/tail, "enhancement_nerve" = /obj/item/organ/enhancement/head)
+var/list/default_organ_paths = list("head" = /obj/item/organ/head, "skull" = /obj/item/skull, "brain" = /obj/item/organ/brain, "left_eye" = /obj/item/organ/eye, "right_eye" = /obj/item/organ/eye, "chest" = /obj/item/organ/chest, "heart" = /obj/item/organ/heart, "left_lung" = /obj/item/organ/lung, "right_lung" = /obj/item/organ/lung, "butt" = /obj/item/clothing/head/butt, "liver" = /obj/item/organ/liver, "stomach" = /obj/item/organ/stomach, "intestines" = /obj/item/organ/intestines, "pancreas" = /obj/item/organ/pancreas, "spleen" = /obj/item/organ/spleen, "appendix" = /obj/item/organ/appendix, "left_kidney" = /obj/item/organ/kidney, "right_kidney" = /obj/item/organ/kidney, "tail" = /obj/item/organ/tail, "augumentation_nerve" = /obj/item/organ/augumentation/head)
 var/list/default_limb_paths = list("l_arm" = /obj/item/parts/human_parts/arm/left, "r_arm" = /obj/item/parts/human_parts/arm/right, "l_leg" = /obj/item/parts/human_parts/leg/left, "r_leg" = /obj/item/parts/human_parts/leg/right)
 
 /client/proc/modify_parts(var/mob/living/carbon/human/target as mob)
@@ -451,12 +451,12 @@ var/list/default_limb_paths = list("l_arm" = /obj/item/parts/human_parts/arm/lef
 				[(see_vars) ? "[organs.tail ? "<td><a href='byond://?src=\ref[src];action=view_vars;target=\ref[organs.tail]'>\[X\]</a></td>" : "<td>None</td>"]" : null]
 			</tr>
 			<tr>
-				<td>Head Enhancement</td>
-				<td>[organs.enhancement_nerve ? organs.enhancement_nerve : "None"]</td>
-				<td>[organs.enhancement_nerve ? organs.enhancement_nerve.type : "None"]</td>
-				<td><a href='byond://?src=\ref[src];action=drop_organ;target=\ref[organs];part=enhancement_nerve'>\[X\]</a></td>
-				<td><a href='byond://?src=\ref[src];action=replace_organ;target=\ref[organs];part=enhancement_nerve'>\[X\]</a></td>
-				[(see_vars) ? "[organs.enhancement_nerve ? "<td><a href='byond://?src=\ref[src];action=view_vars;target=\ref[organs.enhancement_nerve]'>\[X\]</a></td>" : "<td>None</td>"]" : null]
+				<td>Head augumentation</td>
+				<td>[organs.augumentation_nerve ? organs.augumentation_nerve : "None"]</td>
+				<td>[organs.augumentation_nerve ? organs.augumentation_nerve.type : "None"]</td>
+				<td><a href='byond://?src=\ref[src];action=drop_organ;target=\ref[organs];part=augumentation_nerve'>\[X\]</a></td>
+				<td><a href='byond://?src=\ref[src];action=replace_organ;target=\ref[organs];part=augumentation_nerve'>\[X\]</a></td>
+				[(see_vars) ? "[organs.augumentation_nerve ? "<td><a href='byond://?src=\ref[src];action=view_vars;target=\ref[organs.augumentation_nerve]'>\[X\]</a></td>" : "<td>None</td>"]" : null]
 			</tr>
 			------------------------------------
 			<tr>

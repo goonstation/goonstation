@@ -1003,29 +1003,29 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 1
 	category = "Component"
 
-/datum/manufacture/enhancement_stun
-	name = "Stun Resist Enhancement"
+/datum/manufacture/augumentation_stun
+	name = "Stun Resist augumentation"
 	item_paths = list("CRY-2","MET-2","CON-2","INS-1", "electrum")
 	item_amounts = list(8,5,5,1,5)
-	item_outputs = list(/obj/item/organ/enhancement/head/stun_resist)
+	item_outputs = list(/obj/item/organ/augumentation/head/stun_resist)
 	time = 80 SECONDS
 	create = 1
 	category = "Component"
 
-/datum/manufacture/enhancement_pain
-	name = "Pain Blocker Enhancement"
+/datum/manufacture/augumentation_pain
+	name = "Pain Blocker augumentation"
 	item_paths = list("CRY-2","MET-2","CON-2","INS-1", "uqill")
 	item_amounts = list(8,5,5,3,5)
-	item_outputs = list(/obj/item/organ/enhancement/head/pain_reducer)
+	item_outputs = list(/obj/item/organ/augumentation/head/pain_reducer)
 	time = 80 SECONDS
 	create = 1
 	category = "Component"
 
-/datum/manufacture/enhancement_stam
-	name = "Stamina Storage Enhancement"
+/datum/manufacture/augumentation_stam
+	name = "Stamina Storage augumentation"
 	item_paths = list("CRY-2","MET-2","CON-2","INS-1", "plasmastone")
 	item_amounts = list(15,5,5,8,5)
-	item_outputs = list(/obj/item/organ/enhancement/head/stamina_enhancer)
+	item_outputs = list(/obj/item/organ/augumentation/head/stamina_enhancer)
 	time = 80 SECONDS
 	create = 1
 	category = "Component"

@@ -886,6 +886,16 @@
 		var/stage = 0
 		if (master.mini_health_hud)
 			health.icon_state = "blank"
+			if(istype(master.organHolder.augumentation_nerve, /obj/item/organ/augumentation/head/pain_reducer))
+				health_brute.icon_state = "health8"
+				health_brute.tooltipTheme = "healthDam healthDam7"
+				health_brute.name = "Health"
+				health_brute.desc = "You can't tell how you feel!"
+				health_burn.icon_state = "blank"
+				health_tox.icon_state = "blank"
+				health_oxy.icon_state = "blank"
+				return
+
 			if (isdead(master) || master.fakedead)
 				health_brute.icon_state = "mhealth7" // rip
 				health_brute.tooltipTheme = "healthDam healthDam7"
@@ -1000,28 +1010,33 @@
 				return
 
 			var/health_state = ((master.health - master.fakeloss) / (master.max_health != 0 ? master.max_health : 1)) * 100
-			switch(health_state)
-				if(100 to INFINITY)
-					stage = 0 // green with green marker
-					health.desc = "You feel fine."
-				if(80 to 100)
-					stage = 1 // green
-					health.desc = "You feel a little dinged up, but you're doing okay."
-				if(60 to 80)
-					stage = 2 // yellow
-					health.desc = "You feel a bit hurt. Seeking medical attention couldn't hurt."
-				if(40 to 60)
-					stage = 3 // orange
-					health.desc = "You feel pretty bad. You should seek medical attention."
-				if(20 to 40)
-					stage = 4 // dark orange
-					health.desc = "You feel horrible! You need medical attention as soon as possible."
-				if(0 to 20)
-					stage = 5 // red
-					health.desc = "You feel like you're on death's door... you need help <em>now!</em>"
-				else
-					stage = 6 // crit
-					health.desc = "You're pretty sure you're dying!"
+			if(!istype(master.organHolder.augumentation_nerve, /obj/item/organ/augumentation/head/pain_reducer))
+				switch(health_state)
+					if(100 to INFINITY)
+						stage = 0 // green with green marker
+						health.desc = "You feel fine."
+					if(80 to 100)
+						stage = 1 // green
+						health.desc = "You feel a little dinged up, but you're doing okay."
+					if(60 to 80)
+						stage = 2 // yellow
+						health.desc = "You feel a bit hurt. Seeking medical attention couldn't hurt."
+					if(40 to 60)
+						stage = 3 // orange
+						health.desc = "You feel pretty bad. You should seek medical attention."
+					if(20 to 40)
+						stage = 4 // dark orange
+						health.desc = "You feel horrible! You need medical attention as soon as possible."
+					if(0 to 20)
+						stage = 5 // red
+						health.desc = "You feel like you're on death's door... you need help <em>now!</em>"
+					else
+						stage = 6 // crit
+						health.desc = "You're pretty sure you're dying!"
+			else
+				stage = 8
+				health.desc = "You're not sure how you're feeling!"
+
 
 			health.icon_state = "health[stage]"
 			health.tooltipTheme = "healthDam healthDam[stage]"

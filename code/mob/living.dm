@@ -435,6 +435,7 @@
 
 /mob/living/click(atom/target, params, location, control)
 	. = ..()
+	SEND_SIGNAL(src,COMSIG_CLICK,target, params, location, control)
 	if (. == 100)
 		return 100
 

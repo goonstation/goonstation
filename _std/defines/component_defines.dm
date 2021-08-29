@@ -192,7 +192,8 @@
 #define COMSIG_ATTACKBY "attackby"
 /// Attacking without an item in-hand (attacker)
 #define COMSIG_ATTACKHAND "attackhand"
-
+/// When you click on anything
+#define COMSIG_CLICK "click"
 
 // ---- projectile signals ----
 

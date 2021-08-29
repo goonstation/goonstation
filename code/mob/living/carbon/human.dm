@@ -2343,7 +2343,7 @@
 			O.unbreakme()
 	if (!src.organHolder)
 		src.organHolder = new(src)
-	src.organHolder.heal_organs(INFINITY, INFINITY, INFINITY, list("liver", "left_kidney", "right_kidney", "stomach", "intestines","spleen", "left_lung", "right_lung","appendix", "pancreas", "heart", "brain", "left_eye", "right_eye", "tail", "enhancement_nerve"))
+	src.organHolder.heal_organs(INFINITY, INFINITY, INFINITY, list("liver", "left_kidney", "right_kidney", "stomach", "intestines","spleen", "left_lung", "right_lung","appendix", "pancreas", "heart", "brain", "left_eye", "right_eye", "tail", "augumentation_nerve"))
 
 	src.organHolder.create_organs()
 	if (src.organHolder.chest)
@@ -2734,10 +2734,10 @@
 			processed += organHolder.tail
 			if (prob(75) && organHolder.tail.loc == src)
 				ret += organHolder.tail
-		if (organHolder.enhancement_nerve)
-			processed += organHolder.enhancement_nerve
-			if (prob(25) && organHolder.enhancement_nerve.loc == src)
-				ret += organHolder.enhancement_nerve
+		if (organHolder.augumentation_nerve)
+			processed += organHolder.augumentation_nerve
+			if (prob(25) && organHolder.augumentation_nerve.loc == src)
+				ret += organHolder.augumentation_nerve
 		if (prob(50))
 			var/obj/item/clothing/head/wig/W = create_wig()
 			if (W)

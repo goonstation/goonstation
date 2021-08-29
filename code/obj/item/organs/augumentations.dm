@@ -3,29 +3,29 @@
 #define COMBO_GRAB "grab"
 #define COMBO_HARM "harm"
 
-/obj/item/organ/enhancement
-	name = "surgical enhancement parent"
-	organ_name = "enhancement"
-	//organ_holder_name = "enhancement_nerve"
+/obj/item/organ/augumentation
+	name = "surgical augumentation parent"
+	organ_name = "augumentation"
+	//organ_holder_name = "augumentation_nerve"
 	organ_holder_location = "chest"
 	organ_holder_required_op_stage = 0.0
-	icon_state = "enhancement"
+	icon_state = "augumentation"
 	robotic = 1
 	desc = "A thin, metal oval with some wires sticking out. It seems like it'd do well attached to the nervous system."
 
-/obj/item/organ/enhancement/head //second abstract parent incase other enhancement types get added
-	name = "surgical enhancement parent"
-	organ_name = "enhancement_nerve"
-	organ_holder_name = "enhancement_nerve"
+/obj/item/organ/augumentation/head //second abstract parent incase other augumentation types get added
+	name = "surgical augumentation parent"
+	organ_name = "augumentation_nerve"
+	organ_holder_name = "augumentation_nerve"
 	organ_holder_location = "head"
 	organ_holder_required_op_stage = 4.0
-	icon_state = "enhancement"
+	icon_state = "augumentation"
 
-/obj/item/organ/enhancement/head/stun_resist //a mild-high stun resist in exchange for jitters and occasional stuns
+/obj/item/organ/augumentation/head/stun_resist //a mild-high stun resist in exchange for jitters and occasional stuns
 	name = "stun blocker"
 	organ_name = "stun blocker"
-	icon_state = "enhancement_stun"
-	desc = "An enhancement that speeds up brain functions, allowing the user to recover from incapacitation faster."
+	icon_state = "augumentation_stun"
+	desc = "An augumentation that speeds up brain functions, allowing the user to recover from incapacitation faster."
 
 	on_transplant(var/mob/M as mob)
 		..()
@@ -65,11 +65,11 @@
 			src.donor.add_stun_resist_mod("stun_blocker_broken", -50)
 
 
-/obj/item/organ/enhancement/head/pain_reducer //reduces pain by slowing down nerve functions, but gives brain damage due to the slowed nerves
+/obj/item/organ/augumentation/head/pain_reducer //reduces pain by slowing down nerve functions, but makes you completely unaware of your current health
 	name = "pain reducer"
 	organ_name = "pain reducer"
-	icon_state = "enhancement_pain"
-	desc = "An enhancement that slows down central nerve function, reducing the effect of pain on the body."
+	icon_state = "augumentation_pain"
+	desc = "An augumentation that slows down central nerve function, reducing the effect of pain on the body."
 
 	on_transplant(var/mob/M as mob)
 		..()
@@ -86,11 +86,8 @@
 		var/mob/M = src.donor
 		if(!..())
 			return 0
-		if(!src.broken)
-			if(prob(66))
-				M.take_brain_damage(1 * mult)
-		else
-			M.take_brain_damage(2 * mult)
+		if(src.broken)
+			M.take_brain_damage(1 * mult)
 		return 1
 
 	on_broken(var/mult = 1)
@@ -101,11 +98,11 @@
 		if(!src.donor.movement_modifiers.Find(/datum/movement_modifier/pain_reducer_broken))
 			APPLY_MOVEMENT_MODIFIER(src.donor, /datum/movement_modifier/pain_reducer_broken, "pain_reducer_broken")
 
-/obj/item/organ/enhancement/head/stamina_enhancer //less max health and stamina regen, at the benefit of a massive max stamina increase
+/obj/item/organ/augumentation/head/stamina_enhancer //less max health and stamina regen, at the benefit of a massive max stamina increase
 	name = "stamina enhancer"
 	organ_name = "stamina enhancer"
-	icon_state = "enhancement_stam"
-	desc = "An enhancement that modifies muscle, organ, and brain functions to prioritize energy storage over energy generation."
+	icon_state = "augumentation_stam"
+	desc = "An augumentation that modifies muscle, organ, and brain functions to prioritize energy storage over energy generation."
 
 	on_transplant(var/mob/M as mob)
 		..()
@@ -138,12 +135,61 @@
 		src.donor.reagents.add_reagent("methamphetamine", 3)
 		src.donor.blood_volume -= 15
 
+/obj/item/organ/augumentation/head/wireless_interact //you can interact with mechanical things at range at the cost of flash vulnerability
+	name = "wireless interactor"
+	organ_name = "wireless interactor"
+	icon_state = "augumentation_wire"
+	desc = "An augumentation that allows for ranged interaction with various electronic devices."
+	var/flashed = FALSE
 
-/obj/item/organ/enhancement/head/neural_jack //traitor roboticists can get matrix powers
+	proc/ranged_click(atom/target, params, location, control)
+		var/mob/M = src.donor
+		var/inrange = in_interact_range(target, M)
+		var/obj/item/equipped = M.equipped()
+		if(!istype(params, /obj) || istype(params, /obj/item) || src.flashed == TRUE)
+			return
+		if (M.client.check_any_key(KEY_EXAMINE | KEY_POINT) || (equipped && (inrange || (equipped.flags & EXTRADELAY))) || ishelpermouse(target)) // slightly hacky, oh well, tries to check whether we want to click normally or use attack_ai
+			return
+		else
+			if (get_dist(M, target) > 0)
+				set_dir(get_dir(M, target))
+
+			target.attack_ai(M, params, location, control)
+
+	proc/flash_check(atom/A, obj/item/I, mob/user)
+		if(istype(I, /obj/item/device/flash))
+			src.flashed = TRUE
+			src.take_damage(5, 5, 0) //owie
+			src.donor.remove_stamina(25)
+			SPAWN_DBG(15 SECONDS)
+				src.flashed = FALSE
+		if(src.broken)
+			src.donor.remove_stamina(15)
+
+	on_transplant(var/mob/M as mob)
+		..()
+		if(!broken)
+			RegisterSignal(src.donor, COMSIG_CLICK, .proc/ranged_click)
+			RegisterSignal(src.donor, COMSIG_ATTACKBY, .proc/flash_check)
+
+	on_removal()
+		..()
+		if(!broken)
+			UnregisterSignal(src.donor, COMSIG_CLICK)
+		UnregisterSignal(src.donor, COMSIG_ATTACKBY)
+
+	on_broken(var/mult = 1)
+		if (!..())
+			return
+		src.donor.reagents.add_reagent("goodnanites", 0.75 * mult)
+		src.donor.reagents.add_reagent("nanites", 0.5 * mult) //you want borg powers? Well, come and get 'em!
+		UnregisterSignal(src.donor, COMSIG_CLICK)
+
+/obj/item/organ/augumentation/head/neural_jack //traitor roboticists can get matrix powers
 	name = "neural jack"
 	organ_name = "neural jack"
-	icon_state = "enhancement_neural"
-	desc = "A highly illegal enhancement for the brain, which imparts a boost in reflex speed, and knowledge of some martial moves."
+	icon_state = "augumentation_neural"
+	desc = "A highly illegal augumentation for the brain, which imparts a boost in reflex speed, and knowledge of some martial moves."
 	organ_abilities = list(/datum/targetable/organAbility/combohelp, /datum/targetable/organAbility/combomode)
 	var/parrychance = 20
 	var/comboattacks = FALSE

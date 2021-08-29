@@ -2171,9 +2171,9 @@
 	/datum/manufacture/cyberliver,
 	/datum/manufacture/cyberlung_left,
 	/datum/manufacture/cyberlung_right,
-	/datum/manufacture/enhancement_pain,
-	/datum/manufacture/enhancement_stun,
-	/datum/manufacture/enhancement_stam,
+	/datum/manufacture/augumentation_pain,
+	/datum/manufacture/augumentation_stun,
+	/datum/manufacture/augumentation_stam,
 	/datum/manufacture/rods2,
 	/datum/manufacture/metal,
 	/datum/manufacture/glass)
