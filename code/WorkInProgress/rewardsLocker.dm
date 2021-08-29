@@ -1002,8 +1002,8 @@
 				var/obj/item/clothing/M = H.w_uniform
 				if (istype(M, /obj/item/clothing/under/rank/captain))
 					var/prev = M.name
-					M.name = "administrator's uniform"
-					M.desc = "A uniform specifically for CENTCOM administrators. (Base Item: [prev])"
+					M.name = "\improper CentCom uniform"
+					M.desc = "A uniform specifically for CENTCOM execuitives. (Base Item: [prev])"
 					if (istype(M, /obj/item/clothing/under/rank/captain/fancy))
 						M.icon_state = "captain-fancy-red"
 						M.item_state = "captain-fancy-red"
@@ -1018,8 +1018,8 @@
 
 				else if (istype(M, /obj/item/clothing/under/suit/captain))
 					var/prev = M.name
-					M.name = "\improper Administator's suit"
-					M.desc = "A uniform specifically for CENTCOM administrators. (Base Item: [prev])"
+					M.name = "\improper CentCom suit"
+					M.desc = "A uniform specifically for CENTCOM execuitives. (Base Item: [prev])"
 					if (istype(M, /obj/item/clothing/under/suit/captain/dress))
 						M.icon_state = "suit-capR-dress"
 						M.item_state = "suit-capR-dress"
@@ -1035,8 +1035,8 @@
 					var/prev = M.name
 					M.icon_state = "centcom-red"
 					M.item_state = "centcom-red"
-					M.name = "administrator's armor"
-					M.desc = "A suit of protective formal armor. It is made specifically for CENTCOM administrators. (Base Item: [prev])"
+					M.name = "\improper CentCom armor"
+					M.desc = "A suit of protective formal armor. It is made specifically for CENTCOM execuitives. (Base Item: [prev])"
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
@@ -1044,9 +1044,9 @@
 					var/prev = M.name
 					M.icon_state = "centcoat-red"
 					M.item_state = "centcoat-red"
-					M.name = "administrator's coat"
-					M.real_name = "administrator's coat"
-					M.desc = "A luxorious formal coat. It is specifically made for CENTCOM administrators.(Base Item: [prev])"
+					M.name = "\improper CentCom coat"
+					M.real_name = "\improper CentCom coat"
+					M.desc = "A luxorious formal coat. It is specifically made for CENTCOM execuitives.(Base Item: [prev])"
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
@@ -1054,8 +1054,8 @@
 					var/prev = M.name
 					M.icon_state = "spacecap-red"
 					M.item_state = "spacecap-red"
-					M.name = "administrator's space suit"
-					M.desc = "A suit that protects against low pressure environments. It is made specifically for CENTCOM administrators. (Base Item: [prev])"
+					M.name = "\improper CentCom space suit"
+					M.desc = "A suit that protects against low pressure environments. It is made specifically for CENTCOM execuitives. (Base Item: [prev])"
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
@@ -1065,15 +1065,15 @@
 					var/prev = M.name
 					M.icon_state = "centcom-red"
 					M.item_state = "centcom-red"
-					M.name = "administrator's hat"
-					M.desc = "A fancy hat specifically for CENTCOM administrators. (Base Item: [prev])"
+					M.name = "\improper CentCom hat"
+					M.desc = "A fancy hat specifically for CENTCOM execuitives. (Base Item: [prev])"
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
 				else if (istype(M, /obj/item/clothing/head/helmet/space/captain))
 					var/prev = M.name
-					M.name = "administrator's space helmet"
-					M.desc = "Helps protect against vacuum. Comes in a fasionable red befitting a admninistrator. (Base Item: [prev])"
+					M.name = "\improper CentCom space helmet"
+					M.desc = "Helps protect against vacuum. Comes in a fasionable red befitting an execuitive. (Base Item: [prev])"
 					M.icon_state = "space-captain-red"
 					M.item_state = "space-captain-red"
 					H.set_clothing_icon_dirty()

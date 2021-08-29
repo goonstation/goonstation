@@ -480,7 +480,7 @@
 /*
 		else if (issilicon(user))
 			if (get_dist(src, user) <= 1)
-				return src.attack_hand(user)
+				return src.Attackhand(user)
 */
 		else
 			return ..()

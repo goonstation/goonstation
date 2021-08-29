@@ -1,4 +1,147 @@
 
+(t)sat aug 28 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Full reagent container no longer provides immunity to changeling stings
+(t)thu aug 26 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Light Lotus plants act as UV growth lamps in a 1-tile radius when ready to harvest
+(u)Tarmunora
+(e)⚖|balance
+(*)Voltgen rework - no longer shocks on touch react, instead grants retaliatory arcflashes against attackers when drunk
+(+)Adjust some bottle sizes. (sorry jan)
+(t)tue aug 24 21
+(u)zjdtmkhzt
+(p)5774
+(e)|
+(+)Clicking on the mailgroup name to reply to a message to a group should now actually work for replying to it.
+(t)mon aug 23 21
+(u)TTerc
+(p)5794
+(e)⚖|balance
+(+)The MD now spawns with a medkit containing a brute and a burn automender, meaning that they have three menders total.
+(u)Flappybat
+(p)5661
+(e)🔄|rework
+(+)Microwaves now let you empty out the contents instead of throwing them away.
+(+)Microwaves now can be cleaned with a sponge.
+(t)sun aug 22 21
+(u)Waffleloffle
+(p)5776
+(e)🎨|sprites
+(+)Resprited the large tree found in most Owleries.
+(u)kyle
+(p)5781
+(e)|
+(*)Buff the brute/burn medkits, replace the refill carts with normal patches. Menders now need gold to manufacture not electrum.
+(+)Give Roboticists a brute mender in their pocket on round start.
+(t)sat aug 21 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Donkpockets heated outside of proper cookware at temperatures exceeding 500F will be far too hot to enjoy eating (read: no omnizine if overheated). Please cook donk pockets responsibly.
+(+)Reduce donkpocket to 10u omni, remove adding condiments to donks
+(u)Tarmunora
+(e)⚖|balance
+(*)Wizards get 6 spells up from 4. Staff of Cthulu, Fireball, Prismatic Spray, Clowns Revenge, Baleful Polymorph, Rathens Secret, Teleport, Doppenganger, and Summon Golem cost raised (1 -> 2)
+(+)Forcewall cooldown doubled (10s -> 20s)
+(u)Flourish
+(+)You can now buy packs of power cells (the large kind that fits in APCs) from QM.
+(u)Ikea
+(p)5778
+(e)|
+(+)Incapacitators now have an unswappable battery.
+(u)Tarmunora
+(e)⚖|balance
+(*)DOC has come to its senses, and has stopped buying cyberorgans, and buys normal parts for about 20% of what it used to
+(+)MDir's Doctor Bag comes with surgical scissors
+(*)Beds now count as somewhere inbetween regular tables and surgical tables. They require the patient to either by unconcious, or for them to be have ethanol/morphine in their system (same thresholds as standing self-surgery)
+(u)Kyle, Virva, Flab
+(p)5747
+(e)🗺🎨|mapping, sprites
+(*)Greatly reduce the availability of Auto-Menders for non-doctors. Adds Auto-Mender Refill Cartridges for brute/burn to vendors.
+(u)Flourish
+(e)⚖|balance
+(+)Removed the first aid kit from the sec support pool. Added a new type of donuts to the robust donut kit - robusted donuts. Robusted donuts contain salb, epi, saline, and salicylic, which are helpful for when you're in crit.
+(u)Flourish
+(+)You can now find menthol pills in public minimeds.
+(t)fri aug 20 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Expresso will cease causing BRAIN damage past 60
+(*)Chem contact damage changes (see minor)
+(+)Reduce max acid contact damage by 1/3
+(+)Basic acids (sulferic, hydrochloric, nitric) have diminishing returns on touch reaction damage when used together
+(+)Hot/Cold chem contact damage changed to a flat 7 BURN, matching hot/cold chem ingestion damage
+(u)Tarmunora
+(e)⚖|balance
+(*)Wizard hats are acidproof.
+(+)Prismatic spray projectiles have reduced chance to hit downed targets (90% -> 10)
+(u)Emily
+(p)5768
+(e)|
+(*)Auto Call Time shortened from 120 minutes to 90 minutes
+(*)RP Respawn Time shortened from 15 minutes to 10 minutes
+(*)You can now leave Industrial Cryo after only 5 minutes (prev. 15)
+(t)thu aug 19 21
+(u)Sovexe
+(e)🐛⚖|bug, balance
+(*)Resolved an issue with Arcfiend's discharge ability that was causing it to apply stamina damage twice per cast. Discharge and Jolt will now produce sparks when in use.
+(t)wed aug 18 21
+(u)Flourish
+(+)Charcoal pills now contain 20u. Analgesic and menthol pills now contain 10u.
+(u)Sord + Flourish
+(+)Replaced the prefilled syringes in the Nanomed Plus with bottles. Reorganized the inventory a little.
+(t)tue aug 17 21
+(u)Tarmunora
+(p)5754
+(e)⚖📄|balance, tgui
+(*)The house no longer takes such a massive loss on slot machines, and you can wager up to 1000 credits at once instead of just 20 (minimum bet 20 credits).
+(u)Sovexe
+(p)5748
+(e)🆕|feature
+(*)A new antagonist type, the Arcfiend joins the fray. Be sure to enable it in your job preferences to be among the first to play!
+(u)Walpvrgis
+(p)5703
+(e)🎨|sprites
+(+)The cow mutantrace has had a few visual adjustments.
+(u)Flourish
+(e)⚖|balance
+(+)Security barriers now provide slight disarm resistance when activated. Let me know how this feels and if you think it makes a difference.
+(u)Flourish
+(+)Large mop buckets now have a capacity of 400u. Handheld mop buckets have a capacity of 120u.
+(t)sun aug 15 21
+(u)Arthur Holiday
+(p)5667
+(e)🐛⚖|bug, balance
+(+)Hemostats now will fix EVERY bleeding caused by surgery, instead of only a few of them.
+(u)DoctorStupid
+(p)5694
+(e)|
+(+)Donut boxes, egg cartons, and lollipop bowls are easier to move around in your inventory and can be re-closed by clicking/activating them in hand.
+(u)Tarmunora
+(e)⚖|balance
+(+)port a sci remote costs a telecrystal to print
+(t)fri aug 13 21
+(u)Tarmunora
+(e)⚖|balance
+(*)removed melee meatshielding. bet you didn't know it existed in the first place
+(u)Emily
+(e)🆕|feature
+(*)New Chicken Breed! See Minor Changes for a hint!
+(+)La vie est de la merde, petit clown. Fume avec moi. [Gen 2] [From Clown Chickens]
+(t)tue aug 10 21
+(u)TTerc
+(p)5709
+(e)🆕|feature
+(+)You can now chug from all the drinking containers, not just glasses and pitchers (with a few exceptions).
+(t)sun aug 08 21
+(u)Emily
+(e)⛔|removal
+(+)Removed meathead trait. I doubt anyone will notice.
+(u)Tarmunora
+(e)⚖|balance
+(*)Red chainsaw provides disarm resistance.
 (t)fri aug 06 21
 (u)Azrun
 (p)5611

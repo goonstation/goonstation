@@ -170,6 +170,8 @@
 			if (src && !src.disposed)
 				a = get_area(src)
 				if(a.sanctuary) return
+				if(user?.equipped() == src)
+					user.u_equip(src)
 				explode()
 
 	proc/explode()
@@ -437,20 +439,10 @@
 	New()
 		..()
 		var/obj/item/reagent_containers/glass/B1 = new(src)
-		var/obj/item/reagent_containers/glass/B2 = new(src)
-		var/obj/item/reagent_containers/glass/B3 = new(src)
 
-		B1.reagents.add_reagent("voltagen", 25)
-		B1.reagents.add_reagent("sugar",25)
-
-		B2.reagents.add_reagent("phosphorus", 25)
-		B2.reagents.add_reagent("potassium", 25)
-
-		B3.reagents.add_reagent("voltagen", 25) //do a zap in addition to the smoke.
+		B1.reagents.add_reagent("voltagen", 50)
 
 		beakers += B1
-		beakers += B2
-		beakers += B3
 
 /obj/item/chem_grenade/pepper
 	name = "crowd dispersal grenade"

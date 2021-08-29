@@ -510,7 +510,7 @@
 			if (1)
 				boutput(holder.owner, "<span class='notice'>You flip some light switches near the designated location!!</span>")
 				for (var/obj/machinery/light_switch/L in range(10, holder.owner))
-					L.attack_hand(holder.owner)
+					L.Attackhand(holder.owner)
 				return 0
 			if (2)
 				boutput(holder.owner, "<span class='notice'>You cause a few lights to burn out near the designated location!.</span>")
@@ -725,7 +725,7 @@
 
 		//add poltergeist to master's list is done in /mob/wraith/potergeist/New
 		var/mob/wraith/poltergeist/P = new /mob/wraith/poltergeist(T, W, marker)
-		lucky_dude.special_role = "poltergeist"
+		lucky_dude.special_role = ROLE_POLTERGEIST
 		lucky_dude.dnr = 1
 		lucky_dude.transfer_to(P)
 		ticker.mode.Agimmicks |= lucky_dude

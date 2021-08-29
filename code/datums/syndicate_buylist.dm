@@ -690,6 +690,7 @@ This is basically useless for anyone but miners.
 	name = "Pickpocket Gun"
 	item = /obj/item/gun/energy/pickpocket
 	cost = 3
+	vr_allowed = 0
 	desc = "A stealthy claw gun capable of stealing and planting items, and severely messing with people."
 	job = list("Engineer", "Chief Engineer", "Mechanic", "Clown", "Staff Assistant")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)

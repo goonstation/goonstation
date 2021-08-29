@@ -151,7 +151,7 @@
 			return
 
 	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_hand(mob/user as mob)
 		if(status & (NOPOWER|BROKEN))
@@ -349,7 +349,7 @@
 		boutput(user, "You add the beaker to the machine!")
 		src.updateUsrDialog()
 		icon_state = "mixer1"
-		src.attack_hand(user)
+		src.Attackhand(user)
 
 	Topic(href, href_list)
 		if (status & BROKEN) return
@@ -580,7 +580,7 @@
 			return
 
 	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_hand(mob/user as mob)
 		if (status & BROKEN)
@@ -708,7 +708,7 @@ datum/chemicompiler_core/stationaryCore
 		return
 
 	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_hand(mob/user as mob)
 		if (status & BROKEN || !powered())

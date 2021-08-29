@@ -55,16 +55,16 @@
 		. = CELL_FULL
 	SEND_SIGNAL(parent, COMSIG_UPDATE_ICON)
 
-/datum/component/power_cell/proc/use(source, amount, bypass)
-	if(src.charge >= amount)
+/datum/component/power_cell/proc/use(source, amount)
+	src.charge = max(src.charge - amount, 0)
+	if(src.recharge_rate && amount > 0)
+		processing_items |= parent
+
+
+	if(src.charge > 0) //return sufficient charge if cell is non-empty after drain, insufficient if cell was emptied by the drain
 		. = CELL_SUFFICIENT_CHARGE
 	else
 		. = CELL_INSUFFICIENT_CHARGE
-
-	if(. == CELL_SUFFICIENT_CHARGE || bypass)
-		src.charge = max(src.charge - amount, 0)
-		if(src.recharge_rate && amount > 0)
-			processing_items |= parent
 
 	SEND_SIGNAL(parent, COMSIG_UPDATE_ICON)
 

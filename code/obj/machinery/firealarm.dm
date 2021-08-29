@@ -67,7 +67,7 @@
 	return
 
 /obj/machinery/firealarm/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/firealarm/bullet_act(BLAH)
 	return src.alarm()

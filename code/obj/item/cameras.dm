@@ -130,7 +130,7 @@
 		return
 	if (src.flash_mode)
 		// Use cell charge
-		if (SEND_SIGNAL(src, COMSIG_CELL_USE, 25) & CELL_INSUFFICIENT_CHARGE)
+		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, 25) & CELL_SUFFICIENT_CHARGE))
 			user.show_text("[src] doesn't have enough battery power!", "red")
 			return 0
 		var/turf/T = get_turf(target.loc)
@@ -140,6 +140,7 @@
 		src.update_icon()
 		// Generic flash
 		var/mob/M = target
+		SEND_SIGNAL(src, COMSIG_CELL_USE, 25)
 		var/blind_success = M.apply_flash(30, 8, 0, 0, 0, rand(0, 1), 0, 0, 100, 70, disorient_time = 30)
 		playsound(src, "sound/weapons/flash.ogg", 100, 1)
 		flick("camera_flash-anim", src)

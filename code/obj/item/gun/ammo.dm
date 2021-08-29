@@ -858,6 +858,8 @@
 		amount_left = 24.0
 		max_amount = 24.0
 		ammo_type = new/datum/projectile/bullet/bullet_9mm/smartgun
+		sound_load = 'sound/weapons/gunload_hitek.ogg'
+
 	smg
 		name = "9mm SMG magazine"
 		amount_left = 30.0
@@ -910,7 +912,7 @@
 		..()
 
 	emp_act()
-		SEND_SIGNAL(src, COMSIG_CELL_USE, INFINITY, TRUE)
+		SEND_SIGNAL(src, COMSIG_CELL_USE, INFINITY)
 		return
 
 	update_icon()

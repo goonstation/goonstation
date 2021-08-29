@@ -29,7 +29,7 @@
 
 /obj/mopbucket/New()
 	..()
-	create_reagents(200)
+	create_reagents(400)
 	START_TRACKING
 
 /obj/mopbucket/disposing()

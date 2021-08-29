@@ -573,7 +573,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				src.shoot_point_blank(user, user)
 				user.force_laydown_standup()
 			else
-				src.attack_hand(usr)
+				src.Attackhand(usr)
 			return
 		else
 			var/mob/M = hit_atom

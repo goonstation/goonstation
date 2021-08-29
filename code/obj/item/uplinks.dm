@@ -100,7 +100,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 						src.items_general.Add(S)
 
 				if (ownermind || istype(ownermind))
-					if (ownermind.special_role != "nukeop" && istype(S, /datum/syndicate_buylist/traitor))
+					if (ownermind.special_role != ROLE_NUKEOP && istype(S, /datum/syndicate_buylist/traitor))
 						if (!S.objective && !S.job && !src.items_general.Find(S))
 							src.items_general.Add(S)
 
@@ -743,7 +743,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			src.ui_update()
 			return
 
-		if (user.mind && user.mind.special_role != "spy_thief")
+		if (user.mind && user.mind.special_role != ROLE_SPY_THIEF)
 			user.show_text("You cannot claim a bounty! The PDA doesn't recognize you!", "red")
 			return 0
 
@@ -780,7 +780,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 						M.drop_from_slot(delivery,get_turf(M))
 
 				qdel(delivery)
-				if (user.mind && user.mind.special_role == "spy_thief")
+				if (user.mind && user.mind.special_role == ROLE_SPY_THIEF)
 					user.mind.spy_stolen_items += B.name
 
 				if (req_bounties() > 1)
@@ -960,7 +960,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	item_state = "spellbook"
 	var/wizard_key = ""
 	var/temp = null
-	var/uses = 4
+	var/uses = 6
 	var/selfdestruct = 0
 	var/traitor_frequency = 0
 	var/obj/item/device/radio/origradio = null
@@ -1037,6 +1037,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	desc = "The crew will normally steal your staff and run off with it to cripple your casting abilities, but that doesn't work so well with this version. Any non-wizard dumb enough to touch or pull the Staff of Cthulhu takes massive brain damage and is knocked down for quite a while, and hiding the staff in a closet or somewhere else is similarly ineffective given that you can summon it to your active hand at will. It also makes a much better bludgeoning weapon than the regular staff, hitting harder and occasionally inflicting brain damage."
 	assoc_spell = /datum/targetable/spell/summon_staff
 	assoc_item = /obj/item/staff/cthulhu
+	cost = 2
 
 /datum/SWFuplinkspell/bull
 	name = "Bull's Charge"
@@ -1055,12 +1056,14 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	eqtype = "Offensive"
 	desc = "This spell allows you to fling a fireball at a nearby target of your choice. The fireball will explode, knocking down and burning anyone too close, including you."
 	assoc_spell = /datum/targetable/spell/fireball
+	cost = 2
 
 /datum/SWFuplinkspell/prismatic_spray
 	name = "Prismatic Spray"
 	eqtype = "Offensive"
 	desc = "This spell allows you to launch a spray of colorful and wildly innaccurate projectiles outwards in a cone aimed roughly at a nearby target."
 	assoc_spell = /datum/targetable/spell/prismatic_spray
+	cost = 2
 
 /*
 /datum/SWFuplinkspell/shockinggrasp
@@ -1092,6 +1095,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	eqtype = "Offensive"
 	desc = "This spell turns an adjacent target into an idiotic, horrible, and useless clown."
 	assoc_spell = /datum/targetable/spell/cluwne
+	cost = 2
 
 /datum/SWFuplinkspell/balefulpolymorph
 	name = "Baleful Polymorph"
@@ -1099,12 +1103,14 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	desc = "This spell turns an adjacent target into some kind of an animal."
 	vr_allowed = 0
 	assoc_spell = /datum/targetable/spell/animal
+	cost = 2
 
 /datum/SWFuplinkspell/rathensecret
 	name = "Rathen's Secret"
 	eqtype = "Offensive"
 	desc = "This spell summons a shockwave that rips the arses off of your foes. If you're lucky, the shockwave might even sever an arm or leg."
 	assoc_spell = /datum/targetable/spell/rathens
+	cost = 2
 
 /*/datum/SWFuplinkspell/lightningbolt
 	name = "Lightning Bolt"
@@ -1131,6 +1137,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	desc = "This spell teleports you to an area of your choice, but requires a short time to charge up."
 	vr_allowed = 0
 	assoc_spell = /datum/targetable/spell/teleport
+	cost = 2
 
 /datum/SWFuplinkspell/warp
 	name = "Warp"
@@ -1150,6 +1157,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	eqtype = "Defensive"
 	desc = "This spell projects a decoy in the direction you were moving while rendering you invisible and capable of moving through solid matter for a few moments."
 	assoc_spell = /datum/targetable/spell/doppelganger
+	cost = 2
 
 /datum/SWFuplinkspell/knock
 	name = "Knock"
@@ -1168,6 +1176,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	eqtype = "Utility"
 	desc = "This spell allows you to turn a reagent you currently hold (in a jar, bottle or other container) into a golem. Golems will attack your enemies, and release their contents as chemical smoke when destroyed."
 	assoc_spell = /datum/targetable/spell/golem
+	cost = 2
 
 /datum/SWFuplinkspell/stickstosnakes
 	name = "Sticks to Snakes"
@@ -1286,9 +1295,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			spell_group[SP.eqtype] = list("<center><b>[SP.eqtype]</b></center>")
 
 		if (!unusable)
-			link = "<a href='byond://?src=\ref[src];buyspell=\ref[SP]'><span class='spelllink [rowclass]'>[SP.name]</span></a>"
+			link = "<a href='byond://?src=\ref[src];buyspell=\ref[SP]'><span class='spelllink [rowclass]'>[SP.name] - cost: [SP.cost]</span></a>"
 		else
-			link = "<span class='spelllink [rowclass]'>[SP.name]</span>"
+			link = "<span class='spelllink [rowclass]'>[SP.name] - cost: [SP.cost]</span>"
 
 		spell_group[SP.eqtype] += "<div class='spell'>[link]<em>[rowtext]</em><div>[SP.desc][cooldown ? "<br><b>Cooldown: [cooldown / 10] sec.</b>" : ""]</div></div>"
 

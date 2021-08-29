@@ -369,7 +369,6 @@ brojob
 chronicpwnage
 drago156
 kremlins
-eristheslackwyrm
 frankstein
 internetdweller
 schwickyschwag
@@ -470,3 +469,5 @@ bartimeus973
 dataerr0r
 flappybat
 nefarious6th
+zonespace
+mysticmidgit
