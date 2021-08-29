@@ -1,0 +1,3 @@
+[submodule "+secret"]
+	path = +secret
+	url = https://github.com/coolstation/coolstation-secret.git
