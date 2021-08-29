@@ -609,8 +609,12 @@ var/list/radio_brains = list()
 	icon_state  = "strong"
 
 	OnAdd()
-		APPLY_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-buff", 2)
-		src.owner.add_stam_mod_max("g-fitness-buff", 30)
+		APPLY_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-buff", 1 * power)
+		src.owner.add_stam_mod_max("g-fitness-buff", 15 * power)
+
+	onPowerChange(oldval, newval)
+		APPLY_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-buff", 1 * newval)
+		src.owner.add_stam_mod_max("g-fitness-buff", 15 * newval)
 
 	OnRemove()
 		REMOVE_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-buff")
