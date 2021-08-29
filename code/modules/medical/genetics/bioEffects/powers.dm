@@ -973,10 +973,13 @@
 				while (throw_repeat > 0)
 					throw_repeat--
 					step_away(V,get_turf(owner),throw_speed)
-
-			if(owner.bioHolder.HasEffect("toxic_farts"))
+			var/toxic = owner.bioHolder.HasEffect("toxic_farts")
+			if(toxic)
 				var/turf/fart_turf = get_turf(owner)
-				fart_turf.fluid_react_single("toxic_fart",50,airborne = 1)
+				var/datum/reagents/R = new(toxic * 100)
+				R.add_reagent("toxic_fart", 50 * toxic)
+				R.add_reagent("toxin", (toxic - 1) * 50)
+				fart_turf.fluid_react(R, R.total_volume, airborne = 1)
 
 			SF.farting = 0
 			if (linked_power.power > 1)
