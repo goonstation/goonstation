@@ -113,7 +113,7 @@
 		if(!isliving(M) || !isalive(M))
 			return FALSE
 		return !istype(M.get_id(), preferred_card_type)
-
+/*
 /mob/living/carbon/human/npc/monkey/oppenheimer/pod_wars
 	preferred_card_type = /obj/item/card/id/pod_wars/syndicate
 
@@ -133,7 +133,7 @@
 				return FALSE
 			else
 				return ..()
-
+*/
 /mob/living/carbon/human/npc/monkey/horse
 	name = "????"
 	real_name = "????"

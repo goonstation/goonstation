@@ -63,8 +63,7 @@
 	/obj/item/reagent_containers/patch/bruise = 3,\
 	/obj/item/device/analyzer/healthanalyzer,\
 	/obj/item/reagent_containers/pill/salicylic_acid,\
-	/obj/item/reagent_containers/emergency_injector/epinephrine,\
-	/obj/item/bandage/medicated)
+	/obj/item/reagent_containers/emergency_injector/epinephrine)
 
 /obj/item/storage/firstaid/fire
 	name = "fire first aid"

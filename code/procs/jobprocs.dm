@@ -425,11 +425,7 @@
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
 
-		//remove problem traits from people on pod_wars
-		if (istype(ticker.mode, /datum/game_mode/pod_wars))
-			H.traitHolder.removeTrait("immigrant")
-			H.traitHolder.removeTrait("pilot")
-			H.traitHolder.removeTrait("puritan")
+
 
 		H.Equip_Job_Slots(JOB)
 

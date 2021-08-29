@@ -2650,7 +2650,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 /datum/job/battler
 	name = "Battler"
 	limit = -1
-
+/*
 ABSTRACT_TYPE(/datum/job/special/pod_wars)
 /datum/job/special/pod_wars
 	name = "Pod_Wars"
@@ -2771,7 +2771,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 			slot_suit = list(/obj/item/clothing/suit/space/syndicate/commissar_greatcoat)
 			slot_card = /obj/item/card/id/pod_wars/syndicate/commander
 			slot_ears = list(/obj/item/device/radio/headset/pod_wars/syndicate/commander)
-
+*/
 /datum/job/football
 	name = "Football Player"
 	limit = -1
