@@ -613,7 +613,7 @@ var/list/radio_brains = list()
 			var/mob/living/carbon/human/H = owner
 
 			if (H.blood_volume < 500 && H.blood_volume > 0)
-				H.blood_volume += 6*mult
+				H.blood_volume += 3*mult*power
 
 
 ///////////////////////////
