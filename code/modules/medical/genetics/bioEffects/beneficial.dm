@@ -550,6 +550,30 @@ var/list/radio_brains = list()
 	degrade_to = "bad_eyesight"
 	icon_state  = "eye"
 
+	OnAdd()
+		if(power == 1)
+			APPLY_MOB_PROPERTY(owner, PROP_XRAYVISION_WEAK, src)
+		else
+			APPLY_MOB_PROPERTY(owner, PROP_XRAYVISION, src)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		if(oldval == 1)
+			REMOVE_MOB_PROPERTY(owner, PROP_XRAYVISION_WEAK, src)
+		else
+			REMOVE_MOB_PROPERTY(owner, PROP_XRAYVISION, src)
+
+		if(newval == 1)
+			APPLY_MOB_PROPERTY(owner, PROP_XRAYVISION_WEAK, src)
+		else
+			APPLY_MOB_PROPERTY(owner, PROP_XRAYVISION, src)
+
+	OnRemove()
+		if(power == 1)
+			REMOVE_MOB_PROPERTY(owner, PROP_XRAYVISION_WEAK, src)
+		else
+			REMOVE_MOB_PROPERTY(owner, PROP_XRAYVISION, src)
+
 /datum/bioEffect/nightvision
 	name = "Night Vision"
 	desc = "Enhances the subject's optic nerves, allowing them to see in the dark."

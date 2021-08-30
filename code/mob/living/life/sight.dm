@@ -30,13 +30,16 @@
 
 ////Dead sight
 		var/turf/T = owner.eye ? get_turf(owner.eye) : get_turf(owner) //They might be in a closet or something idk
-		if ((isdead(owner) ||( owner.bioHolder && owner.bioHolder.HasEffect("xray"))) && (T && !isrestrictedz(T.z)))
+		if ((isdead(owner) || HAS_MOB_PROPERTY(owner, PROP_XRAYVISION) || HAS_MOB_PROPERTY(owner, PROP_XRAYVISION_WEAK)) && (T && !isrestrictedz(T.z)))
 			owner.sight |= SEE_TURFS
 			owner.sight |= SEE_MOBS
 			owner.sight |= SEE_OBJS
 			owner.see_in_dark = SEE_DARK_FULL
 			if (owner.client?.adventure_view)
 				owner.see_invisible = 21
+			else if(HAS_MOB_PROPERTY(owner, PROP_XRAYVISION_WEAK))
+				owner.sight &= ~SEE_BLACKNESS
+				owner.sight &= ~SEE_MOBS
 			else
 				owner.see_invisible = 2
 		else
