@@ -917,7 +917,7 @@
 			elecflash(user,power=2)
 			var/shock_damage = rand(10,15)
 
-			if (user.bioHolder.HasEffect("resist_electric") == 2)
+			if (user.bioHolder.HasEffect("resist_electric_heal"))
 				var/healing = 0
 				if (shock_damage)
 					healing = shock_damage / 3
@@ -925,7 +925,7 @@
 				user.take_toxin_damage(0 - healing)
 				boutput(user, "<span class='notice'>You absorb the electrical shock, healing your body!</span>")
 				return
-			else if (user.bioHolder.HasEffect("resist_electric") == 1)
+			else if (user.bioHolder.HasEffect("resist_electric"))
 				boutput(user, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
 				return
 

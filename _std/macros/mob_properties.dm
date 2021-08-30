@@ -213,6 +213,13 @@ To remove:
 #define PROP_BREATHLESS(x) x("breathless", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
 #define PROP_ENCHANT_ARMOR(x) x("enchant_armor", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM)
 #define PROP_STAMINA_REGEN_BONUS(x) x("stamina_regen", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM)
+//disorient_resist props
+#define PROP_DISORIENT_RESIST_BODY(x) x("disorient_resist_body", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM)
+#define PROP_DISORIENT_RESIST_BODY_MAX(x) x("disorient_resist_body_max", APPLY_MOB_PROPERTY_MAX, REMOVE_MOB_PROPERTY_MAX)
+#define PROP_DISORIENT_RESIST_EYE(x) x("disorient_resist_eye", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM)
+#define PROP_DISORIENT_RESIST_EYE_MAX(x) x("disorient_resist_eye_max", APPLY_MOB_PROPERTY_MAX, REMOVE_MOB_PROPERTY_MAX)
+#define PROP_DISORIENT_RESIST_EAR(x) x("disorient_resist_eye", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM)
+#define PROP_DISORIENT_RESIST_EAR_MAX(x) x("disorient_resist_eye_max", APPLY_MOB_PROPERTY_MAX, REMOVE_MOB_PROPERTY_MAX)
 
 // In lieu of comments, these are the indexes used for list access in the macros below.
 #define MOB_PROPERTY_ACTIVE_VALUE 1

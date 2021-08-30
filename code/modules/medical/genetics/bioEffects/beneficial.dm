@@ -94,7 +94,32 @@
 			owner:organHolder:heart:broken = 1
 			owner:contract_disease(/datum/ailment/malady/flatline,null,null,1)
 			boutput(owner, "<span class='alert'>Something is wrong with your cyberheart, it stops beating!</span>")
+		if(src.power > 1)
+			APPLY_MOB_PROPERTY(owner, PROP_DISORIENT_RESIST_BODY, src, 40)
+			APPLY_MOB_PROPERTY(owner, PROP_DISORIENT_RESIST_BODY_MAX, src, 40)
 
+	onPowerChange(oldval, newval)
+		. = ..()
+		if(oldval > 1)
+			REMOVE_MOB_PROPERTY(owner, PROP_DISORIENT_RESIST_BODY, src)
+			REMOVE_MOB_PROPERTY(owner, PROP_DISORIENT_RESIST_BODY_MAX, src)
+		if(newval > 1)
+			APPLY_MOB_PROPERTY(owner, PROP_DISORIENT_RESIST_BODY, src, 40)
+			APPLY_MOB_PROPERTY(owner, PROP_DISORIENT_RESIST_BODY_MAX, src, 40)
+
+	OnRemove()
+		. = ..()
+		if(src.power > 1)
+			APPLY_MOB_PROPERTY(owner, PROP_DISORIENT_RESIST_BODY, src, 40)
+			APPLY_MOB_PROPERTY(owner, PROP_DISORIENT_RESIST_BODY_MAX, src, 40)
+		
+
+	heal
+		id = "resist_electric_heal"
+		occur_in_genepools = 0
+		can_copy = 0
+		acceptable_in_mutini = 0
+		degrade_to = "resist_electric"
 
 /datum/bioEffect/rad_resist
 	name = "Radiation Resistance"
