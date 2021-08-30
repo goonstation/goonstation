@@ -71,9 +71,40 @@
 	icon_state = "augmentation_pain"
 	desc = "An augmentation that slows down central nerve function, reducing the effect of pain on the body."
 
+	proc/suffer_pain_punch(source, mob/attacker)
+		src.suffer_pain(source, null, attacker)
+
+	proc/suffer_pain(source, item, mob/attacker)
+		var/obj/item/I = item
+		var/suffer_chance = 0
+		if(!GET_COOLDOWN(src.donor, "pain_aug_hurt") && src.broken)
+			if(!isnull(item))
+				suffer_chance = round((I.force / 4) * 5)
+				if(prob(suffer_chance))
+					boutput(src.donor, __red("You are paralyzed from the pain!"))
+					src.donor.changeStatus("paralysis", 5 SECONDS)
+					ON_COOLDOWN(src.donor, "pain_aug_hurt", 10 SECONDS)
+			else
+				if(prob(7.5))
+					boutput(src.donor, __red("You are paralyzed from the pain!"))
+					src.donor.changeStatus("paralysis", 5 SECONDS)
+					ON_COOLDOWN(src.donor, "pain_aug_hurt", 10 SECONDS)
+
+	proc/suffer_pain(var/obj/projectile/P, var/atom/hit)
+		var/suffer_chance = 0
+		if(!GET_COOLDOWN(src.donor, "pain_aug_hurt") && src.broken)
+			suffer_chance = round((P.power / 4) * 5)
+			if(prob(suffer_chance))
+				boutput(src.donor, __red("You are paralyzed from the pain!"))
+				src.donor.changeStatus("paralysis", 5 SECONDS)
+				ON_COOLDOWN(src.donor, "pain_aug_hurt", 10 SECONDS)
+
 	on_transplant(var/mob/M as mob)
 		..()
 		APPLY_MOVEMENT_MODIFIER(src.donor, /datum/movement_modifier/pain_reducer, "pain_reducer")
+		RegisterSignal(src.donor, COMSIG_ATTACKBY, .proc/suffer_pain)
+		RegisterSignal(src.donor, COMSIG_ATTACKHAND, .proc/suffer_pain_punch)
+		RegisterSignal(src.donor, COMSIG_PROJ_COLLIDE, .proc/suffer_pain_bullet)
 
 	on_removal()
 		..()
@@ -81,6 +112,8 @@
 			REMOVE_MOVEMENT_MODIFIER(src.donor, /datum/movement_modifier/pain_reducer, "pain_reducer")
 		if(src.donor.movement_modifiers.Find(/datum/movement_modifier/pain_reducer_broken))
 			REMOVE_MOVEMENT_MODIFIER(src.donor, /datum/movement_modifier/pain_reducer_broken, "pain_reducer_broken")
+		UnregisterSignal(src.donor, COMSIG_ATTACKBY)
+		UnregisterSignal(src.donor, COMSIG_ATTACKHAND)
 
 	on_life(var/mult = 1)
 		var/mob/living/carbon/human/M = src.donor
