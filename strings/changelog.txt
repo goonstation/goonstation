@@ -1,5 +1,8 @@
 
 (t)mon aug 30 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Reinforced walls are immune to being punched down by hulks
 (u)Flaborized
 (p)5842
 (e)🎨|sprites
