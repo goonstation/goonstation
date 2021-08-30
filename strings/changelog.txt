@@ -1,5 +1,9 @@
 
 (t)sun aug 29 21
+(u)Azrun and Walpvrgis
+(p)5573
+(e)🎨|sprites
+(+)Graphical assets for snow experiences and future snow planets...
 (u)Azrun
 (p)5765
 (e)🆕|feature
