@@ -2766,6 +2766,36 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 		boutput(src, "You must be at least an Administrator to use this command.")
 #endif
 
+/client/proc/cmd_winterify_station()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Winterify"
+	set desc = "Turns space into a colder snowy place"
+	admin_only
+	var/const/ambient_light = "#222"
+#ifdef UNDERWATER_MAP
+	//to prevent tremendous lag from the entire map flooding from a single ocean tile.
+	boutput(src, "You cannot use this command on underwater maps. Sorry!")
+	return
+#else
+	if(src.holder.level >= LEVEL_ADMIN)
+		switch(alert("Turn space into a snowscape? This is probably going to lag a bunch when it happens and there's no easy undo!",,"Yes","No"))
+			if("Yes")
+				var/image/I = new /image/ambient
+				var/datum/map_generator/snow_generator/map_generator = new
+				var/list/space = list()
+				for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+					space += S
+				map_generator.generate_terrain(space)
+				for (var/turf/S as anything in space)
+					I.color = ambient_light
+					S.UpdateOverlays(I, "ambient")
+				logTheThing("admin", src, null, "turned space into a snowscape.")
+				logTheThing("diary", src, null, "turned space into a snowscape.", "admin")
+				message_admins("[key_name(src)] turned space into a snowscape.")
+	else
+		boutput(src, "You must be at least an Administrator to use this command.")
+#endif
+
 /client/proc/cmd_trenchify_station()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Trenchify"
