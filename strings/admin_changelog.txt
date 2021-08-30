@@ -1,3 +1,6 @@
+(t)mon aug 30 21
+(u)Azrun
+(*)Winterify, Trenchify, and Swampify moved under Terrainify
 (t)fri aug 21 21
 (u)Sovexe
 (*)Wide Area Spawn's marked tile now has a visual indicator
