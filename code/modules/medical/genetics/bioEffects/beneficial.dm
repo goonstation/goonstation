@@ -429,11 +429,23 @@
 			var/mob/living/carbon/human/H = owner
 			animate_fade_grayscale(H, 5)
 
+		if(src.power > 1)
+			owner.apply_color_matrix(COLOR_MATRIX_GRAYSCALE, COLOR_MATRIX_GRAYSCALE_LABEL)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		if(oldval > 1)
+			owner.remove_color_matrix(COLOR_MATRIX_GRAYSCALE_LABEL)
+		if(newval > 1)
+			owner.apply_color_matrix(COLOR_MATRIX_GRAYSCALE, COLOR_MATRIX_GRAYSCALE_LABEL)
+
 	OnRemove()
 		..()
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			animate_fade_from_grayscale(H, 5)
+		if(src.power > 1)
+			owner.remove_color_matrix(COLOR_MATRIX_GRAYSCALE_LABEL)
 
 ///////////////////
 // General buffs //
