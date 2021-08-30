@@ -36325,6 +36325,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/nanofab/mining,
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
 "kJJ" = (
