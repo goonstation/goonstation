@@ -886,7 +886,7 @@
 		var/stage = 0
 		if (master.mini_health_hud)
 			health.icon_state = "blank"
-			if(istype(master.organHolder.augumentation_nerve, /obj/item/organ/augumentation/head/pain_reducer))
+			if(istype(master.organHolder.augmentation_nerve, /obj/item/organ/augmentation/head/pain_reducer))
 				health_brute.icon_state = "health8"
 				health_brute.tooltipTheme = "healthDam healthDam7"
 				health_brute.name = "Health"
@@ -1010,7 +1010,7 @@
 				return
 
 			var/health_state = ((master.health - master.fakeloss) / (master.max_health != 0 ? master.max_health : 1)) * 100
-			if(!istype(master.organHolder.augumentation_nerve, /obj/item/organ/augumentation/head/pain_reducer))
+			if(!istype(master.organHolder.augmentation_nerve, /obj/item/organ/augmentation/head/pain_reducer))
 				switch(health_state)
 					if(100 to INFINITY)
 						stage = 0 // green with green marker

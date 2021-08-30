@@ -929,11 +929,11 @@ This is basically useless for anyone but miners.
 
 /datum/syndicate_buylist/traitor/neural_jack
 	name = "Neural Jack"
-	item = /obj/item/organ/augumentation/head/neural_jack
+	item = /obj/item/organ/augmentation/head/neural_jack
 	cost = 7
 	vr_allowed = 0
 	not_in_crates = 1
-	desc = "A highly illegal surgical augumentation which massively speeds up user reaction speed, and gives great martial prowess."
+	desc = "A highly illegal surgical augmentation which massively speeds up user reaction speed, and gives great martial prowess."
 	blockedmode = list(/datum/game_mode/revolution, /datum/game_mode/spy)
 	job = list("Roboticist")
 

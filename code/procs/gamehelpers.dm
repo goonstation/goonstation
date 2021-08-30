@@ -129,8 +129,8 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 
 				return TRUE
 
-			else if (istype(C.organHolder.augumentation_nerve, /obj/item/organ/augumentation/head/wireless_interact) && get_dist(source, user) <= 7)
-				var/obj/item/organ/augumentation/head/wireless_interact/WI = C.organHolder.augumentation_nerve
+			else if (istype(C.organHolder.augmentation_nerve, /obj/item/organ/augmentation/head/wireless_interact) && get_dist(source, user) <= 7)
+				var/obj/item/organ/augmentation/head/wireless_interact/WI = C.organHolder.augmentation_nerve
 				var/X = source:x
 				var/Y = source:y
 				var/Z = source:z

@@ -1961,7 +1961,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				if (4.0)
 					playsound(patient, "sound/items/Scissor.ogg", 50, 1)
 
-					if (!patient.organHolder.augumentation_nerve)
+					if (!patient.organHolder.augmentation_nerve)
 						src.surgeryConfusion(patient, surgeon, damage_low)
 						return 1
 
@@ -1971,14 +1971,14 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						return 1
 
-					patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] nerve augumentation out with [src]!</span>",\
-					surgeon, "<span class='alert'>You cut [surgeon == patient ? "your" : "[patient]'s"] nerve augumentation out with [src]!</span>",\
-					patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] your nerve augumentation out with [src]!</span>")
+					patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] nerve augmentation out with [src]!</span>",\
+					surgeon, "<span class='alert'>You cut [surgeon == patient ? "your" : "[patient]'s"] nerve augmentation out with [src]!</span>",\
+					patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] your nerve augmentation out with [src]!</span>")
 
 					patient.TakeDamage("head", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
-					logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s nerve augumentation with [src].")
-					patient.organHolder.drop_organ("augumentation_nerve")
+					logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s nerve augmentation with [src].")
+					patient.organHolder.drop_organ("augmentation_nerve")
 
 ////////////////////////////////////////////////////////////////////
 

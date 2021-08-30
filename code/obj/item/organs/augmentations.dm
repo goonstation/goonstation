@@ -3,29 +3,29 @@
 #define COMBO_GRAB "grab"
 #define COMBO_HARM "harm"
 
-/obj/item/organ/augumentation
-	name = "surgical augumentation parent"
-	organ_name = "augumentation"
-	//organ_holder_name = "augumentation_nerve"
+/obj/item/organ/augmentation
+	name = "surgical augmentation parent"
+	organ_name = "augmentation"
+	//organ_holder_name = "augmentation_nerve"
 	organ_holder_location = "chest"
 	organ_holder_required_op_stage = 0.0
-	icon_state = "augumentation"
+	icon_state = "augmentation"
 	robotic = 1
 	desc = "A thin, metal oval with some wires sticking out. It seems like it'd do well attached to the nervous system."
 
-/obj/item/organ/augumentation/head //second abstract parent incase other augumentation types get added
-	name = "surgical augumentation parent"
-	organ_name = "augumentation_nerve"
-	organ_holder_name = "augumentation_nerve"
+/obj/item/organ/augmentation/head //second abstract parent incase other augmentation types get added
+	name = "surgical augmentation parent"
+	organ_name = "augmentation_nerve"
+	organ_holder_name = "augmentation_nerve"
 	organ_holder_location = "head"
 	organ_holder_required_op_stage = 4.0
-	icon_state = "augumentation"
+	icon_state = "augmentation"
 
-/obj/item/organ/augumentation/head/stun_resist //a mild-high stun resist in exchange for jitters and occasional stuns
+/obj/item/organ/augmentation/head/stun_resist //a mild-high stun resist in exchange for jitters and occasional stuns
 	name = "stun blocker"
 	organ_name = "stun blocker"
-	icon_state = "augumentation_stun"
-	desc = "An augumentation that speeds up brain functions, allowing the user to recover from incapacitation faster."
+	icon_state = "augmentation_stun"
+	desc = "An augmentation that speeds up brain functions, allowing the user to recover from incapacitation faster."
 
 	on_transplant(var/mob/M as mob)
 		..()
@@ -65,11 +65,11 @@
 			src.donor.add_stun_resist_mod("stun_blocker_broken", -50)
 
 
-/obj/item/organ/augumentation/head/pain_reducer //reduces pain by slowing down nerve functions, but makes you completely unaware of your current health
+/obj/item/organ/augmentation/head/pain_reducer //reduces pain by slowing down nerve functions, but makes you completely unaware of your current health
 	name = "pain reducer"
 	organ_name = "pain reducer"
-	icon_state = "augumentation_pain"
-	desc = "An augumentation that slows down central nerve function, reducing the effect of pain on the body."
+	icon_state = "augmentation_pain"
+	desc = "An augmentation that slows down central nerve function, reducing the effect of pain on the body."
 
 	on_transplant(var/mob/M as mob)
 		..()
@@ -83,7 +83,7 @@
 			REMOVE_MOVEMENT_MODIFIER(src.donor, /datum/movement_modifier/pain_reducer_broken, "pain_reducer_broken")
 
 	on_life(var/mult = 1)
-		var/mob/M = src.donor
+		var/mob/living/carbon/human/M = src.donor
 		if(!..())
 			return 0
 		if(src.broken && M.get_brain_damage <= 70)
@@ -98,11 +98,11 @@
 		if(!src.donor.movement_modifiers.Find(/datum/movement_modifier/pain_reducer_broken))
 			APPLY_MOVEMENT_MODIFIER(src.donor, /datum/movement_modifier/pain_reducer_broken, "pain_reducer_broken")
 
-/obj/item/organ/augumentation/head/stamina_enhancer //less max health and stamina regen, at the benefit of a massive max stamina increase
+/obj/item/organ/augmentation/head/stamina_enhancer //less max health and stamina regen, at the benefit of a massive max stamina increase
 	name = "stamina enhancer"
 	organ_name = "stamina enhancer"
-	icon_state = "augumentation_stam"
-	desc = "An augumentation that modifies muscle, organ, and brain functions to prioritize energy storage over energy generation."
+	icon_state = "augmentation_stam"
+	desc = "An augmentation that modifies muscle, organ, and brain functions to prioritize energy storage over energy generation."
 
 	on_transplant(var/mob/M as mob)
 		..()
@@ -135,11 +135,11 @@
 		src.donor.reagents.add_reagent("methamphetamine", 3)
 		src.donor.blood_volume -= 15
 
-/obj/item/organ/augumentation/head/wireless_interact //you can interact with mechanical things at range at the cost of flash vulnerability
+/obj/item/organ/augmentation/head/wireless_interact //you can interact with mechanical things at range at the cost of flash vulnerability
 	name = "wireless interactor"
 	organ_name = "wireless interactor"
-	icon_state = "augumentation_wire"
-	desc = "An augumentation that allows for ranged interaction with various electronic devices."
+	icon_state = "augmentation_wire"
+	desc = "An augmentation that allows for ranged interaction with various electronic devices."
 	var/flashed = FALSE
 
 	proc/ranged_click(atom/target, params, location, control)
@@ -184,11 +184,11 @@
 		src.donor.reagents.add_reagent("nanites", 0.5 * mult) //you want borg powers? Well, come and get 'em!
 		UnregisterSignal(src.donor, COMSIG_CLICK)
 
-/obj/item/organ/augumentation/head/neural_jack //traitor roboticists can get matrix powers
+/obj/item/organ/augmentation/head/neural_jack //traitor roboticists can get matrix powers
 	name = "neural jack"
 	organ_name = "neural jack"
-	icon_state = "augumentation_neural"
-	desc = "A highly illegal augumentation for the brain, which imparts a boost in reflex speed, and knowledge of some martial moves."
+	icon_state = "augmentation_neural"
+	desc = "A highly illegal augmentation for the brain, which imparts a boost in reflex speed, and knowledge of some martial moves."
 	organ_abilities = list(/datum/targetable/organAbility/combohelp, /datum/targetable/organAbility/combomode)
 	var/parrychance = 20
 	var/comboattacks = FALSE

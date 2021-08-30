@@ -23,10 +23,10 @@
 	var/obj/item/organ/intestines = null
 	var/obj/item/organ/appendix = null
 	var/obj/item/organ/tail = null
-	var/obj/item/organ/augumentation/head/augumentation_nerve = null
+	var/obj/item/organ/augmentation/head/augmentation_nerve = null
 	var/lungs_changed = 2				//for changing lung stamina debuffs if it has changed since last cycle. starts at 2 for having 2 working lungs
 
-	var/list/organ_list = list("all", "head", "skull", "brain", "left_eye", "right_eye", "chest", "heart", "left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail", "augumentation_nerve")
+	var/list/organ_list = list("all", "head", "skull", "brain", "left_eye", "right_eye", "chest", "heart", "left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail", "augmentation_nerve")
 
 	var/list/organ_type_list = list(
 		"head"="/obj/item/organ/head",
@@ -48,7 +48,7 @@
 		"appendix"="/obj/item/organ/appendix",
 		"butt"="/obj/item/clothing/head/butt",
 		"tail"="/obj/item/organ/tail",
-		"augumentation_nerve"="/obj/item/organ/augumentation/head")
+		"augmentation_nerve"="/obj/item/organ/augmentation/head")
 
 	New(var/mob/living/L, var/ling)
 		..()
@@ -122,9 +122,9 @@
 		if (tail)
 			tail.donor = null
 			tail.holder = null
-		if (augumentation_nerve)
-			augumentation_nerve.donor = null
-			augumentation_nerve.holder = null
+		if (augmentation_nerve)
+			augmentation_nerve.donor = null
+			augmentation_nerve.holder = null
 
 		head = null
 		skull = null
@@ -145,7 +145,7 @@
 		pancreas = null
 		appendix = null
 		tail = null
-		augumentation_nerve = null
+		augmentation_nerve = null
 
 		donor = null
 		..()
@@ -409,8 +409,8 @@
 				organ = "appendix"
 			else if(organ == tail)
 				organ = "tail"
-			else if(organ == augumentation_nerve)
-				organ = "augumentation_nerve"
+			else if(organ == augmentation_nerve)
+				organ = "augmentation_nerve"
 			else
 				return 0 // what the fuck are you trying to remove
 
@@ -721,17 +721,17 @@
 				src.organ_list["tail"] = null
 				return mytail
 
-			if ("augumentation_nerve")
-				if (!src.augumentation_nerve)
+			if ("augmentation_nerve")
+				if (!src.augmentation_nerve)
 					return 0
-				var/obj/item/organ/augumentation/head/myaugumentation_nerve = src.augumentation_nerve
-				myaugumentation_nerve.set_loc(location)
-				myaugumentation_nerve.on_removal()
-				myaugumentation_nerve.holder = null
-				src.augumentation_nerve = null
+				var/obj/item/organ/augmentation/head/myaugmentation_nerve = src.augmentation_nerve
+				myaugmentation_nerve.set_loc(location)
+				myaugmentation_nerve.on_removal()
+				myaugmentation_nerve.holder = null
+				src.augmentation_nerve = null
 				src.donor.update_body()
-				src.organ_list["augumentation_nerve"] = null
-				return myaugumentation_nerve
+				src.organ_list["augmentation_nerve"] = null
+				return myaugmentation_nerve
 
 	/// drops the organ, then hurls it somewhere
 	proc/drop_and_throw_organ(var/organ, var/location, var/direction, var/dist, var/speed, var/showtext)
@@ -1131,18 +1131,18 @@
 				src.donor.update_body()
 				success = 1
 
-			if ("augumentation_nerve")
-				if (src.augumentation_nerve)
+			if ("augmentation_nerve")
+				if (src.augmentation_nerve)
 					if (force)
-						qdel(src.augumentation_nerve)
+						qdel(src.augmentation_nerve)
 					else
 						return 0
-				var/obj/item/organ/augumentation/head/newaug = I
+				var/obj/item/organ/augmentation/head/newaug = I
 				newaug.op_stage = op_stage
-				src.augumentation_nerve = newaug
+				src.augmentation_nerve = newaug
 				newaug.set_loc(src.donor)
 				newaug.holder = src
-				organ_list["augumentation_nerve"] = newaug
+				organ_list["augmentation_nerve"] = newaug
 				src.donor.update_body()
 				success = 1
 
@@ -1661,7 +1661,7 @@
 		if(..())
 			return 1
 		var/mob/living/carbon/human/H = holder.owner
-		for(var/obj/item/organ/augumentation/head/neural_jack/N in H.organHolder.augumentation_nerve)
+		for(var/obj/item/organ/augmentation/head/neural_jack/N in H.organHolder.augmentation_nerve)
 			if(N.comboattacks == TRUE)
 				boutput(holder.owner, __blue("You disable your combat enhancer."))
 			else

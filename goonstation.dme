@@ -1461,7 +1461,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\mob_parts\human_parts.dm"
 #include "code\obj\item\mob_parts\robot_parts.dm"
 #include "code\obj\item\organs\appendix.dm"
-#include "code\obj\item\organs\augumentations.dm"
+#include "code\obj\item\organs\augmentations.dm"
 #include "code\obj\item\organs\brain.dm"
 #include "code\obj\item\organs\butt.dm"
 #include "code\obj\item\organs\eye.dm"
