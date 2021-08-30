@@ -312,7 +312,7 @@
 					C.remove_ability_holder(/datum/abilityHolder/changeling/)
 				else
 					failed = 1
-/*
+
 			if ("Arcfiend")
 				var/mob/living/L = M3.humanize()
 				if (istype(L))
@@ -326,7 +326,7 @@
 					objective_path = /datum/objective_set/traitor
 #endif
 				else
-					failed = 1*/
+					failed = 1
 			else
 				failed = 1
 

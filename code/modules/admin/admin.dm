@@ -1835,9 +1835,9 @@ var/global/noir = 0
 
 			var/list/matches = get_matches(CT, "/mob/living/critter")
 			matches -= list(/mob/living/critter, /mob/living/critter/small_animal, /mob/living/critter/aquatic) //blacklist
-/*#ifdef SECRETS_ENABLED
+#ifdef SECRETS_ENABLED
 			matches -= list(/mob/living/critter/vending) //secret repo blacklist
-#endif*/
+#endif
 
 			if (!length(matches))
 				return
@@ -4592,14 +4592,14 @@ var/global/noir = 0
 				M.make_floor_goblin()
 				SHOW_TRAITOR_HARDMODE_TIPS(M)
 				M.show_text("<h2><font color=red><B>You have become a floor goblin!</B></font></h2>", "red")
-			if(ROLE_ARCFIEND)/*
+			if(ROLE_ARCFIEND)
 #ifdef SECRETS_ENABLED
 				M.mind.special_role = ROLE_ARCFIEND
 				M.make_arcfiend()
 				M.show_text("<h2><font color=red><B>You feel starved for power!</B></font></h2>", "red")
-#else*/
+#else
 				M.show_text("<h2><font color=red><B>NOTHING TO SEE HERE!</B></font></h2>", "red")
-//#endif
+#endif
 			if(ROLE_GANG_LEADER)
 				// hi so this tried in the past to make someone a gang leader without, uh, giving them a gang
 				// seeing as gang leaders are only allowed during the gang gamemode, this should work

@@ -1488,10 +1488,10 @@ if([removeOnFinish])
 </html>
 	"}, "window=pregameBrowser")
 
-//#ifndef SECRETS_ENABLED //COME BACK TO THIS LATER WARC
+#ifndef SECRETS_ENABLED
 /client/proc/dpi(list/data)
 	return
-//#endif
+#endif
 
 /world/proc/showCinematic(var/name, var/removeOnFinish = 0)
 	for(var/client/C)

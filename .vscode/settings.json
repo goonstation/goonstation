@@ -39,7 +39,7 @@
 		"warning",
 		"info"
 	],
-	"tgstationTestExplorer.project.DMEName": "coolstation.dme",
+	"tgstationTestExplorer.project.DMEName": "goonstation.dme",
     "tgstationTestExplorer.project.defines": [
         "#define UNIT_TESTS"
     ]

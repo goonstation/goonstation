@@ -35,7 +35,7 @@ jobs:
 
       - name: Misc Checks
         run: |
-          tools/ci/check_filedirs.sh coolstation.dme
+          tools/ci/check_filedirs.sh goonstation.dme
           tools/ci/build_tgui.sh
           tools/ci/check_grep.sh
           tools/bootstrap/python -m dmi.test
@@ -78,7 +78,7 @@ jobs:
 
       - name: Compile
         run: |
-          tools/ci/dm.sh -DCIBUILD coolstation.dme
+          tools/ci/dm.sh -DCIBUILD goonstation.dme
 
       # - name: Prepare Artifacts
       #   run: |
@@ -128,7 +128,7 @@ jobs:
 
       - name: Compile
         run: |
-          tools/ci/dm.sh -DCIBUILD -DTRAVIS_ASSJAM coolstation.dme
+          tools/ci/dm.sh -DCIBUILD -DTRAVIS_ASSJAM goonstation.dme
 
   compile_full:
     name: "Compile and Lint with Secret Submodule"
@@ -182,7 +182,7 @@ jobs:
 
       - name: Misc Checks
         run: |
-          tools/ci/check_filedirs.sh coolstation.dme
+          tools/ci/check_filedirs.sh goonstation.dme
           tools/ci/build_tgui.sh
           tools/ci/check_grep.sh
           tools/bootstrap/python -m dmi.test
@@ -195,4 +195,4 @@ jobs:
 
       - name: Compile
         run: |
-          tools/ci/dm.sh -DCIBUILD -DTRAVIS_SUB coolstation.dme
+          tools/ci/dm.sh -DCIBUILD -DTRAVIS_SUB goonstation.dme
