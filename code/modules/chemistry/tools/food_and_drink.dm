@@ -911,7 +911,7 @@
 					playsound(U, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 					var/damage = rand(5,15)
 					random_brute_damage(user, damage)
-					take_bleeding_damage(user, damage)
+					take_bleeding_damage(user, null, damage)
 			else
 				src.shatter++
 				user.visible_message("<span class='alert'><b>[user]</b> [pick("shanks","stabs","attacks")] [target] with the broken [src]!</span>")
@@ -919,7 +919,7 @@
 				playsound(target, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
 				var/damage = rand(1,10)
 				random_brute_damage(target, damage)//shiv that nukie/secHoP
-				take_bleeding_damage(target, damage)
+				take_bleeding_damage(target, null, damage)
 		..()
 
 	proc/smash_on_thing(mob/user as mob, atom/target as turf|obj|mob) // why did I have this as a proc on tables?  jeez, babbycoder haine, you really didn't know shit about nothin

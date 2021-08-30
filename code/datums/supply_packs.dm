@@ -264,6 +264,15 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate
 	containername = "Electrical Maintenance Crate"
 
+/datum/supply_packs/powercell
+	name = "Power Cell Crate"
+	desc = "x3 Power Cell"
+	category = "Engineering Department"
+	contains = list(/obj/item/cell/charged = 3)
+	cost = 2500
+	containertype = /obj/storage/crate
+	containername = "Power Cell Crate"
+
 /datum/supply_packs/firefighting
 	name = "Firefighting Supplies Crate"
 	desc = "x3 Extinguisher, x3 Firefighting Grenade, x2 Firesuit, x2 Firefighter Helmets"

@@ -1,10 +1,68 @@
 
+(t)sun aug 29 21
+(u)Zamujasa
+(e)🆕|feature
+(*)Added the "cargo appraiser", a tool that will tell you what stuff will sell for when you use it on items or crates.
+(*)If a crate is tagged with a trader, it will show the value that trader will pay.
+(*)Will also scan the contents of hydro and mining satchels, so you can value your ore before dumping it all in that crate.
+(*)QMs start with one in their pockets. Hydro, Mining, and Cargo supply closets should also have one available.
+(t)sat aug 28 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Full reagent container no longer provides immunity to changeling stings
+(t)thu aug 26 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Light Lotus plants act as UV growth lamps in a 1-tile radius when ready to harvest
+(u)Tarmunora
+(e)⚖|balance
+(*)Voltgen rework - no longer shocks on touch react, instead grants retaliatory arcflashes against attackers when drunk
+(+)Adjust some bottle sizes. (sorry jan)
+(t)tue aug 24 21
+(u)zjdtmkhzt
+(p)5774
+(e)|
+(+)Clicking on the mailgroup name to reply to a message to a group should now actually work for replying to it.
+(t)mon aug 23 21
+(u)TTerc
+(p)5794
+(e)⚖|balance
+(+)The MD now spawns with a medkit containing a brute and a burn automender, meaning that they have three menders total.
+(u)Flappybat
+(p)5661
+(e)🔄|rework
+(+)Microwaves now let you empty out the contents instead of throwing them away.
+(+)Microwaves now can be cleaned with a sponge.
+(t)sun aug 22 21
+(u)Waffleloffle
+(p)5776
+(e)🎨|sprites
+(+)Resprited the large tree found in most Owleries.
+(u)kyle
+(p)5781
+(e)|
+(*)Buff the brute/burn medkits, replace the refill carts with normal patches. Menders now need gold to manufacture not electrum.
+(+)Give Roboticists a brute mender in their pocket on round start.
 (t)sat aug 21 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Donkpockets heated outside of proper cookware at temperatures exceeding 500F will be far too hot to enjoy eating (read: no omnizine if overheated). Please cook donk pockets responsibly.
+(+)Reduce donkpocket to 10u omni, remove adding condiments to donks
+(u)Tarmunora
+(e)⚖|balance
+(*)Wizards get 6 spells up from 4. Staff of Cthulu, Fireball, Prismatic Spray, Clowns Revenge, Baleful Polymorph, Rathens Secret, Teleport, Doppenganger, and Summon Golem cost raised (1 -> 2)
+(+)Forcewall cooldown doubled (10s -> 20s)
+(u)Flourish
+(+)You can now buy packs of power cells (the large kind that fits in APCs) from QM.
+(u)Ikea
+(p)5778
+(e)|
+(+)Incapacitators now have an unswappable battery.
 (u)Tarmunora
 (e)⚖|balance
 (*)DOC has come to its senses, and has stopped buying cyberorgans, and buys normal parts for about 20% of what it used to
 (+)MDir's Doctor Bag comes with surgical scissors
-(*)Beds now count as regular tables for surgery instead of surgical tables
+(*)Beds now count as somewhere inbetween regular tables and surgical tables. They require the patient to either by unconcious, or for them to be have ethanol/morphine in their system (same thresholds as standing self-surgery)
 (u)Kyle, Virva, Flab
 (p)5747
 (e)🗺🎨|mapping, sprites
