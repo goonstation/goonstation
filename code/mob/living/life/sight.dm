@@ -137,6 +137,8 @@
 
 		if (HAS_MOB_PROPERTY(owner, PROP_NIGHTVISION))
 			owner.render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
+		else if (HAS_MOB_PROPERTY(owner, PROP_NIGHTVISION_WEAK))
+			owner.render_special.set_centerlight_icon("thermal", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 
 		if (human_owner)////Glasses handled separately because i dont have a fast way to get glasses on any mob type
 			if (istype(human_owner.glasses, /obj/item/clothing/glasses/construction) && (T && !isrestrictedz(T.z)))

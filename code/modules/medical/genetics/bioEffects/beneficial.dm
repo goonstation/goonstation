@@ -571,10 +571,28 @@ var/list/radio_brains = list()
 	icon_state  = "eye"
 
 	OnAdd()
-		APPLY_MOB_PROPERTY(owner, PROP_NIGHTVISION, src)
+		if(power == 1)
+			APPLY_MOB_PROPERTY(owner, PROP_NIGHTVISION_WEAK, src)
+		else
+			APPLY_MOB_PROPERTY(owner, PROP_NIGHTVISION, src)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		if(oldval == 1)
+			REMOVE_MOB_PROPERTY(owner, PROP_NIGHTVISION_WEAK, src)
+		else
+			REMOVE_MOB_PROPERTY(owner, PROP_NIGHTVISION, src)
+
+		if(newval == 1)
+			APPLY_MOB_PROPERTY(owner, PROP_NIGHTVISION_WEAK, src)
+		else
+			APPLY_MOB_PROPERTY(owner, PROP_NIGHTVISION, src)
 
 	OnRemove()
-		REMOVE_MOB_PROPERTY(owner, PROP_NIGHTVISION, src)
+		if(power == 1)
+			REMOVE_MOB_PROPERTY(owner, PROP_NIGHTVISION_WEAK, src)
+		else
+			REMOVE_MOB_PROPERTY(owner, PROP_NIGHTVISION, src)
 
 /datum/bioEffect/toxic_farts
 	name = "High Decay Digestion"
