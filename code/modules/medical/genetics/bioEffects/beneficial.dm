@@ -454,12 +454,26 @@
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			APPLY_MOVEMENT_MODIFIER(H, /datum/movement_modifier/hulkstrong, src.type)
+			if(power > 1)
+				APPLY_MOVEMENT_MODIFIER(H, /datum/movement_modifier/strong, src.type)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if(oldval > 1)
+				REMOVE_MOVEMENT_MODIFIER(H, /datum/movement_modifier/strong, src.type)
+			if(newval > 1)
+				APPLY_MOVEMENT_MODIFIER(H, /datum/movement_modifier/strong, src.type)
 
 	OnRemove()
 		..()
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			REMOVE_MOVEMENT_MODIFIER(H, /datum/movement_modifier/hulkstrong, src.type)
+
+			if(src.power > 1)
+				REMOVE_MOVEMENT_MODIFIER(H, /datum/movement_modifier/strong, src.type)
 
 /datum/bioEffect/radio_brain
 	name = "Meta-Neural Antenna"
