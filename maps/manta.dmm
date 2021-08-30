@@ -38013,7 +38013,7 @@
 "ozt" = (
 /obj/disposalpipe/segment,
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor,
+/turf/simulated/floor/orange,
 /area/station/mining/staff_room)
 "oEq" = (
 /obj/decal/tile_edge/line/black{
@@ -38187,7 +38187,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/orange,
-/area/station/mining)
+/area/station/mining/staff_room)
 "oRE" = (
 /obj/table/auto,
 /obj/machinery/cashreg{
@@ -64619,7 +64619,7 @@ aAW
 bjT
 dPl
 cty
-jgL
+tNG
 lgI
 lIT
 kJd
@@ -64921,7 +64921,7 @@ bgy
 bkK
 boc
 boc
-jgL
+tNG
 lIT
 lIT
 cNp
@@ -65223,7 +65223,7 @@ boc
 box
 boc
 boc
-jgL
+tNG
 tZg
 lIT
 lIT
