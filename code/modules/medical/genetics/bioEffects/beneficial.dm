@@ -111,7 +111,13 @@
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			APPLY_MOB_PROPERTY(M, PROP_RADPROT, src, 100)
+			APPLY_MOB_PROPERTY(M, PROP_RADPROT, src, min(75 * power, 100))
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			APPLY_MOB_PROPERTY(M, PROP_RADPROT, src, min(75 * newval, 100))
 
 	OnRemove()
 		. = ..()
