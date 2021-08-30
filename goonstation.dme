@@ -30,7 +30,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\__secret_public.dme"
 
 // BEGIN_INCLUDE
-
 #include "code\area.dm"
 #include "code\atom.dm"
 #include "code\base_lighting.dm"
@@ -355,7 +354,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\flock\flock.dm"
 #include "code\datums\flock\flockpanel.dm"
 #include "code\datums\flock\flocktilegroup.dm"
-#include "code\datums\gamemodes\arcfiend.dm"
 #include "code\datums\gamemodes\assday_classic.dm"
 #include "code\datums\gamemodes\battle_royale.dm"
 #include "code\datums\gamemodes\blob.dm"

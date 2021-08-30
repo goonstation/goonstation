@@ -3203,11 +3203,9 @@ datum
 				. = ..()
 				if(istype(M, /mob/dead))
 					return
-				#ifdef SECRETS_ENABLED
-				one_with_everything(M)
-				#else
+
 				M.ex_act(1)
-				#endif
+
 
 
 			reaction_obj(var/obj/O, var/volume)
@@ -3218,12 +3216,12 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
-				#ifdef SECRETS_ENABLED
-				one_with_everything(M)
-				#else
+
+
+
 				M.ex_act(1)
 				M.gib()
-				#endif
+
 				M.reagents.del_reagent(src.id)
 
 		gib_juice

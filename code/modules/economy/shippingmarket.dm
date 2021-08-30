@@ -237,9 +237,7 @@
 
 		var/duckets = src.appraise_value(sell_crate, commodities_list, 1) + src.points_per_crate
 
-		#ifdef SECRETS_ENABLED
-		send_to_brazil(sell_crate)
-		#endif
+
 
 		qdel(sell_crate)
 

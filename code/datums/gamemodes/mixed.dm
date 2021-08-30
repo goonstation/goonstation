@@ -2,7 +2,7 @@
 	name = "mixed (action)"
 	config_tag = "mixed"
 	latejoin_antag_compatible = 1
-	latejoin_antag_roles = list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_WRESTLER, ROLE_WEREWOLF, ROLE_ARCFIEND)
+	latejoin_antag_roles = list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_WRESTLER, ROLE_WEREWOLF)
 
 	var/const/traitors_possible = 8 // cogwerks - lowered from 10
 	var/const/werewolf_players_req = 15
@@ -11,7 +11,7 @@
 	var/has_werewolves = 1
 	var/has_blobs = 1
 
-	var/list/traitor_types = list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_SPY_THIEF, ROLE_WEREWOLF, ROLE_ARCFIEND)
+	var/list/traitor_types = list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_SPY_THIEF, ROLE_WEREWOLF)
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
@@ -50,7 +50,7 @@
 	var/num_blobs = 0
 	var/num_spy_thiefs = 0
 	var/num_werewolves = 0
-	var/num_arcfiends = 0
+
 #ifdef XMAS
 	src.traitor_types += ROLE_GRINCH
 	src.latejoin_antag_roles += ROLE_GRINCH
@@ -75,11 +75,7 @@
 				if(ROLE_GRINCH) num_grinches++
 				if(ROLE_SPY_THIEF) num_spy_thiefs++
 				if(ROLE_WEREWOLF) num_werewolves++
-				if(ROLE_ARCFIEND)
-					if(num_arcfiends < 2)
-						num_arcfiends++
-					else
-						num_traitors++
+
 
 	token_players = antag_token_list()
 	for(var/datum/mind/tplayer in token_players)
@@ -125,10 +121,7 @@
 				traitors += tplayer
 				token_players.Remove(tplayer)
 				tplayer.special_role = ROLE_WEREWOLF
-			if(ROLE_ARCFIEND)
-				traitors += tplayer
-				token_players.Remove(tplayer)
-				tplayer.special_role = ROLE_ARCFIEND
+
 
 		logTheThing("admin", tplayer.current, null, "successfully redeemed an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token.")
@@ -206,13 +199,7 @@
 			wolf.special_role = ROLE_WEREWOLF
 			possible_werewolves.Remove(wolf)
 
-	if(num_arcfiends)
-		var/list/possible_arcfiends = get_possible_enemies(ROLE_ARCFIEND,num_arcfiends)
-		var/list/chosen_arcfiends = antagWeighter.choose(pool = possible_arcfiends, role = ROLE_ARCFIEND, amount = num_arcfiends, recordChosen = 1)
-		for (var/datum/mind/arcfiend in chosen_arcfiends)
-			traitors += arcfiend
-			arcfiend.special_role = ROLE_ARCFIEND
-			possible_arcfiends.Remove(arcfiend)
+
 
 	if(!traitors) return 0
 
@@ -318,15 +305,7 @@
 				objective_set_path = /datum/objective_set/werewolf
 				traitor.current.make_werewolf()
 
-			if (ROLE_ARCFIEND) // TODO: EV objectives
-			#ifdef RP_MODE
-				objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
-			#else
-				objective_set_path = pick(typesof(/datum/objective_set/traitor))
-			#endif
-			#ifdef SECRETS_ENABLED
-				traitor.current.make_arcfiend()
-			#endif
+
 
 		if (!isnull(objective_set_path)) // Cannot create objects of type null. [wraiths use a special proc]
 			new objective_set_path(traitor)
@@ -364,8 +343,6 @@
 					if(player.client.preferences.be_spy) candidates += player.mind
 				if(ROLE_WEREWOLF)
 					if(player.client.preferences.be_werewolf) candidates += player.mind
-				if(ROLE_ARCFIEND)
-					if(player.client.preferences.be_arcfiend) candidates += player.mind
 				else
 					if(player.client.preferences.be_misc) candidates += player.mind
 
