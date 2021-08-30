@@ -176,6 +176,7 @@ ABSTRACT_TYPE(/datum/bioEffect/thermal_resistances)
 	desc = "Strongly reinforces the subject's nervous system against alcoholic intoxication."
 	id = "resist_alcohol"
 	probability = 99
+	stability_loss = 0
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel unusually sober."
 	msgLose = "You feel like you could use a stiff drink."
@@ -192,7 +193,7 @@ ABSTRACT_TYPE(/datum/bioEffect/thermal_resistances)
 	blockGaps = 5
 	reclaim_mats = 40
 	curable_by_mutadone = 0
-	stability_loss = 40
+	stability_loss = 30
 	msgGain = "You feel refreshed and clean."
 	msgLose = "You feel a bit grody."
 	degrade_to = "toxification"
@@ -220,7 +221,7 @@ ABSTRACT_TYPE(/datum/bioEffect/thermal_resistances)
 	lockedDiff = 4
 	lockedChars = list("G","C","A","T")
 	lockedTries = 10
-	stability_loss = 40
+	stability_loss = 30
 	msgGain = "Your lungs feel strangely empty."
 	msgLose = "You start gasping for air."
 	degrade_to = "mute"
@@ -277,6 +278,7 @@ ABSTRACT_TYPE(/datum/bioEffect/thermal_resistances)
 	desc = "Boosts efficiency in sectors of the brain commonly associated with resisting meta-mental energies."
 	id = "psy_resist"
 	probability = 99
+	stability_loss = 0
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "Your mind feels closed."
 	msgLose = "You feel oddly exposed."
@@ -300,7 +302,7 @@ ABSTRACT_TYPE(/datum/bioEffect/thermal_resistances)
 	lockedDiff = 4
 	lockedChars = list("G","C","A","T")
 	lockedTries = 10
-	stability_loss = 40
+	stability_loss = 25
 	msgGain = "Your skin feels tingly and shifty."
 	msgLose = "Your skin tightens."
 	var/heal_per_tick = 0.5
@@ -387,7 +389,7 @@ ABSTRACT_TYPE(/datum/bioEffect/thermal_resistances)
 	lockedTries = 10
 	curable_by_mutadone = 0
 	var/remove_per_tick = 2.5
-	stability_loss = 15
+	stability_loss = 10
 	degrade_to = "toxification"
 	icon_state  = "tox_res"
 
@@ -439,7 +441,7 @@ ABSTRACT_TYPE(/datum/bioEffect/thermal_resistances)
 	desc = "The subject generates a light-defying aura, equalizing photons in such a way that make them look completely grayscale."
 	id = "noir"
 	probability = 99
-	stability_loss = 5
+	stability_loss = 0
 	icon_state  = "noir"
 	msgGain = "You feel chromatic pain."
 	msgLose = "Colors around you begin returning to normal."
@@ -478,6 +480,7 @@ ABSTRACT_TYPE(/datum/bioEffect/thermal_resistances)
 	id = "strong"
 	effectType = EFFECT_TYPE_POWER
 	probability = 99
+	stability_loss = 5
 	msgGain = "You feel buff!"
 	msgLose = "You feel wimpy and weak."
 	icon_state  = "strong"
@@ -624,7 +627,7 @@ var/list/radio_brains = list()
 	lockedDiff = 3
 	lockedChars = list("G","C","A","T")
 	lockedTries = 8
-	stability_loss = 30
+	stability_loss = 20
 	degrade_to = "bad_eyesight"
 	icon_state  = "eye"
 
@@ -668,7 +671,7 @@ var/list/radio_brains = list()
 	lockedDiff = 3
 	lockedChars = list("G","C","A","T")
 	lockedTries = 8
-	stability_loss = 25
+	stability_loss = 15
 	degrade_to = "bad_eyesight"
 	icon_state  = "eye"
 
@@ -729,7 +732,7 @@ var/list/radio_brains = list()
 	lockedGaps = 1
 	lockedDiff = 3
 	lockedTries = 8
-	stability_loss = 5
+	stability_loss = -5
 	icon_state  = "strong"
 
 	OnAdd()
@@ -752,7 +755,7 @@ var/list/radio_brains = list()
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel like being stabbed isn't such a big deal anymore."
 	msgLose = "You are once again afraid of being stabbed."
-	stability_loss = 15
+	stability_loss = 5
 	icon_state  = "regen"
 
 	OnLife(var/mult)
