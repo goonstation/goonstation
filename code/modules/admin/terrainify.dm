@@ -8,7 +8,7 @@
 		"Swamp Station"=/client/proc/cmd_swampify_station,
 		"Trench Station"=/client/proc/cmd_trenchify_station)
 
-	var/param = input("Transform space around the station...", "Terraform Space", null) as null|anything in options
+	var/param = tgui_input_list(src,"Transform space around the station...","Terraform Space",options)
 	if(param)
 		call(src, options[param])()
 
