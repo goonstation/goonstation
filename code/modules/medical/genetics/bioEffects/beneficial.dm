@@ -530,7 +530,7 @@ var/list/radio_brains = list()
 	OnLife(var/mult)
 		if(..()) return
 		var/mob/living/carbon/human/H = owner
-		if (H.health <= 25)
+		if (H.health <= 25 && src.power == 1)
 			timeLeft = 1
 			boutput(owner, "<span class='alert'>You suddenly feel very weak.</span>")
 			H.changeStatus("weakened", 3 SECONDS)
