@@ -82,21 +82,24 @@
 				suffer_chance = round((I.force / 4) * 5)
 				if(prob(suffer_chance))
 					boutput(src.donor, __red("You are paralyzed from the pain!"))
-					src.donor.changeStatus("paralysis", 5 SECONDS)
+					src.donor.changeStatus("stunned", 5 SECONDS)
+					src.donor.emote("scream")
 					ON_COOLDOWN(src.donor, "pain_aug_hurt", 10 SECONDS)
 			else
 				if(prob(7.5))
 					boutput(src.donor, __red("You are paralyzed from the pain!"))
-					src.donor.changeStatus("paralysis", 5 SECONDS)
+					src.donor.changeStatus("stunned", 5 SECONDS)
+					src.donor.emote("scream")
 					ON_COOLDOWN(src.donor, "pain_aug_hurt", 10 SECONDS)
 
-	proc/suffer_pain(var/obj/projectile/P, var/atom/hit)
+	proc/suffer_pain_bullet(var/obj/projectile/P, var/atom/hit)
 		var/suffer_chance = 0
 		if(!GET_COOLDOWN(src.donor, "pain_aug_hurt") && src.broken)
 			suffer_chance = round((P.power / 4) * 5)
 			if(prob(suffer_chance))
 				boutput(src.donor, __red("You are paralyzed from the pain!"))
-				src.donor.changeStatus("paralysis", 5 SECONDS)
+				src.donor.changeStatus("stunned", 5 SECONDS)
+				src.donor.emote("scream")
 				ON_COOLDOWN(src.donor, "pain_aug_hurt", 10 SECONDS)
 
 	on_transplant(var/mob/M as mob)
