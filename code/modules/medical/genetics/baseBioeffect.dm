@@ -354,7 +354,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 				if (H.bioHolder)
 					var/datum/bioHolder/BH = H.bioHolder
 					success_prob = BH.genetic_stability
-					success_prob = max(success_prob_min_cap,min(success_prob,100))
+					success_prob = lerp(clamp(success_prob, 0, 100), 100, success_prob_min_cap/100)
 
 			if (prob(success_prob))
 				. = cast(target)
