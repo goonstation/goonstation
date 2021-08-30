@@ -813,8 +813,8 @@ mob/dead/observer/proc/insert_observer(var/atom/target)
 	if (isghostrestrictedz(newobs.z) && !restricted_z_allowed(newobs, get_turf(newobs)) && !(src.client && src.client.holder))
 		newobs.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
 
-mob/dead/observer/proc/insert_welder_observer(var/atom/target) //aaaaaa i had to create a new proc aaaaaa
-	var/mob/dead/target_observer/welder_ghost/newobs = unpool(/mob/dead/target_observer/welder_ghost)
+mob/dead/observer/proc/insert_slasher_observer(var/atom/target) //aaaaaa i had to create a new proc aaaaaa
+	var/mob/dead/target_observer/slasher_ghost/newobs = unpool(/mob/dead/target_observer/slasher_ghost)
 	newobs.attach_hud(hud)
 	newobs.set_observe_target(target)
 	newobs.name = src.name

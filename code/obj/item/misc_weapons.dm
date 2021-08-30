@@ -1550,10 +1550,10 @@ obj/item/whetstone
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
 
-//Machete for The Welder
-/obj/item/welder_machete
-	name = "welder's machete"
-	desc = "An old machete, clearly showing signs of wear and tear due to its age. The word 'DeFoe' is carved into the handle."
+//Machete for The Slasher
+/obj/item/slasher_machete
+	name = "slasher's machete"
+	desc = "An old machete, clearly showing signs of wear and tear due to its age."
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "welder_machete"
 	item_state = "welder_machete"
@@ -1566,7 +1566,7 @@ obj/item/whetstone
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_CUTTING
 	w_class = W_CLASS_NORMAL
-	var/welder_key = ""
+	var/slasher_key = ""
 
 	New()
 		. = ..()
@@ -1579,9 +1579,9 @@ obj/item/whetstone
 
 	attack_hand(var/mob/user as mob)
 		if (user.mind)
-			if (iswelder(user) || check_target_immunity(user))
-				if (user.mind.key != src.welder_key && !check_target_immunity(user))
-					boutput(user, "<span class='alert'>The [src.name] is attuned to another Welder! You may use it, but it may get recalled at any time!</span>")
+			if (isslasher(user) || check_target_immunity(user))
+				if (user.mind.key != src.slasher_key && !check_target_immunity(user))
+					boutput(user, "<span class='alert'>The [src.name] is attuned to another Slasher! You may use it, but it may get recalled at any time!</span>")
 				..()
 				return
 			else
@@ -1598,7 +1598,7 @@ obj/item/whetstone
 		if (!istype(user))
 			return
 
-		if (iswelder(user))
+		if (isslasher(user))
 			return ..()
 		else
 			random_brute_damage(user, 2*src.force)
@@ -1610,8 +1610,8 @@ obj/item/whetstone
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
 			if (ismob(usr))
-				A:lastattacker = usr
-				A:lastattackertime = world.time
+				A.lastattacker = usr
+				A.lastattackertime = world.time
 			C.changeStatus("weakened", 3 SECONDS)
 			C.force_laydown_standup()
 			take_bleeding_damage(C, null, src.force / 2	, DAMAGE_CUT)
@@ -1622,5 +1622,5 @@ obj/item/whetstone
 		cant_self_remove = 1
 		cant_other_remove = 1
 		cant_drop = 1
-		throwforce = 20 //higher base damage, lower once the welder starts scaling up their machete
+		throwforce = 20 //higher base damage, lower once the slasher starts scaling up their machete
 		force = 20

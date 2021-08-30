@@ -297,9 +297,9 @@
 						[iswraith(M) ? "<em>Is Wraith</em>" : "<a href='[playeropt_link(M, "makewraith")]'>Wraith</a>"] &bull;
 						[isblob(M) ? "<em>Is Blob</em>" : "<a href='[playeropt_link(M, "makeblob")]'>Blob</a>"] &bull;
 						[istype(M, /mob/living/carbon/human/machoman) ? "<em>Is Macho Man</em>" : "<a href='[playeropt_link(M, "makemacho")]'>Macho Man</a>"] &bull;
-						[istype(M, /mob/living/carbon/human/welder) ? "<em>Is Welder</em>" : "<a href='[playeropt_link(M, "makewelder")]'>Welder</a>"] &bull;
 						[isflock(M) ? "<em>Is Flock</em>" : "<a href='[playeropt_link(M, "makeflock")]'>Flock</a>"] &bull;
-						[isfloorgoblin(M) ? "<em>Is Floor Goblin</em>" : "<a href='[playeropt_link(M, "makefloorgoblin")]'>Floor Goblin</a>"]
+						[isfloorgoblin(M) ? "<em>Is Floor Goblin</em>" : "<a href='[playeropt_link(M, "makefloorgoblin")]'>Floor Goblin</a>"] &bull;
+						[istype(M, /mob/living/carbon/human/slasher) ? "<em>Is slasher</em>" : "<a href='[playeropt_link(M, "makeslasher")]'>slasher</a>"]
 					</div>
 				</div>
 			</div>

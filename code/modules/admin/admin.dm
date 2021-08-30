@@ -1812,17 +1812,17 @@ var/global/noir = 0
 			if (alert("Make [M] a macho man?", "Make Macho", "Yes", "No") == "Yes")
 				M.machoize()
 
-		if ("makewelder")
+		if ("makeslasher")
 			if( src.level < LEVEL_PA )
-				alert("You must be at least a Primary Administrator to make someone a Welder.")
+				alert("You must be at least a Primary Administrator to make someone a slasher.")
 				return
 			if(!ticker || !ticker.mode)
 				alert("The game hasn't started yet!")
 				return
 			var/mob/M = locate(href_list["target"])
 			if (!M) return
-			if (alert("Make [M] into a Welder?", "Make Welder", "Yes", "No") == "Yes")
-				M.welderize()
+			if (alert("Make [M] into a slasher?", "Make slasher", "Yes", "No") == "Yes")
+				M.slasherize()
 
 		if ("makecritter")
 			if( src.level < LEVEL_PA )

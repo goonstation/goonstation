@@ -394,9 +394,9 @@
 		return make_blob()
 	return 0
 
-/mob/proc/welderize()
+/mob/proc/slasherize()
 	if(src.mind || src.client)
-		var/mob/living/carbon/human/welder/W = new/mob/living/carbon/human/welder(src)
+		var/mob/living/carbon/human/slasher/W = new/mob/living/carbon/human/slasher(src)
 		var/turf/T = get_turf(src)
 		if(!(T && isturf(T)) || (isrestrictedz(T.z) && !(src.client && src.client.holder)))
 			var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
@@ -406,10 +406,10 @@
 				W.set_loc(locate(1, 1, 1))
 		else
 			W.set_loc(T)
-		SHOW_WELDER_TIPS(src)
+		SHOW_slasher_TIPS(src)
 		if(src.mind)
 			src.mind.transfer_to(W)
-			src.mind.special_role = "welder"
+			src.mind.special_role = "slasher"
 		else
 			var/key = src.client.key
 			if (src.client)

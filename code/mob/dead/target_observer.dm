@@ -184,7 +184,7 @@ var/list/observers = list()
 			pool(src)
 
 
-/mob/dead/target_observer/welder_ghost
+/mob/dead/target_observer/slasher_ghost
 	name = "spooky not-quite ghost"
 	var/start_time
 
@@ -202,7 +202,7 @@ var/list/observers = list()
 		else
 			return
 
-	proc/welder_ghostize()
+	proc/slasher_ghostize()
 		RETURN_TYPE(/mob/dead/observer)
 		if(src.key || src.client)
 			if(src.mind && src.mind.damned) // Wow so much sin. Off to hell with you.

@@ -231,7 +231,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		..()
 		setProperty("heatprot", 7)
 
-	welder
+	slasher
 		name = "Padded Gloves"
 		desc = "These gloves are padded and lined with insulating material."
 		cant_self_remove = 1

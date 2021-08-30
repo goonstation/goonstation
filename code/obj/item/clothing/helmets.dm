@@ -601,7 +601,7 @@
 		setProperty("disorient_resist_eye", 0)
 
 	unremovable
-		name = "welder's mask"
+		name = "slasher's mask"
 		desc = "A face-mounted welding mask, this one seems to be protruding some kind of dark aura."
 		cant_self_remove = 1
 		cant_other_remove = 1

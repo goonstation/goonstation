@@ -1,19 +1,18 @@
-/mob/living/carbon/human/welder
-	real_name = "The Welder"
+/mob/living/carbon/human/slasher
+	real_name = "The Slasher"
 	var/trailing_blood = FALSE
 
 	New(loc)
 		..()
-	//	RegisterSignal(src, COMSIG_MOB_WELDER_DEATH, .proc/moveMindsBack)
-		src.gender = MALE //you might argue it's a spirit and has no gender, but William DeFoe or whatever the fuck his name was, was a male.
-		src.abilityHolder = new /datum/abilityHolder/welder(src)
+		src.gender = MALE
+		src.abilityHolder = new /datum/abilityHolder/slasher(src)
 		src.addAllAbilities()
 
-		src.equip_new_if_possible(/obj/item/clothing/shoes/welder_shoes/noslip, slot_shoes)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/slasher_shoes/noslip, slot_shoes)
 		src.equip_new_if_possible(/obj/item/clothing/under/color/unremovable, slot_w_uniform)
-		src.equip_new_if_possible(/obj/item/clothing/suit/apron/welder, slot_wear_suit)
+		src.equip_new_if_possible(/obj/item/clothing/suit/apron/slasher, slot_wear_suit)
 		src.equip_new_if_possible(/obj/item/clothing/head/helmet/welding/unremovable, slot_head)
-		src.equip_new_if_possible(/obj/item/clothing/gloves/black/welder, slot_gloves)
+		src.equip_new_if_possible(/obj/item/clothing/gloves/black/slasher, slot_gloves)
 
 		src.see_in_dark = SEE_DARK_FULL
 		src.sight |= SEE_SELF
@@ -21,7 +20,7 @@
 		src.bioHolder.AddEffect("breathless", 0, 0, 0, 1)
 		src.bioHolder.AddEffect("food_rad_resist", 0, 0, 0, 1)
 		src.bioHolder.AddEffect("detox", 0, 0, 0, 1)
-		src.add_stun_resist_mod("welder_stun_resistance", 75)
+		src.add_stun_resist_mod("slasher_stun_resistance", 75)
 
 	Life()
 		var/turf/T = get_turf(src)
@@ -109,8 +108,8 @@
 				boutput(M, __red("Not when you're incapacitated, restrained, or incorporeal."))
 				return 1
 
-			for_by_tcl(K, /obj/item/welder_machete)
-				if (M.mind && M.mind.key == K.welder_key)
+			for_by_tcl(K, /obj/item/slasher_machete)
+				if (M.mind && M.mind.key == K.slasher_key)
 					if (K == M.find_in_hand(K))
 						we_hold_it = 1
 						continue
@@ -124,13 +123,13 @@
 						return 1
 					else
 						boutput(M, __red("You summon a new machete to your hands."))
-						var/obj/item/welder_machete/N = new /obj/item/welder_machete(get_turf(M))
-						N.welder_key = M.mind?.key
+						var/obj/item/slasher_machete/N = new /obj/item/slasher_machete(get_turf(M))
+						N.slasher_key = M.mind?.key
 						M.put_in_hand_or_drop(N)
 						return 0
 
 				if (1)
-					var/obj/item/welder_machete/W
+					var/obj/item/slasher_machete/W
 					for (var/C in machetes)
 						W = machetes[C]
 						break
@@ -147,7 +146,7 @@
 					if (!t1)
 						return 1
 
-					var/obj/item/welder_machete/K2 = machetes[t1]
+					var/obj/item/slasher_machete/K2 = machetes[t1]
 
 					if (!M || !ismob(M) || !isliving(M || !M.mind))
 						return 0
@@ -157,7 +156,7 @@
 					if (M.getStatusDuration("stunned") > 0 || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") > 0 || !isalive(M) || M.restrained())
 						boutput(M, __red("Not when you're incapacitated, restrained, or incorporeal."))
 						return 0
-					if (M.mind.key != K2.welder_key)
+					if (M.mind.key != K2.slasher_key)
 						boutput(M, __red("You are unable to summon your machete."))
 						return 0
 
@@ -193,7 +192,7 @@
 			return
 
 		take_control(var/mob/living/carbon/human/M)
-			var/mob/living/carbon/human/welder/W = src
+			var/mob/living/carbon/human/slasher/W = src
 			if(!src || !istype(src) || !M || !istype(M))
 				return
 
@@ -232,11 +231,11 @@
 			M.drop_from_slot(M.slot_wear_suit)
 			M.drop_from_slot(M.slot_shoes)
 			M.equip_new_if_possible(/obj/item/clothing/head/helmet/welding/unremovable, M.slot_head)
-			M.equip_new_if_possible(/obj/item/clothing/suit/apron/welder, M.slot_wear_suit)
-			M.equip_new_if_possible(/obj/item/clothing/shoes/welder_shoes/noslip, M.slot_shoes)
+			M.equip_new_if_possible(/obj/item/clothing/suit/apron/slasher, M.slot_wear_suit)
+			M.equip_new_if_possible(/obj/item/clothing/shoes/slasher_shoes/noslip, M.slot_shoes)
 			M.equip_new_if_possible(/obj/item/clothing/under/color/unremovable, M.slot_w_uniform)
-			M.equip_new_if_possible(/obj/item/welder_machete/possessed, M.slot_r_hand)
-			M.equip_new_if_possible(/obj/item/clothing/gloves/black/welder, slot_gloves)
+			M.equip_new_if_possible(/obj/item/slasher_machete/possessed, M.slot_r_hand)
+			M.equip_new_if_possible(/obj/item/clothing/gloves/black/slasher, slot_gloves)
 			if(src.density)
 				W.incorporealize()
 				W.client.flying = 0
@@ -244,16 +243,16 @@
 			var/mob/dead/observer/O = M.ghostize()
 			boutput(O, "<span class='bold' style='color:red;font-size:150%'>You have been temporarily removed from your body!</span>")
 			if (O.mind)
-				O.Browse(grabResource("html/welder_possession.html"),"window=welder_possession;size=600x440;title=Welder Possession")
+				O.Browse(grabResource("html/slasher_possession.html"),"window=slasher_possession;size=600x440;title=Slasher Possession")
 		//	usr.mind.swap_with(M)
 			M.mind = W.mind
-			var/mob/dead/target_observer/welder_ghost/WG = O.insert_welder_observer(M)
+			var/mob/dead/target_observer/slasher_ghost/WG = O.insert_slasher_observer(M)
 			WG.mind.dnr = 1
 			WG.verbs -= list(/mob/verb/setdnr)
 			sleep(45 SECONDS)
 			if(!M || !M.loc) //TEMPORARY BANDAID FIX INCOMING
 				if(WG)
-					var/mob/dead/observer/O2 = WG.welder_ghostize()
+					var/mob/dead/observer/O2 = WG.slasher_ghostize()
 					O2.set_loc(src) //a bit of a hack but it works
 					if(O2.mind.dnr)
 						O2.mind.dnr = 0
@@ -278,22 +277,22 @@
 						WG.mind.transfer_to(M)
 					src.client.flying = 1*/
 
-			for(var/obj/item/clothing/suit/apron/welder/A in M)
+			for(var/obj/item/clothing/suit/apron/slasher/A in M)
 				qdel(A)
-			for(var/obj/item/clothing/gloves/black/welder/G in M)
+			for(var/obj/item/clothing/gloves/black/slasher/G in M)
 				qdel(G)
-			for(var/obj/item/clothing/shoes/welder_shoes/B in M)
+			for(var/obj/item/clothing/shoes/slasher_shoes/B in M)
 				qdel(B)
-			for(var/obj/item/welder_machete/possessed/P in M)
+			for(var/obj/item/slasher_machete/possessed/P in M)
 				P.visible_message("<span class='alert'><b>The [P.name] crumbles into ash!</b></span>")
 				qdel(P)
 			for(var/obj/item/clothing/head/helmet/welding/unremovable/U in M)
 				qdel(U)
 			M.equip_new_if_possible(/obj/item/clothing/under/color, M.slot_w_uniform)
 			M.equip_new_if_possible(/obj/item/clothing/head/helmet/welding/postpossession, M.slot_head)
-			M.equip_new_if_possible(/obj/item/clothing/suit/apron/welder/postpossession, M.slot_wear_suit)
+			M.equip_new_if_possible(/obj/item/clothing/suit/apron/slasher/postpossession, M.slot_wear_suit)
 			M.equip_new_if_possible(/obj/item/clothing/gloves/black, M.slot_gloves)
-			M.equip_new_if_possible(/obj/item/clothing/shoes/welder_shoes, M.slot_shoes)
+			M.equip_new_if_possible(/obj/item/clothing/shoes/slasher_shoes, M.slot_shoes)
 
 		regenerate()
 			playsound(src, 'sound/machines/ArtifactEld1.ogg', 60, 0)
@@ -304,7 +303,7 @@
 
 		soulStealSetup(var/mob/living/carbon/human/M)
 			boutput(usr, "<span class='alert'>You begin stealing [M]'s soul.</span>")
-			SETUP_GENERIC_ACTIONBAR(src, null, 3 SECONDS, /mob/living/carbon/human/welder/proc/soulSteal, M, src.icon, src.icon_state,\
+			SETUP_GENERIC_ACTIONBAR(src, null, 3 SECONDS, /mob/living/carbon/human/slasher/proc/soulSteal, M, src.icon, src.icon_state,\
 	 		"Something barely visible seems to come out of [M]'s mouth, which then is absorbed into [src]'s body!", null)
 
 		soulSteal(var/mob/living/carbon/human/M)
@@ -313,8 +312,8 @@
 			playsound(src, "sound/voice/wraith/wraithpossesobject.ogg", 60, 0)
 			if(M.mind)
 				M.mind.soul = 0
-			for_by_tcl(K, /obj/item/welder_machete)
-				if (W.mind && W.mind.key == K.welder_key)
+			for_by_tcl(K, /obj/item/slasher_machete)
+				if (W.mind && W.mind.key == K.slasher_key)
 					K.force = K.force + 2.5
 					K.throwforce = K.throwforce + 2.5
 					K.tooltip_rebuild = 1
@@ -333,36 +332,36 @@
 					M.setStatus("staggered", 8 SECONDS)
 
 		addAllAbilities()
-			src.addAbility(/datum/targetable/welder/help)
-			src.addAbility(/datum/targetable/welder/incorporeal)
-			src.addAbility(/datum/targetable/welder/corporeal)
-			src.addAbility(/datum/targetable/welder/soulsteal)
-			src.addAbility(/datum/targetable/welder/blood_trail)
-			src.addAbility(/datum/targetable/welder/summon_machete)
-			src.addAbility(/datum/targetable/welder/take_control)
-			src.addAbility(/datum/targetable/welder/regenerate)
-			src.addAbility(/datum/targetable/welder/open_doors)
-			src.addAbility(/datum/targetable/welder/stagger)
+			src.addAbility(/datum/targetable/slasher/help)
+			src.addAbility(/datum/targetable/slasher/incorporeal)
+			src.addAbility(/datum/targetable/slasher/corporeal)
+			src.addAbility(/datum/targetable/slasher/soulsteal)
+			src.addAbility(/datum/targetable/slasher/blood_trail)
+			src.addAbility(/datum/targetable/slasher/summon_machete)
+			src.addAbility(/datum/targetable/slasher/take_control)
+			src.addAbility(/datum/targetable/slasher/regenerate)
+			src.addAbility(/datum/targetable/slasher/open_doors)
+			src.addAbility(/datum/targetable/slasher/stagger)
 
 		updateButtons()
 			abilityHolder.updateButtons()
 
-/datum/abilityHolder/welder
+/datum/abilityHolder/slasher
 	usesPoints = 0
 	regenRate = 0
 	tabName = "Abilities"
 	cast_while_dead = 0
 
-ABSTRACT_TYPE(/datum/targetable/welder)
-/datum/targetable/welder
-	icon = 'icons/mob/welder.dmi'
+ABSTRACT_TYPE(/datum/targetable/slasher)
+/datum/targetable/slasher
+	icon = 'icons/mob/slasher.dmi'
 	icon_state = "template"
 	cooldown = 0
 	last_cast = 0
 	pointCost = 0
-	preferred_holder_type = /datum/abilityHolder/welder
+	preferred_holder_type = /datum/abilityHolder/slasher
 
-/datum/targetable/welder/incorporeal
+/datum/targetable/slasher/incorporeal
 	name = "Incorporealize"
 	desc = "Become a ghost, capable of moving through walls."
 	icon_state = "incorporealize"
@@ -373,7 +372,7 @@ ABSTRACT_TYPE(/datum/targetable/welder)
 		if(..())
 			return 1
 
-		var/mob/living/carbon/human/welder/W = src.holder.owner
+		var/mob/living/carbon/human/slasher/W = src.holder.owner
 		if(!W.density)
 			boutput(usr, __red("<span class='alert'>You must be corporeal to use this ability.</span>"))
 			return 1
@@ -385,7 +384,7 @@ ABSTRACT_TYPE(/datum/targetable/welder)
 						return 1
 		return W.incorporealize()
 
-/datum/targetable/welder/corporeal
+/datum/targetable/slasher/corporeal
 	name = "Corporealize"
 	desc = "Manifest your being, allowing you to interact with the world."
 	icon_state = "corporealize"
@@ -396,14 +395,14 @@ ABSTRACT_TYPE(/datum/targetable/welder)
 		if(..())
 			return 1
 
-		var/mob/living/carbon/human/welder/W = src.holder.owner
+		var/mob/living/carbon/human/slasher/W = src.holder.owner
 		if(W.density)
 			boutput(usr, __red("<span class='alert'>You must be incorporeal to use this ability.</span>"))
 			return 1
 		else
 			return W.corporealize()
 
-/datum/targetable/welder/blood_trail
+/datum/targetable/slasher/blood_trail
 	name = "Blood Trail"
 	desc = "Begin trailing blood behind you, to spook those who reside on station."
 	icon_state = "trail_blood"
@@ -414,10 +413,10 @@ ABSTRACT_TYPE(/datum/targetable/welder)
 		if(..())
 			return 1
 
-		var/mob/living/carbon/human/welder/W = src.holder.owner
+		var/mob/living/carbon/human/slasher/W = src.holder.owner
 		return W.blood_trail()
 
-/datum/targetable/welder/summon_machete
+/datum/targetable/slasher/summon_machete
 	name = "Summon Machete"
 	desc = "Summon your machete to your active hand."
 	icon_state = "summon_machete"
@@ -427,13 +426,13 @@ ABSTRACT_TYPE(/datum/targetable/welder)
 	cast()
 		if(..())
 			return 1
-		var/mob/living/carbon/human/welder/W = src.holder.owner
+		var/mob/living/carbon/human/slasher/W = src.holder.owner
 		return W.summon_machete()
 
-/datum/targetable/welder/take_control
+/datum/targetable/slasher/take_control
 	name = "Possess"
 	desc = "Possess a target temporarily."
-	icon_state = "welder_possession"
+	icon_state = "slasher_possession"
 	targeted = 1
 	target_anything = 1
 	cooldown = 3 MINUTES
@@ -444,7 +443,7 @@ ABSTRACT_TYPE(/datum/targetable/welder)
 
 		if (ishuman(target))
 			var/mob/living/carbon/human/H = target
-			var/mob/living/carbon/human/welder/W = src.holder.owner
+			var/mob/living/carbon/human/slasher/W = src.holder.owner
 			if(isdead(H))
 				boutput(usr, "<span class='alert'>You cannot possess a corpse.</span>")
 				return 1
@@ -460,7 +459,7 @@ ABSTRACT_TYPE(/datum/targetable/welder)
 			boutput(usr, "<span class='alert'>You cannot possess a non-human.</span>")
 			return 1
 
-/datum/targetable/welder/regenerate
+/datum/targetable/slasher/regenerate
 	name = "Regenerate"
 	desc = "Regenerate your body, and remove all restraints."
 	icon_state = "regenerate"
@@ -471,10 +470,10 @@ ABSTRACT_TYPE(/datum/targetable/welder)
 		if(..())
 			return 1
 
-		var/mob/living/carbon/human/welder/W = src.holder.owner
+		var/mob/living/carbon/human/slasher/W = src.holder.owner
 		return W.regenerate()
 
-/datum/targetable/welder/help
+/datum/targetable/slasher/help
 	name = "Toggle Help Mode"
 	desc = "Enter or exit help mode."
 	icon_state = "help"
@@ -497,7 +496,7 @@ ABSTRACT_TYPE(/datum/targetable/welder)
 		src.object.icon_state = "help[holder.help_mode]"
 		holder.updateButtons()
 
-/datum/targetable/welder/open_doors
+/datum/targetable/slasher/open_doors
 	name = "Open Nearby Doors"
 	desc = "Open doors within three tiles of you."
 	icon_state = "open_doors"
@@ -507,10 +506,10 @@ ABSTRACT_TYPE(/datum/targetable/welder)
 	cast()
 		if(..())
 			return 1
-		var/mob/living/carbon/human/welder/W = src.holder.owner
+		var/mob/living/carbon/human/slasher/W = src.holder.owner
 		return W.openDoors()
 
-/datum/targetable/welder/stagger
+/datum/targetable/slasher/stagger
 	name = "Stagger Area"
 	desc = "Stagger everyone in a four tile radius of you for a short duration."
 	icon_state = "stagger_group"
@@ -520,10 +519,10 @@ ABSTRACT_TYPE(/datum/targetable/welder)
 	cast()
 		if(..())
 			return 1
-		var/mob/living/carbon/human/welder/W = src.holder.owner
+		var/mob/living/carbon/human/slasher/W = src.holder.owner
 		return W.staggerNearby()
 
-/datum/targetable/welder/soulsteal
+/datum/targetable/slasher/soulsteal
 	name = "Soul Steal"
 	desc = "Steal a corpse's soul, increasing the power of your machete."
 	icon_state = "soul_steal"
@@ -533,7 +532,7 @@ ABSTRACT_TYPE(/datum/targetable/welder)
 	cast(atom/target)
 		if(..())
 			return 1
-		var/mob/living/carbon/human/welder/W = src.holder.owner
+		var/mob/living/carbon/human/slasher/W = src.holder.owner
 		var/mob/living/carbon/human/M = target
 		if(isdead(M))
 			if(ishuman(M) && M.mind && M.mind.soul >= 100)

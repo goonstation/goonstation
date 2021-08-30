@@ -439,7 +439,7 @@
 	icon_state = "apron-botany"
 	item_state = "apron-botany"
 
-/obj/item/clothing/suit/apron/welder
+/obj/item/clothing/suit/apron/slasher
 	name = "welding apron"
 	desc = "A brown welder's apron, you can feel an aura of something dark radiating off of it."
 	icon_state = "apron-welder"

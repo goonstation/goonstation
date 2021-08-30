@@ -678,7 +678,7 @@
 	desc = "Dainty and formal. This pair is white."
 	step_sound = "footstep"
 
-/obj/item/clothing/shoes/welder_shoes
+/obj/item/clothing/shoes/slasher_shoes
 	name = "Industrial Boots"
 	icon_state = "boots"
 	desc = "Bulky boots with thick soles, protecting your feet."

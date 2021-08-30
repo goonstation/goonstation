@@ -2648,8 +2648,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	name = "Battler"
 	limit = -1
 
-/datum/job/welder
-	name = "Welder"
+/datum/job/slasher
+	name = "The Slasher"
 	linkcolor = "#02020d"
 	limit = 0
 	slot_ears = list()
@@ -2661,7 +2661,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 		..()
 		if (!M)
 			return
-		M.welderize()
+		M.slasherize()
 
 ABSTRACT_TYPE(/datum/job/special/pod_wars)
 /datum/job/special/pod_wars
