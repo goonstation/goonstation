@@ -1456,6 +1456,8 @@ Other Goonstation servers:[serverList]</span>"})
 		while (gib_time > 0 && !src.qdeled && !victim.qdeled)
 
 		if (victim && !victim.qdeled)
+			victim.vis_contents -= src
+			src.maptext = null
 			victim.gib()
 
 		qdel(src)
