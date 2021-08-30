@@ -74,9 +74,9 @@
 
 #if ASS_JAM
 var/global/ass_mutation
-#ifndef SECRETS_ENABLED
+/*#ifndef SECRETS_ENABLED
 var/list/ass_trinket_blacklist = list()
-#endif
+#endif*/
 
 proc/ass_jam_init()
 	if(prob(25))

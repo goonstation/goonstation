@@ -310,7 +310,7 @@ var/global/the_automaton = null
 
 		else if (istype(W, /obj/item/alchemy/stone))
 			src.visible_message("<span class='alert'>[src] studies [W] intently. It looks impressed, but hands [W] back. Perhaps it's not the right time for this yet?</span>")
-
+/*
 		#ifdef SECRETS_ENABLED
 		else if (istype(W, /obj/item/onyxphoto))
 			if (!W:used)
@@ -325,7 +325,7 @@ var/global/the_automaton = null
 					playsound(src.loc, "sound/musical_instruments/Gong_Rumbling.ogg", 60, 1)
 			else
 				boutput(user, "<span class='alert'>[src] no longer seems interested in [W].</span>")
-		#endif
+		#endif*/
 
 		else if (istype(W, /obj/item/space_thing)) // if I'm gunna make a weird widget it may as well have some interaction with the automaton
 			var/obj/item/space_thing/ST = W

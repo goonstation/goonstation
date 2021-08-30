@@ -3487,10 +3487,10 @@ var/global/noir = 0
 							LAGCHECK(LAG_LOW)
 						dat += "</table>"
 						usr.Browse(dat, "window=fingerprints;size=440x410")
-#ifdef SECRETS_ENABLED
+/*#ifdef SECRETS_ENABLED
 					if ("ideas")
 						usr.Browse(file2text("+secret/assets/fun_admin_ideas.html"), "window=admin_ideas;size=700x450;title=Admin Ideas")
-#endif
+#endif*/
 				if (usr)
 					logTheThing("admin", usr, null, "used secret [href_list["secretsadmin"]]")
 					logTheThing("diary", usr, null, "used secret [href_list["secretsadmin"]]", "admin")
@@ -4151,9 +4151,9 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=secretsadmin;type=fingerprints'>Fingerprints</A><BR>
 
 			"}
-#ifdef SECRETS_ENABLED
+/*#ifdef SECRETS_ENABLED
 	dat += {"<A href='?src=\ref[src];action=secretsadmin;type=ideas'>Fun Admin Ideas</A>"}
-#endif
+#endif*/
 
 	dat += "</div>"
 

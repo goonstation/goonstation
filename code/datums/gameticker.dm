@@ -746,10 +746,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	global.save_noticeboards()
 
-#ifdef SECRETS_ENABLED
-	for_by_tcl(S, /obj/santa_helper)
-		S.save_mail()
-#endif
+
 
 	logTheThing("debug", null, null, "Done with books")
 
