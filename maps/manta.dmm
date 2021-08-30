@@ -34716,6 +34716,9 @@
 	dir = 1;
 	pixel_y = 20
 	},
+/obj/landmark/start{
+	name = "Miner"
+	},
 /turf/simulated/floor/orange,
 /area/station/mining)
 "fLG" = (
@@ -36711,6 +36714,17 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/starboardlowerhallway)
+"kss" = (
+/obj/item/storage/wall/mining{
+	dir = 4;
+	pixel_x = -32;
+	pixel_y = 0
+	},
+/obj/landmark/start{
+	name = "Miner"
+	},
+/turf/simulated/floor/orange,
+/area/station/mining)
 "kuo" = (
 /obj/table/auto,
 /obj/item/paper_bin,
@@ -41002,6 +41016,9 @@
 	dir = 1
 	},
 /obj/machinery/drainage/big,
+/obj/landmark/start{
+	name = "Miner"
+	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/mining)
 "vfw" = (
@@ -63104,7 +63121,7 @@ bqT
 nAY
 fLk
 fEl
-fEl
+kss
 xpQ
 rdx
 usf
