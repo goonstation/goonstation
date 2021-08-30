@@ -297,8 +297,8 @@
 
 //If it's a multi-tool, let the user configure the device.
 /datum/component/mechanics_holder/proc/attackby(var/comsig_target, obj/item/W as obj, mob/user)
-	var/obj/machinery/door/airlock = comsig_target
-	if(!ispulsingtool(W) || !isliving(user) || user.stat || airlock.p_open)
+	var/obj/machinery/door/hacked_door = comsig_target
+	if(!ispulsingtool(W) || !isliving(user) || user.stat || hacked_door.p_open)
 		return 0
 	if(length(src.configs))
 		var/selected_config = input("Select a config to modify!", "Config", null) as null|anything in src.configs
