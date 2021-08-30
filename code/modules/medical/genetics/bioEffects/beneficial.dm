@@ -305,7 +305,7 @@ ABSTRACT_TYPE(/datum/bioEffect/thermal_resistances)
 	stability_loss = 25
 	msgGain = "Your skin feels tingly and shifty."
 	msgLose = "Your skin tightens."
-	var/heal_per_tick = 0.5
+	var/heal_per_tick = 0.66
 	var/regrow_prob = 250
 	var/roundedmultremainder
 	degrade_to = "mutagenic_field"
@@ -388,7 +388,7 @@ ABSTRACT_TYPE(/datum/bioEffect/thermal_resistances)
 	lockedChars = list("G","C","A","T")
 	lockedTries = 10
 	curable_by_mutadone = 0
-	var/remove_per_tick = 2.5
+	var/remove_per_tick = 3.3
 	stability_loss = 10
 	degrade_to = "toxification"
 	icon_state  = "tox_res"
@@ -736,12 +736,12 @@ var/list/radio_brains = list()
 	icon_state  = "strong"
 
 	OnAdd()
-		APPLY_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-buff", 1 * power)
-		src.owner.add_stam_mod_max("g-fitness-buff", 15 * power)
+		APPLY_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-buff", 1.33 * power)
+		src.owner.add_stam_mod_max("g-fitness-buff", 20 * power)
 
 	onPowerChange(oldval, newval)
-		APPLY_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-buff", 1 * newval)
-		src.owner.add_stam_mod_max("g-fitness-buff", 15 * newval)
+		APPLY_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-buff", 1.33 * newval)
+		src.owner.add_stam_mod_max("g-fitness-buff", 20 * newval)
 
 	OnRemove()
 		REMOVE_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-buff")
@@ -764,7 +764,7 @@ var/list/radio_brains = list()
 			var/mob/living/carbon/human/H = owner
 
 			if (H.blood_volume < 500 && H.blood_volume > 0)
-				H.blood_volume += 3*mult*power
+				H.blood_volume += 4*mult*power
 
 
 ///////////////////////////
