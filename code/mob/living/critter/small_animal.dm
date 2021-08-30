@@ -20,8 +20,11 @@
    - geese
   - cockroaches
   - ferrets
+  - frogs
   - possums
    - Morty
+  - seals
+  - walruses
   - floating eye
   - pigs
   - clownspiders
@@ -1653,6 +1656,93 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	name = "Morty"
 	real_name = "Morty"
 
+/* ================================================ */
+/* -------------------- Seal ---------------------- */
+/* ================================================ */
+
+/mob/living/critter/small_animal/seal
+	name = "seal"
+	real_name = "seal"
+	desc = "Did you know, that when it snows, its eyes become large and the light that you shine can be seen?"
+	icon_state = "seal"
+	icon_state_dead = "seal-dead"
+	hand_count = 2
+	speechverb_say = "trills"
+	speechverb_exclaim = "barks"
+	death_text = "%src% lets out a final weak coo and keels over."
+	butcherable = 0
+	health_brute = 15
+	health_burn = 15
+	pet_text = list("gently baps", "pets", "cuddles")
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/small_critter
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "flipper"
+		HH.limb_name = "flipper"
+
+		HH = hands[2]
+		HH.limb = new /datum/limb/mouth/small
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "mouth"
+		HH.name = "mouth"
+		HH.limb_name = "mouth"
+		HH.can_hold_items = 0
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream","coo")
+				if (src.emote_check(voluntary, 50))
+					playsound(src, "sound/voice/babynoise.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+					return "<span class='emote'><b>[src]</b> coos!</span>"
+		return null
+
+	specific_emote_type(var/act)
+		switch (act)
+			if ("scream","coo")
+				return 2
+		return ..()
+
+/* ================================================ */
+/* -------------------- Walrus ---------------------- */
+/* ================================================ */
+
+/mob/living/critter/small_animal/walrus
+	name = "walrus"
+	real_name = "walrus"
+	desc = "Usually found in the Arctic on Earth, this particular walrus specimen seems to thrive in space."
+	icon_state = "walrus"
+	icon_state_dead = "walrus-dead"
+	hand_count = 2
+	speechverb_say = "harrumphs"
+	speechverb_exclaim = "roars"
+	death_text = "%src% lets out a final weak grumble and keels over."
+	butcherable = 0
+	health_brute = 15
+	health_burn = 15
+	pet_text = list("gently baps", "pets")
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/small_critter
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "flipper"
+		HH.limb_name = "flipper"
+
+		HH = hands[2]
+		HH.limb = new /datum/limb/mouth/small
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "mouth"
+		HH.name = "mouth"
+		HH.limb_name = "mouth"
+		HH.can_hold_items = 0
+
+
 /* ====================================================== */
 /* -------------------- Floating Eye -------------------- */
 /* ====================================================== */
@@ -1849,13 +1939,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
-			if ("flip","dance")
+			if ("dance")
 				if (src.emote_check(voluntary, 50) && !src.shrunk)
 					SPAWN_DBG(1 SECOND)
 						animate_bumble(src)
-					return null
-			if ("snap","buzz")
+					return "<span class='emote'><b>[src]</b> bumbles menacingly!</span>"
+			if ("scream","buzz")
 				if (src.emote_check(voluntary, 30))
+					playsound(src, "sound/voice/animal/fly_buzz.ogg", 90, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='emote'><b>[src]</b> buzzes!</span>" // todo?: find buzz noise
 		return null
 
@@ -1863,7 +1954,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		switch (act)
 			if ("flip","dance")
 				return 1
-			if ("snap","buzz")
+			if ("scream","buzz")
 				return 2
 		return ..()
 

@@ -1187,6 +1187,17 @@
 		..()
 		src.set_dir(pick(cardinal))
 
+/turf/simulated/nicegrass
+	name = "grass"
+	icon = 'icons/turf/outdoors.dmi'
+	icon_state = "grass"
+
+/turf/simulated/nicegrass/random
+	New()
+		..()
+		src.set_dir(pick(cardinal))
+
+
 /turf/unsimulated/floor/ballpit
 	name = "ball pit"
 	icon = 'icons/obj/stationobjs.dmi'

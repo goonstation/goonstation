@@ -177,48 +177,65 @@
 		if(transmit_connection != null)
 			transmit_connection.post_signal(null, pdaSignal)
 
-	proc/sell_crate(obj/storage/crate/sell_crate, var/list/commodities_list)
-		var/obj/item/card/id/scan = sell_crate.scan
-		var/datum/data/record/account = sell_crate.account
+	// Returns value of whatever the list of objects would sell for
+	proc/appraise_value(var/list/obj/items, var/list/commodities_list, var/sell = 1)
 
-		var/duckets = src.points_per_crate  // fuck yeah duckets
+		// TODO: Does this handle common containers like satchels?
+		// If not, maybe they should?
+		// Maybe some way to send them through mail chutes without
+		// dumping the contents out would be good
+
+		var/duckets = 0  // fuck yeah duckets  ((noun) Cash, money or bills, from "ducats")
 		var/add = 0
-
 		if (!commodities_list)
-			for(var/obj/O in sell_crate.contents)
+			for(var/obj/O in items)
 				for (var/C in src.commodities) // Key is type of the commodity
 					var/datum/commodity/CM = commodities[C]
 					if (istype(O, CM.comtype))
 						add = CM.price
 						if (CM.indemand)
 							add *= shippingmarket.demand_multiplier
-						if (istype(O, /obj/item/raw_material) || istype(O, /obj/item/material_piece) || istype(O, /obj/item/plant) || istype(O, /obj/item/reagent_containers/food/snacks/plant))
+						if (istype(O, /obj/item/raw_material) || istype(O, /obj/item/sheet) || istype(O, /obj/item/material_piece) || istype(O, /obj/item/plant) || istype(O, /obj/item/reagent_containers/food/snacks/plant))
 							add *= O:amount // TODO: fix for snacks
-							pool(O)
+							if (sell)
+								pool(O)
 						else
-							qdel(O)
+							if (sell)
+								qdel(O)
 						duckets += add
 						break
 					else if (istype(O, /obj/item/spacecash))
 						duckets += 0.9 * O:amount
-						pool(O)
+						if (sell)
+							pool(O)
 		else // Please excuse this duplicate code, I'm gonna change trader commodity lists into associative ones later I swear
-			for(var/obj/O in sell_crate.contents)
+			for(var/obj/O in items)
 				for (var/datum/commodity/C in commodities_list)
 					if (istype(O, C.comtype))
 						add = C.price
 						if (C.indemand)
 							add *= shippingmarket.demand_multiplier
-						if (istype(O, /obj/item/raw_material) || istype(O, /obj/item/material_piece) || istype(O, /obj/item/plant) || istype(O, /obj/item/reagent_containers/food/snacks/plant))
+						if (istype(O, /obj/item/raw_material) || istype(O, /obj/item/sheet) || istype(O, /obj/item/material_piece) || istype(O, /obj/item/plant) || istype(O, /obj/item/reagent_containers/food/snacks/plant))
 							add *= O:amount // TODO: fix for snacks
-							pool(O)
+							if (sell)
+								pool(O)
 						else
-							qdel(O)
+							if (sell)
+								qdel(O)
 						duckets += add
 						break
 					else if (istype(O, /obj/item/spacecash))
 						duckets += O:amount
-						pool(O)
+						if (sell)
+							pool(O)
+
+		return duckets
+
+	proc/sell_crate(obj/storage/crate/sell_crate, var/list/commodities_list)
+		var/obj/item/card/id/scan = sell_crate.scan
+		var/datum/data/record/account = sell_crate.account
+
+		var/duckets = src.appraise_value(sell_crate, commodities_list, 1) + src.points_per_crate
 
 		#ifdef SECRETS_ENABLED
 		send_to_brazil(sell_crate)
