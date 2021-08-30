@@ -1,5 +1,9 @@
 
 (t)sun aug 29 21
+(u)Walpvrgis
+(p)5815
+(e)🆕🎨|feature, sprites
+(+)Wasps, rockworms, seals and walruses have been resprited.
 (u)Vocalpocal
 (p)5824
 (e)⚖|balance
