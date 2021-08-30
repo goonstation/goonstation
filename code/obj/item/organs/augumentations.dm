@@ -86,7 +86,7 @@
 		var/mob/M = src.donor
 		if(!..())
 			return 0
-		if(src.broken)
+		if(src.broken && M.get_brain_damage <= 70)
 			M.take_brain_damage(1 * mult)
 		return 1
 
@@ -181,7 +181,6 @@
 	on_broken(var/mult = 1)
 		if (!..())
 			return
-		src.donor.reagents.add_reagent("goodnanites", 0.75 * mult)
 		src.donor.reagents.add_reagent("nanites", 0.5 * mult) //you want borg powers? Well, come and get 'em!
 		UnregisterSignal(src.donor, COMSIG_CLICK)
 

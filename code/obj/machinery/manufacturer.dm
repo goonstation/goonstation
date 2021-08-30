@@ -2174,6 +2174,7 @@
 	/datum/manufacture/augumentation_pain,
 	/datum/manufacture/augumentation_stun,
 	/datum/manufacture/augumentation_stam,
+	/datum/manufacture/augumentation_wire,
 	/datum/manufacture/rods2,
 	/datum/manufacture/metal,
 	/datum/manufacture/glass)

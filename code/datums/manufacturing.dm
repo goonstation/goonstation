@@ -1004,7 +1004,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	category = "Component"
 
 /datum/manufacture/augumentation_stun
-	name = "Stun Resist augumentation"
+	name = "Stun Resist Augumentation"
 	item_paths = list("CRY-2","MET-2","CON-2","INS-1", "electrum")
 	item_amounts = list(8,5,5,1,5)
 	item_outputs = list(/obj/item/organ/augumentation/head/stun_resist)
@@ -1013,7 +1013,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	category = "Component"
 
 /datum/manufacture/augumentation_pain
-	name = "Pain Blocker augumentation"
+	name = "Pain Blocker Augumentation"
 	item_paths = list("CRY-2","MET-2","CON-2","INS-1", "uqill")
 	item_amounts = list(8,5,5,3,5)
 	item_outputs = list(/obj/item/organ/augumentation/head/pain_reducer)
@@ -1022,10 +1022,19 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	category = "Component"
 
 /datum/manufacture/augumentation_stam
-	name = "Stamina Storage augumentation"
+	name = "Stamina Storage Augumentation"
 	item_paths = list("CRY-2","MET-2","CON-2","INS-1", "plasmastone")
 	item_amounts = list(15,5,5,8,5)
 	item_outputs = list(/obj/item/organ/augumentation/head/stamina_enhancer)
+	time = 80 SECONDS
+	create = 1
+	category = "Component"
+
+/datum/manufacture/augumentation_wire
+	name = "Wireless Interaction Augumentation"
+	item_paths = list("CRY-2","MET-2","CON-2","INS-1", "telecrystal")
+	item_amounts = list(8,5,5,3,10)
+	item_outputs = list(/obj/item/organ/augumentation/head/wireless_interact)
 	time = 80 SECONDS
 	create = 1
 	category = "Component"
