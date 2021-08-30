@@ -11,7 +11,7 @@
 	lockedDiff = 2
 	lockedChars = list("A","T","C","G")
 	lockedTries = 12
-	stability_loss = 5
+	stability_loss = 0
 	icon_state  = "hemochromia_unknown"
 
 	OnLife(var/mult)
