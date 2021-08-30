@@ -86,7 +86,7 @@
 		var/mob/living/carbon/human/M = src.donor
 		if(!..())
 			return 0
-		if(src.broken && M.get_brain_damage <= 70)
+		if(src.broken && M.get_brain_damage() <= 70)
 			M.take_brain_damage(1 * mult)
 		return 1
 
