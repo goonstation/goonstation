@@ -1,6 +1,6 @@
-### [![Goonstation](.github/assets/goonstation.png)](#) Welcome to the main repository for the Goonstation branch of [Space Station 13](https://spacestation13.com/).
+### [![Coolstation](.github/assets/coolstation.png)](#) Welcome to the main repository for the Coolstation fork of the Goonstation branch of [Space Station 13](https://spacestation13.com/).
 
-[![contains technical debt](https://forthebadge.com/images/badges/contains-technical-debt.svg)](#)[![made with crayons](https://forthebadge.com/images/badges/made-with-crayons.svg)](#)[![made in byond](https://user-images.githubusercontent.com/5211576/29499758-4efff304-85e6-11e7-8267-62919c3688a9.gif)](#)
+[![fuckshit](https://forthebadge.com/images/badges/you-didnt-ask-for-this.svg)](#)[![made with crayons](https://forthebadge.com/images/badges/made-with-crayons.svg)](#)[![made in byond](https://user-images.githubusercontent.com/5211576/29499758-4efff304-85e6-11e7-8267-62919c3688a9.gif)](#)
 
 # SETUP
 
