@@ -6627,10 +6627,6 @@
 "atP" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/communications/office)
-"atQ" = (
-/obj/indestructible/invisible_block,
-/turf/simulated/floor,
-/area/station/quartermaster/cargobay)
 "atR" = (
 /obj/table/auto,
 /obj/item/reagent_containers/mender_refill_cartridge/brute,
@@ -27223,19 +27219,6 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
-"bwL" = (
-/obj/storage/closet/mantacontainerred,
-/turf/simulated/floor,
-/area/station/quartermaster/cargobay)
-"bwM" = (
-/obj/storage/closet/mantacontainerred/right,
-/turf/simulated/floor,
-/area/station/quartermaster/cargobay)
-"bwN" = (
-/obj/storage/closet/mantacontainerred/right,
-/obj/item/instrument/harmonica,
-/turf/simulated/floor,
-/area/station/quartermaster/cargobay)
 "bwP" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/quartermaster/cargobay)
@@ -29974,10 +29957,6 @@
 	pixel_y = -24
 	},
 /turf/simulated/floor/bot,
-/area/station/quartermaster/cargobay)
-"bEk" = (
-/obj/decal/fakeobjects/mantacontainer/upwards/yellow,
-/turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bEl" = (
 /obj/machinery/conveyor/north{
@@ -72097,9 +72076,9 @@ boR
 xfn
 box
 aKs
-atQ
-atQ
-bwL
+bvk
+bvk
+bvk
 byy
 bvk
 bvk
@@ -72399,14 +72378,14 @@ boS
 brC
 bpW
 aKs
-atQ
-atQ
-bwM
+bvk
+bvk
+bvk
 byy
 bvk
-bNC
-bBz
-bEj
+bvk
+bvk
+bvk
 bwP
 bGE
 bHD
@@ -72701,14 +72680,14 @@ boR
 bgr
 box
 aKs
-atQ
-atQ
-bwL
+bvk
+bvk
+bvk
 byy
 bvk
 bvk
 bvk
-bEk
+bvk
 bwP
 fKa
 bHD
@@ -73003,14 +72982,14 @@ boR
 bgr
 box
 aKs
-atQ
-atQ
-bwN
+bvk
+bvk
+bvk
 byy
 bvk
-bvk
-bvk
-bvk
+bNC
+bBz
+bEj
 bwP
 bwP
 bwP
