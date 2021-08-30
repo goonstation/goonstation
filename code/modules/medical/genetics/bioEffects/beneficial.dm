@@ -1,8 +1,8 @@
 ////////////////////////////////
 // Resistances and Immunities //
 ////////////////////////////////
-
-/datum/bioEffect/fireres
+ABSTRACT_TYPE(/datum/bioEffect/thermal_resistances)
+/datum/bioEffect/thermal_resistances/fireres
 	name = "Fire Resistance"
 	desc = "Shields the subject's cellular structure against high temperatures and flames."
 	id = "fire_resist"
@@ -16,12 +16,17 @@
 	icon_state  = "fire_res"
 
 	OnAdd()
+		for (var/ID in owner.bioHolder.effects)
+			// clear away any existing fire/cold/thermalres first
+			if (istype(owner.bioHolder.GetEffect(ID), /datum/bioEffect/thermal_resistances) && ID != src.id)
+				owner.bioHolder.RemoveEffect(ID)
 		if (ishuman(owner))
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 			overlay_image.color = "#FFA200"
+
 		..()
 
-/datum/bioEffect/coldres
+/datum/bioEffect/thermal_resistances/coldres
 	name = "Cold Resistance"
 	desc = "Shields the subject's cellular structure against freezing temperatures and crystallization."
 	id = "cold_resist"
@@ -36,14 +41,19 @@
 	icon_state  = "cold_res"
 
 	OnAdd()
+		for (var/ID in owner.bioHolder.effects)
+			// clear away any existing fire/cold/thermalres first
+			if (istype(owner.bioHolder.GetEffect(ID), /datum/bioEffect/thermal_resistances) && ID != src.id)
+				owner.bioHolder.RemoveEffect(ID)
+
 		if (ishuman(owner))
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 			overlay_image.color = "#009DFF"
 		..()
 
-/datum/bioEffect/thermalres
+/datum/bioEffect/thermal_resistances/thermalres
 	name = "Thermal Resistance"
-	desc = "Shields the subject's cellular structure against any harmful temperature exposure."
+	desc = "Somewhat shields the subject's cellular structure against any harmful temperature exposure."
 	id = "thermal_resist"
 	effectType = EFFECT_TYPE_POWER
 	blockCount = 3
@@ -54,6 +64,11 @@
 	icon_state  = "thermal_res"
 
 	OnAdd()
+		for (var/ID in owner.bioHolder.effects)
+			// clear away any existing fire/cold/thermalres first
+			if (istype(owner.bioHolder.GetEffect(ID), /datum/bioEffect/thermal_resistances) && ID != src.id)
+				owner.bioHolder.RemoveEffect(ID)
+
 		if (ishuman(owner))
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 			overlay_image_two = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse-offset", layer = MOB_LIMB_LAYER)
@@ -63,9 +78,15 @@
 		if(overlay_image_two)
 			var/mob/living/L = owner
 			L.UpdateOverlays(overlay_image_two, id + "2")
+		APPLY_MOB_PROPERTY(owner, PROP_HEATPROT, src.type, 50)
+		APPLY_MOB_PROPERTY(owner, PROP_COLDPROT, src.type, 50)
+		owner.temp_tolerance *= 10
 
 	OnRemove()
 		..()
+		REMOVE_MOB_PROPERTY(owner, PROP_HEATPROT, src.type)
+		REMOVE_MOB_PROPERTY(owner, PROP_COLDPROT, src.type)
+		owner.temp_tolerance /= 10
 		if(overlay_image_two)
 			if(isliving(owner))
 				var/mob/living/L = owner
