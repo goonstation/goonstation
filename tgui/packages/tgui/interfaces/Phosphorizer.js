@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, NoticeBox, Divider, ColorBox, NumberInput } from '../components';
+import { Box, Button, ColorBox, Divider, Knob, NoticeBox } from '../components';
 import { Window } from '../layouts';
 
 export const Phosphorizer = (props, context) => {
@@ -11,13 +11,11 @@ export const Phosphorizer = (props, context) => {
       width={360}
       height={190}>
       <Window.Content>
-        <Box>
-          { busy ? (
-            <BusyWindow />
-          ) : (
-            <OperateWindow />
-          )}
-        </Box>
+        { busy ? (
+          <BusyWindow />
+        ) : (
+          <OperateWindow />
+        )}
       </Window.Content>
     </Window>
   );
@@ -25,7 +23,7 @@ export const Phosphorizer = (props, context) => {
 
 const OperateWindow = (props, context) => {
   const { act, data } = useBackend(context);
-  const { tubes, online, hostR, hostG, hostB } = data;
+  const { lights, online, hostR, hostG, hostB } = data;
 
   return (
     <Box>
@@ -34,35 +32,41 @@ const OperateWindow = (props, context) => {
       </NoticeBox>
       <Box>
         <strong># Loaded Lights:</strong>
-        {' '}{ tubes }
+        {' '}{ lights }
       </Box>
       <Box>
         Color Tuning:
         {' '}
-        <NumberInput
+        <Knob
+          inline
           minValue={20}
           maxValue={255}
           value={hostR}
+          color="red"
           format={value => "R:" + value}
           onDrag={(e, value) => act('tune_hue', {
             hue: "R",
             output: value,
           })}
         />
-        <NumberInput
+        <Knob
+          inline
           minValue={20}
           maxValue={255}
           value={hostG}
+          color="green"
           format={value => "G:" + value}
           onDrag={(e, value) => act('tune_hue', {
             hue: "G",
             output: value,
           })}
         />
-        <NumberInput
+        <Knob
+          inline
           minValue={20}
           maxValue={255}
           value={hostB}
+          color="blue"
           format={value => "B:" + value}
           onDrag={(e, value) => act('tune_hue', {
             hue: "B",
@@ -70,22 +74,21 @@ const OperateWindow = (props, context) => {
           })}
         />
         {' '}
-        <ColorBox
-          color={`rgba(${hostR}, ${hostG}, ${hostB}, 1)`} />
+        <ColorBox color={`rgba(${hostR}, ${hostG}, ${hostB}, 1)`} />
       </Box>
       <Divider />
       <Button
         icon="power-off"
-        content={online ? "Stop Phosphorizing" : "Start Phosphorizing"}
-        tooltip={online ? "Abort current processing." : "Begin applying chosen color to contents."}
+        content={online ? 'Stop Phosphorizing' : 'Start Phosphorizing'}
+        tooltip={online ? 'Abort current processing.' : 'Begin applying chosen color to contents.'}
         tooltipPosition="right"
-        onClick={() => act('process', {})} />
+        onClick={() => act('toggle-process')} />
       <Button
         icon="eject"
         content="Eject"
         tooltip="Remove contents without colorizing."
         tooltipPosition="bottom"
-        onClick={() => act('eject', {})} />
+        onClick={() => act('eject')} />
     </Box>
   );
 };
@@ -93,7 +96,7 @@ const OperateWindow = (props, context) => {
 const BusyWindow = () => {
   return (
     <NoticeBox warning>
-      The Machine is busy, please wait!
+      Phosphorization in progress, please wait!
     </NoticeBox>
   );
 };

@@ -1,5 +1,5 @@
 /obj/machinery/phosphorizer
-	name = "Phosphorizer"
+	name = "phosphorizer"
 	desc = "A device capable of baking a phosphor onto light tubes or bulbs, changing the color of light they emit."
 	icon = 'icons/obj/machines/phosphorizer.dmi'
 	icon_state = "baseunit"
@@ -142,7 +142,7 @@
 				if("G") src.ctrl_G = clamp(round(params["output"]), 20, 255)
 				if("B") src.ctrl_B = clamp(round(params["output"]), 20, 255)
 			. = TRUE
-		if("process")
+		if("toggle-process")
 			if(status | BROKEN && powered() && src.contents.len)
 				if(!src.phosphorizing)
 					src.start_phos()
@@ -150,7 +150,7 @@
 				else
 					src.stop_phos()
 					boutput(usr, "You deactivate [src].")
-				ui_interact(usr, ui)
+				. = TRUE
 		if("eject")
 			if(src.contents.len)
 				if(src.phosphorizing) stop_phos()
@@ -158,6 +158,6 @@
 					M.pixel_x = -4
 					M.pixel_y = 2 //bulb being blorfed out the input slot
 					M.set_loc(src.loc)
-				ui_interact(usr, ui)
+				. = TRUE
 
 	src.add_fingerprint(usr)
