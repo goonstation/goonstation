@@ -100,9 +100,6 @@
 	},
 /turf/space,
 /area/space)
-"aaq" = (
-/turf/simulated/shuttle/wall,
-/area/listeningpost)
 "aar" = (
 /turf/simulated/wall/asteroid{
 	dir = 4;
@@ -67905,10 +67902,10 @@ aac
 aac
 aaI
 aOI
-aaq
-aaq
-aaq
-aaq
+aOI
+aOI
+aOI
+aOI
 aac
 aac
 aaa
