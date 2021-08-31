@@ -1,6 +1,13 @@
 
 (t)tue aug 31 21
 (u)Tarmunora
+(p)5837
+(e)⚖|balance
+(*)Rebalances 'beneficial' bioeffects to accept the Power Booster chromosome. See PR for details. There are a lot of details.
+(+)Rebalances genetic stability costs of many bioeffects (mostly buffs). See PR for details. Again,
+(+)Removes robust genes trait, increases base genetic stability
+(+)Change formula for genetic power failrates at lower stability
+(u)Tarmunora
 (e)⚖|balance
 (+)Artifact guns must be activated to swap cells.
 (+)Chef is keeping a closer eye on their meatcleaver
