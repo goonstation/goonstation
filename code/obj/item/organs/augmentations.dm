@@ -117,6 +117,7 @@
 			REMOVE_MOVEMENT_MODIFIER(src.donor, /datum/movement_modifier/pain_reducer_broken, "pain_reducer_broken")
 		UnregisterSignal(src.donor, COMSIG_ATTACKBY)
 		UnregisterSignal(src.donor, COMSIG_ATTACKHAND)
+		UnregisterSignal(src.donor, COMSIG_PROJ_COLLIDE)
 
 	on_life(var/mult = 1)
 		var/mob/living/carbon/human/M = src.donor
