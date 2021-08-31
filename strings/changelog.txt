@@ -1,5 +1,12 @@
 
 (t)mon aug 30 21
+(u)UnfunnyPerson
+(p)5834
+(e)⚖|balance
+(+)Skeletons heal 1 brute and 1 burn from milk per cycle instead of 2 brute, 2 burn, and 1 tox
+(u)Tarmunora
+(e)⚖|balance
+(*)Stimulants are now a 6TC purchase for 3 3-minute stimpacks. The syndicate would like to remind it's agents that withdrawl symptoms are natural, and to not try to ride them out with another dose, as you will eventually run out.
 (u)Tarmunora
 (e)⚖|balance
 (*)Reinforced walls are immune to being punched down by hulks
