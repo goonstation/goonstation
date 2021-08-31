@@ -290,7 +290,7 @@
 				M.remove_stam_mod_max("stims")
 				M.remove_stun_resist_mod("stims")
 
-			owner.changeStatus("stimulant_withdrawl", (tickspassed/(3 MINUTES))**2 MINUTES, optional = tickspassed)
+			owner.changeStatus("stimulant_withdrawl", tickspassed/(3), optional = tickspassed)
 
 		onUpdate(timePassed)
 			. = ..()
@@ -630,8 +630,8 @@
 		onAdd(optional)
 			. = ..()
 			movement_modifier.additive_slowdown = duration / (1 MINUTE)
-			damage_brute *= duration / (1 MINUTE)
-			damage_tox *= duration / (1 MINUTE)
+			damage_brute *= (duration / (1 MINUTE)) ** 1.5
+			damage_tox *= (duration / (1 MINUTE)) ** 1.5
 			tickspassed = optional
 			if(ismob(owner))
 				var/mob/M = owner
