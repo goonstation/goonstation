@@ -360,34 +360,15 @@
 /area/prefab/shooting_range)
 "ys" = (
 /obj/table/reinforced,
-/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/ears/earmuffs/yeti,
 /obj/item/clothing/glasses/sunglasses/tanning{
 	pixel_y = 12
 	},
 /obj/item/item_box/assorted/stickers,
-/obj/item/clothing/ears/earmuffs{
+/obj/item/clothing/ears/earmuffs/earplugs{
 	pixel_x = -10;
 	pixel_y = -1
 	},
-/obj/item/storage/secure/ssafe/shooting_range{
-	pixel_y = 32
-	},
-/obj/machinery/light/incandescent/cool/very{
-	dir = 4;
-	pixel_x = 10
-	},
-/obj/item/paper/shooting_range_note1{
-	pixel_x = -13;
-	pixel_y = 28
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/table/reinforced,
-/obj/item/clothing/glasses/sunglasses/tanning{
-	pixel_y = 12
-	},
-/obj/item/item_box/assorted/stickers,
 /obj/item/storage/secure/ssafe/shooting_range{
 	pixel_y = 32
 	},
@@ -543,6 +524,18 @@
 	icon_state = "xtra_bigstripe-corner2"
 	},
 /obj/storage/crate/bin,
+/obj/item/clothing/ears/earmuffs{
+	pixel_x = -5;
+	pixel_y = 2
+	},
+/obj/item/clothing/ears/earmuffs{
+	pixel_x = -5;
+	pixel_y = 2
+	},
+/obj/item/clothing/ears/earmuffs{
+	pixel_x = -5;
+	pixel_y = 2
+	},
 /turf/simulated/floor/wood/three,
 /area/prefab/shooting_range)
 "Oz" = (
@@ -706,24 +699,15 @@
 /area/noGenerate)
 "Wf" = (
 /obj/table/reinforced,
-/obj/item/clothing/ears/earmuffs{
+/obj/item/clothing/ears/earmuffs/earplugs{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/ears/earmuffs{
+/obj/item/clothing/ears/earmuffs/earplugs,
+/obj/item/clothing/ears/earmuffs/earplugs{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/decal/tile_edge/stripe{
-	dir = 10;
-	icon_state = "xtra_bigstripe-corner2"
-	},
-/obj/item/clothing/glasses/sunglasses/tanning,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/table/reinforced,
 /obj/decal/tile_edge/stripe{
 	dir = 10;
 	icon_state = "xtra_bigstripe-corner2"
