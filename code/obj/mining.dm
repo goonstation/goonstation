@@ -2386,7 +2386,7 @@ var/global/list/cargopads = list()
 				I.set_loc(target)
 			satchel.satchel_updateicon()
 			return
-		if (istype(target, /obj/item/satchel/mining)
+		if (istype(target, /obj/item/satchel/mining))
 			src.attackby(satchel, user)
 
 ////// Shit that goes in the asteroid belt, might split it into an exploring.dm later i guess
