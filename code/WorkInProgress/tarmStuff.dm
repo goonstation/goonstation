@@ -5,7 +5,7 @@
 	name = "\improper Rakshasa round"
 	icon_state = "sniper_bullet"
 	dissipation_rate = 0
-	projectile_speed = 640
+	projectile_speed = 12800
 	casing = /obj/item/casing/cannon
 	power = 125
 	implanted = /obj/item/implant/projectile/rakshasa
@@ -29,7 +29,7 @@
 /obj/item/ammo/bullets/rifle_3006/rakshasa
 	name = "\improper Rakshasa round"
 	desc = "..."
-	ammo_type = /datum/projectile/bullet/rifle_3006/rakshasa
+	ammo_type = new/datum/projectile/bullet/rifle_3006/rakshasa
 
 /obj/item/gun/kinetic/g11
 	name = "\improper Manticore assault rifle"
