@@ -2,7 +2,7 @@
 	name = "mixed (action)"
 	config_tag = "mixed"
 	latejoin_antag_compatible = 1
-	latejoin_antag_roles = list("traitor", "changeling", "vampire", "wrestler", "werewolf")
+	latejoin_antag_roles = list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_WRESTLER, ROLE_WEREWOLF, ROLE_ARCFIEND)
 
 	var/const/traitors_possible = 8 // cogwerks - lowered from 10
 	var/const/werewolf_players_req = 15
@@ -11,7 +11,7 @@
 	var/has_werewolves = 1
 	var/has_blobs = 1
 
-	var/list/traitor_types = list("traitor","changeling","vampire", "spy_thief", "werewolf")
+	var/list/traitor_types = list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_SPY_THIEF, ROLE_WEREWOLF, ROLE_ARCFIEND)
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
@@ -33,7 +33,7 @@
 			num_players++
 
 	if (num_players < werewolf_players_req || !has_werewolves)
-		traitor_types -= "werewolf"
+		traitor_types -= ROLE_WEREWOLF
 
 	var/i = rand(25)
 	var/num_enemies = 1
@@ -50,9 +50,10 @@
 	var/num_blobs = 0
 	var/num_spy_thiefs = 0
 	var/num_werewolves = 0
+	var/num_arcfiends = 0
 #ifdef XMAS
-	src.traitor_types += "grinch"
-	src.latejoin_antag_roles += "grinch"
+	src.traitor_types += ROLE_GRINCH
+	src.latejoin_antag_roles += ROLE_GRINCH
 #endif
 
 	if ((num_enemies >= 4 && prob(20)) || debug_mixed_forced_wraith || debug_mixed_forced_blob)
@@ -68,133 +69,150 @@
 			// if any combat roles end up in this mode they go here ok
 		else // more stealthy roles
 			switch(pick(src.traitor_types))
-				if("traitor") num_traitors++
-				if("changeling") num_changelings++
-				if("vampire") num_vampires++
-				if("grinch") num_grinches++
-				if("spy_thief") num_spy_thiefs++
-				if("werewolf") num_werewolves++
+				if(ROLE_TRAITOR) num_traitors++
+				if(ROLE_CHANGELING) num_changelings++
+				if(ROLE_VAMPIRE) num_vampires++
+				if(ROLE_GRINCH) num_grinches++
+				if(ROLE_SPY_THIEF) num_spy_thiefs++
+				if(ROLE_WEREWOLF) num_werewolves++
+				if(ROLE_ARCFIEND)
+					if(num_arcfiends < 2)
+						num_arcfiends++
+					else
+						num_traitors++
 
 	token_players = antag_token_list()
 	for(var/datum/mind/tplayer in token_players)
 		if (!token_players.len)
 			break
 		switch(pick(traitor_types))
-			if("wizard")
+			if(ROLE_WIZARD)
 				traitors += tplayer
 				token_players.Remove(tplayer)
 				tplayer.assigned_role = "MODE"
-				tplayer.special_role = "wizard"
+				tplayer.special_role = ROLE_WIZARD
 				//num_wizards = max(0, num_wizards -1)
-			if("traitor")
+			if(ROLE_TRAITOR)
 				traitors += tplayer
 				token_players.Remove(tplayer)
-				tplayer.special_role = "traitor"
+				tplayer.special_role = ROLE_TRAITOR
 				//num_traitors = max(0, num_traitors -1)
-			if("changeling")
+			if(ROLE_CHANGELING)
 				traitors += tplayer
 				token_players.Remove(tplayer)
-				tplayer.special_role = "changeling"
+				tplayer.special_role = ROLE_CHANGELING
 				//num_changelings = max(0, num_changelings -1)
-			if("vampire")
+			if(ROLE_VAMPIRE)
 				traitors += tplayer
 				token_players.Remove(tplayer)
-				tplayer.special_role = "vampire"
+				tplayer.special_role = ROLE_VAMPIRE
 				//num_vampires = max(0, num_vampires -1)
-			if("wraith")
+			if(ROLE_WRAITH)
 				traitors += tplayer
 				token_players.Remove(tplayer)
-				tplayer.special_role = "wraith"
+				tplayer.special_role = ROLE_WRAITH
 				//num_wraiths = max(0, num_wraiths -1)
-			if("blob")
+			if(ROLE_BLOB)
 				traitors += tplayer
 				token_players.Remove(tplayer)
-				tplayer.special_role = "blob"
+				tplayer.special_role = ROLE_BLOB
 				//num_blobs = max(0, num_blobs -1)
-			if("spy_thief")
+			if(ROLE_SPY_THIEF)
 				traitors += tplayer
 				token_players.Remove(tplayer)
-				tplayer.special_role = "spy_thief"
-			if("werewolf")
+				tplayer.special_role = ROLE_SPY_THIEF
+			if(ROLE_WEREWOLF)
 				traitors += tplayer
 				token_players.Remove(tplayer)
-				tplayer.special_role = "werewolf"
+				tplayer.special_role = ROLE_WEREWOLF
+			if(ROLE_ARCFIEND)
+				traitors += tplayer
+				token_players.Remove(tplayer)
+				tplayer.special_role = ROLE_ARCFIEND
 
 		logTheThing("admin", tplayer.current, null, "successfully redeemed an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token.")
 
 	if(num_wizards)
-		var/list/possible_wizards = get_possible_enemies("wizard",num_wizards)
-		var/list/chosen_wizards = antagWeighter.choose(pool = possible_wizards, role = "wizard", amount = num_wizards, recordChosen = 1)
+		var/list/possible_wizards = get_possible_enemies(ROLE_WIZARD,num_wizards)
+		var/list/chosen_wizards = antagWeighter.choose(pool = possible_wizards, role = ROLE_WIZARD, amount = num_wizards, recordChosen = 1)
 		for (var/datum/mind/wizard in chosen_wizards)
 			traitors += wizard
 			wizard.assigned_role = "MODE"
-			wizard.special_role = "wizard"
+			wizard.special_role = ROLE_WIZARD
 			possible_wizards.Remove(wizard)
 
 	if(num_traitors)
-		var/list/possible_traitors = get_possible_enemies("traitor",num_traitors)
-		var/list/chosen_traitors = antagWeighter.choose(pool = possible_traitors, role = "traitor", amount = num_traitors, recordChosen = 1)
+		var/list/possible_traitors = get_possible_enemies(ROLE_TRAITOR,num_traitors)
+		var/list/chosen_traitors = antagWeighter.choose(pool = possible_traitors, role = ROLE_TRAITOR, amount = num_traitors, recordChosen = 1)
 		for (var/datum/mind/traitor in chosen_traitors)
 			traitors += traitor
-			traitor.special_role = "traitor"
+			traitor.special_role = ROLE_TRAITOR
 			possible_traitors.Remove(traitor)
 
 	if(num_changelings)
-		var/list/possible_changelings = get_possible_enemies("changeling",num_changelings)
-		var/list/chosen_changelings = antagWeighter.choose(pool = possible_changelings, role = "changeling", amount = num_changelings, recordChosen = 1)
+		var/list/possible_changelings = get_possible_enemies(ROLE_CHANGELING,num_changelings)
+		var/list/chosen_changelings = antagWeighter.choose(pool = possible_changelings, role = ROLE_CHANGELING, amount = num_changelings, recordChosen = 1)
 		for (var/datum/mind/changeling in chosen_changelings)
 			traitors += changeling
-			changeling.special_role = "changeling"
+			changeling.special_role = ROLE_CHANGELING
 			possible_changelings.Remove(changeling)
 
 	if(num_vampires)
-		var/list/possible_vampires = get_possible_enemies("vampire",num_vampires)
-		var/list/chosen_vampires = antagWeighter.choose(pool = possible_vampires, role = "vampire", amount = num_vampires, recordChosen = 1)
+		var/list/possible_vampires = get_possible_enemies(ROLE_VAMPIRE,num_vampires)
+		var/list/chosen_vampires = antagWeighter.choose(pool = possible_vampires, role = ROLE_VAMPIRE, amount = num_vampires, recordChosen = 1)
 		for (var/datum/mind/vampire in chosen_vampires)
 			traitors += vampire
-			vampire.special_role = "vampire"
+			vampire.special_role = ROLE_VAMPIRE
 			possible_vampires.Remove(vampire)
 
 	if(num_wraiths)
-		var/list/possible_wraiths = get_possible_enemies("wraith",num_wraiths)
-		var/list/chosen_wraiths = antagWeighter.choose(pool = possible_wraiths, role = "wraith", amount = num_wraiths, recordChosen = 1)
+		var/list/possible_wraiths = get_possible_enemies(ROLE_WRAITH,num_wraiths)
+		var/list/chosen_wraiths = antagWeighter.choose(pool = possible_wraiths, role = ROLE_WRAITH, amount = num_wraiths, recordChosen = 1)
 		for (var/datum/mind/wraith in chosen_wraiths)
 			traitors += wraith
-			wraith.special_role = "wraith"
+			wraith.special_role = ROLE_WRAITH
 			possible_wraiths.Remove(wraith)
 
 	if(num_blobs)
-		var/list/possible_blobs = get_possible_enemies("blob",num_blobs)
-		var/list/chosen_blobs = antagWeighter.choose(pool = possible_blobs, role = "blob", amount = num_blobs, recordChosen = 1)
+		var/list/possible_blobs = get_possible_enemies(ROLE_BLOB,num_blobs)
+		var/list/chosen_blobs = antagWeighter.choose(pool = possible_blobs, role = ROLE_BLOB, amount = num_blobs, recordChosen = 1)
 		for (var/datum/mind/blob in chosen_blobs)
 			traitors += blob
-			blob.special_role = "blob"
+			blob.special_role = ROLE_BLOB
 			possible_blobs.Remove(blob)
 
 	if(num_grinches)
-		var/list/possible_grinches = get_possible_enemies("grinch",num_grinches)
-		var/list/chosen_grinches = antagWeighter.choose(pool = possible_grinches, role = "grinch", amount = num_grinches, recordChosen = 1)
+		var/list/possible_grinches = get_possible_enemies(ROLE_GRINCH,num_grinches)
+		var/list/chosen_grinches = antagWeighter.choose(pool = possible_grinches, role = ROLE_GRINCH, amount = num_grinches, recordChosen = 1)
 		for (var/datum/mind/grinch in chosen_grinches)
 			traitors += grinch
-			grinch.special_role = "grinch"
+			grinch.special_role = ROLE_GRINCH
 			possible_grinches.Remove(grinch)
 
 	if(num_spy_thiefs)
-		var/list/possible_spy_thieves = get_possible_enemies("spy_thief",num_spy_thiefs)
-		var/list/chosen_spy_thieves = antagWeighter.choose(pool = possible_spy_thieves, role = "spy_thief", amount = num_spy_thiefs, recordChosen = 1)
+		var/list/possible_spy_thieves = get_possible_enemies(ROLE_SPY_THIEF,num_spy_thiefs)
+		var/list/chosen_spy_thieves = antagWeighter.choose(pool = possible_spy_thieves, role = ROLE_SPY_THIEF, amount = num_spy_thiefs, recordChosen = 1)
 		for (var/datum/mind/spy in chosen_spy_thieves)
 			traitors += spy
-			spy.special_role = "spy_thief"
+			spy.special_role = ROLE_SPY_THIEF
 			possible_spy_thieves.Remove(spy)
 
 	if(num_werewolves)
-		var/list/possible_werewolves = get_possible_enemies("werewolf",num_werewolves)
-		var/list/chosen_werewolves = antagWeighter.choose(pool = possible_werewolves, role = "werewolf", amount = num_werewolves, recordChosen = 1)
+		var/list/possible_werewolves = get_possible_enemies(ROLE_WEREWOLF,num_werewolves)
+		var/list/chosen_werewolves = antagWeighter.choose(pool = possible_werewolves, role = ROLE_WEREWOLF, amount = num_werewolves, recordChosen = 1)
 		for (var/datum/mind/wolf in chosen_werewolves)
 			traitors += wolf
-			wolf.special_role = "werewolf"
+			wolf.special_role = ROLE_WEREWOLF
 			possible_werewolves.Remove(wolf)
+
+	if(num_arcfiends)
+		var/list/possible_arcfiends = get_possible_enemies(ROLE_ARCFIEND,num_arcfiends)
+		var/list/chosen_arcfiends = antagWeighter.choose(pool = possible_arcfiends, role = ROLE_ARCFIEND, amount = num_arcfiends, recordChosen = 1)
+		for (var/datum/mind/arcfiend in chosen_arcfiends)
+			traitors += arcfiend
+			arcfiend.special_role = ROLE_ARCFIEND
+			possible_arcfiends.Remove(arcfiend)
 
 	if(!traitors) return 0
 
@@ -206,15 +224,15 @@
 	for (var/datum/mind/traitor in traitors)
 		objective_set_path = null // Gotta reset this.
 
-		if (traitor.assigned_role == "Chaplain" && traitor.special_role == "vampire")
+		if (traitor.assigned_role == "Chaplain" && traitor.special_role == ROLE_VAMPIRE)
 			// vamp will burn in the chapel before he can react
 			if (prob(50))
-				traitor.special_role = "traitor"
+				traitor.special_role = ROLE_TRAITOR
 			else
-				traitor.special_role = "changeling"
+				traitor.special_role = ROLE_CHANGELING
 
 		switch (traitor.special_role)
-			if ("traitor")
+			if (ROLE_TRAITOR)
 			#ifdef RP_MODE
 				objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
 			#else
@@ -222,11 +240,11 @@
 			#endif
 				equip_traitor(traitor.current)
 
-			if ("changeling")
+			if (ROLE_CHANGELING)
 				objective_set_path = /datum/objective_set/changeling
 				traitor.current.make_changeling()
 
-			if ("wizard")
+			if (ROLE_WIZARD)
 				objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
 				traitor.current.unequip_all(1)
 
@@ -256,24 +274,24 @@
 						traitor.current.real_name = newname
 						traitor.current.name = newname
 
-			if ("wraith")
+			if (ROLE_WRAITH)
 				generate_wraith_objectives(traitor)
 
-			if ("vampire")
+			if (ROLE_VAMPIRE)
 				objective_set_path = /datum/objective_set/vampire
 				traitor.current.make_vampire()
 
-			if ("hunter")
+			if (ROLE_HUNTER)
 				objective_set_path = /datum/objective_set/hunter
 				traitor.current.show_text("<h2><font color=red><B>You are a hunter!</B></font></h2>", "red")
 				traitor.current.make_hunter()
 
-			if ("grinch")
+			if (ROLE_GRINCH)
 				objective_set_path = /datum/objective_set/grinch
 				boutput(traitor.current, "<h2><font color=red><B>You are a grinch!</B></font></h2>")
 				traitor.current.make_grinch()
 
-			if ("blob")
+			if (ROLE_BLOB)
 				objective_set_path = /datum/objective_set/blob
 				SPAWN_DBG(0)
 					var/newname = input(traitor.current, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change") as text
@@ -285,7 +303,7 @@
 						traitor.current.real_name = newname
 						traitor.current.name = newname
 
-			if ("spy_thief")
+			if (ROLE_SPY_THIEF)
 				objective_set_path = /datum/objective_set/spy_theft
 				SPAWN_DBG(1 SECOND) //dumb delay to avoid race condition where spy assignment bugs
 					equip_spy_theft(traitor.current)
@@ -296,9 +314,19 @@
 					src.spy_market.build_bounty_list()
 					src.spy_market.update_bounty_readouts()
 
-			if ("werewolf")
+			if (ROLE_WEREWOLF)
 				objective_set_path = /datum/objective_set/werewolf
 				traitor.current.make_werewolf()
+
+			if (ROLE_ARCFIEND) // TODO: EV objectives
+			#ifdef RP_MODE
+				objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
+			#else
+				objective_set_path = pick(typesof(/datum/objective_set/traitor))
+			#endif
+			#ifdef SECRETS_ENABLED
+				traitor.current.make_arcfiend()
+			#endif
 
 		if (!isnull(objective_set_path)) // Cannot create objects of type null. [wraiths use a special proc]
 			new objective_set_path(traitor)
@@ -320,27 +348,29 @@
 		if (ishellbanned(player)) continue //No treason for you
 		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
 			switch(type)
-				if("wizard")
+				if(ROLE_WIZARD)
 					if(player.client.preferences.be_wizard) candidates += player.mind
-				if("traitor")
+				if(ROLE_TRAITOR)
 					if(player.client.preferences.be_traitor) candidates += player.mind
-				if("changeling")
+				if(ROLE_CHANGELING)
 					if(player.client.preferences.be_changeling) candidates += player.mind
-				if("vampire")
+				if(ROLE_VAMPIRE)
 					if(player.client.preferences.be_vampire) candidates += player.mind
-				if("wraith")
+				if(ROLE_WRAITH)
 					if(player.client.preferences.be_wraith) candidates += player.mind
-				if("blob")
+				if(ROLE_BLOB)
 					if(player.client.preferences.be_blob) candidates += player.mind
-				if("spy_thief")
+				if(ROLE_SPY_THIEF)
 					if(player.client.preferences.be_spy) candidates += player.mind
-				if("werewolf")
+				if(ROLE_WEREWOLF)
 					if(player.client.preferences.be_werewolf) candidates += player.mind
+				if(ROLE_ARCFIEND)
+					if(player.client.preferences.be_arcfiend) candidates += player.mind
 				else
 					if(player.client.preferences.be_misc) candidates += player.mind
 
 	if(candidates.len < number)
-		if(type in list("wizard","traitor","changeling", "wraith", "blob", "werewolf"))
+		if(type in list(ROLE_WIZARD, ROLE_TRAITOR, ROLE_CHANGELING, ROLE_WRAITH, ROLE_BLOB, ROLE_WEREWOLF))
 			logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_[type] set to yes were ready. We need [number] so including players who don't want to be [type]s in the pool.")
 		else
 			logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Not enough players with be_misc set to yes, including players who don't want to be misc enemies in the pool for [type] assignment.")

@@ -113,7 +113,6 @@
 		materiel_stock += new/datum/materiel/utility/crowdgrenades
 		materiel_stock += new/datum/materiel/utility/detscanner
 		materiel_stock += new/datum/materiel/utility/medcappowercell
-		materiel_stock += new/datum/materiel/utility/firstaidsec
 		materiel_stock += new/datum/materiel/utility/nightvisiongoggles
 		materiel_stock += new/datum/materiel/utility/markerrounds
 		materiel_stock += new/datum/materiel/utility/prisonerscanner
@@ -260,9 +259,9 @@
 	description = "Four Morphine Autoinjectors, capable of ensuring you move at the best possible speed while injured without slowdowns...or used as a makeshift tranquilizer if overdosed."
 
 /datum/materiel/utility/donuts
-	name = "Robust Donuts"
+	name = "Robust(ed) Donuts"
 	path = /obj/item/storage/box/robustdonuts
-	description = "Two Robust Donuts, which are loaded with helpful chemicals which heals you and helps you resist stuns!"
+	description = "Two Robust Donuts and two Robusted Donuts, which are loaded with helpful chemicals that help you resist stuns and heal you!"
 
 /datum/materiel/utility/crowdgrenades
 	name = "Crowd Dispersal Grenades"
@@ -273,11 +272,6 @@
 	name = "Forensics Scanner"
 	path = /obj/item/device/detective_scanner
 	description = "A scanner capable of reading fingerprints on objects and looking up the records in real time. A favorite of investigators."
-
-/datum/materiel/utility/firstaidsec
-	name = "First Aid Kit"
-	path = /obj/item/storage/firstaid/regular/doctor_spawn
-	description = "An advanced first aid kit, typically used in first responder scenarios before doctors arrive."
 
 /datum/materiel/utility/medcappowercell
 	name = "Spare Power Cell"

@@ -696,7 +696,7 @@
 		R.set_loc(src)
 		src.occupant = R
 		if (R.client)
-			src.attack_hand(R)
+			src.Attackhand(R)
 		src.add_fingerprint(user)
 		src.build_icon()
 
@@ -714,7 +714,7 @@
 		H.set_loc(src)
 		src.occupant = H
 		if (H.client)
-			src.attack_hand(H)
+			src.Attackhand(H)
 		src.add_fingerprint(user)
 		src.build_icon()
 
@@ -885,7 +885,7 @@
 	usr.pulling = null
 	usr.set_loc(src)
 	src.occupant = usr
-	src.attack_hand(usr)
+	src.Attackhand(usr)
 	src.add_fingerprint(usr)
 	src.build_icon()
 

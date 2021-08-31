@@ -114,8 +114,8 @@
 		. = SEND_SIGNAL(src.cell, COMSIG_CELL_CHARGE, amount)
 
 
-/datum/component/cell_holder/proc/use(parent, amount, bypass)
-	. = SEND_SIGNAL(src.cell, COMSIG_CELL_USE, amount, bypass)
+/datum/component/cell_holder/proc/use(parent, amount)
+	. = SEND_SIGNAL(src.cell, COMSIG_CELL_USE, amount)
 
 /datum/component/cell_holder/proc/check_charge(source, amount)
 	. = SEND_SIGNAL(src.cell, COMSIG_CELL_CHECK_CHARGE, amount)

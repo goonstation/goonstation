@@ -121,6 +121,7 @@
 	/obj/item/clothing/shoes/brown,
 	/obj/item/gun/implanter,
 	/obj/item/gun/reagent/syringe/NT,
+	/obj/item/reagent_containers/mender/both,
 	/obj/item/gun/kinetic/dart_rifle,
 	/obj/item/ammo/bullets/tranq_darts,
 	/obj/item/ammo/bullets/tranq_darts/anti_mutant,
@@ -572,7 +573,8 @@
 	/obj/item/mining_tool/power_pick,
 	/obj/item/clothing/glasses/meson,
 	/obj/item/storage/belt/mining,
-	/obj/item/device/geiger)
+	/obj/item/device/geiger,
+	/obj/item/device/appraisal)
 
 /obj/storage/secure/closet/engineering/cargo
 	name = "\improper Quartermaster's locker"
@@ -582,7 +584,8 @@
 	/obj/item/paper_bin,
 	/obj/item/clipboard,
 	/obj/item/hand_labeler,
-	/obj/item/cargotele)
+	/obj/item/cargotele,
+	/obj/item/device/appraisal)
 
 /* ==================== */
 /* ----- Civilian ----- */
@@ -613,7 +616,8 @@
 	/obj/item/plantanalyzer,
 	/obj/item/device/reagentscanner,
 	/obj/item/reagent_containers/glass/wateringcan,
-	/obj/item/paper/book/from_file/hydroponicsguide)
+	/obj/item/paper/book/from_file/hydroponicsguide,
+	/obj/item/device/appraisal)
 
 /obj/storage/secure/closet/civilian/kitchen
 	name = "\improper Catering supplies locker"

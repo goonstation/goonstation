@@ -101,7 +101,7 @@
 				for (var/obj/machinery/light_switch/L as() in station_switches)
 					if(L.on && prob(50))
 						elecflash(L)
-						L.attack_hand(null)
+						L.Attackhand(null)
 				generator.transformation_mngr.transform_to_type(/datum/teg_transformation/vampire)
 
 		SPAWN_DBG(0)
@@ -111,7 +111,7 @@
 			// Set stage by turning off lights to engine room
 			if(teg_light_switch)
 				elecflash(teg_light_switch)
-				teg_light_switch.attack_hand(null)
+				teg_light_switch.Attackhand(null)
 			else
 				elecflash(A.area_apc)
 				if(!A.area_apc.lighting)
@@ -142,7 +142,7 @@
 							for (var/obj/machinery/light_switch/L as() in station_switches)
 								if(L.on && prob(5))
 									elecflash(L)
-									L.attack_hand(null)
+									L.Attackhand(null)
 						if(4)
 							// Electrify Doors
 							for_by_tcl(D, /obj/machinery/door/airlock)
@@ -456,7 +456,7 @@ datum/teg_transformation/vampire
 
 				target.real_name = "zombie [target.real_name]"
 				if (target.mind)
-					target.mind.special_role = "vampthrall"
+					target.mind.special_role = ROLE_VAMPTHRALL
 					target.mind.master = src.teg
 					if (!(target.mind in ticker.mode.Agimmicks))
 						ticker.mode.Agimmicks += target.mind
