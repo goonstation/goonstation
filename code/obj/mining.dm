@@ -2366,7 +2366,7 @@ var/global/list/cargopads = list()
 		if(!issilicon(user))
 			if (satchel)
 				user.visible_message("[user] unloads [satchel] from [src].", "You unload [satchel] from [src].")
-				satchel.set_loc(get_turf(user))
+				user.put_in_hand_or_drop(satchel)
 				satchel = null
 				icon_state = "scoop"
 			else
