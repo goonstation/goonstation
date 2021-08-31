@@ -30,9 +30,13 @@ Try not to!
 
 You’ll need to create a file named `__secret.dme` in the +secret subdirectory. It should be blank and have no contents. Read the [Goonstation Development Guide](https://hackmd.io/@goonstation/docs/%2F%40goonstation%2Fdev) for additional details.
 
-#### Q: You got any 
+#### Q: this is just goonstation
 
-yeah friendo
+For NOW it's just Goonstation. It's a fork. There's Plan's afoot's.
+
+#### Q: Hey nerd, you got any horse deworming paste?
+
+yeah friendo i got you hooked up
 
 ## LICENSE
 [![license-badge](https://forthebadge.com/images/badges/cc-nc-sa.svg)](https://creativecommons.org/licenses/by-nc-sa/3.0/)
