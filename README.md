@@ -6,22 +6,23 @@
 
 [<img src=".github/assets/setup.png" alt="Setup" width="150" align="left">](https://hackmd.io/@goonstation/docs/%2F%40goonstation%2Fdev)
 
-Want to get the code up and running? This guide is the place to go. <br>***Be sure to follow it exactly!*** If you need help, visit the #imcoder channel on our Discord.
+Here's Goonstation's guide to getting this shit off the ground, it's not our guide. Nevertheless: <br>***Be sure to follow it exactly!*** If you need help, visit the #imcoder channel on their Discord or holler at us on our Discord.
+We're still figuring it out and getting our own server up thank you very much please be nice.
 
 ## COMMUNITY
 
 [<img src=".github/assets/forums.png" alt="Forums" width="150" align="left">](https://forum.coolstation.space)
-The forums are where we get most of our player feedback/suggestions and talk about things in a more longform format. This is also the place to appeal any bans or give admin feedback.
+We have wonderful formums for announcements and discussion. Feast your eyes, and then make suggestions, discussion about game, leave feedback, like and subscribe, and appeal a ban's.
 
 [<img src=".github/assets/wiki.png" alt="Goonhub" width="150" align="left">](https://wiki.coolstation.space/)
-Our wiki is the place to go for any information you seek on the various constructions, items, game modes, and more in-game. There's also guides for various jobs on station!
+You might leave our wiki knowing more than you did before or you might still just be confused but that's cool. It's still under construction don't worry about it.
 
-[<img src=".github/assets/goonhub.png" alt="Goonhub" width="150" align="left">](https://goonhub.com)
-Goonhub is the premier place for locating statistics, data about rounds, detailed game maps, and all other links pertaining to Goonstation!
+[<img src=".github/assets/goonhub.png" alt="Coolhub" width="150" align="left">](https://coolstation.space)
+Coolhub doesn't exiust yet but it probably will have like, maps and round info and be a good intro landing page. Right now it is a very good template website that is intended for use by energy companies.
 
 ## CONTRIBUTING
 
-Try not to! 
+Try not to!
 
 ## FAQ (Frequently Asked Question)
 
@@ -29,10 +30,13 @@ Try not to!
 
 You’ll need to create a file named `__secret.dme` in the +secret subdirectory. It should be blank and have no contents. Read the [Goonstation Development Guide](https://hackmd.io/@goonstation/docs/%2F%40goonstation%2Fdev) for additional details.
 
+#### Q: You got any 
+
+yeah friendo
 
 ## LICENSE
 [![license-badge](https://forthebadge.com/images/badges/cc-nc-sa.svg)](https://creativecommons.org/licenses/by-nc-sa/3.0/)
 
-All Goonstation contributions are licensed under [Creative Commons BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/3.0/). See LICENSE for more details.
+All Cooltation contributions are licensed under [Creative Commons BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/3.0/). See LICENSE for more details.
 
-**Important:** This means that code from Goonstation cannot be ported to codebases such as /tg/station. If you wish to port a specific feature, you must get the developer(s) to sublicense it to you under a license like AGPLv3. This also applies in the opposite direction for features ported from other codebases.
+**Important:** This means that code from Coolstation, like Goonstation, cannot be ported to codebases such as /tg/station. If you wish to port a specific feature, you must get the developer(s) to sublicense it to you under a license like AGPLv3. This also applies in the opposite direction for features ported from other codebases.
