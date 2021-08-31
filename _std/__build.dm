@@ -109,13 +109,10 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_WRESTLEMAP   // Wrestlemap by Overtone
 // #define MAP_OVERRIDE_POD_WARS   // 500x500 Pod Wars map
 
-<<<<<<< HEAD
-=======
 //////////// Unit Test Framework
 
 //#define UNIT_TESTS
 
->>>>>>> da6bbc28ccff18dcba3d8f6b64d21b0657c6d2e6
 //////////// HOLIDAYS AND OTHER SUCH TOGGLES
 
 //#define RP_MODE
