@@ -43530,6 +43530,10 @@
 "cvq" = (
 /obj/item/match,
 /obj/stool/chair/comfy/shuttle/brown,
+/obj/decal/fakeobjects/robot{
+	desc = "A J-12 Bus Driving Unit. It looks like someone's given it several hard whacks on the brain-case with a blunt object.";
+	name = "Busted J-12 Bus Driver"
+	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},

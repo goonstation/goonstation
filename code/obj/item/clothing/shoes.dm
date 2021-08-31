@@ -251,6 +251,11 @@
 	step_priority = STEP_PRIORITY_LOW
 	permeability_coefficient = 0.05
 
+	torn
+		desc = "Rubber boots that would prevent slipping on wet surfaces, were they not all torn up. Like these are. Damn."
+		c_flags = null
+		permeability_coefficient = 1
+
 /obj/item/clothing/shoes/clown_shoes
 	name = "clown shoes"
 	desc = "Damn, thems some big shoes."

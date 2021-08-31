@@ -222,30 +222,6 @@
 	},
 /turf/simulated/floor/engine/caution,
 /area/prefab/shooting_range)
-"jn" = (
-/obj/table/reinforced,
-/obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/glasses/sunglasses/tanning{
-	pixel_y = 12
-	},
-/obj/item/item_box/assorted/stickers,
-/obj/item/clothing/ears/earmuffs{
-	pixel_x = -10;
-	pixel_y = -1
-	},
-/obj/item/storage/secure/ssafe/shooting_range{
-	pixel_y = 32
-	},
-/obj/machinery/light/incandescent/cool/very{
-	dir = 4;
-	pixel_x = 10
-	},
-/obj/item/paper/shooting_range_note1{
-	pixel_x = -13;
-	pixel_y = 28
-	},
-/turf/simulated/floor/wood/three,
-/area/prefab/shooting_range)
 "ls" = (
 /obj/random_pod_spawner/random_putt_spawner,
 /turf/simulated/floor/engine/glow/blue,
@@ -369,26 +345,6 @@
 /obj/machinery/weapon_stand/taser_rack/recharger/empty,
 /turf/simulated/floor/wood/three,
 /area/prefab/shooting_range)
-"xl" = (
-/obj/decal/tile_edge/stripe{
-	dir = 9;
-	icon_state = "xtra_bigstripe-corner2"
-	},
-/obj/storage/crate/bin,
-/obj/item/clothing/ears/earmuffs{
-	pixel_x = -5;
-	pixel_y = 2
-	},
-/obj/item/clothing/ears/earmuffs{
-	pixel_x = -5;
-	pixel_y = 2
-	},
-/obj/item/clothing/ears/earmuffs{
-	pixel_x = -5;
-	pixel_y = 2
-	},
-/turf/simulated/floor/wood/three,
-/area/prefab/shooting_range)
 "xn" = (
 /obj/decal/cleanable/eggsplat,
 /obj/item/caution/target_sheet{
@@ -401,6 +357,49 @@
 	anchored = 1
 	},
 /turf/simulated/floor/racing,
+/area/prefab/shooting_range)
+"ys" = (
+/obj/table/reinforced,
+/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/glasses/sunglasses/tanning{
+	pixel_y = 12
+	},
+/obj/item/item_box/assorted/stickers,
+/obj/item/clothing/ears/earmuffs{
+	pixel_x = -10;
+	pixel_y = -1
+	},
+/obj/item/storage/secure/ssafe/shooting_range{
+	pixel_y = 32
+	},
+/obj/machinery/light/incandescent/cool/very{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/item/paper/shooting_range_note1{
+	pixel_x = -13;
+	pixel_y = 28
+	},
+/obj{
+	name = "---Merge conflict marker---"
+	},
+/obj/table/reinforced,
+/obj/item/clothing/glasses/sunglasses/tanning{
+	pixel_y = 12
+	},
+/obj/item/item_box/assorted/stickers,
+/obj/item/storage/secure/ssafe/shooting_range{
+	pixel_y = 32
+	},
+/obj/machinery/light/incandescent/cool/very{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/item/paper/shooting_range_note1{
+	pixel_x = -13;
+	pixel_y = 28
+	},
+/turf/simulated/floor/wood/three,
 /area/prefab/shooting_range)
 "zc" = (
 /obj/decoration/bullethole{
@@ -456,24 +455,6 @@
 	dir = 1;
 	icon_state = "xtra_bigstripe-edge"
 	},
-/turf/simulated/floor/wood/three,
-/area/prefab/shooting_range)
-"EB" = (
-/obj/table/reinforced,
-/obj/item/clothing/ears/earmuffs{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/ears/earmuffs{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/decal/tile_edge/stripe{
-	dir = 10;
-	icon_state = "xtra_bigstripe-corner2"
-	},
-/obj/item/clothing/glasses/sunglasses/tanning,
 /turf/simulated/floor/wood/three,
 /area/prefab/shooting_range)
 "EQ" = (
@@ -555,6 +536,14 @@
 /area/prefab/shooting_range)
 "Nk" = (
 /turf/simulated/floor/bot/caution,
+/area/prefab/shooting_range)
+"Np" = (
+/obj/decal/tile_edge/stripe{
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/storage/crate/bin,
+/turf/simulated/floor/wood/three,
 /area/prefab/shooting_range)
 "Oz" = (
 /obj/machinery/light/incandescent/cool/very{
@@ -715,6 +704,33 @@
 "VY" = (
 /turf/space,
 /area/noGenerate)
+"Wf" = (
+/obj/table/reinforced,
+/obj/item/clothing/ears/earmuffs{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/ears/earmuffs{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/decal/tile_edge/stripe{
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/item/clothing/glasses/sunglasses/tanning,
+/obj{
+	name = "---Merge conflict marker---"
+	},
+/obj/table/reinforced,
+/obj/decal/tile_edge/stripe{
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/item/clothing/glasses/sunglasses/tanning,
+/turf/simulated/floor/wood/three,
+/area/prefab/shooting_range)
 "Xo" = (
 /turf/simulated/wall/auto/reinforced/jen/dark4,
 /area/prefab/shooting_range)
@@ -937,9 +953,9 @@ Fe
 Hs
 Fe
 lC
-EB
+Wf
 rA
-xl
+Np
 Fe
 Fe
 Lu
@@ -1004,7 +1020,7 @@ Oz
 zM
 KL
 Xo
-jn
+ys
 Fe
 aj
 Fe

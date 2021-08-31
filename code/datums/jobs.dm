@@ -628,7 +628,6 @@ ABSTRACT_TYPE(/datum/job/research)
 	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
 	slot_poc1 = list(/obj/item/reagent_containers/mender/brute)
-	items_in_backpack = list(/obj/item/crowbar)
 
 	New()
 		..()
