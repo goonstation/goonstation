@@ -2374,16 +2374,14 @@ var/global/list/cargopads = list()
 			boutput(user, "<span class='alert'>The satchel is firmly secured.</span>")
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
-		if (!isturf(target))
-			target = get_turf(target)
-		if (!satchel)
-			boutput(user, "<span class='alert'>There's no satchel in [src] to dump out.</span>")
-			return
-		if (satchel.contents.len < 1)
-			boutput(user, "<span class='alert'>The satchel in [src] is empty.</span>")
-			return
 		if(isturf(target))
-			user.visible_message("[user] dumps out [src]'s satchel contents.", "You dump out [src]'s satchel contents.")
+			if (!satchel)
+				boutput(user, "<span class='alert'>There's no satchel in [src] to dump out.</span>")
+				return
+			if (satchel.contents.len < 1)
+				boutput(user, "<span class='alert'>The satchel in [src] is empty.</span>")
+				return
+				user.visible_message("[user] dumps out [src]'s satchel contents.", "You dump out [src]'s satchel contents.")
 			for (var/obj/item/I in satchel.contents)
 				I.set_loc(target)
 			satchel.satchel_updateicon()
