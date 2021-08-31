@@ -1419,6 +1419,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\device\energy_shield_gen.dm"
 #include "code\obj\item\device\flash.dm"
 #include "code\obj\item\device\flyswatter.dm"
+#include "code\obj\item\device\genetic_analyzer.dm"
 #include "code\obj\item\device\gps.dm"
 #include "code\obj\item\device\igniter.dm"
 #include "code\obj\item\device\infrared_stuff.dm"
