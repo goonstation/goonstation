@@ -185,7 +185,11 @@
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
 		amount *= -1
 
-	if (src.bioHolder && src.bioHolder.HasEffect("resist_toxic"))
+	var/resist_toxic = src.bioHolder?.HasEffect("resist_toxic")
+
+	if(resist_toxic == 1)
+		amount *= 0.33
+	else
 		src.toxloss = 0
 		return 1 //prevent organ damage
 

@@ -60,7 +60,7 @@
 			if (total_stability <= 40 && probmult(5))
 				owner.bioHolder.DegradeRandomEffect()
 
-			if (total_stability <= 20 && probmult(10))
-				owner.bioHolder.DegradeRandomEffect()
+			if (total_stability <= 20 && probmult(5))
+				owner.bioHolder.RandomEffect("either", 1)
 
 		..()
