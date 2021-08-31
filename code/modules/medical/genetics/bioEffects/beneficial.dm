@@ -701,6 +701,7 @@ var/list/radio_brains = list()
 
 	onPowerChange(oldval, newval)
 		. = ..()
+		if(ismob(owner))
 			if(oldval == 1)
 				REMOVE_MOB_PROPERTY(owner, PROP_NIGHTVISION_WEAK, src)
 			else
