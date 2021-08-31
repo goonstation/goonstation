@@ -19,7 +19,7 @@
 	setupProperties()
 		..()
 		setProperty("coldprot", 20)
-		setProperty("disorient_resist_ear", 50)
+		setProperty("disorient_resist_ear", 40)
 
 /obj/item/clothing/ears/earmuffs/earplugs
 	name = "ear plugs"
@@ -43,4 +43,4 @@
 	setupProperties()
 		..()
 		setProperty("coldprot", 80)
-		setProperty("disorient_resist_ear", 80)
+		setProperty("disorient_resist_ear", 70)
