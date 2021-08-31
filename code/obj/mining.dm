@@ -2350,7 +2350,6 @@ var/global/list/cargopads = list()
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W,/obj/item/satchel/mining/))
 			var/obj/item/satchel/mining/S = W
-			user.drop_item()
 			if (satchel)
 				user.put_in_hand_or_drop(satchel)
 			S.set_loc(src)
