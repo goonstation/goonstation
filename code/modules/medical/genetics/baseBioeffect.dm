@@ -60,6 +60,8 @@ ABSTRACT_TYPE(/datum/bioEffect)
 	var/wildcard = 0
 	var/power = 1
 	var/degrade_to = null // what this mutation turns into if stability is too low
+	///if this mutation should degrade after timing out
+	var/degrade_after = FALSE
 
 	var/datum/dnaBlocks/dnaBlocks = null
 
