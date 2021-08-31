@@ -2919,7 +2919,7 @@ Returns:
 				user.changeStatus("paralysis", 2 SECONDS)
 				user.force_laydown_standup()
 			else
-				src.attack_hand(usr)
+				src.Attackhand(usr)
 			return
 		else
 			if(ishuman(hit_atom))
@@ -3283,7 +3283,7 @@ Returns:
 
 	MouseDrop_T(atom/target, mob/user)
 		if (get_dist(user,src) < 1 && target == user)
-			src.attack_hand(user)
+			src.Attackhand(user)
 
 	attack_hand(mob/user as mob)
 		if(in_use)

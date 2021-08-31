@@ -474,7 +474,7 @@ var/zapLimiter = 0
 			updateicon()
 
 	else if (wiresexposed && (issnippingtool(W) || ispulsingtool(W)))
-		src.attack_hand(user)
+		src.Attackhand(user)
 
 	else if (issilicon(user))
 		if (istype(W, /obj/item/robojumper))
@@ -512,7 +512,7 @@ var/zapLimiter = 0
 
 			charging = chargemode
 
-		else return src.attack_hand(user)
+		else return src.Attackhand(user)
 
 	else if (istype(W, /obj/item/device/pda2) && W:ID_card)
 		W = W:ID_card
@@ -548,7 +548,7 @@ var/zapLimiter = 0
 	if (src.aidisabled && !src.wiresexposed)
 		boutput(user, "AI control for this APC interface has been disabled.")
 	else
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
 // attack with hand - remove cell (if cover open) or interact with the APC
 

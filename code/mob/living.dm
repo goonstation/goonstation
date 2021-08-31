@@ -205,9 +205,9 @@
 	var/youdied = "You have died!"
 	if (prob(1))
 		if (gibbed)
-			youdied = pick("Cleanup on aisle 5", "What a mess...", "Nice and creamy", "Salsa con [src.real_name]", "Someone get the janitor!", "Gib and let gib", "Rest In Pieces")
+			youdied = pick("Cleanup on aisle 5", "What a mess...", "Nice and creamy", "Salsa con [src.real_name]", "Someone get the janitor!", "Gib and let gib", "Rest In Pieces", "Chunky!", "Quite a concept, being everywhere at once!", "Splat!")
 		else
-			youdied = pick("Congratulations on your recent death!", "Welp, so much for that.", "You are dead. Not big surprise.", "You are no longer alive.", "haha you died loser.", "R.I.P. [src.real_name]", "well, shit.", "Better luck next time.", "MISSING: Life, 100 credit reward")
+			youdied = pick("Congratulations on your recent death!", "Welp, so much for that.", "You are dead. Not big surprise.", "You are no longer alive.", "haha you died loser.", "R.I.P. [src.real_name]", "well, shit.", "Better luck next time.", "MISSING: Life, 100 credit reward", "w a s t e d", "Lost to the Zone", "Your Story Has Ended...", "Game over, man!")
 
 	boutput(src, {"
 	<div style="border: 3px solid red; padding: 3px;">
@@ -317,7 +317,7 @@
 	return 0
 
 /mob/living/proc/hand_attack(atom/target, params, location, control, origParams)
-	target.attack_hand(src, params, location, control, origParams)
+	target.Attackhand(src, params, location, control, origParams)
 
 /mob/living/proc/hand_range_attack(atom/target, params, location, control, origParams)
 	.= 0
@@ -1323,7 +1323,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 		if (!src.grabbed_by || !src.grabbed_by.len && !struggled_grab)
 			if (src.buckled)
-				src.buckled.attack_hand(src)
+				src.buckled.Attackhand(src)
 				src.force_laydown_standup() //safety because buckle code is a mess
 				if (src.targeting_ability == src.chair_flip_ability) //fuCKKK
 					src.targeting_ability = null
@@ -1727,7 +1727,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			S.active = 0
 			S.icon_state = "shield0"
 
-	if (HAS_MOB_PROPERTY(src, PROP_REFLECTPROT))
+	if (!P.was_pointblank && HAS_MOB_PROPERTY(src, PROP_REFLECTPROT))
 		var/obj/item/equipped = src.equipped()
 		if (equipped && istype(equipped,/obj/item/sword))
 			var/obj/item/sword/S = equipped
@@ -1980,7 +1980,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	src.Virus_ShockCure(min(wattage / 500, 100))
 
 	var/stun = (min((shock_damage/5), 12) * stun_multiplier)* 10
-	src.do_disorient(100 + stun, weakened = stun, stunned = stun, disorient = stun + 40, remove_stamina_below_zero = 1)
+	src.do_disorient(100 * stun_multiplier + stun, weakened = stun, stunned = stun, disorient = stun + 40 * stun_multiplier, remove_stamina_below_zero = 1)
 
 	return shock_damage
 

@@ -87,7 +87,7 @@
 
 		if (spider.mind && ticker.mode)
 			if (!spider.mind.special_role)
-				spider.mind.special_role = "handspider"
+				spider.mind.special_role = ROLE_HANDSPIDER
 			if (!(spider.mind in ticker.mode.Agimmicks))
 				ticker.mode.Agimmicks += spider.mind
 			spider.mind.master = owner.ckey
@@ -179,7 +179,7 @@
 
 		if (spider.mind && ticker.mode)
 			if (!spider.mind.special_role)
-				spider.mind.special_role = "eyespider"
+				spider.mind.special_role = ROLE_EYESPIDER
 			if (!(spider.mind in ticker.mode.Agimmicks))
 				ticker.mode.Agimmicks += spider.mind
 			spider.mind.master = owner.ckey
@@ -272,7 +272,7 @@
 
 		if (spider.mind && ticker.mode)
 			if (!spider.mind.special_role)
-				spider.mind.special_role = "legworm"
+				spider.mind.special_role = ROLE_LEGWORM
 			if (!(spider.mind in ticker.mode.Agimmicks))
 				ticker.mode.Agimmicks += spider.mind
 			spider.mind.master = owner.ckey
@@ -356,7 +356,7 @@
 
 		if (crab.mind && ticker.mode)
 			if (!crab.mind.special_role)
-				crab.mind.special_role = "buttcrab"
+				crab.mind.special_role = ROLE_BUTTCRAB
 			if (!(crab.mind in ticker.mode.Agimmicks))
 				ticker.mode.Agimmicks += crab.mind
 			crab.mind.master = owner.ckey

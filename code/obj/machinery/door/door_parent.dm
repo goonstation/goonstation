@@ -187,7 +187,7 @@
 	return
 
 /obj/machinery/door/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/door/attack_hand(mob/user as mob)
 	interact_particle(user,src)
@@ -318,6 +318,9 @@
 		else
 			src.last_used = world.time
 			src.close()
+		return
+
+	if(istype(I, /obj/item/card/emag) && !src.cant_emag)
 		return
 
 	if (src.allowed(user))
@@ -641,7 +644,7 @@
 	cant_emag = 1
 
 /obj/machinery/door/unpowered/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/door/unpowered/attack_hand(mob/user as mob)
 	return src.Attackby(null, user)

@@ -6,7 +6,7 @@
 	if(istype(L))
 		L.blood_id = "bloodc"
 
-	if (src.mind && !src.mind.is_changeling && (src.mind.special_role != "omnitraitor"))
+	if (src.mind && !src.mind.is_changeling && (src.mind.special_role != ROLE_OMNITRAITOR))
 		src.Browse(grabResource("html/traitorTips/changelingTips.html"),"window=antagTips;size=600x400;title=Antagonist Tips")
 
 	var/datum/abilityHolder/changeling/C = src.add_ability_holder(/datum/abilityHolder/changeling)

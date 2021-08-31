@@ -694,7 +694,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/mob/vamp = src
 	if (relay_laws_for_shell && ismob(relay_laws_for_shell))
 		vamp = relay_laws_for_shell
-	if (vamp.mind && vamp.mind.special_role == "vampthrall" && vamp.mind.master)
+	if (vamp.mind && vamp.mind.special_role == ROLE_VAMPTHRALL && vamp.mind.master)
 		var/mob/mymaster = whois_ckey_to_mob_reference(vamp.mind.master)
 		if (mymaster)
 			boutput(who, "1. Only your master [mymaster.real_name] is human. Obey and serve them to the best of your ability.")

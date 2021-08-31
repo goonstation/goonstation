@@ -55,10 +55,10 @@
 		logTheThing("admin", tplayer.current, null, "successfully redeems an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeems an antag token.")
 
-	var/list/chosen_revolutionaries = antagWeighter.choose(pool = revs_possible, role = "head_rev", amount = rev_number, recordChosen = 1)
+	var/list/chosen_revolutionaries = antagWeighter.choose(pool = revs_possible, role = ROLE_HEAD_REV, amount = rev_number, recordChosen = 1)
 	head_revolutionaries |= chosen_revolutionaries
 	for (var/datum/mind/rev in head_revolutionaries)
-		rev.special_role = "head_rev"
+		rev.special_role = ROLE_HEAD_REV
 		revs_possible.Remove(rev)
 
 	return 1

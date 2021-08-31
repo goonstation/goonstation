@@ -64,7 +64,7 @@ datum
 							if (O.bones)
 								O.bones.repair_damage(1 * mult)
 					if(H.mob_flags & IS_BONER)
-						M.HealDamage("All", 2 * mult, 2 * mult, 1 * mult)
+						M.HealDamage("All", 1 * mult, 1 * mult)
 						if(probmult(15))
 							boutput(H, "<span class='notice'>The milk comforts your [pick("boanes","bones","bonez","boens","bowns","beaunes","brones","bonse")]!</span>")
 				if (M.reagents.has_reagent("capsaicin"))
@@ -2182,9 +2182,16 @@ datum
 			id = "expresso"
 			description = "An expresso is a strong black coffee with more stupid."
 			stun_resist = 25
+			var/killer = 0
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
-				M.take_brain_damage(2 * mult)
+				if(M.get_brain_damage() < 60 || killer)
+					M.take_brain_damage(2 * mult)
+
+			killer
+				id = "expresso_killer"
+				random_chem_blacklisted = 1
+				killer = 1
 
 		fooddrink/coffee/espresso/decaf
 			name = "decaf espresso"

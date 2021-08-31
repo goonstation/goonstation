@@ -266,8 +266,7 @@
 		heal_brute = 10
 		heal_burn = 10
 		heal_tox = 5
-		var/muscliness_factor = 7
-		var/filter
+		var/tickspassed = 0
 
 
 		onAdd(optional)
@@ -277,9 +276,10 @@
 				APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stims", 500)
 				M.add_stam_mod_max("stims", 500)
 				M.add_stun_resist_mod("stims", 1000)
-				M.filters += filter(type="displace", icon=icon('icons/effects/distort.dmi', "muscly"), size=0)
-				src.filter = M.filters[length(M.filters)]
-				animate(filter, size=src.muscliness_factor, time=1 SECOND, easing=SINE_EASING)
+				var/datum/statusEffect/simpledot/stimulant_withdrawl/SW = owner.hasStatus("stimulant_withdrawl")
+				if(istype(SW))
+					tickspassed += SW.tickspassed
+					owner.delStatus("stimulant_withdrawl")
 
 
 		onRemove()
@@ -289,15 +289,12 @@
 				REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stims")
 				M.remove_stam_mod_max("stims")
 				M.remove_stun_resist_mod("stims")
-				animate(filter, size=0, time=1 SECOND, easing=SINE_EASING)
-				SPAWN_DBG(1 SECOND)
-					M.filters -= filter
-					filter = null
 
-			owner.changeStatus("stimulant_withdrawl", 1 MINUTE)
+			owner.changeStatus("stimulant_withdrawl", tickspassed/(3), optional = tickspassed)
 
 		onUpdate(timePassed)
 			. = ..()
+			tickspassed += timePassed
 			if(ismob(owner))
 				var/mob/M = owner
 				M.take_oxygen_deprivation(-timePassed)
@@ -305,6 +302,7 @@
 				M.delStatus("disorient")
 				if (M.misstep_chance)
 					M.change_misstep_chance(-INFINITY)
+				M.make_jittery(1000)
 				M.dizziness = max(0,M.dizziness-10)
 				M.drowsyness = max(0,M.drowsyness-10)
 				M.sleeping = 0
@@ -626,11 +624,32 @@
 		tickSpacing = 3 SECONDS
 		damage_brute = 1
 		damage_tox = 2
+		movement_modifier = new /datum/movement_modifier/status_slowed
+		var/tickspassed = 0
+
+		onAdd(optional)
+			. = ..()
+			movement_modifier.additive_slowdown = duration / (1 MINUTE)
+			damage_brute *= (duration / (1 MINUTE)) ** 1.5
+			damage_tox *= (duration / (1 MINUTE)) ** 1.5
+			tickspassed = optional
+			if(ismob(owner))
+				var/mob/M = owner
+				APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, -5, "stim_withdrawl")
+				M.jitteriness = 0
 
 		onUpdate(timePassed)
 			. = ..()
-			if(prob(timePassed))
-				owner.changeStatus("stunned", 3 SECONDS)
+			if(tickspassed)
+				tickspassed = max(0, tickspassed - timePassed)
+			if(prob(1))
+				owner.changeStatus("stunned", 1 SECONDS)
+
+		onRemove()
+			. = ..()
+			if(ismob(owner))
+				var/mob/M = owner
+				REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stim_withdrawl")
 
 	stuns
 		modify_change(change)
@@ -1020,7 +1039,7 @@
 
 		clicked(list/params)
 			if(H.buckled)
-				H.buckled.attack_hand(H)
+				H.buckled.Attackhand(H)
 
 		onUpdate(timePassed)
 			if (H && !H.buckled)
@@ -1607,3 +1626,32 @@
 				P.create_overlay(states[2], "#ff8820", direct, 'icons/effects/blood.dmi')
 		else
 			P.create_overlay("smear2", "#ff8820", direct, 'icons/effects/blood.dmi')
+
+/datum/statusEffect/magnetized
+	id = "magnetized"
+	name = "Magnetized"
+	desc = "You've been given a magnetic charge"
+	icon_state = "magnetized"
+	unique = TRUE
+	maxDuration = 3 MINUTES
+	var/charge = null
+
+	onAdd(optional)
+		. = ..()
+		if (!ismob(owner)) return
+		var/mob/M = owner
+		if (!M.bioHolder || M.bioHolder.HasEffect("resist_electric") || M.traitHolder.hasTrait("unionized"))
+			SPAWN_DBG(0)
+				M.delStatus("magnetized")
+			return
+		if (optional)
+			src.charge = optional
+		else
+			src.charge = pick("magnets_pos", "magnets_neg")
+		M.bioHolder.AddEffect(src.charge)
+
+	onRemove()
+		. = ..()
+		if (!ismob(owner)) return
+		var/mob/M = owner
+		M.bioHolder.RemoveEffect(charge)

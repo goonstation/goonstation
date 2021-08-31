@@ -309,17 +309,17 @@
 				break
 
 	if (istype(R))
-		var/looper = round(R.item_amounts[1] / 10, 1)
+		var/looper = round(R.item_amounts[1] / 10)
 		while (looper > 0)
 			var/obj/item/material_piece/mauxite/M = unpool(/obj/item/material_piece/mauxite)
 			M.set_loc(get_turf(src))
 			looper--
-		looper = round(R.item_amounts[2] / 10, 1)
+		looper = round(R.item_amounts[2] / 10)
 		while (looper > 0)
 			var/obj/item/material_piece/pharosium/P = unpool(/obj/item/material_piece/pharosium)
 			P.set_loc(get_turf(src))
 			looper--
-		looper = round(R.item_amounts[3] / 10, 1)
+		looper = round(R.item_amounts[3] / 10)
 		while (looper > 0)
 			var/obj/item/material_piece/molitz/M = unpool(/obj/item/material_piece/molitz)
 			M.set_loc(get_turf(src))

@@ -82,6 +82,9 @@
 //Instructions for pod-wars gametype
 #define SHOW_POD_WARS(M) M.Browse(grabResource("html/traitorTips/pod_wars.html"), ANTAG_TIPS_WINDOW)
 
+// arcfiend
+#define SHOW_ARCFIEND_TIPS(M) M.Browse(grabResource("html/traitorTips/arcfiendTips.html"), ANTAG_TIPS_WINDOW)
+
 /datum/adminAntagPopups
 	var/html
 
@@ -142,6 +145,7 @@
 	<a href='?src=\ref[src];action=battle'>Battle Royale</a> |
 	<a href='?src=\ref[src];action=martian'>Martian</a> |
 	<a href='?src=\ref[src];action=kudzu'>Kudzu Person</a>
+	<a href='?src=\ref[src];action=arcfiend'>Arcfiend Person</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Misc</b>
 	<a href='?src=\ref[src];action=emaggedborg'>Borg Emagged</a> |
@@ -254,6 +258,8 @@
 				SHOW_MARTIAN_TIPS(M)
 			if ("kudzu")
 				SHOW_KUDZU_TIPS(M)
+			if ("arcfiend")
+				SHOW_ARCFIEND_TIPS(M)
 
 			// misc
 			if ("emaggedborg")

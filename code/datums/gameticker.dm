@@ -116,7 +116,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	switch(master_mode)
 		if("random","secret") src.mode = config.pick_random_mode()
 		if("action") src.mode = config.pick_mode(pick("nuclear","wizard","blob"))
-		if("intrigue") src.mode = config.pick_mode(pick("mixed_rp", "traitor","changeling","vampire","conspiracy","spy_theft", prob(50); "extended"))
+		if("intrigue") src.mode = config.pick_mode(pick("mixed_rp", "traitor","changeling","vampire","conspiracy","spy_theft","arcfiend", prob(50); "extended"))
 		if("pod_wars") src.mode = config.pick_mode("pod_wars")
 		else src.mode = config.pick_mode(master_mode)
 
@@ -298,29 +298,29 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					var/mob/living/silicon/ai/A = player.AIize()
 					A.Equip_Bank_Purchase(A.mind.purchased_bank_item)
 
-				else if (player.mind && player.mind.special_role == "wraith")
+				else if (player.mind && player.mind.special_role == ROLE_WRAITH)
 					player.close_spawn_windows()
 					var/mob/wraith/W = player.make_wraith()
 					if (W)
 						W.set_loc(pick_landmark(LANDMARK_OBSERVER))
 						logTheThing("debug", W, null, "<b>Late join</b>: assigned antagonist role: wraith.")
-						antagWeighter.record(role = "wraith", ckey = W.ckey)
+						antagWeighter.record(role = ROLE_WRAITH, ckey = W.ckey)
 
-				else if (player.mind && player.mind.special_role == "blob")
+				else if (player.mind && player.mind.special_role == ROLE_BLOB)
 					player.close_spawn_windows()
 					var/mob/living/intangible/blob_overmind/B = player.make_blob()
 					if (B)
 						B.set_loc(pick_landmark(LANDMARK_OBSERVER))
 						logTheThing("debug", B, null, "<b>Late join</b>: assigned antagonist role: blob.")
-						antagWeighter.record(role = "blob", ckey = B.ckey)
+						antagWeighter.record(role = ROLE_BLOB, ckey = B.ckey)
 
-				else if (player.mind && player.mind.special_role == "flockmind")
+				else if (player.mind && player.mind.special_role == ROLE_FLOCKMIND)
 					player.close_spawn_windows()
 					var/mob/living/intangible/flock/flockmind/F = player.make_flockmind()
 					if (F)
 						F.set_loc(pick_landmark(LANDMARK_OBSERVER))
 						logTheThing("debug", F, null, "<b>Late join</b>: assigned antagonist role: flockmind.")
-						antagWeighter.record(role = "flockmind", ckey = F.ckey)
+						antagWeighter.record(role = ROLE_FLOCKMIND, ckey = F.ckey)
 
 				else if (player.mind)
 					if (player.client.using_antag_token)
@@ -688,7 +688,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			else if (istype(player.loc, /obj/cryotron) || player.mind && (player.mind in all_the_baddies)) // Cryo'd or was a baddie at any point? Keep your shit, but you don't get the extra bux
 				player_loses_held_item = 0
 			//some might not actually have a wage
-			if (!isvirtual(player) && (isnukeop(player) ||  (isblob(player) && (player.mind && player.mind.special_role == "blob")) || iswraith(player) || (iswizard(player) && (player.mind && player.mind.special_role == "wizard")) ))
+			if (!isvirtual(player) && (isnukeop(player) ||  (isblob(player) && (player.mind && player.mind.special_role == ROLE_BLOB)) || iswraith(player) || (iswizard(player) && (player.mind && player.mind.special_role == ROLE_WIZARD)) ))
 				bank_earnings.wage_base = 0 //only effects the end of round display
 				earnings = 800
 

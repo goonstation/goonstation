@@ -100,9 +100,6 @@
 						fake_attackEx(affected_mob, 'icons/effects/hallucinations.dmi', halluc_state, halluc_name)
 			if(prob(9))
 				affected_mob.playsound_local(affected_mob.loc, pick("explosion", "punch", 'sound/vox/poo-vox.ogg', "clownstep", 'sound/weapons/armbomb.ogg', 'sound/weapons/Gunshot.ogg'), 50, 1)
-			if(prob(6))
-				if(affected_mob.client)
-					affected_mob.client.dir = pick(1,1,1,2,3,4)
 
 			if (prob(8))
 				for (var/mob/living/M in view(7,affected_mob))
