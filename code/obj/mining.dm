@@ -2389,6 +2389,7 @@ var/global/list/cargopads = list()
 		if (istype(target, /obj/item/satchel/mining))
 			user.swap_hand() //Needed so you don't drop the scoop instead of the satchel
 			src.attackby(target, user)
+			user.swap_hand()
 
 ////// Shit that goes in the asteroid belt, might split it into an exploring.dm later i guess
 
