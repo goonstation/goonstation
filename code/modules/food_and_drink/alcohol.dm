@@ -265,7 +265,7 @@
 	alt_filled_state = 1
 	heal_amt = 1
 	g_amt = 60
-	initial_volume = 250
+	initial_volume = 60
 	initial_reagents = list("wine"=40,"charcoal"=20)
 
 /obj/item/reagent_containers/food/drinks/bottle/thegoodstuff
@@ -278,8 +278,8 @@
 	alt_filled_state = 1
 	heal_amt = 1
 	g_amt = 60
-	initial_volume = 250
-	initial_reagents = list("champagne"=30,"wine"=30,"cider"=30,"vodka"=30,"ethanol"=30,"eyeofnewt"=30)
+	initial_volume = 120
+	initial_reagents = list("champagne"=20,"wine"=20,"cider"=20,"vodka"=20,"eyeofnewt"=40)
 
 /obj/item/reagent_containers/food/drinks/bottle/bojackson
 	name = "Bo Jack Daniel's"
