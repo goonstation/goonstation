@@ -1,7 +1,7 @@
 /datum/buildmode/copy
 	name = "Copy Paste"
 	desc = {"***********************************************************<br>
-Right Mouse Button on mob/obj = Select object for copying (right click on turf to clear)<br>
+Right Mouse Button on obj = Select object for copying (right click on turf to clear)<br>
 Left Mouse Button on turf  = Paste object on the turf you clicked<br>
 Ctrl + Right Mouse Button on build mode  = Spawn for every living player<br>
 ***********************************************************"}
@@ -24,7 +24,10 @@ Ctrl + Right Mouse Button on build mode  = Spawn for every living player<br>
 			semi_deep_copy(src.copied_object, T)
 
 	click_right(atom/object, var/ctrl, var/alt, var/shift)
-		if(isobj(object) || ismob(object))
+		if(ismob(object))
+			boutput(holder.owner, "Making a copy of a mob is a really bad idea!")
+			return
+		if(isobj(object))
 			src.copied_object = object
 			boutput(holder.owner, "Selected [src.copied_object] for copying.")
 		else
