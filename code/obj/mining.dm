@@ -2350,10 +2350,9 @@ var/global/list/cargopads = list()
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W,/obj/item/satchel/mining/))
 			var/obj/item/satchel/mining/S = W
-			if (satchel)
-				boutput(user, "<span class='alert'>There's already a satchel hooked up to [src].</span>")
-				return
 			user.drop_item()
+			if (satchel)
+				user.put_in_hand_or_drop(satchel)
 			S.set_loc(src)
 			satchel = S
 			icon_state = "scoop-bag"
