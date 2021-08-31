@@ -441,7 +441,7 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		required = 1
 		prefabPath = "assets/maps/prefabs/prefab_water_mantamining.dmm"
 		prefabSizeX = 13
-		prefabSizeY = 48
+		prefabSizeY = 43
 #endif
 
 	cache_small_loot
