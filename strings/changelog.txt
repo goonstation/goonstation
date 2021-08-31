@@ -1,4 +1,9 @@
 
+(t)tue aug 31 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Artifact guns must be activated to swap cells.
+(+)Chef is keeping a closer eye on their meatcleaver
 (t)mon aug 30 21
 (u)UnfunnyPerson
 (p)5834
