@@ -630,6 +630,8 @@
 		onAdd(optional)
 			. = ..()
 			movement_modifier.additive_slowdown = duration / (1 MINUTE)
+			damage_brute *= duration / (1 MINUTE)
+			damage_tox *= duration / (1 MINUTE)
 			tickspassed = optional
 			if(ismob(owner))
 				var/mob/M = owner
