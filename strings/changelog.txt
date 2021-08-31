@@ -1,4 +1,67 @@
 
+(t)tue aug 31 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Artifact guns must be activated to swap cells.
+(+)Chef is keeping a closer eye on their meatcleaver
+(t)mon aug 30 21
+(u)UnfunnyPerson
+(p)5834
+(e)⚖|balance
+(+)Skeletons heal 1 brute and 1 burn from milk per cycle instead of 2 brute, 2 burn, and 1 tox
+(u)Tarmunora
+(e)⚖|balance
+(*)Stimulants are now a 6TC purchase for 3 3-minute stimpacks. The syndicate would like to remind it's agents that withdrawl symptoms are natural, and to not try to ride them out with another dose, as you will eventually run out.
+(u)Tarmunora
+(e)⚖|balance
+(*)Reinforced walls are immune to being punched down by hulks
+(u)Flaborized
+(p)5842
+(e)🎨|sprites
+(+)Resprited cats.
+(t)sun aug 29 21
+(u)Azrun and Walpvrgis
+(p)5573
+(e)🎨|sprites
+(+)Graphical assets for snow experiences and future snow planets...
+(u)Azrun
+(p)5765
+(e)🆕|feature
+(+)Amusing Duck's will sometimes quack in response to interaction with the AI.
+(u)Walpvrgis
+(p)5815
+(e)🆕🎨|feature, sprites
+(+)Wasps, rockworms, seals and walruses have been resprited.
+(u)Vocalpocal
+(p)5824
+(e)⚖|balance
+(+)Custom cigarettes now last half as long but make you twice as high #nofilter
+(u)Zonespace
+(p)5826
+(e)⚖|balance
+(+)Poison Bottles no longer contain: Sulfonal, Loose Screws, and Cyanide.
+(u)Flaborized
+(p)5838
+(e)🎨|sprites
+(+)Resprited mass drivers.
+(u)Zamujasa
+(e)🆕|feature
+(*)Added the "cargo appraiser", a tool that will tell you what stuff will sell for when you use it on items or crates.
+(*)If a crate is tagged with a trader, it will show the value that trader will pay.
+(*)Will also scan the contents of hydro and mining satchels, so you can value your ore before dumping it all in that crate.
+(*)QMs start with one in their pockets. Hydro, Mining, and Cargo supply closets should also have one available.
+(t)sat aug 28 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Full reagent container no longer provides immunity to changeling stings
+(t)thu aug 26 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Light Lotus plants act as UV growth lamps in a 1-tile radius when ready to harvest
+(u)Tarmunora
+(e)⚖|balance
+(*)Voltgen rework - no longer shocks on touch react, instead grants retaliatory arcflashes against attackers when drunk
+(+)Adjust some bottle sizes. (sorry jan)
 (t)tue aug 24 21
 (u)zjdtmkhzt
 (p)5774
