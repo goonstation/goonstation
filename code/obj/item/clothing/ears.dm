@@ -8,7 +8,6 @@
 	w_class = W_CLASS_TINY
 	wear_layer = MOB_EARS_LAYER
 	throwforce = 2
-	block_hearing_when_worn = HEARING_BLOCKED
 
 /obj/item/clothing/ears/earmuffs
 	name = "earmuffs"
@@ -20,7 +19,7 @@
 	setupProperties()
 		..()
 		setProperty("coldprot", 20)
-		setProperty("disorient_resist_ear", 100)
+		setProperty("disorient_resist_ear", 50)
 
 /obj/item/clothing/ears/earmuffs/earplugs
 	name = "ear plugs"
@@ -28,6 +27,7 @@
 	icon_state = "earplugs"
 	item_state = "nothing"
 	protective_temperature = 0
+	block_hearing_when_worn = HEARING_BLOCKED
 
 	setupProperties()
 		..()
@@ -39,7 +39,6 @@
 	desc = "Keeps you warm without making it hard to hear."
 	icon_state = "yetiearmuffs"
 	item_state = "yetiearmuffs"
-	block_hearing_when_worn = HEARING_NORMAL
 
 	setupProperties()
 		..()
