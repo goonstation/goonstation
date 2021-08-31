@@ -3,7 +3,7 @@
 	config_tag = "arcfiend"
 	latejoin_antag_compatible = 1
 	latejoin_antag_roles = list(ROLE_ARCFIEND)
-	traitor_types = list(ROLE_ARCFIEND, ROLE_VAMPIRE)
+	traitor_types = list(ROLE_ARCFIEND)
 
 
 	has_wizards = 0
