@@ -124,7 +124,7 @@
 
 /obj/machinery/phosphorizer/ui_data(mob/user)
 	. = list(
-		"tubes" = src.contents.len,
+		"lights" = src.contents.len,
 		"online" = src.phosphorizing,
 		"hostR" = src.ctrl_R,
 		"hostG" = src.ctrl_G,
