@@ -688,6 +688,7 @@
 	item_state = "medic_belt"
 	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/high_capacity/cardiac,
 	/obj/item/reagent_containers/emergency_injector/high_capacity/bloodloss,
+	/obj/item/reagent_containers/emergency_injector/high_capacity/lifesupport,
 	/obj/item/reagent_containers/emergency_injector/high_capacity/juggernaut,
 	/obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector)
 
