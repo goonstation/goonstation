@@ -1708,6 +1708,7 @@
 
 	New()
 		..()
+		src.AddComponent(/datum/component/obj_projectile_damage)
 		if(!print_id)
 			src.print_id = "GENERIC"
 
@@ -1778,6 +1779,10 @@
 
 		else
 			return attack_hand(user)
+
+	onDestroy()
+		robogibs(src.loc,null)
+		. = ..()
 
 	attack_hand(mob/user as mob)
 		if(..() || (status & (NOPOWER|BROKEN)))
