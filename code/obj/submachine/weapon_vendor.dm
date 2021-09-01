@@ -178,6 +178,7 @@
 		materiel_stock += new/datum/materiel/utility/sarin_grenade
 		materiel_stock += new/datum/materiel/utility/noslip_boots
 		materiel_stock += new/datum/materiel/utility/bomb_decoy
+		materiel_stock += new/datum/materiel/utility/comtac
 
 	accepted_token()
 		src.credits[WEAPON_VENDOR_CATEGORY_SIDEARM]++
@@ -423,6 +424,10 @@
 	path = /obj/bomb_decoy
 	description = "A realistic inflatable nuclear bomb decoy, it'll fool anyone not looking closely but won't take much punishment before it pops."
 
+/datum/materiel/utility/comtac
+	name = "ComTac Headset"
+	path = /obj/item/device/radio/headset/syndicate/comtac
+	description = "A military radio headset designed to protect the wearer from dangerous levels of noise."
 // Requisition tokens
 
 /obj/item/requisition_token
