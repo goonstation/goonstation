@@ -133,6 +133,10 @@
 			boutput(user, "<span class='alert'>[W] has already been processed.</span>")
 			return
 
+		if(istype(W, /obj/item/ore_scoop))
+			var/obj/item/ore_scoop/O = W
+			if (O.satchel) W = O.satchel
+
 		if(istype(W, /obj/item/satchel))
 			var/obj/item/satchel/S = W
 			boutput(user, "<span class='notice'>You empty \the [W] into \the [src].</span>")
@@ -239,7 +243,7 @@
 
 		var/obj/item/W = O
 
-		if(W in user)
+		if(W in user && !W.cant_drop)
 			user.u_equip(W)
 			W.set_loc(src.loc)
 			W.dropped()
@@ -249,7 +253,7 @@
 		if(W.material && !istype(W, /obj/item/material_piece))
 			quickload(user, W)
 		else
-			attackby(W, user)
+			src.Attackby(W, user)
 			return
 
 

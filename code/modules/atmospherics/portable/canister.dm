@@ -355,7 +355,7 @@
 		user.show_message("<span class='alert'>You cannot insert a tank, as the slot is shut closed by the detonator assembly.</span>")
 		return
 	else if (src.det && W && istool(W, TOOL_PULSING | TOOL_SNIPPING))
-		src.attack_hand(user)
+		src.Attackhand(user)
 
 	else if (istype(W, /obj/item/cargotele))
 		W:cargoteleport(src, user)
@@ -379,7 +379,7 @@
 /obj/machinery/portable_atmospherics/canister/attack_ai(var/mob/user as mob)
 	if(!src.connected_port && get_dist(src, user) > 7)
 		return
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)

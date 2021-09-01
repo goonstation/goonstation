@@ -26,15 +26,15 @@
 
 /datum/geneticsrecipe/thermal_res
 	required_effects = list("fire_resist","cold_resist")
-	result = /datum/bioEffect/thermalres
+	result = /datum/bioEffect/thermal_resistances/thermalres
 
 /datum/geneticsrecipe/fire_resist // Discovered
 	required_effects = list("immolate","glowy")
-	result = /datum/bioEffect/fireres
+	result = /datum/bioEffect/thermal_resistances/fireres
 
 /datum/geneticsrecipe/cold_resist // Discovered
 	required_effects = list("cryokinesis","glowy")
-	result = /datum/bioEffect/coldres
+	result = /datum/bioEffect/thermal_resistances/coldres
 
 /datum/geneticsrecipe/rad_resist // Discovered
 	required_effects = list("radioactive","glowy")
@@ -69,10 +69,6 @@
 /datum/geneticsrecipe/coprolalia
 	required_effects = list("accent_chav","accent_tommy")
 	result = /datum/bioEffect/coprolalia
-
-/datum/geneticsrecipe/epilepsy
-	required_effects = list("bad_eyesight","flashy")
-	result = /datum/bioEffect/epilepsy
 
 /datum/geneticsrecipe/blind
 	required_effects = list("bad_eyesight","narcolepsy")
@@ -316,10 +312,6 @@
 
 /datum/geneticsrecipe/flashy_two
 	required_effects = list("glowy","chameleon")
-	result = /datum/bioEffect/mutantrace/flashy
-
-/datum/geneticsrecipe/flashy_three // Discovered
-	required_effects = list("glowy","epilepsy")
 	result = /datum/bioEffect/mutantrace/flashy
 
 /datum/geneticsrecipe/lizard

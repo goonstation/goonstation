@@ -208,14 +208,19 @@ WET FLOOR SIGN
 
 	if(src.reagents.has_reagent("water") || src.reagents.has_reagent("cleaner"))
 		JOB_XP(user, "Janitor", 2)
-
+	playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
+	// Make sure we clean an item that was sprayed directly in case it is in contents
+	if (!isturf(A.loc))
+		if (istype(A, /obj/item))
+			src.reagents.reaction(A, TOUCH, 5)
+			src.reagents.remove_any(5)
+			return
 	var/obj/decal/D = new/obj/decal(get_turf(src))
 	D.name = "chemicals"
 	D.icon = 'icons/obj/chemical.dmi'
 	D.icon_state = "chempuff"
 	D.create_reagents(5) // cogwerks: lowered from 10 to 5
 	src.reagents.trans_to(D, 5)
-	playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
 	var/log_reagents = log_reagents(src)
 	var/travel_distance = max(min(get_dist(get_turf(src), A), 3), 1)
 	SPAWN_DBG(0)
@@ -292,6 +297,8 @@ WET FLOOR SIGN
 		. += "<span class='notice'>[src] is wet!</span>"
 
 /obj/item/mop/afterattack(atom/A, mob/user as mob)
+	if (ismob(A))
+		return
 	if ((src.reagents.total_volume < 1 || mopcount >= 9) && !istype(A, /obj/fluid))
 		boutput(user, "<span class='notice'>Your mop is dry!</span>", group = "mop")
 		return
@@ -349,7 +356,7 @@ WET FLOOR SIGN
 			S.joustingTool = src
 
 /obj/item/mop/attack(mob/living/M as mob, mob/user as mob)
-	if (user.intent == INTENT_HELP)
+	if (user.a_intent == INTENT_HELP)
 		user.visible_message("[user] pokes [M] with \the [src].", "You poke [M] with \the [src].")
 		return
 	return ..()
@@ -442,6 +449,7 @@ WET FLOOR SIGN
 	icon_state = "sponge"
 	item_state = "sponge"
 	force = 0
+	stamina_damage = 5
 	throwforce = 0
 	w_class = W_CLASS_SMALL // gross why would you put a sponge in your pocket
 
@@ -463,6 +471,11 @@ WET FLOOR SIGN
 	. = ..()
 	if(reagents?.total_volume)
 		. += "<span class='notice'>[src] is wet!</span>"
+
+/obj/item/sponge/attack(mob/living/M as mob, mob/user as mob)
+	if (user.a_intent == INTENT_HELP)
+		return
+	return ..()
 
 /obj/item/sponge/attack_self(mob/user as mob)
 	if(spam_flag)
@@ -524,22 +537,22 @@ WET FLOOR SIGN
 		var/list/choices = list()
 		var/target_is_fluid = istype(target,/obj/fluid)
 		if (target_is_fluid)
-			choices += "Soak up"
+			choices |= "Soak up"
 		else if (istype(target, /turf/simulated))
 			var/turf/simulated/T = target
 			if (T.reagents && T.reagents.total_volume || T.active_liquid)
-				choices += "Soak up"
+				choices |= "Soak up"
 			if (T.wet)
-				choices += "Dry"
+				choices |= "Dry"
 			if (src.reagents.total_volume)
-				choices += "Wipe down"
+				choices |= "Wipe down"
 		if (src.reagents.total_volume && !target_is_fluid)
-			choices += "Wipe down"
+			choices |= "Wipe down"
 			if ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink) || istype(target, /obj/mopbucket))
-				choices += "Wring out"
+				choices |= "Wring out"
 		if (src.reagents.total_volume < src.reagents.maximum_volume && ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink)) || istype(target, /obj/mopbucket))
 			if (istype(target, /obj/submachine/chef_sink) || (target.reagents && target.reagents.total_volume))
-				choices += "Wet"
+				choices |= "Wet"
 
 		if (!choices.len)
 			boutput(user, "<span class='notice'>You can't think of anything to do with [src].</span>")
@@ -565,7 +578,8 @@ WET FLOOR SIGN
 				if (!F && T?.active_liquid)
 					F = T.active_liquid
 
-				if (!(T?.reagents) && !istype(F)) return
+				if (!(T?.reagents) && !istype(F))
+					return
 
 				if (F)
 					if (F.group)
@@ -866,6 +880,7 @@ WET FLOOR SIGN
 			boutput(user, "<span class='notice'>You remove \the [removed_things[1]] from \the [src]</span>")
 		else
 			boutput(user, "<span class='notice'>You remove \the [removed_things[1]] and \the [removed_things[2]] from \the [src]</span>")
+		src.tooltip_rebuild = 1
 
 	attack_hand(mob/user)
 		if(!(src.loc == user && user.find_in_hand(src)))
@@ -894,6 +909,7 @@ WET FLOOR SIGN
 				I.set_loc(storage)
 			src.trashbag.calc_w_class(null)
 			boutput(user, "<span class='notice'>You empty \the [src] into \the [target].</span>")
+			src.tooltip_rebuild = 1
 			return
 		else if(istype(target, /obj/machinery/disposal))
 			var/obj/machinery/disposal/disposal = target
@@ -902,12 +918,14 @@ WET FLOOR SIGN
 					I.set_loc(disposal)
 				src.trashbag.calc_w_class(null)
 				boutput(user, "<span class='notice'>You empty \the [src] into \the [target].</span>")
+				src.tooltip_rebuild = 1
 				disposal.update()
 				return
 		else if(istype(target, /obj/submachine/chef_sink))
 			if(src.bucket.reagents.total_volume > 0)
 				boutput(user, "<span class='notice'>You empty \the [src] into \the [target].</span>")
 				src.bucket.reagents.clear_reagents()
+				src.tooltip_rebuild = 1
 			else
 				boutput(user, "<span class='notice'>[src]'s bucket is empty.</span>")
 			return
@@ -915,6 +933,7 @@ WET FLOOR SIGN
 			if(src.bucket.reagents.total_volume > 0)
 				boutput(user, "<span class='notice'>You empty \the [src] into \the [target].</span>")
 				src.bucket.transfer_all_reagents(target, user)
+				src.tooltip_rebuild = 1
 			else
 				boutput(user, "<span class='notice'>[src]'s bucket is empty.</span>")
 			return
@@ -985,6 +1004,7 @@ WET FLOOR SIGN
 					if(src.trashbag.current_stuff >= src.trashbag.max_stuff)
 						boutput(user, "<span class='notice'>[src]'s [src.trashbag] is now full.</span>")
 
+		src.tooltip_rebuild = 1
 		. |= success
 
 	attackby(obj/item/W, mob/user, params, is_special=0)
@@ -1002,6 +1022,7 @@ WET FLOOR SIGN
 				user.put_in_hand_or_drop(old_trashbag)
 			user.u_equip(W)
 			W.dropped()
+			src.tooltip_rebuild = 1
 		else if(istype(W, /obj/item/reagent_containers/glass/bucket))
 			if(isnull(src.bucket))
 				boutput(user, "<span class='notice'>You insert \the [W] into \the [src].")
@@ -1016,6 +1037,7 @@ WET FLOOR SIGN
 				user.put_in_hand_or_drop(old_bucket)
 			user.u_equip(W)
 			W.dropped()
+			src.tooltip_rebuild = 1
 		else
 			. = ..()
 

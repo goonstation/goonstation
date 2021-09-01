@@ -91,7 +91,7 @@
 		if(istype(pee_target) && pee_target.reagents && pee_target.reagents.total_volume < pee_target.reagents.maximum_volume && pee_target.is_open_container())
 			src.visible_message("<span class='alert'><B>[src] pees in [pee_target]!</B></span>")
 			playsound(src, "sound/misc/pourdrink.ogg", 50, 1)
-			pee_target.reagents.add_reagent("urine", 20)
+			pee_target.reagents.add_reagent("urine", 4)
 			return
 
 		// possibly change the text colour to the gray emote text
@@ -185,7 +185,11 @@
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
 		amount *= -1
 
-	if (src.bioHolder && src.bioHolder.HasEffect("resist_toxic"))
+	var/resist_toxic = src.bioHolder?.HasEffect("resist_toxic")
+
+	if(resist_toxic == 1)
+		amount *= 0.33
+	else
 		src.toxloss = 0
 		return 1 //prevent organ damage
 

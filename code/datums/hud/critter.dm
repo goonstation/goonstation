@@ -51,116 +51,42 @@
 	/// offset for a screen location in the top right (generally where health and status icons go)
 	var/top_right_offset = 0
 
-	/// idk, something left
+	/// status effect left offset
 	var/wraparound_offset_left = 0
-	/// idk, something right
+	/// status effect right offset
 	var/wraparound_offset_right = 0
 
 /datum/hud/critter/New(M)
 	..()
 	src.master = M
 
-	// hand hud element creation
-	var/initial_hand_offset = -round((src.master.hands.len - 1) / 2) // calculates an offset using a methodology i dont understand
-	src.left_offset = initial_hand_offset - 1
-	for (var/i = 1, i <= src.master.hands.len, i++)
-		var/curr = initial_hand_offset + i - 1
-		var/datum/handHolder/handHolder = src.master.hands[i]
+	// element load order determines position in the hud
+	src.create_hand_element()
+	src.create_health_element()
+	src.create_stamina_element()
+	src.create_temperature_element()
 
-		var/center_offset = 0
-		if (curr < 0)
-			center_offset = curr
-		else if (curr > 0)
-			center_offset = "+[curr]"
-		else
-			center_offset = ""
-
-		var/new_screen_loc = "CENTER[center_offset], SOUTH"
-		var/atom/movable/screen/hud/hand_element = src.create_screen("hand[i]", handHolder.name, handHolder.icon,\
-		"[handHolder.icon_state][i == src.master.active_hand ? 1 : 0]", new_screen_loc, HUD_LAYER)
-		handHolder.screenObj = hand_element
-		src.hands.Add(handHolder)
-	src.right_offset = initial_hand_offset + length(src.master.hands)
-
-	// health hud element creation
-	src.health = src.create_screen("health", "health", src.hud_icon, "health0",\
-	"EAST[src.next_topright()],NORTH", HUD_LAYER)
-
-	// stamina element creation
-	if (src.master.use_stamina)
-		var/stamloc = "EAST[src.next_topright()], NORTH"
-		src.stamina = src.create_screen("stamina","Stamina", src.hud_icon, "stamina",\
-		stamloc, HUD_LAYER, tooltipTheme = "stamina")
-		src.stamina_back = src.create_screen("stamina_back","Stamina", src.hud_icon, "stamina_back",\
-		stamloc, HUD_LAYER_UNDER_1)
-		if (src.master.stamina_bar)
-			src.stamina.desc = src.master.stamina_bar.getDesc(src.master)
-
-	// temperature element creation
-	src.bodytemp = src.create_screen("bodytemp","Temperature", src.hud_icon, "temp0",\
-	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltipTheme = "tempInd tempInd0")
-	src.bodytemp.desc = "The temperature feels fine."
-
+	// these elements rely on being able to breathe
 	if (src.master.get_health_holder("oxy"))
-		// oxygen element creation
-		src.oxygen = src.create_screen("oxygen", "Suffocation Warning", src.hud_icon, "oxy0",\
-		"EAST[src.next_topright()], NORTH", HUD_LAYER)
+		src.create_oxygen_element()
+		src.create_fire_element()
+		src.create_toxin_element()
 
-		// fire element creation
-		src.fire = src.create_screen("fire","Fire Warning", src.hud_icon, "fire0",\
-		"EAST[src.next_topright()], NORTH", HUD_LAYER)
+	src.create_radiation_element()
 
-		// toxic gas element creation
-		src.toxin = src.create_screen("toxin","Toxic Warning",src.hud_icon, "toxin0",\
-		"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltipTheme = "statusToxin")
-		src.toxin.desc = "This indicator warns that you are poisoned. You will take toxic damage until the situation is remedied."
-
-		// radiation element creation
-		src.rad = src.create_screen("rad","Radiation Warning", src.hud_icon, "rad0",\
-		"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltipTheme = "statusRad")
-		src.rad.desc = "This indicator warns that you are irradiated. You will take toxic and burn damage until the situation is remedied."
-
-	// bleeding element creation
 	if (src.master.can_bleed)
-		src.bleeding = src.create_screen("bleeding","Bleed Warning", src.hud_icon, "blood0",\
-		"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltipTheme = "healthDam healthDam0")
-		src.bleeding.desc = "This indicator warns that you are currently bleeding. You will die if the situation is not remedied."
+		src.create_bleeding_element()
 
-	// throwing element creation
 	if (src.master.can_throw)
-		src.throwing = src.create_screen("throw", "throw mode", src.hud_icon, "throw0",\
-		"CENTER[src.next_right()], SOUTH", HUD_LAYER_1)
+		src.create_throwing_element()
 
-	// intent element creation
-	src.intent = src.create_screen("intent", "action intent", src.hud_icon, "intent-help",\
-	"CENTER[src.next_right()],SOUTH", HUD_LAYER_1)
+	src.create_intent_element()
+	src.create_pulling_element()
+	src.create_mintent_element()
+	src.create_rest_element()
+	src.create_resist_element()
+	src.create_equipment_element()
 
-	// pulling element creation
-	src.pulling = src.create_screen("pull", "pulling", 'icons/mob/critter_ui.dmi', "pull0",\
-	"CENTER[src.get_right()], SOUTH", HUD_LAYER_1)
-
-	// movement intent element creation
-	src.mintent = src.create_screen("mintent", "movement mode", 'icons/mob/critter_ui.dmi', "move-run",\
-	"CENTER[src.next_right()], SOUTH", HUD_LAYER_1)
-
-	// resting element creation
-	src.resting = src.create_screen("rest", "resting", 'icons/mob/critter_ui.dmi', "rest0",\
-	"CENTER[src.get_right()], SOUTH", HUD_LAYER_1)
-
-	// resist element creation
-	src.resist = src.create_screen("resist", "resist", 'icons/mob/critter_ui.dmi', "resist_critter",\
-	"CENTER[src.next_right()], SOUTH", HUD_LAYER_1)
-
-	// equipment element creation
-	for (var/i = 1, i <= src.master.equipment.len, i++)
-		var/datum/equipmentHolder/equipmentHolder = src.master.equipment[i]
-		var/screen_loc = src.loc_left()
-		var/atom/movable/screen/hud/equipment_hud = src.create_screen("equipment[i]", equipmentHolder.name, equipmentHolder.icon,\
-		equipmentHolder.icon_state, screen_loc, HUD_LAYER_1)
-		equipmentHolder.screenObj = equipment_hud
-		src.equipment += equipmentHolder
-		if (equipmentHolder.item)
-			src.add_object(equipmentHolder.item)
 
 /// clears owner mob
 /datum/hud/critter/clear_master()
@@ -524,3 +450,101 @@
 		var/datum/hud/critter/H = src.hud
 		H.update_status_effects()
 	return
+
+/datum/hud/critter/proc/create_hand_element()
+	var/initial_hand_offset = -round((src.master.hands.len - 1) / 2) // calculates an offset based on even//odd number of hands
+	src.left_offset = initial_hand_offset - 1
+	for (var/i = 1, i <= src.master.hands.len, i++)
+		var/curr = initial_hand_offset + i - 1
+		var/datum/handHolder/handHolder = src.master.hands[i]
+		var/center_offset = 0
+		if (curr < 0)
+			center_offset = curr
+		else if (curr > 0)
+			center_offset = "+[curr]"
+		else
+			center_offset = ""
+
+		var/new_screen_loc = "CENTER[center_offset], SOUTH"
+		var/atom/movable/screen/hud/hand_element = src.create_screen("hand[i]", handHolder.name, handHolder.icon,\
+		"[handHolder.icon_state][i == src.master.active_hand ? 1 : 0]", new_screen_loc, HUD_LAYER)
+		handHolder.screenObj = hand_element
+		src.hands.Add(handHolder)
+	src.right_offset = initial_hand_offset + length(src.master.hands)
+
+/datum/hud/critter/proc/create_health_element()
+	src.health = src.create_screen("health", "health", src.hud_icon, "health0",\
+	"EAST[src.next_topright()],NORTH", HUD_LAYER)
+
+/datum/hud/critter/proc/create_stamina_element()
+	if (src.master.use_stamina)
+		var/stamloc = "EAST[src.next_topright()], NORTH"
+		src.stamina = src.create_screen("stamina","Stamina", src.hud_icon, "stamina",\
+		stamloc, HUD_LAYER, tooltipTheme = "stamina")
+		src.stamina_back = src.create_screen("stamina_back","Stamina", src.hud_icon, "stamina_back",\
+		stamloc, HUD_LAYER_UNDER_1)
+		if (src.master.stamina_bar)
+			src.stamina.desc = src.master.stamina_bar.getDesc(src.master)
+
+/datum/hud/critter/proc/create_temperature_element()
+	src.bodytemp = src.create_screen("bodytemp","Temperature", src.hud_icon, "temp0",\
+	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltipTheme = "tempInd tempInd0")
+	src.bodytemp.desc = "The temperature feels fine."
+
+/datum/hud/critter/proc/create_oxygen_element()
+	src.oxygen = src.create_screen("oxygen", "Suffocation Warning", src.hud_icon, "oxy0",\
+	"EAST[src.next_topright()], NORTH", HUD_LAYER)
+
+/datum/hud/critter/proc/create_fire_element()
+	src.fire = src.create_screen("fire","Fire Warning", src.hud_icon, "fire0",\
+	"EAST[src.next_topright()], NORTH", HUD_LAYER)
+
+/datum/hud/critter/proc/create_toxin_element()
+	src.toxin = src.create_screen("toxin","Toxic Warning",src.hud_icon, "toxin0",\
+	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltipTheme = "statusToxin")
+	src.toxin.desc = "This indicator warns that you are poisoned. You will take toxic damage until the situation is remedied."
+
+/datum/hud/critter/proc/create_radiation_element()
+	src.rad = src.create_screen("rad","Radiation Warning", src.hud_icon, "rad0",\
+	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltipTheme = "statusRad")
+	src.rad.desc = "This indicator warns that you are irradiated. You will take toxic and burn damage until the situation is remedied."
+
+/datum/hud/critter/proc/create_bleeding_element()
+	src.bleeding = src.create_screen("bleeding","Bleed Warning", src.hud_icon, "blood0",\
+	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltipTheme = "healthDam healthDam0")
+	src.bleeding.desc = "This indicator warns that you are currently bleeding. You will die if the situation is not remedied."
+
+/datum/hud/critter/proc/create_throwing_element()
+	src.throwing = src.create_screen("throw", "throw mode", src.hud_icon, "throw0",\
+	"CENTER[src.next_right()], SOUTH", HUD_LAYER_1)
+
+/datum/hud/critter/proc/create_intent_element()
+	src.intent = src.create_screen("intent", "action intent", src.hud_icon, "intent-help",\
+	"CENTER[src.next_right()],SOUTH", HUD_LAYER_1)
+
+/datum/hud/critter/proc/create_pulling_element()
+	src.pulling = src.create_screen("pull", "pulling", 'icons/mob/critter_ui.dmi', "pull0",\
+	"CENTER[src.get_right()], SOUTH", HUD_LAYER_1)
+
+/datum/hud/critter/proc/create_mintent_element()
+	src.mintent = src.create_screen("mintent", "movement mode", 'icons/mob/critter_ui.dmi', "move-run",\
+	"CENTER[src.next_right()], SOUTH", HUD_LAYER_1)
+
+/datum/hud/critter/proc/create_rest_element()
+	src.resting = src.create_screen("rest", "resting", 'icons/mob/critter_ui.dmi', "rest0",\
+		"CENTER[src.get_right()], SOUTH", HUD_LAYER_1)
+
+/datum/hud/critter/proc/create_resist_element()
+	src.resist = src.create_screen("resist", "resist", 'icons/mob/critter_ui.dmi', "resist_critter",\
+	"CENTER[src.next_right()], SOUTH", HUD_LAYER_1)
+
+/datum/hud/critter/proc/create_equipment_element()
+	for (var/i = 1, i <= src.master.equipment.len, i++)
+		var/datum/equipmentHolder/equipmentHolder = src.master.equipment[i]
+		var/screen_loc = src.loc_left()
+		var/atom/movable/screen/hud/equipment_hud = src.create_screen("equipment[i]", equipmentHolder.name, equipmentHolder.icon,\
+		equipmentHolder.icon_state, screen_loc, HUD_LAYER_1)
+		equipmentHolder.screenObj = equipment_hud
+		src.equipment += equipmentHolder
+		if (equipmentHolder.item)
+			src.add_object(equipmentHolder.item)

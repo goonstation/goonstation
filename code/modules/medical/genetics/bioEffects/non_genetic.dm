@@ -11,6 +11,7 @@
 	can_research = 0
 	can_make_injector = 0
 	reclaim_fail = 100
+	acceptable_in_mutini = 0
 	effectType = EFFECT_TYPE_POWER
 
 	//Moved special job stuff (chaplain, medical) over to traits system.
@@ -181,13 +182,12 @@
 	can_copy = 0
 	curable_by_mutadone = 0
 	occur_in_genepools = 0
-	var/personalized_stink = "Wow, it stinks in here!"
+	var/personalized_stink = null
 
 	New()
 		..()
-		src.personalized_stink = stinkString()
 		if (prob(5))
-			src.variant = 2
+			src.personalized_stink = stinkString()
 
 	OnLife(var/mult)
 		if(..()) return
@@ -195,7 +195,7 @@
 			for(var/mob/living/carbon/C in view(6,get_turf(owner)))
 				if (C == owner)
 					continue
-				if (src.variant == 2)
+				if (src.personalized_stink)
 					boutput(C, "<span class='alert'>[src.personalized_stink]</span>")
 				else
 					boutput(C, "<span class='alert'>[stinkString()]</span>")

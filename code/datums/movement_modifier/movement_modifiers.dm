@@ -29,8 +29,14 @@
 /datum/movement_modifier/hulkstrong
 	pushpull_multiplier = 0
 
+/datum/movement_modifier/strong
+	health_deficiency_adjustment = -50
+
 /datum/movement_modifier/status_slowed // these are instantiated by the status effect and the slowdown adjusted there
 	additive_slowdown = 10
+
+/datum/movement_modifier/status_salted // these are instantiated by the status effect and the slowdown adjusted there
+	health_deficiency_adjustment = 10
 
 /datum/movement_modifier/staggered_or_blocking
 	additive_slowdown = 0.4
@@ -69,15 +75,17 @@
 
 // robot legs
 /datum/movement_modifier/robotleg_right
-	additive_slowdown = -0.20
+	health_deficiency_adjustment = -25
 
 /datum/movement_modifier/robotleg_left
-	additive_slowdown = -0.20
+	health_deficiency_adjustment = -25
 
 /datum/movement_modifier/robottread_right
+	health_deficiency_adjustment = -25
 	additive_slowdown = -0.25
 
 /datum/movement_modifier/robottread_left
+	health_deficiency_adjustment = -25
 	additive_slowdown = -0.25
 
 // robot modifiers
@@ -144,17 +152,17 @@
 /datum/movement_modifier/revenant
 	maximum_slowdown = 2
 
-/datum/movement_modifier/vamp_zombie
+/datum/movement_modifier/vampiric_thrall
 	ask_proc = 1
 
-/datum/movement_modifier/vamp_zombie/modifiers(mob/user, move_target, running)
+/datum/movement_modifier/vampiric_thrall/modifiers(mob/user, move_target, running)
 	. = list(4,0)
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
-		var/datum/mutantrace/vamp_zombie/vamp_zombie = H.mutantrace
-		if (!istype(vamp_zombie))
+		var/datum/mutantrace/vampiric_thrall/vampiric_thrall = H.mutantrace
+		if (!istype(vampiric_thrall))
 			return
-		switch (vamp_zombie.blood_points)
+		switch (vampiric_thrall.blood_points)
 			if (151 to INFINITY)
 				.[1] = 0.7
 			if (101 to 151)

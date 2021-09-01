@@ -37,8 +37,7 @@
 	proc/attack_hand(atom/target, var/mob/user, var/reach, params, location, control)
 		if(!target) // fix runtime Cannot execute null.attack hand().
 			return
-
-		target.attack_hand(user, params, location, control)
+		target.Attackhand(user, params, location, control)
 
 	proc/harm(mob/living/target, var/mob/living/user)
 		if (special_next)
@@ -84,18 +83,13 @@
 	proc/attack_range(atom/target, var/mob/user, params)
 		if(user.a_intent == "disarm")
 			if(disarm_special)
-				for (var/obj/item/cloaking_device/I in user)
-					if (I.active)
-						I.deactivate(user)
-						user.visible_message("<span class='notice'><b>[user]'s cloak is disrupted!</b></span>")
+				SEND_SIGNAL(user, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
 				disarm_special.pixelaction(target,params,user)
 				.= 1
 		else if (user.a_intent == "harm")
 			if(harm_special)
 				for (var/obj/item/cloaking_device/I in user)
-					if (I.active)
-						I.deactivate(user)
-						user.visible_message("<span class='notice'><b>[user]'s cloak is disrupted!</b></span>")
+					SEND_SIGNAL(user, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
 				harm_special.pixelaction(target,params,user)
 				.= 1
 		else
@@ -312,7 +306,7 @@
 		reload_time = 1 SECOND
 
 /datum/limb/mouth
-	var/sound_attack = "sound/weapons/werewolf_attack1.ogg"
+	var/sound_attack = "sound/voice/animal/werewolf_attack1.ogg"
 	var/dam_low = 3
 	var/dam_high = 9
 	var/custom_msg = null
@@ -376,7 +370,7 @@
 /datum/limb/item
 	attack_hand(atom/target, var/mob/user, var/reach, params, location, control)
 		if (holder?.remove_object && istype(holder.remove_object))
-			target.attackby(holder.remove_object, user, params, location, control)
+			target.Attackby(holder.remove_object, user, params, location, control)
 			if (target)
 				holder.remove_object.afterattack(target, src, reach)
 
@@ -386,7 +380,7 @@
 			return
 
 		if (!istype(user))
-			target.attack_hand(user, params, location, control)
+			target.Attackhand(user, params, location, control)
 			return
 
 		if (ismob(target))
@@ -445,7 +439,7 @@
 			return
 
 		if (!istype(user))
-			target.attack_hand(user, params, location, control)
+			target.Attackhand(user, params, location, control)
 			return
 
 		if (ismob(target))
@@ -499,7 +493,7 @@
 			else if(istype(target, /obj/structure/woodwall))
 				var/obj/window/O = target
 				user.lastattacked = O
-				O.attack_hand(user)
+				O.Attackhand(user)
 
 			else if(istype(target, /obj/machinery/bot))
 				var/obj/machinery/bot/O = target
@@ -531,7 +525,7 @@
 			return
 
 		if (!istype(user) || !ismob(target))
-			target.attack_hand(user)
+			target.Attackhand(user)
 			return
 
 		if(check_target_immunity( target ))
@@ -578,7 +572,7 @@
 			return
 
 		if (!istype(user))
-			target.attack_hand(user)
+			target.Attackhand(user)
 			return
 
 		if (ismob(target))
@@ -643,7 +637,7 @@
 		var/quality = src.holder.quality
 
 		if (!istype(user))
-			target.attack_hand(user, params, location, control)
+			target.Attackhand(user, params, location, control)
 			return
 
 		if (isobj(target))
@@ -721,7 +715,7 @@
 
 
 		if (!istype(user))
-			target.attack_hand(user, params, location, control)
+			target.Attackhand(user, params, location, control)
 			return
 
 		if (isitem(target))
@@ -802,7 +796,7 @@
 			return 0
 
 		if (!istype(user))
-			target.attack_hand(user, params, location, control)
+			target.Attackhand(user, params, location, control)
 			return
 
 		if (istype(target, /obj/critter))
@@ -854,7 +848,7 @@
 		if (isobj(target))
 			switch (user.smash_through(target, list("window", "grille", "door")))
 				if (0)
-					target.attack_hand(user, params, location, control)
+					target.Attackhand(user, params, location, control)
 					return
 				if (1)
 					user.lastattacked = target
@@ -877,7 +871,7 @@
 			return
 
 		if (!istype(user) || !ismob(target))
-			target.attack_hand(user)
+			target.Attackhand(user)
 			return
 
 		if(check_target_immunity( target ))
@@ -904,7 +898,7 @@
 			return
 
 		if (!istype(user) || !ismob(target))
-			target.attack_hand(user)
+			target.Attackhand(user)
 			return
 
 		if(check_target_immunity( target ))
@@ -1010,7 +1004,7 @@
 			return
 
 		if (!istype(user) || !ismob(target))
-			target.attack_hand(user)
+			target.Attackhand(user)
 			return
 		if(check_target_immunity( target ))
 			return 0
@@ -1114,13 +1108,13 @@
 		if(check_target_immunity( target ))
 			return 0
 		if (!istype(user))
-			target.attack_hand(user, params, location, control)
+			target.Attackhand(user, params, location, control)
 			return
 
 		if (isobj(target))
 			switch (user.smash_through(target, list("door")))
 				if (0)
-					target.attack_hand(user, params, location, control)
+					target.Attackhand(user, params, location, control)
 					return
 				if (1)
 					return
@@ -1134,7 +1128,7 @@
 		if(check_target_immunity( target ))
 			return 0
 		if (!istype(user) || !ismob(target))
-			target.attack_hand(user)
+			target.Attackhand(user)
 			return
 
 		if (ismob(target))
@@ -1153,7 +1147,7 @@
 		//var/quality = src.holder.quality
 
 		if (!istype(user))
-			target.attack_hand(user, params, location, control)
+			target.Attackhand(user, params, location, control)
 			return
 
 		if (isobj(target))
@@ -1231,7 +1225,7 @@
 			return
 
 		if (!istype(user))
-			target.attack_hand(user, params, location, control)
+			target.Attackhand(user, params, location, control)
 			return
 
 		if (isobj(target))
@@ -1289,6 +1283,8 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 	/obj/machinery/weapon_stand,\
 	/obj/dummy/chameleon,\
 	/obj/machinery/light,\
+	/obj/machinery/phone,\
+	/obj/machinery/atmospherics/valve,\
 	/obj/machinery/vending,\
 	/obj/machinery/nuclearbomb,\
 	/obj/item/gun/kinetic/airzooka,\
@@ -1318,7 +1314,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 		if(check_target_immunity( target ))
 			return
 		if (!istype(user))
-			target.attack_hand(user, params, location, control)
+			target.Attackhand(user, params, location, control)
 			return
 		if (isobj(target))
 			if (isitem(target))
@@ -1431,7 +1427,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 		//var/quality = src.holder.quality
 
 		if (!istype(user))
-			target.attack_hand(user, params, location, control)
+			target.Attackhand(user, params, location, control)
 			return
 		..()
 

@@ -90,6 +90,9 @@
 		/obj/item/wirecutters/yellow,\
 		/obj/item/device/analyzer/atmospheric)
 
+	empty
+		spawn_contents = list()
+
 /obj/item/storage/toolbox/electrical
 	name = "electrical toolbox"
 	icon_state = "yellow"

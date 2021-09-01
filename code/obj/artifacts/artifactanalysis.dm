@@ -27,14 +27,15 @@
 		if(A.type_name == src.artifactType)
 			lastAnalysis++
 
-		// check if trigger is one of the correct ones
-		for(var/datum/artifact_trigger/T as anything in A.triggers)
-			if(T.type_name == src.artifactTriggers)
-				lastAnalysis++
-				break
-		// if a trigger would e redundant, let's just say it's cool!
-		if(!length(A.triggers) || A.automatic_activation)
+		// if a trigger would be redundant, let's just say it's cool!
+		if(A.automatic_activation || A.no_activation)
 			lastAnalysis++
+		else
+			// check if trigger is one of the correct ones
+			for(var/datum/artifact_trigger/T as anything in A.triggers)
+				if(T.type_name == src.artifactTriggers)
+					lastAnalysis++
+					break
 
 		// ok, let's make a name
 		// start with obscured name
@@ -60,7 +61,7 @@
 	attack_hand(mob/user)
 		var/obj/attachedobj = src.attached
 		if(istype(attachedobj) && attachedobj.artifact) // touch artifact we are attached to
-			src.attached.attack_hand(user)
+			src.attached.Attackhand(user)
 			user.lastattacked = user
 		else // do sticker things
 			..()
@@ -81,7 +82,7 @@
 		else
 			var/obj/attachedobj = src.attached
 			if(istype(attachedobj) && attachedobj.artifact) // hit artifact we are attached to
-				src.attached.attackby(W, user)
+				src.attached.Attackby(W, user)
 				user.lastattacked = user
 			else // just sticker things
 				..()

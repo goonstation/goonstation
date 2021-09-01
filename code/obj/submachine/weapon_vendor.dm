@@ -113,9 +113,9 @@
 		materiel_stock += new/datum/materiel/utility/crowdgrenades
 		materiel_stock += new/datum/materiel/utility/detscanner
 		materiel_stock += new/datum/materiel/utility/medcappowercell
-		materiel_stock += new/datum/materiel/utility/firstaidsec
 		materiel_stock += new/datum/materiel/utility/nightvisiongoggles
-		materiel_stock += new/datum/materiel/utility/riotrounds
+		materiel_stock += new/datum/materiel/utility/markerrounds
+		materiel_stock += new/datum/materiel/utility/prisonerscanner
 		materiel_stock += new/datum/materiel/assistant/basic
 
 	vended(var/atom/A)
@@ -151,6 +151,7 @@
 	New()
 		..()
 		// List of avaliable objects for purchase
+		materiel_stock += new/datum/materiel/sidearm/smartgun
 		materiel_stock += new/datum/materiel/sidearm/pistol
 		materiel_stock += new/datum/materiel/sidearm/revolver
 
@@ -258,9 +259,9 @@
 	description = "Four Morphine Autoinjectors, capable of ensuring you move at the best possible speed while injured without slowdowns...or used as a makeshift tranquilizer if overdosed."
 
 /datum/materiel/utility/donuts
-	name = "Robust Donuts"
+	name = "Robust(ed) Donuts"
 	path = /obj/item/storage/box/robustdonuts
-	description = "Two Robust Donuts, which are loaded with helpful chemicals which heals you and helps you resist stuns!"
+	description = "Two Robust Donuts and two Robusted Donuts, which are loaded with helpful chemicals that help you resist stuns and heal you!"
 
 /datum/materiel/utility/crowdgrenades
 	name = "Crowd Dispersal Grenades"
@@ -272,11 +273,6 @@
 	path = /obj/item/device/detective_scanner
 	description = "A scanner capable of reading fingerprints on objects and looking up the records in real time. A favorite of investigators."
 
-/datum/materiel/utility/firstaidsec
-	name = "First Aid Kit"
-	path = /obj/item/storage/firstaid/regular/doctor_spawn
-	description = "An advanced first aid kit, typically used in first responder scenarios before doctors arrive."
-
 /datum/materiel/utility/medcappowercell
 	name = "Spare Power Cell"
 	path = /obj/item/ammo/power_cell/self_charging/disruptor
@@ -287,10 +283,15 @@
 	path = /obj/item/clothing/glasses/nightvision
 	description = "A pair of Night Vision Goggles. Helps you see in the dark, but doesn't give you any protection from flashes or a SecHud."
 
-/datum/materiel/utility/riotrounds
-	name = "40mm Riot Rounds"
-	path = /obj/item/ammo/bullets/pbr
-	description = "One case of 40mm Riot Rounds, totalling 2 shots, for the Riot Launcher."
+/datum/materiel/utility/markerrounds
+	name = "40mm Paint Marker Rounds"
+	path = /obj/item/ammo/bullets/marker
+	description = "One case of 40mm Paint Marker Rounds, totalling 5 rounds, for the Riot Launcher."
+
+/datum/materiel/utility/prisonerscanner
+	name = "RecordTrak Scannner"
+	path = /obj/item/device/prisoner_scanner
+	description = "A device used to scan in prisoners and update their security records."
 
 /datum/materiel/assistant/basic
 	name = "Assistant"
@@ -298,6 +299,11 @@
 	description = "One belt containing a security barrier, a forensic scanner, and a security ticket writer."
 
 //SYNDIE
+
+/datum/materiel/sidearm/smartgun
+	name = "Hydra Smart Pistol"
+	path = /obj/item/storage/belt/smartgun
+	description = "A gun-belt containing a pistol capable of locking onto multiple targets and firing on them in rapid sequence and four magazines."
 
 /datum/materiel/sidearm/pistol
 	name = "Branwen Pistol"

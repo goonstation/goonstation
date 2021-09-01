@@ -65,6 +65,25 @@
 
 		return D
 
+	proc/wipe_or_zap(mob/user)
+		if(!read_only)
+			user.visible_message("<span class='alert'><b>[user] wipes the [src.name]!</b></span>")
+			elecflash(src,0, power=2, exclude_center = 0)
+			if (src.root)
+				src.root.dispose()
+
+			src.root = new /datum/computer/folder
+			src.root.holder = src
+			src.root.name = "root"
+		else
+			user.visible_message("<span class='alert'><b>[user] is zapped as the multitool backfires! The [src.name] seems unphased.</b></span>")
+			elecflash(user,0, power=2, exclude_center = 0)
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (ispulsingtool(W))
+			user.visible_message("<span class='alert'><b>[user] begins to wipe [src.name]!</b></span>")
+			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/disk/data/proc/wipe_or_zap, list(user), src.icon, src.icon_state, null, null)
+
 /obj/item/disk/data/floppy
 	var/random_color = 1
 
@@ -108,19 +127,6 @@
 	title = "MEMCORE"
 	file_amount = 640
 	portable = 0
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (ispulsingtool(W))
-			user.visible_message("<span class='alert'><b>[user] begins to clear the [src]!</b></span>","You begin to clear the [src].")
-			if(do_after(user, 3 SECONDS))
-				user.visible_message("<span class='alert'><b>[user] clears the [src]!</b></span>","You clear the [src].")
-				//qdel(src.root)
-				if (src.root)
-					src.root.dispose()
-
-				src.root = new /datum/computer/folder
-				src.root.holder = src
-				src.root.name = "root"
 
 /obj/item/disk/data/tape
 	name = "ThinkTape"
@@ -313,3 +319,19 @@
 			newfolder.add_file( new /datum/computer/file/terminal_program/writewizard(src))
 		else
 			newfolder.add_file( new /datum/computer/file/terminal_program/file_transfer(src))
+
+//A computer disk with the hottest software, for nerds
+/obj/item/disk/data/fixed_disk/techcomputer3
+	New()
+		. = ..()
+		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
+		newfolder.name = "logs"
+		src.root.add_file( newfolder )
+		newfolder.add_file( new /datum/computer/file/record/c3help(src))
+		newfolder = new /datum/computer/folder
+		newfolder.name = "bin"
+		src.root.add_file( newfolder )
+		newfolder.add_file( new /datum/computer/file/terminal_program/sigpal(src))
+		newfolder.add_file( new /datum/computer/file/terminal_program/background/signal_catcher(src))
+		newfolder.add_file( new /datum/computer/file/terminal_program/writewizard(src))
+		newfolder.add_file( new /datum/computer/file/terminal_program/file_transfer(src))

@@ -12,14 +12,15 @@
 	req_access = list(access_heads) //Only used for record deletion right now.
 	object_flags = CAN_REPROGRAM_ACCESS
 	machine_registry_idx = MACHINES_CLONINGCONSOLES
-	can_reconnect = 1
+	can_reconnect = TRUE
+	circuit_type = /obj/item/circuitboard/cloning
+	records = list()
 	var/obj/machinery/clone_scanner/scanner = null //Linked scanner. For scanning.
 	var/max_pods = 3
 	var/list/linked_pods = list() // /obj/machinery/clonepod
 	var/currentStatusMessage = list()
 	var/currentMessageNumber = 0
 	var/menu = 1 //Which menu screen to display
-	var/list/records = list()
 	var/obj/item/disk/data/floppy/diskette = null //Mostly so the geneticist can steal somebody's identity while pretending to give them a handy backup profile.
 	var/held_credit = 5000 // one free clone
 	var/allow_dead_scanning = 0 //Can the dead be scanned in the cloner?
@@ -103,6 +104,23 @@
 		if (src.linked_pods.len >= src.max_pods)
 			break
 
+/obj/machinery/computer/cloning/special_deconstruct(var/obj/computerframe/frame as obj)
+	frame.circuit.records = src.records
+	if (src.allow_dead_scanning)
+		new /obj/item/cloner_upgrade (src.loc)
+		src.allow_dead_scanning = 0
+	if(src.allow_mind_erasure)
+		new /obj/item/cloneModule/minderaser(src.loc)
+		src.allow_mind_erasure = 0
+	if(src.BE)
+		new /obj/item/cloneModule/genepowermodule(src.loc)
+		src.BE = null
+	if(src.status & BROKEN)
+		logTheThing("station", usr, null, "disassembles [src] (broken) [log_loc(src)]")
+	else
+		logTheThing("station", usr, null, "disassembles [src] [log_loc(src)]")
+
+
 /obj/machinery/computer/cloning/attackby(obj/item/W as obj, mob/user as mob)
 	if (wagesystem.clones_for_cash && istype(W, /obj/item/spacecash))
 		var/obj/item/spacecash/cash = W
@@ -119,40 +137,6 @@
 			boutput(user, "You insert [W].")
 			src.updateUsrDialog()
 			return
-
-	else if (isscrewingtool(W))
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 2 SECONDS))
-			if(src.status & BROKEN)
-				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-				G.set_loc(src.loc)
-			else
-				boutput(user, "<span class='notice'>The glass pane falls out.</span>")
-				var/obj/item/sheet/glass/glass = new/obj/item/sheet/glass(src.loc)
-				glass.amount = 6
-				glass.inventory_counter.update_number(glass.amount)
-			logTheThing("station", user, null, "disconnects the cloning console at [log_loc(src)].")
-			var/obj/computerframe/A = new /obj/computerframe( src.loc )
-			if(src.material) A.setMaterial(src.material)
-			var/obj/item/circuitboard/cloning/M = new /obj/item/circuitboard/cloning( A )
-			for (var/obj/C in src)
-				C.set_loc(src.loc)
-			M.records = src.records
-			if (src.allow_dead_scanning)
-				new /obj/item/cloner_upgrade (src.loc)
-				src.allow_dead_scanning = 0
-			if(src.allow_mind_erasure)
-				new /obj/item/cloneModule/minderaser(src.loc)
-				src.allow_mind_erasure = 0
-			if(src.BE)
-				new /obj/item/cloneModule/genepowermodule(src.loc)
-				src.BE = null
-			A.circuit = M
-			A.state = 3
-			A.icon_state = "3"
-			A.anchored = 1
-			qdel(src)
 
 	else if (istype(W, /obj/item/cloner_upgrade))
 		if (allow_dead_scanning || allow_mind_erasure)
@@ -461,12 +445,12 @@ proc/find_ghost_by_key(var/find_key)
 			var/previous_user_intent = user.a_intent
 			user.a_intent = INTENT_GRAB
 			user.drop_item()
-			target.attack_hand(user)
+			target.Attackhand(user)
 			user.a_intent = previous_user_intent
 			SPAWN_DBG(user.combat_click_delay + 2)
 				if (can_operate(user))
 					if (istype(user.equipped(), /obj/item/grab))
-						src.attackby(user.equipped(), user)
+						src.Attackby(user.equipped(), user)
 		return
 
 
@@ -764,10 +748,6 @@ proc/find_ghost_by_key(var/find_key)
 				src.diskette = null
 				. = TRUE
 		if("load")
-			if (src.diskette.read_only)
-				// The file needs to be deleted from the disk after loading the record
-				show_message("Load error - cannot transfer clone records from a disk in read only mode.", "warning")
-				. = TRUE
 
 			var/loaded = 0
 
@@ -778,7 +758,10 @@ proc/find_ghost_by_key(var/find_key)
 					src.records += R
 					loaded++
 					show_message("Load successful, [loaded] [loaded > 1 ? "records" : "record"] transferred.", "success")
+					var/read_only = src.diskette.read_only
+					src.diskette.read_only = 0
 					src.diskette.root.remove_file(cloneRecord)
+					src.diskette.read_only = read_only
 					. = TRUE
 
 			if(!loaded)

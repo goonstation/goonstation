@@ -73,22 +73,17 @@ Custom Books
 		name = "Medbay Pocket Guide"
 		icon_state = "mediguide"
 		file_path = "strings/books/medbay_pocket_guide.txt"
-	//note in jobs.dm says both pocket guides can be combined; something to work on later
-	mining1
-		name = "Mining Pocket Guide No.1"
-		icon_state = "minerguide"
-		file_path = "strings/books/mining_pocket_guide_1.txt"
 
-	mining2
-		name = "Mining Pocket Guide No.2"
+	mining
+		name = "Mining Pocket Guide"
 		icon_state = "minerguide"
-		file_path = "strings/books/mining_pocket_guide_2.txt"
+		file_path = "strings/books/mining_pocket_guide.txt"
 
 	bartending
 		name = "Bartending Pocket Guide"
 		icon_state = "barguide"
 		file_path = "strings/books/bartending_pocket_guide.txt"
-	//i personally would like to re-do the pockt guide to be a little more comprehensive
+	//i personally would like to re-do the pocket guide to be a little more comprehensive
 	//since it says to refer to the engine start-up documentation paper, which the sing doesn't even have - nefarious
 	engineering
 		name = "Engineering Pocket Guide"
@@ -208,7 +203,7 @@ Custom Books
 	name = "Elective Prosthetics for Dummies"
 	icon_state = "roboticsbook"
 	file_path = "strings/books/elective_prosthetics_for_dummies.txt"
-//rev
+
 /obj/item/paper/book/from_file/pharmacopia //medical_guide
 	name = "Pharmacopia"
 	icon_state = "pharmacopia"
@@ -239,7 +234,7 @@ Custom Books
 
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = 0
 
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "lawbook"
@@ -269,20 +264,15 @@ Custom Books
 				user.changeStatus("paralysis", 2 SECONDS)
 				user.force_laydown_standup()
 			else
-				src.attack_hand(usr)
+				src.Attackhand(usr)
 			return
 		else
 			if(ishuman(hit_atom))
 				var/mob/living/carbon/human/user = usr
+				var/mob/living/carbon/human/H = hit_atom
 				var/hos = (istype(user.head, /obj/item/clothing/head/hosberet) || istype(user.head, /obj/item/clothing/head/hos_hat))
-				if(hos)
-					var/mob/living/carbon/human/H = hit_atom
-					H.changeStatus("stunned", 2 SECONDS)
-					H.changeStatus("weakened", 2 SECONDS)
-					H.force_laydown_standup()
-					//H.paralysis++
-					playsound(H.loc, "swing_hit", 50, 1)
-					usr.say("I AM THE LAW!")
+				if(hos && !ON_COOLDOWN(H, "spacelaw_confession", 10 SECONDS))
+					H.say("[pick("Alright, fine, I ", "I confess that I ", "I confess! I ", "Okay, okay, I admit that I ")][pick("nabbed ", "stole ", "klepped ", "grabbed ", "thieved ", "pilfered ")]the [pick("Head of Security's ", "Captain's ", "Head of Personnel's ", "Chief Engineer's ", "Research Director's ", "Science Department's ", "Mining Team's ", "Quartermaster's ")] [pick("hair brush!", "shoes!", "stuffed animal!", "spare uniform!", "bedsheets!", "hat!", "trophy!", "glasses!", "fizzy lifting drink!", "ID card!")]")
 				prob_clonk = min(prob_clonk + 5, 40)
 				SPAWN_DBG(2 SECONDS)
 					prob_clonk = max(prob_clonk - 5, 0)

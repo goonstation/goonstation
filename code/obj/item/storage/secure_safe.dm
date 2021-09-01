@@ -630,8 +630,7 @@
 			if (1)
 				new /obj/item/storage/pill_bottle/cyberpunk(src)
 				new /obj/item/storage/pill_bottle/ipecac(src)
-				new /obj/item/gun/kinetic/pistol/empty(src)
-				new /obj/item/ammo/bullets/bullet_9mm/five_shots(src)
+				new /obj/item/gun/kinetic/clock_188/boomerang(src)
 				new /obj/item/paper/orangeroomsafe(src)
 			if (2)
 				new /obj/item/storage/pill_bottle/bathsalts(src)
@@ -714,6 +713,13 @@
 	spawn_contents = list(/obj/item/robot_foodsynthesizer,\
 	/obj/item/spacecash/thousand,\
 	/obj/item/gun/kinetic/derringer/empty)
+
+/obj/item/storage/secure/ssafe/shooting_range //prefab safe
+	configure_mode = 0
+	random_code = 1
+	spawn_contents = list(/obj/item/spacecash/thousand,\
+	/obj/item/gun/energy/raygun,\
+	/obj/item/paper/shooting_range_note2)
 
 /obj/item/storage/secure/ssafe/marsvault
 	name = "secure vault"

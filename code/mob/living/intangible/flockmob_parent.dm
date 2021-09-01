@@ -153,12 +153,8 @@
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 	logTheThing("diary", src, null, ": [message]", "say")
 
-	if (dd_hasprefix(message, ":lh") || dd_hasprefix(message, ":rh") || dd_hasprefix(message, ":in"))
-		message = copytext(message, 4)
-	else if (dd_hasprefix(message, ":"))
-		message = copytext(message, 3)
-	else if (dd_hasprefix(message, ";"))
-		message = copytext(message, 2)
+	var/prefixAndMessage = separate_radio_prefix_and_message(message)
+	message = prefixAndMessage[2]
 
 	flock_speak(src, message, src.flock)
 

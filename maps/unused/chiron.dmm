@@ -1719,7 +1719,7 @@
 "adc" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/radio,
@@ -3132,7 +3132,7 @@
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "afF" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -11095,7 +11095,7 @@
 	pixel_x = 6
 	},
 /obj/item/device/radio/intercom/catering{
-
+	
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -32369,7 +32369,7 @@
 /area/station/hallway/secondary/exit)
 "blR" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/table/auto,
 /obj/item/decoration/ashtray,
@@ -33701,7 +33701,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A really big A/C unit, sorta, except it also filters and processes air.  So not really at all like an A/C unit.";
-	icon = 'icons/obj/64x96.dmi';
+	icon = 'icons/obj/large/64x96.dmi';
 	icon_state = "air_gizmo";
 	name = "damaged vaporator unit"
 	},

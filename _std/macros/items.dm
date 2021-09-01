@@ -14,3 +14,6 @@
 
 /// Returns true if the given x is a grab (obj/item/grab)
 #define isgrab(x) (istype(x, /obj/item/grab/))
+
+/// Returns true if x is equipped or inside & usable in what's equipped (currently only applicable to magtractors)
+#define equipped_or_holding(x,source) (source.equipped() == x || (source.equipped()?.useInnerItem && (x in source.equipped())))

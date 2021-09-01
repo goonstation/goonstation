@@ -81,7 +81,7 @@
 	msgGain = "You feel kind of off-balance and disoriented."
 	msgLose = "You feel well co-ordinated again."
 	reclaim_fail = 15
-	stability_loss = -5
+	stability_loss = -10
 	icon_state  = "bad"
 
 /datum/bioEffect/narcolepsy
@@ -94,7 +94,7 @@
 	msgGain = "You feel a bit sleepy."
 	msgLose = "You feel wide awake."
 	reclaim_fail = 15
-	stability_loss = -5
+	stability_loss = -15
 	var/sleep_prob = 4
 	icon_state  = "bad"
 
@@ -189,10 +189,10 @@
 					applied = 0
 		return
 
-/datum/bioEffect/epilepsy
-	name = "Epilepsy"
-	desc = "Causes damage to the subject's brain structure, resulting in occasional seizures from brain misfires."
-	id = "epilepsy"
+/datum/bioEffect/stupefaction
+	name = "Stupefaction"
+	desc = "Causes damage to the subject's brain structure, occassionally utterly stupefying and stunning them."
+	id = "stupefaction"
 	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	probability = 66
@@ -208,9 +208,8 @@
 		if (isdead(owner))
 			return
 		if (probmult(1) && !owner.getStatusDuration("paralysis"))
-			owner:visible_message("<span class='alert'><B>[owner] starts having a seizure!</span>", "<span class='alert'>You have a seizure!</span>")
-			owner.setStatus("paralysis", max(owner.getStatusDuration("paralysis"), 20))
-			owner:make_jittery(100)
+			owner:visible_message("<span class='alert'><B>[owner] looks totally stupefied!</span>", "<span class='alert'>You feel totally stupefied!</span>")
+			owner.setStatus("paralysis", max(owner.getStatusDuration("paralysis"), 2 SECONDS))
 		return
 
 /datum/bioEffect/thermal_vuln
@@ -272,7 +271,7 @@
 	msgGain = "You feel like you can't control your actions fully."
 	msgLose = "You feel in full control of yourself once again."
 	reclaim_fail = 15
-	stability_loss = -5
+	stability_loss = -10
 	icon_state  = "bad"
 
 	OnLife(var/mult)
@@ -332,7 +331,7 @@
 	msgGain = "One of your limbs feels a bit strange and twitchy."
 	msgLose = "Your limb feels fine again."
 	reclaim_fail = 15
-	stability_loss = -20
+	stability_loss = -25
 	lockProb = 50
 	lockedGaps = 2
 	lockedDiff = 4
@@ -461,7 +460,7 @@
 	lockedDiff = 4
 	lockedChars = list("G","C","A","T")
 	lockedTries = 10
-	stability_loss = 50
+	stability_loss = 35
 	var/affect_others = 0
 	var/field_range = 2
 	var/proc_prob = 5
@@ -502,7 +501,7 @@
 	lockedDiff = 3
 	lockedChars = list("G","C","A","T")
 	lockedTries = 8
-	stability_loss = 15
+	stability_loss = 10
 	var/tele_prob = 5
 	icon_state  = "bad"
 
@@ -748,7 +747,7 @@
 	lockedGaps = 1
 	lockedDiff = 3
 	lockedTries = 8
-	stability_loss = -5
+	stability_loss = -10
 	icon_state  = "bad"
 
 	OnAdd()
@@ -767,7 +766,7 @@
 	isBad = 1
 	msgGain = "You hear a ringing in your ears."
 	msgLose = "The ringing has stopped...Finally. Thank the Space-Gods."
-	stability_loss = -5
+	stability_loss = 0
 	probability = 99
 	var/ring_prob = 6
 	icon_state  = "bad"
@@ -786,7 +785,7 @@
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel lightheaded."
 	msgLose = "Your lightheadedness fades."
-	stability_loss = -5
+	stability_loss = -10
 	var/run = 1
 	icon_state  = "bad"
 
@@ -806,7 +805,7 @@
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "Your breathing quickens."
 	msgLose = "Your breathing returns to normal."
-	stability_loss = -5
+	stability_loss = -10
 	var/run = 1
 	icon_state  = "bad"
 
@@ -842,6 +841,9 @@
 
 	OnLife(var/mult)
 		if(..()) return
+		var/turf/T = get_turf(owner)
+		if(isrestrictedz(T?.z))
+			return
 		if (probmult(proc_prob))
 			var/list/potential_victims = list()
 			for(var/mob/living/carbon/human/H in range(7,owner))

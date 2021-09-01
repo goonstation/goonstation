@@ -28,6 +28,7 @@
 	var/pictures_max = 30
 	var/can_use = 1
 	var/takes_voodoo_pics = 0
+	var/steals_souls = FALSE
 
 	New()
 		..()
@@ -87,7 +88,6 @@
 
 /obj/item/camera/spy
 	inventory_counter_enabled = 1
-	var/obj/item/ammo/power_cell/self_charging/cell = null
 	var/flash_mode = 0
 	var/wait_cycle = 0
 
@@ -105,63 +105,43 @@
 			src.update_icon()
 
 	New()
-		if (!cell)
-			cell = new/obj/item/ammo/power_cell/self_charging/
-			cell.max_charge = 200
-			cell.charge = 200
-			cell.recharge_rate = 10.0
-		if (!(src in processing_items)) // No self-charging cell? Will be kicked out after the first tick (Convair880).
-			processing_items.Add(src)
+		var/cell = new/obj/item/ammo/power_cell/self_charging/medium{recharge_rate = 10}
+		AddComponent(/datum/component/cell_holder,cell, FALSE, 200, FALSE)
+		RegisterSignal(src, COMSIG_UPDATE_ICON, .proc/update_icon)
 		..()
 		update_icon()
 
 	proc/update_icon()
 		if (!src.flash_mode)
 			inventory_counter.update_text("")
-		else if (src.cell)
-			inventory_counter.update_percent(src.cell.charge, src.cell.max_charge)
 		else
-			inventory_counter.update_text("-")
+			var/list/ret = list()
+			if (SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+				inventory_counter.update_percent(ret["charge"], ret["max_charge"])
+			else
+				inventory_counter.update_text("-")
 		return 0
 
 	disposing()
 		processing_items -= src
 		..()
 
-	process()
-		src.wait_cycle = !src.wait_cycle // Self-charging cells recharge every other tick
-		if (src.wait_cycle)
-			return
-
-		if (!(src in processing_items))
-			logTheThing("debug", null, null, "Process() was called for a spy ([src]) that wasn't in the item loop. Last touched by: [src.fingerprintslast]")
-			processing_items.Add(src)
-			return
-		if (!src.cell)
-			processing_items.Remove(src)
-			return
-		if (src.cell.charge == src.cell.max_charge)
-			return
-
-		src.update_icon()
-		return
-
 /obj/item/camera/spy/attack(atom/target, mob/user, flag)
 	if (!ismob(target))
 		return
 	if (src.flash_mode)
-		if (src.cell?.charge < 25)
+		// Use cell charge
+		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, 25) & CELL_SUFFICIENT_CHARGE))
 			user.show_text("[src] doesn't have enough battery power!", "red")
 			return 0
 		var/turf/T = get_turf(target.loc)
 		if (T.is_sanctuary())
 			user.visible_message("<span class='alert'><b>[user]</b> tries to use [src], cannot quite comprehend the forces at play!</span>")
 			return
-		// Use cell charge
-		src.cell.use(25)
 		src.update_icon()
 		// Generic flash
 		var/mob/M = target
+		SEND_SIGNAL(src, COMSIG_CELL_USE, 25)
 		var/blind_success = M.apply_flash(30, 8, 0, 0, 0, rand(0, 1), 0, 0, 100, 70, disorient_time = 30)
 		playsound(src, "sound/weapons/flash.ogg", 100, 1)
 		flick("camera_flash-anim", src)
@@ -289,7 +269,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (enchant_power && world.time > src.enchant_delay && cursed_dude && istype(cursed_dude, /mob))
-			cursed_dude.attackby(W,user)
+			cursed_dude.Attackby(W,user)
 			src.enchant_delay = world.time + COMBAT_CLICK_DELAY
 			if(enchant_power > 0) enchant_power--
 		else
@@ -372,6 +352,7 @@
 
 	var/mobnumber = 0 // above 3 and it'll stop listing what they're holding and if they're hurt
 	var/itemnumber = 0
+	var/list/mob/stolen_souls = list()
 
 	for (var/atom/A in the_turf)
 		if (A.invisibility || istype(A, /obj/overlay/tile_effect))
@@ -385,6 +366,9 @@
 			photo_icon.Blend(Y, ICON_OVERLAY)
 			qdel(X)
 			qdel(Y)
+
+			if(src.steals_souls)
+				stolen_souls += M
 
 			if (!mob_title)
 				if(src.takes_voodoo_pics)
@@ -466,6 +450,11 @@
 		P:cursed_dude = deafnote //kubius: using runtime eval because non-voodoo photos don't have a cursed_dude var
 		if(src.takes_voodoo_pics == 2) //unlimited photo uses
 			P:enchant_power = -1
+	else if(src.steals_souls)
+		P = new/obj/item/photo/haunted(get_turf(src), photo, photo_icon, finished_title, finished_detail)
+		var/obj/item/photo/haunted/HP = P
+		for(var/mob/M as anything in stolen_souls)
+			HP.add_soul(M)
 	else
 		P = new/obj/item/photo(get_turf(src), photo, photo_icon, finished_title, finished_detail)
 

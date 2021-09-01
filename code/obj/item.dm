@@ -113,10 +113,6 @@
 	var/limb_hit_bonus = 0 // attack bonus for when you have this item as a limb and hit someone with it
 	var/can_hold_items = 0 //when used as an arm, can it hold things?
 
-	var/list/module_research = null
-	var/module_research_type = null
-	var/module_research_no_diminish = 0
-
 	var/rand_pos = 0
 	var/obj/item/holding = null
 	var/rarity = ITEM_RARITY_COMMON // Just a little thing to indicate item rarity. RPG fluff.
@@ -257,6 +253,7 @@
 
 	onMaterialChanged()
 		..()
+		tooltip_rebuild = 1
 		if (istype(src.material))
 			force = material.hasProperty("hard") ? initial(force) + round(material.getProperty("hard") / 20) : initial(force)
 			burn_possible = src.material.getProperty("flammable") > 50 ? 1 : 0
@@ -475,7 +472,7 @@
 /obj/item/proc/equipment_click(atom/source, atom/target, params, location, control, origParams, slot) //Called through hand_range_attack on items the mob is wearing that have HAS_EQUIP_CLICK in flags.
 	return 0
 
-/obj/item/proc/combust() // cogwerks- flammable items project
+/obj/item/proc/combust(obj/item/W) // cogwerks- flammable items project
 	if(processing_items.Find(src)) //processing items cant be lit on fire to avoid weird bugs
 		return
 	if (!src.burning)
@@ -483,6 +480,18 @@
 		src.visible_message("<span class='alert'>[src] catches on fire!</span>")
 		src.burning = 1
 		src.firesource = TRUE
+		if (istype(src, /obj/item/plant))
+			if (!GET_COOLDOWN(global, "hotbox_adminlog"))
+				var/list/hotbox_plants = list()
+				for (var/obj/item/plant/P in get_turf(src))
+					hotbox_plants += P
+				if (length(hotbox_plants) >= 5) //number is up for debate, 5 seemed like a good starting place
+					ON_COOLDOWN(global, "hotbox_adminlog", 30 SECONDS)
+					var/msg = "([src]) was set on fire on the same turf as at least ([length(hotbox_plants)]) other plants at [log_loc(src)]"
+					if (W?.firesource)
+						msg += " by item ([W]). Last touched by: [key_name(W.fingerprintslast)]"
+					message_admins(msg)
+					logTheThing("bombing", W?.fingerprintslast, null, msg)
 		if (src.burn_output >= 1000)
 			UpdateOverlays(image('icons/effects/fire.dmi', "2old"),"burn_overlay")
 		else
@@ -490,6 +499,7 @@
 		processing_items.Add(src)
 
 /obj/item/proc/combust_ended()
+	STOP_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
 	processing_items.Remove(src)
 	burning = null
 	firesource = FALSE
@@ -537,7 +547,12 @@
 /obj/item/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if (src.burn_possible && !src.burning)
 		if ((temperature > T0C + src.burn_point) && prob(5))
-			src.combust()
+			var/obj/item/firesource = null
+			for (var/obj/item/I in get_turf(src))
+				if (I.firesource)
+					firesource = I
+					break
+			src.combust(firesource)
 	if (src.material)
 		src.material.triggerTemp(src, temperature)
 	..() // call your fucking parents
@@ -756,7 +771,7 @@
 		if (succ)
 			SPAWN_DBG(1 DECI SECOND)
 				if (user.is_in_hands(src))
-					storage.attackby(src, user)
+					storage.Attackby(src, user)
 			return
 
 	if (istype(S))
@@ -827,7 +842,7 @@
 		src.material.triggerTemp(src ,1500)
 	if (W.firesource)
 		if (src.burn_possible && src.burn_point <= 1500)
-			src.combust()
+			src.combust(W)
 		else
 			..(W, user)
 	else
@@ -841,13 +856,13 @@
 		src.last_tick_duration = (ticker.round_elapsed_ticks - src.last_processing_tick) / (2.9 SECONDS)
 	src.last_processing_tick = ticker.round_elapsed_ticks
 	if (src.burning)
-		if (src.material)
+		if (src.material && !(src.item_function_flags & COLD_BURN))
 			src.material.triggerTemp(src, src.burn_output + rand(1,200))
 		var/turf/T = get_turf(src.loc)
-		if (T) // runtime error fix
+		if (T && !(src.item_function_flags & COLD_BURN)) // runtime error fix
 			T.hotspot_expose((src.burn_output + rand(1,200)),5)
 
-		if (prob(7))
+		if (prob(7) && !(src.item_function_flags & COLD_BURN))
 			elecflash(src)
 		if (prob(7))
 			if(!(src.item_function_flags & SMOKELESS))// maybe a better way to make this if no?
@@ -855,7 +870,7 @@
 				smoke.set_up(1, 0, src.loc)
 				smoke.attach(src)
 				smoke.start()
-		if (prob(7))
+		if (prob(7) && !(src.item_function_flags & COLD_BURN))
 			fireflash(src, 0)
 
 		if (prob(40))
@@ -1021,12 +1036,6 @@
 	src.set_loc(T)
 */
 
-/obj/item/interact(mob/user)
-	if (user.equipped() == src)
-		src.attack_self(user)
-	else
-		src.pick_up_by(user)
-
 /obj/item/proc/pick_up_by(var/mob/M)
 
 	if (world.time < M.next_click)
@@ -1042,10 +1051,7 @@
 		return
 
 	.= 1
-	for (var/obj/item/cloaking_device/I in M)
-		if (I.active)
-			I.deactivate(M)
-			M.visible_message("<span class='notice'><b>[M]'s cloak is disrupted!</b></span>")
+	SEND_SIGNAL(M, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
 	if (issmallanimal(M))
 		var/mob/living/critter/small_animal = M
 
@@ -1064,9 +1070,9 @@
 	if (M.equipped())
 		M.drop_item()
 		SPAWN_DBG(1 DECI SECOND)
-			src.attack_hand(M)
+			src.Attackhand(M)
 	else
-		src.attack_hand(M)
+		src.Attackhand(M)
 	M.next_click = world.time + src.click_delay
 
 /obj/item/get_desc()
@@ -1167,7 +1173,7 @@
 		logTheThing("combat", user, M, "uses [src] ([type], object name: [initial(name)]) on [constructTarget(M,"combat")]")
 		return
 
-	if (user.mind && user.mind.special_role == "vampthrall" && isvampire(M) && user.is_mentally_dominated_by(M))
+	if (user.mind && user.mind.special_role == ROLE_VAMPTHRALL && isvampire(M) && user.is_mentally_dominated_by(M))
 		boutput(user, "<span class='alert'>You cannot harm your master!</span>") //This message was previously sent to the attacking item. YEP.
 		return
 

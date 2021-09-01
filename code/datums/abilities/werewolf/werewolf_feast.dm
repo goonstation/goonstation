@@ -49,8 +49,8 @@
 	icon_state = "devour_over"
 	var/mob/living/target
 	var/datum/targetable/werewolf/werewolf_feast/feast
-	var/last_complete = 0
-	var/do_we_get_points = 0 // For the specialist objective. Did we feed on the target long enough?
+	var/times_attacked = 0
+	var/do_we_get_points = FALSE // For the specialist objective. Did we feed on the target enough times?
 
 	New(Target, Feast)
 		target = Target
@@ -91,77 +91,17 @@
 		var/datum/abilityHolder/A = feast.holder
 		var/mob/living/carbon/human/HH = target
 
-		if (!feast || get_dist(M, target) > feast.max_range || target == null || M == null || !ishuman(target) || !ishuman(M) || !A || !istype(A))
+		if (!feast || get_dist(M, HH) > feast.max_range || HH == null || M == null || !ishuman(HH) || !ishuman(M) || !A || !istype(A) || (!HH.lying))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		var/done = TIME - started
-		var/complete = max(min((done / duration), 1), 0)
+		if (!GET_COOLDOWN(M, "ww feast"))
+			M.werewolf_attack(HH, "feast")
+			ON_COOLDOWN(M, "ww feast", 2.5 SECONDS) // Enough time between attacks for them to happen 9 times
+			times_attacked += 1
 
-		if (complete >= 0.1 && last_complete < 0.1)
-			if (M.werewolf_attack(target, "feast") != 1)
-				boutput(M, __red("[target] is moving around too much."))
-				interrupt(INTERRUPT_ALWAYS)
-				return
-
-		if (complete >= 0.2 && last_complete < 0.2)
-			if (M.werewolf_attack(target, "feast") != 1)
-				boutput(M, __red("[target] is moving around too much."))
-				interrupt(INTERRUPT_ALWAYS)
-				return
-
-		if (complete >= 0.3 && last_complete < 0.3)
-			if (M.werewolf_attack(target, "feast") != 1)
-				boutput(M, __red("[target] is moving around too much."))
-				interrupt(INTERRUPT_ALWAYS)
-				return
-
-		if (complete >= 0.4 && last_complete < 0.4)
-			if (M.werewolf_attack(target, "feast") != 1)
-				boutput(M, __red("[target] is moving around too much."))
-				interrupt(INTERRUPT_ALWAYS)
-				return
-
-		if (complete >= 0.5 && last_complete < 0.5)
-			if (M.werewolf_attack(target, "feast") != 1)
-				boutput(M, __red("[target] is moving around too much."))
-				interrupt(INTERRUPT_ALWAYS)
-				return
-
-		if (complete >= 0.6 && last_complete < 0.6)
-			if (M.werewolf_attack(target, "feast") != 1)
-				boutput(M, __red("[target] is moving around too much."))
-				interrupt(INTERRUPT_ALWAYS)
-				return
-
-		if (complete >= 0.7 && last_complete < 0.7)
-			if (M.werewolf_attack(target, "feast") != 1)
-				boutput(M, __red("[target] is moving around too much."))
-				interrupt(INTERRUPT_ALWAYS)
-				return
-
-			if (HH.decomp_stage <= 2 && !(isnpcmonkey(target))) // Can't farm npc monkeys.
-				src.do_we_get_points = 1
-
-		if (complete >= 0.8 && last_complete < 0.8)
-			if (M.werewolf_attack(target, "feast") != 1)
-				boutput(M, __red("[target] is moving around too much."))
-				interrupt(INTERRUPT_ALWAYS)
-				return
-
-			if (HH.decomp_stage <= 2 && !(isnpcmonkey(target)))
-				src.do_we_get_points = 1
-
-		if (complete >= 0.9 && last_complete < 0.9)
-			if (M.werewolf_attack(target, "feast") != 1)
-				boutput(M, __red("[target] is moving around too much."))
-				interrupt(INTERRUPT_ALWAYS)
-				return
-
-			if (HH.decomp_stage <= 2 && !(isnpcmonkey(target)))
-				src.do_we_get_points = 1
-
-		last_complete = complete
+		if (HH.decomp_stage <= 2 && !(isnpcmonkey(HH)) && (times_attacked >= 7)) // Can't farm npc monkeys.
+			src.do_we_get_points = TRUE
 
 	onEnd()
 		..()

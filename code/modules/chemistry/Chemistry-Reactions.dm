@@ -14,32 +14,33 @@
 	if (!covered || !length(covered))
 		covered = list(get_turf(holder.my_atom))
 
-	var/howmany = clamp(covered.len / 2.2, 1, 15)
-	for(var/i = 0, i < howmany, i++)
-		var/atom/source = pick(covered)
-		if(ON_COOLDOWN(source, "ldm_reaction_ratelimit", 0.2 SECONDS))
-			continue
-		new/obj/decal/implo(source)
-		playsound(source, 'sound/effects/suck.ogg', 100, 1)
+	if(length(covered))
+		var/howmany = clamp(covered.len / 2.2, 1, 15)
+		for(var/i = 0, i < howmany, i++)
+			var/atom/source = pick(covered)
+			if(ON_COOLDOWN(source, "ldm_reaction_ratelimit", 0.2 SECONDS))
+				continue
+			new/obj/decal/implo(source)
+			playsound(source, 'sound/effects/suck.ogg', 100, 1)
 
-		if (in_container)
-			var/damage = clamp(created_volume * rand(8, 15) / 10, 1, 80)	// 0.8 to 1.5 damage per unit made
-			for (var/mob/living/M in psource)
-				logTheThing("combat", M, null, "takes [damage] damage due to ldmatter implosion while inside [psource].")
-				M.TakeDamage("All", damage, 0)
-				boutput(M, "<span class='alert'>[psource] [created_volume >= 10 ? "crushes you as it implodes!" : "compresses around you tightly for a moment!"]</span>")
+			if (in_container)
+				var/damage = clamp(created_volume * rand(8, 15) / 10, 1, 80)	// 0.8 to 1.5 damage per unit made
+				for (var/mob/living/M in psource)
+					logTheThing("combat", M, null, "takes [damage] damage due to ldmatter implosion while inside [psource].")
+					M.TakeDamage("All", damage, 0)
+					boutput(M, "<span class='alert'>[psource] [created_volume >= 10 ? "crushes you as it implodes!" : "compresses around you tightly for a moment!"]</span>")
 
-			if (created_volume >= 10)
-				for (var/atom/movable/O in psource)
-					O.set_loc(source)
-				psource:visible_message("<span class='alert'>[psource] implodes!</span>")
-				qdel(psource)
-				return
-		SPAWN_DBG(0)
-			for(var/atom/movable/M in view(clamp(2+round(created_volume/15), 0, 4), source))
-				if(M.anchored || M == source || M.throwing) continue
-				M.throw_at(source, 20 + round(created_volume * 2), 1 + round(created_volume / 10))
-				LAGCHECK(LAG_MED)
+				if (created_volume >= 10)
+					for (var/atom/movable/O in psource)
+						O.set_loc(source)
+					psource:visible_message("<span class='alert'>[psource] implodes!</span>")
+					qdel(psource)
+					return
+			SPAWN_DBG(0)
+				for(var/atom/movable/M in view(clamp(2+round(created_volume/15), 0, 4), source))
+					if(M.anchored || M == source || M.throwing) continue
+					M.throw_at(source, 20 + round(created_volume * 2), 1 + round(created_volume / 10))
+					LAGCHECK(LAG_MED)
 	if (holder)
 		holder.del_reagent(id)
 
@@ -52,18 +53,19 @@
 	if (!covered || !length(covered))
 		covered = list(get_turf(holder.my_atom))
 
-	var/howmany = clamp(covered.len / 2.2, 1, 15)
-	for(var/i = 0, i < howmany, i++)
-		var/atom/source = pick(covered)
-		if(ON_COOLDOWN(source, "sorium_reaction_ratelimit", 0.2 SECONDS))
-			continue
-		new/obj/decal/shockwave(source)
-		playsound(source, "sound/weapons/flashbang.ogg", 25, 1)
-		SPAWN_DBG(0)
-			for(var/atom/movable/M in view(clamp(2+round(created_volume/15), 0, 4), source))
-				if(M.anchored || M == source || M.throwing) continue
-				M.throw_at(get_edge_cheap(source, get_dir(source, M)),  20 + round(created_volume * 2), 1 + round(created_volume / 10))
-				LAGCHECK(LAG_MED)
+	if(length(covered))
+		var/howmany = clamp(covered.len / 2.2, 1, 15)
+		for(var/i = 0, i < howmany, i++)
+			var/atom/source = pick(covered)
+			if(ON_COOLDOWN(source, "sorium_reaction_ratelimit", 0.2 SECONDS))
+				continue
+			new/obj/decal/shockwave(source)
+			playsound(source, "sound/weapons/flashbang.ogg", 25, 1)
+			SPAWN_DBG(0)
+				for(var/atom/movable/M in view(clamp(2+round(created_volume/15), 0, 4), source))
+					if(M.anchored || M == source || M.throwing) continue
+					M.throw_at(get_edge_cheap(source, get_dir(source, M)),  20 + round(created_volume * 2), 1 + round(created_volume / 10))
+					LAGCHECK(LAG_MED)
 
 	if (holder)
 		holder.del_reagent(id)
@@ -169,16 +171,17 @@
 
 
 /proc/omega_hairgrownium_grow_hair(var/mob/living/carbon/human/H, var/all_hairs)
-	var/list/possible_hairstyles
-	if (all_hairs == 1)
-		possible_hairstyles = customization_styles + customization_styles_gimmick
-	else
-		possible_hairstyles = customization_styles_gimmick
-	H.bioHolder.mobAppearance.customization_first = pick(possible_hairstyles)
+	var/list/possible_hairstyles = concrete_typesof(/datum/customization_style) - concrete_typesof(/datum/customization_style/biological)
+	if (!all_hairs)
+		possible_hairstyles -= concrete_typesof(/datum/customization_style/hair/gimmick)
+	var/hair_type = pick(possible_hairstyles)
+	H.bioHolder.mobAppearance.customization_first = new hair_type
 	H.bioHolder.mobAppearance.customization_first_color = random_saturated_hex_color()
-	H.bioHolder.mobAppearance.customization_second = pick(possible_hairstyles)
+	hair_type = pick(possible_hairstyles)
+	H.bioHolder.mobAppearance.customization_second = new hair_type
 	H.bioHolder.mobAppearance.customization_second_color = random_saturated_hex_color()
-	H.bioHolder.mobAppearance.customization_third = pick(possible_hairstyles)
+	hair_type = pick(possible_hairstyles)
+	H.bioHolder.mobAppearance.customization_third = new hair_type
 	H.bioHolder.mobAppearance.customization_third_color = random_saturated_hex_color()
 	H.update_colorful_parts()
 	boutput(H, "<span class='notice'>Your entire head feels extremely itchy!</span>")
@@ -189,12 +192,9 @@
 	H.reagents.del_reagent("unstable_omega_hairgrownium")
 	var/obj/item/I = H.create_wig()
 	I.set_loc(H.loc)
-	H.bioHolder.mobAppearance.customization_first = "None"
-	H.cust_one_state = customization_styles["None"]
-	H.bioHolder.mobAppearance.customization_second = "None"
-	H.cust_two_state = customization_styles["None"]
-	H.bioHolder.mobAppearance.customization_third = "None"
-	H.cust_three_state = customization_styles["None"]
+	H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
+	H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
+	H.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
 	H.update_colorful_parts()
 
 /proc/flashpowder_reaction(turf/center, amount)
