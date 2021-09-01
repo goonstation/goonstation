@@ -1,0 +1,41 @@
+"a" = (/turf/space,/area/space)
+"b" = (/obj/railing/orange/reinforced{dir = 4},/obj/critter/maneater,/turf/simulated/floor/grasstodirt{dir = 5},/area/space)
+"d" = (/obj/railing/orange/reinforced{dir = 4},/turf/simulated/floor/grasstodirt{dir = 5},/area/space)
+"e" = (/obj/railing/orange/reinforced,/obj/railing/orange/reinforced{dir = 8},/turf/simulated/floor/grasstodirt{dir = 10},/area/space)
+"g" = (/obj/railing/orange/reinforced{dir = 8},/obj/critter/maneater,/turf/simulated/floor/grasstodirt{dir = 9},/area/space)
+"j" = (/obj/railing/orange/reinforced{dir = 8},/turf/simulated/floor/grasstodirt{dir = 9},/area/space)
+"n" = (/turf/simulated/floor,/area/space)
+"o" = (/obj/machinery/plantpot,/turf/simulated/floor/grass,/area/space)
+"q" = (/turf/simulated/floor/grass,/area/space)
+"t" = (/obj/railing/orange/reinforced{dir = 4},/obj/railing/orange/reinforced,/turf/simulated/floor/grasstodirt{dir = 6},/area/space)
+"u" = (/obj/railing/orange/reinforced{dir = 8},/obj/railing/orange/reinforced,/turf/simulated/floor/grasstodirt{dir = 10},/area/space)
+"v" = (/obj/decal/fakeobjects/shuttleengine{icon_state = "alt_heater-L"},/turf/simulated/wall/auto/reinforced,/area/space)
+"z" = (/obj/decal/fakeobjects/shuttleengine{icon_state = "alt_heater-R"},/turf/simulated/wall/auto/reinforced,/area/space)
+"B" = (/turf/simulated/wall/auto/reinforced,/area/space)
+"G" = (/obj/decal/fakeobjects/shuttleengine{icon_state = "alt_propulsion"},/turf/simulated/wall/auto/reinforced,/area/space)
+"J" = (/obj/railing/orange/reinforced,/obj/railing/orange/reinforced{dir = 4},/turf/simulated/floor/grasstodirt{dir = 6},/area/space)
+"L" = (/turf/simulated/grass,/area/space)
+"M" = (/turf/simulated/wall/auto/supernorn,/area/space)
+"O" = (/obj/machinery/plantpot,/obj/machinery/plantpot,/turf/simulated/floor/grass,/area/space)
+"R" = (/obj/decal/fakeobjects/shuttleengine,/obj/decal/fakeobjects/shuttleengine{icon_state = "alt_heater"},/turf/simulated/floor,/area/space)
+"S" = (/obj/machinery/door/airlock/gannets/alt,/turf/simulated/floor/grass,/area/space)
+"T" = (/obj/machinery/door/airlock/gannets/alt,/obj/machinery/door/airlock/gannets/glass/alt,/obj/machinery/door/airlock/gannets/alt,/turf/simulated/grass,/area/space)
+"U" = (/obj/grille/catwalk{icon_state = "catwalk_cross"},/turf/space,/area/space)
+"X" = (/obj/machinery/plantpot,/turf/simulated/grass,/area/space)
+
+(1,1,1) = {"
+aaaaaBaaaaa
+aaaaBBBaaaa
+aaaBBnBBaaa
+aaBBqqqBBaa
+aaBoqqqOBaa
+aaBoqqqoBaa
+aMMMMSMMMMa
+UTLjbLgdLTU
+UMLetLuJLMU
+aMLLLLLLLMa
+aMMXLLLXMMa
+aaMMXXXMMaa
+aaaMvRzMaaa
+aaaaGGGaaaa
+"}
