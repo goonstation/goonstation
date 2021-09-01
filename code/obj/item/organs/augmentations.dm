@@ -225,6 +225,72 @@
 		src.donor.reagents.add_reagent("nanites", 0.5 * mult) //you want borg powers? Well, come and get 'em!
 		UnregisterSignal(src.donor, COMSIG_CLICK)
 
+/obj/item/organ/augmentation/head/surgery_assistant //better surgery odds and you get told the steps at the cost of ____
+	name = "surgery assistant"
+	organ_name = "surgery assistant"
+	icon_state = "augmentation_stam"
+	desc = "An augmentation that, unlike medical books, teaches you how to do surgery, and makes you better at it too!"
+	organ_abilities = list(/datum/targetable/organAbility/surgery_assistant)
+	var/chosen_surgery
+	var/surgery_step
+
+	proc/surgery_act(var/mob/U, var/mob/living/carbon/human/M, var/obj/item/I)
+		switch(chosen_surgery)
+			if("Implant/Parasite/Shrapnel Removal")
+				if(surgery_step == 1 && M.a_intent == INTENT_GRAB && istype(I, TOOL_CUTTING))
+			if("Limb Removal")
+
+			if("Butt Removal")
+
+			if("Eye Removal")
+
+			if("Brain Removal")
+
+			if("Head Removal")
+
+			if("Skull Removal")
+
+			if("Heart")
+
+			if("Lung")
+
+			if("Kidney")
+
+			if("Appendix")
+
+			if("Liver")
+
+			if("Stomach")
+
+			if("Intestines")
+
+			if("Pancreas")
+
+			if("Spleen")
+
+			if("Tail")
+
+			if("Augumentation")
+
+			if("Chest-Implanted Item")
+
+	on_transplant(var/mob/M as mob)
+		..()
+		RegisterSignal(src.donor, COMSIG_SURGERY_TOOL, .proc/surgery_act)
+
+	on_removal()
+		..()
+		UnregisterSignal(src.donor, COMSIG_SURGERY_TOOL)
+
+	emp_act()
+		..()
+
+	on_broken(var/mult = 1)
+		if (!..())
+			return
+
+
+
 /obj/item/organ/augmentation/head/neural_jack //traitor roboticists can get matrix powers
 	name = "neural jack"
 	organ_name = "neural jack"

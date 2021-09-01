@@ -194,6 +194,8 @@
 #define COMSIG_ATTACKHAND "attackhand"
 /// When you click on anything
 #define COMSIG_CLICK "click"
+/// When you succesfully use a surgery tool on someone in surgery mode
+#define COMSIG_SURGERY_TOOL "surgery_tool"
 
 // ---- projectile signals ----
 

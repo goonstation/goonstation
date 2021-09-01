@@ -109,7 +109,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		surgeon, "<span class='alert'>You [fluff][fluff2] at [patient]'s [target_area] with [src].</span>")
 		return
 
-/proc/calc_screw_up_prob(var/mob/living/carbon/human/patient as mob, var/mob/surgeon as mob, var/screw_up_prob = 25)
+/proc/calc_screw_up_prob(var/mob/living/carbon/human/patient as mob, var/mob/living/carbon/human/surgeon as mob, var/screw_up_prob = 25)
 	if (!patient) // did we not get passed a patient?
 		return 0 // uhhh
 	if (!ishuman(patient)) // is the patient not a human?
@@ -151,7 +151,10 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		if (patient.reagents.get_reagent_amount("antihistamine") >= 5)
 			screw_up_prob -= 5
 
-	if (surgeon.traitHolder.hasTrait("training_medical"))
+	if(istype(surgeon.organHolder.augmentation_nerve, /obj/item/organ/augmentation/head/surgery_assistant))
+		screw_up_prob -= 20
+
+	if (surgeon.traitHolder.hasTrait("training_medical") || istype(surgeon.organHolder.augmentation_nerve, /obj/item/organ/augmentation/head/surgery_assistant))
 		screw_up_prob = max(0, min(100, screw_up_prob)) // if they're a doctor they can have no chance to mess up
 	else
 		screw_up_prob = max(5, min(100, screw_up_prob)) // otherwise there'll always be a slight chance
@@ -160,10 +163,10 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 	return screw_up_prob
 
-/proc/calc_surgery_damage(var/mob/surgeon as mob, var/screw_up_prob = 25, var/damage = 10, var/adj1 = 0.5, adj2 = 200)
+/proc/calc_surgery_damage(var/mob/living/carbon/human/surgeon as mob, var/screw_up_prob = 25, var/damage = 10, var/adj1 = 0.5, adj2 = 200)
 	damage = damage * (adj1 + (screw_up_prob / adj2))
 
-	if (surgeon?.traitHolder.hasTrait("training_medical")) // doctor better trained and do less hurt
+	if (surgeon?.traitHolder.hasTrait("training_medical") || istype(surgeon.organHolder.augmentation_nerve, /obj/item/organ/augmentation/head/surgery_assistant)) // doctor better trained and do less hurt
 		damage = max(0, round(damage))
 	else
 		damage = max(2, round(damage))
@@ -353,6 +356,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient.TakeDamage("head", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 				patient.organHolder.head.op_stage = 1.0
+				SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 				return 1
 
 			else if (patient.organHolder.head.op_stage == 2.0)
@@ -372,6 +376,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient.TakeDamage("head", damage_high, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 				patient.organHolder.head.op_stage = 3.0
+				SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 				return 1
 
 		else if (patient.organHolder.right_eye && patient.organHolder.right_eye.op_stage == 1.0 && surgeon.find_in_hand(src, "right"))
@@ -391,6 +396,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			patient.TakeDamage("head", damage_low, 0)
 			take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 			patient.organHolder.right_eye.op_stage = 2.0
+			SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 			return 1
 
 		else if (patient.organHolder.left_eye && patient.organHolder.left_eye.op_stage == 1.0 && surgeon.find_in_hand(src, "left"))
@@ -410,6 +416,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			patient.TakeDamage("head", damage_low, 0)
 			take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 			patient.organHolder.left_eye.op_stage = 2.0
+			SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 			return 1
 
 		else if (patient.organHolder.head.op_stage == 5.0)
@@ -429,6 +436,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			patient.TakeDamage("head", damage_low, 0)
 			take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 			patient.organHolder.head.op_stage = 4.0
+			SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 			return 1
 
 		else if (patient.organHolder.head.scalp_op_stage <= 4.0)
@@ -456,6 +464,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient.TakeDamage("head", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 				patient.organHolder.head.scalp_op_stage = 1.0
+				SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 				return 1
 
 			else if (patient.organHolder.head.scalp_op_stage == 2.0)
@@ -481,6 +490,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient.TakeDamage("head", damage_high, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 				patient.organHolder.head.scalp_op_stage = 3.0
+				SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 				return 1
 			else if (patient.organHolder.head.scalp_op_stage == 4.0)
 				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
@@ -505,6 +515,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient.TakeDamage("head", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 				patient.organHolder.head.scalp_op_stage = 5.0
+				SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 				return 1
 
 			else
@@ -532,6 +543,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			patient.TakeDamage("chest", damage_low, 0)
 			take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 			patient.butt_op_stage = 1.0
+			SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 			return 1
 
 		else if (patient.butt_op_stage == 2.0)
@@ -551,6 +563,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			patient.TakeDamage("chest", damage_high, 0)
 			take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 			patient.butt_op_stage = 3.0
+			SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 			return 1
 
 		else
@@ -580,6 +593,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient.visible_message("<span class='alert'>\The [outChestItem] flops out onto the table.</span>")
 				patient.chest_item = null
 				patient.chest_item_sewn = 0 //There's no longer an item to be sewn!
+				SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 			return 1
 		// Chest cavity is open and an item exists
 		else if(patient.chest_cavity_open == 1 && patient.chest_item != null)
@@ -597,6 +611,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			outChestItem.set_loc(location)
 			patient.chest_item = null
 			patient.chest_item_sewn = 0
+			SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 			return 1
 
 /* ---------- SCALPEL - IMPLANT ---------- */
@@ -617,6 +632,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts out a parasite from [patient == surgeon ? "[him_or_her(patient)]self" : "[patient]"] with [src]!</span>",\
 				surgeon, "<span class='alert'>You cut out a parasite from [surgeon == patient ? "yourself" : "[patient]"] with [src]!</span>",\
 				patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] out a parasite from you with [src]!</span>")
+				SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 				return 1
 
 		if (patient.implant.len > 0)
@@ -633,6 +649,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				I.on_remove(patient)
 				patient.implant.Remove(I)
 				I.set_loc(patient.loc)
+				SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 				return 1
 
 			for (var/obj/item/implant/I in patient.implant)
@@ -658,7 +675,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				newcase.UpdateOverlays(wadblood, "blood")
 				newcase.blood_DNA = patient.bioHolder.Uid
 				newcase.blood_type = patient.bioHolder.bloodType
-
+				SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 				return 1
 
 		/* chest op_stage description
@@ -709,6 +726,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient.TakeDamage("chest", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					patient.organHolder.chest.op_stage = 5.0
+					SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 					return 1
 
 				//second cut, path for stomach/Intestines
@@ -729,6 +747,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient.TakeDamage("chest", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					patient.organHolder.chest.op_stage = 4.0
+					SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 					return 1
 
 				//remove liver with this cut
@@ -754,7 +773,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s liver with [src].")
 					patient.organHolder.drop_organ("liver")
-
+					SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 					return 1
 
 				//remove intestines with this cut
@@ -780,7 +799,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s intestines with [src].")
 					patient.organHolder.drop_organ("intestines")
-
+					SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 					return 1
 
 				//path for kidneys/spleen/pancreas
@@ -801,7 +820,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient.TakeDamage("chest", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					patient.organHolder.chest.op_stage = 7.0
-
+					SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 					return 1
 
 				// kyle-note fix this, it should be able to make a sound and damage if there's no spleen here
@@ -829,7 +848,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s spleen with [src].")
 						patient.organHolder.drop_organ("spleen")
-
+						SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 						return 1
 
 				//heart path
@@ -851,6 +870,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient.TakeDamage("chest", damage_high, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					patient.organHolder.chest.op_stage = 9.0
+					SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 					return 1
 
 				//tail path
@@ -880,6 +900,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient.TakeDamage("chest", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					patient.organHolder.chest.op_stage = 11.0
+					SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 					return 1
 
 				else
@@ -897,6 +918,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		var/obj/item/parts/surgery_limb = patient.limbs.vars[surgeon.zone_sel.selecting]
 		if (istype(surgery_limb))
 			if (surgery_limb.surgery(src))
+				SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 				return 1
 			else
 				src.surgeryConfusion(patient, surgeon, damage_high)
@@ -967,6 +989,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient.TakeDamage("head", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 				patient.organHolder.head.op_stage = 2.0
+				SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 				return 1
 
 			else if (patient.organHolder.head.op_stage == 3.0)
@@ -988,6 +1011,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s head and brain with [src].")
 					patient.death()
 				patient.organHolder.drop_organ("head")
+				SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 				return 1
 
 			else
@@ -1016,6 +1040,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient.TakeDamage("head", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 				patient.organHolder.head.op_stage = 5.0
+				SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 				return 1
 
 			else if (patient.organHolder.head.scalp_op_stage == 1.0)
@@ -1039,6 +1064,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient.TakeDamage("head", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 				patient.organHolder.head.scalp_op_stage = 2.0
+				SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 				return 1
 
 			else if (patient.organHolder.head.scalp_op_stage == 3.0)
@@ -1067,6 +1093,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s brain with [src].")
 				patient.death()
 				patient.organHolder.head.scalp_op_stage = 4.0
+				SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 				return 1
 
 			else if (patient.organHolder.head.scalp_op_stage == 5.0)
@@ -1097,6 +1124,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient.real_name = "Unknown"
 				patient.unlock_medal("Red Hood", 1)
 				patient.set_clothing_icon_dirty()
+				SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 				return 1
 			else
 				src.surgeryConfusion(patient, surgeon, damage_high)
@@ -1124,6 +1152,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient.TakeDamage("chest", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 				patient.butt_op_stage = 2.0
+				SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 				return 1
 
 			if (3.0)
@@ -1144,6 +1173,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient.butt_op_stage = 4.0
 				logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s butt with [src].")
 				patient.organHolder.drop_organ("butt")
+				SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 				return 1
 
 			else
@@ -1175,6 +1205,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient.TakeDamage("chest", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					patient.organHolder.chest.op_stage = 10.0
+					SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 					return 1
 
 				if(11.0)	// Last of tail!
@@ -1200,6 +1231,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					if (patient.organHolder.tail)
 						logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s tail with [src].")
 					patient.organHolder.drop_organ("tail")
+					SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 					return 1
 
 				if (1.0)
@@ -1218,7 +1250,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient.TakeDamage("chest", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					patient.organHolder.chest.op_stage = 2.0
-
+					SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 					return 1
 
 				if (5.0)
@@ -1237,6 +1269,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient.TakeDamage("chest", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					patient.organHolder.chest.op_stage = 8.0
+					SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 					return 1
 
 				if (9.0)
@@ -1260,6 +1293,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					//patient.contract_disease(/datum/ailment/disease/noheart,null,null,1)
 
 					patient.organHolder.drop_organ("heart")
+					SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 					return 1
 				else
 					src.surgeryConfusion(patient, surgeon, damage_high)
@@ -1321,6 +1355,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			patient.TakeDamage("head", 2 * surgCheck * surgCheck, 0)
 			if (patient.bleeding)
 				repair_bleeding_damage(patient, 50, rand(1,3))
+			SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 			return 1
 
 		else if (patient.organHolder && patient.organHolder.head && patient.organHolder.head.scalp_op_stage > 0.0)
@@ -1332,6 +1367,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			patient.TakeDamage("head", 2 * surgCheck * surgCheck, 0)
 			if (patient.bleeding)
 				repair_bleeding_damage(patient, 50, rand(1,3))
+			SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 			return 1
 
 		else if (patient.organHolder && patient.organHolder.right_eye && patient.organHolder.right_eye.op_stage > 0.0)
@@ -1343,6 +1379,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			patient.TakeDamage("head", 2 * surgCheck * surgCheck, 0)
 			if (patient.bleeding)
 				repair_bleeding_damage(patient, 50, rand(1,3))
+			SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 
 		else if (patient.organHolder && patient.organHolder.left_eye && patient.organHolder.left_eye.op_stage > 0.0)
 			patient.tri_message("<span class='notice'><b>[surgeon]</b> sews the incision in [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] left eye socket closed with [src].</span>",\
@@ -1353,6 +1390,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			patient.TakeDamage("head", 2 * surgCheck * surgCheck, 0)
 			if (patient.bleeding)
 				repair_bleeding_damage(patient, 50, rand(1,3))
+			SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 
 		else if (patient.bleeding)
 			patient.tri_message("<span class='notice'><b>[surgeon]</b> sews [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] wounds closed with [src].</span>",\
@@ -1378,6 +1416,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			patient.TakeDamage("chest", 2, 0)
 			if (patient.bleeding)
 				repair_bleeding_damage(patient, 50, rand(1,3))
+			SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 			return 1
 
 		else if (patient.organHolder.chest && patient.organHolder.chest.op_stage >= 10.0)
@@ -1394,6 +1433,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			patient.TakeDamage("chest", 2, 0)
 			if (patient.bleeding)
 				repair_bleeding_damage(patient, 50, rand(1,3))
+			SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 			return 1
 
 		// Sew chest cavity closed
@@ -1406,6 +1446,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			patient.TakeDamage("chest", 2 * surgCheck * surgCheck, 0)
 			if (patient.bleeding)
 				repair_bleeding_damage(patient, 50, rand(1,3))
+			SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 			return 1
 
 		// Sew chest item securely into chest cavity
@@ -1418,6 +1459,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			patient.TakeDamage("chest", 2 * surgCheck * surgCheck, 0)
 			if (patient.bleeding)
 				repair_bleeding_damage(patient, 50, rand(1,3))
+			SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 			return 1
 
 		else if (patient.butt_op_stage > 0.0 && patient.butt_op_stage < 4.0)
@@ -1429,6 +1471,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			patient.TakeDamage("chest", 2 * surgCheck * surgCheck, 0)
 			if (patient.bleeding)
 				repair_bleeding_damage(patient, 50, rand(1,3))
+			SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 			return 1
 
 		else if (patient.bleeding)
@@ -1509,6 +1552,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			patient.organHolder.head.op_stage = 0.0
 			if (patient.bleeding)
 				repair_bleeding_damage(patient, 50, rand(1,3))
+			SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 			return 1
 
 		else
@@ -1524,6 +1568,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient.organHolder.head.op_stage = 0.0
 				if (patient.bleeding)
 					repair_bleeding_damage(patient, 50, rand(1,3))
+				SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 				return 1
 
 			else
@@ -1550,6 +1595,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			patient.butt_op_stage = 5.0
 			if (patient.bleeding)
 				repair_bleeding_damage(patient, 50, rand(1,3))
+			SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 			return 1
 
 		else
@@ -1565,6 +1611,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient.butt_op_stage = 5.0
 				if (patient.bleeding)
 					repair_bleeding_damage(patient, 50, rand(1,3))
+				SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 				return 1
 
 			else
@@ -1687,6 +1734,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			patient.TakeDamage("head", damage_low, 0)
 			take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 			target_eye.op_stage = 1.0
+			SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 			return 1
 
 		else if (target_eye.op_stage == 2.0)
@@ -1710,6 +1758,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient.organHolder.drop_organ("right_eye")
 			else if (target_eye == patient.organHolder.left_eye)
 				patient.organHolder.drop_organ("left_eye")
+			SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 			return 1
 
 		else
@@ -1776,6 +1825,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient.TakeDamage("chest", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					patient.organHolder.chest.op_stage = 1.0
+					SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 					return 1
 
 				//second cut, path for appendix/liver
@@ -1795,6 +1845,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient.TakeDamage("chest", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					patient.organHolder.chest.op_stage = 3.0
+					SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 					return 1
 
 				//remove lungs
@@ -1832,7 +1883,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						patient.organHolder.drop_organ("left_lung")
 					else if (target_organ == patient.organHolder.right_lung)
 						patient.organHolder.drop_organ("right_lung")
-
+					SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 					return 1
 
 				//remove appendix or liver
@@ -1858,6 +1909,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s appendix with [src].")
 					patient.organHolder.drop_organ("appendix")
+					SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 					return 1
 
 				//path for stomach and intestines
@@ -1883,7 +1935,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s stomach with [src].")
 					patient.organHolder.drop_organ("stomach")
-
+					SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 					return 1
 
 				//paths for pancreas and kidneys
@@ -1904,7 +1956,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient.TakeDamage("chest", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					patient.organHolder.chest.op_stage = 6.0
-
+					SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 					return 1
 
 				//remove pancreas
@@ -1930,7 +1982,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s pancreas with [src].")
 					patient.organHolder.drop_organ("pancreas")
-
+					SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 					return 1
 
 				//remove kidneys
@@ -1968,7 +2020,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						patient.organHolder.drop_organ("left_kidney")
 					else if (target_organ == patient.organHolder.right_kidney)
 						patient.organHolder.drop_organ("right_kidney")
-
+					SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 					return 1
 				else
 					src.surgeryConfusion(patient, surgeon, damage_high)
@@ -2002,6 +2054,8 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s nerve augmentation with [src].")
 					patient.organHolder.drop_organ("augmentation_nerve")
+					SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
+					return 1
 
 ////////////////////////////////////////////////////////////////////
 
@@ -2058,6 +2112,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			if (patient.organHolder.tail)
 				logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s skeleton tail with [src].")
 			patient.organHolder.drop_organ("tail")
+			SEND_SIGNAL(surgeon, COMSIG_SURGERY_TOOL, patient, src)
 			return 1
 
 	else

@@ -1687,3 +1687,95 @@
 		boutput(holder.owner, __blue("Grab -> Grab -> Disarm -> Harm: Fling Pin, both you and your target go several tiles, before you immediately pin them."))
 		sleep(5 DECI SECONDS)
 		boutput(holder.owner, __blue("Passives: You deal extra kick damage, have more stamina, can parry people by blocking when they attack, and you can flip to dodge projectiles for a short period."))
+
+/datum/targetable/organAbility/surgery_assistant
+	name = "Choose Surgery Type"
+	desc = "Get the help of your surgery assistant augment to get the steps for surgery."
+	cooldown = 10
+	var/list/surgery_types = list("Implant/Parasite/Shrapnel Removal", "Limb Removal", "Butt Removal", "Eye Removal", "Brain Removal", "Head Removal", "Skull Removal", "Heart", "Lung", "Kidney", "Appendix", "Liver", "Stomach", "Intestines", "Pancreas", "Spleen", "Tail", "Augmentation", "Chest-Implanted Item")
+	var/mob/living/carbon/human/H = holder.owner
+	var/obj/item/organ/augmentation/head/surgery_assistant/S = H.organHolder.augmentation_nerve
+
+	cast()
+		if(..())
+			return 1
+		S.chosen_surgery = input("Which surgery would you like to do?","Surgery Options") as null|anything in surgery_types
+		S.surgery_step = 0
+		switch(S.chosen_surgery)
+			if("Implant/Parasite/Shrapnel Removal")
+				boutput(holder.owner, __blue("<b>Step 1:</b> Use a scalpel on the patient's chest on help intent."))
+				S.surgery_step = 1
+			if("Limb Removal")
+				boutput(holder.owner, __blue("<b>Step 1:</b> Use a scalpel on the limb you wish to remove, on help intent."))
+				S.surgery_step = 1
+			if("Butt Removal")
+				boutput(holder.owner, __blue("<b>Step 1:</b> Use a scalpel on the patient's chest on harm intent."))
+				S.surgery_step = 1
+			if("Eye Removal")
+				boutput(holder.owner, __blue("<b>Step 1:</b> Use a eunclination spoon on their head, with the spoon in the hand in relation to the eye you want to remove, on help intent."))
+				S.surgery_step = 1
+			if("Brain")
+				boutput(holder.owner, __blue("<b>Step 1:</b> Use a scalpel on the patient's head on help intent."))
+				S.surgery_step = 1
+			if("Head Removal")
+				boutput(holder.owner, __blue("<b>Step 1:</b> Use a scalpel on the patient's head on harm intent."))
+				S.surgery_step = 1
+			if("Skull Removal")
+				boutput(holder.owner, __blue("<b>Step 1:</b> Use a scalpel on the patient's head on help intent."))
+				S.surgery_step = 1
+			if("Heart")
+				boutput(holder.owner, __blue("<b>Step 0.5:</b> Make sure the patient is clear of parasites, implants, and shrapnel."))
+				SPAWN_DBG(15 DECI SECONDS)
+					boutput(holder.owner, __blue("<b>Step 1:</b> Use a scalpel on the patient's chest on help intent."))
+					S.surgery_step = 1
+			if("Lung")
+				boutput(holder.owner, __blue("<b>Step 0.5:</b> Make sure the patient is clear of parasites, implants, and shrapnel."))
+				SPAWN_DBG(15 DECI SECONDS)
+					boutput(holder.owner, __blue("<b>Step 1:</b> Use surgical scissors on the patient's chest on help intent."))
+					S.surgery_step = 1
+			if("Kidney")
+				boutput(holder.owner, __blue("<b>Step 0.5:</b> Make sure the patient is clear of parasites, implants, and shrapnel."))
+				SPAWN_DBG(15 DECI SECONDS)
+					boutput(holder.owner, __blue("<b>Step 1:</b> Use a scalpel on the patient's chest on help intent."))
+					S.surgery_step = 1
+			if("Appendix")
+				boutput(holder.owner, __blue("<b>Step 1:</b> Use surgical scissors on the patient's chest on help intent."))
+				S.surgery_step = 1
+			if("Liver")
+				boutput(holder.owner, __blue("<b>Step 0.5:</b> Make sure the patient is clear of parasites, implants, and shrapnel."))
+				SPAWN_DBG(15 DECI SECONDS)
+					boutput(holder.owner, __blue("<b>Step 1:</b> Use surgical scissors on the patient's chest on help intent."))
+					S.surgery_step = 1
+			if("Stomach")
+				boutput(holder.owner, __blue("<b>Step 0.5:</b> Make sure the patient is clear of parasites, implants, and shrapnel."))
+				SPAWN_DBG(15 DECI SECONDS)
+					boutput(holder.owner, __blue("<b>Step 1:</b> Use surgical scissors on the patient's chest on help intent."))
+					S.surgery_step = 1
+			if("Intestines")
+				boutput(holder.owner, __blue("<b>Step 0.5:</b> Make sure the patient is clear of parasites, implants, and shrapnel."))
+				SPAWN_DBG(15 DECI SECONDS)
+					boutput(holder.owner, __blue("<b>Step 1:</b> Use surgical scissors on the patient's chest on help intent."))
+					S.surgery_step = 1
+			if("Pancreas")
+				boutput(holder.owner, __blue("<b>Step 0.5:</b> Make sure the patient is clear of parasites, implants, and shrapnel."))
+				SPAWN_DBG(15 DECI SECONDS)
+					boutput(holder.owner, __blue("<b>Step 1:</b> Use a scalpel on the patient's chest on help intent."))
+					S.surgery_step = 1
+			if("Spleen")
+				boutput(holder.owner, __blue("<b>Step 0.5:</b> Make sure the patient is clear of parasites, implants, and shrapnel."))
+				SPAWN_DBG(15 DECI SECONDS)
+					boutput(holder.owner, __blue("<b>Step 1:</b> Use a scalpel on the patient's chest on help intent."))
+					S.surgery_step = 1
+			if("Tail")
+				boutput(holder.owner, __blue("<b>Step 0.5:</b> Make sure the patient is clear of parasites, implants, and shrapnel."))
+				SPAWN_DBG(15 DECI SECONDS)
+					boutput(holder.owner, __blue("<b>Step 1:</b> Use a surgical saw on the patient's chest on help intent."))
+					S.surgery_step = 1
+			if("Augumentation")
+				boutput(holder.owner, __blue("<b>Step 0.5:</b> Make sure the patient is clear of parasites, implants, and shrapnel."))
+				SPAWN_DBG(15 DECI SECONDS)
+					boutput(holder.owner, __blue("<b>Step 1:</b> Use a surgical saw on the patient's head on help intent."))
+					S.surgery_step = 1
+			if("Chest-Implanted Item")
+				boutput(holder.owner, __blue("<b>Step 1:</b> Use a scalpel on the patient's chest on grab intent."))
+				S.surgery_step = 1
