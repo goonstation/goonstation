@@ -1781,7 +1781,7 @@
 			return attack_hand(user)
 
 	onDestroy()
-		robogibs(src.loc,null)
+		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
 		. = ..()
 
 	attack_hand(mob/user as mob)

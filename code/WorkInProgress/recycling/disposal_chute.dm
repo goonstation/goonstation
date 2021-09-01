@@ -66,7 +66,6 @@
 
 	onDestroy()
 		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
-		elecflash(src.loc, power = 2)
 		. = ..()
 
 	proc/initair()

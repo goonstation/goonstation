@@ -14,7 +14,10 @@
 			var/obj/decal/cleanable/machine_debris/gib = null
 			gib = make_cleanable(/obj/decal/cleanable/machine_debris, O.loc)
 			gib.streak_cleanable()
-			elecflash(O, power = 2)
+			if (istype(O, /obj/machinery))
+				var/obj/machinery/M = O
+				if (M.powered())
+					elecflash(M, power = 2)
 		O.changeHealth(-round(((P.power/2)*P.proj_data.ks_ratio), 1.0))
 
 /datum/component/obj_projectile_damage/proc/examine(mob/owner, mob/examiner, list/lines)
