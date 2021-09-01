@@ -1,4 +1,12 @@
 
+(t)wed sep 01 21
+(u)Gannets
+(p)5858
+(e)⚖|balance
+(+)Adjusted Field Medic autoinjector loadout:
+(+)Adds cardiac injector, filled with saline and epinephrine.
+(+)Adds lifesupport injector, filled with mannitol and salbutamol.
+(+)Adds blood-loss injector, filled with filgrastim and proconvertin.
 (t)tue aug 31 21
 (u)Tarmunora
 (p)5837
