@@ -19,8 +19,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": false,
-    "baseUrl": "packages"
+    "isolatedModules": false
   },
   "include": [
     "./global.d.ts",
