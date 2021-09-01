@@ -581,6 +581,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	slot_foot = list(/obj/item/clothing/shoes/white)
 	slot_suit = list(/obj/item/clothing/suit/labcoat/genetics)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
+	slot_poc1 = list(/obj/item/device/analyzer/genetic)
 
 	New()
 		..()

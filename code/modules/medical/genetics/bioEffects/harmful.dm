@@ -81,7 +81,7 @@
 	msgGain = "You feel kind of off-balance and disoriented."
 	msgLose = "You feel well co-ordinated again."
 	reclaim_fail = 15
-	stability_loss = -5
+	stability_loss = -10
 	icon_state  = "bad"
 
 /datum/bioEffect/narcolepsy
@@ -94,7 +94,7 @@
 	msgGain = "You feel a bit sleepy."
 	msgLose = "You feel wide awake."
 	reclaim_fail = 15
-	stability_loss = -5
+	stability_loss = -15
 	var/sleep_prob = 4
 	icon_state  = "bad"
 
@@ -271,7 +271,7 @@
 	msgGain = "You feel like you can't control your actions fully."
 	msgLose = "You feel in full control of yourself once again."
 	reclaim_fail = 15
-	stability_loss = -5
+	stability_loss = -10
 	icon_state  = "bad"
 
 	OnLife(var/mult)
@@ -331,7 +331,7 @@
 	msgGain = "One of your limbs feels a bit strange and twitchy."
 	msgLose = "Your limb feels fine again."
 	reclaim_fail = 15
-	stability_loss = -20
+	stability_loss = -25
 	lockProb = 50
 	lockedGaps = 2
 	lockedDiff = 4
@@ -460,7 +460,7 @@
 	lockedDiff = 4
 	lockedChars = list("G","C","A","T")
 	lockedTries = 10
-	stability_loss = 50
+	stability_loss = 35
 	var/affect_others = 0
 	var/field_range = 2
 	var/proc_prob = 5
@@ -501,7 +501,7 @@
 	lockedDiff = 3
 	lockedChars = list("G","C","A","T")
 	lockedTries = 8
-	stability_loss = 15
+	stability_loss = 10
 	var/tele_prob = 5
 	icon_state  = "bad"
 
@@ -747,7 +747,7 @@
 	lockedGaps = 1
 	lockedDiff = 3
 	lockedTries = 8
-	stability_loss = -5
+	stability_loss = -10
 	icon_state  = "bad"
 
 	OnAdd()
@@ -766,7 +766,7 @@
 	isBad = 1
 	msgGain = "You hear a ringing in your ears."
 	msgLose = "The ringing has stopped...Finally. Thank the Space-Gods."
-	stability_loss = -5
+	stability_loss = 0
 	probability = 99
 	var/ring_prob = 6
 	icon_state  = "bad"
@@ -785,7 +785,7 @@
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel lightheaded."
 	msgLose = "Your lightheadedness fades."
-	stability_loss = -5
+	stability_loss = -10
 	var/run = 1
 	icon_state  = "bad"
 
@@ -805,7 +805,7 @@
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "Your breathing quickens."
 	msgLose = "Your breathing returns to normal."
-	stability_loss = -5
+	stability_loss = -10
 	var/run = 1
 	icon_state  = "bad"
 

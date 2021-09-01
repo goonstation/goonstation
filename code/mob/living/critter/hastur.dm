@@ -35,7 +35,7 @@ var/HasturPresent = 0
 		changeIcon()
 		src.nodamage = 1
 		HasturPresent = 1
-		radio_brains += src
+		radio_brains[src] = 2
 		abilityHolder.addAbility(/datum/targetable/hastur/devour)
 		abilityHolder.addAbility(/datum/targetable/hastur/insanityaura)
 		abilityHolder.addAbility(/datum/targetable/hastur/masswhisper)

@@ -1,5 +1,24 @@
 
+(t)wed sep 01 21
+(u)Mordent & Flaborized
+(p)5859
+(e)🆕🎨|feature, sprites
+(*)Geneticists get a new genetic analyzer device (which they spawn with) that lets them quickly check someone's genetics.
+(u)Gannets
+(p)5858
+(e)⚖|balance
+(+)Adjusted Field Medic autoinjector loadout:
+(+)Adds cardiac injector, filled with saline and epinephrine.
+(+)Adds lifesupport injector, filled with mannitol and salbutamol.
+(+)Adds blood-loss injector, filled with filgrastim and proconvertin.
 (t)tue aug 31 21
+(u)Tarmunora
+(p)5837
+(e)⚖|balance
+(*)Rebalances 'beneficial' bioeffects to accept the Power Booster chromosome. See PR for details. There are a lot of details.
+(+)Rebalances genetic stability costs of many bioeffects (mostly buffs). See PR for details. Again,
+(+)Removes robust genes trait, increases base genetic stability
+(+)Change formula for genetic power failrates at lower stability
 (u)Tarmunora
 (e)⚖|balance
 (+)Artifact guns must be activated to swap cells.

@@ -1923,14 +1923,14 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			if (!shock_damage)
 				return 0
 
-	if (src.bioHolder.HasEffect("resist_electric") == 2)
+	if (src.bioHolder.HasEffect("resist_electric_heal"))
 		var/healing = 0
 		healing = shock_damage / 3
 		src.HealDamage("All", healing, healing)
 		src.take_toxin_damage(0 - healing)
 		boutput(src, "<span class='notice'>You absorb the electrical shock, healing your body!</span>")
 		return 0
-	else if (src.bioHolder.HasEffect("resist_electric") == 1)
+	else if (src.bioHolder.HasEffect("resist_electric"))
 		boutput(src, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
 		return 0
 

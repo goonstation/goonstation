@@ -1,8 +1,8 @@
 ////////////////////////////////
 // Resistances and Immunities //
 ////////////////////////////////
-
-/datum/bioEffect/fireres
+ABSTRACT_TYPE(/datum/bioEffect/thermal_resistances)
+/datum/bioEffect/thermal_resistances/fireres
 	name = "Fire Resistance"
 	desc = "Shields the subject's cellular structure against high temperatures and flames."
 	id = "fire_resist"
@@ -16,12 +16,17 @@
 	icon_state  = "fire_res"
 
 	OnAdd()
+		for (var/ID in owner.bioHolder.effects)
+			// clear away any existing fire/cold/thermalres first
+			if (istype(owner.bioHolder.GetEffect(ID), /datum/bioEffect/thermal_resistances) && ID != src.id)
+				owner.bioHolder.RemoveEffect(ID)
 		if (ishuman(owner))
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 			overlay_image.color = "#FFA200"
+
 		..()
 
-/datum/bioEffect/coldres
+/datum/bioEffect/thermal_resistances/coldres
 	name = "Cold Resistance"
 	desc = "Shields the subject's cellular structure against freezing temperatures and crystallization."
 	id = "cold_resist"
@@ -36,14 +41,19 @@
 	icon_state  = "cold_res"
 
 	OnAdd()
+		for (var/ID in owner.bioHolder.effects)
+			// clear away any existing fire/cold/thermalres first
+			if (istype(owner.bioHolder.GetEffect(ID), /datum/bioEffect/thermal_resistances) && ID != src.id)
+				owner.bioHolder.RemoveEffect(ID)
+
 		if (ishuman(owner))
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 			overlay_image.color = "#009DFF"
 		..()
 
-/datum/bioEffect/thermalres
+/datum/bioEffect/thermal_resistances/thermalres
 	name = "Thermal Resistance"
-	desc = "Shields the subject's cellular structure against any harmful temperature exposure."
+	desc = "Somewhat shields the subject's cellular structure against any harmful temperature exposure."
 	id = "thermal_resist"
 	effectType = EFFECT_TYPE_POWER
 	blockCount = 3
@@ -54,6 +64,11 @@
 	icon_state  = "thermal_res"
 
 	OnAdd()
+		for (var/ID in owner.bioHolder.effects)
+			// clear away any existing fire/cold/thermalres first
+			if (istype(owner.bioHolder.GetEffect(ID), /datum/bioEffect/thermal_resistances) && ID != src.id)
+				owner.bioHolder.RemoveEffect(ID)
+
 		if (ishuman(owner))
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 			overlay_image_two = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse-offset", layer = MOB_LIMB_LAYER)
@@ -63,9 +78,15 @@
 		if(overlay_image_two)
 			var/mob/living/L = owner
 			L.UpdateOverlays(overlay_image_two, id + "2")
+		APPLY_MOB_PROPERTY(owner, PROP_HEATPROT, src.type, 50)
+		APPLY_MOB_PROPERTY(owner, PROP_COLDPROT, src.type, 50)
+		owner.temp_tolerance *= 10
 
 	OnRemove()
 		..()
+		REMOVE_MOB_PROPERTY(owner, PROP_HEATPROT, src.type)
+		REMOVE_MOB_PROPERTY(owner, PROP_COLDPROT, src.type)
+		owner.temp_tolerance /= 10
 		if(overlay_image_two)
 			if(isliving(owner))
 				var/mob/living/L = owner
@@ -94,6 +115,34 @@
 			owner:organHolder:heart:broken = 1
 			owner:contract_disease(/datum/ailment/malady/flatline,null,null,1)
 			boutput(owner, "<span class='alert'>Something is wrong with your cyberheart, it stops beating!</span>")
+		if(ismob(owner))
+			if(src.power > 1)
+				APPLY_MOB_PROPERTY(owner, PROP_DISORIENT_RESIST_BODY, src, 40)
+				APPLY_MOB_PROPERTY(owner, PROP_DISORIENT_RESIST_BODY_MAX, src, 40)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		if(ismob(owner))
+			if(oldval > 1)
+				REMOVE_MOB_PROPERTY(owner, PROP_DISORIENT_RESIST_BODY, src)
+				REMOVE_MOB_PROPERTY(owner, PROP_DISORIENT_RESIST_BODY_MAX, src)
+			if(newval > 1)
+				APPLY_MOB_PROPERTY(owner, PROP_DISORIENT_RESIST_BODY, src, 40)
+				APPLY_MOB_PROPERTY(owner, PROP_DISORIENT_RESIST_BODY_MAX, src, 40)
+
+	OnRemove()
+		. = ..()
+		if(ismob(owner))
+			if(src.power > 1)
+				APPLY_MOB_PROPERTY(owner, PROP_DISORIENT_RESIST_BODY, src, 40)
+				APPLY_MOB_PROPERTY(owner, PROP_DISORIENT_RESIST_BODY_MAX, src, 40)
+
+	heal
+		id = "resist_electric_heal"
+		occur_in_genepools = 0
+		can_copy = 0
+		acceptable_in_mutini = 0
+		degrade_to = "resist_electric"
 
 /datum/bioEffect/rad_resist
 	name = "Radiation Resistance"
@@ -110,7 +159,13 @@
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			APPLY_MOB_PROPERTY(M, PROP_RADPROT, src, 100)
+			APPLY_MOB_PROPERTY(M, PROP_RADPROT, src, min(75 * power, 100))
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			APPLY_MOB_PROPERTY(M, PROP_RADPROT, src, min(75 * newval, 100))
 
 	OnRemove()
 		. = ..()
@@ -123,6 +178,7 @@
 	desc = "Strongly reinforces the subject's nervous system against alcoholic intoxication."
 	id = "resist_alcohol"
 	probability = 99
+	stability_loss = 0
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel unusually sober."
 	msgLose = "You feel like you could use a stiff drink."
@@ -139,7 +195,7 @@
 	blockGaps = 5
 	reclaim_mats = 40
 	curable_by_mutadone = 0
-	stability_loss = 40
+	stability_loss = 30
 	msgGain = "You feel refreshed and clean."
 	msgLose = "You feel a bit grody."
 	degrade_to = "toxification"
@@ -167,7 +223,7 @@
 	lockedDiff = 4
 	lockedChars = list("G","C","A","T")
 	lockedTries = 10
-	stability_loss = 40
+	stability_loss = 30
 	msgGain = "Your lungs feel strangely empty."
 	msgLose = "You start gasping for air."
 	degrade_to = "mute"
@@ -180,12 +236,30 @@
 		var/mob/living/carbon/human/H = owner
 		H.oxyloss = 0
 		H.losebreath = 0
-		APPLY_MOB_PROPERTY(H, PROP_BREATHLESS, src.type)
+		if(ismob(owner))
+			if(src.power == 1)
+				APPLY_MOB_PROPERTY(H, PROP_REBREATHING, src.type)
+			else
+				APPLY_MOB_PROPERTY(H, PROP_BREATHLESS, src.type)
 		health_update_queue |= H
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		if(ismob(owner))
+			if(oldval == 1)
+				REMOVE_MOB_PROPERTY(owner, PROP_REBREATHING, src.type)
+			else
+				REMOVE_MOB_PROPERTY(owner, PROP_BREATHLESS, src.type)
+			if(newval == 1)
+				APPLY_MOB_PROPERTY(owner, PROP_REBREATHING, src.type)
+			else
+				APPLY_MOB_PROPERTY(owner, PROP_BREATHLESS, src.type)
 
 	OnRemove()
 		. = ..()
-		REMOVE_MOB_PROPERTY(owner, PROP_BREATHLESS, src.type)
+		if(ismob(owner))
+			REMOVE_MOB_PROPERTY(owner, PROP_BREATHLESS, src.type)
+			REMOVE_MOB_PROPERTY(owner, PROP_REBREATHING, src.type)
 
 /datum/bioEffect/breathless/contract
 	name = "Airless Breathing"
@@ -202,12 +276,14 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 	stability_loss = 0
+	power = 2
 
 /datum/bioEffect/psychic_resist
 	name = "Meta-Neural Enhancement"
 	desc = "Boosts efficiency in sectors of the brain commonly associated with resisting meta-mental energies."
 	id = "psy_resist"
 	probability = 99
+	stability_loss = 0
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "Your mind feels closed."
 	msgLose = "You feel oddly exposed."
@@ -231,10 +307,10 @@
 	lockedDiff = 4
 	lockedChars = list("G","C","A","T")
 	lockedTries = 10
-	stability_loss = 40
+	stability_loss = 25
 	msgGain = "Your skin feels tingly and shifty."
 	msgLose = "Your skin tightens."
-	var/heal_per_tick = 1
+	var/heal_per_tick = 0.66
 	var/regrow_prob = 250
 	var/roundedmultremainder
 	degrade_to = "mutagenic_field"
@@ -243,14 +319,14 @@
 	OnLife(var/mult)
 		if(..()) return
 		var/mob/living/L = owner
-		L.HealDamage("All", heal_per_tick * mult, heal_per_tick * mult)
+		L.HealDamage("All", heal_per_tick * mult * power, heal_per_tick * power)
 		var/roundedmult = round(mult)
 		roundedmultremainder += (mult % 1)
 		if (roundedmultremainder >= 1)
 			roundedmult += round(roundedmultremainder)
 			roundedmultremainder = roundedmultremainder % 1
 		for (roundedmult = roundedmult, roundedmult > 0, roundedmult --)
-			if (rand(1, regrow_prob) == 1)
+			if (rand(1, regrow_prob) <= power)
 				if (ishuman(L))
 					var/mob/living/carbon/human/H = L
 					if (H.limbs)
@@ -317,18 +393,25 @@
 	lockedChars = list("G","C","A","T")
 	lockedTries = 10
 	curable_by_mutadone = 0
-	var/remove_per_tick = 5
-	stability_loss = 15
+	var/remove_per_tick = 3.3
+	stability_loss = 10
 	degrade_to = "toxification"
 	icon_state  = "tox_res"
 
 	OnAdd()
 		. = ..()
-		APPLY_MOB_PROPERTY(owner, PROP_CHEM_PURGE, src.type, remove_per_tick)
+		if(ismob(owner))
+			APPLY_MOB_PROPERTY(owner, PROP_CHEM_PURGE, src.type, remove_per_tick * power)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		if(ismob(owner))
+			APPLY_MOB_PROPERTY(owner, PROP_CHEM_PURGE, src.type, remove_per_tick * power)
 
 	OnRemove()
 		. = ..()
-		REMOVE_MOB_PROPERTY(owner, PROP_CHEM_PURGE, src.type)
+		if(ismob(owner))
+			REMOVE_MOB_PROPERTY(owner, PROP_CHEM_PURGE, src.type)
 
 /////////////
 // Stealth //
@@ -366,7 +449,7 @@
 	desc = "The subject generates a light-defying aura, equalizing photons in such a way that make them look completely grayscale."
 	id = "noir"
 	probability = 99
-	stability_loss = 5
+	stability_loss = 0
 	icon_state  = "noir"
 	msgGain = "You feel chromatic pain."
 	msgLose = "Colors around you begin returning to normal."
@@ -377,11 +460,26 @@
 			var/mob/living/carbon/human/H = owner
 			animate_fade_grayscale(H, 5)
 
+		if(ismob(owner))
+			if(src.power > 1)
+				owner.apply_color_matrix(COLOR_MATRIX_GRAYSCALE, COLOR_MATRIX_GRAYSCALE_LABEL)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		if(ismob(owner))
+			if(oldval > 1)
+				owner.remove_color_matrix(COLOR_MATRIX_GRAYSCALE_LABEL)
+			if(newval > 1)
+				owner.apply_color_matrix(COLOR_MATRIX_GRAYSCALE, COLOR_MATRIX_GRAYSCALE_LABEL)
+
 	OnRemove()
 		..()
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			animate_fade_from_grayscale(H, 5)
+		if(ismob(owner))
+			if(src.power > 1)
+				owner.remove_color_matrix(COLOR_MATRIX_GRAYSCALE_LABEL)
 
 ///////////////////
 // General buffs //
@@ -393,6 +491,7 @@
 	id = "strong"
 	effectType = EFFECT_TYPE_POWER
 	probability = 99
+	stability_loss = 5
 	msgGain = "You feel buff!"
 	msgLose = "You feel wimpy and weak."
 	icon_state  = "strong"
@@ -402,12 +501,26 @@
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			APPLY_MOVEMENT_MODIFIER(H, /datum/movement_modifier/hulkstrong, src.type)
+			if(power > 1)
+				APPLY_MOVEMENT_MODIFIER(H, /datum/movement_modifier/strong, src.type)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if(oldval > 1)
+				REMOVE_MOVEMENT_MODIFIER(H, /datum/movement_modifier/strong, src.type)
+			if(newval > 1)
+				APPLY_MOVEMENT_MODIFIER(H, /datum/movement_modifier/strong, src.type)
 
 	OnRemove()
 		..()
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			REMOVE_MOVEMENT_MODIFIER(H, /datum/movement_modifier/hulkstrong, src.type)
+
+			if(src.power > 1)
+				REMOVE_MOVEMENT_MODIFIER(H, /datum/movement_modifier/strong, src.type)
 
 /datum/bioEffect/radio_brain
 	name = "Meta-Neural Antenna"
@@ -430,7 +543,10 @@
 	icon_state  = "radiobrain"
 
 	OnAdd()
-		radio_brains += owner
+		radio_brains[owner] = power
+
+	onPowerChange(oldval, newval)
+		radio_brains[owner] = newval
 
 	OnRemove()
 		radio_brains -= owner
@@ -500,7 +616,7 @@ var/list/radio_brains = list()
 	OnLife(var/mult)
 		if(..()) return
 		var/mob/living/carbon/human/H = owner
-		if (H.health <= 25)
+		if (H.health <= 25 && src.power == 1)
 			timeLeft = 1
 			boutput(owner, "<span class='alert'>You suddenly feel very weak.</span>")
 			H.changeStatus("weakened", 3 SECONDS)
@@ -522,9 +638,38 @@ var/list/radio_brains = list()
 	lockedDiff = 3
 	lockedChars = list("G","C","A","T")
 	lockedTries = 8
-	stability_loss = 30
+	stability_loss = 20
 	degrade_to = "bad_eyesight"
 	icon_state  = "eye"
+
+	OnAdd()
+		. = ..()
+		if(ismob(owner))
+			if(power == 1)
+				APPLY_MOB_PROPERTY(owner, PROP_XRAYVISION_WEAK, src)
+			else
+				APPLY_MOB_PROPERTY(owner, PROP_XRAYVISION, src)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		if(ismob(owner))
+			if(oldval == 1)
+				REMOVE_MOB_PROPERTY(owner, PROP_XRAYVISION_WEAK, src)
+			else
+				REMOVE_MOB_PROPERTY(owner, PROP_XRAYVISION, src)
+
+			if(newval == 1)
+				APPLY_MOB_PROPERTY(owner, PROP_XRAYVISION_WEAK, src)
+			else
+				APPLY_MOB_PROPERTY(owner, PROP_XRAYVISION, src)
+
+	OnRemove()
+		. = ..()
+		if(ismob(owner))
+			if(power == 1)
+				REMOVE_MOB_PROPERTY(owner, PROP_XRAYVISION_WEAK, src)
+			else
+				REMOVE_MOB_PROPERTY(owner, PROP_XRAYVISION, src)
 
 /datum/bioEffect/nightvision
 	name = "Night Vision"
@@ -542,15 +687,38 @@ var/list/radio_brains = list()
 	lockedDiff = 3
 	lockedChars = list("G","C","A","T")
 	lockedTries = 8
-	stability_loss = 25
+	stability_loss = 15
 	degrade_to = "bad_eyesight"
 	icon_state  = "eye"
 
 	OnAdd()
-		APPLY_MOB_PROPERTY(owner, PROP_NIGHTVISION, src)
+		. = ..()
+		if(ismob(owner))
+			if(power == 1)
+				APPLY_MOB_PROPERTY(owner, PROP_NIGHTVISION_WEAK, src)
+			else
+				APPLY_MOB_PROPERTY(owner, PROP_NIGHTVISION, src)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		if(ismob(owner))
+			if(oldval == 1)
+				REMOVE_MOB_PROPERTY(owner, PROP_NIGHTVISION_WEAK, src)
+			else
+				REMOVE_MOB_PROPERTY(owner, PROP_NIGHTVISION, src)
+
+			if(newval == 1)
+				APPLY_MOB_PROPERTY(owner, PROP_NIGHTVISION_WEAK, src)
+			else
+				APPLY_MOB_PROPERTY(owner, PROP_NIGHTVISION, src)
 
 	OnRemove()
-		REMOVE_MOB_PROPERTY(owner, PROP_NIGHTVISION, src)
+		. = ..()
+		if(ismob(owner))
+			if(power == 1)
+				REMOVE_MOB_PROPERTY(owner, PROP_NIGHTVISION_WEAK, src)
+			else
+				REMOVE_MOB_PROPERTY(owner, PROP_NIGHTVISION, src)
 
 /datum/bioEffect/toxic_farts
 	name = "High Decay Digestion"
@@ -585,16 +753,26 @@ var/list/radio_brains = list()
 	lockedGaps = 1
 	lockedDiff = 3
 	lockedTries = 8
-	stability_loss = 5
+	stability_loss = -5
 	icon_state  = "strong"
 
 	OnAdd()
-		APPLY_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-buff", 2)
-		src.owner.add_stam_mod_max("g-fitness-buff", 30)
+		. = ..()
+		if(ismob(owner))
+			APPLY_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-buff", 1.33 * power)
+			src.owner.add_stam_mod_max("g-fitness-buff", 20 * power)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		if(ismob(owner))
+			APPLY_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-buff", 1.33 * newval)
+			src.owner.add_stam_mod_max("g-fitness-buff", 20 * newval)
 
 	OnRemove()
-		REMOVE_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-buff")
-		src.owner.remove_stam_mod_max("g-fitness-buff")
+		. = ..()
+		if(ismob(owner))
+			REMOVE_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-buff")
+			src.owner.remove_stam_mod_max("g-fitness-buff")
 
 /datum/bioEffect/blood_overdrive
 	name = "Hemopoiesis Overdrive"
@@ -604,7 +782,7 @@ var/list/radio_brains = list()
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel like being stabbed isn't such a big deal anymore."
 	msgLose = "You are once again afraid of being stabbed."
-	stability_loss = 15
+	stability_loss = 5
 	icon_state  = "regen"
 
 	OnLife(var/mult)
@@ -613,7 +791,7 @@ var/list/radio_brains = list()
 			var/mob/living/carbon/human/H = owner
 
 			if (H.blood_volume < 500 && H.blood_volume > 0)
-				H.blood_volume += 6*mult
+				H.blood_volume += 4*mult*power
 
 
 ///////////////////////////
