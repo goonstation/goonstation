@@ -1,5 +1,9 @@
 
 (t)wed sep 01 21
+(u)Mordent & Flaborized
+(p)5859
+(e)🆕🎨|feature, sprites
+(*)Geneticists get a new genetic analyzer device (which they spawn with) that lets them quickly check someone's genetics.
 (u)Gannets
 (p)5858
 (e)⚖|balance
