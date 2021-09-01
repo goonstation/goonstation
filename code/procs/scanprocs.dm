@@ -166,6 +166,8 @@
 				organ_data1 += organ_health_scan("appendix", H, obfuscate)
 				if(H.organHolder.tail || H.mob_flags & SHOULD_HAVE_A_TAIL)
 					organ_data1 += organ_health_scan("tail", H, obfuscate)
+				if(H.organHolder.augmentation_nerve)
+					organ_data1 += organ_health_scan("augmentation_nerve", H, obfuscate)
 
 				//Don't give organ readings for Vamps.
 				if (organ_data1 && !isvampire(H))
