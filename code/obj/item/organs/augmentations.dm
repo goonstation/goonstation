@@ -148,18 +148,18 @@
 	on_transplant(var/mob/M as mob)
 		..()
 		M.add_stam_mod_max("stamina_storage", 200)
-		M.max_health -= 35
+		M.max_health -= 20
 		APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stamina_storage", -6)
 
 	on_removal()
 		..()
 		if(!src.broken)
 			src.donor.remove_stam_mod_max("stamina_storage")
-			src.donor.max_health += 35
+			src.donor.max_health += 20
 			REMOVE_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, "stamina_storage")
 		else
 			REMOVE_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, "stamina_storage")
-			src.donor.max_health += 35
+			src.donor.max_health += 20
 
 	emp_act()
 		..()
