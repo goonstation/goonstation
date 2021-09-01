@@ -42,10 +42,108 @@
 	name = "portable identification computer"
 	icon_state = "idportC"
 	density = 0
+	var/obj/item/cell/cell //We have limited power! Immersion!!
+	var/setup_charge_maximum = 15000
+	var/obj/item/luggable_computer/personal/case //The object that holds us when we're all closed up.
+	var/deployed = 1
+	var/list/peripherals = list()
 
 	New()
 		..()
 		src.AddComponent(/datum/component/foldable,/obj/item/objBriefcase/blue_green_stripe)
+	New()
+		..()
+		src.cell = new /obj/item/cell(src)
+		src.cell.maxcharge = setup_charge_maximum
+		src.cell.charge = src.cell.maxcharge
+		return
+
+	disposing()
+		if (src.cell)
+			src.cell.dispose()
+			src.cell = null
+
+		if (case && case.loc == src)
+			case.dispose()
+			case = null
+
+		..()
+
+	verb/fold_up()
+		set src in view(1)
+
+		if(usr.stat)
+			return
+
+		src.visible_message("<span class='alert'>[usr] folds [src] back up!</span>")
+		src.undeploy()
+		return
+
+	proc/undeploy()
+		if(!src.case)
+			src.case = new /obj/item/luggable_computer(src)
+			src.case.luggable = src
+
+		for (var/obj/item/peripheral/peripheral in peripherals)
+			peripheral.uninstalled()
+
+		src.case.set_loc(get_turf(src))
+		src.set_loc(src.case)
+		src.deployed = 0
+		return
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/disk/data/floppy)) //IDK i just dont want to screw this up
+
+			return
+
+		else if (ispryingtool(W))
+			if(!src.cell)
+				boutput(user, "<span class='alert'>There is no energy cell inserted!</span>")
+				return
+
+			playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+			src.cell.set_loc(get_turf(src))
+			src.cell = null
+			user.visible_message("<span class='alert'>[user] removes the power cell from [src]!.</span>","<span class='alert'>You remove the power cell from [src]!</span>")
+			src.power_change()
+			return
+
+		else if (istype(W, /obj/item/cell))
+			if(src.cell)
+				boutput(user, "<span class='alert'>There is already an energy cell inserted!</span>")
+
+			else
+				user.drop_item()
+				W.set_loc(src)
+				src.cell = W
+				boutput(user, "You insert [W].")
+				src.power_change()
+				src.updateUsrDialog()
+
+			return
+
+		else
+			src.Attackhand(user)
+
+		return
+
+	powered()
+		if(!src.cell || src.cell.charge <= 0)
+			return 0
+
+		return 1
+
+	use_power(var/amount, var/chan=EQUIP)
+		if(!src.cell || !src.deployed)
+			return
+
+		cell.use(amount / 100)
+
+		src.power_change()
+		return
+
+
 
 /obj/machinery/computer/card/attack_hand(var/mob/user as mob)
 	if(..())
