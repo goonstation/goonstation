@@ -154,10 +154,10 @@
 						. += "<br><span class='alert'><B>[src.name]'s head is barely attached!</B></span>"
 					else
 						. += "<br><span class='alert'><B>[src.name] has a huge incision across their neck!</B></span>"
-			if (src.organHolder.augmentation_nerve && src.head.c_flags & BLOCKCHOKE)
+			if (src.organHolder.augmentation_nerve && src.head && src.head.c_flags & BLOCKCHOKE)
 				. += "<br><span class='alert'>[src.name] has a [bicon(src.organHolder.augmentation_nerve)] small, round machine installed at the base of [t_his] skull.</span>"
 			else if (src.organHolder.augmentation_nerve)
-				. += "<br><span class='alert'>[src.name] has a [bicon(src.organHolder.augmentation_nerve)] [src.organHolder.augmentation_nerve] installed at the base of [t_his] skull.</span>"
+				. += "<br><span class='alert'>[src.name] has [bicon(src.organHolder.augmentation_nerve)] [src.organHolder.augmentation_nerve] installed at the base of [t_his] skull.</span>"
 
 		else
 			. += "<br><span class='alert'><B>[src.name] has been decapitated!</B></span>"
