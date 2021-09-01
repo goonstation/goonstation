@@ -81,4 +81,6 @@
 /// How much farting costs. I am not even kidding.
 #define STAMINA_DEFAULT_FART_COST 0
 
-#define USE_STAMINA_DISORIENT //use the new stamina based stun disorient system thingy
+//#define USE_STAMINA_DISORIENT //use the new stamina based stun disorient system thingy
+// WARC DISABLE
+// WARC SMASH

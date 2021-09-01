@@ -110,7 +110,7 @@
 	var/co2overloadtime = null
 	var/temperature_resistance = T0C+75
 
-	var/use_stamina = 1
+	var/use_stamina = 0 // warc maybe put this
 	var/stamina = STAMINA_MAX
 	var/stamina_max = STAMINA_MAX
 	var/stamina_regen = STAMINA_REGEN
