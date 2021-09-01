@@ -45,15 +45,19 @@
 			return 0
 		M.make_jittery(10)
 		if(!src.broken)
-			if(prob(10))
-				M.visible_message("<span class='alert'><b>[M.name]</b> trips over their own feet!</span>")
-				M.changeStatus("weakened", 4 SECONDS)
-				M.force_laydown_standup()
+			if(M.reagents.has_reagent("sugar", 50)) //might do something about glaucogen, but currently that's only when its broken
+				src.take_damage(2.5, 2.5, 0)
+			else if(M.reagents.has_reagent("sugar", 3))
+				M.reagents.remove_reagent("sugar", 2)
+			else
+				src.take_damage(2.5, 2.5, 0)
 		else
-			if(prob(20))
-				M.visible_message("<span class='alert'><b>[M.name]</b> trips over their own feet!</span>")
-				M.changeStatus("weakened", 4 SECONDS)
-				M.force_laydown_standup()
+			if(M.reagents.has_reagent("sugar", 50))
+				M.reagents.remove_reagent("sugar", 4)
+			else
+				M.take_toxin_damage(2)
+			if(M.reagents.has_reagent("glaucogen"))
+				M.take_toxin_damage(2)
 		return 1
 
 	on_broken(var/mult = 1)
@@ -259,7 +263,7 @@
 				else
 					src.parrychance += 7.5
 
-	proc/combohelp(mob/user, mob/target) //these four procs may be wasteful *shrug
+	proc/combohelp(mob/user, mob/target) //help's not used *currently* but keeping it for the sake of consistency
 		if(comboattacks)
 			if(combotarget != target)
 				combotarget = null
