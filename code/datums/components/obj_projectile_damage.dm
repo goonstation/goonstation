@@ -10,9 +10,8 @@
 /datum/component/obj_projectile_damage/proc/projectile_collide(owner, var/obj/projectile/P)
 	var/obj/O = parent
 	if(P.proj_data.damage_type & (D_KINETIC | D_ENERGY | D_SLASHING))
-		if (O && (O._health/O._max_health) <= 0.5 && prob(abs((O._health/O._max_health) - 1) * 60))
-			var/obj/decal/cleanable/machine_debris/gib = null
-			gib = make_cleanable(/obj/decal/cleanable/machine_debris, O.loc)
+		if (O && (O._health/O._max_health) <= 0.5 && prob((O._health/O._max_health) * 60))
+			var/obj/decal/cleanable/machine_debris/gib = make_cleanable(/obj/decal/cleanable/machine_debris, O.loc)
 			gib.streak_cleanable()
 			if (istype(O, /obj/machinery))
 				var/obj/machinery/M = O
