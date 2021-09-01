@@ -11,8 +11,7 @@
 	var/obj/O = parent
 	if(P.proj_data.damage_type & (D_KINETIC | D_ENERGY | D_SLASHING))
 		if (O && (O._health/O._max_health) <= 0.5 && prob((O._health/O._max_health) * 60))
-			var/obj/decal/cleanable/machine_debris/gib = null
-			gib = make_cleanable(/obj/decal/cleanable/machine_debris, O.loc)
+			var/obj/decal/cleanable/machine_debris/gib = make_cleanable(/obj/decal/cleanable/machine_debris, O.loc)
 			gib.streak_cleanable()
 			elecflash(O, power = 2)
 		O.changeHealth(-round(((P.power/2)*P.proj_data.ks_ratio), 1.0))
