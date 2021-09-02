@@ -1,4 +1,4 @@
-//rerun checks
+//bot go brr?
 //GUNS GUNS GUNS
 /datum/projectile/bullet/rifle_3006/rakshasa
 	sname = "\improper Rakshasa"
