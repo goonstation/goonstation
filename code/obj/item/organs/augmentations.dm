@@ -237,42 +237,419 @@
 	proc/surgery_act(var/mob/U, var/mob/living/carbon/human/M, var/obj/item/I)
 		switch(chosen_surgery)
 			if("Implant/Parasite/Shrapnel Removal")
-				if(surgery_step == 1 && M.a_intent == INTENT_GRAB && istype(I, TOOL_CUTTING))
+				if(surgery_step == 1 && U.a_intent == INTENT_HELP && istool(I, TOOL_CUTTING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("<b>Surgery completed, good job!</b>"))
+					src.chosen_surgery = null
+					src.surgery_step = 0
+
 			if("Limb Removal")
+				if(surgery_step == 1 && U.a_intent == INTENT_HELP && istool(I, TOOL_CUTTING) && !U.zone_sel.selecting == "chest" && !U.zone_sel.selecting == "head")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 2
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 2:</b> Use a surgical saw on the patient's limb on help intent."))
+				else if(surgery_step == 2 && U.a_intent == INTENT_HELP && istool(I, TOOL_SAWING) && !U.zone_sel.selecting == "chest" && !U.zone_sel.selecting == "head")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 3
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 3:</b> Use a scalpel on the patient's limb on help intent."))
+				else if(surgery_step == 3 && U.a_intent == INTENT_HELP && istool(I, TOOL_CUTTING) && !U.zone_sel.selecting == "chest" && !U.zone_sel.selecting == "head")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 4
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 4:</b> Use a surgical saw on the patient's limb on help intent."))
+				else if(surgery_step == 4 && U.a_intent == INTENT_HELP && istool(I, TOOL_SAWING) && !U.zone_sel.selecting == "chest" && !U.zone_sel.selecting == "head")
+					boutput(U, __blue("<b>Surgery completed, good job!</b>"))
+					src.chosen_surgery = null
+					src.surgery_step = 0
+				else if(U.zone_sel.selecting == "chest" || U.zone_sel.selecting == "head")
+					boutput(U, __blue("<b>Warning!</b> You're not targeting one of their limbs!"))
+				else if(!U.a_intent == INTENT_HELP)
+					boutput(U, __blue("<b>Warning!</b> You're not on help intent!")) // odds are, this won't occur because of how I did the signals, but keeping it to be safe
+				else
+					boutput(U, __blue("<b>Warning!</b> Double check you're doing everything right!")) // no idea what the fuck they're doing wrong
 
 			if("Butt Removal")
+				if(surgery_step == 1 && U.a_intent == INTENT_HARM && istool(I, TOOL_CUTTING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 2
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 2:</b> Use a surgical saw on the patient's chest on harm intent."))
+				else if(surgery_step == 2 && U.a_intent == INTENT_HARM && istool(I, TOOL_SAWING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 3
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 3:</b> Use a scalpel on the patient's chest on harm intent."))
+				else if(surgery_step == 3 && U.a_intent == INTENT_HARM && istool(I, TOOL_CUTTING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 4
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 4:</b> Use a surgical saw on the patient's chest on harm intent."))
+				else if(surgery_step == 4 && U.a_intent == INTENT_HARM && istool(I, TOOL_SAWING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("<b>Surgery completed, good job!</b>"))
+					src.chosen_surgery = null
+					src.surgery_step = 0
+				else if(!U.zone_sel.selecting == "chest")
+					boutput(U, __blue("<b>Warning!</b> You're not targeting one of their limbs!"))
+				else if(!U.a_intent == INTENT_HARM)
+					boutput(U, __blue("<b>Warning!</b> You're not on harm intent!"))
+				else
+					boutput(U, __blue("<b>Warning!</b> Double check you're doing everything right!"))
 
 			if("Eye Removal")
+				if(surgery_step == 1 && U.a_intent == INTENT_HELP && istool(I, TOOL_SPOONING) && U.zone_sel.selecting == "head")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 2
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 2:</b> Use a scalpel on the patient's head on help intent, with the hand in relation to the side you wish to remove."))
+				else if(surgery_step == 2 && U.a_intent == INTENT_HELP && istool(I, TOOL_CUTTING) && U.zone_sel.selecting == "head")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 3
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 3:</b> Use surgical scissors on the patient's head on help intent, with the hand in relation to the side you wish to remove."))
+				else if(surgery_step == 4 && U.a_intent == INTENT_HELP && istool(I, TOOL_SPOONING) && U.zone_sel.selecting == "head")
+					boutput(U, __blue("<b>Surgery completed, good job!</b>"))
+					src.chosen_surgery = null
+					src.surgery_step = 0
+				else if(!U.zone_sel.selecting == "head")
+					boutput(U, __blue("<b>Warning!</b> You're not targeting one of their limbs!"))
+				else if(!U.a_intent == INTENT_HELP)
+					boutput(U, __blue("<b>Warning!</b> You're not on help intent!"))
+				else
+					boutput(U, __blue("<b>Warning!</b> Double check you're doing everything right!"))
 
 			if("Brain Removal")
+				if(surgery_step == 1 && U.a_intent == INTENT_HELP && istool(I, TOOL_CUTTING) && U.zone_sel.selecting == "head")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 2
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 2:</b> Use a surgical saw on the patient's head on help intent."))
+				else if(surgery_step == 2 && U.a_intent == INTENT_HELP && istool(I, TOOL_SAWING) && U.zone_sel.selecting == "head")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 3
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 3:</b> Use a scalpel on the patient's head on help intent."))
+				else if(surgery_step == 3 && U.a_intent == INTENT_HELP && istool(I, TOOL_CUTTING) && U.zone_sel.selecting == "head")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 4
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 4:</b> Use a surgical saw on the patient's head on help intent."))
+				else if(surgery_step == 4 && U.a_intent == INTENT_HELP && istool(I, TOOL_SAWING) && U.zone_sel.selecting == "head")
+					boutput(U, __blue("<b>Surgery completed, good job!</b>"))
+					src.chosen_surgery = null
+					src.surgery_step = 0
+				else if(!U.zone_sel.selecting == "head")
+					boutput(U, __blue("<b>Warning!</b> You're not targeting their head!"))
+				else if(!U.a_intent == INTENT_HELP)
+					boutput(U, __blue("<b>Warning!</b> You're not on help intent!"))
+				else
+					boutput(U, __blue("<b>Warning!</b> Double check you're doing everything right!"))
 
 			if("Head Removal")
+				if(surgery_step == 1 && U.a_intent == INTENT_HARM && istool(I, TOOL_CUTTING) && U.zone_sel.selecting == "head")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 2
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 2:</b> Use a surgical saw on the patient's head on harm intent."))
+				else if(surgery_step == 2 && U.a_intent == INTENT_HARM && istool(I, TOOL_SAWING) && U.zone_sel.selecting == "head")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 3
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 3:</b> Use a scalpel on the patient's gead on harm intent."))
+				else if(surgery_step == 3 && U.a_intent == INTENT_HARM && istool(I, TOOL_CUTTING) && U.zone_sel.selecting == "head")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 4
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 4:</b> Use a surgical saw on the patient's head on harm intent."))
+				else if(surgery_step == 4 && U.a_intent == INTENT_HARM && istool(I, TOOL_SAWING) && U.zone_sel.selecting == "head")
+					boutput(U, __blue("<b>Surgery completed, good job!</b>"))
+					src.chosen_surgery = null
+					src.surgery_step = 0
+				else if(!U.zone_sel.selecting == "head")
+					boutput(U, __blue("<b>Warning!</b> You're not targeting one of their head!"))
+				else if(!U.a_intent == INTENT_HARM)
+					boutput(U, __blue("<b>Warning!</b> You're not on harm intent!"))
+				else
+					boutput(U, __blue("<b>Warning!</b> Double check you're doing everything right!"))
 
 			if("Skull Removal")
+				if(surgery_step == 1 && U.a_intent == INTENT_HELP && istool(I, TOOL_CUTTING) && U.zone_sel.selecting == "head")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 2
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 2:</b> Use a surgical saw on the patient's head on help intent."))
+				else if(surgery_step == 2 && U.a_intent == INTENT_HELP && istool(I, TOOL_SAWING) && U.zone_sel.selecting == "head")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 3
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 3:</b> Use a scalpel on the patient's head on help intent."))
+				else if(surgery_step == 3 && U.a_intent == INTENT_HELP && istool(I, TOOL_CUTTING) && U.zone_sel.selecting == "head")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 4
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 4:</b> Use a surgical saw on the patient's head on help intent. Note: This will remove the brain."))
+				else if(surgery_step == 4 && U.a_intent == INTENT_HELP && istool(I, TOOL_SAWING) && U.zone_sel.selecting == "head")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 5
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 5:</b> Use a surgical saw on the patient's head on help intent."))
+				else if(surgery_step == 5 && U.a_intent == INTENT_HELP && istool(I, TOOL_CUTTING) && U.zone_sel.selecting == "head")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 6
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 6:</b> Use a surgical saw on the patient's head on help intent."))
+				else if(surgery_step == 6 && U.a_intent == INTENT_HELP && istool(I, TOOL_SAWING) && U.zone_sel.selecting == "head")
+					boutput(U, __blue("<b>Surgery completed, good job!</b>"))
+					src.chosen_surgery = null
+					src.surgery_step = 0
+				else if(!U.zone_sel.selecting == "head")
+					boutput(U, __blue("<b>Warning!</b> You're not targeting their head!"))
+				else if(!U.a_intent == INTENT_HELP)
+					boutput(U, __blue("<b>Warning!</b> You're not on help intent!"))
+				else
+					boutput(U, __blue("<b>Warning!</b> Double check you're doing everything right!"))
 
 			if("Heart")
+				if(surgery_step == 1 && U.a_intent == INTENT_HELP && istool(I, TOOL_CUTTING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 2
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 2:</b> Use a surgical saw on the patient's chest on help intent."))
+				else if(surgery_step == 2 && U.a_intent == INTENT_HELP && istool(I, TOOL_SAWING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 3
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 3:</b> Use a scalpel on the patient's chest on help intent."))
+				else if(surgery_step == 3 && U.a_intent == INTENT_HELP && istool(I, TOOL_CUTTING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 4
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 4:</b> Use a surgical saw on the patient's chest on help intent."))
+				else if(surgery_step == 4 && U.a_intent == INTENT_HELP && istool(I, TOOL_SAWING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("<b>Surgery completed, good job!</b>"))
+					src.chosen_surgery = null
+					src.surgery_step = 0
+				else if(!U.zone_sel.selecting == "chest")
+					boutput(U, __blue("<b>Warning!</b> You're not targeting their chest!"))
+				else if(!U.a_intent == INTENT_HELP)
+					boutput(U, __blue("<b>Warning!</b> You're not on help intent!"))
+				else
+					boutput(U, __blue("<b>Warning!</b> Double check you're doing everything right!"))
 
 			if("Lung")
+				if(surgery_step == 1 && U.a_intent == INTENT_HELP && istool(I, TOOL_SNIPPING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 2
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 2:</b> Use a scalpel on the patient's chest on help intent, with the hand in relation to the side you wish to remove."))
+				else if(surgery_step == 2 && U.a_intent == INTENT_HELP && istool(I, TOOL_CUTTING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 3
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 3:</b> Use surgical scissors on the patient's chest on help intent, with the hand in relation to the side you wish to remove."))
+				else if(surgery_step == 4 && U.a_intent == INTENT_HELP && istool(I, TOOL_SNIPPING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("<b>Surgery completed, good job!</b>"))
+					src.chosen_surgery = null
+					src.surgery_step = 0
+				else if(!U.zone_sel.selecting == "chest")
+					boutput(U, __blue("<b>Warning!</b> You're not targeting their chest!"))
+				else if(!U.a_intent == INTENT_HELP)
+					boutput(U, __blue("<b>Warning!</b> You're not on help intent!"))
+				else
+					boutput(U, __blue("<b>Warning!</b> Double check you're doing everything right!"))
 
 			if("Kidney")
+				if(surgery_step == 1 && U.a_intent == INTENT_HELP && istool(I, TOOL_CUTTING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 2
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 2:</b> Use a scalpel on the patient's chest on help intent, with the hand in relation to the side you wish to remove."))
+				else if(surgery_step == 2 && U.a_intent == INTENT_HELP && istool(I, TOOL_CUTTING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 3
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 3:</b> Use surgical scissors on the patient's chest on help intent, with the hand in relation to the side you wish to remove."))
+				else if(surgery_step == 4 && U.a_intent == INTENT_HELP && istool(I, TOOL_SNIPPING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("<b>Surgery completed, good job!</b>"))
+					src.chosen_surgery = null
+					src.surgery_step = 0
+				else if(!U.zone_sel.selecting == "chest")
+					boutput(U, __blue("<b>Warning!</b> You're not targeting their chest!"))
+				else if(!U.a_intent == INTENT_HELP)
+					boutput(U, __blue("<b>Warning!</b> You're not on help intent!"))
+				else
+					boutput(U, __blue("<b>Warning!</b> Double check you're doing everything right!"))
 
 			if("Appendix")
+				if(surgery_step == 1 && U.a_intent == INTENT_HELP && istool(I, TOOL_SNIPPING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 2
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 2:</b> Use surgical scissors on the patient's chest on help intent."))
+				else if(surgery_step == 2 && U.a_intent == INTENT_HELP && istool(I, TOOL_SNIPPING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 3
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 3:</b> Use surgical scissors on the patient's chest on help intent."))
+				else if(surgery_step == 3 && U.a_intent == INTENT_HELP && istool(I, TOOL_SNIPPING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("<b>Surgery completed, good job!</b>"))
+					src.chosen_surgery = null
+					src.surgery_step = 0
+				else if(!U.zone_sel.selecting == "chest")
+					boutput(U, __blue("<b>Warning!</b> You're not targeting their chest!"))
+				else if(!U.a_intent == INTENT_HELP)
+					boutput(U, __blue("<b>Warning!</b> You're not on help intent!"))
+				else
+					boutput(U, __blue("<b>Warning!</b> Double check you're doing everything right!"))
 
 			if("Liver")
+				if(surgery_step == 1 && U.a_intent == INTENT_HELP && istool(I, TOOL_SNIPPING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 2
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 2:</b> Use surgical scissors on the patient's chest on help intent."))
+				else if(surgery_step == 2 && U.a_intent == INTENT_HELP && istool(I, TOOL_SNIPPING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 3
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 3:</b> Use a scalpel on the patient's chest on help intent."))
+				else if(surgery_step == 3 && U.a_intent == INTENT_HELP && istool(I, TOOL_CUTTING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("<b>Surgery completed, good job!</b>"))
+					src.chosen_surgery = null
+					src.surgery_step = 0
+				else if(!U.zone_sel.selecting == "chest")
+					boutput(U, __blue("<b>Warning!</b> You're not targeting their chest!"))
+				else if(!U.a_intent == INTENT_HELP)
+					boutput(U, __blue("<b>Warning!</b> You're not on help intent!"))
+				else
+					boutput(U, __blue("<b>Warning!</b> Double check you're doing everything right!"))
 
 			if("Stomach")
+				if(surgery_step == 1 && U.a_intent == INTENT_HELP && istool(I, TOOL_SNIPPING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 2
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 2:</b> Use a scalpel on the patient's chest on help intent."))
+				else if(surgery_step == 2 && U.a_intent == INTENT_HELP && istool(I, TOOL_CUTTING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 3
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 3:</b> Use surgical scissors on the patient's chest on help intent."))
+				else if(surgery_step == 3 && U.a_intent == INTENT_HELP && istool(I, TOOL_SNIPPING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("<b>Surgery completed, good job!</b>"))
+					src.chosen_surgery = null
+					src.surgery_step = 0
+				else if(!U.zone_sel.selecting == "chest")
+					boutput(U, __blue("<b>Warning!</b> You're not targeting their chest!"))
+				else if(!U.a_intent == INTENT_HELP)
+					boutput(U, __blue("<b>Warning!</b> You're not on help intent!"))
+				else
+					boutput(U, __blue("<b>Warning!</b> Double check you're doing everything right!"))
 
 			if("Intestines")
+				if(surgery_step == 1 && U.a_intent == INTENT_HELP && istool(I, TOOL_SNIPPING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 2
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 2:</b> Use a scalpel on the patient's chest on help intent."))
+				else if(surgery_step == 2 && U.a_intent == INTENT_HELP && istool(I, TOOL_CUTTING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 3
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 3:</b> Use a scalpel on the patient's chest on help intent."))
+				else if(surgery_step == 3 && U.a_intent == INTENT_HELP && istool(I, TOOL_CUTTING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("<b>Surgery completed, good job!</b>"))
+					src.chosen_surgery = null
+					src.surgery_step = 0
+				else if(!U.zone_sel.selecting == "chest")
+					boutput(U, __blue("<b>Warning!</b> You're not targeting their chest!"))
+				else if(!U.a_intent == INTENT_HELP)
+					boutput(U, __blue("<b>Warning!</b> You're not on help intent!"))
+				else
+					boutput(U, __blue("<b>Warning!</b> Double check you're doing everything right!"))
 
 			if("Pancreas")
+				if(surgery_step == 1 && U.a_intent == INTENT_HELP && istool(I, TOOL_CUTTING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 2
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 2:</b> Use surgical scissors on the patient's chest on help intent."))
+				else if(surgery_step == 2 && U.a_intent == INTENT_HELP && istool(I, TOOL_SNIPPING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 3
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 3:</b> Use surgical scissors on the patient's chest on help intent."))
+				else if(surgery_step == 3 && U.a_intent == INTENT_HELP && istool(I, TOOL_SNIPPING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("<b>Surgery completed, good job!</b>"))
+					src.chosen_surgery = null
+					src.surgery_step = 0
+				else if(!U.zone_sel.selecting == "chest")
+					boutput(U, __blue("<b>Warning!</b> You're not targeting their chest!"))
+				else if(!U.a_intent == INTENT_HELP)
+					boutput(U, __blue("<b>Warning!</b> You're not on help intent!"))
+				else
+					boutput(U, __blue("<b>Warning!</b> Double check you're doing everything right!"))
 
 			if("Spleen")
+				if(surgery_step == 1 && U.a_intent == INTENT_HELP && istool(I, TOOL_CUTTING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 2
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 2:</b> Use a scalpel on the patient's chest on help intent."))
+				else if(surgery_step == 2 && U.a_intent == INTENT_HELP && istool(I, TOOL_SNIPPING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 3
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 3:</b> Use a scalpel on the patient's chest on help intent."))
+				else if(surgery_step == 3 && U.a_intent == INTENT_HELP && istool(I, TOOL_CUTTING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("<b>Surgery completed, good job!</b>"))
+					src.chosen_surgery = null
+					src.surgery_step = 0
+				else if(!U.zone_sel.selecting == "chest")
+					boutput(U, __blue("<b>Warning!</b> You're not targeting their chest!"))
+				else if(!U.a_intent == INTENT_HELP)
+					boutput(U, __blue("<b>Warning!</b> You're not on help intent!"))
+				else
+					boutput(U, __blue("<b>Warning!</b> Double check you're doing everything right!"))
 
-			if("Tail")
+			if("Tail Removal")
+				if(surgery_step == 1 && U.a_intent == INTENT_HELP && istool(I, TOOL_SAWING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 2
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 2:</b> Use surgical scissors on the patient's chest on help intent."))
+				else if(surgery_step == 2 && U.a_intent == INTENT_HELP && istool(I, TOOL_CUTTING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 3
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 3:</b> Use a surgical saw on the patient's chest on help intent."))
+				else if(surgery_step == 3 && U.a_intent == INTENT_HELP && istype(I, TOOL_SAWING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("<b>Surgery completed, good job!</b>"))
+					src.chosen_surgery = null
+					src.surgery_step = 0
+				else if(!U.zone_sel.selecting == "chest")
+					boutput(U, __blue("<b>Warning!</b> You're not targeting their chest!"))
+				else if(!U.a_intent == INTENT_HELP)
+					boutput(U, __blue("<b>Warning!</b> You're not on help intent!"))
+				else
+					boutput(U, __blue("<b>Warning!</b> Double check you're doing everything right!"))
 
 			if("Augumentation")
-
-			if("Chest-Implanted Item")
+				if(surgery_step == 1 && U.a_intent == INTENT_HELP && istool(I, TOOL_SAWING) && U.zone_sel.selecting == "head")
+					boutput(U, __blue("Step Completed."))
+					src.surgery_step = 2
+					sleep(15 DECI SECONDS)
+					boutput(U, __blue("<b>Step 2:</b> Use a scalpel on the patient's head on help intent."))
+				else if(surgery_step == 2 && U.a_intent == INTENT_HELP && istool(I, TOOL_CUTTING) && U.zone_sel.selecting == "head")
+					boutput(U, __blue("<b>Surgery completed, good job!</b> Note: If you wish to remove an augmentation, use surgical scissors at this step."))
+					src.chosen_surgery = null
+					src.surgery_step = 0
+				else if(!U.zone_sel.selecting == "head")
+					boutput(U, __blue("<b>Warning!</b> You're not targeting their head!"))
+				else if(!U.a_intent == INTENT_HELP)
+					boutput(U, __blue("<b>Warning!</b> You're not on help intent!"))
+				else
+					boutput(U, __blue("<b>Warning!</b> Double check you're doing everything right!"))
 
 	on_transplant(var/mob/M as mob)
 		..()

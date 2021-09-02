@@ -1692,9 +1692,14 @@
 	name = "Choose Surgery Type"
 	desc = "Get the help of your surgery assistant augment to get the steps for surgery."
 	cooldown = 10
-	var/list/surgery_types = list("Implant/Parasite/Shrapnel Removal", "Limb Removal", "Butt Removal", "Eye Removal", "Brain Removal", "Head Removal", "Skull Removal", "Heart", "Lung", "Kidney", "Appendix", "Liver", "Stomach", "Intestines", "Pancreas", "Spleen", "Tail", "Augmentation", "Chest-Implanted Item")
-	var/mob/living/carbon/human/H = holder.owner
-	var/obj/item/organ/augmentation/head/surgery_assistant/S = H.organHolder.augmentation_nerve
+	var/list/surgery_types = list("Implant/Parasite/Shrapnel Removal", "Limb Removal", "Butt Removal", "Eye Removal", "Brain Removal", "Head Removal", "Skull Removal", "Heart", "Lung", "Kidney", "Appendix", "Liver", "Stomach", "Intestines", "Pancreas", "Spleen", "Tail Removal", "Augmentation")
+	var/mob/living/carbon/human/H
+	var/obj/item/organ/augmentation/head/surgery_assistant/S
+
+	New()
+		..()
+		H = holder.owner
+		S = H.organHolder.augmentation_nerve
 
 	cast()
 		if(..())
@@ -1766,7 +1771,7 @@
 				SPAWN_DBG(15 DECI SECONDS)
 					boutput(holder.owner, __blue("<b>Step 1:</b> Use a scalpel on the patient's chest on help intent."))
 					S.surgery_step = 1
-			if("Tail")
+			if("Tail Removal")
 				boutput(holder.owner, __blue("<b>Step 0.5:</b> Make sure the patient is clear of parasites, implants, and shrapnel."))
 				SPAWN_DBG(15 DECI SECONDS)
 					boutput(holder.owner, __blue("<b>Step 1:</b> Use a surgical saw on the patient's chest on help intent."))
@@ -1776,6 +1781,3 @@
 				SPAWN_DBG(15 DECI SECONDS)
 					boutput(holder.owner, __blue("<b>Step 1:</b> Use a surgical saw on the patient's head on help intent."))
 					S.surgery_step = 1
-			if("Chest-Implanted Item")
-				boutput(holder.owner, __blue("<b>Step 1:</b> Use a scalpel on the patient's chest on grab intent."))
-				S.surgery_step = 1
