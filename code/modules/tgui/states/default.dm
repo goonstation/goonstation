@@ -29,7 +29,7 @@ var/global/datum/ui_state/tgui_default_state/tgui_default_state = new /datum/ui_
 		return
 
 	// Robots can interact with anything they can see.
-	if(get_dist(src, src_object) <= ((WIDE_TILE_WIDTH - 1)/ 2))
+	if(GET_DIST(src, src_object) <= ((WIDE_TILE_WIDTH - 1)/ 2))
 		return UI_INTERACTIVE
 
 	// AI Borgs can recieve updates from anything that the AI can see.
@@ -44,7 +44,7 @@ var/global/datum/ui_state/tgui_default_state/tgui_default_state = new /datum/ui_
 		return
 
 	// Robots can interact with anything they can see.
-	if(get_dist(src, src_object) <= ((WIDE_TILE_WIDTH - 1)/ 2))
+	if(GET_DIST(src, src_object) <= ((WIDE_TILE_WIDTH - 1)/ 2))
 		return UI_INTERACTIVE
 
 	return UI_UPDATE // AI eyebots can recieve updates from anything that the AI can see.

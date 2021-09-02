@@ -514,7 +514,7 @@
 
 	attackby(obj/item/I, mob/user)
 		if (isscrewingtool(I) || ispryingtool(I) || ispulsingtool(I))
-			src.attack_hand(user)
+			src.Attackhand(user)
 		else
 			boom()
 

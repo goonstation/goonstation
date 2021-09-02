@@ -218,7 +218,7 @@
 	// custom attacks, should return attack_hand by default or bad things will happen!!
 	// ^--- Outdated, please use limb datums instead if possible.
 	proc/custom_attack(atom/target)
-		return target.attack_hand(mob)
+		return target.Attackhand(mob)
 
 	// vision modifier (see_mobs, etc i guess)
 	proc/sight_modifier()
@@ -705,7 +705,7 @@
 
 /datum/mutantrace/flashy
 	name = "flashy"
-	icon = "icons/mob/flashy.dmi"
+	icon = 'icons/mob/flashy.dmi'
 	icon_state = "body_m"
 	mutant_appearance_flags = (HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HEAD_HAS_OWN_COLORS | HAS_HUMAN_EYES | WEARS_UNDERPANTS | BUILT_FROM_PIECES)
 	override_attack = 0
@@ -720,7 +720,7 @@
 
 /datum/mutantrace/virtual
 	name = "virtual"
-	icon = "icons/mob/virtual.dmi"
+	icon = 'icons/mob/virtual.dmi'
 	icon_state = "body_m"
 	override_attack = 0
 	mutant_folder = 'icons/mob/virtual.dmi'
@@ -792,7 +792,7 @@
 
 /datum/mutantrace/lizard
 	name = "lizard"
-	icon = "icons/mob/lizard.dmi"
+	icon = 'icons/mob/lizard.dmi'
 	icon_state = "body_m"
 	override_attack = 0
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HAS_EXTRA_DETAILS | FIX_COLORS | SKINTONE_USES_PREF_COLOR_1 | HAS_SPECIAL_HAIR | TORSO_HAS_SKINTONE | WEARS_UNDERPANTS)
@@ -1035,17 +1035,17 @@
 			H.abilityHolder.removeAbility(/datum/targetable/critter/zombify)
 		..()
 
-/datum/mutantrace/vamp_zombie
-	name = "vampiric zombie"
-	icon = "icons/mob/vamp_zombie.dmi"
+/datum/mutantrace/vampiric_thrall
+	name = "vampiric thrall"
+	icon = 'icons/mob/vampiric_thrall.dmi'
 	icon_state = "body_m"
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/vamp_zombie/right
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/vamp_zombie/left
-	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/vamp_zombie/right
-	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/vamp_zombie/left
-	mutant_folder = 'icons/mob/vamp_zombie.dmi'
-	special_head = HEAD_VAMPZOMBIE
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/vampiric_thrall/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/vampiric_thrall/left
+	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/vampiric_thrall/right
+	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/vampiric_thrall/left
+	mutant_folder = 'icons/mob/vampiric_thrall.dmi'
+	special_head = HEAD_VAMPTHRALL
 	jerk = 1
 
 	var/blood_points = 0
@@ -1057,17 +1057,17 @@
 		..()
 		if(ishuman(mob))
 			src.add_ability(mob)
-			M.add_stam_mod_max("vamp_zombie", 100)
-			//APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "vamp_zombie", 15)
+			M.add_stam_mod_max("vampiric_thrall", 100)
+			//APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "vampiric_thrall", 15)
 
 	disposing()
 		if (ishuman(mob))
-			mob.remove_stam_mod_max("vamp_zombie")
-			//REMOVE_MOB_PROPERTY(mob, PROP_STAMINA_REGEN_BONUS, "vamp_zombie")
+			mob.remove_stam_mod_max("vampiric_thrall")
+			//REMOVE_MOB_PROPERTY(mob, PROP_STAMINA_REGEN_BONUS, "vampiric_thrall")
 		..()
 
 	proc/add_ability(var/mob/living/carbon/human/H)
-		H.make_vampiric_zombie()
+		H.make_vampiric_thrall()
 
 	onLife(var/mult = 1)
 		..()
@@ -1100,7 +1100,7 @@
 			..()
 
 	onDeath(gibbed)
-		var/datum/abilityHolder/vampiric_zombie/abil = mob.get_ability_holder(/datum/abilityHolder/vampiric_zombie)
+		var/datum/abilityHolder/vampiric_thrall/abil = mob.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 		if (abil)
 			if (abil.master)
 				abil.master.remove_thrall(mob)
@@ -1249,7 +1249,7 @@
 
 /datum/mutantrace/werewolf
 	name = "werewolf"
-	icon = "icons/mob/werewolf.dmi"
+	icon = 'icons/mob/werewolf.dmi'
 	icon_state = "body_m"
 	human_compatible = 0
 	uses_human_clothes = 0
@@ -1357,7 +1357,7 @@
 
 /datum/mutantrace/hunter
 	name = "hunter"
-	icon = "icons/mob/hunter.dmi"
+	icon = 'icons/mob/hunter.dmi'
 	icon_state = "full"
 	human_compatible = 0
 	jerk = 1
@@ -1394,7 +1394,7 @@
 
 /datum/mutantrace/ithillid
 	name = "ithillid"
-	icon = "icons/mob/ithillid.dmi"
+	icon = 'icons/mob/ithillid.dmi'
 	icon_state = "body_m"
 	jerk = 0
 	override_attack = 0
@@ -1470,7 +1470,7 @@
 			do_table_hide(target)
 		if(istype(target, /obj/stool/bed/))
 			do_table_hide(target)
-		return target.attack_hand(mob)
+		return target.Attackhand(mob)
 
 	proc
 		do_table_hide(obj/target)
@@ -1682,7 +1682,7 @@
 
 /datum/mutantrace/roach
 	name = "roach"
-	icon = "icons/mob/roach.dmi"
+	icon = 'icons/mob/roach.dmi'
 	icon_state = "body_m"
 	override_attack = 0
 	voice_override = "roach"
@@ -1696,7 +1696,7 @@
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/roach/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_EYES | BUILT_FROM_PIECES | FIX_COLORS | HAS_SPECIAL_HAIR | TORSO_HAS_SKINTONE | WEARS_UNDERPANTS)
 	eye_state = "eyes_roach"
-	typevulns = list("blunt" = 1.66, "crush" = 1.66)
+	typevulns = list("blunt" = 1.5, "crush" = 1.5)
 	dna_mutagen_banned = FALSE
 
 	New(mob/living/carbon/human/M)
@@ -1721,7 +1721,7 @@
 
 /datum/mutantrace/cat // we have the sprites so ~why not add them~? (I fully expect to get shit for this)
 	name = "cat"
-	icon = "icons/mob/cat.dmi"
+	icon = 'icons/mob/cat.dmi'
 	icon_state = "body_m"
 	jerk = 1
 	override_attack = 0
@@ -1756,7 +1756,7 @@
 
 /datum/mutantrace/amphibian
 	name = "amphibian"
-	icon = "icons/mob/amphibian.dmi"
+	icon = 'icons/mob/amphibian.dmi'
 	icon_state = "body_m"
 	firevuln = 1.3
 	brutevuln = 0.7
@@ -1832,7 +1832,7 @@
 
 /datum/mutantrace/amphibian/shelter
 	name = "Shelter Amphibian"
-	icon = "icons/mob/shelterfrog.dmi"
+	icon = 'icons/mob/shelterfrog.dmi'
 	icon_state = "body_m"
 	human_compatible = 1
 	jerk = 0
@@ -1861,7 +1861,7 @@
 
 /datum/mutantrace/kudzu
 	name = "kudzu"
-	icon = "icons/mob/kudzu.dmi"
+	icon = 'icons/mob/kudzu.dmi'
 	icon_state = "kudzu-w"
 	human_compatible = 0
 	uses_human_clothes = 0
@@ -1904,7 +1904,7 @@
 		if(ishuman(target))
 			mob.visible_message("<span class='alert'><B>[mob]</B> waves its limbs at [target] threateningly!</span>")
 		else
-			return target.attack_hand(mob)
+			return target.Attackhand(mob)
 
 	say_verb()
 		return "rasps"
@@ -1916,7 +1916,7 @@
 				H.setStatus("maxhealth-", null, -50)
 				H.add_stam_mod_max("kudzu", -100)
 				APPLY_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "kudzu", -5)
-				H.bioHolder.AddEffect("xray", magical=1)
+				H.bioHolder.AddEffect("xray", power = 2, magical=1)
 				H.abilityHolder = new /datum/abilityHolder/kudzu(H)
 				H.abilityHolder.owner = H
 				H.abilityHolder.addAbility(/datum/targetable/kudzu/guide)
@@ -1986,7 +1986,7 @@
 
 /datum/mutantrace/cow
 	name = "cow"
-	icon = "icons/mob/cow.dmi"
+	icon = 'icons/mob/cow.dmi'
 	icon_state = "body_m"
 	human_compatible = TRUE
 	uses_human_clothes = FALSE

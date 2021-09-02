@@ -78,10 +78,10 @@
 	combust_ended()
 		var/turf/T = get_turf(src)
 		if (T.allow_unrestricted_hotbox) // traitor hotboxing
-			var/datum/reagents/R = new()
+			src.reagents.maximum_volume *= HERB_HOTBOX_MULTIPLIER
 			for (var/reagent_id in reagents.reagent_list)
-				R.add_reagent(reagent_id, (src.reagents.get_reagent_amount(reagent_id) * HERB_HOTBOX_MULTIPLIER))
-			smoke_reaction(R, 1, get_turf(src), do_sfx = 0)
+				src.reagents.add_reagent(reagent_id, (src.reagents.get_reagent_amount(reagent_id) * (HERB_HOTBOX_MULTIPLIER - 1)))
+			smoke_reaction(src.reagents, 1, get_turf(src), do_sfx = 0)
 		else
 			smoke_reaction(src.reagents.remove_any_to(HERB_SMOKE_TRANSFER_HARDCAP), 1, get_turf(src), do_sfx = 0)
 		..()

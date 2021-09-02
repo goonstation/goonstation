@@ -14,7 +14,7 @@
 		if (..())
 			return 1
 
-		if (target.is_open_container() || istype(target,/obj/item/reagent_containers/food) || istype(target,/obj/item/reagent_containers/patch))
+		if (isobj(target) && (target.is_open_container() || istype(target,/obj/item/reagent_containers/food) || istype(target,/obj/item/reagent_containers/patch)))
 			if (get_dist(holder.owner, target) > 1)
 				boutput(holder.owner, __red("We cannot reach that target with our stinger."))
 				return 1
@@ -53,6 +53,8 @@
 			holder.owner.visible_message(__red("<b>[holder.owner] stings [target]!</b>"))
 		else
 			holder.owner.show_message(__blue("We stealthily sting [target]."))
+		if(MT.reagents.total_volume + inject_amount > MT.reagents.maximum_volume)
+			MT.reagents.remove_any(MT.reagents.total_volume + inject_amount - MT.reagents.maximum_volume)
 		MT.reagents?.add_reagent(venom_id, inject_amount)
 
 		if (isliving(MT))

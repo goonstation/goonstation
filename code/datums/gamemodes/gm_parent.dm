@@ -7,7 +7,7 @@
 
 	var/shuttle_available = 1 // 0: Won't dock. | 1: Normal. | 2: Won't dock if called too early.
 	var/shuttle_available_threshold = 12000 // 20 min. Only works when shuttle_available == 2.
-	var/shuttle_auto_call_time = 72000 // 120 minutes.  Shuttle auto-called at this time and then again at this time + 1/2 this time, then every 1/2 this time after that. Set to 0 to disable.
+	var/shuttle_auto_call_time = 90 MINUTES // 120 minutes.  Shuttle auto-called at this time and then again at this time + 1/2 this time, then every 1/2 this time after that. Set to 0 to disable.
 	var/shuttle_last_auto_call = 0
 	var/shuttle_initial_auto_call_done = 0 // set to 1 after first call so we know to start checking shuttle_auto_call_time/2
 
@@ -81,10 +81,10 @@
 			else
 				traitor_name = "[traitor.key] (character destroyed)"
 
-			if (traitor.special_role == "mindslave")
+			if (traitor.special_role == ROLE_MINDSLAVE)
 				stuff_to_output += "<B>[traitor_name] was a mindslave!</B>"
 				continue // Objectives are irrelevant for mindslaves and thralls.
-			else if (traitor.special_role == "vampthrall")
+			else if (traitor.special_role == ROLE_VAMPTHRALL)
 				stuff_to_output += "<B>[traitor_name] was a vampire's thrall!</B>"
 				continue // Ditto.
 			else
@@ -95,7 +95,7 @@
 				else
 					stuff_to_output += "<B>[traitor_name] was a [traitor.special_role]!</B>"
 
-				if (traitor.special_role == "changeling" && traitor.current)
+				if (traitor.special_role == ROLE_CHANGELING && traitor.current)
 					var/dna_absorbed = 0
 					var/datum/abilityHolder/changeling/C = traitor.current.get_ability_holder(/datum/abilityHolder/changeling)
 					if (C && istype(C))
@@ -104,7 +104,7 @@
 						dna_absorbed = "N/A (body destroyed)"
 					stuff_to_output += "<B>Absorbed DNA:</b> [dna_absorbed]"
 
-				if (traitor.special_role == "vampire" && traitor.current)
+				if (traitor.special_role == ROLE_VAMPIRE && traitor.current)
 					var/blood_acquired = 0
 					if (isvampire(traitor.current))
 						blood_acquired = traitor.current.get_vampire_blood(1)
@@ -112,20 +112,20 @@
 						blood_acquired = "N/A (body destroyed)"
 					stuff_to_output += "<B>Blood acquired:</b>  [blood_acquired][isnum(blood_acquired) ? " units" : ""]"
 
-				if (traitor.special_role == "werewolf")
+				if (traitor.special_role == ROLE_WEREWOLF)
 					// Werewolves may not have the feed objective, so we don't want to make this output universal.
 					for (var/datum/objective/specialist/werewolf/feed/O in traitor.objectives)
 						if (O && istype(O, /datum/objective/specialist/werewolf/feed/))
 							stuff_to_output += "<B>No. of victims:</b> [O.mobs_fed_on.len]"
 
-				if (traitor.special_role == "hunter")
+				if (traitor.special_role == ROLE_HUNTER)
 					// Same reasoning here, really.
 					for (var/datum/objective/specialist/hunter/trophy/T in traitor.objectives)
 						if (traitor.current && T && istype(T, /datum/objective/specialist/hunter/trophy))
 							var/S = traitor.current.get_skull_value()
 							stuff_to_output += "<B>Combined trophy value:</b> [S]"
 
-				if (traitor.special_role == "blob")
+				if (traitor.special_role == ROLE_BLOB)
 					var/victims = length(traitor.blob_absorb_victims)
 					stuff_to_output += "<b>\ [victims <= 0 ? "Not a single person was" : "[victims] lifeform[s_es(victims)] were"] absorbed by them  <span class='success'>Players in Green</span></b>"
 					if (victims)
@@ -137,7 +137,7 @@
 								absorbed_announce += "<span class='success'>[AV:real_name]([AV:last_client:key])</span>, "
 						stuff_to_output += absorbed_announce
 
-				if (traitor.special_role == "traitor")
+				if (traitor.special_role == ROLE_TRAITOR)
 					var/purchases = length(traitor.purchased_traitor_items)
 					var/surplus = length(traitor.traitor_crate_items)
 					stuff_to_output += "<b>They purchased [purchases <= 0 ? "nothing" : "[purchases] item[s_es(purchases)]"] with their [syndicate_currency]![purchases <= 0 ? " [pick("Wow", "Dang", "Gosh", "Good work", "Good job")]!" : null]</b>"
@@ -153,7 +153,7 @@
 							item_detail = copytext(item_detail, 1, -2)
 						stuff_to_output += item_detail
 
-				if (traitor.special_role == "spy_thief")
+				if (traitor.special_role == ROLE_SPY_THIEF)
 					var/purchases = length(traitor.purchased_traitor_items)
 					var/stolen = length(traitor.spy_stolen_items)
 					stuff_to_output += "<b>They stole [stolen <= 0 ? "nothing" : "[stolen] items"]!</b>"
@@ -190,9 +190,9 @@
 			if (traitorwin)
 				if (traitor.current)
 					traitor.current.unlock_medal("MISSION COMPLETE", 1)
-				if (traitor.special_role == "wizard" && traitor.current)
+				if (traitor.special_role == ROLE_WIZARD && traitor.current)
 					traitor.current.unlock_medal("You're no Elminster!", 1)
-				if (traitor.special_role == "wrestler" && traitor.current)
+				if (traitor.special_role == ROLE_WRESTLER && traitor.current)
 					traitor.current.unlock_medal("Cream of the Crop", 1)
 				stuff_to_output += "<B>The [traitor.special_role] was successful!<B>"
 			else
@@ -220,9 +220,9 @@
 
 			if (traitor.former_antagonist_roles.len)
 				for (var/string in traitor.former_antagonist_roles)
-					if (string == "mindslave")
+					if (string == ROLE_MINDSLAVE)
 						stuff_to_output += "<B>[traitor_name] was a mindslave!</B>"
-					else if (string == "vampthrall")
+					else if (string == ROLE_VAMPTHRALL)
 						stuff_to_output += "<B>[traitor_name] was a vampire's thrall!</B>"
 					else
 						stuff_to_output += "<B>[traitor_name] was a [string]!</B>"

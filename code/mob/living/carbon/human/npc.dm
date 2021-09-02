@@ -172,7 +172,7 @@
 
 	//Moving this up because apparently beds were tripping the AI up.
 	if(src.buckled && !src.hasStatus("handcuffed"))
-		src.buckled.attack_hand(src)
+		src.buckled.Attackhand(src)
 		if(src.buckled) //WE'RE STUCKED :C
 			return
 
@@ -421,7 +421,7 @@
 
 				if(isgrab(src.r_hand) || isgrab(src.l_hand))
 					var/obj/item/grab/grab = locate(/obj/item/grab) in src
-					grab.attack_hand(src)
+					grab.Attackhand(src)
 
 				if(!src.equipped() || prefer_hand)
 					// need to restore this at some point i guess, the "monkeys bite" code is commented out right now

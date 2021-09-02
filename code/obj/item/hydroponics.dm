@@ -45,6 +45,10 @@
 	cyborg
 		takes_damage = 0
 
+	active
+		active = 1
+		force = 12
+
 	New()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
@@ -208,6 +212,11 @@
 	stamina_damage = 100
 	stamina_cost = 30
 	stamina_crit_chance = 40
+	c_flags = EQUIPPED_WHILE_HELD | NOT_EQUIPPED_WHEN_WORN
+
+	setupProperties()
+		. = ..()
+		setProperty("deflection", 75)
 
 /obj/item/saw/syndie/attack(mob/living/carbon/human/target as mob, mob/user as mob)
 	var/mob/living/carbon/human/H = target

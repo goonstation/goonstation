@@ -28,6 +28,7 @@
 	var/pictures_max = 30
 	var/can_use = 1
 	var/takes_voodoo_pics = 0
+	var/steals_souls = FALSE
 
 	New()
 		..()
@@ -130,7 +131,7 @@
 		return
 	if (src.flash_mode)
 		// Use cell charge
-		if (SEND_SIGNAL(src, COMSIG_CELL_USE, 25) & CELL_INSUFFICIENT_CHARGE)
+		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, 25) & CELL_SUFFICIENT_CHARGE))
 			user.show_text("[src] doesn't have enough battery power!", "red")
 			return 0
 		var/turf/T = get_turf(target.loc)
@@ -140,6 +141,7 @@
 		src.update_icon()
 		// Generic flash
 		var/mob/M = target
+		SEND_SIGNAL(src, COMSIG_CELL_USE, 25)
 		var/blind_success = M.apply_flash(30, 8, 0, 0, 0, rand(0, 1), 0, 0, 100, 70, disorient_time = 30)
 		playsound(src, "sound/weapons/flash.ogg", 100, 1)
 		flick("camera_flash-anim", src)
@@ -350,6 +352,7 @@
 
 	var/mobnumber = 0 // above 3 and it'll stop listing what they're holding and if they're hurt
 	var/itemnumber = 0
+	var/list/mob/stolen_souls = list()
 
 	for (var/atom/A in the_turf)
 		if (A.invisibility || istype(A, /obj/overlay/tile_effect))
@@ -363,6 +366,9 @@
 			photo_icon.Blend(Y, ICON_OVERLAY)
 			qdel(X)
 			qdel(Y)
+
+			if(src.steals_souls)
+				stolen_souls += M
 
 			if (!mob_title)
 				if(src.takes_voodoo_pics)
@@ -444,6 +450,11 @@
 		P:cursed_dude = deafnote //kubius: using runtime eval because non-voodoo photos don't have a cursed_dude var
 		if(src.takes_voodoo_pics == 2) //unlimited photo uses
 			P:enchant_power = -1
+	else if(src.steals_souls)
+		P = new/obj/item/photo/haunted(get_turf(src), photo, photo_icon, finished_title, finished_detail)
+		var/obj/item/photo/haunted/HP = P
+		for(var/mob/M as anything in stolen_souls)
+			HP.add_soul(M)
 	else
 		P = new/obj/item/photo(get_turf(src), photo, photo_icon, finished_title, finished_detail)
 

@@ -264,6 +264,15 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate
 	containername = "Electrical Maintenance Crate"
 
+/datum/supply_packs/powercell
+	name = "Power Cell Crate"
+	desc = "x3 Power Cell"
+	category = "Engineering Department"
+	contains = list(/obj/item/cell/charged = 3)
+	cost = 2500
+	containertype = /obj/storage/crate
+	containername = "Power Cell Crate"
+
 /datum/supply_packs/firefighting
 	name = "Firefighting Supplies Crate"
 	desc = "x3 Extinguisher, x3 Firefighting Grenade, x2 Firesuit, x2 Firefighter Helmets"
@@ -310,17 +319,19 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/medicalchems
 	name = "Medical: Medical Reservoir Crate"
-	desc = "x4 Assorted reservoir tanks, x2 Sedative bottles, x2 Hyposprays, 2x Automenders, x1 Syringe Kit"
+	desc = "x4 Assorted reservoir tanks, x2 Sedative bottles, x2 Hyposprays, x1 Auto-mender, x2 Brute Auto-mender Refill Cartridges, x2 Burn Auto-mender Refill Cartridges, x1 Syringe Kit"
 	category = "Medical Department"
 	contains = list(/obj/item/reagent_containers/glass/beaker/large/antitox,
 					/obj/item/reagent_containers/glass/beaker/large/epinephrine,
 					/obj/item/reagent_containers/food/drinks/reserve/brute,
 					/obj/item/reagent_containers/food/drinks/reserve/burn,
 					/obj/item/reagent_containers/glass/bottle/morphine = 2,
-					/obj/item/reagent_containers/mender = 2,
+					/obj/item/reagent_containers/mender,
+					/obj/item/reagent_containers/mender_refill_cartridge/brute = 2,
+					/obj/item/reagent_containers/mender_refill_cartridge/burn = 2,
 					/obj/item/reagent_containers/hypospray = 2,
 					/obj/item/storage/box/syringes)
-	cost = 1750
+	cost = 2300
 	containertype = /obj/storage/crate/medical
 	containername = "Medical Crate"
 
@@ -1035,6 +1046,32 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	cost = 1500
 	containertype = /obj/storage/crate/wooden
 	containername = "Furnishings Crate"
+
+/datum/supply_packs/furniture_eventtablered
+	name = "Red Event Table Crate"
+	desc = "A flat-packed set of tables, each with a fancy red tablecloth."
+	contains = list(/obj/item/furniture_parts/table/clothred = 5)
+	cost = 25000
+	containertype = /obj/storage/crate/wooden
+	containername = "Red Event Table Crate"
+
+/datum/supply_packs/furniture_regal
+	name = "Regal Furnishings Crate"
+	desc = "A set of very fancy flat-packed, regal furniture."
+	contains = list(/obj/item/furniture_parts/wood_chair/regal = 4,
+					/obj/item/furniture_parts/table/regal = 4,
+					/obj/item/furniture_parts/decor/regallamp = 2)
+	cost = 80000
+	containertype = /obj/storage/crate/wooden
+	containername = "Regal Furnishings Crate"
+
+/datum/supply_packs/furniture_throne
+	name = "Golden Throne"
+	desc = "A flat-packed throne. It can't be real gold for that price..."
+	contains = list(/obj/item/furniture_parts/throne_gold)
+	cost = 150000
+	containertype = /obj/storage/crate/wooden
+	containername = "Throne Crate"
 
 /datum/supply_packs/hat
 	name = "Haberdasher's Crate"

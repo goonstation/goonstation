@@ -42,7 +42,7 @@ SHARDS
 			src.amount = diff
 			var/obj/item/sheet/glass/new_stack = new src.type(user.loc, diff)
 			new_stack.amount = splitnum
-			new_stack.attack_hand(user)
+			new_stack.Attackhand(user)
 			new_stack.add_fingerprint(user)
 		else
 			..(user)

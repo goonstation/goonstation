@@ -1161,7 +1161,7 @@ About the new airlock wires panel:
 
 //		message_admins("<span class='internal'><B>ADMIN: </B>DEBUG: shock_damage = [shock_damage] PN.avail = [PN.avail] user = [user] netnum = [netnum]</span>")
 
-	if (user.bioHolder.HasEffect("resist_electric") == 2)
+	if (user.bioHolder.HasEffect("resist_electric_heal"))
 		var/healing = 0
 		if (shock_damage)
 			healing = shock_damage / 3
@@ -1169,7 +1169,7 @@ About the new airlock wires panel:
 		user.take_toxin_damage(0 - healing)
 		boutput(user, "<span class='notice'>You absorb the electrical shock, healing your body!</span>")
 		return
-	else if (user.bioHolder.HasEffect("resist_electric") == 1)
+	else if (user.bioHolder.HasEffect("resist_electric"))
 		boutput(user, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
 		return
 
@@ -1404,11 +1404,11 @@ About the new airlock wires panel:
 		tgui_process.update_uis(src)
 		src.update_icon()
 	else if (issnippingtool(C) && src.p_open)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 	else if (ispulsingtool(C))
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 	else if (istype(C, /obj/item/device/radio/signaler))
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 	else if (ispryingtool(C))
 		src.unpowered_open_close()
 	else

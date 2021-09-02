@@ -231,12 +231,12 @@
 				if (user.equipped())
 					user.swap_hand(!user.hand)
 					if (!user.equipped())
-						src.attack_hand(user)
+						src.Attackhand(user)
 						user.hotkey("equip")
 
 
 			if (!user.find_in_hand(T))		//pickup tank
-				T.attack_hand(user)
+				T.Attackhand(user)
 
 			if (!T.using_internal())//set tank ON
 				T.toggle_valve()

@@ -238,14 +238,14 @@
 					dat += "<BR><BR>\[ <A HREF='?src=\ref[src];operation=delmessage'>Delete \]"
 			else
 				src.state = STATE_MESSAGELIST
-				src.attack_hand(user)
+				src.Attackhand(user)
 				return
 		if(STATE_DELMESSAGE)
 			if (src.currmsg)
 				dat += "Are you sure you want to delete this message? \[ <A HREF='?src=\ref[src];operation=delmessage2'>OK</A> | <A HREF='?src=\ref[src];operation=viewmessage'>Cancel</A> \]"
 			else
 				src.state = STATE_MESSAGELIST
-				src.attack_hand(user)
+				src.Attackhand(user)
 				return
 		if(STATE_STATUSDISPLAY)
 			dat += "Set Status Displays<BR>"
@@ -286,14 +286,14 @@
 				dat += "<BR><BR>\[ <A HREF='?src=\ref[src];operation=ai-delmessage'>Delete</A> \]"
 			else
 				src.aistate = STATE_MESSAGELIST
-				src.attack_hand(user)
+				src.Attackhand(user)
 				return null
 		if(STATE_DELMESSAGE)
 			if(src.aicurrmsg)
 				dat += "Are you sure you want to delete this message? \[ <A HREF='?src=\ref[src];operation=ai-delmessage2'>OK</A> | <A HREF='?src=\ref[src];operation=ai-viewmessage'>Cancel</A> \]"
 			else
 				src.aistate = STATE_MESSAGELIST
-				src.attack_hand(user)
+				src.Attackhand(user)
 				return
 
 		if(STATE_STATUSDISPLAY)

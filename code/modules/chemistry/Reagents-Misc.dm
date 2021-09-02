@@ -1161,7 +1161,7 @@ datum
 
 			reaction_turf(var/turf/target, var/volume)
 				var/turf/simulated/T = target
-				if (istype(T) && T.wet) //Wire: fix for Undefined variable /turf/space/var/wet (&& T.wet)
+				if (istype(T)) //Wire: fix for Undefined variable /turf/space/var/wet (&& T.wet)
 					if (T.wet >= 2) return
 					var/wet = image('icons/effects/water.dmi',"wet_floor")
 					T.UpdateOverlays(wet, "wet_overlay")
@@ -2668,6 +2668,16 @@ datum
 			value = 3
 			viscosity = 0.4
 
+			on_add()
+				if (holder && ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					APPLY_MOB_PROPERTY(M, PROP_GHOSTVISION, src)
+
+			on_remove()
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_MOB_PROPERTY(M, PROP_GHOSTVISION, src)
+
 		voltagen
 			name = "voltagen"
 			id = "voltagen"
@@ -2680,29 +2690,25 @@ datum
 			overdose = 20
 			viscosity = 0.3
 			minimum_reaction_temperature = T0C+100
-			var/multiplier = 1
-			var/grenade_handled = 0
 			pooled()
 				..()
-				multiplier = 1
-				grenade_handled = 0
 
+			on_add()
+				..()
+				if(ismob(src.holder?.my_atom))
+					RegisterSignal(holder.my_atom, COMSIG_ATTACKBY, .proc/zap_dude)
+					RegisterSignal(holder.my_atom, COMSIG_ATTACKHAND, .proc/zap_dude_punching)
+
+			on_remove()
+				..()
+				UnregisterSignal(holder.my_atom, COMSIG_ATTACKBY)
+				UnregisterSignal(holder.my_atom, COMSIG_ATTACKHAND)
 
 			grenade_effects(var/obj/grenade, var/atom/A)
 				if (isliving(A))
-					if (!grenade_handled)
-						multiplier = 15
-						grenade_handled = 1
-					else
-						multiplier /= 2
 					arcFlash(grenade, A, 0)
-
-			reaction_mob(var/mob/M, var/method = TOUCH, volume_passed)
-				. = ..()
-				var/vol = max(1,volume_passed)
-				if (method == TOUCH)
-					M.shock(src.holder.my_atom, min(7500 * multiplier, vol * 100 * multiplier), "chest", 1, 1)
-					. = 0
+					var/mob/M = A
+					M.shock(M, 1 MEGA , "chest", 0.75, 1)
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if (reacting)
@@ -2713,7 +2719,7 @@ datum
 				for (var/mob/living/L in oview(5, get_turf(holder.my_atom)))
 					count++
 				for (var/mob/living/L in oview(5, get_turf(holder.my_atom)))
-					arcFlash(holder.my_atom, L, min(75000 * multiplier / count, volume * 1000 * multiplier / count))
+					arcFlash(holder.my_atom, L, min(75000 / count, volume * 1000 / count))
 
 				holder.del_reagent(id)
 
@@ -2722,6 +2728,13 @@ datum
 				if (probmult(10))
 					elecflash(M)
 				..()
+
+			proc/zap_dude_punching(source, mob/attacker)
+				src.zap_dude(source, null, attacker)
+			proc/zap_dude(source, item, mob/attacker)
+				if(volume >= 5 && prob(volume))
+					arcFlash(holder?.my_atom, attacker,  min(75000, volume * 1000))
+					holder.remove_reagent(id, 5)
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
 				if (prob(10))
@@ -2973,8 +2986,8 @@ datum
 				if (method == INGEST)
 					if (M.mind)
 						var/mob/living/carbon/human/H = M
-						if (istype(H.mutantrace, /datum/mutantrace/vamp_zombie))
-							var/datum/mutantrace/vamp_zombie/V = H.mutantrace
+						if (istype(H.mutantrace, /datum/mutantrace/vampiric_thrall))
+							var/datum/mutantrace/vampiric_thrall/V = H.mutantrace
 							var/bloodget = volume_passed / 4
 							V.blood_points += bloodget
 
@@ -3223,6 +3236,37 @@ datum
 				#endif
 				M.reagents.del_reagent(src.id)
 
+		gib_juice
+			// old qgp
+			name = "gib juice"
+			id = "gib_juice"
+			description = "oof ouch owie my bones"
+			random_chem_blacklisted = 1
+			reagent_state = LIQUID
+			fluid_r = 255
+			fluid_g = 0
+			fluid_b = 0
+			transparency = 255
+			viscosity = 0.7
+
+			pierces_outerwear = 1//shoo, biofool
+
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if(istype(M, /mob/dead))
+					return
+				M.ex_act(1)
+
+
+			reaction_obj(var/obj/O, var/volume)
+				O.ex_act(1)
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				..()
+				M.ex_act(1)
+				M.gib()
+				M.reagents.del_reagent(src.id)
+
 		cyclopentanol
 			name = "cyclopentanol"
 			id = "cyclopentanol"
@@ -3350,8 +3394,8 @@ datum
 					M << sound('sound/misc/yee_music.ogg', repeat = 1, wait = 0, channel = 391, volume = 50) // play them tunes
 					if (M.bioHolder && ishuman(M))			// All mobs get the tunes, only "humans" get the scales
 						var/mob/living/carbon/human/H = M
-						src.the_bioeffect_you_had_before_it_was_affected_by_yee = H?.mutantrace.name			// then write down what your whatsit was
-						src.the_mutantrace_you_were_before_yee_overwrote_it = H?.mutantrace.type		// write that down too
+						src.the_bioeffect_you_had_before_it_was_affected_by_yee = H?.mutantrace?.name			// then write down what your whatsit was
+						src.the_mutantrace_you_were_before_yee_overwrote_it = H?.mutantrace?.type		// write that down too
 						if (src.the_bioeffect_you_had_before_it_was_affected_by_yee != "lizard")				// Dont make me a lizard if im already a lizard
 							H.bioHolder.AddEffect("lizard", timeleft = 180)
 						else

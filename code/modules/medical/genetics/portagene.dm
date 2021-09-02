@@ -85,7 +85,7 @@
 			var/previous_user_intent = user.a_intent
 			user.a_intent = INTENT_GRAB
 			user.drop_item()
-			target.attack_hand(user)
+			target.Attackhand(user)
 			user.a_intent = previous_user_intent
 			SPAWN_DBG(user.combat_click_delay + 2)
 				if (can_operate(user,target))
@@ -149,7 +149,7 @@
 				user.drop_item()
 				qdel(DNA)
 			else
-				src.attack_hand(user)
+				src.Attackhand(user)
 
 		else if (istype(W, /obj/item/grab))
 			var/obj/item/grab/G = W
@@ -178,7 +178,7 @@
 			qdel(G)
 			return
 		else
-			src.attack_hand(user)
+			src.Attackhand(user)
 		return
 
 	power_change()

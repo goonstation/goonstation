@@ -8593,7 +8593,7 @@
 /turf/simulated/floor/grey/whitegrime,
 /area/station/engine/gas)
 "vg" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/grey/whitegrime,
 /area/station/engine/gas)
 "vh" = (

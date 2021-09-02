@@ -1187,7 +1187,7 @@ as it may become compromised.
 
 /obj/item/paper_bin/attack_self(mob/user as mob)
 	..()
-	src.attack_hand(user)
+	src.Attackhand(user)
 
 /obj/item/paper_bin/attackby(obj/item/paper/P as obj, mob/user as mob) // finally you can write on all the paper AND put it back in the bin to mess with whoever shows up after you ha ha
 	if (istype(P))
@@ -1449,7 +1449,8 @@ as it may become compromised.
 
 /obj/item/paper/folded/ball/attack(mob/M as mob, mob/user as mob)
 	if (iscarbon(M) && M == user)
-		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and and eats it.</span>")
+		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and eats it.</span>")
+		playsound(M,"sound/misc/gulp.ogg", 30, 1)
 		eat_twitch(M)
 		var/obj/item/paper/P = src
 		user.u_equip(P)

@@ -889,7 +889,7 @@
 	},
 /area/station/science/teleporter)
 "acm" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 5
 	},
@@ -45589,7 +45589,7 @@
 /turf/simulated/floor,
 /area/station/science/lab)
 "xIm" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/yellow,
 /area/station/mining/staff_room)
 "xMY" = (

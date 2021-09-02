@@ -1,5 +1,289 @@
 
+(t)thu sep 02 21
+(u)Flappybat
+(p)5869
+(e)🐛⚖|bug, balance
+(+)You can no longer emote while unconscious.
+(t)wed sep 01 21
+(u)kyle
+(p)5841
+(e)🆕🎨|feature, sprites
+(*)Changelings now automatically start to regrow their limbs after making a limbspider. (Don't be by anyone when the timer runs out or they might notice!)
+(u)Mordent & Flaborized
+(p)5859
+(e)🆕🎨|feature, sprites
+(*)Geneticists get a new genetic analyzer device (which they spawn with) that lets them quickly check someone's genetics.
+(u)Gannets
+(p)5858
+(e)⚖|balance
+(+)Adjusted Field Medic autoinjector loadout:
+(+)Adds cardiac injector, filled with saline and epinephrine.
+(+)Adds lifesupport injector, filled with mannitol and salbutamol.
+(+)Adds blood-loss injector, filled with filgrastim and proconvertin.
+(t)tue aug 31 21
+(u)Tarmunora
+(p)5837
+(e)⚖|balance
+(*)Rebalances 'beneficial' bioeffects to accept the Power Booster chromosome. See PR for details. There are a lot of details.
+(+)Rebalances genetic stability costs of many bioeffects (mostly buffs). See PR for details. Again,
+(+)Removes robust genes trait, increases base genetic stability
+(+)Change formula for genetic power failrates at lower stability
+(u)Tarmunora
+(e)⚖|balance
+(+)Artifact guns must be activated to swap cells.
+(+)Chef is keeping a closer eye on their meatcleaver
+(t)mon aug 30 21
+(u)UnfunnyPerson
+(p)5834
+(e)⚖|balance
+(+)Skeletons heal 1 brute and 1 burn from milk per cycle instead of 2 brute, 2 burn, and 1 tox
+(u)Tarmunora
+(e)⚖|balance
+(*)Stimulants are now a 6TC purchase for 3 3-minute stimpacks. The syndicate would like to remind it's agents that withdrawl symptoms are natural, and to not try to ride them out with another dose, as you will eventually run out.
+(u)Tarmunora
+(e)⚖|balance
+(*)Reinforced walls are immune to being punched down by hulks
+(u)Flaborized
+(p)5842
+(e)🎨|sprites
+(+)Resprited cats.
+(t)sun aug 29 21
+(u)Azrun and Walpvrgis
+(p)5573
+(e)🎨|sprites
+(+)Graphical assets for snow experiences and future snow planets...
+(u)Azrun
+(p)5765
+(e)🆕|feature
+(+)Amusing Duck's will sometimes quack in response to interaction with the AI.
+(u)Walpvrgis
+(p)5815
+(e)🆕🎨|feature, sprites
+(+)Wasps, rockworms, seals and walruses have been resprited.
+(u)Vocalpocal
+(p)5824
+(e)⚖|balance
+(+)Custom cigarettes now last half as long but make you twice as high #nofilter
+(u)Zonespace
+(p)5826
+(e)⚖|balance
+(+)Poison Bottles no longer contain: Sulfonal, Loose Screws, and Cyanide.
+(u)Flaborized
+(p)5838
+(e)🎨|sprites
+(+)Resprited mass drivers.
+(u)Zamujasa
+(e)🆕|feature
+(*)Added the "cargo appraiser", a tool that will tell you what stuff will sell for when you use it on items or crates.
+(*)If a crate is tagged with a trader, it will show the value that trader will pay.
+(*)Will also scan the contents of hydro and mining satchels, so you can value your ore before dumping it all in that crate.
+(*)QMs start with one in their pockets. Hydro, Mining, and Cargo supply closets should also have one available.
+(t)sat aug 28 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Full reagent container no longer provides immunity to changeling stings
+(t)thu aug 26 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Light Lotus plants act as UV growth lamps in a 1-tile radius when ready to harvest
+(u)Tarmunora
+(e)⚖|balance
+(*)Voltgen rework - no longer shocks on touch react, instead grants retaliatory arcflashes against attackers when drunk
+(+)Adjust some bottle sizes. (sorry jan)
+(t)tue aug 24 21
+(u)zjdtmkhzt
+(p)5774
+(e)|
+(+)Clicking on the mailgroup name to reply to a message to a group should now actually work for replying to it.
+(t)mon aug 23 21
+(u)TTerc
+(p)5794
+(e)⚖|balance
+(+)The MD now spawns with a medkit containing a brute and a burn automender, meaning that they have three menders total.
+(u)Flappybat
+(p)5661
+(e)🔄|rework
+(+)Microwaves now let you empty out the contents instead of throwing them away.
+(+)Microwaves now can be cleaned with a sponge.
+(t)sun aug 22 21
+(u)Waffleloffle
+(p)5776
+(e)🎨|sprites
+(+)Resprited the large tree found in most Owleries.
+(u)kyle
+(p)5781
+(e)|
+(*)Buff the brute/burn medkits, replace the refill carts with normal patches. Menders now need gold to manufacture not electrum.
+(+)Give Roboticists a brute mender in their pocket on round start.
+(t)sat aug 21 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Donkpockets heated outside of proper cookware at temperatures exceeding 500F will be far too hot to enjoy eating (read: no omnizine if overheated). Please cook donk pockets responsibly.
+(+)Reduce donkpocket to 10u omni, remove adding condiments to donks
+(u)Tarmunora
+(e)⚖|balance
+(*)Wizards get 6 spells up from 4. Staff of Cthulu, Fireball, Prismatic Spray, Clowns Revenge, Baleful Polymorph, Rathens Secret, Teleport, Doppenganger, and Summon Golem cost raised (1 -> 2)
+(+)Forcewall cooldown doubled (10s -> 20s)
+(u)Flourish
+(+)You can now buy packs of power cells (the large kind that fits in APCs) from QM.
+(u)Ikea
+(p)5778
+(e)|
+(+)Incapacitators now have an unswappable battery.
+(u)Tarmunora
+(e)⚖|balance
+(*)DOC has come to its senses, and has stopped buying cyberorgans, and buys normal parts for about 20% of what it used to
+(+)MDir's Doctor Bag comes with surgical scissors
+(*)Beds now count as somewhere inbetween regular tables and surgical tables. They require the patient to either by unconcious, or for them to be have ethanol/morphine in their system (same thresholds as standing self-surgery)
+(u)Kyle, Virva, Flab
+(p)5747
+(e)🗺🎨|mapping, sprites
+(*)Greatly reduce the availability of Auto-Menders for non-doctors. Adds Auto-Mender Refill Cartridges for brute/burn to vendors.
+(u)Flourish
+(e)⚖|balance
+(+)Removed the first aid kit from the sec support pool. Added a new type of donuts to the robust donut kit - robusted donuts. Robusted donuts contain salb, epi, saline, and salicylic, which are helpful for when you're in crit.
+(u)Flourish
+(+)You can now find menthol pills in public minimeds.
+(t)fri aug 20 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Expresso will cease causing BRAIN damage past 60
+(*)Chem contact damage changes (see minor)
+(+)Reduce max acid contact damage by 1/3
+(+)Basic acids (sulferic, hydrochloric, nitric) have diminishing returns on touch reaction damage when used together
+(+)Hot/Cold chem contact damage changed to a flat 7 BURN, matching hot/cold chem ingestion damage
+(u)Tarmunora
+(e)⚖|balance
+(*)Wizard hats are acidproof.
+(+)Prismatic spray projectiles have reduced chance to hit downed targets (90% -> 10)
+(u)Emily
+(p)5768
+(e)|
+(*)Auto Call Time shortened from 120 minutes to 90 minutes
+(*)RP Respawn Time shortened from 15 minutes to 10 minutes
+(*)You can now leave Industrial Cryo after only 5 minutes (prev. 15)
+(t)thu aug 19 21
+(u)Sovexe
+(e)🐛⚖|bug, balance
+(*)Resolved an issue with Arcfiend's discharge ability that was causing it to apply stamina damage twice per cast. Discharge and Jolt will now produce sparks when in use.
+(t)wed aug 18 21
+(u)Flourish
+(+)Charcoal pills now contain 20u. Analgesic and menthol pills now contain 10u.
+(u)Sord + Flourish
+(+)Replaced the prefilled syringes in the Nanomed Plus with bottles. Reorganized the inventory a little.
+(t)tue aug 17 21
+(u)Tarmunora
+(p)5754
+(e)⚖📄|balance, tgui
+(*)The house no longer takes such a massive loss on slot machines, and you can wager up to 1000 credits at once instead of just 20 (minimum bet 20 credits).
+(u)Sovexe
+(p)5748
+(e)🆕|feature
+(*)A new antagonist type, the Arcfiend joins the fray. Be sure to enable it in your job preferences to be among the first to play!
+(u)Walpvrgis
+(p)5703
+(e)🎨|sprites
+(+)The cow mutantrace has had a few visual adjustments.
+(u)Flourish
+(e)⚖|balance
+(+)Security barriers now provide slight disarm resistance when activated. Let me know how this feels and if you think it makes a difference.
+(u)Flourish
+(+)Large mop buckets now have a capacity of 400u. Handheld mop buckets have a capacity of 120u.
+(t)sun aug 15 21
+(u)Arthur Holiday
+(p)5667
+(e)🐛⚖|bug, balance
+(+)Hemostats now will fix EVERY bleeding caused by surgery, instead of only a few of them.
+(u)DoctorStupid
+(p)5694
+(e)|
+(+)Donut boxes, egg cartons, and lollipop bowls are easier to move around in your inventory and can be re-closed by clicking/activating them in hand.
+(u)Tarmunora
+(e)⚖|balance
+(+)port a sci remote costs a telecrystal to print
+(t)fri aug 13 21
+(u)Tarmunora
+(e)⚖|balance
+(*)removed melee meatshielding. bet you didn't know it existed in the first place
+(u)Emily
+(e)🆕|feature
+(*)New Chicken Breed! See Minor Changes for a hint!
+(+)La vie est de la merde, petit clown. Fume avec moi. [Gen 2] [From Clown Chickens]
+(t)tue aug 10 21
+(u)TTerc
+(p)5709
+(e)🆕|feature
+(+)You can now chug from all the drinking containers, not just glasses and pitchers (with a few exceptions).
+(t)sun aug 08 21
+(u)Emily
+(e)⛔|removal
+(+)Removed meathead trait. I doubt anyone will notice.
+(u)Tarmunora
+(e)⚖|balance
+(*)Red chainsaw provides disarm resistance.
+(t)fri aug 06 21
+(u)Azrun
+(p)5611
+(e)🗺⚖|mapping, balance
+(+)Silicon folks can now use the Long Range Teleporter and Quantum Telescope from a distance.
+(t)thu aug 05 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Riot launchers are now a bulky item.
+(u)112358sam
+(p)5565
+(e)🆕|feature
+(*)Added a MedTrak Scanner PDA program for scanning people to search for their medical record.
+(t)tue aug 03 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Ectothermid adjustment - protection efficiency decreases if blocking lots of damage in a short time, and releases stored heat in a medium-sized fireflash on death.
+(u)Walpvrgis
+(p)5646
+(e)🆕🎨|feature, sprites
+(*)The Cranial Keratin Formation gene now randomly chooses sets of horns from several different sprite options.
+(t)mon aug 02 21
+(u)Flaborized
+(p)5653
+(e)🎨|sprites
+(+)Resprited the crusher.
+(u)zjdtmkhzt
+(p)5587
+(e)|
+(+)The right click interact option should now hit stuff with held objects instead of dropping the current object and picking the other one up.
+(t)sat jul 31 21
+(u)Walpvrgis
+(p)5616
+(e)🆕🎨|feature, sprites
+(*)Three new furniture crates are now available for Quartermasters to purchase at Cargo; a fancy red-tableclothed table, a set of regal furniture, and a golden throne.
+(u)Walpvrgis
+(p)5567
+(e)🎨|sprites
+(*)The Floor and Wall Planner now has a few new flooring designs to choose from. Check the PR link above for preview images.
+(u)Arthur Holiday
+(p)5635
+(e)⚖🗺|balance, mapping
+(+)A certain box of syndicate donkpockets on a certain ship now contains normal donk pockets
+(t)fri jul 30 21
+(u)Sovexe
+(p)5631
+(e)⚖|balance
+(*)Roaches are now a little more durable to crushing and blunt damage. Roach vulnerability to crush / blunt reduced from 166% to 150%.
+(t)thu jul 29 21
+(u)Janonas + jigjagboi45
+(p)5580
+(e)⚖🆕🎨|balance, feature, sprites
+(*)Added Rafflesias (corpseflowers) to the game. - Admire how pretty they look! Make them stink up the place! Wear them on your head like a silly person!
+(+)The hydroponic trays are now open containers, as they should be.
+(t)wed jul 28 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Projectiles bypass ground hit/miss rolls when passing over a mob within the first half-second of resting (other sources of resting (stunned/etc) not affected). i.e.: frame-perfect rest-dodging tasers will be less/not possible, while not affecting ground-hit system much outside of that case
 (t)tue jul 27 21
+(u)Flappybat
+(p)5609
+(e)|
+(+)Supply requests are now shown with their price.
 (u)Sovexe
 (p)5606
 (e)⚖🆕🎨|balance, feature, sprites

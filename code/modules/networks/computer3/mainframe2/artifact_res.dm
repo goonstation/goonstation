@@ -1412,7 +1412,7 @@
 					src.dynamicUpdate(M, forceUpdate|entryUpdateFlags)
 					entryUpdateFlags = REASON_NONE
 				else
-					src.attack_hand(M)
+					src.Attackhand(M)
 
 		if (issilicon(usr))
 			if (!(usr in nearby))

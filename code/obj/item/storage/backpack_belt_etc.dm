@@ -686,10 +686,9 @@
 	desc = "A canvas duffel bag full of medical autoinjectors."
 	icon_state = "medic_belt"
 	item_state = "medic_belt"
-	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/high_capacity/epinephrine,
-	/obj/item/reagent_containers/emergency_injector/high_capacity/saline,
-	/obj/item/reagent_containers/emergency_injector/high_capacity/salbutamol,
-	/obj/item/reagent_containers/emergency_injector/high_capacity/mannitol,
+	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/high_capacity/cardiac,
+	/obj/item/reagent_containers/emergency_injector/high_capacity/bloodloss,
+	/obj/item/reagent_containers/emergency_injector/high_capacity/lifesupport,
 	/obj/item/reagent_containers/emergency_injector/high_capacity/juggernaut,
 	/obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector)
 
