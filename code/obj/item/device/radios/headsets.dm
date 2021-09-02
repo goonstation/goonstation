@@ -111,7 +111,7 @@
 
 /obj/item/device/radio/headset/command/radio_show_host
 	name = "Radio show host's Headset"
-	icon_state = "captain headset"
+	icon_state = "radio"
 	secure_frequencies = list(
 		"h" = R_FREQ_COMMAND,
 		"g" = R_FREQ_SECURITY,
