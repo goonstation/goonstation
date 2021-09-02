@@ -21,7 +21,6 @@
 	set name = "Ice Station"
 	set desc = "Turns space into the Outpost Theta..."
 	admin_only
-	var/ambient_value
 #ifdef UNDERWATER_MAP
 	//to prevent tremendous lag from the entire map flooding from a single ocean tile.
 	boutput(src, "You cannot use this command on underwater maps. Sorry!")
@@ -30,6 +29,7 @@
 	if(src.holder.level >= LEVEL_ADMIN)
 		switch(alert("Turn space into a CO2 + Ice? This is probably going to lag a bunch when it happens and there's no easy undo!",,"Yes","No"))
 			if("Yes")
+				var/ambient_value
 				var/snow = alert("Should it be snowing?",,"Yes", "No", "Particles!")
 				snow = (snow == "No") ? null : snow
 				var/image/weather = image(icon = 'icons/turf/areas.dmi', icon_state = "snowverlay", layer = EFFECTS_LAYER_BASE)
