@@ -21,7 +21,7 @@
 	set name = "Ice Station"
 	set desc = "Turns space into the Outpost Theta..."
 	admin_only
-	var/const/ambient_light = "#111"
+	var/ambient_value
 #ifdef UNDERWATER_MAP
 	//to prevent tremendous lag from the entire map flooding from a single ocean tile.
 	boutput(src, "You cannot use this command on underwater maps. Sorry!")
@@ -55,7 +55,8 @@
 						else
 							new /obj/effects/snow/grey/tile(S)
 					if(I)
-						I.color = ambient_light
+						ambient_value = lerp(10,50,min(1-S.x/300,0.8))
+						I.color = rgb(ambient_value,ambient_value+((rand()*1)),ambient_value+((rand()*1))) //randomly shift green&blue to reduce vertical banding
 						S.UpdateOverlays(I, "ambient")
 				// Path to market does not need to be cleared because it was converted to ice.  Abyss will screw up everything!
 
