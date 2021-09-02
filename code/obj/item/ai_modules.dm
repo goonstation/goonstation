@@ -242,7 +242,7 @@ AI MODULES
 /obj/item/aiModule/freeform
 	name = "'Freeform' AI Module"
 	lawNumber = 14
-	input_char_limit = 200
+	input_char_limit = 400
 
 	get_law_text(for_silicons)
 		return lawTarget ? lawTarget : "This law intentionally left blank."
