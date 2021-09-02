@@ -1495,6 +1495,17 @@
 				src.timeleft += rand(2,6)
 				src.timeleft *= 1.5
 			src.timeleft /= src.speed
+
+		if(src.fabdisk)
+			var/obj/item/fabdisk/FD = src.fabdisk
+			if(FD.fablimit == 0)
+				src.mode = "halt"
+				src.error = "This ManuDisk is unable to operate further."
+				src.queue = null
+				return
+			else
+				FD.fablimit -= 1
+
 		playsound(src.loc, src.sound_beginwork, 50, 1, 0, 3)
 		src.mode = "working"
 		src.build_icon()

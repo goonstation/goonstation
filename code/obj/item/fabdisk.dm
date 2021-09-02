@@ -2,10 +2,10 @@ obj/item/fabdisk
 	name = "ManuDisk: Empty"
 	desc = "A cartridge for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer."
 	icon = 'icons/obj/items/fabdisk.dmi'
-	icon_state = "fabdiskblu"
+	icon_state = "fabdiskwhi"
 	var/list/datum/manufacture/diskstored = list()
 	var/list/datum/manufacture/disktemp = list()
-	var/fablimit = inf
+	var/fablimit = -1 // Means it can be used unlimited time, its a lazy solution yet an effective one.
 
 	New(var/loc,var/schematic = null)
 		..()
