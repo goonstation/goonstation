@@ -1003,15 +1003,6 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 1
 	category = "Component"
 
-/datum/manufacture/augmentation_stun
-	name = "Stun Resist Augmentation"
-	item_paths = list("CRY-2","MET-2","CON-2","INS-1", "electrum")
-	item_amounts = list(8,5,5,1,5)
-	item_outputs = list(/obj/item/organ/augmentation/head/stun_resist)
-	time = 80 SECONDS
-	create = 1
-	category = "Component"
-
 /datum/manufacture/augmentation_pain
 	name = "Pain Blocker Augmentation"
 	item_paths = list("CRY-2","MET-2","CON-2","INS-1", "uqill")

@@ -21,54 +21,6 @@
 	organ_holder_required_op_stage = 4.0
 	icon_state = "augmentation"
 
-/obj/item/organ/augmentation/head/stun_resist //a mild-high stun resist in exchange for jitters and occasional stuns
-	name = "stun blocker"
-	organ_name = "stun blocker"
-	icon_state = "augmentation_stun"
-	desc = "An augmentation that speeds up brain functions, allowing the user to recover from incapacitation faster."
-
-	on_transplant(var/mob/M as mob)
-		..()
-		if(!broken)
-			M.add_stun_resist_mod("stun_blocker", 30)
-
-	on_removal()
-		..()
-		if(src.donor.stun_resist_mods.Find("stun_blocker"))
-			src.donor.remove_stun_resist_mod("stun_blocker")
-		if(src.donor.stun_resist_mods.Find("stun_blocker_broken"))
-			src.donor.remove_stun_resist_mod("stun_blocker_broken")
-
-	on_life(var/mult = 1)
-		var/mob/M = src.donor
-		if(!..())
-			return 0
-		M.make_jittery(10)
-		if(!src.broken)
-			if(M.reagents.has_reagent("sugar", 50)) //might do something about glaucogen, but currently that's only when its broken
-				src.take_damage(2.5, 2.5, 0)
-			else if(M.reagents.has_reagent("sugar", 3))
-				M.reagents.remove_reagent("sugar", 2)
-			else
-				src.take_damage(2.5, 2.5, 0)
-		else
-			if(M.reagents.has_reagent("sugar", 50))
-				M.reagents.remove_reagent("sugar", 4)
-			else
-				M.take_toxin_damage(2)
-			if(M.reagents.has_reagent("glaucogen"))
-				M.take_toxin_damage(2)
-		return 1
-
-	on_broken(var/mult = 1)
-		if (!..())
-			return
-		if(src.donor.stun_resist_mods.Find("stun_blocker"))
-			src.donor.remove_stun_resist_mod("stun_blocker")
-		if(!src.donor.stun_resist_mods.Find("stun_blocker_broken"))
-			src.donor.add_stun_resist_mod("stun_blocker_broken", -50)
-
-
 /obj/item/organ/augmentation/head/pain_reducer //reduces pain by slowing down nerve functions, but makes you completely unaware of your current health
 	name = "pain reducer"
 	organ_name = "pain reducer"

@@ -2172,7 +2172,6 @@
 	/datum/manufacture/cyberlung_left,
 	/datum/manufacture/cyberlung_right,
 	/datum/manufacture/augmentation_pain,
-	/datum/manufacture/augmentation_stun,
 	/datum/manufacture/augmentation_stam,
 	/datum/manufacture/augmentation_wire,
 	/datum/manufacture/rods2,
