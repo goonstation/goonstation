@@ -5,13 +5,14 @@
 	admin_only
 
 	var/options = list("Winter Station"=/client/proc/cmd_winterify_station,
+		"Mars Station"=/client/proc/cmd_marsify_station,
 		"Swamp Station"=/client/proc/cmd_swampify_station,
-		"Trench Station"=/client/proc/cmd_trenchify_station)
+		"Trench Station"=/client/proc/cmd_trenchify_station
+		)
 
 	var/param = tgui_input_list(src,"Transform space around the station...","Terraform Space",options)
 	if(param)
 		call(src, options[param])()
-
 
 /client/proc/cmd_swampify_station()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -56,6 +57,52 @@
 	else
 		boutput(src, "You must be at least an Administrator to use this command.")
 #endif
+
+
+/client/proc/cmd_marsify_station()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Marsify"
+	set desc = "Turns space into a Mars"
+	admin_only
+	var/ambient_value = 0
+#ifdef UNDERWATER_MAP
+	//to prevent tremendous lag from the entire map flooding from a single ocean tile.
+	boutput(src, "You cannot use this command on underwater maps. Sorry!")
+	return
+#else
+	if(src.holder.level >= LEVEL_ADMIN)
+		switch(alert("Turn space into the sands of Mars? This is probably going to lag a bunch when it happens and there's no easy undo!",,"Yes","No"))
+			if("Yes")
+				var/image/weather = image(icon = 'icons/turf/areas.dmi', icon_state = "dustverlay", layer = EFFECTS_LAYER_BASE)
+				//weather.alpha = 200
+				//weather.plane = PLANE_NOSHADOW_ABOVE
+				var/image/I = new /image/ambient
+				var/datum/map_generator/mars_generator/map_generator = new
+				var/list/space = list()
+				for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+					space += S
+				map_generator.generate_terrain(space)
+				sleep(3 SECONDS) // Let turfs initialize and re-orient before applying overlays
+				for (var/turf/S in space)
+					S.UpdateOverlays(weather, "weather")
+					ambient_value = lerp(20,80,S.x/300)
+					I.color = rgb(ambient_value+((rand()*3)),ambient_value,ambient_value) //randomly shift red to reduce vertical banding
+					S.UpdateOverlays(I, "ambient")
+
+				for(var/turf/S in get_area_turfs(/area/mining/magnet))
+					if(S.z != Z_LEVEL_STATION) continue
+					for(var/obj/machinery/M in S)
+						qdel(M)
+
+				shippingmarket.clear_path_to_market()
+
+				logTheThing("admin", src, null, "turned space into a Mars.")
+				logTheThing("diary", src, null, "turned space into a Mars.", "admin")
+				message_admins("[key_name(src)] turned space into a Mars.")
+	else
+		boutput(src, "You must be at least an Administrator to use this command.")
+#endif
+
 
 /client/proc/cmd_trenchify_station()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
