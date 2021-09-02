@@ -974,7 +974,7 @@
 						var/prev_intent = target.a_intent
 						target.a_intent = INTENT_HARM
 
-						target.attackby(I, target)
+						target.Attackby(I, target)
 
 						target.a_intent = prev_intent
 						if (old_zone_sel)

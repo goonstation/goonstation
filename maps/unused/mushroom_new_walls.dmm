@@ -37457,7 +37457,7 @@
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/primary/west)
 "xrq" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/purple,
 /area/station/science/teleporter)
 "xrU" = (

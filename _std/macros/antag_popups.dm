@@ -45,7 +45,7 @@
 
 // vampire (thrall uses the mindslave popup)
 #define SHOW_VAMPIRE_TIPS(M) M.Browse(grabResource("html/traitorTips/vampireTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_VAMPZOMBIE_TIPS(M) M.Browse(grabResource("html/traitorTips/vampiriczombieTips.html"), ANTAG_TIPS_WINDOW)
+#define SHOW_VAMPTHRALL_TIPS(M) M.Browse(grabResource("html/traitorTips/vampiricthrallTips.html"), ANTAG_TIPS_WINDOW)
 
 // changeling
 #define SHOW_CHANGELING_TIPS(M) M.Browse(grabResource("html/traitorTips/changelingTips.html"), ANTAG_TIPS_WINDOW)
@@ -81,6 +81,9 @@
 
 //Instructions for pod-wars gametype
 #define SHOW_POD_WARS(M) M.Browse(grabResource("html/traitorTips/pod_wars.html"), ANTAG_TIPS_WINDOW)
+
+// arcfiend
+#define SHOW_ARCFIEND_TIPS(M) M.Browse(grabResource("html/traitorTips/arcfiendTips.html"), ANTAG_TIPS_WINDOW)
 
 /datum/adminAntagPopups
 	var/html
@@ -142,6 +145,7 @@
 	<a href='?src=\ref[src];action=battle'>Battle Royale</a> |
 	<a href='?src=\ref[src];action=martian'>Martian</a> |
 	<a href='?src=\ref[src];action=kudzu'>Kudzu Person</a>
+	<a href='?src=\ref[src];action=arcfiend'>Arcfiend Person</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Misc</b>
 	<a href='?src=\ref[src];action=emaggedborg'>Borg Emagged</a> |
@@ -229,9 +233,7 @@
 			if ("vampire")
 				SHOW_VAMPIRE_TIPS(M)
 			if ("vampthrall")
-				SHOW_MINDSLAVE_TIPS(M)
-			if ("vampzombie")
-				SHOW_VAMPZOMBIE_TIPS(M)
+				SHOW_VAMPTHRALL_TIPS(M)
 			if ("changeling")
 				SHOW_CHANGELING_TIPS(M)
 			if ("handspider")
@@ -256,6 +258,8 @@
 				SHOW_MARTIAN_TIPS(M)
 			if ("kudzu")
 				SHOW_KUDZU_TIPS(M)
+			if ("arcfiend")
+				SHOW_ARCFIEND_TIPS(M)
 
 			// misc
 			if ("emaggedborg")

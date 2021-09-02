@@ -146,6 +146,7 @@ proc/filter_trait_hats(var/type)
 		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 12)
 		setProperty("disorient_resist_ear", 8)
+		setProperty("movespeed", 0.15)
 
 /obj/item/clothing/head/cakehat
 	name = "cakehat"
@@ -643,6 +644,7 @@ proc/filter_trait_hats(var/type)
 	icon_state = "wizard"
 	item_state = "wizard"
 	magical = 1
+	item_function_flags = IMMUNE_TO_ACID
 
 	setupProperties()
 		..()
@@ -1584,3 +1586,10 @@ ABSTRACT_TYPE(/obj/item/clothing/head/hairbow)
 		desc = "A huge bow that goes on your head. This one is yellow and has polka dots. Not itsy bitsy or teeny weeny."
 		icon_state = "hbow-yellowpolkadot"
 		item_state = "hbow-yellowpolkadot"
+
+/obj/item/clothing/head/rafflesia
+    name = "rafflesia"
+    desc = "Usually reffered to as corpseflower due to its horrid odor, perfect for masking the smell of your stinky head."
+    wear_image_icon = 'icons/mob/fruithat.dmi'
+    icon_state = "rafflesiahat"
+    item_state = "rafflesiahat"

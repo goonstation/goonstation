@@ -25414,7 +25414,7 @@
 /area/station/maintenance/inner/sw)
 "hfR" = (
 /obj/table/reinforced/auto,
-/obj/item/kitchen/utensil/knife/cleaver{
+/obj/item/kitchen/utensil/knife{
 	pixel_y = 10
 	},
 /turf/simulated/floor/specialroom/freezer,
@@ -27345,7 +27345,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "hHU" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/industrial,
 /area/station/quartermaster/refinery)
 "hHY" = (
@@ -38935,7 +38935,7 @@
 	},
 /area/station/maintenance/outer/west)
 "loj" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /obj/landmark{
 	name = "shitty_bill_respawn"
 	},
@@ -43086,7 +43086,7 @@
 	pixel_x = 7;
 	pixel_y = 9
 	},
-/obj/item/kitchen/utensil/knife/cleaver,
+/obj/item/kitchen/utensil/knife,
 /obj/machinery/light/incandescent/cool/very{
 	dir = 4
 	},
@@ -55859,7 +55859,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
 "qjn" = (
-/obj/item_dispenser/perscription_glasses{
+/obj/item_dispenser/prescription_glasses{
 	pixel_x = 1;
 	pixel_y = 29
 	},

@@ -449,20 +449,6 @@
 	if (active)
 		target.do_disorient(0, weakened = 0, stunned = 0, disorient = 30, remove_stamina_below_zero = 0)
 
-		if (prob(30))
-			boutput(user, "<span class='alert'>The sword shorted out! The laser turned off!</span>")
-			hit_type = DAMAGE_BLUNT
-			if(ishuman(user))
-				var/mob/living/carbon/human/U = user
-				if(U.gender == MALE) playsound(U,"sound/weapons/male_cswordturnoff.ogg", 70, 0, 0, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
-				else playsound(U,"sound/weapons/female_cswordturnoff.ogg", 100, 0, 0, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
-			active = 0
-			force = inactive_force
-			icon_state = "[state_name]0"
-			item_state = "[state_name]0"
-			w_class = off_w_class
-			user.update_inhands()
-
 ///////////////////////////////////////////////// Dagger /////////////////////////////////////////////////
 
 /obj/item/dagger
@@ -861,17 +847,17 @@
 	two_handed = 0
 
 	w_class = W_CLASS_NORMAL
-	force = 15
-	throwforce = 5
+	force = 20
+	throwforce = 10
 	throw_speed = 2
 	throw_range = 4
-	stamina_damage = 30
-	stamina_cost = 20
-	stamina_crit_chance = 2
+	stamina_damage = 25
+	stamina_cost = 15
+	stamina_crit_chance = 5
 
 	proc/set_values()
 		if(two_handed)
-			src.click_delay = 15
+			src.click_delay = COMBAT_CLICK_DELAY * 1.5
 			force = 40
 			throwforce = 25
 			throw_speed = 4
@@ -880,7 +866,7 @@
 			stamina_cost = 25
 			stamina_crit_chance = 10
 		else
-			src.click_delay = 10
+			src.click_delay = COMBAT_CLICK_DELAY
 			force = 20
 			throwforce = 10
 			throw_speed = 2

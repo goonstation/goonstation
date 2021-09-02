@@ -270,8 +270,8 @@
 		if (isdead(M) || istype(M,/mob/living/critter/changeling) || (M == hivemind_owner.owner))
 			boutput(M, rendered)
 
-//vampire ghoul say
-/mob/proc/say_ghoul(var/message, var/datum/abilityHolder/vampire/owner)
+//vampire thrall say
+/mob/proc/say_thrall(var/message, var/datum/abilityHolder/vampire/owner)
 	var/name = src.real_name
 	var/alt_name = ""
 
@@ -284,9 +284,9 @@
 	if (isvampire(src))
 		name = src.real_name
 		alt_name = " (VAMPIRE)"
-	else if (isvampiriczombie(src))
+	else if (isvampiricthrall(src))
 		name = src.real_name
-		alt_name = " (GHOUL)"
+		alt_name = " (THRALL)"
 
 #ifdef DATALOGGER
 	game_stats.ScanText(message)
@@ -300,7 +300,7 @@
 	//show to ghouls
 	for (var/client/C in clients)
 		try_render_chat_to_admin(C, rendered)
-	for (var/mob/M in (owner.ghouls + owner.owner))
+	for (var/mob/M in (owner.thralls + owner.owner))
 		if ((M.client?.holder && M.client.deadchat && !M.client.player_mode)) continue
 		boutput(M, rendered)
 
@@ -481,6 +481,8 @@
 	if (src.emote_allowed)
 		if (dead_check && isdead(src))
 			src.emote_allowed = 0
+			return 0
+		if (voluntary && src.getStatusDuration("paralysis") > 0)
 			return 0
 		if (world.time >= (src.last_emote_time + src.last_emote_wait))
 			if (!(src.client && (src.client.holder && admin_bypass) && !src.client.player_mode) && voluntary)

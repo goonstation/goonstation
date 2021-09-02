@@ -8,9 +8,11 @@
 # Adharainspace
 #/_std/ @Adharainspace
 
+# Emily
+/maps/manta.dmm @UrsulaMejor
+
 # Flourish
 /code/obj/item/toys.dm @flrsh
-/maps/manta.dmm @flrsh
 /maps/oshan.dmm @flrsh
 
 # Kyle

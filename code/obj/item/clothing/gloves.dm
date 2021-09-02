@@ -525,7 +525,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 							src.electrocute(target_r, 100, netnum)
 							break
 						if("disarm")
-							target_r:weakened += 3
+							target.changeStatus("weakened", 3 SECONDS)
 							break
 
 				var/list/next = new/list()

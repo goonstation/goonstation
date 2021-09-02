@@ -1514,8 +1514,8 @@
 	w_class = W_CLASS_NORMAL
 	flags = ONBELT
 	force = 7
+	var/cell_type = null
 	var/dig_strength = 1
-	var/obj/item/ammo/power_cell/cell = null
 	var/status = 0
 	var/digcost = 0
 	var/weakener = 0
@@ -1525,42 +1525,53 @@
 
 	New()
 		..()
+		if(cell_type)
+			var/cell = new cell_type
+			AddComponent(/datum/component/cell_holder, cell)
 		BLOCK_SETUP(BLOCK_ROD)
 
 	// Seems like a basic bit of user feedback to me (Convair880).
 	examine(mob/user)
 		. = ..()
-		if (!src.cell)
-			return
 		if (isrobot(user))
 			return // Drains battery instead.
-		. += "The [src.name] is turned [src.status ? "on" : "off"]. There are [src.cell.charge]/[src.cell.max_charge] PUs left!"
+		var/list/ret = list()
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			. += "The [src.name] is turned [src.status ? "on" : "off"]. There are [ret["charge"]]/[ret["max_charge"]] PUs left!"
 
 	proc/process_charges(var/use)
 		if (!isnum(use) || use < 0)
 			return 0
-		if (cell.charge < 1)
+		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
 			return 0
-		src.cell.use(use)
-		if (src.cell.charge == 0)
+
+		if (SEND_SIGNAL(src, COMSIG_CELL_USE, use) & CELL_INSUFFICIENT_CHARGE)
 			src.power_down()
 			var/turf/T = get_turf(src)
 			T.visible_message("<span class='alert'>[src] runs out of charge and powers down!</span>")
 		return 1
+
+	attack_self(var/mob/user as mob)
+		if (!digcost)
+			return
+		if (src.process_charges(0))
+			if (!src.status)
+				boutput(user, "<span class='notice'>You power up [src].</span>")
+				src.power_up()
+				playsound(user.loc, "sound/items/miningtool_on.ogg", 30, 1)
+			else
+				boutput(user, "<span class='notice'>You power down [src].</span>")
+				src.power_down()
+		else
+			boutput(user, "<span class='alert'>No charge left in [src].</span>")
 
 	afterattack(target as mob, mob/user as mob)
 		..()
 		if (src.status && !isturf(target))
 			src.process_charges(digcost*5)
 
-	proc/charge(var/amount)
-		//Support for recharge stations. Increment uses by one until we reach max.
-		if(src.cell)
-			return src.cell.charge(amount)
-		else//No cell, or not rechargeable. Tell anything trying to charge it.
-			return -1
-
 	proc/power_up()
+		src.tooltip_rebuild = 1
 		src.status = 1
 		if (powered_overlay)
 			src.overlays += powered_overlay
@@ -1568,23 +1579,17 @@
 		return
 
 	proc/power_down()
+		src.tooltip_rebuild = 1
 		src.status = 0
 		if (powered_overlay)
 			src.overlays = null
 			signal_event("icon_updated")
 		return
 
-	attackby(obj/item/b as obj, mob/user as mob)
-		if (istype(b, /obj/item/ammo/power_cell/))
-			var/obj/item/ammo/power_cell/pcell = b
-			if (src.cell)
-				if (pcell.swap(src))
-					user.visible_message("<span class='alert'>[user] swaps [src]'s power cell.</span>")
-		else
-			..()
 
 	proc/update_icon()
 		return
+
 obj/item/clothing/gloves/concussive
 	name = "concussion gauntlets"
 	desc = "These gloves enable miners to punch through solid rock with their hands instead of using tools."
@@ -1613,7 +1618,7 @@ obj/item/clothing/gloves/concussive
 	flags = ONBELT
 	dig_strength = 2
 	digcost = 2
-	cell = new/obj/item/ammo/power_cell
+	cell_type = /obj/item/ammo/power_cell
 	hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
 
@@ -1622,35 +1627,24 @@ obj/item/clothing/gloves/concussive
 		powered_overlay = image('icons/obj/items/mining.dmi', "pp-glow")
 		src.power_up()
 
-	attack_self(var/mob/user as mob)
-		tooltip_rebuild = 1
-		if (src.process_charges(0))
-			if (!src.status)
-				boutput(user, "<span class='notice'>You power up [src].</span>")
-				src.power_up()
-				item_state = "ppick1"
-				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_on.ogg", 30, 1)
-			else
-				boutput(user, "<span class='notice'>You power down [src].</span>")
-				src.power_down()
-				item_state = "ppick0"
-				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
-		else
-			boutput(user, "<span class='alert'>No charge left in [src].</span>")
-
-
 	power_up()
 		..()
 		src.force = 15
 		src.dig_strength = 2
+		if(ismob(src.loc))
+			var/mob/user = src.loc
+			item_state = "ppick1"
+			user.update_inhands()
 
 	power_down()
 		..()
 		src.force = 7
 		src.dig_strength = 1
-
+		item_state = "ppick0"
+		if(ismob(src.loc))
+			var/mob/user = src.loc
+			user.update_inhands()
+			playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
 
 	borg
 		process_charges(var/use)
@@ -1684,7 +1678,7 @@ obj/item/clothing/gloves/concussive
 	icon_state = "powerhammer"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "phammer1"
-	cell = new/obj/item/ammo/power_cell
+	cell_type = /obj/item/ammo/power_cell
 	force = 9
 	dig_strength = 3
 	digcost = 3
@@ -1701,6 +1695,10 @@ obj/item/clothing/gloves/concussive
 		src.force = 20
 		dig_strength = 3
 		weakener = 1
+		item_state = "phammer1"
+		if(ismob(src.loc))
+			var/mob/user = src.loc
+			user.update_inhands()
 		src.setItemSpecial(/datum/item_special/slam)
 
 	power_down()
@@ -1708,25 +1706,12 @@ obj/item/clothing/gloves/concussive
 		src.force = 9
 		dig_strength = 1
 		weakener = 0
+		item_state = "phammer0"
+		if(ismob(src.loc))
+			var/mob/user = src.loc
+			user.update_inhands()
+			playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
 		src.setItemSpecial(/datum/item_special/simple)
-
-	attack_self(var/mob/user as mob)
-		tooltip_rebuild = 1
-		if (src.process_charges(0))
-			if (!src.status)
-				boutput(user, "<span class='notice'>You power up [src].</span>")
-				src.power_up()
-				item_state = "phammer1"
-				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_on.ogg", 30, 1)
-			else
-				boutput(user, "<span class='notice'>You power down [src].</span>")
-				src.power_down()
-				item_state = "phammer0"
-				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
-		else
-			boutput(user, "<span class='alert'>No charge left in [src].</span>")
 
 	borg
 		process_charges(var/use)
@@ -1749,7 +1734,7 @@ obj/item/clothing/gloves/concussive
 	flags = ONBELT
 	dig_strength = 0
 	digcost = 2
-	cell = new/obj/item/ammo/power_cell
+	cell_type = /obj/item/ammo/power_cell
 	hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
 
@@ -1759,33 +1744,24 @@ obj/item/clothing/gloves/concussive
 		powered_overlay = image('icons/obj/sealab_power.dmi', "ps-glow")
 		src.power_up()
 
-	attack_self(var/mob/user as mob)
-		tooltip_rebuild = 1
-		if (src.process_charges(0))
-			if (!src.status)
-				boutput(user, "<span class='notice'>You power up [src].</span>")
-				src.power_up()
-				item_state = "pshovel1"
-				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_on.ogg", 30, 1)
-			else
-				boutput(user, "<span class='notice'>You power down [src].</span>")
-				src.power_down()
-				item_state = "pshovel0"
-				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
-		else
-			boutput(user, "<span class='alert'>No charge left in [src].</span>")
-
 	power_up()
 		..()
 		src.force = 8
 		src.dig_strength = 0
+		item_state = "pshovel1"
+		if(ismob(src.loc))
+			var/mob/user = src.loc
+			user.update_inhands()
 
 	power_down()
 		..()
 		src.force = 4
 		src.dig_strength = 0
+		item_state = "pshovel0"
+		if(ismob(src.loc))
+			var/mob/user = src.loc
+			user.update_inhands()
+			playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
 
 	borg
 		process_charges(var/use)
@@ -1929,22 +1905,30 @@ obj/item/clothing/gloves/concussive
 	desc = "A device for teleporting crated goods."
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "cargotele"
-	var/charges = 8
-	var/maximum_charges = 8
-	var/robocharge = 250
+	var/cost = 25
 	var/target = null
+	var/cell_type = /obj/item/ammo/power_cell/med_power
 	w_class = W_CLASS_SMALL
 	flags = ONBELT
 	mats = 4
+
+	New()
+		. = ..()
+		var/cell = new cell_type
+		AddComponent(/datum/component/cell_holder, cell, swappable = FALSE)
 
 	examine(mob/user)
 		. = ..()
 		if (isrobot(user))
 			return // Drains battery instead.
-		. += "There are [src.charges]/[src.maximum_charges] charges left!"
+		var/list/ret = list()
+		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST))
+			. += "<span class='alert'>No power cell installed.</span>"
+		else
+			. += "There are [ret["charge"]]/[ret["max_charge"]] PUs left! Each use will consume [cost]PU."
 
 	attack_self() // Fixed --melon
-		if (src.charges < 1)
+		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
 			boutput(usr, "<span class='alert'>The transporter is out of charge.</span>")
 			return
 		if (!cargopads.len) boutput(usr, "<span class='alert'>No receivers available.</span>")
@@ -1963,23 +1947,16 @@ obj/item/clothing/gloves/concussive
 			//blammo! works!
 			src.target = T
 
-	proc/charge(var/amount)
-		//Support for recharge stations. Increment uses by one until we reach max.
-		src.charges = src.charges + 1 > src.maximum_charges ? src.maximum_charges : src.charges + 1
-
-		//Return if we are finished charging or not to the recharger
-		return src.charges < src.maximum_charges
-
 	proc/cargoteleport(var/obj/T, var/mob/user)
 		if (!src.target)
 			boutput(user, "<span class='alert'>You need to set a target first!</span>")
 			return
-		if (src.charges < 1)
-			boutput(user, "<span class='alert'>The transporter is out of charge.</span>")
+		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
+			boutput(usr, "<span class='alert'>The transporter is out of charge.</span>")
 			return
 		if (isrobot(user))
 			var/mob/living/silicon/robot/R = user
-			if (R.cell.charge < src.robocharge)
+			if (R.cell.charge < src.cost * 10)
 				boutput(user, "<span class='alert'>There is not enough charge left in your cell to use this.</span>")
 				return
 
@@ -2016,20 +1993,18 @@ obj/item/clothing/gloves/concussive
 			elecflash(src)
 			if (isrobot(user))
 				var/mob/living/silicon/robot/R = user
-				R.cell.charge -= src.robocharge
+				R.cell.charge -= cost * 10
 			else
-				src.charges -= 1
-				if (src.charges < 0)
-					src.charges = 0
-				if (src.charges == 0)
+				var/ret = SEND_SIGNAL(src, COMSIG_CELL_USE, cost)
+				if (ret & CELL_INSUFFICIENT_CHARGE)
 					boutput(user, "<span class='alert'>Transfer successful. The transporter is now out of charge.</span>")
 				else
-					boutput(user, "<span class='notice'>Transfer successful. [src.charges] charges remain.</span>")
+					boutput(user, "<span class='notice'>Transfer successful.</span>")
 		return
 
 /obj/item/cargotele/traitor
-	charges = 14
-	maximum_charges = 14
+	cost = 15
+	cell_type = /obj/item/ammo/power_cell/med_power
 	var/list/possible_targets = list()
 
 	New()
@@ -2047,8 +2022,8 @@ obj/item/clothing/gloves/concussive
 		if (!src.target)
 			boutput(user, "<span class='alert'>No target found!</span>")
 			return
-		if (src.charges < 1)
-			boutput(user, "<span class='alert'>The transporter is out of charge.</span>")
+		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
+			boutput(usr, "<span class='alert'>The transporter is out of charge.</span>")
 			return
 		boutput(user, "<span class='notice'>Teleporting [T]...</span>")
 		playsound(user.loc, "sound/machines/click.ogg", 50, 1)
@@ -2063,13 +2038,11 @@ obj/item/clothing/gloves/concussive
 			T.set_loc(src.target)
 			if(hasvar(T, "welded")) T:welded = 1
 			elecflash(src)
-			src.charges -= 1
-			if (src.charges < 0)
-				src.charges = 0
-			if (src.charges == 0)
+			var/ret = SEND_SIGNAL(src, COMSIG_CELL_USE, cost)
+			if (ret & CELL_INSUFFICIENT_CHARGE)
 				boutput(user, "<span class='alert'>Transfer successful. The transporter is now out of charge.</span>")
 			else
-				boutput(user, "<span class='notice'>Transfer successful. [src.charges] charges remain.</span>")
+				boutput(user, "<span class='notice'>Transfer successful.</span>")
 		return
 
 /obj/item/oreprospector

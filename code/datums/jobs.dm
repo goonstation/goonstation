@@ -402,6 +402,7 @@ ABSTRACT_TYPE(/datum/job/command)
 
 	slot_back = list(/obj/item/storage/backpack/withO2)
 	slot_belt = list(/obj/item/device/pda2/medical_director)
+	slot_lhan = list(/obj/item/storage/firstaid/regular/doctor_spawn)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_jump = list(/obj/item/clothing/under/rank/medical_director)
 	slot_suit = list(/obj/item/clothing/suit/labcoat)
@@ -580,6 +581,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	slot_foot = list(/obj/item/clothing/shoes/white)
 	slot_suit = list(/obj/item/clothing/suit/labcoat/genetics)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
+	slot_poc1 = list(/obj/item/device/analyzer/genetic)
 
 	New()
 		..()
@@ -626,7 +628,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	slot_lhan = list(/obj/item/storage/toolbox/mechanical)
 	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
-	items_in_backpack = list(/obj/item/crowbar)
+	slot_poc1 = list(/obj/item/reagent_containers/mender/brute)
 
 	New()
 		..()
@@ -720,6 +722,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	slot_belt = list(/obj/item/device/pda2/quartermaster)
 	slot_ears = list(/obj/item/device/radio/headset/shipping)
 	slot_poc1 = list(/obj/item/paper/book/from_file/pocketguide/quartermaster)
+	slot_poc2 = list(/obj/item/device/appraisal)
 
 	New()
 		..()
@@ -832,7 +835,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_head = list(/obj/item/clothing/head/chefhat)
 	slot_suit = list(/obj/item/clothing/suit/chef)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
-	items_in_backpack = list(/obj/item/kitchen/rollingpin)
+	items_in_backpack = list(/obj/item/kitchen/rollingpin, /obj/item/kitchen/utensil/knife/cleaver)
 
 	New()
 		..()
@@ -2221,7 +2224,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 		else
 			M.real_name = "Syndicate Agent"
 
-		bad_traitorify(M, "Syndicate Agent")
+		antagify(M, "Syndicate Agent", 0)
 
 		equip_syndicate(M)
 		return
@@ -2247,7 +2250,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
-		bad_traitorify(M, "Syndicate Agent")
+		antagify(M, "Syndicate Agent", 0)
 
 /datum/job/special/syndicate_weak/no_ammo
 	name = "Poorly Equipped Junior Syndicate Operative"
@@ -2299,7 +2302,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 		..()
 		if (!M)
 			return
-		bad_traitorify(M, "Syndicate Agent")
+		antagify(M, "Syndicate Agent", 0)
 		M.show_text("<b>The assault has begun! Head over to the station and kill any and all Nanotrasen personnel you encounter!</b>", "red")
 
 /datum/job/special/juicer_specialist

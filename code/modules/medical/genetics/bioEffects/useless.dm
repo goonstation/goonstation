@@ -25,13 +25,24 @@
 	probability = 99
 	msgGain = "A pair of horns erupt from your head."
 	msgLose = "Your horns crumble away into nothing."
+	var/hornstyle = "random"
 
 	OnAdd()
-		if (ishuman(owner))
-			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "horns", layer = MOB_LAYER)
-			if (ismonkey(owner))
-				overlay_image.pixel_y = -6
+		if(hornstyle == "random")
+			hornstyle = pick("horns","horns_ram","horns_ramblk","horns_dark","horns_beige","horns_light","horns_sml","horns_unicorn")
+
+		overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[hornstyle]", layer = MOB_LAYER)
+		if (ismonkey(owner))
+			overlay_image.pixel_y = -6
 		..()
+
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		if(variable == "hornstyle")
+			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[newval]", layer = MOB_LAYER)
+			if(ismonkey(owner))
+				overlay_image.pixel_y = -6
+			owner.UpdateOverlays(overlay_image, id)
 
 /datum/bioEffect/horns/evil //this is just for /proc/soulcheck
 	occur_in_genepools = 0
@@ -44,6 +55,7 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 	id = "demon_horns"
+	hornstyle = "horns_devil"
 
 /datum/bioEffect/particles
 	name = "Dermal Glitter"
@@ -192,13 +204,12 @@
 	isBad = 1
 	msgGain = "You feel sweaty."
 	msgLose = "You feel much more hygenic."
-	var/personalized_stink = "Wow, it stinks in here!"
+	var/personalized_stink = null
 
 	New()
 		..()
-		src.personalized_stink = stinkString()
 		if (prob(5))
-			src.variant = 2
+			src.personalized_stink = stinkString()
 
 	OnLife(var/mult)
 		if(..()) return
@@ -208,7 +219,7 @@
 			for(var/mob/living/carbon/C in view(6,get_turf(owner)))
 				if (C == owner)
 					continue
-				if (src.variant == 2)
+				if (src.personalized_stink)
 					boutput(C, "<span class='alert'>[src.personalized_stink]</span>")
 				else
 					boutput(C, "<span class='alert'>[stinkString()]</span>")
@@ -260,6 +271,7 @@
 	msgGain = "You feel drunk!"
 	msgLose = "You feel sober."
 	probability = 99
+	stability_loss = -5
 	var/reagent_to_add = "ethanol"
 	var/reagent_threshold = 80
 	var/add_per_tick = 1
@@ -327,6 +339,7 @@
 	lockedGaps = 10
 	lockedDiff = 6
 	lockedChars = list("G","C","A","T","U")
+	stability_loss = 15
 	lockedTries = 10
 	curable_by_mutadone = 0
 	can_scramble = 0
@@ -349,6 +362,7 @@
 	probability = 0.25
 	var/change_prob = 25
 	add_per_tick = 7
+	stability_loss = 25
 
 	OnLife(var/mult)
 		if (prob(src.change_prob) && all_functional_reagent_ids.len > 1)
@@ -405,7 +419,7 @@
 	blockGaps = 3
 	msgGain = "You feel as if you're impossibly young."
 	msgLose = "You feel like you're your own age again."
-	stability_loss = 10
+	stability_loss = 0
 
 	OnAdd()
 		holder.age = (0 - holder.age)
@@ -424,7 +438,7 @@
 	blockGaps = 3
 	msgGain = "You feel like you're growing younger - no wait, older?"
 	msgLose = "You feel like you're aging normally again."
-	stability_loss = 10
+	stability_loss = 0
 	OnLife(var/mult)
 		..()
 		if (prob(33))

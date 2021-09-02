@@ -731,11 +731,18 @@
 			playsound(src, (has_butt.sound_fart ? has_butt.sound_fart : 'sound/voice/farts/fart1.ogg'), 50, 1)
 		else
 			playsound(src, "sound/misc/belt_click.ogg", 50, 1)
+		RegisterSignal(to_buckle, COMSIG_MOVABLE_SET_LOC, .proc/maybe_unbuckle)
 
+	proc/maybe_unbuckle(source, turf/oldloc)
+		// unbuckle if the guy is not on a turf, or if their chair is out of range and it's not a shuttle situation
+		if(!isturf(buckled_guy.loc) || (!IN_RANGE(src, oldloc, 1) && (!istype(get_area(src), /area/shuttle || !istype(get_area(oldloc), /area/shuttle)))))
+			UnregisterSignal(buckled_guy, COMSIG_MOVABLE_SET_LOC)
+			unbuckle()
 
 	unbuckle()
 		..()
 		if(!src.buckled_guy) return
+		UnregisterSignal(buckled_guy, COMSIG_MOVABLE_SET_LOC)
 
 		var/mob/living/M = src.buckled_guy
 		var/mob/living/carbon/human/H = src.buckled_guy
@@ -991,6 +998,16 @@
 		arm_icon_state = "arm-purple"
 		parts_type = /obj/item/furniture_parts/comfy_chair/purple
 
+/obj/stool/chair/comfy/throne_gold
+	name = "golden throne"
+	desc = "This throne commands authority and respect. Everyone is super envious of whoever sits in this chair."
+	icon_state = "thronegold"
+	arm_icon_state = "thronegold-arm"
+	comfort_value = 7
+	anchored = 0
+	deconstructable = 1
+	parts_type = /obj/item/furniture_parts/throne_gold
+
 /* ======================================================== */
 /* -------------------- Shuttle Chairs -------------------- */
 /* ======================================================== */
@@ -1110,6 +1127,13 @@
 	anchored = 0
 	//deconstructable = 0
 	parts_type = /obj/item/furniture_parts/wood_chair
+
+	regal
+		name = "regal chair"
+		desc = "Much more comfortable than the average dining chair, and much more expensive."
+		icon_state = "regalchair"
+		comfort_value = 7
+		parts_type = /obj/item/furniture_parts/wood_chair/regal
 
 /* ============================================== */
 /* -------------------- Pews -------------------- */

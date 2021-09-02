@@ -587,7 +587,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			if (null, "list")
 				. = "<h2>Current Requests</h2><br><a href='[topicLink("requests", "clear")]'>Clear all</a><br><ul>"
 				for(var/datum/supply_order/SO in shippingmarket.supply_requests)
-					. += "<li>[SO.object.name], requested by [SO.orderedby] from [SO.console_location]. <a href='[topicLink("order", "buy", list(what = "\ref[SO]"))]'>Approve</a> <a href='[topicLink("requests", "remove", list(what = "\ref[SO]"))]'>Deny</a></li>"
+					. += "<li>[SO.object.name], requested by [SO.orderedby] from [SO.console_location]. Price: [SO.object.cost] <a href='[topicLink("order", "buy", list(what = "\ref[SO]"))]'>Approve</a> <a href='[topicLink("requests", "remove", list(what = "\ref[SO]"))]'>Deny</a></li>"
 
 				. += {"</ul>"}
 				return .

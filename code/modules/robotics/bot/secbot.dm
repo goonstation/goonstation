@@ -208,6 +208,19 @@
 	desc = "A little security robot, apparently carved out of a pumpkin.  He looks...spooky?"
 	icon = 'icons/misc/halloween.dmi'
 
+/obj/machinery/bot/secbot/brute
+	name = "Komisarz Beepinarska"
+	desc = "This little security robot seems to have a particularly large chip on its... shoulder? ...head?"
+	our_baton_type = /obj/item/baton/classic
+	loot_baton_type = null
+	stun_type = "harm_classic"
+	emagged = 2
+	control_freq = 0
+
+	demag()
+		//Nope
+		return
+
 /obj/item/secbot_assembly
 	name = "helmet/signaler assembly"
 	desc = "Some sort of bizarre assembly."
@@ -547,8 +560,7 @@
 
 			// No need for unnecessary hassle, just make it ignore charges entirely for the time being.
 			if (src.our_baton && istype(src.our_baton))
-				if (src.our_baton.uses_charges != 0)
-					src.our_baton.uses_charges = 0
+				src.our_baton.cost_normal = 0
 			else
 				src.our_baton = new src.our_baton_type(src)
 

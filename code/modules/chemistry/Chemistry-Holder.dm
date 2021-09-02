@@ -44,7 +44,6 @@ datum
 		var/defer_reactions = 0 //Set internally to prevent reactions inside reactions.
 		var/deferred_reaction_checks = 0
 		var/processing_reactions = 0
-		var/desc = null		//(Inexact) description of the reagents. If null, needs refreshing.
 		var/inert = 0 //Do not react. At all. Do not pass go, do not collect $200. Halt. Stop right there, son.
 
 		var/list/addiction_tally = null
@@ -132,7 +131,7 @@ datum
 			if(loud)
 				boutput(world,"composite_heat_capacity: [composite_heat_capacity]")
 
-			var/new_temperature = (total_temperature*total_volume*composite_heat_capacity + exposed_temp*exposed_volume*exposed_heat_capacity)/(total_volume*composite_heat_capacity + exposed_volume*exposed_heat_capacity)
+			var/new_temperature = (total_temperature*total_volume*composite_heat_capacity + exposed_temp*exposed_volume*exposed_heat_capacity)/max(total_volume*composite_heat_capacity + exposed_volume*exposed_heat_capacity, 1)
 
 			if(loud)
 				boutput(world,"new_temperature = ([total_temperature]*[total_volume]*[composite_heat_capacity] + [exposed_temp]*[exposed_volume]*[exposed_heat_capacity])/([total_volume]*[composite_heat_capacity] + [exposed_volume]*[exposed_heat_capacity])")
@@ -658,15 +657,15 @@ datum
 						if(temp_to_burn_with > H.base_body_temp + (H.temp_tolerance * 4) && !H.is_heat_resistant())
 							if (chem_helmet_check(H, "hot"))
 								boutput(H, "<span class='alert'>You are scalded by the hot chemicals!</span>")
-								H.TakeDamage("head", 0, round(log(max((temp_to_burn_with - (H.base_body_temp + (H.temp_tolerance * 4))), 1) / 50) * 10) * dmg_multiplier, 0, DAMAGE_BURN) // lol this caused brute damage
+								H.TakeDamage("head", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN) // lol this caused brute damage
 								H.emote("scream")
-								H.bodytemperature += min(max((temp_to_burn_with - (H.base_body_temp + (H.temp_tolerance * 4))) - 20, 5),500)
+								H.bodytemperature += clamp((temp_to_burn_with - (H.base_body_temp + (H.temp_tolerance * 4))) - 20, 5, 500)
 						else if(temp_to_burn_with < H.base_body_temp - (H.temp_tolerance * 4) && !H.is_cold_resistant())
 							if (chem_helmet_check(H, "cold"))
 								boutput(H, "<span class='alert'>You are frostbitten by the freezing cold chemicals!</span>")
-								H.TakeDamage("head", 0, round(log(max(((H.base_body_temp - (H.temp_tolerance * 4)) - temp_to_burn_with), 1) / 50) * 10) * dmg_multiplier, 0, DAMAGE_BURN)
+								H.TakeDamage("head", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN)
 								H.emote("scream")
-								H.bodytemperature -= min(max((H.base_body_temp - (H.temp_tolerance * 4)) - temp_to_burn_with - 20, 5), 500)
+								H.bodytemperature -= clamp((H.base_body_temp - (H.temp_tolerance * 4)) - temp_to_burn_with - 20, 5, 500)
 
 					for(var/current_id in reagent_list)
 						var/datum/reagent/current_reagent = reagent_list[current_id]
@@ -713,11 +712,12 @@ datum
 								if(temp_to_burn_with > C.base_body_temp + (C.temp_tolerance * 4) && !C.is_heat_resistant())
 									boutput(C, "<span class='alert'>You scald yourself trying to consume the boiling hot substance!</span>")
 									C.TakeDamage("chest", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN)
-									C.bodytemperature += min(max((temp_to_burn_with - T0C) - 20, 5),700)
+									C.bodytemperature += clamp((temp_to_burn_with - T0C) - 20, 5, 700)
 								else if(temp_to_burn_with < C.base_body_temp - (C.temp_tolerance * 4) && !C.is_cold_resistant())
 									boutput(C, "<span class='alert'>You frostburn yourself trying to consume the freezing cold substance!</span>")
 									C.TakeDamage("chest", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN)
-									C.bodytemperature -= min(max((temp_to_burn_with - T0C) - 20, 5),700)
+									C.bodytemperature -= clamp((temp_to_burn_with - T0C) - 20, 5, 700)
+
 
 					// These spawn calls were breaking stuff elsewhere. Since they didn't appear to be necessary and
 					// I didn't come across problems in local testing, I've commented them out as an experiment. If you've come
@@ -860,10 +860,10 @@ datum
 		proc/get_smoke_spread_mod()
 			if (!total_volume)
 				return 0
-			var/smoke_spread_mod = 9999
+			var/smoke_spread_mod = 0
 			for (var/id in reagent_list)
 				var/datum/reagent/R = reagent_list[id]
-				if (R.smoke_spread_mod < smoke_spread_mod)
+				if (R.smoke_spread_mod > smoke_spread_mod)
 					smoke_spread_mod = R.smoke_spread_mod
 			return smoke_spread_mod
 
@@ -872,7 +872,6 @@ datum
 		proc/reagents_changed(var/add = 0) // add will be 1 if reagents were just added
 			if (my_atom)
 				my_atom.on_reagent_change(add)
-			desc = null			// mark the description as needing refresh
 			return
 
 		proc/is_full() // li'l tiny helper thing vOv
@@ -927,24 +926,19 @@ datum
 			.= get_fullness(total_volume / maximum_volume * 100)
 
 		proc/get_inexact_description(var/rc_flags=0)
-			if(desc) return desc
 			if(rc_flags == 0)
 				return null
-
-
-			// rebuild description
-
 
 			var/full_text = get_reagents_fullness()
 
 			if(full_text == "empty")
 				if(rc_flags & (RC_SCALE | RC_VISIBLE | RC_FULLNESS) )
-					desc = "<span class='notice'>It is empty.</span>"
-				return desc
+					. += "<span class='notice'>It is empty.</span>"
+				return
 
 			var/datum/color/c = get_average_color()
 
-			//desc+= "([c.r],[c.g],[c.b];[c.a])"
+			//. += "([c.r],[c.g],[c.b];[c.a])"
 
 			var/nearest_color_text = get_nearest_color(c)
 
@@ -961,17 +955,17 @@ datum
 
 			if(rc_flags & RC_VISIBLE)
 				if(rc_flags & RC_SCALE)
-					desc += "<span class='notice'>It contains [total_volume] units of \a [t]-colored [state_text].</span>"
+					. += "<span class='notice'>It contains [total_volume] units of \a [t]-colored [state_text].</span>"
 				else
-					desc += "<span class='notice'>It is [full_text] of \a [t]-colored [state_text].</span>"
+					. += "<span class='notice'>It is [full_text] of \a [t]-colored [state_text].</span>"
 			else
 				if(rc_flags & RC_SCALE)
-					desc += "<span class='notice'>It contains [total_volume] units.</span>"
+					. += "<span class='notice'>It contains [total_volume] units.</span>"
 				else
 					if(rc_flags & RC_FULLNESS)
-						desc += "<span class='notice'>It is [full_text].</span>"
+						. += "<span class='notice'>It is [full_text].</span>"
 
-			return desc
+			return .
 
 
 		// returns the average color of the reagents

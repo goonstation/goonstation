@@ -1055,8 +1055,7 @@
 /mob/proc/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	hit_twitch(src)
 	src.health -= max(0, brute)
-	if (!is_heat_resistant())
-		src.health -= max(0, burn)
+	src.health -= max(0, (src.bioHolder?.HasEffect("fire_resist") > 1) ? burn/2 : burn)
 
 /mob/proc/TakeDamageAccountArmor(zone, brute, burn, tox, damage_type)
 	TakeDamage(zone, brute - get_melee_protection(zone,damage_type), burn - get_melee_protection(zone,damage_type))
@@ -2976,14 +2975,14 @@
 //MOB VERBS ARE FASTER THAN OBJ VERBS, ELIMINATE ALL OBJ VERBS WHERE U CAN
 // ALSO EXCLUSIVE VERBS (LIKE ADMIN VERBS) ARE BAD FOR RCLICK TOO, TRY NOT TO USE THOSE OK
 
-/mob/verb/point(atom/A as mob|obj|turf in view())
+/mob/verb/point(atom/A as mob|obj|turf in view(,get_turf(usr)))
 	set name = "Point"
 	src.point_at(A)
 
 /mob/proc/point_at(var/atom/target) //overriden by living and dead
 	.=0
 
-/mob/verb/pull_verb(atom/movable/A as mob|obj in view(1))
+/mob/verb/pull_verb(atom/movable/A as mob|obj in view(1, get_turf(usr)))
 	set name = "Pull / Unpull"
 	set category = "Local"
 
@@ -2994,7 +2993,7 @@
 		A.pull()
 
 
-/mob/verb/examine_verb(atom/A as mob|obj|turf in view())
+/mob/verb/examine_verb(atom/A as mob|obj|turf in view(,get_turf(usr)))
 	set name = "Examine"
 	set category = "Local"
 	var/list/result = A.examine(src)
@@ -3002,10 +3001,12 @@
 	boutput(src, result.Join("\n"))
 
 
-/mob/living/verb/interact_verb(atom/A as mob|obj|turf in view(1))
+/mob/living/verb/interact_verb(atom/A as mob|obj|turf in view(1, get_turf(usr)))
 	set name = "Pick Up / Left Click"
 	set category = "Local"
-	A.interact(src)
+
+	if(src.client)
+		src.client.Click(A, get_turf(A))
 
 /mob/living/verb/pickup_verb()
 	set name = "Pick Up"
@@ -3017,7 +3018,7 @@
 			items += I
 	if (items.len)
 		var/atom/A = input(usr, "What do you want to pick up?") as anything in items
-		A.interact(src)
+		src.client.Click(A, get_turf(A))
 
 /mob/proc/can_eat(var/atom/A)
 	return 1
@@ -3030,3 +3031,7 @@
 		..(0)
 	else
 		..(newdensity)
+
+// to check if someone is abusing cameras with stuff like artifacts, power gloves, etc
+/mob/proc/in_real_view_range(var/turf/T)
+	return src.client && IN_RANGE(T, src, WIDE_TILE_WIDTH)

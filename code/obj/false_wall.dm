@@ -150,7 +150,7 @@
 				return ..(S, user)
 			else return
 		else
-			return src.attack_hand(user)
+			return src.Attackhand(user)
 
 	proc/open()
 		if (src.operating)

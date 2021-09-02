@@ -45,6 +45,8 @@
 	var/tmp/checkinghasproximity = 0
 	/// directions of this turf being blocked by directional blocking objects. So we don't need to loop through the entire contents
 	var/tmp/blocked_dirs = 0
+	/// this turf is allowing unrestricted hotbox reactions
+	var/tmp/allow_unrestricted_hotbox = 0
 	var/wet = 0
 	throw_unlimited = 0 //throws cannot stop on this tile if true (also makes space drift)
 
@@ -426,7 +428,7 @@
 // Ported from unstable r355
 /turf/space/Entered(atom/movable/A as mob|obj)
 	..()
-	if ((!(A) || istype(null, /obj/projectile)))
+	if ((!(A) || istype(A, /obj/projectile)))
 		return
 
 	if (!(A.last_move))
@@ -805,7 +807,7 @@
 			if (src.temp_flags & HAS_KUDZU)
 				var/obj/spacevine/K = locate(/obj/spacevine) in src.contents
 				if (K)
-					K.attackby(W, user, params)
+					K.Attackby(W, user, params)
 			return ..()
 
 /turf/simulated/aprilfools/grass
@@ -1184,6 +1186,17 @@
 	New()
 		..()
 		src.set_dir(pick(cardinal))
+
+/turf/simulated/nicegrass
+	name = "grass"
+	icon = 'icons/turf/outdoors.dmi'
+	icon_state = "grass"
+
+/turf/simulated/nicegrass/random
+	New()
+		..()
+		src.set_dir(pick(cardinal))
+
 
 /turf/unsimulated/floor/ballpit
 	name = "ball pit"

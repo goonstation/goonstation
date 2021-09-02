@@ -1097,7 +1097,7 @@ Returns:
 			for(var/atom/A in T)
 				if(A in attacked) continue
 				if((ismob(A) || A.density || istype(A, /obj/critter)) && !istype(A, /obj/table))
-					A.attackby(src, user)
+					A.Attackby(src, user)
 		showEffect(user,target,direction)
 		return
 
@@ -1258,7 +1258,7 @@ Returns:
 						//blood_slash(A, 5, get_step(target,get_dir(user, target)), get_dir(user, target), 4)
 					hitmob = 1
 				else
-					A.attackby(src, user)
+					A.Attackby(src, user)
 
 		if(bloody && hitmob)
 			playsound(target, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 100, 0)
@@ -1802,9 +1802,9 @@ Returns:
 	proc/fall_apart(var/mob/holder)
 		boutput(holder,"[src] bursts apart in your hand!")
 		if (prob(70) && item1)
-			holder.attackby(item1, holder)
+			holder.Attackby(item1, holder)
 		if (prob(70) && item2)
-			holder.attackby(item2, holder)
+			holder.Attackby(item2, holder)
 		if (item1)
 			item1.set_loc(get_turf(src))
 		if (item2)
@@ -2919,7 +2919,7 @@ Returns:
 				user.changeStatus("paralysis", 2 SECONDS)
 				user.force_laydown_standup()
 			else
-				src.attack_hand(usr)
+				src.Attackhand(usr)
 			return
 		else
 			if(ishuman(hit_atom))
@@ -3283,7 +3283,7 @@ Returns:
 
 	MouseDrop_T(atom/target, mob/user)
 		if (get_dist(user,src) < 1 && target == user)
-			src.attack_hand(user)
+			src.Attackhand(user)
 
 	attack_hand(mob/user as mob)
 		if(in_use)

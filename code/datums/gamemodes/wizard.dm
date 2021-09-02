@@ -4,7 +4,7 @@
 	shuttle_available = 2
 	latejoin_antag_compatible = 1
 	latejoin_only_if_all_antags_dead = 1
-	latejoin_antag_roles = list("changeling", "vampire")
+	latejoin_antag_roles = list(ROLE_CHANGELING, ROLE_VAMPIRE)
 
 	var/const/wizards_possible = 5
 	var/finished = 0
@@ -44,11 +44,11 @@
 		/*--num_wizards
 		num_wizards = max(num_wizards, 0)*/
 
-	var/list/chosen_wizards = antagWeighter.choose(pool = possible_wizards, role = "wizard", amount = num_wizards, recordChosen = 1)
+	var/list/chosen_wizards = antagWeighter.choose(pool = possible_wizards, role = ROLE_WIZARD, amount = num_wizards, recordChosen = 1)
 	traitors |= chosen_wizards
 	for (var/datum/mind/wizard in traitors)
 		wizard.assigned_role = "MODE"
-		wizard.special_role = "wizard"
+		wizard.special_role = ROLE_WIZARD
 		possible_wizards.Remove(wizard)
 
 	return 1
@@ -60,7 +60,7 @@
 			src.traitors.Remove(wizard)
 			continue
 		if(istype(wizard))
-			wizard.special_role = "wizard"
+			wizard.special_role = ROLE_WIZARD
 			if(!pick(job_start_locations["wizard"]))
 				boutput(wizard.current, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
 			else

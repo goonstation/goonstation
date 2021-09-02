@@ -1,3 +1,20 @@
+(t)tue aug 31 21
+(u)Sovexe
+(e)🐛|bug
+(*)Resolved an issue with deep copying certain mob types that could result in a server freeze or crash.
+(t)mon aug 30 21
+(u)Azrun
+(*)Winterify, Trenchify, and Swampify moved under Terrainify
+(t)fri aug 21 21
+(u)Sovexe
+(*)Wide Area Spawn's marked tile now has a visual indicator
+(t)fri aug 20 21
+(u)Zamujasa
+(*)Stealth mode can now fully hide you from Who and other things - enter your fake name as a single space to become invisible. Spooky!
+(*)Playing music while hidden this way will not display the "Now playing music. (Stop music)" message. (Note that DJ announcements will still fire, so don't do that)
+(t)fri aug 6 21
+(u)Zamujasa
+(*)Adventure View will now show antag overlays even if you aren't a ghost.
 (t)fri jul 9 21
 (u)Zonespace
 (*)Hotboxes are now logged, showing the turf, the fire source, and the last person to touch it.

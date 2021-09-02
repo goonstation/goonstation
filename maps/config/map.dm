@@ -1,4 +1,4 @@
-#if defined(SPACE_PREFAB_RUNTIME_CHECKING)
+#if defined(SPACE_PREFAB_RUNTIME_CHECKING) || defined( UNIT_TESTS )
 #include "blank.dm"
 
 #elif defined(UNDERWATER_PREFAB_RUNTIME_CHECKING)

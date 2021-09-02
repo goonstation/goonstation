@@ -280,7 +280,7 @@
 					src.users+=user
 				return ..() // you can just use the trigger manually from the UI
 			if(src.find_trigger() && !src.open && src.loc==user)
-				return src.the_trigger.attack_hand(user)
+				return src.the_trigger.Attackhand(user)
 			return
 #undef CONTAINER_LIGHT_TIME
 #undef MAX_CONTAINER_LIGHT_TIME
@@ -414,7 +414,7 @@
 		else return ..(user)
 
 	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 	proc/secure()
 	proc/loosen()
 
@@ -2782,7 +2782,7 @@
 	desc = ""
 	icon_state = "comp_gun2"
 	density = 0
-	compatible_guns = /obj/item/gun/energy
+	compatible_guns = list(/obj/item/gun/energy)
 	var/charging = 0
 
 	get_desc()
@@ -2812,7 +2812,7 @@
 		var/obj/item/gun/energy/E = Gun
 
 		// Can't recharge the crossbow. Same as the other recharger.
-		if (!E.rechargeable)
+		if (!(SEND_SIGNAL(E, COMSIG_CELL_CAN_CHARGE) & CELL_CHARGEABLE))
 			src.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"This gun cannot be recharged manually.\"</span>")
 			playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
 			charging = 0
@@ -2820,8 +2820,8 @@
 			updateIcon()
 			return
 
-		if (E.cell)
-			if (E.cell.charge(15) != 1) // Same as other recharger.
+		else
+			if (SEND_SIGNAL(E, COMSIG_CELL_CHARGE, 15) & CELL_FULL) // Same as other recharger.
 				src.charging = 0
 				tooltip_rebuild = 1
 				src.updateIcon()

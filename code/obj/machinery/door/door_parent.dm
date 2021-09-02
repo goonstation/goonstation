@@ -187,19 +187,19 @@
 	return
 
 /obj/machinery/door/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/door/attack_hand(mob/user as mob)
 	interact_particle(user,src)
-	return src.attackby(null, user)
+	return src.Attackby(null, user)
 
 /obj/machinery/door/proc/tear_apart(mob/user as mob)
 	if (!src.density)
-		return src.attackby(null, user)
+		return src.Attackby(null, user)
 
 	if (istype(src, /obj/machinery/door/airlock) || istype(src, /obj/machinery/door/window))
 		if (src.allowed(user)) // Don't override ID cards.
-			return src.attackby(null, user)
+			return src.Attackby(null, user)
 
 	src.visible_message("<span class='alert'>[user] is attempting to pry open [src].</span>")
 	user.show_text("You have to stand still...", "red")
@@ -318,6 +318,9 @@
 		else
 			src.last_used = world.time
 			src.close()
+		return
+
+	if(istype(I, /obj/item/card/emag) && !src.cant_emag)
 		return
 
 	if (src.allowed(user))
@@ -641,10 +644,10 @@
 	cant_emag = 1
 
 /obj/machinery/door/unpowered/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/door/unpowered/attack_hand(mob/user as mob)
-	return src.attackby(null, user)
+	return src.Attackby(null, user)
 
 /obj/machinery/door/unpowered/attackby(obj/item/I as obj, mob/user as mob)
 	if (src.operating)

@@ -691,6 +691,7 @@
 	New()
 		..()
 		src.build_buttons()
+		src.setItemSpecial(/datum/item_special/rangestab)
 
 	dropped(mob/user)
 		..()
