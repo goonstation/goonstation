@@ -450,6 +450,8 @@
 		onUpdate(timePassed)
 
 			var/mob/M = null
+			if(ismob(owner))
+				M = owner
 
 			var/prot = 1
 			if(istype(owner, /mob/living))
@@ -1068,7 +1070,7 @@
 
 		onAdd(optional=null)
 			. = ..()
-			ON_COOLDOWN(owner, "lying_bullet_dodge_cheese", 0.5 SECONDS)
+			ON_COOLDOWN(owner, "lying_bullet_dodge_cheese", 0.2 SECONDS)
 			if (isliving(owner))
 				L = owner
 				if (L.getStatusDuration("burning"))
@@ -1655,3 +1657,143 @@
 		if (!ismob(owner)) return
 		var/mob/M = owner
 		M.bioHolder.RemoveEffect(charge)
+
+//I call it regrow limb, but it can regrow any limb/organ that a changer can make a spider from. (apart from headspider obviously)
+/datum/statusEffect/changeling_regrow
+	id = "c_regrow"
+	name = "Regrowing Part: "
+	desc = ""
+	icon_state = "fire1"
+	maxDuration = 100 SECONDS
+	var/regrow_target_path = null 	//object path for the limb/organ we regrow
+	var/regrow_target_name = null 	//Human readable name for name of the effect button and whatnot
+	var/regrow_target_id = null 	//The limb/organ "slot" for this item. Must be a value that works in /datum/human_limbs or /datum/organHolder
+	var/limb_or_organ = null		//Acceptable values: "limb" or "organ"
+
+	var/counter = 0					//This I'm doing out of laziness. Instead of finding every place where an arm comes back.
+
+///atom/proc/setStatus("c_regrow_body_part", 90 SECONDS, optional)
+
+	getTooltip()
+		. = "We are currently regrowing [regrow_target_name]."
+
+	preCheck(atom/A)
+		. = 1
+		if(issilicon(A))
+			. = 0
+
+	onUpdate()
+		..()
+		//only do the extra checks every  10th tick
+		if (counter % 10 == 0)
+			counter = 0
+			return
+
+		//They already have the body part, don't give em a new one.
+		if (check_target_part())
+			boutput(owner, "We notice that we already have a new <b>[regrow_target_name]</b> and we stop growing a new one.")
+			owner.delStatus(id)
+			return
+		counter++
+
+
+	//Optional needs to be an acceptable value in organHolder.receive_organ or limb for this to work.
+	onAdd(optional = null)
+		. = ..()
+		if (isnull(limb_or_organ))
+			owner.delStatus(id)
+		if (!ishuman(owner))
+			owner.delStatus(id)
+			return
+
+		name += regrow_target_name
+
+	onRemove()
+		..()
+		if (!ishuman(owner))
+			return
+		//They already have the body part, don't give em a new one.
+		if (check_target_part())
+			return
+		//if it is removed before the time runs out (i.e. if you manually replaced this limb/organ), then don't regrow...
+		if (duration > 0)
+			boutput(owner, "We stop regrowing our [regrow_target_name]")
+			return
+		else
+			do_regrow(owner)
+
+	//Checks if the target spot has been mended (if there's a new limb or organ in that spot) using var/regrow_target_id
+	proc/check_target_part()
+		//check if they got a new limb/organ and remove the status
+		switch(limb_or_organ)
+			if ("limb")
+				var/mob/living/carbon/human/H = owner
+				return H.limbs.get_limb(regrow_target_id)
+
+			if ("organ")
+				var/mob/living/carbon/human/H = owner
+				return H.organHolder.get_organ(regrow_target_id)
+
+		return null
+
+	proc/do_regrow(var/mob/living/carbon/human/H)
+		if (check_target_part())
+			boutput(owner, "We notice that we already have a new <b>[regrow_target_name]</b> and we stop growing a new one.")
+			return
+
+		switch(limb_or_organ)
+			if ("limb")
+				H.limbs.replace_with(regrow_target_id, regrow_target_path, show_message = 0)
+				H.visible_message("<span class='alert'>[H]'s [regrow_target_name] seems to regrow before your eyes!</span>", "<span class='notice'>We finish growing a new <b>[regrow_target_name]</b>!</span>")
+			if ("organ")
+				H.organHolder.receive_organ(new regrow_target_path(H), regrow_target_id)
+				H.visible_message("<span class='alert'>[H]'s [regrow_target_name] seems to regrow before your eyes!</span>", "<span class='notice'>We finish growing a new <b>[regrow_target_name]</b>!</span>")
+
+/datum/statusEffect/changeling_regrow/limb
+	limb_or_organ = "limb"
+/datum/statusEffect/changeling_regrow/organ
+	limb_or_organ = "organ"
+
+/datum/statusEffect/changeling_regrow/limb/l_arm
+	id = "c_regrow-l_hand"
+	icon_state = "cspider-hand"
+	regrow_target_id = "l_arm"
+	regrow_target_name = "left arm"
+	regrow_target_path = /obj/item/parts/human_parts/arm/left
+/datum/statusEffect/changeling_regrow/limb/r_arm
+	id = "c_regrow-r_hand"
+	icon_state = "cspider-hand"
+	regrow_target_id = "r_arm"
+	regrow_target_name = "right arm"
+	regrow_target_path = /obj/item/parts/human_parts/arm/right
+/datum/statusEffect/changeling_regrow/limb/l_leg
+	id = "c_regrow-l_leg"
+	icon_state = "cspider-leg"
+	regrow_target_id = "l_leg"
+	regrow_target_name = "left leg"
+	regrow_target_path = /obj/item/parts/human_parts/leg/left
+/datum/statusEffect/changeling_regrow/limb/r_leg
+	id = "c_regrow-r_leg"
+	icon_state = "cspider-leg"
+	regrow_target_id = "r_leg"
+	regrow_target_name = "right leg"
+	regrow_target_path = /obj/item/parts/human_parts/leg/right
+
+/datum/statusEffect/changeling_regrow/organ/left_eye
+	id = "c_regrow-l_eye"
+	icon_state = "cspider-eye"
+	regrow_target_id = "left_eye"
+	regrow_target_name = "left eye"
+	regrow_target_path = /obj/item/organ/eye/left
+/datum/statusEffect/changeling_regrow/organ/right_eye
+	id = "c_regrow-r_eye"
+	icon_state = "cspider-eye"
+	regrow_target_id = "right_eye"
+	regrow_target_name = "right eye"
+	regrow_target_path = /obj/item/organ/eye/right
+/datum/statusEffect/changeling_regrow/organ/butt
+	id = "c_regrow-butt"
+	icon_state = "cspider-butt"
+	regrow_target_id = "butt"
+	regrow_target_name = "butt"
+	regrow_target_path = /obj/item/clothing/head/butt

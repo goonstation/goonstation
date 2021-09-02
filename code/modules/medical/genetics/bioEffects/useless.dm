@@ -204,13 +204,12 @@
 	isBad = 1
 	msgGain = "You feel sweaty."
 	msgLose = "You feel much more hygenic."
-	var/personalized_stink = "Wow, it stinks in here!"
+	var/personalized_stink = null
 
 	New()
 		..()
-		src.personalized_stink = stinkString()
 		if (prob(5))
-			src.variant = 2
+			src.personalized_stink = stinkString()
 
 	OnLife(var/mult)
 		if(..()) return
@@ -220,7 +219,7 @@
 			for(var/mob/living/carbon/C in view(6,get_turf(owner)))
 				if (C == owner)
 					continue
-				if (src.variant == 2)
+				if (src.personalized_stink)
 					boutput(C, "<span class='alert'>[src.personalized_stink]</span>")
 				else
 					boutput(C, "<span class='alert'>[stinkString()]</span>")
@@ -272,6 +271,7 @@
 	msgGain = "You feel drunk!"
 	msgLose = "You feel sober."
 	probability = 99
+	stability_loss = -5
 	var/reagent_to_add = "ethanol"
 	var/reagent_threshold = 80
 	var/add_per_tick = 1
@@ -339,6 +339,7 @@
 	lockedGaps = 10
 	lockedDiff = 6
 	lockedChars = list("G","C","A","T","U")
+	stability_loss = 15
 	lockedTries = 10
 	curable_by_mutadone = 0
 	can_scramble = 0
@@ -361,6 +362,7 @@
 	probability = 0.25
 	var/change_prob = 25
 	add_per_tick = 7
+	stability_loss = 25
 
 	OnLife(var/mult)
 		if (prob(src.change_prob) && all_functional_reagent_ids.len > 1)
@@ -417,7 +419,7 @@
 	blockGaps = 3
 	msgGain = "You feel as if you're impossibly young."
 	msgLose = "You feel like you're your own age again."
-	stability_loss = 10
+	stability_loss = 0
 
 	OnAdd()
 		holder.age = (0 - holder.age)
@@ -436,7 +438,7 @@
 	blockGaps = 3
 	msgGain = "You feel like you're growing younger - no wait, older?"
 	msgLose = "You feel like you're aging normally again."
-	stability_loss = 10
+	stability_loss = 0
 	OnLife(var/mult)
 		..()
 		if (prob(33))

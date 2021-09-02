@@ -1,3 +1,7 @@
+(t)tue aug 31 21
+(u)Sovexe
+(e)🐛|bug
+(*)Resolved an issue with deep copying certain mob types that could result in a server freeze or crash.
 (t)mon aug 30 21
 (u)Azrun
 (*)Winterify, Trenchify, and Swampify moved under Terrainify
