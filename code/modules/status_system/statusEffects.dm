@@ -450,6 +450,8 @@
 		onUpdate(timePassed)
 
 			var/mob/M = null
+			if(ismob(owner))
+				M = owner
 
 			var/prot = 1
 			if(istype(owner, /mob/living))
