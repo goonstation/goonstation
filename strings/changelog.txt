@@ -1,6 +1,10 @@
 
 (t)thu sep 02 21
 (u)Flappybat
+(p)5882
+(e)|
+(+)Welders will always do damage on harm intent rather than trying to cauterize bleeding.
+(u)Flappybat
 (p)5875
 (e)|
 (+)Added a sound to the hand labeler.
