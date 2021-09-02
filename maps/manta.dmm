@@ -26247,23 +26247,14 @@
 /obj/item/storage/wall/fire{
 	pixel_y = 32
 	},
-/obj/storage/secure/closet/engineering/cargo,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "btM" = (
 /obj/machinery/manufacturer/hangar,
 /turf/simulated/floor/bot,
 /area/station/quartermaster/cargobay)
-"btN" = (
-/obj/machinery/manufacturer/mining,
-/turf/simulated/floor/bot,
-/area/station/quartermaster/cargobay)
-"btO" = (
-/obj/machinery/manufacturer/general,
-/turf/simulated/floor/bot,
-/area/station/quartermaster/cargobay)
 "btP" = (
-/obj/machinery/manufacturer/medical,
+/obj/machinery/manufacturer/mining,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 3;
@@ -35972,6 +35963,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
+"dBj" = (
+/obj/stool/chair/yellow{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/quartermaster/cargobay)
 "dCn" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -38240,7 +38237,6 @@
 	dir = 1;
 	pixel_y = 20
 	},
-/obj/storage/secure/closet/engineering/cargo,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "hVI" = (
@@ -38679,6 +38675,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/mining)
+"iQM" = (
+/obj/machinery/manufacturer/robotics,
+/turf/simulated/floor/bot,
+/area/station/quartermaster/cargobay)
 "iSe" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -39002,6 +39002,10 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/communications/bedroom)
+"jFc" = (
+/obj/storage/secure/closet/engineering/cargo,
+/turf/simulated/floor,
+/area/station/quartermaster/cargobay)
 "jFQ" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -41566,6 +41570,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
+"pue" = (
+/obj/machinery/nanofab/refining,
+/turf/simulated/floor,
+/area/station/quartermaster/cargobay)
 "pvN" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -42906,6 +42914,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/secoffquarters)
+"sOt" = (
+/obj/decal/fakeobjects/mantacontainer/upwards,
+/turf/simulated/floor,
+/area/station/quartermaster/cargobay)
 "sTs" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -44676,6 +44688,10 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/power)
+"wOa" = (
+/obj/machinery/manufacturer/medical,
+/turf/simulated/floor/bot,
+/area/station/quartermaster/cargobay)
 "wOL" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -44821,7 +44837,7 @@
 	name = "Submarine Bay (Engineering)"
 	})
 "xod" = (
-/obj/machinery/manufacturer/robotics,
+/obj/machinery/manufacturer/general,
 /obj/machinery/light/incandescent/netural{
 	dir = 1;
 	pixel_y = 20
@@ -70566,7 +70582,7 @@ aLF
 bgr
 bpq
 aKs
-btM
+jFc
 bvg
 bwH
 ayM
@@ -70868,7 +70884,7 @@ aLF
 bfl
 bpU
 aKs
-btN
+jFc
 bvh
 bwI
 ayM
@@ -71170,7 +71186,7 @@ aLJ
 bgr
 box
 aKs
-btO
+btM
 bvi
 bwJ
 byw
@@ -72076,12 +72092,12 @@ boR
 xfn
 box
 aKs
-bvk
+wOa
 bvk
 bvk
 byy
 bvk
-bvk
+dBj
 bvk
 bvk
 bFv
@@ -72378,14 +72394,14 @@ boS
 brC
 bpW
 aKs
-bvk
+iQM
 bvk
 bvk
 byy
 bvk
-bvk
-bvk
-bvk
+bNC
+bBz
+bEj
 bwP
 bGE
 bHD
@@ -72680,14 +72696,14 @@ boR
 bgr
 box
 aKs
-bvk
+pue
 bvk
 bvk
 byy
 bvk
 bvk
 bvk
-bvk
+sOt
 bwP
 fKa
 bHD
@@ -72987,9 +73003,9 @@ bvk
 bvk
 byy
 bvk
-bNC
-bBz
-bEj
+bvk
+bvk
+bvk
 bwP
 bwP
 bwP
