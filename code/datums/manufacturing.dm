@@ -1004,7 +1004,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	category = "Component"
 
 /datum/manufacture/augmentation_stun
-	name = "Stun Resist augmentation"
+	name = "Stun Resist Augmentation"
 	item_paths = list("CRY-2","MET-2","CON-2","INS-1", "electrum")
 	item_amounts = list(8,5,5,1,5)
 	item_outputs = list(/obj/item/organ/augmentation/head/stun_resist)
@@ -1013,7 +1013,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	category = "Component"
 
 /datum/manufacture/augmentation_pain
-	name = "Pain Blocker augmentation"
+	name = "Pain Blocker Augmentation"
 	item_paths = list("CRY-2","MET-2","CON-2","INS-1", "uqill")
 	item_amounts = list(8,5,5,3,5)
 	item_outputs = list(/obj/item/organ/augmentation/head/pain_reducer)
@@ -1035,6 +1035,15 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	item_paths = list("CRY-2","MET-2","CON-2","INS-1", "telecrystal")
 	item_amounts = list(8,5,5,3,10)
 	item_outputs = list(/obj/item/organ/augmentation/head/wireless_interact)
+	time = 80 SECONDS
+	create = 1
+	category = "Component"
+
+/datum/manufacture/augmentation_surgery
+	name = "Surgery Assistant Augmentation"
+	item_paths = list("CRY-1","MET-2","CON-1","INS-1", "cobryl")
+	item_amounts = list(7,5,5,3,5)
+	item_outputs = list(/obj/item/organ/augmentation/head/surgery_assistant)
 	time = 80 SECONDS
 	create = 1
 	category = "Component"

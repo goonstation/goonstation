@@ -225,10 +225,10 @@
 		src.donor.reagents.add_reagent("nanites", 0.5 * mult) //you want borg powers? Well, come and get 'em!
 		UnregisterSignal(src.donor, COMSIG_CLICK)
 
-/obj/item/organ/augmentation/head/surgery_assistant //better surgery odds and you get told the steps at the cost of ____
+/obj/item/organ/augmentation/head/surgery_assistant //better surgery odds and you get told the steps at the cost of being unable to self-surgery, good for newbies and surgeons
 	name = "surgery assistant"
 	organ_name = "surgery assistant"
-	icon_state = "augmentation_stam"
+	icon_state = "augmentation_surgery"
 	desc = "An augmentation that, unlike medical books, teaches you how to do surgery, and makes you better at it too!"
 	organ_abilities = list(/datum/targetable/organAbility/surgery_assistant)
 	var/chosen_surgery
@@ -333,7 +333,7 @@
 					boutput(U, __blue("Step Completed."))
 					src.surgery_step = 4
 					sleep(15 DECI SECONDS)
-					boutput(U, __blue("<b>Step 4:</b> Use a surgical saw on the patient's head on help intent."))
+					boutput(U, __blue("<b>Step 4:</b> Use a surgical saw on the patient's head on help intent. Note: If you wish to put in a brain, put it in instead of or following this step."))
 				else if(surgery_step == 4 && U.a_intent == INTENT_HELP && istool(I, TOOL_SAWING) && U.zone_sel.selecting == "head")
 					boutput(U, __blue("<b>Surgery completed, good job!</b>"))
 					src.chosen_surgery = null
@@ -424,7 +424,7 @@
 					boutput(U, __blue("Step Completed."))
 					src.surgery_step = 4
 					sleep(15 DECI SECONDS)
-					boutput(U, __blue("<b>Step 4:</b> Use a surgical saw on the patient's chest on help intent."))
+					boutput(U, __blue("<b>Step 4:</b> Use a surgical saw on the patient's chest on help intent. Note: If you wish to put in a heart, put it in instead of or following this step."))
 				else if(surgery_step == 4 && U.a_intent == INTENT_HELP && istool(I, TOOL_SAWING) && U.zone_sel.selecting == "chest")
 					boutput(U, __blue("<b>Surgery completed, good job!</b>"))
 					src.chosen_surgery = null
@@ -441,13 +441,13 @@
 					boutput(U, __blue("Step Completed."))
 					src.surgery_step = 2
 					sleep(15 DECI SECONDS)
-					boutput(U, __blue("<b>Step 2:</b> Use a scalpel on the patient's chest on help intent, with the hand in relation to the side you wish to remove."))
+					boutput(U, __blue("<b>Step 2:</b> Use a scalpel on the patient's chest on help intent."))
 				else if(surgery_step == 2 && U.a_intent == INTENT_HELP && istool(I, TOOL_CUTTING) && U.zone_sel.selecting == "chest")
 					boutput(U, __blue("Step Completed."))
 					src.surgery_step = 3
 					sleep(15 DECI SECONDS)
-					boutput(U, __blue("<b>Step 3:</b> Use surgical scissors on the patient's chest on help intent, with the hand in relation to the side you wish to remove."))
-				else if(surgery_step == 4 && U.a_intent == INTENT_HELP && istool(I, TOOL_SNIPPING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("<b>Step 3:</b> Use surgical scissors on the patient's chest on help intent, with the hand in relation to the side you wish to remove. Note: If you wish to put in a lung, put it in instead of or following this step."))
+				else if(surgery_step == 3 && U.a_intent == INTENT_HELP && istool(I, TOOL_SNIPPING) && U.zone_sel.selecting == "chest")
 					boutput(U, __blue("<b>Surgery completed, good job!</b>"))
 					src.chosen_surgery = null
 					src.surgery_step = 0
@@ -463,13 +463,13 @@
 					boutput(U, __blue("Step Completed."))
 					src.surgery_step = 2
 					sleep(15 DECI SECONDS)
-					boutput(U, __blue("<b>Step 2:</b> Use a scalpel on the patient's chest on help intent, with the hand in relation to the side you wish to remove."))
+					boutput(U, __blue("<b>Step 2:</b> Use a scalpel on the patient's chest on help intent."))
 				else if(surgery_step == 2 && U.a_intent == INTENT_HELP && istool(I, TOOL_CUTTING) && U.zone_sel.selecting == "chest")
 					boutput(U, __blue("Step Completed."))
 					src.surgery_step = 3
 					sleep(15 DECI SECONDS)
-					boutput(U, __blue("<b>Step 3:</b> Use surgical scissors on the patient's chest on help intent, with the hand in relation to the side you wish to remove."))
-				else if(surgery_step == 4 && U.a_intent == INTENT_HELP && istool(I, TOOL_SNIPPING) && U.zone_sel.selecting == "chest")
+					boutput(U, __blue("<b>Step 3:</b> Use surgical scissors on the patient's chest on help intent, with the hand in relation to the side you wish to remove. Note: If you wish to put in a kidney, put it in instead of or following this step."))
+				else if(surgery_step == 3 && U.a_intent == INTENT_HELP && istool(I, TOOL_SNIPPING) && U.zone_sel.selecting == "chest")
 					boutput(U, __blue("<b>Surgery completed, good job!</b>"))
 					src.chosen_surgery = null
 					src.surgery_step = 0
@@ -490,7 +490,7 @@
 					boutput(U, __blue("Step Completed."))
 					src.surgery_step = 3
 					sleep(15 DECI SECONDS)
-					boutput(U, __blue("<b>Step 3:</b> Use surgical scissors on the patient's chest on help intent."))
+					boutput(U, __blue("<b>Step 3:</b> Use surgical scissors on the patient's chest on help intent. Note: If you wish to put in an appendix, put it in instead of or following this step."))
 				else if(surgery_step == 3 && U.a_intent == INTENT_HELP && istool(I, TOOL_SNIPPING) && U.zone_sel.selecting == "chest")
 					boutput(U, __blue("<b>Surgery completed, good job!</b>"))
 					src.chosen_surgery = null
@@ -512,7 +512,7 @@
 					boutput(U, __blue("Step Completed."))
 					src.surgery_step = 3
 					sleep(15 DECI SECONDS)
-					boutput(U, __blue("<b>Step 3:</b> Use a scalpel on the patient's chest on help intent."))
+					boutput(U, __blue("<b>Step 3:</b> Use a scalpel on the patient's chest on help intent. Note: If you wish to put in a liver, put it in instead of or following this step."))
 				else if(surgery_step == 3 && U.a_intent == INTENT_HELP && istool(I, TOOL_CUTTING) && U.zone_sel.selecting == "chest")
 					boutput(U, __blue("<b>Surgery completed, good job!</b>"))
 					src.chosen_surgery = null
@@ -534,7 +534,7 @@
 					boutput(U, __blue("Step Completed."))
 					src.surgery_step = 3
 					sleep(15 DECI SECONDS)
-					boutput(U, __blue("<b>Step 3:</b> Use surgical scissors on the patient's chest on help intent."))
+					boutput(U, __blue("<b>Step 3:</b> Use surgical scissors on the patient's chest on help intent. Note: If you wish to put in a stomach, put it in instead of or following this step."))
 				else if(surgery_step == 3 && U.a_intent == INTENT_HELP && istool(I, TOOL_SNIPPING) && U.zone_sel.selecting == "chest")
 					boutput(U, __blue("<b>Surgery completed, good job!</b>"))
 					src.chosen_surgery = null
@@ -556,7 +556,7 @@
 					boutput(U, __blue("Step Completed."))
 					src.surgery_step = 3
 					sleep(15 DECI SECONDS)
-					boutput(U, __blue("<b>Step 3:</b> Use a scalpel on the patient's chest on help intent."))
+					boutput(U, __blue("<b>Step 3:</b> Use a scalpel on the patient's chest on help intent. Note: If you wish to put in intestines, put it in instead of or following this step."))
 				else if(surgery_step == 3 && U.a_intent == INTENT_HELP && istool(I, TOOL_CUTTING) && U.zone_sel.selecting == "chest")
 					boutput(U, __blue("<b>Surgery completed, good job!</b>"))
 					src.chosen_surgery = null
@@ -578,7 +578,7 @@
 					boutput(U, __blue("Step Completed."))
 					src.surgery_step = 3
 					sleep(15 DECI SECONDS)
-					boutput(U, __blue("<b>Step 3:</b> Use surgical scissors on the patient's chest on help intent."))
+					boutput(U, __blue("<b>Step 3:</b> Use surgical scissors on the patient's chest on help intent.  Note: If you wish to put in a pancreas, put it in instead of or following this step."))
 				else if(surgery_step == 3 && U.a_intent == INTENT_HELP && istool(I, TOOL_SNIPPING) && U.zone_sel.selecting == "chest")
 					boutput(U, __blue("<b>Surgery completed, good job!</b>"))
 					src.chosen_surgery = null
@@ -600,7 +600,7 @@
 					boutput(U, __blue("Step Completed."))
 					src.surgery_step = 3
 					sleep(15 DECI SECONDS)
-					boutput(U, __blue("<b>Step 3:</b> Use a scalpel on the patient's chest on help intent."))
+					boutput(U, __blue("<b>Step 3:</b> Use a scalpel on the patient's chest on help intent. Note: If you wish to put in a spleen, put it in instead of or following this step."))
 				else if(surgery_step == 3 && U.a_intent == INTENT_HELP && istool(I, TOOL_CUTTING) && U.zone_sel.selecting == "chest")
 					boutput(U, __blue("<b>Surgery completed, good job!</b>"))
 					src.chosen_surgery = null
@@ -658,15 +658,8 @@
 	on_removal()
 		..()
 		UnregisterSignal(src.donor, COMSIG_SURGERY_TOOL)
-
-	emp_act()
-		..()
-
-	on_broken(var/mult = 1)
-		if (!..())
-			return
-
-
+		chosen_surgery = null
+		surgery_step = 0
 
 /obj/item/organ/augmentation/head/neural_jack //traitor roboticists can get matrix powers
 	name = "neural jack"

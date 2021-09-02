@@ -296,7 +296,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 /* ---------- SCALPEL ---------- */
 /* ============================= */
 
-/obj/item/proc/scalpel_surgery(var/mob/living/carbon/human/patient as mob, var/mob/living/surgeon as mob)
+/obj/item/proc/scalpel_surgery(var/mob/living/carbon/human/patient as mob, var/mob/living/carbon/human/surgeon as mob)
 	if (!ishuman(patient))
 		return 0
 
@@ -313,6 +313,15 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		random_brute_damage(surgeon, damage)
 		take_bleeding_damage(surgeon, null, damage)
 		return 1
+
+	if(surgeon.organHolder.augmentation_nerve)
+		var/obj/item/organ/augmentation/head/surgery_assistant/S = surgeon.organHolder.augmentation_nerve
+		if(patient == surgeon && istype(surgeon.organHolder.augmentation_nerve, /obj/item/organ/augmentation/head/surgery_assistant))
+			boutput(surgeon, __blue("[surgeon.organHolder.augmentation_nerve] stops you from attempting to do surgery on yourself!"))
+			return 0
+		if(istype(surgeon.organHolder.augmentation_nerve, /obj/item/organ/augmentation/head/surgery_assistant) && S.broken && !istype(src, /obj/item/scalpel))
+			boutput(surgeon, __blue("[surgeon.organHolder.augmentation_nerve] stops you from attempting to do surgery without a medical-grade tool!"))
+			return 0
 
 	src.add_fingerprint(surgeon)
 
@@ -930,7 +939,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 /* ---------- SAW ---------- */
 /* ========================= */
 
-/obj/item/proc/saw_surgery(var/mob/living/carbon/human/patient as mob, var/mob/surgeon as mob)
+/obj/item/proc/saw_surgery(var/mob/living/carbon/human/patient as mob, var/mob/living/carbon/human/surgeon as mob)
 	if (!ishuman(patient))
 		return 0
 
@@ -946,6 +955,15 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		random_brute_damage(surgeon, damage)
 		take_bleeding_damage(surgeon, damage)
 		return 1
+
+	if(surgeon.organHolder.augmentation_nerve)
+		var/obj/item/organ/augmentation/head/surgery_assistant/S = surgeon.organHolder.augmentation_nerve
+		if(patient == surgeon && istype(surgeon.organHolder.augmentation_nerve, /obj/item/organ/augmentation/head/surgery_assistant))
+			boutput(surgeon, __blue("[surgeon.organHolder.augmentation_nerve] stops you from attempting to do surgery on yourself!"))
+			return 0
+		if(istype(surgeon.organHolder.augmentation_nerve, /obj/item/organ/augmentation/head/surgery_assistant) && S.broken && !istype(src, /obj/item/circular_saw))
+			boutput(surgeon, __blue("[surgeon.organHolder.augmentation_nerve] stops you from attempting to do surgery without a medical-grade tool!"))
+			return 0
 
 	src.add_fingerprint(surgeon)
 
@@ -1319,7 +1337,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 /* ---------- SUTURE ---------- */
 /* ============================ */
 
-/obj/item/proc/suture_surgery(var/mob/living/carbon/human/patient as mob, var/mob/surgeon as mob)
+/obj/item/proc/suture_surgery(var/mob/living/carbon/human/patient as mob, var/mob/living/carbon/human/surgeon as mob)
 	if (!ishuman(patient))
 		return 0
 
@@ -1771,7 +1789,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 /* ------------ SNIP ----------- */
 /* ============================= */
 
-/obj/item/proc/snip_surgery(var/mob/living/carbon/human/patient as mob, var/mob/living/surgeon as mob)
+/obj/item/proc/snip_surgery(var/mob/living/carbon/human/patient as mob, var/mob/living/carbon/human/surgeon as mob)
 	if (!surgeryCheck(patient, surgeon))
 		return 0
 
@@ -1789,6 +1807,15 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		random_brute_damage(surgeon, damage)
 		take_bleeding_damage(surgeon, null, damage)
 		return 1
+
+	if(surgeon.organHolder.augmentation_nerve)
+		var/obj/item/organ/augmentation/head/surgery_assistant/S = surgeon.organHolder.augmentation_nerve
+		if(patient == surgeon && istype(surgeon.organHolder.augmentation_nerve, /obj/item/organ/augmentation/head/surgery_assistant))
+			boutput(surgeon, __blue("[surgeon.organHolder.augmentation_nerve] stops you from attempting to do surgery on yourself!"))
+			return 0
+		if(istype(surgeon.organHolder.augmentation_nerve, /obj/item/organ/augmentation/head/surgery_assistant) && S.broken && !istype(src, /obj/item/scissors/surgical_scissors))
+			boutput(surgeon, __blue("[surgeon.organHolder.augmentation_nerve] stops you from attempting to do surgery without a medical-grade tool!"))
+			return 0
 
 	src.add_fingerprint(surgeon)
 

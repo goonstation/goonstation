@@ -1698,8 +1698,9 @@
 
 	New()
 		..()
-		H = holder.owner
-		S = H.organHolder.augmentation_nerve
+		SPAWN_DBG(5 DECI SECONDS)
+			H = holder.owner
+			S = H.organHolder.augmentation_nerve
 
 	cast()
 		if(..())
