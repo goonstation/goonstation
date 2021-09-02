@@ -475,10 +475,6 @@
 "bM" = (
 /turf/simulated/floor/sanitary,
 /area/prefab/tunnelsnake)
-"bO" = (
-/obj/machinery/ore_cloud_storage_container,
-/turf/simulated/floor,
-/area/prefab/tunnelsnake)
 "bP" = (
 /obj/decal/cleanable/dirt/dirt5,
 /turf/simulated/floor/shuttlebay,
@@ -669,6 +665,10 @@
 	},
 /turf/simulated/floor,
 /area/prefab/tunnelsnake)
+"nQ" = (
+/obj/item/device/radio/beacon,
+/turf/simulated/floor,
+/area/prefab/tunnelsnake)
 "oe" = (
 /obj/machinery/drainage/big,
 /obj/machinery/r_door_control/podbay/mining/new_walls/north{
@@ -729,6 +729,10 @@
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
+"xX" = (
+/obj/machinery/recharge_station,
+/turf/simulated/floor/orange,
+/area/prefab/tunnelsnake)
 "zw" = (
 /obj/machinery/r_door_control/podbay/mining/new_walls/north{
 	id = "door4"
@@ -757,7 +761,7 @@
 /turf/simulated/floor/black,
 /area/prefab/tunnelsnake)
 "EL" = (
-/obj/machinery/recharge_station,
+/obj/machinery/ore_cloud_storage_container,
 /turf/simulated/floor/shuttlebay,
 /area/prefab/tunnelsnake)
 "GI" = (
@@ -1183,7 +1187,7 @@ aW
 bt
 bw
 bA
-AM
+nQ
 HR
 bG
 bK
@@ -1227,7 +1231,7 @@ aS
 bC
 bb
 aC
-bO
+AM
 AM
 AM
 AM
@@ -1357,7 +1361,7 @@ au
 bu
 bx
 au
-bu
+xX
 bx
 au
 ab
