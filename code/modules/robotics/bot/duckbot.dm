@@ -77,7 +77,7 @@
 	if(length(T) >= 1)
 		T = (pick(T))
 		src.mystical_access()
-		src.navigate_to(T, src.bot_move_delay, 0, 300)
+		src.navigate_to(T, src.bot_move_delay, 0, 69)
 		if(length(src.path) >= 1)
 			return TRUE
 
@@ -95,10 +95,10 @@
 			var/message = pick("QUacK", "WHaCKA", "quURK", "bzzACK", "quock", "queck", "WOcka", "wacKY","GOggEL","gugel","goEGL","GeGGal")
 			src.speak(message, 1, 1)
 			wakka_wakka(TRUE) // Seek loser is TRUE
-			if(prob(70))
+			if(prob(50))
 				playsound(src.loc, "sound/misc/amusingduck.ogg", 50, 1) // MUSIC
 		else
-			if(!ON_COOLDOWN(src, DUCKBOT_QUACK_COOLDOWN, src.quack_cooldown) && prob(60))
+			if(!ON_COOLDOWN(src, DUCKBOT_QUACK_COOLDOWN, src.quack_cooldown) && prob(40))
 				var/message = pick("wacka", "quack","quacky","gaggle")
 				src.speak(message, 1, 0)
 			if(!src.moving)
@@ -116,9 +116,9 @@
 			E.name = "duck egg"
 			src.eggs--
 			playsound(src.loc, "sound/misc/eggdrop.ogg", 50, 0)
-		if(prob(80))
+		if(prob(10)) // why the fuck was this 80?????????????????? -warc
 			src.egg_process++
-		if(src.egg_process >= 100 && prob(20))
+		if(src.egg_process >= 100)
 			src.eggs++
 			src.egg_process = 0
 		if(frustration >= 8)
