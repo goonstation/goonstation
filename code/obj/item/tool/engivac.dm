@@ -45,7 +45,6 @@ obj/item/engivac
 obj/item/engivac/proc/update_icon(mob/M = null)
 	item_state = "engivac_" + (held_toolbox ? held_toolbox.icon_state : "")
 	wear_state = item_state
-	//toolbox_col = held_toolbox ? held_toolbox.icon_state : ""
 	underlays = null
 	toolbox_img.icon_state = held_toolbox ? held_toolbox.icon_state : null
 	underlays += toolbox_img
@@ -58,13 +57,10 @@ obj/item/engivac/proc/update_icon(mob/M = null)
 obj/item/engivac/equipped(var/mob/user, var/slot)
 	..()
 	if (slot == SLOT_BACK)
-		wear_image_icon = 'icons/mob/back.dmi'
+		wear_image = image('icons/mob/back.dmi')
 	if (slot == SLOT_BELT)
-		wear_image_icon = 'icons/mob/belt.dmi'
+		wear_image = image('icons/mob/belt.dmi')
 	update_icon(user)
-
-//obj/item/engivac/unequipped(mob/user)
-//	..()
 
 
 ///
@@ -90,12 +86,11 @@ obj/item/engivac/disposing()
 	..()
 
 
-//You can't pick stuff up off windows for some reason without first dragging said stuff off first, so this is a bit of QOL for repair cleanup.
-obj/item/engivac/afterattack(atom/target, mob/user as mob)
-	if (istype(target, /obj/window))
-		if (find_crud_on_turf(get_turf(target)))
-			playsound(get_turf(src), "sound/effects/suck.ogg", 20, TRUE, 0, 1.5)
-			boutput(user, "<span class='notice'>\The [name] sucks up some stuff stuck behind the window somehow.</span>")
+//Manually cleaning up turfs (for corners you can't walk into)
+obj/item/engivac/afterattack(atom/target)
+	if (!target)
+		return
+	find_crud_on_turf(isturf(target) ? target : get_turf(target))
 
 
 obj/item/engivac/attackby(obj/item/I as obj, mob/user as mob)
@@ -158,14 +153,6 @@ obj/item/engivac/attack_self(mob/user)
 			toolbox_col = ""
 			update_icon(user)
 
-/*
-obj/item/engivac/dropped(mob/living/user)
-	..()
-	if (islist(user.move_laying))
-		user.move_laying -= src
-	else
-		user.move_laying = null
-*/
 
 obj/item/engivac/move_callback(mob/M, turf/source, turf/target)
 	. = ..()
@@ -181,7 +168,7 @@ obj/item/engivac/move_callback(mob/M, turf/source, turf/target)
 			placing_tiles = FALSE
 			tooltip_rebuild = 1
 			playsound(get_turf(src), "sound/machines/buzz-sigh.ogg", 50, 0)
-			boutput(M, "<span class='alert'>\The [name] does not have any floor tiles left, and deactivates the auto-placing.</span>")
+			boutput(M, "<span class='alert'>\The [name] does not have any floor tiles left, and deactivates auto-placing.</span>")
 			return
 	if (istype(target, /turf/simulated/floor))
 		var/turf/simulated/floor/tile_target = target
@@ -204,12 +191,12 @@ obj/item/engivac/get_desc(dist)
 ///				VAC SPECIFIC HELPER PROCS
 ///
 
-///Find stuff on a turf and try to grab it. Returns 1 if it manages to find and collect at least 1 thing (for use in the afterattack code)
+///Find stuff on a turf and try to grab it. Returns TRUE if it manages to find and collect at least 1 thing
 obj/item/engivac/proc/find_crud_on_turf(turf/target_turf)
 	if (!islist(currently_collecting)) //both categories toggled off
-		return 0
+		return FALSE
 	if (!held_toolbox) //lol
-		return 0
+		return FALSE
 	var/did_something = FALSE
 	for (var/obj/item/floor_item in target_turf)
 		for(var/sometype in currently_collecting)
@@ -217,40 +204,38 @@ obj/item/engivac/proc/find_crud_on_turf(turf/target_turf)
 				if (attempt_fill(floor_item))
 					did_something = TRUE //congratulations
 				break
-		//if (!(floor_item.type in currently_collecting))
-		//	continue
 
 	return did_something
 
 
-///Returns 1 if we fit the target thing (or some of the thing if it's a stack of stuff) into the toolbox.
+///Returns TRUE if we fit the target thing (or some of the thing if it's a stack of stuff) into the toolbox.
 obj/item/engivac/proc/attempt_fill(obj/item/target)
 	if (!target)
-		return 0
+		return FALSE
 	if (get_dist(target, src) > 1) //I'm sure smartasses will find a way
-		return 0
+		return FALSE
 	var/succeeded = FALSE
 	var/list/toolbox_contents = held_toolbox.get_contents()
 	for (var/obj/item/thingy as anything in toolbox_contents) //This loop is trying to stack target onto similar stacks in the toolbox
 		if (!istype(thingy, target.type))
 			continue
 		var/prev_amount = target.amount
-		target.stack_item(thingy)
+		thingy.stack_item(target)
 		if (target.amount < prev_amount)
 			succeeded = TRUE
 		if (target.pooled)
 			break
 	if (!target.pooled) //If we get to here we've still got some left on the stack
-		if (held_toolbox.check_can_hold(target) > 0) //meaning:target can fit. check_can_hold returns 0 or lower for various errors
+		if (held_toolbox.check_can_hold(target) > 0) // target can fit. check_can_hold returns 0 or lower for various errors
 			held_toolbox.add_contents(target)
 			succeeded = TRUE
 	return succeeded
 
 
-///Sets current_stack to the first stack of floortiles we find in the toolbox, or null otherwise. Returns 1 or 0 respectively.
+///Sets current_stack to the first stack of floortiles we find in the toolbox, or null otherwise. Returns TRUE or FALSE respectively.
 obj/item/engivac/proc/scan_for_floortiles()
 	if (!held_toolbox) //lol
-		return 0
+		return FALSE
 	var/list/toolbox_contents = held_toolbox.get_contents()
 	for (var/i=1, i <= toolbox_contents.len, i++)
 		if (!istype(toolbox_contents[i], /obj/item/tile))
@@ -258,8 +243,8 @@ obj/item/engivac/proc/scan_for_floortiles()
 				current_stack = null
 			continue
 		current_stack = toolbox_contents[i]
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 obj/item/engivac/proc/rebuild_collection_list()
