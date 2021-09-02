@@ -770,6 +770,7 @@
 				A.name_suffixes = list()
 			A.name_suffix("([src.label])")
 			A.UpdateName()
+		playsound(src, "sound/items/hand_label.ogg", 40, 1)
 		if (user && !no_message)
 			logTheThing("combat", user, A, "labels [constructTarget(A,"combat")] with \"[src.label]\"")
 		else if(!no_message)
