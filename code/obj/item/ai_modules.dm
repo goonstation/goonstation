@@ -20,7 +20,7 @@ AI MODULES
 	throw_speed = 3
 	throw_range = 15
 	mats = 8
-	var/input_char_limit = 50
+	var/input_char_limit = 100
 	var/lawNumber = 0
 	var/lawTarget = null
 	// 1 = shows all laws, 0 = won't show law zero
