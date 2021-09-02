@@ -82,6 +82,12 @@
 	iconmod = "CornClear"
 	assoc_reagents = list("ethanol")
 
+/datum/plantmutation/corn/pepper
+	crop = /obj/item/reagent_containers/food/snacks/plant/corn/pepper
+	iconmod = "peppercorn"
+	name_prefix = "Pepper "
+	assoc_reagents = list("pepper")
+
 // Pea Mutations
 
 /datum/plantmutation/peas/ammonia

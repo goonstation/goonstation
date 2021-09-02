@@ -271,6 +271,14 @@
 	food_color = "#a7927d"
 	custom_food = 1
 
+/obj/item/reagent_containers/food/snacks/ingredient/pepper
+	name = "pepper"
+	desc = "A must have in any kitchen, just dont use too much."
+	icon_state = "pepper"
+	amount = 1
+	food_color = "#a7927d"
+	custom_food = 1
+
 /obj/item/reagent_containers/food/snacks/ingredient/honey
 	name = "honey"
 	desc = "A sweet nectar derivative produced by bees."

@@ -110,7 +110,7 @@ ABSTRACT_TYPE(/datum/plant/crop)
 	harvests = 3
 	endurance = 2
 	genome = 10
-	mutations = list(/datum/plantmutation/corn/clear)
+	mutations = list(/datum/plantmutation/corn/clear, /datum/plantmutation/corn/pepper)
 	commuts = list(/datum/plant_gene_strain/photosynthesis,/datum/plant_gene_strain/splicing/bad)
 	assoc_reagents = list("cornstarch")
 
