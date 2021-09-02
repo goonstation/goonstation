@@ -64,7 +64,6 @@
 	set name = "Marsify"
 	set desc = "Turns space into a Mars"
 	admin_only
-	var/ambient_value = 0
 #ifdef UNDERWATER_MAP
 	//to prevent tremendous lag from the entire map flooding from a single ocean tile.
 	boutput(src, "You cannot use this command on underwater maps. Sorry!")
@@ -73,6 +72,7 @@
 	if(src.holder.level >= LEVEL_ADMIN)
 		switch(alert("Turn space into the sands of Mars? This is probably going to lag a bunch when it happens and there's no easy undo!",,"Yes","No"))
 			if("Yes")
+				var/ambient_value
 				var/image/weather = image(icon = 'icons/turf/areas.dmi', icon_state = "dustverlay", layer = EFFECTS_LAYER_BASE)
 				//weather.alpha = 200
 				//weather.plane = PLANE_NOSHADOW_ABOVE
