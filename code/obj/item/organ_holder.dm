@@ -1718,7 +1718,7 @@
 				boutput(holder.owner, __blue("<b>Step 1:</b> Use a scalpel on the patient's chest on harm intent."))
 				S.surgery_step = 1
 			if("Eye Removal")
-				boutput(holder.owner, __blue("<b>Step 1:</b> Use a eunclination spoon on their head, with the spoon in the hand in relation to the eye you want to remove, on help intent."))
+				boutput(holder.owner, __blue("<b>Step 1:</b> Use a enucleation spoon spoon on their head, with the spoon in the hand in relation to the eye you want to remove, on help intent."))
 				S.surgery_step = 1
 			if("Brain")
 				boutput(holder.owner, __blue("<b>Step 1:</b> Use a scalpel on the patient's head on help intent."))

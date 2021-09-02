@@ -1680,7 +1680,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 /* ---------- SPOON ---------- */
 /* =========================== */
 
-/obj/item/proc/spoon_surgery(var/mob/living/carbon/human/patient as mob, var/mob/living/surgeon as mob)
+/obj/item/proc/spoon_surgery(var/mob/living/carbon/human/patient as mob, var/mob/living/carbon/human/surgeon as mob)
 	if (!ishuman(patient))
 		return 0
 
@@ -1702,6 +1702,15 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	var/surgCheck = surgeryCheck(patient, surgeon)
 	if (!surgCheck)
 		return 0
+
+	if(surgeon.organHolder.augmentation_nerve)
+		var/obj/item/organ/augmentation/head/surgery_assistant/S = surgeon.organHolder.augmentation_nerve
+		if(patient == surgeon && istype(surgeon.organHolder.augmentation_nerve, /obj/item/organ/augmentation/head/surgery_assistant))
+			boutput(surgeon, __blue("[surgeon.organHolder.augmentation_nerve] stops you from attempting to do surgery on yourself!"))
+			return 0
+		if(istype(surgeon.organHolder.augmentation_nerve, /obj/item/organ/augmentation/head/surgery_assistant) && S.broken && !istype(src, /obj/item/surgical_spoon))
+			boutput(surgeon, __blue("[surgeon.organHolder.augmentation_nerve] stops you from attempting to do surgery without a medical-grade tool!"))
+			return 0
 
 	// fluff2 is for things that do more damage: nicking the optic nerve is included in the choices
 	var/fluff = pick(" messes up", "'s hand slips", " fumbles with [src]", " nearly drops [src]", "'s hand twitches", " jabs [src] in too far")
