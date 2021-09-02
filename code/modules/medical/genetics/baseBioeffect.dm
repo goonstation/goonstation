@@ -63,6 +63,9 @@ ABSTRACT_TYPE(/datum/bioEffect)
 	///if this mutation should degrade after timing out
 	var/degrade_after = FALSE
 
+	///groups of mutually exclusive bioeffects
+	var/effect_group = null
+
 	var/datum/dnaBlocks/dnaBlocks = null
 
 	var/data = null //Should be used to hold custom user data or it might not be copied correctly with injectors and all these things.

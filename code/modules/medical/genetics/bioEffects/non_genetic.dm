@@ -91,6 +91,7 @@
 	desc = "Subject's cellular structure is degenerating due to sub-lethal necrosis."
 	id = "zombie"
 	effectType = EFFECT_TYPE_MUTANTRACE
+	effect_group = "mutantrace"
 	isBad = 1
 	can_copy = 0
 	msgGain = "You begin to rot."
@@ -117,6 +118,7 @@
 	desc = "Genetic abnormalities possibly resulting from incomplete development in a cloning pod."
 	id = "premature_clone"
 	effectType = EFFECT_TYPE_MUTANTRACE
+	effect_group = "mutantrace"
 	isBad = 1
 	can_copy = 0
 	msgGain = "You don't feel quite right."
