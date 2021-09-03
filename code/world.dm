@@ -97,7 +97,11 @@ var/global/mob/twitch_mob = 0
 
 /world/proc/load_admins()
 	set background = 1
+	#ifdef SECRETS_ENABLED
+	var/text = file2text("+secret/config/admins.txt")
+	#else
 	var/text = file2text("config/admins.txt")
+	#endif
 	if (!text)
 		logDiary("Failed to load config/admins.txt\n")
 	else
