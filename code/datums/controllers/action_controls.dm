@@ -44,7 +44,7 @@ var/datum/action_controller/actions
 			interrupt(owner, INTERRUPT_ACTION)
 			for(var/datum/action/OA in running[owner])
 				//Meant to catch users starting the same action twice, and saving the first-attempt from deletion
-				if(OA.id == A.id && OA.state == ACTIONSTATE_DELETE)
+				if(OA.id == A.id && OA.state == ACTIONSTATE_DELETE && OA.resumable)
 					OA.onResume()
 					qdel(A)
 					return OA
@@ -87,6 +87,7 @@ var/datum/action_controller/actions
 	var/state = ACTIONSTATE_STOPPED //Current state of the action.
 	var/started = -1 //TIME this action was started at
 	var/id = "base" //Unique ID for this action. For when you want to remove actions by ID on a person.
+	var/resumable = TRUE
 
 	proc/interrupt(var/flag) //This is called by the default interrupt actions
 		if(interrupt_flags & flag || flag == INTERRUPT_ALWAYS)
@@ -1131,6 +1132,8 @@ var/datum/action_controller/actions
 	onInterrupt(var/flag)
 		..()
 		boutput(owner, "<span class='alert'>Your attempt to remove your handcuffs was interrupted!</span>")
+		if(!(flag & INTERRUPT_ACTION))
+			src.resumable = FALSE
 
 	onEnd()
 		..()

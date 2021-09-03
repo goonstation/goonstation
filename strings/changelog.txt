@@ -1,5 +1,37 @@
 
+(t)fri sep 03 21
+(u)Flourish
+(+)Cyborgs should now be able to hear and speak even when stunned or immobile.
+(t)thu sep 02 21
+(u)Yellow/Myco
+(p)5870
+(e)🗺|mapping
+(*)Refurbishes Destiny by updating walls, doors, and windows to the modern style!
+(u)BatElite
+(p)5883
+(e)🆕🎨|feature, sprites
+(+)The radio show host found a pair of vintage headphones in their closet, so they now spawn with that.
+(u)Ikea
+(p)5849
+(e)🗺|mapping
+(*)Nanotrasen has decided to reconstruct the Tunnel snake with some design modifications, and has decommissioned the old mining outpost for manta.
+(u)Flappybat
+(p)5882
+(e)|
+(+)Welders will always do damage on harm intent rather than trying to cauterize bleeding.
+(u)Flappybat
+(p)5875
+(e)|
+(+)Added a sound to the hand labeler.
+(u)Flappybat
+(p)5869
+(e)🐛⚖|bug, balance
+(+)You can no longer emote while unconscious.
 (t)wed sep 01 21
+(u)kyle
+(p)5841
+(e)🆕🎨|feature, sprites
+(*)Changelings now automatically start to regrow their limbs after making a limbspider. (Don't be by anyone when the timer runs out or they might notice!)
 (u)Mordent & Flaborized
 (p)5859
 (e)🆕🎨|feature, sprites

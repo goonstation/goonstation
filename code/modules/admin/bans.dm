@@ -58,6 +58,9 @@ var/global/list/playersSeen = list()
 	query["compID"] = compID
 	query["ip"] = ip
 	query["record"] = record
+	#ifdef RP_MODE
+	query["rp_mode"] = true
+	#endif
 
 	var/list/data
 	try

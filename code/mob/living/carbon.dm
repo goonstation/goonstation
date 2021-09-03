@@ -187,11 +187,12 @@
 
 	var/resist_toxic = src.bioHolder?.HasEffect("resist_toxic")
 
-	if(resist_toxic == 1)
-		amount *= 0.33
-	else
-		src.toxloss = 0
-		return 1 //prevent organ damage
+	if(resist_toxic)
+		if(resist_toxic > 1)
+			src.toxloss = 0
+			return 1 //prevent organ damage
+		else
+			amount *= 0.33
 
 	src.toxloss = max(0,src.toxloss + amount)
 	return

@@ -26,15 +26,15 @@
 
 /datum/geneticsrecipe/thermal_res
 	required_effects = list("fire_resist","cold_resist")
-	result = /datum/bioEffect/thermal_resistances/thermalres
+	result = /datum/bioEffect/thermalres
 
 /datum/geneticsrecipe/fire_resist // Discovered
 	required_effects = list("immolate","glowy")
-	result = /datum/bioEffect/thermal_resistances/fireres
+	result = /datum/bioEffect/fireres
 
 /datum/geneticsrecipe/cold_resist // Discovered
 	required_effects = list("cryokinesis","glowy")
-	result = /datum/bioEffect/thermal_resistances/coldres
+	result = /datum/bioEffect/coldres
 
 /datum/geneticsrecipe/rad_resist // Discovered
 	required_effects = list("radioactive","glowy")

@@ -225,6 +225,7 @@
 	reclaim_fail = 15
 	stability_loss = -20
 	icon_state  = "bad"
+	effect_group = "thermal"
 
 	OnAdd()
 		..()
@@ -253,6 +254,7 @@
 	var/tox_amount = 1
 	var/tox_prob = 10
 	icon_state  = "bad"
+	effect_group = "tox"
 
 	OnLife(var/mult)
 		if(..()) return
@@ -426,6 +428,7 @@
 	msgLose = "You no longer feel awful and sick all over."
 	reclaim_fail = 15
 	icon_state  = "bad"
+	effect_group = "rad"
 
 	OnAdd()
 		if (ishuman(owner))
@@ -749,6 +752,7 @@
 	lockedTries = 8
 	stability_loss = -10
 	icon_state  = "bad"
+	effect_group = "fit"
 
 	OnAdd()
 		APPLY_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-debuff", -2)
@@ -788,6 +792,7 @@
 	stability_loss = -10
 	var/run = 1
 	icon_state  = "bad"
+	effect_group = "blood"
 
 	OnLife(var/mult)
 		if (ishuman(owner))
@@ -808,6 +813,7 @@
 	stability_loss = -10
 	var/run = 1
 	icon_state  = "bad"
+	effect_group = "blood"
 
 	OnLife(var/mult)
 

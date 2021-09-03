@@ -1,8 +1,7 @@
 ////////////////////////////////
 // Resistances and Immunities //
 ////////////////////////////////
-ABSTRACT_TYPE(/datum/bioEffect/thermal_resistances)
-/datum/bioEffect/thermal_resistances/fireres
+/datum/bioEffect/fireres
 	name = "Fire Resistance"
 	desc = "Shields the subject's cellular structure against high temperatures and flames."
 	id = "fire_resist"
@@ -14,19 +13,16 @@ ABSTRACT_TYPE(/datum/bioEffect/thermal_resistances)
 	stability_loss = 10
 	degrade_to = "aura_fire"
 	icon_state  = "fire_res"
+	effect_group = "thermal"
 
 	OnAdd()
-		for (var/ID in owner.bioHolder.effects)
-			// clear away any existing fire/cold/thermalres first
-			if (istype(owner.bioHolder.GetEffect(ID), /datum/bioEffect/thermal_resistances) && ID != src.id)
-				owner.bioHolder.RemoveEffect(ID)
 		if (ishuman(owner))
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 			overlay_image.color = "#FFA200"
 
 		..()
 
-/datum/bioEffect/thermal_resistances/coldres
+/datum/bioEffect/coldres
 	name = "Cold Resistance"
 	desc = "Shields the subject's cellular structure against freezing temperatures and crystallization."
 	id = "cold_resist"
@@ -39,19 +35,15 @@ ABSTRACT_TYPE(/datum/bioEffect/thermal_resistances)
 	// you feel warm because you're resisting the cold, stop changing these around! =(
 	degrade_to = "shiny"
 	icon_state  = "cold_res"
+	effect_group = "thermal"
 
 	OnAdd()
-		for (var/ID in owner.bioHolder.effects)
-			// clear away any existing fire/cold/thermalres first
-			if (istype(owner.bioHolder.GetEffect(ID), /datum/bioEffect/thermal_resistances) && ID != src.id)
-				owner.bioHolder.RemoveEffect(ID)
-
 		if (ishuman(owner))
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 			overlay_image.color = "#009DFF"
 		..()
 
-/datum/bioEffect/thermal_resistances/thermalres
+/datum/bioEffect/thermalres
 	name = "Thermal Resistance"
 	desc = "Somewhat shields the subject's cellular structure against any harmful temperature exposure."
 	id = "thermal_resist"
@@ -62,13 +54,9 @@ ABSTRACT_TYPE(/datum/bioEffect/thermal_resistances)
 	var/image/overlay_image_two = null
 	degrade_to = "thermal_vuln"
 	icon_state  = "thermal_res"
+	effect_group = "thermal"
 
 	OnAdd()
-		for (var/ID in owner.bioHolder.effects)
-			// clear away any existing fire/cold/thermalres first
-			if (istype(owner.bioHolder.GetEffect(ID), /datum/bioEffect/thermal_resistances) && ID != src.id)
-				owner.bioHolder.RemoveEffect(ID)
-
 		if (ishuman(owner))
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 			overlay_image_two = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse-offset", layer = MOB_LIMB_LAYER)
@@ -154,6 +142,7 @@ ABSTRACT_TYPE(/datum/bioEffect/thermal_resistances)
 	stability_loss = 15
 	degrade_to = "radioactive"
 	icon_state  = "rad_res"
+	effect_group = "rad"
 
 	OnAdd()
 		. = ..()
@@ -200,6 +189,7 @@ ABSTRACT_TYPE(/datum/bioEffect/thermal_resistances)
 	msgLose = "You feel a bit grody."
 	degrade_to = "toxification"
 	icon_state  = "tox_res"
+	effect_group = "tox"
 
 	OnAdd()
 		..()
@@ -315,6 +305,7 @@ ABSTRACT_TYPE(/datum/bioEffect/thermal_resistances)
 	var/roundedmultremainder
 	degrade_to = "mutagenic_field"
 	icon_state  = "regen"
+	effect_group = "regen"
 
 	OnLife(var/mult)
 		if(..()) return
@@ -755,6 +746,7 @@ var/list/radio_brains = list()
 	lockedTries = 8
 	stability_loss = -5
 	icon_state  = "strong"
+	effect_group = "fit"
 
 	OnAdd()
 		. = ..()
@@ -784,6 +776,7 @@ var/list/radio_brains = list()
 	msgLose = "You are once again afraid of being stabbed."
 	stability_loss = 5
 	icon_state  = "regen"
+	effect_group = "blood"
 
 	OnLife(var/mult)
 
