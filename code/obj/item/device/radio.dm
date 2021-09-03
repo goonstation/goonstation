@@ -334,6 +334,8 @@ var/list/headset_channel_lookup
 	// Don't let them monitor Syndie headsets. You can get the radio_brain bioeffect at the start of the round, basically.
 	if (src.protected_radio != 1 && isnull(src.traitorradio) && protected_frequency != display_freq )
 		for (var/mob/living/L in radio_brains)
+			if(radio_brains[L] == 1 && display_freq != R_FREQ_DEFAULT)
+				continue
 			receive += L
 
 		for(var/mob/zoldorf/z in the_zoldorf)

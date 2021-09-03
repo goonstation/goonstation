@@ -602,7 +602,7 @@
 
 /obj/item/proc/try_grab(var/mob/living/target, var/mob/living/user)
 	.= 0
-	if(!chokehold && istype(target) && istype(user))
+	if(!chokehold && istype(target) && istype(user) && target != user)
 		src.chokehold = user.grab_other(target, hide_attack, src)
 		chokehold?.post_item_setup()
 		.= 1

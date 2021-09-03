@@ -812,14 +812,14 @@ var/zapLimiter = 0
 	else
 		return 0
 
-	if (user.bioHolder.HasEffect("resist_electric") == 2)
+	if (user.bioHolder.HasEffect("resist_electric_heal"))
 		var/healing = 0
 		healing = shock_damage / 3
 		user.HealDamage("All", healing, healing)
 		user.take_toxin_damage(0 - healing)
 		boutput(user, "<span class='notice'>You absorb the electrical shock, healing your body!</span>")
 		return
-	else if (user.bioHolder.HasEffect("resist_electric") == 1)
+	else if (user.bioHolder.HasEffect("resist_electric"))
 		boutput(user, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
 		return
 

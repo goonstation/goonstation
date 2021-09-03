@@ -5,10 +5,15 @@
  * @license ISC
  */
 
+import { SFC } from 'inferno';
 import { classes, pureComponentHooks } from 'common/react';
 import * as styles from './style';
 
-export const EmptyPlaceholder = props => {
+interface EmptyPlaceholderProps {
+  className?: string,
+}
+
+export const EmptyPlaceholder: SFC<EmptyPlaceholderProps> = props => {
   const {
     children,
     className,

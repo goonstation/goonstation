@@ -425,6 +425,7 @@ var/global/list/soundCache = list(
  	"sound/items/fishing_rod_reel.ogg" = 'sound/items/fishing_rod_reel.ogg',\
  	"sound/items/garrote_twang.ogg" = 'sound/items/garrote_twang.ogg',\
  	"sound/items/gavel.ogg" = 'sound/items/gavel.ogg',\
+ 	"sound/items/hand_label.ogg" = 'sound/items/hand_label.ogg',\
  	"sound/items/hypo.ogg" = 'sound/items/hypo.ogg',\
  	"sound/items/injectorbelt_active.ogg" = 'sound/items/injectorbelt_active.ogg',\
  	"sound/items/matchstick_hit.ogg" = 'sound/items/matchstick_hit.ogg',\

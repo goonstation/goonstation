@@ -544,7 +544,7 @@
 						if(href_list["message_send"])
 							t = href_list["message_send"]
 						else
-							t = input(usr, "Please enter message", target_name, null) as text
+							t = input(usr, "Please enter message", target_name, null) as null|text
 						if (!t || !isalive(usr))
 							return
 
