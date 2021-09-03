@@ -1,4 +1,7 @@
 
+(t)fri sep 03 21
+(u)Flourish
+(+)Cyborgs should now be able to hear even when stunned or immobile.
 (t)thu sep 02 21
 (u)Yellow/Myco
 (p)5870
