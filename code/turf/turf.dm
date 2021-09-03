@@ -428,7 +428,7 @@
 // Ported from unstable r355
 /turf/space/Entered(atom/movable/A as mob|obj)
 	..()
-	if ((!(A) || istype(null, /obj/projectile)))
+	if ((!(A) || istype(A, /obj/projectile)))
 		return
 
 	if (!(A.last_move))

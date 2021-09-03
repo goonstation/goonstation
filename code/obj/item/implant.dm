@@ -853,6 +853,10 @@ THROWING DARTS
 		name = ".50AE round"
 		desc = "Ouch."
 
+	rakshasa
+		name = "\improper Rakshasa round"
+		desc = "..."
+
 /obj/item/implant/projectile/implanted(mob/living/carbon/C, var/mob/I, var/bleed_time = 60)
 	SEND_SIGNAL(src, COMSIG_IMPLANT_IMPLANTED, C)
 	if (!istype(C) || !isnull(I)) //Don't make non-organics bleed and don't act like a launched bullet if some doofus is just injecting it somehow.

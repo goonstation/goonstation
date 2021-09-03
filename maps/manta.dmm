@@ -6627,10 +6627,6 @@
 "atP" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/communications/office)
-"atQ" = (
-/obj/indestructible/invisible_block,
-/turf/simulated/floor,
-/area/station/quartermaster/cargobay)
 "atR" = (
 /obj/table/auto,
 /obj/item/reagent_containers/mender_refill_cartridge/brute,
@@ -17226,7 +17222,7 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 10
 	},
-/obj/item/kitchen/utensil/knife/cleaver,
+/obj/item/kitchen/utensil/knife,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "aXb" = (
@@ -26251,23 +26247,14 @@
 /obj/item/storage/wall/fire{
 	pixel_y = 32
 	},
-/obj/storage/secure/closet/engineering/cargo,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "btM" = (
 /obj/machinery/manufacturer/hangar,
 /turf/simulated/floor/bot,
 /area/station/quartermaster/cargobay)
-"btN" = (
-/obj/machinery/manufacturer/mining,
-/turf/simulated/floor/bot,
-/area/station/quartermaster/cargobay)
-"btO" = (
-/obj/machinery/manufacturer/general,
-/turf/simulated/floor/bot,
-/area/station/quartermaster/cargobay)
 "btP" = (
-/obj/machinery/manufacturer/medical,
+/obj/machinery/manufacturer/mining,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 3;
@@ -27221,19 +27208,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor,
-/area/station/quartermaster/cargobay)
-"bwL" = (
-/obj/storage/closet/mantacontainerred,
-/turf/simulated/floor,
-/area/station/quartermaster/cargobay)
-"bwM" = (
-/obj/storage/closet/mantacontainerred/right,
-/turf/simulated/floor,
-/area/station/quartermaster/cargobay)
-"bwN" = (
-/obj/storage/closet/mantacontainerred/right,
-/obj/item/instrument/harmonica,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bwP" = (
@@ -29974,10 +29948,6 @@
 	pixel_y = -24
 	},
 /turf/simulated/floor/bot,
-/area/station/quartermaster/cargobay)
-"bEk" = (
-/obj/decal/fakeobjects/mantacontainer/upwards/yellow,
-/turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bEl" = (
 /obj/machinery/conveyor/north{
@@ -35993,6 +35963,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
+"dBj" = (
+/obj/stool/chair/yellow{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/quartermaster/cargobay)
 "dCn" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -38261,7 +38237,6 @@
 	dir = 1;
 	pixel_y = 20
 	},
-/obj/storage/secure/closet/engineering/cargo,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "hVI" = (
@@ -38700,6 +38675,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/mining)
+"iQM" = (
+/obj/machinery/manufacturer/robotics,
+/turf/simulated/floor/bot,
+/area/station/quartermaster/cargobay)
 "iSe" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -39023,6 +39002,10 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/communications/bedroom)
+"jFc" = (
+/obj/storage/secure/closet/engineering/cargo,
+/turf/simulated/floor,
+/area/station/quartermaster/cargobay)
 "jFQ" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -41587,6 +41570,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
+"pue" = (
+/obj/machinery/nanofab/refining,
+/turf/simulated/floor,
+/area/station/quartermaster/cargobay)
 "pvN" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -42927,6 +42914,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/secoffquarters)
+"sOt" = (
+/obj/decal/fakeobjects/mantacontainer/upwards,
+/turf/simulated/floor,
+/area/station/quartermaster/cargobay)
 "sTs" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -44697,6 +44688,10 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/power)
+"wOa" = (
+/obj/machinery/manufacturer/medical,
+/turf/simulated/floor/bot,
+/area/station/quartermaster/cargobay)
 "wOL" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -44842,7 +44837,7 @@
 	name = "Submarine Bay (Engineering)"
 	})
 "xod" = (
-/obj/machinery/manufacturer/robotics,
+/obj/machinery/manufacturer/general,
 /obj/machinery/light/incandescent/netural{
 	dir = 1;
 	pixel_y = 20
@@ -70587,7 +70582,7 @@ aLF
 bgr
 bpq
 aKs
-btM
+jFc
 bvg
 bwH
 ayM
@@ -70889,7 +70884,7 @@ aLF
 bfl
 bpU
 aKs
-btN
+jFc
 bvh
 bwI
 ayM
@@ -71191,7 +71186,7 @@ aLJ
 bgr
 box
 aKs
-btO
+btM
 bvi
 bwJ
 byw
@@ -72097,12 +72092,12 @@ boR
 xfn
 box
 aKs
-atQ
-atQ
-bwL
+wOa
+bvk
+bvk
 byy
 bvk
-bvk
+dBj
 bvk
 bvk
 bFv
@@ -72399,9 +72394,9 @@ boS
 brC
 bpW
 aKs
-atQ
-atQ
-bwM
+iQM
+bvk
+bvk
 byy
 bvk
 bNC
@@ -72701,14 +72696,14 @@ boR
 bgr
 box
 aKs
-atQ
-atQ
-bwL
+pue
+bvk
+bvk
 byy
 bvk
 bvk
 bvk
-bEk
+sOt
 bwP
 fKa
 bHD
@@ -73003,9 +72998,9 @@ boR
 bgr
 box
 aKs
-atQ
-atQ
-bwN
+bvk
+bvk
+bvk
 byy
 bvk
 bvk

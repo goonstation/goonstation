@@ -798,6 +798,7 @@ var/global/noir = 0
 							<A href='?src=\ref[src];action=[cmd];type=blob'>Blob</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=conspiracy'>Conspiracy</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=spy_theft'>Spy Theft</A><br>
+							<A href='?src=\ref[src];action=[cmd];type=arcfiend'>Arcfiend</A><br>
 							<b>Other Modes</b><br>
 							<A href='?src=\ref[src];action=[cmd];type=extended'>Extended</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=flock'>Flock(probably wont work. Press at own risk)</A><br>
@@ -826,7 +827,7 @@ var/global/noir = 0
 
 				var/list/valid_modes = list("secret","action","intrigue","random","traitor","meteor","extended","monkey",
 				"nuclear","blob","restructuring","wizard","revolution", "revolution_extended","malfunction",
-				"spy","gang","disaster","changeling","vampire","mixed","mixed_rp", "construction","conspiracy","spy_theft","battle_royale", "vampire","assday", "football", "flock")
+				"spy","gang","disaster","changeling","vampire","mixed","mixed_rp", "construction","conspiracy","spy_theft","battle_royale", "vampire","assday", "football", "flock", "arcfiend")
 #if defined(MAP_OVERRIDE_POD_WARS)
 				valid_modes += "pod_wars"
 #else
@@ -1287,14 +1288,12 @@ var/global/noir = 0
 			if(src.level >= LEVEL_SA)
 				var/datum/bioEffect/power/BE = locate(href_list["bioeffect"])
 				BE.altered = 1
-				if(istype(BE, /datum/bioEffect/power)) //powers only
-					if (BE.power)
-						BE.power = 0
-					else
-						BE.power = 1
+				var/oldpower = BE.power
+				if (BE.power > 1)
+					BE.power = 1
 				else
-					return
-
+					BE.power = 2
+				BE.onPowerChange(oldpower, BE.power)
 				usr.client.cmd_admin_managebioeffect(BE.holder.owner)
 			else
 				return
@@ -1372,7 +1371,7 @@ var/global/noir = 0
 						BE.altered = 1
 					if ("Power Booster")
 						if (P.altered) managebioeffect_chromosome_clean(P)
-						P.power = 1
+						P.power = 2
 						P.name = "Empowered " + P.name
 						P.altered = 1
 					if ("Energy Booster")
@@ -4868,9 +4867,11 @@ var/global/noir = 0
 	BE.reclaim_mats = BE.global_instance.reclaim_mats
 	BE.msgGain = BE.global_instance.msgGain
 	BE.msgLose = BE.global_instance.msgLose
+	var/oldpower = P.power
+	P.power = P.global_instance_power.power
+	P.onPowerChange(oldpower, P.power)
 	if (istype(BE, /datum/bioEffect/power)) //powers
 		P = BE
-		P.power = P.global_instance_power.power
 		P.cooldown = P.global_instance_power.cooldown
 		P.safety = P.global_instance_power.safety
 
@@ -4957,12 +4958,12 @@ var/global/noir = 0
 			is_stable = 1
 		if (!B.curable_by_mutadone)
 			is_reinforced = 1
+		if (B.power > 1)
+			is_power_boosted = 1
+		else
+			is_power_boosted = 0
 		if (istype(B, /datum/bioEffect/power))//powers only
 			P = B
-			if (P.power)
-				is_power_boosted = 1
-			else
-				is_power_boosted = 0
 			if (P.safety)
 				is_synced = 1
 			else
