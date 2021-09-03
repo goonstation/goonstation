@@ -439,9 +439,9 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		underwater = 1
 		maxNum = 1
 		required = 1
-		prefabPath = "assets/maps/prefabs/prefab_water_miner_manta.dmm"
-		prefabSizeX = 21
-		prefabSizeY = 15
+		prefabPath = "assets/maps/prefabs/prefab_water_mantamining.dmm"
+		prefabSizeX = 13
+		prefabSizeY = 43
 #endif
 
 	cache_small_loot

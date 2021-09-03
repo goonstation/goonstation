@@ -1,5 +1,17 @@
 
 (t)thu sep 02 21
+(u)Ikea
+(p)5849
+(e)🗺|mapping
+(*)Nanotrasen has decided to reconstruct the Tunnel snake with some design modifications, and has decommissioned the old mining outpost for manta.
+(u)Flappybat
+(p)5882
+(e)|
+(+)Welders will always do damage on harm intent rather than trying to cauterize bleeding.
+(u)Flappybat
+(p)5875
+(e)|
+(+)Added a sound to the hand labeler.
 (u)Flappybat
 (p)5869
 (e)🐛⚖|bug, balance
