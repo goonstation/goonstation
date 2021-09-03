@@ -190,16 +190,13 @@
 		else
 			dude_to_stun = victim
 
-		// Stun the target mob.
-		if (dude_to_stun.bioHolder && dude_to_stun.bioHolder.HasEffect("resist_electric"))
-			boutput(dude_to_stun, "<span class='notice'>Thankfully, electricity doesn't do much to you in your current state.</span>")
-		else
-			dude_to_stun.do_disorient(src.disorient_stamina_damage, weakened = src.stun_normal_weakened * 10, disorient = 60)
+	
+		dude_to_stun.do_disorient(src.disorient_stamina_damage, weakened = src.stun_normal_weakened * 10, disorient = 60)
 
-			if (isliving(dude_to_stun))
-				var/mob/living/L = dude_to_stun
-				L.Virus_ShockCure(33)
-				L.shock_cyberheart(33)
+		if (isliving(dude_to_stun))
+			var/mob/living/L = dude_to_stun
+			L.Virus_ShockCure(33)
+			L.shock_cyberheart(33)
 
 		src.process_charges(-1, user)
 

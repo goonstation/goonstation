@@ -2,7 +2,7 @@
 	name = "mixed (action)"
 	config_tag = "mixed"
 	latejoin_antag_compatible = 1
-	latejoin_antag_roles = list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_WRESTLER, ROLE_WEREWOLF)
+	latejoin_antag_roles = list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_WRESTLER, ROLE_WEREWOLF, ROLE_ARCFIEND)
 
 	var/const/traitors_possible = 8 // cogwerks - lowered from 10
 	var/const/werewolf_players_req = 15
@@ -11,7 +11,7 @@
 	var/has_werewolves = 1
 	var/has_blobs = 1
 
-	var/list/traitor_types = list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_SPY_THIEF, ROLE_WEREWOLF)
+	var/list/traitor_types = list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_SPY_THIEF, ROLE_WEREWOLF, ROLE_ARCFIEND)
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
@@ -67,10 +67,6 @@
 		if(has_wizards && prob(10)) // powerful combat roles
 			num_wizards++
 			// if any combat roles end up in this mode they go here ok
-#ifndef RP_MODE
-		else if (prob(10) && !num_arcfiends)
-			num_arcfiends++ //starting off slow as we see how EV's play out
-#endif
 		else // more stealthy roles
 			switch(pick(src.traitor_types))
 				if(ROLE_TRAITOR) num_traitors++
@@ -80,7 +76,7 @@
 				if(ROLE_SPY_THIEF) num_spy_thiefs++
 				if(ROLE_WEREWOLF) num_werewolves++
 				if(ROLE_ARCFIEND)
-					if(!num_arcfiends) //only allow 1 for now
+					if(num_arcfiends < 2)
 						num_arcfiends++
 					else
 						num_traitors++

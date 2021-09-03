@@ -43,7 +43,6 @@ ABSTRACT_TYPE(/datum/bioEffect)
 
 	var/timeLeft = -1//Time left for temporary effects.
 
-	var/variant = 1  //For effects with different variants.
 	var/cooldown = 0 //For effects that come with verbs
 	var/can_reclaim = 1 // Can this gene be turned into mats with the reclaimer?
 	var/can_scramble = 1 // Can this gene be scrambled with the emitter?
@@ -59,7 +58,13 @@ ABSTRACT_TYPE(/datum/bioEffect)
 	var/altered = 0
 	var/add_delay = 0
 	var/wildcard = 0
+	var/power = 1
 	var/degrade_to = null // what this mutation turns into if stability is too low
+	///if this mutation should degrade after timing out
+	var/degrade_after = FALSE
+
+	///groups of mutually exclusive bioeffects
+	var/effect_group = null
 
 	var/datum/dnaBlocks/dnaBlocks = null
 
@@ -132,6 +137,14 @@ ABSTRACT_TYPE(/datum/bioEffect)
 				return BE
 			else
 				return null
+
+	proc/onPowerChange(oldval, newval)
+		return
+
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		if(variable == "power")
+			src.onPowerChange(oldval, newval)
 
 /datum/dnaBlocks
 	var/datum/bioEffect/owner = null
@@ -346,7 +359,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 				if (H.bioHolder)
 					var/datum/bioHolder/BH = H.bioHolder
 					success_prob = BH.genetic_stability
-					success_prob = max(success_prob_min_cap,min(success_prob,100))
+					success_prob = lerp(clamp(success_prob, 0, 100), 100, success_prob_min_cap/100)
 
 			if (prob(success_prob))
 				. = cast(target)

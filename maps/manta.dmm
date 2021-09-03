@@ -12997,12 +12997,6 @@
 	},
 /turf/simulated/floor/caution/south,
 /area/station/engine/elect)
-"aKF" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 8
-	},
-/turf/space/fluid/manta,
-/area/station/maintenance/upperport)
 "aKG" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -17232,7 +17226,7 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 10
 	},
-/obj/item/kitchen/utensil/knife/cleaver,
+/obj/item/kitchen/utensil/knife,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "aXb" = (
@@ -72990,7 +72984,7 @@ aaa
 aaa
 act
 acO
-aKF
+aMA
 acO
 acO
 ait

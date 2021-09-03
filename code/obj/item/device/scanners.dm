@@ -723,3 +723,93 @@ that cannot be itched
 			p.icon_state = "paper_caution"
 
 		return T.target_byond_key
+
+
+
+
+/obj/item/device/appraisal
+	name = "cargo appraiser"
+	desc = "Handheld scanner hooked up to Cargo's market computers. Estimates sale value of various items."
+	flags = FPRINT|ONBELT|TABLEPASS
+	w_class = W_CLASS_SMALL
+	m_amt = 150
+	mats = 5
+	icon_state = "fs"
+	item_state = "electronic"
+
+	attack(mob/M as mob, mob/user as mob)
+		return
+
+	// attack_self
+	// would be neat to maybe add an option to print a receipt or invoice?
+	// like if you wanna buy botany's stuff, this can print out what's inside
+	// and the cargo value, and then
+	// i dunno, who knows. at least you'd be able to take stock easier.
+
+	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
+		if (get_dist(A,user) > 1)
+			return
+
+		var/datum/artifact/art = null
+		if (isobj(A))
+			var/obj/O = A
+			art = O.artifact
+		else
+			// objs only
+			return
+
+		var/sell_value = 0
+		var/out_text = ""
+		if (art)
+			// TODO: Artifact valuation
+			// shippingmarket.sell_artifact(AM, art)
+			boutput(user, "<span class='alert'>Artifact appraisal not yet available. Coming Soon&trade;!</span>")
+			return
+
+		else if (istype(A, /obj/storage/crate))
+			sell_value = -1
+			var/obj/storage/crate/C = A
+			if (C.delivery_destination)
+				for (var/datum/trader/T in shippingmarket.active_traders)
+					if (T.crate_tag == C.delivery_destination)
+						sell_value = shippingmarket.appraise_value(C.contents, T.goods_buy, sell = 0)
+						out_text = "<strong>Prices from [T.name]</strong><br>"
+
+			if (sell_value == -1)
+				// no trader on the crate
+				sell_value = shippingmarket.appraise_value(A.contents, sell = 0)
+
+		else if (istype(A, /obj/storage))
+			var/obj/storage/S = A
+			if (S.welded)
+				// you cant do this
+				boutput(user, "<span class='alert'>\The [A] is welded shut and can't be scanned.</span>")
+				return
+			if (S.locked)
+				// you cant do this either
+				boutput(user, "<span class='alert'>\The [A] is locked closed and can't be scanned.</span>")
+				return
+
+			out_text = "<span class='alert'>Contents must be placed in a crate to be sold!</span><br>"
+			sell_value = shippingmarket.appraise_value(S.contents, sell = 0)
+
+		else if (istype(A, /obj/item/satchel))
+			out_text = "<span class='alert'>Contents must be placed in a crate to be sold!</span><br>"
+			sell_value = shippingmarket.appraise_value(A.contents, sell = 0)
+
+		else if (istype(A, /obj/item))
+			sell_value = shippingmarket.appraise_value(list( A ), sell = 0)
+
+		// replace with boutput
+		boutput(user, "<span class='notice'>[out_text]Estimated value: <strong>[sell_value] credit\s.</strong></span>")
+		if (sell_value > 0)
+			playsound(src, "sound/machines/chime.ogg", 10, 1)
+
+		if (user.client && !user.client.preferences?.flying_chat_hidden)
+			var/image/chat_maptext/chat_text = null
+			var/popup_text = "<span class='ol c pixel'[sell_value == 0 ? " style='color: #bbbbbb;'>No value" : ">$[round(sell_value)]"]</span>"
+			chat_text = make_chat_maptext(A, popup_text, alpha = 180, force = 1, time = 1.5 SECONDS)
+			if (chat_text)
+				// don't bother bumping up other things
+				chat_text.show_to(user.client)
+

@@ -29,6 +29,9 @@
 /datum/movement_modifier/hulkstrong
 	pushpull_multiplier = 0
 
+/datum/movement_modifier/strong
+	health_deficiency_adjustment = -50
+
 /datum/movement_modifier/status_slowed // these are instantiated by the status effect and the slowdown adjusted there
 	additive_slowdown = 10
 
