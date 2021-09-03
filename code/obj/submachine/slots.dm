@@ -164,10 +164,10 @@
 		amount = 300 * wager
 		command_alert("Congratulations to [src.scan.registered] on winning a Jackpot of [amount] credits!", "Jackpot Winner")
 	else if (roll <= 5) //4 - 400
-		command_alert("Congratulations to [src.scan.registered] on winning [amount] credits!", "Big Winner")
 		win_sound =  "sound/misc/klaxon.ogg"
 		exclamation = "Big Winner! "
 		amount = 100 * wager
+		command_alert("Congratulations to [src.scan.registered] on winning [amount] credits!", "Big Winner")
 	else if (roll <= 15) //10 - 500    (Plus additional 5 - 250 if wager <= 250)
 		win_sound =  "sound/musical_instruments/Bell_Huge_1.ogg"
 		exclamation = "Big Winner! "

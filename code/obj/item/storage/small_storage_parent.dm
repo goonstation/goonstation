@@ -197,12 +197,14 @@
 				"<span class='alert'><B>You reach into \the [src], but there was a live mousetrap in there!</B></span>")
 				MT.triggered(user, user.hand ? "l_hand" : "r_hand")
 				. = 1
+			break
 		for (var/obj/item/mine/M in src)
 			if (M.armed && M.used_up != 1)
 				user.visible_message("<span class='alert'><B>[user] reaches into \the [src] and sets off a [M.name]!</B></span>",\
 				"<span class='alert'><B>You reach into \the [src], but there was a live [M.name] in there!</B></span>")
 				M.triggered(user)
 				. = 1
+			break
 
 	MouseDrop(atom/over_object, src_location, over_location)
 		..()

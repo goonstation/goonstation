@@ -963,6 +963,10 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				W.reagents.handle_reactions()
 				return 1
 
+	unpooled()
+		. = ..()
+		src.thrice_drunk = initial(thrice_drunk)
+
 /obj/decal/cleanable/vomit
 	name = "pool of vomit"
 	desc = "Someone lost their lunch."

@@ -46,7 +46,7 @@
 /obj/item/ammo/bullets
 	name = "Ammo box"
 	sname = "Bullets"
-	desc = "A box of ammo"
+	desc = "A box of ammo!"
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "power_cell"
 	m_amt = 40000

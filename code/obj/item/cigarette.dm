@@ -257,7 +257,7 @@
 				if (9) message = "<B>[user]</B> pulls on [his_or_her(user)] [src.name]."
 				if (10) message = "<B>[user]</B> blows out some smoke in the shape of a [pick("butt","bee","shelterfrog","heart","burger","gun","cube","face","dog","star")]!"
 			user.visible_message("<span class='alert'>[message]</span>", group = "blow_smoke")
-			src.cycle = 0 //do the transfer on the next cycle. Also means we get the lung damage etc rolls
+		src.cycle = 0 //do the transfer on the next cycle. Also means we get the lung damage etc rolls
 
 		src.puff_ready = 0
 
@@ -508,6 +508,7 @@
 		..()
 		src.reagents.maximum_volume = 600
 		src.reagents.clear_reagents()
+		numpuffs = 20
 
 	is_open_container()
 		return 1

@@ -2465,7 +2465,6 @@
 		if (!src.canmove)
 			if (isalive(src))
 				src.lastgasp() // calling lastgasp() here because we just got knocked out
-			setunconscious(src)
 		else
 			if(src.health > 0)
 				setalive(src)

@@ -86,7 +86,7 @@
 		// MeasureText sleeps and that fucks up a lot, removing for now
 		return measured * (1 + round(length(src.maptext_width) / 128))
 
-proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255, force = 0)
+proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255, force = 0, time = 40)
 	var/image/chat_maptext/text = unpool(/image/chat_maptext)
 	animate(text, maptext_y = 28, time = 0.01) // this shouldn't be necessary but it keeps breaking without it
 	if (!force)
@@ -107,7 +107,7 @@ proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255, force = 0)
 		text.loc = target
 	animate(text, alpha = alpha, maptext_y = 34, time = 4, flags = ANIMATION_END_NOW)
 	var/text_id = text.unique_id
-	SPAWN_DBG(4 SECONDS)
+	SPAWN_DBG(time)
 		if(text_id == text.unique_id)
 			text.bump_up(invis=1)
 			sleep(0.5 SECONDS)

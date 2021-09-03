@@ -216,69 +216,13 @@
 #define DISORIENT_EAR 4
 
 /mob/proc/get_disorient_protection()
-	. = 0
-
-	var/res = 0
-	for (var/obj/item/C as anything in src.get_equipped_items())
-		if(C.hasProperty("disorient_resist"))
-			res = C.getProperty("disorient_resist")
-			if (res >= 100)
-				return 100 //a singular item with resistance 100 or higher will block ALL
-			. += res
-		if(C.hasProperty("I_disorient_resist")) //cursed
-			res = C.getProperty("I_disorient_resist")
-			if (res >= 100)
-				return 100 //a singular item with resistance 100 or higher will block ALL
-			. += res
-
-
-	. = clamp(.,0,90) //0 to 90 range
+	return clamp(GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_BODY), 90, GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_BODY_MAX))
 
 /mob/proc/get_disorient_protection_eye()
-	. = 0
-
-	var/res = 0
-	for (var/obj/item/C as anything in src.get_equipped_items())
-		if(C.hasProperty("disorient_resist_eye"))
-			res = C.getProperty("disorient_resist_eye")
-			if (res >= 100)
-				return 100 //a singular item with resistance 100 or higher will block ALL
-			. += res
-
-	.= clamp(.,0,90) //90 max!
-
-/mob/living/get_disorient_protection_eye()
-	.= ..()
-
-	if (. >= 100)
-		return .
-
-	if (organHolder)//factor in me eyes
-		if (organHolder.left_eye)
-			var/res = organHolder.left_eye.getProperty("disorient_resist_eye")
-			if (res >= 100)
-				return 100
-			.+= res
-		if (organHolder.right_eye)
-			var/res = organHolder.right_eye.getProperty("disorient_resist_eye")
-			if (res >= 100)
-				return 100
-			.+= res
-
-	.= clamp(.,0,90)
+	return clamp(GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_EYE), 90, GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_EYE_MAX))
 
 /mob/proc/get_disorient_protection_ear()
-	.= 0
-
-	var/res = 0
-	for (var/obj/item/C as anything in src.get_equipped_items())
-		if(C.hasProperty("disorient_resist_ear"))
-			res = C.getProperty("disorient_resist_ear")
-			if (res >= 100)
-				return 100 //a singular item with resistance 100 or higher will block ALL
-			. += res
-
-	.= clamp(.,0,90) //0 to 90 range
+	return clamp(GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_EAR), 90, GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_EAR_MAX))
 
 
 /mob/proc/force_laydown_standup() //the real force laydown lives in Life.dm
