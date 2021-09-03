@@ -11,7 +11,7 @@
 	///list of type paths of mobs that can be spawned when the turf spawns fauna. Syntax: list(type = weight)
 	var/list/fauna_types = list()
 
-var/list/area/blacklist_flora_gen = list(/area/shuttle)
+var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 
 ///This proc handles the creation of a turf of a specific biome type
 /datum/biome/proc/generate_turf(var/turf/gen_turf)
