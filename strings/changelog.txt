@@ -1,5 +1,9 @@
 
 (t)thu sep 02 21
+(u)BatElite
+(p)5883
+(e)🆕🎨|feature, sprites
+(+)The radio show host found a pair of vintage headphones in their closet, so they now spawn with that.
 (u)Ikea
 (p)5849
 (e)🗺|mapping
