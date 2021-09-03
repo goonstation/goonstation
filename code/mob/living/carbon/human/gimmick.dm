@@ -987,4 +987,40 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		src.ai.enabled = 1
 
 
+/mob/living/carbon/human/erin
+	gender = FEMALE
+	is_npc = 1
+	uses_mobai = 1
+	New()
+		..()
+		src.say("Hey there")//debug
+
+		src.equip_new_if_possible(/obj/item/clothing/shoes/black,{cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} slot_shoes)
+		src.equip_new_if_possible(/obj/item/clothing/under/rank/overalls,{cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} slot_w_uniform)
+
+		src.equip_new_if_possible(/obj/item/device/radio/headset/command/radio_show_host,{cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} slot_ears)
+
+		remove_lifeprocess(/datum/lifeprocess/blindness)
+		remove_lifeprocess(/datum/lifeprocess/viruses)
+		src.ai.enabled = 0
+
+	initializeBioholder()
+		. = ..()
+		bioHolder.age = 49
+		bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/long/midb
+		bioHolder.mobAppearance.customization_first_color = "#555555"
+		bioHolder.mobAppearance.gender = "female"
+		bioHolder.mobAppearance.s_tone = "dd9178"
+		bioHolder.mobAppearance.underwear = "bra and panties"
+
+	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		. = ..()
+		if(isdead(src))
+			return
+		if(prob(10))
+			say(pick("Oh no you don't - not today, not ever!","Nice try fuckass, but I ain't goin' down so easy!","IMMA SCREAM BUDDY!","You wanna fuck around bucko? You wanna try your luck?"))
+			src.ai.interrupt()
+		src.ai.target = M
+		src.ai.enabled = 1
+
 #undef BILL_PICK

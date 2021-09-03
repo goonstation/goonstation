@@ -1152,6 +1152,15 @@ ABSTRACT_TYPE(/area/diner)
 	name = "Tech Outpost"
 	icon_state = "storage"
 
+/area/seaturtle/traderbooth
+	icon_state = "blue"
+	teleport_blocked = 1 //required for the trader gimmick to work and not have nerds drain the NPC - ET
+	requires_power = 0
+
+/area/seaturtle
+	icon_state ="lightblue"
+	requires_power = 0
+
 // Gore's Z5 Space generation areas //
 ABSTRACT_TYPE(/area/prefab)
 /area/prefab

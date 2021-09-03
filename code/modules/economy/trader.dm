@@ -1429,3 +1429,60 @@
 
 
 */
+// A gal trying to keep her sub afloat
+
+/obj/npc/trader/
+	icon = 'icons/obj/trader.dmi'
+	icon_state = "chad"
+	picture = "generic.png"
+	name = "Erin Sarni"
+	trader_area = "/area/seaturtle/traderbooth"
+	angrynope = "Dont try to cheap out on me spacer."
+	whotext = "I'm the Chief Engineer and Helmsmen of the NSS Sea Turtle. We've been running short of materials after repairing the NSS Manta, and we've detected high mineral concentrations in the area, so we've been proccessing alot of ore, along with helping look for Polaris. I'll trade you some in exchange for scrap and any mechanical parts you have."
+
+	New()
+		..()
+		/////////////////////////////////////////////////////////
+		//// sell list //////////////////////////////////////////
+		/////////////////////////////////////////////////////////
+		src.goods_sell += new /datum/commodity/ore/steel(src)
+		src.goods_sell += new /datum/commodity/ore/molitz(src)
+		src.goods_sell += new /datum/commodity/ore/pharosium(src)
+		src.goods_sell += new /datum/commodity/ore/cobryl(src)
+		src.goods_sell += new /datum/commodity/ore/fibrilith(src)
+		src.goods_sell += new /datum/commodity/ore/uquill(src)
+		src.goods_sell += new /datum/commodity/ore/telecrystal(src)
+		src.goods_sell += new /datum/commodity/ore/gold	(src)
+		src.goods_illegal += new /datum/commodity/duct_tape(src)
+		/////////////////////////////////////////////////////////
+		//// buy list ///////////////////////////////////////////
+		/////////////////////////////////////////////////////////
+		src.goods_buy += new /datum/commodity/salvage/syndicate_circuit_board(src)
+		src.goods_buy += new /datum/commodity/raw_material/chitin(src)
+		src.goods_buy += new /datum/commodity/produce/(src)
+		src.goods_buy += new /datum/commodity/produce/(src)
+		/////////////////////////////////////////////////////////
+
+		greeting= {"Hey there spacer!"}
+
+		portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
+
+		sell_dialogue = "I'm looking for scrap and mechanical parts. I'll pay ya if your willing to part with them."
+
+		buy_dialogue = "Here's what we can spare, it's not much but we can use the credits."
+
+		successful_purchase_dialogue = list("Here, it's yours",
+			"Thank you, I'll have your order ready when you want it")
+
+		failed_sale_dialogue = list("I dont think I can use that, sorry",
+			"I'm looking for scrap, not what ever that is", " That's intresting, but not scrap.")
+
+		successful_sale_dialogue = list("We've been running low on this, thanks!",
+			"Finally, the parts I need, thank you.")
+
+		failed_purchase_dialogue = list("I'm sorry, but we need the credits to keep the turtle afloat.",
+			"No I'm not going to give it to you. Yes, even if you say pretty please with a cherry on top.")
+
+		pickupdialogue = "It's good to do some honest work. If you need to process any of this, the refinery is not in use at the moment, just clean up when your done."
+
+		pickupdialoguefailure = "I dont see your name on my list, so there's nothing for you to pick up at the moment, sorry."

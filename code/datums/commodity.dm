@@ -2839,3 +2839,32 @@
 	price = 21000
 	upperfluc = 20000
 	lowerfluc = -28500
+
+//////////////////////
+/// Mining Trader ////
+//////////////////////
+
+/datum/commodity/material/steel
+	comname = "Steel"
+	comtype =
+/datum/commodity/salvage/syndicate_circuit_board
+	comname = "Syndicate Circuit Board"
+	desc = "Hey, uh, I'll make sure these get to the right people..."
+	comtype = /obj/item/factionrep/ntboard
+	onmarket = 0
+	price = 1850
+
+/datum/commodity/raw_material/chitin
+	conname = "Chitin"
+	desc = "Pretty sturdy and weirdly flexable. What ever this is, it's useful to us here on the Turtle."
+	comtype = /obj/item/raw_material/chitin
+	onmarket = 0
+	price = 150
+
+/datum/commodity/duct_tape
+	conname = "Duct Tape"
+	desc = "I see that glint in your eyes. I got a roll of Duct Tape I can spare. It'll cost you, but Duct Tape fixes everything."
+	comtype = /obj/item/
+	onmarket = 0
+	price = 91541
+
