@@ -1,4 +1,6 @@
-//Yikes let's put all these stone powers in one place
+
+// MARKED FOR DELETION - warc
+// //Yikes let's put all these stone powers in one place
 //This is Readster's very messy attempt at ability code (<-- Eff You)
 
 //Space Stone

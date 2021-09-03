@@ -397,6 +397,7 @@
 	rc_flags = 0
 	edible = 1
 	rand_pos = 1
+	var/poop_value = 0.5
 	var/did_react = 0
 
 	unpooled()
@@ -416,6 +417,7 @@
 			src.reagents.trans_to(owner, process_rate, HAS_MOB_PROPERTY(owner, PROP_DIGESTION_EFFICIENCY) ? GET_MOB_PROPERTY(owner, PROP_DIGESTION_EFFICIENCY) : 1)
 
 			if (src.reagents.total_volume <= 0)
+				owner.poops += poop_value
 				owner.stomach_process -= src
 				pool(src)
 

@@ -91,6 +91,7 @@
 	var/jitteriness = 0
 	var/charges = 0.0
 	var/urine = 0.0
+	var/poops = 0.0
 	var/nutrition = 100
 	var/losebreath = 0.0
 	var/intent = null

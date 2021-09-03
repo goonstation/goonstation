@@ -654,7 +654,7 @@ var/global/datum/simsControl/simsController = new()
 			addMotive(/datum/simsMotive/hunger)
 			addMotive(/datum/simsMotive/hunger/thirst)
 			addMotive(/datum/simsMotive/hygiene)
-			//addMotive(/datum/simsMotive/bladder)
+			addMotive(/datum/simsMotive/bladder)
 			//addMotive(/datum/simsMotive/energy)
 			//addMotive(/datum/simsMotive/sanity)
 

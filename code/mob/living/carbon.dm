@@ -85,6 +85,47 @@
 		M.set_loc(src.loc)
 	. = ..(give_medal, include_ejectables)
 
+/mob/living/carbon/proc/poop()
+	SPAWN_DBG(0)
+		var/mob/living/carbon/human/H = src
+		var/obj/item/reagent_containers/poo_target = src.equipped()
+		var/obj/item/reagent_containers/food/snacks/ingredient/mud/shit = new()
+		if(!istype(src)) // just in case something unhuman poops, lets still make a turd.
+			var/turf/T = get_turf(src)
+			if (istype(T))
+				make_cleanable( /obj/decal/cleanable/mud,T)
+			return
+
+		if(H.wear_suit || H.w_uniform) // wearing pants while shitting? fine!!
+			H.visible_message("<span class='alert'><B>[H] shits [his_or_her(H)] pants!</B></span>")
+			if(H.w_uniform)
+				H.w_uniform.add_mud(H)
+			else
+				H.wear_suit?.add_mud(H)
+			H.set_clothing_icon_dirty() //ur a shitter
+			playsound(H, H.sound_fart, 50, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+			H.poops--
+			return
+
+		else
+			if(istype(poo_target) && poo_target.reagents && poo_target.reagents.total_volume < poo_target.reagents.maximum_volume && poo_target.is_open_container())
+				H.visible_message("<span class='alert'><B>[H] tries to shit in [poo_target]!</B></span>")
+				playsound(H, H.sound_fart, 50, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+				if(prob(H.bioHolder.HasEffect("clumsy")?75:25))//clowns are bad at shitting in containers
+					H.visible_message("<span class='alert'><B>[H] misses the container!</B></span>")
+					shit.throw_impact(H)
+				else
+					playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 100, 1)
+					poo_target.reagents.add_reagent("poo", 10)
+					qdel(shit)
+			else
+				shit.set_loc(src.loc)
+				H.visible_message("<span class='alert'><B>[H] [pick("takes a dump","drops a turd","shits a load","does a poo","craps all over")]!</B></span>")
+
+		H.poops--
+		return
+
+
 /mob/living/carbon/proc/urinate()
 	SPAWN_DBG(0)
 		var/obj/item/reagent_containers/pee_target = src.equipped()

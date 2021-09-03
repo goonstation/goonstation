@@ -1933,8 +1933,30 @@
 
 			if ("poo", "poop", "shit", "crap")
 				if (src.emote_check(voluntary))
-					message = "<B>[src]</B> grunts for a moment. [prob(1) ? "Something" : "Nothing"] happens."
+					message = "<B>[src]</B> grunts for a moment."
 					maptext_out = "<I>grunts</I>"
+					var/obj/item/storage/toilet/toilet = locate() in src.loc
+
+					if (toilet && (src.buckled != null))
+						if (src.poops >= 1)
+							for (var/obj/item/storage/toilet/T in src.loc)
+								message = pick("<B>[src]</B> unzips [his_or_her(src)] pants and [pick("shits","turds","craps","poops","pooes")] in the toilet.", "<B>[src]</B> empties [his_or_her(src)] bladder.", "<span class='notice'>Ahhh, sweet relief.</span>")
+								var/load = (rand(1,src.poops))/5 //if you got five or more poops (ten bites) stored up, you might clog the pipes!
+								src.poops = 0 //empty out the shitbutt!
+								if(load >= 1)
+									message = "<B>[src]</B> grunts for a moment- Then really fills the bowl!"
+									var/turf/terf = get_turf(src)
+									terf.fluid_react_single("miasma", 5, airborne = 1)
+								T.clogged += load
+								playsound(src, src.sound_fart, 50, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+								break
+						else
+							message = "<B>[src]</B> unzips [his_or_her(src)] pants but, try as [he_or_she(src)] might, [he_or_she(src)] can't shit!"
+					else if (src.poops < 1)
+						message = "<B>[src]</B> grunts for a moment. [prob(1)?"something":"nothing"] happens."
+					else
+						src.poops--
+						src.poop()
 
 			if ("monologue")
 				m_type = 2
@@ -2068,7 +2090,7 @@
 				if (src.emote_check(voluntary, 50))
 					if (src.mind && (src.mind.assigned_role in list("Captain", "Head of Personnel", "Head of Security", "Security Officer", "Security Assistant", "Detective", "Vice Officer", "Regional Director", "Inspector")))
 						src.recite_miranda()
-
+/*  warc remove
 			if ("dab") //I'm honestly not sure how I'm ever going to code anything lower than this - Readster 23/04/19
 				var/mob/living/carbon/human/H = null
 				if(ishuman(src))
@@ -2160,7 +2182,7 @@
 						playsound(src.loc,"sound/misc/deepfrieddabs.ogg",50,0, channel=VOLUME_CHANNEL_EMOTE)
 				else
 					src.show_text("You don't know how to do that but you feel deeply ashamed for trying", "red")
-
+*/
 /*			if ("wedgie")
 				if (src.emote_check(voluntary))
 					var/mob/living/carbon/human/H = null
