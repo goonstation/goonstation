@@ -2435,7 +2435,7 @@ var/global/night_mode_enabled = 0
 			boutput(src, "Failed to clear medal; error!")
 			break
 
-/client/proc/give_mass_medals(var/medal as null|text)
+/client/proc/give_mass_medals(var/medal as null|text, var/revoke = 0)
 	set name = "Give Mass Medals"
 	set desc = "Give a bunch of players a medal. Don't use this while any of them are online please lol."
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -2452,15 +2452,17 @@ var/global/night_mode_enabled = 0
 			return
 
 	var/key = input("Enter player key", "Player key", null) as null|text
-	var/mob/M = new /mob
 	while(key)
-		M.key = key
-		var/result = world.SetMedal(medal, M, config.medal_hub, config.medal_password)
+		var/player = ckey(key)
+		var/result
+		if (revoke)
+			result = world.ClearMedal(medal, player, config.medal_hub, config.medal_password)
+		else
+			result = world.SetMedal(medal, player, config.medal_hub, config.medal_password)
 		if (isnull(result))
 			boutput(src, "Failed to set medal; error communicating with BYOND hub!")
 			break
 		key = input("Enter player key", "Player key", null) as null|text
-	qdel(M)
 
 /client/proc/copy_medals(var/old_key as null|text, var/new_key as null|text)
 	set name = "Copy Medals"
