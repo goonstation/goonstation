@@ -2,6 +2,7 @@
 	name = "Glowy"
 	desc = "Endows the subject with bioluminescent skin. Color and intensity may vary by subject."
 	id = "glowy"
+	icon_state = "glowy"
 	probability = 99
 	effectType = EFFECT_TYPE_POWER
 	blockCount = 3
@@ -21,6 +22,7 @@
 	name = "Cranial Keratin Formation"
 	desc = "Enables the growth of a compacted keratin formation on the subject's head."
 	id = "horns"
+	icon_state = "horns"
 	effectType = EFFECT_TYPE_POWER
 	probability = 99
 	msgGain = "A pair of horns erupt from your head."
@@ -61,6 +63,7 @@
 	name = "Dermal Glitter"
 	desc = "Causes the subject's skin to shine and gleam."
 	id = "shiny"
+	icon_state = "dermal_glitter"
 	effectType = EFFECT_TYPE_POWER
 	probability = 66
 	msgGain = "Your skin looks all blinged out."
@@ -122,6 +125,7 @@
 	name = "Melanin Suppressor"
 	desc = "Shuts down all melanin production in the subject's body."
 	id = "albinism"
+	icon_state = "albinism"
 	effectType = EFFECT_TYPE_POWER
 	probability = 99
 	isBad = 1
@@ -267,6 +271,7 @@
 	name = "Ethanol Production"
 	desc = "Encourages growth of ethanol-producing symbiotic fungus in the subject's body."
 	id = "drunk"
+	icon_state = "ethanol_prod"
 	isBad = 1
 	msgGain = "You feel drunk!"
 	msgLose = "You feel sober."
@@ -288,6 +293,7 @@
 	name = "Bee Production"
 	desc = "Encourages growth of bees in the subject's body."
 	id = "drunk_bee"
+	icon_state = "unknown"
 	isBad = 0
 	msgGain = "Your stomach buzzes!"
 	msgLose = "The buzzing in your stomach stops."
@@ -308,6 +314,7 @@
 	name = "Pentetic Acid Production"
 	desc = "This mutation somehow causes the subject's body to manufacture a potent chellating agent. How exactly it functions is completely unknown."
 	id = "drunk_pentetic"
+	icon_state = "unknown"
 	msgGain = "You feel detoxified."
 	msgLose = "You feel toxic."
 	occur_in_genepools = 0
@@ -327,6 +334,7 @@
 	name = "Chemical Production Modification"
 	desc = {"This mutation somehow irreversibly alters the subject's body to function as an organic chemical factory, mass producing large quantities of seemingly random chemicals. The mechanism for this modification is currently unknown to medical and genetic science."}
 	id = "drunk_random"
+	icon_state = "unknown"
 	msgGain = "You begin to sense an odd chemical taste in your mouth."
 	msgLose = "The chemical taste in your mouth fades."
 	occur_in_genepools = 1 //this is going to be very goddamn rare and very fucking difficult to unlock.
@@ -359,6 +367,7 @@
 	name = "Unstable Chemical Production Modification"
 	desc = {"This mutation somehow irreversibly alters the subject's body to function as an organic chemical factory, mass producing large quantities of seemingly random chemicals. The mechanism for this modification is currently unknown to medical and genetic science."}
 	id = "drunk_random_unstable"
+	icon_state = "unknown"
 	probability = 0.25
 	var/change_prob = 25
 	add_per_tick = 7
@@ -382,6 +391,7 @@
 	name = "Dactyl Crystallization"
 	desc = "The subject's digits crystallize and, when struck together, emit a pleasant noise."
 	id = "chime_snaps"
+	icon_state = "chime_snaps"
 	effectType = EFFECT_TYPE_POWER
 	probability = 99
 	msgGain = "Your fingers and toes turn transparent and crystalline."
@@ -391,6 +401,7 @@
 	name = "Dermal Glow"
 	desc = "Causes the subject's skin to emit faint light patterns."
 	id = "aura"
+	icon_state = "aura"
 	effectType = EFFECT_TYPE_POWER
 	probability = 99
 	msgGain = "You start to emit a pulsing glow."
@@ -453,6 +464,7 @@
 	name = "Blazing Aura"
 	desc = "Causes the subject's skin to emit harmless false fire."
 	id = "aura_fire"
+	icon_state = "blazing_aura"
 	effectType = EFFECT_TYPE_POWER
 	occur_in_genepools = 0
 	msgGain = "You burst into flames!"
