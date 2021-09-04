@@ -1,7 +1,10 @@
 
 (t)fri sep 03 21
+(u)Yass + Flourish
+(e)⚖|balance
+(*)Shoving an unarmed target will do 1.5x the stamina damage shoving an armed (i.e. holding something in at least one of their hands) target will do.
 (u)Flourish
-(+)Cyborgs should now be able to hear and speak even when stunned or immobile.
+(*)Cyborgs should now be able to hear and speak even when stunned or immobilized.
 (t)thu sep 02 21
 (u)Yellow/Myco
 (p)5870

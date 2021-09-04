@@ -981,6 +981,11 @@
 							if (!see_everything && isobserver(M.current)) continue
 							var/I = image(antag_spy_theft, loc = M.current)
 							can_see.Add(I)
+				if (ROLE_ARCFIEND)
+					if (see_everything)
+						if (M.current)
+							var/I = image(antag_arcfiend, loc = M.current)
+							can_see.Add(I)
 				else
 					if (see_everything)
 						if (M.current)
