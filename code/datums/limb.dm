@@ -447,50 +447,50 @@
 			return
 
 		if (isobj(target)) //I am just going to do this like this, this is not good but I do not care.
+			var/hit = FALSE
 			if (isitem(target))
 				boutput(user, "<span class='alert'>Your zombie arm is too dumb to be able to handle this item!</span>")
 				return
 			else if(istype(target, /obj/machinery/door))
 				var/obj/machinery/door/O = target
-				user.lastattacked = O
 				O.visible_message("<span class='alert'><b>[user]</b> violently smashes against the [O]!</span>")
-				attack_particle(user, O)
 				playsound(user.loc, O.hitsound, 50, 1, pitch = 1.6)
 				O.take_damage(20, user) //Like 30ish hits to break a normal airlock?
-
+				hit = TRUE
 			else if(istype(target, /obj/grille))
 				var/obj/grille/O = target
-				user.lastattacked = O
 				if (!O.shock(user, 70))
 					O.visible_message("<span class='alert'><b>[user]</b> violently slashes [O]!</span>")
 					playsound(O.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 80, 1)
 					O.damage_slashing(5)
+				hit = TRUE
 
 			else if(istype(target, /obj/window))
 				var/obj/window/O = target
-				user.lastattacked = O
 				O.visible_message("<span class='alert'>[user] smashes into the window.</span>", "<span class='notice'>You mash yourself against the window.</span>")
 				O.damage_blunt(15)
 				playsound(user.loc, O.hitsound, 50, 1, pitch = 1.6)
+				hit = TRUE
 
 			else if(istype(target, /obj/table))
 				var/obj/table/O = target
-				user.lastattacked = O
 				O.visible_message("<span class='alert'><b>[user]</b> violently rips apart the [O]!</span>")
 				playsound(O.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 				O.deconstruct()
+				hit = TRUE
 
 			else if(istype(target, /obj/structure/woodwall))
 				var/obj/window/O = target
-				user.lastattacked = O
 				O.Attackhand(user)
-
+				hit = TRUE
 			else if(istype(target, /obj/machinery/bot))
 				var/obj/machinery/bot/O = target
-				user.lastattacked = O
 				O.explode()
 				O.visible_message("<span class='alert'><b>[user]</b> violently rips [O] apart!</span>")
-
+				hit = TRUE
+			if (hit)
+				user.lastattacked = target
+				attack_particle(user, target)
 			if(prob(40) && !ON_COOLDOWN(user, "zombie arm scream", 1 SECOND))
 				user.emote("scream")
 			return
