@@ -551,6 +551,15 @@
 	)
 	in_list_or_max = 1
 
+/obj/item/storage/belt/mining/prepared
+	spawn_contents = list(/obj/item/mining_tool/power_pick,
+		/obj/item/ore_scoop/prepared,
+		/obj/item/satchel/mining,
+		/obj/item/device/geiger,
+		/obj/item/device/gps,
+		/obj/item/oreprospector,
+		/obj/item/device/appraisal)
+
 /obj/item/storage/belt/hunter
 	name = "trophy belt"
 	desc = "Holds normal-sized items, such as skulls."
