@@ -95,7 +95,7 @@
 		telescopeDialogue = new/datum/dialogueMaster/telescopeDojo(src)
 
 /datum/telescope_event/cow
-	name = "Cow Diner"
+	name = "Void Diner"
 	name_undiscovered = "Unusual signal"
 	id = "cw"
 	size = 25

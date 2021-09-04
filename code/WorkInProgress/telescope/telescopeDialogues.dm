@@ -194,14 +194,14 @@
 /* COW DINER DIALOGUE BELOW */
 
 /datum/dialogueMaster/telescopeCow
-	dialogueName = "Cow Diner"
+	dialogueName = "Void Diner"
 	start = /datum/dialogueNode/telCowStart
 	visibleDialogue = 0
 
 /datum/dialogueNode
 	telCowStart
 		nodeImage = "milk.png"
-		nodeText = "Uh... Moo?"
+		nodeText = "This place seems... familiar.<br>Have you been here before?"
 		linkText = "..."
 		links = list(/datum/dialogueNode/telCowEnable)
 
@@ -210,12 +210,12 @@
 		nodeText = "The location is now available at the long-range teleporter."
 
 		onActivate(var/client/C)
-			if(!special_places.Find("Cow Diner"))
-				special_places.Add("Cow Diner")
+			if(!special_places.Find("Void Diner"))
+				special_places.Add("Void Diner")
 			return
 
 		canShow(var/client/C)
-			if(!special_places.Find("Cow Diner"))
+			if(!special_places.Find("Void Diner"))
 				return 1
 			else
 				return 0

@@ -9236,8 +9236,18 @@
 /area/moon/museum)
 "aGo" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/light,
+/obj/item/reagent_containers/food/drinks/bottle/mead{
+	initial_reagents = list("milk" = 30);
+	name = "mood";
+	pixel_x = -4;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/milk{
+	pixel_x = 3;
+	pixel_y = 9
+	},
 /turf/simulated/floor/carpet{
+	dir = 10;
 	icon_state = "red2"
 	},
 /area/diner/cow)
@@ -74567,12 +74577,6 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
-"erT" = (
-/obj/table/reinforced/bar/auto,
-/turf/simulated/floor/carpet{
-	icon_state = "red2"
-	},
-/area/diner/cow)
 "eso" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-33"
@@ -74796,17 +74800,6 @@
 	icon_state = "diagonalWall"
 	},
 /area/hospital/samostrel)
-"eSb" = (
-/obj/table/reinforced/bar/auto,
-/obj/item/reagent_containers/food/drinks/bottle/bojackson{
-	desc = "Moo knows how to get you drunk, by diddley!";
-	initial_reagents = "milk";
-	name = "Moo Jack Daniel's";
-	pixel_y = 12;
-	step_y = 0
-	},
-/turf/unsimulated/outdoors/grass,
-/area/diner/cow)
 "eTm" = (
 /obj/item/clothing/under/pride/ace,
 /obj/storage/closet{
@@ -75075,9 +75068,12 @@
 /turf/unsimulated/floor/caution/corner/ne,
 /area/hospital/samostrel)
 "fLj" = (
-/obj/lattice,
 /obj/table/reinforced/bar/auto,
-/turf/unsimulated/floor/void,
+/obj/item/plate,
+/obj/item/cigbutt,
+/turf/simulated/floor/carpet{
+	icon_state = "red2"
+	},
 /area/diner/cow)
 "fMq" = (
 /obj/machinery/light,
@@ -75320,13 +75316,6 @@
 	},
 /turf/unsimulated/floor/setpieces/bloodfloor,
 /area/meat_derelict/guts)
-"gDT" = (
-/obj/machinery/teleport/portal_ring,
-/obj/landmark/lrt/workshop{
-	name = "Cow Diner"
-	},
-/turf/unsimulated/floor/void,
-/area/diner/cow)
 "gGM" = (
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/teleport)
@@ -77875,6 +77864,25 @@
 	},
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
+"nKS" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/bottle/bojackson{
+	desc = "Moo knows how to get you drunk, by diddley!";
+	initial_reagents = "milk";
+	name = "Moo Jack Daniel's";
+	pixel_x = 6;
+	pixel_y = 12;
+	step_y = 0
+	},
+/obj/item/reagent_containers/food/drinks/moonshine{
+	desc = "A jug of milk.";
+	initial_reagents = "milk";
+	name = "jug of mooshine";
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/turf/unsimulated/outdoors/grass,
+/area/diner/cow)
 "nMS" = (
 /obj/admin_plaque{
 	name = "UrsulaMajor's Office"
@@ -78109,13 +78117,6 @@
 	icon_state = "red2"
 	},
 /area/diner/cow)
-"ogI" = (
-/obj/table/reinforced/bar/auto,
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "red2"
-	},
-/area/diner/cow)
 "ogV" = (
 /obj/landmark/spawner{
 	name = "monkeyspawn_syndicate"
@@ -78253,6 +78254,18 @@
 	dir = 8
 	},
 /area/shuttle/escape/centcom/cogmap2)
+"oyE" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/light,
+/obj/item/raw_material/shard,
+/obj/item/decoration/ashtray{
+	pixel_x = -2;
+	pixel_y = 10
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "red2"
+	},
+/area/diner/cow)
 "ozw" = (
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
@@ -80226,6 +80239,13 @@
 /obj/item/clothing/gloves/yellow,
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
+"tPE" = (
+/obj/machinery/teleport/portal_ring,
+/obj/landmark/lrt/workshop{
+	name = "Void Diner"
+	},
+/turf/unsimulated/floor/void,
+/area/diner/cow)
 "tPH" = (
 /obj/decal/cleanable/cobweb2,
 /turf/unsimulated/floor/plating,
@@ -81337,6 +81357,18 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"xHa" = (
+/obj/lattice,
+/obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/snacks/salad{
+	pixel_x = -3;
+	pixel_y = 9
+	},
+/obj/item/kitchen/utensil/fork{
+	pixel_x = 5
+	},
+/turf/unsimulated/floor/void,
+/area/diner/cow)
 "xJg" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-25"
@@ -116126,15 +116158,15 @@ ajI
 ajI
 ajI
 aaa
-iBf
-iBf
-iBf
-iBf
-iBf
-iBf
-iBf
-iBf
-iBf
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 aaa
 aIr
 aIr
@@ -116428,15 +116460,15 @@ kkX
 ajI
 ajI
 aaa
-iBf
-iBf
-iBf
-iBf
-iBf
-iBf
-iBf
-iBf
-iBf
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 aaa
 aIr
 aIr
@@ -116730,15 +116762,15 @@ kkX
 ajI
 ajI
 aaa
-iBf
-iBf
-iBf
-iBf
-iBf
-iBf
-iBf
-iBf
-iBf
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 aaa
 aIr
 aIr
@@ -117032,15 +117064,15 @@ kkX
 ajI
 ajI
 aaa
-iBf
-iBf
-iBf
-iBf
-iBf
-iBf
-iBf
-iBf
-iBf
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 aaa
 aIr
 aIr
@@ -117334,15 +117366,15 @@ kkX
 ajI
 ajI
 aaa
-iBf
-iBf
-iBf
-iBf
-iBf
-iBf
-iBf
-iBf
-iBf
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 aaa
 aIr
 aIr
@@ -117636,15 +117668,15 @@ kkX
 ajI
 ajI
 aaa
-iBf
-iBf
-iBf
-iBf
-iBf
-iBf
-iBf
-iBf
-iBf
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 aaa
 aIr
 aIF
@@ -117938,15 +117970,15 @@ ajI
 ajI
 ajI
 aaa
-iBf
-iBf
-iBf
-iBf
-iBf
-iBf
-iBf
-iBf
-iBf
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aIr
 aIr
@@ -118242,7 +118274,7 @@ ajI
 aaa
 iBf
 iBf
-glz
+iBf
 iBf
 iBf
 iBf
@@ -118543,8 +118575,8 @@ ajI
 ajI
 aaa
 iBf
-hSU
-rdl
+iBf
+glz
 iBf
 iBf
 iBf
@@ -118845,9 +118877,9 @@ ajI
 ajI
 aaa
 iBf
-lPj
-hEV
-gDT
+hSU
+rdl
+iBf
 iBf
 iBf
 iBf
@@ -119148,8 +119180,8 @@ aaa
 aaa
 iBf
 lPj
-gpV
-hTV
+hEV
+tPE
 iBf
 iBf
 iBf
@@ -119446,12 +119478,12 @@ iBf
 iBf
 iBf
 iBf
-uVv
 iBf
-tgk
-oAZ
-yan
-oYs
+iBf
+iBf
+lPj
+gpV
+hTV
 iBf
 iBf
 iBf
@@ -119746,15 +119778,15 @@ iBf
 iBf
 iBf
 iBf
-hSU
-tKt
-tKt
-tKt
-tKt
-tKt
-tKt
-glz
-glz
+iBf
+iBf
+uVv
+iBf
+tgk
+oAZ
+yan
+oYs
+iBf
 iBf
 iBf
 iBf
@@ -120046,17 +120078,17 @@ aaa
 iBf
 iBf
 iBf
+iBf
+iBf
 hSU
-sBX
-riN
 tKt
 tKt
 tKt
 tKt
 tKt
 tKt
-tKt
-hSU
+glz
+glz
 iBf
 iBf
 iBf
@@ -120346,19 +120378,19 @@ aES
 dFc
 aaa
 iBf
-uVv
-pCf
-knY
-uVv
-uVv
-xNY
-rAS
-tKt
-kPp
+iBf
+iBf
+hSU
+sBX
+riN
 tKt
 tKt
-xMP
-uVv
+tKt
+tKt
+tKt
+tKt
+tKt
+hSU
 iBf
 iBf
 iBf
@@ -120649,17 +120681,17 @@ dFc
 aaa
 iBf
 uVv
+pCf
+knY
 uVv
 uVv
-uVv
-two
-uVv
+xNY
+rAS
 tKt
-uVv
-uVv
-uVv
+kPp
 tKt
 tKt
+xMP
 uVv
 iBf
 iBf
@@ -120951,17 +120983,17 @@ dFc
 aaa
 iBf
 uVv
-quR
-lPj
 uVv
 uVv
 uVv
-rON
+two
 uVv
-woU
+tKt
 uVv
-jfn
-ljR
+uVv
+uVv
+tKt
+tKt
 uVv
 iBf
 iBf
@@ -121253,19 +121285,19 @@ dFc
 aaa
 iBf
 uVv
-lCJ
-jOH
-jOH
-oPP
-iTT
-tKt
+quR
+lPj
 uVv
 uVv
 uVv
-tKt
-tKt
+rON
 uVv
-aHj
+woU
+uVv
+jfn
+ljR
+uVv
+iBf
 iBf
 iBf
 iBf
@@ -121555,19 +121587,19 @@ dFc
 aaa
 iBf
 uVv
-mwi
+lCJ
 jOH
 jOH
+oPP
+iTT
+tKt
 uVv
-mkm
-tKt
-yfT
-nxw
-vbc
+uVv
+uVv
 tKt
 tKt
-uex
-lll
+uVv
+aHj
 iBf
 iBf
 iBf
@@ -121856,20 +121888,20 @@ aES
 dFc
 aaa
 iBf
-iBf
-mET
-jOH
-kjk
 uVv
-lPH
+mwi
+jOH
+jOH
+uVv
+mkm
 tKt
-kfH
-xCw
-jHB
+yfT
+nxw
+vbc
 tKt
 tKt
-jDS
-ogI
+uex
+lll
 iBf
 iBf
 iBf
@@ -122159,20 +122191,20 @@ dFc
 aaa
 iBf
 iBf
-oxe
+mET
 jOH
 kjk
-xNY
-seK
-tKt
-tKt
-qZh
-vel
-tKt
-tKt
-mSp
-aGo
 uVv
+lPH
+tKt
+kfH
+xCw
+jHB
+tKt
+tKt
+jDS
+aGo
+iBf
 iBf
 iBf
 aaa
@@ -122461,19 +122493,19 @@ dFc
 aaa
 iBf
 iBf
-iBf
-glz
-xQP
+oxe
+jOH
+kjk
 xNY
-mzt
+seK
 tKt
 tKt
-eSb
+qZh
 vel
 tKt
 tKt
-ofE
-diL
+mSp
+oyE
 uVv
 iBf
 iBf
@@ -122764,19 +122796,19 @@ aaa
 iBf
 iBf
 iBf
-uVv
+glz
+xQP
 xNY
+mzt
+tKt
+tKt
+nKS
+vel
+tKt
+tKt
+ofE
+diL
 uVv
-pyP
-iTT
-tKt
-lFb
-uBi
-tKt
-tKt
-mSp
-erT
-iBf
 iBf
 iBf
 aaa
@@ -123066,14 +123098,14 @@ aaa
 iBf
 iBf
 iBf
-iBf
-iBf
 uVv
-kPR
+xNY
+uVv
+pyP
 iTT
-iTT
-ixz
 tKt
+lFb
+uBi
 tKt
 tKt
 mSp
@@ -123370,16 +123402,16 @@ iBf
 iBf
 iBf
 iBf
-iBf
-tdU
+uVv
+kPR
+iTT
+iTT
+ixz
 tKt
 tKt
-jup
 tKt
-tKt
-tKt
-ofE
-hSU
+mSp
+xHa
 iBf
 iBf
 iBf
@@ -123673,15 +123705,15 @@ iBf
 iBf
 iBf
 iBf
-iMC
+tdU
 tKt
 tKt
-wkZ
+jup
 tKt
 tKt
 tKt
-gfR
-iBf
+ofE
+hSU
 iBf
 iBf
 iBf
@@ -123975,14 +124007,14 @@ iBf
 iBf
 iBf
 iBf
-kpi
+iMC
 tKt
 tKt
-uVv
-imL
+wkZ
 tKt
-glz
-hSU
+tKt
+tKt
+gfR
 iBf
 iBf
 iBf
@@ -124277,14 +124309,14 @@ iBf
 iBf
 iBf
 iBf
-iBf
-hSU
-moj
+kpi
+tKt
+tKt
 uVv
-glz
+imL
+tKt
 glz
 hSU
-iBf
 iBf
 iBf
 iBf
@@ -124580,12 +124612,12 @@ iBf
 iBf
 iBf
 iBf
-iBf
-qtB
+hSU
+moj
 uVv
-iBf
-iBf
-iBf
+glz
+glz
+hSU
 iBf
 iBf
 iBf
@@ -124883,8 +124915,8 @@ iBf
 iBf
 iBf
 iBf
-iBf
-iBf
+qtB
+uVv
 iBf
 iBf
 iBf
