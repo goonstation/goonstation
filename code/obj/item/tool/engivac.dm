@@ -6,6 +6,7 @@
  *Also somewhat distant from the janitor vacuum functionally, as this one doesn't do smoke and that one doesn't auto-pickup,
  *but they could maybe be merged somehow.
  */
+#define ENGIVAC_MISC_ITEM_LIMIT 2 //How much non-listed crap a toolbox can have before the engivac rejects it.
 
 obj/item/engivac
 	name = "engineering materiel vacuum"
@@ -31,8 +32,6 @@ obj/item/engivac
 	var/collect_buildmats = TRUE
 	var/collect_debris = TRUE
 	var/placing_tiles = FALSE
-	//IDK if we want these to make fixing broken tiles as easy as walking around wearing one of these holding a crowbar out so here's a var for it
-	var/also_replace_broken = TRUE
 
 	//The stack of tiles within the toolbox that we're currently drawing from wrt auto-placing
 	var/obj/item/tile/current_stack
@@ -95,6 +94,11 @@ obj/item/engivac/afterattack(atom/target)
 
 obj/item/engivac/attackby(obj/item/I as obj, mob/user as mob)
 	if (istype(I, /obj/item/storage/toolbox) && !held_toolbox)
+		if (!toolbox_contents_check(I))
+			if(!ON_COOLDOWN(src, "rejectsound", 2 SECONDS))
+				playsound(get_turf(src), "sound/machines/buzz-sigh.ogg", 50, 0)
+			boutput(user, "<span class='alert'>This toolbox has too many unrecognised things in it, and the vacuum rejects it.</span>")
+			return
 		user.u_equip(I)
 		held_toolbox = I
 		I.set_loc(src)
@@ -172,7 +176,7 @@ obj/item/engivac/move_callback(mob/M, turf/source, turf/target)
 			return
 	if (istype(target, /turf/simulated/floor))
 		var/turf/simulated/floor/tile_target = target
-		if (tile_target.intact && (also_replace_broken && !(tile_target.broken || tile_target.burnt))) //Does this need replacing?
+		if (tile_target.intact && !(tile_target.broken || tile_target.burnt)) //Does this need replacing?
 			return
 
 		tile_target.attackby(current_stack,M)
@@ -253,3 +257,24 @@ obj/item/engivac/proc/rebuild_collection_list()
 		currently_collecting += buildmats_2_collect
 	if (collect_debris)
 		currently_collecting += debris_2_collect
+
+///Returns TRUE if the toolbox should be accepted and FALSE if it should not
+obj/item/engivac/proc/toolbox_contents_check(obj/item/storage/toolbox/tocheck)
+	if (!istype(tocheck))
+		return FALSE
+	var/list/toolbox_contents = tocheck.get_contents()
+	var/strikes = 0
+	var/in_list = FALSE
+	for (var/obj/item/thingy as anything in toolbox_contents)
+		for(var/sometype in (buildmats_2_collect + debris_2_collect))
+			if(istype(thingy, sometype))
+				in_list = TRUE
+				break
+		if (!in_list)
+			strikes += 1
+		in_list = FALSE
+	if (strikes <= ENGIVAC_MISC_ITEM_LIMIT)
+		return TRUE
+	return FALSE
+
+#undef ENGIVAC_MISC_ITEM_LIMIT
