@@ -1236,12 +1236,12 @@ Read the rules, don't grief, and have fun!</div>"}
 			src.maptext_width = 600
 			src.maptext_height = 400
 			src.set_text({"<span class='ol vga'>
-Welcome to Goonstation!
+Welcome to <a style='color: #88f;' href="https://wiki.coolstation.space/">Coolstation</a>!
 New? <a style='color: #88f;' href="https://mini.xkeeper.net/ss13/tutorial/">Check the tutorial</a>!
 Have questions? Ask mentors with \[F3]!
 Need an admin? Message us with \[F1].
 
-Other Goonstation servers:[serverList]</span>"})
+Other Coolstation servers: Not Yet!!!</span>"})
 
 
 
