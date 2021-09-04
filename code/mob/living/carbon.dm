@@ -90,6 +90,7 @@
 		var/mob/living/carbon/human/H = src
 		var/obj/item/reagent_containers/poo_target = src.equipped()
 		var/obj/item/reagent_containers/food/snacks/ingredient/mud/shit = new()
+		shit.owner = src // this is your shit.
 		if(!istype(src)) // just in case something unhuman poops, lets still make a turd.
 			var/turf/T = get_turf(src)
 			if (istype(T))

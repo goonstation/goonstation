@@ -114,7 +114,13 @@
 	color = DEFAULT_MUD_COLOR
 	//item_state = "poop"
 	var/mob/living/carbon/owner = null
+	var/mob/living/carbon/human/last_touched
 	amount_per_transfer_from_this = 10
+	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+
+	attack_hand(var/mob/user)
+		last_touched = user
+		..()
 
 	New()
 		..()
@@ -123,10 +129,11 @@
 		R.my_atom = src
 		R.add_reagent("poo", 10)
 		icon_state = "mud[rand(1,3)]"
+		name = pick("shit","turd","poop","poo")
 
 	heal(var/mob/living/M)
 		if (prob(33))
-			boutput(M, "<span class='alert'>You briefly think you probably shouldn't be eating mud.</span>")
+			boutput(M, "<span class='alert'>You briefly think you probably shouldn't be eating this.</span>")
 			M.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
@@ -150,6 +157,13 @@
 				if (H.shoes)
 					H.shoes.add_mud(src)
 					H.set_clothing_icon_dirty()
+			if (H.sims)
+				H.sims.affectMotive("fun", -10)
+				if (owner && (owner == H)) // double humiliation if it's your own shit
+					H.sims.affectMotive("fun", -10)
+			if (istype(last_touched) && (last_touched in viewers(src)) && last_touched != H)
+				if (last_touched.sims)
+					last_touched.sims.affectMotive("fun", 10)
 		else
 			A.add_mud(src)
 
@@ -157,6 +171,31 @@
 
 		..()
 
+/obj/item/reagent_containers/food/snacks/ingredient/mud/HasEntered(AM as mob|obj)
+	if(istype(src.loc, /turf/space))
+		return
+	if (iscarbon(AM))
+		var/mob/M =	AM
+		if (M.slip(ignore_actual_delay = 1))
+
+			boutput(M, "<span class='notice'>You slipped on [src]!</span>")
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if (H.sims)
+					H.sims.affectMotive("fun", -10)
+					if (owner && (owner == H)) // double humiliation if it's your own shit
+						H.sims.affectMotive("fun", -10)
+			if (istype(last_touched) && (last_touched in viewers(src)) && last_touched != M)
+				if (last_touched.sims)
+					last_touched.sims.affectMotive("fun", 10)
+			if(M.bioHolder.HasEffect("clumsy"))
+				M.changeStatus("weakened", 5 SECONDS)
+				JOB_XP(M, "Clown", 2)
+			else
+				if (prob(50))
+					JOB_XP(last_touched, "Clown", 1)
+
+			src.throw_impact(M) //splat the poo after it's been slipped on
 
 
 /obj/decal/cleanable/mud
