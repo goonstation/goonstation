@@ -132,6 +132,7 @@
 			owner.render_special.set_centerlight_icon("thermal", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 
 		if (HAS_MOB_PROPERTY(owner, PROP_MESONVISION) && (T && !isrestrictedz(T.z)))
+			owner.sight |= BLIND
 			owner.sight |= SEE_TURFS
 			owner.sight &= ~SEE_BLACKNESS
 			if (owner.see_in_dark < initial(owner.see_in_dark) + 1)
