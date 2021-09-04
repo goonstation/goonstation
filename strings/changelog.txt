@@ -1,4 +1,9 @@
 
+(t)sat sep 04 21
+(u)UnfunnyPerson
+(p)5899
+(e)⚖|balance
+(+)Werewolf serum requires 3 u to infect lycanthropy instead of 0 u
 (t)fri sep 03 21
 (u)Yass + Flourish
 (e)⚖|balance
