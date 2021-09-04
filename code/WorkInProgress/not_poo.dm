@@ -109,7 +109,7 @@
 /obj/item/reagent_containers/food/snacks/ingredient/mud
 	name = "mud"
 	desc = "It is mud."
-	icon = '+secret/icons/misc/not_poo.dmi'
+	icon = 'icons/misc/not_poo.dmi'
 	icon_state = "mud1"
 	color = DEFAULT_MUD_COLOR
 	//item_state = "poop"
@@ -168,7 +168,7 @@
 	anchored = 1
 	color = DEFAULT_MUD_COLOR
 	//layer = 2
-	icon = '+secret/icons/misc/not_poo.dmi'
+	icon = 'icons/misc/not_poo.dmi'
 	icon_state = "floor1"
 	var/datum/ailment/disease/virus = null
 	blood_DNA = null
