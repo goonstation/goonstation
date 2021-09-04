@@ -781,6 +781,27 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		set_current_projectile(new/datum/projectile/bullet/tranq_dart)
 		..()
 
+
+/obj/item/gun/kinetic/dart_blowgun
+	name = "Blowgun"
+	desc = "A stealthy blowgun that launches poisoned darts."
+	icon_state = "blowgun"
+	item_state = "cane-f"
+	force = MELEE_DMG_PISTOL
+	contraband = 2
+	caliber = 0.308
+	max_ammo_capacity = 1.
+	auto_eject = 1
+	can_dual_wield = 0
+	hide_attack = 1
+	muzzle_flash = "muzzle_flash_launch"
+	gildable = 1
+
+	New()
+		ammo = new/obj/item/ammo/bullets/tranq_darts/syndicate/curare
+		set_current_projectile(new/datum/projectile/bullet/tranq_dart/syndicate/curare)
+		..()
+
 /obj/item/gun/kinetic/zipgun
 	name = "Zip Gun"
 	desc = "An improvised and unreliable gun."

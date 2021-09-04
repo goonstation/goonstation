@@ -280,6 +280,9 @@ toxic - poisons
 	syndicate
 		reagent_payload = "sodium_thiopental" // HEH
 
+		curare
+			reagent_payload = "curare"
+
 		pistol
 			caliber = 0.355
 			casing = /obj/item/casing/small

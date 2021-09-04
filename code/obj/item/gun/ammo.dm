@@ -595,6 +595,11 @@
 		sname = ".308 Tranquilizer Deluxe"
 		ammo_type = new/datum/projectile/bullet/tranq_dart/syndicate
 
+		curare
+			sname = "blow dart"
+			name = "poison darts"
+			ammo_type = new/datum/projectile/bullet/tranq_dart/syndicate/curare
+
 		pistol
 			sname = ".355 Tranqilizer"
 			name = ".355 tranquilizer pistol darts"
