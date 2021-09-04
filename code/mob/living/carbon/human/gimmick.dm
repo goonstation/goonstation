@@ -995,10 +995,10 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		..()
 		src.say("Hey there")//debug
 
-		src.equip_new_if_possible(/obj/item/clothing/shoes/black,{cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} slot_shoes)
-		src.equip_new_if_possible(/obj/item/clothing/under/rank/overalls,{cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} slot_w_uniform)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/black {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1}, slot_shoes)
+		src.equip_new_if_possible(/obj/item/clothing/under/rank/overalls {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1}, slot_w_uniform)
 
-		src.equip_new_if_possible(/obj/item/device/radio/headset/command/radio_show_host,{cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} slot_ears)
+		src.equip_new_if_possible(/obj/item/device/radio/headset/command/radio_show_host {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1}, slot_ears)
 
 		remove_lifeprocess(/datum/lifeprocess/blindness)
 		remove_lifeprocess(/datum/lifeprocess/viruses)

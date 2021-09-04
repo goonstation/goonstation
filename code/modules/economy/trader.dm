@@ -1432,8 +1432,8 @@
 // A gal trying to keep her sub afloat
 
 /obj/npc/trader/
-	icon = 'icons/obj/trader.dmi'
-	icon_state = "chad"
+	icon = 'icons/obj/items/device.dmi'
+	icon_state = "intercom"
 	picture = "generic.png"
 	name = "Erin Sarni"
 	trader_area = "/area/seaturtle/traderbooth"
@@ -1445,19 +1445,19 @@
 		/////////////////////////////////////////////////////////
 		//// sell list //////////////////////////////////////////
 		/////////////////////////////////////////////////////////
-		src.goods_sell += new /datum/commodity/ore/steel(src)
+		// src.goods_sell += new /datum/commodity/ore/steel(src)
 		src.goods_sell += new /datum/commodity/ore/molitz(src)
 		src.goods_sell += new /datum/commodity/ore/pharosium(src)
 		src.goods_sell += new /datum/commodity/ore/cobryl(src)
 		src.goods_sell += new /datum/commodity/ore/fibrilith(src)
-		src.goods_sell += new /datum/commodity/ore/uquill(src)
+		src.goods_sell += new /datum/commodity/ore/uqill(src)
 		src.goods_sell += new /datum/commodity/ore/telecrystal(src)
 		src.goods_sell += new /datum/commodity/ore/gold	(src)
 		src.goods_illegal += new /datum/commodity/duct_tape(src)
 		/////////////////////////////////////////////////////////
 		//// buy list ///////////////////////////////////////////
 		/////////////////////////////////////////////////////////
-		src.goods_buy += new /datum/commodity/salvage/syndicate_circuit_board(src)
+		src.goods_buy += new /datum/commodity/syndicate_circuit_board(src)
 		src.goods_buy += new /datum/commodity/raw_material/chitin(src)
 		src.goods_buy += new /datum/commodity/produce/(src)
 		src.goods_buy += new /datum/commodity/produce/(src)
