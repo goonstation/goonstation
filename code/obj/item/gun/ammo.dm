@@ -46,7 +46,7 @@
 /obj/item/ammo/bullets
 	name = "Ammo box"
 	sname = "Bullets"
-	desc = "A box of ammo"
+	desc = "A box of ammo!"
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "power_cell"
 	m_amt = 40000
@@ -594,6 +594,15 @@
 	syndicate
 		sname = ".308 Tranquilizer Deluxe"
 		ammo_type = new/datum/projectile/bullet/tranq_dart/syndicate
+
+		curare
+			sname = "blow dart"
+			name = "poison darts"
+			ammo_type = new/datum/projectile/bullet/tranq_dart/syndicate/curare
+
+			single
+				amount_left = 1
+				max_amount = 1
 
 		pistol
 			sname = ".355 Tranqilizer"
