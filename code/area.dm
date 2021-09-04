@@ -1149,7 +1149,7 @@ ABSTRACT_TYPE(/area/diner)
 	icon_state = "red"
 
 /area/diner/cow
-	name = "Cow Diner"
+	name = "Void Diner"
 	icon_state = "purple"
 	requires_power = FALSE
 
