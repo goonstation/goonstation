@@ -1797,3 +1797,58 @@
 	regrow_target_id = "butt"
 	regrow_target_name = "butt"
 	regrow_target_path = /obj/item/clothing/head/butt
+
+
+/datum/statusEffect/z_pre_infection
+	id = "z_pre_inf"
+	name = "Zombie Scratch"
+	desc = "You breathed in some gross miasma."
+	icon_state = "z_pre_infection-1"
+	maxDuration = 90 SECONDS
+	visible = 0
+
+	var/timer = 0
+	var/static/infect_time = 50 SECONDS
+
+	var/mob/living/carbon/human/H
+	var/image/onfire = null
+
+	getTooltip()
+		. = ""
+
+	clicked(list/params)
+		if (H)
+			H.resist()
+
+	preCheck(atom/A)
+		. = 1
+		if(!ishuman(A))
+			. = 0
+		// I'd LIKE to put this check here, but proc/find_ailment_by_type and is a bit too inefficient for my comfort
+		// and this will be applied on combat hit. The ailments should use a assoc list for Constant lookup time or something...
+		// if (isliving(A))
+		// 	var/mob/living/L = A
+		// 	if (L.find_ailment_by_type(/datum/ailment/disease/necrotic_degeneration/can_infect_more))
+		// 		. = 0 //Already have the disease, don't need to bother with this
+
+	onAdd()
+		. = ..()
+		timer = 0
+		if (ishuman(owner))
+			H = owner
+			//If dead, instaconvert.
+			if(isdead(H))
+				H.set_mutantrace(/datum/mutantrace/zombie/can_infect)
+				if (H.ghost?.mind && !(H.mind && H.mind.dnr)) // if they have dnr set don't bother shoving them back in their body (Shamelessly ripped from SR code. Fight me.)
+					H.ghost.show_text("<span class='alert'><B>You feel yourself being dragged out of the afterlife!</B></span>")
+					H.ghost.mind.transfer_to(H)
+				H.delStatus(id)
+
+	onUpdate(timePassed)
+		timer += timePassed
+
+		if (timer >= infect_time && H)
+			H.contract_disease(/datum/ailment/disease/necrotic_degeneration/can_infect_more, null, null, 1) // path, name, strain, bypass resist
+			H.delStatus(id)
+			return
+		return ..(timePassed)

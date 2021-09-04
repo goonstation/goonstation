@@ -861,8 +861,10 @@
 /datum/mutantrace/zombie
 	name = "zombie"
 	icon_state = "zombie"
+	human_compatible = FALSE
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON | HEAD_HAS_OWN_COLORS)
 	jerk = 1
+	override_attack = 0
 	needs_oxy = 0
 	movement_modifier = /datum/movement_modifier/zombie
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/zombie
@@ -900,7 +902,11 @@
 
 			M.add_stam_mod_max("zombie", 100)
 			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "zombie", -5)
+			M.full_heal()
+			M.real_name = "Zombie [M.real_name]"
 
+			SPAWN_DBG(rand(4, 30))
+				M.emote("scream")
 			SHOW_ZOMBIE_TIPS(M)
 
 	proc/make_bubs(var/mob/living/carbon/human/M)
