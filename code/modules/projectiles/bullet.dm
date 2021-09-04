@@ -282,6 +282,8 @@ toxic - poisons
 
 		curare
 			reagent_payload = "curare"
+			casing = null
+			silentshot = 1
 
 		pistol
 			caliber = 0.355

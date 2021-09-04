@@ -791,14 +791,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	contraband = 2
 	caliber = 0.308
 	max_ammo_capacity = 1.
-	auto_eject = 1
 	can_dual_wield = 0
 	hide_attack = 1
-	muzzle_flash = "muzzle_flash_launch"
 	gildable = 1
 
 	New()
-		ammo = new/obj/item/ammo/bullets/tranq_darts/syndicate/curare
+		ammo = new/obj/item/ammo/bullets/tranq_darts/syndicate/curare/single
 		set_current_projectile(new/datum/projectile/bullet/tranq_dart/syndicate/curare)
 		..()
 
