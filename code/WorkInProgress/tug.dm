@@ -16,6 +16,9 @@
 		if (!istype(C)|| C.anchored || get_dist(user, src) > 1 || get_dist(src,C) > 1 )
 			return
 
+		if (istype(C, /mob/dead/))
+			return
+
 		if (istype(C, /obj/vehicle/tug))
 			user.show_text("\The [C] is too heavy for \the [src]!", "red")
 			return

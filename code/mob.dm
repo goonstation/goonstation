@@ -799,8 +799,6 @@
 		C.eye = src.eye
 		C.pixel_x = src.eye_pixel_x
 		C.pixel_y = src.eye_pixel_y
-	else if(!isturf(src.loc))
-		C.eye = src.loc
 	else
 		C.eye = src
 		C.pixel_x = src.loc_pixel_x
@@ -1055,8 +1053,7 @@
 /mob/proc/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	hit_twitch(src)
 	src.health -= max(0, brute)
-	if (!is_heat_resistant())
-		src.health -= max(0, burn)
+	src.health -= max(0, (src.bioHolder?.HasEffect("fire_resist") > 1) ? burn/2 : burn)
 
 /mob/proc/TakeDamageAccountArmor(zone, brute, burn, tox, damage_type)
 	TakeDamage(zone, brute - get_melee_protection(zone,damage_type), burn - get_melee_protection(zone,damage_type))

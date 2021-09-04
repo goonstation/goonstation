@@ -12,7 +12,6 @@
 	stability_loss = 10
 	var/using = 0
 	var/safety = 0
-	var/power = 0
 	var/ability_path = /datum/targetable/geneticsAbility/cryokinesis
 	var/datum/targetable/geneticsAbility/ability = /datum/targetable/geneticsAbility/cryokinesis
 
@@ -72,16 +71,10 @@
 		particleMaster.SpawnSystem(new /datum/particleSystem/tele_wand(get_turf(target),"8x8snowflake","#88FFFF"))
 
 		var/obj/decal/icefloor/B
-		B = new /obj/decal/icefloor(T)
-		SPAWN_DBG(80 SECONDS)
-			if (B)
+		for (var/turf/TF in range(linked_power.power - 1,T))
+			B = new /obj/decal/icefloor(TF)
+			SPAWN_DBG(80 SECONDS)
 				B.dispose()
-
-		if (linked_power.power)
-			for (var/turf/TF in orange(1,T))
-				B = new /obj/decal/icefloor(TF)
-				SPAWN_DBG(80 SECONDS)
-					B.dispose()
 
 		for (var/mob/living/L in T.contents)
 			if (L == owner && linked_power.safety)
@@ -90,7 +83,7 @@
 			if(L.getStatusDuration("burning"))
 				L.delStatus("burning")
 			L.bodytemperature = 100
-			if (linked_power.power)
+			if (linked_power.power > 1)
 				new /obj/icecube(get_turf(L), L)
 
 		return
@@ -156,7 +149,7 @@
 				if (istype(A,ME.target_path))
 					items += A
 
-		if (linked_power.power)
+		if (linked_power.power > 1)
 			items += get_filtered_atoms_in_touch_range(owner, /obj/the_server_ingame_whoa)
 			//So people can still get the meat ending
 
@@ -219,7 +212,7 @@
 				if (istype(A,ME.target_path))
 					items += A
 
-		if (linked_power.power)
+		if (linked_power.power > 1)
 			items += get_filtered_atoms_in_touch_range(owner, /obj/the_server_ingame_whoa)
 			//So people can still get the meat ending
 
@@ -265,7 +258,7 @@
 	probability = 99
 	blockCount = 4
 	blockGaps = 2
-	stability_loss = 5
+	stability_loss = 10
 	ability_path = /datum/targetable/geneticsAbility/jumpy
 
 /datum/bioEffect/power/jumpy/jumpsuit // granted by the frog jumpsuit
@@ -297,13 +290,9 @@
 		//store both x and y as transforms mid jump can cause unwanted pixel offsetting
 		var/original_x_offset = owner.pixel_x
 		var/original_y_offset = owner.pixel_y
-		var/jump_tiles = 10
-		var/pixel_move = 8
-		var/sleep_time = 1
-		if (linked_power.power)
-			jump_tiles = 20
-			pixel_move = 16
-			sleep_time = 0.5
+		var/jump_tiles = 10 * linked_power.power
+		var/pixel_move = 8 * linked_power.power
+		var/sleep_time = 1 / linked_power.power
 
 		if (istype(owner.loc,/turf/))
 			usr.visible_message("<span class='alert'><b>[owner]</b> takes a huge leap!</span>")
@@ -354,13 +343,9 @@
 		//store both x and y as transforms mid jump can cause unwanted pixel offsetting
 		var/original_x_offset = owner.pixel_x
 		var/original_y_offset = owner.pixel_y
-		var/jump_tiles = 10
-		var/pixel_move = 8
-		var/sleep_time = 0.5
-		if (linked_power.power)
-			jump_tiles = 20
-			pixel_move = 16
-			sleep_time = 0.2
+		var/jump_tiles = 10 * linked_power.power
+		var/pixel_move = 8 * linked_power.power
+		var/sleep_time = 0.5 / linked_power.power
 
 		if (istype(owner.loc,/turf/))
 			usr.visible_message("<span class='alert'><b>[owner]</b> leaps far too high and comes crashing down hard!</span>")
@@ -554,7 +539,7 @@
 	probability = 99
 	blockCount = 4
 	blockGaps = 2
-	stability_loss = 5
+	stability_loss = 0
 	ability_path = /datum/targetable/geneticsAbility/telepathy
 
 /datum/targetable/geneticsAbility/telepathy
@@ -823,13 +808,12 @@
 
 		playsound(owner.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
 
-		if (!linked_power.power && owner.bioHolder && (owner.bioHolder.HasEffect("fire_resist") || owner.bioHolder.HasEffect("thermal_resist")))
-			owner.show_message("<span class='alert'>Your body emits an odd burnt odor but you somehow cannot bring yourself to heat up. Huh.</span>")
-			return
-
-		if (linked_power.power)
+		if (linked_power.power > 1)
 			owner.visible_message("<span class='alert'><b>[owner.name]</b> erupts into a huge column of flames! Holy shit!</span>")
 			fireflash_sm(get_turf(owner), 3, 7000, 2000)
+		else if (owner.is_heat_resistant())
+			owner.show_message("<span class='alert'>Your body emits an odd burnt odor but you somehow cannot bring yourself to heat up. Huh.</span>")
+			return
 		else
 			owner.visible_message("<span class='alert'><b>[owner.name]</b> suddenly bursts into flames!</span>")
 			owner.set_burning(100)
@@ -951,26 +935,19 @@
 
 		owner.visible_message("<span class='alert'><b>[owner.name]</b> hunches down and grits their teeth!</span>")
 		SF.farting = 1
-		var/stun_time = 3
-		var/fart_range = 6
+		var/stun_time = 3 * linked_power.power
+		var/fart_range = 6 * linked_power.power
 		var/gib_user = 0
-		var/throw_speed = 15
-		var/throw_repeat = 3
-		var/sound_volume = 50
-		var/sound_repeat = 1
+		var/throw_speed = 15 * linked_power.power
+		var/throw_repeat = 3 * linked_power.power
+		var/sound_volume = 50 * linked_power.power
+		var/sound_repeat = 1 * linked_power.power
 		var/fart_string = " unleashes a [pick("tremendous","gigantic","colossal")] fart!"
 
-		if(linked_power.power)
-			stun_time = 6
-			fart_range = 12
-			throw_speed = 30
-			throw_repeat = 6
-			sound_volume = 100
-			sound_repeat = 3
-			if (!linked_power.safety)
-				gib_user = 1
-				fart_string = "'s body is torn apart like a wet paper bag by [his_or_her(owner)] unbelievably powerful farting!"
-				owner.unlock_medal("Shit Fest", 1)
+		if(linked_power.power > 1 && !linked_power.safety)
+			gib_user = 1
+			fart_string = "'s body is torn apart like a wet paper bag by [his_or_her(owner)] unbelievably powerful farting!"
+			owner.unlock_medal("Shit Fest", 1)
 
 		sleep(3 SECONDS)
 		if (can_act(owner))
@@ -996,13 +973,16 @@
 				while (throw_repeat > 0)
 					throw_repeat--
 					step_away(V,get_turf(owner),throw_speed)
-
-			if(owner.bioHolder.HasEffect("toxic_farts"))
+			var/toxic = owner.bioHolder.HasEffect("toxic_farts")
+			if(toxic)
 				var/turf/fart_turf = get_turf(owner)
-				fart_turf.fluid_react_single("toxic_fart",50,airborne = 1)
+				var/datum/reagents/R = new(toxic * 100)
+				R.add_reagent("toxic_fart", 50 * toxic)
+				R.add_reagent("toxin", (toxic - 1) * 50)
+				fart_turf.fluid_react(R, R.total_volume, airborne = 1)
 
 			SF.farting = 0
-			if (linked_power.power)
+			if (linked_power.power > 1)
 				for (var/turf/T in range(owner,6))
 					animate_shake(T,5,rand(3,8),rand(3,8))
 			if (gib_user)
@@ -1101,7 +1081,7 @@
 
 		var/datum/bioEffect/power/eyebeams/EB = linked_power
 		var/projectile_path = ispath(EB.projectile_path) ? EB.projectile_path : text2path(EB.projectile_path)
-		if(linked_power.power)
+		if(linked_power.power > 1)
 			projectile_path = /datum/projectile/laser
 		else if(EB.stun_mode) //used by superhero for nonlethal stun
 			projectile_path = /datum/projectile/laser/eyebeams/stun
@@ -1150,7 +1130,7 @@
 	cooldown = 600
 	msgGain = "You feel hype!"
 	msgLose = "You don't feel so pumped anymore."
-	stability_loss = 5
+	stability_loss = 15
 	ability_path = /datum/targetable/geneticsAbility/adrenaline
 
 /datum/targetable/geneticsAbility/adrenaline
@@ -1163,9 +1143,7 @@
 	cast()
 		if (..())
 			return 1
-		var/multiplier = 1
-		if(linked_power.power)
-			multiplier = 2
+		var/multiplier = linked_power.power
 		if (owner.reagents)
 			boutput(owner, "<span class='notice'>You get pumped up!</span>")
 			owner.emote("scream")
@@ -1225,7 +1203,7 @@
 			return 1
 
 		var/base_path = /obj/item/
-		if (linked_power.power)
+		if (linked_power.power > 1)
 			base_path = /obj/
 
 		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
@@ -1260,7 +1238,7 @@
 			return 1
 
 		var/base_path = /obj/item/
-		if (linked_power.power)
+		if (linked_power.power > 1)
 			base_path = /obj/
 
 		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
@@ -1325,9 +1303,7 @@
 		var/mob/living/carbon/C = target
 		owner.visible_message("<span class='alert'><b>[owner] touches [C], enveloping them in a soft glow!</b></span>")
 		boutput(C, "<span class='notice'>You feel your pain fading away.</span>")
-		var/amount_to_heal = 25
-		if (linked_power.power)
-			amount_to_heal = 50
+		var/amount_to_heal = 25 * linked_power.power
 		C.HealDamage("All", amount_to_heal, amount_to_heal)
 		C.take_toxin_damage(0 - amount_to_heal)
 		C.take_oxygen_deprivation(0 - amount_to_heal)
@@ -1354,9 +1330,7 @@
 		owner.visible_message("<span class='alert'><b>[owner] touches [C], enveloping them in a bright glow!</b></span>")
 		boutput(C, "<span class='notice'>Your pain fades away rapidly.</span>")
 		boutput(owner, "<span class='alert'>You use too much life energy and hurt yourself!</span>")
-		var/amount_to_heal = 25
-		if (linked_power.power)
-			amount_to_heal = 50
+		var/amount_to_heal = 25 * linked_power.power
 		C.HealDamage("All", amount_to_heal, amount_to_heal)
 		owner.TakeDamage("All", amount_to_heal, amount_to_heal)
 		C.take_toxin_damage(0 - amount_to_heal)
@@ -1380,7 +1354,7 @@
 	msgLose = "The blue light fades away."
 	cooldown = 900
 	occur_in_genepools = 0
-	stability_loss = 20
+	stability_loss = 15
 	ability_path = /datum/targetable/geneticsAbility/dimension_shift
 	var/active = 0
 	var/processing = 0
@@ -1479,7 +1453,7 @@
 	msgLose = "It's too bright!"
 	cooldown = 600
 	occur_in_genepools = 0
-	stability_loss = 5
+	stability_loss = 0
 	ability_path = /datum/targetable/geneticsAbility/photokinesis
 	var/red = 0
 	var/green = 0
@@ -1508,11 +1482,8 @@
 		var/turf/T = get_turf(target)
 		owner.visible_message("<span class='alert'><b>[owner]</b> raises [his_or_her(owner)] hands into the air!</span>")
 		playsound(owner.loc, "sound/voice/heavenly.ogg", 50, 0)
-		var/strength = 7
-		var/time = 300
-		if (linked_power.power)
-			strength = 13
-			time = 600
+		var/strength = 1 + 6 * linked_power.power
+		var/time = 300 * linked_power.power
 		new /obj/photokinesis_light(T,P.red,P.green,P.blue,strength,time)
 
 /obj/photokinesis_light
@@ -1552,7 +1523,7 @@
 	msgLose = "It's too dark!"
 	cooldown = 600
 	occur_in_genepools = 0
-	stability_loss = 5
+	stability_loss = 15
 	ability_path = /datum/targetable/geneticsAbility/erebokinesis
 	var/time = 0
 	var/size = 0
@@ -1577,9 +1548,8 @@
 		var/datum/bioEffect/power/erebokinesis/P = linked_power
 		var/field_size = P.size
 		var/field_time = P.time
-		if (P.power)
-			field_size *= 2
-			field_time *= 2
+		field_size *= P.power
+		field_time *= P.power
 
 		var/turf/T = get_turf(target)
 		owner.visible_message("<span class='alert'><b>[owner]</b> raises [his_or_her(owner)] hands into the air!</span>")
@@ -1617,11 +1587,8 @@
 		var/turf/T = get_turf(target)
 		var/list/affected_turfs = getline(owner, T)
 		var/datum/bioEffect/power/fire_breath/FB = linked_power
-		var/range = FB.range
-		var/temp = FB.temperature
-		if (FB.power)
-			range *= 2
-			temp *= 4
+		var/range = FB.range * FB.power
+		var/temp = FB.temperature * FB.power ** 2
 		owner.visible_message("<span class='alert'><b>[owner] breathes fire!</b></span>")
 		playsound(owner.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
 		var/turf/currentturf
@@ -1677,7 +1644,7 @@
 		var/count = 0
 		for (var/mob/living/L in range(7,owner))
 			if (L.hearing_check(1))
-				if(count++ > (src.linked_power.power ? 10 : 7)) break
+				if(count++ > (4 + src.linked_power.power * 3)) break
 				if(locate(/obj/item/storage/bible) in get_turf(L))
 					owner.visible_message("<span class='alert'><b>A mysterious force smites [owner.name] for inciting blasphemy!</b></span>")
 					owner.gib()
@@ -1706,7 +1673,7 @@
 	reclaim_mats = 40
 	msgGain = "You feel your consciousness expand outwards."
 	msgLose = "Your conciousness closes inwards."
-	stability_loss = 15
+	stability_loss = 10
 	ability_path = /datum/targetable/geneticsAbility/telekinesis
 
 	OnMobDraw()
@@ -1760,8 +1727,7 @@
 		var/current_prob = 100
 		var/modifier = 0.4
 
-		if (linked_power.power)
-			modifier *= 2
+		modifier *= linked_power.power
 
 		owner.visible_message("<span class='alert'><b>[owner.name]</b> makes a gesture at [T.name]!</span>")
 
@@ -1782,8 +1748,7 @@
 		var/current_prob = 100
 		var/modifier = 0.4
 
-		if (linked_power.power)
-			modifier *= 2
+		modifier *= linked_power.power
 
 		owner.visible_message("<span class='alert'><b>[owner.name]</b> makes a gesture at [T.name]!</span>")
 
@@ -1819,7 +1784,7 @@
 	lockedDiff = 3
 	lockedChars = list("G","C","A","T")
 	lockedTries = 8
-	stability_loss = 20
+	stability_loss = 15
 	cooldown = 0
 	var/active = 0
 	ability_path = /datum/targetable/geneticsAbility/darkcloak
@@ -1906,7 +1871,7 @@
 	lockedDiff = 3
 	lockedChars = list("G","C","A","T")
 	lockedTries = 8
-	stability_loss = 20
+	stability_loss = 15
 	cooldown = 0
 	var/last_moved = 0
 	var/active = 0
@@ -1998,8 +1963,7 @@
 		var/list/affected_turfs = getline(owner, T)
 		var/datum/bioEffect/power/bigpuke/BP = linked_power
 		var/range = BP.range
-		if (BP.power)
-			range *= 2
+		range *= BP.power
 		owner.visible_message("<span class='alert'><b>[owner] horfs up a huge stream of puke!</b></span>")
 		logTheThing("combat", owner, target, "power-pukes [log_reagents(owner)] at [log_loc(owner)].")
 		playsound(owner.loc, "sound/misc/meat_plop.ogg", 50, 0)
@@ -2207,7 +2171,7 @@
 					var/tmp_force = thrown_limb.throwforce
 					thrown_limb.throwforce = limb_force* (throw_power+1)	//double damage if empowered
 					var/callback = (SL?.stun_mode) ? /datum/targetable/geneticsAbility/shoot_limb/proc/hit_callback : null
-					thrown_limb.throw_at(target, range, throw_power * (linked_power.power+1), end_throw_callback=callback)
+					thrown_limb.throw_at(target, range, throw_power * (linked_power.power), end_throw_callback=callback)
 					//without snychronizer, you take damage and bleed on usage of the power
 					if (!linked_power.safety)
 						new thrown_limb.streak_decal(owner.loc)
@@ -2221,7 +2185,7 @@
 						if (istype(pwr))
 							pwr.count = 0
 
-					owner.visible_message("<span class='alert'><b>[thrown_limb][linked_power.power ? " violently " : " "]bursts off of its socket and flies towards [target]!</b></span>")
+					owner.visible_message("<span class='alert'><b>[thrown_limb][linked_power.power > 1 ? " violently " : " "]bursts off of its socket and flies towards [target]!</b></span>")
 					logTheThing("combat", owner, target, "shoot_limb [!linked_power.safety ? "Accidently" : ""] at [ismob(target)].")
 					SPAWN_DBG(1 SECOND)
 						if (thrown_limb)

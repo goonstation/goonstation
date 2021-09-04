@@ -46,7 +46,7 @@
 /obj/item/ammo/bullets
 	name = "Ammo box"
 	sname = "Bullets"
-	desc = "A box of ammo"
+	desc = "A box of ammo!"
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "power_cell"
 	m_amt = 40000
@@ -595,6 +595,15 @@
 		sname = ".308 Tranquilizer Deluxe"
 		ammo_type = new/datum/projectile/bullet/tranq_dart/syndicate
 
+		curare
+			sname = "blow dart"
+			name = "poison darts"
+			ammo_type = new/datum/projectile/bullet/tranq_dart/syndicate/curare
+
+			single
+				amount_left = 1
+				max_amount = 1
+
 		pistol
 			sname = ".355 Tranqilizer"
 			name = ".355 tranquilizer pistol darts"
@@ -858,6 +867,8 @@
 		amount_left = 24.0
 		max_amount = 24.0
 		ammo_type = new/datum/projectile/bullet/bullet_9mm/smartgun
+		sound_load = 'sound/weapons/gunload_hitek.ogg'
+
 	smg
 		name = "9mm SMG magazine"
 		amount_left = 30.0

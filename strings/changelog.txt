@@ -1,9 +1,153 @@
-
+(t)sat sep 04 21
+(u)Emily
+(e)🆕
+(*)Chickens age twice as fast if injected with ageinium
+(u)UnfunnyPerson
+(p)5899
+(e)⚖|balance
+(+)Werewolf serum requires 3 u to infect lycanthropy instead of 0 u
+(t)fri sep 03 21
+(u)Yass + Flourish
+(e)⚖|balance
+(*)Shoving an unarmed target will do 1.5x the stamina damage shoving an armed (i.e. holding something in at least one of their hands) target will do.
+(u)Flourish
+(*)Cyborgs should now be able to hear and speak even when stunned or immobilized.
+(t)thu sep 02 21
+(u)Yellow/Myco
+(p)5870
+(e)🗺|mapping
+(*)Refurbishes Destiny by updating walls, doors, and windows to the modern style!
+(u)BatElite
+(p)5883
+(e)🆕🎨|feature, sprites
+(+)The radio show host found a pair of vintage headphones in their closet, so they now spawn with that.
+(u)Ikea
+(p)5849
+(e)🗺|mapping
+(*)Nanotrasen has decided to reconstruct the Tunnel snake with some design modifications, and has decommissioned the old mining outpost for manta.
+(u)Flappybat
+(p)5882
+(e)|
+(+)Welders will always do damage on harm intent rather than trying to cauterize bleeding.
+(u)Flappybat
+(p)5875
+(e)|
+(+)Added a sound to the hand labeler.
+(u)Flappybat
+(p)5869
+(e)🐛⚖|bug, balance
+(+)You can no longer emote while unconscious.
+(t)wed sep 01 21
+(u)kyle
+(p)5841
+(e)🆕🎨|feature, sprites
+(*)Changelings now automatically start to regrow their limbs after making a limbspider. (Don't be by anyone when the timer runs out or they might notice!)
+(u)Mordent & Flaborized
+(p)5859
+(e)🆕🎨|feature, sprites
+(*)Geneticists get a new genetic analyzer device (which they spawn with) that lets them quickly check someone's genetics.
+(u)Gannets
+(p)5858
+(e)⚖|balance
+(+)Adjusted Field Medic autoinjector loadout:
+(+)Adds cardiac injector, filled with saline and epinephrine.
+(+)Adds lifesupport injector, filled with mannitol and salbutamol.
+(+)Adds blood-loss injector, filled with filgrastim and proconvertin.
+(t)tue aug 31 21
+(u)Tarmunora
+(p)5837
+(e)⚖|balance
+(*)Rebalances 'beneficial' bioeffects to accept the Power Booster chromosome. See PR for details. There are a lot of details.
+(+)Rebalances genetic stability costs of many bioeffects (mostly buffs). See PR for details. Again,
+(+)Removes robust genes trait, increases base genetic stability
+(+)Change formula for genetic power failrates at lower stability
+(u)Tarmunora
+(e)⚖|balance
+(+)Artifact guns must be activated to swap cells.
+(+)Chef is keeping a closer eye on their meatcleaver
+(t)mon aug 30 21
+(u)UnfunnyPerson
+(p)5834
+(e)⚖|balance
+(+)Skeletons heal 1 brute and 1 burn from milk per cycle instead of 2 brute, 2 burn, and 1 tox
+(u)Tarmunora
+(e)⚖|balance
+(*)Stimulants are now a 6TC purchase for 3 3-minute stimpacks. The syndicate would like to remind it's agents that withdrawl symptoms are natural, and to not try to ride them out with another dose, as you will eventually run out.
+(u)Tarmunora
+(e)⚖|balance
+(*)Reinforced walls are immune to being punched down by hulks
+(u)Flaborized
+(p)5842
+(e)🎨|sprites
+(+)Resprited cats.
+(t)sun aug 29 21
+(u)Azrun and Walpvrgis
+(p)5573
+(e)🎨|sprites
+(+)Graphical assets for snow experiences and future snow planets...
+(u)Azrun
+(p)5765
+(e)🆕|feature
+(+)Amusing Duck's will sometimes quack in response to interaction with the AI.
+(u)Walpvrgis
+(p)5815
+(e)🆕🎨|feature, sprites
+(+)Wasps, rockworms, seals and walruses have been resprited.
+(u)Vocalpocal
+(p)5824
+(e)⚖|balance
+(+)Custom cigarettes now last half as long but make you twice as high #nofilter
+(u)Zonespace
+(p)5826
+(e)⚖|balance
+(+)Poison Bottles no longer contain: Sulfonal, Loose Screws, and Cyanide.
+(u)Flaborized
+(p)5838
+(e)🎨|sprites
+(+)Resprited mass drivers.
+(u)Zamujasa
+(e)🆕|feature
+(*)Added the "cargo appraiser", a tool that will tell you what stuff will sell for when you use it on items or crates.
+(*)If a crate is tagged with a trader, it will show the value that trader will pay.
+(*)Will also scan the contents of hydro and mining satchels, so you can value your ore before dumping it all in that crate.
+(*)QMs start with one in their pockets. Hydro, Mining, and Cargo supply closets should also have one available.
+(t)sat aug 28 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Full reagent container no longer provides immunity to changeling stings
+(t)thu aug 26 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Light Lotus plants act as UV growth lamps in a 1-tile radius when ready to harvest
+(u)Tarmunora
+(e)⚖|balance
+(*)Voltgen rework - no longer shocks on touch react, instead grants retaliatory arcflashes against attackers when drunk
+(+)Adjust some bottle sizes. (sorry jan)
+(t)tue aug 24 21
+(u)zjdtmkhzt
+(p)5774
+(e)|
+(+)Clicking on the mailgroup name to reply to a message to a group should now actually work for replying to it.
+(t)mon aug 23 21
+(u)TTerc
+(p)5794
+(e)⚖|balance
+(+)The MD now spawns with a medkit containing a brute and a burn automender, meaning that they have three menders total.
+(u)Flappybat
+(p)5661
+(e)🔄|rework
+(+)Microwaves now let you empty out the contents instead of throwing them away.
+(+)Microwaves now can be cleaned with a sponge.
 (t)sun aug 22 21
+(u)Waffleloffle
+(p)5776
+(e)🎨|sprites
+(+)Resprited the large tree found in most Owleries.
 (u)kyle
 (p)5781
 (e)|
 (*)Buff the brute/burn medkits, replace the refill carts with normal patches. Menders now need gold to manufacture not electrum.
+(+)Give Roboticists a brute mender in their pocket on round start.
 (t)sat aug 21 21
 (u)Tarmunora
 (e)⚖|balance

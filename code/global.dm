@@ -431,6 +431,7 @@ var/global
 	antag_blob = image('icons/mob/antag_overlays.dmi', icon_state = "blob")
 	antag_wrestler = image('icons/mob/antag_overlays.dmi', icon_state = "wrestler")
 	antag_spy_theft = image('icons/mob/antag_overlays.dmi', icon_state = "spy_thief")
+	antag_arcfiend = image('icons/mob/antag_overlays.dmi', icon_state = "arcfiend")
 
 	pod_wars_NT = image('icons/mob/antag_overlays.dmi', icon_state = "nanotrasen")
 	pod_wars_NT_CMDR = image('icons/mob/antag_overlays.dmi', icon_state = "nanocomm")
