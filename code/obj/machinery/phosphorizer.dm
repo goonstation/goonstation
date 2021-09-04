@@ -105,7 +105,7 @@
 /obj/machinery/phosphorizer/power_change()
 	var/image/I_panel = SafeGetOverlayImage("statuspanel", 'icons/obj/machines/phosphorizer.dmi', "powerpanel")
 	I_panel.plane = PLANE_SELFILLUM
-	I_panel.alpha = 128
+	I_panel.alpha = 150
 	if (status & BROKEN)
 		UpdateOverlays(null, "statuspanel", 0, 1)
 		if(src.phosphorizing) src.stop_phos()
