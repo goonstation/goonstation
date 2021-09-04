@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, ColorBox, Divider, Knob, NoticeBox } from '../components';
+import { Box, Button, ColorBox, Divider, Knob, NoticeBox, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const Phosphorizer = (props, context) => {
@@ -30,52 +30,54 @@ const OperateWindow = (props, context) => {
       <NoticeBox success>
         Please insert only standard light tubes and bulbs.
       </NoticeBox>
-      <Box>
-        <strong># Loaded Lights:</strong>
-        {' '}{ lights }
-      </Box>
-      <Box>
-        Color Tuning:
-        {' '}
-        <Knob
-          inline
-          minValue={20}
-          maxValue={255}
-          value={hostR}
-          color="red"
-          format={value => "R:" + value}
-          onDrag={(e, value) => act('tune_hue', {
-            hue: "R",
-            output: value,
-          })}
-        />
-        <Knob
-          inline
-          minValue={20}
-          maxValue={255}
-          value={hostG}
-          color="green"
-          format={value => "G:" + value}
-          onDrag={(e, value) => act('tune_hue', {
-            hue: "G",
-            output: value,
-          })}
-        />
-        <Knob
-          inline
-          minValue={20}
-          maxValue={255}
-          value={hostB}
-          color="blue"
-          format={value => "B:" + value}
-          onDrag={(e, value) => act('tune_hue', {
-            hue: "B",
-            output: value,
-          })}
-        />
-        {' '}
-        <ColorBox color={`rgba(${hostR}, ${hostG}, ${hostB}, 1)`} />
-      </Box>
+      <Stack vertical>
+        <Stack.Item>
+          <strong># Loaded Lights:</strong>
+          {' '}{ lights }
+        </Stack.Item>
+        <Stack.Item>
+          Color Tuning:
+          {' '}
+          <Knob
+            inline
+            minValue={20}
+            maxValue={255}
+            value={hostR}
+            color="red"
+            format={value => "R:" + value}
+            onDrag={(e, value) => act('tune_hue', {
+              hue: "R",
+              output: value,
+            })}
+          />
+          <Knob
+            inline
+            minValue={20}
+            maxValue={255}
+            value={hostG}
+            color="green"
+            format={value => "G:" + value}
+            onDrag={(e, value) => act('tune_hue', {
+              hue: "G",
+              output: value,
+            })}
+          />
+          <Knob
+            inline
+            minValue={20}
+            maxValue={255}
+            value={hostB}
+            color="blue"
+            format={value => "B:" + value}
+            onDrag={(e, value) => act('tune_hue', {
+              hue: "B",
+              output: value,
+            })}
+          />
+          {' '}
+          <ColorBox color={`rgba(${hostR}, ${hostG}, ${hostB}, 1)`} />
+        </Stack.Item>
+      </Stack>
       <Divider />
       <Button
         icon="power-off"

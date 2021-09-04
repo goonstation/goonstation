@@ -6,14 +6,17 @@
 	anchored = 1
 	density = 1
 	power_usage = 150
+	processing_tier = PROCESSING_HALF
+	status = REQ_PHYSICAL_ACCESS
 
 	var/phosphorizing = false //whether the phosphorizer is currently operating
-	var/failbreak = false //set to true if phosphorizing ended without processing all bulbs
-	var/phos_delay = 12 //delay between bulb processing
+
+	var/phos_work = 0 //used for light processing timing. batches start at 0, then increment up to the cap, resetting to 1 when it's reached
+	//this ensures lights never take less than cap minus one ticks to phosphorize, providing a consistent feel of processing time
+	var/phos_work_cap = 2
 
 	var/sound/sound_load = sound('sound/items/Deconstruct.ogg')
 	var/sound/sound_process = sound('sound/effects/pop.ogg')
-	var/sound/sound_grump = sound('sound/machines/buzz-sigh.ogg')
 	var/sound/sound_happi = sound('sound/machines/chime.ogg')
 
 	//color values to install into the bulb
@@ -77,28 +80,27 @@
 		UpdateOverlays(null, "operatebar", 0, 1)
 
 	proc/start_phos()
+		src.phos_work = 0
 		src.phosphorizing = true
 		var/image/O_panel = SafeGetOverlayImage("operatebar", 'icons/obj/machines/phosphorizer.dmi', "activelight")
 		UpdateOverlays(O_panel, "operatebar", 0, 1)
-		sleep(phos_delay)
 
-		for (var/obj/item/M in src.contents)
-			if(status & NOPOWER || src.phosphorizing == false)
-				failbreak = true
-				break
+/obj/machinery/phosphorizer/process()
+	if(src.phosphorizing)
+		if(status & NOPOWER)
+			stop_phos()
+		if(length(src.contents))
+			src.visible_message(length(src.contents))
 			use_power(src.power_usage)
-			colorize_bulb(M)
-
-			sleep(phos_delay)
-
-		if(failbreak)
-			failbreak = false
-			src.visible_message("<b>[src]</b> abruptly stops operating.")
-			playsound(src.loc, sound_grump, 20, 1)
+			if(src.phos_work >= src.phos_work_cap)
+				colorize_bulb(src.contents[1])
+				src.phos_work = 1
+			else
+				src.phos_work++
 		else
 			src.visible_message("<b>[src]</b> finishes working and shuts down.")
 			playsound(src.loc, sound_happi, 20, 1)
-		if(src.phosphorizing) stop_phos()
+			stop_phos()
 
 /obj/machinery/phosphorizer/power_change()
 	var/image/I_panel = SafeGetOverlayImage("statuspanel", 'icons/obj/machines/phosphorizer.dmi', "powerpanel")
@@ -124,7 +126,7 @@
 
 /obj/machinery/phosphorizer/ui_data(mob/user)
 	. = list(
-		"lights" = src.contents.len,
+		"lights" = length(src.contents),
 		"online" = src.phosphorizing,
 		"hostR" = src.ctrl_R,
 		"hostG" = src.ctrl_G,
@@ -143,7 +145,7 @@
 				if("B") src.ctrl_B = clamp(round(params["output"]), 20, 255)
 			. = TRUE
 		if("toggle-process")
-			if(status | BROKEN && powered() && src.contents.len)
+			if(length(src.contents))
 				if(!src.phosphorizing)
 					src.start_phos()
 					boutput(usr, "You activate [src].")
@@ -152,8 +154,11 @@
 					boutput(usr, "You deactivate [src].")
 				. = TRUE
 		if("eject")
-			if(src.contents.len)
-				if(src.phosphorizing) stop_phos()
+			if(length(src.contents))
+				if(src.phosphorizing)
+					src.visible_message("<b>[src]</b> ejects its unprocessed lights and shuts down.")
+					playsound(src.loc, sound_happi, 20, 1)
+					stop_phos()
 				for (var/obj/item/M in src.contents)
 					M.pixel_x = -4
 					M.pixel_y = 2 //bulb being blorfed out the input slot
