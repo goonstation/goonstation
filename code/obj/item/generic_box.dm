@@ -151,7 +151,7 @@
 			desc = "Oh my god.. ALL THE STICKERS! ALL IN ONE PLACE? WHAT CAN THIS MEAN!!!"
 
 			set_contained_items()
-				contained_items = childrentypesof( /obj/item/sticker/ ) - /obj/item/sticker/spy - childrentypesof( /obj/item/sticker/barcode )
+				contained_items = childrentypesof( /obj/item/sticker/ ) - /obj/item/sticker/spy - childrentypesof( /obj/item/sticker/barcode ) - /obj/item/sticker/glow
 
 			robot//this type sticks things by clicking on them with a cooldown
 				name = "box shaped sticker dispenser"

@@ -8090,6 +8090,7 @@
 "asK" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/mechanical,
+/obj/item/item_box/glow_sticker,
 /turf/simulated/floor/shuttlebay,
 /area/station/mining/staff_room)
 "asL" = (
