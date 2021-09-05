@@ -271,6 +271,12 @@
 	proc/process() //slow processing
 		calc_new_coords()
 
+		if(!my_galaxy)
+			my_galaxy = GALAXY
+			link_stars()
+			link_landmark()
+			GALAXY.bodies += background_ship_datum
+
 		if(old_x == galactic_x && old_y == galactic_y)
 			return
 

@@ -12,24 +12,25 @@ var/global/datum/galaxy/GALAXY = new
 
 	New()
 		..()
-		Rand = new(513)//rand(3, 50000)
+#if defined(DEBUG_ARTEMIS)
+		Rand = new(513)
+#else
+		Rand = new(rand(3, 50000))
+#endif
 
 		src.bodies += new/datum/galactic_object/test()
 		src.bodies += new/datum/galactic_object/eyesenhower()
 		src.bodies += new/datum/galactic_object/station()
 
+#if defined(DEBUG_ARTEMIS)
 		src.bodies += new/datum/galactic_object/bhole
 		src.bodies += new/datum/galactic_object/star
 		src.bodies += new/datum/galactic_object/asteroid
+#endif
 
 		for(var/i in 1 to 5)
 			src.bodies += new/datum/galactic_object/asteroid/random(src)
 
-// for(var/i in 1 to 3)
-		// 	src.bodies += new/datum/galactic_object/star/random(src)
-
-		// for(var/i in 1 to 10)
-		// 	src.bodies += new/datum/galactic_object/planet/random(src)
 		SPAWN_DBG(20 SECONDS)
 			populate_galaxy()
 
@@ -156,7 +157,6 @@ var/global/datum/galaxy/GALAXY = new
 		GALAXY.asteroids.asteroid_markers[src.name] = src
 		SPAWN_DBG(1 SECOND)
 			construct()
-
 
 /datum/galactic_object
 	var/name

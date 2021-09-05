@@ -8,13 +8,12 @@
 /obj/background_star/galactic_object/centeroid
 	alpha = 0
 
-
 /datum/galactic_object/planet/random
 	name = "Randomized Planet"
 	body_path_map = /obj/background_star/galactic_object/planet/random
 	body_path_ship = /obj/background_star/galactic_object/planet/large/random
 	sector = "A"
-	navigable = TRUE
+	navigable = FALSE
 	var/color = null
 	var/destination_name = null
 	var/icon_state = null
@@ -35,12 +34,16 @@
 		biome_seed += G.Rand.xor_rand()*50000
 		biome_seed += G.Rand.xor_rand()*50000
 
-		if(G.Rand.xor_prob(95))
-			navigable = FALSE
-
 		if(G && length(G.available_planets))
 			destination_name = G.Rand.xor_pick(G.available_planets)
 			G.available_planets -= destination_name
+
+#if defined(DEBUG_ARTEMIS)
+			navigable = TRUE
+#else
+			if(G.Rand.xor_prob(85))
+				navigable = TRUE
+#endif
 
 			SPAWN_DBG(1 SECOND)
 				for(var/turf/T in landmarks[LANDMARK_PLANETS])
