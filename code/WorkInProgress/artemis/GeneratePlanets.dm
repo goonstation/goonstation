@@ -21,7 +21,7 @@ var/list/planet_seeds = list()
 			planet_seeds[A.name] = list("height"=GALAXY.Rand.xor_rand(1,50000), "humidity"=GALAXY.Rand.xor_rand(1,50000), "heat"=GALAXY.Rand.xor_rand(1,50000))
 
 		var/seed = planet_seeds[A.name]
-		A.generate_perlin_noise_terrain(seed["height"], seed["humidity"], seed["heat"])
+		A.generate_perlin_noise_terrain(list(seed["height"], seed["humidity"], seed["heat"]))
 
 		if(A.allow_prefab)
 			var/list/area_turfs = get_area_turfs(A)
@@ -69,19 +69,7 @@ var/list/planet_seeds = list()
 					if(istype(T.loc, /area/space)) //space...
 						new A.type(T)
 				if(length(regen_turfs))
-					var/seed = planet_seeds[A.name]
-					A.map_generator.generate_terrain(regen_turfs, seed["height"], seed["humidity"], seed["heat"])
-
-
-	// var/datum/mapGenerator/D
-
-	// if(map_currently_underwater)
-	// 	D = new/datum/mapGenerator/seaCaverns()
-	// else
-	// 	D = new/datum/mapGenerator/asteroidsDistance()
-
-	game_start_countdown?.update_status("Setting up Planet level...\nGenerating terrain...")
-	//planetZ = D.generate(planetZ)
+					A.map_generator.generate_terrain(regen_turfs, reuse_seed=TRUE)
 
 	// // remove temporary areas
 	var/area/A
@@ -162,13 +150,14 @@ var/list/planet_seeds = list()
 	var/allow_prefab = TRUE
 	var/generated = FALSE
 
-	generate_perlin_noise_terrain(height_seed, humidity_seed, heat_seed)
+	generate_perlin_noise_terrain(list/seed_list)
 		if(generated)
 			return
 		if(src.map_generator_path)
 			map_generator = new map_generator_path()
-
-		map_generator.generate_terrain(get_area_turfs(src), height_seed, humidity_seed, heat_seed)
+		if(seed_list)
+			map_generator.set_seed(seed_list)
+		map_generator.generate_terrain(get_area_turfs(src), reuse_seed=TRUE)
 		generated = TRUE
 
 	proc/colorize_planet(color)
