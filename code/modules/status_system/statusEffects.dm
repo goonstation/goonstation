@@ -1867,6 +1867,7 @@
 		tickspassed += timePassed
 		movement_modifier.additive_slowdown = 2 + tickspassed/(15 SECONDS)
 		if(ismob(owner) && prob(10))
+			var/mob/M = owner
 			M.change_eye_blurry(2, 10)
 
 		if(prob(tickspassed/(10 SECONDS)))
