@@ -266,7 +266,7 @@
 	name = "Neural Jack"
 	desc = "The user's mental speed has been increased with the use of an illegal neural jack."
 	id = "neural_jack"
-	effectType = EFFECT_TYPE_DISABILITY
+	effectType = EFFECT_TYPE_POWER
 	isBad = 0
 	can_copy = 0
 	curable_by_mutadone = 0
