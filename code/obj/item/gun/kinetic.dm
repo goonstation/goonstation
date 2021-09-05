@@ -794,6 +794,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	can_dual_wield = 0
 	hide_attack = 1
 	gildable = 1
+	muzzle_flash = "muzzle_flash_launch"
 
 	New()
 		ammo = new/obj/item/ammo/bullets/tranq_darts/syndicate/curare/single

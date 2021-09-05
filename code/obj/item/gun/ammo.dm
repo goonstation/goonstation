@@ -601,8 +601,21 @@
 			ammo_type = new/datum/projectile/bullet/tranq_dart/syndicate/curare
 
 			single
+
 				amount_left = 1
 				max_amount = 1
+
+		madness
+			sname = "blow dart"
+			name = "madness darts"
+			color = "red"
+			ammo_type = new/datum/projectile/bullet/tranq_dart/syndicate/madness
+
+		venom
+			sname = "blow dart"
+			name = "venom darts"
+			color = "green"
+			ammo_type = new/datum/projectile/bullet/tranq_dart/syndicate/venom
 
 		pistol
 			sname = ".355 Tranqilizer"
