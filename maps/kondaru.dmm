@@ -16732,7 +16732,7 @@
 	id = "clone_begone";
 	name = "Exit Door Control";
 	pixel_x = -24;
-	pixel_y = -11
+	pixel_y = 15
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
@@ -16997,7 +16997,7 @@
 /obj/machinery/door_control{
 	id = "clone_begone";
 	name = "Exit Door Control";
-	pixel_x = 26
+	pixel_x = 24
 	},
 /obj/storage/secure/closet/medical{
 	name = "Patient Locker"
