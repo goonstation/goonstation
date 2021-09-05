@@ -4,6 +4,9 @@
 (p)5878
 (e)⚖⛔|balance, removal
 (+)Removed medical locker access from security officers on the RP servers (to be the same as the non-RP servers).
+(u)Zamujasa
+(e)🐛|bug
+(+)fix scissors
 (t)sat sep 04 21
 (u)Emily
 (e)🆕
