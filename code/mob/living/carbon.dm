@@ -86,7 +86,7 @@
 	. = ..(give_medal, include_ejectables)
 
 /mob/living/carbon/proc/poop()
-	SPAWN_DBG(0)
+	SPAWN_DBG(0.1 SECOND)
 		var/mob/living/carbon/human/H = src
 		var/obj/item/reagent_containers/poo_target = src.equipped()
 		var/obj/item/reagent_containers/food/snacks/ingredient/mud/shit = new()
