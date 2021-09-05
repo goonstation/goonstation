@@ -3289,6 +3289,45 @@ datum
 			thirst_value = 1
 			bladder_value = -1
 
+		fooddrink/turmeric
+			name = "turmeric powder"
+			id = "turmpowder"
+			description = "Has a warm, spicy scent and nausea-soothing properties. But if you get this shit on something, the stain's NEVER coming out."
+			reagent_state = SOLID
+			fluid_r = 224
+			fluid_g = 168
+			fluid_b = 12
+			transparency = 255
+
+			reaction_mob(var/mob/M, var/method = TOUCH, var/volume)
+				. = ..()
+				if(method == TOUCH)
+					boutput(M, "<span class='notice'><b>The chemical stains your skin!</b></span>")
+					M.color = rgb(rand(175,255),rand(110,169),92)
+					return
+
+			reaction_obj(var/obj/O, var/volume)
+				O.color = rgb(rand(175,255),rand(110,169),92)
+				return
+
+			reaction_turf(var/turf/T, var/volume)
+				T.color = rgb(rand(175,255),rand(110,169),92)
+				return
+
+			on_mob_life(var/mob/living/M, var/mult = 1)
+				if(!M) M = holder.my_atom
+				if(prob(50))
+					M.nutrition += 1 * mult
+				for(var/datum/ailment_data/disease/virus in M.ailments)
+					if(probmult(10) && istype(virus.master,/datum/ailment/disease/cold))
+						M.cure_disease(virus)
+					if(probmult(10) && istype(virus.master,/datum/ailment/disease/flu))
+						M.cure_disease(virus)
+					if(probmult(10) && istype(virus.master,/datum/ailment/disease/food_poisoning))
+						M.cure_disease(virus)
+				..()
+				return
+
 		fooddrink/juice_pickle
 			name = "pickle juice"
 			id = "juice_pickle"

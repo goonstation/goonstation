@@ -2620,3 +2620,51 @@
 	initial_volume = 20
 	initial_reagents = list("THC"=10,"CBD"=10)
 	food_effects = list("food_brute","food_burn")
+
+/obj/item/reagent_containers/food/snacks/tandoorichicken
+	name = "tandoori chicken"
+	desc = "This one wasn't actually cooked in a tandoor, the cylindrical clay oven for which the dish is named. Don't tell."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "tandoorichicken"
+	needfork = 1
+	heal_amt = 2
+	amount = 4
+	initial_volume = 20
+	initial_reagents = list("turmpowder"=10, "capsaicin"=5, "holywater"=5)
+	food_effects = list("food_hp_up","food_tox","food_warm")
+
+/obj/item/reagent_containers/food/snacks/potatocurry
+	name = "potato curry"
+	desc = "A rich Indian curry full of potatoes, carrots, and peas."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "potatocurry"
+	needfork = 1
+	heal_amt = 2
+	amount = 5
+	initial_volume = 15
+	initial_reagents = list("turmpowder"=10, "oculine"=5)
+	food_effects = list("food_energized","food_tox","food_warm")
+
+/obj/item/reagent_containers/food/snacks/coconutcurry
+	name = "coconut curry"
+	desc = "A creamy Thai curry made with coconut milk, served on a bed of rice."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "coconutcurry"
+	needfork = 1
+	heal_amt = 2
+	amount = 5
+	initial_volume = 15
+	initial_reagents = list("turmpowder"=10, "oculine"=5)
+	food_effects = list("food_refreshed","food_tox","food_warm")
+
+/obj/item/reagent_containers/food/snacks/chickenpineapplecurry
+	name = "chicken pineapple curry"
+	desc = "A sweet-and-spicy curry that expertly balances the tang of pineapple with the heat of the curry powder."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "chickenpapplecurry"
+	needfork = 1
+	heal_amt = 2
+	amount = 5
+	initial_volume = 25
+	initial_reagents = list("turmpowder"=10, "capsaicin"=5, "salicylic_acid"=10)
+	food_effects = list("food_brute","food_tox","food_warm")
