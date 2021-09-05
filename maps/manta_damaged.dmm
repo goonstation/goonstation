@@ -449,7 +449,7 @@
 /turf/simulated/floor/damaged5,
 /area/station/security/starboardtorpedoes)
 "aaL" = (
-/obj/item/clothing/under/gimmick/cosby,
+/obj/item/clothing/under/gimmick/sweater,
 /obj/item/device/microphone,
 /obj/machinery/firealarm{
 	dir = 8;
