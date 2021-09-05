@@ -1,3 +1,9 @@
+
+(t)sun sep 05 21
+(u)Mordent
+(p)5878
+(e)⚖⛔|balance, removal
+(+)Removed medical locker access from security officers on the RP servers (to be the same as the non-RP servers).
 (t)sat sep 04 21
 (u)Emily
 (e)🆕
