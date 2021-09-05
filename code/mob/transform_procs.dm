@@ -586,7 +586,7 @@
 
 
 // HI IT'S ME CIRR I DON'T KNOW WHERE ELSE TO PUT THIS
-var/list/respawn_critter_types = list(/mob/living/critter/small_animal/mouse/weak, /mob/living/critter/small_animal/cockroach/weak, /mob/living/critter/small_animal/butterfly/weak,)
+var/list/respawn_critter_types = list(/mob/living/critter/small_animal/mouse/weak, /mob/living/critter/small_animal/cockroach/weak, /mob/living/critter/small_animal/butterfly/weak, /mob/living/critter/small_animal/sparrow/weak,)
 var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fly/weak, /mob/living/critter/small_animal/mosquito/weak,)
 
 
