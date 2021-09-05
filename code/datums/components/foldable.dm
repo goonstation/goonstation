@@ -122,3 +122,33 @@
 	blue_green_stripe
 		icon_state = "hopcaseC"
 		item_state = "hopcaseC"
+
+/obj/item/computerunfolder
+	icon = 'icons/obj/items/storage.dmi'
+	item_state = "hopcaseC"
+	icon_state = "hopcaseC"
+
+	New(var/loc, var/obj/object)
+		..(loc)
+		src.set_loc(loc)
+		src.name = "foldable portable identification computer"
+		src.desc = "A briefcase with a identification computer inside. A breakthrough in briefcase technology!"
+		BLOCK_SETUP(BLOCK_BOOK)
+
+	attack_self(mob/user)
+		deploy(user)
+
+	verb/unfold()
+		set src in view(1)
+		set category = "Local"
+		set name = "Unfold"
+		deploy(usr)
+
+	proc/deploy(var/mob/user)
+
+		if(src.loc == user)
+			user.drop_from_slot(src)
+		user.visible_message("<span class='alert'>[user] unfolds the foldable portable idendification computer from a briefcase!</span>")
+		var/obj/machinery/computer/card/portable/T = new/obj/machinery/computer/card/portable()
+		T.set_loc(get_turf(src))
+		qdel(src)
