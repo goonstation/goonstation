@@ -1330,18 +1330,19 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/voice/animal/mouse_squeak.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, "sound/voice/animal/mouse_squeak.ogg", 40, 1, 0.1, 1.3, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='emote'><b>[src]</b> chirps!</span>"
-			if ("smile")
+			if ("dance")
 				if (src.emote_check(voluntary, 50))
-					return "<span class='emote'><b>[src]</b> bounces happily!</span>"
+					animate_bouncy(src)
+					return "<span class='emote'><b>[src]</b> hops about with joy!</span>"
 		return null
 
 	specific_emote_type(var/act)
 		switch (act)
 			if ("scream")
 				return 2
-			if ("smile")
+			if ("dance")
 				return 1
 		return ..()
 
@@ -1363,6 +1364,42 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		HH.can_hold_items = 0
 
 /mob/living/critter/small_animal/sparrow/weak
+	health_brute = 2
+	health_burn = 2
+
+/* -------------------- Robin -------------------- */
+
+/mob/living/critter/small_animal/sparrow/robin
+	name = "space robin"
+	real_name = "space robin"
+	desc = "It's a little far from home."
+	icon_state = "robin"
+	icon_state_dead = "robin-dead"
+
+	New()
+		..()
+		fur_color =	"#836857"
+		eye_color = "#000000"
+
+	setup_overlays()
+		fur_color = src.client?.preferences.AH.customization_first_color
+		eye_color = src.client?.preferences.AH.e_color
+		var/image/overlay = image('icons/misc/critter.dmi', "robin_colorkey")
+		overlay.color = fur_color
+		src.UpdateOverlays(overlay, "hair")
+
+		var/image/overlay_eyes = image('icons/misc/critter.dmi', "sparrow_eyes")
+		overlay_eyes.color = eye_color
+		src.UpdateOverlays(overlay_eyes, "eyes")
+
+	death()
+		src.ClearAllOverlays()
+		var/image/overlay = image('icons/misc/critter.dmi', "robin_colorkey-dead")
+		overlay.color = fur_color
+		src.UpdateOverlays(overlay, "hair")
+		..()
+
+/mob/living/critter/small_animal/sparrow/robin/weak
 	health_brute = 2
 	health_burn = 2
 
