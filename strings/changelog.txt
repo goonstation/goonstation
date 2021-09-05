@@ -7,7 +7,6 @@
 (u)Tarmunora
 (e)🔄|rework
 (+)Drowsiness migrated to status system.
-(t)sun sep 05 21
 (u)Mordent
 (p)5878
 (e)⚖⛔|balance, removal
