@@ -1,5 +1,9 @@
 
 (t)sun sep 05 21
+(u)Kubius
+(p)5909
+(e)🆕🗺|feature, mapping
+(+)Small set of Kondaru adjustments; cloning room rearranged for easier reclaimer loading and patient release, and hydro grow lamp count reduced for parity.
 (u)Tarmunora
 (e)🔄|rework
 (+)Drowsiness migrated to status system.
