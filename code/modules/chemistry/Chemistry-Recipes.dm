@@ -1314,9 +1314,15 @@ datum
 			name = "Ling Island Iced Tea"
 			id = "lingtea"
 			result = "lingtea"
-			required_reagents = list("longisland" = 1, "capulettium" = 1)
+			required_reagents = list("longisland" = 1, "neurotoxin" = 1)
 			result_amount = 2
 			mix_phrase = "The toxin upsets the delicate balance of alcohol and sours in this mix. Ew."
+
+			does_react(var/datum/reagents/holder)
+				if(holder?.my_atom?.is_open_container())
+					return 1
+				else
+					return
 
 		cocktail_longbeach
 			name = "Long Beach Iced Tea"
