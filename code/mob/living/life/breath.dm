@@ -233,6 +233,19 @@
 		if (owner.health < 0 || (human_owner?.organHolder && human_owner?.organHolder.get_working_lung_amt() == 0)) //We aren't breathing.
 			return 0
 
+
+#define BREATH_OXY_INDICATOR_ON (1 << 0)
+#define BREATH_TOX_INDICATOR_ON (1 << 1)
+#define BREATH_FIRE_INDICATOR_ON (1 << 2)
+#if TRUE
+		var/status_updates
+		status_updates |= human_owner?.organHolder?.left_lung.breathe(breath, underwater, mult)
+		status_updates |= human_owner?.organHolder?.right_lung.breathe(breath, underwater, mult)
+
+		update_oxy((status_updates & BREATH_OXY_INDICATOR_ON) == BREATH_OXY_INDICATOR_ON)
+		update_toxy((status_updates & BREATH_TOX_INDICATOR_ON) == BREATH_TOX_INDICATOR_ON)
+		human_owner.hud.update_fire_indicator(( status_updates & BREATH_FIRE_INDICATOR_ON ) == BREATH_FIRE_INDICATOR_ON)
+#else
 		var/has_cyberlungs = (human_owner?.organHolder && (human_owner.organHolder.left_lung && human_owner.organHolder.right_lung) && (human_owner.organHolder.left_lung.robotic && human_owner.organHolder.right_lung.robotic)) //gotta prevent null pointers...
 		var/safe_oxygen_min = 17 // Minimum safe partial pressure of O2, in kPa
 		//var/safe_oxygen_max = 140 // Maximum safe partial pressure of O2, in kPa (Not used for now)
@@ -363,7 +376,7 @@
 
 			else
 				human_owner.hud.update_fire_indicator(0)
-
+#endif
 
 		//Temporary fixes to the alerts.
 
