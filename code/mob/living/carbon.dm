@@ -96,7 +96,7 @@
 			if (istype(T))
 				make_cleanable( /obj/decal/cleanable/mud,T)
 			return
-
+		playsound(H, 'sound/voice/hoooagh2.ogg', 50, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 		if(H.wear_suit || H.w_uniform) // wearing pants while shitting? fine!!
 			H.visible_message("<span class='alert'><B>[H] shits [his_or_her(H)] pants!</B></span>")
 			if(H.w_uniform)
@@ -105,7 +105,6 @@
 				H.wear_suit?.add_mud(H)
 			H.set_clothing_icon_dirty() //ur a shitter
 			playsound(H, H.sound_fart, 50, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-			H.poops--
 			return
 
 		else
@@ -123,7 +122,6 @@
 				shit.set_loc(src.loc)
 				H.visible_message("<span class='alert'><B>[H] [pick("takes a dump","drops a turd","shits a load","does a poo","craps all over")]!</B></span>")
 
-		H.poops--
 		return
 
 

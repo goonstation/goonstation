@@ -1956,6 +1956,7 @@
 						message = "<B>[src]</B> grunts for a moment. [prob(1)?"something":"nothing"] happens."
 					else
 						src.poops--
+
 						src.poop()
 
 			if ("monologue")
