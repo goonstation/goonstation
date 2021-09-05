@@ -1562,9 +1562,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	if (src.nodamage)
 		return .
 
-	if (src.drowsyness > 0)
-		. += 5
-
 	var/health_deficiency = (src.max_health - src.health) + health_deficiency_adjustment // cogwerks // let's treat this like pain
 
 	if (health_deficiency >= 30)

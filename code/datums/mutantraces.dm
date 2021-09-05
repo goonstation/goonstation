@@ -977,7 +977,7 @@
 					//mob.full_heal()
 
 					mob.HealDamage("All", 100000, 100000)
-					mob.drowsyness = 0
+					mob.delStatus("drowsy")
 					mob.stuttering = 0
 					mob.losebreath = 0
 					mob.delStatus("paralysis")
@@ -1202,7 +1202,7 @@
 		//Bringing it more in line with how it was before it got broken (in a hilarious fashion)
 		if (ruff_tuff_and_ultrabuff && !(mob.getStatusDuration("burning") && prob(90))) //Are you a macho abomination or not?
 			mob.delStatus("disorient")
-			mob.drowsyness = 0
+			mob.delStatus("drowsy")
 			mob.change_misstep_chance(-INFINITY)
 			mob.delStatus("slowed")
 			mob.stuttering = 0
@@ -1327,8 +1327,8 @@
 	// Werewolves (being a melee-focused role) are quite buff.
 	onLife(var/mult = 1)
 		if (mob && ismob(mob))
-			if (mob.drowsyness)
-				mob.drowsyness = max(0, mob.drowsyness - 2)
+			if (mob.hasStatus("drowsy"))
+				mob.changeStatus("drowsy", -10 SECONDS)
 			if (mob.misstep_chance)
 				mob.change_misstep_chance(-10 * mult)
 			if (mob.getStatusDuration("slowed"))

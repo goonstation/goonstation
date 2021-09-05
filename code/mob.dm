@@ -83,7 +83,6 @@
 	var/temp_tolerance = 15 // iterations between each temperature state
 	var/thermoregulation_mult = 0.025 // how quickly the body's temperature tries to correct itself, higher = faster
 	var/innate_temp_resistance = 0.16  // how good the body is at resisting environmental temperature, lower = more resistant
-	var/drowsyness = 0.0
 	var/dizziness = 0
 	var/is_dizzy = 0
 	var/is_jittery = 0
@@ -1520,7 +1519,7 @@
 		if (D_RADIOACTIVE)
 			src.changeStatus("radiation", (damage) SECONDS)
 			src.stuttering += stun
-			src.drowsyness += stun
+			src.changeStatus("drowsy", stun * 2 SECONDS)
 		if (D_TOXIC)
 			src.take_toxin_damage(damage)
 	if (!P || !P.proj_data || !P.proj_data.silentshot)
@@ -1551,7 +1550,7 @@
 			src.show_text("<span class='alert'>You are shocked by the impact of [P]!</span>")
 		if (D_RADIOACTIVE)
 			src.stuttering += stun
-			src.drowsyness += stun/10
+			src.changeStatus("drowsy", stun / 5 SECONDS)
 			src.show_text("<span class='alert'>You feel a wave of sickness as [P] impacts [src.loc]!</span>")
 
 
@@ -2356,7 +2355,7 @@
 
 /mob/proc/full_heal()
 	src.HealDamage("All", 100000, 100000)
-	src.drowsyness = 0
+	src.delStatus("drowsy")
 	src.stuttering = 0
 	src.losebreath = 0
 	src.delStatus("paralysis")

@@ -304,7 +304,7 @@
 					M.change_misstep_chance(-INFINITY)
 				M.make_jittery(1000)
 				M.dizziness = max(0,M.dizziness-10)
-				M.drowsyness = max(0,M.drowsyness-10)
+				M.changeStatus("drowsy", -20 SECONDS)
 				M.sleeping = 0
 
 	simpledot //Simple damage over time.
@@ -1852,3 +1852,36 @@
 			H.delStatus(id)
 			return
 		return ..(timePassed)
+
+/datum/statusEffect/drowsy
+	maxDuration = 2 MINUTES
+	id = "drowsy"
+	name = "Drowsy"
+	icon_state = "?1"
+	desc = "You feel very drowsy"
+	movement_modifier = new/datum/movement_modifier/drowsy
+	var/tickspassed = 0
+
+	onUpdate(timePassed)
+		. = ..()
+		tickspassed += timePassed
+		movement_modifier.additive_slowdown = 2 + tickspassed/(15 SECONDS)
+		if(prob(tickspassed/(10 SECONDS)))
+			if(!owner.hasStatus("passing_out"))
+				owner.setStatus("passing_out", 5 SECONDS)
+
+/datum/statusEffect/passing_out
+	id = "passing_out"
+	name = "Passing out"
+	desc = "You're so tired you're about to pass out!"
+	icon_state = "disorient"
+	maxDuration = 5 SECONDS
+
+	onRemove()
+		. = ..()
+		owner.changeStatus("paralysis", 5 SECONDS)
+		owner.delStatus("drowsy")
+		if(isliving(owner))
+			var/mob/living/L = owner
+			L.changeStatus("weakened", 1 SECOND)
+			L.force_laydown_standup()
