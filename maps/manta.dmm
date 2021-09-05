@@ -256,7 +256,7 @@
 /turf/simulated/floor/longtile,
 /area/station/bridge)
 "aaL" = (
-/obj/item/clothing/under/gimmick/cosby,
+/obj/item/clothing/under/gimmick/sweater,
 /obj/item/device/microphone,
 /obj/machinery/firealarm{
 	dir = 8;

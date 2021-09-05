@@ -39366,7 +39366,7 @@
 /area/station/crew_quarters/radio/lab)
 "bLG" = (
 /obj/storage/secure/closet/personal,
-/obj/item/clothing/under/gimmick/cosby,
+/obj/item/clothing/under/gimmick/sweater,
 /obj/item/device/microphone,
 /obj/machinery/camera{
 	c_tag = "autotag";
