@@ -1260,6 +1260,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\critter\big_animals.dm"
 #include "code\obj\critter\critter_parent.dm"
 #include "code\obj\critter\drone.dm"
+#include "code\obj\critter\gnome.dm"
 #include "code\obj\critter\gunbot.dm"
 #include "code\obj\critter\headspider.dm"
 #include "code\obj\critter\helldrone.dm"
