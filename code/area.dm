@@ -5476,6 +5476,7 @@ MAJOR_AST(30)
 \* +++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 
 /area/centcom/outpost
+	filler_turf = null
 	name = "Nanotrasen Temporary Frontier Command"
 	icon_state = "yellow"
 
@@ -5490,3 +5491,7 @@ MAJOR_AST(30)
 /area/centcom/outpost/maintenance
 	name = "Maintenance Tunnel"
 	icon_state = "purple"
+
+/area/centcom/outpost/lounge
+	name = "Employee Lounge"
+	icon_state = "red"
