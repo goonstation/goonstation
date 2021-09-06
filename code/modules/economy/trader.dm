@@ -1131,6 +1131,83 @@
 	else
 		..()
 
+/obj/npc/trader/gnome
+	icon = 'icons/obj/trader.dmi'
+	icon_state = "bee"
+	picture = "bee.png"
+	name = "David the Space Gnome" // like the tribe of bumblebees
+	trader_area = "/area/gnome_trader"
+
+	New()
+		..()
+		/////////////////////////////////////////////////////////
+		//// sell list //////////////////////////////////////////
+		/////////////////////////////////////////////////////////
+		src.goods_sell += new /datum/commodity/guardbot_kit(src)
+		src.goods_sell += new /datum/commodity/guardbot_medicator(src)
+		src.goods_sell += new /datum/commodity/guardbot_flash(src)
+		src.goods_sell += new /datum/commodity/guardbot_taser(src)
+		src.goods_sell += new /datum/commodity/guardbot_smoker(src)
+		src.goods_sell += new /datum/commodity/royaljelly(src)
+		src.goods_sell += new /datum/commodity/beeegg(src)
+		src.goods_sell += new /datum/commodity/b33egg(src)
+		src.goods_sell += new /datum/commodity/bee_kibble(src)
+		/////////////////////////////////////////////////////////
+		//// buy list ///////////////////////////////////////////
+		/////////////////////////////////////////////////////////
+		src.goods_buy += new /datum/commodity/honey(src)
+		src.goods_buy += new /datum/commodity/contraband/spareid/bee(src)
+		src.goods_buy += new /datum/commodity/contraband/captainid/bee(src)
+		src.goods_buy += new /datum/commodity/goldbar(src)
+		/////////////////////////////////////////////////////////
+
+		greeting= {"Vat te -- hov diid you get iin? Oh knevermiind. Do knot hurrt ourr blants orr you viill rregrret iit."}
+
+		portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
+
+		sell_dialogue = ""
+
+		buy_dialogue = "[src.name] buzzes inquisitively."
+
+		angrynope = "You knoblin! Peat iit!"
+		whotext = "Ii am a gnome, frriiend. I grov and sell blants."
+
+		successful_sale_dialogue = list("Oh I rreally have peen waiiting to get my miittens on tiis.")
+
+		failed_sale_dialogue = list("Only a stiinky trroll could come ub viit a stinky offerr liike that!")
+
+		successful_purchase_dialogue = list("Thank you verry much!",
+		"Kood. Ii'll see if I can krov morre.")
+
+		failed_purchase_dialogue = list("[src.name] gives a somber little buzz.",
+			"[src.name] pouts. You feel pretty bad about yourself.")
+
+		pickupdialogue = "Alrriikht. Blease drrag the crrate viit you."
+
+		pickupdialoguefailure = "No the crrate is not frree. You have to puy sometiing fiirrst."
+	/*
+	activatesecurity()
+		for(var/mob/M in AIviewers(src))
+			boutput(M, "<B>[src.name]</B> exclaims, \"BZZZZZZZZZZZ!\"")
+		for(var/turf/T in get_area_turfs( get_area(src) ))
+			for (var/obj/critter/domestic_bee/B in T)
+				B.aggressive = 1 // be, aggressive. bee be aggressive
+				B.atkcarbon = 1
+
+	// OKAY we're tryin to do something here with the medal for the rescue allright?
+
+	attackby(obj/item/W as obj, mob/living/user as mob)
+		if (istype(W, /obj/item/coin/bombini))
+			for(var/mob/M in AIviewers(src))
+				boutput(M, "<B>[src.name]</B> buzzes excitedly! \"BZZ?? BZZ!!\"")
+				M.unlock_medal("Bombini is missing!", 1)
+				M.add_karma(15) // This line originally tried to give the karma to Bombini. Definitely a bug but I like to imagine that she just managed to pickpocket your karma or something.
+			user.u_equip(W)
+			qdel(W)
+		else
+			..()*/
+
+
 // Clack!
 
 /obj/npc/trader/skeleton

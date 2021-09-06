@@ -1,42 +1,44 @@
 "a" = (/turf/space,/area/space)
 "b" = (/obj/grille/catwalk{icon_state = "catwalk_cross"},/turf/space,/area/space)
-"c" = (/obj/machinery/plantpot,/turf/simulated/grass,/area/space)
+"c" = (/obj/machinery/plantpot,/turf/simulated/floor/grass/leafy,/area/gnome_trader)
 "e" = (/obj/decal/fakeobjects/shuttleengine,/obj/decal/fakeobjects/shuttleengine{icon_state = "alt_heater"},/turf/simulated/floor,/area/space)
-"g" = (/obj/railing/orange/reinforced{dir = 8},/obj/critter/maneater,/obj/machinery/light/incandescent/greenish{dir = 1},/turf/simulated/floor/grasstodirt{dir = 9},/area/space)
-"h" = (/obj/machinery/plantpot,/obj/machinery/light/incandescent/greenish,/turf/simulated/grass,/area/space)
-"j" = (/obj/railing/orange/reinforced,/obj/railing/orange/reinforced{dir = 4},/turf/simulated/floor/grasstodirt{dir = 6},/area/space)
-"n" = (/obj/critter/garden_gnome,/turf/simulated/floor/grass,/area/space)
-"p" = (/obj/machinery/plantpot,/turf/simulated/floor/grass,/area/space)
-"q" = (/obj/machinery/door/airlock/gannets/alt,/turf/simulated/floor/grass,/area/space)
-"r" = (/obj/railing/orange/reinforced{dir = 4},/turf/simulated/floor/grasstodirt{dir = 5},/area/space)
-"s" = (/obj/railing/orange/reinforced{dir = 8},/turf/simulated/floor/grasstodirt{dir = 9},/area/space)
-"t" = (/obj/railing/orange/reinforced{dir = 8},/obj/railing/orange/reinforced,/turf/simulated/floor/grasstodirt{dir = 10},/area/space)
+"g" = (/obj/railing/orange/reinforced{dir = 8},/obj/critter/maneater,/obj/machinery/light/incandescent/greenish{dir = 1},/turf/simulated/floor/grasstodirt{dir = 9},/area/gnome_trader)
+"h" = (/obj/machinery/plantpot,/obj/machinery/light/incandescent/greenish,/turf/simulated/floor/grass/leafy,/area/gnome_trader)
+"j" = (/obj/railing/orange/reinforced,/obj/railing/orange/reinforced{dir = 4},/turf/simulated/floor/grasstodirt{dir = 6},/area/gnome_trader)
+"m" = (/obj/submachine/seed_manipulator,/turf/simulated/floor/grass,/area/gnome_trader)
+"n" = (/obj/critter/garden_gnome,/turf/simulated/floor/grass,/area/gnome_trader)
+"o" = (/turf/simulated/wall/auto/jen/brown,/area/gnome_trader)
+"p" = (/obj/machinery/plantpot,/turf/simulated/floor/grass,/area/gnome_trader)
+"q" = (/obj/machinery/door/airlock/gannets/alt,/turf/simulated/floor/grass,/area/gnome_trader)
+"r" = (/obj/railing/orange/reinforced{dir = 4},/turf/simulated/floor/grasstodirt{dir = 5},/area/gnome_trader)
+"s" = (/obj/railing/orange/reinforced{dir = 8},/turf/simulated/floor/grasstodirt{dir = 9},/area/gnome_trader)
+"t" = (/obj/railing/orange/reinforced{dir = 8},/obj/railing/orange/reinforced,/turf/simulated/floor/grasstodirt{dir = 10},/area/gnome_trader)
 "u" = (/obj/machinery/door/airlock/gannets/alt,/obj/machinery/door/airlock/gannets/glass/alt,/obj/machinery/door/airlock/gannets/alt,/turf/simulated/grass,/area/space)
-"v" = (/turf/simulated/floor/grass,/area/space)
-"w" = (/obj/railing/orange/reinforced{dir = 4},/obj/railing/orange/reinforced,/turf/simulated/floor/grasstodirt{dir = 6},/area/space)
+"w" = (/obj/railing/orange/reinforced{dir = 4},/obj/railing/orange/reinforced,/turf/simulated/floor/grasstodirt{dir = 6},/area/gnome_trader)
 "x" = (/obj/decal/fakeobjects/shuttleengine{icon_state = "alt_propulsion"},/turf/simulated/wall/auto/reinforced,/area/space)
-"A" = (/obj/machinery/plantpot,/obj/machinery/plantpot,/obj/machinery/light/incandescent/greenish{dir = 4},/turf/simulated/floor/grass,/area/space)
-"B" = (/obj/machinery/light/incandescent/greenish{dir = 1},/turf/simulated/floor,/area/space)
+"A" = (/obj/machinery/plantpot,/obj/machinery/plantpot,/obj/machinery/light/incandescent/greenish{dir = 4},/turf/simulated/floor/grass,/area/gnome_trader)
+"B" = (/obj/machinery/light/incandescent/greenish{dir = 1},/obj/marker/supplymarker,/turf/simulated/floor,/area/gnome_trader)
+"C" = (/obj/npc/trader/gnome,/turf/simulated/floor/grass,/area/gnome_trader)
 "D" = (/turf/simulated/wall/auto/jen/brown,/area/space)
-"H" = (/obj/railing/orange/reinforced{dir = 4},/obj/critter/maneater,/obj/machinery/light/incandescent/greenish{dir = 1},/turf/simulated/floor/grasstodirt{dir = 5},/area/space)
+"H" = (/obj/railing/orange/reinforced{dir = 4},/obj/critter/maneater,/obj/machinery/light/incandescent/greenish{dir = 1},/turf/simulated/floor/grasstodirt{dir = 5},/area/gnome_trader)
 "L" = (/obj/decal/fakeobjects/shuttleengine{icon_state = "alt_heater-L"},/turf/simulated/wall/auto/reinforced,/area/space)
 "M" = (/turf/simulated/wall/auto/jen/the_tuff_stuff,/area/space)
-"N" = (/turf/simulated/grass,/area/space)
-"O" = (/obj/machinery/plantpot,/obj/machinery/light/incandescent/greenish{dir = 8},/turf/simulated/floor/grass,/area/space)
+"N" = (/turf/simulated/floor/grass/leafy,/area/gnome_trader)
+"O" = (/obj/machinery/plantpot,/obj/machinery/light/incandescent/greenish{dir = 8},/turf/simulated/floor/grass,/area/gnome_trader)
 "Q" = (/obj/decal/fakeobjects/shuttleengine{icon_state = "alt_heater-R"},/turf/simulated/wall/auto/reinforced,/area/space)
-"S" = (/obj/npc/trader/bee,/turf/simulated/floor/grass,/area/space)
+"S" = (/turf/simulated/floor/grass,/area/gnome_trader)
 "U" = (/turf/simulated/wall/auto/reinforced/jen/red,/area/space)
-"V" = (/obj/critter/garden_gnome,/turf/simulated/grass,/area/space)
-"Y" = (/obj/railing/orange/reinforced,/obj/railing/orange/reinforced{dir = 8},/turf/simulated/floor/grasstodirt{dir = 10},/area/space)
+"V" = (/obj/critter/garden_gnome,/turf/simulated/floor/grass/leafy,/area/gnome_trader)
+"Y" = (/obj/railing/orange/reinforced,/obj/railing/orange/reinforced{dir = 8},/turf/simulated/floor/grasstodirt{dir = 10},/area/gnome_trader)
 
 (1,1,1) = {"
 aaaaaUaaaaa
 aaaaUUUaaaa
 aaaUUBUUaaa
-aaUUSvvUUaa
-aaUOnvvAUaa
-aaUpvvvpUaa
-aMDDDqDDDMa
+aaUUCSmUUaa
+aaUOnSSAUaa
+aaUpSSSpUaa
+aMDooqooDMa
 buNsHNgrNub
 bMNYwNtjNMb
 aMNNNNNNNMa

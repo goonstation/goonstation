@@ -1035,6 +1035,10 @@ ABSTRACT_TYPE(/area/adventure)
 	requires_power = FALSE
 #endif
 
+/area/gnome_trader
+	name ="Gnomish Destroyer"
+	icon_state ="green"
+	sound_environment = 2
 /area/skeleton_trader
 	name = "Skeleton Trade Outpost"
 	icon_state = "green"

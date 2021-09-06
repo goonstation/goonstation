@@ -69,9 +69,9 @@
 					//C.reagents.add_reagent("methanol", 0.5 / length(mobs_affected))
 					src.visible_message("<span class='alert'><b>[src] waters [planter].</b></span>")
 					//obj/
-					SETUP_GENERIC_ACTIONBAR(src, planter, 5 SECONDS, .proc/water_plant, planter,
-					'icons/obj/hydroponics/items_hydroponics.dmi', "wateringcan", "", null)
-
+					//SETUP_GENERIC_ACTIONBAR(src, planter, 2 SECONDS, /obj/critter/garden_gnome/proc/water_plant, list(planter),
+					//'icons/obj/hydroponics/items_hydroponics.dmi', "wateringcan", "Hello", null)
+					src.water_plant(planter)
 					src.task = "thinking"
 					src.attacking = 0
 					return
@@ -105,10 +105,11 @@
 					src.attacking = 0
 					return
 
-	proc/water_plant(obj/machinery/plantpot/POT)
+	proc/water_plant(planter)
 		// Sorry for this, but I can't come up with a better solution
 		var/datum/reagents/reagents_temp = new/datum/reagents(60)
+		src.visible_message("<span class='alert'><b>[src] here did his job [planter].</b></span>")
 		reagents_temp.my_atom = src
 		reagents_temp.add_reagent("water", 60)
-		reagents_temp.trans_to(POT, 60)
+		reagents_temp.trans_to(planter, 60)
 		qdel(reagents_temp)
