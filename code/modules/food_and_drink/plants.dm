@@ -190,7 +190,7 @@
 
 /obj/item/reagent_containers/food/snacks/plant/corn/pepper
 	name = "Pepper corn cob"
-	desc = "Wha? Why's this called corn? It's pepper!."
+	desc = "Wha? Why's this called corn? It's pepper!"
 	icon_state = "peppercorn"
 	planttype = /datum/plant/crop/corn
 	amount = 3
