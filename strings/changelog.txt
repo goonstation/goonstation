@@ -1,5 +1,9 @@
 
 (t)sun sep 05 21
+(u)Walpvrgis
+(p)5903
+(e)🆕🎨|feature, sprites
+(*)Added a new spacebux ghost critter purchase; Lil Bird Ghost Critter. It costs 1000 spacebux and lets you play as a little sparrow or robin if you decide to respawn after tiring of the afterlife!
 (u)Kubius
 (p)5909
 (e)🆕🗺|feature, mapping
