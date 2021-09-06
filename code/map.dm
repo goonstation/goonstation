@@ -95,6 +95,7 @@ var/global/list/mapNames = list(
 	var/airlock_style = "gannets"
 
 	var/escape_centcom = /area/shuttle/escape/centcom
+	var/escape_outpost = /area/shuttle/escape/outpost
 	var/escape_transit = /area/shuttle/escape/transit
 	var/escape_station = /area/shuttle/escape/station
 	var/escape_def = SHUTTLE_NODEF
@@ -141,6 +142,7 @@ var/global/list/mapNames = list(
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
 	escape_centcom = /area/shuttle/escape/centcom/donut2
+	escape_outpost = /area/shuttle/escape/outpost/donut2
 	escape_transit = /area/shuttle/escape/transit/donut2
 	escape_station = /area/shuttle/escape/station/donut2
 	escape_def = SHUTTLE_WEST
@@ -170,6 +172,7 @@ var/global/list/mapNames = list(
 	rwalls = /turf/simulated/wall/auto/reinforced/jen
 
 	escape_centcom = /area/shuttle/escape/centcom/donut3
+	escape_outpost = /area/shuttle/escape/outpost/donut3
 	escape_transit = /area/shuttle/escape/transit/donut3
 	escape_station = /area/shuttle/escape/station/donut3
 	escape_def = SHUTTLE_DONUT3
@@ -210,6 +213,7 @@ var/global/list/mapNames = list(
 /datum/map_settings/cogmap_old
 	name = "COGMAP_OLD"
 	escape_centcom = /area/shuttle/escape/centcom/cogmap
+	escape_outpost = /area/shuttle/escape/outpost/cogmap
 	escape_transit = /area/shuttle/escape/transit/cogmap
 	escape_station = /area/shuttle/escape/station/cogmap
 	escape_def = SHUTTLE_SOUTH
@@ -242,6 +246,7 @@ var/global/list/mapNames = list(
 	airlock_style = "pyro"
 
 	escape_centcom = /area/shuttle/escape/centcom/cogmap
+	escape_outpost = /area/shuttle/escape/outpost/cogmap
 	escape_transit = /area/shuttle/escape/transit/cogmap
 	escape_station = /area/shuttle/escape/station/cogmap
 	escape_def = SHUTTLE_SOUTH
@@ -290,6 +295,7 @@ var/global/list/mapNames = list(
 	airlock_style = "pyro"
 
 	escape_centcom = /area/shuttle/escape/centcom/cogmap2
+	escape_outpost = /area/shuttle/escape/outpost/cogmap2
 	escape_transit = /area/shuttle/escape/transit/cogmap2
 	escape_station = /area/shuttle/escape/station/cogmap2
 	escape_def = SHUTTLE_EAST
@@ -333,6 +339,7 @@ var/global/list/mapNames = list(
 	airlock_style = "pyro"
 
 	escape_centcom = /area/shuttle/escape/centcom/destiny
+	escape_outpost = /area/shuttle/escape/outpost/destiny
 	escape_transit = /area/shuttle/escape/transit/destiny
 	escape_station = /area/shuttle/escape/station/destiny
 	escape_def = SHUTTLE_NORTH
@@ -416,6 +423,7 @@ var/global/list/mapNames = list(
 	airlock_style = "pyro"
 
 	escape_centcom = /area/shuttle/escape/centcom/cogmap2
+	escape_outpost = /area/shuttle/escape/outpost/cogmap2
 	escape_transit = /area/shuttle/escape/transit/cogmap2
 	escape_station = /area/shuttle/escape/station/cogmap2
 	escape_def = SHUTTLE_EAST
@@ -486,6 +494,7 @@ var/global/list/mapNames = list(
 	shuttle_map_turf = /turf/space/fluid/manta
 
 	escape_centcom = /area/shuttle/escape/centcom/manta
+	escape_outpost = /area/shuttle/escape/outpost/manta
 	escape_transit = /area/shuttle/escape/transit/manta
 	escape_station = /area/shuttle/escape/station/manta
 	escape_def = SHUTTLE_MANTA
@@ -528,6 +537,7 @@ var/global/list/mapNames = list(
 	auto_windows = 1
 
 	escape_centcom = /area/shuttle/escape/centcom/cogmap2
+	escape_outpost = /area/shuttle/escape/outpost/cogmap2
 	escape_transit = /area/shuttle/escape/transit/cogmap2
 	escape_station = /area/shuttle/escape/station/cogmap2
 	escape_def = SHUTTLE_EAST
@@ -537,6 +547,7 @@ var/global/list/mapNames = list(
 	name = "TRUNKMAP"
 	goonhub_map = "https://goonhub.com/maps/trunkmap"
 	escape_centcom = /area/shuttle/escape/centcom/destiny
+	escape_outpost = /area/shuttle/escape/outpost/destiny
 	escape_transit = /area/shuttle/escape/transit/destiny
 	escape_station = /area/shuttle/escape/station/destiny
 	escape_def = SHUTTLE_NORTH
@@ -561,6 +572,7 @@ var/global/list/mapNames = list(
 	airlock_style = "pyro"
 
 	escape_centcom = /area/shuttle/escape/centcom/cogmap2
+	escape_outpost = /area/shuttle/escape/outpost/cogmap2
 	escape_transit = /area/shuttle/escape/transit/cogmap2
 	escape_station = /area/shuttle/escape/station/cogmap2
 	escape_def = SHUTTLE_EAST
@@ -604,6 +616,7 @@ var/global/list/mapNames = list(
 	airlock_style = "pyro"
 
 	escape_centcom = /area/shuttle/escape/centcom/cogmap2
+	escape_outpost = /area/shuttle/escape/outpost/cogmap2
 	escape_transit = /area/shuttle/escape/transit/cogmap2
 	escape_station = /area/shuttle/escape/station/cogmap2
 	escape_def = SHUTTLE_EAST
@@ -662,6 +675,7 @@ var/global/list/mapNames = list(
 	airlock_style = "pyro"
 
 	escape_centcom = /area/shuttle/escape/centcom/cogmap2
+	escape_outpost = /area/shuttle/escape/outpost/cogmap2
 	escape_transit = /area/shuttle/escape/transit/cogmap2
 	escape_station = /area/shuttle/escape/station/cogmap2
 	escape_def = SHUTTLE_EAST
@@ -708,6 +722,7 @@ var/global/list/mapNames = list(
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 
 	escape_centcom = /area/shuttle/escape/centcom/cogmap2
+	escape_outpost = /area/shuttle/escape/outpost/cogmap2
 	escape_transit = /area/shuttle/escape/transit/cogmap2
 	escape_station = /area/shuttle/escape/station/cogmap2
 	escape_def = SHUTTLE_EAST
@@ -751,6 +766,7 @@ var/global/list/mapNames = list(
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 
 	escape_centcom = /area/shuttle/escape/centcom/destiny
+	escape_outpost = /area/shuttle/escape/outpost/destiny
 	escape_transit = /area/shuttle/escape/transit/destiny
 	escape_station = /area/shuttle/escape/station/destiny
 	escape_def = SHUTTLE_NORTH
@@ -789,6 +805,7 @@ var/global/list/mapNames = list(
 	airlock_style = "pyro"
 
 	escape_centcom = /area/shuttle/escape/centcom/cogmap2
+	escape_outpost = /area/shuttle/escape/outpost/cogmap2
 	escape_transit = /area/shuttle/escape/transit/cogmap2
 	escape_station = /area/shuttle/escape/station/cogmap2
 	escape_def = SHUTTLE_EAST
@@ -832,6 +849,7 @@ var/global/list/mapNames = list(
 	airlock_style = "pyro"
 
 	escape_centcom = /area/shuttle/escape/centcom/cogmap
+	escape_outpost = /area/shuttle/escape/outpost/cogmap
 	escape_transit = /area/shuttle/escape/transit/cogmap
 	escape_station = /area/shuttle/escape/station/cogmap
 	escape_def = SHUTTLE_SOUTH
@@ -871,6 +889,7 @@ var/global/list/mapNames = list(
 	airlock_style = "pyro"
 
 	escape_centcom = /area/shuttle/escape/centcom/sealab
+	escape_outpost = /area/shuttle/escape/outpost/sealab
 	escape_transit = /area/shuttle/escape/transit/sealab
 	escape_station = /area/shuttle/escape/station/sealab
 	escape_def = SHUTTLE_OSHAN
@@ -924,6 +943,7 @@ var/global/list/mapNames = list(
 	airlock_style = "pyro"
 
 	escape_centcom = /area/shuttle/escape/centcom/destiny
+	escape_outpost = /area/shuttle/escape/outpost/destiny
 	escape_transit = /area/shuttle/escape/transit/destiny
 	escape_station = /area/shuttle/escape/station/destiny
 	escape_def = SHUTTLE_NORTH
@@ -984,6 +1004,26 @@ var/global/list/mapNames = list(
 	valid_nuke_targets = list()
 
 /area/shuttle/escape/centcom
+	icon_state = "shuttle_escape"
+	donut2
+		icon_state = "shuttle_escape-dnt2"
+	donut3
+		icon_state = "shuttle_escape-dnt3"
+	cogmap
+		icon_state = "shuttle_escape-cog1"
+	cogmap2
+		icon_state = "shuttle_escape-cog2"
+	destiny
+		icon_state = "shuttle_escape-dest"
+	sealab
+		icon_state = "shuttle_escape-sealab"
+	manta
+		icon_state = "shuttle_escape-manta"
+		filler_turf = "/turf/space/fluid"
+	donut3
+		icon_state = "shuttle_escape-dnt3"
+
+/area/shuttle/escape/outpost
 	icon_state = "shuttle_escape"
 	donut2
 		icon_state = "shuttle_escape-dnt2"

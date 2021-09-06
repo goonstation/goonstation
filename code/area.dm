@@ -584,6 +584,11 @@ ABSTRACT_TYPE(/area/shuttle)
 	sound_group = "centcom"
 	is_centcom = 1
 
+/area/shuttle/escape/outpost
+	icon_state = "shuttle3"
+	sound_group = "centcom"
+	is_centcom = 1
+
 /area/shuttle/prison/
 	name = "Prison Shuttle"
 
@@ -5462,3 +5467,26 @@ MAJOR_AST(29)
 MAJOR_AST(30)
 
 #undef MAJOR_AST
+
+
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++ *\
+||                                                         ||
+|| _.~**~._ Nanotrasen Temporary Frontier Command _.~**~._ ||
+||                                                         ||
+\* +++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+/area/centcom/outpost
+	name = "Nanotrasen Temporary Frontier Command"
+	icon_state = "yellow"
+
+/area/centcom/outpost/docks
+	name = "NTFC Docks"
+	icon_state = "green"
+
+/area/centcom/outpost/offices
+	name = "NTFC Administration"
+	icon_state = "blue"
+
+/area/centcom/outpost/maintenance
+	name = "Maintenance Tunnel"
+	icon_state = "purple"

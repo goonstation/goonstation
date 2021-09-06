@@ -111,7 +111,7 @@ datum/shuttle_controller
 
 						processScheduler.disableProcess("Fluid_Turfs")
 
-						var/area/start_location = locate(map_settings ? map_settings.escape_centcom : /area/shuttle/escape/centcom)
+						var/area/start_location = locate(map_settings ? (channel_open ? map_settings.escape_centcom : map_settings.escape_outpost) : /area/shuttle/escape/centcom)
 						var/area/end_location = locate(map_settings ? map_settings.escape_station : /area/shuttle/escape/station)
 
 						var/list/dstturfs = list()
@@ -285,7 +285,7 @@ datum/shuttle_controller
 						return 0
 					else
 						var/area/start_location = locate(map_settings ? map_settings.escape_transit : /area/shuttle/escape/transit)
-						var/area/end_location = locate(map_settings ? map_settings.escape_centcom : /area/shuttle/escape/centcom)
+						var/area/end_location = locate(map_settings ? (channel_open ? map_settings.escape_centcom : map_settings.escape_outpost) : /area/shuttle/escape/centcom)
 
 						for (var/mob/M in start_location)
 							M.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
@@ -322,7 +322,7 @@ datum/shuttle_controller
 					else
 						location = SHUTTLE_LOC_RETURNED
 						var/area/start_location = locate(map_settings ? map_settings.escape_station : /area/shuttle/escape/station)
-						var/area/end_location = locate(map_settings ? map_settings.escape_centcom : /area/shuttle/escape/centcom)
+						var/area/end_location = locate(map_settings ? (channel_open ? map_settings.escape_centcom : map_settings.escape_outpost) : /area/shuttle/escape/centcom)
 
 						start_location.move_contents_to(end_location, map_turf)
 						for (var/turf/O in end_location)
