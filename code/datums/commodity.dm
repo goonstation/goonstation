@@ -2256,8 +2256,8 @@
 	comtype = /obj/item/gun/kinetic/foamdartgun
 	desc = "A toy gun that fires foam darts."
 	onmarket = 0
-	price = 200
-	baseprice = 200
+	price = 500
+	baseprice = 500
 	upperfluc = 50
 	lowerfluc = -50
 
@@ -2266,8 +2266,8 @@
 	comtype = /obj/item/ammo/bullets/foamdarts
 	desc = "Six foam darts for toy guns."
 	onmarket = 0
-	price = 120
-	baseprice = 120
+	price = 200
+	baseprice = 200
 	upperfluc = 20
 	lowerfluc = -20
 
