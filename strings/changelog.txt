@@ -1,5 +1,10 @@
 
 (t)mon sep 06 21
+(u)Gannets & BatElite
+(p)5876
+(e)🆕🎨|feature, sprites
+(*)Adds a new utility purchase to the Syndicate Weapons Vendor on the Cairngorm: the Military Headset.
+(*)This headset allows an operative to communicate on their usual radio frequencies, but with the advantage of blocking 100% of ear disorient damage from things like flashbang grenades.
 (u)DoctorStupid
 (p)5830
 (e)🆕🎨|feature, sprites
