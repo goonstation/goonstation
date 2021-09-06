@@ -1,5 +1,8 @@
 
 (t)sun sep 05 21
+(u)Zamujasa
+(e)🆕|feature
+(*)Players in Ghost VR or the Afterlife Bar should now get alerts and be eligible for random event antagonist/pest spawns.
 (u)Vaskritaya
 (p)5789
 (e)🆕🗺|feature, mapping

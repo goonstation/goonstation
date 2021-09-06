@@ -1881,7 +1881,11 @@ proc/countJob(rank)
 /proc/dead_player_list_helper(var/mob/G, var/allow_dead_antags = 0, var/require_client = FALSE)
 	if (!G?.mind || G.mind.dnr)
 		return 0
-	if (!isobserver(G) && !(isliving(G) && isdead(G))) // if (NOT /mob/dead) AND NOT (/mob/living AND dead)
+	// if (!isobserver(G) && !(isliving(G) && isdead(G))) // if (NOT /mob/dead) AND NOT (/mob/living AND dead)
+	// 	return 0
+	// If (alive) and (not in the afterlife, or in the afterlife but in hell) and (not a VR ghost)
+	// (basically, allow people who are alive in the afterlife or in VR to get respawn popups)
+	if (!isdead(G) && !(istype(get_area(G), /area/afterlife) && !istype(get_area(G), /area/afterlife/hell)) && !isVRghost(G))
 		return 0
 	if (istype(G, /mob/new_player) || G.respawning)
 		return 0

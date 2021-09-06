@@ -277,7 +277,19 @@
 
 /mob/living/Login()
 	..()
-	if(!isdead(src) && !istype(get_area(src), /area/afterlife/bar) && !isVRghost(src) && !isghostcritter(src) && !isghostdrone(src))
+	// If...
+	// living
+	// and not (in the afterlife, and not in hell)
+	// and not a vr ghost
+	// and not a ghost critter
+	// and not a ghost drone
+	// ...then remove respawn candidate.
+	if (!isdead(src) \
+		&& !(istype(get_area(src), /area/afterlife) && !istype(get_area(src), /area/afterlife/hell)) \
+		&& !isVRghost(src) \
+		&& !isghostcritter(src) \
+		&& !isghostdrone(src) \
+	)
 		respawn_controller.unsubscribeRespawnee(src.ckey)
 
 /mob/living/Life(datum/controller/process/mobs/parent)
