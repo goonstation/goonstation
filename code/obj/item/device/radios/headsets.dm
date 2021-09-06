@@ -308,8 +308,9 @@
 		icon_override = "syndieboss"
 
 	comtac
-	name = "ComTac Headset"
-	desc = "A military radio headset designed to protect the wearer from dangerous levels of noise."
+	name = "Military Headset"
+	icon_state = "comtac"
+	desc = "A two-way radio headset designed to protect the wearer from dangerous levels of noise during gunfights."
 
 	setupProperties()
 		..()

@@ -425,9 +425,9 @@
 	description = "A realistic inflatable nuclear bomb decoy, it'll fool anyone not looking closely but won't take much punishment before it pops."
 
 /datum/materiel/utility/comtac
-	name = "ComTac Headset"
+	name = "Military Headset"
 	path = /obj/item/device/radio/headset/syndicate/comtac
-	description = "A military radio headset designed to protect the wearer from dangerous levels of noise."
+	description = "A two-way radio headset designed to protect against any incoming hazardous noise, including flashbangs."
 // Requisition tokens
 
 /obj/item/requisition_token
