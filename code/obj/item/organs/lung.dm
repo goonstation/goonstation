@@ -1,7 +1,7 @@
+#define LUNG_COUNT 2
 /*=========================*/
 /*----------Lungs----------*/
 /*=========================*/
-#define LUNG_COUNT 2
 /obj/item/organ/lung
 	name = "lungs"
 	organ_name = "lung"
@@ -21,6 +21,7 @@
 	var/fart_vomit_min = 6.9
 	var/fart_choke_min = 16.9
 	var/rad_immune = FALSE
+	var/breaths_oxygen = TRUE
 
 	on_life(var/mult = 1)
 		if (!..())
@@ -56,12 +57,7 @@
 	// 		if (src.holder.right_lung && src.holder.right_lung.get_damage() > FAIL_DAMAGE && prob(src.get_damage() * 0.2))
 	// 			donor.contract_disease(failure_disease,null,null,1)
 
-
-// #define BREATH_OXY_INDICATOR_ON (1 << 0)
-// #define BREATH_TOX_INDICATOR_ON (1 << 1)
-// #define BREATH_FIRE_INDICATOR_ON (1 << 2)
-
-	proc/breathe(datum/gas_mixture/breath, underwater, mult)
+	proc/breathe(datum/gas_mixture/breath, underwater, mult, datum/organ/lung/status/update)
 		var/breath_pressure = (TOTAL_MOLES(breath)*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 		//Partial pressure of the O2 in our breath
 		var/O2_pp = (breath.oxygen/TOTAL_MOLES(breath))*breath_pressure
@@ -71,26 +67,27 @@
 		var/CO2_pp = (breath.carbon_dioxide/TOTAL_MOLES(breath))*breath_pressure
 		var/oxygen_used
 
-		if (O2_pp < safe_oxygen_min) 			// Too little oxygen
-			if (prob(20))
-				if (underwater)
-					donor.emote("gurgle")
+		if(breaths_oxygen)
+			if (O2_pp < safe_oxygen_min) 			// Too little oxygen
+				if (prob(20))
+					if (underwater)
+						update.emotes |= "gurgle"
+					else
+						update.emotes |= "gasp"
+				if (O2_pp > 0)
+					var/ratio = round(safe_oxygen_min/(O2_pp + 0.1))
+					donor.take_oxygen_deprivation(min(5*ratio, 5)/LUNG_COUNT) // Don't fuck them up too fast (space only does 7 after all!)
+					oxygen_used = breath.oxygen*ratio/6
 				else
-					donor.emote("gasp")
-			if (O2_pp > 0)
-				var/ratio = round(safe_oxygen_min/(O2_pp + 0.1))
-				donor.take_oxygen_deprivation(min(5*ratio, 5)/LUNG_COUNT) // Don't fuck them up too fast (space only does 7 after all!)
-				oxygen_used = breath.oxygen*ratio/6
-			else
-				donor.take_oxygen_deprivation(3 * mult/LUNG_COUNT)
-			. |= BREATH_OXY_INDICATOR_ON
-		else 									// We're in safe limits
-			donor.take_oxygen_deprivation(-6 * mult/LUNG_COUNT)
-			oxygen_used = breath.oxygen/6
+					donor.take_oxygen_deprivation(3 * mult/LUNG_COUNT)
+				update.show_oxy_indicator = TRUE
+			else 									// We're in safe limits
+				donor.take_oxygen_deprivation(-6 * mult/LUNG_COUNT)
+				oxygen_used = breath.oxygen/6
 
-		oxygen_used /= LUNG_COUNT
-		breath.oxygen -= oxygen_used
-		breath.carbon_dioxide += oxygen_used
+			oxygen_used /= LUNG_COUNT
+			breath.oxygen -= oxygen_used
+			breath.carbon_dioxide += oxygen_used
 
 		if (CO2_pp > safe_co2_max)
 			if (!donor.co2overloadtime) // If it's the first breath with too much CO2 in it, lets start a counter, then have them pass out after 12s or so.
@@ -101,14 +98,14 @@
 				if (world.time - donor.co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
 					donor.take_oxygen_deprivation(7 * mult/LUNG_COUNT)
 			if (prob(percentmult(20, mult))) // Lets give them some chance to know somethings not right though I guess.
-				donor.emote("cough")
+				update.emotes |= "cough"
 		else
 			donor.co2overloadtime = 0
 
 		if (Toxins_pp > safe_toxins_max) // Too much toxins
 			var/ratio = breath.toxins/safe_toxins_max
 			donor.take_toxin_damage(min(ratio * 125,20) * mult/LUNG_COUNT)
-			. |= BREATH_TOX_INDICATOR_ON
+			update.show_tox_indicator = TRUE
 
 		if (length(breath.trace_gases))	// If there's some other shit in the air lets deal with it here.
 			var/datum/gas/sleeping_agent/SA = breath.get_trace_gas_by_type(/datum/gas/sleeping_agent)
@@ -120,7 +117,7 @@
 						donor.sleeping = max(donor.sleeping, 2)
 				else if (SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 					if (prob(percentmult(20, mult)))
-						donor.emote(pick("giggle", "laugh"))
+						update.emotes |= pick("giggle", "laugh")
 
 		var/FARD_pp = (breath.farts/TOTAL_MOLES(breath))*breath_pressure
 		if (prob(15) && (FARD_pp > fart_smell_min))
@@ -131,7 +128,7 @@
 		if (FARD_pp > fart_choke_min)
 			donor.take_oxygen_deprivation(6.9 * mult/LUNG_COUNT)
 			if (prob(20))
-				donor.emote("cough")
+				update.emotes |= "cough"
 				if (prob(30))
 					boutput(donor, "<span class='alert'>Oh god it's so bad you could choke to death in here!</span>")
 
@@ -144,13 +141,13 @@
 
 		if (breath.temperature > min(temp_tolerance) && !donor.is_heat_resistant()) // Hot air hurts :(
 			var/lung_burn = min(max(breath.temperature - temp_tolerance, 0) / 3, 10)
-			donor.TakeDamage("chest", 0, (lung_burn / 2) + 3, 0, DAMAGE_BURN)
+			donor.TakeDamage("chest", 0, (lung_burn / LUNG_COUNT) + 3, 0, DAMAGE_BURN)
 			if(prob(20))
 				boutput(donor, "<span class='alert'>This air is searing hot!</span>")
 				if (prob(80))
 					holder.damage_organ(0, lung_burn + 6, 0, organ_holder_name)
 
-			. |= BREATH_FIRE_INDICATOR_ON
+			update.show_fire_indicator = TRUE
 			if (prob(4))
 				boutput(donor, "<span class='alert'>Your lungs hurt like hell! This can't be good!</span>")
 
@@ -339,3 +336,13 @@
 	icon_state = "cyber-lung-R"
 	body_side = R_ORGAN
 	failure_disease = /datum/ailment/disease/respiratory_failure/right
+
+
+/datum/organ/lung/status
+	var/show_oxy_indicator = FALSE
+	var/show_tox_indicator = FALSE
+	var/show_fire_indicator = FALSE
+
+	var/list/emotes = list()
+
+#undef LUNG_COUNT
