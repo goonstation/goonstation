@@ -1,5 +1,9 @@
 
 (t)mon sep 06 21
+(u)Flaborized
+(p)5902
+(e)🎨|sprites
+(+)Resprited some ore, material bars and other intermediate matsci products.
 (u)Gannets & BatElite
 (p)5876
 (e)🆕🎨|feature, sprites
