@@ -2343,7 +2343,7 @@
 			O.unbreakme()
 	if (!src.organHolder)
 		src.organHolder = new(src)
-	src.organHolder.heal_organs(INFINITY, INFINITY, INFINITY, list("liver", "left_kidney", "right_kidney", "stomach", "intestines","spleen", "left_lung", "right_lung","appendix", "pancreas", "heart", "brain", "left_eye", "right_eye", "tail"))
+	src.organHolder.heal_organs(INFINITY, INFINITY, INFINITY, list("liver", "left_kidney", "right_kidney", "stomach", "intestines","spleen", "left_lung", "right_lung","appendix", "pancreas", "heart", "brain", "left_eye", "right_eye", "tail", "augmentation_nerve"))
 
 	src.organHolder.create_organs()
 	if (src.organHolder.chest)

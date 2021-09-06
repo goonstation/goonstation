@@ -23,9 +23,10 @@
 	var/obj/item/organ/intestines = null
 	var/obj/item/organ/appendix = null
 	var/obj/item/organ/tail = null
+	var/obj/item/organ/augmentation/head/augmentation_nerve = null
 	var/lungs_changed = 2				//for changing lung stamina debuffs if it has changed since last cycle. starts at 2 for having 2 working lungs
 
-	var/list/organ_list = list("all", "head", "skull", "brain", "left_eye", "right_eye", "chest", "heart", "left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
+	var/list/organ_list = list("all", "head", "skull", "brain", "left_eye", "right_eye", "chest", "heart", "left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail", "augmentation_nerve")
 
 	var/list/organ_type_list = list(
 		"head"="/obj/item/organ/head",
@@ -46,7 +47,8 @@
 		"intestines"="/obj/item/organ/intestines",
 		"appendix"="/obj/item/organ/appendix",
 		"butt"="/obj/item/clothing/head/butt",
-		"tail"="/obj/item/organ/tail")
+		"tail"="/obj/item/organ/tail",
+		"augmentation_nerve"="/obj/item/organ/augmentation/head")
 
 	New(var/mob/living/L, var/ling)
 		..()
@@ -120,6 +122,9 @@
 		if (tail)
 			tail.donor = null
 			tail.holder = null
+		if (augmentation_nerve)
+			augmentation_nerve.donor = null
+			augmentation_nerve.holder = null
 
 		head = null
 		skull = null
@@ -140,6 +145,7 @@
 		pancreas = null
 		appendix = null
 		tail = null
+		augmentation_nerve = null
 
 		donor = null
 		..()
@@ -403,6 +409,8 @@
 				organ = "appendix"
 			else if(organ == tail)
 				organ = "tail"
+			else if (organ == augmentation_nerve)
+				organ = "augmentation_nerve"
 			else
 				return 0 // what the fuck are you trying to remove
 
@@ -712,6 +720,18 @@
 				src.donor.update_body()
 				src.organ_list["tail"] = null
 				return mytail
+
+			if ("augmentation_nerve")
+				if (!src.augmentation_nerve)
+					return 0
+				var/obj/item/organ/augmentation/head/myaugmentation_nerve = src.augmentation_nerve
+				myaugmentation_nerve.set_loc(location)
+				myaugmentation_nerve.on_removal()
+				myaugmentation_nerve.holder = null
+				src.augmentation_nerve = null
+				src.donor.update_body()
+				src.organ_list["augmentation_nerve"] = null
+				return myaugmentation_nerve
 
 	/// drops the organ, then hurls it somewhere
 	proc/drop_and_throw_organ(var/organ, var/location, var/direction, var/dist, var/speed, var/showtext)
@@ -1108,6 +1128,21 @@
 				newtail.set_loc(src.donor)
 				newtail.holder = src
 				organ_list["tail"] = newtail
+				src.donor.update_body()
+				success = 1
+
+			if ("augmentation_nerve")
+				if (src.augmentation_nerve)
+					if (force)
+						qdel(src.augmentation_nerve)
+					else
+						return 0
+				var/obj/item/organ/augmentation/head/newaugmentation_nerve = I
+				newaugmentation_nerve.op_stage = op_stage
+				src.augmentation_nerve = newaugmentation_nerve
+				augmentation_nerve.set_loc(src.donor)
+				augmentation_nerve.holder = src
+				organ_list["augmentation_nerve"] = newaugmentation_nerve
 				src.donor.update_body()
 				success = 1
 

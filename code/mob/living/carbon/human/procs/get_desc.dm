@@ -150,10 +150,18 @@
 						. += "<br><span class='alert'><B>[src.name] has an open incision on [t_his] head!</B></span>"
 
 				if (src.organHolder.head.op_stage > 0.0)
-					if (src.organHolder.head.op_stage >= 3.0)
+					if (src.organHolder.head.op_stage == 3.0) //fix me
 						. += "<br><span class='alert'><B>[src.name]'s head is barely attached!</B></span>"
 					else
 						. += "<br><span class='alert'><B>[src.name] has a huge incision across their neck!</B></span>"
+					if (src.organHolder.head.op_stage == 5.0 || src.organHolder.head.op_stage == 4.0)
+						. += "<br><span class='alert'><B>[src.name] has a flap of loose skin in the back of their neck!</B></span>"
+
+			if (src.organHolder.augmentation_nerve && src.head && src.head.c_flags & BLOCKCHOKE)
+				. += "<br><span class='alert'>[src.name] has a [bicon(src.organHolder.augmentation_nerve)] small, round machine installed at the base of [t_his] skull.</span>"
+			else if (src.organHolder.augmentation_nerve)
+				. += "<br><span class='alert'>[src.name] has [bicon(src.organHolder.augmentation_nerve)] [src.organHolder.augmentation_nerve] installed at the base of [t_his] skull.</span>"
+
 
 		else
 			. += "<br><span class='alert'><B>[src.name] has been decapitated!</B></span>"

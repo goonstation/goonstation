@@ -550,7 +550,6 @@
 
 
 	Topic(href, href_list)
-
 		if(!(href_list["cutwire"] || href_list["pulsewire"]))
 			if(status & BROKEN || status & NOPOWER)
 				return
@@ -563,7 +562,7 @@
 				if (src.manuf_zap(usr, 10))
 					return
 
-		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1 || isAI(usr)) && istype(src.loc, /turf))))
+		if (usr.contents.Find(src) || ((get_dist(src, usr) <= 1 || isAI(usr) || HasWirelessInteractor(usr) && istype(src.loc, /turf))))
 			src.add_dialog(usr)
 
 			if (src.malfunction && prob(10))
@@ -2171,6 +2170,7 @@
 	/datum/manufacture/cyberliver,
 	/datum/manufacture/cyberlung_left,
 	/datum/manufacture/cyberlung_right,
+	/datum/manufacture/augmentation_wire,
 	/datum/manufacture/rods2,
 	/datum/manufacture/metal,
 	/datum/manufacture/glass)
