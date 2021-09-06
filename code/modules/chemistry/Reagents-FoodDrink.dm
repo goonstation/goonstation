@@ -3303,29 +3303,35 @@ datum
 				. = ..()
 				if(method == TOUCH && volume >= 10)
 					boutput(M, "<span class='notice'><b>The chemical stains your skin!</b></span>")
+					var/oldcol = M.color
 					M.color = list(
 						0.5, 0, 0,
 						0, 0.5, 0,
 						0, 0, 0.5,
 						0.5, 0.35, 0.0625)
+					M.onVarChanged("color", oldcol, M.color)
 					return
 
 			reaction_obj(var/obj/O, var/volume)
 				if(volume >= 10)
+					var/oldcol = O.color
 					O.color = list(
 						0.5, 0, 0,
 						0, 0.5, 0,
 						0, 0, 0.5,
 						0.5, 0.35, 0.0625)
+					O.onVarChanged("color", oldcol, O.color)
 					return
 
 			reaction_turf(var/turf/T, var/volume)
 				if(volume >= 20)
+					var/oldcol = T.color
 					T.color = list(
 						0.5, 0, 0,
 						0, 0.5, 0,
 						0, 0, 0.5,
 						0.5, 0.35, 0.0625)
+					T.onVarChanged("color", oldcol, T.color)
 					return
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
