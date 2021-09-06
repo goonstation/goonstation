@@ -134,10 +134,8 @@
 
 		intercom
 			after_setup(var/datum/hud/hud)
-				var/obj/item/device/radio/intercom/O = new(holder)
+				var/obj/item/device/radio/headset/O = new(holder)
 				equip(O)
 				// it's a built in radio, they can't take it off.
 				O.cant_self_remove = TRUE
 				O.cant_other_remove = TRUE
-				if (item)
-					hud.add_object(item, HUD_LAYER+1, screenObj.screen_loc)
