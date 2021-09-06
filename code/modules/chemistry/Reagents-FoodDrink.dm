@@ -3301,18 +3301,20 @@ datum
 
 			reaction_mob(var/mob/M, var/method = TOUCH, var/volume)
 				. = ..()
-				if(method == TOUCH)
+				if(method == TOUCH && volume >= 10)
 					boutput(M, "<span class='notice'><b>The chemical stains your skin!</b></span>")
 					M.color = rgb(rand(175,255),rand(110,169),92)
 					return
 
 			reaction_obj(var/obj/O, var/volume)
-				O.color = rgb(rand(175,255),rand(110,169),92)
-				return
+				if(volume >= 10)
+					O.color = rgb(rand(175,255),rand(110,169),92)
+					return
 
 			reaction_turf(var/turf/T, var/volume)
-				T.color = rgb(rand(175,255),rand(110,169),92)
-				return
+				if(volume >= 20)
+					T.color = rgb(rand(175,255),rand(110,169),92)
+					return
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
 				if(!M) M = holder.my_atom
