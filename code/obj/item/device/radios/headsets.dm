@@ -308,13 +308,13 @@
 		icon_override = "syndieboss"
 
 	comtac
-	name = "Military Headset"
-	icon_state = "comtac"
-	desc = "A two-way radio headset designed to protect the wearer from dangerous levels of noise during gunfights."
+		name = "Military Headset"
+		icon_state = "comtac"
+		desc = "A two-way radio headset designed to protect the wearer from dangerous levels of noise during gunfights."
 
-	setupProperties()
-		..()
-		setProperty("disorient_resist_ear", 100)
+		setupProperties()
+			..()
+			setProperty("disorient_resist_ear", 100)
 
 /obj/item/device/radio/headset/deaf
 	name = "Auditory Headset"
