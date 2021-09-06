@@ -18,6 +18,12 @@
 	speechverb_ask = "queries"
 	metabolizes = 0
 
+	New()
+		. = ..()
+		var/image/eye_light = image(icon, "mars_sec_bot_eye")
+		eye_light.plane = PLANE_SELFILLUM
+		src.UpdateOverlays(eye_light, "eye_light")
+
 	death(var/gibbed)
 		..(gibbed, 0)
 		if (!gibbed)
