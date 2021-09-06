@@ -52,7 +52,7 @@ ABSTRACT_TYPE(/datum/plant/crop)
 	endurance = 0
 	genome = 10
 	commuts = list(/datum/plant_gene_strain/growth_fast,/datum/plant_gene_strain/health_poor)
-	mutations = list(/datum/plantmutation/oat/saltoat)
+	mutations = list(/datum/plantmutation/oat/salt)
 
 /datum/plant/crop/rice
 	name = "Rice"

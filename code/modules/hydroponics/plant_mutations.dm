@@ -244,8 +244,8 @@
 
 // Oat Mutations
 
-/datum/plantmutation/oat/saltoat
-	name = "Salted Oat's"
+/datum/plantmutation/oat/salt
+	name = "Salted Oats"
 	name_prefix = "salted "
 	iconmod = "OatSalt"
 	assoc_reagents = list("salt")

@@ -265,7 +265,7 @@
 
 /obj/item/reagent_containers/food/snacks/ingredient/salt
 	name = "salt"
-	desc = "A must have in any kitchen, just dont use too much."
+	desc = "A must have in any kitchen, just don't use too much."
 	icon_state = "salt"
 	amount = 1
 	food_color = "#a7927d"
@@ -273,7 +273,7 @@
 
 /obj/item/reagent_containers/food/snacks/ingredient/pepper
 	name = "pepper"
-	desc = "A must have in any kitchen, just dont use too much."
+	desc = "A must have in any kitchen, just don't use too much."
 	icon_state = "pepper"
 	amount = 1
 	food_color = "#a7927d"

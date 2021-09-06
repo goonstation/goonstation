@@ -214,8 +214,8 @@
 	icon_state = "oat"
 
 /obj/item/plant/oat/salt
-	name = "oat"
-	desc = "A salty but healthy cereal crop. Just dont eat too much without water."
+	name = " salted oat"
+	desc = "A salty but healthy cereal crop. Just don't eat too much without water."
 	icon_state = "saltedoat"
 
 /obj/item/plant/sugar/
