@@ -1,4 +1,9 @@
 
+(t)mon sep 06 21
+(u)DoctorStupid
+(p)5830
+(e)🆕🎨|feature, sprites
+(*)toy guns sold by Geoff Honkington are much cheaper and have been reworked. More powerful toy guns are now sold by Josh in the QM console
 (t)sun sep 05 21
 (u)Zamujasa
 (e)🆕|feature
