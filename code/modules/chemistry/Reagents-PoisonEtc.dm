@@ -329,7 +329,7 @@ datum
 							M.emote(pick("drool","pale", "gasp"))
 					if (11 to INFINITY)
 						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 4 SECONDS * mult))
-						M.drowsyness  = max(M.drowsyness, 20)
+						M.setStatus("drowsy", 40 SECONDS)
 						if (probmult(20) && !M.stat)
 							M.emote(pick("drool", "faint", "pale", "gasp", "collapse"))
 						else if (prob(8))
@@ -1007,7 +1007,7 @@ datum
 						M.emote("drool")
 						M.change_misstep_chance(5 * mult)
 					if (2 to 4)
-						M.drowsyness = max(M.drowsyness, 20)
+						M.changeStatus("drowsy", 1 MINUTE)
 					if (5)
 						M.emote("faint")
 						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 5 SECONDS * mult))
@@ -1112,14 +1112,14 @@ datum
 					if (1 to 10)
 						if (probmult(7)) M.emote("yawn")
 					if (11 to 20)
-						M.drowsyness  = max(M.drowsyness, 20)
+						M.setStatus("drowsy", 40 SECONDS)
 					if (21)
 						M.emote("faint")
 					if (22 to INFINITY)
 						if (prob(20))
 							M.emote("faint")
 							M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 8 SECONDS * mult))
-						M.drowsyness  = max(M.drowsyness, 20)
+						M.setStatus("drowsy", 40 SECONDS)
 				M.take_toxin_damage(1 * mult)
 				..()
 				return
@@ -1213,7 +1213,7 @@ datum
 						M.change_misstep_chance(10 * mult)
 						if (probmult(20)) M.emote("drool")
 					if (11 to 17)
-						M.drowsyness  = max(M.drowsyness, 10)
+						M.setStatus("drowsy", 20 SECONDS)
 						M.make_dizzy(1 * mult)
 						M.change_misstep_chance(20 * mult)
 						if (probmult(35)) M.emote("drool")
@@ -1222,7 +1222,7 @@ datum
 							M.emote("faint")
 							fainted = 1
 						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 10 SECONDS * mult))
-						M.drowsyness  = max(M.drowsyness, 20)
+						M.setStatus("drowsy", 40 SECONDS)
 
 				M.jitteriness = max(M.jitteriness-30,0)
 				if (M.get_brain_damage() <= 80)
@@ -1669,21 +1669,21 @@ datum
 
 				if (t1 && data >= t1)
 					if (probmult(33))
-						H.drowsyness = max(H.drowsyness,4)
+						H.changeStatus("drowsy", 6 SECONDS)
 						H.show_text(pick_string("chemistry_reagent_messages.txt", "madness0"), "red")
 					if (probmult(10)) H.emote(pick_string("chemistry_reagent_messages.txt", "madness_e0"))
 
 				if (t2 && data >= t2)
 					t1 = 0
 					if (probmult(33))
-						H.drowsyness = max(H.drowsyness,7)
+						H.changeStatus("drowsy", 15 SECONDS)
 						H.show_text(pick_string("chemistry_reagent_messages.txt", "madness1"), "blue")
 					if (probmult(10)) H.emote(pick_string("chemistry_reagent_messages.txt", "madness_e1"))
 
 				if (t3 && data >= t3)
 					t2 = 0
 					if (probmult(33))
-						H.drowsyness = max(H.drowsyness,7)
+						H.changeStatus("drowsy", 15 SECONDS)
 						H.make_jittery(300)
 						H.show_text("<B>[pick_string("chemistry_reagent_messages.txt", "madness2")]</B>", "red")
 						if (probmult(33) && world.time > lastSpook + lastSpookLen)
@@ -1697,7 +1697,7 @@ datum
 				if (t4 && data >= t4)
 					t3 = 0
 					H.show_text("<B>Your mind feels clearer.<B>", "blue")
-					H.drowsyness = 0
+					H.delStatus("drowsy")
 
 				if (t5 && data >= t5)
 					t4 = 0
@@ -1859,7 +1859,7 @@ datum
 								H.changeStatus("weakened", 2 SECONDS * mult)
 							if(6) //Light-headedness
 								H.show_text("You feel light-headed.", "red")
-								H.drowsyness += rand(2,4)
+								H.changeStatus("drowsy", rand(8,16) SECONDS)
 
 					if(2) //I don't feel so good (tripping, hard time breathing, randomly dropping stuff)
 						switch(rand(1,4))
@@ -1879,7 +1879,7 @@ datum
 								H.changeStatus("weakened", 2 SECONDS * mult)
 							if(4) //Light-headedness
 								H.show_text("You feel like you are about to faint!", "red")
-								H.drowsyness += rand(4,7)
+								H.changeStatus("drowsy", rand(12,24) SECONDS)
 								if(probmult(20)) H.emote(pick("faint", "collapse"))
 						if(prob(30))
 							H.make_jittery(15)

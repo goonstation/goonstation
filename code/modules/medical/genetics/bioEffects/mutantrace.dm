@@ -4,6 +4,7 @@
 	id = "lizard"
 	mutantrace_option = "Lizard"
 	effectType = EFFECT_TYPE_MUTANTRACE
+	effect_group = "mutantrace"
 	probability = 33
 	msgGain = "Your skin feels oddly dry."
 	msgLose = "Your scales fall off."

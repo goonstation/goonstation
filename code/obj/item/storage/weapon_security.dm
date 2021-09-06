@@ -353,6 +353,14 @@
 	icon_state = "box"
 	spawn_contents = list(/obj/item/reagent_containers/glass/bottle/poison = 7)
 
+
+/obj/item/storage/box/blowgun
+	name = "flute box"
+	desc = "Looks like there's some kinda wooden flute in here."
+	icon_state = "box"
+	spawn_contents = list(/obj/item/gun/kinetic/dart_blowgun,\
+	/obj/item/storage/pouch/poison_dart = 3)
+
 // Starter kit used in the conspiracy/spy game mode.
 /obj/item/storage/box/spykit
 	name = "spy starter kit"

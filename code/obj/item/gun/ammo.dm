@@ -46,7 +46,7 @@
 /obj/item/ammo/bullets
 	name = "Ammo box"
 	sname = "Bullets"
-	desc = "A box of ammo"
+	desc = "A box of ammo!"
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "power_cell"
 	m_amt = 40000
@@ -594,6 +594,28 @@
 	syndicate
 		sname = ".308 Tranquilizer Deluxe"
 		ammo_type = new/datum/projectile/bullet/tranq_dart/syndicate
+
+		curare
+			sname = "blow dart"
+			name = "poison darts"
+			ammo_type = new/datum/projectile/bullet/tranq_dart/syndicate/curare
+
+			single
+
+				amount_left = 1
+				max_amount = 1
+
+		madness
+			sname = "blow dart"
+			name = "madness darts"
+			color = "red"
+			ammo_type = new/datum/projectile/bullet/tranq_dart/syndicate/madness
+
+		venom
+			sname = "blow dart"
+			name = "venom darts"
+			color = "green"
+			ammo_type = new/datum/projectile/bullet/tranq_dart/syndicate/venom
 
 		pistol
 			sname = ".355 Tranqilizer"
@@ -1162,17 +1184,22 @@
 
 /obj/item/ammo/bullets/foamdarts
 	sname = "foam darts"
-	name = "foam dart box"
-	icon_state = "foamdarts"
+	name = "foam darts"
+	desc = "Reusable foam darts for shooting people in the eyes with."
+	icon_state = "foamdarts-6"
 	icon_empty = "foamdarts-0"
-	amount_left = 20
-	max_amount = 20
+	icon_dynamic = 1
+	icon_short = "foamdarts"
+	amount_left = 6
+	max_amount = 6
 	caliber = 0.393
 	ammo_type = new/datum/projectile/bullet/foamdart
 
-/obj/item/ammo/bullets/foamdarts/ten
-	amount_left = 10
-	max_amount = 10
+	update_icon()
+		if(amount_left == 0)
+			qdel(src)
+		else
+			..()
 
 /datum/action/bar/icon/powercellswap
 	duration = 1 SECOND
