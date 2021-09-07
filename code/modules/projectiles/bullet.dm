@@ -280,6 +280,21 @@ toxic - poisons
 	syndicate
 		reagent_payload = "sodium_thiopental" // HEH
 
+		curare
+			reagent_payload = "curare"
+			casing = null
+			silentshot = 1
+
+		madness
+			reagent_payload = "madness_toxin"
+			casing = null
+			silentshot = 1
+
+		venom
+			reagent_payload = "venom"
+			casing = null
+			silentshot = 1
+
 		pistol
 			caliber = 0.355
 			casing = /obj/item/casing/small
@@ -1469,3 +1484,13 @@ toxic - poisons
 	max_range = 15
 	dissipation_rate = 0
 	ie_type = null
+
+	on_end(var/obj/projectile/O)
+		..()
+		var/turf/T = get_turf(O)
+		if(T)
+			var/obj/item/ammo/bullets/foamdarts/ammo_dropped = new /obj/item/ammo/bullets/foamdarts (T)
+			ammo_dropped.amount_left = 1
+			ammo_dropped.update_icon()
+			ammo_dropped.pixel_x += rand(-12,12)
+			ammo_dropped.pixel_y += rand(-12,12)

@@ -28,6 +28,11 @@
 	if(istype(AM,/obj/item/scrap) || istype(AM, /obj/fluid) || istype(AM, /obj/decal) || isobserver(AM) || isintangible(AM) || istype(AM, /obj/machinery/conveyor))
 		return
 
+	if(istype(AM,/mob/wraith))
+		var/mob/wraith/W = AM
+		if(!W.haunting)
+			return
+
 	if(!(AM.temp_flags & BEING_CRUSHERED))
 		actions.start(new /datum/action/bar/crusher(AM), src)
 

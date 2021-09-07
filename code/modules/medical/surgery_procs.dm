@@ -136,7 +136,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		screw_up_prob -= 10
 	if (patient.getStatusDuration("stunned")) // stunned?
 		screw_up_prob -= 5
-	if (patient.drowsyness) // sleepy?
+	if (patient.hasStatus("drowsy")) // sleepy?
 		screw_up_prob -= 5
 
 	if (patient.reagents) // check for anesthetics/analgetics

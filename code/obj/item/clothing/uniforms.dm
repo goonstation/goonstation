@@ -1340,13 +1340,13 @@
 	icon_state = "princess"
 	item_state = "princess"
 
-/obj/item/clothing/under/gimmick/cosby
+/obj/item/clothing/under/gimmick/sweater
 	name = "comfy sweater"
 	desc = "A colourful and cozy jumper."
-	icon_state = "cosby1"
-	item_state = "cosby1"
+	icon_state = "sweater1"
+	item_state = "sweater1"
 	New()
-		icon_state = "cosby[pick(1,2,3)]"
+		icon_state = "sweater[pick(1,2,3)]"
 		..()
 
 /obj/item/clothing/under/gimmick/chaps

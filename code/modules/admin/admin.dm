@@ -3080,7 +3080,7 @@ var/global/noir = 0
 								message_admins("[key_name(usr)] creepified the station.")
 								logTheThing("admin", usr, null, "used the Creepify Station button")
 								logTheThing("diary", usr, null, "used the Creepify Station button", "admin")
-							creepify_station()
+								creepify_station()
 						else
 							alert("You need to be at least a Administrator to creepify the station.")
 							return

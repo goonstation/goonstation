@@ -306,7 +306,7 @@ datum
 						M.change_misstep_chance(-INFINITY)
 					M.HealDamage("All", 10 * mult, 10 * mult)
 					M.dizziness = max(0,M.dizziness-10)
-					M.drowsyness = max(0,M.drowsyness-10)
+					M.changeStatus("drowsy", -20 SECONDS)
 					M.sleeping = 0
 				else
 					M.take_toxin_damage(2 * mult)
@@ -1212,7 +1212,7 @@ datum
 					if (1 to 9)
 						M.change_eye_blurry(10, 10)
 					if (10 to 18)
-						M.drowsyness  = max(M.drowsyness, 10)
+						M.setStatus("drowsy", 20 SECONDS)
 					if (19 to INFINITY)
 						M.changeStatus("paralysis", 3 SECONDS * mult)
 				if (counter >= 19 && !fakedeathed)
@@ -1248,7 +1248,7 @@ datum
 					if (1 to 9)
 						M.change_eye_blurry(10, 10)
 					if (10 to 18)
-						M.drowsyness  = max(M.drowsyness, 10)
+						M.setStatus("drowsy", 20 SECONDS)
 				if (counter >= 19 && !fakedeathed)
 					M.visible_message("<B>[M]</B> seizes up and falls limp, [his_or_her(M)] eyes dead and lifeless...")
 					M.setStatus("resting", INFINITE_STATUS)
@@ -2167,7 +2167,7 @@ datum
 					anim_lock = 1
 
 				M.make_jittery(2)
-				M.drowsyness = max(M.drowsyness-6, 0)
+				M.changeStatus("drowsy", -12 SECONDS)
 				if (M.sleeping) M.sleeping = 0
 				return
 
@@ -2297,7 +2297,7 @@ datum
 					anim_lock = 1
 
 				M.make_jittery(4)
-				M.drowsyness = max(M.drowsyness-12, 0)
+				M.changeStatus("drowsy", -25 SECONDS)
 				if (M.sleeping) M.sleeping = 0
 				return
 

@@ -1266,7 +1266,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	add_abilities = list(/datum/targetable/critter/peck,
 						/datum/targetable/critter/tackle)
 
-/* -------------------- Goose -------------------- */
+/* -------------------- Swan -------------------- */
 
 /mob/living/critter/small_animal/bird/goose/swan
 	name = "space swan"
@@ -1276,6 +1276,132 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state_dead = "swan-dead"
 	feather_color = "#FFFFFF"
 	species = "swan"
+
+/* =============================================== */
+/* ------------------- Sparrow ------------------- */
+/* =============================================== */
+
+/* These are almost identical to space mice, but throwing them here directly under birbs */
+
+/mob/living/critter/small_animal/sparrow
+	name = "space sparrow"
+	real_name = "space sparrow"
+	desc = "A little bird. How cute."
+	flags = TABLEPASS | DOORPASS
+	fits_under_table = 1
+	hand_count = 2
+	icon_state = "sparrow"
+	icon_state_dead = "sparrow-dead"
+	speechverb_say = "chirps"
+	speechverb_exclaim = "chitters"
+	speechverb_ask = "peeps"
+	health_brute = 8
+	health_burn = 8
+
+	New()
+		..()
+		fur_color =	"#ac5e41"
+		eye_color = "#000000"
+
+	setup_overlays()
+		fur_color = src.client?.preferences.AH.customization_first_color
+		eye_color = src.client?.preferences.AH.e_color
+		var/image/overlay = image('icons/misc/critter.dmi', "sparrow_colorkey")
+		overlay.color = fur_color
+		src.UpdateOverlays(overlay, "hair")
+
+		var/image/overlay_eyes = image('icons/misc/critter.dmi', "sparrow_eyes")
+		overlay_eyes.color = eye_color
+		src.UpdateOverlays(overlay_eyes, "eyes")
+
+	death()
+		src.ClearAllOverlays()
+		var/image/overlay = image('icons/misc/critter.dmi', "sparrow_colorkey-dead")
+		overlay.color = fur_color
+		src.UpdateOverlays(overlay, "hair")
+		..()
+
+	full_heal()
+		..()
+		src.ClearAllOverlays()
+		src.setup_overlays()
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream")
+				if (src.emote_check(voluntary, 50))
+					playsound(src, "sound/voice/animal/mouse_squeak.ogg", 40, 1, 0.1, 1.3, channel=VOLUME_CHANNEL_EMOTE)
+					return "<span class='emote'><b>[src]</b> chirps!</span>"
+			if ("dance")
+				if (src.emote_check(voluntary, 50))
+					animate_bouncy(src)
+					return "<span class='emote'><b>[src]</b> hops about with joy!</span>"
+		return null
+
+	specific_emote_type(var/act)
+		switch (act)
+			if ("scream")
+				return 2
+			if ("dance")
+				return 1
+		return ..()
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/small_critter
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "foot"
+		HH.limb_name = "claws"
+
+		HH = hands[2]
+		HH.limb = new /datum/limb/mouth/small	// if not null, the special limb to use when attack_handing
+		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon_state = "beak"					// the icon state of the hand UI background
+		HH.name = "beak"						// designation of the hand - purely for show
+		HH.limb_name = "beak"					// name for the dummy holder
+		HH.can_hold_items = 0
+
+/mob/living/critter/small_animal/sparrow/weak
+	health_brute = 2
+	health_burn = 2
+
+/* -------------------- Robin -------------------- */
+
+/mob/living/critter/small_animal/sparrow/robin
+	name = "space robin"
+	real_name = "space robin"
+	desc = "It's a little far from home."
+	icon_state = "robin"
+	icon_state_dead = "robin-dead"
+
+	New()
+		..()
+		fur_color =	"#836857"
+		eye_color = "#000000"
+
+	setup_overlays()
+		fur_color = src.client?.preferences.AH.customization_first_color
+		eye_color = src.client?.preferences.AH.e_color
+		var/image/overlay = image('icons/misc/critter.dmi', "robin_colorkey")
+		overlay.color = fur_color
+		src.UpdateOverlays(overlay, "hair")
+
+		var/image/overlay_eyes = image('icons/misc/critter.dmi', "sparrow_eyes")
+		overlay_eyes.color = eye_color
+		src.UpdateOverlays(overlay_eyes, "eyes")
+
+	death()
+		src.ClearAllOverlays()
+		var/image/overlay = image('icons/misc/critter.dmi', "robin_colorkey-dead")
+		overlay.color = fur_color
+		src.UpdateOverlays(overlay, "hair")
+		..()
+
+/mob/living/critter/small_animal/sparrow/robin/weak
+	health_brute = 2
+	health_burn = 2
 
 /* =================================================== */
 /* -------------------- Cockroach -------------------- */
