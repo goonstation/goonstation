@@ -1378,7 +1378,7 @@ DEFINE_FLOORS(techfloor/green,
 		return
 	//duplicate user.pulling for RTE fix
 	if (user.pulling && user.pulling.loc == user)
-		user.pulling = null
+		user.remove_pulling()
 		return
 	//if the object being pulled's loc is another object (being in their contents) return
 	if (isobj(user.pulling.loc))
@@ -1390,9 +1390,9 @@ DEFINE_FLOORS(techfloor/green,
 	if (ismob(user.pulling))
 		var/mob/M = user.pulling
 		var/mob/t = M.pulling
-		M.pulling = null
+		M.remove_pulling()
 		step(M, get_dir(fuck_u, src))
-		M.pulling = t
+		M.set_pulling(t)
 	else
 		step(user.pulling, get_dir(fuck_u, src))
 	return

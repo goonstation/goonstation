@@ -651,7 +651,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			return
 		if (!isalive(usr) || usr.getStatusDuration("stunned") != 0)
 			return
-		usr.pulling = null
+		usr.remove_pulling()
 		usr.set_loc(src)
 		src.occupant = usr
 		src.add_fingerprint(usr)

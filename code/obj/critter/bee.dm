@@ -169,7 +169,7 @@
 						src.visible_message("<span class='alert'><b>[user]</b> attempts to wrangle [src], but [src] is [pick("mad","grumpy","hecka grumpy","agitated", "too angry")] and resists!</span>")
 					return
 
-				user.pulling = src
+				user.set_pulling(src)
 				src.wanderer = 0
 				if (src.task == "wandering")
 					src.task = "thinking"
@@ -1210,7 +1210,7 @@
 					src.visible_message("<span class='alert'><b>[user]</b> attempts to wrangle [src], but [src] is [pick("mad","grumpy","hecka grumpy","agitated", "too angry")] and resists!</span>")
 					return
 
-				user.pulling = src
+				user.set_pulling(src)
 				src.wanderer = 0
 				if (src.task == "wandering")
 					src.task = "thinking"
