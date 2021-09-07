@@ -1,4 +1,9 @@
+
 (t)tue sep 07 21
+(u)Emily
+(p)5933
+(e)|
+(*)You can now resist (Default Z) out of pulls like you can with grabs
 (u)Tarmunora
 (e)🆕⚖|feature, balance
 (*)Gunbot (and fire elemental) critters can pointblank
