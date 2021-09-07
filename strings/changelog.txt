@@ -1,5 +1,10 @@
 
 (t)mon sep 06 21
+(u)Zamujasa
+(e)🆕⚖|feature, balance
+(*)The station's payroll budget is now funded automatically by Centcom, based on crewmembers' initially assigned jobs.
+(*)Any payroll stipend that is not distributed is added to the station's budget. If payroll is higher than the stipend, any deficit will be funded by the budget (unless that is also exhausted).
+(*)The banking control computer has a somewhat better interface.
 (u)Flaborized
 (p)5902
 (e)🎨|sprites
