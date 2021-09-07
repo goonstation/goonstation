@@ -52,6 +52,7 @@
 	var/other_mobs = null
 	var/memory = ""
 	var/atom/movable/pulling = null
+	var/mob/pulled_by = null
 	var/stat = 0.0
 	var/next_click = 0
 	var/transforming = null
@@ -718,7 +719,7 @@
 		if (old_loc != src.loc) //causes infinite pull loop without these checks. lol
 			var/list/pulling = list()
 			if ((get_dist(old_loc, src.pulling) > 1 && get_dist(src, src.pulling) > 1) || src.pulling == src) // fucks sake
-				src.pulling = null
+				src.remove_pulling()
 				//hud.update_pulling() // FIXME
 			else
 				pulling += src.pulling
@@ -1067,7 +1068,14 @@
 	if(A == src)
 		return
 
+	if(src.pulling)
+		src.remove_pulling()
+
 	pulling = A
+
+	if(ismob(pulling))
+		var/mob/M = pulling
+		M.pulled_by = src
 
 	//robust grab : a dirty DIRTY trick on mbc's part. When I am being chokeholded by someone, redirect pulls to the captor.
 	//this is so much simpler than pulling the victim and invoking movment on the captor through that chain of events.
@@ -1077,8 +1085,15 @@
 			for (var/obj/item/grab/G in src.grabbed_by)
 				if (G.state < GRAB_NECK) continue
 				pulling = G.assailant
+				G.assailant.pulled_by = src
 
 	pull_particle(src,pulling)
+
+/mob/proc/remove_pulling()
+	if(ismob(pulling))
+		var/mob/M = pulling
+		M.pulled_by = null
+	src.pulling = null
 
 // less icon caching maybe?!
 
@@ -2750,6 +2765,9 @@
 
 	if (source && source != src) //we were moved by something that wasnt us
 		last_pulled_time = world.time
+	else
+		if(src.pulled_by)
+			src.pulled_by.remove_pulling()
 
 /mob/proc/on_centcom()
 	. = FALSE
