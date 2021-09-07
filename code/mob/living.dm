@@ -1334,7 +1334,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				src.pulled_by.remove_pulling()
 				struggled_grab = 1
 		else
-			if(src.grabbed_by.len > 0)
+			if(length(src.grabbed_by) > 0)
 				for (var/obj/item/grab/G in src.grabbed_by)
 					if (G.stunned_targets_can_break())
 						G.do_resist()
