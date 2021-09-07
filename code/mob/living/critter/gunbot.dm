@@ -108,9 +108,6 @@
 					playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 30, 1, -2)
 					user.visible_message("<span class='alert'>[user] shakes [src] [pick_string("descriptors.txt", "borg_shake")]!</span>")
 				if(INTENT_HARM) //Dumbo
-					var/h = ishunter(user)
-					var/ww = iswerewolf(user)
-					var/w = iswrestler(user)
 					if (ishuman(user) && !ishunter(user) && !iswerewolf(user) && !iswrestler(user))
 						if (user.is_hulk())
 							src.TakeDamage("All", 5, 0)
