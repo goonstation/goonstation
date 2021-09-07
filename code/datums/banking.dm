@@ -10,6 +10,7 @@
 	var/station_budget = 0.0
 	var/shipping_budget = 0.0
 	var/research_budget = 0.0
+	var/payroll_stipend = 0.0
 
 	var/list/jobs = new/list()
 
@@ -147,9 +148,18 @@
 		return
 
 	proc/payday()
+		// Every payday cycle, the station budget is awarded its stipend
+		// Even if payday is off, which lets heads disable payday for
+		// saving up funds or whatever.
+		// This also means that payday stopping is strictly a result of
+		// someone tampering it and not just having 80 assistants in 20 minutes
+		station_budget += payroll_stipend
+
 		// Everyone gets paid into their bank accounts
 		if (!wagesystem.pay_active) return // some greedy prick suspended the payroll!
-		if (station_budget < 1) return // we don't have any money so don't bother!
+		// if (station_budget < 1) return // we don't have any money so don't bother!
+		// technically this can be 0 now with payday stipends
+
 		for(var/datum/data/record/t in data_core.bank)
 			if(station_budget >= t.fields["wage"])
 				t.fields["current_money"] += t.fields["wage"]
