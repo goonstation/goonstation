@@ -1333,7 +1333,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					for (var/mob/O in AIviewers(src, null))
 						O.show_message(text("<span class='alert'>[] resists []'s pulling!</span>", src, src.pulled_by), 1, group = "resist")
 					src.pulled_by.remove_pulling()
-					stuggled_grab = 1
+					struggled_grab = 1
 		else
 			for (var/obj/item/grab/G in src.grabbed_by)
 				if (G.stunned_targets_can_break())
