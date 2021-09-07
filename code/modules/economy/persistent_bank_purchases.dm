@@ -208,9 +208,14 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			path = /obj/item/instrument/bikehorn/dramatic
 
 		saxophone
-			name = "Saxophone"
+			name = "New Saxophone"
 			cost = 600
 			path = /obj/item/instrument/saxophone
+
+		oldsax
+			name = "Old Saxophone"
+			cost = 600
+			path = /obj/item/saxophone
 
 		trumpet
 			name = "Trumpet"

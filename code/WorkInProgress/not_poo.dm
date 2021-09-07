@@ -60,7 +60,7 @@
 
 		if (istype(I, /obj/item/clothing))
 			var/obj/item/clothing/C = src
-			C.add_stain("mud-stained")
+			C.add_stain("shit-stained")
 
 		else
 			I.name = "[pick("filthy ","muddy ","dirty ")] [I]"
@@ -108,7 +108,7 @@
 
 /obj/item/reagent_containers/food/snacks/ingredient/mud
 	name = "mud"
-	desc = "It is mud."
+	desc = "It is poo."
 	icon = 'icons/misc/not_poo.dmi'
 	icon_state = "mud1"
 	color = DEFAULT_MUD_COLOR
@@ -199,7 +199,7 @@
 
 
 /obj/decal/cleanable/mud
-	name = "mud stain"
+	name = "poo stain"
 	desc = "Ewww, doesn't this violate health code?"
 	sample_reagent = "poo"
 	can_sample = 1
@@ -214,7 +214,7 @@
 	blood_type = null
 	slippery = 50
 	can_dry = 1
-	stain = "mud-stained"
+	stain = "shit-stained"
 	var/can_track =1
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7", "floor8")
 	var/reagents_max = 15

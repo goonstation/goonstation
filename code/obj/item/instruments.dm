@@ -194,10 +194,43 @@
 	show_play_message(mob/user as mob)
 		return
 
+/* -------------------- OLD SAXO -------------------- */
+/obj/item/saxophone
+	name = "saxophone"
+	desc = "NEVER GONNA DANCE AGAIN, GUILTY FEET HAVE GOT NO RHYTHM"
+	icon = 'icons/obj/instruments.dmi'
+	icon_state = "sax" // temp
+	item_state = "sax"
+	w_class = 3
+	force = 1
+	throwforce = 5
+	var/spam_flag = 0
+	var/list/sounds_sax = list('sound/items/sax.ogg', 'sound/items/sax2.ogg','sound/items/sax3.ogg','sound/items/sax4.ogg','sound/items/sax5.ogg')
+	stamina_damage = 10
+	stamina_cost = 10
+	stamina_crit_chance = 5
+	module_research = list("audio" = 7, "metals" = 3)
+
+/obj/item/saxophone/attack_self(mob/user as mob)
+	if (spam_flag == 0)
+		spam_flag = 1
+		if (ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if (H.sims)
+				H.sims.affectMotive("fun", 5)
+		user.visible_message("<B>[user]</B> lays down a [pick("sexy", "sensuous", "libidinous","spicy","flirtatious","salacious","sizzling","carnal","hedonistic")] riff on \his saxophone!")
+		playsound(get_turf(src), pick(src.sounds_sax), 50, 1)
+		for (var/obj/critter/dog/george/G in range(user,6))
+			if (prob(60))
+				G.howl()
+		src.add_fingerprint(user)
+		spawn(100)
+			spam_flag = 0
+	return
 /* -------------------- Saxophone -------------------- */
 
 /obj/item/instrument/saxophone
-	name = "saxophone"
+	name = "fancy saxophone"
 	desc = "NEVER GONNA DANCE AGAIN, GUILTY FEET HAVE GOT NO RHYTHM"
 	icon_state = "sax"
 	item_state = "sax"

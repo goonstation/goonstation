@@ -3781,7 +3781,7 @@
 	name = "Jazzy Turtleneck"
 	},
 /obj/item/clothing/head/flatcap,
-/obj/item/instrument/saxophone,
+/obj/item/saxophone,
 /obj/item/clothing/glasses/sunglasses,
 /obj/decal/cleanable/dirt,
 /obj/storage/crate,
@@ -54472,7 +54472,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "cpb" = (
-/obj/item/instrument/saxophone,
+/obj/item/saxophone,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 9;
