@@ -1,6 +1,10 @@
 
 (t)tue sep 07 21
 (u)Emily
+(p)5935
+(e)🆕|feature
+(*)Resist Buff: you can now struggle out of grabs and pulls while stunned using the resist button/key (Default Z), unless cuffed
+(u)Emily
 (p)5933
 (e)|
 (*)You can now resist (Default Z) out of pulls like you can with grabs
