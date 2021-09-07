@@ -230,6 +230,32 @@
 		else
 			reloaded_at = ticker.round_elapsed_ticks + reload_time
 
+	harm(mob/living/target, mob/living/user)
+		if (reloaded_at > ticker.round_elapsed_ticks && !current_shots)
+			boutput(user, "<span class='alert'>The [holder.name] is [reloading_str]!</span>")
+			return
+		else if (current_shots <= 0)
+			current_shots = shots
+		if (next_shot_at > ticker.round_elapsed_ticks)
+			return
+		if (current_shots > 0)
+			current_shots--
+			for (var/i = 0; i < proj.shot_number; i++)
+				var/obj/projectile/P = initialize_projectile_pixel(user, proj, target, 0, 0)
+				if (!P)
+					return FALSE
+				if(get_dist(user,target) <= 1)
+					P.was_pointblank = 1
+					hit_with_existing_projectile(P, target) // Includes log entry.
+				else
+					P.launch()
+			user.visible_message("<b class='alert'>[user] fires at [target] with the [holder.name]!</b>")
+			next_shot_at = ticker.round_elapsed_ticks + cooldown
+			if (!current_shots)
+				reloaded_at = ticker.round_elapsed_ticks + reload_time
+		else
+			reloaded_at = ticker.round_elapsed_ticks + reload_time
+
 	is_on_cooldown()
 		if (ticker.round_elapsed_ticks < reloaded_at)
 			return reloaded_at - ticker.round_elapsed_ticks
