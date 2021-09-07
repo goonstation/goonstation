@@ -180,8 +180,8 @@
 	desc = "Rum which has been exposed to cosmic radiation. Don't worry, radiation does everything!"
 	icon_state = "rum"
 	heal_amt = 1
-	initial_volume = 120
-	initial_reagents = list("rum"=60,"yobihodazine"=60)
+	initial_volume = 60
+	initial_reagents = list("rum"=30,"yobihodazine"=30)
 
 /obj/item/reagent_containers/food/drinks/grog
 	name = "Ye Olde Grogge"
@@ -291,7 +291,7 @@
 	alt_filled_state = 1
 	heal_amt = 1
 	g_amt = 40
-	initial_volume = 120
+	initial_volume = 60
 	initial_reagents = "bojack"
 
 /obj/item/reagent_containers/food/drinks/moonshine
