@@ -309,12 +309,12 @@
 
 			if ("list")
 				src.show_text("Basic emotes:")
-				src.show_text("clap, flap, aflap, twitch, twitch_s, scream, sigh, laugh, chuckle, giggle, chortle, guffaw, cackle, birdwell, fart, flip, custom, customv, customh")
+				src.show_text("clap, flap, aflap, twitch, twitch_s, scream, sigh, laugh, chuckle, giggle, chortle, guffaw, cackle, birdwell, dance, fart, flip, custom, customv, customh")
 				src.show_text("Targetable emotes:")
 				src.show_text("salute, bow, hug, wave, glare, stare, look, leer, nod, point")
 
 			if ("listbasic")
-				src.show_text("clap, flap, aflap, twitch, twitch_s, scream, sigh, laugh, chuckle, giggle, chortle, guffaw, cackle, birdwell, fart, flip, custom, customv, customh")
+				src.show_text("clap, flap, aflap, twitch, twitch_s, scream, sigh, laugh, chuckle, giggle, chortle, guffaw, cackle, birdwell, dance, fart, flip, custom, customv, customh")
 
 			if ("listtarget")
 				src.show_text("salute, bow, hug, wave, glare, stare, look, leer, nod, point")
@@ -508,6 +508,46 @@
 				if (src.emote_check(voluntary, 50))
 					playsound(src.loc, 'sound/vox/birdwell.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 					message = "<b>[src]</b> birdwells."
+
+			if ("dance")
+				if (src.emote_check(voluntary, 50))
+					var/dancemove = rand(1,4)
+					switch(dancemove)
+						if (1)
+							message = "<B>[src]</B> does the robot."
+							SPAWN_DBG(0)
+								for (var/i = 0, i < 4, i++)
+									src.set_dir(turn(src.dir, 90))
+									sleep(0.2 SECONDS)
+
+						if (2)
+							message = "<B>[src]</B> does the electric slide."
+							SPAWN_DBG(0)
+								for (var/i = 0, i < 4, i++)
+									src.set_dir(turn(src.dir, -90))
+									sleep(0.2 SECONDS)
+
+						if (3)
+							message = "<B>[src]</B> moonwalks."
+							SPAWN_DBG(0)
+								for (var/i = 0, i < 4, i++)
+									src.pixel_x+= 2
+									sleep(0.2 SECONDS)
+								for (var/i = 0, i < 4, i++)
+									src.pixel_x-= 2
+									sleep(0.2 SECONDS)
+
+						if (4)
+							message = "<B>[src]</B> cranks it up to groove factor five."
+							SPAWN_DBG(0)
+								for (var/i = 0, i < 4, i++)
+									src.pixel_x+= 2
+									src.set_dir(turn(src.dir, 90))
+									sleep(0.2 SECONDS)
+								for (var/i = 0, i < 4, i++)
+									src.pixel_x-= 2
+									src.set_dir(turn(src.dir, 90))
+									sleep(0.2 SECONDS)
 
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
