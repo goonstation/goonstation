@@ -1,7 +1,58 @@
+(t)tue sep 07 21
+(u)Tarmunora
+(e)🆕⚖|feature, balance
+(*)Gunbot (and fire elemental) critters can pointblank
+(t)mon sep 06 21
+(u)Zamujasa
+(e)🆕⚖|feature, balance
+(*)The station's payroll budget is now funded automatically by Centcom, based on crewmembers' initially assigned jobs.
+(*)Any payroll stipend that is not distributed is added to the station's budget. If payroll is higher than the stipend, any deficit will be funded by the budget (unless that is also exhausted).
+(*)The banking control computer has a somewhat better interface.
+(u)Flaborized
+(p)5902
+(e)🎨|sprites
+(+)Resprited some ore, material bars and other intermediate matsci products.
+(u)Gannets & BatElite
+(p)5876
+(e)🆕🎨|feature, sprites
+(*)Adds a new utility purchase to the Syndicate Weapons Vendor on the Cairngorm: the Military Headset.
+(*)This headset allows an operative to communicate on their usual radio frequencies, but with the advantage of blocking 100% of ear disorient damage from things like flashbang grenades.
+(u)DoctorStupid
+(p)5830
+(e)🆕🎨|feature, sprites
+(*)toy guns sold by Geoff Honkington are much cheaper and have been reworked. More powerful toy guns are now sold by Josh in the QM console
+(t)sun sep 05 21
+(u)Zamujasa
+(e)🆕|feature
+(*)Players in Ghost VR or the Afterlife Bar should now get alerts and be eligible for random event antagonist/pest spawns.
+(u)Vaskritaya
+(p)5789
+(e)🆕🗺|feature, mapping
+(+)Flasks are now available from the Spacebux menu.
+(u)Walpvrgis
+(p)5903
+(e)🆕🎨|feature, sprites
+(*)Added a new spacebux ghost critter purchase; Lil Bird Ghost Critter. It costs 1000 spacebux and lets you play as a little sparrow or robin if you decide to respawn after tiring of the afterlife!
+(u)Kubius
+(p)5909
+(e)🆕🗺|feature, mapping
+(+)Small set of Kondaru adjustments; cloning room rearranged for easier reclaimer loading and patient release, and hydro grow lamp count reduced for parity.
+(u)Tarmunora
+(e)🔄|rework
+(+)Drowsiness migrated to status system.
+(u)Mordent
+(p)5878
+(e)⚖⛔|balance, removal
+(+)Removed medical locker access from security officers on the RP servers (to be the same as the non-RP servers).
+(u)Zamujasa
+(e)🐛|bug
+(+)fix scissors
 (t)sat sep 04 21
 (u)Emily
 (e)🆕
 (*)Chickens age twice as fast if injected with ageinium
+(*)Miners now spawn with the equipment needed to mine
+(*)There are now more miner job slots open
 (u)UnfunnyPerson
 (p)5899
 (e)⚖|balance

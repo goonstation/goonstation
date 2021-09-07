@@ -2341,6 +2341,13 @@ var/global/list/cargopads = list()
 	mats = 6
 	var/obj/item/satchel/mining/satchel = null
 
+	prepared
+		New()
+			..()
+			var/obj/item/satchel/mining/S = new /obj/item/satchel/mining(src)
+			satchel = S
+			icon_state = "scoop-bag"
+
 	borg
 		New()
 			..()

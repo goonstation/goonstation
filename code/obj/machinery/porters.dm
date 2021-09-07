@@ -773,7 +773,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 							SPAWN_DBG(rand(10,40))
 								M.visible_message("<span class='alert'>[M] pukes all over \himself.</span>", "<span class='alert'>Oh god, that was terrible!</span>", "<span class='alert'>You hear a splat!</span>")
 								M.change_misstep_chance(40)
-								M.drowsyness += 2
+								M.changeStatus("drowsy", 10 SECONDS)
 								M.vomit()
 
 					if(51 to 70) //A nice tan

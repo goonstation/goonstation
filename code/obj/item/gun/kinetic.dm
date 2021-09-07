@@ -782,22 +782,24 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		..()
 
 
-/obj/item/gun/kinetic/dart_blowgun
-	name = "Blowgun"
-	desc = "A stealthy blowgun that launches poisoned darts."
+/obj/item/gun/kinetic/blowgun
+	name = "Flute"
+	desc = "Wait, this isn't a flute. It's a blowgun!"
 	icon_state = "blowgun"
 	item_state = "cane-f"
 	force = MELEE_DMG_PISTOL
 	contraband = 2
-	caliber = 0.308
+	caliber = 0.40
 	max_ammo_capacity = 1.
 	can_dual_wield = 0
 	hide_attack = 1
 	gildable = 1
+	w_class = 2
+	muzzle_flash = "muzzle_flash_launch"
 
 	New()
-		ammo = new/obj/item/ammo/bullets/tranq_darts/syndicate/curare/single
-		set_current_projectile(new/datum/projectile/bullet/tranq_dart/syndicate/curare)
+		ammo = new/obj/item/ammo/bullets/blow_darts/single
+		set_current_projectile(new/datum/projectile/bullet/blow_dart)
 		..()
 
 /obj/item/gun/kinetic/zipgun
@@ -1767,9 +1769,68 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	contraband = 1
 	force = 1
 	caliber = 0.393
-	max_ammo_capacity = 10
+	max_ammo_capacity = 1
+	muzzle_flash = null
+	var/pulled = 0
 
 	New()
-		ammo = new/obj/item/ammo/bullets/foamdarts/ten
+		ammo = new/obj/item/ammo/bullets/foamdarts
+		ammo.amount_left = 1
+		set_current_projectile(new/datum/projectile/bullet/foamdart)
+		..()
+
+	attack_self(mob/user as mob)
+		..()
+		if(!pulled)
+			pulled = 1
+			playsound(user.loc, "sound/weapons/gunload_click.ogg", 60, 1)
+			update_icon()
+
+	update_icon()
+		..()
+		if(pulled)
+			icon_state="foamdartgun-pull"
+		else
+			icon_state="foamdartgun"
+
+	canshoot()
+		if(!pulled)
+			return 0
+		else
+			return ..()
+
+	shoot(var/target,var/start ,var/mob/user)
+		if(!pulled)
+			boutput(user, "<span class='notice'>You need to pull back the pully tab thingy first!</span>")
+			playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
+			return
+		..()
+		pulled = 0
+		update_icon()
+
+	shoot_point_blank(var/mob/M as mob, var/mob/user as mob)
+		if(!pulled)
+			boutput(user, "<span class='notice'>You need to pull back the pully tab thingy first!</span>")
+			playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
+			return
+		..()
+		pulled = 0
+		update_icon()
+
+/obj/item/gun/kinetic/foamdartrevolver
+	name = "Foam Dart Revolver"
+	icon_state = "foamdartrevolver"
+	desc = "An advanced dart gun for experienced pros. Just holding it imbues you with a sense of great power."
+	w_class = W_CLASS_SMALL
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	item_state = "toyrevolver"
+	contraband = 1
+	force = 1
+	caliber = 0.393
+	max_ammo_capacity = 6
+	muzzle_flash = null
+
+	New()
+		ammo = new/obj/item/ammo/bullets/foamdarts
 		set_current_projectile(new/datum/projectile/bullet/foamdart)
 		..()

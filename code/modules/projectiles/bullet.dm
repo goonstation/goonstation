@@ -22,6 +22,7 @@ ABSTRACT_TYPE(/datum/projectile/bullet)
 	// 0.308 - rifles
 	// 0.357 - revolver
 	// 0.38 - detective
+	// 0.40 - blowgun darts
 	// 0.41 - derringer
 	// 0.72 - shotgun shell, 12ga
 	// 1.57 - grenade shell, 40mm
@@ -280,11 +281,6 @@ toxic - poisons
 	syndicate
 		reagent_payload = "sodium_thiopental" // HEH
 
-		curare
-			reagent_payload = "curare"
-			casing = null
-			silentshot = 1
-
 		pistol
 			caliber = 0.355
 			casing = /obj/item/casing/small
@@ -300,6 +296,26 @@ toxic - poisons
 	anti_mutant
 		reagent_payload = "mutadone" // HAH
 
+
+/datum/projectile/bullet/blow_dart
+	name = "poison dart"
+	power = 5
+	icon_state = "blowdart"
+	damage_type = D_TOXIC
+	hit_type = DAMAGE_STAB
+	dissipation_delay = 10
+	caliber = 0.40
+	implanted = "blowdart"
+	shot_sound = 'sound/effects/syringeproj.ogg'
+	silentshot = 1
+	casing = null
+	reagent_payload = "curare"
+
+	madness
+		reagent_payload = "madness_toxin"
+
+	ls_bee
+		reagent_payload = "lsd_bee"
 
 
 
@@ -1474,3 +1490,13 @@ toxic - poisons
 	max_range = 15
 	dissipation_rate = 0
 	ie_type = null
+
+	on_end(var/obj/projectile/O)
+		..()
+		var/turf/T = get_turf(O)
+		if(T)
+			var/obj/item/ammo/bullets/foamdarts/ammo_dropped = new /obj/item/ammo/bullets/foamdarts (T)
+			ammo_dropped.amount_left = 1
+			ammo_dropped.update_icon()
+			ammo_dropped.pixel_x += rand(-12,12)
+			ammo_dropped.pixel_y += rand(-12,12)

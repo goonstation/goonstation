@@ -140,7 +140,8 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			if(3) return ..("<font face='System'size=3>[uppertext(message)]!!</font>")
 			else
 				var/honk = pick("WACKA", "QUACK","QUACKY","GAGGLE")
-				playsound(src.loc, "sound/misc/amusingduck.ogg", 50, 0)
+				if(!ON_COOLDOWN(src, "bootleg_sound", 15 SECONDS))
+					playsound(src.loc, "sound/misc/amusingduck.ogg", 50, 0)
 				return ..("<font face='Comic Sans MS' size=3>[honk]!!</font>")
 	Move()
 		if(..())

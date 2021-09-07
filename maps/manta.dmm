@@ -256,7 +256,7 @@
 /turf/simulated/floor/longtile,
 /area/station/bridge)
 "aaL" = (
-/obj/item/clothing/under/gimmick/cosby,
+/obj/item/clothing/under/gimmick/sweater,
 /obj/item/device/microphone,
 /obj/machinery/firealarm{
 	dir = 8;
@@ -32264,7 +32264,7 @@
 /obj/landmark/start{
 	name = "Detective"
 	},
-/obj/item/reagent_containers/food/drinks/detflask,
+/obj/item/reagent_containers/food/drinks/flask/det,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office_manta/detectives_bedroom)
 "bLN" = (

@@ -77,7 +77,7 @@
 			M.delStatus("staggered")
 			M.change_misstep_chance(-INFINITY)
 			M.stuttering = 0
-			M.drowsyness = 0
+			M.delStatus("drowsy")
 
 			//wolfing removes all the implants in you
 			for(var/obj/item/implant/I in M)
