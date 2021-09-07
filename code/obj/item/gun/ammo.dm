@@ -37,6 +37,7 @@
 	// 0.355 - pistol (9mm)
 	// 0.357 - revolver
 	// 0.38 - detective
+	// 0.40 - blowgun
 	// 0.41 - derringer
 	// 0.72 - shotgun shell, 12ga
 	// 0.787 - 20mm cannon round
@@ -595,28 +596,6 @@
 		sname = ".308 Tranquilizer Deluxe"
 		ammo_type = new/datum/projectile/bullet/tranq_dart/syndicate
 
-		curare
-			sname = "blow dart"
-			name = "poison darts"
-			ammo_type = new/datum/projectile/bullet/tranq_dart/syndicate/curare
-
-			single
-
-				amount_left = 1
-				max_amount = 1
-
-		madness
-			sname = "blow dart"
-			name = "madness darts"
-			color = "red"
-			ammo_type = new/datum/projectile/bullet/tranq_dart/syndicate/madness
-
-		venom
-			sname = "blow dart"
-			name = "venom darts"
-			color = "green"
-			ammo_type = new/datum/projectile/bullet/tranq_dart/syndicate/venom
-
 		pistol
 			sname = ".355 Tranqilizer"
 			name = ".355 tranquilizer pistol darts"
@@ -629,6 +608,37 @@
 		sname = ".308 Mutadone"
 		name = ".308 mutadone darts"
 		ammo_type = new/datum/projectile/bullet/tranq_dart/anti_mutant
+
+
+/obj/item/ammo/bullets/blow_darts
+	sname = "blowdart"
+	name = "poison blowdarts"
+	ammo_type = new/datum/projectile/bullet/blow_dart
+	desc = "These darts are loaded with a dangerous paralytic toxin."
+	icon_state = "tranq_clip"
+	amount_left = 4
+	max_amount = 4
+	caliber = 0.40
+	color = "green"
+
+	single
+		amount_left = 1
+		max_amount = 1
+
+	madness
+		name = "madness blowdarts"
+		desc = "These darts are loaded with a violently behavior-altering toxin."
+		ammo_type = new/datum/projectile/bullet/blow_dart/madness
+		color = "red"
+
+	ls_bee
+		name = "hallucinogenic blowdarts"
+		desc = "These darts are loaded with a potent mind-altering drug. They smell like honey."
+		ammo_type = new/datum/projectile/bullet/blow_dart/ls_bee
+		color = "yellow"
+
+
+
 
 /obj/item/ammo/bullets/vbullet
 	sname = "VR bullets"

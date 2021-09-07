@@ -782,23 +782,24 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		..()
 
 
-/obj/item/gun/kinetic/dart_blowgun
-	name = "Blowgun"
-	desc = "A stealthy blowgun that launches poisoned darts."
+/obj/item/gun/kinetic/blowgun
+	name = "Flute"
+	desc = "Wait, this isn't a flute. It's a blowgun!"
 	icon_state = "blowgun"
 	item_state = "cane-f"
 	force = MELEE_DMG_PISTOL
 	contraband = 2
-	caliber = 0.308
+	caliber = 0.40
 	max_ammo_capacity = 1.
 	can_dual_wield = 0
 	hide_attack = 1
 	gildable = 1
+	w_class = 2
 	muzzle_flash = "muzzle_flash_launch"
 
 	New()
-		ammo = new/obj/item/ammo/bullets/tranq_darts/syndicate/curare/single
-		set_current_projectile(new/datum/projectile/bullet/tranq_dart/syndicate/curare)
+		ammo = new/obj/item/ammo/bullets/blow_darts/single
+		set_current_projectile(new/datum/projectile/bullet/blow_dart)
 		..()
 
 /obj/item/gun/kinetic/zipgun
