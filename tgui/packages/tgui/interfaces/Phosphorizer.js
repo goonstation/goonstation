@@ -32,7 +32,7 @@ const OperateWindow = (props, context) => {
       </NoticeBox>
       <Stack vertical>
         <Stack.Item>
-          <strong># Loaded Lights:</strong>
+          <strong>Loaded Lights:</strong>
           {' '}{ lights }
         </Stack.Item>
         <Stack.Item>
