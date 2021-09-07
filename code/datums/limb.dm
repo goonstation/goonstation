@@ -209,6 +209,7 @@
 	var/reloaded_at = 0
 	var/next_shot_at = 0
 	var/image/default_obscurer
+	var/muzzle_flash = null
 
 	attack_range(atom/target, var/mob/user, params)
 		if (reloaded_at > ticker.round_elapsed_ticks && !current_shots)
@@ -223,6 +224,10 @@
 			var/pox = text2num(params["icon-x"]) - 16
 			var/poy = text2num(params["icon-y"]) - 16
 			shoot_projectile_ST_pixel(user, proj, target, pox, poy)
+			if (src.muzzle_flash)
+				if (isturf(user.loc))
+					var/turf/origin = user.loc
+					muzzle_flash_attack_particle(user, origin, target, src.muzzle_flash)
 			user.visible_message("<b class='alert'>[user] fires at [target] with the [holder.name]!</b>")
 			next_shot_at = ticker.round_elapsed_ticks + cooldown
 			if (!current_shots)
@@ -241,6 +246,7 @@
 		current_shots = 3
 		cooldown = 30
 		reload_time = 200
+		muzzle_flash = "muzzle_flash"
 
 	abg
 		proj = new/datum/projectile/bullet/abg
@@ -248,6 +254,7 @@
 		current_shots = 6
 		cooldown = 30
 		reload_time = 300
+		muzzle_flash = "muzzle_flash"
 
 	phaser
 		proj = new/datum/projectile/laser/light
