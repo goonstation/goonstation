@@ -428,7 +428,7 @@
 // Ported from unstable r355
 /turf/space/Entered(atom/movable/A as mob|obj)
 	..()
-	if ((!(A) || istype(null, /obj/projectile)))
+	if ((!(A) || istype(A, /obj/projectile)))
 		return
 
 	if (!(A.last_move))
@@ -953,9 +953,9 @@
 	if (ismob(user.pulling))
 		var/mob/M = user.pulling
 		var/mob/t = M.pulling
-		M.pulling = null
+		M.remove_pulling()
 		step(M, get_dir(fuck_u, src))
-		M.pulling = t
+		M.set_pulling(t)
 	else
 		step(user.pulling, get_dir(fuck_u, src))
 	return
@@ -978,9 +978,9 @@
 	if (ismob(user.pulling))
 		var/mob/M = user.pulling
 		var/t = M.pulling
-		M.pulling = null
+		M.remove_pulling()
 		step(M, get_dir(fuck_u, src))
-		M.pulling = t
+		M.set_pulling(t)
 	else
 		step(user.pulling, get_dir(fuck_u, src))
 	return
@@ -1186,6 +1186,17 @@
 	New()
 		..()
 		src.set_dir(pick(cardinal))
+
+/turf/simulated/nicegrass
+	name = "grass"
+	icon = 'icons/turf/outdoors.dmi'
+	icon_state = "grass"
+
+/turf/simulated/nicegrass/random
+	New()
+		..()
+		src.set_dir(pick(cardinal))
+
 
 /turf/unsimulated/floor/ballpit
 	name = "ball pit"

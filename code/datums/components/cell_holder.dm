@@ -45,7 +45,7 @@
 		else if(istype(new_cell, /datum/component/power_cell))
 			src.cell.AddComponent(new_cell)
 		else if(islist(new_cell))
-			src.cell.AdminAddComponent(list(/datum/component/power_cell) + new_cell)
+			src.cell.AdminAddComponent(arglist(list(/datum/component/power_cell) + new_cell))
 
 		if(isnum_safe(chargable))
 			src.can_be_recharged = chargable
@@ -114,8 +114,8 @@
 		. = SEND_SIGNAL(src.cell, COMSIG_CELL_CHARGE, amount)
 
 
-/datum/component/cell_holder/proc/use(parent, amount, bypass)
-	. = SEND_SIGNAL(src.cell, COMSIG_CELL_USE, amount, bypass)
+/datum/component/cell_holder/proc/use(parent, amount)
+	. = SEND_SIGNAL(src.cell, COMSIG_CELL_USE, amount)
 
 /datum/component/cell_holder/proc/check_charge(source, amount)
 	. = SEND_SIGNAL(src.cell, COMSIG_CELL_CHECK_CHARGE, amount)

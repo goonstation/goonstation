@@ -162,7 +162,7 @@
 			src.current_colors = list()
 			src.current_alphas = list()
 
-		src.attack_hand(usr)
+		src.Attackhand(usr)
 		src.updateUsrDialog()
 		return
 

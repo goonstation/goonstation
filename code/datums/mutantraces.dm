@@ -218,7 +218,7 @@
 	// custom attacks, should return attack_hand by default or bad things will happen!!
 	// ^--- Outdated, please use limb datums instead if possible.
 	proc/custom_attack(atom/target)
-		return target.attack_hand(mob)
+		return target.Attackhand(mob)
 
 	// vision modifier (see_mobs, etc i guess)
 	proc/sight_modifier()
@@ -861,8 +861,10 @@
 /datum/mutantrace/zombie
 	name = "zombie"
 	icon_state = "zombie"
+	human_compatible = FALSE
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON | HEAD_HAS_OWN_COLORS)
 	jerk = 1
+	override_attack = 0
 	needs_oxy = 0
 	movement_modifier = /datum/movement_modifier/zombie
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/zombie
@@ -900,7 +902,11 @@
 
 			M.add_stam_mod_max("zombie", 100)
 			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "zombie", -5)
+			M.full_heal()
+			M.real_name = "Zombie [M.real_name]"
 
+			SPAWN_DBG(rand(4, 30))
+				M.emote("scream")
 			SHOW_ZOMBIE_TIPS(M)
 
 	proc/make_bubs(var/mob/living/carbon/human/M)
@@ -971,7 +977,7 @@
 					//mob.full_heal()
 
 					mob.HealDamage("All", 100000, 100000)
-					mob.drowsyness = 0
+					mob.delStatus("drowsy")
 					mob.stuttering = 0
 					mob.losebreath = 0
 					mob.delStatus("paralysis")
@@ -1035,17 +1041,17 @@
 			H.abilityHolder.removeAbility(/datum/targetable/critter/zombify)
 		..()
 
-/datum/mutantrace/vamp_zombie
-	name = "vampiric zombie"
-	icon = 'icons/mob/vamp_zombie.dmi'
+/datum/mutantrace/vampiric_thrall
+	name = "vampiric thrall"
+	icon = 'icons/mob/vampiric_thrall.dmi'
 	icon_state = "body_m"
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/vamp_zombie/right
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/vamp_zombie/left
-	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/vamp_zombie/right
-	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/vamp_zombie/left
-	mutant_folder = 'icons/mob/vamp_zombie.dmi'
-	special_head = HEAD_VAMPZOMBIE
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/vampiric_thrall/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/vampiric_thrall/left
+	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/vampiric_thrall/right
+	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/vampiric_thrall/left
+	mutant_folder = 'icons/mob/vampiric_thrall.dmi'
+	special_head = HEAD_VAMPTHRALL
 	jerk = 1
 
 	var/blood_points = 0
@@ -1057,17 +1063,17 @@
 		..()
 		if(ishuman(mob))
 			src.add_ability(mob)
-			M.add_stam_mod_max("vamp_zombie", 100)
-			//APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "vamp_zombie", 15)
+			M.add_stam_mod_max("vampiric_thrall", 100)
+			//APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "vampiric_thrall", 15)
 
 	disposing()
 		if (ishuman(mob))
-			mob.remove_stam_mod_max("vamp_zombie")
-			//REMOVE_MOB_PROPERTY(mob, PROP_STAMINA_REGEN_BONUS, "vamp_zombie")
+			mob.remove_stam_mod_max("vampiric_thrall")
+			//REMOVE_MOB_PROPERTY(mob, PROP_STAMINA_REGEN_BONUS, "vampiric_thrall")
 		..()
 
 	proc/add_ability(var/mob/living/carbon/human/H)
-		H.make_vampiric_zombie()
+		H.make_vampiric_thrall()
 
 	onLife(var/mult = 1)
 		..()
@@ -1100,7 +1106,7 @@
 			..()
 
 	onDeath(gibbed)
-		var/datum/abilityHolder/vampiric_zombie/abil = mob.get_ability_holder(/datum/abilityHolder/vampiric_zombie)
+		var/datum/abilityHolder/vampiric_thrall/abil = mob.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 		if (abil)
 			if (abil.master)
 				abil.master.remove_thrall(mob)
@@ -1196,7 +1202,7 @@
 		//Bringing it more in line with how it was before it got broken (in a hilarious fashion)
 		if (ruff_tuff_and_ultrabuff && !(mob.getStatusDuration("burning") && prob(90))) //Are you a macho abomination or not?
 			mob.delStatus("disorient")
-			mob.drowsyness = 0
+			mob.delStatus("drowsy")
 			mob.change_misstep_chance(-INFINITY)
 			mob.delStatus("slowed")
 			mob.stuttering = 0
@@ -1321,8 +1327,8 @@
 	// Werewolves (being a melee-focused role) are quite buff.
 	onLife(var/mult = 1)
 		if (mob && ismob(mob))
-			if (mob.drowsyness)
-				mob.drowsyness = max(0, mob.drowsyness - 2)
+			if (mob.hasStatus("drowsy"))
+				mob.changeStatus("drowsy", -10 SECONDS)
 			if (mob.misstep_chance)
 				mob.change_misstep_chance(-10 * mult)
 			if (mob.getStatusDuration("slowed"))
@@ -1470,7 +1476,7 @@
 			do_table_hide(target)
 		if(istype(target, /obj/stool/bed/))
 			do_table_hide(target)
-		return target.attack_hand(mob)
+		return target.Attackhand(mob)
 
 	proc
 		do_table_hide(obj/target)
@@ -1904,7 +1910,7 @@
 		if(ishuman(target))
 			mob.visible_message("<span class='alert'><B>[mob]</B> waves its limbs at [target] threateningly!</span>")
 		else
-			return target.attack_hand(mob)
+			return target.Attackhand(mob)
 
 	say_verb()
 		return "rasps"
@@ -1916,7 +1922,7 @@
 				H.setStatus("maxhealth-", null, -50)
 				H.add_stam_mod_max("kudzu", -100)
 				APPLY_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "kudzu", -5)
-				H.bioHolder.AddEffect("xray", magical=1)
+				H.bioHolder.AddEffect("xray", power = 2, magical=1)
 				H.abilityHolder = new /datum/abilityHolder/kudzu(H)
 				H.abilityHolder.owner = H
 				H.abilityHolder.addAbility(/datum/targetable/kudzu/guide)

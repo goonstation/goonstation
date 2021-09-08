@@ -1,5 +1,41 @@
-//rerun checks
+//bot go brr?
 //GUNS GUNS GUNS
+/datum/projectile/bullet/rifle_3006/rakshasa
+	sname = "\improper Rakshasa"
+	name = "\improper Rakshasa round"
+	icon_state = "sniper_bullet"
+	dissipation_rate = 0
+	projectile_speed = 12800
+	casing = /obj/item/casing/cannon
+	power = 125
+	implanted = /obj/item/implant/projectile/rakshasa
+	icon_turf_hit = "bhole-large"
+	goes_through_walls = 1
+	pierces = -1
+
+	on_end(obj/projectile/P)
+		. = ..()
+		var/obj/railgun_trg_dummy/start = new(P.orig_turf)
+		var/obj/railgun_trg_dummy/end = new(get_turf(P))
+		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,1,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0)
+		for(var/obj/O in affected)
+			animate(O, 1 SECOND, alpha = 0, easing = SINE_EASING | EASE_IN)
+		SPAWN_DBG(1 SECOND)
+			for(var/obj/O in affected)
+				O.alpha = initial(O.alpha)
+				pool(O)
+			qdel(start)
+			qdel(end)
+
+	on_hit(atom/hit, direction, obj/projectile/P)
+		. = ..()
+		hit.ex_act(2)
+
+/obj/item/ammo/bullets/rifle_3006/rakshasa
+	name = "\improper Rakshasa round"
+	desc = "..."
+	ammo_type = new/datum/projectile/bullet/rifle_3006/rakshasa
+
 /obj/item/gun/kinetic/g11
 	name = "\improper Manticore assault rifle"
 	desc = "An assault rifle capable of firing single precise bursts. The magazines holders are embossed with \"Anderson Para-Munitions\""

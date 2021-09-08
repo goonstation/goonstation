@@ -1,7 +1,7 @@
 /proc/most_applicable_trade(var/list/datum/commodity/goods_buy, var/obj/item/sell_item)
 	var/list/goods_buy_types = new /list(0)
 	for(var/datum/commodity/N as anything in goods_buy)
-		if (istype(sell_item, N.comtype))
+		if (N.subtype_valid ? istype(sell_item, N.comtype) : N.comtype == sell_item.type)
 			goods_buy_types[N.comtype] = N
 	return goods_buy_types[maximal_subtype(goods_buy_types)]
 
@@ -141,7 +141,7 @@
 		var/list/goods_for_purchase = goods_sell.Copy()
 		// Illegal goods for syndicate traitors
 		if (illegal)
-			if(usr.mind && (usr.mind.special_role == "traitor" || usr.mind.special_role == "spy_thief" || usr.mind.special_role == "nukeop" ||	usr.mind.special_role == "sleeper agent" || usr.mind.special_role == "hard-mode traitor" ||	usr.mind.special_role == "omnitraitor"))
+			if(usr.mind && (usr.mind.special_role == ROLE_TRAITOR || usr.mind.special_role == ROLE_SPY_THIEF || usr.mind.special_role == ROLE_NUKEOP ||	usr.mind.special_role == ROLE_SLEEPER_AGENT || usr.mind.special_role == ROLE_HARDMODE_TRAITOR ||	usr.mind.special_role == ROLE_OMNITRAITOR))
 				goods_for_purchase += goods_illegal
 		if (href_list["purchase"])
 			src.temp =buy_dialogue + "<HR><BR>"
@@ -800,13 +800,13 @@
 				var/carlsell = rand(1,10)
 				src.goods_illegal += new /datum/commodity/contraband/command_suit(src)
 				src.goods_illegal += new /datum/commodity/contraband/disguiser(src)
-				if (carlsell <= 2)
+				if (carlsell <= 3)
 					src.goods_illegal += new /datum/commodity/contraband/radiojammer(src)
-				if (carlsell >= 3 && carlsell <= 5)
+				if (carlsell >= 2 && carlsell <= 6)
 					src.goods_illegal += new /datum/commodity/contraband/stealthstorage(src)
-				if (carlsell >= 6 && carlsell <= 8)
+				if (carlsell >= 5 && carlsell <= 8)
 					src.goods_illegal += new /datum/commodity/contraband/voicechanger(src)
-				if (carlsell == 9) // if it rolls 10, then none of the three are sold
+				if (carlsell >= 9)
 					src.goods_illegal += new /datum/commodity/contraband/radiojammer(src)
 					src.goods_illegal += new /datum/commodity/contraband/stealthstorage(src)
 					src.goods_illegal += new /datum/commodity/contraband/voicechanger(src)

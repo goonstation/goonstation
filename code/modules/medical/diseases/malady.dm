@@ -305,7 +305,7 @@
 				if (prob(5))
 					affected_mob.stuttering += 1
 				if (prob(2))
-					affected_mob.drowsyness += 1
+					affected_mob.changeStatus("drowsy", 5 SECONDS)
 				if (prob(5))
 					affected_mob.emote(pick("faint", "collapse", "twitch", "groan"))
 			else // a limb or whatever

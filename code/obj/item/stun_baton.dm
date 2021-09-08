@@ -7,7 +7,6 @@
 // - Subtypes
 
 ////////////////////////////////////////// Stun baton parent //////////////////////////////////////////////////
-
 // Completely refactored the ca. 2009-era code here. Powered batons also use power cells now (Convair880).
 /obj/item/baton
 	name = "stun baton"
@@ -191,16 +190,13 @@
 		else
 			dude_to_stun = victim
 
-		// Stun the target mob.
-		if (dude_to_stun.bioHolder && dude_to_stun.bioHolder.HasEffect("resist_electric"))
-			boutput(dude_to_stun, "<span class='notice'>Thankfully, electricity doesn't do much to you in your current state.</span>")
-		else
-			dude_to_stun.do_disorient(src.disorient_stamina_damage, weakened = src.stun_normal_weakened * 10, disorient = 60)
+	
+		dude_to_stun.do_disorient(src.disorient_stamina_damage, weakened = src.stun_normal_weakened * 10, disorient = 60)
 
-			if (isliving(dude_to_stun))
-				var/mob/living/L = dude_to_stun
-				L.Virus_ShockCure(33)
-				L.shock_cyberheart(33)
+		if (isliving(dude_to_stun))
+			var/mob/living/L = dude_to_stun
+			L.Virus_ShockCure(33)
+			L.shock_cyberheart(33)
 
 		src.process_charges(-1, user)
 
@@ -336,6 +332,36 @@
 	item_off = "cane"
 	cell_type = /obj/item/ammo/power_cell
 	mats = list("MET-3"=10, "CON-2"=10, "gem"=1, "gold"=1)
+
+/obj/item/baton/classic
+	name = "police baton"
+	desc = "YOU SHOULD NOT SEE THIS"
+	icon_state = "baton"
+	item_state = "classic_baton"
+	force = 15
+	mats = 0
+	contraband = 6
+	icon_on = "baton"
+	icon_off = "baton"
+	stamina_damage = 105
+	stamina_cost = 25
+	cost_normal = 0
+	can_swap_cell = 0
+
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/simple) //override spark of parent
+
+	do_stun(mob/user, mob/victim, type, stun_who)
+		user.visible_message("<span class='alert'><B>[victim] has been beaten with the [src.name] by [user]!</B></span>")
+		playsound(src, "swing_hit", 50, 1, -1)
+		random_brute_damage(victim, src.force, 1) // Necessary since the item/attack() parent wasn't called.
+		victim.changeStatus("weakened", 8 SECONDS)
+		victim.force_laydown_standup()
+		victim.remove_stamina(src.stamina_damage)
+		if (user && ismob(user) && user.get_stamina() >= STAMINA_MIN_ATTACK)
+			user.remove_stamina(src.stamina_cost)
+
 
 /obj/item/baton/ntso
 	name = "extendable stun baton"

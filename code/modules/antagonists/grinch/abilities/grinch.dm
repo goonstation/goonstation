@@ -32,7 +32,7 @@
 			C.abilityHolder.addAbility(/datum/targetable/grinch/instakill)
 			C.abilityHolder.addAbility(/datum/targetable/grinch/grinch_cloak)
 
-		if (src.mind && src.mind.special_role != "omnitraitor")
+		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
 			SHOW_GRINCH_TIPS(src)
 
 	else return

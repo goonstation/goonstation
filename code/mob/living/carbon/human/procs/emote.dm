@@ -227,16 +227,16 @@
 							src.chest_item_attack_self_on_fart()
 
 						if (src.bioHolder)
-							if (src.bioHolder.HasEffect("toxic_farts"))
+							var/toxic = src.bioHolder.HasEffect("toxic_farts")
+							if (toxic)
 								message = "<span class='alert'><B>[src] [pick("unleashes","rips","blasts")] \a [pick("truly","utterly","devastatingly","shockingly")] [pick("hideous","horrendous","horrific","heinous","horrible")] fart!</B></span>"
 								var/turf/fart_turf = get_turf(src)
-								fart_turf.fluid_react_single("toxic_fart",2,airborne = 1)
+								var/datum/reagents/R = new(100)
+								R.add_reagent("toxic_fart", 2 * toxic)
+								R.add_reagent("toxin", (toxic - 1) * 2)
+								fart_turf.fluid_react(R, R.total_volume, airborne = 1)
 
 							if (src.bioHolder.HasEffect("linkedfart"))
-								message = "<span class='alert'><B>[src] [pick("unleashes","rips","blasts")] \a [pick("truly","utterly","devastatingly","shockingly")] [pick("hideous","horrendous","horrific","heinous","horrible")] fart!</B></span>"
-								var/turf/fart_turf = get_turf(src)
-								fart_turf.fluid_react_single("toxic_fart",2,airborne = 1)
-
 								for(var/mob/living/H in mobs)
 									if (H.bioHolder && H.bioHolder.HasEffect("linkedfart")) continue
 									var/found_bible = 0

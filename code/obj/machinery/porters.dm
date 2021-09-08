@@ -224,6 +224,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	item_state = "electronic"
 	desc = "A remote that summons a Port-A-Sci."
 	machinery_name = "Port-a-Sci"
+	mats = list("MET-1" = 5, "CON-1" = 5, "telecrystal" = 10)
 
 	get_machinery()
 		if (!src)
@@ -650,7 +651,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			return
 		if (!isalive(usr) || usr.getStatusDuration("stunned") != 0)
 			return
-		usr.pulling = null
+		usr.remove_pulling()
 		usr.set_loc(src)
 		src.occupant = usr
 		src.add_fingerprint(usr)
@@ -772,7 +773,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 							SPAWN_DBG(rand(10,40))
 								M.visible_message("<span class='alert'>[M] pukes all over \himself.</span>", "<span class='alert'>Oh god, that was terrible!</span>", "<span class='alert'>You hear a splat!</span>")
 								M.change_misstep_chance(40)
-								M.drowsyness += 2
+								M.changeStatus("drowsy", 10 SECONDS)
 								M.vomit()
 
 					if(51 to 70) //A nice tan

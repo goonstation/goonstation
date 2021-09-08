@@ -361,7 +361,7 @@
 /obj/machinery/turretid/attackby(obj/item/W, mob/user)
 	if(status & BROKEN) return
 	if (issilicon(user) || isAI(user))
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 	else // trying to unlock the interface
 		if (src.allowed(user))
 			locked = !locked
@@ -372,7 +372,7 @@
 					user.Browse(null, "window=turretid")
 			else
 				if (user.using_dialog_of(src))
-					src.attack_hand(user)
+					src.Attackhand(user)
 		else
 			boutput(user, "<span class='alert'>Access denied.</span>")
 
@@ -446,7 +446,7 @@
 			logTheThing("combat", usr, null, "set turrets to STUN from control \[[showCoords(src.x, src.y, src.z)]].")
 			message_admins("[key_name(usr)] set turrets to STUN from control \[[showCoords(src.x, src.y, src.z)]].")
 		src.updateTurrets()
-	src.attack_hand(usr)
+	src.Attackhand(usr)
 
 /obj/machinery/turretid/receive_silicon_hotkey(var/mob/user)
 	..()

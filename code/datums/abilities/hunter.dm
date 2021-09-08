@@ -14,7 +14,7 @@
 		P.addAbility(/datum/targetable/hunter/hunter_taketrophy)
 		P.addAbility(/datum/targetable/hunter/hunter_trophycount)
 
-		if (src.mind && src.mind.special_role != "omnitraitor")
+		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
 			SHOW_HUNTER_TIPS(src)
 
 	else return
@@ -34,7 +34,7 @@
 		M.delStatus("slowed")
 		M.change_misstep_chance(-INFINITY)
 		M.stuttering = 0
-		M.drowsyness = 0
+		M.delStatus("drowsy")
 
 		if (M.hasStatus("handcuffed"))
 			M.visible_message("<span class='alert'><B>[M] rips apart the [M.handcuffs] with pure brute strength!</b></span>")
@@ -104,22 +104,22 @@
 					// Antagonist check.
 					if (checktraitor(H))
 						switch (H.mind.special_role) // Ordered by skull value.
-							if ("omnitraitor")
+							if (ROLE_OMNITRAITOR)
 								skull_type = /obj/item/skull/crystal
 								skull_desc = "A trophy taken from a mystic, all-powerful creature. It is an immeasurable honor."
-							if ("hunter")
+							if (ROLE_HUNTER)
 								skull_type = /obj/item/skull/strange
 								skull_desc = "A trophy taken from a hunter, the finest hunters of all."
-							if ("changeling")
+							if (ROLE_CHANGELING)
 								skull_type = /obj/item/skull/odd
 								skull_desc = "A trophy taken from a shapeshifting alien! It is an immense honor."
-							if ("werewolf")
+							if (ROLE_WEREWOLF)
 								skull_value = 4
 								skull_desc = "A grand trophy from a lycanthrope, a very capable hunter. It is an immense honor."
-							if ("wizard")
+							if (ROLE_WIZARD)
 								skull_type = /obj/item/skull/peculiar
 								skull_desc = "A grand trophy from a powerful magician. It brings you great honor."
-							if ("vampire")
+							if (ROLE_VAMPIRE)
 								skull_value = 3
 								skull_desc = "A trophy taken from an undead vampire! It brings you great honor."
 							else

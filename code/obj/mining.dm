@@ -1551,12 +1551,27 @@
 			T.visible_message("<span class='alert'>[src] runs out of charge and powers down!</span>")
 		return 1
 
+	attack_self(var/mob/user as mob)
+		if (!digcost)
+			return
+		if (src.process_charges(0))
+			if (!src.status)
+				boutput(user, "<span class='notice'>You power up [src].</span>")
+				src.power_up()
+				playsound(user.loc, "sound/items/miningtool_on.ogg", 30, 1)
+			else
+				boutput(user, "<span class='notice'>You power down [src].</span>")
+				src.power_down()
+		else
+			boutput(user, "<span class='alert'>No charge left in [src].</span>")
+
 	afterattack(target as mob, mob/user as mob)
 		..()
 		if (src.status && !isturf(target))
 			src.process_charges(digcost*5)
 
 	proc/power_up()
+		src.tooltip_rebuild = 1
 		src.status = 1
 		if (powered_overlay)
 			src.overlays += powered_overlay
@@ -1564,6 +1579,7 @@
 		return
 
 	proc/power_down()
+		src.tooltip_rebuild = 1
 		src.status = 0
 		if (powered_overlay)
 			src.overlays = null
@@ -1573,6 +1589,7 @@
 
 	proc/update_icon()
 		return
+
 obj/item/clothing/gloves/concussive
 	name = "concussion gauntlets"
 	desc = "These gloves enable miners to punch through solid rock with their hands instead of using tools."
@@ -1610,35 +1627,24 @@ obj/item/clothing/gloves/concussive
 		powered_overlay = image('icons/obj/items/mining.dmi', "pp-glow")
 		src.power_up()
 
-	attack_self(var/mob/user as mob)
-		tooltip_rebuild = 1
-		if (src.process_charges(0))
-			if (!src.status)
-				boutput(user, "<span class='notice'>You power up [src].</span>")
-				src.power_up()
-				item_state = "ppick1"
-				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_on.ogg", 30, 1)
-			else
-				boutput(user, "<span class='notice'>You power down [src].</span>")
-				src.power_down()
-				item_state = "ppick0"
-				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
-		else
-			boutput(user, "<span class='alert'>No charge left in [src].</span>")
-
-
 	power_up()
 		..()
 		src.force = 15
 		src.dig_strength = 2
+		if(ismob(src.loc))
+			var/mob/user = src.loc
+			item_state = "ppick1"
+			user.update_inhands()
 
 	power_down()
 		..()
 		src.force = 7
 		src.dig_strength = 1
-
+		item_state = "ppick0"
+		if(ismob(src.loc))
+			var/mob/user = src.loc
+			user.update_inhands()
+			playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
 
 	borg
 		process_charges(var/use)
@@ -1689,6 +1695,10 @@ obj/item/clothing/gloves/concussive
 		src.force = 20
 		dig_strength = 3
 		weakener = 1
+		item_state = "phammer1"
+		if(ismob(src.loc))
+			var/mob/user = src.loc
+			user.update_inhands()
 		src.setItemSpecial(/datum/item_special/slam)
 
 	power_down()
@@ -1696,25 +1706,12 @@ obj/item/clothing/gloves/concussive
 		src.force = 9
 		dig_strength = 1
 		weakener = 0
+		item_state = "phammer0"
+		if(ismob(src.loc))
+			var/mob/user = src.loc
+			user.update_inhands()
+			playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
 		src.setItemSpecial(/datum/item_special/simple)
-
-	attack_self(var/mob/user as mob)
-		tooltip_rebuild = 1
-		if (src.process_charges(0))
-			if (!src.status)
-				boutput(user, "<span class='notice'>You power up [src].</span>")
-				src.power_up()
-				item_state = "phammer1"
-				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_on.ogg", 30, 1)
-			else
-				boutput(user, "<span class='notice'>You power down [src].</span>")
-				src.power_down()
-				item_state = "phammer0"
-				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
-		else
-			boutput(user, "<span class='alert'>No charge left in [src].</span>")
 
 	borg
 		process_charges(var/use)
@@ -1747,33 +1744,24 @@ obj/item/clothing/gloves/concussive
 		powered_overlay = image('icons/obj/sealab_power.dmi', "ps-glow")
 		src.power_up()
 
-	attack_self(var/mob/user as mob)
-		tooltip_rebuild = 1
-		if (src.process_charges(0))
-			if (!src.status)
-				boutput(user, "<span class='notice'>You power up [src].</span>")
-				src.power_up()
-				item_state = "pshovel1"
-				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_on.ogg", 30, 1)
-			else
-				boutput(user, "<span class='notice'>You power down [src].</span>")
-				src.power_down()
-				item_state = "pshovel0"
-				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
-		else
-			boutput(user, "<span class='alert'>No charge left in [src].</span>")
-
 	power_up()
 		..()
 		src.force = 8
 		src.dig_strength = 0
+		item_state = "pshovel1"
+		if(ismob(src.loc))
+			var/mob/user = src.loc
+			user.update_inhands()
 
 	power_down()
 		..()
 		src.force = 4
 		src.dig_strength = 0
+		item_state = "pshovel0"
+		if(ismob(src.loc))
+			var/mob/user = src.loc
+			user.update_inhands()
+			playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
 
 	borg
 		process_charges(var/use)
@@ -2007,7 +1995,7 @@ obj/item/clothing/gloves/concussive
 				var/mob/living/silicon/robot/R = user
 				R.cell.charge -= cost * 10
 			else
-				var/ret = SEND_SIGNAL(src, COMSIG_CELL_USE, cost, TRUE)
+				var/ret = SEND_SIGNAL(src, COMSIG_CELL_USE, cost)
 				if (ret & CELL_INSUFFICIENT_CHARGE)
 					boutput(user, "<span class='alert'>Transfer successful. The transporter is now out of charge.</span>")
 				else
@@ -2050,7 +2038,7 @@ obj/item/clothing/gloves/concussive
 			T.set_loc(src.target)
 			if(hasvar(T, "welded")) T:welded = 1
 			elecflash(src)
-			var/ret = SEND_SIGNAL(src, COMSIG_CELL_USE, cost, TRUE)
+			var/ret = SEND_SIGNAL(src, COMSIG_CELL_USE, cost)
 			if (ret & CELL_INSUFFICIENT_CHARGE)
 				boutput(user, "<span class='alert'>Transfer successful. The transporter is now out of charge.</span>")
 			else
@@ -2352,6 +2340,13 @@ var/global/list/cargopads = list()
 	w_class = W_CLASS_SMALL
 	mats = 6
 	var/obj/item/satchel/mining/satchel = null
+
+	prepared
+		New()
+			..()
+			var/obj/item/satchel/mining/S = new /obj/item/satchel/mining(src)
+			satchel = S
+			icon_state = "scoop-bag"
 
 	borg
 		New()

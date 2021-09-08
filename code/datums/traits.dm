@@ -466,19 +466,6 @@
 
 // GENETICS - Blue Border
 
-/obj/trait/robustgenetics
-	name = "Robust Genetics (-2) \[Genetics\]"
-	cleanName = "Robust Genetics"
-	desc = "You gain an additional 20 genetic stability."
-	id = "robustgenetics"
-	icon_state = "stablegenesB"
-	points = -2
-	isPositive = 0
-	category = "genetics"
-
-	onAdd(var/mob/owner)
-		owner.bioHolder?.genetic_stability = 120
-
 /obj/trait/mildly_mutated
 	name = "Mildly Mutated (0) \[Genetics\]"
 	cleanName = "Mildly Mutated"
@@ -677,28 +664,6 @@
 				owner.changeStatus("stunned", 2 SECONDS)
 
 // Stats - Undetermined Border
-
-/obj/trait/meathead
-	name = "Meathead (-1) \[Stats\]"
-	cleanName = "Meathead"
-	desc = "You can take quite a beating! You suffer from brain trauma, though."
-	id = "meathead"
-	category = "stats"
-	points = -1
-	isPositive = 1
-
-	onAdd(var/mob/owner)
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			H.max_health = 150
-			H.health = 150
-			H.take_brain_damage(60)
-
-	onLife(var/mob/owner) //Just to be safe.
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if(H.get_brain_damage() < 60)
-				H.take_brain_damage(60-H.get_brain_damage())
 
 /obj/trait/athletic
 	name = "Athletic (-2) \[Stats\]"
@@ -1023,7 +988,7 @@ obj/trait/pilot
 			if(!owner.equipped())
 				for(var/obj/item/I in view(1, owner))
 					if(!I.anchored && isturf(I.loc))
-						I.attack_hand(owner)
+						I.Attackhand(owner)
 						if(prob(12))
 							owner.emote(pick("grin", "smirk", "chuckle", "smug"))
 						break

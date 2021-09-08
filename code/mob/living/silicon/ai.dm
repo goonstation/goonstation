@@ -694,7 +694,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/mob/vamp = src
 	if (relay_laws_for_shell && ismob(relay_laws_for_shell))
 		vamp = relay_laws_for_shell
-	if (vamp.mind && vamp.mind.special_role == "vampthrall" && vamp.mind.master)
+	if (vamp.mind && vamp.mind.special_role == ROLE_VAMPTHRALL && vamp.mind.master)
 		var/mob/mymaster = whois_ckey_to_mob_reference(vamp.mind.master)
 		if (mymaster)
 			boutput(who, "1. Only your master [mymaster.real_name] is human. Obey and serve them to the best of your ability.")
@@ -1142,7 +1142,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (src.blinded) src.blinded = 0
 	if (src.get_ear_damage()) src.take_ear_damage(-INFINITY) // Ear_deaf is handled by src.set_vision().
 	if (src.dizziness) src.dizziness = 0
-	if (src.drowsyness) src.drowsyness = 0
+	if (src.hasStatus("drowsy")) src.delStatus("drowsy")
 	if (src.stuttering) src.stuttering = 0
 	if (src.druggy) src.druggy = 0
 	if (src.jitteriness) src.jitteriness = 0

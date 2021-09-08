@@ -132,8 +132,8 @@ datum/character_preview
 		src.preview_mob.update_colorful_parts()
 		src.preview_mob.set_body_icon_dirty()
 		src.preview_mob.set_face_icon_dirty()
-		src.preview_mob.real_name = name
-		src.preview_mob.name = name
+		src.preview_mob.real_name = "clone of " + name
+		src.preview_mob.name = "clone of " + name
 
 /// Manages its own window.
 /// Basically a simplified version for when you don't need to put other stuff in the preview window.
