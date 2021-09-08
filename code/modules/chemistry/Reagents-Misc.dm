@@ -507,8 +507,7 @@ datum
 				if (probmult(8))
 					boutput(M, "<span class='alert'>The voices ...</span>")
 					M.playsound_local(M, pick(ghostly_sounds), 100, 1)
-
-				return
+				..()
 
 		strange_reagent
 			name = "strange reagent"
@@ -1179,13 +1178,6 @@ datum
 					SPAWN_DBG(20 SECONDS)
 						T.wet = 0
 						T.UpdateOverlays(null, "wet_overlay")
-
-				return
-
-			on_mob_life(var/mob/M, var/mult = 1)
-				//if (prob(4)) // it's motor oil, you goof
-					//M.reagents.add_reagent("cholesterol", rand(1,3))
-				return
 
 		capulettium
 			name = "capulettium"
