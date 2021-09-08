@@ -510,7 +510,7 @@ This is basically useless for anyone but miners.
 
 /datum/syndicate_buylist/traitor/chambomb
 	name = "Chameleon Bomb Case"
-	item = /obj/item/storage/box/chameleonbombcase
+	item = /obj/item/storage/box/chameleonbomb
 	cost = 6
 	vr_allowed = 0
 	desc = "4 questionable mixtures of a chameleon projector and a bomb. Scan an object to take on its appearance, arm the bomb, and then explode the face(s) of whoever tries to touch it."
