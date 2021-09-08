@@ -1,4 +1,8 @@
 
+(t)wed sep 08 21
+(u)tarmunora
+(e)🆕|feature
+(*)You can now craft windows by clicking the floor with glass sheets (also reinforced windows with reinforced sheets)
 (t)tue sep 07 21
 (u)UnfunnyPerson
 (p)5913
