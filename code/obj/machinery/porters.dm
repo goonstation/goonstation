@@ -389,8 +389,9 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		..()
 		src.occupant = null
 		build_icon()
-		for (var/obj/item/I in src)
+		for (var/obj/item/I in src) //What if you drop something while inside? WHAT THEN HUH?
 			I.set_loc(src.loc)
+
 		if (processing)
 			UnsubscribeProcess()
 
@@ -441,24 +442,12 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			icon_state = "port_a_brig_0"
 
 	proc/go_out()
-		if (!src.occupant)
-			return
 		if (src.locked)
 			boutput(usr, "<span class='alert'>The Port-A-Brig is locked!</span>")
 			return
-		if(src.occupant.loc == src)
+		if(src.occupant)
 			src.occupant.set_loc(src.loc)
 			src.occupant.changeStatus("weakened", 2 SECONDS)
-		else
-			src.visible_message("<span class='notice'>The [src] is mysteriously empty.</span>")
-		src.occupant = null
-		build_icon()
-		for (var/obj/item/I in src) //What if you drop something while inside? WHAT THEN HUH?
-			I.set_loc(src.loc)
-
-		if (processing)
-			UnsubscribeProcess()
-
 		return
 
 	verb/move_eject()
