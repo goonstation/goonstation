@@ -628,6 +628,7 @@
 		..()
 		src.color = rgb(220, 220, 75)
 		reagents.add_reagent("urine", 120)
+
 /obj/item/reagent_containers/glass/bottle/saltpetre
 	name = "saltpetre bottle"
 	desc = "A reagent storage bottle."

@@ -1186,28 +1186,6 @@
 		pickupdialogue = "Alrriikht. Blease drrag the crrate viit you."
 
 		pickupdialoguefailure = "No the crrate is not frree. You have to puy sometiing fiirrst."
-	/*
-	activatesecurity()
-		for(var/mob/M in AIviewers(src))
-			boutput(M, "<B>[src.name]</B> exclaims, \"BZZZZZZZZZZZ!\"")
-		for(var/turf/T in get_area_turfs( get_area(src) ))
-			for (var/obj/critter/domestic_bee/B in T)
-				B.aggressive = 1 // be, aggressive. bee be aggressive
-				B.atkcarbon = 1
-
-	// OKAY we're tryin to do something here with the medal for the rescue allright?
-
-	attackby(obj/item/W as obj, mob/living/user as mob)
-		if (istype(W, /obj/item/coin/bombini))
-			for(var/mob/M in AIviewers(src))
-				boutput(M, "<B>[src.name]</B> buzzes excitedly! \"BZZ?? BZZ!!\"")
-				M.unlock_medal("Bombini is missing!", 1)
-				M.add_karma(15) // This line originally tried to give the karma to Bombini. Definitely a bug but I like to imagine that she just managed to pickpocket your karma or something.
-			user.u_equip(W)
-			qdel(W)
-		else
-			..()*/
-
 
 // Clack!
 
