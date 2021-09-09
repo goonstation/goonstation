@@ -22,7 +22,7 @@
 	boutput(world, "<B>The Syndicate is using the [station_or_ship()] as a battleground to train elite operatives!</B>")
 
 /datum/game_mode/spy/pre_setup()
-	var/list/leaders_possible = get_possible_leaders()
+	var/list/leaders_possible = get_possible_enemies(ROLE_SPY_THIEF, 1)
 
 	if (!leaders_possible.len)
 		return 0
@@ -139,33 +139,6 @@
 	spy.mind.special_role = null
 	spy.mind.master = null
 	return 1
-
-/datum/game_mode/spy/proc/get_possible_leaders()
-	var/list/candidates = list()
-
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if (ishellbanned(player)) continue //No treason for you
-		if ((player.ready) && !(player.mind in leaders) && !(player.mind in token_players) && !candidates.Find(player.mind))
-			if(player.client.preferences.be_spy)
-				candidates += player.mind
-
-	if(candidates.len < 1)
-		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Not enough players with be_spy set to yes, so we're adding players who don't want to be spy leaders to the pool.")
-		for(var/client/C)
-			var/mob/new_player/player = C.mob
-			if (!istype(player)) continue
-			if (ishellbanned(player)) continue //No treason for you
-
-			if ((player.ready) && !(player.mind in leaders) && !(player.mind in token_players) && !candidates.Find(player.mind))
-				candidates += player.mind
-
-	if(candidates.len < 1)
-		return list()
-	else
-		return candidates
 
 /datum/game_mode/spy/declare_completion()
 

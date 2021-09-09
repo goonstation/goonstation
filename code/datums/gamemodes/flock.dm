@@ -22,7 +22,7 @@
 
 	// TODO: Handle token players
 
-	possible_flockminds = get_possible_flockminds()
+	possible_flockminds = get_possible_enemies(ROLE_FLOCKMIND, 1)
 	var/list/chosen_flockminds = antagWeighter.choose(pool = possible_flockminds, role = ROLE_FLOCKMIND, amount = 1, recordChosen = 1)
 	flockminds |= chosen_flockminds
 	for (var/datum/mind/flockmind in flockminds)
@@ -44,23 +44,4 @@
 	//TODO
 	. = ..()
 
-/datum/game_mode/flock/proc/get_possible_flockminds(minimum_flockminds=1)
-	var/list/candidates = list()
-
-	for (var/mob/new_player/player in mobs)
-		if (ishellbanned(player)) continue
-		if ((player.client) && (player.ready) && !(player.mind in flockminds) && !candidates.Find(player.mind))
-			if(player.client.preferences.be_flock)
-				candidates += player.mind
-
-	if (candidates.len < minimum_flockminds)
-		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_flock set to yes were ready. We need [minimum_flockminds] flockminds so including players who don't want to be flockminds in the pool.")
-		for (var/mob/new_player/player in mobs)
-			if (ishellbanned(player)) continue
-			if ((player.client) && (player.ready) && !(player.mind in flockminds) && !candidates.Find(player.mind))
-				candidates += player.mind
-	if (candidates.len < 1)
-		return list()
-	else
-		return candidates
 

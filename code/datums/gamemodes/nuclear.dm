@@ -41,7 +41,7 @@
 			num_players++
 	var/num_synds = clamp( round(num_players / 6 ), 1, agents_possible)
 
-	possible_syndicates = get_possible_syndicates(num_synds)
+	possible_syndicates = get_possible_enemies(ROLE_NUKEOP, num_synds)
 
 	if (!islist(possible_syndicates) || possible_syndicates.len < 1)
 		boutput(world, "<span class='alert'><b>ERROR: couldn't assign any players as Syndicate operatives, aborting nuke round pre-setup.</b></span>")
@@ -343,36 +343,6 @@
 
 	if (opcount == opdeathcount) return 1
 	else return 0
-
-/datum/game_mode/nuclear/proc/get_possible_syndicates(minimum_syndicates=1)
-	var/list/candidates = list()
-
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if (ishellbanned(player)) continue //No treason for you
-		if ((player.ready) && !(player.mind in syndicates) && !(player.mind in token_players) && !candidates.Find(player.mind))
-			if(player.client.preferences.be_syndicate)
-				candidates += player.mind
-
-	if(candidates.len < minimum_syndicates)
-		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Not enough players with be_syndicate set to yes, including players who don't want to be syndicates in the pool.")
-		for(var/client/C)
-			var/mob/new_player/player = C.mob
-			if (!istype(player)) continue
-			if (ishellbanned(player)) continue //No treason for you
-
-			if ((player.ready) && !(player.mind in syndicates) && !(player.mind in token_players) && !candidates.Find(player.mind))
-				candidates += player.mind
-
-				if ((minimum_syndicates > 1) && (candidates.len >= minimum_syndicates))
-					break
-
-	if(candidates.len < 1)
-		return list()
-	else
-		return candidates
 
 /datum/game_mode/nuclear/send_intercept()
 	var/intercepttext = "Cent. Com. Update Requested staus information:<BR>"
