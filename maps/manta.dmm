@@ -23352,9 +23352,7 @@
 	name = "Submarine Bay (Mining) door control"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "blA" = (
 /obj/loudspeaker,
 /obj/cable{
@@ -26685,12 +26683,13 @@
 /turf/simulated/floor,
 /area/station/crewquarters/garbagegarbs)
 "buc" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/manufacturer/hangar,
 /obj/machinery/light/incandescent/netural{
-	dir = 1;
-	pixel_y = 20
+	dir = 8;
+	nostick = 1;
+	pixel_x = -10
 	},
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor,
 /area/seaturtle)
 "bud" = (
 /obj/burning_barrel,
@@ -26704,11 +26703,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/lowerport)
 "bue" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 1;
-	pixel_y = 20
-	},
-/turf/simulated/floor/shuttlebay,
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor,
 /area/seaturtle)
 "buf" = (
 /obj/lattice{
@@ -27075,8 +27071,8 @@
 /turf/space/fluid/manta,
 /area/mantaSpace)
 "bvt" = (
-/obj/item/device/gps,
-/turf/simulated/floor/shuttlebay,
+/obj/machinery/manufacturer/general,
+/turf/simulated/floor,
 /area/seaturtle)
 "bvv" = (
 /obj/juggleplaque/manta,
@@ -27606,10 +27602,6 @@
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/quartermaster/cargobay)
-"bwY" = (
-/obj/machinery/drainage/big,
-/turf/simulated/floor/shuttlebay,
-/area/seaturtle)
 "bwZ" = (
 /obj/table/reinforced,
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -27621,15 +27613,25 @@
 /turf/simulated/floor/industrial,
 /area/station/mining/refinery)
 "bxb" = (
-/obj/machinery/door_control/podbay/qm/new_walls/west{
-	id = "door4";
-	name = "Cargo Bay door control"
+/obj/item/cargotele{
+	pixel_x = 5;
+	pixel_y = 8
 	},
-/turf/simulated/floor/shuttlebay,
+/obj/machinery/recharger{
+	pixel_x = 5
+	},
+/obj/table/reinforced/industrial/auto,
+/turf/simulated/floor,
 /area/seaturtle)
 "bxc" = (
-/obj/machinery/vehicle/tank/minisub/mining,
-/turf/simulated/floor/shuttlebay,
+/obj/item/storage/toolbox/electrical{
+	pixel_y = 4
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = -2
+	},
+/obj/table/reinforced/industrial/auto,
+/turf/simulated/floor/caution/east,
 /area/seaturtle)
 "bxi" = (
 /obj/chicken_nesting_box,
@@ -28120,17 +28122,11 @@
 /obj/item/hand_labeler,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
-"byE" = (
-/obj/machinery/door/poddoor/blast/pyro{
-	dir = 4;
-	icon_state = "bdoormid1";
-	id = "door4"
-	},
-/obj/forcefield/energyshield/perma/doorlink,
-/turf/simulated/floor/shuttlebay,
-/area/seaturtle)
 "byF" = (
-/obj/reagent_dispensers/fueltank,
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	pixel_y = 20
+	},
 /turf/simulated/floor/shuttlebay,
 /area/seaturtle)
 "byG" = (
@@ -28640,9 +28636,7 @@
 	},
 /obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/orange,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "bzZ" = (
 /obj/landmark/start{
 	name = "Miner"
@@ -33493,9 +33487,7 @@
 /obj/firedoor_spawn,
 /obj/access_spawn/mining,
 /turf/unsimulated/floor/orange,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "bZU" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/diner/hangar)
@@ -34610,8 +34602,11 @@
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
 "ekh" = (
-/obj/decal/cleanable/dirt/dirt5,
-/turf/simulated/floor,
+/obj/machinery/door_control/podbay/qm/new_walls/west{
+	id = "door4";
+	name = "Cargo Bay door control"
+	},
+/turf/simulated/floor/shuttlebay,
 /area/seaturtle)
 "ekO" = (
 /obj/table/reinforced,
@@ -34761,13 +34756,14 @@
 /obj/table/reinforced/industrial/auto,
 /obj/disposalpipe/segment,
 /turf/unsimulated/floor/orange,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "eBY" = (
-/obj/machinery/power/apc/autoname_south,
-/obj/cable,
-/turf/simulated/floor,
+/obj/machinery/door/poddoor/blast/pyro{
+	dir = 4;
+	icon_state = "bdoormid1";
+	id = "door4"
+	},
+/turf/simulated/floor/shuttlebay,
 /area/seaturtle)
 "eCs" = (
 /obj/decal/tile_edge/line/green{
@@ -34839,9 +34835,7 @@
 	pixel_y = -1
 	},
 /turf/simulated/floor/shuttlebay,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "eIb" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -35013,7 +35007,14 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/storage)
+"eTk" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/random,
+/area/seaturtle)
 "eWe" = (
+/obj/forcefield/energyshield/perma/doorlink,
 /obj/machinery/door/poddoor/blast/pyro{
 	dir = 4;
 	icon_state = "bdoormid1";
@@ -35190,9 +35191,7 @@
 	name = "Submarine Bay (Mining) door control"
 	},
 /turf/simulated/floor/orange,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "fkq" = (
 /obj/table/wood/auto,
 /obj/item/device/radio/intercom/loudspeaker,
@@ -35330,9 +35329,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/orange,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "fsO" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -35414,17 +35411,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/centralhallway)
-"fvG" = (
-/obj/item/cargotele{
-	pixel_x = 5;
-	pixel_y = 8
-	},
-/obj/machinery/recharger{
-	pixel_x = 5
-	},
-/obj/table/reinforced/industrial/auto,
-/turf/simulated/floor,
-/area/seaturtle)
 "fvY" = (
 /obj/machinery/portable_reclaimer,
 /obj/machinery/light/incandescent/netural{
@@ -35620,9 +35606,7 @@
 /obj/item/shipcomponent/secondary_system/orescoop,
 /obj/item/shipcomponent/sensor/mining,
 /turf/simulated/floor/orange,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "fLG" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -35668,13 +35652,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
-"fSt" = (
-/obj/machinery/power/apc/autoname_east,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/plating/random,
-/area/seaturtle)
 "fTd" = (
 /obj/table/reinforced/auto,
 /obj/decoration/decorativeplant/plant4{
@@ -35843,10 +35820,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crewquarters/cryotron)
 "ghy" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating/random,
+/obj/item/device/gps,
+/turf/simulated/floor/shuttlebay,
 /area/seaturtle)
 "glv" = (
 /obj/machinery/light/incandescent/netural{
@@ -35979,10 +35954,11 @@
 	pixel_x = 3
 	},
 /obj/machinery/light/small/floor/warm,
+/obj/landmark/start{
+	name = "Miner"
+	},
 /turf/simulated/floor/shuttlebay,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "gvx" = (
 /obj/table/wood/auto,
 /obj/machinery/light/lamp,
@@ -36377,9 +36353,7 @@
 /obj/decal/tile_edge/stripe/big,
 /obj/item/storage/wall/mining,
 /turf/simulated/floor/orange,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "hfg" = (
 /obj/disposaloutlet{
 	desc = "An outlet for the pneumatic artifact disposal system.";
@@ -36819,10 +36793,8 @@
 /turf/simulated/floor/grime,
 /area/diner/hangar)
 "hUF" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/plating/random,
+/obj/machinery/drainage/big,
+/turf/simulated/floor/shuttlebay,
 /area/seaturtle)
 "hUM" = (
 /obj/machinery/light/incandescent/netural{
@@ -37059,10 +37031,6 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/ce)
-"ism" = (
-/obj/machinery/manufacturer/general,
-/turf/simulated/floor,
-/area/seaturtle)
 "iti" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1;
@@ -37179,8 +37147,8 @@
 /turf/simulated/floor/redblack,
 /area/listeningpost/syndicateassaultvessel)
 "iGU" = (
-/obj/item/constructioncone,
-/turf/simulated/floor,
+/obj/machinery/vehicle/tank/minisub/mining,
+/turf/simulated/floor/shuttlebay,
 /area/seaturtle)
 "iHk" = (
 /obj/lattice{
@@ -37419,7 +37387,12 @@
 /turf/simulated/floor/plating/random,
 /area/diner/kitchen)
 "jhR" = (
-/obj/machinery/light/incandescent/netural,
+/obj/machinery/door/poddoor/blast/pyro{
+	dir = 4;
+	icon_state = "bdoormid1";
+	id = "door4"
+	},
+/obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/shuttlebay,
 /area/seaturtle)
 "jkh" = (
@@ -37537,9 +37510,7 @@
 /obj/firedoor_spawn,
 /obj/access_spawn/mining,
 /turf/simulated/floor/orange,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "jtA" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
@@ -37572,9 +37543,7 @@
 	icon_state = "bigstripe-corner2"
 	},
 /turf/simulated/floor/orange,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "jvO" = (
 /obj/machinery/power/furnace,
 /obj/cable{
@@ -37632,9 +37601,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/orange,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "jCl" = (
 /obj/decal/cleanable/dirt/dirt4,
 /turf/simulated/floor/grime,
@@ -37819,15 +37786,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/market)
-"jYU" = (
-/obj/forcefield/energyshield/perma/doorlink,
-/obj/machinery/door/poddoor/blast/pyro{
-	dir = 4;
-	icon_state = "bdoormid1";
-	id = "door4"
-	},
-/turf/simulated/floor/shuttlebay,
-/area/seaturtle)
 "kai" = (
 /obj/table/reinforced/bar/auto,
 /obj/marker/supplymarker,
@@ -37974,10 +37932,8 @@
 /turf/simulated/floor/grime,
 /area/diner/backroom)
 "kpy" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/shuttlebay,
 /area/seaturtle)
 "kpZ" = (
 /obj/landmark/gps_waypoint,
@@ -38139,11 +38095,6 @@
 	icon_state = "pipe-c"
 	},
 /obj/item/storage/wall/mining,
-/obj/item/storage/wall/mining{
-	dir = 8;
-	pixel_x = 32;
-	pixel_y = 0
-	},
 /turf/simulated/floor/orange,
 /area/mining)
 "kIT" = (
@@ -38205,6 +38156,9 @@
 /obj/machinery/vehicle/tank/minisub,
 /turf/simulated/floor/shuttlebay,
 /area/diner/hangar)
+"kQX" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/mining/staff_room)
 "kRd" = (
 /obj/decal/tile_edge/line/red{
 	color = "#e7c88c";
@@ -38281,7 +38235,7 @@
 /area/station/maintenance/lowerstarboard)
 "ldA" = (
 /turf/simulated/wall/auto/reinforced/supernorn/orange,
-/area/mining)
+/area/station/mining/staff_room)
 "len" = (
 /obj/decal/tile_edge/line/red{
 	color = "#e7c88c";
@@ -38429,9 +38383,7 @@
 	name = "Miner"
 	},
 /turf/simulated/floor/shuttlebay,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "lAp" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1;
@@ -38502,9 +38454,7 @@
 "lFv" = (
 /obj/machinery/vehicle/tank/minisub/mining,
 /turf/simulated/floor/shuttlebay,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "lHv" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1;
@@ -39063,9 +39013,7 @@
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/random,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "mIx" = (
 /obj/reagent_dispensers/watertank/fountain,
 /obj/disposalpipe/segment/mail{
@@ -39382,6 +39330,11 @@
 /obj/storage/closet/mantacontainerred/right,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
+"nrw" = (
+/obj/machinery/power/apc/autoname_south,
+/obj/cable,
+/turf/simulated/floor,
+/area/seaturtle)
 "nry" = (
 /obj/npc/trader/skeleton,
 /turf/simulated/floor/grime,
@@ -39422,9 +39375,7 @@
 	},
 /obj/table/reinforced/industrial/auto,
 /turf/simulated/floor/orange,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "nuY" = (
 /obj/decal/tile_edge/line/green{
 	color = "#e7c88c";
@@ -39669,21 +39620,6 @@
 	dir = 8
 	},
 /area/station/ranch)
-"nPH" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/obj/machinery/light/incandescent/blueish{
-	dir = 4;
-	nostick = 1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/plating/random,
-/area/seaturtle)
 "nQO" = (
 /obj/storage/closet/mantacontainerred,
 /turf/simulated/floor,
@@ -40346,9 +40282,7 @@
 	name = "Miner"
 	},
 /turf/simulated/floor/orange,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "oVY" = (
 /obj/table/glass/auto,
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
@@ -40390,9 +40324,7 @@
 "oXC" = (
 /obj/machinery/manufacturer/hangar,
 /turf/simulated/floor/orange,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "oZK" = (
 /obj/item/device/audio_log,
 /obj/item/audio_tape{
@@ -40493,6 +40425,16 @@
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
+"pjk" = (
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4
+	},
+/obj/access_spawn/maint,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/random,
+/area/seaturtle)
 "pmR" = (
 /obj/disposalpipe/segment,
 /obj/machinery/light/incandescent/netural{
@@ -40585,6 +40527,9 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen/therustykrab)
+"prA" = (
+/turf/space,
+/area/mantaSpace)
 "prD" = (
 /obj/stool/chair{
 	dir = 4
@@ -40716,16 +40661,6 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/south,
 /area/listeningpost/syndicateassaultvessel)
-"pEq" = (
-/obj/item/storage/toolbox/electrical{
-	pixel_y = 4
-	},
-/obj/item/storage/toolbox/mechanical{
-	pixel_y = -2
-	},
-/obj/table/reinforced/industrial/auto,
-/turf/simulated/floor/caution/east,
-/area/seaturtle)
 "pEQ" = (
 /obj/machinery/light/incandescent/netural,
 /obj/item/device/radio/intercom/security{
@@ -40842,13 +40777,8 @@
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "pWk" = (
-/obj/machinery/light/incandescent/blueish{
-	nostick = 1
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/plating/random,
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/shuttlebay,
 /area/seaturtle)
 "pWO" = (
 /obj/decal/fakeobjects{
@@ -41032,9 +40962,7 @@
 	},
 /obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/shuttlebay,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "qrl" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -41097,9 +41025,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/unsimulated/floor/orange,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "qBh" = (
 /obj/machinery/light/incandescent/cool{
 	dir = 8;
@@ -41230,16 +41156,13 @@
 	dir = 8
 	},
 /turf/simulated/floor/orange,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "qHg" = (
-/obj/machinery/door/airlock/pyro/maintenance{
-	dir = 4
+/obj/machinery/light/incandescent/blueish{
+	nostick = 1
 	},
-/obj/access_spawn/maint,
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating/random,
 /area/seaturtle)
@@ -41431,9 +41354,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/orange,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "rdx" = (
 /obj/machinery/portable_reclaimer,
 /obj/machinery/light/incandescent/netural{
@@ -41441,9 +41362,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/orange,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "rdE" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -41900,9 +41819,7 @@
 /obj/decal/cleanable/dirt/dirt3,
 /obj/machinery/vehicle/tank/minisub/mining,
 /turf/simulated/floor/shuttlebay,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "rXl" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/grime,
@@ -42012,14 +41929,6 @@
 	dir = 8
 	},
 /obj/disposalpipe/segment/mineral,
-/obj/item/storage/wall/mining{
-	dir = 8;
-	pixel_x = 32;
-	pixel_y = 0
-	},
-/obj/landmark/start{
-	name = "Miner"
-	},
 /turf/unsimulated/floor/orange,
 /area/mining)
 "skn" = (
@@ -42059,13 +41968,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/shuttlebay,
-/area/mining{
-	name = "Mining"
-	})
-"sqq" = (
-/obj/machinery/portable_reclaimer,
-/turf/simulated/floor,
-/area/seaturtle)
+/area/station/mining/staff_room)
 "srA" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/glass/bottle/holywater,
@@ -42149,9 +42052,19 @@
 	},
 /area/station/engine/monitoring)
 "sAu" = (
-/obj/storage/closet/welding_supply,
-/obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/shuttlebay,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/obj/machinery/light/incandescent/blueish{
+	dir = 4;
+	nostick = 1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/plating/random,
 /area/seaturtle)
 "sCW" = (
 /obj/wingrille_spawn/auto,
@@ -42200,13 +42113,9 @@
 /turf/simulated/floor/industrial,
 /area/station/mining/refinery)
 "sHX" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
+/obj/storage/closet/welding_supply,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/shuttlebay,
 /area/seaturtle)
 "sKg" = (
 /obj/machinery/camera{
@@ -42244,6 +42153,13 @@
 /obj/machinery/manufacturer/mining,
 /turf/simulated/floor/bot,
 /area/station/quartermaster/cargobay)
+"sPI" = (
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating/random,
+/area/seaturtle)
 "sQB" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -42637,9 +42553,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/unsimulated/floor/orange,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "tLV" = (
 /obj/decal/tile_edge/stripe/big,
 /obj/disposalpipe/segment{
@@ -42650,9 +42564,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/orange,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "tNr" = (
 /obj/machinery/light/incandescent/blueish{
 	dir = 8;
@@ -42722,9 +42634,7 @@
 	},
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "tYO" = (
 /obj/stool/chair/yellow{
 	dir = 8
@@ -42855,9 +42765,7 @@
 "uhg" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "uhU" = (
 /obj/table/glass/reinforced/auto,
 /obj/item/clipboard,
@@ -42964,9 +42872,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/orange,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "uvR" = (
 /obj/stool/bench/auto,
 /obj/decal/tile_edge/line/red{
@@ -43382,9 +43288,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/orange,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "vrU" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/blue,
@@ -43827,14 +43731,19 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/orange,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "wdi" = (
 /obj/cable,
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/sec_foyer)
+"wep" = (
+/obj/forcefield/energyshield/perma/doorlink,
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/mining_horizontal{
+	name = "Submarine Bay (Mining)"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/mining/staff_room)
 "wev" = (
 /obj/submachine/cargopad/robotics,
 /obj/machinery/light/incandescent/cool{
@@ -44041,9 +43950,7 @@
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/orange,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "wzU" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/wood/five,
@@ -44081,13 +43988,7 @@
 	},
 /area/station/engine/inner)
 "wCK" = (
-/obj/machinery/manufacturer/hangar,
-/obj/machinery/light/incandescent/netural{
-	dir = 8;
-	nostick = 1;
-	pixel_x = -10
-	},
-/turf/simulated/floor,
+/turf/space,
 /area/seaturtle)
 "wDz" = (
 /obj/wingrille_spawn/auto,
@@ -44261,6 +44162,9 @@
 	},
 /turf/simulated/floor/wood/five,
 /area/station/chapel/sanctuary)
+"xcu" = (
+/turf/simulated/floor/shuttlebay,
+/area/station/mining/staff_room)
 "xcQ" = (
 /obj/machinery/manufacturer/medical,
 /turf/simulated/floor/bot,
@@ -44354,9 +44258,7 @@
 "xlP" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "xod" = (
 /obj/storage/crate/packing,
 /turf/simulated/floor/bot,
@@ -44392,11 +44294,14 @@
 	},
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/orange,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "xqn" = (
-/turf/simulated/floor/caution/east,
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	pixel_y = 20
+	},
+/turf/simulated/floor/shuttlebay,
 /area/seaturtle)
 "xqw" = (
 /obj/cable{
@@ -44426,6 +44331,12 @@
 /area/station/science/chemistry)
 "xsU" = (
 /turf/simulated/floor/shuttlebay,
+/area/seaturtle)
+"xtQ" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating/random,
 /area/seaturtle)
 "xuW" = (
 /obj/table/reinforced/auto,
@@ -44749,9 +44660,7 @@
 "xUP" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/orange,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "xVb" = (
 /obj/machinery/vending/security,
 /obj/machinery/light/incandescent/warm{
@@ -44889,6 +44798,10 @@
 /obj/item/constructioncone,
 /turf/simulated/floor,
 /area/station/hallway/secondary/construction)
+"ygZ" = (
+/obj/item/constructioncone,
+/turf/simulated/floor,
+/area/seaturtle)
 "yhb" = (
 /obj/machinery/vending/snack,
 /obj/machinery/light/incandescent/warm{
@@ -44903,9 +44816,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/orange,
-/area/mining{
-	name = "Mining"
-	})
+/area/station/mining/staff_room)
 "yhC" = (
 /obj/cable{
 	icon_state = "6-8"
@@ -65656,7 +65567,7 @@ xpQ
 rdx
 fkb
 oXC
-aoQ
+kQX
 act
 aaa
 aaa
@@ -66257,9 +66168,9 @@ eBV
 xUP
 tLV
 smp
-yck
-yck
-yck
+xcu
+xcu
+xcu
 qlY
 act
 aaa
@@ -66559,10 +66470,10 @@ yhc
 yhc
 usW
 smp
-yck
+xcu
 rXk
-yck
-vMo
+xcu
+wep
 act
 aaa
 aaa
@@ -66856,15 +66767,15 @@ tPi
 bjS
 kly
 uFt
-nAY
+ldA
 wzI
 jyS
 jvz
 qGr
 lxB
 guv
-yck
-vMo
+xcu
+wep
 act
 aaa
 aaa
@@ -67158,15 +67069,15 @@ aAW
 bjT
 dPl
 cty
-nAY
+ldA
 uhg
 uhg
-nAY
+ldA
 heQ
 eHx
 lFv
-yck
-vMo
+xcu
+wep
 act
 aaa
 aaa
@@ -68067,13 +67978,13 @@ uUj
 gWm
 xoE
 gpN
-hnt
 ldA
-nAY
+ldA
+ldA
 tYp
 bZu
-aoQ
-aoQ
+kQX
+kQX
 drW
 aaa
 aaa
@@ -98443,7 +98354,7 @@ ado
 oOR
 oOR
 acI
-sqq
+wCK
 acn
 aYE
 aeD
@@ -98745,7 +98656,7 @@ ado
 oVY
 oOR
 acI
-ism
+wCK
 acn
 acn
 acn
@@ -98756,7 +98667,7 @@ ado
 ado
 ado
 mjE
-ado
+nrw
 aca
 aca
 aaa
@@ -99047,19 +98958,19 @@ ado
 pcM
 cAS
 acI
-fvG
+wCK
 ado
-ado
-ado
+xOT
+xsU
 ekh
-ado
+kpy
 aca
-ado
-ado
 ado
 mjE
 ado
-aca
+ado
+wCK
+wCK
 aaa
 aqQ
 aaa
@@ -99349,19 +99260,19 @@ ado
 aca
 aca
 aca
-pEq
+wCK
 eyn
 xqn
-xqn
-xqn
-xqn
+xOT
+xsU
+pWk
 aca
 ado
-kpy
-nvV
-sHX
-eBY
+mjE
+ado
+ado
 aca
+xOT
 aaa
 aaa
 aaa
@@ -99649,21 +99560,21 @@ bCS
 ado
 ado
 aca
+buc
+aca
+aca
+aca
 xOT
-aca
-aca
-aca
 xOT
 xsU
-bxb
-jhR
+xsU
 aca
 ado
 mjE
 ado
 ado
 aca
-aca
+xOT
 aaa
 aaa
 aaa
@@ -99951,19 +99862,19 @@ bCT
 ado
 mGJ
 aca
-xOT
+bue
 arP
 xOT
 acI
-buc
-xOT
 xsU
-byF
+ghy
+iGU
+xsU
 aca
-ado
+ygZ
 mjE
-ado
-ado
+ygZ
+aca
 aca
 aaa
 aaa
@@ -100253,20 +100164,20 @@ bIZ
 ado
 ado
 aca
-xOT
+bvt
 xOT
 xOT
 xsU
-xOT
-xOT
+xsU
+xsU
 xsU
 xsU
 aca
-ado
-mjE
-ado
-ado
 aca
+pjk
+aca
+aca
+xOT
 aaa
 aaa
 aaa
@@ -100555,20 +100466,20 @@ ado
 ado
 mWm
 aca
-xOT
+bxb
 xOT
 xOT
 ase
+byF
 xsU
-bvt
-bxc
 xsU
+sHX
 aca
-iGU
-mjE
-iGU
+ach
+eTk
 aca
-aca
+xOT
+xOT
 aaa
 aaa
 aaa
@@ -100857,19 +100768,19 @@ ado
 ado
 ado
 aca
-xOT
+bxc
 xOT
 acI
 acI
-xsU
-xsU
-xsU
-xsU
+eBY
+eBY
+eBY
 aca
 aca
+xtQ
 qHg
 aca
-aca
+xOT
 aaa
 aaa
 aaa
@@ -101163,13 +101074,13 @@ xOT
 xOT
 xOT
 aca
-bue
 xsU
+hUF
 xsU
 sAu
-aca
 ach
-ghy
+sPI
+aca
 aca
 aaa
 aaa
@@ -101467,12 +101378,12 @@ aca
 ast
 eWe
 eWe
-eWe
+jhR
 aca
 aca
-hUF
-pWk
 aca
+aca
+xOT
 aaa
 aaa
 aaa
@@ -101767,18 +101678,18 @@ ach
 aeb
 ach
 ach
-xsU
-bwY
-xsU
-nPH
-ach
-fSt
-aca
-aca
-aaa
-aaa
-aaa
-aaa
+wCK
+wCK
+wCK
+wCK
+wCK
+wCK
+wCK
+wCK
+prA
+prA
+prA
+prA
 aaa
 aaa
 aaa
@@ -102069,18 +101980,18 @@ aca
 aca
 aca
 ast
-jYU
-jYU
-byE
-aca
-aca
-aca
-aca
-aaa
-aaa
-aaa
-aaa
-aaa
+wCK
+wCK
+wCK
+wCK
+wCK
+wCK
+wCK
+prA
+prA
+prA
+prA
+prA
 aaa
 aaa
 aaa
