@@ -783,7 +783,7 @@
 /obj/machinery/rkit/Topic(href, href_list)
 	if (usr.stat)
 		return
-	if ((in_interact_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)) || HasWirelessInteractor(usr))
+	if ((in_interact_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
 		src.add_dialog(usr)
 
 		switch(href_list["tp"])

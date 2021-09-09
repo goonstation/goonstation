@@ -52,15 +52,20 @@
 		if(!broken)
 			RegisterSignal(src.donor, COMSIG_CLICK, .proc/ranged_click)
 			RegisterSignal(src.donor, COMSIG_ATTACKBY, .proc/flash_check)
+			M.mob_flags |= USR_DIALOG_UPDATES_RANGE
 
 	on_removal()
 		..()
+		var/mob/M = src.donor
 		if(!broken)
 			UnregisterSignal(src.donor, COMSIG_CLICK)
+			M.mob_flags &= ~USR_DIALOG_UPDATES_RANGE
 		UnregisterSignal(src.donor, COMSIG_ATTACKBY)
 
 	on_broken(var/mult = 1)
+		var/mob/M = src.donor
 		if (!..())
 			return
 		src.donor.reagents.add_reagent("nanites", 0.5 * mult) //you want borg powers? Well, come and get 'em!
 		UnregisterSignal(src.donor, COMSIG_CLICK)
+		M.mob_flags &= ~USR_DIALOG_UPDATES_RANGE

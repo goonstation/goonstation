@@ -104,7 +104,7 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 	else if (source in bible_contents && locate(/obj/item/storage/bible) in range(1, user)) // whoever added the global bibles, fuck you
 		return TRUE
 	else
-		if (iscarbon(user))
+		if (iscarbon(user) && !istype(source, /obj/machinery))
 			var/mob/living/carbon/C = user
 			if ((C.bioHolder.HasEffect("telekinesis")) && get_dist(source, user) <= 7) //You can only reach stuff within your screen.
 				var/X = source:x
@@ -124,34 +124,6 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 					O.icon = 'icons/effects/effects.dmi'
 					O.icon_state = "nothing"
 					flick("empdisable",O)
-					sleep(0.5 SECONDS)
-					qdel(O)
-
-				return TRUE
-
-			else if (istype(C.organHolder.augmentation_nerve, /obj/item/organ/augmentation/head/wireless_interact) && get_dist(source, user) <= 7)
-				var/obj/item/organ/augmentation/head/wireless_interact/WI = C.organHolder.augmentation_nerve
-				var/X = source:x
-				var/Y = source:y
-				var/Z = source:z
-				if(WI.flashed == TRUE)
-					boutput(user, "<span class='alert'>Your augmentation is recovering from being flashed.</span>")
-					return FALSE
-				if(isrestrictedz(Z) || isrestrictedz(user.z))
-					boutput(user, "<span class='alert'>Your augmentation doesn't seem to work here.</span>")
-					return FALSE
-				if(!istype(source, /obj) || istype(source, /obj/item))
-					return FALSE
-				SPAWN_DBG(0)
-					var/obj/overlay/O = new /obj/overlay ( locate(X,Y,Z) )
-					O.name = "magnetic touch"
-					O.anchored = 1
-					O.set_density(0)
-					O.layer = FLY_LAYER
-					O.set_dir(pick(cardinal))
-					O.icon = 'icons/effects/effects.dmi'
-					O.icon_state = "nothing"
-					flick("emppulse",O)
 					sleep(0.5 SECONDS)
 					qdel(O)
 

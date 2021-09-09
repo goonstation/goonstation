@@ -160,6 +160,8 @@
 				var/mob/living/silicon/ghostdrone/G = user
 				return !G.active_tool
 			. = TRUE
+		else if(HasWirelessInteractor(user))
+			. = TRUE
 
 	proc/client_login(var/mob/user)
 		return

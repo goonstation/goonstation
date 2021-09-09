@@ -633,17 +633,17 @@
 					var/atom/movable/vended = new product_path(src.get_output_location()) // changed from obj, because it could be a mob, THANKS VALUCHIMP
 					vended.layer = src.layer + 0.1 //So things stop spawning under the fukin thing
 					if(isitem(vended))
-						if(!get_dist(usr, src) > 1)
-							usr.put_in_hand_or_eject(vended)
-						else
+						if(get_dist(usr, src) > 1)
 							vended.set_loc(src.loc)
+						else
+							usr.put_in_hand_or_eject(vended)
 					// else, just let it spawn where it is
 				else if (player_list)
 					playervended.layer = src.layer + 0.3 //To get over the CRT layer
-					if(!get_dist(usr, src.loc) > 1)
-						usr.put_in_hand_or_eject(playervended) // try to eject it into the users hand, if we can
-					else
+					if(get_dist(usr, src.loc) > 1)
 						playervended.set_loc(src.loc)
+					else
+						usr.put_in_hand_or_eject(playervended) // try to eject it into the users hand, if we can
 				else if (isicon(R.product_path))
 					var/icon/welp = icon(R.product_path)
 					if (welp.Width() > 32 || welp.Height() > 32)
@@ -683,10 +683,10 @@
 				if (src.credit > 0)
 					var/obj/item/spacecash/returned = unpool(/obj/item/spacecash)
 					returned.setup(src.get_output_location(), src.credit)
-					if(!get_dist(usr, src) > 1)
-						usr.put_in_hand_or_eject(returned) // try to eject it into the users hand, if we can
-					else
+					if(get_dist(usr, src) > 1)
 						returned.set_loc(src.loc)
+					else
+						usr.put_in_hand_or_eject(returned) // try to eject it into the users hand, if we can
 					src.credit = 0
 					boutput(usr, "<span class='notice'>You receive [returned].</span>")
 					src.generate_HTML(1)
@@ -2748,10 +2748,10 @@
 
 		if(href_list["eject"])
 			if(holding)
-				if(!get_dist(usr, src) > 1)
-					usr.put_in_hand_or_eject(holding) // try to eject it into the users hand, if we can
-				else
+				if(get_dist(usr, src) > 1)
 					holding.set_loc(src.loc)
+				else
+					usr.put_in_hand_or_eject(holding) // try to eject it into the users hand, if we can
 				holding = null
 				UpdateOverlays(null, "o2_vend_tank_overlay")
 				src.updateUsrDialog()
