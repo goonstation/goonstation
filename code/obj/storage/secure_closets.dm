@@ -605,7 +605,8 @@
 	/obj/item/device/light/flashlight,\
 	/obj/item/caution = 4,
 	/obj/item/clothing/gloves/long,
-	/obj/item/handheld_vacuum)
+	/obj/item/handheld_vacuum
+	/obj/item/lamp_manufacturer)
 
 /obj/storage/secure/closet/civilian/hydro
 	name = "\improper Botanical supplies locker"
