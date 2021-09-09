@@ -70,7 +70,7 @@
 		phos_target.desc = "A light [nameadjust] that has been coated with a phosphor to change its hue. A small label is marked '[ctrl_R]-[ctrl_G]-[ctrl_B]'."
 
 		phos_target.pixel_x = -4
-		phos_target.pixel_y = -8 //move bulb more towards output chute
+		phos_target.pixel_y = -9 //move bulb more towards output chute
 		phos_target.set_loc(src.loc)
 
 		playsound(src.loc, sound_process, 80, 1)
@@ -105,7 +105,7 @@
 /obj/machinery/phosphorizer/power_change()
 	var/image/I_panel = SafeGetOverlayImage("statuspanel", 'icons/obj/machines/phosphorizer.dmi', "powerpanel")
 	I_panel.plane = PLANE_SELFILLUM
-	I_panel.alpha = 150
+	I_panel.alpha = 220
 	if (status & BROKEN)
 		UpdateOverlays(null, "statuspanel", 0, 1)
 		if(src.phosphorizing) src.stop_phos()
@@ -160,8 +160,8 @@
 					playsound(src.loc, sound_happi, 20, 1)
 					stop_phos()
 				for (var/obj/item/M in src.contents)
-					M.pixel_x = -4
-					M.pixel_y = 2 //bulb being blorfed out the input slot
+					M.pixel_x = -3
+					M.pixel_y = 4 //bulb being blorfed out the input slot
 					M.set_loc(src.loc)
 				. = TRUE
 
