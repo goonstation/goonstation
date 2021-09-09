@@ -269,6 +269,8 @@
 					if(player.client.preferences.be_arcfiend) candidates += player.mind
 				if(ROLE_FLOCKMIND)
 					if(player.client.preferences.be_flock) candidates += player.mind
+				if(ROLE_CONSPIRATOR)
+					if(player.client.preferences.be_conspirator) candidates += player.mind
 				else
 					if(player.client.preferences.be_misc) candidates += player.mind
 
