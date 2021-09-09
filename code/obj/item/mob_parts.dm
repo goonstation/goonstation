@@ -255,6 +255,8 @@ ABSTRACT_TYPE(/obj/item/parts)
 
 	//for humans
 	attach(var/mob/living/carbon/human/attachee,var/mob/attacher,var/both_legs = 0)
+		if(!can_act(attacher))
+			return
 		if(!src.easy_attach)
 			if(!surgeryCheck(attachee, attacher))
 				return
