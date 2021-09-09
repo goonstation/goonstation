@@ -149,7 +149,7 @@
 		if (!user || !victim || !ismob(victim))
 			return
 
-		if (prob(misfire_chance) || ((user.job == "Clown") && prob(10))) // reliability check
+		if (prob(misfire_chance) || (ismob(user) && (user.job == "Clown") && prob(10))) // reliability check
 			misfire_chance++
 			type = "fizzle" // ha ha
 
