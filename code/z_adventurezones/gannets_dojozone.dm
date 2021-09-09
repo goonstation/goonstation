@@ -171,34 +171,32 @@ Contents:
 	name = "unfinished blade"
 	desc = "A blade that still requires some work before it'll be an effective weapon."
 	icon = 'icons/obj/items/weapons.dmi'
-	icon_state = "katana"
+	icon_state = "katana_un"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "rods"
+
+	force = 8
+	throwforce = 12
+	throw_speed = 5
+	throw_range = 10
+	stamina_damage = 20
+	stamina_cost = 16
+	stamina_crit_chance = 25
 
 	var/strikes = 0
 	var/temperature = T20C
-	var/strikes_to_complete = 10//1000
+	var/strikes_to_complete = 1000
 
 	New()
 		..()
 
-
 	attackby(obj/item/H as obj, mob/user as mob)
 		if (istype(H, /obj/item/dojohammer))
-			actions.start(new/datum/action/bar/icon/forge_katana(user, H, src), user)
-			// if (prob(85))
-			// 	boutput(user, "<span class='notice'>You pound the [src] with the [H].</span>")
-			// 	playsound(loc, "sound/impact_sounds/Metal_Clang_1.ogg", 60, 1)
-			// else
-			// 	if (prob(50))
-			// 		boutput(user, "<span class='notice'>The steel groans and bends under your swings, forming a menacing blade!</span>")
-			// 		playsound(loc, "sound/items/blade_pull.ogg", 60, 1)
-			// 		new /obj/item/bloodthirsty_blade(src.loc)
-			// 		del(src)
-			// 	else
-			// 		boutput(user, "<span class='notice'>The steel grows brittle under your swings, but takes on a tremendously sharp edge!</span>")
-			// 		playsound(loc, "sound/items/blade_pull.ogg", 60, 1)
-			// 		new /obj/item/fragile_sword(src.loc)
-			// 		del(src)
+			var/obj/table/anvil/A = locate() in get_turf(src)
+			if(A)
+				actions.start(new/datum/action/bar/icon/forge_katana(user, H, src, A), user)
 
+	// black body radiation color temperature
 	proc/set_real_color()
 		var/input = temperature / 100
 
@@ -230,42 +228,66 @@ Contents:
 				blue = 138.5177312231 * log(blue) - 305.0447927307
 		blue = clamp(blue, 0, 255)
 
-		color = rgb(red, green, blue) //changing obj.color is not expensive, and smooths imperfect light transitions
+		color = rgb(red, green, blue)
 
 	afterattack(var/atom/target, var/mob/user)
 		var/obj/item/reagent_containers/RC = target
-		if(istype(RC))
-			if(RC.is_open_container() && RC.reagents.total_volume >= 120)
-				RC.reagents.smoke_start(RC.reagents.total_volume)
-				if(src.strikes > src.strikes_to_complete)
-					new /obj/item/fragile_sword(get_turf(target))
+		var/can_quench = istype(RC) && RC.is_open_container()  && RC.reagents.total_volume >= 120
+		if( can_quench && (src.strikes > (src.strikes_to_complete * 0.25)) && (src.temperature > T0C+1000))
+			if( src.strikes > src.strikes_to_complete )
+				if(RC.reagents.has_reagent("blood", 100))
+					var/blood = RC.reagents.get_reagent_amount("blood")/2
+					RC.reagents.remove_reagent("blood", blood)
+					RC.reagents.add_reagent("miasma", blood)
+					RC.reagents.smoke_start(RC.reagents.total_volume)
+					playsound(loc, "sound/effects/blood.ogg", 30)
+					new /obj/item/bloodthirsty_blade(get_turf(target))
 					qdel(src)
+				else
+					if(RC.reagents.has_reagent("reversium",1))
+						new /obj/item/katana/reverse(get_turf(target))
+					else
+						new /obj/item/katana/crafted(get_turf(target))
+					RC.reagents.smoke_start(RC.reagents.total_volume)
+					qdel(src)
+			else
+				RC.reagents.smoke_start(RC.reagents.total_volume)
+				var/obj/item/fragile_sword/sword = new(get_turf(target))
+
+				// scale sword based on % complete
+				sword.maximum_force = max(30 * (src.strikes / src.strikes_to_complete),10)
+				sword.force = sword.maximum_force
+				sword.throwforce = 10
+				qdel(src)
 
 
 
 /datum/action/bar/icon/forge_katana
-	duration = 2.0 SECONDS
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
+	duration = 1.5 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED | INTERRUPT_ACTION
 	id = "forge_katana"
-	icon = 'icons/obj/items/weapons.dmi'
-	icon_state = "katana"
+
 	var/mob/living/user
 	var/obj/item/dojohammer/H
 	var/obj/item/unfinished_katana/target
+	var/obj/table/anvil/A
 	var/looped = 0
 	var/flashing = FALSE
 	var/outline
 
-	New(usermob, tool, targetmob, loopcount = 0)
+	New(usermob, tool, targetmob, anvil, loopcount = 0)
 		user = usermob
 		H = tool
 		target = targetmob
+		A = anvil
 		looped = loopcount
+		icon = target.icon
+		icon_state = target.icon_state
 		..()
 
 	onUpdate()
 		..()
-		if(get_dist(user, target) > 1 || user == null || target == null)
+		if(get_dist(user, target) > 1 || get_dist(A, target) > 0 || user == null || target == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		target.temperature -= 5
@@ -300,16 +322,13 @@ Contents:
 		src.loopStart()
 		return
 
-	loopStart()
-		..()
-		playsound(target,'sound/impact_sounds/Metal_Clang_3.ogg', 60, pitch=1-(rand()*0.1))
-		target.strikes++
-
 	onEnd()
 		if(get_dist(user, target) > 1 || user == null || target == null || !user.find_in_hand(H))
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		playsound(target,'sound/impact_sounds/Metal_Clang_3.ogg', 60, pitch=1-(rand()*0.2))
+		target.strikes++
 
 		looped++
 		src.onRestart()
@@ -421,14 +440,6 @@ Contents:
 	icon = 'icons/obj/dojo.dmi'
 	icon_state = "stone_edge"
 
-/obj/decal/fakeobjects/furnace
-	name = "tatara"
-	desc = "A large, traditional, swordsmithing furnace. It is lit and the flame is roaring."
-	icon = 'icons/obj/large/32x64.dmi'
-	icon_state = "furnace"
-	density = 1
-	anchored = 2
-
 /obj/machinery/dojo_tatara
 	name = "tatara"
 	desc = "A large, traditional, swordsmithing furnace. It is lit and the flame is roaring."
@@ -436,35 +447,49 @@ Contents:
 	icon_state = "furnace"
 	density = 1
 	anchored = 2
+	var/obj/effects/tatara/effect
 
 	var/temperature = T0C + 870
 
+	New()
+		..()
+		effect = new /obj/effects/tatara(src)
+		vis_contents += effect
+
 	attackby(obj/item/W, mob/user as mob)
-		var/obj/item/unfinished_katana/K = W
-		if(istype(K))
-			user.u_equip(K)
-			K.set_loc(src)
+		if(istype(W, /obj/item/unfinished_katana) || istype(W, /obj/item/rods))
+			user.u_equip(W)
+			W.set_loc(src)
+			src.visible_message("[user] places [W] in \the [src].")
 
 	attack_hand(mob/user)
 		. = ..()
-		var/obj/item/unfinished_katana/K
 		if(length(src.contents))
+			var/obj/item/unfinished_katana/K
 			K = pick(src.contents)
-			K.set_real_color()
+			if(istype(K))
+				K.set_real_color()
 			usr.put_in_hand_or_eject(K)
 
-	process()
-		for(var/obj/item/unfinished_katana/K in contents)
-			K.temperature = lerp(K.temperature, src.temperature, 0.3)
-		temperature = max(src.temperature-25, initial(src.temperature))
+	process(mult)
+		for(var/obj/O in contents)
+			if(istype(O,/obj/item/unfinished_katana))
+				var/obj/item/unfinished_katana/K = O
+				K.temperature = lerp(K.temperature, src.temperature, 0.3)
+				if(K.temperature >= src.temperature * 0.90)
+					effect.spark_up()
+			if(istype(O,/obj/item/rods))
+				var/obj/item/rods/R = O
+				if(prob(1*mult))
+					if((R.material?.material_flags & MATERIAL_METAL) && R.material.getProperty("density") >= 30 && R.material.getProperty("hard") >= 15)
+						if (R.amount > 1)
+							R.change_stack_amount(-1)
+						else
+							qdel(O)
+						new /obj/item/unfinished_katana(src)
+						effect.spark_up()
 
-/obj/decal/fakeobjects/anvil
-	name = "anvil"
-	desc = "A mighty iron anvil. It appears well worn."
-	icon = 'icons/obj/dojo.dmi'
-	icon_state = "anvil"
-	density = 1
-	anchored = 2
+		temperature = max(src.temperature-25, initial(src.temperature))
 
 /obj/table/anvil
 	name = "anvil"
@@ -475,13 +500,11 @@ Contents:
 	anchored = 2
 	parts_type = null
 
-/obj/decal/fakeobjects/bellows
-	name = "bellows"
-	desc = "An old bellows. Used to keep a flame alight."
-	icon = 'icons/obj/dojo.dmi'
-	icon_state = "bellows"
-	density = 1
-	anchored = 2
+	attackby(obj/item/W as obj, mob/user as mob, params)
+		if (istype(W) && src.place_on(W, user, params))
+			return
+		else
+			return ..()
 
 /obj/dojo_bellows
 	name = "bellows"
@@ -493,12 +516,13 @@ Contents:
 
 	attack_hand(mob/user)
 		. = ..()
-		if(ON_COOLDOWN(src,"bellows", 1 SECOND))
+		if(ON_COOLDOWN(src,"bellows", 2 SECOND))
 			boutput(user,"The bellows are still working...")
 		else
+			playsound(src, "sound/impact_sounds/Stone_Scrape_1.ogg", 40)
 			for(var/obj/machinery/dojo_tatara/T in orange(2))
-				src.visible_message("\The [src] breath life into \the [T] causing it errupt in flames.", blind_message="A loud roar of air causes a fire to errupt")
-				T.temperature = clamp(T.temperature + 150, initial(T.temperature)-150, T0C+2000)
+				src.visible_message("\The [src] breathe life into \the [T] causing it errupt in flames.", blind_message="A loud roar of air causes a fire to errupt.")
+				T.temperature = clamp(T.temperature + 150, initial(T.temperature)-150, T0C+3000)
 
 /obj/decal/fakeobjects/swordrack
 	name = "katana rack"
