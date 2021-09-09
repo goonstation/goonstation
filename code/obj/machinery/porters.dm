@@ -385,6 +385,15 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		src.go_out()
 		return
 
+	Exited(atom/movable/Obj)
+		..()
+		src.occupant = null
+		build_icon()
+		for (var/obj/item/I in src)
+			I.set_loc(src.loc)
+		if (processing)
+			UnsubscribeProcess()
+
 	attackby(obj/item/W, mob/user as mob)
 		if (istype(W, /obj/item/device/pda2) && W:ID_card)
 			W = W:ID_card
