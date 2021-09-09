@@ -259,6 +259,8 @@
 					if(player.client.preferences.be_blob) candidates += player.mind
 				if(ROLE_SPY_THIEF)
 					if(player.client.preferences.be_spy) candidates += player.mind
+				if(ROLE_GANG_LEADER)
+					if(player.client.preferences.be_gangleader) candidates += player.mind
 				if(ROLE_WEREWOLF)
 					if(player.client.preferences.be_werewolf) candidates += player.mind
 				if(ROLE_ARCFIEND)
