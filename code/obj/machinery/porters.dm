@@ -437,8 +437,11 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		if (src.locked)
 			boutput(usr, "<span class='alert'>The Port-A-Brig is locked!</span>")
 			return
-		src.occupant.set_loc(src.loc)
-		src.occupant.changeStatus("weakened", 2 SECONDS)
+		if(src.occupant.loc == src)
+			src.occupant.set_loc(src.loc)
+			src.occupant.changeStatus("weakened", 2 SECONDS)
+		else
+			src.visible_message("<span class='notice'>The [src] is mysteriously empty.</span>")
 		src.occupant = null
 		build_icon()
 		for (var/obj/item/I in src) //What if you drop something while inside? WHAT THEN HUH?
