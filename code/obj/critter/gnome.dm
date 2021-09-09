@@ -105,11 +105,15 @@
 					src.attacking = 0
 					return
 
-	proc/water_plant(planter)
-		// Sorry for this, but I can't come up with a better solution
-		var/datum/reagents/reagents_temp = new/datum/reagents(60)
-		src.visible_message("<span class='alert'><b>[src] here did his job [planter].</b></span>")
-		reagents_temp.my_atom = src
-		reagents_temp.add_reagent("water", 60)
-		reagents_temp.trans_to(planter, 60)
-		qdel(reagents_temp)
+	proc/water_plant(var/obj/machinery/plantpot/planter)
+		if (planter.current && !planter.dead && planter.water_level < 2)
+			// Sorry for this, but I can't come up with a better solution
+			var/datum/reagents/reagents_temp = new/datum/reagents(60)
+			src.visible_message("<span class='alert'><b>[src] here did his job [planter].</b></span>")
+			reagents_temp.my_atom = src
+			reagents_temp.add_reagent("water", 60)
+			reagents_temp.trans_to(planter, 60)
+			qdel(reagents_temp)
+		src.task = "thinking"
+		src.attacking = 0
+

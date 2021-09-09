@@ -1133,7 +1133,7 @@
 
 /obj/npc/trader/gnome
 	icon = 'icons/obj/trader.dmi'
-	icon_state = "bee"
+	icon_state = "gnome"
 	picture = "bee.png"
 	name = "David the Space Gnome" // like the tribe of bumblebees
 	trader_area = "/area/gnome_trader"
@@ -1143,15 +1143,21 @@
 		/////////////////////////////////////////////////////////
 		//// sell list //////////////////////////////////////////
 		/////////////////////////////////////////////////////////
-		src.goods_sell += new /datum/commodity/guardbot_kit(src)
+		src.goods_sell += new /datum/commodity/alien_seed(src)
 		src.goods_sell += new /datum/commodity/guardbot_medicator(src)
 		src.goods_sell += new /datum/commodity/guardbot_flash(src)
 		src.goods_sell += new /datum/commodity/guardbot_taser(src)
 		src.goods_sell += new /datum/commodity/guardbot_smoker(src)
 		src.goods_sell += new /datum/commodity/royaljelly(src)
-		src.goods_sell += new /datum/commodity/beeegg(src)
-		src.goods_sell += new /datum/commodity/b33egg(src)
+
 		src.goods_sell += new /datum/commodity/bee_kibble(src)
+
+		// Randomized "uncommon loot"
+		if (prob(50))
+			src.goods_sell += new /datum/commodity/beeegg(src)
+		else
+			src.goods_sell += new /datum/commodity/b33egg(src)
+
 		/////////////////////////////////////////////////////////
 		//// buy list ///////////////////////////////////////////
 		/////////////////////////////////////////////////////////
@@ -1167,7 +1173,7 @@
 
 		sell_dialogue = ""
 
-		buy_dialogue = "[src.name] buzzes inquisitively."
+		buy_dialogue = "Please take a look."
 
 		angrynope = "You knoblin! Peat iit!"
 		whotext = "Ii am a gnome, frriiend. I grov and sell blants."

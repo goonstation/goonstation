@@ -523,6 +523,19 @@
 	lowerfluc = -10
 	onmarket = 0
 
+/datum/commodity/alien_seed
+	comname = "Strange Seed"
+	comtype = /obj/item/seed/alien
+	desc = "Sprouted from an unknown origin, these seeds hold many secrets."
+	onmarket = 0
+	price = 100
+	baseprice = 50
+	upperfluc = 10
+	lowerfluc = -10
+	onmarket = 0
+
+
+
 //////////////////////
 //// pod sales ///////
 //////////////////////
