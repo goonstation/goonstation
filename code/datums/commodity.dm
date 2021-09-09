@@ -523,6 +523,7 @@
 	lowerfluc = -10
 	onmarket = 0
 
+// Gnome trader
 /datum/commodity/alien_seed
 	comname = "Strange Seed"
 	comtype = /obj/item/seed/alien
@@ -534,16 +535,50 @@
 	lowerfluc = -10
 	onmarket = 0
 
+/datum/commodity/pisscher
+	comname = "Piss Pitcher"
+	comtype = /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher/pisscher
+	desc = "Botanist's friend and precursor for a great fertilizer... but why is it in a pitcher!?"
+	onmarket = 0
+	price = 1000
+	upperfluc = 400
+	lowerfluc = -200
+
+/datum/commodity/saltpetre_bottle
+	comname = "Saltpetre Bottle (100u)"
+	comtype = /obj/item/reagent_containers/glass/bottle/saltpetre
+	desc = "Essential fertilizer for quality crops."
+	onmarket = 0
+	price = 1000
+	upperfluc = 0
+	lowerfluc = 0
+
 /datum/commodity/splicer
 	comname = "LUCA 1005 - Splicer Upgrade"
 	comtype = /obj/item/plantModule/splicer
 	desc = "Increases PlantMaster Mk3 splicing chances by using the science behind the genome of the last universal common ancestor."
 	onmarket = 0
-	price = 10 // TODO: increase the cost to 50k or something
-	baseprice = 50
-	upperfluc = 10
-	lowerfluc = -10
+	price = 50000
+	upperfluc = 10000
+	lowerfluc = -10000
+
+/datum/commodity/humanmeat
+	comname = "Human Meat"
+	comtype = /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/
+	desc_buy = "Better not ask where it is needed."
 	onmarket = 0
+	price = 5000
+	upperfluc = 500
+	lowerfluc = -500
+
+/datum/commodity/monkeymeat
+	comname = "Monkey Meat"
+	comtype = /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat
+	desc_buy = "Not as ... uh... nutritious as its sapient form."
+	onmarket = 0
+	price = 1000
+	upperfluc = 150
+	lowerfluc = -150
 
 
 //////////////////////

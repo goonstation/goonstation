@@ -37,11 +37,14 @@
 						plant_plan = "clear"
 						src.target = planter
 						return
+					/*
+					TODO:
 					// VERY rarely you might see them plant something, usually strange seeds
 					if (planter.current && prob(1))
 						plant_plan = "plant"
 						src.target = planter
 						return
+					*/
 		return ..()
 
 	CritterAttack(mob/M)
@@ -64,22 +67,18 @@
 
 			if (plant_plan == "water")
 				if (planter.current && !planter.dead)
-					// I believe this does not need any chat messages
-					//var/R = planter.reagents
-					//C.reagents.add_reagent("methanol", 0.5 / length(mobs_affected))
+					// TODO: move this to an action bar
+					// TODO: remove this debug message once happy with an action bar
 					src.visible_message("<span class='alert'><b>[src] waters [planter].</b></span>")
-					//obj/
-					//SETUP_GENERIC_ACTIONBAR(src, planter, 2 SECONDS, /obj/critter/garden_gnome/proc/water_plant, list(planter),
-					//'icons/obj/hydroponics/items_hydroponics.dmi', "wateringcan", "Hello", null)
 					src.water_plant(planter)
 					src.task = "thinking"
 					src.attacking = 0
 					return
+			/*
+			// TODO: the rare plant plan
 			if (plant_plan == "plant")
 				if (!planter.current)
 					// Half of the time regular plants, half of the time strange seeds and some mutations
-					//var/seed
-					//var/species
 					src.visible_message("Seed!")
 					if (prob(100))
 						for (var/A in concrete_typesof(/datum/plant))
@@ -92,19 +91,22 @@
 					src.attacking = 0
 					return
 				else
-					/*
-					TODO: make the gnome say something angry. Here is how critters speak to someone high in THC.
+					//TODO: make the gnome say something angry when it fails a task. Here is how critters speak to someone high in THC.
 					var/text = pick_smart_string("shit_bees_say_when_youre_high.txt", "strings", list("M"="[M]", "beeMom"=bee.beeMom ? bee.beeMom : "Mom", "other_bee"=istype(bee, /obj/critter/domestic_bee/sea) ? "Seabee" : "Spacebee"), bee)
 					if(!M.client.preferences.flying_chat_hidden)
 					var/speechpopupstyle = "font-family: 'Comic Sans MS'; font-size: 8px;"
 					chat_text = make_chat_maptext(bee, text, "color: [rgb(194,190,190)];" + speechpopupstyle, alpha = 140)
 					M.show_message("[bee] buzzes \"[text]\"",2, assoc_maptext = chat_text)
 					break
-					*/
 					src.task = "thinking"
 					src.attacking = 0
 					src.plant_plan = ""
 					return
+			*/
+	// TODO: Attacking players
+	// Ranged attack: throws a seething tomato if there is enough distance between the target and a plant pot (so it wont kill plants by accident!)
+	// Alternative ranged attack: tosses a coconut
+	// Melee attack: Chainsaw attack, I guess
 
 	proc/water_plant(var/obj/machinery/plantpot/planter)
 		if (planter.current && !planter.dead && planter.water_level < 2)

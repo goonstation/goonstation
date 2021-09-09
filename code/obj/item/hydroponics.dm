@@ -8,6 +8,7 @@
 // - Plant formulas
 // - Garden Trowel
 // - Splicing Module
+// - Piss Pitcher
 
 //////////////////////////////////////////////// Chainsaw ////////////////////////////////////
 
@@ -613,16 +614,33 @@
 
 	filled
 
-
-/*
-
-Modules that upgrade hydroponics PlantMaster
-
-*/
-
 /obj/item/plantModule/splicer
-	// this module increases the bottom chance from 0% to 30%.
 	icon = 'icons/obj/module.dmi'
 	icon_state = "splicing"
 	name = "LUCA 1005"
 	desc = "Used to enhance your PlantMaster Mk3, it greatly increases the odds of splicing seeds from very different genomes."
+
+/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher/pisscher
+	name = "Piss Pitcher"
+	desc = "It smells AWFUL!"
+	// TODO: could add random chance of vomiting when drinking from this. Would be hilarious.
+	New()
+		..()
+		src.color = rgb(220, 220, 75)
+		reagents.add_reagent("urine", 120)
+
+/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher/pisscher
+	name = "Piss Pitcher"
+	desc = "It smells AWFUL!"
+	// TODO: could add random chance of vomiting when drinking from this. Would be hilarious.
+	New()
+		..()
+		src.color = rgb(220, 220, 75)
+		reagents.add_reagent("urine", 120)
+
+/obj/item/reagent_containers/glass/bottle/saltpetre
+	name = "saltpetre bottle"
+	desc = "A reagent storage bottle."
+	icon_state = "largebottle"
+	initial_volume = 100
+	initial_reagents = "saltpetre"

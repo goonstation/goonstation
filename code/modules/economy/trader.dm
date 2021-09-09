@@ -1134,8 +1134,8 @@
 /obj/npc/trader/gnome
 	icon = 'icons/obj/trader.dmi'
 	icon_state = "gnome"
-	picture = "bee.png"
-	name = "David the Space Gnome" // like the tribe of bumblebees
+	//picture = "bee.png"
+	name = "David the Space Gnome"
 	trader_area = "/area/gnome_trader"
 
 	New()
@@ -1144,52 +1144,44 @@
 		//// sell list //////////////////////////////////////////
 		/////////////////////////////////////////////////////////
 		src.goods_sell += new /datum/commodity/alien_seed(src)
-		src.goods_sell += new /datum/commodity/guardbot_medicator(src)
-		src.goods_sell += new /datum/commodity/guardbot_flash(src)
-		src.goods_sell += new /datum/commodity/guardbot_taser(src)
-		src.goods_sell += new /datum/commodity/guardbot_smoker(src)
-		src.goods_sell += new /datum/commodity/royaljelly(src)
+		src.goods_sell += new /datum/commodity/drugs/cannabis(src)
+		src.goods_sell += new /datum/commodity/saltpetre_bottle(src)
 
-		src.goods_sell += new /datum/commodity/bee_kibble(src)
+		// Technically a better deal than saltpetre, so it is a rare include
+		if (prob(30))
+			src.goods_sell += new /datum/commodity/pisscher(src)
 
-		// Randomized "uncommon loot"
-		if (prob(50))
-			src.goods_sell += new /datum/commodity/beeegg(src)
-		else
-			src.goods_sell += new /datum/commodity/b33egg(src)
-
-		// TODO: make this a rare drop
 		src.goods_sell += new /datum/commodity/splicer(src)
 
 		/////////////////////////////////////////////////////////
 		//// buy list ///////////////////////////////////////////
 		/////////////////////////////////////////////////////////
+		src.goods_buy += new /datum/commodity/humanmeat(src)
+		src.goods_buy += new /datum/commodity/monkeymeat(src)
 		src.goods_buy += new /datum/commodity/honey(src)
-		src.goods_buy += new /datum/commodity/contraband/spareid/bee(src)
-		src.goods_buy += new /datum/commodity/contraband/captainid/bee(src)
-		src.goods_buy += new /datum/commodity/goldbar(src)
+		// Would really like him to buy chems, namely mead and beer
 		/////////////////////////////////////////////////////////
 
-		greeting= {"Vat te -- hov diid you get iin? Oh knevermiind. Do knot hurrt ourr blants orr you viill rregrret iit."}
+		greeting= {"Make blants, not unfrriiendly panter."}
 
 		portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
 
-		sell_dialogue = ""
+		sell_dialogue = "Ii am a pit chort tiis mont, put Ii can stiill puy sometiing."
 
-		buy_dialogue = "Please take a look."
+		buy_dialogue = "Blease take look."
 
-		angrynope = "You knoblin! Peat iit!"
+		angrynope = "You knobliin! Peat iit!"
 		whotext = "Ii am a gnome, frriiend. I grov and sell blants."
 
 		successful_sale_dialogue = list("Oh I rreally have peen waiiting to get my miittens on tiis.")
 
 		failed_sale_dialogue = list("Only a stiinky trroll could come ub viit a stinky offerr liike that!")
 
-		successful_purchase_dialogue = list("Thank you verry much!",
+		successful_purchase_dialogue = list("Tank you verry much!",
 		"Kood. Ii'll see if I can krov morre.")
 
-		failed_purchase_dialogue = list("[src.name] gives a somber little buzz.",
-			"[src.name] pouts. You feel pretty bad about yourself.")
+		failed_purchase_dialogue = list("Ach! Forrget iit!",
+			"Sliibbery knelf, I viil not pe trriicked liike tat!")
 
 		pickupdialogue = "Alrriikht. Blease drrag the crrate viit you."
 
