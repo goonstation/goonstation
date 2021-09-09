@@ -534,6 +534,16 @@
 	lowerfluc = -10
 	onmarket = 0
 
+/datum/commodity/splicer
+	comname = "LUCA 1005 - Splicer Upgrade"
+	comtype = /obj/item/plantModule/splicer
+	desc = "Increases PlantMaster Mk3 splicing chances by using the science behind the genome of the last universal common ancestor."
+	onmarket = 0
+	price = 10 // TODO: increase the cost to 50k or something
+	baseprice = 50
+	upperfluc = 10
+	lowerfluc = -10
+	onmarket = 0
 
 
 //////////////////////

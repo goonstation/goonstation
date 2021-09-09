@@ -7,6 +7,7 @@
 // - Compost bag
 // - Plant formulas
 // - Garden Trowel
+// - Splicing Module
 
 //////////////////////////////////////////////// Chainsaw ////////////////////////////////////
 
@@ -611,3 +612,17 @@
 	icon_state = "bong"
 
 	filled
+
+
+/*
+
+Modules that upgrade hydroponics PlantMaster
+
+*/
+
+/obj/item/plantModule/splicer
+	// this module increases the bottom chance from 0% to 30%.
+	icon = 'icons/obj/module.dmi'
+	icon_state = "splicing"
+	name = "LUCA 1005"
+	desc = "Used to enhance your PlantMaster Mk3, it greatly increases the odds of splicing seeds from very different genomes."

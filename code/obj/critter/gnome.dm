@@ -25,22 +25,22 @@
 		if (task != "attacking")
 			if (--plant_check < 1)
 				plant_check = initial(plant_check)
-				// TODO: make sure no other gnome has the same target
 				for (var/obj/machinery/plantpot/planter in view(7, src))
 					// Gnomes mostly just water trays
-					if (planter.current && !planter.dead && planter.water_level < 2 && prob(30))
-						src.target = planter
-						plant_plan = "water"
-						return
+					if (planter.current && !planter.dead)
+						if (prob(50-(planter.water_level*10))) // The less water in a tray, the more likely a gnome is to water it
+							plant_plan = "water"
+							src.target = planter
+							return
 					// Rarely you might see gnomes keeping the place clean
 					if (planter.dead && prob(10))
-						src.target = planter
 						plant_plan = "clear"
+						src.target = planter
 						return
 					// VERY rarely you might see them plant something, usually strange seeds
 					if (planter.current && prob(1))
-						src.target = planter
 						plant_plan = "plant"
+						src.target = planter
 						return
 		return ..()
 
@@ -103,6 +103,7 @@
 					*/
 					src.task = "thinking"
 					src.attacking = 0
+					src.plant_plan = ""
 					return
 
 	proc/water_plant(var/obj/machinery/plantpot/planter)

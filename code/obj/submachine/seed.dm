@@ -12,6 +12,7 @@
 	var/list/seeds = list()
 	var/seedfilter = null
 	var/seedoutput = 1
+	var/spliceupgraded = 0
 	var/dialogue_open = 0
 	var/obj/item/seed/splicing1 = null
 	var/obj/item/seed/splicing2 = null
@@ -216,7 +217,10 @@
 						else
 							splice_chance += S.splice_mod
 
-				splice_chance = max(0,min(splice_chance,100))
+				var/chance_minimum = 0
+				if (spliceupgraded)
+					chance_minimum = 30
+				splice_chance = max(chance_minimum, min(splice_chance,100))
 
 				dat += "<b>Chance of Successful Splice:</b> [splice_chance]%<br>"
 				dat += "<A href='?src=\ref[src];splice=1'>(Proceed)</A> <A href='?src=\ref[src];splice_cancel=1'>(Cancel)</A><BR>"
@@ -476,8 +480,11 @@
 						else
 							splice_chance += S.splice_mod
 
-			// Cap probability between 0 and 100
-			splice_chance = max(0,min(splice_chance,100))
+			// Cap probability between 0 and 100, unless the machine has been upgraded
+			var/chance_minimum = 0
+			if (spliceupgraded)
+				chance_minimum = 30
+			splice_chance = max(chance_minimum,min(splice_chance,100))
 			if (prob(splice_chance)) // We're good, so start splicing!
 				// Create the new seed
 				var/obj/item/seed/S = unpool(/obj/item/seed)
@@ -660,6 +667,16 @@
 				else
 					boutput(user, "<span class='alert'>No items were loaded from the satchel!</span>")
 				S.satchel_updateicon()
+
+		else if (istype(W,/obj/item/plantModule/splicer))
+			if (spliceupgraded)
+				boutput(user, "<span class='alert'>There is already an upgrade installed.</span>")
+				return
+			spliceupgraded = 1
+			user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
+			user.drop_item()
+			logTheThing("combat", src, user, "[user] has added plant splice module ([W]) to ([src]) at [log_loc(user)].")
+			qdel(W)
 		else ..()
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
