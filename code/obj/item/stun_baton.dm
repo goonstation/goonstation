@@ -45,6 +45,7 @@
 	var/can_swap_cell = 1
 	var/beepsky_held_this = 0 // Did a certain validhunter hold this?
 	var/flipped = false //is it currently rotated so that youre grabbing it by the head?
+	var/misfire_chance = 1 //% chance that this baton will just fail to stun sporadically.
 
 	New()
 		..()
@@ -148,6 +149,10 @@
 		if (!user || !victim || !ismob(victim))
 			return
 
+		if (prob(misfire_chance) || ((user.job == "Clown") && prob(10))) // reliability check
+			misfire_chance++
+			type = "fizzle" // ha ha
+
 		// Sound effects, log entries and text messages.
 		switch (type)
 			if ("failed")
@@ -160,7 +165,7 @@
 				user.visible_message("<span class='alert'><B>[victim] has been prodded with the [src.name] by [user]! Luckily it was off.</B></span>")
 				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1, -1)
 				logTheThing("combat", user, victim, "unsuccessfully tries to stun [constructTarget(victim,"combat")] with the [src.name] at [log_loc(victim)].")
-
+				random_brute_damage(victim, 2 * src.force)
 				if (src.is_active && !(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, src.cost_normal) & CELL_SUFFICIENT_CHARGE))
 					if (user && ismob(user))
 						user.show_text("The [src.name] is out of charge!", "red")
@@ -170,14 +175,24 @@
 				user.visible_message("<span class='alert'><B>[user] has attempted to beat [victim] with the [src.name] but held it wrong!</B></span>")
 				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1, -1)
 				logTheThing("combat", user, victim, "unsuccessfully tries to beat [constructTarget(victim,"combat")] with the [src.name] at [log_loc(victim)].")
+				random_brute_damage(user, 2 * src.force)
 
 			if ("stun")
 				user.visible_message("<span class='alert'><B>[victim] has been stunned with the [src.name] by [user]!</B></span>")
 				logTheThing("combat", user, victim, "stuns [constructTarget(victim,"combat")] with the [src.name] at [log_loc(victim)].")
 				JOB_XP(victim, "Clown", 3)
-				else
-					flick(flick_baton_active, src)
-					playsound(src, "sound/impact_sounds/Energy_Hit_3.ogg", 50, 1, -1)
+				flick(flick_baton_active, src)
+				playsound(src, "sound/impact_sounds/Energy_Hit_3.ogg", 50, 1, -1)
+
+			if ("fizzle")
+				logTheThing("combat", user, null, "experiences a baton misfire with the [src.name] at [log_loc(user)].")
+				user.visible_message("<span class='alert'><B>[user]'s [src.name] fizzles out on impact!</B></span>")
+				JOB_XP_FORCE(user, "Clown", 3)
+				flick(flick_baton_active, src)
+				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1, -1)
+				random_brute_damage(victim, 2 * src.force)
+				return
+
 
 			else
 				logTheThing("debug", user, null, "<b>Convair880</b>: stun baton ([src.type]) do_stun() was called with an invalid argument ([type]), aborting. Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
@@ -221,7 +236,7 @@
 
 		src.is_active = !src.is_active
 
-		if (src.can_stun() == 1 && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
+		if (src.can_stun() == 1 && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(30))
 			src.do_stun(user, user, "failed", 1)
 			JOB_XP(user, "Clown", 2)
 			return
@@ -245,7 +260,7 @@
 			user.show_message("<span class='alert'>[M] seems to be warded from attacks!</span>")
 			return
 
-		if (src.can_stun() == 1 && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
+		if (src.can_stun() == 1 && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(30))
 			src.do_stun(user, M, "failed", 1)
 			JOB_XP(user, "Clown", 1)
 			return

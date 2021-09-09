@@ -15,6 +15,13 @@
 	w_class = W_CLASS_BULKY
 	max_wclass = 3
 
+	//warcrimes - rng stuns - toolboxes disorient and stun but won't down
+	rng_stun_rate = 3 //%
+	rng_stun_time = 1 SECOND
+	rng_stun_diso = 2 SECONDS
+	rng_stun_weak = 0 SECONDS
+
+
 	//cogwerks - burn vars
 	burn_point = 4500
 	burn_output = 4800

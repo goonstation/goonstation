@@ -25,6 +25,13 @@
 	rand_pos = 1
 	inventory_counter_enabled = 1
 	move_triggered = 1
+	//warc - rng stuns - down and disorient without full stun
+	rng_stun_rate = 2 // %
+	rng_stun_time = 0
+	rng_stun_weak = 2 SECONDS
+	rng_stun_diso = 4 SECONDS
+
+
 	var/list/banned_reagents = list("vomit",
 	"blackpowder",
 	"blood",

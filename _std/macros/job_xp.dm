@@ -39,3 +39,8 @@
 //Say a round lasts 60 minutes. Level 5 should take 2 hours. ??
 //TOTAL TIME SPENT FOR LEVELS WITH CONSTANT 0.2, LV5@2hours, 5.2XP per min:
 //625XP/120m,5.2XP-min.lv5=2 hours, lv7=3.9 hours, lv10=8 hours, lv20=32.05 hours, lv30=72,1 hours, lv50=200 hours, lv100=801 hours/33 days
+
+/******************************************************************************************************/
+// same as above but bypassing the job check. Use this to give Security Officers lots of Clown XP
+
+#define JOB_XP_FORCE(TRG, JOB, XP) if(ismob(TRG) && TRG:key) award_xp_and_archive(TRG:key, JOB, XP)

@@ -47,9 +47,9 @@
 /// Can't speak below this point.
 #define STAMINA_WINDED_SPEAK_MIN 0
 /// can only sprint above this number
-#define STAMINA_SPRINT 64
+#define STAMINA_SPRINT 0
 /// cost of moving in sprint
-#define STAMINA_COST_SPRINT 7
+#define STAMINA_COST_SPRINT 0
 /// grace period where sustained run can be sustained
 #define SUSTAINED_RUN_GRACE 0.5 SECONDS
 /// how many tiles to start sustained run

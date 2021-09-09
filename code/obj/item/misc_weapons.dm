@@ -55,7 +55,13 @@
 	var/datum/component/holdertargeting/simple_light/light_c
 	var/do_stun = 0
 
-	stunner
+	//warcrimes - rng stuns
+	rng_stun_rate = 5 //%
+	rng_stun_time = 2 SECONDS
+	rng_stun_diso = 0 SECONDS
+	rng_stun_weak = 3 SECONDS
+
+	stunner // guaranteed stuns but more a stamina thing than whatever
 		do_stun = 1
 
 	New()
@@ -929,6 +935,12 @@
 	stamina_cost = 30
 	stamina_crit_chance = 15
 	mats = list("wood" = 8)
+
+	//warcrimes - rng stuns -
+	rng_stun_rate = 3 //%
+	rng_stun_time = 1 SECOND
+	rng_stun_diso = 3 SECONDS
+	rng_stun_weak = 2 SECONDS
 
 	New()
 		..()

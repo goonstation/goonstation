@@ -42,12 +42,17 @@
 	var/stamina_damage = STAMINA_ITEM_DMG //amount of stamina removed from target per hit.
 	var/stamina_cost = STAMINA_ITEM_COST  //amount of stamina removed from USER per hit. This cant bring you below 10 points and you will not be able to attack if it would.
 
-	var/stamina_crit_chance = STAMINA_CRIT_CHANCE //Crit chance when attacking with this.
+	var/stamina_crit_chance = STAMINA_CRIT_CHANCE //Crit chance when attacking with this. // kinda deprecated but maybe npcs will use stamina they dont people yknow?
 	var/datum/item_special/special = null // Contains the datum which executes the items special, if it has one, when used beyond melee range.
 	var/hide_attack = 0 //If 1, hide the attack animation + particles. Used for hiding attacks with silenced .22 and sleepy pen
 						//If 2, play the attack animation but hide the attack particles.
 	var/click_delay = DEFAULT_CLICK_DELAY //Delay before next click after using this.
 	var/combat_click_delay = COMBAT_CLICK_DELAY
+
+	var/rng_stun_rate = 0 // % chance to old-stun
+	var/rng_stun_time = 0 // how many ticks to old-stun
+	var/rng_stun_weak = 0 // how many ticks to weaken on an old-stun
+	var/rng_stun_diso = 0 // how many ticks to disorient on an old-stun
 
 	var/can_disarm = 0
 	var/useInnerItem = 0 // Should this item use a contained item (in contents) to attack with instead?
@@ -1235,12 +1240,24 @@
 	SEND_SIGNAL(M, COMSIG_MOB_ATTACKED_PRE, user, src)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_PRE, M, user) & ATTACK_PRE_DONT_ATTACK)
 		return
+
+
+
+#ifdef USE_STAMINA_DISORIENT
 	var/stam_crit_pow = src.stamina_crit_chance
 	if (prob(stam_crit_pow) && !M.check_block()?.can_block(src.hit_type, 0))
 		msgs.stamina_crit = 1
 		msgs.played_sound = pick(sounds_punch)
 		//moved to item_attack_message
 		//msgs.visible_message_target("<span class='alert'><B><I>... and lands a devastating hit!</B></I></span>")
+
+#else
+	// rng simple stuns for now - warc
+	if (rng_stun_rate && prob(rng_stun_rate))
+		M.do_disorient(weakened = rng_stun_weak, stunned = rng_stun_time, disorient = rng_stun_diso)
+		msgs.stamina_crit = 1
+		msgs.played_sound = pick(sounds_punch)
+#endif
 
 	msgs.played_sound = src.hitsound
 
@@ -1332,9 +1349,11 @@
 		msgs.force_stamina_target = 1
 		msgs.stamina_target -= max(stam_power, 0)
 
+#ifdef USE_STAMINA_DISORIENT
 	if (is_special && src.special)
 		if(src.special.overrideCrit >= 0)
 			stam_crit_pow = src.special.overrideCrit
+#endif
 
 	if(M.traitHolder && M.traitHolder.hasTrait("deathwish"))
 		power *= 2
