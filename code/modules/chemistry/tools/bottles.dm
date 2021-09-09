@@ -11,6 +11,7 @@
 	item_state = "atoxinbottle"
 	initial_volume = 30
 	var/image/fluid_image
+	var/image/cap_image
 	var/bottle_style = null
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	amount_per_transfer_from_this = 10
@@ -20,11 +21,20 @@
 		if (!src.bottle_style)
 			src.bottle_style = "[rand(1,4)]"
 		..()
+		src.cap_image = image('icons/obj/chemical.dmi', "bottle[bottle_style]-cap", -1)
+		if (src.reagents)
+			var/datum/color/average_HEX = reagents.get_average_color()
+			var/list/color_HSL = rgb2num(average_HEX.to_rgb(), COLORSPACE_HSL)
+			if (color_HSL[3] < 60)
+				color_HSL[3] = 60
+			src.cap_image.color = rgb(h=color_HSL[1],s=color_HSL[2]	,l=color_HSL[3])
+		src.underlays += src.cap_image
+		signal_event("icon_updated")
 
 	on_reagent_change()
 		if (!(src.icon_state in list("bottle1", "bottle2", "bottle3", "bottle4")))
 			return
-		src.underlays = null
+		src.underlays -= src.fluid_image
 		icon_state = "bottle[bottle_style]"
 		if (reagents.total_volume >= 0)
 			var/datum/color/average = reagents.get_average_color()
