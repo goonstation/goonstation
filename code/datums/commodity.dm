@@ -549,7 +549,7 @@
 	comtype = /obj/item/reagent_containers/glass/bottle/saltpetre
 	desc = "Essential fertilizer for quality crops."
 	onmarket = 0
-	price = 1000
+	price = 800
 	upperfluc = 0
 	lowerfluc = 0
 

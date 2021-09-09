@@ -25,6 +25,7 @@
 "Q" = (/obj/decal/fakeobjects/shuttleengine{icon_state = "alt_heater-R"},/turf/simulated/wall/auto/reinforced,/area/space)
 "S" = (/turf/simulated/floor/grass,/area/gnome_trader)
 "U" = (/turf/simulated/wall/auto/reinforced/jen/red,/area/space)
+"V" = (/obj/machinery/light/incandescent/greenish,/turf/simulated/floor/grass/leafy,/area/gnome_trader)
 "Y" = (/turf/simulated/wall/auto/jen/the_tuff_stuff,/area/gnome_trader)
 
 (1,1,1) = {"
@@ -39,7 +40,7 @@ buNYHNgYNub
 bMNYwNtYNMb
 aMhYYhYYhMa
 aMNNNoNNNMa
-aMYNcccNYMa
+aMYVcccVYMa
 aaMMLeQMMaa
 aaaaxxxaaaa
 "}
