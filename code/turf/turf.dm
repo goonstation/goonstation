@@ -953,9 +953,9 @@
 	if (ismob(user.pulling))
 		var/mob/M = user.pulling
 		var/mob/t = M.pulling
-		M.pulling = null
+		M.remove_pulling()
 		step(M, get_dir(fuck_u, src))
-		M.pulling = t
+		M.set_pulling(t)
 	else
 		step(user.pulling, get_dir(fuck_u, src))
 	return
@@ -978,9 +978,9 @@
 	if (ismob(user.pulling))
 		var/mob/M = user.pulling
 		var/t = M.pulling
-		M.pulling = null
+		M.remove_pulling()
 		step(M, get_dir(fuck_u, src))
-		M.pulling = t
+		M.set_pulling(t)
 	else
 		step(user.pulling, get_dir(fuck_u, src))
 	return

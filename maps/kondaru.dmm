@@ -16728,11 +16728,18 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/power/apc/autoname_west,
+/obj/machinery/door_control{
+	id = "clone_begone";
+	name = "Exit Door Control";
+	pixel_x = -24;
+	pixel_y = 15
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
 /area/station/medical/medbay/cloner)
 "aUn" = (
+/obj/stool/chair/office,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -16740,6 +16747,9 @@
 "aUo" = (
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
@@ -16756,9 +16766,11 @@
 /obj/machinery/light_switch/north{
 	pixel_x = -7
 	},
-/obj/storage/secure/closet/medical{
-	name = "Patient Locker"
+/obj/cable{
+	icon_state = "0-8"
 	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/clonegrinder,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -16985,10 +16997,10 @@
 /obj/machinery/door_control{
 	id = "clone_begone";
 	name = "Exit Door Control";
-	pixel_x = 26
+	pixel_x = 24
 	},
-/obj/stool/chair/office{
-	dir = 8
+/obj/storage/secure/closet/medical{
+	name = "Patient Locker"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
@@ -17525,11 +17537,6 @@
 	icon_state = "1-8"
 	},
 /obj/landmark/gps_waypoint,
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "aWx" = (
@@ -17906,17 +17913,17 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/cloner)
 "aXE" = (
-/obj/machinery/clonegrinder,
 /obj/cable,
 /obj/machinery/power/data_terminal,
 /obj/machinery/light/emergency,
+/obj/machinery/clonepod,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/cloner)
 "aXF" = (
-/obj/machinery/clonepod,
-/obj/cable,
-/obj/machinery/power/data_terminal,
 /obj/machinery/light,
+/obj/stool/chair/office{
+	dir = 1
+	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/cloner)
 "aXG" = (
@@ -25364,7 +25371,6 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/mining/staff_room)
 "bwZ" = (
-/obj/machinery/hydro_growlamp,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -25372,6 +25378,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/shrub,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "bxa" = (
@@ -55134,8 +55141,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "riU" = (
-/obj/machinery/hydro_growlamp,
-/turf/simulated/floor/grey,
+/obj/shrub,
+/turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "rjI" = (
 /obj/machinery/light/small{
@@ -116352,7 +116359,7 @@ nbR
 nbR
 boo
 kSb
-riU
+pUl
 pUl
 gpc
 bvR
@@ -118776,7 +118783,7 @@ jHF
 cpw
 pJk
 pJk
-jHF
+riU
 boo
 tvw
 bDA

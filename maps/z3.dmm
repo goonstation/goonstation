@@ -19679,7 +19679,7 @@
 /obj/item/circuitboard/solar_control,
 /obj/item/circuitboard/air_management,
 /obj/item/skull,
-/obj/item/clothing/under/gimmick/cosby,
+/obj/item/clothing/under/gimmick/sweater,
 /turf/space,
 /area/space)
 "aYK" = (
@@ -25262,7 +25262,7 @@
 /area/space)
 "wfJ" = (
 /obj/storage/secure/closet/personal,
-/obj/item/clothing/under/gimmick/cosby,
+/obj/item/clothing/under/gimmick/sweater,
 /obj/item/device/microphone,
 /turf/simulated/floor/carpet{
 	dir = 8;

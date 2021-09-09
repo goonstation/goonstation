@@ -45,7 +45,7 @@
 		else if(istype(new_cell, /datum/component/power_cell))
 			src.cell.AddComponent(new_cell)
 		else if(islist(new_cell))
-			src.cell.AdminAddComponent(list(/datum/component/power_cell) + new_cell)
+			src.cell.AdminAddComponent(arglist(list(/datum/component/power_cell) + new_cell))
 
 		if(isnum_safe(chargable))
 			src.can_be_recharged = chargable

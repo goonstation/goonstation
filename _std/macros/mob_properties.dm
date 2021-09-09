@@ -218,8 +218,8 @@ To remove:
 #define PROP_DISORIENT_RESIST_BODY_MAX(x) x("disorient_resist_body_max", APPLY_MOB_PROPERTY_MAX, REMOVE_MOB_PROPERTY_MAX)
 #define PROP_DISORIENT_RESIST_EYE(x) x("disorient_resist_eye", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM)
 #define PROP_DISORIENT_RESIST_EYE_MAX(x) x("disorient_resist_eye_max", APPLY_MOB_PROPERTY_MAX, REMOVE_MOB_PROPERTY_MAX)
-#define PROP_DISORIENT_RESIST_EAR(x) x("disorient_resist_eye", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM)
-#define PROP_DISORIENT_RESIST_EAR_MAX(x) x("disorient_resist_eye_max", APPLY_MOB_PROPERTY_MAX, REMOVE_MOB_PROPERTY_MAX)
+#define PROP_DISORIENT_RESIST_EAR(x) x("disorient_resist_ear", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM)
+#define PROP_DISORIENT_RESIST_EAR_MAX(x) x("disorient_resist_ear_max", APPLY_MOB_PROPERTY_MAX, REMOVE_MOB_PROPERTY_MAX)
 
 // In lieu of comments, these are the indexes used for list access in the macros below.
 #define MOB_PROPERTY_ACTIVE_VALUE 1
