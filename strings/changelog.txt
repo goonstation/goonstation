@@ -6,6 +6,9 @@
 (*)This means that commodity hyperinflation/total devaluation should no longer be a thing.
 (*)"Hot" prices only show up when a commodity's value is actually higher than its base price.
 (*)As usual, this is subject to further changes later.
+(e)🔄|rework
+(+)Cleanbots no longer absorb reagents they mop up. No more Oshan Arrivals turning into a lubed up deathtrap.
+(+)You can still dump reagents into them to cause chaos, though. You knew about that, right?
 (t)wed sep 08 21
 (u)tarmunora
 (e)🆕|feature
