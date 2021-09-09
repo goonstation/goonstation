@@ -269,22 +269,23 @@
 		if (prob(40))
 			src.emote("scream")
 		var/pals = 0
-		for_by_tcl(pal, /mob/living/carbon/human/npc/monkey)
-			if (get_dist(src, pal) > 7)
-				continue
-			if (pals >= 5)
-				return
-			if (prob(10))
-				continue
-			//pal.ai_aggressive = 1
-			pal.target = T
-			pal.ai_state = AI_ATTACKING
-			pal.ai_threatened = world.timeofday
-			pal.ai_target = T
-			pal.shitlist[T] ++
-			pals ++
-			if (prob(40))
-				src.emote("scream")
+		if(!src.client)
+			for_by_tcl(pal, /mob/living/carbon/human/npc/monkey)
+				if (get_dist(src, pal) > 7)
+					continue
+				if (pals >= 5)
+					return
+				if (prob(10))
+					continue
+				//pal.ai_aggressive = 1
+				pal.target = T
+				pal.ai_state = AI_ATTACKING
+				pal.ai_threatened = world.timeofday
+				pal.ai_target = T
+				pal.shitlist[T] ++
+				pals ++
+				if (prob(40))
+					src.emote("scream")
 		if(aggroed)
 			walk_towards(src, ai_target, ai_movedelay)
 
