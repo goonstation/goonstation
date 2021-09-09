@@ -233,6 +233,13 @@
 
 	return 1
 
+/**
+  * Get a list of viable candidates for an antagonist type and expected number of antagonists, taking antagonist preferences into account if possible.
+  *
+  * Arguments:
+  * * type - requested antagonist type.
+  * * number - requested number of antagonists. If it can't find that many it will try to look again, but ignoring antagonist preferences.
+  */
 /datum/game_mode/proc/get_possible_enemies(type,number)
 	var/list/candidates = list()
 
