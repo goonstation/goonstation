@@ -47,7 +47,7 @@
 /// Can't speak below this point.
 #define STAMINA_WINDED_SPEAK_MIN 0
 /// can only sprint above this number
-#define STAMINA_SPRINT 0
+#define STAMINA_SPRINT -10
 /// cost of moving in sprint
 #define STAMINA_COST_SPRINT 0
 /// grace period where sustained run can be sustained
