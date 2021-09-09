@@ -621,23 +621,13 @@
 	desc = "Used to enhance your PlantMaster Mk3, it greatly increases the odds of splicing seeds from very different genomes."
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher/pisscher
-	name = "Piss Pitcher"
+	name = "piss pitcher"
 	desc = "It smells AWFUL!"
 	// TODO: could add random chance of vomiting when drinking from this. Would be hilarious.
 	New()
 		..()
 		src.color = rgb(220, 220, 75)
 		reagents.add_reagent("urine", 120)
-
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher/pisscher
-	name = "Piss Pitcher"
-	desc = "It smells AWFUL!"
-	// TODO: could add random chance of vomiting when drinking from this. Would be hilarious.
-	New()
-		..()
-		src.color = rgb(220, 220, 75)
-		reagents.add_reagent("urine", 120)
-
 /obj/item/reagent_containers/glass/bottle/saltpetre
 	name = "saltpetre bottle"
 	desc = "A reagent storage bottle."
