@@ -24,6 +24,6 @@ obj/item/fabdisk/debug // just for testing purposes.
 obj/item/fabdisk/debug2 // just for testing purposes.
 	name = "Standard ManuDisk: Debug the Sequel"
 	desc = "Hey how did you get this! Give it back!"
-	fablimit = 5
+	fablimit = 2
 	disktemp = list(/datum/manufacture/screwdriver,
 		/datum/manufacture/wirecutters)
