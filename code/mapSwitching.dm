@@ -606,6 +606,8 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 				//chosenMap = "Density"
 			if(istype(I, /obj/item/reagent_containers/food/snacks/donut))
 				chosenMap = "Donut 2"
+			if(istype(I, /obj/item/reagent_containers) && I:reagents:has_reagent("bubsium"))
+				chosenMap = "Ozymandias"
 
 		if (mapSwitcher.playersVoting)
 			if(chosenMap)
