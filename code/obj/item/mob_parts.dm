@@ -229,7 +229,8 @@ ABSTRACT_TYPE(/obj/item/parts)
 		if(ishuman(holder))
 			var/mob/living/carbon/human/H = holder
 			holder = null
-			H.limbs.vars[src.slot] = null
+			if(H.limbs.vars[src.slot] == src) //BAD BAD HACK FUCK FUCK UGLY SHITCODE - Tarm
+				H.limbs.vars[src.slot] = null
 			if(remove_object)
 				src.remove_object = null
 				qdel(src)
