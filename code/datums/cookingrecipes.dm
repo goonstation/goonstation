@@ -162,6 +162,14 @@
 	cookbonus = 20
 	output = /obj/item/reagent_containers/food/snacks/burger/monsterburger
 
+#ifdef SECRETS_ENABLED
+/datum/cookingrecipe/hamburgris
+ 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+ 	item2 = /obj/item/material_piece/hamburgris
+ 	cookbonus = 13
+ 	output = /obj/item/reagent_containers/food/snacks/burger/hamburgris
+#endif
+
 /datum/cookingrecipe/swede_mball
 	item1 = /obj/item/reagent_containers/food/snacks/meatball
 	amt1 = 2

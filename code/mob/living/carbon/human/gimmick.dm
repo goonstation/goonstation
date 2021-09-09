@@ -975,6 +975,14 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 				say(pick("Brudder, I did that job months ago. Fuck outta here with that.","Oh come on, quit wastin my time [pick_string("johnbill.txt", "insults")]."))
 			return
 		..()
+#ifdef SECRETS_ENABLED
+		if (istype(W, yank_object))
+			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
+			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
+			SPAWN_DBG(1 SECOND)
+				yank_reaction(W)
+			return
+#endif
 
 	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 		. = ..()
