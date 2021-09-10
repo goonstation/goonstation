@@ -1,4 +1,9 @@
 
+(t)fri sep 10 21
+(u)zjdtmkhzt
+(p)5960
+(e)⚖|balance
+(+)Splicing garlic should now properly give the resulting plant the holy water reagent.
 (t)thu sep 09 21
 (u)Zamujasa
 (e)🔄|rework
