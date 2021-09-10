@@ -1718,6 +1718,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\WorkInProgress\racing.dm"
 #include "code\WorkInProgress\Railgun.dm"
 #include "code\WorkInProgress\rewardsLocker.dm"
+#include "code\WorkInProgress\RNG_stuns.dm"
 #include "code\WorkInProgress\rp_stuff.dm"
 #include "code\WorkInProgress\silo.dm"
 #include "code\WorkInProgress\simroom.dm"

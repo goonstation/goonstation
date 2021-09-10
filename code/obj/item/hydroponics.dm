@@ -214,11 +214,8 @@
 	stamina_crit_chance = 40
 	c_flags = EQUIPPED_WHILE_HELD | NOT_EQUIPPED_WHEN_WORN
 
-	//warcrimes - rng stuns -
-	rng_stun_rate = 5 //%
-	rng_stun_time = 2 SECOND
-	rng_stun_diso = 10 SECONDS
-	rng_stun_weak = 2 SECONDS
+
+
 
 	setupProperties()
 		. = ..()
