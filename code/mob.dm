@@ -1706,7 +1706,7 @@
 
 	if (src.client) // I feel like every player should be ghosted when they get gibbed
 		var/mob/dead/observer/newmob = ghostize()
-		newmob.corpse = null
+		newmob?.corpse = null
 		if (!isnull(newmob) && give_medal)
 			newmob.unlock_medal("Gore Fest", 1)
 
