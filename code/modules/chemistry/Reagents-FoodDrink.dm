@@ -3335,16 +3335,16 @@ datum
 					return
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
-				if(!M) M = holder.my_atom
-				if(prob(50))
-					M.nutrition += 1 * mult
 				for(var/datum/ailment_data/disease/virus in M.ailments)
 					if(probmult(10) && istype(virus.master,/datum/ailment/disease/cold))
 						M.cure_disease(virus)
+						boutput(M,"<span class= 'notice'>You feel a little less ill.</span>")
 					if(probmult(10) && istype(virus.master,/datum/ailment/disease/flu))
 						M.cure_disease(virus)
+						boutput(M,"<span class= 'notice'>You feel a little less ill.</span>")
 					if(probmult(10) && istype(virus.master,/datum/ailment/disease/food_poisoning))
 						M.cure_disease(virus)
+						boutput(M,"<span class= 'notice'>You feel a little less sickly.</span>")
 				..()
 				return
 
