@@ -106,7 +106,8 @@
 	/obj/item/clothing/mask/gas,
 	/obj/item/device/flash,
 	/obj/item/stamp/rd,
-	/obj/item/device/radio/headset/command/rd)
+	/obj/item/device/radio/headset/command/rd,
+	/obj/item/manudrive/assembly_grenade)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has

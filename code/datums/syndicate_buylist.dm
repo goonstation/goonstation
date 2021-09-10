@@ -827,14 +827,6 @@ This is basically useless for anyone but miners.
 	job = list("Chef", "Sous-Chef", "Waiter", "Clown")
 	blockedmode = list(/datum/game_mode/revolution)
 
-/datum/syndicate_buylist/traitor/chemgrenades
-	name = "Chem Grenade Starter Kit"
-	item = /obj/item/storage/box/grenade_starter_kit
-	cost = 2
-	desc = "Tired of destroying your own face with acid reactions? Want to make the janitor feel incompetent? This kit gets you started with three grenades. Just add beakers and screw!"
-	job = list("Scientist","Research Director")
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
-
 /datum/syndicate_buylist/traitor/ammo_38AP // 2 TC for 1 speedloader was very poor value compared to other guns and traitor items in general (Convair880).
 	name = ".38 AP ammo box"
 	item = /obj/item/storage/box/ammo38AP

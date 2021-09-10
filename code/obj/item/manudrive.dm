@@ -12,3 +12,8 @@ obj/item/manudrive
 		for (var/X in src.temp_recipe_string)
 			src.drivestored += get_schematic_from_path(X)
 
+obj/item/manudrive/assembly_grenade
+	name = "Science ManuDrive: Assembly Grenades"
+	icon_state = "manudrivesci"
+	temp_recipe_string = list(/datum/manufacture/chem_grenade,
+	/datum/manufacture/grenade_fuse)

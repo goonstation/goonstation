@@ -2934,3 +2934,23 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	time = 40 SECONDS
 	create = 1
 	category = "Miscellaneous"
+
+/******************** MANUDRIVE SHIT *******************/
+
+/datum/manufacture/grenade_fuse
+	name = "Grenade Fuse"
+	item_paths = list("MET-1", "CON-2")
+	item_amounts = list(4, 2)
+	item_outputs = list(/obj/item/grenade_fuse)
+	time = 60 SECONDS
+	create = 1
+	category = "Miscellaneous" // Before you dear reviewer yell at me for this, keep in mind that manudrives will automatically add recipes to the disk_recipes category.
+
+/datum/manufacture/chem_grenade
+	name = "Grenade Metal Casing"
+	item_paths = list("MET-3")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/chem_grenade)
+	time = 60 SECONDS
+	create = 1
+	category = "Miscellaneous"
