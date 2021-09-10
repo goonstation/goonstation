@@ -25414,7 +25414,7 @@
 /area/station/maintenance/inner/sw)
 "hfR" = (
 /obj/table/reinforced/auto,
-/obj/item/kitchen/utensil/knife/cleaver{
+/obj/item/kitchen/utensil/knife{
 	pixel_y = 10
 	},
 /turf/simulated/floor/specialroom/freezer,
@@ -43086,7 +43086,7 @@
 	pixel_x = 7;
 	pixel_y = 9
 	},
-/obj/item/kitchen/utensil/knife/cleaver,
+/obj/item/kitchen/utensil/knife,
 /obj/machinery/light/incandescent/cool/very{
 	dir = 4
 	},

@@ -5,11 +5,19 @@
  * @license ISC
  */
 
+import { SFC } from 'inferno';
 import { Button } from '../../../components';
 import { EmptyPlaceholder } from '../EmptyPlaceholder';
 import * as styles from '../style';
+import { ToolData } from '../type';
 
-const Tool = props => {
+interface ToolProps {
+  onMoveToolDown: () => void,
+  onMoveToolUp: () => void,
+  onRemoveTool: () => void,
+}
+
+const Tool: SFC<ToolProps> = props => {
   const {
     children,
     onMoveToolDown,
@@ -26,7 +34,14 @@ const Tool = props => {
   );
 };
 
-export const Tools = props => {
+interface ToolsProps {
+  onMoveToolDown: (toolRef: string) => void,
+  onMoveToolUp: (toolRef: string) => void,
+  onRemoveTool: (toolRef: string) => void,
+  tools: Array<ToolData>
+}
+
+export const Tools: SFC<ToolsProps> = props => {
   const {
     onMoveToolDown,
     onMoveToolUp,

@@ -277,7 +277,19 @@
 
 /mob/living/Login()
 	..()
-	if(!isdead(src) && !istype(get_area(src), /area/afterlife/bar) && !isVRghost(src) && !isghostcritter(src) && !isghostdrone(src))
+	// If...
+	// living
+	// and not (in the afterlife, and not in hell)
+	// and not a vr ghost
+	// and not a ghost critter
+	// and not a ghost drone
+	// ...then remove respawn candidate.
+	if (!isdead(src) \
+		&& !(istype(get_area(src), /area/afterlife) && !istype(get_area(src), /area/afterlife/hell)) \
+		&& !isVRghost(src) \
+		&& !isghostcritter(src) \
+		&& !isghostdrone(src) \
+	)
 		respawn_controller.unsubscribeRespawnee(src.ckey)
 
 /mob/living/Life(datum/controller/process/mobs/parent)
@@ -1312,14 +1324,26 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	if (!src.restrained())
 		var/struggled_grab = 0
 		if (src.canmove)
-			for (var/obj/item/grab/G in src.grabbed_by)
-				G.do_resist()
-				struggled_grab = 1
-		else
-			for (var/obj/item/grab/G in src.grabbed_by)
-				if (G.stunned_targets_can_break())
+			if(src.grabbed_by.len > 0)
+				for (var/obj/item/grab/G in src.grabbed_by)
 					G.do_resist()
 					struggled_grab = 1
+			else if(src.pulled_by)
+				for (var/mob/O in AIviewers(src, null))
+					O.show_message(text("<span class='alert'>[] breaks free from []'s pulling!</span>", src, src.pulled_by), 1, group = "resist")
+				src.pulled_by.remove_pulling()
+				struggled_grab = 1
+		else
+			if(length(src.grabbed_by) > 0)
+				for (var/obj/item/grab/G in src.grabbed_by)
+					if (G.stunned_targets_can_break())
+						G.do_resist()
+						struggled_grab = 1
+			else if(src.pulled_by)
+				for (var/mob/O in AIviewers(src, null))
+					O.show_message(text("<span class='alert'>[] breaks free from []'s pulling!</span>", src, src.pulled_by), 1, group = "resist")
+				src.pulled_by.remove_pulling()
+				struggled_grab = 1
 
 		if (!src.grabbed_by || !src.grabbed_by.len && !struggled_grab)
 			if (src.buckled)
@@ -1561,9 +1585,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	if (src.nodamage)
 		return .
-
-	if (src.drowsyness > 0)
-		. += 5
 
 	var/health_deficiency = (src.max_health - src.health) + health_deficiency_adjustment // cogwerks // let's treat this like pain
 
@@ -1923,14 +1944,14 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			if (!shock_damage)
 				return 0
 
-	if (src.bioHolder.HasEffect("resist_electric") == 2)
+	if (src.bioHolder.HasEffect("resist_electric_heal"))
 		var/healing = 0
 		healing = shock_damage / 3
 		src.HealDamage("All", healing, healing)
 		src.take_toxin_damage(0 - healing)
 		boutput(src, "<span class='notice'>You absorb the electrical shock, healing your body!</span>")
 		return 0
-	else if (src.bioHolder.HasEffect("resist_electric") == 1)
+	else if (src.bioHolder.HasEffect("resist_electric"))
 		boutput(src, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
 		return 0
 

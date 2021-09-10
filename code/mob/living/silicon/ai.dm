@@ -1142,7 +1142,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (src.blinded) src.blinded = 0
 	if (src.get_ear_damage()) src.take_ear_damage(-INFINITY) // Ear_deaf is handled by src.set_vision().
 	if (src.dizziness) src.dizziness = 0
-	if (src.drowsyness) src.drowsyness = 0
+	if (src.hasStatus("drowsy")) src.delStatus("drowsy")
 	if (src.stuttering) src.stuttering = 0
 	if (src.druggy) src.druggy = 0
 	if (src.jitteriness) src.jitteriness = 0
