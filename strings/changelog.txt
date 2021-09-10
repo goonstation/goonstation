@@ -1,5 +1,9 @@
 
 (t)fri sep 10 21
+(u)tarmunora
+(e)⚖|balance
+(*)Sprinting is less effective when lying down.
+(*)Speed penalty from lying down is extended through standup animation.
 (u)BatElite
 (p)5927
 (e)🎨|sprites

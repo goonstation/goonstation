@@ -1082,6 +1082,10 @@
 			else
 				owner.delStatus("resting")
 
+		onRemove()
+			. = ..()
+			ON_COOLDOWN(owner, "unlying_speed_cheesy", 0.3 SECONDS)
+
 		clicked(list/params)
 			if(ON_COOLDOWN(src.owner, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
 			L.delStatus("resting")
