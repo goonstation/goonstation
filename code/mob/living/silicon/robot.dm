@@ -249,7 +249,6 @@
 	death(gibbed)
 		if (!gibbed)
 			src.collapse_to_pieces()
-		..(gibbed)
 
 #ifdef RESTART_WHEN_ALL_DEAD
 		var/cancel
