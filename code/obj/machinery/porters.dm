@@ -387,10 +387,11 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 	Exited(atom/movable/Obj)
 		..()
-		src.occupant = null
-		build_icon()
-		for (var/obj/item/I in src) //What if you drop something while inside? WHAT THEN HUH?
-			I.set_loc(src.loc)
+		if(Obj == src.occupant)
+			src.occupant = null
+			build_icon()
+			for (var/obj/item/I in src) //What if you drop something while inside? WHAT THEN HUH?
+				I.set_loc(src.loc)
 
 		if (processing)
 			UnsubscribeProcess()
