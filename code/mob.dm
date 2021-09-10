@@ -52,6 +52,7 @@
 	var/other_mobs = null
 	var/memory = ""
 	var/atom/movable/pulling = null
+	var/mob/pulled_by = null
 	var/stat = 0.0
 	var/next_click = 0
 	var/transforming = null
@@ -83,7 +84,6 @@
 	var/temp_tolerance = 15 // iterations between each temperature state
 	var/thermoregulation_mult = 0.025 // how quickly the body's temperature tries to correct itself, higher = faster
 	var/innate_temp_resistance = 0.16  // how good the body is at resisting environmental temperature, lower = more resistant
-	var/drowsyness = 0.0
 	var/dizziness = 0
 	var/is_dizzy = 0
 	var/is_jittery = 0
@@ -719,7 +719,7 @@
 		if (old_loc != src.loc) //causes infinite pull loop without these checks. lol
 			var/list/pulling = list()
 			if ((get_dist(old_loc, src.pulling) > 1 && get_dist(src, src.pulling) > 1) || src.pulling == src) // fucks sake
-				src.pulling = null
+				src.remove_pulling()
 				//hud.update_pulling() // FIXME
 			else
 				pulling += src.pulling
@@ -799,8 +799,6 @@
 		C.eye = src.eye
 		C.pixel_x = src.eye_pixel_x
 		C.pixel_y = src.eye_pixel_y
-	else if(!isturf(src.loc))
-		C.eye = src.loc
 	else
 		C.eye = src
 		C.pixel_x = src.loc_pixel_x
@@ -1055,8 +1053,7 @@
 /mob/proc/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	hit_twitch(src)
 	src.health -= max(0, brute)
-	if (!is_heat_resistant())
-		src.health -= max(0, burn)
+	src.health -= max(0, (src.bioHolder?.HasEffect("fire_resist") > 1) ? burn/2 : burn)
 
 /mob/proc/TakeDamageAccountArmor(zone, brute, burn, tox, damage_type)
 	TakeDamage(zone, brute - get_melee_protection(zone,damage_type), burn - get_melee_protection(zone,damage_type))
@@ -1071,7 +1068,14 @@
 	if(A == src)
 		return
 
+	if(src.pulling)
+		src.remove_pulling()
+
 	pulling = A
+
+	if(ismob(pulling))
+		var/mob/M = pulling
+		M.pulled_by = src
 
 	//robust grab : a dirty DIRTY trick on mbc's part. When I am being chokeholded by someone, redirect pulls to the captor.
 	//this is so much simpler than pulling the victim and invoking movment on the captor through that chain of events.
@@ -1081,8 +1085,15 @@
 			for (var/obj/item/grab/G in src.grabbed_by)
 				if (G.state < GRAB_NECK) continue
 				pulling = G.assailant
+				G.assailant.pulled_by = src
 
 	pull_particle(src,pulling)
+
+/mob/proc/remove_pulling()
+	if(ismob(pulling))
+		var/mob/M = pulling
+		M.pulled_by = null
+	src.pulling = null
 
 // less icon caching maybe?!
 
@@ -1523,7 +1534,7 @@
 		if (D_RADIOACTIVE)
 			src.changeStatus("radiation", (damage) SECONDS)
 			src.stuttering += stun
-			src.drowsyness += stun
+			src.changeStatus("drowsy", stun * 2 SECONDS)
 		if (D_TOXIC)
 			src.take_toxin_damage(damage)
 	if (!P || !P.proj_data || !P.proj_data.silentshot)
@@ -1554,7 +1565,7 @@
 			src.show_text("<span class='alert'>You are shocked by the impact of [P]!</span>")
 		if (D_RADIOACTIVE)
 			src.stuttering += stun
-			src.drowsyness += stun/10
+			src.changeStatus("drowsy", stun / 5 SECONDS)
 			src.show_text("<span class='alert'>You feel a wave of sickness as [P] impacts [src.loc]!</span>")
 
 
@@ -2359,7 +2370,7 @@
 
 /mob/proc/full_heal()
 	src.HealDamage("All", 100000, 100000)
-	src.drowsyness = 0
+	src.delStatus("drowsy")
 	src.stuttering = 0
 	src.losebreath = 0
 	src.delStatus("paralysis")
@@ -2754,6 +2765,9 @@
 
 	if (source && source != src) //we were moved by something that wasnt us
 		last_pulled_time = world.time
+	else
+		if(src.pulled_by)
+			src.pulled_by.remove_pulling()
 
 /mob/proc/on_centcom()
 	. = FALSE
