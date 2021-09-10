@@ -120,7 +120,7 @@
 				else
 					. += "<br><span class='alert'>[src] has powered down fully.</span>"
 			else
-				. += . += "<br><span class='alert'>[src] has its factory defaults enabled. No conciousness has entered it yet.</span>"
+				. += "<br><span class='alert'>[src] has its factory defaults enabled. No conciousness has entered it yet.</span>"
 
 /obj/item/organ/brain/ai
 	name = "neural net processor"
