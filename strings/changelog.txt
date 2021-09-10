@@ -1,5 +1,9 @@
 
 (t)fri sep 10 21
+(u)edwardly
+(p)5953
+(e)🗺|mapping
+(+)Power monitor / solar controls are now computers that can be deconstructed
 (u)tarmunora
 (e)⚖|balance
 (*)Sprinting is less effective when lying down.
