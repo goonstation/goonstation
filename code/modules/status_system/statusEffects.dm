@@ -637,7 +637,7 @@
 			tickspassed = optional
 			if(ismob(owner))
 				var/mob/M = owner
-				APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, -5, "stim_withdrawl")
+				APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stim_withdrawl", -5)
 				M.jitteriness = 0
 
 		onUpdate(timePassed)
@@ -1185,9 +1185,9 @@
 		onRemove()
 			. = ..()
 			if(ismob(owner))
-				owner.changeStatus("janktank_withdrawl", 10 MINUTES)
 				var/mob/M = owner
 				M.remove_stun_resist_mod("janktank")
+				owner.changeStatus("janktank_withdrawl", 10 MINUTES)
 
 		onUpdate(timePassed)
 			var/mob/living/carbon/human/H
@@ -1224,13 +1224,13 @@
 			var/mob/living/carbon/human/M
 			if(ishuman(owner))
 				M = owner
-			if (prob(15))
-				M.TakeDamage("All", 0, 0, 1)
-			if (prob(10))
-				owner.changeStatus("stunned", 2 SECONDS)
-			if (prob(20))
-				violent_twitch(owner)
-				M.make_jittery(rand(6,9))
+				if (prob(15))
+					M.TakeDamage("All", 0, 0, 1)
+				if (prob(10))
+					owner.changeStatus("stunned", 2 SECONDS)
+				if (prob(20))
+					violent_twitch(owner)
+					M.make_jittery(rand(6,9))
 
 	mutiny
 		id = "mutiny"
@@ -1883,9 +1883,9 @@
 
 	onRemove()
 		. = ..()
-		owner.changeStatus("paralysis", 5 SECONDS)
 		owner.delStatus("drowsy")
 		if(isliving(owner))
 			var/mob/living/L = owner
-			L.changeStatus("weakened", 1 SECOND)
 			L.force_laydown_standup()
+			L.changeStatus("weakened", 1 SECOND)
+			L.changeStatus("paralysis", 5 SECONDS)
