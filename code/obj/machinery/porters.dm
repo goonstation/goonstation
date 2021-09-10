@@ -393,8 +393,8 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			for (var/obj/item/I in src) //What if you drop something while inside? WHAT THEN HUH?
 				I.set_loc(src.loc)
 
-		if (processing)
-			UnsubscribeProcess()
+			if (processing)
+				UnsubscribeProcess()
 
 	attackby(obj/item/W, mob/user as mob)
 		if (istype(W, /obj/item/device/pda2) && W:ID_card)
