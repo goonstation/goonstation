@@ -1,5 +1,9 @@
 
 (t)fri sep 10 21
+(u)BatElite
+(p)5927
+(e)🎨|sprites
+(+)Headsets have new sprites and now look like something!
 (u)zjdtmkhzt
 (p)5960
 (e)⚖|balance
