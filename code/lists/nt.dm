@@ -7,7 +7,7 @@
  * since we only have one elite security job (head of security)
  */
 
-var/list/NT = dd_file2list("strings/nt.txt")
+var/list/NT = dd_file2list("+secret/strings/nt.txt")
 
 
 // this list is for mentors, everyone in the NT
@@ -15,5 +15,5 @@ var/list/NT = dd_file2list("strings/nt.txt")
 // ok this has changed and not everyone in NT is a mentor
 
 // this is for people who are mentors but not HOSes
-var/list/mentors = dd_file2list("strings/mentors.txt")
+var/list/mentors = dd_file2list("+secret/strings/mentors.txt")
 
