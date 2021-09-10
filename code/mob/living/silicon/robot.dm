@@ -1303,7 +1303,7 @@
 						REMOVE_MOVEMENT_MODIFIER(src, src.part_arm_r.robot_movement_modifier, src.part_arm_r.type)
 					src.compborg_force_unequip(3)
 					src.part_arm_r.set_loc(src.loc)
-					src.part_leg_r.holder = null
+					src.part_arm_r.holder = null
 					if (src.part_arm_r.slot == "arm_both")
 						src.compborg_force_unequip(1)
 						src.part_arm_l = null
@@ -1315,7 +1315,7 @@
 						REMOVE_MOVEMENT_MODIFIER(src, src.part_arm_l.robot_movement_modifier, src.part_arm_l.type)
 					src.compborg_force_unequip(1)
 					src.part_arm_l.set_loc(src.loc)
-					src.part_leg_l.holder = null
+					src.part_arm_l.holder = null
 					if (src.part_arm_l.slot == "arm_both")
 						src.part_arm_r = null
 						src.compborg_force_unequip(3)
