@@ -1278,7 +1278,6 @@
 			var/action = input("What do you want to do?", "Cyborg Deconstruction") in actions
 			if (!action) return
 			if (action == "Do nothing") return
-			if (src.stat >= 2) return //Wire: Fix for borgs removing their entire bodies after death
 			if (get_dist(src.loc,user.loc) > 1 && (!user.bioHolder || !user.bioHolder.HasEffect("telekinesis")))
 				boutput(user, "<span class='alert'>You need to move closer!</span>")
 				return
