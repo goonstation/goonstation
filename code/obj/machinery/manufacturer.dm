@@ -1497,7 +1497,7 @@
 			src.timeleft /= src.speed
 
 		if(src.fabdisk)
-			if(/datum/manufacture in src.disk)
+			if(src.queue[1] in src.disk)
 				var/obj/item/fabdisk/FD = src.fabdisk
 				if(FD.fablimit == 0)
 					src.mode = "halt"
@@ -1696,8 +1696,16 @@
 
 			dat += {"
 		<tr><td colspan='2'><a href='?src=\ref[src];ejectfabdisk=\ref[src.beaker]' class='buttonlink'>&#9167;</a> [src.fabdisk.name]</td></tr>
-		<tr><td class='c'>
 			"}
+
+			var/obj/item/fabdisk/FD = src.fabdisk
+			if(FD.fablimit >= 0)
+				dat += {"
+			<tr>
+				<td>ManuDisk Usages</td>
+				<td class='r'>[FD.fablimit]</td>
+			</tr>
+				"}
 
 		if (src.reagents.total_volume > 0)
 			dat += {"
