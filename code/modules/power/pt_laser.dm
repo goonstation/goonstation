@@ -203,7 +203,7 @@
 		else if(t.fields["job"] == "Engineer")
 			accounts += t
 
-	if(!accounts.len) // no engineering staff but someone still started the PTL
+	if(!length(accounts)) // no engineering staff but someone still started the PTL
 		wagesystem.station_budget += generated_moolah
 	else if(abs(generated_moolah) >= accounts.len*2) //otherwise not enough to split evenly so don't bother I guess
 		wagesystem.station_budget += round(generated_moolah/2)
