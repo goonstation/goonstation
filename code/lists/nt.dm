@@ -7,7 +7,7 @@
  * since we only have one elite security job (head of security)
  */
 #ifdef SECRETS_ENABLED
-var/list/NT = dd_file2list("secret/strings/nt.txt")
+var/list/NT = dd_file2list("+secret/strings/nt.txt")
 #else
 var/list/NT = dd_file2list("strings/nt.txt")
 #endif
@@ -17,7 +17,7 @@ var/list/NT = dd_file2list("strings/nt.txt")
 
 // this is for people who are mentors but not HOSes
 #ifdef SECRETS_ENABLED
-var/list/mentors = dd_file2list("secret/strings/mentors.txt")
+var/list/mentors = dd_file2list("+secret/strings/mentors.txt")
 #else
 var/list/mentors = dd_file2list("strings/mentors.txt")
 #endif
