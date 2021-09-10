@@ -173,7 +173,7 @@
 
 #ifdef ARTEMIS_LINK_AT_ROUNDSTART
 		if(!is_syndicate && !special_places.Find(src.name))
-		 	special_places.Add(src.name)
+			special_places.Add(src.name)
 #endif
 
 	proc/gen_stars()
