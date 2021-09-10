@@ -204,18 +204,19 @@
 /obj/machinery/plantpot/alien
 	// This is a plantpot which just spawns with a strange seed in it
 	New()
-		..()
-		var /obj/item/seed/alien/SEED = new /obj/item/seed/alien
-		if(src.current)
-			// sanity check
-			return
-		// I have no idea
-		// SEED = unpool(/obj/item/seed)
-		SEED.set_loc(src)
-		if(SEED.planttype)
-			src.HYPnewplant(SEED)
-		else
-			return //??
+		SPAWN_DBG(0)
+			..()
+			var /obj/item/seed/alien/SEED = new /obj/item/seed/alien
+			if(src.current)
+				// sanity check
+				return
+			// I have no idea
+			// SEED = unpool(/obj/item/seed)
+			SEED.set_loc(src)
+			if(SEED.planttype)
+				src.HYPnewplant(SEED)
+			else
+				return //??
 
 /obj/machinery/plantpot
 	// The central object for Hydroponics. All plant growing and most of everything goes on in
