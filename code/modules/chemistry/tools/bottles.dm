@@ -23,7 +23,6 @@
 		..() // i have no damn clue why, but ..() *has* to be here otherwise it breaks everything about the damn cap colours wHY DID I DO THIS - DisturbHerb
 		src.cap_image = image('icons/obj/chemical.dmi', "bottle[bottle_style]-cap", -1)
 		if (src.reagents)
-			//var/datum/color/average_HEX = reagents.get_average_color()
 			var/list/color_HSL = rgb2num((reagents.get_average_color()).to_rgb(), COLORSPACE_HSL)
 			if (color_HSL[3] < 80)
 				color_HSL[3] = 80
