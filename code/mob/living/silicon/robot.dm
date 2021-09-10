@@ -2952,7 +2952,6 @@
 			src.part_chest = null
 		if (istype(part,/obj/item/parts/robot_parts/head/))
 			src.visible_message("<b>[src]'s</b> head breaks apart!")
-			borg_death_alert()//no head means you dead
 			if (src.brain)
 				src.brain.set_loc(get_turf(src))
 			src.part_head.brain = null
@@ -3008,6 +3007,11 @@
 		TakeDamage(pick(get_valid_target_zones()), brute, burn)
 
 	proc/collapse_to_pieces()
+		logTheThing("combat", src, null, "was destroyed at [log_loc(src)].")
+		if (src.mind?.special_role)
+			src.handle_robot_antagonist_status("death", 1)
+		src.borg_death_alert()
+
 		src.visible_message("<span class='alert'><b>[src]</b> falls apart into a pile of components!</span>")
 		var/turf/T = get_turf(src)
 		for(var/obj/item/parts/robot_parts/R in src.contents)
@@ -3018,8 +3022,10 @@
 		src.part_arm_r = null
 		src.part_leg_l = null
 		src.part_leg_r = null
+		new /obj/item/parts/robot_parts/robot_frame(T)
+
+		src.ghostize()
 		qdel(src)
-		return
 
 /mob/living/silicon/robot/var/image/i_batterydistress
 
