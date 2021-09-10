@@ -2782,7 +2782,7 @@
 	desc = ""
 	icon_state = "comp_gun2"
 	density = 0
-	compatible_guns = /obj/item/gun/energy
+	compatible_guns = list(/obj/item/gun/energy)
 	var/charging = 0
 
 	get_desc()

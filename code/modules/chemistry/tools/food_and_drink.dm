@@ -1772,15 +1772,22 @@
 	initial_reagents = list("energydrink"=20)
 
 
-/obj/item/reagent_containers/food/drinks/detflask
+/obj/item/reagent_containers/food/drinks/flask
+	name = "flask"
+	desc = "For the busy alcoholic."
+	icon = 'icons/obj/foodNdrink/bottle.dmi'
+	icon_state = "flask"
+	item_state = "flask"
+	g_amt = 5
+	initial_volume = 40
+	can_recycle = FALSE
+
+/obj/item/reagent_containers/food/drinks/flask/det
 	name = "detective's flask"
 	desc = "Must be migrational."
 	icon = 'icons/obj/foodNdrink/bottle.dmi'
 	icon_state = "detflask"
 	item_state = "detflask"
-	g_amt = 5
-	initial_volume = 40
-	can_recycle = FALSE
 	initial_reagents = list("bojack"=40)
 
 /obj/item/reagent_containers/food/drinks/cocktailshaker

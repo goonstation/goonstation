@@ -1596,7 +1596,6 @@
 		product_list += new/datum/data/vending_product(/obj/item/ladle, 1)
 		product_list += new/datum/data/vending_product(/obj/item/soup_pot, 1)
 		product_list += new/datum/data/vending_product(/obj/item/kitchen/rollingpin, 2)
-		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/knife/cleaver, 1)
 		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/knife/pizza_cutter, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bowl, 10)
 		product_list += new/datum/data/vending_product(/obj/item/plate, 10)

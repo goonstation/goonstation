@@ -1388,3 +1388,76 @@ Other Goonstation servers:[serverList]</span>"})
 	attack_hand(mob/user as mob)
 		..()
 		src.icon_state = "cowbrush[src.on ? "_on" : ""]"
+
+
+
+/obj/maptext_junk/gib_timer
+	mouse_opacity = 0
+	density = 0
+	opacity = 0
+	icon = null
+	plane = PLANE_HUD - 1
+	appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | PIXEL_SCALE
+	maptext = ""
+	var/gib_time = 60
+	// var/gib_time = null
+	var/mob/victim = null
+
+	two
+		gib_time = 120
+	five
+		gib_time = 300
+	ten
+		gib_time = 600
+	fifteen
+		gib_time = 900
+	twenty
+		gib_time = 1200
+	thirty
+		gib_time = 1800
+
+
+
+	New()
+		..()
+		src.pixel_y += 34
+		src.maptext_x = -20
+		src.maptext_width += 40
+		var/mob/home = src.loc
+		// Put it inside something to make it constantly show its location.
+		if (istype(home))
+			home.vis_contents += src
+		else
+			// if we are not home then we are gone, bye
+			qdel(src)
+			return
+		src.victim = home
+		set_loc(null)
+		// gib_time = ticker.round_elapsed_ticks + time_until_gib
+		SPAWN_DBG(0)
+			countdown()
+
+	// These are admin gimmick bombs so a while...sleep() delay isn't going to murder things
+	proc/countdown()
+
+		// var/time_left = INFINITY
+		do
+			sleep(1 SECOND)
+			// time_left = max(0, gib_time - ticker.round_elapsed_ticks)
+			gib_time--
+			switch (gib_time)
+				if (60 to INFINITY)
+					maptext = "<span class='vb c ol ps2p'>[round(gib_time / 60)]:[add_zero(num2text(gib_time % 60), 2)]</span>"
+				if (10 to 60)
+					maptext = "<span class='vb c ol ps2p'>[round(gib_time)]</span>"
+				else
+					maptext = "<span class='vb c ol ps2p' style='color: #ff4444;'>[round(gib_time)]</span>"
+
+		while (gib_time > 0 && !src.qdeled && !victim.qdeled)
+
+		if (victim && !victim.qdeled)
+			victim.vis_contents -= src
+			src.maptext = null
+			victim.gib()
+
+		qdel(src)

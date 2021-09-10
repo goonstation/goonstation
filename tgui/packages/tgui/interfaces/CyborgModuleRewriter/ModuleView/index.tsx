@@ -8,12 +8,23 @@
 import { Button, Flex, Section, Tabs } from '../../../components';
 import { EmptyPlaceholder } from '../EmptyPlaceholder';
 import { Module } from './Module';
+import { ModulesData } from '../type';
 
 // width hard-coded to allow display of widest current module name
 // without resizing when ejected/reset
 const ModuleListWidth = 18;
 
-export const ModuleView = props => {
+interface ModuleViewProps {
+  modules: ModulesData,
+  onEjectModule: (moduleRef: string) => void,
+  onMoveToolDown: (moduleRef: string, toolRef: string) => void,
+  onMoveToolUp: (moduleRef: string, toolRef: string) => void,
+  onRemoveTool: (moduleRef: string, toolRef: string) => void,
+  onResetModule: (moduleRef: string, moduleId: string) => void,
+  onSelectModule: (moduleRef: string) => void,
+}
+
+export const ModuleView = (props: ModuleViewProps) => {
   const {
     modules: {
       available = [],
@@ -31,22 +42,10 @@ export const ModuleView = props => {
     tools = [],
   } = selected || {};
 
-  const handleMoveToolDown = toolRef => onMoveToolDown({
-    moduleRef: selectedModuleRef,
-    toolRef,
-  });
-  const handleMoveToolUp = toolRef => onMoveToolUp({
-    moduleRef: selectedModuleRef,
-    toolRef,
-  });
-  const handleRemoveTool = toolRef => onRemoveTool({
-    moduleRef: selectedModuleRef,
-    toolRef,
-  });
-  const handleResetModule = moduleId => onResetModule({
-    moduleId,
-    moduleRef: selectedModuleRef,
-  });
+  const handleMoveToolDown = (toolRef: string) => onMoveToolDown(selectedModuleRef, toolRef);
+  const handleMoveToolUp = (toolRef: string) => onMoveToolUp(selectedModuleRef, toolRef);
+  const handleRemoveTool = (toolRef: string) => onRemoveTool(selectedModuleRef, toolRef);
+  const handleResetModule = (moduleId: string) => onResetModule(selectedModuleRef, moduleId);
 
   return (
     available.length > 0

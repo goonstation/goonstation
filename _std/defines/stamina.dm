@@ -36,6 +36,10 @@
 #define STAMINA_BLOCK_CHANCE 40
 /// Chance to block grabs.
 #define STAMINA_GRAB_BLOCK_CHANCE 85
+/// Chance to resist out of passive grabs.
+#define STAMINA_P_GRAB_RESIST_CHANCE 100
+/// Chance to resist out of upgraded grabs.
+#define STAMINA_U_GRAB_RESIST_CHANCE 45
 /// Cost of blocking an attack.
 #define STAMINA_DEFAULT_BLOCK_COST 5
 /// Does kicking people on the ground cost less stamina ? (Right now it doesnt cost less but rather refunds some because kicking people on the ground is very relaxing OKAY)
