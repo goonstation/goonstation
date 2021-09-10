@@ -32,20 +32,20 @@
 	// 0 is =>, 1 is ==
 	var/base_material_class = /obj/item/material_piece/ // please only material pieces
 	var/obj/item/reagent_containers/glass/beaker = null
-	var/obj/item/fabdisk = null
+	var/obj/item/manudrive = null
 	var/list/resource_amounts = list()
 	var/area_name = null
 	var/output_target = null
 	var/list/materials_in_use = list()
 	var/list/available = list()
 	var/list/download = list()
-	var/list/disk = list()
+	var/list/drive_recipes = list()
 	var/list/hidden = list()
 	var/list/queue = list()
 	var/last_queue_op = 0
 
 	var/category = null
-	var/list/categories = list("Tool","Clothing","Resource","Component","Machinery","Miscellaneous", "Disk", "Downloaded")
+	var/list/categories = list("Tool","Clothing","Resource","Component","Machinery","Miscellaneous", "Drive_recipes", "Downloaded")
 	var/search = null
 	var/wires = 15
 	var/image/work_display = null
@@ -109,10 +109,10 @@
 		src.panel_sprite = null
 		src.output_target = null
 		src.beaker = null
-		src.fabdisk = null
+		src.manudrive = null
 		src.available.len = 0
 		src.available = null
-		src.disk = null
+		src.drive_recipes = null
 		src.download.len = 0
 		src.download = null
 		src.hidden.len = 0
@@ -447,7 +447,7 @@
 		// 	dat += " <small>(Filter: \"[html_encode(src.category)]\")</small>"
 
 		// Get the list of stuff we can print ...
-		var/list/products = src.available + src.disk + src.download
+		var/list/products = src.available + src.drive_recipes + src.download
 		if (src.hacked)
 			products += src.hidden
 
@@ -549,7 +549,7 @@
 		if(src.download && (M in src.download))
 			return TRUE
 
-		if(src.disk && (M in src.disk))
+		if(src.drive_recipes && (M in src.drive_recipes))
 			return TRUE
 
 		if(src.hacked && src.hidden && (M in src.hidden))
@@ -713,11 +713,11 @@
 					src.updateUsrDialog()
 					return
 
-			if (href_list["ejectfabdisk"])
-				src.disk = null
-				if (src.fabdisk)
-					src.fabdisk.set_loc(get_output_location(fabdisk,1))
-				src.fabdisk = null
+			if (href_list["ejectmanudrive"])
+				src.drive_recipes = null
+				if (src.manudrive)
+					src.manudrive.set_loc(get_output_location(manudrive,1))
+				src.manudrive = null
 
 			if (href_list["ejectbeaker"])
 				if (src.beaker)
@@ -1038,15 +1038,15 @@
 					user.u_equip(W)
 					W.dropped()
 
-		else if (istype(W,/obj/item/fabdisk))
-			if (src.fabdisk)
-				boutput(user, "<span class='alert'>There's already a disk in the machine. You need to remove it first.</span>")
+		else if (istype(W,/obj/item/manudrive))
+			if (src.manudrive)
+				boutput(user, "<span class='alert'>There's already a drive in the machine. You need to remove it first.</span>")
 			else
 				boutput(user, "<span class='notice'>You insert [W].</span>")
 				W.set_loc(src)
-				src.fabdisk = W
-				var/obj/item/fabdisk/FD = W
-				src.disk += FD.diskstored
+				src.manudrive = W
+				var/obj/item/manudrive/MD = W
+				src.drive_recipes += MD.drivestored
 				if (user && W)
 					user.u_equip(W)
 					W.dropped()
@@ -1454,7 +1454,7 @@
 
 		var/datum/manufacture/M = src.queue[1]
 		//Wire: Fix for href exploit creating arbitrary items
-		if (!(M in src.available + src.hidden + src.disk + src.download))
+		if (!(M in src.available + src.hidden + src.drive_recipes + src.download))
 			src.mode = "halt"
 			src.error = "Corrupted entry purged from production queue."
 			src.queue -= src.queue[1]
@@ -1496,16 +1496,16 @@
 				src.timeleft *= 1.5
 			src.timeleft /= src.speed
 
-		if(src.fabdisk)
-			if(src.queue[1] in src.disk)
-				var/obj/item/fabdisk/FD = src.fabdisk
-				if(FD.fablimit == 0)
+		if(src.manudrive)
+			if(src.queue[1] in src.drive_recipes)
+				var/obj/item/manudrive/MD = src.manudrive
+				if(MD.fablimit == 0)
 					src.mode = "halt"
-					src.error = "This ManuDisk is unable to operate further."
+					src.error = "This ManuDrive is unable to operate further."
 					src.queue = list()
 					return
 				else
-					FD.fablimit -= 1
+					MD.fablimit -= 1
 
 		playsound(src.loc, src.sound_beginwork, 50, 1, 0, 3)
 		src.mode = "working"
@@ -1689,21 +1689,21 @@
 		</tr>
 			"}
 
-		if (src.fabdisk)
+		if (src.manudrive)
 			dat += {"
-		<tr><th colspan='2'>Manufacturer disk</th></tr>
+		<tr><th colspan='2'>Manufacturer drive</th></tr>
 			"}
 
 			dat += {"
-		<tr><td colspan='2'><a href='?src=\ref[src];ejectfabdisk=\ref[src.beaker]' class='buttonlink'>&#9167;</a> [src.fabdisk.name]</td></tr>
+		<tr><td colspan='2'><a href='?src=\ref[src];ejectmanudrive=\ref[src]' class='buttonlink'>&#9167;</a> [src.manudrive.name]</td></tr>
 			"}
 
-			var/obj/item/fabdisk/FD = src.fabdisk
-			if(FD.fablimit >= 0)
+			var/obj/item/manudrive/MD = src.manudrive
+			if(MD.fablimit >= 0)
 				dat += {"
 			<tr>
-				<td>ManuDisk Usages</td>
-				<td class='r'>[FD.fablimit]</td>
+				<td>ManuDrive Usages</td>
+				<td class='r'>[MD.fablimit]</td>
 			</tr>
 				"}
 
