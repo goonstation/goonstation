@@ -6223,7 +6223,7 @@
 /turf/space,
 /area/station/solar/west)
 "anO" = (
-/obj/machinery/power/solar_control/west{
+/obj/machinery/computer/solar_control/west{
 	dir = 4
 	},
 /obj/cable,
@@ -6352,7 +6352,7 @@
 	icon_state = "bulb1";
 	pixel_x = 12
 	},
-/obj/machinery/power/solar_control/east{
+/obj/machinery/computer/solar_control/east{
 	dir = 8
 	},
 /obj/cable,
@@ -9322,7 +9322,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "auy" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4;
 	name = "Station Power Grid Monitoring"
 	},
@@ -9495,7 +9495,7 @@
 /turf/simulated/floor/grey,
 /area/station/turret_protected/ai)
 "auR" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8
 	},
 /obj/machinery/light{
@@ -10157,7 +10157,7 @@
 /turf/simulated/floor/caution/west,
 /area/station/engine/engineering)
 "awe" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8;
 	name = "Station Power Grid Monitoring"
 	},
@@ -10558,7 +10558,7 @@
 /turf/simulated/floor/caution/west,
 /area/station/engine/engineering)
 "axa" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
 	},
@@ -11177,7 +11177,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
 "ayn" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
 	},
@@ -25387,7 +25387,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "bbH" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"

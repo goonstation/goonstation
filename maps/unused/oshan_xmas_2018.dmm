@@ -2213,7 +2213,7 @@
 /turf/simulated/floor/engine/caution/corner,
 /area/station/engine/gas)
 "aei" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
 	},
@@ -10780,7 +10780,7 @@
 	pixel_y = 5
 	},
 /obj/item/device/radio/intercom/science{
-	
+
 	},
 /obj/decal/xmas_lights{
 	pixel_y = 32
@@ -14722,7 +14722,7 @@
 "aFP" = (
 /obj/storage/secure/closet/research/chemical,
 /obj/item/device/radio/intercom/science{
-	
+
 	},
 /obj/decal/garland{
 	dir = 6;
@@ -18085,7 +18085,7 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/gas)
 "aNo" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -20675,7 +20675,7 @@
 /area/station/engine/inner)
 "aTm" = (
 /obj/item/device/radio/intercom/engineering{
-	
+
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
@@ -20687,7 +20687,7 @@
 	icon_state = "4-8"
 	},
 /obj/item/device/radio/intercom/engineering{
-	
+
 	},
 /turf/simulated/floor/yellow/checker{
 	icon_state = "yellowchecker";
@@ -23818,7 +23818,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/research_outpost)
 "bbp" = (
@@ -25235,7 +25235,7 @@
 /turf/space/fluid,
 /area/flock_trader)
 "beG" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	icon_state = "power";
 	dir = 8
 	},
@@ -29460,7 +29460,7 @@
 /area/station/engine/inner)
 "boM" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
 	},
@@ -29691,7 +29691,7 @@
 /area/space)
 "bpo" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8
 	},
 /obj/cable{
@@ -31905,7 +31905,7 @@
 "bup" = (
 /obj/table/wood/round/auto,
 /obj/item/device/radio/intercom/engineering{
-	
+
 	},
 /obj/decal/xmas_lights{
 	pixel_y = 32
@@ -31918,7 +31918,7 @@
 "buq" = (
 /obj/table/wood/round/auto,
 /obj/item/device/radio/intercom/security{
-	
+
 	},
 /obj/decal/xmas_lights{
 	pixel_y = 32
@@ -31931,7 +31931,7 @@
 "bur" = (
 /obj/table/wood/round/auto,
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /obj/machinery/light/incandescent/warm,
 /obj/decal/xmas_lights{
@@ -31945,7 +31945,7 @@
 "bus" = (
 /obj/table/wood/round/auto,
 /obj/item/device/radio/intercom/science{
-	
+
 	},
 /obj/decal/xmas_lights{
 	pixel_y = 32
@@ -44127,7 +44127,7 @@
 /area/station/security/brig)
 "bXr" = (
 /obj/item/device/radio/intercom/security{
-	
+
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig)
@@ -45894,7 +45894,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "ccS" = (

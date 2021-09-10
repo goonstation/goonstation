@@ -14626,7 +14626,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	name = "Station Power Grid Monitoring"
 	},
 /obj/machinery/power/data_terminal,
@@ -36326,7 +36326,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4
 	},
 /obj/blind_switch/area/north,
@@ -52005,7 +52005,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "czp" = (
@@ -57154,7 +57154,7 @@
 /obj/cable/yellow{
 	icon_state = "2-4"
 	},
-/obj/machinery/power/solar_control/west{
+/obj/machinery/computer/solar_control/west{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -59399,7 +59399,7 @@
 /turf/simulated/floor/delivery,
 /area/station/mining/staff_room)
 "nfH" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
 	},
@@ -60119,7 +60119,7 @@
 /area/station/medical/cdc)
 "oxf" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	name = "Engine Output Monitoring"
 	},
 /obj/cable/brown{
@@ -61429,7 +61429,7 @@
 /obj/cable/yellow{
 	icon_state = "2-4"
 	},
-/obj/machinery/power/solar_control/west,
+/obj/machinery/computer/solar_control/west,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
 "qEB" = (
@@ -62688,7 +62688,7 @@
 /turf/simulated/floor/bot,
 /area/station/crew_quarters/market)
 "sHJ" = (
-/obj/machinery/power/solar_control/east{
+/obj/machinery/computer/solar_control/east{
 	dir = 4
 	},
 /obj/cable/yellow{
@@ -65135,7 +65135,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},

@@ -1721,7 +1721,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control/west{
+/obj/machinery/computer/solar_control/west{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -2294,7 +2294,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control/small_backup2{
+/obj/machinery/computer/solar_control/small_backup2{
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
@@ -24886,7 +24886,7 @@
 "bfp" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/atmospherics/pipe/simple/overfloor/northwest,
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8;
 	name = "Station Power Grid Monitoring"
 	},
@@ -35409,7 +35409,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
 	},
@@ -35704,7 +35704,7 @@
 /obj/blind_switch/area{
 	pixel_x = -24
 	},
-/obj/machinery/power/monitor/smes,
+/obj/machinery/computer/power_monitor/smes,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/ce)
 "bCF" = (
@@ -38747,7 +38747,7 @@
 	name = "Engineering Control Room"
 	})
 "bIh" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 4;
 	name = "Engine Output Monitoring"
 	},
@@ -40132,7 +40132,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4;
 	name = "Station Power Grid Monitoring"
 	},
@@ -50394,7 +50394,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	name = "Station Power Grid Monitoring"
 	},
 /obj/cable{
@@ -72798,7 +72798,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control/small_backup1{
+/obj/machinery/computer/solar_control/small_backup1{
 	dir = 8
 	},
 /turf/simulated/floor/airless/plating/damaged3,
@@ -74003,7 +74003,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control/east{
+/obj/machinery/computer/solar_control/east{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -75466,7 +75466,7 @@
 /turf/simulated/floor/plating,
 /area/research_outpost)
 "djr" = (
-/obj/machinery/power/solar_control/east{
+/obj/machinery/computer/solar_control/east{
 	dir = 8
 	},
 /obj/cable{
@@ -77113,7 +77113,7 @@
 /turf/simulated/wall,
 /area/listeningpost/power)
 "dmZ" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -77130,7 +77130,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/solar_control/small_backup4,
+/obj/machinery/computer/solar_control/small_backup4,
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "dnb" = (
