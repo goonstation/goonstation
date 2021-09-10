@@ -247,30 +247,9 @@
 		hud.update_pulling()
 
 	death(gibbed)
-		if (src.mainframe)
-			logTheThing("combat", src, null, "'s AI controlled cyborg body was destroyed [log_health(src)] at [log_loc(src)].") // Brought in line with carbon mobs (Convair880).
-			src.mainframe.return_to(src)
-		setdead(src)
-		borg_death_alert()
-		src.canmove = 0
-
-		if (src.camera)
-			src.camera.camera_status = 0.0
-
-		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS
-
-		src.see_in_dark = SEE_DARK_FULL
-		if (client?.adventure_view)
-			src.see_invisible = 21
-		else
-			src.see_invisible = 2
-
-		logTheThing("combat", src, null, "was destroyed [log_health(src)] at [log_loc(src)].") // Only called for instakill critters and the like, I believe (Convair880).
-
-		if (src.mind)
-			if (src.mind.special_role)
-				src.handle_robot_antagonist_status("death", 1) // Mindslave or rogue (Convair880).
-			src.mind.register_death()
+		if (!gibbed)
+			src.collapse_to_pieces()
+		..(gibbed)
 
 #ifdef RESTART_WHEN_ALL_DEAD
 		var/cancel
@@ -3008,6 +2987,7 @@
 
 	proc/collapse_to_pieces()
 		logTheThing("combat", src, null, "was destroyed at [log_loc(src)].")
+		src.mind?.register_death()
 		if (src.mind?.special_role)
 			src.handle_robot_antagonist_status("death", 1)
 		src.borg_death_alert()
