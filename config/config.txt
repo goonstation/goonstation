@@ -82,7 +82,7 @@ ALLOW_AI
 NORESPAWN
 
 # Server Name
-SERVERNAME Goonstation
+SERVERNAME Coolstation
 #SERVERSUFFIX
 SERVERREGION Development
 

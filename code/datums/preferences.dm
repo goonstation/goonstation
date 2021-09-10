@@ -535,7 +535,7 @@ datum/preferences
 			if ("update-skinTone")
 				var/new_tone = "#FEFEFE"
 				if (usr.has_medal("Contributor"))
-					switch(alert(usr, "Goonstation contributors get to pick any colour for their skin tone!", "Thanks, pal!", "Paint me like a posh fence!", "Use Standard tone.", "Cancel"))
+					switch(alert(usr, "Coolstation contributors get to pick any colour for their skin tone!", "Thanks, pal!", "Paint me like a posh fence!", "Use Standard tone.", "Cancel"))
 						if("Paint me like a posh fence!")
 							new_tone = input(usr, "Please select skin color.", "Character Generation", AH.s_tone)  as null|color
 						if("Use Standard tone.")

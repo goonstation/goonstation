@@ -10,7 +10,7 @@
 	var/server_specific_configs = 0		// load extra config files (by port)
 
 	var/update_check_enabled = 0				// Server will call world.Reboot after checking for update if this is on
-	var/dmb_filename = "goonstation"
+	var/dmb_filename = "coolstation"
 
 	var/medal_hub = null				// medal hub name
 	var/medal_password = null			// medal hub password
