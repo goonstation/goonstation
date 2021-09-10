@@ -5557,7 +5557,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "bpW" = (
-/obj/machinery/power/solar_control/small_backup1{
+/obj/machinery/computer/solar_control/small_backup1{
 	dir = 4
 	},
 /obj/cable{
@@ -15288,7 +15288,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4
 	},
 /turf/simulated/floor/plating/jen,
@@ -30954,7 +30954,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "iQU" = (
-/obj/machinery/power/monitor/smes,
+/obj/machinery/computer/power_monitor/smes,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -34452,7 +34452,7 @@
 /area/station/ai_monitored/armory)
 "jVu" = (
 /obj/cable,
-/obj/machinery/power/monitor/smes,
+/obj/machinery/computer/power_monitor/smes,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
@@ -35860,7 +35860,7 @@
 	name = "Tool Storage"
 	})
 "kve" = (
-/obj/machinery/power/solar_control/east{
+/obj/machinery/computer/solar_control/east{
 	dir = 8
 	},
 /obj/cable{
@@ -51571,7 +51571,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/lobby)
 "pbX" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8;
 	name = "Station Power Grid Monitoring"
 	},
@@ -60548,7 +60548,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
 "rxG" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
 	},
@@ -63881,7 +63881,7 @@
 /turf/simulated/floor/carpet/purple/decal/outercross,
 /area/station/chapel/sanctuary)
 "swT" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8
 	},
 /obj/machinery/power/data_terminal,
@@ -68602,7 +68602,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/chapel/sanctuary)
 "tTy" = (
-/obj/machinery/power/solar_control/west{
+/obj/machinery/computer/solar_control/west{
 	dir = 4
 	},
 /obj/cable{
@@ -82828,7 +82828,7 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "xZO" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4
 	},
 /obj/cable{

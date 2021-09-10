@@ -7557,7 +7557,7 @@
 /turf/simulated/floor/bot,
 /area/station/engine/storage)
 "aww" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8
 	},
 /obj/machinery/power/data_terminal,
@@ -8056,7 +8056,7 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/breakroom)
 "axD" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4
 	},
 /obj/machinery/power/data_terminal,
@@ -33035,7 +33035,7 @@
 /turf/simulated/floor,
 /area/station/engine/power)
 "bNL" = (
-/obj/machinery/power/monitor/smes,
+/obj/machinery/computer/power_monitor/smes,
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /turf/simulated/floor,
@@ -41386,7 +41386,7 @@
 /area/station/hallway/centralhallway)
 "pfe" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor/console_upper,
+/obj/machinery/computer/power_monitor/console_upper,
 /obj/machinery/light/incandescent/cool{
 	dir = 1;
 	nostick = 1;
@@ -43609,7 +43609,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/power/monitor/console_upper,
+/obj/machinery/computer/power_monitor/console_upper,
 /obj/machinery/light/incandescent/cool{
 	dir = 1;
 	nostick = 1;

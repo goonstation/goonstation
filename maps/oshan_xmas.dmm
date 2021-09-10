@@ -2008,7 +2008,7 @@
 /turf/simulated/floor/engine/caution/corner,
 /area/station/engine/gas)
 "aei" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
 	},
@@ -17459,7 +17459,7 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/gas)
 "aNo" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -17982,7 +17982,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
 "aOG" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8
 	},
 /obj/item/device/radio/intercom{
@@ -23085,7 +23085,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/research_outpost)
 "bbp" = (
@@ -28538,7 +28538,7 @@
 /area/station/engine/inner)
 "boM" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
 	},
@@ -28768,7 +28768,7 @@
 /area/space)
 "bpo" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8
 	},
 /obj/cable{
@@ -44653,7 +44653,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "ccS" = (

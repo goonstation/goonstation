@@ -34962,7 +34962,7 @@
 /area/station/crew_quarters/ce)
 "buy" = (
 /obj/disposalpipe/segment/mail,
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8
 	},
 /obj/machinery/power/data_terminal,
@@ -35501,7 +35501,7 @@
 /area/station/crew_quarters/ce)
 "bvE" = (
 /obj/disposalpipe/segment/mail,
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
 	},
@@ -36219,7 +36219,7 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "bwR" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 1;
 	name = "Engine Output Monitoring"
 	},
@@ -36267,7 +36267,7 @@
 	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "bwW" = (
@@ -38785,7 +38785,7 @@
 	dir = 0;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/solar_control/west{
+/obj/machinery/computer/solar_control/west{
 	dir = 4
 	},
 /obj/cable{
@@ -38852,7 +38852,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4
 	},
 /turf/simulated/floor/caution/misc{
@@ -39291,7 +39291,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8
 	},
 /turf/simulated/floor/caution/misc{
@@ -39346,7 +39346,7 @@
 	dir = 0;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/solar_control/east{
+/obj/machinery/computer/solar_control/east{
 	dir = 8
 	},
 /turf/simulated/floor/caution/misc{
@@ -42066,7 +42066,7 @@
 /turf/simulated/floor/engine/caution/northsouth,
 /area/station/hangar/qm)
 "bJo" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4
 	},
 /obj/machinery/power/data_terminal,
@@ -42136,7 +42136,7 @@
 /turf/simulated/floor/engine/caution/northsouth,
 /area/station/hangar/qm)
 "bJu" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 4;
 	name = "Engine Output Monitoring"
 	},
@@ -42452,7 +42452,7 @@
 /turf/simulated/wall,
 /area/listeningpost/power)
 "bKl" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -42471,7 +42471,7 @@
 	dir = 0;
 	icon_state = "2-4"
 	},
-/obj/machinery/power/solar_control/small_backup4,
+/obj/machinery/computer/solar_control/small_backup4,
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "bKn" = (
@@ -49000,7 +49000,7 @@
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "oLM" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4
 	},
 /obj/cable{
