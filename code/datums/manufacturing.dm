@@ -2942,7 +2942,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	item_paths = list("MET-1", "CON-2")
 	item_amounts = list(4, 2)
 	item_outputs = list(/obj/item/grenade_fuse)
-	time = 60 SECONDS
+	time = 30 SECONDS
 	create = 1
 	category = "Miscellaneous" // Before you dear reviewer yell at me for this, keep in mind that manudrives will automatically add recipes to the disk_recipes category.
 
@@ -2951,6 +2951,6 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	item_paths = list("MET-3")
 	item_amounts = list(5)
 	item_outputs = list(/obj/item/chem_grenade)
-	time = 60 SECONDS
+	time = 30 SECONDS
 	create = 1
 	category = "Miscellaneous"
