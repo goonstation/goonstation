@@ -14838,7 +14838,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/maint)
 "aXF" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable,
 /obj/cable{
 	d1 = 1;
@@ -15073,7 +15073,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/upper_arctic/pod1)
 "aYe" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -51143,7 +51143,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8
 	},
 /obj/machinery/light/small/iomoon{
@@ -56110,7 +56110,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "owl"
 	},
 /obj/machinery/power/data_terminal,

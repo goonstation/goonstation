@@ -1865,7 +1865,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/solar_control/alt{
+/obj/machinery/computer/solar_control/alt{
 	dir = 8
 	},
 /turf/simulated/floor/wood/two,
@@ -3250,7 +3250,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/substation/pylon)
 "aic" = (
-/obj/machinery/power/solar_control/small_backup3,
+/obj/machinery/computer/solar_control/small_backup3,
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /turf/simulated/floor/grey/blackgrime,
@@ -8289,7 +8289,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/solar_control/north{
+/obj/machinery/computer/solar_control/north{
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
@@ -41066,7 +41066,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
 	},
@@ -41930,7 +41930,7 @@
 	name = "Engineering Control Room"
 	})
 "caX" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8;
 	icon_state = "power2"
 	},
@@ -44981,7 +44981,7 @@
 	},
 /area/station/crew_quarters/ce)
 "ciq" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	name = "Station Power Grid Monitoring"
 	},
 /obj/cable{
@@ -46540,7 +46540,7 @@
 /area/station/engine/coldloop)
 "cmk" = (
 /obj/cable,
-/obj/machinery/power/solar_control/small_backup2,
+/obj/machinery/computer/solar_control/small_backup2,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/north)
@@ -47482,7 +47482,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 4;
 	name = "Engine Output Monitoring"
 	},
@@ -47499,7 +47499,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
 "cod" = (
-/obj/machinery/power/solar_control/small_backup4,
+/obj/machinery/computer/solar_control/small_backup4,
 /obj/decal/cleanable/rust,
 /obj/cable{
 	icon_state = "0-2"
@@ -48521,7 +48521,7 @@
 	d2 = 8;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/solar_control/south{
+/obj/machinery/computer/solar_control/south{
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
@@ -49789,7 +49789,7 @@
 	},
 /area/listeningpost/power)
 "cvt" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2"
 	},

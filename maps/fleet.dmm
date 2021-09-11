@@ -2837,7 +2837,7 @@
 	name = "Tenebrae Maintenance"
 	})
 "gc" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	dir = 8;
 	id = "tene";
 	name = "Tenebrae solar panel control"
@@ -7776,7 +7776,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/hammer)
 "pZ" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	dir = 8;
 	id = "ham";
 	name = "Hammer solar panel control"
@@ -12081,7 +12081,7 @@
 	name = "Asclepius Equipment Room"
 	})
 "ya" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	dir = 8;
 	id = "asc";
 	name = "Asclepius solar panel control"
@@ -12848,7 +12848,7 @@
 	name = "Dionysus Maintenance"
 	})
 "zt" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	dir = 8;
 	id = "dio";
 	name = "Dionysus solar panel control"
@@ -16088,7 +16088,7 @@
 	name = "autoname - SS13";
 	pixel_y = 20
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "maru";
 	name = "Maru solar panel control"
 	},
@@ -16323,7 +16323,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	dir = 8;
 	id = "meri";
 	name = "Meridian solar panel control"
@@ -17058,7 +17058,7 @@
 	name = "Demeter Operations Room"
 	})
 "Hy" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	dir = 8;
 	id = "deme";
 	name = "Demeter solar panel control"
@@ -17830,7 +17830,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "IV" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -24176,7 +24176,7 @@
 	name = "Erebus Maintenance Room"
 	})
 "Wg" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	dir = 8;
 	id = "erebus";
 	name = "Erebus solar panel control"

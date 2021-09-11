@@ -304,7 +304,7 @@
 					M.change_misstep_chance(-INFINITY)
 				M.make_jittery(1000)
 				M.dizziness = max(0,M.dizziness-10)
-				M.drowsyness = max(0,M.drowsyness-10)
+				M.changeStatus("drowsy", -20 SECONDS)
 				M.sleeping = 0
 
 	simpledot //Simple damage over time.
@@ -637,7 +637,7 @@
 			tickspassed = optional
 			if(ismob(owner))
 				var/mob/M = owner
-				APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, -5, "stim_withdrawl")
+				APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stim_withdrawl", -5)
 				M.jitteriness = 0
 
 		onUpdate(timePassed)
@@ -1082,6 +1082,10 @@
 			else
 				owner.delStatus("resting")
 
+		onRemove()
+			. = ..()
+			ON_COOLDOWN(owner, "unlying_speed_cheesy", 0.3 SECONDS)
+
 		clicked(list/params)
 			if(ON_COOLDOWN(src.owner, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
 			L.delStatus("resting")
@@ -1185,9 +1189,9 @@
 		onRemove()
 			. = ..()
 			if(ismob(owner))
-				owner.changeStatus("janktank_withdrawl", 10 MINUTES)
 				var/mob/M = owner
 				M.remove_stun_resist_mod("janktank")
+				owner.changeStatus("janktank_withdrawl", 10 MINUTES)
 
 		onUpdate(timePassed)
 			var/mob/living/carbon/human/H
@@ -1224,13 +1228,13 @@
 			var/mob/living/carbon/human/M
 			if(ishuman(owner))
 				M = owner
-			if (prob(15))
-				M.TakeDamage("All", 0, 0, 1)
-			if (prob(10))
-				owner.changeStatus("stunned", 2 SECONDS)
-			if (prob(20))
-				violent_twitch(owner)
-				M.make_jittery(rand(6,9))
+				if (prob(15))
+					M.TakeDamage("All", 0, 0, 1)
+				if (prob(10))
+					owner.changeStatus("stunned", 2 SECONDS)
+				if (prob(20))
+					violent_twitch(owner)
+					M.make_jittery(rand(6,9))
 
 	mutiny
 		id = "mutiny"
@@ -1797,3 +1801,95 @@
 	regrow_target_id = "butt"
 	regrow_target_name = "butt"
 	regrow_target_path = /obj/item/clothing/head/butt
+
+
+/datum/statusEffect/z_pre_infection
+	id = "z_pre_inf"
+	name = "Zombie Scratch"
+	desc = "You breathed in some gross miasma."
+	icon_state = "z_pre_infection-1"
+	maxDuration = 90 SECONDS
+	visible = 0
+
+	var/timer = 0
+	var/static/infect_time = 50 SECONDS
+
+	var/mob/living/carbon/human/H
+	var/image/onfire = null
+
+	getTooltip()
+		. = ""
+
+	clicked(list/params)
+		if (H)
+			H.resist()
+
+	preCheck(atom/A)
+		. = 1
+		if(!ishuman(A))
+			. = 0
+		// I'd LIKE to put this check here, but proc/find_ailment_by_type and is a bit too inefficient for my comfort
+		// and this will be applied on combat hit. The ailments should use a assoc list for Constant lookup time or something...
+		// if (isliving(A))
+		// 	var/mob/living/L = A
+		// 	if (L.find_ailment_by_type(/datum/ailment/disease/necrotic_degeneration/can_infect_more))
+		// 		. = 0 //Already have the disease, don't need to bother with this
+
+	onAdd()
+		. = ..()
+		timer = 0
+		if (ishuman(owner))
+			H = owner
+			//If dead, instaconvert.
+			if(isdead(H))
+				H.set_mutantrace(/datum/mutantrace/zombie/can_infect)
+				if (H.ghost?.mind && !(H.mind && H.mind.dnr)) // if they have dnr set don't bother shoving them back in their body (Shamelessly ripped from SR code. Fight me.)
+					H.ghost.show_text("<span class='alert'><B>You feel yourself being dragged out of the afterlife!</B></span>")
+					H.ghost.mind.transfer_to(H)
+				H.delStatus(id)
+
+	onUpdate(timePassed)
+		timer += timePassed
+
+		if (timer >= infect_time && H)
+			H.contract_disease(/datum/ailment/disease/necrotic_degeneration/can_infect_more, null, null, 1) // path, name, strain, bypass resist
+			H.delStatus(id)
+			return
+		return ..(timePassed)
+
+/datum/statusEffect/drowsy
+	maxDuration = 2 MINUTES
+	id = "drowsy"
+	name = "Drowsy"
+	icon_state = "?1"
+	desc = "You feel very drowsy"
+	movement_modifier = new/datum/movement_modifier/drowsy
+	var/tickspassed = 0
+
+	onUpdate(timePassed)
+		. = ..()
+		tickspassed += timePassed
+		movement_modifier.additive_slowdown = 2 + tickspassed/(15 SECONDS)
+		if(ismob(owner) && prob(10))
+			var/mob/M = owner
+			M.change_eye_blurry(2, 10)
+
+		if(prob(tickspassed/(10 SECONDS)))
+			if(!owner.hasStatus("passing_out"))
+				owner.setStatus("passing_out", 5 SECONDS)
+
+/datum/statusEffect/passing_out
+	id = "passing_out"
+	name = "Passing out"
+	desc = "You're so tired you're about to pass out!"
+	icon_state = "disorient"
+	maxDuration = 5 SECONDS
+
+	onRemove()
+		. = ..()
+		owner.delStatus("drowsy")
+		if(isliving(owner))
+			var/mob/living/L = owner
+			L.force_laydown_standup()
+			L.changeStatus("weakened", 1 SECOND)
+			L.changeStatus("paralysis", 5 SECONDS)

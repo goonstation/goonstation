@@ -19,8 +19,13 @@
 		target.set_loc(src)
 		img = image('icons/effects/effects.dmi',src ,"energyorb")
 		target << img
+		RegisterSignal(the_user, list(COMSIG_MOB_DROPPED), .proc/handle_dropped_item)
+		APPLY_MOB_PROPERTY(the_user, PROP_CANTTHROW, src)
 
 		//SPAWN_DBG(0) check() but why
+
+	proc/handle_dropped_item(mob/user, atom/movable/AM)
+		AM.set_loc(get_turf(user))
 
 	remove_air(amount as num)
 		var/datum/gas_mixture/Air = unpool(/datum/gas_mixture)
@@ -59,6 +64,7 @@
 		return
 
 	disposing()
+		REMOVE_MOB_PROPERTY(the_user, PROP_CANTTHROW, src)
 		the_user.client.images -= cableimgs
 		the_user = null
 		return ..()

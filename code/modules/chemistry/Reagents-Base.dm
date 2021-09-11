@@ -196,7 +196,7 @@ datum
 								H.make_dizzy(5 * mult)
 						if (ethanol_amt >= 60)
 							H.change_eye_blurry(10 , 50)
-							if(probmult(6)) H.drowsyness += 5
+							if(probmult(6)) H.changeStatus("drowsy", 15 SECONDS)
 							if(prob(5)) H.take_toxin_damage(rand(1,2) * mult)
 
 					if (ishuman(M))
@@ -563,7 +563,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.make_jittery(2 )
-				M.drowsyness = max(M.drowsyness-(5), 0)
+				M.changeStatus("drowsy", -10 SECONDS)
 				if(prob(4))
 					M.reagents.add_reagent("epinephrine", 1.2 * mult) // let's not metabolize into meth anymore
 				//if(prob(2))
