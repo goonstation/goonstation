@@ -256,12 +256,6 @@
 			var/turf/T = get_turf(src)
 			for(var/obj/item/parts/robot_parts/R in src.contents)
 				R.set_loc(T)
-			src.part_chest = null
-			src.part_head = null
-			src.part_arm_l = null
-			src.part_arm_r = null
-			src.part_leg_l = null
-			src.part_leg_r = null
 			new /obj/item/parts/robot_parts/robot_frame(T)
 
 			src.ghostize()
