@@ -2340,9 +2340,9 @@
 		var/off_x = rand(-amplitude, amplitude)
 		var/off_y = rand(-amplitude/3, amplitude/3)
 
-		animate(src, pixel_x = off_x, pixel_y = off_y, easing = JUMP_EASING|EASE_IN, time = 1, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
-		animate(pixel_x = off_x*-1, pixel_y = off_y*-1, easing = JUMP_EASING, time = 1, flags = ANIMATION_RELATIVE)
-		sleep(0.2 SECONDS)
+		animate(src, pixel_x = off_x, pixel_y = off_y, easing = JUMP_EASING, time = 0.5, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+		animate(pixel_x = off_x*-1, pixel_y = off_y*-1, easing = JUMP_EASING, time = 0.5, flags = ANIMATION_RELATIVE)
+		sleep(0.1 SECONDS)
 	//endwhile - reset the pixel offsets to zero
 	is_jittery = 0
 
