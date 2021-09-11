@@ -264,7 +264,7 @@
 
 /obj/item/reagent_containers/food/snacks/pizza/pepper
     name = "fresh pepperoni  pizza"
-    desc = "A cheey pizza pie toped with bright red sizzling pepperoni slices."
+    desc = "A cheesy pizza pie toped with bright red sizzling pepperoni slices."
     icon_state = "peper"
     sliced_icon = "peper-slice"
 
@@ -280,7 +280,7 @@
     icon_state = "pizza-b"
     sliced_icon = "slice-b"	
 	
-/obj/item/reagent_containers/food/snacks/pizza/peperbad
+/obj/item/reagent_containers/food/snacks/pizza/pepperbad
     name = "soft serve pepperoni pizza"
     desc = "A pizza shipped from god knows where straight to cargo."
     icon_state = "pizza_m"
