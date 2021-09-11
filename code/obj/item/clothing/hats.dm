@@ -381,6 +381,7 @@ proc/filter_trait_hats(var/type)
 					C.set_loc(src)
 					cigs.Add(C)
 					packet.cigcount--
+				packet.update_icon()
 				success = 1
 
 		if(success)
