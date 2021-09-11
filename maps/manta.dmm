@@ -2225,9 +2225,6 @@
 /obj/stool/chair/office/yellow{
 	dir = 8
 	},
-/obj/landmark/spawner{
-	name = "erin"
-	},
 /turf/simulated/floor/orange,
 /area/seaturtle)
 "aht" = (
@@ -26467,6 +26464,7 @@
 	pixel_y = -1;
 	words = "If you want to talk to me, use the Intercom. - Erin"
 	},
+/obj/npc/trader/erin,
 /turf/simulated/floor/orange,
 /area/seaturtle)
 "buf" = (
