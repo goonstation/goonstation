@@ -950,10 +950,6 @@
 /turf/simulated/floor/plating,
 /area/station/crewquarters/cryotron)
 "acX" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-4"
-	},
 /obj/decal/fakeobjects{
 	desc = "Looks to have various readouts of navigational data and readouts from the ocean bottom. Interesting.";
 	dir = 4;
@@ -965,17 +961,16 @@
 /area/station/seaturtlebridge)
 "acY" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor/console_upper,
+/obj/decal/fakeobjects{
+	desc = "Wow! Look at all those buttons!";
+	icon = 'icons/obj/decoration.dmi';
+	icon_state = "lever1";
+	name = "Navigation Controls"
+	},
 /obj/machinery/light/incandescent/cool{
 	dir = 1;
 	nostick = 1;
 	pixel_y = 20
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/cable{
-	icon_state = "2-8"
 	},
 /obj/machinery/drainage/big,
 /turf/simulated/floor,
@@ -1025,9 +1020,6 @@
 /obj/machinery/computer/announcement/console_lower{
 	dir = 4;
 	req_access = null
-	},
-/obj/cable{
-	icon_state = "0-4"
 	},
 /turf/simulated/floor,
 /area/station/seaturtlebridge)
@@ -2175,13 +2167,23 @@
 /area/abandonedmedicalship/robot_trader)
 "ahg" = (
 /obj/table/reinforced/industrial/auto,
-/obj/item/room_planner,
+/obj/item/lamp_manufacturer/organic{
+	pixel_y = 6
+	},
+/obj/item/room_planner{
+	pixel_y = 4
+	},
 /obj/item/room_planner,
 /turf/simulated/floor,
 /area/seaturtle)
 "ahh" = (
 /obj/table/reinforced/industrial/auto,
-/obj/item/material_shaper,
+/obj/item/lamp_manufacturer/organic{
+	pixel_y = 6
+	},
+/obj/item/material_shaper{
+	pixel_y = 4
+	},
 /obj/item/material_shaper,
 /turf/simulated/floor,
 /area/seaturtle)
@@ -2277,9 +2279,6 @@
 "ahD" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/firedoor_spawn,
-/obj/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor,
 /area/seaturtle)
 "ahG" = (
@@ -33047,9 +33046,9 @@
 /turf/simulated/floor,
 /area/station/engine/power)
 "bNL" = (
-/obj/machinery/power/monitor/smes,
 /obj/machinery/power/data_terminal,
 /obj/cable,
+/obj/machinery/computer/power_monitor/smes,
 /turf/simulated/floor,
 /area/station/engine/power)
 "bNM" = (
@@ -33696,14 +33695,8 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "cSf" = (
-/obj/machinery/door/airlock/pyro/maintenance{
-	dir = 4
-	},
-/obj/access_spawn/maint,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating/random,
+/obj/machinery/manufacturer/mechanic,
+/turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/seaturtle)
 "cTx" = (
 /obj/item/device/multitool,
@@ -34475,11 +34468,8 @@
 	},
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "emT" = (
-/obj/machinery/power/apc/autoname_east,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/plating/random,
+/obj/machinery/rkit,
+/turf/simulated/floor,
 /area/seaturtle)
 "eoz" = (
 /obj/cable{
@@ -34843,13 +34833,8 @@
 /turf/simulated/floor,
 /area/station/engine/gas)
 "eRO" = (
-/obj/machinery/light/incandescent/blueish{
-	nostick = 1
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/plating/random,
+/obj/machinery/manufacturer/mechanic,
+/turf/simulated/floor,
 /area/seaturtle)
 "eRX" = (
 /obj/cable{
@@ -36460,15 +36445,6 @@
 	dir = 1
 	},
 /area/station/ranch)
-"hEK" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/seaturtle)
 "hGr" = (
 /obj/decal/tile_edge/line/red{
 	color = "#e7c88c";
@@ -36748,11 +36724,6 @@
 	dir = 6
 	},
 /area/station/security/secoffquarters)
-"hZN" = (
-/obj/machinery/power/apc/autoname_south,
-/obj/cable,
-/turf/simulated/floor,
-/area/seaturtle)
 "iaJ" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
@@ -37320,12 +37291,6 @@
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/plating/random,
 /area/diner/kitchen)
-"jhR" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/plating/random,
-/area/seaturtle)
 "jkh" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -39354,12 +39319,6 @@
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
 "nvV" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -39603,16 +39562,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/storage)
-"nRg" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor,
-/area/seaturtle)
 "nSv" = (
 /obj/iv_stand,
 /obj/item_dispenser/latex_gloves,
@@ -40627,9 +40576,6 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor,
 /area/seaturtle)
 "pyg" = (
@@ -40761,12 +40707,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
-"pWk" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor,
-/area/seaturtle)
 "pWO" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -42052,12 +41992,6 @@
 	icon_state = "yellowblack"
 	},
 /area/station/engine/monitoring)
-"sAu" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating/random,
-/area/seaturtle)
 "sCW" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/left{
@@ -43788,9 +43722,6 @@
 	name = "Mining"
 	},
 /obj/firedoor_spawn,
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor,
 /area/seaturtle)
 "wmS" = (
@@ -44017,9 +43948,6 @@
 	req_access = null
 	},
 /obj/firedoor_spawn,
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -44127,19 +44055,6 @@
 	icon_state = "fred2"
 	},
 /area/station/science/restroom)
-"wUj" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/turf/simulated/floor,
-/area/seaturtle)
 "wVU" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable,
@@ -44620,13 +44535,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/inner)
-"xOE" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment,
-/turf/simulated/floor,
-/area/seaturtle)
 "xOT" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -95963,7 +95871,7 @@ aaa
 aca
 adw
 ach
-acn
+cSf
 ace
 aea
 aea
@@ -96891,9 +96799,9 @@ fmh
 fmh
 pcG
 ahD
-jvO
-wUj
-nRg
+ado
+pew
+lWX
 nvV
 tGW
 ado
@@ -97196,7 +97104,7 @@ acI
 lMX
 ado
 xwf
-sHX
+ado
 ado
 ado
 oXH
@@ -97498,7 +97406,7 @@ aeD
 hTz
 jcc
 nTP
-sHX
+ado
 xre
 ado
 aca
@@ -98082,7 +97990,7 @@ adV
 aeu
 aeG
 acn
-ado
+emT
 adr
 byH
 acn
@@ -98102,7 +98010,7 @@ aca
 lSC
 ado
 snu
-xOE
+hTz
 vvc
 vHd
 cdp
@@ -98384,7 +98292,7 @@ adX
 aex
 aeU
 acn
-ado
+eRO
 ado
 byI
 acI
@@ -98404,7 +98312,7 @@ aca
 ado
 ado
 ado
-sHX
+ado
 ado
 ado
 aca
@@ -98706,7 +98614,7 @@ aca
 ado
 ado
 ado
-sHX
+ado
 ado
 aca
 aca
@@ -99008,7 +98916,7 @@ aca
 ado
 ado
 ado
-sHX
+ado
 ado
 aca
 aaa
@@ -99308,10 +99216,10 @@ xqn
 xqn
 aca
 ado
-pWk
-jvO
-hEK
-hZN
+ado
+ado
+ado
+ado
 aca
 aaa
 aaa
@@ -99610,7 +99518,7 @@ xsU
 jYZ
 aca
 ado
-sHX
+ado
 ado
 ado
 aca
@@ -99912,7 +99820,7 @@ xsU
 xsU
 aca
 ado
-sHX
+ado
 ado
 ado
 aca
@@ -100214,7 +100122,7 @@ xsU
 xsU
 aca
 ado
-sHX
+ado
 ado
 ado
 aca
@@ -100516,7 +100424,7 @@ xsU
 xsU
 aca
 ioD
-sHX
+ado
 ioD
 aca
 aca
@@ -100818,7 +100726,7 @@ xsU
 xsU
 aca
 aca
-cSf
+yfh
 aca
 aca
 aaa
@@ -101120,7 +101028,7 @@ xsU
 kGk
 aca
 ach
-sAu
+ach
 aca
 aaa
 aaa
@@ -101421,8 +101329,8 @@ sPI
 aca
 aca
 aca
-jhR
-eRO
+ach
+quy
 aca
 aaa
 aaa
@@ -101723,7 +101631,7 @@ xsU
 ach
 rBf
 ach
-emT
+ach
 aca
 aca
 aaa
