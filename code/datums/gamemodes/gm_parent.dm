@@ -282,10 +282,7 @@
 					if(player.client.preferences.be_misc) candidates += player.mind
 
 	if(candidates.len < number)
-		if(type in list(ROLE_WIZARD, ROLE_TRAITOR, ROLE_CHANGELING, ROLE_WRAITH, ROLE_BLOB, ROLE_WEREWOLF))
-			logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_[type] set to yes were ready. We need [number] so including players who don't want to be [type]s in the pool.")
-		else
-			logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Not enough players with be_misc set to yes, including players who don't want to be misc enemies in the pool for [type] assignment.")
+		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_[type] set to yes were ready. We need [number] so including players who don't want to be [type]s in the pool.")
 
 		for(var/client/C)
 			var/mob/new_player/player = C.mob
