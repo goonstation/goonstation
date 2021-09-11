@@ -790,15 +790,6 @@
 		..() // Logs.
 		src.flash(3 SECONDS)
 
-		if (isdead(src) && src.client)
-			SPAWN_DBG(1 DECI SECOND)
-				src.gib(1)
-			return
-
-		else if (isdead(src) && !src.client)
-			qdel(src)
-			return
-
 		var/fire_protect = 0
 		for (var/obj/item/roboupgrade/R in src.contents)
 			if (istype(R, /obj/item/roboupgrade/physshield) && R.activated)
