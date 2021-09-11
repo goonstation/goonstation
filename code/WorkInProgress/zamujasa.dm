@@ -462,7 +462,7 @@
 		alpha = 128
 		boutput(user, "Spawning target dummy, stand by") //no need to be rude
 
-		new /mob/living/carbon/human/tdummy(locate(src.x+1, src.y, src.z))
+		new /mob/living/carbon/human/tdummy(locate(src.x+1, src.y, src.z)){shutup = TRUE}
 		//T.x = src.x + 1 // move it to the right
 
 
