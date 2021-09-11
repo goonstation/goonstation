@@ -671,9 +671,6 @@
 		. += "<span class='notice'>*---------*</span><br>"
 		. += "<span class='notice'>This is [bicon(src)] <B>[src.name]</B>!</span><br>"
 
-		if (isdead(src))
-			. += "<span class='alert'>[src.name] is powered-down.</span><br>"
-
 		var/brute = get_brute_damage()
 		var/burn = get_burn_damage()
 		if (brute)
