@@ -839,7 +839,7 @@
 
 
 ///////////modular components - putting them here so it's easier to work on for now////////
-
+/*
 /obj/item/gun_parts
 	name = "gun parts"
 	desc = "Components for building custom sidearms."
@@ -896,7 +896,7 @@
 	grip // tacticool
 		name = "fore grip"
 		icon_state = "mod-grip"
-
+*/
 ///////////////////////////////////////Owl Gun
 /obj/item/gun/energy/owl
 	name = "Owl gun"
