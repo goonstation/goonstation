@@ -1593,3 +1593,139 @@ ABSTRACT_TYPE(/obj/item/clothing/head/hairbow)
     wear_image_icon = 'icons/mob/fruithat.dmi'
     icon_state = "rafflesiahat"
     item_state = "rafflesiahat"
+
+/obj/item/clothing/head/deerstalker
+	name = "deerstalker hat"
+	desc = "A hat for hunting space deer or solving a mystery."
+	icon_state = "deerstalker"
+	item_state = "deerstalker"
+
+/obj/item/clothing/head/pomhat_blue
+   name = "blue pomhat"
+   desc = "A cobalt hat with a fun little pom!"
+   icon_state = "pomhat_blue"
+   item_state = "pomhat_blue"
+
+/obj/item/clothing/head/pomhat_red
+   name = "red pomhat"
+   desc = "A crimson hat with an enjoyable little pom!"
+   icon_state = "pomhat_red"
+   item_state = "pomhat_red"
+
+// Mime Beret recolours (mime beret is located elsewhere weirdly)
+
+ABSTRACT_TYPE(/obj/item/clothing/head/frenchberet)
+/obj/item/clothing/head/frenchberet
+	name = "\improper French beret"
+	desc = "More artistic than your standard beret."
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "beret_wht"
+	item_state = "beret_wht"
+	w_class = W_CLASS_TINY
+	throwforce = 0
+
+	white
+		name = "white French beret"
+		icon_state = "beret_wht"
+		item_state = "beret_wht"
+
+	yellow
+		name = "yellow French beret"
+		icon_state = "beret_yel"
+		item_state = "beret_yel"
+
+	mint
+		name = "mint French beret"
+		icon_state = "beret_mnt"
+		item_state = "beret_mnt"
+
+	purple
+		name = "purple French beret"
+		icon_state = "beret_prp"
+		item_state = "beret_prp"
+
+	blue
+		name = "blue French beret"
+		icon_state = "beret_blu"
+		item_state = "beret_blu"
+
+	pink
+		name = "pink French beret"
+		icon_state = "beret_pnk"
+		item_state = "beret_pnk"
+
+	strawberry
+		name = "strawberry beret"
+		icon_state = "beret_strawb"
+		item_state = "beret_strawb"
+
+// Costume goggles
+
+ABSTRACT_TYPE(/obj/item/clothing/head/goggles)
+/obj/item/clothing/head/goggles
+	name = "costume goggles"
+	desc = "WARNING: Does not actually provide any ocular protection whatsoever."
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "goggles_red"
+	item_state = "goggles_red"
+	w_class = W_CLASS_TINY
+	throwforce = 0
+
+	red
+		name = "red costume goggles"
+		icon_state = "gogglesred_up"
+		item_state = "goggles_red"
+
+	purple
+		name = "purple costume goggles"
+		icon_state = "gogglesprp_up"
+		item_state = "goggles_prp"
+
+	green
+		name = "green costume goggles"
+		icon_state = "gogglesgrn_up"
+		item_state = "goggles_grn"
+
+	blue
+		name = "blue costume goggles"
+		icon_state = "gogglesblu_up"
+		item_state = "goggles_blu"
+
+	yellow
+		name = "yellow costume goggles"
+		icon_state = "gogglesyel_up"
+		item_state = "goggles_yel"
+
+/obj/item/clothing/head/gothsunhat
+	name = "goth sunhat"
+	desc = "Favoured by vampires."
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "goth_sunhat"
+	item_state = "goth_sunhat"
+
+/obj/item/clothing/head/cavalierhat
+	name = "cavalier hat"
+	desc = "Heroic!"
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "cavalier_hat"
+	item_state = "cavalier_hat"
+
+/obj/item/clothing/head/pirate_blk
+	name = "black pirate hat"
+	desc = "Heroic!"
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "pirate_blk"
+	item_state = "pirate_blk"
+
+/obj/item/clothing/head/pirate_brn
+	name = "brown pirate hat"
+	desc = "Heroic!"
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "pirate_brn"
+	item_state = "pirate_brn"
