@@ -53,8 +53,8 @@
 		var/timeleft = src.time_until_shift - ticker.round_elapsed_ticks
 
 		if(timeleft <= 0)
+			src.time_until_shift = ticker.round_elapsed_ticks + time_between_shifts + rand(-900,900)
 			market_shift()
-			src.time_until_shift =ticker.round_elapsed_ticks + time_between_shifts + rand(-900,900)
 			return 0
 
 		return timeleft
@@ -67,35 +67,72 @@
 
 	proc/market_shift()
 		last_market_update = world.timeofday
+
+		// Chance of a commodity being hot. Sometimes the market is on fire.
+		// Sometimes it is not. They still have to have a positive value roll,
+		// so on average the % chance is actually about ~half this value.
+		var/hot_chance = rand(10, 33)
+
 		for (var/type in src.commodities)
 			var/datum/commodity/C = src.commodities[type]
-			C.indemand = 0
-			// Clear current in-demand products so we can set new ones later
-			if (prob(90))
-				C.price += rand(C.lowerfluc,C.upperfluc)
-				// Most of the time price fluctuates normally
-			else
-				var/multiplier = rand(2,4)
-				C.price += rand(C.lowerfluc * multiplier,C.upperfluc * multiplier)
-				// Sometimes it goes apeshit though!
-			if (C.price < 0)
-				C.price = 0
-				// No point in paying centcom to take your goods away
-			if (prob(5))
-				C.price = C.baseprice
-				// Small chance of a price being sent back to its original value
 
-		if (prob(3))
-			src.demand_multiplier = rand(2,4)
-			// Small chance of the multiplier of in-demand items being altered
-		var/demands = rand(2,4)
-		// How many goods are going to be in demand this time?
-		while(demands > 0)
-			var/datum/commodity/D = src.commodities[pick(src.commodities)]
-			if (D.price > 0)
-				D.indemand = 1
-				// Goods that are in demand sell for a multiplied price
-			demands--
+			// First, get the basic RNG roll. Why -90 to 90? Well, because...
+			var/modifier_roll = rand(-900, 900) / 10
+			// ...we feed it into cos(x). -90 ... 0 ... 90 = 0 ... 1 ... 0
+			// Then we subtract it from 1, so that roll=0 -> 0, roll=90 = 1
+			var/price_mod = 1 - cos(modifier_roll)
+
+			// All prices are initially based off of the base price.
+			// Previously it was based off of the PREVIOUS price, which
+			// could end up making certain commodies skyrocket to absurd
+			// levels, or outright crash to literally worthless.
+			// The price is then adjusted by either upperfluc or lowerfluc,
+			// based on the roll and modifier above.
+			var/price_adjust = C.baseprice
+			if (modifier_roll >= 0)
+				// Good rolls adjust based on the upper fluctuation...
+				price_adjust += C.upperfluc * price_mod
+			else
+				// ... and bad rolls adjust on the lower one.
+				price_adjust += C.lowerfluc * price_mod
+
+			C.price = price_adjust
+
+			// At this point, the price is (hopefully) roughly on this
+			// unfortunately upside-down scale of probabilities:
+			//   |                                 | | v rare
+			//    -                               -  |
+			//     -_                           _-   | rare
+			//       --___                 ___--     |
+			//            ----____|____----          | common
+			// lowerfluc      baseprice        upperfluc
+
+			// This means that the price will always be between
+			// (baseprice - abs(lowerfluc)) and (baseprice + upperfluc),
+			// tending to land closer to the middle of the range.
+
+			// If we had a good roll (> 0), roll a chance to make this
+			// item Hot™! Hot items get a bigger bonus to their current value,
+			// which is just pure random inflation.
+			C.indemand = 0
+			if (modifier_roll > 0 && prob(hot_chance))
+				// shit is on FIYAH! SELL SELL SELL!!
+				// Hot prices are marked up by +50% to +200%.
+				// This might be a bit much, but compensating for some of the
+				// commodities that achieved stupidly inflated prices in the
+				// old system. Can be adjusted down later if need be.
+				C.indemand = 1
+				C.price *= rand(150, 300) / 100
+
+			// If (somehow) a price manages to become negative, make it
+			// zero again so you aren't charged for disposing of it.
+			// (comedy option: actual trash should cost money to dispose of.)
+			// (please only do this when something that can recycle
+			//  the crusher's scraps exist.)
+			// We also strip off any weird decimals because it is 2053
+			// and the penny has been abolished, along with all other coins.
+			C.price = max(round(C.price), 0)
+
 
 		// Shuffle trader visibility around a bit
 		for (var/datum/trader/T in src.active_traders)

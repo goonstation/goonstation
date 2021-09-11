@@ -1611,6 +1611,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/hairbow)
    desc = "A crimson hat with an enjoyable little pom!"
    icon_state = "pomhat_red"
    item_state = "pomhat_red"
+<<<<<<< HEAD
 
 // Mime Beret recolours (mime beret is located elsewhere weirdly)
 
@@ -1729,3 +1730,5 @@ ABSTRACT_TYPE(/obj/item/clothing/head/goggles)
 	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "pirate_brn"
 	item_state = "pirate_brn"
+=======
+>>>>>>> master

@@ -3838,7 +3838,7 @@
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
 "apD" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "westsolar";
 	name = "West Solar Control"
 	},
@@ -4521,7 +4521,7 @@
 /turf/simulated/floor/plating/damaged1,
 /area/station/maintenance/west)
 "ass" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "eastsolar";
 	name = "East Solar Control"
 	},
@@ -10696,7 +10696,7 @@
 	},
 /area/station/chapel/sanctuary)
 "aQB" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -14258,7 +14258,7 @@
 /turf/simulated/floor,
 /area/station/engine/power)
 "bcj" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	name = "Engine Output Monitoring"
 	},
 /obj/cable/reinforced{
@@ -14271,7 +14271,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor,
 /area/station/engine/power)
 "bcm" = (
@@ -16663,7 +16663,7 @@
 	},
 /area/listeningpost/power)
 "blk" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -18918,7 +18918,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/east,
@@ -19587,7 +19587,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control/small_backup1{
+/obj/machinery/computer/solar_control/small_backup1{
 	dir = 8
 	},
 /obj/machinery/light/small/warm{
@@ -33117,7 +33117,7 @@
 /area/station/engine/inner)
 "sAq" = (
 /obj/lattice,
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	name = "Engine Output Monitoring"
 	},
 /obj/cable,

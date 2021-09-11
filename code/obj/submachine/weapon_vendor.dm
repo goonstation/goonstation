@@ -101,6 +101,7 @@
 	icon_state = "weapon-sec"
 	desc = "An automated quartermaster service for supplying your security team with weapons and gear."
 	token_accepted = /obj/item/requisition_token/security
+	log_purchase = TRUE
 	New()
 		..()
 		materiel_stock += new/datum/materiel/loadout/standard

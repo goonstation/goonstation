@@ -1527,8 +1527,9 @@ datum
 				if (method == INGEST)
 					boutput(M, "<span class='alert'>Aaaagh! It tastes fucking horrendous!</span>")
 					SPAWN_DBG(1 SECOND)
-						M.visible_message("<span class='alert'>[M] pukes violently!</span>")
-						M.vomit()
+						if(!isdead(M))
+							M.visible_message("<span class='alert'>[M] pukes violently!</span>")
+							M.vomit()
 				else
 					boutput(M, "<span class='alert'>Oh god! It smells horrific! What the fuck IS this?!</span>")
 					if (prob(50))
@@ -1561,6 +1562,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				if(volume <= 1)
+					return
 				if (method == TOUCH)
 					. = 0 // for depleting fluid pools
 				if(!ON_COOLDOWN(M, "ants_scream", 3 SECONDS))
@@ -1590,6 +1593,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				if(volume <= 1)
+					return
 				if(method == TOUCH)
 					. = 0 // for depleting fluid pools
 				if (!ON_COOLDOWN(M, "spiders_scream", 3 SECONDS))
@@ -3734,6 +3739,13 @@ datum
 						boutput(M, "<span class='alert'>Oh god! The <i>smell</i>!!!</span>")
 					M.reagents.add_reagent("jenkem",0.1 * volume_passed)
 
+			very_toxic
+				id = "very_toxic_fart"
+				name = "very toxic fart"
+
+				on_mob_life(var/mob/M, var/mult = 1)
+					. =..()
+					M.take_toxin_damage(2 * mult)
 			//on_mob_life(var/mob/M, var/mult = 1)
 			//	if(!M) M = holder.my_atom
 			//	..()

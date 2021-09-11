@@ -423,7 +423,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/solar_control/west{
+/obj/machinery/computer/solar_control/west{
 	dir = 4
 	},
 /turf/space,
@@ -1329,7 +1329,7 @@
 /turf/simulated/floor/caution/south,
 /area/station/engine/ptl)
 "adu" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
 	},
@@ -1475,7 +1475,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	name = "Station Power Grid Monitoring"
 	},
 /turf/simulated/floor/plating,
@@ -5960,7 +5960,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/solar_control/east{
+/obj/machinery/computer/solar_control/east{
 	dir = 8
 	},
 /turf/simulated/floor/plating,
@@ -8044,7 +8044,7 @@
 	},
 /area/station/engine/core)
 "avQ" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4;
 	name = "Station Power Grid Monitoring"
 	},
@@ -9191,7 +9191,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 4;
 	name = "Engine Output Monitoring"
 	},
@@ -9255,7 +9255,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
 	},
@@ -14804,7 +14804,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_east)
 "aOX" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8;
 	name = "Station Power Grid Monitoring"
 	},
@@ -19560,7 +19560,7 @@
 /turf/simulated/floor,
 /area/station/storage/eva)
 "bdg" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	name = "Station Power Grid Monitoring"
 	},
 /obj/machinery/power/data_terminal,
@@ -22676,7 +22676,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "bnA" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	name = "Station Power Grid Monitoring"
 	},
 /obj/cable{
@@ -38948,7 +38948,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "clb" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -47153,7 +47153,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10
 	},
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8;
 	name = "Station Power Grid Monitoring"
 	},

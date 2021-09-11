@@ -2162,7 +2162,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "aFz" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4
 	},
 /obj/cable{
@@ -11584,7 +11584,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "dmu" = (
-/obj/machinery/power/solar_control/west,
+/obj/machinery/computer/solar_control/west,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -24854,7 +24854,7 @@
 	name = "Officers' Lounge"
 	})
 "gRa" = (
-/obj/machinery/power/solar_control/small_backup4{
+/obj/machinery/computer/solar_control/small_backup4{
 	dir = 4
 	},
 /obj/cable{
@@ -29827,7 +29827,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "ijA" = (
-/obj/machinery/power/solar_control/south{
+/obj/machinery/computer/solar_control/south{
 	dir = 4
 	},
 /obj/cable{
@@ -33845,7 +33845,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
 	},
@@ -38034,7 +38034,7 @@
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/south)
 "krQ" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4;
 	name = "Station Power Grid Monitoring"
 	},
@@ -40248,7 +40248,7 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "kZO" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4;
 	name = "Station Power Grid Monitoring"
 	},
@@ -46256,7 +46256,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "myY" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4;
 	name = "Station Power Grid Monitoring"
 	},
@@ -55708,7 +55708,7 @@
 	name = "Medical Booth Morgue"
 	})
 "pbo" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	name = "Engine Output Monitoring"
 	},
 /obj/cable{
@@ -59077,7 +59077,7 @@
 /turf/simulated/floor/grey,
 /area/station/chapel/sanctuary)
 "pYK" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4;
 	name = "Station Power Grid Monitoring"
 	},
@@ -69028,7 +69028,7 @@
 /turf/simulated/floor/yellow/checker,
 /area/station/storage/tools)
 "sCA" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4
 	},
 /obj/cable{
@@ -70564,7 +70564,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/south)
 "sVI" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	name = "Station Power Grid Monitoring"
 	},
 /obj/machinery/power/data_terminal,
@@ -70849,7 +70849,7 @@
 	name = "Chapel Reception"
 	})
 "sYr" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
 	},
@@ -73561,7 +73561,7 @@
 /area/station/engine/power)
 "tGv" = (
 /obj/decal/stage_edge/alt,
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8;
 	name = "Station Power Grid Monitoring"
 	},
@@ -77774,7 +77774,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbooth)
 "uJz" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8;
 	name = "Station Power Grid Monitoring"
 	},
@@ -79757,7 +79757,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/solar_control/small_backup1{
+/obj/machinery/computer/solar_control/small_backup1{
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
@@ -90241,7 +90241,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	name = "Station Power Grid Monitoring"
 	},
 /obj/machinery/power/data_terminal,
