@@ -119,6 +119,12 @@
 			SPAWN_DBG(src.time_between_laughs)
 				src.laugh_cooldown = FALSE
 
+	on_damaged(mob/user)
+		. = ..()
+		if (prob(50))
+			playsound(src.loc, "sound/misc/gnomeoof.ogg", 50, 1)
+		else if (prob(10))
+			playsound(src.loc, "sound/misc/gnomecry.ogg", 50, 1)
 
 	proc/water_plant(var/obj/machinery/plantpot/planter)
 		if (planter.current && !planter.dead && planter.water_level < 2)
@@ -131,4 +137,5 @@
 			qdel(reagents_temp)
 		src.task = "thinking"
 		src.attacking = 0
+		src.plant_plan = ""
 
