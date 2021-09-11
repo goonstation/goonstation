@@ -1432,11 +1432,11 @@
 // A gal trying to keep her sub afloat
 
 /obj/npc/trader/
-	icon = 'icons/obj/items/device.dmi'
-	icon_state = "intercom"
+	icon = 'icons/obj/trader64.dmi'
+	icon_state = "Erin"
 	picture = "generic.png"
 	name = "Erin Sarni"
-	trader_area = "/area/seaturtle/traderbooth"
+	trader_area = "/area/seaturtle"
 	angrynope = "Dont try to cheap out on me spacer."
 	whotext = "I'm the Chief Engineer and Helmsmen of the NSS Sea Turtle. We've been running short of materials after repairing the NSS Manta, and we've detected high mineral concentrations in the area, so we've been proccessing alot of ore, along with helping look for Polaris. I'll trade you some in exchange for scrap and any mechanical parts you have."
 
