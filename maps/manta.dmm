@@ -1839,7 +1839,7 @@
 	pixel_x = -10
 	},
 /obj/decal/fakeobjects{
-	desc = "A Standard ThinkDOS computer. There's something about minerals and a map on it.";
+	desc = "A Standard ThinkDOS computer. There's something about minerals and alot of graphs.";
 	dir = 4;
 	icon = 'icons/obj/computerpanel.dmi';
 	icon_state = "announcement1";
@@ -2213,7 +2213,7 @@
 /area/seaturtle)
 "ahp" = (
 /obj/decal/fakeobjects{
-	desc = "A standard ThinkDOS computer. Seems the latest copy of Frontier Admiral is running on it. ";
+	desc = "A standard ThinkDOS computer. There seems to be a real time feed of the trench from the Sea Turtles sonar suite.";
 	dir = 4;
 	icon = 'icons/obj/computerpanel.dmi';
 	icon_state = "announcement2";
@@ -2223,7 +2223,8 @@
 /area/seaturtle)
 "ahr" = (
 /obj/stool/chair/office/yellow{
-	dir = 8
+	dir = 8;
+	pixel_x = -2
 	},
 /turf/simulated/floor/orange,
 /area/seaturtle)
@@ -6303,15 +6304,13 @@
 /turf/simulated/floor/sanitary,
 /area/seaturtle)
 "asv" = (
-/obj/disposalpipe/segment/mineral{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/obj/decal/cleanable/dirt/jen,
 /obj/landmark/start{
 	name = "Miner"
 	},
 /obj/decal/cleanable/dirt,
+/obj/disposalpipe/segment/mineral{
+	dir = 4
+	},
 /turf/simulated/floor/industrial,
 /area/station/mining/refinery)
 "asx" = (
@@ -14396,6 +14395,10 @@
 	},
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/disposalpipe/segment/mineral{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/cargooffice)
@@ -26458,13 +26461,13 @@
 /obj/table/reinforced,
 /obj/machinery/light/small/floor/warm,
 /obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/npc/trader/erin,
 /obj/item/sticker/postit{
 	layer = 4;
 	pixel_x = 7;
 	pixel_y = -1;
 	words = "If you want to talk to me, use the Intercom. - Erin"
 	},
-/obj/npc/trader/erin,
 /turf/simulated/floor/orange,
 /area/seaturtle)
 "buf" = (
@@ -27812,26 +27815,17 @@
 /turf/simulated/floor,
 /area/station/hallway/starboardlowerhallway)
 "byu" = (
-/obj/disposalpipe/segment/mineral{
-	dir = 4
+/obj/cable{
+	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/engineering{
-	dir = 4;
-	name = "Refinery";
-	req_access = null
-	},
-/obj/access_spawn/cargo,
-/obj/firedoor_spawn,
-/turf/simulated/floor,
-/area/station/quartermaster/cargooffice)
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/orange,
+/area/station/mining/staff_room)
 "byv" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment/mineral{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
+/obj/disposalpipe/segment/mineral,
 /turf/simulated/floor,
 /area/station/quartermaster/cargooffice)
 "byw" = (
@@ -33132,8 +33126,12 @@
 /turf/simulated/floor/sanitary,
 /area/seaturtle)
 "bOI" = (
-/obj/machinery/nanofab/refining,
-/turf/simulated/floor/industrial,
+/obj/disposalpipe/segment/mineral{
+	dir = 4
+	},
+/turf/simulated/floor/stairs{
+	dir = 4
+	},
 /area/station/mining/refinery)
 "bOJ" = (
 /obj/machinery/nanofab/mining,
@@ -34594,6 +34592,13 @@
 /obj/item/reagent_containers/food/drinks/fueltank{
 	pixel_x = -10
 	},
+/obj/item/device/gps{
+	pixel_x = 8;
+	pixel_y = 7
+	},
+/obj/item/device/gps{
+	pixel_x = 9
+	},
 /obj/item/storage/toolbox/electrical{
 	pixel_y = 7
 	},
@@ -35489,8 +35494,20 @@
 /obj/storage/crate{
 	icon_state = "crateopen"
 	},
-/obj/item/shipcomponent/secondary_system/orescoop,
-/obj/item/shipcomponent/sensor/mining,
+/obj/item/device/gps{
+	pixel_x = -8;
+	pixel_y = 5
+	},
+/obj/item/device/gps{
+	pixel_x = -8
+	},
+/obj/item/shipcomponent/secondary_system/orescoop{
+	pixel_x = 2;
+	pixel_y = 4
+	},
+/obj/item/shipcomponent/sensor/mining{
+	pixel_x = 6
+	},
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
 "fLG" = (
@@ -35506,12 +35523,8 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/construction)
 "fMm" = (
-/obj/disposalpipe/segment/mineral{
-	dir = 4
-	},
-/turf/simulated/floor/stairs{
-	dir = 4
-	},
+/obj/machinery/nanofab/refining,
+/turf/simulated/floor/industrial,
 /area/station/mining/refinery)
 "fOY" = (
 /obj/cable{
@@ -38757,6 +38770,19 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crewquarters/garbagegarbs)
+"mpK" = (
+/obj/disposalpipe/segment/mineral{
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4;
+	name = "Refinery";
+	req_access = null
+	},
+/obj/access_spawn/cargo,
+/obj/firedoor_spawn,
+/turf/simulated/floor,
+/area/station/quartermaster/cargooffice)
 "mrf" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -42298,12 +42324,19 @@
 "tgV" = (
 /obj/machinery/light/incandescent/netural,
 /obj/table/reinforced/industrial/auto,
+/obj/item/device/gps{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/device/gps{
+	pixel_x = -7
+	},
 /obj/item/paper/book/from_file/matsci_guide{
 	pixel_x = 7;
 	pixel_y = 5
 	},
 /obj/item/device/matanalyzer{
-	pixel_x = -7;
+	pixel_x = 13;
 	pixel_y = 7
 	},
 /turf/unsimulated/floor/orange,
@@ -43907,7 +43940,6 @@
 /obj/decal/poster/wallsign/poster_mining{
 	pixel_y = 32
 	},
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
 "wzU" = (
@@ -66478,7 +66510,7 @@ rVZ
 lmY
 jsD
 yhc
-yhc
+byu
 usW
 smp
 xcu
@@ -68894,7 +68926,7 @@ lDl
 bvd
 bvd
 bwE
-uZI
+bxa
 asv
 bOJ
 uUj
@@ -69498,8 +69530,8 @@ svv
 bwF
 bwF
 bwF
-byu
 bCU
+mpK
 bCU
 bCU
 bCU
@@ -100177,7 +100209,7 @@ qHg
 rGE
 xsU
 xsU
-xsU
+rGE
 xsU
 xsU
 aca
