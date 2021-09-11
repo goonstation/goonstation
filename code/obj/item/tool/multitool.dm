@@ -17,7 +17,6 @@
 	m_amt = 50
 	g_amt = 20
 	mats = 6
-	module_research = list("tools" = 5, "devices" = 2)
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)

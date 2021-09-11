@@ -402,6 +402,7 @@ ABSTRACT_TYPE(/datum/job/command)
 
 	slot_back = list(/obj/item/storage/backpack/withO2)
 	slot_belt = list(/obj/item/device/pda2/medical_director)
+	slot_lhan = list(/obj/item/storage/firstaid/regular/doctor_spawn)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_jump = list(/obj/item/clothing/under/rank/medical_director)
 	slot_suit = list(/obj/item/clothing/suit/labcoat)
@@ -580,6 +581,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	slot_foot = list(/obj/item/clothing/shoes/white)
 	slot_suit = list(/obj/item/clothing/suit/labcoat/genetics)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
+	slot_poc1 = list(/obj/item/device/analyzer/genetic)
 
 	New()
 		..()
@@ -626,7 +628,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	slot_lhan = list(/obj/item/storage/toolbox/mechanical)
 	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
-	items_in_backpack = list(/obj/item/crowbar)
+	slot_poc1 = list(/obj/item/reagent_containers/mender/brute)
 
 	New()
 		..()
@@ -720,6 +722,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	slot_belt = list(/obj/item/device/pda2/quartermaster)
 	slot_ears = list(/obj/item/device/radio/headset/shipping)
 	slot_poc1 = list(/obj/item/paper/book/from_file/pocketguide/quartermaster)
+	slot_poc2 = list(/obj/item/device/appraisal)
 
 	New()
 		..()
@@ -728,16 +731,33 @@ ABSTRACT_TYPE(/datum/job/engineering)
 
 /datum/job/engineering/miner
 	name = "Miner"
-	limit = 3
+	#ifdef UNDERWATER_MAP
+	limit = 6
+	#else
+	limit = 5
+	#endif
 	wages = PAY_TRADESMAN
 	slot_back = list(/obj/item/storage/backpack/withO2)
-	slot_belt = list(/obj/item/device/pda2/mining)
+	slot_mask = list(/obj/item/clothing/mask/breath)
+	slot_eyes = list(/obj/item/clothing/glasses/meson)
+	slot_belt = list(/obj/item/storage/belt/mining/prepared)
 	slot_jump = list(/obj/item/clothing/under/rank/overalls)
 	slot_foot = list(/obj/item/clothing/shoes/orange)
 	slot_glov = list(/obj/item/clothing/gloves/black)
 	slot_ears = list(/obj/item/device/radio/headset/engineer)
-	slot_poc1 = list(/obj/item/paper/book/from_file/pocketguide/mining)
-	items_in_backpack = list(/obj/item/crowbar)
+	slot_poc1 = list(/obj/item/device/pda2/mining)
+	#ifdef UNDERWATER_MAP
+	slot_suit = list(/obj/item/clothing/suit/space/diving/engineering)
+	slot_head = list(/obj/item/clothing/head/helmet/space/engineer/diving/engineering)
+	items_in_backpack = list(/obj/item/crowbar,
+							/obj/item/paper/book/from_file/pocketguide/mining,
+							/obj/item/clothing/shoes/flippers)
+	#else
+	slot_suit = list(/obj/item/clothing/suit/space/engineer)
+	slot_head = list(/obj/item/clothing/head/helmet/space/engineer)
+	items_in_backpack = list(/obj/item/crowbar,
+							/obj/item/paper/book/from_file/pocketguide/mining)
+	#endif
 
 	New()
 		..()
@@ -832,7 +852,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_head = list(/obj/item/clothing/head/chefhat)
 	slot_suit = list(/obj/item/clothing/suit/chef)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
-	items_in_backpack = list(/obj/item/kitchen/rollingpin)
+	items_in_backpack = list(/obj/item/kitchen/rollingpin, /obj/item/kitchen/utensil/knife/cleaver)
 
 	New()
 		..()
@@ -1810,13 +1830,15 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	name = "WannaBEE"
 	wages = PAY_UNTRAINED
 	limit = 1
-	slot_suit = list(/obj/item/clothing/suit/bee)
-	slot_ears = list(/obj/item/device/radio/headset)
-	slot_jump = list(/obj/item/clothing/under/rank/beekeeper)
-	slot_foot = list(/obj/item/clothing/shoes/black)
-	slot_belt = list(/obj/item/device/pda2)
-	slot_poc1 = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/bee)
-	slot_poc2 = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/buddy)
+
+	slot_head = /obj/item/clothing/head/headband/bee
+	slot_suit = /obj/item/clothing/suit/bee
+	slot_ears = /obj/item/device/radio/headset
+	slot_jump = /obj/item/clothing/under/rank/beekeeper
+	slot_foot = /obj/item/clothing/shoes/black
+	slot_belt = /obj/item/device/pda2
+	slot_poc1 = /obj/item/reagent_containers/food/snacks/ingredient/egg/bee
+	slot_poc2 = /obj/item/reagent_containers/food/snacks/ingredient/egg/bee/buddy
 	items_in_backpack = list(/obj/item/reagent_containers/food/snacks/b_cupcake, /obj/item/reagent_containers/food/snacks/ingredient/royal_jelly)
 
 	New()
@@ -1925,9 +1947,10 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	wages = PAY_UNTRAINED
 	limit = 1
 	change_name_on_spawn = 1
-	slot_head = list(/obj/item/clothing/head/green)
+	slot_head = list(/obj/item/clothing/head/biglizard)
 	slot_ears = list(/obj/item/device/radio/headset)
 	slot_jump = list(/obj/item/clothing/under/color/green)
+	slot_suit = list(/obj/item/clothing/suit/gimmick/dinosaur)
 	slot_belt = list(/obj/item/device/pda2)
 	slot_poc1 = list(/obj/item/toy/figure)
 	slot_poc2 = list(/obj/item/toy/figure)
@@ -2087,7 +2110,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_foot = list(/obj/item/clothing/shoes/tourist)
 	slot_belt = list(/obj/item/storage/belt/utility/superhero)
 	slot_back = list()
-	slot_poc2 = list(/obj/item/device/pda2
+	slot_poc2 = list(/obj/item/device/pda2)
 
 	New()
 		..()
@@ -2218,7 +2241,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 		else
 			M.real_name = "Syndicate Agent"
 
-		bad_traitorify(M, "Syndicate Agent")
+		antagify(M, "Syndicate Agent", 0)
 
 		equip_syndicate(M)
 		return
@@ -2244,7 +2267,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
-		bad_traitorify(M, "Syndicate Agent")
+		antagify(M, "Syndicate Agent", 0)
 
 /datum/job/special/syndicate_weak/no_ammo
 	name = "Poorly Equipped Junior Syndicate Operative"
@@ -2296,7 +2319,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 		..()
 		if (!M)
 			return
-		bad_traitorify(M, "Syndicate Agent")
+		antagify(M, "Syndicate Agent", 0)
 		M.show_text("<b>The assault has begun! Head over to the station and kill any and all Nanotrasen personnel you encounter!</b>", "red")
 
 /datum/job/special/juicer_specialist

@@ -10,7 +10,8 @@
 	icon_state = "scanner"
 	req_access = list(access_heads) //Only used for record deletion right now.
 	object_flags = CAN_REPROGRAM_ACCESS
-	can_reconnect = 1
+	can_reconnect = TRUE
+	circuit_type = /obj/item/circuitboard/genetics
 	/// Linked scanner. For scanning.
 	var/obj/machinery/genetics_scanner/scanner = null
 	var/list/equipment = list(
@@ -52,25 +53,7 @@
 	..()
 
 /obj/machinery/computer/genetics/attackby(obj/item/W as obj, mob/user as mob)
-	if (isscrewingtool(W) && ((src.status & BROKEN) || !src.scanner))
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if (do_after(user, 2 SECONDS))
-			boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-			var/obj/computerframe/A = new /obj/computerframe( src.loc )
-			if(src.material) A.setMaterial(src.material)
-			var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-			G.set_loc(src.loc)
-
-			var/obj/item/circuitboard/genetics/M = new /obj/item/circuitboard/genetics( A )
-			for (var/obj/C in src)
-				C.set_loc(src.loc)
-			A.circuit = M
-			A.state = 3
-			A.icon_state = "3"
-			A.anchored = 1
-			qdel(src)
-
-	else if (istype(W,/obj/item/genetics_injector/dna_activator))
+	if (istype(W,/obj/item/genetics_injector/dna_activator))
 		var/obj/item/genetics_injector/dna_activator/DNA = W
 		if (DNA.expended_properly)
 			user.drop_item()
@@ -82,7 +65,7 @@
 			user.drop_item()
 			qdel(DNA)
 		else
-			src.attack_hand(user)
+			src.Attackhand(user)
 	else
 		var/obj/item/device/pda2/PDA = W
 		if (istype(PDA) && PDA.ID_card)
@@ -111,9 +94,6 @@
 		var/type_to_make = pick(concrete_typesof(/datum/dna_chromosome))
 		var/datum/dna_chromosome/C = new type_to_make(src)
 		src.saved_chromosomes += C
-
-/obj/machinery/computer/genetics/attack_ai(mob/user as mob)
-	return attack_hand(user)
 
 /obj/machinery/computer/genetics/proc/bioEffect_sanity_check(datum/bioEffect/E, occupant_check = 1)
 	var/mob/living/carbon/human/H = src.get_scan_subject()
@@ -409,9 +389,8 @@
 					return
 				if (!(E in selected_record.dna_pool))
 					return
-			else
-				if (bioEffect_sanity_check(E))
-					return
+			else if (bioEffect_sanity_check(E))
+				return
 			genResearch.addResearch(E)
 			on_ui_interacted(ui.user)
 		if("advancepair")

@@ -71,7 +71,7 @@ datum
 			id = "werewolf_serum"
 			description = "A mutagenic substance associated with a mythical beast."
 			reagent_state = LIQUID
-			minimum_to_infect = 0
+			minimum_to_infect = 3
 			fluid_r = 173
 			fluid_g = 65
 			fluid_b = 133

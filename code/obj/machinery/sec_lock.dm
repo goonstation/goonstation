@@ -1,5 +1,5 @@
 /obj/machinery/sec_lock/attack_ai(user as mob)
-	return //src.attack_hand(user)
+	return //src.Attackhand(user)
 
 /obj/machinery/sec_lock/attack_hand(var/mob/user as mob)
 	if(..())
@@ -13,7 +13,7 @@
 	return
 
 /obj/machinery/sec_lock/attackby(nothing, user as mob)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/sec_lock/New()
 	..()

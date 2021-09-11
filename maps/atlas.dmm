@@ -236,7 +236,7 @@
 /area/space)
 "az" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/solar_control/north{
+/obj/machinery/computer/solar_control/north{
 	dir = 4
 	},
 /obj/cable{
@@ -4510,7 +4510,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/hotloop)
 "lD" = (
-/obj/machinery/power/monitor/smes,
+/obj/machinery/computer/power_monitor/smes,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	d2 = 2;
@@ -10864,7 +10864,6 @@
 /turf/space,
 /area/space)
 "Ar" = (
-/obj/creepy_sound_trigger,
 /turf/simulated/wall/false_wall/reinforced,
 /area/station/quartermaster/office)
 "As" = (
@@ -11165,7 +11164,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/coldloop)
 "Bk" = (
-/obj/machinery/power/monitor/smes,
+/obj/machinery/computer/power_monitor/smes,
 /obj/cable,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/caution/corner/sw,
@@ -12137,7 +12136,7 @@
 /area/station/science/chemistry)
 "DR" = (
 /obj/machinery/door/airlock/pyro/glass{
-	name = "Research Wing";
+	name = "Research Wing"
 	},
 /obj/access_spawn/research,
 /obj/firedoor_spawn,
@@ -14751,7 +14750,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/solar_control/west{
+/obj/machinery/computer/solar_control/west{
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
@@ -15919,7 +15918,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost/power)
 "Nu" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	d2 = 2;
@@ -15928,7 +15927,7 @@
 /turf/simulated/floor/circuit/red,
 /area/listeningpost)
 "Nv" = (
-/obj/machinery/power/solar_control/small_backup4,
+/obj/machinery/computer/solar_control/small_backup4,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	d2 = 2;
@@ -19467,7 +19466,7 @@
 /turf/simulated/floor/plating,
 /area/station/bridge/united_command)
 "WS" = (
-/obj/lrteleporter{
+/obj/machinery/lrteleporter{
 	layer = 4
 	},
 /obj/decal/fakeobjects{
@@ -19776,7 +19775,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4
 	},
 /turf/simulated/floor/orangeblack,

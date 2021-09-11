@@ -24,8 +24,6 @@
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 1
-	module_research = list("efficiency" = 1)
-	module_research_type = /obj/item/spacecash
 	inventory_counter_enabled = 1
 	var/default_min_amount = 0
 	var/default_max_amount = 0
@@ -107,7 +105,7 @@
 				change_stack_amount( 0 - amt )
 				var/obj/item/spacecash/young_money = unpool(/obj/item/spacecash)
 				young_money.setup(user.loc, amt)
-				young_money.attack_hand(user)
+				young_money.Attackhand(user)
 		else
 			..(user)
 

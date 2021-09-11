@@ -16,7 +16,6 @@ GAUNTLET CARDS
 	stamina_damage = 0
 	stamina_cost = 0
 	var/list/files = list("tools" = 1)
-	module_research_type = /obj/item/card
 
 	disposing()
 		if (istype(src.loc,/obj/machinery/bot))
@@ -35,8 +34,6 @@ GAUNTLET CARDS
 	is_syndicate = 1
 	mats = 8
 	contraband = 6
-	module_research = list("malfunction" = 25)
-	module_research_type = /obj/item/card/emag
 
 	afterattack(var/atom/A, var/mob/user)
 		if(!A || !user)
@@ -77,7 +74,7 @@ GAUNTLET CARDS
 	flags = FPRINT | TABLEPASS | ATTACK_SELF_DELAY
 	click_delay = 0.4 SECONDS
 	wear_layer = MOB_BELT_LAYER
-	var/access = list()
+	var/list/access = list()
 	var/registered = null
 	var/assignment = null
 	var/title = null
@@ -180,7 +177,7 @@ GAUNTLET CARDS
 		assignment = "NanoTrasen Pilot"
 		access = list(access_heads)
 		team = 1
-			
+
 		commander
 			name = "NanoTrasen Commander"
 			assignment = "NanoTrasen Commander"

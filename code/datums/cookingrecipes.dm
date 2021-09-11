@@ -901,7 +901,7 @@
 /datum/cookingrecipe/cookie_jaffa
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_cookie
 	item2 = /obj/item/reagent_containers/food/snacks/plant/orange
-	item3 = /obj/item/reagent_containers/food/snacks/candy
+	item3 = /obj/item/reagent_containers/food/snacks/candy/regular
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/cookie/jaffa
 
@@ -916,6 +916,12 @@
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/butter
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/cookie/butter
+
+/datum/cookingrecipe/cookie_peanut
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_cookie
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/peanutbutter
+	cookbonus = 4
+	output = /obj/item/reagent_containers/food/snacks/cookie/peanut
 
 //Moon pies!
 /datum/cookingrecipe/moon_pie
@@ -971,7 +977,7 @@
 	item1 = /obj/item/reagent_containers/food/snacks/cookie/chocolate_chip
 	amt1 = 2
 	item2 = /obj/item/reagent_containers/food/snacks/condiment/cream
-	item3 = /obj/item/reagent_containers/food/snacks/candy
+	item3 = /obj/item/reagent_containers/food/snacks/candy/regular
 	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/moon_pie/chocolate
 
@@ -1188,8 +1194,8 @@
 
 /datum/cookingrecipe/pie_chocolate
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
-	item2 = /obj/item/reagent_containers/food/snacks/candy
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/butter
+	item2 = /obj/item/reagent_containers/food/snacks/candy/regular
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/butter
 	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/pie/chocolate
 
@@ -1321,7 +1327,7 @@
 
 /datum/cookingrecipe/cake_chocolate
 	item1 = /obj/item/reagent_containers/food/snacks/cake_batter
-	item2 = /obj/item/reagent_containers/food/snacks/candy
+	item2 = /obj/item/reagent_containers/food/snacks/candy/regular
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/cake/chocolate
 

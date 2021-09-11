@@ -3,7 +3,7 @@
 	desc = "Create a forcewall which extends out to your sides."
 	icon_state = "forcewall"
 	targeted = 0
-	cooldown = 100
+	cooldown = 20 SECONDS
 	requires_robes = 1
 	voice_grim = "sound/voice/wizard/ForcewallGrim.ogg"
 	voice_fem = "sound/voice/wizard/ForcewallFem.ogg"

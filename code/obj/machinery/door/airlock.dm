@@ -205,6 +205,11 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		src.net_access_code = rand(1, NET_ACCESS_OPTIONS)
 		START_TRACKING
 
+
+	was_built_from_frame(mob/user, newly_built)
+		. = ..()
+		req_access = list()
+
 	disposing()
 		. = ..()
 		STOP_TRACKING
@@ -1156,7 +1161,7 @@ About the new airlock wires panel:
 
 //		message_admins("<span class='internal'><B>ADMIN: </B>DEBUG: shock_damage = [shock_damage] PN.avail = [PN.avail] user = [user] netnum = [netnum]</span>")
 
-	if (user.bioHolder.HasEffect("resist_electric") == 2)
+	if (user.bioHolder.HasEffect("resist_electric_heal"))
 		var/healing = 0
 		if (shock_damage)
 			healing = shock_damage / 3
@@ -1164,7 +1169,7 @@ About the new airlock wires panel:
 		user.take_toxin_damage(0 - healing)
 		boutput(user, "<span class='notice'>You absorb the electrical shock, healing your body!</span>")
 		return
-	else if (user.bioHolder.HasEffect("resist_electric") == 1)
+	else if (user.bioHolder.HasEffect("resist_electric"))
 		boutput(user, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
 		return
 
@@ -1399,11 +1404,11 @@ About the new airlock wires panel:
 		tgui_process.update_uis(src)
 		src.update_icon()
 	else if (issnippingtool(C) && src.p_open)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 	else if (ispulsingtool(C))
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 	else if (istype(C, /obj/item/device/radio/signaler))
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 	else if (ispryingtool(C))
 		src.unpowered_open_close()
 	else
@@ -1783,6 +1788,14 @@ obj/machinery/door/airlock
 			SPAWN_DBG(30 SECONDS)
 				src.secondsElectrified = 0
 	return
+
+/obj/machinery/door/airlock/emag_act(mob/user, obj/item/card/emag/E)
+	. = ..()
+	if(src.welded && !src.locked)
+		audible_message("<span class='alert'>[src] lets out a loud whirring and grinding noise!</span>")
+		animate_shake(src, 5, 2, 2, src.pixel_x, src.pixel_y)
+		playsound(src, 'sound/items/mining_drill.ogg', 25, 1, 0, 0.8)
+		src.take_damage(src.health * 0.8)
 
 /obj/machinery/door/airlock/receive_silicon_hotkey(var/mob/user)
 	..()

@@ -10,6 +10,7 @@
 	var/station_budget = 0.0
 	var/shipping_budget = 0.0
 	var/research_budget = 0.0
+	var/payroll_stipend = 0.0
 
 	var/list/jobs = new/list()
 
@@ -61,7 +62,7 @@
 
 	proc/default_wages()
 
-		station_budget = 100000
+		station_budget =      0
 		shipping_budget = 30000
 		research_budget = 20000
 
@@ -147,9 +148,18 @@
 		return
 
 	proc/payday()
+		// Every payday cycle, the station budget is awarded its stipend
+		// Even if payday is off, which lets heads disable payday for
+		// saving up funds or whatever.
+		// This also means that payday stopping is strictly a result of
+		// someone tampering it and not just having 80 assistants in 20 minutes
+		station_budget += payroll_stipend
+
 		// Everyone gets paid into their bank accounts
 		if (!wagesystem.pay_active) return // some greedy prick suspended the payroll!
-		if (station_budget < 1) return // we don't have any money so don't bother!
+		// if (station_budget < 1) return // we don't have any money so don't bother!
+		// technically this can be 0 now with payday stipends
+
 		for(var/datum/data/record/t in data_core.bank)
 			if(station_budget >= t.fields["wage"])
 				t.fields["current_money"] += t.fields["wage"]
@@ -197,33 +207,6 @@
 
 		jobs[rank] = C.wage
 */
-
-/obj/machinery/computer
-	var/can_reconnect = 0 //Set to 1 to make multitools call connection_scan. For consoles with associated equipment (cloner, genetek etc)
-	Topic(href, href_list)
-		if (..(href, href_list))
-			return 1
-		playsound(src.loc, 'sound/machines/keypress.ogg', 30, 1, -15)
-
-	attack_hand(var/mob/user)
-		..()
-		interact_particle(user,src)
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (can_reconnect)
-			if (istype(W, /obj/item/device/multitool) && !(status & (BROKEN|NOPOWER)))
-				boutput(user, "<span class='notice'>You pulse [src.name] to re-scan for equipment.</span>")
-				connection_scan()
-				return
-			else
-				src.attack_hand(user) //Previously the default behaviour for all affected computers
-		else
-			..()
-
-	proc/connection_scan()
-		//Placeholder so the multitool probing thing can go on this parent
-		//Put the code for finding the stuff your computer needs in this proc
-		return
 
 /obj/machinery/computer/ATM
 	name = "ATM"
@@ -279,7 +262,7 @@
 			user.client.add_to_bank(SB.amount)
 			boutput(user, "<span class='alert'>You deposit [SB.amount] spacebux into your account!</span>")
 			qdel(SB)
-		if(istype(I, /obj/item/spacecash/))
+		else if(istype(I, /obj/item/spacecash/))
 			if (src.accessed_record)
 				boutput(user, "<span class='notice'>You insert the cash into the ATM.</span>")
 
@@ -291,7 +274,7 @@
 				I.amount = 0
 				pool(I)
 			else boutput(user, "<span class='alert'>You need to log in before depositing cash!</span>")
-		if(istype(I, /obj/item/lotteryTicket))
+		else if(istype(I, /obj/item/lotteryTicket))
 			if (src.accessed_record)
 				boutput(user, "<span class='notice'>You insert the lottery ticket into the ATM.</span>")
 				if(I:winner)
@@ -309,7 +292,7 @@
 				qdel(I)
 			else boutput(user, "<span class='alert'>You need to log in before inserting a ticket!</span>")
 		else
-			src.attack_hand(user)
+			..()
 		return
 
 	attack_ai(var/mob/user as mob)
@@ -341,11 +324,7 @@
 
 					if (src.scan)
 						dat += "<BR><BR>Your balance is: $ [src.accessed_record.fields["current_money"]]."
-						dat += "<BR>Your balance on your card is: $ [src.scan.money]"
-						dat += "<BR><BR><A HREF='?src=\ref[src];operation=withdraw'>Withdraw to Card</A>"
 						dat += "<BR><A HREF='?src=\ref[src];operation=withdrawcash'>Withdraw Cash</A>"
-						dat += "<BR><A HREF='?src=\ref[src];operation=deposit'>Deposit from Card</A>"
-
 						dat += "<BR><BR><A HREF='?src=\ref[src];operation=buy'>Buy Lottery Ticket (100 credits)</A>"
 						dat += "<BR>To claim your winnings you'll need to insert your lottery ticket."
 					else
@@ -407,20 +386,6 @@
 				src.accessed_record = null
 				src.scan = null
 
-			if("withdraw")
-				if (scan.registered in FrozenAccounts)
-					boutput(usr, "<span class='alert'>This account is frozen!</span>")
-					return
-				var/amount = round(input(usr, "How much would you like to withdraw?", "Withdrawal", 0) as null|num)
-				if(amount < 1)
-					boutput(usr, "<span class='alert'>Invalid amount!</span>")
-					return
-				if(amount > src.accessed_record.fields["current_money"])
-					boutput(usr, "<span class='alert'>Insufficient funds in account.</span>")
-				else
-					src.scan.money += amount
-					src.accessed_record.fields["current_money"] -= amount
-
 			if("withdrawcash")
 				if (scan.registered in FrozenAccounts)
 					boutput(usr, "<span class='alert'>This account is frozen!</span>")
@@ -436,17 +401,6 @@
 					var/obj/item/spacecash/S = unpool(/obj/item/spacecash)
 					S.setup(src.loc, amount)
 					usr.put_in_hand_or_drop(S)
-
-			if("deposit")
-				var/amount = round(input(usr, "How much would you like to deposit?", "Deposit", 0) as null|num)
-				if(amount < 1)
-					boutput(usr, "<span class='alert'>Invalid amount!</span>")
-					return
-				if(amount > src.scan.money)
-					boutput(usr, "<span class='alert'>Insufficient funds on card.</span>")
-				else
-					src.scan.money -= amount
-					src.accessed_record.fields["current_money"] += amount
 
 			if("buy")
 				if(accessed_record.fields["current_money"] >= 100)
@@ -522,7 +476,20 @@
 	var/payroll_rate_limit_time = 0 //for preventing coammand message spam
 
 	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
+
+	attackby(obj/item/I as obj, mob/user as mob)
+		if (istype(I, /obj/item/card/id))
+			if (!src.scan)
+				boutput(user, "<span class='notice'>You insert [I] into the authentication card slot.</span>")
+				user.drop_item()
+				I.set_loc(src)
+				src.scan = I
+			else
+				boutput(user, "<span class='notice'>There is already a card inserted.</span>")
+
+		else
+			..()
 
 	attack_hand(mob/user as mob)
 		if(..())
@@ -531,41 +498,88 @@
 		if (src.temp)
 			dat += text("<TT>[src.temp]</TT><BR><BR><A href='?src=\ref[src];temp=1'>Clear Screen</A>")
 		else
-			dat += text("Confirm Identity: <A href='?src=\ref[];scan=1'>[]</A><HR>", src, (src.scan ? text("[]", src.scan.name) : "----------"))
+			dat += {"
+				<style type="text/css">
+				.l { text-align: left; }
+				.r { text-align: right; }
+				.c { text-align: center; }
+				.hyp-dominant { font-weight: bold; background-color: rgba(160, 160, 160, 0.33);}
+				.buttonlink { background: #66c; width: 1.1em; height: 1.2em; padding: 0.2em 0.2em; margin-bottom: 2px; border-radius: 4px; font-size: 90%; color: white; text-decoration: none; display: inline-block; vertical-align: middle; }
+				table { width: 100%; }
+				td, th { border-bottom: 1px solid rgb(160, 160, 160); padding: 0.1em 0.2em; }
+				thead { background: rgba(160, 160, 160, 0.6); }
+				th.second { background: rgba(160, 160, 160, 0.3); }
+				abbr { text-decoration: underline; }
+				.buttonlinks { white-space: nowrap; padding: 0; text-align: center; }
+				</style>
+
+				ID Card: [src.scan ? "<a href='?src=\ref[src];scan=1' class='buttonlink'>&#9167;</a> [src.scan.name]" : "<a href='?src=\ref[src];scan=1'>No card inserted.</a>"]
+				<br><a href='?src=\ref[src];[src.authenticated ? "logout=1'>Log Out" : "login=1'>Log In"]</a><hr>
+				"}
+
 			if (src.authenticated)
-				switch(src.screen)
-					if(1.0)
-						var/payroll = 0
-						var/totalfunds = wagesystem.station_budget + wagesystem.research_budget + wagesystem.shipping_budget
-						for(var/datum/data/record/R in data_core.bank)
-							payroll += R.fields["wage"]
-						dat += {"
-						<u><b>Total Station Funds:</b> $[num2text(totalfunds,50)]</u>
-						<BR>
-						<BR><b>Current Payroll Budget:</b> $[num2text(wagesystem.station_budget,50)]
-						<BR><b>Current Research Budget:</b> $[num2text(wagesystem.research_budget,50)]
-						<BR><b>Current Shipping Budget:</b> $[num2text(wagesystem.shipping_budget,50)]
-						<BR>
-						<b>Current Payroll Cost:</b> $[payroll]
-						<BR>
-						<BR><br><A href='?src=\ref[src];list=1'>List Payroll Records</A>"}
-						if (wagesystem.pay_active) dat += "<BR><br><A href='?src=\ref[src];payroll=1'>Suspend Payroll</A>"
-						else dat += "<BR><br><A href='?src=\ref[src];payroll=1'>Resume Payroll</A>"
-						dat += {"<BR><br><A href='?src=\ref[src];transfer=1'>Transfer Funds Between Budgets</A>
-						<BR><br>
-						<BR><br><A href='?src=\ref[src];logout=1'>{Log Out}</A>
-						<BR><br>"}
-					if(2.0)
-						dat += "<B>Record List</B>:<HR>"
-						for(var/datum/data/record/R in data_core.bank)
-							dat += text("<BR><b>Name:</b> <A href='?src=\ref[src];Fname=\ref[R]'>[R.fields["name"]]</A> <b>Job:</b> <A href='?src=\ref[src];Fjob=\ref[R]'>[R.fields["job"]]</A>")
-							dat += text("<BR><b>Current Wage:</b> <A href='?src=\ref[src];Fwage=\ref[R]'>[R.fields["wage"]]</A>")
-							dat += text("<BR><b>Current Balance:</b> <A href='?src=\ref[src];Fmoney=\ref[R]'>[R.fields["current_money"]]</A><BR>")
-						dat += text("<HR><A href='?src=\ref[src];main=1'>Back</A>")
-					else
-			else
-				dat += text("<A href='?src=\ref[];login=1'>{Log In}</A>", src)
-		user.Browse(dat.Join(), "window=secure_bank;title=Bank Records")
+
+				var/payroll = 0
+				for(var/datum/data/record/R in data_core.bank)
+					payroll += R.fields["wage"]
+				var/surplus = round(wagesystem.payroll_stipend - payroll)
+
+				dat += {"
+			<table>
+				<thead>
+					<tr><th colspan="2">Budget Status</th></tr>
+				</thead>
+				<tbody>
+					<tr><th>Payroll Budget</th><td class='r'>$[num2text(round(wagesystem.station_budget),50)]</td></tr>
+					<tr><th>Shipping Budget</th><td class='r'>$[num2text(round(wagesystem.shipping_budget),50)]</td></tr>
+					<tr><th>Research Budget</th><td class='r'>$[num2text(round(wagesystem.research_budget),50)]</td></tr>
+					<tr><th>Total Funds</th><th class='r'>$[num2text(round(wagesystem.research_budget),50)]</th></tr>
+					<tr><th colspan="2" class='second'>Payroll Details</th></tr>
+					<tr><th>Payroll Stipend</th><td class='r'>$[num2text(round(wagesystem.payroll_stipend),50)]</td></tr>
+					<tr><th>Payroll Cost</th><td class='r'>$[num2text(round(payroll),50)]</td></tr>
+					[surplus >= 0 ? {"
+					<tr><th>Surplus</th><th class='r'>+$[num2text(round(surplus),50)]</th></tr>
+					"} : {"
+					<tr><th>Deficit</th><th style="text-align: right; color: red;">-$[num2text(round(surplus * -1),50)]</th></tr>
+					"}]
+				</tbody>
+			</table>
+			<div class='c'>
+				<a href='?src=\ref[src];payroll=1'>[wagesystem.pay_active ? "Suspend Payroll" : "Resume Payroll"]</a>
+				- <a href='?src=\ref[src];transfer=1'>Transfer Funds Between Budgets</a>
+			</div>
+			<hr>
+			Every payday cycle, Centcom distributes the <em>payroll stipend</em> into the station's budget, which is then paid out to crew accounts.
+			<br>
+			<br>The payday stipend is based on typical staffing costs and will not change if you adjust the pay scales below.
+			<hr>
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Job</th>
+						<th>Wage</th>
+						<th>Balance</th>
+					</tr>
+				</thead>
+				<tbody>
+				"}
+
+				for(var/datum/data/record/R in data_core.bank)
+					dat += {"
+					<tr>
+						<th class='l'><a href='?src=\ref[src];Fname=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a> [R.fields["name"]]</th>
+						<td><a href='?src=\ref[src];Fjob=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a> [R.fields["job"]]</td>
+						<td class='r'>$[R.fields["wage"]] <a href='?src=\ref[src];Fwage=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a></td>
+						<td style="text-align: right; font-weight: bold;">$[R.fields["current_money"]] <a href='?src=\ref[src];Fmoney=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a></td>
+					</tr>
+					"}
+
+				dat += {"
+				</tbody>
+			</table>
+				"}
+		user.Browse(dat.Join(), "window=secure_bank;size=500x700;title=Bank Records")
 		onclose(user, "secure_bank")
 		return
 
@@ -832,12 +846,7 @@
 
 					if (src.scan)
 						dat += "<BR><BR>Your balance is: $ [src.accessed_record.fields["current_money"]]."
-						dat += "<BR>Your balance on your card is: $ [src.scan.money]"
-						dat += "<BR><BR><A HREF='?src=\ref[src];operation=withdraw'>Withdraw to Card</A>"
 						dat += "<BR><A HREF='?src=\ref[src];operation=withdrawcash'>Withdraw Cash</A>"
-						if(!afterlife)
-							dat += "<BR><A HREF='?src=\ref[src];operation=deposit'>Deposit from Card</A>"
-
 						dat += "<BR><BR><A HREF='?src=\ref[src];operation=buy'>Buy Lottery Ticket (100 credits)</A>"
 						dat += "<BR>To claim your winnings you'll need to insert your lottery ticket."
 					else
@@ -902,20 +911,6 @@
 				src.accessed_record = null
 				src.scan = null
 
-			if("withdraw")
-				if (scan.registered in FrozenAccounts)
-					boutput(usr, "<span class='alert'>This account is frozen!</span>")
-					return
-				var/amount = round(input(usr, "How much would you like to withdraw?", "Withdrawal", 0) as null|num)
-				if(amount < 1)
-					boutput(usr, "<span class='alert'>Invalid amount!</span>")
-					return
-				if(amount > src.accessed_record.fields["current_money"])
-					boutput(usr, "<span class='alert'>Insufficient funds in account.</span>")
-				else
-					src.scan.money += amount
-					src.accessed_record.fields["current_money"] -= amount
-
 			if("withdrawcash")
 				if (scan.registered in FrozenAccounts)
 					boutput(usr, "<span class='alert'>This account is frozen!</span>")
@@ -931,17 +926,6 @@
 					var/obj/item/spacecash/S = unpool(/obj/item/spacecash)
 					S.setup(src.loc, amount)
 					usr.put_in_hand_or_drop(S)
-
-			if("deposit")
-				var/amount = round(input(usr, "How much would you like to deposit?", "Deposit", 0) as null|num)
-				if(amount < 1)
-					boutput(usr, "<span class='alert'>Invalid amount!</span>")
-					return
-				if(amount > src.scan.money)
-					boutput(usr, "<span class='alert'>Insufficient funds on card.</span>")
-				else
-					src.scan.money -= amount
-					src.accessed_record.fields["current_money"] += amount
 
 			if("buy")
 				if(accessed_record.fields["current_money"] >= 100)

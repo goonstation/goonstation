@@ -49,7 +49,6 @@ MATERIAL
 	stamina_cost = 23
 	stamina_crit_chance = 10
 	var/datum/material/reinforcement = null
-	module_research = list("metals" = 5)
 	rand_pos = 1
 	inventory_counter_enabled = 1
 
@@ -837,7 +836,7 @@ MATERIAL
 
 			user.visible_message("<span class='alert'><B>[user.name] pulls [head.name] off of the spike!</B></span>")
 			head.set_loc(user.loc)
-			head.attack_hand(user)
+			head.Attackhand(user)
 			head.add_fingerprint(user)
 			head.pixel_x = rand(-8,8)
 			head.pixel_y = rand(-8,8)

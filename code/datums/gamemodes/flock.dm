@@ -23,11 +23,11 @@
 	// TODO: Handle token players
 
 	possible_flockminds = get_possible_flockminds()
-	var/list/chosen_flockminds = antagWeighter.choose(pool = possible_flockminds, role = "flockmind", amount = 1, recordChosen = 1)
+	var/list/chosen_flockminds = antagWeighter.choose(pool = possible_flockminds, role = ROLE_FLOCKMIND, amount = 1, recordChosen = 1)
 	flockminds |= chosen_flockminds
 	for (var/datum/mind/flockmind in flockminds)
 		flockmind.assigned_role = "MODE"
-		flockmind.special_role = "flockmind"
+		flockmind.special_role = ROLE_FLOCKMIND
 		possible_flockminds.Remove(flockmind)
 
 	return 1

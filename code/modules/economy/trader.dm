@@ -1,7 +1,7 @@
 /proc/most_applicable_trade(var/list/datum/commodity/goods_buy, var/obj/item/sell_item)
 	var/list/goods_buy_types = new /list(0)
 	for(var/datum/commodity/N as anything in goods_buy)
-		if (istype(sell_item, N.comtype))
+		if (N.subtype_valid ? istype(sell_item, N.comtype) : N.comtype == sell_item.type)
 			goods_buy_types[N.comtype] = N
 	return goods_buy_types[maximal_subtype(goods_buy_types)]
 
@@ -13,6 +13,8 @@
 	var/hiketolerance = 20 //How much they will tolerate price hike
 	var/list/droplist = null //What the merchant will drop upon their death
 	var/list/goods_sell = new/list() //What products the trader sells
+	var/illegal = 0 // maybe trading with illegal bots could flag the user's criminal record for smuggling
+	var/goods_illegal = list() // Illegal goods
 	var/list/goods_buy = new/list() //what products the merchant buys
 	var/list/shopping_cart = new/list() //What has been bought
 	var/obj/item/sell = null //Item to sell
@@ -136,9 +138,14 @@
 		///////////////////////////////
 		///////Generate Purchase List//
 		///////////////////////////////
+		var/list/goods_for_purchase = goods_sell.Copy()
+		// Illegal goods for syndicate traitors
+		if (illegal)
+			if(usr.mind && (usr.mind.special_role == ROLE_TRAITOR || usr.mind.special_role == ROLE_SPY_THIEF || usr.mind.special_role == ROLE_NUKEOP ||	usr.mind.special_role == ROLE_SLEEPER_AGENT || usr.mind.special_role == ROLE_HARDMODE_TRAITOR ||	usr.mind.special_role == ROLE_OMNITRAITOR))
+				goods_for_purchase += goods_illegal
 		if (href_list["purchase"])
 			src.temp =buy_dialogue + "<HR><BR>"
-			for(var/datum/commodity/N in goods_sell)
+			for(var/datum/commodity/N in goods_for_purchase)
 				// Have to send the type instead of a reference to the obj because it would get caught by the garbage collector. oh well.
 				src.temp += {"<A href='?src=\ref[src];doorder=\ref[N]'><B><U>[N.comname]</U></B></A><BR>
 				<B>Cost:</B> [N.price] Credits<BR>
@@ -169,7 +176,7 @@
 					quantity = 50
 
 				////////////
-				var/datum/commodity/P = locate(href_list["doorder"]) in goods_sell
+				var/datum/commodity/P = locate(href_list["doorder"]) in goods_for_purchase
 
 				if(P)
 					if(shopping_cart.len + quantity > 50)
@@ -200,7 +207,7 @@
 
 			var/askingprice= input(usr, "Please enter your asking price.", "Haggle", 0) as null|num
 			if(askingprice)
-				var/datum/commodity/N = locate(href_list["haggleb"]) in goods_sell
+				var/datum/commodity/N = locate(href_list["haggleb"]) in goods_for_purchase
 				if(N)
 					if(patience == N.haggleattempts)
 						src.temp = "[src.name] becomes angry and won't trade anymore."
@@ -315,9 +322,9 @@
 					doing_a_thing = 1
 					src.temp = pick(src.successful_sale_dialogue) + "<BR>"
 					src.temp += "<BR><A href='?src=\ref[src];sell=1'>OK</A>"
+					account.fields["current_money"] += tradetype.price * src.sellitem.amount
 					qdel (src.sellitem)
 					src.sellitem = null
-					account.fields["current_money"] += tradetype.price
 					src.add_fingerprint(usr)
 					src.updateUsrDialog()
 					doing_a_thing = 0
@@ -735,7 +742,6 @@
 	picture = "robot.png"
 	trader_area = "/area/turret_protected/robot_trade_outpost"
 	var/productset = 0 // 0 is robots and salvage, 1 is podparts and drugs, 2 is produce. 3 is syndicate junk, 4 is medical stuff
-	var/illegal = 0 // maybe trading with illegal bots could flag the user's criminal record for smuggling
 	angrynope = "Unable to process request."
 	whotext = "I am a trading unit. I have been authorized to engage in trade with you."
 
@@ -790,22 +796,23 @@
 				src.goods_buy += new /datum/commodity/produce/special/glowfruit(src)
 
 			if(3) // syndicate bot
+				src.illegal = 1
 				var/carlsell = rand(1,10)
-				src.goods_sell += new /datum/commodity/contraband/command_suit(src)
+				src.goods_illegal += new /datum/commodity/contraband/command_suit(src)
+				src.goods_illegal += new /datum/commodity/contraband/disguiser(src)
+				if (carlsell <= 3)
+					src.goods_illegal += new /datum/commodity/contraband/radiojammer(src)
+				if (carlsell >= 2 && carlsell <= 6)
+					src.goods_illegal += new /datum/commodity/contraband/stealthstorage(src)
+				if (carlsell >= 5 && carlsell <= 8)
+					src.goods_illegal += new /datum/commodity/contraband/voicechanger(src)
+				if (carlsell >= 9)
+					src.goods_illegal += new /datum/commodity/contraband/radiojammer(src)
+					src.goods_illegal += new /datum/commodity/contraband/stealthstorage(src)
+					src.goods_illegal += new /datum/commodity/contraband/voicechanger(src)
+				src.goods_illegal += new /datum/commodity/contraband/birdbomb(src)
 				src.goods_sell += new /datum/commodity/contraband/swatmask(src)
-				if (carlsell <= 2)
-					src.goods_sell += new /datum/commodity/contraband/radiojammer(src)
-				if (carlsell >= 3 && carlsell <= 5)
-					src.goods_sell += new /datum/commodity/contraband/stealthstorage(src)
-				if (carlsell >= 6 && carlsell <= 8)
-					src.goods_sell += new /datum/commodity/contraband/voicechanger(src)
-				if (carlsell == 9) // if it rolls 10, then none of the three are sold
-					src.goods_sell += new /datum/commodity/contraband/radiojammer(src)
-					src.goods_sell += new /datum/commodity/contraband/stealthstorage(src)
-					src.goods_sell += new /datum/commodity/contraband/voicechanger(src)
 				src.goods_sell += new /datum/commodity/contraband/spy_sticker_kit(src)
-				src.goods_sell += new /datum/commodity/contraband/disguiser(src)
-				src.goods_sell += new /datum/commodity/contraband/birdbomb(src)
 				src.goods_sell += new /datum/commodity/contraband/flare(src)
 				src.goods_sell += new /datum/commodity/contraband/eguncell_highcap(src)
 				src.goods_sell += new /datum/commodity/podparts/cloak(src)
@@ -1068,6 +1075,8 @@
 		src.goods_sell += new /datum/commodity/costume/mime/alt(src) //suspenders and such
 		src.goods_sell += new /datum/commodity/backpack/breadpack(src)
 		src.goods_sell += new /datum/commodity/backpack/bearpack(src)
+		src.goods_sell += new /datum/commodity/backpack/turtlebrown(src)
+		src.goods_sell += new /datum/commodity/backpack/turtlegreen(src)
 		src.goods_sell += new /datum/commodity/balloons(src)
 		src.goods_sell += new /datum/commodity/crayons(src)
 		src.goods_sell += new /datum/commodity/sticker/googly_eyes(src)

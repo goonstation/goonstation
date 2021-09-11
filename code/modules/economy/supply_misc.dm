@@ -61,6 +61,8 @@
 			return 1
 		else if (istype(A,/mob/living/critter/changeling/handspider) || istype(A,/mob/living/critter/changeling/eyespider))
 			return 1
+		else if (!M.can_lie && isdead(M))
+			return 1
 		else if(!M.lying) // or you're lying down
 			return 0
 	return ..()

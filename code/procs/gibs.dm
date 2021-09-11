@@ -8,8 +8,6 @@
 
 	// NORTH
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
-	if (prob(30))
-		gib.icon_state = "gibup1"
 	gib.streak_cleanable(NORTH)
 	gib.diseases += diseases
 	gib.blood_DNA = blood_DNA
@@ -19,8 +17,6 @@
 
 	// SOUTH
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
-	if (prob(30))
-		gib.icon_state = "gibdown1"
 	gib.streak_cleanable(SOUTH)
 	gib.diseases += diseases
 	gib.blood_DNA = blood_DNA

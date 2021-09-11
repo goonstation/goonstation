@@ -2310,7 +2310,7 @@
 /turf/simulated/wall/auto/reinforced/gannets,
 /area/station/crew_quarters/ce)
 "aec" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	icon_state = "power";
 	dir = 4
 	},
@@ -6444,7 +6444,7 @@
 	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/solar_control/west,
+/obj/machinery/computer/solar_control/west,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/solar/west)
 "als" = (
@@ -6472,7 +6472,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/solar_control/east,
+/obj/machinery/computer/solar_control/east,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/solar/east)
 "alv" = (
@@ -23463,7 +23463,7 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/ce)
 "aNO" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8
 	},
 /obj/cable{
@@ -26555,7 +26555,7 @@
 	},
 /area/station/science/teleporter)
 "aSV" = (
-/obj/lrteleporter{
+/obj/machinery/lrteleporter{
 	layer = 3
 	},
 /turf/simulated/floor/white,
@@ -27278,7 +27278,7 @@
 /turf/simulated/floor,
 /area/station/engine/engineering/ce)
 "aUi" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
 	},
@@ -34353,7 +34353,7 @@
 /turf/simulated/wall/auto/reinforced/gannets,
 /area/station/engine/gas)
 "bge" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4";
@@ -41937,7 +41937,7 @@
 /area/station/engine/engineering)
 "bsn" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
 	},
@@ -44818,7 +44818,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
 "bxh" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	d2 = 8;
@@ -44993,7 +44993,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "bxy" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-4";
 	d2 = 4
@@ -46156,7 +46156,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "bzT" = (

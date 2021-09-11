@@ -46,11 +46,15 @@
 	..()
 	basedir = dir
 	setdir()
-	UnsubscribeProcess()
 
 /obj/machinery/conveyor/initialize()
 	..()
 	setdir()
+
+/obj/machinery/conveyor/process()
+	if(status & NOPOWER || !operating)
+		return
+	use_power(power_usage)
 
 /obj/machinery/conveyor/disposing()
 	for(var/obj/machinery/conveyor/C in range(1,src))
@@ -208,12 +212,12 @@
 		return
 	if (ismob(user.pulling))
 		var/mob/M = user.pulling
-		M.pulling = null
+		M.remove_pulling()
 		step(user.pulling, get_dir(user.pulling.loc, src))
-		user.pulling = null
+		user.remove_pulling()
 	else
 		step(user.pulling, get_dir(user.pulling.loc, src))
-		user.pulling = null
+		user.remove_pulling()
 	return
 
 

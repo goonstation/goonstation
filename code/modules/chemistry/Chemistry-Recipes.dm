@@ -500,6 +500,31 @@ datum
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
+		milk_punch
+			name = "Milk Punch"
+			id = "milk_punch"
+			result = "milk_punch"
+			required_reagents = list("simplesyrup" = 1, "juice_lime" = 1, "juice_apple" = 1, "ginger_ale" = 1, "juice_pineapple" = 1, "milk" = 1)
+			result_amount = 2
+			mix_phrase = "You wonder why you made this drink at all."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
+		milk_punch/milk_punch2
+			id = "milk_punch2"
+			required_reagents = list("fruit_punch" = 5, "milk" = 1)
+			result_amount = 2
+
+		fruit_punch
+			name = "Fruit Punch"
+			id = "fruit punch"
+			result = "fruit_punch"
+			required_reagents = list("simplesyrup" = 1, "juice_apple" = 1, "juice_lime" = 1, "ginger_ale" = 1, "juice_pineapple" = 1)
+			result_amount = 3
+			mix_phrase = "You are reminded of family picnics and school functions as the syrup mixes with the juices."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
 		lipolicide // COGWERKS REPLACEMENT NOTES: FEN-PHEN? EPHEDRINE?
 			name = "Lipolicide"
 			id = "lipolicide"
@@ -627,7 +652,6 @@ datum
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
-
 		sodawater
 			name = "soda water"
 			id = "sodawater"
@@ -647,6 +671,16 @@ datum
 			result_amount = 2
 			mix_phrase = "The sugar and water congeal in the heat into a gloopy syrup."
 			mix_sound = 'sound/impact_sounds/slimy_hit_3.ogg'
+			drinkrecipe = 1
+
+		cocktail_hardpunch
+			name = "Hard Punch"
+			id = "hard_punch"
+			result = "hard_punch"
+			required_reagents = list("simplesyrup" = 1, "sangria" = 1, "juice_apple" = 1, "ginger_ale" = 1, "juice_pineapple" = 1)
+			result_amount = 2
+			mix_phrase = "This drink is so disgustingly sweet you start to get a headache from smelling it."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
 		cocktail_kalimoxto
@@ -1281,6 +1315,7 @@ datum
 			id = "lingtea"
 			result = "lingtea"
 			required_reagents = list("longisland" = 1, "neurotoxin" = 1)
+			required_temperature = T0C + 100
 			result_amount = 2
 			mix_phrase = "The toxin upsets the delicate balance of alcohol and sours in this mix. Ew."
 
@@ -2586,7 +2621,7 @@ datum
 			result_amount = 1
 			#endif
 			mix_phrase = "The solution settles and congeals into a strange viscous fluid that seems to have the properties of both a liquid and a gas."
-			required_temperature = T0C - 277
+			required_temperature = 0
 
 
 		smokepowder
@@ -3722,7 +3757,7 @@ datum
 			mix_phrase = "The mixture starts to rapidly fizzle and heat up."
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				holder.temperature_reagents(holder.total_temperature + created_volume*200)
+				holder.temperature_reagents(holder.total_temperature + created_volume*200, 400, change_min = 1)
 
 		cryostylane_cold
 			name = "cryostylane chilling"
@@ -3735,7 +3770,7 @@ datum
 			mix_phrase = "The mixture begins to rapidly freeze."
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				holder.temperature_reagents(holder.total_temperature - created_volume*200)
+				holder.temperature_reagents(holder.total_temperature - created_volume*200, 400, change_min = 1)
 
 		reversium
 			name = "Reversium"

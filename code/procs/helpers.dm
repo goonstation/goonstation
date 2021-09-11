@@ -918,6 +918,42 @@ proc/get_angle(atom/a, atom/b)
 	var/y = min(world.maxy, max(1, A.y + dy))
 	return locate(x,y,A.z)
 
+
+/// Returns the turf facing the fab for cardinal directions (which should also be the user's turf),
+///		but for diagonals it returns a neighbouring turf depending on where you click
+/// Just in case you're attacking a corner diagonally. (made initially for lamp manufacturers, probably behaves funky above range 1)
+proc/get_adjacent_floor(atom/W, mob/user, px, py)
+	var/dir_temp = get_dir(user, W) //Our W is to the ___ of the user
+	//These two expressions divide a 32*32 turf into diagonal halves
+	var/diag1 = (px > py) //up-left vs down-right
+	var/diag2 = ((px + py) > 32) //up-right vs down-left
+	switch(dir_temp)
+		if (NORTH)
+			return get_turf(get_step(W,SOUTH))
+		if (NORTHEAST)
+			if (diag1)
+				return get_turf(get_step(W,SOUTH))
+			return get_turf(get_step(W,WEST))
+		if (EAST)
+			return get_turf(get_step(W,WEST))
+		if (SOUTHEAST)
+			if (diag2)
+				return get_turf(get_step(W,NORTH))
+			return get_turf(get_step(W,WEST))
+		if (SOUTH)
+			return get_turf(get_step(W,NORTH))
+		if (SOUTHWEST)
+			if (diag1)
+				return get_turf(get_step(W,EAST))
+			return get_turf(get_step(W,NORTH))
+		if (WEST)
+			return get_turf(get_step(W,EAST))
+		if (NORTHWEST)
+			if (diag2)
+				return get_turf(get_step(W,EAST))
+			return get_turf(get_step(W,SOUTH))
+
+
 // extends pick() to associated lists
 /proc/alist_pick(var/list/L)
 	if(!L || !length(L))
@@ -1036,8 +1072,7 @@ proc/get_angle(atom/a, atom/b)
 		for(var/i=0, i<duration, i++)
 			var/off_x = (rand(0, strength) * (prob(50) ? -1:1))
 			var/off_y = (rand(0, strength) * (prob(50) ? -1:1))
-			animate(client, pixel_x = off_x, pixel_y = off_y, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
-			animate(pixel_x = off_x*-1, pixel_y = off_y*-1, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
+			animate(client, time = 2, pixel_x = off_x, pixel_y = off_y, easing = LINEAR_EASING)
 			sleep(delay)
 
 		if (client)
@@ -1846,7 +1881,11 @@ proc/countJob(rank)
 /proc/dead_player_list_helper(var/mob/G, var/allow_dead_antags = 0, var/require_client = FALSE)
 	if (!G?.mind || G.mind.dnr)
 		return 0
-	if (!isobserver(G) && !(isliving(G) && isdead(G))) // if (NOT /mob/dead) AND NOT (/mob/living AND dead)
+	// if (!isobserver(G) && !(isliving(G) && isdead(G))) // if (NOT /mob/dead) AND NOT (/mob/living AND dead)
+	// 	return 0
+	// If (alive) and (not in the afterlife, or in the afterlife but in hell) and (not a VR ghost)
+	// (basically, allow people who are alive in the afterlife or in VR to get respawn popups)
+	if (!isdead(G) && !(istype(get_area(G), /area/afterlife) && !istype(get_area(G), /area/afterlife/hell)) && !isVRghost(G))
 		return 0
 	if (istype(G, /mob/new_player) || G.respawning)
 		return 0
@@ -1928,8 +1967,8 @@ proc/countJob(rank)
 
 			remove_antag(M, null, 1, 0)
 			if (M.mind && ticker.mode && !(M.mind in ticker.mode.former_antagonists))
-				if (!M.mind.former_antagonist_roles.Find("mindslave"))
-					M.mind.former_antagonist_roles.Add("mindslave")
+				if (!M.mind.former_antagonist_roles.Find(ROLE_MINDSLAVE))
+					M.mind.former_antagonist_roles.Add(ROLE_MINDSLAVE)
 				ticker.mode.former_antagonists += M.mind
 
 		if ("vthrall")
@@ -1941,8 +1980,8 @@ proc/countJob(rank)
 
 			remove_antag(M, null, 1, 0)
 			if (M.mind && ticker.mode && !(M.mind in ticker.mode.former_antagonists))
-				if (!M.mind.former_antagonist_roles.Find("vampthrall"))
-					M.mind.former_antagonist_roles.Add("vampthrall")
+				if (!M.mind.former_antagonist_roles.Find(ROLE_VAMPTHRALL))
+					M.mind.former_antagonist_roles.Add(ROLE_VAMPTHRALL)
 				ticker.mode.former_antagonists += M.mind
 
 		// This is only used for spy slaves and mindslaved antagonists at the moment.
@@ -1965,8 +2004,8 @@ proc/countJob(rank)
 			else
 				M.mind.master = null
 			if (M.mind && ticker.mode && !(M.mind in ticker.mode.former_antagonists))
-				if (!M.mind.former_antagonist_roles.Find("mindslave"))
-					M.mind.former_antagonist_roles.Add("mindslave")
+				if (!M.mind.former_antagonist_roles.Find(ROLE_MINDSLAVE))
+					M.mind.former_antagonist_roles.Add(ROLE_MINDSLAVE)
 				ticker.mode.former_antagonists += M.mind
 
 		else
@@ -2054,7 +2093,7 @@ proc/countJob(rank)
 var/global/nextDectalkDelay = 5 //seconds
 var/global/lastDectalkUse = 0
 /proc/dectalk(msg)
-	if (!msg) return 0
+	if (!msg || !ircbot.apikey) return 0
 	if (world.timeofday > (lastDectalkUse + (nextDectalkDelay * 10)))
 		lastDectalkUse = world.timeofday
 		msg = copytext(msg, 1, 2000)
@@ -2525,7 +2564,7 @@ proc/client_has_cap_grace(var/client/C)
 
 /// Returns true if not incapicitated and unhandcuffed (by default)
 proc/can_act(var/mob/M, var/include_cuffs = 1)
-	return !((include_cuffs && M.hasStatus("handcuffed")) || is_incapacitated(M))
+	return !((include_cuffs && M.restrained()) || is_incapacitated(M))
 
 /// Returns true if the given mob is incapacitated
 proc/is_incapacitated(mob/M)

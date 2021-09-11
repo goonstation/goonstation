@@ -115,6 +115,27 @@
 			signal.data_file = theScan
 			post_signal(signal, 1467)
 
+	medrecord_scan
+		name = "MedTrak Scanner"
+		size = 2
+
+		scan_atom(atom/A as mob|obj|turf|area)
+			if (..())
+				return
+
+			if (istype(A, /obj/machinery/clonepod))
+				var/obj/machinery/clonepod/P = A
+				if(P.occupant)
+					scan_medrecord(src.master, P.occupant)
+					update_medical_record(P.occupant)
+
+			if (!iscarbon(A))
+				return
+			var/mob/living/carbon/C = A
+
+			. = scan_medrecord(src.master, C, visible = 1)
+			update_medical_record(C)
+
 /datum/computer/file/electronics_scan
 	name = "scanfile"
 	extension = "OSCN"
@@ -134,10 +155,12 @@
 	extension = "GSCN"
 	var/subject_name = null
 	var/subject_uID = null
-	var/list/datum/bioEffect/dna_pool = list()
+	var/subject_stability = null
+	var/scanned_at = null
+	var/list/datum/bioEffect/dna_pool = null
+	var/list/datum/bioEffect/dna_active = null
 
 	disposing()
-		if (dna_pool)
-			dna_pool = null
-
+		src.dna_pool = null
+		src.dna_active = null
 		..()

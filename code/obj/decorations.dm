@@ -50,14 +50,24 @@
 	icon_state = "tree" // changed from 0.0
 	anchored = 1
 	layer = EFFECTS_LAYER_UNDER_3
+
 	pixel_x = -20
 	density = 1
 	opacity = 0 // this causes some of the super ugly lighting issues too
 
 	elm_random
+		layer = EFFECTS_LAYER_UNDER_1 // match shrubs
 		New()
 			. = ..()
 			src.dir = pick(cardinal - SOUTH)
+
+	snow_random
+		icon_state = "snowtree"
+		layer = EFFECTS_LAYER_UNDER_1 // match shrubs
+		pixel_x = -32
+		New()
+			. = ..()
+			src.dir = pick(cardinal)
 
 // what the hell is all this and why wasn't it just using a big icon? the lighting system gets all fucked up with this stuff
 
@@ -121,6 +131,16 @@
 		New()
 			. = ..()
 			src.dir = pick(alldirs)
+
+	snow
+		icon = 'icons/turf/snow.dmi'
+		icon_state = "snowstone"
+		plane = PLANE_NOSHADOW_BELOW // has snow accents to meld with turf
+
+		random
+			New()
+				. = ..()
+				src.dir = pick(alldirs)
 
 /obj/shrub
 	name = "shrub"
@@ -221,6 +241,15 @@
 		New()
 			. = ..()
 			src.dir = pick(alldirs)
+
+	snow
+		icon = 'icons/turf/snow.dmi'
+		icon_state = "snowshrub"
+
+		random
+			New()
+				. = ..()
+				src.dir = pick(cardinal)
 
 
 //It'll show up on multitools
@@ -1094,3 +1123,134 @@ obj/decoration/ceilingfan
 		for (var/image/i in src.proj_impacts)
 			src.proj_image.overlays += i
 		src.UpdateOverlays(src.proj_image, "projectiles")
+
+//Walp Decor
+
+/obj/decoration/regallamp
+	name = "golden candelabra"
+	desc = "Fancy."
+	icon = 'icons/misc/walp_decor.dmi'
+	icon_state = "lamp_regal_unlit"
+	density = 0
+	anchored = 0
+	opacity = 0
+	var/parts_type = /obj/item/furniture_parts/decor/regallamp
+	var/icon_off = "lamp_regal_unlit"
+	var/icon_on = "lamp_regal_lit"
+	var/brightness = 1
+	var/col_r = 0.5
+	var/col_g = 0.3
+	var/col_b = 0.0
+	var/lit = 0
+	var/securable = 1
+	var/datum/light/light
+	var/deconstructable = 1
+
+	New()
+		..()
+		light = new /datum/light/point
+		light.set_brightness(brightness)
+		light.set_color(col_r, col_g, col_b)
+		update_icon()
+		light.attach(src)
+
+	proc/update_icon()
+		if (src.lit == 1)
+			src.icon_state = src.icon_on
+			light.enable()
+
+		else
+			src.lit = 0
+			src.icon_state = src.icon_off
+			light.disable()
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (!src.lit)
+			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
+				boutput(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
+				src.lit = 1
+				update_icon()
+
+			if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
+				boutput(user, "<span class='alert'>Did [user] just light \his [src] with [W]? Holy Shit.</span>")
+				src.lit = 1
+				update_icon()
+
+			if (istype(W, /obj/item/device/igniter))
+				boutput(user, "<span class='alert'><b>[user]</b> fumbles around with [W]; a small flame erupts from [src].</span>")
+				src.lit = 1
+				update_icon()
+
+			if (istype(W, /obj/item/device/light/zippo) && W:on)
+				boutput(user, "<span class='alert'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
+				src.lit = 1
+				update_icon()
+
+			if ((istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on)
+				boutput(user, "<span class='alert'><b>[user] lights [src] with [W].</span>")
+				src.lit = 1
+				update_icon()
+
+			if (W.burning)
+				boutput(user, "<span class='alert'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
+				src.lit = 1
+				update_icon ()
+
+	attack_hand(mob/user as mob)
+		if (src.lit)
+			var/fluff = pick("snuff", "blow")
+			src.lit = 0
+			update_icon()
+			user.visible_message("<b>[user]</b> [fluff]s out the [src].",\
+			"You [fluff] out the [src].")
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (iswrenchingtool(W) && src.deconstructable)
+			actions.start(new /datum/action/bar/icon/furniture_deconstruct(src, W, 30), user)
+			return
+		else if (isscrewingtool(W) && src.securable)
+			src.toggle_secure(user)
+			return
+		else
+			return ..()
+
+	proc/toggle_secure(mob/user as mob)
+		if (user)
+			user.visible_message("<b>[user]</b> [src.anchored ? "loosens" : "tightens"] the floor bolts of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
+		playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
+		src.anchored = !(src.anchored)
+		src.p_class = src.anchored ? initial(src.p_class) : 2
+		return
+
+	disposing()
+		if (light)
+			light.dispose()
+		..()
+
+	proc/deconstruct()
+		if (!src.deconstructable)
+			return
+		if (ispath(src.parts_type))
+			var/obj/item/furniture_parts/P = new src.parts_type(src.loc)
+			if (P && src.material)
+				P.setMaterial(src.material)
+		else
+			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+			var/obj/item/sheet/S = new (src.loc)
+			if (src.material)
+				S.setMaterial(src.material)
+			else
+				var/datum/material/M = getMaterial("steel")
+				S.setMaterial(M)
+		qdel(src)
+		return
+
+
+obj/decoration/floralarrangement
+	name = "floral arrangement"
+	desc = "These look... Very plastic. Huh."
+	icon = 'icons/misc/walp_decor.dmi'
+	icon_state = "floral_arrange"
+	anchored = 1
+	density = 1
+

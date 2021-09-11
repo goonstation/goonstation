@@ -160,6 +160,16 @@
 	icon_state = "bp_bear"
 	item_state = "bp_bear"
 
+/obj/item/storage/backpack/turtlebrown
+	name = "brown turtle shell backpack"
+	desc = "A backpack that looks like a brown turtleshell. How childish!"
+	icon_state = "bp_turtle_brown"
+
+/obj/item/storage/backpack/turtlegreen
+	name = "green turtle shell backpack"
+	desc = "A backpack that looks like a green turtleshell. Cowabunga!"
+	icon_state = "bp_turtle_green"
+
 /obj/item/storage/backpack/satchel
 	name = "satchel"
 	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder."
@@ -281,6 +291,18 @@
 	desc = "An adorable friend that is perfect for hugs AND carries your gear for you, how helpful!"
 	icon_state = "sat_bear"
 	item_state = "sat_bear"
+
+/obj/item/storage/backpack/satchel/turtlebrown
+	name = "brown turtle shell satchel"
+	desc = "A satchel that looks like a brown turtleshell. How childish!"
+	icon_state = "sat_turtle_brown"
+	item_state = "sat_turtle_brown"
+
+/obj/item/storage/backpack/satchel/turtlegreen
+	name = "green turtle shell satchel"
+	desc = "A satchel that looks like a green turtleshell. Cowabunga!"
+	icon_state = "sat_turtle_green"
+	item_state = "sat_turtle_green"
 
 /* -------------------- Fanny Packs -------------------- */
 
@@ -529,6 +551,15 @@
 	)
 	in_list_or_max = 1
 
+/obj/item/storage/belt/mining/prepared
+	spawn_contents = list(/obj/item/mining_tool/power_pick,
+		/obj/item/ore_scoop/prepared,
+		/obj/item/satchel/mining,
+		/obj/item/device/geiger,
+		/obj/item/device/gps,
+		/obj/item/oreprospector,
+		/obj/item/device/appraisal)
+
 /obj/item/storage/belt/hunter
 	name = "trophy belt"
 	desc = "Holds normal-sized items, such as skulls."
@@ -664,10 +695,9 @@
 	desc = "A canvas duffel bag full of medical autoinjectors."
 	icon_state = "medic_belt"
 	item_state = "medic_belt"
-	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/high_capacity/epinephrine,
-	/obj/item/reagent_containers/emergency_injector/high_capacity/saline,
-	/obj/item/reagent_containers/emergency_injector/high_capacity/salbutamol,
-	/obj/item/reagent_containers/emergency_injector/high_capacity/mannitol,
+	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/high_capacity/cardiac,
+	/obj/item/reagent_containers/emergency_injector/high_capacity/bloodloss,
+	/obj/item/reagent_containers/emergency_injector/high_capacity/lifesupport,
 	/obj/item/reagent_containers/emergency_injector/high_capacity/juggernaut,
 	/obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector)
 

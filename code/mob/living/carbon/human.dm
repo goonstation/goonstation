@@ -196,13 +196,13 @@
 #endif
 
 	health_mon = image('icons/effects/healthgoggles.dmi',src,"100",10)
-	health_mon_icons.Add(health_mon)
+	get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(health_mon)
 
 	health_implant = image('icons/effects/healthgoggles.dmi',src,"100",10)
-	health_mon_icons.Add(health_implant)
+	get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(health_implant)
 
 	arrestIcon = image('icons/effects/sechud.dmi',src,null,10)
-	arrestIconsAll.Add(arrestIcon)
+	get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_image(arrestIcon)
 
 	src.organHolder = new(src)
 
@@ -485,8 +485,8 @@
 /mob/living/carbon/human/proc/is_vampire()
 	return get_ability_holder(/datum/abilityHolder/vampire)
 
-/mob/living/carbon/human/proc/is_vampiric_zombie()
-	return get_ability_holder(/datum/abilityHolder/vampiric_zombie)
+/mob/living/carbon/human/proc/is_vampiric_thrall()
+	return get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 
 /mob/living/carbon/human/disposing()
 	for(var/obj/item/I in src)
@@ -511,17 +511,15 @@
 		imp.dispose()
 	src.implant = null
 
-	for(var/client/C)
-		C.images -= list(health_mon, health_implant, arrestIcon)
 	if(health_mon)
+		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(health_mon)
 		health_mon.dispose()
-		health_mon_icons -= health_mon
 	if(health_implant)
+		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(health_implant)
 		health_implant.dispose()
-		health_mon_icons -= health_implant
 	if(arrestIcon)
+		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_image(arrestIcon)
 		arrestIcon.dispose()
-		arrestIconsAll -= arrestIcon
 
 	src.chest_item = null
 
@@ -713,9 +711,9 @@
 
 	if (src.mind) // I think this is kinda important (Convair880).
 		src.mind.register_death()
-		if (src.mind.special_role == "mindslave")
+		if (src.mind.special_role == ROLE_MINDSLAVE)
 			remove_mindslave_status(src, "mslave", "death")
-		else if (src.mind.special_role == "vampthrall")
+		else if (src.mind.special_role == ROLE_VAMPTHRALL)
 			remove_mindslave_status(src, "vthrall", "death")
 		else if (src.mind.master)
 			remove_mindslave_status(src, "otherslave", "death")
@@ -884,6 +882,10 @@
 					if (istype(O, /datum/objective/specialist/stealth))
 						stat("Stealth Points:", "[O:score] / [O:min_score]")
 
+		/*
+
+		//For some reason, this code was causing severe lag. Feel free to uncomment it if you want to figure out why - Emily
+
 		if (src.internal)
 			if (!src.internal.air_contents)
 				qdel(src.internal)
@@ -891,6 +893,7 @@
 				stat("Internal Atmosphere Info:", src.internal.name)
 				stat("Tank Pressure:", MIXTURE_PRESSURE(src.internal.air_contents))
 				stat("Distribution Pressure:", src.internal.distribute_pressure)
+		*/
 
 /mob/living/carbon/human/hotkey(name)
 	switch (name)
@@ -982,9 +985,12 @@
 	src.update_cursor()
 	hud.update_throwing()
 
-/mob/living/carbon/human/proc/throw_item(atom/target, list/params)
+/mob/living/carbon/human/throw_item(atom/target, list/params)
+	..()
 	var/turf/thrown_from = get_turf(src)
 	src.throw_mode_off()
+	if (HAS_MOB_PROPERTY(src, PROP_CANTTHROW))
+		return
 	if (src.stat)
 		return
 
@@ -1537,7 +1543,7 @@
 		return
 
 	logTheThing("diary", src, null, "(WHISPER): [message]", "whisper")
-	logTheThing("whisper", src, null, "SAY: [message] (Whispered)")
+	logTheThing("whisper", src, null, "SAY: [message] (WHISPER) [log_loc(src)]")
 
 	if (src.client && !src.client.holder && url_regex?.Find(message))
 		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
@@ -1723,10 +1729,10 @@
 			hud.set_visible(hud.twohandr, 0)
 
 	if (W == src.wear_suit)
+		src.update_hair_layer()
 		src.wear_suit = null
 		W.unequipped(src)
 		src.update_clothing()
-		src.update_hair_layer()
 	else if (W == src.w_uniform)
 		W.unequipped(src)
 		W = src.r_store
@@ -1769,9 +1775,9 @@
 		src.update_clothing()
 	else if (W == src.head)
 		W.unequipped(src)
+		src.update_hair_layer()
 		src.head = null
 		src.update_clothing()
-		src.update_hair_layer()
 	else if (W == src.ears)
 		W.unequipped(src)
 		src.ears = null
@@ -2873,7 +2879,9 @@
 
 	for(var/slot in valid_slots)
 		var/obj/item/slot_item = src.get_slot(slot)
-		if(slot_item?.flags & HAS_EQUIP_CLICK && slot_item.equipment_click(src, target, params, location, control, origParams, slot))
+		if (slot_item?.flags & HAS_EQUIP_CLICK &&\
+		 	src.in_real_view_range(get_turf(target)) &&\
+		 	slot_item.equipment_click(src, target, params, location, control, origParams, slot))
 			return
 
 	if (src.lying)
@@ -3305,7 +3313,7 @@
 		if (!src.limbs.r_leg) missing_legs++
 		if (!src.limbs.l_arm) missing_arms++
 		if (!src.limbs.r_arm) missing_arms++
-	if (src.lying)
+	if (src.lying || GET_COOLDOWN(src, "unlying_speed_cheesy"))
 		missing_legs = 2
 	else if (src.shoes && src.shoes.chained)
 		missing_legs = 2
@@ -3366,7 +3374,7 @@
 				src.changeStatus("stunned", 3 SECONDS)
 
 		else
-			AM.attack_hand(src)	// nice catch, hayes. don't ever fuckin do it again
+			AM.Attackhand(src)	// nice catch, hayes. don't ever fuckin do it again
 			src.visible_message("<span class='alert'>[src] catches the [AM.name]!</span>")
 			logTheThing("combat", src, null, "catches [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
 			src.throw_mode_off()

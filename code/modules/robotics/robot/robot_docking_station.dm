@@ -50,6 +50,8 @@
 
 	if (src.occupant)
 		src.process_occupant(mult)
+
+	use_power(power_usage)
 	return 1
 
 /obj/machinery/recharge_station/allow_drop()
@@ -673,7 +675,7 @@
 		return
 
 	if (isitem(O) && !user.stat)
-		src.attackby(O, user)
+		src.Attackby(O, user)
 		return
 
 	if (isliving(O) && src.occupant)
@@ -690,11 +692,11 @@
 				return
 			else
 				user.visible_message("<b>[user]</b> moves [R] into  [src].")
-		R.pulling = null
+		R.remove_pulling()
 		R.set_loc(src)
 		src.occupant = R
 		if (R.client)
-			src.attack_hand(R)
+			src.Attackhand(R)
 		src.add_fingerprint(user)
 		src.build_icon()
 
@@ -708,11 +710,11 @@
 				return
 			else
 				user.visible_message("<b>[user]</b> moves [H] into [src].")
-		H.pulling = null
+		H.remove_pulling()
 		H.set_loc(src)
 		src.occupant = H
 		if (H.client)
-			src.attack_hand(H)
+			src.Attackhand(H)
 		src.add_fingerprint(user)
 		src.build_icon()
 
@@ -742,7 +744,7 @@
 					user.visible_message("<b>[user]</b> moves [H] into [src].")
 				else
 					user.visible_message("<b>[user]</b> climbs into [src].")
-				H.pulling = null
+				H.remove_pulling()
 				H.set_loc(src)
 				src.occupant = H
 				src.add_fingerprint(user)
@@ -880,10 +882,10 @@
 	if (src.occupant)
 		boutput(usr, "<span class='alert'>\The [src] is already occupied!</span>")
 		return
-	usr.pulling = null
+	usr.remove_pulling()
 	usr.set_loc(src)
 	src.occupant = usr
-	src.attack_hand(usr)
+	src.Attackhand(usr)
 	src.add_fingerprint(usr)
 	src.build_icon()
 

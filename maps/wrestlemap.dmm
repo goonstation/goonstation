@@ -90,7 +90,7 @@
 /area/station/engine/monitoring)
 "aam" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/reagent_containers/food/snacks/candy,
+/obj/item/reagent_containers/food/snacks/candy/regular,
 /obj/item/reagent_containers/food/snacks/candy/nougat,
 /obj/item/reagent_containers/food/snacks/candy/chocolate,
 /turf/simulated/floor/carpet/green/fancy/narrow/eastwest,
@@ -3036,7 +3036,7 @@
 	},
 /area/station/catwalk/south)
 "bnF" = (
-/obj/item/reagent_containers/food/snacks/candy,
+/obj/item/reagent_containers/food/snacks/candy/regular,
 /turf/space,
 /area/space)
 "bnQ" = (
@@ -14943,7 +14943,7 @@
 /area/station/science/lab)
 "gjW" = (
 /obj/table/glass/auto,
-/obj/item/reagent_containers/food/snacks/candy,
+/obj/item/reagent_containers/food/snacks/candy/regular,
 /obj/item/reagent_containers/food/snacks/burger{
 	pixel_x = 2;
 	pixel_y = 10
@@ -15908,7 +15908,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/solar_control/west,
+/obj/machinery/computer/solar_control/west,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "gFC" = (
@@ -16601,7 +16601,7 @@
 	name = "Research Computer Lab"
 	})
 "gVm" = (
-/obj/machinery/power/solar_control/north,
+/obj/machinery/computer/solar_control/north,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
@@ -31085,7 +31085,7 @@
 	dir = 6;
 	icon_state = "bot2"
 	},
-/obj/machinery/power/monitor/console_upper{
+/obj/machinery/computer/power_monitor/console_upper{
 	dir = 4;
 	name = "Power Monitoring Console"
 	},
@@ -33651,7 +33651,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/machinery/power/solar_control/east,
+/obj/machinery/computer/solar_control/east,
 /obj/decal/tile_edge/stripe{
 	dir = 6;
 	icon_state = "bot2"
@@ -37378,7 +37378,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "qbM" = (
-/obj/item/reagent_containers/food/snacks/candy,
+/obj/item/reagent_containers/food/snacks/candy/regular,
 /turf/simulated/floor/airless/blackwhite,
 /area/abandonedship{
 	name = "Crashed Limo"
@@ -37685,7 +37685,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "qhg" = (
@@ -38333,17 +38333,17 @@
 /obj/item/reagent_containers/food/drinks/noodlecup,
 /obj/item/reagent_containers/food/drinks/noodlecup,
 /obj/item/reagent_containers/food/drinks/noodlecup,
-/obj/item/reagent_containers/food/snacks/candy,
-/obj/item/reagent_containers/food/snacks/candy,
-/obj/item/reagent_containers/food/snacks/candy,
-/obj/item/reagent_containers/food/snacks/candy,
-/obj/item/reagent_containers/food/snacks/candy,
-/obj/item/reagent_containers/food/snacks/candy,
-/obj/item/reagent_containers/food/snacks/candy,
-/obj/item/reagent_containers/food/snacks/candy,
-/obj/item/reagent_containers/food/snacks/candy,
-/obj/item/reagent_containers/food/snacks/candy,
-/obj/item/reagent_containers/food/snacks/candy,
+/obj/item/reagent_containers/food/snacks/candy/regular,
+/obj/item/reagent_containers/food/snacks/candy/regular,
+/obj/item/reagent_containers/food/snacks/candy/regular,
+/obj/item/reagent_containers/food/snacks/candy/regular,
+/obj/item/reagent_containers/food/snacks/candy/regular,
+/obj/item/reagent_containers/food/snacks/candy/regular,
+/obj/item/reagent_containers/food/snacks/candy/regular,
+/obj/item/reagent_containers/food/snacks/candy/regular,
+/obj/item/reagent_containers/food/snacks/candy/regular,
+/obj/item/reagent_containers/food/snacks/candy/regular,
+/obj/item/reagent_containers/food/snacks/candy/regular,
 /obj/item/reagent_containers/food/snacks/chips,
 /obj/item/reagent_containers/food/snacks/chips,
 /obj/item/reagent_containers/food/snacks/chips,
@@ -43517,7 +43517,7 @@
 	name = "Ringside Hallway"
 	})
 "szL" = (
-/obj/item/reagent_containers/food/snacks/candy,
+/obj/item/reagent_containers/food/snacks/candy/regular,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "szP" = (
@@ -43702,7 +43702,7 @@
 /area/station/turret_protected/ai_upload)
 "sFl" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
@@ -51176,7 +51176,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/caution,
 /area/station/science/teleporter)
 "vUe" = (
@@ -52789,7 +52789,7 @@
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "wDX" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	d2 = 8;
@@ -55713,7 +55713,7 @@
 /obj/item/parts/robot_parts/head,
 /obj/item/parts/robot_parts/arm/left,
 /obj/item/parts/robot_parts/arm/right,
-/obj/item/reagent_containers/food/snacks/candy,
+/obj/item/reagent_containers/food/snacks/candy/regular,
 /obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log,
 /obj/item/pen/pencil,
 /obj/cable{

@@ -529,7 +529,7 @@ datum/pump_ui/circulator_ui
 		return our_circ
 
 
-/obj/machinery/power/monitor
+/obj/machinery/computer/power_monitor
 	name = "Power Monitoring Computer"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "power"
@@ -1459,13 +1459,13 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 	icon_state = "computer_generic"
 
 	name = "Pump control computer"
+	frequency = 1225
 
 	var/list/pump_infos
 
 	var/last_change = 0
 	var/message_delay = 1 MINUTE
 
-	var/frequency = 1225
 	var/datum/radio_frequency/radio_connection
 
 	New()
@@ -1484,11 +1484,6 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 		if(status & (BROKEN | NOPOWER))
 			return
 		//src.updateUsrDialog()
-
-	attackby(I as obj, user as mob)
-			//Readd construction code + boards
-		src.attack_hand(user)
-		return
 
 	receive_signal(datum/signal/signal)
 		if(!signal || signal.encryption)

@@ -151,7 +151,7 @@
 			return
 
 	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_hand(mob/user as mob)
 		if(status & (NOPOWER|BROKEN))
@@ -199,6 +199,10 @@
 		return ..(AM)
 	*/
 
+	process()
+		..()
+		use_power(power_usage)
+
 	proc/active()
 		if (!active) return
 		if (status & (NOPOWER|BROKEN) || !beaker || !beaker.reagents.total_volume)
@@ -206,7 +210,7 @@
 			return
 
 		var/datum/reagents/R = beaker:reagents
-		R.temperature_reagents(target_temp, 10)
+		R.temperature_reagents(target_temp, 400)
 
 		src.power_usage = 1000
 
@@ -345,7 +349,7 @@
 		boutput(user, "You add the beaker to the machine!")
 		src.updateUsrDialog()
 		icon_state = "mixer1"
-		src.attack_hand(user)
+		src.Attackhand(user)
 
 	Topic(href, href_list)
 		if (status & BROKEN) return
@@ -576,7 +580,7 @@
 			return
 
 	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_hand(mob/user as mob)
 		if (status & BROKEN)
@@ -704,7 +708,7 @@ datum/chemicompiler_core/stationaryCore
 		return
 
 	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_hand(mob/user as mob)
 		if (status & BROKEN || !powered())

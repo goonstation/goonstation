@@ -71,7 +71,6 @@
 	var/uses = 6
 	var/emagged = 0
 	burn_possible = 0
-	module_research = list("efficiency" = 10)
 	step_sound = "step_plating"
 	step_priority = STEP_PRIORITY_LOW
 
@@ -178,7 +177,6 @@
 	// c_flags = NOSLIP
 	mats = 8
 	burn_possible = 0
-	module_research = list("efficiency" = 5, "engineering" = 5)
 	laces = LACES_NONE
 	kick_bonus = 2
 	step_sound = "step_plating"
@@ -207,7 +205,6 @@
 	mats = 0
 	magical = 1
 	burn_possible = 0
-	module_research = list("efficiency" = 5, "engineering" = 5)
 	laces = LACES_NONE
 	step_sound = "step_flipflop"
 	step_priority = STEP_PRIORITY_LOW
@@ -228,7 +225,6 @@
 #endif
 	mats = 12
 	burn_possible = 0
-	module_research = list("efficiency" = 5, "engineering" = 5, "mining" = 10)
 	laces = LACES_NONE
 	kick_bonus = 2
 
@@ -255,6 +251,11 @@
 	step_priority = STEP_PRIORITY_LOW
 	permeability_coefficient = 0.05
 
+	torn
+		desc = "Rubber boots that would prevent slipping on wet surfaces, were they not all torn up. Like these are. Damn."
+		c_flags = null
+		permeability_coefficient = 1
+
 /obj/item/clothing/shoes/clown_shoes
 	name = "clown shoes"
 	desc = "Damn, thems some big shoes."
@@ -262,7 +263,6 @@
 	item_state = "clown_shoes"
 	step_sound = "clownstep"
 	compatible_species = list("human", "cow")
-	module_research = list("audio" = 5)
 	step_lots = 1
 	step_priority = 999
 	var/list/crayons = list() // stonepillar's crayon project
@@ -480,7 +480,6 @@
 	icon_state = "rocketboots"
 	laces = LACES_NONE
 	burn_possible = 0
-	module_research = list("efficiency" = 20)
 	step_sound = "step_plating"
 	step_priority = STEP_PRIORITY_LOW
 	var/on = 1

@@ -575,7 +575,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 					return
 				src.change_stack_amount(0 - amt)
 				var/obj/item/dice/coin/poker_chip/P = new src.type(user.loc)
-				P.attack_hand(user)
+				P.Attackhand(user)
 		else
 			..(user)
 
@@ -1091,8 +1091,8 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	item_state = "sailormoon"
 
 /obj/item/clothing/head/sailormoon
-	name = "hair clips"
-	desc = "Shiny red hair clips to keep your hair in a very specific style and are about useless for anything else."
+	name = "red hairclips"
+	desc = "Shiny red hairclips to keep your hair in a very specific style and are about useless for anything else."
 	icon_state = "sailormoon"
 
 /obj/item/clothing/glasses/sailormoon
@@ -1120,7 +1120,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 				if (!usagi.equip_if_possible(src, usagi.slot_glasses))
 					usagi.put_in_hand_or_drop(src)
 			else
-				src.attack_hand(usr)
+				src.Attackhand(usr)
 			return
 		return ..(hit_atom)
 

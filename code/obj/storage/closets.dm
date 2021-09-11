@@ -98,7 +98,7 @@
 	icon_state = "coffin"
 	icon_closed = "coffin"
 	icon_opened = "coffin-open"
-	layer = 2.2
+	layer = 2.5
 	icon_welded = "welded-coffin-4dirs"
 
 	wood
@@ -480,7 +480,7 @@
 /*
 		else if (issilicon(user))
 			if (get_dist(src, user) <= 1)
-				return src.attack_hand(user)
+				return src.Attackhand(user)
 */
 		else
 			return ..()

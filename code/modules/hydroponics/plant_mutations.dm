@@ -82,6 +82,13 @@
 	iconmod = "CornClear"
 	assoc_reagents = list("ethanol")
 
+// Pea Mutations
+
+/datum/plantmutation/peas/ammonia
+	crop = /obj/item/reagent_containers/food/snacks/plant/peas/ammonia
+	iconmod = "GoldenPeas"
+	assoc_reagents = list("ammonia")
+
 // Grape Mutations
 
 /datum/plantmutation/grapes/green
@@ -101,6 +108,7 @@
 /datum/plantmutation/orange/blood
 	name = "Blood Orange"
 	name_prefix = "Blood "
+	crop = /obj/item/reagent_containers/food/snacks/plant/orange/blood
 	iconmod = "OrangeBlood"
 	assoc_reagents = list("bloodc") // heh
 
@@ -174,7 +182,7 @@
 		var/thud_prob = max(0,min(100, DNA.endurance / 2))
 
 		if (prob(thud_prob))
-			playsound(POT.loc, "sound/effects/exlow.ogg", 30, 1)
+			playsound(POT, "sound/effects/exlow.ogg", 30, 1)
 			animate_wiggle_then_reset(POT)
 
 
@@ -247,7 +255,7 @@
 
 		if (POT.growth > (P.growtime - DNA.growtime) && prob(fart_prob))
 			POT.visible_message("<span class='alert'><b>[POT]</b> farts!</span>")
-			playsound(POT.loc, "sound/voice/farts/poo2.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+			playsound(POT, "sound/voice/farts/poo2.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 			// coder.Life()
 			// whoops undefined proc
 
@@ -444,7 +452,7 @@
 			// I know that this seems weird, but consider how many plants clutter botany at any given time. Looping through mobs and checking distance is
 			// less of a pain than looping through potentially hundreds of random seeds and crap in view(1) to see if they're mobs.
 			for (var/mob/living/L in mobs)
-				if (get_dist(L.loc,POT.loc) <= 1)
+				if (get_dist(L.loc,get_turf(POT)) <= 1)
 					nerds += L
 				else
 					continue
@@ -549,7 +557,7 @@
 		var/datum/plantgenes/DNA = POT.plantgenes
 
 		if (POT.growth > (P.harvtime - DNA.harvtime) && prob(10))
-			var/obj/overlay/B = new /obj/overlay( POT.loc )
+			var/obj/overlay/B = new /obj/overlay( get_turf(POT) )
 			B.icon = 'icons/effects/hydroponics.dmi'
 			B.icon_state = "radpulse"
 			B.name = "radioactive pulse"
@@ -691,3 +699,11 @@
 	crop = /obj/item/plant/herb/tobacco/twobacco
 	assoc_reagents = list("nicotine2")
 	chance = 50
+
+//Dripper mutations
+/datum/plantmutation/dripper/leaker
+	name = "Leaker"
+	iconmod = "Leaker"
+	crop = /obj/item/reagent_containers/food/snacks/plant/purplegoop/orangegoop
+	assoc_reagents = list("oil")
+	chance = 25

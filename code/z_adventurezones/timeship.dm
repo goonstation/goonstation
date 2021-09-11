@@ -144,48 +144,6 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 			playsound(src.loc, 'sound/machines/futurebuddy_beep.ogg', 50, 1)
 			return ..()
 
-	interact(mob/user as mob)
-		var/dat = "<tt><B>PR-7 Robuddy v2.9</B></tt><br><br>"
-
-		var/power_readout = null
-		var/readout_color = "#000000"
-		if(!src.cell)
-			power_readout = "NO CELL"
-		else
-			var/charge_percentage = round((cell.charge/cell.maxcharge)*100)
-			power_readout = "[charge_percentage]%"
-			switch(charge_percentage)
-				if(0 to 10)
-					readout_color = "#F80000"
-				if(11 to 25)
-					readout_color = "#FFCC00"
-				if(26 to 50)
-					readout_color = "#CCFF00"
-				if(51 to 75)
-					readout_color = "#33CC00"
-				if(76 to 100)
-					readout_color = "#33FF00"
-
-
-		dat += {"Power: <table border='1' style='background-color:[readout_color]'>
-				<tr><td><font color=white>[power_readout]</font></td></tr></table><br>"}
-
-		dat += "Current Tool: [src.tool ? src.tool.tool_id : "NONE"]<br>"
-
-		if(src.locked)
-
-			dat += "Status: [src.on ? "On" : "Off"]<br>"
-
-		else
-
-			dat += "Status: <a href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</a><br>"
-
-		dat += "<br>Network ID: <b>\[[uppertext(src.net_id)]]</b><br>"
-
-		user.Browse("<head><title>Robuddy v2.9 controls</title></head>[dat]", "window=guardbot;size=310x415;title=Robuddy v2.9 controls")
-		onclose(user, "guardbot")
-		return
-
 	explode()
 		if(src.exploding) return
 		src.exploding = 1

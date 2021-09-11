@@ -227,16 +227,13 @@
 							src.chest_item_attack_self_on_fart()
 
 						if (src.bioHolder)
-							if (src.bioHolder.HasEffect("toxic_farts"))
+							var/toxic = src.bioHolder.HasEffect("toxic_farts")
+							if (toxic)
 								message = "<span class='alert'><B>[src] [pick("unleashes","rips","blasts")] \a [pick("truly","utterly","devastatingly","shockingly")] [pick("hideous","horrendous","horrific","heinous","horrible")] fart!</B></span>"
 								var/turf/fart_turf = get_turf(src)
-								fart_turf.fluid_react_single("toxic_fart",2,airborne = 1)
+								fart_turf.fluid_react_single("[toxic > 1 ?"very_":""]toxic_fart", toxic*2, airborne = 1)
 
 							if (src.bioHolder.HasEffect("linkedfart"))
-								message = "<span class='alert'><B>[src] [pick("unleashes","rips","blasts")] \a [pick("truly","utterly","devastatingly","shockingly")] [pick("hideous","horrendous","horrific","heinous","horrible")] fart!</B></span>"
-								var/turf/fart_turf = get_turf(src)
-								fart_turf.fluid_react_single("toxic_fart",2,airborne = 1)
-
 								for(var/mob/living/H in mobs)
 									if (H.bioHolder && H.bioHolder.HasEffect("linkedfart")) continue
 									var/found_bible = 0
@@ -291,7 +288,7 @@
 					G.throw_at(target,5,1)
 					src.visible_message("<b>[src]</B> farts out a...glowstick?")
 
-			if ("salute","saluteto","bow","hug","wave","waveto","blowkiss","sidehug")
+			if ("salute","saluteto","bow","hug","wave","waveto","blowkiss","sidehug","fingerguns")
 				// visible targeted emotes
 				if (!src.restrained())
 					var/M = null
@@ -316,6 +313,8 @@
 									action_phrase = "wave to"
 								if("blowkiss")
 									action_phrase = "to whom you'll blow a [prob(1) ? "smooch" : "kiss"]"
+								if("fingerguns")
+									action_phrase = "point finger guns at"
 							M = tgui_input_list(src, "Pick something to [action_phrase]!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
 							if (M && (range > 1 && !IN_RANGE(get_turf(src), get_turf(M), range)) || (range == 1 && !in_interact_range(src, M)) )
 								var/inaction_phrase = "emote upon"
@@ -353,6 +352,9 @@
 								maptext_out = "<I>blows a kiss to [M]</I>"
 								//var/atom/U = get_turf(param)
 								//shoot_projectile_ST(src, new/datum/projectile/special/kiss(), U) //I gave this all of 5 minutes of my time I give up
+							if ("fingerguns")
+								message = "<B>[src]</B> points finger guns at [M]!"
+								maptext_out = "<I>points finger guns at [M]!</I>"
 							else
 								message = "<B>[src]</B> [act]s [M]."
 								maptext_out = "<I>[act]s [M]</I>"
@@ -364,6 +366,9 @@
 							if ("blowkiss")
 								message = "<B>[src]</b> blows a kiss to... [himself_or_herself(src)]?"
 								maptext_out = "<I> blows a kiss to... [himself_or_herself(src)]?</I>"
+							if ("fingerguns")
+								message = "<B>[src]</b> points finger guns at... [himself_or_herself(src)]?"
+								maptext_out = "<I> points finger guns at... [himself_or_herself(src)]?</I>"
 							else
 								message = "<B>[src]</b> [act]s."
 								maptext_out = "<I>[act]s [M]</I>"
@@ -522,7 +527,7 @@
 				burp, fart, monologue, contemplate, custom")
 
 			if ("listtarget")
-				src.show_text("salute, bow, hug, wave, glare, stare, look, leer, nod, flipoff, doubleflip, shakefist, handshake, daps, slap, boggle, highfive")
+				src.show_text("salute, bow, hug, wave, glare, stare, look, leer, nod, flipoff, doubleflip, shakefist, handshake, daps, slap, boggle, highfive, fingerguns")
 
 			if ("suicide")
 				src.show_text("Suicide is a command, not an emote.  Please type 'suicide' in the input bar at the bottom of the game window to kill yourself.", "red")
@@ -666,21 +671,15 @@
 
 			if ("tip")
 				if (!src.restrained() && !src.stat)
+					if (istype(src.head, /obj/item/clothing/head/mj_hat || /obj/item/clothing/head/det_hat/))
+						src.say (pick("M'lady", "M'lord", "M'liege")) //male, female and non-binary variants with alliteration
+						//maptext_out = "<I>tips their fedora</I>"
 					if (istype(src.head, /obj/item/clothing/head/fedora))
-						var/obj/item/clothing/head/fedora/hat = src.head
-						message = "<B>[src]</B> tips [his_or_her(src)] [hat] and [pick("winks", "smiles", "grins", "smirks")].<br><B>[src]</B> [pick("says", "states", "articulates", "implies", "proclaims", "proclamates", "promulgates", "exclaims", "exclamates", "extols", "predicates")], &quot;M'lady.&quot;"
+						src.visible_message("[src] tips [his_or_her(src)] fedora and smirks.")
+						src.say ("M'lady")
 						SPAWN_DBG(1 SECOND)
-							hat.set_loc(src.loc)
-							src.head = null
 							src.add_karma(-10)
 							src.gib()
-					else if (istype(src.head, /obj/item/clothing/head) && !istype(src.head, /obj/item/clothing/head/fedora))
-						src.show_text("This hat just isn't [pick("fancy", "suave", "manly", "sexerific", "majestic", "euphoric")] enough for that!", "red")
-						//maptext_out = "<I>tips hat</I>"
-						return
-					else
-						src.show_text("You can't tip a hat you don't have!", "red")
-						return
 
 			if ("hatstomp", "stomphat")
 				if (!src.restrained())

@@ -92,7 +92,7 @@
 		if(params["ctrl"])
 			if (src.pulling)
 				unpull_particle(src,pulling)
-			src.pulling = null
+			src.remove_pulling()
 
 	//circumvented by some rude hack in client.dm; uncomment if hack ceases to exist
 	//if (istype(target, /atom/movable/screen/ability))
@@ -125,7 +125,7 @@
 		if ("stop_pull")
 			if (src.pulling)
 				unpull_particle(src,pulling)
-			src.pulling = null
+			src.remove_pulling()
 
 /**
 	* Return the ability bound to the pressed ability hotkey combination

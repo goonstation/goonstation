@@ -95,6 +95,7 @@ ABSTRACT_TYPE(/datum/plant/crop)
 	endurance = 0
 	vending = 1
 	genome = 8
+	mutations = list(/datum/plantmutation/peas/ammonia)
 	commuts = list(/datum/plant_gene_strain/immunity_toxin,/datum/plant_gene_strain/metabolism_slow)
 
 /datum/plant/crop/corn
@@ -165,7 +166,7 @@ ABSTRACT_TYPE(/datum/plant/crop)
 				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/spleen)
 			if("charcoal")
 				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/stomach)
-				
+
 /datum/plant/crop/sugar
 	name = "Sugar"
 	seedcolor = "#BBBBBB"
