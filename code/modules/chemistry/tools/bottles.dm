@@ -35,12 +35,23 @@
 			return
 		src.underlays -= src.fluid_image
 		icon_state = "bottle[bottle_style]"
-		if (reagents.total_volume >= 0)
-			var/datum/color/average = reagents.get_average_color()
+		if (reagents.total_volume)
+			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * (src.reagents.maximum_volume / 10) + 1), 1, 4))
 			if (!src.fluid_image)
-				src.fluid_image = image('icons/obj/chemical.dmi', "bottle[bottle_style]-fluid", -1)
+				src.fluid_image = image(src.icon, "bottle[src.bottle_style]-fluid[fluid_state]", -1)
+			else
+				src.fluid_image.icon_state = "bottle[src.bottle_style]-fluid[fluid_state]"
+			var/datum/color/average = reagents.get_average_color()
 			src.fluid_image.color = average.to_rgba()
 			src.underlays += src.fluid_image
+		// else
+		// 	src.icon_state = src.icon_style
+		// if (reagents.total_volume >= 0)
+		// 	var/datum/color/average = reagents.get_average_color()
+		// 	if (!src.fluid_image)
+		// 		src.fluid_image = image('icons/obj/chemical.dmi', "bottle[bottle_style]-fluid", -1)
+		// 	src.fluid_image.color = average.to_rgba()
+		// 	src.underlays += src.fluid_image
 		signal_event("icon_updated")
 
 /* =================================================== */
