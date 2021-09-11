@@ -1,5 +1,9 @@
 
 (t)sat sep 11 21
+(u)Flappybat
+(p)5968
+(e)⚖|balance
+(*)Strange reagent requires a minimum of 1u to revive.
 (u)Emily
 (e)⚖|balance
 (*)Chickens can now be butchered significantly faster to make cleaning out the ranch easier.
