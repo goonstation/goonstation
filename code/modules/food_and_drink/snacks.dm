@@ -252,7 +252,7 @@
 
 /obj/item/reagent_containers/food/snacks/pizza/fresh
     name = "fresh pizza"
-    desc = "A cheesey pizza pie with thick tomato sauce."
+    desc = "A cheesy pizza pie with thick tomato sauce."
     icon_state = "cheesy"
     sliced_icon = "cheesy-slice"
 	
@@ -262,9 +262,9 @@
     icon_state = "meatball"
     sliced_icon = "meatball-slice"
 
-/obj/item/reagent_containers/food/snacks/pizza/peper
+/obj/item/reagent_containers/food/snacks/pizza/pepper
     name = "fresh pepperoni  pizza"
-    desc = "A cheesey pizza pie toped with bright red sizzling pepperoni slices."
+    desc = "A cheey pizza pie toped with bright red sizzling pepperoni slices."
     icon_state = "peper"
     sliced_icon = "peper-slice"
 
