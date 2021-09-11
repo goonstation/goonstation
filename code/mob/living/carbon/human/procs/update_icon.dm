@@ -552,7 +552,7 @@
 		src.r_store.screen_loc = hud.layouts[hud.layout_style]["storage2"]
 
 	if (src.hasStatus("handcuffed"))
-		src.pulling = null
+		src.remove_pulling()
 		handcuff_img.icon_state = "handcuff1"
 		handcuff_img.pixel_x = 0
 		handcuff_img.pixel_y = hand_offset

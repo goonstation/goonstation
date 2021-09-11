@@ -355,11 +355,11 @@
 
 
 /obj/item/storage/box/blowgun
-	name = "flute box"
-	desc = "Looks like there's some kinda wooden flute in here."
-	icon_state = "box"
-	spawn_contents = list(/obj/item/gun/kinetic/dart_blowgun,\
-	/obj/item/storage/pouch/poison_dart = 3)
+	name = "instrument case"
+	desc = "A hardshell case for musical instruments."
+	icon_state = "briefcase_black"
+	spawn_contents = list(/obj/item/gun/kinetic/blowgun,\
+	/obj/item/storage/pouch/poison_dart = 2)
 
 // Starter kit used in the conspiracy/spy game mode.
 /obj/item/storage/box/spykit

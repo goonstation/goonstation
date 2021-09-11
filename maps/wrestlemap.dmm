@@ -15908,7 +15908,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/solar_control/west,
+/obj/machinery/computer/solar_control/west,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "gFC" = (
@@ -16601,7 +16601,7 @@
 	name = "Research Computer Lab"
 	})
 "gVm" = (
-/obj/machinery/power/solar_control/north,
+/obj/machinery/computer/solar_control/north,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
@@ -31085,7 +31085,7 @@
 	dir = 6;
 	icon_state = "bot2"
 	},
-/obj/machinery/power/monitor/console_upper{
+/obj/machinery/computer/power_monitor/console_upper{
 	dir = 4;
 	name = "Power Monitoring Console"
 	},
@@ -33651,7 +33651,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/machinery/power/solar_control/east,
+/obj/machinery/computer/solar_control/east,
 /obj/decal/tile_edge/stripe{
 	dir = 6;
 	icon_state = "bot2"
@@ -37685,7 +37685,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "qhg" = (
@@ -43702,7 +43702,7 @@
 /area/station/turret_protected/ai_upload)
 "sFl" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
@@ -52789,7 +52789,7 @@
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "wDX" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	d2 = 8;

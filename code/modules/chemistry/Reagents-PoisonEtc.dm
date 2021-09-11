@@ -303,7 +303,7 @@ datum
 			fluid_b = 25
 			reagent_state = SOLID
 			transparency = 255
-			depletion_rate = 0.1
+			depletion_rate = 0.2
 			var/counter = 1
 			penetrates_skin = 1
 

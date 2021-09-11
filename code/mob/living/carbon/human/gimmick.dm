@@ -388,8 +388,8 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 	initializeBioholder()
 		. = ..()
-		bioHolder.mobAppearance.customization_first_color = "#101010"
-		bioHolder.mobAppearance.customization_second_color = "#101010"
+		bioHolder.mobAppearance.customization_first_color = "#292929"
+		bioHolder.mobAppearance.customization_second_color = "#292929"
 		bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/gimmick/shitty_hair
 		bioHolder.mobAppearance.customization_second = new /datum/customization_style/hair/gimmick/shitty_beard
 		bioHolder.age = 62

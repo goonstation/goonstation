@@ -10,7 +10,7 @@
 	name = "grab"
 	w_class = W_CLASS_HUGE
 	anchored = 1
-	var/break_prob = 45
+	var/prob_mod = 1
 	var/assailant_stam_drain = 30
 	var/affecting_stam_drain = 20
 	var/resist_count = 0
@@ -313,7 +313,7 @@
 			src.affecting:was_harmed(src.assailant)
 
 	proc/stunned_targets_can_break()
-		.= (src.state == GRAB_PIN)
+		. = TRUE // Allow stunned players to break all grabs
 
 	proc/check()
 		if(!assailant || !affecting)
@@ -353,16 +353,21 @@
 		src.affecting.set_dir(pick(alldirs))
 		resist_count += 1
 
+		if (is_incapacitated(src.affecting))
+			prob_mod = 0.7
+		else
+			prob_mod = 1
+
 		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
 
-		if (src.state == GRAB_PASSIVE)
+		if (src.state == GRAB_PASSIVE && prob(STAMINA_P_GRAB_RESIST_CHANCE * prob_mod))
 			for (var/mob/O in AIviewers(src.affecting, null))
 				O.show_message(text("<span class='alert'>[] has broken free of []'s grip!</span>", src.affecting, src.assailant), 1, group = "resist")
 			qdel(src)
 		else if (src.state == GRAB_PIN)
 			var/succ = 0
 
-			if (resist_count >= 8 && prob(7)) //after 8 resists, start rolling for breakage. this is to make sure people with stamina buffs cant infinite-pin someone
+			if (resist_count >= 8 && prob(7 * prob_mod)) //after 8 resists, start rolling for breakage. this is to make sure people with stamina buffs cant infinite-pin someone
 				succ = 1
 			else if (ishuman(src.assailant))
 				src.assailant.remove_stamina(19)
@@ -370,7 +375,7 @@
 				var/mob/living/carbon/human/H = src.assailant
 				if (H.stamina <= 0)
 					succ = 1
-			else if (prob(13)) //the grabber must be a critter or some shit
+			else if (prob(13 * prob_mod)) //the grabber must be a critter or some shit
 				succ = 1
 
 
@@ -383,7 +388,7 @@
 					O.show_message(text("<span class='alert'>[] attempts to break free of []'s pin!</span>", src.affecting, src.assailant), 1, group = "resist")
 
 		else
-			if (prob(break_prob))
+			if (prob(STAMINA_U_GRAB_RESIST_CHANCE * prob_mod))
 				for (var/mob/O in AIviewers(src.affecting, null))
 					O.show_message(text("<span class='alert'>[] has broken free of []'s grip!</span>", src.affecting, src.assailant), 1, group = "resist")
 				qdel(src)
