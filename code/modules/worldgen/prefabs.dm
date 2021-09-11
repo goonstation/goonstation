@@ -208,6 +208,13 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 19
 		prefabSizeY = 22
 
+	synd_lab // Zone's Syndicate laboratory for experimenting with telecrystals
+		maxNum = 1
+		probability = 15
+		prefabPath = "assets/maps/prefabs/prefab_synd_lab.dmm"
+		prefabSizeX = 14
+		prefabSizeY = 16
+
 	//UNDERWATER AREAS FOR OSHAN
 
 	pit

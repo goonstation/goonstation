@@ -227,3 +227,6 @@
 	name = "round flask"
 	icon_state = "roundflask"
 	icon_style = "roundflask"
+
+/obj/item/reagent_containers/glass/flask/black_powder //prefab shit
+	initial_reagents = "blackpowder"

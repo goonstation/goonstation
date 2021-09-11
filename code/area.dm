@@ -1207,6 +1207,10 @@ ABSTRACT_TYPE(/area/prefab)
 	name = "Shooting Range"
 	icon_state = "purple"
 
+/area/prefab/synd_lab
+	name = "Syndicate TC Laboratory"
+	icon_state = "red"
+
 // Sealab trench areas //
 
 /area/shuttle/sea_elevator_room

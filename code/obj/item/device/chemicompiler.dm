@@ -9,7 +9,11 @@
  *   then run `uglifyjs browserassets/js/chemicompiler.js -c > browserassets/js/chemicompiler.min.js` to rebuild the compressed version.
  */
 /datum/chemicompiler_core/portableCore
-	maxReservoir = 6
+	maxReservoir = 8
+
+/datum/chemicompiler_core/portableCoreSmall
+	maxReservoir = 4
+	maxStored = 3
 
 /obj/item/device/chemicompiler/
 	name = "sloppy-looking hackjob of a device"
@@ -38,3 +42,11 @@
 	process()
 		. = ..()
 		executor?.on_process()
+
+/obj/item/device/chemicompiler/small
+	name = "prototype hackjob of a device"
+	desc = "You really don't know what this could possibly be used for. There's a label on its side, saying 'PROTOTYPE CC-12'."
+
+	New()
+		..()
+		executor = new(src, /datum/chemicompiler_core/portableCoreSmall)
