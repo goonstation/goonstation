@@ -246,8 +246,26 @@
 		hud.update_pulling()
 
 	death(gibbed)
+		logTheThing("combat", src, null, "was destroyed at [log_loc(src)].")
+		src.mind?.register_death()
+		if (src.mind?.special_role)
+			src.handle_robot_antagonist_status("death", 1)
+		src.borg_death_alert()
 		if (!gibbed)
-			src.collapse_to_pieces()
+			src.visible_message("<span class='alert'><b>[src]</b> falls apart into a pile of components!</span>")
+			var/turf/T = get_turf(src)
+			for(var/obj/item/parts/robot_parts/R in src.contents)
+				R.set_loc(T)
+			src.part_chest = null
+			src.part_head = null
+			src.part_arm_l = null
+			src.part_arm_r = null
+			src.part_leg_l = null
+			src.part_leg_r = null
+			new /obj/item/parts/robot_parts/robot_frame(T)
+
+			src.ghostize()
+			qdel(src)
 
 #ifdef RESTART_WHEN_ALL_DEAD
 		var/cancel
@@ -2942,28 +2960,6 @@
 
 	proc/compborg_take_critter_damage(var/zone = null, var/brute = 0, var/burn = 0)
 		TakeDamage(pick(get_valid_target_zones()), brute, burn)
-
-	proc/collapse_to_pieces()
-		logTheThing("combat", src, null, "was destroyed at [log_loc(src)].")
-		src.mind?.register_death()
-		if (src.mind?.special_role)
-			src.handle_robot_antagonist_status("death", 1)
-		src.borg_death_alert()
-
-		src.visible_message("<span class='alert'><b>[src]</b> falls apart into a pile of components!</span>")
-		var/turf/T = get_turf(src)
-		for(var/obj/item/parts/robot_parts/R in src.contents)
-			R.set_loc(T)
-		src.part_chest = null
-		src.part_head = null
-		src.part_arm_l = null
-		src.part_arm_r = null
-		src.part_leg_l = null
-		src.part_leg_r = null
-		new /obj/item/parts/robot_parts/robot_frame(T)
-
-		src.ghostize()
-		qdel(src)
 
 /mob/living/silicon/robot/var/image/i_batterydistress
 
