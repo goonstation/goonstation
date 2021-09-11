@@ -529,7 +529,7 @@ datum
 				var/mob/living/M = target
 				if (!iscarbon(M) && !ismobcritter(M))
 					return
-				if (volume < 1)
+				if (volume_passed < 1)
 					return
 				if ((method == INGEST || (method == TOUCH && prob(25))) && (isdead(M) || istype(get_area(M),/area/afterlife/bar)))
 					var/came_back_wrong = 0
