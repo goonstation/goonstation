@@ -581,15 +581,16 @@
 	frequency = R_FREQ_DETECTIVE
 	chat_class = RADIOCL_DETECTIVE
 
+ABSTRACT_TYPE(/obj/item/sticker/glow)
 /obj/item/sticker/glow
 	name = "glow sticker"
 	desc = "A sticker that has been egineered to self-illuminate when stuck to things."
 	dont_make_an_overlay = TRUE
 	icon_state = "glow"
 	var/datum/component/holdertargeting/simple_light/light_c
-	var/col_r = 0.0
-	var/col_g = 0.9
-	var/col_b = 0.1
+	var/col_r = 0
+	var/col_g = 0
+	var/col_b = 0
 	var/brightness = 0.6
 
 	New()
@@ -644,8 +645,39 @@
 		src.attached = null
 		light_c.update(0)
 
-/obj/item/item_box/glow_sticker
-	name = "glow stickers"
-	desc = "A box of stickers that glow when stuck to things."
-	contained_item = /obj/item/sticker/glow
-	item_amount = 20
+	green
+		col_r = 0.0
+		col_g = 0.9
+		col_b = 0.1
+	white
+		col_r = 0.9
+		col_g = 0.9
+		col_b = 0.9
+	yellow
+		col_r = 0.9
+		col_g = 0.8
+		col_b = 0.1
+	blue
+		col_r = 0.1
+		col_g = 0.1
+		col_b = 0.9
+	purple
+		col_r = 0.6
+		col_g = 0.1
+		col_b = 0.9
+	pink
+		col_r = 0.9
+		col_g = 0.5
+		col_b = 0.9
+	cyan
+		col_r = 0.1
+		col_g = 0.9
+		col_b = 0.9
+	oranange
+		col_r = 0.9
+		col_g = 0.6
+		col_b = 0.1
+	red
+		col_r = 0.9
+		col_g = 0.1
+		col_b = 0.0
