@@ -32,6 +32,12 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 	var/obj/item/gun_parts/accessory/accessory = null
 	var/list/obj/item/gun_parts/parts = list()
 
+	var/auto_eject = 0 // Do we eject casings on firing, or on reload?
+	var/casings_to_eject = 0 // kee ptrack
+	var/max_ammo_capacity = 1 // How much ammo can this gun hold? Don't make this null (Convair880).
+	var/caliber = null // Can be a list too. The .357 Mag revolver can also chamber .38 Spc rounds, for instance (Convair880).
+
+
 	New()
 		..()
 		build_gun()
@@ -50,26 +56,87 @@ ABSTRACT_TYPE(/obj/item/gun_parts)
 ABSTRACT_TYPE(/obj/item/gun_parts/barrel)
 /obj/item/gun_parts/barrel/
 	var/spread_angle = 0
+	var/silenced = 0
+	var/muzzle_flash = "muzzle_flash"
 
 	add_part_to_gun()
 		..()
+		if(!my_gun)
+			return
 		my_gun.barrel = src
-		my_gun.spread_angle = src.spread_angle
-
+		my_gun.spread_angle += src.spread_angle
+		my_gun.silenced = src.silenced
+		my_gun.muzzle_flash = src.muzzle_flash
 
 	remove_part_from_gun()
+		if(!my_gun)
+			return
 		my_gun.barrel = null
 		my_gun.spread_angle = initial(my_gun.spread_angle)
-		..()
+		my_gun.silenced = initial(my_gun.silenced)
+		my_gun.muzzle_flash = initial(my_gun.muzzle_flash)
+		. = ..()
 
 ABSTRACT_TYPE(/obj/item/gun_parts/stock)
 /obj/item/gun_parts/stock/
+	var/can_dual_wield = 1
+	var/max_ammo_capacity = 0 //modifier
+
+	add_part_to_gun()
+		..()
+		if(!my_gun)
+			return
+		my_gun.stock = src
+		my_gun.can_dual_wield = src.can_dual_wield
+		my_gun.max_ammo_capacity += src.max_ammo_capacity
+
+	remove_part_from_gun()
+		if(!my_gun)
+			return
+		my_gun.stock = null
+		my_gun.can_dual_wield = initial(my_gun.can_dual_wield)
+		my_gun.max_ammo_capacity = initial(my_gun.max_ammo_capacity)
+		. = ..()
 
 ABSTRACT_TYPE(/obj/item/gun_parts/magazine)
 /obj/item/gun_parts/magazine/
+	var/rechargeable = 0
+	var/datum/projectile/current_projectile = null
+	var/list/projectiles = null
+	var/max_ammo_capacity = 0 //modifier
+
+	add_part_to_gun()
+		..()
+		if(!my_gun)
+			return
+		my_gun.magazine = src
+
+		my_gun.current_projectile = src.current_projectile
+		my_gun.projectiles = src.projectiles
+		my_gun.max_ammo_capacity += src.max_ammo_capacity
+
+	remove_part_from_gun()
+		if(!my_gun)
+			return
+		my_gun.magazine = null
+
+		my_gun.current_projectile = initial(my_gun.current_projectile)
+		my_gun.projectiles = initial(my_gun.projectiles)
+		my_gun.max_ammo_capacity = initial(my_gun.max_ammo_capacity)
+		. = ..()
 
 ABSTRACT_TYPE(/obj/item/gun_parts/accessory)
 /obj/item/gun_parts/accessory/
+	var/alt_fire = 0 //does this accessory offer an alt-fire mode?
+	var/call_on_fire = 0 // does the gun call this accessory's on_fire() proc?
+
+	proc/alt_fire()
+		return alt_fire
+
+	proc/on_fire()
+		return call_on_fire
+
+
 
 /obj/item/gun/modular/proc/build_gun()
 	parts = list()
@@ -88,6 +155,8 @@ ABSTRACT_TYPE(/obj/item/gun_parts/accessory)
 
 	//update the icon to match!!!!!
 
+
+// THIS NEXT PART MIGHT B STUPID
 ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 /obj/item/storage/gun_workbench/
 	slots = 1
@@ -121,7 +190,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 				boutput(usr, "That part isn't compatible with your gun!")
 				return
 
-
+//told u
 /obj/table/gun_workbench/
 	name = "gunsmithing workbench"
 	desc = "lay down a rifle and start swappin bits"
@@ -185,7 +254,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 			src.accessory.add_contents(new_gun.accessory.remove_part_from_gun())
 
 		//update icon
-
+//real stupid
 	proc/open_gunsmithing_menu()
 		//dear smart people please do
 		return
