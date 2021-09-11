@@ -35859,9 +35859,6 @@
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
 "jnR" = (
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer/power_monitor/console_upper,
 /obj/machinery/light/incandescent/cool{
