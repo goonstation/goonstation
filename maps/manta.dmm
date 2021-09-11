@@ -40193,6 +40193,10 @@
 	},
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/treatment2)
+"tkd" = (
+/obj/item/device/radio/beacon,
+/turf/simulated/floor/orange,
+/area/station/mining/staff_room)
 "tlH" = (
 /obj/decal/cleanable/blood,
 /obj/decal/cleanable/dirt/dirt4,
@@ -64941,7 +64945,7 @@ boc
 boc
 gtI
 bEo
-bEo
+tkd
 hbV
 tmW
 vJL
