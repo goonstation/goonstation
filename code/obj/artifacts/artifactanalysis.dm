@@ -70,6 +70,7 @@
 		. = ..()
 		if(isobj(A))
 			checkArtifactVars(A)
+			src.updateTypeLabel(src.artifactType)
 
 	attackby(obj/item/W, mob/living/user)
 		if(istype(W, /obj/item/pen)) // write on it
@@ -117,10 +118,15 @@
 		if (!params["hasPen"])
 			boutput(usr, "You can't write without a pen!")
 			return FALSE
+
+		var/obj/O = null
+		if(isobj(src.loc))
+			O = src.loc
 		switch(action)
 			if("origin")
 				artifactOrigin = params["newOrigin"]
 			if("type")
+				src.updateTypeLabel(params["newType"])
 				artifactType = params["newType"]
 			if("trigger")
 				artifactTriggers = params["newTriggers"]
@@ -129,8 +135,8 @@
 			if("detail")
 				artifactDetails = params["newDetail"]
 		. = TRUE
-		if(isobj(src.loc))
-			src.checkArtifactVars(src.loc)
+		if(O)
+			src.checkArtifactVars(O)
 
 	ui_data(mob/user)
 		var/obj/item/pen/P = user.find_type_in_hand(/obj/item/pen)
@@ -143,6 +149,28 @@
 			"artifactDetails" = artifactDetails,
 			"hasPen" = P
 		)
+
+	remove_from_attached()
+		src.removeTypeLabel()
+		. = ..()
+
+	/// updates the label that shows what type the artifact supposedly is
+	proc/updateTypeLabel(var/newtype)
+		// nothing to set, so no need!
+		if(newtype == "")
+			return
+		if(isobj(src.attached))
+			var/obj/O = src.attached
+			O.remove_suffixes("\[[src.artifactType]\]")
+			O.name_suffix("\[[newtype]\]")
+			O.UpdateName()
+
+	/// removes the label that shows what type the artifact supposedly is
+	proc/removeTypeLabel()
+		if(isobj(src.attached))
+			var/obj/O = src.attached
+			O.remove_suffixes("\[[src.artifactType]\]")
+			O.UpdateName()
 
 /obj/artifact_paper_dispenser
 	name = "artifact analysis form tray"

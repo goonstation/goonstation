@@ -109,6 +109,8 @@ var/list/prefab_shuttles = list()
 		prefab_path = "assets/maps/shuttles/donut3/donut3-cave.dmm"
 	disaster
 		prefab_path = "assets/maps/shuttles/donut3/donut3-disaster.dmm"
+	syndicate
+		prefab_path = "assets/maps/shuttles/donut3/donut3-syndicate.dmm"
 	royal
 		prefab_path = "assets/maps/shuttles/donut3/donut3-royal.dmm"
 

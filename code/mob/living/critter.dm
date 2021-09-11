@@ -357,6 +357,8 @@
 
 	throw_item(atom/target, list/params)
 		..()
+		if (HAS_MOB_PROPERTY(src, PROP_CANTTHROW))
+			return
 		if (!can_throw)
 			return
 		src.throw_mode_off()
@@ -777,6 +779,7 @@
 		var/datum/healthHolder/Bu = get_health_holder("burn")
 		if (Bu && (burn < 0 || !is_heat_resistant()))
 			Bu.TakeDamage(burn)
+		take_toxin_damage(tox)
 
 	take_brain_damage(var/amount)
 		if (..())
@@ -854,7 +857,7 @@
 
 	HealDamage(zone, brute, burn, tox)
 		..()
-		TakeDamage(zone, -brute, -burn)
+		TakeDamage(zone, -brute, -burn, -tox)
 
 
 	updatehealth()

@@ -127,7 +127,7 @@
 			if (readers.len && (reader in readers))
 				. += "<br>You frantically read the play again..."
 				. += "You feel as if you're about to faint."
-				reader.drowsyness += 3
+				reader.changeStatus("drowsy", 15 SECONDS)
 			else
 				. += "<br>This appears to be an ancient book containing a play."
 				. += "The first act tells of a city named Carcosa, and a mysterious \"King in Yellow\"."
