@@ -1169,7 +1169,7 @@
 				user.drop_item()
 				user.visible_message("<span class='notice'>[user] inserts [W] into [src]'s head.</span>")
 				if (B.owner && (B.owner.dnr || jobban_isbanned(B.owner.current, "Cyborg")))
-					src.visible_message("<span class='alert'>\The [B] is hit by a spark of electricity from \the [src]!</span>")
+					src.visible_message("<span class='alert'>The safeties on [src] engage, zapping [B]! [B] must not be compatible with silicon bodies.</span>")
 					B.combust()
 					return
 				W.set_loc(src)
