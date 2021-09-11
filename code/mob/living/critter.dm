@@ -357,6 +357,8 @@
 
 	throw_item(atom/target, list/params)
 		..()
+		if (HAS_MOB_PROPERTY(src, PROP_CANTTHROW))
+			return
 		if (!can_throw)
 			return
 		src.throw_mode_off()
