@@ -1,5 +1,16 @@
 
 (t)sat sep 11 21
+(u)Emily
+(e)⚖|balance
+(*)Chickens can now be butchered significantly faster to make cleaning out the ranch easier.
+(u)Obama Gaming
+(p)5936
+(e)|
+(+)Apprentice caps can now be handmade.
+(u)Flappybat
+(p)5798
+(e)⚖|balance
+(+)Scanning Syndicate command helmet now requires a syndicate device analyser.
 (u)Ikea
 (p)5970
 (e)|
