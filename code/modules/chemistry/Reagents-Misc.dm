@@ -529,9 +529,9 @@ datum
 				var/mob/living/M = target
 				if (!iscarbon(M) && !ismobcritter(M))
 					return
+				if (volume < 1)
+					return
 				if ((method == INGEST || (method == TOUCH && prob(25))) && (isdead(M) || istype(get_area(M),/area/afterlife/bar)))
-					if(volume <= 1)
-						return
 					var/came_back_wrong = 0
 					if (M.get_brute_damage() + M.get_burn_damage() >= 150)
 						came_back_wrong = 1
