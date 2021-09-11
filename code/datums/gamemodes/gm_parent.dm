@@ -258,8 +258,8 @@
 		for(var/client/C)
 			var/mob/new_player/player = C.mob
 			if (!istype(player)) continue
-
 			if (ishellbanned(player)) continue //No treason for you
+
 			if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
 				candidates += player.mind
 				if ((number > 1) && (candidates.len >= number))
