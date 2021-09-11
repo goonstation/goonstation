@@ -1,4 +1,7 @@
 
+(t)sat sep 11 21
+(u)pali
+(+)The overcharged vacuum now has smaller movement penalty for the special attack.
 (t)fri sep 10 21
 (u)tarmunora
 (*)Blob overmind teleport only on right-click.
