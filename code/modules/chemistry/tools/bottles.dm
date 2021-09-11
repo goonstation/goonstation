@@ -44,14 +44,6 @@
 			var/datum/color/average = reagents.get_average_color()
 			src.fluid_image.color = average.to_rgba()
 			src.underlays += src.fluid_image
-		// else
-		// 	src.icon_state = src.icon_style
-		// if (reagents.total_volume >= 0)
-		// 	var/datum/color/average = reagents.get_average_color()
-		// 	if (!src.fluid_image)
-		// 		src.fluid_image = image('icons/obj/chemical.dmi', "bottle[bottle_style]-fluid", -1)
-		// 	src.fluid_image.color = average.to_rgba()
-		// 	src.underlays += src.fluid_image
 		signal_event("icon_updated")
 
 /* =================================================== */
