@@ -24,8 +24,7 @@
 		src.cap_image = image('icons/obj/chemical.dmi', "bottle[bottle_style]-cap", -1)
 		if (src.reagents)
 			var/list/color_HSL = rgb2num((reagents.get_average_color()).to_rgb(), COLORSPACE_HSL)
-			if (color_HSL[3] < 80)
-				color_HSL[3] = 80
+			color_HSL[3] = max(80, color_HSL[3]) // minimum lightness
 			src.cap_image.color = rgb(h=color_HSL[1],s=color_HSL[2]	,l=color_HSL[3])
 		src.underlays += src.cap_image
 		signal_event("icon_updated")
