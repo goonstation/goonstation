@@ -1,5 +1,8 @@
 
 (t)sat sep 11 21
+(u)Emily
+(e)⚖|balance
+(*)Chickens can now be butchered significantly faster to make cleaning out the ranch easier.
 (u)Obama Gaming
 (p)5936
 (e)|
