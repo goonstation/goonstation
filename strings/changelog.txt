@@ -1,5 +1,7 @@
 
 (t)fri sep 10 21
+(u)tarmunora
+(*)Blob overmind teleport only on right-click.
 (u)Flaborized
 (p)5961
 (e)🎨|sprites
