@@ -783,28 +783,6 @@
 		else
 			stat("No Cell Inserted!")
 
-		/*
-		// this is handled by the hud now
-		if (ticker.round_elapsed_ticks > next_cache)
-			next_cache = ticker.round_elapsed_ticks + 50
-			var/list/limbs_report = list()
-			if (!part_arm_r)
-				limbs_report += "Right arm"
-			if (!part_arm_l)
-				limbs_report += "Left arm"
-			if (!part_leg_r)
-				limbs_report += "Right leg"
-			if (!part_leg_l)
-				limbs_report += "Left leg"
-			var/limbs_missing = limbs_report.len ? jointext(limbs_report, "; ") : 0
-			stat_cache = list(100 - min(get_brute_damage(), 100), 100 - min(get_burn_damage(), 100), limbs_missing)
-
-		stat("Structural integrity:", "[stat_cache[1]]%")
-		stat("Circuit integrity:", "[stat_cache[2]]%")
-		if (stat_cache[3])
-			stat("Missing limbs:", stat_cache[3])
-		*/
-
 	restrained()
 		return 0
 
