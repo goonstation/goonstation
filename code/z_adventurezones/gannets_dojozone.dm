@@ -185,7 +185,7 @@ Contents:
 
 	var/strikes = 0
 	var/temperature = T20C
-	var/strikes_to_complete = 1000
+	var/strikes_to_complete = 400
 
 	New()
 		..()
@@ -235,21 +235,12 @@ Contents:
 		var/can_quench = istype(RC) && RC.is_open_container()  && RC.reagents.total_volume >= 120
 		if( can_quench && (src.strikes > (src.strikes_to_complete * 0.25)) && (src.temperature > T0C+1000))
 			if( src.strikes > src.strikes_to_complete )
-				if(RC.reagents.has_reagent("blood", 100))
-					var/blood = RC.reagents.get_reagent_amount("blood")/2
-					RC.reagents.remove_reagent("blood", blood)
-					RC.reagents.add_reagent("miasma", blood)
-					RC.reagents.smoke_start(RC.reagents.total_volume)
-					playsound(loc, "sound/effects/blood.ogg", 30)
-					new /obj/item/bloodthirsty_blade(get_turf(target))
-					qdel(src)
+				if(RC.reagents.has_reagent("reversium",1))
+					new /obj/item/katana/reverse(get_turf(target))
 				else
-					if(RC.reagents.has_reagent("reversium",1))
-						new /obj/item/katana/reverse(get_turf(target))
-					else
-						new /obj/item/katana/crafted(get_turf(target))
-					RC.reagents.smoke_start(RC.reagents.total_volume)
-					qdel(src)
+					new /obj/item/katana/crafted(get_turf(target))
+				RC.reagents.smoke_start(RC.reagents.total_volume)
+				qdel(src)
 			else
 				RC.reagents.smoke_start(RC.reagents.total_volume)
 				var/obj/item/fragile_sword/sword = new(get_turf(target))
@@ -522,7 +513,7 @@ Contents:
 			playsound(src, "sound/impact_sounds/Stone_Scrape_1.ogg", 40)
 			for(var/obj/machinery/dojo_tatara/T in orange(2))
 				src.visible_message("\The [src] breathe life into \the [T] causing it errupt in flames.", blind_message="A loud roar of air causes a fire to errupt.")
-				T.temperature = clamp(T.temperature + 150, initial(T.temperature)-150, T0C+3000)
+				T.temperature = clamp(T.temperature + 150, initial(T.temperature)-150, T0C+2500)
 
 /obj/decal/fakeobjects/swordrack
 	name = "katana rack"
