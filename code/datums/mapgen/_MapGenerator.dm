@@ -9,7 +9,7 @@ proc/initialize_biomes()
 
 ///This type is responsible for any map generation behavior that is done in areas, override this to allow for area-specific map generation. This generation is ran by areas on world/proc/init().
 /datum/map_generator
-	var/seeds = list()
+	var/list/seeds
 
 ///This proc will be ran by areas on world/proc/init(), and provides the areas turfs as argument to allow for generation.
 /datum/map_generator/proc/generate_terrain(var/list/turfs, var/reuse_seed)
