@@ -1,0 +1,1531 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aW" = (
+/turf/unsimulated/floor/darkpurple,
+/area/space)
+"dv" = (
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/space)
+"eb" = (
+/turf/unsimulated/floor/stairs/wide/other{
+	dir = 4
+	},
+/area/space)
+"fD" = (
+/turf/unsimulated/floor/caution/westeast,
+/area/space)
+"fW" = (
+/obj/stool/bench/auto,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/space)
+"gc" = (
+/obj/machinery/door/window/eastleft,
+/obj/machinery/drainage,
+/turf/unsimulated/floor/sanitary,
+/area/space)
+"gM" = (
+/obj/stool/bed,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/item/storage/wall{
+	pixel_y = 32
+	},
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "pink";
+	icon_state = "bedsheet-pink"
+	},
+/turf/unsimulated/floor/carpet/purple/standard/narrow/west,
+/area/space)
+"hd" = (
+/turf/unsimulated/floor/grey,
+/area/space)
+"ig" = (
+/turf/unsimulated/floor/darkpurple/side,
+/area/space)
+"io" = (
+/obj/shrub/dead{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/space)
+"is" = (
+/turf/unsimulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/space)
+"iv" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/space)
+"jO" = (
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/item/storage/wall{
+	pixel_y = 32
+	},
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/orange,
+/turf/unsimulated/floor/carpet/purple/standard/narrow/east,
+/area/space)
+"jQ" = (
+/turf/unsimulated/floor/darkpurple/side{
+	dir = 1
+	},
+/area/space)
+"kU" = (
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor,
+/area/space)
+"mq" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 4
+	},
+/turf/unsimulated/floor/carpet/purple/standard/narrow/west,
+/area/space)
+"mE" = (
+/turf/unsimulated/floor/specialroom/bar,
+/area/space)
+"mY" = (
+/obj/item/storage/wall/medical{
+	dir = 1;
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/white,
+/area/space)
+"oV" = (
+/obj/stool/bed,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "pink";
+	icon_state = "bedsheet-pink"
+	},
+/obj/item/storage/wall/random,
+/turf/unsimulated/floor/carpet/purple/standard/narrow/west,
+/area/space)
+"pc" = (
+/turf/unsimulated/floor/grey/side,
+/area/space)
+"pG" = (
+/turf/unsimulated/floor/stairs/wide,
+/area/space)
+"rL" = (
+/obj/item/storage/toilet,
+/turf/unsimulated/floor/sanitary,
+/area/space)
+"se" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/unsimulated/floor,
+/area/space)
+"sk" = (
+/obj/stool/bench/blue,
+/turf/unsimulated/floor/sanitary,
+/area/space)
+"sR" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4;
+	pixel_x = -8
+	},
+/turf/unsimulated/floor/sanitary,
+/area/space)
+"tQ" = (
+/turf/unsimulated/floor/stairs/wide/middle{
+	dir = 4
+	},
+/area/space)
+"ui" = (
+/obj/table/auto,
+/obj/window/cubicle{
+	dir = 4;
+	icon_state = "cubicle"
+	},
+/obj/item/paper_bin,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/unsimulated/floor/sanitary,
+/area/space)
+"vR" = (
+/obj/machinery/door/airlock/pyro,
+/turf/unsimulated/floor/sanitary,
+/area/space)
+"wY" = (
+/obj/machinery/door/airlock/pyro/glass/sci,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/space)
+"wZ" = (
+/obj/stool/bed,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/item/storage/wall/random,
+/obj/item/paper{
+	info = "nope im out"
+	},
+/turf/unsimulated/floor/carpet/purple/standard/narrow/east,
+/area/space)
+"xm" = (
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/space)
+"Bv" = (
+/obj/machinery/drainage,
+/obj/machinery/shower{
+	dir = 8;
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/turf/unsimulated/floor/sanitary,
+/area/space)
+"BO" = (
+/obj/stool/bed,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/item/storage/wall{
+	pixel_y = 32
+	},
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "blue";
+	icon_state = "bedsheet-blue"
+	},
+/turf/unsimulated/floor/carpet/purple/standard/narrow/west,
+/area/space)
+"DR" = (
+/turf/unsimulated/floor/stairs/wide{
+	dir = 4
+	},
+/area/space)
+"Eo" = (
+/turf/unsimulated/floor/stairs/wide{
+	dir = 1
+	},
+/area/space)
+"Fj" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/unsimulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/space)
+"Gx" = (
+/obj/machinery/shower{
+	dir = 4;
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/stool/bench/blue,
+/turf/unsimulated/floor/sanitary,
+/area/space)
+"GR" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
+/turf/unsimulated/floor/specialroom/bar,
+/area/space)
+"Hr" = (
+/obj/machinery/door/airlock/pyro,
+/turf/unsimulated/floor/specialroom/bar,
+/area/space)
+"KZ" = (
+/turf/unsimulated/floor,
+/area/space)
+"Me" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/space)
+"Mk" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 8
+	},
+/turf/unsimulated/floor/carpet/purple/standard/narrow/east,
+/area/space)
+"NY" = (
+/obj/table/reinforced/bar/auto,
+/turf/unsimulated/floor/specialroom/bar,
+/area/space)
+"Px" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/unsimulated/floor/sanitary,
+/area/space)
+"Qf" = (
+/turf/unsimulated/floor/stairs/wide/other{
+	dir = 1
+	},
+/area/space)
+"QZ" = (
+/turf/unsimulated/floor/darkpurple/side{
+	dir = 4
+	},
+/area/space)
+"Sb" = (
+/turf/unsimulated/floor/white,
+/area/space)
+"Sf" = (
+/turf/space,
+/area/space)
+"TR" = (
+/turf/unsimulated/wall/auto/supernorn,
+/area/space)
+"Ug" = (
+/turf/unsimulated/floor/darkpurple/side{
+	dir = 8
+	},
+/area/space)
+"WU" = (
+/obj/item/storage/wall{
+	dir = 4;
+	name = "bath cabinet";
+	pixel_x = -32;
+	spawn_contents = list(/obj/item/clothing/under/towel,/obj/item/clothing/under/towel)
+	},
+/turf/unsimulated/floor/sanitary,
+/area/space)
+"Xb" = (
+/obj/stool/bed,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/item/storage/wall{
+	pixel_y = 32
+	},
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "pink";
+	icon_state = "bedsheet-pink"
+	},
+/turf/unsimulated/floor/carpet/purple/standard/narrow/east,
+/area/space)
+"XI" = (
+/obj/machinery/door/airlock/pyro/glass/sci{
+	dir = 4
+	},
+/turf/unsimulated/floor/caution/westeast,
+/area/space)
+"XL" = (
+/obj/shrub/dead,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/space)
+"Yg" = (
+/turf/unsimulated/floor/stairs/wide/other,
+/area/space)
+"YN" = (
+/turf/unsimulated/floor/sanitary,
+/area/space)
+"YY" = (
+/turf/unsimulated/floor/shuttlebay,
+/area/space)
+"ZG" = (
+/obj/machinery/door/airlock/pyro/glass/sci,
+/turf/unsimulated/floor/darkpurple,
+/area/space)
+
+(1,1,1) = {"
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+"}
+(2,1,1) = {"
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+"}
+(3,1,1) = {"
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+"}
+(4,1,1) = {"
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+"}
+(5,1,1) = {"
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+"}
+(6,1,1) = {"
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+"}
+(7,1,1) = {"
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+xm
+se
+se
+se
+xm
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+"}
+(8,1,1) = {"
+Sf
+Sf
+Sf
+xm
+xm
+xm
+xm
+xm
+aW
+aW
+aW
+xm
+xm
+kU
+kU
+TR
+kU
+kU
+TR
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+"}
+(9,1,1) = {"
+Sf
+Sf
+Sf
+xm
+is
+is
+Fj
+aW
+Ug
+jQ
+Ug
+aW
+se
+mE
+mE
+NY
+mE
+mE
+TR
+TR
+YY
+YY
+YY
+YY
+TR
+TR
+Sf
+Sf
+Sf
+Sf
+"}
+(10,1,1) = {"
+Sf
+Sf
+Sf
+se
+is
+is
+Qf
+aW
+dv
+aW
+dv
+aW
+aW
+mE
+mE
+NY
+mE
+mE
+TR
+YY
+YY
+YY
+YY
+YY
+YY
+TR
+Sf
+Sf
+Sf
+Sf
+"}
+(11,1,1) = {"
+Sf
+Sf
+Sf
+se
+is
+is
+Eo
+aW
+QZ
+ig
+QZ
+aW
+se
+mE
+mE
+NY
+mE
+mE
+kU
+YY
+YY
+YY
+YY
+YY
+YY
+kU
+Sf
+Sf
+Sf
+Sf
+"}
+(12,1,1) = {"
+Sf
+Sf
+Sf
+xm
+is
+is
+Fj
+aW
+aW
+aW
+xm
+xm
+xm
+mE
+mE
+NY
+mE
+mE
+kU
+YY
+YY
+YY
+YY
+YY
+YY
+kU
+Sf
+Sf
+Sf
+Sf
+"}
+(13,1,1) = {"
+Sf
+Sf
+Sf
+xm
+xm
+XI
+xm
+xm
+xm
+xm
+xm
+KZ
+TR
+mE
+mE
+NY
+mE
+mE
+TR
+YY
+YY
+YY
+YY
+YY
+YY
+TR
+Sf
+Sf
+Sf
+Sf
+"}
+(14,1,1) = {"
+Sf
+Sf
+xm
+xm
+is
+is
+is
+is
+is
+is
+xm
+xm
+TR
+TR
+GR
+TR
+iv
+iv
+TR
+TR
+fD
+fD
+fD
+fD
+TR
+TR
+Sf
+Sf
+Sf
+Sf
+"}
+(15,1,1) = {"
+Sf
+Sf
+xm
+is
+is
+is
+is
+is
+is
+is
+is
+xm
+mE
+mE
+mE
+TR
+dv
+dv
+Me
+pG
+hd
+hd
+hd
+hd
+kU
+Sf
+Sf
+Sf
+Sf
+Sf
+"}
+(16,1,1) = {"
+Sf
+Sf
+xm
+is
+is
+is
+is
+is
+is
+is
+is
+xm
+mE
+mE
+mE
+TR
+dv
+dv
+Me
+Yg
+hd
+hd
+hd
+hd
+kU
+Sf
+Sf
+Sf
+Sf
+Sf
+"}
+(17,1,1) = {"
+Sf
+Sf
+xm
+is
+is
+is
+is
+is
+is
+is
+is
+xm
+mE
+mE
+mE
+Hr
+dv
+dv
+TR
+TR
+TR
+TR
+TR
+TR
+TR
+TR
+Sf
+Sf
+Sf
+Sf
+"}
+(18,1,1) = {"
+Sf
+Sf
+xm
+is
+is
+is
+is
+is
+is
+is
+is
+xm
+mE
+mE
+mE
+TR
+dv
+dv
+fW
+TR
+oV
+TR
+BO
+TR
+gM
+TR
+Sf
+Sf
+Sf
+Sf
+"}
+(19,1,1) = {"
+Sf
+Sf
+xm
+Fj
+XI
+Fj
+xm
+Fj
+Fj
+Fj
+Fj
+xm
+mE
+mE
+mE
+TR
+dv
+dv
+fW
+TR
+Mk
+TR
+Mk
+TR
+Mk
+TR
+Sf
+Sf
+Sf
+Sf
+"}
+(20,1,1) = {"
+Sf
+Sf
+se
+is
+is
+is
+xm
+aW
+aW
+aW
+aW
+xm
+mE
+mE
+TR
+TR
+dv
+dv
+dv
+pc
+hd
+hd
+hd
+hd
+hd
+kU
+Sf
+Sf
+Sf
+Sf
+"}
+(21,1,1) = {"
+Sf
+Sf
+se
+DR
+tQ
+eb
+xm
+jQ
+QZ
+QZ
+ig
+xm
+TR
+TR
+TR
+dv
+dv
+dv
+dv
+TR
+mq
+TR
+mq
+TR
+mq
+TR
+Sf
+Sf
+Sf
+Sf
+"}
+(22,1,1) = {"
+Sf
+Sf
+xm
+se
+XI
+se
+xm
+jQ
+aW
+aW
+ig
+xm
+dv
+dv
+dv
+dv
+dv
+dv
+dv
+TR
+Xb
+TR
+jO
+TR
+wZ
+TR
+Sf
+Sf
+Sf
+Sf
+"}
+(23,1,1) = {"
+Sf
+Sf
+se
+aW
+aW
+aW
+se
+jQ
+aW
+aW
+ig
+wY
+dv
+dv
+dv
+dv
+dv
+dv
+dv
+TR
+TR
+TR
+TR
+TR
+TR
+TR
+Sf
+Sf
+Sf
+Sf
+"}
+(24,1,1) = {"
+Sf
+Sf
+se
+aW
+aW
+aW
+ZG
+jQ
+Ug
+Ug
+ig
+wY
+dv
+dv
+dv
+dv
+dv
+dv
+dv
+vR
+sR
+WU
+vR
+Px
+Bv
+TR
+Sf
+Sf
+Sf
+Sf
+"}
+(25,1,1) = {"
+Sf
+Sf
+xm
+xm
+aW
+aW
+se
+aW
+aW
+aW
+aW
+TR
+XL
+dv
+dv
+dv
+dv
+dv
+io
+TR
+ui
+gc
+TR
+Gx
+sk
+TR
+Sf
+Sf
+Sf
+Sf
+"}
+(26,1,1) = {"
+Sf
+Sf
+Sf
+xm
+xm
+xm
+TR
+kU
+kU
+kU
+TR
+TR
+kU
+iv
+kU
+TR
+TR
+hd
+TR
+TR
+rL
+YN
+TR
+TR
+TR
+TR
+Sf
+Sf
+Sf
+Sf
+"}
+(27,1,1) = {"
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+TR
+Sb
+Sb
+Sb
+Sb
+Sb
+Sb
+Sb
+Sb
+TR
+hd
+hd
+hd
+TR
+TR
+TR
+TR
+hd
+TR
+Sf
+Sf
+Sf
+Sf
+Sf
+"}
+(28,1,1) = {"
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+TR
+mY
+Sb
+Sb
+Sb
+Sb
+Sb
+Sb
+Sb
+TR
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+Sf
+Sf
+Sf
+Sf
+Sf
+"}
+(29,1,1) = {"
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+TR
+TR
+Sb
+Sb
+Sb
+Sb
+Sb
+Sb
+Sb
+TR
+hd
+hd
+hd
+hd
+hd
+hd
+TR
+TR
+TR
+Sf
+Sf
+Sf
+Sf
+Sf
+"}
+(30,1,1) = {"
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+TR
+kU
+kU
+TR
+TR
+kU
+kU
+TR
+TR
+TR
+kU
+kU
+kU
+kU
+TR
+TR
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+"}
+(31,1,1) = {"
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+"}
+(32,1,1) = {"
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+"}
+(33,1,1) = {"
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+"}
+(34,1,1) = {"
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+"}
+(35,1,1) = {"
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+"}
+(36,1,1) = {"
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+"}
+(37,1,1) = {"
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+"}
