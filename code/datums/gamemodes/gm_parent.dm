@@ -249,37 +249,8 @@
 
 		if (ishellbanned(player)) continue //No treason for you
 		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-			switch(type)
-				if(ROLE_WIZARD)
-					if(player.client.preferences.be_wizard) candidates += player.mind
-				if(ROLE_TRAITOR)
-					if(player.client.preferences.be_traitor) candidates += player.mind
-				if(ROLE_NUKEOP)
-					if(player.client.preferences.be_syndicate) candidates += player.mind
-				if(ROLE_CHANGELING)
-					if(player.client.preferences.be_changeling) candidates += player.mind
-				if(ROLE_VAMPIRE)
-					if(player.client.preferences.be_vampire) candidates += player.mind
-				if(ROLE_WRAITH)
-					if(player.client.preferences.be_wraith) candidates += player.mind
-				if(ROLE_BLOB)
-					if(player.client.preferences.be_blob) candidates += player.mind
-				if(ROLE_SPY_THIEF)
-					if(player.client.preferences.be_spy) candidates += player.mind
-				if(ROLE_GANG_LEADER)
-					if(player.client.preferences.be_gangleader) candidates += player.mind
-				if(ROLE_HEAD_REV)
-					if(player.client.preferences.be_revhead) candidates += player.mind
-				if(ROLE_WEREWOLF)
-					if(player.client.preferences.be_werewolf) candidates += player.mind
-				if(ROLE_ARCFIEND)
-					if(player.client.preferences.be_arcfiend) candidates += player.mind
-				if(ROLE_FLOCKMIND)
-					if(player.client.preferences.be_flock) candidates += player.mind
-				if(ROLE_CONSPIRATOR)
-					if(player.client.preferences.be_conspirator) candidates += player.mind
-				else
-					if(player.client.preferences.be_misc) candidates += player.mind
+			if (player.client.preferences.vars[get_preference_for_role(type)])
+				candidates += player.mind
 
 	if(candidates.len < number)
 		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_[type] set to yes were ready. We need [number] so including players who don't want to be [type]s in the pool.")
