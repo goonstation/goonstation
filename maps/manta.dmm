@@ -2284,7 +2284,7 @@
 /area/seaturtle)
 "ahG" = (
 /obj/decal/fakeobjects{
-	desc = "Seems to seal from the inside. It looks like your not getting in this way. Maybe picking up intercom microphone would help?;
+	desc = "Seems to seal from the inside. It looks like your not getting in this way. Maybe picking up intercom microphone would help?";
 	dir = 4;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "eng_glass_closed";
@@ -38137,6 +38137,19 @@
 	},
 /turf/simulated/floor/orange,
 /area/seaturtle)
+"kRu" = (
+/obj/disposalpipe/segment/mineral{
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4;
+	name = "Refinery";
+	req_access = null
+	},
+/obj/access_spawn/cargo,
+/obj/firedoor_spawn,
+/turf/simulated/floor,
+/area/station/quartermaster/cargooffice)
 "kUs" = (
 /obj/machinery/vending/cigarette,
 /obj/decal/cleanable/cobweb{
@@ -38770,19 +38783,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crewquarters/garbagegarbs)
-"mpK" = (
-/obj/disposalpipe/segment/mineral{
-	dir = 4
-	},
-/obj/machinery/door/airlock/pyro/engineering{
-	dir = 4;
-	name = "Refinery";
-	req_access = null
-	},
-/obj/access_spawn/cargo,
-/obj/firedoor_spawn,
-/turf/simulated/floor,
-/area/station/quartermaster/cargooffice)
 "mrf" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -69531,7 +69531,7 @@ bwF
 bwF
 bwF
 bCU
-mpK
+kRu
 bCU
 bCU
 bCU
