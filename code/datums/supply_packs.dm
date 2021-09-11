@@ -710,11 +710,11 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/takeout_pizza
 	name = "Soft Soft Pizzeria Delivery"
-	desc = "Two fresh-baked pizza meals, straight from the oven to your airlock."
+	desc = "Two soft serve pizzas, straight from the oven to your airlock."
 	category = "Civilian Department"
-	contains = list(/obj/item/reagent_containers/food/snacks/pizza = 2,
+	contains = list(/obj/random_item_spawner/pizza = 1,
 					/obj/item/reagent_containers/food/snacks/fries = 2,
-					/obj/item/reagent_containers/food/drinks/cola = 2)
+					/obj/random_item_spawner/cola = 1)
 	cost = 200
 	containertype = /obj/storage/crate/pizza
 	containername = "Soft Soft Pizza Delivery"

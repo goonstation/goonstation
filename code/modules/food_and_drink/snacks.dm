@@ -74,6 +74,7 @@
 	var/num = 0
 	var/list/topping_colors = list()
 	var/list/topping_holder = list()
+	var/sliced_icon = "pslice"
 	custom_food = 0
 
 	mat_changeappearance = 0
@@ -121,7 +122,7 @@
 			P.sharpened = src.sharpened
 			P.sliced = TRUE
 			P.amount = 1
-			P.icon_state = "pslice"
+			P.icon_state = sliced_icon
 			P.quality = src.quality
 			P.heal_amt += round((src.heal_amt/makeslices))
 			P.topping_color = src.topping_color
@@ -249,6 +250,48 @@
 		..()
 		src.add_topping(0)
 
+/obj/item/reagent_containers/food/snacks/pizza/fresh
+    name = "fresh pizza"
+    desc = "A cheesey pizza pie with thick tomato sauce."
+    icon_state = "cheesy"
+    sliced_icon = "cheesy-slice"
+	
+/obj/item/reagent_containers/food/snacks/pizza/ball
+    name = "fresh meatball pizza"
+    desc = "A fresh pizza pie topped with succulent meatballs."
+    icon_state = "meatball"
+    sliced_icon = "meatball-slice"
+
+/obj/item/reagent_containers/food/snacks/pizza/peper
+    name = "fresh pepperoni  pizza"
+    desc = "A cheesey pizza pie toped with bright red sizzling pepperoni slices."
+    icon_state = "peper"
+    sliced_icon = "peper-slice"
+
+/obj/item/reagent_containers/food/snacks/pizza/shroom
+    name = "fresh mushroom  pizza"
+    desc = "A pizza pie toped fresh picked mushrooms."
+    icon_state = "shroom"
+    sliced_icon = "shroom-slice"
+	
+/obj/item/reagent_containers/food/snacks/pizza/bad
+    name = "soft serve cheese pizza"
+    desc = "A pizza shipped from god knows where straight to cargo."
+    icon_state = "pizza-b"
+    sliced_icon = "slice-b"	
+	
+/obj/item/reagent_containers/food/snacks/pizza/peperbad
+    name = "soft serve pepperoni pizza"
+    desc = "A pizza shipped from god knows where straight to cargo."
+    icon_state = "pizza_m"
+    sliced_icon = "psliceM"	
+
+/obj/item/reagent_containers/food/snacks/pizza/mushbad
+    name = "soft serve mushroom pizza"
+    desc = "A pizza shipped from god knows where straight to cargo."
+    icon_state = "pizza_v"
+    sliced_icon = "psliceV"		
+	
 /obj/item/reagent_containers/food/snacks/stroopwafel
 	name = "stroopwafel"
 	desc = "A traditional cookie from Holland. Doesn't this need to go into the microwave?"
@@ -2620,3 +2663,6 @@
 	initial_volume = 20
 	initial_reagents = list("THC"=10,"CBD"=10)
 	food_effects = list("food_brute","food_burn")
+
+
+
