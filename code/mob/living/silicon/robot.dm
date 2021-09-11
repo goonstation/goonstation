@@ -17,7 +17,6 @@
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "robot"
 	health = 300
-	// max_health = 300
 	emaggable = 1
 	syndicate_possible = 1
 	movement_delay_modifier = 2 - BASE_SPEED
