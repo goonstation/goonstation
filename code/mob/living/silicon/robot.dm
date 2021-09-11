@@ -2422,9 +2422,6 @@
 				if (fix)
 					HealDamage("All", 6, 6)
 
-				if(src.health > 0)
-					setalive(src)
-
 			if (src.cell.charge <= ROBOT_BATTERY_DISTRESS_THRESHOLD)
 				batteryDistress() // Execute distress mode
 			else if (src.batteryDistress == ROBOT_BATTERY_DISTRESS_ACTIVE)
