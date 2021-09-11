@@ -536,7 +536,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "thin glass airlock"
 	icon_state = "windoor_closed"
 	icon_base = "windoor"
-	panel_icon_state = null
+	panel_icon_state = "windoor_panel_open"
 	welded_icon_state = "fdoor_weld"
 	sound_airlock = 'sound/machines/windowdoor.ogg'
 	has_crush = 0
