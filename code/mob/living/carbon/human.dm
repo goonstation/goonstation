@@ -989,6 +989,8 @@
 	..()
 	var/turf/thrown_from = get_turf(src)
 	src.throw_mode_off()
+	if (HAS_MOB_PROPERTY(src, PROP_CANTTHROW))
+		return
 	if (src.stat)
 		return
 
