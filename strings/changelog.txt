@@ -1,5 +1,9 @@
 
 (t)sat sep 11 21
+(u)Ikea
+(p)5970
+(e)|
+(*)Neurotoxin and capulettium sting cooldown has been increased to 140 seconds.
 (u)pali
 (+)The overcharged vacuum now has smaller movement penalty for the special attack.
 (t)fri sep 10 21
