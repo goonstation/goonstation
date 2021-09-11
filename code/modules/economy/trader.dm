@@ -1431,7 +1431,7 @@
 */
 // A gal trying to keep her sub afloat
 
-/obj/npc/trader/
+/obj/npc/trader/erin
 	icon = 'icons/obj/trader64.dmi'
 	icon_state = "Erin"
 	picture = "generic.png"
