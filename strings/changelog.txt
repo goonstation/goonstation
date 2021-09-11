@@ -11,6 +11,9 @@
 (p)5798
 (e)⚖|balance
 (+)Scanning Syndicate command helmet now requires a syndicate device analyser.
+(u)tarmunora
+(e)⚖|balance
+(*)Radprot now affects incoming rad status duration instead of existing rad status damage.
 (u)Ikea
 (p)5970
 (e)|
