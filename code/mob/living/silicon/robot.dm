@@ -2442,11 +2442,6 @@
 		if (!src.canmove)
 			if (isalive(src))
 				src.lastgasp() // calling lastgasp() here because we just got knocked out
-		else
-			if(src.health > 0)
-				setalive(src)
-			else
-				setdead(src)
 		if (src.misstep_chance > 0)
 			switch(misstep_chance)
 				if(50 to INFINITY)
