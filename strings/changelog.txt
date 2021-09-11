@@ -1,5 +1,9 @@
 
 (t)fri sep 10 21
+(u)Flaborized
+(p)5961
+(e)🎨|sprites
+(*)Added some more clothing options to the clothing booth, and the detective's locker.
 (u)edwardly
 (p)5953
 (e)🗺|mapping
