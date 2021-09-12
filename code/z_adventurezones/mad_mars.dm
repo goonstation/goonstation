@@ -182,7 +182,7 @@
 
 /obj/decal/fakeobjects/robotarm
 	name = "robot arm"
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "marsfactory_arm"
 	anchored = 1
 	density = 1
@@ -284,7 +284,7 @@
 	wear_image_icon = 'icons/mob/overcoats/worn_suit_hazard.dmi'
 	item_state = "mars_blue"
 	c_flags = SPACEWEAR
-	permeability_coefficient = 0.02
+	permeability_coefficient = 0.1
 	protective_temperature = 700
 
 	setupProperties()

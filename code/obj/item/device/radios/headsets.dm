@@ -111,7 +111,7 @@
 
 /obj/item/device/radio/headset/command/radio_show_host
 	name = "Radio show host's Headset"
-	icon_state = "captain headset"
+	icon_state = "radio"
 	secure_frequencies = list(
 		"h" = R_FREQ_COMMAND,
 		"g" = R_FREQ_SECURITY,
@@ -306,6 +306,15 @@
 
 	leader
 		icon_override = "syndieboss"
+
+	comtac
+		name = "Military Headset"
+		icon_state = "comtac"
+		desc = "A two-way radio headset designed to protect the wearer from dangerous levels of noise during gunfights."
+
+		setupProperties()
+			..()
+			setProperty("disorient_resist_ear", 100)
 
 /obj/item/device/radio/headset/deaf
 	name = "Auditory Headset"

@@ -31,6 +31,11 @@
 		dir = WEST
 		pixel_x = -25
 
+/obj/machinery/computer/shuttle/embedded/syndieshuttle
+	name = "Shuttle Computer"
+	icon = 'icons/obj/decoration.dmi'
+	icon_state = "syndiepc4"
+
 /obj/machinery/computer/asylum_shuttle
 	name = "Asylum Shuttle"
 	icon_state = "shuttle"
@@ -601,6 +606,7 @@
 				for(var/obj/machinery/computer/icebase_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
 					active = 1
 					C.visible_message("<span class='alert'>The elevator begins to move!</span>")
+					playsound(C.loc, "sound/machines/elevator_move.ogg", 100, 0)
 				SPAWN_DBG(5 SECONDS)
 					call_shuttle()
 
@@ -665,6 +671,7 @@
 				for(var/obj/machinery/computer/icebase_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
 					active = 1
 					C.visible_message("<span class='alert'>The elevator begins to move!</span>")
+					playsound(C.loc, "sound/machines/elevator_move.ogg", 100, 0)
 				SPAWN_DBG(5 SECONDS)
 					call_shuttle()
 

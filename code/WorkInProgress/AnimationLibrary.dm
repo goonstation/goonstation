@@ -659,25 +659,16 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 // for vampire standup :)
 /proc/violent_standup_twitch(var/atom/A)
 	SPAWN_DBG(-1)
-		var/matrix/start = matrix(A.transform)
-		var/matrix/target = matrix(A.transform)
-		var/last_angle = rand(-45,45)
-		target.Turn(last_angle)
-		A.transform = target
-		var/orig_x = A.pixel_x
-		var/orig_y = A.pixel_y
-
+		var/offx
+		var/offy
+		var/angle
 		for (var/i = 0, (i < 7 && A), i++)
-			var/new_angle = rand(-45, 45)
-			target = A.transform.Turn(-last_angle + new_angle)
-			last_angle = new_angle
-			A.transform = target
-
-			A.pixel_x = orig_x + rand(-3,3)
-			A.pixel_y = orig_y + rand(-2,2)
+			offx = rand(-3,3)
+			offy = rand(-2,2)
+			angle = rand(-45,45)
+			animate(A, time = 0.5, transform = matrix().Turn(angle), easing = JUMP_EASING, pixel_x = offx, pixel_y = offy, flags = ANIMATION_PARALLEL|ANIMATION_RELATIVE)
+			animate(time = 0.5, transform = matrix().Turn(-angle), easing = JUMP_EASING, pixel_x = -offx, pixel_y = -offy, flags = ANIMATION_RELATIVE)
 			sleep(0.1 SECONDS)
-
-		animate(A, pixel_x = orig_x, pixel_y = orig_y, transform = UNDO_TRANSFORMATION(start, target, A.transform), time = 1, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 
 /proc/eat_twitch(var/atom/A)
 	var/matrix/squish_matrix = matrix(A.transform)
@@ -799,7 +790,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	var/x_severity_inverse = 0 - x_severity
 	var/y_severity_inverse = 0 - y_severity
 
-	animate(A, pixel_y = rand(y_severity_inverse,y_severity), pixel_x = rand(x_severity_inverse,x_severity),time = 1,loop = amount, easing = ELASTIC_EASING, flags=ANIMATION_PARALLEL)
+	animate(A, pixel_y = return_y+rand(y_severity_inverse,y_severity), pixel_x = return_x+rand(x_severity_inverse,x_severity),time = 1,loop = amount, easing = ELASTIC_EASING, flags=ANIMATION_PARALLEL)
 	SPAWN_DBG(amount)
 		if (A)
 			animate(A, pixel_y = return_y, pixel_x = return_x,time = 1,loop = 1, easing = LINEAR_EASING)
@@ -1001,9 +992,12 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if(!istype(A))
 		return
 	if(stand)
-		animate(A, pixel_x = 0, pixel_y = 0, transform = A.transform.Turn(-90), time = 3, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
+		animate(A, pixel_x = 0, pixel_y = 0, transform = A.transform.Turn(A.rest_mult * -90), time = 3, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
+		A.rest_mult = 0
 	else
-		animate(A, pixel_x = 0, pixel_y = -4, transform = A.transform.Turn(90), time = 2, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
+		var/fall_left_or_right = pick(1, -1) //A multiplier of one makes the atom rotate to the right, negative makes them fall to the left.
+		animate(A, pixel_x = 0, pixel_y = -4, transform = A.transform.Turn(fall_left_or_right * 90), time = 2, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
+		A.rest_mult = fall_left_or_right
 
 /proc/animate_flip(var/atom/A, var/T)
 	animate(A, transform = matrix(A.transform, 90, MATRIX_ROTATE), time = T, flags=ANIMATION_PARALLEL)
@@ -1158,8 +1152,8 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	var/matrix/M2 = matrix()
 	M2.Scale(1.2,0.8)
 
-	animate(A, transform = M2, time = 30, easing = ELASTIC_EASING, flags = ANIMATION_END_NOW)
-	animate(A, transform = M1, time = 20, easing = ELASTIC_EASING)
+	animate(A, transform = M2, time = 3, easing = SINE_EASING, flags = ANIMATION_END_NOW)
+	animate(transform = M1, time = 2, easing = SINE_EASING)
 
 /proc/shrink_teleport(var/atom/teleporter)
 	var/matrix/M = matrix(0.1, 0.1, MATRIX_SCALE)
@@ -1220,7 +1214,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, M.type)
 
 /obj/heavenly_light
-	icon = 'icons/obj/32x192.dmi'
+	icon = 'icons/obj/large/32x192.dmi'
 	icon_state = "heavenlight"
 	layer = EFFECTS_LAYER
 	blend_mode = BLEND_ADD
@@ -1454,10 +1448,43 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	animate(A.filters[A.filters.len], time = 10, size=size_max, loop=-1,easing = SINE_EASING, flags=ANIMATION_PARALLEL)
 	animate(time = 10, size=size_min, loop=-1,easing = SINE_EASING)
 
-/proc/animate_bouncy(var/atom/A) // little bouncy dance for admin and mentor mice, could be used for other stuff
+/proc/animate_bouncy(atom/A) // little bouncy dance for admin and mentor mice, could be used for other stuff
 	if (!istype(A))
 		return
 	animate(A, pixel_y = (A.pixel_y + 4), time = 0.15 SECONDS, dir = EAST, flags=ANIMATION_PARALLEL)
 	animate(pixel_y = (A.pixel_y - 4), time = 0.15 SECONDS, dir = EAST)
 	animate(pixel_y = (A.pixel_y + 4), time = 0.15 SECONDS, dir = WEST)
 	animate(pixel_y = (A.pixel_y - 4), time = 0.15 SECONDS, dir = WEST)
+
+/proc/animate_wave(atom/A, waves=7) // https://secure.byond.com/docs/ref/info.html#/{notes}/filters/wave
+	if (!istype(A))
+		return
+	var/start = A.filters.len
+	var/X,Y,rsq,i,f
+	for(i=1, i<=waves, ++i)
+		// choose a wave with a random direction and a period between 10 and 30 pixels
+		do
+			X = 60*rand() - 30
+			Y = 60*rand() - 30
+			rsq = X*X + Y*Y
+		while(rsq<100 || rsq>900)   // keep trying if we don't like the numbers
+		// keep distortion (size) small, from 0.5 to 3 pixels
+		// choose a random phase (offset)
+		A.filters += filter(type="wave", x=X, y=Y, size=rand()*2.5+0.5, offset=rand())
+	for(i=1, i<=waves, ++i)
+		// animate phase of each wave from its original phase to phase-1 and then reset;
+		// this moves the wave forward in the X,Y direction
+		f = A.filters[start+i]
+		animate(f, offset=f:offset, time=0, loop=-1, flags=ANIMATION_PARALLEL)
+		animate(offset=f:offset-1, time=rand()*20+10)
+
+/proc/animate_ripple(atom/A, ripples=1)
+	if (!istype(A))
+		return
+	var/filter,size
+	for(var/i=1, i<=ripples, ++i)
+		size=rand()*2.5+1
+		A.filters += filter(type="ripple", x=0, y=0, size=size, repeat=rand()*2.5+1, radius=0)
+		filter = A.filters[A.filters.len]
+		animate(filter, size=size, time=0, loop=-1, radius=0, flags=ANIMATION_PARALLEL)
+		animate(size=0, radius=rand()*10+10, time=rand()*20+10)

@@ -31,6 +31,10 @@
 	var/max_capacity = 100 //Won't close past this many items.
 	var/open = 0
 	var/welded = 0
+	var/image/weld_image
+	//Offsets for the weld icon, rather than make icons for every slightly off crate or closet
+	var/weld_image_offset_X = 0 //Positive is right, negative is left
+	var/weld_image_offset_Y = 0 //Positive is up, negative is down
 	var/locked = 0
 	var/emagged = 0
 	var/jiggled = 0
@@ -57,6 +61,9 @@
 	New()
 		..()
 		START_TRACKING
+		weld_image = image(src.icon, src.icon_welded)
+		weld_image.pixel_x = weld_image_offset_X
+		weld_image.pixel_y = weld_image_offset_Y
 		SPAWN_DBG(1 DECI SECOND)
 			src.update_icon()
 
@@ -92,7 +99,7 @@
 			src.icon_state = src.icon_closed
 
 		if (src.welded)
-			src.UpdateOverlays(image(src.icon, src.icon_welded), "welded")
+			src.UpdateOverlays(weld_image, "welded")
 		else
 			src.UpdateOverlays(null, "welded")
 
@@ -163,7 +170,7 @@
 			user.show_text("It won't open!", "red")
 			return
 		else if (!src.toggle(user))
-			return src.attackby(null, user)
+			return src.Attackby(null, user)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/cargotele))
@@ -413,7 +420,7 @@
 
 	attack_ai(mob/user)
 		if (can_reach(user, src) <= 1 && (isrobot(user) || isshell(user)))
-			. = src.attack_hand(user)
+			. = src.Attackhand(user)
 
 	alter_health()
 		. = get_turf(src)

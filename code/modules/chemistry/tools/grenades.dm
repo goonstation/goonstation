@@ -24,6 +24,7 @@
 	stamina_cost = 0
 	stamina_crit_chance = 0
 	move_triggered = 1
+	var/detonating = 0
 
 
 	New()
@@ -31,6 +32,9 @@
 		fluid_image1 = image('icons/obj/items/grenade.dmi', "grenade-chem-fluid1", -1)
 		fluid_image2 = image('icons/obj/items/grenade.dmi', "grenade-chem-fluid2", -1)
 		src.create_reagents(150000)
+
+	is_open_container()
+		return src.detonating
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W,/obj/item/grenade_fuse) && !stage)
@@ -166,10 +170,14 @@
 			if (src && !src.disposed)
 				a = get_area(src)
 				if(a.sanctuary) return
+				if(user?.equipped() == src)
+					user.u_equip(src)
 				explode()
 
 	proc/explode()
+		src.reagents.my_atom = src //hax
 		var/has_reagents = 0
+		src.detonating = 1
 		for (var/obj/item/reagent_containers/glass/G in beakers)
 			if (G.reagents.total_volume) has_reagents = 1
 
@@ -431,20 +439,10 @@
 	New()
 		..()
 		var/obj/item/reagent_containers/glass/B1 = new(src)
-		var/obj/item/reagent_containers/glass/B2 = new(src)
-		var/obj/item/reagent_containers/glass/B3 = new(src)
 
-		B1.reagents.add_reagent("voltagen", 25)
-		B1.reagents.add_reagent("sugar",25)
-
-		B2.reagents.add_reagent("phosphorus", 25)
-		B2.reagents.add_reagent("potassium", 25)
-
-		B3.reagents.add_reagent("voltagen", 25) //do a zap in addition to the smoke.
+		B1.reagents.add_reagent("voltagen", 50)
 
 		beakers += B1
-		beakers += B2
-		beakers += B3
 
 /obj/item/chem_grenade/pepper
 	name = "crowd dispersal grenade"

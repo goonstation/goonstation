@@ -2,7 +2,7 @@
 /obj/item/sticker
 	name = "sticker"
 	desc = "You stick it on something, then that thing is even better, because it has a little sparkly unicorn stuck to it, or whatever."
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT | TABLEPASS | CLICK_DELAY_IN_CONTENTS | USEDELAY
 	event_handler_flags = HANDLE_STICKER | USE_FLUID_ENTER
 	icon = 'icons/misc/stickers.dmi'
 	icon_state = "bounds"
@@ -129,7 +129,7 @@
 				src.add_fingerprint(user)
 				user.put_in_hand_or_drop(src)
 			else
-				src.attached.attack_hand(user)
+				src.attached.Attackhand(user)
 				user.lastattacked = user
 		else
 			return ..()
@@ -189,7 +189,7 @@
 			return
 
 		if (src.attached)
-			src.attached.attackby(W, user)
+			src.attached.Attackby(W, user)
 			user.lastattacked = user
 		else
 			..()

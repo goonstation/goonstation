@@ -140,7 +140,8 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			if(3) return ..("<font face='System'size=3>[uppertext(message)]!!</font>")
 			else
 				var/honk = pick("WACKA", "QUACK","QUACKY","GAGGLE")
-				playsound(src.loc, "sound/misc/amusingduck.ogg", 50, 0)
+				if(!ON_COOLDOWN(src, "bootleg_sound", 15 SECONDS))
+					playsound(src.loc, "sound/misc/amusingduck.ogg", 50, 0)
 				return ..("<font face='Comic Sans MS' size=3>[honk]!!</font>")
 	Move()
 		if(..())
@@ -716,9 +717,9 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		HS.addAbility(/datum/targetable/santa/banish)
 
 	initializeBioholder()
-		bioHolder.mobAppearance.customization_first = "Balding"
-		bioHolder.mobAppearance.customization_second = "Full Beard"
-		bioHolder.mobAppearance.customization_third = "Eyebrows"
+		bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/short/balding
+		bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/fullbeard
+		bioHolder.mobAppearance.customization_third = new /datum/customization_style/eyebrows/eyebrows
 		bioHolder.mobAppearance.customization_first_color = "#FFFFFF"
 		bioHolder.mobAppearance.customization_second_color = "#FFFFFF"
 		bioHolder.mobAppearance.customization_third_color = "#FFFFFF"
@@ -924,9 +925,9 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		bioHolder.AddEffect("cold_resist")
 
 	initializeBioholder()
-		bioHolder.mobAppearance.customization_first = "None"
-		bioHolder.mobAppearance.customization_second = "None"
-		bioHolder.mobAppearance.customization_third = "None"
+		bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
+		bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
+		bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
 		. = ..()
 
 

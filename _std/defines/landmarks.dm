@@ -55,6 +55,7 @@
 #define LANDMARK_BIGBOOM "bigboom" // unfinished Manta event
 #define LANDMARK_TUTORIAL_START "tutorial_start_marker"
 #define LANDMARK_CRUISER_ENTRANCE "cruiser_entrance"
+#define LANDMARK_CRUISER_CENTER "cruiser_center"
 // loading screen maptext landmarks
 #define LANDMARK_LOBBY_LEFTSIDE "lobby_leftside"
 #define LANDMARK_LOBBY_STATUS "lobby_status"

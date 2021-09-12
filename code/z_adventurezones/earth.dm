@@ -20,7 +20,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	icon_state = "purple"
 	requires_power = 0
 	sound_environment = 4
-	teleport_blocked = 1
+	teleport_blocked = 2
 	skip_sims = 1
 	sims_score = 25
 	sound_group = "centcom"
@@ -253,6 +253,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	tarmunora
 		ckey = "tarmunora"
 		name = "Office of yass"
+	tterc
+		ckey = "tterc"
+		name = "Office of Caroline Audibert"
 	urs
 		ckey = "ursulamajor"
 		name = "Office of UrsulaMajor"
@@ -303,6 +306,11 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 /area/retentioncenter
 	name = "NT Retention Center"
 	icon_state = "dk_yellow"
+
+/area/retentioncenter/teleblocked
+	name = "NT Retention Center (teleblocked)"
+	icon_state = "death"
+	teleport_blocked = 2
 
 /area/retentioncenter/depot
 	name = "NT Retention Center (depot)"

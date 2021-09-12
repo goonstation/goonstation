@@ -8,6 +8,8 @@
 	soundproofing = 10
 	var/trick = 0 //enjoy some gimmicky bullfuckery
 	var/id = null
+	weld_image_offset_X = -6
+	weld_image_offset_Y = 2
 
 /obj/storage/closet/wardrobe
 	name = "wardrobe"
@@ -126,7 +128,7 @@
 	/obj/item/clothing/head/bio_hood/janitor = 1,
 	/obj/item/clothing/mask/gas = 1,
 	/obj/item/clothing/gloves/long = 1,
-	/obj/item/clothing/shoes/galoshes = 1,
+	/obj/item/clothing/shoes/galoshes/torn = 1,
 	/obj/item/device/light/flashlight = 1)
 
 

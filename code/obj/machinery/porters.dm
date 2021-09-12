@@ -180,6 +180,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 /obj/item/remote/porter/port_a_brig
 	name = "Port-A-Brig Remote"
+	icon_state = "pbrig"
 	desc = "A remote that summons a Port-A-Brig."
 	machinery_name = "Port-a-Brig"
 
@@ -223,6 +224,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	item_state = "electronic"
 	desc = "A remote that summons a Port-A-Sci."
 	machinery_name = "Port-a-Sci"
+	mats = list("MET-1" = 5, "CON-1" = 5, "telecrystal" = 10)
 
 	get_machinery()
 		if (!src)
@@ -383,6 +385,17 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		src.go_out()
 		return
 
+	Exited(atom/movable/Obj)
+		..()
+		if(Obj == src.occupant)
+			src.occupant = null
+			build_icon()
+			for (var/obj/item/I in src) //What if you drop something while inside? WHAT THEN HUH?
+				I.set_loc(src.loc)
+
+			if (processing)
+				UnsubscribeProcess()
+
 	attackby(obj/item/W, mob/user as mob)
 		if (istype(W, /obj/item/device/pda2) && W:ID_card)
 			W = W:ID_card
@@ -408,14 +421,8 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			if (src.locked)
 				boutput(user, "<span class='alert'>The Port-A-Brig is locked!</span>")
 				return
-			var/mob/living/carbon/human/H = G.affecting
-			H.set_loc(src)
-			src.occupant = H
-			for(var/obj/O in src)
-				O.set_loc(src.loc)
 			src.add_fingerprint(user)
-			build_icon()
-			qdel(W)
+			actions.start(new /datum/action/bar/portabrig_shove_in(src, user, G.affecting, G), user)
 
 		else if (ispryingtool(W))
 			var/turf/T = user.loc
@@ -436,21 +443,12 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			icon_state = "port_a_brig_0"
 
 	proc/go_out()
-		if (!src.occupant)
-			return
 		if (src.locked)
 			boutput(usr, "<span class='alert'>The Port-A-Brig is locked!</span>")
 			return
-		src.occupant.set_loc(src.loc)
-		src.occupant.changeStatus("weakened", 2 SECONDS)
-		src.occupant = null
-		build_icon()
-		for (var/obj/item/I in src) //What if you drop something while inside? WHAT THEN HUH?
-			I.set_loc(src.loc)
-
-		if (processing)
-			UnsubscribeProcess()
-
+		if(src.occupant)
+			src.occupant.set_loc(src.loc)
+			src.occupant.changeStatus("weakened", 2 SECONDS)
 		return
 
 	verb/move_eject()
@@ -461,6 +459,51 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		src.go_out()
 		add_fingerprint(usr)
 		return
+
+/datum/action/bar/portabrig_shove_in
+	duration = 1 SECOND
+	var/mob/victim
+	var/obj/item/grab/G
+	var/obj/machinery/port_a_brig/brig
+	interrupt_flags = INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+
+	New(obj/machinery/port_a_brig/brig, mob/user, mob/victim, obj/item/grab/G)
+		..()
+		src.owner = user
+		src.brig = brig
+		src.victim = victim
+		src.G = G
+
+	onStart()
+		..()
+		if (!src.owner || !src.victim || QDELETED(G))
+			interrupt(INTERRUPT_ALWAYS)
+		if (!IN_RANGE(src.owner, src.brig, 1) || !IN_RANGE(src.victim, src.brig, 1))
+			interrupt(INTERRUPT_ALWAYS)
+		src.brig.visible_message("<span class='alert'>[owner] begins shoving [victim] into [src.brig]!</span>")
+
+
+	onUpdate()
+		..()
+		if (!src.owner || !src.victim || QDELETED(G))
+			interrupt(INTERRUPT_ALWAYS)
+		if (!IN_RANGE(src.owner, src.brig, 1) || !IN_RANGE(src.victim, src.brig, 1))
+			interrupt(INTERRUPT_ALWAYS)
+
+	onEnd()
+		..()
+		if (!src.owner || !src.victim || QDELETED(G))
+			interrupt(INTERRUPT_ALWAYS)
+		if (!IN_RANGE(src.owner, src.brig, 1) || !IN_RANGE(src.victim, src.brig, 1))
+			interrupt(INTERRUPT_ALWAYS)
+		src.brig.visible_message("<span class='alert'>[owner] shoves [victim] into [src.brig]!</span>")
+		victim.set_loc(src.brig)
+		src.brig.occupant = victim
+		for(var/obj/O in src.brig)
+			O.set_loc(src.brig.loc)
+		src.brig.build_icon()
+		qdel(G)
+
 
 /obj/item/paper/Port_A_Brig
 	name = "paper - 'A-97 Port-A-Brig Manual"
@@ -610,7 +653,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			return
 		if (!isalive(usr) || usr.getStatusDuration("stunned") != 0)
 			return
-		usr.pulling = null
+		usr.remove_pulling()
 		usr.set_loc(src)
 		src.occupant = usr
 		src.add_fingerprint(usr)
@@ -732,7 +775,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 							SPAWN_DBG(rand(10,40))
 								M.visible_message("<span class='alert'>[M] pukes all over \himself.</span>", "<span class='alert'>Oh god, that was terrible!</span>", "<span class='alert'>You hear a splat!</span>")
 								M.change_misstep_chance(40)
-								M.drowsyness += 2
+								M.changeStatus("drowsy", 10 SECONDS)
 								M.vomit()
 
 					if(51 to 70) //A nice tan

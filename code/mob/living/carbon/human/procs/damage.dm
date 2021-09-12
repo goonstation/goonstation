@@ -342,8 +342,6 @@
 		burn *= src.mutantrace.firevuln
 		tox *= src.mutantrace.toxvuln
 
-	if (is_heat_resistant())
-		burn = 0
 
 	//if (src.bioHolder && src.bioHolder.HasEffect("resist_toxic"))
 		//tox = 0
@@ -354,8 +352,8 @@
 
 	if (brute + burn + tox <= 0) return
 
-	if (src.is_heat_resistant())
-		burn = 0 //mostly covered by individual procs that cause burn damage, but just in case
+	if (src.bioHolder?.HasEffect("fire_resist") > 1)
+		burn /= 2
 
 	//Bandaid fix for tox damage being mysteriously unhooked in here.
 	if (tox)
@@ -429,6 +427,8 @@
 
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
 		src.TakeDamage(zone, brute, burn, tox, null, FALSE, TRUE)
+
+	src.take_toxin_damage(-tox)
 
 	if (zone == "All")
 		var/bruteOrganCount = 0.0 		//How many organs have brute damage?

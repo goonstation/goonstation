@@ -19,6 +19,7 @@
 	burn_output = 800
 	burn_possible = 1
 	health = 50
+	var/team_num
 
 	duration_remove = 6.5 SECONDS
 
@@ -190,6 +191,7 @@
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_pride.dmi'
 	icon_state = "gay"
 	item_state = "gay"
+	burn_possible = 0
 
 	ace
 		name = "ace pride jumpsuit"
@@ -235,7 +237,7 @@
 
 	poly
 		name = "poly pride jumpsuit"
-		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the polysexual pride flag."
+		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the polysexual pride flag. Previously mistaken for polyamorous in uniform fabricators - the responsible employee was promptly terminated under all applicable versions of Space Law."
 		icon_state ="poly"
 		item_state = "poly"
 
@@ -319,7 +321,6 @@
 
 	dress
 		icon_state = "hop-dress"
-		item_state = "hop-dress"
 
 /obj/item/clothing/under/rank/head_of_securityold
 	name = "head of security's uniform"
@@ -728,12 +729,36 @@
 	desc = "Non-descript, slightly suspicious civilian clothing."
 	icon_state = "syndicate"
 	item_state = "syndicate"
+	team_num = TEAM_SYNDICATE
+	#ifdef MAP_OVERRIDE_POD_WARS
+	attack_hand(mob/user)
+		if (get_pod_wars_team_num(user) == team_num)
+			..()
+		else
+			boutput(user, "<span class='alert'>The jumpsuit <b>explodes</b> as you reach out to grab it!</span>")
+			make_fake_explosion(src)
+			user.u_equip(src)
+			src.dropped(user)
+			qdel(src)
+	#endif
 
 /obj/item/clothing/under/misc/turds
 	name = "NT-SO Jumpsuit"
 	desc = "A Nanotrasen Special Operations jumpsuit."
 	icon_state = "turdsuit"
 	item_state = "turdsuit"
+	team_num = TEAM_NANOTRASEN
+	#ifdef MAP_OVERRIDE_POD_WARS
+	attack_hand(mob/user)
+		if (get_pod_wars_team_num(user) == team_num)
+			..()
+		else
+			boutput(user, "<span class='alert'>The jumpsuit <b>explodes</b> as you reach out to grab it!</span>")
+			make_fake_explosion(src)
+			user.u_equip(src)
+			src.dropped(user)
+			qdel(src)
+	#endif
 
 /obj/item/clothing/under/misc/NT
 	name = "nanotrasen jumpsuit"
@@ -1102,7 +1127,6 @@
 
 	dress
 		icon_state = "suitT-dress"
-		item_state = "suitT-dress"
 
 /obj/item/clothing/under/suit/hos
 	name = "\improper Head of Security's suit"
@@ -1316,13 +1340,13 @@
 	icon_state = "princess"
 	item_state = "princess"
 
-/obj/item/clothing/under/gimmick/cosby
+/obj/item/clothing/under/gimmick/sweater
 	name = "comfy sweater"
 	desc = "A colourful and cozy jumper."
-	icon_state = "cosby1"
-	item_state = "cosby1"
+	icon_state = "sweater1"
+	item_state = "sweater1"
 	New()
-		icon_state = "cosby[pick(1,2,3)]"
+		icon_state = "sweater[pick(1,2,3)]"
 		..()
 
 /obj/item/clothing/under/gimmick/chaps
@@ -1465,6 +1489,78 @@
     desc = "Outfit of a not-so-funny-clown."
     icon_state = "jester"
     item_state = "jester"
+
+/obj/item/clothing/under/misc/spade
+    name = "spade jumpsuit"
+    desc = "A suit suit. This suit's suit is a spade."
+    icon_state = "spade"
+    item_state = "spade"
+
+/obj/item/clothing/under/misc/club
+    name = "club jumpsuit"
+    desc = "A suit suit. This suit's suit is a club."
+    icon_state = "club"
+    item_state = "club"
+
+/obj/item/clothing/under/misc/heart
+    name = "heart jumpsuit"
+    desc = "A suit suit. This suit's suit is a heart. D'aww."
+    icon_state = "heart"
+    item_state = "heart"
+
+/obj/item/clothing/under/misc/diamond
+    name = "diamond jumpsuit"
+    desc = "A suit suit. This suit's suit is a diamond."
+    icon_state = "diamond"
+    item_state = "diamond"
+
+/obj/item/clothing/under/misc/tech_shirt
+    name = "tech shirt"
+    desc = "A shirt with a fancy, vaguely sci-fi pattern on it."
+    icon_state = "tech_shirt"
+    item_state = "tech_shirt"
+
+/obj/item/clothing/under/misc/flannel
+    name = "flannel shirt"
+    desc = "Perfect for chopping wood or drinking coffee."
+    icon_state = "flannel"
+    item_state = "flannel"
+
+/obj/item/clothing/under/misc/fish
+    name = "fish shirt"
+    desc = "It reads, 'Fish'."
+    icon_state = "fish"
+    item_state = "fish"
+
+/obj/item/clothing/under/misc/collar_pink
+    name = "pink collar shirt"
+    desc = "A plain pink collared shirt."
+    icon_state = "pink_collar"
+    item_state = "pink_collar"
+
+/obj/item/clothing/under/misc/fancy_vest
+    name = "fancy vest"
+    desc = "It's even got a real flower!"
+    icon_state = "fancy_vest"
+    item_state = "fancy_vest"
+
+/obj/item/clothing/under/misc/flame_purple
+    name = "purple flame shirt"
+    desc = "Basic fire colors are so passé."
+    icon_state = "flame_purple"
+    item_state = "flame_purple"
+
+/obj/item/clothing/under/misc/flame_rainbow
+    name = "rainbow flame shirt"
+    desc = "Monochromatic fire colors are so démodé."
+    icon_state = "flame_rainbow"
+    item_state = "flame_rainbow"
+
+/obj/item/clothing/under/misc/bubble
+    name = "bubble shirt"
+    desc = "Soothing bubbles for a calm shirt."
+    icon_state = "bubble"
+    item_state = "bubble"
 
 // WALPVRGIS fashion
 

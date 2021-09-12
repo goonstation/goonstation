@@ -604,7 +604,6 @@
 	desc = "Quartz is somewhat valuable but not paticularly useful."
 	color = "#BBBBBB"
 	quality = 50
-	alpha = 100
 	var/gem_tier = 3
 
 	New()
@@ -800,6 +799,7 @@
 		addTrigger(triggersOnEntered, new /datum/materialProc/telecrystal_entered())
 		addTrigger(triggersOnAttack, new /datum/materialProc/telecrystal_onattack())
 		return ..()
+
 
 /datum/material/crystal/miracle
 	mat_id = "miracle"

@@ -667,7 +667,7 @@
 	name = "table"
 	},
 /obj/machinery/recharger,
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /turf/simulated/floor/carpet{
 	icon_state = "fblue2";
 	dir = 8
@@ -2310,7 +2310,7 @@
 /turf/simulated/wall/auto/reinforced/gannets,
 /area/station/crew_quarters/ce)
 "aec" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	icon_state = "power";
 	dir = 4
 	},
@@ -6444,7 +6444,7 @@
 	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/solar_control/west,
+/obj/machinery/computer/solar_control/west,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/solar/west)
 "als" = (
@@ -6472,7 +6472,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/solar_control/east,
+/obj/machinery/computer/solar_control/east,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/solar/east)
 "alv" = (
@@ -9213,7 +9213,7 @@
 	},
 /obj/table/wood/round/auto,
 /obj/disposalpipe/segment/mail,
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /obj/item/storage/box/trackimp_kit2,
 /obj/item/storage/box/PDAbox,
 /obj/item/kitchen/food_box/donut_box,
@@ -10152,7 +10152,7 @@
 	dir = 1
 	},
 /obj/table/reinforced/auto,
-/obj/item/paper/book/cookbook,
+/obj/item/paper/book/from_file/cookbook,
 /obj/item/kitchen/food_box/donut_box,
 /obj/item/instrument/bikehorn/dramatic,
 /obj/machinery/disposal/small{
@@ -11505,7 +11505,7 @@
 	icon_state = "line1";
 	dir = 1
 	},
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /turf/simulated/floor/blue/side{
 	dir = 1
 	},
@@ -13720,7 +13720,7 @@
 	req_access_txt = "35"
 	},
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
@@ -17463,7 +17463,7 @@
 	pixel_y = -5
 	},
 /obj/item/disk/data/tape/master/readonly,
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /obj/item/device/multitool,
 /obj/decal/tile_edge/line/green{
 	icon_state = "line3";
@@ -21087,7 +21087,7 @@
 	dir = 1
 	},
 /obj/table/reinforced/auto,
-/obj/item/paper/book/guardbot_guide,
+/obj/item/paper/book/from_file/guardbot_guide,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "aKq" = (
@@ -23080,7 +23080,7 @@
 /obj/machinery/door/window/westleft{
 	req_access_txt = "5|33"
 	},
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -23463,7 +23463,7 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/ce)
 "aNO" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8
 	},
 /obj/cable{
@@ -23911,7 +23911,7 @@
 "aOu" = (
 /obj/decal/cleanable/dirt,
 /obj/stool/bed,
-/obj/item/paper/book/the_trial,
+/obj/item/paper/book/from_file/the_trial,
 /obj/landmark/start{
 	name = "Clown"
 	},
@@ -25216,7 +25216,7 @@
 	icon_state = "line3"
 	},
 /obj/table/reinforced/auto,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/item/surgical_spoon{
 	pixel_y = 4
 	},
@@ -25646,7 +25646,7 @@
 	d1 = 2;
 	d2 = 4
 	},
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /obj/item/paper{
 	desc = "";
 	info = "We are very sorry, but the system upgrade is taking longer than expected.  Some systems may not be accesable. Please take enclosed $BAKED_GOOD as a token of our sincere regret.";
@@ -26555,7 +26555,7 @@
 	},
 /area/station/science/teleporter)
 "aSV" = (
-/obj/lrteleporter{
+/obj/machinery/lrteleporter{
 	layer = 3
 	},
 /turf/simulated/floor/white,
@@ -27278,7 +27278,7 @@
 /turf/simulated/floor,
 /area/station/engine/engineering/ce)
 "aUi" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
 	},
@@ -31646,8 +31646,8 @@
 	},
 /obj/table/reinforced/auto,
 /obj/machinery/recharger,
-/obj/item/paper/book/minerals,
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/minerals,
+/obj/item/paper/book/from_file/matsci_guide,
 /obj/item/cargotele,
 /obj/machinery/firealarm{
 	dir = 8;
@@ -32322,7 +32322,7 @@
 /area/station/security/main)
 "bcD" = (
 /obj/table/wood/auto,
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /obj/item/storage/wall/office,
 /turf/simulated/floor/black,
 /area/station/security/main)
@@ -33401,7 +33401,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/table/reinforced/auto,
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /obj/item/storage/wall/office{
 	pixel_x = -32;
 	pixel_y = 0
@@ -34353,7 +34353,7 @@
 /turf/simulated/wall/auto/reinforced/gannets,
 /area/station/engine/gas)
 "bge" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4";
@@ -34689,7 +34689,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/item/device/audio_log,
 /obj/item/audio_tape{
 	pixel_y = 5
@@ -34697,7 +34697,7 @@
 /obj/item/audio_tape{
 	pixel_y = 5
 	},
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "bgK" = (
@@ -36899,7 +36899,7 @@
 	dir = 10
 	},
 /obj/item/storage/box/stma_kit,
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
 /obj/item/storage/box/handcuff_kit,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/device/multitool,
@@ -41601,8 +41601,8 @@
 	icon_state = "line1";
 	dir = 8
 	},
-/obj/item/paper/book/minerals,
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/minerals,
+/obj/item/paper/book/from_file/matsci_guide,
 /obj/item/cargotele,
 /obj/item/device/light/glowstick,
 /turf/simulated/floor/caution/east,
@@ -41937,7 +41937,7 @@
 /area/station/engine/engineering)
 "bsn" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
 	},
@@ -42914,7 +42914,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /turf/simulated/floor/white/checker{
 	dir = 5
 	},
@@ -44818,7 +44818,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
 "bxh" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	d2 = 8;
@@ -44993,7 +44993,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "bxy" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-4";
 	d2 = 4
@@ -46156,7 +46156,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "bzT" = (

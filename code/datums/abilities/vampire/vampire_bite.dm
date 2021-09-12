@@ -30,7 +30,7 @@
 		return 0
 	else
 		var/mob/living/carbon/human/humantarget = target
-		if (istype(humantarget.mutantrace, /datum/mutantrace/vamp_zombie))
+		if (istype(humantarget.mutantrace, /datum/mutantrace/vampiric_thrall))
 			boutput(M, __red("You cannot drink the blood of a thrall."))
 			return 0
 
@@ -55,7 +55,7 @@
 		target.visible_message("<span class='alert'><B>[M] bites [target], but fails to even pierce their skin!</B></span>")
 		return 0
 
-	if ((target.mind && target.mind.special_role == "vampthrall") && target.is_mentally_dominated_by(M))
+	if ((target.mind && target.mind.special_role == ROLE_VAMPTHRALL) && target.is_mentally_dominated_by(M))
 		boutput(M, __red("You can't drink the blood of your own thralls!"))
 		return 0
 
@@ -156,16 +156,16 @@
 	playsound(src.owner.loc,"sound/items/drink.ogg", rand(10,50), 1, pitch = 1.4)
 	HH.was_harmed(M, special = "vamp")
 
-/datum/abilityHolder/vampiric_zombie/var/list/blood_tally
-/datum/abilityHolder/vampiric_zombie/var/const/max_take_per_mob = 250
+/datum/abilityHolder/vampiric_thrall/var/list/blood_tally
+/datum/abilityHolder/vampiric_thrall/var/const/max_take_per_mob = 250
 
-/datum/abilityHolder/vampiric_zombie/proc/can_take_blood_from(var/mob/living/carbon/human/target)
+/datum/abilityHolder/vampiric_thrall/proc/can_take_blood_from(var/mob/living/carbon/human/target)
 	.= 1
 	if (src.blood_tally)
 		if (target in src.blood_tally)
 			.= src.blood_tally[target] < max_take_per_mob
 
-/datum/abilityHolder/vampiric_zombie/proc/tally_bite(var/mob/living/carbon/human/target, var/blood_amt_taken)
+/datum/abilityHolder/vampiric_thrall/proc/tally_bite(var/mob/living/carbon/human/target, var/blood_amt_taken)
 	if (!src.blood_tally)
 		src.blood_tally = list()
 
@@ -174,10 +174,10 @@
 
 	src.blood_tally[target] += blood_amt_taken
 
-/datum/abilityHolder/vampiric_zombie/proc/can_bite(var/mob/living/carbon/human/target, is_pointblank = 1)
-	var/datum/abilityHolder/vampiric_zombie/holder = src
+/datum/abilityHolder/vampiric_thrall/proc/can_bite(var/mob/living/carbon/human/target, is_pointblank = 1)
+	var/datum/abilityHolder/vampiric_thrall/holder = src
 	var/mob/living/M = holder.owner
-	var/datum/abilityHolder/vampiric_zombie/H = holder
+	var/datum/abilityHolder/vampiric_thrall/H = holder
 
 	if (!M || !target)
 		return 0
@@ -187,7 +187,7 @@
 		return 0
 	else
 		var/mob/living/carbon/human/humantarget = target
-		if (istype(humantarget.mutantrace, /datum/mutantrace/vamp_zombie))
+		if (istype(humantarget.mutantrace, /datum/mutantrace/vampiric_thrall))
 			boutput(M, __red("You cannot drink the blood of a thrall."))
 			return 0
 
@@ -215,7 +215,7 @@
 	var/mob/master = null
 	if(src.owner.mind && src.owner.mind.master)
 		master = whois_ckey_to_mob_reference(src.owner.mind.master)
-	if ((target.mind && target.mind.special_role == "vampthrall") && target.is_mentally_dominated_by(master))
+	if ((target.mind && target.mind.special_role == ROLE_VAMPTHRALL) && target.is_mentally_dominated_by(master))
 		boutput(M, __red("You can't drink the blood of your master's thralls!"))
 		return 0
 
@@ -229,10 +229,10 @@
 
 	return 1
 
-/datum/abilityHolder/vampiric_zombie/proc/do_bite(var/mob/living/carbon/human/HH, var/mult = 1, var/thrall = 0)
+/datum/abilityHolder/vampiric_thrall/proc/do_bite(var/mob/living/carbon/human/HH, var/mult = 1, var/thrall = 0)
 	.= 1
 	var/mob/living/carbon/human/M = src.owner
-	var/datum/abilityHolder/vampiric_zombie/H = src
+	var/datum/abilityHolder/vampiric_thrall/H = src
 
 
 	if (HH.blood_volume <= 0)

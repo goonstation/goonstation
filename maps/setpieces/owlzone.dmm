@@ -1065,7 +1065,7 @@
 /obj/item/electronics/relay,
 /obj/item/electronics/bulb,
 /obj/item/electronics/capacitor,
-/obj/item/pod/armor_industrial,
+/obj/item/podarmor/armor_industrial,
 /obj/item/pod/engine,
 /obj/item/putt/frame_box,
 /obj/item/putt/engine,
@@ -3042,7 +3042,7 @@
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "hn" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4
 	},
 /obj/cable,
@@ -4869,7 +4869,7 @@
 /area/owlery/Owlmait)
 "lp" = (
 /obj/table,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/office)
 "lq" = (
@@ -4979,7 +4979,7 @@
 /area/owlery/office)
 "lF" = (
 /obj/table,
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/office)
 "lG" = (
@@ -5313,7 +5313,7 @@
 /area/owlery/gangzone)
 "mo" = (
 /obj/table,
-/obj/item/paper/book/the_trial,
+/obj/item/paper/book/from_file/the_trial,
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/office)
 "mp" = (
@@ -6262,7 +6262,7 @@
 	},
 /area/owlery/gangzone)
 "oA" = (
-/obj/item/paper/book/guardbot_guide,
+/obj/item/paper/book/from_file/guardbot_guide,
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "oB" = (
@@ -8335,7 +8335,7 @@
 	},
 /area/owlery/gangzone)
 "tg" = (
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /turf/unsimulated/floor/redblack{
 	icon_state = "redblack";
 	dir = 8

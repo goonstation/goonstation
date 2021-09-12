@@ -1510,7 +1510,7 @@
 	},
 /area/radiostation/podbay)
 "aes" = (
-/obj/structure/puttframe,
+/obj/structure/vehicleframe/puttframe,
 /obj/item/shipcomponent/life_support,
 /obj/decal/cleanable/oil/streak,
 /obj/machinery/light_switch/north{
@@ -1963,6 +1963,7 @@
 	},
 /obj/table/auto,
 /obj/decal/cleanable/cobweb2,
+/obj/item/circuitboard/telescope,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "afN" = (
@@ -2977,11 +2978,6 @@
 /obj/item/device/matanalyzer,
 /turf/simulated/floor/grime,
 /area/mining/refinery)
-"aiF" = (
-/mob/living/critter/spider,
-/obj/item/storage/box/record/notaquario_mixtape1,
-/turf/simulated/floor/wood/two,
-/area/space)
 "aiG" = (
 /obj/grille/catwalk,
 /turf/space{
@@ -3130,7 +3126,7 @@
 /turf/simulated/floor,
 /area/mining/miningoutpost)
 "ajd" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8
 	},
 /obj/cable{
@@ -5240,13 +5236,6 @@
 "aos" = (
 /turf/simulated/floor/caution/north,
 /area/mining/manufacturing)
-"aot" = (
-/obj/table/auto,
-/obj/item/clothing/gloves/yellow,
-/obj/item/device/multitool,
-/obj/item/paper/book/minerals,
-/turf/simulated/floor/caution/north,
-/area/mining/manufacturing)
 "aou" = (
 /obj/rail{
 	dir = 1;
@@ -5290,13 +5279,6 @@
 /area/mining/manufacturing)
 "aoB" = (
 /turf/simulated/floor/scorched2,
-/area/mining/manufacturing)
-"aoC" = (
-/obj/table/auto,
-/obj/item/storage/toolbox/electrical,
-/obj/item/storage/toolbox/electrical,
-/obj/item/paper/book/minerals,
-/turf/simulated/floor/grime,
 /area/mining/manufacturing)
 "aoD" = (
 /obj/cable{
@@ -7470,11 +7452,6 @@
 /turf/space,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
-"atK" = (
-/obj/decal/cleanable/dirt,
-/turf/space,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/abandonedship)
 "atL" = (
 /turf/space,
 /turf/simulated/shuttle/wall{
@@ -7493,11 +7470,9 @@
 /turf/space,
 /area/space)
 "atN" = (
-/obj/item/storage/belt/hunter,
-/obj/item/clothing/under/misc/tourist,
 /turf/space,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/abandonedship)
+/turf/space,
+/area/space)
 "atO" = (
 /obj/decal/floatingtiles{
 	dir = 4
@@ -7839,7 +7814,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "auI" = (
@@ -9991,50 +9966,26 @@
 /turf/simulated/floor/plating/damaged3,
 /area/spyshack)
 "aAl" = (
-/obj/decal/fakeobjects/shuttlethruster{
-	dir = 1;
-	icon_state = "alt_propulsion"
-	},
-/turf/space,
-/area/abandonedship{
-	do_not_irradiate = 0;
-	icon_state = "green";
-	irradiated = 1;
-	name = "Unmanned ship"
-	})
-"aAm" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "wall3_space"
-	},
-/area/abandonedship{
-	do_not_irradiate = 0;
-	icon_state = "green";
-	irradiated = 1;
-	name = "Unmanned ship"
-	})
+/obj/critter/gunbot/drone/cutterdrone,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "aAn" = (
-/turf/simulated/shuttle/wall{
-	dir = 5;
-	icon_state = "wall3dir"
-	},
-/area/abandonedship{
-	do_not_irradiate = 0;
-	icon_state = "green";
-	irradiated = 1;
-	name = "Unmanned ship"
-	})
+/obj/structure/girder/reinforced,
+/obj/decal/tile_edge/line/black,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "aAo" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "wall3dir"
+/obj/decal/floatingtiles{
+	icon_state = "floattiles2"
 	},
-/area/abandonedship{
-	do_not_irradiate = 0;
-	icon_state = "green";
-	irradiated = 1;
-	name = "Unmanned ship"
-	})
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "Rust has rendered this airlock useless.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "bloodydoor";
+	name = "broken airlock"
+	},
+/turf/simulated/floor/airless/plating/damaged2,
+/area/abandonedship)
 "aAp" = (
 /obj/decal/cleanable/robot_debris{
 	icon_state = "gib3"
@@ -10103,20 +10054,6 @@
 "aAw" = (
 /turf/simulated/martian/wall,
 /area/evilreaver/genetics)
-"aAx" = (
-/obj/machinery/power/smes/magical{
-	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit with an integral radiothermal generating core.";
-	icon_state = "rtg";
-	name = "SMES-RTG"
-	},
-/obj/map/light/cyan,
-/turf/simulated/floor/circuit/off,
-/area/abandonedship{
-	do_not_irradiate = 0;
-	icon_state = "green";
-	irradiated = 1;
-	name = "Unmanned ship"
-	})
 "aAy" = (
 /obj/machinery/door/unpowered/shuttle{
 	autoclose = 1
@@ -10127,16 +10064,14 @@
 	},
 /area/salyut)
 "aAz" = (
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "wall3"
+/obj/lattice{
+	icon_state = "lattice-dir"
 	},
-/area/abandonedship{
-	do_not_irradiate = 0;
-	icon_state = "green";
-	irradiated = 1;
-	name = "Unmanned ship"
-	})
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "aAA" = (
 /obj/submachine/seed_manipulator,
 /turf/simulated/floor/shuttle{
@@ -11127,21 +11062,6 @@
 	},
 /turf/space,
 /area/timewarp)
-"aDc" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 9
-	},
-/area/timewarp/ship)
-"aDd" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 4
-	},
-/area/timewarp/ship)
-"aDe" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 5
-	},
-/area/timewarp/ship)
 "aDf" = (
 /obj/decal/timeplug{
 	dir = 4
@@ -11266,14 +11186,6 @@
 	icon_state = "diagonalWall"
 	},
 /area/evilreaver/bridge)
-"aDu" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 8
-	},
-/area/timewarp/ship)
-"aDv" = (
-/turf/unsimulated/wall/setpieces/leadwall,
-/area/timewarp/ship)
 "aDw" = (
 /obj/table/auto,
 /obj/decal/fakeobjects{
@@ -11296,11 +11208,6 @@
 "aDy" = (
 /obj/storage/secure/closet/fridge/kitchen,
 /turf/unsimulated/floor/black,
-/area/timewarp/ship)
-"aDz" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 10
-	},
 /area/timewarp/ship)
 "aDA" = (
 /turf/simulated/martian/wall,
@@ -11440,11 +11347,6 @@
 /obj/storage/crate/loot,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/storage/tools)
-"aDQ" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 6
-	},
-/area/timewarp/ship)
 "aDR" = (
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
@@ -11840,7 +11742,7 @@
 	icon_state = "sideWall";
 	name = "organic wall"
 	},
-/obj/item/storage/box/donkpocket_w_kit,
+/obj/item/storage/box/donkpocket_kit,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/bar)
 "aEU" = (
@@ -12499,7 +12401,7 @@
 "aGF" = (
 /obj/lattice,
 /obj/decal/fakeobjects/shuttleengine,
-/turf/space,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aGG" = (
 /obj/lattice{
@@ -12980,15 +12882,6 @@
 /turf/simulated/floor/plating/airless,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedmedicalship)
-"aIe" = (
-/obj/storage/secure/closet/personal,
-/obj/item/clothing/under/gimmick/cosby,
-/obj/item/device/microphone,
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fred2"
-	},
-/area/radiostation/bedroom)
 "aIf" = (
 /obj/overlay{
 	density = 1;
@@ -14629,20 +14522,6 @@
 	icon_state = "wall3_space"
 	},
 /area/space)
-"aMk" = (
-/obj/decal/fakeobjects/shuttleengine{
-	desc = "Looks like shuttle thruster tech, but with some unusual modifications.";
-	dir = 1;
-	icon_state = "alt_heater";
-	name = "impulse modulator"
-	},
-/turf/simulated/floor/circuit/off,
-/area/abandonedship{
-	do_not_irradiate = 0;
-	icon_state = "green";
-	irradiated = 1;
-	name = "Unmanned ship"
-	})
 "aMl" = (
 /obj/lattice{
 	dir = 5;
@@ -15880,7 +15759,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/solar_control/derelict_ai_sat,
+/obj/machinery/computer/solar_control/derelict_ai_sat,
 /turf/simulated/floor/plating,
 /area/derelict_ai_sat)
 "aPl" = (
@@ -17580,18 +17459,6 @@
 /obj/marker/supplymarker,
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
-"aTz" = (
-/obj/decal/fakeobjects/brokenportal{
-	desc = "This portal ring has been used recently.";
-	name = "portal ring"
-	},
-/turf/simulated/floor/circuit/off,
-/area/abandonedship{
-	do_not_irradiate = 0;
-	icon_state = "green";
-	irradiated = 1;
-	name = "Unmanned ship"
-	})
 "aTA" = (
 /obj/cable{
 	d2 = 8;
@@ -18305,7 +18172,10 @@
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "aVE" = (
-/obj/machinery/manufacturer/robotics,
+/obj/decal/cleanable/machine_debris{
+	icon_state = "gib7";
+	name = "smashed fabricator"
+	},
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "aVF" = (
@@ -18453,7 +18323,7 @@
 /turf/simulated/floor/plating/random,
 /area/abandonedoutpostthing)
 "aVU" = (
-/obj/machinery/power/solar_control,
+/obj/machinery/computer/solar_control,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -19809,7 +19679,7 @@
 /obj/item/circuitboard/solar_control,
 /obj/item/circuitboard/air_management,
 /obj/item/skull,
-/obj/item/clothing/under/gimmick/cosby,
+/obj/item/clothing/under/gimmick/sweater,
 /turf/space,
 /area/space)
 "aYK" = (
@@ -22236,7 +22106,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "h7solar";
 	name = "Hemera Solar Control"
 	},
@@ -22441,26 +22311,6 @@
 	icon_state = "floor3"
 	},
 /area/salyut)
-"bfL" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	name = "power conduit"
-	},
-/obj/decal/fakeobjects{
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "1-6";
-	name = "power cable"
-	},
-/turf/simulated/floor/circuit/off,
-/area/abandonedship{
-	do_not_irradiate = 0;
-	icon_state = "green";
-	irradiated = 1;
-	name = "Unmanned ship"
-	})
 "bfO" = (
 /obj/cable,
 /obj/machinery/power/solar{
@@ -23709,9 +23559,12 @@
 /turf/space,
 /area/space)
 "biN" = (
-/obj/item/seed/alien,
-/turf/simulated/floor/airless/damaged2,
-/area/abandonedship)
+/obj/machinery/door/unpowered/shuttle{
+	autoclose = 1;
+	color = "gray"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "biO" = (
 /obj/decal/cleanable/dirt,
 /obj/computerframe,
@@ -23854,13 +23707,10 @@
 /turf/simulated/floor/delivery,
 /area/radiostation/serverroom)
 "bjh" = (
-/turf/simulated/floor/circuit/off,
-/area/abandonedship{
-	do_not_irradiate = 0;
-	icon_state = "green";
-	irradiated = 1;
-	name = "Unmanned ship"
-	})
+/obj/table/reinforced/industrial/auto,
+/obj/machinery/glass_recycler,
+/turf/simulated/floor/longtile/black,
+/area/space)
 "bjk" = (
 /turf/simulated/wall/r_wall{
 	icon = 'icons/misc/evilreaverstation.dmi';
@@ -24032,25 +23882,9 @@
 	},
 /area/salyut)
 "bjO" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	name = "power conduit"
-	},
-/obj/decal/fakeobjects{
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "1-10";
-	name = "power cable"
-	},
-/turf/simulated/floor/circuit/off,
-/area/abandonedship{
-	do_not_irradiate = 0;
-	icon_state = "green";
-	irradiated = 1;
-	name = "Unmanned ship"
-	})
+/obj/reagent_dispensers/beerkeg,
+/turf/simulated/floor/longtile/black,
+/area/space)
 "bjR" = (
 /obj/storage/crate,
 /obj/item/paper/torn{
@@ -24061,12 +23895,6 @@
 	pixel_x = -5
 	},
 /obj/item/record/poo,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
-"bjS" = (
-/obj/storage/crate,
-/obj/item/paper/book/deep_blue_sea,
-/obj/item/paper/bores_part_two,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bjV" = (
@@ -24244,21 +24072,6 @@
 	},
 /turf/space,
 /area/space)
-"bky" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	name = "power conduit"
-	},
-/turf/simulated/floor/circuit/off,
-/area/abandonedship{
-	do_not_irradiate = 0;
-	icon_state = "green";
-	irradiated = 1;
-	name = "Unmanned ship"
-	})
 "bkz" = (
 /obj/critter/gunbot/drone{
 	wanderer = 0
@@ -24266,83 +24079,42 @@
 /turf/space,
 /area/space)
 "bkA" = (
-/obj/decal/fakeobjects{
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "9-10";
-	name = "power cable"
-	},
-/turf/simulated/floor/circuit/off,
-/area/abandonedship{
-	do_not_irradiate = 0;
-	icon_state = "green";
-	irradiated = 1;
-	name = "Unmanned ship"
-	})
+/obj/machinery/bathtub,
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe,
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe,
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe,
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe,
+/turf/simulated/floor/longtile/black,
+/area/space)
 "bkB" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "It seems to be a targeting console, but the system is offline.";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_status_comp";
-	layer = 8;
-	name = "targeting computer";
-	pixel_y = -32;
-	true_name = "targeting computer"
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
 	},
-/turf/simulated/floor/circuit/off,
-/area/abandonedship{
-	do_not_irradiate = 0;
-	icon_state = "green";
-	irradiated = 1;
-	name = "Unmanned ship"
-	})
+/turf/simulated/wall/asteroid,
+/area/space)
 "bkC" = (
-/obj/decal/fakeobjects{
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "5-6";
-	name = "power cable"
-	},
-/turf/simulated/floor/circuit/off,
-/area/abandonedship{
-	do_not_irradiate = 0;
-	icon_state = "green";
-	irradiated = 1;
-	name = "Unmanned ship"
-	})
+/obj/stool,
+/turf/simulated/floor/longtile/black,
+/area/space)
 "bkD" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3_space"
+/obj/item/caution{
+	desc = "Caution! No trespassing!";
+	name = "no trespassing sign"
 	},
-/area/abandonedship{
-	do_not_irradiate = 0;
-	icon_state = "green";
-	irradiated = 1;
-	name = "Unmanned ship"
-	})
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "bkE" = (
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "wall3_space"
-	},
-/area/abandonedship{
-	do_not_irradiate = 0;
-	icon_state = "green";
-	irradiated = 1;
-	name = "Unmanned ship"
-	})
+/obj/item/seed/alien,
+/turf/simulated/floor/airless/damaged2,
+/area/abandonedship)
 "bkF" = (
-/turf/simulated/floor/circuit/off,
-/turf/simulated/shuttle/wall{
-	icon_state = "platform";
-	name = "command console";
-	opacity = 0
-	},
-/area/abandonedship{
-	do_not_irradiate = 0;
-	icon_state = "green";
-	irradiated = 1;
-	name = "Unmanned ship"
-	})
+/obj/machinery/bathtub,
+/turf/simulated/floor/longtile/black,
+/turf/space,
+/area/space)
 "bkG" = (
 /obj/lattice{
 	dir = 9;
@@ -24361,16 +24133,11 @@
 /turf/simulated/floor/plating,
 /area/spyshack)
 "bkI" = (
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "wall3_space"
-	},
-/area/abandonedship{
-	do_not_irradiate = 0;
-	icon_state = "green";
-	irradiated = 1;
-	name = "Unmanned ship"
-	})
+/obj/structure/girder/reinforced,
+/obj/decal/poster/wallsign/warning1,
+/obj/decal/tile_edge/line/black,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "bkJ" = (
 /obj/lattice{
 	dir = 5;
@@ -24389,94 +24156,33 @@
 /turf/space,
 /area/space)
 "bkL" = (
+/turf/simulated/floor/longtile/black,
 /turf/space,
-/turf/simulated/shuttle/wall{
-	desc = "This looks pretty dangerous.";
-	icon_state = "alt_heater";
-	name = "modified propulsion unit"
-	},
-/area/abandonedship{
-	do_not_irradiate = 0;
-	icon_state = "green";
-	irradiated = 1;
-	name = "Unmanned ship"
-	})
+/area/space)
 "bkM" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 10;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit";
-	tag = "icon-conduit (SOUTHWEST)"
-	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "A security camera that is not on but, instead, off.";
-	dir = 8;
-	icon = 'icons/obj/monitors.dmi';
-	icon_state = "camerax";
-	name = "security camera"
-	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3_space"
-	},
-/area/abandonedship{
-	do_not_irradiate = 0;
-	icon_state = "green";
-	irradiated = 1;
-	name = "Unmanned ship"
-	})
+/obj/wingrille_spawn/reinforced/full,
+/turf/simulated/floor/plating,
+/area/space)
 "bkN" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 4;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit";
-	tag = "icon-conduit (EAST)"
-	},
-/turf/simulated/shuttle/wall{
-	dir = 5;
-	icon_state = "wall3dir"
-	},
-/area/abandonedship{
-	do_not_irradiate = 0;
-	icon_state = "green";
-	irradiated = 1;
-	name = "Unmanned ship"
-	})
+/obj/item/storage/box/beer,
+/obj/item/storage/box/beer,
+/obj/storage/crate/wooden,
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
+/obj/machinery/light/small/cool,
+/turf/simulated/floor/longtile/black,
+/area/space)
 "bkO" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 6;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	name = "power conduit"
+/obj/machinery/light/small/cool{
+	dir = 8;
+	pixel_x = -16
 	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "A security camera that is not on but, instead, off.";
-	dir = 4;
-	icon = 'icons/obj/monitors.dmi';
-	icon_state = "camerax";
-	name = "security camera"
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
 	},
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "wall3_space"
-	},
-/area/abandonedship{
-	do_not_irradiate = 0;
-	icon_state = "green";
-	irradiated = 1;
-	name = "Unmanned ship"
-	})
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "bkP" = (
 /obj/lattice{
 	dir = 1;
@@ -24497,19 +24203,12 @@
 /turf/simulated/floor/plating,
 /area/spyshack)
 "bkR" = (
-/obj/decal/fakeobjects/shuttlethruster{
-	desc = "A large impulse driver with some unusual modifications to the layout.";
-	icon_state = "alt_propulsion";
-	name = "modified propulsion unit"
+/obj/machinery/door/unpowered/shuttle{
+	autoclose = 1;
+	color = "gray"
 	},
-/obj/map/light/cyan,
-/turf/space,
-/area/abandonedship{
-	do_not_irradiate = 0;
-	icon_state = "green";
-	irradiated = 1;
-	name = "Unmanned ship"
-	})
+/turf/simulated/floor/longtile/black,
+/area/space)
 "bkS" = (
 /obj/cable{
 	d1 = 4;
@@ -24552,9 +24251,13 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bla" = (
-/obj/critter/gunbot/drone/cutterdrone,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
+/obj/decal/cleanable/dirt,
+/obj/computerframe,
+/obj/item/storage/secure/ssafe/pilot_cargo3{
+	pixel_y = 32
+	},
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedship)
 "ble" = (
 /obj/item/electronics/resistor,
 /turf/space,
@@ -24794,8 +24497,14 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "blL" = (
-/obj/critter/gunbot/drone/minigundrone,
-/turf/space,
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "blN" = (
 /obj/item/raw_material/rock,
@@ -24805,13 +24514,10 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/abandonedship)
 "blP" = (
-/obj/decal/cleanable/dirt,
-/obj/computerframe,
-/obj/item/storage/secure/ssafe/pilot_cargo3{
-	pixel_y = 32
-	},
-/turf/simulated/floor/airless/plating/damaged1,
-/area/abandonedship)
+/obj/table/reinforced/industrial/auto,
+/obj/item/device/radio,
+/turf/simulated/floor/longtile/black,
+/area/space)
 "blQ" = (
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "gibbl2"
@@ -24879,8 +24585,11 @@
 /turf/simulated/floor/airless/circuit,
 /area/abandonedmedicalship)
 "bmb" = (
-/obj/critter/gunbot/drone/cannondrone,
-/turf/simulated/floor/plating/airless/asteroid,
+/obj/table/reinforced/industrial/auto,
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
+/turf/simulated/floor/longtile/black,
 /area/space)
 "bme" = (
 /obj/item/paper/brad_punchcard,
@@ -25321,11 +25030,46 @@
 	},
 /turf/simulated/floor,
 /area/radiostation/studio)
+"duy" = (
+/turf/simulated/floor/longtile/black,
+/area/space)
+"elM" = (
+/obj/decal/tile_edge/stripe/big,
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
+"exM" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/abandonedship)
 "fkT" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/black,
 /area/radiostation/studio)
+"fWR" = (
+/obj/machinery/space_heater,
+/turf/simulated/floor/airless/caution/northsouth,
+/area/space)
+"hmp" = (
+/turf/unsimulated/floor/stairs/dark{
+	dir = 8
+	},
+/area/space)
+"hOL" = (
+/obj/item/storage/secure/ssafe{
+	configure_mode = 0;
+	desc = "A tough, airtight safe.";
+	name = "hermetically-sealed safe";
+	pixel_x = -4;
+	pixel_y = 30;
+	random_code = 1;
+	spawn_contents = list(/obj/item/ammo/bullets/rifle_3006,/obj/item/reagent_containers/food/snacks/pizza/mushroom,/obj/item/reagent_containers/food/snacks/pizza/pepperoni)
+	},
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
 "hUW" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle{
@@ -25347,6 +25091,10 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/radiostation/bedroom)
+"iIc" = (
+/obj/critter/gunbot/drone/heavydrone,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "kag" = (
 /obj/decal/tile_edge/stripe{
 	dir = 10;
@@ -25354,6 +25102,20 @@
 	},
 /turf/simulated/floor/red/side,
 /area/radiostation/hallway)
+"lbt" = (
+/obj/table/auto,
+/obj/item/storage/toolbox/electrical,
+/obj/item/storage/toolbox/electrical,
+/obj/item/paper/book/from_file/minerals,
+/turf/simulated/floor/grime,
+/area/mining/manufacturing)
+"lpI" = (
+/obj/machinery/door/unpowered/shuttle{
+	autoclose = 1;
+	color = "gray"
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "lwM" = (
 /obj/table/auto,
 /obj/item/camera{
@@ -25361,6 +25123,12 @@
 	},
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
+"mHM" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "npm" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/left{
@@ -25368,6 +25136,35 @@
 	},
 /turf/simulated/floor,
 /area/radiostation/studio)
+"odf" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
+"oeL" = (
+/obj/decal/cleanable/robot_debris/limb,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
+"oNd" = (
+/obj/table/auto,
+/obj/item/clothing/gloves/yellow,
+/obj/item/device/multitool,
+/obj/item/paper/book/from_file/minerals,
+/turf/simulated/floor/caution/north,
+/area/mining/manufacturing)
+"oWB" = (
+/mob/living/critter/spider,
+/obj/item/storage/box/record/notaquario,
+/turf/simulated/floor/wood/two,
+/area/space)
 "qmR" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/left,
@@ -25399,28 +25196,87 @@
 	stone_color = "#575A5E"
 	},
 /area/space)
-"uGt" = (
-/obj/item/storage/secure/ssafe{
-	configure_mode = 0;
-	desc = "A tough, airtight safe.";
-	name = "hermetically-sealed safe";
-	pixel_x = -4;
-	pixel_y = 30;
-	random_code = 1;
-	spawn_contents = list(/obj/item/ammo/bullets/rifle_3006, /obj/item/reagent_containers/food/snacks/pizza/mushroom, /obj/item/reagent_containers/food/snacks/pizza/pepperoni)
+"rRX" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
 	},
-/turf/simulated/martian/floor,
-/area/evilreaver/bridge)
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
+"sFV" = (
+/turf/unsimulated/wall/auto/lead/blue,
+/area/timewarp/ship)
+"sQW" = (
+/obj/storage/crate/internals,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/machinery/light/small/cool{
+	dir = 1;
+	pixel_y = 16
+	},
+/turf/simulated/floor/longtile/black,
+/area/space)
+"sRW" = (
+/obj/reagent_dispensers/still,
+/turf/simulated/floor/longtile/black,
+/area/space)
+"txH" = (
+/obj/critter/gunbot/drone/cutterdrone,
+/turf/simulated/floor/plating/airless/asteroid{
+	stone_color = "#D1E6FF"
+	},
+/area/space)
+"utd" = (
+/obj/decal/cleanable/robot_debris/gib,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
+"uto" = (
+/obj/storage/crate,
+/obj/item/paper/book/from_file/deep_blue_sea,
+/obj/item/paper/bores_part_two,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "uIh" = (
 /turf/simulated/wall/asteroid{
 	name = "weak compacted stone";
 	stone_color = "#575A5E"
 	},
 /area/space)
+"vel" = (
+/obj/item/storage/belt/hunter,
+/obj/item/clothing/under/misc/tourist,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/abandonedship)
 "vrI" = (
 /obj/stool/chair,
 /turf/simulated/floor/black,
 /area/mining/quarters)
+"wav" = (
+/obj/machinery/portable_atmospherics/pump,
+/turf/simulated/floor/airless/caution/northsouth,
+/area/space)
+"wfJ" = (
+/obj/storage/secure/closet/personal,
+/obj/item/clothing/under/gimmick/sweater,
+/obj/item/device/microphone,
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fred2"
+	},
+/area/radiostation/bedroom)
+"wNJ" = (
+/obj/reagent_dispensers/beerkeg,
+/obj/machinery/light/small/cool{
+	dir = 1;
+	pixel_y = 16
+	},
+/turf/simulated/floor/longtile/black,
+/area/space)
 "xOl" = (
 /turf/simulated/floor/plating/airless/asteroid{
 	stone_color = "#D1E6FF"
@@ -40437,8 +40293,8 @@ aaa
 aaa
 aaa
 aaz
-bmb
 aac
+iIc
 aaa
 aMF
 aaa
@@ -46407,7 +46263,7 @@ aCh
 aCh
 aCF
 aCF
-uGt
+hOL
 aDM
 aDp
 aCF
@@ -49126,7 +48982,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aGt
 aaa
 aaa
 aaa
@@ -49426,10 +49282,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+aGt
+aGv
+aGv
+aGB
 aaa
 aaa
 aaa
@@ -49728,11 +49584,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aAo
+bkE
+exM
+aGv
+aGD
 aaa
 aaa
 aaa
@@ -50030,11 +49886,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aGv
+bla
+vel
+aGv
+aGD
 aaa
 aaa
 aaa
@@ -50332,10 +50188,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+aGw
+aGv
+aGv
+aGC
 aaa
 aaa
 aaa
@@ -50636,11 +50492,11 @@ aaa
 aaa
 aaa
 aaa
+aGw
 aaa
 aaa
 aaa
 aaa
-aGt
 aaa
 aaa
 aaa
@@ -50940,10 +50796,10 @@ aaa
 aaa
 aaa
 aaa
-aGt
-aGv
-aGv
-aGB
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -51242,11 +51098,11 @@ aaa
 aaa
 aaa
 aaa
-atJ
-biN
-atK
-aGv
-aGD
+atN
+aaa
+atN
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -51544,11 +51400,11 @@ aaa
 aaa
 aaa
 aaa
-aGv
-blP
+aaa
+aaa
 atN
-aGv
-aGD
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -51846,10 +51702,10 @@ aaa
 aaa
 aaa
 aaa
-aGw
-aGv
-aGv
-aGC
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -52075,7 +51931,7 @@ aab
 aab
 aab
 aab
-bjS
+uto
 aab
 aab
 aab
@@ -52146,11 +52002,11 @@ aaa
 aaa
 aaa
 aaa
+aab
+aab
+aab
 aaa
 aaa
-aaa
-aaa
-aGw
 aaa
 aaa
 aaa
@@ -52445,16 +52301,16 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -52746,18 +52602,18 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aad
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -53048,18 +52904,18 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aAm
-aAz
-aAz
-bkD
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aab
+aab
+aab
+aAn
+aab
+aab
+aAn
+aab
+aab
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -53349,19 +53205,19 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aAl
-aAn
-aAx
-aAz
-aAz
-bkD
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aab
+aab
+aab
+aab
+blL
+aac
+aac
+blL
+aac
+aac
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -53651,20 +53507,20 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aAz
-aMk
-bfL
-bky
-aAz
+aab
+aab
+aab
+afR
 bkM
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bkM
+bkM
+bkM
+afR
+bkM
+afR
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -53952,21 +53808,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+aab
+aab
+aAn
 aAz
-aAx
+bkM
 bjh
 bkA
 bkF
 bkN
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+afR
+sQW
+afR
+afR
+aab
+aab
 aaa
 aaa
 aaa
@@ -54253,23 +54109,23 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aAl
-aAn
-aTz
-bjh
-bkB
-bkF
+aac
+aab
+aab
+aab
+aac
+bkM
+blP
+duy
+bkL
 bkL
 bkR
-aaa
-aaa
-aaa
-aaa
-aad
-aaa
+duy
+fWR
+afR
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -54554,24 +54410,24 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aAz
-aAx
-bjh
+aac
+aac
+aab
+aab
+aab
+aac
+bkM
+bmb
 bkC
-bkF
-bkN
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bkL
+duy
+bkR
+duy
+wav
+afR
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -54856,24 +54712,24 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aab
+aac
+aab
+aab
+aAn
 aAz
-aMk
+bkM
+wNJ
 bjO
-bky
-aAz
-bkO
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sRW
+sRW
+afR
+hmp
+afR
+afR
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -55157,24 +55013,24 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aAl
-aAo
-aAx
-aAz
-aAz
-bkI
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+afR
+bkM
+bkM
+bkM
+bkM
+afR
+lpI
+afR
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -55459,23 +55315,23 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-bkE
-aAz
-aAz
-bkI
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aac
+rRX
+aac
+aac
+rRX
+aac
+aac
+aac
+aab
+aab
 aaa
 aaa
 aaa
@@ -55760,24 +55616,24 @@ aaa
 aaa
 aaa
 aab
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aac
+aAn
+aac
+aab
+aAn
+aab
+aac
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -56062,23 +55918,23 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 aab
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aab
+aab
+aab
+aab
+aab
+aab
+bkB
+mHM
+odf
+aac
+aab
+aab
+aab
+aab
+aab
+aab
 aaa
 aaa
 aMi
@@ -56364,22 +56220,22 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aAU
-aGQ
-aaa
-aaa
-aaa
-aaa
-aaa
+aac
+aab
+aab
+aab
+aab
+aab
+aab
+bkI
+biN
+bkI
+aab
+aab
+aab
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -56666,22 +56522,22 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aGK
-aGR
-aaa
-aaa
-aaa
-aaa
-aaa
+aac
+aac
+aab
+aab
+aab
+aab
+aab
+bkX
+elM
+bkX
+aab
+aab
+aab
+aab
+aac
+aac
 aaa
 aaa
 aaa
@@ -56969,19 +56825,19 @@ aab
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aGK
-aaF
-aaa
-aaa
-aaa
+aac
+aab
+aab
+aab
+aab
+aab
+bkX
+elM
+bkX
+aab
+aab
+aab
+aac
 aGF
 aGJ
 aaa
@@ -57271,19 +57127,19 @@ aab
 aaa
 aaa
 aaa
-aaa
-aad
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aGK
-aaF
-aaa
-aaa
-aaa
+aac
+aac
+aab
+aab
+aab
+aab
+aAn
+biN
+aAn
+aab
+aab
+aac
+aac
 aaa
 aaa
 aaa
@@ -57573,18 +57429,18 @@ aab
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+aac
+aac
 aab
 aab
-aaa
-aaa
-aaa
-aGL
-aGS
-aaa
-aaa
+aab
+aab
+bkO
+bkD
+bkO
+aab
+aab
+aac
 aaa
 aaa
 aaa
@@ -57875,23 +57731,23 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+aac
+aac
 aab
 aab
 aab
+aac
+aac
+aac
+aac
 aab
 aab
+aac
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aAU
+aGQ
 aaa
 aaa
 aad
@@ -58177,23 +58033,23 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+aac
+aac
 aac
 aab
 aab
 aab
+aac
+aac
+oeL
 aab
 aab
+aac
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aGK
+aGR
 aaa
 aaa
 aaa
@@ -58386,7 +58242,7 @@ acR
 acS
 acS
 afR
-aiF
+oWB
 ajt
 ajW
 alg
@@ -58478,24 +58334,24 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+aac
+aac
+aac
 aac
 aab
 aab
 aab
+aac
+aab
+utd
 aab
 aab
 aab
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aGK
+aaF
 aaa
 aaa
 aad
@@ -58787,7 +58643,7 @@ aac
 aab
 aab
 aab
-aab
+aac
 aab
 aab
 aab
@@ -58796,8 +58652,8 @@ aab
 aaa
 aaa
 aaa
-aaa
-aaa
+aGK
+aaF
 aaa
 aaa
 aaa
@@ -59098,8 +58954,8 @@ aab
 aaa
 aaa
 aaa
-aaa
-aaa
+aGL
+aGS
 aaa
 aaa
 aaa
@@ -59386,7 +59242,7 @@ aaa
 aab
 aab
 aab
-aac
+aab
 aac
 aac
 aac
@@ -59688,14 +59544,14 @@ aab
 aab
 aab
 aab
-aac
+aab
 aac
 aac
 aac
 aac
 aac
 aab
-aab
+aac
 aab
 aab
 aab
@@ -59745,7 +59601,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aaP
 aaa
 aaa
 aaa
@@ -59993,15 +59849,15 @@ aab
 aab
 aac
 aac
-aac
+aab
 aac
 aac
 aac
 aac
 aab
+aab
 aac
-aab
-aab
+aac
 aab
 aab
 aaa
@@ -60285,7 +60141,7 @@ aaa
 aaa
 aaa
 aaa
-aab
+aaa
 aab
 aab
 aab
@@ -60362,7 +60218,7 @@ aaa
 aaa
 aaa
 aaa
-blL
+aaa
 aaa
 aaa
 aaa
@@ -60599,14 +60455,14 @@ bkX
 bkX
 aab
 aac
-aab
-aab
-aab
-aab
+aac
 aac
 aac
 aab
-aab
+aac
+aac
+aac
+aac
 aaa
 aaa
 aaa
@@ -60908,7 +60764,7 @@ aac
 aac
 aab
 aab
-aab
+aac
 aaa
 blj
 aaa
@@ -61197,7 +61053,7 @@ aab
 aab
 aab
 aab
-aac
+aGh
 aac
 aac
 aab
@@ -61500,7 +61356,7 @@ aab
 aab
 aab
 aab
-aac
+aAl
 aac
 bkX
 aab
@@ -61796,8 +61652,8 @@ aaa
 aaa
 aaa
 aaa
-aab
-aab
+aaa
+aaa
 aab
 aab
 aab
@@ -62099,16 +61955,16 @@ aaa
 aaa
 aaa
 aaa
+aaa
 aab
 aab
 aab
 aab
-aac
 aac
 aab
 bkX
 aac
-bla
+aac
 aac
 aac
 bkY
@@ -62401,12 +62257,12 @@ aaa
 aaa
 aaa
 aaa
+aaa
+aaa
 aab
 aab
 aab
 aab
-aac
-aac
 aab
 aab
 aac
@@ -62703,20 +62559,20 @@ aaa
 aaa
 aaa
 aaa
+aaa
+aaa
+aaa
 aab
 aab
 aab
-aab
-aac
-aab
-aab
-aab
-aac
 aab
 aab
 aac
 aab
 aab
+aac
+aac
+aac
 aab
 aab
 aab
@@ -63007,18 +62863,18 @@ aaa
 aaa
 aaa
 aaa
+aaa
+aaa
+aab
+aab
 aab
 aab
 aac
-aab
-aab
-aab
-aac
-aGh
 aac
 aac
-aab
-aab
+aac
+aac
+aac
 aab
 aab
 aaa
@@ -63310,17 +63166,17 @@ aaa
 aaa
 aaa
 aaa
+aaa
+aaa
+aab
+aab
+aab
+aab
+aab
+aab
+aab
 aab
 aac
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
 aab
 aab
 aaa
@@ -63612,8 +63468,8 @@ aaa
 aaa
 aaa
 aaa
-aab
-aab
+aaa
+aaa
 aab
 aab
 aab
@@ -63915,7 +63771,7 @@ aaa
 aaa
 aaa
 aaa
-aab
+aaa
 aaa
 aab
 aab
@@ -64224,10 +64080,10 @@ aaa
 aab
 aab
 aab
-aab
-aab
 aac
-aab
+aac
+aac
+aac
 aaa
 aaa
 aaa
@@ -64524,9 +64380,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aab
 aab
+aac
 aaa
 aaa
 aaa
@@ -64827,7 +64683,7 @@ aaa
 aaa
 aaa
 aaa
-aab
+aaa
 aaa
 aaa
 aaa
@@ -78643,8 +78499,8 @@ ahy
 ajz
 anX
 aof
-aot
-aoC
+oNd
+lbt
 aoR
 apf
 aps
@@ -91160,7 +91016,7 @@ aIL
 xOl
 aIL
 xOl
-xOl
+txH
 xOl
 aIL
 xOl
@@ -104685,14 +104541,14 @@ aCj
 ars
 aCs
 aCs
-aDc
-aDz
+sFV
+sFV
 atI
-aDc
-aDz
+sFV
+sFV
 atI
-aDc
-aDz
+sFV
+sFV
 aCs
 aCs
 aDb
@@ -104986,16 +104842,16 @@ aCi
 aCr
 aCs
 aCs
-aDc
-aDQ
-aDc
-aDv
-aDv
-aDv
-aDv
-aDz
-aDe
-aDz
+sFV
+sFV
+sFV
+sFV
+sFV
+sFV
+sFV
+sFV
+sFV
+sFV
 aCs
 aCs
 aaa
@@ -105288,16 +105144,16 @@ aCj
 aCs
 aCs
 aCs
-aDu
-aDc
-aDQ
+sFV
+sFV
+sFV
 aEI
 aFf
 aFu
 aEq
-aDe
-aDz
-aDu
+sFV
+sFV
+sFV
 aCs
 aCs
 aaa
@@ -105590,16 +105446,16 @@ aCj
 aCs
 aCs
 aCs
-aDu
-aDu
+sFV
+sFV
 aEl
 aEJ
-aDc
-aDz
+sFV
+sFV
 aEq
 aFW
-aDu
-aDu
+sFV
+sFV
 aCs
 aCs
 aDb
@@ -105891,18 +105747,18 @@ aaa
 aCj
 aCs
 aCs
-aDc
-aDv
-aDv
-aDz
+sFV
+sFV
+sFV
+sFV
 aEK
-aDd
-aDd
+sFV
+sFV
 aEK
-aDc
-aDv
-aDv
-aDz
+sFV
+sFV
+sFV
+sFV
 aCs
 aCs
 aFV
@@ -106193,18 +106049,18 @@ aaa
 aCj
 aCs
 aCs
-aDd
+sFV
 aDw
 aDR
 aEm
 aDR
-aDd
-aDd
+sFV
+sFV
 aDR
 aEm
 aDR
 aGn
-aDd
+sFV
 aCs
 aCs
 aFV
@@ -106495,18 +106351,18 @@ aaa
 aCj
 aCs
 aCs
-aDd
+sFV
 aDx
 aDR
-aDd
+sFV
 aDR
-aDd
-aDd
+sFV
+sFV
 aDR
-aDd
+sFV
 aGi
 aGo
-aDd
+sFV
 aCs
 aCs
 aFV
@@ -106797,18 +106653,18 @@ aaa
 aCj
 aCs
 aCs
-aDd
+sFV
 aDy
 aDS
-aDd
+sFV
 aEL
-aDe
-aDQ
+sFV
+sFV
 aEL
-aDd
+sFV
 aGj
 aGp
-aDd
+sFV
 aCs
 aCs
 aFV
@@ -107099,18 +106955,18 @@ aaa
 aCj
 aCs
 aCs
-aDe
-aDz
-aDc
-aDQ
+sFV
+sFV
+sFV
+sFV
 aEM
 aFg
 aEM
 aFg
-aDe
-aDv
-aDv
-aDQ
+sFV
+sFV
+sFV
+sFV
 aCs
 aCs
 aFV
@@ -107402,15 +107258,15 @@ aCj
 aCs
 aCs
 aCs
-aDd
-aDv
-aDv
-aDz
+sFV
+sFV
+sFV
+sFV
 aFh
 aFv
 aFh
 aFX
-aDd
+sFV
 aCs
 aCs
 aCs
@@ -107704,16 +107560,16 @@ aaa
 aCj
 aCs
 aCs
-aDd
+sFV
 aDT
 aEn
 aEN
 aFg
 aFw
-aDc
-aDv
-aDv
-aDz
+sFV
+sFV
+sFV
+sFV
 aCs
 aCs
 ars
@@ -108006,16 +107862,16 @@ aaa
 aCt
 aCJ
 aCs
-aDd
+sFV
 aDU
 aDV
 aEO
 aFh
 aFv
-aDd
+sFV
 aFY
 aGk
-aDd
+sFV
 aCs
 aCs
 aCs
@@ -108308,16 +108164,16 @@ aaa
 aaa
 aCj
 aCs
-aDd
+sFV
 aDV
 aEo
 aEN
 aFg
 aEM
-aDd
+sFV
 aFZ
 aGl
-aDd
+sFV
 aCs
 aCs
 aCs
@@ -108610,7 +108466,7 @@ aaa
 aaa
 aCj
 aCs
-aDd
+sFV
 aDW
 aEp
 aEN
@@ -108619,7 +108475,7 @@ aFv
 aFI
 aGa
 aGm
-aDd
+sFV
 aCs
 aCs
 aCs
@@ -108912,16 +108768,16 @@ aaa
 aaa
 aCj
 aCs
-aDe
-aDv
-aDv
-aDQ
+sFV
+sFV
+sFV
+sFV
 aFg
 aFx
-aDe
-aDv
-aDv
-aDQ
+sFV
+sFV
+sFV
+sFV
 aCs
 aCs
 aCs
@@ -109222,7 +109078,7 @@ aFi
 aFv
 aFJ
 aGb
-aDd
+sFV
 aCs
 aCs
 aCs
@@ -109517,14 +109373,14 @@ aCj
 aCs
 aCs
 aCs
-aDd
+sFV
 aEr
-aDd
+sFV
 aFg
 aEM
-aDd
+sFV
 aGc
-aDd
+sFV
 aCs
 aCs
 aCs
@@ -109734,7 +109590,7 @@ adg
 agJ
 arc
 atq
-aIe
+wfJ
 biV
 ahQ
 boO
@@ -109819,14 +109675,14 @@ aCj
 aCs
 aCs
 aCs
-aDe
-aDv
-aDz
+sFV
+sFV
+sFV
 aFh
 aFy
-aDd
-aDv
-aDQ
+sFV
+sFV
+sFV
 aCs
 aCs
 aCs
@@ -110123,10 +109979,10 @@ aCs
 aCs
 aCs
 aCs
-aDd
+sFV
 aFg
 aEM
-aDd
+sFV
 aCs
 aCs
 aCs
@@ -110424,12 +110280,12 @@ aCj
 aCs
 aCs
 aCs
-aDc
-aDQ
+sFV
+sFV
 aFj
 aFz
-aDe
-aDz
+sFV
+sFV
 aCs
 aCs
 aCs
@@ -110725,14 +110581,14 @@ aaa
 aCj
 aCs
 aCs
-aDc
-aDQ
+sFV
+sFV
 aDR
 aDR
 aDR
 aDR
-aDe
-aDz
+sFV
+sFV
 aCs
 aCs
 ars
@@ -111027,14 +110883,14 @@ aaa
 aCj
 aCs
 aCs
-aDd
+sFV
 aEs
 aEP
 aDR
 aDR
 aDR
 aGd
-aDd
+sFV
 aCs
 aCs
 aCs
@@ -111329,14 +111185,14 @@ aaa
 aaa
 aCj
 aCs
-aDd
+sFV
 aDR
 aDR
 aDR
 aDR
 aFK
 aGe
-aDd
+sFV
 aCs
 aCs
 aCs
@@ -111631,14 +111487,14 @@ aaa
 aaa
 aCj
 aCs
-aDd
+sFV
 aEt
 aEQ
 aEQ
 aFA
 aEQ
 aGf
-aDd
+sFV
 aCs
 aCs
 aCs
@@ -111933,14 +111789,14 @@ aCj
 aCs
 aCs
 aCs
-aDe
-aDz
+sFV
+sFV
 aER
 aFk
 aFB
 aFk
-aDc
-aDQ
+sFV
+sFV
 aCs
 aCs
 aCs
@@ -112236,12 +112092,12 @@ aCs
 aCs
 aCs
 aCs
-aDe
+sFV
 aES
 aES
 aES
 aES
-aDQ
+sFV
 aCs
 aCs
 aCs

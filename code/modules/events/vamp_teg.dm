@@ -101,7 +101,7 @@
 				for (var/obj/machinery/light_switch/L as() in station_switches)
 					if(L.on && prob(50))
 						elecflash(L)
-						L.attack_hand(null)
+						L.Attackhand(null)
 				generator.transformation_mngr.transform_to_type(/datum/teg_transformation/vampire)
 
 		SPAWN_DBG(0)
@@ -111,7 +111,7 @@
 			// Set stage by turning off lights to engine room
 			if(teg_light_switch)
 				elecflash(teg_light_switch)
-				teg_light_switch.attack_hand(null)
+				teg_light_switch.Attackhand(null)
 			else
 				elecflash(A.area_apc)
 				if(!A.area_apc.lighting)
@@ -142,7 +142,7 @@
 							for (var/obj/machinery/light_switch/L as() in station_switches)
 								if(L.on && prob(5))
 									elecflash(L)
-									L.attack_hand(null)
+									L.Attackhand(null)
 						if(4)
 							// Electrify Doors
 							for_by_tcl(D, /obj/machinery/door/airlock)
@@ -257,7 +257,7 @@ datum/teg_transformation/vampire
 		animate(src.teg)
 		animate(src.teg.circ1)
 		animate(src.teg.circ2)
-		for(var/mob/M in abilityHolder.ghouls)
+		for(var/mob/M in abilityHolder.thralls)
 			remove_mindslave_status(M)
 		. = ..()
 
@@ -277,7 +277,7 @@ datum/teg_transformation/vampire
 
 			var/mob/living/carbon/target = pick(targets)
 
-			if(target in abilityHolder.ghouls)
+			if(target in abilityHolder.thralls)
 				H = target
 				if( abilityHolder.points > 100 && target.blood_volume < 50 && !ON_COOLDOWN(src.teg,"heal", 120 SECONDS) )
 					enthrall(H)
@@ -296,7 +296,7 @@ datum/teg_transformation/vampire
 
 		if(probmult(10))
 			var/list/responses = list("I hunger! Bring us food so we may eat!", "Blood... I needs it.", "I HUNGER!", "Summon them here so we may feast!")
-			say_ghoul(pick(responses))
+			say_thrall(pick(responses))
 
 		if(probmult(20) && abilityHolder.points > 100)
 			var/datum/reagents/reagents = pick(src.teg.circ1.reagents, src.teg.circ2.reagents)
@@ -388,15 +388,15 @@ datum/teg_transformation/vampire
 				health -= round(damage, 1.0)
 
 	// Talk like a vampire
-	proc/say_ghoul(var/message)
+	proc/say_thrall(var/message)
 		var/name = src.teg.name
 		var/alt_name = " (VAMPIRE)"
 
-		if (!message || !length(src.abilityHolder.ghouls) )
+		if (!message || !length(src.abilityHolder.thralls) )
 			return
 
-		var/rendered = "<span class='game ghoulsay'><span class='prefix'>GHOULSPEAK:</span> <span class='name'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
-		for (var/mob/M in src.abilityHolder.ghouls)
+		var/rendered = "<span class='game thrallsay'><span class='prefix'>THRALLSPEAK:</span> <span class='name'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
+		for (var/mob/M in src.abilityHolder.thralls)
 			boutput(M, rendered)
 
 	// Look at others like a vampire
@@ -428,7 +428,7 @@ datum/teg_transformation/vampire
 	proc/enthrall(mob/living/carbon/human/target)
 		var/datum/abilityHolder/vampire/H = src.abilityHolder
 		if(istype(target))
-			if (!istype(target.mutantrace, /datum/mutantrace/vamp_zombie))
+			if (!istype(target.mutantrace, /datum/mutantrace/vampiric_thrall))
 				if (!target.mind && !target.client)
 					if (target.ghost && target.ghost.client && !(target.ghost.mind && target.ghost.mind.dnr))
 						var/mob/dead/ghost = target.ghost
@@ -456,15 +456,15 @@ datum/teg_transformation/vampire
 
 				target.real_name = "zombie [target.real_name]"
 				if (target.mind)
-					target.mind.special_role = "vampthrall"
+					target.mind.special_role = ROLE_VAMPTHRALL
 					target.mind.master = src.teg
 					if (!(target.mind in ticker.mode.Agimmicks))
 						ticker.mode.Agimmicks += target.mind
 
-				src.abilityHolder.ghouls += target
+				src.abilityHolder.thralls += target
 
-				target.set_mutantrace(/datum/mutantrace/vamp_zombie)
-				var/datum/abilityHolder/vampiric_zombie/VZ = target.get_ability_holder(/datum/abilityHolder/vampiric_zombie)
+				target.set_mutantrace(/datum/mutantrace/vampiric_thrall)
+				var/datum/abilityHolder/vampiric_thrall/VZ = target.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 				if (VZ && istype(VZ))
 					VZ.master = H
 
@@ -474,9 +474,9 @@ datum/teg_transformation/vampire
 			else
 				target.full_heal()
 
-			if (target in H.ghouls)
+			if (target in H.thralls)
 				//and add blood!
-				var/datum/mutantrace/vamp_zombie/V = target.mutantrace
+				var/datum/mutantrace/vampiric_thrall/V = target.mutantrace
 				if (V)
 					V.blood_points += 200
 

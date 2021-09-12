@@ -267,10 +267,10 @@
 			src.ReplaceWithSpace()
 			return
 		if(2)
-			if (prob(40))
+			if (prob(66))
 				dismantle_wall(1)
 		if(3)
-			if (prob(66))
+			if (prob(40))
 				dismantle_wall(1)
 		else
 	return
@@ -281,21 +281,25 @@
 
 /turf/simulated/wall/attack_hand(mob/user as mob)
 	if (user.is_hulk())
-		if (prob(70))
-			playsound(user.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
-			if (src.material)
-				src.material.triggerOnAttacked(src, user, user, src)
-			for (var/mob/N in AIviewers(usr, null))
-				if (N.client)
-					shake_camera(N, 4, 8, 0.5)
-		if (prob(40))
-			boutput(user, text("<span class='notice'>You smash through the [src.name].</span>"))
-			logTheThing("combat", usr, null, "uses hulk to smash a wall at [log_loc(src)].")
-			dismantle_wall(1)
+		if(isrwall(src))
+			boutput(user, text("<span class='notice'>You punch the [src.name], but can't seem to make a dent!</span>"))
 			return
 		else
-			boutput(user, text("<span class='notice'>You punch the [src.name].</span>"))
-			return
+			if (prob(70))
+				playsound(user.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+				if (src.material)
+					src.material.triggerOnAttacked(src, user, user, src)
+				for (var/mob/N in AIviewers(usr, null))
+					if (N.client)
+						shake_camera(N, 4, 8, 0.5)
+			if (prob(40))
+				boutput(user, text("<span class='notice'>You smash through the [src.name].</span>"))
+				logTheThing("combat", usr, null, "uses hulk to smash a wall at [log_loc(src)].")
+				dismantle_wall(1)
+				return
+			else
+				boutput(user, text("<span class='notice'>You punch the [src.name].</span>"))
+				return
 
 	if(src.material)
 		var/fail = 0
@@ -336,7 +340,7 @@
 
 		boutput(user, "<span class='notice'>Now disassembling the outer wall plating.</span>")
 		SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, /turf/simulated/wall/proc/weld_action,\
-			list(W, user), W.icon, W.icon_state, "[user] finishes disassembling the outer wall plating.")
+			list(W, user), W.icon, W.icon_state, "[user] finishes disassembling the outer wall plating.", null)
 
 //Spooky halloween key
 	else if(istype(W,/obj/item/device/key/haunted))

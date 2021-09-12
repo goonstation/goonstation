@@ -324,14 +324,15 @@
 					autoequip_slot(slot_head, head)
 					autoequip_slot(slot_back, back)
 
-
-					for (var/datum/hud/storage/S in user.huds) //ez storage stowing
-						S.master.attackby(I, user, params)
+					if (!istype(master.belt,/obj/item/storage) || istype(I,/obj/item/storage)) // belt BEFORE trying storages, and only swap if its not a storage swap
+						autoequip_slot(slot_belt, belt)
 						if (master.equipped() != I)
 							return
 
-					if (!istype(master.belt,/obj/item/storage) || istype(I,/obj/item/storage)) // belt AFTER trying storages, and only swap if its not a storage swap
-						autoequip_slot(slot_belt, belt)
+					for (var/datum/hud/storage/S in user.huds) //ez storage stowing
+						S.master.Attackby(I, user, params)
+						if (master.equipped() != I)
+							return
 
 					//ONLY do these if theyre actually empty, we dont want to pocket swap.
 					if (!master.l_store)
@@ -382,13 +383,15 @@
 					autoequip_slot(slot_head, head)
 					autoequip_slot(slot_back, back)
 
-					for (var/datum/hud/storage/S in user.huds) //ez storage stowing
-						S.master.attackby(I, user, params)
+					if (!istype(master.belt,/obj/item/storage) || istype(I,/obj/item/storage)) // belt BEFORE trying storages, and only swap if its not a storage swap
+						autoequip_slot(slot_belt, belt)
 						if (master.equipped() != I)
 							return
 
-					if (!istype(master.belt,/obj/item/storage) || istype(I,/obj/item/storage)) // belt AFTER trying storages, and only swap if its not a storage swap
-						autoequip_slot(slot_belt, belt)
+					for (var/datum/hud/storage/S in user.huds) //ez storage stowing
+						S.master.Attackby(I, user, params)
+						if (master.equipped() != I)
+							return
 
 					//ONLY do these if theyre actually empty, we dont want to pocket swap.
 					if (!master.l_store)
@@ -438,7 +441,7 @@
 			if ("pull")
 				if (master.pulling)
 					unpull_particle(master,pulling)
-				master.pulling = null
+				master.remove_pulling()
 				src.update_pulling()
 
 			if ("rest")

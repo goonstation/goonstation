@@ -37,7 +37,7 @@
 				if (locate(/obj/item/implant/antirev) in H.implant)
 					if (ticker.mode && ticker.mode.type == /datum/game_mode/revolution)
 						var/datum/game_mode/revolution/R = ticker.mode
-						if (H.mind && H.mind.special_role == "head_rev")
+						if (H.mind && H.mind.special_role == ROLE_HEAD_REV)
 							arrestState = "RevHead"
 						else if (H.mind in R.revolutionaries)
 							arrestState = "Loyal_Progress"

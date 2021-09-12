@@ -226,7 +226,7 @@
 						var/list/pulling = list()
 						if (src.pulling)
 							if ((!IN_RANGE(old_loc, src.pulling, 1) && !IN_RANGE(src, src.pulling, 1)) || !isturf(src.pulling.loc) || src.pulling == src) // fucks sake
-								src.pulling = null
+								src.remove_pulling()
 								//hud.update_pulling() // FIXME
 							else
 								pulling += src.pulling
@@ -239,7 +239,7 @@
 							if (A == src || A == pushing)
 								continue
 							if (!isturf(A.loc) || A.anchored)
-								return // whoops
+								continue // whoops
 							A.animate_movement = SYNC_STEPS
 							A.glide_size = glide
 							step(A, get_dir(A, old_loc))

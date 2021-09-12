@@ -228,6 +228,15 @@
 	force = 0
 	food_color = "#77AA77"
 
+/obj/item/reagent_containers/food/snacks/plant/peas/ammonia
+	name = "golden pea pod"
+	desc = "Golden peas. Like green peas, but not."
+	crop_prefix = "golden "
+	icon_state = "goldenpeapod"
+	food_color = "#bdbd35"
+	plant_reagent = "ammonia"
+	brew_result = "ammonia"
+
 /obj/item/reagent_containers/food/snacks/plant/soylent
 	name = "soylent chartreuse"
 	crop_suffix = " chartreuse"
@@ -284,6 +293,11 @@
 				makeslices -= 1
 			pool (src)
 		..()
+
+/obj/item/reagent_containers/food/snacks/plant/orange/blood
+	name = "blood orange"
+	desc = "Juicy."
+	plant_reagent = "bloodc"
 
 /obj/item/reagent_containers/food/snacks/plant/orange/wedge
 	name = "orange wedge"
@@ -881,8 +895,8 @@
 
 				return
 			boutput(user, "<span class='notice'>You peel [src].</span>")
-			src.name = copytext(src.name, 10)	// "unpeeled "
-			//src.name = "banana"
+			var/index = findtext(src.name, "unpeeled")
+			src.name = splicetext(src.name, index, index + 9)
 			src.icon_state = "banana-fruit"
 			new /obj/item/bananapeel(user.loc)
 		else
@@ -1371,6 +1385,17 @@
 	make_reagents()
 		..()
 		reagents.add_reagent("yuck", 20)
+
+/obj/item/reagent_containers/food/snacks/plant/purplegoop/orangegoop
+	name = "orange goop"
+	desc = "Some sort of pulsating orange goop...."
+	icon_state = "yuckorange"
+	food_color = "#ff9900"
+	initial_volume = 30
+
+	make_reagents()
+		..()
+		reagents.add_reagent("oil", 10)
 
 /obj/item/reagent_containers/food/snacks/plant/glowfruit
 	name = "glowing fruit"

@@ -169,7 +169,7 @@
 						src.visible_message("<span class='alert'><b>[user]</b> attempts to wrangle [src], but [src] is [pick("mad","grumpy","hecka grumpy","agitated", "too angry")] and resists!</span>")
 					return
 
-				user.pulling = src
+				user.set_pulling(src)
 				src.wanderer = 0
 				if (src.task == "wandering")
 					src.task = "thinking"
@@ -1161,7 +1161,7 @@
 			if ((get_dist(src, M) <= 6) && src.alive)
 				M.visible_message("<span class='alert'><b>[M.name] clutches their temples!</b></span>")
 				M.emote("scream")
-				M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 100))
+				M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 10 SECONDS))
 				M.take_brain_damage(10)
 
 				do_teleport(M, locate((world.maxx/2) + rand(-10,10), (world.maxy/2) + rand(-10,10), 1), 0)
@@ -1210,7 +1210,7 @@
 					src.visible_message("<span class='alert'><b>[user]</b> attempts to wrangle [src], but [src] is [pick("mad","grumpy","hecka grumpy","agitated", "too angry")] and resists!</span>")
 					return
 
-				user.pulling = src
+				user.set_pulling(src)
 				src.wanderer = 0
 				if (src.task == "wandering")
 					src.task = "thinking"

@@ -37,6 +37,7 @@
 	// 0.355 - pistol (9mm)
 	// 0.357 - revolver
 	// 0.38 - detective
+	// 0.40 - blowgun
 	// 0.41 - derringer
 	// 0.72 - shotgun shell, 12ga
 	// 0.787 - 20mm cannon round
@@ -46,7 +47,7 @@
 /obj/item/ammo/bullets
 	name = "Ammo box"
 	sname = "Bullets"
-	desc = "A box of ammo"
+	desc = "A box of ammo!"
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "power_cell"
 	m_amt = 40000
@@ -55,8 +56,6 @@
 	var/max_amount = 1000
 	var/unusualCell
 	ammo_type = new/datum/projectile/bullet
-	module_research = list("weapons" = 2, "miniaturization" = 5)
-	module_research_type = /obj/item/ammo/bullets
 
 	var/icon_dynamic = 0 // For dynamic desc and/or icon updates (Convair880).
 	var/icon_short = null // If dynamic = 1, the short icon_state has to be specified as well.
@@ -86,7 +85,7 @@
 
 	attackby(obj/b as obj, mob/user as mob)
 		if(istype(b, /obj/item/gun/kinetic) && b:allowReverseReload)
-			b.attackby(src, user)
+			b.Attackby(src, user)
 		else if(b.type == src.type)
 			var/obj/item/ammo/bullets/A = b
 			if(A.amount_left<1)
@@ -271,10 +270,7 @@
 		if (src.amount_left < 0)
 			src.amount_left = 0
 		inventory_counter.update_number(src.amount_left)
-
-	// src.desc = text("There are [] [] bullet\s left!", src.amount_left, (ammo_type.material && istype(ammo_type, /datum/material/metal/silver)))
-		src.desc = "There are [src.amount_left][ammo_type.material && istype(ammo_type, /datum/material/metal/silver) ? " silver " : " "]bullet\s left!"
-
+		src.tooltip_rebuild = 1
 		if (src.amount_left > 0)
 			if (src.icon_dynamic && src.icon_short)
 				src.icon_state = text("[src.icon_short]-[src.amount_left]")
@@ -287,6 +283,9 @@
 
 	proc/after_unload(mob/user)
 		return
+
+	get_desc()
+		return . += "There [src.amount_left == 1 ? "is" : "are"] [src.amount_left][ammo_type.material && istype(ammo_type.material, /datum/material/metal/silver) ? " silver " : " "]bullet\s left!"
 
 /obj/item/ammo/bullets/derringer
 	sname = ".41 RF"
@@ -610,6 +609,37 @@
 		name = ".308 mutadone darts"
 		ammo_type = new/datum/projectile/bullet/tranq_dart/anti_mutant
 
+
+/obj/item/ammo/bullets/blow_darts
+	sname = "blowdart"
+	name = "poison blowdarts"
+	ammo_type = new/datum/projectile/bullet/blow_dart
+	desc = "These darts are loaded with a dangerous paralytic toxin."
+	icon_state = "tranq_clip"
+	amount_left = 4
+	max_amount = 4
+	caliber = 0.40
+	color = "green"
+
+	single
+		amount_left = 1
+		max_amount = 1
+
+	madness
+		name = "madness blowdarts"
+		desc = "These darts are loaded with a violently behavior-altering toxin."
+		ammo_type = new/datum/projectile/bullet/blow_dart/madness
+		color = "red"
+
+	ls_bee
+		name = "hallucinogenic blowdarts"
+		desc = "These darts are loaded with a potent mind-altering drug. They smell like honey."
+		ammo_type = new/datum/projectile/bullet/blow_dart/ls_bee
+		color = "yellow"
+
+
+
+
 /obj/item/ammo/bullets/vbullet
 	sname = "VR bullets"
 	name = "VR magazine"
@@ -719,12 +749,25 @@
 		amount_left = 1
 		max_amount = 1
 
+/obj/item/ammo/bullets/marker
+	sname = "40mm Paint Marker Rounds"
+	name = "40mm paint marker rounds"
+	ammo_type = new/datum/projectile/bullet/marker
+	amount_left = 5
+	max_amount = 5
+	icon_state = "40mmR"
+	caliber = 1.57
+	w_class = W_CLASS_NORMAL
+	icon_dynamic = 0
+	icon_empty = "40mmR-0"
+	sound_load = 'sound/weapons/gunload_40mm.ogg'
+
 /obj/item/ammo/bullets/pbr
 	sname = "40mm Plastic Baton Rounds"
 	name = "40mm plastic baton rounds"
 	ammo_type = new/datum/projectile/bullet/pbr
-	amount_left = 2
-	max_amount = 2
+	amount_left = 5
+	max_amount = 5
 	icon_state = "40mmB"
 	caliber = 1.57
 	w_class = W_CLASS_NORMAL
@@ -749,6 +792,9 @@
 	sound_load = 'sound/weapons/gunload_40mm.ogg'
 	force_new_current_projectile = 1
 
+	rigil
+		max_amount = 4
+
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
 		if(!W || !user)
@@ -762,6 +808,9 @@
 				src.update_icon()
 				boutput(user, "You load [W] into the [src].")
 				return
+			else if(src.amount_left < src.max_amount && W.type == AMMO.get_nade()?.type)
+				src.amount_left++
+				boutput(user, "You load [W] into the [src].")
 			else
 				boutput(user, "<span class='alert'>For <i>some reason</i>, you are unable to place [W] into an already filled chamber.</span>")
 				return
@@ -773,9 +822,10 @@
 		if(!user)
 			return
 		if (src.loc == user && AMMO.has_grenade != 0)
-			user.put_in_hand_or_drop(AMMO.get_nade())
+			for(var/i in 1 to amount_left)
+				user.put_in_hand_or_drop(SEMI_DEEP_COPY(AMMO.get_nade()))
 			AMMO.unload_nade()
-			boutput(user, "You pry the grenade out of [src].")
+			boutput(user, "You pry the grenade[amount_left>1?"s":""] out of [src].")
 			src.add_fingerprint(user)
 			src.update_icon()
 			return
@@ -792,9 +842,10 @@
 	after_unload(mob/user)
 		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
 		if(AMMO.has_grenade && src.delete_on_reload)
-			qdel(src)
-			user.put_in_hand_or_drop(AMMO.get_nade())
+			for(var/i in 1 to amount_left)
+				user.put_in_hand_or_drop(SEMI_DEEP_COPY(AMMO.get_nade()))
 			AMMO.unload_nade()
+			qdel(src)
 
 // Ported from old, non-gun RPG-7 object class (Convair880).
 /obj/item/ammo/bullets/rpg
@@ -834,6 +885,13 @@
 	five_shots
 		amount_left = 5.0
 
+	smartgun
+		name = "9mm smartgun magazine"
+		amount_left = 24.0
+		max_amount = 24.0
+		ammo_type = new/datum/projectile/bullet/bullet_9mm/smartgun
+		sound_load = 'sound/weapons/gunload_hitek.ogg'
+
 	smg
 		name = "9mm SMG magazine"
 		amount_left = 30.0
@@ -870,42 +928,45 @@
 	g_amt = 20000
 	var/charge = 100.0
 	var/max_charge = 100.0
-	module_research = list("weapons" = 1, "energy" = 5, "miniaturization" = 5)
-	module_research_type = /obj/item/ammo/power_cell
+	var/recharge_rate = 0
 	var/sound_load = 'sound/weapons/gunload_click.ogg'
 	var/unusualCell = 0
 
 	New()
 		..()
-		update_icon()
+		AddComponent(/datum/component/power_cell, max_charge, charge, recharge_rate)
+		RegisterSignal(src, COMSIG_UPDATE_ICON, .proc/update_icon)
 		desc = "A power cell that holds a max of [src.max_charge]PU. Can be inserted into any energy gun, even tasers!"
+		update_icon()
 
 	disposing()
 		processing_items -= src
 		..()
 
 	emp_act()
-		src.use(INFINITY)
+		SEND_SIGNAL(src, COMSIG_CELL_USE, INFINITY)
 		return
 
 	update_icon()
-		inventory_counter.update_percent(src.charge, src.max_charge)
 		if (src.artifact || src.unusualCell) return
 		overlays = null
-		var/ratio = src.charge / src.max_charge
-		ratio = round(ratio, 0.20) * 100
-		switch(ratio)
-			if(20)
-				overlays += "cell_1/5"
-			if(40)
-				overlays += "cell_2/5"
-			if(60)
-				overlays += "cell_3/5"
-			if(80)
-				overlays += "cell_4/5"
-			if(100)
-				overlays += "cell_5/5"
-		return
+		var/list/ret = list()
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			var/ratio = min(1, ret["charge"] / ret["max_charge"])
+			ratio = round(ratio, 0.20) * 100
+			inventory_counter.update_percent(ret["charge"], ret["max_charge"])
+			switch(ratio)
+				if(20)
+					overlays += "cell_1/5"
+				if(40)
+					overlays += "cell_2/5"
+				if(60)
+					overlays += "cell_3/5"
+				if(80)
+					overlays += "cell_4/5"
+				if(100)
+					overlays += "cell_5/5"
+			return
 
 	examine()
 		if (src.artifact)
@@ -913,69 +974,10 @@
 		. = ..()
 		if (src.unusualCell)
 			return
-		. += "There are [src.charge]/[src.max_charge] PU left!"
+		var/list/ret = list()
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			. += "There are [ret["charge"]]/[ret["max_charge"]] PU left!"
 
-	use(var/amt = 0)
-		if (src.charge <= 0)
-			src.charge = 0
-			return 0
-		else
-			if (amt > 0)
-				src.charge = max(0, src.charge - amt)
-				src.update_icon()
-				return 1
-			else
-				return 0
-
-	attackby(obj/attacking_item as obj, mob/attacker as mob)
-		if(istype(attacking_item, /obj/item/gun/energy))
-			var/obj/item/ammo/power_cell/pcell = src
-			attacking_item.attackby(pcell, attacker)
-		else return ..()
-
-	swap(var/obj/item/gun/energy/E, var/mob/living/user)
-		if(!istype(E.cell,/obj/item/ammo/power_cell))
-			return 0
-		var/obj/item/ammo/power_cell/swapped_cell = E.cell
-		var/mob/living/M = src.loc
-		if (!ismob(M))
-			M = user
-		var/atom/old_loc = src.loc
-
-		if(istype(M) && (src in M.get_all_items_on_mob()))
-			M.u_equip(src)
-
-		src.set_loc(E)
-		E.cell = src
-
-		if(istype(old_loc, /obj/item/storage))
-			swapped_cell.set_loc(old_loc)
-			var/obj/item/storage/cell_container = old_loc
-			cell_container.hud.remove_item(src)
-			cell_container.hud.update(user)
-		else
-			M.put_in_hand_or_drop(swapped_cell)
-
-		src.add_fingerprint(usr)
-
-		E.update_icon()
-		swapped_cell.update_icon()
-		src.update_icon()
-
-		playsound(src, sound_load, 50, 1)
-		return 1
-
-	proc/charge(var/amt = 0)
-		if (src.charge >= src.max_charge)
-			src.charge = src.max_charge
-			return 0
-		else
-			if (amt > 0)
-				src.charge = min(src.charge + amt, src.max_charge)
-				src.update_icon()
-				return src.charge < src.max_charge //if we're fully charged, let other things know immediately
-			else
-				return 0
 
 /obj/item/ammo/power_cell/med_power
 	name = "Power Cell - 200"
@@ -1016,28 +1018,9 @@
 	g_amt = 38000
 	charge = 40.0
 	max_charge = 40.0
-	var/cycle = 0 //Recharge every other tick.
-	var/recharge_rate = 5.0
-
-	New()
-		processing_items |= src
-		..()
-		return
-
-	charge(var/amt = 0)
-		if (src.charge < src.max_charge)
-			processing_items |= src
-		return ..()
-
-	use(var/amt = 0)
-		processing_items |= src
-		return ..()
+	recharge_rate = 5.0
 
 	process()
-		src.cycle = !src.cycle // Charge every four seconds.
-		if (src.cycle)
-			return
-
 		if(src.material)
 			if(src.material.hasProperty("stability"))
 				if(src.material.getProperty("stability") <= 50)
@@ -1046,11 +1029,6 @@
 						explosion_new(src, T, 1)
 						src.visible_message("<span class='alert'>\the [src] detonates.</span>")
 
-		src.charge = min(charge + recharge_rate, max_charge)
-		src.update_icon()
-		if (src.charge >= src.max_charge)
-			processing_items.Remove(src)
-		return
 
 /obj/item/ammo/power_cell/self_charging/custom
 	name = "Power Cell"
@@ -1071,6 +1049,7 @@
 				recharge_rate += ((src.material.getProperty("n_radioactive") / 10) / 2)
 
 		charge = max_charge
+		AddComponent(/datum/component/power_cell, max_charge, charge, recharge_rate)
 		return
 
 /obj/item/ammo/power_cell/self_charging/slowcharge
@@ -1087,7 +1066,6 @@
 	g_amt = 38000
 	charge = 100.0
 	max_charge = 100.0
-	cycle = 0
 	recharge_rate = 7.5
 
 /obj/item/ammo/power_cell/self_charging/ntso_baton
@@ -1097,7 +1075,6 @@
 	icon_state = "recharger_cell"
 	charge = 150.0
 	max_charge = 150.0
-	cycle = 0
 	recharge_rate = 7.5
 
 /obj/item/ammo/power_cell/self_charging/ntso_signifer
@@ -1107,8 +1084,16 @@
 	icon_state = "recharger_cell"
 	charge = 250.0
 	max_charge = 250.0
-	cycle = 0
 	recharge_rate = 6
+
+/obj/item/ammo/power_cell/self_charging/medium
+	name = "Power Cell - Hicap RTG"
+	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 100PU."
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "recharger_cell"
+	charge = 200
+	max_charge = 200
+	recharge_rate = 7.5
 
 /obj/item/ammo/power_cell/self_charging/big
 	name = "Power Cell - Fusion"
@@ -1119,7 +1104,6 @@
 	g_amt = 38000
 	charge = 400.0
 	max_charge = 400.0
-	cycle = 0
 	recharge_rate = 40.0
 
 /obj/item/ammo/power_cell/self_charging/lawbringer
@@ -1131,7 +1115,6 @@
 	g_amt = 38000
 	charge = 300.0
 	max_charge = 300.0
-	cycle = 0
 	recharge_rate = 10.0
 
 /obj/item/ammo/power_cell/self_charging/howitzer
@@ -1209,6 +1192,24 @@
 	desc = "A box containg a single inert meowitzer. It appears to be softly purring. Wait is that a cat?"
 	ammo_type = new/datum/projectile/special/meowitzer/inert
 
+/obj/item/ammo/bullets/foamdarts
+	sname = "foam darts"
+	name = "foam darts"
+	desc = "Reusable foam darts for shooting people in the eyes with."
+	icon_state = "foamdarts-6"
+	icon_empty = "foamdarts-0"
+	icon_dynamic = 1
+	icon_short = "foamdarts"
+	amount_left = 6
+	max_amount = 6
+	caliber = 0.393
+	ammo_type = new/datum/projectile/bullet/foamdart
+
+	update_icon()
+		if(amount_left == 0)
+			qdel(src)
+		else
+			..()
 
 /datum/action/bar/icon/powercellswap
 	duration = 1 SECOND

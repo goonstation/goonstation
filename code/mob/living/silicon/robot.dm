@@ -962,22 +962,16 @@
 			if (src.opened && user) boutput(user, "You must close the cover to swipe an ID card.")
 			else if (src.wiresexposed && user) boutput(user, "<span class='alert'>You need to get the wires out of the way.</span>")
 			else
-				sleep (6)
-				if (prob(50))
-					if (user)
-						boutput(user, "You emag [src]'s interface.")
-					src.visible_message("<font color=red><b>[src]</b> buzzes oddly!</font>")
-					src.emagged = 1
-					src.handle_robot_antagonist_status("emagged", 0, user)
-					if(src.syndicate)
-						src.antagonist_overlay_refresh(1, 1)
-					SPAWN_DBG(0)
-						update_appearance()
-					return 1
-				else
-					if (user)
-						boutput(user, "You fail to [ locked ? "unlock" : "lock"] [src]'s interface.")
-					return 0
+				if (user)
+					boutput(user, "You emag [src]'s interface.")
+				src.visible_message("<font color=red><b>[src]</b> buzzes oddly!</font>")
+				src.emagged = 1
+				src.handle_robot_antagonist_status("emagged", 0, user)
+				if(src.syndicate)
+					src.antagonist_overlay_refresh(1, 1)
+				update_appearance()
+				return 1
+			return 0
 
 	emp_act()
 		vision.noise(60)
@@ -1826,7 +1820,7 @@
 
 		// You can enthrall silicon mobs and yes, they need special handling.
 		// Also, enthralled AIs should still see their master's name when in a robot suit (Convair880).
-		if (src.mind && src.mind.special_role == "vampthrall" && src.mind.master)
+		if (src.mind && src.mind.special_role == ROLE_VAMPTHRALL && src.mind.master)
 			var/mob/mymaster = whois_ckey_to_mob_reference(src.mind.master)
 			if (mymaster)
 				boutput(who, "<b>Obey these laws:</b>")
@@ -2471,7 +2465,6 @@
 		if (!src.canmove)
 			if (isalive(src))
 				src.lastgasp() // calling lastgasp() here because we just got knocked out
-			setunconscious(src)
 		else
 			if(src.health > 0)
 				setalive(src)

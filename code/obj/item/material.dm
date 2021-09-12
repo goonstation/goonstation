@@ -332,7 +332,7 @@
 			if (bombturf)
 				var/bombarea = bombturf.loc.name
 				logTheThing("combat", null, null, "Erebite detonated by an explosion in [bombarea] ([showCoords(bombturf.x, bombturf.y, bombturf.z)]). Last touched by: [src.fingerprintslast]")
-				message_admins("Erebite detonated by an explosion in [bombarea] ([showCoords(bombturf.x, bombturf.y, bombturf.z)]). Last touched by: [src.fingerprintslast]")
+				message_admins("Erebite detonated by an explosion in [bombarea] ([showCoords(bombturf.x, bombturf.y, bombturf.z)]). Last touched by: [key_name(src.fingerprintslast)]")
 
 		qdel(src)
 
@@ -346,7 +346,7 @@
 			var/bombarea = istype(bombturf) ? bombturf.loc.name : "a blank, featureless void populated only by your own abandoned dreams and wasted potential"
 
 			logTheThing("combat", null, null, "Erebite detonated by heat in [bombarea]. Last touched by: [src.fingerprintslast]")
-			message_admins("Erebite detonated by heat in [bombarea]. Last touched by: [src.fingerprintslast]")
+			message_admins("Erebite detonated by heat in [bombarea]. Last touched by: [key_name(src.fingerprintslast)]")
 
 		qdel(src)
 
@@ -390,6 +390,7 @@
 
 	setup_material()
 		..()
+		src.icon_state = pick("gem1","gem2","gem3")
 		var/picker = rand(1,100)
 		var/list/picklist
 		switch(picker)
@@ -458,6 +459,7 @@
 		src.color = "#00f"
 		name = "Blue Telecrystal"
 		desc = "[desc] It's all shiny and blue now."
+
 
 /obj/item/raw_material/miracle
 	name = "miracle matter"
@@ -789,10 +791,14 @@
 				var/obj/item/wizard_crystal/wc = M
 				wc.setMaterial(getMaterial(wc.assoc_material),0,0,1,0)
 
-			if (!istype(M.material) || !(M.material.material_flags & MATERIAL_CRYSTAL) && !(M.material.material_flags & MATERIAL_METAL) && !(M.material.material_flags & MATERIAL_RUBBER))
+			if (!istype(M.material))
 				M.set_loc(src.loc)
 				src.reject = 1
 				continue
+
+			else if (istype(M, /obj/item/raw_material/shard))
+				if (output_bar_from_item(M, 10))
+					pool(M)
 
 			else if (istype(M, /obj/item/raw_material))
 				output_bar_from_item(M)
@@ -814,10 +820,6 @@
 				var/obj/item/cable_coil/C = M
 				if (output_bar_from_item(M, 30, C.conductor.mat_id))
 					qdel(C)
-
-			else if (istype(M, /obj/item/raw_material/shard))
-				if (output_bar_from_item(M, 10))
-					qdel(M)
 
 			else if (istype(M, /obj/item/wizard_crystal))
 				if (output_bar_from_item(M))
@@ -898,6 +900,9 @@
 		if (W.cant_drop) //For borg held items
 			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
 			return ..()
+		if (istype(W, /obj/item/ore_scoop))
+			var/obj/item/ore_scoop/scoop = W
+			W = scoop.satchel
 		if (istype(W,/obj/item/storage/) || istype(W,/obj/item/satchel/))
 			var/obj/item/storage/S = W
 			var/obj/item/satchel/B = W
