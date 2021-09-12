@@ -1,5 +1,9 @@
 
 (t)sun sep 12 21
+(u)MarkNstein
+(p)5880
+(e)⚖|balance
+(*)AI Law Boards now have tighter character limits.
 (u)Ikea
 (p)5969
 (e)🎨|sprites
