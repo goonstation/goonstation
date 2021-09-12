@@ -1611,7 +1611,6 @@ ABSTRACT_TYPE(/obj/item/clothing/head/hairbow)
    desc = "A crimson hat with an enjoyable little pom!"
    icon_state = "pomhat_red"
    item_state = "pomhat_red"
-<<<<<<< HEAD
 
 // Mime Beret recolours (mime beret is located elsewhere weirdly)
 
@@ -1676,28 +1675,46 @@ ABSTRACT_TYPE(/obj/item/clothing/head/goggles)
 
 	red
 		name = "red costume goggles"
-		icon_state = "gogglesred_up"
+		icon_state = "goggles_red"
 		item_state = "goggles_red"
 
 	purple
 		name = "purple costume goggles"
-		icon_state = "gogglesprp_up"
+		icon_state = "goggles_prp"
 		item_state = "goggles_prp"
 
 	green
 		name = "green costume goggles"
-		icon_state = "gogglesgrn_up"
+		icon_state = "goggles_grn"
 		item_state = "goggles_grn"
 
 	blue
 		name = "blue costume goggles"
-		icon_state = "gogglesblu_up"
+		icon_state = "goggles_blu"
 		item_state = "goggles_blu"
 
 	yellow
 		name = "yellow costume goggles"
-		icon_state = "gogglesyel_up"
+		icon_state = "goggles_yel"
 		item_state = "goggles_yel"
+
+// Baseball Caps
+
+ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
+/obj/item/clothing/head/basecap
+	name = "baseball cap"
+	desc = "Flip it around to become Radical."
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "basecap_blk"
+	item_state = "basecap_blk"
+	w_class = W_CLASS_TINY
+	throwforce = 0
+
+	black
+		name = "black baseball cap"
+		icon_state = "basecap_blk"
+		item_state = "basecap_blk"
 
 /obj/item/clothing/head/gothsunhat
 	name = "goth sunhat"
@@ -1706,14 +1723,6 @@ ABSTRACT_TYPE(/obj/item/clothing/head/goggles)
 	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "goth_sunhat"
 	item_state = "goth_sunhat"
-
-/obj/item/clothing/head/cavalierhat
-	name = "cavalier hat"
-	desc = "Heroic!"
-	icon = 'icons/obj/clothing/item_hats.dmi'
-	wear_image_icon = 'icons/mob/head.dmi'
-	icon_state = "cavalier_hat"
-	item_state = "cavalier_hat"
 
 /obj/item/clothing/head/pirate_blk
 	name = "black pirate hat"
@@ -1730,5 +1739,3 @@ ABSTRACT_TYPE(/obj/item/clothing/head/goggles)
 	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "pirate_brn"
 	item_state = "pirate_brn"
-=======
->>>>>>> master
