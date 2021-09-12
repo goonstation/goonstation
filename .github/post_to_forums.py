@@ -139,7 +139,6 @@ def post_thread(subject, contents, icon="-1"):
     return thread_url
 
 def post_pr_comment(body):
-    return
     g = Github(os.environ["TOKEN"])
     repo = g.get_repo(os.environ["REPO"])
     pull = repo.get_pull(int(os.environ["PR_NUM"]))
@@ -147,7 +146,6 @@ def post_pr_comment(body):
     pull_but_as_issue.create_comment(body)
 
 def get_thread_id():
-    return None
     g = Github(os.environ["TOKEN"])
     repo = g.get_repo(os.environ["REPO"])
     pull = repo.get_pull(int(os.environ["PR_NUM"]))
