@@ -1,4 +1,9 @@
 
+(t)sun sep 12 21
+(u)Ikea
+(p)5969
+(e)🎨|sprites
+(*)New-style windoors are now hackable.
 (t)sat sep 11 21
 (u)tarmunora
 (e)⚖|balance
