@@ -3,7 +3,7 @@
 	desc = {"***********************************************************<br>
 Left Mouse Button = Select the color of where you click and then a color to map it into. After three such colors are selected, further clicks will paint using a special matrix.<br>
 Note: try to keep the original color inputs relatively distinct from each other, else calculating the matrix and mapping the colors might not be possible.<br>
-Right Mouse Button = Depaint target<br>
+Right Mouse Button = Depaint target.<br>
 Ctrl+Left Mouse Button = Reset color selections.<br>
 Right Mouse Button on buildmode = Manual tweaking - choose the color or edit already picked colors via the color picker instead of clicking on pixels.<br>
 Alt+Left Mouse Button = Generate a random matrix for use.<br>
