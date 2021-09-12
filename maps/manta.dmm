@@ -39935,14 +39935,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/port)
-"sGr" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 8;
-	pixel_x = -10
-	},
-/obj/decal/cleanable/dirt/jen,
-/turf/simulated/floor/industrial,
-/area/station/mining/refinery)
 "sKg" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -64957,7 +64949,7 @@ bgy
 fEM
 gCV
 bxa
-sGr
+xoE
 ldA
 psJ
 xcu
