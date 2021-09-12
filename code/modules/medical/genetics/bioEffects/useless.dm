@@ -293,7 +293,6 @@
 	name = "Bee Production"
 	desc = "Encourages growth of bees in the subject's body."
 	id = "drunk_bee"
-	icon_state = "unknown"
 	isBad = 0
 	msgGain = "Your stomach buzzes!"
 	msgLose = "The buzzing in your stomach stops."
@@ -314,7 +313,6 @@
 	name = "Pentetic Acid Production"
 	desc = "This mutation somehow causes the subject's body to manufacture a potent chellating agent. How exactly it functions is completely unknown."
 	id = "drunk_pentetic"
-	icon_state = "unknown"
 	msgGain = "You feel detoxified."
 	msgLose = "You feel toxic."
 	occur_in_genepools = 0
@@ -334,7 +332,6 @@
 	name = "Chemical Production Modification"
 	desc = {"This mutation somehow irreversibly alters the subject's body to function as an organic chemical factory, mass producing large quantities of seemingly random chemicals. The mechanism for this modification is currently unknown to medical and genetic science."}
 	id = "drunk_random"
-	icon_state = "unknown"
 	msgGain = "You begin to sense an odd chemical taste in your mouth."
 	msgLose = "The chemical taste in your mouth fades."
 	occur_in_genepools = 1 //this is going to be very goddamn rare and very fucking difficult to unlock.
@@ -367,7 +364,6 @@
 	name = "Unstable Chemical Production Modification"
 	desc = {"This mutation somehow irreversibly alters the subject's body to function as an organic chemical factory, mass producing large quantities of seemingly random chemicals. The mechanism for this modification is currently unknown to medical and genetic science."}
 	id = "drunk_random_unstable"
-	icon_state = "unknown"
 	probability = 0.25
 	var/change_prob = 25
 	add_per_tick = 7
