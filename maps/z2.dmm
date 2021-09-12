@@ -73004,7 +73004,7 @@
 "dQq" = (
 /obj/table/auto,
 /obj/item/storage/box/guardbot_kit,
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
 /obj/random_item_spawner/buddytool,
 /turf/unsimulated/floor/black,
 /area/centcom/lobby)

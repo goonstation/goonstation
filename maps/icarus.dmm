@@ -6724,8 +6724,8 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/item/storage/box/flashbang_kit,
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
+/obj/item/chem_grenade/flashbang,
 /obj/item/device/detective_scanner,
 /obj/item/device/detective_scanner,
 /obj/item/device/analyzer/healthanalyzer,

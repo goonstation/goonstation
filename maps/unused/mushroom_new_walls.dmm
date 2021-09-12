@@ -29268,11 +29268,11 @@
 	pixel_x = 7;
 	pixel_y = 14
 	},
-/obj/item/storage/box/flashbang_kit{
+/obj/item/chem_grenade/flashbang{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/storage/box/flashbang_kit{
+/obj/item/chem_grenade/flashbang{
 	pixel_x = 8;
 	pixel_y = 2
 	},
