@@ -1856,8 +1856,8 @@ datum
 
 		sarin // oh god why am i adding this
 			name = "Sarin"
-			id = "sarin"
-			result = "sarin"
+			id = "sarin_weak"
+			result = "sarin_weak"
 			required_reagents = list("chlorine" = 1, "fuel" = 1, "oxygen" = 1, "phosphorus" = 1, "fluorine" = 1, "hydrogen" = 1, "acetone" = 1, "weedkiller" = 1)
 			result_amount = 3 // it is super potent
 			mix_phrase = "The mixture yields a colorless, odorless liquid."
@@ -1870,7 +1870,7 @@ datum
 				if(holder?.my_atom?.is_open_container())
 					// A slightly less stupid way of smoking contents. Maybe.
 					var/datum/reagents/smokeContents = new/datum/reagents/
-					smokeContents.add_reagent("sarin", holder.reagent_list["sarin"].volume / 6)
+					smokeContents.add_reagent("sarin_weak", holder.reagent_list["sarin_weak"].volume / 6)
 					//particleMaster.SpawnSystem(new /datum/particleSystem/chemSmoke(location, smokeContents, 10, 2))
 					smoke_reaction(smokeContents, 2, location)
 					/*

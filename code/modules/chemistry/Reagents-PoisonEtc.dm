@@ -1476,7 +1476,7 @@ datum
 						boutput(M, "<span class='alert'><b>You feel like you're dying!</b></span>")
 
 		harmful/sarin // yet another thing that will put ol' cogwerks on a watch list probably
-			name = "sarin"
+			name = "syndicate sarin"
 			id = "sarin"
 			description = "A lethal organophosphate nerve agent. Can be neutralized with atropine."
 			reagent_state = LIQUID
@@ -1549,6 +1549,10 @@ datum
 				..()
 				return
 
+			weak
+				name = "sarin"
+				id = "sarin_weak"
+				penetrates_skin = 0
 		harmful/dna_mutagen
 			name = "stable mutagen"
 			id = "dna_mutagen"
