@@ -1482,13 +1482,12 @@
 		return 1*/
 
 /mob/living/carbon/human/say_quote(var/text)
+	var/sayverb = null
 	if (src.mutantrace)
 		if (src.mutantrace.voice_message)
 			src.voice_name = src.mutantrace.voice_name
 			src.voice_message = src.mutantrace.voice_message
-		if (text == "" || !text)
-			return src.mutantrace.say_verb()
-		return "[src.mutantrace.say_verb()], \"[text]\""
+		sayverb = src.mutantrace.say_verb()
 	else
 		src.voice_name = initial(src.voice_name)
 		src.voice_message = initial(src.voice_message)
@@ -1499,7 +1498,7 @@
 	if (src.oxyloss > 10)
 		special = "gasp_whisper"
 
-	return ..(text,special)
+	return ..(text, special, sayverb)
 
 //Lallander was here
 /mob/living/carbon/human/whisper(message as text, forced=FALSE)
