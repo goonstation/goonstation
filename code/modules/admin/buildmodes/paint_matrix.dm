@@ -55,7 +55,7 @@ Alt+Shift+Left Mouse Button = Set the random deviation for generating a random m
 			reset_mode()
 			boutput(usr, "Matrix paint module reset.")
 			return
-		switch(stage)
+		switch(stage) // picking and setting colors for mapping
 			if(1)
 				color_one_picked = get_color_of_clicked_pixel(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
 				if(!color_one_picked)
@@ -92,7 +92,7 @@ Alt+Shift+Left Mouse Button = Set the random deviation for generating a random m
 					stage++
 				else
 					boutput(usr, "Calculated color matrix: <br>[json_encode(calculated_matrix)]")
-			else
+			else // matrix should be ready, trying to apply
 				apply_matrix_paint_on_target(target)
 				return
 		stage++
