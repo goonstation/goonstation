@@ -890,7 +890,6 @@ datum/chemicompiler_core/stationaryCore
 	desc = "A prototype of a compact CheMaster/Reagent Extractor device."
 	icon_state = "minichem_proto"
 	flags = NOSPLASH
-	anchored = 0
 	var/mode = "overview"
 	var/autoextract = 0
 	var/obj/item/reagent_containers/glass/extract_to = null
