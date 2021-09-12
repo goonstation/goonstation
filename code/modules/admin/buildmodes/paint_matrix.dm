@@ -86,7 +86,6 @@ Alt+Shift+Left Mouse Button = Set the random deviation for generating a random m
 				calculated_matrix = calculate_color_matrix()
 				if(!calculated_matrix)
 					boutput(usr, "<span class='alert'>Original color inputs aren't linearly independent, couldn't calculate matrix. Try again with different inputs. Reset with ctrl+leftclick or tweak manually by rightclicking the buildmode icon.</span>")
-					stage++
 				else
 					boutput(usr, "Calculated color matrix: <br>[json_encode(calculated_matrix)]")
 			else // matrix should be ready, trying to apply
