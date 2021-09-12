@@ -9,7 +9,7 @@ Right Mouse Button on buildmode = Manual tweaking - choose the color or edit alr
 Alt+Left Mouse Button = Generate a random matrix for use.<br>
 Alt+Shift+Left Mouse Button = Set the random deviation for generating a random matrix.
 ***********************************************************"}
-	icon_state = "buildmode7"
+	icon_state = "buildmode7_matrix"
 	var/color_one_picked
 	var/color_one_mapped_to
 	var/color_two_picked
