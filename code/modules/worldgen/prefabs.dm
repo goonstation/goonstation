@@ -201,6 +201,12 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 12
 		prefabSizeY = 12
 
+	gnomish_destroyer
+		maxNum = 1
+		probability = 100
+		prefabPath = "assets/maps/prefabs/prefab_gnomish_destroyer.dmm"
+		prefabSizeX = 11
+		prefabSizeY = 14
 	shooting_range // Nef's shooting range with an experimental ray gun
 		maxNum = 1
 		probability = 15
