@@ -1,5 +1,53 @@
 
+(t)sun sep 12 21
+(u)Ikea
+(p)5969
+(e)🎨|sprites
+(*)New-style windoors are now hackable.
+(t)sat sep 11 21
+(u)tarmunora
+(e)⚖|balance
+(*)Emagging the NT syringe gun makes it fire it's entire contents, instead of clearing the whitelist.
+(u)Flappybat
+(p)5968
+(e)⚖|balance
+(*)Strange reagent requires a minimum of 1u to revive.
+(u)Emily
+(e)⚖|balance
+(*)Chickens can now be butchered significantly faster to make cleaning out the ranch easier.
+(*)Flashbangs are now severely less available. Check the armory for them.
+(u)Obama Gaming
+(p)5936
+(e)|
+(+)Apprentice caps can now be handmade.
+(u)Flappybat
+(p)5798
+(e)⚖|balance
+(+)Scanning Syndicate command helmet now requires a syndicate device analyser.
+(u)tarmunora
+(e)⚖|balance
+(*)Radprot now affects incoming rad status duration instead of existing rad status damage.
+(u)Ikea
+(p)5970
+(e)|
+(*)Neurotoxin and capulettium sting cooldown has been increased to 140 seconds.
+(u)pali
+(+)The overcharged vacuum now has smaller movement penalty for the special attack.
 (t)fri sep 10 21
+(u)tarmunora
+(*)Blob overmind teleport only on right-click.
+(u)Flaborized
+(p)5961
+(e)🎨|sprites
+(*)Added some more clothing options to the clothing booth, and the detective's locker.
+(u)edwardly
+(p)5953
+(e)🗺|mapping
+(+)Power monitor / solar controls are now computers that can be deconstructed
+(u)tarmunora
+(e)⚖|balance
+(*)Sprinting is less effective when lying down.
+(*)Speed penalty from lying down is extended through standup animation.
 (u)BatElite
 (p)5927
 (e)🎨|sprites

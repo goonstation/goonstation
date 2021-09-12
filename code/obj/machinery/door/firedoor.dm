@@ -36,6 +36,7 @@
 	var/image/welded_image = null
 	var/welded_icon_state = "welded"
 	has_crush = 0
+	cant_emag = 1
 
 /obj/machinery/door/firedoor/border_only
 	name = "Firelock"

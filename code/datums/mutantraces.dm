@@ -210,7 +210,7 @@
 		return message
 
 	proc/say_verb()
-		return "says"
+		return null
 
 	proc/emote(var/act)
 		return null

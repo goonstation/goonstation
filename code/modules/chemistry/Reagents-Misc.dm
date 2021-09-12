@@ -529,6 +529,8 @@ datum
 				var/mob/living/M = target
 				if (!iscarbon(M) && !ismobcritter(M))
 					return
+				if (volume_passed < 1)
+					return
 				if ((method == INGEST || (method == TOUCH && prob(25))) && (isdead(M) || istype(get_area(M),/area/afterlife/bar)))
 					var/came_back_wrong = 0
 					if (M.get_brute_damage() + M.get_burn_damage() >= 150)
@@ -1527,7 +1529,7 @@ datum
 				if (method == INGEST)
 					boutput(M, "<span class='alert'>Aaaagh! It tastes fucking horrendous!</span>")
 					SPAWN_DBG(1 SECOND)
-						if(!isdead(M))
+						if(!isdead(M) && volume >= 1)
 							M.visible_message("<span class='alert'>[M] pukes violently!</span>")
 							M.vomit()
 				else
@@ -1562,7 +1564,7 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
-				if(volume <= 1)
+				if(volume < 1)
 					return
 				if (method == TOUCH)
 					. = 0 // for depleting fluid pools
@@ -1593,7 +1595,7 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
-				if(volume <= 1)
+				if(volume < 1)
 					return
 				if(method == TOUCH)
 					. = 0 // for depleting fluid pools
@@ -3739,6 +3741,13 @@ datum
 						boutput(M, "<span class='alert'>Oh god! The <i>smell</i>!!!</span>")
 					M.reagents.add_reagent("jenkem",0.1 * volume_passed)
 
+			very_toxic
+				id = "very_toxic_fart"
+				name = "very toxic fart"
+
+				on_mob_life(var/mob/M, var/mult = 1)
+					. =..()
+					M.take_toxin_damage(2 * mult)
 			//on_mob_life(var/mob/M, var/mult = 1)
 			//	if(!M) M = holder.my_atom
 			//	..()

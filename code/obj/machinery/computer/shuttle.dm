@@ -31,6 +31,11 @@
 		dir = WEST
 		pixel_x = -25
 
+/obj/machinery/computer/shuttle/embedded/syndieshuttle
+	name = "Shuttle Computer"
+	icon = 'icons/obj/decoration.dmi'
+	icon_state = "syndiepc4"
+
 /obj/machinery/computer/asylum_shuttle
 	name = "Asylum Shuttle"
 	icon_state = "shuttle"
