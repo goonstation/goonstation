@@ -250,10 +250,6 @@
 /obj/storage/closet,
 /turf/simulated/floor/carpet/purple/fancy/narrow/sw,
 /area/station/communications/bedroom)
-"aaN" = (
-/obj/decal/poster/wallsign/poster_cool,
-/turf/simulated/wall/auto/reinforced/supernorn/orange,
-/area/station/mining/staff_room)
 "aaP" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -34017,13 +34013,6 @@
 /obj/storage/crate{
 	icon_state = "crateopen"
 	},
-/obj/item/device/gps{
-	pixel_x = -8;
-	pixel_y = 5
-	},
-/obj/item/device/gps{
-	pixel_x = -8
-	},
 /obj/item/shipcomponent/secondary_system/orescoop{
 	pixel_x = 2;
 	pixel_y = 4
@@ -36314,6 +36303,9 @@
 	},
 /obj/decal/cleanable/dirt/jen,
 /obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/decal/poster/wallsign/mantaposter{
+	pixel_y = 32
+	},
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
 "kIT" = (
@@ -41648,7 +41640,6 @@
 /obj/decal/poster/wallsign/poster_mining{
 	pixel_y = 32
 	},
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
@@ -65269,7 +65260,7 @@ xba
 txQ
 meh
 xpJ
-aaN
+ldA
 kID
 siD
 okI
