@@ -902,11 +902,11 @@ datum/chemicompiler_core/stationaryCore
 
 	New()
 		..()
-		src.storage_tank_1 = new /obj/item/reagent_containers/glass/beaker/extractor_tank(src)
-		src.storage_tank_2 = new /obj/item/reagent_containers/glass/beaker/extractor_tank(src)
+		src.storage_tank_1 = new /obj/item/reagent_containers/glass/beaker/large(src)
+		src.storage_tank_2 = new /obj/item/reagent_containers/glass/beaker/large(src)
 		var/count = 1
-		for (var/obj/item/reagent_containers/glass/beaker/extractor_tank/ST in src.contents)
-			ST.name = "Storage Tank [count]"
+		for (var/obj/item/reagent_containers/glass/beaker/large/ST in src.contents)
+			ST.name = "Small Storage Tank [count]"
 			count++
 		output_target = src.loc
 
