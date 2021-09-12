@@ -250,6 +250,10 @@
 /obj/storage/closet,
 /turf/simulated/floor/carpet/purple/fancy/narrow/sw,
 /area/station/communications/bedroom)
+"aaN" = (
+/obj/decal/poster/wallsign/poster_cool,
+/turf/simulated/wall/auto/reinforced/supernorn/orange,
+/area/station/mining/staff_room)
 "aaP" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -27329,6 +27333,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/autoname_west,
+/obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
 "bzZ" = (
@@ -33628,6 +33633,7 @@
 /obj/machinery/door_control/podbay/mining/new_walls/west{
 	name = "Submarine Bay (Mining) door control"
 	},
+/obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
 "fkq" = (
@@ -34025,6 +34031,7 @@
 /obj/item/shipcomponent/sensor/mining{
 	pixel_x = 6
 	},
+/obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
 "fLG" = (
@@ -36305,7 +36312,8 @@
 /obj/disposalpipe/segment/mineral{
 	icon_state = "pipe-c"
 	},
-/obj/item/storage/wall/mining,
+/obj/decal/cleanable/dirt/jen,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
 "kIT" = (
@@ -37450,6 +37458,7 @@
 	pixel_x = 5
 	},
 /obj/table/reinforced/industrial/auto,
+/obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
 "nuY" = (
@@ -38236,6 +38245,7 @@
 /obj/landmark/start{
 	name = "Miner"
 	},
+/obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
 "oWc" = (
@@ -38273,6 +38283,7 @@
 /area/station/security/interrogation)
 "oXC" = (
 /obj/machinery/manufacturer/hangar,
+/obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
 "oZK" = (
@@ -38479,6 +38490,7 @@
 /obj/landmark/start{
 	name = "Miner"
 	},
+/obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
 "ptd" = (
@@ -38919,6 +38931,9 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment,
+/obj/landmark/start{
+	name = "Miner"
+	},
 /turf/unsimulated/floor/orange,
 /area/station/mining/staff_room)
 "qBh" = (
@@ -39194,7 +39209,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/machinery/door_control{
-	id = "securitylobby";
+	id = "letmethehelloutofmining";
 	name = "Mining Teleporter Exit Control";
 	pixel_x = -25
 	},
@@ -39204,6 +39219,11 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
 	pixel_x = -10
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/potted_plant/potted_plant4{
+	dir = 8;
+	name = "Sherby the Shrub"
 	},
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
@@ -39756,6 +39776,12 @@
 	dir = 8
 	},
 /obj/disposalpipe/segment/mineral,
+/obj/decal/cleanable/dirt/jen,
+/obj/item/storage/wall/mining{
+	dir = 8;
+	pixel_x = 32;
+	pixel_y = 0
+	},
 /turf/unsimulated/floor/orange,
 /area/station/mining/staff_room)
 "skn" = (
@@ -41418,6 +41444,8 @@
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
 	},
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/orange,
 /area/station/mining/staff_room)
 "wdi" = (
@@ -41620,6 +41648,8 @@
 /obj/decal/poster/wallsign/poster_mining{
 	pixel_y = 32
 	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
 "wzU" = (
@@ -65239,7 +65269,7 @@ xba
 txQ
 meh
 xpJ
-ldA
+aaN
 kID
 siD
 okI
@@ -66751,7 +66781,7 @@ qDm
 fMm
 bOI
 bBt
-uUj
+cty
 mvU
 asB
 dqv
