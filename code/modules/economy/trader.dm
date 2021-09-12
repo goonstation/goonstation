@@ -1173,17 +1173,29 @@
 		angrynope = "You knobliin! Peat iit!"
 		whotext = "Ii am a gnome, frriiend. I grov and sell blants."
 
-		successful_sale_dialogue = list("Oh I rreally have peen waiiting to get my miittens on tiis.")
+		successful_sale_dialogue = list(
+			"Oh I rreally have peen waiiting to get my miittens on tiis.",
+			"Verry kood!",
+			"Siince ourr fuel rran out, ve have not peen aple to ket any of this. Tanks!"
+			)
 
-		failed_sale_dialogue = list("Only a stiinky trroll could come ub viit a stinky offerr liike that!")
+		failed_sale_dialogue = list(
+			"Only a stiinky trroll could come ub viit a stinky offerr liike that!",
+			"Have you lost your miind??"
+			)
 
-		successful_purchase_dialogue = list("Tank you verry much!",
-		"Kood. Ii'll see if I can krov morre.")
+		successful_purchase_dialogue = list(
+			"Tank you verry much!",
+			"Kood. Ii'll see if I can get morre comiikng to stokk."
+			)
 
-		failed_purchase_dialogue = list("Ach! Forrget iit!",
-			"Sliibbery knelf, I viil not pe trriicked liike tat!")
+		failed_purchase_dialogue = list(
+			"Ach! Forrget iit!",
+			"Sliibbery knelf, I viil not pe trriicked liike tat!",
+			"Pooo!"
+			)
 
-		pickupdialogue = "Alrriikht. Blease drrag the crrate viit you."
+		pickupdialogue = "Alrriikht, tank you verry much. Blease take the crrate viit you."
 
 		pickupdialoguefailure = "No the crrate is not frree. You have to puy sometiing fiirrst."
 
