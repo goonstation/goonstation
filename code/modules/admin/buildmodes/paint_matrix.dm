@@ -18,6 +18,7 @@ Alt+Shift+Left Mouse Button = Set the random deviation for generating a random m
 	var/color_three_mapped_to
 	var/calculated_matrix
 	var/busy
+	var/using_random = FALSE
 	var/random_deviation = 1
 
 	var/stage = 1
@@ -44,12 +45,14 @@ Alt+Shift+Left Mouse Button = Set the random deviation for generating a random m
 				boutput(usr, "<span class='alert'>Invalid value or canceled input, deviation remains at [random_deviation].</span>")
 			return
 		if(alt) // random matrix
+			using_random = TRUE
 			stage = 4
 			var/list/randomly_generated_matrix = list()
 			for(var/i in 1 to 9)
 				randomly_generated_matrix.Add(rand(random_deviation * 1000)/1000) // from personal testing positive numbers only gave better results.
 			calculated_matrix = randomly_generated_matrix
 			boutput(usr, "Randomly generated a matrix: <br>[json_encode(calculated_matrix)]")
+			update_text()
 			return
 		if(ctrl) // reset
 			reset_mode()
@@ -93,23 +96,29 @@ Alt+Shift+Left Mouse Button = Set the random deviation for generating a random m
 		update_text()
 
 	proc/update_text()
-		var/text_to_display = "Colors: <br>"
-		var/stage_one_text = "1 : Not yet selected."
-		var/stage_two_text = "<br>2 : Not yet selected."
-		var/stage_three_text = "<br>3 : Not yet selected."
-		if(stage > 1)
-			stage_one_text = "1 : <span style='color: [color_one_picked];'>[color_one_picked]</span> ==> <span style='color: [color_one_mapped_to];'>[color_one_mapped_to]</span>"
-		if(stage > 2)
-			stage_two_text = "<br>2 : <span style='color: [color_two_picked];'>[color_two_picked]</span> ==> <span style='color: [color_two_mapped_to];'>[color_two_mapped_to]</span>"
-		if(stage > 3)
-			stage_three_text = "<br>3 : <span style='color: [color_three_picked];'>[color_three_picked]</span> ==> <span style='color: [color_three_mapped_to];'>[color_three_mapped_to]</span>"
-		text_to_display += stage_one_text
-		text_to_display += stage_two_text
-		text_to_display += stage_three_text
+		var/text_to_display = ""
+		if(using_random)
+			text_to_display = "<B>Using a <font color='#FF0000'>r</font><font color='#FF9900'>a</font><font color='#FFff00'>n</font><font color='#00FF00'>d</font><font color='#0000FF'>o</font><font color='#FF00FF'>m</font> matrix.</B>"
+		else
+			text_to_display = "Colors: <br>"
+			var/stage_one_text = "1 : Not yet selected."
+			var/stage_two_text = "<br>2 : Not yet selected."
+			var/stage_three_text = "<br>3 : Not yet selected."
+			if(stage > 1)
+				stage_one_text = "1 : <span style='color: [color_one_picked];'>[color_one_picked]</span> ==> <span style='color: [color_one_mapped_to];'>[color_one_mapped_to]</span>"
+			if(stage > 2)
+				stage_two_text = "<br>2 : <span style='color: [color_two_picked];'>[color_two_picked]</span> ==> <span style='color: [color_two_mapped_to];'>[color_two_mapped_to]</span>"
+			if(stage > 3)
+				stage_three_text = "<br>3 : <span style='color: [color_three_picked];'>[color_three_picked]</span> ==> <span style='color: [color_three_mapped_to];'>[color_three_mapped_to]</span>"
+			text_to_display += stage_one_text
+			text_to_display += stage_two_text
+			text_to_display += stage_three_text
+
 		update_button_text(text_to_display)
 
 	proc/reset_mode()
 		stage = 1
+		using_random = 0
 		color_one_mapped_to = null
 		color_two_mapped_to = null
 		color_three_mapped_to = null
