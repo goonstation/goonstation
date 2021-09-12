@@ -903,6 +903,8 @@
 					PART = src.part_leg_l
 				else
 					PART = src.part_chest
+			if (!PART) //shooting a limb which is already gone? fallback to chest
+				PART = src.part_chest
 		else
 			var/list/parts = list()
 			for (var/obj/item/parts/robot_parts/RP in src.contents)
