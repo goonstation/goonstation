@@ -61,31 +61,25 @@ Alt+Shift+Left Mouse Button = Set the random deviation for generating a random m
 				if(!color_one_picked)
 					boutput(usr, "<span class='alert'>Couldn't get a color. Probably an issue with how getFlatIcon interacts with target. Try again.</span>")
 					return
-				boutput(usr, "Picked <span style='color: [color_one_picked]; font-size:200%;'>color</span>. Choose color to map it into.")
 				busy = TRUE
 				color_one_mapped_to = get_color_to_map_into_from_user_input(color_one_picked)
 				busy = FALSE
-				boutput(usr, "Mapping <span style='color: [color_one_picked]; font-size:200%;'>color</span> into <span style='color: [color_one_mapped_to]; font-size:200%;'>color</span>.")
 			if(2)
 				color_two_picked = get_color_of_clicked_pixel(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
 				if(!color_two_picked)
 					boutput(usr, "<span class='alert'>Couldn't get a color. Probably an issue with how getFlatIcon interacts with target. Try again.</span>")
 					return
-				boutput(usr, "Picked <span style='color: [color_two_picked]; font-size:200%;'>color</span>. Choose color to map it into.")
 				busy = TRUE
 				color_two_mapped_to = get_color_to_map_into_from_user_input(color_two_picked)
 				busy = FALSE
-				boutput(usr, "Mapping <span style='color: [color_two_picked]; font-size:200%;'>color</span> into <span style='color: [color_two_mapped_to]; font-size:200%;'>color</span>.")
 			if(3)
 				color_three_picked = get_color_of_clicked_pixel(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
 				if(!color_three_picked)
 					boutput(usr, "<span class='alert'>Couldn't get a color. Probably an issue with how getFlatIcon interacts with target. Try again.</span>")
 					return
-				boutput(usr, "Picked <span style='color: [color_three_picked]; font-size:200%;'>color</span>. Choose color to map it into.")
 				busy = TRUE
 				color_three_mapped_to = get_color_to_map_into_from_user_input(color_three_picked)
 				busy = FALSE
-				boutput(usr, "Mapping <span style='color: [color_three_picked]; font-size:200%;'>color</span> into <span style='color: [color_three_mapped_to]; font-size:200%;'>color</span>.")
 				calculated_matrix = calculate_color_matrix()
 				if(!calculated_matrix)
 					boutput(usr, "<span class='alert'>Original color inputs aren't linearly independent, couldn't calculate matrix. Try again with different inputs. Reset with ctrl+leftclick or tweak manually by rightclicking the buildmode icon.</span>")
