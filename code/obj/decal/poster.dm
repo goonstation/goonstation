@@ -764,6 +764,82 @@
 			bound_width  = 96
 			plane = -99
 
+		/* Be gay, do crime */
+		pride
+			name = "Pride"
+			icon = 'icons/obj/items/prideflags.dmi'
+			icon_state = "poster_pride1"
+			desc = "Be Gay, Do Crime!"
+
+		pride/agender
+			name = "Agender Pride"
+			icon_state = "poster_pride2"
+			desc = "Proudly gender-free!"
+
+		pride/aromantic
+			name = "Aromantic Pride"
+			icon_state = "poster_pride3"
+			desc = "No romantic attraction? No problem!"
+
+		pride/asexual
+			name = "Asexual Pride"
+			icon_state = "poster_pride4"
+			desc = "Folks who don't experience sexual attraction are pretty damn cool, y'know!"
+
+		pride/bisexual
+			name = "Bisexual Pride"
+			icon_state = "poster_pride5"
+			desc = "Proudly Bi!"
+
+		pride/genderfluid
+			name = "Genderfluid Pride"
+			icon_state = "poster_pride6"
+			desc = "Change your gender more often than your socks? You're pretty cool in my book."
+
+		pride/genderqueer
+			name = "Genderqueer Pride"
+			icon_state = "poster_pride7"
+			desc = "Gender is malleable, mould your own today!"
+
+		pride/intersex
+			name = "Intersex Pride"
+			icon_state = "poster_pride8"
+			desc = "Born outside the neatly labelled boxes, and refusing to be confined to one."
+
+		pride/lesbian
+			name = "Lesbian Pride"
+			icon_state = "poster_pride9"
+			desc = "\"Jean is a nice person. She happens to like girls instead of guys. \
+			Some people like cats instead of dogs! Frankly, I'd rather live with a lesbian \
+			than a cat. Unless the lesbian sheds; that, I don't know.\""
+
+		pride/nonbinary
+			name = "NonBinary Pride"
+			icon_state = "poster_pride10"
+			desc = "Clear of mind; Pure of heart; None of binary"
+
+		pride/pansexual
+			name = "Pansexual Pride"
+			icon_state = "poster_pride11"
+			desc = "Proudly attracted to people regardless of sex or gender!"
+
+		pride/polysexual
+			name = "Polysexual Pride"
+			icon_state = "poster_pride12"
+			desc = "Attraction to many, or all, genders? Right on!"
+
+		pride/transgender
+			name = "Transgender Pride"
+			icon_state = "poster_pride13"
+			desc = "Who you are comes from inside, and you get to say who that is."
+
+		pride/queer_villain
+			name = "Queer Villain Pride"
+			icon_state = "poster_pride14"
+			desc = "Chaos, and rebellion, against an oppressive -- and, quite frankly, \
+				incredibly boring -- status quo! Passion, community, queer history, \
+				... and EVIL! MWAHAHAHA!"
+
 ///////////////////////////////////////
 // AZUNGAR'S HEAD OF DEPARTMENT ITEMS// + FIREBARRAGE HELPED TOO BUT HE SMELLS
 ///////////////////////////////////////
