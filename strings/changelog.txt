@@ -7,6 +7,7 @@
 (u)Emily
 (e)⚖|balance
 (*)Chickens can now be butchered significantly faster to make cleaning out the ranch easier.
+(*)Flashbangs are now severely less available. Check the armory for them.
 (u)Obama Gaming
 (p)5936
 (e)|
