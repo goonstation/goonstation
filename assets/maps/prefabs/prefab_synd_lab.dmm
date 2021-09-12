@@ -41,7 +41,7 @@
 "P" = (/turf/simulated/floor/redblack{dir = 8},/area/prefab/synd_lab)
 "Q" = (/turf/simulated/floor/redblack/corner{dir = 8},/area/prefab/synd_lab)
 "R" = (/obj/machinery/door/airlock/pyro/glass{dir = 4},/turf/simulated/floor/black,/area/prefab/synd_lab)
-"S" = (/obj/table/reinforced/chemistry/auto,/obj/item/device/chemicompiler/small{pixel_x = -6; pixel_y = 7},/obj/machinery/light{dir = 1},/obj/item/paper/synd_lab_note{pixel_x = 6; pixel_y = -5},/turf/simulated/floor/redblack{dir = 1},/area/prefab/synd_lab)
+"S" = (/obj/table/reinforced/chemistry/auto,/obj/machinery/light{dir = 1},/obj/item/paper/synd_lab_note{pixel_x = 6; pixel_y = -5},/obj/item/robot_chemaster/prototype{pixel_x = -7; pixel_y = 4},/turf/simulated/floor/redblack{dir = 1},/area/prefab/synd_lab)
 "T" = (/obj/machinery/shower{dir = 1},/turf/simulated/floor/black/grime,/area/prefab/synd_lab)
 "U" = (/obj/item/raw_material/rock{pixel_x = -10; pixel_y = -4},/obj/item/raw_material/rock{pixel_x = -9; pixel_y = 8},/turf/simulated/floor/black,/area/prefab/synd_lab)
 "V" = (/turf/simulated/floor/grey,/area/prefab/synd_lab)

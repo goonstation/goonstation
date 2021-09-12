@@ -1620,7 +1620,7 @@ exposed to overconfident outbursts on the part of individuals unqualifed to embo
 	We were given this 'state of the art' facility to figure out how to make this work, when I keep saying that this fundamentally will not.
 	These damn crystals are a pain in the ass to refine normally, when we have a goddamn mining station built to do JUST that!<br>
 	And, we were hardly given proper lab equipment.<br>
-	We're stuck with only a few flasks, along with some shitty prototype chemi-something or other, which quite frankly we'd be better off with another pair of beakers, fuck, it can't even produce vials!
+	We're stuck with only a few flasks, along with some shitty prototype chemi-something or other, which quite frankly we'd be better off with another pair of beakers, fuck, it can't even produce chemicals!
 	I'm trying anything at this point, even port, of all things.<br><br>
 	I'd better get back to it, I'm not being paid by the hour here."}
 
