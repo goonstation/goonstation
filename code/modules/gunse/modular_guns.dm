@@ -37,6 +37,9 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 	var/max_ammo_capacity = 1 // How much ammo can this gun hold? Don't make this null (Convair880).
 	var/caliber = null // Can be a list too. The .357 Mag revolver can also chamber .38 Spc rounds, for instance (Convair880).
 
+	var/accessory_alt = 0 //does the accessory offer an alternative firing mode?
+	var/accessory_on_fire = 0 // does the accessory need to know when you fire?
+
 
 	New()
 		..()
@@ -127,7 +130,7 @@ ABSTRACT_TYPE(/obj/item/gun_parts/magazine)
 
 ABSTRACT_TYPE(/obj/item/gun_parts/accessory)
 /obj/item/gun_parts/accessory/
-	var/alt_fire = 0 //does this accessory offer an alt-fire mode?
+	var/alt_fire = 0 //does this accessory offer an alt-mode? light perhaps?
 	var/call_on_fire = 0 // does the gun call this accessory's on_fire() proc?
 
 	proc/alt_fire()
@@ -136,6 +139,22 @@ ABSTRACT_TYPE(/obj/item/gun_parts/accessory)
 	proc/on_fire()
 		return call_on_fire
 
+	add_part_to_gun()
+		..()
+		if(!my_gun)
+			return
+		my_gun.accessory = src
+		my_gun.accessory_alt = alt_fire
+		my_gun.accessory_on_fire = call_on_fire
+
+
+	remove_part_from_gun()
+		if(!my_gun)
+			return
+		my_gun.accessory = null
+		my_gun.accessory_alt = 0
+		my_gun.accessory_on_fire = 0
+		. = ..()
 
 
 /obj/item/gun/modular/proc/build_gun()
@@ -157,6 +176,7 @@ ABSTRACT_TYPE(/obj/item/gun_parts/accessory)
 
 
 // THIS NEXT PART MIGHT B STUPID
+/*
 ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 /obj/item/storage/gun_workbench/
 	slots = 1
@@ -189,7 +209,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 			else
 				boutput(usr, "That part isn't compatible with your gun!")
 				return
-
+*/
 //told u
 /obj/table/gun_workbench/
 	name = "gunsmithing workbench"
@@ -197,17 +217,14 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 
 	var/list/obj/item/gun_parts/parts = list()
 	var/obj/item/gun/modular/gun = null
-	var/obj/item/storage/gun_workbench/barrel/barrel = null
-	var/obj/item/storage/gun_workbench/stock/stock = null
-	var/obj/item/storage/gun_workbench/magazine/magazine = null
-	var/obj/item/storage/gun_workbench/accessory/accessory = null
+	var/obj/item/gun_parts/barrel/barrel = null
+	var/obj/item/gun_parts/stock/stock = null
+	var/obj/item/gun_parts/magazine/magazine = null
+	var/obj/item/gun_parts/accessory/accessory = null
+	var/gun_DRM = 0
 
 	New()
 		..()
-		barrel = new()
-		stock = new()
-		magazine = new()
-		accessory = new()
 
 
 	attackby(obj/item/W as obj, mob/user as mob, params)
@@ -238,20 +255,17 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 		src.parts = new_gun.parts
 
 		//update DRM for the storage slots.
-		src.barrel.gun_DRM = new_gun.gun_DRM
-		src.stock.gun_DRM = new_gun.gun_DRM
-		src.magazine.gun_DRM = new_gun.gun_DRM
-		src.accessory.gun_DRM = new_gun.gun_DRM
+		src.gun_DRM = new_gun.gun_DRM
 
 		//place parts in the storage slots
 		if(new_gun.barrel)
-			src.barrel.add_contents(new_gun.barrel.remove_part_from_gun())
+			src.barrel = new_gun.barrel.remove_part_from_gun()
 		if(new_gun.stock)
-			src.stock.add_contents(new_gun.stock.remove_part_from_gun())
+			src.stock = new_gun.stock.remove_part_from_gun()
 		if(new_gun.magazine)
-			src.magazine.add_contents(new_gun.magazine.remove_part_from_gun())
+			src.magazine = new_gun.magazine.remove_part_from_gun()
 		if(new_gun.accessory)
-			src.accessory.add_contents(new_gun.accessory.remove_part_from_gun())
+			src.accessory = new_gun.accessory.remove_part_from_gun()
 
 		//update icon
 //real stupid
@@ -260,11 +274,11 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 		return
 
 	proc/remove_gun(mob/user as mob)
-		//add parts to gun
-		gun.barrel = src.barrel.get_contents()[1]
-		gun.stock = src.stock.get_contents()[1]
-		gun.magazine = src.magazine.get_contents()[1]
-		gun.accessory = src.accessory.get_contents()[1]
+		//add parts to gun // this is gonna runtime you dipshit
+		gun.barrel = src.barrel
+		gun.stock = src.stock
+		gun.magazine = src.magazine
+		gun.accessory = src.accessory
 
 		//dispense gun
 		gun.build_gun()
@@ -272,10 +286,10 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 
 		//clear table
 		gun = null
-		barrel.contents = list()
-		stock.contents = list()
-		magazine.contents = list()
-		accessory.contents = list()
+		barrel.contents = null
+		stock.contents = null
+		magazine.contents = null
+		accessory = null
 
 
 
@@ -283,3 +297,9 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 /obj/item/gun/modular/foss // syndicate laser gun's!
 	name = "Syndicate Laser Gun"
 	desc = "An open-sourced and freely modifiable FOSS Inductive Flash Arc, Model 2k/19"
+	max_ammo_capacity = 1 // single-shot pistols ha- unless you strap an expensive loading mag on it.
+
+/obj/item/gun/modular/NT
+	name = "NanoTrasen Standard Pistolet"
+	desc = "A simple, reliable cylindrical bored weapon."
+	max_ammo_capacity = 1 // single-shot pistols ha- unless you strap an expensive loading mag on it.
