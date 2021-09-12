@@ -2330,8 +2330,6 @@
 // will terminate automatically when dizziness gets <100
 // jitteriness decrements automatically in the mob's Life() proc.
 /mob/proc/jittery_process()
-	var/old_x = pixel_x
-	var/old_y = pixel_y
 	is_jittery = 1
 	while(jitteriness > 100)
 //		var/amplitude = jitteriness*(sin(jitteriness * 0.044 * world.time) + 1) / 70
@@ -2339,14 +2337,14 @@
 //		pixel_y = amplitude * cos(0.008 * jitteriness * world.time)
 
 		var/amplitude = min(4, jitteriness / 100)
-		pixel_x = old_x + rand(-amplitude, amplitude)
-		pixel_y = old_y + rand(-amplitude/3, amplitude/3)
+		var/off_x = rand(-amplitude, amplitude)
+		var/off_y = rand(-amplitude/3, amplitude/3)
 
+		animate(src, pixel_x = off_x, pixel_y = off_y, easing = JUMP_EASING, time = 0.5, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+		animate(pixel_x = off_x*-1, pixel_y = off_y*-1, easing = JUMP_EASING, time = 0.5, flags = ANIMATION_RELATIVE)
 		sleep(0.1 SECONDS)
 	//endwhile - reset the pixel offsets to zero
 	is_jittery = 0
-	pixel_x = old_x
-	pixel_y = old_y
 
 /mob/onVarChanged(variable, oldval, newval)
 	update_clothing()
