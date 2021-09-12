@@ -699,6 +699,7 @@ This is basically useless for anyone but miners.
 	name = "Poison Bottle"
 	item = /obj/item/reagent_containers/glass/bottle/poison
 	cost = 1
+	not_in_crates = 1
 	desc = "A bottle of poison. Which poison? Who knows."
 	job = list("Medical Doctor", "Medical Director", "Research Director", "Scientist", "Bartender")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
@@ -707,6 +708,7 @@ This is basically useless for anyone but miners.
 	name = "Poison Bottle Bundle"
 	item = /obj/item/storage/box/poison
 	cost = 7
+	not_in_crates = 1
 	desc = "A box filled with seven random poison bottles."
 	job = list("Medical Doctor", "Medical Director", "Research Director", "Scientist", "Bartender")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
