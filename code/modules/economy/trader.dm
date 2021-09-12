@@ -1134,7 +1134,7 @@
 /obj/npc/trader/gnome
 	icon = 'icons/obj/trader.dmi'
 	icon_state = "gnome"
-	//picture = "bee.png"
+	picture = "davidthegnome.png"
 	name = "David the Space Gnome"
 	trader_area = "/area/gnome_trader"
 
@@ -1162,7 +1162,7 @@
 		// Would really like him to buy chems, namely mead and beer
 		/////////////////////////////////////////////////////////
 
-		greeting= {"Make blants, not unfrriiendly panter."}
+		greeting= {"Helloo frriiend! Vat prriings you herre?"}
 
 		portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
 
