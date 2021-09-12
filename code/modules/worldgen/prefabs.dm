@@ -203,7 +203,7 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 
 	gnomish_destroyer
 		maxNum = 1
-		probability = 100
+		probability = 25
 		prefabPath = "assets/maps/prefabs/prefab_gnomish_destroyer.dmm"
 		prefabSizeX = 11
 		prefabSizeY = 14

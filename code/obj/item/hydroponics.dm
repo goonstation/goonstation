@@ -630,7 +630,7 @@
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		..()
-		if (src.reagents || src.reagents.total_volume || iscarbon(M) || ismobcritter(M) || prob(40))
+		if (src.reagents && src.reagents.total_volume && (iscarbon(M) || ismobcritter(M)) && prob(40))
 			boutput(M, "That tasted [pick("awful", "terrible", "disgusting", "like piss")]!")
 			M.take_toxin_damage(1)
 			SPAWN_DBG(50)

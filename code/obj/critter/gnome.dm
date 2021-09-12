@@ -38,7 +38,7 @@
 						plant_plan = "clear"
 						src.target = planter
 						return
-		return ..()
+		..()
 
 	CritterAttack(mob/M)
 		src.attacking = 1
