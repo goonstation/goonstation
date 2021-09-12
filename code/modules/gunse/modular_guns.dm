@@ -34,6 +34,9 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 	var/list/obj/item/gun_parts/parts = list()
 
 	var/lensing = 0 // Variable used for optical gun barrels. laser intensity scales around 1.0
+
+	var/flashbulb_only = 0 // FOSS guns only
+	var/obj/item/ammo/flashbulb/flashbulb = null // FOSS guns only
 	var/max_crank_level = 0 // FOSS guns only
 	var/crank_level = 0 // FOSS guns only
 
@@ -66,6 +69,13 @@ ABSTRACT_TYPE(/obj/item/gun_parts)
 	proc/remove_part_from_gun() // should safely un-do all of add_part_to_gun()
 		my_gun = null
 		return src
+
+/obj/item/ammo/flashbulb // FOSS guns multi-use ammo thing!
+	name = "cathodic arc tube"
+	desc = "A sturdy glass vaccum tube filled with a special gas for producing bright arc flashes. Goes in laser guns."
+	var/amount_left = 50
+
+
 
 ABSTRACT_TYPE(/obj/item/gun_parts/barrel)
 /obj/item/gun_parts/barrel/
@@ -329,21 +339,21 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 // BASIC GUN'S
 
 /obj/item/gun/modular/NT
-	name = "NanoTrasen Standard Pistolet"
+	name = "\improperNanoTrasen standard pistolet"
 	desc = "A simple, reliable cylindrical bored weapon."
 	max_ammo_capacity = 1 // single-shot pistols ha- unless you strap an expensive loading mag on it.
 	gun_DRM = GUN_NANO
 	spread_angle = 20 // value without a barrel. Add one to keep things in line.
 
 /obj/item/gun/modular/foss // syndicate laser gun's!
-	name = "Syndicate Laser Gun"
+	name = "\improperFOSS laser gun"
 	desc = "An open-sourced and freely modifiable FOSS Inductive Flash Arc, Model 2k/19"
-	max_ammo_capacity = 1 // single-shot pistols ha- unless you strap an expensive loading mag on it.
+	max_ammo_capacity = 1 // just takes a flash bulb.
 	gun_DRM = GUN_FOSS
 	spread_angle = 20 // value without a barrel. Add one to keep things in line.
 
 /obj/item/gun/modular/juicer
-	name = "RAD BLASTA"
+	name = "\improperRAD BLASTA"
 	desc = "A juicer-built, juicer-'designed', and most importantly juicer-marketed gun."
 	max_ammo_capacity = 0 //fukt up mags only
 	gun_DRM = GUN_JUICE
@@ -366,20 +376,20 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 // BASIC BARRELS
 
 /obj/item/gun_parts/barrel/NT
-	name = "Standard Barrel"
+	name = "standard barrel"
 	desc = "A cylindrical barrel, unrifled."
 	spread_angle = -10 // basic stabilisation
 	part_DRM = GUN_NANO | GUN_JUICE | GUN_ITALIAN
 
 /obj/item/gun_parts/barrel/foss
-	name = "FOSS Lensed Barrel"
+	name = "\improperFOSS Lensed Barrel"
 	desc = "A cylindrical array of lenses to focus laser blasts."
 	spread_angle = -15
 	lensing = 0.9
 	part_DRM = GUN_FOSS | GUN_SOVIET
 
 /obj/item/gun_parts/barrel/juicer
-	name = "Blaster Barrel"
+	name = "\improperBLASTA Barrel"
 	desc = "A cheaply-built basic rifled barrel. Not great."
 	spread_angle = -13 //decent stabilisation
 	jam_frequency_fire = 5 //but very poorly built
@@ -400,13 +410,13 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 
 // BASIC STOCKS
 /obj/item/gun_parts/stock/NT
-	name = "Standard Grip"
+	name = "standard grip"
 	desc = "A comfortable NT pistol grip"
 	spread_angle = -2 // basic stabilisation
 	part_DRM = GUN_NANO | GUN_JUICE | GUN_ITALIAN
 
 /obj/item/gun_parts/stock/NT_shoulder
-	name = "Standard Stock"
+	name = "standard stock"
 	desc = "A comfortable NT shoulder stock"
 	spread_angle = -5 // better stabilisation
 	stock_two_handed = 1
