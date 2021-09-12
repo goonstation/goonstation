@@ -156,6 +156,9 @@ Alt+Shift+Left Mouse Button = Set the random deviation for generating a random m
 		target.color = calculated_matrix
 
 	click_mode_right(var/ctrl, var/alt, var/shift)
+		if(busy)
+			boutput(usr, "Busy picking a color.")
+			return
 		var/list/options = list()
 		if(stage >= 1)
 			options.Add("Colors 1")
