@@ -14,8 +14,6 @@
 	firevuln = 0.5
 	brutevuln = 0.8
 	angertext = "chants unintelligible gibberish at"
-	//butcherable = 2
-	//min_quality = -60
 	flags = FPRINT | CONDUCT | USEDELAY | TABLEPASS | FLUID_SUBMERGE | FLUID_SUBMERGE
 
 	var/laugh_cooldown = FALSE
@@ -29,11 +27,11 @@
 				plant_check = initial(plant_check)
 				for (var/obj/machinery/plantpot/planter in view(7, src))
 					// Gnomes mostly just water trays
-					if (planter.current && !planter.dead)
-						if (prob(50-(planter.water_level*10))) // The less water in a tray, the more likely a gnome is to water it. water_level=1-5
-							plant_plan = "water"
-							src.target = planter
-							return
+					// The less water there is in a tray, the more likely a gnome is to water it. water_level range is 1-5
+					if (planter.current && !planter.dead && prob(50-(planter.water_level*10)))
+						plant_plan = "water"
+						src.target = planter
+						return
 					// Sometimes you may see gnomes keeping its garden clean
 					if (planter.dead && prob(10))
 						plant_plan = "clear"
@@ -58,10 +56,7 @@
 				src.attacking = 0
 				src.plant_plan = ""
 				return
-
 			if (plant_plan == "water" && planter.current && !planter.dead)
-				// TODO: move this to an action bar
-				// TODO: remove this debug message once happy with an action bar
 				src.visible_message("<span class='alert'><b>[src] waters [planter].</b></span>")
 				src.water_plant(planter)
 
@@ -84,6 +79,10 @@
 			playsound(src.loc, "sound/misc/gnomeoof.ogg", 50, 1)
 		else if (prob(10))
 			playsound(src.loc, "sound/misc/gnomecry.ogg", 50, 1)
+
+	CritterDeath()
+		..()
+		src.desc = "Body is still warm. Looks like there is a killer about."
 
 	proc/water_plant(var/obj/machinery/plantpot/planter)
 		// Sorry for this, but I can't come up with a better solution

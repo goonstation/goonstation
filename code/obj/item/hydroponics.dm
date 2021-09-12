@@ -630,16 +630,15 @@
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		..()
-		if (src.reagents || src.reagents.total_volume || iscarbon(M) || ismobcritter(M))
-			if (prob(40))
-				boutput(M, "That tasted [pick("awful", "terrible", "disgusting", "like piss")]!")
-				M.take_toxin_damage(1)
-				SPAWN_DBG(50)
-					M.vomit()
-					M.visible_message("<span class='alert'>[M] pukes all over \himself!</span>")
-					if(prob(50))
-						var/mob/living/L = M
-						L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
+		if (src.reagents || src.reagents.total_volume || iscarbon(M) || ismobcritter(M) || prob(40))
+			boutput(M, "That tasted [pick("awful", "terrible", "disgusting", "like piss")]!")
+			M.take_toxin_damage(1)
+			SPAWN_DBG(50)
+				M.vomit()
+				M.visible_message("<span class='alert'>[M] pukes all over \himself!</span>")
+				if(prob(50))
+					var/mob/living/L = M
+					L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
 
 
 /obj/item/reagent_containers/glass/bottle/saltpetre
