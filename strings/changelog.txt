@@ -1,5 +1,8 @@
 
 (t)sun sep 12 21
+(u)tarmunora
+(e)⚖|balance
+(*)Item slot machine rebalanced. Notably, the best prizes require a wager of no less than 250 credits
 (u)MarkNstein
 (p)5880
 (e)⚖|balance
