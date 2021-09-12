@@ -17,6 +17,7 @@
 	flags = FPRINT | CONDUCT | USEDELAY | TABLEPASS | FLUID_SUBMERGE | FLUID_SUBMERGE
 
 	var/laugh_cooldown = FALSE
+	var/cry_cooldown = FALSE
 	var/time_between_laughs = 50
 	var/plant_check = 10
 	var/plant_plan
@@ -75,10 +76,17 @@
 
 	on_damaged(mob/user)
 		. = ..()
-		if (prob(50))
-			playsound(src.loc, "sound/misc/gnomeoof.ogg", 50, 1)
-		else if (prob(10))
-			playsound(src.loc, "sound/misc/gnomecry.ogg", 50, 1)
+		if (src.alive && !src.cry_cooldown)
+			if (prob(50))
+				src.cry_cooldown = 1
+				playsound(src.loc, "sound/misc/gnomeoof.ogg", 50, 1)
+				SPAWN_DBG(20)
+					src.cry_cooldown = 0
+			else if (prob(10))
+				src.cry_cooldown = 1
+				playsound(src.loc, "sound/misc/gnomecry.ogg", 50, 1)
+				SPAWN_DBG(30)
+					src.cry_cooldown = 0
 
 	CritterDeath()
 		..()
