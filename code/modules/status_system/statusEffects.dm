@@ -1916,9 +1916,8 @@
 
 	onRemove()
 		. = ..()
-		owner.delStatus("drowsy")
-		if(isliving(owner))
-			var/mob/living/L = owner
-			L.force_laydown_standup()
-			L.changeStatus("weakened", 1 SECOND)
-			L.changeStatus("paralysis", 5 SECONDS)
+		if(ismob(owner))
+			var/mob/M = owner
+			M.changeStatus("paralysis", 5 SECONDS)
+			M.force_laydown_standup()
+			M.delStatus("drowsy")
