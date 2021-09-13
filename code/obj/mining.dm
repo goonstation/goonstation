@@ -1617,7 +1617,7 @@ obj/item/clothing/gloves/concussive
 	item_state = "ppick1"
 	flags = ONBELT
 	dig_strength = 2
-	digcost = 2
+	digcost = 1
 	cell_type = /obj/item/ammo/power_cell
 	hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
