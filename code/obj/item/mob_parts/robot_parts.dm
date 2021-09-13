@@ -1079,10 +1079,12 @@
 				O.ai_interface = src.head.ai_interface
 			else
 				O.death()
+				qdel(src)
 				return
 		else
 			// how the fuck did you even do this
 			O.death()
+			qdel(src)
 			return
 
 		if(O.brain?.owner?.key)
@@ -1094,6 +1096,7 @@
 			if (!M) // if we couldn't find them (i.e. they're still alive), don't pull them into this borg
 				src.visible_message("<span class='alert'><b>[src]</b> remains inactive, as the conciousness associated with that brain could not be reached.</span>")
 				O.death()
+				qdel(src)
 				return
 			if (!isdead(M)) // so if they're in VR, the afterlife bar, or a ghostcritter
 				boutput(M, "<span class='notice'>You feel yourself being pulled out of your current plane of existence!</span>")
@@ -1115,6 +1118,7 @@
 			playsound(src, "sound/weapons/radxbow.ogg", 40, 1)
 		else
 			O.death()
+			qdel(src)
 			return
 
 		if (src.chest && src.chest.cell)
