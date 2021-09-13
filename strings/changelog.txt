@@ -1,5 +1,9 @@
 
 (t)sun sep 12 21
+(u)Ikea
+(p)5990
+(e)|
+(+)Cargo traders have realized they were accidentally selling fibrilith and will now sell cloth fabric instead.
 (u)aloe
 (p)5967
 (e)🐛|bug
