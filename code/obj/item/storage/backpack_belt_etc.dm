@@ -86,6 +86,13 @@
 	item_state = "bp-medic"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
+/obj/item/storage/backpack/security
+	name = "security backpack"
+	desc = "A sturdy, wearable container made of synthetic fibers, able to carry a number of objects adequately on the back of security personnel."
+	icon_state = "bp_security"
+	item_state = "bp_security"
+	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+
 /obj/item/storage/backpack/randoseru
 	name = "randoseru"
 	desc = "Inconspicuous, nostalgic and quintessentially Space Japanese."
@@ -223,6 +230,14 @@
 	name = "medic's satchel"
 	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a Medical Doctor's shoulder."
 	icon_state = "satchel_medic"
+
+/obj/item/storage/backpack/satchel/security
+	name = "security satchel"
+	desc = "A sturdy, wearable container made of synthetic fibers, able to carry a number of objects stylishly on the shoulder of security personnel."
+	icon_state = "satchel_security"
+	item_state = "satchel_security"
+	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+
 
 /obj/item/storage/backpack/satchel/randoseru
 	name = "randoseru satchel"

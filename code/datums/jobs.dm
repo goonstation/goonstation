@@ -257,7 +257,7 @@ ABSTRACT_TYPE(/datum/job/command)
 #ifdef SUBMARINE_MAP
 	slot_jump = list(/obj/item/clothing/under/rank/head_of_securityold/fancy_alt)
 	slot_suit = list(/obj/item/clothing/suit/armor/vest)
-	slot_back = list(/obj/item/storage/backpack/withO2)
+	slot_back = list(/obj/item/storage/backpack/security)
 	slot_belt = list(/obj/item/device/pda2/hos)
 	slot_poc1 = list(/obj/item/requisition_token/security)
 	slot_poc2 = list(/obj/item/storage/security_pouch) //replaces sec starter kit
@@ -268,7 +268,7 @@ ABSTRACT_TYPE(/datum/job/command)
 
 
 #else
-	slot_back = list(/obj/item/storage/backpack/withO2)
+	slot_back = list(/obj/item/storage/backpack/security)
 	slot_belt = list(/obj/item/device/pda2/hos)
 	slot_poc1 = list(/obj/item/requisition_token/security)
 	slot_poc2 = list(/obj/item/storage/security_pouch) //replaces sec starter kit
@@ -471,7 +471,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	receives_disk = 1
 	receives_security_disk = 1
 	receives_badge = 1
-	slot_back = list(/obj/item/storage/backpack/withO2)
+	slot_back = list(/obj/item/storage/backpack/security)
 	slot_belt = list(/obj/item/device/pda2/security)
 	slot_jump = list(/obj/item/clothing/under/rank/security)
 	slot_suit = list(/obj/item/clothing/suit/armor/vest)
@@ -499,6 +499,7 @@ ABSTRACT_TYPE(/datum/job/security)
 		limit = 3
 		cant_spawn_as_con = 1
 		wages = PAY_UNTRAINED
+		slot_back = list(/obj/item/storage/backpack/security)
 		slot_jump = list(/obj/item/clothing/under/rank/security/assistant)
 		slot_suit = list()
 		slot_glov = list(/obj/item/clothing/gloves/fingerless)
