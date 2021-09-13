@@ -1,4 +1,9 @@
 
+(t)mon sep 13 21
+(u)Sovexe
+(p)5904
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)New item, glow stickers. Stickers that glow when stuck to something. Now provided to undersea miners.
 (t)sun sep 12 21
 (u)Ikea
 (p)5990
