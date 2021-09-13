@@ -1898,12 +1898,12 @@
 	onUpdate(timePassed)
 		. = ..()
 		tickspassed += timePassed
-		movement_modifier.additive_slowdown = 2 + tickspassed/(15 SECONDS)
-		if(ismob(owner) && prob(10))
+		movement_modifier.additive_slowdown = 1.5 + tickspassed/(10 SECONDS)
+		if(ismob(owner) && prob(5))
 			var/mob/M = owner
-			M.change_eye_blurry(2, 10)
+			M.change_eye_blurry(2, 40)
 
-		if(prob(tickspassed/(10 SECONDS)))
+		if(prob(round(tickspassed/(5 SECONDS)) / 2))
 			if(!owner.hasStatus("passing_out"))
 				owner.setStatus("passing_out", 5 SECONDS)
 
