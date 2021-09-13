@@ -1,5 +1,9 @@
 
 (t)sun sep 12 21
+(u)aloe
+(p)5967
+(e)🐛|bug
+(*)Cyborgs die a bit differently now- the destruction of your head will always kill you, and any sort of death will cause you to fall apart. Report any new bugs, please!
 (u)tarmunora
 (e)⚖|balance
 (*)Item slot machine rebalanced. Notably, the best prizes require a wager of no less than 250 credits
