@@ -1138,6 +1138,8 @@
 	name = "David the Space Gnome"
 	trader_area = "/area/gnome_trader"
 
+	var/quest_completed = FALSE
+
 	New()
 		..()
 		/////////////////////////////////////////////////////////
@@ -1146,12 +1148,6 @@
 		src.goods_sell += new /datum/commodity/alien_seed(src)
 		src.goods_sell += new /datum/commodity/drugs/cannabis(src)
 		src.goods_sell += new /datum/commodity/saltpetre_bottle(src)
-
-		// Technically a better deal than saltpetre, so it is a rare include
-		if (prob(30))
-			src.goods_sell += new /datum/commodity/pisscher(src)
-
-		src.goods_sell += new /datum/commodity/splicer(src)
 
 		/////////////////////////////////////////////////////////
 		//// buy list ///////////////////////////////////////////
@@ -1198,6 +1194,32 @@
 		pickupdialogue = "Alrriikht, tank you verry much. Blease take the crrate viit you."
 
 		pickupdialoguefailure = "No the crrate is not frree. You have to puy sometiing fiirrst."
+
+	attackby(obj/item/I as obj, mob/user as mob)
+		if (!src.quest_completed)
+			if (istype(I, /obj/item/reagent_containers/food/snacks/plant/))
+				var/obj/item/reagent_containers/food/snacks/plant/P = I
+				if (P.quality > 40) // 40 is quite high and likely a Jumbo crop
+					src.quest_completed = TRUE
+					src.visible_message("<span class='alert'><b>[src]: \"My oh my! Tiis [P] looks rreally tasty!!\"</b></span>")
+					SPAWN_DBG(40)
+						src.visible_message("<span class='alert'><b>[src]: \"Yourr statiion has brroven iitself! Ii viil nov chov you \
+											some sbeciial wares in my catalogue.\"</b></span>")
+						src.goods_sell += new /datum/commodity/pisscher(src)
+						src.goods_sell += new /datum/commodity/splicer(src)
+						SPAWN_DBG(50)
+							src.visible_message("<span class='alert'><b>[src]: \"... stiill not frree!")
+				else
+					src.visible_message("<span class='alert'><b>[src]: \"Pfft! Ii have seen petter.\"</b></span>")
+			else
+				..()
+		else
+			..()
+
+
+
+
+
 
 // Clack!
 
