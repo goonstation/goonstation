@@ -75,8 +75,8 @@
 		else
 			switch(wish)
 				if("I wish to become rich!")
-					O.visible_message("<span class='alert'>A ton of money falls out of thin air! Woah!</span>")
-					for(var/turf/T in range(user,2))
+					O.visible_message("<span class='alert'>A ton of gold falls out of thin air! Woah!</span>")
+					for(var/turf/T in range(user,1))
 						if (T.density)
 							continue
 						var/obj/item/material_piece/gold/G = new /obj/item/material_piece/gold()
