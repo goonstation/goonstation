@@ -650,6 +650,9 @@
 			if (!istype(T,/turf/simulated/floor/airless/plating/catwalk/))
 				T.ReplaceWithSpace()
 				//qdel(T)
+		if(station_repair.station_generator)
+			for (var/turf/unsimulated/UT in mining_controls.magnet_area.contents)
+				UT.ReplaceWith("Space", force=TRUE)
 		for (var/turf/space/S in mining_controls.magnet_area.contents)
 			S.overlays = list()
 
@@ -684,6 +687,12 @@
 			active = 0
 			boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder! (ERROR: NO ENCOUNTER)")
 			return
+
+		if(station_repair.station_generator)
+			var/list/turf/space/repair_turfs = list()
+			for(var/turf/space/T in mining_controls.magnet_area.contents)
+				repair_turfs += T
+			station_repair.repair_turfs(repair_turfs)
 
 		sleep(sleep_time)
 		if (malfunctioning && prob(20))
