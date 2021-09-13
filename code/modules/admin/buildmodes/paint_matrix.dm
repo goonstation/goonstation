@@ -196,7 +196,6 @@ Alt+Shift+Left Mouse Button = Set the random deviation for generating a random m
 
 	click_right(atom/target, var/ctrl, var/alt, var/shift)
 		target.color = null
-		blink(get_turf(target))
 
 	proc/calculate_matrix_determinant(list/list/inp)
 		var/determinant = 0
