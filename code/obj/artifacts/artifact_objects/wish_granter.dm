@@ -76,11 +76,11 @@
 			switch(wish)
 				if("I wish to become rich!")
 					O.visible_message("<span class='alert'>A ton of money falls out of thin air! Woah!</span>")
-					for(var/turf/T in range(user,3))
+					for(var/turf/T in range(user,2))
 						if (T.density)
 							continue
-						var/obj/item/spacecash/million/S = unpool(/obj/item/spacecash/million)
-						S.setup(T)
+						var/obj/item/material_piece/gold/G = new /obj/item/material_piece/gold()
+						G.set_loc(T)
 
 				if("I wish for great power!")
 					O.visible_message("<span class='alert'><b>[O]</b> envelops [user] in a brilliant light!</span>")
