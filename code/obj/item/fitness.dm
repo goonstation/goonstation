@@ -74,6 +74,10 @@
 		else
 			..()
 
+	examine()
+		. = ..()
+		if(syringe)
+			. += "There appears to be a small cut in the fabric!"
 
 	wizard
 		icon_state = "punchingbagwizard"
