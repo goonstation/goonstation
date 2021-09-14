@@ -248,7 +248,7 @@
 			if ("pulling")
 				if (master.pulling)
 					unpull_particle(master,pulling)
-				master.pulling = null
+				master.remove_pulling()
 				update_pulling()
 			if ("face")
 				master.setFaceDialog()

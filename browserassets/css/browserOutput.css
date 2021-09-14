@@ -290,6 +290,7 @@ img.emoji {
 .medal {color: #808000;}
 .combat {color: #ff0000;}
 .say {}
+.sing {color: #B87AB8;}
 .blobsay {color: #226622;}
 .bugsay {color: #EA5D17;}
 .deadsay {color: #5c00e6;}
@@ -423,6 +424,7 @@ body.theme-dark .gfartooc {color: #60c4e6;}
 body.theme-dark .gfartlooc {color: #92cbdf;}
 body.theme-dark .gfartadmin {color: #c2953c;}
 body.theme-dark .combat {color: #e20000;}
+body.theme-dark .sing {color: #D8BFD8;}
 body.theme-dark .blobsay {color: #4ec44e;}
 body.theme-dark .bugsay {color: #EA5D17;}
 body.theme-dark .deadsay {color: #b27eff;}

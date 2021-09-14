@@ -1341,7 +1341,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 /obj/vehicle/cat
 	name = "Rideable Cat"
 	desc = "He looks happy... how odd!"
-	icon_state = "segwaycat-norider"
+	icon_state = "segwaycat"
 	layer = MOB_LAYER + 1
 	soundproofing = 0
 	throw_dropped_items_overboard = 1
@@ -1423,6 +1423,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	var/mob/living/rider = src.rider
 	..()
 	rider.pixel_y = 0
+	src.icon_state = initial(src.icon_state)
 	walk(src, 0)
 	if(crashed)
 		if(crashed == 2)
@@ -1477,6 +1478,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	rider.pixel_x = 0
 	rider.pixel_y = 5
 	src.UpdateOverlays(rider, "rider")
+	src.icon_state = "[src.icon_state]1"
 
 	for (var/mob/C in AIviewers(src))
 		if(C == user)

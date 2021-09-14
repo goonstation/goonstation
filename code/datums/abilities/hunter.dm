@@ -34,7 +34,7 @@
 		M.delStatus("slowed")
 		M.change_misstep_chance(-INFINITY)
 		M.stuttering = 0
-		M.drowsyness = 0
+		M.delStatus("drowsy")
 
 		if (M.hasStatus("handcuffed"))
 			M.visible_message("<span class='alert'><B>[M] rips apart the [M.handcuffs] with pure brute strength!</b></span>")

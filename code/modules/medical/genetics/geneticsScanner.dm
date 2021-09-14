@@ -117,7 +117,7 @@ var/list/genetek_hair_styles = list()
 	proc/move_mob_inside(var/mob/M)
 		if (!can_operate(M,M)) return
 
-		M.pulling = null
+		M.remove_pulling()
 		src.go_in(M)
 
 		for(var/obj/O in src)
@@ -185,7 +185,7 @@ var/list/genetek_hair_styles = list()
 
 		var/mob/M = G.affecting
 		if (L.pulling == M)
-			L.pulling = null
+			L.remove_pulling()
 		src.go_in(M)
 
 		for(var/obj/O in src)
