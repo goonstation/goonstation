@@ -24,7 +24,7 @@ var/datum/station_zlevel_repair/station_repair = new
 
 	proc/repair_turfs(turf/turfs)
 		if(src.station_generator)
-			src.station_generator.generate_terrain(turfs,reuse_seed=TRUE)
+			src.station_generator.generate_terrain(turfs, reuse_seed=TRUE)
 		for(var/turf/T as anything in turfs)
 			if(src.ambient_light)
 				T.UpdateOverlays(src.ambient_light, "ambient")
@@ -50,32 +50,41 @@ var/datum/station_zlevel_repair/station_repair = new
 				var/ambient_value
 				var/snow = alert("Should it be snowing?",,"Yes", "No", "Particles!")
 				snow = (snow == "No") ? null : snow
-				var/image/weather = image(icon = 'icons/turf/areas.dmi', icon_state = "snowverlay", layer = EFFECTS_LAYER_BASE)
-				weather.alpha = 200
-				weather.plane = PLANE_NOSHADOW_ABOVE
-				var/image/I
+				if(snow)
+					if(snow == "Yes")
+						station_repair.weather_img = image(icon = 'icons/turf/areas.dmi', icon_state = "snowverlay", layer = EFFECTS_LAYER_BASE)
+						station_repair.weather_img.alpha = 200
+						station_repair.weather_img.plane = PLANE_NOSHADOW_ABOVE
+					else
+						station_repair.weather_effect = /obj/effects/snow/grey/tile
+
 				if(alert("Should it be pitch black?",,"Yes", "No")=="No")
-					I = new /image/ambient
-				var/datum/map_generator/icemoon_generator/map_generator = new
-				var/list/space = list()
+					station_repair.ambient_light = new /image/ambient
+
+				station_repair.station_generator = new/datum/map_generator/icemoon_generator
 
 				var/list/turf/shipping_path = shippingmarket.get_path_to_market()
 				for(var/turf/space/T in shipping_path)
 					T.ReplaceWith(/turf/unsimulated/floor/arctic/snow/ice)
+					if(station_repair.ambient_light)
+						ambient_value = lerp(10,50,min(1-T.x/300,0.8))
+						station_repair.ambient_light.color = rgb(ambient_value,ambient_value+((rand()*1)),ambient_value+((rand()*1))) //randomly shift green&blue to reduce vertical banding
+						T.UpdateOverlays(station_repair.ambient_light, "ambient")
 
+				var/list/space = list()
 				for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 					space += S
-				map_generator.generate_terrain(space)
+				station_repair.station_generator.generate_terrain(space)
 				for (var/turf/S in space)
 					if(snow)
 						if(snow == "Yes")
-							S.UpdateOverlays(weather, "snow")
+							S.UpdateOverlays(station_repair.weather_img, "rain")
 						else
-							new /obj/effects/snow/grey/tile(S)
-					if(I)
+							new station_repair.weather_effect(S)
+					if(station_repair.ambient_light)
 						ambient_value = lerp(10,50,min(1-S.x/300,0.8))
-						I.color = rgb(ambient_value,ambient_value+((rand()*1)),ambient_value+((rand()*1))) //randomly shift green&blue to reduce vertical banding
-						S.UpdateOverlays(I, "ambient")
+						station_repair.ambient_light.color = rgb(ambient_value,ambient_value+((rand()*1)),ambient_value+((rand()*1))) //randomly shift green&blue to reduce vertical banding
+						S.UpdateOverlays(station_repair.ambient_light, "ambient")
 				// Path to market does not need to be cleared because it was converted to ice.  Abyss will screw up everything!
 
 				logTheThing("admin", src, null, "turned space into an another outpost on Theta.")

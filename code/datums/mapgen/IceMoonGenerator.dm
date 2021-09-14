@@ -57,7 +57,7 @@
 	var/perlin_zoom = 65
 
 ///Seeds the rust-g perlin noise with a random number.
-/datum/map_generator/icemoon_generator/generate_terrain(var/list/turfs)
+/datum/map_generator/icemoon_generator/generate_terrain(var/list/turfs, var/reuse_seed)
 	. = ..()
 	var/height_seed = seeds[1]
 	var/humidity_seed = seeds[2]
