@@ -1224,7 +1224,7 @@ var/global/noir = 0
 					message_admins("[key_name(usr)] removed the [effect] status-effect from [key_name(M)].")
 				else
 					M.setStatus(effect, duration SECONDS)
-					message_admins("[key_name(usr)] added the [effect] status-effect to [key_name(M)] for [duration * 10] seconds.")
+					message_admins("[key_name(usr)] added the [effect] status-effect to [key_name(M)] for [duration] seconds.")
 
 			else
 				alert("If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to statuseffect a player.")
@@ -3080,7 +3080,7 @@ var/global/noir = 0
 								message_admins("[key_name(usr)] creepified the station.")
 								logTheThing("admin", usr, null, "used the Creepify Station button")
 								logTheThing("diary", usr, null, "used the Creepify Station button", "admin")
-							creepify_station()
+								creepify_station()
 						else
 							alert("You need to be at least a Administrator to creepify the station.")
 							return

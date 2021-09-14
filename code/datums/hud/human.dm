@@ -441,7 +441,7 @@
 			if ("pull")
 				if (master.pulling)
 					unpull_particle(master,pulling)
-				master.pulling = null
+				master.remove_pulling()
 				src.update_pulling()
 
 			if ("rest")
