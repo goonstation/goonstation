@@ -1086,18 +1086,18 @@
 				H.do_disorient(src.stamina_damage * mult, weakened = 10)
 
 			if (ismob(hit))
-					var/mob/M = hit
-					M.TakeDamage("chest", 0	, rand(2 * mult,5 * mult), 0, DAMAGE_BLUNT)
-					M.bodytemperature += 4 * mult
-				else if (iscritter(hit))
-					var/obj/critter/C = hit
-					C.health -= 10
-					C.check_health()
-				else //bot
-					var/obj/machinery/bot/B = hit
-					B.health -= 10
-					if (B.health <= 0)
-						B.explode()
+				var/mob/M = hit
+				M.TakeDamage("chest", 0	, rand(2 * mult,5 * mult), 0, DAMAGE_BLUNT)
+				M.bodytemperature += 4 * mult
+			else if (iscritter(hit))
+				var/obj/critter/C = hit
+				C.health -= 10
+				C.check_health()
+			else //bot
+				var/obj/machinery/bot/B = hit
+				B.health -= 10
+				if (B.health <= 0)
+					B.explode()
 
 			playsound(hit, 'sound/effects/electric_shock.ogg', 60, 1, 0.1, 2.8)
 
