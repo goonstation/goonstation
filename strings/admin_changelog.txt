@@ -1,3 +1,6 @@
+(t)mon sep 13 21
+(u)Gerhazo
+(*)Added a "remove component" button to the view variables panel.
 (t)tue aug 31 21
 (u)Sovexe
 (e)🐛|bug

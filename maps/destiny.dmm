@@ -22706,6 +22706,7 @@
 	req_access = null
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/hos,
 /turf/simulated/floor/red,
 /area/station/security/hos)
 "dVf" = (
@@ -29977,6 +29978,7 @@
 	},
 /obj/machinery/door/airlock/pyro/weapons,
 /obj/firedoor_spawn,
+/obj/access_spawn/hos,
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "hoL" = (
@@ -56944,6 +56946,7 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/hos,
 /turf/simulated/floor/red,
 /area/station/security/hos)
 "wiU" = (

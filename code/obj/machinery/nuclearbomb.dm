@@ -10,8 +10,8 @@
 	_max_health = 150
 	var/armed = 0
 	var/det_time = 0
-	var/timer_default = 6000 // 10 min.
-	var/timer_modifier_disk = 1800 // +3 (crew member) or -3 (nuke ops) min.
+	var/timer_default = 10 MINUTES
+	var/timer_modifier_disk = 3 MINUTES // +3 (crew member) or -3 (nuke ops) min.
 	var/motion_sensor_triggered = 0
 	var/done = 0
 	var/debugmode = 0
@@ -67,13 +67,13 @@
 				S.visible_message("<span class='alert'>[S] cannot withstand the intense radiation and crumbles to pieces!</span>")
 				qdel(S)
 
-		if(det_time && src.simple_light && !src.started_light_animation && det_time - ticker.round_elapsed_ticks <= 2 MINUTES)
+		if(det_time && src.simple_light && !src.started_light_animation && det_time - TIME <= 2 MINUTES)
 			src.started_light_animation = 1
 			var/matrix/trans = matrix()
 			trans.Scale(3)
 			animate(src.simple_light, time = 2 MINUTES, alpha = 255, color = "#ff4444", transform = trans)
 
-		if (det_time && ticker.round_elapsed_ticks >= det_time)
+		if (det_time && TIME >= det_time)
 			SPAWN_DBG(0)
 				explode()
 			src.maptext = "<span style=\"color: red; font-family: Fixedsys, monospace; text-align: center; vertical-align: top; -dm-text-outline: 1 black;\">--:--</span>"
@@ -148,7 +148,7 @@
 									src.image_light.icon_state = "nblightc"
 									src.UpdateOverlays(src.image_light, "light")
 								//src.icon_state = "nuclearbomb2"
-								src.det_time = ticker.round_elapsed_ticks + src.timer_default
+								src.det_time = TIME + src.timer_default
 								src.add_simple_light("nuke", list(255, 127, 127, 127))
 								command_alert("\A [src] has been armed in [A]. It will detonate in [src.get_countdown_timer()] minutes. All personnel must report to [A] to disarm the bomb immediately.", "Nuclear Weapon Detected")
 								world << sound('sound/machines/bomb_planted.ogg')
@@ -302,7 +302,7 @@
 		user.attach_hud(src.wirepanel)
 
 	proc/get_countdown_timer()
-		var/timeleft = round((det_time - ticker.round_elapsed_ticks)/10 ,1)
+		var/timeleft = round((det_time - TIME)/10 ,1)
 		timeleft = "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
 		return timeleft
 
@@ -418,13 +418,13 @@
 	onEnd()
 		..()
 		if (owner && the_bomb)
-			var/timer_modifier = round((the_bomb.det_time - ticker.round_elapsed_ticks) / 2)
+			var/timer_modifier = round((the_bomb.det_time - TIME) / 2)
 			the_bomb.anchored = 0
 
 			for (var/mob/O in AIviewers(owner))
 				O.show_message("<span class='alert'><b>[owner]</b> unscrews [the_bomb]'s floor bolts.</span>", 1)
 
-			if (ticker.round_elapsed_ticks < (the_bomb.det_time - timer_modifier) && !the_bomb.motion_sensor_triggered)
+			if (TIME < (the_bomb.det_time - timer_modifier) && !the_bomb.motion_sensor_triggered)
 				the_bomb.motion_sensor_triggered = 1
 				the_bomb.det_time -= timer_modifier
 				the_bomb.visible_message("<span class='alert'><b>[the_bomb]'s motion sensor was triggered! The countdown has been halved to [the_bomb.get_countdown_timer()]!</b></span>")

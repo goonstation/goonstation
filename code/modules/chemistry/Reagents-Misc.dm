@@ -2705,9 +2705,7 @@ datum
 
 			grenade_effects(var/obj/grenade, var/atom/A)
 				if (isliving(A))
-					arcFlash(grenade, A, 0)
-					var/mob/M = A
-					M.shock(M, 1 MEGA , "chest", 0.75, 1)
+					arcFlash(grenade, A, 1 MEGA WATT, 0.75)
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if (reacting)
@@ -2725,18 +2723,18 @@ datum
 			on_mob_life(mob/M, var/mult = 1)
 
 				if (probmult(10))
-					elecflash(M)
+					elecflash(M, 1, 4, 1)
 				..()
 
 			proc/zap_dude_punching(source, mob/attacker)
 				src.zap_dude(source, null, attacker)
 			proc/zap_dude(source, item, mob/attacker)
 				if(volume >= 5 && prob(volume))
-					arcFlash(holder?.my_atom, attacker,  min(75000, volume * 1000))
+					arcFlash(holder?.my_atom, attacker,  min(75000, volume * 1000), 0.5)
 					holder.remove_reagent(id, 5)
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
-				if (prob(10))
+				if (probmult(10))
 					if (severity >= 2)
 						M.shock(M, 100000, "chest", 1, 1)
 						holder.remove_reagent(id, 20)

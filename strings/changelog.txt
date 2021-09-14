@@ -1,5 +1,25 @@
 
+(t)mon sep 13 21
+(u)Sovexe
+(p)5904
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)New item, glow stickers. Stickers that glow when stuck to something. Now provided to undersea miners.
 (t)sun sep 12 21
+(u)Ikea
+(p)5990
+(e)|
+(+)Cargo traders have realized they were accidentally selling fibrilith and will now sell cloth fabric instead.
+(u)aloe
+(p)5967
+(e)🐛|bug
+(*)Cyborgs die a bit differently now- the destruction of your head will always kill you, and any sort of death will cause you to fall apart. Report any new bugs, please!
+(u)tarmunora
+(e)⚖|balance
+(*)Item slot machine rebalanced. Notably, the best prizes require a wager of no less than 250 credits
+(u)MarkNstein
+(p)5880
+(e)⚖|balance
+(*)AI Law Boards now have tighter character limits.
 (u)Ikea
 (p)5969
 (e)🎨|sprites
