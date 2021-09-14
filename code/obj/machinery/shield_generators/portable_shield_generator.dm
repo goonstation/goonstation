@@ -470,7 +470,7 @@
 			src.icon_state = "shieldw"
 			src.color = "#FF3333"
 			src.powerlevel = 3
-			flags = ALWAYS_SOLID_FLUID
+			flags = ALWAYS_SOLID_FLUID | USEDELAY
 
 	disposing()
 		if(update_tiles)
