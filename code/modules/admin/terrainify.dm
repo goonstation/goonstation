@@ -20,17 +20,20 @@ var/datum/station_zlevel_repair/station_repair = new
 	var/image/ambient_light
 	var/image/weather_img
 	var/obj/effects/weather_effect
+	var/overlay_delay
 
 	proc/repair_turfs(turf/turfs)
 		if(src.station_generator)
 			src.station_generator.generate_terrain(turfs,reuse_seed=TRUE)
-		for(var/turf/T as anything in turfs)
-			if(src.ambient_light)
-				T.UpdateOverlays(src.ambient_light, "ambient")
-			if(src.weather_img)
-				T.UpdateOverlays(src.weather_img, "weather")
-			if(src.weather_effect)
-				new src.weather_effect(T)
+
+		SPAWN_DBG(overlay_delay)
+			for(var/turf/T as anything in turfs)
+				if(src.ambient_light)
+					T.UpdateOverlays(src.ambient_light, "ambient")
+				if(src.weather_img)
+					T.UpdateOverlays(src.weather_img, "weather")
+				if(src.weather_effect)
+					new src.weather_effect(T)
 
 
 /client/proc/cmd_swampify_station()
@@ -100,21 +103,22 @@ var/datum/station_zlevel_repair/station_repair = new
 		switch(alert("Turn space into the sands of Mars? This is probably going to lag a bunch when it happens and there's no easy undo!",,"Yes","No"))
 			if("Yes")
 				var/ambient_value
-				var/image/weather = image(icon = 'icons/turf/areas.dmi', icon_state = "dustverlay", layer = EFFECTS_LAYER_BASE)
-				//weather.alpha = 200
-				//weather.plane = PLANE_NOSHADOW_ABOVE
-				var/image/I = new /image/ambient
-				var/datum/map_generator/mars_generator/map_generator = new
+
+				station_repair.station_generator = new/datum/map_generator/mars_generator
+				station_repair.overlay_delay = 3.5 SECONDS // Delay to let rocks cull
+				station_repair.weather_img = image(icon = 'icons/turf/areas.dmi', icon_state = "dustverlay", layer = EFFECTS_LAYER_BASE)
+				station_repair.ambient_light = new /image/ambient
+
 				var/list/space = list()
 				for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 					space += S
-				map_generator.generate_terrain(space)
+				station_repair.station_generator.generate_terrain(space)
 				sleep(3 SECONDS) // Let turfs initialize and re-orient before applying overlays
 				for (var/turf/S in space)
-					S.UpdateOverlays(weather, "weather")
+					S.UpdateOverlays(station_repair.weather_img, "weather")
 					ambient_value = lerp(20,80,S.x/300)
-					I.color = rgb(ambient_value+((rand()*3)),ambient_value,ambient_value) //randomly shift red to reduce vertical banding
-					S.UpdateOverlays(I, "ambient")
+					station_repair.ambient_light.color = rgb(ambient_value+((rand()*3)),ambient_value,ambient_value) //randomly shift red to reduce vertical banding
+					S.UpdateOverlays(station_repair.ambient_light, "ambient")
 
 				for(var/turf/S in get_area_turfs(/area/mining/magnet))
 					if(S.z != Z_LEVEL_STATION) continue
@@ -122,6 +126,9 @@ var/datum/station_zlevel_repair/station_repair = new
 						qdel(M)
 
 				shippingmarket.clear_path_to_market()
+				//Adjust lighting to midway for  ambient light
+				ambient_value = lerp(20,80,0.5)
+				station_repair.ambient_light.color = rgb(ambient_value+((rand()*3)),ambient_value,ambient_value)
 
 				logTheThing("admin", src, null, "turned space into a Mars.")
 				logTheThing("diary", src, null, "turned space into a Mars.", "admin")

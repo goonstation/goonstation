@@ -53,7 +53,6 @@
  ///Seeds the rust-g perlin noise with a random number.
 /datum/map_generator/mars_generator/generate_terrain(var/list/turfs, var/reuse_seed)
 	. = ..()
-	var/list/seeds = list(rand(1,5000),rand(1,5000),rand(1,5000))
 	var/height_seed = seeds[1]
 	var/humidity_seed = seeds[2]
 	var/heat_seed = seeds[3]
