@@ -205,7 +205,7 @@
 	force = 1
 	throwforce = 5
 	var/spam_flag = 0
-	var/list/sounds_sax = list('sound/musical_instruments/sax/sax.ogg', 'sound/musical_instruments/sax/sax2.ogg','sound/musical_instruments/sax/sax3.ogg','sound/musical_instruments/sax/sax4.ogg','sound/musical_instruments/sax/sax5.ogg')
+	var/list/sounds_sax = list('sound/musical_instruments/sax/sax.ogg', 'sound/musical_instruments/sax/sax2.ogg','sound/musical_instruments/sax/sax3.ogg','sound/musical_instruments/sax/sax4.ogg','sound/musical_instruments/sax/sax5.ogg','sound/musical_instruments/sax/sax6.ogg','sound/musical_instruments/sax/sax7.ogg')
 	stamina_damage = 10
 	stamina_cost = 10
 	stamina_crit_chance = 5

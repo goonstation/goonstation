@@ -339,21 +339,21 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 // BASIC GUN'S
 
 /obj/item/gun/modular/NT
-	name = "\improperNanoTrasen standard pistolet"
+	name = "\improper NanoTrasen standard pistolet"
 	desc = "A simple, reliable cylindrical bored weapon."
 	max_ammo_capacity = 1 // single-shot pistols ha- unless you strap an expensive loading mag on it.
 	gun_DRM = GUN_NANO
 	spread_angle = 20 // value without a barrel. Add one to keep things in line.
 
 /obj/item/gun/modular/foss // syndicate laser gun's!
-	name = "\improperFOSS laser gun"
+	name = "\improper FOSS laser gun"
 	desc = "An open-sourced and freely modifiable FOSS Inductive Flash Arc, Model 2k/19"
 	max_ammo_capacity = 1 // just takes a flash bulb.
 	gun_DRM = GUN_FOSS
 	spread_angle = 20 // value without a barrel. Add one to keep things in line.
 
 /obj/item/gun/modular/juicer
-	name = "\improperRAD BLASTA"
+	name = "\improper RAD BLASTA"
 	desc = "A juicer-built, juicer-'designed', and most importantly juicer-marketed gun."
 	max_ammo_capacity = 0 //fukt up mags only
 	gun_DRM = GUN_JUICE
@@ -382,14 +382,14 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	part_DRM = GUN_NANO | GUN_JUICE | GUN_ITALIAN
 
 /obj/item/gun_parts/barrel/foss
-	name = "\improperFOSS Lensed Barrel"
+	name = "\improper FOSS Lensed Barrel"
 	desc = "A cylindrical array of lenses to focus laser blasts."
 	spread_angle = -15
 	lensing = 0.9
 	part_DRM = GUN_FOSS | GUN_SOVIET
 
 /obj/item/gun_parts/barrel/juicer
-	name = "\improperBLASTA Barrel"
+	name = "\improper BLASTA Barrel"
 	desc = "A cheaply-built basic rifled barrel. Not great."
 	spread_angle = -13 //decent stabilisation
 	jam_frequency_fire = 5 //but very poorly built

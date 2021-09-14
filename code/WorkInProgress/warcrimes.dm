@@ -4,6 +4,21 @@
 var/johnbill_shuttle_fartnasium_active = 0
 var/fartcount = 0
 
+/obj/death_button/immersive
+	name = "Button that simulates the Coolstation Experience"
+	desc = "A button which, if you press it, will fill you with the sense that you had a pretty good round."
+	var/playing = 0
+	attack_hand(mob/user)
+		if(playing)
+			return
+		playing = 1
+		playsound(src.loc, "sound/misc/TYOOL2053.ogg", 85, 1)
+		SPAWN_DBG(17 SECONDS)
+			playing = 0
+			..()
+
+
+
 /area/diner/tug
 	icon_state = "green"
 	name = "Big Yank's Cheap Tug"
