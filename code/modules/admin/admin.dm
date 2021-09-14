@@ -1832,10 +1832,6 @@ var/global/noir = 0
 			var/CT = input("Enter a /mob/living/critter path or partial name.", "Make Critter", null) as null|text
 
 			var/list/matches = get_matches(CT, "/mob/living/critter")
-			matches -= list(/mob/living/critter, /mob/living/critter/small_animal, /mob/living/critter/aquatic) //blacklist
-#ifdef SECRETS_ENABLED
-			matches -= list(/mob/living/critter/vending) //secret repo blacklist
-#endif
 
 			if (!length(matches))
 				return
