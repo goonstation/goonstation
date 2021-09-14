@@ -6,6 +6,16 @@
 	anchored = 1
 	deconstruct_flags = DECON_SIMPLE
 	layer = MOB_LAYER_BASE+1 // TODO LAYER
+	var/obj/item/reagent_containers/syringe = null
+
+	proc/stick_em(obj/item/reagent_containers/syringe, mob/living/user)
+		if(!syringe.reagents.total_volume)
+			return
+		if(!user.reagents)
+			return
+		if(user.reagents.total_volume >= user.reagents.maximum_volume)
+			return
+		syringe.reagents.trans_to(user, syringe.amount_per_transfer_from_this)
 
 	attack_hand(mob/user as mob)
 		user.lastattacked = src
@@ -16,6 +26,58 @@
 			if (H.sims)
 				H.sims.affectMotive("fun", 2)
 		user.changeStatus("fitness_stam_regen", 100 SECONDS)
+		if(syringe)
+			/* Now you've done it! */
+			logTheThing("combat", user, null, \
+				"stuck themself on a syringe [log_reagents(syringe)] \
+				hidden in [src] at [log_loc(user)]")
+			boutput(user, "<span class='alert'>You feel a sharp prick \
+				 when you hit [src]!</span>")
+			stick_em(syringe, user)
+
+	attackby(obj/item/I, mob/living/user)
+		if(syringe)
+			if(user.bioHolder.HasEffect("clumsy") && prob(50))
+			/* Stick 'em! */
+				boutput(user, "<span class='alert'>You prick yourself \
+				on something sharp in [src], and drop the [I]!\
+				What the hell?</span>")
+				user.drop_item(I)
+				stick_em(syringe, user)
+				return
+
+			if(istype(I, /obj/item/wirecutters))
+				user.visible_message("<span class='warning'>[user] cuts at [src] with [I], \
+					and pulls out a [syringe] with them!</span>", \
+					"<span class='warning'>You pull a [syringe] from [src] with [I]!</span>")
+				if(IN_RANGE(user, src, 1))
+					user.put_in_hand_or_drop(syringe)
+				else
+					syringe.set_loc(src.loc)
+
+				syringe = null
+			return
+
+
+		if(istype(I, /obj/item/reagent_containers/syringe))
+			user.drop_item(I)
+			if(!I.qdeled)
+				I.set_loc(src)
+			user.visible_message("<span class='warning'>[user] looks around \
+			furtively, then slides [I] into [src].</span>",\
+			"<span class='warning'>You slide [I] into [src].</span>")
+			syringe = I
+			logTheThing("combat", user, null, \
+				"Inserted a syringe [log_reagents(syringe)] into [src] \
+				at [log_loc(user)]")
+			return
+		else
+			..()
+
+	examine()
+		. = ..()
+		if(syringe)
+			. += "There appears to be a small cut in the fabric!"
 
 	wizard
 		icon_state = "punchingbagwizard"
