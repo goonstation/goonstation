@@ -2365,14 +2365,17 @@ var/global/list/cargopads = list()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W,/obj/item/satchel/mining/))
-			var/obj/item/satchel/mining/S = W
-			user.drop_item()
-			if (satchel)
-				user.put_in_hand_or_drop(satchel)
-			S.set_loc(src)
-			satchel = S
-			icon_state = "scoop-bag"
-			user.visible_message("[user] inserts [S] into [src].", "You insert [S] into [src].")
+			if (!issilicon(usr))
+				var/obj/item/satchel/mining/S = W
+				user.drop_item()
+				if (satchel)
+					user.put_in_hand_or_drop(satchel)
+				S.set_loc(src)
+				satchel = S
+				icon_state = "scoop-bag"
+				user.visible_message("[user] inserts [S] into [src].", "You insert [S] into [src].")
+			else
+				boutput(user, "<span class='alert'>The satchel is firmly secured to the scoop.</span>")
 		else
 			..()
 			return
@@ -2387,7 +2390,7 @@ var/global/list/cargopads = list()
 			else
 				boutput(user, "<span class='alert'>There's no satchel in [src] to unload.</span>")
 		else
-			boutput(user, "<span class='alert'>The satchel is firmly secured.</span>")
+			boutput(user, "<span class='alert'>The satchel is firmly secured to the scoop.</span>")
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 		if(isturf(target))
