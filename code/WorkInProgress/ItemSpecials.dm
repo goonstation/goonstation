@@ -1085,8 +1085,19 @@
 				var/mob/living/carbon/human/H = hit
 				H.do_disorient(src.stamina_damage * mult, weakened = 10)
 
-			hit.TakeDamage("chest", 0, rand(2 * mult,5 * mult), 0, DAMAGE_BLUNT)
-			hit.bodytemperature += 4 * mult
+			if (ismob(hit))
+					var/mob/M = hit
+					M.TakeDamage("chest", 0	, rand(2 * mult,5 * mult), 0, DAMAGE_BLUNT)
+					M.bodytemperature += 4 * mult
+				else if (iscritter(hit))
+					var/obj/critter/C = hit
+					C.health -= 10
+					C.check_health()
+				else //bot
+					var/obj/machinery/bot/B = hit
+					B.health -= 10
+					if (B.health <= 0)
+						B.explode()
 
 			playsound(hit, 'sound/effects/electric_shock.ogg', 60, 1, 0.1, 2.8)
 
@@ -1409,14 +1420,25 @@
 					return 0
 			return 1
 
-		on_hit(var/mob/hit, var/mult = 1)
+		on_hit(var/hit, var/mult = 1)
 			//maybe add this in, chance to weaken. I dunno a good amount offhand so leaving out for now - kyle
 			// if (ishuman(hit))
 			// 	var/mob/living/carbon/human/H = hit
 			// 	H.do_disorient(src.stamina_damage * mult, weakened = 10)
 			if(istype(master, /obj/item))
-				hit.TakeDamage("chest", 0/*master.force*/, rand(2 * mult,5 * mult), 0, DAMAGE_BLUNT)
-				hit.bodytemperature += 4 * mult
+				if (ismob(hit))
+					var/mob/M = hit
+					M.TakeDamage("chest", 0/*master.force*/, rand(2 * mult,5 * mult), 0, DAMAGE_BLUNT)
+					M.bodytemperature += 4 * mult
+				else if (iscritter(hit))
+					var/obj/critter/C = hit
+					C.health -= 10
+					C.check_health()
+				else //bot
+					var/obj/machinery/bot/B = hit
+					B.health -= 10
+					if (B.health <= 0)
+						B.explode()
 
 			playsound(hit, 'sound/effects/electric_shock.ogg', 60, 1, 0.1, 2.8)
 
