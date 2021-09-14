@@ -59,9 +59,9 @@
 ///Seeds the rust-g perlin noise with a random number.
 /datum/map_generator/icemoon_generator/generate_terrain(var/list/turfs)
 	. = ..()
-	var/height_seed = rand(0, 50000)
-	var/humidity_seed = rand(0, 50000)
-	var/heat_seed = rand(0, 50000)
+	var/height_seed = seeds[1]
+	var/humidity_seed = seeds[2]
+	var/heat_seed = seeds[3]
 
 	for(var/t in turfs) //Go through all the turfs and generate them
 		var/turf/gen_turf = t
