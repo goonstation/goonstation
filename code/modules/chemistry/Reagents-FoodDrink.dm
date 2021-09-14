@@ -3291,7 +3291,7 @@ datum
 
 		fooddrink/turmeric
 			name = "turmeric powder"
-			id = "turmpowder"
+			id = "currypowder"
 			description = "Has a warm, spicy scent and nausea-soothing properties. But if you get this shit on something, the stain's NEVER coming out."
 			reagent_state = SOLID
 			fluid_r = 224

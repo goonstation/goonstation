@@ -1362,7 +1362,7 @@
 	desc = "An aromatic root from the turmeric plant, a relative of ginger."
 	icon_state = "turmericroot"
 	planttype = /datum/plant/veg/turmeric
-	plant_reagent = "turmpowder"
+	plant_reagent = "currypowder"
 	edible = 0
 	validforhat = 1
 	food_color = "#e0a80c"

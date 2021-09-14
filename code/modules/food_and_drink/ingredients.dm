@@ -792,4 +792,4 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	heal_amt = 0
 	food_color = "#e0a80c"
 	initial_volume = 10
-	initial_reagents = "turmpowder"
+	initial_reagents = "currypowder"

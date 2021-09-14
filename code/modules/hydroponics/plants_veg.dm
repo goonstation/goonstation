@@ -86,6 +86,7 @@ ABSTRACT_TYPE(/datum/plant/veg)
 	endurance = 3
 	genome = 13
 	commuts = list(/datum/plant_gene_strain/growth_fast,/datum/plant_gene_strain/terminator)
+	assoc_reagents = list("water_holy")
 
 /datum/plant/veg/turmeric
 	name = "Turmeric"
@@ -100,4 +101,4 @@ ABSTRACT_TYPE(/datum/plant/veg)
 	endurance = 3
 	genome = 13
 	commuts = list(/datum/plant_gene_strain/metabolism_slow,/datum/plant_gene_strain/immunity_toxin)
-	assoc_reagents = list("turmpowder")
+	assoc_reagents = list("currypowder")

@@ -2630,7 +2630,7 @@
 	heal_amt = 2
 	amount = 4
 	initial_volume = 20
-	initial_reagents = list("turmpowder"=10, "capsaicin"=5, "holywater"=5)
+	initial_reagents = list("currypowder"=10, "capsaicin"=5, "holywater"=5)
 	food_effects = list("food_hp_up","food_tox","food_warm")
 
 /obj/item/reagent_containers/food/snacks/potatocurry
@@ -2642,7 +2642,7 @@
 	heal_amt = 2
 	amount = 5
 	initial_volume = 15
-	initial_reagents = list("turmpowder"=10, "oculine"=5)
+	initial_reagents = list("currypowder"=10, "oculine"=5)
 	food_effects = list("food_energized","food_tox","food_warm")
 
 /obj/item/reagent_containers/food/snacks/coconutcurry
@@ -2654,7 +2654,7 @@
 	heal_amt = 2
 	amount = 5
 	initial_volume = 15
-	initial_reagents = list("turmpowder"=10, "oculine"=5)
+	initial_reagents = list("currypowder"=10, "oculine"=5)
 	food_effects = list("food_refreshed","food_tox","food_warm")
 
 /obj/item/reagent_containers/food/snacks/chickenpineapplecurry
@@ -2666,5 +2666,5 @@
 	heal_amt = 2
 	amount = 5
 	initial_volume = 25
-	initial_reagents = list("turmpowder"=10, "capsaicin"=5, "salicylic_acid"=10)
+	initial_reagents = list("currypowder"=10, "capsaicin"=5, "salicylic_acid"=10)
 	food_effects = list("food_brute","food_tox","food_warm")
