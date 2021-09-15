@@ -49,7 +49,7 @@ Alt+Shift+Left Mouse Button = Set the random deviation for generating a random m
 			stage = 4
 			var/list/randomly_generated_matrix = list()
 			for(var/i in 1 to 9)
-				randomly_generated_matrix.Add(rand(random_deviation * 1000)/1000) // from personal testing positive numbers only gave better results.
+				randomly_generated_matrix.Add(random_deviation * rand()) // from personal testing positive numbers only gave better results.
 			calculated_matrix = randomly_generated_matrix
 			boutput(usr, "Randomly generated a matrix: <br>[json_encode(calculated_matrix)]")
 			update_text()
