@@ -355,7 +355,7 @@ obj/item/batarang
 	force = 5
 	contraband = 4
 
-	throwforce = 12
+	throwforce = 8
 	throw_range = 10
 	throw_speed = 1
 	throw_return = 1
