@@ -3843,7 +3843,9 @@
 	dir = 1
 	},
 /obj/cable,
-/obj/machinery/power/solar_control,
+/obj/machinery/computer/solar_control{
+	name = "Western solar panel control"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "apI" = (
@@ -4524,7 +4526,9 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control,
+/obj/machinery/computer/solar_control{
+	name = "Eastern solar panel control"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
 "ast" = (
@@ -14247,9 +14251,7 @@
 /obj/cable/reinforced{
 	icon_state = "0-8-thick"
 	},
-/obj/machinery/power/monitor/smes{
-	name = "Engine Output Monitoring"
-	},
+/obj/machinery/computer/power_monitor/smes,
 /turf/simulated/floor,
 /area/station/engine/power)
 "bcl" = (
@@ -14257,7 +14259,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor,
 /area/station/engine/power)
 "bcm" = (
@@ -33232,9 +33234,6 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/power/monitor/smes{
-	name = "Engine Output Monitoring"
-	},
 /turf/space,
 /area/station/engine/proto)
 "sBj" = (
@@ -37574,7 +37573,7 @@
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/primary/west)
 "xrq" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/purple,
 /area/station/science/teleporter)
 "xrU" = (
