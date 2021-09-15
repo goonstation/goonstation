@@ -65,7 +65,7 @@ Alt+Shift+Left Mouse Button = Set the random deviation for generating a random m
 					boutput(usr, "<span class='alert'>Couldn't get a color. Probably an issue with how getFlatIcon interacts with target. Try again.</span>")
 					return
 				busy = TRUE
-				color_one_mapped_to = get_color_to_map_into_from_user_input(color_one_picked, "Choose a color to map into.")
+				color_one_mapped_to = get_color_from_user_input(color_one_picked, "Choose a color to map into.")
 				busy = FALSE
 			if(2)
 				color_two_picked = get_color_of_clicked_pixel(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
@@ -73,7 +73,7 @@ Alt+Shift+Left Mouse Button = Set the random deviation for generating a random m
 					boutput(usr, "<span class='alert'>Couldn't get a color. Probably an issue with how getFlatIcon interacts with target. Try again.</span>")
 					return
 				busy = TRUE
-				color_two_mapped_to = get_color_to_map_into_from_user_input(color_two_picked, "Choose a color to map into.")
+				color_two_mapped_to = get_color_from_user_input(color_two_picked, "Choose a color to map into.")
 				busy = FALSE
 			if(3)
 				color_three_picked = get_color_of_clicked_pixel(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
@@ -81,7 +81,7 @@ Alt+Shift+Left Mouse Button = Set the random deviation for generating a random m
 					boutput(usr, "<span class='alert'>Couldn't get a color. Probably an issue with how getFlatIcon interacts with target. Try again.</span>")
 					return
 				busy = TRUE
-				color_three_mapped_to = get_color_to_map_into_from_user_input(color_three_picked, "Choose a color to map into.")
+				color_three_mapped_to = get_color_from_user_input(color_three_picked, "Choose a color to map into.")
 				busy = FALSE
 				calculated_matrix = calculate_color_matrix()
 				if(!calculated_matrix)
@@ -128,7 +128,7 @@ Alt+Shift+Left Mouse Button = Set the random deviation for generating a random m
 		var/icon/flat_icon = getFlatIcon(target)
 		return flat_icon.GetPixel(x, y)
 
-	proc/get_color_to_map_into_from_user_input(var/starting_color, var/message)
+	proc/get_color_from_user_input(var/starting_color, var/message)
 		return input("[message]", "Color", starting_color) as color
 
 	proc/calculate_color_matrix()
@@ -173,20 +173,20 @@ Alt+Shift+Left Mouse Button = Set the random deviation for generating a random m
 		switch(selection)
 			if("Colors 1")
 				busy = TRUE
-				color_one_picked = get_color_to_map_into_from_user_input(color_one_picked, "Choose a color to be mapped.")
-				color_one_mapped_to = get_color_to_map_into_from_user_input(color_one_mapped_to, "Choose a color to map into.")
+				color_one_picked = get_color_from_user_input(color_one_picked, "Choose a color to be mapped.")
+				color_one_mapped_to = get_color_from_user_input(color_one_mapped_to, "Choose a color to map into.")
 				busy = FALSE
 				if(stage <= 1) stage++
 			if("Colors 2")
 				busy = TRUE
-				color_two_picked = get_color_to_map_into_from_user_input(color_two_picked, "Choose a color to be mapped.")
-				color_two_mapped_to = get_color_to_map_into_from_user_input(color_two_mapped_to, "Choose a color to map into.")
+				color_two_picked = get_color_from_user_input(color_two_picked, "Choose a color to be mapped.")
+				color_two_mapped_to = get_color_from_user_input(color_two_mapped_to, "Choose a color to map into.")
 				busy = FALSE
 				if(stage <= 2) stage++
 			if("Colors 3")
 				busy = TRUE
-				color_three_picked = get_color_to_map_into_from_user_input(color_three_picked, "Choose a color to be mapped.")
-				color_three_mapped_to = get_color_to_map_into_from_user_input(color_three_mapped_to, "Choose a color to map into.")
+				color_three_picked = get_color_from_user_input(color_three_picked, "Choose a color to be mapped.")
+				color_three_mapped_to = get_color_from_user_input(color_three_mapped_to, "Choose a color to map into.")
 				busy = FALSE
 				if(stage <= 3) stage++
 			else
