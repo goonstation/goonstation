@@ -19,7 +19,7 @@ Alt+Shift+Left Mouse Button = Set a multiplier for matrix randomization value ge
 	var/calculated_matrix
 	var/busy
 	var/using_random = FALSE
-	var/random_deviation = 1
+	var/randomization_multiplier = 1
 
 	var/stage = 1
 
@@ -37,19 +37,19 @@ Alt+Shift+Left Mouse Button = Set a multiplier for matrix randomization value ge
 		if(busy)
 			boutput(usr, "Busy picking a color.")
 			return
-		if(alt && shift) // set random matrix deviation
-			var/num_input = input(usr, "Set a positive value of random deviation (default: 1).", "Random Matrix Deviation", 0) as null|num
+		if(alt && shift) // set random matrix value multiplier
+			var/num_input = input(usr, "Set a positive value for randomization multiplier (default: 1).", "Random Matrix Multiplier", 0) as null|num
 			if(num_input && num_input > 0)
-				random_deviation = num_input
+				randomization_multiplier = num_input
 			else
-				boutput(usr, "<span class='alert'>Invalid value or canceled input, deviation remains at [random_deviation].</span>")
+				boutput(usr, "<span class='alert'>Invalid value or canceled input, randomization multiplier remains at [randomization_multiplier].</span>")
 			return
 		if(alt) // random matrix
 			using_random = TRUE
 			stage = 4
 			var/list/randomly_generated_matrix = list()
 			for(var/i in 1 to 9)
-				randomly_generated_matrix.Add(random_deviation * rand()) // from personal testing positive numbers only gave better results.
+				randomly_generated_matrix.Add(randomization_multiplier * rand()) // from personal testing positive numbers only gave better results.
 			calculated_matrix = randomly_generated_matrix
 			boutput(usr, "Randomly generated a matrix: <br>[json_encode(calculated_matrix)]")
 			update_text()
