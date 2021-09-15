@@ -1,23 +1,40 @@
 
 /datum/random_event/minor/special_order
 	name = "Special Order"
+	customization_available = TRUE
 	var/list/special_order_weights
 
-	event_effect()
+	admin_call(var/source)
+		if (..())
+			return
+		var/list/option_list = list()
+		for(var/type in concrete_typesof(/datum/special_order))
+			var/datum/special_order/O = type
+			option_list[initial(O.name)] = type
+		var/selection = tgui_input_list(usr,"Which special order?", "Special Order Menu", option_list)
+
+		src.event_effect(option_list[selection])
+
+	event_effect(datum/special_order/order_type)
 		..()
 		// build list of possible orders
 
 		// pick one at random or by weight
-		if(!special_order_weights)
-			special_order_weights = list()
-			for(var/type in concrete_typesof(/datum/special_order))
-				var/datum/special_order/O = type
-				special_order_weights[type] = initial(O.weight)
-		var/order_type = weighted_pick(special_order_weights)
+		if(!ispath(order_type))
+			if(!special_order_weights)
+				special_order_weights = list()
+				for(var/type in concrete_typesof(/datum/special_order))
+					var/datum/special_order/O = type
+					special_order_weights[type] = initial(O.weight)
+			order_type = weighted_pick(special_order_weights)
 		var/datum/special_order/new_order = new order_type
 		LAZYLISTADD(shippingmarket.active_orders, new_order)
 
-		shippingmarket.receive_crate(new_order.requisition)
+		if(new_order.C)
+			new_order.pack_crate()
+			shippingmarket.receive_crate(new_order.C)
+		else
+			shippingmarket.receive_crate(new_order.requisition)
 
 /datum/commodity/proc/item_check(var/obj)
 		return TRUE
@@ -78,6 +95,9 @@
 				. += "<li>[initial(C.comname)]</li>"
 		. += "</ul>"
 
+	proc/pack_crate()
+		return
+
 ABSTRACT_TYPE(/datum/special_order/reagents)
 /datum/special_order/reagents
 	var/list/reagents_list
@@ -102,6 +122,11 @@ ABSTRACT_TYPE(/datum/special_order/reagents)
 			if(src.reagents_list[R])
 				. += "<li>([src.reagents_list[R]]u) [R]</li>"
 		. += "</ul>"
+
+ABSTRACT_TYPE(/datum/special_order/surgery)
+/datum/special_order/surgery
+	get_shopping_list()
+		. = ""
 
 /datum/commodity/special_order/pizza
 	comname = "Pizza"
@@ -143,7 +168,47 @@ ABSTRACT_TYPE(/datum/special_order/reagents)
 	price = 9000
 	reagents_list = list("blood"=1000)
 
+/datum/special_order/surgery/organ_swap
+	name = "Organ Swap"
+	weight = 25
+	price = 5000
+	C = new /obj/storage/crate/wooden
+	requisition = new /obj/item/paper/requisition/surgery/organ_swap
+	var/mob/living/carbon/human/target
+	var/target_organs = list()
 
+	New()
+		..()
+		var/possible_targets = list("brain", "left_eye", "right_eye", "heart", "left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
+		for(var/i in 1 to rand(3,6))
+			target_organs |= pick(possible_targets)
+
+	pack_crate()
+		//Make Mob
+		target = new /mob/living/carbon/human/npc/assistant
+		randomize_look(target, 1, 1, 1, 1, 1, 0)
+		target.set_loc(C)
+		target.TakeDamage("All", rand(10, 20), rand(10, 20))
+		target.organHolder.damage_organs(1, 6, 10, target_organs)
+		//Let people have time to figure out what is going on before he starts fucking shit up
+		target.setStatus("paralysis", rand(4 MINUTE, 6 MINUTES))
+		target.setStatus("stunned", rand(4 MINUTE, 4 MINUTES))
+		target.setStatus("weakened", rand(1 MINUTE, 2 MINUTES))
+		//Fuck up Organs
+		target.sleeping = 10 MINUTES
+
+		requisition.set_loc(C)
+
+	check_order(obj/storage/crate/sell_crate)
+		if(target in sell_crate)
+			for(var/organ in target_organs)
+				var/obj/item/organ/O = target.organHolder.get_organ(organ)
+				//Check if organ was not replaced or if it was originally from target...
+				if(!O || (O.donor_original==target && O.donor_name))
+					// Well shit bye bye... target
+					shippingmarket.active_orders -= src
+					return FALSE
+		return TRUE
 
 /obj/item/paper/requisition
 	name = "Order Requisition"
@@ -214,3 +279,15 @@ ABSTRACT_TYPE(/datum/special_order/reagents)
 		src.stamp(rand(50,160), rand(190,290), rand(-40,40), "stamp-gtc.png", "stamp-syndicate")
 		src.stamp(rand(120,260), rand(50,390), rand(20,60), "stamp-gtc.png", "stamp-syndicate")
 
+/obj/item/paper/requisition/surgery/organ_swap
+	info = {"TO:Space Station 13<BR/>
+	FROM: Outpost \[REDACTED\]<BR/>
+	<h3>Cadaver Surgery Exercise 32-21-A</h3>
+	<BR/><p>Replace all internal organs of the individual co-located with these instructions.</p><BR/>
+	<BR/><p>Removed organs are to be destroyed.</p><BR/>
+	<BR/><p>Return individual once complete for evaluation.</p><BR/>
+	<BR/><BR/>
+	<i>All information included or obtained regarding the individual should be ignored and are all part of the training exercise.</i>"}
+	New()
+		..()
+		src.stamp(rand(90,160), rand(120,160), rand(-20,20), "stamp-classified.png", "stamp-syndicate")

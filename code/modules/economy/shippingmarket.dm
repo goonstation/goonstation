@@ -279,6 +279,7 @@
 			for(var/datum/special_order/order in active_orders)
 				if(order.check_order(sell_crate))
 					duckets += order.price
+					active_orders -= order
 
 		duckets += src.appraise_value(sell_crate, commodities_list, 1) + src.points_per_crate
 
