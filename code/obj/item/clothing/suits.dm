@@ -1344,7 +1344,7 @@
 		item_state = "induseng"
 		setupProperties()
 			..()
-			setProperty("exploprot", 0)
+			delProperty("exploprot")
 			setProperty("heatprot", 40)
 
 /obj/item/clothing/suit/space/industrial/syndicate/ntso

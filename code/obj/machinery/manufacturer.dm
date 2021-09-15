@@ -2129,10 +2129,7 @@
 		/datum/manufacture/breathmask,
 		/datum/manufacture/fluidcanister,
 		/datum/manufacture/patch)
-	hidden = list(/datum/manufacture/RCDammo,
-		/datum/manufacture/RCDammomedium,
-		/datum/manufacture/RCDammolarge,
-		/datum/manufacture/bottle,
+	hidden = list(/datum/manufacture/bottle,
 		/datum/manufacture/vuvuzela,
 		/datum/manufacture/harmonica,
 		/datum/manufacture/bikehorn,
@@ -2350,11 +2347,6 @@
 	/datum/manufacture/mining_magnet
 #endif
 	)
-
-	hidden = list(/datum/manufacture/RCD,
-	/datum/manufacture/RCDammo,
-	/datum/manufacture/RCDammomedium,
-	/datum/manufacture/RCDammolarge)
 
 /obj/machinery/manufacturer/hangar
 	name = "Ship Component Fabricator"
