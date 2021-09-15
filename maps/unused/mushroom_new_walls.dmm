@@ -33263,12 +33263,6 @@
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"sEP" = (
-/turf/simulated/wall/false_wall{
-	icon = 'icons/turf/walls_supernorn.dmi';
-	icon_state = "12"
-	},
-/area/station/hallway/primary/west)
 "sFc" = (
 /obj/stool/bench/blue/auto,
 /obj/disposalpipe/segment/mail{
@@ -76000,7 +75994,7 @@ xFS
 xFS
 xFS
 kRa
-sEP
+tfa
 aGK
 tfa
 abm
