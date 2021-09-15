@@ -7,8 +7,8 @@ Right Mouse Button = Depaint target.<br>
 Ctrl+Left Mouse Button = Reset color selections.<br>
 Right Mouse Button on buildmode = Manual tweaking - choose the color or edit already picked colors via the color picker instead of clicking on pixels.<br>
 Alt+Left Mouse Button = Generate a random matrix for use.<br>
-Alt+Shift+Left Mouse Button = Set the random deviation for generating a random matrix.
-***********************************************************"}
+Alt+Shift+Left Mouse Button = Set a multiplier for matrix randomization value generation (default: 1).
+<br>***********************************************************"}
 	icon_state = "buildmode7_matrix"
 	var/color_one_picked
 	var/color_one_mapped_to
