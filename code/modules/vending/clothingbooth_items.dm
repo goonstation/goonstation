@@ -81,7 +81,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/accessory/hbow)
 	navy
 		name = "Navy Hair Bow"
 		path = /obj/item/clothing/head/hairbow/navy
-	
+
 	purple
 		name = "Purple Hair Bow"
 		path = /obj/item/clothing/head/hairbow/purple
@@ -183,6 +183,50 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/casual)
 	name = "Band Shirt"
 	path = /obj/item/clothing/under/misc/bandshirt
 
+/datum/clothingbooth_item/casual/flannel
+	name = "Flannel"
+	path = /obj/item/clothing/under/misc/flannel
+
+/datum/clothingbooth_item/casual/tech_shirt
+	name = "Tech Shirt"
+	path = /obj/item/clothing/under/misc/tech_shirt
+
+/datum/clothingbooth_item/casual/bubble_shirt
+	name = "Bubble Shirt"
+	path = /obj/item/clothing/under/misc/bubble
+
+/datum/clothingbooth_item/casual/spade
+	name = "Spade Shirt"
+	path = /obj/item/clothing/under/misc/spade
+
+/datum/clothingbooth_item/casual/club
+	name = "Club Shirt"
+	path = /obj/item/clothing/under/misc/club
+
+/datum/clothingbooth_item/casual/heart
+	name = "Heart Shirt"
+	path = /obj/item/clothing/under/misc/heart
+
+/datum/clothingbooth_item/casual/diamond
+	name = "Diamond Shirt"
+	path = /obj/item/clothing/under/misc/diamond
+
+/datum/clothingbooth_item/casual/collar_pink
+	name = "Pink Collar Shirt"
+	path = /obj/item/clothing/under/misc/collar_pink
+
+/datum/clothingbooth_item/casual/flame_purple
+	name = "Purple Flame Shirt"
+	path = /obj/item/clothing/under/misc/flame_purple
+
+/datum/clothingbooth_item/casual/flame_rainbow
+	name = "Rainbow Flame Shirt"
+	path = /obj/item/clothing/under/misc/flame_rainbow
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/casual/fish
+	name = "Fish Shirt"
+	path = /obj/item/clothing/under/misc/fish
 
 //Dresses
 
@@ -364,6 +408,11 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/formal)
 	cost = PAY_IMPORTANT
 	hidden = 1
 
+/datum/clothingbooth_item/formal/fancy_vest
+	name = "Fancy Vest"
+	path = /obj/item/clothing/under/misc/fancy_vest
+	cost = PAY_DOCTORATE/3
+
 //Outerwear
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/outerwear)
@@ -481,6 +530,10 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/outerwear)
 /datum/clothingbooth_item/outerwear/merchantjacket
 	name = "Tacky Merchants Jacket"
 	path = /obj/item/clothing/suit/merchant
+
+/datum/clothingbooth_item/outerwear/jean_jacket
+	name = "Jean Jackett"
+	path = /obj/item/clothing/suit/jean_jacket
 
 /datum/clothingbooth_item/outerwear/tuxedojacket
 	name = "Tuxedo Jacket"
@@ -704,6 +757,14 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head)
 	name = "Gold Hairclips"
 	path = /obj/item/clothing/head/barrette/gold
 
+/datum/clothingbooth_item/head/pomhat_red
+	name = "Red Pomhat"
+	path = /obj/item/clothing/head/pomhat_red
+
+/datum/clothingbooth_item/head/pomhat_blue
+	name = "Blue Pomhat"
+	path = /obj/item/clothing/head/pomhat_blue
+
 /datum/clothingbooth_item/head/ushanka
 	name = "Ushanka"
 	path = /obj/item/clothing/head/ushanka
@@ -723,6 +784,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head)
 	name = "Hero Hat"
 	path = /obj/item/clothing/head/link
 	cost = PAY_TRADESMAN
+
 
 //Sci-Fi
 

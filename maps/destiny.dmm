@@ -618,14 +618,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
-/obj/firedoor_spawn,
-/turf/simulated/floor/black,
+/obj/cable,
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating/random,
 /area/station/hallway/primary/southeast)
 "acp" = (
 /obj/cable{
@@ -6621,7 +6616,6 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/shrub,
 /obj/machinery/light/incandescent/harsh{
 	dir = 1;
 	nostick = 1
@@ -9935,6 +9929,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
+"aMQ" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/black,
+/area/station/hallway/primary/central)
 "aMR" = (
 /obj/table/reinforced/auto,
 /obj/machinery/glass_recycler,
@@ -11221,7 +11222,7 @@
 	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/solar_control/west{
+/obj/machinery/computer/solar_control/west{
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
@@ -15450,7 +15451,7 @@
 /area/station/maintenance/outer/sw)
 "buB" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
 	},
@@ -15614,7 +15615,6 @@
 	name = "autoname  - SS13"
 	},
 /obj/machinery/turret,
-/obj/machinery/turretcover,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "bvn" = (
@@ -16872,7 +16872,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "bzT" = (
@@ -22706,6 +22706,7 @@
 	req_access = null
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/hos,
 /turf/simulated/floor/red,
 /area/station/security/hos)
 "dVf" = (
@@ -25200,7 +25201,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/drainage,
+/obj/shrub,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "eYI" = (
@@ -26768,7 +26769,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/drainage,
+/obj/shrub,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "fLO" = (
@@ -29977,6 +29978,7 @@
 	},
 /obj/machinery/door/airlock/pyro/weapons,
 /obj/firedoor_spawn,
+/obj/access_spawn/hos,
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "hoL" = (
@@ -31709,7 +31711,7 @@
 	icon_state = "line2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -33954,7 +33956,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hydroponics/bay)
 "jFj" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -35326,6 +35328,7 @@
 /obj/machinery/light/emergency{
 	dir = 4
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "kvY" = (
@@ -36549,11 +36552,11 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/food,
-/obj/cable{
-	icon_state = "0-2"
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
 	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/random,
+/obj/firedoor_spawn,
+/turf/simulated/floor/black,
 /area/station/hallway/primary/west)
 "leR" = (
 /obj/machinery/light{
@@ -37863,11 +37866,11 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
+/obj/cable{
+	icon_state = "0-4"
 	},
-/obj/firedoor_spawn,
-/turf/simulated/floor/black,
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating/random,
 /area/station/hallway/primary/west)
 "lRE" = (
 /obj/cable,
@@ -37930,7 +37933,7 @@
 "lSZ" = (
 /obj/rack,
 /obj/item/storage/box/stinger_kit,
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
 /obj/item/chem_grenade/pepper,
 /obj/item/chem_grenade/pepper,
 /obj/decal/tile_edge/line/red{
@@ -38331,7 +38334,6 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/shrub,
 /obj/decal/tile_edge/line/green{
 	dir = 1;
 	icon_state = "line1"
@@ -38471,6 +38473,14 @@
 /obj/potted_plant/potted_plant2,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
+"mic" = (
+/obj/disposalpipe/segment/mail,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/black,
+/area/station/hallway/primary/central)
 "mil" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -39373,9 +39383,11 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/cable,
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/random,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/firedoor_spawn,
+/turf/simulated/floor/black,
 /area/station/hallway/primary/west)
 "mGL" = (
 /obj/machinery/shipalert{
@@ -39394,9 +39406,11 @@
 	},
 /area/station/bridge)
 "mGQ" = (
-/obj/cable,
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/random,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/firedoor_spawn,
+/turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
 "mGU" = (
 /obj/decal/tile_edge/stripe{
@@ -41969,6 +41983,7 @@
 /obj/machinery/light/emergency{
 	dir = 8
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "oem" = (
@@ -45296,7 +45311,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	name = "Engine Output Monitoring"
 	},
 /obj/disposalpipe/segment{
@@ -45715,7 +45730,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "qhx" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	name = "Engine Output Monitoring"
 	},
 /obj/cable{
@@ -50961,7 +50976,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/machinery/light_switch/north{
 	pixel_y = 28
 	},
@@ -52846,7 +52861,7 @@
 	},
 /area/station/medical/robotics)
 "ued" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4
 	},
 /obj/machinery/power/data_terminal,
@@ -53557,7 +53572,7 @@
 	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -54118,12 +54133,14 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/cable,
-/obj/cable{
-	icon_state = "0-2"
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
 	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/random,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/firedoor_spawn,
+/turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
 "uJT" = (
 /obj/disposalpipe/segment/mail{
@@ -55389,9 +55406,6 @@
 	},
 /turf/simulated/floor/purple/checker,
 /area/station/janitor/supply)
-"vpb" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/solar/east)
 "vpo" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -56388,7 +56402,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/solar_control/east{
+/obj/machinery/computer/solar_control/east{
 	dir = 8
 	},
 /turf/simulated/floor/plating/random,
@@ -56686,11 +56700,6 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
 "wdt" = (
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=sec";
-	location = "courtroom";
-	name = "bot navigation beacon"
-	},
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
@@ -56937,6 +56946,7 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/hos,
 /turf/simulated/floor/red,
 /area/station/security/hos)
 "wiU" = (
@@ -60664,9 +60674,6 @@
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/simulated/floor,
 /area/station/engine/gas)
-"yfE" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/solar/west)
 "yfL" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -103089,7 +103096,7 @@ aaa
 uNs
 aWn
 aXq
-yfE
+arP
 arP
 bkt
 bkt
@@ -103391,7 +103398,7 @@ arP
 arP
 asz
 arP
-yfE
+arP
 awP
 cEG
 glY
@@ -106149,7 +106156,7 @@ vry
 uSJ
 uSJ
 wjb
-vry
+aMQ
 oPl
 amJ
 aCZ
@@ -107357,7 +107364,7 @@ akB
 akB
 akB
 aTR
-omH
+mic
 akA
 amJ
 mDJ
@@ -109727,7 +109734,7 @@ vvE
 rWB
 apR
 apR
-vpb
+nrA
 vne
 uGe
 vVd
@@ -110029,12 +110036,12 @@ aaa
 aaa
 aaa
 aaa
-vpb
-vpb
-vpb
-vpb
+nrA
+nrA
+nrA
+nrA
 iqW
-vpb
+nrA
 nnS
 tFq
 aSo
@@ -110338,7 +110345,7 @@ uNs
 kga
 aXT
 nrA
-vpb
+nrA
 aAM
 aAM
 ast

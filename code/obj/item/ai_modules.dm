@@ -20,6 +20,7 @@ AI MODULES
 	throw_speed = 3
 	throw_range = 15
 	mats = 8
+	var/input_char_limit = 100
 	var/lawNumber = 0
 	var/lawTarget = null
 	// 1 = shows all laws, 0 = won't show law zero
@@ -38,7 +39,7 @@ AI MODULES
 		if (!user)
 			return
 		var/answer = input(user, text, title, default) as null|text
-		lawTarget = copytext(adminscrub(answer), 1, MAX_MESSAGE_LEN)
+		lawTarget = copytext(adminscrub(answer), 1, input_char_limit)
 		tooltip_rebuild = 1
 		boutput(user, "\The [src] now reads, \"[get_law_text(for_silicons=FALSE)]\".")
 
@@ -241,6 +242,7 @@ AI MODULES
 /obj/item/aiModule/freeform
 	name = "'Freeform' AI Module"
 	lawNumber = 14
+	input_char_limit = 400
 
 	get_law_text(for_silicons)
 		return lawTarget ? lawTarget : "This law intentionally left blank."

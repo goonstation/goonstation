@@ -731,6 +731,8 @@
 		desc = "Ooh, fancy."
 		icon_state = "indusred"
 		item_state = "indusred"
+		is_syndicate = 1
+
 		setupProperties()
 			..()
 			setProperty("meleeprot_head", 7)
