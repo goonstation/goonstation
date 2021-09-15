@@ -134,7 +134,7 @@
 			src.pot = null
 
 	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
 	proc/light(var/mob/user, var/message as text)
 		if(pot.my_soup)

@@ -252,6 +252,7 @@ mob/new_player
 					if(latejoin)
 						close_spawn_windows()
 						latejoin.activated = 1
+						latejoin.owner = src.mind
 						src.mind.transfer_to(S)
 						SPAWN_DBG(1 DECI SECOND)
 							S.choose_name()
@@ -809,6 +810,10 @@ a.latejoin-card:hover {
 		set name = ".ready"
 
 		if (ticker)
+			if(current_state == GAME_STATE_SETTING_UP || (current_state <= GAME_STATE_PREGAME && ticker.pregame_timeleft <= 1))
+				boutput(usr, "<span class='alert'>The round is currently being set up. Please wait.</span>")
+				return
+
 			if (ticker.mode)
 				if (istype(ticker.mode, /datum/game_mode/construction))
 					var/datum/game_mode/construction/C = ticker.mode
@@ -836,7 +841,7 @@ a.latejoin-card:hover {
 		set name = ".cancel_ready"
 
 		if (ticker)
-			if(ticker.pregame_timeleft <= 1 SECOND)
+			if(ticker.pregame_timeleft <= 3)
 				boutput(usr, "<span class='alert'>It is too close to roundstart for you to unready. Please wait until setup finishes.</span>")
 				return
 			if (ticker.mode)

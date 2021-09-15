@@ -35,6 +35,28 @@
 		return
 	if (W.w_class < W_CLASS_BULKY)
 		if ((istool(user.l_hand, TOOL_CUTTING | TOOL_SNIPPING) && user.l_hand != W) || (istool(user.r_hand, TOOL_CUTTING | TOOL_SNIPPING) && user.r_hand != W))
+			if(istype(W, /obj/item/c_tube) && user.client)
+				var user_choice = input(user, "Do what to the cardboard tube?", "Cardboard tube") in list("Cancel", "Wrap", "Create Hat")
+				if(user_choice == "Cancel")
+					return
+				if(!(user_choice == "Wrap"))
+					var/a_used = 2 ** (src.w_class - 1)
+					if (src.amount < a_used)
+						boutput(user, "<span class='notice'>You need more paper!</span>")
+						return
+					src.amount -= a_used
+					tooltip_rebuild = 1
+					user.drop_item()
+					qdel(W)
+					var/obj/item/clothing/head/apprentice/A = new /obj/item/clothing/head/apprentice(src.loc)
+					A.add_fingerprint(user)
+					user.put_in_hand_or_drop(A)
+					if (src.amount <= 0)
+						user.u_equip(src)
+						var/obj/item/c_tube/C = new /obj/item/c_tube(src.loc)
+						user.put_in_hand_or_drop(C)
+						qdel(src)
+					return
 			if(istype(W, /obj/item/phone_handset/))
 				boutput(user, "<span class='notice'>You can't wrap that, it has a cord attached!</span>")
 				return

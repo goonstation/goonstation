@@ -514,12 +514,15 @@
 	if(health_mon)
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(health_mon)
 		health_mon.dispose()
+		health_mon = null
 	if(health_implant)
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(health_implant)
 		health_implant.dispose()
+		health_implant = null
 	if(arrestIcon)
 		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_image(arrestIcon)
 		arrestIcon.dispose()
+		arrestIcon = null
 
 	src.chest_item = null
 
@@ -989,6 +992,8 @@
 	..()
 	var/turf/thrown_from = get_turf(src)
 	src.throw_mode_off()
+	if (HAS_MOB_PROPERTY(src, PROP_CANTTHROW))
+		return
 	if (src.stat)
 		return
 
@@ -1480,13 +1485,12 @@
 		return 1*/
 
 /mob/living/carbon/human/say_quote(var/text)
+	var/sayverb = null
 	if (src.mutantrace)
 		if (src.mutantrace.voice_message)
 			src.voice_name = src.mutantrace.voice_name
 			src.voice_message = src.mutantrace.voice_message
-		if (text == "" || !text)
-			return src.mutantrace.say_verb()
-		return "[src.mutantrace.say_verb()], \"[text]\""
+		sayverb = src.mutantrace.say_verb()
 	else
 		src.voice_name = initial(src.voice_name)
 		src.voice_message = initial(src.voice_message)
@@ -1497,7 +1501,7 @@
 	if (src.oxyloss > 10)
 		special = "gasp_whisper"
 
-	return ..(text,special)
+	return ..(text, special, sayverb)
 
 //Lallander was here
 /mob/living/carbon/human/whisper(message as text, forced=FALSE)
@@ -3311,7 +3315,7 @@
 		if (!src.limbs.r_leg) missing_legs++
 		if (!src.limbs.l_arm) missing_arms++
 		if (!src.limbs.r_arm) missing_arms++
-	if (src.lying)
+	if (src.lying || GET_COOLDOWN(src, "unlying_speed_cheesy"))
 		missing_legs = 2
 	else if (src.shoes && src.shoes.chained)
 		missing_legs = 2
@@ -3372,7 +3376,7 @@
 				src.changeStatus("stunned", 3 SECONDS)
 
 		else
-			AM.attack_hand(src)	// nice catch, hayes. don't ever fuckin do it again
+			AM.Attackhand(src)	// nice catch, hayes. don't ever fuckin do it again
 			src.visible_message("<span class='alert'>[src] catches the [AM.name]!</span>")
 			logTheThing("combat", src, null, "catches [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
 			src.throw_mode_off()

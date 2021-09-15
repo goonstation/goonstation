@@ -333,6 +333,7 @@
 	var/list/prefix1 = list("Incredibly", "Strange", "Mysterious", "Suspicious", "Scary")
 	var/list/prefix2 = list("Rare", "Black", "Dark", "Shadowy", "Expensive", "Fun", "Gamer")
 	var/list/names = list("Flower", "Blossom", "Tulip", "Daisy")
+	card_style = "stg"
 
 	New()
 		..()

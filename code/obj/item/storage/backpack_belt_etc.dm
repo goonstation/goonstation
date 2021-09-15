@@ -551,6 +551,15 @@
 	)
 	in_list_or_max = 1
 
+/obj/item/storage/belt/mining/prepared
+	spawn_contents = list(/obj/item/mining_tool/power_pick,
+		/obj/item/ore_scoop/prepared,
+		/obj/item/satchel/mining,
+		/obj/item/device/geiger,
+		/obj/item/device/gps,
+		/obj/item/oreprospector,
+		/obj/item/device/appraisal)
+
 /obj/item/storage/belt/hunter
 	name = "trophy belt"
 	desc = "Holds normal-sized items, such as skulls."
@@ -686,10 +695,9 @@
 	desc = "A canvas duffel bag full of medical autoinjectors."
 	icon_state = "medic_belt"
 	item_state = "medic_belt"
-	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/high_capacity/epinephrine,
-	/obj/item/reagent_containers/emergency_injector/high_capacity/saline,
-	/obj/item/reagent_containers/emergency_injector/high_capacity/salbutamol,
-	/obj/item/reagent_containers/emergency_injector/high_capacity/mannitol,
+	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/high_capacity/cardiac,
+	/obj/item/reagent_containers/emergency_injector/high_capacity/bloodloss,
+	/obj/item/reagent_containers/emergency_injector/high_capacity/lifesupport,
 	/obj/item/reagent_containers/emergency_injector/high_capacity/juggernaut,
 	/obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector)
 

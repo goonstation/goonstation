@@ -1577,7 +1577,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 					src.dynamicUpdate(M, reason|updateFlags)
 					updateFlags = REASON_NONE
 				else
-					src.attack_hand(M)
+					src.Attackhand(M)
 
 		if (issilicon(usr))
 			if (!(usr in nearby))

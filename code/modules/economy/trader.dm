@@ -1,7 +1,7 @@
 /proc/most_applicable_trade(var/list/datum/commodity/goods_buy, var/obj/item/sell_item)
 	var/list/goods_buy_types = new /list(0)
 	for(var/datum/commodity/N as anything in goods_buy)
-		if (istype(sell_item, N.comtype))
+		if (N.subtype_valid ? istype(sell_item, N.comtype) : N.comtype == sell_item.type)
 			goods_buy_types[N.comtype] = N
 	return goods_buy_types[maximal_subtype(goods_buy_types)]
 
@@ -800,13 +800,13 @@
 				var/carlsell = rand(1,10)
 				src.goods_illegal += new /datum/commodity/contraband/command_suit(src)
 				src.goods_illegal += new /datum/commodity/contraband/disguiser(src)
-				if (carlsell <= 2)
+				if (carlsell <= 3)
 					src.goods_illegal += new /datum/commodity/contraband/radiojammer(src)
-				if (carlsell >= 3 && carlsell <= 5)
+				if (carlsell >= 2 && carlsell <= 6)
 					src.goods_illegal += new /datum/commodity/contraband/stealthstorage(src)
-				if (carlsell >= 6 && carlsell <= 8)
+				if (carlsell >= 5 && carlsell <= 8)
 					src.goods_illegal += new /datum/commodity/contraband/voicechanger(src)
-				if (carlsell == 9) // if it rolls 10, then none of the three are sold
+				if (carlsell >= 9)
 					src.goods_illegal += new /datum/commodity/contraband/radiojammer(src)
 					src.goods_illegal += new /datum/commodity/contraband/stealthstorage(src)
 					src.goods_illegal += new /datum/commodity/contraband/voicechanger(src)

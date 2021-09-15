@@ -62,9 +62,9 @@
 		logTheThing("admin", null, null, "Setting up Sleeper Agent event. Source: [source ? "[source]" : "random"]")
 		SPAWN_DBG(0)
 			src.lock = 1
-			do_event(source=="spawn_antag")
+			do_event(source=="spawn_antag", source)
 
-	proc/do_event(var/force_antags = 0)
+	proc/do_event(var/force_antags = 0, var/source)
 		gen_numbers()
 		gather_listeners()
 		if (!listeners.len)
@@ -93,11 +93,11 @@
 			if (length(candidates))
 				var/mob/living/carbon/human/H = null
 				num_agents = min(num_agents, length(candidates))
-				for(var/i in 0 to num_agents)
+				for(var/i in 1 to num_agents)
 					H = pick(candidates)
 					candidates -= H
 					if(istype(H))
-						awaken_sleeper_agent(H)
+						awaken_sleeper_agent(H, source)
 			else
 				message_admins("No valid candidates to wake for sleeper event.")
 
@@ -110,7 +110,7 @@
 			cleanup_event()
 		return
 
-	proc/awaken_sleeper_agent(var/mob/living/carbon/human/H)
+	proc/awaken_sleeper_agent(var/mob/living/carbon/human/H, var/source)
 		var/list/eligible_objectives = list(
 			/datum/objective/regular/assassinate,
 			/datum/objective/regular/steal,
@@ -145,7 +145,7 @@
 			objective.owner = H.mind
 			objective.set_up()
 			H.mind.objectives += objective
-
+		logTheThing("admin", H, null, "awakened as a sleeper agent antagonist. Source: [source == "spawn_antag" ? "random event" : "[source]"]")
 		H.show_text("<h2><font color=red><B>You have awakened as a syndicate sleeper agent!</B></font></h2>", "red")
 		H.mind.special_role = ROLE_SLEEPER_AGENT
 		H << browse(grabResource("html/traitorTips/traitorsleeperTips.html"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")

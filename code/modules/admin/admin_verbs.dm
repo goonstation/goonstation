@@ -335,8 +335,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_crusher_walls,
 		/client/proc/cmd_disco_lights,
 		/client/proc/cmd_blindfold_monkeys,
-		/client/proc/cmd_swampify_station,
-		/client/proc/cmd_trenchify_station,
+		/client/proc/cmd_terrainify_station,
 		/client/proc/cmd_special_shuttle,
 
 		/datum/admins/proc/toggleaprilfools,
@@ -881,7 +880,6 @@ var/list/fun_images = list()
 	if (!crossness || crossness == "Cancel")
 		return
 
-	message_admins(crossness)
 	if(!M.client)
 		alert("[M] is logged out, so you should probably ban them!")
 		return

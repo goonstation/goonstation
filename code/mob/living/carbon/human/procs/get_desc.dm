@@ -2,8 +2,8 @@
 /mob/living/carbon/human/get_desc()
 
 	var/ignore_checks = isobserver(usr)
-
-	if (!ignore_checks && src.bioHolder && src.bioHolder.HasEffect("examine_stopper"))
+	var/examine_stopper = src.bioHolder?.HasEffect("examine_stopper")
+	if (!ignore_checks && examine_stopper && get_dist(usr.client.eye, src) > 3 - 2 * examine_stopper)
 		return "<br><span class='alert'>You can't seem to make yourself look at [src.name] long enough to observe anything!</span>"
 
 	if (src.simple_examine || isghostdrone(usr))
@@ -281,7 +281,7 @@
 	if (C?.in_fakedeath)
 		changeling_fakedeath = 1
 
-	if ((isdead(src)) || changeling_fakedeath || (src.reagents.has_reagent("capulettium") && src.getStatusDuration("paralysis")) || (src.reagents.has_reagent("capulettium_plus") && src.hasStatus("resting")))
+	if ((isdead(src)) || changeling_fakedeath || src.bioHolder?.HasEffect("dead_scan") == 2 || (src.reagents.has_reagent("capulettium") && src.getStatusDuration("paralysis")) || (src.reagents.has_reagent("capulettium_plus") && src.hasStatus("resting")))
 		if (!src.decomp_stage)
 			. += "<br><span class='alert'>[src] is limp and unresponsive, a dull lifeless look in [t_his] eyes.</span>"
 	else

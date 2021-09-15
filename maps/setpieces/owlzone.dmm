@@ -3042,7 +3042,7 @@
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "hn" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4
 	},
 /obj/cable,

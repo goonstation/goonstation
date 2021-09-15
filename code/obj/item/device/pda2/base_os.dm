@@ -544,7 +544,7 @@
 						if(href_list["message_send"])
 							t = href_list["message_send"]
 						else
-							t = input(usr, "Please enter message", target_name, null) as text
+							t = input(usr, "Please enter message", target_name, null) as null|text
 						if (!t || !isalive(usr))
 							return
 
@@ -798,7 +798,7 @@
 						if (islist(groupAddress))
 							senderstring += " to [jointext(groupAddress,", ")]"
 						else
-							senderstring += " to <a href='byond://?src=\ref[src];input=message;[groupAddress in src.master.alertgroups ? "" : "target=[groupAddress]"];department=1'>[groupAddress]</a>"
+							senderstring += " to <a href='byond://?src=\ref[src];input=message;[(groupAddress in src.master.alertgroups) ? "" : "target=[groupAddress]"];department=1'>[groupAddress]</a>"
 
 					src.message_note += "<i><b>&larr; [senderstring]:</b></i><br>[signal.data["message"]]<br>"
 					var/alert_beep = null //Don't beep if set to silent.
@@ -826,7 +826,7 @@
 						if (islist(groupAddress))
 							displayMessage += " to [jointext(groupAddress,", ")]"
 						else
-							displayMessage += " to <a href='byond://?src=\ref[src];input=message;[groupAddress in src.master.alertgroups ? "" : "target=[groupAddress]"];department=1'>[groupAddress]</a>"
+							displayMessage += " to <a href='byond://?src=\ref[src];input=message;[(groupAddress in src.master.alertgroups) ? "" : "target=[groupAddress]"];department=1'>[groupAddress]</a>"
 					displayMessage += ":</b></i> [signal.data["message"]]"
 					src.master.display_message(displayMessage)
 

@@ -62,6 +62,7 @@
 	item_state = "incapacitor"
 	force = 1.0
 	rechargeable = 0 // yeah this is weird alien technology good fucking luck charging it
+	can_swap_cell = 0 // No
 	cell_type = /obj/item/ammo/power_cell/self_charging
 	projectiles = null
 	is_syndicate = 1 // it's less that this is a syndicate weapon and more that replicating it isn't trivial

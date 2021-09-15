@@ -286,7 +286,7 @@
 		controller.show_text("\The [detonator_part] is inert without a canister to attach it to!", "red")
 		return
 
-	src.detonator_part.attachedTo.attack_hand(controller)
+	src.detonator_part.attachedTo.Attackhand(controller)
 
 /obj/item/device/brainjar/proc/expedite_canbomb_detonation()
 	set name = "Expedite detonation!"

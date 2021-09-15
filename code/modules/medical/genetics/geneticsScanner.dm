@@ -81,7 +81,7 @@ var/list/genetek_hair_styles = list()
 			var/previous_user_intent = user.a_intent
 			user.a_intent = INTENT_GRAB
 			user.drop_item()
-			target.attack_hand(user)
+			target.Attackhand(user)
 			user.a_intent = previous_user_intent
 			SPAWN_DBG(user.combat_click_delay + 2)
 				if (can_operate(user,target))
@@ -117,7 +117,7 @@ var/list/genetek_hair_styles = list()
 	proc/move_mob_inside(var/mob/M)
 		if (!can_operate(M,M)) return
 
-		M.pulling = null
+		M.remove_pulling()
 		src.go_in(M)
 
 		for(var/obj/O in src)
@@ -185,7 +185,7 @@ var/list/genetek_hair_styles = list()
 
 		var/mob/M = G.affecting
 		if (L.pulling == M)
-			L.pulling = null
+			L.remove_pulling()
 		src.go_in(M)
 
 		for(var/obj/O in src)

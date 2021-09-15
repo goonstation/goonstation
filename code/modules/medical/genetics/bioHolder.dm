@@ -341,7 +341,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/bloodType = "AB+-"
 	var/bloodColor = null
 	var/age = 30.0
-	var/genetic_stability = 100
+	var/genetic_stability = 125
 	var/clone_generation = 0 //Get this high enough and you can be like Arnold. Maybe. I found that movie fun. Don't judge me.
 
 	var/datum/appearanceHolder/mobAppearance = null
@@ -551,6 +551,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 				if(BE.timeLeft != -1)
 					BE.timeLeft -= 1*mult
 					if(BE.timeLeft <= 0)
+						if(BE.degrade_after && BE.degrade_to)
+							AddEffect(BE.degrade_to, do_stability = 0)
 						RemoveEffect(BE.id)
 		return
 
@@ -605,14 +607,15 @@ var/list/datum/bioEffect/mutini_effects = list()
 					if(!newCopy) continue
 
 					newCopy.timeLeft = BE.timeLeft
-					newCopy.variant = BE.variant
+					var/oldpower = newCopy.power
+					newCopy.power = BE.power
+					newCopy.onPowerChange(oldpower, newCopy.power)
 					newCopy.data = BE.data
 				else
-					var/datum/bioEffect/newCopy = AddEffect(BE.id)
+					var/datum/bioEffect/newCopy = AddEffect(BE.id, power = BE.power)
 					if(!newCopy) continue
 
 					newCopy.timeLeft = BE.timeLeft
-					newCopy.variant = BE.variant
 					newCopy.data = BE.data
 		return
 
@@ -629,7 +632,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		age += (toCopy.age - age) / (11 - progress)
 
-	proc/AddEffect(var/idToAdd, var/variant = 0, var/timeleft = 0, var/do_stability = 1, var/magical = 0)
+	proc/AddEffect(var/idToAdd, var/power = 0, var/timeleft = 0, var/do_stability = 1, var/magical = 0)
 		//Adds an effect to this holder. Returns the newly created effect if succesful else 0.
 
 		if(HasEffect(idToAdd))
@@ -641,14 +644,14 @@ var/list/datum/bioEffect/mutini_effects = list()
 		newEffect = new newEffect.type
 
 		if(istype(newEffect))
-			for(var/datum/bioEffect/curr_id as anything in effects)
-				var/datum/bioEffect/curr = effects[curr_id]
-				if(curr?.type == EFFECT_TYPE_MUTANTRACE && newEffect.type == EFFECT_TYPE_MUTANTRACE)
-					//Can only have one mutant race.
-					RemoveEffect(curr.id)
-					break //Since this cleaning is always done we just ousted the only mutantrace in effects
+			if(newEffect.effect_group)
+				for(var/datum/bioEffect/curr_id as anything in effects)
+					var/datum/bioEffect/curr = effects[curr_id]
+					if(curr.effect_group == newEffect.effect_group)
+						RemoveEffect(curr.id)
+						break
 
-			if(variant) newEffect.variant = variant
+			if(power) newEffect.power = power
 			if(timeleft) newEffect.timeLeft = timeleft
 			if(magical)
 				newEffect.curable_by_mutadone = 0
@@ -664,6 +667,9 @@ var/list/datum/bioEffect/mutini_effects = list()
 			if(owner)
 				newEffect.OnAdd()
 			if (do_stability)
+				if(newEffect.degrade_to && !prob(lerp(clamp(src.genetic_stability, 0, 100), 100, 0.5)))
+					newEffect.timeLeft = rand(20, 60)
+					newEffect.degrade_after = TRUE
 				src.genetic_stability -= newEffect.stability_loss
 				src.genetic_stability = max(0,src.genetic_stability)
 			if(owner && length(newEffect.msgGain) > 0)
@@ -672,6 +678,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 				else
 					boutput(owner, "<span class='notice'>[newEffect.msgGain]</span>")
 			mobAppearance.UpdateMob()
+			logTheThing("combat", owner, null, "gains the [newEffect] mutation at [log_loc(owner)].")
 			return newEffect
 
 		return 0
@@ -701,6 +708,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			else
 				boutput(owner, "<span class='notice'>[BE.msgGain]</span>")
 		mobAppearance.UpdateMob()
+		logTheThing("combat", owner, null, "gains the [BE] mutation at [log_loc(owner)].")
 		return BE
 
 	proc/RemoveEffect(var/id)
@@ -722,6 +730,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 					boutput(owner, "<span class='alert'>[D.msgLose]</span>")
 			if (mobAppearance)
 				mobAppearance.UpdateMob()
+			logTheThing("combat", owner, null, "loses the [D] mutation at [log_loc(owner)].")
 			return effects.Remove(D.id)
 
 		return 0
@@ -763,15 +772,13 @@ var/list/datum/bioEffect/mutini_effects = list()
 		return 0
 
 	proc/HasEffect(var/id)
-		//Returns variant if this holder has an effect with the given ID else 0.
-		//Returns 1 if it has the effect with variant 0, special case for limb tone.
+		//Returns effect power if this holder has an effect with the given ID else 0.
 		var/datum/bioEffect/B = effects[id]
 
 		if(!B)
 			.= 0
 		else
-			.= B.variant ? B.variant : 1
-
+			.= B.power
 
 	proc/HasEffectInPool(var/id)
 		return !isnull(effectPool[id])
@@ -789,7 +796,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		var/list/temp = args & effects
 		if(temp.len)
 			var/datum/bioEffect/BE = effects[temp[1]]
-			if(BE) return BE.variant ? BE.variant : 1
+			if(BE) return BE.power
 		return 0
 
 	proc/HasAllOfTheseEffects()

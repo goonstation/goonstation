@@ -88,11 +88,11 @@
 				command_alert("Reports indicate that the engine on-board [station_name()] is behaving unusually. Stationwide power failures may occur or worse.", "Engine Warning")
 				sleep(30 SECONDS)
 			if(event_active)
-				command_alert("Onsite Engineers inform us a sympathetic connection exists between the furances and the engine. Considering burning something it might enjoy: food, people, weed. We're grasping at straws here. ", "Engine Suggestion")
+				command_alert("Onsite Engineers inform us a sympathetic connection exists between the furnaces and the engine. Considering burning something it might enjoy: food, people, weed. We're grasping at straws here. ", "Engine Suggestion")
 				sleep(rand(1 MINUTE, 2.5 MINUTES))
 
 			if(event_active)
-				pda_msg("Unknown substance detected in Themo-Electric Generator Circulators. Please drains and replace lubricants.")
+				pda_msg("Unknown substance detected in Themo-Electric Generator Circulators. Please drain and replace lubricants.")
 
 		// FAILURE EVENT
 		SPAWN_DBG(event_duration)
@@ -101,7 +101,7 @@
 				for (var/obj/machinery/light_switch/L as() in station_switches)
 					if(L.on && prob(50))
 						elecflash(L)
-						L.attack_hand(null)
+						L.Attackhand(null)
 				generator.transformation_mngr.transform_to_type(/datum/teg_transformation/vampire)
 
 		SPAWN_DBG(0)
@@ -111,7 +111,7 @@
 			// Set stage by turning off lights to engine room
 			if(teg_light_switch)
 				elecflash(teg_light_switch)
-				teg_light_switch.attack_hand(null)
+				teg_light_switch.Attackhand(null)
 			else
 				elecflash(A.area_apc)
 				if(!A.area_apc.lighting)
@@ -142,7 +142,7 @@
 							for (var/obj/machinery/light_switch/L as() in station_switches)
 								if(L.on && prob(5))
 									elecflash(L)
-									L.attack_hand(null)
+									L.Attackhand(null)
 						if(4)
 							// Electrify Doors
 							for_by_tcl(D, /obj/machinery/door/airlock)

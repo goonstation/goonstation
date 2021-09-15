@@ -466,19 +466,6 @@
 
 // GENETICS - Blue Border
 
-/obj/trait/robustgenetics
-	name = "Robust Genetics (-2) \[Genetics\]"
-	cleanName = "Robust Genetics"
-	desc = "You gain an additional 20 genetic stability."
-	id = "robustgenetics"
-	icon_state = "stablegenesB"
-	points = -2
-	isPositive = 0
-	category = "genetics"
-
-	onAdd(var/mob/owner)
-		owner.bioHolder?.genetic_stability = 120
-
 /obj/trait/mildly_mutated
 	name = "Mildly Mutated (0) \[Genetics\]"
 	cleanName = "Mildly Mutated"
@@ -1001,7 +988,7 @@ obj/trait/pilot
 			if(!owner.equipped())
 				for(var/obj/item/I in view(1, owner))
 					if(!I.anchored && isturf(I.loc))
-						I.attack_hand(owner)
+						I.Attackhand(owner)
 						if(prob(12))
 							owner.emote(pick("grin", "smirk", "chuckle", "smug"))
 						break
