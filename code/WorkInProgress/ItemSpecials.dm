@@ -1080,26 +1080,16 @@
 			return
 
 
-		proc/on_hit(var/mob/hit, var/mult = 1)
+		proc/on_hit(var/hit, var/mult = 1)
 			if (ishuman(hit))
 				var/mob/living/carbon/human/H = hit
 				H.do_disorient(src.stamina_damage * mult, weakened = 10)
 
 			if (ismob(hit))
 				var/mob/M = hit
-				M.TakeDamage("chest", 0	, rand(2 * mult,5 * mult), 0, DAMAGE_BLUNT)
+				M.TakeDamage("chest", 0, rand(2 * mult, 5 * mult), 0, DAMAGE_BLUNT)
 				M.bodytemperature += 4 * mult
-			else if (iscritter(hit))
-				var/obj/critter/C = hit
-				C.health -= 10
-				C.check_health()
-			else //bot
-				var/obj/machinery/bot/B = hit
-				B.health -= 10
-				if (B.health <= 0)
-					B.explode()
-
-			playsound(hit, 'sound/effects/electric_shock.ogg', 60, 1, 0.1, 2.8)
+				playsound(hit, 'sound/effects/electric_shock.ogg', 60, 1, 0.1, 2.8)
 
 	double
 		cooldown = 0
@@ -1428,19 +1418,9 @@
 			if(istype(master, /obj/item))
 				if (ismob(hit))
 					var/mob/M = hit
-					M.TakeDamage("chest", 0/*master.force*/, rand(2 * mult,5 * mult), 0, DAMAGE_BLUNT)
+					M.TakeDamage("chest", 0, rand(2 * mult,5 * mult), 0, DAMAGE_BLUNT)
 					M.bodytemperature += 4 * mult
-				else if (iscritter(hit))
-					var/obj/critter/C = hit
-					C.health -= 10
-					C.check_health()
-				else //bot
-					var/obj/machinery/bot/B = hit
-					B.health -= 10
-					if (B.health <= 0)
-						B.explode()
-
-			playsound(hit, 'sound/effects/electric_shock.ogg', 60, 1, 0.1, 2.8)
+					playsound(hit, 'sound/effects/electric_shock.ogg', 60, 1, 0.1, 2.8)
 
 	katana_dash
 		cooldown = 9
