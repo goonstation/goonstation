@@ -534,6 +534,7 @@ var/f_color_selector_handler/F_Color_Selector
 			Ar.build_sims_score()
 
 	url_regex = new("(https?|byond|www)(\\.|:\\/\\/)", "i")
+	full_url_regex = new(@"(https?:\/\/)?(www\.)?[\d\l]+\.[\d\l]+(\/\S+)*\/?","ig")
 
 	UPDATE_TITLE_STATUS("Updating status")
 	Z_LOG_DEBUG("World/Init", "Updating status...")
@@ -1275,6 +1276,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 				msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
 				msg = discord_emojify(msg)
+				msg = linkify(msg)
 
 				logTheThing("admin", null, null, "Discord ASAY: [nick]: [msg]")
 				logTheThing("diary", null, null, "Discord ASAY: [nick]: [msg]", "admin")
@@ -1321,6 +1323,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/msg = plist["msg"]
 				var/who = lowertext(plist["target"])
 				var/game_msg = discord_emojify(msg)
+				game_msg = linkify(game_msg)
 
 				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
 				if (M?.client)
@@ -1365,6 +1368,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/who = lowertext(plist["target"])
 				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
 				var/game_msg = discord_emojify(msg)
+				game_msg = linkify(game_msg)
 
 				if (M?.client)
 					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[ckey(nick)]\">[nick]</a> (Discord)</b>: <span class='message'>[game_msg]</span></span>")
