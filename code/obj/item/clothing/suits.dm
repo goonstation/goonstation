@@ -1337,6 +1337,15 @@
 			desc = "A syndicate issue heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
 			icon_state = "syndie_specialist-heavy"
 			item_state = "syndie_specialist-heavy"
+	eng
+		name = "industrial engine armor"
+		desc = "Very heavy armour for prolonged engine activity. Protects from radiation and fire."
+		icon_state = "induseng"
+		item_state = "induseng"
+		setupProperties()
+			..()
+			setProperty("exploprot", 0)
+			setProperty("heatprot", 40)
 
 /obj/item/clothing/suit/space/industrial/syndicate/ntso
 

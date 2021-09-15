@@ -735,6 +735,16 @@
 			..()
 			setProperty("meleeprot_head", 7)
 
+	eng
+		name = "industrial engine helmet"
+		desc = "Goes with Industrial Engineering Armor. Now with zesty citrus-scented visor!"
+		icon_state = "induseng"
+		item_state = "induseng"
+		setupProperties()
+			..()
+			setProperty("exploprot", 0)
+			setProperty("heatprot", 10)
+
 /obj/item/clothing/head/helmet/space/mining_combat
 	name = "mining combat helmet"
 	desc = "Goes with Mining Combat Armor. Now with sweet strawberry-scented visor!"

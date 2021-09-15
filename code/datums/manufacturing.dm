@@ -2934,3 +2934,23 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	time = 40 SECONDS
 	create = 1
 	category = "Miscellaneous"
+
+/******************** MANUDRIVE SHIT *******************/
+
+/datum/manufacture/heavy_firesuit
+	name = "Heavy Firesuit"
+	item_paths = list("MET-3", "fibrilith")
+	item_amounts = list(6, 10)
+	item_outputs = list(/obj/item/clothing/suit/fire/heavy)
+	time = 60 SECONDS
+	create = 1
+	category = "Miscellaneous"
+
+/datum/manufacture/indus_eng
+	name = "Engineering Industrial Suit"
+	item_paths = list("MET-3", "CON-2", "fibrilith")
+	item_amounts = list(17, 5, 3)
+	item_outputs = list(/obj/item/clothing/suit/space/industrial/eng, /obj/item/clothing/head/helmet/space/industrial/eng)
+	time = 60 SECONDS
+	create = 1
+	category = "Miscellaneous"
