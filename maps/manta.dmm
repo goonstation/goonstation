@@ -38847,10 +38847,6 @@
 	pixel_x = 5;
 	pixel_y = -24
 	},
-<<<<<<< HEAD
-/obj/stool/chair/green{
-	dir = 8
-=======
 /turf/space/fluid/manta,
 /area/diner/hangar)
 "mXn" = (
@@ -38864,7 +38860,6 @@
 /obj/cable,
 /obj/cable{
 	icon_state = "0-8"
->>>>>>> c48b2943a49dfc01d69acf3984ed1eb4f5e2da03
 	},
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/greenblack{
