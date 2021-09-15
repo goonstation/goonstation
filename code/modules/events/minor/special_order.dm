@@ -158,6 +158,7 @@ ABSTRACT_TYPE(/datum/special_order/surgery)
 	price = 5000
 
 	nt
+		name = "Pizza Party (NanoTrasen)"
 		requisition = new /obj/item/paper/requisition/pizza_party/nt
 		price = 6000
 
