@@ -7,7 +7,7 @@
 
 /obj/item/chicken_carrier
 
-/mob/living/critter/small_animal/chicken
+/mob/living/critter/small_animal/ranch_base/chicken
 
 /obj/item/reagent_containers/food/snacks/chicken_feed_bag
 	rand_pos = 0
