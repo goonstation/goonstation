@@ -12,8 +12,8 @@
 			var/datum/special_order/O = type
 			option_list[initial(O.name)] = type
 		var/selection = tgui_input_list(usr,"Which special order?", "Special Order Menu", option_list)
-
-		src.event_effect(option_list[selection])
+		if(selection)
+			src.event_effect(option_list[selection])
 
 	event_effect(datum/special_order/order_type)
 		..()
@@ -161,6 +161,99 @@ ABSTRACT_TYPE(/datum/special_order/surgery)
 		requisition = new /obj/item/paper/requisition/pizza_party/nt
 		price = 6000
 
+ABSTRACT_TYPE(/datum/special_order/chef)
+/datum/special_order/chef
+	price = 2000
+	requisition = new /obj/item/paper/requisition/food_order
+	var/list/food_order = list()
+	var/static/list/breakfast
+	var/static/list/lunch
+	var/static/list/dinner
+	var/static/list/snacks
+
+	check_order(obj/storage/crate/sell_crate)
+		var/contents = list()
+		var/food_count = food_order?.Copy()
+		contents += sell_crate.contents
+		for(var/obj/item/storage/S in contents)
+			contents |= S.get_all_contents()
+
+		. = TRUE
+
+		for(var/obj/item/reagent_containers/F in contents)
+			for(var/I in food_count)
+				if(F.type == I)
+					food_count[I] -= max(1, F.amount)
+		for(var/I in food_count)
+			if(food_count[I] > 0)
+				return FALSE
+		return TRUE
+
+	get_shopping_list()
+		. = "<ul>"
+		for(var/f_type in src.food_order)
+			var/obj/item/reagent_containers/F = f_type
+			if(src.food_order[f_type])
+				. += "<li>([src.food_order[f_type]]) [initial(F.name)]</li>"
+			else
+				. += "<li>[initial(F.name)]</li>"
+		. += "</ul>"
+
+	breakfast_order
+		name = "Breakfast Order"
+
+		New()
+			if(!breakfast)
+				breakfast = list()
+				for(var/food_type in concrete_typesof(/obj/item/reagent_containers/food/snacks))
+					var/obj/item/reagent_containers/food/snacks/F = food_type
+					if(initial(F.meal_time_flags) & MEAL_TIME_BREAKFAST)
+						breakfast += food_type
+			for(var/i in 1 to rand(3,6))
+				src.food_order[pick(breakfast)] = pick(60; 1, 30; 2, 10; 3)
+			..()
+
+	lunch_order
+		name = "Lunch Order"
+
+		New()
+			if(!lunch)
+				lunch = list()
+				for(var/food_type in concrete_typesof(/obj/item/reagent_containers/food/snacks))
+					var/obj/item/reagent_containers/food/snacks/F = food_type
+					if(initial(F.meal_time_flags) & MEAL_TIME_LUNCH)
+						lunch += food_type
+			for(var/i in 1 to rand(3,6))
+				src.food_order[pick(lunch)] = pick(60; 1, 30; 2)
+			..()
+
+	dinner_order
+		name = "Dinner Order"
+
+		New()
+			if(!dinner)
+				dinner = list()
+				for(var/food_type in concrete_typesof(/obj/item/reagent_containers/food/snacks))
+					var/obj/item/reagent_containers/food/snacks/F = food_type
+					if(initial(F.meal_time_flags) & MEAL_TIME_DINNER)
+						dinner += food_type
+			for(var/i in 1 to rand(3,6))
+				src.food_order[pick(dinner)] = pick(60; 1, 30; 2)
+			..()
+
+	snack_order
+		name = "Snack Order"
+
+		New()
+			if(!snacks)
+				snacks = list()
+				for(var/food_type in concrete_typesof(/obj/item/reagent_containers/food/snacks))
+					var/obj/item/reagent_containers/food/snacks/F = food_type
+					if(initial(F.meal_time_flags) & MEAL_TIME_SNACK)
+						snacks += food_type
+			for(var/i in 1 to rand(3,6))
+				src.food_order[pick(snacks)] = pick(40; 1, 40; 2, 20; 3)
+			..()
 
 /datum/special_order/reagents/blood
 	name = "Blood Request"
@@ -243,7 +336,7 @@ ABSTRACT_TYPE(/datum/special_order/surgery)
 			src.stamp(rand(50,160), rand(50,90), rand(-20,20), "stamp-gtc.png", "stamp-syndicate")
 
 	nt
-		info = {"TO:Space Station 13<BR/>
+		info = {"TO: Space Station 13<BR/>
 		FROM: CentComm<BR/>
 		<BR/><p>We are in quite the pickle.  Someone said we would coordinate a pizza party to celebrate employee of the month for %BDAY% but all our typical suppliers say they are <i>unavailable</i> and may not arrive in the estimated lifetime of the employee in question.  This should greatly improve the morale of a nearby outpost!</p><BR>
 		%ITEMS%
@@ -280,7 +373,7 @@ ABSTRACT_TYPE(/datum/special_order/surgery)
 		src.stamp(rand(120,260), rand(50,390), rand(20,60), "stamp-gtc.png", "stamp-syndicate")
 
 /obj/item/paper/requisition/surgery/organ_swap
-	info = {"TO:Space Station 13<BR/>
+	info = {"TO: Space Station 13<BR/>
 	FROM: Outpost \[REDACTED\]<BR/>
 	<h3>Cadaver Surgery Exercise 32-21-A</h3>
 	<BR/><p>Replace all internal organs of the individual co-located with these instructions.</p><BR/>
@@ -291,3 +384,17 @@ ABSTRACT_TYPE(/datum/special_order/surgery)
 	New()
 		..()
 		src.stamp(rand(90,160), rand(120,160), rand(-20,20), "stamp-classified.png", "stamp-syndicate")
+
+
+/obj/item/paper/requisition/food_order
+	info = {"TO: Space Station 13<BR/>
+	FROM: %FOOD_COMPANY%<BR/>
+	<h3>Food Order:</h3>
+	%ITEMS%
+	"}
+	var/static/list/company = list("SpaceHub Delivery Services", "SnackAttack - Hunger Destroyer", "FoodDirect", "CelestialEats Delivery", "Technically Fresh")
+	New()
+		..()
+
+		info = replacetext(info, "%FOOD_COMPANY%", pick(company))
+		src.stamp(rand(90,260), rand(150,390), rand(-20,20), "stamp-gtc.png", "stamp-syndicate")

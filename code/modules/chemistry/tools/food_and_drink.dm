@@ -102,6 +102,9 @@
 
 	var/dropped_item = null
 
+	// Used in Special Order events
+	var/meal_time_flags = 0
+
 	New()
 		..()
 		start_amount = amount
