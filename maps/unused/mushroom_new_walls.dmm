@@ -10688,7 +10688,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/false_wall,
+/turf/simulated/wall/auto/supernorn,
 /area/station/chapel/sanctuary)
 "aQB" = (
 /obj/cable{
