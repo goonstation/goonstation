@@ -1707,7 +1707,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 	uses_multiple_icon_states = 1
 	icon = 'icons/obj/clothing/item_hats.dmi'
 	wear_image_icon = 'icons/mob/head.dmi'
-	var/hatflip = 1
+	var/hatflip = TRUE
 	var/hatcolour = "black"
 
 	New()
@@ -1718,12 +1718,12 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 	attack_self(var/mob/user as mob)
 		if(user.r_hand == src || user.l_hand == src)
 			if(!src.hatflip)
-				src.hatflip = 1
+				src.hatflip = TRUE
 				src.icon_state = "basecap_[hatcolour]"
 				src.item_state = "basecap_[hatcolour]"
 				boutput(user, "<span class='notice'>You flip your baseball cap back into the standard baseball cap position.</span>")
 			else
-				src.hatflip = 0
+				src.hatflip = FALSE
 				src.icon_state = "basecapflip_[hatcolour]"
 				src.item_state = "basecapflip_[hatcolour]"
 				boutput(user, "<span class='notice'>You flip your baseball cap around. Now it's backwards.</span>")
