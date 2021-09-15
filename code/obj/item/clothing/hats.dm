@@ -1617,7 +1617,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/hairbow)
 ABSTRACT_TYPE(/obj/item/clothing/head/frenchberet)
 /obj/item/clothing/head/frenchberet
 	name = "\improper French beret"
-	desc = "More artistic than your standard beret."
+	desc = "Much more artistic than your standard beret."
 	icon = 'icons/obj/clothing/item_hats.dmi'
 	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "beret_wht"
@@ -1665,7 +1665,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/frenchberet)
 ABSTRACT_TYPE(/obj/item/clothing/head/goggles)
 /obj/item/clothing/head/goggles
 	name = "costume goggles"
-	desc = "WARNING: Does not actually provide any ocular protection whatsoever."
+	desc = "They don't even fit over your eyes! How cheap."
 	icon = 'icons/obj/clothing/item_hats.dmi'
 	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "goggles_red"
@@ -1703,26 +1703,71 @@ ABSTRACT_TYPE(/obj/item/clothing/head/goggles)
 ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 /obj/item/clothing/head/basecap
 	name = "baseball cap"
-	desc = "Flip it around to become Radical."
+	desc = "Wear it normally, or flip it backwards to increase your coolness."
+	uses_multiple_icon_states = 1
 	icon = 'icons/obj/clothing/item_hats.dmi'
 	wear_image_icon = 'icons/mob/head.dmi'
-	icon_state = "basecap_blk"
-	item_state = "basecap_blk"
-	w_class = W_CLASS_TINY
-	throwforce = 0
+	var/hatflip = 1
+	var/hatcolour = "black"
+
+	New()
+		..()
+		name = "[hatcolour] baseball cap"
+		item_state = "basecap_[hatcolour]"
+
+	attack_self(var/mob/user as mob)
+		if(user.r_hand == src || user.l_hand == src)
+			if(!src.hatflip)
+				src.hatflip = 1
+				src.icon_state = "basecap_[hatcolour]"
+				src.item_state = "basecap_[hatcolour]"
+				boutput(user, "<span class='notice'>You flip your baseball cap back into the standard baseball cap position.</span>")
+			else
+				src.hatflip = 0
+				src.icon_state = "basecapflip_[hatcolour]"
+				src.item_state = "basecapflip_[hatcolour]"
+				boutput(user, "<span class='notice'>You flip your baseball cap around. Now it's backwards.</span>")
+			return
 
 	black
-		name = "black baseball cap"
-		icon_state = "basecap_blk"
-		item_state = "basecap_blk"
+		hatcolour = "black"
+		item_state = "basecap_black"
+		icon_state = "basecap_black"
 
-/obj/item/clothing/head/gothsunhat
-	name = "goth sunhat"
-	desc = "Favoured by vampires."
-	icon = 'icons/obj/clothing/item_hats.dmi'
-	wear_image_icon = 'icons/mob/head.dmi'
-	icon_state = "goth_sunhat"
-	item_state = "goth_sunhat"
+	purple
+		hatcolour = "purple"
+		item_state = "basecap_purple"
+		icon_state = "basecap_purple"
+
+	red
+		hatcolour = "red"
+		item_state = "basecap_red"
+		icon_state = "basecap_red"
+
+	yellow
+		hatcolour = "yellow"
+		item_state = "basecap_yellow"
+		icon_state = "basecap_yellow"
+
+	green
+		hatcolour = "green"
+		item_state = "basecap_green"
+		icon_state = "basecap_green"
+
+	blue
+		hatcolour = "blue"
+		item_state = "basecap_blue"
+		icon_state = "basecap_blue"
+
+	white
+		hatcolour = "white"
+		item_state = "basecap_white"
+		icon_state = "basecap_white"
+
+	pink
+		hatcolour = "pink"
+		item_state = "basecap_pink"
+		icon_state = "basecap_pink"
 
 /obj/item/clothing/head/pirate_blk
 	name = "black pirate hat"
