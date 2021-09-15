@@ -1207,6 +1207,9 @@ ABSTRACT_TYPE(/area/prefab)
 	name = "Shooting Range"
 	icon_state = "purple"
 
+/area/prefab/secbot_academy
+	name = "Securitron Academy"
+	icon_state = "red"
 // Sealab trench areas //
 
 /area/shuttle/sea_elevator_room

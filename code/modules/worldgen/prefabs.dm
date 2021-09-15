@@ -208,6 +208,12 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 19
 		prefabSizeY = 22
 
+	secbot_academy // Danger Noodle's elite securitron school
+		maxNum = 1
+		probability = 15
+		prefabPath = "assets/maps/prefabs/prefab_securitron_academy.dmm"
+		prefabSizeX = 34
+		prefabSizeY = 37
 	//UNDERWATER AREAS FOR OSHAN
 
 	pit
