@@ -146,6 +146,7 @@
 	req_access = list(access_engineering_chief)
 	spawn_contents = list(/obj/item/storage/toolbox/mechanical/yellow_tools,
 	/obj/item/storage/box/clothing/chief_engineer,
+	/obj/item/manudrive/eng,
 	/obj/item/clothing/gloves/yellow,
 	/obj/item/clothing/shoes/brown,
 	/obj/item/clothing/shoes/magnetic,
