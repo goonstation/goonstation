@@ -11761,10 +11761,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/false_wall/reinforced{
-	icon = 'icons/turf/walls_supernorn.dmi';
-	icon_state = "R12"
-	},
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai_upload_foyer)
 "aUD" = (
 /turf/simulated/floor/purple/side{
@@ -26637,11 +26634,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/station/science/storage)
-"kFr" = (
-/turf/simulated/wall/auto/reinforced/supernorn{
-	icon_state = "R12"
-	},
-/area/station/turret_protected/ai_upload_foyer)
 "kFH" = (
 /obj/lattice{
 	dir = 9;
@@ -87733,7 +87725,7 @@ aQB
 aRW
 aTj
 aUa
-kFr
+aUB
 aVC
 hgl
 aXt
@@ -88337,7 +88329,7 @@ aQH
 aRY
 aTl
 aUd
-kFr
+aUB
 aUF
 aWF
 aXw
