@@ -49,7 +49,7 @@
 "mr" = (/obj/machinery/door/airlock/pyro,/turf/simulated/floor/wood/two,/area/prefab/secbot_academy)
 "my" = (/obj/decal/poster/wallsign/poster_nt{pixel_y = 32},/turf/simulated/floor/blueblack{dir = 9},/area/prefab/secbot_academy)
 "mY" = (/obj/decal/tile_edge/stripe{dir = 6; icon_state = "xtra_bigstripe-edge"},/turf/simulated/floor/shuttlebay,/area/noGenerate)
-"nG" = (/obj/deployable_turret{active = 1; burst_size = 1; desc = "A defense turret that got salvaged from an old battle and repurposed as home security, the barrel looks pretty worn down."},/turf/simulated/floor/redblack{dir = 8},/area/prefab/secbot_academy)
+"nG" = (/obj/deployable_turret{active = 1; anchored = 1; burst_size = 1; desc = "A defense turret that got salvaged from an old battle and repurposed as home security, the barrel looks pretty worn down."; dir = 4},/turf/simulated/floor/redblack{dir = 8},/area/prefab/secbot_academy)
 "nI" = (/obj/decal/poster/wallsign/cdnp{pixel_y = 32},/turf/simulated/floor/darkblue,/area/prefab/secbot_academy)
 "nJ" = (/obj/machinery/door/airlock/pyro{dir = 4},/turf/simulated/floor/wood/two,/area/prefab/secbot_academy)
 "om" = (/obj/table/wood/auto/desk,/obj/item/paper{pixel_x = 4; pixel_y = 5},/obj/item/paper{pixel_x = -7; pixel_y = 5},/obj/item/paper{pixel_x = -9; pixel_y = -3},/obj/item/paper{pixel_x = 7; pixel_y = -5},/obj/item/paper{pixel_x = -2; pixel_y = -8},/obj/item/pen/fancy,/turf/simulated/floor/wood/two,/area/prefab/secbot_academy)
