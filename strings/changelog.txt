@@ -1,4 +1,9 @@
 
+(t)wed sep 15 21
+(u)Emily
+(p)6020
+(e)🗺|mapping
+(*)Chickens partially reworked. Please report any bugs.
 (t)mon sep 13 21
 (u)Sovexe
 (p)5904
