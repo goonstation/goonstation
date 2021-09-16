@@ -1,5 +1,9 @@
 
 (t)thu sep 16 21
+(u)Azrun
+(p)6024
+(e)🆕⚖|feature, balance
+(*)Special Order events added. Help your QMs make some money today.
 (u)Flaborized
 (p)6004
 (e)🎨|sprites
