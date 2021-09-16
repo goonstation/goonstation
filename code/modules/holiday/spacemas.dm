@@ -461,6 +461,8 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 	disposing()
 		STOP_TRACKING
+		qdel(src.fire_image)
+		src.fire_image = null
 		..()
 
 	attack_hand(mob/user as mob)
@@ -625,6 +627,11 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		light.set_brightness(0.3)
 		light.attach(src)
 		light.enable()
+
+	disposing()
+		. = ..()
+		qdel(src.light)
+		src.light = null
 
 	attack_hand(mob/user as mob)
 		change_light_pattern()
