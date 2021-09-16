@@ -145,6 +145,7 @@
 	name = "\improper Chief Engineer's locker"
 	req_access = list(access_engineering_chief)
 	spawn_contents = list(/obj/item/storage/toolbox/mechanical/yellow_tools,
+	/obj/item/storage/backpack/engineering,
 	/obj/item/storage/box/clothing/chief_engineer,
 	/obj/item/clothing/gloves/yellow,
 	/obj/item/clothing/shoes/brown,
@@ -394,6 +395,10 @@
 	icon_state = "medical_clothes"
 	spawn_contents = list(/obj/item/storage/backpack/medic,
 	/obj/item/storage/backpack/satchel/medic,
+	/obj/item/storage/backpack/robotics,
+	/obj/item/storage/backpack/genetics,
+	/obj/item/storage/backpack/satchel/robotics,
+	/obj/item/storage/backpack/satchel/genetics,
 	/obj/item/storage/box/clothing/medical,
 	/obj/item/storage/box/clothing/geneticist,
 	/obj/item/storage/box/clothing/roboticist,
@@ -459,6 +464,7 @@
 /obj/storage/secure/closet/research/uniform
 	name = "science uniform locker"
 	spawn_contents = list(/obj/item/tank/air,
+	/obj/item/storage/backpack/research,
 	/obj/item/storage/box/clothing/research,
 	/obj/item/clothing/suit/wintercoat/research,
 	/obj/item/clothing/gloves/latex,
@@ -524,6 +530,7 @@
 	name = "\improper Mechanic's locker"
 	req_access = list(access_engineering_mechanic)
 	spawn_contents = list(/obj/item/storage/toolbox/electrical,
+	/obj/item/storage/backpack/engineering,
 	/obj/item/device/accessgun/lite,
 	/obj/item/clothing/suit/wintercoat/engineering,
 	/obj/item/storage/box/clothing/mechanic,
@@ -554,6 +561,7 @@
 	req_access = list(access_engineering_engine)
 	spawn_contents = list(/obj/item/storage/toolbox/mechanical,
 	/obj/item/storage/box/clothing/engineer,
+	/obj/item/storage/backpack/engineering,
 	/obj/item/clothing/suit/wintercoat/engineering,
 	/obj/item/clothing/mask/gas,
 	/obj/item/old_grenade/oxygen,
@@ -568,6 +576,7 @@
 	req_access = list(access_mining)
 	spawn_contents = list(/obj/item/storage/box/clothing/miner,
 	/obj/item/clothing/suit/wintercoat/engineering,
+	/obj/item/storage/backpack/engineering,
 	/obj/item/breaching_charge/mining/light = 3,
 	/obj/item/satchel/mining = 2,
 	/obj/item/oreprospector,
