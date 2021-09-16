@@ -979,6 +979,100 @@ obj/machinery/atmospherics/pipe
 			else
 				icon_state = "exposed"
 
+	vertical_pipe
+		icon = 'icons/obj/atmospherics/pipe_vent.dmi'
+		icon_state = "intact" // New sprite(s) needed
+		name = "Vertical Pipe" // TODO
+		desc = "a section of vertical piping..." // TODO
+		level = 1
+		volume = 250
+		dir = SOUTH
+		initialize_directions = SOUTH
+		color = "#F0F"
+		var/target_z
+		var/id
+		var/obj/machinery/atmospherics/node1
+		var/obj/machinery/atmospherics/node2
+
+		north
+			dir = NORTH
+		east
+			dir = EAST
+		south
+			dir = SOUTH
+		west
+			dir = WEST
+
+		New()
+			initialize_directions = dir
+			..()
+
+		process()
+			..()
+
+		disposing()
+			node1?.disconnect(src)
+			node2?.disconnect(src)
+			parent = null
+			..()
+
+		pipeline_expansion()
+			return list(node1, node2)
+
+		update_icon()
+			if(node1)
+				icon_state = "intact"
+
+				dir = get_dir(src, node1)
+
+			else
+				icon_state = "exposed"
+
+		initialize()
+			var/connect_direction = dir
+
+			for(var/obj/machinery/atmospherics/target in get_step(src,connect_direction))
+				if(target.initialize_directions & get_dir(target,src))
+					node1 = target
+					break
+
+			if(target_z)
+				for(var/obj/machinery/atmospherics/pipe/vertical_pipe/target_pipe in get_turf(locate(src.x,src.y,target_z)))
+					node2 = target_pipe
+					break
+			else if(id)
+				for(var/obj/machinery/atmospherics/pipe/vertical_pipe/target_pipe in by_cat[TR_CAT_ATMOS_MACHINES])
+					if(target_pipe.id == id && src != target_pipe)
+						node2 = target_pipe
+						break
+			update_icon()
+
+		disconnect(obj/machinery/atmospherics/reference)
+			if(reference == node1)
+				if(istype(node1, /obj/machinery/atmospherics/pipe))
+					if (parent)
+						parent.dispose()
+					parent = null
+				node1 = null
+
+			if(reference == node2)
+				if(istype(node2, /obj/machinery/atmospherics/pipe))
+					if (parent)
+						parent.dispose()
+					parent = null
+				node2 = null
+
+			update_icon()
+
+			return null
+
+		hide(var/i) //to make the little pipe section invisible, the icon changes.
+			if(node1)
+				icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]intact"
+				dir = get_dir(src, node1)
+			else
+				icon_state = "exposed"
+
 	manifold
 		icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi'
 		icon_state = "manifold"//-f"

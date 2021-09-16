@@ -76232,6 +76232,10 @@
 /obj/item/mutation_orb/cat_orb,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
+"jPf" = (
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
+/turf/unsimulated/floor,
+/area/iomoon/base/underground)
 "jPv" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-2"
@@ -76410,6 +76414,10 @@
 	icon_state = "wall3"
 	},
 /area/hospital/samostrel)
+"kkR" = (
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/horizontal,
+/turf/unsimulated/floor,
+/area/iomoon/base/underground)
 "kkX" = (
 /turf/unsimulated/wall/auto/lead/white,
 /area/moon/museum)
@@ -76882,6 +76890,12 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
+"lGk" = (
+/obj/machinery/atmospherics/pipe/vertical_pipe/east{
+	target_z = 1
+	},
+/turf/unsimulated/floor,
+/area/iomoon/base/underground)
 "lGN" = (
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel)
@@ -78719,6 +78733,12 @@
 /turf/space,
 /turf/unsimulated/floor/blackwhite/whitegrime,
 /area/hospital/samostrel)
+"qvW" = (
+/obj/machinery/atmospherics/pipe/vertical_pipe/west{
+	target_z = 1
+	},
+/turf/unsimulated/floor,
+/area/iomoon/base/underground)
 "qvY" = (
 /obj/decal/poster/wallsign/space{
 	pixel_y = -7
@@ -79077,6 +79097,11 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/donut3)
+"rxS" = (
+/obj/decal/fakeobjects/pipe,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
+/turf/unsimulated/floor,
+/area/iomoon/base/underground)
 "rAl" = (
 /obj/window/crystal/reinforced/west,
 /obj/window/crystal/reinforced/north,
@@ -79377,6 +79402,12 @@
 	tag = "icon-fpurple1"
 	},
 /area/centcom/lounge)
+"sbU" = (
+/obj/machinery/atmospherics/pipe/vertical_pipe/east{
+	id = "test_w"
+	},
+/turf/unsimulated/floor,
+/area/iomoon/base/underground)
 "scU" = (
 /obj/admin_plaque{
 	name = "Pali's Office"
@@ -80638,6 +80669,12 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
+"wyr" = (
+/obj/machinery/atmospherics/pipe/vertical_pipe/west{
+	id = "test_e"
+	},
+/turf/unsimulated/floor,
+/area/iomoon/base/underground)
 "wAz" = (
 /turf/space,
 /turf/unsimulated/floor/engine/caution/corner2{
@@ -117329,7 +117366,7 @@ bwg
 byo
 byW
 rHr
-bqB
+lGk
 bAS
 bBG
 rHr
@@ -117631,7 +117668,7 @@ rHr
 rHr
 rHr
 rHr
-btT
+rxS
 bxB
 rHr
 rHr
@@ -117933,7 +117970,7 @@ bxA
 bxA
 bqB
 rHr
-bqB
+jPf
 bqB
 rHr
 bCt
@@ -118235,8 +118272,8 @@ bxB
 bvB
 bqB
 bzA
-bqB
-bqB
+jPf
+sbU
 bBH
 bAf
 rHr
@@ -118537,8 +118574,8 @@ rHr
 byp
 byX
 rHr
-bqB
-bqB
+jPf
+kkR
 rHr
 rHr
 rHr
@@ -118839,8 +118876,8 @@ rHr
 rHr
 rHr
 rHr
-bqB
-bqB
+qvW
+wyr
 rHr
 bpF
 bpF
