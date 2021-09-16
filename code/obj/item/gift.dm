@@ -145,6 +145,7 @@
 	return
 
 /obj/item/a_gift
+	EPHEMERAL_XMAS
 	name = "gift"
 	desc = "I wonder what's inside!?"
 	icon = 'icons/obj/items/items.dmi'
@@ -174,13 +175,6 @@
 			if (!islist(giftpaths) || !length(giftpaths))
 				src.giftpaths = generic_gift_paths + xmas_gift_paths
 			..()
-
-		ephemeral //Disappears except on xmas
-#ifndef XMAS
-			New()
-				qdel(src)
-				..()
-#endif
 
 	easter
 		name = "easter egg"
