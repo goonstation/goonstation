@@ -692,7 +692,7 @@
 				return
 			else
 				user.visible_message("<b>[user]</b> moves [R] into  [src].")
-		R.pulling = null
+		R.remove_pulling()
 		R.set_loc(src)
 		src.occupant = R
 		if (R.client)
@@ -710,7 +710,7 @@
 				return
 			else
 				user.visible_message("<b>[user]</b> moves [H] into [src].")
-		H.pulling = null
+		H.remove_pulling()
 		H.set_loc(src)
 		src.occupant = H
 		if (H.client)
@@ -744,7 +744,7 @@
 					user.visible_message("<b>[user]</b> moves [H] into [src].")
 				else
 					user.visible_message("<b>[user]</b> climbs into [src].")
-				H.pulling = null
+				H.remove_pulling()
 				H.set_loc(src)
 				src.occupant = H
 				src.add_fingerprint(user)
@@ -882,7 +882,7 @@
 	if (src.occupant)
 		boutput(usr, "<span class='alert'>\The [src] is already occupied!</span>")
 		return
-	usr.pulling = null
+	usr.remove_pulling()
 	usr.set_loc(src)
 	src.occupant = usr
 	src.Attackhand(usr)

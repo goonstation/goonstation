@@ -7671,7 +7671,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control,
+/obj/machinery/computer/solar_control,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
 "rD" = (

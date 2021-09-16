@@ -252,6 +252,7 @@ mob/new_player
 					if(latejoin)
 						close_spawn_windows()
 						latejoin.activated = 1
+						latejoin.owner = src.mind
 						src.mind.transfer_to(S)
 						SPAWN_DBG(1 DECI SECOND)
 							S.choose_name()
@@ -809,7 +810,7 @@ a.latejoin-card:hover {
 		set name = ".ready"
 
 		if (ticker)
-			if(ticker.round_elapsed_ticks > 0 && ticker.round_elapsed_ticks < 3 SECONDS)
+			if(current_state == GAME_STATE_SETTING_UP || (current_state <= GAME_STATE_PREGAME && ticker.pregame_timeleft <= 1))
 				boutput(usr, "<span class='alert'>The round is currently being set up. Please wait.</span>")
 				return
 

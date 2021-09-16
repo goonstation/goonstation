@@ -12,6 +12,24 @@
 	if(param)
 		call(src, options[param])()
 
+var/datum/station_zlevel_repair/station_repair = new
+/datum/station_zlevel_repair
+	var/datum/map_generator/station_generator
+	var/image/ambient_light
+	var/image/weather_img
+	var/obj/effects/weather_effect
+
+	proc/repair_turfs(turf/turfs)
+		if(src.station_generator)
+			src.station_generator.generate_terrain(turfs,reuse_seed=TRUE)
+		for(var/turf/T as anything in turfs)
+			if(src.ambient_light)
+				T.UpdateOverlays(src.ambient_light, "ambient")
+			if(src.weather_img)
+				T.UpdateOverlays(src.weather_img, "weather")
+			if(src.weather_effect)
+				new src.weather_effect(T)
+
 
 /client/proc/cmd_swampify_station()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -29,25 +47,33 @@
 			if("Yes")
 				var/rain = alert("Should it be raining?",,"Yes", "No", "Particles!")
 				rain = (rain == "No") ? null : rain
-				var/image/weather = image('icons/turf/water.dmi',"fast_rain", layer = EFFECTS_LAYER_BASE)
-				weather.alpha = 200
-				weather.plane = PLANE_NOSHADOW_ABOVE
-				var/image/I = new /image/ambient
-				var/datum/map_generator/jungle_generator/map_generator = new
+
+				station_repair.station_generator = new/datum/map_generator/jungle_generator
+
+				if(rain == "Yes")
+					station_repair.weather_img = image('icons/turf/water.dmi',"fast_rain", layer = EFFECTS_LAYER_BASE)
+					station_repair.weather_img.alpha = 200
+					station_repair.weather_img.plane = PLANE_NOSHADOW_ABOVE
+				else if(rain)
+					station_repair.weather_effect = /obj/effects/rain/sideways/tile
+
+				station_repair.ambient_light = new /image/ambient
+				station_repair.ambient_light.color = ambient_light
+
+
 				var/list/space = list()
 				for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 					space += S
-				map_generator.generate_terrain(space)
+				station_repair.station_generator.generate_terrain(space)
 				for (var/turf/S in space)
 					if(rain)
 						if(istype(S,/turf/unsimulated/floor/auto/swamp))
 							S.ReplaceWith(/turf/unsimulated/floor/auto/swamp/rain, force=TRUE)
 						if(rain == "Yes")
-							S.UpdateOverlays(weather, "rain")
+							S.UpdateOverlays(station_repair.weather_img, "rain")
 						else
-							new /obj/effects/rain/sideways/tile(S)
-					I.color = ambient_light
-					S.UpdateOverlays(I, "ambient")
+							new station_repair.weather_effect(S)
+					S.UpdateOverlays(station_repair.ambient_light, "ambient")
 				shippingmarket.clear_path_to_market()
 
 				logTheThing("admin", src, null, "turned space into a swamp.")
@@ -145,15 +171,18 @@
 	if(src.holder.level >= LEVEL_ADMIN)
 		switch(alert("Turn space into a snowscape? This is probably going to lag a bunch when it happens and there's no easy undo!",,"Yes","No"))
 			if("Yes")
-				var/image/I = new /image/ambient
-				var/datum/map_generator/snow_generator/map_generator = new
+				station_repair.station_generator = new/datum/map_generator/snow_generator
+
+				station_repair.ambient_light = new /image/ambient
+				station_repair.ambient_light.color = ambient_light
+
 				var/list/space = list()
 				for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 					space += S
-				map_generator.generate_terrain(space)
+				station_repair.station_generator.generate_terrain(space)
 				for (var/turf/S as anything in space)
-					I.color = ambient_light
-					S.UpdateOverlays(I, "ambient")
+					S.UpdateOverlays(station_repair.ambient_light, "ambient")
+
 				logTheThing("admin", src, null, "turned space into a snowscape.")
 				logTheThing("diary", src, null, "turned space into a snowscape.", "admin")
 				message_admins("[key_name(src)] turned space into a snowscape.")

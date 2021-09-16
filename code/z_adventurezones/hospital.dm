@@ -205,7 +205,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 			if (LANDMARK_SAMOSTREL_WARP in landmarks)
 				var/target_original_loc = target.loc
 				target.setStatus("paralysis", max(target.getStatusDuration("paralysis"), 10 SECONDS))
-				do_teleport(target, pick_landmark(LANDMARK_SAMOSTREL_WARP), 0)
+				do_teleport(target, pick_landmark(LANDMARK_SAMOSTREL_WARP), 0, 0)
 
 				if (ishuman(target))
 					var/atom/movable/overlay/animation = new(target_original_loc)
