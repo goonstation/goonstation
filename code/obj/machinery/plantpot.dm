@@ -200,6 +200,11 @@
 			spawn_plant = pick(/datum/plant/weed/creeper, /datum/plant/weed/lasher, /datum/plant/weed/slurrypod, /datum/plant/artifact/pukeplant)
 			..()
 
+	lotus
+		New()
+			spawn_plant = /datum/plant/artifact/litelotus
+			..()
+
 
 /obj/machinery/plantpot/alien
 	// Prefab stuff. This is a plantpot which just spawns with a strange seed in it.
