@@ -1716,16 +1716,16 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 		item_state = "basecap_[hatcolour]"
 
 	attack_self(var/mob/user as mob)
-			if(!src.hatflip)
-				src.hatflip = TRUE
-				src.icon_state = "basecap_[hatcolour]"
-				src.item_state = "basecap_[hatcolour]"
-				boutput(user, "<span class='notice'>You flip your baseball cap back into the standard baseball cap position.</span>")
-			else
-				src.hatflip = FALSE
-				src.icon_state = "basecapflip_[hatcolour]"
-				src.item_state = "basecapflip_[hatcolour]"
-				boutput(user, "<span class='notice'>You flip your baseball cap around. Now it's backwards.</span>")
+		if(!src.hatflip)
+			src.hatflip = TRUE
+			src.icon_state = "basecap_[hatcolour]"
+			src.item_state = "basecap_[hatcolour]"
+			boutput(user, "<span class='notice'>You flip your baseball cap back into the standard baseball cap position.</span>")
+		else
+			src.hatflip = FALSE
+			src.icon_state = "basecapflip_[hatcolour]"
+			src.item_state = "basecapflip_[hatcolour]"
+			boutput(user, "<span class='notice'>You flip your baseball cap around. Now it's backwards.</span>")
 
 	black
 		hatcolour = "black"
