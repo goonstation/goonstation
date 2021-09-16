@@ -145,7 +145,6 @@
 	return
 
 /obj/item/a_gift
-	EPHEMERAL_XMAS
 	name = "gift"
 	desc = "I wonder what's inside!?"
 	icon = 'icons/obj/items/items.dmi'
@@ -170,6 +169,7 @@
 						/obj/item/storage/belt/wrestling)
 
 	festive
+		EPHEMERAL_XMAS
 		icon_state = "gift2-g"
 		attack_self(mob/M as mob)
 			if (!islist(giftpaths) || !length(giftpaths))
