@@ -288,14 +288,13 @@
 				continue
 			if((mover != obstacle) && (forget != obstacle))
 				if(obstacle.event_handler_flags & USE_CHECKEXIT)
-					if (isobj(mover))
-						var/obj/obj_mover = mover
-						if (HAS_FLAG(obj_mover.object_flags, HAS_DIRECTIONAL_BLOCKING) && HAS_FLAG(obstacle.object_flags, HAS_DIRECTIONAL_BLOCKING) \
-								&& obstacle.dir == mover.dir)
-							return 1 //Allow objects which both block the same dirs (i.e. two railings which are facing the same direction) to be pushed past each other
-					if(!obstacle.CheckExit(mover, src))
-						mover.Bump(obstacle, 1)
-						return 0
+					var/obj/obj_mover = mover
+					if (!istype(obj_mover) || !(HAS_FLAG(obj_mover.object_flags, HAS_DIRECTIONAL_BLOCKING) \
+					  && HAS_FLAG(obstacle.object_flags, HAS_DIRECTIONAL_BLOCKING) \
+					  && obstacle.dir == mover.dir)) //Allow objects that block the same dirs to be pushed past each other
+						if(!obstacle.CheckExit(mover, src))
+							mover.Bump(obstacle, 1)
+							return 0
 
 	//Then, check the turf itself
 	if (!src.CanPass(mover, src))
