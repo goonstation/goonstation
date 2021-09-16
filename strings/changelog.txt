@@ -1,4 +1,9 @@
 
+(t)thu sep 16 21
+(u)Flaborized
+(p)6004
+(e)🎨|sprites
+(*)Security personnel now spawn with a visually distinct bag.
 (t)wed sep 15 21
 (u)Azrun
 (p)6013
