@@ -368,7 +368,7 @@ obj/item/batarang
 		if (ishuman(hit_atom))
 			var/mob/living/carbon/human/H = hit_atom
 			H.changeStatus("weakened", 1 SECONDS)
-			force_laydown_standup()	
+			H.force_laydown_standup()
 			take_bleeding_damage(H, null, 10)
 			playsound(src, hitsound, 60, 1)
 
