@@ -28,3 +28,11 @@
 
 //default max range for 'unlimited' range projectiles
 #define PROJ_INFINITE_RANGE 500
+
+
+//modular gun shit
+#define GUN_NANO 1
+#define GUN_FOSS 2
+#define GUN_JUICE 4
+#define GUN_SOVIET 8
+#define GUN_ITALIAN 16
