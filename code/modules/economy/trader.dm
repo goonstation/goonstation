@@ -1164,7 +1164,7 @@
 
 		sell_dialogue = "Ii am a pit chort tiis mont, put Ii can stiill puy sometiing."
 
-		buy_dialogue = "Blease take look."
+		buy_dialogue = "Blease take look. Ii have some sbecial wares, put Ii vont sell them unless you pring me a quality, home-grrovn snakk!"
 
 		angrynope = "You knobliin! Peat iit!"
 		whotext = "Ii am a gnome, frriiend. I grov and sell blants."
@@ -1196,8 +1196,8 @@
 		pickupdialoguefailure = "No the crrate is not frree. You have to puy sometiing fiirrst."
 
 	attackby(obj/item/I as obj, mob/user as mob)
-		if (!src.quest_completed)
-			if (istype(I, /obj/item/reagent_containers/food/snacks/plant/))
+		if (istype(I, /obj/item/reagent_containers/food/snacks/plant/))
+			if (!src.quest_completed)
 				var/obj/item/reagent_containers/food/snacks/plant/P = I
 				if (P.quality > 40) // 40 is quite high and likely a Jumbo crop
 					src.quest_completed = TRUE
@@ -1207,6 +1207,7 @@
 											some sbeciial wares in my catalogue.\"</b></span>")
 						src.goods_sell += new /datum/commodity/pisscher(src)
 						src.goods_sell += new /datum/commodity/splicer(src)
+						buy_dialogue = "Yourr station has imbressed me! Ii vill chow you my pest wares. Blease take look."
 						SPAWN_DBG(50)
 							src.visible_message("<span class='alert'><b>[src]: \"... stiill not frree!")
 				else

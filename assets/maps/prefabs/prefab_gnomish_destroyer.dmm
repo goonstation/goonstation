@@ -3,9 +3,9 @@
 "eG" = (/obj/item/storage/wall/green,/turf/simulated/floor/grass/leafy,/area/gnome_trader)
 "eJ" = (/obj/grille/catwalk/cross{dir = 6},/turf/space,/area/gnome_trader)
 "gW" = (/turf/space,/area/space)
-"hH" = (/obj/machinery/plantpot/alien{anchored = 1},/obj/machinery/light/incandescent/greenish{dir = 4},/turf/simulated/floor/dirt,/area/gnome_trader)
+"im" = (/obj/machinery/plantpot/alien{anchored = 1},/obj/machinery/light/incandescent/greenish{dir = 8},/turf/simulated/floor/dirt,/area/gnome_trader)
 "iI" = (/obj/machinery/door/poddoor/blast{dir = 8; id = "gnome_ship"},/obj/forcefield/energyshield/perma/doorlink{desc = "A door-linked force field that prevents gasses from passing through it."; name = "Door-linked Atmospheric Forcefield"; powerlevel = 1},/obj/decal/tile_edge/stripe/extra_big,/turf/simulated/floor/shuttlebay,/area/gnome_trader)
-"kn" = (/obj/decal/tile_edge/stripe/extra_big{dir = 1},/turf/simulated/floor/shuttlebay,/area/gnome_trader)
+"jz" = (/obj/machinery/plantpot/bareplant/lotus,/turf/simulated/floor/grass/leafy,/area/gnome_trader)
 "lr" = (/obj/machinery/light/incandescent/greenish{dir = 8},/obj/shrub,/turf/simulated/floor/wood,/area/gnome_trader)
 "lu" = (/turf/simulated/floor/grasstodirt{dir = 9},/area/gnome_trader)
 "my" = (/turf/simulated/floor/wood,/area/gnome_trader)
@@ -18,25 +18,24 @@
 "si" = (/obj/critter/garden_gnome,/turf/simulated/floor/grass/leafy,/area/gnome_trader)
 "th" = (/turf/simulated/floor/grey,/area/gnome_trader)
 "uj" = (/obj/decal/fakeobjects/shuttleengine{icon_state = "alt_heater-L"},/turf/space,/area/gnome_trader)
-"vz" = (/obj/machinery/plantpot/alien{anchored = 1},/obj/machinery/light/incandescent/greenish{dir = 8},/turf/simulated/floor/dirt,/area/gnome_trader)
 "wg" = (/turf/simulated/floor/grasstodirt{dir = 5},/area/gnome_trader)
 "yg" = (/obj/machinery/plantpot/alien{anchored = 1},/turf/simulated/floor/wood,/area/gnome_trader)
 "yz" = (/obj/stool/chair/comfy/shuttle/pilot{dir = 1},/turf/simulated/floor/wood,/area/gnome_trader)
 "yD" = (/obj/item/bananapeel,/turf/simulated/floor/grass/leafy,/area/gnome_trader)
 "zA" = (/turf/simulated/floor/grasstodirt{dir = 4},/area/gnome_trader)
 "zW" = (/obj/window/auto,/turf/simulated/floor/grey,/area/gnome_trader)
+"CN" = (/obj/machinery/light/incandescent/greenish{dir = 4},/turf/simulated/floor/shuttlebay,/area/gnome_trader)
 "Dw" = (/obj/machinery/light/incandescent/greenish{dir = 4},/obj/shrub,/turf/simulated/floor/wood,/area/gnome_trader)
 "DG" = (/obj/grille/catwalk/cross{dir = 10},/turf/space,/area/gnome_trader)
 "EQ" = (/turf/simulated/wall/auto/jen/brown,/area/gnome_trader)
-"Fh" = (/obj/machinery/light/incandescent/greenish{dir = 4},/turf/simulated/floor/shuttlebay,/area/gnome_trader)
+"Ft" = (/obj/decal/tile_edge/stripe/extra_big{dir = 1},/turf/simulated/floor/shuttlebay,/area/gnome_trader)
 "FZ" = (/obj/machinery/light_switch,/turf/simulated/wall/auto/jen/the_tuff_stuff,/area/gnome_trader)
 "Iw" = (/turf/simulated/wall/auto/reinforced/jen/red,/area/gnome_trader)
 "KR" = (/obj/decal/cleanable/blood/tracks{icon_state = "drip4"},/turf/simulated/wall/auto/jen/brown,/area/gnome_trader)
 "LD" = (/obj/critter/garden_gnome,/turf/simulated/floor/wood,/area/gnome_trader)
-"LH" = (/obj/machinery/plantpot/bareplant/lotus,/turf/simulated/floor/grass/leafy,/area/gnome_trader)
 "Md" = (/turf/simulated/wall/auto/jen/the_tuff_stuff,/area/gnome_trader)
 "Mv" = (/obj/decal/cleanable/ash,/turf/simulated/floor/grey,/area/gnome_trader)
-"Oq" = (/obj/lattice/barricade{icon_state = "woodwall"},/turf/simulated/floor/wood,/area/gnome_trader)
+"Oq" = (/obj/structure/woodwall,/turf/simulated/floor/wood,/area/gnome_trader)
 "PR" = (/obj/machinery/light/incandescent/greenish{dir = 4},/turf/simulated/floor/dirt,/area/gnome_trader)
 "QF" = (/obj/railing/orange/reinforced{dir = 4},/obj/critter/maneater,/obj/decal/fakeobjects/lighttube_broken{dir = 1},/turf/simulated/floor/grasstodirt{dir = 4},/area/gnome_trader)
 "QS" = (/obj/machinery/light/incandescent/greenish{dir = 8},/turf/simulated/floor/shuttlebay,/area/gnome_trader)
@@ -47,6 +46,7 @@
 "UD" = (/obj/machinery/plantpot/bareplant/tree,/turf/simulated/floor/dirt,/area/gnome_trader)
 "UK" = (/obj/machinery/plantpot/alien{anchored = 1},/turf/simulated/floor/grass/leafy,/area/gnome_trader)
 "Vl" = (/obj/machinery/light/incandescent/greenish{dir = 8},/turf/simulated/floor/dirt,/area/gnome_trader)
+"Vo" = (/obj/machinery/plantpot/alien{anchored = 1},/obj/machinery/light/incandescent/greenish{dir = 4},/turf/simulated/floor/dirt,/area/gnome_trader)
 "Vx" = (/obj/machinery/power/apc{pixel_y = 1},/turf/simulated/wall/auto/jen/the_tuff_stuff,/area/gnome_trader)
 "WT" = (/obj/railing/orange/reinforced{dir = 8},/obj/critter/maneater,/obj/decal/cleanable/blood,/obj/decal/fakeobjects/lighttube_broken{dir = 1},/turf/simulated/floor/grasstodirt{dir = 8},/area/gnome_trader)
 "Xg" = (/obj/railing/orange/reinforced{dir = 8},/obj/item/organ/tail/monkey,/turf/simulated/floor/grasstodirt{dir = 8},/area/gnome_trader)
@@ -67,10 +67,10 @@ gWmORQMvzWQFpIWTzWthRQpGgW
 gWDGMdthzWYMyDXgzWthMdeJgW
 gWgWMdRQMdMdpsVxFZRQMdgWgW
 gWgWMdVlzAeGsipITYPRMdgWgW
-gWgWMdUDzAUKLHUKTYUDMdgWgW
-gWgWMdvzwgRJRJRJluhHMdgWgW
-gWgWMdMdMdknknknMdMdMdgWgW
-gWgWgWujMdQSSHFhMdYfgWgWgW
+gWgWMdUDzAUKjzUKTYUDMdgWgW
+gWgWMdimwgRJRJRJluVoMdgWgW
+gWgWMdMdMdFtFtFtMdMdMdgWgW
+gWgWgWujMdQSSHCNMdYfgWgWgW
 gWgWgWpcMdSHSHSHMdpcgWgWgW
 gWgWgWgWZyiIiIiIMdgWgWgWgW
 gWgWgWgWgWgWgWgWgWgWgWgWgW

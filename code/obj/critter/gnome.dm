@@ -105,6 +105,7 @@
 			reagents_temp.add_reagent("water", 60)
 			reagents_temp.trans_to(planter, 60)
 			qdel(reagents_temp)
+			/obj/machinery/r_door_control
 		src.task = "thinking"
 		src.attacking = 0
 		src.plant_plan = ""
