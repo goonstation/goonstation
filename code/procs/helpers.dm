@@ -120,7 +120,7 @@ var/global/obj/flashDummy
 	elecflash(target,power = elecflashpower)
 	O.set_loc(null)
 
-/proc/arcFlash(var/atom/from, var/atom/target, var/wattage)
+/proc/arcFlash(var/atom/from, var/atom/target, var/wattage, stun_coeff = 1)
 	var/target_r = target
 	if (isturf(target))
 		var/obj/O = getFlashDummy()
@@ -135,7 +135,7 @@ var/global/obj/flashDummy
 		SPAWN_DBG(0.6 SECONDS) pool(O)
 
 	if(wattage && isliving(target)) //Probably unsafe.
-		target:shock(from, wattage, "chest", 1, 1)
+		target:shock(from, wattage, "chest", stun_coeff, 1)
 
 	var/elecflashpower = 0
 	if (wattage > 12000)

@@ -580,3 +580,104 @@
 	locked_frequency = 1
 	frequency = R_FREQ_DETECTIVE
 	chat_class = RADIOCL_DETECTIVE
+
+ABSTRACT_TYPE(/obj/item/sticker/glow)
+/obj/item/sticker/glow
+	name = "glow sticker"
+	desc = "A sticker that has been egineered to self-illuminate when stuck to things."
+	dont_make_an_overlay = TRUE
+	icon_state = "glow"
+	var/datum/component/holdertargeting/simple_light/light_c
+	var/col_r = 0
+	var/col_g = 0
+	var/col_b = 0
+	var/brightness = 0.6
+
+	New()
+		. = ..()
+		color = rgb(col_r*255, col_g*255, col_b*255)
+		light_c = src.AddComponent(/datum/component/holdertargeting/simple_light, col_r*255, col_g*255, col_b*255, brightness*255)
+		light_c.update(0)
+
+	attack_hand(mob/user as mob)
+		user.lastattacked = user
+		if (src.attached)
+			if (user.a_intent == INTENT_HELP)
+				boutput(user, "You peel \the [src] off of \the [src.attached].")
+				src.remove_from_attached()
+				src.add_fingerprint(user)
+				user.put_in_hand_or_drop(src)
+			else
+				src.attached.Attackhand(user)
+				user.lastattacked = user
+		else
+			return ..()
+
+	stick_to(var/atom/A, var/pox, var/poy)
+		..()
+		if (istype(src.attached, /mob) || istype(src.attached, /obj))
+			var/atom/movable/F = src.attached
+			src.layer = F.layer + 0.1
+			src.plane = F.plane
+			F.vis_contents += src
+		else if (istype(src.attached, /turf))
+			var/turf/F = src.attached
+			src.layer = F.layer + 0.1
+			src.plane = F.plane
+			F.vis_contents += src
+		light_c.update(1)
+
+	proc/remove_from_attached()
+		if (!src.attached)
+			return
+		if (istype(src.attached, /atom/movable))
+			var/atom/movable/F = src.attached
+			F.vis_contents -= src
+		else if (istype(src.attached, /turf))
+			var/turf/F = src.attached
+			F.vis_contents -= src
+
+		src.set_loc(src.attached.loc)
+		src.layer = initial(src.layer)
+		src.plane = initial(src.plane)
+		src.pixel_x = initial(src.pixel_x)
+		src.pixel_y = initial(src.pixel_y)
+		src.attached = null
+		light_c.update(0)
+
+	green
+		col_r = 0.0
+		col_g = 0.9
+		col_b = 0.1
+	white
+		col_r = 0.9
+		col_g = 0.9
+		col_b = 0.9
+	yellow
+		col_r = 0.9
+		col_g = 0.8
+		col_b = 0.1
+	blue
+		col_r = 0.1
+		col_g = 0.1
+		col_b = 0.9
+	purple
+		col_r = 0.6
+		col_g = 0.1
+		col_b = 0.9
+	pink
+		col_r = 0.9
+		col_g = 0.5
+		col_b = 0.9
+	cyan
+		col_r = 0.1
+		col_g = 0.9
+		col_b = 0.9
+	oranange
+		col_r = 0.9
+		col_g = 0.6
+		col_b = 0.1
+	red
+		col_r = 0.9
+		col_g = 0.1
+		col_b = 0.0

@@ -514,12 +514,15 @@
 	if(health_mon)
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(health_mon)
 		health_mon.dispose()
+		health_mon = null
 	if(health_implant)
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(health_implant)
 		health_implant.dispose()
+		health_implant = null
 	if(arrestIcon)
 		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_image(arrestIcon)
 		arrestIcon.dispose()
+		arrestIcon = null
 
 	src.chest_item = null
 
@@ -1482,13 +1485,12 @@
 		return 1*/
 
 /mob/living/carbon/human/say_quote(var/text)
+	var/sayverb = null
 	if (src.mutantrace)
 		if (src.mutantrace.voice_message)
 			src.voice_name = src.mutantrace.voice_name
 			src.voice_message = src.mutantrace.voice_message
-		if (text == "" || !text)
-			return src.mutantrace.say_verb()
-		return "[src.mutantrace.say_verb()], \"[text]\""
+		sayverb = src.mutantrace.say_verb()
 	else
 		src.voice_name = initial(src.voice_name)
 		src.voice_message = initial(src.voice_message)
@@ -1499,7 +1501,7 @@
 	if (src.oxyloss > 10)
 		special = "gasp_whisper"
 
-	return ..(text,special)
+	return ..(text, special, sayverb)
 
 //Lallander was here
 /mob/living/carbon/human/whisper(message as text, forced=FALSE)

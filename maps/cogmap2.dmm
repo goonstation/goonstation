@@ -39245,8 +39245,8 @@
 	icon_state = "pipe-c"
 	},
 /obj/table/reinforced/auto,
-/obj/item/storage/box/flashbang_kit,
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
+/obj/item/chem_grenade/flashbang,
 /obj/item/storage/box/stinger_kit,
 /obj/item/storage/box/revimp_kit{
 	pixel_x = 5
@@ -78650,7 +78650,7 @@
 /area/station/ranch)
 "jcR" = (
 /obj/machinery/light,
-/obj/submachine/chicken_feed_grinder,
+/obj/submachine/ranch_feed_grinder,
 /obj/item/reagent_containers/food/snacks/plant/corn{
 	doants = 0
 	},
@@ -78833,8 +78833,8 @@
 	dir = 8
 	},
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag,
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag,
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag,
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag,
 /turf/simulated/floor/grasstodirt{
 	dir = 8
 	},
@@ -78973,8 +78973,8 @@
 /obj/railing/orange/reinforced,
 /obj/machinery/light_switch/east,
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag,
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag,
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag,
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag,
 /turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "nqk" = (

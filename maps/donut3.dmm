@@ -969,7 +969,7 @@
 	pixel_x = -9;
 	pixel_y = 4
 	},
-/obj/item/storage/box/flashbang_kit{
+/obj/item/chem_grenade/flashbang{
 	pixel_x = 7;
 	pixel_y = 2
 	},
@@ -14732,10 +14732,10 @@
 "dZS" = (
 /obj/table/reinforced/auto,
 /obj/access_spawn/rancher,
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag{
 	rand_pos = 1
 	},
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag{
 	rand_pos = 1
 	},
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -15612,7 +15612,7 @@
 /area/station/security/checkpoint/escape)
 "emH" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag{
 	rand_pos = 1
 	},
 /obj/machinery/door/airlock/pyro/glass/windoor,
@@ -44609,7 +44609,7 @@
 	pixel_x = -26;
 	pixel_y = -1
 	},
-/obj/submachine/chicken_feed_grinder,
+/obj/submachine/ranch_feed_grinder,
 /obj/item/reagent_containers/food/snacks/plant/corn{
 	doants = 0
 	},
@@ -80611,10 +80611,10 @@
 "xsw" = (
 /obj/table/reinforced/auto,
 /obj/access_spawn/rancher,
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag{
 	rand_pos = 1
 	},
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag{
 	rand_pos = 1
 	},
 /obj/machinery/door/airlock/pyro/glass/windoor{
