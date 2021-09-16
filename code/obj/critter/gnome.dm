@@ -72,7 +72,7 @@
 		..()
 		if (src.alive && user.a_intent == INTENT_HELP && !src.laugh_cooldown)
 			src.laugh_cooldown = TRUE
-			playsound(src.loc, "sound/misc/gnomechuckle.ogg", 50, 1)
+			//playsound(src.loc, "sound/misc/gnomechuckle.ogg", 50, 1)
 			SPAWN_DBG(src.time_between_laughs)
 				src.laugh_cooldown = FALSE
 
@@ -81,12 +81,12 @@
 		if (src.alive && !src.cry_cooldown)
 			if (prob(50))
 				src.cry_cooldown = 1
-				playsound(src.loc, "sound/misc/gnomeoof.ogg", 50, 1)
+				//playsound(src.loc, "sound/misc/gnomeoof.ogg", 50, 1)
 				SPAWN_DBG(20)
 					src.cry_cooldown = 0
 			else if (prob(10))
 				src.cry_cooldown = 1
-				playsound(src.loc, "sound/misc/gnomecry.ogg", 50, 1)
+				//playsound(src.loc, "sound/misc/gnomecry.ogg", 50, 1)
 				SPAWN_DBG(30)
 					src.cry_cooldown = 0
 
