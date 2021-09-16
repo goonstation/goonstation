@@ -292,8 +292,7 @@
 						var/obj/obj_mover = mover
 						if (HAS_FLAG(obj_mover.object_flags, HAS_DIRECTIONAL_BLOCKING) && HAS_FLAG(obstacle.object_flags, HAS_DIRECTIONAL_BLOCKING) \
 								&& obstacle.dir == mover.dir)
-							return 1 //Allow objects which both block the same dirs
-									 //(i.e. two railings which are facing to same direction) to be pushed past each other
+							return 1 //Allow objects which both block the same dirs (i.e. two railings which are facing the same direction) to be pushed past each other
 					if(!obstacle.CheckExit(mover, src))
 						mover.Bump(obstacle, 1)
 						return 0
