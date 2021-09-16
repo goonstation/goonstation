@@ -1,5 +1,5 @@
 
-
+ABSTRACT_TYPE(/obj/item/stackable_ammo/)
 /obj/item/stackable_ammo/
 	name = "1 round"
 	real_name = "round"
@@ -21,7 +21,7 @@
 	health = 10
 	amount = 1
 	max_stack = 1000
-	stack_type = /obj/item/stackable_ammo // change this per bullet style
+	stack_type = null // change this per bullet style
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 1
@@ -58,10 +58,11 @@
 			usr.u_equip(src) //wonder if that will work?
 		amount = 1
 		..()
-/*
+
 	update_stack_appearance()
 		src.UpdateName()
 		src.inventory_counter.update_number(src.amount)
+		/*
 		switch (src.amount)
 			if (-INFINITY to 9)
 				src.icon_state = "cashgreen"
@@ -131,15 +132,22 @@
 				playsound(src.loc, "sound/weapons/casings/casing-0[rand(1,9)].ogg", 10, 0.1, 0, 0.8)
 				amount--
 				M.ammo_list += projectile_type
+				update_stack_appearance()
 				sleep(5)
 			playsound(src.loc, "sound/weapons/gunload_heavy.ogg", 30, 0.1, 0, 0.8)
+		if(amount < 1)
+			pool(src)
+
+
 
 /obj/item/stackable_ammo/capacitive/
 	name = "\improper NT Stunner Fuckers"
+	real_name = "\improper NT Stunner Fuckers"
 	desc = "pee pee, poo poo"
 	projectile_type = /datum/projectile/energy_bolt
 	stack_type = /obj/item/stackable_ammo/capacitive/
 	ammo_DRM = GUN_NANO | GUN_FOSS
+	color = "#FFFF30"
 
 	three
 		default_min_amount = 3
@@ -154,11 +162,13 @@
 		default_max_amount = 10
 
 /obj/item/stackable_ammo/zaubertube/
-	name = "лазерный картридж"
+	name = "Elektrograd лазерный картридж"
+	real_name = "Elektrograd лазерный картридж"
 	desc = "A small glass bulb filled with hypergolic incandescent chemicals."
 	projectile_type = /datum/projectile/laser
 	stack_type = /obj/item/stackable_ammo/zaubertube/
 	ammo_DRM = GUN_SOVIET | GUN_FOSS
+	color = "#c89"
 
 	three
 		default_min_amount = 3

@@ -61,7 +61,12 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 		..()
 		build_gun()
 
-
+/obj/item/gun/modular/attackby(var/obj/item/I as obj, mob/user as mob)
+	if (istype(I, /obj/item/stackable_ammo))
+		var/obj/item/stackable_ammo/SA = I
+		SA.reload(src)
+		return
+	..()
 
 ABSTRACT_TYPE(/obj/item/gun_parts)
 /obj/item/gun_parts/
@@ -209,14 +214,18 @@ ABSTRACT_TYPE(/obj/item/gun_parts/accessory)
 		. = ..()
 
 /obj/item/gun/modular/process_ammo(mob/user)
-	jammed = 0
+	if(jammed)
+		boutput(user,"<span class='notice'><b>You clear the ammunition jam.</b></span>")
+		jammed = 0
+		playsound(src.loc, "sound/weapons/gunload_heavy.ogg", 40, 1)
+		return
 	if(!ammo_list.len) // empty!
 		playsound(src.loc, "sound/weapons/Gunclick.ogg", 40, 1)
 		return
 	if(ammo_list.len > max_ammo_capacity)
 		var/waste = ammo_list.len - max_ammo_capacity
 		ammo_list.Cut(1,(1 + waste))
-		src.visible_message("<span class='alert'><b>Error! Storage space low! Deleting [waste] ammunition...</b></span>")
+		boutput(user,"<span class='alert'><b>Error! Storage space low! Deleting [waste] ammunition...</b></span>")
 		playsound(src.loc, 'sound/items/mining_drill.ogg', 20, 1,0,0.8)
 
 	if(!ammo_list.len) // empty! again!! just in case max ammo capacity was 0!!!
@@ -225,21 +234,25 @@ ABSTRACT_TYPE(/obj/item/gun_parts/accessory)
 
 	if(current_projectile) // chamber is loaded
 		return
+
 	if(prob(jam_frequency_reload))
 		jammed = 1
-		src.visible_message("<span class='alert'><b>Error! Ammunition jam!</b></span>")
-		playsound(src.loc, "sound/weapons/Gunclick.ogg", 60, 1)
+		boutput(user,"<span class='alert'><b>Error! Jam detected!</b></span>")
+		playsound(src.loc, "sound/weapons/trayhit.ogg", 60, 1)
 		return
 	else
 		current_projectile = unpool(ammo_list[ammo_list.len]) // last one goes in
 		ammo_list.Remove(ammo_list[ammo_list.len]) //and remove it from the list
+		playsound(src.loc, "sound/weapons/gun_cocked_colt45.ogg", 60, 1)
 
 
-/obj/item/gun/modular/attack_self()
+/obj/item/gun/modular/attack_self(mob/user)
 	src.visible_message("<span class='alert'><b>debug: reloading i guess </b></span>")
-	process_ammo()
+	process_ammo(user)
 
 /obj/item/gun/modular/canshoot()
+	if(jammed)
+		return 0
 	if(current_projectile)
 		return 1
 	return 0
@@ -275,6 +288,12 @@ ABSTRACT_TYPE(/obj/item/gun_parts/accessory)
 				M.movement_delay_modifier += slowdown
 				sleep(slowdown_time)
 				M.movement_delay_modifier -= slowdown
+
+	if(prob(jam_frequency_fire))
+		jammed = 1
+		user.show_text("*clunk* *clack*", "red")
+		playsound(user, "sound/impact_sounds/Generic_Click_1.ogg", 60, 1)
+
 
 	var/spread = is_dual_wield*10
 	if (user.reagents)
@@ -518,6 +537,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	New()
 		barrel = new /obj/item/gun_parts/barrel/italian(src)
 		stock = new /obj/item/gun_parts/stock/italian(src)
+		..()
 
 	shoot()
 		..()
