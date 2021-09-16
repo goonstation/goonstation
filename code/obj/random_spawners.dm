@@ -1497,7 +1497,7 @@
 	max_amt2spawn = 2
 	rare_chance = 1
 	items2spawn = list(/obj/item/reagent_containers/food/snacks/pizza/bad,
-						/obj/item/reagent_containers/food/snacks/pizza/peperbad,
+						/obj/item/reagent_containers/food/snacks/pizza/pepperbad,
 						/obj/item/reagent_containers/food/snacks/pizza/mushbad)
 	rare_items2spawn = list(/obj/item/reagent_containers/food/drinks/bottle/soda/softsoft_pizza)
 
