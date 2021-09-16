@@ -133,21 +133,9 @@ ABSTRACT_TYPE(/datum/special_order/surgery)
 	comtype = /obj/item/reagent_containers/food/snacks/pizza
 	subtype_valid = TRUE
 
-/datum/commodity/special_order/megaweed
-	comname = "Rainbow Weed"
-	comtype = /obj/item/plant/herb/cannabis/mega
-
-/datum/commodity/special_order/whiteweed
-	comname = "White Weed"
-	comtype = /obj/item/plant/herb/cannabis/white
-
-/datum/commodity/special_order/omegaweed
-	comname = "Omega Weed"
-	comtype = /obj/item/plant/herb/cannabis/omega
-
 /datum/special_order/weed_sampler
 	name = "Weed Flight"
-	order_items = list(/datum/commodity/special_order/megaweed=1, /datum/commodity/special_order/whiteweed=1, /datum/commodity/special_order/omegaweed=1, /datum/commodity/special_order/pizza=1)
+	order_items = list(/datum/commodity/trader/buford/megaweed=1, /datum/commodity/trader/buford/whiteweed=1, /datum/commodity/trader/buford/omegaweed=1, /datum/commodity/special_order/pizza=1)
 	requisition = new /obj/item/paper/requisition/weed_sample
 	price = 41834
 
@@ -281,15 +269,25 @@ ABSTRACT_TYPE(/datum/special_order/chef)
 		//Make Mob
 		target = new /mob/living/carbon/human/npc/assistant
 		randomize_look(target, 1, 1, 1, 1, 1, 0)
+		//Let people have time to figure out what is going on before he starts fucking shit up
+		target.reagents.add_reagent("capulettium_plus", rand(15,30) ) // 5 minutes to 8.3 minutes (AI will fuck it before then but creates the illusion)
+		target.reagents.add_reagent("ether", rand(25, 60) ) //
+		var/datum/reagent/capulettium_plus/R = target.reagents.get_reagent("capulettium_plus")
+		R.counter = 20
+		var/datum/reagent/capulettium_plus/E = target.reagents.get_reagent("ether")
+		E.counter = 36
+		target.ai_lastaction = TIME + 2 MINUTES
 		target.set_loc(C)
+		//Fuck up Organs
 		target.TakeDamage("All", rand(10, 20), rand(10, 20))
 		target.organHolder.damage_organs(1, 6, 10, target_organs)
-		//Let people have time to figure out what is going on before he starts fucking shit up
-		target.setStatus("paralysis", rand(4 MINUTE, 6 MINUTES))
-		target.setStatus("stunned", rand(4 MINUTE, 4 MINUTES))
-		target.setStatus("weakened", rand(1 MINUTE, 2 MINUTES))
-		//Fuck up Organs
-		target.sleeping = 10 MINUTES
+
+		SPAWN_DBG(0.5 SECOND) // Delay for JobEquipSpawned to resolve
+			for(var/slot in list(SLOT_EARS, SLOT_WEAR_ID, SLOT_BACK, SLOT_BELT))
+				var/obj/O = target.get_slot(slot)
+				if(O)
+					target.u_equip(O)
+					qdel(O)
 
 		requisition.set_loc(C)
 
