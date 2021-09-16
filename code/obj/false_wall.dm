@@ -208,11 +208,10 @@
 				var/turf/T = get_step(src, dir)
 				if (istype(T, /turf/simulated/wall/auto))
 					var/turf/simulated/wall/auto/W = T
-					// neither of us are reinforced
-					if (!istype(W, r_wall_path) && !istype(src, /turf/simulated/wall/false_wall/reinforced))
-						dirs |= dir
-					// both of us are reinforced
-					else if (istype(W, r_wall_path) && istype(src, /turf/simulated/wall/false_wall/reinforced))
+					if (istype(W, /turf/simulated/wall/false_wall) || \
+							istype(W, wall_path) || \
+							istype(W, r_wall_path) && istype(src, /turf/simulated/wall/false_wall/reinforced)
+						)
 						dirs |= dir
 					if (W.light_mod) //If the walls have a special light overlay, apply it.
 						src.RL_SetSprite("[W.light_mod][num2text(dirs)]")
