@@ -54170,10 +54170,6 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/info)
-"dAo" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/horizontal,
-/turf/simulated/floor/white,
-/area/station/medical/medbay/lobby)
 "dAS" = (
 /obj/machinery/door/poddoor/pyro{
 	dir = 4;
@@ -55353,10 +55349,6 @@
 	dir = 8
 	},
 /area/station/security/main)
-"fsR" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
-/turf/simulated/floor/white,
-/area/station/medical/medbay/lobby)
 "ftg" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/snacks/spaghetti/spicy{
@@ -55402,12 +55394,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
-"fxR" = (
-/obj/machinery/atmospherics/pipe/vertical_pipe/east{
-	target_z = 2
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay/lobby)
 "fzO" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights/ephemeral,
@@ -55836,11 +55822,6 @@
 /obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
-"fZF" = (
-/obj/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
-/turf/simulated/floor/white,
-/area/station/medical/medbay/lobby)
 "fZG" = (
 /obj/machinery/light/emergency{
 	dir = 4
@@ -57792,12 +57773,6 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/engine/gas)
-"jLs" = (
-/obj/machinery/atmospherics/pipe/vertical_pipe/east{
-	id = "test_w"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay/lobby)
 "jMV" = (
 /obj/table/auto,
 /obj/item/hand_labeler{
@@ -60008,11 +59983,6 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
-"onR" = (
-/obj/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/horizontal,
-/turf/simulated/floor/white,
-/area/station/medical/medbay/lobby)
 "opf" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -60162,12 +60132,6 @@
 	dir = 1
 	},
 /area/station/engine/engineering)
-"oxO" = (
-/obj/machinery/atmospherics/pipe/vertical_pipe/west{
-	target_z = 2
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay/lobby)
 "oyc" = (
 /obj/disposalpipe/segment/produce{
 	dir = 8;
@@ -62132,12 +62096,6 @@
 	},
 /turf/simulated/floor/delivery/white,
 /area/station/science/chemistry)
-"rKn" = (
-/obj/machinery/atmospherics/pipe/vertical_pipe/west{
-	target_z = "test_e"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay/lobby)
 "rLp" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -101793,8 +101751,8 @@ cfJ
 cbQ
 cde
 ces
-fxR
-jLs
+cev
+cev
 cev
 cev
 cev
@@ -102095,8 +102053,8 @@ cfQ
 cbR
 cdf
 cet
-fZF
-onR
+cfF
+cfF
 cfF
 cfF
 cfF
@@ -102397,8 +102355,8 @@ cfR
 oPc
 cmh
 ceu
-fsR
-dAo
+cev
+cev
 dnI
 cjq
 cev
@@ -102699,8 +102657,8 @@ bYj
 nXh
 cmi
 cev
-fsR
-dAo
+cev
+cev
 cev
 cjr
 ckN
@@ -103001,8 +102959,8 @@ chc
 cbU
 cdi
 cev
-fsR
-rKn
+cev
+cev
 cie
 cjs
 ckO
@@ -103303,7 +103261,7 @@ bLG
 cbQ
 cbQ
 cew
-oxO
+cev
 cCa
 cif
 cjt
