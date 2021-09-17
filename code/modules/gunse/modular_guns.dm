@@ -35,6 +35,7 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 	var/lensing = 0 // Variable used for optical gun barrels. laser intensity scales around 1.0
 
 	var/flashbulb_only = 0 // FOSS guns only
+	var/flashbulb_health = 0 // FOSS guns only
 	var/obj/item/ammo/flashbulb/flashbulb = null // FOSS guns only
 	var/max_crank_level = 0 // FOSS guns only
 	var/crank_level = 0 // FOSS guns only
@@ -331,7 +332,16 @@ ABSTRACT_TYPE(/obj/item/gun_parts/accessory)
 			var/mob/living/carbon/human/H = user
 			H.gunshot_residue = 1
 
-	current_projectile = null // empty chamber
+	if(flashbulb_health)// this should be nonzero if we have a flashbulb loaded.
+		flashbulb_health = max(0,(flashbulb_health - crank_level))//subtract cranks from life
+		crank_level = 0 // reset
+		if(!flashbulb_health) // that was the end of it!
+			user.show_text("<span class='alert'>Your gun's flash bulb burns out!</span>")
+			current_projectile = null // empty chamber
+
+
+	else // not a flashbulb? Bye bintch.
+		current_projectile = null // empty chamber
 
 	src.update_icon()
 	return TRUE

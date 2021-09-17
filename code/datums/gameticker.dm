@@ -35,6 +35,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	var/tmp/timeDilationUpperBound = OVERLOADED_WORLD_TICKLAG
 	var/tmp/highMapCpuCount = 0 // how many times in a row has the map_cpu been high
 
+	var/list/lobby_music = list('sound/radio_station/lobby/opus_number_null.ogg','sound/radio_station/lobby/up_for_me.ogg','sound/radio_station/lobby/where_are_we.ogg')
+
 /datum/controller/gameticker/proc/pregame()
 
 	pregame_timeleft = PREGAME_LOBBY_TICKS
@@ -58,6 +60,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 
 	var/did_mapvote = 0
+	var/did_lobbymusic = 0
 	if (!player_capa)
 		new /obj/overlay/zamujasa/round_start_countdown/encourage()
 	var/obj/overlay/zamujasa/round_start_countdown/timer/title_countdown = new()
@@ -66,6 +69,10 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		// Start the countdown as normal, but hold it at 30 seconds until setup is complete
 		if (!game_start_delayed && (pregame_timeleft > 30 || current_state == GAME_STATE_PREGAME))
 			pregame_timeleft--
+
+			if (pregame_timeleft <= 120 && !did_lobbymusic)
+				lobby_music()
+				did_lobbymusic = 1
 
 			if (pregame_timeleft <= 60 && !did_mapvote)
 				// do it here now instead of before the countdown
@@ -275,6 +282,34 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				logTheThing("admin", usr ? usr : src, null, "the automated map switch vote couldn't run because: [e.name]")
 				logTheThing("diary", usr ? usr : src, null, "the automated map switch vote couldn't run because: [e.name]", "admin")
 				message_admins("[key_name(usr ? usr : src)] the automated map switch vote couldn't run because: [e.name]")
+
+/datum/controller/gameticker/proc/lobby_music()
+
+	var/sound/music_sound = new()
+	music_sound.file = pick(lobby_music)
+	music_sound.wait = 0
+	music_sound.repeat = 0
+	music_sound.priority = 254
+	music_sound.channel = admin_sound_channel //having this set to 999 removed layering music functionality -ZeWaka
+
+	music_sound.frequency = 1
+
+	music_sound.environment = -1
+	music_sound.echo = -1
+
+	SPAWN_DBG(0)
+		for (var/client/C in clients)
+
+			var/client_vol = C.getVolume(VOLUME_CHANNEL_ADMIN)
+
+			if (!client_vol)
+				continue
+
+			C.sound_playing[ admin_sound_channel ][1] = 1
+			C.sound_playing[ admin_sound_channel ][2] = VOLUME_CHANNEL_ADMIN
+
+			music_sound.volume = client_vol
+			C << music_sound
 
 /datum/controller/gameticker
 	proc/distribute_jobs()

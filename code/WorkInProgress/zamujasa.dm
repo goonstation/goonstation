@@ -1201,7 +1201,11 @@ Read the rules, don't grief, and have fun!</div>"}
 				switch (time)
 					if (90 to INFINITY)
 						timeLeftColor = "#33dd33"
-					if (60 to 90)
+					if (60 to 68)
+						timeLeftColor = "#ffff00"
+					if(69)
+						timeLeftColor = "#ff55ff"
+					if (70 to 90)
 						timeLeftColor = "#ffff00"
 					if (30 to 60)
 						timeLeftColor = "#ffb400"
