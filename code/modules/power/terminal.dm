@@ -146,3 +146,33 @@
 	hide(var/i)
 		invisibility = i ? 101 : 0
 		alpha = invisibility ? 128 : 255
+
+
+/obj/machinery/power/data_terminal/cable_tray
+	name = "cable tray"
+	desc = "A connector that goes off into somewhere..." //TODO
+	color = "#F0F"
+	var/id
+	var/target_z
+
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
+
+/obj/machinery/power/data_terminal/cable_tray/get_connections(unmarked = 0)
+	. = ..()
+	if(target_z)
+		for(var/obj/machinery/power/data_terminal/cable_tray/tray in get_turf(locate(src.x,src.y,target_z)))
+			. |= tray
+			break
+	else if(id)
+		for_by_tcl(tray, /obj/machinery/power/data_terminal/cable_tray)
+			if(tray.id == id && src != tray)
+				. |= tray
+				break
+
+
