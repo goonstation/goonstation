@@ -466,7 +466,6 @@
 
 		qdel(src)
 
-
 // a straight or bent segment
 /obj/disposalpipe/segment
 	icon_state = "pipe-s"

@@ -76868,10 +76868,6 @@
 /turf/space,
 /turf/unsimulated/floor/plating/scorched,
 /area/adventure/channel/flingy)
-"lEH" = (
-/obj/disposalpipe/trunk/west,
-/turf/unsimulated/floor,
-/area/iomoon/base/underground)
 "lEU" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-1"
@@ -76922,16 +76918,6 @@
 	},
 /turf/unsimulated/floor/carpet/red/fancy/narrow/northsouth,
 /area/centcom/offices/sovexe)
-"lOo" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 6
-	},
-/obj/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/unsimulated/floor,
-/area/iomoon/base/underground)
 "lPg" = (
 /obj/table/auto,
 /obj/item/paper{
@@ -78403,12 +78389,6 @@
 	name = "plating"
 	},
 /area/hospital/samostrel)
-"pAq" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/unsimulated/floor,
-/area/iomoon/base/underground)
 "pBy" = (
 /obj/item/storage/wall/emergency{
 	pixel_y = 32
@@ -79691,16 +79671,6 @@
 "sWb" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/lobby)
-"tbT" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 9
-	},
-/obj/disposalpipe/trunk/zlevel{
-	dir = 8;
-	id = "t3st"
-	},
-/turf/unsimulated/floor,
-/area/iomoon/base/underground)
 "tck" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/blueprint/destiny,
@@ -79876,13 +79846,6 @@
 	icon_state = "wall3dir"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
-"tDe" = (
-/obj/decal/fakeobjects/pipe,
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/unsimulated/floor,
-/area/iomoon/base/underground)
 "tED" = (
 /obj/stool/bee_bed,
 /obj/dialogueobj/dreambee,
@@ -80793,13 +80756,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
-"wQT" = (
-/obj/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
-/turf/unsimulated/floor,
-/area/iomoon/base/underground)
 "wRR" = (
 /obj/decal/fakeobjects/dreambeach/earth,
 /turf/unsimulated/floor/dream/beach,
@@ -117373,8 +117329,8 @@ bwg
 byo
 byW
 rHr
-wQT
-lOo
+bqB
+bAS
 bBG
 rHr
 bpF
@@ -117675,8 +117631,8 @@ rHr
 rHr
 rHr
 rHr
-tDe
-tbT
+btT
+bxB
 rHr
 rHr
 rHr
@@ -117977,7 +117933,7 @@ bxA
 bxA
 bqB
 rHr
-pAq
+bqB
 bqB
 rHr
 bCt
@@ -118279,7 +118235,7 @@ bxB
 bvB
 bqB
 bzA
-pAq
+bqB
 bqB
 bBH
 bAf
@@ -118581,7 +118537,7 @@ rHr
 byp
 byX
 rHr
-pAq
+bqB
 bqB
 rHr
 rHr
@@ -118883,7 +118839,7 @@ rHr
 rHr
 rHr
 rHr
-lEH
+bqB
 bqB
 rHr
 bpF
