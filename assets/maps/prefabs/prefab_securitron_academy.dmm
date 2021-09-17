@@ -67,7 +67,7 @@
 "te" = (/obj/submachine/chef_sink/chem_sink{dir = 1},/turf/simulated/floor/white,/area/prefab/secbot_academy)
 "tC" = (/obj/machinery/recharger,/obj/table/reinforced/industrial/auto,/obj/machinery/light/incandescent,/turf/simulated/floor/redblack,/area/prefab/secbot_academy)
 "tW" = (/obj/rack,/obj/item/clothing/head/NTberet,/obj/item/clothing/head/NTberet,/obj/item/clothing/head/NTberet,/obj/item/clothing/head/NTberet,/turf/simulated/floor/wood/two,/area/prefab/secbot_academy)
-"ub" = (/obj/item/storage/wall/red{desc = "It's basically a big box attached to the wall. There's a label at the bottom of it saying  Beepsky Jr"; name = "Personal wall locker"; spawn_contents = null},/turf/simulated/floor/darkblue/checker,/area/prefab/secbot_academy)
+"ub" = (/obj/item/storage/wall/red{desc = "It's basically a big box attached to the wall. There's a label at the bottom of it saying \"Beepsky Jr\""; name = "Personal wall locker"; spawn_contents = null},/turf/simulated/floor/darkblue/checker,/area/prefab/secbot_academy)
 "uY" = (/turf/simulated/floor/carpet/purple/fancy/edge/south,/area/prefab/secbot_academy)
 "vb" = (/obj/decal/poster/wallsign/poster_nt{desc = "It seems to be advertising a book about a securitron who became THE LAW, huh."; pixel_y = 32},/turf/space,/area/noGenerate)
 "vF" = (/obj/machinery/photocopier,/turf/simulated/floor/wood/two,/area/prefab/secbot_academy)
