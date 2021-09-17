@@ -54111,6 +54111,12 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/hangar/main)
+"dwg" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/lobby)
 "dxP" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/firedoor_spawn,
@@ -54695,6 +54701,9 @@
 /obj/machinery/power/solar/west,
 /turf/simulated/floor/airless/solar,
 /area/station/solar/west)
+"ewa" = (
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/lobby)
 "exJ" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
@@ -55996,6 +56005,13 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/engine/coldloop)
+"gnv" = (
+/obj/disposalpipe/trunk/zlevel{
+	dir = 4;
+	id = "t3st"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/lobby)
 "gnN" = (
 /obj/grille/catwalk{
 	dir = 6
@@ -58162,6 +58178,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
+"krR" = (
+/obj/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/disposal,
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/lobby)
 "ksd" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment/transport,
@@ -63012,6 +63035,13 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
+"tgS" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	level = -1
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/lobby)
 "tjP" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/red/side{
@@ -63234,6 +63264,13 @@
 /obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
+"tLe" = (
+/obj/disposalpipe/segment,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/lobby)
 "tLS" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -64936,6 +64973,14 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/ai_monitored/storage/eva)
+"wPA" = (
+/obj/disposalpipe/segment,
+/obj/disposalpipe/segment{
+	dir = 4;
+	level = -1
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/lobby)
 "wRC" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/cable{
@@ -65029,6 +65074,13 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"xbv" = (
+/obj/disposalpipe/trunk/zlevel{
+	dir = 8;
+	target_z = 2
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/lobby)
 "xdC" = (
 /turf/simulated/floor/green/side{
 	dir = 10
@@ -101751,8 +101803,8 @@ cfJ
 cbQ
 cde
 ces
-cev
-cev
+krR
+gnv
 cev
 cev
 cev
@@ -102053,8 +102105,8 @@ cfQ
 cbR
 cdf
 cet
-cfF
-cfF
+tLe
+wPA
 cfF
 cfF
 cfF
@@ -102355,8 +102407,8 @@ cfR
 oPc
 cmh
 ceu
-cev
-cev
+dwg
+tgS
 dnI
 cjq
 cev
@@ -102657,8 +102709,8 @@ bYj
 nXh
 cmi
 cev
-cev
-cev
+dwg
+ewa
 cev
 cjr
 ckN
@@ -102959,7 +103011,7 @@ chc
 cbU
 cdi
 cev
-cev
+dwg
 cev
 cie
 cjs
@@ -103261,7 +103313,7 @@ bLG
 cbQ
 cbQ
 cew
-cev
+xbv
 cCa
 cif
 cjt
