@@ -136,40 +136,39 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/accessory/hbow)
 		name = "Yellow Polka-Dot Hair Bow"
 		path = /obj/item/clothing/head/hairbow/yellowpolkadot
 
-/datum/clothingbooth_item/accessory/redhairclips
-	name = "Red Hairclip"
-	path = /obj/item/clothing/head/sailormoon
+ABSTRACT_TYPE(/datum/clothingbooth_item/accessory/hairclips)
+/datum/clothingbooth_item/accessory/hairclips
+	name = "Hairclips"
 	slot = SLOT_HEAD
+	cost = PAY_TRADESMAN/5
 
-/datum/clothingbooth_item/accessory/butterflyclip_bl
-	name = "Blue Butterfly Hairclip"
-	path = /obj/item/clothing/head/barrette/butterflyblu
-	slot = SLOT_HEAD
+	red
+		name = "Red Hairclip"
+		path = /obj/item/clothing/head/sailormoon
 
-/datum/clothingbooth_item/accessory/butterflyclip_o
-	name = "Orange Butterfly Hairclip"
-	path = /obj/item/clothing/head/barrette/butterflyorg
-	slot = SLOT_HEAD
+	butterflyblu
+		name = "Blue Butterfly Hairclip"
+		path = /obj/item/clothing/head/barrette/butterflyblu
 
-/datum/clothingbooth_item/accessory/barrette_blue
-	name = "Blue Hairclips"
-	path = /obj/item/clothing/head/barrette/blue
-	slot = SLOT_HEAD
+	butterflyorg
+		name = "Orange Butterfly Hairclip"
+		path = /obj/item/clothing/head/barrette/butterflyorg
 
-/datum/clothingbooth_item/accessory/barrette_green
-	name = "Green Hairclips"
-	path = /obj/item/clothing/head/barrette/green
-	slot = SLOT_HEAD
+	barrette_blue
+		name = "Blue Hairclips"
+		path = /obj/item/clothing/head/barrette/blue
 
-/datum/clothingbooth_item/accessory/barrette_pink
-	name = "Pink Hairclips"
-	path = /obj/item/clothing/head/barrette/pink
-	slot = SLOT_HEAD
+	barrette_green
+		name = "Green Hairclips"
+		path = /obj/item/clothing/head/barrette/green
 
-/datum/clothingbooth_item/accessory/barrette_gold
-	name = "Gold Hairclips"
-	path = /obj/item/clothing/head/barrette/gold
-	slot = SLOT_HEAD
+	barrette_pink
+		name = "Pink Hairclips"
+		path = /obj/item/clothing/head/barrette/pink
+
+	barrette_gold
+		name = "Gold Hairclips"
+		path = /obj/item/clothing/head/barrette/gold
 
 //Casual
 
@@ -820,7 +819,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/frenchberet)
 /datum/clothingbooth_item/head/frenchberet
-	name = "Baseball Cap"
+	name = "French Beret"
 	slot = SLOT_HEAD
 	cost = PAY_TRADESMAN/3
 
