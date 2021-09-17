@@ -1239,7 +1239,6 @@
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/handcuffs/guardbot, 16)
 		product_list += new/datum/data/vending_product(/obj/item/handcuffs, 8)
-		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/flashbang, 5)
 		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/fog, 5)
 		product_list += new/datum/data/vending_product(/obj/item/device/flash, 4)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/helmet/hardhat/security, 4)
@@ -1278,6 +1277,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/pbr, 5)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts, 3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts/anti_mutant, 3)
+		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/flashbang, 7)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12/weak, 1, hidden=1) // this may be a bad idea, but it's only one box //Maybe don't put the delimbing version in here
 /obj/machinery/vending/cola
 	name = "soda machine"

@@ -192,7 +192,7 @@
 
 /obj/item/clothing/mask/monkey_translator
 	name = "vocal translator"
-	desc = "Nanotechnology and questionable science combine to make a face-hugging translator, capable of making monkeys speak human lanauge. Or whoever wears this."
+	desc = "Nanotechnology and questionable science combine to make a face-hugging translator, capable of making monkeys speak human language. Or whoever wears this."
 	icon = 'icons/obj/items/items.dmi'
 	wear_image_icon = 'icons/mob/mask.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'

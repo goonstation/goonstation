@@ -1018,7 +1018,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.make_jittery(2)
-				M.drowsyness = max(M.drowsyness-5, 0)
+				M.changeStatus("drowsy", -10 SECONDS)
 				if(prob(8))
 					M.reagents.add_reagent("methamphetamine", 1.2 * mult)
 					var/speed_message = pick("Gotta go fast!", "Time to speed, keed!", "I feel a need for speed!", "Let's juice.", "Juice time.", "Way Past Cool!")
@@ -1997,7 +1997,7 @@ datum
 			bladder_value = -0.2
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				M.drowsyness = max(0,M.drowsyness-5)
+				M.changeStatus("drowsy", -10 SECONDS)
 				if(M.bodytemperature > M.base_body_temp) // So it doesn't act like supertep
 					M.bodytemperature = max(M.base_body_temp, M.bodytemperature-(5 * mult))
 				..()
@@ -2135,7 +2135,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
 				M.dizziness = max(0,M.dizziness-5)
-				M.drowsyness = max(0,M.drowsyness-3)
+				M.changeStatus("drowsy", -5 SECONDS)
 				M.sleeping = 0
 				if(M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
 					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
@@ -2250,7 +2250,7 @@ datum
 						return
 					else
 						M.show_message("<span class='alert'>You feel exhausted!</span>")
-						M.drowsyness = tickcounter - 20
+						M.setStatus("drowsy", tickcounter SECONDS)
 						M.dizziness = tickcounter - 20
 					src.holder.del_reagent(id)
 

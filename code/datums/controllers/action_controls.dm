@@ -1343,7 +1343,9 @@ var/datum/action_controller/actions
 	id = "butcherlivingcritter"
 	var/mob/living/critter/target
 
-	New(Target)
+	New(Target,var/dur = null)
+		if(dur)
+			duration = dur
 		target = Target
 		..()
 

@@ -1093,6 +1093,8 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 		playsound(src.loc, 'sound/misc/talk/speak_1.ogg', 50, 1)
 	return hear
 
+/obj/item/device/radio/intercom/loudspeaker/attack_self(mob/user as mob)
+	return
 
 /obj/item/device/radio/intercom/loudspeaker/speaker/attack_hand(mob/user as mob)
 	return

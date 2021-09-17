@@ -9,7 +9,7 @@
 		if (ismob(entered))
 			var/mob/M = entered
 			if (M.weakened<4 && !M.lying)
-				M.pulling = null
+				M.remove_pulling()
 				random_brute_damage(M, 5)
 				M.weakened = max(8, M.weakened)
 

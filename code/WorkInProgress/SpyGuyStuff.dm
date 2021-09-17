@@ -1060,7 +1060,7 @@ proc/Create_Tommyname()
 // Special grab obj that doesn't care if it's in someone's hands
 /obj/item/grab/garrote_grab
 	// No breaking out under own power
-	break_prob = 0
+	prob_mod = 0
 	var/extra_deadly = 0
 	check()
 		if(!assailant || !affecting)
