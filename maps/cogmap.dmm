@@ -53398,14 +53398,6 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
-"cFk" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay/lobby)
 "cFm" = (
 /obj/grille/catwalk{
 	dir = 9
@@ -57396,16 +57388,6 @@
 /obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/engine/core)
-"iXt" = (
-/obj/machinery/power/data_terminal/cable_tray{
-	target_z = 2
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay/lobby)
 "iZi" = (
 /obj/cable/brown{
 	icon_state = "1-2"
@@ -59670,16 +59652,6 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
-"nIk" = (
-/obj/machinery/power/data_terminal/cable_tray{
-	target_z = 2
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay/lobby)
 "nIv" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -59971,15 +59943,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
-"ogN" = (
-/obj/disposalpipe/segment,
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay/lobby)
 "ohW" = (
 /obj/table/auto,
 /obj/machinery/coffeemaker/security{
@@ -60122,16 +60085,6 @@
 	dir = 1
 	},
 /area/station/engine/engineering)
-"ouj" = (
-/obj/machinery/power/data_terminal/cable_tray{
-	id = "right"
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay/lobby)
 "ovm" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -63071,16 +63024,6 @@
 /obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
-"toX" = (
-/obj/machinery/power/data_terminal/cable_tray{
-	id = "left"
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay/lobby)
 "tpY" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -101808,11 +101751,11 @@ cfJ
 cbQ
 cde
 ces
-toX
-nIk
 cev
 cev
-toX
+cev
+cev
+cev
 cmg
 mEV
 coC
@@ -102110,11 +102053,11 @@ cfQ
 cbR
 cdf
 cet
-ogN
-ogN
 cfF
 cfF
-ogN
+cfF
+cfF
+cfF
 cBZ
 vIs
 cxh
@@ -102412,11 +102355,11 @@ cfR
 oPc
 cmh
 ceu
-cFk
-cFk
+cev
+cev
 dnI
 cjq
-ouj
+cev
 cCa
 xqO
 cBP
@@ -102714,8 +102657,8 @@ bYj
 nXh
 cmi
 cev
-cFk
-cFk
+cev
+cev
 cev
 cjr
 ckN
@@ -103016,8 +102959,8 @@ chc
 cbU
 cdi
 cev
-ouj
-iXt
+cev
+cev
 cie
 cjs
 ckO

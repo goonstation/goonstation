@@ -77579,14 +77579,6 @@
 	},
 /turf/simulated/floor/white,
 /area/centcom/offices/varshie)
-"nyw" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/unsimulated/floor,
-/area/iomoon/base/underground)
 "nyz" = (
 /obj/decal/fakeobjects/dreambeach/big/palm1,
 /turf/unsimulated/floor/dream/beach,
@@ -80294,19 +80286,6 @@
 	name = "Fleshy Floor"
 	},
 /area/meat_derelict/guts)
-"vgQ" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 6
-	},
-/obj/machinery/power/data_terminal/cable_tray{
-	target_z = 1
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/unsimulated/floor,
-/area/iomoon/base/underground)
 "vhA" = (
 /obj/stool/chair/office/green{
 	desc = "This is a very cool gamer chair, and definitely not just a green office chair.";
@@ -80787,17 +80766,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/donut3)
-"wVe" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 9
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/unsimulated/floor,
-/area/iomoon/base/underground)
 "wWb" = (
 /obj/decal/poster/wallsign/hazard_caution,
 /turf/unsimulated/wall/auto/lead/blue,
@@ -80854,16 +80822,6 @@
 "xgE" = (
 /turf/unsimulated/floor/carpet/red/fancy/narrow/east,
 /area/titlescreen)
-"xhK" = (
-/obj/machinery/power/data_terminal/cable_tray{
-	target_z = 1
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/unsimulated/floor,
-/area/iomoon/base/underground)
 "xia" = (
 /obj/machinery/light/small/frostedred{
 	dir = 4;
@@ -117372,7 +117330,7 @@ byo
 byW
 rHr
 bqB
-vgQ
+bAS
 bBG
 rHr
 bpF
@@ -117674,7 +117632,7 @@ rHr
 rHr
 rHr
 btT
-wVe
+bxB
 rHr
 rHr
 rHr
@@ -117976,7 +117934,7 @@ bxA
 bqB
 rHr
 bqB
-nyw
+bqB
 rHr
 bCt
 rHr
@@ -118278,7 +118236,7 @@ bvB
 bqB
 bzA
 bqB
-nyw
+bqB
 bBH
 bAf
 rHr
@@ -118580,7 +118538,7 @@ byp
 byX
 rHr
 bqB
-xhK
+bqB
 rHr
 rHr
 rHr
