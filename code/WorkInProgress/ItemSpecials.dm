@@ -373,7 +373,7 @@
 				for(var/atom/A in lastTurf)
 					if(A in attacked) continue
 					if(isTarget(A, user) && A != user)
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						attacked += A
 						hit = 1
 
@@ -448,7 +448,7 @@
 				var/hit = 0
 				for(var/atom/A in turf)
 					if(isTarget(A))
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						hit = 1
 						break
 
@@ -506,7 +506,7 @@
 					for(var/atom/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
-							A.attackby(master, user, params, 1)
+							A.Attackby(master, user, params, 1)
 							attacked += A
 							hit = 1
 
@@ -603,7 +603,7 @@
 					for(var/atom/movable/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
-							A.attackby(master, user, params, 1)
+							A.Attackby(master, user, params, 1)
 							attacked += A
 							hit = 1
 					if(ignition)
@@ -772,9 +772,9 @@
 						if(A in attacked) continue
 						if(isTarget(A))
 							if(master)
-								A.attackby(master, user, params, 1)
+								A.Attackby(master, user, params, 1)
 							else
-								A.attack_hand(user, params)
+								A.Attackhand(user, params)
 							attacked += A
 							A.throw_at(get_edge_target_turf(A,direction), 5, 3)
 
@@ -850,7 +850,7 @@
 					for(var/atom/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
-							A.attackby(master, usr, params, 1)
+							A.Attackby(master, usr, params, 1)
 							attacked += A
 
 				showEffect("whirlwind", NORTH)
@@ -900,7 +900,7 @@
 				var/hit = 0
 				for(var/atom/A in turf)
 					if(isTarget(A))
-						A.attack_hand(user,params)
+						A.Attackhand(user,params)
 						hit = 1
 						break
 
@@ -948,7 +948,7 @@
 				var/hit = 0
 				for(var/atom/A in turf)
 					if(isTarget(A))
-						A.attack_hand(user,params)
+						A.Attackhand(user,params)
 						hit = 1
 						break
 
@@ -998,7 +998,7 @@
 					for(var/atom/movable/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
-							A.attack_hand(user,params)
+							A.Attackhand(user,params)
 							attacked += A
 							hit = 1
 
@@ -1123,7 +1123,7 @@
 				var/hit = 0
 				for(var/atom/A in turf)
 					if(isTarget(A))
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						hit = 1
 						break
 				if (!hit)
@@ -1138,7 +1138,7 @@
 					hit = 0
 					for(var/atom/A in turf)
 						if(isTarget(A))
-							A.attackby(master, user, params, 1)
+							A.Attackby(master, user, params, 1)
 							hit = 1
 							break
 					if (!hit)
@@ -1196,7 +1196,7 @@
 				var/hit = 0
 				for(var/atom/A in turf)
 					if(isTarget(A))
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						hit = 1
 						break
 
@@ -1387,7 +1387,7 @@
 					if(isTarget(A))
 						on_hit(A)
 						//fake harmbaton it
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						hit = 1
 						playsound(master, 'sound/effects/sparks6.ogg', 70, 0)
 						break
@@ -1517,7 +1517,7 @@
 					if(isTarget(A))
 						on_hit(A)
 						attacked += A
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						// hit = 1
 						break
 				afterUse(user)
@@ -1648,7 +1648,7 @@
 					if(A in attacked) continue
 					if(isTarget(A))
 						attacked += A
-						A.attack_hand(user,params)
+						A.Attackhand(user,params)
 						// hit = 1
 						break
 
@@ -1699,16 +1699,16 @@
 					for(var/atom/movable/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
-							A.attackby(master, user, params, 1)
+							A.Attackby(master, user, params, 1)
 							attacked += A
 							hit = 1
 
 				for(var/atom/movable/A in one)
 					if(A in attacked) continue
 					if(isTarget(A))
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						SPAWN_DBG(0.5 SECONDS)
-							A.attackby(master, user, params, 1)
+							A.Attackby(master, user, params, 1)
 						attacked += A
 						hit = 1
 
@@ -1748,7 +1748,7 @@
 				var/hit = 0
 				for(var/atom/A in turf)
 					if(isTarget(A))
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						hit = 1
 						break
 

@@ -917,6 +917,12 @@
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/cookie/butter
 
+/datum/cookingrecipe/cookie_peanut
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_cookie
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/peanutbutter
+	cookbonus = 4
+	output = /obj/item/reagent_containers/food/snacks/cookie/peanut
+
 //Moon pies!
 /datum/cookingrecipe/moon_pie
 	item1 = /obj/item/reagent_containers/food/snacks/cookie

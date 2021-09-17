@@ -35,6 +35,28 @@
 		return
 	if (W.w_class < W_CLASS_BULKY)
 		if ((istool(user.l_hand, TOOL_CUTTING | TOOL_SNIPPING) && user.l_hand != W) || (istool(user.r_hand, TOOL_CUTTING | TOOL_SNIPPING) && user.r_hand != W))
+			if(istype(W, /obj/item/c_tube) && user.client)
+				var user_choice = input(user, "Do what to the cardboard tube?", "Cardboard tube") in list("Cancel", "Wrap", "Create Hat")
+				if(user_choice == "Cancel")
+					return
+				if(!(user_choice == "Wrap"))
+					var/a_used = 2 ** (src.w_class - 1)
+					if (src.amount < a_used)
+						boutput(user, "<span class='notice'>You need more paper!</span>")
+						return
+					src.amount -= a_used
+					tooltip_rebuild = 1
+					user.drop_item()
+					qdel(W)
+					var/obj/item/clothing/head/apprentice/A = new /obj/item/clothing/head/apprentice(src.loc)
+					A.add_fingerprint(user)
+					user.put_in_hand_or_drop(A)
+					if (src.amount <= 0)
+						user.u_equip(src)
+						var/obj/item/c_tube/C = new /obj/item/c_tube(src.loc)
+						user.put_in_hand_or_drop(C)
+						qdel(src)
+					return
 			if(istype(W, /obj/item/phone_handset/))
 				boutput(user, "<span class='notice'>You can't wrap that, it has a cord attached!</span>")
 				return
@@ -147,18 +169,12 @@
 						/obj/item/storage/belt/wrestling)
 
 	festive
+		EPHEMERAL_XMAS
 		icon_state = "gift2-g"
 		attack_self(mob/M as mob)
 			if (!islist(giftpaths) || !length(giftpaths))
 				src.giftpaths = generic_gift_paths + xmas_gift_paths
 			..()
-
-		ephemeral //Disappears except on xmas
-#ifndef XMAS
-			New()
-				qdel(src)
-				..()
-#endif
 
 	easter
 		name = "easter egg"
@@ -280,6 +296,7 @@ var/global/list/generic_gift_paths = list(/obj/item/basketball,
 	/obj/item/clothing/head/aviator,
 	/obj/item/clothing/head/pinwheel_hat,
 	/obj/item/clothing/head/frog_hat,
+	/obj/item/clothing/head/hairbow/flashy,
 	/obj/item/clothing/head/helmet/jetson,
 	/obj/item/clothing/head/longtophat,
 	/obj/item/clothing/suit/bedsheet/cape/royal,
@@ -293,7 +310,7 @@ var/global/list/generic_gift_paths = list(/obj/item/basketball,
 	/obj/item/clothing/shoes/dress_shoes,
 	/obj/item/clothing/shoes/heels/red,
 	/obj/item/clothing/shoes/moon,
-	/obj/item/clothing/suit/armor/sneaking_suit,
+	/obj/item/clothing/suit/armor/sneaking_suit/costume,
 	/obj/item/clothing/suit/hoodie,
 	/obj/item/clothing/suit/robuddy,
 	/obj/item/clothing/suit/scarf,
@@ -322,6 +339,7 @@ var/global/list/questionable_generic_gift_paths = list(/obj/item/relic,
 	/obj/item/clothing/head/oddjob,
 	/obj/item/clothing/mask/anime,
 	/obj/item/clothing/under/gimmick,
+	/obj/item/clothing/suit/armor/sneaking_suit,
 	/obj/item/kitchen/everyflavor_box,
 	/obj/item/medical/bruise_pack/cyborg,
 	/obj/item/medical/ointment/cyborg,

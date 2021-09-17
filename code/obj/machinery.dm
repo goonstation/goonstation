@@ -156,7 +156,7 @@
 	return 0
 
 /obj/machinery/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/attack_hand(mob/user as mob)
 	. = ..()
@@ -273,6 +273,18 @@
 	var/area/A = get_area(src)		// make sure it's in an area
 	if(!A || !isarea(A))
 		return
+
+#ifdef MACHINE_PROCESSING_DEBUG
+	var/list/machines = detailed_machine_power[A]
+	if(!machines)
+		detailed_machine_power[A] = list()
+		machines = detailed_machine_power[A]
+	var/list/machine = machines[src]
+	if(!machine)
+		machines[src] = list()
+		machine = machines[src]
+	machine += -amount
+#endif
 
 	A.use_power(amount, chan)
 

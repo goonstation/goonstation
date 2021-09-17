@@ -170,10 +170,7 @@
 				if (proj_data.hit_mob_sound)
 					playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5)
 			SEND_SIGNAL(A, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
-			for (var/obj/item/device/disguiser/D in A.contents)
-				if (D.on)
-					D.disrupt(A)
-					src.visible_message("<span class='notice'><b>[A]'s disguiser is disrupted!</b></span>")
+			SEND_SIGNAL(A, COMSIG_DISGUISER_DEACTIVATE)
 			if (ishuman(A))
 				var/mob/living/carbon/human/H = A
 				H.stamina_stun()

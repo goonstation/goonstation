@@ -69,6 +69,10 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
 				if (method == TOUCH)
+					. = 0
+					var/stack_mult = 1
+					if(ON_COOLDOWN(M, "basic_acid_stack_check", 0.1 SECONDS))
+						stack_mult = 0.5
 					if (volume > 25)
 						if (ishuman(M))
 							var/mob/living/carbon/human/H = M
@@ -80,19 +84,20 @@ datum
 								return
 
 						if (prob(75))
-							M.TakeDamage("head", 5, 10, 0, DAMAGE_BURN)
+							M.TakeDamage("head", 0, 10 * stack_mult, 0, DAMAGE_BURN)
 							M.emote("scream")
 							boutput(M, "<span class='alert'>Your face has become disfigured!</span>")
 							M.real_name = "Unknown"
 							M.unlock_medal("Red Hood", 1)
 						else
-							M.TakeDamage("All", 5, 10, 0, DAMAGE_BURN)
+							M.TakeDamage("All", 0, 10 * stack_mult, 0, DAMAGE_BURN)
 					else
-						M.TakeDamage("All", min(1, volume * 0.1), min (5, volume * 0.5), 0, DAMAGE_BURN)
+
+						M.TakeDamage("All", 0, min(5, volume * 0.5) * stack_mult, 0, DAMAGE_BURN)
 				else
 					boutput(M, "<span class='alert'>The greenish acidic substance stings[volume < 10 ? " you, but isn't concentrated enough to harm you" : null]!</span>")
 					if (volume >= 10)
-						M.TakeDamage("All", 0, min(max(4, (volume - 10) * 2), 20), 0, DAMAGE_BURN)
+						M.TakeDamage("All", 0, clamp((volume - 10) * 2, 4, 20), 0, DAMAGE_BURN)
 						M.emote("scream")
 
 			reaction_obj(var/obj/O, var/volume)
@@ -101,7 +106,7 @@ datum
 				if (istype(O,/obj/item/clothing/head/chemhood || /obj/item/clothing/suit/chemsuit))
 					return 1
 				if (isitem(O) && prob(40))
-					var/obj/item/toMelt
+					var/obj/item/toMelt = O
 					if (!(toMelt.item_function_flags & IMMUNE_TO_ACID))
 						if(!O.hasStatus("acid"))
 							O.changeStatus("acid", 5 SECONDS, list("leave_cleanable" = 1))
@@ -149,18 +154,19 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
 				if (method == TOUCH)
+					. = 0
 					if (volume >= 50 && prob(75))
-						M.TakeDamage("head", 5, 15, 0, DAMAGE_BURN)
+						M.TakeDamage("head", 0, 10, 0, DAMAGE_BURN)
 						M.emote("scream")
 						boutput(M, "<span class='alert'>Your face has become disfigured!</span>")
 						M.real_name = "Unknown"
 						M.unlock_medal("Red Hood", 1)
 					else
-						random_brute_damage(M, min(5, volume * 0.25))
+						random_burn_damage(M, min(5, volume * 0.25))
 				else
 					boutput(M, "<span class='alert'>The transparent acidic substance stings[volume < 25 ? " you, but isn't concentrated enough to harm you" : null]!</span>")
 					if (volume >= 25)
-						random_brute_damage(M, 2)
+						random_burn_damage(M, 2)
 						M.emote("scream")
 
 			on_plant_life(var/obj/machinery/plantpot/P)
@@ -251,20 +257,39 @@ datum
 			penetrates_skin = 1
 			blob_damage = 5
 			value = 7 // 3 2 1 heat
+			var/counter = 1
+
+			pooled()
+				..()
+				counter = 1
 
 			on_mob_life(var/mob/M, var/mult = 1) // -cogwerks. previous version
 				if (!M) M = holder.my_atom
+				if (!counter) counter = 1
 				M.take_toxin_damage(1.5 * mult)
 				if (probmult(8))
 					M.emote("drool")
-				if (prob(10))
+				if (prob(15))
 					boutput(M, "<span class='alert'>You cannot breathe!</span>")
 					M.losebreath += (1 * mult)
 					M.emote("gasp")
-				if (prob(8))
-					boutput(M, "<span class='alert'>You feel horribly weak.</span>")
-					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 3 SECONDS * mult))
-					M.take_toxin_damage(2 * mult)
+				switch(counter += (1 * mult))
+					if (20 to 30)
+						if (prob(15))
+							boutput(M, "<span class='alert'>You feel weak.</span>")
+							M.setStatus("stunned", max(M.getStatusDuration("stunned"), 0.5 SECONDS * mult))
+							M.take_toxin_damage(0.5 * mult)
+					if (30 to 45)
+						if (prob(20))
+							boutput(M, "<span class='alert'>You feel very weak.</span>")
+							M.setStatus("stunned", max(M.getStatusDuration("stunned"), 1 SECONDS * mult))
+							M.take_toxin_damage(1 * mult)
+					if (45 to INFINITY)
+						if (prob(25))
+							boutput(M, "<span class='alert'>You feel horribly weak.</span>")
+							M.setStatus("stunned", max(M.getStatusDuration("stunned"), 2 SECONDS * mult))
+							M.take_toxin_damage(1.5 * mult)
+
 				..()
 				return
 
@@ -278,7 +303,7 @@ datum
 			fluid_b = 25
 			reagent_state = SOLID
 			transparency = 255
-			depletion_rate = 0.1
+			depletion_rate = 0.2
 			var/counter = 1
 			penetrates_skin = 1
 
@@ -304,7 +329,7 @@ datum
 							M.emote(pick("drool","pale", "gasp"))
 					if (11 to INFINITY)
 						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 4 SECONDS * mult))
-						M.drowsyness  = max(M.drowsyness, 20)
+						M.setStatus("drowsy", 40 SECONDS)
 						if (probmult(20) && !M.stat)
 							M.emote(pick("drool", "faint", "pale", "gasp", "collapse"))
 						else if (prob(8))
@@ -769,12 +794,14 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				if(method == TOUCH)
+					. = 0
 				if (method == TOUCH && volume >= 10)
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
 						var/blocked = 0
 						if (!H.wear_mask && !H.head)
-							H.TakeDamage("head", 0, min(max(8, (volume - 5) * 3), 75), 0, DAMAGE_BURN)
+							H.TakeDamage("head", 0, clamp((volume - 5) * 2, 8, 50), 0, DAMAGE_BURN)
 							H.emote("scream")
 							boutput(H, "<span class='alert'>Your face has become disfigured!</span>")
 							H.real_name = "Unknown"
@@ -790,7 +817,7 @@ datum
 								else
 									H.visible_message("<span class='alert>The blueish acidic substance slides off \the [D] harmlessly.</span>", "<span class='alert'>Your [H.head] protects you from the acid!</span>")
 								blocked = 1
-							if (!(H.head?.c_flags & SPACEWEAR))
+							if (!(H.head?.c_flags & SPACEWEAR) || !(H.head?.item_function_flags & IMMUNE_TO_ACID))
 								if (H.wear_mask)
 									var/obj/item/clothing/mask/K = H.wear_mask
 									if (!(K.item_function_flags & IMMUNE_TO_ACID))
@@ -832,9 +859,10 @@ datum
 
 							if (blocked)
 								return
+						M.TakeDamage("head", 0, clamp((volume - 5) * 2, 8, 50), 0, DAMAGE_BURN)
 				else if (volume >= 5)
 					M.emote("scream")
-					M.TakeDamage("All", 0, min(max(8, (volume - 5) * 4), 75), 0, DAMAGE_BURN)
+					M.TakeDamage("All", 0, clamp((volume - 5) * 3, 8, 75), 0, DAMAGE_BURN)
 
 				boutput(M, "<span class='alert'>The blueish acidic substance stings[volume < 5 ? " you, but isn't concentrated enough to harm you" : null]!</span>")
 				return
@@ -979,7 +1007,7 @@ datum
 						M.emote("drool")
 						M.change_misstep_chance(5 * mult)
 					if (2 to 4)
-						M.drowsyness = max(M.drowsyness, 20)
+						M.changeStatus("drowsy", 1 MINUTE)
 					if (5)
 						M.emote("faint")
 						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 5 SECONDS * mult))
@@ -1084,14 +1112,14 @@ datum
 					if (1 to 10)
 						if (probmult(7)) M.emote("yawn")
 					if (11 to 20)
-						M.drowsyness  = max(M.drowsyness, 20)
+						M.setStatus("drowsy", 40 SECONDS)
 					if (21)
 						M.emote("faint")
 					if (22 to INFINITY)
 						if (prob(20))
 							M.emote("faint")
 							M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 8 SECONDS * mult))
-						M.drowsyness  = max(M.drowsyness, 20)
+						M.setStatus("drowsy", 40 SECONDS)
 				M.take_toxin_damage(1 * mult)
 				..()
 				return
@@ -1185,7 +1213,7 @@ datum
 						M.change_misstep_chance(10 * mult)
 						if (probmult(20)) M.emote("drool")
 					if (11 to 17)
-						M.drowsyness  = max(M.drowsyness, 10)
+						M.setStatus("drowsy", 20 SECONDS)
 						M.make_dizzy(1 * mult)
 						M.change_misstep_chance(20 * mult)
 						if (probmult(35)) M.emote("drool")
@@ -1194,7 +1222,7 @@ datum
 							M.emote("faint")
 							fainted = 1
 						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 10 SECONDS * mult))
-						M.drowsyness  = max(M.drowsyness, 20)
+						M.setStatus("drowsy", 40 SECONDS)
 
 				M.jitteriness = max(M.jitteriness-30,0)
 				if (M.get_brain_damage() <= 80)
@@ -1554,7 +1582,14 @@ datum
 							src.data = cheating.data
 
 				if (src.data && M.bioHolder && progress_timer <= 10)
-
+					if(istype(src.data, /datum/bioHolder))
+						var/datum/bioHolder/tocopy = data
+						if(tocopy?.mobAppearance?.mutant_race?.dna_mutagen_banned)
+							return ..()
+					if(ishuman(M))
+						var/mob/living/carbon/human/H = M
+						if(H.mutantrace?.dna_mutagen_banned)
+							return ..()
 					M.bioHolder.StaggeredCopyOther(data, progress_timer+=(1 * mult))
 					if (probmult(50) && progress_timer > 7)
 						boutput(M, "<span class='notice'>You feel a little [pick("unlike yourself", "out of it", "different", "strange")].</span>")
@@ -1634,21 +1669,21 @@ datum
 
 				if (t1 && data >= t1)
 					if (probmult(33))
-						H.drowsyness = max(H.drowsyness,4)
+						H.changeStatus("drowsy", 6 SECONDS)
 						H.show_text(pick_string("chemistry_reagent_messages.txt", "madness0"), "red")
 					if (probmult(10)) H.emote(pick_string("chemistry_reagent_messages.txt", "madness_e0"))
 
 				if (t2 && data >= t2)
 					t1 = 0
 					if (probmult(33))
-						H.drowsyness = max(H.drowsyness,7)
+						H.changeStatus("drowsy", 15 SECONDS)
 						H.show_text(pick_string("chemistry_reagent_messages.txt", "madness1"), "blue")
 					if (probmult(10)) H.emote(pick_string("chemistry_reagent_messages.txt", "madness_e1"))
 
 				if (t3 && data >= t3)
 					t2 = 0
 					if (probmult(33))
-						H.drowsyness = max(H.drowsyness,7)
+						H.changeStatus("drowsy", 15 SECONDS)
 						H.make_jittery(300)
 						H.show_text("<B>[pick_string("chemistry_reagent_messages.txt", "madness2")]</B>", "red")
 						if (probmult(33) && world.time > lastSpook + lastSpookLen)
@@ -1662,7 +1697,7 @@ datum
 				if (t4 && data >= t4)
 					t3 = 0
 					H.show_text("<B>Your mind feels clearer.<B>", "blue")
-					H.drowsyness = 0
+					H.delStatus("drowsy")
 
 				if (t5 && data >= t5)
 					t4 = 0
@@ -1824,7 +1859,7 @@ datum
 								H.changeStatus("weakened", 2 SECONDS * mult)
 							if(6) //Light-headedness
 								H.show_text("You feel light-headed.", "red")
-								H.drowsyness += rand(2,4)
+								H.changeStatus("drowsy", rand(8,16) SECONDS)
 
 					if(2) //I don't feel so good (tripping, hard time breathing, randomly dropping stuff)
 						switch(rand(1,4))
@@ -1844,7 +1879,7 @@ datum
 								H.changeStatus("weakened", 2 SECONDS * mult)
 							if(4) //Light-headedness
 								H.show_text("You feel like you are about to faint!", "red")
-								H.drowsyness += rand(4,7)
+								H.changeStatus("drowsy", rand(12,24) SECONDS)
 								if(probmult(20)) H.emote(pick("faint", "collapse"))
 						if(prob(30))
 							H.make_jittery(15)

@@ -24,7 +24,6 @@
 	stamina_damage = 10
 	stamina_cost = 18
 	stamina_crit_chance = 0
-	module_research = list("tools" = 4, "metals" = 1, "fuels" = 5)
 	rand_pos = 1
 	inventory_counter_enabled = 1
 	var/capacity = 20
@@ -49,7 +48,7 @@
 		if (!ismob(M))
 			return
 		src.add_fingerprint(user)
-		if (ishuman(M))
+		if (ishuman(M) && (user.a_intent != INTENT_HARM))
 			var/mob/living/carbon/human/H = M
 			if (H.bleeding || (H.butt_op_stage == 4 && user.zone_sel.selecting == "chest"))
 				if (!src.cautery_surgery(H, user, 15, src.welding))
@@ -108,6 +107,7 @@
 								return
 						else return ..()
 			else return ..()
+		else return ..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (isscrewingtool(W))
@@ -142,6 +142,7 @@
 			F.rod = R
 			src.add_fingerprint(user)
 
+
 	afterattack(obj/O as obj, mob/user as mob)
 		if ((istype(O, /obj/reagent_dispensers/fueltank) || istype(O, /obj/item/reagent_containers/food/drinks/fueltank)) && get_dist(src,O) <= 1)
 			if  (!O.reagents.total_volume)
@@ -154,7 +155,7 @@
 				playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
 				return
 		if (src.welding)
-			use_fuel(ismob(O) ? 2 : 0.2)
+			use_fuel((ismob(O) || istype(O, /obj/blob) || istype(O, /obj/critter)) ? 2 : 0.2)
 			if (get_fuel() <= 0)
 				boutput(user, "<span class='notice'>Need more fuel!</span>")
 				src.welding = 0
@@ -168,7 +169,7 @@
 				location.hotspot_expose(700, 50, 1)
 			if (O && !ismob(O) && O.reagents)
 				boutput(user, "<span class='notice'>You heat \the [O.name]</span>")
-				O.reagents.temperature_reagents(2500,10)
+				O.reagents.temperature_reagents(4000,50, 100, 100, 1)
 		return
 
 	attack_self(mob/user as mob)

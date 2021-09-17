@@ -105,7 +105,7 @@
 						B = new /obj/blob/firewall(T)
 					else
 						B = new /obj/blob(T)
-
+					owner.total_placed++
 					B.setOvermind(src.owner)
 					currentTurfs++
 
@@ -202,6 +202,10 @@
 				boutput(owner, __red("You need to start on the [station_or_ship()]!"))
 				return
 
+			if(IS_ARRIVALS(T.loc))
+				boutput(owner, "<spawn class='alert'>You can't start inside arrivals!</span>")
+				return
+
 			if (istype(T,/turf/unsimulated/))
 				boutput(owner, "<span class='alert'>This kind of tile cannot support a blob.</span>")
 				return
@@ -227,6 +231,7 @@
 		var/turf/startTurf = get_turf(owner)
 		var/obj/blob/nucleus/C = new /obj/blob/nucleus(startTurf)
 		C.layer++
+		owner.total_placed++
 		C.setOvermind(owner)
 		C.Life()
 		owner.started = 1
@@ -340,13 +345,16 @@
 		var/obj/blob/B2 = new /obj/blob(T)
 		B2.setOvermind(owner)
 
-		cooldown_time = 15
+		cooldown_time = 16
 		var/mindist = 127
 		for_by_tcl(nucleus, /obj/blob/nucleus)
 			if(nucleus.overmind == owner)
 				mindist = min(mindist, get_dist(T, get_turf(nucleus)))
 
-		cooldown_time = max(cooldown_time + max(mindist * 0.4 - 1, 0) - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 6)
+		mindist *= max((length(owner.blobs) * 0.005) - 2, 1)
+
+		cooldown_time = max(cooldown_time + max(mindist * 0.5 - 10, 0) - owner.spread_upgrade * 5 - owner.spread_mitigation * 0.5, 6)
+		owner.total_placed++
 
 		var/extra_spreads = round(owner.multi_spread / 100) + (prob(owner.multi_spread % 100) ? 1 : 0)
 		if (extra_spreads)
@@ -362,6 +370,7 @@
 			for (var/i = 1, i <= extra_spreads && spreadability.len, i++)
 				var/turf/R = pick(spreadability)
 				var/obj/blob/B3 = new /obj/blob(R)
+				owner.total_placed++
 				B3.setOvermind(owner)
 				spreadability -= R
 
@@ -1165,9 +1174,9 @@
 /datum/blob_upgrade/quick_spread
 	name = "Passive: Quicker Spread"
 	icon_state = "blob-quickspread"
-	desc = "Reduces the cooldown of your Spread ability by 1 second. Can be repeated. The cooldown of Spread cannot go below 1 second."
+	desc = "Reduces the cooldown of your Spread ability by 0.5 seconds. Can be repeated. The cooldown of Spread cannot go below 0.6 seconds."
 	evo_point_cost = 3
-	scaling_cost_add = 4
+	scaling_cost_add = 3
 	repeatable = -1
 	upgradename = "spread"
 

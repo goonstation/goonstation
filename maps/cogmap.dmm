@@ -241,7 +241,7 @@
 /turf/simulated/shuttle/wall,
 /area/shuttle/arrival/station)
 "aaQ" = (
-/obj/machinery/sleeper,
+/obj/machinery/sleeper/compact,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -1047,7 +1047,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "adw" = (
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 8
 	},
 /turf/simulated/floor/grime,
@@ -1057,9 +1057,6 @@
 /obj/machinery/light/small{
 	dir = 1;
 	status = 2
-	},
-/obj/machinery/sleep_console{
-	dir = 8
 	},
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/construction)
@@ -2025,7 +2022,6 @@
 /area/station/crew_quarters/clown)
 "age" = (
 /obj/decal/cleanable/dirt,
-/obj/creepy_sound_trigger,
 /obj/item/bananapeel,
 /obj/cable{
 	icon_state = "1-2"
@@ -5316,7 +5312,6 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/creepy_sound_trigger,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -7158,7 +7153,7 @@
 	pixel_x = -4;
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag,
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -7709,9 +7704,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/locker)
 "avL" = (
-/obj/shrub{
-	dir = 6
-	},
+/obj/machinery/manufacturer/uniform,
 /turf/simulated/floor/neutral/side{
 	dir = 10
 	},
@@ -9136,7 +9129,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/submachine/chicken_feed_grinder,
+/obj/submachine/ranch_feed_grinder,
 /obj/item/reagent_containers/food/snacks/plant/corn{
 	doants = 0
 	},
@@ -14633,7 +14626,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	name = "Station Power Grid Monitoring"
 	},
 /obj/machinery/power/data_terminal,
@@ -14716,21 +14709,18 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/sleeper{
-	dir = 8
-	},
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
+	},
+/obj/machinery/sleeper/compact{
+	dir = 8
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
 /area/station/medical/medbooth)
 "aNg" = (
-/obj/machinery/sleep_console{
-	dir = 8
-	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -15135,7 +15125,7 @@
 	pixel_x = -4;
 	pixel_y = 9
 	},
-/obj/item/storage/box/flashbang_kit{
+/obj/item/chem_grenade/flashbang{
 	pixel_x = 11;
 	pixel_y = 4
 	},
@@ -16087,7 +16077,9 @@
 	},
 /area/station/security/main)
 "aQa" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 8
+	},
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "aQb" = (
@@ -19272,13 +19264,6 @@
 "aXE" = (
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/east)
-"aXF" = (
-/obj/creepy_sound_trigger,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aXG" = (
 /obj/disposalpipe/trunk{
@@ -34975,7 +34960,7 @@
 	},
 /area/station/science/teleporter)
 "bKi" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "bKj" = (
@@ -36341,7 +36326,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4
 	},
 /obj/blind_switch/area/north,
@@ -43413,9 +43398,6 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "cew" = (
-/obj/machinery/sleep_console{
-	dir = 4
-	},
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
@@ -43432,7 +43414,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 4
 	},
 /turf/simulated/floor/bluewhite,
@@ -44335,16 +44317,10 @@
 /obj/machinery/door/window/eastright,
 /turf/simulated/floor/wood,
 /area/station/medical/medbay/lobby)
-"cgY" = (
-/obj/machinery/sleep_console{
-	dir = 4
-	},
-/turf/simulated/floor/bluewhite,
-/area/station/medical/medbay/lobby)
 "cgZ" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 4
 	},
 /turf/simulated/floor/bluewhite,
@@ -51476,13 +51452,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/sleeper{
-	dir = 8
-	},
-/turf/simulated/floor/white,
-/area/station/medical/cdc)
-"cxM" = (
-/obj/machinery/sleep_console{
+/obj/machinery/sleeper/compact{
 	dir = 8
 	},
 /turf/simulated/floor/white,
@@ -52035,7 +52005,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "czp" = (
@@ -55062,8 +55032,8 @@
 /area/station/medical/medbay)
 "eNe" = (
 /obj/table/auto,
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag,
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag,
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag,
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -57184,7 +57154,7 @@
 /obj/cable/yellow{
 	icon_state = "2-4"
 	},
-/obj/machinery/power/solar_control/west{
+/obj/machinery/computer/solar_control/west{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -59429,7 +59399,7 @@
 /turf/simulated/floor/delivery,
 /area/station/mining/staff_room)
 "nfH" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
 	},
@@ -60149,7 +60119,7 @@
 /area/station/medical/cdc)
 "oxf" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	name = "Engine Output Monitoring"
 	},
 /obj/cable/brown{
@@ -61459,7 +61429,7 @@
 /obj/cable/yellow{
 	icon_state = "2-4"
 	},
-/obj/machinery/power/solar_control/west,
+/obj/machinery/computer/solar_control/west,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
 "qEB" = (
@@ -62718,7 +62688,7 @@
 /turf/simulated/floor/bot,
 /area/station/crew_quarters/market)
 "sHJ" = (
-/obj/machinery/power/solar_control/east{
+/obj/machinery/computer/solar_control/east{
 	dir = 4
 	},
 /obj/cable/yellow{
@@ -65165,7 +65135,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -65446,7 +65416,7 @@
 	pixel_x = 11;
 	pixel_y = 3
 	},
-/obj/item/storage/box/flashbang_kit{
+/obj/item/chem_grenade/flashbang{
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -101803,7 +101773,7 @@ omh
 cxk
 cxt
 cxC
-cxM
+cxp
 vfr
 cyj
 cyl
@@ -103292,7 +103262,7 @@ cbQ
 cbQ
 cew
 cev
-cgY
+cCa
 cif
 cjt
 ckP
@@ -122557,7 +122527,7 @@ aTN
 aVb
 bcg
 aXN
-aXF
+bbH
 aYP
 baE
 bbG
@@ -125251,12 +125221,12 @@ awI
 awI
 azp
 eJd
-atV
+avj
 awB
 axQ
 azn
 aAW
-atV
+avj
 awI
 azp
 awI

@@ -176,6 +176,18 @@
 		onclose(usr, "[src.name]")
 	return
 
+/obj/item/paper/proc/stamp(x, y, r, stamp_png, icon_state)
+	if(length(stamps) < PAPER_MAX_STAMPS)
+		var/list/stamp_info = list(list(stamp_png, x, y, r))
+		LAZYLISTADD(stamps, stamp_info)
+	if(icon_state)
+		var/image/stamp_overlay = image('icons/obj/writing.dmi', "paper_[icon_state]");
+		var/matrix/stamp_matrix = matrix()
+		stamp_matrix.Scale(1, 1)
+		stamp_matrix.Translate(rand(-2, 2), rand(-3, 2))
+		stamp_overlay.transform = stamp_matrix
+		src.UpdateOverlays(stamp_overlay, "stamps_[length(stamps) % PAPER_MAX_STAMPS_OVERLAYS]")
+
 /obj/item/paper/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
@@ -209,18 +221,9 @@
 			var/stamp_y = text2num(params["y"])
 			var/stamp_r = text2num(params["r"])	// rotation in degrees
 			var/obj/item/stamp/stamp = ui.user.equipped()
-			if(length(stamps) < PAPER_MAX_STAMPS)
-				var/list/stamp_info = list(list(stamp.current_state, stamp_x, stamp_y, stamp_r))
-				LAZYLISTADD(stamps, stamp_info)
-				/// This does the overlay stuff
-				var/image/stamp_overlay = image('icons/obj/writing.dmi', "paper_[stamp.icon_state]");
-				var/matrix/stamp_matrix = matrix()
-				stamp_matrix.Scale(1, 1)
-				stamp_matrix.Translate(rand(-2, 2), rand(-3, 2))
-				stamp_overlay.transform = stamp_matrix
 
-				src.UpdateOverlays(stamp_overlay, "stamps_[length(stamps) % PAPER_MAX_STAMPS_OVERLAYS]")
-				update_static_data(usr,ui)
+			if(length(stamps) < PAPER_MAX_STAMPS)
+				stamp(stamp_x, stamp_y, stamp_r, stamp.current_state, stamp.icon_state)
 				boutput(usr, "<span class='notice'>[ui.user] stamps [src] with \the [stamp.name]!</span>")
 			else
 				boutput(usr, "There is no where else you can stamp!")
@@ -239,11 +242,10 @@
 				// the javascript was modified, somehow, outside of
 				// byond.  but right now we are logging it as
 				// the generated html might get beyond this limit
-				logTheThing("PAPER: [key_name(ui.user)] writing to paper [name], and overwrote it by [paper_len-PAPER_MAX_LENGTH]")
+				logTheThing("debug", src, null, "PAPER: [key_name(ui.user)] writing to paper [name], and overwrote it by [paper_len-PAPER_MAX_LENGTH]")
 			if(paper_len == 0)
 				boutput(ui.user, pick("Writing block strikes again!", "You forgot to write anthing!"))
 			else
-				logTheThing("PAPER: [key_name(ui.user)] writing to paper [name]")
 				if(info != in_paper)
 					boutput(ui.user, "You write on \the [src]!");
 					info = in_paper
@@ -273,7 +275,7 @@
 	var/obj/O = user.equipped()
 	var/time_type = istype(O, /obj/item/stamp/clown) ? "HONK O'CLOCK" : "SHIFT TIME"
 	var/T = ""
-	T = time_type + ": [time2text(ticker.round_elapsed_ticks, "hh:mm:ss")]"
+	T = time_type + ": [time2text(world.timeofday, "DD MMM 2053, hh:mm:ss")]"
 
 	// TODO: change this awful array name & stampAssetType
 	var/stamp_assets = list(
@@ -1188,7 +1190,7 @@ as it may become compromised.
 
 /obj/item/paper_bin/attack_self(mob/user as mob)
 	..()
-	src.attack_hand(user)
+	src.Attackhand(user)
 
 /obj/item/paper_bin/attackby(obj/item/paper/P as obj, mob/user as mob) // finally you can write on all the paper AND put it back in the bin to mess with whoever shows up after you ha ha
 	if (istype(P))
@@ -1450,7 +1452,8 @@ as it may become compromised.
 
 /obj/item/paper/folded/ball/attack(mob/M as mob, mob/user as mob)
 	if (iscarbon(M) && M == user)
-		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and and eats it.</span>")
+		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and eats it.</span>")
+		playsound(M,"sound/misc/gulp.ogg", 30, 1)
 		eat_twitch(M)
 		var/obj/item/paper/P = src
 		user.u_equip(P)

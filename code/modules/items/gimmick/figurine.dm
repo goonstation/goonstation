@@ -722,6 +722,16 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "newttreitor"
 		ckey = "edwardly"
 
+	ook
+		name = "\improper Ook"
+		icon_state = "ook"
+		ckey = "taocat"
+
+	brucemcafee
+		name = "\improper Bruce McAfee"
+		icon_state = "brucemcafee"
+		ckey = "mysticmidgit"
+
 /obj/item/item_box/figure_capsule
 	name = "capsule"
 	desc = "A little plastic ball for keeping stuff in. Woah! We're truly in the future with technology like this."
@@ -757,6 +767,14 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 			src.cap_image.icon_state = "cap-cap[src.item_amount ? 1 : 0]"
 			src.UpdateOverlays(src.cap_image, "cap")
 
+	attack_self(mob/user as mob)
+		if (open && item_amount == 0)
+			user.playsound_local(user, "sound/items/can_crush-3.ogg", 50, 1)
+			boutput(user, "<span class='notice'>You crush the empty capsule into an insignificant speck.</span>")
+			qdel(src)
+			return
+		..()
+
 /obj/machinery/vending/capsule
 	name = "capsule machine"
 	desc = "A little figure in every capsule, guaranteed*!"
@@ -768,9 +786,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	var/sound_vend = 'sound/machines/capsulebuy.ogg'
 	var/image/capsule_image = null
 
-	New()
-		..()
-		//Products
+	create_products()
 		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule, 26, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/satchel/figurines, 2, cost=PAY_UNTRAINED*3)
 		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule/gaming_capsule, rand(4,10), cost=PAY_UNTRAINED/3, hidden=1)

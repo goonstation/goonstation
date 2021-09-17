@@ -88,7 +88,7 @@
 /mob/proc/is_cold_resistant()
 	if (!src)
 		return 0
-	if(src.bioHolder && src.bioHolder.HasOneOfTheseEffects("cold_resist","thermal_resist"))
+	if(src.bioHolder?.HasEffect("cold_resist") || src.bioHolder?.HasEffect("thermal_resist") > 1)
 		return 1
 	if(ischangeling(src))
 		return 1
@@ -99,7 +99,7 @@
 /mob/proc/is_heat_resistant()
 	if (!src)
 		return 0
-	if(src.bioHolder && src.bioHolder.HasOneOfTheseEffects("fire_resist","thermal_resist"))
+	if(src.bioHolder && src.bioHolder.HasOneOfTheseEffects("fire_resist") || src.bioHolder?.HasEffect("thermal_resist") > 1)
 		return 1
 	if(src.nodamage)
 		return 1

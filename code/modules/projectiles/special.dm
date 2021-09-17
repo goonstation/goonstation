@@ -378,7 +378,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		var/turf/T = get_turf(A)
 		playsound(A, "sound/effects/ExplosionFirey.ogg", 60, 1)
 		if(!src.impacted)
-			world << sound('sound/weapons/energy/howitzer_impact.ogg', volume = 70)
+			playsound_global(world, 'sound/weapons/energy/howitzer_impact.ogg', 60)
 			src.impacted = 1
 			SPAWN_DBG(1 DECI SECOND)
 				for(var/mob/living/M in mobs)
@@ -386,8 +386,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 		SPAWN_DBG(0)
 			explosion_new(null, T, 30, 1)
-		if(prob(50))
-			world << sound('sound/effects/creaking_metal1.ogg', volume = 60)
+		if(prob(10))
+			playsound_global(world, 'sound/effects/creaking_metal1.ogg', 40)
 
 // A weapon by Sovexe
 /datum/projectile/special/meowitzer //what have I done
@@ -480,7 +480,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 	on_hit(atom/hit)
 		if (usr && hit)
-			hit.attack_hand(usr)
+			hit.Attackhand(usr)
 
 //mbc : hey i know homing projectiles exist already as 'seeker', but i like mine better
 /datum/projectile/special/homing
@@ -635,7 +635,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = "mysterious mystery mist"
 	icon_state = "vamp_travel"
 	auto_find_targets = 0
-	max_speed = 2
+	max_speed = 6
 	start_speed = 0.1
 
 

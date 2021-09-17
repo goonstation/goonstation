@@ -388,7 +388,10 @@
 		var/armor_mod = 0
 		armor_mod = target.get_melee_protection(def_zone)
 		if(target_stamina >= 0)
-			msgs.stamina_target -= max(STAMINA_DISARM_DMG - (armor_mod*0.5), 0) //armor vs barehanded disarm gives flat reduction
+			var/unarmed_mod = 1.5 // if target is unarmed, do 1.5x stamina damage
+			if (length(items))
+				unarmed_mod = 1
+			msgs.stamina_target -= max(unarmed_mod * STAMINA_DISARM_DMG - (armor_mod*0.5), 0) //armor vs barehanded disarm gives flat reduction
 			msgs.force_stamina_target = 1
 
 
@@ -974,7 +977,7 @@
 						var/prev_intent = target.a_intent
 						target.a_intent = INTENT_HARM
 
-						target.attackby(I, target)
+						target.Attackby(I, target)
 
 						target.a_intent = prev_intent
 						if (old_zone_sel)

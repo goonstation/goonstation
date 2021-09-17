@@ -8,7 +8,10 @@
 
 	var/static/list/turfs = list("Ancient floor" = /turf/unsimulated/iomoon/ancient_floor, \
 	"Ancient wall" = /turf/unsimulated/iomoon/ancient_wall, "Cave floor" = /turf/unsimulated/floor/cave, \
-	"Cave wall" = /turf/unsimulated/wall/cave, "Dirt" = /turf/unsimulated/aprilfools/dirt, "Grass" = /turf/unsimulated/aprilfools/grass, \
+	"Cave wall" = /turf/unsimulated/wall/cave,  "Data floor: Blue" = /turf/unsimulated/floor/techfloor, \
+	"Data floor: Red" = /turf/unsimulated/floor/techfloor/red, "Data floor: Purple" = /turf/unsimulated/floor/techfloor/purple, \
+	"Data floor: Yellow" = /turf/unsimulated/floor/techfloor/yellow, "Data floor: Green" = /turf/unsimulated/floor/techfloor/green, \
+	"Dirt" = /turf/unsimulated/aprilfools/dirt, "Grass" = /turf/unsimulated/aprilfools/grass, \
 	"Hive floor" = /turf/unsimulated/floor/setpieces/hivefloor, "Hive wall" = /turf/unsimulated/wall/setpieces/hive, \
 	"Ice" = /turf/unsimulated/floor/arctic/snow/ice, "Lava" = /turf/unsimulated/floor/lava, "Martian floor" = /turf/simulated/martian/floor, \
 	"Martian wall" = /turf/simulated/martian/wall, "Normal floor" = /turf/simulated/floor, "Normal wall" = /turf/simulated/wall, \

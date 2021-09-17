@@ -68,6 +68,7 @@
 	name = "hydroponics tray"
 	desc = "A tray filled with nutrient solution capable of sustaining plantlife... Made of plants."
 	icon_state = "kudzutray"
+	power_usage = 0
 
 	attackby(var/obj/item/W as obj, var/mob/user as mob)
 		//Can only attempt to destroy the plant pot if the plant in it is dead or empty.
@@ -82,6 +83,123 @@
 			else
 				return ..()
 		..()
+
+/obj/machinery/plantpot/bareplant
+	name = "arable soil"
+	desc = "A small mound of arable soil for planting and plant based activities."
+	anchored = 1
+	mats = 0
+	deconstruct_flags = 0
+	icon_state = null
+	power_usage = 0
+	growth_rate = 1
+	/// plant to grow
+	var/datum/plant/spawn_plant = null
+	/// growth level to spawn with
+	var/spawn_growth = null
+	/// list of commuts to apply to plant
+	var/list/datum/plant_gene_strain/spawn_commuts = list()
+	var/auto_water = TRUE
+
+	New()
+		SPAWN_DBG(0) // delay for prefab attribute assignment
+			var/datum/plant/P
+			//Adjust processing tier to slow down server burden unless necessary
+			if(spawn_plant)
+				P = new spawn_plant()
+				if(!P.special_proc)
+					processing_tier = PROCESSING_32TH
+			..()
+			status |= BROKEN
+
+			if(P)
+				var/obj/item/seed/S = unpool(/obj/item/seed)
+
+				S.generic_seed_setup(P)
+				src.HYPnewplant(S)
+
+				for(var/commutes in spawn_commuts)
+					HYPaddCommut(src.current, src.plantgenes, commutes)
+
+				if(spawn_growth)
+					src.grow_level = spawn_growth
+				else
+					src.grow_level = pick(3,4,4)
+				switch(grow_level)
+					if(2)
+						src.growth = (src.current.growtime - src.plantgenes.growtime) / 2
+					if(3)
+						src.growth = src.current.growtime - src.plantgenes.growtime
+					if(4)
+						src.growth = src.current.harvtime - src.plantgenes.harvtime
+				update_icon()
+			else
+				if(!src.current)
+					qdel(src)
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		// Filter out the following item interactions
+		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
+			boutput(user, "<span class='alert'>[W] does not seem like the right tool for the job.</span>")
+		else if(istype(W, /obj/item/seed/) || istype(W, /obj/item/seedplanter/))
+			boutput(user, "<span class='alert'>Something is already growing there.</span>")
+		else
+			..()
+
+	attack_hand(var/mob/user as mob)
+
+		if(isAI(user) || isobserver(user)) return // naughty AIs used to be able to harvest plants
+		src.add_fingerprint(user)
+		if(src.current)
+			var/datum/plant/growing = src.current
+
+			if(src.dead)
+				boutput(user, "<span class='notice'>You clear the dead plant.</span>")
+				HYPdestroyplant()
+				return
+
+			if(HYPcheck_if_harvestable())
+				if(!growing.harvest_tools) //if the plant needs a specific tool or set of tools to harvest
+					HYPharvesting(user,null)
+				else
+					if(!growing.harvest_tool_fail_message)
+						boutput(user, "<span><b>You don't have the right tool to harvest this plant!</b></span>")
+					else
+						boutput(user,growing.harvest_tool_fail_message)
+
+	HYPdestroyplant()
+		..()
+		qdel(src)
+
+	update_water_icon()
+		return
+
+	process()
+		..()
+		if(auto_water)
+			if(!src.reagents.has_reagent("water", 50))
+				src.reagents.add_reagent("water", 200)
+
+	flower
+		New()
+			spawn_plant = pick(/datum/plant/flower/rose)
+			..()
+
+	crop
+		New()
+			spawn_plant = pick(/datum/plant/crop/cotton, /datum/plant/crop/oat, /datum/plant/crop/peanut, /datum/plant/crop/soy)
+			..()
+
+	tree
+		New()
+			spawn_plant = pick(/datum/plant/crop/tree, /datum/plant/fruit/cherry, /datum/plant/fruit/apple, /datum/plant/fruit/peach)
+			..()
+
+	weed
+		New()
+			spawn_plant = pick(/datum/plant/weed/creeper, /datum/plant/weed/lasher, /datum/plant/weed/slurrypod, /datum/plant/artifact/pukeplant)
+			..()
+
 
 /obj/machinery/plantpot
 	// The central object for Hydroponics. All plant growing and most of everything goes on in
@@ -98,6 +216,7 @@
 	flags = NOSPLASH
 	processing_tier = PROCESSING_SIXTEENTH
 	machine_registry_idx = MACHINES_PLANTPOTS
+	power_usage = 25
 	var/datum/plant/current = null // What is currently growing in the plant pot
 	var/datum/plantgenes/plantgenes = null // Set this up in New
 	var/tickcount = 0  // Automatic. Tracks how many ticks have elapsed, for CPU efficiency things.
@@ -152,6 +271,7 @@
 		..()
 
 	proc/post_alert(var/alert_msg)
+		if(status & (NOPOWER|BROKEN)) return
 
 		var/datum/radio_frequency/frequency = radio_controller.return_frequency("[report_freq]")
 
@@ -197,6 +317,10 @@
 	on_reagent_change()
 		src.do_update_water_icon = 1
 		src.update_water_level()
+
+	power_change()
+		. = ..()
+		update_icon()
 
 	process()
 		..()
@@ -383,7 +507,8 @@
 			update_icon()
 			update_name()
 
-		return
+		if(!HAS_FLAG(status, NOPOWER))
+			use_power(power_usage)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(src.current)
@@ -640,7 +765,7 @@
 		else ..()
 
 	attack_ai(mob/user as mob)
-		if(isrobot(user) && get_dist(src, user) <= 1) return src.attack_hand(user)
+		if(isrobot(user) && get_dist(src, user) <= 1) return src.Attackhand(user)
 
 	attack_hand(var/mob/user as mob)
 		if(isAI(user) || isobserver(user)) return // naughty AIs used to be able to harvest plants
@@ -756,7 +881,7 @@
 			if(get_dist(user, over_object) > 1)
 				boutput(user, "<span class='alert'>[over_object] is too far away!</span>")
 				return
-			src.attackby(over_object, user)  // Activates the same command as would be used with a seed in hand on the tray.
+			src.Attackby(over_object, user)  // Activates the same command as would be used with a seed in hand on the tray.
 			return
 		else // if it's not a seed...
 			return ..() // call our parents and ask what to do.
@@ -815,6 +940,8 @@
 			UpdateOverlays(null, "health_display")
 			UpdateOverlays(null, "plant")
 			UpdateOverlays(null, "plantdeath")
+			if(status & (NOPOWER|BROKEN))
+				UpdateOverlays(null, "water_meter")
 			return
 
 		var/datum/plant/growing = src.current
@@ -860,6 +987,12 @@
 		src.plant_sprite.icon_state = planticon
 		src.plant_sprite.layer = 4
 		UpdateOverlays(plant_sprite, "plant")
+
+		if(status & (NOPOWER|BROKEN))
+			UpdateOverlays(null, "water_meter")
+			UpdateOverlays(null, "harvest_display")
+			UpdateOverlays(null, "health_display")
+			UpdateOverlays(null, "plantdeath")
 
 	proc/update_name()
 		if(!src.current)
@@ -1768,6 +1901,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 	mats = 6
 	var/active = 0
 	var/datum/light/light
+	power_usage = 100
 
 	New()
 		..()
@@ -1784,7 +1918,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 
 	process()
 		..()
-		if(src.active)
+		if(src.active && powered())
 			for (var/obj/machinery/plantpot/P in view(2,src))
 				if(!P.current || P.dead)
 					continue
@@ -1793,16 +1927,25 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 					var/datum/plantgenes/DNA = P.plantgenes
 					if(HYPCheckCommut(DNA,/datum/plant_gene_strain/photosynthesis))
 						P.growth += 4
+			use_power(power_usage)
 
 	attack_hand(var/mob/user as mob)
 		src.add_fingerprint(user)
 		src.active = !src.active
 		user.visible_message("<b>[user]</b> switches [src.name] [src.active ? "on" : "off"].")
 		src.icon_state = "growlamp[src.active]"
-		if(src.active)
+		if(src.active && !HAS_FLAG(status, (NOPOWER|BROKEN)))
 			light.enable()
 		else
 			light.disable()
+
+	power_change()
+		. = ..()
+		if(HAS_FLAG(status, NOPOWER))
+			light.disable()
+		else if(src.active)
+			light.enable()
+
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(isscrewingtool(W) || iswrenchingtool(W))

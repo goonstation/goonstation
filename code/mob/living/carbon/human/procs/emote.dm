@@ -227,16 +227,13 @@
 							src.chest_item_attack_self_on_fart()
 
 						if (src.bioHolder)
-							if (src.bioHolder.HasEffect("toxic_farts"))
+							var/toxic = src.bioHolder.HasEffect("toxic_farts")
+							if (toxic)
 								message = "<span class='alert'><B>[src] [pick("unleashes","rips","blasts")] \a [pick("truly","utterly","devastatingly","shockingly")] [pick("hideous","horrendous","horrific","heinous","horrible")] fart!</B></span>"
 								var/turf/fart_turf = get_turf(src)
-								fart_turf.fluid_react_single("toxic_fart",2,airborne = 1)
+								fart_turf.fluid_react_single("[toxic > 1 ?"very_":""]toxic_fart", toxic*2, airborne = 1)
 
 							if (src.bioHolder.HasEffect("linkedfart"))
-								message = "<span class='alert'><B>[src] [pick("unleashes","rips","blasts")] \a [pick("truly","utterly","devastatingly","shockingly")] [pick("hideous","horrendous","horrific","heinous","horrible")] fart!</B></span>"
-								var/turf/fart_turf = get_turf(src)
-								fart_turf.fluid_react_single("toxic_fart",2,airborne = 1)
-
 								for(var/mob/living/H in mobs)
 									if (H.bioHolder && H.bioHolder.HasEffect("linkedfart")) continue
 									var/found_bible = 0
@@ -674,21 +671,15 @@
 
 			if ("tip")
 				if (!src.restrained() && !src.stat)
+					if (istype(src.head, /obj/item/clothing/head/mj_hat || /obj/item/clothing/head/det_hat/))
+						src.say (pick("M'lady", "M'lord", "M'liege")) //male, female and non-binary variants with alliteration
+						//maptext_out = "<I>tips their fedora</I>"
 					if (istype(src.head, /obj/item/clothing/head/fedora))
-						var/obj/item/clothing/head/fedora/hat = src.head
-						message = "<B>[src]</B> tips [his_or_her(src)] [hat] and [pick("winks", "smiles", "grins", "smirks")].<br><B>[src]</B> [pick("says", "states", "articulates", "implies", "proclaims", "proclamates", "promulgates", "exclaims", "exclamates", "extols", "predicates")], &quot;M'lady.&quot;"
+						src.visible_message("[src] tips [his_or_her(src)] fedora and smirks.")
+						src.say ("M'lady")
 						SPAWN_DBG(1 SECOND)
-							hat.set_loc(src.loc)
-							src.head = null
 							src.add_karma(-10)
 							src.gib()
-					else if (istype(src.head, /obj/item/clothing/head) && !istype(src.head, /obj/item/clothing/head/fedora))
-						src.show_text("This hat just isn't [pick("fancy", "suave", "manly", "sexerific", "majestic", "euphoric")] enough for that!", "red")
-						//maptext_out = "<I>tips hat</I>"
-						return
-					else
-						src.show_text("You can't tip a hat you don't have!", "red")
-						return
 
 			if ("hatstomp", "stomphat")
 				if (!src.restrained())

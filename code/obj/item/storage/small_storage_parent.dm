@@ -101,13 +101,13 @@
 		if (O in src.contents)
 			user.drop_item()
 			SPAWN_DBG(1 DECI SECOND)
-				O.attack_hand(user)
+				O.Attackhand(user)
 		else if (isitem(O) && !istype(O, /obj/item/storage) && !O.anchored)
 			user.swap_hand()
 			if(user.equipped() == null)
-				O.attack_hand(user)
+				O.Attackhand(user)
 				if(O in user.equipped_list())
-					src.attackby(O, user, O.loc)
+					src.Attackby(O, user, O.loc)
 			else
 				boutput(user, __blue("Your hands are full!"))
 			user.swap_hand()
@@ -148,7 +148,7 @@
 				var/obj/item/storage/S = W
 				for (var/obj/item/I in S.get_contents())
 					if(src.check_can_hold(I) > 0)
-						src.attackby(I, user, S)
+						src.Attackby(I, user, S)
 				return
 			switch (canhold)
 				if(0)
@@ -197,12 +197,14 @@
 				"<span class='alert'><B>You reach into \the [src], but there was a live mousetrap in there!</B></span>")
 				MT.triggered(user, user.hand ? "l_hand" : "r_hand")
 				. = 1
+			break
 		for (var/obj/item/mine/M in src)
 			if (M.armed && M.used_up != 1)
 				user.visible_message("<span class='alert'><B>[user] reaches into \the [src] and sets off a [M.name]!</B></span>",\
 				"<span class='alert'><B>You reach into \the [src], but there was a live [M.name] in there!</B></span>")
 				M.triggered(user)
 				. = 1
+			break
 
 	MouseDrop(atom/over_object, src_location, over_location)
 		..()

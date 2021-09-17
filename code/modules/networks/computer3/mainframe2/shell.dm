@@ -221,13 +221,18 @@
 						if (pipetemp)
 							echo_text = pipetemp
 
+						var/add_newline = TRUE
+						if (command_list[1] == "-n")
+							add_newline = FALSE
+							command_list.Cut(1,2)
+
 						if(istype(command_list) && (command_list.len > 0))
 							echo_text += jointext(command_list, " ")
 
 						if (piping && piped_list.len && (ckey(piped_list[1]) != "break") )
 							pipetemp = echo_text
 						else
-							if (echo_text && !dd_hassuffix(echo_text, "|n"))
+							if (echo_text && add_newline && !dd_hassuffix(echo_text, "|n"))
 								echo_text += "|n"
 							message_user(echo_text, "multiline")
 

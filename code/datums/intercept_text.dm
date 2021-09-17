@@ -42,7 +42,7 @@
 			src.text = ""
 			src.build_malf(correct_mob)
 			return src.text
-		if("changeling")
+		if(ROLE_CHANGELING)
 			src.text = ""
 			src.build_changeling(correct_mob)
 			return src.text

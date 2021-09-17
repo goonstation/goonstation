@@ -120,7 +120,7 @@ var/global/obj/flashDummy
 	elecflash(target,power = elecflashpower)
 	O.set_loc(null)
 
-/proc/arcFlash(var/atom/from, var/atom/target, var/wattage)
+/proc/arcFlash(var/atom/from, var/atom/target, var/wattage, stun_coeff = 1)
 	var/target_r = target
 	if (isturf(target))
 		var/obj/O = getFlashDummy()
@@ -135,7 +135,7 @@ var/global/obj/flashDummy
 		SPAWN_DBG(0.6 SECONDS) pool(O)
 
 	if(wattage && isliving(target)) //Probably unsafe.
-		target:shock(from, wattage, "chest", 1, 1)
+		target:shock(from, wattage, "chest", stun_coeff, 1)
 
 	var/elecflashpower = 0
 	if (wattage > 12000)
@@ -1882,7 +1882,11 @@ proc/countJob(rank)
 /proc/dead_player_list_helper(var/mob/G, var/allow_dead_antags = 0, var/require_client = FALSE)
 	if (!G?.mind || G.mind.dnr)
 		return 0
-	if (!isobserver(G) && !(isliving(G) && isdead(G))) // if (NOT /mob/dead) AND NOT (/mob/living AND dead)
+	// if (!isobserver(G) && !(isliving(G) && isdead(G))) // if (NOT /mob/dead) AND NOT (/mob/living AND dead)
+	// 	return 0
+	// If (alive) and (not in the afterlife, or in the afterlife but in hell) and (not a VR ghost)
+	// (basically, allow people who are alive in the afterlife or in VR to get respawn popups)
+	if (!isdead(G) && !(istype(get_area(G), /area/afterlife) && !istype(get_area(G), /area/afterlife/hell)) && !isVRghost(G))
 		return 0
 	if (istype(G, /mob/new_player) || G.respawning)
 		return 0
@@ -1964,8 +1968,8 @@ proc/countJob(rank)
 
 			remove_antag(M, null, 1, 0)
 			if (M.mind && ticker.mode && !(M.mind in ticker.mode.former_antagonists))
-				if (!M.mind.former_antagonist_roles.Find("mindslave"))
-					M.mind.former_antagonist_roles.Add("mindslave")
+				if (!M.mind.former_antagonist_roles.Find(ROLE_MINDSLAVE))
+					M.mind.former_antagonist_roles.Add(ROLE_MINDSLAVE)
 				ticker.mode.former_antagonists += M.mind
 
 		if ("vthrall")
@@ -1977,8 +1981,8 @@ proc/countJob(rank)
 
 			remove_antag(M, null, 1, 0)
 			if (M.mind && ticker.mode && !(M.mind in ticker.mode.former_antagonists))
-				if (!M.mind.former_antagonist_roles.Find("vampthrall"))
-					M.mind.former_antagonist_roles.Add("vampthrall")
+				if (!M.mind.former_antagonist_roles.Find(ROLE_VAMPTHRALL))
+					M.mind.former_antagonist_roles.Add(ROLE_VAMPTHRALL)
 				ticker.mode.former_antagonists += M.mind
 
 		// This is only used for spy slaves and mindslaved antagonists at the moment.
@@ -2001,8 +2005,8 @@ proc/countJob(rank)
 			else
 				M.mind.master = null
 			if (M.mind && ticker.mode && !(M.mind in ticker.mode.former_antagonists))
-				if (!M.mind.former_antagonist_roles.Find("mindslave"))
-					M.mind.former_antagonist_roles.Add("mindslave")
+				if (!M.mind.former_antagonist_roles.Find(ROLE_MINDSLAVE))
+					M.mind.former_antagonist_roles.Add(ROLE_MINDSLAVE)
 				ticker.mode.former_antagonists += M.mind
 
 		else
@@ -2090,7 +2094,7 @@ proc/countJob(rank)
 var/global/nextDectalkDelay = 5 //seconds
 var/global/lastDectalkUse = 0
 /proc/dectalk(msg)
-	if (!msg) return 0
+	if (!msg || !ircbot.apikey) return 0
 	if (world.timeofday > (lastDectalkUse + (nextDectalkDelay * 10)))
 		lastDectalkUse = world.timeofday
 		msg = copytext(msg, 1, 2000)
@@ -2561,7 +2565,7 @@ proc/client_has_cap_grace(var/client/C)
 
 /// Returns true if not incapicitated and unhandcuffed (by default)
 proc/can_act(var/mob/M, var/include_cuffs = 1)
-	return !((include_cuffs && M.hasStatus("handcuffed")) || is_incapacitated(M))
+	return !((include_cuffs && M.restrained()) || is_incapacitated(M))
 
 /// Returns true if the given mob is incapacitated
 proc/is_incapacitated(mob/M)

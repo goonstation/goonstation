@@ -269,6 +269,81 @@
 		ret += "<span style='color:purple'> - Robotic organ detected</span>"
 	return ret.Join()
 
+/datum/genetic_prescan
+	var/list/activeDna = null
+	var/list/poolDna = null
+
+	var/list/activeDnaKnown = null
+	var/list/activeDnaUnknown = null
+	var/list/poolDnaKnown = null
+	var/list/poolDnaUnknown = null
+
+	proc/generate_known_unknown(ignoreRestrictions = FALSE)
+		if (ignoreRestrictions)
+			src.activeDnaKnown = src.activeDna
+			src.poolDnaKnown = src.poolDna
+			return
+		src.activeDnaKnown = list()
+		src.activeDnaUnknown = list()
+		src.poolDnaKnown = list()
+		src.poolDnaUnknown = list()
+		for (var/datum/bioEffect/BE in src.activeDna)
+			var/datum/bioEffect/GBE = BE.get_global_instance()
+			if (!GBE.scanner_visibility)
+				continue
+			if (GBE.secret && !genResearch.see_secret)
+				continue
+			if (GBE.research_level < EFFECT_RESEARCH_DONE)
+				src.activeDnaUnknown += BE
+				continue
+			src.activeDnaKnown += BE
+		for (var/datum/bioEffect/BE in src.poolDna)
+			var/datum/bioEffect/GBE = BE.get_global_instance()
+			if (!GBE.scanner_visibility)
+				continue
+			if (GBE.secret && !genResearch.see_secret)
+				continue
+			if (GBE.research_level < EFFECT_RESEARCH_DONE)
+				src.poolDnaUnknown += BE
+				continue
+			src.poolDnaKnown += BE
+
+/proc/scan_genetic(mob/M as mob, datum/genetic_prescan/prescan = null, visible = FALSE)
+	if (!M)
+		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
+	if (visible)
+		animate_scanning(M, "#9eee80")
+	if (!ishuman(M))
+		return "<span class='alert'>ERROR: UNABLE TO ANALYZE GENETIC STRUCTURE</span>"
+	var/list/data = list()
+	var/datum/bioHolder/BH = M.bioHolder
+	data += "<span class='notice'>Genetic Stability: [BH.genetic_stability]</span>"
+	var/datum/genetic_prescan/GP = prescan
+	if (!GP)
+		GP = new /datum/genetic_prescan
+		GP.activeDna = list()
+		GP.poolDna = list()
+		for (var/bioEffectId in BH.effects)
+			GP.activeDna += BH.GetEffect(bioEffectId)
+		for (var/bioEffectId in BH.effectPool)
+			GP.poolDna += BH.GetEffect(bioEffectId)
+		GP.generate_known_unknown()
+	data += "<span class='notice'>Potential Genetic Effects:</span>"
+	for (var/datum/bioEffect/BE in GP.poolDnaKnown)
+		data += BE.name
+	if (length(GP.poolDnaUnknown))
+		data += "<span class='alert'>Unknown: [length(GP.poolDnaUnknown)]</span>"
+	else if (!length(GP.poolDnaKnown))
+		data += "-- None --"
+	data += "<span class='notice'>Active Genetic Effects:</span>"
+	for (var/datum/bioEffect/BE in GP.activeDnaKnown)
+		data += BE.name
+	if (length(GP.activeDnaUnknown))
+		data += "<span class='alert'>Unknown: [length(GP.activeDnaUnknown)]</span>"
+	else if (!length(GP.activeDnaKnown))
+		data += "-- None --"
+	return data.Join("<br>")
+
 /proc/update_medical_record(var/mob/living/carbon/human/M)
 	if (!M || !ishuman(M))
 		return
@@ -322,6 +397,35 @@
 				if(I != chat_text)
 					I.bump_up(chat_text.measured_height)
 			chat_text.show_to(C.client)
+
+/proc/scan_medrecord(var/obj/item/device/pda2/pda, var/mob/M as mob, var/visible = 0)
+	if (!M)
+		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
+
+	if (!ishuman(M))
+		return "<span class='alert'>ERROR: INVALID DATA FROM SUBJECT</span>"
+
+	if(visible)
+		animate_scanning(M, "#0AEFEF")
+
+	var/mob/living/carbon/human/H = M
+	var/datum/data/record/GR = FindRecordByFieldValue(data_core.general, "name", H.name)
+	var/datum/data/record/MR = FindRecordByFieldValue(data_core.medical, "name", H.name)
+	if (!MR)
+		return "<span class='alert'>ERROR: NO RECORD FOUND</span>"
+
+	//Find medical records program
+	var/list/programs = null
+	for (var/obj/item/disk/data/mod in pda.contents)
+		programs += mod.root.contents.Copy()
+	var/datum/computer/file/pda_program/records/medical/record_prog = locate(/datum/computer/file/pda_program/records/medical) in programs
+	if (!record_prog)
+		return "<span class='alert'>ERROR: NO MEDICAL RECORD FILE</span>"
+	pda.run_program(record_prog)
+	record_prog.active1 = GR
+	record_prog.active2 = MR
+	record_prog.mode = 1
+	pda.attack_self(usr)
 
 /proc/scan_reagents(var/atom/A as turf|obj|mob, var/show_temp = 1, var/single_line = 0, var/visible = 0, var/medical = 0)
 	if (!A)

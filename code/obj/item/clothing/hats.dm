@@ -13,12 +13,17 @@
 	block_vision = 0
 	var/path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
 	var/team_num
+	var/blocked_from_petasusaphilic = FALSE //Replacing the global blacklist
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 10)
 		setProperty("heatprot", 5)
 		setProperty("meleeprot_head", 1)
+
+proc/filter_trait_hats(var/type)
+	var/obj/item/clothing/head/coolhat = type
+	return !initial(coolhat.blocked_from_petasusaphilic)
 
 /obj/item/clothing/head/red
 	desc = "A knit cap in red."
@@ -141,6 +146,7 @@
 		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 12)
 		setProperty("disorient_resist_ear", 8)
+		setProperty("movespeed", 0.15)
 
 /obj/item/clothing/head/cakehat
 	name = "cakehat"
@@ -227,7 +233,7 @@
 	afterattack(atom/target, mob/user as mob)
 		if (src.on && !ismob(target) && target.reagents)
 			boutput(user, "<span class='notice'>You heat \the [target.name]</span>")
-			target.reagents.temperature_reagents(2500,10)
+			target.reagents.temperature_reagents(4000,10)
 		return
 
 /obj/item/clothing/head/caphat
@@ -638,6 +644,7 @@
 	icon_state = "wizard"
 	item_state = "wizard"
 	magical = 1
+	item_function_flags = IMMUNE_TO_ACID
 
 	setupProperties()
 		..()
@@ -891,6 +898,7 @@
 	wear_image_icon = 'icons/mob/bighat.dmi'
 	icon_state = "tophat"
 	w_class = W_CLASS_BULKY
+	blocked_from_petasusaphilic = TRUE
 
 /obj/item/clothing/head/bighat/syndicate
 	name = "syndicate hat"
@@ -1338,6 +1346,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband)
 			H.name = src.name
 			H.icon_state = src.icon_state
 			H.wear_image_icon = src.wear_image_icon
+			H.wear_image = src.wear_image
 			H.desc = "Aww, cute and fuzzy. Someone has taped a radio headset onto the headband."
 			qdel(src)
 
@@ -1457,6 +1466,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/barrette)
 	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "barrette-blue"
 	item_state = "barrette-blue"
+	blocked_from_petasusaphilic = TRUE
 	w_class = W_CLASS_TINY
 	throwforce = 0
 
@@ -1486,3 +1496,118 @@ ABSTRACT_TYPE(/obj/item/clothing/head/barrette)
 		name = "gold barrettes"
 		icon_state = "barrette-gold"
 		item_state = "barrette-gold"
+
+// HAIRBOWS (jan.antilles loves you)
+
+ABSTRACT_TYPE(/obj/item/clothing/head/hairbow)
+/obj/item/clothing/head/hairbow
+	name = "hairbow"
+	desc = "A huge bow that goes on your head."
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "hbow-magenta"
+	item_state = "hbow-magenta"
+	w_class = W_CLASS_TINY
+	throwforce = 0
+
+	magenta
+		name = "magenta hairbow"
+		desc = "A huge bow that goes on your head. This one is magenta."
+		icon_state = "hbow-magenta"
+		item_state = "hbow-magenta"
+	pink
+		name = "pink hairbow"
+		desc = "A huge bow that goes on your head. This one is pink."
+		icon_state = "hbow-pink"
+		item_state = "hbow-pink"
+	red
+		name = "red hairbow"
+		desc = "A huge bow that goes on your head. This one is red."
+		icon_state = "hbow-red"
+		item_state = "hbow-red"
+	gold
+		name = "gold hairbow"
+		desc = "A huge bow that goes on your head. This one is gold."
+		icon_state = "hbow-gold"
+		item_state = "hbow-gold"
+	green
+		name = "green hairbow"
+		desc = "A huge bow that goes on your head. This one is green."
+		icon_state = "hbow-green"
+		item_state = "hbow-green"
+	mint
+		name = "mint hairbow"
+		desc = "A huge bow that goes on your head. This one is mint."
+		icon_state = "hbow-mint"
+		item_state = "hbow-mint"
+	blue
+		name = "blue hairbow"
+		desc = "A huge bow that goes on your head. This one is blue."
+		icon_state = "hbow-blue"
+		item_state = "hbow-blue"
+	navy
+		name = "navy hairbow"
+		desc = "A huge bow that goes on your head. This one is navy."
+		icon_state = "hbow-navy"
+		item_state = "hbow-navy"
+	purple
+		name = "purple hairbow"
+		desc = "A huge bow that goes on your head. This one is purple."
+		icon_state = "hbow-purple"
+		item_state = "hbow-purple"
+	shinyblack
+		name = "shiny black hairbow"
+		desc = "A huge bow that goes on your head. This one is shiny black."
+		icon_state = "hbow-shinyblack"
+		item_state = "hbow-shinyblack"
+	matteblack
+		name = "matte black hairbow"
+		desc = "A huge bow that goes on your head. This one is matte black."
+		icon_state = "hbow-matteblack"
+		item_state = "hbow-matteblack"
+	white
+		name = "white hairbow"
+		desc = "A huge bow that goes on your head. This one is white."
+		icon_state = "hbow-white"
+		item_state = "hbow-white"
+	rainbow
+		name = "rainbow hairbow"
+		desc = "A huge bow that goes on your head. This one has stripes in all the colors of the rainbow."
+		icon_state = "hbow-rainbow"
+		item_state = "hbow-rainbow"
+	flashy
+		name = "flashy hairbow"
+		desc = "A huge bow that goes on your head. This one is flashing all kinds of colors! Whoa."
+		icon_state = "hbow-flashy"
+		item_state = "hbow-flashy"
+
+	yellowpolkadot
+		name = "yellow polka-dot hairbow"
+		desc = "A huge bow that goes on your head. This one is yellow and has polka dots. Not itsy bitsy or teeny weeny."
+		icon_state = "hbow-yellowpolkadot"
+		item_state = "hbow-yellowpolkadot"
+
+/obj/item/clothing/head/rafflesia
+    name = "rafflesia"
+    desc = "Usually reffered to as corpseflower due to its horrid odor, perfect for masking the smell of your stinky head."
+    wear_image_icon = 'icons/mob/fruithat.dmi'
+    icon_state = "rafflesiahat"
+    item_state = "rafflesiahat"
+
+/obj/item/clothing/head/deerstalker
+	name = "deerstalker hat"
+	desc = "A hat for hunting space deer or solving a mystery."
+	icon_state = "deerstalker"
+	item_state = "deerstalker"
+
+/obj/item/clothing/head/pomhat_blue
+   name = "blue pomhat"
+   desc = "A cobalt hat with a fun little pom!"
+   icon_state = "pomhat_blue"
+   item_state = "pomhat_blue"
+
+/obj/item/clothing/head/pomhat_red
+   name = "red pomhat"
+   desc = "A crimson hat with an enjoyable little pom!"
+   icon_state = "pomhat_red"
+   item_state = "pomhat_red"
