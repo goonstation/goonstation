@@ -11,7 +11,7 @@
 	var/special_next = 0
 	var/datum/item_special/disarm_special = null //Contains the datum which executes the items special, if it has one, when used beyond melee range.
 	var/datum/item_special/harm_special = null //Contains the datum which executes the items special, if it has one, when used beyond melee range.
-
+	var/can_pickup_item = TRUE
 
 	New(var/obj/item/parts/holder)
 		..()
@@ -230,6 +230,32 @@
 		else
 			reloaded_at = ticker.round_elapsed_ticks + reload_time
 
+	harm(mob/living/target, mob/living/user)
+		if (reloaded_at > ticker.round_elapsed_ticks && !current_shots)
+			boutput(user, "<span class='alert'>The [holder.name] is [reloading_str]!</span>")
+			return
+		else if (current_shots <= 0)
+			current_shots = shots
+		if (next_shot_at > ticker.round_elapsed_ticks)
+			return
+		if (current_shots > 0)
+			current_shots--
+			for (var/i = 0; i < proj.shot_number; i++)
+				var/obj/projectile/P = initialize_projectile_pixel(user, proj, target, 0, 0)
+				if (!P)
+					return FALSE
+				if(get_dist(user,target) <= 1)
+					P.was_pointblank = 1
+					hit_with_existing_projectile(P, target) // Includes log entry.
+				else
+					P.launch()
+			user.visible_message("<b class='alert'>[user] fires at [target] with the [holder.name]!</b>")
+			next_shot_at = ticker.round_elapsed_ticks + cooldown
+			if (!current_shots)
+				reloaded_at = ticker.round_elapsed_ticks + reload_time
+		else
+			reloaded_at = ticker.round_elapsed_ticks + reload_time
+
 	is_on_cooldown()
 		if (ticker.round_elapsed_ticks < reloaded_at)
 			return reloaded_at - ticker.round_elapsed_ticks
@@ -368,6 +394,7 @@
 	dam_high = 0
 
 /datum/limb/item
+	can_pickup_item = FALSE
 	attack_hand(atom/target, var/mob/user, var/reach, params, location, control)
 		if (holder?.remove_object && istype(holder.remove_object))
 			target.Attackby(holder.remove_object, user, params, location, control)
@@ -441,74 +468,60 @@
 		if (!istype(user))
 			target.Attackhand(user, params, location, control)
 			return
-
-		if (ismob(target))
-			var/mob/M = target
-			//total hack. from attack_hand in mob/living/silicon/robot
-			if (istype(M, /mob/living/silicon/robot))
-				if(user.a_intent == INTENT_HARM)
-					M.TakeDamage("All", rand(3,6), 0)
-					if (prob(10))
-						var/turf/T = get_edge_target_turf(user, user.dir)
-						if (isturf(T))
-							M.visible_message("<span class='alert'><B>[user] savagely punches [M], sending them flying!</B></span>")
-							M.throw_at(T, 6, 2)
-					else
-						M.visible_message("<span class='alert'><B>[user] punches [M]!</B></span>")
-					return
-			..()
+		if (issilicon(target))
+			special_attack_silicon(target, user)
 			return
 
 		if (isobj(target)) //I am just going to do this like this, this is not good but I do not care.
-			if(istype(target, /obj/machinery/door))
+			var/hit = FALSE
+			if (isitem(target))
+				boutput(user, "<span class='alert'>Your zombie arm is too dumb to be able to handle this item!</span>")
+				return
+			else if(istype(target, /obj/machinery/door))
 				var/obj/machinery/door/O = target
-				user.lastattacked = O
 				O.visible_message("<span class='alert'><b>[user]</b> violently smashes against the [O]!</span>")
-				attack_particle(user, O)
 				playsound(user.loc, O.hitsound, 50, 1, pitch = 1.6)
 				O.take_damage(20, user) //Like 30ish hits to break a normal airlock?
-
+				hit = TRUE
 			else if(istype(target, /obj/grille))
 				var/obj/grille/O = target
-				user.lastattacked = O
 				if (!O.shock(user, 70))
 					O.visible_message("<span class='alert'><b>[user]</b> violently slashes [O]!</span>")
 					playsound(O.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 80, 1)
-					O.damage_slashing(10)
+					O.damage_slashing(5)
+				hit = TRUE
 
 			else if(istype(target, /obj/window))
 				var/obj/window/O = target
-				user.lastattacked = O
 				O.visible_message("<span class='alert'>[user] smashes into the window.</span>", "<span class='notice'>You mash yourself against the window.</span>")
 				O.damage_blunt(15)
 				playsound(user.loc, O.hitsound, 50, 1, pitch = 1.6)
+				hit = TRUE
 
 			else if(istype(target, /obj/table))
 				var/obj/table/O = target
-				user.lastattacked = O
 				O.visible_message("<span class='alert'><b>[user]</b> violently rips apart the [O]!</span>")
 				playsound(O.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 				O.deconstruct()
+				hit = TRUE
 
 			else if(istype(target, /obj/structure/woodwall))
 				var/obj/window/O = target
-				user.lastattacked = O
 				O.Attackhand(user)
-
+				hit = TRUE
 			else if(istype(target, /obj/machinery/bot))
 				var/obj/machinery/bot/O = target
-				user.lastattacked = O
 				O.explode()
 				O.visible_message("<span class='alert'><b>[user]</b> violently rips [O] apart!</span>")
-
+				hit = TRUE
+			if (hit)
+				user.lastattacked = target
+				attack_particle(user, target)
 			if(prob(40) && !ON_COOLDOWN(user, "zombie arm scream", 1 SECOND))
 				user.emote("scream")
 			return
 
-		if (isitem(target))
-			boutput(user, "<span class='alert'>You try to pick [target] up but it wiggles out of your hand. Opposable thumbs would be nice.</span>")
-			return
-		else if (istype(target, /obj/machinery))
+		if (istype(target, /obj/machinery))
 			boutput(user, "<span class='alert'>You're unlikely to be able to use [target]. You manage to scratch its surface though.</span>")
 			return
 
@@ -530,10 +543,6 @@
 
 		if(check_target_immunity( target ))
 			return 0
-
-		if (issilicon(target))
-			special_attack_silicon(target, user)
-			return
 
 		user.grab_other(target, 1) // Use standard grab proc.
 
@@ -558,9 +567,15 @@
 		msgs.damage_type = DAMAGE_BLUNT
 		msgs.flush(SUPPRESS_LOGS)
 		if (prob(40))
-			if (istype(target))
-				var/mob/living/L = target
-				L.do_disorient(25, disorient=3 SECONDS)
+			if (iscarbon(target))
+				var/mob/living/carbon/C = target
+				C.do_disorient(25, disorient=3 SECONDS)
+		if (ishuman(target) && ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if (istype(H.mutantrace, /datum/mutantrace/zombie))
+				target.changeStatus("z_pre_inf", rand(5,9) SECONDS)
+		else if (issilicon(target))
+			special_attack_silicon(target, user)
 
 		user.lastattacked = target
 

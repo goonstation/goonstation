@@ -362,6 +362,21 @@
 			activator.set_clothing_icon_dirty()
 			M.wear_layer = MOB_BACK_LAYER_SATCHEL
 
+		else if (istype(activator.back, /obj/item/storage/backpack/security) || activator.back.icon_state == "bp_security")
+			var/obj/item/storage/backpack/security/M = activator.back
+			M.icon = 'icons/obj/items/storage.dmi'
+			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
+			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
+			M.wear_image_icon = 'icons/mob/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.icon_state = "satchel_security"
+			M.item_state = "satchel_security"
+			M.name = "security satchel"
+			M.real_name = "security satchel"
+			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects stylishly on the shoulder of security personnel.(Base Item: security backpack)"
+			activator.set_clothing_icon_dirty()
+			M.wear_layer = MOB_BACK_LAYER_SATCHEL
+
 		else if (istype(activator.back, /obj/item/storage/backpack/captain/blue) || activator.back.icon_state == "capbackpack_blue")
 			var/obj/item/storage/backpack/M = activator.back
 			M.icon = 'icons/obj/items/storage.dmi'

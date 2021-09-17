@@ -143,6 +143,7 @@
 				src.light()
 
 	ex_act(severity)
+		. = ..()
 		if (src.on == 0)
 			src.visible_message("<span class='alert'>The [src] ignites!</span>", group = "cig_ignite")
 			src.light()
@@ -257,7 +258,7 @@
 				if (9) message = "<B>[user]</B> pulls on [his_or_her(user)] [src.name]."
 				if (10) message = "<B>[user]</B> blows out some smoke in the shape of a [pick("butt","bee","shelterfrog","heart","burger","gun","cube","face","dog","star")]!"
 			user.visible_message("<span class='alert'>[message]</span>", group = "blow_smoke")
-			src.cycle = 0 //do the transfer on the next cycle. Also means we get the lung damage etc rolls
+		src.cycle = 0 //do the transfer on the next cycle. Also means we get the lung damage etc rolls
 
 		src.puff_ready = 0
 
@@ -508,6 +509,7 @@
 		..()
 		src.reagents.maximum_volume = 600
 		src.reagents.clear_reagents()
+		numpuffs = 20
 
 	is_open_container()
 		return 1
@@ -1088,8 +1090,8 @@
 
 	New()
 		..()
-		src.create_reagents(100)
-		reagents.add_reagent("fuel", 100)
+		src.create_reagents(20)
+		reagents.add_reagent("fuel", 20)
 
 		src.setItemSpecial(/datum/item_special/flame)
 		return
@@ -1208,7 +1210,7 @@
 					src.deactivate(null)
 				return
 			if (!infinite_fuel && reagents.get_reagent_amount("fuel"))
-				reagents.remove_reagent("fuel", 1)
+				reagents.remove_reagent("fuel", 0.2)
 			var/turf/location = src.loc
 			if (ismob(location))
 				var/mob/M = location
@@ -1232,7 +1234,7 @@
 
 	firesource_interact()
 		if (!infinite_fuel && reagents.get_reagent_amount("fuel"))
-			reagents.remove_reagent("fuel", 1)
+			reagents.remove_reagent("fuel", 0.2)
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)

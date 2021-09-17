@@ -174,6 +174,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			if(isnull(type))
 				src.specialoverride?.onRemove()
 				src.specialoverride = null
+				src.overridespecial = FALSE
 			return null
 
 		src.specialoverride?.onRemove()

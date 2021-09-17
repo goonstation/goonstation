@@ -165,7 +165,7 @@ var/datum/geneticsResearchManager/genResearch = new()
 
 	// Note: Parent should be called LAST to ensure any updates are forwarded as static data where applicable
 	proc/onFinish()
-		SHOULD_CALL_PARENT(TRUE)	
+		SHOULD_CALL_PARENT(TRUE)
 		for_by_tcl(computer, /obj/machinery/computer/genetics)
 			for (var/datum/tgui/ui as anything in tgui_process.get_uis(computer))
 				computer.update_static_data(null, ui)
@@ -425,12 +425,24 @@ var/datum/geneticsResearchManager/genResearch = new()
 	var/datum/computer/file/genetics_scan/scan = new /datum/computer/file/genetics_scan()
 	scan.subject_name = C.real_name
 	scan.subject_uID = C.bioHolder.Uid
+	scan.subject_stability = C.bioHolder.genetic_stability
+	scan.scanned_at = TIME
 
-	for(var/ID in C.bioHolder.effectPool)
-		var/datum/bioEffect/BE = C.bioHolder.GetEffectFromPool(ID)
-		var/datum/bioEffect/MUT = new BE.type(scan)
-		MUT.dnaBlocks.blockList = BE.dnaBlocks.blockList
-		MUT.dnaBlocks.blockListCurr = BE.dnaBlocks.blockListCurr
-		scan.dna_pool += MUT
+	scan.dna_active = list()
+	scan.dna_pool = list()
+
+	for (var/bioEffectId in C.bioHolder.effects)
+		var/datum/bioEffect/BE = C.bioHolder.GetEffect(bioEffectId)
+		var/datum/bioEffect/scannedBE = new BE.type(scan)
+		// copy necessary information
+		// currently only name, for chromosome presence
+		scannedBE.name = BE.name
+		scan.dna_active += scannedBE
+	for (var/bioEffectId in C.bioHolder.effectPool)
+		var/datum/bioEffect/BE = C.bioHolder.GetEffectFromPool(bioEffectId)
+		var/datum/bioEffect/scannedBE = new BE.type(scan)
+		scannedBE.dnaBlocks.blockList = BE.dnaBlocks.blockList
+		scannedBE.dnaBlocks.blockListCurr = BE.dnaBlocks.blockListCurr
+		scan.dna_pool += scannedBE
 
 	return scan

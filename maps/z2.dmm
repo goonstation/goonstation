@@ -14838,7 +14838,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/maint)
 "aXF" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable,
 /obj/cable{
 	d1 = 1;
@@ -15073,7 +15073,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/upper_arctic/pod1)
 "aYe" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -43530,6 +43530,10 @@
 "cvq" = (
 /obj/item/match,
 /obj/stool/chair/comfy/shuttle/brown,
+/obj/decal/fakeobjects/robot{
+	desc = "A J-12 Bus Driving Unit. It looks like someone's given it several hard whacks on the brain-case with a blunt object.";
+	name = "Busted J-12 Bus Driver"
+	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -51139,7 +51143,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8
 	},
 /obj/machinery/light/small/iomoon{
@@ -56106,7 +56110,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "owl"
 	},
 /obj/machinery/power/data_terminal,
@@ -73000,7 +73004,7 @@
 "dQq" = (
 /obj/table/auto,
 /obj/item/storage/box/guardbot_kit,
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
 /obj/random_item_spawner/buddytool,
 /turf/unsimulated/floor/black,
 /area/centcom/lobby)
@@ -78119,6 +78123,7 @@
 /area/centcom/offices/sord)
 "oSl" = (
 /obj/table/reinforced/industrial/auto,
+/obj/item/gun/energy/tasersmg,
 /obj/item/kitchen/food_box/donut_box{
 	pixel_y = 4
 	},
