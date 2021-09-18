@@ -1,30 +1,127 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ai" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/green/side{
+	dir = 1
+	},
+/area/space)
+"at" = (
+/obj/machinery/light,
+/turf/simulated/floor/darkblue,
+/area/space)
+"ax" = (
+/obj/decal/cleanable/ash,
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/shuttlebay,
+/area/space)
 "aW" = (
-/turf/unsimulated/floor/darkpurple,
+/turf/simulated/floor/darkpurple,
+/area/space)
+"cd" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro{
+	dir = 8;
+	id = "boomroom";
+	name = "Test Chamber Shutters"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/space)
+"cj" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/item/device/audio_log{
+	rand_pos = 0
+	},
+/obj/item/audio_tape,
+/obj/item/clothing/glasses/blindfold,
+/obj/item/handcuffs,
+/turf/simulated/floor/engine,
+/area/space)
+"ck" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/cashreg,
+/turf/simulated/floor/carpet/green/standard/narrow/eastwest,
+/area/space)
+"cl" = (
+/turf/simulated/floor/caution/north,
+/area/space)
+"do" = (
+/obj/storage/secure/closet/research/chemical,
+/turf/simulated/floor/darkpurple,
 /area/space)
 "dv" = (
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	icon_state = "floor"
 	},
 /area/space)
 "eb" = (
-/turf/unsimulated/floor/stairs/wide/other{
+/turf/simulated/floor/stairs/wide/other{
 	dir = 4
 	},
 /area/space)
-"fD" = (
-/turf/unsimulated/floor/caution/westeast,
+"eg" = (
+/obj/table/reinforced/auto,
+/obj/machinery/computer3/generic/personal{
+	pixel_x = 1;
+	pixel_y = 9
+	},
+/turf/simulated/floor/darkpurple,
+/area/space)
+"eI" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4;
+	name = "Test Chamber Access";
+	req_access = null
+	},
+/obj/access_spawn/research,
+/turf/simulated/floor/caution/westeast,
+/area/space)
+"fa" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/plating,
+/area/space)
+"fk" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/shaker/pepper{
+	pixel_x = -8;
+	pixel_y = 3
+	},
+/obj/item/shaker/salt{
+	pixel_x = 1
+	},
+/turf/simulated/floor/carpet/green/standard/narrow/eastwest,
+/area/space)
+"fy" = (
+/obj/machinery/manufacturer/mechanic,
+/turf/simulated/floor/darkpurple,
+/area/space)
+"fL" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/black,
 /area/space)
 "fW" = (
 /obj/stool/bench/auto,
-/turf/unsimulated/floor{
-	icon_state = "floor"
+/turf/simulated/floor/neutral/side{
+	dir = 10
 	},
 /area/space)
 "gc" = (
 /obj/machinery/door/window/eastleft,
 /obj/machinery/drainage,
-/turf/unsimulated/floor/sanitary,
+/turf/simulated/floor/sanitary,
 /area/space)
 "gM" = (
 /obj/stool/bed,
@@ -39,24 +136,81 @@
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
-/turf/unsimulated/floor/carpet/purple/standard/narrow/west,
+/turf/simulated/floor/carpet/purple/standard/narrow/west,
 /area/space)
-"hd" = (
-/turf/unsimulated/floor/grey,
+"gN" = (
+/obj/machinery/chem_dispenser/alcohol,
+/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/turf/simulated/floor/grey,
+/area/space)
+"gR" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/shuttlebay,
+/area/space)
+"gV" = (
+/turf/simulated/floor/caution/west,
+/area/space)
+"gW" = (
+/obj/item/device/radio/intercom{
+	dir = 8
+	},
+/obj/machinery/light/small,
+/obj/table/reinforced/chemistry/auto,
+/obj/item/device/analyzer/healthanalyzer{
+	pixel_y = -7
+	},
+/obj/item/clothing/mask/gas/emergency{
+	pixel_y = 3
+	},
+/turf/simulated/floor/engine,
+/area/space)
+"ht" = (
+/obj/storage/closet/office,
+/turf/simulated/floor/darkpurple,
+/area/space)
+"hx" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/bowl,
+/turf/simulated/floor/carpet/green/standard/narrow/eastwest,
+/area/space)
+"ib" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/plating,
 /area/space)
 "ig" = (
-/turf/unsimulated/floor/darkpurple/side,
+/turf/simulated/floor/darkpurple/side,
 /area/space)
 "io" = (
 /obj/shrub/dead{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
+/turf/simulated/floor/neutral/side,
+/area/space)
+"ip" = (
+/obj/table/reinforced/auto,
+/obj/item/paper_bin{
+	pixel_x = -3
+	},
+/obj/item/pen/marker/red,
+/obj/item/pen{
+	pixel_x = 3;
+	pixel_y = 6
+	},
+/turf/simulated/floor/darkpurple/side{
+	dir = 1
+	},
+/area/space)
+"ir" = (
+/obj/shrub/dead,
+/turf/simulated/floor/darkpurple/side{
+	dir = 1
 	},
 /area/space)
 "is" = (
-/turf/unsimulated/floor/shuttlebay{
+/turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
 /area/space)
@@ -64,9 +218,10 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/simulated/floor/darkblue,
+/area/space)
+"iH" = (
+/turf/simulated/floor/caution/corner/sw,
 /area/space)
 "jO" = (
 /obj/machinery/light/small{
@@ -78,32 +233,129 @@
 	},
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/orange,
-/turf/unsimulated/floor/carpet/purple/standard/narrow/east,
+/turf/simulated/floor/carpet/purple/standard/narrow/east,
 /area/space)
 "jQ" = (
-/turf/unsimulated/floor/darkpurple/side{
+/turf/simulated/floor/darkpurple/side{
 	dir = 1
 	},
 /area/space)
+"kf" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/firstaid/fire{
+	pixel_x = -4
+	},
+/obj/item/storage/firstaid/toxin{
+	pixel_x = 4
+	},
+/obj/machinery/light/small,
+/turf/simulated/floor/purpleblack{
+	dir = 8
+	},
+/area/space)
+"kq" = (
+/turf/simulated/floor/stairs/wide/other,
+/area/space)
 "kU" = (
 /obj/wingrille_spawn/auto,
-/turf/unsimulated/floor,
+/turf/simulated/floor/plating,
+/area/space)
+"lm" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor,
+/area/space)
+"lB" = (
+/obj/item/extinguisher{
+	pixel_x = -3;
+	pixel_y = -10
+	},
+/turf/simulated/floor/grey,
+/area/space)
+"lI" = (
+/turf/simulated/floor/engine,
+/area/space)
+"me" = (
+/turf/simulated/floor/specialroom/cafeteria,
 /area/space)
 "mq" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 4
 	},
-/turf/unsimulated/floor/carpet/purple/standard/narrow/west,
+/turf/simulated/floor/carpet/purple/standard/narrow/west,
 /area/space)
-"mE" = (
-/turf/unsimulated/floor/specialroom/bar,
+"mt" = (
+/turf/simulated/floor/shuttlebay,
+/area/space)
+"mz" = (
+/turf/simulated/floor/neutral/corner{
+	dir = 8
+	},
 /area/space)
 "mY" = (
-/obj/item/storage/wall/medical{
-	dir = 1;
-	pixel_y = 32
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro{
+	dir = 9;
+	id = "boomroom";
+	name = "Test Chamber Shutters"
 	},
-/turf/unsimulated/floor/white,
+/turf/simulated/floor/engine,
+/area/space)
+"nf" = (
+/obj/table/reinforced/auto,
+/obj/item/paper{
+	info = "<I>instability down to 17 percent, crystal slat cohesion matters wrt binding<BR><BR>need 10% before recursion paradox fix, ask federico for better sample + more stabilizer</I>";
+	name = "wrinkled paper";
+	pixel_x = 3;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/glass/flask{
+	pixel_x = -5;
+	pixel_y = -7
+	},
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_x = 7;
+	pixel_y = -12
+	},
+/turf/simulated/floor/darkpurple,
+/area/space)
+"nj" = (
+/obj/stool/chair/office{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 8
+	},
+/area/space)
+"nn" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/plating,
+/area/space)
+"nX" = (
+/turf/simulated/floor/grey,
+/area/space)
+"op" = (
+/obj/storage/closet/emergency,
+/turf/simulated/floor/engine,
+/area/space)
+"os" = (
+/obj/stool/chair/office{
+	dir = 8
+	},
+/turf/simulated/floor/darkpurple,
+/area/space)
+"ox" = (
+/turf/simulated/floor/stairs/wide,
+/area/space)
+"oQ" = (
+/obj/decal/cleanable/oil,
+/turf/simulated/floor/shuttlebay,
 /area/space)
 "oV" = (
 /obj/stool/bed,
@@ -116,36 +368,130 @@
 	icon_state = "bedsheet-pink"
 	},
 /obj/item/storage/wall/random,
-/turf/unsimulated/floor/carpet/purple/standard/narrow/west,
+/turf/simulated/floor/carpet/purple/standard/narrow/west,
 /area/space)
-"pc" = (
-/turf/unsimulated/floor/grey/side,
+"pF" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_x = 6;
+	pixel_y = 15
+	},
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_x = 1
+	},
+/turf/simulated/floor/darkpurple,
 /area/space)
-"pG" = (
-/turf/unsimulated/floor/stairs/wide,
+"pN" = (
+/turf/simulated/floor/caution/corner/se,
+/area/space)
+"qa" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro{
+	id = "sglass_scibar";
+	layer = 3.1;
+	name = "Zone Control Door"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"qg" = (
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "Whatever this thing was supposed to do, it's probably not doing it that well anymore.";
+	dir = 8;
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff";
+	name = "Resonance Calibrator"
+	},
+/turf/simulated/floor/caution/misc{
+	dir = 4
+	},
+/area/space)
+"qx" = (
+/obj/item/wrench,
+/turf/simulated/floor/shuttlebay,
+/area/space)
+"qN" = (
+/obj/machinery/camera/television{
+	c_tag = "test chamber";
+	dir = 1;
+	name = "camera - test chamber"
+	},
+/turf/simulated/floor/engine,
+/area/space)
+"qS" = (
+/obj/rack,
+/obj/item/crowbar,
+/turf/simulated/floor/grey,
 /area/space)
 "rL" = (
 /obj/item/storage/toilet,
-/turf/unsimulated/floor/sanitary,
-/area/space)
-"se" = (
-/obj/wingrille_spawn/auto/crystal,
-/turf/unsimulated/floor,
+/turf/simulated/floor/sanitary,
 /area/space)
 "sk" = (
 /obj/stool/bench/blue,
-/turf/unsimulated/floor/sanitary,
+/turf/simulated/floor/sanitary,
+/area/space)
+"sw" = (
+/obj/machinery/atmospherics/binary/pump{
+	dir = 8;
+	frequency = 1229;
+	icon_state = "intact_on";
+	id = "Test Chamber";
+	on = 1;
+	target_pressure = 250
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 8
+	},
+/area/space)
+"sH" = (
+/obj/item/clothing/head/emerg{
+	pixel_x = 7;
+	pixel_y = 11
+	},
+/turf/simulated/floor/caution/westeast,
 /area/space)
 "sR" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4;
 	pixel_x = -8
 	},
-/turf/unsimulated/floor/sanitary,
+/turf/simulated/floor/sanitary,
+/area/space)
+"sW" = (
+/turf/simulated/floor/green/side{
+	dir = 8
+	},
+/area/space)
+"td" = (
+/turf/simulated/floor/caution/south,
+/area/space)
+"tz" = (
+/obj/storage/closet/emergency,
+/obj/machinery/light,
+/turf/simulated/floor/darkblue,
+/area/space)
+"tN" = (
+/obj/stool/chair/office{
+	dir = 8
+	},
+/turf/simulated/floor/darkpurple/side{
+	dir = 4
+	},
 /area/space)
 "tQ" = (
-/turf/unsimulated/floor/stairs/wide/middle{
+/turf/simulated/floor/stairs/wide/middle{
 	dir = 4
+	},
+/area/space)
+"uc" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/green/side{
+	dir = 9
 	},
 /area/space)
 "ui" = (
@@ -159,17 +505,67 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/turf/unsimulated/floor/sanitary,
+/turf/simulated/floor/sanitary,
+/area/space)
+"uW" = (
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/shuttlebay,
+/area/space)
+"vC" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/test_apparatus/gas_sensor{
+	setup_tag = "TEST_CHAMBER"
+	},
+/turf/simulated/floor/engine,
 /area/space)
 "vR" = (
 /obj/machinery/door/airlock/pyro,
-/turf/unsimulated/floor/sanitary,
+/turf/simulated/floor/sanitary,
+/area/space)
+"we" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/item/storage/box/syringes,
+/obj/item/clothing/gloves/latex,
+/obj/item/reagent_containers/dropper,
+/turf/simulated/floor/engine,
+/area/space)
+"wj" = (
+/obj/machinery/chem_master{
+	dir = 8
+	},
+/turf/simulated/floor/darkpurple,
+/area/space)
+"ws" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro{
+	dir = 10;
+	id = "boomroom";
+	name = "Test Chamber Shutters"
+	},
+/turf/simulated/floor/engine,
+/area/space)
+"wv" = (
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
+/area/space)
+"wE" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/bar,
 /area/space)
 "wY" = (
-/obj/machinery/door/airlock/pyro/glass/sci,
-/turf/unsimulated/floor{
-	icon_state = "floor"
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro{
+	dir = 6;
+	id = "boomroom";
+	name = "Test Chamber Shutters"
 	},
+/turf/simulated/floor/engine,
 /area/space)
 "wZ" = (
 /obj/stool/bed,
@@ -181,10 +577,87 @@
 /obj/item/paper{
 	info = "nope im out"
 	},
-/turf/unsimulated/floor/carpet/purple/standard/narrow/east,
+/turf/simulated/floor/carpet/purple/standard/narrow/east,
 /area/space)
 "xm" = (
-/turf/unsimulated/wall/auto/reinforced/supernorn,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/space)
+"xp" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/caution/westeast,
+/area/space)
+"xD" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/poddoor/pyro{
+	dir = 4;
+	id = "sglass_scicore";
+	layer = 3.1;
+	name = "Zone Control Door"
+	},
+/turf/simulated/floor/darkpurple,
+/area/space)
+"xS" = (
+/obj/machinery/drainage,
+/turf/simulated/floor/engine,
+/area/space)
+"xZ" = (
+/obj/table/reinforced/industrial/auto,
+/turf/simulated/floor/caution/misc{
+	dir = 6
+	},
+/area/space)
+"yp" = (
+/obj/machinery/r_door_control{
+	id = "silverglass_dock"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/space)
+"yG" = (
+/turf/simulated/floor/neutral/corner,
+/area/space)
+"zb" = (
+/obj/machinery/atmospherics/pipe/simple/overfloor/horizontal,
+/turf/simulated/floor/engine,
+/area/space)
+"zJ" = (
+/turf/simulated/floor/caution/westeast,
+/area/space)
+"zU" = (
+/obj/stool/chair/couch{
+	dir = 4;
+	icon_state = "chair_couch-blue";
+	name = "ratty blue couch"
+	},
+/turf/simulated/floor/darkpurple/side{
+	dir = 1
+	},
+/area/space)
+"An" = (
+/obj/table/reinforced/auto,
+/obj/item/clipboard,
+/turf/simulated/floor/darkpurple,
+/area/space)
+"At" = (
+/obj/critter/roach,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/space)
+"AD" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/plate,
+/turf/simulated/floor/carpet/green/standard/narrow/eastwest,
+/area/space)
+"AW" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/pyro{
+	dir = 8;
+	id = "boomroom";
+	name = "Test Chamber Shutters"
+	},
+/obj/access_spawn/research,
+/obj/machinery/atmospherics/pipe/simple/overfloor/horizontal,
+/turf/simulated/floor/engine/caution/westeast,
 /area/space)
 "Bv" = (
 /obj/machinery/drainage,
@@ -193,7 +666,20 @@
 	pixel_x = -8;
 	pixel_y = 8
 	},
-/turf/unsimulated/floor/sanitary,
+/turf/simulated/floor/sanitary,
+/area/space)
+"BH" = (
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "Whatever this thing was supposed to do, it's probably not doing it that well anymore.";
+	dir = 4;
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff";
+	name = "Resonance Calibrator"
+	},
+/turf/simulated/floor/caution/misc{
+	dir = 8
+	},
 /area/space)
 "BO" = (
 /obj/stool/bed,
@@ -208,23 +694,85 @@
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
-/turf/unsimulated/floor/carpet/purple/standard/narrow/west,
+/turf/simulated/floor/carpet/purple/standard/narrow/west,
+/area/space)
+"BU" = (
+/obj/machinery/atmospherics/unary/outlet_injector{
+	dir = 4;
+	icon_state = "on";
+	level = 2;
+	on = 1
+	},
+/turf/simulated/floor/engine,
+/area/space)
+"Cn" = (
+/obj/machinery/vending/snack,
+/turf/simulated/floor/neutral/side,
+/area/space)
+"CV" = (
+/obj/machinery/light,
+/turf/simulated/floor/specialroom/bar,
+/area/space)
+"Dr" = (
+/obj/stool/chair/office{
+	dir = 8
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 8
+	},
+/area/space)
+"DK" = (
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/space)
+"DP" = (
+/obj/submachine/chef_sink,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/space)
 "DR" = (
-/turf/unsimulated/floor/stairs/wide{
+/turf/simulated/floor/stairs/wide{
 	dir = 4
 	},
 /area/space)
 "Eo" = (
-/turf/unsimulated/floor/stairs/wide{
+/turf/simulated/floor/stairs/wide{
 	dir = 1
 	},
 /area/space)
+"Ey" = (
+/obj/storage/closet/fire,
+/turf/simulated/floor/engine,
+/area/space)
+"EJ" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/glass_recycler{
+	glass_amt = 5;
+	pixel_y = 4
+	},
+/turf/simulated/floor/carpet/green/standard/narrow/northsouth,
+/area/space)
+"EV" = (
+/obj/table/reinforced/auto,
+/turf/simulated/floor/engine,
+/area/space)
+"EY" = (
+/obj/machinery/door/airlock/pyro/glass/sci{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/space)
 "Fj" = (
 /obj/wingrille_spawn/auto/crystal,
-/turf/unsimulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
+/turf/simulated/floor/engine,
+/area/space)
+"Fx" = (
+/obj/submachine/chef_oven,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/space)
+"Gj" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/shuttlebay,
 /area/space)
 "Gx" = (
 /obj/machinery/shower{
@@ -233,67 +781,464 @@
 	pixel_y = 8
 	},
 /obj/stool/bench/blue,
-/turf/unsimulated/floor/sanitary,
+/turf/simulated/floor/sanitary,
+/area/space)
+"GA" = (
+/obj/stool/chair/office{
+	dir = 1;
+	icon_state = "office_chair"
+	},
+/turf/simulated/floor/darkpurple/side{
+	dir = 8
+	},
 /area/space)
 "GR" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4
 	},
-/turf/unsimulated/floor/specialroom/bar,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/space)
+"Hb" = (
+/obj/table/reinforced/auto,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/gloves/latex{
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/turf/simulated/floor/darkpurple/side,
 /area/space)
 "Hr" = (
-/obj/machinery/door/airlock/pyro,
-/turf/unsimulated/floor/specialroom/bar,
+/obj/table/reinforced/chemistry/auto,
+/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/kitchen/utensil/knife{
+	desc = "A precision instrument for biological research.";
+	name = "dissection knife"
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "test chamber plating"
+	},
+/area/space)
+"HC" = (
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 20
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/machinery/vending/monkey,
+/turf/simulated/floor/shuttlebay{
+	name = "test chamber plating"
+	},
+/area/space)
+"HP" = (
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8;
+	pixel_x = 8
+	},
+/obj/machinery/light/small,
+/turf/simulated/floor/purpleblack{
+	dir = 4
+	},
+/area/space)
+"Ic" = (
+/obj/storage/closet/biohazard,
+/turf/simulated/floor/black,
+/area/space)
+"Iz" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/black,
+/area/space)
+"Jc" = (
+/obj/machinery/vending/cigarette,
+/turf/simulated/floor/neutral/side,
+/area/space)
+"JV" = (
+/obj/stool/bench/auto,
+/turf/simulated/floor/neutral/side,
+/area/space)
+"Kj" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"Ku" = (
+/obj/stool/bar,
+/turf/simulated/floor/specialroom/bar,
+/area/space)
+"KH" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro{
+	id = "boomroom";
+	name = "Test Chamber Shutters"
+	},
+/turf/simulated/floor/engine,
+/area/space)
+"KV" = (
+/turf/simulated/floor/green/corner{
+	dir = 1
+	},
 /area/space)
 "KZ" = (
-/turf/unsimulated/floor,
+/turf/simulated/floor/plating,
+/area/space)
+"Ld" = (
+/obj/storage/secure/closet/fridge,
+/obj/item/reagent_containers/food/snacks/greengoo{
+	pixel_y = -9
+	},
+/obj/item/reagent_containers/food/snacks/burger/moldy,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/space)
+"LY" = (
+/turf/simulated/floor/neutral/side,
 /area/space)
 "Me" = (
 /obj/machinery/door/airlock/pyro/external,
-/turf/unsimulated/floor{
-	icon_state = "floor"
+/turf/simulated/floor/green/side{
+	dir = 8
 	},
 /area/space)
 "Mk" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 8
 	},
-/turf/unsimulated/floor/carpet/purple/standard/narrow/east,
+/turf/simulated/floor/carpet/purple/standard/narrow/east,
+/area/space)
+"MR" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/neutral/side{
+	dir = 4
+	},
+/area/space)
+"MS" = (
+/obj/machinery/vending/coffee,
+/turf/simulated/floor/neutral/side,
+/area/space)
+"MV" = (
+/obj/decal/cleanable/cobweb,
+/obj/rack,
+/obj/item/storage/toolbox/mechanical,
+/turf/simulated/floor/plating,
+/area/space)
+"Nq" = (
+/turf/simulated/floor/specialroom/bar,
+/area/space)
+"Ns" = (
+/obj/machinery/chem_dispenser/soda,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/grey,
+/area/space)
+"Nv" = (
+/obj/machinery/light/small,
+/obj/machinery/chemicompiler_stationary,
+/turf/simulated/floor/engine,
+/area/space)
+"NE" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"NK" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing{
+	pixel_y = 9
+	},
+/obj/item/kitchen/rollingpin,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/space)
+"NW" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
 /area/space)
 "NY" = (
 /obj/table/reinforced/bar/auto,
-/turf/unsimulated/floor/specialroom/bar,
+/obj/item_dispenser/icedispenser{
+	pixel_y = 11
+	},
+/turf/simulated/floor/carpet/green/standard/narrow/T_south,
+/area/space)
+"OC" = (
+/obj/table/reinforced/auto,
+/obj/deskclutter,
+/obj/item/pen/marker/blue{
+	pixel_x = 6
+	},
+/turf/simulated/floor/darkpurple,
+/area/space)
+"OL" = (
+/obj/iv_stand,
+/turf/simulated/floor/shuttlebay{
+	name = "test chamber plating"
+	},
 /area/space)
 "Px" = (
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
 	},
-/turf/unsimulated/floor/sanitary,
+/turf/simulated/floor/sanitary,
+/area/space)
+"PI" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro{
+	dir = 8;
+	id = "boomroom";
+	name = "Test Chamber Shutters"
+	},
+/turf/simulated/floor/engine,
+/area/space)
+"PS" = (
+/turf/simulated/floor/caution/corner/nw,
 /area/space)
 "Qf" = (
-/turf/unsimulated/floor/stairs/wide/other{
+/turf/simulated/floor/stairs/wide/other{
 	dir = 1
 	},
 /area/space)
+"Qr" = (
+/obj/machinery/door_control{
+	id = "boomroom";
+	name = "Test Chamber Shutters";
+	pixel_x = -24
+	},
+/obj/table/reinforced/auto,
+/obj/item/clothing/glasses/sunglasses{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/obj/item/decoration/ashtray{
+	pixel_x = -3;
+	pixel_y = -2
+	},
+/obj/item/clothing/glasses/sunglasses{
+	pixel_x = -1;
+	pixel_y = 9
+	},
+/obj/item/extinguisher{
+	pixel_x = 8;
+	pixel_y = 7
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 8
+	},
+/area/space)
+"QL" = (
+/turf/simulated/floor/caution/east,
+/area/space)
 "QZ" = (
-/turf/unsimulated/floor/darkpurple/side{
+/turf/simulated/floor/darkpurple/side{
 	dir = 4
 	},
 /area/space)
+"Ry" = (
+/obj/machinery/atmospherics/valve{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/space)
+"RE" = (
+/obj/table/reinforced/auto,
+/obj/item/screwdriver{
+	pixel_x = 3
+	},
+/obj/item/reagent_containers/dropper/mechanical{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/item/electronics/soldering{
+	pixel_y = 6
+	},
+/turf/simulated/floor/darkpurple,
+/area/space)
 "Sb" = (
-/turf/unsimulated/floor/white,
+/turf/simulated/floor/white,
 /area/space)
 "Sf" = (
 /turf/space,
 /area/space)
+"SD" = (
+/obj/machinery/deep_fryer,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/space)
+"SH" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/poddoor/pyro{
+	id = "sglass_scibar";
+	layer = 3.1;
+	name = "Zone Control Door"
+	},
+/turf/simulated/floor/darkpurple,
+/area/space)
+"Tl" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/box/glassbox,
+/obj/item/storage/box/cutlery{
+	pixel_y = -9
+	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/space)
+"Tr" = (
+/obj/table/reinforced/auto,
+/obj/item/device/analyzer/atmospheric/upgraded,
+/turf/simulated/floor/darkpurple,
+/area/space)
+"Tv" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/espresso_machine,
+/obj/cup_rack{
+	pixel_y = 32
+	},
+/turf/simulated/floor/carpet/green/standard/narrow/northsouth,
+/area/space)
+"TO" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 4
+	},
+/area/space)
 "TR" = (
-/turf/unsimulated/wall/auto/supernorn,
+/turf/simulated/wall/auto/supernorn,
+/area/space)
+"TZ" = (
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4
+	},
+/turf/simulated/floor,
 /area/space)
 "Ug" = (
-/turf/unsimulated/floor/darkpurple/side{
+/turf/simulated/floor/darkpurple/side{
 	dir = 8
 	},
+/area/space)
+"Um" = (
+/obj/rack,
+/obj/item/device/light/flashlight,
+/turf/simulated/floor/grey,
+/area/space)
+"Un" = (
+/turf/simulated/floor/caution/corner/ne,
+/area/space)
+"UA" = (
+/obj/stool/chair/couch{
+	dir = 8;
+	icon_state = "chair_couch-blue";
+	name = "ratty blue couch"
+	},
+/turf/simulated/floor/darkpurple/side{
+	dir = 1
+	},
+/area/space)
+"UF" = (
+/obj/table/reinforced/auto,
+/obj/item/interdictor_rod{
+	pixel_x = -5
+	},
+/obj/item/interdictor_rod/sigma{
+	pixel_x = 5
+	},
+/turf/simulated/floor/darkpurple,
+/area/space)
+"UO" = (
+/turf/simulated/floor/green/side{
+	dir = 1
+	},
+/area/space)
+"UP" = (
+/obj/machinery/light_switch/east,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/terminal/zeta{
+	dir = 8;
+	setup_os_string = "ZETA_MAINFRAME"
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 4
+	},
+/area/space)
+"Vx" = (
+/obj/machinery/disposal{
+	name = "emergency ejector"
+	},
+/turf/simulated/floor/engine,
+/area/space)
+"VF" = (
+/obj/machinery/vending/kitchen,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/space)
+"Wh" = (
+/obj/machinery/drainage,
+/turf/simulated/floor/darkpurple,
+/area/space)
+"Wn" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro{
+	dir = 5;
+	id = "boomroom";
+	name = "Test Chamber Shutters"
+	},
+/turf/simulated/floor/engine,
+/area/space)
+"Wr" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	dir = 4;
+	id = "silverglass_dock";
+	name = "Silverglass Dock"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/space)
+"WR" = (
+/obj/machinery/door/airlock/pyro,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/space)
 "WU" = (
 /obj/item/storage/wall{
@@ -302,7 +1247,7 @@
 	pixel_x = -32;
 	spawn_contents = list(/obj/item/clothing/under/towel,/obj/item/clothing/under/towel)
 	},
-/turf/unsimulated/floor/sanitary,
+/turf/simulated/floor/sanitary,
 /area/space)
 "Xb" = (
 /obj/stool/bed,
@@ -317,32 +1262,76 @@
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
-/turf/unsimulated/floor/carpet/purple/standard/narrow/east,
+/turf/simulated/floor/carpet/purple/standard/narrow/east,
+/area/space)
+"XH" = (
+/obj/table/reinforced/auto,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/space)
 "XI" = (
 /obj/machinery/door/airlock/pyro/glass/sci{
 	dir = 4
 	},
-/turf/unsimulated/floor/caution/westeast,
+/turf/simulated/floor/caution/westeast,
 /area/space)
 "XL" = (
-/obj/shrub/dead,
-/turf/unsimulated/floor{
-	icon_state = "floor"
+/obj/machinery/shower{
+	dir = 1;
+	pixel_y = 20
 	},
+/turf/simulated/floor/darkblue,
 /area/space)
-"Yg" = (
-/turf/unsimulated/floor/stairs/wide/other,
+"YM" = (
+/obj/storage/closet/fire,
+/turf/simulated/floor/darkblue,
 /area/space)
 "YN" = (
-/turf/unsimulated/floor/sanitary,
+/turf/simulated/floor/sanitary,
 /area/space)
 "YY" = (
-/turf/unsimulated/floor/shuttlebay,
+/turf/simulated/floor,
+/area/space)
+"Zj" = (
+/obj/table/reinforced/auto,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/item/paper_bin{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/obj/item/clipboard{
+	pixel_x = -11
+	},
+/obj/item/pen{
+	pixel_x = -13
+	},
+/obj/item/pen/marker/red{
+	pixel_x = -9;
+	pixel_y = 2
+	},
+/obj/item/pen/marker/blue{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/obj/machinery/power/apc/autoname_north,
+/turf/simulated/floor/black,
+/area/space)
+"ZD" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/shuttlebay,
+/area/space)
+"ZF" = (
+/obj/machinery/optable,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/engine,
 /area/space)
 "ZG" = (
 /obj/machinery/door/airlock/pyro/glass/sci,
-/turf/unsimulated/floor/darkpurple,
+/turf/simulated/floor/darkpurple,
 /area/space)
 
 (1,1,1) = {"
@@ -546,9 +1535,9 @@ Sf
 Sf
 Sf
 xm
-se
-se
-se
+nn
+nn
+nn
 xm
 Sf
 Sf
@@ -578,9 +1567,9 @@ xm
 xm
 xm
 xm
-aW
-aW
-aW
+UF
+nf
+RE
 xm
 xm
 kU
@@ -606,28 +1595,28 @@ Sf
 Sf
 Sf
 xm
-is
-is
-Fj
-aW
-Ug
+Ey
+op
+xm
+eg
+GA
 jQ
 Ug
-aW
-se
-mE
-mE
+fy
+xm
+Tv
+EJ
 NY
-mE
-mE
+Nq
+Nq
 TR
-TR
-YY
-YY
-YY
-YY
-TR
-TR
+Wr
+Wr
+Wr
+Wr
+Wr
+Wr
+yp
 Sf
 Sf
 Sf
@@ -637,28 +1626,28 @@ Sf
 Sf
 Sf
 Sf
-se
-is
-is
+Fj
+lI
+lI
 Qf
 aW
 dv
 aW
 dv
 aW
-aW
-mE
-mE
-NY
-mE
-mE
+SH
+nX
+nX
+AD
+Ku
+CV
 TR
-YY
-YY
-YY
-YY
-YY
-YY
+mt
+mt
+mt
+Gj
+mt
+mt
 TR
 Sf
 Sf
@@ -669,28 +1658,28 @@ Sf
 Sf
 Sf
 Sf
-se
-is
-is
+Fj
+lI
+lI
 Eo
 aW
 QZ
 ig
 QZ
-aW
-se
-mE
-mE
-NY
-mE
-mE
+os
+qa
+nX
+nX
+hx
+Ku
+Nq
 kU
-YY
-YY
-YY
-YY
-YY
-YY
+ZD
+mt
+mt
+gR
+mt
+mt
 kU
 Sf
 Sf
@@ -702,27 +1691,27 @@ Sf
 Sf
 Sf
 xm
-is
-is
-Fj
-aW
-aW
+lI
+lI
+xm
+do
+wj
 aW
 xm
 xm
 xm
-mE
-mE
-NY
-mE
-mE
+Ns
+nX
+ck
+Ku
+Nq
 kU
-YY
-YY
-YY
-YY
-YY
-YY
+mt
+mt
+oQ
+gR
+mt
+qx
 kU
 Sf
 Sf
@@ -734,27 +1723,27 @@ Sf
 Sf
 Sf
 xm
-xm
-XI
-xm
-xm
+EY
+EY
 xm
 xm
+xm
+xD
 xm
 KZ
 TR
-mE
-mE
-NY
-mE
-mE
+gN
+nX
+fk
+Nq
+Nq
 TR
-YY
-YY
-YY
-YY
-YY
-YY
+mt
+mt
+gR
+ax
+gR
+uW
 TR
 Sf
 Sf
@@ -767,9 +1756,9 @@ Sf
 xm
 xm
 is
+lI
 is
-is
-is
+BH
 is
 is
 xm
@@ -778,14 +1767,14 @@ TR
 TR
 GR
 TR
-iv
-iv
+wE
+wE
 TR
 TR
-fD
-fD
-fD
-fD
+zJ
+zJ
+xp
+sH
 TR
 TR
 Sf
@@ -797,27 +1786,27 @@ Sf
 Sf
 Sf
 xm
-is
-is
-is
-is
-is
-is
-is
-is
+EV
+lI
+lI
+PS
+gV
+iH
+lI
+EV
 xm
-mE
-mE
-mE
+Tl
+NK
+me
 TR
-dv
-dv
+uc
+sW
 Me
-pG
-hd
-hd
-hd
-hd
+ox
+nX
+nX
+lB
+qS
 kU
 Sf
 Sf
@@ -829,27 +1818,27 @@ Sf
 Sf
 Sf
 xm
-is
-is
-is
-is
-is
-is
-is
-is
+EV
+lI
+lI
+cl
+xZ
+td
+lI
+EV
 xm
-mE
-mE
-mE
-TR
-dv
-dv
-Me
-Yg
-hd
-hd
-hd
-hd
+me
+me
+me
+XH
+UO
+yG
+MR
+kq
+nX
+nX
+nX
+Um
 kU
 Sf
 Sf
@@ -861,21 +1850,21 @@ Sf
 Sf
 Sf
 xm
-is
-is
-is
-is
-is
-is
-is
-is
+EV
+lI
+lI
+Un
+QL
+pN
+lI
+EV
 xm
-mE
-mE
-mE
-Hr
-dv
-dv
+Ld
+At
+me
+TR
+UO
+LY
 TR
 TR
 TR
@@ -893,21 +1882,21 @@ Sf
 Sf
 Sf
 xm
-is
-is
-is
-is
-is
-is
-is
-is
+Vx
+lI
+lI
+lI
+qg
+lI
+lI
+lI
 xm
-mE
-mE
-mE
-TR
-dv
-dv
+DP
+me
+me
+WR
+UO
+mz
 fW
 TR
 oV
@@ -926,7 +1915,7 @@ Sf
 Sf
 xm
 Fj
-XI
+EY
 Fj
 xm
 Fj
@@ -934,13 +1923,13 @@ Fj
 Fj
 Fj
 xm
-mE
-mE
-mE
+SD
+me
+me
 TR
-dv
-dv
-fW
+ai
+YY
+JV
 TR
 Mk
 TR
@@ -956,29 +1945,29 @@ Sf
 (20,1,1) = {"
 Sf
 Sf
-se
-is
-is
-is
+Fj
+lI
+lI
+lI
 xm
-aW
-aW
-aW
-aW
+OC
+An
+pF
+Tr
 xm
-mE
-mE
+VF
+Fx
 TR
 TR
-dv
-dv
-dv
-pc
-hd
-hd
-hd
-hd
-hd
+KV
+YY
+YY
+nX
+nX
+nX
+nX
+nX
+nX
 kU
 Sf
 Sf
@@ -988,23 +1977,23 @@ Sf
 (21,1,1) = {"
 Sf
 Sf
-se
+Fj
 DR
 tQ
 eb
 xm
-jQ
-QZ
-QZ
-ig
+ip
+tN
+tN
+Hb
 xm
 TR
 TR
 TR
-dv
-dv
-dv
-dv
+UA
+YY
+YY
+Cn
 TR
 mq
 TR
@@ -1021,22 +2010,22 @@ Sf
 Sf
 Sf
 xm
-se
+nn
 XI
-se
+nn
 xm
 jQ
 aW
 aW
 ig
 xm
-dv
-dv
-dv
-dv
-dv
-dv
-dv
+YM
+tz
+TR
+zU
+YY
+YY
+MS
 TR
 Xb
 TR
@@ -1052,23 +2041,23 @@ Sf
 (23,1,1) = {"
 Sf
 Sf
-se
+nn
 aW
 aW
 aW
-se
+nn
 jQ
 aW
 aW
 ig
-wY
-dv
-dv
-dv
-dv
-dv
-dv
-dv
+ZG
+Wh
+aW
+ZG
+jQ
+YY
+YY
+Jc
 TR
 TR
 TR
@@ -1084,7 +2073,7 @@ Sf
 (24,1,1) = {"
 Sf
 Sf
-se
+nn
 aW
 aW
 aW
@@ -1093,14 +2082,14 @@ jQ
 Ug
 Ug
 ig
-wY
-dv
-dv
-dv
-dv
-dv
-dv
-dv
+ZG
+Wh
+aW
+ZG
+jQ
+YY
+YY
+LY
 vR
 sR
 WU
@@ -1120,18 +2109,18 @@ xm
 xm
 aW
 aW
-se
+nn
 aW
 aW
 aW
-aW
-TR
+ht
+xm
 XL
-dv
-dv
-dv
-dv
-dv
+at
+TR
+ir
+lm
+YY
 io
 TR
 ui
@@ -1152,18 +2141,18 @@ Sf
 xm
 xm
 xm
-TR
+xm
 kU
 kU
 kU
-TR
-TR
-kU
+xm
+xm
 iv
-kU
+iv
 TR
 TR
-hd
+TR
+TZ
 TR
 TR
 rL
@@ -1185,23 +2174,23 @@ Sf
 Sf
 Sf
 TR
-Sb
-Sb
-Sb
-Sb
-Sb
-Sb
-Sb
-Sb
+wv
+wv
+wv
+wv
+wv
+wv
+wv
+wv
 TR
-hd
-hd
-hd
-TR
-TR
+KZ
+KZ
+KZ
 TR
 TR
-hd
+TR
+TR
+MV
 TR
 Sf
 Sf
@@ -1210,14 +2199,14 @@ Sf
 Sf
 "}
 (28,1,1) = {"
-Sf
-Sf
-Sf
-Sf
-Sf
-Sf
-TR
 mY
+PI
+PI
+PI
+ws
+Sf
+TR
+Sb
 Sb
 Sb
 Sb
@@ -1226,15 +2215,15 @@ Sb
 Sb
 Sb
 TR
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
+ib
+KZ
+KZ
+KZ
+Kj
+KZ
+fa
+KZ
+fa
 Sf
 Sf
 Sf
@@ -1242,28 +2231,28 @@ Sf
 Sf
 "}
 (29,1,1) = {"
-Sf
-Sf
-Sf
-Sf
-Sf
-Sf
+wY
+OL
+ZF
+we
+Wn
+ws
 TR
 TR
-Sb
-Sb
-Sb
-Sb
-Sb
-Sb
-Sb
+DK
+DK
+DK
+DK
+DK
+DK
+DK
 TR
-hd
-hd
-hd
-hd
-hd
-hd
+KZ
+KZ
+KZ
+KZ
+KZ
+KZ
 TR
 TR
 TR
@@ -1274,12 +2263,12 @@ Sf
 Sf
 "}
 (30,1,1) = {"
-Sf
-Sf
-Sf
-Sf
-Sf
-Sf
+Hr
+lI
+lI
+lI
+Nv
+KH
 Sf
 TR
 kU
@@ -1306,12 +2295,12 @@ Sf
 Sf
 "}
 (31,1,1) = {"
-Sf
-Sf
-Sf
-Sf
-Sf
-Sf
+cj
+vC
+xS
+BU
+qN
+KH
 Sf
 Sf
 Sf
@@ -1338,12 +2327,12 @@ Sf
 Sf
 "}
 (32,1,1) = {"
-Sf
-Sf
-Sf
-Sf
-Sf
-Sf
+HC
+NW
+lI
+zb
+gW
+KH
 Sf
 Sf
 Sf
@@ -1370,12 +2359,12 @@ Sf
 Sf
 "}
 (33,1,1) = {"
-Sf
-Sf
-Sf
-Sf
-Sf
-Sf
+xm
+cd
+PI
+AW
+xm
+xm
 Sf
 Sf
 Sf
@@ -1402,12 +2391,12 @@ Sf
 Sf
 "}
 (34,1,1) = {"
-Sf
-Sf
-Sf
-Sf
-Sf
-Sf
+Qr
+nj
+Dr
+sw
+kf
+xm
 Sf
 Sf
 Sf
@@ -1434,12 +2423,12 @@ Sf
 Sf
 "}
 (35,1,1) = {"
-Sf
-Sf
-Sf
-Sf
-Sf
-Sf
+Zj
+Iz
+fL
+Ry
+Ic
+xm
 Sf
 Sf
 Sf
@@ -1466,12 +2455,12 @@ Sf
 Sf
 "}
 (36,1,1) = {"
-Sf
-Sf
-Sf
-Sf
-Sf
-Sf
+xm
+UP
+TO
+HP
+xm
+xm
 Sf
 Sf
 Sf
@@ -1498,12 +2487,12 @@ Sf
 Sf
 "}
 (37,1,1) = {"
-Sf
-Sf
-Sf
-Sf
-Sf
-Sf
+xm
+xm
+eI
+xm
+xm
+NE
 Sf
 Sf
 Sf
