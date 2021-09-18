@@ -214,17 +214,7 @@ var/global/list/playersSeen = list()
 		ircbot.export("ban", ircmsg)
 
 		if (targetC)
-			if (targetC.mob)
-				if (targetC.mob.contents) //for observers
-					for (var/mob/M in targetC.mob.contents)
-						M.set_loc(get_turf(M))
-				del(targetC.mob)
 			del(targetC)
-		if (targetM)
-			if (targetM.contents) //for observers
-				for (var/mob/M in targetM.contents)
-					M.set_loc(get_turf(M))
-			del(targetM)
 
 		return 0
 
