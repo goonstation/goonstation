@@ -1000,6 +1000,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/door_control/podbay{
+	id = "silverglass_dock";
+	pixel_x = 24
+	},
 /turf/simulated/floor/grey,
 /area/prefab/silverglass/bay)
 "IC" = (
