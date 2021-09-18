@@ -721,11 +721,6 @@
 	/obj/item/gun/energy/raygun,\
 	/obj/item/paper/shooting_range_note2)
 
-/obj/item/storage/secure/ssafe/silverglass //ALSO prefab safe
-	configure_mode = 0
-	random_code = 1
-	spawn_contents = list(/obj/item/spacecash/thousand) //SILVERGLASS: make this the quantum storage doohickey
-
 /obj/item/storage/secure/ssafe/marsvault
 	name = "secure vault"
 	configure_mode = 0
