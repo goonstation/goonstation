@@ -63,9 +63,10 @@
 		ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html"
 		ircbot.export("help", ircmsg)
 
+	var/dead = isdead(client.mob) ? "Dead " : ""
 	var/ircmsg[] = new()
 	ircmsg["key"] = client.key
-	ircmsg["name"] = stripTextMacros(client.mob.real_name)
+	ircmsg["name"] = client.mob.job ? "[stripTextMacros(client.mob.real_name)] \[[dead][client.mob.mind?.special_role] [client.mob.job]]" : "[stripTextMacros(client.mob.real_name)] \[[dead][client.mob.mind?.special_role]]"
 	ircmsg["msg"] = html_decode(msg)
 	ircbot.export("help", ircmsg)
 

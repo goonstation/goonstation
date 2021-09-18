@@ -18,6 +18,8 @@
 
 	var/artifact_resupply_amount = 0 // amount of artifacts in next resupply crate
 
+	var/list/datum/special_order/active_orders
+
 	New()
 		..()
 
@@ -271,8 +273,16 @@
 	proc/sell_crate(obj/storage/crate/sell_crate, var/list/commodities_list)
 		var/obj/item/card/id/scan = sell_crate.scan
 		var/datum/data/record/account = sell_crate.account
+		var/duckets
 
-		var/duckets = src.appraise_value(sell_crate, commodities_list, 1) + src.points_per_crate
+		if(length(active_orders))
+			for(var/datum/special_order/order in active_orders)
+				if(order.check_order(sell_crate))
+					duckets += order.price
+					active_orders -= order
+
+		duckets += src.appraise_value(sell_crate, commodities_list, 1) + src.points_per_crate
+
 
 		#ifdef SECRETS_ENABLED
 		send_to_brazil(sell_crate)
