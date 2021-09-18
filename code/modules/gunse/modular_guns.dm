@@ -52,6 +52,7 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 	var/jam_frequency_reload = 1 //base % chance to jam on reload. Just reload again to clear.
 	var/jam_frequency_fire = 1 //base % chance to jam on fire. Reload to clear.
 	var/jammed = 0
+	var/processing_ammo = 0
 
 
 	two_handed = 0
@@ -254,6 +255,8 @@ ABSTRACT_TYPE(/obj/item/gun_parts/accessory)
 /obj/item/gun/modular/canshoot()
 	if(jammed)
 		return 0
+	if(flashbulb_only && !flashbulb_health)
+		return 0
 	if(current_projectile)
 		return 1
 	return 0
@@ -332,16 +335,15 @@ ABSTRACT_TYPE(/obj/item/gun_parts/accessory)
 			var/mob/living/carbon/human/H = user
 			H.gunshot_residue = 1
 
+
 	if(flashbulb_health)// this should be nonzero if we have a flashbulb loaded.
 		flashbulb_health = max(0,(flashbulb_health - crank_level))//subtract cranks from life
 		crank_level = 0 // reset
 		if(!flashbulb_health) // that was the end of it!
 			user.show_text("<span class='alert'>Your gun's flash bulb burns out!</span>")
-			current_projectile = null // empty chamber
 
 
-	else // not a flashbulb? Bye bintch.
-		current_projectile = null // empty chamber
+	current_projectile = null // empty chamber
 
 	src.update_icon()
 	return TRUE
@@ -361,7 +363,7 @@ ABSTRACT_TYPE(/obj/item/gun_parts/accessory)
 		if(src.gun_DRM & part.part_DRM)
 			part.add_part_to_gun(src)
 
-	process_ammo()
+
 
 	//update the icon to match!!!!!
 
@@ -503,11 +505,106 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	max_ammo_capacity = 1 // just takes a flash bulb.
 	gun_DRM = GUN_FOSS
 	spread_angle = 20 // value without a barrel. Add one to keep things in line.
+	flashbulb_only = 1
+	max_crank_level = 3
 
 	New()
 		barrel = new /obj/item/gun_parts/barrel/foss(src)
-		stock = new /obj/item/gun_parts/stock(src)
+		stock = new /obj/item/gun_parts/stock/NT_shoulder(src)
 		..()
+
+	process_ammo(mob/user)
+		if(processing_ammo)
+			return
+
+		if(jammed)
+			boutput(user,"<span class='notice'><b>You clear the ammunition jam.</b></span>")
+			jammed = 0
+			playsound(src.loc, "sound/weapons/gunload_heavy.ogg", 40, 1)
+			return
+
+		if(flashbulb_health) // bulb still loaded
+			processing_ammo = 1
+			crank(user)
+			return
+
+		if(!ammo_list.len) // empty!
+			playsound(src.loc, "sound/weapons/Gunclick.ogg", 40, 1)
+			return
+
+		if(ammo_list.len > max_ammo_capacity)
+			var/waste = ammo_list.len - max_ammo_capacity
+			ammo_list.Cut(1,(1 + waste))
+			boutput(user,"<span class='alert'><b>Error! Storage space low! Deleting [waste] ammunition...</b></span>")
+			playsound(src.loc, 'sound/items/mining_drill.ogg', 20, 1,0,0.8)
+
+		if(!ammo_list.len) // empty! again!! just in case max ammo capacity was 0!!!
+			playsound(src.loc, "sound/weapons/Gunclick.ogg", 40, 1)
+			return
+
+		if(prob(jam_frequency_reload))
+			jammed = 1
+			boutput(user,"<span class='alert'><b>Error! Jam detected!</b></span>")
+			playsound(src.loc, "sound/weapons/trayhit.ogg", 60, 1)
+			return
+		else
+			processing_ammo = 1
+			var/obj/item/stackable_ammo/flashbulb/FB = ammo_list[ammo_list.len]
+			if(!istype(FB))
+				boutput(user,"<span class='notice'><b>Error! This device is configured only for FOSS Cathodic Flash Bulbs.</b></span>")
+				playsound(src.loc, "sound/machines/twobeep.ogg", 55, 1)
+			else
+				flashbulb_health = rand(FB.min_health, FB.max_health)
+				boutput(user,"<span class='notice'><b>FOSS Cathodic Flash Bulb loaded.</b></span>")
+				playsound(src.loc, "sound/weapons/gun_cocked_colt45.ogg", 60, 1)
+
+			ammo_list.Remove(ammo_list[ammo_list.len]) //and remove it from the list
+
+			processing_ammo = 0
+
+	proc/crank(mob/user)
+		SPAWN_DBG(1)
+			if(crank_level > max_crank_level)
+				boutput(user,"<span class='notice'><b>Error! This device cannot be further overloaded.</b></span>")
+				playsound(src.loc, "sound/machines/twobeep.ogg", 55, 1)
+				processing_ammo = 0
+				return
+			if(crank_level == max_crank_level)
+				boutput(user,"<span class='notice'><b>Notice! Exceeding design specification.</b></span>")
+				playsound(src.loc, "sound/machines/twobeep.ogg", 55, 1)
+				sleep(0.5 SECONDS)
+				crank_level++
+				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			if(crank_level < max_crank_level)
+				boutput(user,"<span><b>You crank the handle.</b></span>")
+				crank_level++
+				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			if(current_projectile)
+				pool(current_projectile)
+			switch(crank_level)
+				if (0)
+					current_projectile = null // this shouldnt happen but just in case!
+				if (1)
+					current_projectile = unpool(/datum/projectile/laser/flashbulb/)
+				if (2)
+					current_projectile = unpool(/datum/projectile/laser/flashbulb/two/)
+				if (3)
+					current_projectile = unpool(/datum/projectile/laser/flashbulb/three/)
+				if (4)
+					current_projectile = unpool(/datum/projectile/laser/flashbulb/four/)
+				//if (5)
+					//current_projectile = /datum/projectile/laser/flashbulb/five
+			processing_ammo = 0
+
+
+
+
+
+
+
+
+
+
 
 /obj/item/gun/modular/juicer
 	name = "\improper RAD BLASTA"

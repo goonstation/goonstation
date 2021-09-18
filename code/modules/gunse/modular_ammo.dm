@@ -21,7 +21,7 @@ ABSTRACT_TYPE(/obj/item/stackable_ammo/)
 	health = 10
 	amount = 1
 	max_stack = 1000
-	stack_type = null // change this per bullet style
+	stack_type = null
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 1
@@ -30,6 +30,7 @@ ABSTRACT_TYPE(/obj/item/stackable_ammo/)
 	var/default_max_amount = 0
 	var/datum/projectile/projectile_type = null
 	var/ammo_DRM = null
+	var/reloading = 0
 
 
 	New(var/atom/loc, var/amt = 1 as num)
@@ -115,6 +116,8 @@ ABSTRACT_TYPE(/obj/item/stackable_ammo/)
 			..(user)
 
 	proc/reload(var/obj/item/gun/modular/M)
+		if(reloading)
+			return
 		if(!istype(M))
 			return
 		if(!projectile_type)
@@ -123,6 +126,7 @@ ABSTRACT_TYPE(/obj/item/stackable_ammo/)
 			M.ammo_list = list()
 		if(M.ammo_list.len >= M.max_ammo_capacity)
 			return
+		reloading = 1
 		SPAWN_DBG(0)
 			boutput(usr, "<span class='notice'>You start loading rounds into [M]</span>")
 			while(M.ammo_list.len < M.max_ammo_capacity)
@@ -135,6 +139,7 @@ ABSTRACT_TYPE(/obj/item/stackable_ammo/)
 				update_stack_appearance()
 				sleep(5)
 			playsound(src.loc, "sound/weapons/gunload_heavy.ogg", 30, 0.1, 0, 0.8)
+			reloading = 0
 		if(amount < 1)
 			pool(src)
 
@@ -145,7 +150,6 @@ ABSTRACT_TYPE(/obj/item/stackable_ammo/)
 	real_name = "\improper NT Stunner Fuckers"
 	desc = "pee pee, poo poo"
 	projectile_type = /datum/projectile/energy_bolt
-	stack_type = /obj/item/stackable_ammo/capacitive/
 	ammo_DRM = GUN_NANO | GUN_FOSS
 	color = "#FFFF30"
 
@@ -162,11 +166,10 @@ ABSTRACT_TYPE(/obj/item/stackable_ammo/)
 		default_max_amount = 10
 
 /obj/item/stackable_ammo/zaubertube/
-	name = "Elektrograd лазерный картридж"
-	real_name = "Elektrograd лазерный картридж"
+	name = "\improper Elektrograd лазерный Zaubertube"
+	real_name = "Elektrograd лазерный Zaubertube"
 	desc = "A small glass bulb filled with hypergolic incandescent chemicals."
 	projectile_type = /datum/projectile/laser
-	stack_type = /obj/item/stackable_ammo/zaubertube/
 	ammo_DRM = GUN_SOVIET | GUN_FOSS
 	color = "#c89"
 
@@ -181,3 +184,43 @@ ABSTRACT_TYPE(/obj/item/stackable_ammo/)
 	ten
 		default_min_amount = 10
 		default_max_amount = 10
+
+
+
+/obj/item/stackable_ammo/flashbulb/
+	name = "\improper FOSSYN. CATHODIC FLASH BULBS"
+	real_name = "FOSSYN. CATHODIC FLASH BULB"
+	desc = "A hefty glass tube filled with ionic gas, and two opposing electrodes."
+	icon = 'icons/obj/lighting.dmi'
+	icon_state = "tbulb"
+	projectile_type = null
+	max_stack = 1 // not stackable! scandalous!
+	ammo_DRM = GUN_FOSS
+	var/max_health = 20
+	var/min_health = 15
+
+
+
+	reload(var/obj/item/gun/modular/M)
+		if(reloading)
+			return
+		if(!istype(M))
+			return
+		if(!M.flashbulb_only)
+			return
+		if(!M.ammo_list)
+			M.ammo_list = list()
+		if(M.ammo_list.len >= M.max_ammo_capacity)
+			return
+		reloading = 1
+		SPAWN_DBG(0)
+			boutput(usr, "<span class='notice'>You start loading a bulb into [M].</span>")
+			if(M.ammo_list.len < M.max_ammo_capacity)
+				playsound(src.loc, "sound/weapons/casings/casing-0[rand(1,9)].ogg", 10, 0.1, 0, 0.8)
+				M.ammo_list += src
+				src.set_loc(M)
+				sleep(5)
+				if(M.ammo_list.len == M.max_ammo_capacity)
+					playsound(src.loc, "sound/weapons/gunload_heavy.ogg", 30, 0.1, 0, 0.8)
+				reloading = 0
+
