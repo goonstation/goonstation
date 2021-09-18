@@ -1,4 +1,29 @@
 
+(t)sat sep 18 21
+(u)tarmunora
+(e)⚖|balance
+(*)asslaser direct damage reduction.
+(u)tarmunora
+(e)⚖|balance
+(*)sprinting while prone costs extra stamina.
+(t)thu sep 16 21
+(u)Azrun
+(p)6024
+(e)🆕⚖|feature, balance
+(*)Special Order events added. Help your QMs make some money today.
+(u)Flaborized
+(p)6004
+(e)🎨|sprites
+(*)Security personnel now spawn with a visually distinct bag.
+(t)wed sep 15 21
+(u)Azrun
+(p)6013
+(e)🐛⚖|bug, balance
+(+)Shield Generator and Meteor Generators use power to block melee and projectile attacks.
+(u)Emily
+(p)6020
+(e)🗺|mapping
+(*)Chickens partially reworked. Please report any bugs.
 (t)mon sep 13 21
 (u)Sovexe
 (p)5904

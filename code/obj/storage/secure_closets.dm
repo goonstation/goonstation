@@ -189,6 +189,7 @@
 	/obj/item/clothing/glasses/sunglasses/sechud,
 	/obj/item/handcuffs,
 	/obj/item/device/flash,
+	/obj/item/storage/backpack/security,
 	/obj/item/barrier)
 
 /obj/storage/secure/closet/security/forensics

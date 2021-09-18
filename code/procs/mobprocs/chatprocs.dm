@@ -747,7 +747,8 @@
 	if (!L)
 		L = languages.language_cache["english"]
 
-	return prefix + L.get_messages(message)
+	var/list/messages = L.get_messages(message)
+	return list(prefix + messages[1], prefix + messages[2])
 
 /mob/proc/get_special_language(var/secure_mode)
 	return null
