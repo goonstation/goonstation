@@ -14,6 +14,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/human_item/trumpet,\
 	new /datum/bank_purchaseable/human_item/fiddle,\
 	new /datum/bank_purchaseable/human_item/gold_zippo,\
+	new /datum/bank_purchaseable/human_item/drinking_flask,\
 	new /datum/bank_purchaseable/human_item/toy_sword,\
 	new /datum/bank_purchaseable/human_item/sound_synth,\
 	new /datum/bank_purchaseable/human_item/record,\
@@ -39,6 +40,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/missile_arrival,\
 	new /datum/bank_purchaseable/lunchbox,\
 
+	new /datum/bank_purchaseable/bird_respawn,\
 	new /datum/bank_purchaseable/critter_respawn,\
 	new /datum/bank_purchaseable/golden_ghost,\
 
@@ -226,6 +228,11 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			name = "Gold Zippo"
 			cost = 500
 			path = /obj/item/device/light/zippo/gold
+
+		drinking_flask
+			name = "Drinking Flask"
+			cost = 400
+			path = /obj/item/reagent_containers/food/drinks/flask
 
 		toy_sword
 			name = "Toy Sword"
@@ -456,6 +463,14 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		name = "Alt Ghost Critter"
 		cost = 1000
 		var/list/respawn_critter_types = list(/mob/living/critter/small_animal/boogiebot/weak, /mob/living/critter/small_animal/figure/weak)
+
+		Create(var/mob/M)
+			return 1
+
+	bird_respawn
+		name = "Lil Bird Ghost Critter"
+		cost = 1000
+		var/list/respawn_critter_types = list(/mob/living/critter/small_animal/sparrow/weak, /mob/living/critter/small_animal/sparrow/robin/weak)
 
 		Create(var/mob/M)
 			return 1

@@ -219,14 +219,14 @@
 
 					if (src.loc != old_loc)
 						if (running)
-							src.remove_stamina(STAMINA_COST_SPRINT)
+							src.remove_stamina((src.lying ? 3 : 1) * STAMINA_COST_SPRINT)
 							if (src.pulling)
-								src.remove_stamina(STAMINA_COST_SPRINT-1)
+								src.remove_stamina((src.lying ? 3 : 1) * (STAMINA_COST_SPRINT-1))
 
 						var/list/pulling = list()
 						if (src.pulling)
 							if ((!IN_RANGE(old_loc, src.pulling, 1) && !IN_RANGE(src, src.pulling, 1)) || !isturf(src.pulling.loc) || src.pulling == src) // fucks sake
-								src.pulling = null
+								src.remove_pulling()
 								//hud.update_pulling() // FIXME
 							else
 								pulling += src.pulling

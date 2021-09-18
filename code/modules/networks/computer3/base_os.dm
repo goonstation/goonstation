@@ -736,7 +736,7 @@
 			if(!acc_name || !acc_job)
 				return
 
-			if(!src.active_account && !src.initialize_accounts()) //Oh welp we can't write it to file
+			if(!src.initialize_accounts() && !src.active_account) //Oh welp we can't write it to file
 				src.print_text("<b>Error:</b> Unable to write account file.")
 				return -1
 

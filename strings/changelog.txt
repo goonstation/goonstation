@@ -1,4 +1,300 @@
 
+(t)sat sep 18 21
+(u)tarmunora
+(e)⚖|balance
+(*)asslaser direct damage reduction.
+(u)tarmunora
+(e)⚖|balance
+(*)sprinting while prone costs extra stamina.
+(t)thu sep 16 21
+(u)Azrun
+(p)6024
+(e)🆕⚖|feature, balance
+(*)Special Order events added. Help your QMs make some money today.
+(u)Flaborized
+(p)6004
+(e)🎨|sprites
+(*)Security personnel now spawn with a visually distinct bag.
+(t)wed sep 15 21
+(u)Azrun
+(p)6013
+(e)🐛⚖|bug, balance
+(+)Shield Generator and Meteor Generators use power to block melee and projectile attacks.
+(u)Emily
+(p)6020
+(e)🗺|mapping
+(*)Chickens partially reworked. Please report any bugs.
+(t)mon sep 13 21
+(u)Sovexe
+(p)5904
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)New item, glow stickers. Stickers that glow when stuck to something. Now provided to undersea miners.
+(t)sun sep 12 21
+(u)Ikea
+(p)5990
+(e)|
+(+)Cargo traders have realized they were accidentally selling fibrilith and will now sell cloth fabric instead.
+(u)aloe
+(p)5967
+(e)🐛|bug
+(*)Cyborgs die a bit differently now- the destruction of your head will always kill you, and any sort of death will cause you to fall apart. Report any new bugs, please!
+(u)tarmunora
+(e)⚖|balance
+(*)Item slot machine rebalanced. Notably, the best prizes require a wager of no less than 250 credits
+(u)MarkNstein
+(p)5880
+(e)⚖|balance
+(*)AI Law Boards now have tighter character limits.
+(u)Ikea
+(p)5969
+(e)🎨|sprites
+(*)New-style windoors are now hackable.
+(t)sat sep 11 21
+(u)tarmunora
+(e)⚖|balance
+(*)Emagging the NT syringe gun makes it fire it's entire contents, instead of clearing the whitelist.
+(u)Flappybat
+(p)5968
+(e)⚖|balance
+(*)Strange reagent requires a minimum of 1u to revive.
+(u)Emily
+(e)⚖|balance
+(*)Chickens can now be butchered significantly faster to make cleaning out the ranch easier.
+(*)Flashbangs are now severely less available. Check the armory for them.
+(u)Obama Gaming
+(p)5936
+(e)|
+(+)Apprentice caps can now be handmade.
+(u)Flappybat
+(p)5798
+(e)⚖|balance
+(+)Scanning Syndicate command helmet now requires a syndicate device analyser.
+(u)tarmunora
+(e)⚖|balance
+(*)Radprot now affects incoming rad status duration instead of existing rad status damage.
+(u)Ikea
+(p)5970
+(e)|
+(*)Neurotoxin and capulettium sting cooldown has been increased to 140 seconds.
+(u)pali
+(+)The overcharged vacuum now has smaller movement penalty for the special attack.
+(t)fri sep 10 21
+(u)tarmunora
+(*)Blob overmind teleport only on right-click.
+(u)Flaborized
+(p)5961
+(e)🎨|sprites
+(*)Added some more clothing options to the clothing booth, and the detective's locker.
+(u)edwardly
+(p)5953
+(e)🗺|mapping
+(+)Power monitor / solar controls are now computers that can be deconstructed
+(u)tarmunora
+(e)⚖|balance
+(*)Sprinting is less effective when lying down.
+(*)Speed penalty from lying down is extended through standup animation.
+(u)BatElite
+(p)5927
+(e)🎨|sprites
+(+)Headsets have new sprites and now look like something!
+(u)zjdtmkhzt
+(p)5960
+(e)⚖|balance
+(+)Splicing garlic should now properly give the resulting plant the holy water reagent.
+(t)thu sep 09 21
+(u)Zamujasa
+(e)🔄|rework
+(*)The shipping market has been beaten with a hammer a few times. Fluctuations are now somewhat more consistent, and commodity prices will tend towards their base prices.
+(*)This means that commodity hyperinflation/total devaluation should no longer be a thing.
+(*)"Hot" prices only show up when a commodity's value is actually higher than its base price.
+(*)As usual, this is subject to further changes later.
+(e)🔄|rework
+(+)Cleanbots no longer absorb reagents they mop up. No more Oshan Arrivals turning into a lubed up deathtrap.
+(+)You can still dump reagents into them to cause chaos, though. You knew about that, right?
+(t)wed sep 08 21
+(u)tarmunora
+(e)🆕|feature
+(*)You can now craft windows by clicking the floor with glass sheets (also reinforced windows with reinforced sheets)
+(t)tue sep 07 21
+(u)UnfunnyPerson
+(p)5913
+(e)⚖|balance
+(+)Ling Island Iced Tea recipe now requires heating to 100C when being created.
+(u)Emily
+(p)5935
+(e)🆕|feature
+(*)Resist Buff: you can now struggle out of grabs and pulls while stunned using the resist button/key (Default Z), unless cuffed
+(u)Emily
+(p)5933
+(e)|
+(*)You can now resist (Default Z) out of pulls like you can with grabs
+(u)Tarmunora
+(e)🆕⚖|feature, balance
+(*)Gunbot (and fire elemental) critters can pointblank
+(t)mon sep 06 21
+(u)Zamujasa
+(e)🆕⚖|feature, balance
+(*)The station's payroll budget is now funded automatically by Centcom, based on crewmembers' initially assigned jobs.
+(*)Any payroll stipend that is not distributed is added to the station's budget. If payroll is higher than the stipend, any deficit will be funded by the budget (unless that is also exhausted).
+(*)The banking control computer has a somewhat better interface.
+(u)Flaborized
+(p)5902
+(e)🎨|sprites
+(+)Resprited some ore, material bars and other intermediate matsci products.
+(u)Gannets & BatElite
+(p)5876
+(e)🆕🎨|feature, sprites
+(*)Adds a new utility purchase to the Syndicate Weapons Vendor on the Cairngorm: the Military Headset.
+(*)This headset allows an operative to communicate on their usual radio frequencies, but with the advantage of blocking 100% of ear disorient damage from things like flashbang grenades.
+(u)DoctorStupid
+(p)5830
+(e)🆕🎨|feature, sprites
+(*)toy guns sold by Geoff Honkington are much cheaper and have been reworked. More powerful toy guns are now sold by Josh in the QM console
+(t)sun sep 05 21
+(u)Zamujasa
+(e)🆕|feature
+(*)Players in Ghost VR or the Afterlife Bar should now get alerts and be eligible for random event antagonist/pest spawns.
+(u)Vaskritaya
+(p)5789
+(e)🆕🗺|feature, mapping
+(+)Flasks are now available from the Spacebux menu.
+(u)Walpvrgis
+(p)5903
+(e)🆕🎨|feature, sprites
+(*)Added a new spacebux ghost critter purchase; Lil Bird Ghost Critter. It costs 1000 spacebux and lets you play as a little sparrow or robin if you decide to respawn after tiring of the afterlife!
+(u)Kubius
+(p)5909
+(e)🆕🗺|feature, mapping
+(+)Small set of Kondaru adjustments; cloning room rearranged for easier reclaimer loading and patient release, and hydro grow lamp count reduced for parity.
+(u)Tarmunora
+(e)🔄|rework
+(+)Drowsiness migrated to status system.
+(u)Mordent
+(p)5878
+(e)⚖⛔|balance, removal
+(+)Removed medical locker access from security officers on the RP servers (to be the same as the non-RP servers).
+(u)Zamujasa
+(e)🐛|bug
+(+)fix scissors
+(t)sat sep 04 21
+(u)Emily
+(e)🆕
+(*)Chickens age twice as fast if injected with ageinium
+(*)Miners now spawn with the equipment needed to mine
+(*)There are now more miner job slots open
+(u)UnfunnyPerson
+(p)5899
+(e)⚖|balance
+(+)Werewolf serum requires 3 u to infect lycanthropy instead of 0 u
+(t)fri sep 03 21
+(u)Yass + Flourish
+(e)⚖|balance
+(*)Shoving an unarmed target will do 1.5x the stamina damage shoving an armed (i.e. holding something in at least one of their hands) target will do.
+(u)Flourish
+(*)Cyborgs should now be able to hear and speak even when stunned or immobilized.
+(t)thu sep 02 21
+(u)Yellow/Myco
+(p)5870
+(e)🗺|mapping
+(*)Refurbishes Destiny by updating walls, doors, and windows to the modern style!
+(u)BatElite
+(p)5883
+(e)🆕🎨|feature, sprites
+(+)The radio show host found a pair of vintage headphones in their closet, so they now spawn with that.
+(u)Ikea
+(p)5849
+(e)🗺|mapping
+(*)Nanotrasen has decided to reconstruct the Tunnel snake with some design modifications, and has decommissioned the old mining outpost for manta.
+(u)Flappybat
+(p)5882
+(e)|
+(+)Welders will always do damage on harm intent rather than trying to cauterize bleeding.
+(u)Flappybat
+(p)5875
+(e)|
+(+)Added a sound to the hand labeler.
+(u)Flappybat
+(p)5869
+(e)🐛⚖|bug, balance
+(+)You can no longer emote while unconscious.
+(t)wed sep 01 21
+(u)kyle
+(p)5841
+(e)🆕🎨|feature, sprites
+(*)Changelings now automatically start to regrow their limbs after making a limbspider. (Don't be by anyone when the timer runs out or they might notice!)
+(u)Mordent & Flaborized
+(p)5859
+(e)🆕🎨|feature, sprites
+(*)Geneticists get a new genetic analyzer device (which they spawn with) that lets them quickly check someone's genetics.
+(u)Gannets
+(p)5858
+(e)⚖|balance
+(+)Adjusted Field Medic autoinjector loadout:
+(+)Adds cardiac injector, filled with saline and epinephrine.
+(+)Adds lifesupport injector, filled with mannitol and salbutamol.
+(+)Adds blood-loss injector, filled with filgrastim and proconvertin.
+(t)tue aug 31 21
+(u)Tarmunora
+(p)5837
+(e)⚖|balance
+(*)Rebalances 'beneficial' bioeffects to accept the Power Booster chromosome. See PR for details. There are a lot of details.
+(+)Rebalances genetic stability costs of many bioeffects (mostly buffs). See PR for details. Again,
+(+)Removes robust genes trait, increases base genetic stability
+(+)Change formula for genetic power failrates at lower stability
+(u)Tarmunora
+(e)⚖|balance
+(+)Artifact guns must be activated to swap cells.
+(+)Chef is keeping a closer eye on their meatcleaver
+(t)mon aug 30 21
+(u)UnfunnyPerson
+(p)5834
+(e)⚖|balance
+(+)Skeletons heal 1 brute and 1 burn from milk per cycle instead of 2 brute, 2 burn, and 1 tox
+(u)Tarmunora
+(e)⚖|balance
+(*)Stimulants are now a 6TC purchase for 3 3-minute stimpacks. The syndicate would like to remind it's agents that withdrawl symptoms are natural, and to not try to ride them out with another dose, as you will eventually run out.
+(u)Tarmunora
+(e)⚖|balance
+(*)Reinforced walls are immune to being punched down by hulks
+(u)Flaborized
+(p)5842
+(e)🎨|sprites
+(+)Resprited cats.
+(t)sun aug 29 21
+(u)Azrun and Walpvrgis
+(p)5573
+(e)🎨|sprites
+(+)Graphical assets for snow experiences and future snow planets...
+(u)Azrun
+(p)5765
+(e)🆕|feature
+(+)Amusing Duck's will sometimes quack in response to interaction with the AI.
+(u)Walpvrgis
+(p)5815
+(e)🆕🎨|feature, sprites
+(+)Wasps, rockworms, seals and walruses have been resprited.
+(u)Vocalpocal
+(p)5824
+(e)⚖|balance
+(+)Custom cigarettes now last half as long but make you twice as high #nofilter
+(u)Zonespace
+(p)5826
+(e)⚖|balance
+(+)Poison Bottles no longer contain: Sulfonal, Loose Screws, and Cyanide.
+(u)Flaborized
+(p)5838
+(e)🎨|sprites
+(+)Resprited mass drivers.
+(u)Zamujasa
+(e)🆕|feature
+(*)Added the "cargo appraiser", a tool that will tell you what stuff will sell for when you use it on items or crates.
+(*)If a crate is tagged with a trader, it will show the value that trader will pay.
+(*)Will also scan the contents of hydro and mining satchels, so you can value your ore before dumping it all in that crate.
+(*)QMs start with one in their pockets. Hydro, Mining, and Cargo supply closets should also have one available.
+(t)sat aug 28 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Full reagent container no longer provides immunity to changeling stings
 (t)thu aug 26 21
 (u)Tarmunora
 (e)⚖|balance

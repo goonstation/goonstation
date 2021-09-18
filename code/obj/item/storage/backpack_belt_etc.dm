@@ -86,6 +86,13 @@
 	item_state = "bp-medic"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
+/obj/item/storage/backpack/security
+	name = "security backpack"
+	desc = "A sturdy, wearable container made of synthetic fibers, able to carry a number of objects adequately on the back of security personnel."
+	icon_state = "bp_security"
+	item_state = "bp_security"
+	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+
 /obj/item/storage/backpack/randoseru
 	name = "randoseru"
 	desc = "Inconspicuous, nostalgic and quintessentially Space Japanese."
@@ -223,6 +230,14 @@
 	name = "medic's satchel"
 	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a Medical Doctor's shoulder."
 	icon_state = "satchel_medic"
+
+/obj/item/storage/backpack/satchel/security
+	name = "security satchel"
+	desc = "A sturdy, wearable container made of synthetic fibers, able to carry a number of objects stylishly on the shoulder of security personnel."
+	icon_state = "satchel_security"
+	item_state = "satchel_security"
+	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+
 
 /obj/item/storage/backpack/satchel/randoseru
 	name = "randoseru satchel"
@@ -551,6 +566,15 @@
 	)
 	in_list_or_max = 1
 
+/obj/item/storage/belt/mining/prepared
+	spawn_contents = list(/obj/item/mining_tool/power_pick,
+		/obj/item/ore_scoop/prepared,
+		/obj/item/satchel/mining,
+		/obj/item/device/geiger,
+		/obj/item/device/gps,
+		/obj/item/oreprospector,
+		/obj/item/device/appraisal)
+
 /obj/item/storage/belt/hunter
 	name = "trophy belt"
 	desc = "Holds normal-sized items, such as skulls."
@@ -686,10 +710,9 @@
 	desc = "A canvas duffel bag full of medical autoinjectors."
 	icon_state = "medic_belt"
 	item_state = "medic_belt"
-	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/high_capacity/epinephrine,
-	/obj/item/reagent_containers/emergency_injector/high_capacity/saline,
-	/obj/item/reagent_containers/emergency_injector/high_capacity/salbutamol,
-	/obj/item/reagent_containers/emergency_injector/high_capacity/mannitol,
+	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/high_capacity/cardiac,
+	/obj/item/reagent_containers/emergency_injector/high_capacity/bloodloss,
+	/obj/item/reagent_containers/emergency_injector/high_capacity/lifesupport,
 	/obj/item/reagent_containers/emergency_injector/high_capacity/juggernaut,
 	/obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector)
 

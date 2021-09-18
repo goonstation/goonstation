@@ -51,7 +51,6 @@ names@=
 	FRIEND COMPUTER
 	Fagor
 	Faith
-	Fembot
 	Fi
 	Frost
 	Fum
