@@ -145,7 +145,6 @@ obj/item/reagent_containers/iv_drip/dead_exec
 		..()
 		src.setup_blood_bioHolder()
 		src.setup_bio_handscanner_access()
-		src.setup_bot_master()
 		qdel(src)
 
 	proc/setup_blood_bioHolder()
@@ -164,13 +163,6 @@ obj/item/reagent_containers/iv_drip/dead_exec
 				var/datum/bioHolder/D = new/datum/bioHolder(null)
 				D.CopyOther(M.bioHolder)
 				O.allowed_bioHolders = D.Uid //Copy the Uid only, copying and comparing against all bioHolder data is too prone to error.
-
-	proc/setup_bot_master()
-		for(var/obj/machinery/bot/medbot/exec/O in src.loc)
-			for(var/mob/living/carbon/human/dead_exec/M in world) //aka Jean
-				var/datum/bioHolder/D = new/datum/bioHolder(null)
-				D.CopyOther(M.bioHolder)
-				O.registered_owner = D.Uid //Copy the Uid only, copying and comparing against all bioHolder data is too prone to error.
 
 /obj/machinery/handscanner/bio_handscanner
 	name = "Hand Scanner"
