@@ -101,7 +101,7 @@
 				src.part_ig = null
 				src.part_mt = null
 				user.u_equip(src)
-				del(src)
+				qdel(src)
 				user.show_message("<span class='notice'>You sever the connection between the multitool and the igniter. The assembly falls apart.</span>")
 			else
 				user.show_message("<span class='alert'>The [W.name] doesn't seem to fit into the slot!</span>")
@@ -258,7 +258,7 @@
 		src.attachedTo.visible_message("<b><span class='alert'>A sparking noise is heard as the igniter goes off. The plasma tank fails to explode, merely burning the circuits of the detonator.</span></b>")
 		src.attachedTo.det = null
 		src.attachedTo.overlay_state = null
-		del(src)
+		qdel(src)
 		return
 	src.attachedTo.visible_message("<b><span class='alert'>A sparking noise is heard as the igniter goes off. The plasma tank blows, creating a microexplosion and rupturing the canister.</span></b>")
 	if (MIXTURE_PRESSURE(attachedTo.air_contents) < 7000)
@@ -267,7 +267,7 @@
 		src.attachedTo.healthcheck()
 		src.attachedTo.det = null
 		src.attachedTo.overlay_state = null
-		del(src)
+		qdel(src)
 		return
 	if (attachedTo.air_contents.temperature < 100000)
 		src.attachedTo.visible_message("<b><span class='alert'>The ruptured canister shatters from the pressure, but its temperature isn't high enough to create an explosion. Its contents leak into the air.</span></b>")
@@ -275,7 +275,7 @@
 		src.attachedTo.healthcheck()
 		src.attachedTo.det = null
 		src.attachedTo.overlay_state = null
-		del(src)
+		qdel(src)
 		return
 
 	var/turf/epicenter = get_turf(loc)
