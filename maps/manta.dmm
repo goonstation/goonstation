@@ -11352,12 +11352,6 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
-	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperport)
 "aGX" = (
@@ -40438,17 +40432,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/lowerport)
-"tOg" = (
-/obj/machinery/portable_atmospherics/canister/air/large,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/upperport)
 "tPi" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1;
@@ -76086,7 +76069,7 @@ ait
 sWH
 sWH
 ait
-aHO
+ait
 aGp
 lAp
 aJQ
@@ -76379,7 +76362,7 @@ aaa
 act
 act
 acO
-tOg
+buO
 ait
 ait
 aGX
