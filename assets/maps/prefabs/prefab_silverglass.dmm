@@ -45,7 +45,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/prefab/silverglass/bay)
 "bq" = (
-/turf/simulated/floor/darkpurple/side{
+/turf/simulated/floor/blue/side{
 	dir = 1
 	},
 /area/prefab/silverglass)
@@ -180,7 +180,7 @@
 /area/prefab/silverglass)
 "gl" = (
 /obj/machinery/door/airlock/pyro/glass/sci,
-/turf/simulated/floor/darkpurple,
+/turf/simulated/floor/darkblue/checker,
 /area/prefab/silverglass)
 "gM" = (
 /obj/submachine/chef_sink/chem_sink{
@@ -328,7 +328,7 @@
 	icon_state = "chair_couch-blue";
 	name = "ratty blue couch"
 	},
-/turf/simulated/floor/darkpurple/side{
+/turf/simulated/floor/blue/side{
 	dir = 1
 	},
 /area/prefab/silverglass)
@@ -462,7 +462,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/darkpurple/side{
+/turf/simulated/floor/blue/side{
 	dir = 1
 	},
 /area/prefab/silverglass)
@@ -556,7 +556,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/darkpurple,
+/turf/simulated/floor/darkblue/checker,
 /area/prefab/silverglass)
 "rL" = (
 /obj/cable,
@@ -745,7 +745,7 @@
 "zU" = (
 /obj/table/reinforced/auto,
 /obj/item/paper{
-	info = "<I>instability down to 17%, crystal slat cohesion matters wrt binding<BR><BR>need 10% before recursion paradox fix, ask federico for better sample + more stabilizer<BR><BR>HH wants unsafe test, DO NOT PROCEED</I>";
+	info = "<I>instability down to 17%, crystal slat cohesion matters wrt binding<BR><BR>need 10% before recursion paradox fix, ask federico for better sample + more stabilizer<BR><BR>HH wants unsafe test, DO NOT PROCEED, INTERDICTORS NOT READY</I>";
 	name = "wrinkled paper";
 	pixel_x = 3;
 	pixel_y = 12
@@ -929,12 +929,12 @@
 /area/prefab/silverglass/bay)
 "Gq" = (
 /obj/cable{
-	icon_state = "2-4"
-	},
-/obj/cable{
 	icon_state = "2-5"
 	},
 /obj/lattice,
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/space,
 /area/prefab/silverglass/research)
 "Gx" = (
@@ -1041,6 +1041,9 @@
 "JV" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/espresso_machine,
+/obj/cup_rack{
+	pixel_y = 32
+	},
 /turf/space,
 /area/prefab/silverglass/eats)
 "Kj" = (
@@ -1344,7 +1347,7 @@
 /area/space)
 "Um" = (
 /obj/shrub/dead,
-/turf/simulated/floor/darkpurple/side{
+/turf/simulated/floor/blue/side{
 	dir = 1
 	},
 /area/prefab/silverglass)
@@ -1457,7 +1460,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/darkpurple/side{
+/turf/simulated/floor/blue/side{
 	dir = 1
 	},
 /area/prefab/silverglass)

@@ -209,9 +209,8 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeY = 22
 
 	silverglass // Ill-fated entanglement research facility
-		required = 1 //CHANGE FOR LIVE
 		maxNum = 1
-		probability = 100 //CHANGE FOR LIVE
+		probability = 25
 		prefabPath = "assets/maps/prefabs/prefab_silverglass.dmm"
 		prefabSizeX = 32
 		prefabSizeY = 24
