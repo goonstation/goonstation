@@ -426,7 +426,7 @@
 	},
 /obj/item/storage/wall/random,
 /obj/item/paper{
-	info = "nope im out"
+	info = "feddy, i'm out<BR>bail asap<BR>they're gonna fuck up sooner or later"
 	},
 /turf/simulated/floor/carpet/purple/standard/narrow/east,
 /area/prefab/silverglass)
@@ -745,7 +745,7 @@
 "zU" = (
 /obj/table/reinforced/auto,
 /obj/item/paper{
-	info = "<I>instability down to 17%, crystal slat cohesion matters wrt binding<BR><BR>need 10% before recursion paradox fix, ask federico for better sample + more stabilizer<BR><BR>HH wants unsafe test, DO NOT PROCEED, INTERDICTORS NOT READY</I>";
+	info = "<I>instability down to 17%, crystal slat cohesion matters wrt binding<BR><BR>need 10% before recursion paradox fix, ask federico for better sample + more stabilizer<BR><BR>HH wants unsafe test, DO NOT PROCEED, INTERDICTORS NOT READY. what part of black hole does he not understand</I>";
 	name = "wrinkled paper";
 	pixel_x = 3;
 	pixel_y = 12
