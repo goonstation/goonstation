@@ -2487,7 +2487,9 @@
 	},
 /area/station/turret_protected/ai_upload)
 "afo" = (
-/obj/machinery/computer/robotics,
+/obj/machinery/computer/robotics{
+	perma = 1
+	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"

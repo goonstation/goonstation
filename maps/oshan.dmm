@@ -8112,7 +8112,8 @@
 /area/station/turret_protected/Zeta)
 "asP" = (
 /obj/machinery/computer/robotics{
-	dir = 8
+	dir = 8;
+	perma = 1
 	},
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor/circuit/green,

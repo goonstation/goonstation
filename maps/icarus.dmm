@@ -8343,7 +8343,8 @@
 /area/station/maintenance/solar/east)
 "asy" = (
 /obj/machinery/computer/robotics{
-	dir = 4
+	dir = 4;
+	perma = 1
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{

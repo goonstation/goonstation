@@ -24757,7 +24757,8 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/computer/robotics{
-	dir = 4
+	dir = 4;
+	perma = 1
 	},
 /obj/disposalpipe/segment/transport{
 	dir = 4

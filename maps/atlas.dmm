@@ -9369,7 +9369,9 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
 "wI" = (
-/obj/machinery/computer/robotics,
+/obj/machinery/computer/robotics{
+	perma = 1
+	},
 /obj/machinery/light{
 	light_type = /obj/item/light/tube/blueish
 	},

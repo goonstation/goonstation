@@ -30208,7 +30208,8 @@
 /area/station/turret_protected/Zeta)
 "blx" = (
 /obj/machinery/computer/robotics{
-	dir = 8
+	dir = 8;
+	perma = 1
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{

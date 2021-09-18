@@ -3591,7 +3591,7 @@
 "hX" = (
 /obj/machinery/computer/robotics{
 	dir = 4;
-	icon_state = "robotics"
+	perma = 1
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable,
