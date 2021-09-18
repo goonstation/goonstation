@@ -217,14 +217,6 @@ obj/item/reagent_containers/iv_drip/dead_exec
 		sleep(1 SECOND) //To reduce chat spam in case of multi-click.
 		cooldown = FALSE
 
-/obj/item/reagent_containers/glass/bottle/dna_mutagen //CHEAT - DEBUG PURPOSES ONLY
-	name = "stable mutagen bottle"
-	desc = "A reagent storage bottle."
-	icon_state = "reagent_bottle"
-	initial_volume = 50
-	amount_per_transfer_from_this = 5
-	initial_reagents = "dna_mutagen"
-
 // CLONESCAN HEALTH IMPLANT
 
 /obj/item/implant/health/exp_health_implant

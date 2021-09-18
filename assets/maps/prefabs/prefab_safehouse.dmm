@@ -101,7 +101,6 @@
 "Kz" = (/turf/simulated/floor/bluewhite/corner,/area/prefab/safehouse)
 "MT" = (/obj/table/reinforced/bar/auto,/obj/item/plate{desc = "You bet your grandma would like this."; name = "antique plate"},/obj/item/kitchen/utensil/fork{pixel_x = 10},/obj/item/reagent_containers/food/snacks/burger/moldy,/obj/item/reagent_containers/food/drinks/drinkingglass/random_style{pixel_x = -11; pixel_y = 12},/turf/simulated/floor/specialroom/bar,/area/prefab/safehouse)
 "Nd" = (/obj/decal/floatingtiles,/turf/space,/area/noGenerate)
-"NA" = (/obj/table/reinforced/bar/auto,/obj/item/reagent_containers/glass/bottle/dna_mutagen,/turf/simulated/floor/specialroom/bar,/area/prefab/safehouse)
 "NB" = (/obj/stool/chair/couch/red{dir = 8},/turf/simulated/floor/carpet/red/fancy/narrow/T_north,/area/prefab/safehouse)
 "Op" = (/obj/machinery/door/unpowered/wood/pyro,/turf/simulated/floor/wood/two,/area/prefab/safehouse)
 "Ou" = (/obj/stool/chair/couch/red{dir = 4},/turf/simulated/floor/carpet/red/fancy/narrow/ne,/area/prefab/safehouse)
@@ -142,7 +141,7 @@ UMUMZdYAidiigodKeqYAYAYAGpYAYAYAZdZdZdZdYAYAYAYAYAYAYAYAYAYAZdZdUM
 UMZdZdYAYAcgklkCYAYAYAcykNeImBYAYAYAYAYAYAWilOlYWilOuePvnFYAYAZdZd
 UMUMZdZdYAYAYAorYAYAYAcjZmZmnpYAouoxpJpTxIFsYAkBrfYAueuetJueYAZdUM
 UMUMUMZdZdYAFaWiWiYAYAwIwIgzDuYAHLHLHLHLHLHLYAYAYAYAwpEdEdEdYAZdZd
-UMRRRREMZdYAWiENWiYAYAYAuQYAYAYADjMTNAKeHLxmNBOuYAYADAEdEdQcYAZdZd
+UMRRRREMZdYAWiENWiYAYAYAuQYAYAYADjMTDjKeHLxmNBOuYAYADAEdEdQcYAZdZd
 UMRRRRVtZdYAYAYAYAYAkLlvplWZkLYASWymymWlWZFnWtWSYAYAEdEdEdEdREZdZd
 UMUMUMZdZdYAXOYZyHlGljDlmMDlZfmyWZWZWZWZWZwAZwnsYAZdDcDcDcSrZdZdUM
 UMUMUMVtZdYAvPnzGDYAYAOpYAYAYAYAYArIWZWZWZYAYAYAYAZdRRRRRRRRZdZdZd
