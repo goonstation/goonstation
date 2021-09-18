@@ -1832,10 +1832,6 @@ var/global/noir = 0
 			var/CT = input("Enter a /mob/living/critter path or partial name.", "Make Critter", null) as null|text
 
 			var/list/matches = get_matches(CT, "/mob/living/critter")
-			matches -= list(/mob/living/critter, /mob/living/critter/small_animal, /mob/living/critter/aquatic) //blacklist
-#ifdef SECRETS_ENABLED
-			matches -= list(/mob/living/critter/vending) //secret repo blacklist
-#endif
 
 			if (!length(matches))
 				return
@@ -4700,7 +4696,7 @@ var/global/noir = 0
 
 	return chosen
 
-/proc/get_matches(var/object, var/base = /atom, use_concrete_types = TRUE)
+/proc/get_matches(var/object, var/base = /atom, use_concrete_types=TRUE, only_admin_spawnable=TRUE)
 	var/list/types
 	if(use_concrete_types)
 		types = concrete_typesof(base)
@@ -4710,13 +4706,17 @@ var/global/noir = 0
 	var/list/matches = new()
 
 	for(var/path in types)
+		if(only_admin_spawnable)
+			var/typeinfo/atom/typeinfo = get_type_typeinfo(path)
+			if(!typeinfo.admin_spawnable)
+				continue
 		if(findtext("[path]", object))
 			matches += path
 
 	. = matches
 
-/proc/get_one_match(var/object, var/base = /atom, use_concrete_types = TRUE)
-	var/list/matches = get_matches(object, base, use_concrete_types)
+/proc/get_one_match(var/object, var/base = /atom, use_concrete_types=TRUE, only_admin_spawnable=TRUE)
+	var/list/matches = get_matches(object, base, use_concrete_types, only_admin_spawnable)
 
 	if(!matches.len)
 		return null
