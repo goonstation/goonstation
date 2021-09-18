@@ -42050,9 +42050,7 @@
 /area/diner/hangar)
 "qJt" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/robotics{
-	perma = 1
-	},
+/obj/machinery/computer/robotics,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-8"

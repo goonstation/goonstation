@@ -44579,8 +44579,7 @@
 /area/station/medical/medbay)
 "pAh" = (
 /obj/machinery/computer/robotics{
-	dir = 8;
-	perma = 1
+	dir = 8
 	},
 /obj/machinery/light{
 	dir = 4
