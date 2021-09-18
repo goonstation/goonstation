@@ -161,12 +161,6 @@ var/global/list/playersSeen = list()
 			if (C.ckey == row["ckey"])
 				targetC = C
 
-		var/mob/targetM
-		if (!targetC)
-			for (var/mob/M in mobs) //Grab the mob if no target clients were found
-				if (M.ckey == row["ckey"])
-					targetM = M
-
 		row["reason"] = html_decode(row["reason"])
 
 		if (text2num(row["chain"]) > 0) //Prepend our evasion attempt info for: the user, admins, notes (everything except the actual ban reason in the db)
