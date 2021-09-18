@@ -70,7 +70,7 @@ obj/structure/ex_act(severity)
 						var/datum/material/M = getMaterial("steel")
 						A.setMaterial(M)
 				else
-					del(src)
+					qdel(src)
 
 		else
 			boutput(user, text("<span class='notice'>You punch the [src.name].</span>"))

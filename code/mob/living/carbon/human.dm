@@ -2375,7 +2375,6 @@
 				boutput(src, "[I] falls out of you!")
 				I.on_remove(src)
 				implant.Remove(I)
-				//del(I)
 				I.set_loc(get_turf(src))
 				continue
 
