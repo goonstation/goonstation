@@ -1,3 +1,6 @@
+TYPEINFO(/atom)
+	var/admin_spawnable = TRUE
+
 /**
   * The base type for nearly all physical objects in SS13
 	*

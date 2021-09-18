@@ -171,7 +171,7 @@
 		..()
 
 	proc/toggleinput()
-		if(src.req_access && !(src.operating == -1))
+		if(cant_emag || (src.req_access && !(src.operating == -1)))
 			play_animation("deny")
 			return
 		if(density)

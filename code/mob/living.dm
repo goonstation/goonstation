@@ -277,7 +277,19 @@
 
 /mob/living/Login()
 	..()
-	if(!isdead(src) && !istype(get_area(src), /area/afterlife/bar) && !isVRghost(src) && !isghostcritter(src) && !isghostdrone(src))
+	// If...
+	// living
+	// and not (in the afterlife, and not in hell)
+	// and not a vr ghost
+	// and not a ghost critter
+	// and not a ghost drone
+	// ...then remove respawn candidate.
+	if (!isdead(src) \
+		&& !(istype(get_area(src), /area/afterlife) && !istype(get_area(src), /area/afterlife/hell)) \
+		&& !isVRghost(src) \
+		&& !isghostcritter(src) \
+		&& !isghostdrone(src) \
+	)
 		respawn_controller.unsubscribeRespawnee(src.ckey)
 
 /mob/living/Life(datum/controller/process/mobs/parent)
@@ -467,7 +479,7 @@
 
 	if (!src.stat && !is_incapacitated(src))
 		var/obj/item/equipped = src.equipped()
-		var/use_delay = !(target in src.contents) && !istype(target,/atom/movable/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
+		var/use_delay = (target.flags & CLICK_DELAY_IN_CONTENTS || !(target in src.contents)) && !istype(target,/atom/movable/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
 		var/grace_penalty = 0
 		if ((target == equipped || use_delay) && world.time < src.next_click) // if we ignore next_click on attack_self we get... instachoking, so let's not do that
 			var/time_left = src.next_click - world.time
@@ -1321,14 +1333,26 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	if (!src.restrained())
 		var/struggled_grab = 0
 		if (src.canmove)
-			for (var/obj/item/grab/G in src.grabbed_by)
-				G.do_resist()
-				struggled_grab = 1
-		else
-			for (var/obj/item/grab/G in src.grabbed_by)
-				if (G.stunned_targets_can_break())
+			if(src.grabbed_by.len > 0)
+				for (var/obj/item/grab/G in src.grabbed_by)
 					G.do_resist()
 					struggled_grab = 1
+			else if(src.pulled_by)
+				for (var/mob/O in AIviewers(src, null))
+					O.show_message(text("<span class='alert'>[] breaks free from []'s pulling!</span>", src, src.pulled_by), 1, group = "resist")
+				src.pulled_by.remove_pulling()
+				struggled_grab = 1
+		else
+			if(length(src.grabbed_by) > 0)
+				for (var/obj/item/grab/G in src.grabbed_by)
+					if (G.stunned_targets_can_break())
+						G.do_resist()
+						struggled_grab = 1
+			else if(src.pulled_by)
+				for (var/mob/O in AIviewers(src, null))
+					O.show_message(text("<span class='alert'>[] breaks free from []'s pulling!</span>", src, src.pulled_by), 1, group = "resist")
+				src.pulled_by.remove_pulling()
+				struggled_grab = 1
 
 		if (!src.grabbed_by || !src.grabbed_by.len && !struggled_grab)
 			if (src.buckled)
@@ -1571,9 +1595,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	if (src.nodamage)
 		return .
 
-	if (src.drowsyness > 0)
-		. += 5
-
 	var/health_deficiency = (src.max_health - src.health) + health_deficiency_adjustment // cogwerks // let's treat this like pain
 
 	if (health_deficiency >= 30)
@@ -1635,7 +1656,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 		var/runScaling = src.lying ? RUN_SCALING_LYING : RUN_SCALING
 		if (src.hasStatus(list("staggered","blocking")))
-			runScaling = RUN_SCALING_STAGGER
+			runScaling = max(runScaling, RUN_SCALING_STAGGER)
 		var/minSpeed = (1.0- runScaling * base_speed) / (1 - runScaling) // ensures sprinting with 1.2 tally drops it to 0.75
 		if (pulling) minSpeed = base_speed // not so fast, fucko
 		. = min(., minSpeed + (. - minSpeed) * runScaling) // i don't know what I'm doing, help
@@ -1675,7 +1696,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			begin_sniping()
 	else if (src.use_stamina)
 		if (!next_step_delay && world.time >= next_sprint_boost)
-			if (!HAS_MOB_PROPERTY(src, PROP_CANTMOVE))
+			if (!(HAS_MOB_PROPERTY(src, PROP_CANTMOVE) || GET_COOLDOWN(src, "lying_bullet_dodge_cheese") || GET_COOLDOWN(src, "unlying_speed_cheesy")))
 				//if (src.hasStatus("blocking"))
 				//	for (var/obj/item/grab/block/G in src.equipped_list(check_for_magtractor = 0)) //instant break blocks when we start a sprint
 				//		qdel(G)
