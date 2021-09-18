@@ -208,6 +208,14 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 19
 		prefabSizeY = 22
 
+	silverglass // Ill-fated entanglement research facility
+		required = 1 //CHANGE FOR LIVE
+		maxNum = 1
+		probability = 100 //CHANGE FOR LIVE
+		prefabPath = "assets/maps/prefabs/prefab_silverglass.dmm"
+		prefabSizeX = 32
+		prefabSizeY = 24
+
 	//UNDERWATER AREAS FOR OSHAN
 
 	pit
