@@ -1139,7 +1139,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/machinery/power/solar_control/silverglass,
+/obj/machinery/computer/solar_control/silverglass,
 /turf/simulated/floor/plating,
 /area/prefab/silverglass)
 "Ng" = (
@@ -1163,7 +1163,7 @@
 /area/prefab/silverglass/bay)
 "NW" = (
 /obj/rack,
-/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical/empty,
 /turf/simulated/floor/plating,
 /area/prefab/silverglass)
 "NY" = (
