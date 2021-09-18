@@ -630,7 +630,7 @@
 			sleep(6 SECONDS)
 			if (current_state == GAME_STATE_PLAYING)
 				if(prob(10))
-					S = sound(file=pick('sound/ambience/nature/Mars_Rockslide1.ogg','sound/ambience/industrial/MarsFacility_MovingEquipment.ogg','sound/ambience/nature/Mars_Rockslide2.ogg','sound/ambience/industrial/MarsFacility_Glitchy.ogg'), volume=100)
+					S = sound(file=pick('sound/ambience/nature/Mars_Rockslide1.ogg','sound/ambience/industrial/MarsFacility_MovingEquipment.ogg','sound/ambience/nature/Mars_Rockslide2.ogg','sound/ambience/industrial/MarsFacility_Glitchy.ogg'))
 					sound_delay = rand(0, 50)
 				else
 					S = null
@@ -642,7 +642,7 @@
 						H << mysound
 						if(S)
 							SPAWN_DBG(sound_delay)
-								H << S
+								playsound(H, S, 70, channel = VOLUME_CHANNEL_AMBIENT)
 
 /area/marsoutpost/duststorm
 	name = "Barren Planet"

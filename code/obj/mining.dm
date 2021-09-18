@@ -650,6 +650,9 @@
 			if (!istype(T,/turf/simulated/floor/airless/plating/catwalk/))
 				T.ReplaceWithSpace()
 				//qdel(T)
+		if(station_repair.station_generator)
+			for (var/turf/unsimulated/UT in mining_controls.magnet_area.contents)
+				UT.ReplaceWith("Space", force=TRUE)
 		for (var/turf/space/S in mining_controls.magnet_area.contents)
 			S.overlays = list()
 
@@ -684,6 +687,12 @@
 			active = 0
 			boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder! (ERROR: NO ENCOUNTER)")
 			return
+
+		if(station_repair.station_generator)
+			var/list/turf/space/repair_turfs = list()
+			for(var/turf/space/T in mining_controls.magnet_area.contents)
+				repair_turfs += T
+			station_repair.repair_turfs(repair_turfs)
 
 		sleep(sleep_time)
 		if (malfunctioning && prob(20))
@@ -1271,7 +1280,7 @@
 				dig_feedback = "This rock is tough. You may need a stronger tool."
 			if (2)
 				dig_chance = 10
-				dig_feedback = "This rock is very tough. You need a stronger tool."
+				dig_feedback = "This rock is very tough. You'll be faster with a stronger tool."
 			if (3 to INFINITY)
 				dig_chance = 0
 				dig_feedback = "You can't even make a dent! You need a stronger tool."
@@ -2356,15 +2365,17 @@ var/global/list/cargopads = list()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W,/obj/item/satchel/mining/))
-			var/obj/item/satchel/mining/S = W
-			if (satchel)
-				boutput(user, "<span class='alert'>There's already a satchel hooked up to [src].</span>")
-				return
-			user.drop_item()
-			S.set_loc(src)
-			satchel = S
-			icon_state = "scoop-bag"
-			user.visible_message("[user] inserts [S] into [src].", "You insert [S] into [src].")
+			if (!issilicon(usr))
+				var/obj/item/satchel/mining/S = W
+				user.drop_item()
+				if (satchel)
+					user.put_in_hand_or_drop(satchel)
+				S.set_loc(src)
+				satchel = S
+				icon_state = "scoop-bag"
+				user.visible_message("[user] inserts [S] into [src].", "You insert [S] into [src].")
+			else
+				boutput(user, "<span class='alert'>The satchel is firmly secured to the scoop.</span>")
 		else
 			..()
 			return
@@ -2373,27 +2384,31 @@ var/global/list/cargopads = list()
 		if(!issilicon(user))
 			if (satchel)
 				user.visible_message("[user] unloads [satchel] from [src].", "You unload [satchel] from [src].")
-				satchel.set_loc(get_turf(user))
+				user.put_in_hand_or_drop(satchel)
 				satchel = null
 				icon_state = "scoop"
 			else
 				boutput(user, "<span class='alert'>There's no satchel in [src] to unload.</span>")
 		else
-			boutput(user, "<span class='alert'>The satchel is firmly secured.</span>")
+			boutput(user, "<span class='alert'>The satchel is firmly secured to the scoop.</span>")
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
-		if (!isturf(target))
-			target = get_turf(target)
-		if (!satchel)
-			boutput(user, "<span class='alert'>There's no satchel in [src] to dump out.</span>")
+		if(isturf(target))
+			if (!satchel)
+				boutput(user, "<span class='alert'>There's no satchel in [src] to dump out.</span>")
+				return
+			if (satchel.contents.len < 1)
+				boutput(user, "<span class='alert'>The satchel in [src] is empty.</span>")
+				return
+			user.visible_message("[user] dumps out [src]'s satchel contents.", "You dump out [src]'s satchel contents.")
+			for (var/obj/item/I in satchel.contents)
+				I.set_loc(target)
+			satchel.satchel_updateicon()
 			return
-		if (satchel.contents.len < 1)
-			boutput(user, "<span class='alert'>The satchel in [src] is empty.</span>")
-			return
-		user.visible_message("[user] dumps out [src]'s satchel contents.", "You dump out [src]'s satchel contents.")
-		for (var/obj/item/I in satchel.contents)
-			I.set_loc(target)
-		satchel.satchel_updateicon()
+		if (istype(target, /obj/item/satchel/mining))
+			user.swap_hand() //Needed so you don't drop the scoop instead of the satchel
+			src.attackby(target, user)
+			user.swap_hand()
 
 ////// Shit that goes in the asteroid belt, might split it into an exploring.dm later i guess
 

@@ -1,49 +1,29 @@
 // the power monitoring computer
 // for the moment, just report the status of all APCs in the same powernet
 
-/obj/machinery/power/monitor
+/obj/machinery/computer/power_monitor
 	name = "Power Monitoring Computer"
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "power2"
-	density = 1
-	anchored = 1
 	desc = "Shows the power usage of the station."
-	flags = FPRINT | TGUI_INTERACTIVE
-	var/datum/light/light
-	var/light_r = 1
-	var/light_g = 1
-	var/light_b = 1
+	icon_state = "power2"
+	power_usage = 0
+	circuit_type = /obj/item/circuitboard/powermonitor
 	var/window_tag = "powcomp"
-	/// does it have a glow in the dark screen? see computer_screens.dmi
-	var/glow_in_dark_screen = TRUE
-	var/image/screen_image
 	var/list/history
 	var/const/history_max = 50
 
-/obj/machinery/power/monitor/New()
+/obj/machinery/computer/power_monitor/New()
 	..()
 	history = list()
 
-	light = new/datum/light/point
-	light.set_brightness(0.4)
-	light.set_color(light_r, light_g, light_b)
-	light.attach(src)
-	if(glow_in_dark_screen)
-		src.screen_image = image('icons/obj/computer_screens.dmi', src.icon_state, -1)
-		screen_image.plane = PLANE_LIGHTING
-		screen_image.blend_mode = BLEND_ADD
-		screen_image.layer = LIGHTING_LAYER_BASE
-		screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
-		src.UpdateOverlays(screen_image, "screen_image")
-
-
-/obj/machinery/power/monitor/ui_interact(mob/user, datum/tgui/ui)
+/obj/machinery/computer/power_monitor/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if (!ui)
 		ui = new(user, src, "PowerMonitor", src.name)
 		ui.open()
 
-/obj/machinery/power/monitor/ui_static_data(mob/user)
+/obj/machinery/computer/power_monitor/ui_static_data(mob/user)
+	var/datum/powernet/powernet = src.get_direct_powernet()
+
 	. = list(
 		"type" = "apc",
 		"apcNames" = list(),
@@ -60,10 +40,12 @@
 			"\ref[A]" =  A.area.name
 		)
 
-/obj/machinery/power/monitor/ui_data(mob/user)
+/obj/machinery/computer/power_monitor/ui_data(mob/user)
+	var/datum/powernet/powernet = src.get_direct_powernet()
+
 	. = list(
-		"available" = src.powernet.avail,
-		"load" = src.powernet.viewload,
+		"available" = powernet.avail,
+		"load" = powernet.viewload,
 		"apcs" = list(),
 		"history" = src.history,
 	)
@@ -89,11 +71,7 @@
 
 		.["apcs"] += list(data)
 
-/obj/machinery/power/monitor/attack_hand(mob/user)
-	add_fingerprint(user)
-	..()
-
-/obj/machinery/power/monitor/process()
+/obj/machinery/computer/power_monitor/process()
 	if (status & (NOPOWER|BROKEN))
 		return
 
@@ -102,48 +80,24 @@
 	if (src.history.len > src.history_max)
 		src.history.Cut(1, 2) //drop the oldest entry
 
-/obj/machinery/power/monitor/proc/add_history()
+/obj/machinery/computer/power_monitor/proc/add_history()
+	var/datum/powernet/powernet = src.get_direct_powernet()
+
 	src.history += list(list(
-		src.powernet.avail,
-		src.powernet.viewload,
+		powernet.avail,
+		powernet.viewload,
 	))
 
-/obj/machinery/power/monitor/console_upper
+/obj/machinery/computer/power_monitor/console_upper
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "power1"
 
-/obj/machinery/power/monitor/console_lower
+/obj/machinery/computer/power_monitor/console_lower
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "power2"
 
-/obj/machinery/power/monitor/power_change()
-
-	if(status & BROKEN)
-		icon_state = "broken"
-		light.disable()
-		if(glow_in_dark_screen)
-			src.ClearSpecificOverlays("screen_image")
-	else
-		if( powered() )
-			icon_state = initial(icon_state)
-			status &= ~NOPOWER
-			light.enable()
-			if(glow_in_dark_screen)
-				screen_image.plane = PLANE_LIGHTING
-				screen_image.blend_mode = BLEND_ADD
-				screen_image.layer = LIGHTING_LAYER_BASE
-				screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
-				src.UpdateOverlays(screen_image, "screen_image")
-		else
-			SPAWN_DBG(rand(0, 15))
-				src.icon_state = "power20"
-				status |= NOPOWER
-				light.disable()
-				if(glow_in_dark_screen)
-					src.ClearSpecificOverlays("screen_image")
-
 // tweaked version to hook up to the engine->smes powernet and show SMES usage stats and power produced
-/obj/machinery/power/monitor/smes
+/obj/machinery/computer/power_monitor/smes
 	name = "SMES Monitoring Computer"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "power"
@@ -151,14 +105,16 @@
 	anchored = 1
 	desc = "Shows the SMES usage and power produced by the engine."
 	window_tag = "smespowcomp"
+	circuit_type = /obj/item/circuitboard/powermonitor_smes
 
-/obj/machinery/power/monitor/smes/ui_static_data(mob/user)
+/obj/machinery/computer/power_monitor/smes/ui_static_data(mob/user)
 	. = list(
 		"type" = "smes",
 		"unitNames" = list(),
 	)
 
 	var/list/L = list()
+	var/datum/powernet/powernet = src.get_direct_powernet()
 	for(var/obj/machinery/power/terminal/term in powernet.nodes)
 		if(istype(term.master, /obj/machinery/power/smes))
 			var/obj/machinery/power/smes/A = term.master
@@ -174,10 +130,12 @@
 				"\ref[A]" = place.name
 			)
 
-/obj/machinery/power/monitor/smes/ui_data(mob/user)
+/obj/machinery/computer/power_monitor/smes/ui_data(mob/user)
+	var/datum/powernet/powernet = src.get_direct_powernet()
+
 	. = list(
-		"available" = src.powernet.avail,
-		"load" = src.powernet.viewload,
+		"available" = powernet.avail,
+		"load" = powernet.viewload,
 		"units" = list(),
 		"history" = src.history,
 	)

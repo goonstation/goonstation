@@ -1089,8 +1089,7 @@
 	dropped(mob/user)
 		..()
 		if (isturf(src.loc))
-			del(src)
-			return
+			qdel(src)
 
 /obj/item/katana/reverse
 	icon_state = "katana_reverse"

@@ -475,7 +475,7 @@ proc/find_ghost_by_key(var/find_key)
 	proc/move_mob_inside(var/mob/M)
 		if (!can_operate(M) || !ishuman(M)) return
 
-		M.pulling = null
+		M.remove_pulling()
 		M.set_loc(src)
 		src.occupant = M
 		src.icon_state = "scanner_1"

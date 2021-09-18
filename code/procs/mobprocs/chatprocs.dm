@@ -357,19 +357,20 @@
 			return 1
 	return 0*/
 
-/mob/proc/say_quote(var/text, var/special = 0)
+/mob/proc/say_quote(var/text, var/special = 0, var/speechverb = null)
 	var/ending = copytext(text, length(text))
-	var/speechverb = speechverb_say
 	var/loudness = 0
 	var/font_accent = null
-	var/style = ""
+	var/class = ""
 	var/first_quote = " \""
 	var/second_quote = "\""
 
-	if (ending == "?")
-		speechverb = speechverb_ask
-	else if (ending == "!")
-		speechverb = speechverb_exclaim
+	if(!speechverb)
+		speechverb = speechverb_say
+		if (ending == "?")
+			speechverb = speechverb_ask
+		else if (ending == "!")
+			speechverb = speechverb_exclaim
 	if (src.stuttering)
 		speechverb = speechverb_stammer
 	for (var/datum/ailment_data/A in src.ailments)
@@ -445,7 +446,7 @@
 			speechverb = "[adverb] [speechverb]"
 		// add style for singing
 		text = "<i>[text]</i>"
-		style = "color:thistle;"
+		class = "sing"
 
 	if (special)
 		if (special == "gasp_whisper")
@@ -465,14 +466,14 @@
 	if (text == "" || !text)
 		return speechverb
 
-	if(style)
-		style = " style=\"[style]\""
+	if(class)
+		class = " class='game [class]'"
 	if (loudness > 0)
-		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<big><strong><b [style? style : ""]>[text]</b></strong></big>[font_accent ? "</font>" : null][second_quote]"
+		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<big><strong><b [class? class : ""]>[text]</b></strong></big>[font_accent ? "</font>" : null][second_quote]"
 	else if (loudness < 0)
-		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<small [style? style : ""]>[text]</small>[font_accent ? "</font>" : null][second_quote]"
+		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<small [class? class : ""]>[text]</small>[font_accent ? "</font>" : null][second_quote]"
 	else
-		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<span [style? style : ""]>[text]</span>[font_accent ? "</font>" : null][second_quote]"
+		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<span [class? class : ""]>[text]</span>[font_accent ? "</font>" : null][second_quote]"
 
 /mob/proc/emote(var/act, var/voluntary = 0)
 	return
@@ -746,7 +747,8 @@
 	if (!L)
 		L = languages.language_cache["english"]
 
-	return prefix + L.get_messages(message)
+	var/list/messages = L.get_messages(message)
+	return list(prefix + messages[1], prefix + messages[2])
 
 /mob/proc/get_special_language(var/secure_mode)
 	return null
