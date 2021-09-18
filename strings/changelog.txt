@@ -1,4 +1,8 @@
 
+(t)sat sep 18 21
+(u)tarmunora
+(e)⚖|balance
+(*)sprinting while prone costs extra stamina.
 (t)thu sep 16 21
 (u)Azrun
 (p)6024
