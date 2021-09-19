@@ -1,4 +1,5 @@
-datum/controller/process/fluid_group
+/// Controller for fluids
+/datum/controller/process/fluid_group
 	var/tmp/list/processing_fluid_groups = list()
 	var/tmp/list/processing_fluid_spreads = list()
 	var/tmp/list/processing_fluid_drains = list()
@@ -6,8 +7,8 @@ datum/controller/process/fluid_group
 	var/group_update_interval = 40 SECONDS
 	var/last_group_update = 0
 
-	var/max_schedule_interval = 40 //4 seconds
-	var/min_schedule_interval = 5 //.5 seconds
+	var/max_schedule_interval = 4 SECONDS
+	var/min_schedule_interval = 0.5 SECONDS
 
 	setup()
 		name = "Fluid_Groups"
@@ -17,6 +18,11 @@ datum/controller/process/fluid_group
 		src.processing_fluid_spreads = global.processing_fluid_spreads
 		src.processing_fluid_drains = global.processing_fluid_drains
 
+	copyStateFrom(datum/controller/process/target)
+		var/datum/controller/process/fluid_group/old_fluids = target
+		src.processing_fluid_drains = old_fluids.processing_fluid_drains
+		src.processing_fluid_groups = old_fluids.processing_fluid_groups
+		src.processing_fluid_spreads = old_fluids.processing_fluid_spreads
 
 	doWork()
 
@@ -57,7 +63,7 @@ datum/controller/process/fluid_group
 			else if (FG)
 				avg_viscosity += FG.avg_viscosity
 
-			if (FG && FG.qdeled)
+			if (FG?.qdeled)
 				FG = null
 
 		avg_viscosity /= processing_fluid_spreads.len ? processing_fluid_spreads.len : 1
@@ -88,7 +94,7 @@ datum/controller/process/fluid_group
 			for (var/datum/fluid_group/FG in processing_fluid_groups)
 				LAGCHECK(LAG_MED)
 				if (!FG) continue
-				if (!FG.members || !FG.members.len) continue
+				if (!FG.members || !length(FG.members)) continue
 
 				//temperature stuff
 
@@ -142,5 +148,5 @@ datum/controller/process/fluid_group
 								B.blood_type = F.blood_type
 
 						FG.evaporate()
-						if (FG && FG.qdeled)
+						if (FG?.qdeled)
 							FG = null

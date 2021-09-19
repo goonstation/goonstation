@@ -12,7 +12,7 @@
 		P.set_loc(T)
 		SPAWN_DBG(0)
 			for (var/k = 1, k <= 3, k++)
-			P.streak(dirlist[i])
+			P.streak_object(dirlist[i])
 		produce += P
 
 	var/extra = rand(2,4)
@@ -20,7 +20,7 @@
 		var/PT = /obj/item/material_piece/bone
 		var/obj/item/material_piece/bone/P  = unpool(PT)
 		P.set_loc(T)
-		P.streak(alldirs)
+		P.streak_object(alldirs)
 		produce += P
 
 	return produce
@@ -46,7 +46,7 @@
 		switch (act)
 			if ("scream", "clak")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/items/Scissor.ogg", 80, 1)
+					playsound(src, "sound/items/Scissor.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='alert'>[src] claks!</span>"
 		return null
 
@@ -80,5 +80,5 @@
 		HH.icon_state = "handr"
 
 	setup_healths()
-		add_hh_flesh(-50, 50, 1)
-		add_hh_flesh_burn(-50, 50, 0.7)
+		add_hh_flesh(50, 1)
+		add_hh_flesh_burn(50, 0.7)

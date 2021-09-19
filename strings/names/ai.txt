@@ -51,7 +51,6 @@ names@=
 	FRIEND COMPUTER
 	Fagor
 	Faith
-	Fembot
 	Fi
 	Frost
 	Fum
@@ -98,7 +97,6 @@ names@=
 	R.I.C. 2.0
 	R2-D2
 	R4-P17
-	Real Doll
 	Revelation
 	Ro-Man
 	Robbie

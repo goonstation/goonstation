@@ -16,7 +16,7 @@
 			G.addAbility(/datum/targetable/grinch/instakill)
 			G.addAbility(/datum/targetable/grinch/grinch_cloak)
 
-			SPAWN_DBG (25) // Don't remove.
+			SPAWN_DBG(2.5 SECONDS) // Don't remove.
 				if (src) src.assign_gimmick_skull()
 
 		else if (ismobcritter(src))
@@ -32,14 +32,14 @@
 			C.abilityHolder.addAbility(/datum/targetable/grinch/instakill)
 			C.abilityHolder.addAbility(/datum/targetable/grinch/grinch_cloak)
 
-		if (src.mind && src.mind.special_role != "omnitraitor")
+		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
 			SHOW_GRINCH_TIPS(src)
 
 	else return
 
 //////////////////////////////////////////// Ability holder /////////////////////////////////////////
 
-/obj/screen/ability/topBar/grinch
+/atom/movable/screen/ability/topBar/grinch
 	clicked(params)
 		var/datum/targetable/grinch/spell = owner
 		if (!istype(spell))
@@ -82,7 +82,7 @@
 	var/not_when_handcuffed = 0
 
 	New()
-		var/obj/screen/ability/topBar/grinch/B = new /obj/screen/ability/topBar/grinch(null)
+		var/atom/movable/screen/ability/topBar/grinch/B = new /atom/movable/screen/ability/topBar/grinch(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -94,7 +94,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/grinch()
+			src.object = new /atom/movable/screen/ability/topBar/grinch()
 			object.icon = src.icon
 			object.owner = src
 		if (src.last_cast > world.time)

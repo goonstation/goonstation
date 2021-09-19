@@ -50,15 +50,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		else if (patient == surgeon)
 			return 3.5 // surgery is okay but hurts more
 
-	else if (locate(/obj/stool/bed, patient.loc)) // is the patient on a bed and lying?
-		if(patient.lying)
-			return 1 // surgery is okay
-		else if (patient == surgeon)
-			return 3.5 // surgery is okay but hurts more
-
-	else if (locate(/obj/table, patient.loc) && (patient.getStatusDuration("paralysis") || patient.stat)) // is the patient on a table and paralyzed or dead?
+	else if ((locate(/obj/stool/bed, patient.loc) || locate(/obj/table, patient.loc)) && (patient.getStatusDuration("paralysis") || patient.stat)) // is the patient on a table and paralyzed or dead?
 		return 1 // surgery is okay
-	else if (patient.reagents && (patient.reagents.get_reagent_amount("ethanol") > 40 || patient.reagents.get_reagent_amount("morphine") > 5) && patient == surgeon) // is the patient really drunk and also the surgeon?
+	else if (patient.reagents && (patient.reagents.get_reagent_amount("ethanol") > 40 || patient.reagents.get_reagent_amount("morphine") > 5) && (patient == surgeon || (locate(/obj/stool/bed, patient.loc) && patient.lying))) // is the patient really drunk and also the surgeon?
 		return 1 // surgery is okay
 
 	else // if all else fails?
@@ -80,6 +74,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	else // if all else fails?
 		return 1 // head surgery is okay
 
+#define UNPOOL_BLOOD_SPLOOSH(T) var/obj/itemspecialeffect/impact/E = unpool(/obj/itemspecialeffect/impact/blood);\
+			if (E){E.setup(get_turf(T));}
+
 /obj/item/proc/surgeryConfusion(var/mob/living/carbon/human/patient as mob, var/mob/surgeon as mob, var/damage as num)
 	if (!patient || !surgeon)
 		return
@@ -98,6 +95,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 		patient.TakeDamage(surgeon.zone_sel.selecting, damage, 0)
 		take_bleeding_damage(patient, surgeon, damage)
+		UNPOOL_BLOOD_SPLOOSH(patient)
 
 		patient.visible_message("<span class='alert'><b>Blood gushes from the incision!</b> That can't have been the correct thing to do!</span>")
 		return
@@ -138,7 +136,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		screw_up_prob -= 10
 	if (patient.getStatusDuration("stunned")) // stunned?
 		screw_up_prob -= 5
-	if (patient.drowsyness) // sleepy?
+	if (patient.hasStatus("drowsy")) // sleepy?
 		screw_up_prob -= 5
 
 	if (patient.reagents) // check for anesthetics/analgetics
@@ -165,7 +163,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 /proc/calc_surgery_damage(var/mob/surgeon as mob, var/screw_up_prob = 25, var/damage = 10, var/adj1 = 0.5, adj2 = 200)
 	damage = damage * (adj1 + (screw_up_prob / adj2))
 
-	if (surgeon && surgeon.traitHolder.hasTrait("training_medical")) // doctor better trained and do less hurt
+	if (surgeon?.traitHolder.hasTrait("training_medical")) // doctor better trained and do less hurt
 		damage = max(0, round(damage))
 	else
 		damage = max(2, round(damage))
@@ -180,7 +178,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			// If no item in chest, get surgeon's equipped item
 			var/obj/item/chest_item = surgeon.equipped()
 
-			if(chest_item.w_class > 3 && !(chest_item.type in chestitem_whitelist))
+			if(chest_item.w_class > W_CLASS_NORMAL && !(chest_item.type in chestitem_whitelist))
 				surgeon.show_text("<span class='alert'>[chest_item] is too big to fit into [patient]'s chest cavity.</span>")
 				return 1
 
@@ -189,7 +187,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			patient, "<span class='notice'>[patient == surgeon ? "You shove" : "<b>[surgeon]</b> shoves"] [chest_item] into your chest.</span>")
 
 			// Move equipped item to patient's chest
-			playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+			playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 			chest_item.set_loc(patient)
 			patient.chest_item = chest_item
 
@@ -214,7 +212,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	if (user && user.a_intent != INTENT_HELP)
 		return 0
 
-	if (!islist(H.bandaged) || !H.bandaged.len)
+	if (!islist(H.bandaged) || !length(H.bandaged))
 		return 0
 
 	var/removing = pick(H.bandaged)
@@ -339,12 +337,13 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 		if (surgeon.a_intent == INTENT_HARM && patient.organHolder.head)
 			if (patient.organHolder.head.op_stage == 0.0)
-				playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 				if (prob(screw_up_prob))
 					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 					patient.TakeDamage("head", damage_low, 0)
-					take_bleeding_damage(patient, surgeon, damage_low)
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
+					UNPOOL_BLOOD_SPLOOSH(patient)
 					return 1
 
 				patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts the skin of [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] neck open with [src]!</span>",\
@@ -352,20 +351,18 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] the skin of your neck open with [src]!</span>")
 
 				patient.TakeDamage("head", damage_low, 0)
-				if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-					take_bleeding_damage(patient, surgeon, damage_low)
-				else
-					surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 				patient.organHolder.head.op_stage = 1.0
 				return 1
 
 			else if (patient.organHolder.head.op_stage == 2.0)
-				playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 				if (prob(screw_up_prob))
 					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff2]!</b></span>")
 					patient.TakeDamage("head", damage_high, 0)
-					take_bleeding_damage(patient, surgeon, damage_high)
+					take_bleeding_damage(patient, surgeon, damage_high, surgery_bleed = 1)
+					UNPOOL_BLOOD_SPLOOSH(patient)
 					return 1
 
 				patient.tri_message("<span class='alert'><b>[surgeon]</b> slices the tissue around [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] spine with [src]!</span>",\
@@ -373,20 +370,18 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient, "<span class='alert'>[patient == surgeon ? "You slice" : "<b>[surgeon]</b> slices"] the tissue around your spine with [src]!</span>")
 
 				patient.TakeDamage("head", damage_high, 0)
-				if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-					take_bleeding_damage(patient, surgeon, damage_low)
-				else
-					surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 				patient.organHolder.head.op_stage = 3.0
 				return 1
 
 		else if (patient.organHolder.right_eye && patient.organHolder.right_eye.op_stage == 1.0 && surgeon.find_in_hand(src, "right"))
-			playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+			playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 			if (prob(screw_up_prob))
 				surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 				patient.TakeDamage("head", damage_low, 0)
-				take_bleeding_damage(patient, surgeon, damage_low)
+				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
+				UNPOOL_BLOOD_SPLOOSH(patient)
 				return 1
 
 			patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts away the flesh holding [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] right eye in with [src]!</span>",\
@@ -394,20 +389,18 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] away the flesh holding your right eye in with [src]!</span>")
 
 			patient.TakeDamage("head", damage_low, 0)
-			if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-				take_bleeding_damage(patient, surgeon, damage_low)
-			else
-				surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+			take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 			patient.organHolder.right_eye.op_stage = 2.0
 			return 1
 
 		else if (patient.organHolder.left_eye && patient.organHolder.left_eye.op_stage == 1.0 && surgeon.find_in_hand(src, "left"))
-			playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+			playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 			if (prob(screw_up_prob))
 				surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 				patient.TakeDamage("head", damage_low, 0)
-				take_bleeding_damage(patient, surgeon, damage_low)
+				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
+				UNPOOL_BLOOD_SPLOOSH(patient)
 				return 1
 
 			patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts away the flesh holding [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] left eye in with [src]!</span>",\
@@ -415,21 +408,26 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] away the flesh holding your left eye in with [src]!</span>")
 
 			patient.TakeDamage("head", damage_low, 0)
-			if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-				take_bleeding_damage(patient, surgeon, damage_low)
-			else
-				surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+			take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 			patient.organHolder.left_eye.op_stage = 2.0
 			return 1
 
 		else if (patient.organHolder.head.scalp_op_stage <= 4.0)
 			if (patient.organHolder.head.scalp_op_stage == 0.0)
-				playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+
+				var/removing_eye = (patient.organHolder.left_eye && patient.organHolder.left_eye.op_stage == 1.0) || (patient.organHolder.right_eye && patient.organHolder.right_eye.op_stage == 1.0)
+
+				if (removing_eye && (surgeon.find_in_hand(src, "left") || surgeon.find_in_hand(src, "right")))
+					surgeon.show_text("Wait, which eye was I operating on?")
+				else if (removing_eye && surgeon.find_in_hand(src, "middle"))
+					surgeon.show_text("Hey, there's no middle eye!")
 
 				if (prob(screw_up_prob))
 					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 					patient.TakeDamage("head", damage_low, 0)
-					take_bleeding_damage(patient, surgeon, damage_low)
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
+					UNPOOL_BLOOD_SPLOOSH(patient)
 					return 1
 
 				patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] head open with [src]!</span>",\
@@ -437,20 +435,18 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] your head open with [src]!</span>")
 
 				patient.TakeDamage("head", damage_low, 0)
-				if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-					take_bleeding_damage(patient, surgeon, damage_low)
-				else
-					surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 				patient.organHolder.head.scalp_op_stage = 1.0
 				return 1
 
 			else if (patient.organHolder.head.scalp_op_stage == 2.0)
-				playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 				if (prob(screw_up_prob))
 					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff2]!</b></span>")
 					patient.TakeDamage("head", damage_high, 0)
-					take_bleeding_damage(patient, surgeon, damage_high)
+					take_bleeding_damage(patient, surgeon, damage_high, surgery_bleed = 1)
+					UNPOOL_BLOOD_SPLOOSH(patient)
 					return 1
 
 				if (patient.organHolder.brain)
@@ -464,19 +460,17 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient, "<span class='alert'>[patient == surgeon ? "You open" : "<b>[surgeon]</b> opens"] the area around your brain cavity with [src]!</span>")
 
 				patient.TakeDamage("head", damage_high, 0)
-				if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-					take_bleeding_damage(patient, surgeon, damage_low)
-				else
-					surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 				patient.organHolder.head.scalp_op_stage = 3.0
 				return 1
 			else if (patient.organHolder.head.scalp_op_stage == 4.0)
-				playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 				if (prob(screw_up_prob))
 					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 					patient.TakeDamage("head", damage_low, 0)
-					take_bleeding_damage(patient, surgeon, damage_low)
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
+					UNPOOL_BLOOD_SPLOOSH(patient)
 					return 1
 
 				if (patient.organHolder.skull)
@@ -490,10 +484,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient, "<span class='alert'>[patient == surgeon ? "You open" : "<b>[surgeon]</b> opens"] your skull cavity with [src]!</span>")
 
 				patient.TakeDamage("head", damage_low, 0)
-				if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-					take_bleeding_damage(patient, surgeon, damage_low)
-				else
-					surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 				patient.organHolder.head.scalp_op_stage = 5.0
 				return 1
 
@@ -504,15 +495,15 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			return 0
 
 /* ---------- SCALPEL - BUTT ---------- */
-
-	else if (surgeon.zone_sel.selecting == "chest" && surgeon.a_intent == INTENT_HARM)
+	if (surgeon.zone_sel.selecting == "chest" && surgeon.a_intent == INTENT_HARM)
 		if (patient.butt_op_stage == 0.0)
-			playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+			playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 			if (prob(screw_up_prob))
 				surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 				patient.TakeDamage("chest", damage_low, 0)
-				take_bleeding_damage(patient, surgeon, damage_low)
+				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
+				UNPOOL_BLOOD_SPLOOSH(patient)
 				return 1
 
 			patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] butt open with [src]!</span>",\
@@ -520,20 +511,18 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] your butt open with [src]!</span>")
 
 			patient.TakeDamage("chest", damage_low, 0)
-			if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-				take_bleeding_damage(patient, surgeon, damage_low)
-			else
-				surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+			take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 			patient.butt_op_stage = 1.0
 			return 1
 
 		else if (patient.butt_op_stage == 2.0)
-			playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+			playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 			if (prob(screw_up_prob))
 				surgeon.visible_message("<span class='alert'><b>[surgeon][fluff2]!</b></span>")
 				patient.TakeDamage("chest", damage_high, 0)
-				take_bleeding_damage(patient, surgeon, damage_high)
+				take_bleeding_damage(patient, surgeon, damage_high, surgery_bleed = 1)
+				UNPOOL_BLOOD_SPLOOSH(patient)
 				return 1
 
 			patient.tri_message("<span class='alert'><b>[surgeon]</b> severs [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] intestines with [src]!</span>",\
@@ -541,10 +530,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			patient, "<span class='alert'>[patient == surgeon ? "You sever" : "<b>[surgeon]</b> severs"] your intestines with [src]!</span>")
 
 			patient.TakeDamage("chest", damage_high, 0)
-			if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-				take_bleeding_damage(patient, surgeon, damage_low)
-			else
-				surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+			take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 			patient.butt_op_stage = 3.0
 			return 1
 
@@ -557,16 +543,13 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	else if (surgeon.zone_sel.selecting == "chest" && surgeon.a_intent == "grab")
 		// Chest cavity is not open
 		if(patient.chest_cavity_open == 0)
-			playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+			playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 			patient.tri_message("<span class='notice'><b>[surgeon]</b> carefully cuts down [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest with [src] and opens it.</span>",\
 			surgeon, "<span class='notice'>You carefully cut down [surgeon == patient ? "your" : "[patient]'s"] chest with [src] and open it up.</span>",\
 			patient, "<span class='notice'>[patient == surgeon ? "You carefully cut" : "<b>[surgeon]</b> carefully cuts"] down your chest with [src] and [patient == surgeon ? "open" : "opens"] it.</span>")
 
 			patient.TakeDamage("chest", damage_low, 0)
-			if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-				take_bleeding_damage(patient, surgeon, damage_low)
-			else
-				surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+			take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 
 			// Open chest cavity for item insertion
 			patient.chest_cavity_open = 1
@@ -581,16 +564,13 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			return 1
 		// Chest cavity is open and an item exists
 		else if(patient.chest_cavity_open == 1 && patient.chest_item != null)
-			playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+			playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 			patient.tri_message("<span class='notice'><b>[surgeon]</b> cuts [patient.chest_item] out of [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest with [src].</span>",\
 			surgeon, "<span class='notice'>You cut [patient.chest_item] out of [surgeon == patient ? "your" : "[patient]'s"] chest with [src].</span>",\
 			patient, "<span class='notice'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] [patient.chest_item] out of your chest with [src].</span>")
 
 			patient.TakeDamage("chest", damage_low, 0)
-			if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-				take_bleeding_damage(patient, surgeon, damage_low)
-			else
-				surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+			take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 
 			// Cut item out of chest and move it outside of patient's body
 			var/location = get_turf(patient)
@@ -621,7 +601,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				return 1
 
 		if (patient.implant.len > 0)
-			playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+			playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 			patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest with [src]!</span>",\
 			surgeon, "<span class='alert'>You cut into [surgeon == patient ? "your" : "[patient]'s"] chest with [src]!</span>",\
 			patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] into your chest with [src]!</span>")
@@ -640,7 +620,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 				// This is kinda important (Convair880).
 				if (istype(I, /obj/item/implant/mindslave))
-					if (patient.mind && (patient.mind.special_role == "mindslave"))
+					if (patient.mind && (patient.mind.special_role == ROLE_MINDSLAVE))
 						if(surgeon == patient) continue
 						remove_mindslave_status(patient, "mslave", "surgery")
 					else if (patient.mind && patient.mind.master)
@@ -651,12 +631,14 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				surgeon, "<span class='alert'>You cut out an implant from [surgeon == patient ? "yourself" : "[patient]"] with [src]!</span>",\
 				patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] out an implant from you with [src]!</span>")
 
-				var/obj/item/implantcase/newcase = new /obj/item/implantcase(patient.loc)
-				newcase.imp = I
+				var/obj/item/implantcase/newcase = new /obj/item/implantcase(patient.loc, usedimplant = I)
 				I.on_remove(patient)
 				patient.implant.Remove(I)
-				I.set_loc(newcase)
-				newcase.icon_state = "implantcase-b"
+				var/image/wadblood = image('icons/obj/surgery.dmi', icon_state = "implantpaper-blood")
+				wadblood.color = patient.blood_color
+				newcase.UpdateOverlays(wadblood, "blood")
+				newcase.blood_DNA = patient.bioHolder.Uid
+				newcase.blood_type = patient.bioHolder.bloodType
 
 				return 1
 
@@ -670,6 +652,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			2.0 = cut is remove lungs R/L
 			3.0 = snip is remove appendix || cut is remove liver
 			4.0 = snip is remove stomach || cut is remove intestines
+
 			5.0 = snip -> 6.0 || cut -> 7.0 || saw -> 8.0
 			6.0 = snip is remove pancreas || cut is remove spleen
 			7.0 = snip is remove kidneys
@@ -685,40 +668,39 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			remove spleen = 	cut -> snip -> cut
 			remove kidneys = 	cut -> cut -> snip -> Right/Left hands for removing R/L kidneys
 			remove heart = 0.0 cut -> 5.0 saw -> 8.0 cut -> 9.0 saw
+			remove tail = 0.0 saw -> 10.0 cut -> 11.0 saw
+				except skeletons with bone tails, just disarm-poke em with some scissors
 			*note, for lungs/kidneys R/L hand use only matters for last cut
 		*/
+
 		if (patient.organHolder.chest)
 			switch (patient.organHolder.chest.op_stage)
 				if (0.0)
-					playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 					if (prob(screw_up_prob))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
-						take_bleeding_damage(patient, surgeon, damage_low)
+						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
+						UNPOOL_BLOOD_SPLOOSH(patient)
 						return 1
 
 					patient.tri_message("<span class='alert'><b>[surgeon]</b> makes a cut on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest with [src]!</span>",\
 					surgeon, "<span class='alert'>You make a cut on [surgeon == patient ? "your" : "[patient]'s"] chest with [src]!</span>",\
 					patient, "<span class='alert'>[patient == surgeon ? "You make a cut" : "<b>[surgeon]</b> makes a cut"] on chest with [src]!</span>")
-
-
 					patient.TakeDamage("chest", damage_low, 0)
-					if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-						take_bleeding_damage(patient, surgeon, damage_low)
-					else
-						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					patient.organHolder.chest.op_stage = 5.0
 					return 1
 
 				//second cut, path for stomach/Intestines
 				if (1.0)
-					playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 					if (prob(screw_up_prob))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
-						take_bleeding_damage(patient, surgeon, damage_low)
+						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
+						UNPOOL_BLOOD_SPLOOSH(patient)
 						return 1
 
 					patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] lower abdomen open with [src]!</span>",\
@@ -726,16 +708,13 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] your lower abdomen open with [src]!</span>")
 
 					patient.TakeDamage("chest", damage_low, 0)
-					if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-						take_bleeding_damage(patient, surgeon, damage_low)
-					else
-						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					patient.organHolder.chest.op_stage = 4.0
 					return 1
 
 				//remove liver with this cut
 				if (3.0)
-					playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 					if (!patient.organHolder.liver)
 						src.surgeryConfusion(patient, surgeon, damage_low)
@@ -744,7 +723,8 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					if (prob(screw_up_prob))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
-						take_bleeding_damage(patient, surgeon, damage_low)
+						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
+						UNPOOL_BLOOD_SPLOOSH(patient)
 						return 1
 
 					patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] liver out with [src]!</span>",\
@@ -752,10 +732,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] your liver out with [src]!</span>")
 
 					patient.TakeDamage("chest", damage_low, 0)
-					if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-						take_bleeding_damage(patient, surgeon, damage_low)
-					else
-						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s liver with [src].")
 					patient.organHolder.drop_organ("liver")
 
@@ -763,7 +740,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 				//remove intestines with this cut
 				if (4.0)
-					playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 					if (!patient.organHolder.intestines)
 						src.surgeryConfusion(patient, surgeon, damage_low)
@@ -772,7 +749,8 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					if (prob(screw_up_prob))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
-						take_bleeding_damage(patient, surgeon, damage_low)
+						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
+						UNPOOL_BLOOD_SPLOOSH(patient)
 						return 1
 
 					patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] intestines out with [src]!</span>",\
@@ -780,10 +758,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] your intestines out with [src]!</span>")
 
 					patient.TakeDamage("chest", damage_low, 0)
-					if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-						take_bleeding_damage(patient, surgeon, damage_low)
-					else
-						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s intestines with [src].")
 					patient.organHolder.drop_organ("intestines")
 
@@ -791,12 +766,13 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 				//path for kidneys/spleen/pancreas
 				if (5.0)
-					playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 					if (prob(screw_up_prob))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
-						take_bleeding_damage(patient, surgeon, damage_low)
+						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
+						UNPOOL_BLOOD_SPLOOSH(patient)
 						return 1
 
 					patient.tri_message("<span class='alert'><b>[surgeon]</b> makes a cut in preparation to access  [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] kidneys with [src]!</span>",\
@@ -804,10 +780,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient, "<span class='alert'>[patient == surgeon ? "You make" : "<b>[surgeon]</b> makes"] a cut in preparation to access your kidneys with [src]!</span>")
 
 					patient.TakeDamage("chest", damage_low, 0)
-					if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-						take_bleeding_damage(patient, surgeon, damage_low)
-					else
-						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					patient.organHolder.chest.op_stage = 7.0
 
 					return 1
@@ -815,7 +788,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				// kyle-note fix this, it should be able to make a sound and damage if there's no spleen here
 				//remove spleen with this cut
 				if (6.0)
-					playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 					if (!patient.organHolder.spleen)
 						src.surgeryConfusion(patient, surgeon, damage_low)
@@ -824,7 +797,8 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					if (prob(screw_up_prob))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
-						take_bleeding_damage(patient, surgeon, damage_low)
+						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
+						UNPOOL_BLOOD_SPLOOSH(patient)
 						return 1
 
 					if (patient.organHolder.spleen)
@@ -833,11 +807,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] spleen out with [src]!</span>")
 
 						patient.TakeDamage("chest", damage_high, 0)
-						if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-							take_bleeding_damage(patient, surgeon, damage_low)
-						else
-							surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-
+						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s spleen with [src].")
 						patient.organHolder.drop_organ("spleen")
 
@@ -845,12 +815,13 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 				//heart path
 				if (8.0)
-					playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 					if (prob(screw_up_prob))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff2]!</b></span>")
 						patient.TakeDamage("chest", damage_high, 0)
-						take_bleeding_damage(patient, surgeon, damage_high)
+						take_bleeding_damage(patient, surgeon, damage_high, surgery_bleed = 1)
+						UNPOOL_BLOOD_SPLOOSH(patient)
 						return 1
 
 					patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] aorta and vena cava with [src]!</span>",\
@@ -859,11 +830,37 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 
 					patient.TakeDamage("chest", damage_high, 0)
-					if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-						take_bleeding_damage(patient, surgeon, damage_low)
-					else
-						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					patient.organHolder.chest.op_stage = 9.0
+					return 1
+
+				//tail path
+				if(10.0)
+					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+
+					if (prob(screw_up_prob))
+						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+						patient.TakeDamage("chest", damage_low, 0)
+						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
+						UNPOOL_BLOOD_SPLOOSH(patient)
+						return 1
+
+					if(istype(patient.organHolder.tail, /obj/item/organ/tail/bone)) // Has tail, is tailbone
+						patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts through the tissue covering [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] tailbone with [src]!</span>",\
+						surgeon, "<span class='alert'>You cut through the tissue covering [surgeon == patient ? "your" : "[patient]'s"] tailbone with [src]!</span>",\
+						patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] through the tissue covering your tailbone with [src]!</span>")
+					else if (!patient.organHolder.tail)	// Doesnt have tail at all, likely removed earlier
+						patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts away the connective tissue between [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] skin and [his_or_her(patient)] sacrum with [src]!</span>",\
+						surgeon, "<span class='alert'>You cut away the connective tissue between [surgeon == patient ? "your" : "[patient]'s"] skin and [surgeon == patient ? "your" : "[his_or_her(patient)]"] sacrum with [src]!</span>",\
+						patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] away the connective tissue between your skin and your sacrum with [src]!</span>")
+					else	// Has tail hopefully
+						patient.tri_message("<span class='alert'><b>[surgeon]</b> severs the tendons and ligaments connecting [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] tail to [his_or_her(patient)] spine with [src]!</span>",\
+						surgeon, "<span class='alert'>You sever the tendons and ligaments connecting [surgeon == patient ? "your" : "[patient]'s"] tail to [surgeon == patient ? "your" : "[his_or_her(patient)]"] spine with [src]!</span>",\
+						patient, "<span class='alert'>[patient == surgeon ? "You sever" : "<b>[surgeon]</b> severs"] the tendons and ligaments connecting your tail to your spine with [src]!</span>")
+
+					patient.TakeDamage("chest", damage_low, 0)
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
+					patient.organHolder.chest.op_stage = 11.0
 					return 1
 
 				else
@@ -936,12 +933,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 		if (surgeon.a_intent == INTENT_HARM && patient.organHolder.head)
 			if (patient.organHolder.head.op_stage == 1.0)
-				playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 				if (prob(screw_up_prob))
 					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 					patient.TakeDamage("head", damage_low, 0)
-					take_bleeding_damage(patient, surgeon, damage_low)
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					return 1
 
 				patient.tri_message("<span class='alert'><b>[surgeon]</b> severs most of [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] neck with [src]!</span>",\
@@ -949,20 +946,17 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient, "<span class='alert'>[patient == surgeon ? "You sever" : "<b>[surgeon]</b> severs"] most of your neck with [src]!</span>")
 
 				patient.TakeDamage("head", damage_low, 0)
-				if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-					take_bleeding_damage(patient, surgeon, damage_low)
-				else
-					surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 				patient.organHolder.head.op_stage = 2.0
 				return 1
 
 			else if (patient.organHolder.head.op_stage == 3.0)
-				playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 				if (prob(screw_up_prob))
 					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 					patient.TakeDamage("head", damage_low, 0)
-					take_bleeding_damage(patient, surgeon, damage_low)
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					return 1
 
 				patient.tri_message("<span class='alert'><b>[surgeon]</b> saws through the last of [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] head's connections to [surgeon == patient ? "[his_or_her(patient)]" : "[patient]'s"] body with [src]!</span>",\
@@ -970,10 +964,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient, "<span class='alert'>[patient == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] through the last of your head's connection to your body with [src]!</span>")
 
 				patient.TakeDamage("head", damage_low, 0)
-				if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-					take_bleeding_damage(patient, surgeon, damage_low)
-				else
-					surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 				if (patient.organHolder.brain)
 					logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s head and brain with [src].")
 					patient.death()
@@ -986,12 +977,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 		else if (patient.organHolder.head)
 			if (patient.organHolder.head.scalp_op_stage == 1.0)
-				playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 				if (prob(screw_up_prob))
 					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 					patient.TakeDamage("head", damage_low, 0)
-					take_bleeding_damage(patient, surgeon, damage_low)
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					return 1
 
 				var/missing_fluff = ""
@@ -1004,20 +995,17 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient, "<span class='alert'>[patient == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] open your skull [missing_fluff] with [src]!</span>")
 
 				patient.TakeDamage("head", damage_low, 0)
-				if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-					take_bleeding_damage(patient, surgeon, damage_low)
-				else
-					surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 				patient.organHolder.head.scalp_op_stage = 2.0
 				return 1
 
 			else if (patient.organHolder.head.scalp_op_stage == 3.0)
-				playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 				if (prob(screw_up_prob))
 					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 					patient.TakeDamage("head", damage_low, 0)
-					take_bleeding_damage(patient, surgeon, damage_low)
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					return 1
 
 				if (patient.organHolder.brain)
@@ -1033,22 +1021,19 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient, "<span class='alert'>[patient == surgeon ? "You cut open" : "<b>[surgeon]</b> cuts open "] your brain cavity with [src]!</span>")
 
 				patient.TakeDamage("head", damage_low, 0)
-				if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-					take_bleeding_damage(patient, surgeon, damage_low)
-				else
-					surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 				logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s brain with [src].")
 				patient.death()
 				patient.organHolder.head.scalp_op_stage = 4.0
 				return 1
 
 			else if (patient.organHolder.head.scalp_op_stage == 5.0)
-				playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 				if (prob(screw_up_prob))
 					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 					patient.TakeDamage("head", damage_low, 0)
-					take_bleeding_damage(patient, surgeon, damage_low)
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					return 1
 
 				if (patient.organHolder.skull)
@@ -1066,10 +1051,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient, "<span class='alert'>[patient == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] the top of your head open with [src]!</span>")
 
 				patient.TakeDamage("head", damage_low, 0)
-				if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-					take_bleeding_damage(patient, surgeon, damage_low)
-				else
-					surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 				patient.real_name = "Unknown"
 				patient.unlock_medal("Red Hood", 1)
 				patient.set_clothing_icon_dirty()
@@ -1085,12 +1067,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	else if (surgeon.zone_sel.selecting == "chest" && surgeon.a_intent == INTENT_HARM)
 		switch (patient.butt_op_stage)
 			if (1.0)
-				playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 				if (prob(screw_up_prob))
 					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 					patient.TakeDamage("chest", damage_low, 0)
-					take_bleeding_damage(patient, surgeon, damage_low)
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					return 1
 
 				patient.tri_message("<span class='alert'><b>[surgeon]</b> saws open [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] butt with [src]!</span>",\
@@ -1098,20 +1080,17 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient, "<span class='alert'>[patient == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] open your butt with [src]!</span>")
 
 				patient.TakeDamage("chest", damage_low, 0)
-				if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-					take_bleeding_damage(patient, surgeon, damage_low)
-				else
-					surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 				patient.butt_op_stage = 2.0
 				return 1
 
 			if (3.0)
-				playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 				if (prob(screw_up_prob))
 					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 					patient.TakeDamage("chest", damage_low, 0)
-					take_bleeding_damage(patient, surgeon, damage_low)
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					return 1
 
 				patient.tri_message("<span class='alert'><b>[surgeon]</b> severs [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] butt's connection to the stomach with [src]!</span>",\
@@ -1119,10 +1098,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient, "<span class='alert'>[patient == surgeon ? "You sever" : "<b>[surgeon]</b> severs"] your butt's connection to the stomach with [src]!</span>")
 
 				patient.TakeDamage("chest", damage_low, 0)
-				if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-					take_bleeding_damage(patient, surgeon, damage_low)
-				else
-					surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 				patient.butt_op_stage = 4.0
 				logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s butt with [src].")
 				patient.organHolder.drop_organ("butt")
@@ -1137,13 +1113,60 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	else if (surgeon.zone_sel.selecting == "chest")
 		if (patient.organHolder.chest)
 			switch (patient.organHolder.chest.op_stage)
-				if (1.0)
-					playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+				if(0.0)	// Tail!
+					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+					if (prob(screw_up_prob))
+						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+						patient.TakeDamage("chest", damage_low, 0)
+						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
+						return 1
+
+					if(istype(patient.organHolder.tail, /obj/item/organ/tail/bone) || !patient.organHolder.tail)
+						patient.tri_message("<span class='alert'><b>[surgeon]</b> saws through the skin across the top of [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] butt with [src]!</span>",\
+						surgeon, "<span class='alert'>You snip the skin across the top of [surgeon == patient ? "your" : "[patient]'s"] butt with [src]!</span>",\
+						patient, "<span class='alert'>[patient == surgeon ? "You snip" : "<b>[surgeon]</b> saws through"] the skin across the top of your butt with [src]!</span>")
+					else
+						patient.tri_message("<span class='alert'><b>[surgeon]</b> saws through the skin along the base of [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] tail with [src]!</span>",\
+						surgeon, "<span class='alert'>You snip the skin along the base of [surgeon == patient ? "your" : "[patient]'s"] tail with [src]!</span>",\
+						patient, "<span class='alert'>[patient == surgeon ? "You snip" : "<b>[surgeon]</b> saws through"] the skin along the base of your tail with [src]!</span>")
+
+					patient.TakeDamage("chest", damage_low, 0)
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
+					patient.organHolder.chest.op_stage = 10.0
+					return 1
+
+				if(11.0)	// Last of tail!
+					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 					if (prob(screw_up_prob))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
-						take_bleeding_damage(patient, surgeon, damage_low)
+						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
+						return 1
+
+					if(istype(patient.organHolder.tail, /obj/item/organ/tail/bone) || !patient.organHolder.tail)
+						patient.tri_message("<span class='alert'><b>[surgeon]</b> saws through away the last few connections holding [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] tailbone in place with [src]!</span>",\
+						surgeon, "<span class='alert'>You snip away the last few connections holding [surgeon == patient ? "your" : "[patient]'s"] tailbone in place with [src]!</span>",\
+						patient, "<span class='alert'>[patient == surgeon ? "You snip" : "<b>[surgeon]</b> saws through"] away the last few connections holding your tailbone in place with [src]!</span>")
+					else
+						patient.tri_message("<span class='alert'><b>[surgeon]</b> saws through away the last few remaining strings of flesh attaching [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] tail to [his_or_her(patient)] lower body with [src]!</span>",\
+						surgeon, "<span class='alert'>You snip away the last few remaining strings of flesh attaching [surgeon == patient ? "your" : "[patient]'s"] tail to [surgeon == patient ? "your" : "[his_or_her(patient)]"] lower body with [src]!</span>",\
+						patient, "<span class='alert'>[patient == surgeon ? "You snip" : "<b>[surgeon]</b> saws through"] away the last few remaining strings of flesh attaching your tail to your butt with [src]!</span>")
+
+					patient.TakeDamage("chest", damage_low, 0)
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
+					if (patient.organHolder.tail)
+						logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s tail with [src].")
+					patient.organHolder.drop_organ("tail")
+					return 1
+
+				if (1.0)
+					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+
+					if (prob(screw_up_prob))
+						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+						patient.TakeDamage("chest", damage_low, 0)
+						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						return 1
 
 					patient.tri_message("<span class='alert'><b>[surgeon]</b> saws open [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] ribcage with [src]!</span>",\
@@ -1151,21 +1174,18 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient, "<span class='alert'>[patient == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] open your ribcage with [src]!</span>")
 
 					patient.TakeDamage("chest", damage_low, 0)
-					if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-						take_bleeding_damage(patient, surgeon, damage_low)
-					else
-						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					patient.organHolder.chest.op_stage = 2.0
 
 					return 1
 
 				if (5.0)
-					playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 					if (prob(screw_up_prob))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
-						take_bleeding_damage(patient, surgeon, damage_low)
+						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						return 1
 
 					patient.tri_message("<span class='alert'><b>[surgeon]</b> saws open [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] ribcage with [src]!</span>",\
@@ -1173,15 +1193,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient, "<span class='alert'>[patient == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] open your ribcage with [src]!</span>")
 
 					patient.TakeDamage("chest", damage_low, 0)
-					if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-						take_bleeding_damage(patient, surgeon, damage_low)
-					else
-						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					patient.organHolder.chest.op_stage = 8.0
 					return 1
 
 				if (9.0)
-					playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 					if (!patient.organHolder.get_organ("heart"))
 						src.surgeryConfusion(patient, surgeon, damage_low)
@@ -1189,17 +1206,14 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					if (prob(screw_up_prob))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff2]!</b></span>")
 						patient.TakeDamage("chest", damage_high, 0)
-						take_bleeding_damage(patient, surgeon, damage_high)
+						take_bleeding_damage(patient, surgeon, damage_high, surgery_bleed = 1)
 						return 1
 					patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts out [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] heart with [src]!</span>",\
 					surgeon, "<span class='alert'>You cut out [surgeon == patient ? "your" : "[patient]'s"] heart with [src]!</span>",\
 					patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] out your heart with [src]!</span>")
 
 					patient.TakeDamage("chest", damage_high, 0)
-					if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-						take_bleeding_damage(patient, surgeon, damage_low)
-					else
-						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s heart with [src].")
 					//patient.contract_disease(/datum/ailment/disease/noheart,null,null,1)
 
@@ -1244,7 +1258,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		JOB_XP(surgeon, "Clown", 1)
 		var/damage = rand(1, 10)
 		random_brute_damage(surgeon, damage)
-		take_bleeding_damage(surgeon, damage)
+		take_bleeding_damage(surgeon, damage, surgery_bleed = 1)
 		return 1
 
 	src.add_fingerprint(surgeon)
@@ -1313,10 +1327,26 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 /* ---------- SUTURE - CHEST ---------- */
 
 	else if (surgeon.zone_sel.selecting == "chest")
-		if (patient.organHolder.chest && patient.organHolder.chest.op_stage > 0.0)
+		if (patient.organHolder.chest && patient.organHolder.chest.op_stage > 0.0 && patient.organHolder.chest.op_stage < 10.0)
 			patient.tri_message("<span class='notice'><b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest closed with [src].</span>",\
 			surgeon, "<span class='notice'>You sew the incision on [surgeon == patient ? "your" : "[patient]'s"] chest closed with [src].</span>",\
 			patient, "<span class='notice'>[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision on your chest closed with [src].</span>")
+
+			patient.organHolder.chest.op_stage = 0.0
+			patient.TakeDamage("chest", 2, 0)
+			if (patient.bleeding)
+				repair_bleeding_damage(patient, 50, rand(1,3))
+			return 1
+
+		else if (patient.organHolder.chest && patient.organHolder.chest.op_stage >= 10.0)
+			if (patient.organHolder.tail && istype(patient.organHolder.tail, /obj/item/organ/tail)) // If tail, then sew it on
+				patient.tri_message("<span class='notice'><b>[surgeon]</b> sews [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] tail into place with [src].</span>",\
+				surgeon, "<span class='notice'>You sew [surgeon == patient ? "your" : "[patient]'s"] tail into place with [src].</span>",\
+				patient, "<span class='notice'>[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] your tail into place with [src].</span>")
+			else
+				patient.tri_message("<span class='notice'><b>[surgeon]</b> sews the incision just above [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] butt closed with [src].</span>",\
+				surgeon, "<span class='notice'>You sew the incision just above [surgeon == patient ? "your" : "[patient]'s"] butt closed with [src].</span>",\
+				patient, "<span class='notice'>[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision just above your butt closed with [src].</span>")
 
 			patient.organHolder.chest.op_stage = 0.0
 			patient.TakeDamage("chest", 2, 0)
@@ -1593,16 +1623,19 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		else if (surgeon.find_in_hand(src, "left") && patient.organHolder.left_eye)
 			target_eye = patient.organHolder.left_eye
 			target_side = "left"
+		else if (surgeon.find_in_hand(src, "middle"))
+			surgeon.show_text("Hey, there's no middle eye!")
+			return 0
 		else
 			return 0
 
 		if (target_eye.op_stage == 0.0)
-			playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+			playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 			if (prob(screw_up_prob))
 				surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 				patient.TakeDamage("head", damage_low, 0)
-				take_bleeding_damage(patient, surgeon, damage_low)
+				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 				return 1
 
 			patient.tri_message("<span class='alert'><b>[surgeon]</b> inserts [src] into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] [target_side] eye socket!</span>",\
@@ -1610,20 +1643,17 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			patient, "<span class='alert'>[patient == surgeon ? "You insert" : "<b>[surgeon]</b> inserts"] [src] into your [target_side] eye socket!</span>")
 
 			patient.TakeDamage("head", damage_low, 0)
-			if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-				take_bleeding_damage(patient, surgeon, damage_low)
-			else
-				surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+			take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 			target_eye.op_stage = 1.0
 			return 1
 
 		else if (target_eye.op_stage == 2.0)
-			playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+			playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 			if (prob(screw_up_prob))
 				surgeon.visible_message("<span class='alert'><b>[surgeon][fluff2]!</b></span>")
 				patient.TakeDamage("head", damage_high, 0)
-				take_bleeding_damage(patient, surgeon, damage_high)
+				take_bleeding_damage(patient, surgeon, damage_high, surgery_bleed = 1)
 				return 1
 
 			patient.tri_message("<span class='alert'><b>[surgeon]</b> removes [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] [target_side] eye with [src]!</span>",\
@@ -1631,10 +1661,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			patient, "<span class='alert'>[patient == surgeon ? "You remove" : "<b>[surgeon]</b> removes"] your [target_side] eye with [src]!</span>")
 
 			patient.TakeDamage("head", damage_low, 0)
-			if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-				take_bleeding_damage(patient, surgeon, damage_low)
-			else
-				surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+			take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 			logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s [target_side] eye with [src].")
 
 			if (target_eye == patient.organHolder.right_eye)
@@ -1664,7 +1691,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> fumbles and stabs [him_or_her(surgeon)]self in the eye with [src]!</span>", \
 		"<span class='alert'>You fumble and stab yourself in the eye with [src]!</span>")
 		surgeon.bioHolder.AddEffect("blind")
-		patient.changeStatus("weakened", 4)
+		patient.changeStatus("weakened", 0.4 SECONDS)
 
 		JOB_XP(surgeon, "Clown", 1)
 		var/damage = rand(5, 15)
@@ -1692,12 +1719,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		if (patient.organHolder.chest)
 			switch (patient.organHolder.chest.op_stage)
 				if (0.0)
-					playsound(get_turf(patient), "sound/items/Scissor.ogg", 50, 1)
+					playsound(patient, "sound/items/Scissor.ogg", 50, 1)
 
 					if (prob(screw_up_prob))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
-						take_bleeding_damage(patient, surgeon, damage_low)
+						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						return 1
 
 					patient.tri_message("<span class='alert'><b>[surgeon]</b> makes a cut on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest with [src]!</span>",\
@@ -1705,22 +1732,18 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient, "<span class='alert'>[patient == surgeon ? "You make a cut" : "<b>[surgeon]</b> makes a cut"] on chest with [src]!</span>")
 
 					patient.TakeDamage("chest", damage_low, 0)
-					if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-						take_bleeding_damage(patient, surgeon, damage_low)
-					else
-						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					patient.organHolder.chest.op_stage = 1.0
 					return 1
 
 				//second cut, path for appendix/liver
 				if (1.0)
-					playsound(get_turf(patient), "sound/items/Scissor.ogg", 50, 1)
+					playsound(patient, "sound/items/Scissor.ogg", 50, 1)
 
 					if (prob(screw_up_prob))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
-						take_bleeding_damage(patient, surgeon, damage_low)
+						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						return 1
 
 					patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] right abdomen open with [src]!</span>",\
@@ -1728,16 +1751,13 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] your right abdomen open with [src]!</span>")
 
 					patient.TakeDamage("chest", damage_low, 0)
-					if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-						take_bleeding_damage(patient, surgeon, damage_low)
-					else
-						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					patient.organHolder.chest.op_stage = 3.0
 					return 1
 
 				//remove lungs
 				if (2.0)
-					playsound(get_turf(patient), "sound/items/Scissor.ogg", 50, 1)
+					playsound(patient, "sound/items/Scissor.ogg", 50, 1)
 
 					var/obj/item/organ/lung/target_organ = null
 					var/target_side = null
@@ -1755,7 +1775,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					if (prob(screw_up_prob))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff2]!</b></span>")
 						patient.TakeDamage("chest", damage_high, 0)
-						take_bleeding_damage(patient, surgeon, damage_high)
+						take_bleeding_damage(patient, surgeon, damage_high, surgery_bleed = 1)
 						return 1
 
 					patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] [target_side] lung out with [src]!</span>",\
@@ -1763,10 +1783,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] your [target_side] lung out with [src]!</span>")
 
 					patient.TakeDamage("chest", damage_low, 0)
-					if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-						take_bleeding_damage(patient, surgeon, damage_low)
-					else
-						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s [target_side] lung with [src].")
 
 					if (target_organ == patient.organHolder.left_lung)
@@ -1779,7 +1796,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				//remove appendix or liver
 				if (3.0)
 					//remove appendix with this cut
-					playsound(get_turf(patient), "sound/items/Scissor.ogg", 50, 1)
+					playsound(patient, "sound/items/Scissor.ogg", 50, 1)
 
 					if (!patient.organHolder.appendix)
 						src.surgeryConfusion(patient, surgeon, damage_low)
@@ -1788,7 +1805,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					if (prob(screw_up_prob))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
-						take_bleeding_damage(patient, surgeon, damage_low)
+						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						return 1
 
 					patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] appendix out with [src]!</span>",\
@@ -1796,11 +1813,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] your appendix out with [src]!</span>")
 
 					patient.TakeDamage("chest", damage_low, 0)
-					if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-						take_bleeding_damage(patient, surgeon, damage_low)
-					else
-						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s appendix with [src].")
 					patient.organHolder.drop_organ("appendix")
 					return 1
@@ -1808,7 +1821,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				//path for stomach and intestines
 				if (4.0)
 					//remove stomach with this cut
-					playsound(get_turf(patient), "sound/items/Scissor.ogg", 50, 1)
+					playsound(patient, "sound/items/Scissor.ogg", 50, 1)
 
 					if (!patient.organHolder.stomach)
 						src.surgeryConfusion(patient, surgeon, damage_low)
@@ -1817,7 +1830,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					if (prob(screw_up_prob))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
-						take_bleeding_damage(patient, surgeon, damage_low)
+						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						return 1
 
 					patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] stomach out with [src]!</span>",\
@@ -1825,10 +1838,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] your stomach out with [src]!</span>")
 
 					patient.TakeDamage("chest", damage_low, 0)
-					if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-						take_bleeding_damage(patient, surgeon, damage_low)
-					else
-						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s stomach with [src].")
 					patient.organHolder.drop_organ("stomach")
 
@@ -1837,12 +1847,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				//paths for pancreas and kidneys
 				if (5.0)
 					//path for pancreas
-					playsound(get_turf(patient), "sound/items/Scissor.ogg", 50, 1)
+					playsound(patient, "sound/items/Scissor.ogg", 50, 1)
 
 					if (prob(screw_up_prob))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
-						take_bleeding_damage(patient, surgeon, damage_low)
+						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						return 1
 
 					patient.tri_message("<span class='alert'><b>[surgeon]</b> makes a cut just below [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] ribcage with [src]!</span>",\
@@ -1850,17 +1860,14 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient, "<span class='alert'>[patient == surgeon ? "You make" : "<b>[surgeon]</b> makes"] a cut just below your ribcage with [src]!</span>")
 
 					patient.TakeDamage("chest", damage_low, 0)
-					if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-						take_bleeding_damage(patient, surgeon, damage_low)
-					else
-						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					patient.organHolder.chest.op_stage = 6.0
 
 					return 1
 
 				//remove pancreas
 				if (6.0)
-					playsound(get_turf(patient), "sound/items/Scissor.ogg", 50, 1)
+					playsound(patient, "sound/items/Scissor.ogg", 50, 1)
 
 					if (!patient.organHolder.pancreas)
 						src.surgeryConfusion(patient, surgeon, damage_low)
@@ -1869,7 +1876,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					if (prob(screw_up_prob))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
-						take_bleeding_damage(patient, surgeon, damage_low)
+						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						return 1
 
 
@@ -1878,10 +1885,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] your pancreas out with [src]!</span>")
 
 					patient.TakeDamage("chest", damage_low, 0)
-					if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-						take_bleeding_damage(patient, surgeon, damage_low)
-					else
-						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s pancreas with [src].")
 					patient.organHolder.drop_organ("pancreas")
 
@@ -1889,7 +1893,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 				//remove kidneys
 				if (7.0)
-					playsound(get_turf(patient), "sound/items/Scissor.ogg", 50, 1)
+					playsound(patient, "sound/items/Scissor.ogg", 50, 1)
 
 					var/obj/item/organ/kidney/target_organ = null
 					var/target_side = null
@@ -1907,7 +1911,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					if (prob(screw_up_prob))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff2]!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
-						take_bleeding_damage(patient, surgeon, damage_low)
+						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						return 1
 
 					patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] [target_side] kidney out with [src]!</span>",\
@@ -1915,10 +1919,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] your [target_side] kidney out with [src]!</span>")
 
 					patient.TakeDamage("chest", damage_low, 0)
-					if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-						take_bleeding_damage(patient, surgeon, damage_low)
-					else
-						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s [target_side] kidney with [src].")
 
 					if (target_organ == patient.organHolder.left_kidney)
@@ -1933,5 +1934,64 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 		else
 			return 0
+
+////////////////////////////////////////////////////////////////////
+
+/* ================================ */
+/* ------------ CROWBAR ----------- */
+/* ================================ */
+
+/obj/item/proc/pry_surgery(var/mob/living/carbon/human/patient as mob, var/mob/living/surgeon as mob)
+	if (!surgeryCheck(patient, surgeon))
+		return 0
+
+	if (!patient.organHolder)
+		return 0
+
+	if (surgeon.bioHolder.HasEffect("clumsy") && prob(50))
+		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> fumbles and clubs [him_or_her(surgeon)]self upside the head with [src]!</span>", \
+		"<span class='alert'>You fumble and club yourself in the head with [src]!</span>")
+		patient.changeStatus("weakened", 0.4 SECONDS)
+
+		JOB_XP(surgeon, "Clown", 1)
+		var/damage = rand(5, 15)
+		random_brute_damage(surgeon, damage)
+		return 1
+
+	src.add_fingerprint(surgeon)
+
+	// fluff2 is for things that do more damage: smacking an artery is included in the choices
+	//var/fluff = pick(" messes up", "'s hand slips", " fumbles with [src]", " nearly drops [src]", "'s hand twitches")
+	//var/fluff2 = pick(" messes up", "'s hand slips", " fumbles with [src]", " nearly drops [src]", "'s hand twitches", " smacks an artery")
+
+	//var/screw_up_prob = calc_screw_up_prob(patient, surgeon)
+
+	//Crowbarring is a lot safer than other types of surgery. Is it because the crowbar is a pretty lousy weaspon? Yes, it is
+	//var/damage_low = calc_surgery_damage(surgeon, screw_up_prob, rand(1,2)/*, src.adj1, src.adj2*/)
+	//var/damage_high = calc_surgery_damage(surgeon, screw_up_prob, rand(3,4)/*, src.adj1, src.adj2*/)
+
+	DEBUG_MESSAGE("<b>[patient]'s surgery (performed by [surgeon])</b>")
+
+
+/* ---------- crowbar - chest ---------- */
+	if (surgeon.zone_sel.selecting == "chest")
+		if (patient.mob_flags & IS_BONER)
+			playsound(patient, "sound/items/Crowbar.ogg", 50, 1)	// Dont really need much surgery to remove a bone from a skeleton
+
+			if(istype(patient.organHolder.tail, /obj/item/organ/tail/bone))
+				patient.tri_message("<span class='alert'><b>[surgeon]</b> jams one end of the [src] between [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] sacrum and coccyx and pries [his_or_her(patient)] tailbone free!</span>",\
+				surgeon, "<span class='alert'>You jam one end of the [src] between [surgeon == patient ? "your" : "[patient]'s"] sacrum and coccyx and pries [his_or_her(patient)] tailbone free!</span>",\
+				patient, "<span class='alert'>[patient == surgeon ? "You jam" : "<b>[surgeon]</b> jams"] one end of the [src] between your sacrum and coccyx and pry your tailbone free!</span>")
+			else
+				patient.tri_message("<span class='alert'><b>[surgeon]</b> jams one end of the [src] just below [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] sacrum and pries [his_or_her(patient)] tail off!</span>",\
+				surgeon, "<span class='alert'>You jam one end of the [src] just below [surgeon == patient ? "your" : "[patient]'s"] sacrum and pries [his_or_her(patient)] tail off!</span>",\
+				patient, "<span class='alert'>[patient == surgeon ? "You jam" : "<b>[surgeon]</b> jams"] one end of the [src] just below your sacrum and [patient == surgeon ? "pry" : "pries"] your tail off!</span>")
+
+			if (patient.organHolder.tail)
+				logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s skeleton tail with [src].")
+			patient.organHolder.drop_organ("tail")
+			return 1
+
 	else
 		return 0
+#undef UNPOOL_BLOOD_SPLOOSH

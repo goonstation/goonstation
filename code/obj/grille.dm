@@ -2,7 +2,7 @@
 	desc = "A sturdy metal mesh. Blocks large objects, but lets small items, gas, or energy beams through."
 	name = "grille"
 	icon = 'icons/obj/SL_windows_grilles.dmi'
-	icon_state = "grille-0"
+	icon_state = "grille0-0"
 	density = 1
 	stops_space_move = 1
 	var/health = 30
@@ -44,7 +44,7 @@
 
 	steel
 #ifdef IN_MAP_EDITOR
-		icon_state = "grille-0"
+		icon_state = "grille0-0"
 #endif
 		New()
 			..()
@@ -55,11 +55,13 @@
 		desc = "Looks like its been in this sorry state for quite some time."
 		icon_state = "grille-cut"
 		ruined = 1
+		density = 0
+		health = 0
 
-		New()
-			..()
-			damage_slashing(1000)
-			update_icon()
+		corroded
+			icon_state = "grille-corroded"
+		melted
+			icon_state = "grille-melted"
 
 	catwalk
 		name = "catwalk surface"
@@ -110,7 +112,7 @@
 				if (issnippingtool(W))
 					..()
 				else
-					src.loc.attackby(user.equipped(), user)
+					src.loc.Attackby(user.equipped(), user)
 
 			reagent_act(var/reagent_id,var/volume)
 				..()
@@ -314,7 +316,7 @@
 
 		else if(istype(W, /obj/item/sheet/))
 			var/obj/item/sheet/S = W
-			if (S.material && S.material.material_flags & MATERIAL_CRYSTAL)
+			if (S.material && S.material.material_flags & MATERIAL_CRYSTAL && S.amount_check(2))
 				var/obj/window/WI
 				var/win_thin = 0
 				var/win_dir = 2
@@ -360,16 +362,14 @@
 					if (S.material)
 						WI.setMaterial(S.material)
 					if(win_thin)
-						WI.dir = win_dir
+						WI.set_dir(win_dir)
 						WI.ini_dir = win_dir
 					logTheThing("station", usr, null, "builds a [WI.name] (<b>Material:</b> [WI.material && WI.material.mat_id ? "[WI.material.mat_id]" : "*UNKNOWN*"]) at ([showCoords(usr.x, usr.y, usr.z)] in [usr.loc.loc])")
 				else
 					user.show_text("<b>Error:</b> Couldn't spawn window. Try again and please inform a coder if the problem persists.", "red")
 					return
 
-				S.amount--
-				if (S.amount < 1)
-					qdel(S)
+				S.change_stack_amount(-2)
 				return
 			else
 				..()
@@ -385,7 +385,7 @@
 		if ((src.material && src.material.hasProperty("electrical") && src.material.getProperty("electrical") > 30))
 			dmg_mod = 60 - src.material.getProperty("electrical")
 
-		if (OSHA_is_crying && shock(user, 100 - dmg_mod))
+		if (OSHA_is_crying && IN_RANGE(src, user, 1) && shock(user, 100 - dmg_mod))
 			return
 
 		// Things that will electrocute you
@@ -398,6 +398,7 @@
 		else if (isscrewingtool(W) && (istype(src.loc, /turf/simulated) || src.anchored))
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			src.anchored = !( src.anchored )
+			src.stops_space_move = !(src.stops_space_move)
 			src.visible_message("<span class='alert'><b>[usr]</b> [src.anchored ? "fastens" : "unfastens"] [src].</span>")
 			return
 

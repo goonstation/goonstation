@@ -27,7 +27,7 @@
 		light.attach(src)
 
 	attack_ai()
-		src.attack_hand()
+		src.Attackhand()
 
 	Bumped(M as mob|obj)
 		SPAWN_DBG( 0 )
@@ -94,7 +94,7 @@
 		find_links()
 
 	attack_ai()
-		src.attack_hand()
+		src.Attackhand()
 
 	attack_hand()
 		if(engaged)
@@ -103,7 +103,7 @@
 			src.engage()
 
 	attackby(var/obj/item/W)
-		src.attack_hand()
+		src.Attackhand()
 
 	power_change()
 		..()
@@ -237,7 +237,7 @@ proc/splinch(var/mob/M as mob, var/probability)
 			var/mob/living/carbon/human/H = M
 			var/part_splinched
 
-			part_splinched = pick("l_arm", "r_arm", "l_leg", "l_leg","left_eye", "right_eye", "left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "spleen", "pancreas", "appendix", "stomach", "intestines")
+			part_splinched = pick("l_arm", "r_arm", "l_leg", "l_leg","left_eye", "right_eye", "left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "spleen", "pancreas", "appendix", "stomach", "intestines", "tail")
 			if (part_splinched == "l_arm" || part_splinched == "r_arm" || part_splinched == "l_leg" || part_splinched == "l_leg")
 				return H.sever_limb(part_splinched)
 			else

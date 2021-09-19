@@ -73,7 +73,7 @@
 		src.icon_state = possessed.icon_state
 		src.pixel_x = possessed.pixel_x
 		src.pixel_y = possessed.pixel_y
-		src.dir = possessed.dir
+		src.set_dir(possessed.dir)
 		src.color = possessed.color
 		src.overlays = possessed.overlays
 		src.item = possessed
@@ -86,6 +86,7 @@
 			src.owner.set_loc(src)
 			if (!src.owner.mind)
 				src.owner.mind = new /datum/mind(  )
+				src.owner.mind.ckey = ckey
 				src.owner.mind.key = src.owner.key
 				src.owner.mind.current = src.owner
 				ticker.minds += src.owner.mind
@@ -131,7 +132,7 @@
 		delStatus("slowed")
 		sleeping = 0
 		change_misstep_chance(-INFINITY)
-		drowsyness = 0.0
+		src.delStatus("drowsy")
 		dizziness = 0
 		is_dizzy = 0
 		is_jittery = 0
@@ -212,9 +213,9 @@
 				src.item.attack_self(src)
 			else
 				if(!isitem(src.item))
-					src.item.attack_hand(src)
+					src.item.Attackhand(src)
 				else //This shouldnt ever happen.
-					src.item.attackby(src.item, src)
+					src.item.Attackby(src.item, src)
 		else
 			if(src.a_intent == INTENT_GRAB && istype(target, /atom/movable) && get_dist(src, target) <= 1)
 				var/atom/movable/M = target
@@ -233,7 +234,7 @@
 		src.name = "[name_prefix][src.item.name]"
 		src.real_name = src.name
 		src.desc = "[src.item.desc]"
-		src.item.dir = src.dir
+		src.item.set_dir(src.dir)
 		src.icon = src.item.icon
 		src.icon_state = src.item.icon_state
 		//src.pixel_x = src.item.pixel_x
@@ -269,10 +270,10 @@
 				if (src.mind)
 					src.mind.transfer_to(O)
 
-		playsound(src.loc, "sound/effects/suck.ogg", 40, 1, -1, 0.6)
+		playsound(src.loc, "sound/voice/wraith/wraithleaveobject.ogg", 40, 1, -1, 0.6)
 
 		if (src.item)
-			src.item.dir = src.dir
+			src.item.set_dir(src.dir)
 			if (src.item.loc == src)
 				src.item.set_loc(get_turf(src))
 			if (gibbed)
@@ -295,3 +296,9 @@
 			return "<span class='alert'><B>[src] attacks [T] in the [d_zone]!</B></span>"
 		else
 			return "<span class='alert'><B>[src] attacks [T]!</B></span>"
+
+	return_air()
+		return loc?.return_air()
+
+	assume_air(datum/air_group/giver)
+		return loc?.assume_air(giver)

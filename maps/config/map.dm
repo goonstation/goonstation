@@ -1,5 +1,10 @@
+#if defined(SPACE_PREFAB_RUNTIME_CHECKING) || defined( UNIT_TESTS )
+#include "blank.dm"
 
-#if defined(MAP_OVERRIDE_CONSTRUCTION)
+#elif defined(UNDERWATER_PREFAB_RUNTIME_CHECKING)
+#include "blank_underwater.dm"
+
+#elif defined(MAP_OVERRIDE_CONSTRUCTION)
 #include "construction.dm"
 
 #elif defined(MAP_OVERRIDE_DESTINY)
@@ -64,6 +69,9 @@
 
 #elif defined(MAP_OVERRIDE_WRESTLEMAP)
 #include "wrestlemap.dm"
+
+#elif defined(MAP_OVERRIDE_POD_WARS)
+#include "pod_wars.dm"
 
 #elif defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
 #include "gottagofast.dm"

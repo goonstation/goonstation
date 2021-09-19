@@ -1,7 +1,9 @@
 
 var/global/list/persistent_bank_purchaseables =	list(\
+	new /datum/bank_purchaseable/human_item/reset,\
 	new /datum/bank_purchaseable/human_item/crayon,\
 	new /datum/bank_purchaseable/human_item/paint_rainbow,\
+	new /datum/bank_purchaseable/human_item/crayon_box,\
 	new /datum/bank_purchaseable/human_item/paint_plaid,\
 	new /datum/bank_purchaseable/human_item/stickers,\
 	new /datum/bank_purchaseable/human_item/bee_egg,\
@@ -12,9 +14,9 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/human_item/trumpet,\
 	new /datum/bank_purchaseable/human_item/fiddle,\
 	new /datum/bank_purchaseable/human_item/gold_zippo,\
+	new /datum/bank_purchaseable/human_item/drinking_flask,\
 	new /datum/bank_purchaseable/human_item/toy_sword,\
 	new /datum/bank_purchaseable/human_item/sound_synth,\
-	new /datum/bank_purchaseable/human_item/food_synth,\
 	new /datum/bank_purchaseable/human_item/record,\
 	new /datum/bank_purchaseable/human_item/sparkler_box,\
 	new /datum/bank_purchaseable/human_item/dabbing_license,\
@@ -25,15 +27,20 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/bp_fjallraven,\
 	new /datum/bank_purchaseable/bp_randoseru,\
 	new /datum/bank_purchaseable/bp_anello,\
+	new /datum/bank_purchaseable/bp_brown,\
 	new /datum/bank_purchaseable/nt_backpack,\
+	new /datum/bank_purchaseable/bp_studded,\
+	new /datum/bank_purchaseable/bp_itabag,\
 
 	new /datum/bank_purchaseable/limbless,\
+	new /datum/bank_purchaseable/legless,\
 	new /datum/bank_purchaseable/corpse,\
 	new /datum/bank_purchaseable/space_diner,\
 	new /datum/bank_purchaseable/mail_order,\
 	new /datum/bank_purchaseable/missile_arrival,\
 	new /datum/bank_purchaseable/lunchbox,\
 
+	new /datum/bank_purchaseable/bird_respawn,\
 	new /datum/bank_purchaseable/critter_respawn,\
 	new /datum/bank_purchaseable/golden_ghost,\
 
@@ -153,6 +160,10 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				return 0
 			return ..()
 
+		reset
+			name = "Clear Purchase"
+			cost = 0
+			path = null
 		crayon
 			name = "Crayon"
 			cost = 50
@@ -167,6 +178,11 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			name = "Plaid Paint Can"
 			cost = 3000
 			path = /obj/item/paint_can/rainbow/plaid
+
+		crayon_box
+			name = "Crayon Creator"
+			cost = 2500
+			path = /obj/item/item_box/crayon
 
 		stickers
 			name = "Sticker Box"
@@ -213,6 +229,11 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			cost = 500
 			path = /obj/item/device/light/zippo/gold
 
+		drinking_flask
+			name = "Drinking Flask"
+			cost = 400
+			path = /obj/item/reagent_containers/food/drinks/flask
+
 		toy_sword
 			name = "Toy Sword"
 			cost = 900
@@ -222,11 +243,6 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			name = "Sound Synthesizer"
 			cost = 14000
 			path = /obj/item/noisemaker
-
-		food_synth
-			name = "Food Synthesizer"
-			cost = 8000
-			path = /obj/item/robot_foodsynthesizer
 
 		record
 			name = "Record"
@@ -250,7 +266,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 			Create(var/mob/living/M)
 				..(M)
-				if(M && M.mind)
+				if(M?.mind)
 					battle_pass_holders.Add(M.mind)
 				return 1
 
@@ -281,17 +297,29 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 
 				if (H.w_uniform && istype(H.w_uniform, /obj/item/clothing/under/rank))
-					if (ispath(text2path("[H.w_uniform.type]/april_fools")))
+					var/obj/origin = text2path("[H.w_uniform.type]/april_fools")
+					if (ispath(origin))
 						H.w_uniform.icon_state = "[H.w_uniform.icon_state]-alt"
 						H.w_uniform.item_state = "[H.w_uniform.item_state]-alt"
+						H.w_uniform.desc = initial(origin.desc)
 						succ = 1
 
 				if (H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
-					if (ispath(text2path("[H.wear_suit.type]/april_fools")))
+					var/obj/origin = text2path("[H.wear_suit.type]/april_fools")
+					if (ispath(origin))
 						H.wear_suit.icon_state = "[H.wear_suit.icon_state]-alt"
 						H.wear_suit.item_state = "[H.wear_suit.item_state]-alt"
+						H.wear_suit.desc = initial(origin.desc)
 						if (istype(H.wear_suit, /obj/item/clothing/suit/labcoat))
 							H.wear_suit:coat_style = "[H.wear_suit:coat_style]-alt"
+						succ = 1
+
+				if (H.head && istype(H.head, /obj/item/clothing/head))
+					var/obj/origin = text2path("[H.head.type]/april_fools")
+					if (ispath(origin))
+						H.head.icon_state = "[H.head.icon_state]-alt"
+						H.head.item_state = "[H.head.item_state]-alt"
+						H.head.desc = initial(origin.desc)
 						succ = 1
 
 			return succ
@@ -353,13 +381,30 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				return 1
 			return 0
 
+	legless
+		name = "No Legs"
+		cost = 5000
+
+		Create(var/mob/living/M)
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				SPAWN_DBG(6 SECONDS)
+					if (H.limbs)
+						if (H.limbs.l_leg)
+							H.limbs.l_leg.delete()
+						if (H.limbs.r_leg)
+							H.limbs.r_leg.delete()
+						boutput( H, "<span class='notice'><b>You haven't got a leg to stand on!</b></span>" )
+				return 1
+			return 0
+
 	corpse
 		name = "Corpse"
 		cost = 15000
 		carries_over = 0
 
 		Create(var/mob/living/M)
-			setdead(M)
+			M.death(FALSE)
 			boutput(M, "<span class='notice'><b>You magically keel over and die! Oh, no!</b></span>")
 			return 1
 
@@ -390,10 +435,10 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			if (istype(M.loc, /obj/storage)) // also for stowaways; we really should have a system for integrating this stuff
 				S = M.loc
 			else
-				S = new /obj/storage/crate/packing(get_turf(M))
+				S = new /obj/storage/crate/packing()
 				M.set_loc(S)
-				shippingmarket.receive_crate(S)
-				return 1
+			shippingmarket.receive_crate(S)
+			return 1
 
 	missile_arrival
 		name = "Missile Arrival"
@@ -403,7 +448,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			if(istype(M.back, /obj/item/storage))
 				var/obj/item/storage/backpack = M.back
 				new /obj/item/tank/emergency_oxygen(backpack) // oh boy they'll need this if they are unlucky
-				backpack.hud.update()
+				backpack.hud.update(M)
 			var/mob/living/carbon/human/H = M
 			if(istype(H))
 				H.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
@@ -418,6 +463,14 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		name = "Alt Ghost Critter"
 		cost = 1000
 		var/list/respawn_critter_types = list(/mob/living/critter/small_animal/boogiebot/weak, /mob/living/critter/small_animal/figure/weak)
+
+		Create(var/mob/M)
+			return 1
+
+	bird_respawn
+		name = "Lil Bird Ghost Critter"
+		cost = 1000
+		var/list/respawn_critter_types = list(/mob/living/critter/small_animal/sparrow/weak, /mob/living/critter/small_animal/sparrow/robin/weak)
 
 		Create(var/mob/M)
 			return 1
@@ -440,6 +493,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 					var/color = pick("red","yellow")
 					H.back.name = "rucksack"
 					H.back.icon_state = H.back.item_state = "bp_fjallraven_[color]"
+					H.back.desc = "A thick, wearable container made of synthetic fibers, perfectly suited for outdoorsy, adventure-loving staff."
 					return 1
 			return 0
 
@@ -453,6 +507,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				if (H.back)
 					H.back.name = "randoseru"
 					H.back.icon_state = H.back.item_state = "bp_randoseru"
+					H.back.desc = "Inconspicuous, nostalgic and quintessentially Space Japanese."
 					return 1
 			return 0
 
@@ -466,6 +521,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				if (H.back)
 					H.back.name = "travel pack"
 					H.back.icon_state = H.back.item_state = "bp_anello"
+					H.back.desc = "A thick, wearable container made of synthetic fibers, often seen carried by tourists and travelers."
 				return 1
 			return 0
 
@@ -478,7 +534,52 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				var/mob/living/carbon/human/H = M
 				if (H.back)
 					H.back.name = "\improper NT backpack"
-					H.back.icon_state = "NTbackpack"
+					H.back.icon_state = H.back.item_state = "NTbackpack"
+					H.back.desc = "A stylish blue, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's back."
+					return 1
+				return 0
+
+	bp_studded
+		name = "Studded Backpack"
+		cost = 1500
+
+		Create(var/mob/living/M)
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if (H.back)
+					H.back.name = "studded backpack"
+					H.back.icon_state = H.back.item_state = "bp_studded"
+					H.back.desc = "Made of sturdy synthleather and covered in metal studs. Much edgier than the standard issue bag."
+					return 1
+				return 0
+
+	bp_itabag
+		name = "Itabag"
+		cost = 1600
+
+		Create(var/mob/living/M)
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if (H.back)
+					var/color = pick("pink","blue","purple","mint","black")
+					var/itabagmascot = pick("Heisenbee","Bombini","Morty","Sylvester","Dr. Acula","a clown","a mime","Jones the cat","Stir Stir","a bumblespider","a space bee","the Amusing Duck")
+					H.back.name = "[color] itabag"
+					H.back.icon_state = H.back.item_state = "bp_itabag_[color]"
+					H.back.desc = "Comes in cute pastel shades. Within the heart-shaped window, you can see buttons and stickers of [itabagmascot]!"
+					return 1
+			return 0
+
+	bp_brown
+		name = "Brown Backpack"
+		cost = 500
+
+		Create(var/mob/living/M)
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if (H.back)
+					H.back.name = "backpack"
+					H.back.icon_state = H.back.item_state = "backpackbr"
+					H.back.desc = "A thick, wearable container made of synthetic fibers. This brown variation is both rustic and adventurous!"
 					return 1
 				return 0
 
@@ -578,5 +679,3 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				A.set_hat(new picked())
 				return 1
 			return 0
-
-

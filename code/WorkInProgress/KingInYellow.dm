@@ -61,7 +61,7 @@
 		created = world.time
 		showimg = image('icons/misc/critter.dmi', src, "kingyellow", 3)
 		target << showimg
-		src.dir = get_dir(src, target)
+		src.set_dir(get_dir(src, target))
 		SPAWN_DBG(0.5 SECONDS) update()
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -74,7 +74,7 @@
 		if(!target) vanish()
 		if(!(src in view(7, target)) && (world.time - created) > 40) vanish()
 		if(get_dist(src,target) <= 2) vanish()
-		src.dir = get_dir(src, target)
+		src.set_dir(get_dir(src, target))
 		SPAWN_DBG(0.5 SECONDS) update()
 
 	proc/vanish()
@@ -127,7 +127,7 @@
 			if (readers.len && (reader in readers))
 				. += "<br>You frantically read the play again..."
 				. += "You feel as if you're about to faint."
-				reader.drowsyness += 3
+				reader.changeStatus("drowsy", 15 SECONDS)
 			else
 				. += "<br>This appears to be an ancient book containing a play."
 				. += "The first act tells of a city named Carcosa, and a mysterious \"King in Yellow\"."

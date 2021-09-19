@@ -137,7 +137,7 @@ var/const/PHASER_SNIPER = 256
 	item_state = "gun"
 	m_amt = 2000
 	throwforce = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 10
 
@@ -156,7 +156,7 @@ var/const/PHASER_SNIPER = 256
 	name = "phaser"
 	icon_state = "phaser"
 	desc = "Set phasers to 'Robust'"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	item_state = "gun"
 	force = 10.0
 	throw_speed = 2
@@ -495,7 +495,7 @@ var/const/PHASER_SNIPER = 256
 							for(var/turf/simulated/floor/T in view(O.range,O.loc))
 								var/obj/OV = unpool(/obj/effects/sparks)
 								OV.set_loc(T)
-								OV.dir = pick(alldirs)
+								OV.set_dir(pick(alldirs))
 								SPAWN_DBG(2 SECONDS) if (OV) pool(OV)
 						if(34 to 66)
 							playsound(O.loc, "sound/effects/exlow.ogg", 65, 1)
@@ -503,7 +503,7 @@ var/const/PHASER_SNIPER = 256
 								var/obj/OV = new/obj/overlay(T)
 								OV.icon = 'icons/effects/effects.dmi'
 								OV.icon_state = "empdisable"
-								OV.dir = pick(alldirs)
+								OV.set_dir(pick(alldirs))
 								SPAWN_DBG(0.3 SECONDS) qdel(OV)
 								if(prob(O.power/2) || !O.range)
 									T.burn_tile()
@@ -511,14 +511,14 @@ var/const/PHASER_SNIPER = 256
 							playsound(O.loc, "sound/weapons/flashbang.ogg", 65, 1)
 							for(var/turf/simulated/floor/T in view(O.range,O.loc))
 								var/obj/OV = new/obj/effects/expl_particles(T)
-								OV.dir=get_dir(O.loc,OV)
+								OV.set_dir(get_dir(O.loc,OV))
 								if(prob(O.power/2) || !O.range)
 									T.break_tile()
 						if(101 to 150)
 							playsound(O.loc, "sound/weapons/grenade.ogg", 65, 1)
 							for(var/turf/simulated/floor/T in view(O.range,O.loc))
 								var/obj/OV = new/obj/effects/expl_particles(T)
-								OV.dir=get_dir(O.loc,OV)
+								OV.set_dir(get_dir(O.loc,OV))
 								if(prob(85) || !O.range)
 									T.break_tile_to_plating()
 
@@ -530,7 +530,7 @@ var/const/PHASER_SNIPER = 256
 	Topic(href, href_list)
 		if(overloading) return
 		if(usr.stat || usr.restrained()) return
-		if(!in_range(src, usr)) return
+		if(!in_interact_range(src, usr)) return
 		src.add_dialog(usr)
 		if (href_list["power"])
 			var/change = href_list["power"]

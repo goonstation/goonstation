@@ -5,10 +5,17 @@
 	system = "Sensors"
 	var/ships = 0
 	var/list/obj/shiplist = list()
-	var/list/obj/whos_tracking_me = list()
+	var/beacons = 0
+	var/list/beaconlist = list()
 	var/lifeforms = 0
 	var/list/lifelist = list()
+	var/list/obj/whos_tracking_me = list()
+	//HAHA SUE ME NERDS, I'LL REMOVE THIS WHEN SENSORS DON'T SUCK --Kyle
+#if defined(MAP_OVERRIDE_POD_WARS)
+	var/seekrange = 90
+#else
 	var/seekrange = 30
+#endif
 	var/sight = SEE_SELF
 	var/see_in_dark = SEE_DARK_HUMAN + 3
 	var/antisight = 0
@@ -49,6 +56,10 @@
 		if(src.active)
 			dat += build_html_gps_form(src, false, src.tracking_target)
 			dat += {"<HR><BR><A href='?src=\ref[src];scan=1'>Scan Area</A>"}
+			dat += {"<HR><B>[beacons] Beacons Nearby:</B><BR>"}
+			if(beaconlist.len)
+				for(var/obj/B in beaconlist)
+					dat += {"<HR><a href=\"byond://?src=\ref[src];dest_cords=1;x=[B.x];y=[B.y];z=[B.z]\">[B.name]</a>~[round(get_dist(src.ship, B), 25)]M [dir_name(get_dir(src.ship, B))]"}
 			dat += {"<HR><B>[ships] Ships Detected:</B><BR>"}
 			if(shiplist.len)
 				for(var/obj/V in shiplist)
@@ -122,7 +133,7 @@
 						target_pod.myhud.sensor_lock.mouse_opacity = 0
 
 		src.tracking_target = null
-		src.ship.myhud.tracking.dir = 1
+		src.ship.myhud.tracking.set_dir(1)
 		animate(src.ship.myhud.tracking, transform = null, time = 10, loop = 0)
 
 		src.ship.myhud.tracking.icon_state = "off"
@@ -143,7 +154,7 @@
 			//change position and icon dir based on direction to target. And make sure it's using the dots.
 			//must be within range and be on the same z-level
 			if (same_z_level && (cur_dist <= trackable_range || tracking_gps_coord))
-				// src.dir = get_dir(ship, src.tracking_target)
+				// src.set_dir(get_dir(ship, src.tracking_target))
 				src.ship.myhud.tracking.icon_state = "dots-s"
 				animate_tracking_hud(src.ship.myhud.tracking, src.tracking_target)
 
@@ -284,14 +295,16 @@
 		scanning = 1
 		lifeforms = 0
 		ships = 0
+		beacons = 0
 		lifelist = list()
 		shiplist = list()
+		beaconlist = list()
 		for(var/mob/living/carbon/human/M in ship)
 			M << sound('sound/machines/signal.ogg')
 		ship.visible_message("<b>[ship] begins a sensor sweep of the area.</b>")
-		boutput(usr, "<span class='notice'>Scanning...</span>")
+		boutput(user, "<span class='notice'>Scanning...</span>")
 		sleep(3 SECONDS)
-		boutput(usr, "<span class='notice'>Scan complete.</span>")
+		boutput(user, "<span class='notice'>Scan complete.</span>")
 		for (var/mob/living/M in mobs)
 			if (!isturf(M.loc))	// || ship.Find(M)
 				continue
@@ -311,6 +324,12 @@
 			if(C.alive)
 				lifeforms++
 				lifelist += C.name
+
+		for (var/obj/B in by_type[/obj/warp_beacon]) //ignoring cruisers, they barely exist, sue me.
+			if(B != ship)
+				if (ship.z == B.z)
+					beacons++
+					beaconlist[B] = "[dir_name(get_dir(ship, B))]"
 
 		for (var/obj/machinery/vehicle/V in by_cat[TR_CAT_PODS_AND_CRUISERS]) //ignoring cruisers, they barely exist, sue me.
 			if(V != ship)

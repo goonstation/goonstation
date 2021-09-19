@@ -2,7 +2,7 @@
 	name = "changeling"
 	config_tag = "changeling"
 	latejoin_antag_compatible = 1
-	latejoin_antag_roles = list("changeling")
+	latejoin_antag_roles = list(ROLE_CHANGELING)
 
 	var/const/changelings_possible = 4
 
@@ -40,10 +40,10 @@
 		message_admins("[key_name(tplayer.current)] successfully redeems an antag token.")
 		//num_changelings = max(0, num_changelings - 1)
 
-	var/list/chosen_changelings = antagWeighter.choose(pool = possible_changelings, role = "changeling", amount = num_changelings, recordChosen = 1)
+	var/list/chosen_changelings = antagWeighter.choose(pool = possible_changelings, role = ROLE_CHANGELING, amount = num_changelings, recordChosen = 1)
 	traitors |= chosen_changelings
 	for (var/datum/mind/changeling in traitors)
-		changeling.special_role = "changeling"
+		changeling.special_role = ROLE_CHANGELING
 		possible_changelings.Remove(changeling)
 
 	return 1
@@ -109,7 +109,7 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(src.traitors))
 /*
-	for (var/obj/machinery/computer/communications/comm as() in machine_registry[MACHINES_COMMSCONSOLES])
+	for (var/obj/machinery/computer/communications/comm as anything in machine_registry[MACHINES_COMMSCONSOLES])
 		if (!(comm.status & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/paper/intercept = new /obj/item/paper( comm.loc )
 			intercept.name = "paper- 'Cent. Com. Status Summary'"

@@ -1,3 +1,29 @@
+#define PAPER_MODE_READING 0
+#define PAPER_MODE_WRITING 1
+#define PAPER_MODE_STAMPING 2
+#define PAPER_MAX_LENGTH 5000
+#define PAPER_MAX_STAMPS 30
+#define PAPER_MAX_STAMPS_OVERLAYS 4
+
+#define STAMP_IDS list(\
+	"Clown" = "stamp-sprite-clown",\
+	"Denied" = "stamp-sprite-deny" ,\
+	"Granted" = "stamp-sprite-ok",\
+	"Head of Personnel" = "stamp-sprite-hop",\
+	"Medical Director" = "stamp-sprite-md",\
+	"Chief Engineer" = "stamp-sprite-ce",\
+	"Head of Security" = "stamp-sprite-hos",\
+	"Research Director" = "stamp-sprite-rd",\
+	"Captain" = "stamp-sprite-cap",\
+	"Quartermaster" = "stamp-sprite-qm",\
+	"Security" = "stamp-sprite-law",\
+	"Chaplain" = "stamp-sprite-chap",\
+	"Mime" = "stamp-sprite-mime",\
+	"Centcom" = "stamp-sprite-centcom",\
+	"Syndicate" = "stamp-sprite-syndicate",\
+	"Void" = "stamp-sprite-void",\
+	"Your Name" = "stamp-text-name",\
+	"Current Time" = "stamp-text-time",)
 
 /obj/item/paper
 	name = "paper"
@@ -7,10 +33,10 @@
 	wear_image_icon = 'icons/mob/head.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
-	var/info = null
+	var/info = ""
 	var/stampable = 1
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 3
 	throw_range = 15
 	layer = OBJ_LAYER
@@ -19,20 +45,18 @@
 	burn_output = 900
 	burn_possible = 2
 	health = 10
-
 	var/list/form_startpoints
 	var/list/form_endpoints
-
 	var/font_css_crap = null
 	var/list/fonts = list()
-	//
+
 	var/see_face = 1
 	var/body_parts_covered = HEAD
 	var/protective_temperature = T0C + 10
 	var/heat_transfer_coefficient = 0.99
 	var/permeability_coefficient = 0.99
 	var/siemens_coefficient = 0.80
-
+	var/stampNum = 0
 	var/sizex = 0
 	var/sizey = 0
 	var/offset = 0
@@ -42,6 +66,9 @@
 	stamina_crit_chance = 0
 
 	var/sealed = 0 //Can you write on this with a pen?
+	var/list/stamps = null
+	var/list/form_fields = list()
+	var/field_counter = 1
 
 /obj/item/paper/New()
 	..()
@@ -56,10 +83,10 @@
 		src.pixel_y = rand(-8, 8)
 		src.pixel_x = rand(-9, 9)
 
-
 /obj/item/paper/pooled()
 
 	..()
+	name = "paper"
 	info = 0
 	src.icon_state = "paper_blank"
 	health = 10
@@ -67,6 +94,7 @@
 /obj/item/paper/unpooled()
 
 	..()
+	name = initial(name)
 	info = initial(info)
 	icon_state = initial(icon_state)
 	health = initial(health)
@@ -93,32 +121,7 @@
 
 /obj/item/paper/examine(mob/user)
 	. = ..()
-	var/windowtext
-	if(!user.literate)
-		windowtext = html_encode(illiterateGarbleText(src.info)) // deny them ANY useful information
-	else
-		windowtext = src.info
-		if (src.form_startpoints && src.form_endpoints)
-			for (var/x = src.form_startpoints.len, x > 0, x--)
-				windowtext = copytext(windowtext, 1, src.form_startpoints[src.form_startpoints[x]]) + "<a href='byond://?src=\ref[src];form=[src.form_startpoints[x]]'>" + copytext(windowtext, src.form_startpoints[src.form_startpoints[x]], src.form_endpoints[src.form_endpoints[x]]) + "</a>" + copytext(windowtext, src.form_endpoints[src.form_endpoints[x]])
-
-	var/font_junk = ""
-	for (var/i in src.fonts)
-		font_junk += "<link href='http://fonts.googleapis.com/css?family=[i]' rel='stylesheet' type='text/css'>"
-
-	usr.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE>[font_junk]</HEAD><BODY><TT>[windowtext]</TT></BODY></HTML>", "window=[src.name][(sizex || sizey) ? {";size=[sizex]x[sizey]"} : ""]")
-	onclose(usr, "[src.name]")
-
-//[(sizex || sizey) ? {";size=[sizex]x[sizey]"} : ""]
-/obj/item/paper/Map/examine(mob/user)
-	. = ..()
-
-	if (!( ishuman(user) || isobserver(user) || issilicon(user) ))
-		user.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE></HEAD><BODY><TT>[stars(src.info)]</TT></BODY></HTML>", "window=[src.name]")
-		onclose(user, "[src.name]")
-	else
-		user.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE></HEAD><BODY><TT>[src.info]</TT></BODY></HTML>", "window=[src.name]")
-		onclose(user, "[src.name]")
+	ui_interact(user)
 
 /obj/item/paper/custom_suicide = 1
 /obj/item/paper/suicide(var/mob/user as mob)
@@ -136,27 +139,27 @@
 		src.examine(user)
 	else
 		var/fold = alert("What would you like to fold [src] into?",,"Paper hat","Paper plane","Paper ball")
-		var/obj/item/paper/P = src
-		src = null
-		usr.u_equip(P)
+		if(src.pooled) //It's possible to queue multiple of these menus before resolving any.
+			return
+		user.u_equip(src)
 		if (fold == "Paper hat")
-			usr.show_text("You fold the paper into a hat! Neat.", "blue")
+			user.show_text("You fold the paper into a hat! Neat.", "blue")
 			var/obj/item/clothing/head/paper_hat/H = new()
-			usr.put_in_hand_or_drop(H)
+			user.put_in_hand_or_drop(H)
 		else
 			var/obj/item/paper/folded/F = null
 			if (fold == "Paper plane")
-				usr.show_text("You fold the paper into a plane! Neat.", "blue")
-				F = new /obj/item/paper/folded/plane(usr)
+				user.show_text("You fold the paper into a plane! Neat.", "blue")
+				F = new /obj/item/paper/folded/plane(user)
 			else
-				usr.show_text("You crumple the paper into a ball! Neat.", "blue")
-				F = new /obj/item/paper/folded/ball(usr)
-			F.info = P.info
-			F.old_desc = P.desc
-			F.old_icon_state = P.icon_state
-			F.sealed = 1
-			usr.put_in_hand_or_drop(F)
-		pool(P)
+				user.show_text("You crumple the paper into a ball! Neat.", "blue")
+				F = new /obj/item/paper/folded/ball(user)
+			F.info = src.info
+			F.old_desc = src.desc
+			F.old_icon_state = src.icon_state
+			user.put_in_hand_or_drop(F)
+
+		pool(src)
 
 /obj/item/paper/attack_ai(var/mob/AI as mob)
 	var/mob/living/silicon/ai/user
@@ -173,219 +176,210 @@
 		onclose(usr, "[src.name]")
 	return
 
-/obj/item/paper/Topic(href, href_list)
-	..()
-	if ((usr.stat || usr.restrained()) || (get_dist(src, usr) > 1))
+/obj/item/paper/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "PaperSheet")
+		ui.open()
+
+/obj/item/paper/ui_status(mob/user,/datum/ui_state/state)
+	if(!user.literate)
+		boutput(user, "<span class='alert'>You don't know how to read.</span>")
+		return UI_CLOSE
+	if(istype(src.loc, /obj/item/clipboard))
+		var/mob/living/M = user
+		return M.shared_living_ui_distance(src, viewcheck = FALSE)
+	. = max(..(), UI_DISABLED)
+	if(IN_RANGE(user, src, 8))
+		. = max(., UI_UPDATE)
+
+/obj/item/paper/ui_act(action, params,datum/tgui/ui)
+	. = ..()
+	if(.)
 		return
+	if(src.sealed)
+		boutput(usr, "<span class='alert'>You can't do that while [src] is folded up.</span>")
+		return
+	switch(action)
+		if("stamp")
+			if(!src.stampable)
+				boutput(usr, "<span class='alert'>You can't stamp [src].</span>")
+				return
+			var/stamp_x = text2num(params["x"])
+			var/stamp_y = text2num(params["y"])
+			var/stamp_r = text2num(params["r"])	// rotation in degrees
+			var/obj/item/stamp/stamp = ui.user.equipped()
+			if(length(stamps) < PAPER_MAX_STAMPS)
+				var/list/stamp_info = list(list(stamp.current_state, stamp_x, stamp_y, stamp_r))
+				LAZYLISTADD(stamps, stamp_info)
+				/// This does the overlay stuff
+				var/image/stamp_overlay = image('icons/obj/writing.dmi', "paper_[stamp.icon_state]");
+				var/matrix/stamp_matrix = matrix()
+				stamp_matrix.Scale(1, 1)
+				stamp_matrix.Translate(rand(-2, 2), rand(-3, 2))
+				stamp_overlay.transform = stamp_matrix
 
-	if (href_list["form"])
-		if (istype(usr.equipped(), /obj/item/pen))
-			. = href_list["form"]
-			if (. in form_startpoints)
-				// fill in field (up to field length)
-				var/t = input(usr, "What text do you wish to add?", "[src.name]", null) as null|text
-				if (!t)
-					return
-				if ((!in_range(src, usr) && src.loc != usr && !( istype(src.loc, /obj/item/clipboard) ) && src.loc.loc != usr))
-					return
-				t = copytext(html_encode(t), 1, (form_endpoints[.] - form_startpoints[.]) + 1)
-				t = sign_name(t, usr)
-				src.info = copytext(src.info, 1, form_startpoints[.]) + "" + t + "" + copytext(src.info, form_startpoints[.] + length(t))
-				build_formpoints()
-				usr.examine_verb(src)
+				src.UpdateOverlays(stamp_overlay, "stamps_[length(stamps) % PAPER_MAX_STAMPS_OVERLAYS]")
+				update_static_data(usr,ui)
+				boutput(usr, "<span class='notice'>[ui.user] stamps [src] with \the [stamp.name]!</span>")
+			else
+				boutput(usr, "There is no where else you can stamp!")
+			. = TRUE
 
-		if (istype(usr.equipped(), /obj/item/stamp))
-			var/obj/item/stamp/S = usr.equipped()
-			. = href_list["form"]
-			if (S && (. in form_startpoints))
-				switch(input(usr, "Stamp \the [src] with [S.name]?", "[src.name]", "No") in list("Yes", "No"))
-					if ("No")
-						return
-					if ("Yes")
-						var/T = S.get_stamp_text()
-						if (!T)
-							return
-						if ((!in_range(src, usr) && src.loc != usr && !(istype(src.loc, /obj/item/clipboard)) && src.loc.loc != usr))
-							return
-						// replace whole form field with stamp
-						src.info = copytext(src.info, 1, form_startpoints[.]) + "" + T + "" + copytext(src.info, form_endpoints[.])
-						src.icon_state = "paper_stamped"
-						build_formpoints()
-						usr.examine_verb(src)
+		if("save")
+			if (src.icon_state == "paper_blank" && params["text"])
+				src.icon_state = "paper"
+			var/in_paper = params["text"]
+			var/paper_len = length(in_paper)
 
-	src.add_fingerprint(usr)
+			field_counter = params["fieldCounter"] ? text2num(params["fieldCounter"]) : field_counter
 
-/obj/item/paper/attackby(obj/item/P as obj, mob/user as mob)
+			if(paper_len > PAPER_MAX_LENGTH)
+				// Side note, the only way we should get here is if
+				// the javascript was modified, somehow, outside of
+				// byond.  but right now we are logging it as
+				// the generated html might get beyond this limit
+				logTheThing("debug", src, null, "PAPER: [key_name(ui.user)] writing to paper [name], and overwrote it by [paper_len-PAPER_MAX_LENGTH]")
+			if(paper_len == 0)
+				boutput(ui.user, pick("Writing block strikes again!", "You forgot to write anthing!"))
+			else
+				if(info != in_paper)
+					boutput(ui.user, "You write on \the [src]!");
+					info = in_paper
+					update_static_data(usr,ui)
+			. = TRUE
 
-	if (istype(P, /obj/item/pen))
-		if(!user.literate)
-			boutput(user, "<span class='alert'>You don't know how to write.</span>")
-			return ..()
+/obj/item/paper/ui_static_data(mob/user)
+	. = list(
+		"name" = src.name,
+		"sizeX" = src.sizex,
+		"sizeY" = src.sizey,
+		"text" = src.info,
+		"max_length" = PAPER_MAX_LENGTH,
+		"paperColor" = src.color || "white",	// color might not be set
+		"stamps" = src.stamps,
+		"stampable" = src.stampable,
+		"sealed" = src.sealed,
+	)
 
-		if (isghostdrone(user))
-			return ..()
+/obj/item/paper/ui_data(mob/user)
+	. = list(
+		"editUsr" = "[user]",
+		"fieldCounter" = field_counter,
+		"formFields" = form_fields,
+	)
 
-		if (src.sealed)
+	var/obj/O = user.equipped()
+	var/time_type = istype(O, /obj/item/stamp/clown) ? "HONK O'CLOCK" : "SHIFT TIME"
+	var/T = ""
+	T = time_type + ": [time2text(world.timeofday, "DD MMM 2053, hh:mm:ss")]"
+
+	// TODO: change this awful array name & stampAssetType
+	var/stamp_assets = list(
+		"stamp-sprite-clown" = "[resource("images/tgui/stamp_icons/stamp-clown.png")]",
+		"stamp-sprite-deny" = "[resource("images/tgui/stamp_icons/stamp-deny.png")]",
+		"stamp-sprite-ok" = "[resource("images/tgui/stamp_icons/stamp-ok.png")]",
+		"stamp-sprite-hop" = "[resource("images/tgui/stamp_icons/stamp-hop.png")]",
+		"stamp-sprite-md" = "[resource("images/tgui/stamp_icons/stamp-md.png")]",
+		"stamp-sprite-ce" = "[resource("images/tgui/stamp_icons/stamp-ce.png")]",
+		"stamp-sprite-hos" = "[resource("images/tgui/stamp_icons/stamp-hos.png")]",
+		"stamp-sprite-rd" = "[resource("images/tgui/stamp_icons/stamp-rd.png")]",
+		"stamp-sprite-cap" = "[resource("images/tgui/stamp_icons/stamp-cap.png")]",
+		"stamp-sprite-qm" = "[resource("images/tgui/stamp_icons/stamp-qm.png")]",
+		"stamp-sprite-law" = "[resource("images/tgui/stamp_icons/stamp-law.png")]",
+		"stamp-sprite-chap" = "[resource("images/tgui/stamp_icons/stamp-chap.png")]",
+		"stamp-sprite-mime" = "[resource("images/tgui/stamp_icons/stamp-mime.png")]",
+		"stamp-sprite-centcom" = "[resource("images/tgui/stamp_icons/stamp-centcom.png")]",
+		"stamp-sprite-syndicate" = "[resource("images/tgui/stamp_icons/stamp-syndicate.png")]",
+		"stamp-sprite-void" = "[resource("images/tgui/stamp_icons/stamp-void.png")]",
+		"stamp-text-time" =  T,
+		"stamp-text-name" = user.name
+	)
+
+	if(!istype(O, /obj/item/pen))
+		if(istype(src.loc, /obj/item/clipboard))
+			var/obj/item/clipboard/C = src.loc
+			if(istype(C.pen, /obj/item/pen))
+				O = C.pen
+		if(istype(src.loc, /obj/item/portable_typewriter))
+			var/obj/item/portable_typewriter/typewriter = src.loc
+			if(istype(typewriter.pen, /obj/item/pen))
+				O = typewriter.pen
+	if(istype(O, /obj/item/pen))
+		var/obj/item/pen/PEN = O
+		. += list(
+			"penFont" = PEN.font,
+			"penColor" = PEN.color,
+			"editMode" = PAPER_MODE_WRITING,
+			"isCrayon" = FALSE,
+			"stampClass" = "FAKE",
+		)
+	else if(istype(O, /obj/item/stamp))
+		var/obj/item/stamp/stamp = O
+		stamp.current_state = stamp_assets[stamp.current_mode]
+		. += list(
+			"stampClass" = stamp_assets[stamp.current_mode],
+			"editMode" = PAPER_MODE_STAMPING,
+			"penFont" = "FAKE",
+			"penColor" = "FAKE",
+			"isCrayon" = FALSE,
+		)
+	else
+		. += list(
+			"editMode" = PAPER_MODE_READING,
+			"penFont" = "FAKE",
+			"penColor" = "FAKE",
+			"isCrayon" = FALSE,
+			"stampClass" = "FAKE",
+		)
+
+/obj/item/paper/attackby(obj/item/P, mob/living/user, params)
+	if(istype(P, /obj/item/portable_typewriter))
+		return // suppress attack sound, the typewriter will load the paper in afterattack
+	if(istype(P, /obj/item/pen) || istype(P, /obj/item/pen/crayon))
+		if(src.sealed)
 			boutput(user, "<span class='alert'>You can't write on [src].</span>")
 			return
-
-		var/custom_font = "Georgia"
-		var/custom_color = "black"
-		var/custom_size = 16
-
-		var/obj/item/pen/pen = P
-		if (pen.font)
-			custom_font = pen.font
-		if (pen.font_color)
-			custom_color = pen.font_color
-
-		if (pen.uses_handwriting)
-			custom_font = "Dancing Script"
-			if (user && user.mind && user.mind.handwriting)
-				custom_font = user.mind.handwriting
-			if (islist(src.fonts) && !src.fonts[custom_font])
-				src.fonts[custom_font] = 1
-			custom_font += ", cursive"
-			custom_size += rand(0,4)
-
-		else if (pen.webfont && islist(src.fonts) && !src.fonts[pen.webfont])
-			src.fonts[pen.webfont] = 1
-
-		var/t = input(user, "What text do you wish to add?", "[src.name]", null) as null|message
-		if (!t)
+		if(length(info) >= PAPER_MAX_LENGTH) // Sheet must have less than 1000 charaters
+			boutput(user, "<span class='warning'>This sheet of paper is full!</span>")
 			return
-		if ((!in_range(src, usr) && src.loc != user && !( istype(src.loc, /obj/item/clipboard) ) && src.loc.loc != user && user.equipped() != P))
+		ui_interact(user)
+		return
+	else if(istype(P, /obj/item/stamp))
+		if(src.sealed)
+			boutput(user, "<span class='alert'>You can't stamp [src].</span>")
 			return
-		//t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
-
-		t = copytext(html_encode(t), 1, 2*MAX_MESSAGE_LEN)
-		t = replacetext(t, "\n", "<BR>")
-		t = replacetext(t, "\[b\]", "<B>")
-		t = replacetext(t, "\[/b\]", "</B>")
-		t = replacetext(t, "\[i\]", "<I>")
-		t = replacetext(t, "\[/i\]", "</I>")
-		t = replacetext(t, "\[u\]", "<U>")
-		t = replacetext(t, "\[/u\]", "</U>")
-		t = replacetext(t, "\[hr\]", "<HR>")
-		t = replacetext(t, "\[/hr\]", "</HR>")
-		t = replacetext(t, "\[sup\]", "<SUP>")
-		t = replacetext(t, "\[/sup\]", "</SUP>")
-		t = replacetext(t, "\[h1\]", "<H1>")
-		t = replacetext(t, "\[/h1\]", "</H1>")
-		t = replacetext(t, "\[h2\]", "<H2>")
-		t = replacetext(t, "\[/h2\]", "</H2>")
-		t = replacetext(t, "\[h3\]", "<H3>")
-		t = replacetext(t, "\[/h3\]", "</H3>")
-		t = replacetext(t, "\[h4\]", "<H4>")
-		t = replacetext(t, "\[/h4\]", "</H4>")
-		t = replacetext(t, "\[li\]", "<LI>")
-		t = replacetext(t, "\[/li\]", "</LI>")
-		t = replacetext(t, "\[ul\]", "<UL>")
-		t = replacetext(t, "\[/ul\]", "</UL>")
-		t = replacetext(t, "\[bq\]", "<BLOCKQUOTE>")
-		t = replacetext(t, "\[/bq\]", "</BLOCKQUOTE>")
-
-		logTheThing("say", user, null, "writes on a piece of paper: [t]")
-
-		t = sign_name(t, user)
-		src.info += "<span style='font-family: [custom_font]; color: [custom_color]; font-size: [custom_size]px'>[t]</span>"
-
-		//src.info += "<font face=[custom_font] color=[custom_color] size='3'> [t] </font>" // shit's hard to read at size 2 goddamn
-		// bad font arguments don't seem to do much
-
-		build_formpoints()
-
-		if (src.icon_state == "paper_blank" && src.info)
-			src.icon_state = "paper"
+		boutput(user, "<span class='notice'>You ready your stamp over the paper! </span>")
+		ui_interact(user)
+		return // Normaly you just stamp, you don't need to read the thing
+	else if (issnippingtool(P))
+		boutput(user, "<span class='notice'>You cut the paper into a mask.</span>")
+		playsound(src.loc, "sound/items/Scissor.ogg", 30, 1)
+		var/obj/item/paper_mask/M = new /obj/item/paper_mask(get_turf(src.loc))
+		user.put_in_hand_or_drop(M)
+		user.u_equip(src)
+		pool(src)
 	else
-		if (istype(P, /obj/item/stamp) && src.stampable)
-			if ((!in_range(src, usr) && src.loc != user && !(istype(src.loc, /obj/item/clipboard)) && src.loc.loc != user && user.equipped() != P))
-				return
-			var/obj/item/stamp/S = P
-			src.info += "<br>" + S.get_stamp_text() + "<br>"
-			src.icon_state = "paper_stamped"
-			boutput(user, "<span class='notice'>You stamp the paper.</span>")
+		// cut paper?  the sky is the limit!
+		ui_interact(user)	// The other ui will be created with just read mode outside of this
 
-		else if (issnippingtool(P))
-			boutput(user, "<span class='notice'>You cut the paper into a mask.</span>")
-			playsound(src.loc, "sound/items/Scissor.ogg", 30, 1)
-			var/obj/item/paper_mask/M = new /obj/item/paper_mask(src.loc)
-			user.put_in_hand_or_drop(M)
-			//M.set_loc(get_turf(src)) // otherwise they seem to just vanish into the aether at times
-			usr.u_equip(src)
-			pool(src)
+	return ..()
 
-		else if (istype(P, /obj/item/paper) && !istype(P, /obj/item/paper/manufacturer_blueprint))
-			var/obj/item/staple_gun/S = user.find_type_in_hand(/obj/item/staple_gun)
-			if (S && S.ammo)
-				var/obj/item/paper_booklet/B = new
-				B.set_loc(src.loc)
-				user.drop_item()
-				B.pages += src
-				B.pages += P
-				src.visible_message("[user] staples [P] under [src].")
-				src.set_loc(B)
-				P.set_loc(B)
-				S.ammo--
-				playsound(user,"sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
-			else
-				boutput(usr, "<span class='alert'>You need a loaded stapler in hand to staple these papers.</span>")
+/obj/item/paper/proc/build_fields(var/length)
+	var/pixel_width = (14 + (12 * (length-1)))
+	src.field_counter++
+	return {"\[<input type="text" style="font:'12x Georgia';color:'null';min-width:[pixel_width]px;max-width:[pixel_width]px;" id="paperfield_[field_counter]" maxlength=[length] size=[length] />\]"}
 
-		else
-			..()
-
-	src.add_fingerprint(user)
-	return
-
-/obj/item/paper/proc/sign_name(var/t as text, mob/user as mob)
-	var/writing_style = "Dancing Script"
-	if (findtext(t, "\[sign\]") || findtext(t, "\[signature\]"))
-		if (user && user.mind && user.mind.handwriting)
-			writing_style = user.mind.handwriting
-		if (islist(src.fonts) && !src.fonts[writing_style])
-			src.fonts[writing_style] = 1
-	t = replacetext(t, "\[sign\]", "<span style='font-family: [writing_style], cursive;'>[user.real_name]</span>")
-	t = replacetext(t, "\[signature\]", "<span style='font-family: [writing_style], cursive;'>[user.real_name]</span>")
-	return t
-
-/obj/item/paper/proc/build_formpoints()
-	var/formStart = 1
-	var/formEnd = 0
-
-	if (form_startpoints)
-		form_startpoints.len = 0
-	else
-		form_startpoints = list()
-
-	if (form_endpoints)
-		form_endpoints.len = 0
-	else
-		form_endpoints = list()
-
-	. = 0
-	while (formStart)
-		formStart = findtext(src.info, "__", formStart)
-		if (formStart)
-			formEnd = formStart + 1
-			while (copytext(src.info, formEnd, formEnd+1) == "_")
-				formEnd++
-
-			if (!form_startpoints)
-				form_startpoints = list()
-
-			if (!form_endpoints)
-				form_endpoints = list()
-
-			form_startpoints["[.]"] = formStart
-			form_endpoints["[.++]"] = formEnd
-
-			formStart = formEnd+1
 
 /obj/item/paper/thermal
-	name = "Thermal Paper"
+	name = "thermal paper"
 	stampable = 0
 	icon_state = "thermal_paper"
 	sealed = 1
+	item_function_flags = SMOKELESS
+
+/obj/item/paper/thermal/portable_printer
+	sealed = 0
 
 /obj/item/paper/alchemy/
 	name = "'Chemistry Information'"
@@ -401,13 +395,13 @@
 	Using the H-87 is almost as simple as brain surgery! Simply insert the target humanoid into the scanning chamber and select the scan option to create a new profile!<br>
 	<b>That's all there is to it!</b><br>
 	<i>Notice, cloning system cannot scan inorganic life or small primates.  Scan may fail if subject has suffered extreme brain damage.</i><br>
-	<p>Clone profiles may be viewed through the profiles menu. Scanning implants a complementary HEALTH MONITOR IMPLANT into the subject, which may be viewed from the cloning console.
+	<p>Clone profiles may be viewed through the profiles menu. Scanning implants a complementary CLONING RECORDS IMPLANT into the subject, which may be viewed from the cloning console.
 	Profile Deletion has been restricted to \[Station Head\] level access.</p>
 	<h4>Cloning from a profile</h4>
 	Cloning is as simple as pressing the CLONE option to the right of the desired profile.<br>
 	Per your company's EMPLOYEE PRIVACY RIGHTS agreement, the H-87 has been blocked from cloning crewmembers while they are still alive.<br>
 	<br>
-	<p>The provided CLONEPOD SYSTEM will produce the desired clone.  Standard clone maturation times (With SPEEDCLONE technology) are roughly 90 seconds.
+	<p>The provided CLONEPOD SYSTEM will produce the desired clone.  Standard clone maturation times (with SPEEDCLONE technology) are roughly 90 seconds.
 	The cloning pod may be unlocked early with any \[Medical Researcher\] ID after initial maturation is complete.</p><br>
 	<i>Please note that resulting clones may have a small DEVELOPMENTAL DEFECT as a result of genetic drift.</i><br>
 	<h4>Profile Management</h4>
@@ -446,7 +440,8 @@
 /obj/item/paper/HangarGuide
 	name ="'Ship Basics'"
 	info ={"In order to open the hangar doors, either look-up the password via the hangar control computer, or use the handy button near every hangar to get it.<BR>
-		In order to uninstall and install parts use a crowbar on a ship to open the maintenance panel, If you want to install a part, simply use the part on the ship. If you want to uninstall a part simply use an empty hand on the maintenance panel. Make sure to close the panel when you are done.<br>
+		In order to uninstall and install parts use a crowbar on a ship to open the maintenance panel, If you want to install a part, simply use the part on the ship.
+		If you want to uninstall a part simply use an empty hand on the maintenance panel. Make sure to close the panel when you are done.<br>
 		In order to use the cargo loader on a crate, simply make ensure the crate is behind the ship, and the loader will handle the rest."}
 
 /obj/item/paper/Map
@@ -485,20 +480,24 @@ ASC: Aux. Solar Control<BR>
 	name = "'Cryogenics Instruction Manual'"
 	fonts = list("Special Elite" = 1)
 	info = {"<h4><center><span style='font-family: Special Elite, cursive;'>NanoTrasen Cryogenics Chambers<br>Instruction Manual</span></center></h4>
-	All NanoTrasen spaceships are equipped with multiple cryogenics tubes, meant to store and heal critically wounded patients using cryoxadone. Use this guide for proper setup and handling instructions.<br><br>
+	All NanoTrasen spaceships are equipped with multiple cryogenics tubes, meant to store and heal critically wounded patients using cryoxadone. Use this guide for proper
+	setup and handling instructions.<br><br>
 	<h4>Setting Up the Cryogenics Chambers</h4>
 	<ol type="1">
 	<li>Secure a filled canister of O2 or another suitable air mixture to the attached connector using a wrench.</li>
-	<li>Add a 50-unit supply of cryoxadone to each of the two cryogenics chambers. There should be two nearby beakers for this purpose; if they are missing or empty, it is recommended that a request be sent to the research department to synthesize an additional supply.</li>
+	<li>Add a 50-unit supply of cryoxadone to each of the two cryogenics chambers. There should be two nearby beakers for this purpose; if they are missing or empty, it is recommended
+	that a request be sent to the Research Department to synthesize an additional supply.</li>
 	<li>Set the freezer to the lowest possible temperature setting (73.15 K, the default) if necessary.</li>
 	<li>Turn on the power on the freezer and leave it on.</li>
 	<li>One can add a defibrillator to attempt to revive subjects as well.</li>
 	</ol>
-	Note that the supply of cryoxadone will not deplete unless there is a patient present in the cryogenics chamber. However, the oxygen slowly depletes if the cryogenics chambers themselves are turned on, so it is recommended to leave them switched off unless a patient is present.<br><br>
+	Note that the supply of cryoxadone will not deplete unless there is a patient present in the cryogenics chamber. However, the oxygen slowly depletes if the cryogenics chambers
+	themselves are turned on, so it is recommended to leave them switched off unless a patient is present.<br><br>
 	<h4>Treating a Patient Using the Cryogenics Chambers</h4>
 	<ol type="1">
 	<li>Stabilize the patient's health using CPR or cardiac stimulants.</li>
-	<li>Remove any exosuit, headgear, and any other insulative materials being worn by the patient. Failure to remove these will deter the effects of the cryoxadone and halt the healing process.</li>
+	<li>Remove any exosuit, headgear, and any other insulative materials being worn by the patient. Failure to remove these will deter the effects of the cryoxadone and halt the
+	healing process.</li>
 	<li>Check to ensure that the gas temperature is at optimal levels and there is no contamination in the system.</li>
 	<li>Put the patient in the cryogenics chamber and turn it on.</li>
 	</ol>
@@ -509,13 +508,58 @@ ASC: Aux. Solar Control<BR>
 	name = "'Cargo Bay Setup Instructions'"
 	info = "In order to properly set up the cargo computer, both the incoming and outgoing supply pads must be directly or diagonally adjacent to the computer."
 
-/obj/item/paper/Toxin
-	name = "'Chemical Information'"
-	info = "Known Onboard Toxins:<BR>\n\tGrade A Semi-Liquid Plasma:<BR>\n\t\tHighly poisonous. You cannot sustain concentrations above 15 units.<BR>\n\t\tA gas mask fails to filter plasma after 50 units.<BR>\n\t\tWill attempt to diffuse like a gas.<BR>\n\t\tFiltered by scrubbers.<BR>\n\t\tThere is a bottled version which is very different<BR>\n\t\t\tfrom the version found in canisters!<BR>\n<BR>\n\t\tWARNING: Highly Flammable. Keep away from heat sources<BR>\n\t\texcept in a enclosed fire area!<BR>\n\t\tWARNING: It is a crime to use this without authorization.<BR>\nKnown Onboard Anti-Toxin:<BR>\n\tAnti-Toxin Type 01P: Works against Grade A Plasma.<BR>\n\t\tBest if injected directly into bloodstream.<BR>\n\t\tA full injection is in every regular Med-Kit.<BR>\n\t\tSpecial toxin Kits hold around 7.<BR>\n<BR>\nKnown Onboard Chemicals (other):<BR>\n\tRejuvenation T#001:<BR>\n\t\tEven 1 unit injected directly into the bloodstream<BR>\n\t\t\twill cure paralysis and sleep toxins.<BR>\n\t\tIf administered to a dying patient it will prevent<BR>\n\t\t\tfurther damage for about units*3 seconds.<BR>\n\t\t\tit will not cure them or allow them to be cured.<BR>\n\t\tIt can be administeredd to a non-dying patient<BR>\n\t\t\tbut the chemicals disappear just as fast.<BR>\n\tSleep Toxin T#054:<BR>\n\t\t5 units wilkl induce precisely 1 minute of sleep.<BR>\n\t\t\tThe effects are cumulative.<BR>\n\t\tWARNING: It is a crime to use this without authorization"
-
 /obj/item/paper/courtroom
 	name = "'A Crash Course in Legal SOP on SS13'"
-	info = "<B>Roles:</B><BR>\nThe Detective is basically the investigator and prosecutor.<BR>\nThe Staff Assistant can perform these functions with written authority from the Detective.<BR>\nThe Captain/HoP/Warden is ct as the judicial authority.<BR>\nThe Security Officers are responsible for executing warrants, security during trial, and prisoner transport.<BR>\n<BR>\n<B>Investigative Phase:</B><BR>\nAfter the crime has been committed the Detective's job is to gather evidence and try to ascertain not only who did it but what happened. He must take special care to catalogue everything and don't leave anything out. Write out all the evidence on paper. Make sure you take an appropriate number of fingerprints. IF he must ask someone questions he has permission to confront them. If the person refuses he can ask a judicial authority to write a subpoena for questioning. If again he fails to respond then that person is to be jailed as insubordinate and obstructing justice. Said person will be released after he cooperates.<BR>\n<BR>\nONCE the FT has a clear idea as to who the criminal is he is to write an arrest warrant on the piece of paper. IT MUST LIST THE CHARGES. The FT is to then go to the judicial authority and explain a small version of his case. If the case is moderately acceptable the authority should sign it. Security must then execute said warrant.<BR>\n<BR>\n<B>Pre-Pre-Trial Phase:</B><BR>\nNow a legal representative must be presented to the defendant if said defendant requests one. That person and the defendant are then to be given time to meet (in the jail IS ACCEPTABLE). The defendant and his lawyer are then to be given a copy of all the evidence that will be presented at trial (rewriting it all on paper is fine). THIS IS CALLED THE DISCOVERY PACK. With a few exceptions, THIS IS THE ONLY EVIDENCE BOTH SIDES MAY USE AT TRIAL. IF the prosecution will be seeking the death penalty it MUST be stated at this time. ALSO if the defense will be seeking not guilty by mental defect it must state this at this time to allow ample time for examination.<BR>\nNow at this time each side is to compile a list of witnesses. By default, the defendant is on both lists regardless of anything else. Also the defense and prosecution can compile more evidence beforehand BUT in order for it to be used the evidence MUST also be given to the other side.\nThe defense has time to compile motions against some evidence here.<BR>\n<B>Possible Motions:</B><BR>\n1. <U>Invalidate Evidence-</U> Something with the evidence is wrong and the evidence is to be thrown out. This includes irrelevance or corrupt security.<BR>\n2. <U>Free Movement-</U> Basically the defendant is to be kept uncuffed before and during the trial.<BR>\n3. <U>Subpoena Witness-</U> If the defense presents god reasons for needing a witness but said person fails to cooperate then a subpoena is issued.<BR>\n4. <U>Drop the Charges-</U> Not enough evidence is there for a trial so the charges are to be dropped. The FT CAN RETRY but the judicial authority must carefully reexamine the new evidence.<BR>\n5. <U>Declare Incompetent-</U> Basically the defendant is insane. Once this is granted a medical official is to examine the patient. If he is indeed insane he is to be placed under care of the medical staff until he is deemed competent to stand trial.<BR>\n<BR>\nALL SIDES MOVE TO A COURTROOM<BR>\n<B>Pre-Trial Hearings:</B><BR>\nA judicial authority and the 2 sides are to meet in the trial room. NO ONE ELSE BESIDES A SECURITY DETAIL IS TO BE PRESENT. The defense submits a plea. If the plea is guilty then proceed directly to sentencing phase. Now the sides each present their motions to the judicial authority. He rules on them. Each side can debate each motion. Then the judicial authority gets a list of crew members. He first gets a chance to look at them all and pick out acceptable and available jurors. Those jurors are then called over. Each side can ask a few questions and dismiss jurors they find too biased. HOWEVER before dismissal the judicial authority MUST agree to the reasoning.<BR>\n<BR>\n<B>The Trial:</B><BR>\nThe trial has three phases.<BR>\n1. <B>Opening Arguments</B>- Each side can give a short speech. They may not present ANY evidence.<BR>\n2. <B>Witness Calling/Evidence Presentation</B>- The prosecution goes first and is able to call the witnesses on his approved list in any order. He can recall them if necessary. During the questioning the lawyer may use the evidence in the questions to help prove a point. After every witness the other side has a chance to cross-examine. After both sides are done questioning a witness the prosecution can present another or recall one (even the EXACT same one again!). After prosecution is done the defense can call witnesses. After the initial cases are presented both sides are free to call witnesses on either list.<BR>\nFINALLY once both sides are done calling witnesses we move onto the next phase.<BR>\n3. <B>Closing Arguments</B>- Same as opening.<BR>\nThe jury then deliberates IN PRIVATE. THEY MUST ALL AGREE on a verdict. REMEMBER: They mix between some charges being guilty and others not guilty (IE if you supposedly killed someone with a gun and you unfortunately picked up a gun without authorization then you CAN be found not guilty of murder BUT guilty of possession of illegal weaponry.). Once they have agreed they present their verdict. If unable to reach a verdict and feel they will never they call a deadlocked jury and we restart at Pre-Trial phase with an entirely new set of jurors.<BR>\n<BR>\n<B>Sentencing Phase:</B><BR>\nIf the death penalty was sought (you MUST have gone through a trial for death penalty) then skip to the second part. <BR>\nI. Each side can present more evidence/witnesses in any order. There is NO ban on emotional aspects or anything. The prosecution is to submit a suggested penalty. After all the sides are done then the judicial authority is to give a sentence.<BR>\nII. The jury stays and does the same thing as I. Their sole job is to determine if the death penalty is applicable. If NOT then the judge selects a sentence.<BR>\n<BR>\nTADA you're done. Security then executes the sentence and adds the applicable convictions to the person's record.<BR>\n"
+	info = {"<B>Roles:</B><BR>\nThe Detective is basically the investigator and prosecutor.<BR>\nThe Staff Assistant can perform these functions with written
+	authority from the Detective.<BR>\nThe Captain/HoP is the judicial authority.<BR>\nThe Security Officers are responsible for executing warrants,
+	security during trial, and prisoner transport.
+	<BR>\n<BR>\n<B>Investigative Phase:</B><BR>\nAfter the crime has been committed the Detective's job is to gather evidence and try to ascertain not only who did
+	it but what happened. They must take special care to catalogue everything and don't leave anything out.
+	Write out all the evidence on paper. Make sure you take an appropriate number of fingerprints. If you must ask someone questions, you have permission to confront them.
+	If the person refuses, the Detective can ask a judicial authority to write a subpoena for questioning. If again the suspect fails to respond then that person
+	is to be jailed as insubordinate and obstructing justice. Said person will be released after they cooperate.
+	<BR>\n<BR>\nONCE the Detective has a clear idea as to who the criminal is, they are to write an arrest warrant on the piece of paper.
+	IT MUST LIST THE CHARGES. The Detective is to then go to the judicial authority and explain a small version of their case. If the case is moderately
+	acceptable the authority should sign it. Security must then execute said warrant.
+	<BR>\n<BR>\n<B>Pre-Pre-Trial Phase:</B><BR>\nNow a legal representative must be presented to the defendant if said defendant requests one.
+	That person and the defendant are then to be given time to meet (in the jail IS ACCEPTABLE). The defendant and their lawyer	are then to be given a copy of
+	all the evidence that will be presented at trial (rewriting it all on paper is fine). THIS IS CALLED THE DISCOVERY PACK. With a few exceptions,
+	THIS IS THE ONLY EVIDENCE BOTH SIDES MAY USE AT TRIAL. IF the prosecution will be seeking the death penalty it MUST be stated at this time. ALSO, if the defense will be
+	seeking not guilty by mental defect, it must be stated this at this time to allow ample time for examination.
+	<BR>\nNow at this time each side is to compile a list of witnesses.
+	By default, the defendant is on both lists regardless of anything else. Also the defense and prosecution can compile more evidence beforehand BUT in order for it to be used
+	the evidence MUST also be given to the other side.\nThe defense has time to compile motions against some evidence here.
+	<BR>\n<B>Possible Motions:</B><BR>\n1.
+	<U>Invalidate Evidence-</U> Something with the evidence is wrong and the evidence is to be thrown out. This includes irrelevance or corrupt Security.<BR>\n2.
+	<U>Free Movement-</U> Basically, the defendant is to be kept uncuffed before and during the trial.<BR>\n3.
+	<U>Subpoena Witness-</U> If the defense presents good reasons for needing a witness but said person fails to cooperate then a subpoena is issued.<BR>\n4.
+	<U>Drop the Charges-</U> Not enough evidence is there for a trial so the charges are to be dropped. The Detective CAN RETRY but the judicial authority must carefully
+	reexamine the new evidence.<BR>\n5.
+	<U>Declare Incompetent-</U> The defendant is insane. Once this is granted, a medical official is to examine the patient. If they are indeed insane, they are to be placed
+	under care of the medical staff until they are deemed competent to stand trial.
+	<BR>\n<BR>\nALL SIDES MOVE TO A COURTROOM<BR>\n
+	<B>Pre-Trial Hearings:</B><BR>\nA judicial authority and the 2 sides are to meet in the trial room.
+	NO ONE ELSE BESIDES A SECURITY DETAIL IS TO BE PRESENT. The defense submits a plea. If the plea is guilty, then proceed directly to sentencing phase.
+	Now the sides each present their motions to the judicial authority. The judicial authority rules on them. Each side can debate each motion. Then the judicial authority
+	gets a list of crew members. The judicial authority first gets a chance	to look at them all and pick out acceptable and available jurors. Those jurors are then called over.
+	Each side can ask a few questions and dismiss jurors they find too biased. HOWEVER, before dismissal the judicial authority MUST agree to the reasoning.
+	<BR>\n<BR>\n<B>The Trial:</B><BR>\nThe trial has three phases.<BR>\n1.
+	<B>Opening Arguments</B> - Each side can give a short speech. They may not present ANY evidence.<BR>\n2.
+	<B>Witness Calling/Evidence Presentation</B> - The prosecution goes first and is able to call the witnesses on their approved list in any order.
+	They can recall them if necessary. During the questioning the lawyer may use the evidence in the questions to help prove a point.
+	After every witness, the other side has a chance to cross-examine. After both sides are done questioning a witness the prosecution can present another witness or recall one
+	(even the EXACT same one again!). After prosecution is done the defense can call witnesses. After the initial cases are presented both sides are free to call witnesses on either
+	list.<BR>\nFINALLY once both sides are done calling witnesses we move onto the next phase.<BR>\n3.
+	<B>Closing Arguments</B>- Same procedure as Opening Arguments.<BR>\nThe jury then deliberates IN PRIVATE. THEY MUST ALL AGREE on a verdict.
+	REMEMBER: They can mix between some charges being guilty and others not guilty (IE, if you supposedly killed someone with a gun and you	unfortunately picked up a gun without
+	authorization then you CAN be found not guilty of murder BUT guilty of possession of illegal weaponry). Once they have agreed, they present	their verdict. If unable to reach
+	a verdict and feel they never will, they call a deadlocked jury and we restart at Pre-Trial phase with an entirely new set of jurors.
+	<BR>\n<BR>\n<B>Sentencing Phase:</B>
+	<BR>\nIf the death penalty was sought (you MUST have gone through a trial for death penalty) then skip to the second part.
+	<BR>\nI. Each side can present more evidence/witnesses in any order. There is NO ban on emotional aspects. The prosecution is to submit a suggested penalty.
+	After all the sides are done, then the judicial authority is to give a sentence.
+	<BR>\nII. The jury stays and does the same thing as I. Their sole job is to determine if the death penalty is applicable. If NOT then the judge selects a
+	sentence.<BR>\n<BR>\nTADA you're done. Security then executes the sentence and adds the applicable convictions to the person's record.<BR>\n"}
 
 /obj/item/paper/flag
 	icon_state = "flag_neutral"
@@ -523,13 +567,18 @@ ASC: Aux. Solar Control<BR>
 	item_state = "paper"
 	anchored = 1.0
 
-/obj/item/paper/jobs
-	name = "'Job Information'"
-	info = "Information on all formal jobs that can be assigned on Space Station 13 can be found on this document.<BR>\nThe data will be in the following form.<BR>\nGenerally lower ranking positions come first in this list.<BR>\n<BR>\n<B>Job Name</B>   general access>lab access-engine access-systems access (atmosphere control)<BR>\n\tJob Description<BR>\nJob Duties (in no particular order)<BR>\nTips (where applicable)<BR>\n<BR>\n<B>Research Assistant</B> 1>1-0-0<BR>\n\tThis is probably the lowest level position. Anyone who enters the space station after the initial job\nassignment will automatically receive this position. Access with this is restricted. Head of Personnel should\nappropriate the correct level of assistance.<BR>\n1. Assist the researchers.<BR>\n2. Clean up the labs.<BR>\n3. Prepare materials.<BR>\n<BR>\n<B>Staff Assistant</B> 2>0-0-0<BR>\n\tThis position assists the security officer in his duties. The staff assisstants should primarily br\npatrolling the ship waiting until they are needed to maintain ship safety.\n(Addendum: Updated/Elevated Security Protocols admit issuing of low level weapons to security personnel)<BR>\n1. Patrol ship/Guard key areas<BR>\n2. Assist security officer<BR>\n3. Perform other security duties.<BR>\n<BR>\n<B>Technical Assistant</B> 1>0-0-1<BR>\n\tThis is yet another low level position. The technical assistant helps the engineer and the statian\ntechnician with the upkeep and maintenance of the station. This job is very important because it usually\ngets to be a heavy workload on station technician and these helpers will alleviate that.<BR>\n1. Assist Station technician and Engineers.<BR>\n2. Perform general maintenance of station.<BR>\n3. Prepare materials.<BR>\n<BR>\n<B>Medical Assistant</B> 1>1-0-0<BR>\n\tThis is the fourth position yet it is slightly less common. This position doesn't have much power\noutside of the med bay. Consider this position like a nurse who helps to upkeep medical records and the\nmaterials (filling syringes and checking vitals)<BR>\n1. Assist the medical personnel.<BR>\n2. Update medical files.<BR>\n3. Prepare materials for medical operations.<BR>\n<BR>\n<B>Research Technician</B> 2>3-0-0<BR>\n\tThis job is primarily a step up from research assistant. These people generally do not get their own lab\nbut are more hands on in the experimentation process. At this level they are permitted to work as consultants to\nthe others formally.<BR>\n1. Inform superiors of research.<BR>\n2. Perform research alongside of official researchers.<BR>\n<BR>\n<B>Detective</B> 3>2-0-0<BR>\n\tThis job is in most cases slightly boring at best. Their sole duty is to\nperform investigations of crine scenes and analysis of the crime scene. This\nalleviates SOME of the burden from the security officer. This person's duty\nis to draw conclusions as to what happened and testify in court. Said person\nalso should stroe the evidence ly.<BR>\n1. Perform crime-scene investigations/draw conclusions.<BR>\n2. Store and catalogue evidence properly.<BR>\n3. Testify to superiors/inquieries on findings.<BR>\n<BR>\n<B>Station Technician</B> 2>0-2-3<BR>\n\tPeople assigned to this position must work to make sure all the systems aboard Space Station 13 are operable.\nThey should primarily work in the computer lab and repairing faulty equipment. They should work with the\natmospheric technician.<BR>\n1. Maintain SS13 systems.<BR>\n2. Repair equipment.<BR>\n<BR>\n<B>Atmospheric Technician</B> 3>0-0-4<BR>\n\tThese people should primarily work in the atmospheric control center and lab. They have the very important\njob of maintaining the delicate atmosphere on SS13.<BR>\n1. Maintain atmosphere on SS13<BR>\n2. Research atmospheres on the space station. (safely please!)<BR>\n<BR>\n<B>Engineer</B> 2>1-3-0<BR>\n\tPeople working as this should generally have detailed knowledge as to how the propulsion systems on SS13\nwork. They are one of the few classes that have unrestricted access to the engine area.<BR>\n1. Upkeep the engine.<BR>\n2. Prevent fires in the engine.<BR>\n3. Maintain a safe orbit.<BR>\n<BR>\n<B>Medical Researcher</B> 2>5-0-0<BR>\n\tThis position may need a little clarification. Their duty is to make sure that all experiments are safe and\nto conduct experiments that may help to improve the station. They will be generally idle until a new laboratory\nis constructed.<BR>\n1. Make sure the station is kept safe.<BR>\n2. Research medical properties of materials studied of Space Station 13.<BR>\n<BR>\n<B>Scientist</B> 2>5-0-0<BR>\n\tThese people study the properties, particularly the toxic properties, of materials handled on SS13.\nTechnically they can also be called Plasma Technicians as plasma is the material they routinly handle.<BR>\n1. Research plasma<BR>\n2. Make sure all plasma is properly handled.<BR>\n<BR>\n<B>Medical Doctor (Officer)</B> 2>0-0-0<BR>\n\tPeople working this job should primarily stay in the medical area. They should make sure everyone goes to\nthe medical bay for treatment and examination. Also they should make sure that medical supplies are kept in\norder.<BR>\n1. Heal wounded people.<BR>\n2. Perform examinations of all personnel.<BR>\n3. Moniter usage of medical equipment.<BR>\n<BR>\n<B>Security Officer</B> 3>0-0-0<BR>\n\tThese people should attempt to keep the peace inside the station and make sure the station is kept safe. One\nside duty is to assist in repairing the station. They also work like general maintenance personnel. They are not\ngiven a weapon and must use their own resources.<BR>\n(Addendum: Updated/Elevated Security Protocols admit issuing of weapons to security personnel)<BR>\n1. Maintain order.<BR>\n2. Assist others.<BR>\n3. Repair structural problems.<BR>\n<BR>\n<B>Head of Security</B> 4>5-2-2<BR>\n\tPeople assigned as Head of Security should issue orders to the security staff. They should\nalso carefully moderate the usage of all security equipment. All security matters should be reported to this person.<BR>\n1. Oversee security.<BR>\n2. Assign patrol duties.<BR>\n3. Protect the station and staff.<BR>\n<BR>\n<B>Head of Personnel</B> 4>4-2-2<BR>\n\tPeople assigned as head of personnel will find themselves moderating all actions done by personnel. \nAlso they have the ability to assign jobs and access levels.<BR>\n1. Assign duties.<BR>\n2. Moderate personnel.<BR>\n3. Moderate research. <BR>\n<BR>\n<B>Captain</B> 5>5-5-5 (unrestricted station wide access)<BR>\n\tThis is the highest position youi can aquire on Space Station 13. They are allowed anywhere inside the\nspace station and therefore should protect their ID card. They also have the ability to assign positions\nand access levels. They should not abuse their power.<BR>\n1. Assign all positions on SS13<BR>\n2. Inspect the station for any problems.<BR>\n3. Perform administrative duties.<BR>\n"
-
 /obj/item/paper/sop
 	name = "'Standard Operating Procedure'"
-	info = "Alert Levels:<BR>\nBlue- Emergency<BR>\n\t1. Caused by fire<BR>\n\t2. Caused by manual interaction<BR>\n\tAction:<BR>\n\t\tClose all fire doors. These can only be opened by reseting the alarm<BR>\nRed- Ejection/Self Destruct<BR>\n\t1. Caused by module operating computer.<BR>\n\tAction:<BR>\n\t\tAfter the specified time the module will eject completely.<BR>\n<BR>\nEngine Maintenance Instructions:<BR>\n\tShut off ignition systems:<BR>\n\tActivate internal power<BR>\n\tActivate orbital balance matrix<BR>\n\tRemove volatile liquids from area<BR>\n\tWear a fire suit<BR>\n<BR>\n\tAfter<BR>\n\t\tDecontaminate<BR>\n\t\tVisit medical examiner<BR>\n<BR>\nToxin Laboratory Procedure:<BR>\n\tWear a gas mask regardless<BR>\n\tGet an oxygen tank.<BR>\n\tActivate internal atmosphere<BR>\n<BR>\n\tAfter<BR>\n\t\tDecontaminate<BR>\n\t\tVisit medical examiner<BR>\n<BR>\nDisaster Procedure:<BR>\n\tFire:<BR>\n\t\tActivate sector fire alarm.<BR>\n\t\tMove to a safe area.<BR>\n\t\tGet a fire suit<BR>\n\t\tAfter:<BR>\n\t\t\tAssess Damage<BR>\n\t\t\tRepair damages<BR>\n\t\t\tIf needed, Evacuate<BR>\n\tMeteor Shower:<BR>\n\t\tActivate fire alarm<BR>\n\t\tMove to the back of ship<BR>\n\t\tAfter<BR>\n\t\t\tRepair damage<BR>\n\t\t\tIf needed, Evacuate<BR>\n\tAccidental Reentry:<BR>\n\t\tActivate fire alrms in front of ship.<BR>\n\t\tMove volatile matter to a fire proof area!<BR>\n\t\tGet a fire suit.<BR>\n\t\tStay secure until an emergency ship arrives.<BR>\n<BR>\n\t\tIf ship does not arrive-<BR>\n\t\t\tEvacuate to a nearby safe area!"
+	info = {"Alert Levels:<BR>\nBlue- Emergency<BR>\n\t1. Caused by fire<BR>\n\t2. Caused by manual interaction<BR>\n\tAction:<BR>\n\t\tClose all fire doors. These can
+	only be opened by reseting the alarm<BR>\nRed- Ejection/Self Destruct<BR>\n\t1. Caused by module operating computer.<BR>\n\tAction:<BR>\n\t\tAfter the specified time
+	the module will eject completely.<BR>\n<BR>\nEngine Maintenance Instructions:<BR>\n\tShut off ignition systems:<BR>\n\tActivate internal power<BR>\n\tActivate orbital
+	balance matrix<BR>\n\tRemove volatile liquids from area<BR>\n\tWear a fire suit<BR>\n<BR>\n\tAfter<BR>\n\t\tDecontaminate<BR>\n\t\tVisit medical examiner
+	<BR>\n<BR>\nToxin Laboratory Procedure:<BR>\n\tWear a gas mask regardless<BR>\n\tGet an oxygen tank.<BR>\n\tActivate internal atmosphere<BR>\n<BR>\n\tAfter
+	<BR>\n\t\tDecontaminate<BR>\n\t\tVisit medical examiner<BR>\n<BR>\nDisaster Procedure:<BR>\n\tFire:<BR>\n\t\tActivate sector fire alarm.<BR>\n\t\tMove to a safe area.
+	<BR>\n\t\tGet a fire suit<BR>\n\t\tAfter:<BR>\n\t\t\tAssess Damage<BR>\n\t\t\tRepair damages<BR>\n\t\t\tIf needed, Evacuate<BR>\n\tMeteor Shower:<BR>\n\t\tActivate fire alarm
+	<BR>\n\t\tMove to the back of ship<BR>\n\t\tAfter<BR>\n\t\t\tRepair damage<BR>\n\t\t\tIf needed, Evacuate<BR>\n\tAccidental Reentry:<BR>\n\t\tActivate fire alrms in front of ship.
+	<BR>\n\t\tMove volatile matter to a fire proof area!<BR>\n\t\tGet a fire suit.<BR>\n\t\tStay secure until an emergency ship arrives.<BR>\n<BR>\n\t\tIf ship does not arrive-
+	<BR>\n\t\t\tEvacuate to a nearby safe area!"}
 
 /obj/item/paper/engine
 	name = "'Generator Startup Procedure'"
@@ -549,6 +598,12 @@ Standard checklist for thermo-electric generator cold-start:
 <b>*Direct combustion of internal coolant may void your engine warranty and result in: fire, explosion, death, and/or property damage.</b><BR>
 <li>In the event of hazardous coolant pressure buildup, use the vent valves in maintenance above the engine core to drain line pressure. If the engine is not functioning properly, check your line pressure.
 <li>Generator efficiency may suffer if the pressure differential between loops becomes too high. This may be rectified by adding more gas pressure to the low side or draining the high side.
+<li>The circulator includes a blower system to help ensure a minimum pressure can be provided to the circulator.  A multitool can be used to override the default setting if additional pressure is required.<BR>
+<b>*Power required is proportional to the pressure differential to overcome. Ensure ample power is provided by SMES system, this is critical when an override is active.</b><BR>
+<li>Circulator efficiency will suffer if the pressure of the outlet exceeds the inlet*. This issue may also be mitigated by cycling gas from outlet near via auxilary ports or draining line pressure depending on loop configuration.<BR>
+<b>*Failure to provide sufficient pressure will inhibit energy production until the problem can be rectified.</b><BR>
+<li>Circulators are equipped with a lubrication system to aid with overall efficiency and longevity. Only lubricants with sufficiently high viscosity should be utilized. System should arrive pre-lubricated with a proprietary synthetic heavy hydrocarbon oil blend from the factory. Should additional lubricant be required or need changing carefully unscrew the maintenance panel to gain access.<BR>
+<b>*Operation without sufficient lubricant may void your engine warranty but is unlikely to cause fire, explosion or death.</b><BR>
 <li>With the power generation rate stable, engage charging of the superconducting magnetic energy storage (SMES) devices in the Power Room. Total charging input rates between all connected SMES cells must not exceed the available generator output.</ol>
 <HR>
 <i>Warning!</i> Improper engine and generator operation may cause exposure to hazardous gasses, extremes of heat and cold, and dangerous electrical voltages.
@@ -556,6 +611,39 @@ Only trained personnel should operate station systems. Follow all procedures car
 <HR>
 
 "}
+	// Provide tracking so training material can be updated by TEG.  This removes reliance on a search criteria that becomes
+	// a limitation on map design.  Performant for that one time...
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
+
+/obj/item/paper/hellburn
+	name = "paper- 'memo #R13-08-A'"
+	info = {"<h3 style="border-bottom: 1px solid black; width: 80%;">Nanotrasen Toxins Research</h3>
+<tt>
+<strong>MEMORANDUM &nbsp; &nbsp; * CONFIDENTIAL *</strong><br>
+<br><strong>DATE:</strong> 02/19/53
+<br><strong>FROM:</strong> NT Research Division.
+<br><strong>TO:&nbsp&nbsp;</strong> Space Station 13's Research Director
+<br><strong>SUBJ:</strong> Toxins Research Project #08-A
+<br>
+<p>
+The enclosed samples are to be used in continued plasma research.  Our current understanding is that the gas released from "Molitz Beta" in the presence of
+sufficient temperatures and plasma cause an unusual phenomenon. The gas, Oxygen Agent B, seems to disrupt the typical equilibrium formed in exothermic oxidation
+allowing for temperatures we have been unable to fully realize. This only seems to occur when combustion is incomplete and can be observed visually as a gentle swirling of the flame.
+</p>
+<p>
+Please exercise caution in your testing, the result can best be described as a hellfire.  Ensure adequate safety messures are in place to purge the fire.
+</p>
+<p>All findings and documents related to Project #08-A are to be provided in triplicate to CentComm on physical documents only. <b>DO NOT</b> provide this data digitally
+as it may become compromised.
+</p>
+</tt>
+<center><span style="font-family: 'Dancing Script';">Is this a Hellburn???!!?</span></center>"}
 
 /obj/item/paper/zeta_boot_kit
 	name = "Paper-'Instructions'"
@@ -600,9 +688,11 @@ Only trained personnel should operate station systems. Follow all procedures car
 	name = "Re:re: Break-in!"
 	info = {"Some fucking asshole broke into our vault all by themselves! How the hell did they even manage that?<br>
 			<br>
-			They messed with the <b><i>Ouroboros Engine</i></b> and those dumb fucks blew up most of the vault too. Nearly blinded myself looking at all that gold. They must have tried using that alchemy stone without a conduit, damn lucky the damage wasn't spread any further<br>
+			They messed with the <b><i>Ouroboros Engine</i></b> and those dumb fucks blew up most of the vault too. Nearly blinded myself looking at all that gold.
+			They must have tried using that alchemy stone without a conduit, damn lucky the damage wasn't spread any further<br>
 			<br>
-			Sent the NTSOs off to the remains of Site Tempus on that dead planet again to hopefully recover the artifact. Gunna need it to revert this place back to how it was. Thank god we were able to recover the Engine.<br>
+			Sent the NTSOs off to the remains of Site Tempus on that dead planet again to hopefully recover the artifact. Gunna need it to revert this place back
+			to how it was. Thank god we were able to recover the Engine.<br>
 			<br>
 			Up your bloody security before this happens again. You know how dangerous using that artifact is. We'll be the ones blowing up next time. Or worse!"}
 
@@ -627,7 +717,8 @@ Only trained personnel should operate station systems. Follow all procedures car
     name = "paper - Where are the security segways?"
     icon_state = "paper"
     info = {"<h4>Where are the security segways?</h4><br>
-    Many of you have asked "where are the security segways?". Well let me tell you that we finally got rid of those filthy stains on the cover of the Space Law and permanently brigged them in some warehouse on the ship.
+    Many of you have asked "where are the security segways?". Well let me tell you that we finally got rid of those filthy stains on the cover of the Space Law
+	and permanently brigged them in some warehouse on the ship.
     <br>
     Now quit bothering us with your nonsensical questions and get back to work!
     <br>
@@ -636,7 +727,8 @@ Only trained personnel should operate station systems. Follow all procedures car
 /obj/item/paper/mantasecscanners
 	name = "paper - Security Officers are so dumb!"
 	icon_state = "paper"
-	info ={"Man, I can't believe how ridiculously dumb those security officers are! It's been weeks since I cut the wires to the security scanners on the left and right side of security and yet they still haven't noticed!<br>
+	info ={"Man, I can't believe how ridiculously dumb those security officers are! It's been weeks since I cut the wires to the security scanners on the left
+	and right side of security and yet they still haven't noticed!<br>
 	I swear, as soon as I'll get out of here, I'm going to go and snatch that sweet medal that Head of Security has in his office."}
 
 /obj/item/paper/mantanote
@@ -673,21 +765,25 @@ Only trained personnel should operate station systems. Follow all procedures car
 
 	We hope that it will keep you alive long enough for us to find a potential replacement candidate to do your job.
 
-	With best regards, Nanotrasen HR department. <br>"}
+	With best regards,<br>Nanotrasen HR Department. <br>"}
 
 /obj/item/paper/antisingularity
 	name = "paper - How to properly operate Singularity Buster rocket launcher"
 	icon_state = "paper"
 	info = {"<center><h2>How to properly operate Singularity Buster rocket launcher</h2></center>
 	<h3>Quick word from the manufacturer</h3><hr>
-	Please note that this highly experimental weapon is designed to reliably collapse a singularity in order to prevent catastrophic damage to the station. The singularity buster rockets are theoretically harmless to humans. Please do not try shooting a rocket at a human.<hr>
+	Please note that this highly experimental weapon is designed to reliably collapse a singularity in order to prevent catastrophic damage to the station.
+	The singularity buster rockets are theoretically harmless to humans. Please do not try shooting a rocket at a human.<hr>
 	<h3>Operating Singularity Buster rocket launcher</h3><hr>
 	<ul style='list-style-type:disc'>
-		<li>1) Carefully pick up a singularity buster rocket and load it into the loading chamber of the rocket launcher. Please make sure not to hit the rocket on any hard surfaces while doing so as this may lead to matter destabilization. </li>
-		<li>2) Pick up the rocket launcher on your shoulders, yet again making sure not to hit the rocket launcher on any hard surfaces as this might accidentally disintegrate the weapon.</li>
+		<li>1) Carefully pick up a singularity buster rocket and load it into the loading chamber of the rocket launcher. Please make sure not to hit the rocket
+		on any hard surfaces while doing so as this may lead to matter destabilization. </li>
+		<li>2) Pick up the rocket launcher on your shoulders, yet again making sure not to hit the rocket launcher on any hard surfaces as this might accidentally
+		disintegrate the weapon.</li>
 		<li>3) Point the rocket launcher carefully towards the center of a rogue singularity.</li>
-		<li>4) Press the trigger and prepare for the rocket to fly out of the barrel. This might be a good moment to pray for your safety if you are into that kind of thing as there is a slight chance for the rocket to destabilize and cause a new singularity to appear in it's location. </li>
-		<li>5) Singularities gravitional pull may move the rocket off course, requiring several attempts at collapsing the singularity.</li>
+		<li>4) Press the trigger and prepare for the rocket to fly out of the barrel. This might be a good moment to pray for your safety if you are into that
+		kind of thing as there is a slight chance for the rocket to destabilize and cause a new singularity to appear in its location. </li>
+		<li>5) Singularities' gravitional pull may move the rocket off course, requiring several attempts at collapsing a singularity.</li>
 	</ul>
 	"}
 
@@ -696,16 +792,21 @@ Only trained personnel should operate station systems. Follow all procedures car
 	icon_state = "paper"
 	info = {"<center><h2>How to properly install official Nanotrasen neon lining</h2></center>
 	<h3>Product description</h3><hr>
-	Ever wanted to spice up your bar? Build a meditation room? Enhance the station halls in case of an emergency? Then this official Nanotrasen neon lining are what you need. Now with color change modules!<hr>
+	Ever wanted to spice up your bar? Build a meditation room? Enhance the station halls in case of an emergency? Then this official Nanotrasen neon lining
+	is what you need. Now with color-change modules!<hr>
 	<h3>Modifying the neon lining</h3><hr>
 	<ul style='list-style-type:disc'>
-		<li>1) A wrench can be used to change the shape of the lining. Currently only 6 shapes officially supported.</li>
-		<li>2) To turn an already attached piece of lining back into a coil, carefully use a crowbar to detach it from the it's attachment point.</li>
-		<li>3) Apply a standard multitool to change the pattern of the lining. If upon changing shape the pattern's value is higher than the maximum for that shape, the value gets automatically reset to 0.</li>
-		<li>4) As this version is designed to be more flexible and compact, the lining feeds only on an internal power source. Due to this the only way to turn it off/on is to cut/mend the wires that connect to said power source.</li>
-		<li>5) To adjust the lining's rotation, simply unscrew it from it's attachment point. The lining will automatically snap to the next available rotation and screw itself into a new attachment point.</li>
-		<li>6) Due to safety concerns caused by our previous prototype of the product, the color change modules are only active when the lining is detached and thus in a coil.</li>
-		<li>7) There have been reports that when the lining is in the short line shape, using a multitool to change the pattern sometimes triggers the movement function of it's rotation program. This essentially shifts the lining a bit. We understand that this might be a bit unintuitive, but since this isn't hazardous we have no intentions of fixing it.</li>
+		<li>1) A wrench can be used to change the shape of the lining. Currently only 6 shapes are officially supported.</li>
+		<li>2) To turn an already attached piece of lining back into a coil, carefully use a crowbar to detach it from its attachment point.</li>
+		<li>3) Apply a standard multitool to change the pattern of the lining. If upon changing shape, the pattern's value is higher than the maximum for that shape,
+		the value gets automatically reset to 0.</li>
+		<li>4) As this version is designed to be more flexible and compact, the lining feeds only on an internal power source. Due to this the only way to turn it
+		off/on is to cut/mend the wires that connect to said power source.</li>
+		<li>5) To adjust the lining's rotation, simply unscrew it from its attachment point. The lining will automatically snap to the next available rotation and
+		screw itself into a new attachment point.</li>
+		<li>6) Due to safety concerns caused by our previous prototype of the product, the color-change modules are only active when the lining is detached and thus in a coil.</li>
+		<li>7) There have been reports that when the lining is in the short line shape, using a multitool to change the pattern sometimes triggers the movement function. This
+		essentially shifts the lining a bit. We understand that this might be a bit unintuitive, but since this isn't hazardous we have no intentions of fixing it.</li>
 	</ul>
 	"}
 
@@ -759,7 +860,8 @@ Only trained personnel should operate station systems. Follow all procedures car
 	icon_state = "paper"
 	info = {"<center><h2>So you've contracted a pathogen!</h2></center>
 	Hello, dear customer!<hr>
-	Pathogens can be scary! But you can rest easy knowing that your health is in safe hands now that you have contacted the CDC. Simply place a pathogen sample into the biohazard crate and send it back to us and we will have you cured in no time!<hr>
+	Pathogens can be scary! But you can rest easy knowing that your health is in safe hands now that you have contacted the CDC. Simply place a pathogen
+	sample into the biohazard crate and send it back to us and we will have you cured in no time!<hr>
 	<h3>How to send a pathogen sample</h3><hr>
 	<ul style='list-style-type:disc'>
 		<li>1) Fill a reagent container with a blood sample from a person afflicted with the pathogen you are seeking to cure. (For instance, you could use the syringe we sent you!)</li>
@@ -768,7 +870,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 		<li>4) As soon as we receive your sample, you can contact us using your Quartermaster's Console to ask us to start analyzing it.</li>
 		<li>5) Once we are done analyzing your sample, we will offer to sell you cures. Buying a pack of multiple cures at a time will be cheaper for you!</li>
 	</ul>
-	We hope that you have found this pamphlet enlightening and we hope to receive your sample soon!<hr>
+	We hope that you have found this pamphlet enlightening and we look forward to receiving your sample soon!<hr>
 	Remember, only you can prevent deadly pathogens!
 	"}
 
@@ -782,7 +884,8 @@ Only trained personnel should operate station systems. Follow all procedures car
 	<br>
 	<br>
 	<br>
-	So read carefully and heed the precautions! Keep the fridges closed! All of them! Do not look inside...and if you happen to hear any clawing, grumbling, or cries for help...<b>ignore them</b>!
+	So read carefully and heed the precautions! Keep the fridges closed! All of them! Do not look inside...and if you happen to hear any clawing, grumbling,
+	or cries for help...<b>ignore them</b>!
 	<br>
 	<br>
 	The freight is extremely valuable! Any light or human flesh exposed to said cargo will cost your pal Discount Dan an arm, a leg and a space-tastic lawsuit!
@@ -823,7 +926,8 @@ Only trained personnel should operate station systems. Follow all procedures car
 	desc = "A scribbled note - created with burning rage."
 	info = {"<center><h3>MICE?!</h3></center>
 	<hr>
-	<i>Ey! Yo! What the hell? You think you can take a day off - relax - and then these hungry n'angry food pirates come along! Damn Thompson McGreasy; unable to close his trash-pod he arrived in. Now we gotta deal with some mutant mice problem!</i>
+	<i>Ey! Yo! What the hell? You think you can take a day off - relax - and then these hungry n'angry food pirates come along! Damn Thompson McGreasy;
+	unable to close his trash-pod he arrived in. Now we gotta deal with some mutant mice problem!</i>
 	"}
 
 /obj/item/paper/fortune
@@ -833,7 +937,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	icon_state = "fortune"
 
 	var/static/list/action = list("Beware of", "Keep an eye on", "Seek out", "Be wary of", "Make friends with", "Aid", "Talk to", "Avoid")
-	var/static/list/who = list("Zero-G Chem-Co Commander", "Shambling Abomination", "Merlin", "GeneTek Operative Javelin (as Destiny Calls)", "Remy", "Dr. Acula", "Morty")
+	var/static/list/who = list("Officer Beepsky", "Shambling Abomination", "Remy", "Dr. Acula", "Morty", "Sylvester", "Jones", "the staff assistant next to you", "the clown")
 	var/static/list/thing = list("are in possession of highly dangerous contraband.", "murdered a bee.", "kicked George.", "are a Syndicate operative.", "are a murderer.", "have disguised themselves from their true form.",
 	"are not who they claim to be.", "know Shitty Bill's secret.", "are lonely.", "hugged a space bear and survived to tell the tale.", "know the legendary double-fry technique.", "have the power to reanimate the dead.",
 	"consort with wizards.", "sell really awesome drugs.", "have all-access.", "know the king.", "make amazing pizza.", "have a toolbox and are not afraid to use it.")
@@ -1044,7 +1148,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	amount = 10.0
 	item_state = "sheet-metal"
 	throwforce = 1
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 3
 	throw_range = 7
 
@@ -1061,7 +1165,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	return
 
 /obj/item/paper_bin/MouseDrop(mob/user as mob)
-	if (user == usr && !usr.restrained() && !usr.stat && (usr.contents.Find(src) || in_range(src, usr)))
+	if (user == usr && !user.restrained() && !user.stat && (user.contents.Find(src) || in_interact_range(src, user)))
 		if (!user.put_in_hand(src))
 			return ..()
 
@@ -1081,6 +1185,10 @@ Only trained personnel should operate station systems. Follow all procedures car
 	src.update()
 	return
 
+/obj/item/paper_bin/attack_self(mob/user as mob)
+	..()
+	src.Attackhand(user)
+
 /obj/item/paper_bin/attackby(obj/item/paper/P as obj, mob/user as mob) // finally you can write on all the paper AND put it back in the bin to mess with whoever shows up after you ha ha
 	if (istype(P))
 		user.drop_item()
@@ -1095,27 +1203,24 @@ Only trained personnel should operate station systems. Follow all procedures car
 		n++
 	return "There's [(n > 0) ? n : "no" ] paper[s_es(n)] in \the [src]."
 
-/*
-/obj/item/paper_bin/attackby(obj/item/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/paper))
-		user.drop_item()
-		W.set_loc(src)
-	else
-		if (isweldingtool(W))
-			if ((T:try_weld(user,0,1,0,0) && T:weldfuel > 0))
-				viewers(user, null) << text("[] burns the paper with the welding tool!", user)
-				SPAWN_DBG( 0 )
-					src.burn(1800000.0)
-					return
-		else
-			if (istype(W, /obj/item/device/igniter))
-				viewers(user, null) << text("[] burns the paper with the igniter!", user)
-				SPAWN_DBG( 0 )
-					src.burn(1800000.0)
-					return
-	src.update()
-	return
-*/ //TODO: FIX
+/obj/item/paper_bin/robot
+	name = "semi-automatic paper bin"
+	var/next_generate = 0
+
+	attack_self(mob/user as mob)
+		if (src.amount < 1 && isnull(locate(/obj/item/paper) in src))
+			if (src.next_generate < ticker.round_elapsed_ticks)
+				boutput(user, "The [src] generates another sheet of paper using the power of [pick("technology","science","computers","nanomachines",5;"magic",5;"extremely tiny clowns")].")
+				src.amount++
+				src.update()
+				src.next_generate = ticker.round_elapsed_ticks + 5 SECONDS
+				return
+
+			boutput(user, "Nothing left in the [src]. Maybe you should check again later.")
+			return
+
+		boutput(user, "You remove a piece of paper from the [src].")
+		return attack_hand(user)
 
 /obj/item/stamp
 	name = "rubber stamp"
@@ -1125,17 +1230,25 @@ Only trained personnel should operate station systems. Follow all procedures car
 	item_state = "stamp"
 	flags = FPRINT | TABLEPASS
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 60
 	stamina_damage = 0
 	stamina_cost = 0
 	rand_pos = 1
+	var/special_mode = null
 	var/is_reassignable = 1
 	var/assignment = null
-	var/available_modes = list("Approved", "Rejected", "Void", "X", "Current Time");
-	var/current_mode = "Approved"
+	var/available_modes = list("Granted", "Denied", "Void", "Current Time", "Your Name");
+	var/current_mode = "stamp-sprite-ok"
+	var/current_state = null
+
+/obj/item/stamp/New()
+	..()
+	if(special_mode)
+		available_modes += special_mode
+		current_mode = (STAMP_IDS[special_mode])
 
 /obj/item/stamp/proc/set_assignment(A)
 	if (istext(A))
@@ -1146,34 +1259,6 @@ Only trained personnel should operate station systems. Follow all procedures car
 		src.assignment = null
 		src.desc = "A rubber stamp for stamping important documents."
 		return
-
-/obj/item/stamp/proc/get_stamp_text()
-	var/T = null;
-	switch (src.current_mode)
-		if ("Approved")
-			if (src.assignment)
-				T = "APPROVED ([src.assignment])"
-			else
-				T = "APPROVED"
-		if ("Rejected")
-			if (src.assignment)
-				T = "REJECTED ([src.assignment])"
-			else
-				T = "REJECTED"
-		if ("Void")
-			T = "VOID"
-		if ("X")
-			T = "X"
-		if ("Current Time")
-			if (ticker)
-				var/S = round(ticker.round_elapsed_ticks / 10)
-				T = "SHIFT TIME: [round(S / 3600)]:[add_zero(round(S % 3600 / 60), 2)]:[add_zero(num2text(S % 60), 2)]"
-			else
-				T = "SHIFT TIME"
-		else
-			T = src.current_mode
-	return "<span style='font-family: Georgia; font-style: normal; font-weight: normal; font-size: 16px; color: red;'><b>\[</b>[T]<b>\]</b></span>"
-
 /obj/item/stamp/attackby(obj/item/C as obj, mob/user as mob)// assignment with ID
 	if (istype(C, /obj/item/card/id))
 		var/obj/item/card/id/ID = C
@@ -1194,7 +1279,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	var/NM = input(usr, "Configure \the [src]?", "[src.name]", src.current_mode) in src.available_modes
 	if (!NM || !length(NM) || !(NM in src.available_modes))
 		return
-	src.current_mode = NM
+	src.current_mode = (STAMP_IDS[NM])
 	boutput(usr, "<span class='notice'>You set \the [src] to '[NM]'.</span>")
 	return
 
@@ -1225,74 +1310,96 @@ Only trained personnel should operate station systems. Follow all procedures car
 
 /obj/item/stamp // static staff stamps
 	cap
-		name = "captain's rubber stamp"
+		name = "\improper captain's rubber stamp"
 		desc = "The Captain's rubber stamp for stamping important documents."
 		icon_state = "stamp-cap"
+		special_mode = "Captain"
 		is_reassignable = 0
-		assignment = "Captain"
+		assignment = "stamp-cap"
 	hop
-		name = "head of personnel's rubber stamp"
+		name = "\improper head of personnel's rubber stamp"
 		desc = "The Head of Personnel's rubber stamp for stamping important documents."
 		icon_state = "stamp-hop"
+		special_mode = "Head of Personnel"
 		is_reassignable = 0
-		assignment = "Head of Personnel"
+		assignment = "stamp-hop"
 	hos
-		name = "head of security's rubber stamp"
+		name = "\improper head of security's rubber stamp"
 		desc = "The Head of Security's rubber stamp for stamping important documents."
 		icon_state = "stamp-hos"
+		special_mode = "Head of Security"
 		is_reassignable = 0
-		assignment = "Head of Security"
+		assignment = "stamp-hos"
 	ce
-		name = "chief engineer's rubber stamp"
+		name = "\improper chief engineer's rubber stamp"
 		desc = "The Chief Engineer's rubber stamp for stamping important documents."
 		icon_state = "stamp-ce"
+		special_mode = "Chief Engineer"
 		is_reassignable = 0
-		assignment = "Chief Engineer"
+		assignment = "stamp-ce"
 	md
-		name = "medical director's rubber stamp"
+		name = "\improper medical director's rubber stamp"
 		desc = "The Medical Director's rubber stamp for stamping important documents."
 		icon_state = "stamp-md"
+		special_mode = "Medical Director"
 		is_reassignable = 0
-		assignment = "Medical Director"
+		assignment = "stamp-md"
 	rd
-		name = "research director's rubber stamp"
+		name = "\improper research director's rubber stamp"
 		desc = "The Research Director's rubber stamp for stamping important documents."
 		icon_state = "stamp-rd"
+		special_mode = "Research Director"
 		is_reassignable = 0
-		assignment = "Research Director"
+		assignment = "stamp-rd"
 	clown
-		name = "clown's rubber stamp"
+		name = "\improper clown's rubber stamp"
 		desc = "The Clown's rubber stamp for stamping whatever important documents they've gotten their hands on."
 		icon_state = "stamp-honk"
+		special_mode = "Clown"
 		is_reassignable = 0
-		assignment = "Clown"
-		get_stamp_text()
-			var/T = null;
-			switch (src.current_mode)
-				if ("Approved")
-					T = " :o) "
-				if ("Rejected")
-					T = html_encode(" >:o( ")
-				if ("Void")
-					T = "HONK"
-				if ("X")
-					T = pick("X", "!", "#", "?")
-				if ("Current Time")
-					if (ticker)
-						var/S = round(ticker.round_elapsed_ticks / 10)
-						T = "HONK O'CLOCK: [round(S / 3600)]:[add_zero(round(S % 3600 / 60), 2)]:[add_zero(num2text(S % 60), 2)]"
-					else
-						T = "HONK O'CLOCK"
-				else
-					T = src.current_mode
-			return "<span style='font-family: Georgia; font-style: normal; font-weight: normal; font-size: 24px; color: red;'><b>\[</b><span style='font-family: Comic Sans MS;'>[T]</span><b>\]</b></span>"
-
-/* who did this
-/obj/item/stamp/New()
-
-	..()
-	return
-WHO DID THIS */
+		assignment = "stamp-honk"
+	centcom
+		name = "\improper centcom rubber stamp"
+		desc = "Some bureaucrat from Centcom probably lost this."
+		icon_state = "stamp-centcom"
+		special_mode = "Centcom"
+		is_reassignable = 0
+		assignment = "stamp-centcom"
+	mime
+		name = "\improper mime's rubber stamp"
+		desc = "The Mime's rubber stamp for stamping whatever important documents they've gotten their hands on."
+		icon_state = "stamp-mime"
+		special_mode = "Mime"
+		is_reassignable = 0
+		assignment = "stamp-mime"
+	chap
+		name = "\improper chaplain's rubber stamp"
+		desc = "The Chaplain's rubber stamp for stamping whatever important documents they've gotten their hands on."
+		icon_state = "stamp-chap"
+		special_mode = "Chaplain"
+		is_reassignable = 0
+		assignment = "stamp-chap"
+	qm
+		name = "\improper quartermaster's rubber stamp"
+		desc = "The Quartermaster's rubber stamp for stamping whatever important documents they've gotten their hands on."
+		icon_state = "stamp-qm"
+		special_mode = "Quartermaster"
+		is_reassignable = 0
+		assignment = "stamp-qm"
+	syndicate
+		name = "\improper syndicate rubber stamp"
+		desc = "Syndicate rubber stamp for stamping whatever important documents they've gotten their hands on."
+		icon_state = "stamp-syndicate"
+		special_mode = "Syndicate"
+		is_reassignable = 0
+		assignment = "stamp-syndicate"
+	law
+		name = "\improper security's rubber stamp"
+		desc = "Security's rubber stamp for stamping whatever important documents they've gotten their hands on."
+		icon_state = "stamp-syndicate"
+		special_mode = "Security"
+		is_reassignable = 0
+		assignment = "stamp-law"
 
 /obj/item/paper/folded
 	name = "folded paper"
@@ -1342,11 +1449,11 @@ WHO DID THIS */
 
 /obj/item/paper/folded/ball/attack(mob/M as mob, mob/user as mob)
 	if (iscarbon(M) && M == user)
-		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and and eats it.</span>")
+		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and eats it.</span>")
+		playsound(M,"sound/misc/gulp.ogg", 30, 1)
 		eat_twitch(M)
 		var/obj/item/paper/P = src
-		src = null
-		usr.u_equip(P)
+		user.u_equip(P)
 		pool(P)
 	else
 		..()
@@ -1403,42 +1510,41 @@ automatically adopt your criminal control strategy of choice.<br>
 <td>The perfect crowd control option, this Mode stuns all your enemies within a close radius, but leaves you untouched!</td>
 </tr>
 <tr>
-<td><b>"Execute"</b></td>
+<td><b>"Execute" / "Exterminate"</b></td>
 <td>30 PU</td>
 <td>Turn your Lawbringer™ into your favourite sidearm with these .38 Full Metal Jacket rounds!</td>
 </tr>
 <tr>
-<td><b>"Hotshot"</b></td>
+<td><b>"Hotshot" / "Incendiary"</b></td>
 <td>60 PU</td>
 <td>This handy flare gun/flamethrower option is sure to heat things up! The Lawbringer™ is not certified fireproof. Do not set on fire.</td>
 </tr>
 <tr>
-<td><b>"Smokeshot"</b></td>
+<td><b>"Smokeshot" / "Fog"</b></td>
 <td>50 PU</td>
 <td>Never use a riot launcher again! These smoke grenades will let you manage line of sight with ease.</td>
 </tr>
 <tr>
-<td><b>"Knockout"</b></td>
+<td><b>"Knockout" /  "Sleepshot"</b></td>
 <td>60 PU</td>
 <td>When you just can't get things to slow down, <i>make 'em</i> slow down with these handy haloperidol tranquilizer darts!</td>
 </tr>
 <tr>
-<td><b>"Bigshot"*</b></td>
+<td><b>"Bigshot" / "High Explosive" / "HE"</b></td>
 <td>170 PU</td>
 <td>You'll be the talk of the station when you bust down a wall with one of these explosive rounds! May cause loss of limbs or life.</td>
 </tr>
 <tr>
-<td><b>"Clownshot"</b></td>
+<td><b>"Clownshot" / "Clown"</b></td>
 <td>15 PU</td>
 <td>Lawbringer™ warranty is voided if exposed to clowns. Keep them at bay.</td>
 </tr>
 <tr>
-<td><b>"Pulse"</b></td>
+<td><b>"Pulse" / "Push" / "Throw"</b></td>
 <td>35 PU</td>
 <td>Just like our patented Pulse Rifle™s, this Mode sends your enemies flying! Keep crime at arm's length!</td>
 </tr>
 </table>
-<i><b>*</b>Also accepted for this Mode: "High Explosive," "HE."</i>
 <hr>
 <p><b>Disclaimer:</b> Nanotrasen Arms Division cannot be held liable in the case of inconvenience, failure or death,
 as per your Nanotrasen Employment Agreement. If any of the Modes are found to be ineffective, underpowered,
@@ -1453,12 +1559,56 @@ exposed to overconfident outbursts on the part of individuals unqualifed to embo
 	name = "Mushroom Station postcard"
 	desc = "Just four pals hangin' out havin' a good time. Looks like they're welded into the bathroom? Why?!"
 	icon_state = "postcard-mushroom"
-
-	//sizex = 1066
-	//sizey = 735
+	sizex = 1066
+	sizey = 735
 
 	New()
 		..()
 		pixel_x = rand(-8, 8)
 		pixel_y = rand(-8, 8)
 		info = "<html><body style='margin:2px'><img src='[resource("images/arts/mushroom_station.png")]'></body></html>"
+
+/obj/item/paper/botany_guide
+	name = "Botany Field Guide"
+	desc = "Some kinda informative poster. Or is it a pamphlet? Either way, it wants to teach you things. About plants."
+	icon_state = "botany_guide"
+	sizex = 970
+	sizey = 690
+
+	New()
+		..()
+		pixel_x = rand(-8, 8)
+		pixel_y = rand(-8, 8)
+		info = "<html><body style='margin:2px'><img src='[resource("images/pocket_guides/botanyguide.png")]'></body></html>"
+
+/obj/item/paper/ranch_guide
+	name = "Ranch Field Guide"
+	desc = "Some kinda informative poster. Or is it a pamphlet? Either way, it wants to teach you things. About chickens."
+	icon_state = "ranch_guide"
+	sizex = 1100
+	sizey = 800
+
+	New()
+		..()
+		pixel_x = rand(-8, 8)
+		pixel_y = rand(-8, 8)
+		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/pocket_guides/ranchguide.png")]'></body></html>"
+
+/obj/item/paper/iou
+	name = "IOU"
+	desc = "Somebody took whatever was in here."
+	icon_state = "postit-writing"
+	info = {"<h2>IOU</h2>"}
+
+/obj/item/paper/shooting_range_note1 //shooting range prefab junk
+	name = "secure safe note"
+	desc = "Someone left a reminder in neat cursive. The post-it looks nearly new."
+	icon_state = "postit-writing"
+	info = {"*Experimental ray gun - DO NOT FIRE IN A CLOSED SPACE. Waiting for Olwen to fix... whenever she's back...<br><b><u>*Dinner date is on <s>Tuesday</s>  <s>Fri.</s></s><br>
+<s>Thurs.</s><br><s>Sunday</s><br></u><br>???"}
+
+/obj/item/paper/shooting_range_note2
+	name = "secure safe note"
+	desc = "This note is creased and ripped and tattered. The writing on it is scribbled in near-indecipherable chickenscratch."
+	icon_state = "postit-writing"
+	info = {"-non-stable battery; keeps popping on use.<br>-design work (not final)<br>-battery capacity??? maybe?<br>Cheers,<br>O"}

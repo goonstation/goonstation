@@ -1,4 +1,4 @@
-#if ASS_JAM
+
 /datum/ailment/disease/high_fever
 	name = "High Fever"
 	max_stages = 5
@@ -37,5 +37,5 @@
 				H.update_body()
 			D.stage_prob = 0
 			D.stage = 1
-#endif
+
 

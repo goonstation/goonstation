@@ -10,7 +10,7 @@
   desc = "Pointy!"
   icon = 'icons/obj/martian.dmi'
   icon_state = "seed"
-  w_class = 1.0
+  w_class = W_CLASS_TINY
   stamina_damage = 1
   stamina_cost = 1
   rand_pos = 1

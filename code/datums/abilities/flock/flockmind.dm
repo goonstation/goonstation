@@ -6,7 +6,7 @@
 	topBarRendered = 1
 	rendered = 1
 
-/obj/screen/ability/topBar/flockmind
+/atom/movable/screen/ability/topBar/flockmind
 	tens_offset_x = 19
 	tens_offset_y = 7
 	secs_offset_x = 23
@@ -25,7 +25,7 @@
 	theme = "flock"
 
 /datum/targetable/flockmindAbility/New()
-	var/obj/screen/ability/topBar/flockmind/B = new /obj/screen/ability/topBar/flockmind(null)
+	var/atom/movable/screen/ability/topBar/flockmind/B = new /atom/movable/screen/ability/topBar/flockmind(null)
 	B.icon = src.icon
 	B.icon_state = src.icon_state
 	B.owner = src
@@ -139,7 +139,7 @@
 		return 1
 	if(!istype(target))
 		return 1
-	playsound(get_turf(holder.owner), "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
+	playsound(holder.owner, "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
 	boutput(holder.owner, "<span class='notice'>You focus the flock's efforts on fixing [target.real_name]</span>")
 	sleep(1.5 SECONDS)
 	target.HealDamage("All", 200, 200)
@@ -150,7 +150,7 @@
 /datum/targetable/flockmindAbility/splitDrone
 	name = "Diffract Drone"
 	desc = "Split a drone into flockbits, mindless automata that only convert whatever they find."
-	//icon_state = "quiet_drone"
+	icon_state = "diffract"
 
 /datum/targetable/flockmindAbility/splitDrone/cast(mob/living/critter/flock/drone/target)
 	if(..())
@@ -159,10 +159,12 @@
 		return 1
 	// sanity check: don't remove our last complex drone
 	var/mob/living/intangible/flock/flockmind/F = holder.owner
-	if(F && F.flock)
-		if(F.flock.getComplexDroneCount() == 1)
-			boutput(holder.owner, "<span class='alert'>That's your last complex drone. Diffracting it would be suicide.</span>")
-			return 1
+	if(!F?.flock || F.flock != target.flock)
+		boutput(holder.owner, "<span class='notice'>The drone does not respond to your command.</span>")
+		return 1
+	if(F.flock.getComplexDroneCount() == 1)
+		boutput(holder.owner, "<span class='alert'>That's your last complex drone. Diffracting it would be suicide.</span>")
+		return 1
 	boutput(holder.owner, "<span class='notice'>You diffract the drone.</span>")
 	target.split_into_bits()
 
@@ -184,7 +186,7 @@
 			targets += A
 	if(targets.len > 1)
 		// do casty stuff here
-		playsound(get_turf(holder.owner), "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
+		playsound(holder.owner, "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
 		boutput(holder.owner, "<span class='notice'>You force open all the doors around you.</span>")
 		sleep(1.5 SECONDS)
 		for(var/obj/machinery/door/airlock/A in targets)
@@ -214,14 +216,14 @@
 			// skip this one
 			continue
 		var/obj/item/device/radio/R = M.ears
-		if(R && R.listening)
+		if(istype(R) && R.listening)
 			// your headset's on, you're fair game!!
 			targets += M
 	if(targets.len >= 1)
-		playsound(get_turf(holder.owner), "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
+		playsound(holder.owner, "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
 		boutput(holder.owner, "<span class='notice'>You transmit the worst static you can weave into the headsets around you.</span>")
 		for(var/mob/living/M in targets)
-			playsound(get_turf(M), "sound/effects/radio_sweep[rand(1,5)].ogg", 100, 1)
+			playsound(M, "sound/effects/radio_sweep[rand(1,5)].ogg", 100, 1)
 			boutput(M, "<span class='alert'>Horrifying static bursts into your headset, disorienting you severely!</span>")
 			M.apply_sonic_stun(3, 6, 60, 0, 0, rand(1, 3), rand(1, 3))
 	else
@@ -305,3 +307,34 @@
 		return 1
 	panel.Subscribe(user)
 
+////////////////////////////////
+
+/datum/targetable/flockmindAbility/createStructure
+	name = "Fabricate Structure"
+	desc = "Create a structure tealprint for your drones to construct onto."
+	icon_state = "fabstructure"
+	cooldown = 4 SECONDS
+	targeted = 0
+
+/datum/targetable/flockmindAbility/createStructure/cast()
+	var/resourcecost = null
+	var/structurewantedtype = null
+	var/turf/T = get_turf(holder.owner)
+	if(!istype(T, /turf/simulated/floor/feather))
+		boutput(holder.owner, "<span class='alert'>You aren't above a flocktile.</span>")//todo maybe make this flock themed?
+		return 1
+	if(locate(/obj/flock_structure) in T)
+		boutput(holder.owner, "<span class='alert'>There is already a flock structure on this flocktile!</span>")
+		return 1
+	//todo: replace with FANCY tgui/chui window with WHEELS and ICONS and stuff!
+	var/structurewanted = tgui_input_list(holder.owner, "Select which structure you would like to create", "Tealprint selection", list("Collector", "Sentinel"))
+	switch(structurewanted)
+		if("Collector")
+			structurewantedtype = /obj/flock_structure/collector
+			resourcecost = 200
+		if("Sentinel")
+			structurewantedtype = /obj/flock_structure/sentinel
+			resourcecost = 300
+	if(structurewantedtype)
+		var/mob/living/intangible/flock/F = holder.owner
+		F.createstructure(structurewantedtype, resourcecost)

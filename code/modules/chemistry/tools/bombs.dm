@@ -105,7 +105,6 @@
 		src.triggering_device = null
 		src.igniter = null
 		src.payload = null
-		//SN src = null
 		qdel(src)
 		return
 
@@ -131,7 +130,7 @@
 	var/bombarea = bombturf.loc.name
 
 	logTheThing("bombing", null, null, "Chemical ([src]) Bomb triggered in [bombarea] with device attacher: [attacher]. Last touched by: [src.fingerprintslast]")
-	message_admins("Chemical Bomb ([src]) triggered in [bombarea] with device attacher: [attacher]. Last touched by: [src.fingerprintslast]")
+	message_admins("Chemical Bomb ([src]) triggered in [bombarea] with device attacher: [attacher]. Last touched by: [key_name(src.fingerprintslast)]")
 
 	//boutput(world, "sent explode() to [src.payload]")
 	src.payload.explode()

@@ -7,7 +7,7 @@
 	flags = FPRINT | TABLEPASS
 	plane = PLANE_NOSHADOW_ABOVE
 	force = 8.0
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	anchored = 1.0
 	density = 0
 	mats = 8
@@ -82,7 +82,7 @@
 	pixel_y = 32
 	spawn_contents = list(/obj/item/paper_bin = 2,
 	/obj/item/hand_labeler,
-	/obj/item/postit_stack,
+	/obj/item/item_box/postit,
 	/obj/item/pen,
 	/obj/item/staple_gun/red,
 	/obj/item/scissors,
@@ -105,11 +105,7 @@
 	/obj/item/storage/box/lglo_kit/random = 2,
 	/obj/item/storage/box/clothing/patient_gowns = 2)
 
-#if ASS_JAM
-	New()
-		. = ..()
-		ADD_MORTY(11, 8, 11, 11)
-#endif
+
 
 /obj/item/storage/wall/research_supplies
 	name = "research supplies"
@@ -265,6 +261,15 @@
 	/obj/item/clothing/under/gimmick/chaps= 1,
 	/obj/item/clothing/under/gimmick/shirtnjeans = 1)
 
+/obj/item/storage/wall/clothingrack/clothes_shooting_range //for the shooting range prefab; Consumerism.
+	spawn_contents = list(/obj/item/clothing/under/gimmick/utena = 1,
+	/obj/item/clothing/suit/hoodie = 1,
+	/obj/item/clothing/suit/wintercoat = 1,
+	/obj/item/clothing/suit/labcoat/hitman = 1,
+	/obj/item/clothing/suit/johnny_coat = 1,
+	/obj/item/clothing/under/gimmick/chaps= 1,
+	/obj/item/clothing/under/gimmick/shirtnjeans = 1)
+
 obj/item/storage/wall/clothingrack/hatrack
 	name = "hat shelf"
 	desc = "It's a shelf designed for many hats."
@@ -301,22 +306,22 @@ obj/item/storage/wall/clothingrack/hatrack
 		/obj/item/clothing/head/beret/random_color = 1,
 		/obj/item/clothing/head/beret/random_color = 1,
 		/obj/item/clothing/head/beret/random_color = 1,
-		/obj/item/clothing/head/veil = 1,
+		/obj/item/clothing/head/sunhat/sunhatg = 1,
 		/obj/item/clothing/head/serpico = 1,
-		/obj/item/clothing/head/sailormoon = 1)
+		/obj/item/clothing/head/cowboy = 1)
 
 	hatrack_3
 		spawn_contents = list(/obj/item/clothing/head/raccoon = 1,
 		/obj/item/clothing/head/mj_hat = 1,
+		/obj/item/clothing/head/veil = 1,
 		/obj/item/clothing/head/sunhat = 1,
 		/obj/item/clothing/head/sunhat/sunhatr = 1,
-		/obj/item/clothing/head/sunhat/sunhatg = 1,
 		/obj/item/clothing/head/aviator = 1,
-		/obj/item/clothing/head/cowboy = 1)
+		/obj/item/clothing/head/sailormoon = 1)
 
 /obj/item/storage/wall/toolshelf
 	name = "tool shelf"
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	density = 0
 	slots = 7
 	anchored = 1
@@ -339,7 +344,7 @@ obj/item/storage/wall/clothingrack/hatrack
 
 /obj/item/storage/wall/mineralshelf
 	name = "mineral shelf"
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	density = 0
 	slots = 7
 	anchored = 1

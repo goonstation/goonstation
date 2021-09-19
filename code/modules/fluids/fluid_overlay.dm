@@ -114,7 +114,7 @@
 
 /obj/proc/show_submerged_image(var/depth) //depth from 0 - 4
 	if (depth == 1) depth = 0
-	if (!submerged_images || !submerged_images.len) return
+	if (!submerged_images || !length(submerged_images)) return
 	if (src.is_submerged == depth) return
 
 	if (depth)

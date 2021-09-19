@@ -36,7 +36,7 @@ labels_to_emoji = {
 def parse_pr_changelog(pr):
 	entries = []
 	author = None
-	changelog_match = re.search(r"##\s*Changelog.*```(.*)```", pr.body, re.S | re.M)
+	changelog_match = re.search(r"```changelog(.*)```", pr.body, re.S | re.M)
 	if changelog_match is None:
 		return
 	lines = changelog_match.group(1).split('\n')
@@ -104,9 +104,7 @@ def update_changelog(repo, file_path, date_string, lines, message, tries=5, bran
 	return completed
 
 def utc_to_local(utc_dt):
-
 	local_tz = pytz.timezone('US/Eastern')
-
 	local_dt = utc_dt.replace(tzinfo=pytz.utc).astimezone(local_tz)
 	return local_tz.normalize(local_dt)
 

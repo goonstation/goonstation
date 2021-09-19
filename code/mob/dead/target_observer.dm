@@ -1,7 +1,6 @@
 var/list/observers = list()
 
 /mob/dead/target_observer
-	invisibility = 10
 	density = 1
 	name = "spooky ghost"
 	icon = null
@@ -12,14 +11,18 @@ var/list/observers = list()
 
 	New()
 		..()
+		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
 		observers += src
 		mobs += src
 		//set_observe_target(target)
 
 	unpooled()
 		..()
+		src.mob_properties = list()
+		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
 		observers += src
 		mobs += src
+		src.move_dir = 0
 
 	pooled()
 		mobs -= src
@@ -37,7 +40,7 @@ var/list/observers = list()
 
 
 		for (var/datum/hud/H in huds)
-			for (var/obj/screen/hud/S in H.objects)
+			for (var/atom/movable/screen/hud/S in H.objects)
 				if (S:master == src)
 					S:master = null
 			detach_hud(H)
@@ -80,7 +83,8 @@ var/list/observers = list()
 		return
 
 	process_move(keys)
-		src.stop_observing()
+		if(keys && src.move_dir)
+			src.stop_observing()
 
 	apply_camera(client/C)
 		var/mob/living/M = src.target

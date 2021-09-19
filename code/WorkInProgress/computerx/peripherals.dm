@@ -42,7 +42,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "id_mod"
 	item_state = "electronic"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	var/obj/machinery/computerx/host
 	var/id = null
 	var/func_tag = "GENERIC" //What kind of peripheral is this, huh??
@@ -56,8 +56,7 @@
 		src.id = "\ref[src]"
 
 	disposing()
-		if(host)
-			host.peripherals.Remove(src)
+		host?.peripherals.Remove(src)
 		..()
 
 
@@ -108,7 +107,7 @@
 		if(usr.stat || usr.restrained())
 			return 1
 
-		if ((!usr.contents.Find(src.host) && (!in_range(src.host, usr) || !istype(src.host.loc, /turf))) && (!issilicon(usr)))
+		if ((!usr.contents.Find(src.host) && (!in_interact_range(src.host, usr) || !istype(src.host.loc, /turf))) && (!issilicon(usr)))
 			return 1
 
 		if(src.host.status & (NOPOWER|BROKEN))
@@ -423,7 +422,7 @@
 		if((source != host) || !(src in host))
 			return
 
-		if(!command)// || (signal && signal.encryption && signal.encryption != src.id))
+		if(!command)// || (signal?.encryption && signal.encryption != src.id))
 			return
 
 		if(!src.check_connection())
@@ -550,7 +549,7 @@
 
 	proc/vend_prize()
 		var/obj/item/prize
-		var/prizeselect = rand(1,4)
+		var/prizeselect = rand(1,8)
 		var/turf/prize_location = null
 
 		if(src.host)

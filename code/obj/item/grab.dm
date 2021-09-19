@@ -8,9 +8,9 @@
 	icon = 'icons/mob/hud_human_new.dmi'
 	icon_state = "reinforce"
 	name = "grab"
-	w_class = 5
+	w_class = W_CLASS_HUGE
 	anchored = 1
-	var/break_prob = 45
+	var/prob_mod = 1
 	var/assailant_stam_drain = 30
 	var/affecting_stam_drain = 20
 	var/resist_count = 0
@@ -18,8 +18,11 @@
 	var/can_pin = 1
 	var/dropped = 0
 
-	New(atom/loc, mob/assailant = null)
+	New(atom/loc, mob/assailant = null, mob/affecting = null)
 		..()
+		if(!affecting || affecting.disposed)
+			qdel(src)
+			return
 
 		var/icon/hud_style = hud_style_selection[get_hud_style(src.assailant)]
 		if (isicon(hud_style))
@@ -34,6 +37,9 @@
 
 			I.UpdateOverlays(ima, "grab", 0, 1)
 		src.assailant = assailant
+		src.affecting = affecting
+		src.affecting.grabbed_by += src
+		RegisterSignal(src.assailant, COMSIG_ATOM_HITBY_PROJ, .proc/check_hostage)
 
 	proc/post_item_setup()//after grab is done being made with item
 		return
@@ -80,6 +86,7 @@
 				affecting.grabbed_by -= src
 			affecting = null
 
+		UnregisterSignal(assailant, COMSIG_ATOM_HITBY_PROJ)
 		assailant = null
 		..()
 
@@ -95,7 +102,7 @@
 		..()
 		dropped += 1
 		if(src.assailant)
-			REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src.type)
+			REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src)
 			qdel(src)
 
 	process(var/mult = 1)
@@ -177,7 +184,7 @@
 			src.affecting.pixel_y = src.assailant.pixel_y + pyo
 		src.affecting.set_loc(src.assailant.loc)
 		src.affecting.layer = src.assailant.layer + (src.assailant.dir == NORTH ? -0.1 : 0.1)
-		src.affecting.dir = src.assailant.dir
+		src.affecting.set_dir(src.assailant.dir)
 		src.affecting.set_density(0)
 
 	attack_self(mob/user)
@@ -188,13 +195,13 @@
 		switch (src.state)
 			if (GRAB_PASSIVE)
 				if (src.affecting.buckled)
-					src.affecting.buckled.attack_hand(src.assailant)
+					src.affecting.buckled.Attackhand(src.assailant)
 					src.affecting.force_laydown_standup() //safety because buckle code is a mess
 					if (src.affecting.targeting_ability == src.affecting.chair_flip_ability) //fuCKKK
 						src.affecting.end_chair_flip_targeting()
 					src.affecting.buckled = null
 
-				else if (user.is_hulk() || prob(75))
+				else
 					logTheThing("combat", src.assailant, src.affecting, "'s grip upped to aggressive on [constructTarget(src.affecting,"combat")]")
 					for(var/mob/O in AIviewers(src.assailant, null))
 						O.show_message("<span class='alert'>[src.assailant] has grabbed [src.affecting] aggressively (now hands)!</span>", 1)
@@ -204,16 +211,9 @@
 						set_affected_loc()
 
 					user.next_click = world.time + user.combat_click_delay //+ rand(6,11) //this was utterly disgusting, leaving it here in memorial
-				else
-					for(var/mob/O in AIviewers(src.assailant, null))
-						O.show_message("<span class='alert'>[src.assailant] has failed to grab [src.affecting] aggressively!</span>", 1)
-					user.next_click = world.time + user.combat_click_delay
 			if (GRAB_AGGRESSIVE)
 				if (ishuman(src.affecting))
 					var/mob/living/carbon/human/H = src.affecting
-					if (H.bioHolder.HasEffect("fat"))
-						boutput(src.assailant, "<span class='notice'>You can't strangle [src.affecting] through all that fat!</span>")
-						return
 					for (var/obj/item/clothing/C in list(H.head, H.wear_suit, H.wear_mask, H.w_uniform))
 						if (C.body_parts_covered & HEAD)
 							boutput(src.assailant, "<span class='notice'>You have to take off [src.affecting]'s [C.name] first!</span>")
@@ -248,6 +248,9 @@
 		update_icon()
 
 	proc/upgrade_to_kill(var/msg_overridden = 0)
+		if (!assailant || !affecting)
+			return
+
 		icon_state = "disarm/kill"
 		logTheThing("combat", src.assailant, src.affecting, "chokes [constructTarget(src.affecting,"combat")]")
 		choke_count = 0
@@ -261,14 +264,12 @@
 				for (var/mob/O in AIviewers(src.assailant, null))
 					O.show_message("<span class='alert'>[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck!</span>", 1)
 		src.state = GRAB_KILL
-		REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src.type)
+		REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src)
 		src.assailant.lastattacked = src.affecting
 		src.affecting.lastattacker = src.assailant
 		src.affecting.lastattackertime = world.time
 		if (!src.affecting.buckled)
 			set_affected_loc()
-		if (src.assailant.bioHolder.HasEffect("fat"))
-			src.affecting.unlock_medal("Bear Hug", 1)
 		//src.affecting.losebreath++
 		//if (src.affecting.paralysis < 2)
 		//	src.affecting.paralysis = 2
@@ -281,6 +282,9 @@
 			src.affecting:was_harmed(src.assailant)
 
 	proc/upgrade_to_pin(var/turf/T)
+		if (!assailant || !affecting)
+			return
+
 		icon_state = "pin"
 		logTheThing("combat", src.assailant, src.affecting, "pins [constructTarget(src.affecting,"combat")]")
 
@@ -299,19 +303,17 @@
 		src.affecting.force_laydown_standup()
 		if (!src.affecting.buckled)
 			set_affected_loc()
-		if (src.assailant.bioHolder.HasEffect("fat"))
-			src.affecting.unlock_medal("Bear Hug", 1)
 
 		if (ishuman(src.assailant))
 			var/mob/living/carbon/human/H = src.assailant
-			APPLY_MOB_PROPERTY(H, PROP_CANTMOVE, src.type)
+			APPLY_MOB_PROPERTY(H, PROP_CANTMOVE, src)
 			H.update_canmove()
 
 		if (isliving(src.affecting))
 			src.affecting:was_harmed(src.assailant)
 
 	proc/stunned_targets_can_break()
-		.= (src.state == GRAB_PIN)
+		. = TRUE // Allow stunned players to break all grabs
 
 	proc/check()
 		if(!assailant || !affecting)
@@ -348,19 +350,24 @@
 
 	proc/do_resist()
 		hit_twitch(src.assailant)
-		src.affecting.dir = pick(alldirs)
+		src.affecting.set_dir(pick(alldirs))
 		resist_count += 1
+
+		if (is_incapacitated(src.affecting))
+			prob_mod = 0.7
+		else
+			prob_mod = 1
 
 		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
 
-		if (src.state == GRAB_PASSIVE)
+		if (src.state == GRAB_PASSIVE && prob(STAMINA_P_GRAB_RESIST_CHANCE * prob_mod))
 			for (var/mob/O in AIviewers(src.affecting, null))
 				O.show_message(text("<span class='alert'>[] has broken free of []'s grip!</span>", src.affecting, src.assailant), 1, group = "resist")
 			qdel(src)
 		else if (src.state == GRAB_PIN)
 			var/succ = 0
 
-			if (resist_count >= 8 && prob(7)) //after 8 resists, start rolling for breakage. this is to make sure people with stamina buffs cant infinite-pin someone
+			if (resist_count >= 8 && prob(7 * prob_mod)) //after 8 resists, start rolling for breakage. this is to make sure people with stamina buffs cant infinite-pin someone
 				succ = 1
 			else if (ishuman(src.assailant))
 				src.assailant.remove_stamina(19)
@@ -368,7 +375,7 @@
 				var/mob/living/carbon/human/H = src.assailant
 				if (H.stamina <= 0)
 					succ = 1
-			else if (prob(13)) //the grabber must be a critter or some shit
+			else if (prob(13 * prob_mod)) //the grabber must be a critter or some shit
 				succ = 1
 
 
@@ -381,7 +388,7 @@
 					O.show_message(text("<span class='alert'>[] attempts to break free of []'s pin!</span>", src.affecting, src.assailant), 1, group = "resist")
 
 		else
-			if (prob(break_prob))
+			if (prob(STAMINA_U_GRAB_RESIST_CHANCE * prob_mod))
 				for (var/mob/O in AIviewers(src.affecting, null))
 					O.show_message(text("<span class='alert'>[] has broken free of []'s grip!</span>", src.affecting, src.assailant), 1, group = "resist")
 				qdel(src)
@@ -407,6 +414,18 @@
 		.= src.affecting
 		user.u_equip(src)
 
+
+	proc/check_hostage(owner, obj/projectile/P)
+		var/mob/hostage = null
+		if(src.affecting && src.state >= 2 && P.shooter != src.affecting) //If you grab someone they can still shoot you
+			hostage = src.affecting
+		if (hostage && (!hostage.lying || GET_COOLDOWN(hostage, "lying_bullet_dodge_cheese") || prob(P.proj_data?.hit_ground_chance)))
+			P.collide(hostage)
+			//moved here so that it displays after the bullet hit message
+			if(prob(25)) //This should probably not be bulletproof, har har
+				hostage.visible_message("<span class='combat bold'>[hostage] is knocked out of [owner]'s grip by the force of the [P.name]!</span>")
+				qdel(src)
+
 //////////////////////
 //PROGRESS BAR STUFF//
 //////////////////////
@@ -417,6 +436,7 @@
 	id = "strangle_target"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "neck_over"
+	color_active = "#d37610"
 	var/mob/living/target
 	var/obj/item/grab/G
 
@@ -462,6 +482,7 @@
 	id = "pin_target"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "pin"
+	color_active = "#d37610"
 	var/mob/living/target
 	var/obj/item/grab/G
 	var/turf/T
@@ -499,7 +520,7 @@
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && G && get_dist(owner, target) <= 1 || get_dist(owner,T) > 1)
+		if(owner && ownerMob && target && G && get_dist(owner, target) <= 1 && get_dist(owner,T) <= 1)
 			G.upgrade_to_pin(T)
 		else
 			interrupt(INTERRUPT_ALWAYS)
@@ -586,10 +607,9 @@
 
 /obj/item/proc/try_grab(var/mob/living/target, var/mob/living/user)
 	.= 0
-	if(!chokehold && istype(target) && istype(user))
+	if(!chokehold && istype(target) && istype(user) && target != user)
 		src.chokehold = user.grab_other(target, hide_attack, src)
-		if(chokehold)
-			chokehold.post_item_setup()
+		chokehold?.post_item_setup()
 		.= 1
 
 /obj/item/proc/drop_grab()
@@ -728,7 +748,7 @@
 			var/obj/item/I = src.loc
 			I.c_flags |= HAS_GRAB_EQUIP
 			I.tooltip_rebuild = 1
-		setProperty("I_disorient_resist", 15)
+		setProperty("I_disorient_resist", 20)
 
 	disposing()
 		for(var/datum/objectProperty/equipment/P in src.properties)
@@ -776,32 +796,36 @@
 		if(istype(P))
 			P.removeFromMob(src, src.assailant, propVal)
 
-	proc/can_block(var/hit_type = null)
-		.= DEFAULT_BLOCK_PROTECTION_BONUS
+	proc/can_block(var/hit_type = null, real_hit = 1)
+		.= UNARMED_BLOCK_PROTECTION_BONUS
 		if (isitem(src.loc) && hit_type)
-			.= 0
 			var/obj/item/I = src.loc
 
 			var/prop = DAMAGE_TYPE_TO_STRING(hit_type)
-			if(prop == "burn" && I && I.reagents)
-				I.reagents.temperature_reagents(2000,10)
+			if(real_hit && prop == "burn" && I?.reagents)
+				I.reagents.temperature_reagents(4000,10)
 			.= src.getProperty("I_block_[prop]")
+		if(real_hit)
+			SEND_SIGNAL(src, COMSIG_BLOCK_BLOCKED)
+			block_spark(src.assailant)
+			fuckup_attack_particle()
+
 
 	proc/play_block_sound(var/hit_type = DAMAGE_BLUNT)
 		switch(hit_type)
 			if (DAMAGE_BLUNT)
-				playsound(get_turf(src), 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1)
+				playsound(src, 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1)
 			if (DAMAGE_CUT)
-				playsound(get_turf(src), 'sound/impact_sounds/block_cut.ogg', 50, 1, -1)
+				playsound(src, 'sound/impact_sounds/block_cut.ogg', 50, 1, -1)
 			if (DAMAGE_STAB)
-				playsound(get_turf(src), 'sound/impact_sounds/block_stab.ogg', 50, 1, -1)
+				playsound(src, 'sound/impact_sounds/block_stab.ogg', 50, 1, -1)
 			if (DAMAGE_BURN)
-				playsound(get_turf(src), 'sound/impact_sounds/block_burn.ogg', 50, 1, -1)
+				playsound(src, 'sound/impact_sounds/block_burn.ogg', 50, 1, -1)
 
 	handle_throw(var/mob/living/user,var/atom/target)
 		if (isturf(user.loc) && target)
 			var/turf/T = user.loc
-			if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE) && !(user.lying))
+			if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE) && !(user.lying) && can_act(user))
 				user.changeStatus("weakened", max(user.movement_delay()*2, 0.5 SECONDS))
 				user.force_laydown_standup()
 
@@ -822,9 +846,13 @@
 						var/mob/living/carbon/human/H = user
 						if (H.shoes)
 							damage += H.shoes.kick_bonus
+						else if (H.limbs.r_leg)
+							damage += H.limbs.r_leg.limb_hit_bonus
+						else if (H.limbs.l_leg)
+							damage += H.limbs.l_leg.limb_hit_bonus
 
 					dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
-					playsound(get_turf(user), 'sound/impact_sounds/Generic_Hit_2.ogg', 50, 1, -1)
+					playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, 1, -1)
 					for (var/mob/O in AIviewers(user))
 						O.show_message("<span class='alert'><B>[user] slides into [dive_attack_hit]!</B></span>", 1)
 					logTheThing("combat", user, dive_attack_hit, "slides into [dive_attack_hit] at [log_loc(dive_attack_hit)].")
@@ -866,7 +894,7 @@
 
 /obj/item/cable_coil/process_grab(var/mult = 1)
 	..()
-	if (src.chokehold && chokehold.state == GRAB_KILL)
+	if (src.chokehold?.state == GRAB_KILL)
 		if (ishuman(src.chokehold.affecting))
 			var/mob/living/carbon/human/H = src.chokehold.affecting
 			H.losebreath += (0.5 * mult)

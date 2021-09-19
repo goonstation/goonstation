@@ -22,10 +22,12 @@
 #define FIELDNUM_MINDET 11
 #define FIELDNUM_MAJDIS 12
 #define FIELDNUM_MAJDET 13
-#define FIELDNUM_DISEASE 14
-#define FIELDNUM_DISDET 15
-#define FIELDNUM_TRAITS 16
-#define FIELDNUM_NOTES  17
+#define FIELDNUM_ALLERGY 14
+#define FIELDNUM_ALGDET 15
+#define FIELDNUM_DISEASE 16
+#define FIELDNUM_DISDET 17
+#define FIELDNUM_TRAITS 18
+#define FIELDNUM_NOTES  19
 
 #define FIELDNUM_DELETE "d"
 #define FIELDNUM_NEWREC 99
@@ -184,6 +186,8 @@
 							<br><br>Details: [src.active_medical.fields["mi_dis_d"]]
 							<br><br><br>Major Disabilities: [src.active_medical.fields["ma_dis"]]
 							<br><br>Details: [src.active_medical.fields["ma_dis_d"]]
+							<br><br><br>Allergies: [src.active_medical.fields["alg"]]
+							<br><br>Details: [src.active_medical.fields["alg_d"]]
 							<br><br><br>Current Diseases: [src.active_medical.fields["cdi"]] (per disease info placed in log/comment section)
 							<br>Details: [src.active_medical.fields["cdi_d"]]<br><br><br>
 							<br>Traits: [src.active_medical.fields["traits"]]<br><br><br>
@@ -392,6 +396,28 @@
 
 						if (ckey(inputText))
 							src.active_medical.fields["ma_dis_d"] = copytext(inputText, 1, MAX_MESSAGE_LEN)
+						else
+							return
+
+					if (FIELDNUM_ALLERGY)
+						if (!src.active_medical)
+							src.print_text("No medical record loaded!")
+							src.menu = MENU_IN_RECORD
+							return
+
+						if (ckey(inputText))
+							src.active_medical.fields["alg"] = copytext(inputText, 1, MAX_MESSAGE_LEN)
+						else
+							return
+
+					if (FIELDNUM_ALGDET)
+						if (!src.active_medical)
+							src.print_text("No medical record loaded!")
+							src.menu = MENU_IN_RECORD
+							return
+
+						if (ckey(inputText))
+							src.active_medical.fields["alg_d"] = copytext(inputText, 1, MAX_MESSAGE_LEN)
 						else
 							return
 
@@ -672,10 +698,12 @@
 				<br>\[11]Details: [src.active_medical.fields["mi_dis_d"]]
 				<br>\[12]<br>Major Disabilities: [src.active_medical.fields["ma_dis"]]
 				<br>\[13]Details: [src.active_medical.fields["ma_dis_d"]]
-				<br>\[14]<br>Current Diseases: [src.active_medical.fields["cdi"]] (per disease info placed in log/comment section)
-				<br>\[15]Details: [src.active_medical.fields["cdi_d"]]
-				<br>\[16]Traits: [src.active_medical.fields["traits"]]
-				<br>\[17]Important Notes:
+				<br>\[14]<br>Allergies: [src.active_medical.fields["alg"]]
+				<br>\[15]Details: [src.active_medical.fields["alg_d"]]
+				<br>\[16]<br>Current Diseases: [src.active_medical.fields["cdi"]] (per disease info placed in log/comment section)
+				<br>\[17]Details: [src.active_medical.fields["cdi_d"]]
+				<br>\[18]Traits: [src.active_medical.fields["traits"]]
+				<br>\[19]Important Notes:
 				<br>&emsp;[src.active_medical.fields["notes"]]"}
 			else
 				view_string += "<br><br><b>Medical Record Lost!</b>"
@@ -689,7 +717,7 @@
 		print_index()
 			src.master.temp = null
 			var/dat = ""
-			if(!src.record_list || !src.record_list.len)
+			if(!src.record_list || !length(src.record_list))
 				src.print_text("<b>Error:</b> No records found in database.")
 
 			else
@@ -741,6 +769,8 @@
 #undef FIELDNUM_MINDET
 #undef FIELDNUM_MAJDIS
 #undef FIELDNUM_MAJDET
+#undef FIELDNUM_ALLERGY
+#undef FIELDNUM_ALGDET
 #undef FIELDNUM_DISEASE
 #undef FIELDNUM_DISDET
 #undef FIELDNUM_TRAITS

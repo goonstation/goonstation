@@ -2,13 +2,14 @@
 /obj/item/sticker
 	name = "sticker"
 	desc = "You stick it on something, then that thing is even better, because it has a little sparkly unicorn stuck to it, or whatever."
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT | TABLEPASS | CLICK_DELAY_IN_CONTENTS | USEDELAY
 	event_handler_flags = HANDLE_STICKER | USE_FLUID_ENTER
 	icon = 'icons/misc/stickers.dmi'
 	icon_state = "bounds"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	force = 0
 	throwforce = 0
+	vis_flags = VIS_INHERIT_DIR
 	var/dont_make_an_overlay = 0
 	var/active = 0
 	var/overlay_key
@@ -17,7 +18,7 @@
 
 	New()
 		..()
-		if (islist(src.random_icons) && src.random_icons.len)
+		if (islist(src.random_icons) && length(src.random_icons))
 			src.icon_state = pick(src.random_icons)
 		pixel_y = rand(-8, 8)
 		pixel_x = rand(-8, 8)
@@ -25,7 +26,7 @@
 	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)
 		if (!A)
 			return
-		if (isarea(A) || istype(A, /obj/item/item_box) || istype(A, /obj/screen) || istype(A, /obj/ability_button))
+		if (isarea(A) || istype(A, /obj/item/item_box) || istype(A, /atom/movable/screen) || istype(A, /obj/ability_button))
 			return
 		user.tri_message("<b>[user]</b> sticks [src] to [A]!",\
 		user, "You stick [src] to [user == A ? "yourself" : "[A]"]!",\
@@ -67,7 +68,7 @@
 		src.active = 1
 		src.set_loc(A)
 
-		playsound(get_turf(src), 'sound/items/sticker.ogg', 50, 1)
+		playsound(src, 'sound/items/sticker.ogg', 50, 1)
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
@@ -120,16 +121,15 @@
 		. = "<br><span class='notice'>It says:</span><br><blockquote style='margin: 0 0 0 1em;'>[words]</blockquote>"
 
 	attack_hand(mob/user as mob)
-		//boutput(user, "fart")
 		user.lastattacked = user
 		if (src.attached)
 			if (user.a_intent == INTENT_HELP)
-				boutput(user, "You peel \the [src] off of [src.attached].")
+				boutput(user, "You peel \the [src] off of \the [src.attached].")
 				src.remove_from_attached()
 				src.add_fingerprint(user)
 				user.put_in_hand_or_drop(src)
 			else
-				src.attached.attack_hand(user)
+				src.attached.Attackhand(user)
 				user.lastattacked = user
 		else
 			return ..()
@@ -189,7 +189,7 @@
 			return
 
 		if (src.attached)
-			src.attached.attackby(W, user)
+			src.attached.Attackby(W, user)
 			user.lastattacked = user
 		else
 			..()
@@ -323,6 +323,15 @@
 /obj/item/sticker/xmas_ornament/holly
 	name = "holly ornament"
 	icon_state = "holly"
+
+/obj/item/sticker/googly_eye
+	name = "googly eye sticker"
+	icon_state = "googly1"
+	random_icons = list("googly1", "googly2")
+
+	angry
+		name = "angry googly eye sticker"
+		random_icons = list("googly_angerL", "googly_angerR")
 
 /obj/item/sticker/ribbon
 	name = "award ribbon"
@@ -534,16 +543,16 @@
 	has_camera = 0
 	has_selectable_skin = 0
 
-/obj/item/sticker/spy/radio_only/sec_only
+/obj/item/sticker/spy/radio_only/det_only
 	desc = "This sticker contains a tiny radio transmitter that handles audio. Closer inspection reveals that the frequency is locked to the Security channel."
-	radio_path = /obj/item/device/radio/spy/sec_only
+	radio_path = /obj/item/device/radio/spy/det_only
 
 /obj/item/device/camera_viewer/sticker
-	name = "Camera monitor"
+	name = "camera monitor"
 	desc = "A portable video monitor connected to a network of spy cameras."
 	icon_state = "monitor"
 	item_state = "electronic"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	network = "stickers"
 
 /obj/item/storage/box/spy_sticker_kit
@@ -558,8 +567,8 @@
 	/obj/item/device/radio/headset)
 
 /obj/item/storage/box/spy_sticker_kit/radio_only/detective
-	spawn_contents = list(/obj/item/sticker/spy/radio_only/sec_only = 6,
-	/obj/item/device/radio/headset/security)
+	spawn_contents = list(/obj/item/sticker/spy/radio_only/det_only = 6,
+	/obj/item/device/radio/headset/detective)
 
 /obj/item/device/radio/spy
 	name = "spy radio"
@@ -567,7 +576,7 @@
 	listening = 0
 	hardened = 0
 
-/obj/item/device/radio/spy/sec_only
+/obj/item/device/radio/spy/det_only
 	locked_frequency = 1
-	frequency = R_FREQ_SECURITY
-	chat_class = RADIOCL_SECURITY
+	frequency = R_FREQ_DETECTIVE
+	chat_class = RADIOCL_DETECTIVE

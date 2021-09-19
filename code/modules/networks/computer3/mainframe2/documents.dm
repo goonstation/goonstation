@@ -124,6 +124,92 @@
 						  "or",
 						  "#prman upload bot_id bodyguard -f demo_conf")
 
+// things to shorten artlab work
+// so people misspell gptio less often
+
+/datum/computer/file/record/artlab_activate
+	name = "act"
+
+	New()
+		..()
+		src.fields = list("#!",
+						  "if $argc 1 lt | echo Error: Please specify equipment to activate! | break",
+						  "gptio activate $arg0")
+
+/datum/computer/file/record/artlab_deactivate
+	name = "deact"
+
+	New()
+		..()
+		src.fields = list("#!",
+						  "if $argc 1 lt | echo Error: Please specify equipment to deactivate! | break",
+						  "gptio deactivate $arg0")
+
+/datum/computer/file/record/artlab_read
+	name = "read"
+
+	New()
+		..()
+		src.fields = list("#!",
+						  "if $argc 1 lt | echo Error: Please specify equipment to read test results from! | break",
+							"gptio read $arg0")
+
+/datum/computer/file/record/artlab_info
+	name = "info"
+
+	New()
+		..()
+		src.fields = list("#!",
+						  "if $argc 1 lt | echo Error: Please specify equipment to get information on! | break",
+						  "gptio info $arg0")
+
+/datum/computer/file/record/artlab_xray
+	name = "xray"
+
+	New()
+		..()
+		src.fields = list("#!",
+						  "if $argc 1 lt | gptio peek xray radstrength",
+						  "if $argc 1 ge | gptio poke xray radstrength $arg0")
+
+/datum/computer/file/record/artlab_heater
+	name = "temp"
+
+	New()
+		..()
+		src.fields = list("#!",
+						  "if $argc 1 lt | gptio peek heater temptarget",
+						  "if $argc 1 ge | gptio poke heater temptarget $arg0")
+
+/datum/computer/file/record/artlab_elecbox
+	name = "elec"
+
+	New()
+		..()
+		src.fields = list("#!",
+						  "if $argc 1 lt | gptio peek elecbox voltage",
+							"if $argc 1 lt | gptio peek elecbox wattage",
+						  "if $argc 1 ge | gptio poke elecbox voltage $arg0",
+							"if $argc 2 ge | gptio poke elecbox wattage $arg1")
+
+/datum/computer/file/record/artlab_pitcher
+	name = "pitcher"
+
+	New()
+		..()
+		src.fields = list("#!",
+						  "if $argc 1 lt | gptio peek pitcher power",
+						  "if $argc 1 ge | gptio poke pitcher power $arg0")
+
+/datum/computer/file/record/artlab_impactpad
+	name = "stand"
+
+	New()
+		..()
+		src.fields = list("#!",
+						  "if $argc 1 lt | gptio peek impactpad stand",
+						  "if $argc 1 ge | gptio poke impactpad stand $arg0")
+
 /*
  *		Emails!!
  */

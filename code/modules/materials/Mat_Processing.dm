@@ -8,6 +8,7 @@
 	density = 1
 	layer = FLOOR_EQUIP_LAYER1
 	mats = 20
+	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
 	var/atom/output_location = null
@@ -40,28 +41,86 @@
 
 			var/mat_id
 
-			if(exists_nearby)
-				exists_nearby.change_stack_amount(totalAmount)
-				mat_id = exists_nearby.material.mat_id
-			else
-				var/newType = getProcessedMaterialForm(X.material)
-				var/obj/item/material_piece/P = unpool(newType)
-				P.set_loc(get_output_location())
-				P.setMaterial(copyMaterial(X.material))
-				P.change_stack_amount(totalAmount - P.amount)
-				mat_id = P.material.mat_id
+			//Check for exploitable inputs and divide the result accordingly
+			var/div_factor = 1
+			var/second_mat = null
+			if (istype(X, /obj/item/sheet))
+				div_factor = 10
 
-			if (istype(output_location, /obj/machinery/manufacturer))
-				var/obj/machinery/manufacturer/M = output_location
-				M.update_resource_amount(mat_id, totalAmount * 10)
+			else if (istype(X, /obj/item/rods))
+				div_factor = 20
 
+			else if (istype(X, /obj/item/tile))
+				div_factor = 40
+
+			else if (istype(X, /obj/item/cable_coil))
+				var/obj/item/cable_coil/C = X
+				div_factor = 30
+				second_mat = C.conductor
+
+			else if (istype(X, /obj/item/raw_material/shard))
+				div_factor = 10
+
+			//Output processed amount if there is enough input material
+			var/out_amount = round(totalAmount/div_factor)
+			if (out_amount > 0)
+				if(exists_nearby)
+					exists_nearby.change_stack_amount(out_amount)
+					mat_id = exists_nearby.material.mat_id
+				else
+					var/newType = getProcessedMaterialForm(X.material)
+					var/obj/item/material_piece/P = unpool(newType)
+					P.set_loc(get_output_location())
+					P.setMaterial(copyMaterial(X.material))
+					P.change_stack_amount(out_amount - P.amount)
+					mat_id = P.material.mat_id
+
+				if (istype(output_location, /obj/machinery/manufacturer))
+					var/obj/machinery/manufacturer/M = output_location
+					M.update_resource_amount(mat_id, out_amount * 10)
+
+				//If the input was a cable coil, output the conductor too
+				if (second_mat)
+					var/obj/item/material_piece/second_exists_nearby = null
+					var/second_mat_id
+					for(var/obj/item/material_piece/G in output_location)
+						if(isSameMaterial(G.material, second_mat))
+							second_exists_nearby = G
+							break
+
+					if(second_exists_nearby)
+						second_exists_nearby.change_stack_amount(out_amount)
+						second_mat_id = second_exists_nearby.material.mat_id
+					else
+						var/newType = getProcessedMaterialForm(second_mat)
+						var/obj/item/material_piece/PC = unpool(newType)
+						PC.set_loc(get_output_location())
+						PC.setMaterial(copyMaterial(second_mat))
+						PC.change_stack_amount(out_amount - PC.amount)
+						second_mat_id = PC.material.mat_id
+
+					if (istype(output_location, /obj/machinery/manufacturer))
+						var/obj/machinery/manufacturer/M = output_location
+						M.update_resource_amount(second_mat_id, out_amount * 10)
+
+			//Delete items in processor and output leftovers
+			var/leftovers = (totalAmount/div_factor-out_amount)*div_factor
 			for(var/atom/movable/D in matches)
+				var/obj/item/R = D
+				if (leftovers != 0 && R.amount)
+					R.change_stack_amount(leftovers-R.amount)
+					R.set_loc(src.loc)
+					leftovers = 0
+					continue
 				D.set_loc(null)
 				qdel(D)
 				D = null
 
-			playsound(src.loc, "sound/effects/pop.ogg", 40, 1)
-			flick("fab3-work",src)
+			if (out_amount > 0)//No animation and beep if nothing processed
+				playsound(src.loc, "sound/effects/pop.ogg", 40, 1)
+				flick("fab3-work",src)
+			else
+				playsound(src.loc, "sound/machines/buzz-two.ogg", 40, 1)
 		return
 
 	attackby(var/obj/item/W as obj, mob/user as mob)
@@ -70,13 +129,13 @@
 		if (!istype(W))
 			return
 
-		if(isExploitableObject(W))
-			boutput(user, "<span class='alert'>\the [src] grumps at you and refuses to use [W].</span>")
-			return
-
 		if(istype(W, /obj/item/material_piece))
 			boutput(user, "<span class='alert'>[W] has already been processed.</span>")
 			return
+
+		if(istype(W, /obj/item/ore_scoop))
+			var/obj/item/ore_scoop/O = W
+			if (O.satchel) W = O.satchel
 
 		if(istype(W, /obj/item/satchel))
 			var/obj/item/satchel/S = W
@@ -165,7 +224,7 @@
 		return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-		if (get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || isAI(user))
+		if (get_dist(user, src) > 1 || get_dist(user, O) > 1 || is_incapacitated(user) || isAI(user))
 			return
 
 		if (istype(O, /obj/storage/crate/) || istype(O, /obj/storage/cart/))
@@ -173,8 +232,6 @@
 			var/amtload = 0
 			for (var/obj/item/raw_material/M in O.contents)
 				if(!M.material)
-					continue
-				if(isExploitableObject(M))
 					continue
 				if(istype(M, /obj/item/material_piece))
 					continue
@@ -186,17 +243,17 @@
 
 		var/obj/item/W = O
 
-		if(W in user)
+		if(W in user && !W.cant_drop)
 			user.u_equip(W)
 			W.set_loc(src.loc)
 			W.dropped()
 
 
 		//if (istype(W, /obj/item/raw_material/) || istype(W, /obj/item/sheet/) || istype(W, /obj/item/rods/) || istype(W, /obj/item/tile/) || istype(W, /obj/item/cable_coil))
-		if(!isExploitableObject(W) && W.material && !istype(W, /obj/item/material_piece))
+		if(W.material && !istype(W, /obj/item/material_piece))
 			quickload(user, W)
 		else
-			attackby(W, user)
+			src.Attackby(W, user)
 			return
 
 
@@ -221,7 +278,7 @@
 				//	continue
 
 			M.set_loc(src)
-			playsound(get_turf(src), "sound/items/Deconstruct.ogg", 40, 1)
+			playsound(src, "sound/items/Deconstruct.ogg", 40, 1)
 			sleep(0.5)
 			if (user.loc != staystill) break
 		boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
@@ -362,8 +419,7 @@
 						addMaterial(piece, usr)
 					else
 						piece.set_loc(get_turf(src))
-					if(RE)
-						RE.apply_to_obj(piece)
+					RE?.apply_to_obj(piece)
 					first_part = null
 					second_part = null
 					boutput(usr, "<span class='notice'>You make [amt] [piece].</span>")
@@ -659,7 +715,7 @@
 	name = "Material analyzer"
 	desc = "This piece of equipment can detect and analyze materials."
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if(get_dist(src, target) <= world.view)
@@ -689,7 +745,7 @@
 	icon_state = "shovel"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "shovel"
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	flags = ONBELT
 	force = 7 // 15 puts it significantly above most other weapons
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'

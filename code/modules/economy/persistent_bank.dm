@@ -112,9 +112,7 @@
 			ret += "<p style=\"text-align:left;\">Antagonist - No tax!</p>"
 		if (pilot)
 			ret += "<p style=\"text-align:left;\">Pilot's bonus ....<span style=\"float:right;\"><b>+ [pilot_bonus] </b></span> </p>"
-#if ASS_JAM
-			ret += "<p style=\"text-align:left;\">2X ASS DAY BONUS!</p>"
-#endif
+
 
 		ret += "<hr>"
 		ret += "<big><b><p style=\"text-align:left;\">PAYOUT ..... <span style=\"float:right;\">[final_payout]</span> </p></b></big><br>"
@@ -133,7 +131,10 @@
 		if (purchase.Create(src))
 			boutput( src, "<span class='notice'><b>[purchase.name] equipped successfully.</b></span>" )
 		else
-			boutput( src, "<span class='notice'><b>[purchase.name] is not available for the job you rolled. It will remain as your held item if possible.</b></span>" )
+			boutput( src, "<span class='notice'><b>[purchase.name] is not available for the job you rolled. It has been refunded.</b></span>" )
+			src.client.add_to_bank(purchase.cost)
+			src.client.set_last_purchase(null)
+			return
 	else
 		boutput( src, "<span class='notice'><b>The thing you previously purchased has been removed from your inventory due to it no longer existing.</b></span>")
 		src.client.set_last_purchase(null)

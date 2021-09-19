@@ -61,7 +61,8 @@
 			boutput(holder.owner, "<span class='alert'>It wasn't possible to remove the item from its container, oh no.</span>")
 			return 1 // No cooldown when it fails.
 
-		holder.owner.say("STYX TUSNEKS")
+		if(!istype(get_area(holder.owner), /area/sim/gunsim))
+			holder.owner.say("STYX TUSNEKS")
         //..() uncomment this when we have voice files
 
 		var/obj/critter/snake/snake = new(stick.loc, stick)

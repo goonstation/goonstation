@@ -48,6 +48,8 @@
 		F["[profileNum]_fartsound"] << AH.fartsound
 		F["[profileNum]_screamsound"] << AH.screamsound
 		F["[profileNum]_voicetype"] << AH.voicetype
+		F["[profileNum]_PDAcolor"] << src.PDAcolor
+		F["[profileNum]_pda_ringtone_index"] << src.pda_ringtone_index
 		F["[profileNum]_random_blood"] << src.random_blood
 		F["[profileNum]_blood_type"] << src.blType
 
@@ -80,17 +82,19 @@
 		F["[profileNum]_job_prefs_2"] << src.jobs_med_priority
 		F["[profileNum]_job_prefs_3"] << src.jobs_low_priority
 		F["[profileNum]_job_prefs_4"] << src.jobs_unwanted
-		F["[profileNum]_be_changeling"] << src.be_changeling
-		F["[profileNum]_be_revhead"] << src.be_revhead
-		F["[profileNum]_be_syndicate"] << src.be_syndicate
-		F["[profileNum]_be_wizard"] << src.be_wizard
 		F["[profileNum]_be_traitor"] << src.be_traitor
-		F["[profileNum]_be_werewolf"] << src.be_werewolf
-		F["[profileNum]_be_vampire"] << src.be_vampire
+		F["[profileNum]_be_syndicate"] << src.be_syndicate
 		F["[profileNum]_be_spy"] << src.be_spy
 		F["[profileNum]_be_gangleader"] << src.be_gangleader
+		F["[profileNum]_be_revhead"] << src.be_revhead
+		F["[profileNum]_be_changeling"] << src.be_changeling
+		F["[profileNum]_be_wizard"] << src.be_wizard
+		F["[profileNum]_be_werewolf"] << src.be_werewolf
+		F["[profileNum]_be_vampire"] << src.be_vampire
+		F["[profileNum]_be_arcfiend"] << src.be_arcfiend
 		F["[profileNum]_be_wraith"] << src.be_wraith
 		F["[profileNum]_be_blob"] << src.be_blob
+		F["[profileNum]_be_conspirator"] << src.be_conspirator
 		F["[profileNum]_be_flock"] << src.be_flock
 		F["[profileNum]_be_misc"] << src.be_misc
 
@@ -121,6 +125,7 @@
 		F["preferred_map"] << src.preferred_map
 		F["flying_chat_hidden"] << src.flying_chat_hidden
 		F["auto_capitalization"] << src.auto_capitalization
+		F["local_deachat"] << src.local_deadchat
 
 		if (returnSavefile)
 			return F
@@ -201,6 +206,8 @@
 		F["[profileNum]_fartsound"] >> AH.fartsound
 		F["[profileNum]_screamsound"] >> AH.screamsound
 		F["[profileNum]_voicetype"] >> AH.voicetype
+		F["[profileNum]_PDAcolor"] >> src.PDAcolor
+		F["[profileNum]_pda_ringtone_index"] >> src.pda_ringtone_index
 		F["[profileNum]_random_blood"] >> src.random_blood
 		F["[profileNum]_blood_type"] >> src.blType
 
@@ -219,31 +226,52 @@
 			F["[profileNum]_neutral_pronouns"] >> AH.pronouns
 			F["[profileNum]_eye_color"] >> AH.e_color
 			F["[profileNum]_hair_color"] >> AH.customization_first_color
+			F["[profileNum]_hair_color"] >> AH.customization_first_color_original
 			F["[profileNum]_facial_color"] >> AH.customization_second_color
+			F["[profileNum]_facial_color"] >> AH.customization_second_color_original
 			F["[profileNum]_detail_color"] >> AH.customization_third_color
+			F["[profileNum]_detail_color"] >> AH.customization_third_color_original
 			F["[profileNum]_skin_tone"] >> AH.s_tone
+			F["[profileNum]_skin_tone"] >> AH.s_tone_original
 			F["[profileNum]_hair_style_name"] >> AH.customization_first
+			F["[profileNum]_hair_style_name"] >> AH.customization_first_original
 			F["[profileNum]_facial_style_name"] >> AH.customization_second
+			F["[profileNum]_facial_style_name"] >> AH.customization_second_original
 			F["[profileNum]_detail_style_name"] >> AH.customization_third
+			F["[profileNum]_detail_style_name"] >> AH.customization_third_original
 			F["[profileNum]_underwear_style_name"] >> AH.underwear
 			F["[profileNum]_underwear_color"] >> AH.u_color
+			if(!istype(src.AH.customization_first,/datum/customization_style))
+				src.AH.customization_first = find_style_by_name(src.AH.customization_first)
+			if(!istype(src.AH.customization_second,/datum/customization_style))
+				src.AH.customization_second = find_style_by_name(src.AH.customization_second)
+			if(!istype(src.AH.customization_third,/datum/customization_style))
+				src.AH.customization_third = find_style_by_name(src.AH.customization_third)
+			if(!istype(src.AH.customization_first_original,/datum/customization_style))
+				src.AH.customization_first_original = find_style_by_name(src.AH.customization_first_original)
+			if(!istype(src.AH.customization_second_original,/datum/customization_style))
+				src.AH.customization_second_original = find_style_by_name(src.AH.customization_second_original)
+			if(!istype(src.AH.customization_third_original,/datum/customization_style))
+				src.AH.customization_third_original = find_style_by_name(src.AH.customization_third_original)
 
 		// Job prefs
 		F["[profileNum]_job_prefs_1"] >> src.job_favorite
 		F["[profileNum]_job_prefs_2"] >> src.jobs_med_priority
 		F["[profileNum]_job_prefs_3"] >> src.jobs_low_priority
 		F["[profileNum]_job_prefs_4"] >> src.jobs_unwanted
-		F["[profileNum]_be_changeling"] >> src.be_changeling
-		F["[profileNum]_be_revhead"] >> src.be_revhead
-		F["[profileNum]_be_syndicate"] >> src.be_syndicate
-		F["[profileNum]_be_wizard"] >> src.be_wizard
 		F["[profileNum]_be_traitor"] >> src.be_traitor
-		F["[profileNum]_be_werewolf"] >> src.be_werewolf
-		F["[profileNum]_be_vampire"] >> src.be_vampire
+		F["[profileNum]_be_syndicate"] >> src.be_syndicate
 		F["[profileNum]_be_spy"] >> src.be_spy
 		F["[profileNum]_be_gangleader"] >> src.be_gangleader
+		F["[profileNum]_be_revhead"] >> src.be_revhead
+		F["[profileNum]_be_changeling"] >> src.be_changeling
+		F["[profileNum]_be_wizard"] >> src.be_wizard
+		F["[profileNum]_be_werewolf"] >> src.be_werewolf
+		F["[profileNum]_be_vampire"] >> src.be_vampire
+		F["[profileNum]_be_arcfiend"] >> src.be_arcfiend
 		F["[profileNum]_be_wraith"] >> src.be_wraith
 		F["[profileNum]_be_blob"] >> src.be_blob
+		F["[profileNum]_be_conspirator"] >> src.be_conspirator
 		F["[profileNum]_be_flock"] >> src.be_flock
 		F["[profileNum]_be_misc"] >> src.be_misc
 
@@ -272,6 +300,7 @@
 		F["preferred_map"] >> src.preferred_map
 		F["flying_chat_hidden"] >> src.flying_chat_hidden
 		F["auto_capitalization"] >> src.auto_capitalization
+		F["local_deachat"] >> src.local_deadchat
 
 
 		if (isnull(src.name_first) || !length(src.name_first) || isnull(src.name_last) || !length(src.name_last))
@@ -286,6 +315,13 @@
 		if (!AH.voicetype)
 			AH.voicetype = RANDOM_HUMAN_VOICE
 
+		if(!is_valid_color_string(src.PDAcolor)) //how?
+			src.PDAcolor = "#6F7961"
+
+		get_all_character_setup_ringtones()
+		if(!(src.pda_ringtone_index in selectable_ringtones))
+			src.pda_ringtone_index = "Two-Beep"
+
 		if (!istext(src.hud_style))
 			src.hud_style = "New"
 		if (!istext(src.target_cursor))
@@ -296,8 +332,8 @@
 		if (src.traitPreferences.traits_selected == null)
 			src.traitPreferences.traits_selected = list()
 
-		for (var/T in src.traitPreferences.traits_selected)
-			if (!traitList.Find(T)) src.traitPreferences.traits_selected.Remove(T)
+		for (var/T as anything in src.traitPreferences.traits_selected)
+			if (!(T in traitList)) src.traitPreferences.traits_selected.Remove(T)
 
 		if (!src.traitPreferences.isValid())
 			src.traitPreferences.traits_selected.Cut()
@@ -310,7 +346,7 @@
 			F["[profileNum]_radio_sounds"] << src.radio_music_volume
 
 		// Global pref validation
-		if (user && user.is_mentor())
+		if (user?.is_mentor())
 			if (isnull(src.see_mentor_pms))
 				src.see_mentor_pms = 1
 			if (src.see_mentor_pms == 0)
@@ -361,7 +397,7 @@
 
 
 	cloudsave_load( client/user, var/name )
-		if(isnull( user.cloudsaves ))
+		if(isnull( user.player.cloudsaves ))
 			return "Failed to retrieve cloud data, try rejoining."
 
 		if (IsGuestKey(user.key))
@@ -387,7 +423,7 @@
 		return src.savefile_load(user, 1, save)
 
 	cloudsave_save( client/user, var/name )
-		if(isnull( user.cloudsaves ))
+		if(isnull( user.player.cloudsaves ))
 			return "Failed to retrieve cloud data, try rejoining."
 		if (IsGuestKey( user.key ))
 			return 0
@@ -409,7 +445,7 @@
 		var/list/ret = json_decode(response.body)
 		if( ret["status"] == "error" )
 			return ret["error"]["error"]
-		user.cloudsaves[ name ] = length( exported )
+		user.player.cloudsaves[ name ] = length( exported )
 		return 1
 
 	cloudsave_delete( client/user, var/name )
@@ -425,5 +461,5 @@
 			logTheThing("debug", null, null, "<b>cloudsave_delete:</b> Failed to contact goonhub. u: [user.ckey]")
 			return
 
-		user.cloudsaves.Remove( name )
+		user.player.cloudsaves.Remove( name )
 		return 1

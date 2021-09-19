@@ -1,6 +1,7 @@
 
+
 /datum/hud/human
-	var/obj/screen/hud
+	var/atom/movable/screen/hud
 		invtoggle
 		belt
 		storage1
@@ -38,13 +39,13 @@
 		stats
 		legend
 		sel
-	var/list/obj/screen/hud/inventory_bg = list()
+	var/list/atom/movable/screen/hud/inventory_bg = list()
 	var/list/obj/item/inventory_items = list()
 	var/show_inventory = 1
 	var/current_ability_set = 1
 	var/icon/icon_hud = 'icons/mob/hud_human_new.dmi'
 
-	var/list/statusUiElements = list() //Assoc. List  STATUS EFFECT INSTANCE : UI ELEMENT add_screen(obj/screen/S). Used to hold the ui elements since they shouldnt be on the status effects themselves.
+	var/list/statusUiElements = list() //Assoc. List  STATUS EFFECT INSTANCE : UI ELEMENT add_screen(atom/movable/screen/S). Used to hold the ui elements since they shouldnt be on the status effects themselves.
 
 	var/mob/living/carbon/human/master
 
@@ -131,11 +132,11 @@
 
 
 	proc/update_status_effects()
-		for(var/obj/screen/statusEffect/G in src.objects)
+		for(var/atom/movable/screen/statusEffect/G in src.objects)
 			remove_screen(G)
 
-		for(var/datum/statusEffect/S in src.statusUiElements) //Remove stray effects.
-			if(!master || !master.statusEffects || !(S in master.statusEffects) || !S.visible)
+		for(var/datum/statusEffect/S as anything in src.statusUiElements) //Remove stray effects.
+			if(!master || !master.statusEffects || !(S in master.statusEffects))
 				pool(statusUiElements[S])
 				src.statusUiElements.Remove(S)
 				qdel(S)
@@ -143,11 +144,11 @@
 		var/spacing = 0.6
 		var/pos_x = spacing - 0.2
 
-		if(master && master.statusEffects)
-			for(var/datum/statusEffect/S in master.statusEffects) //Add new ones, update old ones.
+		if(master?.statusEffects)
+			for(var/datum/statusEffect/S as anything in master.statusEffects) //Add new ones, update old ones.
 				if(!S.visible) continue
 				if((S in statusUiElements) && statusUiElements[S])
-					var/obj/screen/statusEffect/U = statusUiElements[S]
+					var/atom/movable/screen/statusEffect/U = statusUiElements[S]
 					U.icon = icon_hud
 					U.screen_loc = "EAST[pos_x < 0 ? "":"+"][pos_x],NORTH-0.7"
 					U.update_value()
@@ -155,7 +156,7 @@
 					pos_x -= spacing
 				else
 					if(S.visible)
-						var/obj/screen/statusEffect/U = unpool(/obj/screen/statusEffect)
+						var/atom/movable/screen/statusEffect/U = unpool(/atom/movable/screen/statusEffect)
 						U.init(master,S)
 						U.icon = icon_hud
 						statusUiElements.Add(S)
@@ -173,14 +174,21 @@
 
 	New(M)
 		..()
+		if(isnull(M))
+			CRASH("human HUD created with no master")
 		master = M
 
 		SPAWN_DBG(0)
+			if(master?.disposed)
+				qdel(src)
+				return
+			if(src.disposed)
+				return
 			var/icon/hud_style = hud_style_selection[get_hud_style(master)]
 			if (isicon(hud_style))
 				src.icon_hud = hud_style
 
-			if (master.client && master.client.tg_layout)
+			if (master?.client?.tg_layout)
 				layout_style = "tg"
 
 			if (layouts[layout_style]["show_bg"])
@@ -228,7 +236,7 @@
 
 			if (layouts[layout_style]["ignore_inventory_hide"])
 				for (var/id in layouts[layout_style]["ignore_inventory_hide"])
-					for (var/obj/screen/hud/H in inventory_bg)
+					for (var/atom/movable/screen/hud/H in inventory_bg)
 						if (id == H.id)
 							inventory_bg -= H
 							break
@@ -246,7 +254,7 @@
 
 			stamina = create_screen("stamina","Stamina", src.icon_hud, "stamina", "EAST-1, NORTH", HUD_LAYER, tooltipTheme = "stamina")
 			stamina_back = create_screen("stamina_back","Stamina", src.icon_hud, "stamina_back", "EAST-1, NORTH", HUD_LAYER-2)
-			if (master.stamina_bar)
+			if (master?.stamina_bar)
 				stamina.desc = master.stamina_bar.getDesc(master)
 
 			bodytemp = create_screen("bodytemp","Temperature", src.icon_hud, "temp0", "EAST-2, NORTH", HUD_LAYER, tooltipTheme = "tempInd tempInd0")
@@ -266,17 +274,17 @@
 
 			ability_toggle = create_screen("ability", "Toggle Ability Hotbar", src.icon_hud, "[layouts[layout_style]["ability_icon"]]1", layouts[layout_style]["abiltoggle"], HUD_LAYER)
 			stats = create_screen("stats", "Character stats", src.icon_hud, "stats", layouts[layout_style]["stats"], HUD_LAYER,
-				tooltipTheme = master && master.client && master.client.preferences && master.client.preferences.hud_style == "New" ? "newhud" : "item")
+				tooltipTheme = master?.client?.preferences?.hud_style == "New" ? "newhud" : "item")
 			stats.desc = "..."
 
 			legend = create_screen("legend", "Inline Icon Legend", src.icon_hud, "legend", layouts[layout_style]["legend"], HUD_LAYER,
-				tooltipTheme = master && master.client && master.client.preferences && master.client.preferences.hud_style == "New" ? "newhud" : "item")
+				tooltipTheme = master?.client?.preferences?.hud_style == "New" ? "newhud" : "item")
 			legend.desc = "When blocking:"+\
 			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/cutprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs cutting attacks"+\
 			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/stabprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs stabbing attacks"+\
 			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/burnprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs burning attacks"+\
 			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/bluntprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs blunt attacks"+\
-			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/protdisorient.png")]\" width=\"12\" height=\"12\" /> Body Insulation (Disorient Resist): 15%"
+			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/protdisorient.png")]\" width=\"12\" height=\"12\" /> Body Insulation (Disorient Resist): 20%"
 
 			sel = create_screen("sel", "sel", src.icon_hud, "sel", null, HUD_LAYER+1.2)
 			sel.mouse_opacity = 0
@@ -295,9 +303,9 @@
 			update_indicators()
 			update_ability_hotbar()
 
-			master.update_equipment_screen_loc()
+			master?.update_equipment_screen_loc()
 
-	clicked(id, mob/user, list/params)
+	relay_click(id, mob/user, list/params)
 		switch (id)
 			if ("invtoggle")
 				var/obj/item/I = master.equipped()
@@ -316,14 +324,15 @@
 					autoequip_slot(slot_head, head)
 					autoequip_slot(slot_back, back)
 
-
-					for (var/datum/hud/storage/S in user.huds) //ez storage stowing
-						S.master.attackby(I, user, params)
+					if (!istype(master.belt,/obj/item/storage) || istype(I,/obj/item/storage)) // belt BEFORE trying storages, and only swap if its not a storage swap
+						autoequip_slot(slot_belt, belt)
 						if (master.equipped() != I)
 							return
 
-					if (!istype(master.belt,/obj/item/storage) || istype(I,/obj/item/storage)) // belt AFTER trying storages, and only swap if its not a storage swap
-						autoequip_slot(slot_belt, belt)
+					for (var/datum/hud/storage/S in user.huds) //ez storage stowing
+						S.master.Attackby(I, user, params)
+						if (master.equipped() != I)
+							return
 
 					//ONLY do these if theyre actually empty, we dont want to pocket swap.
 					if (!master.l_store)
@@ -336,14 +345,14 @@
 
 				show_inventory = !show_inventory
 				if (show_inventory)
-					for (var/obj/screen/hud/S in inventory_bg)
+					for (var/atom/movable/screen/hud/S in inventory_bg)
 						src.add_screen(S)
 					for (var/obj/O in inventory_items)
 						src.add_object(O, HUD_LAYER+2)
 					if (layout_style == "tg")
 						src.add_screen(legend)
 				else
-					for (var/obj/screen/hud/S in inventory_bg)
+					for (var/atom/movable/screen/hud/S in inventory_bg)
 						src.remove_screen(S)
 					for (var/obj/O in inventory_items)
 						src.remove_object(O)
@@ -374,13 +383,15 @@
 					autoequip_slot(slot_head, head)
 					autoequip_slot(slot_back, back)
 
-					for (var/datum/hud/storage/S in user.huds) //ez storage stowing
-						S.master.attackby(I, user, params)
+					if (!istype(master.belt,/obj/item/storage) || istype(I,/obj/item/storage)) // belt BEFORE trying storages, and only swap if its not a storage swap
+						autoequip_slot(slot_belt, belt)
 						if (master.equipped() != I)
 							return
 
-					if (!istype(master.belt,/obj/item/storage) || istype(I,/obj/item/storage)) // belt AFTER trying storages, and only swap if its not a storage swap
-						autoequip_slot(slot_belt, belt)
+					for (var/datum/hud/storage/S in user.huds) //ez storage stowing
+						S.master.Attackby(I, user, params)
+						if (master.equipped() != I)
+							return
 
 					//ONLY do these if theyre actually empty, we dont want to pocket swap.
 					if (!master.l_store)
@@ -430,7 +441,7 @@
 			if ("pull")
 				if (master.pulling)
 					unpull_particle(master,pulling)
-				master.pulling = null
+				master.remove_pulling()
 				src.update_pulling()
 
 			if ("rest")
@@ -556,7 +567,7 @@
 				clicked_slot(slot_head)
 			#undef clicked_slot
 
-	MouseEntered(var/obj/screen/hud/H, location, control, params)
+	MouseEntered(var/atom/movable/screen/hud/H, location, control, params)
 		if (!H || usr != src.master) return
 		var/obj/item/W = null
 		var/obj/item/I
@@ -630,7 +641,7 @@
 		#undef entered_slot
 		#undef test_slot
 
-	MouseExited(obj/screen/hud/H)
+	MouseExited(atom/movable/screen/hud/H)
 		if (!H || usr != src.master) return
 		if (sel)
 			sel.screen_loc = null
@@ -638,7 +649,7 @@
 				//sel.icon_state = "sel"
 				sel.appearance = default_sel_appearance
 
-	MouseDrop(obj/screen/hud/H, atom/over_object, src_location, over_location, over_control, params)
+	MouseDrop(atom/movable/screen/hud/H, atom/over_object, src_location, over_location, over_control, params)
 		if (!H) return
 		var/obj/item/W = null
 		#define mdrop_slot(slot) W = master.get_slot(master.slot); if (W) { W.MouseDrop(over_object, src_location, over_location, over_control, params); }
@@ -675,7 +686,7 @@
 				mdrop_slot(slot_r_hand)
 		#undef mdrop_slot
 
-	MouseDrop_T(obj/screen/hud/H, atom/movable/O as obj, mob/user as mob)
+	MouseDrop_T(atom/movable/screen/hud/H, atom/movable/O as obj, mob/user as mob)
 		if (!H) return
 		var/obj/item/W = null
 		#define mdrop_slot(slot) W = master.get_slot(master.slot); if (W) { W.MouseDrop_T(O,user); }
@@ -715,7 +726,7 @@
 	proc/add_other_object(obj/item/I, loc) // this is stupid but necessary
 
 		var/hide = 0 //hide from layotu based on the ignore_inventory_hide thingo
-		for (var/obj/screen/hud/H in inventory_bg)
+		for (var/atom/movable/screen/hud/H in inventory_bg)
 			if (loc == H.screen_loc)
 				hide = 1
 
@@ -728,7 +739,7 @@
 			I.screen_loc = loc
 
 	proc/remove_item(obj/item/I)
-		if (inventory_items && inventory_items.len)
+		if (length(inventory_items))
 			inventory_items -= I
 		remove_object(I)
 
@@ -749,9 +760,10 @@
 		newDesc += "<div><img src='[resource("images/tooltips/cold.png")]' alt='' class='icon' /><span>Total Resistance (Cold): [master.get_cold_protection()]%</span></div>"
 		newDesc += "<div><img src='[resource("images/tooltips/radiation.png")]' alt='' class='icon' /><span>Total Resistance (Radiation): [master.get_rad_protection()]%</span></div>"
 		newDesc += "<div><img src='[resource("images/tooltips/disease.png")]' alt='' class='icon' /><span>Total Resistance (Disease): [master.get_disease_protection()]%</span></div>"
+		newDesc += "<div><img src='[resource("images/tooltips/explosion.png")]' alt='' class='icon' /><span>Total Resistance (Explosion): [master.get_explosion_resistance() * 100]%</span></div>"
 		newDesc += "<div><img src='[resource("images/tooltips/bullet.png")]' alt='' class='icon' /><span>Total Ranged Protection: [master.get_ranged_protection()]</span></div>"
-		newDesc += "<div><img src='[resource("images/tooltips/melee.png")]' alt='' class='icon' /><span>Total Melee Armor (Body): [master.get_melee_protection("chest", DAMAGE_CRUSH)]</span></div>"
-		newDesc += "<div><img src='[resource("images/tooltips/melee.png")]' alt='' class='icon' /><span>Total Melee Armor (Head): [master.get_melee_protection("head", DAMAGE_CRUSH)]</span></div>"
+		newDesc += "<div><img src='[resource("images/tooltips/melee.png")]' alt='' class='icon' /><span>Total Melee Armor (Body): [master.get_melee_protection("chest")]</span></div>"
+		newDesc += "<div><img src='[resource("images/tooltips/melee.png")]' alt='' class='icon' /><span>Total Melee Armor (Head): [master.get_melee_protection("head")]</span></div>"
 
 		var/block = master.get_passive_block()
 		if (block)
@@ -808,9 +820,9 @@
 			return
 
 		// remove genetics buttons
-		for(var/obj/screen/ability/topBar/genetics/G in src.objects)
+		for(var/atom/movable/screen/ability/topBar/genetics/G in src.objects)
 			remove_object(G)
-		for(var/obj/screen/pseudo_overlay/PO in master.client.screen)
+		for(var/atom/movable/screen/pseudo_overlay/PO in master.client.screen)
 			master.client.screen -= PO
 		for(var/obj/ability_button/B in master.client.screen)
 			master.client.screen -= B
@@ -831,30 +843,32 @@
 					pos_x = 1
 					pos_y++
 
-			if (istype(master.loc,/obj/vehicle/))
-				var/obj/vehicle/V = master.loc
-				for(var/obj/ability_button/B2 in V.ability_buttons)
-					B2.screen_loc = "NORTH-[pos_y],[pos_x]"
-					master.client.screen += B2
-					pos_x++
-					if(pos_x > 15)
-						pos_x = 1
-						pos_y++
-
 		if (current_ability_set == 2) // genetics
 			var/datum/bioEffect/power/P
 			for(var/ID in master.bioHolder.effects)
 				P = master.bioHolder.GetEffect(ID)
-				if (!istype(P, /datum/bioEffect/power/) || !istype(P.ability) || !istype(P.ability.object))
+				if (!istype(P, /datum/bioEffect/power/) || !istype(P.ability) || !istype(P.ability.object) || P.removed)
 					continue
 				var/datum/targetable/geneticsAbility/POWER = P.ability
-				var/obj/screen/ability/topBar/genetics/BUTTON = POWER.object
+				var/atom/movable/screen/ability/topBar/genetics/BUTTON = POWER.object
 				BUTTON.update_on_hud(pos_x,pos_y)
 
 				pos_x++
 				if(pos_x > 15)
 					pos_x = 1
 					pos_y++
+
+		if (istype(master.loc,/obj/vehicle/)) //so we always see vehicle buttons
+			var/obj/vehicle/V = master.loc
+			for(var/obj/ability_button/B2 in V.ability_buttons)
+				B2.screen_loc = "NORTH-[pos_y],[pos_x]"
+				master.client.screen += B2
+				B2.the_mob = master
+				pos_x++
+				if(pos_x > 15)
+					pos_x = 1
+					pos_y++
+
 
 	proc/update_sprinting()
 		if (!sprinting || !master.client) return 0
@@ -890,17 +904,17 @@
 			switch (brutedam)
 				if (-INFINITY to 0) // this goes the other way around from the normal health indicator since it's determined by how much of whatever damage you have
 					stage = 0 // bright green
-				if (1 to 15)
+				if (0 to 15)
 					stage = 1 // green
-				if (16 to 30)
+				if (15 to 30)
 					stage = 2 // yellow
-				if (31 to 45)
+				if (30 to 45)
 					stage = 3 // orange
-				if (46 to 60)
+				if (45 to 60)
 					stage = 4 // dark orange
-				if (61 to 75)
+				if (60 to 75)
 					stage = 5 // red
-				if (76 to INFINITY)
+				if (75 to INFINITY)
 					stage = 6 // crit
 
 			health_brute.name = "Brute Damage"
@@ -910,17 +924,17 @@
 			switch (burndam)
 				if (-INFINITY to 0)
 					stage = 0 // bright green
-				if (1 to 15)
+				if (0 to 15)
 					stage = 1 // green
-				if (16 to 30)
+				if (15 to 30)
 					stage = 2 // yellow
-				if (31 to 45)
+				if (30 to 45)
 					stage = 3 // orange
-				if (46 to 60)
+				if (45 to 60)
 					stage = 4 // dark orange
-				if (61 to 75)
+				if (60 to 75)
 					stage = 5 // red
-				if (76 to INFINITY)
+				if (75 to INFINITY)
 					stage = 6 // crit
 
 			health_burn.name = "Burn Damage"
@@ -930,17 +944,17 @@
 			switch (toxdam)
 				if (-INFINITY to 0)
 					stage = 0 // bright green
-				if (1 to 15)
+				if (0 to 15)
 					stage = 1 // green
-				if (16 to 30)
+				if (15 to 30)
 					stage = 2 // yellow
-				if (31 to 45)
+				if (30 to 45)
 					stage = 3 // orange
-				if (46 to 60)
+				if (45 to 60)
 					stage = 4 // dark orange
-				if (61 to 75)
+				if (60 to 75)
 					stage = 5 // red
-				if (76 to INFINITY)
+				if (75 to INFINITY)
 					stage = 6 // crit
 
 			health_tox.name = "Toxin Damage"
@@ -950,17 +964,17 @@
 			switch (oxydam)
 				if (-INFINITY to 0)
 					stage = 0 // bright green
-				if (1 to 15)
+				if (0 to 15)
 					stage = 1 // green
-				if (16 to 30)
+				if (15 to 30)
 					stage = 2 // yellow
-				if (31 to 45)
+				if (30 to 45)
 					stage = 3 // orange
-				if (46 to 60)
+				if (45 to 60)
 					stage = 4 // dark orange
-				if (61 to 75)
+				if (60 to 75)
 					stage = 5 // red
-				if (76 to INFINITY)
+				if (75 to INFINITY)
 					stage = 6 // crit
 
 			health_oxy.name = "Oxygen Damage"
@@ -1116,7 +1130,7 @@
 		if (new_file)
 			src.icon_hud = new_file
 
-			for(var/obj/screen/statusEffect/G in master.client.screen)
+			for(var/atom/movable/screen/statusEffect/G in master.client.screen)
 				G.icon = new_file
 
 			if (invtoggle) invtoggle.icon = new_file
@@ -1150,7 +1164,7 @@
 			if (health_tox) health_tox.icon = new_file
 			if (health_oxy) health_oxy.icon = new_file
 
-			for (var/obj/screen/hud/H in inventory_bg)
+			for (var/atom/movable/screen/hud/H in inventory_bg)
 				H.icon = new_file
 
 			if (master.stamina_bar)

@@ -69,16 +69,16 @@
 
 	setup_healths()
 		..()
-		add_hh_flesh(-health_brute, health_brute, health_brute_vuln)
-		add_hh_flesh_burn(-health_burn, health_burn, health_burn_vuln)
+		add_hh_flesh(health_brute, health_brute_vuln)
+		add_hh_flesh_burn(health_burn, health_burn_vuln)
 		add_health_holder(/datum/healthHolder/toxin)
 		add_health_holder(/datum/healthHolder/brain)
 
 	on_pet()
 		if (..())
 			return 1
-		if (prob(33))
-			playsound(get_turf(src), "sound/voice/babynoise.ogg", 50, 1)
+		if (prob(15) && !ON_COOLDOWN(src, "playsound", 3 SECONDS))
+			playsound(src, "sound/voice/babynoise.ogg", 30, 1)
 			src.visible_message("<span class='notice'><b>[src]</b> coos!</span>",\
 			"<span class='notice'>You coo!</span>")
 
@@ -86,11 +86,11 @@
 		switch (act)
 			if ("scream","hiss")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/voice/animal/cat_hiss.ogg", 80, 1)
+					playsound(src, "sound/voice/animal/cat_hiss.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> hisses!"
 			if ("smile","coo")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/voice/babynoise.ogg", 50, 1)
+					playsound(src, "sound/voice/babynoise.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> coos!"
 		return null
 
@@ -105,14 +105,14 @@
 	death(var/gibbed)
 		if (!gibbed)
 			src.unequip_all()
-			playsound(get_turf(src), src.deathsound, 50, 0)
+			playsound(src, src.deathsound, 50, 0)
 			src.reagents.add_reagent(venom1, 50, null)
 			src.reagents.add_reagent(venom2, 50, null)
 		return ..()
 
 	proc/venom_bite(mob/M)
 		if (src.reagents && istype(M) && M.reagents)
-			playsound(get_turf(src), src.bitesound, 50, 1)
+			playsound(src, src.bitesound, 50, 1)
 			if (issilicon(M))
 				var/mob/living/silicon/robot/R = M
 				R.compborg_take_critter_damage("[pick("l","r")]_[pick("arm","leg")]", rand(2,4))
@@ -382,7 +382,7 @@
 						I.throw_at(T, 12, 3)
 			src.gib(1)
 
-	was_harmed(var/atom/T as mob|obj, var/obj/item/weapon = 0, var/special = 0)
+	was_harmed(var/atom/T as mob|obj, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 		..()
 
 		//clownbabies can't fight clownqueens. but they can fight Cluwnequeens and vice versa
@@ -411,19 +411,14 @@
 		playsound(location, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
 	var/obj/decal/cleanable/blood/splatter/extra/blood = null
 
-	var/list/dirlist = list(list(NORTH, NORTHEAST, NORTHWEST),
-		list(SOUTH, SOUTHEAST, SOUTHWEST),
-		list(WEST, NORTHWEST, SOUTHWEST),
-		list(EAST, NORTHEAST, SOUTHEAST))
-
 	var/list/bloods = list()
 
-	for (var/i = 1, i <= 4, i++)
+	for (var/i in cardinal)
 		blood = make_cleanable(/obj/decal/cleanable/blood/splatter/extra, location)
 		blood.blood_DNA = bDNA
 		blood.blood_type = btype
 		blood.color = random_saturated_hex_color()
-		blood.streak(dirlist[i], 1)
+		blood.streak_cleanable(i, 1)
 		bloods += blood
 
 	var/extra = rand(2,4)
@@ -432,13 +427,13 @@
 		blood.blood_DNA = bDNA
 		blood.blood_type = btype
 		blood.color = random_saturated_hex_color()
-		blood.streak(alldirs, 1)
+		blood.streak_cleanable(cardinal, 1)
 		bloods += blood
 
 	var/turf/Q = get_turf(location)
 	if (!Q)
 		return
-	if (ejectables && ejectables.len)
+	if (length(ejectables))
 		for (var/atom/movable/I in ejectables)
 			var/turf/target = null
 			var/tries = 0

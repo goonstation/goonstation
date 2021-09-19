@@ -5,7 +5,7 @@
 	name = "power sink"
 	icon_state = "powersink0"
 	item_state = "electronic"
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	flags = FPRINT | TABLEPASS | CONDUCT
 	throwforce = 5
 	throw_speed = 1
@@ -109,7 +109,7 @@
 
 
 			if(power_drained > max_power * 0.95)
-				playsound(src, "sound/effects/screech.ogg", 100, 1, 1)
+				playsound(src, "sound/effects/screech.ogg", 50, 1, 1)
 			if(power_drained >= max_power)
 				processing_items.Remove(src)
 				explosion(src, src.loc, 3,6,9,12)

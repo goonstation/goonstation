@@ -160,12 +160,11 @@
 	icon_state = "precursor-1" // temp
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "precursor" // temp
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	force = 1
 	throwforce = 5
 	var/spam_flag = 0
 	var/pitch = 0
-	module_research = list("audio" = 20, "precursor" = 3)
 
 /////////////////////////////////////////////////////////////
 
@@ -216,7 +215,7 @@
 			if(12)
 				horn_note = 'sound/musical_instruments/WeirdHorn_12.ogg'
 
-		playsound(get_turf(src), horn_note, 50, 0)
+		playsound(src, horn_note, 50, 0)
 		for(var/atom/A in range(user, 5))
 			if(istype(A, /obj/critter/dog/george))
 				var/obj/critter/dog/george/G = A
@@ -278,7 +277,7 @@
 				src.overlays += icon('icons/obj/artifacts/artifacts.dmi',"precursor-1fx")*/
 		if (isrobot(user)) return
 		user.drop_item()
-		if(W && W.loc)	W.set_loc(src.loc)
+		if(W?.loc)	W.set_loc(src.loc)
 		return
 
 /obj/item/chilly_orb // borb
@@ -701,8 +700,7 @@
 
 	proc
 		update_controller()
-			if(src.linked_controller)
-				src.linked_controller.update()
+			src.linked_controller?.update()
 			return
 
 
@@ -919,7 +917,7 @@
 			elecflash(user,power=2)
 			var/shock_damage = rand(10,15)
 
-			if (user.bioHolder.HasEffect("resist_electric") == 2)
+			if (user.bioHolder.HasEffect("resist_electric_heal"))
 				var/healing = 0
 				if (shock_damage)
 					healing = shock_damage / 3
@@ -927,7 +925,7 @@
 				user.take_toxin_damage(0 - healing)
 				boutput(user, "<span class='notice'>You absorb the electrical shock, healing your body!</span>")
 				return
-			else if (user.bioHolder.HasEffect("resist_electric") == 1)
+			else if (user.bioHolder.HasEffect("resist_electric"))
 				boutput(user, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
 				return
 
@@ -980,7 +978,7 @@
 /obj/portrait_sneaky
 	name = "crooked portrait"
 	anchored = 1
-	icon = 'icons/obj/decals/misc.dmi'
+	icon = 'icons/obj/decals/wallsigns.dmi'
 	icon_state = "portrait"
 	desc = "A portrait of a man wearing a ridiculous merchant hat. That must be Discount Dan."
 
@@ -1142,7 +1140,7 @@
 			animating = 1
 			animate(src, alpha = 64, time = 10, easing = SINE_EASING)
 			animate(alpha = 192, time = 10, easing = SINE_EASING)
-			SPAWN_DBG (25)
+			SPAWN_DBG(2.5 SECONDS)
 				animating = 0
 
 	CritterDeath()
@@ -1182,7 +1180,7 @@
 		..()
 
 		range += rand(-1,2)
-		SPAWN_DBG (0)
+		SPAWN_DBG(0)
 			summon()
 
 
@@ -1356,7 +1354,7 @@
 				if(prob(75))
 					active = 1
 					SPAWN_DBG(1 MINUTE) active = 0
-					playsound(get_turf(AM), pick('sound/ambience/station/Station_SpookyAtmosphere1.ogg','sound/ambience/station/Station_SpookyAtmosphere2.ogg'), 75, 0)
+					playsound(AM, pick('sound/ambience/station/Station_SpookyAtmosphere1.ogg','sound/ambience/station/Station_SpookyAtmosphere2.ogg'), 75, 0)
 
 // cogwerks- variant for glaciers
 
@@ -1377,9 +1375,9 @@
 					active = 1
 					SPAWN_DBG(1 MINUTE) active = 0
 					if(prob(10))
-						playsound(get_turf(AM), pick('sound/voice/animal/wendigo_scream.ogg', 'sound/voice/animal/wendigo_cry.ogg'),25, 1) // play these quietly so as to spook
+						playsound(AM, pick('sound/voice/animal/wendigo_scream.ogg', 'sound/voice/animal/wendigo_cry.ogg'),25, 1) // play these quietly so as to spook
 					else
-						playsound(get_turf(AM), pick('sound/ambience/nature/Glacier_DeepRumbling1.ogg','sound/ambience/nature/Glacier_DeepRumbling1.ogg', 'sound/ambience/nature/Glacier_DeepRumbling1.ogg', 'sound/ambience/nature/Glacier_IceCracking.ogg', 'sound/ambience/nature/Glacier_DeepRumbling1.ogg', 'sound/ambience/nature/Glacier_Scuttling.ogg'), 75, 0)
+						playsound(AM, pick('sound/ambience/nature/Glacier_DeepRumbling1.ogg','sound/ambience/nature/Glacier_DeepRumbling1.ogg', 'sound/ambience/nature/Glacier_DeepRumbling1.ogg', 'sound/ambience/nature/Glacier_IceCracking.ogg', 'sound/ambience/nature/Glacier_DeepRumbling1.ogg', 'sound/ambience/nature/Glacier_Scuttling.ogg'), 75, 0)
 ////////////
 
 /obj/ydrone_panel
@@ -1419,7 +1417,7 @@
 /obj/item/device/dongle
 	name = "syndicate security dongle"
 	desc = "A form of secure, electronic identification with a round port connector and a funny name."
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	icon_state = "rfid"
 
 var/global/list/scarysounds = list('sound/machines/engine_alert3.ogg',

@@ -7,6 +7,7 @@ Ctrl-RMB on buildmode button = Set cinematic effect and giftwrap style<br>
 Left Mouse Button on turf/mob/obj      = Place gifts<br>
 Right Mouse Button                     = Mark corners of area to spawn gifts with two clicks<br>
 Right Mouse Button + CTRL              = Clear area corners<br>
+Right Mouse Button + Shift             = Set object type to selected mob/obj type<br>
 <br>
 Use the button in the upper left corner to<br>
 change the direction of created objects.<br>
@@ -58,7 +59,7 @@ change the direction of created objects.<br>
 			G.icon_state = "strange-[random_style]"
 		else
 			G.size = 3
-			G.w_class = 4
+			G.w_class = W_CLASS_BULKY
 			//style selection copied from wrapping paper's New()
 			if(giftwrap_style == "Regular")
 				random_style = rand(1,8)
@@ -67,7 +68,7 @@ change the direction of created objects.<br>
 			G.icon_state = "gift3-[random_style]"
 		G.gift = A
 		if (isobj(A) || ismob(A))
-			A.dir = holder.dir
+			A.set_dir(holder.dir)
 			A.onVarChanged("dir", SOUTH, A.dir)
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
@@ -110,6 +111,11 @@ change the direction of created objects.<br>
 					spawn_gift(T)
 
 	click_right(atom/object, var/ctrl, var/alt, var/shift)
+		if (shift)
+			if (ismob(object) || isobj(object))
+				objpath = object.type
+				update_button_text(objpath)
+			return
 		if(ctrl)
 			first_corner = null
 			boutput(usr, "<span class='alert'>Cleared corners!</span>")

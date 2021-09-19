@@ -17,7 +17,6 @@
 	//if (istype(T, /turf))
 	//	T.firelevel = 0 //TODO: FIX
 	if (--src.life < 1)
-		//SN src = null
 		if (!disposed)
 			pool(src)
 		return 0
@@ -51,7 +50,7 @@
 
 			sleep(0.2 SECONDS)
 
-			if (try_connect_fluid && T && T.active_liquid)
+			if (try_connect_fluid && T?.active_liquid)
 				T.active_liquid.try_connect_to_adjacent()
 
 			if(src.loc == target)

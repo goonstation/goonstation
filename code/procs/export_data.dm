@@ -25,7 +25,7 @@
 	message["round_server_number"] = "[serverKey]"
 	message["round_status"] = "end"
 	message["end_reason"] = reason
-	message["game_type"] = ticker && ticker.mode ? ticker.mode.name : "pre"
+	message["game_type"] = ticker?.mode ? ticker.mode.name : "pre"
 
 	// Send data
 	var/datum/http_request/request = new()

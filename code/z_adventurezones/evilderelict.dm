@@ -94,7 +94,6 @@ var/maniac_previous_victim = "Unknown"
 	invisibility = 101
 	anchored = 1
 	density = 0
-	var/obj/chaser/master/master = null
 	event_handler_flags = USE_HASENTERED
 
 	HasEntered(atom/movable/AM as mob|obj)
@@ -115,7 +114,6 @@ var/maniac_previous_victim = "Unknown"
 	invisibility = 101
 	anchored = 1
 	density = 0
-	var/obj/chaser/master/master = null
 	event_handler_flags = USE_HASENTERED
 
 	HasEntered(atom/movable/AM as mob|obj)
@@ -159,17 +157,18 @@ var/maniac_previous_victim = "Unknown"
 						if (!P.density)
 							SPAWN_DBG( 0 )
 								P.close()
-				sleep(5 SECONDS)
-				if(id == "evilreaverbridge")
-					playsound(src.loc, 'sound/machines/driveclick.ogg', 50, 1)
-					var/obj/item/paper/PA = unpool(/obj/item/paper)
-					PA.set_loc(src.loc)
+				SPAWN_DBG(5 SECONDS)
+					if(id == "evilreaverbridge")
+						playsound(src.loc, 'sound/machines/driveclick.ogg', 50, 1)
+						var/obj/item/paper/PA = unpool(/obj/item/paper)
+						PA.set_loc(src.loc)
 
-					PA.info = "<center>YOU DO NOT BELONG HERE<BR><font size=30>LEAVE NOW</font></center>" //rude!
-					PA.name = "Paper - PR1-OUT"
+						PA.info = "<center>YOU DO NOT BELONG HERE<BR><font size=30>LEAVE NOW</font></center>" //rude!
+						PA.name = "Paper - PR1-OUT"
 
-				icon_state = "pr1_0"
-				SPAWN_DBG(30 SECONDS) 	alert = 0
+					icon_state = "pr1_0"
+					sleep(30 SECONDS)
+					alert = 0
 
 
 
@@ -179,6 +178,9 @@ var/maniac_previous_victim = "Unknown"
 	icon_state = "derelict"
 	teleport_blocked = 1
 	sound_loop = 'sound/ambience/spooky/Evilreaver_Ambience.ogg'
+#ifdef MAP_OVERRIDE_OSHAN
+	requires_power = FALSE
+#endif
 
 /area/evilreaver/medical
 	icon_state = "medbay"

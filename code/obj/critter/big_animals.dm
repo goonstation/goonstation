@@ -59,6 +59,11 @@
 		. += "-dead"
 		icon_state = .
 
+	on_pet(mob/user)
+		if (..())
+			return 1
+		user.unlock_medal("Bear Hug", 1) //new method to get since obesity is removed
+
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		if (!src.alive)
 			// TODO: tie this into surgery()
@@ -210,7 +215,7 @@ obj/critter/bear/care
 		M.transforming = 1
 		M.canmove = 0
 		M.icon = null
-		M.invisibility = 101
+		APPLY_MOB_PROPERTY(M, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 		if(ishuman(M))
 			animation = new(src.loc)
 			animation.icon_state = "blank"
@@ -372,7 +377,7 @@ obj/critter/bear/care
 		if (src.task == "wandering" || src.task == "thinking")
 			if (ishuman(over_object) && usr == over_object)
 				var/mob/living/carbon/human/H = over_object
-				if (H && !H.restrained() && !H.stat && in_range(src, H))
+				if (H && !H.restrained() && !H.stat && in_interact_range(src, H))
 					src.task = "drink mob"
 					src.drink_target = H
 					src.set_loc(H.loc)
@@ -510,7 +515,7 @@ obj/critter/bear/care
 	Move()
 		if(prob(15))
 			playsound(src.loc, "rustle", 10, 1)
-		..()
+		. = ..()
 
 /obj/critter/bat/doctor
 	name = "Dr. Acula"

@@ -13,12 +13,10 @@
 	New()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
-			if (kit_styles && kit_styles.len)
+			if (length(kit_styles))
 				icon_state = pick(kit_styles)
 				item_state = icon_state
-#if ASS_JAM
-		ADD_MORTY(13, 11, 5, 5)
-#endif
+
 
 /obj/item/storage/firstaid/regular
 	icon_state = "firstaid1"
@@ -41,6 +39,16 @@
 		/obj/item/device/analyzer/healthanalyzer/borg,\
 		/obj/item/reagent_containers/emergency_injector/epinephrine)
 
+	emergency
+		spawn_contents = list(/obj/item/item_box/medical_patches/mini_styptic,\
+		/obj/item/item_box/medical_patches/mini_silver_sulf,\
+		/obj/item/reagent_containers/pill/menthol,\
+		/obj/item/reagent_containers/pill/salicylic_acid,\
+		/obj/item/device/analyzer/healthanalyzer/borg,\
+		/obj/item/reagent_containers/emergency_injector/epinephrine,\
+		/obj/item/reagent_containers/emergency_injector/atropine)
+
+
 	empty
 		spawn_contents = list()
 
@@ -52,12 +60,11 @@
 	desc = "A medical kit that contains several medical patches and pills for treating brute injuries. Contains one epinephrine syringe for emergency use and a health analyzer."
 	kit_styles = list("brute1", "brute2", "brute3", "brute4")
 	spawn_contents = list(\
-	/obj/item/reagent_containers/mender/brute,\
-	/obj/item/reagent_containers/patch/mini/bruise = 2,\
-	/obj/item/reagent_containers/pill/salicylic_acid,\
+	/obj/item/reagent_containers/patch/bruise = 3,\
 	/obj/item/device/analyzer/healthanalyzer,\
+	/obj/item/reagent_containers/pill/salicylic_acid,\
 	/obj/item/reagent_containers/emergency_injector/epinephrine,\
-	/obj/item/bandage)
+	/obj/item/bandage/medicated)
 
 /obj/item/storage/firstaid/fire
 	name = "fire first aid"
@@ -66,12 +73,11 @@
 	desc = "A medical kit that contains several medical patches and pills for treating burns. Contains one epinephrine syringe for emergency use and a health analyzer."
 	kit_styles = list("burn1", "burn2", "burn3", "burn4")
 	spawn_contents = list(\
-	/obj/item/reagent_containers/mender/burn,\
-	/obj/item/reagent_containers/patch/mini/burn = 2,\
+	/obj/item/reagent_containers/patch/burn = 3,\
 	/obj/item/device/analyzer/healthanalyzer,\
-	/obj/item/reagent_containers/emergency_injector/epinephrine,\
+	/obj/item/reagent_containers/pill/menthol,\
 	/obj/item/reagent_containers/pill/salicylic_acid,\
-	/obj/item/reagent_containers/pill/menthol)
+	/obj/item/reagent_containers/emergency_injector/epinephrine)
 
 /obj/item/storage/firstaid/toxin
 	name = "toxin first aid"
@@ -140,7 +146,7 @@
 	item_state = "docbag1"
 	desc = "A old-fashioned doctor's bag designed to cary medical and surgical supplies."
 	kit_styles = list("docbag1", "docbag2", "docbag3")
-	spawn_contents = list(/obj/item/circular_saw, /obj/item/scalpel, /obj/item/suture, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/iv_drip/blood, /obj/item/medical/medicaldiagnosis/stethoscope)
+	spawn_contents = list(/obj/item/circular_saw, /obj/item/scalpel, /obj/item/scissors/surgical_scissors, /obj/item/suture, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/iv_drip/blood, /obj/item/medical/medicaldiagnosis/stethoscope)
 
 /* -------------------- First Aid Kits - VR -------------------- */
 
@@ -262,11 +268,7 @@
 	icon_state = "health_upgr"
 	desc = "A box containing health analyzer reagent scan upgrade cards."
 	spawn_contents = list(/obj/item/device/analyzer/healthanalyzer_upgrade = 7)
-#if ASS_JAM
-	New()
-		..()
-		ADD_MORTY(13, 9, 7, 7)
-#endif
+
 
 /obj/item/storage/box/iv_box
 	name = "\improper IV drip box"
@@ -373,11 +375,7 @@
 	icon_state = "minimed"
 	spawn_contents = list()
 
-#if ASS_JAM
-	New()
-		. = ..()
-		ADD_MORTY(10, 7, 12, 12)
-#endif
+
 
 	make_my_stuff()
 		..()
@@ -390,7 +388,7 @@
 		if (prob(40))
 			new /obj/item/reagent_containers/glass/bottle/ethanol(src)
 
-		switch (pickweight(list("gloves" = 20, "mask" = 20, "autoinjector" = 10, "both" = 10)))
+		switch (weighted_pick(list("gloves" = 20, "mask" = 20, "autoinjector" = 10, "both" = 10)))
 			if ("gloves")
 				new /obj/item/clothing/gloves/latex(src)
 			if ("mask")

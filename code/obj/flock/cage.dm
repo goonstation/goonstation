@@ -60,7 +60,7 @@
 			eating_occupant = 0
 			target = pick(items)
 			H.remove_item(target)
-			playsound(get_turf(src), "sound/weapons/nano-blade-1.ogg", 50, 1)
+			playsound(src, "sound/weapons/nano-blade-1.ogg", 50, 1)
 			boutput(H, "<span class='alert'>[src] pulls [target] from you and begins to rip it apart.</span>")
 			src.visible_message("<span class='alert'>[src] pulls [target] from [H] and begins to rip it apart.</span>")
 		else if(limbs.len >= 1)
@@ -69,7 +69,7 @@
 			H.limbs.sever(target)
 			H.emote("scream")
 			random_brute_damage(H, 20)
-			playsound(get_turf(src), "sound/impact_sounds/Flesh_Tear_1.ogg", 80, 1)
+			playsound(src, "sound/impact_sounds/Flesh_Tear_1.ogg", 80, 1)
 			boutput(H, "<span class='alert bold'>[src] wrenches your [initial(target.name)] clean off and begins peeling it apart! Fuck!</span>")
 			src.visible_message("<span class='alert bold'>[src] wrenches [target.name] clean off and begins peeling it apart!</span>")
 		else if(organs.len >= 1)
@@ -78,14 +78,14 @@
 			H.drop_organ(target)
 			H.emote("scream")
 			random_brute_damage(H, 20)
-			playsound(get_turf(src), "sound/impact_sounds/Flesh_Tear_2.ogg", 80, 1)
+			playsound(src, "sound/impact_sounds/Flesh_Tear_2.ogg", 80, 1)
 			boutput(H, "<span class='alert bold'>[src] tears out your [initial(target.name)]! OH GOD!</span>")
 			src.visible_message("<span class='alert bold'>[src] tears out [target.name]!</span>")
 		else
 			H.gib()
 			occupant = null
 			underlays -= H
-			playsound(get_turf(src), "sound/impact_sounds/Flesh_Tear_2.ogg", 80, 1)
+			playsound(src, "sound/impact_sounds/Flesh_Tear_2.ogg", 80, 1)
 			src.visible_message("<span class='alert bold'>[src] rips what's left of its occupant to shreds!</span>")
 
 	Enter(atom/movable/O)
@@ -102,7 +102,7 @@
 	process()
 		// consume any fluid near us
 		var/turf/T = get_turf(src)
-		if(T && T.active_liquid)
+		if(T?.active_liquid)
 			var/obj/fluid/F = T.active_liquid
 			F.group.drain(F, 15, src)
 
@@ -120,7 +120,7 @@
 			if(edibles.len >= 1)
 				target = pick(edibles)
 				eating_occupant = 0
-				playsound(get_turf(src), "sound/weapons/nano-blade-1.ogg", 50, 1)
+				playsound(src, "sound/weapons/nano-blade-1.ogg", 50, 1)
 				if(occupant)
 					boutput(occupant, "<span class='notice'>[src] begins to process [target].</span>")
 			else if(occupant && ishuman(occupant))
@@ -151,26 +151,24 @@
 				boutput(occupant, "<span class='flocksay italics'>[pick_string("flockmind.txt", "flockmind_conversion")]</span>")
 		if(src.contents.len <= 0 && reagents.get_reagent_amount(target_fluid) < 50)
 			if(reagents.has_reagent(target_fluid)) // flood the area with our unprocessed contents
-				playsound(get_turf(src), "sound/impact_sounds/Slimy_Splat_1.ogg", 80, 1)
+				playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 80, 1)
 				T.fluid_react_single(reagents.get_reagent_amount(target_fluid))
 			qdel(src)
 
 	disposing()
-		playsound(get_turf(src), "sound/impact_sounds/Energy_Hit_2.ogg", 80, 1)
+		playsound(src, "sound/impact_sounds/Energy_Hit_2.ogg", 80, 1)
 		processing_items -= src
-		if(occupant)
-			occupant.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit)
+		occupant?.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit)
 		..()
 
 
 /obj/icecube/flockdrone/special_desc(dist, mob/user)
 	if(isflock(user))
-		var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-		special_desc += "<br><span class='bold'>ID:</span> Matter Reprocessor"
-		special_desc += "<br><span class='bold'>Volume:</span> [src.reagents.get_reagent_amount(src.target_fluid)]"
-		special_desc += "<br><span class='bold'>Needed volume:</span> [src.create_egg_at_fluid]"
-		special_desc += "<br><span class='bold'>###=-</span></span>"
-		return special_desc
+		return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+		<br><span class='bold'>ID:</span> Matter Reprocessor
+		<br><span class='bold'>Volume:</span> [src.reagents.get_reagent_amount(src.target_fluid)]
+		<br><span class='bold'>Needed volume:</span> [src.create_egg_at_fluid]
+		<br><span class='bold'>###=-</span></span>"}
 	else
 		return null // give the standard description
 

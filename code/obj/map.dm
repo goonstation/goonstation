@@ -1,4 +1,4 @@
 /obj/map
 	icon = 'icons/effects/mapeditor.dmi'
 	invisibility = 101
-	anchored = 1
+	anchored = 2

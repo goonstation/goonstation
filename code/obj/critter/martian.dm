@@ -28,7 +28,8 @@
 				src.visible_message("<span class='alert'><b>[src]</b> teleports away!</span>")
 				CritterTeleport(8, 1, 0)
 
-	on_pet()
+	on_pet(mob/user)
+		..()
 		for(var/mob/O in hearers(src, null))
 			O.show_message("<b>[src]</b> screeches, 'KXBQUB IJFDQVW??'", 1)
 
@@ -40,11 +41,14 @@
 			return
 		playsound(target.loc, "sound/effects/ghost2.ogg", 100, 1)
 		var/mob/living/carbon/human/H = target
-		if (istype(H.head, /obj/item/clothing/head/tinfoil_hat))
-			boutput(H, "<span class='notice'>Your tinfoil hat protects you from the psyblast!</span>")
+		if (istype(H.head, /obj/item/clothing/head/tinfoil_hat) || H.bioHolder?.HasEffect("psy_resist") == 2)
+			if(istype(H.head, /obj/item/clothing/head/tinfoil_hat))
+				boutput(H, "<span class='notice'>Your tinfoil hat protects you from the psyblast!</span>")
+			else
+				boutput(H, "<span class='notice'>The psyblast bounces off you harmlessly!</span>")
 		else
 			boutput(H, "<span class='alert'>You are blasted by psychic energy!</span>")
-			H.changeStatus("paralysis", 70)
+			H.changeStatus("paralysis", 7 SECONDS)
 			H.stuttering += 60
 			H.take_brain_damage(20)
 			H.TakeDamage("head", 0, 5)

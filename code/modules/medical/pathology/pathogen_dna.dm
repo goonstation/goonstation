@@ -86,7 +86,6 @@ datum/pathogendna
 
 	proc/manipulate(value, direction)
 		var/datum/pathogendna/this = src
-		src = null
 		if (direction > 0)
 			direction = 1
 		else
@@ -198,7 +197,6 @@ datum/pathogendna
 	proc/reevaluate()
 		// Move src reference so we can return false if evaluation fails (important for whatever is calling this)
 		var/datum/pathogendna/this = src
-		src = null
 		var/desc = this.reference.desc
 		var/name_base = this.reference.name_base
 		var/mutation = this.reference.mutation

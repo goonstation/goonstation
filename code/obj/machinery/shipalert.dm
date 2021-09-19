@@ -129,10 +129,9 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 5.0
 	throwforce = 5
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	m_amt = 50
 	desc = "Like a normal hammer, but teeny."
 	stamina_damage = 33
 	stamina_cost = 18
 	stamina_crit_chance = 10
-	module_research = list("tools" = 4, "metals" = 2)

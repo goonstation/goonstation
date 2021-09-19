@@ -7,6 +7,7 @@
 #define PIPEC_PRODUCE "#b2ff4f"
 #define PIPEC_TRANSPORT "#ffbef6"
 #define PIPEC_MINERAL "#a5fffc"
+#define PIPEC_CARGO "#f4ff53"
 
 // virtual disposal object
 // travels through pipes in lieu of actual items
@@ -19,7 +20,6 @@
 	var/active = 0	// true if the holder is moving, otherwise inactive
 	dir = 0
 	var/count = 1000	//*** can travel 1000 steps before going inactive (in case of loops)
-	var/has_fat_guy = 0	// true if contains a fat person
 	var/last_sound = 0
 
 	var/slowed = 0 // when you move, slows you down
@@ -30,17 +30,15 @@
 		..()
 		gas = null
 		active = 0
-		dir = 0
+		set_dir(0)
 		count = initial(count)
-		has_fat_guy = 0
 		last_sound = 0
 		mail_tag = null
 
 	pooled()
 		gas = null
 		active = 0
-		dir = 0
-		has_fat_guy = 0
+		set_dir(0)
 		last_sound = 0
 		mail_tag = null
 		..()
@@ -62,8 +60,6 @@
 			if(ishuman(AM))
 				var/mob/living/carbon/human/H = AM
 				H.unlock_medal("It'sa me, Mario", 1)
-				if(H.bioHolder.HasEffect("fat"))		// is a human and fat?
-					has_fat_guy = 1			// set flag on holder
 
 
 
@@ -76,7 +72,7 @@
 
 		set_loc(D.trunk)
 		active = 1
-		dir = DOWN
+		set_dir(DOWN)
 		SPAWN_DBG(1 DECI SECOND)
 			process()		// spawn off the movement process
 
@@ -86,14 +82,6 @@
 	proc/process()
 		var/obj/disposalpipe/last
 		while(active)
-			if(has_fat_guy && prob(2)) // chance of becoming stuck per segment if contains a fat guy
-				active = 0
-				// find the fat guys
-				for(var/mob/living/carbon/human/H in src)
-					if(H.bioHolder.HasEffect("fat"))
-						H.unlock_medal("Try jiggling the handle",1)
-
-				break
 			sleep(0.1 SECONDS)		// was 1
 			if(slowed > 0)
 				slowed--
@@ -134,8 +122,6 @@
 	proc/merge(var/obj/disposalholder/other)
 		for(var/atom/movable/AM in other)
 			AM.set_loc(src)	// move everything in other holder to this one
-		if(other.has_fat_guy)
-			has_fat_guy = 1
 		if(other.mail_tag && !src.mail_tag)
 			src.mail_tag = other.mail_tag
 		pool(other)
@@ -165,7 +151,7 @@
 		if(!istype(P))
 			return
 		user.show_text("<span class='alert'>You leap and slam against the inside of [P]! Ouch!</span>")
-		user.changeStatus("paralysis", 40)
+		user.changeStatus("paralysis", 4 SECONDS)
 		user.changeStatus("weakened", 4 SECONDS)
 		src.visible_message("<span class='alert'><b>[P]</b> emits a loud thump and rattles a bit.</span>")
 
@@ -226,7 +212,7 @@
 			// holder was present
 			H.active = 0
 			var/turf/T = get_turf(src)
-			if(T && T.density)
+			if(T?.density)
 				// deleting pipe is inside a dense turf (wall)
 				// this is unlikely, but just dump out everything into the turf in case
 
@@ -251,7 +237,7 @@
 	//
 	proc/transfer(var/obj/disposalholder/H)
 		var/nextdir = nextdir(H.dir)
-		H.dir = nextdir
+		H.set_dir(nextdir)
 		var/turf/T = H.nextloc()
 		var/obj/disposalpipe/P = H.findpipe(T)
 
@@ -311,7 +297,7 @@
 			var/turf/simulated/floor/F = T
 			//F.health	= 100
 			F.burnt	= 1
-			F.intact	= 0
+			F.setIntact(FALSE)
 			F.levelupdate()
 			new /obj/item/tile/steel(H)	// add to holder so it will be thrown with other stuff
 			F.icon_state = "[F.burnt ? "panelscorched" : "plating"]"
@@ -356,7 +342,7 @@
 			for(var/D in cardinal)
 				if(D & dpdir)
 					var/obj/disposalpipe/broken/P = new(src.loc)
-					P.dir = D
+					P.set_dir(D)
 
 		src.invisibility = 101	// make invisible (since we won't delete the pipe immediately)
 		var/obj/disposalholder/H = locate() in src
@@ -474,7 +460,7 @@
 		if (user)
 			boutput(user, "You finish slicing [C].")
 
-		C.dir = dir
+		C.set_dir(dir)
 		C.mail_tag = src.mail_tag
 		C.update()
 
@@ -555,6 +541,11 @@
 		desc = "An underfloor mineral pipe."
 		color = PIPEC_MINERAL
 
+	cargo
+		name = "cargo pipe"
+		desc = "An underfloor cargo pipe."
+		color = PIPEC_CARGO
+
 	New()
 		..()
 		if(icon_state == "pipe-s")
@@ -572,7 +563,7 @@
 		icon_state = "pipe-c"
 		for(var/d in list(1, 2, 4, 8))
 			if((d | turn(d, -90)) == dpdir)
-				dir = d
+				set_dir(d)
 				break
 	base_icon_state = icon_state
 	src.update()
@@ -734,7 +725,7 @@
 			same_group = 1
 
 		var/nextdir = nextdir(H.dir, same_group)
-		H.dir = nextdir
+		H.set_dir(nextdir)
 		var/turf/T = H.nextloc()
 		var/obj/disposalpipe/P = H.findpipe(T)
 
@@ -816,7 +807,7 @@
 				break
 
 		var/nextdir = nextdir(H.dir, redirect)
-		H.dir = nextdir
+		H.set_dir(nextdir)
 		var/turf/T = H.nextloc()
 		var/obj/disposalpipe/P = H.findpipe(T)
 
@@ -837,7 +828,7 @@
 
 		var/obj/disposalconstruct/C = new (src.loc)
 		C.ptype = (src.icon_state == "pipe-sj1" ? 8 : 9)
-		C.dir = dir
+		C.set_dir(dir)
 		C.mail_tag = src.mail_tag
 		C.update()
 
@@ -847,9 +838,9 @@
 	name = "disciplinary loaf processor"
 	desc = "A pipe segment designed to convert detritus into a nutritionally-complete meal for inmates."
 	icon_state = "pipe-loaf0"
-	var/nugget_mode = 0
 	mats = 100
 	is_syndicate = 1
+	var/is_doing_stuff = FALSE
 
 	horizontal
 		dir = EAST
@@ -868,6 +859,9 @@
 		update()
 
 	transfer(var/obj/disposalholder/H)
+		while(src.is_doing_stuff)
+			sleep(1 SECOND)
+		src.is_doing_stuff = TRUE
 
 		if (H.contents.len)
 			playsound(src.loc, "sound/machines/mixer.ogg", 50, 1)
@@ -891,109 +885,60 @@
 				estein.set_loc(H)
 				goto StopLoafing
 
-			if (nugget_mode)
-				var/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/current_nugget
-				var/list/new_nuggets = list()
-				for (var/atom/movable/newIngredient in H)
-					if(istype(newIngredient, /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget))
-						continue
-					if (!current_nugget)
-						current_nugget = new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget(src)
-						new_nuggets += current_nugget
 
-					current_nugget.name = "[newIngredient] nugget"
-					current_nugget.desc = "A breaded wad of [newIngredient.name], far too processed to have a more specific label than 'nugget.'"
+			var/obj/item/reagent_containers/food/snacks/prison_loaf/newLoaf = new /obj/item/reagent_containers/food/snacks/prison_loaf(src)
+			for (var/atom/movable/newIngredient in H)
 
-					if (isliving(newIngredient))
-						playsound(src.loc, pick("sound/impact_sounds/Slimy_Splat_1.ogg","sound/impact_sounds/Liquid_Slosh_1.ogg","sound/impact_sounds/Wood_Hit_1.ogg","sound/impact_sounds/Slimy_Hit_3.ogg","sound/impact_sounds/Slimy_Hit_4.ogg","sound/impact_sounds/Flesh_Stab_1.ogg"), 50, 1)
-						var/mob/living/poorSoul = newIngredient
-						if (issilicon(poorSoul))
-							current_nugget.reagents.add_reagent("oil",10)
-							current_nugget.reagents.add_reagent("silicon",10)
-							current_nugget.reagents.add_reagent("iron",10)
-						else
-							current_nugget.reagents.add_reagent("bloodc",10) // heh
-							current_nugget.reagents.add_reagent("ectoplasm",10)
-
-						if(!isdead(poorSoul))
-							poorSoul:emote("scream")
-						sleep(0.5 SECONDS)
-						poorSoul.ghostize()
-
-					if (newIngredient.reagents)
-						var/anItem = isitem(newIngredient)
-						while (length(new_nuggets) < 50 && (newIngredient.reagents.total_volume > 0 || (anItem && newIngredient:w_class--)))
-							newIngredient.reagents.trans_to(current_nugget, current_nugget.reagents.maximum_volume)
-							if (current_nugget.reagents.total_volume >= current_nugget.reagents.maximum_volume)
-								current_nugget = new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget(src)
-
-								current_nugget.name = "[newIngredient] nugget"
-								current_nugget.desc = "A breaded wad of [newIngredient.name], far too processed to have a more specific label than 'nugget.'"
-
-								new_nuggets += current_nugget
-
-					qdel(newIngredient)
-					LAGCHECK(LAG_MED)
-
-				for (var/obj/O in new_nuggets)
-					O.set_loc(H)
-					LAGCHECK(LAG_MED)
-
-			else
-				var/obj/item/reagent_containers/food/snacks/prison_loaf/newLoaf = new /obj/item/reagent_containers/food/snacks/prison_loaf(src)
-
-				for (var/atom/movable/newIngredient in H)
-
-					LAGCHECK(LAG_MED)
+				LAGCHECK(LAG_MED)
 
 
 
-					if (newIngredient.reagents)
-						newIngredient.reagents.trans_to(newLoaf, 1000)
+				if (newIngredient.reagents)
+					newIngredient.reagents.trans_to(newLoaf, 1000)
 
-					if (istype(newIngredient, /obj/item/reagent_containers/food/snacks/prison_loaf))
-						var/obj/item/reagent_containers/food/snacks/prison_loaf/otherLoaf = newIngredient
-						newLoaf.loaf_factor += otherLoaf.loaf_factor * 1.2
-						newLoaf.loaf_recursion = otherLoaf.loaf_recursion + 1
-						otherLoaf = null
+				if (istype(newIngredient, /obj/item/reagent_containers/food/snacks/prison_loaf))
+					var/obj/item/reagent_containers/food/snacks/prison_loaf/otherLoaf = newIngredient
+					newLoaf.loaf_factor += otherLoaf.loaf_factor * 1.2
+					newLoaf.loaf_recursion = otherLoaf.loaf_recursion + 1
+					otherLoaf = null
 
-					else if (isliving(newIngredient))
-						playsound(src.loc, pick("sound/impact_sounds/Slimy_Splat_1.ogg","sound/impact_sounds/Liquid_Slosh_1.ogg","sound/impact_sounds/Wood_Hit_1.ogg","sound/impact_sounds/Slimy_Hit_3.ogg","sound/impact_sounds/Slimy_Hit_4.ogg","sound/impact_sounds/Flesh_Stab_1.ogg"), 50, 1)
-						var/mob/living/poorSoul = newIngredient
-						if (issilicon(poorSoul))
-							newLoaf.reagents.add_reagent("oil",10)
-							newLoaf.reagents.add_reagent("silicon",10)
-							newLoaf.reagents.add_reagent("iron",10)
-						else
-							newLoaf.reagents.add_reagent("bloodc",10) // heh
-							newLoaf.reagents.add_reagent("ectoplasm",10)
-
-						if(ishuman(newIngredient))
-							newLoaf.loaf_factor += (newLoaf.loaf_factor / 5) + 50 // good god this is a weird value
-						else
-							newLoaf.loaf_factor += (newLoaf.loaf_factor / 10) + 50
-						if(!isdead(poorSoul))
-							poorSoul:emote("scream")
-						sleep(0.5 SECONDS)
-						poorSoul.death()
-						if (poorSoul.mind || poorSoul.client)
-							poorSoul.ghostize()
-					else if (isitem(newIngredient))
-						var/obj/item/I = newIngredient
-						newLoaf.loaf_factor += I.w_class * 5
-						I = null
+				else if (isliving(newIngredient))
+					playsound(src.loc, pick("sound/impact_sounds/Slimy_Splat_1.ogg","sound/impact_sounds/Liquid_Slosh_1.ogg","sound/impact_sounds/Wood_Hit_1.ogg","sound/impact_sounds/Slimy_Hit_3.ogg","sound/impact_sounds/Slimy_Hit_4.ogg","sound/impact_sounds/Flesh_Stab_1.ogg"), 50, 1)
+					var/mob/living/poorSoul = newIngredient
+					if (issilicon(poorSoul))
+						newLoaf.reagents.add_reagent("oil",10)
+						newLoaf.reagents.add_reagent("silicon",10)
+						newLoaf.reagents.add_reagent("iron",10)
 					else
-						newLoaf.loaf_factor++
+						newLoaf.reagents.add_reagent("bloodc",10) // heh
+						newLoaf.reagents.add_reagent("ectoplasm",10)
 
-					H.contents -= newIngredient
-					newIngredient.set_loc(null)
-					newIngredient = null
+					if(ishuman(newIngredient))
+						newLoaf.loaf_factor += (newLoaf.loaf_factor / 5) + 50 // good god this is a weird value
+					else
+						newLoaf.loaf_factor += (newLoaf.loaf_factor / 10) + 50
+					if(!isdead(poorSoul))
+						poorSoul:emote("scream")
+					sleep(0.5 SECONDS)
+					poorSoul.death()
+					if (poorSoul.mind || poorSoul.client)
+						poorSoul.ghostize()
+				else if (isitem(newIngredient))
+					var/obj/item/I = newIngredient
+					newLoaf.loaf_factor += I.w_class * 5
+					I = null
+				else
+					newLoaf.loaf_factor++
 
-					//LAGCHECK(LAG_MED)
-					qdel(newIngredient)
+				H.contents -= newIngredient
+				newIngredient.set_loc(null)
+				newIngredient = null
 
-				newLoaf.update()
-				newLoaf.set_loc(H)
+				//LAGCHECK(LAG_MED)
+				qdel(newIngredient)
+
+			newLoaf.update()
+			newLoaf.set_loc(H)
 
 			StopLoafing:
 
@@ -1007,9 +952,11 @@
 			//src.visible_message("<b>[src] deactivates!</b>") // Processor + loop = SPAM
 
 		var/nextdir = nextdir(H.dir)
-		H.dir = nextdir
+		H.set_dir(nextdir)
 		var/turf/T = H.nextloc()
 		var/obj/disposalpipe/P = H.findpipe(T)
+
+		src.is_doing_stuff = FALSE
 
 		if(P)
 			// find other holder in next loc, if inactive merge it with current
@@ -1025,26 +972,10 @@
 		return P
 
 	welded()
-
-		/*var/obj/disposalconstruct/C = new (src.loc)
-		C.ptype = 10
-		C.dir = dir
-		C.update()
-
-		qdel(src)*/
-
-		src.visible_message("<span class='alert'>[src] emits a weird noise!</span>")
-
-		src.nugget_mode = !src.nugget_mode
-		src.update()
-		return
-
+		return //can't let them unweld the loafer
 	update()
 		..()
-		if (nugget_mode)
-			src.name = "disciplinary nugget processor"
-		else
-			src.name = initial(src.name)
+		src.name = initial(src.name)
 
 #define MAXIMUM_LOAF_STATE_VALUE 10
 
@@ -1235,7 +1166,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"on", "activate")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"off", "deactivate")
 
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			switch_dir = turn(dir, 90)
 			dpdir = dir | switch_dir | turn(dir,180)
 
@@ -1273,7 +1204,7 @@
 	welded()
 		var/obj/disposalconstruct/C = new (src.loc)
 		C.ptype = 11
-		C.dir = dir
+		C.set_dir(dir)
 		C.update()
 		qdel(src)
 
@@ -1296,8 +1227,8 @@
 		var/otherdir = nextdir(origHolder.dir, 0)
 		var/biodir = nextdir(origHolder.dir, 1)
 
-		origHolder.dir = otherdir
-		bioHolder.dir = biodir
+		origHolder.set_dir(otherdir)
+		bioHolder.set_dir(biodir)
 
 		var/turf/nonBioTurf = origHolder.nextloc()
 		var/turf/bioTurf = bioHolder.nextloc()
@@ -1324,7 +1255,7 @@
 			boutput(world, "I found a bio pipe at [bioPipe.loc] with [bioHolder.loc]")
 
 		bioHolder.active = 1
-		bioHolder.dir = biodir
+		bioHolder.set_dir(biodir)
 		SPAWN_DBG(1 DECI SECOND)
 			bioHolder.process()
 
@@ -1333,7 +1264,7 @@
 	welded()
 		var/obj/disposalconstruct/C = new (src.loc)
 		C.ptype = (src.icon_state == "pipe-sj1" ? 8 : 9)
-		C.dir = dir
+		C.set_dir(dir)
 		C.mail_tag = src.mail_tag
 		C.update()
 
@@ -1360,7 +1291,7 @@
 		..()
 
 		dpdir = dir | turn(dir, 270) | turn(dir, 90)
-		SPAWN_DBG (1)
+		SPAWN_DBG(0.1 SECONDS)
 			stuff_chucking_target = get_ranged_target_turf(src, dir, 1)
 
 	welded()
@@ -1427,7 +1358,7 @@
 		..()
 
 		dpdir = dir | turn(dir, 270) | turn(dir, 90)
-		SPAWN_DBG (1)
+		SPAWN_DBG(0.1 SECONDS)
 			stuff_chucking_target = get_ranged_target_turf(src, dir, 1)
 
 	welded()
@@ -1507,9 +1438,9 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(..(W, user)) return
 		else if(ispulsingtool(W))
-			. = alert(usr, "What should trigger the sensor?","Disposal Sensor", "Creatures", "Anything", "A mail tag")
+			. = alert(user, "What should trigger the sensor?","Disposal Sensor", "Creatures", "Anything", "A mail tag")
 			if (.)
-				if (get_dist(usr, src) > 1 || usr.stat)
+				if (get_dist(user, src) > 1 || user.stat)
 					return
 
 				switch (.)
@@ -1520,8 +1451,8 @@
 						sense_mode = SENSE_OBJECT
 
 					if ("A mail tag")
-						. = copytext(ckeyEx(input(usr, "What should the tag be?", "What?")), 1, 33)
-						if (. && get_dist(usr, src) < 2 && !usr.stat)
+						. = copytext(ckeyEx(input(user, "What should the tag be?", "What?")), 1, 33)
+						if (. && get_dist(user, src) < 2 && !user.stat)
 							sense_mode = SENSE_TAG
 							sense_tag_filter = .
 
@@ -1573,7 +1504,7 @@
 	welded()
 		var/obj/disposalconstruct/C = new (src.loc)
 		C.ptype = 12
-		C.dir = dir
+		C.set_dir(dir)
 		C.update()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 		qdel(src)
@@ -1735,6 +1666,7 @@
 	var/active = 0
 	var/turf/target	// this will be where the output objects are 'thrown' to.
 	mats = 12
+	var/range = 10
 
 	var/message = null
 	var/mailgroup = null
@@ -1742,6 +1674,7 @@
 	var/net_id = null
 	var/frequency = 1149
 	var/datum/radio_frequency/radio_connection
+	throw_speed = 1
 
 	ex_act(var/severity)
 		switch(severity)
@@ -1766,7 +1699,7 @@
 		..()
 
 		SPAWN_DBG(1 DECI SECOND)
-			target = get_ranged_target_turf(src, dir, 10)
+			target = get_ranged_target_turf(src, dir, range)
 		SPAWN_DBG(0.8 SECONDS)
 			if(radio_controller)
 				radio_connection = radio_controller.add_object(src, "[frequency]")
@@ -1785,30 +1718,22 @@
 	// expel the contents of the holder object, then delete it
 	// called when the holder exits the outlet
 	proc/expel(var/obj/disposalholder/H)
-		if (message && mailgroup && radio_connection)
+		if (message && (mailgroup || mailgroup2) && radio_connection)
+			var/groups = list()
+			if (mailgroup)
+				groups += mailgroup
+			if (mailgroup2)
+				groups += mailgroup2
+			groups += MGA_MAIL
+
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
 			newsignal.transmission_method = TRANSMISSION_RADIO
 			newsignal.data["command"] = "text_message"
 			newsignal.data["sender_name"] = "CHUTE-MAILBOT"
 			newsignal.data["message"] = "[message]"
-
 			newsignal.data["address_1"] = "00000000"
-			newsignal.data["group"] = mailgroup
-			newsignal.data["sender"] = src.net_id
-
-			radio_connection.post_signal(src, newsignal)
-
-		if (message && mailgroup2 && radio_connection)
-			var/datum/signal/newsignal = get_free_signal()
-			newsignal.source = src
-			newsignal.transmission_method = TRANSMISSION_RADIO
-			newsignal.data["command"] = "text_message"
-			newsignal.data["sender_name"] = "CHUTE-MAILBOT"
-			newsignal.data["message"] = "[message]"
-
-			newsignal.data["address_1"] = "00000000"
-			newsignal.data["group"] = mailgroup2
+			newsignal.data["group"] = groups
 			newsignal.data["sender"] = src.net_id
 
 			radio_connection.post_signal(src, newsignal)
@@ -1823,7 +1748,7 @@
 		for(var/atom/movable/AM in H)
 			AM.set_loc(src.loc)
 			AM.pipe_eject(dir)
-			AM.throw_at(target, src.throw_range, 1)
+			AM.throw_at(target, src.throw_range, src.throw_speed)
 		H.vent_gas(src.loc)
 		pool(H)
 
@@ -1842,71 +1767,34 @@
 
 /obj/decal/cleanable/blood/gibs/pipe_eject(var/direction)
 	var/list/dirs
-	if(direction)
-		dirs = list( direction, turn(direction, -45), turn(direction, 45))
+	if(direction in cardinal)
+		dirs = direction
 	else
-		dirs = alldirs.Copy()
+		dirs = cardinal.Copy()
 
-	src.streak(dirs)
+	src.streak_cleanable(dirs)
 
 /obj/decal/cleanable/robot_debris/gib/pipe_eject(var/direction)
 	var/list/dirs
-	if(direction)
-		dirs = list( direction, turn(direction, -45), turn(direction, 45))
+	if(direction in cardinal)
+		dirs = direction
 	else
-		dirs = alldirs.Copy()
+		dirs = cardinal.Copy()
 
-	src.streak(dirs)
+	src.streak_cleanable(dirs)
 
 
-
+/obj/disposaloutlet/random_range
+	var/min_range = 1
+	var/max_range = 6
+	expel(obj/disposalholder/H)
+		src.throw_range = rand(min_range, max_range)
+		. = ..()
 
 /obj/disposaloutlet/artifact
+	throw_range = 10
+	throw_speed = 10
 
-	expel(var/obj/disposalholder/H)
-		if (message && mailgroup && radio_connection)
-			var/datum/signal/newsignal = get_free_signal()
-			newsignal.source = src
-			newsignal.transmission_method = TRANSMISSION_RADIO
-			newsignal.data["command"] = "text_message"
-			newsignal.data["sender_name"] = "CHUTE-MAILBOT"
-			newsignal.data["message"] = "[message]"
-
-			newsignal.data["address_1"] = "00000000"
-			newsignal.data["group"] = mailgroup
-			newsignal.data["sender"] = src.net_id
-
-			radio_connection.post_signal(src, newsignal)
-
-		if (message && mailgroup2 && radio_connection)
-			var/datum/signal/newsignal = get_free_signal()
-			newsignal.source = src
-			newsignal.transmission_method = TRANSMISSION_RADIO
-			newsignal.data["command"] = "text_message"
-			newsignal.data["sender_name"] = "CHUTE-MAILBOT"
-			newsignal.data["message"] = "[message]"
-
-			newsignal.data["address_1"] = "00000000"
-			newsignal.data["group"] = mailgroup2
-			newsignal.data["sender"] = src.net_id
-
-			radio_connection.post_signal(src, newsignal)
-
-		flick("outlet-open", src)
-		playsound(src, "sound/machines/warning-buzzer.ogg", 50, 0, 0)
-
-		sleep(2 SECONDS)	//wait until correct animation frame
-		playsound(src, "sound/machines/hiss.ogg", 50, 0, 0)
-
-
-		for(var/atom/movable/AM in H)
-			AM.set_loc(src.loc)
-			AM.pipe_eject(dir)
-			AM.throw_at(target, 10, 10) //This is literally the only thing that was changed in this, otherwise it booted them way too close.
-		H.vent_gas(src.loc)
-		pool(H)
-
-		return
 // -------------------- VR --------------------
 /obj/disposaloutlet/virtual
 	name = "gauntlet outlet"
@@ -1924,23 +1812,23 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 		if(istype(pipe, /obj/disposalpipe/trunk))
 			var/obj/disposalpipe/segment/segment = new(pipe.loc)
 			segment.dpdir = pipe.dpdir | new_dir
-			segment.dir = new_dir
+			segment.set_dir(new_dir)
 			qdel(pipe)
 			segment.fix_sprite()
 		else if(istype(pipe, /obj/disposalpipe/junction))
 			var/obj/disposalpipe/segment/horiz = new(pipe.loc)
 			horiz.dpdir = 1 | 2
-			horiz.dir = 1
+			horiz.set_dir(1)
 			horiz.fix_sprite()
 			var/obj/disposalpipe/segment/vert = new(pipe.loc)
 			vert.dpdir = 4 | 8
-			vert.dir = 4
+			vert.set_dir(4)
 			vert.fix_sprite()
 			qdel(pipe)
 		if(istype(pipe, /obj/disposalpipe/segment))
 			var/obj/disposalpipe/junction/junction = new(pipe.loc)
 			junction.dpdir = pipe.dpdir | new_dir
-			junction.dir = new_dir
+			junction.set_dir(new_dir)
 			qdel(pipe)
 			junction.fix_sprite()
 		return
@@ -1950,6 +1838,6 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 				pipe.dpdir &= ~d
 				pipe.dpdir |= new_dir
 				if(!(pipe.dir & pipe.dpdir)) // if we lost our dir
-					pipe.dir = new_dir
+					pipe.set_dir(new_dir)
 				break
 	pipe.fix_sprite()

@@ -1,27 +1,33 @@
 //Firebot
 //Firebot assembly
 
+#define FIREBOT_MOVE_SPEED 8
+#define FIREBOT_SEARCH_COOLDOWN "look4fire"
+#define FIREBOT_SPRAY_COOLDOWN "spraycooldown"
+
 /obj/machinery/bot/firebot
 	name = "Firebot"
 	desc = "A little fire-fighting robot!  He looks so darn chipper."
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "firebot0"
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER | USE_CANPASS
+	flags =  FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE | DOORPASS
 	layer = 5.0 //TODO LAYER
 	density = 0
 	anchored = 0
 	req_access = list(access_engineering_atmos)
 	on = 1
 	health = 20
-	var/stunned = 0 //It can be stunned by tasers. Delicate circuits.
 	locked = 1
-	var/frustration = 0
-	var/list/path = null
+	access_lookup = "Captain"
+	bot_move_delay = FIREBOT_MOVE_SPEED
 	var/obj/hotspot/target = null
 	var/obj/hotspot/oldtarget = null
 	var/oldloc = null
-	var/last_found = 0
-	var/last_spray = 0
+	var/found_cooldown = 5 SECONDS
+	var/spray_cooldown = 3 SECONDS
+	/// If we pointed at someone, don't keep pointing at them, its rude
+	var/last_pointed = null
 	var/setup_party = 0
 	//To-Do: Patrol the station for fires maybe??
 
@@ -40,18 +46,15 @@
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 5
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	flags = TABLEPASS
 	var/extinguisher = 0 //Is the extinguisher added?
 	var/created_name = "Firebot"
 
 /obj/machinery/bot/firebot/New()
 	..()
-	SPAWN_DBG (5)
+	SPAWN_DBG(0.5 SECONDS)
 		if (src)
-			// Firebots are used in multiple department, so I guess they get all-access instead of only engineering.
-			src.botcard = new /obj/item/card/id(src)
-			src.botcard.access = get_access(src.access_lookup)
 			src.icon_state = "firebot[src.on]"
 
 //		if(radio_connection)
@@ -108,13 +111,9 @@
 	if (!src.emagged)
 		if(user)
 			boutput(user, "<span class='alert'>You short out [src]'s valve control circuit!</span>")
-		SPAWN_DBG(0)
-			for(var/mob/O in hearers(src, null))
-				O.show_message("<span class='alert'><B>[src] buzzes oddly!</B></span>", 1)
+		src.audible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
 		flick("firebot_spark", src)
-		src.target = null
-		src.last_found = world.time
-		src.anchored = 0
+		src.KillPathAndGiveUp(1)
 		src.emagged = 1
 		src.on = 1
 		src.icon_state = "firebot[src.on]"
@@ -136,9 +135,7 @@
 	if (!src.emagged && prob(75))
 		src.visible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
 		flick("firebot_spark", src)
-		src.target = null
-		src.last_found = world.time
-		src.anchored = 0
+		src.KillPathAndGiveUp(1)
 		src.emagged = 1
 		src.on = 1
 		src.icon_state = "firebot[src.on]"
@@ -178,116 +175,120 @@
 		..()
 
 /obj/machinery/bot/firebot/process()
+	. = ..()
 	if(!src.on)
 		src.stunned = 0
+		src.KillPathAndGiveUp(1)
 		return
 
 	if(src.stunned)
 		src.icon_state = "firebota"
 		src.stunned--
-
-		src.oldtarget = src.target
-		src.target = null
-
+		src.KillPathAndGiveUp(1)
 		if(src.stunned <= 0)
 			src.icon_state = "firebot[src.on]"
 			src.stunned = 0
 		return
 
 	if(src.frustration > 8)
+		src.KillPathAndGiveUp(1)
+
+	if(src.target) // is our target still on fire?
+		if(src.emagged)
+			if(!IN_RANGE(src, src.target, 5) && prob(25))
+				src.speak(pick("ONE FIRE, ONE EXTINGUISHER.", "HEAT DEATH: DELAYED.", "TARGET FIRE TRIANGLE: DISRUPTED.", "FIRE DESTROYED.",
+											"AN EXTINGUISHER TO THE FACE KEEPS ME AWAY.", "YOU HAVE OUTRUN AN INFERNO", "GOD MADE TOMORROW FOR THE FIRES WE DON'T KILL TODAY."))
+				src.KillPathAndGiveUp(1)
+		else if(!(src.target in by_cat[TR_CAT_BURNING_ITEMS]) && !(src.target in by_cat[TR_CAT_BURNING_MOBS]) && !(src.target in by_type[/obj/hotspot]))
+			src.speak(pick("FIRE: [pick("ENDED", "MURDERED", "STARVED", "KILLED", "DEAD", "DESTROYED")].", "FIRE SAFETY PROTOCOLS: OBSERVED.",
+										 "TARGET CREATURE, OBJECT, OR REGION OF FLAME: EXTINGUISHED.","YOU ARE NO LONGER ON FIRE."))
+			src.KillPathAndGiveUp(1) // Cus they used to keep trying to put someone out, even if they arent on fire. Or are dead.
+
+	if(!src.target || src.target.disposed)
+		src.doing_something = 0
+		src.target = src.look_for_fire()
+
+	if(src.target)
+		src.oldtarget = src.target
+		if(src.last_pointed != src.target)
+			src.last_pointed = src.target
+			src.point(src.target)
+		ON_COOLDOWN(src, FIREBOT_SEARCH_COOLDOWN, src.found_cooldown)
+		src.frustration = 0
+		src.doing_something = 1
+		if(IN_RANGE(src,src.target,3))
+			spray_at(src.target)
+		else
+			src.navigate_to(get_turf(src.target), FIREBOT_MOVE_SPEED, max_dist = 50)
+			if (!src.path)
+				src.KillPathAndGiveUp(1)
+
+/obj/machinery/bot/firebot/proc/look_for_fire()
+	if(ON_COOLDOWN(src, FIREBOT_SEARCH_COOLDOWN, src.found_cooldown))
+		return
+	for_by_tcl(H, /obj/hotspot) // First search for burning tiles
+		if ((H == src.oldtarget))
+			continue
+		if(IN_RANGE(src, H, 7))
+			if(prob(10))
+				if(src.setup_party)
+					src.speak(pick("IT IS PARTY TIME.","I AM A FAN OF PARTIES", "PARTIES ARE THE FUTURE"))
+				else
+					src.speak(pick("I AM GOING TO MURDER THIS FIRE.","KILL ALL FIRES.","I DIDN'T START THIS, BUT I'M GOING TO END IT.","[world.time >= 30 MINUTES ? "TONIGHT" : "TODAY"] A FIRE DIES."))
+			return H
+
+	for (var/obj/O in by_cat[TR_CAT_BURNING_ITEMS]) // Is anything else on fire?
+		if (O == src.oldtarget)
+			continue
+		if(IN_RANGE(src, O, 7))
+			if(prob(10))
+				if(src.setup_party)
+					src.speak(pick("PARTY SUPPLIES DETECTED. RIGHT ON.","PARTY FAVORS ARE THE BEST FLAVOR.", "[O] PARTY FOUL PROBABILITY: [rand(1, 150)]%. RECTIPARTYING."))
+				else
+					src.speak(pick("[O] BURN POINT TEMPERATURE EXCEEDED.","[O] DOT BURNING GREATER THAN ZERO EQUALS TRUE.","HOT [pick("ANGRY", "BURNING")] [O] IN MY AREA DETECTED.","[world.time >= 30 MINUTES ? "TONIGHT" : "TODAY"] A FIRE DIES."))
+			return O
+
+	for (var/mob/M in by_cat[TR_CAT_BURNING_MOBS]) // fine I guess we can go extinguish someone
+		if (M == src.oldtarget || isdead(M))
+			continue
+		if(IN_RANGE(src, M, 7) && (M.getStatusDuration("burning") || (src.emagged && prob(25))))
+			if (src.setup_party)
+				src.speak(pick("YOU NEED TO GET DOWN -- ON THE DANCE FLOOR", "PARTY HARDER", "HAPPY BIRTHDAY.", "YOU ARE NOT PARTYING SUFFICIENTLY.", "NOW CORRECTING PARTY DEFICIENCY."))
+			else
+				src.speak(pick("YOU ARE ON FIRE!", "STOP DROP AND ROLL","THE FIRE IS ATTEMPTING TO FEED FROM YOU! I WILL STOP IT","I WON'T LET YOU BURN AWAY!",5;"Taste the meat, not the heat."))
+			return M
+
+
+/obj/machinery/bot/firebot/DoWhileMoving()
+	. = ..()
+	if (IN_RANGE(src, src.target, 3) && !ON_COOLDOWN(src, FIREBOT_SPRAY_COOLDOWN, src.spray_cooldown))
+		src.frustration = 0
+		spray_at(src.target)
+		return TRUE
+
+/obj/machinery/bot/firebot/KillPathAndGiveUp(var/give_up)
+	. = ..()
+	src.last_pointed = null
+	if(give_up)
 		src.oldtarget = src.target
 		src.target = null
-		//src.currently_healing = 0
-		src.last_found = world.time
-		src.path = null
-		src.frustration = 0
+		ON_COOLDOWN(src, FIREBOT_SEARCH_COOLDOWN, src.found_cooldown)
 
-	if(!src.target)
-		for (var/obj/hotspot/H in view(7,src))
-			if ((H == src.oldtarget) && (world.time < src.last_found + 80))
-				continue
-
-			src.target = H
-			src.oldtarget = H
-			src.last_found = world.time
-			src.frustration = 0
-			if(prob(10))
-				SPAWN_DBG(0)
-					src.speak( src.setup_party ? pick("IT IS PARTY TIME.","I AM A FAN OF PARTIES", "PARTIES ARE THE FUTURE") : pick("I AM GOING TO MURDER THIS FIRE.","KILL ALL FIRES.","I DIDN'T START THIS, BUT I'M GOING TO END IT.","A fire is going to die tonight.") )
-			break
-
-		if (!src.target)
-			for (var/mob/living/carbon/burningMob in view(7, src))
-				if (burningMob == src.oldtarget && (world.time < src.last_found + 80))
-					continue
-
-				if (isdead(burningMob))
-					continue
-
-				if (burningMob.getStatusDuration("burning") || (src.emagged && prob(25)))
-					src.target = burningMob
-					src.oldtarget = burningMob
-					src.last_found = world.time
-					src.frustration = 0
-					src.visible_message("<b>[src]</b> points at [burningMob.name]!")
-					if (src.setup_party)
-						src.speak(pick("YOU NEED TO GET DOWN -- ON THE DANCE FLOOR", "PARTY HARDER", "HAPPY BIRTHDAY.", "YOU ARE NOT PARTYING SUFFICIENTLY.", "NOW CORRECTING PARTY DEFICIENCY."))
-					else
-						src.speak(pick("YOU ARE ON FIRE!", "STOP DROP AND ROLL","THE FIRE IS ATTEMPTING TO FEED FROM YOU! I WILL STOP IT","I WON'T LET YOU BURN AWAY!",5;"Taste the meat, not the heat."))
-					break
-
-	if(src.target && (get_dist(src,src.target) <= 2))
-		if(world.time > src.last_spray + 30)
-			src.frustration = 0
-			spray_at(src.target)
-		if (iscarbon(src.target)) //Check if this is a mob and we can stop spraying when they are no longer on fire.
-			var/mob/living/carbon/C = src.target
-			if (!C.getStatusDuration("burning") || isdead(C))
-				src.frustration = INFINITY
-		return
-
-	else if(src.target && src.path && src.path.len && (get_dist(src.target,src.path[src.path.len]) > 2))
-		src.path = new()
-//		src.currently_healing = 0
-		src.last_found = world.time
-
-	if(src.target && (!src.path || !src.path.len) && (get_dist(src,src.target) > 1))
-		SPAWN_DBG(0)
-			if (!isturf(src.loc))
-				return
-			src.path = AStar(get_turf(src), get_turf(src.target), /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, adjacent_param = botcard)
-			if (!src.path)
-				src.frustration += 4
-		return
-
-	if(src.path && src.path.len && src.target)
-		step_to(src, src.path[1])
-		src.path -= src.path[1]
-		SPAWN_DBG(0.3 SECONDS)
-			if(src.path && src.path.len)
-				step_to(src, src.path[1])
-				src.path -= src.path[1]
-
-	if(src.path && src.path.len > 8 && src.target)
-		src.frustration++
-
-	return
-
-//Oh no we're emagged!! Nobody better try to cross us!
+//Oh no, we may or may not be emagged! Better hope someone crossing us is on fire!
 /obj/machinery/bot/firebot/HasProximity(atom/movable/AM as mob|obj)
-	if(!on || !emagged || stunned)
+	if(!on || stunned)
 		return
 
-	if (iscarbon(AM) && prob(40))
-		spray_at(AM)
-
-	return
+	if (iscarbon(AM) && ((!ON_COOLDOWN(src, FIREBOT_SPRAY_COOLDOWN, src.spray_cooldown) && src.target == AM) || src.emagged))
+		var/mob/living/carbon/hosem = AM
+		if(src.emagged && prob(40) || hosem.getStatusDuration("burning"))
+			spray_at(AM)
 
 /obj/machinery/bot/firebot/proc/spray_at(atom/target)
 	if(!target || !src.on || src.stunned)
 		return
 
-	src.last_spray = world.time
+	ON_COOLDOWN(src, FIREBOT_SPRAY_COOLDOWN, src.spray_cooldown)
 	var/direction = get_dir(src,target)
 
 	var/turf/T = get_turf(target)
@@ -302,10 +303,9 @@
 		playsound(src.loc, "sound/musical_instruments/Bikehorn_1.ogg", 75, 1, -3)
 
 	else
-		playsound(src.loc, "sound/effects/spray.ogg", 75, 1, -3)
+		playsound(src.loc, "sound/effects/spray.ogg", 30, 1, -3)
 
-	for(var/a=0, a<5, a++)
-		//SPAWN_DBG(0)
+	for(var/a in 0 to 5)
 		var/obj/effects/water/W = unpool(/obj/effects/water)
 		if(!W) return
 		W.set_loc( get_turf(src) )
@@ -314,8 +314,8 @@
 		R.add_reagent("water", 2)
 		R.add_reagent("ff-foam", 8)
 		if (src.setup_party)	// heh
-			R.add_reagent("glitter_harmless", 5)
-		W.spray_at(my_target, R)
+			R.add_reagent("sparkles", 5)
+		W.spray_at(my_target, R, 1)
 
 	if (src.emagged && iscarbon(target))
 		var/atom/targetTurf = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
@@ -324,6 +324,13 @@
 		boutput(Ctarget, "<span class='alert'><b>[src] knocks you back!</b></span>")
 		Ctarget.changeStatus("weakened", 2 SECONDS)
 		Ctarget.throw_at(targetTurf, 200, 4)
+
+	if (iscarbon(src.target)) //Check if this is a mob and we can stop spraying when they are no longer on fire.
+		var/mob/living/carbon/C = src.target
+		if (!C.getStatusDuration("burning") || isdead(C))
+			src.KillPathAndGiveUp(1)
+	else
+		src.KillPathAndGiveUp(0)
 
 	return
 
@@ -355,8 +362,8 @@
 	if(src.exploding) return
 	src.exploding = 1
 	src.on = 0
-	for(var/mob/O in hearers(src, null))
-		O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
+	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
+	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/device/prox_sensor(Tsec)
@@ -380,17 +387,11 @@
 	src.oldtarget = null
 	src.oldloc = null
 	src.path = null
-	src.last_found = 0
-	src.last_spray = 0
+	src.cooldowns -= FIREBOT_SEARCH_COOLDOWN
+	src.cooldowns -= FIREBOT_SPRAY_COOLDOWN
 	src.icon_state = "firebot[src.on]"
 	src.updateUsrDialog()
 	return
-
-/obj/machinery/bot/firebot/Bumped(M as mob|obj)
-	SPAWN_DBG(0)
-		var/turf/T = get_turf(src)
-		M:set_loc(T)
-
 
 /*
  *	Firebot construction
@@ -431,11 +432,20 @@
 
 	else if (istype(W, /obj/item/pen))
 		var/t = input(user, "Enter new robot name", src.name, src.created_name) as text
+		if(t && t != src.name && t != src.created_name)
+			phrase_log.log_phrase("bot-fire", t)
 		t = strip_html(replacetext(t, "'",""))
 		t = copytext(t, 1, 45)
 		if (!t)
 			return
-		if (!in_range(src, usr) && src.loc != usr)
+		if (!in_interact_range(src, user) && src.loc != user)
 			return
 
 		src.created_name = t
+
+#undef FIREBOT_MOVE_SPEED
+
+/mob/living/critter/bot/firebot
+	name = "firebot"
+
+	emagged

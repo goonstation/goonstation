@@ -287,8 +287,10 @@
 
 		else if(href_list["label"])
 			var/obj/item/I = locate(href_list["label"]) in src
-			if (istype(I))
+			if (istype(I) && !isghostdrone(usr) && !isghostcritter(usr))
 				var/newName = copytext(strip_html(input(usr,"What do you want to label [I.name]?","[src.name]",I.name) ),1, 129)
+				if(newName && newName != I.name)
+					phrase_log.log_phrase("seed", newName, no_duplicates=TRUE)
 				if (newName && I && get_dist(src, usr) < 2)
 					I.name = newName
 			src.updateUsrDialog()
@@ -350,6 +352,7 @@
 						HYPpassplantgenes(DNA,SDNA)
 
 						S.name = stored.name
+						S.plant_seed_color(stored.seedcolor)
 						if (stored.hybrid)
 							var/datum/plant/hybrid = new /datum/plant(S)
 							for(var/V in stored.vars)
@@ -534,11 +537,11 @@
 				else
 					P.name = dominantspecies.name
 
-				if (dominantspecies.sprite)
-					P.sprite = dominantspecies.sprite
+				P.sprite = dominantspecies.sprite
+				if(dominantspecies.override_icon_state)
+					P.override_icon_state = dominantspecies.override_icon_state
 				else
-					P.sprite = dominantspecies.name
-				P.override_icon_state = dominantspecies.override_icon_state
+					P.override_icon_state = dominantspecies.name
 				P.plant_icon = dominantspecies.plant_icon
 				P.crop = dominantspecies.crop
 				P.force_seed_on_harvest = dominantspecies.force_seed_on_harvest
@@ -548,6 +551,9 @@
 				P.cantscan = dominantspecies.cantscan
 				P.nectarlevel = dominantspecies.nectarlevel
 				S.name = "[P.name] seed"
+
+				P.seedcolor = rgb(round((GetRedPart(P1.seedcolor) + GetRedPart(P2.seedcolor)) / 2), round((GetGreenPart(P1.seedcolor) + GetGreenPart(P2.seedcolor)) / 2), round((GetBluePart(P1.seedcolor) + GetBluePart(P2.seedcolor)) / 2))
+				S.plant_seed_color(P.seedcolor)
 
 				var/newgenome = P1.genome + P2.genome
 				if (newgenome)
@@ -590,6 +596,8 @@
 				DNA.endurance = SpliceMK2(P1DNA.alleles[7],P2DNA.alleles[7],P1DNA.vars["endurance"],P2DNA.vars["endurance"])
 
 				boutput(usr, "<span class='notice'>Splice successful.</span>")
+				//0 xp for a 100% splice, 4 xp for a 10% splice
+				JOB_XP(usr, "Botanist", clamp(round((100 - splice_chance) / 20), 0, 4))
 				if (!src.seedoutput) src.seeds.Add(S)
 				else S.set_loc(src.loc)
 
@@ -660,7 +668,7 @@
 		if (!isitem(O))
 			return
 		if (istype(O, /obj/item/reagent_containers/glass/) || istype(O, /obj/item/reagent_containers/food/drinks/) || istype(O,/obj/item/satchel/hydro))
-			return src.attackby(O, user)
+			return src.Attackby(O, user)
 		if (istype(O, /obj/item/reagent_containers/food/snacks/plant/) || istype(O, /obj/item/seed/))
 			user.visible_message("<span class='notice'>[user] begins quickly stuffing [O.name] into [src]!</span>")
 			var/staystill = user.loc
@@ -727,6 +735,7 @@
 	density = 1
 	anchored = 1
 	mats = 6
+	event_handler_flags = NO_MOUSEDROP_QOL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "reex-off"
@@ -896,14 +905,14 @@
 
 		else if (href_list["flush_reagent"])
 			var/id = href_list["flush_reagent"]
-			var/obj/item/reagent_containers/glass/T = locate(href_list["flush"]) in src
-			if (istype(T) && T.reagents)
+			var/obj/item/reagent_containers/T = locate(href_list["flush"]) in src
+			if (istype(T, /obj/item/reagent_containers/food/drinks) || istype(T, /obj/item/reagent_containers/glass) && T.reagents)
 				T.reagents.remove_reagent(id, 500)
 			src.updateUsrDialog()
 
 		else if (href_list["flush"])
-			var/obj/item/reagent_containers/glass/T = locate(href_list["flush"]) in src
-			if (istype(T) && T.reagents)
+			var/obj/item/reagent_containers/T = locate(href_list["flush"]) in src
+			if (istype(T, /obj/item/reagent_containers/food/drinks) || istype(T, /obj/item/reagent_containers/glass) && T.reagents)
 				T.reagents.clear_reagents()
 			src.updateUsrDialog()
 
@@ -978,74 +987,48 @@
 
 		else if (istype(W,/obj/item/satchel/hydro))
 			var/obj/item/satchel/S = W
-
 			var/loadcount = 0
 			for (var/obj/item/I in S.contents)
-				for(var/check_path in src.allowed)
-					if(istype(I, check_path))
-						I.set_loc(src)
-						src.ingredients += I
-						loadcount++
-						break
-
-			if (loadcount)
-				boutput(user, "<span class='notice'>[loadcount] items were loaded from the satchel!</span>")
-			else
+				if (src.canExtract(I) && (src.tryLoading(I, user)))
+					loadcount++
+			if (!loadcount)
 				boutput(user, "<span class='alert'>No items were loaded from the satchel!</span>")
+			else if (src.autoextract)
+				boutput(user, "<span class='notice'>[loadcount] items were automatically extracted from the satchel!</span>")
+			else
+				boutput(user, "<span class='notice'>[loadcount] items were loaded from the satchel!</span>")
+
 			S.satchel_updateicon()
 			src.update_icon()
 			src.updateUsrDialog()
 
 		else
-			var/proceed = 0
-			for(var/check_path in src.allowed)
-				if(istype(W, check_path))
-					proceed = 1
-					break
-			if (!proceed)
+			if (!src.canExtract(W))
 				boutput(user, "<span class='alert'>The extractor cannot accept that!</span>")
 				return
 
-			if (src.autoextract)
-				if (!src.extract_to)
-					boutput(usr, "<span class='alert'>You must first select an extraction target if you want items to be automatically extracted.</span>")
-					return
-				if (src.extract_to.reagents.total_volume == src.extract_to.reagents.maximum_volume)
-					boutput(usr, "<span class='alert'>The extraction target is full.</span>")
-					return
-
+			if (!src.tryLoading(W, user)) return
 			boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
+
 			user.u_equip(W)
 			W.dropped()
 
-			if (src.autoextract)
-				src.doExtract(W)
-				qdel(W)
-			else
-				W.set_loc(src)
-				src.ingredients += W
 			src.update_icon()
 			src.updateUsrDialog()
 			return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (istype(O, /obj/item/reagent_containers/glass/) || istype(O, /obj/item/reagent_containers/food/drinks/) || istype(O, /obj/item/satchel/hydro))
-			return src.attackby(O, user)
-		var/proceed = 0
-		for (var/check_path in src.allowed)
-			if (istype(O, check_path))
-				proceed = 1
-				break
-		if (!proceed) ..()
+			return src.Attackby(O, user)
+		if (!src.canExtract(O)) ..()
 		else
 			user.visible_message("<span class='notice'>[user] begins quickly stuffing [O.name] into [src]!</span>")
 			var/staystill = user.loc
 			for (var/obj/item/P in view(1,user))
-				sleep(0.2 SECONDS)
 				if (user.loc != staystill) break
 				if (P.type == O.type)
-					src.ingredients.Add(P)
-					P.set_loc(src)
+					if (!src.tryLoading(P, user)) break
+					sleep(0.2 SECONDS)
 				else continue
 			boutput(user, "<span class='notice'>You finish stuffing items into [src]!</span>")
 		src.update_icon()
@@ -1087,6 +1070,29 @@
 	I.reagents.trans_to(src.extract_to, I.reagents.total_volume)
 	src.update_icon()
 
+/obj/submachine/chem_extractor/proc/canExtract(O)
+	. = FALSE
+	for(var/check_path in src.allowed)
+		if(istype(O, check_path))
+			return TRUE
+
+/obj/submachine/chem_extractor/proc/tryLoading(var/obj/item/O, var/mob/user as mob)
+	// Pre: make sure that the item type can be extracted
+	if (src.autoextract)
+		if (!src.extract_to)
+			boutput(user, "<span class='alert'>You must first select an extraction target if you want items to be automatically extracted.</span>")
+			return FALSE
+		if (src.extract_to.reagents.total_volume >= src.extract_to.reagents.maximum_volume)
+			boutput(user, "<span class='alert'>The auto-extraction target is full.</span>")
+			return FALSE
+		src.doExtract(O)
+		qdel(O)
+		return TRUE
+	else
+		O.set_loc(src)
+		src.ingredients += O
+		return TRUE
+
 /obj/submachine/seed_vendor
 	name = "Seed Fabricator"
 	desc = "Fabricates basic plant seeds."
@@ -1123,7 +1129,7 @@
 				continue*/
 
 	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_hand(var/mob/user as mob)
 		src.add_dialog(user)
@@ -1279,6 +1285,8 @@
 				src.panelopen = 0
 			boutput(user, "You [src.panelopen ? "open" : "close"] the maintenance panel.")
 			src.updateUsrDialog()
+		else if (src.panelopen && (issnippingtool(W) || ispulsingtool(W)))
+			src.Attackhand(user)
 		else ..()
 
 	proc/isWireColorCut(var/wireColor)

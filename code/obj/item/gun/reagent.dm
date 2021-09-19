@@ -11,6 +11,8 @@
 	var/projectile_reagents = 0 // whether the reagents should get transfered to the projectiles
 	var/dump_reagents_on_turf = 0 //set this to 1 if you want the dumped reagents to be put onto the turf instead of just evaporated into nothingness
 	var/custom_reject_message = "" //set this to a string if you want a custom message to be shown instead of the default when a reagent isnt accepted by the gun
+	///will fill a projectile only partway
+	var/fractional = FALSE
 	inventory_counter_enabled = 1
 	move_triggered = 1
 
@@ -26,7 +28,7 @@
 		return 1
 
 	alter_projectile(var/obj/projectile/P)
-		if(src.projectile_reagents && P && P.proj_data)
+		if(src.projectile_reagents && P?.proj_data)
 			if (!P.reagents)
 				P.reagents = new /datum/reagents(P.proj_data.cost)
 				P.reagents.my_atom = P
@@ -50,7 +52,11 @@
 
 	update_icon()
 		if (src.current_projectile)
-			var/amt = round(src.reagents.total_volume / src.current_projectile.cost)
+			var/amt = round(src.reagents.total_volume) / round(src.current_projectile.cost)
+			if(fractional)
+				amt = ceil(round(amt, 0.1))
+			else
+				amt = round(amt)
 			inventory_counter.update_number(amt)
 		else
 			inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
@@ -59,7 +65,9 @@
 
 	canshoot()
 		if(src.reagents && src.current_projectile)
-			if(src.reagents.total_volume >= src.current_projectile.cost)
+			if(src.fractional && src.reagents.total_volume > 0)
+				return 1
+			else if(src.reagents.total_volume >= src.current_projectile.cost)
 				return 1
 		return 0
 
@@ -104,11 +112,10 @@
 	name = "syringe gun"
 	icon_state = "syringegun"
 	item_state = "syringegun"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 10
 	force = 4.0
-	current_projectile = new/datum/projectile/syringe
 	contraband = 3
 	add_residue = 1 // Does this gun add gunshot residue when fired? These syringes are probably propelled by CO2 or something, but whatever (Convair880).
 	mats = 12 // These are some of the few syndicate items that would be genuinely useful to non-antagonists when scanned.
@@ -117,6 +124,10 @@
 	projectile_reagents = 1
 	dump_reagents_on_turf = 1
 	tooltip_flags = REBUILD_DIST
+
+	New()
+		set_current_projectile(new/datum/projectile/syringe)
+		. = ..()
 
 	get_desc(dist)
 		if (dist > 2)
@@ -139,16 +150,18 @@
 
 	New()
 		..()
-		if (src.safe && islist(global.chem_whitelist) && global.chem_whitelist.len)
+		if (src.safe && islist(global.chem_whitelist) && length(global.chem_whitelist))
 			src.ammo_reagents = global.chem_whitelist
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.safe)
 			return 0
 		if (user)
-			boutput(user, "<span class='alert'>[src]'s safeties have been disabled.</span>")
+			boutput(user, "<span class='alert'>[src]'s volumetric limiter safeties have been disabled.</span>")
 		src.safe = 0
-		src.ammo_reagents = null
+		src.fractional = TRUE
+		src.current_projectile.cost = 90
+		src.update_icon()
 		var/image/magged = image(src.icon, "syringemag", layer = FLOAT_LAYER)
 		src.UpdateOverlays(magged, "emagged")
 		return 1
@@ -159,6 +172,25 @@
 		src.emag_act()
 
 
+/obj/item/gun/reagent/syringe/love
+	name = "Love Gun"
+	icon_state = "syringegun-love"
+	item_state = "syringegun-love"
+	contraband = 1
+	capacity = 250
+	ammo_reagents = list("love", "hugs")
+	custom_reject_message = "This Gun was built for Love, not War!"
+
+	New()
+		..()
+		src.reagents.add_reagent("love", src.reagents.maximum_volume)
+
+
+obj/item/gun/reagent/syringe/love/plus // Sometimes you just need more love in your life.
+	name = "Love Gun Plus"
+	capacity = 1000
+
+
 /obj/item/gun/reagent/ecto
 	name = "ectoblaster"
 	icon_state = "ecto0"
@@ -167,7 +199,7 @@
 	desc = "A weapon that launches concentrated ectoplasm. Harmless to humans, deadly to ghosts."
 
 	New()
-		current_projectile = new/datum/projectile/ectoblaster
+		set_current_projectile(new/datum/projectile/ectoblaster)
 		projectiles = list(current_projectile)
 		..()
 

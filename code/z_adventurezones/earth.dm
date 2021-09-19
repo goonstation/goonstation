@@ -20,7 +20,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	icon_state = "purple"
 	requires_power = 0
 	sound_environment = 4
-	teleport_blocked = 1
+	teleport_blocked = 2
 	skip_sims = 1
 	sims_score = 25
 	sound_group = "centcom"
@@ -253,9 +253,21 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	tarmunora
 		ckey = "tarmunora"
 		name = "Office of yass"
+	tterc
+		ckey = "tterc"
+		name = "Office of Caroline Audibert"
 	urs
 		ckey = "ursulamajor"
 		name = "Office of UrsulaMajor"
+	varshie
+		ckey = "varshie"
+		name = "Office of Varshie"
+	virvatuli
+		ckey = "virvatuli"
+		name = "Office of Virvatuli"
+		New()
+			..()
+			overlays += image(icon = 'icons/turf/areas.dmi', icon_state = "snowverlay", layer = EFFECTS_LAYER_BASE)
 	wire
 		ckey = "wirewraith"
 		name = "Office of Wire"
@@ -287,6 +299,63 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	name = "NT Data Center"
 	icon_state = "pink"
 
+/area/centcom/reconstitutioncenter
+	name = "NT Reconstitution Center"
+	icon_state = "purple"
+
+/area/retentioncenter
+	name = "NT Retention Center"
+	icon_state = "dk_yellow"
+
+/area/retentioncenter/teleblocked
+	name = "NT Retention Center (teleblocked)"
+	icon_state = "death"
+	teleport_blocked = 2
+
+/area/retentioncenter/depot
+	name = "NT Retention Center (depot)"
+	icon_state = "green"
+
+/area/retentioncenter/blue
+	name = "NT Retention Center (BLU)"
+	icon_state = "blue"
+
+/area/retentioncenter/green
+	name = "NT Retention Center (GRN)"
+	icon_state = "green"
+
+/area/retentioncenter/yellow
+	name = "NT Retention Center (YLW)"
+	icon_state = "yellow"
+
+/area/retentioncenter/orange
+	name = "NT Retention Center (ORG)"
+	icon_state = "orange"
+
+/area/retentioncenter/red
+	name = "NT Retention Center (RED)"
+	icon_state = "red"
+
+/area/retentioncenter/black
+	name = "NT Retention Center (BLK)"
+	icon_state = "purple"
+
+/area/retentioncenter/restricted
+	name = "NT Retention Center (Restricted)"
+	icon_state = "death"
+
+/area/retentioncenter/disposals
+	name = "NT Retention Center (disposals)"
+	icon_state = "red"
+
+/area/retentioncenter/substation
+	name = "NT Retention Center (substation)"
+	icon_state = "pink"
+
+/area/retentioncenter/office
+	name = "NT Retention Center (office)"
+	icon_state = "orange"
+
 ////////////////////////////
 
 /turf/unsimulated/outdoors
@@ -296,13 +365,13 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 		name = "snow"
 		New()
 			..()
-			dir = pick(cardinal)
+			set_dir(pick(cardinal))
 		icon_state = "grass_snow"
 	grass
 		name = "grass"
 		New()
 			..()
-			dir = pick(cardinal)
+			set_dir(pick(cardinal))
 		icon_state = "grass"
 		dense
 			name = "dense grass"

@@ -3,7 +3,7 @@
 	var/viewport_id = 0
 	var/clickToMove = 0
 	var/client/viewer
-	var/obj/screen/handler
+	var/atom/movable/screen/handler
 
 	var/list/planes = list()
 	var/kind
@@ -24,8 +24,8 @@
 		handler.screen_loc = "map_[viewport_id]:1,1"
 		winshow( viewer, viewport_id, 1 )
 		viewer.screen += handler
-		for(var/obj/screen/plane_parent/p in viewer.plane_parents)
-			var/obj/screen/plane_parent/dupe = new
+		for(var/atom/movable/screen/plane_parent/p in viewer.plane_parents)
+			var/atom/movable/screen/plane_parent/dupe = new
 			dupe.plane = p.plane
 			dupe.appearance = p.appearance
 			dupe.appearance_flags = p.appearance_flags
@@ -74,18 +74,22 @@
 		handler.vis_contents = contentBlock
 
 /client/var/list/viewports = list()
+
 /client/proc/getViewportsByType(var/kind)
 	.=list()
 	for(var/datum/viewport/vp in viewports)
 		if(vp.kind == kind)
 			. += vp
+
 /client/proc/getViewportById(var/id)
 	for(var/datum/viewport/vp in viewports)
 		if(vp.getID() == id) return vp
+
 /client/proc/clearViewportsByType(var/kind)
 	for(var/datum/viewport/vp in getViewportsByType(kind))
 		if(vp.kind == kind)
 			qdel(vp)
+
 /client/Del()
 	for(var/datum/viewport/vp in viewports)
 		qdel(vp)//circular reference, gotta trash it manually
@@ -142,11 +146,9 @@
 	vp.clickToMove = 1
 	vp.SetViewport(startPos, 8, 8)
 /mob/living/intangible/blob_overmind/death()
-	if(src.client)
-		src.client.clearViewportsByType("Blob: Viewport")
+	src.client?.clearViewportsByType("Blob: Viewport")
 	.=..()
 
 /mob/living/silicon/ai/death(gibbed)
-	if(src.client)
-		src.client.clearViewportsByType("AI: Viewport")
+	src.client?.clearViewportsByType("AI: Viewport")
 	.=..()

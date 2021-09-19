@@ -8,6 +8,7 @@
 	name = "Security Records"
 	icon_state = "datasec"
 	req_access = list(access_security)
+	circuit_type = /obj/item/circuitboard/secure_data
 	var/obj/item/card/id/scan = null
 	var/authenticated = null
 	var/rank = null
@@ -21,51 +22,14 @@
 	var/require_login = 1
 	desc = "A computer that allows an authorized user to set warrants, view fingerprints, and add notes to various crewmembers."
 
-	lr = 1
-	lg = 0.7
-	lb = 0.74
+	light_r =1
+	light_g = 0.7
+	light_b = 0.74
 
 /obj/machinery/computer/secure_data/detective_computer
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "messyfiles"
 	req_access = list(access_forensics_lockers)
-
-/obj/machinery/computer/secure_data/attackby(obj/item/I as obj, user as mob)
-	if (isscrewingtool(I))
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if (do_after(user, 20))
-			if (src.status & BROKEN)
-				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if (src.material) A.setMaterial(src.material)
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-				G.set_loc(src.loc)
-				var/obj/item/circuitboard/secure_data/M = new /obj/item/circuitboard/secure_data( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				qdel(src)
-			else
-				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if (src.material) A.setMaterial(src.material)
-				var/obj/item/circuitboard/secure_data/M = new /obj/item/circuitboard/secure_data( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				qdel(src)
-	else
-		src.attack_hand(user)
-	return
-
-/obj/machinery/computer/secure_data/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
 
 /obj/machinery/computer/secure_data/attack_hand(mob/user as mob)
 	if (..())
@@ -389,7 +353,7 @@
 		return 1
 	if (user && (user.lying || user.stat))
 		return 1
-	if (user && (get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !issilicon(user) && !isAI(usr))
+	if (!in_interact_range(src, user) || !istype(src.loc, /turf))
 		return 1
 
 
@@ -624,8 +588,8 @@
 			// 				src.active_record_general.fields["rank"] = "Head of Personnel"
 			// 			if ("captain")
 			// 				src.active_record_general.fields["rank"] = "Captain"
-			// 			if ("barman")
-			// 				src.active_record_general.fields["rank"] = "Barman"
+			// 			if ("bartender")
+			// 				src.active_record_general.fields["rank"] = "Bartender"
 			// 			if ("chemist")
 			// 				src.active_record_general.fields["rank"] = "Chemist"
 			// 			if ("janitor")
@@ -685,7 +649,7 @@
 			if ("view_record")
 				var/datum/data/record/R = locate(href_list["rec"])
 				var/S = locate(href_list["rec"])
-				if (!data_core.general.Find(R))
+				if (!(R in data_core.general))
 					src.temp = "Record Not Found!"
 					return
 				for (var/datum/data/record/E in data_core.security)
@@ -798,7 +762,8 @@
 			if ("print_record")
 				if (!( src.printing ))
 					src.printing = 1
-					sleep(5 SECONDS)
+					playsound(src.loc, "sound/machines/printer_press.ogg", 50, 0)
+					sleep(3 SECONDS)
 					var/obj/item/paper/P = new /obj/item/paper( src.loc )
 					P.info = "<center><b>Security Record</b></center><br>"
 					src.validate_records()

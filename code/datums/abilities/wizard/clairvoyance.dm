@@ -13,7 +13,8 @@
 	cast()
 		if(!holder)
 			return
-		holder.owner.say("HAIDAN SEEHQ")
+		if(!istype(get_area(holder.owner), /area/sim/gunsim))
+			holder.owner.say("HAIDAN SEEHQ")
 		..()
 
 		var/list/mob/targets = list()
@@ -38,6 +39,7 @@
 		if (M.traitHolder.hasTrait("training_chaplain"))
 			boutput(holder.owner, "<span class='alert'>[M] has divine protection. Your scrying spell fails!</span>")
 			boutput(M, "<span class='alert'>You sense a Wizard's scrying spell!</span>")
+			JOB_XP(M, "Chaplain", 2)
 			return
 		else if(check_target_immunity(M))
 			boutput(holder.owner, "<span class='alert'>[M] seems to be warded from the effects!</span>" )

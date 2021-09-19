@@ -80,7 +80,8 @@
 				src.link.post_signal(src, signal)
 
 		transmit_to_centcom(var/title, var/message, var/user)
-			command_alert(message, title, override_big_title="Transmission to Central Command")
+			var/sound_to_play = "sound/misc/announcement_1.ogg"
+			command_alert(message, title, sound_to_play, override_big_title="Transmission to Central Command")
 			message_admins("[user ? user : "Someone"] sent a message to Central Command:<br>[title]<br><br>[message]")
 			var/ircmsg[] = new()
 			ircmsg["msg"] = "[user ? user : "Unknown"] sent a message to Central Command:\n**[title]**\n[message]"
@@ -212,7 +213,7 @@
 					return
 
 				var/list/commandList = params2list(signal.data["data"])
-				if (!commandList || !commandList.len)
+				if (!commandList || !length(commandList))
 					return
 
 				switch (commandList["command"])

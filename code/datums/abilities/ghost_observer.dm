@@ -10,7 +10,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	var/spent_points = list()				//assoc list of ckeys to their spent points.
 	var/maxed_out = 0					//set to 1 if the points get up to MAX_POINTS so we can play the special event/thing
 
-	var/obj/screen/spooktober_meter/meter = new()
+	var/atom/movable/screen/spooktober_meter/meter = new()
 
 	proc/change_points(var/ckey, var/added as num)
 		if (ckey)
@@ -43,7 +43,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		maxed_out = 1
 
 
-/obj/screen/spooktober_meter
+/atom/movable/screen/spooktober_meter
 	icon = 'icons/mob/spooktober_ghost_hud160x32.dmi'
 	icon_state = "empty"
 	name = "Spooktober Spookpoints Meter"
@@ -67,7 +67,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 #endif
 
-/obj/screen/ability/topBar/ghost_observer
+/atom/movable/screen/ability/topBar/ghost_observer
 	clicked(params)
 		var/datum/targetable/ghost_observer/abil = owner
 		if (!istype(abil))
@@ -155,9 +155,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		// src.addAbility(/datum/targetable/ghost_observer/respawn_animal)	//moved to respawn_options menu
 		src.addAbility(/datum/targetable/ghost_observer/respawn_options)
 
-#if ASS_JAM
-		src.addAbility(/datum/targetable/ghost_observer/ass_day_arena)
-#endif
+
 #ifdef HALLOWEEN
 		src.addAbility(/datum/targetable/ghost_observer/spooktober_hud)
 
@@ -340,7 +338,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 	cast(atom/target)
 		displaying_buttons = !displaying_buttons
-		if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/football))
+		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
 			boutput(holder.owner, "Sorry, respawn options aren't availbale during football mode.")
 			displaying_buttons = 0
 		if (!displaying_buttons)
@@ -602,7 +600,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	proc/start_spooking()
 		src.holder.owner.color = rgb(170, 0, 0)
 		anim_f_ghost_blur(src.holder.owner)
-		applied_filter_index = src.holder.owner.filters.len
+		applied_filter_index = length(src.holder.owner.filters)
 
 		if (istype(holder, /datum/abilityHolder/ghost_observer))
 			var/datum/abilityHolder/ghost_observer/GAH = holder

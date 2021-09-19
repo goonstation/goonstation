@@ -51,13 +51,13 @@ var/global/list/cached_concrete_types
 	* ALSO OKAY:
 	* ```dm
 	* var/list/hats = concrete_typesof(/obj/item/clothing/head).Copy()
-  * hats -= /obj/item/clothing/head/hosberet
+	* hats -= /obj/item/clothing/head/hosberet
 	* ```
 	*
 	* NOT OKAY:
 	* ```dm
 	* var/list/hats = concrete_typesof(/obj/item/clothing/head)
-  * hats -= /obj/item/clothing/head/hosberet
+	* hats -= /obj/item/clothing/head/hosberet
 	* ```
 	*/
 proc/concrete_typesof(type, cache=TRUE)
@@ -116,6 +116,29 @@ proc/get_singleton(type)
 	return singletons[type]
 var/global/list/singletons
 
+
+/// Find predecessor of a type
+proc/predecessor_path_in_list(type, list/types)
+	while(type)
+		if(type in types)
+			return type
+		type = type2parent(type)
+	return null
+
+/**
+	* Returns the maximal subtype (i.e. the most subby) in a list of given types
+	*/
+proc/maximal_subtype(var/list/L)
+	if (!(length(L)))
+		.= null
+	else
+		.= L[1]
+		for (var/t in L)
+			if (ispath(t, .))
+				.= t
+			else if (!(ispath(., t)))
+				return null // paths in L aren't linearly ordered
+
 // by_type and by_cat stuff
 
 // sometimes we want to have all objects of a certain type stored (bibles, staffs of cthulhu, ...)
@@ -126,19 +149,23 @@ var/global/list/singletons
 #define STOP_TRACKING
 #else
 #define START_TRACKING if(!by_type[......]) { by_type[......] = list() }; by_type[.......][src] = 1 //we use an assoc list here because removing from one is a lot faster
+#if DM_BUILD >= 1552
+#define STOP_TRACKING by_type[......].Remove(src) //ok if ur seeing this and thinking "wtf is up with the ....... in THIS use case it gives us the type path at the particular scope this is called. and the amount of dots varies based on scope in the macro! fun
+#else
 #define STOP_TRACKING by_type[.....].Remove(src) //ok if ur seeing this and thinking "wtf is up with the ...... in THIS use case it gives us the type path at the particular scope this is called. and the amount of dots varies based on scope in the macro! fun
+#endif
 #endif
 
 /// contains lists of objects indexed by their type based on START_TRACKING / STOP_TRACKING
 var/list/list/by_type = list()
 
 /// Performs a typecheckless for loop with var/iterator over by_type[_type]
-#define for_by_tcl(_iterator, _type) for(var ##_type/##_iterator as() in by_type[##_type])
+#define for_by_tcl(_iterator, _type) for(var ##_type/##_iterator as anything in by_type[##_type])
 
 // sometimes we want to have a list of objects of multiple types, without having to traverse multiple lists
 // to do that add START_TRACKING_CAT("category") to New, unpooled, or whatever proc you want to start tracking the objects in (eg: tracking dead humans, put start tracking in death())
 // and add STOP_TRACKING_CAT("category") to disposing, or whatever proc you want to stop tracking the objects in (eg: tracking live humans, put stop tracking in death())
-// and to traverse the list, use by_type_cat["category"] to get the list of objects in that category
+// and to traverse the list, use by_cat["category"] to get the list of objects in that category
 // also ideally youd use defines for by_cat categories!
 #define START_TRACKING_CAT(x) OTHER_START_TRACKING_CAT(src, x)
 #define STOP_TRACKING_CAT(x) OTHER_STOP_TRACKING_CAT(src, x)
@@ -154,11 +181,18 @@ var/list/list/by_cat = list()
 #define TR_CAT_LIGHT_GENERATING_TURFS "light_generating_turfs"
 #define TR_CAT_CRITTERS "critters"
 #define TR_CAT_PETS "pets"
+#define TR_CAT_PW_PETS "pod_wars_pets"
 #define TR_CAT_PODS_AND_CRUISERS "pods_and_cruisers"
 #define TR_CAT_NERVOUS_MOBS "nervous_mobs"
 #define TR_CAT_SHITTYBILLS "shittybills"
 #define TR_CAT_JOHNBILLS "johnbills"
 #define TR_CAT_OTHERBILLS "otherbills"
 #define TR_CAT_TELEPORT_JAMMERS "teleport_jammers"
+#define TR_CAT_BURNING_MOBS "dudes_on_fire"
+#define TR_CAT_BURNING_ITEMS "items_on_fire"
+#define TR_CAT_OMNIPRESENT_MOBS "omnipresent_mobs"
+#define TR_CAT_CHAPLAINS "chaplains"
+#define TR_CAT_SOUL_TRACKING_ITEMS "soul_tracking_items"
+#define TR_CAT_CLOWN_DISBELIEF_MOBS "clown_disbelief_mobs"
 // powernets? processing_items?
 // mobs? ai-mobs?

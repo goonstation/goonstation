@@ -10,11 +10,11 @@ Fibre wire
 */
 
 
-//////////////////////////////
+//--------------------------//
 //The pretty darn mean skull
 //That's nice to ghosts
 //		Yay
-////////////////////////////
+//-------------------------//
 /obj/item/soulskull
 	name = "ominous skull"
 	desc = "This skull gives you the heebie-jeebies."
@@ -45,9 +45,9 @@ Fibre wire
 		var/list/mob/dead/observer/priority_targets = list()
 
 
-		if(ticker && ticker.mode) //Yes, I'm sure my runtimes will matter if the goddamn TICKER is gone.
+		if(ticker?.mode) //Yes, I'm sure my runtimes will matter if the goddamn TICKER is gone.
 			for(var/datum/mind/M in (ticker.mode.Agimmicks | ticker.mode.traitors)) //We want an EVIL ghost
-				if(!M.dnr && M.current && isobserver(M.current) && M.current.client && M.special_role != "vampthrall" && M.special_role != "mindslave")
+				if(!M.dnr && M.current && isobserver(M.current) && M.current.client && M.special_role != ROLE_VAMPTHRALL && M.special_role != ROLE_MINDSLAVE)
 					priority_targets.Add(M.current)
 
 		if(!priority_targets.len) //Okay, fine. Any ghost. *sigh
@@ -59,7 +59,7 @@ Fibre wire
 					possible_targets.Add(O)
 
 
-		if(!priority_targets.len && !possible_targets.len) return //Gotta have a ghostie
+		if(!priority_targets.len && !length(possible_targets)) return //Gotta have a ghostie
 
 		being_mean = 1
 		H.canmove = 0
@@ -77,7 +77,7 @@ Fibre wire
 				being_mean = 0
 				return
 			H.emote("faint")
-			H.changeStatus("paralysis", 150)
+			H.changeStatus("paralysis", 15 SECONDS)
 			H.show_text("<I><font size=5>You feel your mind drifting away from your body!</font></I>", "red")
 
 			playsound(src.loc, 'sound/effects/ghost.ogg', 50, 1)
@@ -129,7 +129,7 @@ proc/Create_Tommyname()
 	//Set up the new appearance
 	var/datum/appearanceHolder/AH = new
 	AH.gender = "male"
-	AH.customization_first = "Dreadlocks"
+	AH.customization_first = new /datum/customization_style/hair/long/dreads
 	AH.gender = "male"
 	AH.s_tone = "#FAD7D0"
 	AH.owner = src
@@ -164,12 +164,11 @@ proc/Create_Tommyname()
 	if(src.bioHolder)
 		src.bioHolder.mobAppearance = AH
 		src.bioHolder.AddEffect("accent_tommy")
-	SPAWN_DBG(1 SECOND)
-		src.bioHolder.mobAppearance.UpdateMob()
+	src.update_colorful_parts()
 
-//////////////////////////////
+//------------------------//
 //Tommy gun
-////////////////////////////
+//------------------------//
 
 /datum/projectile/tommy
 	name = "space-tommy disruption"
@@ -215,11 +214,11 @@ proc/Create_Tommyname()
 	m_amt = 4000
 	rechargeable = 1
 	force = 0.0
+	cell_type = /obj/item/ammo/power_cell/high_power
 	desc = "It smells of cheap cologne and..."
 
 	New()
-		cell = new/obj/item/ammo/power_cell/high_power
-		current_projectile = new/datum/projectile/tommy
+		set_current_projectile(new/datum/projectile/tommy)
 		projectiles = list(new/datum/projectile/tommy)
 		..()
 
@@ -233,8 +232,8 @@ proc/Create_Tommyname()
 		return ..(target, start, user)
 
 	update_icon()
-		if(cell)
-			src.icon_state = "tommygun[src.cell.charge <= 0 ? "-empty" : ""]"
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE)
+			src.icon_state = "tommygun[(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE) ? "" : "-empty"]"
 			return
 
 ///////////////////////////////////////Analysis datum for the spectrometer
@@ -242,7 +241,7 @@ proc/Create_Tommyname()
 /datum/spectro_analysis
 
 	proc/analyze_reagents(var/datum/reagents/R, var/check_recipes = 0)
-		if(R && R.reagent_list && R.reagent_list.len)
+		if(length(R?.reagent_list))
 			if(check_recipes)
 				. = analyze_reagent_components(R.reagent_list)
 			else
@@ -257,7 +256,7 @@ proc/Create_Tommyname()
 			for (var/id in reagent_ids)
 
 				var/datum/chemical_reaction/recipe = chem_reactions_by_id[id]
-				if(recipe && recipe.required_reagents && recipe.required_reagents.len)
+				if(length(recipe?.required_reagents))
 					analyze_reagent_list(recipe.required_reagents, output)
 				else
 					for(var/i=0, i<rand(2,7), i++) //If it doesn't have a recipe, just spit out some random data
@@ -397,20 +396,19 @@ proc/Create_Tommyname()
 			var/mob/living/carbon/human/H = hit
 			if(!istype(H.head, /obj/item/clothing/head/wig))
 				var/obj/item/clothing/head/wig/W = H.create_wig()
-				H.bioHolder.mobAppearance.customization_first = "None"
-				H.cust_one_state = customization_styles["None"]
+				H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
 				H.drop_from_slot(H.head)
 				H.force_equip(W, H.slot_head)
-				H.set_clothing_icon_dirty()
+				H.update_colorful_parts()
 
 /obj/item/gun/energy/dtrumpet
 	name = "Donald Trumpet"
 	desc = "You can tell this gun has been fired!"
 	icon = 'icons/obj/instruments.dmi'
 	icon_state = "trumpet"
+	cell_type = /obj/item/ammo/power_cell/high_power
 	New()
-		cell = new/obj/item/ammo/power_cell/high_power
-		current_projectile = new/datum/projectile/energy_bolt_v/trumpet
+		set_current_projectile(new/datum/projectile/energy_bolt_v/trumpet)
 		projectiles = list(new/datum/projectile/energy_bolt_v/trumpet)
 		..()
 
@@ -770,7 +768,7 @@ proc/Create_Tommyname()
 			O.pixel_x = ipx
 			O.pixel_y = ipy
 			if(setdir)
-				O.dir = setdir
+				O.set_dir(setdir)
 			O.set_loc(T)
 			animate_slide(O, 0, 0, animtime, LINEAR_EASING)
 
@@ -779,7 +777,7 @@ proc/Create_Tommyname()
 	if(turf_type)
 		DEBUG_MESSAGE("Creating [turf_type] at [showCoords(T.x, T.y, T.z)]")
 		var/turf/NT = new turf_type(T)
-		if(setdir) NT.dir = setdir
+		if(setdir) NT.set_dir(setdir)
 		created_atoms += NT
 
 
@@ -818,7 +816,7 @@ proc/Create_Tommyname()
 	src.icon_state = initial(T.icon_state)
 	src.set_density(initial(T.density))
 	src.opacity = initial(T.opacity)
-	src.dir = initial(T.dir)
+	src.set_dir(initial(T.dir))
 	src.layer = initial(T.layer)
 	src.invisibility = 0
 	if(TTL)
@@ -855,7 +853,7 @@ proc/Create_Tommyname()
 /obj/item/garrote
 	name = "fibre wire"
 	desc = "A sturdy wire between two handles. Could be used with both hands to really ruin someone's day."
-	w_class = 1
+	w_class = W_CLASS_TINY
 	c_flags = EQUIPPED_WHILE_HELD
 
 	icon = 'icons/obj/items/items.dmi'
@@ -886,10 +884,10 @@ proc/Create_Tommyname()
 
 	if(wire_readied)
 		playsound(usr, 'sound/items/garrote_twang.ogg', 25,5)
-		w_class = 4
+		w_class = W_CLASS_BULKY
 	else
 		drop_grab()
-		w_class = 1
+		w_class = W_CLASS_TINY
 
 	update_state()
 
@@ -1062,7 +1060,7 @@ proc/Create_Tommyname()
 // Special grab obj that doesn't care if it's in someone's hands
 /obj/item/grab/garrote_grab
 	// No breaking out under own power
-	break_prob = 0
+	prob_mod = 0
 	var/extra_deadly = 0
 	check()
 		if(!assailant || !affecting)
@@ -1098,7 +1096,7 @@ proc/Create_Tommyname()
 			//IRCbot alert, for fun
 			var/ircmsg[] = new()
 			ircmsg["key"] =  M.key
-			ircmsg["name"] = M.real_name
+			ircmsg["name"] = stripTextMacros(M.real_name)
 			ircmsg["msg"] = "[message] and got themselves got by the anti-cheat cluwne."
 			ircbot.export("admin", ircmsg)
 

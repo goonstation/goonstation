@@ -124,7 +124,7 @@
 				return
 			var/obj/item/cable_coil/C = W
 			if (get_fraction_of_percentage_and_whole(src.health,src.health_max) >= 33)
-				boutput(usr, "<span class='alert'>The cabling looks fine. Use a welder to repair the rest of the damage.</span>")
+				boutput(user, "<span class='alert'>The cabling looks fine. Use a welder to repair the rest of the damage.</span>")
 				return
 			C.use(1)
 			src.health = max(1,min(src.health + 10,src.health_max))
@@ -180,19 +180,19 @@
 
 	click(atom/target, params)
 		var/obj/item/equipped = src.active_tool
-		var/use_delay = !(target in src.contents) && !istype(target,/obj/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
+		var/use_delay = !(target in src.contents) && !istype(target,/atom/movable/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
 		if (use_delay && world.time < src.next_click)
 			return src.next_click - world.time
 
 		if (get_dist(src, target) > 0)
-			dir = get_dir(src, target)
+			set_dir(get_dir(src, target))
 
 		var/reach = can_reach(target, src)
 		if (equipped && (reach || (equipped.flags & EXTRADELAY)))
 			if (use_delay)
 				src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)
 
-			target.attackby(equipped, src)
+			target.Attackby(equipped, src)
 			if (equipped)
 				equipped.afterattack(target, src, reach)
 
@@ -204,15 +204,6 @@
 		SPAWN_DBG( 0 )
 			if ((!( yes ) || src.now_pushing))
 				return
-			src.now_pushing = 1
-			if(ismob(AM))
-				var/mob/tmob = AM
-				if(ishuman(tmob) && tmob.bioHolder && tmob.bioHolder.HasEffect("fat"))
-					src.visible_message("<span class='alert'><b>[src]</b> can't get past [AM.name]'s fat ass!</span>")
-					src.now_pushing = 0
-					src.unlock_medal("That's no moon, that's a GOURMAND!", 1)
-					return
-			src.now_pushing = 0
 			..()
 			if (!istype(AM, /atom/movable))
 				return
@@ -278,13 +269,13 @@
 				emote_sound = beeps_n_boops[5]
 				message = "<B>[src]</B> buzzes dejectedly."
 			if ("glitch","malfunction")
-				playsound(src.loc, pick(glitchy_noise), 50, 1)
+				playsound(src.loc, pick(glitchy_noise), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.visible_message("<span class='alert'><B>[src]</B> freaks the fuck out! That's [pick(glitch_con)] [pick(glitch_adj)]!</span>")
 				animate_glitchy_freakout(src)
 				return
 
 		if (emote_sound)
-			playsound(src.loc, emote_sound, 50, 1)
+			playsound(src.loc, emote_sound, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 		if (message)
 			src.visible_message(message)
 		return
@@ -349,7 +340,7 @@
 
 		icon_state = "frame-" + max(0,min(change_to,6))
 		overlays = list()
-		if (part_propulsion && part_propulsion.drone_overlay)
+		if (part_propulsion?.drone_overlay)
 			overlays += part_propulsion.drone_overlay
 
 	examine()
@@ -389,7 +380,7 @@
 				part_propulsion = null
 				change_stage(5)
 			else
-				boutput(usr, "You can't figure out what to do with it. Maybe a closer examination is in order.")
+				boutput(user, "You can't figure out what to do with it. Maybe a closer examination is in order.")
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(isweldingtool(W))

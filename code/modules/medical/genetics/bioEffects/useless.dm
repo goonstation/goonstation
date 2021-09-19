@@ -25,11 +25,24 @@
 	probability = 99
 	msgGain = "A pair of horns erupt from your head."
 	msgLose = "Your horns crumble away into nothing."
+	var/hornstyle = "random"
 
 	OnAdd()
-		if (ishuman(owner))
-			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "horns", layer = MOB_LAYER)
+		if(hornstyle == "random")
+			hornstyle = pick("horns","horns_ram","horns_ramblk","horns_dark","horns_beige","horns_light","horns_sml","horns_unicorn")
+
+		overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[hornstyle]", layer = MOB_LAYER)
+		if (ismonkey(owner))
+			overlay_image.pixel_y = -6
 		..()
+
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		if(variable == "hornstyle")
+			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[newval]", layer = MOB_LAYER)
+			if(ismonkey(owner))
+				overlay_image.pixel_y = -6
+			owner.UpdateOverlays(overlay_image, id)
 
 /datum/bioEffect/horns/evil //this is just for /proc/soulcheck
 	occur_in_genepools = 0
@@ -42,6 +55,7 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 	id = "demon_horns"
+	hornstyle = "horns_devil"
 
 /datum/bioEffect/particles
 	name = "Dermal Glitter"
@@ -79,10 +93,11 @@
 		var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
 		holder_skin = AH.s_tone
 		var/list/L = hex_to_rgb_list(AH.s_tone)
-		var/new_color = ((L["r"] + L["g"] + L["b"]) / 3) - 20
+		var/new_color = ((L[1] + L[2] + L[3]) / 3) - 20
 		if (new_color < 0)
 			new_color = 0
 		AH.s_tone = rgb(new_color, new_color, new_color)
+		H.update_colorful_parts()
 		H.update_body()
 
 	OnRemove()
@@ -96,6 +111,11 @@
 		if (!AH)
 			return
 		AH.s_tone = holder_skin
+		if(AH.mob_appearance_flags & FIX_COLORS) // human -> achrom -> lizard -> notachrom is *bright*
+			AH.customization_first_color = fix_colors(AH.customization_first_color)
+			AH.customization_second_color = fix_colors(AH.customization_second_color)
+			AH.customization_third_color = fix_colors(AH.customization_third_color)
+		H.update_colorful_parts()
 		H.update_body()
 
 /datum/bioEffect/color_changer
@@ -116,31 +136,33 @@
 				if (istype(H.bioHolder.GetEffect(ID), /datum/bioEffect/color_changer) && ID != src.id)
 					H.bioHolder.RemoveEffect(ID)
 			var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
-			AH.e_color_carry = AH.e_color
-			AH.customization_first_color_carry = AH.customization_first_color
-			AH.customization_second_color_carry = AH.customization_second_color
-			AH.customization_third_color_carry = AH.customization_third_color
-			AH.s_tone_carry = AH.s_tone
+			AH.e_color_original = AH.e_color
+			AH.customization_first_color_original = AH.customization_first_color
+			AH.customization_second_color_original = AH.customization_second_color
+			AH.customization_third_color_original = AH.customization_third_color
+			AH.s_tone_original = AH.s_tone
 
 			AH.e_color = eye_color_to_use
 			AH.s_tone = skintone_to_use
 			AH.customization_first_color = color_to_use
 			AH.customization_second_color = color_to_use
 			AH.customization_third_color = color_to_use
-			H.update_face()
-			H.update_body()
+			H.update_colorful_parts()
 
 	OnRemove()
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
-			AH.e_color = AH.e_color_carry
-			AH.s_tone = AH.s_tone_carry
-			AH.customization_first_color = AH.customization_first_color_carry
-			AH.customization_second_color = AH.customization_second_color_carry
-			AH.customization_third_color = AH.customization_third_color_carry
-			H.update_face()
-			H.update_body()
+			AH.e_color = AH.e_color_original
+			AH.s_tone = AH.s_tone_original
+			AH.customization_first_color = AH.customization_first_color_original
+			AH.customization_second_color = AH.customization_second_color_original
+			AH.customization_third_color = AH.customization_third_color_original
+			if(AH.mob_appearance_flags & FIX_COLORS) // human -> blank -> lizard -> unblank is *bright*
+				AH.customization_first_color = fix_colors(AH.customization_first_color)
+				AH.customization_second_color = fix_colors(AH.customization_second_color)
+				AH.customization_third_color = fix_colors(AH.customization_third_color)
+			H.update_colorful_parts()
 
 /datum/bioEffect/color_changer/black
 	name = "Melanin Stimulator"
@@ -182,15 +204,14 @@
 	isBad = 1
 	msgGain = "You feel sweaty."
 	msgLose = "You feel much more hygenic."
-	var/personalized_stink = "Wow, it stinks in here!"
+	var/personalized_stink = null
 
 	New()
 		..()
-		src.personalized_stink = stinkString()
 		if (prob(5))
-			src.variant = 2
+			src.personalized_stink = stinkString()
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		if (owner.reagents.has_reagent("menthol"))
 			return
@@ -198,10 +219,49 @@
 			for(var/mob/living/carbon/C in view(6,get_turf(owner)))
 				if (C == owner)
 					continue
-				if (src.variant == 2)
+				if (src.personalized_stink)
 					boutput(C, "<span class='alert'>[src.personalized_stink]</span>")
 				else
 					boutput(C, "<span class='alert'>[stinkString()]</span>")
+
+
+/obj/effect/distort/dwarf
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "distort-dwarf"
+
+/datum/bioEffect/dwarf
+	name = "Dwarfism"
+	desc = "Greatly reduces the overall size of the subject, resulting in markedly dimished height."
+	id = "dwarf"
+	msgGain = "Did everything just get bigger?"
+	msgLose = "You feel tall!"
+	icon_state  = "dwarf"
+	var/filter = null
+	var/obj/effect/distort/dwarf/distort = new
+	var/size = 127
+
+	OnAdd()
+		. = ..()
+		owner.filters += filter(type="displace", size=0, render_source = src.distort.render_target)
+		owner.vis_contents += src.distort
+		src.filter = owner.filters[length(owner.filters)]
+		animate(src.filter, size=src.size, time=0.7 SECONDS, easing=SINE_EASING, flags=ANIMATION_PARALLEL)
+
+	OnRemove()
+		owner.filters -= filter
+		owner.vis_contents -= src.distort
+		src.filter = null
+		. = ..()
+
+	disposing()
+		qdel(src.distort)
+		src.distort = null
+		. = ..()
+
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		if(variable == "size" && src.filter)
+			animate(src.filter, size=newval, time=0.7 SECONDS, easing=SINE_EASING, flags=ANIMATION_PARALLEL)
 
 /datum/bioEffect/drunk
 	name = "Ethanol Production"
@@ -211,17 +271,18 @@
 	msgGain = "You feel drunk!"
 	msgLose = "You feel sober."
 	probability = 99
+	stability_loss = -5
 	var/reagent_to_add = "ethanol"
 	var/reagent_threshold = 80
 	var/add_per_tick = 1
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		var/mob/living/L = owner
 		if (isdead(L))
 			return
 		if (L.reagents && L.reagents.get_reagent_amount(reagent_to_add) < reagent_threshold)
-			L.reagents.add_reagent(reagent_to_add,add_per_tick)
+			L.reagents.add_reagent(reagent_to_add,add_per_tick * mult)
 
 /datum/bioEffect/drunk/bee
 	name = "Bee Production"
@@ -240,8 +301,8 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 	reagent_to_add = "bee"
-	reagent_threshold = 40
-	add_per_tick = 1.2
+	reagent_threshold = 12
+	add_per_tick = 6 //ensures we always have bee sickness
 
 /datum/bioEffect/drunk/pentetic
 	name = "Pentetic Acid Production"
@@ -259,7 +320,7 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 	reagent_to_add = "penteticacid"
-	reagent_threshold = 40
+	reagent_threshold = 12
 	add_per_tick = 4
 
 /datum/bioEffect/drunk/random
@@ -278,6 +339,7 @@
 	lockedGaps = 10
 	lockedDiff = 6
 	lockedChars = list("G","C","A","T","U")
+	stability_loss = 15
 	lockedTries = 10
 	curable_by_mutadone = 0
 	can_scramble = 0
@@ -289,7 +351,7 @@
 	New()
 		..()
 		if (all_functional_reagent_ids.len > 1)
-			reagent_to_add = pick(all_functional_reagent_ids - list("big_bang_precursor", "big_bang", "nitrotri_parent", "nitrotri_wet", "nitrotri_dry"))
+			reagent_to_add = pick(all_functional_reagent_ids)
 		else
 			reagent_to_add = "water"
 
@@ -300,8 +362,9 @@
 	probability = 0.25
 	var/change_prob = 25
 	add_per_tick = 7
+	stability_loss = 25
 
-	OnLife()
+	OnLife(var/mult)
 		if (prob(src.change_prob) && all_functional_reagent_ids.len > 1)
 			reagent_to_add = pick(all_functional_reagent_ids)
 		..()
@@ -356,7 +419,7 @@
 	blockGaps = 3
 	msgGain = "You feel as if you're impossibly young."
 	msgLose = "You feel like you're your own age again."
-	stability_loss = 10
+	stability_loss = 0
 
 	OnAdd()
 		holder.age = (0 - holder.age)
@@ -375,8 +438,8 @@
 	blockGaps = 3
 	msgGain = "You feel like you're growing younger - no wait, older?"
 	msgLose = "You feel like you're aging normally again."
-	stability_loss = 10
-	OnLife()
+	stability_loss = 0
+	OnLife(var/mult)
 		..()
 		if (prob(33))
 			holder.age = rand(-80, 80)

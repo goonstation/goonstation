@@ -6,12 +6,11 @@
 	var/time = null
 	flags = FPRINT | TABLEPASS| CONDUCT
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	item_state = "electronic"
 	m_amt = 300
 	mats = 2
 	desc = "A device which transmits a signal when it detects movement nearby."
-	module_research = list("science" = 2, "devices" = 1, "miniaturization" = 4)
 
 /obj/item/device/prox_sensor/dropped()
 	..()
@@ -59,9 +58,9 @@
 
 
 		if (!src.master)
-			src.updateDialog()
+			src.updateSelfDialog()
 		else
-			src.master.updateDialog()
+			src.master.updateSelfDialog()
 
 	else
 		processing_items.Remove(src)
@@ -90,7 +89,7 @@
 	user.u_equip(src)
 	src.set_loc(R)
 	R.part2 = src
-	R.dir = src.dir
+	R.set_dir(src.dir)
 	src.add_fingerprint(user)
 	return
 
@@ -98,7 +97,10 @@
 	if (user.stat || user.restrained() || user.lying)
 		return
 	if ((src in user) || (src.master && (src.master in user)) || get_dist(src, user) <= 1 && istype(src.loc, /turf))
-		src.add_dialog(user)
+		if (!src.master)
+			src.add_dialog(user)
+		else
+			src.master.add_dialog(user)
 		var/second = src.time % 60
 		var/minute = (src.time - second) / 60
 		var/dat = text("<TT><B>Proximity Sensor</B><br>[] []:[]<br><A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A><br></TT>", (src.timing ? text("<A href='?src=\ref[];time=0'>Timing</A>", src) : text("<A href='?src=\ref[];time=1'>Not Timing</A>", src)), minute, second, src, src, src, src)
@@ -108,7 +110,10 @@
 		onclose(user, "prox")
 	else
 		user.Browse(null, "window=prox")
-		src.remove_dialog(user)
+		if (!src.master)
+			src.remove_dialog(user)
+		else
+			src.master.remove_dialog(user)
 		return
 
 /obj/item/device/prox_sensor/Topic(href, href_list)
@@ -116,7 +121,10 @@
 	if (usr.stat || usr.restrained() || usr.lying)
 		return
 	if ((src in usr) || (src.master && (src.master in usr)) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf)))
-		src.add_dialog(usr)
+		if (!src.master)
+			src.add_dialog(usr)
+		else
+			src.master.add_dialog(usr)
 		if (href_list["arm"])
 			src.armed = !src.armed
 			src.update_icon()
@@ -158,7 +166,10 @@
 
 		if (href_list["close"])
 			usr.Browse(null, "window=prox")
-			src.remove_dialog(usr)
+			if (!src.master)
+				src.remove_dialog(usr)
+			else
+				src.master.remove_dialog(usr)
 			return
 
 		if (!src.master)
@@ -172,6 +183,6 @@
 	return
 
 /obj/item/device/prox_sensor/Move()
-	..()
+	. = ..()
 	src.sense()
 	return

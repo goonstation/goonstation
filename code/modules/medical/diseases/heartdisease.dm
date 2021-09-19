@@ -13,14 +13,14 @@
 	..()
 	if (iscarbon(affected_mob))
 		var/mob/living/carbon/C = affected_mob
-		C.add_stam_mod_regen("heartdisease", -2)
+		APPLY_MOB_PROPERTY(C, PROP_STAMINA_REGEN_BONUS, "heartdisease", -2)
 		C.add_stam_mod_max("heartdisease", -10)
 
 /datum/ailment/disease/heartdisease/on_remove(var/mob/living/affected_mob,var/datum/ailment_data/D)
 	..()
 	if (iscarbon(affected_mob))
 		var/mob/living/carbon/C = affected_mob
-		C.remove_stam_mod_regen("heartdisease")
+		REMOVE_MOB_PROPERTY(C, PROP_STAMINA_REGEN_BONUS, "heartdisease")
 		C.remove_stam_mod_max("heartdisease")
 
 /datum/ailment/disease/heartdisease/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D)
@@ -46,7 +46,7 @@
 			cureprob += 5
 		if (H.blood_pressure["total"] < 585) // high bp
 			cureprob += 5
-		if (!H.bioHolder || !H.bioHolder.HasEffect("fat"))
+		if (!H.bioHolder)
 			cureprob += 5
 		if (!H.reagents || !H.reagents.has_reagent("cholesterol"))
 			cureprob += 5

@@ -5,20 +5,24 @@
 	process()
 		//proc/handle_stuns_lying(datum/controller/process/mobs/parent)
 		var/lying_old = owner.lying
-		var/cant_lie = robot_owner || hivebot_owner || (human_owner && (human_owner.limbs && istype(human_owner.limbs.l_leg, /obj/item/parts/robot_parts/leg/left/treads) && istype(human_owner.limbs.r_leg, /obj/item/parts/robot_parts/leg/right/treads) && !locate(/obj/table, human_owner.loc) && !locate(/obj/machinery/optable, human_owner.loc)))
+		var/cant_lie = robot_owner || hivebot_owner || (human_owner && (human_owner.limbs && (istype(human_owner.limbs.l_leg, /obj/item/parts/robot_parts/leg/left/treads) || istype(human_owner.limbs.r_leg, /obj/item/parts/robot_parts/leg/right/treads)) && !locate(/obj/table, human_owner.loc) && !locate(/obj/machinery/optable, human_owner.loc)))
 
 		var/list/statusList = owner.getStatusList()
 
-		var/must_lie = statusList["resting"] || (!cant_lie && human_owner && human_owner.limbs && !human_owner.limbs.l_leg && !human_owner.limbs.r_leg) //hasn't got a leg to stand on... haaa
+		var/must_lie = !cant_lie && (statusList["resting"] || (human_owner && human_owner.limbs && !human_owner.limbs.l_leg && !human_owner.limbs.r_leg)) //hasn't got a leg to stand on... haaa
 
 		if (!owner.can_lie)
 			cant_lie = 1
 			must_lie = 0
 
+		if(cant_lie && statusList["resting"])
+			owner.delStatus("resting")
+			statusList -= "resting"
+
 		if (!isdead(owner)) //Alive.
 			var/changeling_fakedeath = 0
 			var/datum/abilityHolder/changeling/C = owner.get_ability_holder(/datum/abilityHolder/changeling)
-			if (C && C.in_fakedeath)
+			if (C?.in_fakedeath)
 				changeling_fakedeath = 1
 
 			if (statusList["paralysis"] || statusList["stunned"] || statusList["weakened"] || statusList["pinned"] || changeling_fakedeath || statusList["resting"]) //Stunned etc.

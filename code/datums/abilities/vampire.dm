@@ -3,13 +3,13 @@
 
 /* 	/		/		/		/		/		/		Setup		/		/		/		/		/		/		/		/		*/
 
-/mob/proc/make_vampire(var/shitty = 0)
+/mob/proc/make_vampire(shitty = FALSE, nonantag = FALSE)
+	var/datum/abilityHolder/vampire/vampholder = src.get_ability_holder(/datum/abilityHolder/vampire)
+	if (vampholder && istype(vampholder))
+		return
+
 	if (ishuman(src) || ismobcritter(src))
 		if (ishuman(src))
-			var/datum/abilityHolder/vampire/A = src.get_ability_holder(/datum/abilityHolder/vampire)
-			if (A && istype(A))
-				return
-
 			var/datum/abilityHolder/vampire/V = src.add_ability_holder(/datum/abilityHolder/vampire)
 
 			if(shitty) // Infernal vampire.
@@ -22,7 +22,7 @@
 				V.addAbility(/datum/targetable/vampire/glare)
 				V.addAbility(/datum/targetable/vampire/hypnotize)
 
-			SPAWN_DBG (25) // Don't remove.
+			SPAWN_DBG(2.5 SECONDS) // Don't remove.
 				if (src) src.assign_gimmick_skull()
 
 		else if (ismobcritter(src)) // For testing. Just give them all abilities that are compatible.
@@ -45,11 +45,14 @@
 				C.abilityHolder.addAbility(/datum/targetable/vampire/vampire_scream)
 				C.abilityHolder.addAbility(/datum/targetable/vampire/enthrall)
 
-		if (src.mind && src.mind.special_role != "omnitraitor")
+		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
 			if(shitty)
 				boutput(src, "<span class='notice'>Oh shit, your fangs just broke off! Looks like you'll have to get blood the HARD way.</span>")
 
 			SHOW_VAMPIRE_TIPS(src)
+
+		if(shitty || nonantag)
+			boutput(src, "<span class='alert'><h2>You've been turned into a vampire!</h2> Your vampireness was achieved by in-game means, you are <i>not</i> an antagonist unless you already were one.</span>")
 
 	else return
 
@@ -70,7 +73,7 @@
 		return 0
 
 /mob/proc/change_vampire_blood(var/change = 0, var/total_blood = 0, var/set_null = 0)
-	if (!isvampire(src) && !isvampiriczombie(src))
+	if (!isvampire(src) && !isvampiricthrall(src))
 		return
 
 	var/datum/abilityHolder/vampire/AH = src.get_ability_holder(/datum/abilityHolder/vampire)
@@ -95,11 +98,11 @@
 			else
 				AH.points = max(AH.points + change, 0)
 	else
-		var/datum/abilityHolder/vampiric_zombie/AHZ = src.get_ability_holder(/datum/abilityHolder/vampiric_zombie)
+		var/datum/abilityHolder/vampiric_thrall/AHZ = src.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 		if(AHZ && istype(AHZ) && !total_blood)
 			var/mob/living/carbon/human/M = AHZ.owner
-			if(istype(M) && istype(M.mutantrace, /datum/mutantrace/vamp_zombie))
-				var/datum/mutantrace/vamp_zombie/V = M.mutantrace
+			if(istype(M) && istype(M.mutantrace, /datum/mutantrace/vampiric_thrall))
+				var/datum/mutantrace/vampiric_thrall/V = M.mutantrace
 				if (V.blood_points < 0)
 					V.blood_points = 0
 					if (haine_blood_debug) logTheThing("debug", src, null, "<b>HAINE BLOOD DEBUG:</b> [src]'s blood_points dropped below 0 and was reset to 0")
@@ -146,7 +149,7 @@
 
 ////////////////////////////////////////////////// Ability holder /////////////////////////////////////////////
 
-/obj/screen/ability/topBar/vampire
+/atom/movable/screen/ability/topBar/vampire
 	clicked(params)
 		var/datum/targetable/vampire/spell = owner
 		var/datum/abilityHolder/holder = owner.holder
@@ -210,10 +213,11 @@
 	var/level5 = 1400
 	var/level6 = 1800 // Full power.
 
-	var/list/ghouls = list()
+	var/list/thralls = list()
 	var/turf/coffin_turf = 0
 
-	var/traveling_to_coffin = 0 //shitty projectile hacky fix
+	//contains the reference to the coffin if we're currently travelling to it, otherwise null
+	var/obj/storage/closet/coffin/vampire/the_coffin = null
 	//theres a bug where projectiles get unpooled and moved elsewhere before theyre done with their currnent firing
 	//badly affects 'travel' projectile. band aid.
 
@@ -226,11 +230,11 @@
 
 	onLife(var/mult = 1)
 		..()
-		if (traveling_to_coffin && isturf(owner.loc) && istype(traveling_to_coffin,/obj/storage/closet/coffin))
-			owner.set_loc(traveling_to_coffin)
+		if (!(the_coffin?.disposed) && isturf(owner.loc) && istype(the_coffin,/obj/storage/closet/coffin))
+			owner.set_loc(the_coffin)
 
 		if (istype(owner.loc,/obj/storage/closet/coffin))
-			traveling_to_coffin = 0
+			the_coffin = null
 			if (isdead(owner))
 				owner.full_heal()
 			else
@@ -239,7 +243,7 @@
 	set_loc_callback(newloc)
 		if (istype(newloc,/obj/storage/closet/coffin))
 			//var/obj/storage/closet/coffin/C = newloc
-			traveling_to_coffin = 0
+			the_coffin = null
 
 	proc/blood_tracking_output(var/deduct = 0)
 		if (!src.owner || !ismob(src.owner))
@@ -277,6 +281,7 @@
 			src.last_power = 2
 
 			src.has_thermal = 1
+			APPLY_MOB_PROPERTY(src.owner, PROP_THERMALVISION_MK2, src)
 			boutput(src.owner, __blue("<h3>Your vampiric vision has improved (thermal)!</h3>"))
 
 			src.addAbility(/datum/targetable/vampire/mark_coffin)
@@ -293,13 +298,13 @@
 
 			src.removeAbility(/datum/targetable/vampire/phaseshift_vampire)
 			src.addAbility(/datum/targetable/vampire/phaseshift_vampire/mk2)
+			src.addAbility(/datum/targetable/vampire/plague_touch)
 
 		if (src.last_power == 4 && src.vamp_blood >= src.level5)
 			src.last_power = 5
 
 			src.removeAbility(/datum/targetable/vampire/vampire_scream)
 			src.addAbility(/datum/targetable/vampire/vampire_scream/mk2)
-			src.addAbility(/datum/targetable/vampire/plague_touch)
 
 		if (src.last_power == 5 && src.vamp_blood >= src.level6)
 			src.last_power = 6
@@ -325,7 +330,7 @@
 
 		src.updateButtons()
 
-	proc/transmit_ghoul_msg(var/message,var/mob/sender)
+	proc/transmit_thrall_msg(var/message,var/mob/sender)
 		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 		if (!message)
@@ -340,12 +345,12 @@
 			boutput(sender, "You are currently muted and may not speak.")
 			return
 
-		sender.say_ghoul(message, src)
+		sender.say_thrall(message, src)
 
 
 	proc/remove_thrall(var/mob/victim)
 		remove_mindslave_status(victim)
-		ghouls -= victim
+		thralls -= victim
 
 	proc/make_thrall(var/mob/victim)
 		if (ishuman(victim))
@@ -388,17 +393,17 @@
 				return
 
 
-			M.real_name = "zombie [M.real_name]"
+			M.real_name = "thrall [M.real_name]"
 			if (M.mind)
-				M.mind.special_role = "vampthrall"
+				M.mind.special_role = ROLE_VAMPTHRALL
 				M.mind.master = owner.ckey
 				if (!(M.mind in ticker.mode.Agimmicks))
 					ticker.mode.Agimmicks += M.mind
 
-			ghouls += M
+			thralls += M
 
-			M.set_mutantrace(/datum/mutantrace/vamp_zombie)
-			var/datum/abilityHolder/vampiric_zombie/VZ = M.get_ability_holder(/datum/abilityHolder/vampiric_zombie)
+			M.set_mutantrace(/datum/mutantrace/vampiric_thrall)
+			var/datum/abilityHolder/vampiric_thrall/VZ = M.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 			if (VZ && istype(VZ))
 				VZ.master = src
 
@@ -435,7 +440,7 @@
 	var/unlock_message = null
 
 	New()
-		var/obj/screen/ability/topBar/vampire/B = new /obj/screen/ability/topBar/vampire(null)
+		var/atom/movable/screen/ability/topBar/vampire/B = new /atom/movable/screen/ability/topBar/vampire(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -453,7 +458,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/vampire()
+			src.object = new /atom/movable/screen/ability/topBar/vampire()
 			object.icon = src.icon
 			object.owner = src
 		if (src.last_cast > world.time)

@@ -85,7 +85,7 @@
 				owncritter.a_intent = INTENT_HARM
 
 			owncritter.hud.update_intent()
-			owncritter.dir = get_dir(owncritter, M)
+			owncritter.set_dir(get_dir(owncritter, M))
 
 			var/list/params = list()
 			params["left"] = 1
@@ -95,7 +95,7 @@
 	..()
 
 /datum/aiTask/timed/targeted/trilobite/get_targets()
-	var/list/targets = list()
+	. = list()
 	if(holder.owner)
 		for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 			var/atom/A = atom
@@ -105,8 +105,7 @@
 
 		for(var/mob/living/M in view(target_range, holder.owner))
 			if(isalive(M) && !ismobcritter(M))
-				targets += M
-	return targets
+				. += M
 
 
 
@@ -123,9 +122,9 @@
 	var/datum/aiTask/escape = null
 
 /datum/aiTask/timed/targeted/escape_vehicles/frustration_check()
-	.= 0
+	. = 0
 	if (IN_RANGE(holder.owner, holder.target, target_range/2))
-		return 1
+		. = 1
 
 /datum/aiTask/timed/targeted/escape_vehicles/on_tick()
 	if (HAS_MOB_PROPERTY(holder.owner, PROP_CANTMOVE))
@@ -143,13 +142,12 @@
 	..()
 
 /datum/aiTask/timed/targeted/escape_vehicles/get_targets()
-	var/list/targets = list()
+	. = list()
 	if(holder.owner)
 		for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 			var/atom/A = atom
 			if (IN_RANGE(holder.owner, A, target_range))
-				targets += A
-	return targets
+				. += A
 
 
 
@@ -216,7 +214,7 @@
 		owncritter.a_intent = INTENT_HARM
 
 		owncritter.hud.update_intent()
-		owncritter.dir = get_dir(owncritter, holder.target)
+		owncritter.set_dir(get_dir(owncritter, holder.target))
 
 		var/list/params = list()
 		params["left"] = 1
@@ -226,19 +224,15 @@
 	..()
 
 /datum/aiTask/timed/targeted/flee_and_shoot/get_targets()
-	var/list/targets = list()
+	. = list()
 	if(holder.owner)
 		for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 			var/atom/A = atom
 			if (IN_RANGE(holder.owner, A, 6))
-				targets += A
+				. += A
 		for(var/mob/living/M in view(target_range, holder.owner))
 			if(isalive(M) && !ismobcritter(M))
-				targets += M
-
-	return targets
-
-
+				. += M
 
 
 
@@ -326,7 +320,7 @@
 			if (dist <= 1)
 				owncritter.a_intent = INTENT_GRAB
 				owncritter.hud.update_intent()
-				owncritter.dir = get_dir(owncritter, M)
+				owncritter.set_dir(get_dir(owncritter, M))
 
 				var/list/params = list()
 				params["left"] = 1
@@ -352,14 +346,13 @@
 	..()
 
 /datum/aiTask/timed/targeted/pikaia/get_targets()
-	var/list/targets = list()
+	. = list()
 	if(holder.owner)
 		for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 			var/atom/A = atom
 			if (IN_RANGE(holder.owner, A, 6))
-				targets += A
+				. += A
 
 		for(var/mob/living/M in view(target_range, holder.owner))
 			if(isalive(M) && !ismobcritter(M))
-				targets += M
-	return targets
+				. += M

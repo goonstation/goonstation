@@ -14,6 +14,8 @@
 	var/hidden = 0 //Sometimes traders won't say if they will buy something
 	var/haggleattempts = 0
 	var/amount = -1 // Used for QM traders - how much of a thing they have for sale, unlim if -1
+	///if true, subtypes of this item will be accepted by NPC traders
+	var/subtype_valid = FALSE
 	// if its in the shopping cart, this is how many you're buying instead
 
 /*
@@ -557,7 +559,7 @@
 
 /datum/commodity/podparts/blackarmor
 	comname = "Strange Armor Plating"
-	comtype = /obj/item/pod/armor_black
+	comtype = /obj/item/podarmor/armor_black
 	desc = "NT Special Ops vehicular armor plating, almost certainly stolen."
 	price = 50000
 	baseprice = 50000
@@ -566,7 +568,7 @@
 
 /datum/commodity/podparts/redarmor
 	comname = "Syndicate Pod Armor"
-	comtype = /obj/item/pod/armor_red
+	comtype = /obj/item/podarmor/armor_red
 	desc = "A kit of Syndicate pod armor plating."
 	price = 25000
 	baseprice = 25000
@@ -575,7 +577,7 @@
 
 /datum/commodity/podparts/goldarmor
 	comname = "Gold Pod Armor"
-	comtype = /obj/item/pod/armor_gold
+	comtype = /obj/item/podarmor/armor_gold
 	desc = "A kit of gold-plated pod armor plating."
 	price = 32500
 	baseprice = 32500
@@ -777,7 +779,7 @@
 	upperfluc = 100
 	lowerfluc = -100
 
-/datum/commodity/drugs/lsd_bee
+/datum/commodity/drug/lsd_bee
 	comname = "LSBee (1x patch)"
 	comtype = /obj/item/reagent_containers/patch/lsd_bee
 	desc = "A highly potent hallucinogenic substance. It smells like honey."
@@ -868,6 +870,15 @@
 	upperfluc = 5000
 	lowerfluc = -3000
 
+/datum/commodity/relics/bootlegfirework
+	comname = "Bootleg Firework (1x rocket)"
+	comtype = /obj/item/firework/bootleg
+	desc = "Bootleg fireworks, found deep in the back of an old warehouse."
+	price = 60
+	baseprice = 60
+	upperfluc = 10
+	lowerfluc = -10
+
 ////////////////////////////////
 ///// syndicate trader /////////
 ////////////////////////////////
@@ -914,7 +925,7 @@
 
 /datum/commodity/contraband/hosberet
 	comname = "Head of Security Beret"
-	comtype = /obj/item/clothing/head/helmet/HoS
+	comtype = /obj/item/clothing/head/hos_hat
 	desc = "The beloved beret of an NT HoS."
 	price = 10000
 	baseprice = 10000
@@ -1061,16 +1072,16 @@
 //NT stuff
 
 /datum/commodity/contraband/ntso_uniform
-	comname = "NT-SO uniform"
+	comname = "Surplus tactical uniform"
 	comtype = /obj/item/clothing/under/misc/turds
-	desc = "Freshly salvaged from an NT transport craft. Best not to ask too many questions."
+	desc = "A rather smelly tactical uniform sold off from an NT warehouse."
 	price = 1500
 	baseprice = 1500
 	upperfluc = 500
 	lowerfluc = -500
 
 /datum/commodity/contraband/ntso_beret
-	comname = "NT-SO beret"
+	comname = "Surplus NT beret"
 	comtype = /obj/item/clothing/head/NTberet
 	desc = "Fancy. Possibly salvaged, possibly stolen, what's it to you?"
 	price = 2500
@@ -1079,11 +1090,11 @@
 	lowerfluc = -500
 
 /datum/commodity/contraband/ntso_vest
-	comname = "NT-SO vest"
+	comname = "Surplus armored vest"
 	comtype = /obj/item/clothing/suit/armor/NT_alt
-	desc = "Sure is a pretty shade of blue. Other than that, it's really just a standard armor vest."
-	price = 2500
-	baseprice = 2500
+	desc = "A surplus blue armored vest, well worn and definitely not drycleaned."
+	price = 3500
+	baseprice = 3500
 	upperfluc = 500
 	lowerfluc = -500
 
@@ -1242,6 +1253,15 @@
 	baseprice = 150
 	upperfluc = 50
 	lowerfluc = -50
+
+/datum/commodity/junk/pie_launcher
+	comname = "Pie Tool Module"
+	comtype = /obj/item/device/guardbot_tool/pie_launcher
+	desc = "A tool module compatible with guardbuddies. Are tool modules supposed to have cream on them?"
+	price = PAY_DOCTORATE/2
+	baseprice = PAY_DOCTORATE/2
+	upperfluc = PAY_DOCTORATE/6
+	lowerfluc = -PAY_DOCTORATE/6
 
 /datum/commodity/junk/laughbox
 	comname = "Box of Laughs"
@@ -1499,54 +1519,55 @@
 /datum/commodity/bodyparts
 	desc = "It's best not to ask too many questions."
 	onmarket = 0
+	subtype_valid = FALSE
 
 /datum/commodity/bodyparts/armL
 	comname = "Human Arm - Left"
 	comtype = /obj/item/parts/human_parts/arm/left
-	price = 2500
-	baseprice = 2500
-	upperfluc = 1500
-	lowerfluc = -500
+	price = 500
+	baseprice = 500
+	upperfluc = 300
+	lowerfluc = -100
 
 /datum/commodity/bodyparts/armR
 	comname = "Human Arm - Right"
 	comtype = /obj/item/parts/human_parts/arm/right
-	price = 2500
-	baseprice = 2500
-	upperfluc = 1500
-	lowerfluc = -500
+	price = 500
+	baseprice = 500
+	upperfluc = 300
+	lowerfluc = -100
 
 /datum/commodity/bodyparts/legL
 	comname = "Human Leg - Left"
 	comtype = /obj/item/parts/human_parts/leg/left
-	price = 2500
-	baseprice = 2500
-	upperfluc = 1500
-	lowerfluc = -500
+	price = 500
+	baseprice = 500
+	upperfluc = 300
+	lowerfluc = -100
 
 /datum/commodity/bodyparts/legR
 	comname = "Human Leg - Right"
 	comtype = /obj/item/parts/human_parts/leg/right
-	price = 2500
-	baseprice = 2500
-	upperfluc = 1500
-	lowerfluc = -500
+	price = 500
+	baseprice = 500
+	upperfluc = 300
+	lowerfluc = -100
 
 /datum/commodity/bodyparts/brain
 	comname = "Brain"
 	comtype = /obj/item/organ/brain
-	price = 5000
-	baseprice = 5000
-	upperfluc = 2500
-	lowerfluc = -1000
+	price = 1000
+	baseprice = 1000
+	upperfluc = 500
+	lowerfluc = -200
 
 /datum/commodity/bodyparts/synthbrain
 	comname = "Synthetic Brain"
 	comtype = /obj/item/organ/brain/synth
-	price = 500
-	baseprice = 500
-	upperfluc = 250
-	lowerfluc = -250
+	price = 100
+	baseprice = 100
+	upperfluc = 50
+	lowerfluc = -50
 
 /datum/commodity/bodyparts/aibrain
 	comname = "AI Neural Net Processor"
@@ -1559,18 +1580,18 @@
 /datum/commodity/bodyparts/butt
 	comname = "Human Butt"
 	comtype = /obj/item/clothing/head/butt
-	price = 5000
-	baseprice = 5000
-	upperfluc = 2500
-	lowerfluc = -2500
+	price = 1000
+	baseprice = 1000
+	upperfluc = 500
+	lowerfluc = -200
 
 /datum/commodity/bodyparts/synthbutt
 	comname = "Synthetic Butt"
 	comtype = /obj/item/clothing/head/butt/synth
-	price = 300
-	baseprice = 300
-	upperfluc = 300
-	lowerfluc = -150
+	price = 100
+	baseprice = 100
+	upperfluc = 50
+	lowerfluc = -50
 
 /datum/commodity/bodyparts/cyberbutt
 	comname = "Robutt"
@@ -1583,18 +1604,18 @@
 /datum/commodity/bodyparts/heart
 	comname = "Human Heart"
 	comtype = /obj/item/organ/heart
-	price = 5000
-	baseprice = 5000
-	upperfluc = 2500
-	lowerfluc = -2500
+	price = 1000
+	baseprice = 1000
+	upperfluc = 500
+	lowerfluc = -200
 
 /datum/commodity/bodyparts/synthheart
 	comname = "Synthetic Heart"
 	comtype = /obj/item/organ/heart/synth
-	price = 500
-	baseprice = 500
-	upperfluc = 250
-	lowerfluc = -250
+	price = 100
+	baseprice = 100
+	upperfluc = 50
+	lowerfluc = -50
 
 /datum/commodity/bodyparts/cyberheart
 	comname = "Cyberheart"
@@ -1607,26 +1628,26 @@
 /datum/commodity/bodyparts/l_eye
 	comname = "Left Human Eye"
 	comtype = /obj/item/organ/eye/left
-	price = 2500
-	baseprice = 2500
-	upperfluc = 1000
-	lowerfluc = -1000
+	price = 500
+	baseprice = 500
+	upperfluc = 200
+	lowerfluc = -100
 
 /datum/commodity/bodyparts/r_eye
 	comname = "Right Human Eye"
 	comtype = /obj/item/organ/eye/right
-	price = 2500
-	baseprice = 2500
-	upperfluc = 1000
-	lowerfluc = -1000
+	price = 500
+	baseprice = 500
+	upperfluc = 200
+	lowerfluc = -100
 
 /datum/commodity/bodyparts/syntheye
 	comname = "Synthetic Eye"
 	comtype = /obj/item/organ/eye/synth
-	price = 250
-	baseprice = 250
-	upperfluc = 100
-	lowerfluc = -100
+	price = 50
+	baseprice = 50
+	upperfluc = 30
+	lowerfluc = -10
 
 /datum/commodity/bodyparts/cybereye
 	comname = "Cybereye"
@@ -1719,18 +1740,18 @@
 /datum/commodity/bodyparts/l_lung
 	comname = "Left Human Lung"
 	comtype = /obj/item/organ/lung/left
-	price = 2500
-	baseprice = 2500
-	upperfluc = 1000
-	lowerfluc = -1000
+	price = 500
+	baseprice = 500
+	upperfluc = 200
+	lowerfluc = -100
 
 /datum/commodity/bodyparts/r_lung
 	comname = "Right Human Lung"
 	comtype = /obj/item/organ/lung/right
-	price = 2500
-	baseprice = 2500
-	upperfluc = 1000
-	lowerfluc = -1000
+	price = 500
+	baseprice = 500
+	upperfluc = 200
+	lowerfluc = -100
 
 /datum/commodity/bodyparts/l_cyberlung
 	comname = "Left Cyberlung"
@@ -1753,23 +1774,23 @@
 /datum/commodity/bodyparts/l_kidney
 	comname = "Left Human Kidney"
 	comtype = /obj/item/organ/kidney/left
-	price = 2200
-	baseprice = 2200
-	upperfluc = 900
-	lowerfluc = -900
+	price = 440
+	baseprice = 440
+	upperfluc = 180
+	lowerfluc = -180
 
 /datum/commodity/bodyparts/r_kidney
 	comname = "Right Human Kidney"
 	comtype = /obj/item/organ/kidney/right
-	price = 2200
-	baseprice = 2200
-	upperfluc = 900
-	lowerfluc = -900
+	price = 440
+	baseprice = 440
+	upperfluc = 180
+	lowerfluc = -180
 
 /datum/commodity/bodyparts/l_cyberkidney
 	comname = "Left Cyberkidney"
 	comtype = /obj/item/organ/kidney/cyber/left
-	price = 1000
+	price = 1200
 	baseprice = 1000
 	upperfluc = 500
 	lowerfluc = -500
@@ -1787,10 +1808,10 @@
 /datum/commodity/bodyparts/liver
 	comname = "Human Liver"
 	comtype = /obj/item/organ/liver
-	price = 3500
-	baseprice = 3500
-	upperfluc = 1500
-	lowerfluc = -1500
+	price = 700
+	baseprice = 700
+	upperfluc = 300
+	lowerfluc = -300
 
 /datum/commodity/bodyparts/cyberliver
 	comname = "Cyberliver"
@@ -1803,10 +1824,10 @@
 /datum/commodity/bodyparts/spleen
 	comname = "Human Spleen"
 	comtype = /obj/item/organ/spleen
-	price = 2200
-	baseprice = 2200
-	upperfluc = 1000
-	lowerfluc = -1000
+	price = 440
+	baseprice = 440
+	upperfluc = 200
+	lowerfluc = -200
 
 /datum/commodity/bodyparts/cyberspleen
 	comname = "Cyberspleen"
@@ -1819,10 +1840,10 @@
 /datum/commodity/bodyparts/pancreas
 	comname = "Human Pancreas"
 	comtype = /obj/item/organ/pancreas
-	price = 1100
-	baseprice = 1100
-	upperfluc = 200
-	lowerfluc = -200
+	price = 220
+	baseprice = 220
+	upperfluc = 20
+	lowerfluc = -20
 
 /datum/commodity/bodyparts/cyberpancreas
 	comname = "Cyberpancreas"
@@ -1835,10 +1856,10 @@
 /datum/commodity/bodyparts/appendix
 	comname = "Human Appendix"
 	comtype = /obj/item/organ/appendix
-	price = 100
-	baseprice = 100
-	upperfluc = 100
-	lowerfluc = -99
+	price = 20
+	baseprice = 20
+	upperfluc = 20
+	lowerfluc = -19
 
 /datum/commodity/bodyparts/cyberappendix
 	comname = "Cyberappendix"
@@ -1851,10 +1872,10 @@
 /datum/commodity/bodyparts/stomach
 	comname = "Human Stomach"
 	comtype = /obj/item/organ/stomach
-	price = 2500
-	baseprice = 2500
-	upperfluc = 1000
-	lowerfluc = -1000
+	price = 500
+	baseprice = 500
+	upperfluc = 200
+	lowerfluc = -200
 
 /datum/commodity/bodyparts/cyberstomach
 	comname = "Cyberstomach"
@@ -1867,10 +1888,10 @@
 /datum/commodity/bodyparts/intestines
 	comname = "Human Intestines"
 	comtype = /obj/item/organ/intestines
-	price = 2500
-	baseprice = 2500
-	upperfluc = 1000
-	lowerfluc = -1000
+	price = 500
+	baseprice = 500
+	upperfluc = 200
+	lowerfluc = -200
 
 /datum/commodity/bodyparts/cyberintestines
 	comname = "Cyberintestines"
@@ -2137,6 +2158,56 @@
 	upperfluc = 150
 	lowerfluc = -100
 
+/datum/commodity/costume/mime
+	comname = "Mime Clothes"
+	comtype = /obj/item/storage/box/costume/mime
+	desc = "No words can describe this. Only intricate gesticulation."
+	price = 100 //exactly what the clown spawns with in their account, three mimes on mondays.
+	baseprice = 100
+	upperfluc = 150
+	lowerfluc = -100
+
+/datum/commodity/costume/mime/alt
+	comname = "Alternate Mime Clothes."
+	comtype = /obj/item/storage/box/costume/mime/alt
+	desc = "This stuff will give you an edge in charades."
+
+/datum/commodity/backpack/breadpack
+	comname = "Bag-uette"
+	comtype = /obj/item/storage/backpack/breadpack
+	desc = "A bread-themed backpack...? It kind of smells like bread too! Unfortunately inedible."
+	price = 600
+	baseprice = 100
+	upperfluc = 150
+	lowerfluc = -100
+
+/datum/commodity/backpack/bearpack
+	comname = "Bearpack"
+	comtype = /obj/item/storage/backpack/bearpack
+	desc = "A teddy bear backpack; perfect for hugs AND carries your gear for you, how helpful!"
+	price = 500
+	baseprice = 100
+	upperfluc = 150
+	lowerfluc = -100
+
+/datum/commodity/backpack/turtlebrown
+	comname = "Brown Turtle Shell Backpack"
+	comtype = /obj/item/storage/backpack/turtlebrown
+	desc = "All the hip teenage mutants have one of these turtle shell backpacks."
+	price = 650
+	baseprice = 100
+	upperfluc = 150
+	lowerfluc = -100
+
+/datum/commodity/backpack/turtlegreen
+	comname = "Green Turtle Shell Backpack"
+	comtype = /obj/item/storage/backpack/turtlegreen
+	desc = "All the hip teenage mutants have one of these turtle shell backpacks."
+	price = 650
+	baseprice = 100
+	upperfluc = 150
+	lowerfluc = -100
+
 /datum/commodity/balloons //no it ain't a costume kit but it's going in Geoff's wares so idgaf tOt fite me
 	comname = "box of balloons"
 	comtype = /obj/item/storage/box/balloonbox
@@ -2157,7 +2228,50 @@
 	upperfluc = 100
 	lowerfluc = -20
 
-#if ASS_JAM
+/datum/commodity/sticker/
+	onmarket = 0
+
+/datum/commodity/sticker/googly_eyes
+	comname = "box of googly eyes"
+	comtype = /obj/item/item_box/googly_eyes
+	desc = "A box of googly eyes! Sweet!"
+	onmarket = 0
+	price = 50
+	baseprice = 50
+	upperfluc = 100
+	lowerfluc = -20
+
+/datum/commodity/sticker/googly_eyes_angry
+	comname = "box of angry googly eyes"
+	comtype = /obj/item/item_box/googly_eyes/angry
+	desc = "A box of angry googly eyes! Aaaaargh!"
+	onmarket = 0
+	price = 50
+	baseprice = 50
+	upperfluc = 100
+	lowerfluc = -20
+
+/datum/commodity/toygun
+	comname = "Toy Gun"
+	comtype = /obj/item/gun/kinetic/foamdartgun
+	desc = "A toy gun that fires foam darts."
+	onmarket = 0
+	price = 500
+	baseprice = 500
+	upperfluc = 50
+	lowerfluc = -50
+
+/datum/commodity/toygunammo
+	comname = "Foam Darts"
+	comtype = /obj/item/ammo/bullets/foamdarts
+	desc = "Six foam darts for toy guns."
+	onmarket = 0
+	price = 200
+	baseprice = 200
+	upperfluc = 20
+	lowerfluc = -20
+
+/*
 /datum/commodity/screamshoes
 	comname = "scream shoes"
 	comtype = /obj/item/clothing/shoes/scream
@@ -2177,7 +2291,7 @@
 	baseprice = 100
 	upperfluc = 150
 	lowerfluc = -20
-#endif
+*/
 
 /// pathology
 /datum/commodity/synthmodule
@@ -2716,3 +2830,12 @@
 	baseprice = 2000
 	upperfluc = 1700
 	lowerfluc = -1700
+
+/datum/commodity/expensive_card
+	comname = "Incredibly Expensive Card"
+	desc = "Wow...people really pay a lot for these cards..."
+	comtype = /obj/item/playing_card/expensive
+	onmarket = 1
+	price = 21000
+	upperfluc = 20000
+	lowerfluc = -28500

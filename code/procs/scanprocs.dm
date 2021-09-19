@@ -1,4 +1,5 @@
 
+
 /proc/scan_health(var/mob/M as mob, var/verbose_reagent_info = 0, var/disease_detection = 1, var/organ_scan = 0, var/visible = 0)
 	if (!M)
 		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
@@ -16,6 +17,8 @@
 	var/health_percent = round(100 * M.health / M.max_health)
 
 	var/colored_health
+	if(M.max_health <= 0)
+		colored_health = "<span class='alert'>???</span>"
 	if (health_percent >= 51 && health_percent <= 100)
 		colored_health = "<span style='color:#138015'>[health_percent]</span>"
 	else if (health_percent >= 1 && health_percent <= 50)
@@ -105,7 +108,7 @@
 
 			var/bad_stuff = 0
 			if (L.implant && L.implant.len > 0)
-				for (var/obj/item/implant/I in L)
+				for (var/obj/item/implant/I in L.implant)
 					if (istype(I, /obj/item/implant/projectile))
 						bad_stuff ++
 
@@ -161,6 +164,8 @@
 				organ_data1 += organ_health_scan("spleen", H, obfuscate)
 				organ_data1 += organ_health_scan("pancreas", H, obfuscate)
 				organ_data1 += organ_health_scan("appendix", H, obfuscate)
+				if(H.organHolder.tail || H.mob_flags & SHOULD_HAVE_A_TAIL)
+					organ_data1 += organ_health_scan("tail", H, obfuscate)
 
 				//Don't give organ readings for Vamps.
 				if (organ_data1 && !isvampire(H))
@@ -264,6 +269,81 @@
 		ret += "<span style='color:purple'> - Robotic organ detected</span>"
 	return ret.Join()
 
+/datum/genetic_prescan
+	var/list/activeDna = null
+	var/list/poolDna = null
+
+	var/list/activeDnaKnown = null
+	var/list/activeDnaUnknown = null
+	var/list/poolDnaKnown = null
+	var/list/poolDnaUnknown = null
+
+	proc/generate_known_unknown(ignoreRestrictions = FALSE)
+		if (ignoreRestrictions)
+			src.activeDnaKnown = src.activeDna
+			src.poolDnaKnown = src.poolDna
+			return
+		src.activeDnaKnown = list()
+		src.activeDnaUnknown = list()
+		src.poolDnaKnown = list()
+		src.poolDnaUnknown = list()
+		for (var/datum/bioEffect/BE in src.activeDna)
+			var/datum/bioEffect/GBE = BE.get_global_instance()
+			if (!GBE.scanner_visibility)
+				continue
+			if (GBE.secret && !genResearch.see_secret)
+				continue
+			if (GBE.research_level < EFFECT_RESEARCH_DONE)
+				src.activeDnaUnknown += BE
+				continue
+			src.activeDnaKnown += BE
+		for (var/datum/bioEffect/BE in src.poolDna)
+			var/datum/bioEffect/GBE = BE.get_global_instance()
+			if (!GBE.scanner_visibility)
+				continue
+			if (GBE.secret && !genResearch.see_secret)
+				continue
+			if (GBE.research_level < EFFECT_RESEARCH_DONE)
+				src.poolDnaUnknown += BE
+				continue
+			src.poolDnaKnown += BE
+
+/proc/scan_genetic(mob/M as mob, datum/genetic_prescan/prescan = null, visible = FALSE)
+	if (!M)
+		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
+	if (visible)
+		animate_scanning(M, "#9eee80")
+	if (!ishuman(M))
+		return "<span class='alert'>ERROR: UNABLE TO ANALYZE GENETIC STRUCTURE</span>"
+	var/list/data = list()
+	var/datum/bioHolder/BH = M.bioHolder
+	data += "<span class='notice'>Genetic Stability: [BH.genetic_stability]</span>"
+	var/datum/genetic_prescan/GP = prescan
+	if (!GP)
+		GP = new /datum/genetic_prescan
+		GP.activeDna = list()
+		GP.poolDna = list()
+		for (var/bioEffectId in BH.effects)
+			GP.activeDna += BH.GetEffect(bioEffectId)
+		for (var/bioEffectId in BH.effectPool)
+			GP.poolDna += BH.GetEffect(bioEffectId)
+		GP.generate_known_unknown()
+	data += "<span class='notice'>Potential Genetic Effects:</span>"
+	for (var/datum/bioEffect/BE in GP.poolDnaKnown)
+		data += BE.name
+	if (length(GP.poolDnaUnknown))
+		data += "<span class='alert'>Unknown: [length(GP.poolDnaUnknown)]</span>"
+	else if (!length(GP.poolDnaKnown))
+		data += "-- None --"
+	data += "<span class='notice'>Active Genetic Effects:</span>"
+	for (var/datum/bioEffect/BE in GP.activeDnaKnown)
+		data += BE.name
+	if (length(GP.activeDnaUnknown))
+		data += "<span class='alert'>Unknown: [length(GP.activeDnaUnknown)]</span>"
+	else if (!length(GP.activeDnaKnown))
+		data += "-- None --"
+	return data.Join("<br>")
+
 /proc/update_medical_record(var/mob/living/carbon/human/M)
 	if (!M || !ishuman(M))
 		return
@@ -276,8 +356,8 @@
 		if (E.fields["name"] == patientname)
 			switch (M.stat)
 				if (0)
-					if (M.bioHolder && M.bioHolder.HasEffect("fat"))
-						E.fields["p_stat"] = "Physically Unfit"
+					if (M.bioHolder && M.bioHolder.HasEffect("strong"))
+						E.fields["p_stat"] = "Very Active"
 					else
 						E.fields["p_stat"] = "Active"
 				if (1)
@@ -295,6 +375,57 @@
 					break
 			break
 	return
+
+// output a health pop-up overhead thing to the client
+/proc/scan_health_overhead(var/mob/M as mob, var/mob/C as mob) // M is who we're scanning, C is who to give the overhead to
+	if (C.client && !C.client.preferences?.flying_chat_hidden)
+
+		var/image/chat_maptext/chat_text = null
+		var/h_pct = M.max_health ? round(100 * M.health / M.max_health) : M.health
+		if(M.max_health <= 0)
+			h_pct = "???"
+		var/oxy = round(M.get_oxygen_deprivation())
+		var/tox = round(M.get_toxin_damage())
+		var/burn = round(M.get_burn_damage())
+		var/brute = round(M.get_brute_damage())
+
+		var/popup_text = "<span class='ol c pixel'><span class='vga'>[h_pct]%</span>\n<span style='color: #40b0ff;'>[oxy]</span> - <span style='color: #33ff33;'>[tox]</span> - <span style='color: #ffee00;'>[burn]</span> - <span style='color: #ff6666;'>[brute]</span></span>"
+		chat_text = make_chat_maptext(M, popup_text, force = 1)
+		if(chat_text)
+			chat_text.measure(C.client)
+			for(var/image/chat_maptext/I in C.chat_text.lines)
+				if(I != chat_text)
+					I.bump_up(chat_text.measured_height)
+			chat_text.show_to(C.client)
+
+/proc/scan_medrecord(var/obj/item/device/pda2/pda, var/mob/M as mob, var/visible = 0)
+	if (!M)
+		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
+
+	if (!ishuman(M))
+		return "<span class='alert'>ERROR: INVALID DATA FROM SUBJECT</span>"
+
+	if(visible)
+		animate_scanning(M, "#0AEFEF")
+
+	var/mob/living/carbon/human/H = M
+	var/datum/data/record/GR = FindRecordByFieldValue(data_core.general, "name", H.name)
+	var/datum/data/record/MR = FindRecordByFieldValue(data_core.medical, "name", H.name)
+	if (!MR)
+		return "<span class='alert'>ERROR: NO RECORD FOUND</span>"
+
+	//Find medical records program
+	var/list/programs = null
+	for (var/obj/item/disk/data/mod in pda.contents)
+		programs += mod.root.contents.Copy()
+	var/datum/computer/file/pda_program/records/medical/record_prog = locate(/datum/computer/file/pda_program/records/medical) in programs
+	if (!record_prog)
+		return "<span class='alert'>ERROR: NO MEDICAL RECORD FILE</span>"
+	pda.run_program(record_prog)
+	record_prog.active1 = GR
+	record_prog.active2 = MR
+	record_prog.mode = 1
+	pda.attack_self(usr)
 
 /proc/scan_reagents(var/atom/A as turf|obj|mob, var/show_temp = 1, var/single_line = 0, var/visible = 0, var/medical = 0)
 	if (!A)
@@ -323,7 +454,7 @@
 					data = "<span class='alert'>ERR: SPECTROSCOPIC ANALYSIS OF THIS SUBSTANCE IS NOT POSSIBLE.</span>"
 					return data
 
-			var/reagents_length = reagents.reagent_list.len
+			var/reagents_length = length(reagents.reagent_list)
 			data = "<span class='notice'>[reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found in [A].</span>"
 
 			for (var/current_id in reagents.reagent_list)
@@ -383,7 +514,7 @@
 
 		if (H.implant && H.implant.len > 0)
 			var/wounds = null
-			for (var/obj/item/implant/I in H)
+			for (var/obj/item/implant/I in H.implant)
 				if (istype(I, /obj/item/implant/projectile))
 					wounds ++
 			if (wounds)
@@ -512,7 +643,7 @@
 
 		if (istype(A, /turf/simulated/wall))
 			var/turf/simulated/wall/W = A
-			if (W.forensic_impacts && islist(W.forensic_impacts) && W.forensic_impacts.len)
+			if (W.forensic_impacts && islist(W.forensic_impacts) && length(W.forensic_impacts))
 				for(var/i in W.forensic_impacts)
 					forensic_data += "<br><span class='notice'>Forensic signature found:</span> [i]"
 
@@ -574,8 +705,8 @@
 		var/obj/item/assembly/proximity_bomb/PB = A
 		if (PB.part3)
 			check_me = PB.part3.air_contents
-	if (istype(A, /obj/item/flamethrower/assembled/))
-		var/obj/item/flamethrower/assembled/FT = A
+	if (istype(A, /obj/item/gun/flamethrower/assembled/))
+		var/obj/item/gun/flamethrower/assembled/FT = A
 		if (FT.gastank)
 			check_me = FT.gastank.air_contents
 

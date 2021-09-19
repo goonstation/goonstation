@@ -37,7 +37,6 @@ var/list/dangerousVerbs = list(\
 /client/proc/BK_finance_debug,\
 /client/proc/BK_alter_funds,\
 /client/proc/debug_pools,\
-/client/proc/cmd_claim_rs_verbs,\
 /client/proc/debug_variables,\
 /client/proc/debug_global_variable,\
 /client/proc/call_proc,\
@@ -89,10 +88,12 @@ var/list/dangerousVerbs = list(\
 	admin_only
 
 	if (alert("Enable drunk mode for yourself?", "Confirmation", "Yes", "No") == "Yes")
+		var/not_drunk_but_high = (alert("Are you boozin' or weedin'", "drugs", "Drunk", "High") == "High")
+
 		if (src)
 			src.verbs -= /client/proc/enableDrunkMode
 			src.verbs += /client/proc/disableDrunkMode
-			src.toggleDrunkMode(src)
+			src.toggleDrunkMode(src, not_drunk_but_high)
 	return
 
 /client/proc/disableDrunkMode()
@@ -110,7 +111,7 @@ var/list/dangerousVerbs = list(\
 	var/num2 = rand(10,99)
 	var/answer = num1 + num2
 	message += "What is [num1] + [num2]?\n\n"
-	message += "You have to give your answer in WORDS! e.g. 10 = ten"
+	message += "You have to give your answer in WORDS! e.g. 310 = three hundred and ten"
 
 	answer = get_english_num(answer)
 
@@ -145,7 +146,7 @@ var/list/dangerousVerbs = list(\
 	src.toggleDrunkMode(C)
 
 
-/client/proc/toggleDrunkMode(var/client/C)
+/client/proc/toggleDrunkMode(var/client/C, var/is_actually_high = 0)
 	if (!C) return
 
 	admin_only
@@ -197,14 +198,26 @@ var/list/dangerousVerbs = list(\
 		logTheThing("diary", C, null, logMessage, "admin")
 		message_admins("[key_name(C)] [logMessage]")
 
-		//Make centcom announcement
-		var/list/announce = list(\
-			"is drunk as a skunk",\
-			"makes poor life choices",\
-			"likes to get wasted and play terrible space farting games. What a loser",\
-			"is here to ruin everyone's round",\
-			"\"I'm drunk it doesn't have to make sense\""\
-		)
-		command_alert("[C.key] [pick(announce)].", "Drunkmin detected")
+		if (!is_actually_high)
+			//Make centcom announcement
+			var/list/announce = list(\
+				"is drunk as a skunk",\
+				"makes poor life choices",\
+				"likes to get wasted and play terrible space farting games. What a loser",\
+				"is here to ruin everyone's round",\
+				"\"I'm drunk it doesn't have to make sense\""\
+			)
+			command_alert("[C.key] [pick(announce)].", "Drunkmin detected")
+
+		else
+			//Make centcom announcement
+			var/list/announce = list(\
+				"is high as a kite",\
+				"makes poor life choices",\
+				"likes to get stoned and play terrible space farting games. What a loser",\
+				"is here to ruin everyone's round",\
+				"\"I'm high it doesn't have to make sense\""\
+			)
+			command_alert("[C.key] [pick(announce)].", "Weedmin detected")
 
 		boutput(C, "<span class='alert'><b><big>You are now in drunk-mode!</big></b><br>You will have reduced powers so you can't fuck shit up so much.<br>Use \"Disable Drunk Mode\" to disable this.</span>")

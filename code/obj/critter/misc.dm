@@ -34,7 +34,7 @@
 		src.visible_message("<b>[src]</b> stops moving!")
 		animate_float(src, 1, 5)
 		playsound(src.loc, "sound/effects/suck.ogg", 40, 1, -1, 0.6)
-		SPAWN_DBG (100) //Give time for people to butcher it if they want.
+		SPAWN_DBG(10 SECONDS) //Give time for people to butcher it if they want.
 			if (!src.disposed && src.loc && original_object)
 				original_object.set_loc(src.loc)
 				original_object = null
@@ -389,6 +389,7 @@
 	name = "space wasp"
 	desc = "A wasp in space."
 	icon_state = "spacebee"
+	critter_family = BUG
 	density = 1
 	health = 10
 	aggressive = 1
@@ -484,7 +485,7 @@
 
 	Move()
 		playsound(src.loc, "sound/impact_sounds/Crystal_Hit_1.ogg", 50, 0)
-		..()
+		. = ..()
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		..()
@@ -608,7 +609,7 @@
 		src.create_reagents(1000)
 
 		SPAWN_DBG(4 SECONDS)
-			if(!reagents.total_volume)
+			if(reagents && !reagents.total_volume)
 				if (all_functional_reagent_ids.len > 0)
 					src.reagent_id = pick(all_functional_reagent_ids)
 				else
@@ -678,8 +679,7 @@
 		..()
 
 		src.visible_message("<span class='combat'><b>[src]</b> bursts into a puff of smoke!</span>")
-		var/datum/chemical_reaction/smoke/thesmoke = new
-		thesmoke.on_reaction(src.reagents, 12)
+		src.reagents.smoke_start(12)
 		invisibility = 100
 		SPAWN_DBG(5 SECONDS)
 			qdel(src)
@@ -785,7 +785,7 @@
 			if(iscarbon(M))
 				if(to_deal > (((sword_damage_max-sword_damage_min)/2)+sword_damage_min) && prob(50))
 					src.visible_message("<span class='combat'><B>[src] knocks down [M]!</B></span>")
-					M:changeStatus("weakened", 80)
+					M:changeStatus("weakened", 8 SECONDS)
 			SPAWN_DBG(2.5 SECONDS)
 				src.attacking = 0
 		else
@@ -991,6 +991,9 @@
 
 			src.attacking = 0
 
+	blob_act(power)
+		return
+
 	attack_hand(var/mob/user as mob)
 		if (src.alive)
 			boutput(user, "<span class='combat'><b>Your hand passes right through! It's so cold...</b></span>")
@@ -1003,7 +1006,7 @@
 		else
 			if (istype(W, /obj/item/baton))
 				var/obj/item/baton/B = W
-				if (B.can_stun(1, 1, user) == 1)
+				if (B.can_stun(1, user) == 1)
 					user.visible_message("<span class='combat'><b>[user] shocks the [src.name] with [B]!</b></span>", "<span class='combat'><b>While your baton passes through, the [src.name] appears damaged!</b></span>")
 					B.process_charges(-1, user)
 					src.health--
@@ -1302,7 +1305,7 @@
 		var/this_expiration_id = rand(1, 100000)
 		src.expiration_id = this_expiration_id
 		SPAWN_DBG(time)
-			if(src && src.alive && src.expiration_id == this_expiration_id)
+			if(src?.alive && src.expiration_id == this_expiration_id)
 				src.health = 0
 				src.CritterDeath()
 
@@ -1395,7 +1398,7 @@
 			return
 
 	proc/contents_check()
-		if(!src.allow_empty && !src.contents.len)
+		if(!src.allow_empty && !length(src.contents))
 			src.visible_message("<span class='notice'><B>[src]</B> realizes that its material essence is missing and vanishes in a puff of logic!</span>")
 			qdel(src)
 
@@ -1414,7 +1417,8 @@
 		drop_stick(1)
 		qdel(src)
 
-	on_pet()
+	on_pet(mob/user)
+		..()
 		if(prob(10))
 			if(icon_state == "snake_bee")
 				src.visible_message("[src] buzzes delightedly!")

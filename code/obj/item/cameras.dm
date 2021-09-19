@@ -4,20 +4,20 @@
 	icon_state = "album"
 	item_state = "briefcase"
 
-/obj/item/storage/photo_album/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/storage/photo_album/attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
 	if (!istype(W,/obj/item/photo))
 		boutput(user, "<span class='alert'>You can only put photos in a photo album.</span>")
 		return
 
 	return ..()
 
-/obj/item/camera_test
+/obj/item/camera
 	name = "camera"
 	icon = 'icons/obj/items/device.dmi'
 	desc = "A reusable polaroid camera."
 	icon_state = "camera"
 	item_state = "electropack"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | EXTRADELAY | CONDUCT | ONBELT
 	m_amt = 2000
 	throwforce = 5
@@ -28,6 +28,7 @@
 	var/pictures_max = 30
 	var/can_use = 1
 	var/takes_voodoo_pics = 0
+	var/steals_souls = FALSE
 
 	New()
 		..()
@@ -76,7 +77,7 @@
 			..()
 		return
 
-/obj/item/camera_test/voodoo //kubius: voodoo cam subtyped for cleanliness
+/obj/item/camera/voodoo //kubius: voodoo cam subtyped for cleanliness
 	desc = "There's some sort of faint writing etched into the casing."
 	takes_voodoo_pics = 1
 
@@ -85,6 +86,84 @@
 		desc = "No one cam should have all this power."
 		takes_voodoo_pics = 2
 
+/obj/item/camera/spy
+	inventory_counter_enabled = 1
+	var/flash_mode = 0
+	var/wait_cycle = 0
+
+	attack_self(mob/user)
+		if (user.find_in_hand(src))
+			if (!src.flash_mode)
+				user.show_text("You use the secret switch to set the camera to flash mode.", "blue")
+				playsound(user, "sound/items/pickup_defib.ogg", 100, 1)
+				src.icon_state = "camera_flash"
+			else
+				user.show_text("You use the secret switch to set the camera to take photos.", "blue")
+				playsound(user, "sound/items/putback_defib.ogg", 100, 1)
+				src.icon_state = "camera"
+			src.flash_mode = !src.flash_mode
+			src.update_icon()
+
+	New()
+		var/cell = new/obj/item/ammo/power_cell/self_charging/medium{recharge_rate = 10}
+		AddComponent(/datum/component/cell_holder,cell, FALSE, 200, FALSE)
+		RegisterSignal(src, COMSIG_UPDATE_ICON, .proc/update_icon)
+		..()
+		update_icon()
+
+	proc/update_icon()
+		if (!src.flash_mode)
+			inventory_counter.update_text("")
+		else
+			var/list/ret = list()
+			if (SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+				inventory_counter.update_percent(ret["charge"], ret["max_charge"])
+			else
+				inventory_counter.update_text("-")
+		return 0
+
+	disposing()
+		processing_items -= src
+		..()
+
+/obj/item/camera/spy/attack(atom/target, mob/user, flag)
+	if (!ismob(target))
+		return
+	if (src.flash_mode)
+		// Use cell charge
+		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, 25) & CELL_SUFFICIENT_CHARGE))
+			user.show_text("[src] doesn't have enough battery power!", "red")
+			return 0
+		var/turf/T = get_turf(target.loc)
+		if (T.is_sanctuary())
+			user.visible_message("<span class='alert'><b>[user]</b> tries to use [src], cannot quite comprehend the forces at play!</span>")
+			return
+		src.update_icon()
+		// Generic flash
+		var/mob/M = target
+		SEND_SIGNAL(src, COMSIG_CELL_USE, 25)
+		var/blind_success = M.apply_flash(30, 8, 0, 0, 0, rand(0, 1), 0, 0, 100, 70, disorient_time = 30)
+		playsound(src, "sound/weapons/flash.ogg", 100, 1)
+		flick("camera_flash-anim", src)
+		// Log entry.
+		var/blind_msg_target = "!"
+		var/blind_msg_others = "!"
+		if (!blind_success)
+			blind_msg_target = " but your eyes are protected!"
+			blind_msg_others = " but [his_or_her(M)] eyes are protected!"
+		M.visible_message("<span class='alert'>[user] blinds [M] with the flash[blind_msg_others]</span>", "<span class='alert'>You are blinded by the flash[blind_msg_target]</span>") // Pretend to be a flash
+		logTheThing("combat", user, M, "blinds [constructTarget(M,"combat")] with spy [src] at [log_loc(user)].")
+	else
+		. = ..()
+
+/obj/item/camera/spy/afterattack(atom/target, mob/user, flag)
+	if (!can_use || ismob(target.loc))
+		return
+	if (src.flash_mode)
+		return
+	else
+		. = ..() 	// Call /obj/item/camera/spy/afterattack() for photo mode
+
 /obj/item/camera_film
 	name = "film cartridge"
 	desc = "A replacement film cartridge for an instant camera."
@@ -92,7 +171,7 @@
 	icon_state = "camera_film"
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "box"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	mats = 10
 	var/pictures = 10
 
@@ -112,7 +191,7 @@
 	icon_state = "photo"
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/image/fullImage
 	var/icon/fullIcon
 	var/list/signed = list()
@@ -190,7 +269,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (enchant_power && world.time > src.enchant_delay && cursed_dude && istype(cursed_dude, /mob))
-			cursed_dude.attackby(W,user)
+			cursed_dude.Attackby(W,user)
 			src.enchant_delay = world.time + COMBAT_CLICK_DELAY
 			if(enchant_power > 0) enchant_power--
 		else
@@ -213,7 +292,7 @@
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
-/*/obj/item/camera_test*/
+/*/obj/item/camera*/
 /proc/build_composite_icon(var/atom/C)
 	if (!C)
 		return
@@ -225,28 +304,28 @@
 	composite.underlays = C.underlays
 	return composite
 //////////////////////////////////////////////////////////////////////////////////////////////////
-/obj/item/camera_test/attack(mob/living/carbon/human/M as mob, mob/user as mob)
+/obj/item/camera/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	return
 
-/obj/item/camera_test/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+/obj/item/camera/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 	if (!can_use || ismob(target.loc)) return
 	if (src.pictures_left == 0 && user)
 		user.show_text("The film cartridge is used up. You have to replace it first.", "red")
 		return
 
 	src.create_photo(target)
-	playsound(get_turf(src), "sound/items/polaroid[rand(1,2)].ogg", 75, 1, -3)
+	playsound(src, "sound/items/polaroid[rand(1,2)].ogg", 75, 1, -3)
 
 	if (src.pictures_left > 0)
 		src.pictures_left = max(0, src.pictures_left - 1)
 		if (user)
 			boutput(user, "<span class='notice'>[pictures_left] photos left.</span>")
 	can_use = 0
-	SPAWN_DBG (50)
+	SPAWN_DBG(5 SECONDS)
 		if (src)
 			src.can_use = 1
 
-/obj/item/camera_test/proc/create_photo(var/atom/target, var/powerflash = 0)
+/obj/item/camera/proc/create_photo(var/atom/target, var/powerflash = 0)
 	if (!target)
 		return 0
 	var/turf/the_turf = get_turf(target)
@@ -273,6 +352,7 @@
 
 	var/mobnumber = 0 // above 3 and it'll stop listing what they're holding and if they're hurt
 	var/itemnumber = 0
+	var/list/mob/stolen_souls = list()
 
 	for (var/atom/A in the_turf)
 		if (A.invisibility || istype(A, /obj/overlay/tile_effect))
@@ -286,6 +366,9 @@
 			photo_icon.Blend(Y, ICON_OVERLAY)
 			qdel(X)
 			qdel(Y)
+
+			if(src.steals_souls)
+				stolen_souls += M
 
 			if (!mob_title)
 				if(src.takes_voodoo_pics)
@@ -367,6 +450,11 @@
 		P:cursed_dude = deafnote //kubius: using runtime eval because non-voodoo photos don't have a cursed_dude var
 		if(src.takes_voodoo_pics == 2) //unlimited photo uses
 			P:enchant_power = -1
+	else if(src.steals_souls)
+		P = new/obj/item/photo/haunted(get_turf(src), photo, photo_icon, finished_title, finished_detail)
+		var/obj/item/photo/haunted/HP = P
+		for(var/mob/M as anything in stolen_souls)
+			HP.add_soul(M)
 	else
 		P = new/obj/item/photo(get_turf(src), photo, photo_icon, finished_title, finished_detail)
 

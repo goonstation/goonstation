@@ -2,7 +2,9 @@
 
 /**
  * Chemicompiler
+ *
  * v1.0 By volundr 9/24/14
+ *
  * This device is a programmable chemistry mixing and heating device.
  * The javascript code to run the frontend is in browserassets/js/chemicompiler.min.js
  *   which is minified javascript from browserassets/js/chemicompiler.js
@@ -10,7 +12,6 @@
  *   and run `npm install -g uglify-js`
  *   then run `uglifyjs browserassets/js/chemicompiler.js -c > browserassets/js/chemicompiler.min.js` to rebuild the compressed version.
  */
-
 /datum/chemicompiler_core
 	var/list/buttons[6]
 	var/list/cbf[6]
@@ -695,7 +696,7 @@
 			reservoirs[resId] = null
 		else
 			var/obj/item/reagent_containers/glass/B = reservoirs[resId]
-			B.attackby(usr.equipped(), usr)
+			B.Attackby(usr.equipped(), usr)
 
 	else
 		// Putting SOMETHING in
@@ -795,7 +796,7 @@
 	if (target == 13)
 		RS.trans_to(src.ejection_reservoir, amount, index = index)
 		RS = src.ejection_reservoir.reagents
-		RS.reaction(get_turf(src.holder), TOUCH, amount)
+		RS.reaction(get_turf(src.holder), TOUCH, min(amount, RS.total_volume))
 		RS.clear_reagents()
 		showMessage("Something drips out the side of [src.holder].")
 
@@ -828,9 +829,10 @@
 	var/max_temp_change = abs(R.total_temperature - temp)
 	var/next_temp_change = min(max((abs(R.total_temperature - element_temp) / h_divisor), 1), h_change_cap)	// Formula used by temperature_reagents() to determine how much to change the temp
 	if(next_temp_change >= max_temp_change)																	// Check if this tick will cause the temperature to overshoot if heated/cooled at full power. Use >= to prevent reheating in the case the values line up perfectly
-		var/element_temp_offset = max_temp_change * h_divisor												// Compute the exact exposure temperature to reach the target
-		element_temp = R.total_temperature + element_temp_offset * (temp > R.total_temperature ? 1 : -1)
+		element_temp = (((R.total_temperature - (R.total_temperature-temp)*h_divisor) * (R.total_volume+h_exposed_volume)) - (R.total_temperature*R.total_volume))/h_exposed_volume
 		heating_in_progress = 0
+
+	h_divisor = 35/h_divisor*100 // quick hack because idk wtf is going on here - Emily
 
 	R.temperature_reagents(element_temp, h_exposed_volume, h_divisor, h_change_cap)
 

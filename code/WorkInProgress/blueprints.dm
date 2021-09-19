@@ -206,13 +206,13 @@
 					var/turf/newTile = get_turf(pos)
 					newTile.ReplaceWith(T.tiletype)
 					newTile.icon_state = T.state
-					newTile.dir = T.direction
+					newTile.set_dir(T.direction)
 					newTile.inherit_area()
 
 				for(var/datum/objectinfo/O in T.objects)
 					if(O.objecttype == null) continue
 					var/atom/A = new O.objecttype(pos)
-					A.dir = O.direction
+					A.set_dir(O.direction)
 					A.layer = O.layer
 					A.pixel_x = O.px
 					A.pixel_y = O.py
@@ -322,7 +322,7 @@
 				//boutput(world, newObjType + " - " + O.objecttype)
 				if(O.objecttype == null) continue
 				var/atom/A = new O.objecttype(pos)
-				A.dir = O.direction
+				A.set_dir(O.direction)
 				A.layer = O.layer
 				A.pixel_x = O.px
 				A.pixel_y = O.py
@@ -344,7 +344,7 @@
 	item_state = "gun"
 
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 	var/prints_left = 5
 
@@ -386,22 +386,23 @@
 	"/obj/machinery/optable",
 	"/obj/machinery/mass_driver", \
 //	"/obj/reagent_dispensers", \ //No free helium/fuel/omni/raj/etc from abcu
-	"/obj/machinery/manufacturer", \
 	"/obj/machinery/sleeper", \
 	"/obj/machinery/sleep_console", \
 	"/obj/submachine/slot_machine", \
 	"/obj/machinery/deep_fryer",
 	"/obj/submachine/ATM", \
-	"/obj/submachine/slot_machine",
 	"/obj/submachine/ice_cream_dispenser",
 	"/obj/machinery/portable_atmospherics", \
 	"/obj/machinery/ai_status_display",
-	"/obj/noticeboard",
 	"/obj/securearea",
 	"/obj/submachine/mixer",
 	"/obj/submachine/foodprocessor"
 	)
 
+	var/list/blacklistedObjectTypes = list(\
+	"/obj/disposalpipe/loafer",
+	"/obj/submachine/slot_machine/item",
+	"/obj/machinery/portable_atmospherics/canister")
 	var/list/permittedTileTypes = list("/turf/simulated")
 
 	var/savefile/save = new/savefile("data/blueprints.dat")
@@ -430,7 +431,7 @@
 			boutput(user, "<span class='alert'>Unsupported Tile type detected.</span>")
 			return
 
-		for(var/turf/t as() in roomList)
+		for(var/turf/t as anything in roomList)
 			if(t.x < minx) minx = t.x
 			if(t.y < miny) miny = t.y
 
@@ -450,7 +451,7 @@
 			return
 
 		if(roomList.Find(target))
-			if (using && using.client)
+			if (using?.client)
 				using.client.images -= roomList[target]
 			roomList.Remove(target)
 		else
@@ -464,14 +465,14 @@
 		..()
 
 	proc/removeOverlays()
-		if (using && using.client)
+		if (using?.client)
 			for(var/a in roomList)
 				var/image/i = roomList[a]
 				using.client.images -= i
 		return
 
 	proc/updateOverlays()
-		if (using && using.client)
+		if (using?.client)
 			removeOverlays()
 			for(var/a in roomList)
 				var/image/i = roomList[a]
@@ -498,7 +499,7 @@
 		var/maxx = 0
 		var/maxy = 0
 
-		for(var/turf/t as() in roomList)
+		for(var/turf/t as anything in roomList)
 			if(t.x < minx) minx = t.x
 			if(t.y < miny) miny = t.y
 
@@ -524,8 +525,10 @@
 			save["state"] << curr.icon_state
 
 			for(var/obj/o in curr)
-				if (istype(o, /obj/disposalpipe/loafer)) // Sorry.
-					continue
+				for(var/p in blacklistedObjectTypes)
+					var/type = text2path(p)
+					if(istype(o, type))
+						break//no
 				var/permitted = 0
 				for(var/p in permittedObjectTypes)
 					var/type = text2path(p)

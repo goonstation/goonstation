@@ -68,7 +68,8 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 						src.load()
 				return "queued"
 			else
-				if (config.env == "dev") return 0
+				if (config.env == "dev" || !apikey) // If we have no API key, why even bother
+					return 0
 
 				args = (args == null ? list() : args)
 				args["server_name"] = (config.server_name ? replacetext(config.server_name, "#", "") : null)
@@ -118,7 +119,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 			//args["api_key"] = (src.apikey ? src.apikey : null)
 			//WHY WAS THAT A THING?
 
-			if (config && config.server_name)
+			if (config?.server_name)
 				args["server_name"] = replacetext(config.server_name, "#", "")
 				args["server"] = replacetext(config.server_name, "#", "") //TEMP FOR BACKWARD COMPAT WITH SHITFORMANT
 

@@ -658,7 +658,7 @@ var/global/datum/module_research_controller/module_control = new
 			user.u_equip(W)
 			W.set_loc(src)
 			return
-		if ((!islist(W.module_research) || !W.module_research.len) && !W.artifact)
+		if ((!islist(W.module_research) || !length(W.module_research)) && !W.artifact)
 			boutput(user, "<span class='alert'>That item cannot be researched!</span>")
 			return
 		user.u_equip(W)

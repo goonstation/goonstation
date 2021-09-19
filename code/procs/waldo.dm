@@ -57,7 +57,7 @@
 	var/list/theareas = new/list()
 	for(var/area/AR in world)
 		LAGCHECK(LAG_LOW)
-		if(theareas.Find(AR.name)) continue
+		if(AR.name in theareas) continue
 		var/turf/picked = pick(get_area_turfs(AR.type))
 		if (picked.z == usr.z)
 			theareas += AR.name
@@ -95,7 +95,7 @@
 
 		var/list/mob/teleportees = list()
 		for(var/mob/living/M in orange(usr, 4))
-			if(!isdead(M) && M.mind && (M.mind.special_role in list("waldo", "odlaw", "wizard")))
+			if(!isdead(M) && M.mind && (M.mind.special_role in list("waldo", "odlaw", ROLE_WIZARD)))
 				teleportees.Add(M)
 
 		usr.set_loc(pick(L))

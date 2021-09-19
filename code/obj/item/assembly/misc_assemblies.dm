@@ -23,7 +23,7 @@ Contains:
 	item_state = "assembly"
 	var/status = 0.0
 	throwforce = 10
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 4
 	throw_range = 10
 	force = 2
@@ -222,7 +222,7 @@ Contains:
 
 	if(src.part3)
 		src.part3.master = null
-		src.part3.attack_hand(usr)
+		src.part3.Attackhand(usr)
 		src.part3 = null
 		src.c_state(src.part1.timing)
 		boutput(usr, "<span class='notice'>You remove the timer/igniter assembly from the beaker.</span>")
@@ -339,8 +339,6 @@ Contains:
 			src.part5.set_loc(T)
 			src.part5.master = null
 			src.part5 = null
-
-		//SN src = null
 		user.u_equip(src)
 		qdel(src)
 		return
@@ -441,7 +439,7 @@ Contains:
 
 	if(src.part3)
 		src.part3.master = null
-		src.part3.attack_hand(usr)
+		src.part3.Attackhand(usr)
 		src.part3 = null
 		src.c_state(src.part1.timing)
 		boutput(usr, "<span class='notice'>You remove the Proximity/Igniter assembly from the beaker.</span>")
@@ -618,7 +616,7 @@ Contains:
 
 	if(src.part3)
 		src.part3.master = null
-		src.part3.attack_hand(usr)
+		src.part3.Attackhand(usr)
 		src.part3 = null
 		src.c_state()
 		boutput(usr, "<span class='notice'>You remove the radio/igniter assembly from the beaker.</span>")
@@ -662,7 +660,7 @@ Contains:
 
 /obj/item/assembly/anal_ignite/New()
 	..()
-	SPAWN_DBG (5)
+	SPAWN_DBG(0.5 SECONDS)
 		if (src && !src.part1)
 			src.part1 = new /obj/item/device/analyzer/healthanalyzer(src)
 			src.part1.master = src
@@ -861,7 +859,7 @@ obj/item/assembly/radio_horn/receive_signal()
 	return
 
 /obj/item/assembly/rad_prox/Move()
-	..()
+	. = ..()
 	src.part2.sense()
 	return
 

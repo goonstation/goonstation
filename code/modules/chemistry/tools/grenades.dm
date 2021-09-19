@@ -9,7 +9,7 @@
 	icon = 'icons/obj/items/grenade.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "flashbang"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	force = 2.0
 	var/stage = 0
 	var/state = 0
@@ -23,6 +23,9 @@
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 0
+	move_triggered = 1
+	var/detonating = 0
+
 
 	New()
 		..()
@@ -30,10 +33,13 @@
 		fluid_image2 = image('icons/obj/items/grenade.dmi', "grenade-chem-fluid2", -1)
 		src.create_reagents(150000)
 
+	is_open_container()
+		return src.detonating
+
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W,/obj/item/grenade_fuse) && !stage)
 			boutput(user, "<span class='notice'>You add [W] to the metal casing.</span>")
-			playsound(get_turf(src), "sound/items/Screwdriver2.ogg", 25, -3)
+			playsound(src, "sound/items/Screwdriver2.ogg", 25, -3)
 			qdel(W) //Okay so we're not really adding anything here. cheating.
 			icon_state = "grenade-chem2"
 			name = "unsecured grenade"
@@ -41,7 +47,7 @@
 		else if (isscrewingtool(W) && stage == 1)
 			if (beakers.len)
 				boutput(user, "<span class='notice'>You lock the assembly.</span>")
-				playsound(get_turf(src), "sound/items/Screwdriver.ogg", 25, -3)
+				playsound(src, "sound/items/Screwdriver.ogg", 25, -3)
 				name = "grenade"
 				icon_state = "grenade-chem3"
 				stage = 2
@@ -159,15 +165,19 @@
 		boutput(user, "<span class='alert'>You prime the grenade! 3 seconds!</span>")
 		src.state = 1
 		src.icon_state = icon_state_armed
-		playsound(get_turf(src), "sound/weapons/armbomb.ogg", 75, 1, -3)
+		playsound(src, "sound/weapons/armbomb.ogg", 75, 1, -3)
 		SPAWN_DBG(3 SECONDS)
 			if (src && !src.disposed)
 				a = get_area(src)
 				if(a.sanctuary) return
+				if(user?.equipped() == src)
+					user.u_equip(src)
 				explode()
 
 	proc/explode()
+		src.reagents.my_atom = src //hax
 		var/has_reagents = 0
+		src.detonating = 1
 		for (var/obj/item/reagent_containers/glass/G in beakers)
 			if (G.reagents.total_volume) has_reagents = 1
 
@@ -189,7 +199,7 @@
 			var/min_dispersal = src.reagents.get_dispersal()
 			for (var/atom/A in range(min_dispersal, get_turf(src.loc)))
 				if ( A == src ) continue
-				if (src && src.reagents) // Erik: fix for cannot execute null.grenade effects()
+				if (src?.reagents) // Erik: fix for cannot execute null.grenade effects()
 					src.reagents.grenade_effects(src, A)
 					src.reagents.reaction(A, 1, 10, 0)
 
@@ -199,6 +209,12 @@
 			if (src.master) qdel(src.master)
 			if (src) qdel(src)	   //correctly before deleting the grenade.
 
+	move_trigger(var/mob/M, kindof)
+		if (..())
+			for (var/obj/O in contents)
+				if (O.move_triggered)
+					O.move_trigger(M, kindof)
+
 /obj/item/grenade_fuse
 	name = "grenade fuse"
 	desc = "A fuse mechanism with a safety lever."
@@ -206,7 +222,7 @@
 	icon_state = "grenade-fuse"
 	item_state = "pen"
 	force = 0
-	w_class = 1
+	w_class = W_CLASS_TINY
 	m_amt = 100
 
 /* =================================================== */
@@ -325,8 +341,9 @@
 		beakers += B2
 
 	revolution //convertssss
+		mats = null
 		explode()
-			if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution))
+			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 				var/datum/game_mode/revolution/R = ticker.mode
 				var/min_dispersal = src.reagents.get_dispersal()
 				for (var/mob/M in range(max(min_dispersal,6), get_turf(src.loc)))
@@ -422,20 +439,10 @@
 	New()
 		..()
 		var/obj/item/reagent_containers/glass/B1 = new(src)
-		var/obj/item/reagent_containers/glass/B2 = new(src)
-		var/obj/item/reagent_containers/glass/B3 = new(src)
 
-		B1.reagents.add_reagent("voltagen", 25)
-		B1.reagents.add_reagent("sugar",25)
-
-		B2.reagents.add_reagent("phosphorus", 25)
-		B2.reagents.add_reagent("potassium", 25)
-
-		B3.reagents.add_reagent("voltagen", 25) //do a zap in addition to the smoke.
+		B1.reagents.add_reagent("voltagen", 50)
 
 		beakers += B1
-		beakers += B2
-		beakers += B3
 
 /obj/item/chem_grenade/pepper
 	name = "crowd dispersal grenade"
@@ -516,6 +523,28 @@
 		var/obj/item/reagent_containers/glass/B2 = new(src)
 
 		B1.reagents.add_reagent("fog", 25)
+		B1.reagents.add_reagent("sugar",25)
+
+		B2.reagents.add_reagent("phosphorus", 25)
+		B2.reagents.add_reagent("potassium", 25)
+
+		beakers += B1
+		beakers += B2
+
+/obj/item/chem_grenade/napalm
+	name = "napalm smoke grenade"
+	desc = "A grenade that will fill an area with napalm smoke."
+	icon = 'icons/obj/items/grenade.dmi'
+	icon_state = "incendiary"
+	icon_state_armed = "incendiary1"
+	stage = 2
+
+	New()
+		..()
+		var/obj/item/reagent_containers/glass/B1 = new(src)
+		var/obj/item/reagent_containers/glass/B2 = new(src)
+
+		B1.reagents.add_reagent("syndicate_napalm", 25)
 		B1.reagents.add_reagent("sugar",25)
 
 		B2.reagents.add_reagent("phosphorus", 25)

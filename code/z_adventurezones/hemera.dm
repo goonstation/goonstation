@@ -410,7 +410,7 @@ Obsidian Crown
 
 				if(isrestrictedz(host.z))
 					for(var/turf/T in view(M, 4))
-						if (T.loc != get_area(M) && T.loc.type != /area) //If we're in a telesci area and this is a change in area.
+						if (T.loc != get_area(M) && T.loc.type != /area/space) //If we're in a telesci area and this is a change in area.
 							continue
 						if(T.density)
 							continue
@@ -441,7 +441,7 @@ Obsidian Crown
 		host.delStatus("weakened")
 		host.delStatus("paralysis")
 		host.dizziness = max(0,host.dizziness-10)
-		host.drowsyness = max(0,host.drowsyness-10)
+		host.changeStatus("drowsy", -20 SECONDS)
 		host.sleeping = 0
 
 		health_update_queue |= host

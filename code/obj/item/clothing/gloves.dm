@@ -1,18 +1,20 @@
 // NO GLOVES NO LOVES
 
 var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwerk's forensic ID system (Convair880).
-
+ABSTRACT_TYPE(/obj/item/clothing/gloves)
 /obj/item/clothing/gloves
 	name = "gloves"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	icon = 'icons/obj/clothing/item_gloves.dmi'
 	wear_image_icon = 'icons/mob/hands.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_feethand.dmi'
 	protective_temperature = 400
+	wear_layer = MOB_HAND_LAYER2
 	var/uses = 0
 	var/max_uses = 0 // If can_be_charged == 1, how many charges can these gloves store?
 	var/stunready = 0
-	var/weighted = 0
+	///additive modifier to punch damage
+	var/punch_damage_modifier = 0
 	var/atom/movable/overlay/overl = null
 	var/activeweapon = 0 // Used for gloves that can be toggled to turn into a weapon (example, bladed gloves)
 
@@ -103,7 +105,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 				return
 			boutput(user, "<span class='notice'>You attach the wires to the [src.name].</span>")
 			src.stunready = 1
-			src.setSpecialOverride(/datum/item_special/spark, 0)
+			src.setSpecialOverride(/datum/item_special/spark, src, 0)
 			src.material_prints += ", electrically charged"
 			return
 
@@ -139,11 +141,6 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 
 		..()
 
-	proc/damage_bonus()
-		if (weighted)
-			return 3
-		return 0
-
 	proc/distort_prints(var/prints as text, var/get_glove_ID = 1) // Ditto (Convair880).
 
 		var/data = null
@@ -172,22 +169,21 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 		boutput(usr, "Your gloves do nothing special")
 		return
 
-	proc/setSpecialOverride(var/type = null, active = 1)
+	proc/setSpecialOverride(var/type = null, master = null, active = 1)
 		if(!ispath(type))
 			if(isnull(type))
-				if(src.specialoverride)
-					src.specialoverride.onRemove()
+				src.specialoverride?.onRemove()
 				src.specialoverride = null
 			return null
 
-		if(src.specialoverride)
-			src.specialoverride.onRemove()
+		src.specialoverride?.onRemove()
 
 		var/datum/item_special/S = new type
-		S.master = src
+		S.master = master
 		src.overridespecial = active
 		S.onAdd()
 		src.specialoverride = S
+		src.tooltip_rebuild = true;
 		return S
 
 
@@ -235,6 +231,14 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 		..()
 		setProperty("heatprot", 7)
 
+/obj/item/clothing/gloves/black/attackby(obj/item/W, mob/user)
+	if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
+		user.visible_message("<span class='notice'>[user] cuts off the fingertips from [src].</span>")
+		if(src.loc == user)
+			user.u_equip(src)
+		qdel(src)
+		user.put_in_hand_or_drop(new /obj/item/clothing/gloves/fingerless)
+	else . = ..()
 /obj/item/clothing/gloves/cyborg
 	desc = "beep boop borp"
 	name = "cyborg gloves"
@@ -326,6 +330,14 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 		setProperty("conductivity", 0.3)
 		setProperty("deflection", 20)
 
+/obj/item/clothing/gloves/swat/knight
+	name = "combat gauntlets"
+	desc = "Heavy-duty combat gloves that help you keep hold of your weapon."
+
+	setupProperties()
+		..()
+		setProperty("deflection", 25)
+
 /obj/item/clothing/gloves/swat/NT
 	desc = "A pair of Nanotrasen tactical gloves that are quite fire and electrically-resistant. They also help you block attacks. They do not specifically help you block against blocking though. Just regular attacks."
 	icon_state = "swat_NT"
@@ -346,7 +358,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 		setProperty("conductivity", 0)
 	New()
 		..()
-		setSpecialOverride(/datum/item_special/spark)
+		setSpecialOverride(/datum/item_special/spark, src)
 
 
 /obj/item/clothing/gloves/yellow
@@ -357,7 +369,6 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	material_prints = "insulative fibers"
 	can_be_charged = 1
 	max_uses = 4
-	permeability_coefficient = 0.5
 
 	setupProperties()
 		..()
@@ -388,6 +399,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	crit_override = 1
 	bonus_crit_chance = 0
 	stamina_dmg_mult = 0.35
+	var/weighted
 
 	setupProperties()
 		..()
@@ -409,6 +421,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 			return
 		boutput(user, "You slip the horseshoe inside one of the gloves.")
 		src.weighted = 1
+		src.punch_damage_modifier += 3
 		tooltip_rebuild = 1
 		qdel(W)
 	else
@@ -420,10 +433,10 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	icon = 'icons/obj/junk.dmi'
 	icon_state = "horseshoe"
 	force = 6.5
-	throwforce = 25
+	throwforce = 15
 	throw_speed = 3
 	throw_range = 6
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	flags = FPRINT | TABLEPASS | NOSHIELD
 
 	New()
@@ -483,10 +496,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 
 			playsound(user, "sound/effects/elec_bigzap.ogg", 40, 1)
 
-			for (var/obj/item/cloaking_device/I in user)
-				if (I.active)
-					I.deactivate(user)
-					user.visible_message("<span class='notice'><b>[user]'s cloak is disrupted!</b></span>")
+			SEND_SIGNAL(user, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
 
 			if(isturf(target))
 				target_r = new/obj/elec_trg_dummy(target)
@@ -515,7 +525,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 							src.electrocute(target_r, 100, netnum)
 							break
 						if("disarm")
-							target_r:weakened += 3
+							target.changeStatus("weakened", 3 SECONDS)
 							break
 
 				var/list/next = new/list()
@@ -548,7 +558,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	desc = "A strange gauntlet made of cogs and brass machinery. It has seven slots along the side."
 	icon_state = "brassgauntlet"
 	item_state = "brassgauntlet"
-	weighted = 1
+	punch_damage_modifier = 3
 	burn_possible = 0
 	cant_self_remove = 1
 	cant_other_remove = 1

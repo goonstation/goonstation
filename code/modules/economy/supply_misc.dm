@@ -27,7 +27,13 @@
 
 	Entered(var/atom/movable/AM)
 		..()
-		if (istype(AM, /obj/storage/crate/biohazard/cdc))
+		var/datum/artifact/art = null
+		if(isobj(AM))
+			var/obj/O = AM
+			art = O.artifact
+		if(art)
+			shippingmarket.sell_artifact(AM, art)
+		else if (istype(AM, /obj/storage/crate/biohazard/cdc))
 			QM_CDC.receive_pathogen_samples(AM)
 		else if (istype(AM, /obj/storage/crate))
 			if (AM.delivery_destination)
@@ -54,6 +60,8 @@
 		if (isghostdrone(M)) // except for drones
 			return 1
 		else if (istype(A,/mob/living/critter/changeling/handspider) || istype(A,/mob/living/critter/changeling/eyespider))
+			return 1
+		else if (!M.can_lie && isdead(M))
 			return 1
 		else if(!M.lying) // or you're lying down
 			return 0

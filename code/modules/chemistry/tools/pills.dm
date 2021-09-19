@@ -11,9 +11,7 @@
 	icon_state = "pill0"
 	item_state = "pill"
 	rc_flags = RC_SPECTRO		// only spectroscopic analysis
-	flags = NOSPLASH
-	module_research = list("medicine" = 0.5, "science" = 0.5)
-	module_research_type = /obj/item/reagent_containers/pill
+	flags = NOSPLASH | TABLEPASS
 	rand_pos = 1
 	var/random_icon = 0
 	var/image/color_overlay
@@ -134,10 +132,7 @@
 			return ..()
 
 
-	MouseDrop(atom/over_object, src_location, over_location, over_control, params)
-		if (istype(over_object,/obj/item/chem_pill_bottle)) //dont do our whole fancy pickup thjing
-			return
-		..()
+
 
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */
@@ -155,17 +150,15 @@
 	name = "charcoal pill"
 	desc = "Neutralizes many common toxins."
 	icon_state = "pill17"
-	initial_volume = 100
 
 	New()
 		..()
-		reagents.add_reagent("charcoal", 50)
+		reagents.add_reagent("charcoal", 20)
 
 /obj/item/reagent_containers/pill/calomel
 	name = "calomel pill"
 	desc = "Can be used to purge impurities, but is highly toxic itself."
 	icon_state = "pill3"
-	initial_volume = 100
 
 	New()
 		..()
@@ -175,7 +168,6 @@
 	name = "cyanide pill"
 	desc = "Highly lethal."
 	icon_state = "pill5"
-	initial_volume = 100
 
 	New()
 		..()
@@ -185,7 +177,6 @@
 	name = "morphine pill"
 	desc = "Used to treat severe pain. Highly addictive."
 	icon_state = "pill8"
-	initial_volume = 100
 
 	New()
 		..()
@@ -195,27 +186,24 @@
 	name = "analgesic pill"
 	desc = "Commonly used to treat moderate pain and fevers."
 	icon_state = "pill4"
-	initial_volume = 100
 
 	New()
 		..()
-		reagents.add_reagent("salicylic_acid", 20)
+		reagents.add_reagent("salicylic_acid", 10)
 
 /obj/item/reagent_containers/pill/menthol
 	name = "menthol pill"
 	desc = "This pill looks kinda cool. It's used to treat moderate burns and fevers."
 	icon_state = "pill21"
-	initial_volume = 100
 
 	New()
 		..()
-		reagents.add_reagent("menthol", 20)
+		reagents.add_reagent("menthol", 10)
 
 /obj/item/reagent_containers/pill/silver_sulfadiazine
 	name = "silver sulfadiazine pill" //wtf
 	desc = "Used to treat burns, but it's not meant to be ingested. Welp."
 	icon_state = "pill11"
-	initial_volume = 100
 
 	New()
 		..()
@@ -225,7 +213,6 @@
 	name = "epinephrine pill"
 	desc = "Used to stabilize patients in crisis."
 	icon_state = "pill20"
-	initial_volume = 100
 
 	New()
 		..()
@@ -235,7 +222,6 @@
 	name = "salbutamol pill"
 	desc = "Used to treat respiratory distress."
 	icon_state = "pill16"
-	initial_volume = 100
 
 	New()
 		..()
@@ -245,7 +231,6 @@
 	name = "mutadone pill"
 	desc = "Used to cure genetic abnormalities."
 	icon_state = "pill18"
-	initial_volume = 100
 
 	New()
 		..()
@@ -255,7 +240,6 @@
 	name = "mannitol pill"
 	desc = "Used to treat cranial swelling."
 	icon_state = "pill19"
-	initial_volume = 100
 
 	New()
 		..()
@@ -265,7 +249,6 @@
 	name = "potassium iodide pill"
 	desc = "Used to treat radiation poisoning."
 	icon_state = "pill9"
-	initial_volume = 100
 
 	New()
 		..()
@@ -275,7 +258,6 @@
 	name = "\improper EZ-Hairgrowth pill"
 	desc = "The #1 hair growth product on the market! WARNING: Some side effects may occur."
 	icon_state = "pill6"
-	initial_volume = 100
 
 	New()
 		..()
@@ -287,7 +269,6 @@
 	name = "methamphetamine pill"
 	desc = "Methamphetamine is a highly effective and dangerous stimulant drug."
 	icon_state = "pill9"
-	initial_volume = 100
 
 	New()
 		..()
@@ -297,7 +278,6 @@
 	name = "crank pill"
 	desc = "A cheap and dirty stimulant drug, commonly used by space biker gangs."
 	icon_state = "pill4"
-	initial_volume = 100
 
 	New()
 		..()
@@ -307,7 +287,6 @@
 	name = "bath salts pill"
 	desc = "Sometimes packaged as a refreshing bathwater additive, these crystals are definitely not for human consumption."
 	icon_state = "pill1"
-	initial_volume = 100
 
 	New()
 		..()
@@ -317,7 +296,6 @@
 	name = "cat drugs pill"
 	desc = "Uhhh..."
 	icon_state = "pill5"
-	initial_volume = 100
 
 	New()
 		..()
@@ -326,7 +304,6 @@
 /obj/item/reagent_containers/pill/cyberpunk
 	name = "cyberpunk pill"
 	desc = "A cocktail of illicit designer drugs, who knows what might be in here."
-	initial_volume = 100
 	random_icon = 1
 
 	New()
@@ -336,14 +313,7 @@
 		var/primaries = rand(1,3)
 		var/adulterants = rand(2,4)
 
-#if ASS_JAM
-		primaries--
-		adulterants--
-		var/the_spicy_stuff = rand(2, 4)
-		while(the_spicy_stuff > 0)
-			the_spicy_stuff--
-			reagents.add_reagent(pick(all_functional_reagent_ids), 3)
-#endif
+
 
 		while(primaries > 0)
 			primaries--
@@ -359,7 +329,6 @@
 	name = "mannitol pill"
 	desc = "Used to treat cranial swelling."
 	icon_state = "pill1"
-	initial_volume = 100
 
 	New()
 		..()
@@ -369,27 +338,24 @@
 	name = "anti-toxins pill"
 	desc = "Neutralizes many common toxins."
 	icon_state = "pill2"
-	initial_volume = 100
 
 	New()
 		..()
-		reagents.add_reagent("charcoal", 50)
+		reagents.add_reagent("charcoal", 20)
 
 /obj/item/reagent_containers/pill/vr/salicylic_acid
 	name = "analgesic pill"
 	desc = "Commonly used to treat moderate pain and fevers."
 	icon_state = "pill3"
-	initial_volume = 100
 
 	New()
 		..()
-		reagents.add_reagent("salicylic_acid", 20)
+		reagents.add_reagent("salicylic_acid", 10)
 
 /obj/item/reagent_containers/pill/vr/salbutamol
 	name = "salbutamol pill"
 	desc = "Used to treat respiratory distress."
 	icon_state = "pill4"
-	initial_volume = 100
 
 	New()
 		..()

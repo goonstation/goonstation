@@ -19,8 +19,8 @@ var/global/datum/apiHandler/apiHandler
 
 
 	// Suppress errors on local environments, as it's spammy and local devs probably won't have the config for API connectivity to work
-	proc/apiError(message = "")
-		if (config.server_id != "local")
+	proc/apiError(message = "", forceErrorException = 0)
+		if (config.server_id != "local" || forceErrorException)
 			throw EXCEPTION(message)
 
 
@@ -49,9 +49,9 @@ var/global/datum/apiHandler/apiHandler
 	 * @return (list|boolean) list containing parsed data response from api, 1 if forceResponse is false
 	 *
 	 */
-	proc/queryAPI(route = "", query = list(), forceResponse = 0, attempt = 1)
+	proc/queryAPI(route = "", query = list(), forceResponse = 0, attempt = 1, forceErrorException = 0)
 		if (!enabled || !route)
-			src.apiError("API Error: Cancelled query due to [!enabled ? "disabled apiHandler" : "missing route parameter"]")
+			src.apiError("API Error: Cancelled query due to [!enabled ? "disabled apiHandler" : "missing route parameter"]", forceErrorException)
 			return
 
 		var/req = "[config.goonhub_api_endpoint]/[route]/?[query ? "[list2params(query)]&" : ""]" //Necessary

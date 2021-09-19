@@ -34,7 +34,7 @@
 	return 1
 
 /datum/game_mode/waldo/post_setup()
-	var/num_waldos = waldos.len
+	var/num_waldos = length(waldos)
 	for(var/turf/T in landmarks[LANDMARK_TELEPORT_SCROLL])
 		for(var/scrollcount in 1 to num_waldos)
 			new /obj/item/teleportation_scroll(T)
@@ -50,13 +50,13 @@
 				if(2)
 					waldo.special_role = "odlaw"
 				if(3)
-					waldo.special_role = "wizard"
+					waldo.special_role = ROLE_WIZARD
 			waldo.current.resistances += list(/datum/ailment/disease/dnaspread, /datum/ailment/disease/clowning_around, /datum/ailment/disease/cluwneing_around, /datum/ailment/disease/enobola, /datum/ailment/disease/robotic_transformation)
 			if(!job_start_locations["wizard"])
 				boutput(waldo.current, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
 			else
 				waldo.current.set_loc(pick(job_start_locations["wizard"]))
-			if(waldo.special_role in list("odlaw", "wizard"))
+			if(waldo.special_role in list("odlaw", ROLE_WIZARD))
 				switch(rand(1,100))
 					if(1 to 30)
 						var/datum/objective/assassinate/kill_objective = new
@@ -110,7 +110,7 @@
 				if("odlaw")
 					boutput(waldo.current, "<B><span class='alert'>You are Odlaw!</span></B>")
 					waldo.current.real_name = "Odlaw"
-				if("wizard")
+				if(ROLE_WIZARD)
 					boutput(waldo.current, "<B><span class='alert'>You are Wizard Whitebeard!</span></B>")
 					waldo.current.real_name = "Wizard Whitebeard"
 			equip_waldo(waldo.current)
@@ -179,7 +179,7 @@
 				waldo_mob.head.cant_other_remove = 1
 				equip_traitor(waldo_mob)
 
-			if("wizard")
+			if(ROLE_WIZARD)
 				waldo_mob.verbs += /client/proc/invisibility
 				waldo_mob.verbs += /client/proc/mass_teleport
 
@@ -255,7 +255,7 @@
 						R:uplink = T
 						T.lock_code = pda_pass
 						T.hostpda = R
-						boutput(waldo_mob, "The Space Waldos Federation have cunningly enchanted a spellbook into your PDA [loc_text]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features.")
+						boutput(waldo_mob, "The Space Waldos Federation have cunningly enchanted a spellbook into your PDA [loc_text]. Simply enter the code \"[pda_pass]\" into the ring message select to unlock its hidden features.")
 						waldo_mob.mind.store_memory("<B>Uplink Passcode:</B> [pda_pass] ([R.name] [loc_text]).")
 		waldo_mob.equip_if_possible(new /obj/item/device/radio/headset/syndicate(waldo_mob), waldo_mob.slot_ears)
 		waldo_mob.equip_if_possible(new /obj/item/card/id/syndicate(waldo_mob), waldo_mob.slot_wear_id)
@@ -284,7 +284,7 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(waldos))
 /*
-	for (var/obj/machinery/computer/communications/comm as() in machine_registry[MACHINES_COMMSCONSOLES])
+	for (var/obj/machinery/computer/communications/comm as anything in machine_registry[MACHINES_COMMSCONSOLES])
 		if (!(comm.status & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/paper/intercept = new /obj/item/paper( comm.loc )
 			intercept.name = "paper- 'Cent. Com. Status Summary'"

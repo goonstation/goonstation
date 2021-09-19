@@ -30,7 +30,7 @@ CONTAINS:
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 	force = 5
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
@@ -40,7 +40,6 @@ CONTAINS:
 	stamina_cost = 5
 	stamina_crit_chance = 35
 	var/mob/Poisoner = null
-	module_research = list("tools" = 3, "medicine" = 3, "weapons" = 0.25)
 	move_triggered = 1
 
 	New()
@@ -102,7 +101,7 @@ CONTAINS:
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/circsaw.ogg'
 	force = 8
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 3.0
 	throw_speed = 3
 	throw_range = 5
@@ -112,7 +111,6 @@ CONTAINS:
 	stamina_cost = 5
 	stamina_crit_chance = 35
 	var/mob/Poisoner = null
-	module_research = list("tools" = 3, "medicine" = 3, "weapons" = 0.25)
 	move_triggered = 1
 
 	New()
@@ -171,7 +169,7 @@ CONTAINS:
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	force = 5.0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
@@ -181,7 +179,6 @@ CONTAINS:
 	stamina_cost = 5
 	stamina_crit_chance = 35
 	var/mob/Poisoner = null
-	module_research = list("tools" = 3, "medicine" = 3, "weapons" = 0.25)
 	move_triggered = 1
 
 	New()
@@ -230,7 +227,7 @@ CONTAINS:
 	desc = "A medical staple gun for securely reattaching limbs."
 	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "staplegun"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throw_speed = 4
 	throw_range = 20
 	force = 5
@@ -241,7 +238,6 @@ CONTAINS:
 	stamina_damage = 15
 	stamina_cost = 7
 	stamina_crit_chance = 15
-	module_research = list("tools" = 1, "medicine" = 1, "weapons" = 1)
 
 	// Every bit of usability helps (Convair880).
 	examine()
@@ -317,9 +313,7 @@ CONTAINS:
 
 	attackby(obj/item/W, mob/user)
 		..()
-		#if ASS_JAM
-			//DISABLE ZIPGUN DURING ASSJAM
-		#else
+
 		if (istype(W,/obj/item/pipebomb/frame))
 			var/obj/item/pipebomb/frame/F = W
 			if (F.state < 2)
@@ -337,7 +331,7 @@ CONTAINS:
 			else
 				user.show_text("You can't seem to combine these two items this way.")
 		return
-		#endif
+
 
 // a mostly decorative thing from z2 areas I want to add to office closets
 /obj/item/staple_gun/red
@@ -407,7 +401,7 @@ CONTAINS:
 			SPAWN_DBG(src.charge_time)
 				src.charged = 1
 				set_icon_state("[src.icon_base]-on")
-				playsound(user.loc, "sound/weapons/flash.ogg", 75, 1, pitch = 0.88)
+				playsound(user.loc, "sound/items/defib_charge.ogg", 90, 0)
 
 	attack_self(mob/user as mob)
 		user.show_text("You [talk2me ? "disable" : "enable"] the [src]'s verbal alert system.")
@@ -425,7 +419,7 @@ CONTAINS:
 		SPAWN_DBG(src.charge_time)
 			src.charged = 1
 			set_icon_state("[src.icon_base]-on")
-			playsound(src.loc, "sound/weapons/flash.ogg", 75, 1, pitch = 0.88)
+			playsound(src.loc, "sound/items/defib_charge.ogg", 90, 0)
 		return 1
 
 	proc/speak(var/message)	// lifted entirely from bot_parent.dm
@@ -538,7 +532,7 @@ CONTAINS:
 				var/adjust = cell.charge
 				if (adjust <= 0) // bwuh??
 					adjust = 1000 // fu
-				patient.changeStatus("paralysis", min(0.002 * adjust, 10) * 10)
+				patient.changeStatus("paralysis", min(0.002 * adjust, 10) SECONDS)
 				patient.stuttering += min(0.005 * adjust, 25)
 				//DEBUG_MESSAGE("[src]'s defibrillate(): adjust = [adjust], paralysis + [min(0.001 * adjust, 5)], stunned + [min(0.002 * adjust, 10)], weakened + [min(0.002 * adjust, 10)], stuttering + [min(0.005 * adjust, 25)]")
 
@@ -550,9 +544,9 @@ CONTAINS:
 				if (emagged)
 					patient.do_disorient(130, weakened = 50, stunned = 50, paralysis = 40, disorient = 60, remove_stamina_below_zero = 0)
 				else
-					patient.changeStatus("paralysis", 50)
+					patient.changeStatus("paralysis", 5 SECONDS)
 #else
-				patient.changeStatus("paralysis", 50)
+				patient.changeStatus("paralysis", 5 SECONDS)
 
 #endif
 				patient.stuttering += 10
@@ -618,7 +612,7 @@ CONTAINS:
 
 /obj/item/robodefibrillator/mounted
 	var/obj/machinery/defib_mount/parent = null	//temp set while not attached
-	w_class = 4
+	w_class = W_CLASS_BULKY
 
 	move_callback(var/mob/living/M, var/turf/source, var/turf/target)
 		if (parent)
@@ -671,7 +665,7 @@ CONTAINS:
 			src.defib = new /obj/item/robodefibrillator/mounted(src)
 		user.put_in_hand_or_drop(src.defib)
 		src.defib.parent = src
-		playsound(get_turf(src), "sound/items/pickup_defib.ogg", 65, vary=0.2)
+		playsound(src, "sound/items/pickup_defib.ogg", 65, vary=0.2)
 
 		update_icon()
 
@@ -699,7 +693,7 @@ CONTAINS:
 		else
 			M.move_laying = null
 
-		playsound(get_turf(src), "sound/items/putback_defib.ogg", 65, vary=0.2)
+		playsound(src, "sound/items/putback_defib.ogg", 65, vary=0.2)
 		update_icon()
 
 
@@ -717,7 +711,7 @@ CONTAINS:
 	flags = FPRINT | TABLEPASS | CONDUCT
 	hit_type = DAMAGE_STAB
 	object_flags = NO_ARM_ATTACH
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	force = 1
 	throwforce = 1.0
 	throw_speed = 4
@@ -736,10 +730,10 @@ CONTAINS:
 				var/zone = user.zone_sel.selecting
 				var/surgery_status = H.get_surgery_status(zone)
 				if (surgery_status && H.organHolder)
-					actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 10, zone, surgery_status, rand(1,2), "sutur"), user)
+					actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 10, zone, surgery_status, rand(1,2), Vrb = "sutur"), user)
 					src.in_use = 1
 				else if (H.bleeding)
-					actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 15, 0, 0, 5, "sutur"), user)
+					actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 15, 0, 0, 5, Vrb = "sutur"), user)
 					src.in_use = 1
 				else
 					user.show_text("[H == user ? "You have" : "[H] has"] no wounds or incisions on [H == user ? "your" : his_or_her(H)] [zone_sel2name[zone]] to close!", "red")
@@ -777,7 +771,7 @@ CONTAINS:
 	item_state = "bandage"
 	flags = FPRINT | TABLEPASS
 	object_flags = NO_ARM_ATTACH
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	force = 0
 	throwforce = 1.0
 	throw_speed = 4
@@ -788,6 +782,9 @@ CONTAINS:
 	var/uses = 6
 	var/in_use = 0
 	hide_attack = 2
+	//if we want this bandage to do some healing. choose how much healing of each type of damage it should do per application.
+	var/brute_heal = 0
+	var/burn_heal = 0
 
 	get_desc()
 		..()
@@ -811,10 +808,13 @@ CONTAINS:
 			var/zone = user.zone_sel.selecting
 			var/surgery_status = H.get_surgery_status(zone)
 			if (surgery_status && H.organHolder)
-				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 10, zone, surgery_status, rand(2,5), "bandag"), user)
+				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 10, zone, surgery_status, rand(2,5), brute_heal, burn_heal, "bandag"), user)
 				src.in_use = 1
 			else if (H.bleeding)
-				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 1, zone, 0, rand(4,6), "bandag"), user)
+				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 1, zone, 0, rand(4,6), brute_heal, burn_heal, "bandag"), user)
+				src.in_use = 1
+			else if ((brute_heal || burn_heal) && M.health < M.max_health)
+				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 5 SECONDS, 0, 0, 5, brute_heal, burn_heal, "bandag"), user)
 				src.in_use = 1
 			else
 				user.show_text("[H == user ? "You have" : "[H] has"] no wounds or incisions on [H == user ? "your" : his_or_her(H)] [zone_sel2name[zone]] to bandage!", "red")
@@ -853,14 +853,19 @@ CONTAINS:
 	var/surgery_status
 	var/repair_amount
 	var/vrb
+	var/brute_heal
+	var/burn_heal
 
-	New(Target, Tool, Time, Zone, Status, Repair, Vrb)
-		target = Target
-		tool = Tool
-		duration = Time
-		zone = Zone
-		surgery_status = Status
-		repair_amount = Repair
+	New(Target, Tool, Time, Zone, Status, Repair, brute_heal, burn_heal, Vrb)
+		src.target = Target
+		src.tool = Tool
+		src.duration = Time
+		src.zone = Zone
+		src.surgery_status = Status
+		src.repair_amount = Repair
+		src.brute_heal = brute_heal
+		src.burn_heal = burn_heal
+
 		vrb = Vrb
 		if (zone && surgery_status)
 			duration = clamp((duration * surgery_status), 5, 50)
@@ -927,6 +932,9 @@ CONTAINS:
 				target.visible_message("<span class='success'>[owner] [vrb]es [owner == target ? "[his_or_her(owner)]" : "[target]'s"] wounds closed with [tool].</span>",\
 				"<span class='success'>[owner == target ? "You [vrb]e" : "[owner] [vrb]es"] your wounds closed with [tool].</span>")
 				repair_bleeding_damage(target, 100, repair_amount)
+				if (brute_heal || burn_heal)
+					target.HealDamage("All", brute_heal, burn_heal)
+
 			if (zone && vrb == "bandag" && !target.bandaged.Find(zone))
 				target.bandaged += zone
 				target.update_body()
@@ -939,6 +947,11 @@ CONTAINS:
 				B.uses --
 				B.tooltip_rebuild = 1
 				B.update_icon()
+				if (B.uses <= 0)
+					boutput(ownerMob, "<span class='alert'>You use up the last of the bandages.</span>")
+					ownerMob.u_equip(tool)
+					qdel(tool)
+
 			else if (istype(tool, /obj/item/material_piece/cloth))
 				ownerMob.u_equip(tool)
 				pool(tool)
@@ -955,7 +968,7 @@ CONTAINS:
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "bloodbag"
 	flags = FPRINT | TABLEPASS
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	force = 0
 	throwforce = 1.0
 	throw_speed = 4
@@ -990,7 +1003,7 @@ CONTAINS:
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.blood_volume < 500)
-				H.tri_message("<span class='notice'><b>[user]</b> attaches [src]'s needle to [H == user ? </span>"[H.gender == "male" ? "his" : "her"]" : "[H]'s"] arm and begins transferring blood.",\
+				H.tri_message("<span class='notice'><b>[user]</b> attaches [src]'s needle to [H == user ? </span>"[his_or_her(H)]" : "[H]'s"] arm and begins transferring blood.",\
 				user, "<span class='notice'>You attach [src]'s needle to [H == user ? </span>"your" : "[H]'s"] arm and begin transferring blood.",\
 				H, "<span class='notice'>[H == user ? </span>"You attach" : "<b>[user]</b> attaches"] [src]'s needle to your arm and begin transferring blood.")
 				src.in_use = 1
@@ -1083,7 +1096,7 @@ CONTAINS:
 	icon_state = "bodybag"
 	uses_multiple_icon_states = 1
 	flags = FPRINT | TABLEPASS
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	force = 0
 	throwforce = 1.0
 	throw_speed = 4
@@ -1108,21 +1121,21 @@ CONTAINS:
 		if (src.open && src.open_image)
 			src.overlays += src.open_image
 			src.icon_state = "bodybag-open"
-			src.w_class = 4.0
+			src.w_class = W_CLASS_BULKY
 		else if (!src.open)
 			src.overlays -= src.open_image
-			if (src.contents && src.contents.len)
+			if (src.contents && length(src.contents))
 				src.icon_state = "bodybag-closed1"
 			else
 				src.icon_state = "bodybag-closed0"
-			src.w_class = 4.0
+			src.w_class = W_CLASS_BULKY
 		else
 			src.overlays -= src.open_image
 			src.icon_state = "bodybag"
-			src.w_class = 1.0
+			src.w_class = W_CLASS_TINY
 
 	attack_self(mob/user as mob)
-		if (src.icon_state == "bodybag" && src.w_class == 1.0)
+		if (src.icon_state == "bodybag" && src.w_class == W_CLASS_TINY)
 			user.visible_message("<b>[user]</b> unfolds [src].",\
 			"You unfold [src].")
 			user.drop_item()
@@ -1134,7 +1147,7 @@ CONTAINS:
 
 	attack_hand(mob/user as mob)
 		add_fingerprint(user)
-		if (src.icon_state == "bodybag" && src.w_class == 1.0)
+		if (src.icon_state == "bodybag" && src.w_class == W_CLASS_TINY)
 			return ..()
 		else
 			if (src.open)
@@ -1159,7 +1172,7 @@ CONTAINS:
 		if(isturf(over_object))
 			..() //Lets it do the turf-to-turf slide
 			return
-		else if (istype(over_object, /obj/screen/hud))
+		else if (istype(over_object, /atom/movable/screen/hud))
 			over_object = usr //Try to fold & pick up the bag with your mob instead
 		else if (!(over_object == usr))
 			return
@@ -1170,11 +1183,11 @@ CONTAINS:
 				"You fold up [src].")
 			src.overlays -= src.open_image
 			src.icon_state = "bodybag"
-			src.w_class = 1.0
-			src.attack_hand(usr)
+			src.w_class = W_CLASS_TINY
+			src.Attackhand(usr)
 
 	proc/open()
-		playsound(get_turf(src), src.sound_zipper, 100, 1, , 6)
+		playsound(src, src.sound_zipper, 100, 1, , 6)
 		for (var/obj/O in src)
 			O.set_loc(get_turf(src))
 		for (var/mob/M in src)
@@ -1185,7 +1198,7 @@ CONTAINS:
 		src.update_icon()
 
 	proc/close()
-		playsound(get_turf(src), src.sound_zipper, 100, 1, , 6)
+		playsound(src, src.sound_zipper, 100, 1, , 6)
 		for (var/obj/O in get_turf(src))
 			if (O.density || O.anchored || O == src)
 				continue
@@ -1212,7 +1225,7 @@ CONTAINS:
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	force = 1.5
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 3.0
 	throw_speed = 3
 	throw_range = 6
@@ -1221,7 +1234,6 @@ CONTAINS:
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 15
-	module_research = list("tools" = 2, "medicine" = 3, "weapons" = 0.1)
 	hide_attack = 2
 
 	attack(mob/M as mob, mob/user as mob)
@@ -1239,22 +1251,23 @@ CONTAINS:
 			if (user.a_intent == INTENT_HELP)
 				return
 			return ..()
-		H.tri_message("<span class='alert'><b>[user]</b> begins clamping the bleeders in [H == user ? "[his_or_her(H)]" : "[H]'s"] incision with [src].</span>",\
-		user, "<span class='alert'>You begin clamping the bleeders in [user == H ? "your" : "[H]'s"] incision with [src].</span>",\
-		H, "<span class='alert'>[H == user ? "You begin" : "<b>[user]</b> begins"] clamping the bleeders in your incision with [src].</span>")
-
-		if (!do_mob(user, H, clamp(surgery_status * 4, 0, 100)))
-			user.visible_message("<span class='alert'><b>[user]</b> was interrupted!</span>",\
-			"<span class='alert'>You were interrupted!</span>")
-			return
-
-		H.tri_message("<span class='notice'><b>[user]</b> clamps the bleeders in [H == user ? "[his_or_her(H)]" : "[H]'s"] incision with [src].</span>",\
-		user, "<span class='notice'>You clamp the bleeders in [user == H ? "your" : "[H]'s"] incision with [src].</span>",\
-		H, "<span class='notice'>[H == user ? "You clamp" : "<b>[user]</b> clamps"] the bleeders in your incision with [src].</span>")
-
 		if (H.bleeding)
-			repair_bleeding_damage(H, 50, rand(2,5))
-		return
+			H.tri_message("<span class='alert'><b>[user]</b> begins clamping the bleeders in [H == user ? "[his_or_her(H)]" : "[H]'s"] incision with [src].</span>",\
+			user, "<span class='alert'>You begin clamping the bleeders in [user == H ? "your" : "[H]'s"] incision with [src].</span>",\
+			H, "<span class='alert'>[H == user ? "You begin" : "<b>[user]</b> begins"] clamping the bleeders in your incision with [src].</span>")
+
+			if (!do_mob(user, H, clamp(surgery_status * 4, 0, 100)))
+				user.visible_message("<span class='alert'><b>[user]</b> was interrupted!</span>",\
+				"<span class='alert'>You were interrupted!</span>")
+				return
+
+			H.tri_message("<span class='notice'><b>[user]</b> clamps the bleeders in [H == user ? "[his_or_her(H)]" : "[H]'s"] incision with [src].</span>",\
+			user, "<span class='notice'>You clamp the bleeders in [user == H ? "your" : "[H]'s"] incision with [src].</span>",\
+			H, "<span class='notice'>[H == user ? "You clamp" : "<b>[user]</b> clamps"] the bleeders in your incision with [src].</span>")
+
+			if (H.bleeding)
+				repair_bleeding_damage(H, 50, rand(2,5))
+			return
 
 /* ======================================================= */
 /* -------------------- Reflex Hammer -------------------- */
@@ -1264,7 +1277,7 @@ CONTAINS:
 	// todo: give people's limbs the ol' tappa tappa
 	// also make sure intent, force and armor matter
 	if (!def_zone)
-		def_zone = (user && user.zone_sel && user.zone_sel.selecting) ? user.zone_sel.selecting : "chest" // may as well default to head idk
+		def_zone = (user?.zone_sel?.selecting) ? user.zone_sel.selecting : "chest" // may as well default to head idk
 
 	var/my_damage = src.force
 	var/my_sound = "sound/impact_sounds/Generic_Stab_1.ogg"
@@ -1291,14 +1304,14 @@ CONTAINS:
 				else if (clumsy && !doctor && prob(1)) // extreme clumsiness can lead to extremely unintended examination results
 					var/obj/item/organ/head/head = H.drop_organ("head")
 					H.visible_message("<span style='color:red;font-weight:bold'>[user] swings [src] way too hard at [H == user ? "[his_or_her(H)] own" : "[H]'s"] head and hits it clean off [H == user ? "[his_or_her(H)] own" : "[H]'s"] shoulders!</span>")
-					playsound(get_turf(H), "sound/impact_sounds/Flesh_Stab_1.ogg", 80, 1)
+					playsound(H, "sound/impact_sounds/Flesh_Stab_1.ogg", 80, 1)
 					if (head)
 						head.throw_at(get_dir(user, H), 3, 3)
 					return
 
 				else if (clumsy && prob(33)) // WHACK
 					H.visible_message("<span style='color:red;font-weight:bold'>[user] swings [src] way too hard at [H == user ? "[his_or_her(H)] own" : "[H]'s"] head!</span>")
-					playsound(get_turf(H), "sound/impact_sounds/Generic_Hit_1.ogg", 80, 1)
+					playsound(H, "sound/impact_sounds/Generic_Hit_1.ogg", 80, 1)
 					my_damage = (max(my_damage, 2) * 3)
 
 				else if (!headSurgeryCheck(H))
@@ -1318,7 +1331,7 @@ CONTAINS:
 				if (!H.limbs || !H.
 */
 		H.TakeDamage(def_zone, my_damage)
-		playsound(get_turf(H), my_sound, 80, 1)
+		playsound(H, my_sound, 80, 1)
 		return
 
 	//else if (isrobot(M)) // clonk clonk
@@ -1332,7 +1345,6 @@ CONTAINS:
 	stamina_damage = 1
 	stamina_cost = 1
 	stamina_crit_chance = 1
-	module_research = list("tools" = 2, "medicine" = 2, "weapons" = 0.1)
 
 	New()
 		..()
@@ -1349,7 +1361,7 @@ CONTAINS:
 	item_state = "pen"
 	icon_on = "penlight1"
 	icon_off = "penlight0"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 0
 	throw_speed = 7
 	throw_range = 15
@@ -1360,12 +1372,11 @@ CONTAINS:
 	col_g = 0.8
 	col_b = 0.7
 	brightness = 2
-	module_research = list("science" = 1, "devices" = 1, "medicine" = 2)
 	var/anim_duration = 10 // testing var so I can adjust in-game to see what looks nice
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		// todo: check zone, make sure people are shining the light 1) at a human 2) in the eyes, clauses for whatever else
-		if (!def_zone && user && user.zone_sel && user.zone_sel.selecting)
+		if (!def_zone && user?.zone_sel?.selecting)
 			def_zone = user.zone_sel.selecting
 		else if (!def_zone)
 			return ..()
@@ -1447,7 +1458,7 @@ CONTAINS:
 					// irl these things can affect either side of the brain but this will help differentiate them in a video game context I think
 					// (also: injuries to the brain show up as issues on the opposite side of the body, so a left injury affects the right eye, etc)
 					var/datum/ailment_data/malady/AD = H.find_ailment_by_type(/datum/ailment/malady/bloodclot)
-					if (AD && AD.state == "Active" && AD.affected_area == "head") // having a stroke!!
+					if (AD?.state == "Active" && AD.affected_area == "head") // having a stroke!!
 						if (leye)
 							lmove = "[His_Her] left eye doesn't follow the light at all!"
 							lpreact = "doesn't react to the light at all!"
@@ -1525,8 +1536,8 @@ keeping this here because I want to make something else with it eventually
 		. = ..()
 		if (.)
 			if (prob(75))
-				playsound(get_turf(src), "sound/misc/chair/office/scoot[rand(1,5)].ogg", 40, 1)
-			if (islist(bring_this_stuff) && bring_this_stuff.len)
+				playsound(src, "sound/misc/chair/office/scoot[rand(1,5)].ogg", 40, 1)
+			if (islist(bring_this_stuff) && length(bring_this_stuff))
 				var/stuff_moved = 0
 				for (var/obj/item/I in bring_this_stuff)
 					LAGCHECK(LAG_HIGH)
@@ -1559,7 +1570,7 @@ keeping this here because I want to make something else with it eventually
 		. = ..()
 		if (.)
 			if (prob(75))
-				playsound(get_turf(src), "sound/misc/chair/office/scoot[rand(1,5)].ogg", 40, 1)
+				playsound(src, "sound/misc/chair/office/scoot[rand(1,5)].ogg", 40, 1)
 
 			//if we're over the max amount a table can fit, have a chance to drop an item. Chance increases with items on tray
 			if (prob((src.contents.len-max_to_move)*1.1))
@@ -1614,6 +1625,13 @@ keeping this here because I want to make something else with it eventually
 		src.attached_objs.Remove(I)
 		UnregisterSignal(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING))
 
+	attack_hand(mob/user as mob)
+		if (!anchored)
+			boutput(user, "You apply \the [name]'s brake.")
+		else
+			boutput(user, "You release \the [name]'s brake.")
+		anchored = !anchored
+
 /* ---------- Surgery Tray Parts ---------- */
 /obj/item/furniture_parts/surgery_tray
 	name = "tray parts"
@@ -1632,8 +1650,7 @@ keeping this here because I want to make something else with it eventually
 /* ================================================== */
 
 /obj/item/scissors/surgical_scissors
-	// name = "Garden Snips"
-	name = "Surgical Scissors"
+	name = "surgical scissors"
 	desc = "Used for precisely cutting up people in surgery. I guess you could use them on paper too."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "surgical-scissors-base"
@@ -1646,7 +1663,7 @@ keeping this here because I want to make something else with it eventually
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 35
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 
@@ -1654,7 +1671,6 @@ keeping this here because I want to make something else with it eventually
 	throw_speed = 3
 	throw_range = 5
 	var/mob/Poisoner = null
-	module_research = list("tools" = 3, "medicine" = 3, "weapons" = 0.25)
 	move_triggered = 1
 	var/image/handle = null
 
@@ -1679,3 +1695,9 @@ keeping this here because I want to make something else with it eventually
 	move_trigger(var/mob/M, kindof)
 		if (..() && reagents)
 			reagents.move_trigger(M, kindof)
+
+	bloody
+		New()
+			. = ..()
+			SPAWN_DBG(1 DECI SECOND) //sync with the organs spawn
+				make_cleanable(/obj/decal/cleanable/blood/gibs, src.loc)

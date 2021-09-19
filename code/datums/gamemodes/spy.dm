@@ -38,7 +38,7 @@
 	var/i = rand(5)
 	var/num_teams = max(setup_min_teams, min(round((num_players + i) / 7), setup_max_teams))
 	if (num_teams > leaders_possible.len)
-		num_teams = leaders_possible.len
+		num_teams = length(leaders_possible)
 
 	var/list/chosen_spies = antagWeighter.choose(pool = leaders_possible, role = "spy", amount = num_teams, recordChosen = 1)
 	for (var/datum/mind/spy in chosen_spies)
@@ -243,7 +243,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/charges = 4
 
 	proc/update_icon()
@@ -350,7 +350,7 @@
 
 			src.linked_objective.explanation_text = "Obey [leader_name]'s every order."
 
-		if (leader_mind && leader_mind.current && M.client)
+		if (leader_mind?.current && M.client)
 			var/I = image(antag_spyleader, loc = leader_mind.current)
 			M.client.images += I
 
@@ -361,7 +361,7 @@
 		..()
 
 		if (leader_name)
-			boutput(M, "<h1><font color=red>Your loyalty to [(leader_mind && leader_mind.current) ? leader_mind.current.real_name : leader_name] fades away!</font></h1>")
+			boutput(M, "<h1><font color=red>Your loyalty to [leader_mind?.current ? leader_mind.current.real_name : leader_name] fades away!</font></h1>")
 
 			if (istype(ticker.mode, /datum/game_mode/spy))
 				var/datum/game_mode/spy/spymode = ticker.mode

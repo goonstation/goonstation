@@ -4,22 +4,25 @@
 obj/machinery/computer/general_air_control
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
-
+	circuit_type = /obj/item/circuitboard/air_management
 	name = "Computer"
+	frequency = 1439
 
-	var/frequency = 1439
 	var/list/sensors = list()
 
 	var/list/sensor_information = list()
 	var/datum/radio_frequency/radio_connection
 
-	lr = 0.6
-	lg = 1
-	lb = 0.1
+	light_r =0.6
+	light_g = 1
+	light_b = 0.1
 
 	disposing()
 		radio_controller.remove_object(src, "[frequency]")
 		..()
+
+	special_deconstruct(obj/computerframe/frame as obj)
+		frame.circuit.frequency = src.frequency
 
 	attack_hand(mob/user)
 		user.Browse(return_text(),"window=computer")
@@ -30,42 +33,6 @@ obj/machinery/computer/general_air_control
 		..()
 
 		src.updateDialog()
-
-	attackby(obj/item/I as obj, user as mob)
-		if (isscrewingtool(I))
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-			if(do_after(user, 20))
-				if (src.status & BROKEN)
-					boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-					var/obj/computerframe/A = new /obj/computerframe( src.loc )
-					if(src.material) A.setMaterial(src.material)
-					var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-					G.set_loc(src.loc)
-					var/obj/item/circuitboard/air_management/M = new /obj/item/circuitboard/air_management( A )
-					for (var/obj/C in src)
-						C.set_loc(src.loc)
-					M.frequency = src.frequency
-					A.circuit = M
-					A.state = 3
-					A.icon_state = "3"
-					A.anchored = 1
-					qdel(src)
-				else
-					boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
-					var/obj/computerframe/A = new /obj/computerframe( src.loc )
-					if(src.material) A.setMaterial(src.material)
-					var/obj/item/circuitboard/air_management/M = new /obj/item/circuitboard/air_management( A )
-					for (var/obj/C in src)
-						C.set_loc(src.loc)
-					M.frequency = src.frequency
-					A.circuit = M
-					A.state = 4
-					A.icon_state = "4"
-					A.anchored = 1
-					qdel(src)
-		else
-			src.attack_hand(user)
-		return
 
 	receive_signal(datum/signal/signal)
 		if(!signal || signal.encryption) return
@@ -276,7 +243,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 	fuel_injection
 		icon = 'icons/obj/computer.dmi'
 		icon_state = "atmos"
-
+		circuit_type = /obj/item/circuitboard/injector_control
 
 		var/device_tag
 		var/list/device_info
@@ -286,41 +253,8 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 		var/cutoff_temperature = 2000
 		var/on_temperature = 1200
 
-		attackby(obj/item/I as obj, user as mob)
-			if (isscrewingtool(I))
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-				if(do_after(user, 20))
-					if (src.status & BROKEN)
-						boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-						var/obj/computerframe/A = new /obj/computerframe( src.loc )
-						if(src.material) A.setMaterial(src.material)
-						var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-						G.set_loc(src.loc)
-						var/obj/item/circuitboard/injector_control/M = new /obj/item/circuitboard/injector_control( A )
-						for (var/obj/C in src)
-							C.set_loc(src.loc)
-						M.frequency = src.frequency
-						A.circuit = M
-						A.state = 3
-						A.icon_state = "3"
-						A.anchored = 1
-						qdel(src)
-					else
-						boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
-						var/obj/computerframe/A = new /obj/computerframe( src.loc )
-						if(src.material) A.setMaterial(src.material)
-						var/obj/item/circuitboard/injector_control/M = new /obj/item/circuitboard/injector_control( A )
-						for (var/obj/C in src)
-							C.set_loc(src.loc)
-						M.frequency = src.frequency
-						A.circuit = M
-						A.state = 4
-						A.icon_state = "4"
-						A.anchored = 1
-						qdel(src)
-			else
-				src.attack_hand(user)
-			return
+		special_deconstruct(obj/computerframe/frame as obj)
+			frame.circuit.frequency = src.frequency
 
 		process()
 			if(automation)
@@ -560,15 +494,18 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 /obj/machinery/computer/atmosphere/mixercontrol
 	var/obj/machinery/atmospherics/mixer/mixerid
 	var/mixer_information
-	var/id
 	req_access = list(access_engineering_engine, access_tox_storage)
 	object_flags = CAN_REPROGRAM_ACCESS
-
+	circuit_type = /obj/item/circuitboard/air_management
 	var/last_change = 0
 	var/message_delay = 600
 
-	var/frequency = 1439
+	frequency = 1439
 	var/datum/radio_frequency/radio_connection
+
+	special_deconstruct(obj/computerframe/frame as obj)
+		frame.circuit.frequency = src.frequency
+
 	attack_hand(mob/user)
 		if(status & (BROKEN | NOPOWER))
 			return
@@ -581,42 +518,6 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 		if(status & (BROKEN | NOPOWER))
 			return
 		src.updateDialog()
-
-	attackby(obj/item/I as obj, user as mob)
-		if (isscrewingtool(I))
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-			if(do_after(user, 20))
-				if (src.status & BROKEN)
-					boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-					var/obj/computerframe/A = new /obj/computerframe( src.loc )
-					if(src.material) A.setMaterial(src.material)
-					var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-					G.set_loc(src.loc)
-					var/obj/item/circuitboard/air_management/M = new /obj/item/circuitboard/air_management( A )
-					for (var/obj/C in src)
-						C.set_loc(src.loc)
-					M.frequency = src.frequency
-					A.circuit = M
-					A.state = 3
-					A.icon_state = "3"
-					A.anchored = 1
-					qdel(src)
-				else
-					boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
-					var/obj/computerframe/A = new /obj/computerframe( src.loc )
-					if(src.material) A.setMaterial(src.material)
-					var/obj/item/circuitboard/air_management/M = new /obj/item/circuitboard/air_management( A )
-					for (var/obj/C in src)
-						C.set_loc(src.loc)
-					M.frequency = src.frequency
-					A.circuit = M
-					A.state = 4
-					A.icon_state = "4"
-					A.anchored = 1
-					qdel(src)
-		else
-			src.attack_hand(user)
-		return
 
 	receive_signal(datum/signal/signal)
 		//boutput(world, "[id] actually can recieve a signal!")
@@ -724,7 +625,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 				var/change = input(usr,"Target Pressure (0 - [MAX_PRESSURE]):", "Enter target pressure", pressure) as num
 				if ((get_dist(src, usr) > 1 && !issilicon(usr)) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 					return 0
-				if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
+				if (is_incapacitated(usr) || usr.restrained())
 					return 0
 				if (!src.allowed(usr))
 					boutput(usr, "<span class='alert'>Access denied!</span>")

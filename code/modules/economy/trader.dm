@@ -1,10 +1,20 @@
+/proc/most_applicable_trade(var/list/datum/commodity/goods_buy, var/obj/item/sell_item)
+	var/list/goods_buy_types = new /list(0)
+	for(var/datum/commodity/N as anything in goods_buy)
+		if (N.subtype_valid ? istype(sell_item, N.comtype) : N.comtype == sell_item.type)
+			goods_buy_types[N.comtype] = N
+	return goods_buy_types[maximal_subtype(goods_buy_types)]
+
+
 /obj/npc/trader
 	name="Trader"
 	layer = 4  //Same layer as most mobs, should stop them from sometimes being drawn under their shuttle chairs out of sight
-	var/bullshit =0
+	var/bullshit = 0
 	var/hiketolerance = 20 //How much they will tolerate price hike
 	var/list/droplist = null //What the merchant will drop upon their death
 	var/list/goods_sell = new/list() //What products the trader sells
+	var/illegal = 0 // maybe trading with illegal bots could flag the user's criminal record for smuggling
+	var/goods_illegal = list() // Illegal goods
 	var/list/goods_buy = new/list() //what products the merchant buys
 	var/list/shopping_cart = new/list() //What has been bought
 	var/obj/item/sell = null //Item to sell
@@ -57,7 +67,7 @@
 	anger()
 		for(var/mob/M in AIviewers(src))
 			boutput(M, "<span class='alert'><B>[src.name]</B> becomes angry!</span>")
-		src.desc = "[src] looks angry"
+		src.desc = "[src] looks angry."
 		SPAWN_DBG(rand(1000,3000))
 			src.visible_message("<b>[src.name] calms down.</b>")
 			src.desc = "[src] looks a bit annoyed."
@@ -85,6 +95,24 @@
 		onclose(user, windowName)
 		return
 
+	attackby(obj/item/I as obj, mob/user as mob)
+		if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
+			if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
+			boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
+			var/datum/data/record/account = null
+			account = FindBankAccountByName(I:registered)
+			if(account)
+				var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num
+				if (enterpin == I:pin)
+					boutput(usr, "<span class='notice'>Card authorized.</span>")
+					src.scan = I
+				else
+					boutput(usr, "<span class='alert'>Pin number incorrect.</span>")
+					src.scan = null
+			else
+				boutput(usr, "<span class='alert'>No bank account associated with this ID found.</span>")
+				src.scan = null
+
 	attack_hand(var/mob/user as mob)
 		if(..())
 			return
@@ -105,14 +133,19 @@
 		if(..())
 			return
 
-		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 			src.add_dialog(usr)
 		///////////////////////////////
 		///////Generate Purchase List//
 		///////////////////////////////
+		var/list/goods_for_purchase = goods_sell.Copy()
+		// Illegal goods for syndicate traitors
+		if (illegal)
+			if(usr.mind && (usr.mind.special_role == ROLE_TRAITOR || usr.mind.special_role == ROLE_SPY_THIEF || usr.mind.special_role == ROLE_NUKEOP ||	usr.mind.special_role == ROLE_SLEEPER_AGENT || usr.mind.special_role == ROLE_HARDMODE_TRAITOR ||	usr.mind.special_role == ROLE_OMNITRAITOR))
+				goods_for_purchase += goods_illegal
 		if (href_list["purchase"])
 			src.temp =buy_dialogue + "<HR><BR>"
-			for(var/datum/commodity/N in goods_sell)
+			for(var/datum/commodity/N in goods_for_purchase)
 				// Have to send the type instead of a reference to the obj because it would get caught by the garbage collector. oh well.
 				src.temp += {"<A href='?src=\ref[src];doorder=\ref[N]'><B><U>[N.comname]</U></B></A><BR>
 				<B>Cost:</B> [N.price] Credits<BR>
@@ -135,15 +168,15 @@
 			account = FindBankAccountByName(src.scan.registered)
 			if (account)
 				var/quantity = 1
-				quantity = input("How many units do you want to purchase? Maximum: 10", "Trader Purchase", null, null) as num
+				quantity = input("How many units do you want to purchase? Maximum: 50", "Trader Purchase", null, null) as num
 				if (quantity < 1)
 					quantity = 0
 					return
-				else if (quantity >= 10)
-					quantity = 10
+				else if (quantity >= 50)
+					quantity = 50
 
 				////////////
-				var/datum/commodity/P = locate(href_list["doorder"]) in goods_sell
+				var/datum/commodity/P = locate(href_list["doorder"]) in goods_for_purchase
 
 				if(P)
 					if(shopping_cart.len + quantity > 50)
@@ -174,7 +207,7 @@
 
 			var/askingprice= input(usr, "Please enter your asking price.", "Haggle", 0) as null|num
 			if(askingprice)
-				var/datum/commodity/N = locate(href_list["haggleb"]) in goods_sell
+				var/datum/commodity/N = locate(href_list["haggleb"]) in goods_for_purchase
 				if(N)
 					if(patience == N.haggleattempts)
 						src.temp = "[src.name] becomes angry and won't trade anymore."
@@ -275,13 +308,8 @@
 							<BR><A href='?src=\ref[src];sell=1'>OK</A>"}
 				src.updateUsrDialog()
 				return
-			var/list/goods_buy_types
-			goods_buy_types = new /list(0)
-			for(var/datum/commodity/N in goods_buy)
-				if (istype(src.sellitem, N.comtype))
-					goods_buy_types[N.comtype] = N.price
-			if (goods_buy_types.len >= 1)
-				var/goods_type = maximal_subtype(goods_buy_types)
+			var/datum/commodity/tradetype = most_applicable_trade(src.goods_buy, src.sellitem)
+			if(tradetype)
 				var/datum/data/record/account = null
 				account = FindBankAccountByName(src.scan.registered)
 				if (!account)
@@ -294,9 +322,9 @@
 					doing_a_thing = 1
 					src.temp = pick(src.successful_sale_dialogue) + "<BR>"
 					src.temp += "<BR><A href='?src=\ref[src];sell=1'>OK</A>"
+					account.fields["current_money"] += tradetype.price * src.sellitem.amount
 					qdel (src.sellitem)
 					src.sellitem = null
-					account.fields["current_money"] += goods_buy_types[goods_type]
 					src.add_fingerprint(usr)
 					src.updateUsrDialog()
 					doing_a_thing = 0
@@ -380,7 +408,7 @@
 		var/found = 0
 
 		var/list/area_turfs = get_area_turfs(trader_area)
-		if (!area_turfs || !area_turfs.len)
+		if (!area_turfs || !length(area_turfs))
 			area_turfs = get_area_turfs( get_area(src) )
 
 		for(var/turf/T in area_turfs)
@@ -393,7 +421,7 @@
 			found = 1
 			pickedloc = get_turf(C)
 		if (!found)
-			if (islist(markers) && markers.len)
+			if (islist(markers) && length(markers))
 				pickedloc = get_turf(pick(markers))
 			else
 				pickedloc = get_turf(src) // put it SOMEWHERE
@@ -514,17 +542,11 @@
 				user.visible_message("<span class='notice'>[src] rummages through [user]'s [O].</span>")
 				playsound(src.loc, "rustle", 60, 1)
 				var/cratevalue = null
-				for (var/obj/M in O.contents)
-					//boutput(world, "<span class='notice'>HELLO I AM [M]</span>")
-					//boutput(world, "<span class='notice'>AND MY TYPE PATH IS [M.type]</span>")
-					for(var/datum/commodity/N in src.goods_buy)
-						if(M) // fuck the hell off you dirty null.type errors
-							if(N.comtype == M.type)
-								//boutput(world, "<b>MY ASSOCIATED DATUM IS [N]</b>")
-								//boutput(world, "<span class='notice'>[M] IS GOING TO SELL FOR [N.price] HOT BALLS</span>")
-								//boutput(world, "<span class='notice'>UPDATING CRATE VALUE TO [cratevalue] OR FUCKING ELSE</span>")
-								cratevalue += N.price
-								qdel( M )
+				for (var/obj/sellitem in O.contents)
+					var/datum/commodity/tradetype = most_applicable_trade(src.goods_buy, sellitem)
+					if(tradetype)
+						cratevalue += tradetype.price
+						qdel(sellitem)
 				if(cratevalue)
 					boutput(user, "<span class='notice'>[src] takes what they want from [O]. [cratevalue] credits have been transferred to your account.</span>")
 					account.fields["current_money"] += cratevalue
@@ -609,8 +631,11 @@
 		/datum/commodity/junk,
 		/datum/commodity/diner,
 		/datum/commodity/bodyparts,
-		/datum/commodity/medical,
-		/datum/commodity/synthmodule)
+		/datum/commodity/medical)
+
+		#ifdef CREATE_PATHOGENS //Don't need this when there's no pathology
+		commercetypes += /datum/commodity/synthmodule
+		#endif
 
 		var/list/selltypes = typesof(pick(commercetypes))
 		var/list/buytypes = typesof(pick(commercetypes))
@@ -717,7 +742,6 @@
 	picture = "robot.png"
 	trader_area = "/area/turret_protected/robot_trade_outpost"
 	var/productset = 0 // 0 is robots and salvage, 1 is podparts and drugs, 2 is produce. 3 is syndicate junk, 4 is medical stuff
-	var/illegal = 0 // maybe trading with illegal bots could flag the user's criminal record for smuggling
 	angrynope = "Unable to process request."
 	whotext = "I am a trading unit. I have been authorized to engage in trade with you."
 
@@ -742,7 +766,8 @@
 				src.goods_sell += new /datum/commodity/drugs/morphine(src)
 				src.goods_sell += new /datum/commodity/drugs/krokodil(src)
 				src.goods_sell += new /datum/commodity/drugs/lsd(src)
-				src.goods_sell += new /datum/commodity/drugs/lsd_bee(src)
+				src.goods_sell += new /datum/commodity/drug/lsd_bee(src)
+				src.goods_sell += new /datum/commodity/relics/bootlegfirework(src)
 				src.goods_sell += new /datum/commodity/pills/uranium(src)
 
 				src.goods_buy += new /datum/commodity/drugs/shrooms(src)
@@ -771,13 +796,23 @@
 				src.goods_buy += new /datum/commodity/produce/special/glowfruit(src)
 
 			if(3) // syndicate bot
-				src.goods_sell += new /datum/commodity/contraband/command_suit(src)
+				src.illegal = 1
+				var/carlsell = rand(1,10)
+				src.goods_illegal += new /datum/commodity/contraband/command_suit(src)
+				src.goods_illegal += new /datum/commodity/contraband/disguiser(src)
+				if (carlsell <= 3)
+					src.goods_illegal += new /datum/commodity/contraband/radiojammer(src)
+				if (carlsell >= 2 && carlsell <= 6)
+					src.goods_illegal += new /datum/commodity/contraband/stealthstorage(src)
+				if (carlsell >= 5 && carlsell <= 8)
+					src.goods_illegal += new /datum/commodity/contraband/voicechanger(src)
+				if (carlsell >= 9)
+					src.goods_illegal += new /datum/commodity/contraband/radiojammer(src)
+					src.goods_illegal += new /datum/commodity/contraband/stealthstorage(src)
+					src.goods_illegal += new /datum/commodity/contraband/voicechanger(src)
+				src.goods_illegal += new /datum/commodity/contraband/birdbomb(src)
 				src.goods_sell += new /datum/commodity/contraband/swatmask(src)
-				src.goods_sell += new /datum/commodity/contraband/radiojammer(src)
-				src.goods_sell += new /datum/commodity/contraband/stealthstorage(src)
 				src.goods_sell += new /datum/commodity/contraband/spy_sticker_kit(src)
-				src.goods_sell += new /datum/commodity/contraband/disguiser(src)
-				src.goods_sell += new /datum/commodity/contraband/birdbomb(src)
 				src.goods_sell += new /datum/commodity/contraband/flare(src)
 				src.goods_sell += new /datum/commodity/contraband/eguncell_highcap(src)
 				src.goods_sell += new /datum/commodity/podparts/cloak(src)
@@ -808,13 +843,13 @@
 				src.goods_sell += new /datum/commodity/medical/firstaidC(src)
 				src.goods_sell += new /datum/commodity/medical/injectorPent(src)
 				src.goods_sell += new /datum/commodity/medical/injectorPerf(src)
+				#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
 				src.goods_sell += new /datum/commodity/synthmodule/bacteria(src)
 				src.goods_sell += new /datum/commodity/synthmodule/virii(src)
 				src.goods_sell += new /datum/commodity/synthmodule/fungi(src)
 				src.goods_sell += new /datum/commodity/synthmodule/parasite(src)
 				src.goods_sell += new /datum/commodity/synthmodule/gmcell(src)
 				src.goods_sell += new /datum/commodity/synthmodule/vaccine(src)
-				#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
 				src.goods_sell += new /datum/commodity/pathogensample(src)
 				#endif
 
@@ -1036,14 +1071,22 @@
 		src.goods_sell += new /datum/commodity/costume/werewolf(src)
 		src.goods_sell += new /datum/commodity/costume/abomination(src)
 		src.goods_sell += new /datum/commodity/costume/hotdog(src)
+		src.goods_sell += new /datum/commodity/costume/mime(src)
+		src.goods_sell += new /datum/commodity/costume/mime/alt(src) //suspenders and such
+		src.goods_sell += new /datum/commodity/backpack/breadpack(src)
+		src.goods_sell += new /datum/commodity/backpack/bearpack(src)
+		src.goods_sell += new /datum/commodity/backpack/turtlebrown(src)
+		src.goods_sell += new /datum/commodity/backpack/turtlegreen(src)
 		src.goods_sell += new /datum/commodity/balloons(src)
 		src.goods_sell += new /datum/commodity/crayons(src)
+		src.goods_sell += new /datum/commodity/sticker/googly_eyes(src)
+		src.goods_sell += new /datum/commodity/sticker/googly_eyes_angry(src)
+		src.goods_sell += new /datum/commodity/toygun(src)
+		src.goods_sell += new /datum/commodity/toygunammo(src)
 		src.goods_sell += new /datum/commodity/junk/circus_board(src)
+		src.goods_sell += new /datum/commodity/junk/pie_launcher(src)
 		src.goods_sell += new /datum/commodity/junk/laughbox(src)
-		#if ASS_JAM
-		src.goods_sell += new /datum/commodity/screamshoes(src)
-		src.goods_sell += new /datum/commodity/fartflops(src)
-		#endif
+
 
 		/////////////////////////////////////////////////////////
 		//// buy list ///////////////////////////////////////////
@@ -1221,7 +1264,7 @@
 		src.goods_sell += new /datum/commodity/drugs/krokodil(src)
 		src.goods_sell += new /datum/commodity/drugs/jenkem(src)
 		src.goods_sell += new /datum/commodity/drugs/lsd(src)
-		src.goods_sell += new /datum/commodity/drugs/lsd_bee(src)
+		src.goods_sell += new /datum/commodity/drug/lsd_bee(src)
 		src.goods_sell += new /datum/commodity/medical/ether(src)
 		src.goods_sell += new /datum/commodity/medical/toxin(src)
 		src.goods_sell += new /datum/commodity/medical/cyanide(src)
@@ -1268,11 +1311,11 @@
 		pickupdialoguefailure = "<i>A hand sticking out from a toilet flails around for a bit.</i>"
 
 /obj/npc/trader/twins
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "twins"
 	picture = "twins.png"
 	name = "Carol and Lynn"
-	trader_area = "/area/mobius"
+	trader_area = "/area/prefab/mobius"
 
 	bound_width = 64
 	bound_height = 32

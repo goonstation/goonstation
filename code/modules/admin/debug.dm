@@ -30,7 +30,7 @@ var/global/debug_messages = 0
 	var/total = 0
 	for (var/b = 1; b <= DELQUEUE_SIZE; b++)
 		buckets += "<li style='[b == dp ? "background-color: #fcc;": ( b == cp ? "background-color: #bbf;" : "")]'><span style='display: inline-block; width: 6em; text-align: right;'>[global.delete_queue_2[b].len]</span><span style='display: inline-block; height: 1em; width: [round(global.delete_queue_2[b].len / 2.5)]px; background: black;'></span></li>"
-		total += global.delete_queue_2[b].len
+		total += length(global.delete_queue_2[b])
 
 	deletedJson += "]"
 	var/html = {"<!doctype html><html>
@@ -195,7 +195,7 @@ var/global/debug_messages = 0
 
 	if (!typename)
 		return
-	var/thetype = get_one_match(typename, /atom)
+	var/thetype = get_one_match(typename, /atom, use_concrete_types = FALSE)
 	if (thetype)
 		var/counter = 0
 		var/procname = input("Procpath","path:", null) as text
@@ -203,7 +203,7 @@ var/global/debug_messages = 0
 		var/list/listargs = list()
 
 		for(var/i=0, i<argnum, i++)
-			var/class = input("Type of Argument #[i]","Variable Type", null) in list("text","num","type","reference","mob reference","reference atom at current turf","icon","file","-cancel-")
+			var/class = input("Type of Argument #[i]","Variable Type", null) in list("text","num","type","json","ref","reference","mob reference","reference atom at current turf","icon","file","-cancel-")
 			switch(class)
 				if("-cancel-")
 					return
@@ -216,6 +216,15 @@ var/global/debug_messages = 0
 
 				if("type")
 					listargs += input("Enter type:","Type", null) in null|typesof(/obj,/mob,/area,/turf)
+
+				if("json")
+					listargs += list(json_decode(input("Enter json:") as null|text))
+
+				if ("ref")
+					var/input = input("Enter ref:") as null|text
+					var/target = locate(input)
+					if (!target) target = locate("\[[input]\]")
+					listargs += target
 
 				if("reference")
 					listargs += input("Select reference:","Reference", null) as null|mob|obj|turf|area in world
@@ -309,12 +318,12 @@ var/global/debug_messages = 0
 	for(var/actual_proc in name_list)
 		try
 			if (target)
-				if(islist(listargs) && listargs.len)
+				if(islist(listargs) && length(listargs))
 					returnval = call(target,actual_proc)(arglist(listargs))
 				else
 					returnval = call(target,actual_proc)()
 			else
-				if(islist(listargs) && listargs.len)
+				if(islist(listargs) && length(listargs))
 					returnval = call(actual_proc)(arglist(listargs))
 				else
 					returnval = call(actual_proc)()
@@ -343,7 +352,7 @@ var/global/debug_messages = 0
 	if (!argnum)
 		return listargs
 	for (var/i=0, i<argnum, i++)
-		var/class = input("Type of Argument #[i]","Variable Type", null) as null|anything in list("text","num","type","reference","mob reference","reference atom at current turf","icon","color","file","the turf of which you are on top of right now")
+		var/class = input("Type of Argument #[i]","Variable Type", null) as null|anything in list("text","num","type","json","ref","reference","mob reference","reference atom at current turf","icon","color","file","the turf of which you are on top of right now")
 		if(!class)
 			break
 		switch(class)
@@ -359,9 +368,18 @@ var/global/debug_messages = 0
 				boutput(usr, "<span class='notice'>Type part of the path of the type.</span>")
 				var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
 				if (typename)
-					var/match = get_one_match(typename, /datum)
+					var/match = get_one_match(typename, /datum, use_concrete_types = FALSE)
 					if (match)
 						listargs += match
+
+			if("json")
+				listargs += list(json_decode(input("Enter json:") as null|text))
+
+			if ("ref")
+				var/input = input("Enter ref:") as null|text
+				var/target = locate(input)
+				if (!target) target = locate("\[[input]\]")
+				listargs += target
 
 			if ("reference")
 				listargs += input("Select reference:","Reference", null) as null|mob|obj|turf|area in world
@@ -518,7 +536,7 @@ var/global/debug_messages = 0
 		var/numdeleted = 0
 		for(var/atom/O in world)
 			if(istype(O, hsbitem))
-				del(O)
+				qdel(O)
 				numdeleted++
 				if(background == "Yes (Low)")
 					LAGCHECK(LAG_LOW)
@@ -564,12 +582,14 @@ var/global/debug_messages = 0
 	if (!esize)
 		return
 	var/bris = input("Enter BRISANCE of Explosion\nLeave it on 1 if you have no idea what this is.", "Brisance", 1) as num
+	var/angle = input("Enter ANGLE of Explosion (clockwise from north)\nIf not a multiple of 45, you may encounter issues.", "Angle", 0) as num
+	var/width = input("Enter WIDTH of Explosion\nLeave it on 360 if you have no idea what this does.", "Width", 360) as num
 
 	logTheThing("admin", src, null, "created an explosion (power [esize], brisance [bris]) at [log_loc(T)].")
 	logTheThing("diary", src, null, "created an explosion (power [esize], brisance [bris]) at [log_loc(T)].", "admin")
 	message_admins("[key_name(src)] has created an explosion (power [esize], brisance [bris]) at [log_loc(T)].")
 
-	explosion_new(null, T, esize, bris)
+	explosion_new(null, T, esize, bris, angle, width)
 	return
 
 /client/proc/cmd_debug_mutantrace(var/mob/mob in world)
@@ -646,7 +666,7 @@ body
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Check Gang Scores"
 
-	if(!(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/gang)))
+	if(!(ticker?.mode && istype(ticker.mode, /datum/game_mode/gang)))
 		alert("It isn't gang mode, dummy!")
 		return
 
@@ -659,7 +679,7 @@ body
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Profiling Scenario"
 
-	var/selected = input("Select scenario", "Do not use on a live server for the love of god", "Cancel") in list("Cancel", "Disco Inferno", "Chemist's Delight", "Viscera Cleanup Detail")
+	var/selected = input("Select scenario", "Do not use on a live server for the love of god", "Cancel") in list("Cancel", "Disco Inferno", "Chemist's Delight", "Viscera Cleanup Detail", "Brighter Bonanza")
 	switch (selected)
 		if ("Disco Inferno")
 			for (var/turf/T in landmarks[LANDMARK_BLOBSTART])
@@ -691,6 +711,15 @@ body
 				LAGCHECK(LAG_LOW)
 				if ((T.x*T.y) % 10 == 0)
 					gibs(T)
+		if ("Brighter Bonanza")
+			var/list/obj/item/device/light/zippo/brighter/brighters = list()
+			for(var/i in 1 to 1000)
+				brighters += new /obj/item/device/light/zippo/brighter
+				brighters[i].light.enable()
+			while(TRUE)
+				for(var/obj/brighter in brighters)
+					brighter.set_loc(locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_STATION))
+				sleep(0.2 SECONDS)
 /*
 /client/proc/icon_print_test()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
@@ -776,7 +805,7 @@ body
 	set name = "Find One"
 	set desc = "Show the location of one instance of type."
 
-	var/thetype = get_one_match(typename, /atom)
+	var/thetype = get_one_match(typename, /atom, use_concrete_types = FALSE)
 	if (thetype)
 		var/atom/theinstance = locate(thetype) in world
 		if (!theinstance)
@@ -793,7 +822,7 @@ body
 	set name = "Find All"
 	set desc = "Show the location of all instances of a type. Performance warning!!"
 
-	var/thetype = get_one_match(typename, /atom)
+	var/thetype = get_one_match(typename, /atom, use_concrete_types = FALSE)
 	if (thetype)
 		var/counter = 0
 		boutput(usr, "<span class='notice'><b>All instances of [thetype]: </b></span>")
@@ -825,7 +854,7 @@ body
 	set name = "Count All"
 	set desc = "Returns the number of all instances of a type that exist."
 
-	var/thetype = get_one_match(typename, /atom)
+	var/thetype = get_one_match(typename, /atom, use_concrete_types = FALSE)
 	if (thetype)
 		var/counter = 0
 		for (var/atom/theinstance in world)
@@ -845,7 +874,7 @@ body
 	set popup_menu = 0
 	admin_only
 
-	var/new_level = input(src, null, "Choose New Rank", "Coder") as() in null|list("Host", "Coder", "Shit Guy", "Primary Admin", "Admin", "Secondary Admin", "Mod", "Babby")
+	var/new_level = input(src, null, "Choose New Rank", "Coder") as anything in null|list("Host", "Coder", "Shit Guy", "Primary Admin", "Admin", "Secondary Admin", "Mod", "Babby")
 	if (!new_level)
 		return
 	src.holder.rank = new_level
@@ -1018,6 +1047,34 @@ proc/display_camera_paths()
 			</html>"}
 	src.Browse(output, "window=holyfuck;size=600x500")
 
+
+/client/proc/cmd_display_detailed_power_stats()
+	set name = "Machine Power stats"
+	set desc = "Displays the statistics for how much power machines are using."
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	admin_only
+
+	var/output = ""
+	var/apc_data = ""
+
+	for(var/area/A as() in detailed_machine_power_prev)
+		if(A.area_apc)
+			apc_data = "<B>[A.area_apc.lastused_total]</B>      EQP:[A.area_apc.lastused_equip] LGT:[A.area_apc.lastused_light] ENV:[A.area_apc.lastused_environ]"
+			for(var/obj/machinery/AM as() in A.machines)
+				if(AM.power_usage)
+					if(!detailed_machine_power_prev[A][AM]) detailed_machine_power_prev[A][AM] = list()
+					detailed_machine_power_prev[A][AM] += "([-AM.power_usage])"
+		else
+			apc_data = "<i>NO APC</i>"
+		output += "<B><a href='byond://?src=\ref[src];Vars=\ref[A]'>[A]</a></B> [apc_data]<BR/>"
+		for(var/M in detailed_machine_power_prev[A])
+			output += "&middot; <a href='byond://?src=\ref[src];Vars=\ref[M]'>[M]</a> (<a href='byond://?src=\ref[src];JumpToThing=\ref[M]'>JMP</a>) :"
+			for(var/P in detailed_machine_power_prev[A][M])
+				output += "[P] "
+			output += "<BR/>"
+		output += "<BR/>"
+	src.Browse(output, "window=power_data;size=600x500")
+
 #endif
 
 #ifdef QUEUE_STAT_DEBUG
@@ -1148,7 +1205,7 @@ var/datum/flock/testflock
 		testflock = new()
 
 	var/chui/window/flockpanel/panel = testflock.panel
-	panel.Subscribe(usr)
+	panel.Subscribe(usr.client)
 
 /client/proc/clear_string_cache()
 	set name = "Clear String Cache"
@@ -1157,7 +1214,7 @@ var/datum/flock/testflock
 	admin_only
 
 	if(alert("Really clear the string cache?","Invalidate String Cache","OK","Cancel") == "OK")
-		var/length = string_cache.len
+		var/length = length(string_cache)
 		string_cache = new
 		logTheThing("admin", usr, null, "cleared the string cache, clearing [length] existing list(s).")
 		logTheThing("diary", usr, null, "cleared the string cache, clearing [length] existing list(s).", "admin")

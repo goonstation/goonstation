@@ -41,7 +41,7 @@
 /area/noGenerate)
 "ak" = (
 /turf/variableTurf/wall,
-/area)
+/area/space)
 "al" = (
 /obj/machinery/optable,
 /obj/map/light/white,
@@ -87,7 +87,7 @@
 /area/noGenerate)
 "aq" = (
 /turf/variableTurf/clear,
-/area)
+/area/space)
 "ar" = (
 /obj/decal/cleanable/oil,
 /obj/decal/cleanable/dirt,
@@ -106,7 +106,6 @@
 /area/noGenerate)
 "at" = (
 /obj/wingrille_spawn/auto,
-/turf/simulated/shuttle/wall,
 /turf/simulated/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
@@ -116,7 +115,6 @@
 	icon_state = "tracks";
 	dir = 9
 	},
-/turf/space,
 /turf/simulated/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
@@ -176,7 +174,6 @@
 /obj/decal/cleanable/cobweb2,
 /obj/decal/cleanable/blood/gibs/body,
 /obj/decal/cleanable/blood/splatter,
-/turf/simulated/floor/plating/airless,
 /turf/simulated/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
@@ -249,7 +246,7 @@
 "aK" = (
 /obj/item/raw_material/scrap_metal,
 /turf/variableTurf/wall,
-/area)
+/area/space)
 "aL" = (
 /obj/decal/cleanable/machine_debris,
 /obj/decal/floatingtiles{
@@ -259,7 +256,6 @@
 /obj/item/raw_material/shard/glass,
 /obj/decal/cleanable/blood/splatter,
 /obj/item/paper/Cloning,
-/turf/space,
 /turf/simulated/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
@@ -344,7 +340,7 @@
 /area/noGenerate)
 "aW" = (
 /obj/decal/cleanable/vomit,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/machinery/drainage,
 /turf/simulated/floor/airless{
 	icon_state = "floorgrime"
@@ -372,7 +368,6 @@
 	icon_state = "intact"
 	},
 /obj/decal/cleanable/blood/gibs/core,
-/turf/simulated/floor/plating/airless,
 /turf/simulated/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
@@ -711,7 +706,6 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "gibbl2"
 	},
-/turf/simulated/floor/plating/airless,
 /turf/simulated/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
@@ -739,9 +733,6 @@
 	name = "rusted hatch"
 	},
 /obj/decal/cleanable/paper,
-/turf/simulated/floor/plating/airless{
-	icon_state = "platingdmg1"
-	},
 /turf/simulated/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},

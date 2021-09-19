@@ -23,7 +23,7 @@
 
 	New(var/mob/M)
 		..()
-		src.invisibility = 10
+		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
 		src.abilityHolder = new /datum/abilityHolder/zoldorf(src)
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.see_invisible = 16
@@ -100,8 +100,8 @@
 		src.addAbility(/datum/targetable/zoldorfAbility/color)
 
 		the_zoldorf = list()
-
-		src << browse(grabResource("html/traitorTips/souldorfTips.htm"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
+		spawn(0)
+			src << browse(grabResource("html/traitorTips/souldorfTips.htm"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
 
 	Login()
 		..()
@@ -155,7 +155,7 @@
 			else
 				animate_spin(src, "L", 1, 0)
 			src.UpdateOverlays(image('icons/obj/zoldorf.dmi',"ectooverlay"),"ecto")
-			src.invisibility = 0
+			REMOVE_MOB_PROPERTY(src, PROP_INVISIBILITY, src)
 			qdel(target)
 		else
 			src.examine_verb(target)
@@ -193,11 +193,11 @@
 		if (!isturf(src.loc))
 			src.set_loc(get_turf(src))
 		if (NewLoc)
-			dir = get_dir(loc, NewLoc)
+			src.set_dir(get_dir(loc, NewLoc))
 			src.set_loc(NewLoc)
 			return
 
-		dir = direct
+		src.set_dir(direct)
 		if((direct & NORTH) && src.y < world.maxy)
 			src.y++
 		if((direct & SOUTH) && src.y > 1)
@@ -263,7 +263,7 @@
 							sleep(0.1 SECONDS)
 						src.pixel_x = 0
 						src.pixel_y = 0
-						src.invisibility = 10
+						APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
 						src.ClearAllOverlays()
 						var/obj/item/reagent_containers/food/snacks/ectoplasm/e = new /obj/item/reagent_containers/food/snacks/ectoplasm
 						e.set_loc(get_turf(src))
@@ -273,7 +273,7 @@
 				soulcache = src.icon
 				if(!src.invisibility)
 					src.visible_message("<span class='alert'><b>The ectoplasm falls off! Oh no!</b></span>")
-					src.invisibility = 10
+					APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
 					src.ClearAllOverlays()
 					var/obj/item/reagent_containers/food/snacks/ectoplasm/e = new /obj/item/reagent_containers/food/snacks/ectoplasm
 					e.set_loc(get_turf(src))
@@ -340,6 +340,7 @@
 			if (src.client)
 				src.client.mob = Z
 			Z.mind = new /datum/mind()
+			Z.mind.ckey = ckey
 			Z.mind.key = key
 			Z.mind.current = Z
 			ticker.minds += Z.mind
@@ -399,11 +400,13 @@
 
 	if(istype(over_object,/obj/item) && istype(usr.loc,/obj/machinery/playerzoldorf))
 		var/obj/item/i = over_object
+		if(i.anchored)
+			return
 		var/obj/machinery/playerzoldorf/pz = usr.loc
 		if((i in range(1,usr.loc)) && (Tb in range(1,Ta)))
 			if(!pz.GetOverlayImage("fortunetelling"))
 				pz.UpdateOverlays(image('icons/obj/zoldorf.dmi',"fortunetelling"),"fortunetelling")
-				spawn(6)
+				SPAWN_DBG(0.6 SECONDS)
 					if(pz)
 						pz.ClearSpecificOverlays("fortunetelling")
 			if((istype(i,/obj/item/paper/thermal/playerfortune)) && (Ta == get_turf(usr.loc)))

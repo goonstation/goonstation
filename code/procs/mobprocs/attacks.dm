@@ -1,5 +1,5 @@
 
-/mob/attackby(obj/item/W as obj, mob/user as mob, params, is_special = 0, mob/meatshield)
+/mob/attackby(obj/item/W as obj, mob/user as mob, params, is_special = 0)
 	actions.interrupt(src, INTERRUPT_ATTACKED)
 
 	// why is this not in human/attackby?
@@ -32,31 +32,11 @@
 				if (S.active)
 					shielded = 1
 
-	if (!meatshield && locate(/obj/item/grab, src))
-		var/mob/safe = null
-		var/obj/item/grab/G = null
-		if (istype(src.l_hand, /obj/item/grab))
-			G = src.l_hand
-			if (G.state >= 2 && G.affecting != user) //(get_dir(src, user) == src.dir) removed to match projectiles
-				safe = G.affecting
-		if (istype(src.r_hand, /obj/item/grab))
-			G = src.r_hand
-			if (G.state >= 2 && G.affecting != user)
-				safe = G.affecting
-		if (safe)
-			safe.attackby(W, user, params, is_special, src)
-
-			//after attackby so the attack message itself displays first
-			if(prob(20))
-				safe.visible_message("<span class='combat bold'>[safe] is knocked out of [src]'s grip by the force of the blow!</span>")
-				qdel(G)
-
-			return
-	if ((!( shielded ) || !( W.flags ) & NOSHIELD))
+	if (!shielded || !(W.flags & NOSHIELD))
 		SPAWN_DBG( 0 )
 		// drsingh Cannot read null.force
 #ifdef DATALOGGER
-			if (!isnull(W) && W.force)
+			if (W?.force)
 				game_stats.Increment("violence")
 #endif
 			if (!isnull(W))
@@ -69,7 +49,7 @@
 						attack_twitch(user)
 
 
-				if (W && W.force) //Wire: Fix for Cannot read null.force
+				if (W?.force) //Wire: Fix for Cannot read null.force
 					message_admin_on_attack(user, "uses \a [W.name] on")
 			return
 	return

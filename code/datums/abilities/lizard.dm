@@ -6,6 +6,7 @@
 		var/datum/abilityHolder/lizard/W = src.add_ability_holder(/datum/abilityHolder/lizard)
 		W.addAbility(/datum/targetable/lizardAbility/colorshift)
 		W.addAbility(/datum/targetable/lizardAbility/colorchange)
+		W.addAbility(/datum/targetable/lizardAbility/regrow_tail)
 	else return
 
 /mob/living/carbon/human/proc/remove_lizard_powers()
@@ -14,8 +15,41 @@
 		if (W && istype(W))
 			W.removeAbility(/datum/targetable/lizardAbility/colorshift)
 			W.removeAbility(/datum/targetable/lizardAbility/colorchange)
+			W.removeAbility(/datum/targetable/lizardAbility/regrow_tail)
 			src.remove_ability_holder(/datum/abilityHolder/lizard)
 	else return
+
+/mob/living/carbon/human/proc/update_lizard_parts()
+	if (ishuman(src))
+		var/mob/living/carbon/human/liz = src
+		if(!liz?.limbs)
+			return
+		if (istype(liz.limbs.l_arm, /obj/item/parts/human_parts/arm/mutant/lizard ))
+			var/obj/item/parts/human_parts/LA = liz.limbs.l_arm
+			LA.colorize_limb_icon()
+			LA.set_skin_tone()
+		if (istype(liz.limbs.r_arm, /obj/item/parts/human_parts/arm/mutant/lizard ))
+			var/obj/item/parts/human_parts/RA = liz.limbs.r_arm
+			RA.colorize_limb_icon()
+			RA.set_skin_tone()
+		if (istype(liz.limbs.l_leg, /obj/item/parts/human_parts/leg/mutant/lizard ))
+			var/obj/item/parts/human_parts/LL = liz.limbs.l_leg
+			LL.colorize_limb_icon()
+			LL.set_skin_tone()
+		if (istype(liz.limbs.r_leg, /obj/item/parts/human_parts/leg/mutant/lizard ))
+			var/obj/item/parts/human_parts/RL = liz.limbs.r_leg
+			RL.colorize_limb_icon()
+			RL.set_skin_tone()
+		if (liz.organHolder?.head)
+			var/obj/item/organ/head/hed = liz.organHolder.head
+			if(hed.head_type == HEAD_LIZARD)
+				hed.update_icon(ignore_transplant = 1) // Chromatophores are chromatophores
+			else
+				hed.update_icon(ignore_transplant = 0)
+		if (istype(liz?.organHolder.tail, /obj/item/organ/tail/lizard))
+			var/obj/item/organ/tail/T = liz.organHolder.tail
+			T.colorize_tail(liz.bioHolder.mobAppearance)
+		liz?.bioHolder?.mobAppearance.UpdateMob()
 
 /datum/abilityHolder/lizard
 	topBarRendered = 1
@@ -38,15 +72,29 @@
 			L = holder.owner
 		return
 
-	/// Clamps each of the RGB values between 50 and 190
-	proc/fix_colors(var/hex)
-		var/list/L = hex_to_rgb_list(hex)
-		for (var/i in L)
-			L[i] = min(L[i], 190)
-			L[i] = max(L[i], 50)
-		if (L.len == 3)
-			return rgb(L["r"], L["g"], L["b"])
-		return rgb(22, 210, 22)
+/datum/targetable/lizardAbility/regrow_tail
+	name = "Regrow Tail"
+	desc = "Regrow your tail... (If cast while you have a tail, shoot off your tail and regrow a new one)"
+	cooldown = 5 MINUTES
+	targeted = 0
+	pointCost = 2
+
+	cast()
+		if (..())
+			return 1
+
+		if (L.mutantrace && !istype(L.mutantrace, /datum/mutantrace/lizard) || !L.organHolder)
+			boutput(L, "<span class='notice'>You don't have any chromatophores.</span>")
+			return 1
+
+		//shoot off tail
+		if (L.organHolder?.tail)
+			L.drop_and_throw_organ("tail", dist = 2, speed = 1, showtext = 1)
+
+		//simply make a new tail
+		L.visible_message("<span class='notice'><b>[L.name]</b> visibly exerts [himself_or_herself(L)] and a new tail starts to sprout!</span>")
+		L.organHolder.receive_organ(new/obj/item/organ/tail/lizard, "tail", 0.0, 1)
+
 
 /datum/targetable/lizardAbility/colorshift
 	name = "Chromatophore Shift"
@@ -60,7 +108,7 @@
 
 		if (L.mutantrace && !istype(L.mutantrace, /datum/mutantrace/lizard))
 			boutput(L, "<span class='notice'>You don't have any chromatophores.</span>")
-			return
+			return 1
 
 		if (L?.bioHolder?.mobAppearance)
 			var/datum/appearanceHolder/AHs = L.bioHolder.mobAppearance
@@ -72,9 +120,10 @@
 			AHs.customization_first_color = col3
 			AHs.customization_second_color = col1
 			AHs.customization_third_color = col2
+			AHs.s_tone = AHs.customization_first_color
 
 			L.visible_message("<span class='notice'><b>[L.name]</b> changes colors!</span>")
-			L.update_body()
+			L.update_lizard_parts()
 
 /datum/targetable/lizardAbility/colorchange
 	name = "Chromatophore Activation"
@@ -89,7 +138,7 @@
 
 		if (L.mutantrace && !istype(L.mutantrace, /datum/mutantrace/lizard))
 			boutput(L, "<span class='notice'>You're fresh out of chromatophores.</span>")
-			return
+			return 1
 
 		if (L?.bioHolder?.mobAppearance)
 			var/datum/appearanceHolder/AHs = L.bioHolder.mobAppearance
@@ -98,17 +147,15 @@
 
 			if (!which_region)
 				boutput(L, "<span class='notice'>You leave your pigmentation as-is.</span>")
-				return
+				return 1
 
 			var/coloration = input(L, "Please select skin color.", "Character Generation")  as null | color
 
 			if (!coloration)
 				boutput(L, "<span class='notice'>You think it looks fine the way it is.</span>")
-				return
+				return 1
 
 			actions.start(new/datum/action/bar/lizcolor(L, fix_colors(coloration), regions[which_region], which_region, AHs), L)
-			return
-
 
 
 /datum/action/bar/lizcolor
@@ -140,6 +187,7 @@
 		switch(region)
 			if (1)
 				AHliz.customization_first_color = color
+				AHliz.s_tone = color
 				spot = "skin"
 			if (2)
 				AHliz.customization_second_color = color
@@ -148,7 +196,7 @@
 				AHliz.customization_third_color = color
 				spot = "head thing"
 		L.visible_message("[L]'s [spot] changes color!", "<span class='notice'>Your [region_name] changes color!</span>")
-		L.update_body()
+		L.update_lizard_parts()
 		..()
 
 	onInterrupt()

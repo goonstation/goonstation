@@ -172,7 +172,7 @@
 
 	for(var/mob/M in viewers(1, src))
 		if ((M.client && M.machine == src))
-			src.attack_hand(M)
+			src.Attackhand(M)
 	return
 
 /obj/machinery/autolathe/New()
@@ -197,7 +197,7 @@
 	src.L += new /obj/item/device/t_scanner(src)
 	src.L += new /obj/item/reagent_containers/food/drinks/cola_bottle(src)
 	src.L += new /obj/item/device/gps(src)
-	src.LL += new /obj/item/flamethrower/assembled(src)
+	src.LL += new /obj/item/gun/flamethrower/assembled(src)
 	src.LL += new /obj/item/device/igniter(src)
 	src.LL += new /obj/item/device/timer(src)
 	src.LL += new /obj/item/rcd(src)

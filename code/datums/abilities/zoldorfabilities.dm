@@ -6,7 +6,7 @@
 	notEnoughPointsMessage = "<span class='alert'>You do not have enough souls to use that ability.</span>"
 	cast_while_dead = 1
 
-/obj/screen/ability/topBar/zoldorf
+/atom/movable/screen/ability/topBar/zoldorf
 	tens_offset_x = 19
 	tens_offset_y = 7
 	secs_offset_x = 23
@@ -22,7 +22,7 @@
 	preferred_holder_type = /datum/abilityHolder/zoldorf
 
 	New()
-		var/obj/screen/ability/topBar/zoldorf/B = new /obj/screen/ability/topBar/zoldorf(null)
+		var/atom/movable/screen/ability/topBar/zoldorf/B = new /atom/movable/screen/ability/topBar/zoldorf(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -316,7 +316,7 @@
 			else
 				f.icon = 'icons/obj/zoldorf.dmi'
 				f.icon_state = "branded"
-				spawn(32)
+				SPAWN_DBG(3.2 SECONDS)
 					f.icon_state = "fortunepaper"
 				f.branded = 1
 				f.referencedorf = pz
@@ -338,7 +338,7 @@
 		if(istype(user.loc,/obj/machinery/playerzoldorf))
 			var/obj/machinery/playerzoldorf/pz = user.loc
 			user.homebooth = pz
-			var/staticiterations = pz.brandlist.len
+			var/staticiterations = length(pz.brandlist)
 			for(var/i=1,i<=staticiterations,i++)
 				if(pz.brandlist[i]==null)
 					pz.brandlist -= pz.brandlist[i]
@@ -410,7 +410,7 @@
 		var/obj/ectoplasm = new /obj/item/reagent_containers/food/snacks/ectoplasm
 		ectoplasm.set_loc(boothloc)
 		sleep(60 SECONDS)
-		if(sg && sg.mind)
+		if(sg?.mind)
 			sg.mind.transfer_to(user)
 			qdel(sg)
 
@@ -451,7 +451,7 @@
 					var/obj/ectoplasm = new /obj/item/reagent_containers/food/snacks/ectoplasm
 					ectoplasm.set_loc(mobloc)
 					SPAWN_DBG(600)
-						if(sg && sg.mind)
+						if(sg?.mind)
 							if(istype(the_mob,/mob/zoldorf))
 								sg.mind.transfer_to(the_mob)
 								qdel(sg)

@@ -276,21 +276,6 @@ obj/machinery/atmospherics
 
 				target_pressure = amount
 
-	unary/oxygen_generator
-		verb
-			toggle()
-				set src in world
-				set category = "Minor"
-
-				on = !on
-
-				update_icon()
-
-			change_rate(amount as num)
-				set src in world
-				set category = "Minor"
-
-				oxygen_content = amount
 	binary/pump
 		verb
 			DEBUG_MESSAGE()
@@ -400,23 +385,22 @@ turf/simulated
 			overlays = null
 			for(var/direction in cardinal)
 				if(group_border&direction)
-					overlays += icon('icons/turf_analysis.dmi',"red_arrow",direction)
+					overlays += icon('icons/Testing/turf_analysis.dmi',"red_arrow",direction)
 				else if(air_check_directions&direction)
-					overlays += icon('icons/turf_analysis.dmi',"arrow",direction)
+					overlays += icon('icons/Testing/turf_analysis.dmi',"arrow",direction)
 		air_status()
 			set src in world
 			set category = "Minor"
 			var/datum/gas_mixture/GM = return_air()
 			boutput(usr, "<span class='notice'>@[x],[y] ([GM.group_multiplier])<br>[MOLES_REPORT(GM)] w [GM.temperature] Kelvin, [MIXTURE_PRESSURE(GM)] kPa [(active_hotspot)?("<span class='alert'>BURNING</span>"):(null)]")
 			if(length(GM.trace_gases))
-				for(var/G in GM.trace_gases)
-					var/datum/gas/trace_gas = G
+				for(var/datum/gas/trace_gas as anything in GM.trace_gases)
 					boutput(usr, "[trace_gas.type]: [trace_gas.moles]")
 
 		force_temperature(temp as num)
 			set src in world
 			set category = "Minor"
-			if(parent&&parent.group_processing)
+			if(parent?.group_processing)
 				parent.suspend_group_processing()
 
 			air.temperature = temp
@@ -440,10 +424,9 @@ turf/simulated
 
 			if(amount>1)
 				var/datum/gas_mixture/adding = unpool(/datum/gas_mixture)
-				var/datum/gas/sleeping_agent/trace_gas = new
+				var/datum/gas/sleeping_agent/trace_gas = adding.get_or_add_trace_gas_by_type(var/datum/gas/sleeping_agent)
 
 				trace_gas.moles = amount
-				adding.trace_gases += trace_gas
 				adding.temperature = T20C
 
 				assume_air(adding)
@@ -558,7 +541,7 @@ mob
 				group.marker = 0
 
 			for(var/turf/simulated/floor/S in world)
-				S.icon = 'icons/turf_analysis.dmi'
+				S.icon = 'icons/Testing/turf_analysis.dmi'
 				if(S.parent)
 					if(S.parent.group_processing)
 						if(S.parent.marker == 0)

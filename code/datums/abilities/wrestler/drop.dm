@@ -38,11 +38,7 @@
 			boutput(M, __red("You can use this move on prone opponents only!"))
 			return 1
 
-		if (M.invisibility > 0)
-			for (var/obj/item/cloaking_device/I in M)
-				if (I.active)
-					I.deactivate(M)
-					M.visible_message("<span class='notice'><b>[M]'s cloak is disrupted!</b></span>")
+		SEND_SIGNAL(M, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
 
 		var/obj/surface = null
 		var/turf/ST = null
@@ -88,7 +84,7 @@
 				boutput(M, __red("You can't drop onto [target] from here!"))
 				return 0
 
-			SPAWN_DBG (0)
+			SPAWN_DBG(0)
 				if (M)
 					animate(M, transform = matrix(90, MATRIX_ROTATE), time = 1, loop = 0)
 				sleep (10)

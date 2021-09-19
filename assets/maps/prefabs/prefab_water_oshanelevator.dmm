@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/variableTurf/wall,
-/area)
+/area/space)
 "b" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 9
@@ -31,7 +31,6 @@
 "h" = (
 /obj/shrub{
 	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
-	dir = 2;
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
 	},
@@ -48,7 +47,6 @@
 /area/shuttle/sea_elevator)
 "k" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "It probably has something to do with the elevator.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -118,7 +116,6 @@
 /area/shuttle/sea_elevator)
 "y" = (
 /turf/unsimulated/wall/setpieces/leadwindow{
-	icon_state = "leadwindow_1";
 	dir = 8
 	},
 /area/shuttle/sea_elevator)
@@ -140,6 +137,8 @@
 /obj/table/auto,
 /obj/item/paper/fortune,
 /obj/item/pen,
+/obj/item/sea_ladder,
+/obj/item/sea_ladder,
 /turf/simulated/floor/black/grime,
 /area/shuttle/sea_elevator)
 "C" = (
@@ -158,6 +157,19 @@
 /obj/item/device/light/glowstick,
 /obj/item/device/light/glowstick,
 /turf/simulated/floor/scorched2,
+/area/shuttle/sea_elevator)
+"Z" = (
+/obj/rack,
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/pinpointer/trench,
+/obj/item/pinpointer/trench{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/turf/simulated/floor/black/grime,
 /area/shuttle/sea_elevator)
 
 (1,1,1) = {"
@@ -208,7 +220,7 @@ n
 o
 r
 j
-j
+Z
 d
 a
 "}

@@ -21,10 +21,9 @@
 
 /obj/table/flock/special_desc(dist, mob/user)
   if(isflock(user))
-    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-    special_desc += "<br><span class='bold'>ID:</span> Storage Surface"
-    special_desc += "<br><span class='bold'>###=-</span></span>"
-    return special_desc
+    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+    <br><span class='bold'>ID:</span> Storage Surface
+    <br><span class='bold'>###=-</span></span>"}
   else
     return null // give the standard description
 
@@ -39,11 +38,10 @@
 
 /obj/item/furniture_parts/table/flock/special_desc(dist, mob/user)
   if(isflock(user))
-    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-    special_desc += "<br><span class='bold'>ID:</span> Storage Surface, Deployable State"
-    special_desc += "<br><span class='bold'>Instructions:</span> Activate within grip tool to deploy."
-    special_desc += "<br><span class='bold'>###=-</span></span>"
-    return special_desc
+    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+    <br><span class='bold'>ID:</span> Storage Surface, Deployable State
+    <br><span class='bold'>Instructions:</span> Activate within grip tool to deploy.
+    <br><span class='bold'>###=-</span></span>"}
   else
     return null // give the standard description
 
@@ -64,10 +62,9 @@
 
 /obj/stool/chair/comfy/flock/special_desc(dist, mob/user)
   if(isflock(user))
-    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-    special_desc += "<br><span class='bold'>ID:</span> Resting Chamber"
-    special_desc += "<br><span class='bold'>###=-</span></span>"
-    return special_desc
+    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+    <br><span class='bold'>ID:</span> Resting Chamber
+    <br><span class='bold'>###=-</span></span>"}
   else
     return null // give the standard description
 
@@ -84,11 +81,10 @@
 
 /obj/item/furniture_parts/flock_chair/special_desc(dist, mob/user)
   if(isflock(user))
-    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-    special_desc += "<br><span class='bold'>ID:</span> Resting Chamber, Deployable State"
-    special_desc += "<br><span class='bold'>Instructions:</span> Activate within grip tool to deploy."
-    special_desc += "<br><span class='bold'>###=-</span></span>"
-    return special_desc
+    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+    <br><span class='bold'>ID:</span> Resting Chamber, Deployable State
+    <br><span class='bold'>Instructions:</span> Activate within grip tool to deploy.
+    <br><span class='bold'>###=-</span></span>"}
   else
     return null // give the standard description
 
@@ -163,16 +159,15 @@
 
 	if(isflock(user))
 		if (!src.toggle())
-			return src.attackby(null, user)
+			return src.Attackby(null, user)
 	else
 		boutput(user, "<span class='alert'>Nothing you can do can persuade this thing to either open or close. Bummer.</span>")
 
 /obj/storage/closet/flock/special_desc(dist, mob/user)
   if(isflock(user))
-    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-    special_desc += "<br><span class='bold'>ID:</span> Containment Capsule"
-    special_desc += "<br><span class='bold'>###=-</span></span>"
-    return special_desc
+    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+    <br><span class='bold'>ID:</span> Containment Capsule
+    <br><span class='bold'>###=-</span></span>"}
   else
     return null // give the standard description
 
@@ -203,10 +198,9 @@
 
 /obj/item/furniture_parts/flock_chair/special_desc(dist, mob/user)
   if(isflock(user))
-    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-    special_desc += "<br><span class='bold'>ID:</span> Light Emitter"
-    special_desc += "<br><span class='bold'>###=-</span></span>"
-    return special_desc
+    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+    <br><span class='bold'>ID:</span> Light Emitter
+    <br><span class='bold'>###=-</span></span>"}
   else
     return null // give the standard description
 
@@ -235,13 +229,17 @@
 			playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 			T.add_fingerprint(user)
 			qdel(src)
-
-		if (T.amount < 1  && !issilicon(user))
-			user.u_equip(T)
-			qdel(T)
 	if (isweldingtool(C) && C:try_weld(user,0,-1,0,0))
 		boutput(user, "<span class='notice'>The fibres burn away in the same way glass doesn't. Huh.</span>")
 		qdel(src)
+
+/obj/lattice/flock/special_desc(dist, mob/user)
+	if(isflock(user))
+		return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+		<br><span class='bold'>ID:</span> Structural Foundation
+		<br><span class='bold'>###=-</span></span>"}
+	else
+		return null // give the standard description
 
 /////////////
 // BARRICADE
@@ -254,17 +252,49 @@
 	health = 50
 	health_max = 50
 	shock_when_entered = 0
+	auto = FALSE
 	mat_appearances_to_ignore = list("steel","gnesis")
 	mat_changename = 0
 	mat_changedesc = 0
 
+	update_icon(special_icon_state) //fix for perspective grilles fucking these up
+		if (ruined)
+			return
+
+		if (istext(special_icon_state))
+			icon_state = initial(src.icon_state) + "-" + special_icon_state
+			return
+
+		var/diff = get_fraction_of_percentage_and_whole(health,health_max)
+		switch(diff)
+			if(-INFINITY to 25)
+				icon_state = initial(src.icon_state) + "-3"
+			if(26 to 50)
+				icon_state = initial(src.icon_state) + "-2"
+			if(51 to 75)
+				icon_state = initial(src.icon_state) + "-1"
+			if(76 to INFINITY)
+				icon_state = initial(src.icon_state) + "-0"
+
 /obj/grille/flock/New()
 	..()
 	setMaterial("gnesis")
+	src.update_icon()
+
 
 // flockdrones can always move through
 /obj/grille/flock/CanPass(atom/movable/mover, turf/target)
-	if (istype(mover, /mob/living/critter/flock/drone) && !mover:floorrunning)
+	. = ..()
+	var/mob/living/critter/flock/drone/drone = mover
+	if(istype(drone) && !drone.floorrunning)
 		animate_flock_passthrough(mover)
-		return 1
-	return ..()
+		. = TRUE
+
+
+/obj/grille/flock/special_desc(dist, mob/user)
+	if(isflock(user))
+		return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+		<br><span class='bold'>ID:</span> Reinforced Barricade
+		<br><span class='bold'>###=-</span></span>"}
+	else
+		return null // give the standard description

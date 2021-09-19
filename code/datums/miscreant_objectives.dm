@@ -23,7 +23,7 @@
 
 		var/obj_count = 1
 		var/assignCount = 1 //min(rand(1,3), objectiveTypes.len)
-		while (assignCount && objectiveTypes.len)
+		while (assignCount && length(objectiveTypes))
 			assignCount--
 			var/selectedType = pick(objectiveTypes)
 			var/datum/objective/miscreant/newObjective = new selectedType
@@ -90,7 +90,11 @@ ABSTRACT_TYPE(/datum/objective/miscreant)
 		explanation_text = "Make as much noise as possible."
 
 	bonsai
+#ifdef MAP_OVERRIDE_MANTA
+		explanation_text = "Destroy the Captain's ship in a bottle."
+#else
 		explanation_text = "Destroy the Captain's prized bonsai tree."
+#endif
 
 	reassign
 		explanation_text = "Try to convince as many crew members as possible to reassign to your department."
@@ -128,7 +132,7 @@ ABSTRACT_TYPE(/datum/objective/miscreantrp)
 		explanation_text = "Through trade, sweet-talking, light extortion, blackmail, and other devilish, but non-violent means, secure and deep-fry as many shoes as possible."
 
 	bar
-		explanation_text = "Set up and aggressively market an illicit bar to compete with the Barman, try to draw as many customers away as possible!"
+		explanation_text = "Set up and aggressively market an illicit bar to compete with the Bartender, try to draw as many customers away as possible!"
 
 	kitchen
 		explanation_text = "Set up and aggressively market an illicit kitchen to compete with the Chef, try to draw as many customers away as possible!"

@@ -29,8 +29,17 @@
 /datum/movement_modifier/hulkstrong
 	pushpull_multiplier = 0
 
+/datum/movement_modifier/strong
+	health_deficiency_adjustment = -50
+
 /datum/movement_modifier/status_slowed // these are instantiated by the status effect and the slowdown adjusted there
 	additive_slowdown = 10
+
+/datum/movement_modifier/status_salted // these are instantiated by the status effect and the slowdown adjusted there
+	health_deficiency_adjustment = 10
+
+/datum/movement_modifier/drowsy
+	additive_slowdown = 5
 
 /datum/movement_modifier/staggered_or_blocking
 	additive_slowdown = 0.4
@@ -53,6 +62,9 @@
 /datum/movement_modifier/reagent/salicylic_acid
 	health_deficiency_adjustment = -25
 
+/datum/movement_modifier/reagent/epinepherine
+	health_deficiency_adjustment = -15
+
 /datum/movement_modifier/reagent/cocktail_triple
 	multiplicative_slowdown = 0.333
 
@@ -66,15 +78,17 @@
 
 // robot legs
 /datum/movement_modifier/robotleg_right
-	additive_slowdown = -0.20
+	health_deficiency_adjustment = -25
 
 /datum/movement_modifier/robotleg_left
-	additive_slowdown = -0.20
+	health_deficiency_adjustment = -25
 
 /datum/movement_modifier/robottread_right
+	health_deficiency_adjustment = -25
 	additive_slowdown = -0.25
 
 /datum/movement_modifier/robottread_left
+	health_deficiency_adjustment = -25
 	additive_slowdown = -0.25
 
 // robot modifiers
@@ -141,17 +155,17 @@
 /datum/movement_modifier/revenant
 	maximum_slowdown = 2
 
-/datum/movement_modifier/vamp_zombie
+/datum/movement_modifier/vampiric_thrall
 	ask_proc = 1
 
-/datum/movement_modifier/vamp_zombie/modifiers(mob/user, move_target, running)
+/datum/movement_modifier/vampiric_thrall/modifiers(mob/user, move_target, running)
 	. = list(4,0)
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
-		var/datum/mutantrace/vamp_zombie/vamp_zombie = H.mutantrace
-		if (!istype(vamp_zombie))
+		var/datum/mutantrace/vampiric_thrall/vampiric_thrall = H.mutantrace
+		if (!istype(vampiric_thrall))
 			return
-		switch (vamp_zombie.blood_points)
+		switch (vampiric_thrall.blood_points)
 			if (151 to INFINITY)
 				.[1] = 0.7
 			if (101 to 151)
@@ -192,3 +206,13 @@
 		// apply a negative modifier to balance out what movement_delay would set, times half times the number of arms
 		// (2 arms get full negation, 1 negates half, 0 would get nothing except hardcoded to be 100 earlier)
 		return list(0-(applied_modifier*((2-missing_arms)*0.5)),1)
+
+// pathogen stuff
+
+/datum/movement_modifier/patho_oxygen
+	multiplicative_slowdown = 0.75
+
+// shivering
+
+/datum/movement_modifier/shiver
+	additive_slowdown = 2
