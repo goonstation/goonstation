@@ -529,7 +529,6 @@
 	throwforce = 2
 	var/max_cigs = 6
 	var/cigtype = /obj/item/clothing/mask/cigarette
-	var/cigs = list()
 	var/package_style = "cigpacket"
 	flags = ONBELT | TABLEPASS | FPRINT
 	stamina_damage = 3
@@ -539,7 +538,7 @@
 	New()
 		..()
 		for(var/i in 1 to src.max_cigs)
-			src.cigs += new src.cigtype(src)
+			src.contents += new src.cigtype(src)
 
 
 /obj/item/cigpacket/nicofree
@@ -576,55 +575,34 @@
 
 /obj/item/cigpacket/proc/update_icon()
 	src.overlays = null
-	if (length(src.cigs) == 0)
+	if (length(src.contents) == 0)
 		src.icon_state = "[src.package_style]0"
 		src.desc = "There aren't any cigs left, shit!"
 	else
 		src.icon_state = "[src.package_style]o"
-		src.overlays += "cig[length(src.cigs)]"
+		src.overlays += "cig[length(src.contents)]"
 	return
 
 /obj/item/cigpacket/attack_hand(mob/user as mob)
 	if (user.find_in_hand(src))//r_hand == src || user.l_hand == src)
-		if (length(src.cigs) == 0)
+		if (length(src.contents) == 0)
 			user.show_text("You're out of cigs, shit! How you gonna get through the rest of the day?", "red")
 			return
 		else
-			var/obj/item/clothing/mask/cigarette/W = src.cigs[1]
+			var/obj/item/clothing/mask/cigarette/W = src.contents[1]
 			user.put_in_hand_or_drop(W)
-			src.cigs -= W
 		src.update_icon()
 	else
 		return ..()
 	return
 
-/obj/item/cigpacket/attackby(obj/item/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/clothing/mask/cigarette))
-		var/obj/item/clothing/mask/cigarette/cig = W
-		if (cig.on)
-			user.show_text("You can't put a lit cig back in the packet, are you crazy?", "red")
-			return
-		if (length(src.cigs) < src.max_cigs)
-			src.cigs += cig
-			user.u_equip(cig)
-			src.update_icon()
-			return
-		else
-			user.show_text("The packet is just too full to fit any more cigs.", "red")
-			return
-	else
-		return ..()
-
-
 //Basically the same as above. This is useful so you can get cigs from packs when you only have one arm
 /obj/item/cigpacket/attack_self(var/mob/user as mob)
-	if (length(src.cigs) == 0)
+	if (length(src.contents) == 0)
 		user.show_text("You're out of cigs, dang! How are you gonna get through the rest of the day?", "red")
 		return
 	else
-		var/obj/item/clothing/mask/cigarette/W = src.cigs[1]
-
-		src.cigs -= W
+		var/obj/item/clothing/mask/cigarette/W = src.contents[1]
 
 		if (user.put_in_hand(W))
 			user.show_text("You stylishly knock a cig out of [src] into your other hand.", "blue")
@@ -633,6 +611,24 @@
 			user.show_text("You knock a cig out of [src], flopping it to the ground.", "red")
 
 	src.update_icon()
+
+/obj/item/cigpacket/attackby(obj/item/W as obj, mob/user as mob)
+	if (istype(W, /obj/item/clothing/mask/cigarette))
+		var/obj/item/clothing/mask/cigarette/cig = W
+		if (cig.on)
+			user.show_text("You can't put a lit cig back in the packet, are you crazy?", "red")
+			return
+		if (length(src.contents) < src.max_cigs)
+			src.contents += cig
+			user.u_equip(cig)
+			cig.set_loc(src)
+			src.update_icon()
+			return
+		else
+			user.show_text("The packet is just too full to fit any more cigs.", "red")
+			return
+	else
+		return ..()
 
 /obj/item/cigbutt
 	name = "cigarette butt"

@@ -369,19 +369,18 @@ proc/filter_trait_hats(var/type)
 			cigs.Add(W)
 		if (length(cigs) < src.max_cigs && istype(W, /obj/item/cigpacket)) //cigarette packet
 			var/obj/item/cigpacket/packet = W
-			if(length(packet.cigs) == 0)
+			if(length(packet.contents) == 0)
 				M.show_text("Oh no! There's no more cigs in [packet]!", "red")
 				return
 			else
-				var/count = length(packet.cigs)
+				var/count = length(packet.contents)
 				for(var/i=0, i<count, i++)
 					if(length(cigs) >= src.max_cigs)
 						M.show_text("The [src] has been totally filled with cigarettes!", "red")
 						break
-					var/obj/item/clothing/mask/cigarette/C = packet.cigs[1]
+					var/obj/item/clothing/mask/cigarette/C = packet.contents[1]
 					C.set_loc(src)
 					cigs.Add(C)
-					packet.cigs -= C
 					packet.update_icon()
 				success = 1
 
