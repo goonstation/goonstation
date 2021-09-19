@@ -1,4 +1,9 @@
 
+(t)sun sep 19 21
+(u)Azrun
+(p)5950
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Blades can once again be forged in the Hidden Workshop.  A lot of blood, sweat and tears must be expended to craft one.
 (t)sat sep 18 21
 (u)Flappybat and THISISANICEGAME
 (p)5923
