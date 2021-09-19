@@ -1,5 +1,9 @@
 
 (t)sun sep 19 21
+(u)Walpvrgis
+(p)6019
+(e)🎨|sprites
+(*)Added a few new hats in multiple colours; baseball caps, goggles (worn as a headband) and pirate hats, as well as some extra mime beret colours. These can be found in the clothing booth under Accessories and Headwear.
 (u)Azrun
 (p)5950
 (e)🆕🗺🎨|feature, mapping, sprites
