@@ -1497,7 +1497,11 @@ var/global/noir = 0
 		if ("kill")
 			if (src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
-				M?.death()
+				if(M)
+					M.death()
+					message_admins("<span class='alert'>Admin [key_name(usr)] killed [key_name(M)]!</span>")
+					logTheThing("admin", usr, M, "killed [constructTarget(M,"admin")]")
+					logTheThing("diary", usr, M, "killed [constructTarget(M,"diary")]", "admin")
 				return
 
 		if ("addreagent")
