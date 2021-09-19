@@ -327,9 +327,9 @@ WET FLOOR SIGN
 
 	var/obj/fluid/target_fluid = A
 	if (istype(target_fluid))
+		user.show_text("You soak up [target_fluid] with [src].", "blue", group = "mop")
 		if (src.reagents && target_fluid.group)
 			target_fluid.group.drain(target_fluid,1,src)
-		user.show_text("You soak up [target_fluid] with [src].", "blue", group = "mop")
 		if (mopcount > 0)
 			mopcount--
 	else if (U && isturf(U))
@@ -1053,6 +1053,8 @@ WET FLOOR SIGN
 		suck.suck_in_range = 3
 		suck.throw_range = 10
 		suck.throw_speed = 1
+		suck.moveDelayDuration = 5
+		suck.moveDelay = 4
 
 /datum/item_special/suck
 	cooldown = 30

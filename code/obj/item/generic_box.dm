@@ -84,6 +84,16 @@
 		name = "box of bee stickers"
 		contained_item = /obj/item/sticker/bee
 
+	glow_sticker
+		name = "glow stickers"
+		desc = "A box of stickers that glow when stuck to things."
+		contained_item = null
+		item_amount = 20
+
+		New()
+			. = ..()
+			contained_item = pick(concrete_typesof(/obj/item/sticker/glow))
+
 	googly_eyes
 		name = "box of googly eyes"
 		desc = "If you give it googly eyes, it immediately becomes better!"
@@ -151,7 +161,7 @@
 			desc = "Oh my god.. ALL THE STICKERS! ALL IN ONE PLACE? WHAT CAN THIS MEAN!!!"
 
 			set_contained_items()
-				contained_items = childrentypesof( /obj/item/sticker/ ) - /obj/item/sticker/spy - childrentypesof( /obj/item/sticker/barcode )
+				contained_items = concrete_typesof( /obj/item/sticker/ ) - /obj/item/sticker/spy - typesof( /obj/item/sticker/barcode, /obj/item/sticker/glow )
 
 			robot//this type sticks things by clicking on them with a cooldown
 				name = "box shaped sticker dispenser"
@@ -182,7 +192,16 @@
 				max_item_amount = 10
 
 				set_contained_items()
-					contained_items = childrentypesof( /obj/item/sticker/ ) - childrentypesof( /obj/item/sticker/barcode ) - /obj/item/sticker/spy - /obj/item/sticker/ribbon/first_place - /obj/item/sticker/ribbon/second_place - /obj/item/sticker/ribbon/third_place
+					contained_items = concrete_typesof( /obj/item/sticker/ ) - typesof( /obj/item/sticker/barcode, /obj/item/sticker/glow ) - /obj/item/sticker/spy - /obj/item/sticker/ribbon/first_place - /obj/item/sticker/ribbon/second_place - /obj/item/sticker/ribbon/third_place
+
+			glow_sticker
+				name = "glow stickers"
+				desc = "A box of stickers that glow various colors when stuck to things."
+				contained_item = null
+				item_amount = 20
+
+				set_contained_items()
+					contained_items = concrete_typesof(/obj/item/sticker/glow)
 
 		ornaments
 			name = "box of assorted ornaments"

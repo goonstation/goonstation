@@ -400,7 +400,7 @@
 			boutput(usr, "The cell is not corrrectly connected to its pipe network!")
 			return
 
-		usr.pulling = null
+		usr.remove_pulling()
 		usr.set_loc(src)
 		src.occupant = usr
 		for (var/obj/O in src)

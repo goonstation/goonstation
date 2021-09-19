@@ -798,6 +798,7 @@ var/global/noir = 0
 							<A href='?src=\ref[src];action=[cmd];type=blob'>Blob</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=conspiracy'>Conspiracy</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=spy_theft'>Spy Theft</A><br>
+							<A href='?src=\ref[src];action=[cmd];type=arcfiend'>Arcfiend</A><br>
 							<b>Other Modes</b><br>
 							<A href='?src=\ref[src];action=[cmd];type=extended'>Extended</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=flock'>Flock(probably wont work. Press at own risk)</A><br>
@@ -826,7 +827,7 @@ var/global/noir = 0
 
 				var/list/valid_modes = list("secret","action","intrigue","random","traitor","meteor","extended","monkey",
 				"nuclear","blob","restructuring","wizard","revolution", "revolution_extended","malfunction",
-				"spy","gang","disaster","changeling","vampire","mixed","mixed_rp", "construction","conspiracy","spy_theft","battle_royale", "vampire","assday", "football", "flock")
+				"spy","gang","disaster","changeling","vampire","mixed","mixed_rp", "construction","conspiracy","spy_theft","battle_royale", "vampire","assday", "football", "flock", "arcfiend")
 #if defined(MAP_OVERRIDE_POD_WARS)
 				valid_modes += "pod_wars"
 #else
@@ -1223,7 +1224,7 @@ var/global/noir = 0
 					message_admins("[key_name(usr)] removed the [effect] status-effect from [key_name(M)].")
 				else
 					M.setStatus(effect, duration SECONDS)
-					message_admins("[key_name(usr)] added the [effect] status-effect to [key_name(M)] for [duration * 10] seconds.")
+					message_admins("[key_name(usr)] added the [effect] status-effect to [key_name(M)] for [duration] seconds.")
 
 			else
 				alert("If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to statuseffect a player.")
@@ -1287,14 +1288,12 @@ var/global/noir = 0
 			if(src.level >= LEVEL_SA)
 				var/datum/bioEffect/power/BE = locate(href_list["bioeffect"])
 				BE.altered = 1
-				if(istype(BE, /datum/bioEffect/power)) //powers only
-					if (BE.power)
-						BE.power = 0
-					else
-						BE.power = 1
+				var/oldpower = BE.power
+				if (BE.power > 1)
+					BE.power = 1
 				else
-					return
-
+					BE.power = 2
+				BE.onPowerChange(oldpower, BE.power)
 				usr.client.cmd_admin_managebioeffect(BE.holder.owner)
 			else
 				return
@@ -1372,7 +1371,7 @@ var/global/noir = 0
 						BE.altered = 1
 					if ("Power Booster")
 						if (P.altered) managebioeffect_chromosome_clean(P)
-						P.power = 1
+						P.power = 2
 						P.name = "Empowered " + P.name
 						P.altered = 1
 					if ("Energy Booster")
@@ -1833,10 +1832,6 @@ var/global/noir = 0
 			var/CT = input("Enter a /mob/living/critter path or partial name.", "Make Critter", null) as null|text
 
 			var/list/matches = get_matches(CT, "/mob/living/critter")
-			matches -= list(/mob/living/critter, /mob/living/critter/small_animal, /mob/living/critter/aquatic) //blacklist
-#ifdef SECRETS_ENABLED
-			matches -= list(/mob/living/critter/vending) //secret repo blacklist
-#endif
 
 			if (!length(matches))
 				return
@@ -2355,23 +2350,23 @@ var/global/noir = 0
 				switch(href_list["type"])
 					if("sec_clothes")
 						for(var/obj/item/clothing/under/O in world)
-							del(O)
+							qdel(O)
 							LAGCHECK(LAG_LOW)
 					if("sec_all_clothes")
 						for(var/obj/item/clothing/O in world)
-							del(O)
+							qdel(O)
 							LAGCHECK(LAG_LOW)
 					if("sec_classic1")
 						for(var/obj/item/clothing/suit/fire/O in world)
-							del(O)
+							qdel(O)
 							LAGCHECK(LAG_LOW)
 						for(var/obj/grille/O in world)
-							del(O)
+							qdel(O)
 							LAGCHECK(LAG_LOW)
 						for(var/obj/machinery/vehicle/pod/O in all_processing_machines())
 							for(var/atom/movable/A in O)
 								A.set_loc(O.loc)
-							del(O)
+							qdel(O)
 							LAGCHECK(LAG_LOW)
 
 					if("transform_one")
@@ -3081,7 +3076,7 @@ var/global/noir = 0
 								message_admins("[key_name(usr)] creepified the station.")
 								logTheThing("admin", usr, null, "used the Creepify Station button")
 								logTheThing("diary", usr, null, "used the Creepify Station button", "admin")
-							creepify_station()
+								creepify_station()
 						else
 							alert("You need to be at least a Administrator to creepify the station.")
 							return
@@ -3377,7 +3372,7 @@ var/global/noir = 0
 									if (!M) continue
 									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdead(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 									dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td>"
-									dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[M]'>([M.mind.special_role])</A></td></tr>"
+									dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[M]'>([M?.mind?.special_role])</A></td></tr>"
 								dat += "</table>"
 
 							if(ticker.mode.Agimmicks.len > 0)
@@ -3387,7 +3382,7 @@ var/global/noir = 0
 									if(!M) continue
 									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdead(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 									dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td>"
-									dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[M]'>([M.mind.special_role])</A></td></tr>"
+									dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[M]'>([M?.mind?.special_role])</A></td></tr>"
 								dat += "</table>"
 
 							if(miscreants.len > 0)
@@ -4701,7 +4696,7 @@ var/global/noir = 0
 
 	return chosen
 
-/proc/get_matches(var/object, var/base = /atom, use_concrete_types = TRUE)
+/proc/get_matches(var/object, var/base = /atom, use_concrete_types=TRUE, only_admin_spawnable=TRUE)
 	var/list/types
 	if(use_concrete_types)
 		types = concrete_typesof(base)
@@ -4711,13 +4706,17 @@ var/global/noir = 0
 	var/list/matches = new()
 
 	for(var/path in types)
+		if(only_admin_spawnable)
+			var/typeinfo/atom/typeinfo = get_type_typeinfo(path)
+			if(!typeinfo.admin_spawnable)
+				continue
 		if(findtext("[path]", object))
 			matches += path
 
 	. = matches
 
-/proc/get_one_match(var/object, var/base = /atom, use_concrete_types = TRUE)
-	var/list/matches = get_matches(object, base, use_concrete_types)
+/proc/get_one_match(var/object, var/base = /atom, use_concrete_types=TRUE, only_admin_spawnable=TRUE)
+	var/list/matches = get_matches(object, base, use_concrete_types, only_admin_spawnable)
 
 	if(!matches.len)
 		return null
@@ -4868,9 +4867,11 @@ var/global/noir = 0
 	BE.reclaim_mats = BE.global_instance.reclaim_mats
 	BE.msgGain = BE.global_instance.msgGain
 	BE.msgLose = BE.global_instance.msgLose
+	var/oldpower = P.power
+	P.power = P.global_instance_power.power
+	P.onPowerChange(oldpower, P.power)
 	if (istype(BE, /datum/bioEffect/power)) //powers
 		P = BE
-		P.power = P.global_instance_power.power
 		P.cooldown = P.global_instance_power.cooldown
 		P.safety = P.global_instance_power.safety
 
@@ -4957,12 +4958,12 @@ var/global/noir = 0
 			is_stable = 1
 		if (!B.curable_by_mutadone)
 			is_reinforced = 1
+		if (B.power > 1)
+			is_power_boosted = 1
+		else
+			is_power_boosted = 0
 		if (istype(B, /datum/bioEffect/power))//powers only
 			P = B
-			if (P.power)
-				is_power_boosted = 1
-			else
-				is_power_boosted = 0
 			if (P.safety)
 				is_synced = 1
 			else

@@ -244,7 +244,7 @@
 			if ("pull")
 				if (src.master.pulling)
 					global.unpull_particle(src.master, src.pulling)
-				src.master.pulling = null
+				src.master.remove_pulling()
 				src.update_pulling()
 
 			if ("throw")

@@ -180,9 +180,9 @@
 
 // ---- attack_X signals ----
 
-/// Attacking wiht an item in-hand
+/// Attacking with an item in-hand (item, attacker)
 #define COMSIG_ATTACKBY "attackby"
-/// Attacking wihtout an item in-hand
+/// Attacking without an item in-hand (attacker)
 #define COMSIG_ATTACKHAND "attackhand"
 
 

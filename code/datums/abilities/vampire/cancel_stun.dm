@@ -26,7 +26,7 @@
 		M.delStatus("disorient")
 		M.change_misstep_chance(-INFINITY)
 		M.stuttering = 0
-		M.drowsyness = 0
+		M.delStatus("drowsy")
 
 		if (M.get_stamina() < 0) // Tasers etc.
 			M.set_stamina(1)

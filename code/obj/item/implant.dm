@@ -844,6 +844,11 @@ THROWING DARTS
 		desc = "A small hollow dart."
 		icon_state = "syringeproj"
 
+	blowdart
+		name = "blowdart"
+		desc = "a sharp little dart with a little poison reservoir."
+		icon_state = "blowdart"
+
 	flintlock
 		name= "flintlock round"
 		desc = "Rather unperfect round ball. Looks very old."
@@ -852,6 +857,10 @@ THROWING DARTS
 	bullet_50
 		name = ".50AE round"
 		desc = "Ouch."
+
+	rakshasa
+		name = "\improper Rakshasa round"
+		desc = "..."
 
 /obj/item/implant/projectile/implanted(mob/living/carbon/C, var/mob/I, var/bleed_time = 60)
 	SEND_SIGNAL(src, COMSIG_IMPLANT_IMPLANTED, C)

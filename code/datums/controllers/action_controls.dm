@@ -44,7 +44,7 @@ var/datum/action_controller/actions
 			interrupt(owner, INTERRUPT_ACTION)
 			for(var/datum/action/OA in running[owner])
 				//Meant to catch users starting the same action twice, and saving the first-attempt from deletion
-				if(OA.id == A.id && OA.state == ACTIONSTATE_DELETE)
+				if(OA.id == A.id && OA.state == ACTIONSTATE_DELETE && OA.resumable)
 					OA.onResume()
 					qdel(A)
 					return OA
@@ -87,6 +87,7 @@ var/datum/action_controller/actions
 	var/state = ACTIONSTATE_STOPPED //Current state of the action.
 	var/started = -1 //TIME this action was started at
 	var/id = "base" //Unique ID for this action. For when you want to remove actions by ID on a person.
+	var/resumable = TRUE
 
 	proc/interrupt(var/flag) //This is called by the default interrupt actions
 		if(interrupt_flags & flag || flag == INTERRUPT_ALWAYS)
@@ -425,7 +426,7 @@ var/datum/action_controller/actions
 		if (border)
 			border.UpdateOverlays(null, "action_icon")
 		if (icon_image)
-			del(icon_image)
+			qdel(icon_image)
 		..()
 
 
@@ -736,8 +737,8 @@ var/datum/action_controller/actions
 	onDelete()
 		bar.icon = 'icons/ui/actions.dmi'
 		border.icon = 'icons/ui/actions.dmi'
-		del(bar.img)
-		del(border.img)
+		qdel(bar.img)
+		qdel(border.img)
 		..()
 
 /datum/action/bar/private/icon //Only visible to the owner and has a little icon on the bar.
@@ -760,7 +761,7 @@ var/datum/action_controller/actions
 			owner << icon_image
 
 	onDelete()
-		del(icon_image)
+		qdel(icon_image)
 		..()
 
 //ACTIONS
@@ -1131,6 +1132,8 @@ var/datum/action_controller/actions
 	onInterrupt(var/flag)
 		..()
 		boutput(owner, "<span class='alert'>Your attempt to remove your handcuffs was interrupted!</span>")
+		if(!(flag & INTERRUPT_ACTION))
+			src.resumable = FALSE
 
 	onEnd()
 		..()
@@ -1340,7 +1343,9 @@ var/datum/action_controller/actions
 	id = "butcherlivingcritter"
 	var/mob/living/critter/target
 
-	New(Target)
+	New(Target,var/dur = null)
+		if(dur)
+			duration = dur
 		target = Target
 		..()
 
