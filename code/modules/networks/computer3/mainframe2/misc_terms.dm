@@ -1144,7 +1144,7 @@
 				src.detonate()
 				return
 			if(src.time == DISARM_CUTOFF)
-				world << sound('sound/misc/airraid_loop_short.ogg')
+				playsound_global(world, "sound/misc/airraid_loop_short.ogg", 90)
 			if(src.time <= DISARM_CUTOFF)
 				src.icon_state = "net_nuke2"
 				boutput(world, "<span class='alert'><b>[src.time] seconds until nuclear charge detonation.</b></span>")
@@ -1323,7 +1323,7 @@
 		return
 
 	proc/detonate()
-		world << sound('sound/effects/kaboom.ogg')
+		playsound_global(world, "sound/effects/kaboom.ogg", 70)
 		//explosion(src, src.loc, 10, 20, 30, 35)
 		explosion_new(src, get_turf(src), 10000)
 		//dispose()

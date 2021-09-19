@@ -449,20 +449,6 @@
 	if (active)
 		target.do_disorient(0, weakened = 0, stunned = 0, disorient = 30, remove_stamina_below_zero = 0)
 
-		if (prob(30))
-			boutput(user, "<span class='alert'>The sword shorted out! The laser turned off!</span>")
-			hit_type = DAMAGE_BLUNT
-			if(ishuman(user))
-				var/mob/living/carbon/human/U = user
-				if(U.gender == MALE) playsound(U,"sound/weapons/male_cswordturnoff.ogg", 70, 0, 0, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
-				else playsound(U,"sound/weapons/female_cswordturnoff.ogg", 100, 0, 0, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
-			active = 0
-			force = inactive_force
-			icon_state = "[state_name]0"
-			item_state = "[state_name]0"
-			w_class = off_w_class
-			user.update_inhands()
-
 ///////////////////////////////////////////////// Dagger /////////////////////////////////////////////////
 
 /obj/item/dagger
@@ -1010,6 +996,13 @@
 	var/obj/itemspecialeffect/katana_dash/end/end
 	var/delimb_prob = 100
 
+	crafted
+		name = "handcrafted katana"
+		delimb_prob = 2
+
+		force = 12
+		contraband = 5
+
 	New()
 		..()
 		start = new/obj/itemspecialeffect/katana_dash/start(src)
@@ -1103,8 +1096,7 @@
 	dropped(mob/user)
 		..()
 		if (isturf(src.loc))
-			del(src)
-			return
+			qdel(src)
 
 /obj/item/katana/reverse
 	icon_state = "katana_reverse"

@@ -191,6 +191,7 @@
 				html += " &middot; <a href='byond://?src=\ref[src];PlayerOptions=\ref[D]'>Player Options</a>"
 	if (istype(D, /datum))
 		html += " &middot; <a href='byond://?src=\ref[src];AddComponent=\ref[D]'>Add Component</a>"
+		html += " &middot; <a href='byond://?src=\ref[src];RemoveComponent=\ref[D]'>Remove Component</a>"
 	html += "<br><a href='byond://?src=\ref[src];Delete=\ref[D]'>Delete</a>"
 	html += " &middot; <a href='byond://?src=\ref[src];HardDelete=\ref[D]'>Hard Delete</a>"
 	if (A || istype(D, /image))
@@ -498,6 +499,13 @@
 			debugAddComponent(locate(href_list["AddComponent"]))
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to add a component to something all rude-like.")
+		return
+	if (href_list["RemoveComponent"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_PA)
+			debugRemoveComponent(locate(href_list["RemoveComponent"]))
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to remove a component from something all rude-like.")
 		return
 	if (href_list["Delete"])
 		usr_admin_only
@@ -910,7 +918,7 @@
 			boutput(usr, "<span class='hint'>Type part of the path of the type.</span>")
 			var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
 			if (typename)
-				var/match = get_one_match(typename, /datum, use_concrete_types = FALSE)
+				var/match = get_one_match(typename, /datum, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 				if (match)
 					if (set_global)
 						for (var/datum/x in world)
@@ -1078,7 +1086,7 @@
 				var/basetype = /obj
 				if (src.holder.rank in list("Host", "Coder", "Administrator"))
 					basetype = /datum
-				var/match = get_one_match(typename, basetype, use_concrete_types = FALSE)
+				var/match = get_one_match(typename, basetype, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 				if (match)
 					if (set_global)
 						for (var/datum/x in world)

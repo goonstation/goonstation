@@ -390,6 +390,7 @@
 
 	setup_material()
 		..()
+		src.icon_state = pick("gem1","gem2","gem3")
 		var/picker = rand(1,100)
 		var/list/picklist
 		switch(picker)
@@ -899,6 +900,9 @@
 		if (W.cant_drop) //For borg held items
 			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
 			return ..()
+		if (istype(W, /obj/item/ore_scoop))
+			var/obj/item/ore_scoop/scoop = W
+			W = scoop.satchel
 		if (istype(W,/obj/item/storage/) || istype(W,/obj/item/satchel/))
 			var/obj/item/storage/S = W
 			var/obj/item/satchel/B = W

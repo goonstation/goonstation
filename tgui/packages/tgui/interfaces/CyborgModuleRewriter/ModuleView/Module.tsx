@@ -5,8 +5,10 @@
  * @license ISC
  */
 
+import { SFC } from 'inferno';
 import { Button, Section } from '../../../components';
 import { Tools } from './Tools';
+import { ToolData } from '../type';
 
 const resetOptions = [
   {
@@ -30,7 +32,15 @@ const resetOptions = [
   },
 ];
 
-export const Module = props => {
+interface ModuleProps {
+  onMoveToolDown: (toolRef: string) => void,
+  onMoveToolUp: (toolRef: string) => void,
+  onRemoveTool: (toolRef: string) => void,
+  onResetModule: (moduleId: string) => void,
+  tools: Array<ToolData>,
+}
+
+export const Module: SFC<ModuleProps> = props => {
   const {
     onMoveToolDown,
     onMoveToolUp,

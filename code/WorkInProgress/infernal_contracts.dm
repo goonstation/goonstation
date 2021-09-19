@@ -165,10 +165,8 @@ proc/is_weak_rollable_contract(type)
 	if(C.mind)
 		shake_camera(C, 20, 16)
 		boutput(C, "<font color=red>[screamstring]</font>")
-		boutput(C, "<span style=\"color:purple; font-size:150%\"><i><b><font face = Tempus Sans ITC>You have sold your soul and become an antagonist and an avatar of evil! Spread darkness across the land!</font></b></i></span>")
-		C.mind.special_role = "Faustian Cluwne"
-		logTheThing("admin", src, null, "has transformed into a demonic cluwne at [log_loc(C)]!")
-		ticker.mode.Agimmicks.Add(C)
+		boutput(C, "<span style=\"color:purple; font-size:150%\"><i><b><font face = Tempus Sans ITC>You have sold your soul and become a Faustian cluwne! Oh no!</font></b></i></span>")
+		logTheThing("admin", src, null, "has signed a contract and turned into a Faustian cluwne at [log_loc(C)]!")
 		C.choose_name(3)
 	else
 		return

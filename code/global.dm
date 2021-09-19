@@ -431,6 +431,7 @@ var/global
 	antag_blob = image('icons/mob/antag_overlays.dmi', icon_state = "blob")
 	antag_wrestler = image('icons/mob/antag_overlays.dmi', icon_state = "wrestler")
 	antag_spy_theft = image('icons/mob/antag_overlays.dmi', icon_state = "spy_thief")
+	antag_arcfiend = image('icons/mob/antag_overlays.dmi', icon_state = "arcfiend")
 
 	pod_wars_NT = image('icons/mob/antag_overlays.dmi', icon_state = "nanotrasen")
 	pod_wars_NT_CMDR = image('icons/mob/antag_overlays.dmi', icon_state = "nanocomm")
@@ -484,7 +485,7 @@ var/global
 
 	list/cooldowns
 
-	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("credits","bux","tokens","cash","dollars","tokens","dollarydoos","tickets","souls","doubloons","Pesos","Rubles","Rupees")]"
+	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("Credits","Bux","Tokens","Cash","Dollars","Tokens","Dollarydoos","Tickets","Souls","Doubloons","Pesos","Rubles","Rupees")]"
 
 
 /proc/addGlobalRenderSource(var/image/I, var/key)

@@ -727,6 +727,16 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "ook"
 		ckey = "taocat"
 
+	brucemcafee
+		name = "\improper Bruce McAfee"
+		icon_state = "brucemcafee"
+		ckey = "mysticmidgit"
+
+	chefbot
+		name = "\improper ChefBot"
+		icon_state = "chefbot"
+		ckey = "skeletondoot"
+
 /obj/item/item_box/figure_capsule
 	name = "capsule"
 	desc = "A little plastic ball for keeping stuff in. Woah! We're truly in the future with technology like this."

@@ -699,7 +699,7 @@
 					src.visible_message("<span class='alert'>[src] bumps into [M]!</span>")
 				else
 					src.visible_message("<span class='alert'>[src] knocks over [M]!</span>")
-					M.pulling = null
+					M.remove_pulling()
 					M.changeStatus("stunned", 8 SECONDS)
 					M.changeStatus("weakened", 5 SECONDS)
 					M.lying = 1

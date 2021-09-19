@@ -41,8 +41,11 @@
 			return
 		playsound(target.loc, "sound/effects/ghost2.ogg", 100, 1)
 		var/mob/living/carbon/human/H = target
-		if (istype(H.head, /obj/item/clothing/head/tinfoil_hat))
-			boutput(H, "<span class='notice'>Your tinfoil hat protects you from the psyblast!</span>")
+		if (istype(H.head, /obj/item/clothing/head/tinfoil_hat) || H.bioHolder?.HasEffect("psy_resist") == 2)
+			if(istype(H.head, /obj/item/clothing/head/tinfoil_hat))
+				boutput(H, "<span class='notice'>Your tinfoil hat protects you from the psyblast!</span>")
+			else
+				boutput(H, "<span class='notice'>The psyblast bounces off you harmlessly!</span>")
 		else
 			boutput(H, "<span class='alert'>You are blasted by psychic energy!</span>")
 			H.changeStatus("paralysis", 7 SECONDS)

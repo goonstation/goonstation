@@ -71,7 +71,7 @@ datum
 			id = "werewolf_serum"
 			description = "A mutagenic substance associated with a mythical beast."
 			reagent_state = LIQUID
-			minimum_to_infect = 0
+			minimum_to_infect = 3
 			fluid_r = 173
 			fluid_g = 65
 			fluid_b = 133
@@ -156,6 +156,7 @@ datum
 			fluid_g = 87
 			fluid_b = 44
 			transparency = 80
+			random_chem_blacklisted = 1
 			disease = /datum/ailment/disease/hootonium
 
 		disease/nanites // Robot Transformation
@@ -284,6 +285,7 @@ datum
 			fluid_g = 220
 			fluid_b = 200
 			transparency = 170
+			random_chem_blacklisted = 1
 			disease = /datum/ailment/disease/necrotic_degeneration
 
 		disease/viral_curative // Panacaea
