@@ -65,8 +65,8 @@
 		..()
 
 	onDestroy()
-		if (M.powered())
-			elecflash(M, power = 2)
+		if (src.powered())
+			elecflash(src, power = 2)
 		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
 		. = ..()
 
