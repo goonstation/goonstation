@@ -1490,6 +1490,78 @@
     icon_state = "jester"
     item_state = "jester"
 
+/obj/item/clothing/under/misc/spade
+    name = "spade jumpsuit"
+    desc = "A suit suit. This suit's suit is a spade."
+    icon_state = "spade"
+    item_state = "spade"
+
+/obj/item/clothing/under/misc/club
+    name = "club jumpsuit"
+    desc = "A suit suit. This suit's suit is a club."
+    icon_state = "club"
+    item_state = "club"
+
+/obj/item/clothing/under/misc/heart
+    name = "heart jumpsuit"
+    desc = "A suit suit. This suit's suit is a heart. D'aww."
+    icon_state = "heart"
+    item_state = "heart"
+
+/obj/item/clothing/under/misc/diamond
+    name = "diamond jumpsuit"
+    desc = "A suit suit. This suit's suit is a diamond."
+    icon_state = "diamond"
+    item_state = "diamond"
+
+/obj/item/clothing/under/misc/tech_shirt
+    name = "tech shirt"
+    desc = "A shirt with a fancy, vaguely sci-fi pattern on it."
+    icon_state = "tech_shirt"
+    item_state = "tech_shirt"
+
+/obj/item/clothing/under/misc/flannel
+    name = "flannel shirt"
+    desc = "Perfect for chopping wood or drinking coffee."
+    icon_state = "flannel"
+    item_state = "flannel"
+
+/obj/item/clothing/under/misc/fish
+    name = "fish shirt"
+    desc = "It reads, 'Fish'."
+    icon_state = "fish"
+    item_state = "fish"
+
+/obj/item/clothing/under/misc/collar_pink
+    name = "pink collar shirt"
+    desc = "A plain pink collared shirt."
+    icon_state = "pink_collar"
+    item_state = "pink_collar"
+
+/obj/item/clothing/under/misc/fancy_vest
+    name = "fancy vest"
+    desc = "It's even got a real flower!"
+    icon_state = "fancy_vest"
+    item_state = "fancy_vest"
+
+/obj/item/clothing/under/misc/flame_purple
+    name = "purple flame shirt"
+    desc = "Basic fire colors are so passé."
+    icon_state = "flame_purple"
+    item_state = "flame_purple"
+
+/obj/item/clothing/under/misc/flame_rainbow
+    name = "rainbow flame shirt"
+    desc = "Monochromatic fire colors are so démodé."
+    icon_state = "flame_rainbow"
+    item_state = "flame_rainbow"
+
+/obj/item/clothing/under/misc/bubble
+    name = "bubble shirt"
+    desc = "Soothing bubbles for a calm shirt."
+    icon_state = "bubble"
+    item_state = "bubble"
+
 // WALPVRGIS fashion
 
 /obj/item/clothing/under/misc/casdressblk

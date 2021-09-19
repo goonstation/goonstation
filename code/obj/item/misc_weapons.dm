@@ -996,6 +996,13 @@
 	var/obj/itemspecialeffect/katana_dash/end/end
 	var/delimb_prob = 100
 
+	crafted
+		name = "handcrafted katana"
+		delimb_prob = 2
+
+		force = 12
+		contraband = 5
+
 	New()
 		..()
 		start = new/obj/itemspecialeffect/katana_dash/start(src)
@@ -1089,8 +1096,7 @@
 	dropped(mob/user)
 		..()
 		if (isturf(src.loc))
-			del(src)
-			return
+			qdel(src)
 
 /obj/item/katana/reverse
 	icon_state = "katana_reverse"
