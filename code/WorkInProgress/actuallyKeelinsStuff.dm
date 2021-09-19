@@ -1869,6 +1869,9 @@ Returns:
 				for(var/i=0, i<rand(5, 10), i++)
 					var/picked = pick(strings("ouija_board.txt", "ouija_board_words"))
 					words |= picked
+				if(prob(30))
+					for(var/i in 1 to rand(1, 3))
+						words |= random_emoji()
 
 				if(words.len)
 					var/selected = input(usr, "Select a word:", src.name) as null|anything in words
