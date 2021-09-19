@@ -1123,11 +1123,6 @@
 		..()
 		for (var/A in concrete_typesof(/datum/plant)) src.available += new A(src)
 
-		/*for (var/datum/plant/P in src.available)
-			if (!P.vending || P.type == /datum/plant)
-				del(P)
-				continue*/
-
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
 

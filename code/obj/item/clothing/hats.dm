@@ -1593,3 +1593,21 @@ ABSTRACT_TYPE(/obj/item/clothing/head/hairbow)
     wear_image_icon = 'icons/mob/fruithat.dmi'
     icon_state = "rafflesiahat"
     item_state = "rafflesiahat"
+
+/obj/item/clothing/head/deerstalker
+	name = "deerstalker hat"
+	desc = "A hat for hunting space deer or solving a mystery."
+	icon_state = "deerstalker"
+	item_state = "deerstalker"
+
+/obj/item/clothing/head/pomhat_blue
+   name = "blue pomhat"
+   desc = "A cobalt hat with a fun little pom!"
+   icon_state = "pomhat_blue"
+   item_state = "pomhat_blue"
+
+/obj/item/clothing/head/pomhat_red
+   name = "red pomhat"
+   desc = "A crimson hat with an enjoyable little pom!"
+   icon_state = "pomhat_red"
+   item_state = "pomhat_red"

@@ -174,10 +174,9 @@
 			if ("stun")
 				user.visible_message("<span class='alert'><B>[victim] has been stunned with the [src.name] by [user]!</B></span>")
 				logTheThing("combat", user, victim, "stuns [constructTarget(victim,"combat")] with the [src.name] at [log_loc(victim)].")
+				playsound(src, "sound/impact_sounds/Energy_Hit_3.ogg", 50, 1, -1)
+				flick(flick_baton_active, src)
 				JOB_XP(victim, "Clown", 3)
-				else
-					flick(flick_baton_active, src)
-					playsound(src, "sound/impact_sounds/Energy_Hit_3.ogg", 50, 1, -1)
 
 			else
 				logTheThing("debug", user, null, "<b>Convair880</b>: stun baton ([src.type]) do_stun() was called with an invalid argument ([type]), aborting. Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
@@ -190,7 +189,7 @@
 		else
 			dude_to_stun = victim
 
-	
+
 		dude_to_stun.do_disorient(src.disorient_stamina_damage, weakened = src.stun_normal_weakened * 10, disorient = 60)
 
 		if (isliving(dude_to_stun))

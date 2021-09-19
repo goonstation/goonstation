@@ -30,6 +30,7 @@
 #include "defines\dialogue.dm"
 #include "defines\dmm_suite.dm"
 #include "defines\door.dm"
+#include "defines\ephemeral.dm"
 #include "defines\fluid.dm"
 #include "defines\infernal.dm"
 #include "defines\input.dm"
