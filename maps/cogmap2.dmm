@@ -41758,7 +41758,7 @@
 	dir = 4
 	},
 /obj/machinery/recharger/wall/sticky{
-	dir = 4;
+	dir = 8;
 	pixel_x = -20
 	},
 /turf/simulated/floor/blueblack,

@@ -996,6 +996,13 @@
 	var/obj/itemspecialeffect/katana_dash/end/end
 	var/delimb_prob = 100
 
+	crafted
+		name = "handcrafted katana"
+		delimb_prob = 2
+
+		force = 12
+		contraband = 5
+
 	New()
 		..()
 		start = new/obj/itemspecialeffect/katana_dash/start(src)
