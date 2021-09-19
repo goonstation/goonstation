@@ -4764,6 +4764,33 @@ var/global/noir = 0
 		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
 		return
 
+/datum/admins/proc/spawn_figurine(var/figurine as text)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set desc="Spawn a figurine"
+	set name="Spawn-Figurine"
+	if(!figurine)
+		return
+
+	var/client/client = usr.client
+
+	if (client.holder.level >= LEVEL_PA)
+		var/chosen = get_one_match(figurine, /datum/figure_info)
+
+		if (chosen)
+			var/atom/movable/A
+			if (client.holder.spawn_in_loc)
+				A = new /obj/item/toy/figure(usr.loc, new chosen)
+			else
+				A = new /obj/item/toy/figure(get_turf(usr), new chosen)
+			if (client.flourish)
+				spawn_animation1(A)
+			logTheThing("admin", usr, null, "spawned figurine [chosen] at ([showCoords(usr.x, usr.y, usr.z)])")
+			logTheThing("diary", usr, null, "spawned figurine [chosen] at ([showCoords(usr.x, usr.y, usr.z, 1)])", "admin")
+
+	else
+		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+		return
+
 /datum/admins/proc/heavenly_spawn_obj(var/obj/object as text)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set desc="(object path) Spawn an object. But all fancy-like"
