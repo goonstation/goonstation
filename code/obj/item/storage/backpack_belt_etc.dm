@@ -93,6 +93,33 @@
 	item_state = "bp_security"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
+/obj/item/storage/backpack/robotics
+	name = "robotics backpack"
+	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects monochromaticly on the back of roboticists."
+	icon_state = "bp_robotics"
+	item_state = "bp_robotics"
+	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+
+/obj/item/storage/backpack/genetics
+	name = "genetics backpack"
+	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects safely on the back of geneticists."
+	icon_state = "bp_genetics"
+	item_state = "bp_genetics"
+	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+
+/obj/item/storage/backpack/engineering
+	name = "engineering backpack"
+	desc = "A sturdy, wearable container made of synthetic fibers, able to carry a number of objects effectively on the back of engineering personnel."
+	icon_state = "bp_engineering"
+	item_state = "bp_engineering"
+	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+
+/obj/item/storage/backpack/research
+	name = "research backpack"
+	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects efficiently on the back of research personnel."
+	icon_state = "bp_research"
+	item_state = "bp_research"
+
 /obj/item/storage/backpack/randoseru
 	name = "randoseru"
 	desc = "Inconspicuous, nostalgic and quintessentially Space Japanese."
@@ -238,6 +265,32 @@
 	item_state = "satchel_security"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
+/obj/item/storage/backpack/satchel/robotics
+	name = "robotics satchel"
+	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects monochromaticly on the shoulder of roboticists."
+	icon_state = "satchel_robotics"
+	item_state = "satchel_robotics"
+	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+
+/obj/item/storage/backpack/satchel/genetics
+	name = "genetics satchel"
+	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects safely on the shoulder of geneticists."
+	icon_state = "satchel_genetics"
+	item_state = "satchel_genetics"
+	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+
+/obj/item/storage/backpack/satchel/engineering
+	name = "engineering satchel"
+	desc = "A sturdy, wearable container made of synthetic fibers, able to carry a number of objects effectively on the shoulder of engineering personnel."
+	icon_state = "satchel_engineering"
+	item_state = "satchel_engineering"
+	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+
+/obj/item/storage/backpack/satchel/research
+	name = "research satchel"
+	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects efficiently on the shoulder of research personnel."
+	icon_state = "satchel_research"
+	item_state = "satchel_research"
 
 /obj/item/storage/backpack/satchel/randoseru
 	name = "randoseru satchel"
