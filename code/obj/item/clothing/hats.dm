@@ -362,25 +362,27 @@ proc/filter_trait_hats(var/type)
 				M.drop_item()
 				W.set_loc(src)
 				break
-		if (cigs.len < src.max_cigs && istype(W, /obj/item/clothing/mask/cigarette)) //cigarette
+		if (length(cigs) < src.max_cigs && istype(W, /obj/item/clothing/mask/cigarette)) //cigarette
 			success = 1
 			M.drop_item()
 			W.set_loc(src)
 			cigs.Add(W)
-		if (cigs.len < src.max_cigs && istype(W, /obj/item/cigpacket)) //cigarette packet
+		if (length(cigs) < src.max_cigs && istype(W, /obj/item/cigpacket)) //cigarette packet
 			var/obj/item/cigpacket/packet = W
-			if(packet.cigcount == 0)
+			if(length(packet.cigs) == 0)
 				M.show_text("Oh no! There's no more cigs in [packet]!", "red")
 				return
 			else
-				var/count = packet.cigcount
-				for(var/i=0, i<count, i++) //not sure if "-1" cigcount packets will work.
-					if(cigs.len >= src.max_cigs)
+				var/count = length(packet.cigs)
+				for(var/i=0, i<count, i++)
+					if(length(cigs) >= src.max_cigs)
+						M.show_text("The [src] has been totally filled with cigarettes!", "red")
 						break
-					var/obj/item/clothing/mask/cigarette/C = new packet.cigtype(src)
+					var/obj/item/clothing/mask/cigarette/C = packet.cigs[1]
 					C.set_loc(src)
 					cigs.Add(C)
-					packet.cigcount--
+					packet.cigs -= C
+					packet.update_icon()
 				success = 1
 
 		if(success)
