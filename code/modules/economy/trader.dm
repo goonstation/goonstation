@@ -799,6 +799,7 @@
 				src.illegal = 1
 				var/carlsell = rand(1,10)
 				src.goods_illegal += new /datum/commodity/contraband/command_suit(src)
+				src.goods_illegal += new /datum/commodity/contraband/command_helmet(src)
 				src.goods_illegal += new /datum/commodity/contraband/disguiser(src)
 				if (carlsell <= 3)
 					src.goods_illegal += new /datum/commodity/contraband/radiojammer(src)
