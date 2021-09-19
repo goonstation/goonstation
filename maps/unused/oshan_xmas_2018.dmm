@@ -34582,7 +34582,7 @@
 /area/space)
 "bAK" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/box/flashbang_kit{
+/obj/item/chem_grenade/flashbang{
 	pixel_x = -7
 	},
 /obj/item/device/detective_scanner,
@@ -44184,7 +44184,7 @@
 "bXy" = (
 /obj/rack,
 /obj/item/storage/box/stinger_kit,
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
 /obj/item/storage/box/revimp_kit,
 /obj/item/ammo/bullets/autocannon/seeker,
 /obj/item/ammo/bullets/autocannon/seeker,

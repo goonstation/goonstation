@@ -1,5 +1,93 @@
 
+(t)sat sep 18 21
+(u)Flappybat and THISISANICEGAME
+(p)5923
+(e)🎨|sprites
+(+)Resprited the critter security bot, now with animated treads and glowing eyes.
+(u)Flaborized
+(p)6030
+(e)🎨|sprites
+(*)Geneticists, scientists, roboticists, and engineering jobs now spawn with visually unique backpacks.
+(u)Flappybat
+(p)5818
+(e)🆕🎨|feature, sprites
+(+)CARL now sells the Syndicate command helmet to go with the command armor.
+(u)tarmunora
+(e)⚖|balance
+(*)asslaser direct damage reduction.
+(u)tarmunora
+(e)⚖|balance
+(*)sprinting while prone costs extra stamina.
+(t)thu sep 16 21
+(u)Azrun
+(p)6024
+(e)🆕⚖|feature, balance
+(*)Special Order events added. Help your QMs make some money today.
+(u)Flaborized
+(p)6004
+(e)🎨|sprites
+(*)Security personnel now spawn with a visually distinct bag.
+(t)wed sep 15 21
+(u)Azrun
+(p)6013
+(e)🐛⚖|bug, balance
+(+)Shield Generator and Meteor Generators use power to block melee and projectile attacks.
+(u)Emily
+(p)6020
+(e)🗺|mapping
+(*)Chickens partially reworked. Please report any bugs.
+(t)mon sep 13 21
+(u)Sovexe
+(p)5904
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)New item, glow stickers. Stickers that glow when stuck to something. Now provided to undersea miners.
+(t)sun sep 12 21
+(u)Ikea
+(p)5990
+(e)|
+(+)Cargo traders have realized they were accidentally selling fibrilith and will now sell cloth fabric instead.
+(u)aloe
+(p)5967
+(e)🐛|bug
+(*)Cyborgs die a bit differently now- the destruction of your head will always kill you, and any sort of death will cause you to fall apart. Report any new bugs, please!
+(u)tarmunora
+(e)⚖|balance
+(*)Item slot machine rebalanced. Notably, the best prizes require a wager of no less than 250 credits
+(u)MarkNstein
+(p)5880
+(e)⚖|balance
+(*)AI Law Boards now have tighter character limits.
+(u)Ikea
+(p)5969
+(e)🎨|sprites
+(*)New-style windoors are now hackable.
 (t)sat sep 11 21
+(u)tarmunora
+(e)⚖|balance
+(*)Emagging the NT syringe gun makes it fire it's entire contents, instead of clearing the whitelist.
+(u)Flappybat
+(p)5968
+(e)⚖|balance
+(*)Strange reagent requires a minimum of 1u to revive.
+(u)Emily
+(e)⚖|balance
+(*)Chickens can now be butchered significantly faster to make cleaning out the ranch easier.
+(*)Flashbangs are now severely less available. Check the armory for them.
+(u)Obama Gaming
+(p)5936
+(e)|
+(+)Apprentice caps can now be handmade.
+(u)Flappybat
+(p)5798
+(e)⚖|balance
+(+)Scanning Syndicate command helmet now requires a syndicate device analyser.
+(u)tarmunora
+(e)⚖|balance
+(*)Radprot now affects incoming rad status duration instead of existing rad status damage.
+(u)Ikea
+(p)5970
+(e)|
+(*)Neurotoxin and capulettium sting cooldown has been increased to 140 seconds.
 (u)pali
 (+)The overcharged vacuum now has smaller movement penalty for the special attack.
 (t)fri sep 10 21

@@ -41721,7 +41721,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
 /turf/simulated/floor,
 /area/station/security/main)
 "bPj" = (

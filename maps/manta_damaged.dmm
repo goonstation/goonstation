@@ -22792,7 +22792,7 @@
 /area/station/security/checkpoint/sec_foyer)
 "aXO" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/box/flashbang_kit{
+/obj/item/chem_grenade/flashbang{
 	pixel_x = -7;
 	pixel_y = 6
 	},

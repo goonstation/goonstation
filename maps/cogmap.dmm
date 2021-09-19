@@ -7153,7 +7153,7 @@
 	pixel_x = -4;
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag,
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -9129,7 +9129,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/submachine/chicken_feed_grinder,
+/obj/submachine/ranch_feed_grinder,
 /obj/item/reagent_containers/food/snacks/plant/corn{
 	doants = 0
 	},
@@ -15125,7 +15125,7 @@
 	pixel_x = -4;
 	pixel_y = 9
 	},
-/obj/item/storage/box/flashbang_kit{
+/obj/item/chem_grenade/flashbang{
 	pixel_x = 11;
 	pixel_y = 4
 	},
@@ -55032,8 +55032,8 @@
 /area/station/medical/medbay)
 "eNe" = (
 /obj/table/auto,
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag,
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag,
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag,
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -65416,7 +65416,7 @@
 	pixel_x = 11;
 	pixel_y = 3
 	},
-/obj/item/storage/box/flashbang_kit{
+/obj/item/chem_grenade/flashbang{
 	pixel_x = -3;
 	pixel_y = 3
 	},

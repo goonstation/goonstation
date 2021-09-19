@@ -87,7 +87,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/prefab/ranch)
 "z" = (
-/obj/submachine/chicken_feed_grinder,
+/obj/submachine/ranch_feed_grinder,
 /turf/simulated/floor/green,
 /area/prefab/ranch)
 "C" = (
