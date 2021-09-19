@@ -1,5 +1,8 @@
 
 (t)sun sep 19 21
+(u)Owari
+(e)🎨|sprites
+(+)New sea ladder in-hand sprites.
 (u)Walpvrgis
 (p)6019
 (e)🎨|sprites
