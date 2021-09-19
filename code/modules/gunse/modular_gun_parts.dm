@@ -20,6 +20,7 @@ ABSTRACT_TYPE(/obj/item/gun_parts)
 		my_gun = gun
 		return 1
 	proc/remove_part_from_gun() // should safely un-do all of add_part_to_gun()
+		RETURN_TYPE(/obj/item/gun_parts/)
 		my_gun = null
 		return src
 
@@ -32,6 +33,8 @@ ABSTRACT_TYPE(/obj/item/gun_parts/barrel)
 	var/muzzle_flash = "muzzle_flash"
 	var/lensing = 0 // Variable used for optical gun barrels. Scalar around 1.0
 	var/jam_frequency_fire = 1 //additional % chance to jam on fire. Reload to clear.
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "c_tube"
 
 	add_part_to_gun()
 		..()
@@ -67,6 +70,8 @@ ABSTRACT_TYPE(/obj/item/gun_parts/stock)
 	var/stock_dual_wield = 1 // if gun AND stock can be dual wielded, whole gun can be dual wielded.
 	var/jam_frequency_reload = 0 //attitional % chance to jam on reload. Just reload again to clear.
 	var/list/ammo_list = list() // ammo that stays in the stock when removed
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "shovel"
 
 
 	add_part_to_gun()
@@ -110,6 +115,8 @@ ABSTRACT_TYPE(/obj/item/gun_parts/magazine)
 	var/max_ammo_capacity = 0 //modifier
 	var/jam_frequency_reload = 5 //additional % chance to jam on reload. Just reload again to clear.
 	var/list/ammo_list = list() // ammo that stays in the mag when removed
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "ak47"
 
 	add_part_to_gun()
 		..()
@@ -137,6 +144,8 @@ ABSTRACT_TYPE(/obj/item/gun_parts/accessory)
 /obj/item/gun_parts/accessory/
 	var/alt_fire = 0 //does this accessory offer an alt-mode? light perhaps?
 	var/call_on_fire = 0 // does the gun call this accessory's on_fire() proc?
+	icon = 'icons/obj/instruments.dmi'
+	icon_state = "bike_horn"
 
 	proc/alt_fire()
 		return alt_fire
@@ -199,6 +208,50 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 				return
 */
 //told u
+/obj/item/gun_exploder/
+	name = "gunsmithing anvil"
+	desc = "hit it with a gun 'till the gun falls apart lmao"
+	var/obj/item/gun_parts/part = null
+	anchored = 1
+	density = 1
+	icon = 'icons/obj/dojo.dmi'
+	icon_state = "anvil"
+
+	attackby(obj/item/W as obj, mob/user as mob, params)
+		if(!istype(W,/obj/item/gun/modular/) || prob(70))
+			playsound(src.loc, "sound/impact_sounds/Wood_Hit_1.ogg", 70, 1)
+			..()
+			return
+		var/obj/item/gun/modular/new_gun = W
+		if(!new_gun.built)
+			boutput(user, "<span class='notice'>You smash the pieces of the gun into place!</span>")
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
+			new_gun.build_gun()
+			return
+		else
+			boutput(user, "<span class='notice'>You smash the pieces of the gun apart!</span>")
+			playsound(src.loc, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
+			user.u_equip(W)
+			W.dropped(user)
+			W.set_loc(src.loc)
+			if(new_gun.barrel)
+				src.part = new_gun.barrel.remove_part_from_gun()
+				src.part.set_loc(src.loc)
+			if(new_gun.stock)
+				src.part = new_gun.stock.remove_part_from_gun()
+				src.part.set_loc(src.loc)
+			if(new_gun.magazine)
+				src.part = new_gun.magazine.remove_part_from_gun()
+				src.part.set_loc(src.loc)
+			if(new_gun.accessory)
+				src.part = new_gun.accessory.remove_part_from_gun()
+				src.part.set_loc(src.loc)
+			src.part = null
+			new_gun.built = 0
+
+
+
+
 /obj/table/gun_workbench/
 	name = "gunsmithing workbench"
 	desc = "lay down a rifle and start swappin bits"
@@ -289,6 +342,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	desc = "A cylindrical barrel, unrifled."
 	spread_angle = -13 // basic stabilisation
 	part_DRM = GUN_NANO | GUN_JUICE | GUN_ITALIAN
+	color = "#33FFFF"
 
 /obj/item/gun_parts/barrel/foss
 	name = "\improper FOSS lensed barrel"
@@ -296,6 +350,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	spread_angle = -16
 	lensing = 0.9
 	part_DRM = GUN_FOSS | GUN_SOVIET
+	color = "#5555FF"
 
 /obj/item/gun_parts/barrel/foss/long
 	name = "\improper FOSS lensed long barrel"
@@ -310,6 +365,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	spread_angle = -11
 	jam_frequency_fire = 5 //but very poorly built
 	part_DRM = GUN_JUICE | GUN_ITALIAN
+	color = "#99FF99"
 
 /obj/item/gun_parts/barrel/soviet
 	name = "Сборка объектива"
@@ -317,12 +373,14 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	spread_angle = -11
 	lensing = 1.1
 	part_DRM = GUN_FOSS | GUN_SOVIET
+	color = "#FF9999"
 
 /obj/item/gun_parts/barrel/italian
 	name = "canna di fucile"
 	desc = "una canna di fucile di base e di alta qualità"
 	spread_angle = -9 // "alta qualità"
 	part_DRM = GUN_JUICE | GUN_ITALIAN
+	color = "#FFFF99"
 
 // BASIC STOCKS
 /obj/item/gun_parts/stock/NT
@@ -330,8 +388,9 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	desc = "A comfortable NT pistol grip"
 	spread_angle = -2 // basic stabilisation
 	part_DRM = GUN_NANO | GUN_JUICE | GUN_ITALIAN
+	color = "#33FFFF"
 
-/obj/item/gun_parts/stock/NT_shoulder
+/obj/item/gun_parts/stock/NT/shoulder
 	name = "standard stock"
 	desc = "A comfortable NT shoulder stock"
 	spread_angle = -5 // better stabilisation
@@ -348,6 +407,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	part_DRM = GUN_FOSS
 	flashbulb_only = 1
 	max_crank_level = 2
+	color = "#5555FF"
 
 /obj/item/gun_parts/stock/foss/long
 	name = "\improper FOSS laser rifle stock"
@@ -362,7 +422,8 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	desc = "un'impugnatura rivestita in cuoio toscano per un revolver di alta qualità"
 	max_ammo_capacity = 3 // to make that revolver revolve!
 	jam_frequency_reload = 7 // a lot  more jammy!!
-	part_DRM = GUN_ITALIAN | GUN_JUICE
+	part_DRM = GUN_ITALIAN | GUN_JUICE | GUN_SOVIET
+	color = "#FFFF99"
 
 
 

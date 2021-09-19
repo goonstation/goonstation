@@ -30,6 +30,7 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 	var/obj/item/gun_parts/magazine/magazine = null
 	var/obj/item/gun_parts/accessory/accessory = null
 	var/list/obj/item/gun_parts/parts = list()
+	var/built = 0
 	icon_state = "tranq_pistol"
 
 
@@ -64,7 +65,24 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 		var/obj/item/stackable_ammo/SA = I
 		SA.reload(src, user)
 		return
-	..()
+	if(istype(I,/obj/item/gun_parts/))
+		if(built)
+			boutput(user,"<span class='notice'><b>You cannot place parts onto an assembled gun.</b></span>")
+			return
+		boutput(user,"<span class='notice'><b>You loosely place [I] onto [src].</b></span>")
+		if (istype(I, /obj/item/gun_parts/barrel/))
+			barrel = I
+		if (istype(I, /obj/item/gun_parts/stock/))
+			stock = I
+		if (istype(I, /obj/item/gun_parts/magazine/))
+			magazine = I
+		if (istype(I, /obj/item/gun_parts/accessory/))
+			accessory = I
+		user.u_equip(I)
+		I.dropped(user)
+		I.set_loc(src)
+	else
+		..()
 
 /obj/item/gun/modular/alter_projectile(var/obj/projectile/P)
 	if(!lensing)
@@ -165,6 +183,8 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 
 /obj/item/gun/modular/canshoot()
 	if(jammed)
+		return 0
+	if(!built)
 		return 0
 	if(flashbulb_only && !flashbulb_health)
 		return 0
@@ -273,8 +293,10 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 	for(var/obj/item/gun_parts/part as anything in parts)
 		if(src.gun_DRM & part.part_DRM)
 			part.add_part_to_gun(src)
+		else
+			part.set_loc(get_turf(src))
 
-
+	built = 1
 
 	//update the icon to match!!!!!
 
@@ -339,6 +361,7 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 	gun_DRM = GUN_FOSS
 	spread_angle = 25 // value without a barrel. Add one to keep things in line.
 	color = "#5555FF"
+	icon_state = "caplaser"
 
 
 	New()
@@ -374,16 +397,17 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 	New()
 		..()
 		barrel = new /obj/item/gun_parts/barrel/juicer(src)
-		stock = new /obj/item/gun_parts/stock/NT_shoulder(src)
+		stock = new /obj/item/gun_parts/stock/NT/shoulder(src)
 		build_gun()
 
 /obj/item/gun/modular/soviet
 	name = "лазерная пушка"
 	desc = "Энергетическая пушка советской разработки с пиротехническими лампами-вспышками."
-	max_ammo_capacity = 6 // laser revolver
+	max_ammo_capacity = 4 // laser revolver
 	gun_DRM = GUN_SOVIET
 	spread_angle = 25 // value without a barrel. Add one to keep things in line.
 	color = "#FF9999"
+	icon_state = "laser"
 
 	New()
 		..()

@@ -14432,7 +14432,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
-/obj/table/gun_workbench,
+/obj/item/gun_exploder,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "aJi" = (
@@ -102385,7 +102385,7 @@ bBm
 bEe
 bGX
 jfw
-bPN
+aJh
 bPN
 bXC
 jfw

@@ -204,7 +204,6 @@ ABSTRACT_TYPE(/obj/item/stackable_ammo/)
 	var/min_health = 15
 
 
-
 	reload(var/obj/item/gun/modular/M, mob/user as mob)
 		if(reloading)
 			return
