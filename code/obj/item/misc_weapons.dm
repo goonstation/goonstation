@@ -998,7 +998,6 @@
 
 	crafted
 		name = "handcrafted katana"
-		is_syndicate = 0
 		delimb_prob = 2
 
 		force = 12
