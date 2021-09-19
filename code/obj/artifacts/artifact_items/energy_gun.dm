@@ -8,7 +8,7 @@
 	is_syndicate = 1
 	mat_changename = 0
 	mat_changedesc = 0
-	var/can_swap_cell = 0
+	can_swap_cell = 0
 
 	New(var/loc, var/forceartiorigin, var/list/datum/projectile/artifact/forceBullets)
 		..()
