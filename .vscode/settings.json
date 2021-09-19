@@ -28,6 +28,7 @@
 	"workbench.editorAssociations": {
 		"*.dmi": "imagePreview.previewEditor"
 	},
+<<<<<<< HEAD
 	// Ignore whitespace for blame
 	"gitlens.advanced.blame.customArguments": [
 		"-w"
@@ -43,4 +44,7 @@
     "tgstationTestExplorer.project.defines": [
         "#define UNIT_TESTS"
     ]
+=======
+	"gitlens.advanced.blame.customArguments": ["-w"],
+>>>>>>> 2a9bfbe2449e4407ca44c95eae48318e999b21b8
 }
