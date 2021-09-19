@@ -9,6 +9,7 @@
 	mat_changename = 0
 	mat_changedesc = 0
 	can_swap_cell = 0
+	item_function_flags = IMMUNE_TO_ACID
 
 	New(var/loc, var/forceartiorigin, var/list/datum/projectile/artifact/forceBullets)
 		..()
