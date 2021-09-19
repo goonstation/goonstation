@@ -26,8 +26,8 @@ ABSTRACT_TYPE(/obj/item/stackable_ammo/)
 	stamina_cost = 0
 	stamina_crit_chance = 1
 	inventory_counter_enabled = 1
-	var/default_min_amount = 0
-	var/default_max_amount = 0
+	var/default_min_amount = 1
+	var/default_max_amount = 1
 	var/datum/projectile/projectile_type = null
 	var/ammo_DRM = null
 	var/reloading = 0
@@ -97,7 +97,7 @@ ABSTRACT_TYPE(/obj/item/stackable_ammo/)
 			stack_item(I)
 		else
 			if(istype(I, /obj/item/gun/modular/))
-				src.reload(I)
+				src.reload(I, user)
 			else
 				..(I, user)
 
@@ -115,7 +115,7 @@ ABSTRACT_TYPE(/obj/item/stackable_ammo/)
 		else
 			..(user)
 
-	proc/reload(var/obj/item/gun/modular/M)
+	proc/reload(var/obj/item/gun/modular/M, mob/user as mob)
 		if(reloading)
 			return
 		if(!istype(M))
@@ -128,9 +128,11 @@ ABSTRACT_TYPE(/obj/item/stackable_ammo/)
 			return
 		reloading = 1
 		SPAWN_DBG(0)
-			boutput(usr, "<span class='notice'>You start loading rounds into [M]</span>")
+			boutput(user, "<span class='notice'>You start loading rounds into [M]</span>")
 			while(M.ammo_list.len < M.max_ammo_capacity)
 				if(amount < 1)
+					user.u_equip(src)
+					src.dropped(user)
 					pool(src)
 					break
 				playsound(src.loc, "sound/weapons/casings/casing-0[rand(1,9)].ogg", 10, 0.1, 0, 0.8)
@@ -141,6 +143,8 @@ ABSTRACT_TYPE(/obj/item/stackable_ammo/)
 			playsound(src.loc, "sound/weapons/gunload_heavy.ogg", 30, 0.1, 0, 0.8)
 			reloading = 0
 		if(amount < 1)
+			user.u_equip(src)
+			src.dropped(user)
 			pool(src)
 
 
@@ -201,7 +205,7 @@ ABSTRACT_TYPE(/obj/item/stackable_ammo/)
 
 
 
-	reload(var/obj/item/gun/modular/M)
+	reload(var/obj/item/gun/modular/M, mob/user as mob)
 		if(reloading)
 			return
 		if(!istype(M))
@@ -214,10 +218,12 @@ ABSTRACT_TYPE(/obj/item/stackable_ammo/)
 			return
 		reloading = 1
 		SPAWN_DBG(0)
-			boutput(usr, "<span class='notice'>You start loading a bulb into [M].</span>")
+			boutput(user, "<span class='notice'>You start loading a bulb into [M].</span>")
 			if(M.ammo_list.len < M.max_ammo_capacity)
 				playsound(src.loc, "sound/weapons/casings/casing-0[rand(1,9)].ogg", 10, 0.1, 0, 0.8)
 				M.ammo_list += src
+				user.u_equip(src)
+				src.dropped(user)
 				src.set_loc(M)
 				sleep(5)
 				if(M.ammo_list.len == M.max_ammo_capacity)

@@ -287,13 +287,13 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 /obj/item/gun_parts/barrel/NT
 	name = "standard barrel"
 	desc = "A cylindrical barrel, unrifled."
-	spread_angle = -10 // basic stabilisation
+	spread_angle = -13 // basic stabilisation
 	part_DRM = GUN_NANO | GUN_JUICE | GUN_ITALIAN
 
 /obj/item/gun_parts/barrel/foss
 	name = "\improper FOSS lensed barrel"
 	desc = "A cylindrical array of lenses to focus laser blasts."
-	spread_angle = -13
+	spread_angle = -16
 	lensing = 0.9
 	part_DRM = GUN_FOSS | GUN_SOVIET
 
@@ -307,21 +307,21 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 /obj/item/gun_parts/barrel/juicer
 	name = "\improper BLASTA Barrel"
 	desc = "A cheaply-built basic rifled barrel. Not great."
-	spread_angle = -13 //decent stabilisation
+	spread_angle = -11
 	jam_frequency_fire = 5 //but very poorly built
 	part_DRM = GUN_JUICE | GUN_ITALIAN
 
 /obj/item/gun_parts/barrel/soviet
 	name = "Сборка объектива"
 	desc = "стопка линз для фокусировки вашего пистолета"
-	spread_angle = -10
+	spread_angle = -11
 	lensing = 1.1
 	part_DRM = GUN_FOSS | GUN_SOVIET
 
 /obj/item/gun_parts/barrel/italian
 	name = "canna di fucile"
 	desc = "una canna di fucile di base e di alta qualità"
-	spread_angle = -7 // "alta qualità"
+	spread_angle = -9 // "alta qualità"
 	part_DRM = GUN_JUICE | GUN_ITALIAN
 
 // BASIC STOCKS

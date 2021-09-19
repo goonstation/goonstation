@@ -17,7 +17,7 @@ by default all children of /obj/item/gun/modular/ should populate their own barr
 with some ordinary basic parts. barrel and mag are necessary, the other two whatever.
 additional custom parts can be created with stat bonuses, and other effects in their add_part_to_gun() proc
 
-"average" base spread is 20 without a barrel, other guns may be less accurate, perhaps up to 30. few should ever be more accurate.
+"average" base spread is 25 without a barrel, other guns may be less accurate, perhaps up to 30. few should ever be more accurate.
 in order to balance this, barrels should be balanced around ~ -15 spread, and stocks around -5 (so -13 is a rough barrel, -17 is a good one, etc.)
 */
 
@@ -34,11 +34,10 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 
 
 
-	var/lensing = 0 // Variable used for optical gun barrels. laser intensity scales around 1.0
+	var/lensing = 0 // Variable used for optical gun barrels. laser intensity scales around 1.0 (or will!)
 
 	var/flashbulb_only = 0 // FOSS guns only
 	var/flashbulb_health = 0 // FOSS guns only
-	var/obj/item/ammo/flashbulb/flashbulb = null // FOSS guns only
 	var/max_crank_level = 0 // FOSS guns only
 	var/crank_level = 0 // FOSS guns only
 
@@ -60,17 +59,17 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 	two_handed = 0
 	can_dual_wield = 1
 
-
-	New()
-		..()
-		build_gun()
-
 /obj/item/gun/modular/attackby(var/obj/item/I as obj, mob/user as mob)
 	if (istype(I, /obj/item/stackable_ammo))
 		var/obj/item/stackable_ammo/SA = I
-		SA.reload(src)
+		SA.reload(src, user)
 		return
 	..()
+
+/obj/item/gun/modular/alter_projectile(var/obj/projectile/P)
+	if(!lensing)
+		return
+
 
 /obj/item/gun/modular/proc/flash_process_ammo(mob/user)
 	if(processing_ammo)
@@ -120,6 +119,7 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 			boutput(user,"<span class='notice'><b>FOSS Cathodic Flash Bulb loaded.</b></span>")
 			playsound(src.loc, "sound/weapons/gun_cocked_colt45.ogg", 60, 1)
 
+		pool(ammo_list[ammo_list.len])
 		ammo_list.Remove(ammo_list[ammo_list.len]) //and remove it from the list
 
 		processing_ammo = 0
@@ -322,41 +322,44 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 	desc = "A simple, reliable cylindrical bored weapon."
 	max_ammo_capacity = 1 // single-shot pistols ha- unless you strap an expensive loading mag on it.
 	gun_DRM = GUN_NANO
-	spread_angle = 20 // value without a barrel. Add one to keep things in line.
+	spread_angle = 23 // value without a barrel. Add one to keep things in line.
 	color = "#33FFFF"
 
 	New()
+		..()
 		barrel = new /obj/item/gun_parts/barrel/NT(src)
 		stock = new /obj/item/gun_parts/stock/NT(src)
-		..()
+		build_gun()
+
 
 /obj/item/gun/modular/foss // syndicate laser gun's!
 	name = "\improper FOSS laser gun"
 	desc = "An open-sourced and freely modifiable FOSS Inductive Flash Arc, Model 2k/19"
 	max_ammo_capacity = 1 // just takes a flash bulb.
 	gun_DRM = GUN_FOSS
-	spread_angle = 20 // value without a barrel. Add one to keep things in line.
+	spread_angle = 25 // value without a barrel. Add one to keep things in line.
 	color = "#5555FF"
 
 
 	New()
+		..()
 		barrel = new /obj/item/gun_parts/barrel/foss(src)
 		stock = new /obj/item/gun_parts/stock/foss(src)
-		..()
+		build_gun()
 
 /obj/item/gun/modular/fosslong
 	name = "\improper FOSS laser long gun"
 	desc = "An open-sourced and freely modifiable FOSS Inductive Flash Arc, Model 2k/20"
 	max_ammo_capacity = 1 // just takes a flash bulb.
 	gun_DRM = GUN_FOSS
-	spread_angle = 20 // value without a barrel. Add one to keep things in line.
-	spread_angle = 20 // value without a barrel. Add one to keep things in line.
+	spread_angle = 25 // value without a barrel. Add one to keep things in line.
 	color = "#9955FF"
 
 	New()
+		..()
 		barrel = new /obj/item/gun_parts/barrel/foss/long(src)
 		stock = new /obj/item/gun_parts/stock/foss/long(src)
-		..()
+		build_gun()
 
 
 
@@ -369,9 +372,10 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 	color = "#99FF99"
 
 	New()
+		..()
 		barrel = new /obj/item/gun_parts/barrel/juicer(src)
 		stock = new /obj/item/gun_parts/stock/NT_shoulder(src)
-		..()
+		build_gun()
 
 /obj/item/gun/modular/soviet
 	name = "лазерная пушка"
@@ -382,9 +386,10 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 	color = "#FF9999"
 
 	New()
+		..()
 		barrel = new /obj/item/gun_parts/barrel/soviet(src)
 		stock = new /obj/item/gun_parts/stock/italian(src)
-		..()
+		build_gun()
 
 	shoot()
 		..()
@@ -395,13 +400,14 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 	desc = "Una pistola realizzata con acciaio, cuoio e olio d'oliva della più alta qualità possibile."
 	max_ammo_capacity = 2 // basic revolving mechanism
 	gun_DRM = GUN_ITALIAN
-	spread_angle = 25 // value without a barrel. Add one to keep things in line.
+	spread_angle = 27 // value without a barrel. Add one to keep things in line.
 	color = "#FFFF99"
 
 	New()
+		..()
 		barrel = new /obj/item/gun_parts/barrel/italian(src)
 		stock = new /obj/item/gun_parts/stock/italian(src)
-		..()
+		build_gun()
 
 	shoot()
 		..()
