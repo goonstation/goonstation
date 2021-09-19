@@ -9,7 +9,6 @@
 	mat_changename = 0
 	mat_changedesc = 0
 	can_swap_cell = 0
-	item_function_flags = IMMUNE_TO_ACID
 
 	New(var/loc, var/forceartiorigin, var/list/datum/projectile/artifact/forceBullets)
 		..()
@@ -85,10 +84,6 @@
 			user.visible_message("<span class='alert'>[src] emits a terrible cracking noise.</span>")
 
 		return
-
-	ArtifactDestroyed()
-		SEND_SIGNAL(src, COMSIG_CELL_SWAP, null, null) //swap cell with nothing (drop cell on flooor)
-		. = ..()
 
 	ArtifactActivated()
 		. = ..()
