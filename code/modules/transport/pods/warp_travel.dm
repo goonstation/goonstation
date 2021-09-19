@@ -147,6 +147,7 @@
 		if(prob(1))
 			T.gib()
 			T.unlock_medal("Where we're going, we won't need eyes to see", 1)
+			logTheThing("combat", T, null, "entered [src] at [log_loc(src)] and gibbed")
 			return
 		else
 			T.changeStatus("radiation", rand(5,25) SECONDS, 2)
@@ -156,6 +157,7 @@
 					H:bioHolder:RandomEffect("bad")
 				else
 					H:bioHolder:RandomEffect("good")
+			logTheThing("combat", T, null, "entered [src] at [log_loc(src)], got irradiated and teleported to [log_loc(src.target)]")
 	if (istype(M, /atom/movable))
 		animate_portal_tele(src)
 		playsound(src.loc, "warp", 50, 1, 0.2, 1.2)
