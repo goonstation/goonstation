@@ -139,7 +139,8 @@
 	if (istype(M, /mob/dead/aieye))
 		return
 	if (!( src.target ))
-		qdel(src)
+		animate(src, time=0.2 SECONDS, transform=matrix(1.25, 0, 0, 0, 1.25, 0), alpha=100, easing=SINE_EASING)
+		animate(time=0.2 SECONDS, transform=null, alpha=initial(src.alpha), easing=SINE_EASING)
 		return
 	if (ismob(M))
 		var/mob/T = M
