@@ -1493,6 +1493,13 @@ var/global/noir = 0
 				if (A)
 					usr.client.cmd_admin_check_health(A)
 					return
+
+		if ("kill")
+			if (src.level >= LEVEL_SA)
+				var/mob/M = locate(href_list["target"])
+				M?.death()
+				return
+
 		if ("addreagent")
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
 				var/mob/M = locate(href_list["target"])

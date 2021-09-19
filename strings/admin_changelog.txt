@@ -1,6 +1,7 @@
 (t)sun sep 19 21
 (u)pali
 (+)New verb spawn-figurine for when you want to spawn a specific figurine.
+(+)Player Options now have a button to kill people.
 (t)sat sep 18 21
 (u)pali
 (*)Banning people no longer deletes their mobs.
