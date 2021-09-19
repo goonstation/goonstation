@@ -1849,6 +1849,12 @@ Returns:
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "ouijaboard"
 	w_class = W_CLASS_NORMAL
+	var/emoji_prob = 30
+	var/emoji_min = 1
+	var/emoji_max = 3
+	var/words_prob = 100
+	var/words_min = 1
+	var/words_max = 3
 
 	New()
 		. = ..()
@@ -1866,11 +1872,12 @@ Returns:
 
 			if(GET_COOLDOWN(src, usr) == 0)
 				var/list/words = list()
-				for(var/i=0, i<rand(5, 10), i++)
-					var/picked = pick(strings("ouija_board.txt", "ouija_board_words"))
-					words |= picked
-				if(prob(30))
-					for(var/i in 1 to rand(1, 3))
+				if(prob(words_prob))
+					for(var/i in 1 to rand(words_min, words_max))
+						var/picked = pick(strings("ouija_board.txt", "ouija_board_words"))
+						words |= picked
+				if(prob(emoji_prob))
+					for(var/i in 1 to rand(emoji_min, emoji_max))
 						words |= random_emoji()
 
 				if(words.len)
@@ -1899,6 +1906,15 @@ Returns:
 				usr.show_text("Please wait a moment before using the board again.", "red")
 		else
 			return ..(location,control,params)
+
+/obj/item/ghostboard/emouija
+	name = "Emouija board"
+	desc = "A wooden board that allows for communication with spirits and such things. Wait, this one doesn't even have proper letters on it."
+	emoji_prob = 100
+	emoji_min = 5
+	emoji_max = 10
+	words_prob = 0
+
 
 /proc/fartes()
 	for(var/imageToLoad in flist("images/"))
