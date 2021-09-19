@@ -3310,7 +3310,6 @@ datum
 						0, 0, 0.5,
 						0.5, 0.35, 0.0625)
 					M.onVarChanged("color", oldcol, M.color)
-					return
 
 			reaction_obj(var/obj/O, var/volume)
 				if(volume >= 10)
@@ -3321,7 +3320,6 @@ datum
 						0, 0, 0.5,
 						0.5, 0.35, 0.0625)
 					O.onVarChanged("color", oldcol, O.color)
-					return
 
 			reaction_turf(var/turf/T, var/volume)
 				if(volume >= 20)
@@ -3332,7 +3330,6 @@ datum
 						0, 0, 0.5,
 						0.5, 0.35, 0.0625)
 					T.onVarChanged("color", oldcol, T.color)
-					return
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
 				for(var/datum/ailment_data/disease/virus in M.ailments)
@@ -3346,7 +3343,6 @@ datum
 						M.cure_disease(virus)
 						boutput(M,"<span class= 'notice'>You feel a little less sickly.</span>")
 				..()
-				return
 
 		fooddrink/juice_pickle
 			name = "pickle juice"
