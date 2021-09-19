@@ -1332,7 +1332,7 @@
 	sword_path = /obj/item/katana/nukeop
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (!istype(W, sword_path)
+		if (!istype(W, sword_path))
 			boutput(user, "<span class='alert'>The [W] can't fit into [src].</span>")
 			return
 		..()
