@@ -8,7 +8,6 @@
 		'icons/obj/large/32x48.dmi'.
 
 	----- TABLE OF CONTENTS ------
-		VARIABLES
 		AREAS
 		TURFS
         ASTEROID DOOR PUZZLE
@@ -18,10 +17,6 @@
 		NOTES AND EMAILS
 
 */
-//VARIABLES & DEFINITIONS
-
-var/exec_setup = FALSE
-
 //AREAS
 
 /area/prefab/safehouse
@@ -113,55 +108,11 @@ var/exec_setup = FALSE
 		bioHolder.uid_hash = md5(bioHolder.Uid)
 		. = ..()
 
-	New()
-		..()
-
-		SPAWN_DBG(5 SECONDS)
-		for(var/mob/living/carbon/human/dead_exec/M)
-			qdel(M) //Jean's only here to set up the puzzle, we don't want them hanging around.
-
 obj/item/reagent_containers/iv_drip/dead_exec
 	desc = "A bag filled with someone's blood. It's labelled 'Jean Rockefeller'."
 	icon_state = "IV-blood"
 	mode = 1
 	initial_reagents = "blood"
-
-/obj/puzzle_spawn/saferoom_puzzle //Same principle as access_spawn (read: copy and paste) to help us set-up the puzzle.
-	name = "safe room bioholder spawn"
-	desc = "Sets up the prefab_saferoom puzzle bioHolder stuff depending on what it's placed on, then destroys itself."
-	icon = 'icons/effects/mapeditor.dmi'
-	icon_state = "access_spawn"
-
-	New()
-		..()
-		if(current_state > GAME_STATE_WORLD_INIT)
-			SPAWN_DBG(5 DECI SECONDS)
-				src.setup_blood_bioHolder() //Copy bioHolder data to blood
-				src.setup_bio_handscanner_access() //Copy bioHolder Uid to var in handscanner
-				qdel(src)
-
-	initialize()
-		..()
-		src.setup_blood_bioHolder()
-		src.setup_bio_handscanner_access()
-		qdel(src)
-
-	proc/setup_blood_bioHolder()
-		for(var/obj/item/reagent_containers/iv_drip/O in src.loc)
-			if(!O.reagents.has_reagent("blood"))
-				return
-			for(var/mob/living/carbon/human/dead_exec/M in world) //aka Jean
-				var/datum/bioHolder/D = new/datum/bioHolder(null)
-				D.CopyOther(M.bioHolder)
-				var/datum/reagent/blood/B = O.reagents.reagent_list["blood"]
-				B.data = D //Give the blood Jean's bioHolder info.
-
-	proc/setup_bio_handscanner_access()
-		for(var/obj/machinery/handscanner/bio_handscanner/O in src.loc)
-			for(var/mob/living/carbon/human/dead_exec/M in world) //aka Jean
-				var/datum/bioHolder/D = new/datum/bioHolder(null)
-				D.CopyOther(M.bioHolder)
-				O.allowed_bioHolders = D.Uid //Copy the Uid only, copying and comparing against all bioHolder data is too prone to error.
 
 /obj/machinery/handscanner/bio_handscanner
 	name = "Hand Scanner"
@@ -407,6 +358,23 @@ obj/item/reagent_containers/iv_drip/dead_exec
 		light.set_color(0.1,1.0,0.1)
 		light.attach(src)
 		light.enable()
+
+		var/mob/living/carbon/human/dead_exec/M //Setting up the puzzle
+		M = new /mob/living/carbon/human/dead_exec(src.loc)
+		var/datum/bioHolder/D = new/datum/bioHolder(null)
+		D.CopyOther(M.bioHolder)
+
+		for(var/obj/machinery/handscanner/bio_handscanner/O in world)
+			O.allowed_bioHolders = D.Uid //Copy the Uid only, copying and comparing against all bioHolder data is too prone to error.
+
+		for(var/obj/item/reagent_containers/iv_drip/dead_exec/O in world)
+			if(!O.reagents.has_reagent("blood"))
+				return
+			var/datum/reagent/blood/B = O.reagents.reagent_list["blood"]
+			B.data = D //Give the blood Jean's bioHolder info.
+
+		SPAWN_DBG(5 SECONDS)
+		qdel(M)
 
 	attack_hand(mob/user as mob)
 		boutput(user, "An advanced cloning pod, designed to be operated automatically through packets. What a great idea!<br>Currently idle.<br><span class='alert'>Biomatter reserves are depleted.</span>")
