@@ -733,7 +733,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		ckey = "mysticmidgit"
 
 	chefbot
-		name = "\improper Chefbot"
+		name = "\improper ChefBot"
 		icon_state = "chefbot"
 		ckey = "skeletondoot"
 
