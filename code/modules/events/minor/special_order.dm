@@ -133,6 +133,9 @@ ABSTRACT_TYPE(/datum/special_order/surgery)
 	comtype = /obj/item/reagent_containers/food/snacks/pizza
 	subtype_valid = TRUE
 
+	item_check(obj/item/reagent_containers/food/snacks/pizza/P)
+		return(!P.sliced)
+
 /datum/special_order/weed_sampler
 	name = "Weed Flight"
 	order_items = list(/datum/commodity/trader/buford/megaweed=1, /datum/commodity/trader/buford/whiteweed=1, /datum/commodity/trader/buford/omegaweed=1, /datum/commodity/special_order/pizza=1)

@@ -996,6 +996,13 @@
 	var/obj/itemspecialeffect/katana_dash/end/end
 	var/delimb_prob = 100
 
+	crafted
+		name = "handcrafted katana"
+		delimb_prob = 2
+
+		force = 12
+		contraband = 5
+
 	New()
 		..()
 		start = new/obj/itemspecialeffect/katana_dash/start(src)
@@ -1089,8 +1096,7 @@
 	dropped(mob/user)
 		..()
 		if (isturf(src.loc))
-			del(src)
-			return
+			qdel(src)
 
 /obj/item/katana/reverse
 	icon_state = "katana_reverse"
@@ -1219,6 +1225,9 @@
 			return ..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if (!istype(W, sword_path))
+			boutput(user, "<span class='alert'>The [W] can't fit into [src].</span>")
+			return
 		if (istype(W, /obj/item/katana) && !src.sword_inside && !W.cant_drop == 1)
 			icon_state = sheathed_state
 			item_state = ih_sheathed_state
@@ -1279,7 +1288,7 @@
 	tooltip_flags = REBUILD_USER
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (W.type == /obj/item/katana)
+		if (!istype(W, /obj/item/katana/captain))
 			boutput(user, "<span class='alert'>The [W] can't fit into [src].</span>")
 			return
 		..()
@@ -1323,7 +1332,7 @@
 	sword_path = /obj/item/katana/nukeop
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (W.type == /obj/item/katana)
+		if (!istype(W, sword_path)
 			boutput(user, "<span class='alert'>The [W] can't fit into [src].</span>")
 			return
 		..()

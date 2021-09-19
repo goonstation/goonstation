@@ -41616,14 +41616,14 @@
 /turf/unsimulated/floor/wood/two,
 /area/dojo)
 "cqG" = (
-/obj/decal/fakeobjects/bellows,
+/obj/dojo_bellows,
 /obj/decal/wallscroll{
 	pixel_y = 32
 	},
 /turf/unsimulated/floor/dojo/stone,
 /area/dojo)
 "cqH" = (
-/obj/decal/fakeobjects/furnace,
+/obj/machinery/dojo_tatara,
 /obj/decal/cleanable/ash{
 	layer = 8
 	},
@@ -41665,9 +41665,10 @@
 /turf/unsimulated/floor/dojo/stone,
 /area/dojo)
 "cqM" = (
-/obj/decal/fakeobjects/anvil,
+/obj/table/anvil,
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt,
+/obj/item/unfinished_katana,
 /turf/unsimulated/floor/dojo/stone,
 /area/dojo)
 "cqN" = (

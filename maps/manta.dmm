@@ -15512,10 +15512,7 @@
 	name = "Visitation Control";
 	pixel_y = 28
 	},
-/obj/table/wood/auto,
-/obj/item/device/prisoner_scanner{
-	rand_pos = 0
-	},
+/obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/black,
 /area/station/security/brig/cell_block_control)
 "aSr" = (
@@ -16132,6 +16129,10 @@
 /obj/machinery/recharger,
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
+/obj/item/device/prisoner_scanner{
+	pixel_x = 8;
+	rand_pos = 0
+	},
 /turf/simulated/floor/black,
 /area/station/security/brig/cell_block_control)
 "aUm" = (

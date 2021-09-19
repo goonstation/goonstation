@@ -1,4 +1,35 @@
 
+(t)sun sep 19 21
+(u)Owari
+(e)🎨|sprites
+(+)New sea ladder in-hand sprites.
+(u)Walpvrgis
+(p)6019
+(e)🎨|sprites
+(*)Added a few new hats in multiple colours; baseball caps, goggles (worn as a headband) and pirate hats, as well as some extra mime beret colours. These can be found in the clothing booth under Accessories and Headwear.
+(u)Azrun
+(p)5950
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Blades can once again be forged in the Hidden Workshop.  A lot of blood, sweat and tears must be expended to craft one.
+(t)sat sep 18 21
+(u)Flappybat and THISISANICEGAME
+(p)5923
+(e)🎨|sprites
+(+)Resprited the critter security bot, now with animated treads and glowing eyes.
+(u)Flaborized
+(p)6030
+(e)🎨|sprites
+(*)Geneticists, scientists, roboticists, and engineering jobs now spawn with visually unique backpacks.
+(u)Flappybat
+(p)5818
+(e)🆕🎨|feature, sprites
+(+)CARL now sells the Syndicate command helmet to go with the command armor.
+(u)tarmunora
+(e)⚖|balance
+(*)asslaser direct damage reduction.
+(u)tarmunora
+(e)⚖|balance
+(*)sprinting while prone costs extra stamina.
 (t)thu sep 16 21
 (u)Azrun
 (p)6024
