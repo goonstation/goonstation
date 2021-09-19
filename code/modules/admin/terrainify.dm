@@ -6,6 +6,7 @@
 
 	var/options = list("Winter Station"=/client/proc/cmd_winterify_station,
 		"Swamp Station"=/client/proc/cmd_swampify_station,
+		"Desert Station"=/client/proc/cmd_desertify_station,
 		"Trench Station"=/client/proc/cmd_trenchify_station)
 
 	var/param = tgui_input_list(src,"Transform space around the station...","Terraform Space",options)
@@ -30,6 +31,40 @@ var/datum/station_zlevel_repair/station_repair = new
 			if(src.weather_effect)
 				new src.weather_effect(T)
 
+
+/client/proc/cmd_desertify_station()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Desertify"
+	set desc = "Turns space into a desert"
+	admin_only
+	var/const/ambient_light = "#cfcfcf"
+#ifdef UNDERWATER_MAP
+	//to prevent tremendous lag from the entire map flooding from a single ocean tile.
+	boutput(src, "You cannot use this command on underwater maps. Sorry!")
+	return
+#else
+	if(src.holder.level >= LEVEL_ADMIN)
+		switch(alert("Turn space into a desert? This is probably going to lag a bunch when it happens and there's no easy undo!",,"Yes","No"))
+			if("Yes")
+				var/list/space = list()
+
+				station_repair.station_generator = new/datum/map_generator/desert_generator
+				station_repair.ambient_light = new /image/ambient
+				station_repair.ambient_light.color = ambient_light
+
+				for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+					space += S
+				station_repair.station_generator.generate_terrain(space)
+				for (var/turf/S in space)
+					S.UpdateOverlays(station_repair.ambient_light, "ambient")
+				shippingmarket.clear_path_to_market()
+
+				logTheThing("admin", src, null, "turned space into a desert.")
+				logTheThing("diary", src, null, "turned space into a desert.", "admin")
+				message_admins("[key_name(src)] turned space into a desert.")
+	else
+		boutput(src, "You must be at least an Administrator to use this command.")
+#endif
 
 /client/proc/cmd_swampify_station()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
