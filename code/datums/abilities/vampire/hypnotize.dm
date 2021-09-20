@@ -98,19 +98,19 @@
 			boutput(target, __blue("Your faith protects you from [M]'s dark designs!"))
 			JOB_XP(target, "Chaplain", 2)
 			target.visible_message("<span class='alert'><b>[target] just stares right back at [M]!</b></span>")
+			return
 
-		else if (target.sight_check(1)) // Can't stare through a blindfold very well, no?
-			boutput(target, __red("Your consciousness is overwhelmed by [M]'s dark glare!"))
-			boutput(M, __blue("Your piercing gaze knocks out [target]."))
-			target.changeStatus("stunned", 30 SECONDS)
-			target.changeStatus("weakened", 30 SECONDS)
-			target.changeStatus("paralysis", 30 SECONDS)
-			target.remove_stamina(300)
-			target.force_laydown_standup()
+		boutput(target, __red("Your consciousness is overwhelmed by [M]'s dark glare!"))
+		boutput(M, __blue("Your piercing gaze knocks out [target]."))
+		target.changeStatus("stunned", 30 SECONDS)
+		target.changeStatus("weakened", 30 SECONDS)
+		target.changeStatus("paralysis", 30 SECONDS)
+		target.remove_stamina(300)
+		target.force_laydown_standup()
 
-			var/obj/itemspecialeffect/glare/E = unpool(/obj/itemspecialeffect/glare)
-			E.color = "#AA02FF"
-			E.setup(target.loc)
+		var/obj/itemspecialeffect/glare/E = unpool(/obj/itemspecialeffect/glare)
+		E.color = "#AA02FF"
+		E.setup(target.loc)
 
 		hypno.doCooldown()
 
