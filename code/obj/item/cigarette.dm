@@ -538,7 +538,7 @@
 	New()
 		..()
 		for(var/i in 1 to src.max_cigs)
-			src.contents += new src.cigtype(src)
+			new src.cigtype(src)
 
 
 /obj/item/cigpacket/nicofree
