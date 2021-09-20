@@ -210,7 +210,7 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 
 	dreamplaza // Walp's abandoned space mall... Well, what remains of it.
 		maxNum = 1
-		probability = 100
+		probability = 30
 		prefabPath = "assets/maps/prefabs/prefab_dreamplaza.dmm"
 		prefabSizeX = 30
 		prefabSizeY = 30
