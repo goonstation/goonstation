@@ -1,5 +1,12 @@
 
 (t)sun sep 19 21
+(u)BatElite
+(p)6014
+(e)|
+(+)You can now remove reinforcement from material sheets in bulk
+(u)Owari
+(e)🎨|sprites
+(+)New sea ladder in-hand sprites.
 (u)Walpvrgis
 (p)6019
 (e)🎨|sprites

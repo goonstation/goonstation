@@ -230,7 +230,7 @@
 			for(var/obj/O in items)
 				for (var/C in src.commodities) // Key is type of the commodity
 					var/datum/commodity/CM = commodities[C]
-					if (istype(O, CM.comtype))
+					if (istype(O, CM.comtype) && CM.item_check(O))
 						add = CM.price
 						if (CM.indemand)
 							add *= shippingmarket.demand_multiplier
@@ -250,7 +250,7 @@
 		else // Please excuse this duplicate code, I'm gonna change trader commodity lists into associative ones later I swear
 			for(var/obj/O in items)
 				for (var/datum/commodity/C in commodities_list)
-					if (istype(O, C.comtype))
+					if (istype(O, C.comtype) && C.item_check(O))
 						add = C.price
 						if (C.indemand)
 							add *= shippingmarket.demand_multiplier
@@ -275,7 +275,7 @@
 		var/datum/data/record/account = sell_crate.account
 		var/duckets
 
-		if(length(active_orders))
+		if(length(active_orders) && !commodities_list)
 			for(var/datum/special_order/order in active_orders)
 				if(order.check_order(sell_crate))
 					duckets += order.price
