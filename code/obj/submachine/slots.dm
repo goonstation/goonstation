@@ -153,7 +153,7 @@
 	var/amount = 0
 
 	//300x and 100x jackpots fall through to 50x winner if wager <= 250
-	if(wager <= 250)
+	if(wager < 250)
 		roll = max(6, roll)
 	if(src.emagged)
 		roll = min(roll * 2, max_roll)
@@ -164,10 +164,10 @@
 		amount = 300 * wager
 		command_alert("Congratulations to [src.scan.registered] on winning a Jackpot of [amount] credits!", "Jackpot Winner")
 	else if (roll <= 5) //4 - 400
-		command_alert("Congratulations to [src.scan.registered] on winning [amount] credits!", "Big Winner")
 		win_sound =  "sound/misc/klaxon.ogg"
 		exclamation = "Big Winner! "
 		amount = 100 * wager
+		command_alert("Congratulations to [src.scan.registered] on winning [amount] credits!", "Big Winner")
 	else if (roll <= 15) //10 - 500    (Plus additional 5 - 250 if wager <= 250)
 		win_sound =  "sound/musical_instruments/Bell_Huge_1.ogg"
 		exclamation = "Big Winner! "
@@ -181,7 +181,7 @@
 	else if (roll <= 265) //100 - 300
 		exclamation = "Winner! "
 		amount = 3 * wager
-	else if (roll <= 715 && wager <= 250) //450 - 450, if wager <= 250, to make up for not having jackpots
+	else if (roll <= 715 && wager < 250) //450 - 450, if wager <= 250, to make up for not having jackpots
 		exclamation = "Small Winner! "
 		amount = 1 * wager
 	else

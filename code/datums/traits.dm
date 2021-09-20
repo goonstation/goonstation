@@ -466,19 +466,6 @@
 
 // GENETICS - Blue Border
 
-/obj/trait/robustgenetics
-	name = "Robust Genetics (-2) \[Genetics\]"
-	cleanName = "Robust Genetics"
-	desc = "You gain an additional 20 genetic stability."
-	id = "robustgenetics"
-	icon_state = "stablegenesB"
-	points = -2
-	isPositive = 0
-	category = "genetics"
-
-	onAdd(var/mob/owner)
-		owner.bioHolder?.genetic_stability = 120
-
 /obj/trait/mildly_mutated
 	name = "Mildly Mutated (0) \[Genetics\]"
 	cleanName = "Mildly Mutated"
@@ -644,6 +631,12 @@
 	cleanName = "Security Training"
 	desc = "Subject is trained in generalized robustness and asskicking."
 	id = "training_security"
+
+/obj/trait/job/quartermaster
+	name = "Quartermaster Training"
+	cleanName = "Quartermaster Training"
+	desc = "Subject is proficent at haggling."
+	id = "training_quartermaster"
 
 // bartender, detective, HoS
 /obj/trait/job/drinker

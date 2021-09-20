@@ -462,7 +462,8 @@
 		alpha = 128
 		boutput(user, "Spawning target dummy, stand by") //no need to be rude
 
-		new /mob/living/carbon/human/tdummy(locate(src.x+1, src.y, src.z))
+		var/mob/living/carbon/human/tdummy/tdu = new /mob/living/carbon/human/tdummy(locate(src.x+1, src.y, src.z))
+		tdu.shutup = TRUE
 		//T.x = src.x + 1 // move it to the right
 
 
@@ -1456,6 +1457,8 @@ Other Goonstation servers:[serverList]</span>"})
 		while (gib_time > 0 && !src.qdeled && !victim.qdeled)
 
 		if (victim && !victim.qdeled)
+			victim.vis_contents -= src
+			src.maptext = null
 			victim.gib()
 
 		qdel(src)

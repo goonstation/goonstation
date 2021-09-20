@@ -575,7 +575,7 @@ Code:
 		if(length(by_type[/obj/machinery/power/vent_capture]))
 			. += "<BR><h4>Vent Capture Unit Status</h4>"
 			for_by_tcl(V, /obj/machinery/power/vent_capture)
-				if(V.z == 1 && (locate(/obj/machinery/power/monitor/smes) in V.powernet?.nodes) )
+				if(V.z == 1 && (locate(/obj/machinery/computer/power_monitor/smes) in V.powernet?.nodes) )
 					engine_found = TRUE
 					. += "Output : [engineering_notation(V.last_gen)]W<BR>"
 			. += "<BR>"

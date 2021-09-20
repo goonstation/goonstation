@@ -540,7 +540,7 @@ obj/decal/fakeobjects/teleport_pad
 		if (M.getStatusDuration("weakened") || M.getStatusDuration("stunned") || M.getStatusDuration("frozen"))
 			return
 
-		if (M.slip(0))
+		if (!(M.bioHolder?.HasEffect("cold_resist") > 1) && M.slip(0))
 			boutput(M, "<span class='alert'>You slipped on [src]!</span>")
 			if (prob(5))
 				M.TakeDamage("head", 5, 0, 0, DAMAGE_BLUNT)

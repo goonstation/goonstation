@@ -1224,7 +1224,7 @@ var/global/noir = 0
 					message_admins("[key_name(usr)] removed the [effect] status-effect from [key_name(M)].")
 				else
 					M.setStatus(effect, duration SECONDS)
-					message_admins("[key_name(usr)] added the [effect] status-effect to [key_name(M)] for [duration * 10] seconds.")
+					message_admins("[key_name(usr)] added the [effect] status-effect to [key_name(M)] for [duration] seconds.")
 
 			else
 				alert("If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to statuseffect a player.")
@@ -1288,14 +1288,12 @@ var/global/noir = 0
 			if(src.level >= LEVEL_SA)
 				var/datum/bioEffect/power/BE = locate(href_list["bioeffect"])
 				BE.altered = 1
-				if(istype(BE, /datum/bioEffect/power)) //powers only
-					if (BE.power)
-						BE.power = 0
-					else
-						BE.power = 1
+				var/oldpower = BE.power
+				if (BE.power > 1)
+					BE.power = 1
 				else
-					return
-
+					BE.power = 2
+				BE.onPowerChange(oldpower, BE.power)
 				usr.client.cmd_admin_managebioeffect(BE.holder.owner)
 			else
 				return
@@ -1373,7 +1371,7 @@ var/global/noir = 0
 						BE.altered = 1
 					if ("Power Booster")
 						if (P.altered) managebioeffect_chromosome_clean(P)
-						P.power = 1
+						P.power = 2
 						P.name = "Empowered " + P.name
 						P.altered = 1
 					if ("Energy Booster")
@@ -1495,6 +1493,17 @@ var/global/noir = 0
 				if (A)
 					usr.client.cmd_admin_check_health(A)
 					return
+
+		if ("kill")
+			if (src.level >= LEVEL_SA)
+				var/mob/M = locate(href_list["target"])
+				if(M)
+					M.death()
+					message_admins("<span class='alert'>Admin [key_name(usr)] killed [key_name(M)]!</span>")
+					logTheThing("admin", usr, M, "killed [constructTarget(M,"admin")]")
+					logTheThing("diary", usr, M, "killed [constructTarget(M,"diary")]", "admin")
+				return
+
 		if ("addreagent")
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
 				var/mob/M = locate(href_list["target"])
@@ -1834,10 +1843,6 @@ var/global/noir = 0
 			var/CT = input("Enter a /mob/living/critter path or partial name.", "Make Critter", null) as null|text
 
 			var/list/matches = get_matches(CT, "/mob/living/critter")
-			matches -= list(/mob/living/critter, /mob/living/critter/small_animal, /mob/living/critter/aquatic) //blacklist
-#ifdef SECRETS_ENABLED
-			matches -= list(/mob/living/critter/vending) //secret repo blacklist
-#endif
 
 			if (!length(matches))
 				return
@@ -2356,23 +2361,23 @@ var/global/noir = 0
 				switch(href_list["type"])
 					if("sec_clothes")
 						for(var/obj/item/clothing/under/O in world)
-							del(O)
+							qdel(O)
 							LAGCHECK(LAG_LOW)
 					if("sec_all_clothes")
 						for(var/obj/item/clothing/O in world)
-							del(O)
+							qdel(O)
 							LAGCHECK(LAG_LOW)
 					if("sec_classic1")
 						for(var/obj/item/clothing/suit/fire/O in world)
-							del(O)
+							qdel(O)
 							LAGCHECK(LAG_LOW)
 						for(var/obj/grille/O in world)
-							del(O)
+							qdel(O)
 							LAGCHECK(LAG_LOW)
 						for(var/obj/machinery/vehicle/pod/O in all_processing_machines())
 							for(var/atom/movable/A in O)
 								A.set_loc(O.loc)
-							del(O)
+							qdel(O)
 							LAGCHECK(LAG_LOW)
 
 					if("transform_one")
@@ -3082,7 +3087,7 @@ var/global/noir = 0
 								message_admins("[key_name(usr)] creepified the station.")
 								logTheThing("admin", usr, null, "used the Creepify Station button")
 								logTheThing("diary", usr, null, "used the Creepify Station button", "admin")
-							creepify_station()
+								creepify_station()
 						else
 							alert("You need to be at least a Administrator to creepify the station.")
 							return
@@ -4702,7 +4707,7 @@ var/global/noir = 0
 
 	return chosen
 
-/proc/get_matches(var/object, var/base = /atom, use_concrete_types = TRUE)
+/proc/get_matches(var/object, var/base = /atom, use_concrete_types=TRUE, only_admin_spawnable=TRUE)
 	var/list/types
 	if(use_concrete_types)
 		types = concrete_typesof(base)
@@ -4712,13 +4717,17 @@ var/global/noir = 0
 	var/list/matches = new()
 
 	for(var/path in types)
+		if(only_admin_spawnable)
+			var/typeinfo/atom/typeinfo = get_type_typeinfo(path)
+			if(!typeinfo.admin_spawnable)
+				continue
 		if(findtext("[path]", object))
 			matches += path
 
 	. = matches
 
-/proc/get_one_match(var/object, var/base = /atom, use_concrete_types = TRUE)
-	var/list/matches = get_matches(object, base, use_concrete_types)
+/proc/get_one_match(var/object, var/base = /atom, use_concrete_types=TRUE, only_admin_spawnable=TRUE)
+	var/list/matches = get_matches(object, base, use_concrete_types, only_admin_spawnable)
 
 	if(!matches.len)
 		return null
@@ -4761,6 +4770,33 @@ var/global/noir = 0
 					spawn_animation1(A)
 			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(usr.x, usr.y, usr.z)])")
 			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(usr.x, usr.y, usr.z, 1)])", "admin")
+
+	else
+		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+		return
+
+/datum/admins/proc/spawn_figurine(var/figurine as text)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set desc="Spawn a figurine"
+	set name="Spawn-Figurine"
+	if(!figurine)
+		return
+
+	var/client/client = usr.client
+
+	if (client.holder.level >= LEVEL_PA)
+		var/chosen = get_one_match(figurine, /datum/figure_info)
+
+		if (chosen)
+			var/atom/movable/A
+			if (client.holder.spawn_in_loc)
+				A = new /obj/item/toy/figure(usr.loc, new chosen)
+			else
+				A = new /obj/item/toy/figure(get_turf(usr), new chosen)
+			if (client.flourish)
+				spawn_animation1(A)
+			logTheThing("admin", usr, null, "spawned figurine [chosen] at ([showCoords(usr.x, usr.y, usr.z)])")
+			logTheThing("diary", usr, null, "spawned figurine [chosen] at ([showCoords(usr.x, usr.y, usr.z, 1)])", "admin")
 
 	else
 		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
@@ -4869,9 +4905,11 @@ var/global/noir = 0
 	BE.reclaim_mats = BE.global_instance.reclaim_mats
 	BE.msgGain = BE.global_instance.msgGain
 	BE.msgLose = BE.global_instance.msgLose
+	var/oldpower = P.power
+	P.power = P.global_instance_power.power
+	P.onPowerChange(oldpower, P.power)
 	if (istype(BE, /datum/bioEffect/power)) //powers
 		P = BE
-		P.power = P.global_instance_power.power
 		P.cooldown = P.global_instance_power.cooldown
 		P.safety = P.global_instance_power.safety
 
@@ -4958,12 +4996,12 @@ var/global/noir = 0
 			is_stable = 1
 		if (!B.curable_by_mutadone)
 			is_reinforced = 1
+		if (B.power > 1)
+			is_power_boosted = 1
+		else
+			is_power_boosted = 0
 		if (istype(B, /datum/bioEffect/power))//powers only
 			P = B
-			if (P.power)
-				is_power_boosted = 1
-			else
-				is_power_boosted = 0
 			if (P.safety)
 				is_synced = 1
 			else
