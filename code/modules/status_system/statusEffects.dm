@@ -1788,13 +1788,13 @@
 	limb_or_organ = "organ"
 
 /datum/statusEffect/changeling_regrow/limb/l_arm
-	id = "c_regrow-l_hand"
+	id = "c_regrow-l_arm"
 	icon_state = "cspider-hand"
 	regrow_target_id = "l_arm"
 	regrow_target_name = "left arm"
 	regrow_target_path = /obj/item/parts/human_parts/arm/left
 /datum/statusEffect/changeling_regrow/limb/r_arm
-	id = "c_regrow-r_hand"
+	id = "c_regrow-r_arm"
 	icon_state = "cspider-hand"
 	regrow_target_id = "r_arm"
 	regrow_target_name = "right arm"

@@ -362,25 +362,26 @@ proc/filter_trait_hats(var/type)
 				M.drop_item()
 				W.set_loc(src)
 				break
-		if (cigs.len < src.max_cigs && istype(W, /obj/item/clothing/mask/cigarette)) //cigarette
+		if (length(cigs) < src.max_cigs && istype(W, /obj/item/clothing/mask/cigarette)) //cigarette
 			success = 1
 			M.drop_item()
 			W.set_loc(src)
 			cigs.Add(W)
-		if (cigs.len < src.max_cigs && istype(W, /obj/item/cigpacket)) //cigarette packet
+		if (length(cigs) < src.max_cigs && istype(W, /obj/item/cigpacket)) //cigarette packet
 			var/obj/item/cigpacket/packet = W
-			if(packet.cigcount == 0)
+			if(length(packet.contents) == 0)
 				M.show_text("Oh no! There's no more cigs in [packet]!", "red")
 				return
 			else
-				var/count = packet.cigcount
-				for(var/i=0, i<count, i++) //not sure if "-1" cigcount packets will work.
-					if(cigs.len >= src.max_cigs)
+				var/count = length(packet.contents)
+				for(var/i=0, i<count, i++)
+					if(length(cigs) >= src.max_cigs)
+						M.show_text("The [src] has been totally filled with cigarettes!", "red")
 						break
-					var/obj/item/clothing/mask/cigarette/C = new packet.cigtype(src)
+					var/obj/item/clothing/mask/cigarette/C = packet.contents[1]
 					C.set_loc(src)
 					cigs.Add(C)
-					packet.cigcount--
+					packet.update_icon()
 				success = 1
 
 		if(success)
@@ -1611,3 +1612,173 @@ ABSTRACT_TYPE(/obj/item/clothing/head/hairbow)
    desc = "A crimson hat with an enjoyable little pom!"
    icon_state = "pomhat_red"
    item_state = "pomhat_red"
+
+// Mime Beret recolours (mime beret is located elsewhere weirdly)
+
+ABSTRACT_TYPE(/obj/item/clothing/head/frenchberet)
+/obj/item/clothing/head/frenchberet
+	name = "\improper French beret"
+	desc = "Much more artistic than your standard beret."
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "beret_wht"
+	item_state = "beret_wht"
+	w_class = W_CLASS_TINY
+	throwforce = 0
+
+	white
+		name = "white French beret"
+		icon_state = "beret_wht"
+		item_state = "beret_wht"
+
+	yellow
+		name = "yellow French beret"
+		icon_state = "beret_yel"
+		item_state = "beret_yel"
+
+	mint
+		name = "mint French beret"
+		icon_state = "beret_mnt"
+		item_state = "beret_mnt"
+
+	purple
+		name = "purple French beret"
+		icon_state = "beret_prp"
+		item_state = "beret_prp"
+
+	blue
+		name = "blue French beret"
+		icon_state = "beret_blu"
+		item_state = "beret_blu"
+
+	pink
+		name = "pink French beret"
+		icon_state = "beret_pnk"
+		item_state = "beret_pnk"
+
+	strawberry
+		name = "strawberry beret"
+		icon_state = "beret_strawb"
+		item_state = "beret_strawb"
+
+// Costume goggles
+
+ABSTRACT_TYPE(/obj/item/clothing/head/goggles)
+/obj/item/clothing/head/goggles
+	name = "costume goggles"
+	desc = "They don't even fit over your eyes! How cheap."
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "goggles_red"
+	item_state = "goggles_red"
+	w_class = W_CLASS_TINY
+	throwforce = 0
+
+	red
+		name = "red costume goggles"
+		icon_state = "goggles_red"
+		item_state = "goggles_red"
+
+	purple
+		name = "purple costume goggles"
+		icon_state = "goggles_prp"
+		item_state = "goggles_prp"
+
+	green
+		name = "green costume goggles"
+		icon_state = "goggles_grn"
+		item_state = "goggles_grn"
+
+	blue
+		name = "blue costume goggles"
+		icon_state = "goggles_blu"
+		item_state = "goggles_blu"
+
+	yellow
+		name = "yellow costume goggles"
+		icon_state = "goggles_yel"
+		item_state = "goggles_yel"
+
+// Baseball Caps
+
+ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
+/obj/item/clothing/head/basecap
+	name = "baseball cap"
+	desc = "Wear it normally, or flip it backwards to increase your coolness."
+	uses_multiple_icon_states = 1
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
+	var/hatflip = FALSE
+	var/hatcolour = "black"
+
+	New()
+		..()
+		name = "[hatcolour] baseball cap"
+		item_state = "basecap_[hatcolour]"
+
+	attack_self(var/mob/user as mob)
+		src.hatflip = !src.hatflip
+		src.icon_state = "basecap_[hatcolour]"
+		src.item_state = "basecap_[hatcolour]"
+		if(src.hatflip)
+			src.icon_state = "basecapflip_[hatcolour]"
+			src.item_state = "basecapflip_[hatcolour]"
+			boutput(user, "<span class='notice'>You flip your baseball cap around. Now it's backwards.</span>")
+		else
+			boutput(user, "<span class='notice'>You flip your baseball cap back into the standard baseball cap position.</span>")
+
+	black
+		hatcolour = "black"
+		item_state = "basecap_black"
+		icon_state = "basecap_black"
+
+	purple
+		hatcolour = "purple"
+		item_state = "basecap_purple"
+		icon_state = "basecap_purple"
+
+	red
+		hatcolour = "red"
+		item_state = "basecap_red"
+		icon_state = "basecap_red"
+
+	yellow
+		hatcolour = "yellow"
+		item_state = "basecap_yellow"
+		icon_state = "basecap_yellow"
+
+	green
+		hatcolour = "green"
+		item_state = "basecap_green"
+		icon_state = "basecap_green"
+
+	blue
+		hatcolour = "blue"
+		item_state = "basecap_blue"
+		icon_state = "basecap_blue"
+
+	white
+		hatcolour = "white"
+		item_state = "basecap_white"
+		icon_state = "basecap_white"
+
+	pink
+		hatcolour = "pink"
+		item_state = "basecap_pink"
+		icon_state = "basecap_pink"
+
+/obj/item/clothing/head/pirate_blk
+	name = "black pirate hat"
+	desc = "Heroic!"
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "pirate_blk"
+	item_state = "pirate_blk"
+
+/obj/item/clothing/head/pirate_brn
+	name = "brown pirate hat"
+	desc = "Heroic!"
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "pirate_brn"
+	item_state = "pirate_brn"

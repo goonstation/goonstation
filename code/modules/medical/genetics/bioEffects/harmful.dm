@@ -37,7 +37,7 @@
 	lockedDiff = 4
 	lockedChars = list("G","C","A","T")
 	lockedTries = 10
-	icon_state  = "bad"
+	icon_state  = "speech_mime"
 
 /datum/bioEffect/deaf
 	name = "Deafness"
