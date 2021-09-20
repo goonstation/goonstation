@@ -207,8 +207,6 @@ var/obj/manta_speed_lever/mantaLever = null
 		STOP_TRACKING
 		return ..()
 
-
-
 //REPAIRING:  wrench > screwdriver > crowbar > wires > welder > wrench > screwdriver > sheet > welder
 
 	attackby(var/obj/item/I as obj, var/mob/user as mob)
