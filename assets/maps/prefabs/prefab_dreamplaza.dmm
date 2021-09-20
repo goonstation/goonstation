@@ -35,7 +35,7 @@
 "jm" = (/obj/neon_lining{dir = 9},/turf/simulated/floor/terrazzo,/area/prefab/dreamplaza)
 "jt" = (/obj/decal/cleanable/blood,/obj/item/implant/projectile/shrapnel,/turf/simulated/floor/terrazzo/white,/area/prefab/dreamplaza)
 "jv" = (/obj/stool/neon{pixel_y = 6},/turf/simulated/floor/terrazzo/white,/area/prefab/dreamplaza)
-"jH" = (/obj/storage/secure/closet/fridge{name = "dusty refrigerator"},/obj/item/reagent_containers/food/snacks/danish_weed{name = "extremely stale pastry"},/obj/item/paper{desc = "It's stale and crusty, but looks untouched."; icon_state = "postit-writing"; info = "If one more of you fuckos steal my snacks AGAIN I'm gonna quit, no joke. Wait. I'll kill you first, and THEN quit. -Cyg"; name = "angrily scrawled sticky note"},/obj/item/reagent_containers/food/drinks/cola{name = "very flat cola"},/turf/simulated/floor,/area/prefab/dreamplaza)
+"jH" = (/obj/storage/secure/closet/fridge{name = "dusty refrigerator"},/obj/item/reagent_containers/food/snacks/danish_weed{name = "extremely stale pastry"},/obj/item/reagent_containers/food/drinks/cola{name = "very flat cola"; rand_pos = 1},/obj/item/paper{desc = "It's stale and crusty, but looks untouched."; icon_state = "postit-writing"; info = "If one more of you fuckos steal my snacks AGAIN I'm gonna quit, no joke. Wait. I'll kill you first, and THEN quit. -Cyg"; name = "angrily scrawled sticky note"; rand_pos = 1},/turf/simulated/floor,/area/prefab/dreamplaza)
 "jO" = (/turf/simulated/floor/marble/border_bw{dir = 6},/area/prefab/dreamplaza)
 "kv" = (/obj/critter/roach,/turf/simulated/floor/purple/checker,/area/prefab/dreamplaza)
 "kK" = (/obj/machinery/door/airlock/pyro/maintenance{name = "storage"},/turf/simulated/floor/neutral,/area/prefab/dreamplaza)
@@ -120,9 +120,9 @@
 "Eh" = (/obj/decal/cleanable/machine_debris,/turf/simulated/floor/neutral,/area/prefab/dreamplaza)
 "Ej" = (/turf/simulated/floor/stairs/medical/wide/middle,/area/prefab/dreamplaza)
 "Eo" = (/obj/stool/neon,/turf/simulated/floor/terrazzo,/area/prefab/dreamplaza)
-"EE" = (/obj/decal/cleanable/dirt/dirt3,/turf/simulated/floor/terrazzo/black,/area/prefab/dreamplaza)
+"EE" = (/obj/decal/cleanable/dirt/dirt3,/obj/map/light/purple,/turf/simulated/floor/terrazzo/black,/area/prefab/dreamplaza)
 "EL" = (/obj/neon_lining{dir = 9},/obj/decal/cleanable/blood/splatter{icon_state = "floor4"},/obj/stool/neon,/turf/simulated/floor/terrazzo/white,/area/prefab/dreamplaza)
-"ER" = (/obj/machinery/light/incandescent/blueish{pixel_y = -12},/turf/simulated/floor/terrazzo/black,/area/prefab/dreamplaza)
+"ER" = (/obj/stool/bench/blue/auto,/obj/machinery/light/small/floor/purpleish,/turf/simulated/floor/terrazzo/black,/area/prefab/dreamplaza)
 "Fu" = (/obj/item/raw_material/shard/glass{pixel_x = 6; pixel_y = 7},/turf/simulated/floor/plating,/area/prefab/dreamplaza)
 "FI" = (/obj/decal/cleanable/oil,/turf/simulated/floor/terrazzo/white,/area/prefab/dreamplaza)
 "FS" = (/obj/lattice{dir = 5; icon_state = "lattice-dir-b"},/obj/structure/girder/reinforced,/turf/space,/area/noGenerate)
@@ -130,7 +130,7 @@
 "Gd" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "The goods inside the machine probably expired before you were even cloned."; icon = 'icons/obj/vending.dmi'; icon_state = "snack-broken"; name = "broken vending machine"; pixel_y = 10},/turf/simulated/floor/neutral,/area/prefab/dreamplaza)
 "Ge" = (/obj/decal/poster/wallsign/neonsparkle{dir = 1; pixel_y = 4},/turf/simulated/wall/auto/reinforced/jen/purple,/area/prefab/dreamplaza)
 "Gi" = (/obj/table/reinforced/auto,/obj/item/sheet/steel{amount = 5},/obj/item/screwdriver,/turf/simulated/floor/neutral,/area/prefab/dreamplaza)
-"Gj" = (/obj/item/clothing/shoes/heels/black{pixel_x = -5; rand_pos = 1},/obj/item/clothing/shoes/flatsblu{pixel_x = 16; pixel_y = -1; rand_pos = 1},/obj/item/clothing/shoes/bootsbrn{pixel_x = 2; pixel_y = 11; rand_pos = 1},/obj/table/neon/auto,/turf/simulated/floor/marble/border_bw,/area/prefab/dreamplaza)
+"Gj" = (/obj/item/clothing/shoes/flatsblu{pixel_x = 16; pixel_y = -1; rand_pos = 1},/obj/item/clothing/shoes/bootsbrn{pixel_x = 2; pixel_y = 11; rand_pos = 1},/obj/table/neon/auto,/obj/item/clothing/shoes/flatspnk{pixel_x = -4; pixel_y = -1},/turf/simulated/floor/marble/border_bw,/area/prefab/dreamplaza)
 "GE" = (/obj/wingrille_spawn/auto/crystal,/obj/decal/poster/wallsign/neonsparkle{dir = 1; pixel_y = 4},/obj/map/light/cyan,/turf/simulated/floor/terrazzo/black,/area/prefab/dreamplaza)
 "GO" = (/turf/simulated/floor,/area/prefab/dreamplaza)
 "GP" = (/obj/storage/crate/packing,/obj/random_item_spawner/junk/two,/turf/simulated/floor/terrazzo/black,/area/prefab/dreamplaza)
@@ -148,6 +148,7 @@
 "JD" = (/obj/neon_lining{dir = 5},/obj/decoration/pottedfern{pixel_y = 4},/turf/simulated/floor/terrazzo/white,/area/prefab/dreamplaza)
 "JE" = (/obj/machinery/door/airlock/pyro/glass{dir = 4},/obj/map/light/purple{brightness = 3},/turf/simulated/floor/terrazzo/white,/area/prefab/dreamplaza)
 "JJ" = (/obj/neon_lining{dir = 6; pixel_y = 5},/obj/table/neon/auto,/turf/simulated/floor/carpet/clowncarpet/border{dir = 5},/area/prefab/dreamplaza)
+"JV" = (/obj/decal/cleanable/dirt/dirt3,/obj/machinery/light/incandescent/purpleish,/turf/simulated/floor/terrazzo/black,/area/prefab/dreamplaza)
 "Ke" = (/obj/lattice{dir = 1; icon_state = "lattice-dir"},/turf/variableTurf/clear,/area/noGenerate)
 "Kg" = (/turf/simulated/floor/carpet/clowncarpet/border{dir = 6},/area/prefab/dreamplaza)
 "Kk" = (/obj/decal/cleanable/dirt/dirt5,/turf/simulated/floor/marble/border_bw{dir = 10},/area/prefab/dreamplaza)
@@ -238,7 +239,7 @@ UKUKNJRBUQUQUQUQMiGElVunPwxifSzyMiUQSkJrFINrbBNrbBTtJDMiUKUK
 UKUKZDpqPFSgBFZpYHzhihbBbBbBihzhzhNXszALooEjEjEjEjPnMspqUKUK
 UKUKZDpqcIbBbBbBbBbBbBbBbBbBbBbBbBbBbBwYbBbBbBbBbBbBjlMiUKUK
 UKUKySpqzhFIbBbBbBbBmVbBbBbBswbBbBbBbBbBbBbBbBbBwsZnEEMiUKUK
-UKUKUKpqtwZnqabBtwzhSmSgSgSgBSGPEREEzhzhzhzhtwzhtwzhObpqUKUK
+UKUKUKpqtwZnqabBtwzhSmSgERSgBSGPzhJVzhzhzhzhtwzhtwzhObpqUKUK
 UKUKUKpqMiRnRnRnMipqpqMiMiMiMipqpqLoieLoLoLoLoYcLopqpqpqUKUK
 UKUKUKpqihHYZnpMihpqUKUKUKUKNJlopqzvNrMOLoGiqoAbGdpqVCUKUKUK
 UKUKUKpqYDwYbBFIsLpqUKNgUKWweieipqNrNrKoLorCIErSzfpqUKUKUKUK
