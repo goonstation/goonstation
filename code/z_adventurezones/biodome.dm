@@ -989,7 +989,7 @@ SYNDICATE DRONE FACTORY AREAS
 				for(var/turf/T in range(2,middle))
 					make_cleanable(/obj/decal/cleanable/greenglow,T)
 				sleep(1 SECOND)
-				world << sound('sound/effects/mag_pandroar.ogg', volume=60) // heh
+				playsound_global(world, "sound/effects/mag_pandroar.ogg", 60) // heh
 				shake_camera(usr, 15, 16, 0.5)
 				new/obj/item/alchemy/stone(middle)
 				sleep(0.2 SECONDS)

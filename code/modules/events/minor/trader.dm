@@ -94,6 +94,8 @@
 			start_location.color = OCEAN_COLOR
 			#endif
 
+			station_repair.repair_turfs(dstturfs)
+
 			active = 0
 
 /proc/get_hiding_jerk(var/atom/movable/container)

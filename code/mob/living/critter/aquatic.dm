@@ -5,6 +5,7 @@
 //	-etc
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+ABSTRACT_TYPE(/mob/living/critter/aquatic)
 /mob/living/critter/aquatic
 	name = "aquatic mobcritter"
 	real_name = "aquatic mobcritter"

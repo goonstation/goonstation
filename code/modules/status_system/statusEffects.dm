@@ -341,6 +341,16 @@
 		var/howMuch = ""
 		var/stage = 1
 
+		modify_change(change)
+			. = change
+
+			if (owner && ismob(owner) && change > 0)
+				var/mob/M = owner
+				SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, get_stage(duration + change))
+				var/percent_protection = GET_MOB_PROPERTY(M, PROP_RADPROT)
+				percent_protection = 1 - (percent_protection/100) //scale from 0 to 1
+				. *= percent_protection
+
 		getTooltip()
 			. = "You are [howMuch]irradiated.<br>Taking [round(damage_tox, 0.1)] toxin damage every [tickSpacing/(1 SECOND)] sec.<br>Damage reduced by radiation resistance on gear."
 
@@ -349,39 +359,43 @@
 			if(issilicon(A) || isobserver(A) || isintangible(A))
 				. = 0
 
+		proc/get_stage(val)
+			. = 1
+			switch(val/(1 SECOND))
+				if(0 to 10)
+					. = 1
+				if(10 to 20)
+					. = 2
+				if(20 to 45)
+					. = 3
+				if(45 to 90)
+					. = 4
+				if(90 to INFINITY)
+					. = 5
+
 		onUpdate(timePassed)
 			if(locate(/obj/item/implant/health) in owner)
 				src.visible = 1
 			else
 				src.visible = 0
 
-
 			var/mob/M = null
 			if(ismob(owner))
 				M = owner
 
-			var/prot = 1
-			if(istype(owner, /mob/living))
-				var/mob/living/L = owner
-				prot = (1 - (L.get_rad_protection() / 100))
-
-			damage_tox = (sqrt(duration/20 + 5) - 1) * prot
-			switch(duration/(1 SECOND))
-				if(0 to 10)
+			damage_tox = (sqrt(duration/20 + 5) - 1)
+			stage = get_stage(duration)
+			switch(stage)
+				if(1)
 					howMuch = ""
-					stage = 1
-				if(10 to 20)
+				if(2)
 					howMuch = "significantly "
-					stage = 2
-				if(20 to 45)
+				if(3)
 					howMuch = "very much "
-					stage = 3
-				if(45 to 90)
+				if(4)
 					howMuch = "extremely "
-					stage = 4
-				if(90 to INFINITY)
+				if(5)
 					howMuch = "horribly "
-					stage = 5
 
 			if(M)
 				SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, stage)
@@ -389,10 +403,10 @@
 					src.visible = 1
 				else
 					src.visible = 0
-				if (prob((stage - 2 - !!(M.traitHolder?.hasTrait("stablegenes"))) * prot) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
+				if (prob(stage - 2 - !!(M.traitHolder?.hasTrait("stablegenes"))) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
 					boutput(M, "<span class='alert'>You mutate!</span>")
 					M.bioHolder.RandomEffect("either")
-				if(prob((stage - 1) * prot) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
+				if(prob(stage - 1) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
 					M.changeStatus("weakened", 3 SECONDS)
 					boutput(M, "<span class='alert'>You feel weak.</span>")
 					M.emote("collapse")
@@ -425,6 +439,29 @@
 			. = 1
 			if(issilicon(A) || isobserver(A) || isintangible(A))
 				. = 0
+		proc/get_stage(val)
+			. = 1
+			switch(val/(1 SECOND))
+				if(0 to 10)
+					. = 1
+				if(10 to 20)
+					. = 2
+				if(20 to 30)
+					. = 3
+				if(30 to 60)
+					. = 4
+				if(60 to INFINITY)
+					. = 5
+
+		modify_change(change)
+			. = change
+
+			if (owner && ismob(owner) && change > 0)
+				var/mob/M = owner
+				SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, get_stage(duration + change))
+				var/percent_protection = GET_MOB_PROPERTY(M, PROP_RADPROT)
+				percent_protection = 1 - (percent_protection/100) //scale from 0 to 1
+				. *= percent_protection
 
 		proc/update_lights(add = 1)
 			owner.remove_simple_light("neutron_rad")
@@ -453,30 +490,22 @@
 			if(ismob(owner))
 				M = owner
 
-			var/prot = 1
-			if(istype(owner, /mob/living))
-				var/mob/living/L = owner
-				prot = (1 - (L.get_rad_protection() / 100))
 
-			damage_tox = (sqrt(duration/20 + 5) - 0.5) * prot
+			damage_tox = (sqrt(duration/20 + 5) - 0.5)
 			damage_brute = damage_tox/2
 
-			switch(duration/(1 SECOND))
-				if(0 to 10)
+			stage = get_stage(duration)
+			switch(stage)
+				if(1)
 					howMuch = ""
-					stage = 1
-				if(10 to 20)
+				if(2)
 					howMuch = "significantly "
-					stage = 2
-				if(20 to 30)
+				if(3)
 					howMuch = "very much "
-					stage = 3
-				if(30 to 60)
+				if(4)
 					howMuch = "extremely "
-					stage = 4
-				if(60 to INFINITY)
+				if(5)
 					howMuch = "horribly "
-					stage = 5
 
 			if(M)
 				SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, stage)
@@ -484,10 +513,10 @@
 					src.visible = 1
 				else
 					src.visible = 0
-				if (prob((stage - !!(M.traitHolder?.hasTrait("stablegenes"))) * prot) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
+				if (prob(stage - !!(M.traitHolder?.hasTrait("stablegenes"))) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
 					boutput(M, "<span class='alert'>You mutate!</span>")
 					M.bioHolder.RandomEffect("either")
-				if(prob((stage-1) * prot) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
+				if(prob(stage-1) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
 					M.changeStatus("weakened", 5 SECONDS)
 					boutput(M, "<span class='alert'>You feel weak.</span>")
 					M.emote("collapse")
@@ -1759,13 +1788,13 @@
 	limb_or_organ = "organ"
 
 /datum/statusEffect/changeling_regrow/limb/l_arm
-	id = "c_regrow-l_hand"
+	id = "c_regrow-l_arm"
 	icon_state = "cspider-hand"
 	regrow_target_id = "l_arm"
 	regrow_target_name = "left arm"
 	regrow_target_path = /obj/item/parts/human_parts/arm/left
 /datum/statusEffect/changeling_regrow/limb/r_arm
-	id = "c_regrow-r_hand"
+	id = "c_regrow-r_arm"
 	icon_state = "cspider-hand"
 	regrow_target_id = "r_arm"
 	regrow_target_name = "right arm"
@@ -1869,12 +1898,12 @@
 	onUpdate(timePassed)
 		. = ..()
 		tickspassed += timePassed
-		movement_modifier.additive_slowdown = 2 + tickspassed/(15 SECONDS)
-		if(ismob(owner) && prob(10))
+		movement_modifier.additive_slowdown = 1.5 + tickspassed/(10 SECONDS)
+		if(ismob(owner) && prob(5))
 			var/mob/M = owner
-			M.change_eye_blurry(2, 10)
+			M.change_eye_blurry(2, 40)
 
-		if(prob(tickspassed/(10 SECONDS)))
+		if(prob(round(tickspassed/(5 SECONDS)) / 2))
 			if(!owner.hasStatus("passing_out"))
 				owner.setStatus("passing_out", 5 SECONDS)
 
@@ -1887,9 +1916,8 @@
 
 	onRemove()
 		. = ..()
-		owner.delStatus("drowsy")
-		if(isliving(owner))
-			var/mob/living/L = owner
-			L.force_laydown_standup()
-			L.changeStatus("weakened", 1 SECOND)
-			L.changeStatus("paralysis", 5 SECONDS)
+		if(ismob(owner))
+			var/mob/M = owner
+			M.changeStatus("paralysis", 5 SECONDS)
+			M.force_laydown_standup()
+			M.delStatus("drowsy")
