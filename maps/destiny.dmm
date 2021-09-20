@@ -48733,7 +48733,7 @@
 /obj/firedoor_spawn,
 /obj/access_spawn/maint,
 /turf/simulated/floor/black,
-/area/station/maintenance/east)
+/area/station/hallway/primary/southeast)
 "rNq" = (
 /obj/critter/turtle/sylvester/HoS,
 /turf/simulated/floor/carpet{
@@ -57508,6 +57508,9 @@
 	icon_state = "wooden"
 	},
 /area/station/crew_quarters/courtroom)
+"wyE" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/hallway/primary/southeast)
 "wyN" = (
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
@@ -114008,7 +114011,7 @@ kMA
 keu
 aQM
 rMU
-hag
+wyE
 jbg
 blM
 aAd
