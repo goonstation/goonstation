@@ -356,7 +356,7 @@
 
 		neonsparkle
 			name = "sparkle neon sign"
-			desc = "A cute little coffee cup poster."
+			desc = "A neon sign shaped like cute sparkles."
 			icon = 'icons/misc/walp_decor.dmi'
 			icon_state = "neonsign_sparkle"
 
