@@ -65,6 +65,9 @@
 			qdel(abilitystat)
 			abilitystat = null
 
+		for(var/ability in src.abilities)
+			qdel(ability)
+		src.abilities = null
 		..()
 
 	proc/onLife(var/mult = 1) //failsafe for UI not doing its update correctly elsewhere
@@ -856,9 +859,9 @@
 		if (object && object.owner == src)
 			if(src.holder?.hud)
 				src.holder.hud.remove_object(object)
-			object.owner = null
 			qdel(object)
 			src.object = null
+			src.holder = null
 		..()
 
 	proc
