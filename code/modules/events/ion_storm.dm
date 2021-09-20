@@ -202,7 +202,7 @@
 				for_by_tcl (foundDoor, /obj/machinery/door)
 					if (foundDoor.z != 1)
 						continue
-					if (istype(foundDoor, /obj/machinery/door/poddoor))
+					if (foundDoor.cant_emag)
 						continue
 					T = get_turf(foundDoor)
 					if (!istype(T.loc,/area/station/))
