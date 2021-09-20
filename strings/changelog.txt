@@ -1,5 +1,11 @@
 
 (t)mon sep 20 21
+(u)eX.n0x & Nefarious6th
+(p)5758
+(e)🎨|sprites
+(+)Card decks can now be taken out of pockets using the "pick up" action.
+(+)The process to open a Spacemen: the Grifening deck box is now easier!
+(+)Realistic card shuffling re-added; your cards might stick to each other!
 (u)pali
 (*)Vomit now contains DNA of the person who vomited it.
 (u)RSG250
