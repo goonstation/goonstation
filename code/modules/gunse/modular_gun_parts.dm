@@ -115,8 +115,6 @@ ABSTRACT_TYPE(/obj/item/gun_parts/stock)
 ABSTRACT_TYPE(/obj/item/gun_parts/magazine)
 /obj/item/gun_parts/magazine/
 
-	var/datum/projectile/current_projectile = null
-	var/list/projectiles = null
 	var/max_ammo_capacity = 0 //modifier
 	var/jam_frequency_reload = 5 //additional % chance to jam on reload. Just reload again to clear.
 	var/list/ammo_list = list() // ammo that stays in the mag when removed
@@ -349,6 +347,11 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	part_DRM = GUN_NANO | GUN_JUICE | GUN_ITALIAN
 	color = "#33FFFF"
 
+/obj/item/gun_parts/barrel/NT/long
+	name = "standard long barrel"
+	desc = "A cylindrical barrel, rifled."
+	spread_angle = -15
+
 /obj/item/gun_parts/barrel/foss
 	name = "\improper FOSS lensed barrel"
 	desc = "A cylindrical array of lenses to focus laser blasts."
@@ -442,5 +445,30 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	// flashlight!!
 	// grenade launcher!!
 	// a horn!!
+/obj/item/gun_parts/accessory/horn
+	name = "Tactical Alerter"
+	desc = "Efficiently alerts your squadron within miliseconds of target engagement, using cutting edge over-the-airwaves technology"
+	call_on_fire = 1
+
+	on_fire()
+		playsound(src.my_gun.loc, pick('sound/musical_instruments/Bikehorn_bonk1.ogg', 'sound/musical_instruments/Bikehorn_bonk2.ogg', 'sound/musical_instruments/Bikehorn_bonk3.ogg'), 50, 1, -1)
+
 
 // No such thing as a basic magazine! they're all bullshit!!
+/obj/item/gun_parts/magazine/juicer
+	name = "HOTT SHOTTS MAG"
+	desc = "Holds 3 rounds, and 30,000 followers."
+	max_ammo_capacity = 3
+	jam_frequency_reload = 8
+
+/obj/item/gun_parts/magazine/juicer/bigger
+	name = "HOTTER SHOTTS MAG"
+	desc = "Holds 5 rounds, and 50,000 followers."
+	max_ammo_capacity = 5
+	jam_frequency_reload = 10
+
+/obj/item/gun_parts/magazine/juicer/massive
+	name = "HOTTEST SHOTTS MAG"
+	desc = "Holds 6 rounds, and 69,000 followers."
+	max_ammo_capacity = 6
+	jam_frequency_reload = 13

@@ -60,6 +60,25 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 	two_handed = 0
 	can_dual_wield = 1
 
+	New()
+		..()
+		make_parts()
+		build_gun()
+
+/obj/item/gun/modular/proc/make_parts()
+	return
+
+/obj/item/gun/modular/proc/check_DRM(var/obj/item/gun_parts/part)
+	if(!istype(part))
+		return 0
+	if(!part.part_DRM || !src.gun_DRM)
+		playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 1)
+		return 1
+	else
+		return (src.gun_DRM & part.part_DRM)
+
+
+
 /obj/item/gun/modular/attackby(var/obj/item/I as obj, mob/user as mob)
 	if (istype(I, /obj/item/stackable_ammo))
 		var/obj/item/stackable_ammo/SA = I
@@ -70,7 +89,7 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 			boutput(user,"<span class='notice'><b>You cannot place parts onto an assembled gun.</b></span>")
 			return
 		var/obj/item/gun_parts/part = I
-		if(src.gun_DRM & part.part_DRM)
+		if(src.check_DRM(part))
 			boutput(user,"<span class='notice'><b>You loosely place [I] onto [src].</b></span>")
 			if (istype(I, /obj/item/gun_parts/barrel/))
 				barrel = I
@@ -252,6 +271,9 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 	if (P)
 		P.forensic_ID = src.forensic_ID
 
+	if(accessory && accessory_on_fire)
+		accessory.on_fire()
+
 	if(user && !suppress_fire_msg)
 		if(!src.silenced)
 			for(var/mob/O in AIviewers(user, null))
@@ -350,11 +372,16 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 	spread_angle = 23 // value without a barrel. Add one to keep things in line.
 	color = "#33FFFF"
 
-	New()
-		..()
+	make_parts()
 		barrel = new /obj/item/gun_parts/barrel/NT(src)
 		stock = new /obj/item/gun_parts/stock/NT(src)
-		build_gun()
+
+/obj/item/gun/modular/NT/long
+	name = "\improper NanoTrasen standard rifle"
+	desc = "A simple, reliable rifled bored weapon."
+	make_parts()
+		barrel = new /obj/item/gun_parts/barrel/NT/long(src)
+		stock = new /obj/item/gun_parts/stock/NT/shoulder(src)
 
 
 /obj/item/gun/modular/foss // syndicate laser gun's!
@@ -367,41 +394,43 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 	icon_state = "caplaser"
 
 
-	New()
-		..()
+	make_parts()
 		barrel = new /obj/item/gun_parts/barrel/foss(src)
 		stock = new /obj/item/gun_parts/stock/foss(src)
-		build_gun()
 
-/obj/item/gun/modular/fosslong
+
+/obj/item/gun/modular/foss/long
 	name = "\improper FOSS laser long gun"
 	desc = "An open-sourced and freely modifiable FOSS Inductive Flash Arc, Model 2k/20"
-	max_ammo_capacity = 1 // just takes a flash bulb.
-	gun_DRM = GUN_FOSS
-	spread_angle = 25 // value without a barrel. Add one to keep things in line.
 	color = "#9955FF"
 
-	New()
-		..()
+	make_parts()
 		barrel = new /obj/item/gun_parts/barrel/foss/long(src)
 		stock = new /obj/item/gun_parts/stock/foss/long(src)
-		build_gun()
+
 
 
 
 /obj/item/gun/modular/juicer
-	name = "\improper RAD BLASTA"
+	name = "\improper BAD BLASTA"
 	desc = "A juicer-built, juicer-'designed', and most importantly juicer-marketed gun."
 	max_ammo_capacity = 0 //fukt up mags only
 	gun_DRM = GUN_JUICE
 	spread_angle = 30 // value without a barrel. Add one to keep things in line.
 	color = "#99FF99"
 
-	New()
-		..()
+	make_parts()
+		barrel = new /obj/item/gun_parts/barrel/juicer(src)
+		stock = new /obj/item/gun_parts/stock/italian(src)
+
+/obj/item/gun/modular/juicer/long
+	name = "\improper RAD BLASTA"
+	desc = "A juicer-built, juicer-'designed', and most importantly juicer-marketed gun."
+	color = "#55FF88"
+
+	make_parts()
 		barrel = new /obj/item/gun_parts/barrel/juicer/longer(src)
 		stock = new /obj/item/gun_parts/stock/NT/shoulder(src)
-		build_gun()
 
 /obj/item/gun/modular/soviet
 	name = "лазерная пушка"
@@ -412,11 +441,10 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 	color = "#FF9999"
 	icon_state = "laser"
 
-	New()
-		..()
+	make_parts()
 		barrel = new /obj/item/gun_parts/barrel/soviet(src)
 		stock = new /obj/item/gun_parts/stock/italian(src)
-		build_gun()
+
 
 	shoot()
 		..()
@@ -430,11 +458,10 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 	spread_angle = 27 // value without a barrel. Add one to keep things in line.
 	color = "#FFFF99"
 
-	New()
-		..()
+	make_parts()
 		barrel = new /obj/item/gun_parts/barrel/italian(src)
 		stock = new /obj/item/gun_parts/stock/italian(src)
-		build_gun()
+
 
 	shoot()
 		..()

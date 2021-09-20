@@ -12780,6 +12780,8 @@
 	pixel_y = 21
 	},
 /obj/table/auto,
+/obj/item/gun_parts/magazine/juicer/bigger,
+/obj/item/gun_parts/magazine/juicer/bigger,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "aFu" = (
@@ -15115,7 +15117,10 @@
 /turf/simulated/floor/engine,
 /area/station/mining/refinery)
 "aKy" = (
-/obj/disposalpipe/segment/vertical,
+/obj/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/machinery/disposal,
 /obj/machinery/light/small/floor,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
@@ -36807,8 +36812,6 @@
 /obj/item/gun/modular/juicer,
 /obj/item/gun/modular/juicer,
 /obj/item/gun/modular/juicer,
-/obj/item/gun/modular/juicer,
-/obj/item/gun/modular/juicer,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bEi" = (
@@ -36831,10 +36834,15 @@
 	pixel_y = 21
 	},
 /obj/table/auto,
+/obj/item/gun_parts/stock/NT/shoulder,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bEm" = (
 /obj/table/auto,
+/obj/item/gun_parts/accessory/horn,
+/obj/item/gun_parts/accessory/horn,
+/obj/item/gun_parts/accessory/horn,
+/obj/item/gun_parts/accessory/horn,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bEn" = (
@@ -39141,11 +39149,11 @@
 	dir = 4
 	},
 /obj/table/auto,
-/obj/item/gun/modular/fosslong,
-/obj/item/gun/modular/fosslong,
-/obj/item/gun/modular/fosslong,
-/obj/item/gun/modular/fosslong,
-/obj/item/gun/modular/fosslong,
+/obj/item/gun/modular/foss/long,
+/obj/item/gun/modular/foss/long,
+/obj/item/gun/modular/foss/long,
+/obj/item/gun/modular/foss/long,
+/obj/item/gun/modular/foss/long,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bJR" = (
@@ -40615,6 +40623,10 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/table/auto,
+/obj/item/gun_parts/barrel/NT/long,
+/obj/item/gun_parts/barrel/NT/long,
+/obj/item/gun_parts/barrel/juicer/longer,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bNb" = (
@@ -40625,10 +40637,12 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bNc" = (
-/obj/disposalpipe/segment/brig{
-	dir = 4
-	},
-/obj/machinery/manufacturer/uniform,
+/obj/table/auto,
+/obj/item/gun_parts/barrel/juicer/longer,
+/obj/item/gun_parts/barrel/foss/long,
+/obj/item/gun_parts/barrel/juicer,
+/obj/item/gun_parts/barrel/italian,
+/obj/item/gun_parts/barrel/foss,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bNf" = (
@@ -40639,6 +40653,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
+/obj/table/auto,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bNg" = (
@@ -43115,22 +43130,12 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bSQ" = (
-/obj/disposalpipe/trunk{
-	dir = 1
-	},
-/obj/machinery/disposal,
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
+/obj/table/auto,
+/obj/item/gun_parts/magazine/juicer,
+/obj/item/gun_parts/magazine/juicer,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bSU" = (
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
 /obj/storage/crate/freezer,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
@@ -45169,6 +45174,7 @@
 /area/station/crew_quarters/pool)
 "bXF" = (
 /obj/disposalpipe/segment/produce,
+/obj/machinery/light/small/floor,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bXG" = (
@@ -59027,6 +59033,26 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/south,
 /area/station/bridge/captain)
+"nNW" = (
+/obj/disposalpipe/segment/brig{
+	dir = 4
+	},
+/obj/table/auto,
+/obj/item/gun/modular/NT/long,
+/obj/item/gun/modular/NT/long,
+/turf/simulated/floor,
+/area/station/crew_quarters/pool)
+"nUm" = (
+/obj/disposalpipe/segment/brig{
+	dir = 4
+	},
+/obj/disposalpipe/segment/brig,
+/obj/table/auto,
+/obj/item/gun/modular/juicer/long,
+/obj/item/gun/modular/juicer/long,
+/obj/item/gun/modular/juicer/long,
+/turf/simulated/floor,
+/area/station/crew_quarters/pool)
 "nXq" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -59192,6 +59218,13 @@
 /obj/decal/wreath,
 /turf/simulated/floor/plating,
 /area/station/storage/tools)
+"rPi" = (
+/obj/disposalpipe/segment/brig{
+	dir = 4
+	},
+/obj/table/auto,
+/turf/simulated/floor,
+/area/station/crew_quarters/pool)
 "rUs" = (
 /obj/decal/poster/wallsign/framed_award/hos_medal,
 /obj/disposalpipe/segment/transport{
@@ -59260,6 +59293,12 @@
 	},
 /turf/simulated/floor/snow,
 /area/station/hallway/primary/central)
+"uVZ" = (
+/obj/table/auto,
+/obj/item/gun_parts/magazine/juicer/massive,
+/obj/item/gun_parts/magazine/juicer/massive,
+/turf/simulated/floor,
+/area/station/crew_quarters/pool)
 "vxI" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -103291,7 +103330,7 @@ bBm
 bBr
 bGS
 bJJ
-bNb
+nUm
 bSP
 bXC
 jfw
@@ -103593,7 +103632,7 @@ bBm
 bBm
 bGT
 bJK
-bPN
+nNW
 bPQ
 bSP
 jfw
@@ -103897,7 +103936,7 @@ bGU
 bJL
 bNa
 aKy
-bSQ
+jfw
 jfw
 jfw
 aPv
@@ -104496,10 +104535,10 @@ btH
 bvX
 byC
 bBm
-bEm
+bNc
 bGX
 jfw
-bNc
+bPN
 bPN
 jfw
 jfw
@@ -104798,7 +104837,7 @@ btF
 bvT
 byA
 bBm
-bEm
+bSQ
 bGX
 jfw
 aJh
@@ -105402,7 +105441,7 @@ btI
 bvZ
 byA
 bBm
-bEm
+uVZ
 bGX
 jfw
 bPN
@@ -105708,7 +105747,7 @@ bEn
 bGY
 bJR
 bNf
-bPN
+rPi
 bSU
 bVt
 bXF
