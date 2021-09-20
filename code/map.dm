@@ -23,7 +23,7 @@ var/global/list/mapNames = list(
 	"Destiny" = 		list("id" = "DESTINY", 		"settings" = "destiny", 		"playerPickable" = 1,		"MaxPlayersAllowed" = 80),
 	"Donut 2" = 		list("id" = "DONUT2", 		"settings" = "donut2",			"playerPickable" = ASS_JAM),
 	"Donut 3" = 		list("id" = "DONUT3", 		"settings" = "donut3",			"playerPickable" = 1, 		"MinPlayersAllowed" = 40),
-	//"Horizon" = 		list("id" = "HORIZON", 		"settings" = "horizon", 		"playerPickable" = 0),
+	"Horizon" = 		list("id" = "HORIZON", 		"settings" = "horizon", 		"playerPickable" = 0),
 	//"Mushroom" =		list("id" = "MUSHROOM", 	"settings" = "mushroom",		"playerPickable" = ASS_JAM),
 	//"Trunkmap" = 		list("id" = "TRUNKMAP", 	"settings" = "trunkmap",		"playerPickable" = ASS_JAM),
 	"Oshan Laboratory"= list("id" = "OSHAN", 		"settings" = "oshan", 			"playerPickable" = 1),

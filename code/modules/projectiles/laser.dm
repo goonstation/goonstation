@@ -83,6 +83,49 @@ toxic - poisons
 		P4.launch()
 		P.die()
 
+/datum/projectile/laser/flashbulb
+	name = "open-source laser"
+	icon_state = "u_laser"
+	power = 20
+	cost = 50
+	dissipation_delay = 5
+	brightness = 0
+	sname = "open-source laser"
+	shot_sound = 'sound/weapons/Laser.ogg'
+	color_red = 0
+	color_green = 1
+	color_blue = 0
+
+/datum/projectile/laser/flashbulb/two
+	power = 40
+	color_red = 1
+	color_green = 1
+	cost = 75
+
+/datum/projectile/laser/flashbulb/three
+	power = 60
+	color_red = 1
+	color_green = 0
+	cost = 100
+
+	on_hit(atom/hit)
+		if (isliving(hit))
+			var/mob/living/L = hit
+			L.changeStatus("slowed", 1 SECOND)
+			L.change_misstep_chance(1)
+			L.emote("twitch_v")
+		return
+
+/datum/projectile/laser/flashbulb/four
+	power = 80
+	color_red = 1
+	color_green = 0
+	cost = 200
+
+	on_hit(atom/hit)
+		fireflash(get_turf(hit), 0)
+		hit.ex_act(3)
+
 /datum/projectile/laser/heavy
 	name = "heavy laser"
 	icon_state = "u_laser"
