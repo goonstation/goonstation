@@ -1,5 +1,9 @@
 
 (t)sun sep 19 21
+(u)Ikea
+(p)6052
+(e)|
+(*)Quartermasters now get quartermaster training, this has the exact same effects of smooth talking trait.
 (u)BatElite
 (p)6014
 (e)|
