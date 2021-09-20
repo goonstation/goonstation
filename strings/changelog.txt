@@ -1,5 +1,10 @@
 
 (t)mon sep 20 21
+(u)Carsontheking
+(p)5813
+(e)🎨|sprites
+(*)Salted oats and Pepper corn added!
+(+)Adds in a new crop mutation for oats, salted oats, which contain salt. Also adds in a new crop mutation for corn, pepper corn, which contains pepper. They can also be processed into bags of salt, and bags of pepper respectively, both of which which serve no purpose currently.
 (u)pali
 (p)6056
 (e)🆕📄|feature, tgui
