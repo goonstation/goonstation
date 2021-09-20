@@ -1,5 +1,7 @@
 
 (t)mon sep 20 21
+(u)pali
+(*)Vomit now contains DNA of the person who vomited it.
 (u)RSG250
 (p)5984
 (e)🆕|feature
