@@ -12,14 +12,14 @@
 	failure_disease = /datum/ailment/disease/respiratory_failure
 	var/temp_tolerance = T0C+66
 
-	var/safe_oxygen_min = 17 // Minimum safe partial pressure of O2, in kPa
-	var/safe_co2_max = 9 // Yes it's an arbitrary value who cares?
-	var/safe_toxins_max = 0.4
-	var/SA_para_min = 1
-	var/SA_sleep_min = 5
-	var/fart_smell_min = 0.69 // don't ask ~warc
-	var/fart_vomit_min = 6.9
-	var/fart_choke_min = 16.9
+	var/safe_oxygen_min = 17 / LUNG_COUNT // Minimum safe partial pressure of O2, in kPa
+	var/safe_co2_max = 9 / LUNG_COUNT // Yes it's an arbitrary value who cares?
+	var/safe_toxins_max = 0.4 / LUNG_COUNT
+	var/SA_para_min = 1 / LUNG_COUNT
+	var/SA_sleep_min = 5 / LUNG_COUNT
+	var/fart_smell_min = 0.69 / LUNG_COUNT // don't ask ~warc
+	var/fart_vomit_min = 6.9 / LUNG_COUNT
+	var/fart_choke_min = 16.9 / LUNG_COUNT
 	var/rad_immune = FALSE
 	var/breaths_oxygen = TRUE
 
@@ -58,7 +58,7 @@
 	// 			donor.contract_disease(failure_disease,null,null,1)
 
 	proc/breathe(datum/gas_mixture/breath, underwater, mult, datum/organ/lung/status/update)
-		var/breath_pressure = (TOTAL_MOLES(breath)*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
+		var/breath_pressure = (TOTAL_MOLES(breath)*R_IDEAL_GAS_EQUATION*breath.temperature)/breath.volume
 		//Partial pressure of the O2 in our breath
 		var/O2_pp = (breath.oxygen/TOTAL_MOLES(breath))*breath_pressure
 		// Same, but for the toxins

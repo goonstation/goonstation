@@ -130,7 +130,7 @@
 			if (prob(25) && owner.losebreath > 0)
 				boutput(owner, "<span class='alert'>You are drowning!</span>")
 
-		var/datum/air_group/breath = null
+		var/datum/gas_mixture/breath = null
 		// HACK NEED CHANGING LATER
 		//if (src.oxymax == 0 || (breathtimer > 15))
 		if (breathtimer > 15)
@@ -173,6 +173,7 @@
 						var/obj/location_as_object = owner.loc
 						location_as_object.handle_internal_lifeform(owner, 0)
 
+		breath.volume = BREATH_VOLUME
 		handle_breath(breath, underwater, mult = mult)
 
 		if (breath)
@@ -235,8 +236,16 @@
 
 		var/datum/organ/lung/status/status_updates = new
 
-		human_owner?.organHolder?.left_lung.breathe(breath, underwater, mult, status_updates)
-		human_owner?.organHolder?.right_lung.breathe(breath, underwater, mult, status_updates)
+		var/datum/gas_mixture/left_breath = breath.remove_ratio(0.5)
+		var/datum/gas_mixture/right_breath = breath.remove_ratio(1.0) // the rest
+		left_breath.volume = breath.volume / 2
+		right_breath.volume = breath.volume / 2
+
+		human_owner?.organHolder?.left_lung.breathe(left_breath, underwater, mult, status_updates)
+		human_owner?.organHolder?.right_lung.breathe(right_breath, underwater, mult, status_updates)
+
+		breath.merge(left_breath)
+		breath.merge(right_breath)
 
 		update_oxy(status_updates.show_oxy_indicator)
 		update_toxy(status_updates.show_tox_indicator)
