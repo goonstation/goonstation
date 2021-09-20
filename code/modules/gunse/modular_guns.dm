@@ -69,18 +69,23 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 		if(built)
 			boutput(user,"<span class='notice'><b>You cannot place parts onto an assembled gun.</b></span>")
 			return
-		boutput(user,"<span class='notice'><b>You loosely place [I] onto [src].</b></span>")
-		if (istype(I, /obj/item/gun_parts/barrel/))
-			barrel = I
-		if (istype(I, /obj/item/gun_parts/stock/))
-			stock = I
-		if (istype(I, /obj/item/gun_parts/magazine/))
-			magazine = I
-		if (istype(I, /obj/item/gun_parts/accessory/))
-			accessory = I
-		user.u_equip(I)
-		I.dropped(user)
-		I.set_loc(src)
+		var/obj/item/gun_parts/part = I
+		if(src.gun_DRM & part.part_DRM)
+			boutput(user,"<span class='notice'><b>You loosely place [I] onto [src].</b></span>")
+			if (istype(I, /obj/item/gun_parts/barrel/))
+				barrel = I
+			if (istype(I, /obj/item/gun_parts/stock/))
+				stock = I
+			if (istype(I, /obj/item/gun_parts/magazine/))
+				magazine = I
+			if (istype(I, /obj/item/gun_parts/accessory/))
+				accessory = I
+			user.u_equip(I)
+			I.dropped(user)
+			I.set_loc(src)
+		else
+			boutput(user,"<span class='notice'><b>The [src]'s DRM prevents you from attatching [I].</b></span>")
+			playsound(src.loc, "sound/machines/twobeep.ogg", 55, 1)
 	else
 		..()
 
@@ -291,10 +296,8 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 		parts += accessory
 
 	for(var/obj/item/gun_parts/part as anything in parts)
-		if(src.gun_DRM & part.part_DRM)
-			part.add_part_to_gun(src)
-		else
-			part.set_loc(get_turf(src))
+		part.add_part_to_gun(src)
+
 
 	built = 1
 
@@ -396,7 +399,7 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 
 	New()
 		..()
-		barrel = new /obj/item/gun_parts/barrel/juicer(src)
+		barrel = new /obj/item/gun_parts/barrel/juicer/longer(src)
 		stock = new /obj/item/gun_parts/stock/NT/shoulder(src)
 		build_gun()
 
