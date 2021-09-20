@@ -48721,7 +48721,6 @@
 	},
 /area/station/hangar/sec)
 "rMU" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/cable{
 	icon_state = "4-8"
 	},
