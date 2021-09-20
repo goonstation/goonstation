@@ -77019,8 +77019,7 @@
 /obj/item/shaker/mustard{
 	name = "moostard bottle";
 	pixel_x = -2;
-	pixel_y = 5;
-	step_x = 0
+	pixel_y = 5
 	},
 /obj/item/shaker/pepper{
 	pixel_x = 6;
@@ -77769,10 +77768,10 @@
 "nxw" = (
 /obj/table/reinforced/bar/auto,
 /obj/deskclutter{
-	step_y = 2
+	pixel_y = 2
 	},
 /obj/item/reagent_containers/food/drinks/bowl{
-	step_y = 8
+	pixel_y = 8
 	},
 /obj/machinery/light{
 	dir = 8
@@ -77871,8 +77870,7 @@
 	initial_reagents = "milk";
 	name = "Moo Jack Daniel's";
 	pixel_x = 6;
-	pixel_y = 12;
-	step_y = 0
+	pixel_y = 12
 	},
 /obj/item/reagent_containers/food/drinks/moonshine{
 	desc = "A jug of milk.";
@@ -79243,7 +79241,7 @@
 "qZh" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/plate{
-	step_y = 5
+	pixel_y = 5
 	},
 /obj/item/plant/herb/grass,
 /obj/item/plant/herb/grass,
