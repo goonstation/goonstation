@@ -177,6 +177,12 @@
 	desc = "A backpack that looks like a green turtleshell. Cowabunga!"
 	icon_state = "bp_turtle_green"
 
+/obj/item/storage/backpack/bpangel
+	name = "angel backpack"
+	desc = "This backpack gives you wings (that are entirely non-functional)!"
+	icon_state = "bp_angel"
+	item_state = "bp_angel"
+
 /obj/item/storage/backpack/satchel
 	name = "satchel"
 	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder."
