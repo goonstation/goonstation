@@ -1,5 +1,9 @@
 
 (t)mon sep 20 21
+(u)Sord
+(p)5890
+(e)🗺|mapping
+(+)Destiny now has a customs booth near the bridge, as well as a new clothing shop replacing some of the old crew quarters!
 (u)eX.n0x & Nefarious6th
 (p)5758
 (e)🎨|sprites
