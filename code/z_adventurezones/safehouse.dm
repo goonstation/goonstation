@@ -114,6 +114,14 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	mode = 1
 	initial_reagents = "blood"
 
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		..()
+
 /obj/machinery/handscanner/bio_handscanner
 	name = "Hand Scanner"
 	desc = "A biometric hand scanner."
@@ -123,20 +131,32 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	var/allowed_bioHolders = null
 	var/cooldown = FALSE
 
-/obj/machinery/handscanner/bio_handscanner/attackby(obj/item/W, mob/user as mob) //We don't want the parents proc here.
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		..()
+
+/obj/machinery/handscanner/bio_handscanner/attackby(obj/item/W, mob/user as mob) //We don't want the parent's proc here.
 	if(istype(W, /obj/item/device/detective_scanner))
+		return
+	if(cooldown == TRUE)
 		return
 	if(istype(W, /obj/item/parts/human_parts/arm/))
 		boutput(user, "<span class='alert'>ERROR: no pulse detected.</span>")
 	if(istype(W, /obj/item/card/emag))
+		boutput(user, "You short out the hand scanner's circuits. So much for cutting edge.")
 		for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
-			boutput(user, "You short out the hand scanner's circuits. So much for cutting edge.")
 			if(M.id == src.id)
 				if(M.density)
 					M.open()
 				else
 					M.close()
-	return src.Attackhand(user)
+	cooldown = TRUE
+	sleep(1 SECOND) //To reduce chat spam in case of multi-click.
+	cooldown = FALSE
 
 /obj/machinery/handscanner/bio_handscanner/attack_hand(mob/user as mob) //Nor here.
 	src.add_fingerprint(user)
@@ -155,9 +175,51 @@ obj/item/reagent_containers/iv_drip/dead_exec
 						M.close()
 		else
 			boutput(user, "<span class='alert'>Invalid biometric profile. Access denied.</span>")
-		cooldown = TRUE
-		sleep(1 SECOND) //To reduce chat spam in case of multi-click.
-		cooldown = FALSE
+	cooldown = TRUE
+	sleep(1 SECOND) //To reduce chat spam in case of multi-click.
+	cooldown = FALSE
+
+/obj/decal/fakeobjects/safehouse/cloner
+	name = "lazarus H-16 cloning pod"
+	desc = "An advanced cloning pod, designed to be operated automatically through packets. What a great idea!"
+	icon = 'icons/obj/adventurezones/safehouse.dmi'
+	icon_state = "cloner1"
+	anchored = 1
+	density = 1
+	layer = 3.1
+	var/datum/light/light
+
+	New()
+		..()
+
+		light = new /datum/light/point
+		light.set_brightness(0.5)
+		light.set_color(0.1,1.0,0.1)
+		light.attach(src)
+		light.enable()
+
+		var/mob/living/carbon/human/dead_exec/M //Setting up the puzzle
+		M = new /mob/living/carbon/human/dead_exec(src.loc) //aka Jean
+		var/datum/bioHolder/D = new/datum/bioHolder(null)
+		D.CopyOther(M.bioHolder)
+
+		for_by_tcl(O, /obj/machinery/handscanner/bio_handscanner)
+			O.allowed_bioHolders = D.Uid //Copy the Uid only, copying and comparing against all bioHolder data is too prone to error.
+
+		for_by_tcl(O, /obj/item/reagent_containers/iv_drip/dead_exec)
+			if(!O.reagents.has_reagent("blood"))
+				return
+			var/datum/reagent/blood/B = O.reagents.reagent_list["blood"]
+			B.data = D //Give the blood Jean's bioHolder info.
+
+		SPAWN_DBG(5 SECONDS) //Jean's just here to set up the puzzle, we don't want him sticking around.
+		qdel(M)
+
+	attack_hand(mob/user as mob)
+		boutput(user, "An advanced cloning pod, designed to be operated automatically through packets. What a great idea!<br>Currently idle.<br><span class='alert'>Biomatter reserves are depleted.</span>")
+		playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
+		src.add_fingerprint(user)
+		return
 
 // CLONESCAN HEALTH IMPLANT
 
@@ -173,10 +235,10 @@ obj/item/reagent_containers/iv_drip/dead_exec
 		clonescanned = 0
 
 	do_process(var/mult = 1) //On do_process so we don't have to worry if the user is dead / in ghostVR.
-		if (!ishuman(src.owner))
+		if(!ishuman(src.owner))
 			return
 		var/mob/living/carbon/human/H = src.owner
-		if (clonescanned < 11)
+		if(clonescanned < 11)
 			switch(clonescanned++)
 				if(1)
 					boutput(H,"Life signs detected. Initiating scanning procedure.")
@@ -185,24 +247,27 @@ obj/item/reagent_containers/iv_drip/dead_exec
 				if(7)
 					boutput(H,"ERROR: Remote server unavailable. Commencing emergency transmisssion protocols. Broadcasting data on all known frequencies.")
 				if(10)
-					for(var/obj/machinery/computer/cloning/C in world)
+					for_by_tcl(C, /obj/machinery/computer/cloning)
 						C.scan_mob(H)
-						if(C.find_record(H.ckey))
+						var/datum/data/record/R = new /datum/data/record()
+						R = C.find_record(H.ckey)
+						if(!isnull(R))
 							boutput(H,"Link to cloning computer establised succesfully.")
 							playsound(src.loc, 'sound/machines/ping.ogg', 50, 1)
-							if(prob(20)) // Too uncommon to weaponise effectively but common enough to deter general usage.
-								H.traitHolder.addTrait("puritan") // Did the player learn nothing from the prefab??
+							if(prob(20) && !H.traitHolder.hasTrait("puritan")) // Too uncommon to weaponise but common enough to deter general usage.
+								R["fields"]["traits"] += "puritan" // Did the player learn nothing from the prefab??
 
 	on_death()
-		if (!ishuman(src.owner))
+		if(!ishuman(src.owner))
 			return
-		for(var/obj/machinery/computer/cloning/C in world)
+		for_by_tcl(C, /obj/machinery/computer/cloning)
 			var/mob/living/carbon/human/H = src.owner
 			C.scan_mob(H)
-			if(C.find_record(H.ckey))
+			var/R = C.find_record(H.ckey)
+			if(R)
 				playsound(src.loc, 'sound/machines/ping.ogg', 50, 1)
-				if(prob(20)) // Too uncommon to weaponise effectively but common enough to deter general usage.
-					H.traitHolder.addTrait("puritan") // Did the player learn nothing from the prefab??
+				if(prob(20) && !H.traitHolder.hasTrait("puritan")) // Too uncommon to weaponise but common enough to deter general usage.
+					R["fields"]["traits"] += "puritan" // Did the player learn nothing from the prefab??
 
 //DECORATIVE OBJECTS
 
@@ -249,7 +314,6 @@ obj/item/reagent_containers/iv_drip/dead_exec
 
 	New()
 		..()
-
 		var/obj/item/spacecash/random/tourist/S1 = unpool(/obj/item/spacecash/random/tourist)
 		S1.setup(src)
 		var/obj/item/spacecash/random/tourist/S2 = unpool(/obj/item/spacecash/random/tourist)
@@ -300,7 +364,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	density = 1
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/record))
+		if(istype(W, /obj/item/record))
 			src.visible_message("<span class='notice'><b>[user] attempts to place the 12 inch record on the 7 inch turntable, but it obviously doesn't fit. How embarassing!</b></span>")
 		return
 
@@ -339,48 +403,6 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	icon_state = "biotube"
 	anchored = 1
 	layer = 2.8
-
-/obj/decal/fakeobjects/safehouse/cloner
-	name = "lazarus H-16 cloning pod"
-	desc = "An advanced cloning pod, designed to be operated automatically through packets. What a great idea!"
-	icon = 'icons/obj/adventurezones/safehouse.dmi'
-	icon_state = "cloner1"
-	anchored = 1
-	density = 1
-	layer = 3.1
-	var/datum/light/light
-
-	New()
-		..()
-
-		light = new /datum/light/point
-		light.set_brightness(0.5)
-		light.set_color(0.1,1.0,0.1)
-		light.attach(src)
-		light.enable()
-
-		var/mob/living/carbon/human/dead_exec/M //Setting up the puzzle
-		M = new /mob/living/carbon/human/dead_exec(src.loc)
-		var/datum/bioHolder/D = new/datum/bioHolder(null)
-		D.CopyOther(M.bioHolder)
-
-		for(var/obj/machinery/handscanner/bio_handscanner/O in world)
-			O.allowed_bioHolders = D.Uid //Copy the Uid only, copying and comparing against all bioHolder data is too prone to error.
-
-		for(var/obj/item/reagent_containers/iv_drip/dead_exec/O in world)
-			if(!O.reagents.has_reagent("blood"))
-				return
-			var/datum/reagent/blood/B = O.reagents.reagent_list["blood"]
-			B.data = D //Give the blood Jean's bioHolder info.
-
-		SPAWN_DBG(5 SECONDS)
-		qdel(M)
-
-	attack_hand(mob/user as mob)
-		boutput(user, "An advanced cloning pod, designed to be operated automatically through packets. What a great idea!<br>Currently idle.<br><span class='alert'>Biomatter reserves are depleted.</span>")
-		playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
-		src.add_fingerprint(user)
-		return
 
 /obj/decal/fakeobjects/safehouse/conduit
 	name = "electrical conduit"
