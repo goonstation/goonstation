@@ -1,5 +1,10 @@
 
 (t)mon sep 20 21
+(u)zjdtmkhzt
+(p)5962
+(e)⚖|balance
+(*)Spliced plants should now properly inherit the special behavior of their dominant parent. (For instance, rafflesia.)
+(*)The rafflesia can now smoke all of its spliced reagents, instead of just miasma.
 (u)Vaskritaya
 (p)6055
 (e)🆕|feature
