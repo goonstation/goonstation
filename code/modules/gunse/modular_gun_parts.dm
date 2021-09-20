@@ -89,6 +89,9 @@ ABSTRACT_TYPE(/obj/item/gun_parts/stock)
 		if(flashbulb_only)
 			my_gun.flashbulb_only = src.flashbulb_only
 			my_gun.max_crank_level = src.max_crank_level
+		else
+			my_gun.flashbulb_only = 0
+			my_gun.max_crank_level = 0
 
 	remove_part_from_gun()
 		if(!my_gun)
@@ -101,6 +104,8 @@ ABSTRACT_TYPE(/obj/item/gun_parts/stock)
 		my_gun.two_handed = initial(my_gun.two_handed)
 		my_gun.can_dual_wield = initial(my_gun.can_dual_wield)
 		my_gun.jam_frequency_reload = initial(my_gun.jam_frequency_reload)
+		my_gun.flashbulb_only = 0
+		my_gun.max_crank_level = 0
 		if(my_gun.ammo_list.len)
 			var/total = ((my_gun.ammo_list.len > src.max_ammo_capacity) ? max_ammo_capacity : 0)
 			src.ammo_list = my_gun.ammo_list.Copy(1,(total))
@@ -367,6 +372,12 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	part_DRM = GUN_JUICE | GUN_ITALIAN
 	color = "#99FF99"
 
+/obj/item/gun_parts/barrel/juicer/longer
+	name = "\improper SNIPA Barrel"
+	desc = "A cheaply-built extended rifled barrel. Not good."
+	spread_angle = -17 // accurate??
+	jam_frequency_fire = 15 //but very!!!!!!! poorly built
+
 /obj/item/gun_parts/barrel/soviet
 	name = "Сборка объектива"
 	desc = "стопка линз для фокусировки вашего пистолета"
@@ -398,13 +409,13 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	can_dual_wield = 0
 	max_ammo_capacity = 1 // additional shot in the butt
 	jam_frequency_reload = 2 // a little more jammy
-	part_DRM = GUN_NANO | GUN_JUICE
+	part_DRM = GUN_NANO | GUN_JUICE | GUN_ITALIAN
 
 /obj/item/gun_parts/stock/foss
 	name = "\improper FOSS laser stock"
 	desc = "An open-sourced laser dynamo, with a multiple-position winding spring."
 	spread_angle = -2 // basic stabilisation
-	part_DRM = GUN_FOSS
+	part_DRM = GUN_FOSS | GUN_SOVIET
 	flashbulb_only = 1
 	max_crank_level = 2
 	color = "#5555FF"

@@ -35,7 +35,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	var/tmp/timeDilationUpperBound = OVERLOADED_WORLD_TICKLAG
 	var/tmp/highMapCpuCount = 0 // how many times in a row has the map_cpu been high
 
-	var/list/lobby_music = list('sound/radio_station/lobby/opus_number_null.ogg','sound/radio_station/lobby/up_for_me.ogg','sound/radio_station/lobby/where_are_we.ogg')
+	var/list/lobby_music = list('sound/radio_station/lobby/opus_number_null.ogg','sound/radio_station/lobby/up_for_me.ogg','sound/radio_station/lobby/where_are_we.ogg','sound/radio_station/lobby/tane_lobby.ogg')
 
 /datum/controller/gameticker/proc/pregame()
 
