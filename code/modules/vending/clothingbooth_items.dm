@@ -16,6 +16,7 @@
 
 
 //Accessories
+
 ABSTRACT_TYPE(/datum/clothingbooth_item/accessory)
 /datum/clothingbooth_item/accessory
 	name = "accessory"
@@ -44,6 +45,31 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/accessory)
 	name = "Suspenders"
 	path = /obj/item/clothing/suit/suspenders
 	slot = SLOT_WEAR_SUIT
+
+ABSTRACT_TYPE(/datum/clothingbooth_item/accessory/goggles)
+/datum/clothingbooth_item/accessory/goggles
+	name = "Costume Goggles"
+	slot = SLOT_HEAD
+
+	yellow
+		name = "Yellow Costume Goggles"
+		path = /obj/item/clothing/head/goggles/yellow
+
+	red
+		name = "Red Costume Goggles"
+		path = /obj/item/clothing/head/goggles/red
+
+	purple
+		name = "Purple Costume Goggles"
+		path = /obj/item/clothing/head/goggles/purple
+
+	green
+		name = "Green Costume Goggles"
+		path = /obj/item/clothing/head/goggles/green
+
+	blue
+		name = "Blue Costume Goggles"
+		path = /obj/item/clothing/head/goggles/blue
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/accessory/hbow)
 /datum/clothingbooth_item/accessory/hbow
@@ -109,6 +135,40 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/accessory/hbow)
 	yellowpolkadot
 		name = "Yellow Polka-Dot Hair Bow"
 		path = /obj/item/clothing/head/hairbow/yellowpolkadot
+
+ABSTRACT_TYPE(/datum/clothingbooth_item/accessory/hairclips)
+/datum/clothingbooth_item/accessory/hairclips
+	name = "Hairclips"
+	slot = SLOT_HEAD
+	cost = PAY_TRADESMAN/5
+
+	red
+		name = "Red Hairclip"
+		path = /obj/item/clothing/head/sailormoon
+
+	butterflyblu
+		name = "Blue Butterfly Hairclip"
+		path = /obj/item/clothing/head/barrette/butterflyblu
+
+	butterflyorg
+		name = "Orange Butterfly Hairclip"
+		path = /obj/item/clothing/head/barrette/butterflyorg
+
+	barrette_blue
+		name = "Blue Hairclips"
+		path = /obj/item/clothing/head/barrette/blue
+
+	barrette_green
+		name = "Green Hairclips"
+		path = /obj/item/clothing/head/barrette/green
+
+	barrette_pink
+		name = "Pink Hairclips"
+		path = /obj/item/clothing/head/barrette/pink
+
+	barrette_gold
+		name = "Gold Hairclips"
+		path = /obj/item/clothing/head/barrette/gold
 
 //Casual
 
@@ -183,6 +243,50 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/casual)
 	name = "Band Shirt"
 	path = /obj/item/clothing/under/misc/bandshirt
 
+/datum/clothingbooth_item/casual/flannel
+	name = "Flannel"
+	path = /obj/item/clothing/under/misc/flannel
+
+/datum/clothingbooth_item/casual/tech_shirt
+	name = "Tech Shirt"
+	path = /obj/item/clothing/under/misc/tech_shirt
+
+/datum/clothingbooth_item/casual/bubble_shirt
+	name = "Bubble Shirt"
+	path = /obj/item/clothing/under/misc/bubble
+
+/datum/clothingbooth_item/casual/spade
+	name = "Spade Shirt"
+	path = /obj/item/clothing/under/misc/spade
+
+/datum/clothingbooth_item/casual/club
+	name = "Club Shirt"
+	path = /obj/item/clothing/under/misc/club
+
+/datum/clothingbooth_item/casual/heart
+	name = "Heart Shirt"
+	path = /obj/item/clothing/under/misc/heart
+
+/datum/clothingbooth_item/casual/diamond
+	name = "Diamond Shirt"
+	path = /obj/item/clothing/under/misc/diamond
+
+/datum/clothingbooth_item/casual/collar_pink
+	name = "Pink Collar Shirt"
+	path = /obj/item/clothing/under/misc/collar_pink
+
+/datum/clothingbooth_item/casual/flame_purple
+	name = "Purple Flame Shirt"
+	path = /obj/item/clothing/under/misc/flame_purple
+
+/datum/clothingbooth_item/casual/flame_rainbow
+	name = "Rainbow Flame Shirt"
+	path = /obj/item/clothing/under/misc/flame_rainbow
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/casual/fish
+	name = "Fish Shirt"
+	path = /obj/item/clothing/under/misc/fish
 
 //Dresses
 
@@ -364,6 +468,11 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/formal)
 	cost = PAY_IMPORTANT
 	hidden = 1
 
+/datum/clothingbooth_item/formal/fancy_vest
+	name = "Fancy Vest"
+	path = /obj/item/clothing/under/misc/fancy_vest
+	cost = PAY_DOCTORATE/3
+
 //Outerwear
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/outerwear)
@@ -481,6 +590,10 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/outerwear)
 /datum/clothingbooth_item/outerwear/merchantjacket
 	name = "Tacky Merchants Jacket"
 	path = /obj/item/clothing/suit/merchant
+
+/datum/clothingbooth_item/outerwear/jean_jacket
+	name = "Jean Jackett"
+	path = /obj/item/clothing/suit/jean_jacket
 
 /datum/clothingbooth_item/outerwear/tuxedojacket
 	name = "Tuxedo Jacket"
@@ -681,33 +794,13 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head)
 	name = "Leaf Hairclip"
 	path = /obj/item/clothing/head/headsprout
 
-/datum/clothingbooth_item/head/redhairclips
-	name = "Red Hairclip"
-	path = /obj/item/clothing/head/sailormoon
+/datum/clothingbooth_item/head/pomhat_red
+	name = "Red Pomhat"
+	path = /obj/item/clothing/head/pomhat_red
 
-/datum/clothingbooth_item/head/butterflyclip_bl
-	name = "Blue Butterfly Hairclip"
-	path = /obj/item/clothing/head/barrette/butterflyblu
-
-/datum/clothingbooth_item/head/butterflyclip_o
-	name = "Orange Butterfly Hairclip"
-	path = /obj/item/clothing/head/barrette/butterflyorg
-
-/datum/clothingbooth_item/head/barrette_blue
-	name = "Blue Hairclips"
-	path = /obj/item/clothing/head/barrette/blue
-
-/datum/clothingbooth_item/head/barrette_green
-	name = "Green Hairclips"
-	path = /obj/item/clothing/head/barrette/green
-
-/datum/clothingbooth_item/head/barrette_pink
-	name = "Pink Hairclips"
-	path = /obj/item/clothing/head/barrette/pink
-
-/datum/clothingbooth_item/head/barrette_gold
-	name = "Gold Hairclips"
-	path = /obj/item/clothing/head/barrette/gold
+/datum/clothingbooth_item/head/pomhat_blue
+	name = "Blue Pomhat"
+	path = /obj/item/clothing/head/pomhat_blue
 
 /datum/clothingbooth_item/head/ushanka
 	name = "Ushanka"
@@ -728,6 +821,78 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head)
 	name = "Hero Hat"
 	path = /obj/item/clothing/head/link
 	cost = PAY_TRADESMAN
+
+ABSTRACT_TYPE(/datum/clothingbooth_item/head/frenchberet)
+/datum/clothingbooth_item/head/frenchberet
+	name = "French Beret"
+	slot = SLOT_HEAD
+	cost = PAY_TRADESMAN/3
+
+	white
+		name = "White French Beret"
+		path = /obj/item/clothing/head/frenchberet/white
+
+	purple
+		name = "Purple French Beret"
+		path = /obj/item/clothing/head/frenchberet/purple
+
+	blue
+		name = "Blue French Beret"
+		path = /obj/item/clothing/head/frenchberet/blue
+
+	pink
+		name = "Pink French Beret"
+		path = /obj/item/clothing/head/frenchberet/pink
+
+	mint
+		name = "Mint French Beret"
+		path = /obj/item/clothing/head/frenchberet/mint
+
+	yellow
+		name = "Yellow French Beret"
+		path = /obj/item/clothing/head/frenchberet/yellow
+
+	strawberry
+		name = "Strawberry Beret"
+		path = /obj/item/clothing/head/frenchberet/strawberry
+
+ABSTRACT_TYPE(/datum/clothingbooth_item/head/basecap)
+/datum/clothingbooth_item/head/basecap
+	name = "Baseball Cap"
+	slot = SLOT_HEAD
+	cost = PAY_TRADESMAN/5
+
+	black
+		name = "Black Baseball Cap"
+		path = /obj/item/clothing/head/basecap/black
+
+	purple
+		name = "Purple Baseball Cap"
+		path = /obj/item/clothing/head/basecap/purple
+
+	red
+		name = "Red Baseball Cap"
+		path = /obj/item/clothing/head/basecap/red
+
+	yellow
+		name = "Yellow Baseball Cap"
+		path = /obj/item/clothing/head/basecap/yellow
+
+	green
+		name = "Green Baseball Cap"
+		path = /obj/item/clothing/head/basecap/green
+
+	blue
+		name = "Blue Baseball Cap"
+		path = /obj/item/clothing/head/basecap/blue
+
+	white
+		name = "White Baseball Cap"
+		path = /obj/item/clothing/head/basecap/white
+
+	pink
+		name = "Pink Baseball Cap"
+		path = /obj/item/clothing/head/basecap/pink
 
 //Sci-Fi
 
@@ -936,6 +1101,18 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/costume)
 	path = /obj/item/clothing/head/waitresshat
 	slot = SLOT_HEAD
 	cost = PAY_TRADESMAN/5
+
+/datum/clothingbooth_item/costume/pirate_blk
+	name = "Black Pirate Hat"
+	path = /obj/item/clothing/head/pirate_blk
+	slot = SLOT_HEAD
+	cost = PAY_TRADESMAN/2
+
+/datum/clothingbooth_item/costume/pirate_brn
+	name = "Brown Pirate Hat"
+	path = /obj/item/clothing/head/pirate_brn
+	slot = SLOT_HEAD
+	cost = PAY_TRADESMAN/2
 
 /datum/clothingbooth_item/costume/guybrush
 	name = "Wannabe Pirate Costume"

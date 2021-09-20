@@ -311,7 +311,7 @@
 					return TRUE
 
 /obj/machinery/door_timer/attack_ai(mob/user)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/door_timer/attack_hand(mob/user)
 	return src.ui_interact(user)

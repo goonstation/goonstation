@@ -48,7 +48,7 @@ MATERIAL
 			var/obj/item/rods/new_stack = new src.type(user.loc, diff)
 			if(src.material) new_stack.setMaterial(src.material)
 			new_stack.amount = splitnum
-			new_stack.attack_hand(user)
+			new_stack.Attackhand(user)
 			new_stack.add_fingerprint(user)
 		else
 			..(user)
@@ -183,7 +183,7 @@ MATERIAL
 			var/obj/item/sheet/metal/new_stack = new src.type(user.loc, diff)
 			if(src.material) new_stack.setMaterial(src.material)
 			new_stack.amount = splitnum
-			new_stack.attack_hand(user)
+			new_stack.Attackhand(user)
 			new_stack.add_fingerprint(user)
 		else
 			..(user)
@@ -443,7 +443,7 @@ MATERIAL
 			var/obj/item/sheet/r_metal/new_stack = new src.type(user.loc, diff)
 			if(src.material) new_stack.setMaterial(src.material)
 			new_stack.amount = splitnum
-			new_stack.attack_hand(user)
+			new_stack.Attackhand(user)
 			new_stack.add_fingerprint(user)
 		else
 			..(user)

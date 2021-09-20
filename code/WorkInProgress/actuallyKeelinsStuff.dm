@@ -2919,7 +2919,7 @@ Returns:
 				user.changeStatus("paralysis", 2 SECONDS)
 				user.force_laydown_standup()
 			else
-				src.attack_hand(usr)
+				src.Attackhand(usr)
 			return
 		else
 			if(ishuman(hit_atom))
@@ -3069,6 +3069,8 @@ Returns:
 
 	Bumped(atom/movable/AM)
 		if(target && istype(target))
+			if(ismob(AM))
+				logTheThing("combat", AM, null, "entered [src] at [log_loc(src)] and teleported to [log_loc(target)]")
 			AM.set_loc(target)
 		else
 			src.visible_message("<span style='color: red; font-weight: bold'>The portal collapses in on itself!</span>")
@@ -3283,7 +3285,7 @@ Returns:
 
 	MouseDrop_T(atom/target, mob/user)
 		if (get_dist(user,src) < 1 && target == user)
-			src.attack_hand(user)
+			src.Attackhand(user)
 
 	attack_hand(mob/user as mob)
 		if(in_use)

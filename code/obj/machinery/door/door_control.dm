@@ -393,12 +393,12 @@
 	UnsubscribeProcess()
 
 /obj/machinery/door_control/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/door_control/attackby(obj/item/W, mob/user as mob)
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/door_control/attack_hand(mob/user as mob)
 	if((status & (NOPOWER|BROKEN)) || inuse)
@@ -479,13 +479,13 @@
 //////////////Mass Driver Button	///////////////////
 ///////////////////////////////////////////////////////
 /obj/machinery/driver_button/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/driver_button/attackby(obj/item/W, mob/user as mob)
 
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/driver_button/attack_hand(mob/user as mob)
 
@@ -983,12 +983,12 @@
 			return ..()
 
 	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
 	attackby(obj/item/W, mob/user as mob)
 		if(istype(W, /obj/item/device/detective_scanner))
 			return
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_hand(mob/user as mob)
 		boutput(user, "<span class='notice'>The password is \[[src.pass]\]</span>")

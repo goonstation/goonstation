@@ -514,12 +514,15 @@
 	if(health_mon)
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(health_mon)
 		health_mon.dispose()
+		health_mon = null
 	if(health_implant)
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(health_implant)
 		health_implant.dispose()
+		health_implant = null
 	if(arrestIcon)
 		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_image(arrestIcon)
 		arrestIcon.dispose()
+		arrestIcon = null
 
 	src.chest_item = null
 
@@ -711,9 +714,9 @@
 
 	if (src.mind) // I think this is kinda important (Convair880).
 		src.mind.register_death()
-		if (src.mind.special_role == "mindslave")
+		if (src.mind.special_role == ROLE_MINDSLAVE)
 			remove_mindslave_status(src, "mslave", "death")
-		else if (src.mind.special_role == "vampthrall")
+		else if (src.mind.special_role == ROLE_VAMPTHRALL)
 			remove_mindslave_status(src, "vthrall", "death")
 		else if (src.mind.master)
 			remove_mindslave_status(src, "otherslave", "death")
@@ -989,6 +992,8 @@
 	..()
 	var/turf/thrown_from = get_turf(src)
 	src.throw_mode_off()
+	if (HAS_MOB_PROPERTY(src, PROP_CANTTHROW))
+		return
 	if (src.stat)
 		return
 
@@ -1480,13 +1485,12 @@
 		return 1*/
 
 /mob/living/carbon/human/say_quote(var/text)
+	var/sayverb = null
 	if (src.mutantrace)
 		if (src.mutantrace.voice_message)
 			src.voice_name = src.mutantrace.voice_name
 			src.voice_message = src.mutantrace.voice_message
-		if (text == "" || !text)
-			return src.mutantrace.say_verb()
-		return "[src.mutantrace.say_verb()], \"[text]\""
+		sayverb = src.mutantrace.say_verb()
 	else
 		src.voice_name = initial(src.voice_name)
 		src.voice_message = initial(src.voice_message)
@@ -1497,7 +1501,7 @@
 	if (src.oxyloss > 10)
 		special = "gasp_whisper"
 
-	return ..(text,special)
+	return ..(text, special, sayverb)
 
 //Lallander was here
 /mob/living/carbon/human/whisper(message as text, forced=FALSE)
@@ -1541,7 +1545,7 @@
 		return
 
 	logTheThing("diary", src, null, "(WHISPER): [message]", "whisper")
-	logTheThing("whisper", src, null, "SAY: [message] (Whispered)")
+	logTheThing("whisper", src, null, "SAY: [message] (WHISPER) [log_loc(src)]")
 
 	if (src.client && !src.client.holder && url_regex?.Find(message))
 		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
@@ -2371,7 +2375,6 @@
 				boutput(src, "[I] falls out of you!")
 				I.on_remove(src)
 				implant.Remove(I)
-				//del(I)
 				I.set_loc(get_turf(src))
 				continue
 
@@ -3311,7 +3314,7 @@
 		if (!src.limbs.r_leg) missing_legs++
 		if (!src.limbs.l_arm) missing_arms++
 		if (!src.limbs.r_arm) missing_arms++
-	if (src.lying)
+	if (src.lying || GET_COOLDOWN(src, "unlying_speed_cheesy"))
 		missing_legs = 2
 	else if (src.shoes && src.shoes.chained)
 		missing_legs = 2
@@ -3372,7 +3375,7 @@
 				src.changeStatus("stunned", 3 SECONDS)
 
 		else
-			AM.attack_hand(src)	// nice catch, hayes. don't ever fuckin do it again
+			AM.Attackhand(src)	// nice catch, hayes. don't ever fuckin do it again
 			src.visible_message("<span class='alert'>[src] catches the [AM.name]!</span>")
 			logTheThing("combat", src, null, "catches [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
 			src.throw_mode_off()

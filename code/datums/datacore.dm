@@ -186,6 +186,7 @@
 	src.medical += M
 	src.security += S
 	src.bank += B
+	wagesystem.payroll_stipend += B.fields["wage"]
 
 	//Add email group
 	if ("[H.mind.assigned_role]" in job_mailgroup_list)

@@ -280,7 +280,7 @@
 					src.users+=user
 				return ..() // you can just use the trigger manually from the UI
 			if(src.find_trigger() && !src.open && src.loc==user)
-				return src.the_trigger.attack_hand(user)
+				return src.the_trigger.Attackhand(user)
 			return
 #undef CONTAINER_LIGHT_TIME
 #undef MAX_CONTAINER_LIGHT_TIME
@@ -414,7 +414,7 @@
 		else return ..(user)
 
 	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 	proc/secure()
 	proc/loosen()
 
@@ -2782,7 +2782,7 @@
 	desc = ""
 	icon_state = "comp_gun2"
 	density = 0
-	compatible_guns = /obj/item/gun/energy
+	compatible_guns = list(/obj/item/gun/energy)
 	var/charging = 0
 
 	get_desc()

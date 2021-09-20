@@ -277,6 +277,7 @@ var/list/admin_verbs = list(
 		/datum/admins/proc/heavenly_spawn_obj,
 		/datum/admins/proc/supplydrop_spawn_obj,
 		/datum/admins/proc/demonically_spawn_obj,
+		/datum/admins/proc/spawn_figurine,
 
 		// moved down from coder. shows artists, atmos etc
 		/client/proc/SetInfoOverlay,
@@ -335,8 +336,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_crusher_walls,
 		/client/proc/cmd_disco_lights,
 		/client/proc/cmd_blindfold_monkeys,
-		/client/proc/cmd_swampify_station,
-		/client/proc/cmd_trenchify_station,
+		/client/proc/cmd_terrainify_station,
 		/client/proc/cmd_special_shuttle,
 
 		/datum/admins/proc/toggleaprilfools,
@@ -881,7 +881,6 @@ var/list/fun_images = list()
 	if (!crossness || crossness == "Cancel")
 		return
 
-	message_admins(crossness)
 	if(!M.client)
 		alert("[M] is logged out, so you should probably ban them!")
 		return
@@ -1021,12 +1020,12 @@ var/list/fun_images = list()
 	// You now get to chose (mostly) if you want to send the target to the arrival shuttle (Convair880).
 	var/send_to_arrival_shuttle = 0
 	if (iswraith(M))
-		if (M.mind && M.mind.special_role == "wraith")
+		if (M.mind && M.mind.special_role == ROLE_WRAITH)
 			remove_antag(M, src, 0, 1) // Can't complete specialist objectives as a human. Also, the proc takes care of the rest.
 			return
 		send_to_arrival_shuttle = 1
 	else if (isintangible(M))
-		if (M.mind && M.mind.special_role == "blob")
+		if (M.mind && M.mind.special_role == ROLE_BLOB)
 			remove_antag(M, src, 0, 1) // Ditto.
 			return
 		send_to_arrival_shuttle = 1

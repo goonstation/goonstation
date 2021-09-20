@@ -45,7 +45,7 @@
 				C.abilityHolder.addAbility(/datum/targetable/vampire/vampire_scream)
 				C.abilityHolder.addAbility(/datum/targetable/vampire/enthrall)
 
-		if (src.mind && src.mind.special_role != "omnitraitor")
+		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
 			if(shitty)
 				boutput(src, "<span class='notice'>Oh shit, your fangs just broke off! Looks like you'll have to get blood the HARD way.</span>")
 
@@ -395,7 +395,7 @@
 
 			M.real_name = "thrall [M.real_name]"
 			if (M.mind)
-				M.mind.special_role = "vampthrall"
+				M.mind.special_role = ROLE_VAMPTHRALL
 				M.mind.master = owner.ckey
 				if (!(M.mind in ticker.mode.Agimmicks))
 					ticker.mode.Agimmicks += M.mind

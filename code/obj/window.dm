@@ -432,10 +432,6 @@
 			attack_particle(user,src)
 			playsound(src.loc, src.hitsound , 75, 1)
 			src.damage_blunt(W.force)
-			if (src.health <= 2)
-				src.anchored = 0
-				src.stops_space_move = 0
-				step(src, get_dir(user, src))
 			..()
 		return
 

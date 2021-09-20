@@ -47,7 +47,7 @@ Fibre wire
 
 		if(ticker?.mode) //Yes, I'm sure my runtimes will matter if the goddamn TICKER is gone.
 			for(var/datum/mind/M in (ticker.mode.Agimmicks | ticker.mode.traitors)) //We want an EVIL ghost
-				if(!M.dnr && M.current && isobserver(M.current) && M.current.client && M.special_role != "vampthrall" && M.special_role != "mindslave")
+				if(!M.dnr && M.current && isobserver(M.current) && M.current.client && M.special_role != ROLE_VAMPTHRALL && M.special_role != ROLE_MINDSLAVE)
 					priority_targets.Add(M.current)
 
 		if(!priority_targets.len) //Okay, fine. Any ghost. *sigh
@@ -1060,7 +1060,7 @@ proc/Create_Tommyname()
 // Special grab obj that doesn't care if it's in someone's hands
 /obj/item/grab/garrote_grab
 	// No breaking out under own power
-	break_prob = 0
+	prob_mod = 0
 	var/extra_deadly = 0
 	check()
 		if(!assailant || !affecting)

@@ -654,7 +654,7 @@ THROWING DARTS
 			boutput(user, "<span class='alert'>[H] is protected from enslaving by \an [AM.name]!</span>")
 			return 0
 		// It might happen, okay. I don't want to have to adapt the override code to take every possible scenario (no matter how unlikely) into considertion.
-		if (H.mind && ((H.mind.special_role == "vampthrall") || (H.mind.special_role == "spyslave")))
+		if (H.mind && ((H.mind.special_role == ROLE_VAMPTHRALL) || (H.mind.special_role == "spyslave")))
 			if (ismob(user)) user.show_text("<b>[H] seems to be immune to being enslaved!</b>", "red")
 			H.show_text("<b>You resist [implant_master]'s attempt to enslave you!</b>", "red")
 			logTheThing("combat", H, implant_master, "resists [constructTarget(implant_master,"combat")]'s attempt to mindslave them at [log_loc(H)].")
@@ -677,7 +677,7 @@ THROWING DARTS
 			if (!istype(MS))
 				continue
 			if (!MS.expire || (MS.expire && (MS.expired != 1)))
-				if (H.mind && (H.mind.special_role == "mindslave"))
+				if (H.mind && (H.mind.special_role == ROLE_MINDSLAVE))
 					remove_mindslave_status(H, "mslave", "override")
 				else if (H.mind && H.mind.master)
 					remove_mindslave_status(H, "otherslave", "override")
@@ -713,7 +713,7 @@ THROWING DARTS
 
 		if (M.mind && ticker.mode)
 			if (!M.mind.special_role)
-				M.mind.special_role = "mindslave"
+				M.mind.special_role = ROLE_MINDSLAVE
 			if (!(M.mind in ticker.mode.Agimmicks))
 				ticker.mode.Agimmicks += M.mind
 			M.mind.master = I.ckey
@@ -744,7 +744,7 @@ THROWING DARTS
 				if (!src || !owner || (M != owner) || src.expired)
 					return
 				// There's a proc for this now (Convair880).
-				if (M.mind && M.mind.special_role == "mindslave")
+				if (M.mind && M.mind.special_role == ROLE_MINDSLAVE)
 					remove_mindslave_status(M, "mslave", "expired")
 				else if (M.mind && M.mind.master)
 					remove_mindslave_status(M, "otherslave", "expired")
@@ -844,6 +844,11 @@ THROWING DARTS
 		desc = "A small hollow dart."
 		icon_state = "syringeproj"
 
+	blowdart
+		name = "blowdart"
+		desc = "a sharp little dart with a little poison reservoir."
+		icon_state = "blowdart"
+
 	flintlock
 		name= "flintlock round"
 		desc = "Rather unperfect round ball. Looks very old."
@@ -852,6 +857,10 @@ THROWING DARTS
 	bullet_50
 		name = ".50AE round"
 		desc = "Ouch."
+
+	rakshasa
+		name = "\improper Rakshasa round"
+		desc = "..."
 
 /obj/item/implant/projectile/implanted(mob/living/carbon/C, var/mob/I, var/bleed_time = 60)
 	SEND_SIGNAL(src, COMSIG_IMPLANT_IMPLANTED, C)

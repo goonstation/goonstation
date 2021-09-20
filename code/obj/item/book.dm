@@ -264,7 +264,7 @@ Custom Books
 				user.changeStatus("paralysis", 2 SECONDS)
 				user.force_laydown_standup()
 			else
-				src.attack_hand(usr)
+				src.Attackhand(usr)
 			return
 		else
 			if(ishuman(hit_atom))

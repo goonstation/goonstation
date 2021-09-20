@@ -85,7 +85,7 @@
 			var/previous_user_intent = user.a_intent
 			user.a_intent = INTENT_GRAB
 			user.drop_item()
-			target.attack_hand(user)
+			target.Attackhand(user)
 			user.a_intent = previous_user_intent
 			SPAWN_DBG(user.combat_click_delay + 2)
 				if (can_operate(user,target))
@@ -118,24 +118,38 @@
 
 		.= 1
 
+	set_broken()
+		if (status & BROKEN)
+			return
+		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+		smoke.set_up(5, 0, src)
+		smoke.start()
+		src.go_out()
+		icon_state = "PAG_broken"
+		light.disable()
+		status |= BROKEN
+
+	attack_hand(mob/user as mob)
+		if (src.status & BROKEN)
+			boutput(user, "<span class='notice'>The [src.name] is busted! You'll need at least two sheets of glass to fix it.</span>")
+			return
+		. = ..()
+
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (isscrewingtool(W) && (src.status & BROKEN))
-			src.icon_state = "PAG_broken"
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-			if(do_after(user, 2 SECONDS))
-				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-				G.set_loc(src.loc)
-				var/obj/item/circuitboard/genetics/M = new /obj/item/circuitboard/genetics( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				qdel(src)
+		if (istype(W, /obj/item/sheet) && (src.status & BROKEN))
+			var/obj/item/sheet/S = W
+			if (S.material && S.material.material_flags & MATERIAL_CRYSTAL)
+				if (S.amount >= 2)
+					W.change_stack_amount(-2)
+					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+					src.status &= !BROKEN
+					src.icon_state = "PAG_0"
+					light.enable()
+					boutput(user, "<span class='notice'>You repair the [src.name]!</span>")
+				else
+					boutput(user, "<span class='alert'>You need at least two sheets of glass to repair the [src.name].</span>")
+			else
+				boutput(user, "<span class='alert'>This is the wrong kind of material. You'll need a type of glass or crystal.</span>")
 
 		else if (istype(W,/obj/item/genetics_injector/dna_activator))
 			var/obj/item/genetics_injector/dna_activator/DNA = W
@@ -149,7 +163,7 @@
 				user.drop_item()
 				qdel(DNA)
 			else
-				src.attack_hand(user)
+				src.Attackhand(user)
 
 		else if (istype(W, /obj/item/grab))
 			var/obj/item/grab/G = W
@@ -168,7 +182,7 @@
 
 			var/mob/M = G.affecting
 			if (user.pulling == M)
-				user.pulling = null
+				user.remove_pulling()
 			src.go_in(M)
 
 			for(var/obj/O in src)
@@ -178,7 +192,7 @@
 			qdel(G)
 			return
 		else
-			src.attack_hand(user)
+			src.Attackhand(user)
 		return
 
 	power_change()
@@ -205,6 +219,9 @@
 		set src in oview(1)
 		set category = "Local"
 
+		if (src.status & BROKEN)
+			boutput(usr, "<span class='alert'>It's broken! You'll need to repair it first.</span>")
+			return
 		if (!isalive(usr))
 			return
 		if (src.locked)
@@ -262,6 +279,9 @@
 			return
 
 		if (src.locked)
+			return
+
+		if (src.status & BROKEN)
 			return
 
 		src.ui_interact(M, null)
