@@ -1088,7 +1088,7 @@
 			if (ismob(hit))
 				var/mob/M = hit
 				M.TakeDamage("chest", 0, rand(2 * mult, 5 * mult), 0, DAMAGE_BLUNT)
-				M.bodytemperature += 4 * mult
+				M.bodytemperature += (4 * mult)
 				playsound(hit, 'sound/effects/electric_shock.ogg', 60, 1, 0.1, 2.8)
 
 	double
