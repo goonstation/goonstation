@@ -27,7 +27,7 @@
 
 		for (var/mob/living/carbon/human/rabid_monkey in mobs)
 			if (ismonkey(rabid_monkey))
-				rabid_monkey.contract_disease(/datum/ailment/disease/jungle_fever,null,null,1)
+				rabid_monkey.contract_disease(/datum/ailment/disease/chimpfluenza,null,null,1)
 
 /datum/game_mode/monkey/check_finished()
 	if(emergency_shuttle.location == SHUTTLE_LOC_RETURNED)

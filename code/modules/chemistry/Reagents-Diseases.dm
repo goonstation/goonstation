@@ -125,7 +125,7 @@ datum
 			transparency = 150
 			disease = /datum/ailment/disease/gbs
 
-		disease/banana_peel // Jungle Fever
+		disease/banana_peel // Chimpfluenza
 			name = "banana peel"
 			id = "banana peel"
 			description = "Banana peel crushed up to a liquid."
@@ -134,7 +134,7 @@ datum
 			fluid_g = 255
 			fluid_b = 0
 			transparency = 150
-			disease = /datum/ailment/disease/jungle_fever
+			disease = /datum/ailment/disease/chimpfluenza
 
 		disease/liquid_plasma // Plasmatoid
 			name = "liquid plasma"
