@@ -75630,6 +75630,7 @@
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/T_south,
 /area/centcom/offices/rodney)
 "hEV" = (
+/obj/landmark/lrt/voiddiner,
 /turf/simulated/floor/plating/damaged1,
 /area/diner/cow)
 "hHZ" = (
@@ -80240,9 +80241,6 @@
 /area/syndicate_station/battlecruiser)
 "tPE" = (
 /obj/machinery/teleport/portal_ring,
-/obj/landmark/lrt/workshop{
-	name = "Void Diner"
-	},
 /turf/unsimulated/floor/void,
 /area/diner/cow)
 "tPH" = (
