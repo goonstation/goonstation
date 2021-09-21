@@ -1615,3 +1615,9 @@ exposed to overconfident outbursts on the part of individuals unqualifed to embo
 	desc = "This note is creased and ripped and tattered. The writing on it is scribbled in near-indecipherable chickenscratch."
 	icon_state = "postit-writing"
 	info = {"-non-stable battery; keeps popping on use.<br>-design work (not final)<br>-battery capacity??? maybe?<br>Cheers,<br>O"}
+
+/obj/item/paper/bee_love_letter //For lesbeeans prefab
+	name = "bee love letter"
+	desc = "This smells as sweet as the prose on it."
+	icon_state = "paper_caution"
+	info = {"<i>You have no hope of deciphering the weird marks on this paper, nor are you entirely certain it's even actual writing, but the splotchy heart with prints of bee pretarsi at the bottom kindles a warmth deep within your heart.</i>"}

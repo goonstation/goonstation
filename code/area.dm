@@ -1207,6 +1207,16 @@ ABSTRACT_TYPE(/area/prefab)
 	name = "Shooting Range"
 	icon_state = "purple"
 
+/area/prefab/lesbeeans/interior
+	name = "Lesbian Bee Farm"
+	icon_state = "ranch"
+	//force_fullbright = 1 //I'm sad that I have to
+
+/area/prefab/lesbeeans/exterior
+	name = "Lesbian Bee Farm"
+	icon_state = "park"
+	force_fullbright = 1
+
 // Sealab trench areas //
 
 /area/shuttle/sea_elevator_room
