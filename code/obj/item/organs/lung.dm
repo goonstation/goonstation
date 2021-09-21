@@ -58,14 +58,17 @@
 	// 			donor.contract_disease(failure_disease,null,null,1)
 
 	proc/breathe(datum/gas_mixture/breath, underwater, mult, datum/organ/lung/status/update)
-		var/breath_pressure = (TOTAL_MOLES(breath)*R_IDEAL_GAS_EQUATION*breath.temperature)/breath.volume
+		var/breath_moles = TOTAL_MOLES(breath)
+		if(breath_moles == 0)
+			breath_moles = ATMOS_EPSILON
+		var/breath_pressure = (breath_moles*R_IDEAL_GAS_EQUATION*breath.temperature)/breath.volume
 		//Partial pressure of the O2 in our breath
-		var/O2_pp = (breath.oxygen/TOTAL_MOLES(breath))*breath_pressure
+		var/O2_pp = (breath.oxygen/breath_moles)*breath_pressure
 		// Same, but for the toxins
-		var/Toxins_pp = (breath.toxins/TOTAL_MOLES(breath))*breath_pressure
+		var/Toxins_pp = (breath.toxins/breath_moles)*breath_pressure
 		// And CO2, lets say a PP of more than 10 will be bad (It's a little less really, but eh, being passed out all round aint no fun)
-		var/CO2_pp = (breath.carbon_dioxide/TOTAL_MOLES(breath))*breath_pressure
-		var/FARD_pp = (breath.farts/TOTAL_MOLES(breath))*breath_pressure
+		var/CO2_pp = (breath.carbon_dioxide/breath_moles)*breath_pressure
+		var/FARD_pp = (breath.farts/breath_moles)*breath_pressure
 		var/oxygen_used
 
 		if(breaths_oxygen)
