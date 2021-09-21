@@ -678,7 +678,7 @@ datum/chemicompiler_core/stationaryCore
 	mats = 15
 	flags = NOSPLASH
 	processing_tier = PROCESSING_FULL
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL | DECON_DESTRUCT
 	var/datum/chemicompiler_executor/executor
 	var/datum/light/light
 

@@ -13,7 +13,7 @@
 	var/stoked = 0 // engine ungrump
 	mats = 20
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
-	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
+	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_DESTRUCT
 
 	process()
 		if(status & BROKEN) return
