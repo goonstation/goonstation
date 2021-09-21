@@ -35473,15 +35473,10 @@
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/pool)
 "bBr" = (
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
 /obj/table/auto,
-/obj/item/stackable_ammo/capacitive/ten,
-/obj/item/stackable_ammo/capacitive/ten,
-/obj/item/stackable_ammo/capacitive/ten,
+/obj/item/gun/modular/foss,
+/obj/item/gun/modular/foss,
+/obj/item/gun/modular/foss,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bBs" = (
@@ -36775,49 +36770,39 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/table/auto,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bEe" = (
 /obj/table/auto,
-/obj/item/gun/modular/italian,
-/obj/item/gun/modular/italian,
-/obj/item/gun/modular/italian,
-/obj/item/gun/modular/italian,
-/obj/item/gun/modular/italian,
+/obj/item/gun/modular/juicer,
+/obj/item/gun/modular/juicer,
+/obj/item/gun/modular/juicer,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bEf" = (
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
 /obj/table/auto,
-/obj/item/stackable_ammo/zaubertube/ten,
-/obj/item/stackable_ammo/zaubertube/ten,
-/obj/item/stackable_ammo/zaubertube/ten,
+/obj/item/gun/modular/NT,
+/obj/item/gun/modular/NT,
+/obj/item/gun/modular/NT,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bEg" = (
 /obj/table/auto,
-/obj/item/gun/modular/NT,
-/obj/item/gun/modular/NT,
-/obj/item/gun/modular/NT,
-/obj/item/gun/modular/NT,
-/obj/item/gun/modular/NT,
+/obj/item/gun/modular/italian,
+/obj/item/gun/modular/italian,
+/obj/item/gun/modular/italian,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bEh" = (
 /obj/table/auto,
-/obj/item/gun/modular/juicer,
-/obj/item/gun/modular/juicer,
-/obj/item/gun/modular/juicer,
+/obj/item/gun/modular/juicer/long,
+/obj/item/gun/modular/juicer/long,
+/obj/item/gun/modular/juicer/long,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bEi" = (
 /obj/table/auto,
-/obj/item/gun/modular/soviet,
-/obj/item/gun/modular/soviet,
 /obj/item/gun/modular/soviet,
 /obj/item/gun/modular/soviet,
 /obj/item/gun/modular/soviet,
@@ -36834,20 +36819,15 @@
 	pixel_y = 21
 	},
 /obj/table/auto,
-/obj/item/gun_parts/stock/NT/shoulder,
-/turf/simulated/floor,
-/area/station/crew_quarters/pool)
-"bEm" = (
-/obj/table/auto,
-/obj/item/gun_parts/accessory/horn,
-/obj/item/gun_parts/accessory/horn,
-/obj/item/gun_parts/accessory/horn,
-/obj/item/gun_parts/accessory/horn,
+/obj/item/stackable_ammo/scatter/capacitive/xl/three,
+/obj/item/stackable_ammo/scatter/capacitive/xl/three,
+/obj/item/stackable_ammo/scatter/capacitive/xl/three,
+/obj/item/stackable_ammo/scatter/capacitive/xl/three,
+/obj/item/stackable_ammo/scatter/capacitive/xl/three,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bEn" = (
 /obj/table/auto,
-/obj/item/stackable_ammo/flashbulb,
 /obj/item/stackable_ammo/flashbulb,
 /obj/item/stackable_ammo/flashbulb,
 /obj/item/stackable_ammo/flashbulb,
@@ -37886,9 +37866,9 @@
 	dir = 4
 	},
 /obj/table/auto,
-/obj/item/stackable_ammo/zaubertube/ten,
-/obj/item/stackable_ammo/zaubertube/ten,
-/obj/item/stackable_ammo/zaubertube/ten,
+/obj/item/gun/modular/NT/long,
+/obj/item/gun/modular/NT/long,
+/obj/item/gun/modular/NT/long,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bGS" = (
@@ -37896,9 +37876,9 @@
 	dir = 4
 	},
 /obj/table/auto,
-/obj/item/stackable_ammo/capacitive/ten,
-/obj/item/stackable_ammo/capacitive/ten,
-/obj/item/stackable_ammo/capacitive/ten,
+/obj/item/gun/modular/foss/long,
+/obj/item/gun/modular/foss/long,
+/obj/item/gun/modular/foss/long,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bGT" = (
@@ -37916,11 +37896,11 @@
 	},
 /obj/disposalpipe/segment/vertical,
 /obj/table/auto,
-/obj/item/gun/modular/foss,
-/obj/item/gun/modular/foss,
-/obj/item/gun/modular/foss,
-/obj/item/gun/modular/foss,
-/obj/item/gun/modular/foss,
+/obj/item/stackable_ammo/scatter/capacitive/five,
+/obj/item/stackable_ammo/scatter/capacitive/five,
+/obj/item/stackable_ammo/scatter/capacitive/five,
+/obj/item/stackable_ammo/scatter/capacitive/five,
+/obj/item/stackable_ammo/scatter/capacitive/five,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bGX" = (
@@ -39111,9 +39091,6 @@
 /area/station/security/brig)
 "bJF" = (
 /obj/table/auto,
-/obj/item/stackable_ammo/zaubertube/ten,
-/obj/item/stackable_ammo/zaubertube/ten,
-/obj/item/stackable_ammo/zaubertube/ten,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bJJ" = (
@@ -39124,9 +39101,6 @@
 	},
 /obj/disposalpipe/segment/bent/east,
 /obj/table/auto,
-/obj/item/stackable_ammo/capacitive/ten,
-/obj/item/stackable_ammo/capacitive/ten,
-/obj/item/stackable_ammo/capacitive/ten,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bJK" = (
@@ -39149,11 +39123,11 @@
 	dir = 4
 	},
 /obj/table/auto,
-/obj/item/gun/modular/foss/long,
-/obj/item/gun/modular/foss/long,
-/obj/item/gun/modular/foss/long,
-/obj/item/gun/modular/foss/long,
-/obj/item/gun/modular/foss/long,
+/obj/item/stackable_ammo/scatter/capacitive/three,
+/obj/item/stackable_ammo/scatter/capacitive/three,
+/obj/item/stackable_ammo/scatter/capacitive/three,
+/obj/item/stackable_ammo/scatter/capacitive/three,
+/obj/item/stackable_ammo/scatter/capacitive/three,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bJR" = (
@@ -40624,9 +40598,13 @@
 	tag = ""
 	},
 /obj/table/auto,
-/obj/item/gun_parts/barrel/NT/long,
-/obj/item/gun_parts/barrel/NT/long,
-/obj/item/gun_parts/barrel/juicer/longer,
+/obj/item/stackable_ammo/zaubertube/ten,
+/obj/item/stackable_ammo/zaubertube/ten,
+/obj/item/stackable_ammo/zaubertube/ten,
+/obj/item/stackable_ammo/zaubertube/ten,
+/obj/item/stackable_ammo/zaubertube/ten,
+/obj/item/stackable_ammo/zaubertube/ten,
+/obj/item/stackable_ammo/zaubertube/ten,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bNb" = (
@@ -40638,11 +40616,11 @@
 /area/station/crew_quarters/pool)
 "bNc" = (
 /obj/table/auto,
-/obj/item/gun_parts/barrel/juicer/longer,
-/obj/item/gun_parts/barrel/foss/long,
-/obj/item/gun_parts/barrel/juicer,
-/obj/item/gun_parts/barrel/italian,
-/obj/item/gun_parts/barrel/foss,
+/obj/item/gun_parts/accessory/horn,
+/obj/item/gun_parts/accessory/horn,
+/obj/item/gun_parts/accessory/horn,
+/obj/item/gun_parts/accessory/horn,
+/obj/item/gun_parts/accessory/horn,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bNf" = (
@@ -40654,6 +40632,11 @@
 	dir = 4
 	},
 /obj/table/auto,
+/obj/item/stackable_ammo/scatter/zaubertube/five,
+/obj/item/stackable_ammo/scatter/zaubertube/five,
+/obj/item/stackable_ammo/scatter/zaubertube/five,
+/obj/item/stackable_ammo/scatter/zaubertube/five,
+/obj/item/stackable_ammo/scatter/zaubertube/five,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bNg" = (
@@ -43131,7 +43114,6 @@
 /area/station/crew_quarters/pool)
 "bSQ" = (
 /obj/table/auto,
-/obj/item/gun_parts/magazine/juicer,
 /obj/item/gun_parts/magazine/juicer,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
@@ -58592,6 +58574,13 @@
 /obj/item/spacecash/hundred,
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/listeningpost/power)
+"dwR" = (
+/obj/disposalpipe/segment/food{
+	dir = 4
+	},
+/obj/table/auto,
+/turf/simulated/floor,
+/area/station/crew_quarters/pool)
 "dzg" = (
 /obj/lattice{
 	dir = 4;
@@ -58618,6 +58607,19 @@
 /obj/item/paper/book/from_file/guardbot_guide,
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/crew_quarters/hor)
+"dOR" = (
+/obj/disposalpipe/segment/brig{
+	dir = 4
+	},
+/obj/table/auto,
+/obj/item/stackable_ammo/capacitive/ten,
+/obj/item/stackable_ammo/capacitive/ten,
+/obj/item/stackable_ammo/capacitive/ten,
+/obj/item/stackable_ammo/capacitive/ten,
+/obj/item/stackable_ammo/capacitive/ten,
+/obj/item/stackable_ammo/capacitive/ten,
+/turf/simulated/floor,
+/area/station/crew_quarters/pool)
 "eyI" = (
 /obj/table/wood/auto,
 /obj/item/paper/book/from_file/hydroponicsguide,
@@ -59038,8 +59040,11 @@
 	dir = 4
 	},
 /obj/table/auto,
-/obj/item/gun/modular/NT/long,
-/obj/item/gun/modular/NT/long,
+/obj/item/stackable_ammo/zaubertube/five,
+/obj/item/stackable_ammo/zaubertube/five,
+/obj/item/stackable_ammo/zaubertube/five,
+/obj/item/stackable_ammo/zaubertube/five,
+/obj/item/stackable_ammo/zaubertube/five,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "nUm" = (
@@ -59048,9 +59053,9 @@
 	},
 /obj/disposalpipe/segment/brig,
 /obj/table/auto,
-/obj/item/gun/modular/juicer/long,
-/obj/item/gun/modular/juicer/long,
-/obj/item/gun/modular/juicer/long,
+/obj/item/stackable_ammo/zaubertube/three,
+/obj/item/stackable_ammo/zaubertube/three,
+/obj/item/stackable_ammo/zaubertube/three,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "nXq" = (
@@ -59223,6 +59228,9 @@
 	dir = 4
 	},
 /obj/table/auto,
+/obj/item/stackable_ammo/scatter/zaubertube/three,
+/obj/item/stackable_ammo/scatter/zaubertube/three,
+/obj/item/stackable_ammo/scatter/zaubertube/three,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "rUs" = (
@@ -59232,6 +59240,18 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/armory)
+"sKY" = (
+/obj/disposalpipe/segment/brig{
+	dir = 4
+	},
+/obj/table/auto,
+/obj/item/stackable_ammo/capacitive/five,
+/obj/item/stackable_ammo/capacitive/five,
+/obj/item/stackable_ammo/capacitive/five,
+/obj/item/stackable_ammo/capacitive/five,
+/obj/item/stackable_ammo/capacitive/five,
+/turf/simulated/floor,
+/area/station/crew_quarters/pool)
 "sVX" = (
 /obj/item/paper/book/from_file/pocketguide/quartermaster,
 /turf/simulated/floor/plating/random,
@@ -59296,7 +59316,6 @@
 "uVZ" = (
 /obj/table/auto,
 /obj/item/gun_parts/magazine/juicer/massive,
-/obj/item/gun_parts/magazine/juicer/massive,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "vxI" = (
@@ -59311,6 +59330,16 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
+"vNr" = (
+/obj/disposalpipe/segment/brig{
+	dir = 4
+	},
+/obj/table/auto,
+/obj/item/stackable_ammo/capacitive/three,
+/obj/item/stackable_ammo/capacitive/three,
+/obj/item/stackable_ammo/capacitive/three,
+/turf/simulated/floor,
+/area/station/crew_quarters/pool)
 "vOC" = (
 /obj/stocking,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -101214,9 +101243,9 @@ bvT
 byp
 bBn
 bEd
-bGX
-jfw
-bPN
+dwR
+bJF
+vNr
 bPN
 bXC
 jfw
@@ -101518,7 +101547,7 @@ bBm
 bBm
 bGT
 bBm
-bPN
+sKY
 bPO
 bXC
 jfw
@@ -101820,7 +101849,7 @@ bBm
 bEf
 bGN
 bJF
-bPN
+dOR
 bPN
 bXC
 jfw
@@ -104233,7 +104262,7 @@ btF
 bvT
 byA
 bBm
-bEm
+bJF
 bGX
 bXD
 bNb

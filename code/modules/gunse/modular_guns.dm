@@ -34,8 +34,8 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 	icon_state = "tranq_pistol"
 
 
-
 	var/lensing = 0 // Variable used for optical gun barrels. laser intensity scales around 1.0 (or will!)
+	var/scatter = 0 // variable for using hella shotgun shells or something
 
 	var/flashbulb_only = 0 // FOSS guns only
 	var/flashbulb_health = 0 // FOSS guns only
@@ -365,7 +365,8 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 // BASIC GUN'S
 
 /obj/item/gun/modular/NT
-	name = "\improper NanoTrasen standard pistolet"
+	name = "\improper NT pistol"
+	real_name = "\improper NT pistol"
 	desc = "A simple, reliable cylindrical bored weapon."
 	max_ammo_capacity = 1 // single-shot pistols ha- unless you strap an expensive loading mag on it.
 	gun_DRM = GUN_NANO
@@ -377,15 +378,18 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 		stock = new /obj/item/gun_parts/stock/NT(src)
 
 /obj/item/gun/modular/NT/long
-	name = "\improper NanoTrasen standard rifle"
+	name = "\improper NT rifle"
+	real_name = "\improper NT rifle"
 	desc = "A simple, reliable rifled bored weapon."
+	max_ammo_capacity = 2
 	make_parts()
 		barrel = new /obj/item/gun_parts/barrel/NT/long(src)
 		stock = new /obj/item/gun_parts/stock/NT/shoulder(src)
 
 
 /obj/item/gun/modular/foss // syndicate laser gun's!
-	name = "\improper FOSS laser gun"
+	name = "\improper FOSS laser"
+	real_name = "\improper FOSS laser"
 	desc = "An open-sourced and freely modifiable FOSS Inductive Flash Arc, Model 2k/19"
 	max_ammo_capacity = 1 // just takes a flash bulb.
 	gun_DRM = GUN_FOSS
@@ -400,7 +404,6 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 
 
 /obj/item/gun/modular/foss/long
-	name = "\improper FOSS laser long gun"
 	desc = "An open-sourced and freely modifiable FOSS Inductive Flash Arc, Model 2k/20"
 	color = "#9955FF"
 
@@ -412,7 +415,8 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 
 
 /obj/item/gun/modular/juicer
-	name = "\improper BAD BLASTA"
+	name = "\improper BLASTA"
+	real_name = "\improper BLASTA"
 	desc = "A juicer-built, juicer-'designed', and most importantly juicer-marketed gun."
 	max_ammo_capacity = 0 //fukt up mags only
 	gun_DRM = GUN_JUICE
@@ -424,7 +428,6 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 		stock = new /obj/item/gun_parts/stock/italian(src)
 
 /obj/item/gun/modular/juicer/long
-	name = "\improper RAD BLASTA"
 	desc = "A juicer-built, juicer-'designed', and most importantly juicer-marketed gun."
 	color = "#55FF88"
 
@@ -433,7 +436,8 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 		stock = new /obj/item/gun_parts/stock/NT/shoulder(src)
 
 /obj/item/gun/modular/soviet
-	name = "лазерная пушка"
+	name = "\improper Soviet лазерная"
+	real_name = "\improper Soviet лазерная"
 	desc = "Энергетическая пушка советской разработки с пиротехническими лампами-вспышками."
 	max_ammo_capacity = 4 // laser revolver
 	gun_DRM = GUN_SOVIET
@@ -451,7 +455,8 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 		process_ammo()
 
 /obj/item/gun/modular/italian
-	name = "cannone di qualità"
+	name = "\improper Italiano"
+	real_name = "\improper Italiano"
 	desc = "Una pistola realizzata con acciaio, cuoio e olio d'oliva della più alta qualità possibile."
 	max_ammo_capacity = 2 // basic revolving mechanism
 	gun_DRM = GUN_ITALIAN

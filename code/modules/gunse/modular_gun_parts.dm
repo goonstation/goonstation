@@ -14,6 +14,7 @@ accssry : mall ninja bullshit. optics. gadgets. flashlights. horns. sexy nude me
 
 ABSTRACT_TYPE(/obj/item/gun_parts)
 /obj/item/gun_parts/
+	var/name_addition = ""
 	var/part_DRM = 0 //which gun models is this part compatible with?
 	var/obj/item/gun/modular/my_gun = null
 	proc/add_part_to_gun(var/obj/item/gun/modular/gun)
@@ -21,6 +22,7 @@ ABSTRACT_TYPE(/obj/item/gun_parts)
 		return 1
 	proc/remove_part_from_gun() // should safely un-do all of add_part_to_gun()
 		RETURN_TYPE(/obj/item/gun_parts/)
+		my_gun.name = my_gun.real_name
 		my_gun = null
 		return src
 
@@ -33,6 +35,7 @@ ABSTRACT_TYPE(/obj/item/gun_parts/barrel)
 	var/muzzle_flash = "muzzle_flash"
 	var/lensing = 0 // Variable used for optical gun barrels. Scalar around 1.0
 	var/jam_frequency_fire = 1 //additional % chance to jam on fire. Reload to clear.
+	var/scatter = 0
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "c_tube"
 
@@ -45,16 +48,19 @@ ABSTRACT_TYPE(/obj/item/gun_parts/barrel)
 		my_gun.silenced = src.silenced
 		my_gun.muzzle_flash = src.muzzle_flash
 		my_gun.lensing = src.lensing
+		my_gun.scatter = src.scatter
 		my_gun.jam_frequency_fire += src.jam_frequency_fire
+		my_gun.name = my_gun.name + " " + src.name_addition
 
 	remove_part_from_gun()
 		if(!my_gun)
 			return
 		my_gun.barrel = null
 		my_gun.spread_angle = initial(my_gun.spread_angle)
-		my_gun.silenced = initial(my_gun.silenced)
-		my_gun.muzzle_flash = initial(my_gun.muzzle_flash)
-		my_gun.lensing = initial(my_gun.lensing)
+		my_gun.silenced = 0
+		my_gun.muzzle_flash = 0
+		my_gun.lensing = 0
+		my_gun.scatter = 0
 		my_gun.jam_frequency_fire = initial(my_gun.jam_frequency_fire)
 		. = ..()
 
@@ -74,6 +80,7 @@ ABSTRACT_TYPE(/obj/item/gun_parts/stock)
 	icon_state = "shovel"
 
 
+
 	add_part_to_gun()
 		..()
 		if(!my_gun)
@@ -86,6 +93,7 @@ ABSTRACT_TYPE(/obj/item/gun_parts/stock)
 		my_gun.can_dual_wield &= src.stock_dual_wield
 		my_gun.jam_frequency_reload += src.jam_frequency_reload
 		my_gun.ammo_list += src.ammo_list
+		my_gun.name = src.name_addition + " " + my_gun.name
 		if(flashbulb_only)
 			my_gun.flashbulb_only = src.flashbulb_only
 			my_gun.max_crank_level = src.max_crank_level
@@ -129,6 +137,7 @@ ABSTRACT_TYPE(/obj/item/gun_parts/magazine)
 		my_gun.ammo_list += src.ammo_list
 		my_gun.max_ammo_capacity += src.max_ammo_capacity
 		my_gun.jam_frequency_reload += src.jam_frequency_reload
+		my_gun.name = my_gun.name + " " + src.name_addition
 
 	remove_part_from_gun()
 		if(!my_gun)
@@ -163,6 +172,8 @@ ABSTRACT_TYPE(/obj/item/gun_parts/accessory)
 		my_gun.accessory = src
 		my_gun.accessory_alt = alt_fire
 		my_gun.accessory_on_fire = call_on_fire
+		my_gun.name = src.name_addition + " " + my_gun.name
+
 
 
 	remove_part_from_gun()
@@ -351,6 +362,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	name = "standard long barrel"
 	desc = "A cylindrical barrel, rifled."
 	spread_angle = -15
+	name_addition = "rifle"
 
 /obj/item/gun_parts/barrel/foss
 	name = "\improper FOSS lensed barrel"
@@ -359,6 +371,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	lensing = 0.9
 	part_DRM = GUN_FOSS | GUN_SOVIET
 	color = "#5555FF"
+	name_addition = "lenser"
 
 /obj/item/gun_parts/barrel/foss/long
 	name = "\improper FOSS lensed long barrel"
@@ -366,20 +379,24 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	spread_angle = -17
 	lensing = 1.1
 	part_DRM = GUN_FOSS | GUN_SOVIET
+	name_addition = "focuser"
 
 /obj/item/gun_parts/barrel/juicer
 	name = "\improper BLASTA Barrel"
-	desc = "A cheaply-built basic rifled barrel. Not great."
-	spread_angle = -11
+	desc = "A cheaply-built shotgun barrel. Not great."
+	spread_angle = -3
+	scatter = 1
 	jam_frequency_fire = 5 //but very poorly built
 	part_DRM = GUN_JUICE | GUN_ITALIAN
 	color = "#99FF99"
+	name_addition = "MASHER"
 
 /obj/item/gun_parts/barrel/juicer/longer
 	name = "\improper SNIPA Barrel"
 	desc = "A cheaply-built extended rifled barrel. Not good."
 	spread_angle = -17 // accurate??
 	jam_frequency_fire = 15 //but very!!!!!!! poorly built
+	name_addition = "BLITZER"
 
 /obj/item/gun_parts/barrel/soviet
 	name = "Сборка объектива"
@@ -388,6 +405,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	lensing = 1.1
 	part_DRM = GUN_FOSS | GUN_SOVIET
 	color = "#FF9999"
+	name_addition = "comrade"
 
 /obj/item/gun_parts/barrel/italian
 	name = "canna di fucile"
@@ -395,6 +413,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	spread_angle = -9 // "alta qualità"
 	part_DRM = GUN_JUICE | GUN_ITALIAN
 	color = "#FFFF99"
+	name_addition = "paisan"
 
 // BASIC STOCKS
 /obj/item/gun_parts/stock/NT
@@ -403,6 +422,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	spread_angle = -2 // basic stabilisation
 	part_DRM = GUN_NANO | GUN_JUICE | GUN_ITALIAN
 	color = "#33FFFF"
+	name_addition = "trusty"
 
 /obj/item/gun_parts/stock/NT/shoulder
 	name = "standard stock"
@@ -413,6 +433,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	max_ammo_capacity = 1 // additional shot in the butt
 	jam_frequency_reload = 2 // a little more jammy
 	part_DRM = GUN_NANO | GUN_JUICE | GUN_ITALIAN
+	name_addition = "sturdy"
 
 /obj/item/gun_parts/stock/foss
 	name = "\improper FOSS laser stock"
@@ -422,6 +443,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	flashbulb_only = 1
 	max_crank_level = 2
 	color = "#5555FF"
+	name_addition = "vicious"
 
 /obj/item/gun_parts/stock/foss/long
 	name = "\improper FOSS laser rifle stock"
@@ -429,6 +451,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	stock_two_handed = 1
 	can_dual_wield = 0
 	max_crank_level = 3 // for syndicate ops
+	name_addition = "monstrous"
 
 
 /obj/item/gun_parts/stock/italian
@@ -438,6 +461,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	jam_frequency_reload = 7 // a lot  more jammy!!
 	part_DRM = GUN_ITALIAN | GUN_JUICE | GUN_SOVIET
 	color = "#FFFF99"
+	name_addition = "quality"
 
 
 
@@ -449,6 +473,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	name = "Tactical Alerter"
 	desc = "Efficiently alerts your squadron within miliseconds of target engagement, using cutting edge over-the-airwaves technology"
 	call_on_fire = 1
+	name_addition = "tactical"
 
 	on_fire()
 		playsound(src.my_gun.loc, pick('sound/musical_instruments/Bikehorn_bonk1.ogg', 'sound/musical_instruments/Bikehorn_bonk2.ogg', 'sound/musical_instruments/Bikehorn_bonk3.ogg'), 50, 1, -1)
@@ -460,15 +485,18 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	desc = "Holds 3 rounds, and 30,000 followers."
 	max_ammo_capacity = 3
 	jam_frequency_reload = 8
+	name_addition = "LARGE"
 
 /obj/item/gun_parts/magazine/juicer/bigger
 	name = "HOTTER SHOTTS MAG"
 	desc = "Holds 5 rounds, and 50,000 followers."
 	max_ammo_capacity = 5
 	jam_frequency_reload = 10
+	name_addition = "EXTRA LARGE"
 
 /obj/item/gun_parts/magazine/juicer/massive
 	name = "HOTTEST SHOTTS MAG"
 	desc = "Holds 6 rounds, and 69,000 followers."
 	max_ammo_capacity = 6
 	jam_frequency_reload = 13
+	name_addition = "SMORGASBORD"

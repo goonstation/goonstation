@@ -189,7 +189,59 @@ ABSTRACT_TYPE(/obj/item/stackable_ammo/)
 		default_min_amount = 10
 		default_max_amount = 10
 
+/obj/item/stackable_ammo/scatter/ // ABSOLUTELY USE THIS TYPE FOR ALL SCATTER AMMO, EVEN OPTICAL
+	name = "generic scatter ammo"
+	real_name = "generic scatter ammo"
+	desc = "debug"
+	icon_state = "12"
 
+	reload(var/obj/item/gun/modular/M, mob/user as mob)
+		if(!M.scatter)
+			boutput(user, "<span class='notice'>That shell won't fit the breech.</span>")
+			return
+		..()
+
+/obj/item/stackable_ammo/scatter/zaubertube/
+	name = "\improper Elektrograd ULTRA лазерный Zaubertube"
+	real_name = "Elektrograd ULTRA лазерный Zaubertube"
+	desc = "A large glass bulb filled with hypergolic incandescent chemicals."
+	projectile_type = /datum/projectile/laser/three
+	ammo_DRM = GUN_SOVIET | GUN_FOSS
+	color = "#c8F"
+
+	three
+		default_min_amount = 3
+		default_max_amount = 3
+
+	five
+		default_min_amount = 5
+		default_max_amount = 5
+
+/obj/item/stackable_ammo/scatter/capacitive
+	name = "\improper NT Stunner Scatters"
+	real_name = "\improper NT Stunner Scatters"
+	desc = "pee pee, poo poo"
+	projectile_type = /datum/projectile/energy_bolt/three
+	ammo_DRM = GUN_NANO | GUN_JUICE
+	color = "#FFBB30"
+
+	three
+		default_min_amount = 3
+		default_max_amount = 3
+
+	five
+		default_min_amount = 5
+		default_max_amount = 5
+
+
+/obj/item/stackable_ammo/scatter/capacitive/xl
+	name = "\improper NT Stunner Scatters XL"
+	real_name = "\improper NT Stunner Scatters XL"
+	projectile_type = /datum/projectile/energy_bolt/five
+
+	three
+		default_min_amount = 3
+		default_max_amount = 3
 
 /obj/item/stackable_ammo/flashbulb/
 	name = "\improper FOSSYN. CATHODIC FLASH BULBS"
@@ -229,3 +281,60 @@ ABSTRACT_TYPE(/obj/item/stackable_ammo/)
 					playsound(src.loc, "sound/weapons/gunload_heavy.ogg", 30, 0.1, 0, 0.8)
 				reloading = 0
 
+// NEW PROJECTILE TYPES TEMPORARY STORAGE
+
+/datum/projectile/energy_bolt/three
+	power = 10
+	shot_number = 3
+
+/datum/projectile/energy_bolt/five
+	power = 8
+	shot_number = 5
+
+/datum/projectile/laser/three
+	power = 15
+	shot_number = 3
+
+
+/datum/projectile/laser/flashbulb
+	name = "open-source laser"
+	icon_state = "u_laser"
+	power = 20
+	cost = 50
+	dissipation_delay = 5
+	brightness = 0
+	sname = "open-source laser"
+	shot_sound = 'sound/weapons/Laser.ogg'
+	color_red = 0
+	color_green = 1
+	color_blue = 0
+
+/datum/projectile/laser/flashbulb/two
+	power = 40
+	color_red = 1
+	color_green = 1
+	cost = 75
+
+/datum/projectile/laser/flashbulb/three
+	power = 60
+	color_red = 1
+	color_green = 0
+	cost = 100
+
+	on_hit(atom/hit)
+		if (isliving(hit))
+			var/mob/living/L = hit
+			L.changeStatus("slowed", 1 SECOND)
+			L.change_misstep_chance(1)
+			L.emote("twitch_v")
+		return
+
+/datum/projectile/laser/flashbulb/four
+	power = 80
+	color_red = 1
+	color_green = 0
+	cost = 200
+
+	on_hit(atom/hit)
+		fireflash(get_turf(hit), 0)
+		hit.ex_act(3)
