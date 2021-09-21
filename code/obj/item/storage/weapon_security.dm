@@ -363,9 +363,9 @@
 
 /obj/item/storage/box/chameleonbomb
 	name = "chameleon bomb case"
-	desc = "A case that contains 4 syndicate chameleon bombs"
+	desc = "A case that contains 2 syndicate chameleon bombs"
 	icon_state = "hard_case"
-	spawn_contents = list(/obj/item/device/chameleon/bomb = 4)
+	spawn_contents = list(/obj/item/device/chameleon/bomb = 2)
 
 // Starter kit used in the conspiracy/spy game mode.
 /obj/item/storage/box/spykit
