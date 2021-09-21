@@ -391,7 +391,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	name = "biomatter reserve tank"
 	desc = "A reserve tank for storing large quantities of biomatter. You could clone a small army with a tank that size."
 	icon = 'icons/obj/large/32x48.dmi'
-	icon_state = "biomatter_tank_1"
+	icon_state = "biomatter_tank0"
 	anchored = 1
 	density = 1
 	layer = 3.1
@@ -415,8 +415,8 @@ obj/item/reagent_containers/iv_drip/dead_exec
 /obj/decal/fakeobjects/safehouse/mechcomp_cabinet
 	name = "component cabinets"
 	desc = "A pair of cabinets containing mechanical components, set up to automate operation of the cloner. Technology is incredible!"
-	icon = 'icons/obj/adventurezones/safehouse.dmi'
-	icon_state = "cabinet"
+	icon = 'icons/obj/large/32x48.dmi'
+	icon_state = "cabinets1"
 	anchored = 1
 	density = 1
 	layer = 3.1
@@ -424,8 +424,8 @@ obj/item/reagent_containers/iv_drip/dead_exec
 /obj/decal/fakeobjects/safehouse/cloning_console
 	name = "cloning console"
 	desc = "A console used to operate a cloning scanner and pod. This one looks like it's seen better days."
-	icon = 'icons/obj/adventurezones/safehouse.dmi'
-	icon_state = "console"
+	icon = 'icons/obj/computer.dmi'
+	icon_state = "scannerb"
 	anchored = 1
 	density = 1
 	layer = 3.1

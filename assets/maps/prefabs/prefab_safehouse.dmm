@@ -3,10 +3,10 @@
 "cg" = (/obj/decal/cleanable/blood{icon_state = "handblood"; pixel_y = 7},/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/safehouse)
 "cj" = (/obj/stool/chair/office/red{dir = 1},/turf/simulated/floor/carpet/red/fancy/edge/sw,/area/prefab/safehouse)
 "cq" = (/obj/machinery,/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/safehouse)
-"cr" = (/obj/decal/fakeobjects/safehouse/mechcomp_cabinet,/turf/unsimulated/floor/circuit/vintage/vintage_CO2,/area/prefab/safehouse)
+"cr" = (/obj/decal/fakeobjects/safehouse/mechcomp_cabinet{pixel_y = -2},/turf/unsimulated/floor/circuit/vintage/vintage_CO2,/area/prefab/safehouse)
 "cy" = (/obj/table/wood/auto,/obj/machinery/computer3/generic/personal/safehouse,/turf/simulated/floor/carpet/red/fancy/edge/nw,/area/prefab/safehouse)
-"cI" = (/obj/window/cubicle{dir = 4},/obj/puzzle_spawn/saferoom_puzzle,/obj/machinery/bot/medbot{pixel_x = -3},/turf/simulated/floor/circuit,/area/prefab/safehouse)
-"dh" = (/obj/decal/fakeobjects/safehouse/conduit,/turf/unsimulated/floor/circuit/vintage/vintage_CO2,/area/prefab/safehouse)
+"cI" = (/obj/window/cubicle{dir = 4},/obj/machinery/bot/medbot{pixel_x = -3},/turf/simulated/floor/circuit,/area/prefab/safehouse)
+"dh" = (/obj/decal/fakeobjects/safehouse/conduit{dir = 8},/turf/unsimulated/floor/circuit/vintage/vintage_CO2,/area/prefab/safehouse)
 "dK" = (/obj/decal/fakeobjects/safehouse/dead_exec{dir = 10; pixel_x = 10; pixel_y = -5},/turf/unsimulated/floor/circuit/green/green_CO2,/area/prefab/safehouse)
 "en" = (/obj/decal/fakeobjects/lighttube_broken{desc = "This light might be broken.  It's probably not wired up, though."; dir = 8; icon_state = "tube0"; name = "inactive light tube"; pixel_x = -10},/turf/simulated/floor/bluewhite{dir = 10},/area/prefab/safehouse)
 "eq" = (/obj/table/auto{layer = 3},/obj/machinery/light/emergencyflashing{dir = 4},/obj/item/storage/briefcase/safehouse{layer = 3.1},/obj/item/storage/pill_bottle/methamphetamine{pixel_x = 9; pixel_y = 8; spawn_contents = list(/obj/item/reagent_containers/pill/methamphetamine = 7)},/turf/unsimulated/floor/circuit/vintage/vintage_CO2,/area/prefab/safehouse)
@@ -18,7 +18,6 @@
 "gh" = (/obj/decal/fakeobjects/safehouse/biomatter_tank{dir = 1},/turf/unsimulated/floor/circuit/vintage/vintage_CO2,/area/prefab/safehouse)
 "gj" = (/obj/decal/fakeobjects/safehouse/cloning_console,/obj/decal/cleanable/blood,/obj/item/raw_material/shard/glass{layer = 3.2; pixel_x = -3},/obj/decal/cleanable/blood/splatter{icon_state = "floor3"},/obj/item/raw_material/shard/glass{layer = 3.2; pixel_x = 6; pixel_y = -3},/turf/unsimulated/floor/circuit/vintage/vintage_CO2,/area/prefab/safehouse)
 "go" = (/obj/decal/fakeobjects/safehouse/dead_exec{dir = 9; pixel_x = 2; pixel_y = 7},/obj/decal/fakeobjects/safehouse/dead_exec/bloody{dir = 8; pixel_y = 6},/obj/decal/fakeobjects/safehouse/dead_exec{dir = 5; pixel_y = -5},/obj/decal/cleanable/blood/splatter{icon_state = "floor4"},/turf/unsimulated/floor/circuit/green/green_CO2,/area/prefab/safehouse)
-"gp" = (/obj/decal/cleanable/dirt,/obj/shrub/dead{dir = 1; name = "Dead plant"; pixel_y = 5},/turf/simulated/floor/wood,/area/prefab/safehouse)
 "gz" = (/obj/storage/crate/bin{layer = 2.9},/obj/item/paper{pixel_x = 2; pixel_y = -2},/obj/item/paper,/obj/item/chem_pill_bottle,/obj/decal/cleanable/paper,/turf/simulated/floor/wood/two,/area/prefab/safehouse)
 "hp" = (/obj/decal/fakeobjects/safehouse/dead_exec{dir = 4; pixel_y = -10},/turf/unsimulated/floor/circuit/green/green_CO2,/area/prefab/safehouse)
 "hx" = (/obj/decal/fakeobjects/safehouse/reclaimer,/turf/unsimulated/floor/circuit/vintage/vintage_CO2,/area/prefab/safehouse)
@@ -150,7 +149,7 @@ UMZdZdYAYAcgklkCYAYAYAcykNeImBYAYAYAYAYAYAWiZblYWilOuePvnFYAYAZdZd
 UMUMZdZdYAYAYAorYAYAYAcjZmZmnpYAouoxpJpTxIFsYAkBrfYAueuetJrqYAZdUM
 UMUMUMZdZdYAFaWiYqYAYAwIwIgzDuYAnKHLHLHLHLHLYAYAYAYAwpEdEdEdYAZdZd
 UMRRRREMZdYAWiENWiYAYAYAuQYAYAYADjMTDjKelhxmNBOuYAYADAEdEdQcYAZdZd
-UMRRRRVtZdYAYAYAYAYAkLlvplgpkLYASWymymWlWZFnWtWSYAYAEdEdEdEdREZdZd
+UMRRRRVtZdYAYAYAYAYAkLlvploMkLYASWymymWlWZFnWtWSYAYAEdEdEdEdREZdZd
 UMUMUMZdZdYAXOYZyHlGljDlmMDlZfmyWZWZWZYOWZwAZwnsYAZdDcDcDcSrZdZdUM
 UMUMUMVtZdYAvPnzGDYAYAOpYAYAYAYAYArIWZWZoMYAYAYAYAZdRRRRRRRRZdZdZd
 UMUMUMZdZdYAAsPnYKYArmzKYArKwynQYATWWZWZWZaMCWYAZdZdRRRRRRRRRRZdUM
