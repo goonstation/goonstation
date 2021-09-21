@@ -122,27 +122,28 @@ obj/item/reagent_containers/iv_drip/dead_exec
 		STOP_TRACKING
 		..()
 
-/obj/machinery/handscanner/bio_handscanner
+/obj/machinery/bio_handscanner
 	name = "Hand Scanner"
 	desc = "A biometric hand scanner."
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "handscanner"
-	id = "clone room"
+	var/id = "clone room"
 	var/allowed_bioHolders = null
-	var/cooldown = FALSE
+	var/cooldown = 1 SECOND
 
 	New()
 		..()
 		START_TRACKING
+		UnsubscribeProcess()
 
 	disposing()
 		STOP_TRACKING
 		..()
 
-/obj/machinery/handscanner/bio_handscanner/attackby(obj/item/W, mob/user as mob) //We don't want the parent's proc here.
+/obj/machinery/bio_handscanner/attackby(obj/item/W, mob/user as mob) //We don't want the parent's proc here.
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
-	if(cooldown == TRUE)
+	if(ON_COOLDOWN(src, "bio_handscanner_attackby", cooldown)) // To reduce chat span in case of multi-click
 		return
 	if(istype(W, /obj/item/parts/human_parts/arm/))
 		boutput(user, "<span class='alert'>ERROR: no pulse detected.</span>")
@@ -154,13 +155,10 @@ obj/item/reagent_containers/iv_drip/dead_exec
 					M.open()
 				else
 					M.close()
-	cooldown = TRUE
-	sleep(1 SECOND) //To reduce chat spam in case of multi-click.
-	cooldown = FALSE
 
-/obj/machinery/handscanner/bio_handscanner/attack_hand(mob/user as mob) //Nor here.
+/obj/machinery/bio_handscanner/attack_hand(mob/user as mob) //Nor here.
 	src.add_fingerprint(user)
-	if(cooldown == TRUE)
+	if(ON_COOLDOWN(src, "bio_handscanner_attackhhand", cooldown)) // To reduce chat span in case of multi-click
 		return
 	playsound(src.loc, "sound/effects/handscan.ogg", 50, 1)
 	if(ishuman(user))
@@ -175,9 +173,6 @@ obj/item/reagent_containers/iv_drip/dead_exec
 						M.close()
 		else
 			boutput(user, "<span class='alert'>Invalid biometric profile. Access denied.</span>")
-	cooldown = TRUE
-	sleep(1 SECOND) //To reduce chat spam in case of multi-click.
-	cooldown = FALSE
 
 /obj/decal/fakeobjects/safehouse/cloner
 	name = "lazarus H-16 cloning pod"
@@ -203,7 +198,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 		var/datum/bioHolder/D = new/datum/bioHolder(null)
 		D.CopyOther(M.bioHolder)
 
-		for_by_tcl(O, /obj/machinery/handscanner/bio_handscanner)
+		for_by_tcl(O, /obj/machinery/bio_handscanner)
 			O.allowed_bioHolders = D.Uid //Copy the Uid only, copying and comparing against all bioHolder data is too prone to error.
 
 		for_by_tcl(O, /obj/item/reagent_containers/iv_drip/dead_exec)
@@ -237,45 +232,44 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	do_process(var/mult = 1) //On do_process so we don't have to worry if the user is dead / in ghostVR.
 		if(!ishuman(src.owner))
 			return
-		var/mob/living/carbon/human/H = src.owner
 		if(clonescanned < 11)
 			switch(clonescanned++)
 				if(1)
-					boutput(H,"Life signs detected. Initiating scanning procedure.")
+					boutput(src.owner,"Life signs detected. Initiating scanning procedure.")
 				if(4)
-					boutput(H,"Scan complete. Contacting remote server for data upload.")
+					boutput(src.owner,"Scan complete. Contacting remote server for data upload.")
 				if(7)
-					boutput(H,"ERROR: Remote server unavailable. Commencing emergency transmisssion protocols. Broadcasting data on all known frequencies.")
+					boutput(src.owner,"ERROR: Remote server unavailable. Commencing emergency transmisssion protocols. Broadcasting data on all known frequencies.")
 				if(10)
-					for_by_tcl(C, /obj/machinery/computer/cloning)
-						C.scan_mob(H)
-						var/datum/data/record/R = new /datum/data/record()
-						R = C.find_record(H.ckey)
-						if(!isnull(R))
-							boutput(H,"Link to cloning computer establised succesfully.")
-							playsound(src.loc, 'sound/machines/ping.ogg', 50, 1)
-							if(prob(20) && !H.traitHolder.hasTrait("puritan")) // Too uncommon to weaponise but common enough to deter general usage.
-								R["fields"]["traits"] += "puritan" // Did the player learn nothing from the prefab??
+					attempt_remote_scan(src.owner)
 
 	on_death()
 		if(!ishuman(src.owner))
 			return
-		for_by_tcl(C, /obj/machinery/computer/cloning)
-			var/mob/living/carbon/human/H = src.owner
-			C.scan_mob(H)
-			var/R = C.find_record(H.ckey)
-			if(R)
+		attempt_remote_scan(src.owner)
+
+	proc/attempt_remote_scan(mob/living/carbon/human/H)
+		for_by_tcl(C, /obj/machinery/computer/cloning) //Scan success or corruption is on a by-computer basis, results allowed to differ.
+			C.scan_mob(H) //Take advantage of scan_mob's checks
+			var/datum/data/record/R = new /datum/data/record()
+			R = C.find_record(H.ckey)
+			if(!isnull(R))// Proceed if scan was a success or user has been scanned previously, our broadcast is interfering with the existing scan.
+				boutput(H,"Link to cloning computer establised succesfully.")
 				playsound(src.loc, 'sound/machines/ping.ogg', 50, 1)
-				if(prob(20) && !H.traitHolder.hasTrait("puritan")) // Too uncommon to weaponise but common enough to deter general usage.
-					R["fields"]["traits"] += "puritan" // Did the player learn nothing from the prefab??
+				var/has_puritan = FALSE
+				if("puritan" in R["fields"]["traits"]) //Does the user's clone record have puritan?
+					has_puritan = TRUE
+					boutput(H,"Subject had puritan")
+				if(prob(20) && !has_puritan) //If the scan doesn't have puritan, roll a dice. Too uncommon to weaponise too common for general use.
+					R["fields"]["traits"] += "puritan" // Signal has degraded. Did the player learn nothing from the prefab??
 
 //DECORATIVE OBJECTS
 
 /obj/decal/fakeobjects/beacon
-	name = "tracking beacon"
-	desc = "A small tracking beacon. What's it doing all the way out here?"
-	icon = 'icons/obj/items/device.dmi'
-	icon_state = "beacon"
+	name = "broken beacon"
+	desc = "A small tracking beacon in fairly poor condition. What's it doing all the way out here?"
+	icon = 'icons/obj/adventurezones/safehouse.dmi'
+	icon_state = "beaconbroken"
 	anchored = 1
 
 /obj/item/disk/data/fixed_disk/safehouse_rdrive
