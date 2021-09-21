@@ -38,7 +38,7 @@ var/global/regex/discord_emoji_regex = new(@{"(?:<|&lt;)(?:a)?:([-a-zA-Z0-9_]+):
 /proc/linkify(text)
 	. = replacetext(text, "http://", "")
 	. = replacetext(., "https://", "")
-	. = full_url_regex?.Replace(., "<a target='_blank' href='http://$0'>$0</a>")
+	. = full_url_regex.Replace(., "<a target='_blank' href='http://$0'>$0</a>")
 
 
 /// Generates a random Unicode emoji that will look ok in the chat
