@@ -12,14 +12,14 @@
 	failure_disease = /datum/ailment/disease/respiratory_failure
 	var/temp_tolerance = T0C+66
 
-	var/safe_oxygen_min = 17 / LUNG_COUNT // Minimum safe partial pressure of O2, in kPa
-	var/safe_co2_max = 9 / LUNG_COUNT // Yes it's an arbitrary value who cares?
-	var/safe_toxins_max = 0.4 / LUNG_COUNT
-	var/SA_para_min = 1 / LUNG_COUNT
-	var/SA_sleep_min = 5 / LUNG_COUNT
-	var/fart_smell_min = 0.69 / LUNG_COUNT // don't ask ~warc
-	var/fart_vomit_min = 6.9 / LUNG_COUNT
-	var/fart_choke_min = 16.9 / LUNG_COUNT
+	var/safe_oxygen_min = 17 // Minimum safe partial pressure of O2, in kPa
+	var/safe_co2_max = 9 // Yes it's an arbitrary value who cares?
+	var/safe_toxins_max = 0.4
+	var/SA_para_min = 1
+	var/SA_sleep_min = 5
+	var/fart_smell_min = 0.69 // don't ask ~warc
+	var/fart_vomit_min = 6.9
+	var/fart_choke_min = 16.9
 	var/rad_immune = FALSE
 	var/breaths_oxygen = TRUE
 
@@ -65,6 +65,7 @@
 		var/Toxins_pp = (breath.toxins/TOTAL_MOLES(breath))*breath_pressure
 		// And CO2, lets say a PP of more than 10 will be bad (It's a little less really, but eh, being passed out all round aint no fun)
 		var/CO2_pp = (breath.carbon_dioxide/TOTAL_MOLES(breath))*breath_pressure
+		var/FARD_pp = (breath.farts/TOTAL_MOLES(breath))*breath_pressure
 		var/oxygen_used
 
 		if(breaths_oxygen)
@@ -119,7 +120,6 @@
 					if (prob(percentmult(20, mult)))
 						update.emotes |= pick("giggle", "laugh")
 
-		var/FARD_pp = (breath.farts/TOTAL_MOLES(breath))*breath_pressure
 		if (prob(15) && (FARD_pp > fart_smell_min))
 			boutput(donor, "<span class='alert'>Smells like someone [pick("died","soiled themselves","let one rip","made a bad fart","peeled a dozen eggs")] in here!</span>")
 			if ((FARD_pp > fart_vomit_min) && prob(50))
