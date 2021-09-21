@@ -139,6 +139,8 @@
 		//stamina bar gets added to the hud in subtypes human and critter... im sorry.
 		//eventual hud merger pls
 
+	AddComponent(/datum/component/filtered_accumulator_trigger/ijkl_to_stop_drop_and_roll)
+
 	SPAWN_DBG(0)
 		src.get_static_image()
 		sleep_bubble.appearance_flags = RESET_TRANSFORM
