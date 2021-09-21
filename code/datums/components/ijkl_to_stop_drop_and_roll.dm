@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(datum/component/filtered_accumulator_trigger)
 datum/component/filtered_accumulator_trigger
 	var/list/timestamps = new/list()
 	var/list/valid_inputs
