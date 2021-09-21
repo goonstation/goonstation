@@ -2567,7 +2567,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 
 /datum/manufacture/id_card_gold
 	name = "Gold ID card"
-	item_paths = list("REF-1", "CON-2","CRY-1")
+	item_paths = list("gold", "CON-2","CRY-1")
 	item_amounts = list(5,4,3)
 	item_outputs = list(/obj/item/card/id/gold)
 	time = 30 SECONDS
@@ -2585,8 +2585,8 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 
 /datum/manufacture/acesscase
 	name = "ID Briefcase"
-	item_paths = list("CON-1","CRY-1","MET-1","REF-1")
-	item_amounts = list(25,15,35,5)
+	item_paths = list("CON-1","CRY-1","MET-1","gold")
+	item_amounts = list(25,15,35,2)
 	item_outputs = list(/obj/item/computerunfolder)
 	time = 75 SECONDS
 	create = 1
