@@ -35477,6 +35477,11 @@
 /obj/item/gun/modular/foss,
 /obj/item/gun/modular/foss,
 /obj/item/gun/modular/foss,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bBs" = (
@@ -36785,6 +36790,11 @@
 /obj/item/gun/modular/NT,
 /obj/item/gun/modular/NT,
 /obj/item/gun/modular/NT,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bEg" = (
@@ -58765,6 +58775,13 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/medical/dome)
+"hbu" = (
+/obj/disposalpipe/segment/food{
+	dir = 4
+	},
+/obj/machinery/light/small/floor,
+/turf/simulated/floor,
+/area/station/crew_quarters/pool)
 "hfH" = (
 /obj/machinery/light{
 	dir = 4;
@@ -102451,7 +102468,7 @@ bvT
 byw
 bBm
 bEe
-bGX
+hbu
 jfw
 aJh
 bPN
