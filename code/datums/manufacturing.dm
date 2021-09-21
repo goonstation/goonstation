@@ -2585,8 +2585,8 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 
 /datum/manufacture/acesscase
 	name = "ID Briefcase"
-	item_paths = list("CON-1","CRY-1","MET-1")
-	item_amounts = list(25,15,35)
+	item_paths = list("CON-1","CRY-1","MET-1","REF-1")
+	item_amounts = list(25,15,35,5)
 	item_outputs = list(/obj/item/computerunfolder)
 	time = 75 SECONDS
 	create = 1

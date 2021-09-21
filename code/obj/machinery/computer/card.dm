@@ -37,6 +37,45 @@
 /obj/machinery/computer/card/console_lower
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "id2"
+/obj/item/computerunfolder
+	icon = 'icons/obj/items/storage.dmi'
+	item_state = "hopcaseC"
+	icon_state = "hopcaseC"
+
+	force = 8.0
+	throw_speed = 1
+	throw_range = 4
+	w_class = W_CLASS_BULKY
+
+	burn_point = 2500
+	burn_output = 2500
+	burn_possible = 1
+	health = 10
+
+	New(var/loc, var/obj/object)
+		..(loc)
+		src.set_loc(loc)
+		src.name = "foldable portable identification computer"
+		src.desc = "A briefcase with a identification computer inside. A breakthrough in briefcase technology!"
+		BLOCK_SETUP(BLOCK_BOOK)
+
+	attack_self(mob/user)
+		deploy(user)
+
+	verb/unfold()
+		set src in view(1)
+		set category = "Local"
+		set name = "Unfold"
+		deploy(usr)
+
+	proc/deploy(var/mob/user)
+
+		if(src.loc == user)
+			user.drop_from_slot(src)
+		user.visible_message("<span class='alert'>[user] unfolds the foldable portable idendification computer from a briefcase!</span>")
+		var/obj/machinery/computer/card/portable/T = new/obj/machinery/computer/card/portable()
+		T.set_loc(get_turf(src))
+		qdel(src)
 
 /obj/machinery/computer/card/portable
 	name = "portable identification computer"
@@ -46,17 +85,13 @@
 	var/setup_charge_maximum = 15000
 	var/obj/item/luggable_computer/personal/case //The object that holds us when we're all closed up.
 	var/deployed = 1
-	var/list/peripherals = list()
 
 	New()
 		..()
 		src.AddComponent(/datum/component/foldable,/obj/item/objBriefcase/blue_green_stripe)
-	New()
-		..()
 		src.cell = new /obj/item/cell(src)
 		src.cell.maxcharge = setup_charge_maximum
 		src.cell.charge = src.cell.maxcharge
-		return
 
 	disposing()
 		if (src.cell)
@@ -83,9 +118,6 @@
 		if(!src.case)
 			src.case = new /obj/item/luggable_computer(src)
 			src.case.luggable = src
-
-		for (var/obj/item/peripheral/peripheral in peripherals)
-			peripheral.uninstalled()
 
 		src.case.set_loc(get_turf(src))
 		src.set_loc(src.case)
