@@ -733,6 +733,12 @@ ABSTRACT_TYPE(/datum/job/engineering)
 		src.access = get_access("Quartermaster")
 		return
 
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_quartermaster")
+
 /datum/job/engineering/miner
 	name = "Miner"
 	#ifdef UNDERWATER_MAP

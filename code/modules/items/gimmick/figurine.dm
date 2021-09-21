@@ -712,7 +712,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "vicky"
 		ckey = "mrprogamer96"
 
-	vicky
+	camrynstern
 		name = "\improper Camryn Stern"
 		icon_state = "camrynstern"
 		ckey = "richardgere"

@@ -916,6 +916,8 @@
 				src.goods_sell += new /datum/commodity/junk/voltron(src)
 				src.goods_sell += new /datum/commodity/junk/cloner_upgrade(src)
 				src.goods_sell += new /datum/commodity/junk/grinder_upgrade(src)
+				src.goods_sell += new /datum/commodity/junk/speedyclone(src)
+				src.goods_sell += new /datum/commodity/junk/efficientclone(src)
 				src.goods_sell += new /datum/commodity/podparts/goldarmor(src)
 
 				src.goods_buy += new /datum/commodity/salvage/scrap(src)
