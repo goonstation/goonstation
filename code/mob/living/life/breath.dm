@@ -173,7 +173,7 @@
 						var/obj/location_as_object = owner.loc
 						location_as_object.handle_internal_lifeform(owner, 0)
 
-		breath.volume = BREATH_VOLUME
+		breath?.volume = BREATH_VOLUME
 		handle_breath(breath, underwater, mult = mult)
 
 		if (breath)
