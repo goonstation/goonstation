@@ -13,7 +13,7 @@
 	var/stoked = 0 // engine ungrump
 	mats = 20
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
-	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_DESTRUCT
+	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 
 	process()
 		if(status & BROKEN) return
@@ -60,6 +60,9 @@
 				else //Clear the overlay
 					UpdateOverlays(null, okey, 0, 1)
 
+
+	was_deconstructed_to_frame(mob/user)
+		src.active = 0
 
 	attack_hand(var/mob/user as mob)
 		if (!src.fuel) boutput(user, "<span class='alert'>There is no fuel in the furnace!</span>")
