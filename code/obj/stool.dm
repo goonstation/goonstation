@@ -143,7 +143,7 @@
 /obj/stool/bee_bed/double // Prefab variant
 	name = "double bee bed"
 	icon_state = "beebed_double"
-	desc = "A bee bed shaped to accomodate two bees while also gently smushing them together, creating one of the most adorable sights in the universe."
+	desc = "A bee bed shaped to accomodate two sleeping bees while also gently smushing them together, creating one of the most adorable sights in the universe."
 	parts_type = /obj/item/furniture_parts/stool/bee_bed
 
 /obj/stool/bar

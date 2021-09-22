@@ -1781,3 +1781,10 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "pirate_brn"
 	item_state = "pirate_brn"
+
+/obj/item/clothing/head/lesbian_hat
+	name = "very lesbian hat"
+	desc = "And they say subtlety is dead."
+	mats = list("FAB-1"=5, "honey"=5)
+	icon_state = "lesbeean"
+	item_state = "lesbeean"

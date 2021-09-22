@@ -122,7 +122,7 @@
 /area/prefab/lesbeeans/exterior)
 "mX" = (
 /obj/critter/domestic_bee{
-	name = "greater lesbian space-farm bee"
+	name = "lesbian space-farm bee"
 	},
 /turf/unsimulated/floor/wood/three,
 /area/prefab/lesbeeans/interior)
@@ -173,7 +173,7 @@
 "tG" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/critter/domestic_bee{
-	name = "greater lesbian space-farm bee"
+	name = "lesbian space-farm bee"
 	},
 /turf/simulated/floor/wood/five,
 /area/prefab/lesbeeans/interior)
@@ -411,6 +411,20 @@
 	name = "nibbled-on shirt and jeans";
 	pixel_x = 4;
 	pixel_y = -3
+	},
+/obj/item/clothing/shoes/brown{
+	desc = "These are fucking soaked in bee saliva, eww.";
+	name = "half-eaten brown shoes";
+	pixel_y = -12
+	},
+/obj/item/clothing/head/lesbian_hat{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/obj/item/clothing/under/misc/casdressgrn{
+	name = "lightly-mangled Green Tshirt Dress";
+	pixel_x = -3;
+	pixel_y = -4
 	},
 /turf/unsimulated/floor/wood/three,
 /area/prefab/lesbeeans/interior)
