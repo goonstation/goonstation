@@ -30391,7 +30391,7 @@
 "bbJ" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/box/stma_kit,
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
 /obj/item/storage/box/handcuff_kit,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/device/multitool,
@@ -37069,7 +37069,7 @@
 /obj/item/device/radio/electropack,
 /obj/item/device/radio/signaler,
 /obj/item/storage/box/revimp_kit,
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
 /obj/item/storage/box/stinger_kit,
 /turf/simulated/floor/black,
 /area/station/security/armory)

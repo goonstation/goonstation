@@ -36899,7 +36899,7 @@
 	dir = 10
 	},
 /obj/item/storage/box/stma_kit,
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
 /obj/item/storage/box/handcuff_kit,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/device/multitool,

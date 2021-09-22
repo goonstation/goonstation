@@ -32906,7 +32906,7 @@
 /area/station/maintenance/southwest)
 "bwE" = (
 /obj/machinery/light,
-/obj/submachine/chicken_feed_grinder,
+/obj/submachine/ranch_feed_grinder,
 /obj/item/reagent_containers/food/snacks/plant/corn{
 	doants = 0
 	},
@@ -40593,7 +40593,7 @@
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/signaler,
 /obj/item/storage/box/stinger_kit,
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
 /obj/item/storage/box/revimp_kit,
 /obj/item/chem_grenade/pepper,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -42479,7 +42479,7 @@
 	pixel_x = -10;
 	pixel_y = 8
 	},
-/obj/item/storage/box/flashbang_kit{
+/obj/item/chem_grenade/flashbang{
 	pixel_x = -3;
 	pixel_y = 3
 	},
