@@ -172,6 +172,9 @@
 /area/prefab/lesbeeans/exterior)
 "tG" = (
 /obj/decal/cleanable/dirt/jen,
+/obj/critter/domestic_bee{
+	name = "greater lesbian space-farm bee"
+	},
 /turf/simulated/floor/wood/five,
 /area/prefab/lesbeeans/interior)
 "uH" = (
@@ -209,12 +212,6 @@
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
-"xT" = (
-/obj/critter/domestic_bee{
-	name = "greater lesbian space-farm bee"
-	},
-/turf/unsimulated/grass,
-/area/prefab/lesbeeans/exterior)
 "zN" = (
 /obj/lattice{
 	dir = 5;
@@ -418,7 +415,7 @@
 /turf/unsimulated/floor/wood/three,
 /area/prefab/lesbeeans/interior)
 "Qz" = (
-/obj/stool/bee_bed,
+/obj/stool/bee_bed/double,
 /turf/unsimulated/floor/wood/three,
 /area/prefab/lesbeeans/interior)
 "QS" = (
@@ -550,8 +547,8 @@ Tb
 Tb
 Jp
 Jp
-Jp
-Jp
+Tb
+Tb
 Jp
 Jp
 Tb
@@ -576,8 +573,8 @@ Tb
 Tb
 Jp
 Jp
-Jp
-Jp
+Tb
+Tb
 Jp
 Jp
 Jp
@@ -791,7 +788,7 @@ pr
 Ig
 VK
 pr
-xT
+cs
 cs
 VK
 cs
