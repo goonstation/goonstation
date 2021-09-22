@@ -486,16 +486,6 @@
 				chance_minimum = 30
 			splice_chance = max(chance_minimum,min(splice_chance,100))
 			if (prob(splice_chance)) // We're good, so start splicing!
-				// Create the new seed
-				var/obj/item/seed/S = unpool(/obj/item/seed)
-				S.set_loc(src)
-				var/datum/plant/P = new /datum/plant(S)
-				var/datum/plantgenes/DNA = new /datum/plantgenes(S)
-				S.planttype = P
-				S.plantgenes = DNA
-				P.hybrid = 1
-				S.generation = max(seed1.generation, seed2.generation) + 1
-
 				var/datum/plantgenes/P1DNA = seed1.plantgenes
 				var/datum/plantgenes/P2DNA = seed2.plantgenes
 
@@ -528,6 +518,17 @@
 						submissivespecies = P1
 						dominantDNA = P2DNA
 						submissiveDNA = P1DNA
+
+				// Create the new seed
+				var/obj/item/seed/S = unpool(/obj/item/seed)
+				S.set_loc(src)
+				var/dominantType = dominantspecies.type
+				var/datum/plant/P = new dominantType(S)
+				var/datum/plantgenes/DNA = new /datum/plantgenes(S)
+				S.planttype = P
+				S.plantgenes = DNA
+				P.hybrid = 1
+				S.generation = max(seed1.generation, seed2.generation) + 1
 
 				// Set up the base variables first
 				/*
@@ -1139,11 +1140,6 @@
 	New()
 		..()
 		for (var/A in concrete_typesof(/datum/plant)) src.available += new A(src)
-
-		/*for (var/datum/plant/P in src.available)
-			if (!P.vending || P.type == /datum/plant)
-				del(P)
-				continue*/
 
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)

@@ -19,6 +19,7 @@
 	proc/update_maptext()
 		if (!src.current)
 			src.maptext = "<span class='pixel ol c vb'></span>"
+			return
 		maptext_width = 96
 		maptext_y = 32
 		maptext_x = -32

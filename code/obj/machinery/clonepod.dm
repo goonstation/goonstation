@@ -597,11 +597,6 @@
 			logTheThing("combat", src, user, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
 			cloneslave = 1
 			implant_master = user
-			// Clone armies are not allowed to use speed or efficiency modules under article 7.2 p5 of the space geneva convention
-			is_speedy = 1
-			is_efficient = 1
-			speed_bonus = DEFAULT_SPEED_BONUS
-			meat_used_per_tick = DEFAULT_MEAT_USED_PER_TICK
 			light.enable()
 			src.update_icon()
 			user.drop_item()

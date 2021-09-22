@@ -195,7 +195,7 @@ var/global/debug_messages = 0
 
 	if (!typename)
 		return
-	var/thetype = get_one_match(typename, /atom, use_concrete_types = FALSE)
+	var/thetype = get_one_match(typename, /atom, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 	if (thetype)
 		var/counter = 0
 		var/procname = input("Procpath","path:", null) as text
@@ -368,7 +368,7 @@ var/global/debug_messages = 0
 				boutput(usr, "<span class='notice'>Type part of the path of the type.</span>")
 				var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
 				if (typename)
-					var/match = get_one_match(typename, /datum, use_concrete_types = FALSE)
+					var/match = get_one_match(typename, /datum, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 					if (match)
 						listargs += match
 
@@ -805,7 +805,7 @@ body
 	set name = "Find One"
 	set desc = "Show the location of one instance of type."
 
-	var/thetype = get_one_match(typename, /atom, use_concrete_types = FALSE)
+	var/thetype = get_one_match(typename, /atom, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 	if (thetype)
 		var/atom/theinstance = locate(thetype) in world
 		if (!theinstance)
@@ -822,7 +822,7 @@ body
 	set name = "Find All"
 	set desc = "Show the location of all instances of a type. Performance warning!!"
 
-	var/thetype = get_one_match(typename, /atom, use_concrete_types = FALSE)
+	var/thetype = get_one_match(typename, /atom, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 	if (thetype)
 		var/counter = 0
 		boutput(usr, "<span class='notice'><b>All instances of [thetype]: </b></span>")
@@ -854,7 +854,7 @@ body
 	set name = "Count All"
 	set desc = "Returns the number of all instances of a type that exist."
 
-	var/thetype = get_one_match(typename, /atom, use_concrete_types = FALSE)
+	var/thetype = get_one_match(typename, /atom, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 	if (thetype)
 		var/counter = 0
 		for (var/atom/theinstance in world)
