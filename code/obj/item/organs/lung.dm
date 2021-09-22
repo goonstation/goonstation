@@ -12,7 +12,7 @@
 	failure_disease = /datum/ailment/disease/respiratory_failure
 	var/temp_tolerance = T0C+66
 
-	var/safe_oxygen_min = 17 // Minimum safe partial pressure of O2, in kPa
+	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
 	var/safe_co2_max = 9 // Yes it's an arbitrary value who cares?
 	var/safe_toxins_max = 0.4
 	var/SA_para_min = 1
