@@ -1210,7 +1210,6 @@ ABSTRACT_TYPE(/area/prefab)
 /area/prefab/lesbeeans/interior
 	name = "Lesbian Bee Farm"
 	icon_state = "ranch"
-	//force_fullbright = 1 //I'm sad that I have to
 
 /area/prefab/lesbeeans/exterior
 	name = "Lesbian Bee Farm"

@@ -210,7 +210,7 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 
 	lesbeeans // BatElite's bee-shaped farm where the bees are also lesbians
 		maxNum = 1
-		probability = 100 //should be 30 imagine if I forgot to change this for the PR haha
+		probability = 20
 		prefabPath = "assets/maps/prefabs/prefab_lesbeeans.dmm"
 		prefabSizeX = 24
 		prefabSizeY = 24
