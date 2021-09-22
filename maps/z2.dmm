@@ -75375,20 +75375,11 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
-<<<<<<< HEAD
 "gfT" = (
 /obj/decoration/bullethole,
 /turf/space,
 /turf/unsimulated/wall/auto/lead/white,
 /area/prefab/threeonefiveonez2)
-=======
-"gfR" = (
-/obj/lattice,
-/obj/stool/chair,
-/mob/living/carbon/human/fatherjack/cow,
-/turf/unsimulated/floor/void,
-/area/diner/cow)
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 "ggw" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/bottle/rum,
@@ -76053,7 +76044,6 @@
 	icon_state = "13"
 	},
 /area/shuttle/escape/centcom/donut3)
-<<<<<<< HEAD
 "ijM" = (
 /obj/table/reinforced/auto,
 /obj/item/plate,
@@ -76073,12 +76063,6 @@
 	icon_state = "floor3"
 	},
 /area/prefab/threeonefiveonez2)
-=======
-"imL" = (
-/obj/submachine/slot_machine,
-/turf/unsimulated/outdoors/grass,
-/area/diner/cow)
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 "imR" = (
 /obj/decal/skeleton{
 	desc = "The remains of some poor cosmonaut fellow.";
@@ -77169,7 +77153,6 @@
 /turf/space,
 /turf/unsimulated/floor/engine/caution/south,
 /area/hospital/samostrel)
-<<<<<<< HEAD
 "liR" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 4;
@@ -77177,13 +77160,6 @@
 	},
 /turf/space,
 /area/prefab/threeonefiveonez2)
-=======
-"ljR" = (
-/turf/simulated/floor/stairs/wide{
-	dir = 8
-	},
-/area/diner/cow)
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 "lkL" = (
 /obj/machinery/door/airlock/pyro/glass/command,
 /obj/access_spawn/owlcommand,
@@ -77193,7 +77169,6 @@
 /obj/machinery/door/airlock/gannets/maintenance,
 /turf/unsimulated/floor/plating,
 /area/retentioncenter)
-<<<<<<< HEAD
 "lnD" = (
 /obj/stool/chair/comfy/shuttle{
 	pixel_x = 2;
@@ -77204,13 +77179,6 @@
 	icon_state = "floor3"
 	},
 /area/prefab/threeonefiveonez2)
-=======
-"lll" = (
-/obj/lattice,
-/obj/machinery/vending/cola/blue,
-/turf/unsimulated/floor/void,
-/area/diner/cow)
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 "loc" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -77827,7 +77795,6 @@
 	dir = 4
 	},
 /area/centcom/offices/virvatuli)
-<<<<<<< HEAD
 "mTo" = (
 /obj/critter/zombie/meatmonaut{
 	desc = "What the fuck is this thing";
@@ -77851,15 +77818,6 @@
 	icon_state = "floor3"
 	},
 /area/prefab/threeonefiveonez2)
-=======
-"mSp" = (
-/obj/stool/chair,
-/turf/simulated/floor/carpet{
-	dir = 1;
-	icon_state = "red2"
-	},
-/area/diner/cow)
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 "mTM" = (
 /obj/table/auto,
 /obj/machinery/light/small/iomoon{
@@ -77981,7 +77939,6 @@
 /turf/space,
 /turf/unsimulated/floor/carpet/office,
 /area/hospital/samostrel)
-<<<<<<< HEAD
 "nfn" = (
 /turf/space,
 /turf/space,
@@ -77998,8 +77955,6 @@
 	},
 /turf/unsimulated/wall/auto/lead/white,
 /area/prefab/threeonefiveonez2)
-=======
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 "ngg" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -79580,25 +79535,10 @@
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/engine,
 /area/shuttle/merchant_shuttle/diner_centcom)
-<<<<<<< HEAD
 "qvg" = (
 /turf/space,
 /turf/space,
 /area/prefab/threeonefiveonez2)
-=======
-"qtB" = (
-/obj/lattice,
-/obj/table/reinforced/auto,
-/obj/machinery/microwave,
-/turf/unsimulated/floor/void,
-/area/diner/cow)
-"quR" = (
-/obj/table/reinforced/auto,
-/obj/item/plate/tray,
-/obj/decal/cleanable/cobweb,
-/turf/simulated/floor/plating,
-/area/diner/cow)
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 "qvu" = (
 /obj/table/auto,
 /turf/space,
@@ -79864,7 +79804,6 @@
 	icon_state = "fblue3"
 	},
 /area/centcom/lobby)
-<<<<<<< HEAD
 "qXF" = (
 /obj/decal/cleanable/blood{
 	icon_state = "tracksL"
@@ -79874,19 +79813,6 @@
 	icon_state = "floor3"
 	},
 /area/prefab/threeonefiveonez2)
-=======
-"qZh" = (
-/obj/table/reinforced/bar/auto,
-/obj/item/plate{
-	pixel_y = 5
-	},
-/obj/item/plant/herb/grass,
-/obj/item/plant/herb/grass,
-/obj/item/plant/herb/grass,
-/obj/item/plant/herb/grass,
-/turf/unsimulated/outdoors/grass,
-/area/diner/cow)
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 "qZu" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -80408,7 +80334,6 @@
 /obj/item/clothing/mask/gas/swat/syndicate,
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
-<<<<<<< HEAD
 "sev" = (
 /obj/decoration/bullethole{
 	pixel_x = -8
@@ -80435,12 +80360,6 @@
 	icon_state = "floor3"
 	},
 /area/prefab/threeonefiveonez2)
-=======
-"seK" = (
-/obj/machinery/vending/kitchen,
-/turf/unsimulated/outdoors/grass,
-/area/diner/cow)
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 "seT" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-12"
@@ -80761,7 +80680,6 @@
 	dir = 4
 	},
 /area/crunch/wtc)
-<<<<<<< HEAD
 "teh" = (
 /obj/map/light/cyan,
 /turf/unsimulated/floor/airless/plating{
@@ -80769,12 +80687,6 @@
 	icon_state = "floor3"
 	},
 /area/prefab/threeonefiveonez2)
-=======
-"tdU" = (
-/obj/machinery/vending/alcohol,
-/turf/unsimulated/outdoors/grass,
-/area/diner/cow)
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 "teX" = (
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor3"
@@ -81004,7 +80916,6 @@
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
 "tPE" = (
-<<<<<<< HEAD
 /obj/railing{
 	dir = 8
 	},
@@ -81014,11 +80925,6 @@
 	icon_state = "floor3"
 	},
 /area/prefab/threeonefiveonez2)
-=======
-/obj/machinery/teleport/portal_ring,
-/turf/unsimulated/floor/void,
-/area/diner/cow)
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 "tPH" = (
 /obj/decal/cleanable/cobweb2,
 /turf/unsimulated/floor/plating,
@@ -81400,7 +81306,6 @@
 	},
 /turf/unsimulated/outdoors/snow,
 /area/centcom/offices/virvatuli)
-<<<<<<< HEAD
 "uZC" = (
 /obj/decoration/bullethole{
 	pixel_x = -8
@@ -81420,11 +81325,6 @@
 	icon_state = "floor3"
 	},
 /area/prefab/threeonefiveonez2)
-=======
-"uVv" = (
-/turf/simulated/wall/r_wall,
-/area/diner/cow)
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 "vab" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-45"
@@ -81474,7 +81374,6 @@
 	dir = 8
 	},
 /area/shuttle/escape/centcom/cogmap2)
-<<<<<<< HEAD
 "vfG" = (
 /obj/decal/skeleton{
 	desc = "The remains of some poor cosmonaut fellow.";
@@ -81492,14 +81391,6 @@
 	icon_state = "floor3"
 	},
 /area/prefab/threeonefiveonez2)
-=======
-"vel" = (
-/obj/stool/bar,
-/turf/simulated/floor/carpet{
-	dir = 10
-	},
-/area/diner/cow)
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 "vgD" = (
 /obj/landmark{
 	name = "pit_meatland"
@@ -81885,7 +81776,6 @@
 	opacity = 0
 	},
 /area/titlescreen)
-<<<<<<< HEAD
 "wpr" = (
 /obj/critter/zombie/meatmonaut{
 	desc = "What the fuck is this thing";
@@ -81898,12 +81788,6 @@
 	icon_state = "floor3"
 	},
 /area/prefab/threeonefiveonez2)
-=======
-"woU" = (
-/obj/grille/steel,
-/turf/simulated/floor/plating,
-/area/diner/cow)
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 "wpG" = (
 /obj/item/storage/wall/fire{
 	pixel_y = 32
@@ -82348,7 +82232,6 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-<<<<<<< HEAD
 "xGI" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/tableware/one_or_zero,
@@ -82358,20 +82241,6 @@
 	icon_state = "floor3"
 	},
 /area/prefab/threeonefiveonez2)
-=======
-"xHa" = (
-/obj/lattice,
-/obj/table/reinforced/bar/auto,
-/obj/item/reagent_containers/food/snacks/salad{
-	pixel_x = -3;
-	pixel_y = 9
-	},
-/obj/item/kitchen/utensil/fork{
-	pixel_x = 5
-	},
-/turf/unsimulated/floor/void,
-/area/diner/cow)
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 "xJg" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-25"
@@ -82461,7 +82330,6 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
-<<<<<<< HEAD
 "xRM" = (
 /obj/decal/fakeobjects{
 	desc = "There's alot of buttons and switches on here. Best not to touch it";
@@ -82488,12 +82356,6 @@
 	icon_state = "floor3"
 	},
 /area/prefab/threeonefiveonez2)
-=======
-"xQP" = (
-/obj/machinery/gibber/output_west,
-/turf/simulated/floor/plating,
-/area/diner/cow)
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 "xUe" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-21"
@@ -163267,7 +163129,6 @@ kfa
 kfa
 kmt
 aaa
-<<<<<<< HEAD
 aaa
 jhk
 aaa
@@ -163281,21 +163142,6 @@ aaa
 aaa
 aaa
 aaa
-=======
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 cnw
 cnw
 cnw
@@ -163585,7 +163431,6 @@ lGN
 lGN
 kmt
 aaa
-<<<<<<< HEAD
 vxb
 qvg
 vxb
@@ -163599,21 +163444,6 @@ vxb
 vxb
 vxb
 aaa
-=======
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 cnw
 cnw
 cnw
@@ -163903,7 +163733,6 @@ abr
 abr
 aCb
 aaa
-<<<<<<< HEAD
 vxb
 qvg
 vxb
@@ -163917,21 +163746,6 @@ vxb
 vxb
 vxb
 aaa
-=======
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 cnw
 cnw
 cnw
@@ -164221,7 +164035,6 @@ abn
 abn
 aCb
 aaa
-<<<<<<< HEAD
 vxb
 qvg
 vxb
@@ -164235,21 +164048,6 @@ vxb
 vxb
 vxb
 aaa
-=======
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 cnw
 cnw
 cnw
@@ -164539,7 +164337,6 @@ abn
 abn
 kmt
 aaa
-<<<<<<< HEAD
 vxb
 qvg
 eJc
@@ -164553,21 +164350,6 @@ eJc
 vxb
 vxb
 aaa
-=======
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 cnw
 cnw
 cnw
@@ -164857,7 +164639,6 @@ abr
 abr
 kmt
 aaa
-<<<<<<< HEAD
 vxb
 qvg
 eJc
@@ -164871,21 +164652,6 @@ eJc
 vxb
 vxb
 aaa
-=======
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 cnw
 cnw
 cnw
@@ -165175,7 +164941,6 @@ axb
 abr
 kmt
 aaa
-<<<<<<< HEAD
 vxb
 qvg
 eJc
@@ -165189,21 +164954,6 @@ eJc
 vxb
 vxb
 aaa
-=======
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 cnw
 cnw
 cnw
@@ -165493,7 +165243,6 @@ axb
 axb
 kmt
 aaa
-<<<<<<< HEAD
 vxb
 rge
 eJc
@@ -165507,21 +165256,6 @@ eJc
 eJc
 vxb
 aaa
-=======
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 cnw
 cnw
 cnw
@@ -165811,7 +165545,6 @@ aBb
 axa
 kmt
 aaa
-<<<<<<< HEAD
 vxb
 rge
 eJc
@@ -165825,21 +165558,6 @@ eJc
 eJc
 vxb
 aaa
-=======
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 cnw
 cnw
 cnw
@@ -166129,7 +165847,6 @@ axG
 axa
 kmt
 aaa
-<<<<<<< HEAD
 vxb
 rge
 qAU
@@ -166143,21 +165860,6 @@ vud
 eJc
 vxb
 aaa
-=======
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 cnw
 cnw
 cnw
@@ -166447,7 +166149,6 @@ aBc
 axa
 kmt
 aaa
-<<<<<<< HEAD
 vxb
 rge
 vud
@@ -166461,21 +166162,6 @@ fFv
 eJc
 vxb
 aaa
-=======
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 cnw
 cnw
 cnw
@@ -166765,7 +166451,6 @@ axG
 axa
 kmt
 aaa
-<<<<<<< HEAD
 vxb
 rge
 vud
@@ -166779,21 +166464,6 @@ vud
 eJc
 vxb
 aaa
-=======
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 cnw
 cnw
 cnw
@@ -167687,7 +167357,6 @@ lhU
 asq
 mnh
 jhk
-<<<<<<< HEAD
 rge
 gfT
 efE
@@ -167701,21 +167370,6 @@ jcl
 eJc
 eJc
 aaa
-=======
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 cnw
 cnw
 cnw
@@ -168005,7 +167659,6 @@ jvI
 asq
 mnh
 jhk
-<<<<<<< HEAD
 gGX
 xfg
 sGK
@@ -168019,21 +167672,6 @@ fhm
 xGI
 eJc
 aaa
-=======
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 cnw
 cnw
 cnw
@@ -168323,7 +167961,6 @@ vFr
 asq
 mnh
 jhk
-<<<<<<< HEAD
 gfT
 fVI
 vud
@@ -168337,21 +167974,6 @@ fhm
 ewo
 eJc
 aaa
-=======
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 cnw
 cnw
 cnw
@@ -168641,7 +168263,6 @@ sTU
 asq
 mnh
 jhk
-<<<<<<< HEAD
 xim
 uZT
 qXF
@@ -168655,21 +168276,6 @@ fhm
 xGI
 eJc
 aaa
-=======
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 cnw
 cnw
 cnw
@@ -168959,7 +168565,6 @@ yld
 asq
 mnh
 jhk
-<<<<<<< HEAD
 uZC
 ptm
 weS
@@ -168973,21 +168578,6 @@ sgz
 xGI
 eJc
 aaa
-=======
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 cnw
 cnw
 cnw
@@ -169277,7 +168867,6 @@ kjA
 kjA
 mnh
 jhk
-<<<<<<< HEAD
 rge
 rge
 eJc
@@ -169291,21 +168880,6 @@ eJc
 eJc
 eJc
 aaa
-=======
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 cnw
 cnw
 cnw
@@ -169595,7 +169169,6 @@ kjA
 lqh
 mnh
 jhk
-<<<<<<< HEAD
 qvg
 rge
 eJc
@@ -169609,21 +169182,6 @@ eJc
 eJc
 vxb
 aaa
-=======
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 cnw
 cnw
 cnw
@@ -169913,7 +169471,6 @@ lqh
 lqh
 mnh
 jhk
-<<<<<<< HEAD
 qvg
 qvg
 eJc
@@ -169927,21 +169484,6 @@ eJc
 vxb
 vxb
 aaa
-=======
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
->>>>>>> b410a02e8af487347e900629cc1c632febd07eeb
 cnw
 cnw
 cnw
