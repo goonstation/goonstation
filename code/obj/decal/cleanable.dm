@@ -94,6 +94,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 		src.name = initial(name)
 		src.desc = initial(desc)
 		color = initial(color)
+		blood_DNA = null
 
 		src.diseases.len = 0
 

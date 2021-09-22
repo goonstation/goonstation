@@ -775,7 +775,7 @@ var/list/radio_brains = list()
 	msgGain = "You feel like being stabbed isn't such a big deal anymore."
 	msgLose = "You are once again afraid of being stabbed."
 	stability_loss = 5
-	icon_state  = "regen"
+	icon_state  = "blood_od"
 	effect_group = "blood"
 
 	OnLife(var/mult)

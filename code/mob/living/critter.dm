@@ -317,7 +317,7 @@
 		else
 			..()
 
-	proc/butcher(var/mob/M)
+	proc/butcher(var/mob/M, drop_brain = TRUE)
 		var/i = rand(2,4)
 		var/transfer = src.reagents.total_volume / i
 
@@ -329,7 +329,7 @@
 				newmeat.name = "[src.name] meat"
 				newmeat.real_name = newmeat.name
 
-		if (src.organHolder)
+		if (src.organHolder && drop_brain)
 			src.organHolder.drop_organ("brain",src.loc)
 
 		src.ghostize()
