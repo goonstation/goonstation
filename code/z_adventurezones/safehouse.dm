@@ -3,7 +3,7 @@
 	Puzzle spoilers below!
 		- MetricDuck
 
-	All resprites specific to this prefab have been located in:
+	All resprites/colours specific to this prefab have been located in:
 		'icons/obj/adventurezones/safehouse.dmi'
 		'icons/obj/large/32x48.dmi'.
 
@@ -58,6 +58,7 @@
 	desc = "A free-floating mineral deposit from space."
 	icon_base = "adoor"
 	doordir = "single"
+	color = "#cccccc" //To match with asteroid var/stone_color, change if you need it to match something.
 
 	flags = FPRINT | IS_PERSPECTIVE_FLUID | ALWAYS_SOLID_FLUID //The poddoors aren't inherently fullbright, need a suitable turf or area underneath.
 
@@ -140,7 +141,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 		STOP_TRACKING
 		..()
 
-/obj/machinery/bio_handscanner/attackby(obj/item/W, mob/user as mob) //We don't want the parent's proc here.
+/obj/machinery/bio_handscanner/attackby(obj/item/W, mob/user as mob)
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
 	if(ON_COOLDOWN(src, "bio_handscanner_attackby", cooldown)) // To reduce chat span in case of multi-click
@@ -156,7 +157,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 				else
 					M.close()
 
-/obj/machinery/bio_handscanner/attack_hand(mob/user as mob) //Nor here.
+/obj/machinery/bio_handscanner/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
 	if(ON_COOLDOWN(src, "bio_handscanner_attackhhand", cooldown)) // To reduce chat span in case of multi-click
 		return
@@ -580,7 +581,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 "30 minutes prior to your scheduled appointment",
 "in order to allow time for a medical pre-assessment",
 "pre-assessment.",
-"I understand the MD I've waived the usual employee",
+"I understand the MD has waived the usual employee",
 "registration  process, so please ask for Dr.",
 "McCormack at reception when you arrive.",
 "",
@@ -602,10 +603,10 @@ obj/item/reagent_containers/iv_drip/dead_exec
 "We are writing to you to reassure you regarding some",
 "public accusations made by our competitors about the",
 "security of our HANDSCAN security product line. We",
-"here at SafeSolutions hold our custmer's sfaety and",
-"security in highest regard, and all out products are",
+"here at SafeSolutions hold our custmer's safety and",
+"security in highest regard, and all our products are",
 "tested rigorously in-accordance with both industry",
-"standards and in cooperation with out corporate",
+"standards and in cooperation with our corporate",
 "partners.",
 "",
 "Our HANDSCAN line is considered the bleeding-edge",
@@ -645,7 +646,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 "",
 "Here's your order summary:",
 "",
-"Activated Charcoal Filters - 4 off - $1400",
+"CO2 Filters - 4 off - $1400",
 "",
 "Subtotal: $1400",
 "Shipping: $40",
