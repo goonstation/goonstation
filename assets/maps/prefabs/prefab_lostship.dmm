@@ -1,0 +1,76 @@
+"ab" = (/obj/decoration/bookcase{pixel_y = 23},/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"aM" = (/obj/stool/chair/couch{dir = 5; icon_state = "chair_couch-blue"; name = "ratty blue couch"},/obj/decal/cleanable/dirt/jen,/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"cs" = (/obj/decal/fakeobjects/pipe/heat{dir = 9; name = "radiator pipe"},/turf/variableTurf/clear,/area/prefab/threeonefiveone)
+"cy" = (/obj/decal/fakeobjects/pipe/heat{dir = 6; name = "radiator pipe"},/turf/variableTurf/clear,/area/prefab/threeonefiveone)
+"ga" = (/obj/table/reinforced,/obj/item/device/light/lava_lamp/activated{pixel_x = 7; pixel_y = 20},/obj/random_item_spawner/desk_stuff/g_clip_bin_pen/maybe_few,/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"kb" = (/obj/rack,/obj/item/clothing/head/helmet/space/soviet{pixel_x = -5},/obj/item/clothing/head/helmet/space/soviet,/obj/item/clothing/head/helmet/space/soviet{pixel_x = 5},/obj/decal/cleanable/dirt/jen,/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"lE" = (/obj/decal/cleanable/dirt/dirt3,/obj/decal/cleanable/dirt/jen,/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"mS" = (/obj/table/reinforced,/obj/decal/cleanable/dirt/dirt3,/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"nt" = (/obj/decal/cleanable/dirt/dirt3,/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"nG" = (/obj/decal/fakeobjects/pipe/heat{dir = 10; name = "radiator pipe"},/turf/variableTurf/clear,/area/prefab/threeonefiveone)
+"op" = (/obj/decal/cleanable/dirt/dirt4,/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"pm" = (/obj/stool/chair/comfy/shuttle{dir = 8},/obj/decal/cleanable/dirt/dirt3,/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"qD" = (/obj/decal/fakeobjects/pipe/heat{dir = 5; name = "radiator pipe"},/turf/variableTurf/clear,/area/prefab/threeonefiveone)
+"qY" = (/obj/rack,/obj/item/clothing/head/helmet/space/soviet{pixel_x = -5},/obj/item/clothing/head/helmet/space/soviet,/obj/item/clothing/head/helmet/space/soviet{pixel_x = 5},/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"rg" = (/turf/unsimulated/wall/auto/lead/white{name = "Armored Wall"},/area/prefab/threeonefiveone)
+"rx" = (/obj/stool/chair/couch{dir = 9; icon_state = "chair_couch-blue"; name = "ratty blue couch"},/obj/decal/cleanable/dirt/jen,/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"rS" = (/obj/decal/cleanable/dirt/dirt4{dir = 1},/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"tJ" = (/obj/machinery/atmospherics/pipe/vent{dir = 1},/obj/decal/cleanable/dirt/jen,/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"vb" = (/obj/table/reinforced,/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"vr" = (/obj/decal/fakeobjects/pipe/heat,/turf/variableTurf/clear,/area/prefab/threeonefiveone)
+"xd" = (/obj/decal/cleanable/dirt/jen,/obj/decal/cleanable/dirt/jen,/turf/unsimulated/wall/auto/lead/white{name = "Armored Wall"},/area/prefab/threeonefiveone)
+"xm" = (/turf/unsimulated/wall/setpieces/leadwindow/white/full{desc = "Doesnt this defeat the purpose of armor?"; dir = 4; name = "Armored Window"},/area/prefab/threeonefiveone)
+"xs" = (/obj/machinery/door/unpowered/shuttle,/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"yh" = (/obj/stool/bed,/obj/item/clothing/suit/bedsheet/red,/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"zj" = (/turf/unsimulated/wall/setpieces/leadwindow/white/full{dir = 4},/area/prefab/threeonefiveone)
+"zs" = (/obj/decal/cleanable/dirt/dirt4,/obj/decal/cleanable/dirt/jen,/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"zD" = (/obj/decal/fakeobjects/pipe/heat{name = "radiator pipe"},/turf/variableTurf/clear,/area/prefab/threeonefiveone)
+"AU" = (/obj/stool/bed,/obj/item/clothing/suit/bedsheet/red,/obj/decal/cleanable/dirt/jen,/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"Bo" = (/obj/stool/bed{interesting = "The scanner displays another unknown chemical. A readout of some of it's basic properites look strangly like a ore...if only you could remember what that ore is."; name = "Operating Bed"},/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"Ed" = (/obj/storage/closet/wardrobe,/obj/random_item_spawner/dressup/one_or_zero,/obj/random_item_spawner/hat/one_or_zero,/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"Fc" = (/obj/stool/bed,/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"FN" = (/obj/ladder/broken{id = "3151_2"; pixel_y = 14},/obj/ladder,/obj/map/light/dimred,/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"FO" = (/obj/surgery_tray,/obj/random_item_spawner/med_tool/maybe_few,/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"GC" = (/obj/table/reinforced/auto,/obj/item/medical/bruise_pack,/obj/item/medical/bruise_pack{pixel_x = 4; pixel_y = 4},/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"IA" = (/obj/ladder/broken{pixel_y = 14},/obj/ladder{id = "3151_1"},/obj/map/light/dimred,/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"Jo" = (/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"JB" = (/obj/table/reinforced,/obj/decal/cleanable/dirt/jen,/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"KY" = (/turf/variableTurf/clear,/area/prefab/threeonefiveone)
+"Lf" = (/obj/decal/cleanable/dirt/jen,/turf/unsimulated/wall/setpieces/leadwindow/white/full{desc = "Doesnt this defeat the purpose of armor?"; dir = 4; name = "Armored Window"},/area/prefab/threeonefiveone)
+"LM" = (/obj/table/reinforced,/obj/deskclutter,/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"MY" = (/obj/decal/cleanable/dirt/dirt3,/turf/unsimulated/wall/auto/lead/white{name = "Armored Wall"},/area/prefab/threeonefiveone)
+"Pm" = (/obj/machinery/door/unpowered/shuttle,/obj/decal/cleanable/dirt/jen,/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"QA" = (/obj/decal/cleanable/dirt/jen,/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"Se" = (/obj/decal/cleanable/dirt/jen,/obj/decal/cleanable/dirt/jen,/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"SL" = (/obj/storage/closet,/obj/item/reagent_containers/glass/bucket/red,/obj/item/reagent_containers/glass/bucket/red,/obj/item/reagent_containers/glass/bucket/red,/obj/item/mop/orange,/obj/item/mop/orange,/obj/item/spraybottle{desc = "A spray bottle labeled Чистящий спрей. Seems what ever was in it is all gone now"; name = "old spray bottle"},/obj/item/spraybottle{desc = "A spray bottle labeled Чистящий спрей. Seems what ever was in it is all gone now"; name = "old spray bottle"},/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"Tf" = (/obj/machinery/shuttle/engine/propulsion{dir = 4; icon_state = "alt_propulsion"},/turf/variableTurf/clear,/area/prefab/threeonefiveone)
+"Ts" = (/turf/unsimulated/wall/setpieces/leadwindow/white/full{desc = "Doesnt this defeat the purpose of armor?"; name = "Armored Window"},/area/prefab/threeonefiveone)
+"UC" = (/obj/decal/cleanable/dirt/jen,/turf/unsimulated/wall/auto/lead/white{name = "Armored Wall"},/area/prefab/threeonefiveone)
+"Vo" = (/obj/iv_stand,/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"Wi" = (/obj/rack,/obj/item/clothing/mask/breath,/obj/item/clothing/head/helmet/space/soviet{pixel_x = -6},/obj/item/clothing/head/helmet/space/soviet,/obj/item/clothing/head/helmet/space/soviet{pixel_x = 5},/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"Ys" = (/obj/stool/bed,/obj/decal/cleanable/blood/splatter{icon_state = "gibbl2"},/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"YV" = (/obj/table/reinforced/auto,/obj/item/bloodslide{pixel_x = 8},/obj/item/bloodslide{pixel_x = 2; pixel_y = 10},/obj/machinery/microscope{pixel_x = -6; pixel_y = 3},/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+"Ze" = (/obj/decal/cleanable/dirt/jen,/obj/decal/cleanable/dirt/dirt3,/turf/unsimulated/floor/airless/plating{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor3"},/area/prefab/threeonefiveone)
+
+(1,1,1) = {"
+KYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKY
+KYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYcynGKYKYKYKYKYKYKY
+KYKYKYKYKYKYKYKYKYcynGcynGKYKYKYKYKYKYKYKYKYKYcynGzDzDcynGKYKYKYKYKY
+KYKYKYKYKYKYKYcynGzDzDzDzDKYKYKYKYKYKYKYKYKYKYzDzDzDzDzDzDKYKYKYKYKY
+KYKYKYKYKYKYKYzDqDcsqDcszDKYrgrgrgrgrgrgKYKYKYzDqDcsqDcszDKYKYKYKYKY
+KYKYKYKYcynGKYrgrgxmrgxmrgrgrgIAQAJoFNrgrgKYKYzDrgxmxmrgzDKYKYKYKYKY
+KYKYKYKYrgrgrgrgyhJBrgyhvbUClEJoopJoJolErgrgzjrgrgJoZergrgxmrgKYKYKY
+KYKYrgxmrgrgrgEdQAJorgntEdrgJoJoSeJoJoJoxsJoJoQAntJoJoTsJoFOrgrgKYKY
+KYrgrgLMababxdrgUCxsrgxsrgrgQAJoJoopJoJoxsSeJoJoJoJontxsJoBoVorgTfKY
+KYTsgapmQAJoxsQAJoJoJoQAJoPmntJoJoJoJoQArgUCMYrgrgzsJoTsJoQAntrgKYKY
+KYTsmSpmQAJoxsQASeJoJontJoxsJontopJoJoJorgntJoSLrgxsxmrgrgrgrgrgKYKY
+KYrgrgntJontrgrgrgxsrgxsrgrgJontJoJoQAZexsntJontUCJoJoxsrSJoFcrgTfKY
+KYKYrgxmrgrgrgEdQAQArgJoEdrgrxaMQAzsJoZergWikbqYrgJoJoTsJoYsrgrgKYKY
+KYKYKYKYrgrgrgrgyhvbrgAUvbrgrgrgxsxsrgrgrgrgLfUCUCYVGCrgrgxmrgKYKYKY
+KYKYKYKYqDcsKYrgrgxmrgxmrgrgrgtJJoQAtJrgrgKYKYvrrgxmxmrgvrKYKYKYKYKY
+KYKYKYKYKYKYKYzDcynGcynGzDKYrgrgxsxsrgrgKYKYKYvrcynGcynGvrKYKYKYKYKY
+KYKYKYKYKYKYKYqDcszDzDzDzDKYKYKYKYKYKYKYKYKYKYvrvrvrvrvrvrKYKYKYKYKY
+KYKYKYKYKYKYKYKYKYqDcsqDcsKYKYKYKYKYKYKYKYKYKYqDcsvrvrqDcsKYKYKYKYKY
+KYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYqDcsKYKYKYKYKYKYKY
+KYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKYKY
+"}

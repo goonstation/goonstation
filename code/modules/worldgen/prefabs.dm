@@ -208,6 +208,13 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 19
 		prefabSizeY = 22
 
+	ship3151 // Eagle's soviet ship with a lot of lore stuff. And blood.
+		maxNum = 1
+		prefabPath = "assets/maps/prefabs/prefab_lostship.dmm"
+		probabiltiy = 10
+		prefabSizeX = 34
+		prefabSizeY = 19
+
 	//UNDERWATER AREAS FOR OSHAN
 
 	pit
