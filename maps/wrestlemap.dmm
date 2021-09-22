@@ -24000,7 +24000,7 @@
 /obj/item/device/radio/electropack,
 /obj/item/storage/box/revimp_kit,
 /obj/item/storage/box/stinger_kit,
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
 /obj/item/device/radio/signaler{
 	pixel_x = 6
 	},
@@ -50901,7 +50901,7 @@
 /area/station/engine/inner)
 "vPq" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
 /obj/item/device/prisoner_scanner,
 /turf/simulated/floor/red/side{
 	dir = 10

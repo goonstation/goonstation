@@ -1706,7 +1706,7 @@
 
 	if (src.client) // I feel like every player should be ghosted when they get gibbed
 		var/mob/dead/observer/newmob = ghostize()
-		newmob.corpse = null
+		newmob?.corpse = null
 		if (!isnull(newmob) && give_medal)
 			newmob.unlock_medal("Gore Fest", 1)
 
@@ -2795,10 +2795,12 @@
 	playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 	if(specialType)
 		if(!locate(specialType) in src.loc)
-			new specialType(src.loc)
+			var/atom/A = new specialType(src.loc)
+			A.blood_DNA = src.bioHolder.Uid
 	else
 		if(!locate(custom_vomit_type) in src.loc)
-			make_cleanable(custom_vomit_type,src.loc)
+			var/obj/decal/cleanable/vomit = make_cleanable(custom_vomit_type,src.loc)
+			vomit.blood_DNA = src.bioHolder.Uid
 
 	src.nutrition -= nutrition
 

@@ -11,6 +11,8 @@
 	var/projectile_reagents = 0 // whether the reagents should get transfered to the projectiles
 	var/dump_reagents_on_turf = 0 //set this to 1 if you want the dumped reagents to be put onto the turf instead of just evaporated into nothingness
 	var/custom_reject_message = "" //set this to a string if you want a custom message to be shown instead of the default when a reagent isnt accepted by the gun
+	///will fill a projectile only partway
+	var/fractional = FALSE
 	inventory_counter_enabled = 1
 	move_triggered = 1
 
@@ -50,7 +52,11 @@
 
 	update_icon()
 		if (src.current_projectile)
-			var/amt = round(src.reagents.total_volume / src.current_projectile.cost)
+			var/amt = round(src.reagents.total_volume) / round(src.current_projectile.cost)
+			if(fractional)
+				amt = ceil(round(amt, 0.1))
+			else
+				amt = round(amt)
 			inventory_counter.update_number(amt)
 		else
 			inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
@@ -59,7 +65,9 @@
 
 	canshoot()
 		if(src.reagents && src.current_projectile)
-			if(src.reagents.total_volume >= src.current_projectile.cost)
+			if(src.fractional && src.reagents.total_volume > 0)
+				return 1
+			else if(src.reagents.total_volume >= src.current_projectile.cost)
 				return 1
 		return 0
 
@@ -149,9 +157,11 @@
 		if (!src.safe)
 			return 0
 		if (user)
-			boutput(user, "<span class='alert'>[src]'s safeties have been disabled.</span>")
+			boutput(user, "<span class='alert'>[src]'s volumetric limiter safeties have been disabled.</span>")
 		src.safe = 0
-		src.ammo_reagents = null
+		src.fractional = TRUE
+		src.current_projectile.cost = 90
+		src.update_icon()
 		var/image/magged = image(src.icon, "syringemag", layer = FLOAT_LAYER)
 		src.UpdateOverlays(magged, "emagged")
 		return 1
