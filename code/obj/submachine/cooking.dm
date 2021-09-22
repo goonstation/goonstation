@@ -366,6 +366,9 @@ table#cooktime a#start {
 			src.recipes = list()
 
 		if (!src.recipes.len)
+			src.recipes += new /datum/cookingrecipe/pizza_shroom(src)
+			src.recipes += new /datum/cookingrecipe/pizza_pepper(src)
+			src.recipes += new /datum/cookingrecipe/pizza_ball(src)
 			src.recipes += new /datum/cookingrecipe/haggass(src)
 			src.recipes += new /datum/cookingrecipe/haggis(src)
 			src.recipes += new /datum/cookingrecipe/scotch_egg(src)
@@ -543,6 +546,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/porridge(src)
 			// Put all single-ingredient recipes after this point
 			src.recipes += new /datum/cookingrecipe/pizza(src)
+			src.recipes += new /datum/cookingrecipe/pizza_fresh(src)
 			src.recipes += new /datum/cookingrecipe/cake_custom_item(src)
 			src.recipes += new /datum/cookingrecipe/pancake(src)
 			src.recipes += new /datum/cookingrecipe/bread(src)
