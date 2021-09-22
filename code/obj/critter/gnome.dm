@@ -71,11 +71,11 @@
 							src.work_target = planter
 							src.task = "work idea"
 							return 0
-						if (!planter.current && prob(10))
+						if (!planter.current && prob(5))
 							plant_plan = "plant seed"
 							src.work_target = planter
 							src.task = "work idea"
-							return
+							return 0
 		..()
 
 	CritterDeath()
@@ -105,8 +105,8 @@
 				else
 					src.visible_message(msg)
 			if ("plant seed")
-				if (!planter.current &&)
-					src.visible_message("<span class='alert'><b>[src] begins planting something in [planter].</b></span>")
+				if (!planter.current)
+					src.visible_message("<span class='alert'><b>[src] is planting something in [planter].</b></span>")
 					SETUP_GENERIC_ACTIONBAR(src, src, 5 SECONDS, /obj/critter/garden_gnome/proc/seed_plant, list(),
 					'icons/obj/hydroponics/items_hydroponics.dmi', "seeds", "", null)
 					return 1
@@ -132,9 +132,9 @@
 
 	proc/seed_plant()
 		var/obj/machinery/plantpot/planter = work_target
-		if (src.task == "working" && planter && !planter.current && get_dist(src, src.work_target) <= src.working_range)
+		if (src.task == "working" && planter && get_dist(src, src.work_target) <= src.working_range)
 			var/obj/item/seed/S
-			if (prob(50))
+			if (prob(50)) // 50-50 if it is a strange seed or a random regular plant
 				var/species = pick(hydro_controls.plant_species)
 				S = unpool(/obj/item/seed)
 				S.removecolor()
@@ -142,11 +142,15 @@
 				if(S.planttype)
 					planter.HYPnewplant(S)
 			else
-				S = unpool(/obj/item/seed/alien)
+				S = unpool(/obj/item/seed/alien) // Strange seed
+			// now plant the generated seed
 			S.set_loc(planter.loc)
-			if(S.planttype)
+			if(S.planttype && !planter.current)
 				planter.HYPnewplant(S)
-				src.visible_message("<span class='alert'><b>[src]</b> plants [S] in [planter].</span>")
+				src.visible_message("<b>[src]</b> plants [S] in a tray.")
+			else
+				src.visible_message("<b>[src]</b> tried to plant [S] in [planter], but it already had something in!")
+				pool(S)
 		src.reset_plant_plan()
 
 	proc/reset_plant_plan()
