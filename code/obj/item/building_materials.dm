@@ -573,15 +573,18 @@ MATERIAL
 
 				if("remetal")
 					// what the fuck is this
+					var/input = input("Use how many sheets?","Max: [src.amount]",1) as num
+					if (input < 1) return
+					input = min(input,src.amount)
 					var/obj/item/sheet/C = new /obj/item/sheet(usr.loc)
 					var/obj/item/rods/R = new /obj/item/rods(usr.loc)
 					if(src.material)
 						C.setMaterial(src.material)
 					if(src.reinforcement)
 						R.setMaterial(src.reinforcement)
-					C.amount = 1
-					R.amount = 1
-					src.change_stack_amount(-1)
+					C.amount = input
+					R.amount = input
+					src.change_stack_amount(-input)
 			if (a_type)
 				actions.start(new /datum/action/bar/icon/build(src, a_type, a_cost, src.material, a_amount, a_icon, a_icon_state, a_name, a_callback), usr)
 

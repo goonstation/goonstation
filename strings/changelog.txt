@@ -1,5 +1,96 @@
 
+(t)tue sep 21 21
+(u)BatElite
+(p)5592
+(e)🗺|mapping
+(+)Added a few more cyborg recharging stations to Donut 3
+(t)mon sep 20 21
+(u)Carsontheking
+(p)5813
+(e)🎨|sprites
+(*)Salted oats and Pepper corn added!
+(+)Adds in a new crop mutation for oats, salted oats, which contain salt. Also adds in a new crop mutation for corn, pepper corn, which contains pepper. They can also be processed into bags of salt, and bags of pepper respectively, both of which which serve no purpose currently.
+(u)pali
+(p)6056
+(e)🆕📄|feature, tgui
+(*)Ouija boards have moved to the 21st century and now contain emoji
+(u)Obama Gaming
+(p)5901
+(e)🗺|mapping
+(*)Added a new location to quantum telescope. Accessible through long range teleporter.
+(u)Azrun
+(p)5917
+(e)🆕⚖|feature, balance
+(*)You can mix and match lungs!
+(u)Sord
+(p)5890
+(e)🗺|mapping
+(+)Destiny now has a customs booth near the bridge, as well as a new clothing shop replacing some of the old crew quarters!
+(u)eX.n0x & Nefarious6th
+(p)5758
+(e)🎨|sprites
+(+)Card decks can now be taken out of pockets using the "pick up" action.
+(+)The process to open a Spacemen: the Grifening deck box is now easier!
+(+)Realistic card shuffling re-added; your cards might stick to each other!
+(u)pali
+(*)Vomit now contains DNA of the person who vomited it.
+(u)RSG250
+(p)5984
+(e)🆕|feature
+(+)added 2 ""new"" cloner modules to a certain space trader.
+(u)zjdtmkhzt
+(p)5962
+(e)⚖|balance
+(*)Spliced plants should now properly inherit the special behavior of their dominant parent. (For instance, rafflesia.)
+(*)The rafflesia can now smoke all of its spliced reagents, instead of just miasma.
+(u)Vaskritaya
+(p)6055
+(e)🆕|feature
+(+)Cigarettes can now be put back into packets.
+(t)sun sep 19 21
+(u)Ikea
+(p)6052
+(e)|
+(*)Quartermasters now get quartermaster training, this has the exact same effects of smooth talking trait.
+(u)BatElite
+(p)6014
+(e)|
+(+)You can now remove reinforcement from material sheets in bulk
+(u)Owari
+(e)🎨|sprites
+(+)New sea ladder in-hand sprites.
+(u)Walpvrgis
+(p)6019
+(e)🎨|sprites
+(*)Added a few new hats in multiple colours; baseball caps, goggles (worn as a headband) and pirate hats, as well as some extra mime beret colours. These can be found in the clothing booth under Accessories and Headwear.
+(u)Azrun
+(p)5950
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Blades can once again be forged in the Hidden Workshop.  A lot of blood, sweat and tears must be expended to craft one.
+(t)sat sep 18 21
+(u)Flappybat and THISISANICEGAME
+(p)5923
+(e)🎨|sprites
+(+)Resprited the critter security bot, now with animated treads and glowing eyes.
+(u)Flaborized
+(p)6030
+(e)🎨|sprites
+(*)Geneticists, scientists, roboticists, and engineering jobs now spawn with visually unique backpacks.
+(u)Flappybat
+(p)5818
+(e)🆕🎨|feature, sprites
+(+)CARL now sells the Syndicate command helmet to go with the command armor.
+(u)tarmunora
+(e)⚖|balance
+(*)asslaser direct damage reduction.
+(u)tarmunora
+(e)⚖|balance
+(*)sprinting while prone costs extra stamina.
 (t)thu sep 16 21
+(u)Azrun
+(p)6024
+(e)🆕⚖|feature, balance
+(*)Special Order events added. Help your QMs make some money today.
 (u)Flaborized
 (p)6004
 (e)🎨|sprites

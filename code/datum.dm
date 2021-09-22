@@ -1,3 +1,6 @@
+TYPEINFO(/datum)
+	var/admin_spawnable = TRUE
+
 #ifdef IMAGE_DEL_DEBUG
 var/global/list/deletedImageData = new
 var/global/list/deletedImageIconStates = new
