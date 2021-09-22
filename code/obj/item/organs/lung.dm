@@ -79,8 +79,8 @@
 					else
 						update.emotes |= "gasp"
 				if (O2_pp > 0)
-					var/ratio = round(safe_oxygen_min/(O2_pp + 0.1))
-					donor.take_oxygen_deprivation(min(5*ratio, 5)/LUNG_COUNT) // Don't fuck them up too fast (space only does 7 after all!)
+					var/ratio = min(((O2_pp + 0.1)/safe_oxygen_min),1)
+					donor.take_oxygen_deprivation(clamp(round(5*(1-ratio)), 1, 5)/LUNG_COUNT) // Don't fuck them up too fast (space only does 7 after all!)
 					oxygen_used = breath.oxygen*ratio/6
 				else
 					donor.take_oxygen_deprivation(3 * mult/LUNG_COUNT)
