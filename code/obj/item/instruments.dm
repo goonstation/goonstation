@@ -32,11 +32,18 @@
 	var/dog_bark = 1
 	var/affect_fun = 5
 	var/special_index = 0
+	var/use_new_interface = 0
 
 	New()
 		..()
-		if (!pick_random_note)
+
+		if(use_new_interface == 0)
 			contextLayout = new /datum/contextLayout/instrumental()
+		else
+			contextLayout = new /datum/contextLayout/newinstrumental()
+
+		if (!pick_random_note)
+
 
 			//src.contextActions = childrentypesof(/datum/contextAction/vehicle)
 
@@ -49,6 +56,8 @@
 
 				if (special_index && i >= special_index)
 					newcontext = new /datum/contextAction/instrument/special
+				else if (findtext(sounds_instrument[i], "-"))
+					newcontext = new /datum/contextAction/instrument/black
 				else
 					newcontext = new /datum/contextAction/instrument
 				newcontext.note = i
@@ -142,16 +151,21 @@
 	icon_state = "piano"
 	item_state = "piano"
 	sounds_instrument = null
-	special_index = 13
+	// special_index = 13
 	note_time = 0.18 SECONDS
 	randomized_pitch = 0
+	var/notes = list("c4")
+	var/note = "c4"
 
 	New()
+		notes = list("c3","c-3", "d3", "d-3", "e3","f3","f-3","g3", "g-3","a3","a-3","b3","c4","c-4", "d4", "d-4", "e4","f4","f-4","g4", "g-4","a4","a-4","b4","c5","c-5", "d5", "d-5", "e5","f5","f-5","g5", "g-5","a5","a-5","b5","c6")
 		sounds_instrument = list()
-		for (var/i in 1 to 12)
-			sounds_instrument += "sound/musical_instruments/piano/piano_[i].ogg"
+		for (var/i in 1 to 37) // 12
+			note = notes[i]
+			sounds_instrument += "sound/musical_instruments/piano/notes/[note].ogg" // [i]
 
-		sounds_instrument += list("sound/musical_instruments/piano/furelise.ogg","sound/musical_instruments/piano/gymno.ogg","sound/musical_instruments/piano/lune.ogg","sound/musical_instruments/piano/nachtmusik1.ogg","sound/musical_instruments/piano/nachtmusik2.ogg")
+		// sounds_instrument += list("sound/musical_instruments/piano/furelise.ogg","sound/musical_instruments/piano/gymno.ogg","sound/musical_instruments/piano/lune.ogg","sound/musical_instruments/piano/nachtmusik1.ogg","sound/musical_instruments/piano/nachtmusik2.ogg")
+		use_new_interface = 1
 		..()
 
 

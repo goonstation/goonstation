@@ -125,6 +125,61 @@ var/list/datum/contextAction/globalContextActions = null
 
 		. = buttons
 
+/datum/contextLayout/newinstrumental
+	var/spacingX = 16
+	var/spacingY = 16
+	var/offsetX = 0
+	var/offsetY = 0
+
+	New(var/SpacingX = 5, var/SpacingY = 16, var/OffsetX = 0, var/OffsetY = 0)
+		spacingX = SpacingX
+		spacingY = SpacingY
+		offsetX = OffsetX
+		offsetY = OffsetY
+		. = ..()
+
+	showButtons(list/buttons, atom/target)
+		var/offX = 0
+		var/offY = spacingY
+		var/finalOff = spacingX * (buttons.len-3)
+		offX -= finalOff/2
+
+		var/buttonIndex = 1
+		var/octaveIndex = 1
+		for(var/atom/movable/screen/contextButton/C as anything in buttons)
+			C.screen_loc = "CENTER,CENTER+0.6"
+
+			if(buttonIndex > 12)
+				offX += 5
+				buttonIndex = 1
+				octaveIndex += 1
+
+			if(buttonIndex == 6)
+				offX += 5
+
+			switch(buttonIndex)
+				if(2,4,7,9,11)
+					offY = spacingY + 12
+				else
+					offY = spacingY
+
+			buttonIndex += 1
+
+			addButtonToHud(usr, C)
+
+			var/matrix/trans = unpool(/matrix)
+			trans = trans.Reset()
+			trans.Translate(offX, offY)
+
+			animate(C, alpha=255, transform=trans, easing=CUBIC_EASING, time=1)
+
+			offX += spacingX
+			//if(offX >= spacingX)
+			//	offX = 0
+			//	offY -= spacingY
+
+		. = buttons
+
 /datum/contextLayout/experimentalcircle
 	var/dist
 
