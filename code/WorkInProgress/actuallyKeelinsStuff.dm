@@ -1849,6 +1849,12 @@ Returns:
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "ouijaboard"
 	w_class = W_CLASS_NORMAL
+	var/emoji_prob = 30
+	var/emoji_min = 1
+	var/emoji_max = 3
+	var/words_prob = 100
+	var/words_min = 5
+	var/words_max = 10
 
 	New()
 		. = ..()
@@ -1859,43 +1865,59 @@ Returns:
 		. = ..()
 		STOP_TRACKING
 
+	proc/generate_words()
+		var/list/words = list()
+		if(prob(words_prob))
+			for(var/i in 1 to rand(words_min, words_max))
+				var/picked = pick(strings("ouija_board.txt", "ouija_board_words"))
+				words |= picked
+		if(prob(emoji_prob))
+			for(var/i in 1 to rand(emoji_min, emoji_max))
+				words |= random_emoji()
+		return words
+
 	Click(location,control,params)
 		if(isobserver(usr) || iswraith(usr))
 			if(isAIeye(usr))
 				boutput(usr, "<span class='notice'>Whoa, you can use this as an AI? Are you actually just a ghost trapped in a metal box??</span>")
 
-			if(GET_COOLDOWN(src, usr) == 0)
-				var/list/words = list()
-				for(var/i=0, i<rand(5, 10), i++)
-					var/picked = pick(strings("ouija_board.txt", "ouija_board_words"))
-					words |= picked
-
-				if(words.len)
-					var/selected = input(usr, "Select a word:", src.name) as null|anything in words
-					if(!selected) return
-
-					if(ON_COOLDOWN(src, usr, 3 SECONDS))
-						usr.show_text("Please wait a moment before using the board again.", "red")
-						return
-
-					if(src && selected)
-						animate_float(src, 1, 5, 1)
-						if(prob(20) && !ON_COOLDOWN(src, "bother chaplains", 1 MINUTE))
-							var/area/AR = get_area(src)
-							for(var/mob/M in by_cat[TR_CAT_CHAPLAINS])
-								if(M.client)
-									boutput(M, "<span class='notice'>You sense a disturbance emanating from \a [src] in \the [AR.name].</span>")
-						for (var/mob/O in observersviewers(7, src))
-							O.show_message("<B><span class='notice'>The board spells out a message ... \"[selected]\"</span></B>", 1)
-#ifdef HALLOWEEN
-						if (istype(usr.abilityHolder, /datum/abilityHolder/ghost_observer))
-							var/datum/abilityHolder/ghost_observer/GH = usr.abilityHolder
-							GH.change_points(30)
-#endif
-			else
+			if(ON_COOLDOWN(src, usr, 3 SECONDS))
 				usr.show_text("Please wait a moment before using the board again.", "red")
+				return
+
+			var/selected
+			do
+				var/list/words = list("*REFRESH*") + src.generate_words()
+				selected = tgui_input_list(usr, "Select a word:", src.name, words, allowIllegal=TRUE)
+			while(selected == "*REFRESH*")
+
+			if(!selected)
+				return
+
+			animate_float(src, 1, 5, 1)
+			if(prob(20) && !ON_COOLDOWN(src, "bother chaplains", 1 MINUTE))
+				var/area/AR = get_area(src)
+				for(var/mob/M in by_cat[TR_CAT_CHAPLAINS])
+					if(M.client)
+						boutput(M, "<span class='notice'>You sense a disturbance emanating from \a [src] in \the [AR.name].</span>")
+			for (var/mob/O in observersviewers(7, src))
+				O.show_message("<B><span class='notice'>The board spells out a message ... \"[selected]\"</span></B>", 1)
+			#ifdef HALLOWEEN
+			if (istype(usr.abilityHolder, /datum/abilityHolder/ghost_observer))
+				var/datum/abilityHolder/ghost_observer/GH = usr.abilityHolder
+				GH.change_points(30)
+			#endif
 		else
 			return ..(location,control,params)
+
+/obj/item/ghostboard/emouija
+	name = "Emouija board"
+	desc = "A wooden board that allows for communication with spirits and such things. Wait, this one doesn't even have proper letters on it."
+	emoji_prob = 100
+	emoji_min = 5
+	emoji_max = 10
+	words_prob = 0
+
 
 /proc/fartes()
 	for(var/imageToLoad in flist("images/"))

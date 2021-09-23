@@ -1,5 +1,37 @@
 
+(t)tue sep 21 21
+(u)BatElite
+(p)5592
+(e)🗺|mapping
+(+)Added a few more cyborg recharging stations to Donut 3
 (t)mon sep 20 21
+(u)Carsontheking
+(p)5813
+(e)🎨|sprites
+(*)Salted oats and Pepper corn added!
+(+)Adds in a new crop mutation for oats, salted oats, which contain salt. Also adds in a new crop mutation for corn, pepper corn, which contains pepper. They can also be processed into bags of salt, and bags of pepper respectively, both of which which serve no purpose currently.
+(u)pali
+(p)6056
+(e)🆕📄|feature, tgui
+(*)Ouija boards have moved to the 21st century and now contain emoji
+(u)Obama Gaming
+(p)5901
+(e)🗺|mapping
+(*)Added a new location to quantum telescope. Accessible through long range teleporter.
+(u)Azrun
+(p)5917
+(e)🆕⚖|feature, balance
+(*)You can mix and match lungs!
+(u)Sord
+(p)5890
+(e)🗺|mapping
+(+)Destiny now has a customs booth near the bridge, as well as a new clothing shop replacing some of the old crew quarters!
+(u)eX.n0x & Nefarious6th
+(p)5758
+(e)🎨|sprites
+(+)Card decks can now be taken out of pockets using the "pick up" action.
+(+)The process to open a Spacemen: the Grifening deck box is now easier!
+(+)Realistic card shuffling re-added; your cards might stick to each other!
 (u)pali
 (*)Vomit now contains DNA of the person who vomited it.
 (u)RSG250

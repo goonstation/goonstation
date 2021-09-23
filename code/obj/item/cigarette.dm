@@ -211,8 +211,7 @@
 		if (!user) return
 		var/can_blow_smoke = (user.wear_mask == src && src.on && src.reagents.total_volume > 0 && src.puff_ready)
 		var/success = ( ..() )
-		if (!(can_blow_smoke && success)) return
-
+		if (!(can_blow_smoke && success) || ON_COOLDOWN(src, "wtf_cig_sanity_check", 0.5 SECONDS)) return
 		particleMaster.SpawnSystem(new /datum/particleSystem/blow_cig_smoke(user.loc, user.dir))
 
 		//var/datum/reagents/smokeContents = new/datum/reagents/(src.reagents.maximum_volume)
