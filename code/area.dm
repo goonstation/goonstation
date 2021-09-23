@@ -1212,14 +1212,6 @@ ABSTRACT_TYPE(/area/prefab)
 	name = "Shooting Range"
 	icon_state = "purple"
 
-/area/prefab/threeonefiveone
-	name = "3151"
-	icon_state = "red"
-
-/area/prefab/threeonefiveonez2
-	name = "3151z2"
-	icon_state = "red"
-
 // Sealab trench areas //
 
 /area/shuttle/sea_elevator_room
