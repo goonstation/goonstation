@@ -1,7 +1,7 @@
 /obj/critter/garden_gnome
 	name = "garden gnome"
 	desc = "Space gnomes are a good omen in your garden. "
-	icon = 'icons/obj/junk.dmi'
+	icon = 'icons/misc/critter.dmi'
 	icon_state = "gnome"
 	density = 0
 	health = 25
