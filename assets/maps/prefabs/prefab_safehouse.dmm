@@ -2,7 +2,6 @@
 "aM" = (/obj/machinery/door/airlock/gannets/maintenance{name = "storage airlock"},/obj/access_spawn/public,/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/prefab/safehouse)
 "cg" = (/obj/decal/cleanable/blood{icon_state = "handblood"; pixel_y = 7},/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/safehouse)
 "cj" = (/obj/stool/chair/office/red{dir = 1},/turf/simulated/floor/carpet/red/fancy/edge/sw,/area/prefab/safehouse)
-"cq" = (/obj/machinery,/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/safehouse)
 "cr" = (/obj/decal/fakeobjects/safehouse/mechcomp_cabinet{pixel_y = -2},/turf/unsimulated/floor/circuit/vintage/vintage_CO2,/area/prefab/safehouse)
 "cy" = (/obj/table/wood/auto,/obj/machinery/computer3/generic/personal/safehouse,/turf/simulated/floor/carpet/red/fancy/edge/nw,/area/prefab/safehouse)
 "cI" = (/obj/window/cubicle{dir = 4},/obj/machinery/bot/medbot{pixel_x = -3},/turf/simulated/floor/circuit,/area/prefab/safehouse)
@@ -142,7 +141,7 @@
 UMUMUMUMZdUMUMUMZdZdUMUMUMUMUMUMUMUMUMUMUMUMUMUMUMUMUMUMUMUMUMUMUM
 UMUMUMZdZdZdUMZdZdZdZdUMUMUMUMUMUMUMUMUMUMUMUMUMUMUMUMUMZdUMUMUMUM
 UMUMZdZdZdZdZdZdZdZdZdZdUMZdZdUMUMUMUMUMUMUMUMUMUMUMUMZdZdZdUMUMUM
-UMVtZdYAYAYAYAcqYAYAZdZdZdZdZdVtUMUMUMZdUMUMUMUMZdUMZdZdZdZdUMUMUM
+UMVtZdYAYAYAYAYAYAYAZdZdZdZdZdVtUMUMUMZdUMUMUMUMZdUMZdZdZdZdUMUMUM
 ZdZdZdYAcrdhetgfghYAZdYAYAYAZdZdVtVtVtZdZdZdZdUMZdZdZdZdZdZdZdUMUM
 UMZdZdYAgjhpzoDmhxYAZdYAaEYAZdZdVtZdZdZdZdZdZdZdZdZdZdZdZdZdZdUMUM
 UMUMZdYAidiigodKeqYAYAYAGpYAYAYAZdZdZdZdYAYAYAYAYAYAYAYAYAYAZdZdUM
