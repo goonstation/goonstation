@@ -240,6 +240,9 @@ var/global/list/job_start_locations = list()
 /obj/landmark/lrt/workshop
 	name = "Hidden Workshop"
 
+/obj/landmark/lrt/voiddiner
+	name = "Void Diner"
+
 /obj/landmark/character_preview_spawn
 	name = LANDMARK_CHARACTER_PREVIEW_SPAWN
 

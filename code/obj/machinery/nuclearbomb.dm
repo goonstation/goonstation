@@ -151,7 +151,7 @@
 								src.det_time = TIME + src.timer_default
 								src.add_simple_light("nuke", list(255, 127, 127, 127))
 								command_alert("\A [src] has been armed in [A]. It will detonate in [src.get_countdown_timer()] minutes. All personnel must report to [A] to disarm the bomb immediately.", "Nuclear Weapon Detected")
-								world << sound('sound/machines/bomb_planted.ogg')
+								playsound_global(world, "sound/machines/bomb_planted.ogg", 90)
 								logTheThing("bombing", user, null, "armed [src] at [log_loc(src)].")
 
 					else

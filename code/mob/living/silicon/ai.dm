@@ -145,7 +145,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	has_feet = 1
 	var/obj/churn = new/obj{icon = 'icons/misc/SomepotatoArt.dmi'; pixel_y = -14; icon_state = "feet"}
 	underlays += churn
-	del(churn)
+	qdel(churn)
 	canmove = 1
 
 /mob/living/silicon/ai/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
