@@ -14,6 +14,7 @@ accssry : mall ninja bullshit. optics. gadgets. flashlights. horns. sexy nude me
 
 ABSTRACT_TYPE(/obj/item/gun_parts)
 /obj/item/gun_parts/
+	icon = 'icons/obj/items/gunsparts.dmi'
 	var/name_addition = ""
 	var/part_DRM = 0 //which gun models is this part compatible with?
 	var/obj/item/gun/modular/my_gun = null
@@ -36,8 +37,7 @@ ABSTRACT_TYPE(/obj/item/gun_parts/barrel)
 	var/lensing = 0 // Variable used for optical gun barrels. Scalar around 1.0
 	var/jam_frequency_fire = 1 //additional % chance to jam on fire. Reload to clear.
 	var/scatter = 0
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "c_tube"
+	icon_state = "barrel-pistol"
 
 	add_part_to_gun()
 		..()
@@ -76,8 +76,7 @@ ABSTRACT_TYPE(/obj/item/gun_parts/stock)
 	var/stock_dual_wield = 1 // if gun AND stock can be dual wielded, whole gun can be dual wielded.
 	var/jam_frequency_reload = 0 //attitional % chance to jam on reload. Just reload again to clear.
 	var/list/ammo_list = list() // ammo that stays in the stock when removed
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "shovel"
+	icon_state = "stock-pistol"
 
 
 
@@ -363,6 +362,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	desc = "A cylindrical barrel, rifled."
 	spread_angle = -15
 	name_addition = "rifle"
+	icon_state = "barrel-rifle"
 
 /obj/item/gun_parts/barrel/foss
 	name = "\improper FOSS lensed barrel"
@@ -372,6 +372,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	part_DRM = GUN_FOSS | GUN_SOVIET
 	color = "#5555FF"
 	name_addition = "lenser"
+	icon_state = "barrel-zauber"
 
 /obj/item/gun_parts/barrel/foss/long
 	name = "\improper FOSS lensed long barrel"
@@ -379,7 +380,9 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	spread_angle = -17
 	lensing = 1.1
 	part_DRM = GUN_FOSS | GUN_SOVIET
+	color = "#7755FF"
 	name_addition = "focuser"
+	icon_state = "barrel-zauber"
 
 /obj/item/gun_parts/barrel/juicer
 	name = "\improper BLASTA Barrel"
@@ -390,6 +393,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	part_DRM = GUN_JUICE | GUN_ITALIAN
 	color = "#99FF99"
 	name_addition = "MASHER"
+	icon_state = "barrel-shotgun"
 
 /obj/item/gun_parts/barrel/juicer/longer
 	name = "\improper SNIPA Barrel"
@@ -397,6 +401,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	spread_angle = -17 // accurate??
 	jam_frequency_fire = 15 //but very!!!!!!! poorly built
 	name_addition = "BLITZER"
+	icon_state = "barrel-rifle"
 
 /obj/item/gun_parts/barrel/soviet
 	name = "Сборка объектива"
@@ -406,6 +411,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	part_DRM = GUN_FOSS | GUN_SOVIET
 	color = "#FF9999"
 	name_addition = "comrade"
+	icon_state = "barrel-zauber"
 
 /obj/item/gun_parts/barrel/italian
 	name = "canna di fucile"
@@ -434,6 +440,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	jam_frequency_reload = 2 // a little more jammy
 	part_DRM = GUN_NANO | GUN_JUICE | GUN_ITALIAN
 	name_addition = "sturdy"
+	icon_state = "stock-standard"
 
 /obj/item/gun_parts/stock/foss
 	name = "\improper FOSS laser stock"
@@ -444,6 +451,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	max_crank_level = 2
 	color = "#5555FF"
 	name_addition = "vicious"
+	icon_state = "stock-crank"
 
 /obj/item/gun_parts/stock/foss/long
 	name = "\improper FOSS laser rifle stock"

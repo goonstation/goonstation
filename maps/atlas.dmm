@@ -10020,7 +10020,7 @@
 "yn" = (
 /obj/decal/poster/wallsign/poster_clown,
 /obj/npc/trader/exclown{
-	name = "Tiny Geoff Honkington";
+	name = "Tiny fake jef";
 	pixel_x = 15;
 	pixel_y = -12;
 	transform = list(0.5,0,0,0,0.5,0)
