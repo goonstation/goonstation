@@ -139,8 +139,6 @@
 				S = unpool(/obj/item/seed)
 				S.removecolor()
 				S.generic_seed_setup(species)
-				if(S.planttype)
-					planter.HYPnewplant(S)
 			else
 				S = unpool(/obj/item/seed/alien) // Strange seed
 			// now plant the generated seed
