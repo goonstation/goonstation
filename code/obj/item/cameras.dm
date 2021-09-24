@@ -92,7 +92,7 @@
 	var/wait_cycle = 0
 
 	attack_self(mob/user)
-		if (user.find_in_hand(src))
+		if (user.find_in_hand(src) && user.mind && user.mind.special_role == ROLE_SPY_THIEF) // No metagming this
 			if (!src.flash_mode)
 				user.show_text("You use the secret switch to set the camera to flash mode.", "blue")
 				playsound(user, "sound/items/pickup_defib.ogg", 100, 1)
