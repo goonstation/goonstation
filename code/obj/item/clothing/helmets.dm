@@ -600,34 +600,6 @@
 		setProperty("meleeprot_head", 4)
 		setProperty("disorient_resist_eye", 0)
 
-	unremovable
-		name = "slasher's mask"
-		desc = "A face-mounted welding mask, this one seems to be protruding some kind of dark aura."
-		cant_self_remove = 1
-		cant_other_remove = 1
-		abilities = null
-		icon_state = "the_welder"
-		item_state = "the_welder"
-		item_function_flags = IMMUNE_TO_ACID
-		see_face = 1.0
-		setupProperties()
-			..()
-			setProperty("meleeprot_head", 6)
-			setProperty("disorient_resist_eye", 100)
-			setProperty("movespeed", 0.2)
-			setProperty("exploprot", 40)
-
-	postpossession
-		name = "worn welding mask"
-		desc = "A worn-out welding mask, from the looks of it, it's well over a hundred years old."
-		icon_state = "the_welder"
-		item_state = "the_welder"
-		abilities = null
-		see_face = 1.0
-		setupProperties()
-			..()
-			setProperty("movespeed", 0.2)
-
 /obj/item/clothing/head/helmet/welding/abilities = list(/obj/ability_button/mask_toggle)
 
 /obj/item/clothing/head/helmet/EOD
