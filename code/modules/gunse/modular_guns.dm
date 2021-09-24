@@ -32,6 +32,7 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 	var/list/obj/item/gun_parts/parts = list()
 	var/built = 0
 	icon_state = "tranq_pistol"
+	contraband = 0
 
 
 	var/lensing = 0 // Variable used for optical gun barrels. laser intensity scales around 1.0 (or will!)
@@ -396,6 +397,7 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 	spread_angle = 25 // value without a barrel. Add one to keep things in line.
 	color = "#5555FF"
 	icon_state = "caplaser"
+	contraband = 2
 
 
 	make_parts()
@@ -422,6 +424,7 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 	gun_DRM = GUN_JUICE
 	spread_angle = 30 // value without a barrel. Add one to keep things in line.
 	color = "#99FF99"
+	contraband = 1
 
 	make_parts()
 		barrel = new /obj/item/gun_parts/barrel/juicer(src)
@@ -444,6 +447,7 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 	spread_angle = 25 // value without a barrel. Add one to keep things in line.
 	color = "#FF9999"
 	icon_state = "laser"
+	contraband = 1
 
 	make_parts()
 		barrel = new /obj/item/gun_parts/barrel/soviet(src)

@@ -127,6 +127,7 @@ ABSTRACT_TYPE(/obj/item/gun_parts/magazine)
 	var/list/ammo_list = list() // ammo that stays in the mag when removed
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "ak47"
+	contraband = 1
 
 	add_part_to_gun()
 		..()
@@ -373,6 +374,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	color = "#5555FF"
 	name_addition = "lenser"
 	icon_state = "barrel-zauber"
+	contraband = 1
 
 /obj/item/gun_parts/barrel/foss/long
 	name = "\improper FOSS lensed long barrel"
