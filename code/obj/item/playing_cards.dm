@@ -127,9 +127,10 @@
 		stored_info = list(name,desc,icon_state)
 
 	proc/flip()
+		tooltip_rebuild = 1 //makes sure the card tooltips get updated everytime
 		if(!facedown)
 			name = "playing card"
-			desc = "a face-down card."
+			desc = "A face-down card."
 			icon_state = "[card_style]-back"
 			facedown = TRUE
 		else
@@ -164,9 +165,9 @@
 		cardActions = list()
 		if(card_outside)
 			cardActions += new /datum/contextAction/card/solitaire
-		cardActions += new /datum/contextAction/card/fan
-		cardActions += new /datum/contextAction/card/stack
-		cardActions += new /datum/contextAction/card/close
+			cardActions += new /datum/contextAction/card/fan
+			cardActions += new /datum/contextAction/card/stack
+			cardActions += new /datum/contextAction/card/close
 
 	proc/deck_or_hand(var/mob/user,var/is_hand) //used by context actions to handle creating a hand or deck of cards
 		if(!istype(user.equipped(),/obj/item/playing_card))
@@ -324,10 +325,10 @@
 	proc/add_foil() //makes the card shiiiiiny
 		UpdateOverlays(image(icon,"stg-foil"),"foil")
 		foiled = TRUE
-		name = "foil [name]"
+		name = "Foil [name]"
 
 /obj/item/playing_card/expensive //(¬‿¬)
-	desc = "Tap this card and sacrifice one Yourself to win the game."
+	desc = "Tap this card and sacrifice one of yourselves to win the game."
 	icon_state = "stg-general-0"
 	var/list/prefix1 = list("Incredibly", "Strange", "Mysterious", "Suspicious", "Scary")
 	var/list/prefix2 = list("Rare", "Black", "Dark", "Shadowy", "Expensive", "Fun", "Gamer")
@@ -375,7 +376,7 @@
 	var/list/stored_cards = list()
 
 	attack_hand(mob/user as mob)
-		if(!is_hand) //handling the player interacting with a deck of cards with an empty hand
+		if(!is_hand && (isturf(src.loc) || src.loc == user)) //handling the player interacting with a deck of cards with an empty hand
 			update_card_actions("empty")
 			user.showContextActions(cardActions, src)
 		else
@@ -386,7 +387,10 @@
 			update_card_actions("handself")
 			user.showContextActions(cardActions, src)
 		else //attack_self with deck to shuffle
-			shuffle_list(stored_cards)
+			if (length(stored_cards) < 11)
+				shuffle_list(stored_cards)
+			else
+				riffle_shuffle(stored_cards)
 			user.visible_message("<b>[user.name]</b> shuffles the [src.name].")
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -524,15 +528,15 @@
 		else
 			group.is_hand = FALSE
 		if(istype(from,/obj/item/playing_card))
-			var/obj/item/playing_card/F = from
-			group.total_cards = F.total_cards
-			group.card_style = F.card_style
-			group.card_name = F.card_name
+			var/obj/item/playing_card/FA = from
+			group.total_cards = FA.total_cards
+			group.card_style = FA.card_style
+			group.card_name = FA.card_name
 		else if(istype(from,/obj/item/card_group))
-			var/obj/item/card_group/F = from
-			group.total_cards = F.total_cards
-			group.card_style = F.card_style
-			group.card_name = F.card_name
+			var/obj/item/card_group/FB = from
+			group.total_cards = FB.total_cards
+			group.card_style = FB.card_style
+			group.card_name = FB.card_name
 
 	proc/update_card_actions(var/hitby) //generates card actions based on which interaction is causing the list to be updated
 		cardActions = list()
@@ -543,14 +547,15 @@
 			cardActions += new /datum/contextAction/card/bottomdeck
 			cardActions += new /datum/contextAction/card/close
 		//empty to deck
-		else if(hitby == "empty")
-			cardActions += new /datum/contextAction/card/draw
-			cardActions += new /datum/contextAction/card/draw_facedown
-			cardActions += new /datum/contextAction/card/draw_multiple
-			cardActions += new /datum/contextAction/card/search
+		else if(hitby == "empty") //reordered this a bit to prevent overdrawing and have the correct actions avaliable
+			cardActions += new /datum/contextAction/card/pickup
+			if(!(usr.find_in_hand(/obj/item/card_group)) || length(usr.contents.Find(/obj/item/card_group)) < max_hand_size)
+				cardActions += new /datum/contextAction/card/draw
+				cardActions += new /datum/contextAction/card/draw_facedown
+				cardActions += new /datum/contextAction/card/draw_multiple
+				cardActions += new /datum/contextAction/card/search
 			if(length(stored_cards) <= max_hand_size)
 				cardActions += new /datum/contextAction/card/fan
-			cardActions += new /datum/contextAction/card/pickup
 			cardActions += new /datum/contextAction/card/close
 		//hand to self
 		else if(hitby == "handself")
@@ -683,6 +688,8 @@
 			if(iswizard(H))
 				continue
 			if(isnukeop(H))
+				continue
+			if(!H.mind)
 				continue
 			possible_humans += H
 		var/list/possible_borgos = list()
@@ -817,7 +824,8 @@
 //Tarot cards
 //---------//
 /obj/item/card_group/tarot
-	desc = "Whoever drew these probably felt like the nine of swords afterward..."
+	desc = {"A type of card that originates back in the 15th century, but became popular for divination in the 18th century. There are 14 cards of each
+	of the four suit types and 22 cards without suits that are called the Major Arcana."}
 	card_style = "tarot"
 	total_cards = 78
 	card_name = "tarot"
@@ -1108,81 +1116,34 @@
 			if(chosen_card.foiled)
 				UpdateOverlays(image(icon,"stg-foil",-1,chosen_card.dir),"foil")
 
-	attack_self(mob/user as mob) //the beginning of the most sadistic unboxing possible...
-		switch(icon_state)
-			if("stg-box")
-				actions.start(new /datum/action/bar/private/stg_open(user,src),user)
-			if("stg-box-open")
-				user.show_text("You try to tear the packaging, but it's too strong! You'll need something to cut it...","red")
-			if("stg-box-torn","stg-blister")
-				if(icon_state == "stg-blister" && !stored_deck)
-					return
-				actions.start(new /datum/action/bar/private/stg_pry(user,src),user)
+	attack_self(mob/user as mob) //must cut open packaging before getting cards out
+		if(icon_state == "stg-box")
+			user.show_text("You try to tear the packaging, but it's too strong! You'll need something to cut it...","red")
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if((icon_state == "stg-box-open") && (istool(W,TOOL_CUTTING) || istool(W,TOOL_SNIPPING)))
+		if((icon_state == "stg-box") && (istool(W,TOOL_CUTTING) || istool(W,TOOL_SNIPPING)))
 			if(loc != user)
 				user.show_text("You need to hold the box if you want enough leverage to rip it to pieces!","red")
 				return
-			actions.start(new /datum/action/bar/private/stg_tear(user,src),user)
-		else if(istool(user.equipped(),TOOL_PRYING) && (icon_state == "stg-box-torn") || (icon_state == "stg-blister" && stored_deck))
-			if(icon_state == "stg-box-torn")
-				user.visible_message("<span class='green'><b>[user.name]</b> quickly dislodges the blister pack!</span>")
-				icon_state = "stg-blister"
-				user.put_in_hand_or_drop(new /obj/item/stg_box_waste)
-			else
-				user.visible_message("<span class='green'><b>[user.name]</b> swiftly splits the [name] in two, retrieving [his_or_her(user)] cards!</span>")
-				user.put_in_hand_or_drop(stored_deck)
-				stored_deck = null
-				name = "discarded blister packaging"
-				ClearAllOverlays()
+			else //dropping cards here means the user doesnt have to go through the entire action to get them
+				actions.start(new /datum/action/bar/private/stg_tear(user,src),user)
+				ClearAllOverlays() //is all good now :D
 		else
 			..()
-
-/datum/action/bar/private/stg_open //more sadism! yay!
-	duration = 10 SECONDS
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	var/mob/user
-	var/obj/item/box
-	var/list/messages = list("slips their fingers under the tab of the StG Preconstructed Deck Box and starts prying upward with all their might!",
-	"reverses the StG Preconstructed Deck Box and plants their feet against it, using the muscles of their legs to free the box's tab!",
-	"screams to the heavens as if asking for a divine entity to intervene with righteous assistance to open the infernal construct of a box!",
-	"struggles to begin opening a box...", "attempts to crack the cardboard safe that holds their precious cards.")
-
-	New(User, Box)
-		user = User
-		box = Box
-		..()
-
-	onStart()
-		..()
-		user.visible_message("<span class='alert'><b>[user.name]</b> [pick(messages)]</span>")
-
-	onUpdate()
-		..()
-		if(box.loc != user)
-			user.show_text("You need to hold the box if you want enough leverage to open it!","red")
-			interrupt(INTERRUPT_ALWAYS)
-
-	onEnd()
-		..()
-		user.visible_message("<span class='green'><b>[user.name]</b> lets out a sigh of relief as the box's tab is freed from the depths of thin cardboard packaging...</span>")
-		box.icon_state = "stg-box-open"
 
 /datum/action/bar/private/stg_tear
 	duration = 10 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	var/mob/user
-	var/obj/item/box
+	var/obj/item/card_box/card_box
 	var/list/messages = list("brutally hacks at the package's exterior with a sharp object!",
 	"desperately slashes a sharp object against the exterior of the StG Preconstructed Deck Box!",
 	"becomes a blinding blur of motion as they send bits of cardboard packaging into the air like grotesque confetti!",
-	"impales the StG Preconstructed Deck Box, gripping their sharp implement with both hands, forcing the blade down the package as if disembowling it!",
-	"HAcKs aNd slAShES aND hACKs AnD sLAsHEs aNd hACkS AnD SLaSHEs aND HA...")
+	"impales the StG Preconstructed Deck Box, gripping their sharp implement with both hands, forcing the blade down the package as if disembowling it!")
 
 	New(User, Box)
 		user = User
-		box = Box
+		card_box = Box
 		..()
 
 	onStart()
@@ -1191,7 +1152,7 @@
 
 	onUpdate()
 		..()
-		if(box.loc != user)
+		if(card_box.loc != user)
 			user.show_text("You need to hold the box if you want enough leverage to rip it to pieces!","red")
 			interrupt(INTERRUPT_ALWAYS)
 		if(!istool(user.equipped(),TOOL_CUTTING) && !istool(user.equipped(),TOOL_SNIPPING))
@@ -1199,52 +1160,14 @@
 
 	onEnd()
 		..()
-		user.visible_message("<span class='green'><b>[user.name]</b> has thoroughly mutilated the StG Preconstructed Deck Box...</span>")
-		box.icon_state = "stg-box-torn"
-		var/obj/decal/cleanable/generic/decal = make_cleanable(/obj/decal/cleanable/generic,get_turf(user.loc))
-		decal.color = pick("#000000","#6f0a0a","#a0621b")
-
-/datum/action/bar/private/stg_pry
-	duration = 15 SECONDS
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	var/mob/user
-	var/obj/item/stg_box/box
-
-	New(User, Box)
-		user = User
-		box = Box
-		..()
-
-	onStart()
-		..()
-		if(box.icon_state == "stg-box-torn")
-			user.visible_message("<span class='alert'><b>[user.name]</b> tries to free a blister pack from the [box.name]...</span>")
-		else
-			user.visible_message("<span class='alert'><b>[user.name]</b> awkwardly scoops cards out of the [box.name]...</span>")
-
-	onUpdate()
-		..()
-		if(box.loc != user)
-			user.show_text("You need to hold the [box.name] if you want enough leverage to pull it apart!","red")
-			interrupt(INTERRUPT_ALWAYS)
-
-	onEnd()
-		..()
-		if(box.icon_state == "stg-box-torn")
-			user.visible_message("<span class='green'><b>[user.name]</b> finally dislodges the blister pack! That would have been much easier with some sort of prying tool...</span>")
-			box.icon_state = "stg-blister"
-			user.put_in_hand_or_drop(new /obj/item/stg_box_waste)
-		else
-			user.visible_message("<span class='green'><b>[user.name]</b> has scooped the last card out of the blister pack! That would have been much easier with some sort of prying tool...</span>")
-			user.put_in_hand_or_drop(box.stored_deck)
-			box.stored_deck = null
-			box.name = "discarded blister packaging"
-			box.ClearAllOverlays()
-
-/obj/item/stg_box_waste
-	name = "mutilated cardboard husk"
-	icon = 'icons/obj/items/playing_card.dmi'
-	icon_state = "stg-box-empty"
+		if(card_box.icon_state == "stg-box")
+			user.visible_message("<span class='green'><b>[user.name]</b> has thoroughly mutilated the StG Preconstructed Deck Box and retrieves the cards from inside.</span>")
+			card_box.icon_state = "stg-box-torn"
+			user.put_in_hand_or_drop(card_box.stored_deck)
+			var/obj/decal/cleanable/generic/decal = make_cleanable(/obj/decal/cleanable/generic,get_turf(user.loc))
+			decal.color = pick("#000000","#6f0a0a","#a0621b")
+			card_box.stored_deck = null
+			card_box.ClearAllOverlays()
 
 /obj/item/stg_booster
 	name = "StG Booster Pack"
@@ -1272,3 +1195,41 @@
 			stored_deck = null
 		else
 			..()
+
+/* Realistic Shuffling Ahoy! */
+
+// The chance to pull another card from the same stack as opposed to switching,
+// so the "stickyness" of the cards.
+#define CARD_STICK_FACTOR 0.5
+
+// Simulates a riffle shuffle using a markovian model.
+// Why? Fuck it, I have no idea.
+proc/riffle_shuffle(list/deck)
+	// Determines a location near the center of the deck to split from.
+
+	var/splitLoc = (deck.len / 2) + rand(-(deck.len) / 5, deck.len / 5)
+
+	// Makes two lists, one for each half of the deck, then clears the original deck.
+	var/list/D1 = deck.Copy(1, splitLoc)
+	var/list/D2 = deck.Copy(splitLoc)
+	deck.len = 0
+
+	// Markovian model of the shuffle
+	var/currentStack = rand() > 0.5
+	while(D1.len > 0 && D2.len > 0)
+		var/item
+
+		if(currentStack)
+			item = D1[1]
+			D1 -= item
+		else
+			item = D2[1]
+			D2 -= item
+
+		deck += item
+		if(rand() > CARD_STICK_FACTOR)
+			currentStack = !currentStack
+
+	// One of these will always be empty but I'm too lazy to check which is which.
+	deck += D1
+	deck += D2

@@ -207,6 +207,8 @@ var/global/list/playersSeen = list()
 		ircmsg["time"] = expiry
 		ircbot.export("ban", ircmsg)
 
+		if(!targetC)
+			targetC = find_player(row["ckey"])?.client
 		if (targetC)
 			del(targetC)
 
