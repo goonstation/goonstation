@@ -213,7 +213,7 @@
 	anchored = 0
 	density = 1
 	mats = 2
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_DESTRUCT
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR
 	flags = NOSPLASH
 	processing_tier = PROCESSING_SIXTEENTH
 	machine_registry_idx = MACHINES_PLANTPOTS
@@ -322,6 +322,10 @@
 	power_change()
 		. = ..()
 		update_icon()
+
+	was_deconstructed_to_frame(mob/user)
+		var/datum/plant/current = null // Dont think this would lead to any frustrations, considering like, youre chopping the machine up of course itd destroy the plant.
+		boutput( user, "<span class='alert'>In the process of deconstructing the tray you destroy the plant.</span>" )
 
 	process()
 		..()
