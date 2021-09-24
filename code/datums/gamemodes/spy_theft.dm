@@ -9,7 +9,7 @@
 	config_tag = "spy_theft"
 
 	latejoin_antag_compatible = 1
-	latejoin_antag_roles = list("traitor")
+	latejoin_antag_roles = list(ROLE_TRAITOR)
 	var/const/waittime_l = 600	// Minimum after round start to send threat information to printer
 	var/const/waittime_h = 1800	// Maximum after round start to send threat information to printer
 
@@ -169,10 +169,10 @@
 		logTheThing("admin", tplayer.current, null, "successfully redeemed an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token.")
 
-	var/list/chosen_spy_thieves = antagWeighter.choose(pool = possible_spies, role = "spy_thief", amount = num_spies, recordChosen = 1)
+	var/list/chosen_spy_thieves = antagWeighter.choose(pool = possible_spies, role = ROLE_SPY_THIEF, amount = num_spies, recordChosen = 1)
 	traitors |= chosen_spy_thieves
 	for (var/datum/mind/spy in traitors)
-		spy.special_role = "spy_thief"
+		spy.special_role = ROLE_SPY_THIEF
 		possible_spies.Remove(spy)
 
 	return 1
@@ -270,7 +270,7 @@
 
 	for(var/datum/mind/M in ticker.mode.traitors) //We loop through ticker.mode.traitors and do spy checks here because the mode might not actually be spy thief. And this instance of the datum may be held by the TRUE MODE
 		LAGCHECK(LAG_LOW)
-		if (M.special_role == "spy_thief")
+		if (M.special_role == ROLE_SPY_THIEF)
 			boutput(M.current, "<span class='notice'><b>Spy Console</b> has been updated with new requests.</span>") //MAGIC SPY SENSE (I feel this is justified, spies NEED to know this)
 			M.current << sound('sound/machines/twobeep.ogg')
 
@@ -445,11 +445,9 @@
 
 	station_bounties[/obj/item/clothing/glasses/blindfold] = 1
 	station_bounties[/obj/item/clothing/glasses/meson] = 1
-	station_bounties[/obj/item/clothing/glasses/sunglasses/tanning] = 1
 	station_bounties[/obj/item/clothing/glasses/sunglasses/sechud] = 2
 	station_bounties[/obj/item/clothing/glasses/sunglasses] = 1
 	station_bounties[/obj/item/clothing/glasses/visor] = 1
-	station_bounties[/obj/item/clothing/glasses/healthgoggles/upgraded] = 1
 	station_bounties[/obj/item/clothing/glasses/healthgoggles] = 1
 
 	station_bounties[/obj/item/clothing/suit/space/santa] = 1

@@ -83,7 +83,7 @@
 		user.visible_message("<span class='alert'><b>[user] stares into the [src], trying to make sense of its function!</b></span>")
 		SPAWN_DBG(3 SECONDS)
 			user.visible_message("<span class='alert'><b>[user]'s brain melts!</b></span>")
-			playsound(user, "sound/weapons/phaseroverload.ogg", 100)
+			playsound(user, "sound/effects/mindkill.ogg", 50)
 			user.take_brain_damage(69*420)
 		SPAWN_DBG(20 SECONDS)
 			if (user && !isdead(user))
@@ -280,7 +280,7 @@
 					src.users+=user
 				return ..() // you can just use the trigger manually from the UI
 			if(src.find_trigger() && !src.open && src.loc==user)
-				return src.the_trigger.attack_hand(user)
+				return src.the_trigger.Attackhand(user)
 			return
 #undef CONTAINER_LIGHT_TIME
 #undef MAX_CONTAINER_LIGHT_TIME
@@ -414,7 +414,7 @@
 		else return ..(user)
 
 	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 	proc/secure()
 	proc/loosen()
 
@@ -2782,7 +2782,7 @@
 	desc = ""
 	icon_state = "comp_gun2"
 	density = 0
-	compatible_guns = /obj/item/gun/energy
+	compatible_guns = list(/obj/item/gun/energy)
 	var/charging = 0
 
 	get_desc()

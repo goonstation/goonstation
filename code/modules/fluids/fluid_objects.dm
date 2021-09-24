@@ -420,7 +420,7 @@
 	desc = "A deployable sea ladder that will allow you to descend to and ascend from the trench."
 	icon = 'icons/obj/fluid.dmi'
 	icon_state = "ladder_off"
-	item_state = "folded_chair"
+	item_state = "sea_ladder"
 	w_class = W_CLASS_NORMAL
 	throwforce = 10
 	flags = FPRINT | TABLEPASS | CONDUCT
@@ -514,7 +514,7 @@
 
 	attackby(obj/item/I, mob/user)
 		if (isscrewingtool(I) || ispryingtool(I) || ispulsingtool(I))
-			src.attack_hand(user)
+			src.Attackhand(user)
 		else
 			boom()
 

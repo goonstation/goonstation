@@ -18,6 +18,8 @@
 
 	var/artifact_resupply_amount = 0 // amount of artifacts in next resupply crate
 
+	var/list/datum/special_order/active_orders
+
 	New()
 		..()
 
@@ -53,8 +55,8 @@
 		var/timeleft = src.time_until_shift - ticker.round_elapsed_ticks
 
 		if(timeleft <= 0)
+			src.time_until_shift = ticker.round_elapsed_ticks + time_between_shifts + rand(-900,900)
 			market_shift()
-			src.time_until_shift =ticker.round_elapsed_ticks + time_between_shifts + rand(-900,900)
 			return 0
 
 		return timeleft
@@ -67,35 +69,72 @@
 
 	proc/market_shift()
 		last_market_update = world.timeofday
+
+		// Chance of a commodity being hot. Sometimes the market is on fire.
+		// Sometimes it is not. They still have to have a positive value roll,
+		// so on average the % chance is actually about ~half this value.
+		var/hot_chance = rand(10, 33)
+
 		for (var/type in src.commodities)
 			var/datum/commodity/C = src.commodities[type]
-			C.indemand = 0
-			// Clear current in-demand products so we can set new ones later
-			if (prob(90))
-				C.price += rand(C.lowerfluc,C.upperfluc)
-				// Most of the time price fluctuates normally
-			else
-				var/multiplier = rand(2,4)
-				C.price += rand(C.lowerfluc * multiplier,C.upperfluc * multiplier)
-				// Sometimes it goes apeshit though!
-			if (C.price < 0)
-				C.price = 0
-				// No point in paying centcom to take your goods away
-			if (prob(5))
-				C.price = C.baseprice
-				// Small chance of a price being sent back to its original value
 
-		if (prob(3))
-			src.demand_multiplier = rand(2,4)
-			// Small chance of the multiplier of in-demand items being altered
-		var/demands = rand(2,4)
-		// How many goods are going to be in demand this time?
-		while(demands > 0)
-			var/datum/commodity/D = src.commodities[pick(src.commodities)]
-			if (D.price > 0)
-				D.indemand = 1
-				// Goods that are in demand sell for a multiplied price
-			demands--
+			// First, get the basic RNG roll. Why -90 to 90? Well, because...
+			var/modifier_roll = rand(-900, 900) / 10
+			// ...we feed it into cos(x). -90 ... 0 ... 90 = 0 ... 1 ... 0
+			// Then we subtract it from 1, so that roll=0 -> 0, roll=90 = 1
+			var/price_mod = 1 - cos(modifier_roll)
+
+			// All prices are initially based off of the base price.
+			// Previously it was based off of the PREVIOUS price, which
+			// could end up making certain commodies skyrocket to absurd
+			// levels, or outright crash to literally worthless.
+			// The price is then adjusted by either upperfluc or lowerfluc,
+			// based on the roll and modifier above.
+			var/price_adjust = C.baseprice
+			if (modifier_roll >= 0)
+				// Good rolls adjust based on the upper fluctuation...
+				price_adjust += C.upperfluc * price_mod
+			else
+				// ... and bad rolls adjust on the lower one.
+				price_adjust += C.lowerfluc * price_mod
+
+			C.price = price_adjust
+
+			// At this point, the price is (hopefully) roughly on this
+			// unfortunately upside-down scale of probabilities:
+			//   |                                 | | v rare
+			//    -                               -  |
+			//     -_                           _-   | rare
+			//       --___                 ___--     |
+			//            ----____|____----          | common
+			// lowerfluc      baseprice        upperfluc
+
+			// This means that the price will always be between
+			// (baseprice - abs(lowerfluc)) and (baseprice + upperfluc),
+			// tending to land closer to the middle of the range.
+
+			// If we had a good roll (> 0), roll a chance to make this
+			// item Hot™! Hot items get a bigger bonus to their current value,
+			// which is just pure random inflation.
+			C.indemand = 0
+			if (modifier_roll > 0 && prob(hot_chance))
+				// shit is on FIYAH! SELL SELL SELL!!
+				// Hot prices are marked up by +50% to +200%.
+				// This might be a bit much, but compensating for some of the
+				// commodities that achieved stupidly inflated prices in the
+				// old system. Can be adjusted down later if need be.
+				C.indemand = 1
+				C.price *= rand(150, 300) / 100
+
+			// If (somehow) a price manages to become negative, make it
+			// zero again so you aren't charged for disposing of it.
+			// (comedy option: actual trash should cost money to dispose of.)
+			// (please only do this when something that can recycle
+			//  the crusher's scraps exist.)
+			// We also strip off any weird decimals because it is 2053
+			// and the penny has been abolished, along with all other coins.
+			C.price = max(round(C.price), 0)
+
 
 		// Shuffle trader visibility around a bit
 		for (var/datum/trader/T in src.active_traders)
@@ -177,48 +216,73 @@
 		if(transmit_connection != null)
 			transmit_connection.post_signal(null, pdaSignal)
 
-	proc/sell_crate(obj/storage/crate/sell_crate, var/list/commodities_list)
-		var/obj/item/card/id/scan = sell_crate.scan
-		var/datum/data/record/account = sell_crate.account
+	// Returns value of whatever the list of objects would sell for
+	proc/appraise_value(var/list/obj/items, var/list/commodities_list, var/sell = 1)
 
-		var/duckets = src.points_per_crate  // fuck yeah duckets
+		// TODO: Does this handle common containers like satchels?
+		// If not, maybe they should?
+		// Maybe some way to send them through mail chutes without
+		// dumping the contents out would be good
+
+		var/duckets = 0  // fuck yeah duckets  ((noun) Cash, money or bills, from "ducats")
 		var/add = 0
-
 		if (!commodities_list)
-			for(var/obj/O in sell_crate.contents)
+			for(var/obj/O in items)
 				for (var/C in src.commodities) // Key is type of the commodity
 					var/datum/commodity/CM = commodities[C]
-					if (istype(O, CM.comtype))
+					if (istype(O, CM.comtype) && CM.item_check(O))
 						add = CM.price
 						if (CM.indemand)
 							add *= shippingmarket.demand_multiplier
-						if (istype(O, /obj/item/raw_material) || istype(O, /obj/item/material_piece) || istype(O, /obj/item/plant) || istype(O, /obj/item/reagent_containers/food/snacks/plant))
+						if (istype(O, /obj/item/raw_material) || istype(O, /obj/item/sheet) || istype(O, /obj/item/material_piece) || istype(O, /obj/item/plant) || istype(O, /obj/item/reagent_containers/food/snacks/plant))
 							add *= O:amount // TODO: fix for snacks
-							pool(O)
+							if (sell)
+								pool(O)
 						else
-							qdel(O)
+							if (sell)
+								qdel(O)
 						duckets += add
 						break
 					else if (istype(O, /obj/item/spacecash))
 						duckets += 0.9 * O:amount
-						pool(O)
+						if (sell)
+							pool(O)
 		else // Please excuse this duplicate code, I'm gonna change trader commodity lists into associative ones later I swear
-			for(var/obj/O in sell_crate.contents)
+			for(var/obj/O in items)
 				for (var/datum/commodity/C in commodities_list)
-					if (istype(O, C.comtype))
+					if (istype(O, C.comtype) && C.item_check(O))
 						add = C.price
 						if (C.indemand)
 							add *= shippingmarket.demand_multiplier
-						if (istype(O, /obj/item/raw_material) || istype(O, /obj/item/material_piece) || istype(O, /obj/item/plant) || istype(O, /obj/item/reagent_containers/food/snacks/plant))
+						if (istype(O, /obj/item/raw_material) || istype(O, /obj/item/sheet) || istype(O, /obj/item/material_piece) || istype(O, /obj/item/plant) || istype(O, /obj/item/reagent_containers/food/snacks/plant))
 							add *= O:amount // TODO: fix for snacks
-							pool(O)
+							if (sell)
+								pool(O)
 						else
-							qdel(O)
+							if (sell)
+								qdel(O)
 						duckets += add
 						break
 					else if (istype(O, /obj/item/spacecash))
 						duckets += O:amount
-						pool(O)
+						if (sell)
+							pool(O)
+
+		return duckets
+
+	proc/sell_crate(obj/storage/crate/sell_crate, var/list/commodities_list)
+		var/obj/item/card/id/scan = sell_crate.scan
+		var/datum/data/record/account = sell_crate.account
+		var/duckets
+
+		if(length(active_orders) && !commodities_list)
+			for(var/datum/special_order/order in active_orders)
+				if(order.check_order(sell_crate))
+					duckets += order.price
+					active_orders -= order
+
+		duckets += src.appraise_value(sell_crate, commodities_list, 1) + src.points_per_crate
+
 
 		#ifdef SECRETS_ENABLED
 		send_to_brazil(sell_crate)
@@ -281,6 +345,35 @@
 						P.close()
 
 		shipped_thing.throw_at(target, 100, 1)
+
+	proc/clear_path_to_market()
+		var/list/bounds = get_area_turfs(/area/supply/delivery_point)
+		bounds += get_area_turfs(/area/supply/sell_point)
+		bounds += get_area_turfs(/area/supply/spawn_point)
+		var/min_x = INFINITY
+		var/max_x = 0
+		var/min_y = INFINITY
+		var/max_y = 0
+		for(var/turf/boundry as anything in bounds)
+			min_x = min(min_x, boundry.x)
+			min_y = min(min_y, boundry.y)
+			max_x = max(max_x, boundry.x)
+			max_y = max(max_y, boundry.y)
+
+		var/list/turf/to_clear = block(locate(min_x, min_y, Z_LEVEL_STATION), locate(max_x, max_y, Z_LEVEL_STATION))
+		for(var/turf/T as anything in to_clear)
+			//Wacks asteroids and skip normal turfs that belong
+			if(istype(T, /turf/simulated/wall/asteroid))
+				T.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid, force=TRUE)
+				continue
+			else if(!istype(T, /turf/unsimulated))
+				continue
+
+			//Uh, make sure we don't block the shipping lanes!
+			for(var/atom/A in T)
+				if(A.density)
+					qdel(A)
+
 
 // Debugging and admin verbs (mostly coder)
 

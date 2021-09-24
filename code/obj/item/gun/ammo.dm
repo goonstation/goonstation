@@ -37,6 +37,7 @@
 	// 0.355 - pistol (9mm)
 	// 0.357 - revolver
 	// 0.38 - detective
+	// 0.40 - blowgun
 	// 0.41 - derringer
 	// 0.72 - shotgun shell, 12ga
 	// 0.787 - 20mm cannon round
@@ -46,7 +47,7 @@
 /obj/item/ammo/bullets
 	name = "Ammo box"
 	sname = "Bullets"
-	desc = "A box of ammo"
+	desc = "A box of ammo!"
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "power_cell"
 	m_amt = 40000
@@ -608,6 +609,37 @@
 		name = ".308 mutadone darts"
 		ammo_type = new/datum/projectile/bullet/tranq_dart/anti_mutant
 
+
+/obj/item/ammo/bullets/blow_darts
+	sname = "blowdart"
+	name = "poison blowdarts"
+	ammo_type = new/datum/projectile/bullet/blow_dart
+	desc = "These darts are loaded with a dangerous paralytic toxin."
+	icon_state = "tranq_clip"
+	amount_left = 4
+	max_amount = 4
+	caliber = 0.40
+	color = "green"
+
+	single
+		amount_left = 1
+		max_amount = 1
+
+	madness
+		name = "madness blowdarts"
+		desc = "These darts are loaded with a violently behavior-altering toxin."
+		ammo_type = new/datum/projectile/bullet/blow_dart/madness
+		color = "red"
+
+	ls_bee
+		name = "hallucinogenic blowdarts"
+		desc = "These darts are loaded with a potent mind-altering drug. They smell like honey."
+		ammo_type = new/datum/projectile/bullet/blow_dart/ls_bee
+		color = "yellow"
+
+
+
+
 /obj/item/ammo/bullets/vbullet
 	sname = "VR bullets"
 	name = "VR magazine"
@@ -858,6 +890,8 @@
 		amount_left = 24.0
 		max_amount = 24.0
 		ammo_type = new/datum/projectile/bullet/bullet_9mm/smartgun
+		sound_load = 'sound/weapons/gunload_hitek.ogg'
+
 	smg
 		name = "9mm SMG magazine"
 		amount_left = 30.0
@@ -910,7 +944,7 @@
 		..()
 
 	emp_act()
-		SEND_SIGNAL(src, COMSIG_CELL_USE, INFINITY, TRUE)
+		SEND_SIGNAL(src, COMSIG_CELL_USE, INFINITY)
 		return
 
 	update_icon()
@@ -1160,17 +1194,22 @@
 
 /obj/item/ammo/bullets/foamdarts
 	sname = "foam darts"
-	name = "foam dart box"
-	icon_state = "foamdarts"
+	name = "foam darts"
+	desc = "Reusable foam darts for shooting people in the eyes with."
+	icon_state = "foamdarts-6"
 	icon_empty = "foamdarts-0"
-	amount_left = 20
-	max_amount = 20
+	icon_dynamic = 1
+	icon_short = "foamdarts"
+	amount_left = 6
+	max_amount = 6
 	caliber = 0.393
 	ammo_type = new/datum/projectile/bullet/foamdart
 
-/obj/item/ammo/bullets/foamdarts/ten
-	amount_left = 10
-	max_amount = 10
+	update_icon()
+		if(amount_left == 0)
+			qdel(src)
+		else
+			..()
 
 /datum/action/bar/icon/powercellswap
 	duration = 1 SECOND

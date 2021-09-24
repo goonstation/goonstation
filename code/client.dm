@@ -291,7 +291,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 								<body>
 									<h1>You have been banned.</h1>
 									<span class='banreason'>Reason: [isbanned].</span><br>
-									If you believe you were unjustly banned, head to <a href=\"https://forum.ss13.co\">the forums</a> and post an appeal.
+									If you believe you were unjustly banned, head to <a target="_blank" href=\"https://forum.ss13.co\">the forums</a> and post an appeal.
 								</body>
 							</html>
 						"}
@@ -492,13 +492,15 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 				src.cmd_ass_day_rules()
 #endif
 
-			if (src.byond_version < 513 || src.byond_build < 1526)
+			if (src.byond_version < 514 || src.byond_build < 1566)
 				if (alert(src, "Please update BYOND to the latest version! Would you like to be taken to the download page? Make sure to download the stable release.", "ALERT", "Yes", "No") == "Yes")
 					src << link("http://www.byond.com/download/")
-				else
+/*
+ 				else
 					alert(src, "You won't be able to play without updating, sorry!")
 					del(src)
 					return
+*/
 
 		else
 			if (noir)

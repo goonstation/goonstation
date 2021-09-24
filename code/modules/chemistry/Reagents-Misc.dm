@@ -306,7 +306,7 @@ datum
 						M.change_misstep_chance(-INFINITY)
 					M.HealDamage("All", 10 * mult, 10 * mult)
 					M.dizziness = max(0,M.dizziness-10)
-					M.drowsyness = max(0,M.drowsyness-10)
+					M.changeStatus("drowsy", -20 SECONDS)
 					M.sleeping = 0
 				else
 					M.take_toxin_damage(2 * mult)
@@ -507,8 +507,7 @@ datum
 				if (probmult(8))
 					boutput(M, "<span class='alert'>The voices ...</span>")
 					M.playsound_local(M, pick(ghostly_sounds), 100, 1)
-
-				return
+				..()
 
 		strange_reagent
 			name = "strange reagent"
@@ -529,6 +528,8 @@ datum
 					return
 				var/mob/living/M = target
 				if (!iscarbon(M) && !ismobcritter(M))
+					return
+				if (volume_passed < 1)
 					return
 				if ((method == INGEST || (method == TOUCH && prob(25))) && (isdead(M) || istype(get_area(M),/area/afterlife/bar)))
 					var/came_back_wrong = 0
@@ -1180,13 +1181,6 @@ datum
 						T.wet = 0
 						T.UpdateOverlays(null, "wet_overlay")
 
-				return
-
-			on_mob_life(var/mob/M, var/mult = 1)
-				//if (prob(4)) // it's motor oil, you goof
-					//M.reagents.add_reagent("cholesterol", rand(1,3))
-				return
-
 		capulettium
 			name = "capulettium"
 			id = "capulettium"
@@ -1212,7 +1206,7 @@ datum
 					if (1 to 9)
 						M.change_eye_blurry(10, 10)
 					if (10 to 18)
-						M.drowsyness  = max(M.drowsyness, 10)
+						M.setStatus("drowsy", 20 SECONDS)
 					if (19 to INFINITY)
 						M.changeStatus("paralysis", 3 SECONDS * mult)
 				if (counter >= 19 && !fakedeathed)
@@ -1248,7 +1242,7 @@ datum
 					if (1 to 9)
 						M.change_eye_blurry(10, 10)
 					if (10 to 18)
-						M.drowsyness  = max(M.drowsyness, 10)
+						M.setStatus("drowsy", 20 SECONDS)
 				if (counter >= 19 && !fakedeathed)
 					M.visible_message("<B>[M]</B> seizes up and falls limp, [his_or_her(M)] eyes dead and lifeless...")
 					M.setStatus("resting", INFINITE_STATUS)
@@ -1535,8 +1529,9 @@ datum
 				if (method == INGEST)
 					boutput(M, "<span class='alert'>Aaaagh! It tastes fucking horrendous!</span>")
 					SPAWN_DBG(1 SECOND)
-						M.visible_message("<span class='alert'>[M] pukes violently!</span>")
-						M.vomit()
+						if(!isdead(M) && volume >= 1)
+							M.visible_message("<span class='alert'>[M] pukes violently!</span>")
+							M.vomit()
 				else
 					boutput(M, "<span class='alert'>Oh god! It smells horrific! What the fuck IS this?!</span>")
 					if (prob(50))
@@ -1569,6 +1564,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				if(volume < 1)
+					return
 				if (method == TOUCH)
 					. = 0 // for depleting fluid pools
 				if(!ON_COOLDOWN(M, "ants_scream", 3 SECONDS))
@@ -1598,6 +1595,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				if(volume < 1)
+					return
 				if(method == TOUCH)
 					. = 0 // for depleting fluid pools
 				if (!ON_COOLDOWN(M, "spiders_scream", 3 SECONDS))
@@ -2167,7 +2166,7 @@ datum
 					anim_lock = 1
 
 				M.make_jittery(2)
-				M.drowsyness = max(M.drowsyness-6, 0)
+				M.changeStatus("drowsy", -12 SECONDS)
 				if (M.sleeping) M.sleeping = 0
 				return
 
@@ -2297,7 +2296,7 @@ datum
 					anim_lock = 1
 
 				M.make_jittery(4)
-				M.drowsyness = max(M.drowsyness-12, 0)
+				M.changeStatus("drowsy", -25 SECONDS)
 				if (M.sleeping) M.sleeping = 0
 				return
 
@@ -2668,6 +2667,16 @@ datum
 			value = 3
 			viscosity = 0.4
 
+			on_add()
+				if (holder && ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					APPLY_MOB_PROPERTY(M, PROP_GHOSTVISION, src)
+
+			on_remove()
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_MOB_PROPERTY(M, PROP_GHOSTVISION, src)
+
 		voltagen
 			name = "voltagen"
 			id = "voltagen"
@@ -2680,29 +2689,23 @@ datum
 			overdose = 20
 			viscosity = 0.3
 			minimum_reaction_temperature = T0C+100
-			var/multiplier = 1
-			var/grenade_handled = 0
 			pooled()
 				..()
-				multiplier = 1
-				grenade_handled = 0
 
+			on_add()
+				..()
+				if(ismob(src.holder?.my_atom))
+					RegisterSignal(holder.my_atom, COMSIG_ATTACKBY, .proc/zap_dude)
+					RegisterSignal(holder.my_atom, COMSIG_ATTACKHAND, .proc/zap_dude_punching)
+
+			on_remove()
+				..()
+				UnregisterSignal(holder.my_atom, COMSIG_ATTACKBY)
+				UnregisterSignal(holder.my_atom, COMSIG_ATTACKHAND)
 
 			grenade_effects(var/obj/grenade, var/atom/A)
 				if (isliving(A))
-					if (!grenade_handled)
-						multiplier = 15
-						grenade_handled = 1
-					else
-						multiplier /= 2
-					arcFlash(grenade, A, 0)
-
-			reaction_mob(var/mob/M, var/method = TOUCH, volume_passed)
-				. = ..()
-				var/vol = max(1,volume_passed)
-				if (method == TOUCH)
-					M.shock(src.holder.my_atom, min(7500 * multiplier, vol * 100 * multiplier), "chest", 1, 1)
-					. = 0
+					arcFlash(grenade, A, 1 MEGA WATT, 0.75)
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if (reacting)
@@ -2713,18 +2716,25 @@ datum
 				for (var/mob/living/L in oview(5, get_turf(holder.my_atom)))
 					count++
 				for (var/mob/living/L in oview(5, get_turf(holder.my_atom)))
-					arcFlash(holder.my_atom, L, min(75000 * multiplier / count, volume * 1000 * multiplier / count))
+					arcFlash(holder.my_atom, L, min(75000 / count, volume * 1000 / count))
 
 				holder.del_reagent(id)
 
 			on_mob_life(mob/M, var/mult = 1)
 
 				if (probmult(10))
-					elecflash(M)
+					elecflash(M, 1, 4, 1)
 				..()
 
+			proc/zap_dude_punching(source, mob/attacker)
+				src.zap_dude(source, null, attacker)
+			proc/zap_dude(source, item, mob/attacker)
+				if(volume >= 5 && prob(volume))
+					arcFlash(holder?.my_atom, attacker,  min(75000, volume * 1000), 0.5)
+					holder.remove_reagent(id, 5)
+
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
-				if (prob(10))
+				if (probmult(10))
 					if (severity >= 2)
 						M.shock(M, 100000, "chest", 1, 1)
 						holder.remove_reagent(id, 20)
@@ -3223,6 +3233,37 @@ datum
 				#endif
 				M.reagents.del_reagent(src.id)
 
+		gib_juice
+			// old qgp
+			name = "gib juice"
+			id = "gib_juice"
+			description = "oof ouch owie my bones"
+			random_chem_blacklisted = 1
+			reagent_state = LIQUID
+			fluid_r = 255
+			fluid_g = 0
+			fluid_b = 0
+			transparency = 255
+			viscosity = 0.7
+
+			pierces_outerwear = 1//shoo, biofool
+
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if(istype(M, /mob/dead))
+					return
+				M.ex_act(1)
+
+
+			reaction_obj(var/obj/O, var/volume)
+				O.ex_act(1)
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				..()
+				M.ex_act(1)
+				M.gib()
+				M.reagents.del_reagent(src.id)
+
 		cyclopentanol
 			name = "cyclopentanol"
 			id = "cyclopentanol"
@@ -3698,6 +3739,13 @@ datum
 						boutput(M, "<span class='alert'>Oh god! The <i>smell</i>!!!</span>")
 					M.reagents.add_reagent("jenkem",0.1 * volume_passed)
 
+			very_toxic
+				id = "very_toxic_fart"
+				name = "very toxic fart"
+
+				on_mob_life(var/mob/M, var/mult = 1)
+					. =..()
+					M.take_toxin_damage(2 * mult)
 			//on_mob_life(var/mob/M, var/mult = 1)
 			//	if(!M) M = holder.my_atom
 			//	..()

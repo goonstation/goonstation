@@ -71,7 +71,11 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 
 			music_sound.volume = client_vol
 			C << music_sound
-			boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
+			if (src && !(src.stealth && !src.fakekey))
+				// Stealthed admins won't show the "now playing music" message,
+				// for added ability to be spooky.
+				boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
+
 			//DEBUG_MESSAGE("Playing sound for [C] on channel [music_sound.channel] with volume [music_sound.volume]")
 		dj_panel.move_admin_sound_channel()
 	logTheThing("admin", src, null, "started loading music [S]")
@@ -138,7 +142,10 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 				continue
 
 			C.chatOutput.playMusic(data["file"], vol)
-			boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
+			if (adminC && !(adminC.stealth && !adminC.fakekey))
+				// Stealthed admins won't show the "now playing music" message,
+				// for added ability to be spooky.
+				boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
 
 
 	if (adminC)

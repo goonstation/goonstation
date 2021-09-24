@@ -105,7 +105,7 @@
 				change_stack_amount( 0 - amt )
 				var/obj/item/spacecash/young_money = unpool(/obj/item/spacecash)
 				young_money.setup(user.loc, amt)
-				young_money.attack_hand(user)
+				young_money.Attackhand(user)
 		else
 			..(user)
 

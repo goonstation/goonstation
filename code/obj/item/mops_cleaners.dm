@@ -208,14 +208,19 @@ WET FLOOR SIGN
 
 	if(src.reagents.has_reagent("water") || src.reagents.has_reagent("cleaner"))
 		JOB_XP(user, "Janitor", 2)
-
+	playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
+	// Make sure we clean an item that was sprayed directly in case it is in contents
+	if (!isturf(A.loc))
+		if (istype(A, /obj/item))
+			src.reagents.reaction(A, TOUCH, 5)
+			src.reagents.remove_any(5)
+			return
 	var/obj/decal/D = new/obj/decal(get_turf(src))
 	D.name = "chemicals"
 	D.icon = 'icons/obj/chemical.dmi'
 	D.icon_state = "chempuff"
 	D.create_reagents(5) // cogwerks: lowered from 10 to 5
 	src.reagents.trans_to(D, 5)
-	playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
 	var/log_reagents = log_reagents(src)
 	var/travel_distance = max(min(get_dist(get_turf(src), A), 3), 1)
 	SPAWN_DBG(0)
@@ -292,6 +297,8 @@ WET FLOOR SIGN
 		. += "<span class='notice'>[src] is wet!</span>"
 
 /obj/item/mop/afterattack(atom/A, mob/user as mob)
+	if (ismob(A))
+		return
 	if ((src.reagents.total_volume < 1 || mopcount >= 9) && !istype(A, /obj/fluid))
 		boutput(user, "<span class='notice'>Your mop is dry!</span>", group = "mop")
 		return
@@ -320,9 +327,9 @@ WET FLOOR SIGN
 
 	var/obj/fluid/target_fluid = A
 	if (istype(target_fluid))
+		user.show_text("You soak up [target_fluid] with [src].", "blue", group = "mop")
 		if (src.reagents && target_fluid.group)
 			target_fluid.group.drain(target_fluid,1,src)
-		user.show_text("You soak up [target_fluid] with [src].", "blue", group = "mop")
 		if (mopcount > 0)
 			mopcount--
 	else if (U && isturf(U))
@@ -349,7 +356,7 @@ WET FLOOR SIGN
 			S.joustingTool = src
 
 /obj/item/mop/attack(mob/living/M as mob, mob/user as mob)
-	if (user.intent == INTENT_HELP)
+	if (user.a_intent == INTENT_HELP)
 		user.visible_message("[user] pokes [M] with \the [src].", "You poke [M] with \the [src].")
 		return
 	return ..()
@@ -442,6 +449,7 @@ WET FLOOR SIGN
 	icon_state = "sponge"
 	item_state = "sponge"
 	force = 0
+	stamina_damage = 5
 	throwforce = 0
 	w_class = W_CLASS_SMALL // gross why would you put a sponge in your pocket
 
@@ -463,6 +471,11 @@ WET FLOOR SIGN
 	. = ..()
 	if(reagents?.total_volume)
 		. += "<span class='notice'>[src] is wet!</span>"
+
+/obj/item/sponge/attack(mob/living/M as mob, mob/user as mob)
+	if (user.a_intent == INTENT_HELP)
+		return
+	return ..()
 
 /obj/item/sponge/attack_self(mob/user as mob)
 	if(spam_flag)
@@ -524,22 +537,22 @@ WET FLOOR SIGN
 		var/list/choices = list()
 		var/target_is_fluid = istype(target,/obj/fluid)
 		if (target_is_fluid)
-			choices += "Soak up"
+			choices |= "Soak up"
 		else if (istype(target, /turf/simulated))
 			var/turf/simulated/T = target
 			if (T.reagents && T.reagents.total_volume || T.active_liquid)
-				choices += "Soak up"
+				choices |= "Soak up"
 			if (T.wet)
-				choices += "Dry"
+				choices |= "Dry"
 			if (src.reagents.total_volume)
-				choices += "Wipe down"
+				choices |= "Wipe down"
 		if (src.reagents.total_volume && !target_is_fluid)
-			choices += "Wipe down"
+			choices |= "Wipe down"
 			if ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink) || istype(target, /obj/mopbucket))
-				choices += "Wring out"
+				choices |= "Wring out"
 		if (src.reagents.total_volume < src.reagents.maximum_volume && ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink)) || istype(target, /obj/mopbucket))
 			if (istype(target, /obj/submachine/chef_sink) || (target.reagents && target.reagents.total_volume))
-				choices += "Wet"
+				choices |= "Wet"
 
 		if (!choices.len)
 			boutput(user, "<span class='notice'>You can't think of anything to do with [src].</span>")
@@ -565,7 +578,8 @@ WET FLOOR SIGN
 				if (!F && T?.active_liquid)
 					F = T.active_liquid
 
-				if (!(T?.reagents) && !istype(F)) return
+				if (!(T?.reagents) && !istype(F))
+					return
 
 				if (F)
 					if (F.group)
@@ -1039,6 +1053,8 @@ WET FLOOR SIGN
 		suck.suck_in_range = 3
 		suck.throw_range = 10
 		suck.throw_speed = 1
+		suck.moveDelayDuration = 5
+		suck.moveDelay = 4
 
 /datum/item_special/suck
 	cooldown = 30

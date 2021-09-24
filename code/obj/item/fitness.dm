@@ -107,6 +107,8 @@
 		if(in_use)
 			boutput(user, "<span class='alert'>Its already in use - wait a bit.</span>")
 			return
+		else if(HAS_MOB_PROPERTY(user, PROP_CANTMOVE))
+			return
 		else
 			in_use = 1
 			icon_state = "fitnessweight-c"

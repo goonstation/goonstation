@@ -650,6 +650,9 @@
 			if (!istype(T,/turf/simulated/floor/airless/plating/catwalk/))
 				T.ReplaceWithSpace()
 				//qdel(T)
+		if(station_repair.station_generator)
+			for (var/turf/unsimulated/UT in mining_controls.magnet_area.contents)
+				UT.ReplaceWith("Space", force=TRUE)
 		for (var/turf/space/S in mining_controls.magnet_area.contents)
 			S.overlays = list()
 
@@ -684,6 +687,12 @@
 			active = 0
 			boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder! (ERROR: NO ENCOUNTER)")
 			return
+
+		if(station_repair.station_generator)
+			var/list/turf/space/repair_turfs = list()
+			for(var/turf/space/T in mining_controls.magnet_area.contents)
+				repair_turfs += T
+			station_repair.repair_turfs(repair_turfs)
 
 		sleep(sleep_time)
 		if (malfunctioning && prob(20))
@@ -1271,7 +1280,7 @@
 				dig_feedback = "This rock is tough. You may need a stronger tool."
 			if (2)
 				dig_chance = 10
-				dig_feedback = "This rock is very tough. You need a stronger tool."
+				dig_feedback = "This rock is very tough. You'll be faster with a stronger tool."
 			if (3 to INFINITY)
 				dig_chance = 0
 				dig_feedback = "You can't even make a dent! You need a stronger tool."
@@ -1551,12 +1560,27 @@
 			T.visible_message("<span class='alert'>[src] runs out of charge and powers down!</span>")
 		return 1
 
+	attack_self(var/mob/user as mob)
+		if (!digcost)
+			return
+		if (src.process_charges(0))
+			if (!src.status)
+				boutput(user, "<span class='notice'>You power up [src].</span>")
+				src.power_up()
+				playsound(user.loc, "sound/items/miningtool_on.ogg", 30, 1)
+			else
+				boutput(user, "<span class='notice'>You power down [src].</span>")
+				src.power_down()
+		else
+			boutput(user, "<span class='alert'>No charge left in [src].</span>")
+
 	afterattack(target as mob, mob/user as mob)
 		..()
 		if (src.status && !isturf(target))
 			src.process_charges(digcost*5)
 
 	proc/power_up()
+		src.tooltip_rebuild = 1
 		src.status = 1
 		if (powered_overlay)
 			src.overlays += powered_overlay
@@ -1564,6 +1588,7 @@
 		return
 
 	proc/power_down()
+		src.tooltip_rebuild = 1
 		src.status = 0
 		if (powered_overlay)
 			src.overlays = null
@@ -1573,6 +1598,7 @@
 
 	proc/update_icon()
 		return
+
 obj/item/clothing/gloves/concussive
 	name = "concussion gauntlets"
 	desc = "These gloves enable miners to punch through solid rock with their hands instead of using tools."
@@ -1610,35 +1636,24 @@ obj/item/clothing/gloves/concussive
 		powered_overlay = image('icons/obj/items/mining.dmi', "pp-glow")
 		src.power_up()
 
-	attack_self(var/mob/user as mob)
-		tooltip_rebuild = 1
-		if (src.process_charges(0))
-			if (!src.status)
-				boutput(user, "<span class='notice'>You power up [src].</span>")
-				src.power_up()
-				item_state = "ppick1"
-				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_on.ogg", 30, 1)
-			else
-				boutput(user, "<span class='notice'>You power down [src].</span>")
-				src.power_down()
-				item_state = "ppick0"
-				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
-		else
-			boutput(user, "<span class='alert'>No charge left in [src].</span>")
-
-
 	power_up()
 		..()
 		src.force = 15
 		src.dig_strength = 2
+		if(ismob(src.loc))
+			var/mob/user = src.loc
+			item_state = "ppick1"
+			user.update_inhands()
 
 	power_down()
 		..()
 		src.force = 7
 		src.dig_strength = 1
-
+		item_state = "ppick0"
+		if(ismob(src.loc))
+			var/mob/user = src.loc
+			user.update_inhands()
+			playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
 
 	borg
 		process_charges(var/use)
@@ -1689,6 +1704,10 @@ obj/item/clothing/gloves/concussive
 		src.force = 20
 		dig_strength = 3
 		weakener = 1
+		item_state = "phammer1"
+		if(ismob(src.loc))
+			var/mob/user = src.loc
+			user.update_inhands()
 		src.setItemSpecial(/datum/item_special/slam)
 
 	power_down()
@@ -1696,25 +1715,12 @@ obj/item/clothing/gloves/concussive
 		src.force = 9
 		dig_strength = 1
 		weakener = 0
+		item_state = "phammer0"
+		if(ismob(src.loc))
+			var/mob/user = src.loc
+			user.update_inhands()
+			playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
 		src.setItemSpecial(/datum/item_special/simple)
-
-	attack_self(var/mob/user as mob)
-		tooltip_rebuild = 1
-		if (src.process_charges(0))
-			if (!src.status)
-				boutput(user, "<span class='notice'>You power up [src].</span>")
-				src.power_up()
-				item_state = "phammer1"
-				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_on.ogg", 30, 1)
-			else
-				boutput(user, "<span class='notice'>You power down [src].</span>")
-				src.power_down()
-				item_state = "phammer0"
-				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
-		else
-			boutput(user, "<span class='alert'>No charge left in [src].</span>")
 
 	borg
 		process_charges(var/use)
@@ -1747,33 +1753,24 @@ obj/item/clothing/gloves/concussive
 		powered_overlay = image('icons/obj/sealab_power.dmi', "ps-glow")
 		src.power_up()
 
-	attack_self(var/mob/user as mob)
-		tooltip_rebuild = 1
-		if (src.process_charges(0))
-			if (!src.status)
-				boutput(user, "<span class='notice'>You power up [src].</span>")
-				src.power_up()
-				item_state = "pshovel1"
-				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_on.ogg", 30, 1)
-			else
-				boutput(user, "<span class='notice'>You power down [src].</span>")
-				src.power_down()
-				item_state = "pshovel0"
-				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
-		else
-			boutput(user, "<span class='alert'>No charge left in [src].</span>")
-
 	power_up()
 		..()
 		src.force = 8
 		src.dig_strength = 0
+		item_state = "pshovel1"
+		if(ismob(src.loc))
+			var/mob/user = src.loc
+			user.update_inhands()
 
 	power_down()
 		..()
 		src.force = 4
 		src.dig_strength = 0
+		item_state = "pshovel0"
+		if(ismob(src.loc))
+			var/mob/user = src.loc
+			user.update_inhands()
+			playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
 
 	borg
 		process_charges(var/use)
@@ -2007,7 +2004,7 @@ obj/item/clothing/gloves/concussive
 				var/mob/living/silicon/robot/R = user
 				R.cell.charge -= cost * 10
 			else
-				var/ret = SEND_SIGNAL(src, COMSIG_CELL_USE, cost, TRUE)
+				var/ret = SEND_SIGNAL(src, COMSIG_CELL_USE, cost)
 				if (ret & CELL_INSUFFICIENT_CHARGE)
 					boutput(user, "<span class='alert'>Transfer successful. The transporter is now out of charge.</span>")
 				else
@@ -2050,7 +2047,7 @@ obj/item/clothing/gloves/concussive
 			T.set_loc(src.target)
 			if(hasvar(T, "welded")) T:welded = 1
 			elecflash(src)
-			var/ret = SEND_SIGNAL(src, COMSIG_CELL_USE, cost, TRUE)
+			var/ret = SEND_SIGNAL(src, COMSIG_CELL_USE, cost)
 			if (ret & CELL_INSUFFICIENT_CHARGE)
 				boutput(user, "<span class='alert'>Transfer successful. The transporter is now out of charge.</span>")
 			else
@@ -2353,6 +2350,13 @@ var/global/list/cargopads = list()
 	mats = 6
 	var/obj/item/satchel/mining/satchel = null
 
+	prepared
+		New()
+			..()
+			var/obj/item/satchel/mining/S = new /obj/item/satchel/mining(src)
+			satchel = S
+			icon_state = "scoop-bag"
+
 	borg
 		New()
 			..()
@@ -2361,15 +2365,17 @@ var/global/list/cargopads = list()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W,/obj/item/satchel/mining/))
-			var/obj/item/satchel/mining/S = W
-			if (satchel)
-				boutput(user, "<span class='alert'>There's already a satchel hooked up to [src].</span>")
-				return
-			user.drop_item()
-			S.set_loc(src)
-			satchel = S
-			icon_state = "scoop-bag"
-			user.visible_message("[user] inserts [S] into [src].", "You insert [S] into [src].")
+			if (!issilicon(usr))
+				var/obj/item/satchel/mining/S = W
+				user.drop_item()
+				if (satchel)
+					user.put_in_hand_or_drop(satchel)
+				S.set_loc(src)
+				satchel = S
+				icon_state = "scoop-bag"
+				user.visible_message("[user] inserts [S] into [src].", "You insert [S] into [src].")
+			else
+				boutput(user, "<span class='alert'>The satchel is firmly secured to the scoop.</span>")
 		else
 			..()
 			return
@@ -2378,27 +2384,31 @@ var/global/list/cargopads = list()
 		if(!issilicon(user))
 			if (satchel)
 				user.visible_message("[user] unloads [satchel] from [src].", "You unload [satchel] from [src].")
-				satchel.set_loc(get_turf(user))
+				user.put_in_hand_or_drop(satchel)
 				satchel = null
 				icon_state = "scoop"
 			else
 				boutput(user, "<span class='alert'>There's no satchel in [src] to unload.</span>")
 		else
-			boutput(user, "<span class='alert'>The satchel is firmly secured.</span>")
+			boutput(user, "<span class='alert'>The satchel is firmly secured to the scoop.</span>")
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
-		if (!isturf(target))
-			target = get_turf(target)
-		if (!satchel)
-			boutput(user, "<span class='alert'>There's no satchel in [src] to dump out.</span>")
+		if(isturf(target))
+			if (!satchel)
+				boutput(user, "<span class='alert'>There's no satchel in [src] to dump out.</span>")
+				return
+			if (satchel.contents.len < 1)
+				boutput(user, "<span class='alert'>The satchel in [src] is empty.</span>")
+				return
+			user.visible_message("[user] dumps out [src]'s satchel contents.", "You dump out [src]'s satchel contents.")
+			for (var/obj/item/I in satchel.contents)
+				I.set_loc(target)
+			satchel.satchel_updateicon()
 			return
-		if (satchel.contents.len < 1)
-			boutput(user, "<span class='alert'>The satchel in [src] is empty.</span>")
-			return
-		user.visible_message("[user] dumps out [src]'s satchel contents.", "You dump out [src]'s satchel contents.")
-		for (var/obj/item/I in satchel.contents)
-			I.set_loc(target)
-		satchel.satchel_updateicon()
+		if (istype(target, /obj/item/satchel/mining))
+			user.swap_hand() //Needed so you don't drop the scoop instead of the satchel
+			src.attackby(target, user)
+			user.swap_hand()
 
 ////// Shit that goes in the asteroid belt, might split it into an exploring.dm later i guess
 
