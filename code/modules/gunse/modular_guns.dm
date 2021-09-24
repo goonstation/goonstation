@@ -78,7 +78,22 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 	else
 		return (src.gun_DRM & part.part_DRM)
 
-
+/obj/item/gun/modular/buildTooltipContent()
+	. = ..()
+	if(gun_DRM)
+		. += "<div><span>DRM LICENSE: </span>"
+		if(gun_DRM & GUN_NANO)
+			. += "<img src='[resource("images/tooltips/temp_nano.png")]' alt='' class='icon' />"
+		if(gun_DRM & GUN_FOSS)
+			. += "<img src='[resource("images/tooltips/temp_foss.png")]' alt='' class='icon' />"
+		if(gun_DRM & GUN_JUICE)
+			. += "<img src='[resource("images/tooltips/temp_juice.png")]' alt='' class='icon' />"
+		if(gun_DRM & GUN_SOVIET)
+			. += "<img src='[resource("images/tooltips/temp_soviet.png")]' alt='' class='icon' />"
+		if(gun_DRM & GUN_ITALIAN)
+			. += "<img src='[resource("images/tooltips/temp_italian.png")]' alt='' class='icon' />"
+		. += "</div>"
+	lastTooltipContent = .
 
 /obj/item/gun/modular/attackby(var/obj/item/I as obj, mob/user as mob)
 	if (istype(I, /obj/item/stackable_ammo))
@@ -428,7 +443,8 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 
 	make_parts()
 		barrel = new /obj/item/gun_parts/barrel/juicer(src)
-		stock = new /obj/item/gun_parts/stock/italian(src)
+		stock = new /obj/item/gun_parts/stock/NT(src)
+		magazine = new /obj/item/gun_parts/magazine/juicer/small(src)
 
 /obj/item/gun/modular/juicer/long
 	desc = "A juicer-built, juicer-'designed', and most importantly juicer-marketed gun."
@@ -436,7 +452,7 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 
 	make_parts()
 		barrel = new /obj/item/gun_parts/barrel/juicer/longer(src)
-		stock = new /obj/item/gun_parts/stock/NT/shoulder(src)
+		stock = new /obj/item/gun_parts/stock/italian(src)
 
 /obj/item/gun/modular/soviet
 	name = "\improper Soviet лазерная"

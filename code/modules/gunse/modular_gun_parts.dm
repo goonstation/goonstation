@@ -27,6 +27,23 @@ ABSTRACT_TYPE(/obj/item/gun_parts)
 		my_gun = null
 		return src
 
+	buildTooltipContent()
+		. = ..()
+		if(part_DRM)
+			. += "<div><span>DRM REQUIREMENTS: </span>"
+			if(part_DRM & GUN_NANO)
+				. += "<img src='[resource("images/tooltips/temp_nano.png")]' alt='' class='icon' />"
+			if(part_DRM & GUN_FOSS)
+				. += "<img src='[resource("images/tooltips/temp_foss.png")]' alt='' class='icon' />"
+			if(part_DRM & GUN_JUICE)
+				. += "<img src='[resource("images/tooltips/temp_juice.png")]' alt='' class='icon' />"
+			if(part_DRM & GUN_SOVIET)
+				. += "<img src='[resource("images/tooltips/temp_soviet.png")]' alt='' class='icon' />"
+			if(part_DRM & GUN_ITALIAN)
+				. += "<img src='[resource("images/tooltips/temp_italian.png")]' alt='' class='icon' />"
+			. += "</div>"
+		lastTooltipContent = .
+
 
 
 ABSTRACT_TYPE(/obj/item/gun_parts/barrel)
@@ -362,7 +379,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	name = "standard long barrel"
 	desc = "A cylindrical barrel, rifled."
 	spread_angle = -15
-	name_addition = "rifle"
+	name_addition = "longarm"
 	icon_state = "barrel-rifle"
 
 /obj/item/gun_parts/barrel/foss
@@ -399,7 +416,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 
 /obj/item/gun_parts/barrel/juicer/longer
 	name = "\improper SNIPA Barrel"
-	desc = "A cheaply-built extended rifled barrel. Not good."
+	desc = "A cheaply-built extended rifled shotgun barrel. Not good."
 	spread_angle = -17 // accurate??
 	jam_frequency_fire = 15 //but very!!!!!!! poorly built
 	name_addition = "BLITZER"
@@ -496,6 +513,13 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	max_ammo_capacity = 3
 	jam_frequency_reload = 8
 	name_addition = "LARGE"
+
+/obj/item/gun_parts/magazine/juicer/small
+	name = "SKINMAG"
+	desc = "Holds 1 round, and lotion."
+	max_ammo_capacity = 1
+	jam_frequency_reload = 5
+	name_addition = "LITE"
 
 /obj/item/gun_parts/magazine/juicer/bigger
 	name = "HOTTER SHOTTS MAG"
