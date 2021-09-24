@@ -3,6 +3,7 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "laser"
 
+
 	virtual
 		icon_state = "laser_virtual"
 

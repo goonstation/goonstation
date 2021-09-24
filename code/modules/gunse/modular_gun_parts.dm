@@ -430,7 +430,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	name = "\improper FOSS lensed long barrel"
 	desc = "A cylindrical array of lenses to focus laser blasts."
 	spread_angle = -17
-	lensing = 1.1
+	lensing = 1
 	part_DRM = GUN_FOSS | GUN_SOVIET
 	color = "#7755FF"
 	name_addition = "focuser"
@@ -458,8 +458,8 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 /obj/item/gun_parts/barrel/soviet
 	name = "Сборка объектива"
 	desc = "стопка линз для фокусировки вашего пистолета"
-	spread_angle = -11
-	lensing = 1.1
+	spread_angle = -14
+	lensing = 1.2
 	part_DRM = GUN_FOSS | GUN_SOVIET
 	color = "#FF9999"
 	name_addition = "comrade"

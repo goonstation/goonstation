@@ -139,8 +139,24 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 		..()
 
 /obj/item/gun/modular/alter_projectile(var/obj/projectile/P)
-	if(!lensing)
-		return
+	if(P.proj_data.window_pass)
+		if(lensing)
+			P.power *= lensing
+		else
+			P.power *= PROJ_PENALTY_UNLENSED
+
+	else
+		if(barrel && lensing)
+			src.jammed = 1
+			barrel.lensing = 0
+			barrel.spread_angle += 5
+			barrel.desc += " The internal lenses have been destroyed."
+			src.lensing = 0
+			src.spread_angle += 5
+			if(usr)
+				boutput(usr, "<span class='alert'><b>[src.barrel] is shattered by the projectile!</b></span>")
+			playsound(get_turf(src), "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
+			buildTooltipContent()
 
 
 /obj/item/gun/modular/proc/flash_process_ammo(mob/user)
@@ -234,6 +250,7 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 		flash_process_ammo(user)
 	else
 		process_ammo(user)
+	buildTooltipContent()
 
 /obj/item/gun/modular/canshoot()
 	if(jammed)

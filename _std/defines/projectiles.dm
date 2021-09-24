@@ -29,10 +29,12 @@
 //default max range for 'unlimited' range projectiles
 #define PROJ_INFINITE_RANGE 500
 
+//power multiplier when *not* using a lensed barrel on a laser gun. Unfocused beam, shit efficiency.
+#define PROJ_PENALTY_UNLENSED 0.1
 
 //modular gun shit
-#define GUN_NANO 1
-#define GUN_FOSS 2
-#define GUN_JUICE 4
-#define GUN_SOVIET 8
-#define GUN_ITALIAN 16
+#define GUN_NANO 				(1<<0)
+#define GUN_FOSS 				(1<<1)
+#define GUN_JUICE 				(1<<2)
+#define GUN_SOVIET 				(1<<3)
+#define GUN_ITALIAN 			(1<<4)
