@@ -1165,6 +1165,8 @@
 	if (surgeryCheck(M, user))		// Check for surgery-specific actions
 		if(insertChestItem(M, user))	// Puting item in patient's chest
 			return
+		if(insertAugment(M, user))
+			return
 
 	if (src.Eat(M, user)) // All those checks were done in there anyway
 		return

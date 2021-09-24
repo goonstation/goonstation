@@ -28,6 +28,7 @@
 	var/datum/organHolder/holder = null
 	var/sound/sound_fart = null // this is the life I live, making it so you can change the fart sound of your butt (that you can wear on your head) so that you can make artifact butts with weird farts
 	var/made_from = "butt"
+	var/augmentation_support = FALSE
 
 	disposing()
 		if (donor?.organs)

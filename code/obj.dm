@@ -150,6 +150,7 @@
 	* inherent packet abilities.
 	*/
 	proc/can_access_remotely_default(mob/user)
+		var/mob/living/carbon/human/H = user
 		if(isAI(user))
 			. = TRUE
 		else if(issilicon(user))
@@ -160,7 +161,7 @@
 				var/mob/living/silicon/ghostdrone/G = user
 				return !G.active_tool
 			. = TRUE
-		else if(HasWirelessInteractor(user))
+		else if(H.has_augmentation("Head", null, /obj/item/augmentation/head/wireless_interact))
 			. = TRUE
 
 	proc/client_login(var/mob/user)

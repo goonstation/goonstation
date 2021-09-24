@@ -151,7 +151,7 @@
 				var/obfuscate = (disease_detection != 255 ? 1 : 0)		//this is so admin check_health verb see exact numbs, scanners don't. Can remove, not exactly necessary, but thought they might want it.
 
 				organ_data1 += organ_health_scan("heart", H, obfuscate)
-				// organ_data1 += organ_health_scan("brain", H, obfuscate) //Might want, might not. will be slightly more accurate than current brain damage scan
+				organ_data1 += organ_health_scan("brain", H, TRUE) //this is gonna be obfuscated regardless
 
 				organ_data1 += organ_health_scan("left_lung", H, obfuscate)
 				organ_data1 += organ_health_scan("right_lung", H, obfuscate)
@@ -166,8 +166,6 @@
 				organ_data1 += organ_health_scan("appendix", H, obfuscate)
 				if(H.organHolder.tail || H.mob_flags & SHOULD_HAVE_A_TAIL)
 					organ_data1 += organ_health_scan("tail", H, obfuscate)
-				if(H.organHolder.augmentation_nerve)
-					organ_data1 += organ_health_scan("augmentation_nerve", H, obfuscate)
 
 				//Don't give organ readings for Vamps.
 				if (organ_data1 && !isvampire(H))
@@ -238,13 +236,26 @@
 	var/obj/item/organ/O = H.organHolder.organ_list[input]
 	if (istype(O))
 		var/damage = O.get_damage()
+		var/aug_damage
 		if (obfuscate)
 			return obfuscate_organ_health(O)
 		else
-			if (damage > 0)
-				return "<br><span style='color:[damage >= 65 ? "red" : "purple"]'><b>[input]</b> - [O.get_damage()]</span>"
+			if(O.augmentation_support && O.installed_aug)
+				var/obj/item/augmentation/A = O.installed_aug
+				aug_damage = A.brute_dam + A.burn_dam + A.tox_dam
+				if (damage > 0 && (aug_damage == 0)) //organ damage, aug isn't
+					return "<br><span style='color:[damage >= 65 ? "red" : "purple"]'><b>[input]</b> - [O.get_damage()]</span>"
+				else if (damage == 0 && (aug_damage > 0)) //no organ damage, aug is
+					return "<span style='color:[aug_damage >= 65 ? "red" : "purple"]'><b>Robotic Augmentation Detected: [A.name]</b> - [aug_damage]</span>"
+				else if (damage > 0 && (aug_damage > 0)) //both organ and aug are damaged
+					return "<br><span style='color:[damage >= 65 ? "red" : "purple"]'><b>[input]</b> - [O.get_damage()] | <span style='color:[aug_damage >= 65 ? "red" : "purple"]'><b>Robotic Augmentation Detected: [A.name]</b> - [aug_damage]</span>"
+				else
+					return null
 			else
-				return null
+				if (damage > 0)
+					return "<br><span style='color:[damage >= 65 ? "red" : "purple"]'><b>[input]</b> - [O.get_damage()]</span>"
+				else
+					return null
 
 	else
 		return "<br><span style='color:purple'><b>[input]</b> - missing!</span>"
@@ -255,6 +266,7 @@
 		return null
 	var/list/ret = list()
 	var/damage = O.get_damage()
+	var/aug_damage
 	if (damage >= O.MAX_DAMAGE)
 		ret += "<br><span class='alert'><b>[O.name]</b> - Dead</span>"
 	else if (damage >= O.MAX_DAMAGE*0.9)
@@ -269,6 +281,21 @@
 		ret += "<br><span style='color:purple'><b>[O.name]</b></span>"
 	if (O.robotic)
 		ret += "<span style='color:purple'> - Robotic organ detected</span>"
+	if(O.augmentation_support && O.installed_aug)
+		var/obj/item/augmentation/A = O.installed_aug
+		aug_damage = A.brute_dam + A.burn_dam + A.tox_dam
+		if(damage > 0 && aug_damage > 0)
+			ret += "<span style='color:purple'> |"
+		if (aug_damage >= A.max_aug_health)
+			ret += "<span class='alert'> Cybernetic Augmentation Detected: <b>[A.name]</b> - Dead</span>"
+		else if (aug_damage >= A.max_aug_health*0.9)
+			ret += "<span class='alert'> Cybernetic Augmentation Detected: <b>[A.name]</b> - Critical</span>"
+		else if (aug_damage >= A.max_aug_health*0.65)
+			ret += "<span class='alert'> Cybernetic Augmentation Detected: <b>[A.name]</b> - Significant</span>"
+		else if (aug_damage >= A.max_aug_health*0.30)
+			ret += "<span style='color:purple'> Cybernetic Augmentation Detected: <b>[A.name]</b> - Moderate</span>"
+		else if (aug_damage > 0)
+			ret += "<span style='color:purple'> Cybernetic Augmentation Detected: <b>[A.name]</b> - Minor</span>"
 	return ret.Join()
 
 /datum/genetic_prescan

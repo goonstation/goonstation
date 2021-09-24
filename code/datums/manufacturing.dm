@@ -924,9 +924,9 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 
 /datum/manufacture/augmentation_wire
 	name = "Wireless Interaction Augmentation"
-	item_paths = list("CRY-2","MET-2","CON-2","INS-1", "telecrystal")
+	item_paths = list("CRY-1","MET-2","CON-2","INS-1", "telecrystal")
 	item_amounts = list(8,5,5,3,10)
-	item_outputs = list(/obj/item/organ/augmentation/head/wireless_interact)
+	item_outputs = list(/obj/item/augmentation/head/wireless_interact)
 	time = 80 SECONDS
 	create = 1
 	category = "Component"

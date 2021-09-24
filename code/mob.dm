@@ -1030,8 +1030,6 @@
 				continue
 			if (istype(W, /obj/item/organ/tail) && src.organHolder.tail == W)
 				continue
-			if (istype(W, /obj/item/organ/augmentation/head) && src.organHolder.augmentation_nerve == W)
-				continue
 
 		if (istype(W, /obj/item/reagent_containers/food/snacks/bite))
 			continue

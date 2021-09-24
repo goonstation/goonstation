@@ -23,10 +23,9 @@
 	var/obj/item/organ/intestines = null
 	var/obj/item/organ/appendix = null
 	var/obj/item/organ/tail = null
-	var/obj/item/organ/augmentation/head/augmentation_nerve = null
 	var/lungs_changed = 2				//for changing lung stamina debuffs if it has changed since last cycle. starts at 2 for having 2 working lungs
 
-	var/list/organ_list = list("all", "head", "skull", "brain", "left_eye", "right_eye", "chest", "heart", "left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail", "augmentation_nerve")
+	var/list/organ_list = list("all", "head", "skull", "brain", "left_eye", "right_eye", "chest", "heart", "left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
 
 	var/list/organ_type_list = list(
 		"head"="/obj/item/organ/head",
@@ -47,8 +46,7 @@
 		"intestines"="/obj/item/organ/intestines",
 		"appendix"="/obj/item/organ/appendix",
 		"butt"="/obj/item/clothing/head/butt",
-		"tail"="/obj/item/organ/tail",
-		"augmentation_nerve"="/obj/item/organ/augmentation/head")
+		"tail"="/obj/item/organ/tail")
 
 	New(var/mob/living/L, var/ling)
 		..()
@@ -67,64 +65,79 @@
 			head.donor = null
 			chest?.bones?.donor = null
 			head.holder = null
+			head?.installed_aug = null
+
 		if (skull)
 			skull.donor = null
 			skull.holder = null
 		if (brain)
 			brain.donor = null
 			brain.holder = null
+			brain?.installed_aug = null
 		if (left_eye)
 			left_eye.donor = null
 			left_eye.holder = null
+			left_eye?.installed_aug = null
 		if (right_eye)
 			right_eye.donor = null
 			right_eye.holder = null
+			right_eye?.installed_aug = null
 		if (chest)
 			chest.donor = null
 			chest?.bones?.donor = null
 			chest.holder = null
+			chest?.installed_aug = null
 		if (heart)
 			heart.donor = null
 			heart.holder = null
+			heart?.installed_aug = null
 		if (left_lung)
 			left_lung.donor = null
 			left_lung.holder = null
+			left_lung?.installed_aug = null
 		if (right_lung)
 			right_lung.donor = null
 			right_lung.holder = null
+			left_lung?.installed_aug = null
 		if (butt)
 			butt.donor = null
 			butt.holder = null
 		if (left_kidney)
 			left_kidney.donor = null
 			left_kidney.holder = null
+			left_kidney?.installed_aug = null
 		if (right_kidney)
 			right_kidney.donor = null
 			right_kidney.holder = null
+			right_kidney?.installed_aug = null
 		if (liver)
 			liver.donor = null
 			liver.holder = null
+			liver?.installed_aug = null
 		if (stomach)
 			stomach.donor = null
 			stomach.holder = null
+			stomach?.installed_aug = null
 		if (intestines)
 			intestines.donor = null
 			intestines.holder = null
+			intestines?.installed_aug = null
 		if (spleen)
 			spleen.donor = null
 			spleen.holder = null
+			spleen?.installed_aug = null
 		if (pancreas)
 			pancreas.donor = null
 			pancreas.holder = null
+			pancreas?.installed_aug = null
 		if (appendix)
 			appendix.donor = null
 			appendix.holder = null
+			appendix?.installed_aug = null
 		if (tail)
 			tail.donor = null
 			tail.holder = null
-		if (augmentation_nerve)
-			augmentation_nerve.donor = null
-			augmentation_nerve.holder = null
+			tail?.installed_aug = null
 
 		head = null
 		skull = null
@@ -145,7 +158,6 @@
 		pancreas = null
 		appendix = null
 		tail = null
-		augmentation_nerve = null
 
 		donor = null
 		..()
@@ -160,6 +172,8 @@
 				//in obj/item/organ/proc/on_life, It should return 1 on success and 0 on fail. And it will fail if the organ is damaged beyond repair or is broken. So...
 				if (!O.on_life(mult))
 					O.on_broken(mult)
+				if (O.installed_aug && !O.installed_aug.on_life(mult))
+					O.installed_aug.on_broken(mult)
 			else	//The organ for this slot is missing. For our purposes here at least. Do bad effects, depending.
 				handle_missing(thing, mult)
 
@@ -214,7 +228,6 @@
 		for (var/organ in organs)
 			if (probability == 100 || prob(probability))
 				heal_organ(brute, burn, tox, organ)
-
 
 	//calls take_damage on the specified Organ attached to this organHolder
 	proc/damage_organ(var/brute, var/burn, var/tox, var/organ as text)
@@ -409,8 +422,6 @@
 				organ = "appendix"
 			else if(organ == tail)
 				organ = "tail"
-			else if (organ == augmentation_nerve)
-				organ = "augmentation_nerve"
 			else
 				return 0 // what the fuck are you trying to remove
 
@@ -721,17 +732,238 @@
 				src.organ_list["tail"] = null
 				return mytail
 
-			if ("augmentation_nerve")
-				if (!src.augmentation_nerve)
+	proc/drop_organ_augmentation(var/organ, var/location)
+		if (!src.donor || !organ)
+			return
+
+		if (!location)
+			location = src.donor.loc
+
+		if(!istext(organ) && istype(organ, /obj/item))
+			if(organ == head)
+				organ = "head"
+			else if(organ == brain)
+				organ = "brain"
+			else if(organ == left_eye)
+				organ = "left_eye"
+			else if(organ == right_eye)
+				organ = "right_eye"
+			else if(organ == chest)
+				organ = "chest"
+			else if(organ == heart)
+				organ = "heart"
+			else if(organ == left_lung)
+				organ = "left_lung"
+			else if(organ == right_lung)
+				organ = "right_lung"
+			else if(organ == left_kidney)
+				organ = "left_kidney"
+			else if(organ == right_kidney)
+				organ = "right_kidney"
+			else if(organ == liver)
+				organ = "liver"
+			else if(organ == stomach)
+				organ = "stomach"
+			else if(organ == intestines)
+				organ = "intestines"
+			else if(organ == spleen)
+				organ = "spleen"
+			else if(organ == pancreas)
+				organ = "pancreas"
+			else if(organ == appendix)
+				organ = "appendix"
+			else if(organ == tail)
+				organ = "tail"
+			else
+				return 0 // what the fuck are you trying to remove
+
+		switch(lowertext(organ))
+
+			if ("all")
+				if (islist(src.organ_list))
+					for (var/thing in src.organ_list)
+						if (!src.organ_list[thing])
+							continue
+						src.drop_organ_augmentation(thing, location)
+					return 1
+
+			if ("head")
+				if (!src.head)
 					return 0
-				var/obj/item/organ/augmentation/head/myaugmentation_nerve = src.augmentation_nerve
-				myaugmentation_nerve.set_loc(location)
-				myaugmentation_nerve.on_removal()
-				myaugmentation_nerve.holder = null
-				src.augmentation_nerve = null
+				var/obj/item/organ/head/myHead = src.head
+				if (src.brain.installed_aug)
+					myHead.brain.installed_aug = src.drop_organ_augmentation("brain", myHead)
+				if (src.right_eye.installed_aug)
+					myHead.right_eye.installed_aug = src.drop_organ_augmentation("right_eye", myHead)
+				if (src.left_eye.installed_aug)
+					myHead.left_eye.installed_aug = src.drop_organ_augmentation("left_eye", myHead)
+				myHead.installed_aug.set_loc(location)
+				myHead.installed_aug.on_organ_removal()
+				src.head.installed_aug = null
 				src.donor.update_body()
-				src.organ_list["augmentation_nerve"] = null
-				return myaugmentation_nerve
+				src.donor.UpdateDamageIcon()
+				src.donor.update_clothing()
+				return myHead.installed_aug
+
+			if ("brain")
+				if (!src.brain)
+					return 0
+				var/obj/item/organ/brain/myBrain = src.brain
+				myBrain.installed_aug.set_loc(location)
+				myBrain.installed_aug.on_organ_removal()
+				src.brain.installed_aug = null
+				src.donor.update_body()
+				return myBrain.installed_aug
+
+			if ("left_eye")
+				if (!src.left_eye)
+					return 0
+				var/obj/item/organ/eye/myLeftEye = src.left_eye
+				myLeftEye.installed_aug.set_loc(location)
+				myLeftEye.installed_aug.on_organ_removal()
+				src.left_eye.installed_aug = null
+				src.donor.update_body()
+				return myLeftEye.installed_aug
+
+			if ("right_eye")
+				if (!src.right_eye)
+					return 0
+				var/obj/item/organ/eye/myRightEye = src.right_eye
+				myRightEye.installed_aug.set_loc(location)
+				myRightEye.installed_aug.on_organ_removal()
+				src.right_eye.installed_aug = null
+				src.donor.update_body()
+				return myRightEye.installed_aug
+
+			if ("chest")
+				if (!src.chest)
+					return 0
+				var/obj/item/organ/chest/myChest = src.chest
+				myChest.installed_aug.set_loc(location)
+				myChest.installed_aug.on_organ_removal()
+				src.chest.installed_aug = null
+				src.donor.update_body()
+				return myChest.installed_aug
+
+			if ("heart")
+				if (!src.heart)
+					return 0
+				var/obj/item/organ/heart/myHeart = src.heart
+				myHeart.installed_aug.set_loc(location)
+				myHeart.installed_aug.on_organ_removal()
+				src.heart.installed_aug = null
+				src.donor.update_body()
+				return myHeart.installed_aug
+
+			if ("left_lung")
+				if (!src.left_lung)
+					return 0
+				var/obj/item/organ/lung/left/myLeftLung = src.left_lung
+				myLeftLung.installed_aug.set_loc(location)
+				myLeftLung.installed_aug.on_organ_removal()
+				src.left_lung.installed_aug = null
+				src.donor.update_body()
+				return myLeftLung.installed_aug
+
+			if ("right_lung")
+				if (!src.right_lung)
+					return 0
+				var/obj/item/organ/lung/right/myRightLung = src.right_lung
+				myRightLung.installed_aug.set_loc(location)
+				myRightLung.installed_aug.on_organ_removal()
+				src.right_lung.installed_aug = null
+				src.donor.update_body()
+				return myRightLung.installed_aug
+
+			if ("left_kidney")
+				if (!src.left_kidney)
+					return 0
+				var/obj/item/organ/kidney/left/myleft_kidney = src.left_kidney
+				myleft_kidney.installed_aug.set_loc(location)
+				myleft_kidney.installed_aug.on_organ_removal()
+				src.left_kidney.installed_aug = null
+				src.donor.update_body()
+				return myleft_kidney.installed_aug
+
+			if ("right_kidney")
+				if (!src.right_kidney)
+					return 0
+				var/obj/item/organ/kidney/right/myright_kidney = src.right_kidney
+				myright_kidney.installed_aug.set_loc(location)
+				myright_kidney.installed_aug.on_organ_removal()
+				src.right_kidney.installed_aug = null
+				src.donor.update_body()
+				return myright_kidney.installed_aug
+
+			if ("liver")
+				if (!src.liver)
+					return 0
+				var/obj/item/organ/liver/myliver = src.liver
+				myliver.installed_aug.set_loc(location)
+				myliver.installed_aug.on_organ_removal()
+				src.liver.installed_aug = null
+				src.donor.update_body()
+				return myliver.installed_aug
+
+			if ("stomach")
+				if (!src.stomach)
+					return 0
+				var/obj/item/organ/stomach/mystomach = src.stomach
+				mystomach.installed_aug.set_loc(location)
+				mystomach.installed_aug.on_organ_removal()
+				src.stomach.installed_aug = null
+				src.donor.update_body()
+				return mystomach.installed_aug
+
+			if ("intestines")
+				if (!src.intestines)
+					return 0
+				var/obj/item/organ/intestines/myintestines = src.intestines
+				myintestines.installed_aug.set_loc(location)
+				myintestines.installed_aug.on_organ_removal()
+				src.intestines.installed_aug = null
+				src.donor.update_body()
+				return myintestines.installed_aug
+
+			if ("spleen")
+				if (!src.spleen)
+					return 0
+				var/obj/item/organ/spleen/myspleen = src.spleen
+				myspleen.installed_aug.set_loc(location)
+				myspleen.installed_aug.on_organ_removal()
+				src.spleen.installed_aug = null
+				src.donor.update_body()
+				return myspleen.installed_aug
+
+			if ("pancreas")
+				if (!src.pancreas)
+					return 0
+				var/obj/item/organ/pancreas/mypancreas = src.pancreas
+				mypancreas.installed_aug.set_loc(location)
+				mypancreas.installed_aug.on_organ_removal()
+				src.pancreas.installed_aug = null
+				src.donor.update_body()
+				return mypancreas.installed_aug
+
+			if ("appendix")
+				if (!src.appendix)
+					return 0
+				var/obj/item/organ/appendix/myappendix = src.appendix
+				myappendix.installed_aug.set_loc(location)
+				myappendix.installed_aug.on_organ_removal()
+				src.appendix.installed_aug = null
+				src.donor.update_body()
+				return myappendix.installed_aug
+
+			if ("tail")
+				if (!src.tail)
+					return 0
+				var/obj/item/organ/tail/mytail = src.tail
+				mytail.installed_aug.set_loc(location)
+				mytail.installed_aug.on_organ_removal()
+				src.tail.installed_aug = null
+				src.donor.update_body()
+				return mytail.installed_aug
 
 	/// drops the organ, then hurls it somewhere
 	proc/drop_and_throw_organ(var/organ, var/location, var/direction, var/dist, var/speed, var/showtext)
@@ -1128,21 +1360,6 @@
 				newtail.set_loc(src.donor)
 				newtail.holder = src
 				organ_list["tail"] = newtail
-				src.donor.update_body()
-				success = 1
-
-			if ("augmentation_nerve")
-				if (src.augmentation_nerve)
-					if (force)
-						qdel(src.augmentation_nerve)
-					else
-						return 0
-				var/obj/item/organ/augmentation/head/newaugmentation_nerve = I
-				newaugmentation_nerve.op_stage = op_stage
-				src.augmentation_nerve = newaugmentation_nerve
-				augmentation_nerve.set_loc(src.donor)
-				augmentation_nerve.holder = src
-				organ_list["augmentation_nerve"] = newaugmentation_nerve
 				src.donor.update_body()
 				success = 1
 

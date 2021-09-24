@@ -73,6 +73,9 @@
 				user.u_equip(src)
 			H.organHolder.receive_organ(src, "right_eye", 2.0)
 			H.update_body()
+			if(src.installed_aug)
+				var/obj/item/augmentation/A = src.installed_aug
+				A.on_insertion(src, H)
 		else if (target_organ_location == "left" && !H.organHolder.left_eye)
 			H.tri_message("<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] left eye socket!</span>",\
 			user, "<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] left eye socket!</span>",\
@@ -82,6 +85,9 @@
 				user.u_equip(src)
 			H.organHolder.receive_organ(src, "left_eye", 2.0)
 			H.update_body()
+			if(src.installed_aug)
+				var/obj/item/augmentation/A = src.installed_aug
+				A.on_insertion(src, H)
 		else
 			H.tri_message("<span class='alert'><b>[user]</b> tries to [fluff] the [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] right eye socket!<br>But there's something already there!</span>",\
 			user, "<span class='alert'>You try to [fluff] the [src] into [user == H ? "your" : "[H]'s"] right eye socket!<br>But there's something already there!</span>",\

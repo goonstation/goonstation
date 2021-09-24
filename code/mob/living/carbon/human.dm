@@ -135,6 +135,7 @@
 	var/static/image/spider_image = image('icons/mob/human.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
 	var/static/image/makeup_image = image('icons/mob/human.dmi') // yeah this is just getting stupider
 	var/static/image/juggle_image = image('icons/mob/human.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
+	var/static/image/augmentation_image = image('icons/mob/human.dmi')
 	var/list/juggling = list()
 	var/can_juggle = 0
 
@@ -2341,9 +2342,15 @@
 		var/obj/item/organ/O = src.organHolder.organ_list[organ_slot]
 		if(istype(O))
 			O.unbreakme()
+		if(O?.augmentation_support && O?.installed_aug && istype(O?.installed_aug, /obj/item/augmentation))
+			O.installed_aug.brute_dam = 0
+			O.installed_aug.burn_dam = 0
+			O.installed_aug.tox_dam = 0
+			O.installed_aug.unbreakme()
+
 	if (!src.organHolder)
 		src.organHolder = new(src)
-	src.organHolder.heal_organs(INFINITY, INFINITY, INFINITY, list("liver", "left_kidney", "right_kidney", "stomach", "intestines","spleen", "left_lung", "right_lung","appendix", "pancreas", "heart", "brain", "left_eye", "right_eye", "tail", "augmentation_nerve"))
+	src.organHolder.heal_organs(INFINITY, INFINITY, INFINITY, list("liver", "left_kidney", "right_kidney", "stomach", "intestines","spleen", "left_lung", "right_lung","appendix", "pancreas", "heart", "brain", "left_eye", "right_eye", "tail"))
 
 	src.organHolder.create_organs()
 	if (src.organHolder.chest)

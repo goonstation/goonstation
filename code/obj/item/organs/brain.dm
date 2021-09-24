@@ -38,6 +38,10 @@
 		return 0
 
 	get_desc()
+		if(src.installed_aug)
+			var/obj/item/augmentation/A = src.installed_aug
+			. += "<br>There appears to be a [bicon(A)] [A.name] attached."
+
 		if (usr?.traitHolder?.hasTrait("training_medical"))
 			if (src.owner?.key)
 				if (!find_ghost_by_key(src.owner?.key))
@@ -78,6 +82,9 @@
 				user.u_equip(src)
 			H.organHolder.receive_organ(src, "brain", 3.0)
 			H.organHolder.head.scalp_op_stage = 3.0
+			if(src.installed_aug)
+				var/obj/item/augmentation/A = src.installed_aug
+				A.on_insertion(src, H)
 			return 1
 
 		return 0
@@ -97,6 +104,7 @@
 	name = "synthbrain"
 	item_state = "plant"
 	desc = "An artificial mass of grey matter. Not actually, as one might assume, very good at thinking."
+	synthetic = TRUE
 	New()
 		..()
 		src.icon_state = pick("plant_brain", "plant_brain_bloom")
@@ -107,7 +115,8 @@
 	item_state = "late_brain"
 	desc = "A brain sized pyramid constructed out of silicon and LED lights. It employs complex quantum loopholes to create a consciousness within a decade or less."
 	created_decal = /obj/decal/cleanable/oil
-	var/activated = 0
+	robotic = TRUE
+	var/activated = FALSE
 
 /obj/item/organ/brain/ai
 	name = "neural net processor"
@@ -115,6 +124,7 @@
 	icon_state = "ai_brain"
 	item_state = "ai_brain"
 	created_decal = /obj/decal/cleanable/oil
+	robotic = TRUE
 	made_from = "pharosium"
 
 /obj/item/organ/brain/martian
@@ -131,6 +141,7 @@
 	icon_state = "flockdrone_brain"
 	item_state = "flockdrone_brain"
 	created_decal = /obj/decal/cleanable/flockdrone_debris/fluid
+	robotic = TRUE //i guess?
 	made_from = "gnesis"
 
 	on_life()

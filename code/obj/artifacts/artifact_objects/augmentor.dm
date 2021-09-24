@@ -44,8 +44,7 @@
 		"right_lung" = "right lung",
 		"left_kidney" = "left kidney",
 		"right_kidney" = "right kidney",
-		"appendix" = "appendix",
-		"augmentation_nerve" = "nerve augmentation")
+		"appendix" = "appendix")
 
 	// lazy initialiser for augmentation datum cache
 	proc/get_augmentation(var/type)
@@ -181,7 +180,6 @@
 	var/list/left_kidney = list()
 	var/list/right_kidney = list()
 	var/list/appendix = list()
-	var/list/augmentation_nerve = list() //might come in handy
 
 	var/list/part_list = list()
 	var/list/limbs = list("l_arm", "r_arm", "l_leg", "r_leg")
@@ -214,7 +212,6 @@
 		part_list["left_kidney"] = left_kidney
 		part_list["right_kidney"] = right_kidney
 		part_list["appendix"] = appendix
-		part_list["augmentation_nerve"] = augmentation_nerve
 
 	proc/get_part_target(var/mob/living/carbon/human/H, var/part_category)
 		if(!H) return

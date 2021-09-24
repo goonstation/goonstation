@@ -30,6 +30,8 @@
 	var/donor_DNA = null
 	var/datum/organHolder/holder = null
 	var/list/organ_abilities = null
+	var/obj/item/augmentation/installed_aug = null
+	var/augmentation_support = TRUE
 
 	// So we can have an organ have a visible counterpart while inside someone, like a tail or some kind of krang
 	// if you're making a tail, you need to have at least organ_image_under_suit_1 defined, or else it wont work
@@ -95,7 +97,33 @@
 			else
 				boutput(user, "<br><span style='color:purple'><b>This device is not equipped to scan organs.</span>")
 				return
-
+		else if (istype(W, /obj/item/augmentation))
+			var/obj/item/augmentation/A = W
+			if(!src.installed_aug && istype(src, A.valid_organ) && !src.synthetic && !src.robotic)
+				A.set_loc(src)
+				A.on_insertion(src, null)
+				user.u_equip(A)
+				boutput(user, "<span class='notice'><b>You insert the [A.name] into [src.name].</span>")
+				return
+			else if(src.installed_aug)
+				boutput(user, "<span class='alert'><b>There's already an augmentation installed!</span>")
+				return
+			else if(!istype(src, A.valid_organ))
+				boutput(user, "<span class='alert'><b>The [A.name] isn't built for [src.name]!</span>")
+				return
+			else if(src.synthetic)
+				boutput(user, "<span class='alert'><b>There's nothing to connect the [A.name] to!</span>")
+				return
+			else if(src.robotic)
+				boutput(user, "<span class='alert'><b>The [A.name] has no organic matter to connect to!</span>")
+				return
+		else if (istool(W, TOOL_SNIPPING))
+			var/obj/item/augmentation/A = src.installed_aug
+			if(src.installed_aug)
+				A.set_loc(get_turf(src))
+				A.on_cutout(src)
+				boutput(user, "=<span class='notice'><b>You cut out a [A.name] from [src.name].</span>")
+				return
 		else
 			user.lastattacked = src
 			attack_particle(user,src)
@@ -174,6 +202,11 @@
 		src.splat(T)
 		..() // call your goddamn parents
 
+	get_desc()
+		if(src.installed_aug)
+			var/obj/item/augmentation/A = src.installed_aug
+			. += "<br>There appears to be a [A.name] attached."
+
 	//Returns true if the organ is broken or damage is over max health.
 	//Under no circumstances should you ever reassign the donor or holder variables in here.
 	//Not checking donor here because it's checked where it's called. And I can't think of ANY REASON to EVER call this from somewhere else. And if I do, then I'll delete this comment. - kyle
@@ -184,7 +217,6 @@
 
 	/// What should happen each life tick when an organ is broken.
 	proc/on_broken(var/mult = 1)
-		//stupid check ikr? prolly remove.
 		if (broken)
 			return 1
 		return 0
@@ -221,7 +253,17 @@
 				return
 			for (var/abil in src.organ_abilities)
 				src.add_ability(A, abil)
-
+		if(installed_aug)
+			var/obj/item/augmentation/O = installed_aug
+			if (!broken && islist(O.augmentation_abilities) && length(O.augmentation_abilities))
+				var/datum/abilityHolder/augmentation/A = M.get_ability_holder(/datum/abilityHolder/augmentation)
+				if (!istype(A))
+					A = M.add_ability_holder(/datum/abilityHolder/augmentation)
+				if (!A)
+					return
+				for (var/abil in O.augmentation_abilities)
+					src.add_ability(A, abil)
+			O.on_organ_transplant(M)
 		return
 
 	//kyle-note come back
@@ -246,6 +288,18 @@
 			if (istype(aholder))
 				for (var/abil in src.organ_abilities)
 					src.remove_ability(aholder, abil)
+		if(installed_aug)
+			var/obj/item/augmentation/O = installed_aug
+			if (islist(O.augmentation_abilities) && length(O.augmentation_abilities))
+				var/datum/abilityHolder/aholder
+				if (src.donor && src.donor.abilityHolder)
+					aholder = src.donor.abilityHolder
+				else if (src.holder && src.holder.donor && src.holder.donor.abilityHolder)
+					aholder = src.holder.donor.abilityHolder
+				if (istype(aholder))
+					for (var/abil in O.augmentation_abilities)
+						src.remove_ability(aholder, abil)
+				O.on_organ_removal()
 
 
 		return
@@ -271,8 +325,10 @@
 		return 1
 
 	emp_act()
-		if (robotic)
+		if(robotic)
 			src.take_damage(20, 20, 0)
+		if(src.installed_aug)
+			installed_aug.take_damage(20, 20, 0)
 
 	proc/add_ability(var/datum/abilityHolder/aholder, var/abil) // in case things wanna do stuff instead of just straight-up adding/removing the abilities (see: laser eyes)
 		if (!aholder || !abil)
@@ -367,6 +423,9 @@
 				user.u_equip(src)
 			H.organHolder.receive_organ(src, src.organ_holder_name, organ_location.op_stage)
 			H.update_body()
+			if(src.installed_aug)
+				var/obj/item/augmentation/A = src.installed_aug
+				A.on_insertion(src, H)
 
 			return 1
 		else

@@ -686,9 +686,3 @@ proc/ThrowRandom(var/atom/movable/A, var/dist = 10, var/speed = 1, var/list/para
 	if(istype(A))
 		var/turf/Y = GetRandomPerimeterTurf(A, dist)
 		A.throw_at(Y, dist, speed, params, thrown_from, throw_type, allow_anchored, bonus_throwforce, end_throw_callback)
-
-proc/HasWirelessInteractor(var/mob/living/carbon/human/H)
-	if(H.organHolder && istype(H.organHolder.augmentation_nerve, /obj/item/organ/augmentation/head/wireless_interact))
-		return TRUE
-	else
-		return FALSE
