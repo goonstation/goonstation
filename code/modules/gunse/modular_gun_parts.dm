@@ -27,6 +27,28 @@ ABSTRACT_TYPE(/obj/item/gun_parts)
 		my_gun = null
 		return src
 
+	//barrel vars
+	var/spread_angle = 0 // modifier, added to stock
+	var/silenced = 0
+	var/muzzle_flash = "muzzle_flash"
+	var/lensing = 0 // Variable used for optical gun barrels. Scalar around 1.0
+	var/jam_frequency_fire = 1 //additional % chance to jam on fire. Reload to clear.
+	var/scatter = 0
+
+	//stock vars
+	var/can_dual_wield = 1
+	//var/spread_angle = 0 // modifier, added to stock // repeat of barrel
+	var/max_ammo_capacity = 0 //modifier
+	var/flashbulb_only = 0 // FOSS guns only
+	var/max_crank_level = 0 // FOSS guns only
+	var/stock_two_handed = 0 // if gun or stock is 2 handed, whole gun is 2 handed
+	var/stock_dual_wield = 1 // if gun AND stock can be dual wielded, whole gun can be dual wielded.
+	var/jam_frequency_reload = 0 //attitional % chance to jam on reload. Just reload again to clear.
+
+	// mag vars
+	// max_ammo_capacity = 0 //modifier
+	// jam_frequency_reload = 5 //additional % chance to jam on reload. Just reload again to clear.
+
 	buildTooltipContent()
 		. = ..()
 		if(part_DRM)
@@ -42,18 +64,29 @@ ABSTRACT_TYPE(/obj/item/gun_parts)
 			if(part_DRM & GUN_ITALIAN)
 				. += "<img src='[resource("images/tooltips/temp_italian.png")]' alt='' class='icon' />"
 			. += "</div>"
+		if(scatter)
+			. += "<div><img src='[resource("images/tooltips/temp_scatter.png")]' alt='' class='icon' /></div>"
+		if(spread_angle)
+			. += "<div><img src='[resource("images/tooltips/temp_spread.png")]' alt='' class='icon' /><span>Spread Modifier: [src.spread_angle] </span></div>"
+		if(lensing)
+			. += "<div><img src='[resource("images/tooltips/lensing.png")]' alt='' class='icon' /><span>Optical Lens Modifier: [src.lensing] </span></div>"
+		if(jam_frequency_fire || jam_frequency_reload)
+			. += "<div><img src='[resource("images/tooltips/jamjarrd.png")]' alt='' class='icon' /><span>Jam Modifier: [src.jam_frequency_reload + src.jam_frequency_fire] </span></div>"
+		if(max_ammo_capacity)
+			. += "<div> <span>Capacity Modifier: [src.max_ammo_capacity] </span></div>"
 		lastTooltipContent = .
 
 
 
 ABSTRACT_TYPE(/obj/item/gun_parts/barrel)
 /obj/item/gun_parts/barrel/
-	var/spread_angle = 0 // modifier, added to stock
-	var/silenced = 0
-	var/muzzle_flash = "muzzle_flash"
-	var/lensing = 0 // Variable used for optical gun barrels. Scalar around 1.0
-	var/jam_frequency_fire = 1 //additional % chance to jam on fire. Reload to clear.
-	var/scatter = 0
+// useful vars
+	spread_angle = 0 // modifier, added to stock
+	silenced = 0
+	muzzle_flash = "muzzle_flash"
+	lensing = 0 // Variable used for optical gun barrels. Scalar around 1.0
+	jam_frequency_fire = 1 //additional % chance to jam on fire. Reload to clear.
+	scatter = 0
 	icon_state = "barrel-pistol"
 
 	add_part_to_gun()
@@ -84,14 +117,14 @@ ABSTRACT_TYPE(/obj/item/gun_parts/barrel)
 ABSTRACT_TYPE(/obj/item/gun_parts/stock)
 /obj/item/gun_parts/stock/
 	//add a var for a power cell later
-	var/can_dual_wield = 1
-	var/spread_angle = 0 // modifier, added to stock
-	var/max_ammo_capacity = 0 //modifier
-	var/flashbulb_only = 0 // FOSS guns only
-	var/max_crank_level = 0 // FOSS guns only
-	var/stock_two_handed = 0 // if gun or stock is 2 handed, whole gun is 2 handed
-	var/stock_dual_wield = 1 // if gun AND stock can be dual wielded, whole gun can be dual wielded.
-	var/jam_frequency_reload = 0 //attitional % chance to jam on reload. Just reload again to clear.
+	can_dual_wield = 1
+	spread_angle = 0 // modifier, added to stock
+	max_ammo_capacity = 0 //modifier
+	flashbulb_only = 0 // FOSS guns only
+	max_crank_level = 0 // FOSS guns only
+	stock_two_handed = 0 // if gun or stock is 2 handed, whole gun is 2 handed
+	stock_dual_wield = 1 // if gun AND stock can be dual wielded, whole gun can be dual wielded.
+	jam_frequency_reload = 0 //attitional % chance to jam on reload. Just reload again to clear.
 	var/list/ammo_list = list() // ammo that stays in the stock when removed
 	icon_state = "stock-pistol"
 
@@ -139,8 +172,8 @@ ABSTRACT_TYPE(/obj/item/gun_parts/stock)
 ABSTRACT_TYPE(/obj/item/gun_parts/magazine)
 /obj/item/gun_parts/magazine/
 
-	var/max_ammo_capacity = 0 //modifier
-	var/jam_frequency_reload = 5 //additional % chance to jam on reload. Just reload again to clear.
+	max_ammo_capacity = 0 //modifier
+	jam_frequency_reload = 5 //additional % chance to jam on reload. Just reload again to clear.
 	var/list/ammo_list = list() // ammo that stays in the mag when removed
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "ak47"

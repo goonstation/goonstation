@@ -93,6 +93,20 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 		if(gun_DRM & GUN_ITALIAN)
 			. += "<img src='[resource("images/tooltips/temp_italian.png")]' alt='' class='icon' />"
 		. += "</div>"
+	if(scatter)
+		. += "<div><img src='[resource("images/tooltips/temp_scatter.png")]' alt='' class='icon' /></div>"
+
+	. += "<div><img src='[resource("images/tooltips/temp_spread.png")]' alt='' class='icon' /><span>Spread: [src.spread_angle] </span></div>"
+
+	if(lensing)
+		. += "<div><img src='[resource("images/tooltips/lensing.png")]' alt='' class='icon' /><span>Lenses: [src.lensing] </span></div>"
+
+	if(jam_frequency_fire || jam_frequency_reload)
+		. += "<div><img src='[resource("images/tooltips/jamjarrd.png")]' alt='' class='icon' /><span>Jammin: [src.jam_frequency_reload + src.jam_frequency_fire] </span></div>"
+
+	. += "<div> <span>Maxcap: [src.max_ammo_capacity] </span></div>"
+	. += "<div> <span>Loaded: [src.ammo_list.len + (src.current_projectile?1:0)] </span></div>"
+
 	lastTooltipContent = .
 
 /obj/item/gun/modular/attackby(var/obj/item/I as obj, mob/user as mob)
@@ -336,7 +350,7 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 	for(var/obj/item/gun_parts/part as anything in parts)
 		part.add_part_to_gun(src)
 
-
+	buildTooltipContent()
 	built = 1
 
 	//update the icon to match!!!!!
