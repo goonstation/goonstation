@@ -131,7 +131,7 @@
 	portal_px_offset(P, warp_dir, dist)
 	animate(P, transform = matrix(1, MATRIX_SCALE), pixel_x = 0, pixel_y = 0, time = 30, easing = ELASTIC_EASING )
 
-	sleep(30)
+	sleep(3 SECONDS)
 	P.target = target
 	ready = 0
 	warp_autopilot = 0

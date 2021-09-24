@@ -11,12 +11,21 @@
 	///list of type paths of mobs that can be spawned when the turf spawns fauna. Syntax: list(type = weight)
 	var/list/fauna_types = list()
 
+var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
+
 ///This proc handles the creation of a turf of a specific biome type
 /datum/biome/proc/generate_turf(var/turf/gen_turf)
 	gen_turf.ReplaceWith(turf_type)
+
 	if(length(fauna_types) && prob(fauna_density))
 		var/mob/fauna = weighted_pick(fauna_types)
 		new fauna(gen_turf)
+
+	// Skip areas where flora generation can be problematic due to introduction of dense anchored objects
+	if(gen_turf.z == Z_LEVEL_STATION)
+		for(var/bad_area in blacklist_flora_gen)
+			if(istype(gen_turf.loc, bad_area))
+				return
 
 	if(length(flora_types) && prob(flora_density))
 		var/obj/structure/flora = weighted_pick(flora_types)

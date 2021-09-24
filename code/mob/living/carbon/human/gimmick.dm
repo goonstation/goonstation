@@ -248,6 +248,15 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 		//	for (var/mob/living/carbon/human/npc/diner_bartender/BT in all_viewers(7, src))
 			//	BT.protect_from(M, src)
 
+/mob/living/carbon/human/fatherjack/cow
+	New()
+		..()
+		src.bioHolder.AddEffect("cow")
+
+	initializeBioholder()
+		. = ..()
+		src.real_name = "Father Milk"
+
 //biker // cogwerks - bringing back the bikers for the diner, now less offensive
 
 /// BILL SPEECH STUFF
@@ -681,6 +690,14 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 				J.a_intent = INTENT_HARM
 
 
+/mob/living/carbon/human/biker/cow
+	real_name = "Beefy Bill"
+
+	New()
+		..()
+		src.bioHolder.AddEffect("cow")
+
+
 // merchant
 
 /mob/living/carbon/human/merchant
@@ -823,6 +840,14 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		//Whoever does eventually put him back in the game : Use a global list of bartenders or something. Dont check all_viewers
 		//	for (var/mob/living/carbon/human/npc/diner_bartender/BT in all_viewers(7, src))
 			//	BT.protect_from(M, src)
+
+/mob/living/carbon/human/don_glab/cow
+	real_name = "Donald \"Don\" Glabs" //NEED COW JOKE NAME!
+
+	New()
+		..()
+		src.bioHolder.AddEffect("cow")
+
 
 /mob/living/carbon/human/tommy
 	sound_list_laugh = list('sound/voice/tommy_hahahah.ogg', 'sound/voice/tommy_hahahaha.ogg')
