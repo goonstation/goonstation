@@ -416,7 +416,6 @@
 		else
 			..()
 
-
 /obj/torpedo_tray
 	name = "torpedo tray"
 	desc = "A tray for wheeling around torpedos."
