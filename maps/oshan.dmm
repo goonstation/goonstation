@@ -12484,6 +12484,7 @@
 /area/station/storage/tools)
 "aDk" = (
 /obj/machinery/light/incandescent/harsh,
+/obj/machinery/manufacturer/general,
 /turf/simulated/floor,
 /area/station/storage/tools)
 "aDl" = (
@@ -25793,12 +25794,10 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/machinery/portable_reclaimer,
 /turf/simulated/floor/yellow,
 /area/station/storage/emergency)
 "bmd" = (
 /obj/machinery/light/incandescent/warm,
-/obj/machinery/manufacturer/general,
 /turf/simulated/floor/yellow,
 /area/station/storage/emergency)
 "bme" = (
@@ -48507,6 +48506,10 @@
 /obj/item/mop,
 /turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
+"wGh" = (
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor,
+/area/station/storage/tools)
 "wGG" = (
 /obj/stool/chair/office/purple{
 	dir = 4
@@ -87173,7 +87176,7 @@ aAG
 aBJ
 aCu
 aDj
-aCs
+wGh
 aRs
 aFA
 aBG
