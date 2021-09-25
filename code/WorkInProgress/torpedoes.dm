@@ -492,9 +492,10 @@
 		changeIcon()
 		return
 
-	proc/remove(var/turf/target, var/direction = null)
+	proc/remove(var/turf/target, var/direction = null, var/force = FALSE)
 		if(loaded == null) return
-		if(!can_act(usr) || !can_reach(usr, src) || !can_reach(usr, target)) return
+		if(!force && (!can_act(usr) || !can_reach(usr, src) || !can_reach(usr, target)))
+			return
 		var/obj/torpedo/T = loaded
 		loaded = null
 		T.set_dir((direction ? direction : src.dir))
@@ -705,7 +706,7 @@
 	proc/breakLaunch()
 		var/obj/torpedo_tray/T = src.loc
 		if(istype(T))
-			T.remove(get_turf(src))
+			T.remove(get_turf(src), force = TRUE)
 		var/atom/target = get_edge_target_turf(src, src.dir)
 		src.lockdir = src.dir
 		src.fired = 1
