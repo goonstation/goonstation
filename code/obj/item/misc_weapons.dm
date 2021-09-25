@@ -1610,8 +1610,8 @@ obj/item/whetstone
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
 			if (ismob(usr))
-				A.lastattacker = usr
-				A.lastattackertime = world.time
+				C.lastattacker = usr
+				C.lastattackertime = world.time
 			C.changeStatus("weakened", 3 SECONDS)
 			C.force_laydown_standup()
 			take_bleeding_damage(C, null, src.force / 2	, DAMAGE_CUT)

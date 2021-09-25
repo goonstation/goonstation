@@ -1,6 +1,7 @@
 /mob/living/carbon/human/slasher
 	real_name = "The Slasher"
 	var/trailing_blood = FALSE
+	var/slasher_ckey
 
 	New(loc)
 		..()
@@ -21,6 +22,8 @@
 		src.bioHolder.AddEffect("food_rad_resist", 0, 0, 0, 1)
 		src.bioHolder.AddEffect("detox", 0, 0, 0, 1)
 		src.add_stun_resist_mod("slasher_stun_resistance", 75)
+		slasher_ckey = src.ckey
+		START_TRACKING
 
 	Life()
 		var/turf/T = get_turf(src)
@@ -43,6 +46,10 @@
 		src.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
 		src.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
 		. = ..()
+
+	disposing()
+		STOP_TRACKING
+		..()
 
 	proc
 
@@ -240,42 +247,23 @@
 				W.incorporealize()
 				W.client.flying = 0
 
+			//var/datum/mind/m_mind = M.mind //didn't work, try again later
 			var/mob/dead/observer/O = M.ghostize()
-			boutput(O, "<span class='bold' style='color:red;font-size:150%'>You have been temporarily removed from your body!</span>")
 			if (O.mind)
 				O.Browse(grabResource("html/slasher_possession.html"),"window=slasher_possession;size=600x440;title=Slasher Possession")
-		//	usr.mind.swap_with(M)
-			M.mind = W.mind
+			boutput(O, "<span class='bold' style='color:red;font-size:150%'>You have been temporarily removed from your body!</span>")
+			usr.mind.swap_with(M)
 			var/mob/dead/target_observer/slasher_ghost/WG = O.insert_slasher_observer(M)
 			WG.mind.dnr = 1
 			WG.verbs -= list(/mob/verb/setdnr)
 			sleep(45 SECONDS)
-			if(!M || !M.loc) //TEMPORARY BANDAID FIX INCOMING
-				if(WG)
-					var/mob/dead/observer/O2 = WG.slasher_ghostize()
-					O2.set_loc(src) //a bit of a hack but it works
-					if(O2.mind.dnr)
-						O2.mind.dnr = 0
-						O2.verbs += list(/mob/verb/setdnr)
-				qdel(src) //bit of a bandaid fix, don't get gibbed
-			else
-				if(M.mind)
-					usr.mind = M.mind
-					M.mind = WG.mind //HEY FUCKO GUESS WHAT YOU FOLLOWED KYLES INSTRUCTIONS, BETTER MAKE SURE THIS WORKS SOMETIME
-					qdel(WG)
-					sleep(5 DECI SECONDS)
-					if(M.mind.dnr)
-						M.mind.dnr = 0
-						M.verbs += list(/mob/verb/setdnr)
-					src.client.flying = 1
-			/*	if(M.mind)
-					M.mind.swap_with(usr)
-					sleep(5 DECI SECONDS)
-					WG.mind.dnr = 0
-					WG.verbs += list(/mob/verb/setdnr)
-					if(M.loc)
-						WG.mind.transfer_to(M)
-					src.client.flying = 1*/
+			M.mind.swap_with(usr)
+			sleep(5 DECI SECONDS)
+			WG.mind.dnr = 0
+			WG.verbs += list(/mob/verb/setdnr)
+			if(locate(M))
+				WG.mind.transfer_to(M)
+
 
 			for(var/obj/item/clothing/suit/apron/slasher/A in M)
 				qdel(A)
@@ -301,6 +289,7 @@
 			sleep(5 DECI SECONDS)
 			src.full_heal() //this won't turn out badly
 			src.visible_message("<span class='alert'>[src] appears to partially dissolve into the shadows, but then reforms!</span>")
+			src.bioHolder.AddEffect("detox", 0, 0, 0, 1) //full_heal gets rid of this
 
 		soulStealSetup(var/mob/living/carbon/human/M)
 			boutput(usr, "<span class='alert'>You begin stealing [M]'s soul.</span>")
