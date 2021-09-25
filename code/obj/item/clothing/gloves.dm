@@ -174,6 +174,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			if(isnull(type))
 				src.specialoverride?.onRemove()
 				src.specialoverride = null
+				src.overridespecial = FALSE
 			return null
 
 		src.specialoverride?.onRemove()
@@ -538,7 +539,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 							src.electrocute(target_r, 100, netnum)
 							break
 						if("disarm")
-							target_r:weakened += 3
+							target.changeStatus("weakened", 3 SECONDS)
 							break
 
 				var/list/next = new/list()

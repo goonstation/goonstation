@@ -132,7 +132,7 @@
 		delStatus("slowed")
 		sleeping = 0
 		change_misstep_chance(-INFINITY)
-		drowsyness = 0.0
+		src.delStatus("drowsy")
 		dizziness = 0
 		is_dizzy = 0
 		is_jittery = 0
@@ -213,7 +213,7 @@
 				src.item.attack_self(src)
 			else
 				if(!isitem(src.item))
-					src.item.attack_hand(src)
+					src.item.Attackhand(src)
 				else //This shouldnt ever happen.
 					src.item.Attackby(src.item, src)
 		else

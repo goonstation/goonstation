@@ -78,10 +78,10 @@
 	combust_ended()
 		var/turf/T = get_turf(src)
 		if (T.allow_unrestricted_hotbox) // traitor hotboxing
-			var/datum/reagents/R = new()
+			src.reagents.maximum_volume *= HERB_HOTBOX_MULTIPLIER
 			for (var/reagent_id in reagents.reagent_list)
-				R.add_reagent(reagent_id, (src.reagents.get_reagent_amount(reagent_id) * HERB_HOTBOX_MULTIPLIER))
-			smoke_reaction(R, 1, get_turf(src), do_sfx = 0)
+				src.reagents.add_reagent(reagent_id, (src.reagents.get_reagent_amount(reagent_id) * (HERB_HOTBOX_MULTIPLIER - 1)))
+			smoke_reaction(src.reagents, 1, get_turf(src), do_sfx = 0)
 		else
 			smoke_reaction(src.reagents.remove_any_to(HERB_SMOKE_TRANSFER_HARDCAP), 1, get_turf(src), do_sfx = 0)
 		..()
@@ -221,6 +221,11 @@
 	desc = "A bland but healthy cereal crop. Good source of fiber."
 	icon_state = "oat"
 
+/obj/item/plant/oat/salt
+	name = " salted oat"
+	desc = "A salty but healthy cereal crop. Just don't eat too much without water."
+	icon_state = "saltedoat"
+
 /obj/item/plant/sugar/
 	name = "sugar cane"
 	crop_suffix	= " cane"
@@ -351,8 +356,8 @@
 	// module_research_type = /obj/item/plant/herb/cannabis
 	attack_hand(var/mob/user as mob)
 		if (iswerewolf(user))
-			user.changeStatus("weakened", 8 SECONDS)
-			user.take_toxin_damage(-10)
+			user.changeStatus("weakened", 3 SECONDS)
+			user.TakeDamage("All", 0, 5, 0, DAMAGE_BURN)
 			boutput(user, "<span class='alert'>You try to pick up [src], but it hurts and you fall over!</span>")
 			return
 		else ..()
@@ -362,7 +367,7 @@
 		if(iswerewolf(M))
 			M.changeStatus("weakened", 3 SECONDS)
 			M.force_laydown_standup()
-			M.take_toxin_damage(-10)
+			M.TakeDamage("All", 0, 5, 0, DAMAGE_BURN)
 			M.visible_message("<span class='alert'>The [M] steps too close to [src] and falls down!</span>")
 			return
 		..()

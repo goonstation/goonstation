@@ -312,7 +312,7 @@
 
 /atom/movable/overlay/attack_hand(a, b, c, d, e)
 	if (src.master)
-		return src.master.attack_hand(a, b, c, d, e)
+		return src.master.Attackhand(a, b, c, d, e)
 
 /atom/movable/overlay/New()
 	..()
@@ -560,7 +560,7 @@
 
 	if (istype(src,/obj/item/old_grenade/light_gimmick))
 		boutput(usr, "<span class='notice'>You feel your hand reach out and clasp the grenade.</span>")
-		src.attack_hand(usr)
+		src.Attackhand(usr)
 		return
 	if (!( src.anchored ))
 		var/mob/user = usr
@@ -624,7 +624,14 @@
 /atom/proc/MouseDrop_T()
 	return
 
+/atom/proc/Attackhand(mob/user as mob)
+	SHOULD_NOT_OVERRIDE(1)
+	if(SEND_SIGNAL(src, COMSIG_ATTACKHAND, user))
+		return
+	src.attack_hand(user)
+
 /atom/proc/attack_hand(mob/user as mob)
+	PROTECTED_PROC(TRUE)
 	if (flags & TGUI_INTERACTIVE)
 		return ui_interact(user)
 	return

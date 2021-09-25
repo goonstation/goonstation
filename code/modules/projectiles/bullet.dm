@@ -22,6 +22,7 @@ ABSTRACT_TYPE(/datum/projectile/bullet)
 	// 0.308 - rifles
 	// 0.357 - revolver
 	// 0.38 - detective
+	// 0.40 - blowgun darts
 	// 0.41 - derringer
 	// 0.72 - shotgun shell, 12ga
 	// 1.57 - grenade shell, 40mm
@@ -296,6 +297,26 @@ toxic - poisons
 		reagent_payload = "mutadone" // HAH
 
 
+/datum/projectile/bullet/blow_dart
+	name = "poison dart"
+	power = 5
+	icon_state = "blowdart"
+	damage_type = D_TOXIC
+	hit_type = DAMAGE_STAB
+	dissipation_delay = 10
+	caliber = 0.40
+	implanted = "blowdart"
+	shot_sound = 'sound/effects/syringeproj.ogg'
+	silentshot = 1
+	casing = null
+	reagent_payload = "curare"
+
+	madness
+		reagent_payload = "madness_toxin"
+
+	ls_bee
+		reagent_payload = "lsd_bee"
+
 
 
 /datum/projectile/bullet/revolver_38/stunners//energy bullet things so he can actually stun something
@@ -491,6 +512,68 @@ toxic - poisons
 			//if (src.hit_type)
 			// impact_image_effect("K", hit)
 				//take_bleeding_damage(hit, null, round(src.power / 3), src.hit_type)
+
+/datum/projectile/bullet/cryo
+	name = "cryogenic slug"
+	shot_sound = 'sound/weapons/shotgunshot.ogg'
+	power = 10
+	ks_ratio = 1
+	dissipation_rate = 2
+	dissipation_delay = 1
+	implanted = null
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	caliber = 0.72
+	icon_turf_hit = null
+	casing = /obj/item/casing/shotgun/blue
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		. = ..()
+		if(isliving(hit))
+			var/mob/living/L = hit
+			L.bodytemperature = max(50, L.bodytemperature - proj.power * 5)
+			var/obj/icecube/I = new/obj/icecube(get_turf(L), L)
+			I.health = proj.power / 2
+
+/datum/projectile/bullet/saltshot_pellet
+	name = "rock salt"
+	shot_sound = 'sound/weapons/shotgunshot.ogg'
+	icon_state = "trace"
+	power = 3
+	ks_ratio = 1
+	dissipation_rate = 1
+	dissipation_delay = 2
+	implanted = null
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	caliber = 0.72
+	icon_turf_hit = "bhole"
+	casing = /obj/item/casing/shotgun/gray
+
+	on_hit(atom/hit, direction, obj/projectile/P)
+		. = ..()
+		if(isliving(hit))
+			var/mob/living/L = hit
+			if(!ON_COOLDOWN(L, "saltshot_scream", 1 SECOND))
+				L.emote("scream")
+			L.take_eye_damage(P.power / 2)
+			L.change_eye_blurry(P.power, 40)
+			L.setStatus("salted", 15 SECONDS, P.power * 2)
+
+/datum/projectile/special/spreader/buckshot_burst/salt
+	name = "rock salt"
+	sname = "rock salt"
+	shot_sound = 'sound/weapons/shotgunshot.ogg'
+	power = 20
+	implanted = null
+	caliber = 0.72
+	casing = /obj/item/casing/shotgun/gray
+	spread_projectile_type = /datum/projectile/bullet/saltshot_pellet
+	speed_min = 28
+	speed_max = 36
+	dissipation_variance = 64
+	spread_angle_variance = 7.5
+	pellets_to_fire = 4
 
 /datum/projectile/bullet/minigun
 	name = "bullet"
@@ -1407,3 +1490,13 @@ toxic - poisons
 	max_range = 15
 	dissipation_rate = 0
 	ie_type = null
+
+	on_end(var/obj/projectile/O)
+		..()
+		var/turf/T = get_turf(O)
+		if(T)
+			var/obj/item/ammo/bullets/foamdarts/ammo_dropped = new /obj/item/ammo/bullets/foamdarts (T)
+			ammo_dropped.amount_left = 1
+			ammo_dropped.update_icon()
+			ammo_dropped.pixel_x += rand(-12,12)
+			ammo_dropped.pixel_y += rand(-12,12)

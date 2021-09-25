@@ -141,7 +141,7 @@
 			playsound(src.loc, "sound/misc/slip.ogg", 50, 1, -3)
 		else
 			playsound(src.loc, "sound/misc/slip_big.ogg", 50, 1, -3)
-		src.pulling = null
+		src.remove_pulling()
 
 		var/turf/T = get_ranged_target_turf(src, src.last_move_dir, throw_range)
 		src.throw_at(T, intensity, 2, list("stun"=clamp(1.1 SECONDS * intensity, 1 SECOND, 5 SECONDS)), src.loc, throw_type = THROW_SLIP)
@@ -828,7 +828,7 @@
 	var/datum/gang/gang_to_see = null
 	var/PWT_to_see = null
 
-	if (isadminghost(src))
+	if (isadminghost(src) || src.client?.adventure_view)
 		see_everything = 1
 	else
 		if (istype(ticker.mode, /datum/game_mode/revolution))
@@ -854,7 +854,7 @@
 			PWT_to_see = get_pod_wars_team_num(src)
 		if (issilicon(src)) // We need to look for borged antagonists too.
 			var/mob/living/silicon/S = src
-			if (src.mind.special_role == "syndicate robot" || (S.syndicate && !S.dependent)) // No AI shells.
+			if (src.mind.special_role == ROLE_SYNDICATE_ROBOT || (S.syndicate && !S.dependent)) // No AI shells.
 				see_traitors = 1
 				see_nukeops = 1
 				see_revs = 1
@@ -862,7 +862,7 @@
 			see_nukeops = 1
 		if (iswizard(src))
 			see_wizards = 1
-		if (src.mind && src.mind.special_role == "grinch")
+		if (src.mind && src.mind.special_role == ROLE_GRINCH)
 			see_xmas = 1
 
 	// Clear existing overlays.
@@ -893,13 +893,13 @@
 
 		if (M.current && issilicon(M.current)) // We need to look for borged antagonists too.
 			var/mob/living/silicon/S = M.current
-			if (M.special_role == "syndicate robot" || (S.syndicate && !S.dependent)) // No AI shells.
+			if (M.special_role == ROLE_SYNDICATE_ROBOT || (S.syndicate && !S.dependent)) // No AI shells.
 				if (see_everything || see_traitors)
 					if (!see_everything && isdead(S)) continue
 					var/I = image(antag_syndieborg, loc = M.current)
 					can_see.Add(I)
 					robot_override = 1
-			if (M.special_role == "emagged robot" || (S.emagged && !S.dependent))
+			if (M.special_role == ROLE_EMAGGED_ROBOT || (S.emagged && !S.dependent))
 				if (see_everything)
 					var/I = image(antag_emagged, loc = M.current)
 					can_see.Add(I)
@@ -907,79 +907,84 @@
 
 		if (robot_override != 1)
 			switch (M.special_role)
-				if ("traitor", "hard-mode traitor", "sleeper agent")
+				if (ROLE_TRAITOR, ROLE_HARDMODE_TRAITOR, ROLE_SLEEPER_AGENT)
 					if (see_everything || see_traitors)
 						if (M.current)
 							if (!see_everything && isobserver(M.current)) continue
 							var/I = image(antag_traitor, loc = M.current)
 							can_see.Add(I)
-				if ("changeling")
+				if (ROLE_CHANGELING)
 					if (see_everything)
 						if (M.current)
 							var/I = image(antag_changeling, loc = M.current)
 							can_see.Add(I)
-				if ("wizard")
+				if (ROLE_WIZARD)
 					if (see_everything || see_wizards)
 						if (M.current)
 							if (!see_everything && isobserver(M.current)) continue
 							var/I = image(antag_wizard, loc = M.current)
 							can_see.Add(I)
-				if ("vampire")
+				if (ROLE_VAMPIRE)
 					if (see_everything)
 						if (M.current)
 							var/I = image(antag_vampire, loc = M.current)
 							can_see.Add(I)
-				if ("hunter")
+				if (ROLE_HUNTER)
 					if (see_everything)
 						if (M.current)
 							var/I = image(antag_hunter, loc = M.current)
 							can_see.Add(I)
-				if ("werewolf")
+				if (ROLE_WEREWOLF)
 					if (see_everything)
 						if (M.current)
 							var/I = image(antag_werewolf, loc = M.current)
 							can_see.Add(I)
-				if ("mindslave")
+				if (ROLE_MINDSLAVE)
 					if (see_everything)
 						if (M.current)
 							var/I = image(antag_mindslave, loc = M.current)
 							can_see.Add(I)
-				if ("vampthrall")
+				if (ROLE_VAMPTHRALL)
 					if (see_everything)
 						if (M.current)
 							var/I = image(antag_vampthrall, loc = M.current)
 							can_see.Add(I)
-				if ("wraith")
+				if (ROLE_WRAITH)
 					if (see_everything)
 						if (M.current)
 							var/I = image(antag_wraith, loc = M.current)
 							can_see.Add(I)
-				if ("blob")
+				if (ROLE_BLOB)
 					if (see_everything)
 						if (M.current)
 							var/I = image(antag_blob, loc = M.current)
 							can_see.Add(I)
-				if ("omnitraitor")
+				if (ROLE_OMNITRAITOR)
 					if (see_everything)
 						if (M.current)
 							var/I = image(antag_omnitraitor, loc = M.current)
 							can_see.Add(I)
-				if ("wrestler")
+				if (ROLE_WRESTLER)
 					if (see_everything)
 						if (M.current)
 							var/I = image(antag_wrestler, loc = M.current)
 							can_see.Add(I)
-				if ("grinch")
+				if (ROLE_GRINCH)
 					if (see_everything || see_xmas)
 						if (M.current)
 							if (!see_everything && isobserver(M.current)) continue
 							var/I = image(antag_grinch, loc = M.current)
 							can_see.Add(I)
-				if ("spy_thief")
+				if (ROLE_SPY_THIEF)
 					if (see_everything)
 						if (M.current)
 							if (!see_everything && isobserver(M.current)) continue
 							var/I = image(antag_spy_theft, loc = M.current)
+							can_see.Add(I)
+				if (ROLE_ARCFIEND)
+					if (see_everything)
+						if (M.current)
+							var/I = image(antag_arcfiend, loc = M.current)
 							can_see.Add(I)
 				else
 					if (see_everything)

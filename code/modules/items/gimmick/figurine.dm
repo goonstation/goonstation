@@ -712,7 +712,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "vicky"
 		ckey = "mrprogamer96"
 
-	vicky
+	camrynstern
 		name = "\improper Camryn Stern"
 		icon_state = "camrynstern"
 		ckey = "richardgere"
@@ -721,6 +721,21 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Newt Treitor"
 		icon_state = "newttreitor"
 		ckey = "edwardly"
+
+	ook
+		name = "\improper Ook"
+		icon_state = "ook"
+		ckey = "taocat"
+
+	brucemcafee
+		name = "\improper Bruce McAfee"
+		icon_state = "brucemcafee"
+		ckey = "mysticmidgit"
+
+	chefbot
+		name = "\improper ChefBot"
+		icon_state = "chefbot"
+		ckey = "skeletondoot"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"

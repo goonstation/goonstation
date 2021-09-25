@@ -10522,7 +10522,7 @@
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "atm" = (
-/obj/submachine/chicken_feed_grinder,
+/obj/submachine/ranch_feed_grinder,
 /obj/item/reagent_containers/food/snacks/plant/corn{
 	doants = 0
 	},
@@ -10783,13 +10783,13 @@
 /area/station/ranch)
 "atV" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag{
 	rand_pos = 1
 	},
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag{
 	rand_pos = 1
 	},
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag{
 	rand_pos = 1
 	},
 /turf/simulated/floor/dirt,
@@ -11700,6 +11700,9 @@
 /area/station/ranch)
 "awd" = (
 /obj/disposalpipe/segment,
+/obj/landmark/spawner{
+	name = "dolly"
+	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "awf" = (
@@ -24082,7 +24085,7 @@
 	},
 /area/station/science/teleporter)
 "aXa" = (
-/obj/lrteleporter{
+/obj/machinery/lrteleporter{
 	layer = 3
 	},
 /turf/simulated/floor/white,
@@ -34962,7 +34965,7 @@
 /area/station/crew_quarters/ce)
 "buy" = (
 /obj/disposalpipe/segment/mail,
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8
 	},
 /obj/machinery/power/data_terminal,
@@ -35501,7 +35504,7 @@
 /area/station/crew_quarters/ce)
 "bvE" = (
 /obj/disposalpipe/segment/mail,
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
 	},
@@ -36219,7 +36222,7 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "bwR" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 1;
 	name = "Engine Output Monitoring"
 	},
@@ -36267,7 +36270,7 @@
 	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "bwW" = (
@@ -38785,7 +38788,7 @@
 	dir = 0;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/solar_control/west{
+/obj/machinery/computer/solar_control/west{
 	dir = 4
 	},
 /obj/cable{
@@ -38852,7 +38855,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4
 	},
 /turf/simulated/floor/caution/misc{
@@ -39291,7 +39294,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8
 	},
 /turf/simulated/floor/caution/misc{
@@ -39346,7 +39349,7 @@
 	dir = 0;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/solar_control/east{
+/obj/machinery/computer/solar_control/east{
 	dir = 8
 	},
 /turf/simulated/floor/caution/misc{
@@ -42066,7 +42069,7 @@
 /turf/simulated/floor/engine/caution/northsouth,
 /area/station/hangar/qm)
 "bJo" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4
 	},
 /obj/machinery/power/data_terminal,
@@ -42136,7 +42139,7 @@
 /turf/simulated/floor/engine/caution/northsouth,
 /area/station/hangar/qm)
 "bJu" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 4;
 	name = "Engine Output Monitoring"
 	},
@@ -42452,7 +42455,7 @@
 /turf/simulated/wall,
 /area/listeningpost/power)
 "bKl" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -42471,7 +42474,7 @@
 	dir = 0;
 	icon_state = "2-4"
 	},
-/obj/machinery/power/solar_control/small_backup4,
+/obj/machinery/computer/solar_control/small_backup4,
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "bKn" = (
@@ -46365,7 +46368,7 @@
 "hHE" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/box/stma_kit,
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
 /obj/item/storage/box/handcuff_kit,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/device/multitool,
@@ -49000,7 +49003,7 @@
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "oLM" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4
 	},
 /obj/cable{

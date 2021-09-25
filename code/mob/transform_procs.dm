@@ -487,7 +487,8 @@
 					/mob/living/carbon/human/machoman/verb/macho_soulsteal,\
 					/mob/living/carbon/human/machoman/verb/macho_stare,\
 					/mob/living/carbon/human/machoman/verb/macho_heartpunch,\
-					/mob/living/carbon/human/machoman/verb/macho_slimjim_snap) //they can keep macho heal and the arena thing
+					/mob/living/carbon/human/machoman/verb/macho_summon_arena,\
+					/mob/living/carbon/human/machoman/verb/macho_slimjim_snap) //they can keep macho heal
 				W.verbs -= dangerousVerbs //this is just diabolical
 				W.reagents.add_reagent("anti_fart", 800) //as is this
 				boutput(W, "<span class='notice'>You weren't able to absorb all the macho waves you were bombarded with! You have been left an incomplete macho man, with a frail body, and only one macho power. However, you inflict double damage with most melee weapons. Use your newfound form wisely to prove your worth as a macho champion of justice. Do not kill innocent crewmembers.</span>")
@@ -689,6 +690,9 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 			if (selfmob.mind && istype(selfmob.mind.purchased_bank_item, /datum/bank_purchaseable/critter_respawn))
 				var/datum/bank_purchaseable/critter_respawn/critter_respawn = selfmob.mind.purchased_bank_item
 				C = selfmob.make_critter(pick(critter_respawn.respawn_critter_types), spawnpoint, ghost_spawned=TRUE)
+			else if (selfmob.mind && istype(selfmob.mind.purchased_bank_item, /datum/bank_purchaseable/bird_respawn))
+				var/datum/bank_purchaseable/bird_respawn/bird_respawn = selfmob.mind.purchased_bank_item
+				C = selfmob.make_critter(pick(bird_respawn.respawn_critter_types), spawnpoint, ghost_spawned=TRUE)
 			else
 				C = selfmob.make_critter(pick(respawn_critter_types), spawnpoint, ghost_spawned=TRUE)
 

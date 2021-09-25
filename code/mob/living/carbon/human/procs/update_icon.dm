@@ -552,7 +552,7 @@
 		src.r_store.screen_loc = hud.layouts[hud.layout_style]["storage2"]
 
 	if (src.hasStatus("handcuffed"))
-		src.pulling = null
+		src.remove_pulling()
 		handcuff_img.icon_state = "handcuff1"
 		handcuff_img.pixel_x = 0
 		handcuff_img.pixel_y = hand_offset
@@ -627,7 +627,7 @@
 	UpdateOverlays(null, "hair_special_two", 1, 1)
 	UpdateOverlays(null, "hair_special_three", 1, 1)
 
-	var/seal_hair = (src.head && src.head.seal_hair)
+	var/seal_hair = ((src.wear_suit && src.wear_suit.over_hair) || (src.head && src.head.seal_hair) || (src.wear_suit && src.wear_suit.body_parts_covered & HEAD))
 	var/obj/item/organ/head/my_head
 	if (src?.organHolder?.head)
 		var/datum/appearanceHolder/AHH = src.bioHolder?.mobAppearance
@@ -796,7 +796,7 @@
 	UpdateOverlays(i_l_hand, "i_l_hand")
 
 /mob/living/carbon/human/proc/update_hair_layer()
-	if (src.wear_suit && src.wear_suit.over_hair && ( src.head && src.head.seal_hair || (src.wear_suit.body_parts_covered & HEAD) ) )
+	if ((src.wear_suit && src.wear_suit.over_hair) || (src.head && src.head.seal_hair) || (src.wear_suit && src.wear_suit.body_parts_covered & HEAD))
 		src.image_cust_one?.layer = MOB_HAIR_LAYER1
 		src.image_cust_two?.layer = MOB_HAIR_LAYER1
 		src.image_cust_three?.layer = MOB_HAIR_LAYER1

@@ -1148,6 +1148,11 @@ ABSTRACT_TYPE(/area/diner)
 	name = "Bill E Bheezes"
 	icon_state = "red"
 
+/area/diner/cow
+	name = "Void Diner"
+	icon_state = "purple"
+	requires_power = FALSE
+
 /area/tech_outpost
 	name = "Tech Outpost"
 	icon_state = "storage"
@@ -3165,7 +3170,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 
 	CanEnter( var/atom/movable/A )
 		var/mob/living/M = A
-		if( istype(M) && M.mind && M.mind.special_role != "wizard" && isliving(M) )
+		if( istype(M) && M.mind && M.mind.special_role != ROLE_WIZARD && isliving(M) )
 			if(M.client && M.client.holder)
 				return 1
 			boutput( M, "<span class='alert'>A magical barrier prevents you from entering!</span>" ) //or something

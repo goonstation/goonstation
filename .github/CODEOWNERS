@@ -8,9 +8,11 @@
 # Adharainspace
 #/_std/ @Adharainspace
 
+# Emily
+/maps/manta.dmm @UrsulaMejor
+
 # Flourish
 /code/obj/item/toys.dm @flrsh
-/maps/manta.dmm @flrsh
 /maps/oshan.dmm @flrsh
 
 # Kyle
@@ -24,6 +26,15 @@
 
 # Tarmunora
 /code/modules/projectiles/projectile_parent.dm @Tarmunora
+/code/modules/chemistry/Reagents-Base.dm @Tarmunora
+/code/modules/chemistry/Reagents-Diseases.dm @Tarmunora
+/code/modules/chemistry/Reagents-Drugs.dm @Tarmunora
+/code/modules/chemistry/Reagents-ExplosiveFire.dm @Tarmunora
+/code/modules/chemistry/Reagents-FoodDrink.dm @Tarmunora
+/code/modules/chemistry/Reagents-Medical.dm @Tarmunora
+/code/modules/chemistry/Reagents-Misc.dm @Tarmunora
+/code/modules/chemistry/Reagents-PoisonEtc.dm @Tarmunora
+/code/modules/chemistry/Chemistry-Recipes.dm @Tarmunora
 
 # Virvatuli
 /sound/ @virvatuli-gh

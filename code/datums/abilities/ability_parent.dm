@@ -65,6 +65,9 @@
 			qdel(abilitystat)
 			abilitystat = null
 
+		for(var/ability in src.abilities)
+			qdel(ability)
+		src.abilities = null
 		..()
 
 	proc/onLife(var/mult = 1) //failsafe for UI not doing its update correctly elsewhere
@@ -158,12 +161,12 @@
 			abilitystat.owner = src
 
 		var/msg = ""
-		var/style = "font-size: 7px;"
+		//var/style = "font-size: 7px;"
 		var/list/stats = onAbilityStat()
 		for (var/x in stats)
 			msg += "[x] [stats[x]]<br>"
 
-		abilitystat.maptext = "<span class='ps2p l vt ol' style=\"[style]\">[msg] </span>"
+		abilitystat.maptext = "<span class='vga l vt ol'>[msg] </span>"
 
 	proc/deepCopy()
 		var/datum/abilityHolder/copy = new src.type
@@ -856,9 +859,9 @@
 		if (object && object.owner == src)
 			if(src.holder?.hud)
 				src.holder.hud.remove_object(object)
-			object.owner = null
 			qdel(object)
 			src.object = null
+			src.holder = null
 		..()
 
 	proc
@@ -1159,7 +1162,7 @@
 			abilitystat.owner = src
 
 		var/msg = ""
-		var/style = "font-size: 7px;"
+		//var/style = "font-size: 7px;"
 
 		var/i = 0
 		for (var/datum/abilityHolder/H in holders)
@@ -1169,7 +1172,7 @@
 					msg += "[x] [stats[x]]<br>"
 					i++
 
-		abilitystat.maptext = "<span class='ps2p l vt ol' style=\"[style]\">[msg] </span>"
+		abilitystat.maptext = "<span class='vga l vt ol'>[msg] </span>"
 
 		if (i > 2)
 			abilitystat.maptext_height = ((i+1) % 2) * 32
@@ -1248,6 +1251,8 @@
 		return A
 
 	removeAbility(var/abilityType)
+		if (istext(abilityType))
+			abilityType = text2path(abilityType)
 		if (!ispath(abilityType))
 			return
 		for (var/datum/abilityHolder/H in holders)

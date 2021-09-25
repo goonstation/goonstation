@@ -969,7 +969,7 @@
 	pixel_x = -9;
 	pixel_y = 4
 	},
-/obj/item/storage/box/flashbang_kit{
+/obj/item/chem_grenade/flashbang{
 	pixel_x = 7;
 	pixel_y = 2
 	},
@@ -5448,6 +5448,12 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
+"boE" = (
+/obj/landmark/spawner{
+	name = "dolly"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "boW" = (
 /obj/cable,
 /obj/disposalpipe/switch_junction/right/south,
@@ -5557,7 +5563,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "bpW" = (
-/obj/machinery/power/solar_control/small_backup1{
+/obj/machinery/computer/solar_control/small_backup1{
 	dir = 4
 	},
 /obj/cable{
@@ -14732,10 +14738,10 @@
 "dZS" = (
 /obj/table/reinforced/auto,
 /obj/access_spawn/rancher,
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag{
 	rand_pos = 1
 	},
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag{
 	rand_pos = 1
 	},
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -15288,7 +15294,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4
 	},
 /turf/simulated/floor/plating/jen,
@@ -15612,7 +15618,7 @@
 /area/station/security/checkpoint/escape)
 "emH" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag{
 	rand_pos = 1
 	},
 /obj/machinery/door/airlock/pyro/glass/windoor,
@@ -25226,7 +25232,7 @@
 /area/station/maintenance/inner/sw)
 "hfR" = (
 /obj/table/reinforced/auto,
-/obj/item/kitchen/utensil/knife/cleaver{
+/obj/item/kitchen/utensil/knife{
 	pixel_y = 10
 	},
 /turf/simulated/floor/specialroom/freezer,
@@ -27126,7 +27132,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "hHU" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/industrial,
 /area/station/quartermaster/refinery)
 "hHY" = (
@@ -30954,7 +30960,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "iQU" = (
-/obj/machinery/power/monitor/smes,
+/obj/machinery/computer/power_monitor/smes,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -31726,9 +31732,9 @@
 /turf/simulated/floor/plating,
 /area/station/bridge/captain)
 "jdI" = (
-/obj/reagent_dispensers/fueltank,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /obj/decal/cleanable/rust/jen,
+/obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/plating/jen,
 /area/station/science/gen_storage)
 "jdO" = (
@@ -34452,7 +34458,7 @@
 /area/station/ai_monitored/armory)
 "jVu" = (
 /obj/cable,
-/obj/machinery/power/monitor/smes,
+/obj/machinery/computer/power_monitor/smes,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
@@ -35860,7 +35866,7 @@
 	name = "Tool Storage"
 	})
 "kve" = (
-/obj/machinery/power/solar_control/east{
+/obj/machinery/computer/solar_control/east{
 	dir = 8
 	},
 /obj/cable{
@@ -38764,7 +38770,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "loj" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /obj/landmark{
 	name = "shitty_bill_respawn"
 	},
@@ -43016,7 +43022,7 @@
 	pixel_x = 7;
 	pixel_y = 9
 	},
-/obj/item/kitchen/utensil/knife/cleaver,
+/obj/item/kitchen/utensil/knife,
 /obj/machinery/light/incandescent/cool/very{
 	dir = 4
 	},
@@ -44609,7 +44615,7 @@
 	pixel_x = -26;
 	pixel_y = -1
 	},
-/obj/submachine/chicken_feed_grinder,
+/obj/submachine/ranch_feed_grinder,
 /obj/item/reagent_containers/food/snacks/plant/corn{
 	doants = 0
 	},
@@ -51571,7 +51577,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/lobby)
 "pbX" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8;
 	name = "Station Power Grid Monitoring"
 	},
@@ -55821,7 +55827,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
 "qjn" = (
-/obj/item_dispenser/perscription_glasses{
+/obj/item_dispenser/prescription_glasses{
 	pixel_x = 1;
 	pixel_y = 29
 	},
@@ -58551,6 +58557,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/southeast)
+"qUa" = (
+/obj/machinery/recharge_station,
+/turf/simulated/floor/plating/jen,
+/area/station/storage/tech)
 "qUg" = (
 /obj/lattice{
 	dir = 5;
@@ -60548,7 +60558,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
 "rxG" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
 	},
@@ -63881,7 +63891,7 @@
 /turf/simulated/floor/carpet/purple/decal/outercross,
 /area/station/chapel/sanctuary)
 "swT" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8
 	},
 /obj/machinery/power/data_terminal,
@@ -66370,9 +66380,9 @@
 /turf/simulated/floor/green/side,
 /area/station/hallway/primary/west)
 "tlS" = (
-/obj/machinery/portable_atmospherics/pump,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /obj/decal/cleanable/rust/jen,
+/obj/machinery/recharge_station,
 /turf/simulated/floor/plating/jen,
 /area/station/science/gen_storage)
 "tlW" = (
@@ -68602,7 +68612,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/chapel/sanctuary)
 "tTy" = (
-/obj/machinery/power/solar_control/west{
+/obj/machinery/computer/solar_control/west{
 	dir = 4
 	},
 /obj/cable{
@@ -73748,6 +73758,11 @@
 /obj/disposalpipe/trunk,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
+"vvV" = (
+/obj/machinery/recharge_station,
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/turf/simulated/floor/plating/airless,
+/area/station/mining/staff_room)
 "vwg" = (
 /obj/wingrille_spawn/auto/tuff,
 /obj/cable{
@@ -78697,6 +78712,14 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
+"wPm" = (
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/machinery/recharge_station,
+/turf/simulated/floor/orangeblack,
+/area/station/hallway/secondary/exit)
 "wPw" = (
 /obj/stool/chair/comfy/purple{
 	dir = 8
@@ -79645,6 +79668,11 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
+"xbR" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/machinery/recharge_station,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/sw)
 "xbV" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/science)
@@ -80611,10 +80639,10 @@
 "xsw" = (
 /obj/table/reinforced/auto,
 /obj/access_spawn/rancher,
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag{
 	rand_pos = 1
 	},
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag{
 	rand_pos = 1
 	},
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -82828,7 +82856,7 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "xZO" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4
 	},
 /obj/cable{
@@ -110498,7 +110526,7 @@ gBM
 lGw
 eRI
 mLB
-bUO
+xbR
 mQf
 gBM
 hcW
@@ -130945,7 +130973,7 @@ vzA
 wYJ
 mBB
 mBB
-mBB
+boE
 mBB
 mBB
 mBB
@@ -132800,7 +132828,7 @@ lmX
 lmX
 vob
 kuM
-cjG
+vvV
 xFO
 tgJ
 dCg
@@ -137095,7 +137123,7 @@ kOm
 wWv
 hqD
 wFv
-xRb
+qUa
 xGu
 ujy
 rdj
@@ -146049,7 +146077,7 @@ fPJ
 jnD
 kNU
 onD
-aIy
+wPm
 qTj
 aIy
 sTL

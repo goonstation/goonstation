@@ -10,7 +10,7 @@
 	name = "grab"
 	w_class = W_CLASS_HUGE
 	anchored = 1
-	var/break_prob = 45
+	var/prob_mod = 1
 	var/assailant_stam_drain = 30
 	var/affecting_stam_drain = 20
 	var/resist_count = 0
@@ -195,7 +195,7 @@
 		switch (src.state)
 			if (GRAB_PASSIVE)
 				if (src.affecting.buckled)
-					src.affecting.buckled.attack_hand(src.assailant)
+					src.affecting.buckled.Attackhand(src.assailant)
 					src.affecting.force_laydown_standup() //safety because buckle code is a mess
 					if (src.affecting.targeting_ability == src.affecting.chair_flip_ability) //fuCKKK
 						src.affecting.end_chair_flip_targeting()
@@ -248,6 +248,9 @@
 		update_icon()
 
 	proc/upgrade_to_kill(var/msg_overridden = 0)
+		if (!assailant || !affecting)
+			return
+
 		icon_state = "disarm/kill"
 		logTheThing("combat", src.assailant, src.affecting, "chokes [constructTarget(src.affecting,"combat")]")
 		choke_count = 0
@@ -279,6 +282,9 @@
 			src.affecting:was_harmed(src.assailant)
 
 	proc/upgrade_to_pin(var/turf/T)
+		if (!assailant || !affecting)
+			return
+
 		icon_state = "pin"
 		logTheThing("combat", src.assailant, src.affecting, "pins [constructTarget(src.affecting,"combat")]")
 
@@ -307,7 +313,7 @@
 			src.affecting:was_harmed(src.assailant)
 
 	proc/stunned_targets_can_break()
-		.= (src.state == GRAB_PIN)
+		. = TRUE // Allow stunned players to break all grabs
 
 	proc/check()
 		if(!assailant || !affecting)
@@ -347,16 +353,21 @@
 		src.affecting.set_dir(pick(alldirs))
 		resist_count += 1
 
+		if (is_incapacitated(src.affecting))
+			prob_mod = 0.7
+		else
+			prob_mod = 1
+
 		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
 
-		if (src.state == GRAB_PASSIVE)
+		if (src.state == GRAB_PASSIVE && prob(STAMINA_P_GRAB_RESIST_CHANCE * prob_mod))
 			for (var/mob/O in AIviewers(src.affecting, null))
 				O.show_message(text("<span class='alert'>[] has broken free of []'s grip!</span>", src.affecting, src.assailant), 1, group = "resist")
 			qdel(src)
 		else if (src.state == GRAB_PIN)
 			var/succ = 0
 
-			if (resist_count >= 8 && prob(7)) //after 8 resists, start rolling for breakage. this is to make sure people with stamina buffs cant infinite-pin someone
+			if (resist_count >= 8 && prob(7 * prob_mod)) //after 8 resists, start rolling for breakage. this is to make sure people with stamina buffs cant infinite-pin someone
 				succ = 1
 			else if (ishuman(src.assailant))
 				src.assailant.remove_stamina(19)
@@ -364,7 +375,7 @@
 				var/mob/living/carbon/human/H = src.assailant
 				if (H.stamina <= 0)
 					succ = 1
-			else if (prob(13)) //the grabber must be a critter or some shit
+			else if (prob(13 * prob_mod)) //the grabber must be a critter or some shit
 				succ = 1
 
 
@@ -377,7 +388,7 @@
 					O.show_message(text("<span class='alert'>[] attempts to break free of []'s pin!</span>", src.affecting, src.assailant), 1, group = "resist")
 
 		else
-			if (prob(break_prob))
+			if (prob(STAMINA_U_GRAB_RESIST_CHANCE * prob_mod))
 				for (var/mob/O in AIviewers(src.affecting, null))
 					O.show_message(text("<span class='alert'>[] has broken free of []'s grip!</span>", src.affecting, src.assailant), 1, group = "resist")
 				qdel(src)
@@ -509,7 +520,7 @@
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && G && get_dist(owner, target) <= 1 || get_dist(owner,T) > 1)
+		if(owner && ownerMob && target && G && get_dist(owner, target) <= 1 && get_dist(owner,T) <= 1)
 			G.upgrade_to_pin(T)
 		else
 			interrupt(INTERRUPT_ALWAYS)
@@ -596,7 +607,7 @@
 
 /obj/item/proc/try_grab(var/mob/living/target, var/mob/living/user)
 	.= 0
-	if(!chokehold && istype(target) && istype(user))
+	if(!chokehold && istype(target) && istype(user) && target != user)
 		src.chokehold = user.grab_other(target, hide_attack, src)
 		chokehold?.post_item_setup()
 		.= 1
@@ -814,7 +825,7 @@
 	handle_throw(var/mob/living/user,var/atom/target)
 		if (isturf(user.loc) && target)
 			var/turf/T = user.loc
-			if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE) && !(user.lying))
+			if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE) && !(user.lying) && can_act(user))
 				user.changeStatus("weakened", max(user.movement_delay()*2, 0.5 SECONDS))
 				user.force_laydown_standup()
 

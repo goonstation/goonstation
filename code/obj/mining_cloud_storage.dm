@@ -156,6 +156,10 @@
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/ore_scoop))
+			var/obj/item/ore_scoop/scoop = W
+			W = scoop.satchel
+
 		if (istype(W, /obj/item/raw_material/) && src.accept_loading(user))
 			var/obj/item/raw_material/R = W
 			if(R.material?.name != R.initial_material_name)
@@ -163,6 +167,19 @@
 				return
 			user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>", "<span class='notice'>You load [W] into the [src].</span>")
 			src.load_item(W,user)
+		else if (istype(W, /obj/item/satchel/mining))
+			var/obj/item/satchel/mining/satchel = W
+			user.visible_message("<span class='notice'>[user] starts dumping [satchel] into [src].</span>", "<span class='notice'>You start dumping [satchel] into [src].</span>")
+			var/amtload = 0
+			for (var/obj/item/loading in W.contents)
+				var/obj/item/raw_material/R = loading
+				if (R.material?.name != R.initial_material_name)
+					continue
+				src.load_item(R, user)
+				amtload++
+			satchel.satchel_updateicon()
+			if (amtload) boutput(user, "<span class='notice'>[amtload] materials loaded from [satchel]!</span>")
+			else boutput(user, "<span class='alert'>[satchel] is empty!</span>")
 
 		else
 			src.health = max(src.health-W.force,0)

@@ -285,6 +285,8 @@
 			pals ++
 			if (prob(40))
 				src.emote("scream")
+			if(src.client)
+				break
 		if(aggroed)
 			walk_towards(src, ai_target, ai_movedelay)
 
@@ -426,7 +428,7 @@
 			return
 		walk_towards(src, null)
 		src.a_intent = INTENT_DISARM
-		theft_target.attack_hand(src)
+		theft_target.Attackhand(src)
 		src.a_intent = src.ai_default_intent
 
 	hear_talk(mob/M as mob, messages, heardname, lang_id)
@@ -561,7 +563,7 @@
 			var/head = pick(/obj/item/clothing/head/bandana/red, /obj/item/clothing/head/bandana/random_color)
 			src.equip_new_if_possible(/obj/item/clothing/shoes/tourist, slot_shoes)
 			src.equip_new_if_possible(head, slot_head)
-			var/weap = pick(/obj/item/storage/toolbox/emergency, /obj/item/extinguisher, /obj/item/ratstick, /obj/item/razor_blade, /obj/item/bat, /obj/item/kitchen/utensil/knife, /obj/item/nunchucks, /obj/item/rubber_hammer, /obj/item/storage/toolbox/mechanical, /obj/item/kitchen/rollingpin)
+			var/weap = pick(/obj/item/saw/active, /obj/item/extinguisher, /obj/item/ratstick, /obj/item/razor_blade, /obj/item/bat, /obj/item/kitchen/utensil/knife/cleaver, /obj/item/nunchucks, /obj/item/tinyhammer, /obj/item/storage/toolbox/mechanical/empty, /obj/item/kitchen/rollingpin)
 			src.put_in_hand_or_drop(new weap)
 		APPLY_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "angry_monkey", 5)
 		src.add_stam_mod_max("angry_monkey", 100)

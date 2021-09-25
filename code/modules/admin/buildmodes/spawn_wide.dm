@@ -16,10 +16,12 @@ change the direction of created objects.<br>
 	var/cinematic = "Blink"
 	var/delete_area = 0
 	var/turf/A = null
+	var/image/marker = null
 
 	deselected()
 		..()
 		A = null
+		usr.client?.images -= marker
 
 	click_mode_right(var/ctrl, var/alt, var/shift)
 		if(ctrl)
@@ -33,9 +35,18 @@ change the direction of created objects.<br>
 		objpath = get_one_match(input("Type path", "Type path", "/obj/closet"), /atom)
 		update_button_text(objpath)
 		A = null
+		usr.client?.images -= marker
 
 	proc/mark_corner(atom/object)
+		if (!marker)
+			marker = image('icons/misc/buildmode.dmi', "marker")
+			marker.plane = PLANE_OVERLAY_EFFECTS
+			marker.layer = NOLIGHT_EFFECTS_LAYER_BASE
+			marker.appearance_flags = RESET_ALPHA | RESET_COLOR | NO_CLIENT_COLOR | KEEP_APART | RESET_TRANSFORM
 		A = get_turf(object)
+		marker.loc = A
+		usr.client?.images += marker
+
 	var/matrix/mtx = matrix()
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (!objpath)
@@ -166,6 +177,7 @@ change the direction of created objects.<br>
 					cnt = 0
 					sleep(0.2 SECONDS)
 			A = null
+			usr.client?.images -= marker
 			update_button_text(objpath)
 
 	click_right(atom/object, var/ctrl, var/alt, var/shift)
@@ -186,3 +198,4 @@ change the direction of created objects.<br>
 				T.ReplaceWithSpaceForce()
 				LAGCHECK(LAG_LOW)
 			A = null
+			usr.client?.images -= marker
