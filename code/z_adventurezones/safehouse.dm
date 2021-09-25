@@ -144,7 +144,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 /obj/machinery/bio_handscanner/attackby(obj/item/W, mob/user as mob)
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
-	if(ON_COOLDOWN(src, "bio_handscanner_attackby", cooldown)) // To reduce chat span in case of multi-click
+	if(ON_COOLDOWN(src, "bio_handscanner_attackby", cooldown)) // To reduce chat spam in case of multi-click
 		return
 	if(istype(W, /obj/item/parts/human_parts/arm/))
 		boutput(user, "<span class='alert'>ERROR: no pulse detected.</span>")
@@ -159,7 +159,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 
 /obj/machinery/bio_handscanner/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
-	if(ON_COOLDOWN(src, "bio_handscanner_attackhhand", cooldown)) // To reduce chat span in case of multi-click
+	if(ON_COOLDOWN(src, "bio_handscanner_attackhhand", cooldown)) // To reduce chat spam in case of multi-click
 		return
 	playsound(src.loc, "sound/effects/handscan.ogg", 50, 1)
 	if(ishuman(user))
@@ -216,6 +216,28 @@ obj/item/reagent_containers/iv_drip/dead_exec
 		playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
 		src.add_fingerprint(user)
 		return
+
+/obj/item/reagent_containers/food/drinks/bottle/soda/lithiawater
+	name = "mineral water"
+	desc = "Mineral spring water bottled at source on earth. Shipped out to the frontier at an extortionate, and pointless, cost."
+	label = "water"
+	labeled = 1
+	initial_volume = 50
+	initial_reagents = list("water"=40,"lithium"=10)
+
+/obj/item/storage/firstaid/hangover
+	name = "hangover survival kit"
+	icon_state = "berserk1"
+	item_state = "berserk1"
+	desc = "A medical kit designed to treat the symptoms of poor decision making. Alas, it can do nothing for the cause."
+	kit_styles = list("berserk1", "berserk2", "berserk3")
+	spawn_contents = list(/obj/item/reagent_containers/food/drinks/bottle/soda/lithiawater,\
+	/obj/item/reagent_containers/emergency_injector/mannitol,\
+	/obj/item/reagent_containers/emergency_injector/synaptizine,\
+	/obj/item/reagent_containers/pill/salicylic_acid,\
+	/obj/item/reagent_containers/pill/mutadone,\
+	/obj/item/reagent_containers/pill/antitox,\
+	/obj/item/device/analyzer/healthanalyzer)
 
 // CLONESCAN HEALTH IMPLANT
 
