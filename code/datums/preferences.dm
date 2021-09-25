@@ -1280,6 +1280,11 @@ datum/preferences
 			HTML += "</td>"
 
 		HTML += "<td valign='top' class='antagprefs'>"
+	#ifdef RP_MODE
+		var/round_num = user.client.player.get_rounds_participated_rp()
+		if (round_num < 10)
+			HTML += "Play [10 - round_num] more rounds to unlock antagonist roles on the RP servers!"
+	#endif
 
 		if (jobban_isbanned(user, "Syndicate"))
 			HTML += "You are banned from playing antagonist roles."
