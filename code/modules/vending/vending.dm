@@ -1868,6 +1868,7 @@
 		if (status & BROKEN)
 			setCrtOverlayStatus(FALSE)
 			setItemOverlay(null)
+			panel_open = FALSE
 			return FALSE
 		else if (powered())
 			setCrtOverlayStatus(TRUE)
