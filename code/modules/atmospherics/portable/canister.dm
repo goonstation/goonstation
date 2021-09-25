@@ -271,7 +271,8 @@
 
 /obj/machinery/portable_atmospherics/canister/proc/rupture() // cogwerks- high pressure tank explosions
 	if (src.det)
-		del(src.det) //Otherwise canister bombs detonate after rupture
+		qdel(src.det) //Otherwise canister bombs detonate after rupture
+		src.det = null
 	if (!destroyed)
 		rupturing = 1
 		SPAWN_DBG(1 SECOND)

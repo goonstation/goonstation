@@ -13,8 +13,6 @@
 					clients << sound('sound/effects/kaboom.ogg')
 					sleep(8 SECONDS)
 					anim.icon_state = "loss_nuke"
-					/*sleep(7 SECONDS)
-					del(src)*/
 			if ("malf")
 				var/atom/movable/screen/hud/anim = create_screen("cinematic", "", 'icons/effects/station_explosion.dmi', "start_malf", "1:6, 1:50", 99)
 				SPAWN_DBG(3.5 SECONDS)//45)

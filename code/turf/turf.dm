@@ -288,9 +288,13 @@
 				continue
 			if((mover != obstacle) && (forget != obstacle))
 				if(obstacle.event_handler_flags & USE_CHECKEXIT)
-					if(!obstacle.CheckExit(mover, src))
-						mover.Bump(obstacle, 1)
-						return 0
+					var/obj/obj_mover = mover
+					if (!istype(obj_mover) || !(HAS_FLAG(obj_mover.object_flags, HAS_DIRECTIONAL_BLOCKING) \
+					  && HAS_FLAG(obstacle.object_flags, HAS_DIRECTIONAL_BLOCKING) \
+					  && obstacle.dir == mover.dir)) //Allow objects that block the same dirs to be pushed past each other
+						if(!obstacle.CheckExit(mover, src))
+							mover.Bump(obstacle, 1)
+							return 0
 
 	//Then, check the turf itself
 	if (!src.CanPass(mover, src))
