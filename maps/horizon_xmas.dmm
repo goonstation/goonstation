@@ -43106,24 +43106,6 @@
 	dir = 10;
 	tag = "icon-pool (SOUTHWEST)"
 	},
-/obj/landmark/bbsss,
-/turf/simulated/floor,
-/area/station/crew_quarters/pool)
-"bSF" = (
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/obj/pool/perspective,
-/turf/simulated/floor,
-/area/station/crew_quarters/pool)
-"bSG" = (
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/obj/pool/perspective{
-	dir = 6;
-	tag = "icon-pool (SOUTHEAST)"
-	},
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bSP" = (
@@ -58966,7 +58948,6 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/pool/perspective,
 /obj/grille/steel,
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating/random,
@@ -59139,13 +59120,6 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/courtroom)
-"ovy" = (
-/obj/disposalpipe/segment/brig{
-	dir = 4
-	},
-/obj/landmark/bbsss,
-/turf/simulated/floor,
-/area/station/crew_quarters/pool)
 "owQ" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -59420,7 +59394,7 @@
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
-/obj/landmark/bbsss,
+/obj/machinery/drainage,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "vxI" = (
@@ -99253,7 +99227,7 @@ bBm
 bDW
 bGX
 bDY
-ovy
+bPN
 bPF
 bSC
 bDY
@@ -99556,7 +99530,7 @@ jfw
 vjY
 bDY
 mjf
-ovy
+bPN
 bXC
 jTW
 bXC
@@ -100161,7 +100135,7 @@ wjf
 bEb
 bPN
 bPN
-bSF
+bXC
 jfw
 bXC
 bZI
@@ -100765,7 +100739,7 @@ bGX
 tUD
 bPN
 bPN
-bSG
+bXC
 jfw
 bXC
 bZI
