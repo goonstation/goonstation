@@ -32,7 +32,7 @@
 		for(var/mob/O in AIviewers(owner))
 			O.show_message("<span class='alert'><B>[owner]</B> stares at [target]!</span>", 1)
 		var/mob/ownerMob = owner
-		playsound(ownerMob.loc, "sound/weapons/phaseroverload.ogg", 100, 1)
+		playsound(ownerMob.loc, "sound/effects/mindkill.ogg", 50, 1)
 		boutput(target, "<span class='alert'>You feel a horrible pain in your head!</span>")
 		target.changeStatus("stunned", 1 SECOND)
 

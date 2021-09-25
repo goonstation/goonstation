@@ -12190,6 +12190,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/landmark/spawner{
+	name = "dolly"
+	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "DY" = (

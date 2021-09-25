@@ -136,7 +136,8 @@
 				qdel(O)
 
 	proc/process()
-		if (time_to_die < ticker.round_elapsed_ticks)
+		var/turf/checkTurf = get_turf(src)
+		if (time_to_die < ticker.round_elapsed_ticks || isrestrictedz(checkTurf?.z))
 			qdel(src)
 			return
 

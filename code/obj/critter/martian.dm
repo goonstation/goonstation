@@ -140,7 +140,7 @@
 				src.target = C
 				src.oldtarget_name = C.name
 				src.visible_message("<span class='alert'><b>[src]</b> stares at [C.name]!</span>")
-				playsound(src.loc, "sound/weapons/phaseroverload.ogg", 100, 1)
+				playsound(src.loc, "sound/effects/mindkill.ogg", 50, 1)
 				boutput(C, "<span class='alert'>You feel a horrible pain in your head!</span>")
 				gib_counter = 0
 				if (do_stun)
