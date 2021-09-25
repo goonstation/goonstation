@@ -1,6 +1,7 @@
 /mob/living/carbon/human/slasher
 	real_name = "The Slasher"
 	var/trailing_blood = FALSE
+	///Used for handling multiple Slashers & their machetes.
 	var/slasher_ckey
 
 	New(loc)
@@ -52,7 +53,7 @@
 		..()
 
 	proc
-
+		///Go invisible, get noclip, be unable to interact with the world
 		incorporealize()
 			var/turf/T = get_turf(src)
 			if(src.density)
@@ -76,7 +77,7 @@
 				src.see_invisible = 16
 				src.client.flying = 1
 
-
+		///undo `incorporealize()`
 		corporealize()
 			if(!src.density)
 				var/turf/T = get_turf(src)
@@ -94,6 +95,7 @@
 				src.nodamage = FALSE
 				src.client.flying = 0
 
+		///Trail some dried blood I guess?
 		blood_trail()
 			if(src.trailing_blood == FALSE)
 				src.tracked_blood = list("bDNA" = src.blood_DNA, "btype" = src.blood_type, "count" = INFINITY)
@@ -103,6 +105,7 @@
 				src.tracked_blood = list("bDNA" = src.blood_DNA, "btype" = src.blood_type, "count" = 0)
 				trailing_blood = FALSE
 
+		///Handles creating a machete/the circumstances where we DON'T summon it
 		summon_machete()
 			var/list/machetes = list()
 			var/we_hold_it = 0
@@ -171,6 +174,7 @@
 
 			return 0
 
+		///Actually sending the machete to the Slasher if one exists already
 		send_machete_to_target(var/obj/item/I)
 			if(!src || !istype(src) || !I || !istype(I))
 				return
@@ -282,6 +286,7 @@
 			M.equip_new_if_possible(/obj/item/clothing/gloves/black, M.slot_gloves)
 			M.equip_new_if_possible(/obj/item/clothing/shoes/slasher_shoes, M.slot_shoes)
 
+		///`fullheal()` but with some extra flavor and readding detox
 		regenerate()
 			playsound(src, 'sound/machines/ArtifactEld1.ogg', 60, 0)
 			if(src.hasStatus("handcuffed"))
@@ -291,11 +296,13 @@
 			src.visible_message("<span class='alert'>[src] appears to partially dissolve into the shadows, but then reforms!</span>")
 			src.bioHolder.AddEffect("detox", 0, 0, 0, 1) //full_heal gets rid of this
 
+		///Actionbar handler for stealing a dead body's soul.
 		soulStealSetup(var/mob/living/carbon/human/M)
 			boutput(usr, "<span class='alert'>You begin stealing [M]'s soul.</span>")
 			SETUP_GENERIC_ACTIONBAR(src, null, 3 SECONDS, /mob/living/carbon/human/slasher/proc/soulSteal, M, src.icon, src.icon_state,\
 	 		"Something barely visible seems to come out of [M]'s mouth, which then is absorbed into [src]'s body!", null)
 
+		///Steal a dead body's soul, provided they have a full one, and get more machete damage
 		soulSteal(var/mob/living/carbon/human/M)
 			var/mob/living/W = src
 			boutput(src, "<span class='alert'>You steal [M]'s soul!</span>")
@@ -308,11 +315,13 @@
 					K.throwforce = K.throwforce + 2.5
 					K.tooltip_rebuild = 1
 
+		///Easy ability to open a door if your target's behind, like, one
 		openDoors()
 			for(var/obj/machinery/door/G in oview(3, src))
 				SPAWN_DBG(1 DECI SECOND)
 				G.open()
 
+		///Crowd control ability to stop people from running as easily, applies stagger
 		staggerNearby()
 			src.visible_message("<span class='alert'>[src] begins emitting a dark aura.</span>")
 			sleep(3 SECONDS)
@@ -321,6 +330,7 @@
 					boutput(M, "<span class='notice'>Your legs feel a bit stiff!</span>")
 					M.setStatus("staggered", 8 SECONDS)
 
+		///Gives the Slasher their abilities
 		addAllAbilities()
 			src.addAbility(/datum/targetable/slasher/help)
 			src.addAbility(/datum/targetable/slasher/incorporeal)
