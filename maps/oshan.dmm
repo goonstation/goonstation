@@ -24138,7 +24138,6 @@
 /area/station/storage/emergency)
 "bhY" = (
 /obj/machinery/light_switch/auto,
-/obj/reagent_dispensers/foamtank,
 /turf/simulated/floor,
 /area/station/storage/emergency)
 "bhZ" = (
@@ -25798,6 +25797,7 @@
 /area/station/storage/emergency)
 "bmd" = (
 /obj/machinery/light/incandescent/warm,
+/obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/yellow,
 /area/station/storage/emergency)
 "bme" = (
