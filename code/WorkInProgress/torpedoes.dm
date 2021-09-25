@@ -410,9 +410,8 @@
 			thrown_person.set_loc(src.loc)
 			parent?.close()
 			if (prob(25) || thrown_person.bioHolder.HasEffect("clumsy"))
-				SPAWN_DBG(0.5 SECONDS)
-					JOB_XP(thrown_person, "Clown", 5)
-					src.parent?.launch()
+				JOB_XP(thrown_person, "Clown", 5)
+				src.parent?.launch()
 		else
 			..()
 
