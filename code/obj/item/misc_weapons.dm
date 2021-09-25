@@ -1615,7 +1615,7 @@ obj/item/whetstone
 			C.changeStatus("weakened", 3 SECONDS)
 			C.force_laydown_standup()
 			take_bleeding_damage(C, null, src.force / 2	, DAMAGE_CUT)
-
+			random_brute_damage(C, round(throwforce * 0.75),1)
 			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
 
 	possessed

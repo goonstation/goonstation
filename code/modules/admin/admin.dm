@@ -1814,14 +1814,14 @@ var/global/noir = 0
 
 		if ("makeslasher")
 			if( src.level < LEVEL_PA )
-				alert("You must be at least a Primary Administrator to make someone a slasher.")
+				alert("You must be at least a Primary Administrator to make someone a Slasher.")
 				return
 			if(!ticker || !ticker.mode)
 				alert("The game hasn't started yet!")
 				return
 			var/mob/M = locate(href_list["target"])
 			if (!M) return
-			if (alert("Make [M] into a slasher?", "Make slasher", "Yes", "No") == "Yes")
+			if (alert("Make [M] into a Slasher?", "Make Slasher", "Yes", "No") == "Yes")
 				M.slasherize()
 
 		if ("makecritter")
