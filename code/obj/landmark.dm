@@ -186,7 +186,8 @@ var/global/list/job_start_locations = list()
 		"seamonkeyspawn_rich" = /mob/living/carbon/human/npc/monkey/sea/rich,
 		"seamonkeyspawn_lab" = /mob/living/carbon/human/npc/monkey/sea/lab,
 		"waiter" = /mob/living/carbon/human/waiter,
-		"monkeyspawn_inside" = /mob/living/carbon/human/npc/monkey
+		"monkeyspawn_inside" = /mob/living/carbon/human/npc/monkey,
+		"dolly" = /mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled
 	)
 
 	New()
