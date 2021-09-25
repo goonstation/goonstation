@@ -24137,6 +24137,7 @@
 /area/station/storage/emergency)
 "bhY" = (
 /obj/machinery/light_switch/auto,
+/obj/reagent_dispensers/foamtank,
 /turf/simulated/floor,
 /area/station/storage/emergency)
 "bhZ" = (
@@ -25614,11 +25615,15 @@
 /turf/simulated/floor/plating/random,
 /area/station/engine/elect)
 "blF" = (
-/obj/reagent_dispensers/foamtank,
-/turf/simulated/floor/yellow/side,
-/area/station/storage/emergency)
-"blG" = (
-/obj/item/sheet/steel/fullstack,
+/obj/table/auto,
+/obj/item/sheet/steel/fullstack{
+	pixel_x = -5;
+	pixel_y = -5
+	},
+/obj/item/sheet/glass/fullstack{
+	pixel_x = 5;
+	pixel_y = 5
+	},
 /turf/simulated/floor/yellow/side,
 /area/station/storage/emergency)
 "blH" = (
@@ -25788,11 +25793,12 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/item/sheet/glass/fullstack,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor/yellow,
 /area/station/storage/emergency)
 "bmd" = (
 /obj/machinery/light/incandescent/warm,
+/obj/machinery/manufacturer/general,
 /turf/simulated/floor/yellow,
 /area/station/storage/emergency)
 "bme" = (
@@ -104109,7 +104115,7 @@ bhX
 bjr
 bkg
 blc
-blG
+blH
 bmb
 arm
 bnm
