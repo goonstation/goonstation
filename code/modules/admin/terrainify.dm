@@ -6,7 +6,7 @@
 
 	var/options = list(
 		"Ice Moon Station"=/client/proc/cmd_ice_moon_station,
-    "Mars Station"=/client/proc/cmd_marsify_station,
+		"Mars Station"=/client/proc/cmd_marsify_station,
 		"Swamp Station"=/client/proc/cmd_swampify_station,
 		"Trench Station"=/client/proc/cmd_trenchify_station,
 		"Winter Station"=/client/proc/cmd_winterify_station,
