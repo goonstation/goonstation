@@ -170,6 +170,7 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 			if(usr)
 				boutput(usr, "<span class='alert'><b>[src.barrel] is shattered by the projectile!</b></span>")
 			playsound(get_turf(src), "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
+			barrel.buildTooltipContent()
 			buildTooltipContent()
 			return
 

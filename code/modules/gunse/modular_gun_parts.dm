@@ -316,6 +316,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 				src.part = new_gun.accessory.remove_part_from_gun()
 				src.part.set_loc(src.loc)
 			src.part = null
+			new_gun.buildTooltipContent()
 			new_gun.built = 0
 
 
