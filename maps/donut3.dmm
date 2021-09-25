@@ -5448,6 +5448,12 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
+"boE" = (
+/obj/landmark/spawner{
+	name = "dolly"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "boW" = (
 /obj/cable,
 /obj/disposalpipe/switch_junction/right/south,
@@ -130967,7 +130973,7 @@ vzA
 wYJ
 mBB
 mBB
-mBB
+boE
 mBB
 mBB
 mBB
