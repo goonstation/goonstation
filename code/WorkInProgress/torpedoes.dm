@@ -402,6 +402,21 @@
 		else
 			return ..(I,user)
 
+	hitby(var/atom/movable/M, var/datum/thrown_thing/thr)
+		if (ishuman(M) && M.throwing)
+			var/mob/living/carbon/human/thrown_person = M
+			M.visible_message("<span class='alert'><b>[thrown_person] [thrown_person.throwing & THROW_SLIP ? "slips" : "falls"] onto [src]! [src] slams closed!</b></span>")
+			logTheThing("combat", thrown_person, null, " falls into \the [src] at [showCoords(src.x, src.y, src.z)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"])")
+			thrown_person.set_loc(src.loc)
+			parent?.close()
+			if (prob(25) || thrown_person.bioHolder.HasEffect("clumsy"))
+				SPAWN_DBG(0.5 SECONDS)
+					JOB_XP(thrown_person, "Clown", 5)
+					src.parent?.launch()
+		else
+			..()
+
+
 /obj/torpedo_tray
 	name = "torpedo tray"
 	desc = "A tray for wheeling around torpedos."
