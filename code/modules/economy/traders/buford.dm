@@ -186,3 +186,6 @@
 	comtype = /obj/item/reagent_containers/food/snacks/pizza
 	price_boundary = list(50,250)
 	possible_names = list("You got any pizza?")
+
+	item_check(obj/item/reagent_containers/food/snacks/pizza/P)
+		return(!P.sliced)

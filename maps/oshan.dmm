@@ -47115,6 +47115,15 @@
 /area/space{
 	pixel_y = 32
 	})
+"mkl" = (
+/obj/landmark/spawner{
+	name = "dolly"
+	},
+/turf/simulated/floor/grasstodirt{
+	icon_state = "dirt";
+	name = "not grass"
+	},
+/area/station/ranch)
 "mlT" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/south,
@@ -85664,7 +85673,7 @@ aDr
 chc
 cgn
 ciP
-aOo
+mkl
 cgx
 cjx
 ciB

@@ -1291,6 +1291,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\effects\ion_trail.dm"
 #include "code\obj\effects\misc.dm"
 #include "code\obj\effects\mustard_gas.dm"
+#include "code\obj\effects\particles.dm"
 #include "code\obj\effects\precipitation.dm"
 #include "code\obj\effects\sparks.dm"
 #include "code\obj\effects\spray.dm"
