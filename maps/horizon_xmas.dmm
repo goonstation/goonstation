@@ -26151,7 +26151,9 @@
 	name = "peststart"
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/southeast,
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/white/checker{
+	dir = 6
+	},
 /area/station/crew_quarters/pool)
 "bhp" = (
 /obj/machinery/atmospherics/pipe/simple/vertical,
@@ -35452,7 +35454,6 @@
 "bBo" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
-/obj/decal/poster/wallsign/pool,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/pool)
 "bBp" = (
@@ -36732,29 +36733,28 @@
 /turf/simulated/floor/red,
 /area/station/security/brig)
 "bDW" = (
-/obj/table/auto,
-/obj/item/clothing/under/jersey/random,
-/obj/item/clothing/under/jersey/random,
-/obj/item/clothing/under/jersey/random,
+/obj/landmark/bbsss,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bDX" = (
-/obj/fitness/stacklifter,
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
-/turf/simulated/floor,
+/obj/grille/steel,
+/obj/window/auto/reinforced,
+/obj/decal/xmas_lights,
+/obj/decal/poster/wallsign/pool,
+/turf/simulated/floor/plating,
 /area/station/crew_quarters/pool)
 "bDY" = (
-/obj/table/auto,
-/obj/towelbin,
-/turf/simulated/floor,
+/obj/grille/steel,
+/obj/window/auto/reinforced,
+/turf/simulated/floor/plating/random,
 /area/station/crew_quarters/pool)
 "bDZ" = (
-/obj/fitness/weightlifter,
-/obj/landmark/start{
-	name = "Staff Assistant"
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
 	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/communications,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bEb" = (
@@ -37906,11 +37906,10 @@
 	},
 /obj/disposalpipe/segment/vertical,
 /obj/table/auto,
-/obj/item/stackable_ammo/scatter/capacitive/five,
-/obj/item/stackable_ammo/scatter/capacitive/five,
-/obj/item/stackable_ammo/scatter/capacitive/five,
-/obj/item/stackable_ammo/scatter/capacitive/five,
-/obj/item/stackable_ammo/scatter/capacitive/five,
+/obj/item/gun_parts/barrel/soviet/long,
+/obj/item/gun_parts/barrel/soviet/long,
+/obj/item/gun_parts/barrel/NT/long,
+/obj/item/gun_parts/barrel/soviet/scatter,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bGX" = (
@@ -39101,6 +39100,11 @@
 /area/station/security/brig)
 "bJF" = (
 /obj/table/auto,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bJJ" = (
@@ -39111,6 +39115,9 @@
 	},
 /obj/disposalpipe/segment/bent/east,
 /obj/table/auto,
+/obj/item/gun_parts/stock/NT/arm_brace,
+/obj/item/gun_parts/stock/NT/arm_brace,
+/obj/item/gun_parts/stock/NT/arm_brace,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bJK" = (
@@ -39133,11 +39140,6 @@
 	dir = 4
 	},
 /obj/table/auto,
-/obj/item/stackable_ammo/scatter/capacitive/three,
-/obj/item/stackable_ammo/scatter/capacitive/three,
-/obj/item/stackable_ammo/scatter/capacitive/three,
-/obj/item/stackable_ammo/scatter/capacitive/three,
-/obj/item/stackable_ammo/scatter/capacitive/three,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bJR" = (
@@ -39157,6 +39159,9 @@
 /obj/item/stackable_ammo/flashbulb,
 /obj/item/stackable_ammo/flashbulb,
 /obj/item/stackable_ammo/flashbulb,
+/obj/item/gun_parts/stock/foss/loader,
+/obj/item/gun_parts/stock/foss/loader,
+/obj/item/gun_parts/stock/foss/loader,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bJS" = (
@@ -40626,6 +40631,8 @@
 /area/station/crew_quarters/pool)
 "bNc" = (
 /obj/table/auto,
+/obj/item/gun_parts/accessory/horn,
+/obj/item/gun_parts/accessory/horn,
 /obj/item/gun_parts/accessory/horn,
 /obj/item/gun_parts/accessory/horn,
 /obj/item/gun_parts/accessory/horn,
@@ -43099,6 +43106,7 @@
 	dir = 10;
 	tag = "icon-pool (SOUTHWEST)"
 	},
+/obj/landmark/bbsss,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bSF" = (
@@ -43124,6 +43132,9 @@
 /area/station/crew_quarters/pool)
 "bSQ" = (
 /obj/table/auto,
+/obj/item/gun_parts/magazine/juicer,
+/obj/item/gun_parts/magazine/juicer,
+/obj/item/gun_parts/magazine/juicer,
 /obj/item/gun_parts/magazine/juicer,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
@@ -43153,7 +43164,9 @@
 /obj/item/reagent_containers/food/snacks/ingredient/meat,
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
 /obj/item/satchel/hydro,
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/white/checker{
+	dir = 6
+	},
 /area/station/crew_quarters/pool)
 "bSW" = (
 /obj/machinery/atmospherics/binary/volume_pump{
@@ -44192,7 +44205,9 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/white/checker{
+	dir = 6
+	},
 /area/station/crew_quarters/pool)
 "bVv" = (
 /obj/disposalpipe/segment/produce{
@@ -44204,13 +44219,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/vertical,
-/obj/machinery/door/airlock/pyro/maintenance{
-	dir = 4;
-	req_access = list(28)
-	},
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
 /turf/simulated/floor/white/checker{
 	dir = 6
 	},
@@ -58884,6 +58892,12 @@
 /obj/stocking,
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/quartersB)
+"jTW" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Heated Pool"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/crew_quarters/pool)
 "kbk" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -58935,12 +58949,49 @@
 /area/station/science/artifact{
 	name = "Artifact Lounge"
 	})
+"kBG" = (
+/obj/table/auto,
+/obj/item/gun_parts/stock/italian/bigger,
+/obj/item/gun_parts/stock/italian/bigger,
+/obj/item/gun_parts/stock/italian/bigger,
+/obj/item/gun_parts/stock/NT/shoulder,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/pool)
+"kHa" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/pool/perspective,
+/obj/grille/steel,
+/obj/window/auto/reinforced,
+/turf/simulated/floor/plating/random,
+/area/station/crew_quarters/pool)
 "kRB" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
+"kSs" = (
+/obj/table/auto,
+/obj/item/gun_parts/barrel/soviet/scatter,
+/obj/item/gun_parts/barrel/soviet/scatter,
+/obj/item/gun_parts/barrel/foss/long,
+/turf/simulated/floor,
+/area/station/crew_quarters/pool)
+"lax" = (
+/obj/disposalpipe/segment/brig{
+	dir = 4
+	},
+/obj/grille/steel,
+/obj/window/auto/reinforced,
+/turf/simulated/floor/plating/random,
+/area/station/crew_quarters/pool)
 "lbS" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -58999,6 +59050,13 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/treatment1)
+"mjf" = (
+/obj/disposalpipe/segment/brig{
+	dir = 4
+	},
+/obj/machinery/vending/monkey,
+/turf/simulated/floor,
+/area/station/crew_quarters/pool)
 "mGT" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -59081,6 +59139,13 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/courtroom)
+"ovy" = (
+/obj/disposalpipe/segment/brig{
+	dir = 4
+	},
+/obj/landmark/bbsss,
+/turf/simulated/floor,
+/area/station/crew_quarters/pool)
 "owQ" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -59273,6 +59338,14 @@
 /obj/item/paper/book/from_file/pocketguide/quartermaster,
 /turf/simulated/floor/plating/random,
 /area/space)
+"tci" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/crew_quarters/pool)
 "thW" = (
 /obj/disposalpipe/segment/bent/south,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -59298,6 +59371,14 @@
 /obj/item/paper/book/from_file/monster_manual,
 /turf/simulated/floor/carpet/purple/fancy/edge,
 /area/station/hallway/secondary/west)
+"tUD" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/pool)
 "tXH" = (
 /obj/item/paper/book/from_file/minerals,
 /turf/simulated/floor/plating/airless/random,
@@ -59335,6 +59416,13 @@
 /obj/item/gun_parts/magazine/juicer/massive,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
+"vjY" = (
+/obj/disposalpipe/segment/food{
+	dir = 4
+	},
+/obj/landmark/bbsss,
+/turf/simulated/floor,
+/area/station/crew_quarters/pool)
 "vxI" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -59361,6 +59449,15 @@
 /obj/stocking,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai)
+"wjf" = (
+/obj/disposalpipe/segment/food{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/pool)
 "wFc" = (
 /turf/space,
 /turf/space,
@@ -59415,6 +59512,14 @@
 /obj/item/paper/book/from_file/medical_surgery_guide,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay/surgery)
+"yeI" = (
+/obj/disposalpipe/segment/food{
+	dir = 4
+	},
+/obj/grille/steel,
+/obj/window/auto/reinforced,
+/turf/simulated/floor/plating/random,
+/area/station/crew_quarters/pool)
 "yix" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/paper/book/from_file/pharmacopia,
@@ -99147,11 +99252,11 @@ byp
 bBm
 bDW
 bGX
-jfw
-bPN
+bDY
+ovy
 bPF
 bSC
-jfw
+bDY
 bXC
 bZE
 bBm
@@ -99446,14 +99551,14 @@ brw
 btF
 bvT
 byq
-bBn
 bDX
-bGX
 jfw
-bPN
-bPN
+vjY
+bDY
+mjf
+ovy
 bXC
-jfw
+jTW
 bXC
 bZJ
 bBm
@@ -99750,12 +99855,12 @@ bvT
 byr
 bBo
 bDY
-bGX
-jfw
-bPN
-bPN
-bSF
-jfw
+yeI
+bDY
+lax
+lax
+kHa
+bDY
 bXA
 bZI
 cbq
@@ -100052,8 +100157,8 @@ bvW
 bys
 bBn
 bDZ
-bGX
-jfw
+wjf
+bEb
 bPN
 bPN
 bSF
@@ -100355,7 +100460,7 @@ byp
 pAR
 jfw
 bGX
-jfw
+tUD
 bPN
 bPO
 bXC
@@ -100657,7 +100762,7 @@ byt
 bBp
 bEb
 bGX
-jfw
+tUD
 bPN
 bPN
 bSG
@@ -100959,7 +101064,7 @@ byp
 bBq
 bEc
 bGX
-jfw
+tUD
 bPN
 bPN
 bXC
@@ -101258,7 +101363,7 @@ brz
 btF
 bvT
 byp
-bBn
+bDX
 bEd
 dwR
 bJF
@@ -101563,7 +101668,7 @@ byu
 bBm
 bBm
 bGT
-bBm
+tci
 sKY
 bPO
 bXC
@@ -101865,7 +101970,7 @@ byp
 bBm
 bEf
 bGN
-bJF
+kBG
 dOR
 bPN
 bXC
@@ -102167,7 +102272,7 @@ byv
 bBm
 bEg
 bGX
-jfw
+tUD
 bPN
 bPN
 bXC
@@ -102469,7 +102574,7 @@ byw
 bBm
 bEe
 hbu
-jfw
+tUD
 aJh
 bPN
 bXC
@@ -102771,7 +102876,7 @@ byx
 bBm
 bEh
 bGX
-jfw
+tUD
 bPN
 bPO
 bXC
@@ -103073,7 +103178,7 @@ byy
 bBm
 bEi
 bGX
-jfw
+tUD
 bPN
 bPN
 bXC
@@ -104279,7 +104384,7 @@ btF
 bvT
 byA
 bBm
-bJF
+kSs
 bGX
 bXD
 bNb

@@ -29,8 +29,9 @@
 //default max range for 'unlimited' range projectiles
 #define PROJ_INFINITE_RANGE 500
 
-//power multiplier when *not* using a lensed barrel on a laser gun. Unfocused beam, shit efficiency.
-#define PROJ_PENALTY_UNLENSED 0.1
+//power multiplier when *not* using the appropriate barrel type on a modular gun. Unfocused beam, shit gas efficiency, whatever.
+#define PROJ_PENALTY_BARREL 0.25
+#define STANDARD_BARREL_LEN 20 // is 20 centimetres good? bad? idk! but that's what 1.0 damage modifier is.
 
 //modular gun shit
 #define GUN_NANO 				(1<<0)

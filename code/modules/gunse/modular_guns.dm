@@ -101,6 +101,9 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 	if(lensing)
 		. += "<div><img src='[resource("images/tooltips/lensing.png")]' alt='' class='icon' /><span>Lenses: [src.lensing] </span></div>"
 
+	if(barrel && barrel.length)
+		. += "<div><span>Barrel length: [src.barrel.length] </span></div>"
+
 	if(jam_frequency_fire || jam_frequency_reload)
 		. += "<div><img src='[resource("images/tooltips/jamjarrd.png")]' alt='' class='icon' /><span>Jammin: [src.jam_frequency_reload + src.jam_frequency_fire] </span></div>"
 
@@ -142,21 +145,41 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 	if(P.proj_data.window_pass)
 		if(lensing)
 			P.power *= lensing
-		else
-			P.power *= PROJ_PENALTY_UNLENSED
+			return
+		P.power *= PROJ_PENALTY_BARREL
+		return
 
 	else
+		if(!barrel)
+			P.power *= PROJ_PENALTY_BARREL
+			if(usr && (prob(10)))
+				boutput(usr, "<span class='alert'><b>You're stunned by the uncontained muzzle flash!</b></span>")
+				usr.apply_flash(2,1,1,0,1,1)
+			return
+
 		if(barrel && lensing)
 			src.jammed = 1
 			barrel.lensing = 0
 			barrel.spread_angle += 5
 			barrel.desc += " The internal lenses have been destroyed."
 			src.lensing = 0
-			src.spread_angle += 5
+			src.spread_angle += 5 // this will reset to stock when the gun is rebuilt
+			src.jam_frequency_fire += 5 // this will reset to stock when the gun is rebuilt
+			src.jam_frequency_reload += 5 // this will reset to stock when the gun is rebuilt
+			P.power *= PROJ_PENALTY_BARREL
 			if(usr)
 				boutput(usr, "<span class='alert'><b>[src.barrel] is shattered by the projectile!</b></span>")
 			playsound(get_turf(src), "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
 			buildTooltipContent()
+			return
+
+		P.power *= (barrel.length / STANDARD_BARREL_LEN) // 20 CM
+		return
+
+
+
+
+
 
 
 /obj/item/gun/modular/proc/flash_process_ammo(mob/user)

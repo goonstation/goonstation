@@ -34,6 +34,7 @@ ABSTRACT_TYPE(/obj/item/gun_parts)
 	var/lensing = 0 // Variable used for optical gun barrels. Scalar around 1.0
 	var/jam_frequency_fire = 1 //additional % chance to jam on fire. Reload to clear.
 	var/scatter = 0
+	var/length = 0 // centimetres
 
 	//stock vars
 	var/can_dual_wield = 1
@@ -69,9 +70,11 @@ ABSTRACT_TYPE(/obj/item/gun_parts)
 		if(spread_angle)
 			. += "<div><img src='[resource("images/tooltips/temp_spread.png")]' alt='' class='icon' /><span>Spread Modifier: [src.spread_angle] </span></div>"
 		if(lensing)
-			. += "<div><img src='[resource("images/tooltips/lensing.png")]' alt='' class='icon' /><span>Optical Lens Modifier: [src.lensing] </span></div>"
+			. += "<div><img src='[resource("images/tooltips/lensing.png")]' alt='' class='icon' /><span>Optical Lens: [src.lensing] </span></div>"
+		if(length)
+			. += "<div><span>Barrel length: [src.length] </span></div>"
 		if(jam_frequency_fire || jam_frequency_reload)
-			. += "<div><img src='[resource("images/tooltips/jamjarrd.png")]' alt='' class='icon' /><span>Jam Modifier: [src.jam_frequency_reload + src.jam_frequency_fire] </span></div>"
+			. += "<div><img src='[resource("images/tooltips/jamjarrd.png")]' alt='' class='icon' /><span>Jam Probability: [src.jam_frequency_reload + src.jam_frequency_fire] </span></div>"
 		if(max_ammo_capacity)
 			. += "<div> <span>Capacity Modifier: [src.max_ammo_capacity] </span></div>"
 		lastTooltipContent = .
@@ -88,6 +91,8 @@ ABSTRACT_TYPE(/obj/item/gun_parts/barrel)
 	jam_frequency_fire = 1 //additional % chance to jam on fire. Reload to clear.
 	scatter = 0
 	icon_state = "barrel-pistol"
+	length = 15 // default of 15 is divided by STANDARD_BARREL_LEN to give a dmg multiplier of 0.5
+
 
 	add_part_to_gun()
 		..()
@@ -407,6 +412,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	spread_angle = -13 // basic stabilisation
 	part_DRM = GUN_NANO | GUN_JUICE | GUN_ITALIAN
 	color = "#33FFFF"
+	length = 16
 
 /obj/item/gun_parts/barrel/NT/long
 	name = "standard long barrel"
@@ -414,6 +420,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	spread_angle = -15
 	name_addition = "longarm"
 	icon_state = "barrel-rifle"
+	length = 35
 
 /obj/item/gun_parts/barrel/foss
 	name = "\improper FOSS lensed barrel"
@@ -425,6 +432,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	name_addition = "lenser"
 	icon_state = "barrel-zauber"
 	contraband = 1
+	length = 17
 
 /obj/item/gun_parts/barrel/foss/long
 	name = "\improper FOSS lensed long barrel"
@@ -435,6 +443,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	color = "#7755FF"
 	name_addition = "focuser"
 	icon_state = "barrel-zauber"
+	length = 39
 
 /obj/item/gun_parts/barrel/juicer
 	name = "\improper BLASTA Barrel"
@@ -446,6 +455,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	color = "#99FF99"
 	name_addition = "MASHER"
 	icon_state = "barrel-shotgun"
+	length = 12
 
 /obj/item/gun_parts/barrel/juicer/longer
 	name = "\improper SNIPA Barrel"
@@ -454,6 +464,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	jam_frequency_fire = 15 //but very!!!!!!! poorly built
 	name_addition = "BLITZER"
 	icon_state = "barrel-rifle"
+	length = 40
 
 /obj/item/gun_parts/barrel/soviet
 	name = "Сборка объектива"
@@ -464,14 +475,39 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	color = "#FF9999"
 	name_addition = "comrade"
 	icon_state = "barrel-zauber"
+	length = 16
+
+/obj/item/gun_parts/barrel/soviet/long
+	name = "Сборка объектива 2"
+	desc = "стопка линз для фокусировки вашего пистолета"
+	spread_angle = -14
+	lensing = 1.4
+	part_DRM = GUN_FOSS | GUN_SOVIET
+	color = "#FF99BB"
+	name_addition = "tovarisch"
+	icon_state = "barrel-zauber"
+	length = 22
+
+/obj/item/gun_parts/barrel/soviet/scatter
+	name = "Сборка объектива scatter"
+	desc = "стопка линз для фокусировки вашего пистолета scatter"
+	scatter = 1
+	spread_angle = -10
+	lensing = 1.2
+	part_DRM = GUN_SOVIET | GUN_JUICE
+	color = "#FF99DD"
+	name_addition = "soyuz"
+	icon_state = "barrel-zauber"
+	length = 10
 
 /obj/item/gun_parts/barrel/italian
 	name = "canna di fucile"
 	desc = "una canna di fucile di base e di alta qualità"
-	spread_angle = -9 // "alta qualità"
+	spread_angle = -11 // "alta qualità"
 	part_DRM = GUN_JUICE | GUN_ITALIAN
 	color = "#FFFF99"
 	name_addition = "paisan"
+	length = 13
 
 // BASIC STOCKS
 /obj/item/gun_parts/stock/NT
@@ -494,6 +530,18 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	name_addition = "sturdy"
 	icon_state = "stock-standard"
 
+/obj/item/gun_parts/stock/NT/arm_brace
+	name = "standard brace"
+	desc = "A comfortable NT forearm brace"
+	spread_angle = -7 // quite better stabilisation
+	stock_two_handed = 1
+	can_dual_wield = 0
+	max_ammo_capacity = 1 // additional shot in the butt
+	jam_frequency_reload = 3 // a little more jammy
+	part_DRM = GUN_NANO | GUN_JUICE | GUN_ITALIAN
+	name_addition = "capable"
+	icon_state = "stock-standard"
+
 /obj/item/gun_parts/stock/foss
 	name = "\improper FOSS laser stock"
 	desc = "An open-sourced laser dynamo, with a multiple-position winding spring."
@@ -513,17 +561,35 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 	max_crank_level = 3 // for syndicate ops
 	name_addition = "monstrous"
 
+/obj/item/gun_parts/stock/foss/loader
+	name = "\improper FOSS laser loader stock"
+	desc = "An open-sourced laser dynamo, with a multiple-position winding spring. This one's kind of hard to hold."
+	spread_angle = 1 // A POSITIVE SPREAD? O NO
+	max_ammo_capacity = 2 // two more bulbs in the pocket
+	part_DRM = GUN_FOSS | GUN_JUICE
+	jam_frequency_reload = 10
+	name_addition = "reckless"
+
 
 /obj/item/gun_parts/stock/italian
 	name = "impugnatura a pistola"
 	desc = "un'impugnatura rivestita in cuoio toscano per un revolver di alta qualità"
-	max_ammo_capacity = 3 // to make that revolver revolve!
-	jam_frequency_reload = 7 // a lot  more jammy!!
+	spread_angle = -1
+	max_ammo_capacity = 1 // to make that revolver revolve!
+	jam_frequency_reload = 5 // a lot  more jammy!!
 	part_DRM = GUN_ITALIAN | GUN_JUICE | GUN_SOVIET
 	color = "#FFFF99"
 	name_addition = "quality"
 
-
+/obj/item/gun_parts/stock/italian/bigger
+	name = "impugnatura a pistola piu larga"
+	desc = "un'impugnatura rivestita in cuoio toscano per un revolver di alta qualità"
+	spread_angle = -3
+	max_ammo_capacity = 3 // to make that revolver revolve!
+	jam_frequency_reload = 9 // a lot  more jammy!!
+	part_DRM = GUN_ITALIAN | GUN_JUICE | GUN_SOVIET
+	color = "#FFFF99"
+	name_addition = "jovial"
 
 // BASIC ACCESSORIES
 	// flashlight!!
@@ -537,6 +603,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 
 	on_fire()
 		playsound(src.my_gun.loc, pick('sound/musical_instruments/Bikehorn_bonk1.ogg', 'sound/musical_instruments/Bikehorn_bonk2.ogg', 'sound/musical_instruments/Bikehorn_bonk3.ogg'), 50, 1, -1)
+
 
 
 // No such thing as a basic magazine! they're all bullshit!!
