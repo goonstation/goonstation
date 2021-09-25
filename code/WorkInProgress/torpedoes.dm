@@ -517,6 +517,18 @@
 			else if(istype(trg, /obj/torpedo_tube_tray))
 				remove(get_turf(over_object), trg.dir)
 
+	hitby(var/atom/movable/M, var/datum/thrown_thing/thr)
+		if (src.loaded && ishuman(M) && M.throwing)
+			var/mob/living/carbon/human/thrown_person = M
+			if (thrown_person.throwing & THROW_CHAIRFLIP)
+				logTheThing("combat", thrown_person, null, " flips into \the [src] at [showCoords(src.x, src.y, src.z)], setting it off.")
+				loaded.breakLaunch()
+			else if (prob(25) || thrown_person.bioHolder.HasEffect("clumsy"))
+				logTheThing("combat", thrown_person, null, " is thrown into \the [src] at [showCoords(src.x, src.y, src.z)], setting it off. (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"])")
+				loaded.breakLaunch()
+				JOB_XP(thrown_person, "Clown", 5)
+		..()
+
 /obj/torpedo_tray/explosive_loaded
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "emptymissiletray"
