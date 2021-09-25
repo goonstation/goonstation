@@ -197,7 +197,7 @@ var/list/observers = list()
 
 
 	stop_observing()
-		if(start_time >= world.time + 20 SECONDS)
+		if(start_time >= world.time + 44 SECONDS)
 			return ..()
 		else
 			return
