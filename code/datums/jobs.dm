@@ -156,9 +156,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	wages = PAY_EXECUTIVE
 	high_priority_job = 1
 	recieves_miranda = 1
-#ifdef RP_MODE
 	allow_traitors = 0
-#endif
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
 	allow_spy_theft = 0
@@ -174,9 +172,8 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_ears = list(/obj/item/device/radio/headset/command/captain)
 	slot_poc1 = list(/obj/item/disk/data/floppy/read_only/authentication)
 	items_in_backpack = list(/obj/item/storage/box/id_kit,/obj/item/device/flash)
-#ifdef RP_MODE
 	rounds_needed_to_play = 20
-#endif
+
 
 	New()
 		..()
