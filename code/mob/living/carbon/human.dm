@@ -90,7 +90,8 @@
 	/// used by werewolf TF to store and restore what you were before TFing into a werewolf
 	var/datum/mutantrace/coreMR = null // There are two wolves inside you. One's a wolf, the other's probably some kind of lizard. Also one's actually you, and they trade places Hannah Montana style
 
-	var/emagged = 0 //What the hell is wrong with me?
+	var/italian = 0 // Italiano
+	var/emagged = 0 // What the hell is wrong with me?
 	var/spiders = 0 // SPIDERS
 	var/makeup = null // for when you wanna look pretty
 	var/makeup_color = null

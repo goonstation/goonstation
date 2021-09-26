@@ -465,6 +465,15 @@
 			owner.bioHolder.AddEffect("blind", 0, 0, 0, 1)
 
 // GENETICS - Blue Border
+/obj/trait/italian
+	name = "Italian (??) \[Italian\]"
+	cleanName = "Italian"
+	desc = "You are Italian."
+	id = "italian"
+	icon_state = "italian"
+	points = 0
+	isPositive = 0
+	category = "genetics"
 
 /obj/trait/robustgenetics
 	name = "Robust Genetics (-2) \[Genetics\]"

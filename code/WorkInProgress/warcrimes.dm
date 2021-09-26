@@ -167,6 +167,7 @@ var/fartcount = 0
 
 		var/obj/item/implant/access/infinite/shittybill/implant = new /obj/item/implant/access/infinite/shittybill(src)
 		implant.implanted(src, src)
+		traitHolder.addTrait("italian")
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_JOHNBILLS)
@@ -321,7 +322,10 @@ var/fartcount = 0
 
 			else if(prob(40) && length(dead_mobs))
 				var/mob/M = pick(dead_mobs)
-				say("[JOHN_PICK("deadguy")] [M.name]...")
+				if(M.traitHolder.hasTrait("italian"))
+					say("Ciao bella, paisan... bella ciao.")
+				else
+					say("[JOHN_PICK("deadguy")] [M.name]...")
 			else if (alive_mobs.len > 0)
 				if (murray && !greeted_murray)
 					greeted_murray = 1
