@@ -351,7 +351,8 @@
 		for(var/turf/T as anything in to_clear)
 			//Wacks asteroids and skip normal turfs that belong
 			if(istype(T, /turf/simulated/wall/asteroid))
-				T.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid, force=TRUE)
+				var/turf/simulated/wall/asteroid/AST = T
+				AST.destroy_asteroid(dropOre=FALSE)
 				continue
 			else if(!istype(T, /turf/unsimulated))
 				continue
