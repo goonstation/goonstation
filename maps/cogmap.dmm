@@ -42413,15 +42413,15 @@
 	pixel_x = -5;
 	pixel_y = -6
 	},
-/obj/item/parts/robot_parts/arm/right{
-	pixel_x = -12;
-	pixel_y = 6
-	},
-/obj/item/parts/robot_parts/arm/right{
+/obj/machinery/light,
+/obj/item/parts/robot_parts/arm/right/standard{
 	pixel_x = -7;
 	pixel_y = 6
 	},
-/obj/machinery/light,
+/obj/item/parts/robot_parts/arm/right/standard{
+	pixel_x = -12;
+	pixel_y = 6
+	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "cbP" = (
@@ -55775,6 +55775,10 @@
 /obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
+"fYP" = (
+/obj/storage/crate/robotparts,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/science/storage)
 "fZG" = (
 /obj/machinery/light/emergency{
 	dir = 4
@@ -90222,7 +90226,7 @@ aap
 aar
 aar
 aar
-bXs
+fYP
 bXs
 bXs
 bXs

@@ -74175,15 +74175,15 @@
 	pixel_x = 5;
 	pixel_y = -3
 	},
-/obj/item/parts/robot_parts/arm/right{
-	pixel_x = 5
-	},
-/obj/item/parts/robot_parts/arm/right{
-	pixel_x = 9;
-	pixel_y = 1
-	},
 /obj/decal/tile_edge/line/purple{
 	icon_state = "line1"
+	},
+/obj/item/parts/robot_parts/arm/right/standard{
+	pixel_x = 5
+	},
+/obj/item/parts/robot_parts/arm/right/standard{
+	pixel_x = 9;
+	pixel_y = 1
 	},
 /turf/simulated/floor/black,
 /area/station/science/bot_storage)
