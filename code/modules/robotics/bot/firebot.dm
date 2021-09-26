@@ -371,7 +371,7 @@
 	new /obj/item/extinguisher(Tsec)
 
 	if (prob(50))
-		new /obj/item/parts/robot_parts/arm/left(Tsec)
+		new /obj/item/parts/robot_parts/arm/left/standard(Tsec)
 
 	var/obj/item/storage/toolbox/emergency/emptybox = new /obj/item/storage/toolbox/emergency(Tsec)
 	for(var/obj/item/I in emptybox.contents) //Empty the toolbox so we don't have infinite crowbars or whatever

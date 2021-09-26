@@ -173,7 +173,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 		core.created_model_task = src.model_task
 */
 		var/list/throwparts = list()
-		throwparts += new /obj/item/parts/robot_parts/arm/left(T)
+		throwparts += new /obj/item/parts/robot_parts/arm/left/standard(T)
 		throwparts += new /obj/item/device/flash(T)
 		//throwparts += core
 		throwparts += src.tool

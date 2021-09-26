@@ -773,11 +773,11 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	category = "Medical Department"
 	contains = list(/obj/item/parts/robot_parts/robot_frame,
 					/obj/item/parts/robot_parts/head/sturdy,
-					/obj/item/parts/robot_parts/chest,
+					/obj/item/parts/robot_parts/chest/standard,
 					/obj/item/parts/robot_parts/arm/left/sturdy,
 					/obj/item/parts/robot_parts/arm/right/sturdy,
-					/obj/item/parts/robot_parts/leg/left,
-					/obj/item/parts/robot_parts/leg/right,
+					/obj/item/parts/robot_parts/leg/left/standard,
+					/obj/item/parts/robot_parts/leg/right/standard,
 					/obj/item/cable_coil)
 	cost = 4500
 	containertype = /obj/storage/crate/wooden

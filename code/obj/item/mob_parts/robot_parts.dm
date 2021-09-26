@@ -828,7 +828,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	handlistPart = "legR-generic"
 	movement_modifier = /datum/movement_modifier/robotleg_right
 
-/obj/item/parts/robot_parts/leg/left/standard
+/obj/item/parts/robot_parts/leg/right/standard
 	name = "standard cyborg right leg"
 
 /obj/item/parts/robot_parts/leg/right/light

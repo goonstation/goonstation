@@ -200,12 +200,12 @@
 	/obj/item/sheet/glass/fullstack,
 	/obj/item/ai_interface,
 	/obj/item/parts/robot_parts/robot_frame,
-	/obj/item/parts/robot_parts/leg/left,
-	/obj/item/parts/robot_parts/leg/right,
-	/obj/item/parts/robot_parts/arm/left,
-	/obj/item/parts/robot_parts/arm/right,
-	/obj/item/parts/robot_parts/chest,
-	/obj/item/parts/robot_parts/head,
+	/obj/item/parts/robot_parts/leg/left/standard,
+	/obj/item/parts/robot_parts/leg/right/standard,
+	/obj/item/parts/robot_parts/arm/left/standard,
+	/obj/item/parts/robot_parts/arm/right/standard,
+	/obj/item/parts/robot_parts/chest/standard,
+	/obj/item/parts/robot_parts/head/standard,
 	/obj/item/cell/supercell = 4,
 	/obj/item/cable_coil = 2)
 
@@ -323,7 +323,7 @@
 					carton.ourEgg.blog += blog
 				return 1
 
-//The crate of borg bits that robotics starts with - the QM robot crate is /obj/storage/crate/robotics_supplies_borg
+//The crate of borg bits that robotics starts with - There is also /obj/storage/crate/robotics_supplies_borg above and IDK where that's used
 //This one has just the bring-your-own-brain-and-cell borg parts (but does lovely pixel offsets I stole from cog1, thanks f1!)
 /obj/storage/crate/robotparts
 	make_my_stuff() //since we want offsets we're gonna have to do this manually (mimicking office closets)
@@ -333,7 +333,7 @@
 			var/obj/item/parts/robot_parts/robot_frame/B1 = new /obj/item/parts/robot_parts/robot_frame(src)
 			B1.pixel_y = 3
 
-			var/obj/item/parts/robot_parts/head/standard/B2 = new /obj/item/parts/robot_parts/head/standard(src)
+			new /obj/item/parts/robot_parts/head/standard(src) //Was B2 but no offsets needed
 
 			var/obj/item/parts/robot_parts/chest/standard/B3 = new /obj/item/parts/robot_parts/chest/standard/(src)
 			B3.pixel_y = -5
@@ -350,7 +350,7 @@
 
 			var/obj/item/parts/robot_parts/leg/left/standard/B6 = new /obj/item/parts/robot_parts/leg/left/standard(src)
 			B6.pixel_y = -6
-			B6.pixel_x = -7
+			B6.pixel_x = 7
 
 			var/obj/item/parts/robot_parts/leg/right/standard/B7 = new /obj/item/parts/robot_parts/leg/right/standard(src)
 			B7.pixel_y = -6
