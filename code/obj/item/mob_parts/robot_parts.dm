@@ -553,13 +553,14 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 
 ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 /obj/item/parts/robot_parts/arm/left
-	name = "standard cyborg left arm"
+	name = "cyborg left arm"
 	slot = "l_arm"
 	icon_state_base = "l_arm"
 	icon_state = "l_arm-generic"
 	handlistPart = "armL-generic"
 
 /obj/item/parts/robot_parts/arm/left/standard
+	name = "standard cyborg left arm"
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
@@ -624,7 +625,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 
 ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 /obj/item/parts/robot_parts/arm/right
-	name = "standard cyborg right arm"
+	name = "cyborg right arm"
 	icon_state = "r_arm"
 	slot = "r_arm"
 	icon_state_base = "r_arm"
@@ -633,6 +634,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 
 
 /obj/item/parts/robot_parts/arm/right/standard
+	name = "standard cyborg right arm"
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
