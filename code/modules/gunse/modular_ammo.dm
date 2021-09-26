@@ -79,7 +79,7 @@ ABSTRACT_TYPE(/obj/item/stackable_ammo/)
 				src.icon_state = "cashrbow"
 */
 	UpdateName()
-		src.name = "[src.amount == src.max_stack ? "1000" : src.amount] [name_prefix(null, 1)][src.real_name][s_es(src.amount)][name_suffix(null, 1)]"
+		src.name = "[src.amount] [name_prefix(null, 1)][src.real_name][s_es(src.amount)][name_suffix(null, 1)]"
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
 		user.visible_message("<span class='notice'>[user] is stacking rounds!</span>")
@@ -127,6 +127,10 @@ ABSTRACT_TYPE(/obj/item/stackable_ammo/)
 		if(M.ammo_list.len >= M.max_ammo_capacity)
 			return
 		reloading = 1
+		if(amount < 1)
+			user.u_equip(src)
+			src.dropped(user)
+			pool(src)
 		SPAWN_DBG(0)
 			boutput(user, "<span class='notice'>You start loading rounds into [M]</span>")
 			while(M.ammo_list.len < M.max_ammo_capacity)
@@ -142,12 +146,26 @@ ABSTRACT_TYPE(/obj/item/stackable_ammo/)
 				sleep(5)
 			playsound(src.loc, "sound/weapons/gunload_heavy.ogg", 30, 0.1, 0, 0.8)
 			reloading = 0
-		if(amount < 1)
-			user.u_equip(src)
-			src.dropped(user)
-			pool(src)
 
+/obj/item/stackable_ammo/pistol/
+	name = "standardised pistol round"
+	real_name = "standardised pistol round"
+	desc = "pee pee, poo poo"
+	projectile_type = /datum/projectile/bullet/bullet_22
+	ammo_DRM = GUN_NANO | GUN_ITALIAN | GUN_JUICE
+	color = "#30FFFF"
 
+	three
+		default_min_amount = 3
+		default_max_amount = 3
+
+	five
+		default_min_amount = 5
+		default_max_amount = 5
+
+	ten
+		default_min_amount = 10
+		default_max_amount = 10
 
 /obj/item/stackable_ammo/capacitive/
 	name = "\improper NT Stunner Fuckers"
@@ -233,6 +251,21 @@ ABSTRACT_TYPE(/obj/item/stackable_ammo/)
 		default_min_amount = 5
 		default_max_amount = 5
 
+/obj/item/stackable_ammo/scatter/buckshot
+	name = "\improper Hot Pocketz"
+	real_name = "\improper Hot Pocketz"
+	desc = "Ecologically and economically hand-packed by local Juicer children."
+	projectile_type = /datum/projectile/bullet/a12
+	ammo_DRM = GUN_JUICE
+	color = "#33BB30"
+
+	three
+		default_min_amount = 3
+		default_max_amount = 3
+
+	five
+		default_min_amount = 5
+		default_max_amount = 5
 
 /obj/item/stackable_ammo/scatter/capacitive/xl
 	name = "\improper NT Stunner Scatters XL"
@@ -280,6 +313,11 @@ ABSTRACT_TYPE(/obj/item/stackable_ammo/)
 				if(M.ammo_list.len == M.max_ammo_capacity)
 					playsound(src.loc, "sound/weapons/gunload_heavy.ogg", 30, 0.1, 0, 0.8)
 				reloading = 0
+
+/obj/item/stackable_ammo/flashbulb/better
+	max_health = 25
+	min_health = 20
+	color = "#CCFFFF"
 
 // NEW PROJECTILE TYPES TEMPORARY STORAGE
 

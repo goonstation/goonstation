@@ -14454,6 +14454,7 @@
 /area/station/hallway/primary/central)
 "aJk" = (
 /obj/machinery/light/small/floor,
+/obj/table/auto,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "aJl" = (
@@ -36829,11 +36830,6 @@
 	pixel_y = 21
 	},
 /obj/table/auto,
-/obj/item/stackable_ammo/scatter/capacitive/xl/three,
-/obj/item/stackable_ammo/scatter/capacitive/xl/three,
-/obj/item/stackable_ammo/scatter/capacitive/xl/three,
-/obj/item/stackable_ammo/scatter/capacitive/xl/three,
-/obj/item/stackable_ammo/scatter/capacitive/xl/three,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bEn" = (
@@ -40613,13 +40609,6 @@
 	tag = ""
 	},
 /obj/table/auto,
-/obj/item/stackable_ammo/zaubertube/ten,
-/obj/item/stackable_ammo/zaubertube/ten,
-/obj/item/stackable_ammo/zaubertube/ten,
-/obj/item/stackable_ammo/zaubertube/ten,
-/obj/item/stackable_ammo/zaubertube/ten,
-/obj/item/stackable_ammo/zaubertube/ten,
-/obj/item/stackable_ammo/zaubertube/ten,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bNb" = (
@@ -40649,11 +40638,6 @@
 	dir = 4
 	},
 /obj/table/auto,
-/obj/item/stackable_ammo/scatter/zaubertube/five,
-/obj/item/stackable_ammo/scatter/zaubertube/five,
-/obj/item/stackable_ammo/scatter/zaubertube/five,
-/obj/item/stackable_ammo/scatter/zaubertube/five,
-/obj/item/stackable_ammo/scatter/zaubertube/five,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bNg" = (
@@ -46257,28 +46241,29 @@
 	icon_state = "6-8"
 	},
 /obj/disposalpipe/segment/transport,
+/obj/table/auto,
+/obj/item/stackable_ammo/capacitive/five,
+/obj/item/stackable_ammo/capacitive/five,
+/obj/item/stackable_ammo/capacitive/five,
+/obj/item/stackable_ammo/capacitive/five,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "bZL" = (
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
+/obj/table/auto,
+/obj/item/stackable_ammo/pistol/five,
+/obj/item/stackable_ammo/pistol/five,
+/obj/item/stackable_ammo/pistol/five,
+/obj/item/stackable_ammo/pistol/five,
 /turf/simulated/floor,
-/area/station/crew_quarters/pool)
-"bZM" = (
-/obj/disposalpipe/segment/produce{
-	dir = 4
-	},
-/obj/machinery/atmospherics/valve/purge/horizontal{
-	name = "DANGER: POOL HEATER"
-	},
-/turf/simulated/floor/plating/random,
 /area/station/crew_quarters/pool)
 "bZN" = (
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/horizontal,
+/obj/table/auto,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/pool)
 "bZO" = (
@@ -47081,15 +47066,24 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/pool)
 "cbr" = (
-/obj/grille/steel,
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/table/auto,
+/obj/item/stackable_ammo/flashbulb,
+/obj/item/stackable_ammo/flashbulb,
+/obj/item/stackable_ammo/flashbulb,
+/obj/item/stackable_ammo/flashbulb,
+/obj/item/stackable_ammo/flashbulb,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "cbs" = (
 /obj/disposalpipe/segment/bent/north,
 /obj/table/auto,
-/obj/item/crowbar,
-/obj/item/storage/toolbox/emergency,
-/obj/item/device/multitool,
+/obj/item/stackable_ammo/capacitive/three,
+/obj/item/stackable_ammo/capacitive/three,
+/obj/item/stackable_ammo/capacitive/three,
+/obj/item/stackable_ammo/capacitive/three,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "cbt" = (
@@ -47102,7 +47096,10 @@
 	dir = 4
 	},
 /obj/table/auto,
-/obj/item/extinguisher,
+/obj/item/stackable_ammo/pistol/three,
+/obj/item/stackable_ammo/pistol/three,
+/obj/item/stackable_ammo/pistol/three,
+/obj/item/stackable_ammo/pistol/three,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "cbu" = (
@@ -58607,19 +58604,6 @@
 /obj/item/paper/book/from_file/guardbot_guide,
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/crew_quarters/hor)
-"dOR" = (
-/obj/disposalpipe/segment/brig{
-	dir = 4
-	},
-/obj/table/auto,
-/obj/item/stackable_ammo/capacitive/ten,
-/obj/item/stackable_ammo/capacitive/ten,
-/obj/item/stackable_ammo/capacitive/ten,
-/obj/item/stackable_ammo/capacitive/ten,
-/obj/item/stackable_ammo/capacitive/ten,
-/obj/item/stackable_ammo/capacitive/ten,
-/turf/simulated/floor,
-/area/station/crew_quarters/pool)
 "eyI" = (
 /obj/table/wood/auto,
 /obj/item/paper/book/from_file/hydroponicsguide,
@@ -58627,6 +58611,17 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/snow,
 /area/station/hydroponics/bay)
+"eRt" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/machinery/light/small/floor,
+/obj/table/auto,
+/obj/item/stackable_ammo/flashbulb/better,
+/obj/item/stackable_ammo/flashbulb/better,
+/obj/item/stackable_ammo/flashbulb/better,
+/turf/simulated/floor,
+/area/station/crew_quarters/pool)
 "eWt" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -58791,6 +58786,14 @@
 	dir = 4
 	},
 /area/station/medical/robotics)
+"hCj" = (
+/obj/table/auto,
+/obj/item/stackable_ammo/scatter/capacitive/xl/three,
+/obj/item/stackable_ammo/scatter/capacitive/xl/three,
+/obj/item/stackable_ammo/scatter/capacitive/xl/three,
+/obj/item/stackable_ammo/scatter/capacitive/xl/three,
+/turf/simulated/floor,
+/area/station/crew_quarters/pool)
 "hVS" = (
 /obj/disposalpipe/segment/mineral{
 	dir = 4
@@ -58856,6 +58859,17 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/station/security/hos)
+"jbI" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/table/auto,
+/obj/item/stackable_ammo/scatter/zaubertube/three,
+/obj/item/stackable_ammo/scatter/zaubertube/three,
+/obj/item/stackable_ammo/scatter/zaubertube/three,
+/obj/item/stackable_ammo/scatter/zaubertube/three,
+/turf/simulated/floor,
+/area/station/crew_quarters/pool)
 "jfw" = (
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
@@ -58874,6 +58888,15 @@
 /obj/stocking,
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/quartersB)
+"jKf" = (
+/obj/disposalpipe/segment/bent/south,
+/obj/table/auto,
+/obj/item/stackable_ammo/capacitive/ten,
+/obj/item/stackable_ammo/capacitive/ten,
+/obj/item/stackable_ammo/capacitive/ten,
+/obj/item/stackable_ammo/capacitive/ten,
+/turf/simulated/floor,
+/area/station/crew_quarters/pool)
 "jTW" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Heated Pool"
@@ -58986,6 +59009,26 @@
 /obj/item/device/radio,
 /turf/simulated/floor/grey/whitegrime,
 /area/station/science/gen_storage)
+"lkz" = (
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/table/auto,
+/obj/item/stackable_ammo/flashbulb,
+/obj/item/stackable_ammo/flashbulb,
+/obj/item/stackable_ammo/flashbulb,
+/obj/item/stackable_ammo/flashbulb,
+/obj/item/stackable_ammo/flashbulb,
+/turf/simulated/floor,
+/area/station/crew_quarters/pool)
 "llI" = (
 /obj/grille/steel,
 /obj/window/auto/crystal/reinforced,
@@ -59037,6 +59080,22 @@
 	},
 /obj/machinery/vending/monkey,
 /turf/simulated/floor,
+/area/station/crew_quarters/pool)
+"mwg" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/table/auto,
+/obj/item/stackable_ammo/scatter/capacitive/five,
+/obj/item/stackable_ammo/scatter/capacitive/five,
+/obj/item/stackable_ammo/scatter/capacitive/five,
+/obj/item/stackable_ammo/scatter/capacitive/five,
+/turf/simulated/floor/plating/random,
 /area/station/crew_quarters/pool)
 "mGT" = (
 /obj/disposalpipe/segment/transport{
@@ -59091,16 +59150,32 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/south,
 /area/station/bridge/captain)
-"nNW" = (
-/obj/disposalpipe/segment/brig{
+"nrF" = (
+/obj/disposalpipe/segment/produce{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light,
 /obj/table/auto,
-/obj/item/stackable_ammo/zaubertube/five,
-/obj/item/stackable_ammo/zaubertube/five,
-/obj/item/stackable_ammo/zaubertube/five,
-/obj/item/stackable_ammo/zaubertube/five,
-/obj/item/stackable_ammo/zaubertube/five,
+/obj/item/stackable_ammo/scatter/buckshot/five,
+/obj/item/stackable_ammo/scatter/buckshot/five,
+/obj/item/stackable_ammo/scatter/buckshot/five,
+/obj/item/stackable_ammo/scatter/buckshot/five,
+/turf/simulated/floor,
+/area/station/crew_quarters/pool)
+"nGj" = (
+/obj/table/auto,
+/turf/simulated/floor,
+/area/station/crew_quarters/pool)
+"nUk" = (
+/obj/machinery/light/small/floor,
+/obj/table/auto,
+/obj/item/stackable_ammo/zaubertube/ten,
+/obj/item/stackable_ammo/zaubertube/ten,
+/obj/item/stackable_ammo/zaubertube/ten,
+/obj/item/stackable_ammo/zaubertube/ten,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "nUm" = (
@@ -59109,9 +59184,6 @@
 	},
 /obj/disposalpipe/segment/brig,
 /obj/table/auto,
-/obj/item/stackable_ammo/zaubertube/three,
-/obj/item/stackable_ammo/zaubertube/three,
-/obj/item/stackable_ammo/zaubertube/three,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "nXq" = (
@@ -59120,6 +59192,15 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/courtroom)
+"okJ" = (
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
+/obj/machinery/atmospherics/valve/purge/horizontal{
+	name = "DANGER: POOL HEATER"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/crew_quarters/pool)
 "owQ" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -59127,6 +59208,14 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating/random,
 /area/station/chapel/office)
+"oya" = (
+/obj/table/auto,
+/obj/item/stackable_ammo/pistol/ten,
+/obj/item/stackable_ammo/pistol/ten,
+/obj/item/stackable_ammo/pistol/ten,
+/obj/item/stackable_ammo/pistol/ten,
+/turf/simulated/floor,
+/area/station/crew_quarters/pool)
 "pcc" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
 /obj/cable{
@@ -59193,11 +59282,50 @@
 /obj/item/raw_material/shard/glass,
 /turf/space,
 /area/space)
+"pqe" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/table/auto,
+/obj/item/stackable_ammo/scatter/buckshot/three,
+/obj/item/stackable_ammo/scatter/buckshot/three,
+/obj/item/stackable_ammo/scatter/buckshot/three,
+/obj/item/stackable_ammo/scatter/buckshot/three,
+/turf/simulated/floor,
+/area/station/crew_quarters/pool)
+"pyA" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/table/auto,
+/obj/item/stackable_ammo/zaubertube/three,
+/obj/item/stackable_ammo/zaubertube/three,
+/obj/item/stackable_ammo/zaubertube/three,
+/obj/item/stackable_ammo/zaubertube/three,
+/turf/simulated/floor/plating/random,
+/area/station/crew_quarters/pool)
 "pAR" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
 /obj/decal/wreath,
 /turf/simulated/floor/plating,
+/area/station/crew_quarters/pool)
+"pKm" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/table/auto,
+/turf/simulated/floor/plating/random,
 /area/station/crew_quarters/pool)
 "pTo" = (
 /obj/grille/steel,
@@ -59233,6 +59361,19 @@
 	dir = 1
 	},
 /area/station/maintenance/northeast)
+"qog" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/machinery/light,
+/obj/table/auto,
+/turf/simulated/floor/plating/random,
+/area/station/crew_quarters/pool)
 "qsT" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -59248,6 +59389,20 @@
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/hallway/secondary/entry)
+"qYg" = (
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/table/auto,
+/obj/item/stackable_ammo/scatter/zaubertube/five,
+/obj/item/stackable_ammo/scatter/zaubertube/five,
+/obj/item/stackable_ammo/scatter/zaubertube/five,
+/obj/item/stackable_ammo/scatter/zaubertube/five,
+/turf/simulated/floor,
+/area/station/crew_quarters/pool)
 "rsU" = (
 /obj/grille/steel,
 /obj/window/auto/crystal/reinforced,
@@ -59279,16 +59434,6 @@
 /obj/decal/wreath,
 /turf/simulated/floor/plating,
 /area/station/storage/tools)
-"rPi" = (
-/obj/disposalpipe/segment/brig{
-	dir = 4
-	},
-/obj/table/auto,
-/obj/item/stackable_ammo/scatter/zaubertube/three,
-/obj/item/stackable_ammo/scatter/zaubertube/three,
-/obj/item/stackable_ammo/scatter/zaubertube/three,
-/turf/simulated/floor,
-/area/station/crew_quarters/pool)
 "rUs" = (
 /obj/decal/poster/wallsign/framed_award/hos_medal,
 /obj/disposalpipe/segment/transport{
@@ -59296,18 +59441,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/armory)
-"sKY" = (
-/obj/disposalpipe/segment/brig{
-	dir = 4
-	},
-/obj/table/auto,
-/obj/item/stackable_ammo/capacitive/five,
-/obj/item/stackable_ammo/capacitive/five,
-/obj/item/stackable_ammo/capacitive/five,
-/obj/item/stackable_ammo/capacitive/five,
-/obj/item/stackable_ammo/capacitive/five,
-/turf/simulated/floor,
-/area/station/crew_quarters/pool)
 "sVX" = (
 /obj/item/paper/book/from_file/pocketguide/quartermaster,
 /turf/simulated/floor/plating/random,
@@ -59397,6 +59530,24 @@
 /obj/machinery/drainage,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
+"vxt" = (
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/table/auto,
+/obj/item/stackable_ammo/flashbulb/better,
+/obj/item/stackable_ammo/flashbulb/better,
+/obj/item/stackable_ammo/flashbulb/better,
+/turf/simulated/floor,
+/area/station/crew_quarters/pool)
 "vxI" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -59409,14 +59560,22 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
+"vHp" = (
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
+/obj/table/auto,
+/obj/item/stackable_ammo/scatter/capacitive/three,
+/obj/item/stackable_ammo/scatter/capacitive/three,
+/obj/item/stackable_ammo/scatter/capacitive/three,
+/obj/item/stackable_ammo/scatter/capacitive/three,
+/turf/simulated/floor/plating/random,
+/area/station/crew_quarters/pool)
 "vNr" = (
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
 /obj/table/auto,
-/obj/item/stackable_ammo/capacitive/three,
-/obj/item/stackable_ammo/capacitive/three,
-/obj/item/stackable_ammo/capacitive/three,
 /turf/simulated/floor,
 /area/station/crew_quarters/pool)
 "vOC" = (
@@ -59459,6 +59618,17 @@
 /obj/item/pen,
 /turf/simulated/floor,
 /area/station/security/main)
+"xne" = (
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
+/obj/table/auto,
+/obj/item/stackable_ammo/zaubertube/five,
+/obj/item/stackable_ammo/zaubertube/five,
+/obj/item/stackable_ammo/zaubertube/five,
+/obj/item/stackable_ammo/zaubertube/five,
+/turf/simulated/floor/plating/random,
+/area/station/crew_quarters/pool)
 "xQJ" = (
 /obj/table/wood/auto,
 /obj/item/device/camera_viewer,
@@ -100741,8 +100911,8 @@ bPN
 bPN
 bXC
 jfw
-bXC
-bZI
+cbr
+lkz
 cbq
 aaQ
 aJs
@@ -101043,8 +101213,8 @@ bPN
 bPN
 bXC
 jfw
-bXA
-bZI
+eRt
+vxt
 cbq
 aaQ
 aJt
@@ -101643,12 +101813,12 @@ bBm
 bBm
 bGT
 tci
-sKY
+vNr
 bPO
 bXC
 jfw
-bXC
-bZJ
+pqe
+nrF
 bBm
 aaQ
 aaa
@@ -101945,12 +102115,12 @@ bBm
 bEf
 bGN
 kBG
-dOR
+vNr
 bPN
 bXC
 jfw
-bXC
-bZE
+jbI
+qYg
 bBm
 bBm
 aad
@@ -102253,7 +102423,7 @@ bXC
 jfw
 bXA
 bZE
-cbr
+jfw
 bBm
 aaa
 aJC
@@ -102553,7 +102723,7 @@ aJh
 bPN
 bXC
 jfw
-bXD
+jKf
 bZK
 cbs
 bBm
@@ -102855,7 +103025,7 @@ bPN
 bPO
 bXC
 jfw
-jfw
+oya
 bZL
 cbt
 bBm
@@ -103459,9 +103629,9 @@ nUm
 bSP
 bXC
 jfw
-aJk
-aPv
-bBs
+nUk
+xne
+pyA
 bBm
 aaa
 aaa
@@ -103757,13 +103927,13 @@ bBm
 bBm
 bGT
 bJK
-nNW
+vNr
 bPQ
 bSP
 jfw
-jfw
-aPv
-bBs
+hCj
+vHp
+mwg
 cde
 aaa
 aaa
@@ -104365,9 +104535,9 @@ bNb
 bPS
 jfw
 jfw
-jfw
+nGj
 bZN
-bBs
+pKm
 cdg
 aae
 aaa
@@ -104668,8 +104838,8 @@ bPN
 jfw
 jfw
 aJk
-bZM
-cbu
+bZN
+qog
 cdh
 aaa
 aaa
@@ -104970,7 +105140,7 @@ bPN
 jfw
 jfw
 jfw
-bZN
+aPv
 bBs
 cdi
 aaa
@@ -105272,7 +105442,7 @@ bPO
 jfw
 jfw
 jfw
-bZN
+aPv
 bBs
 cdj
 aad
@@ -105574,7 +105744,7 @@ bPN
 jfw
 jfw
 jfw
-bZN
+okJ
 bBs
 bBm
 aaa
@@ -105872,7 +106042,7 @@ bEn
 bGY
 bJR
 bNf
-rPi
+vNr
 bSU
 bVt
 bXF
