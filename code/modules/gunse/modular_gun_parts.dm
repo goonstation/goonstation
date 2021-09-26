@@ -546,7 +546,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 /obj/item/gun_parts/stock/foss
 	name = "\improper FOSS laser stock"
 	desc = "An open-sourced laser dynamo, with a multiple-position winding spring."
-	spread_angle = -2 // basic stabilisation
+	spread_angle = -3 // basic stabilisation
 	part_DRM = GUN_FOSS | GUN_SOVIET
 	flashbulb_only = 1
 	max_crank_level = 2
@@ -556,7 +556,7 @@ ABSTRACT_TYPE(/obj/item/storage/gun_workbench/)
 
 /obj/item/gun_parts/stock/foss/long
 	name = "\improper FOSS laser rifle stock"
-	spread_angle = -5 // better stabilisation
+	spread_angle = -6 // better stabilisation
 	stock_two_handed = 1
 	can_dual_wield = 0
 	max_crank_level = 3 // for syndicate ops

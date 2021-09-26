@@ -19,6 +19,7 @@ additional custom parts can be created with stat bonuses, and other effects in t
 
 "average" base spread is 25 without a barrel, other guns may be less accurate, perhaps up to 30. few should ever be more accurate.
 in order to balance this, barrels should be balanced around ~ -15 spread, and stocks around -5 (so -13 is a rough barrel, -17 is a good one, etc.)
+giving an "average" spread for stock guns around 5-10
 */
 
 
@@ -441,7 +442,7 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 	desc = "A simple, reliable cylindrical bored weapon."
 	max_ammo_capacity = 1 // single-shot pistols ha- unless you strap an expensive loading mag on it.
 	gun_DRM = GUN_NANO
-	spread_angle = 23 // value without a barrel. Add one to keep things in line.
+	spread_angle = 24 // value without a barrel. Add one to keep things in line.
 	color = "#33FFFF"
 
 	make_parts()
