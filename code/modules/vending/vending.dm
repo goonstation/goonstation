@@ -190,9 +190,6 @@
 			return
 
 		actions.start(new/datum/action/bar/icon/shoveMobIntoVendomat(src, target, user), user)
-		sleep(5 SECONDS) // Yeah yeah
-		spitOut(target)
-
 
 	proc/spitOut(mob/target)
 		src.prevend_effect()
@@ -2857,6 +2854,8 @@
 			omat.visible_message(msg)
 
 		..()
+		sleep(5 SECONDS)
+		omat.spitOut(target)
 
 	onDelete()
 		..()
