@@ -185,6 +185,32 @@
 			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
 
+	MouseDrop_T(mob/target, mob/user)
+		if(!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user) || isAI(target) || isghostcritter(user))
+			return
+
+		actions.start(new/datum/action/bar/icon/shoveMobIntoVendomat(src, target, user), user)
+
+	proc/spitOut(mob/target)
+		src.prevend_effect()
+		src.visible_message("", "The [src] forces [target] back out!")
+		playsound(src.loc, 'sound/machines/buzz-two.ogg', 25, 1)
+		target.set_loc(src.loc)
+		if(prob(30))
+			random_brute_damage(target, rand(5,20),1)
+		// Doesn't quite work for vending machines on the south side of a hallway, just
+		// punts you into the wall quite firmly. Not sure how to do anything different
+		// about that.
+		if(src.emagged)
+			target.throw_at(get_edge_target_turf(src, src.dir), 15, 3)
+		else
+			target.throw_at(get_edge_target_turf(src, src.dir), 5, 1)
+		src.postvend_effect()
+		sleep(1.5 SECONDS)
+		if(prob(50)) // Additionally, fuck you. *smack*
+			throw_item()
+
+
 	proc/get_output_location()
 		if (!src.output_target)
 			return src.loc
@@ -2148,6 +2174,12 @@
 			updateUsrDialog()
 		return
 
+	spitOut(mob/target)
+		// Ah! Spicy!
+		if(prob(50))
+			random_burn_damage(target, rand(5,15))
+		..(target)
+
 /obj/machinery/vending/pizza/fallen
 	New()
 		. = ..()
@@ -2772,3 +2804,63 @@
 				boutput(usr, "<span class='alert'>Insufficient funds.</span>")
 			else
 				boutput(usr, "<span class='alert'>There is no tank to fill up!</span>")
+
+
+/datum/action/bar/icon/shoveMobIntoVendomat
+	duration = 0.2 SECONDS
+	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ACT
+	id = "shoveMobIntoVendomat"
+	var/obj/machinery/vending/omat
+	var/mob/user
+	var/mob/target
+
+	New(var/obj/machinery/vending/omat, var/mob/target, var/mob/user)
+		..()
+		src.omat   = omat
+		src.user   = user
+		src.target = target
+
+
+	onStart()
+		..()
+		if(!checkStillValid()) return
+
+	onUpdate()
+		..()
+		if(!checkStillValid()) return
+
+	onEnd()
+		if(checkStillValid())
+			if(target.buckled || get_dist(user, omat) > 1 || get_dist(user, target) > 1 || ((is_incapacitated(user) && user != target)))
+				..()
+				return
+
+		var/msg
+		if(target == user)
+			msg = "[user.name] wriggles their way into the [omat]."
+			boutput(user, "You wriggle your way into the [omat].")
+		else if(target != user && !user.restrained())
+			msg = "[user.name] stuffs [target.name] into the [omat]!"
+			boutput(user, "You stuff [target.name] into the [omat]!")
+			logTheThing("combat", user, target, "places [constructTarget(target, "combat")] into [omat] at [log_loc(omat)].")
+		else
+			..()
+			return
+
+		actions.interrupt(target, INTERRUPT_MOVE)
+		target.set_loc(omat)
+
+		if(msg)
+			omat.visible_message(msg)
+
+		..()
+		SPAWN_DBG(5 SECONDS) omat.spitOut(target)
+
+	onDelete()
+		..()
+
+	proc/checkStillValid()
+		if(isnull(user) || isnull(target) || isnull(omat))
+			interrupt(INTERRUPT_ALWAYS)
+			return false
+		return true
