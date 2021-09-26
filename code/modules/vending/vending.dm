@@ -2854,8 +2854,7 @@
 			omat.visible_message(msg)
 
 		..()
-		sleep(5 SECONDS)
-		omat.spitOut(target)
+		SPAWN_DBG(5 SECONDS) omat.spitOut(target)
 
 	onDelete()
 		..()
