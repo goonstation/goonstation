@@ -66,7 +66,7 @@
 	var/dead = isdead(client.mob) ? "Dead " : ""
 	var/ircmsg[] = new()
 	ircmsg["key"] = client.key
-	ircmsg["name"] = client.mob.job ? "[stripTextMacros(client.mob.real_name)] \[[dead][client.mob.mind?.special_role] [client.mob.job]]" : "[stripTextMacros(client.mob.real_name)] \[[dead][client.mob.mind?.special_role]]"
+	ircmsg["name"] = client.mob.job ? "[stripTextMacros(client.mob.real_name)] \[[dead][client.mob.mind?.special_role] [client.mob.job]]" : (istype(client.mob, /mob/new_player) ? "<not ingame>" : "[stripTextMacros(client.mob.real_name)] \[[dead][client.mob.mind?.special_role]]")
 	ircmsg["msg"] = html_decode(msg)
 	ircbot.export("help", ircmsg)
 

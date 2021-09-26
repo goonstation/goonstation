@@ -716,6 +716,8 @@
 	var/modifier = 30
 	if (src.reagents && src.reagents.has_reagent("helium"))
 		modifier += 30
+	if (src.getStatusDuration("crunched") > 0)
+		modifier += 100
 	if (deep_farting)
 		modifier -= 120
 	if (modifier == 0)
