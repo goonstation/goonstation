@@ -187,6 +187,15 @@ var/datum/station_zlevel_repair/station_repair = new
 						qdel(M)
 
 				shippingmarket.clear_path_to_market()
+
+				var/list/turf/shipping_path = shippingmarket.get_path_to_market()
+				for(var/turf/unsimulated/wall/setpieces/martian/auto/T in shipping_path)
+					T.ReplaceWith(/turf/unsimulated/floor/setpieces/martian/station_duststorm, force=TRUE)
+					T.UpdateOverlays(station_repair.weather_img, "weather")
+					ambient_value = lerp(20,80,T.x/300)
+					station_repair.ambient_light.color = rgb(ambient_value+((rand()*3)),ambient_value,ambient_value) //randomly shift red to reduce vertical banding
+					T.UpdateOverlays(station_repair.ambient_light, "ambient")
+
 				//Adjust lighting to midway for  ambient light
 				ambient_value = lerp(20,80,0.5)
 				station_repair.ambient_light.color = rgb(ambient_value+((rand()*3)),ambient_value,ambient_value)
