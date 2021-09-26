@@ -67144,15 +67144,6 @@
 /turf/simulated/wall/auto/jen/blue,
 /area/station/medical/medbay)
 "txr" = (
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
 /obj/machinery/light/small/sticky/cool/very,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -67160,6 +67151,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/storage/crate/robotparts,
 /turf/simulated/floor/black/grime,
 /area/station/medical/robotics)
 "txt" = (

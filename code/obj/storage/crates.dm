@@ -323,7 +323,7 @@
 					carton.ourEgg.blog += blog
 				return 1
 
-//The crate of borg bits that robotics starts with - There is also /obj/storage/crate/robotics_supplies_borg above and IDK where that's used
+//There is also /obj/storage/crate/robotics_supplies_borg that's on destiny & clarion, they only have the one crate
 //This one has just the bring-your-own-brain-and-cell borg parts (but does lovely pixel offsets I stole from cog1, thanks f1!)
 /obj/storage/crate/robotparts
 	make_my_stuff() //since we want offsets we're gonna have to do this manually (mimicking office closets)

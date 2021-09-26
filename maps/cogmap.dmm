@@ -39158,32 +39158,7 @@
 	name = "S light switch";
 	pixel_y = -24
 	},
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/parts/robot_parts/arm/left{
-	pixel_x = -12
-	},
-/obj/item/parts/robot_parts/leg/left{
-	pixel_x = -8;
-	pixel_y = -6
-	},
-/obj/item/parts/robot_parts/arm/right{
-	pixel_x = 11
-	},
-/obj/item/parts/robot_parts/leg/right{
-	pixel_x = 7;
-	pixel_y = -6
-	},
-/obj/item/parts/robot_parts/robot_frame{
-	pixel_y = 3
-	},
-/obj/item/parts/robot_parts/chest{
-	pixel_y = -5
-	},
-/obj/item/cable_coil/cut{
-	pixel_y = -3
-	},
-/obj/item/parts/robot_parts/head,
+/obj/storage/crate/robotparts,
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "bTu" = (
@@ -43000,29 +42975,7 @@
 /turf/simulated/floor/grime,
 /area/station/medical/robotics)
 "cds" = (
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/parts/robot_parts/arm/left{
-	pixel_x = -12
-	},
-/obj/item/parts/robot_parts/leg/left{
-	pixel_x = -8;
-	pixel_y = -6
-	},
-/obj/item/parts/robot_parts/arm/right{
-	pixel_x = 11
-	},
-/obj/item/parts/robot_parts/leg/right{
-	pixel_x = 7;
-	pixel_y = -6
-	},
-/obj/item/parts/robot_parts/robot_frame{
-	pixel_y = 3
-	},
-/obj/item/parts/robot_parts/chest{
-	pixel_y = -5
-	},
-/obj/item/parts/robot_parts/head,
+/obj/storage/crate/robotparts,
 /turf/simulated/floor/grime,
 /area/station/medical/robotics)
 "cdu" = (
