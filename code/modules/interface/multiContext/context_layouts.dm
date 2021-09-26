@@ -130,12 +130,14 @@ var/list/datum/contextAction/globalContextActions = null
 	var/spacingY = 16
 	var/offsetX = 0
 	var/offsetY = 0
+	var/keyOffset = 1
 
-	New(var/SpacingX = 5, var/SpacingY = 16, var/OffsetX = 0, var/OffsetY = 0)
+	New(var/SpacingX = 5, var/SpacingY = 16, var/OffsetX = 0, var/OffsetY = 0, var/KeyOffset = 1)
 		spacingX = SpacingX
 		spacingY = SpacingY
 		offsetX = OffsetX
 		offsetY = OffsetY
+		keyOffset = KeyOffset
 		. = ..()
 
 	showButtons(list/buttons, atom/target)
@@ -144,39 +146,59 @@ var/list/datum/contextAction/globalContextActions = null
 		var/finalOff = spacingX * (buttons.len-3)
 		offX -= finalOff/2
 
-		var/buttonIndex = 1
-		var/octaveIndex = 1
+		var/buttonIndex = keyOffset
+		// var/octaveIndex = 1
+
+		var/list/blackKeys = list()
+		var/list/blackKeysOffX = list()
+
+		var/blackKeyYOff = 12
+
+		var/keyCIndex = 1
+		var/keyFIndex = 6
+		var/keyBIndex = 12
+
 		for(var/atom/movable/screen/contextButton/C as anything in buttons)
 			C.screen_loc = "CENTER,CENTER+0.6"
 
-			if(buttonIndex > 12)
+			if(buttonIndex > keyBIndex)
 				offX += 5
-				buttonIndex = 1
-				octaveIndex += 1
+				buttonIndex = keyCIndex
 
-			if(buttonIndex == 6)
+			if(buttonIndex == keyFIndex)
 				offX += 5
 
 			switch(buttonIndex)
-				if(2,4,7,9,11)
+				if(2,4,7,9,11) // C#, D#, F#, G#, A# added to blackKeys list for proper rendering
+					blackKeys += C
+					blackKeysOffX += offX
 					offY = spacingY + 12
 				else
 					offY = spacingY
+					addButtonToHud(usr, C)
+
+					var/matrix/trans = unpool(/matrix)
+					trans = trans.Reset()
+					trans.Translate(offX, offY)
+
+					animate(C, alpha=255, transform=trans, easing=CUBIC_EASING, time=1)
 
 			buttonIndex += 1
-
-			addButtonToHud(usr, C)
-
-			var/matrix/trans = unpool(/matrix)
-			trans = trans.Reset()
-			trans.Translate(offX, offY)
-
-			animate(C, alpha=255, transform=trans, easing=CUBIC_EASING, time=1)
 
 			offX += spacingX
 			//if(offX >= spacingX)
 			//	offX = 0
 			//	offY -= spacingY
+
+		for(var/i in 1 to blackKeys.len)
+			var/key = blackKeys[i]
+			addButtonToHud(usr, key)
+
+			var/matrix/trans = unpool(/matrix)
+			trans = trans.Reset()
+			trans.Translate(blackKeysOffX[i], offY+blackKeyYOff)
+
+			animate(key, alpha=255, transform=trans, easing=CUBIC_EASING, time=1)
 
 		. = buttons
 
