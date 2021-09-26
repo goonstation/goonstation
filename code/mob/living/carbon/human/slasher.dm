@@ -1,8 +1,6 @@
 /mob/living/carbon/human/slasher
 	real_name = "The Slasher"
 	var/trailing_blood = FALSE
-	///Used for handling multiple Slashers & their machetes.
-	var/slasher_ckey
 
 	New(loc)
 		..()
@@ -23,7 +21,6 @@
 		src.bioHolder.AddEffect("food_rad_resist", 0, 0, 0, 1)
 		src.bioHolder.AddEffect("detox", 0, 0, 0, 1)
 		src.add_stun_resist_mod("slasher_stun_resistance", 75)
-		slasher_ckey = src.ckey
 		START_TRACKING
 
 	Life()
@@ -238,9 +235,10 @@
 			new /obj/overlay/darkness_field(T, 3 SECONDS, radius = 3, max_alpha = 220)
 			new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, 3 SECONDS, radius = 3, max_alpha = 220)
 			M.visible_message("<span class='alert'>A brown apron and gas mask form out of the shadows on [M]!</span>")
-			M.drop_from_slot(M.slot_wear_mask)
-			M.drop_from_slot(M.slot_wear_suit)
-			M.drop_from_slot(M.slot_shoes)
+			M.drop_from_slot(M.wear_mask)
+			M.drop_from_slot(M.wear_suit)
+			M.drop_from_slot(M.shoes)
+			sleep(2) //just gotta make sure everything drops
 			M.equip_new_if_possible(/obj/item/clothing/mask/gas/emergency/unremovable, M.slot_wear_mask)
 			M.equip_new_if_possible(/obj/item/clothing/suit/apron/slasher, M.slot_wear_suit)
 			M.equip_new_if_possible(/obj/item/clothing/shoes/slasher_shoes/noslip, M.slot_shoes)
@@ -256,17 +254,16 @@
 			if (O.mind)
 				O.Browse(grabResource("html/slasher_possession.html"),"window=slasher_possession;size=600x440;title=Slasher Possession")
 			boutput(O, "<span class='bold' style='color:red;font-size:150%'>You have been temporarily removed from your body!</span>")
-			usr.mind.swap_with(M)
-			var/mob/dead/target_observer/slasher_ghost/WG = O.insert_slasher_observer(M)
+			src.mind.swap_with(M)
+			var/mob/dead/target_observer/slasher_ghost/WG = O.insert_slasher_observer(src)
 			WG.mind.dnr = 1
 			WG.verbs -= list(/mob/verb/setdnr)
 			sleep(45 SECONDS)
-			M.mind.swap_with(usr)
+			M.mind.transfer_to(src)
 			sleep(5 DECI SECONDS)
 			WG.mind.dnr = 0
 			WG.verbs += list(/mob/verb/setdnr)
-			if(locate(M))
-				WG.mind.transfer_to(M)
+			WG.mind.transfer_to(M)
 
 
 			for(var/obj/item/clothing/suit/apron/slasher/A in M)
@@ -339,6 +336,7 @@
 			src.addAbility(/datum/targetable/slasher/blood_trail)
 			src.addAbility(/datum/targetable/slasher/summon_machete)
 			src.addAbility(/datum/targetable/slasher/take_control)
+			src.addAbility(/datum/targetable/slasher/debug)
 			src.addAbility(/datum/targetable/slasher/regenerate)
 			src.addAbility(/datum/targetable/slasher/open_doors)
 			src.addAbility(/datum/targetable/slasher/stagger)
@@ -458,6 +456,20 @@ ABSTRACT_TYPE(/datum/targetable/slasher)
 		else
 			boutput(usr, "<span class='alert'>You cannot possess a non-human.</span>")
 			return 1
+
+/datum/targetable/slasher/debug
+	name = "Possess"
+	desc = "Possess a target temporarily."
+	icon_state = "slasher_possession"
+	targeted = 0
+	cooldown = 10 SECONDS
+
+	cast()
+		if (..())
+			return 1
+		var/mob/living/carbon/human/slasher/W = src.holder.owner
+		return W.debug_control()
+
 
 /datum/targetable/slasher/regenerate
 	name = "Regenerate"

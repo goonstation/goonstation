@@ -441,12 +441,12 @@
 	item_state = "apron-botany"
 
 /obj/item/clothing/suit/apron/slasher
-	name = "welding apron"
-	desc = "A brown welder's apron, you can feel an aura of something dark radiating off of it."
+	name = "butcher's apron"
+	desc = "A brown butcher's apron, you can feel an aura of something dark radiating off of it."
 	icon_state = "apron-welder"
 	item_state = "apron-welder"
-	cant_self_remove = 1
-	cant_other_remove = 1
+	cant_self_remove = TRUE
+	cant_other_remove = TRUE
 	item_function_flags = IMMUNE_TO_ACID
 
 	setupProperties()
@@ -455,15 +455,15 @@
 		setProperty("rangedprot", 2)
 		setProperty("coldprot", 75)
 		setProperty("heatprot", 75)
-		setProperty("movespeed", 0.2)
+		setProperty("movespeed", 0.4)
 		setProperty("exploprot", 30)
 
 
 	postpossession
-		cant_self_remove = 0
-		cant_other_remove = 0
+		cant_self_remove = FALSE
+		cant_other_remove = FALSE
 		name = "worn apron"
-		desc = "A brown, faded welder's apron, it looks as though it's over a hundred years old."
+		desc = "A brown, faded butcher's apron, it looks as though it's over a hundred years old."
 
 		setupProperties()
 			..()
@@ -471,7 +471,7 @@
 			setProperty("rangedprot", 0)
 			setProperty("coldprot", 10)
 			setProperty("heatprot", 10)
-			setProperty("movespeed", 0.2)
+			setProperty("movespeed", 0.4)
 
 /obj/item/clothing/suit/labcoat
 	name = "labcoat"
