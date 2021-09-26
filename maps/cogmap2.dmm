@@ -78455,6 +78455,12 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/ai_monitored/storage/eva)
+"gKa" = (
+/obj/landmark/spawner{
+	name = "dolly"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "hbJ" = (
 /obj/stool/chair/office,
 /obj/landmark/start{
@@ -105729,7 +105735,7 @@ xZx
 gtQ
 thz
 qfX
-qfX
+gKa
 qfX
 dpq
 aaa

@@ -36910,6 +36910,12 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
+"luB" = (
+/obj/landmark/spawner{
+	name = "dolly"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "luN" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -114050,7 +114056,7 @@ dlR
 kMA
 kWI
 qbK
-kMA
+luB
 kMA
 qeC
 aQM
