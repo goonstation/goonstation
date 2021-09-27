@@ -411,12 +411,6 @@
 			src.task = "thinking"
 			wander_check = rand(5,20)
 
-	MouseDrop(obj/O, mob/user)
-		if(istype(O, /obj/machinery/disposal) && !src.alive)
-			src.set_loc(O)
-			user.visible_message("[usr.name] places \the [src] into \the [O].")
-			actions.interrupt(user, INTERRUPT_ACT)
-
 	proc/patrol_to(var/towhat)
 		step_to(src, towhat)
 

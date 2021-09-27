@@ -136,14 +136,26 @@
 
 	// mouse drop another mob or self
 	//
-	MouseDrop_T(mob/target, mob/user)
+	MouseDrop_T(atom/target, mob/user)
 		//jesus fucking christ
-		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user) || isAI(target) || isghostcritter(user))
+		if(!in_interact_range(src,user) || !in_interact_range(src,target))
+			return
+
+		if(istype(target, /obj/critter))
+			var/obj/critter/corpse = target
+			if(!corpse.alive)
+				corpse.set_loc(src)
+				user.visible_message("[user.name] places \the [corpse] into \the [src].")
+				actions.interrupt(user, INTERRUPT_ACT)
+			return
+
+		var/mob/mobtarget = target
+		if (!istype(target, /mob) || mobtarget.buckled || is_incapacitated(user) || isAI(user) || isAI(mobtarget) || isghostcritter(user))
 			return
 
 		if (istype(src, /obj/machinery/disposal/mail) && isliving(target))
 			//Is this mob allowed to ride mailchutes?
-			if (!target.canRideMailchutes())
+			if (!mobtarget.canRideMailchutes())
 				boutput(user, "<span class='alert'>That won't fit!</span>")
 				return
 
