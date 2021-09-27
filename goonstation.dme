@@ -902,7 +902,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\medical\disabilities\clumsy.dm"
 #include "code\modules\medical\disabilities\cough.dm"
 #include "code\modules\medical\disabilities\deaf.dm"
-#include "code\modules\medical\disabilities\tourettes.dm"
 #include "code\modules\medical\diseases\addiction.dm"
 #include "code\modules\medical\diseases\avian_flu.dm"
 #include "code\modules\medical\diseases\berserker.dm"
