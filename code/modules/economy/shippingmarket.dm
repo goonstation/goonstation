@@ -351,7 +351,8 @@
 		for(var/turf/T as anything in to_clear)
 			//Wacks asteroids and skip normal turfs that belong
 			if(istype(T, /turf/simulated/wall/asteroid))
-				T.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid, force=TRUE)
+				var/turf/simulated/wall/asteroid/AST = T
+				AST.destroy_asteroid(dropOre=FALSE)
 				continue
 			else if(!istype(T, /turf/unsimulated))
 				continue
@@ -360,6 +361,8 @@
 			for(var/atom/A in T)
 				if(A.density)
 					qdel(A)
+
+			LAGCHECK(LAG_MED)
 
 	proc/get_path_to_market()
 		var/list/bounds = get_area_turfs(/area/supply/delivery_point)
