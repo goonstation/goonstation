@@ -1109,6 +1109,25 @@ obj/trait/pilot
 	category = "species"
 	mutantRace = /datum/mutantrace/roach
 
+/obj/trait/teflon_colon
+	name = "Non-Stick Colon"
+	id = "teflon_colon"
+	desc = "Having eaten crayons all your life, your intestines are now wax-coated, non-stick, high-speed, and low-drag."
+	points = -1
+	isPositive = 1
+
+	onAdd(var/mob/owner)
+		..()
+		if(iscarbon(owner))
+			var/mob/living/carbon/C = owner
+			C.poop_amount += 5
+
+	onRemove(var/mob/owner)
+		..()
+		if(iscarbon(owner))
+			var/mob/living/carbon/C = owner
+			C.poop_amount -= 5
+
 //Infernal Contract Traits
 /obj/trait/hair
 	name = "Wickedly Good Hair"

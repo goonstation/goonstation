@@ -165,7 +165,7 @@
 				if (last_touched.sims)
 					last_touched.sims.affectMotive("fun", 10)
 		else
-			A.add_mud(src)
+			A.add_mud(src, owner.poop_amount ? owner.poop_amount : 5)
 
 		qdel(src)
 

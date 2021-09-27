@@ -10,6 +10,7 @@
 	//var/heart_op_stage = 0.0
 
 	infra_luminosity = 4
+	var/poop_amount
 
 /mob/living/carbon/New()
 	START_TRACKING
@@ -100,9 +101,9 @@
 		if(H.wear_suit || H.w_uniform) // wearing pants while shitting? fine!!
 			H.visible_message("<span class='alert'><B>[H] shits [his_or_her(H)] pants!</B></span>")
 			if(H.w_uniform)
-				H.w_uniform.add_mud(H)
+				H.w_uniform.add_mud(H, H.poop_amount ? H.poop_amount : 5)
 			else
-				H.wear_suit?.add_mud(H)
+				H.wear_suit?.add_mud(H, H.poop_amount ? H.poop_amount : 5)
 			H.set_clothing_icon_dirty() //ur a shitter
 			playsound(H, H.sound_fart, 50, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			return
@@ -116,7 +117,8 @@
 					shit.throw_impact(H)
 				else
 					playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 100, 1)
-					poo_target.reagents.add_reagent("poo", 10)
+					poo_target.reagents.add_reagent("poo",\
+						(H.poop_amount ? H.poop_amount : 5 * 2))
 					qdel(shit)
 			else
 				shit.set_loc(src.loc)
