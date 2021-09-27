@@ -143,7 +143,7 @@ var/list/datum/contextAction/globalContextActions = null
 	showButtons(list/buttons, atom/target)
 		var/offX = 0
 		var/offY = spacingY
-		var/finalOff = spacingX * (buttons.len-3)
+		var/finalOff = spacingX * (length(buttons)-3)
 		offX -= finalOff/2
 
 		var/buttonIndex = keyOffset
