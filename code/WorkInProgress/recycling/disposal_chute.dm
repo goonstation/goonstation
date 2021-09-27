@@ -141,7 +141,7 @@
 		if (!in_interact_range(src,user) || !in_interact_range(src,target))
 			return
 
-		if (istype(target, /obj/critter))
+		if (iscritter(target))
 			var/obj/critter/corpse = target
 			if (!corpse.alive)
 				corpse.set_loc(src)
@@ -149,12 +149,12 @@
 				actions.interrupt(user, INTERRUPT_ACT)
 			return
 
-		if (istype(target, /mob))
+		if (isliving(target))
 			var/mob/mobtarget = target
 			if  (mobtarget.buckled || is_incapacitated(user) || isAI(user) || isAI(mobtarget) || isghostcritter(user))
 				return
 
-			if (istype(src, /obj/machinery/disposal/mail) && isliving(mobtarget))
+			if (istype(src, /obj/machinery/disposal/mail))
 				//Is this mob allowed to ride mailchutes?
 				if (!mobtarget.canRideMailchutes())
 					boutput(user, "<span class='alert'>That won't fit!</span>")
