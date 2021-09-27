@@ -1,4 +1,9 @@
 
+(t)mon sep 27 21
+(u)aloe
+(p)5998
+(e)🆕|feature
+(+)Special attacks can now be used to bonk securitrons, medibots, and other small robots.
 (t)sun sep 26 21
 (u)Zonespace
 (p)6099
