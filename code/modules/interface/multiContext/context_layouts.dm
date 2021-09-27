@@ -143,11 +143,10 @@ var/list/datum/contextAction/globalContextActions = null
 	showButtons(list/buttons, atom/target)
 		var/offX = 0
 		var/offY = spacingY
-		var/finalOff = spacingX * (buttons.len-3)
+		var/finalOff = spacingX * (length(buttons)-3)
 		offX -= finalOff/2
 
 		var/buttonIndex = keyOffset
-		// var/octaveIndex = 1
 
 		var/list/blackKeys = list()
 		var/list/blackKeysOffX = list()
@@ -184,13 +183,9 @@ var/list/datum/contextAction/globalContextActions = null
 					animate(C, alpha=255, transform=trans, easing=CUBIC_EASING, time=1)
 
 			buttonIndex += 1
-
 			offX += spacingX
-			//if(offX >= spacingX)
-			//	offX = 0
-			//	offY -= spacingY
 
-		for(var/i in 1 to blackKeys.len)
+		for(var/i in 1 to length(blackKeys))
 			var/key = blackKeys[i]
 			addButtonToHud(usr, key)
 
