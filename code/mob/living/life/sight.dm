@@ -11,11 +11,10 @@
 			owner.sight &= ~SEE_MOBS
 			owner.sight &= ~SEE_OBJS
 
+			owner.see_in_dark = SEE_DARK_HUMAN
+			owner.see_invisible = 0
 			if (human_owner?.mutantrace)
 				human_owner.mutantrace.sight_modifier()
-			else
-				owner.see_in_dark = SEE_DARK_HUMAN
-				owner.see_invisible = 0
 
 			if (owner.client)
 				if((owner.traitHolder && owner.traitHolder.hasTrait("cateyes")) || (owner.getStatusDuration("food_cateyes")))
