@@ -1076,7 +1076,7 @@
 
 /datum/material/organic/honey
 	mat_id = "honey"
-	name = "honey"
+	name = "refined honey" //Look calling both the globs and the material just "honey" isn't helping people's confusion wrt making clone pods
 	desc = ""
 	color = "#f1da10"
 	material_flags = MATERIAL_ORGANIC
