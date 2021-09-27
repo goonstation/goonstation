@@ -1,6 +1,6 @@
 "aE" = (/obj/ladder{id = "saferoom"},/turf/simulated/floor/plating,/area/prefab/safehouse)
 "aM" = (/obj/machinery/door/airlock/gannets/maintenance{name = "storage airlock"},/obj/access_spawn/public,/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/prefab/safehouse)
-"cg" = (/obj/decal/cleanable/blood{icon_state = "handblood"; pixel_y = 7},/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/safehouse)
+"cg" = (/obj/decal/cleanable/blood{icon_state = "handblood"; pixel_y = 7},/turf/unsimulated/wall/auto/reinforced/supernorn,/area/prefab/safehouse)
 "cj" = (/obj/stool/chair/office/red{dir = 1},/turf/simulated/floor/carpet/red/fancy/edge/sw,/area/prefab/safehouse)
 "cr" = (/obj/decal/fakeobjects/safehouse/mechcomp_cabinet{pixel_y = -2},/turf/unsimulated/floor/circuit/vintage/vintage_CO2,/area/prefab/safehouse)
 "cy" = (/obj/table/wood/auto,/obj/machinery/computer3/generic/personal/safehouse,/turf/simulated/floor/carpet/red/fancy/edge/nw,/area/prefab/safehouse)
@@ -21,7 +21,7 @@
 "hp" = (/obj/decal/fakeobjects/safehouse/dead_exec{dir = 4; pixel_y = -10},/turf/unsimulated/floor/circuit/green/green_CO2,/area/prefab/safehouse)
 "hx" = (/obj/decal/fakeobjects/safehouse/reclaimer,/turf/unsimulated/floor/circuit/vintage/vintage_CO2,/area/prefab/safehouse)
 "id" = (/obj/decal/fakeobjects/safehouse/dead_exec/bloody{dir = 10; pixel_y = -5},/obj/decal/cleanable/blood/splatter{icon_state = "floor4"},/obj/item/raw_material/shard/glass{pixel_x = 9; pixel_y = 9},/obj/item/implant/health/exp_health_implant{pixel_x = -6; pixel_y = 9},/obj/machinery/light/emergencyflashing{dir = 8},/turf/unsimulated/floor/circuit/vintage/vintage_CO2,/area/prefab/safehouse)
-"ii" = (/obj/machinery/bio_handscanner{pixel_y = -32},/obj/decal/fakeobjects/safehouse/dead_exec{dir = 4; pixel_x = 14; pixel_y = -8},/turf/unsimulated/floor/circuit/green/green_CO2,/area/prefab/safehouse)
+"ii" = (/obj/machinery/bio_handscanner{pixel_x = 7; pixel_y = -32},/obj/decal/fakeobjects/safehouse/dead_exec{dir = 4; pixel_x = 14; pixel_y = -8},/turf/unsimulated/floor/circuit/green/green_CO2,/area/prefab/safehouse)
 "iL" = (/turf/simulated/floor/bluewhite{dir = 1},/area/prefab/safehouse)
 "jj" = (/obj/table/auto,/obj/machinery/microwave,/turf/simulated/floor/plating,/area/prefab/safehouse)
 "kl" = (/obj/decal/fakeobjects/safehouse/dead_exec{dir = 9; pixel_x = 2; pixel_y = 7},/obj/decal/fakeobjects/safehouse/dead_exec{dir = 9; pixel_x = 2; pixel_y = 7},/obj/decal/fakeobjects/safehouse/dead_exec{dir = 4; pixel_y = 14},/obj/decal/fakeobjects/safehouse/dead_exec{pixel_x = 15; pixel_y = 11},/obj/decal/fakeobjects/safehouse/dead_exec{dir = 8; layer = 3.2; pixel_x = 9; pixel_y = -8},/obj/decal/fakeobjects/safehouse/dead_exec/bloody{dir = 5; pixel_x = -2; pixel_y = 4},/obj/decal/fakeobjects/safehouse/dead_exec/bloody{dir = 9; pixel_y = -3},/obj/decal/cleanable/blood/splatter,/turf/unsimulated/floor/circuit/green/green_CO2,/area/prefab/safehouse)
@@ -92,13 +92,14 @@
 "Ed" = (/turf/simulated/floor/shuttlebay,/area/prefab/safehouse)
 "EM" = (/obj/item/paper/safehouse/delivery_note{pixel_x = -5; pixel_y = -1},/obj/decal/fakeobjects/beacon{pixel_x = 1},/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
 "EN" = (/obj/ladder{icon_state = "ladder_wall"; id = "saferoom"; pixel_y = 20},/obj/decal/fakeobjects/lighttube_broken{pixel_y = -10},/turf/simulated/floor/neutral,/area/prefab/safehouse)
-"Fa" = (/obj/machinery/bio_handscanner{pixel_y = 32},/turf/simulated/floor/neutral,/area/prefab/safehouse)
+"Fa" = (/obj/machinery/bio_handscanner{pixel_y = 29},/turf/simulated/floor/neutral,/area/prefab/safehouse)
 "Fn" = (/turf/simulated/floor/carpet/red/fancy/narrow/T_west,/area/prefab/safehouse)
 "Fs" = (/turf/simulated/floor/airless/stairs,/area/prefab/safehouse)
 "Gp" = (/turf/simulated/wall/false_wall/reinforced,/area/prefab/safehouse)
 "GD" = (/obj/machinery/power/terminal,/obj/cable,/turf/simulated/floor/plating,/area/prefab/safehouse)
 "Hm" = (/obj/storage/crate/packing{layer = 2.9},/obj/item/storage/box/lightbox/bulbs{pixel_x = 5},/obj/decal/fakeobjects/lighttube_broken{desc = "This light might be broken.  It's probably not wired up, though."; dir = 4; icon_state = "tube0"; layer = 4; name = "inactive light tube"; pixel_x = 10; tag = "icon-tube-broken (NORTH)"},/obj/item/paper/safehouse/contractors_note{layer = 3.2; pixel_x = -5; pixel_y = -9},/obj/decal/cleanable/dirt,/obj/item/device/reagentscanner{pixel_x = -5},/turf/simulated/floor/plating,/area/prefab/safehouse)
 "HL" = (/turf/simulated/floor/specialroom/bar,/area/prefab/safehouse)
+"Il" = (/turf/unsimulated/wall/auto/reinforced/supernorn,/area/prefab/safehouse)
 "IS" = (/obj/decal/cleanable/paper,/turf/simulated/floor/plating,/area/prefab/safehouse)
 "Ke" = (/obj/table/reinforced/bar/auto,/obj/item/device/light/zippo/gold,/obj/decal/tile_edge/line/grey{icon_state = "line1"},/turf/simulated/floor/specialroom/bar,/area/prefab/safehouse)
 "Kz" = (/turf/simulated/floor/bluewhite/corner,/area/prefab/safehouse)
@@ -140,12 +141,12 @@
 UMUMUMUMZdUMUMUMZdZdUMUMUMUMUMUMUMUMUMUMUMUMUMUMUMUMUMUMUMUMUMUMUM
 UMUMUMZdZdZdUMZdZdZdZdUMUMUMUMUMUMUMUMUMUMUMUMUMUMUMUMUMZdUMUMUMUM
 UMUMZdZdZdZdZdZdZdZdZdZdUMZdZdUMUMUMUMUMUMUMUMUMUMUMUMZdZdZdUMUMUM
-UMVtZdYAYAYAYAYAYAYAZdZdZdZdZdVtUMUMUMZdUMUMUMUMZdUMZdZdZdZdUMUMUM
-ZdZdZdYAcrdhetgfghYAZdYAYAYAZdZdVtVtVtZdZdZdZdUMZdZdZdZdZdZdZdUMUM
-UMZdZdYAgjhpzoDmhxYAZdYAaEYAZdZdVtZdZdZdZdZdZdZdZdZdZdZdZdZdZdUMUM
-UMUMZdYAidiigodKeqYAYAYAGpYAYAYAZdZdZdZdYAYAYAYAYAYAYAYAYAYAZdZdUM
-UMZdZdYAYAcgklkCYAYAYAcykNeImBYAYAYAYAYAYAWiZblYWilOuePvnFYAYAZdZd
-UMUMZdZdYAYAYAorYAYAYAcjZmZmnpYAouoxpJpTxIFsYAkBrfYAueuetJrqYAZdUM
+UMVtZdIlIlIlIlIlIlIlZdZdZdZdZdVtUMUMUMZdUMUMUMUMZdUMZdZdZdZdUMUMUM
+ZdZdZdIlcrdhetgfghIlZdYAYAYAZdZdVtVtVtZdZdZdZdUMZdZdZdZdZdZdZdUMUM
+UMZdZdIlgjhpzoDmhxIlZdYAaEYAZdZdVtZdZdZdZdZdZdZdZdZdZdZdZdZdZdUMUM
+UMUMZdIlidiigodKeqIlYAYAGpYAYAYAZdZdZdZdYAYAYAYAYAYAYAYAYAYAZdZdUM
+UMZdZdIlIlcgklkCIlIlYAcykNeImBYAYAYAYAYAYAWiZblYWilOuePvnFYAYAZdZd
+UMUMZdZdZdIlIlorIlYAYAcjZmZmnpYAouoxpJpTxIFsYAkBrfYAueuetJrqYAZdUM
 UMUMUMZdZdYAFaWiYqYAYAwIwIgzDuYAnKHLHLHLHLHLYAYAYAYAwpEdEdEdYAZdZd
 UMRRRREMZdYAWiENWiYAYAYAuQYAYAYADjMTDjKelhxmNBOuYAYADAEdEdQcYAZdZd
 UMRRRRVtZdYAYAYAYAYAkLWZpllvkLYASWymymWlWZFnWtWSYAYAEdEdEdEdREZdZd
