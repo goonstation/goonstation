@@ -443,6 +443,34 @@
 			holder.age = rand(-80, 80)
 
 
+/datum/bioEffect/nonstick_colon
+	name = "Non-Stick Colon"
+	desc = "The subject, having eaten an excessive amount of crayons over the span of their career, now has a wax-lined, non-stick, intestinal tract."
+	id   = "teflon_tom"
+	effectType = EFFECT_TYPE_POWER
+	probability = 99
+	blockCount = 3
+	blockGaps = 3
+	msgGain = "You feel... internally smoother, slicker... High speed, low drag, even!"
+	msgLose = "Your internals feel less slick, and more normal again."
+
+	OnAdd()
+		if(iscarbon(owner))
+			var/mob/living/carbon/C = owner
+			C.poop_amount += 5
+		else
+			return
+		..()
+
+	OnRemove()
+		if(iscarbon(owner))
+			var/mob/living/carbon/C = owner
+			C.poop_amount -= 5
+		else
+			return
+		..()
+
+
 //////////////////////
 // Combination Only //
 //////////////////////
