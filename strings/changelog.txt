@@ -1,4 +1,21 @@
 
+(t)mon sep 27 21
+(u)aloe
+(p)5998
+(e)🆕|feature
+(+)Special attacks can now be used to bonk securitrons, medibots, and other small robots.
+(t)sun sep 26 21
+(u)Zonespace
+(p)6099
+(e)⛔|removal
+(+)Tourettes has been removed.
+(u)Emily
+(e)🆕|feature
+(*)New Secret Chem: Marteeny
+(t)sat sep 25 21
+(u)Emily
+(e)🆕|feature
+(*)New Secret Chem: Miasmosa
 (t)fri sep 24 21
 (u)Emily
 (p)6090
