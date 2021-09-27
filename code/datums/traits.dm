@@ -108,6 +108,30 @@
 		winset(user, "traitssetup_[user.ckey].traitPoints", "text=\"Points left : [calcTotal()]\"&text-color=\"[calcTotal() > 0 ? "#00AA00" : "#AA0000"]\"")
 		return
 
+	proc/getAvailableTraits(var/mob/user)
+		. = list()
+
+		var/skipUnlocks = 0
+		for(var/X in traitList)
+			var/obj/trait/C = getTraitById(X)
+
+			if(C.unselectable) continue
+
+			if(C.requiredUnlock != null && skipUnlocks) continue
+
+			if(C.requiredUnlock != null && user.client) //If this needs an xp unlock, check against the pre-generated list of related xp unlocks for this person.
+				if(!isnull(user.client.qualifiedXpRewards))
+					if(!(C.requiredUnlock in user.client.qualifiedXpRewards))
+						continue
+				else
+					boutput(user, "<span class='alert'><b>WARNING: XP unlocks failed to update. Some traits may not be available. Please try again in a moment.</b></span>")
+					SPAWN_DBG(0) user.client.updateXpRewards()
+					skipUnlocks = 1
+					continue
+
+			. += C
+
+
 	proc/showTraits(var/mob/user)
 		if(!user.client)
 			return

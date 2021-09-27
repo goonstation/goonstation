@@ -5,7 +5,7 @@ export interface CharacterPreferencesData {
 
   profiles: CharacterPreferencesProfile[];
 
-  cloudSaves?: string[]
+  cloudSaves?: string[];
 
   preview: string;
   profileName: string;
@@ -58,6 +58,20 @@ export interface CharacterPreferencesData {
   useWasd: BooleanLike;
   useAzerty: BooleanLike;
   preferredMap: string;
+
+  traitsAvailabe: CharacterPreferencesTrait[],
+  traitsPointsTotal: number;
+  traitsPointsFree: number;
+
+}
+
+export interface CharacterPreferencesTrait {
+  id: string,
+  name: string,
+  desc: string,
+  category?: string,
+  points: number,
+  selected?: BooleanLike,
 }
 
 export interface CharacterPreferencesProfile {
@@ -69,6 +83,7 @@ export enum CharacterPreferencesTabKeys {
   Saves,
   General,
   Character,
+  Traits,
   GameSettings,
 }
 

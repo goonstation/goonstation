@@ -6,6 +6,7 @@ import { CharacterTab } from './CharacterTab';
 import { GameSettingsTab } from './GameSettingsTab';
 import { GeneralTab } from './GeneralTab';
 import { SavesTab } from './SavesTab';
+import { TraitsTab } from './TraitsTab';
 import { CharacterPreferencesData, CharacterPreferencesProfile, CharacterPreferencesTabKeys } from './type';
 
 let nextRotateTime = 0;
@@ -16,8 +17,8 @@ export const CharacterPreferences = (_props: any, context: any) => {
 
   const handleKeyDown = (e) => {
     if (
-      (menu === CharacterPreferencesTabKeys.General || menu === CharacterPreferencesTabKeys.Character)
-      && (e.keyCode === KEY_LEFT || e.keyCode === KEY_RIGHT)
+      (menu === CharacterPreferencesTabKeys.General || menu === CharacterPreferencesTabKeys.Character) &&
+      (e.keyCode === KEY_LEFT || e.keyCode === KEY_RIGHT)
     ) {
       e.preventDefault();
       if (nextRotateTime > performance.now()) {
@@ -54,7 +55,12 @@ export const CharacterPreferences = (_props: any, context: any) => {
                 Appearance
               </Tabs.Tab>
               <Tabs.Tab onClick={() => act('open-occupation-window')}>Occupation</Tabs.Tab>
-              <Tabs.Tab onClick={() => act('open-traits-window')}>Traits</Tabs.Tab>
+              <Tabs.Tab onClick={() => act('open-traits-window')}>Traits old</Tabs.Tab>
+              <Tabs.Tab
+                selected={menu === CharacterPreferencesTabKeys.Traits}
+                onClick={() => setMenu(CharacterPreferencesTabKeys.Traits)}>
+                Traits
+              </Tabs.Tab>
               <Tabs.Tab
                 selected={menu === CharacterPreferencesTabKeys.GameSettings}
                 onClick={() => setMenu(CharacterPreferencesTabKeys.GameSettings)}>
@@ -68,12 +74,19 @@ export const CharacterPreferences = (_props: any, context: any) => {
             </Tabs>
           </Stack.Item>
           <Stack.Item grow="1">
-            {menu === CharacterPreferencesTabKeys.General || menu === CharacterPreferencesTabKeys.Character ? (
+            {menu === CharacterPreferencesTabKeys.General ||
+            menu === CharacterPreferencesTabKeys.Character ||
+            menu === CharacterPreferencesTabKeys.Traits ? (
               <Stack fill>
                 <Stack.Item grow="1">
-                  <Section scrollable fill>
+                  <Section
+                    scrollable={
+                      menu === CharacterPreferencesTabKeys.General || menu === CharacterPreferencesTabKeys.Character
+                    }
+                    fill>
                     {menu === CharacterPreferencesTabKeys.General && <GeneralTab />}
                     {menu === CharacterPreferencesTabKeys.Character && <CharacterTab />}
+                    {menu === CharacterPreferencesTabKeys.Traits && <TraitsTab />}
                   </Section>
                 </Stack.Item>
                 <Stack.Item ml="5px">

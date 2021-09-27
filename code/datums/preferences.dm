@@ -146,6 +146,17 @@ datum/preferences
 		user << browse_rsc(icon(cursors_selection[target_cursor]), "tcursor_[src.target_cursor].png")
 		user << browse_rsc(icon(hud_style_selection[hud_style], "preview"), "hud_preview_[src.hud_style].png")
 
+		var/list/traits = list()
+		for (var/obj/trait/C in src.traitPreferences.getAvailableTraits(user))
+			traits += list(list(
+				"id" = C.id,
+				"name" = C.cleanName,
+				"desc" = C.desc,
+				"category" = C.category,
+				"points" = C.points,
+				"selected" = (C.id in traitPreferences.traits_selected)
+			))
+
 		. = list(
 			"isMentor" = client.is_mentor(),
 
@@ -205,6 +216,10 @@ datum/preferences
 			"useWasd" = src.use_wasd,
 			"useAzerty" = src.use_azerty,
 			"preferredMap" = src.preferred_map,
+
+			"traitsAvailabe" = traits,
+			"traitsPointsTotal" = src.traitPreferences.point_total,
+			"traitsPointsFree" = src.traitPreferences.free_points,
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
