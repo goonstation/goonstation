@@ -49,6 +49,12 @@
 		boutput(src, "You find yourself unable to go through with killing yourself!")
 		return
 
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(isslasher(H) || H.slasher_possessed)
+			boutput(H, "Your curse prevents you from commiting suicide!")
+			return
+
 
 
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")

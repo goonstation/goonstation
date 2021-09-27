@@ -80,6 +80,9 @@
 
 	var/in_throw_mode = 0
 
+	///To check if the person is possessed by the Slasher
+	var/slasher_possessed = FALSE
+
 	var/yeet_chance = 0.1 //yeet
 
 	var/decomp_stage = 0 // 1 = bloat, 2 = decay, 3 = advanced decay, 4 = skeletonized
@@ -2919,6 +2922,11 @@
 	if (isghostcritter(M) && src.health < 80) //there's another one of these in attack_hand(). Same file. see, the quality of my code doens't matter as long as i leave a very helpful comment!!!
 		boutput(M, "Your spectral conscience refuses to damage this human any further.")
 		return
+	if(ishuman(M) && M == src && (W.force > 0))
+		var/mob/living/carbon/human/H = M
+		if(isslasher(H) || H.slasher_possessed)
+			boutput(H, "Your curse prevents you from attacking yourself!")
+			return
 	..()
 	if (!surgeryCheck(src, M))
 		src.activate_chest_item_on_attack(M)

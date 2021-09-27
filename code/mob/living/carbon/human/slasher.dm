@@ -1,6 +1,7 @@
 /mob/living/carbon/human/slasher
 	real_name = "The Slasher"
 	var/trailing_blood = FALSE
+	var/slasher_key
 
 	New(loc)
 		..()
@@ -201,6 +202,7 @@
 
 		take_control(var/mob/living/carbon/human/M)
 			var/mob/living/carbon/human/slasher/W = src
+			slasher_key = src.key
 			if(!src || !istype(src) || !M || !istype(M))
 				return
 
@@ -249,22 +251,46 @@
 				W.incorporealize()
 				W.client.flying = 0
 
-			//var/datum/mind/m_mind = M.mind //didn't work, try again later
+			M.slasher_possessed = TRUE
 			var/mob/dead/observer/O = M.ghostize()
+			if(isnull(O))
+				boutput(src, "<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 101</span>")
+				return
 			if (O.mind)
 				O.Browse(grabResource("html/slasher_possession.html"),"window=slasher_possession;size=600x440;title=Slasher Possession")
 			boutput(O, "<span class='bold' style='color:red;font-size:150%'>You have been temporarily removed from your body!</span>")
+			if(!src.mind || !M.mind)
+				src.visible_message("<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 102</span>")
+				return
 			src.mind.swap_with(M)
 			var/mob/dead/target_observer/slasher_ghost/WG = O.insert_slasher_observer(src)
+			if(isnull(WG))
+				boutput(src, "<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 103</span>")
+				return
 			WG.mind.dnr = 1
 			WG.verbs -= list(/mob/verb/setdnr)
 			sleep(45 SECONDS)
+			if(!src.mind || !M.mind)
+				src.visible_message("<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 104</span>")
+				return
+			if(!locate(M)) //M got gibbed
+				for (var/mob/M2 in mobs)
+					if(M2.key == src.slasher_key)
+						M2.mind.transfer_to(src) //the slasher's alive again at least
+			if(!locate(src)) //src got gibbed
+				return //well you're dead now, soz
 			M.mind.transfer_to(src)
 			sleep(5 DECI SECONDS)
 			WG.mind.dnr = 0
 			WG.verbs += list(/mob/verb/setdnr)
+			if(!WG || !M)
+				src.visible_message("<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 105</span>")
+				return
+			if(!WG.mind || !M.mind)
+				src.visible_message("<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 106</span>")
+				return
 			WG.mind.transfer_to(M)
-
+			M.slasher_possessed = FALSE
 
 			for(var/obj/item/clothing/suit/apron/slasher/A in M)
 				qdel(A)
@@ -336,7 +362,6 @@
 			src.addAbility(/datum/targetable/slasher/blood_trail)
 			src.addAbility(/datum/targetable/slasher/summon_machete)
 			src.addAbility(/datum/targetable/slasher/take_control)
-			src.addAbility(/datum/targetable/slasher/debug)
 			src.addAbility(/datum/targetable/slasher/regenerate)
 			src.addAbility(/datum/targetable/slasher/open_doors)
 			src.addAbility(/datum/targetable/slasher/stagger)
@@ -456,20 +481,6 @@ ABSTRACT_TYPE(/datum/targetable/slasher)
 		else
 			boutput(usr, "<span class='alert'>You cannot possess a non-human.</span>")
 			return 1
-
-/datum/targetable/slasher/debug
-	name = "Possess"
-	desc = "Possess a target temporarily."
-	icon_state = "slasher_possession"
-	targeted = 0
-	cooldown = 10 SECONDS
-
-	cast()
-		if (..())
-			return 1
-		var/mob/living/carbon/human/slasher/W = src.holder.owner
-		return W.debug_control()
-
 
 /datum/targetable/slasher/regenerate
 	name = "Regenerate"
