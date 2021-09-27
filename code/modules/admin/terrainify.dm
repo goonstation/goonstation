@@ -308,6 +308,8 @@ var/datum/station_zlevel_repair/station_repair = new
 				for (var/turf/S as anything in space)
 					S.UpdateOverlays(station_repair.ambient_light, "ambient")
 
+				shippingmarket.clear_path_to_market()
+
 				logTheThing("admin", src, null, "turned space into a snowscape.")
 				logTheThing("diary", src, null, "turned space into a snowscape.", "admin")
 				message_admins("[key_name(src)] turned space into a snowscape.")
