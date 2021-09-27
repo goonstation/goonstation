@@ -138,7 +138,7 @@
 	//
 	MouseDrop_T(atom/target, mob/user)
 		//jesus fucking christ
-		if (!in_interact_range(src,user) || !in_interact_range(src,target))
+		if (!in_interact_range(src,user) || !in_interact_range(src,target) || isAI(user) || is_incapacitated(user) || isghostcritter(user))
 			return
 
 		if (iscritter(target))
@@ -151,7 +151,7 @@
 
 		if (isliving(target))
 			var/mob/mobtarget = target
-			if  (mobtarget.buckled || is_incapacitated(user) || isAI(user) || isAI(mobtarget) || isghostcritter(user))
+			if  (mobtarget.buckled || isAI(mobtarget))
 				return
 
 			if (istype(src, /obj/machinery/disposal/mail))
