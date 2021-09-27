@@ -1206,6 +1206,8 @@ var/f_color_selector_handler/F_Color_Selector
 							return 1
 #endif
 
+		if (findtext(addr, ":")) // remove port if present
+			addr = splittext(addr, ":")[1]
 		if (addr != config.ircbot_ip && addr != config.goonhub_api_ip && addr != config.goonhub2_hostname)
 			return 0 //ip filtering
 

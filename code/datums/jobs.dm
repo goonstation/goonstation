@@ -257,7 +257,7 @@ ABSTRACT_TYPE(/datum/job/command)
 #ifdef SUBMARINE_MAP
 	slot_jump = list(/obj/item/clothing/under/rank/head_of_securityold/fancy_alt)
 	slot_suit = list(/obj/item/clothing/suit/armor/vest)
-	slot_back = list(/obj/item/storage/backpack/withO2)
+	slot_back = list(/obj/item/storage/backpack/security)
 	slot_belt = list(/obj/item/device/pda2/hos)
 	slot_poc1 = list(/obj/item/requisition_token/security)
 	slot_poc2 = list(/obj/item/storage/security_pouch) //replaces sec starter kit
@@ -268,7 +268,7 @@ ABSTRACT_TYPE(/datum/job/command)
 
 
 #else
-	slot_back = list(/obj/item/storage/backpack/withO2)
+	slot_back = list(/obj/item/storage/backpack/security)
 	slot_belt = list(/obj/item/device/pda2/hos)
 	slot_poc1 = list(/obj/item/requisition_token/security)
 	slot_poc2 = list(/obj/item/storage/security_pouch) //replaces sec starter kit
@@ -320,7 +320,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	announce_on_join = 1
 	allow_spy_theft = 0
 
-	slot_back = list(/obj/item/storage/backpack/withO2)
+	slot_back = list(/obj/item/storage/backpack/engineering)
 	slot_belt = list(/obj/item/device/pda2/chiefengineer)
 	slot_glov = list(/obj/item/clothing/gloves/yellow)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
@@ -471,7 +471,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	receives_disk = 1
 	receives_security_disk = 1
 	receives_badge = 1
-	slot_back = list(/obj/item/storage/backpack/withO2)
+	slot_back = list(/obj/item/storage/backpack/security)
 	slot_belt = list(/obj/item/device/pda2/security)
 	slot_jump = list(/obj/item/clothing/under/rank/security)
 	slot_suit = list(/obj/item/clothing/suit/armor/vest)
@@ -499,6 +499,7 @@ ABSTRACT_TYPE(/datum/job/security)
 		limit = 3
 		cant_spawn_as_con = 1
 		wages = PAY_UNTRAINED
+		slot_back = list(/obj/item/storage/backpack/security)
 		slot_jump = list(/obj/item/clothing/under/rank/security/assistant)
 		slot_suit = list()
 		slot_glov = list(/obj/item/clothing/gloves/fingerless)
@@ -576,6 +577,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	name = "Geneticist"
 	limit = 2
 	wages = PAY_DOCTORATE
+	slot_back = list(/obj/item/storage/backpack/genetics)
 	slot_belt = list(/obj/item/device/pda2/genetics)
 	slot_jump = list(/obj/item/clothing/under/rank/geneticist)
 	slot_foot = list(/obj/item/clothing/shoes/white)
@@ -620,6 +622,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	name = "Roboticist"
 	limit = 3
 	wages = 200
+	slot_back = list(/obj/item/storage/backpack/robotics)
 	slot_belt = list(/obj/item/device/pda2/medical/robotics)
 	slot_jump = list(/obj/item/clothing/under/rank/roboticist)
 	slot_foot = list(/obj/item/clothing/shoes/black)
@@ -645,6 +648,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	name = "Scientist"
 	limit = 5
 	wages = PAY_DOCTORATE
+	slot_back = list(/obj/item/storage/backpack/research)
 	slot_belt = list(/obj/item/device/pda2/toxins)
 	slot_jump = list(/obj/item/clothing/under/rank/scientist)
 	slot_suit = list(/obj/item/clothing/suit/labcoat)
@@ -729,6 +733,12 @@ ABSTRACT_TYPE(/datum/job/engineering)
 		src.access = get_access("Quartermaster")
 		return
 
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_quartermaster")
+
 /datum/job/engineering/miner
 	name = "Miner"
 	#ifdef UNDERWATER_MAP
@@ -737,7 +747,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	limit = 5
 	#endif
 	wages = PAY_TRADESMAN
-	slot_back = list(/obj/item/storage/backpack/withO2)
+	slot_back = list(/obj/item/storage/backpack/engineering)
 	slot_mask = list(/obj/item/clothing/mask/breath)
 	slot_eyes = list(/obj/item/clothing/glasses/meson)
 	slot_belt = list(/obj/item/storage/belt/mining/prepared)
@@ -751,7 +761,8 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	slot_head = list(/obj/item/clothing/head/helmet/space/engineer/diving/engineering)
 	items_in_backpack = list(/obj/item/crowbar,
 							/obj/item/paper/book/from_file/pocketguide/mining,
-							/obj/item/clothing/shoes/flippers)
+							/obj/item/clothing/shoes/flippers,
+							/obj/item/item_box/glow_sticker)
 	#else
 	slot_suit = list(/obj/item/clothing/suit/space/engineer)
 	slot_head = list(/obj/item/clothing/head/helmet/space/engineer)
@@ -777,7 +788,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	limit = 3
 	wages = PAY_DOCTORATE
 
-	slot_back = list(/obj/item/storage/backpack/withO2)
+	slot_back = list(/obj/item/storage/backpack/engineering)
 	slot_belt = list(/obj/item/storage/belt/utility/prepared)
 	slot_jump = list(/obj/item/clothing/under/rank/mechanic)
 	slot_foot = list(/obj/item/clothing/shoes/black)
@@ -799,7 +810,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	limit = 5
 #endif
 	wages = PAY_TRADESMAN
-	slot_back = list(/obj/item/storage/backpack/withO2)
+	slot_back = list(/obj/item/storage/backpack/engineering)
 	slot_belt = list(/obj/item/storage/belt/utility/prepared)
 	slot_jump = list(/obj/item/clothing/under/rank/engineer)
 	slot_foot = list(/obj/item/clothing/shoes/orange)
@@ -920,7 +931,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_glov = list(/obj/item/clothing/gloves/black)
 	slot_poc1 = list(/obj/item/paper/ranch_guide)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
-	items_in_backpack = list(/obj/item/fishing_rod, /obj/item/chicken_carrier, /obj/item/device/camera_viewer/ranch)
+	items_in_backpack = list(/obj/item/fishing_rod, /obj/item/chicken_carrier, /obj/item/device/camera_viewer/ranch,/obj/item/storage/box/knitting)
 
 	New()
 		..()
@@ -1094,7 +1105,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/special/head_surgeon
 	name = "Head Surgeon"
 	linkcolor = "#00CC00"
-	limit = 0
+	limit = 1
 	wages = PAY_IMPORTANT
 	cant_spawn_as_rev = 1
 	slot_card = /obj/item/card/id/command
@@ -1210,7 +1221,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/special/research_assistant
 	name = "Research Assistant"
 	linkcolor = "#9900FF"
-	limit = 0
+	limit = 1
 	wages = PAY_UNTRAINED
 	low_priority_job = 1
 	slot_jump = list(/obj/item/clothing/under/color/white)
@@ -1224,7 +1235,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/special/medical_assistant
 	name = "Medical Assistant"
 	linkcolor = "#9900FF"
-	limit = 0
+	limit = 1
 	wages = PAY_UNTRAINED
 	low_priority_job = 1
 	slot_jump = list(/obj/item/clothing/under/color/white)
@@ -1256,7 +1267,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/special/tech_assistant
 	name = "Technical Assistant"
 	linkcolor = "#FF9900"
-	limit = 0
+	limit = 1
 	wages = PAY_UNTRAINED
 	low_priority_job = 1
 	slot_jump = list(/obj/item/clothing/under/color/yellow)
@@ -1401,7 +1412,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 	New()
 		..()
-		if (prob(15))
+		if (prob(40))
 			limit = 1
 		if (src.alt_names.len)
 			name = pick(src.alt_names)

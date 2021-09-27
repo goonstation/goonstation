@@ -309,7 +309,7 @@
 			if (!isturf(M.loc))	// || ship.Find(M)
 				continue
 			if ((ship.z == M.z) && get_dist(ship.loc, M) <= src.seekrange)
-				if(!isdead(M))
+				if(!isdead(M) && !isintangible(M))
 #ifdef UNDERWATER_MAP
 					if (istype(M,/mob/living/critter/aquatic/fish)) continue
 #endif
