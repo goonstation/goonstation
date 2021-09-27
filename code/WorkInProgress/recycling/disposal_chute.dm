@@ -138,28 +138,29 @@
 	//
 	MouseDrop_T(atom/target, mob/user)
 		//jesus fucking christ
-		if(!in_interact_range(src,user) || !in_interact_range(src,target))
+		if (!in_interact_range(src,user) || !in_interact_range(src,target))
 			return
 
-		if(istype(target, /obj/critter))
+		if (istype(target, /obj/critter))
 			var/obj/critter/corpse = target
-			if(!corpse.alive)
+			if (!corpse.alive)
 				corpse.set_loc(src)
 				user.visible_message("[user.name] places \the [corpse] into \the [src].")
 				actions.interrupt(user, INTERRUPT_ACT)
 			return
 
-		var/mob/mobtarget = target
-		if (!istype(target, /mob) || mobtarget.buckled || is_incapacitated(user) || isAI(user) || isAI(mobtarget) || isghostcritter(user))
-			return
-
-		if (istype(src, /obj/machinery/disposal/mail) && isliving(target))
-			//Is this mob allowed to ride mailchutes?
-			if (!mobtarget.canRideMailchutes())
-				boutput(user, "<span class='alert'>That won't fit!</span>")
+		if (istype(target, /mob))
+			var/mob/mobtarget = target
+			if  (mobtarget.buckled || is_incapacitated(user) || isAI(user) || isAI(mobtarget) || isghostcritter(user))
 				return
 
-		actions.start(new/datum/action/bar/icon/shoveMobIntoChute(src, target, user), user)
+			if (istype(src, /obj/machinery/disposal/mail) && isliving(mobtarget))
+				//Is this mob allowed to ride mailchutes?
+				if (!mobtarget.canRideMailchutes())
+					boutput(user, "<span class='alert'>That won't fit!</span>")
+					return
+
+			actions.start(new/datum/action/bar/icon/shoveMobIntoChute(src, mobtarget, user), user)
 
 	hitby(atom/movable/MO, datum/thrown_thing/thr)
 		// This feature interferes with mail delivery, i.e. objects bouncing back into the chute.
