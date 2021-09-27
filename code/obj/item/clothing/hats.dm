@@ -1039,23 +1039,6 @@ proc/filter_trait_hats(var/type)
 		else
 			return 0
 
-/obj/item/clothing/head/bighat/syndicate/biggest/biggerest
-	name = "extremely syndicate hat"
-	desc = "AAAAAAAA"
-	wear_image_icon = 'icons/mob/biggesthat2.dmi'
-	icon_state = "biggest_hat"
-	item_state = "syndicate_top"
-	contraband = 100 // heh
-
-/obj/item/clothing/head/bighat/syndicate/biggest/biggerest/biggerestest
-	name = "okay look its a really big syndicate hat"
-	desc = "AAAAAAAA"
-	wear_image_icon = 'icons/mob/biggesthat3.dmi'
-	icon_state = "biggestestest_hat"
-	item_state = "syndicate_top"
-	contraband = 100 // heh
-
-
 /obj/item/clothing/head/witchfinder
 	name = "witchfinder general's hat"
 	desc = "To hide most of your emotionless facial features."
