@@ -291,6 +291,7 @@
 				return
 			WG.mind.transfer_to(M)
 			M.slasher_possessed = FALSE
+			qdel(WG)
 
 			for(var/obj/item/clothing/suit/apron/slasher/A in M)
 				qdel(A)
