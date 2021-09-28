@@ -555,6 +555,18 @@
 		/obj/item/clothing/suit/space/syndicate/knight,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/knight)
 
+	trapper
+		name = "Class Crate - Trapper"
+		desc = "A crate containing a Specialist Operative loadout."
+		spawn_contents = list(/obj/item/gun/kinetic/assault_rifle, //todo new gun
+		/obj/item/storage/pouch/assault_rifle/mixed, // todo new ammo
+		/obj/item/deployer/barricade/multi_use,
+		/obj/item/storage/landmine_pouch,
+		/obj/item/storage/beartrap_pouch,
+		/obj/item/breaching_charge = 2,
+		/obj/item/clothing/suit/space/syndicate/specialist, // todo new outfit
+		/obj/item/clothing/head/helmet/space/syndicate/specialist)
+
 	qm //Hi Gannets, I like your crate and wanted to use it for some QM stuff. Come yell at Azungar if this is not ok.
 		name = "Weapons crate"
 		desc = "Just a fancy crate that may or may not contain weapons."
