@@ -265,8 +265,8 @@
 	alt_filled_state = 1
 	heal_amt = 1
 	g_amt = 60
-	initial_volume = 120
-	initial_reagents = list("wine"=80,"charcoal"=40)
+	initial_volume = 100
+	initial_reagents = list("wine"=40,"charcoal"=20)
 
 /obj/item/reagent_containers/food/drinks/bottle/thegoodstuff
 	name = "Stinkeye's Special Reserve"
