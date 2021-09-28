@@ -4,6 +4,11 @@
 (p)6111
 (e)|
 (+)Honey, the material, has been renamed to refined honey for all the cloning pod enthusiasts out there.
+(u)JordanTheKitty
+(p)6106
+(e)|
+(+)Lowered the alcohol density of many drinks typically served tall such as Bloody Marys and Piña Coladas.
+(+)Replaced the sugar in the Tequila Sunrise recipe with grenadine
 (u)TTerc
 (p)6108
 (e)|
