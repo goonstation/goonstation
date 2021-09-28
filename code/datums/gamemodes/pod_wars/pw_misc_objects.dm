@@ -809,6 +809,9 @@
 	var/object_type = /obj/barricade 		//object to deploy
 	var/build_duration = 2 SECONDS
 
+	var/multi_use = 0
+	var/uses_left = 5
+
 	New(loc)
 		..()
 		BLOCK_SETUP(BLOCK_LARGE)
@@ -831,7 +834,11 @@
 			if (locate(src.object_type) in T.contents)
 				boutput(user, "<span class='alert'>There is already a barricade here! You can't think of a way that another one could possibly fit!</span>")
 				return
-			newThing = new src.object_type(T)
+			if (src.multi_use == 1 && src.uses_left >= 1)
+				src.uses_left --
+				newThing = new src.object_type(T)
+			else
+				newThing = new src.object_type(T)
 		else
 			logTheThing("diary", user, null, "tries to deploy an object of type ([src.type]) from [src] but its object_type is null and it is being deleted.", "station")
 			user.u_equip(src)
@@ -846,6 +853,12 @@
 				user.u_equip(src)
 		qdel(src)
 		return newThing
+
+//haha kyle, fuck you I stole ur shit! - gannets
+
+/obj/item/deployer/barricade/multi_use
+	multi_use = 1
+
 
 /obj/item_dispenser/barricade
 	name = "barricade dispenser"
