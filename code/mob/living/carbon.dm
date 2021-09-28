@@ -121,10 +121,32 @@
 						(H.poop_amount ? H.poop_amount : 5 * 2))
 					qdel(shit)
 			else
-				shit.set_loc(src.loc)
-				H.visible_message("<span class='alert'><B>[H] [pick("takes a dump","drops a turd","shits a load","does a poo","craps all over")]!</B></span>")
+				if(H.bioHolder.HasEffect("teflon_colon") || H.traitHolder.hasTrait("teflon_colon"))
+					yeetapoop(H, shit)
+				else
+					shit.set_loc(src.loc)
+					H.visible_message("<span class='alert'><B>[H] [pick("takes a dump","drops a turd","shits a load","does a poo","craps all over")]!</B></span>")
 
 		return
+
+/mob/living/carbon/proc/yeetapoop(mob/living/carbon/C, var/obj/item/reagent_containers/food/snacks/ingredient/mud/shit)
+	// Yeet a loaf in the opposite direction from where we're facing
+	var/target_dir = NORTH
+
+	switch(C.dir)
+		if(NORTH)
+			target_dir = SOUTH
+		if(EAST)
+			target_dir = WEST
+		if(WEST)
+			target_dir = EAST
+
+	shit.loc = C.loc
+	shit.throw_at(get_turf(get_steps(C, target_dir, rand(2,5))), rand(2,5), rand(1,4))
+	C.visible_message("<span class='alert'><b>[C] [pick("hurls a loaf",\
+		"unloads at speed", "lobs a loaf", "shits with gusto", \
+		"shits with gutso", "fires the poo-cannon")]!</b></span>")
+
 
 
 /mob/living/carbon/proc/urinate()
