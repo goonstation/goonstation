@@ -211,6 +211,13 @@ var/global/list/playersSeen = list()
 			targetC = find_player(row["ckey"])?.client
 		if (targetC)
 			del(targetC)
+		else
+			logTheThing("debug", null, null, "<b>Bans:</b> Unable to find client with ckey '[row["ckey"]]' during banning.")
+
+		targetC = find_player(row["ckey"])?.client
+		if (targetC)
+			logTheThing("debug", null, null, "<b>Bans:</b> Client with ckey '[row["ckey"]]' somehow survived banning, retrying kick.")
+			del(targetC)
 
 		return 0
 
@@ -233,6 +240,17 @@ var/global/list/playersSeen = list()
 		if (data["server"])
 			query["server"] = data["server"]
 		data = apiHandler.queryAPI("bans/add", query)
+
+		if(data["ckey"])
+			var/client/targetC = find_player(data["ckey"])?.client
+			del(targetC)
+
+		var/ircmsg[] = new()
+		ircmsg["key"] = data["akey"]
+		ircmsg["key2"] = "[data["ckey"]] (IP: [data["ip"]], CompID: [data["compID"]])"
+		ircmsg["msg"] = data["reason"]
+		ircmsg["time"] = banTimestamp
+		ircbot.export("ban", ircmsg)
 
 
 //Starts the dialog for banning a dude
