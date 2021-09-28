@@ -138,7 +138,7 @@
 	//
 	MouseDrop_T(atom/target, mob/user)
 		//jesus fucking christ
-		if (!in_interact_range(src,user) || !in_interact_range(src,target) || isAI(user) || is_incapacitated(user) || isghostcritter(user))
+		if (!IN_RANGE(src,user,1) || !IN_RANGE(src,target,1) || isAI(user) || is_incapacitated(user) || isghostcritter(user))
 			return
 
 		if (iscritter(target))
