@@ -245,6 +245,13 @@ var/global/list/playersSeen = list()
 			var/client/targetC = find_player(data["ckey"])?.client
 			del(targetC)
 
+		var/ircmsg[] = new()
+		ircmsg["key"] = data["akey"]
+		ircmsg["key2"] = "[data["ckey"]] (IP: [data["ip"]], CompID: [data["compID"]])"
+		ircmsg["msg"] = data["reason"]
+		ircmsg["time"] = banTimestamp
+		ircbot.export("ban", ircmsg)
+
 
 //Starts the dialog for banning a dude
 /client/proc/genericBanDialog(target)
