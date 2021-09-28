@@ -215,3 +215,21 @@
 	slots = 7 //bonus two slots for the banana grenade kit
 	does_not_open_in_pocket = 0
 	spawn_contents = list(/obj/item/old_grenade/banana = 5)
+
+/obj/item/storage/landmine_pouch
+	name = "landmine pouch"
+	desc = "A storage pouch designed to fit landmines."
+	icon_state = "ammopouch-large"
+	w_class = W_CLASS_SMALL
+	slots = 6
+	does_not_open_in_pocket = 0
+	spawn_contents = list(/obj/item/mine/blast = 3, /obj/item/mine/incendiary = 3)
+
+/obj/item/storage/beartrap_pouch
+	name = "beartrap pouch"
+	desc = "A storage pouch designed to fit bear traps."
+	icon_state = "ammopouch-large"
+	w_class = W_CLASS_SMALL
+	slots = 4
+	does_not_open_in_pocket = 0
+	spawn_contents = list(/obj/item/beartrap = 4)
