@@ -241,6 +241,10 @@ var/global/list/playersSeen = list()
 			query["server"] = data["server"]
 		data = apiHandler.queryAPI("bans/add", query)
 
+		if(data["ckey"])
+			var/client/targetC = find_player(data["ckey"])?.client
+			del(targetC)
+
 
 //Starts the dialog for banning a dude
 /client/proc/genericBanDialog(target)
