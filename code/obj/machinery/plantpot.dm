@@ -323,6 +323,10 @@
 		. = ..()
 		update_icon()
 
+	was_deconstructed_to_frame(mob/user)
+		src.current = null // Dont think this would lead to any frustrations, considering like, youre chopping the machine up of course itd destroy the plant.
+		boutput( user, "<span class='alert'>In the process of deconstructing the tray you destroy the plant.</span>" )
+
 	process()
 		..()
 
