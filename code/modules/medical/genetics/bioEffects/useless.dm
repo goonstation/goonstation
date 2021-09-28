@@ -446,7 +446,7 @@
 /datum/bioEffect/nonstick_colon
 	name = "Non-Stick Colon"
 	desc = "The subject, having eaten an excessive amount of crayons over the span of their career, now has a wax-lined, non-stick, intestinal tract."
-	id   = "teflon_tom"
+	id   = "teflon_colon"
 	effectType = EFFECT_TYPE_POWER
 	probability = 99
 	blockCount = 3

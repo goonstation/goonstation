@@ -201,7 +201,10 @@
 								if (24) message = "<B>[src]</B> farts. It smells like the bridge in here now!"
 								if (25) message = "<B>[src]</B> farts like a pubby!"
 								if (26) message = "<B>[src]</B> farts like a goone!"
-								if (27) message = "<B>[src]</B> sharts! That's just nasty."
+								if (27)
+									message = "<B>[src]</B> sharts! That's just nasty."
+									if(src?.bioHolder.HasEffect("teflon_colon") || src?.traitHolder.hasTrait("teflon_colon"))
+										src.poop()
 								if (28) message = "<B>[src]</B> farts delicately."
 								if (29) message = "<B>[src]</B> farts timidly."
 								if (30) message = "<B>[src]</B> farts very, very quietly. The stench is OVERPOWERING."
@@ -226,7 +229,6 @@
 						if (src && src.chest_item != null) //Gotta do that pre-emptive runtime protection!
 							src.chest_item_attack_self_on_fart()
 
-						if (src.bioHolder)
 							if (src.bioHolder.HasEffect("toxic_farts"))
 								message = "<span class='alert'><B>[src] [pick("unleashes","rips","blasts")] \a [pick("truly","utterly","devastatingly","shockingly")] [pick("hideous","horrendous","horrific","heinous","horrible")] fart!</B></span>"
 								var/turf/fart_turf = get_turf(src)

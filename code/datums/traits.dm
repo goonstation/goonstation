@@ -1110,8 +1110,9 @@ obj/trait/pilot
 	mutantRace = /datum/mutantrace/roach
 
 /obj/trait/teflon_colon
-	name = "Non-Stick Colon"
+	name = "Non-Stick Colon (-1)"
 	id = "teflon_colon"
+	icon_state = "poo"
 	desc = "Having eaten crayons all your life, your intestines are now wax-coated, non-stick, high-speed, and low-drag."
 	points = -1
 	isPositive = 1
