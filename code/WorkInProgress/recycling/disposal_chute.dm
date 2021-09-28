@@ -150,7 +150,7 @@
 			return
 
 		if (isliving(target))
-			var/mob/mobtarget = target
+			var/mob/living/mobtarget = target
 			if  (mobtarget.buckled || isAI(mobtarget))
 				return
 
