@@ -211,6 +211,13 @@ var/global/list/playersSeen = list()
 			targetC = find_player(row["ckey"])?.client
 		if (targetC)
 			del(targetC)
+		else
+			logTheThing("debug", null, null, "<b>Bans:</b> Unable to find client with ckey '[row["ckey"]]' during banning.")
+
+		targetC = find_player(row["ckey"])?.client
+		if (targetC)
+			logTheThing("debug", null, null, "<b>Bans:</b> Client with ckey '[row["ckey"]]' somehow survived banning, retrying kick.")
+			del(targetC)
 
 		return 0
 
