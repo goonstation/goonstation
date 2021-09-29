@@ -1237,10 +1237,10 @@
 		setProperty("electrical", 32)
 		return ..()
 
-/datum/material/fabric/cloth/wendigohide
-	mat_id = "wendigohide"
-	name = "wendigo hide"
-	desc = "The hide of a fearsome wendigo!"
+/datum/material/fabric/cloth/greslourshide
+	mat_id = "greslourshide"
+	name = "greslours hide"
+	desc = "The hide of a fearsome greslours!"
 	color = "#CCCCCC"
 	material_flags = MATERIAL_CLOTH
 
@@ -1251,10 +1251,10 @@
 		setProperty("electrical", 45)
 		return ..()
 
-/datum/material/fabric/cloth/wendigohide/king
-	mat_id = "kingwendigohide"
-	name = "king wendigo hide"
-	desc = "The hide of a terrifying wendigo king!!!"
+/datum/material/fabric/cloth/greslourshide/king
+	mat_id = "kinggreslourshide"
+	name = "king greslours hide"
+	desc = "The hide of a terrifying greslours king!!!"
 	color = "#EFEEEE"
 	material_flags = MATERIAL_CLOTH
 

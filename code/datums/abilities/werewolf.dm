@@ -318,7 +318,7 @@
 
 		if ("feast")
 			if (sound_playing == 0) // It's a long audio clip.
-				playsound(src.loc, "sound/voice/animal/wendigo_maul.ogg", 80, 1)
+				playsound(src.loc, "sound/voice/animal/greslours_maul.ogg", 80, 1)
 				sound_playing = 1
 				SPAWN_DBG(6 SECONDS)
 					sound_playing = 0

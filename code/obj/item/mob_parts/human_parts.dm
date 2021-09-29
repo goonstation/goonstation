@@ -698,21 +698,21 @@
 		if (src.remove_object)
 			return "has [bicon(src.remove_object)] \an [src.remove_object] attached as a"
 
-/obj/item/parts/human_parts/arm/left/wendigo
-	name = "left wendigo arm"
-	icon_state = "arm_left_wendigo"
+/obj/item/parts/human_parts/arm/left/greslours
+	name = "left greslours arm"
+	icon_state = "arm_left_greslours"
 	slot = "l_arm"
 	side = "left"
 	decomp_affected = 0
 	skintoned = 0
 	streak_descriptor = "eerie"
 	override_attack_hand = 1
-	limb_type = /datum/limb/wendigo
-	handlistPart = "l_hand_wendigo"
+	limb_type = /datum/limb/greslours
+	handlistPart = "l_hand_greslours"
 	show_on_examine = 1
 	/// Wendigeese are pretty unnatural, and most people'd miss em if they suddenly turned into a lizard arm
 	limb_is_unnatural = TRUE
-	kind_of_limb = (LIMB_WENDIGO)
+	kind_of_limb = (LIMB_GRESLOURS)
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -723,24 +723,24 @@
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_wendigo")
+		src.standImage = image('icons/mob/human.dmi', "[src.slot]_greslours")
 		return standImage
 
-/obj/item/parts/human_parts/arm/right/wendigo
-	name = "right wendigo arm"
-	icon_state = "arm_right_wendigo"
+/obj/item/parts/human_parts/arm/right/greslours
+	name = "right greslours arm"
+	icon_state = "arm_right_greslours"
 	slot = "r_arm"
 	side = "right"
 	decomp_affected = 0
 	skintoned = 0
 	streak_descriptor = "eerie"
 	override_attack_hand = 1
-	limb_type = /datum/limb/wendigo
-	handlistPart = "r_hand_wendigo"
+	limb_type = /datum/limb/greslours
+	handlistPart = "r_hand_greslours"
 	show_on_examine = 1
 	/// If you went through the trouble to get yourself a wendy arm, you should keep it no matter how inhuman you become
 	limb_is_unnatural = TRUE
-	kind_of_limb = (LIMB_WENDIGO)
+	kind_of_limb = (LIMB_GRESLOURS)
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -751,7 +751,7 @@
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_wendigo")
+		src.standImage = image('icons/mob/human.dmi', "[src.slot]_greslours")
 		return standImage
 
 /obj/item/parts/human_parts/arm/left/hot
@@ -1089,7 +1089,7 @@
 
 /obj/item/parts/human_parts/arm/left/claw
 	name = "left claw arm"
-	icon_state = "arm_left_wendigo"
+	icon_state = "arm_left_greslours"
 	slot = "l_arm"
 	side = "left"
 	decomp_affected = 0
@@ -1097,11 +1097,11 @@
 	streak_descriptor = "eerie"
 	override_attack_hand = 1
 	limb_type = /datum/limb/claw
-	handlistPart = "l_hand_wendigo"
+	handlistPart = "l_hand_greslours"
 	siemens_coefficient = 0
 	show_on_examine = 1
 	limb_is_unnatural = TRUE
-	kind_of_limb = (LIMB_WENDIGO)
+	kind_of_limb = (LIMB_GRESLOURS)
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1112,12 +1112,12 @@
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_wendigo")
+		src.standImage = image('icons/mob/human.dmi', "[src.slot]_greslours")
 		return standImage
 
 /obj/item/parts/human_parts/arm/right/claw
 	name = "right claw arm"
-	icon_state = "arm_right_wendigo"
+	icon_state = "arm_right_greslours"
 	slot = "r_arm"
 	side = "right"
 	decomp_affected = 0
@@ -1125,11 +1125,11 @@
 	streak_descriptor = "eerie"
 	override_attack_hand = 1
 	limb_type = /datum/limb/claw
-	handlistPart = "r_hand_wendigo"
+	handlistPart = "r_hand_greslours"
 	siemens_coefficient = 0
 	show_on_examine = 1
 	limb_is_unnatural = TRUE
-	kind_of_limb = (LIMB_WENDIGO)
+	kind_of_limb = (LIMB_GRESLOURS)
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1140,7 +1140,7 @@
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_wendigo")
+		src.standImage = image('icons/mob/human.dmi', "[src.slot]_greslours")
 		return standImage
 
 /obj/item/parts/human_parts/arm/right/stone
