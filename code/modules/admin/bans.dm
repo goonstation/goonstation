@@ -205,6 +205,7 @@ var/global/list/playersSeen = list()
 		ircmsg["key2"] = "[row["ckey"]] (IP: [row["ip"]], CompID: [row["compID"]])"
 		ircmsg["msg"] = row["reason"]
 		ircmsg["time"] = expiry
+		ircmsg["timestamp"] = row["timestamp"]
 		ircbot.export("ban", ircmsg)
 
 		if(!targetC)
@@ -240,17 +241,6 @@ var/global/list/playersSeen = list()
 		if (data["server"])
 			query["server"] = data["server"]
 		data = apiHandler.queryAPI("bans/add", query)
-
-		if(data["ckey"])
-			var/client/targetC = find_player(data["ckey"])?.client
-			del(targetC)
-
-		var/ircmsg[] = new()
-		ircmsg["key"] = data["akey"]
-		ircmsg["key2"] = "[data["ckey"]] (IP: [data["ip"]], CompID: [data["compID"]])"
-		ircmsg["msg"] = data["reason"]
-		ircmsg["time"] = banTimestamp
-		ircbot.export("ban", ircmsg)
 
 
 //Starts the dialog for banning a dude
