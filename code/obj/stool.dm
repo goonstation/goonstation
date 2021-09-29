@@ -537,6 +537,9 @@
 		return
 
 	Move()
+		if(src.buckled_guy?.loc != src.loc)
+			src.unbuckle()
+
 		. = ..()
 		if (.)
 			if (src.dir == NORTH)
@@ -549,6 +552,9 @@
 				C.buckled = null
 				C.Move(src.loc)
 				C.buckled = src
+
+		if(src.buckled_guy?.loc != src.loc)
+			src.unbuckle()
 
 	toggle_secure(mob/user as mob)
 		if (istype(get_turf(src), /turf/space))
@@ -798,13 +804,6 @@
 		has_butt = null
 		..()
 		return
-
-	Move(atom/target)
-		if(src.buckled_guy?.loc != src.loc)
-			src.unbuckle()
-		. = ..()
-		if(src.buckled_guy?.loc != src.loc)
-			src.unbuckle()
 
 	Click(location,control,params)
 		var/lpm = params2list(params)
