@@ -314,6 +314,20 @@ ABSTRACT_TYPE(/datum/objective/crew/miner)
 				suitcount++
 			if(suitcount > 2) return 1
 			else return 0
+	forsale
+		explanation_text = "Have at least five different ores available for purchase from the Rockbox at the end of the round."
+		check_completion()
+			var/orecount = 0
+			for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
+				if(S.broken)
+					continue
+				var/list/ores = S.ores
+				for(var/ore in ores)
+					var/datum/ore_cloud_data/OCD = ores[ore]
+					if(OCD.for_sale && OCD.amount)
+						orecount++
+			return orecount >= 5
+
 
 ABSTRACT_TYPE(/datum/objective/crew/mechanic)
 /datum/objective/crew/mechanic
