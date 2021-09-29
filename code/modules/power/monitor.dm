@@ -82,7 +82,8 @@
 
 /obj/machinery/computer/power_monitor/proc/add_history()
 	var/datum/powernet/powernet = src.get_direct_powernet()
-
+	if (!istype(powernet))
+		return
 	src.history += list(list(
 		powernet.avail,
 		powernet.viewload,
