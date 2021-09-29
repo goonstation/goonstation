@@ -1,4 +1,9 @@
 
+(t)wed sep 29 21
+(u)Gannets
+(p)6117
+(e)⚖|balance
+(+)Betelgeuse sniper rifle magazine size increased to 6. Spare magazines increased to 7.
 (t)mon sep 27 21
 (u)BatElite
 (p)6111
