@@ -1034,6 +1034,9 @@
 			src.icon_state = "bullpup[ratio]"
 			return
 
+/obj/item/gun/energy/laser_gun/pred/lowcharge
+	cell_type = /obj/item/ammo/power_cell/self_charging/pod_wars_standard// If the shoe fits, 50 charge per shot so only 6 shots, with 15 self recharge. Not bad at all.
+
 /obj/item/gun/energy/laser_gun/pred/vr
 	name = "advanced laser gun"
 	icon = 'icons/effects/VR.dmi'

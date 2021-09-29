@@ -1009,6 +1009,16 @@
 	charge = 300.0
 	max_charge = 300.0
 
+/obj/item/ammo/power_cell/higherish_power
+	name = "Power Cell - 400"
+	desc = "A power cell that holds a max of 400PU"
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "power_cell"
+	m_amt = 20000
+	g_amt = 40000
+	charge = 400.0
+	max_charge = 400.0
+
 /obj/item/ammo/power_cell/self_charging
 	name = "Power Cell - Atomic"
 	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 40PU."
