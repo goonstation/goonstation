@@ -79,6 +79,9 @@
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 	slots = 10
 
+/obj/item/storage/backpack/syndie/tactical/trapper //todo special sprite
+	spawn_contents = list(/obj/item/deployer/barricade = 8)
+
 /obj/item/storage/backpack/medic
 	name = "medic's backpack"
 	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a Medical Doctor's back."

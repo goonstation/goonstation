@@ -558,12 +558,11 @@
 	trapper
 		name = "Class Crate - Trapper"
 		desc = "A crate containing a Specialist Operative loadout."
-		spawn_contents = list(/obj/item/gun/kinetic/assault_rifle, //todo new gun
-		/obj/item/storage/pouch/assault_rifle/mixed, // todo new ammo
-		/obj/item/deployer/barricade/multi_use,
+		spawn_contents = list(/obj/item/gun/bow, //todo new gun
+		/obj/item/quiver, // todo new ammo
 		/obj/item/storage/landmine_pouch,
 		/obj/item/storage/beartrap_pouch,
-		/obj/item/breaching_charge = 2,
+		/obj/item/storage/backpack/syndie/tactical/trapper,
 		/obj/item/clothing/suit/space/syndicate/specialist, // todo new outfit
 		/obj/item/clothing/head/helmet/space/syndicate/specialist)
 
