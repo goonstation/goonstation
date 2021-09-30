@@ -83,7 +83,7 @@
 		user.visible_message("<span class='alert'><b>[user] stares into the [src], trying to make sense of its function!</b></span>")
 		SPAWN_DBG(3 SECONDS)
 			user.visible_message("<span class='alert'><b>[user]'s brain melts!</b></span>")
-			playsound(user, "sound/weapons/phaseroverload.ogg", 100)
+			playsound(user, "sound/effects/mindkill.ogg", 50)
 			user.take_brain_damage(69*420)
 		SPAWN_DBG(20 SECONDS)
 			if (user && !isdead(user))

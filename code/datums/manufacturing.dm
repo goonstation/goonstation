@@ -2,7 +2,10 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	if(mat in material_category_names)
 		return material_category_names[mat]
 	else
-		return capitalize(mat)
+		var/datum/material/nice_mat = getMaterial(mat)
+		if (istype(nice_mat))
+			return capitalize(nice_mat.name)
+		return capitalize(mat) //if all else fails (probably a category instead of a material)
 
 /datum/manufacture
 	var/name = null                // Name of the schematic

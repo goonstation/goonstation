@@ -152,6 +152,12 @@
 	desc = "Like a stool, but in a bar."
 	parts_type = /obj/item/furniture_parts/stool/bar
 
+/obj/stool/neon
+	name = "neon bar stool"
+	icon_state = "neonstool"
+	desc = "Like a bar stool, but in electric blue."
+	parts_type = /obj/item/furniture_parts/stool/neon
+
 /obj/stool/wooden
 	name = "wooden stool"
 	icon_state = "wstool"
@@ -543,6 +549,9 @@
 		return
 
 	Move()
+		if(src.buckled_guy?.loc != src.loc)
+			src.unbuckle()
+
 		. = ..()
 		if (.)
 			if (src.dir == NORTH)
@@ -555,6 +564,9 @@
 				C.buckled = null
 				C.Move(src.loc)
 				C.buckled = src
+
+		if(src.buckled_guy?.loc != src.loc)
+			src.unbuckle()
 
 	toggle_secure(mob/user as mob)
 		if (istype(get_turf(src), /turf/space))
@@ -737,18 +749,11 @@
 			playsound(src, (has_butt.sound_fart ? has_butt.sound_fart : 'sound/voice/farts/fart1.ogg'), 50, 1)
 		else
 			playsound(src, "sound/misc/belt_click.ogg", 50, 1)
-		RegisterSignal(to_buckle, COMSIG_MOVABLE_SET_LOC, .proc/maybe_unbuckle)
 
-	proc/maybe_unbuckle(source, turf/oldloc)
-		// unbuckle if the guy is not on a turf, or if their chair is out of range and it's not a shuttle situation
-		if(!isturf(buckled_guy.loc) || (!IN_RANGE(src, oldloc, 1) && (!istype(get_area(src), /area/shuttle || !istype(get_area(oldloc), /area/shuttle)))))
-			UnregisterSignal(buckled_guy, COMSIG_MOVABLE_SET_LOC)
-			unbuckle()
 
 	unbuckle()
 		..()
 		if(!src.buckled_guy) return
-		UnregisterSignal(buckled_guy, COMSIG_MOVABLE_SET_LOC)
 
 		var/mob/living/M = src.buckled_guy
 		var/mob/living/carbon/human/H = src.buckled_guy
@@ -811,13 +816,6 @@
 		has_butt = null
 		..()
 		return
-
-	Move(atom/target)
-		if(src.buckled_guy?.loc != src.loc)
-			src.unbuckle()
-		. = ..()
-		if(src.buckled_guy?.loc != src.loc)
-			src.unbuckle()
 
 	Click(location,control,params)
 		var/lpm = params2list(params)

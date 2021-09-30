@@ -348,6 +348,24 @@
 			icon = 'icons/obj/stationobjs.dmi'
 			icon_state = "barsign"
 
+		neonicecream
+			name = "Ice-Cream"
+			desc = "A neon sign shaped like ice cream!"
+			icon = 'icons/misc/walp_decor.dmi'
+			icon_state = "neonsign_ice"
+
+		neonsparkle
+			name = "sparkle neon sign"
+			desc = "A neon sign shaped like cute sparkles."
+			icon = 'icons/misc/walp_decor.dmi'
+			icon_state = "neonsign_sparkle"
+
+		neonretro
+			name = "retro neon sign"
+			desc = "A relic from the past, or a grim prediction of the future."
+			icon = 'icons/misc/walp_decor.dmi'
+			icon_state = "neonsign_80s"
+
 		coffee
 			name ="Coffee Shop"
 			desc = "A cute little coffee cup poster."

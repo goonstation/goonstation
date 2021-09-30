@@ -37888,6 +37888,12 @@
 /obj/machinery/manufacturer/uniform,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/bathroom)
+"hkU" = (
+/obj/landmark/spawner{
+	name = "dolly"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "hlB" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -80857,7 +80863,7 @@ bBM
 bBM
 hDa
 xlK
-bBM
+hkU
 bBM
 rdQ
 xpG

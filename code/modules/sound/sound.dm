@@ -312,7 +312,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 
 /**
 	Plays a sound to some clients without caring about its source location and stuff.
-	`target` can be either a list of clients or a list of mobs or `world` or an area.
+	`target` can be either a list of clients or a list of mobs or `world` or an area or a z-level number.
 */
 /proc/playsound_global(target, soundin, vol as num, vary, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME)
 	// don't play if over the per-tick sound limit
@@ -336,6 +336,12 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 			CRASH("Incorrect object in target list `[target[1]]` in playsound_global.")
 	else if(target == world)
 		clients = global.clients
+	else if(isnum(target))
+		clients = list()
+		for(var/client/client as anything in global.clients)
+			var/turf/T = get_turf(client?.mob)
+			if(T?.z == target)
+				clients += client
 	else if(isarea(target))
 		clients = list()
 		for(var/mob/M in target)
