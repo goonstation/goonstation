@@ -1148,6 +1148,11 @@ ABSTRACT_TYPE(/area/diner)
 	name = "Bill E Bheezes"
 	icon_state = "red"
 
+/area/diner/cow
+	name = "Void Diner"
+	icon_state = "purple"
+	requires_power = FALSE
+
 /area/tech_outpost
 	name = "Tech Outpost"
 	icon_state = "storage"
@@ -1223,6 +1228,10 @@ ABSTRACT_TYPE(/area/prefab)
 	eats
 		name = "Commissary"
 		icon_state = "green"
+
+/area/prefab/dreamplaza
+	name = "DreamPlaza Mall"
+	icon_state = "purple"
 
 // Sealab trench areas //
 

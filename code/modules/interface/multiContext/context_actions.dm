@@ -762,7 +762,7 @@
 
 	unstack
 		name = "Remove Layer"
-		desc = "Removes a layer of cake."
+		desc = "Remove a layer of cake."
 		icon_state = "unstack"
 
 		execute(var/atom/target, var/mob/user)
@@ -771,7 +771,7 @@
 
 	candle
 		name = "Extinguish"
-		desc = "Blows out the cake's candle."
+		desc = "Blow out the cake's candle."
 		icon_state = "candle"
 
 		execute(var/atom/target, var/mob/user)
@@ -780,7 +780,7 @@
 
 	pickup
 		name = "Pick Up"
-		desc = "Picks up the cake."
+		desc = "Pick up the cake."
 		icon_state = "up_arrow"
 
 		execute(var/atom/target, var/mob/user)
@@ -939,8 +939,8 @@
 		return TRUE
 
 	solitaire
-		name = "solitaire stack"
-		desc = "stacks cards with a slight offset."
+		name = "Solitaire Stack"
+		desc = "Stack cards with a slight offset."
 		icon_state = "solitaire"
 
 		execute(var/atom/target, var/mob/user)
@@ -948,8 +948,8 @@
 			card.solitaire(user)
 
 	fan
-		name = "fan"
-		desc = "spreads the cards into an easily readable fan."
+		name = "Fan"
+		desc = "Spread the cards into an easily readable fan."
 		icon_state = "fan"
 
 		execute(var/atom/target, var/mob/user)
@@ -961,8 +961,8 @@
 				group.fan(user)
 
 	stack
-		name = "stack"
-		desc = "gather the cards into a deck."
+		name = "Stack"
+		desc = "Gather the cards into a deck."
 		icon_state = "stack"
 
 		execute(var/atom/target, var/mob/user)
@@ -974,8 +974,8 @@
 				group.stack(user)
 
 	draw
-		name = "draw"
-		desc = "add a card to your hand."
+		name = "Draw"
+		desc = "Add a card to your hand."
 		icon_state = "draw"
 
 		execute(var/atom/target, var/mob/user)
@@ -983,8 +983,8 @@
 			card.draw(user)
 
 	draw_facedown
-		name = "draw face-down"
-		desc = "add a card to your hand face-down."
+		name = "Draw Face-down"
+		desc = "Add a card to your hand face-down."
 		icon_state = "draw_facedown"
 
 		execute(var/atom/target, var/mob/user)
@@ -992,8 +992,8 @@
 			card.draw(user,1)
 
 	draw_multiple
-		name = "draw multiple cards"
-		desc = "add many cards to your hand."
+		name = "Draw Multiple Cards"
+		desc = "Add many cards to your hand."
 		icon_state = "multiple"
 
 		execute(var/atom/target, var/mob/user)
@@ -1001,8 +1001,8 @@
 			card.draw_multiple(user)
 
 	topdeck
-		name = "add to top of deck"
-		desc = "add cards to the top of the deck."
+		name = "Add to Top"
+		desc = "Add cards to the top of the deck."
 		icon_state = "deck_top"
 
 		execute(var/atom/target, var/mob/user)
@@ -1010,8 +1010,8 @@
 			group.top_or_bottom(user,user.equipped(),"top")
 
 	bottomdeck
-		name = "add to bottom of deck"
-		desc = "add cards to the top of the deck."
+		name = "Add to Bottom"
+		desc = "Add cards to the top of the deck."
 		icon_state = "deck_bottom"
 
 		execute(var/atom/target, var/mob/user)
@@ -1019,8 +1019,8 @@
 			card.top_or_bottom(user,user.equipped(),"bottom")
 
 	search
-		name = "search"
-		desc = "search for a card."
+		name = "Search"
+		desc = "Search for a card."
 		icon_state = "search"
 
 		execute(var/atom/target, var/mob/user)
@@ -1028,8 +1028,8 @@
 			group.search(user)
 
 	reveal
-		name = "reveal"
-		desc = "reveal the cards to all players nearby."
+		name = "Reveal"
+		desc = "Reveal the cards to all players nearby."
 		icon_state = "eye"
 
 		execute(var/atom/target, var/mob/user)
@@ -1037,19 +1037,19 @@
 			group.reveal(user)
 
 	pickup
-		name = "pick up"
-		desc = "do the thing."
+		name = "Pick Up"
+		desc = "Pick up cards."
 		icon_state = "up_arrow"
 
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/cards = target
-			if(cards.loc == user)
-				return
+			if(cards.loc == user) //checks hand for card to allow taking from pockets/storage
+				user.u_equip(cards)
 			user.put_in_hand_or_drop(cards)
 
 	close
-		name = "close"
-		desc = "close this menu."
+		name = "Close"
+		desc = "Close this menu."
 		icon_state = "close"
 
 		execute(var/atom/target, var/mob/user)

@@ -54,7 +54,8 @@
 		// currently, just update all controllers in world
 		// ***TODO: better communication system using network
 		var/datum/powernet/powernet = src.get_direct_powernet()
-
+		if (!istype(powernet))
+			return
 		for (var/obj/machinery/computer/solar_control/C in powernet.nodes)
 			if (!isnull(src.id) && src.id == C.solar_id)
 				C.tracker_update(angle)
