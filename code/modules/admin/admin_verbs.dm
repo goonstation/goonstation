@@ -80,6 +80,7 @@ var/list/admin_verbs = list(
 		/client/proc/alt_key,
 		/client/proc/create_portal,
 		/datum/admins/proc/togglefarting,
+		/datum/admins/proc/toggleemoterandom,
 		/client/proc/cmd_admin_show_ai_laws,
 		/client/proc/cmd_admin_reset_ai,
 		/verb/restart_the_fucking_server_i_mean_it,

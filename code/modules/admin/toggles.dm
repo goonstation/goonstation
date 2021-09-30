@@ -638,6 +638,20 @@ var/global/IP_alerts = 1
 	logTheThing("diary", usr, null, "toggled Farting [farting_allowed ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled Farting [farting_allowed ? "on" : "off"]")
 
+/datum/admins/proc/toggleemoterandom()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	set desc = "Toggle slight randomization of emote sounds on or off."
+	set name = "Toggle Randomish Emote Sounds"
+	NOT_IF_TOGGLES_ARE_OFF
+	random_emotesounds = !( random_emotesounds )
+	if (random_emotesounds)
+		boutput(world, "<B>Slight randomization of emote sounds has been enabled.</B>")
+	else
+		boutput(world, "<B>Slight randomization of emote sounds has been disabled.</B>")
+	logTheThing("admin", usr, null, "toggled Randomish Emote Sounds [random_emotesounds ? "on" : "off"].")
+	logTheThing("diary", usr, null, "toggled Randomish Emote Sounds [random_emotesounds ? "on" : "off"].", "admin")
+	message_admins("[key_name(usr)] toggled Randomish Emote Sounds [random_emotesounds ? "on" : "off"]")
+
 /datum/admins/proc/toggle_blood_system()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc = "Toggle the blood system on or off."
