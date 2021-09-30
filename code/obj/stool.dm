@@ -146,6 +146,12 @@
 	desc = "Like a stool, but in a bar."
 	parts_type = /obj/item/furniture_parts/stool/bar
 
+/obj/stool/neon
+	name = "neon bar stool"
+	icon_state = "neonstool"
+	desc = "Like a bar stool, but in electric blue."
+	parts_type = /obj/item/furniture_parts/stool/neon
+
 /obj/stool/wooden
 	name = "wooden stool"
 	icon_state = "wstool"
