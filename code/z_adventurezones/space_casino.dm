@@ -58,7 +58,7 @@
 		/obj/item/gimmickbomb/hotdog,
 		/obj/item/card/id/captains_spare,
 		/obj/item/storage/banana_grenade_pouch,
-		/obj/critter/wendigo, // have fun!
+		/obj/critter/greslours, // have fun!
 		/obj/item/artifact/teleport_wand,
 		/obj/item/card/id/dabbing_license
 	)

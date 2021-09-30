@@ -383,9 +383,9 @@
 				card_name = "Automaton"
 				card_data = "It whirrs and claks ominously. Nobody knows where it came from, or why it appeared. Some theories suggest it just happened into existence."
 
-			wendigo
+			greslours
 				attributes = GRIFFENING_ATTRIBUTE_ORGANIC
-				card_name = "Wendigo"
+				card_name = "Greslours"
 				card_data = "A fearsome creature, living in the shadows of plains and caverns of ice."
 
 				king
@@ -393,8 +393,8 @@
 					LVL = 8
 					ATK = 75
 					DEF = 60
-					card_name = "Wendigo King"
-					card_data = "You must sacrifice one wendigo from your side of the field to play Wendigo King. Wendigo King sends killed creatures to the gibbed pile instead of the discard pile."
+					card_name = "Greslours King"
+					card_data = "You must sacrifice one greslours from your side of the field to play Greslours King. Greslours King sends killed creatures to the gibbed pile instead of the discard pile."
 
 			bear
 				attributes = GRIFFENING_ATTRIBUTE_ORGANIC
