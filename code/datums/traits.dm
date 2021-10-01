@@ -20,95 +20,87 @@
 
 	var/point_total = TRAIT_STARTING_POINTS
 	var/free_points = TRAIT_STARTING_POINTS
+	var/max_traits = TRAIT_MAX
 
 	proc/selectTrait(var/id)
-		if(id in traitList)
-			traits_selected |= id
-		calcTotal()
-		return 1
+		var/list/future_selected = traits_selected.Copy()
+		if (id in traitList)
+			future_selected |= id
+
+		if (!isValid(future_selected))
+			return FALSE
+
+		traits_selected = future_selected
+		updateTotal()
+		return TRUE
 
 	proc/unselectTrait(var/id)
-		traits_selected -= id
-		calcTotal()
-		return 1
+		var/list/future_selected = traits_selected.Copy()
+		future_selected -= id
 
-	proc/calcTotal()
+		if (!isValid(future_selected))
+			return FALSE
+
+		traits_selected = future_selected
+		updateTotal()
+		return TRUE
+
+	proc/resetTraits()
+		traits_selected = list()
+		updateTotal()
+
+	proc/calcTotal(var/list/selected = traits_selected)
 		. = free_points
-		for(var/T in traits_selected)
+		for(var/T in selected)
 			if(T in traitList)
 				var/obj/trait/O = traitList[T]
 				. += O.points
-		point_total = .
 
-	proc/isValid()
+	proc/updateTotal()
+		point_total = calcTotal()
+
+	proc/isValid(var/list/selected = traits_selected)
+		if (length(selected) > TRAIT_MAX)
+			return FALSE
+
 		var/list/categories = list()
-		for(var/A in traits_selected)
+		for(var/A in selected)
 			var/obj/trait/T = getTraitById(A)
 			if(T.unselectable) return 0
-			//if(T.requiredUnlock != null && usr.client)  //This will likely fail since the unlocks will not have loaded by the time the trait preferences are created. getscores is too slow.
-			//	if(usr.client.qualifiedXpRewards != null)
-			//		if(!usr.client.qualifiedXpRewards.Find(T.requiredUnlock))
-			//			return 0
+
 			if(T.category != null)
 				if(T.category in categories)
-					return 0
+					return FALSE
 				else
 					categories.Add(T.category)
-		return (calcTotal() >= 0)
+		return (calcTotal(selected) >= 0)
 
-	proc/updateTraits(var/mob/user)
+	proc/isAvailableTrait(var/id, var/unselect = FALSE)
+		var/obj/trait/T = getTraitById(id)
 
-		// Not passed a user, try to gracefully recover.
-		if (!user)
-			user = usr
-			if (!user)
-				return
+		if (!unselect)
+			var/list/categories = list()
+			for(var/A in traits_selected)
+				var/obj/trait/B = getTraitById(A)
 
-		if(!user.client)
-			return
+				if(B.category != null)
+					categories |= B.category
 
-		if(!winexists(user, "traitssetup_[user.ckey]"))
-			winclone(user, "traitssetup", "traitssetup_[user.ckey]")
+			if (T.category in categories)
+				return FALSE
 
-		var/list/selected = list()
-		var/list/available = list()
+		var/list/future_selected = traits_selected.Copy()
+		if (unselect)
+			future_selected -= id
+		else
+			future_selected += id
 
-		var/skipUnlocks = 0
-		for(var/X in traitList)
-			var/obj/trait/C = getTraitById(X)
-			if(C.unselectable) continue
-			if(C.requiredUnlock != null && skipUnlocks) continue
-			if(C.requiredUnlock != null && user.client) //If this needs an xp unlock, check against the pre-generated list of related xp unlocks for this person.
-				if(!isnull(user.client.qualifiedXpRewards))
-					if(!(C.requiredUnlock in user.client.qualifiedXpRewards))
-						continue
-				else
-					boutput(user, "<span class='alert'><b>WARNING: XP unlocks failed to update. Some traits may not be available. Please try again in a moment.</b></span>")
-					SPAWN_DBG(0) user.client.updateXpRewards()
-					skipUnlocks = 1
-					continue
+		if (!isValid(future_selected))
+			return FALSE
 
-			if(X in traits_selected)
-				selected += X
-			else
-				available += X
+		return TRUE
 
-		winset(user, "traitssetup_[user.ckey].traitsSelected", "cells=\"1x[selected.len]\"")
-		var/countSel = 0
-		for(var/S in selected)
-			winset(user, "traitssetup_[user.ckey].traitsSelected", "current-cell=1,[++countSel]")
-			user << output(traitList[S], "traitssetup_[user.ckey].traitsSelected")
-
-		winset(user, "traitssetup_[user.ckey].traitsAvailable", "cells=\"1x[available.len]\"")
-		var/countAvail = 0
-		for(var/A in available)
-			winset(user, "traitssetup_[user.ckey].traitsAvailable", "current-cell=1,[++countAvail]")
-			user << output(traitList[A], "traitssetup_[user.ckey].traitsAvailable")
-
-		winset(user, "traitssetup_[user.ckey].traitPoints", "text=\"Points left : [calcTotal()]\"&text-color=\"[calcTotal() > 0 ? "#00AA00" : "#AA0000"]\"")
-		return
-
-	proc/getAvailableTraits(var/mob/user)
+	proc/getTraits(var/mob/user)
 		. = list()
 
 		var/skipUnlocks = 0
@@ -130,22 +122,6 @@
 					continue
 
 			. += C
-
-
-	proc/showTraits(var/mob/user)
-		if(!user.client)
-			return
-
-		if(!winexists(user, "traitssetup_[user.ckey]"))
-			winclone(user, "traitssetup", "traitssetup_[user.ckey]")
-
-		winshow(user, "traitssetup_[user.ckey]")
-		updateTraits(user)
-
-		user.Browse(null, "window=preferences")
-		return
-
-
 /datum/traitHolder
 	var/list/traits = list()
 	var/list/moveTraits = list() // differentiate movement traits for Move()
@@ -209,37 +185,6 @@
 
 	proc/onMove(var/mob/owner)
 		return
-
-	Click(location,control,params)
-		if(!usr)
-			return
-		if(control)
-			if(control == "traitssetup_[usr.ckey].traitsAvailable")
-				if(!(id in usr.client.preferences.traitPreferences.traits_selected))
-					if(traitCategoryAllowed(usr.client.preferences.traitPreferences.traits_selected, id))
-						if(usr.client.preferences.traitPreferences.traits_selected.len >= TRAIT_MAX)
-							alert(usr, "You can not select more than [TRAIT_MAX] traits.")
-						else
-							if(((usr.client.preferences.traitPreferences.calcTotal()) + points) < 0)
-								alert(usr, "You do not have enough points available to select this trait.")
-							else
-								usr.client.preferences.traitPreferences.selectTrait(id)
-					else
-						alert(usr, "You can only select one trait of this category.")
-			else if (control == "traitssetup_[usr.ckey].traitsSelected")
-				if(id in usr.client.preferences.traitPreferences.traits_selected)
-					if(((usr.client.preferences.traitPreferences.calcTotal()) - points) < 0)
-						alert(usr, "Removing this trait would leave you with less than 0 points. Please remove a different trait.")
-					else
-						usr.client.preferences.traitPreferences.unselectTrait(id)
-
-			usr.client.preferences.traitPreferences.updateTraits(usr)
-		return
-
-	MouseEntered(location,control,params)
-		if(winexists(usr, "traitssetup_[usr.ckey]"))
-			winset(usr, "traitssetup_[usr.ckey].traitName", "text=\"[name]\"")
-			winset(usr, "traitssetup_[usr.ckey].traitDesc", "text=\"[desc]\"")
 
 // BODY - Red Border
 

@@ -59,19 +59,19 @@ export interface CharacterPreferencesData {
   useAzerty: BooleanLike;
   preferredMap: string;
 
-  traitsAvailabe: CharacterPreferencesTrait[],
+  traitsAvailable: CharacterPreferencesTrait[];
+  traitsMax: number;
   traitsPointsTotal: number;
-  traitsPointsFree: number;
-
 }
 
 export interface CharacterPreferencesTrait {
-  id: string,
-  name: string,
-  desc: string,
-  category?: string,
-  points: number,
-  selected?: BooleanLike,
+  id: string;
+  name: string;
+  desc: string;
+  category?: string;
+  points: number;
+  selected?: BooleanLike;
+  available: BooleanLike;
 }
 
 export interface CharacterPreferencesProfile {

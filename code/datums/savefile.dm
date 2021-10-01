@@ -281,7 +281,6 @@
 
 		F["[profileNum]_traits"] >> src.traitPreferences.traits_selected
 
-
 		// Game setting options, not per-profile
 		F["tooltip"] >> src.tooltip_option
 		F["changelog"] >> src.view_changelog

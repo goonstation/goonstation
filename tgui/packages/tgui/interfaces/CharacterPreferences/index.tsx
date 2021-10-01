@@ -55,7 +55,6 @@ export const CharacterPreferences = (_props: any, context: any) => {
                 Appearance
               </Tabs.Tab>
               <Tabs.Tab onClick={() => act('open-occupation-window')}>Occupation</Tabs.Tab>
-              <Tabs.Tab onClick={() => act('open-traits-window')}>Traits old</Tabs.Tab>
               <Tabs.Tab
                 selected={menu === CharacterPreferencesTabKeys.Traits}
                 onClick={() => setMenu(CharacterPreferencesTabKeys.Traits)}>
@@ -74,19 +73,12 @@ export const CharacterPreferences = (_props: any, context: any) => {
             </Tabs>
           </Stack.Item>
           <Stack.Item grow="1">
-            {menu === CharacterPreferencesTabKeys.General ||
-            menu === CharacterPreferencesTabKeys.Character ||
-            menu === CharacterPreferencesTabKeys.Traits ? (
+            {(menu === CharacterPreferencesTabKeys.General || menu === CharacterPreferencesTabKeys.Character) && (
               <Stack fill>
                 <Stack.Item grow="1">
-                  <Section
-                    scrollable={
-                      menu === CharacterPreferencesTabKeys.General || menu === CharacterPreferencesTabKeys.Character
-                    }
-                    fill>
+                  <Section scrollable fill>
                     {menu === CharacterPreferencesTabKeys.General && <GeneralTab />}
                     {menu === CharacterPreferencesTabKeys.Character && <CharacterTab />}
-                    {menu === CharacterPreferencesTabKeys.Traits && <TraitsTab />}
                   </Section>
                 </Stack.Item>
                 <Stack.Item ml="5px">
@@ -108,12 +100,14 @@ export const CharacterPreferences = (_props: any, context: any) => {
                   </Section>
                 </Stack.Item>
               </Stack>
-            ) : (
+            )}
+            {(menu === CharacterPreferencesTabKeys.GameSettings || menu === CharacterPreferencesTabKeys.Saves) && (
               <Section scrollable fill>
                 {menu === CharacterPreferencesTabKeys.GameSettings && <GameSettingsTab />}
                 {menu === CharacterPreferencesTabKeys.Saves && <SavesTab />}
               </Section>
             )}
+            {menu === CharacterPreferencesTabKeys.Traits && <TraitsTab />}
           </Stack.Item>
           <Stack.Item>
             <Section>

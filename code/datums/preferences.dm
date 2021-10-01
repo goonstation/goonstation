@@ -147,14 +147,17 @@ datum/preferences
 		user << browse_rsc(icon(hud_style_selection[hud_style], "preview"), "hud_preview_[src.hud_style].png")
 
 		var/list/traits = list()
-		for (var/obj/trait/C in src.traitPreferences.getAvailableTraits(user))
+		for (var/obj/trait/C in src.traitPreferences.getTraits(user))
+			var/selected = (C.id in traitPreferences.traits_selected)
+
 			traits += list(list(
 				"id" = C.id,
 				"name" = C.cleanName,
 				"desc" = C.desc,
 				"category" = C.category,
 				"points" = C.points,
-				"selected" = (C.id in traitPreferences.traits_selected)
+				"selected" = selected,
+				"available" = src.traitPreferences.isAvailableTrait(C.id, selected)
 			))
 
 		. = list(
@@ -217,9 +220,9 @@ datum/preferences
 			"useAzerty" = src.use_azerty,
 			"preferredMap" = src.preferred_map,
 
-			"traitsAvailabe" = traits,
+			"traitsAvailable" = traits,
+			"traitsMax" = src.traitPreferences.max_traits,
 			"traitsPointsTotal" = src.traitPreferences.point_total,
-			"traitsPointsFree" = src.traitPreferences.free_points,
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -265,11 +268,6 @@ datum/preferences
 
 			if ("open-occupation-window")
 				src.SetChoices(usr)
-				ui.close()
-				return TRUE
-
-			if ("open-traits-window")
-				traitPreferences.showTraits(usr)
 				ui.close()
 				return TRUE
 
@@ -917,6 +915,20 @@ datum/preferences
 
 				return TRUE
 
+			if ("select-trait")
+				src.profile_modified = src.traitPreferences.selectTrait(params["id"])
+				return TRUE
+
+			if ("unselect-trait")
+				src.profile_modified = src.traitPreferences.unselectTrait(params["id"])
+				return TRUE
+
+			if ("reset-traits")
+				src.traitPreferences.resetTraits()
+				src.profile_modified = TRUE
+				return TRUE
+
+
 	proc/preview_sound(var/sound/S)
 		// tgui kinda adds the ability to spam stuff very fast. This just limits people to spam sound previews.
 		if (!ON_COOLDOWN(usr, "preferences_preview_sound", 0.5 SECONDS))
@@ -1494,10 +1506,6 @@ datum/preferences
 
 		if (link_tags["jobswindow"])
 			src.SetChoices(user)
-			return
-
-		if (link_tags["traitswindow"])
-			traitPreferences.showTraits(user)
 			return
 
 		if (link_tags["closejobswindow"])
