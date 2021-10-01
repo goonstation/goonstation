@@ -843,9 +843,9 @@
 
 	heal(var/mob/M)
 		if(src.warm == DONK_WARM)
-			M.reagents.?add_reagent("honk_fart",15)
+			M.reagents?.add_reagent("honk_fart",15)
 		else
-			M.reagents.?add_reagent("simethicone",15)
+			M.reagents?.add_reagent("simethicone",15)
 		..()
 
 	cooltime()
