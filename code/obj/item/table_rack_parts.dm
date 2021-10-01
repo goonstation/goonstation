@@ -145,6 +145,12 @@ RACK PARTS
 	icon = 'icons/obj/furniture/table_clothred.dmi'
 	furniture_type = /obj/table/clothred/auto
 
+/obj/item/furniture_parts/table/neon
+	name = "food court table parts"
+	desc = "A collection of parts that can be used to make a food court table."
+	icon = 'icons/obj/furniture/table_neon.dmi'
+	furniture_type = /obj/table/neon/auto
+
 /obj/item/furniture_parts/table/folding
 	name = "folded folding table"
 	desc = "A collapsed table that can be deployed quickly."
@@ -282,7 +288,6 @@ RACK PARTS
 	furniture_type = /obj/stool/wooden
 	furniture_name = "wooden stool"
 
-
 /obj/item/furniture_parts/stool/bee_bed
 	name = "bee bed parts"
 	desc = "A collection of parts that can be used to make a bee bed."
@@ -298,6 +303,14 @@ RACK PARTS
 	icon_state = "bstool_parts"
 	furniture_type = /obj/stool/bar
 	furniture_name = "bar stool"
+
+/obj/item/furniture_parts/stool/neon
+	name = "neon bar stool parts"
+	desc = "A collection of parts that can be used to make a neon bar stool."
+	icon = 'icons/obj/furniture/chairs.dmi'
+	icon_state = "neonstool_parts"
+	furniture_type = /obj/stool/neon
+	furniture_name = "neon bar stool"
 
 /* ---------- Bench Parts ---------- */
 /obj/item/furniture_parts/bench

@@ -1842,14 +1842,14 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	wages = PAY_UNTRAINED
 	limit = 1
 
-	slot_head = /obj/item/clothing/head/headband/bee
-	slot_suit = /obj/item/clothing/suit/bee
-	slot_ears = /obj/item/device/radio/headset
-	slot_jump = /obj/item/clothing/under/rank/beekeeper
-	slot_foot = /obj/item/clothing/shoes/black
-	slot_belt = /obj/item/device/pda2
-	slot_poc1 = /obj/item/reagent_containers/food/snacks/ingredient/egg/bee
-	slot_poc2 = /obj/item/reagent_containers/food/snacks/ingredient/egg/bee/buddy
+	slot_head = list(/obj/item/clothing/head/headband/bee)
+	slot_suit = list(/obj/item/clothing/suit/bee)
+	slot_ears = list(/obj/item/device/radio/headset)
+	slot_jump = list(/obj/item/clothing/under/rank/beekeeper)
+	slot_foot = list(/obj/item/clothing/shoes/black)
+	slot_belt = list(/obj/item/device/pda2)
+	slot_poc1 = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/bee)
+	slot_poc2 = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/buddy)
 	items_in_backpack = list(/obj/item/reagent_containers/food/snacks/b_cupcake, /obj/item/reagent_containers/food/snacks/ingredient/royal_jelly)
 
 	New()

@@ -282,6 +282,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\components\itemblock\backpackblock.dm"
 #include "code\datums\components\itemblock\concussivegauntletblock.dm"
 #include "code\datums\components\itemblock\saberblock.dm"
+#include "code\datums\components\itemblock\unarmedbonusblock.dm"
 #include "code\datums\components\itemblock\warmsup.dm"
 #include "code\datums\controllers\action_controls.dm"
 #include "code\datums\controllers\artifact_controls.dm"
