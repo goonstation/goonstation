@@ -718,6 +718,7 @@
 			customPizza.overlays += P.overlays
 			customPizza.num = P.num
 			customPizza.topping = P.topping
+			customPizza.topping_types = P.topping_types
 			customPizza.topping_colors = P.topping_colors
 			customPizza.heal_amt = P.heal_amt
 			P.reagents.trans_to(customPizza, P.reagents.total_volume)
@@ -1391,6 +1392,7 @@
 		B.UpdateOverlays(overlay,"first")
 		B.cake_bases = list("base_custom")
 		if(S)
+			B.cake_types += S.type
 			S.reagents.trans_to(B, 50)
 			B.food_effects += S.food_effects
 			if(S.real_name)

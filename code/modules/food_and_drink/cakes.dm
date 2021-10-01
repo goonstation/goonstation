@@ -40,6 +40,7 @@
 	initial_volume = 100
 	w_class = W_CLASS_BULKY
 	var/list/cake_bases //stores the name of the base types of each layer of cake i.e. ("custom","gateau","meat")
+	var/list/cake_types = list()
 	var/sliced = FALSE
 	var/static/list/frostingstyles = list("classic","top swirls","bottom swirls","spirals","rose spirals")
 	var/clayer = 1
@@ -285,6 +286,14 @@
 		if(c.litfam)
 			src.ignite()
 		src.update_cake_context()
+
+		//Complete pizza crew objectives if possible
+		src.cake_types += c.cake_types
+		if (user.mind && user.mind.objectives)
+			for (var/datum/objective/crew/chef/cake/O in user.mind.objectives)
+				var/list/matching_types = src.cake_types & O.choices
+				if(matching_types.len >= 3)
+					O.completed = 1
 		qdel(c)
 
 

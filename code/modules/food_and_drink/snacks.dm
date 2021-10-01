@@ -72,6 +72,7 @@
 	var/sliced = FALSE
 	var/topping = FALSE
 	var/num = 0
+	var/list/topping_types = list()
 	var/list/topping_colors = list()
 	var/list/topping_holder = list()
 	custom_food = 0

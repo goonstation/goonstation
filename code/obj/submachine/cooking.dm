@@ -632,6 +632,16 @@ table#cooktime a#start {
 						if (!OVEN_checkitem(R.item4, R.amt4)) continue
 
 					output = R.specialOutput(src)
+
+					//Complete pizza crew objectives if possible
+					if(istype(output,/obj/item/reagent_containers/food/snacks/pizza/))
+						var/obj/item/reagent_containers/food/snacks/pizza/P = output
+						if (usr.mind && usr.mind.objectives)
+							for (var/datum/objective/crew/chef/pizza/O in usr.mind.objectives)
+								var/list/matching_toppings = P.topping_types & O.choices
+								if(matching_toppings.len >= 3)
+									O.completed = 1
+
 					if (isnull(output))
 						output = R.output
 

@@ -159,6 +159,23 @@ ABSTRACT_TYPE(/datum/objective/crew/chiefengineer)
 					return 1
 			return 0
 
+	//Copy in the new engineer objectives because, why not?
+	reserves
+		explanation_text = "Make sure all SMES units on the station are at least half chaged at the end of the round."
+		check_completion()
+			for(var/obj/machinery/power/smes/S in machine_registry[MACHINES_POWER])
+				if(S.charge < S.capacity/2)
+					return 0
+			return 1
+
+	apc
+		explanation_text = "Ensure all APC units on the station are working with at least 10% charge at the end of the round."
+		check_completion()
+			for(var/obj/machinery/power/apc/A in machine_registry[MACHINES_POWER])
+				if(!A.operating || A.cell.percent() < 10)
+					return 0
+			return 1
+
 ABSTRACT_TYPE(/datum/objective/crew/securityofficer)
 /datum/objective/crew/securityofficer // grabbed the HoS's two antag-related objectives cause they work just fine for regular sec too, so...?
 	/*brig
@@ -299,8 +316,84 @@ ABSTRACT_TYPE(/datum/objective/crew/janitor)
 //	bartender
 
 //	chef
+ABSTRACT_TYPE(/datum/objective/crew/chef)
+/datum/objective/crew/chef
+	//use a curated list of options as some snacks are not possible
+	cake
+		explanation_text = ""
+		var/choices[3]
+		var/completed = 0
+		New()
+			..()
+			//Result is cached so it should just access the list after the first time
+			var/list/ingredients = filtered_concrete_typesof(/obj/item/reagent_containers/food/snacks, .proc/filter_ingredients)
+			var/list/names[3]
+			for(var/i = 1, i <= 3, i++)
+				choices[i] = pick(ingredients)
+				var/choiceType = choices[i]
+				var/obj/instance =  new choiceType
+				names[i] = instance.name
+			explanation_text = "Create a custom, three-tier cake with layers of [names[1]], [names[2]], and [names[3]] infused cake in any order."
+		check_completion()
+			return completed
+
+	pizza
+		explanation_text = ""
+		var/choices[3]
+		var/completed = 0
+		New()
+			..()
+			var/list/ingredients = filtered_concrete_typesof(/obj/item/reagent_containers/food/snacks, .proc/filter_ingredients)
+			var/list/names[3]
+			for(var/i = 1, i <= 3, i++)
+				choices[i] = pick(ingredients)
+				var/choiceType = choices[i]
+				var/obj/instance =  new choiceType
+				names[i] = instance.name
+			explanation_text = "Create a custom pizza with [names[1]], [names[2]], and [names[3]] toppings."
+		check_completion()
+			return completed
+
+	proc/filter_ingredients(ingredient_type)
+		var/list/blacklist = list(
+			/obj/item/reagent_containers/food/snacks/burger/humanburger,
+			/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat,
+			/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock,
+			/obj/item/reagent_containers/food/snacks/plant,
+			/obj/item/reagent_containers/food/snacks/sandwich,
+			/obj/item/reagent_containers/food/snacks/pizza/xmas,
+			/obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable
+		)
+		blacklist += concrete_typesof(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter)
+		return !(ingredient_type in blacklist)
 
 //	engineer
+ABSTRACT_TYPE(/datum/objective/crew/engineer)
+/datum/objective/crew/engineer
+	furnaces //copied from CE
+		explanation_text = "Make sure all furnaces on the station are active at the end of the round."
+		medal_name = "Slow Burn"
+		check_completion()
+			for(var/obj/machinery/power/furnace/F in machine_registry[MACHINES_POWER])
+				if(F.z == 1 && F.active == 1)
+					return 1
+			return 0
+
+	reserves
+		explanation_text = "Make sure all SMES units on the station are at least half chaged at the end of the round."
+		check_completion()
+			for(var/obj/machinery/power/smes/S in machine_registry[MACHINES_POWER])
+				if(S.charge < S.capacity/2)
+					return 0
+			return 1
+
+	apc
+		explanation_text = "Ensure all APC units on the station are working with at least 10% charge at the end of the round."
+		check_completion()
+			for(var/obj/machinery/power/apc/A in machine_registry[MACHINES_POWER])
+				if(!A.operating || A.cell.percent() < 10)
+					return 0
+			return 1
 
 ABSTRACT_TYPE(/datum/objective/crew/miner)
 /datum/objective/crew/miner
@@ -543,6 +636,14 @@ ABSTRACT_TYPE(/datum/objective/crew/geneticist)
 				if(C.records.len > 4)
 					return 1
 			return 0
+
+	booth
+		explanation_text = "Have at least 5 options available in the gene booth at the end of the round."
+		check_completion()
+			var/list/geneoptions = list()
+			for_by_tcl(GB, /obj/machinery/genetics_booth)
+				geneoptions |= GB.offered_genes
+			return geneoptions.len >= 5
 
 ABSTRACT_TYPE(/datum/objective/crew/roboticist)
 /datum/objective/crew/roboticist
