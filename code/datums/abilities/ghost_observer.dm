@@ -47,7 +47,11 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	icon = 'icons/mob/spooktober_ghost_hud160x32.dmi'
 	icon_state = "empty"
 	name = "Spooktober Spookpoints Meter"
+	desc = "Seems to indicate how spooky the current ghosts are in this sector."
 	var/theme = null // for wire's tooltips, it's about time this got varized
+
+	get_desc()
+		. += "[spooktober_GH.points] Points!"
 
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)

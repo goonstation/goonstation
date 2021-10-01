@@ -1,4 +1,60 @@
 
+(t)fri oct 01 21
+(u)aloe
+(p)6134
+(e)🐛|bug
+(+)The fungus shortage is over, and spaceacillin has returned to to NanoMeds.
+(t)thu sep 30 21
+(u)tarmunora
+(e)⚖|balance
+(+)Fabricated vending machines are constructed empty. Visit your local Quartermaster for restock cartridges!
+(u)tarmunora
+(e)🔄|rework
+(+)Armored gloves now give bonuses to unarmed blocking values based on material stats. Experiment!
+(u)Walpvrgis
+(p)6062
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Added a new space prefab; the DreamPlaza Mall (or what is left of it).
+(t)wed sep 29 21
+(u)Gannets
+(p)6117
+(e)⚖|balance
+(+)Betelgeuse sniper rifle magazine size increased to 6. Spare magazines increased to 7.
+(t)mon sep 27 21
+(u)BatElite
+(p)6111
+(e)|
+(+)Honey, the material, has been renamed to refined honey for all the cloning pod enthusiasts out there.
+(u)JordanTheKitty
+(p)6106
+(e)|
+(+)Lowered the alcohol density of many drinks typically served tall such as Bloody Marys and Piña Coladas.
+(+)Replaced the sugar in the Tequila Sunrise recipe with grenadine
+(u)TTerc
+(p)6108
+(e)|
+(+)Portable reclaimer now accepts anything with a set material e.g. honey, butts, electroplated items.
+(u)aloe
+(p)5998
+(e)🆕|feature
+(+)Special attacks can now be used to bonk securitrons, medibots, and other small robots.
+(t)sun sep 26 21
+(u)Zonespace
+(p)6099
+(e)⛔|removal
+(+)Tourettes has been removed.
+(u)Emily
+(e)🆕|feature
+(*)New Secret Chem: Marteeny
+(t)sat sep 25 21
+(u)Emily
+(e)🆕|feature
+(*)New Secret Chem: Miasmosa
+(t)fri sep 24 21
+(u)Emily
+(p)6090
+(e)🆕🗺|feature, mapping
+(*)A strangely shaped chicken has wandered into the ranch!
 (t)tue sep 21 21
 (u)BatElite
 (p)5592

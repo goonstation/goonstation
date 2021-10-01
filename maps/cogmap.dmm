@@ -55561,6 +55561,15 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/black,
 /area/station/security/armory)
+"fHm" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/landmark/spawner{
+	name = "dolly"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "fHI" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -125228,7 +125237,7 @@ azn
 aAW
 avj
 awI
-azp
+fHm
 awI
 awI
 apY

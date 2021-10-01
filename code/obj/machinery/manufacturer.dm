@@ -4,8 +4,8 @@
 	name = "Manufacturing Unit"
 	desc = "A standard fabricator unit capable of producing certain items from various materials."
 	icon = 'icons/obj/manufacturer.dmi'
-	icon_state = "fab"
-	var/icon_base = null
+	icon_state = "fab-general"
+	var/icon_base = "general"
 	density = 1
 	anchored = 1
 	mats = 20
