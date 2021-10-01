@@ -173,8 +173,6 @@
 		src.power_change()
 		return
 
-
-
 /obj/machinery/computer/card/attack_hand(var/mob/user as mob)
 	if(..())
 		return
