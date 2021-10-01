@@ -800,10 +800,6 @@
 				if (output_bar_from_item(M, 10))
 					pool(M)
 
-			else if (istype(M, /obj/item/raw_material))
-				output_bar_from_item(M)
-				pool(M)
-
 			else if (istype(M, /obj/item/sheet))
 				if (output_bar_from_item(M, 10))
 					qdel(M)
@@ -824,6 +820,10 @@
 			else if (istype(M, /obj/item/wizard_crystal))
 				if (output_bar_from_item(M))
 					qdel(M)
+
+			else
+				output_bar_from_item(M)
+				qdel(M)
 
 			sleep(smelt_interval)
 
@@ -890,7 +890,7 @@
 
 	proc/load_reclaim(obj/item/W as obj, mob/user as mob)
 		. = FALSE
-		if (istype(W,/obj/item/raw_material/) || istype(W,/obj/item/sheet/) || istype(W,/obj/item/rods/) || istype(W,/obj/item/tile/) || istype(W,/obj/item/cable_coil) || istype(W,/obj/item/wizard_crystal))
+		if ((W.material && !istype(W,/obj/item/material_piece)) || istype(W,/obj/item/wizard_crystal))
 			W.set_loc(src)
 			if (user) user.u_equip(W)
 			W.dropped()
@@ -900,6 +900,9 @@
 		if (W.cant_drop) //For borg held items
 			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
 			return ..()
+		if (istype(W, /obj/item/ore_scoop))
+			var/obj/item/ore_scoop/scoop = W
+			W = scoop.satchel
 		if (istype(W,/obj/item/storage/) || istype(W,/obj/item/satchel/))
 			var/obj/item/storage/S = W
 			var/obj/item/satchel/B = W

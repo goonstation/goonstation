@@ -131,6 +131,12 @@
 		item_state = "space-captain-red"
 		desc = "Helps protect against vacuum. Comes in a fasionable red befitting a commander."
 
+/obj/item/clothing/head/helmet/space/neon
+	name = "neon space helmet"
+	icon_state = "space-cute"
+	item_state = "space-cute"
+	desc = "Helps protect against vacuum. Comes in a unique, flashy style."
+
 // Sealab helmets
 
 /obj/item/clothing/head/helmet/space/engineer/diving //hijacking engiehelms for the flashlight
@@ -731,6 +737,8 @@
 		desc = "Ooh, fancy."
 		icon_state = "indusred"
 		item_state = "indusred"
+		is_syndicate = 1
+
 		setupProperties()
 			..()
 			setProperty("meleeprot_head", 7)

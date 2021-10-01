@@ -5149,7 +5149,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "rozetasolar";
 	name = "Zeta Solar Control";
 	track = 2
@@ -10219,7 +10219,7 @@
 /area/crew_quarters/quarters)
 "atq" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/crate,
 /turf/simulated/floor{
@@ -11384,7 +11384,7 @@
 /turf/simulated/wall/r_wall,
 /area/ai_monitored/storage/eva)
 "avG" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -18051,7 +18051,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/inner)
 "aHV" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -19753,7 +19753,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor{
 	icon_state = "snow"
 	},
@@ -29273,7 +29273,7 @@
 /area/crew_quarters/juryroom)
 "bcy" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor{
 	icon_state = "snow"
@@ -29577,7 +29577,7 @@
 "bdb" = (
 /obj/stool,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
@@ -30031,7 +30031,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor{
 	icon_state = "snow"
 	},
@@ -31158,7 +31158,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "solar_aft";
 	name = "South Solar Control"
 	},
@@ -32880,7 +32880,7 @@
 /turf/simulated/floor/plating/airless,
 /area/solar/south)
 "bjm" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "solar_aft";
 	name = "South Solar Control"
 	},
@@ -33064,7 +33064,7 @@
 	},
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/device/radio/signaler{
 	pixel_x = 2;
@@ -49893,7 +49893,7 @@
 	icon_state = "term";
 	dir = 1
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "tds-solar";
 	name = "Factory Solar Control"
 	},
@@ -56212,7 +56212,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "ntoutpost-solar";
 	name = "Outpost Solar Control";
 	track = 2
@@ -56393,7 +56393,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor,
 /area/old_outpost/engine)
 "cjL" = (
@@ -56427,7 +56427,7 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/black,
 /area/old_outpost/control)
 "cjQ" = (

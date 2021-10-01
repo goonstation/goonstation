@@ -1436,7 +1436,7 @@ datum
 			name = "Tequila Sunrise"
 			id = "tequilasunrise"
 			result = "tequilasunrise"
-			required_reagents = list("tequila" = 1, "juice_orange" = 1, "sugar" = 1)
+			required_reagents = list("tequila" = 1, "juice_orange" = 1, "grenadine" = 1)
 			result_amount = 3
 			mix_phrase = "The drink fizzes into some liquid sunshine for the soul."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
@@ -1642,7 +1642,7 @@ datum
 			result = "pinklemonade"
 			required_reagents = list("grenadine" = 1,"lemonade" = 1)
 			result_amount = 2
-			mix_phrase = "You watch the pink colour dance around the container and slowly combine with the lemonade"
+			mix_phrase = "You watch the pink colour dance around the container and slowly combine with the lemonade."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 

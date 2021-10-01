@@ -131,6 +131,12 @@
 		src.panel_image = image(src.icon, src.icon_panel)
 	var/lastvend = 0
 
+
+	was_built_from_frame(mob/user, newly_built)
+		. = ..()
+		if(newly_built)
+			src.product_list = new()
+
 	proc/vendinput(var/datum/mechanicsMessage/inp)
 		if( world.time < lastvend ) return//aaaaaaa
 		lastvend = world.time + 2
@@ -1239,7 +1245,6 @@
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/handcuffs/guardbot, 16)
 		product_list += new/datum/data/vending_product(/obj/item/handcuffs, 8)
-		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/flashbang, 5)
 		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/fog, 5)
 		product_list += new/datum/data/vending_product(/obj/item/device/flash, 4)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/helmet/hardhat/security, 4)
@@ -1278,6 +1283,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/pbr, 5)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts, 3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts/anti_mutant, 3)
+		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/flashbang, 7)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12/weak, 1, hidden=1) // this may be a bad idea, but it's only one box //Maybe don't put the delimbing version in here
 /obj/machinery/vending/cola
 	name = "soda machine"
@@ -1868,6 +1874,7 @@
 		if (status & BROKEN)
 			setCrtOverlayStatus(FALSE)
 			setItemOverlay(null)
+			panel_open = FALSE
 			return FALSE
 		else if (powered())
 			setCrtOverlayStatus(TRUE)

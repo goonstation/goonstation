@@ -55,7 +55,7 @@
 /datum/chemicompiler_core/New(datum/holder)
 	..()
 	if(!istype(holder))
-		del(src)
+		qdel(src)
 		return
 
 	src.holder = holder
@@ -122,14 +122,14 @@
 /** Callbacks */
 /datum/chemicompiler_core/proc/topicPermissionCheck(action)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if(topicPermissionCheckCallback)
 		return call(src.holder, topicPermissionCheckCallback)(action)
 
 /datum/chemicompiler_core/proc/showMessage(message)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	message = "<span class='alert'>[message]</span>"
 	if(messageCallback)
@@ -137,42 +137,42 @@
 
 /datum/chemicompiler_core/proc/throwError(errorCode)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if(errorCallback)
 		return call(src.holder, errorCallback)(errorCode)
 
 /datum/chemicompiler_core/proc/reservoirClick(resId)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if(reservoirClickCallback)
 		return call(src.holder, reservoirClickCallback)(resId)
 
 /datum/chemicompiler_core/proc/reservoirCheck(resId)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if (reservoirCheckCallback)
 		return call(src.holder, reservoirCheckCallback)(resId)
 
 /datum/chemicompiler_core/proc/transfer(source, target, amount)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if (transferCallback)
 		return call(src.holder, transferCallback)(source, target, amount)
 
 /datum/chemicompiler_core/proc/isolate(source, target, amount, index)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if (isolateCallback)
 		return call(src.holder, isolateCallback)(source, target, amount, index)
 
 /datum/chemicompiler_core/proc/heat(res, temp)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if (heatCallback)
 		var/datum/chemicompiler_executor/E = src.holder
@@ -189,7 +189,7 @@
 
 /datum/chemicompiler_core/proc/statusChange(oldStatus, newStatus)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	return call(src.holder, "statusChange")(oldStatus, newStatus)
 
@@ -258,7 +258,7 @@
 
 /datum/chemicompiler_core/proc/runCBF(var/list/inst)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	resetVM()
 	running = 1
@@ -269,7 +269,7 @@
 	if ( !running || !currentProg )
 		return
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if(running)
 		var/loopUsed
@@ -639,7 +639,7 @@
 /datum/chemicompiler_executor/New(datum/holder, corePath = /datum/chemicompiler_core/portableCore)
 	..()
 	if(!istype(holder))
-		del(src)
+		qdel(src)
 		return
 
 	src.holder = holder
@@ -688,7 +688,7 @@
 		return 1
 /datum/chemicompiler_executor/proc/reservoirClick(resId)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if(istype(reservoirs[resId], /obj/item/reagent_containers/glass))
 		// Taking a res out
@@ -712,7 +712,7 @@
 
 /datum/chemicompiler_executor/proc/topicPermissionCheck(action)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	return call(src.holder, "topicPermissionCheck")(action)
 
@@ -736,7 +736,7 @@
 
 /datum/chemicompiler_executor/proc/showMessage(message)
 	if(!istype(holder))
-		del(src)
+		qdel(src)
 		return
 	message = "<span class='alert'>[message]</span>"
 	if(istype(holder:loc, /mob))
@@ -770,7 +770,7 @@
 
 /datum/chemicompiler_executor/proc/transferReagents(var/source, var/target, var/amount, var/index = 0)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	var/error_code = validate_source_target_index(source, target, index)
 	if(error_code)
@@ -804,7 +804,7 @@
 
 /datum/chemicompiler_executor/proc/heatReagents(var/rid, var/temp)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if(rid < 1 || rid > 10)
 		beepCode(1, 1) // Invalid reservoir id
@@ -842,14 +842,14 @@
 
 /datum/chemicompiler_executor/proc/statusChange(oldStatus, newStatus)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if (core.statusChangeCallback)
 		return call(holder, core.statusChangeCallback)(oldStatus, newStatus)
 
 /datum/chemicompiler_executor/proc/reagent_volume(rid)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if(rid < 1 || rid > 10)
 		beepCode(1, 1) // Invalid reservoir id

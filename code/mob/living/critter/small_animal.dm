@@ -44,6 +44,7 @@
   - figures
 todo: add more small animals!
 */
+ABSTRACT_TYPE(/mob/living/critter/small_animal)
 /mob/living/critter/small_animal
 	name = "critter"
 	real_name = "critter"
