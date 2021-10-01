@@ -35,7 +35,7 @@ var/global/regex/discord_emoji_regex = new(@{"(?:<|&lt;)(?:a)?:([-a-zA-Z0-9_]+):
 /proc/discord_emojify(text)
 	return discord_emoji_regex.Replace(text, {"<img src="https://cdn.discordapp.com/emojis/$2.gif" onerror="if (this.src != 'https://cdn.discordapp.com/emojis/$2.png') this.src = 'https://cdn.discordapp.com/emojis/$2.png';" title="$1" width="32" height="32">"})
 
-/proc/linkify(text
+/proc/linkify(text)
 	. = text
 	while(full_url_regex.Find(text))
 		var/http_part = full_url_regex.group[1]
