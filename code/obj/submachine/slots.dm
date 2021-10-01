@@ -99,6 +99,9 @@
 			. = TRUE
 
 		if("cashin")
+			if(!src.accessed_record)
+				boutput(usr, "<span class='alert'>No account connected.</span>")
+				return
 			var/transfer_amount = input(usr, "Enter how much to transfer from your account.", "Deposit Credits", 0) as null|num
 			transfer_amount = clamp(transfer_amount,0,src.accessed_record.fields["current_money"])
 			src.accessed_record.fields["current_money"] -= transfer_amount
