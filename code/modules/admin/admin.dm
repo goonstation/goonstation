@@ -3147,6 +3147,17 @@ var/global/noir = 0
 								logTheThing("admin", usr, null, "used the Noir secret")
 								logTheThing("diary", usr, null, "used the Noir secret", "admin")
 
+					if("random_emotesounds")
+						if(src.level >= LEVEL_ADMIN)
+							if (random_emotesounds)
+								random_emotesounds = 0
+								message_admins("[key_name(usr)] has made farts and screams monotonous again, somehow")
+							else
+								random_emotesounds = 1
+								message_admins("[key_name(usr)] has spiced up life with some mild randomness, and by life i mean screams and farts")
+						logTheThing("admin", usr, null, "used Random Emotesounds secret")
+						logTheThing("diary", usr, null, "used Random Emotesounds secret", "admin")
+
 					if("the_great_switcharoo")
 						if(src.level >= LEVEL_ADMIN) //Will be SG when tested
 							if (alert("Do you really wanna do the great switcharoo?", "Awoo, awoo", "Sure thing!", "Not really.") == "Sure thing!")
@@ -4268,6 +4279,7 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=secretsfun;type=noir'>Noir</A><BR>
 				<A href='?src=\ref[src];action=secretsfun;type=the_great_switcharoo'>The Great Switcharoo</A><BR>
 				<A href='?src=\ref[src];action=secretsfun;type=fartyparty'>Farty Party All The Time</A><BR>
+				<A href='?src=\ref[src];action=secretsfun;type=random_emotesounds'>Change Emotesound Randomness</A><BR>
 		"}
 
 	dat += "</div>"

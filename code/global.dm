@@ -268,6 +268,7 @@ var/global
 	debug_mixed_forced_wraith = 0
 	debug_mixed_forced_blob = 0
 	farting_allowed = 1
+	random_emotesounds = 1
 	blood_system = 1
 	bone_system = 0
 	pull_slowing = 0
@@ -294,6 +295,7 @@ var/global
 	blowout = 0
 	farty_party = 0
 	deep_farting = 0
+
 
 	datum/titlecard/lobby_titlecard
 

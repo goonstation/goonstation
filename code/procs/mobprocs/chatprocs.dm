@@ -717,7 +717,9 @@
 		modifier -= 120
 	if (modifier == 0)
 		modifier = 1
-	return 1.0 + 0.5*(modifier - src.bioHolder.age)/80
+	if (random_emotesounds == 0)
+		return 1.0 + 0.5*(modifier - src.bioHolder.age)/80
+	return 1.0 + 0.5*(modifier - src.bioHolder.age)/80 + rand(-15,15)/100
 
 /mob/proc/understands_language(var/langname)
 	if (langname == say_language)
