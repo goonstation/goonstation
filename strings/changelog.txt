@@ -1,5 +1,8 @@
 
 (t)thu sep 30 21
+(u)tarmunora
+(e)🔄|rework
+(+)Armored gloves now give bonuses to unarmed blocking values based on material stats. Experiment!
 (u)Walpvrgis
 (p)6062
 (e)🆕🗺🎨|feature, mapping, sprites
