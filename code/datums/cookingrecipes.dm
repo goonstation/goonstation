@@ -715,6 +715,16 @@
 	cookbonus = 18
 	output = /obj/item/reagent_containers/food/snacks/pizza/shroom
 
+/datum/cookingrecipe/pizza_bacon
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pizzaba
+	cookbonus = 18
+	output = /obj/item/reagent_containers/food/snacks/pizza/bacon
+
+/datum/cookingrecipe/pizza_meaty
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pizzame
+	cookbonus = 18
+	output = /obj/item/reagent_containers/food/snacks/pizza/meaty
+
 /datum/cookingrecipe/pizza
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pizza3
 	cookbonus = 18

@@ -652,6 +652,11 @@
 			user.put_in_hand_or_drop(pizzap)
 			qdel (W)
 			qdel (src)			
+		else if (istype(W,/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon))
+			var/pizzaba = new /obj/item/reagent_containers/food/snacks/ingredient/pizzaba
+			user.put_in_hand_or_drop(pizzaba)
+			qdel (W)
+			qdel (src)		
 		else if (istype(W, /obj/item/reagent_containers/food/snacks/))
 			var/obj/item/reagent_containers/food/snacks/F = W
 			if(!F.custom_food)
@@ -709,7 +714,7 @@
 		else
 			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
 			return
-
+			
 /obj/item/reagent_containers/food/snacks/ingredient/pizzab
 	name = "uncooked meatball pizza"
 	desc = "A cheese and meatball pizza. You need to bake it..."
@@ -723,11 +728,55 @@
 		else
 			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
 			return
+			
+	attackby(obj/item/W as obj, mob/user as mob)
+	
+		if (istype(W,/obj/item/reagent_containers/food/snacks/ingredient/pepperoni))
+			var/pizzame = new /obj/item/reagent_containers/food/snacks/ingredient/pizzame
+			user.put_in_hand_or_drop(pizzame)
+			qdel (W)
+			qdel (src)
 
 /obj/item/reagent_containers/food/snacks/ingredient/pizzap
 	name = "uncooked pepperoni pizza"
 	desc = "A cheese and pepperoni pizza. You need to bake it..."
 	icon_state = "pizzabasep"
+	
+	attack(mob/M as mob, mob/user as mob, def_zone)
+		if (user == M)
+			boutput(user, "<span class='alert'>You need to bake it, you greedy beast!</span>")
+			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
+			return
+		else
+			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+			return
+			
+	attackby(obj/item/W as obj, mob/user as mob)
+	
+		if (istype(W,/obj/item/reagent_containers/food/snacks/meatball))
+			var/pizzame = new /obj/item/reagent_containers/food/snacks/ingredient/pizzame
+			user.put_in_hand_or_drop(pizzame)
+			qdel (W)
+			qdel (src)
+			
+/obj/item/reagent_containers/food/snacks/ingredient/pizzaba
+	name = "uncooked bacon pizza"
+	desc = "A cheese and bacon pizza. You need to bake it..."
+	icon_state = "pizzabaseba"
+	
+	attack(mob/M as mob, mob/user as mob, def_zone)
+		if (user == M)
+			boutput(user, "<span class='alert'>You need to bake it, you greedy beast!</span>")
+			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
+			return
+		else
+			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+			return
+
+/obj/item/reagent_containers/food/snacks/ingredient/pizzame
+	name = "uncooked pepperoni and meatball pizza"
+	desc = "A pepperoni and meatball pizza. You need to bake it..."
+	icon_state = "pizzabaseme"
 	
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if (user == M)

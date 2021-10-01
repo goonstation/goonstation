@@ -366,6 +366,8 @@ table#cooktime a#start {
 			src.recipes = list()
 
 		if (!src.recipes.len)
+			src.recipes += new /datum/cookingrecipe/pizza_meaty(src)
+			src.recipes += new /datum/cookingrecipe/pizza_bacon(src)
 			src.recipes += new /datum/cookingrecipe/pizza_shroom(src)
 			src.recipes += new /datum/cookingrecipe/pizza_pepper(src)
 			src.recipes += new /datum/cookingrecipe/pizza_ball(src)
