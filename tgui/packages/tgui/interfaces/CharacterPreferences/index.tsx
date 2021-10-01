@@ -17,8 +17,8 @@ export const CharacterPreferences = (_props: any, context: any) => {
 
   const handleKeyDown = (e) => {
     if (
-      (menu === CharacterPreferencesTabKeys.General || menu === CharacterPreferencesTabKeys.Character) &&
-      (e.keyCode === KEY_LEFT || e.keyCode === KEY_RIGHT)
+      (menu === CharacterPreferencesTabKeys.General || menu === CharacterPreferencesTabKeys.Character) 
+      && (e.keyCode === KEY_LEFT || e.keyCode === KEY_RIGHT)
     ) {
       e.preventDefault();
       if (nextRotateTime > performance.now()) {
