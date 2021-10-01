@@ -1,6 +1,9 @@
 
 (t)thu sep 30 21
 (u)tarmunora
+(e)⚖|balance
+(+)Fabricated vending machines are constructed empty. Visit your local Quartermaster for restock cartridges!
+(u)tarmunora
 (e)🔄|rework
 (+)Armored gloves now give bonuses to unarmed blocking values based on material stats. Experiment!
 (u)Walpvrgis
