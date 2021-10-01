@@ -12,14 +12,14 @@
 	failure_disease = /datum/ailment/disease/respiratory_failure
 	var/temp_tolerance = T0C+66
 
-	var/safe_oxygen_min = 17 / LUNG_COUNT // Minimum safe partial pressure of O2, in kPa
-	var/safe_co2_max = 9 / LUNG_COUNT // Yes it's an arbitrary value who cares?
-	var/safe_toxins_max = 0.4 / LUNG_COUNT
-	var/SA_para_min = 1 / LUNG_COUNT
-	var/SA_sleep_min = 5 / LUNG_COUNT
-	var/fart_smell_min = 0.69 / LUNG_COUNT // don't ask ~warc
-	var/fart_vomit_min = 6.9 / LUNG_COUNT
-	var/fart_choke_min = 16.9 / LUNG_COUNT
+	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
+	var/safe_co2_max = 9 // Yes it's an arbitrary value who cares?
+	var/safe_toxins_max = 0.4
+	var/SA_para_min = 1
+	var/SA_sleep_min = 5
+	var/fart_smell_min = 0.69 // don't ask ~warc
+	var/fart_vomit_min = 6.9
+	var/fart_choke_min = 16.9
 	var/rad_immune = FALSE
 	var/breaths_oxygen = TRUE
 
@@ -58,13 +58,17 @@
 	// 			donor.contract_disease(failure_disease,null,null,1)
 
 	proc/breathe(datum/gas_mixture/breath, underwater, mult, datum/organ/lung/status/update)
-		var/breath_pressure = (TOTAL_MOLES(breath)*R_IDEAL_GAS_EQUATION*breath.temperature)/breath.volume
+		var/breath_moles = TOTAL_MOLES(breath)
+		if(breath_moles == 0)
+			breath_moles = ATMOS_EPSILON
+		var/breath_pressure = (breath_moles*R_IDEAL_GAS_EQUATION*breath.temperature)/breath.volume
 		//Partial pressure of the O2 in our breath
-		var/O2_pp = (breath.oxygen/TOTAL_MOLES(breath))*breath_pressure
+		var/O2_pp = (breath.oxygen/breath_moles)*breath_pressure
 		// Same, but for the toxins
-		var/Toxins_pp = (breath.toxins/TOTAL_MOLES(breath))*breath_pressure
+		var/Toxins_pp = (breath.toxins/breath_moles)*breath_pressure
 		// And CO2, lets say a PP of more than 10 will be bad (It's a little less really, but eh, being passed out all round aint no fun)
-		var/CO2_pp = (breath.carbon_dioxide/TOTAL_MOLES(breath))*breath_pressure
+		var/CO2_pp = (breath.carbon_dioxide/breath_moles)*breath_pressure
+		var/FARD_pp = (breath.farts/breath_moles)*breath_pressure
 		var/oxygen_used
 
 		if(breaths_oxygen)
@@ -77,7 +81,7 @@
 				if (O2_pp > 0)
 					var/ratio = round(safe_oxygen_min/(O2_pp + 0.1))
 					donor.take_oxygen_deprivation(min(5*ratio, 5)/LUNG_COUNT) // Don't fuck them up too fast (space only does 7 after all!)
-					oxygen_used = breath.oxygen*ratio/6
+					oxygen_used = min(breath.oxygen*ratio/6, breath.oxygen)
 				else
 					donor.take_oxygen_deprivation(3 * mult/LUNG_COUNT)
 				update.show_oxy_indicator = TRUE
@@ -85,7 +89,6 @@
 				donor.take_oxygen_deprivation(-6 * mult/LUNG_COUNT)
 				oxygen_used = breath.oxygen/6
 
-			oxygen_used /= LUNG_COUNT
 			breath.oxygen -= oxygen_used
 			breath.carbon_dioxide += oxygen_used
 
@@ -119,7 +122,6 @@
 					if (prob(percentmult(20, mult)))
 						update.emotes |= pick("giggle", "laugh")
 
-		var/FARD_pp = (breath.farts/TOTAL_MOLES(breath))*breath_pressure
 		if (prob(15) && (FARD_pp > fart_smell_min))
 			boutput(donor, "<span class='alert'>Smells like someone [pick("died","soiled themselves","let one rip","made a bad fart","peeled a dozen eggs")] in here!</span>")
 			if ((FARD_pp > fart_vomit_min) && prob(50))

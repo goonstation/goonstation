@@ -90,10 +90,6 @@
 	required_effects = list("radioactive","involuntary_teleporting")
 	result = /datum/bioEffect/mutagenic_field
 
-/datum/geneticsrecipe/tourettes
-	required_effects = list("clumsy","coprolalia")
-	result = /datum/bioEffect/tourettes
-
 /datum/geneticsrecipe/buzz
 	required_effects = list("bee","stinky")
 	result = /datum/bioEffect/buzz

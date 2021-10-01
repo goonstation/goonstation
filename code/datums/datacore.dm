@@ -35,6 +35,8 @@
 	S.fields["name"] = G.fields["name"]
 	S.fields["id"] = G.fields["id"]
 
+	H.datacore_id = G.fields["id"]
+
 	B.fields["name"] = G.fields["name"]
 	B.fields["id"] = G.fields["id"]
 
