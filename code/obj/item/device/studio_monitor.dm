@@ -2,9 +2,9 @@
 	name = "Studio Monitor"
 	desc = "An incredibly high quality studio monitor with an uncomfortable number of high voltage stickers."
 	icon = 'icons/obj/loudspeakers.dmi'
-	icon_state = "nukie_speaker"
-	//inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi'
-	wear_image_icon = 'icons/mob/back.dmi'
+	icon_state = "nukie_speaker" // Gannets to make awesome amp stack!
+	//inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi' // Gannets to make sweet inhand
+	wear_image_icon = 'icons/mob/back.dmi' // Gannets to make sweet wearable?
 
 	anchored = 0
 	speaker_range = 7
@@ -139,20 +139,22 @@
 	cooldown = 30 SECONDS
 	var/song_duration = 3 MINUTES + 11 SECONDS // And if I ever didn't thank you you.. then just let me do it now
 	var/list/status_effect_ids
-	var/static/image/cooldown_img
+	var/static/image/frame_img
 
 	New()
 		..()
-		if(!cooldown_img)
-			cooldown_img = image('icons/misc/abilities.dmi',"song_cd")
+		if(!frame_img)
+			frame_img = image('icons/misc/abilities.dmi',"rock_frame")
+			frame_img.appearance_flags = RESET_COLOR
+		src.UpdateOverlays(frame_img, "frame")
 
 	execute_ability()
 		if(status_effect_ids)
 			actions.start(new/datum/action/bar/private/icon/rock_on(the_item, status_effect_ids, song_duration), src.the_mob)
 
-		src.UpdateOverlays(cooldown_img,"cooldown")
+		src.color = COLOR_MATRIX_GRAYSCALE
 		. = ..()
-		src.UpdateOverlays(null,"cooldown")
+		src.color = COLOR_MATRIX_IDENTITY
 
 	ability_allowed()
 		. = ..()
@@ -183,7 +185,6 @@
 				HH.apply_sonic_stun(0, 0, 30, 0, 5, 4, 6)
 
 			. = ..()
-
 
 	infrasound
 		name = "Infrasound"
@@ -273,8 +274,7 @@
 		song_duration = 69 SECONDS
 		cooldown = 5 MINUTES
 
-//Use this to start the action
-//actions.start(new/datum/action/bar/private/icon/magPicker(item, picker), usr)
+
 /datum/action/bar/private/icon/rock_on
 	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ACTION
@@ -299,7 +299,7 @@
 		..()
 
 
-	onUpdate() //check for special conditions that could interrupt the picking-up here.
+	onUpdate()
 		..()
 		var/mob/M = owner
 		if(!istype(M) || M.equipped() != instrument || instrument == null || owner == null) //If the thing is suddenly out of range, interrupt the action. Also interrupt if the user or the item disappears.
@@ -324,9 +324,6 @@
 		blast_to_speakers()
 		icon_image.alpha = 200
 		bar.color = src.color_active
-
-	onInterrupt(var/flag) //They did something else while picking it up. I guess you dont have to do anything here unless you want to.
-		..()
 
 	onEnd()
 		..()
@@ -413,13 +410,17 @@
 
 	onAdd(optional=null)
 		. = ..()
-		APPLY_MOB_PROPERTY(owner, PROP_DISARM_RESIST, "focus_music", 10)
-		APPLY_MOB_PROPERTY(owner, PROP_DISORIENT_RESIST_BODY, "focus_music", 10)
+		if(ismob(owner))
+			var/mob/M = owner
+			APPLY_MOB_PROPERTY(M, PROP_DISARM_RESIST, "focus_music", 10)
+			APPLY_MOB_PROPERTY(M, PROP_DISORIENT_RESIST_BODY, "focus_music", 10)
 
 	onRemove()
 		. = ..()
-		REMOVE_MOB_PROPERTY(owner, PROP_DISARM_RESIST, "focus_music")
-		REMOVE_MOB_PROPERTY(owner, PROP_DISORIENT_RESIST_BODY, "focus_music")
+		if(ismob(owner))
+			var/mob/M = owner
+			REMOVE_MOB_PROPERTY(M, PROP_DISARM_RESIST, "focus_music")
+			REMOVE_MOB_PROPERTY(M, PROP_DISORIENT_RESIST_BODY, "focus_music")
 
 	getTooltip()
 		. = "Your feel like you would be difficult to stop."
@@ -444,13 +445,15 @@
 
 	onAdd(optional=null)
 		. = ..()
-		if(hascall(owner, "add_stam_mod_max"))
-			owner:add_stam_mod_max("music_bonus", change)
+		if(ismob(owner))
+			var/mob/M = owner
+			M.add_stam_mod_max("music_bonus", change)
 
 	onRemove()
 		. = ..()
-		if(hascall(owner, "remove_stam_mod_max"))
-			owner:remove_stam_mod_max("music_bonus")
+		if(ismob(owner))
+			var/mob/M = owner
+			M.remove_stam_mod_max("music_bonus")
 
 /datum/statusEffect/maxhealth/music
 	id = "music_hp_up"
