@@ -131,6 +131,12 @@
 		src.panel_image = image(src.icon, src.icon_panel)
 	var/lastvend = 0
 
+
+	was_built_from_frame(mob/user, newly_built)
+		. = ..()
+		if(newly_built)
+			src.product_list = new()
+
 	proc/vendinput(var/datum/mechanicsMessage/inp)
 		if( world.time < lastvend ) return//aaaaaaa
 		lastvend = world.time + 2
@@ -1868,6 +1874,7 @@
 		if (status & BROKEN)
 			setCrtOverlayStatus(FALSE)
 			setItemOverlay(null)
+			panel_open = FALSE
 			return FALSE
 		else if (powered())
 			setCrtOverlayStatus(TRUE)
