@@ -12,6 +12,7 @@
 		qdel(src)
 //	weight = 1.0E8
 
+ABSTRACT_TYPE(/obj/item/circuitboard)
 /obj/item/circuitboard
 	density = 0
 	anchored = 0
@@ -104,13 +105,13 @@
 	computertype = "/obj/machinery/computer/turbine_computer"
 /obj/item/circuitboard/solar_control
 	name = "Circuit board (Solar control)"
-	computertype = "/obj/machinery/power/solar_control"
+	computertype = "/obj/machinery/computer/solar_control"
 /obj/item/circuitboard/powermonitor
 	name = "Circuit board (Power Monitoring Computer)"
-	computertype = "/obj/machinery/power/monitor"
+	computertype = "/obj/machinery/computer/power_monitor"
 /obj/item/circuitboard/powermonitor_smes
 	name = "Circuit board (Engine Monitoring Computer)"
-	computertype = "/obj/machinery/power/monitor/smes"
+	computertype = "/obj/machinery/computer/power_monitor/smes"
 /obj/item/circuitboard/olddoor
 	name = "Circuit board (DoorMex)"
 	computertype = "/obj/machinery/computer/pod/old"
@@ -129,9 +130,18 @@
 /obj/item/circuitboard/operating
 	name = "Circuit board (Operating Computer)"
 	computertype = "/obj/machinery/computer/operating"
+/obj/item/circuitboard/qmorder
+	name = "Circuit board (Supply Request Console)"
+	computertype = "/obj/machinery/computer/ordercomp"
+/obj/item/circuitboard/qmsupply
+	name = "Circuit board (Quartermaster's Console)"
+	computertype = "/obj/machinery/computer/supplycomp"
 /obj/item/circuitboard/mining_magnet
 	name = "Circuit board (Mining Magnet Computer)"
 	computertype = "/obj/machinery/computer/magnet"
+/obj/item/circuitboard/telescope
+	name = "Circuit board (Quantum Telescope)"
+	computertype = "/obj/machinery/computer/telescope"
 
 /obj/computerframe/meteorhit(obj/O as obj)
 	qdel(src)
@@ -214,11 +224,14 @@
 			if (isscrewingtool(P))
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 				boutput(user, "<span class='notice'>You connect the monitor.</span>")
-				var/B = new src.circuit.computertype ( src.loc )
-				if (circuit.powernet) B:powernet = circuit.powernet
-				if (circuit.id) B:id = circuit.id
-				if (circuit.records) B:records = circuit.records
-				if (circuit.frequency) B:frequency = circuit.frequency
+				var/obj/machinery/computer/B = new src.circuit.computertype ( src.loc )
+				B.set_dir(src.dir)
+				if (circuit.id)
+					B.id = circuit.id
+				if (circuit.records)
+					B.records = circuit.records
+				if (circuit.frequency)
+					B.frequency = circuit.frequency
 				logTheThing("station", user, null, "assembles [B] [log_loc(B)]")
 				qdel(src)
 

@@ -263,6 +263,22 @@
 	food_color = "#CC9966"
 	custom_food = 1
 
+/obj/item/reagent_containers/food/snacks/ingredient/salt
+	name = "salt"
+	desc = "A must have in any kitchen, just don't use too much."
+	icon_state = "salt"
+	amount = 1
+	food_color = "#a7927d"
+	custom_food = 1
+
+/obj/item/reagent_containers/food/snacks/ingredient/pepper
+	name = "pepper"
+	desc = "A must have in any kitchen, just don't use too much."
+	icon_state = "pepper"
+	amount = 1
+	food_color = "#a7927d"
+	custom_food = 1
+
 /obj/item/reagent_containers/food/snacks/ingredient/honey
 	name = "honey"
 	desc = "A sweet nectar derivative produced by bees."
@@ -408,9 +424,7 @@
 			qdel(src)
 		else if (istype(W, /obj/item/baton))
 			var/obj/item/baton/baton = W
-			if (!baton.uses_electricity)
-				..()
-			if (baton.status == 1) //baton is on
+			if (baton.is_active) //baton is on
 				if (user.a_intent != "harm")
 					if (user.traitHolder.hasTrait("training_security"))
 						playsound(src, "sound/impact_sounds/Energy_Hit_3.ogg", 30, 1, -1) //bit quieter than a baton hit

@@ -1030,7 +1030,7 @@
 	desc = "A nuclear charge used as a self-destruct device. Uh oh!"
 	device_tag = "PNET_NUCCHARGE"
 	var/timing = 0
-	var/time = 60
+	var/time = 180
 	power_usage = 120
 
 	var/status_display_freq = "1435"
@@ -1062,8 +1062,6 @@
 	attack_hand(mob/user as mob)
 		if(..() || status & NOPOWER)
 			return
-
-		src.add_dialog(user)
 
 		var/dat = "<html><head><title>Nuclear Charge</title></head><body>"
 
@@ -1146,7 +1144,7 @@
 				src.detonate()
 				return
 			if(src.time == DISARM_CUTOFF)
-				world << sound('sound/misc/airraid_loop_short.ogg')
+				playsound_global(world, "sound/misc/airraid_loop_short.ogg", 90)
 			if(src.time <= DISARM_CUTOFF)
 				src.icon_state = "net_nuke2"
 				boutput(world, "<span class='alert'><b>[src.time] seconds until nuclear charge detonation.</b></span>")
@@ -1263,7 +1261,7 @@
 						if(isnull(thetime))
 							src.post_status(target,"command","term_message","data","command=status&status=noparam&session=[sessionid]")
 							return
-						thetime = max( min(thetime,440), 30)
+						thetime = clamp(thetime, MIN_NUKE_TIME, MAX_NUKE_TIME)
 						src.time = thetime
 						src.post_status(target,"command","term_message","data","command=status&status=success&session=[sessionid]")
 						return
@@ -1295,7 +1293,7 @@
 							return
 
 						src.timing = 0
-						src.time = max(src.time,30) //so we don't have some jerk letting it tick down to 11 and then saving it for later.
+						src.time = max(src.time,MIN_NUKE_TIME) //so we don't have some jerk letting it tick down to 11 and then saving it for later.
 						src.icon_state = "net_nuke0"
 						src.post_status(target,"command","term_message","data","command=status&status=success&session=[sessionid]")
 						//World announcement.
@@ -1325,7 +1323,7 @@
 		return
 
 	proc/detonate()
-		world << sound('sound/effects/kaboom.ogg')
+		playsound_global(world, "sound/effects/kaboom.ogg", 70)
 		//explosion(src, src.loc, 10, 20, 30, 35)
 		explosion_new(src, get_turf(src), 10000)
 		//dispose()
@@ -3532,7 +3530,8 @@
 		if (status & NOPOWER)
 			return 1
 
-		use_power(200)
+		if(active)
+			use_power(power_usage)
 
 		return 0
 
@@ -4730,6 +4729,7 @@
 	setup_device_name = "Gas Sensor"
 	setup_capability_value = "S"
 	active = 1
+	power_usage = 20
 
 	var/setup_tag = null
 			//Pressure, Temperature, gases, trace gases sum

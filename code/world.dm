@@ -440,6 +440,10 @@ var/f_color_selector_handler/F_Color_Selector
 	SPAWN_DBG(0)
 		init()
 
+#ifdef UNIT_TESTS
+	unit_tests.run_tests()
+#endif
+
 #define UPDATE_TITLE_STATUS(x) if (game_start_countdown) game_start_countdown.update_status(x)
 
 /world/proc/init()
@@ -530,6 +534,7 @@ var/f_color_selector_handler/F_Color_Selector
 			Ar.build_sims_score()
 
 	url_regex = new("(https?|byond|www)(\\.|:\\/\\/)", "i")
+	full_url_regex = new(@"(https?:\/\/)?((www\.)?[\d\l\.]+\.[\d\l]+(\/\S+)*\/?)","ig")
 
 	UPDATE_TITLE_STATUS("Updating status")
 	Z_LOG_DEBUG("World/Init", "Updating status...")
@@ -657,6 +662,11 @@ var/f_color_selector_handler/F_Color_Selector
 	SPAWN_DBG(10 SECONDS)
 		Reboot_server()
 #endif
+#ifdef UNIT_TESTS
+	SPAWN_DBG(10 SECONDS)
+		Reboot_server()
+#endif
+
 #undef UPDATE_TITLE_STATUS
 	return
 
@@ -701,7 +711,7 @@ var/f_color_selector_handler/F_Color_Selector
 	save_tetris_highscores()
 	if (current_state < GAME_STATE_FINISHED)
 		current_state = GAME_STATE_FINISHED
-#ifdef RUNTIME_CHECKING
+#if defined(RUNTIME_CHECKING) || defined(UNIT_TESTS)
 	for (var/client/C in clients)
 		ehjax.send(C, "browseroutput", "hardrestart")
 
@@ -724,6 +734,7 @@ var/f_color_selector_handler/F_Color_Selector
 #endif
 	shutdown()
 #endif
+
 	SPAWN_DBG(world.tick_lag)
 		for (var/client/C)
 			if (C.mob)
@@ -853,6 +864,8 @@ var/f_color_selector_handler/F_Color_Selector
 	else if(T == "players")
 		var/n = 0
 		for(var/client/C)
+			if (C.stealth && !C.fakekey) // stealthed admins don't count
+				continue
 			n++
 		return n
 
@@ -901,6 +914,8 @@ var/f_color_selector_handler/F_Color_Selector
 		s["elapsed"] = elapsed
 		var/n = 0
 		for(var/client/C in clients)
+			if (C.stealth && !C.fakekey) // stealthed admins don't count
+				continue
 			s["player[n]"] = "[(C.stealth || C.alt_key) ? C.fakekey : C.key]"
 			n++
 		s["players"] = n
@@ -1192,6 +1207,8 @@ var/f_color_selector_handler/F_Color_Selector
 							return 1
 #endif
 
+		if (findtext(addr, ":")) // remove port if present
+			addr = splittext(addr, ":")[1]
 		if (addr != config.ircbot_ip && addr != config.goonhub_api_ip && addr != config.goonhub2_hostname)
 			return 0 //ip filtering
 
@@ -1260,6 +1277,7 @@ var/f_color_selector_handler/F_Color_Selector
 					return ircbot.response(ircmsg)
 
 				msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
+				msg = linkify(msg)
 				msg = discord_emojify(msg)
 
 				logTheThing("admin", null, null, "Discord ASAY: [nick]: [msg]")
@@ -1306,7 +1324,8 @@ var/f_color_selector_handler/F_Color_Selector
 				var/nick = plist["nick"]
 				var/msg = plist["msg"]
 				var/who = lowertext(plist["target"])
-				var/game_msg = discord_emojify(msg)
+				var/game_msg = linkify(msg)
+				game_msg = discord_emojify(game_msg)
 
 				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
 				if (M?.client)
@@ -1350,7 +1369,8 @@ var/f_color_selector_handler/F_Color_Selector
 				var/msg = html_encode(plist["msg"])
 				var/who = lowertext(plist["target"])
 				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
-				var/game_msg = discord_emojify(msg)
+				var/game_msg = linkify(msg)
+				game_msg = discord_emojify(game_msg)
 
 				if (M?.client)
 					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[ckey(nick)]\">[nick]</a> (Discord)</b>: <span class='message'>[game_msg]</span></span>")
@@ -1547,8 +1567,8 @@ var/f_color_selector_handler/F_Color_Selector
 
 			if ("version")
 				var/ircmsg[] = new()
-				ircmsg["major"] = ci_dm_version_major
-				ircmsg["minor"] = ci_dm_version_minor
+				ircmsg["major"] = world.byond_version
+				ircmsg["minor"] = world.byond_build
 				ircmsg["goonhub_api"] = config.goonhub_api_version ? config.goonhub_api_version : 0
 				return ircbot.response(ircmsg)
 

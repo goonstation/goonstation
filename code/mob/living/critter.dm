@@ -57,6 +57,7 @@
 
 	// moved up from critter/small_animal
 	var/butcherable = 0
+	var/butcher_time = 1.2 SECONDS
 	var/meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat
 	var/name_the_meat = 0
 	var/skinresult = /obj/item/material_piece/cloth/leather //YEP
@@ -225,44 +226,36 @@
 				health += HH.maximum_value
 
 	// begin convenience procs
-	proc/add_hh_flesh(var/min, var/max, var/mult)
+	proc/add_hh_flesh(var/max, var/mult)
 		var/datum/healthHolder/Brute = add_health_holder(/datum/healthHolder/flesh)
 		Brute.maximum_value = max
 		Brute.value = max
 		Brute.last_value = max
 		Brute.damage_multiplier = mult
-		Brute.depletion_threshold = min
-		Brute.minimum_value = min
 		return Brute
 
-	proc/add_hh_flesh_burn(var/min, var/max, var/mult)
+	proc/add_hh_flesh_burn(var/max, var/mult)
 		var/datum/healthHolder/Burn = add_health_holder(/datum/healthHolder/flesh_burn)
 		Burn.maximum_value = max
 		Burn.value = max
 		Burn.last_value = max
 		Burn.damage_multiplier = mult
-		Burn.depletion_threshold = min
-		Burn.minimum_value = min
 		return Burn
 
-	proc/add_hh_robot(var/min, var/max, var/mult)
+	proc/add_hh_robot(var/max, var/mult)
 		var/datum/healthHolder/Brute = add_health_holder(/datum/healthHolder/structure)
 		Brute.maximum_value = max
 		Brute.value = max
 		Brute.last_value = max
 		Brute.damage_multiplier = mult
-		Brute.depletion_threshold = min
-		Brute.minimum_value = min
 		return Brute
 
-	proc/add_hh_robot_burn(var/min, var/max, var/mult)
+	proc/add_hh_robot_burn(var/max, var/mult)
 		var/datum/healthHolder/Burn = add_health_holder(/datum/healthHolder/wiring)
 		Burn.maximum_value = max
 		Burn.value = max
 		Burn.last_value = max
 		Burn.damage_multiplier = mult
-		Burn.depletion_threshold = min
-		Burn.minimum_value = min
 		return Burn
 
 	// end convenience procs
@@ -278,7 +271,7 @@
 		var/obj/item/I = equipped()
 		var/obj/item/W = EH.item
 		if (I && W)
-			W.attackby(I, src) // fix runtime for null.find_type_in_hand - cirr
+			W.Attackby(I, src) // fix runtime for null.find_type_in_hand - cirr
 		else if (I)
 			if (EH.can_equip(I))
 				u_equip(I)
@@ -312,7 +305,7 @@
 					M.visible_message("<span class='alert'>[M] skins [src].</span>","You skin [src].")
 					return
 			if (src.butcherable && (istype(I, /obj/item/circular_saw) || istype(I, /obj/item/kitchen/utensil/knife) || istype(I, /obj/item/scalpel) || istype(I, /obj/item/raw_material/shard) || istype(I, /obj/item/sword) || istype(I, /obj/item/saw) || istype(I, /obj/item/wirecutters)))
-				actions.start(new/datum/action/bar/icon/butcher_living_critter(src), M)
+				actions.start(new/datum/action/bar/icon/butcher_living_critter(src,src.butcher_time), M)
 				return
 
 		var/rv = 1
@@ -324,7 +317,7 @@
 		else
 			..()
 
-	proc/butcher(var/mob/M)
+	proc/butcher(var/mob/M, drop_brain = TRUE)
 		var/i = rand(2,4)
 		var/transfer = src.reagents.total_volume / i
 
@@ -336,7 +329,7 @@
 				newmeat.name = "[src.name] meat"
 				newmeat.real_name = newmeat.name
 
-		if (src.organHolder)
+		if (src.organHolder && drop_brain)
 			src.organHolder.drop_organ("brain",src.loc)
 
 		src.ghostize()
@@ -363,7 +356,10 @@
 		src.update_cursor()
 		hud.update_throwing()
 
-	proc/throw_item(atom/target, list/params)
+	throw_item(atom/target, list/params)
+		..()
+		if (HAS_MOB_PROPERTY(src, PROP_CANTTHROW))
+			return
 		if (!can_throw)
 			return
 		src.throw_mode_off()
@@ -784,6 +780,7 @@
 		var/datum/healthHolder/Bu = get_health_holder("burn")
 		if (Bu && (burn < 0 || !is_heat_resistant()))
 			Bu.TakeDamage(burn)
+		take_toxin_damage(tox)
 
 	take_brain_damage(var/amount)
 		if (..())
@@ -861,7 +858,7 @@
 
 	HealDamage(zone, brute, burn, tox)
 		..()
-		TakeDamage(zone, -brute, -burn)
+		TakeDamage(zone, -brute, -burn, -tox)
 
 
 	updatehealth()

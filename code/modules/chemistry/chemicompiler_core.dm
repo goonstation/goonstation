@@ -53,7 +53,7 @@
 /datum/chemicompiler_core/New(datum/holder)
 	..()
 	if(!istype(holder))
-		del(src)
+		qdel(src)
 		return
 
 	src.holder = holder
@@ -120,14 +120,14 @@
 /** Callbacks */
 /datum/chemicompiler_core/proc/topicPermissionCheck(action)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if(topicPermissionCheckCallback)
 		return call(src.holder, topicPermissionCheckCallback)(action)
 
 /datum/chemicompiler_core/proc/showMessage(message)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	message = "<span class='alert'>[message]</span>"
 	if(messageCallback)
@@ -135,42 +135,42 @@
 
 /datum/chemicompiler_core/proc/throwError(errorCode)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if(errorCallback)
 		return call(src.holder, errorCallback)(errorCode)
 
 /datum/chemicompiler_core/proc/reservoirClick(resId)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if(reservoirClickCallback)
 		return call(src.holder, reservoirClickCallback)(resId)
 
 /datum/chemicompiler_core/proc/reservoirCheck(resId)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if (reservoirCheckCallback)
 		return call(src.holder, reservoirCheckCallback)(resId)
 
 /datum/chemicompiler_core/proc/transfer(source, target, amount)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if (transferCallback)
 		return call(src.holder, transferCallback)(source, target, amount)
 
 /datum/chemicompiler_core/proc/isolate(source, target, amount, index)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if (isolateCallback)
 		return call(src.holder, isolateCallback)(source, target, amount, index)
 
 /datum/chemicompiler_core/proc/heat(res, temp)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if (heatCallback)
 		var/datum/chemicompiler_executor/E = src.holder
@@ -187,7 +187,7 @@
 
 /datum/chemicompiler_core/proc/statusChange(oldStatus, newStatus)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	return call(src.holder, "statusChange")(oldStatus, newStatus)
 
@@ -256,7 +256,7 @@
 
 /datum/chemicompiler_core/proc/runCBF(var/list/inst)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	resetVM()
 	running = 1
@@ -267,7 +267,7 @@
 	if ( !running || !currentProg )
 		return
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if(running)
 		var/loopUsed
@@ -637,7 +637,7 @@
 /datum/chemicompiler_executor/New(datum/holder, corePath = /datum/chemicompiler_core/portableCore)
 	..()
 	if(!istype(holder))
-		del(src)
+		qdel(src)
 		return
 
 	src.holder = holder
@@ -686,7 +686,7 @@
 		return 1
 /datum/chemicompiler_executor/proc/reservoirClick(resId)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if(istype(reservoirs[resId], /obj/item/reagent_containers/glass))
 		// Taking a res out
@@ -696,7 +696,7 @@
 			reservoirs[resId] = null
 		else
 			var/obj/item/reagent_containers/glass/B = reservoirs[resId]
-			B.attackby(usr.equipped(), usr)
+			B.Attackby(usr.equipped(), usr)
 
 	else
 		// Putting SOMETHING in
@@ -710,7 +710,7 @@
 
 /datum/chemicompiler_executor/proc/topicPermissionCheck(action)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	return call(src.holder, "topicPermissionCheck")(action)
 
@@ -734,7 +734,7 @@
 
 /datum/chemicompiler_executor/proc/showMessage(message)
 	if(!istype(holder))
-		del(src)
+		qdel(src)
 		return
 	message = "<span class='alert'>[message]</span>"
 	if(istype(holder:loc, /mob))
@@ -768,7 +768,7 @@
 
 /datum/chemicompiler_executor/proc/transferReagents(var/source, var/target, var/amount, var/index = 0)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	var/error_code = validate_source_target_index(source, target, index)
 	if(error_code)
@@ -802,7 +802,7 @@
 
 /datum/chemicompiler_executor/proc/heatReagents(var/rid, var/temp)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if(rid < 1 || rid > 10)
 		beepCode(1, 1) // Invalid reservoir id
@@ -829,9 +829,10 @@
 	var/max_temp_change = abs(R.total_temperature - temp)
 	var/next_temp_change = min(max((abs(R.total_temperature - element_temp) / h_divisor), 1), h_change_cap)	// Formula used by temperature_reagents() to determine how much to change the temp
 	if(next_temp_change >= max_temp_change)																	// Check if this tick will cause the temperature to overshoot if heated/cooled at full power. Use >= to prevent reheating in the case the values line up perfectly
-		var/element_temp_offset = max_temp_change * h_divisor												// Compute the exact exposure temperature to reach the target
-		element_temp = R.total_temperature + element_temp_offset * (temp > R.total_temperature ? 1 : -1)
+		element_temp = (((R.total_temperature - (R.total_temperature-temp)*h_divisor) * (R.total_volume+h_exposed_volume)) - (R.total_temperature*R.total_volume))/h_exposed_volume
 		heating_in_progress = 0
+
+	h_divisor = 35/h_divisor*100 // quick hack because idk wtf is going on here - Emily
 
 	R.temperature_reagents(element_temp, h_exposed_volume, h_divisor, h_change_cap)
 
@@ -839,14 +840,14 @@
 
 /datum/chemicompiler_executor/proc/statusChange(oldStatus, newStatus)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if (core.statusChangeCallback)
 		return call(holder, core.statusChangeCallback)(oldStatus, newStatus)
 
 /datum/chemicompiler_executor/proc/reagent_volume(rid)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if(rid < 1 || rid > 10)
 		beepCode(1, 1) // Invalid reservoir id

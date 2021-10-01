@@ -604,7 +604,6 @@
 	desc = "Quartz is somewhat valuable but not paticularly useful."
 	color = "#BBBBBB"
 	quality = 50
-	alpha = 100
 	var/gem_tier = 3
 
 	New()
@@ -800,6 +799,7 @@
 		addTrigger(triggersOnEntered, new /datum/materialProc/telecrystal_entered())
 		addTrigger(triggersOnAttack, new /datum/materialProc/telecrystal_onattack())
 		return ..()
+
 
 /datum/material/crystal/miracle
 	mat_id = "miracle"
@@ -1076,7 +1076,7 @@
 
 /datum/material/organic/honey
 	mat_id = "honey"
-	name = "honey"
+	name = "refined honey" //Look calling both the globs and the material just "honey" isn't helping people's confusion wrt making clone pods
 	desc = ""
 	color = "#f1da10"
 	material_flags = MATERIAL_ORGANIC

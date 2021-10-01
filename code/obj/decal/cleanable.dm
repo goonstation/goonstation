@@ -94,6 +94,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 		src.name = initial(name)
 		src.desc = initial(desc)
 		color = initial(color)
+		blood_DNA = null
 
 		src.diseases.len = 0
 
@@ -754,7 +755,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		if (istype(W, /obj/item/sponge) || istype(W, /obj/item/mop))
 			..()
 		else
-			src.loc.attackby(user.equipped(), user)
+			src.loc.Attackby(user.equipped(), user)
 
 /obj/decal/cleanable/balloon
 	name = "balloon"
@@ -963,6 +964,10 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				W.reagents.handle_reactions()
 				return 1
 
+	unpooled()
+		. = ..()
+		src.thrice_drunk = initial(thrice_drunk)
+
 /obj/decal/cleanable/vomit
 	name = "pool of vomit"
 	desc = "Someone lost their lunch."
@@ -1093,7 +1098,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				for (var/mob/O in AIviewers(user, null))
 					if (O != user)
 						O.show_message("<span class='notice'><b>[user]</b> is sticking their fingers into [src] and pushing it into [W]. It's all slimy and stringy. Oh god.</span>", 1)
-						if (prob(33) && ishuman(O))
+						if (prob(33) && ishuman(O) && !isdead(O))
 							O.show_message("<span class='alert'>You feel ill from watching that.</span>")
 							for (var/mob/V in viewers(O, null))
 								V.show_message("<span class='alert'>[O] pukes all over \himself. Thanks, [user].</span>", 1)
@@ -1219,7 +1224,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 			if (istype(W, /obj/item/sponge) || istype(W, /obj/item/mop))
 				..()
 			else
-				src.loc.attackby(user.equipped(), user)
+				src.loc.Attackby(user.equipped(), user)
 
 /obj/decal/cleanable/cobweb
 	name = "cobweb"

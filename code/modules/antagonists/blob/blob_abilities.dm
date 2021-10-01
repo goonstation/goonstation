@@ -105,7 +105,7 @@
 						B = new /obj/blob/firewall(T)
 					else
 						B = new /obj/blob(T)
-
+					owner.total_placed++
 					B.setOvermind(src.owner)
 					currentTurfs++
 
@@ -186,6 +186,7 @@
 	icon_state = "blob-nucleus"
 	desc = "This will place the first blob on your current tile. You can only do this once. Once placed, a small amount of blob tiles will spawn around it."
 	targeted = 0
+	cooldown_time = 10
 
 	onUse(var/turf/T)
 		if (..())
@@ -200,6 +201,10 @@
 		if (!isadmin(owner)) //admins can spawn wherever
 			if (!istype(T.loc, /area/station/) && !istype(T.loc, /area/blob/))
 				boutput(owner, __red("You need to start on the [station_or_ship()]!"))
+				return
+
+			if(IS_ARRIVALS(T.loc))
+				boutput(owner, "<spawn class='alert'>You can't start inside arrivals!</span>")
 				return
 
 			if (istype(T,/turf/unsimulated/))
@@ -227,6 +232,7 @@
 		var/turf/startTurf = get_turf(owner)
 		var/obj/blob/nucleus/C = new /obj/blob/nucleus(startTurf)
 		C.layer++
+		owner.total_placed++
 		C.setOvermind(owner)
 		C.Life()
 		owner.started = 1
@@ -250,9 +256,9 @@
 			var/amount = rand(20, 30)
 			src.auto_spread(startTurf, maxRange = 3, maxTurfs = amount)
 		owner.playsound_local(owner.loc, "sound/voice/blob/blobdeploy.ogg", 50, 1)
-		owner.remove_ability(/datum/blob_ability/plant_nucleus)
 		owner.remove_ability(/datum/blob_ability/set_color)
 		owner.remove_ability(/datum/blob_ability/tutorial)
+		owner.remove_ability(/datum/blob_ability/plant_nucleus)
 
 /datum/blob_ability/set_color
 	name = "Set Color"
@@ -340,18 +346,16 @@
 		var/obj/blob/B2 = new /obj/blob(T)
 		B2.setOvermind(owner)
 
-		if (owner.blobs.len < 100)
-			cooldown_time = 15
-		else if (owner.blobs.len < 200)
-			cooldown_time = 20
-		else
-			cooldown_time = 25
+		cooldown_time = 16
 		var/mindist = 127
 		for_by_tcl(nucleus, /obj/blob/nucleus)
 			if(nucleus.overmind == owner)
 				mindist = min(mindist, get_dist(T, get_turf(nucleus)))
 
-		cooldown_time = max(cooldown_time + max(mindist * 0.4 - 1, 0) - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 6)
+		mindist *= max((length(owner.blobs) * 0.005) - 2, 1)
+
+		cooldown_time = max(cooldown_time + max(mindist * 0.5 - 10, 0) - owner.spread_upgrade * 5 - owner.spread_mitigation * 0.5, 6)
+		owner.total_placed++
 
 		var/extra_spreads = round(owner.multi_spread / 100) + (prob(owner.multi_spread % 100) ? 1 : 0)
 		if (extra_spreads)
@@ -367,6 +371,7 @@
 			for (var/i = 1, i <= extra_spreads && spreadability.len, i++)
 				var/turf/R = pick(spreadability)
 				var/obj/blob/B3 = new /obj/blob(R)
+				owner.total_placed++
 				B3.setOvermind(owner)
 				spreadability -= R
 
@@ -1170,9 +1175,9 @@
 /datum/blob_upgrade/quick_spread
 	name = "Passive: Quicker Spread"
 	icon_state = "blob-quickspread"
-	desc = "Reduces the cooldown of your Spread ability by 1 second. Can be repeated. The cooldown of Spread cannot go below 1 second."
+	desc = "Reduces the cooldown of your Spread ability by 0.5 seconds. Can be repeated. The cooldown of Spread cannot go below 0.6 seconds."
 	evo_point_cost = 3
-	scaling_cost_add = 4
+	scaling_cost_add = 3
 	repeatable = -1
 	upgradename = "spread"
 
@@ -1304,11 +1309,14 @@
 					total = weights[mid]
 					max_id = mid
 		if (!total)
+			taking = 0
 			return 1
 		if (total < required_deposits)
-			boutput(usr, "<span class='alert'><b>You need more deposits on your screen! (Required: [required_deposits], have (of highest material '[max_id]'): [count])</b></span>")
+			taking = 0
+			boutput(usr, "<span class='alert'><b>You need more deposits on your screen! (Required: [required_deposits], have (of highest material '[max_id]'): [total])</b></span>")
 			return 1
 		if (!mats.len)
+			taking = 0
 			return 1
 		var/datum/material/to_merge = copyMaterial(mats[max_id])
 		owner.my_material = getInterpolatedMaterial(owner.my_material, to_merge, 0.17)

@@ -13,12 +13,17 @@
 	block_vision = 0
 	var/path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
 	var/team_num
+	var/blocked_from_petasusaphilic = FALSE //Replacing the global blacklist
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 10)
 		setProperty("heatprot", 5)
 		setProperty("meleeprot_head", 1)
+
+proc/filter_trait_hats(var/type)
+	var/obj/item/clothing/head/coolhat = type
+	return !initial(coolhat.blocked_from_petasusaphilic)
 
 /obj/item/clothing/head/red
 	desc = "A knit cap in red."
@@ -79,7 +84,7 @@
 	name = "bio hood"
 	icon_state = "bio"
 	item_state = "bio_hood"
-	permeability_coefficient = 0.01
+	permeability_coefficient = 0.005
 	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "This hood protects you from harmful biological contaminants."
 	seal_hair = 1
@@ -129,7 +134,7 @@
 /obj/item/clothing/head/rad_hood
 	name = "Class II radiation hood"
 	icon_state = "radiation"
-	permeability_coefficient = 0.01
+	permeability_coefficient = 0.02
 	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "Asbestos, right near your face. Perfect!"
 	seal_hair = 1
@@ -141,6 +146,7 @@
 		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 12)
 		setProperty("disorient_resist_ear", 8)
+		setProperty("movespeed", 0.15)
 
 /obj/item/clothing/head/cakehat
 	name = "cakehat"
@@ -227,7 +233,7 @@
 	afterattack(atom/target, mob/user as mob)
 		if (src.on && !ismob(target) && target.reagents)
 			boutput(user, "<span class='notice'>You heat \the [target.name]</span>")
-			target.reagents.temperature_reagents(2500,10)
+			target.reagents.temperature_reagents(4000,10)
 		return
 
 /obj/item/clothing/head/caphat
@@ -356,25 +362,26 @@
 				M.drop_item()
 				W.set_loc(src)
 				break
-		if (cigs.len < src.max_cigs && istype(W, /obj/item/clothing/mask/cigarette)) //cigarette
+		if (length(cigs) < src.max_cigs && istype(W, /obj/item/clothing/mask/cigarette)) //cigarette
 			success = 1
 			M.drop_item()
 			W.set_loc(src)
 			cigs.Add(W)
-		if (cigs.len < src.max_cigs && istype(W, /obj/item/cigpacket)) //cigarette packet
+		if (length(cigs) < src.max_cigs && istype(W, /obj/item/cigpacket)) //cigarette packet
 			var/obj/item/cigpacket/packet = W
-			if(packet.cigcount == 0)
+			if(length(packet.contents) == 0)
 				M.show_text("Oh no! There's no more cigs in [packet]!", "red")
 				return
 			else
-				var/count = packet.cigcount
-				for(var/i=0, i<count, i++) //not sure if "-1" cigcount packets will work.
-					if(cigs.len >= src.max_cigs)
+				var/count = length(packet.contents)
+				for(var/i=0, i<count, i++)
+					if(length(cigs) >= src.max_cigs)
+						M.show_text("The [src] has been totally filled with cigarettes!", "red")
 						break
-					var/obj/item/clothing/mask/cigarette/C = new packet.cigtype(src)
+					var/obj/item/clothing/mask/cigarette/C = packet.contents[1]
 					C.set_loc(src)
 					cigs.Add(C)
-					packet.cigcount--
+					packet.update_icon()
 				success = 1
 
 		if(success)
@@ -638,6 +645,7 @@
 	icon_state = "wizard"
 	item_state = "wizard"
 	magical = 1
+	item_function_flags = IMMUNE_TO_ACID
 
 	setupProperties()
 		..()
@@ -891,6 +899,7 @@
 	wear_image_icon = 'icons/mob/bighat.dmi'
 	icon_state = "tophat"
 	w_class = W_CLASS_BULKY
+	blocked_from_petasusaphilic = TRUE
 
 /obj/item/clothing/head/bighat/syndicate
 	name = "syndicate hat"
@@ -1185,73 +1194,6 @@
 	item_state = "birthday-blue"
 	desc = "Happy birthday to you, happy birthday to you, in 200 years nobody will remember you."
 
-/obj/item/clothing/head/nyan
-	name = "gray cat ears"
-	desc = "Aww, cute and fuzzy."
-	icon = 'icons/obj/clothing/item_ears.dmi'
-	wear_image_icon = 'icons/mob/ears.dmi'
-	icon_state = "cat-gray"
-	item_state = "cat-gray"
-	w_class = W_CLASS_TINY
-	throwforce = 0
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		..()
-		if(istype(W,/obj/item/device/radio/headset))
-			user.show_message("You stuff the headset on the cat ears and tape it in place. Meow you should be able to hear the radio using these!")
-			var/obj/item/device/radio/headset/H = W
-			H.icon = src.icon
-			H.name = src.name
-			H.icon_state = src.icon_state
-			H.wear_image_icon = src.wear_image_icon
-			H.desc = "Aww, cute and fuzzy. Someone has taped a radio headset onto the headband."
-			qdel(src)
-
-	random
-		New()
-			..()
-			var/color = pick("white","gray","black","red","orange","yellow","green","blue","purple")
-			name = "[color] cat ears"
-			item_state = "cat-[color]"
-			icon_state = "cat-[color]"
-
-	white
-		name = "white cat ears"
-		icon_state = "cat-white"
-		item_state = "cat-white"
-	gray
-		name = "gray cat ears"
-		icon_state = "cat-gray"
-		item_state = "cat-gray"
-	black
-		name = "black cat ears"
-		icon_state = "cat-black"
-		item_state = "cat-black"
-	red
-		name = "red cat ears"
-		icon_state = "cat-red"
-		item_state = "cat-red"
-	orange
-		name = "orange cat ears"
-		icon_state = "cat-orange"
-		item_state = "cat-orange"
-	yellow
-		name = "yellow cat ears"
-		icon_state = "cat-yellow"
-		item_state = "cat-yellow"
-	green
-		name = "green cat ears"
-		icon_state = "cat-green"
-		item_state = "cat-green"
-	blue
-		name = "blue cat ears"
-		icon_state = "cat-blue"
-		item_state = "cat-blue"
-	purple
-		name = "purple cat ears"
-		icon_state = "cat-purple"
-		item_state = "cat-purple"
-
 /obj/item/clothing/head/pokervisor
 	name = "green visor"
 	desc = "Do both gambling and accounting with style."
@@ -1293,16 +1235,6 @@
 		boutput(user, "<span class='notice'>You unfold the beret into a hat.</span>")
 	return
 
-/obj/item/clothing/head/antlers
-	name = "antlers"
-	desc = "Be a deer and wear these, won't you?"
-	icon = 'icons/obj/clothing/item_ears.dmi'
-	wear_image_icon = 'icons/mob/bighat.dmi'
-	icon_state = "antlers"
-	item_state = "antlers"
-	w_class = W_CLASS_TINY
-	throwforce = 0
-
 /obj/item/clothing/head/pajama_cap
 	name = "nightcap"
 	desc = "Is it truly a good night without one?"
@@ -1323,7 +1255,6 @@
 	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "headsprout"
 	item_state = "headsprout"
-
 
 /obj/item/clothing/head/hos_hat
 	name = "HoS Hat"
@@ -1391,3 +1322,463 @@
 	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "waitresshat"
 	item_state = "waitresshat"
+
+// HEADBANDS
+
+ABSTRACT_TYPE(/obj/item/clothing/head/headband)
+/obj/item/clothing/head/headband
+	name = "headband"
+	desc = "A band. For your head."
+	icon = 'icons/obj/clothing/item_ears.dmi'
+	wear_image_icon = 'icons/mob/ears.dmi'
+	icon_state = "cat-gray"
+	item_state = "cat-gray"
+	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
+	item_state = "earsheadband"
+	w_class = W_CLASS_TINY
+	throwforce = 0
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		..()
+		if(istype(W,/obj/item/device/radio/headset))
+			user.show_message("You stuff the headset on the headband and tape it in place. Now you should be able to hear the radio using these!")
+			var/obj/item/device/radio/headset/H = W
+			H.icon = src.icon
+			H.name = src.name
+			H.icon_state = src.icon_state
+			H.wear_image_icon = src.wear_image_icon
+			H.wear_image = src.wear_image
+			H.desc = "Aww, cute and fuzzy. Someone has taped a radio headset onto the headband."
+			qdel(src)
+
+ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
+/obj/item/clothing/head/headband/nyan
+	name = "gray cat ears"
+	desc = "Aww, cute and fuzzy."
+	icon_state = "cat-gray"
+	item_state = "cat-gray"
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		..()
+		if(istype(W,/obj/item/device/radio/headset))
+			user.show_message("You stuff the headset on the headband and tape it in place. Meow you should be able to hear the radio using these!")
+			var/obj/item/device/radio/headset/H = W
+			H.icon = src.icon
+			H.name = src.name
+			H.icon_state = src.icon_state
+			H.wear_image_icon = src.wear_image_icon
+			H.desc = "Aww, cute and fuzzy. Someone has taped a radio headset onto the headband."
+			qdel(src)
+
+	random
+		New()
+			..()
+			var/color = pick("white","gray","black","red","orange","yellow","green","blue","purple")
+			name = "[color] cat ears"
+			item_state = "cat-[color]"
+			icon_state = "cat-[color]"
+
+	white
+		name = "white cat ears"
+		icon_state = "cat-white"
+		item_state = "cat-white"
+	gray
+		name = "gray cat ears"
+		icon_state = "cat-gray"
+		item_state = "cat-gray"
+	black
+		name = "black cat ears"
+		icon_state = "cat-black"
+		item_state = "cat-black"
+	red
+		name = "red cat ears"
+		icon_state = "cat-red"
+		item_state = "cat-red"
+	orange
+		name = "orange cat ears"
+		icon_state = "cat-orange"
+		item_state = "cat-orange"
+	yellow
+		name = "yellow cat ears"
+		icon_state = "cat-yellow"
+		item_state = "cat-yellow"
+	green
+		name = "green cat ears"
+		icon_state = "cat-green"
+		item_state = "cat-green"
+	blue
+		name = "blue cat ears"
+		icon_state = "cat-blue"
+		item_state = "cat-blue"
+	purple
+		name = "purple cat ears"
+		icon_state = "cat-purple"
+		item_state = "cat-purple"
+	leopard
+		name = "leopard ears"
+		icon_state = "cat-leopard"
+		item_state = "cat-leopard"
+	snowleopard
+		name = "snow leopard ears"
+		icon_state = "cat-leopardw"
+		item_state = "cat-leopardw"
+	tiger
+		name = "tiger ears"
+		icon_state = "cat-tiger"
+		item_state = "cat-tiger"
+
+/obj/item/clothing/head/headband/antlers
+	name = "antlers"
+	desc = "Be a deer and wear these, won't you?"
+	icon = 'icons/obj/clothing/item_ears.dmi'
+	wear_image_icon = 'icons/mob/bighat.dmi'
+	icon_state = "antlers"
+	item_state = "antlers"
+	w_class = W_CLASS_TINY
+	throwforce = 0
+
+/obj/item/clothing/head/headband/giraffe
+	name = "giraffe ears"
+	desc = "Wearing these will take your fashion to another level."
+	icon = 'icons/obj/clothing/item_ears.dmi'
+	wear_image_icon = 'icons/mob/bighat.dmi'
+	icon_state = "giraffe"
+	item_state = "giraffe"
+	w_class = W_CLASS_TINY
+	throwforce = 0
+
+/obj/item/clothing/head/headband/bee
+	name = "bee antennae"
+	desc = "These antennae will make you look BEE-autiful!"
+	icon = 'icons/obj/clothing/item_ears.dmi'
+	wear_image_icon = 'icons/mob/bighat.dmi'
+	icon_state = "antennae"
+	item_state = "antennae"
+	w_class = W_CLASS_TINY
+	throwforce = 0
+
+// BARRETTES
+
+ABSTRACT_TYPE(/obj/item/clothing/head/barrette)
+/obj/item/clothing/head/barrette
+	name = "barrettes"
+	desc = "Not to be confused with a beret."
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "barrette-blue"
+	item_state = "barrette-blue"
+	blocked_from_petasusaphilic = TRUE
+	w_class = W_CLASS_TINY
+	throwforce = 0
+
+	butterflyblu
+		name = "blue butterfly hairclip"
+		desc = "A fashionable hair clip shaped like a butterfly to keep your hair from fly-ing all over the place."
+		icon_state = "barrette-butterflyblu"
+		item_state = "barrette-butterflyblu"
+	butterflyorg
+		name = "orange butterfly hairclip"
+		desc = "A fashionable hair clip shaped like a butterfly to keep your hair from fly-ing all over the place."
+		icon_state = "barrette-butterflyorg"
+		item_state = "barrette-butterflyorg"
+	blue
+		name = "blue barrettes"
+		icon_state = "barrette-blue"
+		item_state = "barrette-blue"
+	green
+		name = "green barrettes"
+		icon_state = "barrette-green"
+		item_state = "barrette-green"
+	pink
+		name = "pink barrettes"
+		icon_state = "barrette-pink"
+		item_state = "barrette-pink"
+	gold
+		name = "gold barrettes"
+		icon_state = "barrette-gold"
+		item_state = "barrette-gold"
+
+// HAIRBOWS (jan.antilles loves you)
+
+ABSTRACT_TYPE(/obj/item/clothing/head/hairbow)
+/obj/item/clothing/head/hairbow
+	name = "hairbow"
+	desc = "A huge bow that goes on your head."
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "hbow-magenta"
+	item_state = "hbow-magenta"
+	w_class = W_CLASS_TINY
+	throwforce = 0
+
+	magenta
+		name = "magenta hairbow"
+		desc = "A huge bow that goes on your head. This one is magenta."
+		icon_state = "hbow-magenta"
+		item_state = "hbow-magenta"
+	pink
+		name = "pink hairbow"
+		desc = "A huge bow that goes on your head. This one is pink."
+		icon_state = "hbow-pink"
+		item_state = "hbow-pink"
+	red
+		name = "red hairbow"
+		desc = "A huge bow that goes on your head. This one is red."
+		icon_state = "hbow-red"
+		item_state = "hbow-red"
+	gold
+		name = "gold hairbow"
+		desc = "A huge bow that goes on your head. This one is gold."
+		icon_state = "hbow-gold"
+		item_state = "hbow-gold"
+	green
+		name = "green hairbow"
+		desc = "A huge bow that goes on your head. This one is green."
+		icon_state = "hbow-green"
+		item_state = "hbow-green"
+	mint
+		name = "mint hairbow"
+		desc = "A huge bow that goes on your head. This one is mint."
+		icon_state = "hbow-mint"
+		item_state = "hbow-mint"
+	blue
+		name = "blue hairbow"
+		desc = "A huge bow that goes on your head. This one is blue."
+		icon_state = "hbow-blue"
+		item_state = "hbow-blue"
+	navy
+		name = "navy hairbow"
+		desc = "A huge bow that goes on your head. This one is navy."
+		icon_state = "hbow-navy"
+		item_state = "hbow-navy"
+	purple
+		name = "purple hairbow"
+		desc = "A huge bow that goes on your head. This one is purple."
+		icon_state = "hbow-purple"
+		item_state = "hbow-purple"
+	shinyblack
+		name = "shiny black hairbow"
+		desc = "A huge bow that goes on your head. This one is shiny black."
+		icon_state = "hbow-shinyblack"
+		item_state = "hbow-shinyblack"
+	matteblack
+		name = "matte black hairbow"
+		desc = "A huge bow that goes on your head. This one is matte black."
+		icon_state = "hbow-matteblack"
+		item_state = "hbow-matteblack"
+	white
+		name = "white hairbow"
+		desc = "A huge bow that goes on your head. This one is white."
+		icon_state = "hbow-white"
+		item_state = "hbow-white"
+	rainbow
+		name = "rainbow hairbow"
+		desc = "A huge bow that goes on your head. This one has stripes in all the colors of the rainbow."
+		icon_state = "hbow-rainbow"
+		item_state = "hbow-rainbow"
+	flashy
+		name = "flashy hairbow"
+		desc = "A huge bow that goes on your head. This one is flashing all kinds of colors! Whoa."
+		icon_state = "hbow-flashy"
+		item_state = "hbow-flashy"
+
+	yellowpolkadot
+		name = "yellow polka-dot hairbow"
+		desc = "A huge bow that goes on your head. This one is yellow and has polka dots. Not itsy bitsy or teeny weeny."
+		icon_state = "hbow-yellowpolkadot"
+		item_state = "hbow-yellowpolkadot"
+
+/obj/item/clothing/head/rafflesia
+    name = "rafflesia"
+    desc = "Usually reffered to as corpseflower due to its horrid odor, perfect for masking the smell of your stinky head."
+    wear_image_icon = 'icons/mob/fruithat.dmi'
+    icon_state = "rafflesiahat"
+    item_state = "rafflesiahat"
+
+/obj/item/clothing/head/deerstalker
+	name = "deerstalker hat"
+	desc = "A hat for hunting space deer or solving a mystery."
+	icon_state = "deerstalker"
+	item_state = "deerstalker"
+
+/obj/item/clothing/head/pomhat_blue
+   name = "blue pomhat"
+   desc = "A cobalt hat with a fun little pom!"
+   icon_state = "pomhat_blue"
+   item_state = "pomhat_blue"
+
+/obj/item/clothing/head/pomhat_red
+   name = "red pomhat"
+   desc = "A crimson hat with an enjoyable little pom!"
+   icon_state = "pomhat_red"
+   item_state = "pomhat_red"
+
+// Mime Beret recolours (mime beret is located elsewhere weirdly)
+
+ABSTRACT_TYPE(/obj/item/clothing/head/frenchberet)
+/obj/item/clothing/head/frenchberet
+	name = "\improper French beret"
+	desc = "Much more artistic than your standard beret."
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "beret_wht"
+	item_state = "beret_wht"
+	w_class = W_CLASS_TINY
+	throwforce = 0
+
+	white
+		name = "white French beret"
+		icon_state = "beret_wht"
+		item_state = "beret_wht"
+
+	yellow
+		name = "yellow French beret"
+		icon_state = "beret_yel"
+		item_state = "beret_yel"
+
+	mint
+		name = "mint French beret"
+		icon_state = "beret_mnt"
+		item_state = "beret_mnt"
+
+	purple
+		name = "purple French beret"
+		icon_state = "beret_prp"
+		item_state = "beret_prp"
+
+	blue
+		name = "blue French beret"
+		icon_state = "beret_blu"
+		item_state = "beret_blu"
+
+	pink
+		name = "pink French beret"
+		icon_state = "beret_pnk"
+		item_state = "beret_pnk"
+
+	strawberry
+		name = "strawberry beret"
+		icon_state = "beret_strawb"
+		item_state = "beret_strawb"
+
+// Costume goggles
+
+ABSTRACT_TYPE(/obj/item/clothing/head/goggles)
+/obj/item/clothing/head/goggles
+	name = "costume goggles"
+	desc = "They don't even fit over your eyes! How cheap."
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "goggles_red"
+	item_state = "goggles_red"
+	w_class = W_CLASS_TINY
+	throwforce = 0
+
+	red
+		name = "red costume goggles"
+		icon_state = "goggles_red"
+		item_state = "goggles_red"
+
+	purple
+		name = "purple costume goggles"
+		icon_state = "goggles_prp"
+		item_state = "goggles_prp"
+
+	green
+		name = "green costume goggles"
+		icon_state = "goggles_grn"
+		item_state = "goggles_grn"
+
+	blue
+		name = "blue costume goggles"
+		icon_state = "goggles_blu"
+		item_state = "goggles_blu"
+
+	yellow
+		name = "yellow costume goggles"
+		icon_state = "goggles_yel"
+		item_state = "goggles_yel"
+
+// Baseball Caps
+
+ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
+/obj/item/clothing/head/basecap
+	name = "baseball cap"
+	desc = "Wear it normally, or flip it backwards to increase your coolness."
+	uses_multiple_icon_states = 1
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
+	var/hatflip = FALSE
+	var/hatcolour = "black"
+
+	New()
+		..()
+		name = "[hatcolour] baseball cap"
+		item_state = "basecap_[hatcolour]"
+
+	attack_self(var/mob/user as mob)
+		src.hatflip = !src.hatflip
+		src.icon_state = "basecap_[hatcolour]"
+		src.item_state = "basecap_[hatcolour]"
+		if(src.hatflip)
+			src.icon_state = "basecapflip_[hatcolour]"
+			src.item_state = "basecapflip_[hatcolour]"
+			boutput(user, "<span class='notice'>You flip your baseball cap around. Now it's backwards.</span>")
+		else
+			boutput(user, "<span class='notice'>You flip your baseball cap back into the standard baseball cap position.</span>")
+
+	black
+		hatcolour = "black"
+		item_state = "basecap_black"
+		icon_state = "basecap_black"
+
+	purple
+		hatcolour = "purple"
+		item_state = "basecap_purple"
+		icon_state = "basecap_purple"
+
+	red
+		hatcolour = "red"
+		item_state = "basecap_red"
+		icon_state = "basecap_red"
+
+	yellow
+		hatcolour = "yellow"
+		item_state = "basecap_yellow"
+		icon_state = "basecap_yellow"
+
+	green
+		hatcolour = "green"
+		item_state = "basecap_green"
+		icon_state = "basecap_green"
+
+	blue
+		hatcolour = "blue"
+		item_state = "basecap_blue"
+		icon_state = "basecap_blue"
+
+	white
+		hatcolour = "white"
+		item_state = "basecap_white"
+		icon_state = "basecap_white"
+
+	pink
+		hatcolour = "pink"
+		item_state = "basecap_pink"
+		icon_state = "basecap_pink"
+
+/obj/item/clothing/head/pirate_blk
+	name = "black pirate hat"
+	desc = "Heroic!"
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "pirate_blk"
+	item_state = "pirate_blk"
+
+/obj/item/clothing/head/pirate_brn
+	name = "brown pirate hat"
+	desc = "Heroic!"
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "pirate_brn"
+	item_state = "pirate_brn"

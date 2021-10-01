@@ -61,6 +61,9 @@
 					UpdateOverlays(null, okey, 0, 1)
 
 
+	was_deconstructed_to_frame(mob/user)
+		src.active = 0
+
 	attack_hand(var/mob/user as mob)
 		if (!src.fuel) boutput(user, "<span class='alert'>There is no fuel in the furnace!</span>")
 		else
@@ -83,7 +86,7 @@
 				message_admins("[key_name(user)] is trying to force [key_name(target)] into a furnace at [log_loc(src)].")
 				src.add_fingerprint(user)
 				sleep(5 SECONDS)
-				if(grab?.affecting && src.active) //ZeWaka: Fix for null.affecting
+				if(grab?.affecting && src.active && in_interact_range(src, user)) //ZeWaka: Fix for null.affecting
 					var/mob/M = grab.affecting
 					user.visible_message("<span class='alert'>[user] stuffs [M] into the furnace!</span>")
 					logTheThing("combat", user, M, "forced [constructTarget(M,"combat")] into a furnace at [log_loc(src)].")

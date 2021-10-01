@@ -1836,6 +1836,36 @@
 		..()
 		name = "civilian minisub"
 
+/obj/machinery/vehicle/tank/minisub/heavy
+	body_type = "minisub"
+	icon_state = "graysub_body"
+	health = 130
+	maxhealth = 130
+
+	New()
+		..()
+		name = "heavy minisub"
+
+/obj/machinery/vehicle/tank/minisub/industrial
+	body_type = "minisub"
+	icon_state = "blacksub_body"
+	health = 150
+	maxhealth = 150
+
+	New()
+		..()
+		name = "industrial minisub"
+
+/obj/machinery/vehicle/tank/minisub/black
+	body_type = "minisub"
+	icon_state = "blacksub_body"
+	health = 175
+	maxhealth = 175
+
+	New()
+		..()
+		name = "strange minisub"
+
 /obj/machinery/vehicle/tank/minisub/engineer
 	body_type = "minisub"
 	icon_state = "graysub_body"
@@ -1863,6 +1893,15 @@
 	var/failing = 0
 	var/succeeding = 0
 	var/did_warp = 0
+
+	New()
+		. = ..()
+		src.components -= src.engine
+		qdel(src.engine)
+		src.engine = new /obj/item/shipcomponent/engine/escape(src)
+		src.components += src.engine
+		src.engine.ship = src
+		src.engine.activate()
 
 	finish_board_pod(var/mob/boarder)
 		..()

@@ -1721,7 +1721,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control/west{
+/obj/machinery/computer/solar_control/west{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -2294,7 +2294,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control/small_backup2{
+/obj/machinery/computer/solar_control/small_backup2{
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
@@ -14037,7 +14037,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 4
 	},
 /turf/unsimulated/floor{
@@ -14857,12 +14857,20 @@
 /area/station/hydroponics/bay)
 "aHr" = (
 /obj/cable{
-	icon_state = "4-8"
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /obj/grille/steel,
 /obj/window/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/plating,
-/area/station/hydroponics/bay)
+/area/station/turret_protected/ai)
 "aHs" = (
 /obj/submachine/seed_manipulator{
 	dir = 8
@@ -15378,7 +15386,7 @@
 	},
 /area/shuttle/arrival/station)
 "aIN" = (
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 4
 	},
 /turf/unsimulated/floor{
@@ -18919,7 +18927,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 8
 	},
 /turf/simulated/floor/bluewhite{
@@ -18930,9 +18938,6 @@
 /obj/disposalpipe/segment/mail/bent/north,
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
-/obj/machinery/sleep_console{
-	dir = 8
-	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbooth)
 "aRt" = (
@@ -20925,11 +20930,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aWp" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -22292,11 +22292,6 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/arrivals)
 "aZk" = (
@@ -23263,14 +23258,17 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "bbx" = (
+/obj/grille/steel,
+/obj/window/auto/reinforced,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "0-2"
 	},
-/obj/disposalpipe/segment,
-/turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
+/obj/cable,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/turret_protected/ai)
 "bby" = (
 /obj/landmark{
 	name = "blobstart"
@@ -24450,10 +24448,6 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /obj/machinery/atmospherics/valve/notify_admins/horizontal{
 	name = "Air Reserve (Escape Hallway)"
 	},
@@ -24892,7 +24886,7 @@
 "bfp" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/atmospherics/pipe/simple/overfloor/northwest,
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8;
 	name = "Station Power Grid Monitoring"
 	},
@@ -26558,9 +26552,6 @@
 /turf/simulated/floor/sanitary/blue,
 /area/station/engine/gas)
 "bjp" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/machinery/light/small,
 /obj/disposalpipe/segment/mail/vertical,
@@ -29855,11 +29846,6 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/hos)
 "bqR" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/plasticflaps{
 	layer = 3
 	},
@@ -29868,6 +29854,9 @@
 	req_access_txt = "37"
 	},
 /obj/machinery/door/firedoor/pyro,
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/delivery,
 /area/station/security/hos)
 "bqS" = (
@@ -29880,14 +29869,13 @@
 	name = "Security Lockdown Doors";
 	opacity = 0
 	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /obj/window_blinds/cog2/right,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
 /area/station/security/hos)
@@ -30791,10 +30779,16 @@
 /obj/stool/chair/comfy{
 	dir = 8
 	},
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "bsH" = (
 /obj/machinery/computer/security,
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "bsI" = (
@@ -34312,11 +34306,6 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/checkpoint/customs)
 "bAa" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/machinery/door/firedoor/pyro,
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/door/poddoor/pyro{
@@ -34680,6 +34669,9 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/core)
 "bAE" = (
@@ -34691,11 +34683,10 @@
 	name = "Observation Shutter";
 	opacity = 0
 	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
 /obj/window/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/core)
 "bAF" = (
@@ -35418,7 +35409,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
 	},
@@ -35713,7 +35704,7 @@
 /obj/blind_switch/area{
 	pixel_x = -24
 	},
-/obj/machinery/power/monitor/smes,
+/obj/machinery/computer/power_monitor/smes,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/ce)
 "bCF" = (
@@ -38200,6 +38191,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bGZ" = (
@@ -38753,7 +38747,7 @@
 	name = "Engineering Control Room"
 	})
 "bIh" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 4;
 	name = "Engine Output Monitoring"
 	},
@@ -39160,6 +39154,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/cable,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bIP" = (
@@ -39250,8 +39245,8 @@
 	icon_state = "pipe-c"
 	},
 /obj/table/reinforced/auto,
-/obj/item/storage/box/flashbang_kit,
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
+/obj/item/chem_grenade/flashbang,
 /obj/item/storage/box/stinger_kit,
 /obj/item/storage/box/revimp_kit{
 	pixel_x = 5
@@ -39615,6 +39610,11 @@
 "bJv" = (
 /obj/table/auto,
 /obj/machinery/recharger,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/circuit/off,
 /area/station/bridge)
 "bJw" = (
@@ -40132,7 +40132,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4;
 	name = "Station Power Grid Monitoring"
 	},
@@ -40494,6 +40494,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor/horizontal,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bKJ" = (
@@ -40897,7 +40900,6 @@
 	name = "Observation Shutter";
 	opacity = 0
 	},
-/obj/cable,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -41756,7 +41758,7 @@
 	dir = 4
 	},
 /obj/machinery/recharger/wall/sticky{
-	dir = 4;
+	dir = 8;
 	pixel_x = -20
 	},
 /turf/simulated/floor/blueblack,
@@ -42041,9 +42043,6 @@
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/core)
@@ -42393,22 +42392,20 @@
 /area/station/ai_monitored/armory)
 "bNY" = (
 /obj/window/auto/reinforced,
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
 /obj/grille/steel,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "engine_observation";
+	name = "Observation Shutter";
+	opacity = 0
 	},
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/turf/simulated/floor/plating/airless,
+/area/station/engine/core)
 "bNZ" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -42888,10 +42885,6 @@
 	opacity = 0
 	},
 /obj/cable,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/inner)
 "bOV" = (
@@ -47152,11 +47145,6 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 5
 	},
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
 /turf/simulated/floor/caution/south,
 /area/station/engine/coldloop)
 "bYj" = (
@@ -47313,19 +47301,11 @@
 /obj/machinery/light,
 /obj/cable,
 /obj/machinery/power/data_terminal,
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 8
 	},
 /turf/simulated/floor/carpet{
 	dir = 10;
-	icon_state = "fred2"
-	},
-/area/station/security/main)
-"bYB" = (
-/obj/machinery/sleep_console{
-	dir = 8
-	},
-/turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},
 /area/station/security/main)
@@ -49118,11 +49098,6 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "ccy" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
 	name = "NanoPutt Bay";
@@ -49640,6 +49615,11 @@
 /area/station/security/brig)
 "cdI" = (
 /obj/machinery/door/airlock/pyro/maintenance,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/east)
 "cdJ" = (
@@ -50414,7 +50394,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	name = "Station Power Grid Monitoring"
 	},
 /obj/cable{
@@ -53309,7 +53289,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/construction)
 "cmH" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/circuit/green,
 /area/station/science/teleporter)
 "cmI" = (
@@ -54409,6 +54389,7 @@
 /obj/item/circuitboard/cloning,
 /obj/item/circuitboard/barcode_qm,
 /obj/item/circuitboard/barcode,
+/obj/item/circuitboard/qmorder,
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "coS" = (
@@ -59879,28 +59860,22 @@
 "cBj" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "lockdown_checkpoint2";
-	name = "Checkpoint Lockdown Doors";
-	opacity = 0
-	},
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/specialroom/bar,
-/area/station/security/checkpoint/cargo)
+/turf/simulated/floor/plating,
+/area/station/bridge)
 "cBk" = (
 /obj/rack,
 /obj/item/circuitboard/arcade,
@@ -59908,6 +59883,8 @@
 /obj/item/circuitboard/powermonitor_smes,
 /obj/item/circuitboard/operating,
 /obj/item/circuitboard/genetics,
+/obj/item/circuitboard/qmsupply,
+/obj/item/circuitboard/telescope,
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "cBl" = (
@@ -62186,13 +62163,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/obj/machinery/sleeper{
-	dir = 8
-	},
-/turf/simulated/floor/specialroom/medbay,
-/area/station/medical/medbay/lobby)
-"cGF" = (
-/obj/machinery/sleep_console{
+/obj/machinery/sleeper/compact{
 	dir = 8
 	},
 /turf/simulated/floor/specialroom/medbay,
@@ -62267,9 +62238,6 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/machinery/sleep_console{
-	dir = 4
-	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
 "cGQ" = (
@@ -62283,7 +62251,7 @@
 	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/medbay,
@@ -66204,11 +66172,6 @@
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/office)
 "cPL" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/machinery/manufacturer/robotics,
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/office)
@@ -72407,7 +72370,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 8
 	},
 /turf/simulated/floor/bluewhite{
@@ -72420,9 +72383,6 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
-	},
-/obj/machinery/sleep_console{
-	dir = 8
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
@@ -72838,7 +72798,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control/small_backup1{
+/obj/machinery/computer/solar_control/small_backup1{
 	dir = 8
 	},
 /turf/simulated/floor/airless/plating/damaged3,
@@ -73428,7 +73388,7 @@
 "deZ" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 8
 	},
 /turf/simulated/floor/bluewhite,
@@ -73436,9 +73396,6 @@
 "dfa" = (
 /obj/cable{
 	icon_state = "1-2"
-	},
-/obj/machinery/sleep_console{
-	dir = 8
 	},
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
@@ -74046,7 +74003,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control/east{
+/obj/machinery/computer/solar_control/east{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -75509,7 +75466,7 @@
 /turf/simulated/floor/plating,
 /area/research_outpost)
 "djr" = (
-/obj/machinery/power/solar_control/east{
+/obj/machinery/computer/solar_control/east{
 	dir = 8
 	},
 /obj/cable{
@@ -77156,7 +77113,7 @@
 /turf/simulated/wall,
 /area/listeningpost/power)
 "dmZ" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -77173,7 +77130,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/solar_control/small_backup4,
+/obj/machinery/computer/solar_control/small_backup4,
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "dnb" = (
@@ -78388,6 +78345,12 @@
 /obj/decal/poster/wallsign/framed_award/hos_medal{
 	pixel_y = 28
 	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "eLQ" = (
@@ -78492,6 +78455,12 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/ai_monitored/storage/eva)
+"gKa" = (
+/obj/landmark/spawner{
+	name = "dolly"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "hbJ" = (
 /obj/stool/chair/office,
 /obj/landmark/start{
@@ -78687,7 +78656,7 @@
 /area/station/ranch)
 "jcR" = (
 /obj/machinery/light,
-/obj/submachine/chicken_feed_grinder,
+/obj/submachine/ranch_feed_grinder,
 /obj/item/reagent_containers/food/snacks/plant/corn{
 	doants = 0
 	},
@@ -78870,8 +78839,8 @@
 	dir = 8
 	},
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag,
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag,
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag,
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag,
 /turf/simulated/floor/grasstodirt{
 	dir = 8
 	},
@@ -78931,16 +78900,6 @@
 /obj/machinery/light,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"miG" = (
-/obj/window/auto/reinforced,
-/obj/grille/steel,
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/arcade)
 "mjk" = (
 /obj/storage/closet/fire,
 /obj/disposalpipe/segment/mail/vertical,
@@ -79020,8 +78979,8 @@
 /obj/railing/orange/reinforced,
 /obj/machinery/light_switch/east,
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag,
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag,
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag,
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag,
 /turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "nqk" = (
@@ -79372,7 +79331,6 @@
 "rJV" = (
 /obj/table/auto,
 /obj/random_item_spawner/tools,
-/obj/cable,
 /turf/simulated/floor/plating,
 /area/space)
 "rOo" = (
@@ -103345,7 +103303,7 @@ aIT
 mgV
 vrU
 xGk
-aHr
+aED
 aED
 aED
 awc
@@ -105777,7 +105735,7 @@ xZx
 gtQ
 thz
 qfX
-qfX
+gKa
 qfX
 dpq
 aaa
@@ -106370,7 +106328,7 @@ aJa
 azn
 azn
 aQY
-miG
+aSk
 aTn
 baK
 aXD
@@ -112181,7 +112139,7 @@ cAz
 cCb
 cDy
 cFm
-cGF
+cAL
 cHZ
 cHZ
 cHZ
@@ -117580,7 +117538,7 @@ bGc
 bGc
 bLE
 bNt
-bOY
+bNY
 bQp
 bxk
 bTC
@@ -127516,7 +127474,7 @@ aVD
 aWR
 aYx
 bab
-bbx
+bab
 bbC
 bdx
 bei
@@ -127881,7 +127839,7 @@ cvh
 cwQ
 cyj
 deV
-cBj
+cBh
 cCz
 cEa
 cFU
@@ -134491,7 +134449,7 @@ bGX
 bBZ
 bKH
 bMt
-bNY
+bNW
 bBn
 bRd
 bSJ
@@ -134800,7 +134758,7 @@ bSH
 bUi
 bYY
 bXm
-bYB
+bYx
 bZP
 caY
 cch
@@ -135328,7 +135286,7 @@ abf
 abf
 abf
 adn
-abj
+aeF
 abI
 abI
 abI
@@ -135920,8 +135878,8 @@ aap
 aak
 aaG
 aaa
-aaZ
-abh
+aHr
+abi
 abf
 abu
 abK
@@ -138336,7 +138294,7 @@ aap
 aak
 aaG
 aaa
-aaZ
+aHr
 abi
 abf
 abu
@@ -138952,7 +138910,7 @@ abf
 abf
 abf
 adq
-abg
+aeF
 aeF
 aeF
 aeF
@@ -139554,7 +139512,7 @@ abq
 abq
 abq
 abq
-abq
+bbx
 abq
 adY
 aaX
@@ -149290,7 +149248,7 @@ bJI
 bLn
 bMY
 bOD
-bAf
+cBj
 aaI
 aaa
 aaa

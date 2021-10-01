@@ -39,6 +39,11 @@
 		icon_state = "ammopouch-double"
 		spawn_contents = list(/obj/item/ammo/bullets/tranq_darts/syndicate/pistol = 5)
 
+	poison_dart
+		name = "poison dart pouch"
+		icon_state = "ammopouch-double"
+		spawn_contents = list(/obj/item/ammo/bullets/blow_darts = 2, /obj/item/ammo/bullets/blow_darts/madness = 1, /obj/item/ammo/bullets/blow_darts/ls_bee = 1)
+
 	det_38
 		name = ".38 rounds pouch"
 		icon_state = "ammopouch-double"
@@ -58,8 +63,8 @@
 	sniper
 		name = "sniper magazine pouch"
 		icon_state = "ammopouch-double"
-		slots = 5
-		spawn_contents = list(/obj/item/ammo/bullets/rifle_762_NATO = 5)
+		slots = 7
+		spawn_contents = list(/obj/item/ammo/bullets/rifle_762_NATO = 7)
 
 	shotgun
 		name = "shotgun shell pouch"
@@ -147,7 +152,7 @@
 	slots = 6
 	does_not_open_in_pocket = 0
 	spawn_contents = list(/obj/item/handcuffs = 3,\
-	/obj/item/ammo/power_cell/high_power,\
+	/obj/item/ammo/power_cell/med_power,\
 	/obj/item/device/flash,\
 	/obj/item/instrument/whistle)
 

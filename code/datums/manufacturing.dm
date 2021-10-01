@@ -2,7 +2,10 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	if(mat in material_category_names)
 		return material_category_names[mat]
 	else
-		return capitalize(mat)
+		var/datum/material/nice_mat = getMaterial(mat)
+		if (istype(nice_mat))
+			return capitalize(nice_mat.name)
+		return capitalize(mat) //if all else fails (probably a category instead of a material)
 
 /datum/manufacture
 	var/name = null                // Name of the schematic
@@ -1688,10 +1691,10 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 
 /datum/manufacture/mender
 	name = "Auto Mender"
-	item_paths = list("MET-1","CRY-1")
-	item_amounts = list(3,4)
+	item_paths = list("MET-2","CRY-1", "gold")
+	item_amounts = list(5,4, 5)
 	item_outputs = list(/obj/item/reagent_containers/mender)
-	time = 10 SECONDS
+	time = 30 SECONDS
 	create = 2
 	category = "Resource"
 
@@ -1853,11 +1856,65 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 1
 	category = "Clothing"
 
+/datum/manufacture/backpack_red
+	name = "Red Backpack"
+	item_paths = list("FAB-1")
+	item_amounts = list(8)
+	item_outputs = list(/obj/item/storage/backpack/red)
+	time = 10 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/backpack_green
+	name = "Green Backpack"
+	item_paths = list("FAB-1")
+	item_amounts = list(8)
+	item_outputs = list(/obj/item/storage/backpack/green)
+	time = 10 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/backpack_blue
+	name = "Blue Backpack"
+	item_paths = list("FAB-1")
+	item_amounts = list(8)
+	item_outputs = list(/obj/item/storage/backpack/blue)
+	time = 10 SECONDS
+	create = 1
+	category = "Clothing"
+
 /datum/manufacture/satchel
 	name = "Satchel"
 	item_paths = list("FAB-1")
 	item_amounts = list(8)
 	item_outputs = list(/obj/item/storage/backpack/satchel)
+	time = 10 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/satchel_red
+	name = "Red Satchel"
+	item_paths = list("FAB-1")
+	item_amounts = list(8)
+	item_outputs = list(/obj/item/storage/backpack/satchel/red)
+	time = 10 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/satchel_green
+	name = "Green Satchel"
+	item_paths = list("FAB-1")
+	item_amounts = list(8)
+	item_outputs = list(/obj/item/storage/backpack/satchel/green)
+	time = 10 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/satchel_blue
+	name = "Blue Satchel"
+	item_paths = list("FAB-1")
+	item_amounts = list(8)
+	item_outputs = list(/obj/item/storage/backpack/satchel/blue)
 	time = 10 SECONDS
 	create = 1
 	category = "Clothing"
@@ -2115,7 +2172,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	category = "Clothing"
 
 /datum/manufacture/pride_poly
-	name = "Polyamorous Pride Jumpsuit"
+	name = "Polysexual Pride Jumpsuit"
 	item_paths = list("FAB-1")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/pride/poly)
@@ -2327,7 +2384,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	name = "Light Pod Armor"
 	item_paths = list("MET-2","CON-1")
 	item_amounts = list(30,20)
-	item_outputs = list(/obj/item/pod/armor_light)
+	item_outputs = list(/obj/item/podarmor/armor_light)
 	time = 20 SECONDS
 	create = 1
 	category = "Component"
@@ -2336,7 +2393,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	name = "Heavy Pod Armor"
 	item_paths = list("MET-2","MET-3")
 	item_amounts = list(30,20)
-	item_outputs = list(/obj/item/pod/armor_heavy)
+	item_outputs = list(/obj/item/podarmor/armor_heavy)
 	time = 30 SECONDS
 	create = 1
 	category = "Component"
@@ -2345,7 +2402,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	name = "Industrial Pod Armor"
 	item_paths = list("MET-3","CON-2","DEN-1")
 	item_amounts = list(25,10,5)
-	item_outputs = list(/obj/item/pod/armor_industrial)
+	item_outputs = list(/obj/item/podarmor/armor_industrial)
 	time = 50 SECONDS
 	create = 1
 	category = "Component"
@@ -2359,6 +2416,43 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 1
 	category = "Component"
 
+#ifdef UNDERWATER_MAP
+/datum/manufacture/sub/parts
+	name = "Minisub Frame Kit"
+	item_paths = list("MET-2")
+	item_amounts = list(15)
+	item_outputs = list(/obj/item/sub/frame_box)
+	time = 10 SECONDS
+	create = 1
+	category = "Component"
+
+/datum/manufacture/sub/engine
+	name = "Minisub Engine Manifold"
+	item_paths = list("MET-2","CON-1")
+	item_amounts = list(5,2)
+	item_outputs = list(/obj/item/sub/engine)
+	time = 5 SECONDS
+	create = 1
+	category = "Component"
+
+/datum/manufacture/sub/boards
+	name = "Minisub Circuitry"
+	item_paths = list("CRY-1","CON-1")
+	item_amounts = list(2,2)
+	item_outputs = list(/obj/item/sub/boards)
+	time = 5 SECONDS
+	create = 1
+	category = "Component"
+
+/datum/manufacture/sub/control
+	name = "Minisub Control Interface"
+	item_paths = list("CRY-1","CON-1")
+	item_amounts = list(5,5)
+	item_outputs = list(/obj/item/sub/control)
+	time = 5 SECONDS
+	create = 1
+	category = "Component"
+#endif
 /datum/manufacture/putt/parts
 	name = "MiniPutt Frame Kit"
 	item_paths = list("MET-2")

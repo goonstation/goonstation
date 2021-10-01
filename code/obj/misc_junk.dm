@@ -82,7 +82,7 @@
 	attack_self(mob/user as mob)
 		if(last_laugh + 50 < world.time)
 			user.visible_message("<span class='notice'><b>[user]</b> hugs [src]!</span>","<span class='notice'>You hug [src]!</span>")
-			playsound(src.loc,"sound/misc/gnomechuckle.ogg" ,50,1)
+			playsound(src.loc,"sound/misc/gnomegiggle.ogg", 50, 1)
 			last_laugh = world.time
 
 	process()
@@ -107,7 +107,7 @@
 			return
 		container = pick(eligible_containers)
 
-		playsound(src.loc,"sound/misc/gnomechuckle.ogg" ,50,1)
+		playsound(src.loc,"sound/misc/gnomegiggle.ogg", 50, 1)
 		src.set_loc(container)
 /obj/item/c_tube
 	name = "cardboard tube"
@@ -257,7 +257,6 @@
 	throwforce = 5
 	var/spam_flag = 0
 	var/pitch = 0
-	module_research = list("audio" = 20, "eldritch" = 3)
 
 /obj/item/hell_horn/attack_self(mob/user as mob)
 	if (spam_flag == 0)

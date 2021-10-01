@@ -377,7 +377,7 @@ obj/decal/fakeobjects/teleport_pad
 	name = "PCB constructor"
 	desc = "A combination pick and place machine and wave soldering gizmo.  For making boards.  Buddy boards.   Well, it would if the interface wasn't broken."
 	icon = 'icons/obj/manufacturer.dmi'
-	icon_state = "fab"
+	icon_state = "fab-general"
 	anchored = 1
 	density = 1
 
@@ -540,7 +540,7 @@ obj/decal/fakeobjects/teleport_pad
 		if (M.getStatusDuration("weakened") || M.getStatusDuration("stunned") || M.getStatusDuration("frozen"))
 			return
 
-		if (M.slip(0))
+		if (!(M.bioHolder?.HasEffect("cold_resist") > 1) && M.slip(0))
 			boutput(M, "<span class='alert'>You slipped on [src]!</span>")
 			if (prob(5))
 				M.TakeDamage("head", 5, 0, 0, DAMAGE_BLUNT)

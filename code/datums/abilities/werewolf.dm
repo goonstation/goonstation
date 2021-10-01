@@ -28,7 +28,7 @@
 
 		src.resistances += /datum/ailment/disease/lycanthropy
 
-		if (src.mind && src.mind.special_role != "omnitraitor")
+		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
 			SHOW_WEREWOLF_TIPS(src)
 
 	else return
@@ -77,8 +77,7 @@
 			M.delStatus("staggered")
 			M.change_misstep_chance(-INFINITY)
 			M.stuttering = 0
-			M.drowsyness = 0
-			M.add_stun_resist_mod("wolf_stun_resist", 10)
+			M.delStatus("drowsy")
 
 			//wolfing removes all the implants in you
 			for(var/obj/item/implant/I in M)
@@ -101,10 +100,6 @@
 			else
 				boutput(M, "<span class='notice'><h3>You are now a werewolf. You can remain in this form indefinitely or change back at any time.</span></h3>")
 
-			if (src.bioHolder)
-				src.bioHolder.AddEffect("regenerator_wolf")
-				boutput(src, "<span class='alert'>You will now heal over time!</span>")
-
 			if (M.hasStatus("handcuffed"))
 				if (M.handcuffs.werewolf_cant_rip())
 					boutput(M, "<span class='alert'>You can't seem to break free from these silver handcuffs.</span>")
@@ -116,15 +111,6 @@
 
 		// iswolf?
 		else
-			if (M.find_ailment_by_type(/datum/ailment/disease/lycanthropy)) // Wolfdisease? Whoops, you're a wolf forever!
-				boutput(src, "<span class='alert'>Your body refuses to change!</span>")
-				return
-
-			M.remove_stun_resist_mod("wolf_stun_resist")
-			if (src.bioHolder)
-				src.bioHolder.RemoveEffect("regenerator")
-				boutput(src, "<span class='alert'>You will no longer heal over time!</span>")
-
 			boutput(M, "<span class='notice'><h3>You transform back into your original form.</span></h3>")
 
 			M.set_mutantrace(M.coreMR) // return to monke/bove/herpe/etc
@@ -270,6 +256,8 @@
 				if (prob(70) && HH.stat != 2)
 					HH.emote("scream")
 		if ("pounce")
+			if(isobserver(target) || isintangible(target))
+				return
 			wrestler_knockdown(M, target, 1)
 			M.visible_message("<span class='alert'><B>[M] barrels through the air, slashing [target]!</B></span>")
 			damage += rand(2,8)
@@ -389,7 +377,7 @@
 	onAbilityStat() // In the 'Werewolf' tab.
 		..()
 		.= list()
-		if (src.owner && src.owner.mind && src.owner.mind.special_role == "werewolf")
+		if (src.owner && src.owner.mind && src.owner.mind.special_role == ROLE_WEREWOLF)
 			for (var/datum/objective/specialist/werewolf/feed/O in src.owner.mind.objectives)
 				src.feed_objective = O
 

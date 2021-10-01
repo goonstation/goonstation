@@ -46,6 +46,8 @@
 #define ATTACK_SELF_DELAY		 (1<<20)
 /// Is currently scaled by bubsium
 #define IS_BUBSIUM_SCALED		 (1<<21)
+/// If click delay should be applied even if atom is in user's contents (e.g.: postit notes)
+#define CLICK_DELAY_IN_CONTENTS  (1<<22)
 
 
 //Item function flags
@@ -58,6 +60,8 @@
 #define SMOKELESS 4
 /// makes items immune to acid
 #define IMMUNE_TO_ACID 8
+/// prevents items from heating anything up while burning
+#define COLD_BURN 16
 
 //tool flags
 #define TOOL_CLAMPING 1

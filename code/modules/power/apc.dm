@@ -473,6 +473,9 @@ var/zapLimiter = 0
 			boutput(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
 			updateicon()
 
+	else if (wiresexposed && (issnippingtool(W) || ispulsingtool(W)))
+		src.Attackhand(user)
+
 	else if (issilicon(user))
 		if (istype(W, /obj/item/robojumper))
 			var/mob/living/silicon/S = user
@@ -509,7 +512,7 @@ var/zapLimiter = 0
 
 			charging = chargemode
 
-		else return src.attack_hand(user)
+		else return src.Attackhand(user)
 
 	else if (istype(W, /obj/item/device/pda2) && W:ID_card)
 		W = W:ID_card
@@ -545,7 +548,7 @@ var/zapLimiter = 0
 	if (src.aidisabled && !src.wiresexposed)
 		boutput(user, "AI control for this APC interface has been disabled.")
 	else
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
 // attack with hand - remove cell (if cover open) or interact with the APC
 
@@ -809,14 +812,14 @@ var/zapLimiter = 0
 	else
 		return 0
 
-	if (user.bioHolder.HasEffect("resist_electric") == 2)
+	if (user.bioHolder.HasEffect("resist_electric_heal"))
 		var/healing = 0
 		healing = shock_damage / 3
 		user.HealDamage("All", healing, healing)
 		user.take_toxin_damage(0 - healing)
 		boutput(user, "<span class='notice'>You absorb the electrical shock, healing your body!</span>")
 		return
-	else if (user.bioHolder.HasEffect("resist_electric") == 1)
+	else if (user.bioHolder.HasEffect("resist_electric"))
 		boutput(user, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
 		return
 
@@ -1038,7 +1041,7 @@ var/zapLimiter = 0
 				src.updateUsrDialog()
 				return
 
-			logTheThing("station", usr, null, "turned the APC equipment power [(val==1) ? "off" : "on"] at [log_loc(usr)].")
+			logTheThing("station", usr, null, "turned the APC equipment power [(val==1) ? "off" : "on"] at [log_loc(src)].")
 			equipment = (val==1) ? 0 : val
 
 			updateicon()
@@ -1059,7 +1062,7 @@ var/zapLimiter = 0
 				src.updateUsrDialog()
 				return
 
-			logTheThing("station", usr, null, "turned the APC lighting power [(val==1) ? "off" : "on"] at [log_loc(usr)].")
+			logTheThing("station", usr, null, "turned the APC lighting power [(val==1) ? "off" : "on"] at [log_loc(src)].")
 			lighting = (val==1) ? 0 : val
 
 			updateicon()
@@ -1079,7 +1082,7 @@ var/zapLimiter = 0
 				src.updateUsrDialog()
 				return
 
-			logTheThing("station", usr, null, "turned the APC environment power [(val==1) ? "off" : "on"] at [log_loc(usr)].")
+			logTheThing("station", usr, null, "turned the APC environment power [(val==1) ? "off" : "on"] at [log_loc(src)].")
 			environ = (val==1) ? 0 :val
 
 			updateicon()
@@ -1103,8 +1106,8 @@ var/zapLimiter = 0
 					boutput(usr, "AI control for this APC interface has been disabled.")
 					src.updateUsrDialog()
 					return
-				message_admins("[key_name(usr)] overloaded the lights at [log_loc(usr)].")
-				logTheThing("station", usr, null, "overloaded the lights at [log_loc(usr)].")
+				message_admins("[key_name(usr)] overloaded the lights at [log_loc(src)].")
+				logTheThing("station", usr, null, "overloaded the lights at [log_loc(src)].")
 				src.overload_lighting()
 
 		src.updateUsrDialog()

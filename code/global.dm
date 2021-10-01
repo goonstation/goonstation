@@ -5,6 +5,8 @@ var/global/list/detailed_delete_gc_count = list()
 
 #ifdef MACHINE_PROCESSING_DEBUG
 var/global/list/detailed_machine_timings = list()
+var/global/list/detailed_machine_power = list()
+var/global/list/detailed_machine_power_prev = list()
 #endif
 
 #ifdef QUEUE_STAT_DEBUG
@@ -57,11 +59,10 @@ var/global
 	defer_powernet_rebuild = 0		// true if net rebuild will be called manually after an event
 	machines_may_use_wired_power = 0
 	regex/url_regex = null
+	regex/full_url_regex = null
 	force_random_names = 0			// for the pre-roundstart thing
 	force_random_looks = 0			// same as above
 
-	list/health_mon_icons = new/list()
-	list/arrestIconsAll = new/list()
 	list/default_mob_static_icons = list() // new mobs grab copies of these for themselves, or if their chosen type doesn't exist in the list, they generate their own and add it
 	list/mob_static_icons = list() // these are the images that are actually seen by ghostdrones instead of whatever mob
 	list/orbicons = list()
@@ -310,8 +311,8 @@ var/global
 
 	///////////////
 	//cyberorgan damage thresholds for emagging without emag
-	list/cyberorgan_brute_threshold = list("heart" = 0, "left_lung" = 0, "right_lung" = 0, "left_kidney" = 0, "right_kidney" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
-	list/cyberorgan_burn_threshold = list("heart" = 0, "left_lung" = 0, "right_lung" = 0, "left_kidney" = 0, "right_kidney" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
+	list/cyberorgan_brute_threshold = list("heart" = 0, "cyber_lung_L" = 0, "cyber_lung_R" = 0, "cyber_kidney_L" = 0, "cyber_kidney_R" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
+	list/cyberorgan_burn_threshold = list("heart" = 0, "cyber_lung_L" = 0, "cyber_lung_R" = 0, "cyber_kidney_L" = 0, "cyber_kidney_R" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
 
 	///////////////
 	list/logs = list ( //Loooooooooogs
@@ -351,9 +352,6 @@ var/global
 	bioele_shifts_since_accident = 0
 
 	// Controllers
-	datum/research/disease/disease_research = new()
-	datum/research/artifact/artifact_research = new()
-	datum/research/robotics/robotics_research = new()
 	datum/wage_system/wagesystem
 	datum/shipping_market/shippingmarket
 
@@ -434,6 +432,7 @@ var/global
 	antag_blob = image('icons/mob/antag_overlays.dmi', icon_state = "blob")
 	antag_wrestler = image('icons/mob/antag_overlays.dmi', icon_state = "wrestler")
 	antag_spy_theft = image('icons/mob/antag_overlays.dmi', icon_state = "spy_thief")
+	antag_arcfiend = image('icons/mob/antag_overlays.dmi', icon_state = "arcfiend")
 
 	pod_wars_NT = image('icons/mob/antag_overlays.dmi', icon_state = "nanotrasen")
 	pod_wars_NT_CMDR = image('icons/mob/antag_overlays.dmi', icon_state = "nanocomm")
@@ -487,7 +486,7 @@ var/global
 
 	list/cooldowns
 
-	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("credits","bux","tokens","cash","dollars","tokens","dollarydoos","tickets","souls","doubloons","Pesos","Rubles","Rupees")]"
+	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("Credits","Bux","Tokens","Cash","Dollars","Tokens","Dollarydoos","Tickets","Souls","Doubloons","Pesos","Rubles","Rupees")]"
 
 
 /proc/addGlobalRenderSource(var/image/I, var/key)

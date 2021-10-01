@@ -41,8 +41,6 @@
 	heat_capacity = 0
 	turf_flags = MOB_STEP
 
-	attackby()
-	attack_hand()
 	hitby()
 		. = ..()
 	reagent_act()
@@ -62,8 +60,6 @@
 	icon = 'icons/turf/shuttle.dmi'
 	turf_flags = MOB_STEP
 
-	attackby()
-	attack_hand()
 	hitby()
 		. = ..()
 	reagent_act()

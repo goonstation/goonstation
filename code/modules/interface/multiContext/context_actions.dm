@@ -762,7 +762,7 @@
 
 	unstack
 		name = "Remove Layer"
-		desc = "Removes a layer of cake."
+		desc = "Remove a layer of cake."
 		icon_state = "unstack"
 
 		execute(var/atom/target, var/mob/user)
@@ -771,7 +771,7 @@
 
 	candle
 		name = "Extinguish"
-		desc = "Blows out the cake's candle."
+		desc = "Blow out the cake's candle."
 		icon_state = "candle"
 
 		execute(var/atom/target, var/mob/user)
@@ -780,7 +780,7 @@
 
 	pickup
 		name = "Pick Up"
-		desc = "Picks up the cake."
+		desc = "Pick up the cake."
 		icon_state = "up_arrow"
 
 		execute(var/atom/target, var/mob/user)
@@ -788,6 +788,146 @@
 			if(c.loc == user)
 				user.u_equip(c)
 			user.put_in_hand_or_drop(c)
+
+/datum/contextAction/lamp_manufacturer
+	name = "Lamp Manufacturer Setting"
+	desc = "This button seems kinda meta."
+	icon_state = "dismiss"
+	checkRequirements(var/atom/target, var/mob/user)
+		. = 1
+
+	execute(var/atom/target, var/mob/user)
+		var/obj/item/lamp_manufacturer/M = target
+		if (M.removing_toggled)
+			M.set_icon_state("[M.prefix]-remove")
+		else
+			M.set_icon_state("[M.prefix]-[M.setting]")
+		M.tooltip_rebuild = 1
+
+	white
+		name = "Set White"
+		desc = "Sets the manufacturer to produce white lamps."
+		icon_state = "white"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/lamp_manufacturer/M = target
+			M.setting = "white"
+			M.dispensing_tube = /obj/item/light/tube
+			M.dispensing_bulb = /obj/item/light/bulb
+			..()
+
+	red
+		name = "Set Red"
+		desc = "Sets the manufacturer to produce red lamps."
+		icon_state = "red"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/lamp_manufacturer/M = target
+			M.setting = "red"
+			M.dispensing_tube = /obj/item/light/tube/red
+			M.dispensing_bulb = /obj/item/light/bulb/red
+			..()
+
+	yellow
+		name = "Set Yellow"
+		desc = "Sets the manufacturer to produce yellow lamps."
+		icon_state = "yellow"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/lamp_manufacturer/M = target
+			M.setting = "yellow"
+			M.dispensing_tube = /obj/item/light/tube/yellow
+			M.dispensing_bulb = /obj/item/light/bulb/yellow
+			..()
+
+	green
+		name = "Set Green"
+		desc = "Sets the manufacturer to produce green lamps."
+		icon_state = "green"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/lamp_manufacturer/M = target
+			M.setting = "green"
+			M.dispensing_tube = /obj/item/light/tube/green
+			M.dispensing_bulb = /obj/item/light/bulb/green
+			..()
+
+	cyan
+		name = "Set Cyan"
+		desc = "Sets the manufacturer to produce cyan lamps."
+		icon_state = "cyan"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/lamp_manufacturer/M = target
+			M.setting = "cyan"
+			M.dispensing_tube = /obj/item/light/tube/cyan
+			M.dispensing_bulb = /obj/item/light/bulb/cyan
+			..()
+
+	blue
+		name = "Set Blue"
+		desc = "Sets the manufacturer to produce blue lamps."
+		icon_state = "blue"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/lamp_manufacturer/M = target
+			M.setting = "blue"
+			M.dispensing_tube = /obj/item/light/tube/blue
+			M.dispensing_bulb = /obj/item/light/bulb/blue
+			..()
+
+	purple
+		name = "Set Purple"
+		desc = "Sets the manufacturer to produce purple lamps."
+		icon_state = "purple"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/lamp_manufacturer/M = target
+			M.setting = "purple"
+			M.dispensing_tube = /obj/item/light/tube/purple
+			M.dispensing_bulb = /obj/item/light/bulb/purple
+			..()
+
+	blacklight
+		name = "Set Blacklight"
+		desc = "Sets the manufacturer to produce blacklight lamps."
+		icon_state = "blacklight"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/lamp_manufacturer/M = target
+			M.setting = "blacklight"
+			M.dispensing_tube = /obj/item/light/tube/blacklight
+			M.dispensing_bulb = /obj/item/light/bulb/blacklight
+			..()
+
+	tubes
+		name = "Fitting Production: Tubes"
+		desc = "Sets the manufacturer to produce tube wall fittings."
+		icon_state = "tube"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/lamp_manufacturer/M = target
+			M.dispensing_fitting = /obj/machinery/light
+			..()
+
+	bulbs
+		name = "Fitting Production: Bulbs"
+		desc = "Sets the manufacturer to produce bulb wall fittings."
+		icon_state = "bulb"
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/lamp_manufacturer/M = target
+			M.dispensing_fitting = /obj/machinery/light/small
+			..()
+
+	removal
+		name = "Toggle Fitting Removal"
+		desc = "Toggles the manufacturer between removing fittings and replacing lamps."
+		icon_state = "remove"
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/lamp_manufacturer/M = target
+			M.removing_toggled = !M.removing_toggled
+			boutput(user, "<span class='notice'>Now set to [M.removing_toggled == TRUE ? "remove fittings" : "replace lamps"].</span>")
+			..()
 
 /datum/contextAction/card
 	icon = 'icons/ui/context16x16.dmi'
@@ -799,8 +939,8 @@
 		return TRUE
 
 	solitaire
-		name = "solitaire stack"
-		desc = "stacks cards with a slight offset."
+		name = "Solitaire Stack"
+		desc = "Stack cards with a slight offset."
 		icon_state = "solitaire"
 
 		execute(var/atom/target, var/mob/user)
@@ -808,8 +948,8 @@
 			card.solitaire(user)
 
 	fan
-		name = "fan"
-		desc = "spreads the cards into an easily readable fan."
+		name = "Fan"
+		desc = "Spread the cards into an easily readable fan."
 		icon_state = "fan"
 
 		execute(var/atom/target, var/mob/user)
@@ -821,8 +961,8 @@
 				group.fan(user)
 
 	stack
-		name = "stack"
-		desc = "gather the cards into a deck."
+		name = "Stack"
+		desc = "Gather the cards into a deck."
 		icon_state = "stack"
 
 		execute(var/atom/target, var/mob/user)
@@ -834,8 +974,8 @@
 				group.stack(user)
 
 	draw
-		name = "draw"
-		desc = "add a card to your hand."
+		name = "Draw"
+		desc = "Add a card to your hand."
 		icon_state = "draw"
 
 		execute(var/atom/target, var/mob/user)
@@ -843,8 +983,8 @@
 			card.draw(user)
 
 	draw_facedown
-		name = "draw face-down"
-		desc = "add a card to your hand face-down."
+		name = "Draw Face-down"
+		desc = "Add a card to your hand face-down."
 		icon_state = "draw_facedown"
 
 		execute(var/atom/target, var/mob/user)
@@ -852,8 +992,8 @@
 			card.draw(user,1)
 
 	draw_multiple
-		name = "draw multiple cards"
-		desc = "add many cards to your hand."
+		name = "Draw Multiple Cards"
+		desc = "Add many cards to your hand."
 		icon_state = "multiple"
 
 		execute(var/atom/target, var/mob/user)
@@ -861,8 +1001,8 @@
 			card.draw_multiple(user)
 
 	topdeck
-		name = "add to top of deck"
-		desc = "add cards to the top of the deck."
+		name = "Add to Top"
+		desc = "Add cards to the top of the deck."
 		icon_state = "deck_top"
 
 		execute(var/atom/target, var/mob/user)
@@ -870,8 +1010,8 @@
 			group.top_or_bottom(user,user.equipped(),"top")
 
 	bottomdeck
-		name = "add to bottom of deck"
-		desc = "add cards to the top of the deck."
+		name = "Add to Bottom"
+		desc = "Add cards to the top of the deck."
 		icon_state = "deck_bottom"
 
 		execute(var/atom/target, var/mob/user)
@@ -879,8 +1019,8 @@
 			card.top_or_bottom(user,user.equipped(),"bottom")
 
 	search
-		name = "search"
-		desc = "search for a card."
+		name = "Search"
+		desc = "Search for a card."
 		icon_state = "search"
 
 		execute(var/atom/target, var/mob/user)
@@ -888,8 +1028,8 @@
 			group.search(user)
 
 	reveal
-		name = "reveal"
-		desc = "reveal the cards to all players nearby."
+		name = "Reveal"
+		desc = "Reveal the cards to all players nearby."
 		icon_state = "eye"
 
 		execute(var/atom/target, var/mob/user)
@@ -897,19 +1037,19 @@
 			group.reveal(user)
 
 	pickup
-		name = "pick up"
-		desc = "do the thing."
+		name = "Pick Up"
+		desc = "Pick up cards."
 		icon_state = "up_arrow"
 
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/cards = target
-			if(cards.loc == user)
-				return
+			if(cards.loc == user) //checks hand for card to allow taking from pockets/storage
+				user.u_equip(cards)
 			user.put_in_hand_or_drop(cards)
 
 	close
-		name = "close"
-		desc = "close this menu."
+		name = "Close"
+		desc = "Close this menu."
 		icon_state = "close"
 
 		execute(var/atom/target, var/mob/user)

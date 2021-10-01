@@ -39,7 +39,7 @@
 
 /client/proc/mod_list_add_ass(var/list/L, var/index) //haha
 	var/class = input("What kind of variable?","Variable Type") as null|anything in list("text",
-	"num", "type", "reference", "mob reference", "turf by coordinates", "reference picker", "new instance of a type", "icon", "file", "color")
+	"num", "type", "json", "ref", "reference", "mob reference", "turf by coordinates", "reference picker", "new instance of a type", "icon", "file", "color")
 
 	if (!class)
 		return
@@ -59,6 +59,15 @@
 
 		if ("type")
 			var_value = input("Enter type:","Type") in null|typesof(/obj,/mob,/area,/turf)
+
+		if("json")
+			var_value = json_decode(input("Enter json:") as null|text)
+
+		if ("ref")
+			var/input = input("Enter ref:") as null|text
+			var/target = locate(input)
+			if (!target) target = locate("\[[input]\]")
+			var_value = target
 
 		if ("reference")
 			var_value = input("Select reference:","Reference") as null|mob|obj|turf|area in world
@@ -104,7 +113,7 @@
 				var/basetype = /obj
 				if (src.holder.rank in list("Host", "Coder", "Administrator"))
 					basetype = /datum
-				var/match = get_one_match(typename, basetype, use_concrete_types = FALSE)
+				var/match = get_one_match(typename, basetype, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 				if (match)
 					var_value = new match()
 
@@ -115,7 +124,7 @@
 
 /client/proc/mod_list_add(var/list/L)
 	var/class = input("What kind of variable?","Variable Type") as null|anything in list("text",
-	"num", "type", "reference", "mob reference", "turf by coordinates", "reference picker", "new instance of a type", "icon", "file", "color")
+	"num", "type", "json", "type", "reference", "mob reference", "turf by coordinates", "reference picker", "new instance of a type", "icon", "file", "color")
 
 	if (!class)
 		return
@@ -135,6 +144,15 @@
 
 		if ("type")
 			var_value = input("Enter type:","Type") in null|typesof(/obj,/mob,/area,/turf)
+
+		if("json")
+			var_value = json_decode(input("Enter json:") as null|text)
+
+		if ("ref")
+			var/input = input("Enter ref:") as null|text
+			var/target = locate(input)
+			if (!target) target = locate("\[[input]\]")
+			var_value = target
 
 		if ("reference")
 			var_value = input("Select reference:","Reference") as null|mob|obj|turf|area in world
@@ -179,18 +197,22 @@
 				var/basetype = /obj
 				if (src.holder.rank in list("Host", "Coder", "Administrator"))
 					basetype = /datum
-				var/match = get_one_match(typename, basetype, use_concrete_types = FALSE)
+				var/match = get_one_match(typename, basetype, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 				if (match)
 					var_value = new match()
 
 	if (!var_value) return
 
-	switch(alert("Would you like to associate a var with the list entry?",,"Yes","No"))
-		if("Yes")
-			L += var_value
-			L[var_value] = mod_list_add_ass(L, var_value) //haha
-		if("No")
-			L += var_value
+	if (islist(var_value))
+		//embed the list inside rather than combining the two
+		L += list(var_value)
+	else
+		switch(alert("Would you like to associate a var with the list entry?",,"Yes","No"))
+			if("Yes")
+				L += var_value
+				L[var_value] = mod_list_add_ass(L, var_value) //haha
+			if("No")
+				L += var_value
 
 
 /client/proc/mod_list(var/list/L)
@@ -297,7 +319,7 @@
 			boutput(usr, "If a direction, direction is: [dir]")
 
 	var/class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-		"num","type","reference","mob reference","turf by coordinates","reference picker","new instance of a type", "icon","file","color","list","number","edit referenced object", default == "associated" ? "associated" : null, "(DELETE FROM LIST)","restore to default")
+		"num","type","json","ref","reference","mob reference","turf by coordinates","reference picker","new instance of a type", "icon","file","color","list","number","edit referenced object", default == "associated" ? "associated" : null, "(DELETE FROM LIST)","restore to default")
 
 	if(!class)
 		return
@@ -332,9 +354,18 @@
 			boutput(usr, "<span class='notice'>Type part of the path of the type.</span>")
 			var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
 			if (typename)
-				var/match = get_one_match(typename, /datum, use_concrete_types = FALSE)
+				var/match = get_one_match(typename, /datum, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 				if (match)
 					L[variable_index] = match
+
+		if("json")
+			L[variable_index] = json_decode(input("Enter json:") as null|text)
+
+		if ("ref")
+			var/input = input("Enter ref:") as null|text
+			var/target = locate(input)
+			if (!target) target = locate("\[[input]\]")
+			L[variable_index] = target
 
 		if("reference")
 			L[variable_index] = input("Select reference:","Reference",\
@@ -373,7 +404,7 @@
 				var/basetype = /obj
 				if (src.holder.rank in list("Host", "Coder", "Administrator"))
 					basetype = /datum
-				var/match = get_one_match(typename, basetype, use_concrete_types = FALSE)
+				var/match = get_one_match(typename, basetype, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 				if (match)
 					L[variable_index] = new match()
 
@@ -425,6 +456,7 @@
 	target_anything = 1
 	targeted = 1
 	max_range = 3000
+	can_target_ghosts = 1
 
 	castcheck(var/mob/M)
 		if (M.client && M.client.holder)
@@ -651,7 +683,7 @@
 				var/basetype = /obj
 				if (src.holder.rank in list("Host", "Coder", "Administrator"))
 					basetype = /datum
-				var/match = get_one_match(typename, basetype, use_concrete_types = FALSE)
+				var/match = get_one_match(typename, basetype, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 				if (match)
 					O.vars[variable] = new match(O)
 

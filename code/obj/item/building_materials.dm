@@ -49,7 +49,6 @@ MATERIAL
 	stamina_cost = 23
 	stamina_crit_chance = 10
 	var/datum/material/reinforcement = null
-	module_research = list("metals" = 5)
 	rand_pos = 1
 	inventory_counter_enabled = 1
 
@@ -574,15 +573,18 @@ MATERIAL
 
 				if("remetal")
 					// what the fuck is this
+					var/input = input("Use how many sheets?","Max: [src.amount]",1) as num
+					if (input < 1) return
+					input = min(input,src.amount)
 					var/obj/item/sheet/C = new /obj/item/sheet(usr.loc)
 					var/obj/item/rods/R = new /obj/item/rods(usr.loc)
 					if(src.material)
 						C.setMaterial(src.material)
 					if(src.reinforcement)
 						R.setMaterial(src.reinforcement)
-					C.amount = 1
-					R.amount = 1
-					src.change_stack_amount(-1)
+					C.amount = input
+					R.amount = input
+					src.change_stack_amount(-input)
 			if (a_type)
 				actions.start(new /datum/action/bar/icon/build(src, a_type, a_cost, src.material, a_amount, a_icon, a_icon_state, a_name, a_callback), usr)
 
@@ -837,7 +839,7 @@ MATERIAL
 
 			user.visible_message("<span class='alert'><B>[user.name] pulls [head.name] off of the spike!</B></span>")
 			head.set_loc(user.loc)
-			head.attack_hand(user)
+			head.Attackhand(user)
 			head.add_fingerprint(user)
 			head.pixel_x = rand(-8,8)
 			head.pixel_y = rand(-8,8)

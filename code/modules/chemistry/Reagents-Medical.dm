@@ -104,10 +104,10 @@ datum
 					if(1 to 15)
 						if(probmult(7)) M.emote("yawn")
 					if(16 to 35)
-						M.drowsyness  = max(M.drowsyness, 20)
+						M.setStatus("drowsy", 40 SECONDS)
 					if(36 to INFINITY)
 						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 3 SECONDS * mult))
-						M.drowsyness  = max(M.drowsyness, 20)
+						M.setStatus("drowsy", 40 SECONDS)
 
 				..()
 				return
@@ -154,10 +154,10 @@ datum
 					if(1 to 15)
 						if(probmult(7)) M.emote("yawn")
 					if(16 to 35)
-						M.drowsyness  = max(M.drowsyness, 20)
+						M.setStatus("drowsy", 40 SECONDS)
 					if(36 to INFINITY)
 						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 3 SECONDS * mult))
-						M.drowsyness  = max(M.drowsyness, 20)
+						M.setStatus("drowsy", 40 SECONDS)
 
 				..()
 				return
@@ -368,9 +368,9 @@ datum
 					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(15 * mult))
 				else if(M.bodytemperature > M.base_body_temp)
 					M.bodytemperature = max(M.base_body_temp, M.bodytemperature-(15 * mult))
+				var/oxyloss = M.get_oxygen_deprivation()
 				M.take_oxygen_deprivation(-INFINITY)
-				if(prob(20))
-					M.take_brain_damage(1 * mult)
+				M.take_brain_damage(oxyloss * 0.025)
 				..()
 				return
 
@@ -456,7 +456,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				M.drowsyness = max(M.drowsyness-5, 0)
+				M.changeStatus("drowsy", -10 SECONDS)
 				if(M.sleeping) M.sleeping = 0
 				if (M.get_brain_damage() <= 90)
 					if (prob(50)) M.take_brain_damage(-1 * mult)
@@ -506,8 +506,6 @@ datum
 					M = holder.my_atom
 				if(M.get_oxygen_deprivation())
 					M.take_oxygen_deprivation(-1 * mult)
-				if(M.get_toxin_damage())
-					M.take_toxin_damage(-1 * mult)
 				if(M.losebreath && prob(50))
 					M.lose_breath(-1 * mult)
 				M.HealDamage("All", 2 * mult, 2 * mult, 1 * mult)
@@ -763,7 +761,7 @@ datum
 						if(istype(virus.master,/datum/ailment/disease/space_madness) || istype(virus.master,/datum/ailment/disease/berserker))
 							M.cure_disease(virus)
 				if(prob(20)) M.take_brain_damage(1 * mult)
-				if(probmult(50)) M.drowsyness = max(M.drowsyness, 6)
+				if(probmult(50)) M.changeStatus("drowsy", 10 SECONDS)
 				if(probmult(10)) M.emote("drool")
 				..()
 				return
@@ -803,7 +801,7 @@ datum
 					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(7 * mult))
 				if(probmult(10))
 					M.make_jittery(4)
-				M.drowsyness = max(M.drowsyness-5, 0)
+				M.changeStatus("drowsy", -10 SECONDS)
 				if(M.sleeping && probmult(5)) M.sleeping = 0
 				if(M.get_brain_damage() && prob(5)) M.take_brain_damage(-1 * mult)
 				if(holder.has_reagent("histamine"))
@@ -813,8 +811,6 @@ datum
 				if(M.get_oxygen_deprivation() > 35)
 					M.take_oxygen_deprivation(-10 * mult)
 				if(M.health < -10 && M.health > -65)
-					if(M.get_toxin_damage())
-						M.take_toxin_damage(-1 * mult)
 					M.HealDamage("All", 1 * mult, 1 * mult, 1 * mult)
 				..()
 				return
@@ -1098,7 +1094,7 @@ datum
 				if(M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
 					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
 				M.make_jittery(4)
-				M.drowsyness = max(M.drowsyness-5, 0)
+				M.changeStatus("drowsy", -10 SECONDS)
 				if(M.losebreath > 3)
 					M.losebreath = max(5, M.losebreath-(1 * mult))
 				if(M.get_oxygen_deprivation() > 75)
@@ -1150,9 +1146,8 @@ datum
 					if (reagent_id != id)
 						M.reagents.remove_reagent(reagent_id, 4 * mult)
 				M.changeStatus("radiation", -7 SECONDS, 1)
-				if (M.get_toxin_damage() && prob(75))
-					M.take_toxin_damage(-4 * mult)
-					M.HealDamage("All", 0, 0, 2 * mult)
+				if (prob(75))
+					M.HealDamage("All", 0, 0, 4 * mult)
 				if (prob(33))
 					M.TakeDamage("chest", 1 * mult, 1 * mult, 0, DAMAGE_BLUNT)
 				if (ishuman(M))
@@ -1197,7 +1192,7 @@ datum
 				if(probmult(7)) M.emote("yawn")
 				if(prob(3))
 					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 3 SECONDS * mult))
-					M.drowsyness += 1
+					M.changeStatus("drowsy", 12 SECONDS)
 					M.visible_message("<span class='notice'><b>[M.name]<b> looks a bit dazed.</span>")
 				..()
 				return
@@ -1478,8 +1473,7 @@ datum
 				for(var/reagent_id in M.reagents.reagent_list)
 					if(reagent_id != id && prob(50)) // slow this down a bit
 						M.reagents.remove_reagent(reagent_id, 1 * mult)
-				M.take_toxin_damage(-1.5 * mult)
-				M.HealDamage("All", 0, 0, 1 * mult)
+				M.HealDamage("All", 0, 0, 1.5 * mult)
 
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M

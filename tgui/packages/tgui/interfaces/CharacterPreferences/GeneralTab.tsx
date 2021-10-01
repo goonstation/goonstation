@@ -1,6 +1,6 @@
 import { decodeHtmlEntities } from 'common/string';
 import { useBackend } from '../../backend';
-import { BlockQuote, Box, Button, LabeledList, Section } from '../../components';
+import { BlockQuote, Box, Button, ColorButton, LabeledList, Section } from '../../components';
 import { CharacterPreferencesData } from './type';
 
 export const GeneralTab = (_props, context) => {
@@ -18,7 +18,9 @@ export const GeneralTab = (_props, context) => {
               </Button.Checkbox>
             }>
             <Button onClick={() => act('update-nameFirst')}>{data.nameFirst}</Button>
-            <Button onClick={() => act('update-nameMiddle')}>{data.nameMiddle}</Button>
+            <Button onClick={() => act('update-nameMiddle')} color={data.nameMiddle === '' ? 'grey' : 'default'}>
+              {data.nameMiddle !== '' ? data.nameMiddle : <Box italic>None</Box>}
+            </Button>
             <Button onClick={() => act('update-nameLast')}>{data.nameLast}</Button>
           </LabeledList.Item>
           <LabeledList.Item label="Gender">
@@ -93,7 +95,7 @@ export const GeneralTab = (_props, context) => {
             </Button>
           </LabeledList.Item>
           <LabeledList.Item label="Background Color">
-            <Button.Color color={data.pdaColor} onClick={() => act('update-pdaColor')} />
+            <ColorButton color={data.pdaColor} onClick={() => act('update-pdaColor')} />
           </LabeledList.Item>
         </LabeledList>
       </Section>

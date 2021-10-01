@@ -20,8 +20,8 @@
 	speechverb_ask = "queries"
 
 	setup_healths()
-		add_hh_robot(-100, 100, 1)
-		add_hh_robot_burn(-100, 100, 1)
+		add_hh_robot(100, 1)
+		add_hh_robot_burn(100, 1)
 		add_health_holder(/datum/healthHolder/toxin)
 		add_health_holder(/datum/healthHolder/suffocation)
 		var/datum/healthHolder/Brain = add_health_holder(/datum/healthHolder/brain)
@@ -141,8 +141,8 @@
 		..()
 
 	setup_healths()
-		add_hh_robot(-500, 500, 1)
-		add_hh_robot_burn(-500, 500, 1)
+		add_hh_robot(500, 1)
+		add_hh_robot_burn(500, 1)
 
 	death(var/gibbed)
 		src.visible_message("<b>[src]</b> collapses into broken components...")

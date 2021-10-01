@@ -47,7 +47,7 @@ Fibre wire
 
 		if(ticker?.mode) //Yes, I'm sure my runtimes will matter if the goddamn TICKER is gone.
 			for(var/datum/mind/M in (ticker.mode.Agimmicks | ticker.mode.traitors)) //We want an EVIL ghost
-				if(!M.dnr && M.current && isobserver(M.current) && M.current.client && M.special_role != "vampthrall" && M.special_role != "mindslave")
+				if(!M.dnr && M.current && isobserver(M.current) && M.current.client && M.special_role != ROLE_VAMPTHRALL && M.special_role != ROLE_MINDSLAVE)
 					priority_targets.Add(M.current)
 
 		if(!priority_targets.len) //Okay, fine. Any ghost. *sigh
@@ -214,10 +214,10 @@ proc/Create_Tommyname()
 	m_amt = 4000
 	rechargeable = 1
 	force = 0.0
+	cell_type = /obj/item/ammo/power_cell/high_power
 	desc = "It smells of cheap cologne and..."
 
 	New()
-		cell = new/obj/item/ammo/power_cell/high_power
 		set_current_projectile(new/datum/projectile/tommy)
 		projectiles = list(new/datum/projectile/tommy)
 		..()
@@ -232,8 +232,8 @@ proc/Create_Tommyname()
 		return ..(target, start, user)
 
 	update_icon()
-		if(cell)
-			src.icon_state = "tommygun[src.cell.charge <= 0 ? "-empty" : ""]"
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE)
+			src.icon_state = "tommygun[(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE) ? "" : "-empty"]"
 			return
 
 ///////////////////////////////////////Analysis datum for the spectrometer
@@ -406,8 +406,8 @@ proc/Create_Tommyname()
 	desc = "You can tell this gun has been fired!"
 	icon = 'icons/obj/instruments.dmi'
 	icon_state = "trumpet"
+	cell_type = /obj/item/ammo/power_cell/high_power
 	New()
-		cell = new/obj/item/ammo/power_cell/high_power
 		set_current_projectile(new/datum/projectile/energy_bolt_v/trumpet)
 		projectiles = list(new/datum/projectile/energy_bolt_v/trumpet)
 		..()
@@ -1060,7 +1060,7 @@ proc/Create_Tommyname()
 // Special grab obj that doesn't care if it's in someone's hands
 /obj/item/grab/garrote_grab
 	// No breaking out under own power
-	break_prob = 0
+	prob_mod = 0
 	var/extra_deadly = 0
 	check()
 		if(!assailant || !affecting)

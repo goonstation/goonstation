@@ -60,7 +60,7 @@
 					else if (T.name == "trench floor" || T.name == "\proper space")
 						turf_color = "empty"
 					else
-						if (T.loc && (T.loc.type == /area/shuttle/sea_elevator || T.loc.type == /area/shuttle/sea_elevator/lower))
+						if (T.loc && (T.loc.type == /area/shuttle/sea_elevator || T.loc.type == /area/shuttle/sea_elevator/lower || T.loc.type == /area/prefab/sea_mining))
 							turf_color = "station"
 						else
 							turf_color = "other"
@@ -372,7 +372,7 @@
 			fireflash(phenomena_point,1)
 
 		if (phenomena_flags & PH_EX)
-			explosion(0, phenomena_point, -1, -1, 2, 3)
+			explosion(src, phenomena_point, -1, -1, 2, 3)
 
 		if ((phenomena_flags & PH_EX) || (phenomena_flags & PH_FIRE_WEAK) || (phenomena_flags & PH_FIRE))
 			playsound(phenomena_point, 'sound/misc/ground_rumble_big.ogg', 65, 1, 0.1, 0.7)
@@ -613,7 +613,7 @@
 /turf/space/fluid/attack_hand(var/mob/user)
 	var/obj/item/heat_dowsing/H = locate() in src
 	if (H)
-		H.attack_hand(user)
+		H.Attackhand(user)
 
 /turf/space/fluid/attackby(var/obj/item/W, var/mob/user)
 	if (istype(W,/obj/item/shovel) || istype(W,/obj/item/slag_shovel))
@@ -785,7 +785,7 @@
 				return
 		else
 			if (istype(W,/obj/item/cable_coil))
-				src.loc.attackby(W,user)
+				src.loc.Attackby(W,user)
 				return
 		..()
 
@@ -841,7 +841,7 @@
 	var/powerdownsfx = 'sound/machines/engine_alert3.ogg'
 
 	mats = 8
-	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
+	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_DESTRUCT
 	flags = FPRINT
 
 	var/mode_toggle = 0
@@ -1023,6 +1023,11 @@
 		if(get_dist(owner, T) > 1 || V == null || owner == null || T == null || V.loc != T)
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		if(locate(/obj/machinery/power/vent_capture) in T)
+			V.visible_message("<span class='notice'>[V] beeps grumpily and aborts construction.</span>", "<span class='notice'>You hear a grumpy beeping.</span>")
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
 		if(owner && V && T)
 			V.finish_build(T)
 

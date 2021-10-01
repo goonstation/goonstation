@@ -37,7 +37,7 @@
 	lockedDiff = 4
 	lockedChars = list("G","C","A","T")
 	lockedTries = 10
-	icon_state  = "bad"
+	icon_state  = "speech_mime"
 
 /datum/bioEffect/deaf
 	name = "Deafness"
@@ -81,7 +81,7 @@
 	msgGain = "You feel kind of off-balance and disoriented."
 	msgLose = "You feel well co-ordinated again."
 	reclaim_fail = 15
-	stability_loss = -5
+	stability_loss = -10
 	icon_state  = "bad"
 
 /datum/bioEffect/narcolepsy
@@ -94,7 +94,7 @@
 	msgGain = "You feel a bit sleepy."
 	msgLose = "You feel wide awake."
 	reclaim_fail = 15
-	stability_loss = -5
+	stability_loss = -15
 	var/sleep_prob = 4
 	icon_state  = "bad"
 
@@ -225,6 +225,7 @@
 	reclaim_fail = 15
 	stability_loss = -20
 	icon_state  = "bad"
+	effect_group = "thermal"
 
 	OnAdd()
 		..()
@@ -253,6 +254,7 @@
 	var/tox_amount = 1
 	var/tox_prob = 10
 	icon_state  = "bad"
+	effect_group = "tox"
 
 	OnLife(var/mult)
 		if(..()) return
@@ -260,40 +262,6 @@
 			var/mob/living/carbon/C = owner
 			if (prob(tox_prob))
 				C.take_toxin_damage(tox_amount*mult)
-
-/datum/bioEffect/tourettes
-	name = "Tourettes"
-	desc = "Alters the subject's brain structure, causing periodic involuntary movements and outbursts."
-	id = "tourettes"
-	effectType = EFFECT_TYPE_DISABILITY
-	isBad = 1
-	probability = 66
-	msgGain = "You feel like you can't control your actions fully."
-	msgLose = "You feel in full control of yourself once again."
-	reclaim_fail = 15
-	stability_loss = -5
-	icon_state  = "bad"
-
-	OnLife(var/mult)
-		if(..()) return
-		if (isdead(owner))
-			return
-		if ((probmult(10) && !owner.getStatusDuration("paralysis")))
-			owner.changeStatus("stunned", 3 SECONDS)
-			SPAWN_DBG( 0 )
-				switch(rand(1, 3))
-					if (1 to 2)
-						owner.emote("twitch")
-					if (3)
-						if (owner.client)
-							var/enteredtext = winget(owner, "mainwindow.input", "text")
-							if ((copytext(enteredtext,1,6) == "say \"") && length(enteredtext) > 5)
-								winset(owner, "mainwindow.input", "text=\"\"")
-								if (prob(50))
-									owner.say(uppertext(copytext(enteredtext,6,0)))
-								else
-									owner.say(copytext(enteredtext,6,0))
-		return
 
 /datum/bioEffect/cough
 	name = "Chronic Cough"
@@ -331,7 +299,7 @@
 	msgGain = "One of your limbs feels a bit strange and twitchy."
 	msgLose = "Your limb feels fine again."
 	reclaim_fail = 15
-	stability_loss = -20
+	stability_loss = -25
 	lockProb = 50
 	lockedGaps = 2
 	lockedDiff = 4
@@ -426,6 +394,7 @@
 	msgLose = "You no longer feel awful and sick all over."
 	reclaim_fail = 15
 	icon_state  = "bad"
+	effect_group = "rad"
 
 	OnAdd()
 		if (ishuman(owner))
@@ -460,7 +429,7 @@
 	lockedDiff = 4
 	lockedChars = list("G","C","A","T")
 	lockedTries = 10
-	stability_loss = 50
+	stability_loss = 35
 	var/affect_others = 0
 	var/field_range = 2
 	var/proc_prob = 5
@@ -501,7 +470,7 @@
 	lockedDiff = 3
 	lockedChars = list("G","C","A","T")
 	lockedTries = 8
-	stability_loss = 15
+	stability_loss = 10
 	var/tele_prob = 5
 	icon_state  = "bad"
 
@@ -747,8 +716,9 @@
 	lockedGaps = 1
 	lockedDiff = 3
 	lockedTries = 8
-	stability_loss = -5
+	stability_loss = -10
 	icon_state  = "bad"
+	effect_group = "fit"
 
 	OnAdd()
 		APPLY_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-debuff", -2)
@@ -766,7 +736,7 @@
 	isBad = 1
 	msgGain = "You hear a ringing in your ears."
 	msgLose = "The ringing has stopped...Finally. Thank the Space-Gods."
-	stability_loss = -5
+	stability_loss = 0
 	probability = 99
 	var/ring_prob = 6
 	icon_state  = "bad"
@@ -785,9 +755,10 @@
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel lightheaded."
 	msgLose = "Your lightheadedness fades."
-	stability_loss = -5
+	stability_loss = -10
 	var/run = 1
 	icon_state  = "bad"
+	effect_group = "blood"
 
 	OnLife(var/mult)
 		if (ishuman(owner))
@@ -805,9 +776,10 @@
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "Your breathing quickens."
 	msgLose = "Your breathing returns to normal."
-	stability_loss = -5
+	stability_loss = -10
 	var/run = 1
 	icon_state  = "bad"
+	effect_group = "blood"
 
 	OnLife(var/mult)
 
@@ -841,6 +813,9 @@
 
 	OnLife(var/mult)
 		if(..()) return
+		var/turf/T = get_turf(owner)
+		if(isrestrictedz(T?.z))
+			return
 		if (probmult(proc_prob))
 			var/list/potential_victims = list()
 			for(var/mob/living/carbon/human/H in range(7,owner))

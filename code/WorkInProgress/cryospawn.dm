@@ -1,4 +1,4 @@
-#define CRYOSLEEP_DELAY 15 MINUTES
+#define CRYOSLEEP_DELAY 5 MINUTES
 #define CRYOTRON_MESSAGE_DELAY 3 SECONDS
 
 /obj/cryotron_spawner
@@ -145,6 +145,9 @@
 				if (L.client)
 					L.addOverlayComposition(/datum/overlayComposition/blinded)
 					L.updateOverlaysClient(L.client)
+				for (var/obj/machinery/computer/announcement/A as anything in machine_registry[MACHINES_ANNOUNCEMENTS])
+					if (!A.status && A.announces_arrivals)
+						A.announce_departure(L)
 				return 1
 
 		stored_mobs += L
@@ -157,6 +160,9 @@
 		if (L.client)
 			L.addOverlayComposition(/datum/overlayComposition/blinded)
 			L.updateOverlaysClient(L.client)
+		for (var/obj/machinery/computer/announcement/A as anything in machine_registry[MACHINES_ANNOUNCEMENTS])
+			if (!A.status && A.announces_arrivals)
+				A.announce_departure(L)
 		if (ishuman(L))
 			var/mob/living/carbon/human/H = L
 			if (H.sims)
@@ -166,7 +172,7 @@
 
 	proc/enter_prompt(var/mob/living/user as mob)
 		if (mob_can_enter_storage(user)) // check before the prompt for dead/incapped/restrained/etc users
-			if (alert(user, "Would you like to enter cryogenic storage? You will be unable to leave it again until 15 minutes have passed.", "Confirmation", "Yes", "No") == "Yes")
+			if (alert(user, "Would you like to enter cryogenic storage? You will be unable to leave it again until 5 minutes have passed.", "Confirmation", "Yes", "No") == "Yes")
 				if (alert(user, "Are you absolutely sure you want to enter cryogenic storage?", "Confirmation", "Yes", "No") == "Yes")
 					if (mob_can_enter_storage(user)) // check again in case they left the prompt up and moved away/died/whatever
 						add_person_to_storage(user)
@@ -251,9 +257,9 @@
 
 	attack_hand(var/mob/user as mob)
 		if(isgrab(user.l_hand))
-			src.attackby(user.l_hand, user)
+			src.Attackby(user.l_hand, user)
 		else if(isgrab(user.r_hand))
-			src.attackby(user.r_hand, user)
+			src.Attackby(user.r_hand, user)
 		else if (!enter_prompt(user))
 			return ..()
 

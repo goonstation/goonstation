@@ -133,6 +133,24 @@ RACK PARTS
 	icon = 'icons/obj/furniture/table_round.dmi'
 	furniture_type = /obj/table/round/auto
 
+/obj/item/furniture_parts/table/regal
+	name = "regal table parts"
+	desc = "A collection of parts that can be used to make a regal table."
+	icon = 'icons/obj/furniture/table_regal.dmi'
+	furniture_type = /obj/table/regal/auto
+
+/obj/item/furniture_parts/table/clothred
+	name = "red event table parts"
+	desc = "A collection of parts that can be used to make a red event table."
+	icon = 'icons/obj/furniture/table_clothred.dmi'
+	furniture_type = /obj/table/clothred/auto
+
+/obj/item/furniture_parts/table/neon
+	name = "food court table parts"
+	desc = "A collection of parts that can be used to make a food court table."
+	icon = 'icons/obj/furniture/table_neon.dmi'
+	furniture_type = /obj/table/neon/auto
+
 /obj/item/furniture_parts/table/folding
 	name = "folded folding table"
 	desc = "A collapsed table that can be deployed quickly."
@@ -270,7 +288,6 @@ RACK PARTS
 	furniture_type = /obj/stool/wooden
 	furniture_name = "wooden stool"
 
-
 /obj/item/furniture_parts/stool/bee_bed
 	name = "bee bed parts"
 	desc = "A collection of parts that can be used to make a bee bed."
@@ -286,6 +303,14 @@ RACK PARTS
 	icon_state = "bstool_parts"
 	furniture_type = /obj/stool/bar
 	furniture_name = "bar stool"
+
+/obj/item/furniture_parts/stool/neon
+	name = "neon bar stool parts"
+	desc = "A collection of parts that can be used to make a neon bar stool."
+	icon = 'icons/obj/furniture/chairs.dmi'
+	icon_state = "neonstool_parts"
+	furniture_type = /obj/stool/neon
+	furniture_name = "neon bar stool"
 
 /* ---------- Bench Parts ---------- */
 /obj/item/furniture_parts/bench
@@ -336,6 +361,12 @@ RACK PARTS
 	stamina_cost = 15
 	furniture_type = /obj/stool/chair/wooden
 	furniture_name = "wooden chair"
+
+/obj/item/furniture_parts/wood_chair/regal
+	name = "regal chair parts"
+	desc = "A collection of parts that can be used to make a regal chair."
+	icon_state = "regalchair_parts"
+	furniture_type = /obj/stool/chair/wooden/regal
 
 /obj/item/furniture_parts/wheelchair
 	name = "wheelchair parts"
@@ -417,6 +448,16 @@ RACK PARTS
 	icon_state = "comf_chair_parts-p"
 	furniture_type = /obj/stool/chair/comfy/purple
 
+/obj/item/furniture_parts/throne_gold
+	name = "golden throne parts"
+	desc = "A collection of parts that can be used to make a golden throne."
+	icon = 'icons/obj/furniture/chairs.dmi'
+	icon_state = "thronegold_parts"
+	stamina_damage = 15
+	stamina_cost = 15
+	furniture_type = /obj/stool/chair/comfy/throne_gold
+	furniture_name = "golden throne"
+
 /* ---------- Bed Parts ---------- */
 /obj/item/furniture_parts/bed
 	name = "bed parts"
@@ -435,6 +476,15 @@ RACK PARTS
 	icon_state = "rbed_parts"
 	furniture_type = /obj/stool/bed/moveable
 	furniture_name = "roller bed"
+
+/* ---------- Decor Parts ---------- */
+/obj/item/furniture_parts/decor/regallamp
+	name = "regal lamp parts"
+	desc = "A collection of parts that can be used to make a regal lamp."
+	icon = 'icons/misc/walp_decor.dmi'
+	icon_state = "lamp_regal_parts"
+	furniture_type = /obj/decoration/regallamp
+	furniture_name = "regal lamp"
 
 /* -------------------- Furniture Actions -------------------- */
 /datum/action/bar/icon/furniture_build
@@ -485,7 +535,7 @@ RACK PARTS
 
 /datum/action/bar/icon/furniture_deconstruct
 	id = "furniture_deconstruct"
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
 	duration = 50
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
@@ -497,6 +547,7 @@ RACK PARTS
 		..()
 		if (O)
 			the_furniture = O
+			place_to_put_bar = O
 		if (tool)
 			the_tool = tool
 			icon = the_tool.icon

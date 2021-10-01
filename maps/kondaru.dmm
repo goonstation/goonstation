@@ -423,7 +423,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/solar_control/west{
+/obj/machinery/computer/solar_control/west{
 	dir = 4
 	},
 /turf/space,
@@ -1329,7 +1329,7 @@
 /turf/simulated/floor/caution/south,
 /area/station/engine/ptl)
 "adu" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
 	},
@@ -1475,7 +1475,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	name = "Station Power Grid Monitoring"
 	},
 /turf/simulated/floor/plating,
@@ -5960,7 +5960,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/solar_control/east{
+/obj/machinery/computer/solar_control/east{
 	dir = 8
 	},
 /turf/simulated/floor/plating,
@@ -8044,7 +8044,7 @@
 	},
 /area/station/engine/core)
 "avQ" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4;
 	name = "Station Power Grid Monitoring"
 	},
@@ -9191,7 +9191,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 4;
 	name = "Engine Output Monitoring"
 	},
@@ -9255,7 +9255,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
 	},
@@ -14804,7 +14804,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_east)
 "aOX" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8;
 	name = "Station Power Grid Monitoring"
 	},
@@ -16728,11 +16728,18 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/power/apc/autoname_west,
+/obj/machinery/door_control{
+	id = "clone_begone";
+	name = "Exit Door Control";
+	pixel_x = -24;
+	pixel_y = 15
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
 /area/station/medical/medbay/cloner)
 "aUn" = (
+/obj/stool/chair/office,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -16740,6 +16747,9 @@
 "aUo" = (
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
@@ -16756,9 +16766,11 @@
 /obj/machinery/light_switch/north{
 	pixel_x = -7
 	},
-/obj/storage/secure/closet/medical{
-	name = "Patient Locker"
+/obj/cable{
+	icon_state = "0-8"
 	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/clonegrinder,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -16985,10 +16997,10 @@
 /obj/machinery/door_control{
 	id = "clone_begone";
 	name = "Exit Door Control";
-	pixel_x = 26
+	pixel_x = 24
 	},
-/obj/stool/chair/office{
-	dir = 8
+/obj/storage/secure/closet/medical{
+	name = "Patient Locker"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
@@ -17525,11 +17537,6 @@
 	icon_state = "1-8"
 	},
 /obj/landmark/gps_waypoint,
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "aWx" = (
@@ -17906,17 +17913,17 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/cloner)
 "aXE" = (
-/obj/machinery/clonegrinder,
 /obj/cable,
 /obj/machinery/power/data_terminal,
 /obj/machinery/light/emergency,
+/obj/machinery/clonepod,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/cloner)
 "aXF" = (
-/obj/machinery/clonepod,
-/obj/cable,
-/obj/machinery/power/data_terminal,
 /obj/machinery/light,
+/obj/stool/chair/office{
+	dir = 1
+	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/cloner)
 "aXG" = (
@@ -18475,9 +18482,6 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "aZq" = (
-/obj/machinery/sleep_console{
-	dir = 4
-	},
 /obj/decal/xmas_lights/ephemeral{
 	pixel_y = 32
 	},
@@ -19556,7 +19560,7 @@
 /turf/simulated/floor,
 /area/station/storage/eva)
 "bdg" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	name = "Station Power Grid Monitoring"
 	},
 /obj/machinery/power/data_terminal,
@@ -21625,15 +21629,12 @@
 /obj/cable,
 /obj/machinery/power/data_terminal,
 /obj/machinery/light,
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 8
 	},
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/lobby)
 "bjV" = (
-/obj/machinery/sleep_console{
-	dir = 8
-	},
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/lobby)
 "bjW" = (
@@ -22675,7 +22676,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "bnA" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	name = "Station Power Grid Monitoring"
 	},
 /obj/cable{
@@ -25370,7 +25371,6 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/mining/staff_room)
 "bwZ" = (
-/obj/machinery/hydro_growlamp,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -25378,6 +25378,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/shrub,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "bxa" = (
@@ -26710,9 +26711,6 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/machinery/sleep_console{
-	dir = 4
-	},
 /turf/simulated/floor/blue/side{
 	dir = 1
 	},
@@ -26725,7 +26723,7 @@
 /obj/decal/xmas_lights/ephemeral{
 	pixel_y = 32
 	},
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 4
 	},
 /turf/simulated/floor/blue/side{
@@ -27348,6 +27346,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "bDe" = (
@@ -33287,7 +33286,7 @@
 	},
 /area/station/science/chemistry)
 "bSE" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/circuit/purple,
 /area/station/science/teleporter)
 "bSF" = (
@@ -38193,7 +38192,6 @@
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost/indigo_rye)
 "cjg" = (
-/obj/creepy_sound_trigger,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -38950,7 +38948,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "clb" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -44442,13 +44440,13 @@
 	},
 /obj/disposalpipe/trunk/mail/south,
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag{
 	rand_pos = 1
 	},
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag{
 	rand_pos = 1
 	},
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag{
 	rand_pos = 1
 	},
 /turf/simulated/floor/grasstodirt{
@@ -46554,11 +46552,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "hVu" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
+/obj/machinery/sleeper/compact{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "hVQ" = (
@@ -47155,7 +47153,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10
 	},
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8;
 	name = "Station Power Grid Monitoring"
 	},
@@ -50637,6 +50635,7 @@
 /obj/item/circuitboard/cloning,
 /obj/item/circuitboard/barcode_qm,
 /obj/item/circuitboard/barcode,
+/obj/item/circuitboard/qmsupply,
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
@@ -51157,6 +51156,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/security)
+"mWm" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon2,
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "mXc" = (
 /obj/machinery/recharge_station,
 /obj/landmark/start{
@@ -52480,7 +52486,7 @@
 /obj/railing/orange/reinforced{
 	dir = 8
 	},
-/obj/submachine/chicken_feed_grinder,
+/obj/submachine/ranch_feed_grinder,
 /obj/item/reagent_containers/food/snacks/plant/corn{
 	doants = 0
 	},
@@ -52547,6 +52553,8 @@
 /obj/item/circuitboard/genetics,
 /obj/item/circuitboard/bank_data,
 /obj/item/circuitboard/arcade,
+/obj/item/circuitboard/qmorder,
+/obj/item/circuitboard/telescope,
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
 "osY" = (
@@ -53912,7 +53920,7 @@
 "pSZ" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/box/stma_kit,
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
 /obj/item/clothing/gloves/fingerless,
 /obj/item/clothing/gloves/fingerless,
 /turf/simulated/floor/redblack{
@@ -55133,8 +55141,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "riU" = (
-/obj/machinery/hydro_growlamp,
-/turf/simulated/floor/grey,
+/obj/shrub,
+/turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "rjI" = (
 /obj/machinery/light/small{
@@ -56690,9 +56698,9 @@
 /area/station/hallway/primary/east)
 "sVX" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/box/flashbang_kit,
-/obj/item/storage/box/flashbang_kit,
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
+/obj/item/chem_grenade/flashbang,
+/obj/item/chem_grenade/flashbang,
 /obj/item/reagent_containers/emergency_injector/atropine,
 /obj/item/reagent_containers/emergency_injector/atropine,
 /obj/item/reagent_containers/emergency_injector/atropine,
@@ -57877,9 +57885,6 @@
 /turf/simulated/floor/carpet/blue/fancy/junction/se_n,
 /area/station/storage/warehouse)
 "udL" = (
-/obj/machinery/sleep_console{
-	dir = 4
-	},
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
@@ -58817,6 +58822,12 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"vaO" = (
+/obj/landmark/spawner{
+	name = "dolly"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "vbJ" = (
 /obj/decal/garland/ephemeral{
 	dir = 8;
@@ -58925,7 +58936,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 4
 	},
 /turf/simulated/floor/bluewhite{
@@ -111528,7 +111539,7 @@ dZr
 emB
 buI
 bAJ
-emI
+vaO
 emI
 emI
 tah
@@ -113345,7 +113356,7 @@ ltn
 bAt
 tah
 bCz
-bDA
+mWm
 bEv
 bGl
 cov
@@ -116354,7 +116365,7 @@ nbR
 nbR
 boo
 kSb
-riU
+pUl
 pUl
 gpc
 bvR
@@ -118778,7 +118789,7 @@ jHF
 cpw
 pJk
 pJk
-jHF
+riU
 boo
 tvw
 bDA

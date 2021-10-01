@@ -45,9 +45,13 @@ Contains:
 
 		// Did you know this thing still works? And wasn't logged (Convair880)?
 		logTheThing("bombing", src.fingerprintslast, null, "A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
-		message_admins("A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
+		message_admins("A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [key_name(src.fingerprintslast)]")
 
-		var/turf/T = src.loc
+		var/turf/T = get_turf(src)
+		if(isrestrictedz(T?.z))
+			src.visible_message("<span class='notice'>[src] refuses to activate in this place. Odd.</span>")
+			qdel(src)
+
 		playsound(T, 'sound/machines/satcrash.ogg', 100, 0, 3, 0.8)
 		if (src.bhole)
 			new /obj/bhole(T, 3000)
@@ -134,6 +138,10 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	. = ..()
 
 /obj/machinery/the_singularity/process()
+	var/turf/T = get_turf(src)
+	if(isrestrictedz(T?.z))
+		src.visible_message("<span class='notice'>Something about this place makes [src] wither and implode.</span>")
+		qdel(src)
 	eat()
 
 	if (src.Dtime)//If its a temp singularity IE: an event
@@ -265,7 +273,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 					else
 						gain = 50
 
-		L.gib()
+		L.ghostize()
+		qdel(L)
 
 	else if (isobj(A))
 		//if (istype(A, /obj/item/graviton_grenade))
@@ -821,7 +830,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	logTheThing("combat", user, null, "was shocked by a containment field at [log_loc(src)].")
 
 	if (user?.bioHolder)
-		if (user.bioHolder.HasEffect("resist_electric") == 2)
+		if (user.bioHolder.HasEffect("resist_electric_heal"))
 			var/healing = 0
 			if (shock_damage)
 				healing = shock_damage / 3
@@ -829,7 +838,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			user.take_toxin_damage(0 - healing)
 			boutput(user, "<span class='notice'>You absorb the electrical shock, healing your body!</span>")
 			return
-		else if (user.bioHolder.HasEffect("resist_electric") == 1)
+		else if (user.bioHolder.HasEffect("resist_electric"))
 			boutput(user, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
 			return
 
@@ -1690,7 +1699,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		else
 			for(var/mob/M in viewers(1, src))
 				if (M.using_dialog_of(src))
-					src.attack_hand(M)
+					src.Attackhand(M)
 
 	return
 

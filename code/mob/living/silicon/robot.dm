@@ -17,7 +17,6 @@
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "robot"
 	health = 300
-	// max_health = 300
 	emaggable = 1
 	syndicate_possible = 1
 	movement_delay_modifier = 2 - BASE_SPEED
@@ -247,30 +246,20 @@
 		hud.update_pulling()
 
 	death(gibbed)
-		if (src.mainframe)
-			logTheThing("combat", src, null, "'s AI controlled cyborg body was destroyed [log_health(src)] at [log_loc(src)].") // Brought in line with carbon mobs (Convair880).
-			src.mainframe.return_to(src)
-		setdead(src)
-		borg_death_alert()
-		src.canmove = 0
+		logTheThing("combat", src, null, "was destroyed at [log_loc(src)].")
+		src.mind?.register_death()
+		if (src.mind?.special_role)
+			src.handle_robot_antagonist_status("death", 1)
+		src.borg_death_alert()
+		if (!gibbed)
+			src.visible_message("<span class='alert'><b>[src]</b> falls apart into a pile of components!</span>")
+			var/turf/T = get_turf(src)
+			for(var/obj/item/parts/robot_parts/R in src.contents)
+				R.set_loc(T)
+			new /obj/item/parts/robot_parts/robot_frame(T)
 
-		if (src.camera)
-			src.camera.camera_status = 0.0
-
-		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS
-
-		src.see_in_dark = SEE_DARK_FULL
-		if (client?.adventure_view)
-			src.see_invisible = 21
-		else
-			src.see_invisible = 2
-
-		logTheThing("combat", src, null, "was destroyed [log_health(src)] at [log_loc(src)].") // Only called for instakill critters and the like, I believe (Convair880).
-
-		if (src.mind)
-			if (src.mind.special_role)
-				src.handle_robot_antagonist_status("death", 1) // Mindslave or rogue (Convair880).
-			src.mind.register_death()
+			src.ghostize()
+			qdel(src)
 
 #ifdef RESTART_WHEN_ALL_DEAD
 		var/cancel
@@ -676,9 +665,6 @@
 		. += "<span class='notice'>*---------*</span><br>"
 		. += "<span class='notice'>This is [bicon(src)] <B>[src.name]</B>!</span><br>"
 
-		if (isdead(src))
-			. += "<span class='alert'>[src.name] is powered-down.</span><br>"
-
 		var/brute = get_brute_damage()
 		var/burn = get_burn_damage()
 		if (brute)
@@ -806,43 +792,12 @@
 		else
 			stat("No Cell Inserted!")
 
-		/*
-		// this is handled by the hud now
-		if (ticker.round_elapsed_ticks > next_cache)
-			next_cache = ticker.round_elapsed_ticks + 50
-			var/list/limbs_report = list()
-			if (!part_arm_r)
-				limbs_report += "Right arm"
-			if (!part_arm_l)
-				limbs_report += "Left arm"
-			if (!part_leg_r)
-				limbs_report += "Right leg"
-			if (!part_leg_l)
-				limbs_report += "Left leg"
-			var/limbs_missing = limbs_report.len ? jointext(limbs_report, "; ") : 0
-			stat_cache = list(100 - min(get_brute_damage(), 100), 100 - min(get_burn_damage(), 100), limbs_missing)
-
-		stat("Structural integrity:", "[stat_cache[1]]%")
-		stat("Circuit integrity:", "[stat_cache[2]]%")
-		if (stat_cache[3])
-			stat("Missing limbs:", stat_cache[3])
-		*/
-
 	restrained()
 		return 0
 
 	ex_act(severity)
 		..() // Logs.
 		src.flash(3 SECONDS)
-
-		if (isdead(src) && src.client)
-			SPAWN_DBG(1 DECI SECOND)
-				src.gib(1)
-			return
-
-		else if (isdead(src) && !src.client)
-			qdel(src)
-			return
 
 		var/fire_protect = 0
 		for (var/obj/item/roboupgrade/R in src.contents)
@@ -948,6 +903,8 @@
 					PART = src.part_leg_l
 				else
 					PART = src.part_chest
+			if (!PART) //shooting a limb which is already gone? fallback to chest
+				PART = src.part_chest
 		else
 			var/list/parts = list()
 			for (var/obj/item/parts/robot_parts/RP in src.contents)
@@ -962,22 +919,16 @@
 			if (src.opened && user) boutput(user, "You must close the cover to swipe an ID card.")
 			else if (src.wiresexposed && user) boutput(user, "<span class='alert'>You need to get the wires out of the way.</span>")
 			else
-				sleep (6)
-				if (prob(50))
-					if (user)
-						boutput(user, "You emag [src]'s interface.")
-					src.visible_message("<font color=red><b>[src]</b> buzzes oddly!</font>")
-					src.emagged = 1
-					src.handle_robot_antagonist_status("emagged", 0, user)
-					if(src.syndicate)
-						src.antagonist_overlay_refresh(1, 1)
-					SPAWN_DBG(0)
-						update_appearance()
-					return 1
-				else
-					if (user)
-						boutput(user, "You fail to [ locked ? "unlock" : "lock"] [src]'s interface.")
-					return 0
+				if (user)
+					boutput(user, "You emag [src]'s interface.")
+				src.visible_message("<font color=red><b>[src]</b> buzzes oddly!</font>")
+				src.emagged = 1
+				src.handle_robot_antagonist_status("emagged", 0, user)
+				if(src.syndicate)
+					src.antagonist_overlay_refresh(1, 1)
+				update_appearance()
+				return 1
+			return 0
 
 	emp_act()
 		vision.noise(60)
@@ -1229,7 +1180,7 @@
 				user.drop_item()
 				user.visible_message("<span class='notice'>[user] inserts [W] into [src]'s head.</span>")
 				if (B.owner && (B.owner.dnr || jobban_isbanned(B.owner.current, "Cyborg")))
-					src.visible_message("<span class='alert'>\The [B] is hit by a spark of electricity from \the [src]!</span>")
+					src.visible_message("<span class='alert'>The safeties on [src] engage, zapping [B]! [B] must not be compatible with silicon bodies.</span>")
 					B.combust()
 					return
 				W.set_loc(src)
@@ -1306,7 +1257,6 @@
 			var/action = input("What do you want to do?", "Cyborg Deconstruction") in actions
 			if (!action) return
 			if (action == "Do nothing") return
-			if (src.stat >= 2) return //Wire: Fix for borgs removing their entire bodies after death
 			if (get_dist(src.loc,user.loc) > 1 && (!user.bioHolder || !user.bioHolder.HasEffect("telekinesis")))
 				boutput(user, "<span class='alert'>You need to move closer!</span>")
 				return
@@ -1332,7 +1282,7 @@
 						REMOVE_MOVEMENT_MODIFIER(src, src.part_arm_r.robot_movement_modifier, src.part_arm_r.type)
 					src.compborg_force_unequip(3)
 					src.part_arm_r.set_loc(src.loc)
-					src.part_leg_r.holder = null
+					src.part_arm_r.holder = null
 					if (src.part_arm_r.slot == "arm_both")
 						src.compborg_force_unequip(1)
 						src.part_arm_l = null
@@ -1344,7 +1294,7 @@
 						REMOVE_MOVEMENT_MODIFIER(src, src.part_arm_l.robot_movement_modifier, src.part_arm_l.type)
 					src.compborg_force_unequip(1)
 					src.part_arm_l.set_loc(src.loc)
-					src.part_leg_l.holder = null
+					src.part_arm_l.holder = null
 					if (src.part_arm_l.slot == "arm_both")
 						src.part_arm_r = null
 						src.compborg_force_unequip(3)
@@ -1826,7 +1776,7 @@
 
 		// You can enthrall silicon mobs and yes, they need special handling.
 		// Also, enthralled AIs should still see their master's name when in a robot suit (Convair880).
-		if (src.mind && src.mind.special_role == "vampthrall" && src.mind.master)
+		if (src.mind && src.mind.special_role == ROLE_VAMPTHRALL && src.mind.master)
 			var/mob/mymaster = whois_ckey_to_mob_reference(src.mind.master)
 			if (mymaster)
 				boutput(who, "<b>Obey these laws:</b>")
@@ -2451,9 +2401,6 @@
 				if (fix)
 					HealDamage("All", 6, 6)
 
-				if(src.health > 0)
-					setalive(src)
-
 			if (src.cell.charge <= ROBOT_BATTERY_DISTRESS_THRESHOLD)
 				batteryDistress() // Execute distress mode
 			else if (src.batteryDistress == ROBOT_BATTERY_DISTRESS_ACTIVE)
@@ -2471,12 +2418,6 @@
 		if (!src.canmove)
 			if (isalive(src))
 				src.lastgasp() // calling lastgasp() here because we just got knocked out
-			setunconscious(src)
-		else
-			if(src.health > 0)
-				setalive(src)
-			else
-				setdead(src)
 		if (src.misstep_chance > 0)
 			switch(misstep_chance)
 				if(50 to INFINITY)
@@ -2947,6 +2888,11 @@
 	get_valid_target_zones()
 		return list("head", "chest", "l_leg", "r_leg", "l_arm", "r_arm")
 
+	disposing()
+		if (src.shell)
+			available_ai_shells -= src
+		..()
+
 	proc/compborg_lose_limb(var/obj/item/parts/robot_parts/part)
 		if(!part) return
 
@@ -2959,7 +2905,6 @@
 			src.part_chest = null
 		if (istype(part,/obj/item/parts/robot_parts/head/))
 			src.visible_message("<b>[src]'s</b> head breaks apart!")
-			borg_death_alert()//no head means you dead
 			if (src.brain)
 				src.brain.set_loc(get_turf(src))
 			src.part_head.brain = null
@@ -3013,20 +2958,6 @@
 
 	proc/compborg_take_critter_damage(var/zone = null, var/brute = 0, var/burn = 0)
 		TakeDamage(pick(get_valid_target_zones()), brute, burn)
-
-	proc/collapse_to_pieces()
-		src.visible_message("<span class='alert'><b>[src]</b> falls apart into a pile of components!</span>")
-		var/turf/T = get_turf(src)
-		for(var/obj/item/parts/robot_parts/R in src.contents)
-			R.set_loc(T)
-		src.part_chest = null
-		src.part_head = null
-		src.part_arm_l = null
-		src.part_arm_r = null
-		src.part_leg_l = null
-		src.part_leg_r = null
-		qdel(src)
-		return
 
 /mob/living/silicon/robot/var/image/i_batterydistress
 

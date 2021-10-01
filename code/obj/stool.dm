@@ -146,6 +146,12 @@
 	desc = "Like a stool, but in a bar."
 	parts_type = /obj/item/furniture_parts/stool/bar
 
+/obj/stool/neon
+	name = "neon bar stool"
+	icon_state = "neonstool"
+	desc = "Like a bar stool, but in electric blue."
+	parts_type = /obj/item/furniture_parts/stool/neon
+
 /obj/stool/wooden
 	name = "wooden stool"
 	icon_state = "wstool"
@@ -537,6 +543,9 @@
 		return
 
 	Move()
+		if(src.buckled_guy?.loc != src.loc)
+			src.unbuckle()
+
 		. = ..()
 		if (.)
 			if (src.dir == NORTH)
@@ -549,6 +558,9 @@
 				C.buckled = null
 				C.Move(src.loc)
 				C.buckled = src
+
+		if(src.buckled_guy?.loc != src.loc)
+			src.unbuckle()
 
 	toggle_secure(mob/user as mob)
 		if (istype(get_turf(src), /turf/space))
@@ -799,13 +811,6 @@
 		..()
 		return
 
-	Move(atom/target)
-		if(src.buckled_guy?.loc != src.loc)
-			src.unbuckle()
-		. = ..()
-		if(src.buckled_guy?.loc != src.loc)
-			src.unbuckle()
-
 	Click(location,control,params)
 		var/lpm = params2list(params)
 		if(istype(usr, /mob/dead/observer) && !lpm["ctrl"] && !lpm["shift"] && !lpm["alt"])
@@ -991,6 +996,16 @@
 		arm_icon_state = "arm-purple"
 		parts_type = /obj/item/furniture_parts/comfy_chair/purple
 
+/obj/stool/chair/comfy/throne_gold
+	name = "golden throne"
+	desc = "This throne commands authority and respect. Everyone is super envious of whoever sits in this chair."
+	icon_state = "thronegold"
+	arm_icon_state = "thronegold-arm"
+	comfort_value = 7
+	anchored = 0
+	deconstructable = 1
+	parts_type = /obj/item/furniture_parts/throne_gold
+
 /* ======================================================== */
 /* -------------------- Shuttle Chairs -------------------- */
 /* ======================================================== */
@@ -1094,6 +1109,10 @@
 			REMOVE_MOVEMENT_MODIFIER(src.buckled_guy, /datum/movement_modifier/wheelchair, src.type)
 		return ..()
 
+	set_loc(newloc)
+		. = ..()
+		unbuckle()
+
 /* ======================================================= */
 /* -------------------- Wooden Chairs -------------------- */
 /* ======================================================= */
@@ -1106,6 +1125,13 @@
 	anchored = 0
 	//deconstructable = 0
 	parts_type = /obj/item/furniture_parts/wood_chair
+
+	regal
+		name = "regal chair"
+		desc = "Much more comfortable than the average dining chair, and much more expensive."
+		icon_state = "regalchair"
+		comfort_value = 7
+		parts_type = /obj/item/furniture_parts/wood_chair/regal
 
 /* ============================================== */
 /* -------------------- Pews -------------------- */

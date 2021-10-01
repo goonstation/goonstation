@@ -18,6 +18,12 @@
 	speechverb_ask = "queries"
 	metabolizes = 0
 
+	New()
+		. = ..()
+		var/image/eye_light = image(icon, "mars_sec_bot_eye")
+		eye_light.plane = PLANE_SELFILLUM
+		src.UpdateOverlays(eye_light, "eye_light")
+
 	death(var/gibbed)
 		..(gibbed, 0)
 		if (!gibbed)
@@ -55,7 +61,7 @@
 		HH.icon_state = "hand38"
 		HH.limb_name = ".38 Anti-Personnel Arm"
 		HH.can_hold_items = 0
-		HH.can_attack = 0
+		HH.can_attack = 1
 		HH.can_range_attack = 1
 
 		HH = hands[2]
@@ -65,7 +71,7 @@
 		HH.icon_state = "handabg"
 		HH.limb_name = "ABG Riot Suppression Appendage"
 		HH.can_hold_items = 0
-		HH.can_attack = 0
+		HH.can_attack = 1
 		HH.can_range_attack = 1
 
 		HH = hands[3]
@@ -76,8 +82,8 @@
 		HH.limb_name = "gunbot hands"
 
 	setup_healths()
-		add_hh_robot(-75, 75, 1)
-		add_hh_robot_burn(-50, 50, 1)
+		add_hh_robot(75, 1)
+		add_hh_robot_burn(50, 1)
 
 	get_melee_protection(zone, damage_type)
 		return 6

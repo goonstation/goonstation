@@ -213,7 +213,7 @@
 		if (istype(A, /obj/itemspecialeffect))
 			var/obj/itemspecialeffect/E = A
 			return (E.can_clash && world.time != E.create_time && E.clash_time > 0 && world.time <= E.create_time + E.clash_time)
-		.= ((istype(A, /obj/critter) || (ismob(A) && isliving(A))) && A != usr && A != user)
+		.= ((istype(A, /obj/critter) || (isliving(A)) || istype(A, /obj/machinery/bot)) && A != usr && A != user)
 
 	proc/showEffect(var/name = null, var/direction = NORTH, var/mob/user, alpha=255)
 		if(name == null || master == null) return
@@ -373,7 +373,7 @@
 				for(var/atom/A in lastTurf)
 					if(A in attacked) continue
 					if(isTarget(A, user) && A != user)
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						attacked += A
 						hit = 1
 
@@ -448,7 +448,7 @@
 				var/hit = 0
 				for(var/atom/A in turf)
 					if(isTarget(A))
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						hit = 1
 						break
 
@@ -506,7 +506,7 @@
 					for(var/atom/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
-							A.attackby(master, user, params, 1)
+							A.Attackby(master, user, params, 1)
 							attacked += A
 							hit = 1
 
@@ -603,7 +603,7 @@
 					for(var/atom/movable/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
-							A.attackby(master, user, params, 1)
+							A.Attackby(master, user, params, 1)
 							attacked += A
 							hit = 1
 					if(ignition)
@@ -657,6 +657,57 @@
 				if(master)
 					overrideStaminaDamage = master.stamina_damage * 0.8
 				return
+
+	launch_projectile
+		cooldown = 3 SECONDS
+		staminaCost = 30
+		moveDelay = 0
+		requiresStaminaToFire = TRUE
+		staminaReqAmt = 30
+		/// projectile datum containing data for projectile objects
+		var/datum/projectile/projectile = null
+		/// type path of the special effect
+		var/special_effect_type = /obj/itemspecialeffect/simple
+
+		image = "simple"
+		name = "Cast"
+		desc = "Utilize the power of your wand to cast a bolt of magic."
+
+		pixelaction(atom/target, params, mob/user, reach)
+			. = ..()
+			if (!projectile) return
+			var/turf/T = get_turf(target)
+			if(!T) return
+			if(!usable(user)) return
+			if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+				preUse(user)
+				var/pox = text2num(params["icon-x"]) - 16
+				var/poy = text2num(params["icon-y"]) - 16
+				var/obj/itemspecialeffect/S = unpool(special_effect_type)
+				S.setup(get_step(user, get_dir(user, target)))
+				shoot_projectile_ST_pixel(user, projectile, target, pox, poy)
+				afterUse(user)
+
+		disposing()
+			projectile = null
+			. = ..()
+
+		fireball
+			projectile = new/datum/projectile/fireball
+
+		monkey_organ
+			projectile = new/datum/projectile/special/spawner
+			New()
+				. = ..()
+				var/datum/projectile/special/spawner/P = projectile
+				P.damage_type = D_KINETIC
+				P.power = 5
+				P.typetospawn = /obj/random_item_spawner/organs/bloody/one_to_three
+				P.icon = 'icons/mob/monkey.dmi'
+				P.icon_state = "monkey"
+				P.shot_sound = "sound/voice/screams/monkey_scream.ogg"
+				P.hit_sound = "sound/impact_sounds/Slimy_Splat_1.ogg"
+				P.name = "monkey"
 
 	slam
 		cooldown = 50
@@ -716,14 +767,14 @@
 					shake_camera(M, 8, 24)
 
 				for(var/turf/T in list(one, two, three, four, twoB, threeB, fourB))
-					animate_shake(T)
+					animate_shake(T,5,2,2,T.pixel_x,T.pixel_y)
 					for(var/atom/movable/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
 							if(master)
-								A.attackby(master, user, params, 1)
+								A.Attackby(master, user, params, 1)
 							else
-								A.attack_hand(user, params)
+								A.Attackhand(user, params)
 							attacked += A
 							A.throw_at(get_edge_target_turf(A,direction), 5, 3)
 
@@ -764,7 +815,7 @@
 					shake_camera(M, 8, 24)
 
 				for(var/turf/T in list(one, two, three, four, twoB, threeB, fourB))
-					animate_shake(T)
+					animate_shake(T,5,2,2,T.pixel_x,T.pixel_y)
 					for(var/atom/movable/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
@@ -799,7 +850,7 @@
 					for(var/atom/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
-							A.attackby(master, usr, params, 1)
+							A.Attackby(master, usr, params, 1)
 							attacked += A
 
 				showEffect("whirlwind", NORTH)
@@ -849,7 +900,7 @@
 				var/hit = 0
 				for(var/atom/A in turf)
 					if(isTarget(A))
-						A.attack_hand(user,params)
+						A.Attackhand(user,params)
 						hit = 1
 						break
 
@@ -897,7 +948,7 @@
 				var/hit = 0
 				for(var/atom/A in turf)
 					if(isTarget(A))
-						A.attack_hand(user,params)
+						A.Attackhand(user,params)
 						hit = 1
 						break
 
@@ -947,7 +998,7 @@
 					for(var/atom/movable/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
-							A.attack_hand(user,params)
+							A.Attackhand(user,params)
 							attacked += A
 							hit = 1
 
@@ -1029,15 +1080,16 @@
 			return
 
 
-		proc/on_hit(var/mob/hit, var/mult = 1)
+		proc/on_hit(var/hit, var/mult = 1)
 			if (ishuman(hit))
 				var/mob/living/carbon/human/H = hit
 				H.do_disorient(src.stamina_damage * mult, weakened = 10)
 
-			hit.TakeDamage("chest", 0, rand(2 * mult,5 * mult), 0, DAMAGE_BLUNT)
-			hit.bodytemperature += 4 * mult
-
-			playsound(hit, 'sound/effects/electric_shock.ogg', 60, 1, 0.1, 2.8)
+			if (ismob(hit))
+				var/mob/M = hit
+				M.TakeDamage("chest", 0, rand(2 * mult, 5 * mult), 0, DAMAGE_BLUNT)
+				M.bodytemperature += (4 * mult)
+				playsound(hit, 'sound/effects/electric_shock.ogg', 60, 1, 0.1, 2.8)
 
 	double
 		cooldown = 0
@@ -1072,7 +1124,7 @@
 				var/hit = 0
 				for(var/atom/A in turf)
 					if(isTarget(A))
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						hit = 1
 						break
 				if (!hit)
@@ -1087,7 +1139,7 @@
 					hit = 0
 					for(var/atom/A in turf)
 						if(isTarget(A))
-							A.attackby(master, user, params, 1)
+							A.Attackby(master, user, params, 1)
 							hit = 1
 							break
 					if (!hit)
@@ -1145,7 +1197,7 @@
 				var/hit = 0
 				for(var/atom/A in turf)
 					if(isTarget(A))
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						hit = 1
 						break
 
@@ -1227,10 +1279,7 @@
 							continue
 						if(ismob(A))
 							var/mob/M = A
-							if (M.getStatusDuration("burning"))
-								M.changeStatus("burning", tiny_time)
-							else
-								M.changeStatus("burning", flame_succ ? time : tiny_time)
+							M.changeStatus("burning", flame_succ ? time : tiny_time)
 						else if(iscritter(A))
 							var/obj/critter/crit = A
 							crit.blob_act(8) //REMOVE WHEN WE ADD BURNING OBJCRITTERS
@@ -1339,7 +1388,7 @@
 					if(isTarget(A))
 						on_hit(A)
 						//fake harmbaton it
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						hit = 1
 						playsound(master, 'sound/effects/sparks6.ogg', 70, 0)
 						break
@@ -1361,16 +1410,17 @@
 					return 0
 			return 1
 
-		on_hit(var/mob/hit, var/mult = 1)
+		on_hit(var/hit, var/mult = 1)
 			//maybe add this in, chance to weaken. I dunno a good amount offhand so leaving out for now - kyle
 			// if (ishuman(hit))
 			// 	var/mob/living/carbon/human/H = hit
 			// 	H.do_disorient(src.stamina_damage * mult, weakened = 10)
 			if(istype(master, /obj/item))
-				hit.TakeDamage("chest", 0/*master.force*/, rand(2 * mult,5 * mult), 0, DAMAGE_BLUNT)
-				hit.bodytemperature += 4 * mult
-
-			playsound(hit, 'sound/effects/electric_shock.ogg', 60, 1, 0.1, 2.8)
+				if (ismob(hit))
+					var/mob/M = hit
+					M.TakeDamage("chest", 0, rand(2 * mult,5 * mult), 0, DAMAGE_BLUNT)
+					M.bodytemperature += (4 * mult)
+					playsound(hit, 'sound/effects/electric_shock.ogg', 60, 1, 0.1, 2.8)
 
 	katana_dash
 		cooldown = 9
@@ -1469,7 +1519,7 @@
 					if(isTarget(A))
 						on_hit(A)
 						attacked += A
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						// hit = 1
 						break
 				afterUse(user)
@@ -1600,7 +1650,7 @@
 					if(A in attacked) continue
 					if(isTarget(A))
 						attacked += A
-						A.attack_hand(user,params)
+						A.Attackhand(user,params)
 						// hit = 1
 						break
 
@@ -1651,16 +1701,16 @@
 					for(var/atom/movable/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
-							A.attackby(master, user, params, 1)
+							A.Attackby(master, user, params, 1)
 							attacked += A
 							hit = 1
 
 				for(var/atom/movable/A in one)
 					if(A in attacked) continue
 					if(isTarget(A))
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						SPAWN_DBG(0.5 SECONDS)
-							A.attackby(master, user, params, 1)
+							A.Attackby(master, user, params, 1)
 						attacked += A
 						hit = 1
 
@@ -1700,7 +1750,7 @@
 				var/hit = 0
 				for(var/atom/A in turf)
 					if(isTarget(A))
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						hit = 1
 						break
 

@@ -49,6 +49,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_popup_verbs,
 		/client/proc/toggle_server_toggles_tab,
 		/client/proc/toggle_attack_messages,
+		/client/proc/toggle_rp_word_filtering,
 		/client/proc/toggle_hear_prayers,
 		/client/proc/cmd_admin_plain_message,
 		/client/proc/cmd_admin_check_vehicle,
@@ -276,6 +277,7 @@ var/list/admin_verbs = list(
 		/datum/admins/proc/heavenly_spawn_obj,
 		/datum/admins/proc/supplydrop_spawn_obj,
 		/datum/admins/proc/demonically_spawn_obj,
+		/datum/admins/proc/spawn_figurine,
 
 		// moved down from coder. shows artists, atmos etc
 		/client/proc/SetInfoOverlay,
@@ -334,8 +336,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_crusher_walls,
 		/client/proc/cmd_disco_lights,
 		/client/proc/cmd_blindfold_monkeys,
-		/client/proc/cmd_swampify_station,
-		/client/proc/cmd_trenchify_station,
+		/client/proc/cmd_terrainify_station,
 		/client/proc/cmd_special_shuttle,
 
 		/datum/admins/proc/toggleaprilfools,
@@ -373,7 +374,6 @@ var/list/admin_verbs = list(
 		/client/proc/BK_finance_debug,
 		/client/proc/BK_alter_funds,
 		/client/proc/debug_pools,
-		/client/proc/cmd_claim_rs_verbs,
 		/client/proc/debug_variables,
 		/client/proc/debug_global_variable,
 		/client/proc/get_admin_state,
@@ -426,11 +426,14 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_hard_reboot,
 		/client/proc/cmd_modify_respawn_variables,
 		/client/proc/set_nukie_score,
+		/client/proc/set_pod_wars_score,
+		/client/proc/set_pod_wars_deaths,
 
 		/client/proc/player_panel_tgui,
 
 #ifdef MACHINE_PROCESSING_DEBUG
 		/client/proc/cmd_display_detailed_machine_stats,
+		/client/proc/cmd_display_detailed_power_stats,
 #endif
 #ifdef QUEUE_STAT_DEBUG
 		/client/proc/cmd_display_queue_stats,
@@ -445,7 +448,6 @@ var/list/admin_verbs = list(
 
 	8 = list(
 		// LEVEL_HOST, host
-		/client/proc/cmd_claim_rs_verbs,
 		/datum/admins/proc/toggle_soundpref_override
 		),
 	)
@@ -729,8 +731,8 @@ var/list/special_pa_observing_verbs = list(
 			//stealth_hide_fakekey = (alert("Hide your fake key when using DSAY?", "Extra stealthy","Yes", "No") == "Yes")
 			// I think if people really wanna be Denmark they can just set themselves to be Denmark
 			new_key = strip_html(new_key)
-			if (length(new_key) >= 26)
-				new_key = copytext(new_key, 1, 26)
+			if (length(new_key) >= 50)
+				new_key = copytext(new_key, 1, 50)
 			src.owner:fakekey = new_key
 	else
 		src.owner:fakekey = null
@@ -775,8 +777,8 @@ var/list/special_pa_observing_verbs = list(
 		if (new_key)
 			new_key = trim(new_key)
 			new_key = strip_html(new_key)
-			if (length(new_key) >= 26)
-				new_key = copytext(new_key, 1, 26)
+			if (length(new_key) >= 50)
+				new_key = copytext(new_key, 1, 50)
 			src.owner:fakekey = new_key
 	else
 		src.owner:fakekey = null
@@ -879,7 +881,6 @@ var/list/fun_images = list()
 	if (!crossness || crossness == "Cancel")
 		return
 
-	message_admins(crossness)
 	if(!M.client)
 		alert("[M] is logged out, so you should probably ban them!")
 		return
@@ -910,7 +911,7 @@ var/list/fun_images = list()
 	for(var/i in O.fingerprintshidden)
 		boutput(src, i)
 
-	boutput(src, "<b>Last touched by:</b> [O.fingerprintslast].")
+	boutput(src, "<b>Last touched by:</b> [key_name(O.fingerprintslast)].")
 	return
 
 /client/proc/respawn_heavenly()
@@ -1019,12 +1020,12 @@ var/list/fun_images = list()
 	// You now get to chose (mostly) if you want to send the target to the arrival shuttle (Convair880).
 	var/send_to_arrival_shuttle = 0
 	if (iswraith(M))
-		if (M.mind && M.mind.special_role == "wraith")
+		if (M.mind && M.mind.special_role == ROLE_WRAITH)
 			remove_antag(M, src, 0, 1) // Can't complete specialist objectives as a human. Also, the proc takes care of the rest.
 			return
 		send_to_arrival_shuttle = 1
 	else if (isintangible(M))
-		if (M.mind && M.mind.special_role == "blob")
+		if (M.mind && M.mind.special_role == ROLE_BLOB)
 			remove_antag(M, src, 0, 1) // Ditto.
 			return
 		send_to_arrival_shuttle = 1
@@ -1925,6 +1926,44 @@ var/list/fun_images = list()
 	logTheThing("admin", usr ? usr : src, null, "set nuke ops values to [win_value] wins and [lose_value] loses.")
 	logTheThing("diary", usr ? usr : src, null, "set nuke ops values to [win_value] wins and [lose_value] loses.", "admin")
 	message_admins("[key_name(usr ? usr : src)] set nuke ops values to [win_value] wins and [lose_value] loses.")
+
+/client/proc/set_pod_wars_score()
+	set popup_menu = 0
+	set name = "Set Pod Wars Scoreboard Values"
+	set desc = "Manually assign values to the Pod Wars Nanotrasen/Syndicate wins scoreboard."
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	admin_only
+
+	var/nt_win_value = input("Enter new Nanotrasen win value.") as num
+	world.save_intra_round_value("nt_win", nt_win_value)
+
+	var/sy_win_value = input("Enter new Syndicate loss value.") as num
+	world.save_intra_round_value("sy_win", sy_win_value)
+
+	world.save_intra_round_value("pod_wars_last_reset", world.realtime)
+
+	logTheThing("admin", usr ? usr : src, null, "set pod war win values to [nt_win_value] Nanotrasen wins and [sy_win_value] Syndicate wins.")
+	logTheThing("diary", usr ? usr : src, null, "set pod war win values to [nt_win_value] Nanotrasen wins and [sy_win_value] Syndicate wins.", "admin")
+	message_admins("[key_name(usr ? usr : src)] set pod war win values to [nt_win_value] Nanotrasen wins and [sy_win_value] Syndicate wins.")
+
+/client/proc/set_pod_wars_deaths()
+	set popup_menu = 0
+	set name = "Set Pod Wars Death Scoreboard Values"
+	set desc = "Manually assign values to the Pod Wars Nanotrasen/Syndicate deaths scoreboard."
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	admin_only
+
+	var/nt_death_value = input("Enter new Nanotrasen death value.") as num
+	world.save_intra_round_value("nt_death", nt_death_value)
+
+	var/sy_death_value = input("Enter new Syndicate death value.") as num
+	world.save_intra_round_value("sy_death", sy_death_value)
+
+	world.save_intra_round_value("pod_wars_last_reset", world.realtime)
+
+	logTheThing("admin", usr ? usr : src, null, "set pod war death values to [nt_death_value] Nanotrasen deaths and [sy_death_value] Syndicate deaths.")
+	logTheThing("diary", usr ? usr : src, null, "set pod war death values to [nt_death_value] Nanotrasen deaths and [sy_death_value] Syndicate deaths.", "admin")
+	message_admins("[key_name(usr ? usr : src)] set pod war death values to [nt_death_value] Nanotrasen deaths and [sy_death_value] Syndicate deaths.")
 
 
 /mob/verb/admin_interact_verb()

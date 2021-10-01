@@ -5,6 +5,7 @@
 //	-etc
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+ABSTRACT_TYPE(/mob/living/critter/aquatic)
 /mob/living/critter/aquatic
 	name = "aquatic mobcritter"
 	real_name = "aquatic mobcritter"
@@ -50,8 +51,8 @@
 	..()
 
 /mob/living/critter/aquatic/setup_healths()
-	add_hh_flesh(-(src.health_brute), src.health_brute, src.health_brute_vuln)
-	add_hh_flesh_burn(-(src.health_burn), src.health_burn, src.health_burn_vuln)
+	add_hh_flesh(src.health_brute, src.health_brute_vuln)
+	add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 
 /mob/living/critter/aquatic/Login()
 	..()
@@ -522,7 +523,7 @@
 		return
 
 	if (!istype(user))
-		target.attack_hand(user, params, location, control)
+		target.Attackhand(user, params, location, control)
 		return
 
 	if (isobj(target))
