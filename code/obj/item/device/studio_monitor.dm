@@ -105,6 +105,7 @@
 
 	proc/play_notes()
 		if(!actions.hasAction(usr,"rocking_out"))
+			if(effect.is_playing()) return
 			effect.play_notes()
 			for(var/obj/item/device/radio/nukie_studio_monitor/S in speakers)
 				S.play_song()
@@ -117,10 +118,18 @@
 				S.play_song()
 
 	proc/stop_notes()
-		effect.stop_notes()
 		for(var/obj/item/device/radio/nukie_studio_monitor/S in speakers)
 			S.stop_song()
+		effect.stop_notes()
 
+	proc/get_speaker_targets(range_mod=0)
+		var/list/mob/targets = list()
+		for(var/obj/item/device/radio/nukie_studio_monitor/S in speakers)
+			for(var/mob/HH in hearers(get_turf(S), null))
+				if( GET_DIST(HH, S) <= (S.speaker_range + range_mod) )
+					targets |= HH
+
+		return targets
 
 /obj/ability_button/nukie_rocker
 	name = "Nukie Rocker Ability - You shouldn't see this..."
@@ -128,17 +137,34 @@
 	icon_state = "nostun"
 	targeted = 0
 	cooldown = 10 SECONDS
+	var/song_duration = 3 MINUTES + 11 SECONDS // And if I ever didn't thank you you.. then just let me do it now
 	var/list/status_effect_ids
+	var/static/image/cooldown_img
+
+	New()
+		..()
+		if(!cooldown_img)
+			cooldown_img = image('icons/misc/abilities.dmi',"song_cd")
 
 	execute_ability()
 		if(status_effect_ids)
-			actions.start(new/datum/action/bar/private/icon/rock_on(the_item, status_effect_ids), src.the_mob)
+			actions.start(new/datum/action/bar/private/icon/rock_on(the_item, status_effect_ids, song_duration), src.the_mob)
+
+		src.UpdateOverlays(cooldown_img,"cooldown")
 		. = ..()
+		src.UpdateOverlays(null,"cooldown")
+
+	ability_allowed()
+		. = ..()
+		if(. && actions.hasAction(usr,"rocking_out"))
+			boutput(src.the_mob, "<span class='alert'>You are already playing something...</span>")
+			. = FALSE
 
 	shred
 		name = "Shred"
 		desc = "Lightbreaker Effect"
 		icon_state = "shred"
+		cooldown = 2 MINUTES
 
 		execute_ability()
 			var/obj/item/breaching_hammer/rock_sledge/I = the_item
@@ -150,12 +176,12 @@
 						continue
 					L.broken(1)
 
-				for (var/mob/living/HH in hearers(get_turf(S), null))
-					if(istype(HH.ears, /obj/item/device/radio/headset/syndicate))
-						continue
+			for(var/mob/living/HH in I.get_speaker_targets())
+				if(istype(HH.ears, /obj/item/device/radio/headset/syndicate))
+					continue
 
-					if(!ON_COOLDOWN(HH, "shatter", 5 SECONDS))
-						HH.apply_sonic_stun(0, 0, 30, 0, 5, 4, 6)
+				HH.apply_sonic_stun(0, 0, 30, 0, 5, 4, 6)
+
 			. = ..()
 
 
@@ -163,56 +189,60 @@
 		name = "Infrasound"
 		desc = "Play something so deep it hurts."
 		icon_state = "infrasound"
+		cooldown = 45 SECONDS
 
 		execute_ability()
 			var/obj/item/breaching_hammer/rock_sledge/I = the_item
 
-			for(var/obj/item/device/radio/nukie_studio_monitor/S in I.speakers)
-				for (var/mob/living/HH in hearers(S, null))
-					if(istype(HH.ears, /obj/item/device/radio/headset/syndicate) || GET_DIST(HH,S) > S.speaker_range)
-						continue
-					HH.take_brain_damage(15)
-					HH.do_disorient(25, disorient=10 SECONDS)
+			for(var/mob/living/HH in I.get_speaker_targets(2))
+				if(istype(HH.ears, /obj/item/device/radio/headset/syndicate))
+					continue
+
+				HH.take_brain_damage(15)
+
+				if (HH.ears_protected_from_sound(0) || !HH.hearing_check())
+					continue
+
+				HH.setStatus("infrasound_nausea", 10 SECONDS)
 			. = ..()
 
 	ultrasound
 		name = "Ultrasound"
 		desc = "Play something so high it hurts."
 		icon_state = "ultrasound"
+		cooldown = 45 SECONDS
 
 		execute_ability()
 			var/obj/item/breaching_hammer/rock_sledge/I = the_item
-			for(var/obj/item/device/radio/nukie_studio_monitor/S in I.speakers)
-				for (var/mob/living/HH in hearers(S, null))
-					if(istype(HH.ears, /obj/item/device/radio/headset/syndicate) || GET_DIST(HH,S) > S.speaker_range)
-						continue
-					HH.apply_sonic_stun(0, 0, 0, 0, 2, 8, 5)
-					HH.organHolder.damage_organs(brute=10, organs=list("liver", "heart", "left_kidney", "right_kidney", "stomach", "intestines","appendix", "pancreas", "tail"), probability=90)
+			for(var/mob/living/HH in I.get_speaker_targets(-2))
+				if(istype(HH.ears, /obj/item/device/radio/headset/syndicate))
+					continue
+				HH.apply_sonic_stun(0, 0, 0, 0, 2, 8, 5)
+				HH.organHolder.damage_organs(brute=10, organs=list("liver", "heart", "left_kidney", "right_kidney", "stomach", "intestines","appendix", "pancreas", "tail"), probability=90)
 			. = ..()
 
 	focus
 		name = "Focus"
-		desc = "Clear Stuns"
+		desc = "Clear Stuns and improves resistance"
 		icon_state = "focus"
-
+		status_effect_ids = list("music_focus")
 
 		execute_ability()
 			var/obj/item/breaching_hammer/rock_sledge/I = the_item
-			for(var/obj/item/device/radio/nukie_studio_monitor/S in I.speakers)
-				for (var/mob/living/HH in hearers(S, null))
-					if(istype(HH.ears, /obj/item/device/radio/headset/syndicate) || GET_DIST(HH,S) > S.speaker_range)
-						HH.delStatus("stunned")
-						HH.delStatus("weakened")
-						HH.delStatus("paralysis")
-						HH.delStatus("slowed")
-						HH.delStatus("disorient")
-						HH.change_misstep_chance(-INFINITY)
-						HH.stuttering = 0
-						HH.delStatus("drowsy")
-						if (HH.get_stamina() < 0) // Tasers etc.
-							HH.set_stamina(1)
+			for(var/mob/living/HH in I.get_speaker_targets())
+				if(istype(HH.ears, /obj/item/device/radio/headset/syndicate))
+					HH.delStatus("stunned")
+					HH.delStatus("weakened")
+					HH.delStatus("paralysis")
+					HH.delStatus("slowed")
+					HH.delStatus("disorient")
+					HH.change_misstep_chance(-INFINITY)
+					HH.stuttering = 0
+					HH.delStatus("drowsy")
+					if (HH.get_stamina() < 0) // Tasers etc.
+						HH.set_stamina(1)
 
-						boutput(HH, __blue("You feel refreshed and ready to get back into the fight."))
+					boutput(HH, __blue("You feel refreshed and ready to get back into the fight."))
 
 			logTheThing("combat", src.the_mob, null, "uses cancel stuns at [log_loc(src.the_mob)].")
 			..()
@@ -221,13 +251,7 @@
 		name = "Chill Beats to Murder To"
 		desc = "Gentle healing effect that allows you to do more."
 		icon_state = "chill_murder"
-		status_effect_ids = list("music_energized_big")
-
-	perseverance
-		name = "Perseverance"
-		desc = "Health Boost and Minor Stamina Regeneration"
-		icon_state = "perseverance"
-		status_effect_ids = list("music_hp_up", "music_refreshed")
+		status_effect_ids = list("music_energized_big", "chill_murder")
 
 	death_march
 		name = "Death March"
@@ -235,11 +259,19 @@
 		icon_state = "death_march"
 		status_effect_ids = list("music_refreshed_big")
 
+	perseverance
+		name = "Perseverance"
+		desc = "Health Boost and Minor Stamina Regeneration"
+		icon_state = "perseverance"
+		status_effect_ids = list("music_hp_up", "music_refreshed")
+
 	epic_climax
 		name = "EPIC CLIMAX"
 		desc = "Play a sound that drives the time into a murder rage! Taxing physically and emotionally."
 		icon_state = "epic_climax"
-		status_effect_ids = list("music_hp_up_big", "music_energized")
+		status_effect_ids = list("music_hp_up_big", "epic_climax")
+		song_duration = 69 SECONDS
+		cooldown = 5 MINUTES
 
 //Use this to start the action
 //actions.start(new/datum/action/bar/private/icon/magPicker(item, picker), usr)
@@ -253,12 +285,14 @@
 	var/list/status_effects = null
 	var/looped
 	var/last_strum
+	var/max_song_duration
 
-	New(Instrument, Effects)
+	New(Instrument, Effects, Duration)
 		instrument = Instrument
 		status_effects = Effects
 		looped = 0
 		last_strum = instrument.strums
+		max_song_duration = Duration
 
 		icon = instrument.icon
 		icon_state = instrument.icon_state
@@ -306,18 +340,46 @@
 			src.onRestart()
 
 	proc/blast_to_speakers()
-		for(var/obj/item/device/radio/nukie_studio_monitor/S in instrument.speakers)
-			for(var/mob/M in range(S.speaker_range,S))
-				// Beneficial Effects
-				if(istype(M.ears, /obj/item/device/radio/headset/syndicate))
-					for(var/E in status_effects)
-						M.setStatus(E, 10 SECONDS)
-				//else
-					//BAD EFFECTS
+		for(var/mob/living/HH in instrument.get_speaker_targets())
+			// Beneficial Effects
+			if(istype(HH.ears, /obj/item/device/radio/headset/syndicate))
+				for(var/E in status_effects)
+					HH.setStatus(E, 10 SECONDS)
+			//else
+				//BAD EFFECTS
 
 ///
 ///Music Status Effects
 ///
+/datum/statusEffect/nausea/music
+	id = "infrasound_nausea"
+	name = "Nausea"
+	desc = "Something doesn't feel quite right."
+	icon_state = "miasma1"
+	unique = 1
+	duration = 10 SECONDS
+	maxDuration = null
+
+	onRemove()
+		. = ..()
+		var/mob/living/L = owner
+		if(istype(L))
+			L.do_disorient(25, disorient=8 SECONDS)
+
+	onUpdate(var/timePassed)
+		var/mob/living/L = owner
+		if(!isalive(L))
+			return
+		if(prob(10))
+			L.emote("shudder")
+		else if(prob(5))
+			L.visible_message("<span class='alert'>[L] pukes all over \himself.</span>", "<span class='alert'>You puke all over yourself!</span>")
+			if(prob(5))
+				L.do_disorient(25, disorient=1 SECOND)
+			L.vomit()
+			icon_state = "miasma5"
+
+		return ..(timePassed)
 
 /datum/statusEffect/staminaregen/music
 	id = "music_refreshed"
@@ -329,13 +391,38 @@
 	unique = 1
 	change = 2
 
-	big
+	death_march
 		name = "Tunes (Refreshed+)"
 		id = "music_refreshed_big"
+		desc = "Refreshed and Hastened!"
 		change = 4
+		movement_modifier = /datum/movement_modifier/hastened
 
 	getTooltip()
 		. = "Your stamina regen is increased by [change]."
+
+/datum/statusEffect/focus/music
+	id = "music_focus"
+	name = "Tunes (Focused)"
+	desc = ""
+	icon_state = "muscle"
+	exclusiveGroup = "Music"
+	maxDuration = 10 SECONDS
+	unique = 1
+	var/change = 20
+
+	onAdd(optional=null)
+		. = ..()
+		APPLY_MOB_PROPERTY(owner, PROP_DISARM_RESIST, "focus_music", 10)
+		APPLY_MOB_PROPERTY(owner, PROP_DISORIENT_RESIST_BODY, "focus_music", 10)
+
+	onRemove()
+		. = ..()
+		REMOVE_MOB_PROPERTY(owner, PROP_DISARM_RESIST, "focus_music")
+		REMOVE_MOB_PROPERTY(owner, PROP_DISORIENT_RESIST_BODY, "focus_music")
+
+	getTooltip()
+		. = "Your feel like you would be difficult to stop."
 
 /datum/statusEffect/musicstaminamax
 	id = "music_energized"
@@ -389,7 +476,66 @@
 	onChange(optional=null)
 		. = ..(change)
 
+/datum/statusEffect/simplehot/chill_murder // totally not mild stimulants...
+		id = "chill_murder"
+		name = "Murder Beats"
+		desc = "You feel on top of the world!"
+		exclusiveGroup = "Music"
+		unique = 1
+		tickSpacing = 4 SECONDS
+		maxDuration = 10 SECONDS
+		heal_brute = 2
+		heal_burn = 2
+		heal_tox = 2
 
+/datum/statusEffect/simplehot/epic_climax // totally not mild stimulants...
+	id = "epic_climax"
+	name = "Euphoria"
+	desc = "You feel on top of the world!"
+	icon_state = "janktank"
+	exclusiveGroup = "Music"
+	unique = 1
+	tickSpacing = 2 SECONDS
+	maxDuration = 10 SECONDS
+	heal_brute = 5
+	heal_burn = 5
+	heal_tox = 5
+	var/tickspassed = 0
+
+	onAdd(optional)
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stims", 100)
+			M.add_stam_mod_max("stims", 100)
+			M.add_stun_resist_mod("stims", 100)
+
+	onRemove()
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			M.jitteriness = 110
+			REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stims")
+			M.remove_stam_mod_max("stims")
+			M.remove_stun_resist_mod("stims")
+
+	onUpdate(timePassed)
+		. = ..()
+		tickspassed += timePassed
+		if(ismob(owner))
+			var/mob/M = owner
+			M.take_oxygen_deprivation(-timePassed)
+			M.delStatus("slowed")
+			M.delStatus("disorient")
+			M.make_jittery(10)
+
+			M.dizziness = max(0,M.dizziness-5)
+			M.changeStatus("drowsy", -20 SECONDS)
+			M.sleeping = 0
+
+//
+// Music Notes, Sweet Sweet Music Notes
+//
 particles/music
 	width = 64
 	height = 64
@@ -409,20 +555,21 @@ particles/music
 	drift = generator("box", list(-1, -0.5, 0), list(1, 0.5, 0), LINEAR_RAND)
 
 obj/effects/music
-	particles
 	plane = PLANE_NOSHADOW_ABOVE
 	alpha = 200
-	mouse_opacity = 1
-
-	var/particles/music/music_notes = new
+	particles = new/particles/music
 
 	New()
 		..()
 		src.filters += filter(type="outline", size=0.5, color="#444")
+		src.particles.lifespan = 0
+
+	proc/is_playing()
+		. = src.particles.lifespan == 2 SECONDS
 
 	proc/play_notes()
-		src.particles = music_notes
+		src.particles.lifespan = 2 SECONDS
 
 	proc/stop_notes()
-		src.particles = null
+		src.particles.lifespan = 0
 
