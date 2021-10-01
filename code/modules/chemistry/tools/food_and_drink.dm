@@ -568,7 +568,7 @@
 	//bleck, i dont like this at all. (Copied from chemistry-tools reagent_containers/glass/ definition w minor adjustments)
 	afterattack(obj/target, mob/user , flag)
 		user.lastattacked = target
-		if (istype(target, /obj/fluid)) // fluid handling : If src is empty, fill from fluid. otherwise add to the fluid.
+		if (istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) // fluid handling : If src is empty, fill from fluid. otherwise add to the fluid.
 			var/obj/fluid/F = target
 			if (!src.reagents.total_volume)
 				if (!F.group || !F.group.reagents.total_volume)
@@ -593,7 +593,7 @@
 				var/trans = src.reagents.trans_to(T, src.splash_all_contents ? src.reagents.total_volume : src.amount_per_transfer_from_this)
 				boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [T].</span>")
 
-		else if (istype(target, /obj/reagent_dispensers) || (target.is_open_container() == -1 && target.reagents) || (istype(target, /obj/fluid) && !src.reagents.total_volume)) //A dispenser. Transfer FROM it TO us.
+		else if (istype(target, /obj/reagent_dispensers) || (target.is_open_container() == -1 && target.reagents) || (istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne) && !src.reagents.total_volume)) //A dispenser. Transfer FROM it TO us.
 			if (!target.reagents.total_volume && target.reagents)
 				boutput(user, "<span class='alert'>[target] is empty.</span>")
 				return

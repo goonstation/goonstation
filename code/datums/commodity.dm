@@ -1254,6 +1254,22 @@
 	upperfluc = 750
 	lowerfluc = -500
 
+/datum/commodity/junk/speedyclone
+	comname = "SpeedyClone2000"
+	comtype = /obj/item/cloneModule/speedyclone
+	price = 5000
+	baseprice = 5000
+	upperfluc = 750
+	lowerfluc = -500
+
+/datum/commodity/junk/efficientclone
+	comname = "Biomatter recycling unit"
+	comtype = /obj/item/cloneModule/efficientclone
+	price = 5000
+	baseprice = 5000
+	upperfluc = 750
+	lowerfluc = -500
+
 /datum/commodity/junk/circus_board
 	comname = "Circus board"
 	comtype = /obj/item/peripheral/card_scanner/clownifier

@@ -138,6 +138,8 @@
 						logTheThing("diary", "[user] (Discord)", null, "prisoned [constructTarget(C,"diary")].", "admin")
 						system.reply("Prisoned [ckey].", user)
 						return
+					system.reply("Could not locate prison zone.", user)
+					return
 				system.reply("[ckey] was of mob type [M.type] and could not be prisoned.", user)
 				return
 		system.reply("Could not locate [ckey].", user)
