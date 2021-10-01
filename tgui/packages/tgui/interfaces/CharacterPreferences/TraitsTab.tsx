@@ -49,7 +49,7 @@ export const TraitsTab = (_props, context) => {
         </Stack.Item>
         <Stack.Item grow>
           <Stack fill>
-            <Stack.Item grow>
+            <Stack.Item grow basis={0}>
               <Section
                 title="Available"
                 fill
@@ -73,7 +73,7 @@ export const TraitsTab = (_props, context) => {
             <Stack.Item>
               <Divider vertical />
             </Stack.Item>
-            <Stack.Item grow>
+            <Stack.Item grow basis={0}>
               <Section
                 title={`Selected (${selectedAmount}/${data.traitsMax})`}
                 fill
