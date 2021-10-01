@@ -93,7 +93,7 @@ var/global/list/smart_string_pickers = list()
 				else
 					try
 						thing = call(thing)(arglist(params))
-					except(var/exception/e)
+					catch(var/exception/e)
 						if(e.name != "bad proc")
 							throw e
 						else
