@@ -136,7 +136,7 @@
 	desc = "Waht you no see! This never happened"
 	icon_state = "nostun"
 	targeted = 0
-	cooldown = 10 SECONDS
+	cooldown = 30 SECONDS
 	var/song_duration = 3 MINUTES + 11 SECONDS // And if I ever didn't thank you you.. then just let me do it now
 	var/list/status_effect_ids
 	var/static/image/cooldown_img
@@ -331,7 +331,7 @@
 	onEnd()
 		..()
 
-		if(looped > (((3 MINUTES + 11 SECONDS)/src.duration)-5)  && prob(1/5) )
+		if(looped > ((src.max_song_duration)/src.duration) )
 			return // The Song... ends
 
 		if(last_strum != instrument.strums)
