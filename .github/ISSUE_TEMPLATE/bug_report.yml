@@ -36,7 +36,7 @@ body:
   id: "expected_behavior"
   attributes:
     label: "Expected Behaviour"
-    description: "Give a short of concise description of what you expected to happen"
+    description: "Give a short and concise description of what you expected to happen"
     placeholder: "I expected the explosive bee to explode as it does when its not fed"
   validations:
     required: true
