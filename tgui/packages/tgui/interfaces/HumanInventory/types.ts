@@ -3,15 +3,11 @@ import { BooleanLike } from 'common/react';
 export type HumanInventoryData = {
   name: string;
 
-  slots: HumanInventorySlots;
+  slots: HumanInventorySlot[];
 
   handcuffed: BooleanLike;
   internal: BooleanLike;
   canSetInternal: BooleanLike;
-};
-
-export type HumanInventorySlots = {
-  head: HumanInventorySlot;
 };
 
 export type HumanInventorySlot = {

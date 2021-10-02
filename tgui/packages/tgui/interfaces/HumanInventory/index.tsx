@@ -14,8 +14,8 @@ export const HumanInventory = (_props, context) => {
           <Stack.Item grow>
             <Section scrollable fill>
               <LabeledList>
-                {Object.entries(data.slots).map(([id, slot]) => (
-                  <Slot key={id} {...slot} />
+                {data.slots.map((slot) => (
+                  <Slot key={slot.slot} {...slot} />
                 ))}
               </LabeledList>
             </Section>
