@@ -147,7 +147,7 @@ datum/preferences
 		user << browse_rsc(icon(hud_style_selection[hud_style], "preview"), "hud_preview_[src.hud_style].png")
 
 		var/list/traits = list()
-		for (var/obj/trait/C in src.traitPreferences.getTraits(user))
+		for (var/obj/trait/C as anything in src.traitPreferences.getTraits(user))
 			var/selected = (C.id in traitPreferences.traits_selected)
 
 			traits += list(list(
