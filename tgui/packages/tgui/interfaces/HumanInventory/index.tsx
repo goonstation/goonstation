@@ -8,7 +8,7 @@ export const HumanInventory = (_props, context) => {
   const { data, act } = useBackend<HumanInventoryData>(context);
 
   return (
-    <Window width={400} height={490} title={data.name}>
+    <Window width={300} height={490} title={data.name}>
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item grow>
