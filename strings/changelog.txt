@@ -1,5 +1,9 @@
 
 (t)sat oct 02 21
+(u)Gannets.
+(p)6139
+(e)⚖|balance
+(+)Adds LMG ammo pouch to Heavy Weapons Specialist crate. Spare LMG belts increased to 5.
 (u)Gannets
 (p)6140
 (e)🆕🗺|feature, mapping
