@@ -142,7 +142,7 @@
 				usr.put_in_hand_or_eject(I)
 				ui_interact(user)
 				return TRUE
-			src.accessed_record = FindBankAccountByName(src.scan.registered)
+			src.accessed_record = FindBankAccountByName(idcard.registered)
 			if(isnull(src.accessed_record))
 				boutput(user, "<span class='alert'>That card has no bank account associated.</span>")
 				usr.put_in_hand_or_eject(I)
