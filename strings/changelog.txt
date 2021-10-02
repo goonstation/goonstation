@@ -1,4 +1,9 @@
 
+(t)sat oct 02 21
+(u)Gannets
+(p)6140
+(e)🆕🗺|feature, mapping
+(*)Added a barricade dispenser to the Syndicate Battlecruiser Cairngorm.
 (t)fri oct 01 21
 (u)aloe
 (p)6134
