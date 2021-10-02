@@ -123,23 +123,6 @@ var/global/list/objects_using_dialogs
 
 /mob/proc/remove_dialog(mob/user)
 
-/mob/living/carbon/human/add_dialog(mob/user)
-	if (!user.client) return
-
-	if (!showing_inv)
-		showing_inv = list(user.client)
-	else
-		showing_inv |= user.client
-
-/mob/living/carbon/human/remove_dialog(mob/user)
-	if (!user.client) return
-
-	if (!showing_inv)
-		showing_inv = list()
-	else
-		showing_inv -= user.client
-
-
 //object stuyffs
 
 

@@ -596,17 +596,6 @@
 			UpdateOverlays(I.implant_overlay, "implant--\ref[I]")
 			implant_images += I
 
-	if (world.time - src.last_show_inv <= 30 SECONDS)
-		for (var/client/C in src.showing_inv)
-			if (C?.mob)
-				if (get_dist(src,C.mob) <= 1)
-					src.show_inv(C.mob)
-				else
-					src.remove_dialog(C.mob)
-			else
-				src.showing_inv -= C
-
-
 	src.last_b_state = src.stat
 
 	clothing_dirty = 0
