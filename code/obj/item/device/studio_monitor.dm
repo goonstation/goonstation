@@ -90,6 +90,7 @@
 	var/speakers = list()
 	var/strums = 0
 	var/obj/effects/music/effect
+	var/overheated = FALSE
 
 	New()
 		..()
@@ -121,15 +122,17 @@
 		if(!actions.hasAction(usr,"rocking_out"))
 			if(effect.is_playing()) return
 			effect.play_notes()
-			for(var/obj/item/device/radio/nukie_studio_monitor/S in speakers)
-				S.play_song()
+			if(!overheated)
+				for(var/obj/item/device/radio/nukie_studio_monitor/S in speakers)
+					S.play_song()
 			SPAWN_DBG(2 SECONDS)
 				stop_notes()
 		else
 			strums = ( strums + 1 % 2000 )
 			effect.play_notes()
-			for(var/obj/item/device/radio/nukie_studio_monitor/S in speakers)
-				S.play_song()
+			if(!overheated)
+				for(var/obj/item/device/radio/nukie_studio_monitor/S in speakers)
+					S.play_song()
 
 	proc/stop_notes()
 		for(var/obj/item/device/radio/nukie_studio_monitor/S in speakers)
@@ -138,11 +141,23 @@
 
 	proc/get_speaker_targets(range_mod=0)
 		var/list/mob/targets = list()
-		for(var/obj/item/device/radio/nukie_studio_monitor/S in speakers)
-			for(var/mob/HH in hearers(S.speaker_range + range_mod, get_turf(S)))
-				targets |= HH
+		if(!overheated)
+			for(var/obj/item/device/radio/nukie_studio_monitor/S in speakers)
+				for(var/mob/HH in hearers(S.speaker_range + range_mod, get_turf(S)))
+					targets |= HH
 
 		return targets
+
+	proc/overheat(activate)
+
+		if(activate)
+			for(var/obj/ability_button/nukie_rocker/B as anything in ability_buttons)
+				B.UpdateOverlays(B.rocked_out_img, "rocked_out")
+			src.overheated = TIME + 30 SECONDS
+		else
+			src.overheated = 0
+			for(var/obj/ability_button/nukie_rocker/B as anything in ability_buttons)
+				B.UpdateOverlays(null, "rocked_out")
 
 /obj/ability_button/nukie_rocker
 	name = "Nukie Rocker Ability - You shouldn't see this..."
@@ -153,24 +168,35 @@
 	var/song_duration = 3 MINUTES + 11 SECONDS // And if I ever didn't thank you you.. then just let me do it now
 	var/list/status_effect_ids
 	var/static/image/frame_img
+	var/static/image/rocked_out_img
 
 	New()
 		..()
 		if(!frame_img)
 			frame_img = image('icons/misc/abilities.dmi',"rock_frame")
 			frame_img.appearance_flags = RESET_COLOR
+			rocked_out_img = image('icons/misc/abilities.dmi',"rocked_out")
+			rocked_out_img.appearance_flags = RESET_COLOR
 		src.UpdateOverlays(frame_img, "frame")
 
 	execute_ability()
 		if(status_effect_ids)
-			actions.start(new/datum/action/bar/private/icon/rock_on(the_item, status_effect_ids, song_duration), src.the_mob)
+			actions.start(new/datum/action/bar/private/icon/rock_on(the_item, src), src.the_mob)
 
 		src.color = COLOR_MATRIX_GRAYSCALE
+		. = ..()
+
+	on_cooldown()
 		. = ..()
 		src.color = COLOR_MATRIX_IDENTITY
 
 	ability_allowed()
 		. = ..()
+		var/obj/item/breaching_hammer/rock_sledge/I = the_item
+		if(. && I.overheated)
+			boutput(src.the_mob, "<span class='alert'>The speakers have overheated.  You must wait for them to cooldown!</span>")
+			. = FALSE
+
 		if(. && actions.hasAction(usr,"rocking_out"))
 			boutput(src.the_mob, "<span class='alert'>You are already playing something...</span>")
 			. = FALSE
@@ -287,6 +313,15 @@
 		song_duration = 69 SECONDS
 		cooldown = 5 MINUTES
 
+		execute_ability()
+			var/obj/item/breaching_hammer/rock_sledge/I = the_item
+			I.overheat(TRUE)
+			. = ..()
+
+		on_cooldown()
+			. = ..()
+			var/obj/item/breaching_hammer/rock_sledge/I = the_item
+			I.overheat(FALSE)
 
 /datum/action/bar/private/icon/rock_on
 	duration = 5 SECONDS
@@ -295,17 +330,15 @@
 	fill_bar = FALSE
 
 	var/obj/item/breaching_hammer/rock_sledge/instrument
-	var/list/status_effects = null
+	var/obj/ability_button/nukie_rocker/song
 	var/looped
 	var/last_strum
-	var/max_song_duration
 
-	New(Instrument, Effects, Duration)
+	New(Instrument, Effect)
 		instrument = Instrument
-		status_effects = Effects
+		song = Effect
 		looped = 0
 		last_strum = instrument.strums
-		max_song_duration = Duration
 
 		icon = instrument.icon
 		icon_state = instrument.icon_state
@@ -338,10 +371,15 @@
 		icon_image.alpha = 200
 		bar.color = src.color_active
 
+	onDelete()
+		..()
+		if(istype(song, /obj/ability_button/nukie_rocker/epic_climax))
+			SPAWN_DBG(30 SECONDS)
+				instrument.overheat(FALSE)
+
 	onEnd()
 		..()
-
-		if(looped > ((src.max_song_duration)/src.duration) )
+		if(looped > ((src.song.song_duration)/src.duration) )
 			return // The Song... ends
 
 		if(last_strum != instrument.strums)
@@ -353,7 +391,7 @@
 		for(var/mob/living/HH in instrument.get_speaker_targets())
 			// Beneficial Effects
 			if(istype(HH.ears, /obj/item/device/radio/headset/syndicate))
-				for(var/E in status_effects)
+				for(var/E in src.song.status_effect_ids)
 					HH.setStatus(E, 10 SECONDS)
 			//else
 				//BAD EFFECTS
@@ -361,6 +399,7 @@
 ///
 ///Music Status Effects
 ///
+
 /datum/statusEffect/nausea/music
 	id = "infrasound_nausea"
 	name = "Nausea"
