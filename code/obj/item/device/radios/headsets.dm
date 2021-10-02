@@ -307,6 +307,17 @@
 	leader
 		icon_override = "syndieboss"
 
+	bard
+		name = "Military Headset"
+		desc = "A two-way radio headset designed to protect the wearer from dangerous levels of noise from guns, woofers, and tweeters."
+		secure_frequencies = list("z" = R_FREQ_SYNDICATE, "l"=R_FREQ_LOUDSPEAKERS)
+		secure_classes = list("z" = RADIOCL_SYNDICATE, "l"=RADIOC_OTHER)
+		icon_state = "comtac"
+
+		setupProperties()
+			..()
+			setProperty("disorient_resist_ear", 100)
+
 	comtac
 		name = "Military Headset"
 		icon_state = "comtac"

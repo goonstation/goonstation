@@ -9,10 +9,11 @@
 	anchored = 0
 	speaker_range = 7
 	mats = 0
-	broadcasting = 1
-	listening = 1
+	broadcasting = 0
+	listening = 0
 	chat_class = RADIOCL_INTERCOM
 	frequency = R_FREQ_LOUDSPEAKERS
+	locked_frequency = TRUE
 	rand_pos = 0
 	density = 0
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK
@@ -24,14 +25,30 @@
 		pixel_y = 0
 		effect = new
 		src.vis_contents += effect
+		set_secure_frequency("l", R_FREQ_LOUDSPEAKERS)
+		headset_channel_lookup["[R_FREQ_LOUDSPEAKERS]"] = "Loudspeakers"
 
 	send_hear()
-		var/list/hear = ..()
-
 		flick("nukie_speaker_actv", src)
-		for (var/mob/M in hear)
-			playsound(src.loc, 'sound/misc/talk/speak_1.ogg', 50, 1)
+
+		last_transmission = world.time
+		var/list/hear = hearers(src.speaker_range, get_turf(src)) // changed so station bounce radios will be loud and headsets will only be heard on their tile
+			// modified so that a mob holding the radio is always a hearer of it
+			// this fixes radio problems when inside something (e.g. mulebot)
+
+		if(ismob(loc))
+			hear |= loc
+		//modified so people in the same object as it can hear it
+		if(istype(loc, /obj))
+			for(var/mob/M in loc)
+				hear |= M
+
 		return hear
+
+	speech_bubble()
+		UpdateOverlays(speech_bubble, "speech_bubble")
+		SPAWN_DBG(1.5 SECONDS)
+			UpdateOverlays(null, "speech_bubble")
 
 	proc/play_song(notes=TRUE)
 		icon_state = "nukie_speaker_actv"
@@ -125,9 +142,8 @@
 	proc/get_speaker_targets(range_mod=0)
 		var/list/mob/targets = list()
 		for(var/obj/item/device/radio/nukie_studio_monitor/S in speakers)
-			for(var/mob/HH in hearers(get_turf(S), null))
-				if( GET_DIST(HH, S) <= (S.speaker_range + range_mod) )
-					targets |= HH
+			for(var/mob/HH in hearers(S.speaker_range + range_mod, get_turf(S)))
+				targets |= HH
 
 		return targets
 
