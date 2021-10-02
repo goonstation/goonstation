@@ -258,6 +258,26 @@
 	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/lasagna
 
+/datum/cookingrecipe/alfredo
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/spaghetti
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/cream
+	cookbonus = 16
+	output = /obj/item/reagent_containers/food/snacks/spaghetti/alfredo
+
+/datum/cookingrecipe/chickenparm
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/spaghetti
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/ketchup
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
+	cookbonus = 16
+	output = /obj/item/reagent_containers/food/snacks/spaghetti/chickenparm
+
+/datum/cookingrecipe/chickenalfredo
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/spaghetti
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/cream
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
+	cookbonus = 16
+	output = /obj/item/reagent_containers/food/snacks/spaghetti/chickenalfredo
+
 /datum/cookingrecipe/spaghetti_pg
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/spaghetti
 	item2 = /obj/item/reagent_containers/food/snacks/condiment/ketchup

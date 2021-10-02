@@ -1160,6 +1160,16 @@
 			qdel(src)
 		else return ..()
 
+/obj/item/reagent_containers/food/snacks/spaghetti/alfredo
+	name = "fettucine alfredo"
+	desc = "Pasta in a creamy, cheesy sauce."
+	icon_state = "spag-alfredo"
+	needfork = 1
+	heal_amt = 3
+	amount = 5
+	food_effects = list("food_energized","food_brute","food_burn")
+	meal_time_flags = MEAL_TIME_DINNER
+
 /obj/item/reagent_containers/food/snacks/spaghetti/spicy
 	name = "spaghetti arrabbiata"
 	desc = "Quite spicy!"
@@ -1191,6 +1201,30 @@
 	New()
 		. = ..()
 		name = "[random_spaghetti_name()] and meatballs"
+
+/obj/item/reagent_containers/food/snacks/spaghetti/chickenparm
+	name = "chicken parmigiana"
+	desc = "Spaghetti AND fried chicken? You must be dreaming."
+	icon_state = "spag-chickenparm"
+	needfork = 1
+	heal_amt = 2
+	amount = 5
+	initial_volume = 10
+	initial_reagents = "synaptizine"
+	food_effects = list("food_energized","food_hp_up","food_brute","food_burn")
+	meal_time_flags = MEAL_TIME_DINNER
+
+/obj/item/reagent_containers/food/snacks/spaghetti/chickenalfredo
+	name = "chicken alfredo"
+	desc = "Fettucine alfredo with grilled chicken on top."
+	icon_state = "spag-c-alfredo"
+	needfork = 1
+	heal_amt = 2
+	amount = 5
+	initial_volume = 10
+	initial_reagents = "synaptizine"
+	food_effects = list("food_energized","food_hp_up","food_brute","food_burn")
+	meal_time_flags = MEAL_TIME_DINNER
 
 /obj/item/reagent_containers/food/snacks/lasagna
 	name = "lasagna"
