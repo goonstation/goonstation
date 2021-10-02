@@ -122,9 +122,8 @@
 		if(!actions.hasAction(usr,"rocking_out"))
 			if(effect.is_playing()) return
 			effect.play_notes()
-			if(!overheated)
-				for(var/obj/item/device/radio/nukie_studio_monitor/S in speakers)
-					S.play_song()
+			for(var/obj/item/device/radio/nukie_studio_monitor/S in speakers)
+				S.play_song()
 			SPAWN_DBG(2 SECONDS)
 				stop_notes()
 		else
@@ -141,15 +140,13 @@
 
 	proc/get_speaker_targets(range_mod=0)
 		var/list/mob/targets = list()
-		if(!overheated)
-			for(var/obj/item/device/radio/nukie_studio_monitor/S in speakers)
-				for(var/mob/HH in hearers(S.speaker_range + range_mod, get_turf(S)))
-					targets |= HH
+		for(var/obj/item/device/radio/nukie_studio_monitor/S in speakers)
+			for(var/mob/HH in hearers(S.speaker_range + range_mod, get_turf(S)))
+				targets |= HH
 
 		return targets
 
 	proc/overheat(activate)
-
 		if(activate)
 			for(var/obj/ability_button/nukie_rocker/B as anything in ability_buttons)
 				B.UpdateOverlays(B.rocked_out_img, "rocked_out")
