@@ -15,7 +15,6 @@
 	frequency = R_FREQ_LOUDSPEAKERS
 	locked_frequency = TRUE
 	rand_pos = 0
-	density = 0
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK
 	w_class = W_CLASS_NORMAL
 	var/obj/effects/music/effect
@@ -32,14 +31,12 @@
 		flick("nukie_speaker_actv", src)
 
 		last_transmission = world.time
-		var/list/hear = hearers(src.speaker_range, get_turf(src)) // changed so station bounce radios will be loud and headsets will only be heard on their tile
-			// modified so that a mob holding the radio is always a hearer of it
-			// this fixes radio problems when inside something (e.g. mulebot)
+		var/list/hear = hearers(src.speaker_range, get_turf(src))
 
 		if(ismob(loc))
 			hear |= loc
-		//modified so people in the same object as it can hear it
-		if(istype(loc, /obj))
+
+		if(istype(loc, /obj)) //modified so people in the same object as it can hear it
 			for(var/mob/M in loc)
 				hear |= M
 
@@ -409,7 +406,7 @@
 		id = "music_refreshed_big"
 		desc = "Refreshed and Hastened!"
 		change = 4
-		movement_modifier = /datum/movement_modifier/hastened
+		movement_modifier = /datum/movement_modifier/death_march
 
 	getTooltip()
 		. = "Your stamina regen is increased by [change]."
@@ -560,10 +557,12 @@ particles/music
 	height = 64
 	count = 4
 	spawning = 0.1
-	bound1 = list(-1000, -240, -1000)   // end particles at Y=-240
-	lifespan = 2 SECONDS  // live for 60s max
-	fade = 1.5 SECOND      // fade out over the last 3.5s if still on screen
+	bound1 = list(-1000, -240, -1000)
+	lifespan = 2 SECONDS
+	fade = 1.5 SECOND
+	#ifndef SPACEMAN_DMM // Waiting on next release of DreamChecker
 	fadein = 5
+	#endif
 	// spawn within a certain x,y,z space
 	icon = 'icons/effects/particles.dmi'
 	icon_state = list("quarter"=5, "beamed_eighth"=1, "eighth"=1)
