@@ -196,7 +196,8 @@
 	spawn_contents = list(/obj/item/clothing/under/rank/engineer,\
 	/obj/item/clothing/shoes/orange,\
 	/obj/item/device/radio/headset/engineer,\
-	/obj/item/device/pda2/engine)
+	/obj/item/device/pda2/engine,\
+	/obj/item/clothing/under/rank/orangeoveralls)
 
 /obj/item/storage/box/clothing/miner
 	name = "\improper Miner's equipment"
