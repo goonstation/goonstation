@@ -433,6 +433,14 @@
 	item_state = "sousapron"
 	body_parts_covered = TORSO
 	permeability_coefficient = 0.70
+	
+/obj/item/clothing/suit/apron/pizza
+	name = "pizza apron"
+	desc = "An apron colored like the flag of space Italy, made to resist tomato sauce spills."
+	icon_state = "apron-p"
+	item_state = "apron-p"
+	body_parts_covered = TORSO
+	permeability_coefficient = 0.70
 
 /obj/item/clothing/suit/apron/botanist
 	name = "blue apron"

@@ -1561,6 +1561,15 @@
     desc = "Soothing bubbles for a calm shirt."
     icon_state = "bubble"
     item_state = "bubble"
+	
+/obj/item/clothing/under/misc/tricolor
+    name = "tricolored jumpsuit"
+    desc = "A suit that says you're serious about pizza."
+    icon_state = "tricolor"
+    item_state = "tricolor"
+    icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+    wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+
 
 // WALPVRGIS fashion
 

@@ -1621,7 +1621,9 @@
 
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/breakfast, rand(2, 4), hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/snack_cake, rand(1, 3), hidden=1)
-
+		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/moustache/italian, rand(2, 2), hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/apron/pizza, rand(2, 2), hidden=1)
+	
 //The burden of these machinations weighs on my shoulders
 //And thus you will be burdened
 /datum/data/vending_product/player_product

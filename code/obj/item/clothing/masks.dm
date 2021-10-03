@@ -152,6 +152,13 @@
 	item_state = "moustache"
 	see_face = 1
 
+/obj/item/clothing/mask/moustache/italian
+	name = "Fake Italian moustache"
+	desc = "For those who want to be Italian but just couldn't cut the lasagna."
+	icon_state = "moustache-I"
+	item_state = "moustache-I"
+	see_face = 1
+
 /obj/item/clothing/mask/gas/emergency
 	name = "emergency gas mask"
 	icon_state = "gas_alt"
