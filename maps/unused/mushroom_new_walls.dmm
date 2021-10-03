@@ -12879,16 +12879,12 @@
 /area/station/hallway/primary/central)
 "aYg" = (
 /obj/table/auto,
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag,
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
-	pixel_x = -3;
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
-	pixel_x = -7;
-	pixel_y = 7
-	},
 /obj/item/device/camera_viewer/ranch,
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag,
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag{
+	pixel_x = 16
+	},
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag,
 /turf/simulated/floor/grass{
 	name = "astroturf";
 	tag = "icon-grass1"
@@ -13352,6 +13348,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
 /turf/simulated/floor/grass{
 	name = "astroturf";
 	tag = "icon-grass1"
@@ -13634,8 +13633,8 @@
 /obj/railing/orange{
 	dir = 1
 	},
-/obj/submachine/chicken_feed_grinder,
 /obj/item/reagent_containers/food/snacks/plant/corn,
+/obj/submachine/ranch_feed_grinder,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -13880,6 +13879,10 @@
 /area/station/science/teleporter)
 "bbf" = (
 /obj/railing/orange,
+/obj/disposalpipe/segment/produce{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/grass{
 	name = "astroturf";
 	tag = "icon-grass1"
@@ -18227,6 +18230,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "bqt" = (
+/obj/disposalpipe/segment/produce,
 /turf/simulated/floor/neutral/corner,
 /area/station/hallway/primary/central)
 "bqu" = (
@@ -18638,6 +18642,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "brO" = (
+/obj/disposalpipe/segment/produce,
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
@@ -19181,6 +19186,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "btz" = (
+/obj/disposalpipe/segment/produce,
 /turf/simulated/floor/neutral/corner{
 	dir = 4
 	},
@@ -19546,6 +19552,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/disposalpipe/segment/produce,
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "bGg" = (
@@ -20319,6 +20326,10 @@
 	dir = 9
 	},
 /area/station/medical/medbay)
+"cCd" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/pool)
 "cCv" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -21465,6 +21476,10 @@
 	},
 /turf/simulated/floor/purple,
 /area/station/science/teleporter)
+"ekE" = (
+/obj/disposalpipe/segment/produce,
+/turf/simulated/wall/auto/supernorn,
+/area/station/hallway/primary/central)
 "ekL" = (
 /obj/machinery/ghost_catcher,
 /turf/simulated/floor/plating/random,
@@ -21513,6 +21528,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/produce,
 /turf/simulated/floor/plating/damaged1,
 /area/station/maintenance/west)
 "epO" = (
@@ -22261,6 +22277,7 @@
 /obj/cable{
 	icon_state = "4-5"
 	},
+/obj/disposalpipe/segment/produce,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "foN" = (
@@ -23191,6 +23208,16 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/engine,
 /area/station/security/armory)
+"gvC" = (
+/obj/railing/orange,
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf";
+	tag = "icon-grass1"
+	},
+/area/station/storage/emergencyinternals)
 "gvN" = (
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
@@ -24111,9 +24138,12 @@
 /obj/machinery/camera{
 	c_tag = "Hydroponics Foyer"
 	},
-/obj/disposalpipe/segment/produce{
-	dir = 4;
-	icon_state = "pipe-c"
+/obj/disposalpipe/trunk/produce{
+	dir = 1
+	},
+/obj/machinery/disposal{
+	desc = "A pneumatic waste..err, PRODUCE transport unit.";
+	name = "Botany to Ranch"
 	},
 /turf/simulated/floor/green,
 /area/station/hydroponics/lobby)
@@ -24128,9 +24158,7 @@
 	desc = "A pneumatic waste..err, PRODUCE transport unit.";
 	name = "kitchen/bar chute"
 	},
-/obj/disposalpipe/trunk/produce{
-	dir = 8
-	},
+/obj/disposalpipe/trunk/produce,
 /turf/simulated/floor/green,
 /area/station/hydroponics/lobby)
 "hMo" = (
@@ -25024,7 +25052,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/orangeblack/side{
-	dir = 4
+	dir = 9
 	},
 /area/station/hydroponics/bay)
 "iNv" = (
@@ -25074,19 +25102,11 @@
 	},
 /area/station/hydroponics/bay)
 "iPx" = (
-/obj/rack,
-/obj/item/clothing/mask/gas/emergency,
 /turf/simulated/floor/orangeblack/side{
-	dir = 9
+	dir = 1
 	},
 /area/station/hydroponics/lobby)
 "iPJ" = (
-/obj/machinery/embedded_controller/radio/department_controller{
-	door_tag = "dc_hydro_door";
-	id_tag = "dc_hydro";
-	pixel_y = 24;
-	req_access_txt = "19"
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -25215,12 +25235,15 @@
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/AIsat)
 "iWI" = (
-/obj/disposalpipe/segment/produce,
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/cable{
+	icon_state = "4-8"
 	},
-/turf/simulated/floor/green,
-/area/station/hydroponics/lobby)
+/obj/disposalpipe/segment/produce{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "iWS" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -25662,6 +25685,10 @@
 "jwF" = (
 /turf/simulated/floor/black,
 /area/station/security/main)
+"jwS" = (
+/obj/disposalpipe/segment/produce,
+/turf/simulated/wall/auto/supernorn,
+/area/station/hydroponics/lobby)
 "jyy" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
@@ -26206,7 +26233,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/orangeblack/side{
-	dir = 4
+	dir = 8
 	},
 /area/station/hydroponics/bay)
 "kiW" = (
@@ -26244,25 +26271,19 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "kkl" = (
-/obj/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/external{
-	autoclose = 0;
-	density = 0;
-	dir = 4;
-	frequency = 1449;
-	icon_state = "airlock_open";
-	id_tag = "dc_hydro_door";
-	locked = 1;
-	name = "Grove Module Airlock"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/segment/mail{
+/obj/machinery/door/airlock/pyro/glass/botany{
 	dir = 4
 	},
-/turf/simulated/floor/orangeblack,
-/area/station/hydroponics/bay)
+/obj/firedoor_spawn,
+/obj/access_spawn/rancher,
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/maintenance/inner/central)
 "klF" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -26315,9 +26336,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/orangeblack/side{
-	dir = 8
-	},
+/turf/simulated/floor,
 /area/station/hydroponics/lobby)
 "koj" = (
 /obj/lattice{
@@ -26456,23 +26475,18 @@
 /turf/simulated/floor/circuit/white,
 /area/station/turret_protected/AIsat)
 "ktF" = (
-/obj/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/external{
-	autoclose = 0;
-	density = 0;
-	dir = 4;
-	frequency = 1449;
-	icon_state = "airlock_open";
-	id_tag = "dc_hydro_door";
-	locked = 1;
-	name = "Grove Module Airlock"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
+	name = "Hydroponics"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/hydro,
 /turf/simulated/floor/orangeblack,
 /area/station/hydroponics/lobby)
 "kui" = (
@@ -26537,8 +26551,7 @@
 	icon_state = "2-8"
 	},
 /obj/disposalpipe/segment/produce{
-	dir = 8;
-	icon_state = "pipe-c"
+	dir = 4
 	},
 /turf/simulated/floor/green,
 /area/station/hydroponics/lobby)
@@ -26548,6 +26561,10 @@
 	},
 /obj/railing/orange{
 	dir = 4
+	},
+/obj/disposalpipe/segment/produce{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/grass{
 	name = "astroturf";
@@ -26777,6 +26794,7 @@
 /area/station/garden/owlery)
 "kRk" = (
 /obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag,
 /turf/simulated/floor/grass{
 	name = "astroturf";
 	tag = "icon-grass1"
@@ -27532,7 +27550,7 @@
 "lZA" = (
 /obj/table/wood/auto,
 /turf/simulated/floor/orangeblack/side{
-	dir = 4
+	dir = 10
 	},
 /area/station/hydroponics/bay)
 "maY" = (
@@ -27542,12 +27560,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/proto)
 "mbT" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/simulated/floor/orangeblack/side{
-	dir = 10
-	},
+/obj/machinery/light,
+/turf/simulated/floor/orangeblack/side,
 /area/station/hydroponics/lobby)
 "mcj" = (
 /obj/cable{
@@ -28984,9 +28998,17 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hydroponics/bay)
 "nSe" = (
-/obj/disposalpipe/segment,
-/turf/simulated/wall/auto/supernorn,
-/area/station/hydroponics/lobby)
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf";
+	tag = "icon-grass1"
+	},
+/area/station/maintenance/inner/central)
 "nSy" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -30552,6 +30574,13 @@
 	dir = 4
 	},
 /area/station/medical/medbay/lobby)
+"pDa" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/disposalpipe/segment/produce,
+/turf/simulated/floor/green,
+/area/station/hydroponics/lobby)
 "pDx" = (
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -30607,6 +30636,16 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/science/lobby)
+"pIH" = (
+/obj/disposalpipe/segment/produce{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf";
+	tag = "icon-grass1"
+	},
+/area/station/storage/emergencyinternals)
 "pIJ" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
@@ -31711,6 +31750,12 @@
 /obj/railing/orange{
 	dir = 8
 	},
+/obj/machinery/disposal/small{
+	name = "Ranch to Botany"
+	},
+/obj/disposalpipe/trunk/produce{
+	dir = 1
+	},
 /turf/simulated/floor/grass{
 	name = "astroturf";
 	tag = "icon-grass1"
@@ -32234,6 +32279,9 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"rsH" = (
+/turf/simulated/floor/orangeblack/side,
+/area/station/hydroponics/lobby)
 "rsO" = (
 /obj/stool/bench/blue/auto,
 /obj/machinery/light{
@@ -33408,6 +33456,7 @@
 /obj/landmark/start{
 	name = "Rancher"
 	},
+/obj/disposalpipe/segment/produce,
 /turf/simulated/floor/grass{
 	name = "astroturf";
 	tag = "icon-grass1"
@@ -34808,6 +34857,15 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
+"ubI" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/obj/disposalpipe/segment/produce,
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "ucC" = (
 /obj/stool/bar,
 /turf/simulated/floor/wood/two,
@@ -36502,6 +36560,13 @@
 "vZs" = (
 /turf/simulated/floor/purplewhite,
 /area/station/science/lab)
+"vZH" = (
+/obj/disposalpipe/segment/produce{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/green,
+/area/station/hydroponics/lobby)
 "vZI" = (
 /turf/simulated/floor/purplewhite{
 	dir = 10
@@ -36880,6 +36945,10 @@
 	dir = 5
 	},
 /area/station/crew_quarters/hor)
+"wAD" = (
+/obj/disposalpipe/segment/produce,
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "wAG" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -37334,6 +37403,11 @@
 	icon_state = "red2"
 	},
 /area/station/crew_quarters/cafeteria)
+"xbb" = (
+/obj/firedoor_spawn,
+/obj/disposalpipe/segment/produce,
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "xbn" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -73865,7 +73939,7 @@ aDZ
 qTZ
 boo
 thS
-axW
+ueo
 ecT
 mcn
 uHC
@@ -74167,8 +74241,8 @@ bdt
 lRM
 sbz
 axW
-ueo
-ecT
+axW
+cCd
 mcn
 uHG
 qBr
@@ -74470,7 +74544,7 @@ bjM
 oWh
 tkO
 axW
-ecT
+cCd
 mcn
 uHC
 qBr
@@ -74772,7 +74846,7 @@ bjQ
 cjc
 tlN
 axW
-ecT
+cCd
 wjJ
 uHG
 qBr
@@ -78688,9 +78762,9 @@ xRT
 aaa
 aaa
 tjX
-tjX
-kkl
-tjX
+iPx
+iCc
+rsH
 tjX
 aXu
 wHt
@@ -81380,33 +81454,33 @@ aXd
 aWZ
 aYf
 aYJ
-aZw
-aPu
-aPu
-aPu
-aPu
-aPu
-aYJ
-aNY
-aPu
-aPu
-aPu
-aPu
-aPu
-aYJ
-aPu
+iWI
+wAD
+wAD
+wAD
+wAD
+wAD
+ubI
+xbb
+wAD
+wAD
+wAD
+wAD
+wAD
+ubI
+wAD
 bqt
 brO
 brO
 btz
 bGc
-aPu
-aqj
+wAD
+ekE
 ept
 foC
-iFD
+jwS
 hKJ
-iWI
+iYw
 kzb
 mto
 iFD
@@ -81682,7 +81756,7 @@ aWg
 hWD
 hWD
 aXa
-aZx
+kkl
 aXa
 yeA
 yeA
@@ -81708,10 +81782,10 @@ bhb
 foN
 iFD
 hLp
-iYw
+pDa
+vZH
 aun
-aun
-nSe
+iFD
 paR
 rzV
 rzV
@@ -81984,7 +82058,7 @@ aWg
 hWD
 aYg
 ydQ
-aZB
+nSe
 fHH
 gYh
 xJA
@@ -82588,7 +82662,7 @@ aXo
 jpr
 fax
 jLL
-aZB
+nSe
 jLL
 dHx
 xJA
@@ -83194,7 +83268,7 @@ aXa
 jLL
 aZB
 baj
-bbf
+gvC
 xJA
 xJA
 bda
@@ -83496,7 +83570,7 @@ hWD
 jLL
 aZB
 baj
-bbf
+gvC
 xJA
 fbV
 bda
@@ -83798,7 +83872,7 @@ hWD
 jLL
 aZB
 baj
-bbf
+gvC
 xJA
 xJA
 bda
@@ -84100,7 +84174,7 @@ hWD
 jLL
 aZB
 baj
-xJA
+pIH
 qQW
 bda
 bda
