@@ -353,3 +353,125 @@
 
 /mob/living/silicon/robot/get_step_image_states()
 	return list(istype(src.part_leg_l) ? src.part_leg_l.step_image_state : null, istype(src.part_leg_r) ? src.part_leg_r.step_image_state : null)
+
+
+/*
+                                  ''''''
+IIIIIIIIIITTTTTTTTTTTTTTTTTTTTTTT '::::'   SSSSSSSSSSSSSSS      PPPPPPPPPPPPPPPPP        OOOOOOOOO          OOOOOOOOO     PPPPPPPPPPPPPPPPP
+I::::::::IT:::::::::::::::::::::T '::::' SS:::::::::::::::S     P::::::::::::::::P     OO:::::::::OO      OO:::::::::OO   P::::::::::::::::P
+I::::::::IT:::::::::::::::::::::T ':::''S:::::SSSSSS::::::S     P::::::PPPPPP:::::P  OO:::::::::::::OO  OO:::::::::::::OO P::::::PPPPPP:::::P
+II::::::IIT:::::TT:::::::TT:::::T':::'  S:::::S     SSSSSSS     PP:::::P     P:::::PO:::::::OOO:::::::OO:::::::OOO:::::::OPP:::::P     P:::::P
+  I::::I  TTTTTT  T:::::T  TTTTTT''''   S:::::S                   P::::P     P:::::PO::::::O   O::::::OO::::::O   O::::::O  P::::P     P:::::P
+  I::::I          T:::::T               S:::::S                   P::::P     P:::::PO:::::O     O:::::OO:::::O     O:::::O  P::::P     P:::::P
+  I::::I          T:::::T                S::::SSSS                P::::PPPPPP:::::P O:::::O     O:::::OO:::::O     O:::::O  P::::PPPPPP:::::P
+  I::::I          T:::::T                 SS::::::SSSSS           P:::::::::::::PP  O:::::O     O:::::OO:::::O     O:::::O  P:::::::::::::PP
+  I::::I          T:::::T                   SSS::::::::SS         P::::PPPPPPPPP    O:::::O     O:::::OO:::::O     O:::::O  P::::PPPPPPPPP
+  I::::I          T:::::T                      SSSSSS::::S        P::::P            O:::::O     O:::::OO:::::O     O:::::O  P::::P
+  I::::I          T:::::T                           S:::::S       P::::P            O:::::O     O:::::OO:::::O     O:::::O  P::::P
+  I::::I          T:::::T                           S:::::S       P::::P            O::::::O   O::::::OO::::::O   O::::::O  P::::P
+II::::::II      TT:::::::TT             SSSSSSS     S:::::S     PP::::::PP          O:::::::OOO:::::::OO:::::::OOO:::::::OPP::::::PP
+I::::::::I      T:::::::::T             S::::::SSSSSS:::::S     P::::::::P           OO:::::::::::::OO  OO:::::::::::::OO P::::::::P
+I::::::::I      T:::::::::T             S:::::::::::::::SS      P::::::::P             OO:::::::::OO      OO:::::::::OO   P::::::::P
+IIIIIIIIII      TTTTTTTTTTT              SSSSSSSSSSSSSSS        PPPPPPPPPP               OOOOOOOOO          OOOOOOOOO     PPPPPPPPPP
+*/
+
+
+
+/atom/var/mud_stained = 0
+
+
+
+/proc/muddy(var/mob/living/some_idiot, var/num_amount, var/vis_amount, var/turf/T as turf)
+
+	if (!T)
+		T = get_turf(some_idiot)
+
+	var/obj/decal/cleanable/mud/dynamic/B = null
+	if (T.messy > 0)
+		B = locate(/obj/decal/cleanable/mud/dynamic) in T
+	var/mud_color_to_pass = DEFAULT_MUD_COLOR
+
+	if (!B) // look for an existing dynamic blood decal and add to it if you find one
+		B = make_cleanable( /obj/decal/cleanable/mud/dynamic,T)
+		B.color = mud_color_to_pass
+
+	B.add_volume(mud_color_to_pass, num_amount, vis_amount)
+	return
+
+
+
+/atom/proc/add_mud(mob/living/M as mob, var/amount = 5,)
+	if (!(( src.flags) & FPRINT))
+		return
+
+	if (isitem(src))
+		var/obj/item/I = src
+
+		var/icon/new_icon
+
+		if (I.uses_multiple_icon_states)
+			new_icon = new /icon(I.icon)
+		else
+			new_icon = new /icon(I.icon, I.icon_state)
+
+		new_icon.Blend(new /icon('icons/effects/blood.dmi', "thisisfuckingstupid"), ICON_ADD)
+
+		new_icon.Blend(DEFAULT_MUD_COLOR, ICON_MULTIPLY)
+
+		new_icon.Blend(new /icon('icons/effects/blood.dmi', "itemblood"), ICON_MULTIPLY)
+
+		if (I.uses_multiple_icon_states)
+			new_icon.Blend(new /icon(I.icon), ICON_UNDERLAY)
+		else
+			new_icon.Blend(new /icon(I.icon, I.icon_state), ICON_UNDERLAY)
+
+		I.icon = new_icon
+
+		if (istype(I, /obj/item/clothing))
+			var/obj/item/clothing/C = src
+			C.add_stain("shit-stained")
+
+		else
+			I.name = "[pick("filthy ","muddy ","dirty ")] [I]"
+
+
+
+	else if (istype(src, /turf/simulated))
+		muddy(M, amount, rand(1,3), src)
+
+	else
+		return
+
+/mob/living/carbon/human
+	var/mud_gib_stage = 0.0
+
+
+/mob/living/track_mud()
+	if (!islist(src.tracked_mud))
+		return
+	var/turf/T = get_turf(src)
+	var/obj/decal/cleanable/mud/dynamic/tracks/B = null
+	if (T.messy > 0)
+		B = locate(/obj/decal/cleanable/mud/dynamic) in T
+
+	var/mud_color_to_pass = src.tracked_mud["color"] ? src.tracked_mud["color"] : DEFAULT_MUD_COLOR
+
+	if (!B)
+		if (T.active_liquid)
+			return
+		B = make_cleanable( /obj/decal/cleanable/mud/dynamic/tracks,get_turf(src))
+		B.set_sample_reagent_custom(src.tracked_mud["sample_reagent"],0)
+
+	B.add_volume(mud_color_to_pass, src.tracked_mud["sample_reagent"], 1, 0, src.tracked_mud, "footprints[rand(1,2)]", src.last_move, 0)
+
+	if (src.tracked_mud && isnum(src.tracked_mud["count"])) // mirror from below
+		src.tracked_mud["count"] --
+		if (src.tracked_mud["count"] <= 0)
+			src.tracked_mud = null
+			src.set_clothing_icon_dirty()
+			return
+	else
+		src.tracked_mud = null
+		src.set_clothing_icon_dirty()
+		return
+
