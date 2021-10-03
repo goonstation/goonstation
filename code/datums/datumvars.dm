@@ -666,10 +666,15 @@
 	if(D != "GLOB" && (!variable || !D || !(variable in D.vars)))
 		return
 	var/list/locked = list("vars", "key", "ckey", "client", "holder")
+	var/list/pixel_movement_breaking_vars = list("step_x", "step_y", "step_size", "bound_x", "bound_y", "bound_height", "bound_width", "bounds")
 
 	if(!isadmin(src))
 		boutput(src, "Only administrators may use this command.")
 		return
+
+	if(pixel_movement_breaking_vars.Find(variable))
+		if (tgui_alert(usr, "Modifying this variable might break pixel movement. Don't edit this unless you know what you're doing. Continue?", "Confirmation", list("Yes", "No")) == "No")
+			return
 
 	var/default
 	var/var_value = D == "GLOB" ? global.vars[variable] : D.vars[variable]

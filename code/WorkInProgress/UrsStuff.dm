@@ -39,3 +39,7 @@
 /obj/decal/fakeobjects/dreambeach/palm_leaf
 
 /obj/decal/fakeobjects/dreambeach/mercury
+
+/obj/item/storage/box/knitting
+
+/mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled

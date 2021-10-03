@@ -19,6 +19,7 @@
 	proc/update_maptext()
 		if (!src.current)
 			src.maptext = "<span class='pixel ol c vb'></span>"
+			return
 		maptext_width = 96
 		maptext_y = 32
 		maptext_x = -32
@@ -321,6 +322,10 @@
 	power_change()
 		. = ..()
 		update_icon()
+
+	was_deconstructed_to_frame(mob/user)
+		src.current = null // Dont think this would lead to any frustrations, considering like, youre chopping the machine up of course itd destroy the plant.
+		boutput( user, "<span class='alert'>In the process of deconstructing the tray you destroy the plant.</span>" )
 
 	process()
 		..()
@@ -1076,7 +1081,7 @@
 		else
 			logTheThing("debug", null, null, "<b>Hydro Controls</b>: Could not access Hydroponics Controller to get Harvest cap.")
 
-		src.growth = growing.growtime - DNA.growtime
+		src.growth = max(0, growing.growtime - DNA.growtime)
 		// Reset the growth back to the beginning of maturation so we can wait out the
 		// harvest time again.
 		var/getamount = growing.cropsize + DNA.cropsize

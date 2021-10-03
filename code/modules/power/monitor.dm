@@ -23,7 +23,8 @@
 
 /obj/machinery/computer/power_monitor/ui_static_data(mob/user)
 	var/datum/powernet/powernet = src.get_direct_powernet()
-
+	if (!istype(powernet))
+		return
 	. = list(
 		"type" = "apc",
 		"apcNames" = list(),
@@ -42,7 +43,8 @@
 
 /obj/machinery/computer/power_monitor/ui_data(mob/user)
 	var/datum/powernet/powernet = src.get_direct_powernet()
-
+	if (!istype(powernet))
+		return
 	. = list(
 		"available" = powernet.avail,
 		"load" = powernet.viewload,
@@ -82,7 +84,8 @@
 
 /obj/machinery/computer/power_monitor/proc/add_history()
 	var/datum/powernet/powernet = src.get_direct_powernet()
-
+	if (!istype(powernet))
+		return
 	src.history += list(list(
 		powernet.avail,
 		powernet.viewload,
@@ -115,6 +118,8 @@
 
 	var/list/L = list()
 	var/datum/powernet/powernet = src.get_direct_powernet()
+	if (!istype(powernet))
+		return
 	for(var/obj/machinery/power/terminal/term in powernet.nodes)
 		if(istype(term.master, /obj/machinery/power/smes))
 			var/obj/machinery/power/smes/A = term.master
@@ -132,7 +137,8 @@
 
 /obj/machinery/computer/power_monitor/smes/ui_data(mob/user)
 	var/datum/powernet/powernet = src.get_direct_powernet()
-
+	if (!istype(powernet))
+		return
 	. = list(
 		"available" = powernet.avail,
 		"load" = powernet.viewload,

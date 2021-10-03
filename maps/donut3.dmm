@@ -5448,6 +5448,12 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
+"boE" = (
+/obj/landmark/spawner{
+	name = "dolly"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "boW" = (
 /obj/cable,
 /obj/disposalpipe/switch_junction/right/south,
@@ -31726,9 +31732,9 @@
 /turf/simulated/floor/plating,
 /area/station/bridge/captain)
 "jdI" = (
-/obj/reagent_dispensers/fueltank,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /obj/decal/cleanable/rust/jen,
+/obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/plating/jen,
 /area/station/science/gen_storage)
 "jdO" = (
@@ -58551,6 +58557,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/southeast)
+"qUa" = (
+/obj/machinery/recharge_station,
+/turf/simulated/floor/plating/jen,
+/area/station/storage/tech)
 "qUg" = (
 /obj/lattice{
 	dir = 5;
@@ -66370,9 +66380,9 @@
 /turf/simulated/floor/green/side,
 /area/station/hallway/primary/west)
 "tlS" = (
-/obj/machinery/portable_atmospherics/pump,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /obj/decal/cleanable/rust/jen,
+/obj/machinery/recharge_station,
 /turf/simulated/floor/plating/jen,
 /area/station/science/gen_storage)
 "tlW" = (
@@ -73748,6 +73758,11 @@
 /obj/disposalpipe/trunk,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
+"vvV" = (
+/obj/machinery/recharge_station,
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/turf/simulated/floor/plating/airless,
+/area/station/mining/staff_room)
 "vwg" = (
 /obj/wingrille_spawn/auto/tuff,
 /obj/cable{
@@ -78697,6 +78712,14 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
+"wPm" = (
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/machinery/recharge_station,
+/turf/simulated/floor/orangeblack,
+/area/station/hallway/secondary/exit)
 "wPw" = (
 /obj/stool/chair/comfy/purple{
 	dir = 8
@@ -79645,6 +79668,11 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
+"xbR" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/machinery/recharge_station,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/sw)
 "xbV" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/science)
@@ -110498,7 +110526,7 @@ gBM
 lGw
 eRI
 mLB
-bUO
+xbR
 mQf
 gBM
 hcW
@@ -130945,7 +130973,7 @@ vzA
 wYJ
 mBB
 mBB
-mBB
+boE
 mBB
 mBB
 mBB
@@ -132800,7 +132828,7 @@ lmX
 lmX
 vob
 kuM
-cjG
+vvV
 xFO
 tgJ
 dCg
@@ -137095,7 +137123,7 @@ kOm
 wWv
 hqD
 wFv
-xRb
+qUa
 xGu
 ujy
 rdj
@@ -146049,7 +146077,7 @@ fPJ
 jnD
 kNU
 onD
-aIy
+wPm
 qTj
 aIy
 sTL

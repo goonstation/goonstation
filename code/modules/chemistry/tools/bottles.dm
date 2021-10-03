@@ -108,6 +108,13 @@
 	amount_per_transfer_from_this = 5
 	initial_reagents = "calomel"
 
+/obj/item/reagent_containers/glass/bottle/spaceacillin
+	name = "bottle (spaceacillin)"
+	desc = "A small bottle of spaceacillin, for curing minor diseases."
+	bottle_style = "2"
+	amount_per_transfer_from_this = 5
+	initial_reagents = "spaceacillin"
+
 /// cogwerks - adding some new bottles for traitor medics
 // haine - I added beedril/royal beedril to these, and my heart-related disease reagents. yolo (remove these if they're a dumb idea, idk)
 /obj/item/reagent_containers/glass/bottle/poison

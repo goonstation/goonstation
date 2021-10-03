@@ -817,10 +817,6 @@
 				src.name = "donk-pocket"
 		return
 
-#undef DONK_COLD
-#undef DONK_WARM
-#undef DONK_SCALDING
-
 /obj/item/reagent_containers/food/snacks/donkpocket_w
 	name = "donk-pocket"
 	desc = "This donk-pocket is emitting a small amount of heat."
@@ -846,19 +842,22 @@
 		warm = 1
 
 	heal(var/mob/M)
-		if(src.warm && M.reagents)
-			M.reagents.add_reagent("honk_fart",15)
+		if(src.warm == DONK_WARM)
+			M.reagents?.add_reagent("honk_fart",15)
 		else
-			boutput(M, "<span class='alert'>It's just not good enough cold...</span>")
-			M.reagents.add_reagent("simethicone",15)
+			M.reagents?.add_reagent("simethicone",15)
 		..()
 
 	cooltime()
 		if (src.warm)
 			SPAWN_DBG( 420 SECONDS )
-				src.warm = 0
+				src.warm = DONK_COLD
 				src.name = "honk-pocket"
 		return
+
+#undef DONK_COLD
+#undef DONK_WARM
+#undef DONK_SCALDING
 
 /obj/item/reagent_containers/food/snacks/breakfast
 	name = "bacon and eggs"

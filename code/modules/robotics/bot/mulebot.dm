@@ -16,6 +16,8 @@
 	locked = 1
 	access_lookup = "Captain"
 	var/atom/movable/load = null		// the loaded crate (usually)
+	///sanitycheck so we can't try to unload during an unload operation
+	var/unloading = FALSE
 
 	var/beacon_freq = 1445
 	var/control_freq = 1447
@@ -457,14 +459,16 @@
 	// called to unload the bot
 	// argument is optional direction to unload
 	// if zero, unload at bot's location
-	proc/unload(var/dirn = 0)
-		if(!load)
+	proc/unload(var/dirn = 0, var/setloc = 1)
+		if(!load || unloading)
 			return
+		unloading = TRUE
 
 		mode = 1
 		overlays = null
 
-		load.set_loc(src.loc)
+		if(setloc)
+			load.set_loc(src.loc)
 		load.pixel_y -= 9
 		load.layer = initial(load.layer)
 		if(ismob(load))
@@ -489,7 +493,14 @@
 			AM.pixel_y = initial(AM.pixel_y)
 		mode = 0
 
+		unloading = FALSE
+
 	var/last_process_time
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == load)
+			unload(0, 0)
 
 	process()
 		. = ..()
