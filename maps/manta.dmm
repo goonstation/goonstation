@@ -7176,7 +7176,8 @@
 	icon_state = "pipe-c"
 	},
 /obj/machinery/power/smes{
-	name = "emitter auxiliary power storage unit"
+	name = "emitter auxiliary power storage unit";
+	output = 25000
 	},
 /obj/cable,
 /obj/cable{
