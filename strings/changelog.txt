@@ -1,5 +1,9 @@
 
 (t)sat oct 02 21
+(u)aloe
+(p)6135
+(e)⚖|balance
+(+)Mechanics Reconstruction Kits from QM now include one deconstruction device.
 (u)Gannets.
 (p)6139
 (e)⚖|balance
