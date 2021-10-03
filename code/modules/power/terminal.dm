@@ -146,3 +146,14 @@
 	hide(var/i)
 		invisibility = i ? 101 : 0
 		alpha = invisibility ? 128 : 255
+
+/obj/machinery/power/data_terminal/cable_tray
+	name = "cable tray"
+	desc = "A connector that goes off into somewhere..."
+	color = "#F0F"
+
+/obj/machinery/power/data_terminal/cable_tray/get_connections(unmarked = 0)
+	. = ..()
+	var/turf/T = get_turf(src)
+	. |= T.get_disjoint_objects_by_type(DISJOINT_TURF_CONNECTION_POWERNETS, /obj/machinery/power/data_terminal/cable_tray)
+

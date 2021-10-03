@@ -86,6 +86,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\datumvars.dm"
 #include "code\datums\digital_filter.dm"
 #include "code\datums\disease.dm"
+#include "code\datums\disjoint_turf.dm"
 #include "code\datums\dna.dm"
 #include "code\datums\dynamicQueue.dm"
 #include "code\datums\ehjax.dm"

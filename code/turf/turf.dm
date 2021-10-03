@@ -56,6 +56,7 @@
 	var/special_volume_override = -1 //if greater than or equal to 0, override
 
 	var/turf_flags = 0
+	var/list/datum/disjoint_turf/connections
 
 	disposing() // DOES NOT GET CALLED ON TURFS!!!
 		SHOULD_NOT_OVERRIDE(TRUE)
