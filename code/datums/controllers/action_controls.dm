@@ -426,7 +426,7 @@ var/datum/action_controller/actions
 		if (border)
 			border.UpdateOverlays(null, "action_icon")
 		if (icon_image)
-			del(icon_image)
+			qdel(icon_image)
 		..()
 
 
@@ -737,8 +737,8 @@ var/datum/action_controller/actions
 	onDelete()
 		bar.icon = 'icons/ui/actions.dmi'
 		border.icon = 'icons/ui/actions.dmi'
-		del(bar.img)
-		del(border.img)
+		qdel(bar.img)
+		qdel(border.img)
 		..()
 
 /datum/action/bar/private/icon //Only visible to the owner and has a little icon on the bar.
@@ -761,7 +761,7 @@ var/datum/action_controller/actions
 			owner << icon_image
 
 	onDelete()
-		del(icon_image)
+		qdel(icon_image)
 		..()
 
 //ACTIONS
