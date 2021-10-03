@@ -19654,6 +19654,16 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/brig)
+"bMs" = (
+/obj/railing/orange,
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf";
+	tag = "icon-grass1"
+	},
+/area/station/storage/emergencyinternals)
 "bNd" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -19703,6 +19713,10 @@
 /obj/item/scissors,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/barber_shop)
+"bSd" = (
+/obj/disposalpipe/segment/produce,
+/turf/simulated/wall/auto/supernorn,
+/area/station/hallway/primary/central)
 "bSt" = (
 /obj/landmark{
 	name = "kudzustart"
@@ -20326,10 +20340,6 @@
 	dir = 9
 	},
 /area/station/medical/medbay)
-"cCd" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/pool)
 "cCv" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -20427,9 +20437,9 @@
 /area/station/science/chemistry)
 "cHk" = (
 /obj/rack,
-/obj/item/ammo/bullets/a38,
-/obj/item/ammo/bullets/a38/stun,
-/obj/item/gun/kinetic/detectiverevolver,
+/obj/item/ammo/bullets/foamdarts,
+/obj/item/ammo/bullets/foamdarts,
+/obj/item/gun/kinetic/foamdartrevolver,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "cIb" = (
@@ -20494,6 +20504,15 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/armory)
+"cOA" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/obj/disposalpipe/segment/produce,
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "cOC" = (
 /obj/table/reinforced/bar,
 /obj/machinery/glass_recycler,
@@ -20633,6 +20652,9 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
+"dcp" = (
+/turf/simulated/floor/orangeblack/side,
+/area/station/hydroponics/lobby)
 "dcA" = (
 /obj/machinery/light,
 /obj/cable{
@@ -20758,6 +20780,10 @@
 	},
 /turf/simulated/floor/blueblack,
 /area/station/crew_quarters/captain)
+"dlk" = (
+/obj/disposalpipe/segment/produce,
+/turf/simulated/wall/auto/supernorn,
+/area/station/hydroponics/lobby)
 "dmI" = (
 /obj/machinery/door/airlock/pyro/glass/command{
 	name = "Bridge"
@@ -21476,10 +21502,6 @@
 	},
 /turf/simulated/floor/purple,
 /area/station/science/teleporter)
-"ekE" = (
-/obj/disposalpipe/segment/produce,
-/turf/simulated/wall/auto/supernorn,
-/area/station/hallway/primary/central)
 "ekL" = (
 /obj/machinery/ghost_catcher,
 /turf/simulated/floor/plating/random,
@@ -23208,16 +23230,6 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/engine,
 /area/station/security/armory)
-"gvC" = (
-/obj/railing/orange,
-/obj/disposalpipe/segment/produce{
-	dir = 4
-	},
-/turf/simulated/floor/grass{
-	name = "astroturf";
-	tag = "icon-grass1"
-	},
-/area/station/storage/emergencyinternals)
 "gvN" = (
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
@@ -25685,10 +25697,6 @@
 "jwF" = (
 /turf/simulated/floor/black,
 /area/station/security/main)
-"jwS" = (
-/obj/disposalpipe/segment/produce,
-/turf/simulated/wall/auto/supernorn,
-/area/station/hydroponics/lobby)
 "jyy" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
@@ -27427,6 +27435,11 @@
 	},
 /turf/simulated/floor/purple,
 /area/station/science/lab)
+"lPB" = (
+/obj/firedoor_spawn,
+/obj/disposalpipe/segment/produce,
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "lQg" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 1;
@@ -27767,6 +27780,10 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
+"mqo" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/pool)
 "mrv" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -30574,13 +30591,6 @@
 	dir = 4
 	},
 /area/station/medical/medbay/lobby)
-"pDa" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/disposalpipe/segment/produce,
-/turf/simulated/floor/green,
-/area/station/hydroponics/lobby)
 "pDx" = (
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -30636,16 +30646,6 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/science/lobby)
-"pIH" = (
-/obj/disposalpipe/segment/produce{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/grass{
-	name = "astroturf";
-	tag = "icon-grass1"
-	},
-/area/station/storage/emergencyinternals)
 "pIJ" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
@@ -32279,9 +32279,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
-"rsH" = (
-/turf/simulated/floor/orangeblack/side,
-/area/station/hydroponics/lobby)
 "rsO" = (
 /obj/stool/bench/blue/auto,
 /obj/machinery/light{
@@ -32796,6 +32793,10 @@
 	pixel_y = -24
 	},
 /obj/machinery/light,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/purple,
 /area/station/science/lab)
 "rUI" = (
@@ -33172,6 +33173,16 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/storage/primary)
+"svz" = (
+/obj/disposalpipe/segment/produce{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf";
+	tag = "icon-grass1"
+	},
+/area/station/storage/emergencyinternals)
 "svE" = (
 /obj/grille/steel,
 /turf/simulated/floor/plating/airless,
@@ -34857,15 +34868,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
-"ubI" = (
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/obj/disposalpipe/segment/produce,
-/turf/simulated/floor,
-/area/station/hallway/primary/central)
 "ucC" = (
 /obj/stool/bar,
 /turf/simulated/floor/wood/two,
@@ -35632,13 +35634,8 @@
 /area/station/turret_protected/Zeta)
 "uWp" = (
 /obj/machinery/door/airlock/pyro/glass{
-	autoclose = 0;
-	dir = 4;
-	frequency = 1449;
-	icon_state = "glass_locked";
-	id_tag = "tox_airlock_exterior";
-	locked = 1;
-	name = "Toxins Research Access"
+	dir = 8;
+	name = "Toxins Airlock"
 	},
 /obj/access_spawn/research,
 /obj/firedoor_spawn,
@@ -36256,13 +36253,8 @@
 /area/station/crew_quarters/hor)
 "vIJ" = (
 /obj/machinery/door/airlock/pyro/glass{
-	autoclose = 0;
-	dir = 4;
-	frequency = 1449;
-	icon_state = "glass_locked";
-	id_tag = "tox_airlock_exterior";
-	locked = 1;
-	name = "Toxins Research Access"
+	dir = 8;
+	name = "Toxins Airlock"
 	},
 /obj/access_spawn/research,
 /obj/firedoor_spawn,
@@ -36387,6 +36379,13 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
+"vPJ" = (
+/obj/disposalpipe/segment/produce{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/green,
+/area/station/hydroponics/lobby)
 "vPN" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
@@ -36560,13 +36559,6 @@
 "vZs" = (
 /turf/simulated/floor/purplewhite,
 /area/station/science/lab)
-"vZH" = (
-/obj/disposalpipe/segment/produce{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/green,
-/area/station/hydroponics/lobby)
 "vZI" = (
 /turf/simulated/floor/purplewhite{
 	dir = 10
@@ -36945,10 +36937,6 @@
 	dir = 5
 	},
 /area/station/crew_quarters/hor)
-"wAD" = (
-/obj/disposalpipe/segment/produce,
-/turf/simulated/floor,
-/area/station/hallway/primary/central)
 "wAG" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -37403,11 +37391,6 @@
 	icon_state = "red2"
 	},
 /area/station/crew_quarters/cafeteria)
-"xbb" = (
-/obj/firedoor_spawn,
-/obj/disposalpipe/segment/produce,
-/turf/simulated/floor,
-/area/station/hallway/primary/central)
 "xbn" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -38070,6 +38053,13 @@
 	},
 /turf/simulated/floor,
 /area/station/bridge)
+"xPf" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/disposalpipe/segment/produce,
+/turf/simulated/floor/green,
+/area/station/hydroponics/lobby)
 "xPj" = (
 /turf/simulated/floor/purplewhite{
 	dir = 8
@@ -38265,16 +38255,6 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
 	},
-/obj/machinery/embedded_controller/radio/airlock_controller{
-	airpump_tag = "tox_airlock_pump";
-	exterior_door_tag = "tox_airlock_exterior";
-	id_tag = "tox_airlock_control";
-	interior_door_tag = "tox_airlock_interior";
-	pixel_x = 24;
-	pixel_y = -7;
-	sanitize_external = 1;
-	sensor_tag = "tox_airlock_sensor"
-	},
 /obj/machinery/door_control{
 	id = "mixvent";
 	name = "Mixing Room Vent Control";
@@ -38319,11 +38299,6 @@
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/turret_protected/AIsat)
 "yfD" = (
-/obj/machinery/airlock_sensor{
-	id_tag = "tox_airlock_sensor";
-	master_tag = "tox_airlock_control";
-	pixel_y = 24
-	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4;
 	tag = "icon-intact (EAST)"
@@ -38361,12 +38336,9 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "yhQ" = (
-/obj/machinery/atmospherics/pipe/tank/air{
-	dir = 4;
-	tag = "icon-intact (EAST)"
-	},
-/turf/simulated/floor/purple,
-/area/station/science/lab)
+/obj/disposalpipe/segment/produce,
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "yhR" = (
 /obj/landmark/magnet_shield,
 /obj/securearea{
@@ -74242,7 +74214,7 @@ lRM
 sbz
 axW
 axW
-cCd
+mqo
 mcn
 uHG
 qBr
@@ -74544,7 +74516,7 @@ bjM
 oWh
 tkO
 axW
-cCd
+mqo
 mcn
 uHC
 qBr
@@ -74846,7 +74818,7 @@ bjQ
 cjc
 tlN
 axW
-cCd
+mqo
 wjJ
 uHG
 qBr
@@ -78764,7 +78736,7 @@ aaa
 tjX
 iPx
 iCc
-rsH
+dcp
 tjX
 aXu
 wHt
@@ -81455,30 +81427,30 @@ aWZ
 aYf
 aYJ
 iWI
-wAD
-wAD
-wAD
-wAD
-wAD
-ubI
-xbb
-wAD
-wAD
-wAD
-wAD
-wAD
-ubI
-wAD
+yhQ
+yhQ
+yhQ
+yhQ
+yhQ
+cOA
+lPB
+yhQ
+yhQ
+yhQ
+yhQ
+yhQ
+cOA
+yhQ
 bqt
 brO
 brO
 btz
 bGc
-wAD
-ekE
+yhQ
+bSd
 ept
 foC
-jwS
+dlk
 hKJ
 iYw
 kzb
@@ -81782,8 +81754,8 @@ bhb
 foN
 iFD
 hLp
-pDa
-vZH
+xPf
+vPJ
 aun
 iFD
 paR
@@ -83268,7 +83240,7 @@ aXa
 jLL
 aZB
 baj
-gvC
+bMs
 xJA
 xJA
 bda
@@ -83570,7 +83542,7 @@ hWD
 jLL
 aZB
 baj
-gvC
+bMs
 xJA
 fbV
 bda
@@ -83872,7 +83844,7 @@ hWD
 jLL
 aZB
 baj
-gvC
+bMs
 xJA
 xJA
 bda
@@ -84174,7 +84146,7 @@ hWD
 jLL
 aZB
 baj
-pIH
+svz
 qQW
 bda
 bda
@@ -98709,7 +98681,7 @@ wSO
 ydo
 wSO
 yag
-yhQ
+ydo
 sXL
 tKf
 pPR
