@@ -323,6 +323,31 @@ mob/verb/checkrewards()
 		boutput(C.mob, "<span class='emote'>A pamphlet flutters out.</span>")
 		return
 
+/datum/jobXpReward/HeadofSecurity/blue
+	name = "Blue Clothing"
+	desc = "Show your style by turning all your clothes blue!"
+	required_levels = list("Head of Security"=2)
+	claimable = 1
+	icon_state = "?"
+
+	activate(var/client/C)
+		var/list/hos_contents = src.contents
+		for(var/obj/item/clothing/CL in hos_contents)
+			if(!istype(CL, /obj/item/clothing/head/hos_hat) && !istype(CL, /obj/item/clothing/under/rank/head_of_securityold) && !istype(CL, /obj/item/clothing/suit/armor/hoscape) && !istype(CL, /obj/item/clothing/suit/det_suit/hos) && !istype(CL, /obj/item/clothing/under/suit/hos))
+				if(dd_hassuffix(CL.item_state, "-blue") || dd_hassuffix(CL.icon_state, "-blue") || dd_hassuffix(CL.item_state, "-alt") || dd_hassuffix(CL.icon_state, "-alt"))
+					hos_contents -= CL
+				hos_contents -= CL
+		for(var/obj/item/clothing/I in hos_contents)
+			if(istype(I, /obj/item/clothing/head/hos_hat))
+				var/obj/item/clothing/head/hos_hat/HH = I
+				HH.blue = TRUE
+			if(istype(I, /obj/item/clothing/under/rank/head_of_securityold))
+				I.icon_state = "[I.icon_state]-alt"
+				I.item_state = "[I.item_state]-alt"
+			else
+				I.icon_state = "[I.icon_state]-blue"
+				I.item_state = "[I.item_state]-blue"
+
 /datum/jobXpReward/head_of_security_LG/old
 	name = "The Antique Lawbringer"
 	desc = "Gain access to a voice activated weapon of the past-future-past by sacrificing your gun of the future-past. I.E. The Lawbringer."

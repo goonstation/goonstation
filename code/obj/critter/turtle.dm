@@ -280,7 +280,11 @@
 	CritterDeath()
 		..()
 		if (src.wearing_beret)
-			src.icon_state = "turtle-dead-beret"
+			var/obj/item/clothing/head/hos_hat/beret = src.contents
+			if(beret.blue)
+				src.icon_state = "turtle-dead-beret-blue"
+			else
+				src.icon_state = "turtle-dead-beret"
 		else
 			src.icon_state = "turtle-dead"
 
@@ -289,7 +293,11 @@
 	on_revive()
 		..()
 		if (src.wearing_beret)
-			src.icon_state = "turtle-beret"
+			var/obj/item/clothing/head/hos_hat/beret = src.contents
+			if(beret.blue)
+				src.icon_state = "turtle-beret-blue"
+			else
+				src.icon_state = "turtle-beret"
 		else
 			src.icon_state = "turtle"
 
@@ -300,11 +308,15 @@
 
 		var/obj/item/clothing/head/hos_hat/beret = hat
 		if (istype(beret))
-			if (beret.folds == 0)
-				beret.folds = 1
+			if (beret.folds == FALSE)
+				beret.folds = TRUE
 				beret.name = "HoS Beret"
-				beret.icon_state = "hosberet"
-				beret.item_state = "hosberet"
+				if(beret.blue)
+					beret.icon_state = "hosberet-blue"
+					beret.item_state = "hosberet-blue"
+				else
+					beret.icon_state = "hosberet"
+					beret.item_state = "hosberet"
 				boutput(user, "<span class='notice'>[src] folds the hat into a beret before putting it on! </span>")
 			//beret gives bonus protection
 			brutevuln = 0.5
@@ -381,7 +393,11 @@
 		if (src.alive)
 			if (src.wearing_beret)
 				if (istype(wearing_beret, /obj/item/clothing/head/hos_hat))
-					src.icon_state = "turtle-beret"
+					var/obj/item/clothing/head/hos_hat/HH = wearing_beret
+					if(HH.blue)
+						src.icon_state = "turtle-beret-blue"
+					else
+						src.icon_state = "turtle-beret"
 				else if (istype(wearing_beret, /obj/item/clothing/head/NTberet/commander))
 					src.icon_state = "turtle-beret-com"
 
@@ -390,7 +406,11 @@
 		else
 			if (src.wearing_beret)
 				if (istype(wearing_beret, /obj/item/clothing/head/hos_hat))
-					src.icon_state = "turtle-dead-beret"
+					var/obj/item/clothing/head/hos_hat/HH = wearing_beret
+					if(HH.blue)
+						src.icon_state = "turtle-dead-beret-blue"
+					else
+						src.icon_state = "turtle-dead-beret"
 				else if (istype(wearing_beret, /obj/item/clothing/head/NTberet/commander))
 					src.icon_state = "turtle-dead-beret-com"
 

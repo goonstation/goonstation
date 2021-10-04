@@ -1262,7 +1262,8 @@ proc/filter_trait_hats(var/type)
 	uses_multiple_icon_states = 1
 	item_state = "hoscap"
 	c_flags = SPACEWEAR
-	var/folds = 0
+	var/folds = FALSE
+	var/blue = FALSE
 	desc = "Actually, this hat is from a fast-food restaurant, that's why it folds like it was made of paper."
 	setupProperties()
 		..()
@@ -1271,16 +1272,24 @@ proc/filter_trait_hats(var/type)
 /obj/item/clothing/head/hos_hat/attack_self(mob/user as mob)
 	if(user.r_hand == src || user.l_hand == src)
 		if(!src.folds)
-			src.folds = 1
+			src.folds = TRUE
 			src.name = "HoS Beret"
-			src.icon_state = "hosberet"
-			src.item_state = "hosberet"
+			if(src.blue)
+				src.icon_state = "hosberet-blue"
+				src.item_state = "hosberet-blue"
+			else
+				src.icon_state = "hosberet"
+				src.item_state = "hosberet"
 			boutput(user, "<span class='notice'>You fold the hat into a beret.</span>")
 		else
-			src.folds = 0
+			src.folds = FALSE
 			src.name = "HoS Hat"
-			src.icon_state = "hoscap"
-			src.item_state = "hoscap"
+			if(src.blue)
+				src.icon_state = "hoscap-blue"
+				src.item_state = "hoscap-blue"
+			else
+				src.icon_state = "hoscap"
+				src.item_state = "hoscap"
 			boutput(user, "<span class='notice'>You unfold the beret back into a hat.</span>")
 		return
 
