@@ -1635,7 +1635,7 @@
 			return 0
 
 /obj/disposalpipe/trunk/zlevel
-	color = "#F0F"
+	icon_state = "pipe-v"
 
 	getlinked()
 		return

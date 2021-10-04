@@ -150,7 +150,7 @@
 /obj/machinery/power/data_terminal/cable_tray
 	name = "cable tray"
 	desc = "A connector that goes off into somewhere..."
-	color = "#F0F"
+	icon_state = "vterm"
 
 /obj/machinery/power/data_terminal/cable_tray/get_connections(unmarked = 0)
 	. = ..()
