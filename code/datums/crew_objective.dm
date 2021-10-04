@@ -159,7 +159,6 @@ ABSTRACT_TYPE(/datum/objective/crew/chiefengineer)
 					return 1
 			return 0
 
-	//Copy in the new engineer objectives because, why not?
 	reserves
 		explanation_text = "Make sure all SMES units on the station are at least half chaged at the end of the round."
 		check_completion()
@@ -213,6 +212,12 @@ ABSTRACT_TYPE(/datum/objective/crew/quartermaster)
 		check_completion()
 			if(wagesystem.shipping_budget > 50000) return 1
 			else return 0
+
+	specialorder
+		explanation_text = "Fulfill an off-station order requisition."
+		var/completed = 0
+		check_completion()
+			return length(shippingmarket.complete_orders)
 
 ABSTRACT_TYPE(/datum/objective/crew/detective)
 /datum/objective/crew/detective
@@ -313,14 +318,63 @@ ABSTRACT_TYPE(/datum/objective/crew/janitor)
 					return 0
 			return 1
 
-//	bartender
+//  HoP add 1 (High budget? make ID's? change ID's? make payroll?)
+//  QM add 1 (fill off-station orders? MULE deliveries? )
+//  Delete the above
+#define DRINK_OBJ_DONE 7
+#define DRINK_OBJ_1 1
+#define DRINK_OBJ_2 2
+#define DRINK_OBJ_3 4
+ABSTRACT_TYPE(/datum/objective/crew/bartender)
+/datum/objective/crew/bartender
+	shotgun
+		explanation_text = "Don't lose your shotgun!"
+		check_completion()
+			if(owner.current && owner.current.check_contents_for(/obj/item/gun/kinetic/riotgun))
+				return 1
+			else
+				return 0
+	drinks
+		var/completed = 0
+		var/ids[3]
+		New()
+			..()
+			var/list/cocktails = filtered_concrete_typesof(/datum/reagent/fooddrink/alcoholic, .proc/filter_cocktails)
+			var/list/names[3]
+			for(var/i = 1, i <= 3, i++)
+				var/choiceType = pick(cocktails)
+				var/datum/reagent/fooddrink/instance =  new choiceType
+				names[i] = instance.name
+				ids[i] = instance.id
+			explanation_text = "Mix a [names[1]], [names[2]], and [names[3]] using your cocktail shaker."
+		check_completion()
+			return completed == DRINK_OBJ_DONE //Uses bit flags
 
-//	chef
+	proc/filter_cocktails(cocktail_type)
+		var/list/blacklist = list(
+			/datum/reagent/fooddrink/alcoholic/beer,
+			/datum/reagent/fooddrink/alcoholic/cider,
+			/datum/reagent/fooddrink/alcoholic/mead,
+			/datum/reagent/fooddrink/alcoholic/wine,
+			/datum/reagent/fooddrink/alcoholic/wine/white,
+			/datum/reagent/fooddrink/alcoholic/champagne,
+			/datum/reagent/fooddrink/alcoholic/rum,
+			/datum/reagent/fooddrink/alcoholic/vodka,
+			/datum/reagent/fooddrink/alcoholic/bourbon,
+			/datum/reagent/fooddrink/alcoholic/tequila,
+			/datum/reagent/fooddrink/alcoholic/ricewine,
+			/datum/reagent/fooddrink/alcoholic/moonshine,
+			/datum/reagent/fooddrink/alcoholic/bojack,
+			/datum/reagent/fooddrink/alcoholic/gin,
+			/datum/reagent/fooddrink/alcoholic/vermouth,
+			/datum/reagent/fooddrink/alcoholic/bitters,
+			/datum/reagent/fooddrink/alcoholic/curacao
+		)
+		return !(cocktail_type in blacklist)
+
 ABSTRACT_TYPE(/datum/objective/crew/chef)
 /datum/objective/crew/chef
-	//use a curated list of options as some snacks are not possible
 	cake
-		explanation_text = ""
 		var/choices[3]
 		var/completed = 0
 		New()
@@ -338,7 +392,6 @@ ABSTRACT_TYPE(/datum/objective/crew/chef)
 			return completed
 
 	pizza
-		explanation_text = ""
 		var/choices[3]
 		var/completed = 0
 		New()
@@ -367,7 +420,6 @@ ABSTRACT_TYPE(/datum/objective/crew/chef)
 		blacklist += concrete_typesof(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter)
 		return !(ingredient_type in blacklist)
 
-//	engineer
 ABSTRACT_TYPE(/datum/objective/crew/engineer)
 /datum/objective/crew/engineer
 	furnaces //copied from CE

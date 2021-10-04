@@ -19,6 +19,7 @@
 	var/artifact_resupply_amount = 0 // amount of artifacts in next resupply crate
 
 	var/list/datum/special_order/active_orders
+	var/list/datum/special_order/complete_orders = list()
 
 	New()
 		..()
@@ -279,6 +280,7 @@
 			for(var/datum/special_order/order in active_orders)
 				if(order.check_order(sell_crate))
 					duckets += order.price
+					complete_orders += order
 					active_orders -= order
 
 		duckets += src.appraise_value(sell_crate, commodities_list, 1) + src.points_per_crate

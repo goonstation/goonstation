@@ -1817,6 +1817,14 @@
 			src.reagents.inert = 1
 			if ((user.mind.assigned_role == "Bartender") && !ON_COOLDOWN(user, "bartender shaker xp", 180 SECONDS))
 				JOB_XP(user, "Bartender", 2)
+			if (user.mind && user.mind.objectives)
+				for (var/datum/objective/crew/bartender/drinks/O in user.mind.objectives)
+					if(src.reagents.has_reagent(O.ids[1]))
+						O.completed |= DRINK_OBJ_1
+					if(src.reagents.has_reagent(O.ids[2]))
+						O.completed |= DRINK_OBJ_2
+					if(src.reagents.has_reagent(O.ids[3]))
+						O.completed |= DRINK_OBJ_3
 		else
 			user.visible_message("<b>[user.name]</b> shakes the container, but it's empty!.")
 
