@@ -160,7 +160,7 @@
 	if (istype(target, /obj))
 		var/obj/O = target
 		if (O.loc == user && O != src && istype(O, /obj/item/clothing))
-			boutput(user, "<span class='hint'>You hide the camera inside \the [O]. (Use the wink emote while wearing the clothing item to retrieve it.)</span>")
+			boutput(user, "<span class='hint'>You hide the camera inside \the [O]. (Use the raisehand emote while wearing the clothing item to retrieve it.)</span>")
 			user.u_equip(src)
 			src.set_loc(O)
 			src.dropped(user)
