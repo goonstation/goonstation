@@ -933,6 +933,16 @@
 				m_type = 1
 
 			if ("raisehand")
+				for (var/obj/item/C as anything in src.get_equipped_items())
+					if ((locate(/obj/item/camera/spy) in C) != null)
+						var/obj/item/camera/spy/D = (locate(/obj/item/camera/spy) in C)
+						var/drophand = (src.hand == 0 ? slot_r_hand : slot_l_hand)
+						drop_item()
+						D.set_loc(src)
+						equip_if_possible(D, drophand)
+						src.visible_message("<span class='alert'><B>[src] pulls a camera out of \the [C]!</B></span>")
+						playsound(src.loc, "rustle", 60, 1)
+						break
 				if (!src.restrained())
 					message = "<B>[src]</B> raises a hand."
 					maptext_out = "<I>raises a hand</I>"

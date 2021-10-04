@@ -156,7 +156,14 @@
 	else
 		. = ..()
 
-/obj/item/camera/spy/afterattack(atom/target, mob/user, flag)
+/obj/item/camera/spy/afterattack(atom/target, mob/user as mob, flag)
+	if (istype(target, /obj))
+		var/obj/O = target
+		if (O.loc == user && O != src && istype(O, /obj/item/clothing))
+			boutput(user, "<span class='hint'>You hide the camera inside \the [O]. (Use the wink emote while wearing the clothing item to retrieve it.)</span>")
+			user.u_equip(src)
+			src.set_loc(O)
+			src.dropped(user)
 	if (!can_use || ismob(target.loc))
 		return
 	if (src.flash_mode)
