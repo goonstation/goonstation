@@ -1406,7 +1406,7 @@
 		contents_check()
 		src.attacking = 1
 		M.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
-		playsound(src.loc, "sound/weapons/genhit1.ogg", 50, 1, -1)
+		playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
 		random_brute_damage(M, rand(src.attack_damage, src.attack_damage + 5))
 		SPAWN_DBG(1 SECOND)
 			src.attacking = 0
