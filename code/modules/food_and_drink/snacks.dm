@@ -263,28 +263,16 @@
     sliced_icon = "meatball-slice"
 
 /obj/item/reagent_containers/food/snacks/pizza/pepper
-    name = "fresh pepperoni pizza"
+    name = "fresh pepperoni  pizza"
     desc = "A cheesy pizza pie toped with bright red sizzling pepperoni slices."
-    icon_state = "pepper"
-    sliced_icon = "pepper-slice"
+    icon_state = "peper"
+    sliced_icon = "peper-slice"
 
 /obj/item/reagent_containers/food/snacks/pizza/shroom
-    name = "fresh mushroom pizza"
-    desc = "A pizza pie toped with fresh picked mushrooms."
+    name = "fresh mushroom  pizza"
+    desc = "A pizza pie toped fresh picked mushrooms."
     icon_state = "shroom"
     sliced_icon = "shroom-slice"
-	
-/obj/item/reagent_containers/food/snacks/pizza/bacon
-    name = "fresh bacon pizza"
-    desc = "A pizza pie toped with sizzling bacon."
-    icon_state = "bacon"
-    sliced_icon = "bacon-slice"
-
-/obj/item/reagent_containers/food/snacks/pizza/meaty
-    name = "fresh pepperoni and meatball pizza"
-    desc = "A pizza pie toped with red pepperonis and sliced meatballs."
-    icon_state = "meaty"
-    sliced_icon = "meaty-slice"
 	
 /obj/item/reagent_containers/food/snacks/pizza/bad
     name = "soft serve cheese pizza"
