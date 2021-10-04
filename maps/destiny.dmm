@@ -17831,6 +17831,7 @@
 	name = "Test Chamber"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/chemistry,
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "bMy" = (
@@ -22606,6 +22607,7 @@
 	req_access_txt = null
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/research,
 /turf/simulated/floor/stairs{
 	dir = 4;
 	icon_state = "medstairs_alone"
@@ -39047,6 +39049,7 @@
 	name = "Guardbot Depot"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/research,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "mFb" = (
@@ -48526,6 +48529,7 @@
 	name = "Chemistry"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/chemistry,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "rRk" = (
@@ -49905,6 +49909,7 @@
 	name = "Guardbot Depot"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/research,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "sJu" = (
@@ -52726,6 +52731,7 @@
 	name = "Research"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/research,
 /turf/simulated/floor/sanitary,
 /area/station/science/restroom)
 "uhv" = (
@@ -54863,6 +54869,7 @@
 	req_access_txt = null
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/research,
 /turf/simulated/floor/black,
 /area/station/science/teleporter)
 "vgb" = (
