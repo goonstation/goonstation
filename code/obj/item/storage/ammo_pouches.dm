@@ -37,7 +37,8 @@
 	tranq_pistol_dart
 		name = "tranq pistol dart pouch"
 		icon_state = "ammopouch-double"
-		spawn_contents = list(/obj/item/ammo/bullets/tranq_darts/syndicate/pistol = 5)
+		slots = 4
+		spawn_contents = list(/obj/item/ammo/bullets/tranq_darts/syndicate/pistol = 4)
 
 	poison_dart
 		name = "poison dart pouch"
