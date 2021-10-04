@@ -151,6 +151,7 @@
 	name = "cable tray"
 	desc = "A connector that goes off into somewhere..."
 	icon_state = "vterm"
+	mats = 0 // uh no thanks
 
 /obj/machinery/power/data_terminal/cable_tray/get_connections(unmarked = 0)
 	. = ..()

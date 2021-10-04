@@ -1640,6 +1640,16 @@
 	getlinked()
 		return
 
+	welded()
+		return
+
+	ex_act(severity)
+		return
+
+	// test health for brokenness
+	healthcheck()
+		return
+
 	transfer(var/obj/disposalholder/H)
 		if(H.dir == DOWN)		// we just entered from a disposer
 			return ..()		// so do base transfer proc
