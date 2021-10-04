@@ -1689,6 +1689,28 @@ var/f_color_selector_handler/F_Color_Selector
 
 				return 1
 
+			if ("getNotes")
+				if (!plist["ckey"])
+					return 0
+
+				var/list/data = list(
+					"auth" = config.player_notes_auth,
+					"action" = "get",
+					"ckey" = plist["ckey"]
+				)
+
+				// Fetch notes via HTTP
+				var/datum/http_request/request = new()
+				request.prepare(RUSTG_HTTP_METHOD_GET, "[config.player_notes_baseurl]/?[list2params(data)]", "", "")
+				request.begin_async()
+				UNTIL(request.is_complete())
+				var/datum/http_response/response = request.into_response()
+
+				if (response.errored || !response.body)
+					return 0
+
+				return response.body
+
 /world/proc/setMaxZ(new_maxz)
 	if (!isnum(new_maxz) || new_maxz <= src.maxz)
 		return src.maxz
