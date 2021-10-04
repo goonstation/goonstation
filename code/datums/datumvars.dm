@@ -386,7 +386,7 @@
 
 			html += "<table><thead><tr><th>Idx</th><th>Value</th></tr></thead><tbody>"
 			var/assoc = 0
-			if(name != "contents" && name != "images" && name != "screen" && name != "vis_contents")
+			if(name != "contents" && name != "images" && name != "screen" && name != "vis_contents" && name != "vis_locs")
 				try
 					assoc = !isnum(L[1]) && !isnull(L[L[1]])
 				catch
@@ -666,10 +666,15 @@
 	if(D != "GLOB" && (!variable || !D || !(variable in D.vars)))
 		return
 	var/list/locked = list("vars", "key", "ckey", "client", "holder")
+	var/list/pixel_movement_breaking_vars = list("step_x", "step_y", "step_size", "bound_x", "bound_y", "bound_height", "bound_width", "bounds")
 
 	if(!isadmin(src))
 		boutput(src, "Only administrators may use this command.")
 		return
+
+	if(pixel_movement_breaking_vars.Find(variable))
+		if (tgui_alert(usr, "Modifying this variable might break pixel movement. Don't edit this unless you know what you're doing. Continue?", "Confirmation", list("Yes", "No")) == "No")
+			return
 
 	var/default
 	var/var_value = D == "GLOB" ? global.vars[variable] : D.vars[variable]
@@ -918,7 +923,7 @@
 			boutput(usr, "<span class='hint'>Type part of the path of the type.</span>")
 			var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
 			if (typename)
-				var/match = get_one_match(typename, /datum, use_concrete_types = FALSE)
+				var/match = get_one_match(typename, /datum, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 				if (match)
 					if (set_global)
 						for (var/datum/x in world)
@@ -1086,7 +1091,7 @@
 				var/basetype = /obj
 				if (src.holder.rank in list("Host", "Coder", "Administrator"))
 					basetype = /datum
-				var/match = get_one_match(typename, basetype, use_concrete_types = FALSE)
+				var/match = get_one_match(typename, basetype, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 				if (match)
 					if (set_global)
 						for (var/datum/x in world)

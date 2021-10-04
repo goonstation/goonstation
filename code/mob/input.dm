@@ -219,9 +219,9 @@
 
 					if (src.loc != old_loc)
 						if (running)
-							src.remove_stamina(STAMINA_COST_SPRINT)
+							src.remove_stamina((src.lying ? 3 : 1) * STAMINA_COST_SPRINT)
 							if (src.pulling)
-								src.remove_stamina(STAMINA_COST_SPRINT-1)
+								src.remove_stamina((src.lying ? 3 : 1) * (STAMINA_COST_SPRINT-1))
 
 						var/list/pulling = list()
 						if (src.pulling)

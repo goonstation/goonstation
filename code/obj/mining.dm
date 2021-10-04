@@ -1280,7 +1280,7 @@
 				dig_feedback = "This rock is tough. You may need a stronger tool."
 			if (2)
 				dig_chance = 10
-				dig_feedback = "This rock is very tough. You need a stronger tool."
+				dig_feedback = "This rock is very tough. You'll be faster with a stronger tool."
 			if (3 to INFINITY)
 				dig_chance = 0
 				dig_feedback = "You can't even make a dent! You need a stronger tool."

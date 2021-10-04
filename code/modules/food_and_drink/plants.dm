@@ -188,6 +188,17 @@
 	plant_reagent = "ethanol"
 	brew_result = "ethanol"
 
+/obj/item/reagent_containers/food/snacks/plant/corn/pepper
+	name = "Pepper corn cob"
+	desc = "Wha? Why's this called corn? It's pepper!"
+	icon_state = "peppercorn"
+	planttype = /datum/plant/crop/corn
+	amount = 3
+	heal_amt = 3
+	food_color = "#373232"
+	plant_reagent = "pepper"
+	brew_result = "pepper"
+
 /obj/item/reagent_containers/food/snacks/plant/soy
 	name = "soybean pod"
 	crop_suffix = " pod"

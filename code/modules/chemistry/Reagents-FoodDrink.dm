@@ -506,7 +506,7 @@ datum
 			fluid_g = 163
 			fluid_b = 30
 			transparency = 190
-			alch_strength = 0.25 //half vodka by content, half vodka strength
+			alch_strength = 0.1 //half vodka by content, half vodka strength
 
 		fooddrink/alcoholic/cocktail_bloodymary
 			name = "Bloody Mary"
@@ -518,7 +518,7 @@ datum
 			fluid_g = 53
 			fluid_b = 0
 			transparency = 190
-			alch_strength = 0.25
+			alch_strength = 0.1
 
 		fooddrink/alcoholic/cocktail_bloodyscary
 			name = "Bloody Scary"
@@ -552,7 +552,7 @@ datum
 			fluid_r = 240
 			fluid_g = 236
 			fluid_b = 110
-			alch_strength = 0.25
+			alch_strength = 0.1
 
 		fooddrink/alcoholic/piscosour
 			name = "Pisco Sour"
@@ -933,7 +933,7 @@ datum
 			fluid_r = 244
 			fluid_g = 244
 			fluid_b = 244
-			alch_strength = 0.3
+			alch_strength = 0.15
 			description = "Nice drink, Dude."
 			reagent_state = LIQUID
 
@@ -943,7 +943,7 @@ datum
 			fluid_r = 99
 			fluid_g = 32
 			fluid_b = 15
-			alch_strength = 0.15 //adding milk shouldn't quadruple the alcohol per volume
+			alch_strength = 0.2 //adding milk shouldn't quadruple the alcohol per volume
 			description = "A vodka-infused coffee cocktail. Supposedly created in honor of a US Ambassador that no one remembers."
 			reagent_state = LIQUID
 
@@ -986,7 +986,7 @@ datum
 			fluid_g = 195
 			fluid_b = 195
 			transparency = 50
-			alch_strength = 0.25
+			alch_strength = 0.1
 			description = "Once made to make bitter medication taste better, now drunk for its flavor."
 			reagent_state = LIQUID
 
@@ -997,7 +997,7 @@ datum
 			fluid_g = 195
 			fluid_b = 195
 			transparency = 50
-			alch_strength = 0.25
+			alch_strength = 0.1
 			description = "All the bitterness of a gin and tonic, now without any other flavor but alcohol burn!"
 			reagent_state = LIQUID
 
@@ -1042,7 +1042,7 @@ datum
 			fluid_r = 253
 			fluid_g = 212
 			fluid_b = 212
-			alch_strength = 0.3
+			alch_strength = 0.1
 			description = "A gin and tonic for people who think the gin gets in the way."
 			reagent_state = LIQUID
 
@@ -1188,7 +1188,7 @@ datum
 			fluid_r = 240
 			fluid_g = 185
 			fluid_b =  19
-			alch_strength = 0.5
+			alch_strength = 0.3
 			description = "The favorite drink of unfaithful, alcoholic executives in really nice suits."
 			reagent_state = LIQUID
 
@@ -1307,7 +1307,7 @@ datum
 			fluid_r = 174
 			fluid_g = 171
 			fluid_b = 51
-			alch_strength = 0.4
+			alch_strength = 0.2
 			description = "Preferred by housewives, raging alcoholics, and the rather large overlap between them."
 			reagent_state = LIQUID
 
@@ -1317,7 +1317,7 @@ datum
 			fluid_r = 229
 			fluid_g = 54
 			fluid_b = 77
-			alch_strength = 0.4
+			alch_strength = 0.3
 			description = "For when you want a healthier glass of knocks-you-the-fuck-out."
 			reagent_state = LIQUID
 
@@ -1327,7 +1327,7 @@ datum
 			fluid_r = 255
 			fluid_g = 255
 			fluid_b = 204
-			alch_strength = 0.2
+			alch_strength = 0.1
 			description = "I don't really like being caught in the rain all that much, to be honest."
 			reagent_state = LIQUID
 
@@ -1357,7 +1357,7 @@ datum
 			fluid_r = 124
 			fluid_g = 26
 			fluid_b = 54
-			alch_strength = 0.2
+			alch_strength = 0.15
 			description = "A tasty fruit wine cocktail."
 			reagent_state = LIQUID
 
@@ -1428,7 +1428,7 @@ datum
 			fluid_r = 255
 			fluid_g = 124
 			fluid_b = 30
-			alch_strength = 0.22
+			alch_strength = 0.1
 			description = "A strikingly orange drink."
 			reagent_state = LIQUID
 
@@ -1474,7 +1474,7 @@ datum
 			fluid_r = 55
 			fluid_g = 179
 			fluid_b = 102
-			alch_strength = 0.4
+			alch_strength = 0.2
 			description = "Strikingly green and surprisingly sweet."
 			reagent_state = LIQUID
 
@@ -1591,7 +1591,7 @@ datum
 			fluid_r = 167
 			fluid_g = 0
 			fluid_b = 0
-			alch_strength = 0.6
+			alch_strength = 0.25
 			description = "A sweet gin cocktail."
 			reagent_state = LIQUID
 
@@ -1611,7 +1611,7 @@ datum
 			fluid_r = 164
 			fluid_g = 77
 			fluid_b = 65
-			alch_strength = 0.3
+			alch_strength = 0.15
 			description = "A refreshing Spanish mixture of cola and wine."
 			reagent_state = LIQUID
 
@@ -1661,7 +1661,7 @@ datum
 			fluid_r = 253
 			fluid_g = 116
 			fluid_b = 101
-			alch_strength = 0.2
+			alch_strength = 0.1
 			description = "A refreshing mixed drink evocative of the seaside."
 			reagent_state = LIQUID
 
@@ -1671,7 +1671,7 @@ datum
 			fluid_r = 253
 			fluid_g = 198
 			fluid_b = 47
-			alch_strength = 0.3
+			alch_strength = 0.25
 			description = "Contains no monkeys or brass."
 			reagent_state = LIQUID
 

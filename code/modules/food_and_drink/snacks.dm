@@ -74,6 +74,7 @@
 	var/num = 0
 	var/list/topping_colors = list()
 	var/list/topping_holder = list()
+	var/sliced_icon = "pslice"
 	custom_food = 0
 
 	mat_changeappearance = 0
@@ -121,7 +122,7 @@
 			P.sharpened = src.sharpened
 			P.sliced = TRUE
 			P.amount = 1
-			P.icon_state = "pslice"
+			P.icon_state = sliced_icon
 			P.quality = src.quality
 			P.heal_amt += round((src.heal_amt/makeslices))
 			P.topping_color = src.topping_color
@@ -249,6 +250,48 @@
 		..()
 		src.add_topping(0)
 
+/obj/item/reagent_containers/food/snacks/pizza/fresh
+    name = "fresh pizza"
+    desc = "A cheesy pizza pie with thick tomato sauce."
+    icon_state = "cheesy"
+    sliced_icon = "cheesy-slice"
+	
+/obj/item/reagent_containers/food/snacks/pizza/ball
+    name = "fresh meatball pizza"
+    desc = "A fresh pizza pie topped with succulent meatballs."
+    icon_state = "meatball"
+    sliced_icon = "meatball-slice"
+
+/obj/item/reagent_containers/food/snacks/pizza/pepper
+    name = "fresh pepperoni  pizza"
+    desc = "A cheesy pizza pie toped with bright red sizzling pepperoni slices."
+    icon_state = "peper"
+    sliced_icon = "peper-slice"
+
+/obj/item/reagent_containers/food/snacks/pizza/shroom
+    name = "fresh mushroom  pizza"
+    desc = "A pizza pie toped fresh picked mushrooms."
+    icon_state = "shroom"
+    sliced_icon = "shroom-slice"
+	
+/obj/item/reagent_containers/food/snacks/pizza/bad
+    name = "soft serve cheese pizza"
+    desc = "A pizza shipped from god knows where straight to cargo."
+    icon_state = "pizza-b"
+    sliced_icon = "slice-b"	
+	
+/obj/item/reagent_containers/food/snacks/pizza/pepperbad
+    name = "soft serve pepperoni pizza"
+    desc = "A pizza shipped from god knows where straight to cargo."
+    icon_state = "pizza_m"
+    sliced_icon = "psliceM"	
+
+/obj/item/reagent_containers/food/snacks/pizza/mushbad
+    name = "soft serve mushroom pizza"
+    desc = "A pizza shipped from god knows where straight to cargo."
+    icon_state = "pizza_v"
+    sliced_icon = "psliceV"		
+	
 /obj/item/reagent_containers/food/snacks/stroopwafel
 	name = "stroopwafel"
 	desc = "A traditional cookie from Holland. Doesn't this need to go into the microwave?"
@@ -817,10 +860,6 @@
 				src.name = "donk-pocket"
 		return
 
-#undef DONK_COLD
-#undef DONK_WARM
-#undef DONK_SCALDING
-
 /obj/item/reagent_containers/food/snacks/donkpocket_w
 	name = "donk-pocket"
 	desc = "This donk-pocket is emitting a small amount of heat."
@@ -846,19 +885,22 @@
 		warm = 1
 
 	heal(var/mob/M)
-		if(src.warm && M.reagents)
-			M.reagents.add_reagent("honk_fart",15)
+		if(src.warm == DONK_WARM)
+			M.reagents?.add_reagent("honk_fart",15)
 		else
-			boutput(M, "<span class='alert'>It's just not good enough cold...</span>")
-			M.reagents.add_reagent("simethicone",15)
+			M.reagents?.add_reagent("simethicone",15)
 		..()
 
 	cooltime()
 		if (src.warm)
 			SPAWN_DBG( 420 SECONDS )
-				src.warm = 0
+				src.warm = DONK_COLD
 				src.name = "honk-pocket"
 		return
+
+#undef DONK_COLD
+#undef DONK_WARM
+#undef DONK_SCALDING
 
 /obj/item/reagent_containers/food/snacks/breakfast
 	name = "bacon and eggs"
@@ -2719,3 +2761,4 @@
 	initial_volume = 25
 	initial_reagents = list("currypowder"=10, "capsaicin"=5, "salicylic_acid"=10)
 	food_effects = list("food_brute","food_tox","food_warm")
+=======
