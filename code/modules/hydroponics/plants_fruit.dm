@@ -272,6 +272,34 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 	nectarlevel = 10
 	assoc_reagents = list("juice_blueberry")
 
+/datum/plant/fruit/blackberry
+	name = "Blackberry"
+	seedcolor = "#1d222f"
+	crop = /obj/item/reagent_containers/food/snacks/plant/blackberry
+	starthealth = 10
+	growtime = 60
+	harvtime = 120
+	cropsize = 2
+	harvests = 3
+	endurance = 1
+	genome = 7
+	nectarlevel = 10
+	assoc_reagents = list("juice_blackberry")
+
+/datum/plant/fruit/raspberry
+	name = "Raspberry"
+	seedcolor = "#a30325"
+	crop = /obj/item/reagent_containers/food/snacks/plant/raspberry
+	starthealth = 10
+	growtime = 60
+	harvtime = 120
+	cropsize = 2
+	harvests = 3
+	endurance = 1
+	genome = 7
+	nectarlevel = 10
+	assoc_reagents = list("juice_raspberry")
+
 /datum/plant/fruit/coconut
 	name = "Coconut"
 	seedcolor = "#4D2600"

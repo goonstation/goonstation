@@ -745,6 +745,28 @@
 	plant_reagent = "juice_blueberry"
 	food_effects = list("food_cold", "food_refreshed")
 
+/obj/item/reagent_containers/food/snacks/plant/blackberry/
+	name = "blackberry"
+	desc = "A freshly picked blackberry."
+	icon_state = "blackberry"
+	planttype = /datum/plant/fruit/blackberry
+	amount = 1
+	heal_amt = 1
+	food_color = "#1d222f"
+	plant_reagent = "juice_blackberry"
+	food_effects = list("food_cold", "food_refreshed")
+
+/obj/item/reagent_containers/food/snacks/plant/raspberry/
+	name = "raspberry"
+	desc = "A freshly picked raspberry."
+	icon_state = "raspberry"
+	planttype = /datum/plant/fruit/raspberry
+	amount = 1
+	heal_amt = 1
+	food_color = "#a30325"
+	plant_reagent = "juice_raspberry"
+	food_effects = list("food_cold", "food_refreshed")
+
 /obj/item/reagent_containers/food/snacks/plant/pear/
 	name = "pear"
 	desc = "Whether or not you like the taste, its freshness is appearant."

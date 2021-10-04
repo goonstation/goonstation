@@ -79,6 +79,10 @@
 					tag = "cake[clayer]-lime"
 				if(/obj/item/reagent_containers/food/snacks/plant/strawberry)
 					tag = "cake[clayer]-strawberry"
+				if(/obj/item/reagent_containers/food/snacks/plant/blackberry)
+					tag = "cake[clayer]-blackberry"
+				if(/obj/item/reagent_containers/food/snacks/plant/raspberry)
+					tag = "cake[clayer]-raspberry"
 
 		if(tag && src.GetOverlayImage(tag)) //if there's a duplicate non-generic overlay, return a list of empty data
 			return list(0,0)
