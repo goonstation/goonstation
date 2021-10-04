@@ -255,7 +255,7 @@
     desc = "A cheesy pizza pie with thick tomato sauce."
     icon_state = "cheesy"
     sliced_icon = "cheesy-slice"
-	
+
 /obj/item/reagent_containers/food/snacks/pizza/ball
     name = "fresh meatball pizza"
     desc = "A fresh pizza pie topped with succulent meatballs."
@@ -273,25 +273,25 @@
     desc = "A pizza pie toped fresh picked mushrooms."
     icon_state = "shroom"
     sliced_icon = "shroom-slice"
-	
+
 /obj/item/reagent_containers/food/snacks/pizza/bad
     name = "soft serve cheese pizza"
     desc = "A pizza shipped from god knows where straight to cargo."
     icon_state = "pizza-b"
-    sliced_icon = "slice-b"	
-	
+    sliced_icon = "slice-b"
+
 /obj/item/reagent_containers/food/snacks/pizza/pepperbad
     name = "soft serve pepperoni pizza"
     desc = "A pizza shipped from god knows where straight to cargo."
     icon_state = "pizza_m"
-    sliced_icon = "psliceM"	
+    sliced_icon = "psliceM"
 
 /obj/item/reagent_containers/food/snacks/pizza/mushbad
     name = "soft serve mushroom pizza"
     desc = "A pizza shipped from god knows where straight to cargo."
     icon_state = "pizza_v"
-    sliced_icon = "psliceV"		
-	
+    sliced_icon = "psliceV"
+
 /obj/item/reagent_containers/food/snacks/stroopwafel
 	name = "stroopwafel"
 	desc = "A traditional cookie from Holland. Doesn't this need to go into the microwave?"
@@ -2761,4 +2761,3 @@
 	initial_volume = 25
 	initial_reagents = list("currypowder"=10, "capsaicin"=5, "salicylic_acid"=10)
 	food_effects = list("food_brute","food_tox","food_warm")
-=======
