@@ -4939,6 +4939,7 @@
 	name = "Kitchen"
 	},
 /obj/access_spawn/kitchen,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "atv" = (
@@ -5973,7 +5974,6 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "axG" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/table/reinforced/auto,
 /obj/window/reinforced/north,
 /obj/machinery/door/window/eastleft{
@@ -6172,7 +6172,6 @@
 /turf/simulated/floor,
 /area/station/medical/medbay/lobby)
 "ayu" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/table/reinforced/auto,
 /obj/window/reinforced/south,
 /obj/machinery/door/window/eastright{
