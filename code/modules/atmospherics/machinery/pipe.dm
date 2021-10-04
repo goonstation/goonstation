@@ -1036,14 +1036,6 @@ obj/machinery/atmospherics/pipe
 					break
 
 			node2 = locate() in T.get_disjoint_objects_by_type(DISJOINT_TURF_CONNECTION_ATMOS_MACHINERY, /obj/machinery/atmospherics/pipe/vertical_pipe)
-			// if(length(T.connections))
-			// 	for(var/key in T.connections)
-			// 		var/datum/disjoint_turf/C = T.connections[key]
-			// 		if(C.connections & DISJOINT_TURF_CONNECTION_ATMOS_MACHINERY)
-			// 			var/obj/machinery/atmospherics/pipe/vertical_pipe/target_pipe = locate() in C.turfs
-			// 			if(target_pipe)
-			// 				node2 = target_pipe
-			// 				break
 			update_icon()
 
 		disconnect(obj/machinery/atmospherics/reference)
