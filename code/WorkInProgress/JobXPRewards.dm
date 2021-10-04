@@ -331,7 +331,7 @@ mob/verb/checkrewards()
 	icon_state = "?"
 
 	activate(var/client/C)
-		var/list/hos_contents = src.mob.contents
+		var/list/hos_contents = C.mob.contents
 		for(var/obj/item/clothing/CL in hos_contents)
 			if(!istype(CL, /obj/item/clothing/head/hos_hat) && !istype(CL, /obj/item/clothing/under/rank/head_of_securityold) && !istype(CL, /obj/item/clothing/suit/armor/hoscape) && !istype(CL, /obj/item/clothing/suit/det_suit/hos) && !istype(CL, /obj/item/clothing/under/suit/hos))
 				if(dd_hassuffix(CL.item_state, "-blue") || dd_hassuffix(CL.icon_state, "-blue") || dd_hassuffix(CL.item_state, "-alt") || dd_hassuffix(CL.icon_state, "-alt"))
