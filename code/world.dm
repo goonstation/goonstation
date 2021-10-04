@@ -1696,7 +1696,8 @@ var/f_color_selector_handler/F_Color_Selector
 				var/list/data = list(
 					"auth" = config.player_notes_auth,
 					"action" = "get",
-					"ckey" = plist["ckey"]
+					"ckey" = plist["ckey"],
+					"format" = "json"
 				)
 
 				// Fetch notes via HTTP
