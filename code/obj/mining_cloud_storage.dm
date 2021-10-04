@@ -257,7 +257,7 @@
 		return
 
 	attack_hand(var/mob/user as mob)
-
+		..()
 		src.add_dialog(user)
 
 		if (status & BROKEN || status & NOPOWER)
@@ -376,3 +376,33 @@
 			return src.output_target
 
 		return src.loc
+/*
+	get_ores()
+		if(!ores.len)
+			return null
+		var/ore_list = list()
+		for(var/item/raw_material/ore in childrentypesof(obj/item/raw_material))
+			if(ores[ore.name])
+
+
+	get_ore_amounts()
+		if(!ores.len)
+			return null
+		var/ore_amount = list()
+		for(var/datum/ore_cloud_date/ore in ores)
+			ore_amount += ore.amount
+*/
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "Rockbox")
+			ui.open()
+
+	ui_data(mob/user)
+		//ore_list = get_ores()
+
+		. = list(
+			"ores" = ores
+		)
+
+
