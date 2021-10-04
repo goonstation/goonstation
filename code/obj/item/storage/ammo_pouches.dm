@@ -90,6 +90,11 @@
 		slots = 4
 		spawn_contents = list(/obj/item/ammo/bullets/rpg = 2)
 
+	lmg
+		name = "LMG belt pouch"
+		icon_state = "ammopouch-double"
+		spawn_contents = list(/obj/item/ammo/bullets/lmg = 5)
+
 /obj/item/storage/grenade_pouch
 	name = "grenade pouch"
 	icon_state = "ammopouch"

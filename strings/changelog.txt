@@ -1,4 +1,34 @@
 
+(t)mon oct 04 21
+(u)CodeDude
+(p)6158
+(e)🐛🗺|bug, mapping
+(+)The Oshan medbay storage door connected to maintenance now requires medical access.
+(u)BatElite
+(p)6147
+(e)|
+(+)Engineers now have access to the construction worker's overalls from their lockers.
+(u)Zonespace
+(p)6162
+(e)⚖|balance
+(+)Discount Superheroes have their access reduced to Security Assistant.
+(u)Grokberg
+(p)6100
+(e)🆕🎨|feature, sprites
+(+)Adds a new interface and new sound to the piano and saxophone.
+(t)sat oct 02 21
+(u)aloe
+(p)6135
+(e)⚖|balance
+(+)Mechanics Reconstruction Kits from QM now include one deconstruction device.
+(u)Gannets.
+(p)6139
+(e)⚖|balance
+(+)Adds LMG ammo pouch to Heavy Weapons Specialist crate. Spare LMG belts increased to 5.
+(u)Gannets
+(p)6140
+(e)🆕🗺|feature, mapping
+(*)Added a barricade dispenser to the Syndicate Battlecruiser Cairngorm.
 (t)fri oct 01 21
 (u)aloe
 (p)6134
