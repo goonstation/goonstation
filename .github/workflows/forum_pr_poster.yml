@@ -26,8 +26,6 @@ jobs:
         TOKEN: ${{ secrets.GITHUB_TOKEN }}
         REPO: ${{ github.repository }}
         FORUM_URL: "https://forum.ss13.co"
-        FORUM_LOGOUT_KEY: ${{ secrets.FORUM_LOGOUT_KEY }}
-        FORUM_POST_KEY: ${{ secrets.FORUM_POST_KEY }}
         FORUM_PASSWORD: ${{ secrets.FORUM_PASSWORD }}
         FORUM_USERNAME: "github_bot"
         SUBFORUM_ID: 8 # Ideas & Suggestions

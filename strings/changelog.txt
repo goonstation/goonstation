@@ -1,4 +1,72 @@
 
+(t)tue oct 05 21
+(u)TTerc
+(p)6107
+(e)|
+(+)You are now able to put critter corpses into disposal units via clickdrag.
+(u)112358sam
+(p)6120
+(e)🆕|feature
+(+)Added a new crew objective for miners
+(u)Gannets
+(p)6175
+(e)⚖|balance
+(+)Gwydion tranquilizer pistol magazine size reduced to 10. Tranquilizer ammo pouches now contain 3 spares.
+(t)mon oct 04 21
+(u)Waffleloffle
+(p)5915
+(e)🎨|sprites
+(*)Adds a new botany plant, turmeric, and its associated reagent. Turmeric root can be put in a food processor to make curry powder, which can be used in some new recipes.
+(u)Wisemonster
+(p)6158
+(e)🐛🗺|bug, mapping
+(+)The Oshan medbay storage door connected to maintenance now requires medical access.
+(u)BatElite
+(p)6147
+(e)|
+(+)Engineers now have access to the construction worker's overalls from their lockers.
+(u)Zonespace
+(p)6162
+(e)⚖|balance
+(+)Discount Superheroes have their access reduced to Security Assistant.
+(u)Grokberg
+(p)6100
+(e)🆕🎨|feature, sprites
+(+)Adds a new interface and new sound to the piano and saxophone.
+(t)sat oct 02 21
+(u)aloe
+(p)6135
+(e)⚖|balance
+(+)Mechanics Reconstruction Kits from QM now include one deconstruction device.
+(u)Gannets.
+(p)6139
+(e)⚖|balance
+(+)Adds LMG ammo pouch to Heavy Weapons Specialist crate. Spare LMG belts increased to 5.
+(u)Gannets
+(p)6140
+(e)🆕🗺|feature, mapping
+(*)Added a barricade dispenser to the Syndicate Battlecruiser Cairngorm.
+(t)fri oct 01 21
+(u)aloe
+(p)6134
+(e)🐛|bug
+(+)The fungus shortage is over, and spaceacillin has returned to to NanoMeds.
+(t)thu sep 30 21
+(u)tarmunora
+(e)⚖|balance
+(+)Fabricated vending machines are constructed empty. Visit your local Quartermaster for restock cartridges!
+(u)tarmunora
+(e)🔄|rework
+(+)Armored gloves now give bonuses to unarmed blocking values based on material stats. Experiment!
+(u)Walpvrgis
+(p)6062
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Added a new space prefab; the DreamPlaza Mall (or what is left of it).
+(t)wed sep 29 21
+(u)Gannets
+(p)6117
+(e)⚖|balance
+(+)Betelgeuse sniper rifle magazine size increased to 6. Spare magazines increased to 7.
 (t)mon sep 27 21
 (u)BatElite
 (p)6111

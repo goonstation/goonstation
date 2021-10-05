@@ -56,7 +56,7 @@
 	var/sql_database = null
 
 	// Player notes
-	var/player_notes_baseurl = "http://playernotes.goonhub.com"
+	var/player_notes_baseurl = "https://playernotes.goonhub.com"
 	var/player_notes_auth = null
 
 	// Server list for cross-bans and other stuff
@@ -68,6 +68,7 @@
 	var/irclog_url = null
 	var/ircbot_api = null
 	var/ircbot_ip = null
+	var/spacebee_api_key = null
 
 	//External server configuration (for central bans etc)
 	var/goonhub_api_version = 0
@@ -300,6 +301,9 @@
 				config.ircbot_api = trim(value)
 			if ("ircbot_ip")
 				config.ircbot_ip = trim(value)
+
+			if ("spacebee_api_key")
+				config.spacebee_api_key = trim(value)
 
 			if ("goonhub_parser_url")
 				config.goonhub_parser_url = trim(value)
