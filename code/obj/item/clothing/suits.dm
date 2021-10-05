@@ -1261,6 +1261,12 @@
 		icon_state = "espace-alt"
 		item_state = "es_suit"
 
+/obj/item/clothing/suit/space/neon
+	name = "neon space suit"
+	desc = "It comes in fun colours, but is as bulky and slow to move in as any standard space suit..."
+	icon_state = "space-neon"
+	item_state = "space-neon"
+
 // Sealab suits
 
 /obj/item/clothing/suit/space/diving

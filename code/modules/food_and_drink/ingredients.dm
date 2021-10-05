@@ -637,7 +637,22 @@
 	var/toppingstext = null
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/reagent_containers/food/snacks/))
+		if (istype(W,/obj/item/reagent_containers/food/snacks/mushroom))
+			var/pizzam = new /obj/item/reagent_containers/food/snacks/ingredient/pizzam
+			user.put_in_hand_or_drop(pizzam)
+			qdel (W)
+			qdel (src)
+		else if (istype(W,/obj/item/reagent_containers/food/snacks/meatball))
+			var/pizzab = new /obj/item/reagent_containers/food/snacks/ingredient/pizzab
+			user.put_in_hand_or_drop(pizzab)
+			qdel (W)
+			qdel (src)
+		else if (istype(W,/obj/item/reagent_containers/food/snacks/ingredient/pepperoni))
+			var/pizzap = new /obj/item/reagent_containers/food/snacks/ingredient/pizzap
+			user.put_in_hand_or_drop(pizzap)
+			qdel (W)
+			qdel (src)			
+		else if (istype(W, /obj/item/reagent_containers/food/snacks/))
 			var/obj/item/reagent_containers/food/snacks/F = W
 			if(!F.custom_food)
 				return
@@ -681,6 +696,48 @@
 			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
 			return
 
+/obj/item/reagent_containers/food/snacks/ingredient/pizzam
+	name = "uncooked mushroom pizza"
+	desc = "A cheese and mushroom pizza. You need to bake it..."
+	icon_state = "pizzabasem"
+	
+	attack(mob/M as mob, mob/user as mob, def_zone)
+		if (user == M)
+			boutput(user, "<span class='alert'>You need to bake it, you greedy beast!</span>")
+			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
+			return
+		else
+			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+			return
+
+/obj/item/reagent_containers/food/snacks/ingredient/pizzab
+	name = "uncooked meatball pizza"
+	desc = "A cheese and meatball pizza. You need to bake it..."
+	icon_state = "pizzabaseb"
+	
+	attack(mob/M as mob, mob/user as mob, def_zone)
+		if (user == M)
+			boutput(user, "<span class='alert'>You need to bake it, you greedy beast!</span>")
+			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
+			return
+		else
+			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+			return
+
+/obj/item/reagent_containers/food/snacks/ingredient/pizzap
+	name = "uncooked pepperoni pizza"
+	desc = "A cheese and pepperoni pizza. You need to bake it..."
+	icon_state = "pizzabasep"
+	
+	attack(mob/M as mob, mob/user as mob, def_zone)
+		if (user == M)
+			boutput(user, "<span class='alert'>You need to bake it, you greedy beast!</span>")
+			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
+			return
+		else
+			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+			return
+
 /obj/item/reagent_containers/food/snacks/ingredient/pasta
 	// generic uncooked pasta parent
 	name = "pasta sheet"
@@ -691,7 +748,7 @@
 	heal(var/mob/M)
 		boutput(M, "<span class='alert'>... You must be really hungry.</span>")
 		..()
-
+	
 /obj/item/reagent_containers/food/snacks/ingredient/pasta/sheet
 	name = "pasta sheet"
 	desc = "An uncooked sheet of pasta."
@@ -799,3 +856,13 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	amount = 1
 	heal_amt = 1
 	food_color = "#4C453E"
+
+/obj/item/reagent_containers/food/snacks/ingredient/currypowder
+	name = "curry powder"
+	desc = "A bag of curry powder. Smells heavenly."
+	icon_state = "currypowder"
+	amount = 1
+	heal_amt = 0
+	food_color = "#e0a80c"
+	initial_volume = 10
+	initial_reagents = "currypowder"
