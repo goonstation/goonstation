@@ -1,4 +1,9 @@
 
+(t)tue oct 05 21
+(u)Gannets
+(p)6175
+(e)⚖|balance
+(+)Gwydion tranquilizer pistol magazine size reduced to 10. Tranquilizer ammo pouches now contain 3 spares.
 (t)mon oct 04 21
 (u)Waffleloffle
 (p)5915
