@@ -111,6 +111,8 @@
 	var/msg = input("Please enter your help request to mentors:") as null|text
 
 	msg = copytext(strip_html(msg), 1, MAX_MESSAGE_LEN)
+	if (client.can_see_mentor_pms())
+		msg = linkify(msg)
 
 	if (!msg)
 		return

@@ -54823,6 +54823,12 @@
 	dir = 4
 	},
 /area/station/security/checkpoint/arrivals)
+"hJH" = (
+/obj/landmark/spawner{
+	name = "dolly"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "hKJ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -94807,7 +94813,7 @@ gqE
 rxZ
 vpa
 viZ
-rxZ
+hJH
 lkp
 qfu
 aGl

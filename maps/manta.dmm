@@ -31973,7 +31973,9 @@
 /area/station/science/artifact)
 "bKV" = (
 /obj/landmark/artifact,
-/obj/item/device/radio/intercom/science,
+/obj/item/device/radio/intercom/science{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/station/science/artifact)
 "bKW" = (
@@ -37888,6 +37890,12 @@
 /obj/machinery/manufacturer/uniform,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/bathroom)
+"hkU" = (
+/obj/landmark/spawner{
+	name = "dolly"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "hlB" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -80857,7 +80865,7 @@ bBM
 bBM
 hDa
 xlK
-bBM
+hkU
 bBM
 rdQ
 xpG

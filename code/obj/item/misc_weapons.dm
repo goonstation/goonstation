@@ -987,6 +987,7 @@
 	contraband = 7 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
 	w_class = W_CLASS_BULKY
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
+	tool_flags = TOOL_CUTTING
 
 	// pickup_sfx = "sound/items/blade_pull.ogg"
 	custom_suicide = 1
