@@ -534,6 +534,7 @@ var/f_color_selector_handler/F_Color_Selector
 			Ar.build_sims_score()
 
 	url_regex = new("(https?|byond|www)(\\.|:\\/\\/)", "i")
+	full_url_regex = new(@"(https?:\/\/)?((www\.)?([-\d\l]+\.)+[\d\l]+(\/\S+)*\/?)","ig")
 
 	UPDATE_TITLE_STATUS("Updating status")
 	Z_LOG_DEBUG("World/Init", "Updating status...")
@@ -857,9 +858,10 @@ var/f_color_selector_handler/F_Color_Selector
 	if (T == "ping")
 		var/x = 1
 		for (var/client/C)
+			if (C.stealth && !C.fakekey) // stealthed admins don't count
+				continue
 			x++
 		return x
-
 	else if(T == "players")
 		var/n = 0
 		for(var/client/C)
@@ -867,26 +869,6 @@ var/f_color_selector_handler/F_Color_Selector
 				continue
 			n++
 		return n
-
-	else if (T == "admins")
-		var/list/s = list()
-		var/n = 0
-		for(var/client/C)
-			if(C.holder)
-				s["admin[n]"] = (C.stealth ? "~" : "") + C.key
-				n++
-		s["admins"] = n
-		return list2params(s)
-
-	else if (T == "mentors")
-		var/list/s = list()
-		var/n = 0
-		for(var/client/C)
-			if(!C.holder && C.is_mentor())
-				s["mentor[n]"] = C.key
-				n++
-		s["mentors"] = n
-		return list2params(s)
 
 	else if (T == "status")
 		var/list/s = list()
@@ -1206,8 +1188,29 @@ var/f_color_selector_handler/F_Color_Selector
 							return 1
 #endif
 
+		if (findtext(addr, ":")) // remove port if present
+			addr = splittext(addr, ":")[1]
 		if (addr != config.ircbot_ip && addr != config.goonhub_api_ip && addr != config.goonhub2_hostname)
 			return 0 //ip filtering
+
+		if (T == "admins")
+			var/list/s = list()
+			var/n = 0
+			for(var/client/C)
+				if(C.holder)
+					s["admin[n]"] = (C.stealth ? "~" : "") + C.key
+					n++
+			s["admins"] = n
+			return list2params(s)
+		else if (T == "mentors")
+			var/list/s = list()
+			var/n = 0
+			for(var/client/C)
+				if(!C.holder && C.is_mentor())
+					s["mentor[n]"] = C.key
+					n++
+			s["mentors"] = n
+			return list2params(s)
 
 		var/list/plist = params2list(T)
 		switch(plist["type"])
@@ -1274,6 +1277,7 @@ var/f_color_selector_handler/F_Color_Selector
 					return ircbot.response(ircmsg)
 
 				msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
+				msg = linkify(msg)
 				msg = discord_emojify(msg)
 
 				logTheThing("admin", null, null, "Discord ASAY: [nick]: [msg]")
@@ -1320,7 +1324,8 @@ var/f_color_selector_handler/F_Color_Selector
 				var/nick = plist["nick"]
 				var/msg = plist["msg"]
 				var/who = lowertext(plist["target"])
-				var/game_msg = discord_emojify(msg)
+				var/game_msg = linkify(msg)
+				game_msg = discord_emojify(game_msg)
 
 				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
 				if (M?.client)
@@ -1364,7 +1369,8 @@ var/f_color_selector_handler/F_Color_Selector
 				var/msg = html_encode(plist["msg"])
 				var/who = lowertext(plist["target"])
 				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
-				var/game_msg = discord_emojify(msg)
+				var/game_msg = linkify(msg)
+				game_msg = discord_emojify(game_msg)
 
 				if (M?.client)
 					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[ckey(nick)]\">[nick]</a> (Discord)</b>: <span class='message'>[game_msg]</span></span>")
@@ -1682,6 +1688,29 @@ var/f_color_selector_handler/F_Color_Selector
 					logTheThing("diary", null, null, msg, "admin")
 
 				return 1
+
+			if ("getNotes")
+				if (!plist["ckey"])
+					return 0
+
+				var/list/data = list(
+					"auth" = config.player_notes_auth,
+					"action" = "get",
+					"ckey" = plist["ckey"],
+					"format" = "json"
+				)
+
+				// Fetch notes via HTTP
+				var/datum/http_request/request = new()
+				request.prepare(RUSTG_HTTP_METHOD_GET, "[config.player_notes_baseurl]/?[list2params(data)]", "", "")
+				request.begin_async()
+				UNTIL(request.is_complete())
+				var/datum/http_response/response = request.into_response()
+
+				if (response.errored || !response.body)
+					return 0
+
+				return response.body
 
 /world/proc/setMaxZ(new_maxz)
 	if (!isnum(new_maxz) || new_maxz <= src.maxz)

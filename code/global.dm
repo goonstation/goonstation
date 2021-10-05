@@ -59,6 +59,7 @@ var/global
 	defer_powernet_rebuild = 0		// true if net rebuild will be called manually after an event
 	machines_may_use_wired_power = 0
 	regex/url_regex = null
+	regex/full_url_regex = null
 	force_random_names = 0			// for the pre-roundstart thing
 	force_random_looks = 0			// same as above
 
@@ -485,7 +486,7 @@ var/global
 
 	list/cooldowns
 
-	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("credits","bux","tokens","cash","dollars","tokens","dollarydoos","tickets","souls","doubloons","Pesos","Rubles","Rupees")]"
+	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("Credits","Bux","Tokens","Cash","Dollars","Tokens","Dollarydoos","Tickets","Souls","Doubloons","Pesos","Rubles","Rupees")]"
 
 
 /proc/addGlobalRenderSource(var/image/I, var/key)

@@ -841,7 +841,7 @@
 	var/powerdownsfx = 'sound/machines/engine_alert3.ogg'
 
 	mats = 8
-	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
+	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_DESTRUCT
 	flags = FPRINT
 
 	var/mode_toggle = 0
@@ -1023,6 +1023,11 @@
 		if(get_dist(owner, T) > 1 || V == null || owner == null || T == null || V.loc != T)
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		if(locate(/obj/machinery/power/vent_capture) in T)
+			V.visible_message("<span class='notice'>[V] beeps grumpily and aborts construction.</span>", "<span class='notice'>You hear a grumpy beeping.</span>")
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
 		if(owner && V && T)
 			V.finish_build(T)
 

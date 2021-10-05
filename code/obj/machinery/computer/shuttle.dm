@@ -31,6 +31,11 @@
 		dir = WEST
 		pixel_x = -25
 
+/obj/machinery/computer/shuttle/embedded/syndieshuttle
+	name = "Shuttle Computer"
+	icon = 'icons/obj/decoration.dmi'
+	icon_state = "syndiepc4"
+
 /obj/machinery/computer/asylum_shuttle
 	name = "Asylum Shuttle"
 	icon_state = "shuttle"
@@ -278,17 +283,26 @@
 			call_shuttle()
 
 /obj/machinery/computer/mining_shuttle/proc/call_shuttle()
+	var/area/start_location
+	var/area/end_location
 	if(miningshuttle_location == 0)
-		var/area/start_location = locate(/area/shuttle/mining/space)
-		var/area/end_location = locate(/area/shuttle/mining/station)
+		start_location = locate(/area/shuttle/mining/space)
+		end_location = locate(/area/shuttle/mining/station)
 		start_location.move_contents_to(end_location)
 		miningshuttle_location = 1
 	else
 		if(miningshuttle_location == 1)
-			var/area/start_location = locate(/area/shuttle/mining/station)
-			var/area/end_location = locate(/area/shuttle/mining/space)
+			start_location = locate(/area/shuttle/mining/station)
+			end_location = locate(/area/shuttle/mining/space)
 			start_location.move_contents_to(end_location)
 			miningshuttle_location = 0
+
+
+	if(station_repair.station_generator)
+		if(istype(start_location, /area/shuttle/mining/station))
+			var/list/turf/turfs_to_fix = get_area_turfs(start_location)
+			if(length(turfs_to_fix))
+				station_repair.repair_turfs(turfs_to_fix)
 
 	for(var/obj/machinery/computer/mining_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 		active = 0
@@ -349,15 +363,17 @@
 	//Prison -> Station -> Outpost -> Prison.
 	//Skip outpost if there's a lockdown there.
 	//drsingh took outpost out for cogmap prison shuttle
+	var/area/start_location
+	var/area/end_location
 	switch(brigshuttle_location)
 		if(0)
-			var/area/start_location = locate(/area/shuttle/brig/prison)
-			var/area/end_location = locate(/area/shuttle/brig/station)
+			start_location = locate(/area/shuttle/brig/prison)
+			end_location = locate(/area/shuttle/brig/station)
 			start_location.move_contents_to(end_location)
 			brigshuttle_location = 1
 		if(1)
-			var/area/start_location = locate(/area/shuttle/brig/station)
-			var/area/end_location = null
+			start_location = locate(/area/shuttle/brig/station)
+			end_location = null
 			//if(researchshuttle_lockdown)
 			end_location = locate(/area/shuttle/brig/prison)
 			//else
@@ -375,6 +391,11 @@
 			start_location.move_contents_to(end_location)
 			brigshuttle_location = 0
 		*/
+
+	if(station_repair.station_generator)
+		var/list/turf/turfs_to_fix = get_area_turfs(start_location)
+		if(length(turfs_to_fix))
+			station_repair.repair_turfs(turfs_to_fix)
 
 	for(var/obj/machinery/computer/prison_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 		active = 0
@@ -451,17 +472,24 @@
 		boutput(usr, "<span class='alert'>This shuttle is currently on lockdown and cannot be used.</span>")
 		return
 
+	var/area/start_location
+	var/area/end_location
 	if(researchshuttle_location == 0)
-		var/area/start_location = locate(/area/shuttle/research/outpost)
-		var/area/end_location = locate(/area/shuttle/research/station)
+		start_location = locate(/area/shuttle/research/outpost)
+		end_location = locate(/area/shuttle/research/station)
 		start_location.move_contents_to(end_location)
 		researchshuttle_location = 1
 	else
 		if(researchshuttle_location == 1)
-			var/area/start_location = locate(/area/shuttle/research/station)
-			var/area/end_location = locate(/area/shuttle/research/outpost)
+			start_location = locate(/area/shuttle/research/station)
+			end_location = locate(/area/shuttle/research/outpost)
 			start_location.move_contents_to(end_location)
 			researchshuttle_location = 0
+
+	if(station_repair.station_generator)
+		var/list/turf/turfs_to_fix = get_area_turfs(start_location)
+		if(length(turfs_to_fix))
+			station_repair.repair_turfs(turfs_to_fix)
 
 	for(var/obj/machinery/computer/research_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 		active = 0
@@ -563,6 +591,11 @@
 					qdel(S)
 
 			start_location.move_contents_to(end_location)
+
+			if(station_repair.station_generator)
+				var/list/turf/turfs_to_fix = get_area_turfs(start_location)
+				if(length(turfs_to_fix))
+					station_repair.repair_turfs(turfs_to_fix)
 
 			for(var/obj/machinery/computer/asylum_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 				C.active = 0
