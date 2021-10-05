@@ -1367,6 +1367,17 @@
 		..()
 		reagents.add_reagent("coffee",20)
 
+/obj/item/reagent_containers/food/snacks/plant/turmeric
+	name = "turmeric root"
+	crop_suffix = " root"
+	desc = "An aromatic root from the turmeric plant, a relative of ginger."
+	icon_state = "turmericroot"
+	planttype = /datum/plant/veg/turmeric
+	plant_reagent = "currypowder"
+	edible = 0
+	validforhat = 1
+	food_color = "#e0a80c"
+
 /obj/item/reagent_containers/food/snacks/plant/lashberry/
 	name = "lashberry"
 	desc = "Not nearly as violent as the plant it came from."
@@ -1425,3 +1436,4 @@
 		make_reagents()
 			..()
 			reagents.add_reagent("omnizine", 10)
+

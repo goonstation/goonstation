@@ -1,5 +1,9 @@
 
 (t)mon oct 04 21
+(u)Waffleloffle
+(p)5915
+(e)🎨|sprites
+(*)Adds a new botany plant, turmeric, and its associated reagent. Turmeric root can be put in a food processor to make curry powder, which can be used in some new recipes.
 (u)Wisemonster
 (p)6158
 (e)🐛🗺|bug, mapping
