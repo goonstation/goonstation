@@ -12,9 +12,10 @@
 
 /datum/game_mode/disaster/pre_setup()
 	var/list/candidates = get_possible_enemies(ROLE_WRAITH, 0)
-	var/datum/mind/twraith = pick(candidates) // Just one for now
-	twraith.special_role = ROLE_WRAITH
-	Agimmicks += twraith
+	if (length(candidates))
+		var/datum/mind/twraith = pick(candidates) // Just one for now
+		twraith.special_role = ROLE_WRAITH
+		Agimmicks += twraith
 
 	return 1
 
