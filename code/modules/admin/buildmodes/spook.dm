@@ -148,3 +148,11 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 			src.attack_hand(usr)
 		else
 			. = ..()
+
+/obj/machinery/power/apc/spookTypes = "Toggle"
+/obj/machinery/power/apc/spook_act(what, data)
+	switch(what)
+		if("Toggle")
+			src.operating = !src.operating
+		else
+			. = ..()
