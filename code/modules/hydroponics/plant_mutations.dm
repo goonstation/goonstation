@@ -366,7 +366,7 @@
 	name = "Quivering Contusine"
 	name_prefix = "Quivering "
 	iconmod = "ContusineShivering"
-	assoc_reagents = list("sulfonal")
+	assoc_reagents = list("histamine")
 	chance = 10
 
 // Nureous Mutations
