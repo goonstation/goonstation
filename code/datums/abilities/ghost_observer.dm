@@ -61,7 +61,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			usr.client.tooltipHolder.showHover(src, list(
 				"params" = params,
 				"title" = "spooktober spook points",//src.name,
-				"content" = "[spooktober_GH.points] Points <br>Spinning chairs, flipping, using the ouija board, and farting on people as a ghost generates more points faster.",//(src.desc ? src.desc : null),
+				"content" = "[spooktober_GH.points] Points <br>All Points are shared between ghosts. <br>Spinning chairs, flipping, using the ouija board, and farting on people as a ghost generates more points faster.",//(src.desc ? src.desc : null),
 				"theme" = theme
 			))
 
