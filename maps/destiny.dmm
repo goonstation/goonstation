@@ -22606,6 +22606,10 @@
 	name = "Teleporter Blast Shield";
 	opacity = 0
 	},
+<<<<<<< Updated upstream
+=======
+/obj/access_spawn/research,
+>>>>>>> Stashed changes
 /turf/simulated/floor/stairs{
 	dir = 4;
 	icon_state = "medstairs_alone"
@@ -40507,7 +40511,10 @@
 	name = "EVA Storage"
 	},
 /obj/access_spawn/eva,
+<<<<<<< Updated upstream
 /obj/firedoor_spawn,
+=======
+>>>>>>> Stashed changes
 /obj/machinery/door/poddoor/blast{
 	density = 0;
 	dir = 4;
