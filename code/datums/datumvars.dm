@@ -386,7 +386,7 @@
 
 			html += "<table><thead><tr><th>Idx</th><th>Value</th></tr></thead><tbody>"
 			var/assoc = 0
-			if(name != "contents" && name != "images" && name != "screen" && name != "vis_contents")
+			if(name != "contents" && name != "images" && name != "screen" && name != "vis_contents" && name != "vis_locs")
 				try
 					assoc = !isnum(L[1]) && !isnull(L[L[1]])
 				catch

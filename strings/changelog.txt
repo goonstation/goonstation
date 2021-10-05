@@ -1,4 +1,25 @@
 
+(t)mon oct 04 21
+(u)Waffleloffle
+(p)5915
+(e)🎨|sprites
+(*)Adds a new botany plant, turmeric, and its associated reagent. Turmeric root can be put in a food processor to make curry powder, which can be used in some new recipes.
+(u)Wisemonster
+(p)6158
+(e)🐛🗺|bug, mapping
+(+)The Oshan medbay storage door connected to maintenance now requires medical access.
+(u)BatElite
+(p)6147
+(e)|
+(+)Engineers now have access to the construction worker's overalls from their lockers.
+(u)Zonespace
+(p)6162
+(e)⚖|balance
+(+)Discount Superheroes have their access reduced to Security Assistant.
+(u)Grokberg
+(p)6100
+(e)🆕🎨|feature, sprites
+(+)Adds a new interface and new sound to the piano and saxophone.
 (t)sat oct 02 21
 (u)aloe
 (p)6135
