@@ -1656,6 +1656,38 @@
 	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/risotto
 
+/datum/cookingrecipe/tandoorichicken
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/currypowder
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
+	item3 = /obj/item/reagent_containers/food/snacks/plant/chili
+	item4 = /obj/item/reagent_containers/food/snacks/plant/garlic
+	cookbonus = 18
+	output = /obj/item/reagent_containers/food/snacks/tandoorichicken
+
+/datum/cookingrecipe/potatocurry
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/currypowder
+	item2 = /obj/item/reagent_containers/food/snacks/plant/potato
+	item3 = /obj/item/reagent_containers/food/snacks/plant/carrot
+	item4 = /obj/item/reagent_containers/food/snacks/plant/peas
+	cookbonus = 7
+	output = /obj/item/reagent_containers/food/snacks/potatocurry
+
+/datum/cookingrecipe/coconutcurry
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/currypowder
+	item2 = /obj/item/reagent_containers/food/snacks/plant/coconutmeat
+	item3 = /obj/item/reagent_containers/food/snacks/plant/carrot
+	item4 = /obj/item/reagent_containers/food/snacks/ingredient/rice
+	cookbonus = 7
+	output = /obj/item/reagent_containers/food/snacks/coconutcurry
+
+/datum/cookingrecipe/chickenpineapplecurry
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/currypowder
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
+	item3 = /obj/item/reagent_containers/food/snacks/plant/chili
+	item4 = /obj/item/reagent_containers/food/snacks/plant/pineappleslice
+	cookbonus = 7
+	output = /obj/item/reagent_containers/food/snacks/chickenpineapplecurry
+
 // Recipe for zongzi is a WIP; we're gonna need rice balls or something
 
 /datum/cookingrecipe/beefood

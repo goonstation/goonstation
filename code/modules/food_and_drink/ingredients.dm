@@ -856,3 +856,13 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	amount = 1
 	heal_amt = 1
 	food_color = "#4C453E"
+
+/obj/item/reagent_containers/food/snacks/ingredient/currypowder
+	name = "curry powder"
+	desc = "A bag of curry powder. Smells heavenly."
+	icon_state = "currypowder"
+	amount = 1
+	heal_amt = 0
+	food_color = "#e0a80c"
+	initial_volume = 10
+	initial_reagents = "currypowder"
