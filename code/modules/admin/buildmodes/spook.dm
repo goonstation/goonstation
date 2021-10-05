@@ -140,3 +140,11 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 			honey_color = rgb(0, 255, 0)
 		else
 			. = ..()
+
+/obj/machinery/light_switch/spookTypes = "Toggle"
+/obj/machinery/light_switch/spook_act(what, data)
+	switch(what)
+		if("Toggle")
+			src.attack_hand(usr)
+		else
+			. = ..()
