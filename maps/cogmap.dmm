@@ -57166,6 +57166,10 @@
 /obj/machinery/computer/solar_control/west{
 	dir = 4
 	},
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "iGp" = (
@@ -61439,6 +61443,10 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/computer/solar_control/west,
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
 "qEB" = (
@@ -62706,6 +62714,8 @@
 /obj/cable/yellow{
 	icon_state = "1-4"
 	},
+/obj/cable/yellow,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
 "sHZ" = (
