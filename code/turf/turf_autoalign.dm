@@ -772,7 +772,7 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/lead)
 				self_message = "You begin to pry the outer sheath off."
 				message = "[owner] begins to pry \the [the_wall]'s outer sheath off."
 				playsound(the_wall, "sound/items/Crowbar.ogg", 100, 1)
-		owner.visible_message("<span class='alert'>[message].</span>", "<span class='notice'>[self_message]</span>")
+		owner.visible_message("<span class='alert'>[message]</span>", "<span class='notice'>[self_message]</span>")
 
 	onEnd()
 		..()
@@ -819,4 +819,4 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/lead)
 				message = "[owner] removes \the [the_wall]'s outer sheath."
 				logTheThing("station", owner, null, "dismantles a Reinforced Wall in [owner.loc.loc] ([showCoords(owner.x, owner.y, owner.z)])")
 				the_wall.dismantle_wall()
-		owner.visible_message("<span class='alert'>[message].</span>", "<span class='notice'>[self_message]</span>")
+		owner.visible_message("<span class='alert'>[message]</span>", "<span class='notice'>[self_message]</span>")
