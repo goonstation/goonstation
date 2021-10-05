@@ -366,6 +366,9 @@ table#cooktime a#start {
 			src.recipes = list()
 
 		if (!src.recipes.len)
+			src.recipes += new /datum/cookingrecipe/pizza_shroom(src)
+			src.recipes += new /datum/cookingrecipe/pizza_pepper(src)
+			src.recipes += new /datum/cookingrecipe/pizza_ball(src)
 			src.recipes += new /datum/cookingrecipe/haggass(src)
 			src.recipes += new /datum/cookingrecipe/haggis(src)
 			src.recipes += new /datum/cookingrecipe/scotch_egg(src)
@@ -396,6 +399,10 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/sandwich_p_h(src)
 			src.recipes += new /datum/cookingrecipe/sandwich_p(src)
 			src.recipes += new /datum/cookingrecipe/sandwich_custom(src)
+			src.recipes += new /datum/cookingrecipe/coconutcurry(src)
+			src.recipes += new /datum/cookingrecipe/chickenpineapplecurry(src)
+			src.recipes += new /datum/cookingrecipe/tandoorichicken(src)
+			src.recipes += new /datum/cookingrecipe/potatocurry(src)
 			src.recipes += new /datum/cookingrecipe/onionchips(src)
 			src.recipes += new /datum/cookingrecipe/mint_chutney(src)
 			src.recipes += new /datum/cookingrecipe/refried_beans(src)
@@ -543,6 +550,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/porridge(src)
 			// Put all single-ingredient recipes after this point
 			src.recipes += new /datum/cookingrecipe/pizza(src)
+			src.recipes += new /datum/cookingrecipe/pizza_fresh(src)
 			src.recipes += new /datum/cookingrecipe/cake_custom_item(src)
 			src.recipes += new /datum/cookingrecipe/pancake(src)
 			src.recipes += new /datum/cookingrecipe/bread(src)
@@ -949,6 +957,9 @@ table#cooktime a#start {
 				if (/obj/item/reagent_containers/food/snacks/plant/cherry)
 					new/obj/item/cocktail_stuff/maraschino_cherry(src.loc)
 					qdel( P )
+				if (/obj/item/reagent_containers/food/snacks/plant/turmeric)
+					new/obj/item/reagent_containers/food/snacks/ingredient/currypowder(src.loc)
+					pool( P )
 		// Wind down
 		for(var/obj/item/S in src.contents)
 			S.set_loc(get_turf(src))

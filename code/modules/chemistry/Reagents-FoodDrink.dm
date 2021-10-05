@@ -3289,6 +3289,61 @@ datum
 			thirst_value = 1
 			bladder_value = -1
 
+		fooddrink/turmeric
+			name = "turmeric powder"
+			id = "currypowder"
+			description = "Has a warm, spicy scent and nausea-soothing properties. But if you get this shit on something, the stain's NEVER coming out."
+			reagent_state = SOLID
+			fluid_r = 224
+			fluid_g = 168
+			fluid_b = 12
+			transparency = 255
+
+			reaction_mob(var/mob/M, var/method = TOUCH, var/volume)
+				. = ..()
+				if(method == TOUCH && volume >= 10)
+					boutput(M, "<span class='notice'><b>The chemical stains your skin!</b></span>")
+					var/oldcol = M.color
+					M.color = list(
+						0.5, 0, 0,
+						0, 0.5, 0,
+						0, 0, 0.5,
+						0.5, 0.35, 0.0625)
+					M.onVarChanged("color", oldcol, M.color)
+
+			reaction_obj(var/obj/O, var/volume)
+				if(volume >= 10)
+					var/oldcol = O.color
+					O.color = list(
+						0.5, 0, 0,
+						0, 0.5, 0,
+						0, 0, 0.5,
+						0.5, 0.35, 0.0625)
+					O.onVarChanged("color", oldcol, O.color)
+
+			reaction_turf(var/turf/T, var/volume)
+				if(volume >= 20)
+					var/oldcol = T.color
+					T.color = list(
+						0.5, 0, 0,
+						0, 0.5, 0,
+						0, 0, 0.5,
+						0.5, 0.35, 0.0625)
+					T.onVarChanged("color", oldcol, T.color)
+
+			on_mob_life(var/mob/living/M, var/mult = 1)
+				for(var/datum/ailment_data/disease/virus in M.ailments)
+					if(probmult(10) && istype(virus.master,/datum/ailment/disease/cold))
+						M.cure_disease(virus)
+						boutput(M,"<span class= 'notice'>You feel a little less ill.</span>")
+					if(probmult(10) && istype(virus.master,/datum/ailment/disease/flu))
+						M.cure_disease(virus)
+						boutput(M,"<span class= 'notice'>You feel a little less ill.</span>")
+					if(probmult(10) && istype(virus.master,/datum/ailment/disease/food_poisoning))
+						M.cure_disease(virus)
+						boutput(M,"<span class= 'notice'>You feel a little less sickly.</span>")
+				..()
+
 		fooddrink/juice_pickle
 			name = "pickle juice"
 			id = "juice_pickle"

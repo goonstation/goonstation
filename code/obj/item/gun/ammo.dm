@@ -599,7 +599,7 @@
 		pistol
 			sname = ".355 Tranqilizer"
 			name = ".355 tranquilizer pistol darts"
-			amount_left = 15
+			amount_left = 10
 			max_amount = 15
 			caliber = 0.355
 			ammo_type = new/datum/projectile/bullet/tranq_dart/syndicate/pistol
