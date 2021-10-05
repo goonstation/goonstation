@@ -31973,7 +31973,9 @@
 /area/station/science/artifact)
 "bKV" = (
 /obj/landmark/artifact,
-/obj/item/device/radio/intercom/science,
+/obj/item/device/radio/intercom/science{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/station/science/artifact)
 "bKW" = (
