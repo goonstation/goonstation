@@ -1,5 +1,9 @@
 
 (t)tue oct 05 21
+(u)112358sam
+(p)6120
+(e)🆕|feature
+(+)Added a new crew objective for miners
 (u)Gannets
 (p)6175
 (e)⚖|balance
