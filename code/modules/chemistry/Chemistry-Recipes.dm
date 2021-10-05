@@ -1116,6 +1116,15 @@ datum
 			mix_phrase = "Mon dieu, zis isn't even a martini."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
+		cocktail_jazzberryhardlemonade
+			name = "Jazzberry Hard Lemonade"
+			id = "jazzlemon"
+			result = "jazzlemon"
+			required_reagents = list("lemonade" = 1, "juice_blueraspberry" = 1, "vodka" = 1)
+			result_amount = 3
+			mix_phrase = "The drink turns radically jazzalicious."
+			mix_sound = 'sound/musical_instruments/saxbonk3.ogg'
+
 		cocktail_v_gimlet
 			name = "Vodka Gimlet"
 			id = "v_gimlet"

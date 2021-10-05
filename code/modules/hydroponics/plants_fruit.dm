@@ -284,7 +284,7 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 	endurance = 1
 	genome = 7
 	nectarlevel = 10
-	mutations = list(/datum/plantmutation/raspberry/blackberry)
+	mutations = list(/datum/plantmutation/raspberry/blackberry, /datum/plantmutation/raspberry/blueraspberry)
 	assoc_reagents = list("juice_raspberry")
 
 /datum/plant/fruit/coconut

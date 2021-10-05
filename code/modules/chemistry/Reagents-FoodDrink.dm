@@ -1431,6 +1431,15 @@ datum
 			alch_strength = 0.14
 			description = "Vodka, raspberry liqueur, and pineapple juice. Not actually French."
 			reagent_state = LIQUID
+		fooddrink/alcoholic/jazzlemon
+			name = "Jazzberry Hard Lemonade"
+			id = "jazzlemon"
+			fluid_r = 67
+			fluid_g = 219
+			fluid_b = 238
+			alch_strength = 0.14
+			description = "This unnaturally blue lemonade looks too radical not to drink."
+			reagent_state = LIQUID
 
 		fooddrink/alcoholic/moscowmule
 			name = "Moscow Mule"
@@ -3219,7 +3228,7 @@ datum
 			fluid_r = 101
 			fluid_g = 216
 			fluid_b = 230
-			description = "What do you mean? Rapsberries have always been this shade of blue."
+			description = "Radically flavorlicious. There's really nothing else to call it."
 			reagent_state = LIQUID
 			thirst_value = 1.5
 			bladder_value = -1.5

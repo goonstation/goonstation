@@ -731,3 +731,10 @@
 	dont_rename_crop = true
 	crop = /obj/item/reagent_containers/food/snacks/plant/blackberry
 	assoc_reagents = list("juice_blackberry")
+
+/datum/plantmutation/raspberry/blueraspberry
+	name = "Blue Raspberry"
+	iconmod = "BlueRaspberry"
+	dont_rename_crop = true
+	crop = /obj/item/reagent_containers/food/snacks/plant/blueraspberry
+	assoc_reagents = list("juice_blueraspberry")
