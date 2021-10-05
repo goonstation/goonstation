@@ -1,5 +1,10 @@
 
 (t)tue oct 05 21
+(u)Wisemonster
+(p)6177
+(e)🐛🗺|bug, mapping
+(+)Destiny's science department no longer has as many public access doors.
+(+)Destiny's Medbay lobby is now accessible to the public.
 (u)TTerc
 (p)6107
 (e)|
