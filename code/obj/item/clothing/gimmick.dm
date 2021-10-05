@@ -1280,6 +1280,12 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 		..()
 		setProperty("coldprot", 35)
 
+/obj/item/clothing/under/gimmick/red_wcoat
+	name = "dress shirt and red waistcoat"
+	desc = "A formal red waistcoat meant to be worn alongside an overcoat."
+	icon_state = "red_wcoat"
+	item_state = "red_wcoat"
+
 /obj/item/clothing/under/rank/bartender/tuxedo // look I really want to make the clothes vendor just produce clothing directly and not have to spawn this in a box with a custom name or something
 	name = "dress shirt and bowtie"
 	desc = "A nice, crisp shirt, dress pants and a black bowtie. Fancy."
