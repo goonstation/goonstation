@@ -188,6 +188,17 @@
 	plant_reagent = "ethanol"
 	brew_result = "ethanol"
 
+/obj/item/reagent_containers/food/snacks/plant/corn/pepper
+	name = "Pepper corn cob"
+	desc = "Wha? Why's this called corn? It's pepper!"
+	icon_state = "peppercorn"
+	planttype = /datum/plant/crop/corn
+	amount = 3
+	heal_amt = 3
+	food_color = "#373232"
+	plant_reagent = "pepper"
+	brew_result = "pepper"
+
 /obj/item/reagent_containers/food/snacks/plant/soy
 	name = "soybean pod"
 	crop_suffix = " pod"
@@ -1356,6 +1367,17 @@
 		..()
 		reagents.add_reagent("coffee",20)
 
+/obj/item/reagent_containers/food/snacks/plant/turmeric
+	name = "turmeric root"
+	crop_suffix = " root"
+	desc = "An aromatic root from the turmeric plant, a relative of ginger."
+	icon_state = "turmericroot"
+	planttype = /datum/plant/veg/turmeric
+	plant_reagent = "currypowder"
+	edible = 0
+	validforhat = 1
+	food_color = "#e0a80c"
+
 /obj/item/reagent_containers/food/snacks/plant/lashberry/
 	name = "lashberry"
 	desc = "Not nearly as violent as the plant it came from."
@@ -1414,3 +1436,4 @@
 		make_reagents()
 			..()
 			reagents.add_reagent("omnizine", 10)
+

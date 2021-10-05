@@ -308,14 +308,20 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		onMaterialChanged()
 			..()
 			if(istype(src.material))
-				if(src.material.hasProperty("density"))//linear function, 10 points of disarm-block for every 25 density, starting from density==10
-					src.setProperty("deflection", round(max(src.material.getProperty("density")**0.5+0.2*(src.material.getProperty("density")-20),0)))
-				else
-					src.setProperty("deflection", 0)
-				if(src.material.hasProperty("hard"))//Curve hits 0.5 at 30 (fibrilith), 1 at 60 (carbon fibre), 1.2 at 85 (starstone, aka maximum)
-					src.setProperty("rangedprot", round(max(0,-0.5034652-(-0.04859378/0.02534389)*(1-eulers**(-0.02534398*src.material.getProperty("hard")))),0.1)) //holy best-fit curve batman!
-				else
-					src.setProperty("rangedprot", 0)
+				var/types = list()
+				if(src.material.getProperty("density") > 10 || src.material.getProperty("hard") > 10)
+					types["blunt"] = 0.5 * ceil((max(src.material.getProperty("density"), src.material.getProperty("hard")) - 10)**0.5)
+				if(src.material.getProperty("density") > 10)
+					types["cut"] = 0.5 * ceil((src.material.getProperty("density") - 10)**0.5)
+				if(src.material.getProperty("hard") > 10)
+					types["stab"] = 0.5 * ceil((src.material.getProperty("density") - 10)**0.5)
+				if(src.material.hasProperty("thermal"))
+					var/thermal = 100 - src.material.getProperty("thermal")
+					if(thermal > 10)
+						types["burn"] = 0.5 * ceil((thermal - 10)**0.5)
+
+				AddComponent(/datum/component/wearertargeting/unarmedblock/unarmed_bonus_block, list(SLOT_GLOVES), types)
+
 			return
 
 /obj/item/clothing/gloves/swat

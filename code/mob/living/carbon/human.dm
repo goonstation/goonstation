@@ -658,14 +658,14 @@
 			SPAWN_DBG(0)
 				var/datum/mind/M = src.mind
 				emote("deathgasp")
-				src.visible_message("<span class='alert'><B>[src]</B> begins to grow another head!</span>")
+				src.visible_message("<span class='alert'><B>[src]</B> head starts to shift around!</span>")
 				src.show_text("<b>We begin to grow a headspider...</b>", "blue")
 				sleep(20 SECONDS)
 				if(!M || M.disposed)
 					return
 				if (M?.current)
 					M.current.show_text("<b>We released a headspider, using up some of our DNA reserves.</b>", "blue")
-				src.visible_message("<span class='alert'><B>[src]</B> grows a head, which sprouts legs and wanders off, looking for food!</span>")
+				src.visible_message("<span class='alert'><B>[src]</B> head detaches, sprouts legs and wanders off looking for food!</span>")
 				//make a headspider, have it crawl to find a host, give the host the disease, hand control to the player again afterwards
 				var/mob/living/critter/changeling/headspider/HS = new /mob/living/critter/changeling/headspider(get_turf(src))
 				C.points = max(0, C.points - 10) // This stuff isn't free, you know.
@@ -684,6 +684,24 @@
 				HS.changeling.transferOwnership(HS)
 				HS.changeling.owner = HS
 				HS.changeling.reassign_hivemind_target_mob()
+				if(src.wear_mask)
+					var/obj/item/dropped_mask = src.wear_mask
+					src.u_equip(dropped_mask)
+					dropped_mask.set_loc(src.loc)
+				if(src.glasses)
+					var/obj/item/dropped_glasses = src.glasses
+					src.u_equip(dropped_glasses)
+					dropped_glasses.set_loc(src.loc)
+				if(src.head)
+					var/obj/item/dropped_headwear = src.head
+					src.u_equip(dropped_headwear)
+					dropped_headwear.set_loc(src.loc)
+				if(src.ears)
+					var/obj/item/dropped_earwear = src.ears
+					src.u_equip(dropped_earwear)
+					dropped_earwear.set_loc(src.loc)
+				var/obj/item/organ/head/organ_head = src.organHolder.drop_organ("head")
+				qdel(organ_head)
 
 				//HS.process() //A little kickstart to get you out into the big world (and some chump), li'l guy! O7
 
