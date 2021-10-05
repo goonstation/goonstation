@@ -256,81 +256,19 @@
 			OCD.price = max(0,new_price)
 		return
 
-	attack_hand(var/mob/user as mob)
-		..()
-		src.add_dialog(user)
-
-		if (status & BROKEN || status & NOPOWER)
-			var/dat = "The screen is blank."
-			user.Browse(dat, "window=mining_dropbox;size=400x500")
-			onclose(user, "mining_dropbox")
-			return
-
-		var/list/dat = list({"<B>[src.name]</B>
-			<br><HR>
-			<B>Rockbox™ Ore Cloud Storage Service Settings:</B>
-			<br><small>
-			<B>Rockbox™ Fees:</B> $[!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0] per ore [!rockbox_globals.rockbox_premium_purchased ? "(Purchase our Premium Service to remove this fee!)" : ""]<BR>
-			<B>Client Quartermaster Transaction Fee:</B> [rockbox_globals.rockbox_client_fee_pct]%<BR>
-			<B>Client Quartermaster Transaction Fee Per Ore Minimum:</B> $[rockbox_globals.rockbox_client_fee_min]<BR>
-			</small><HR>"})
-
-		if(ores.len)
-			for(var/ore in ores)
-				var/sellable = 0
-				var/price = 0
-				var/datum/ore_cloud_data/OCD = ores[ore]
-				price = OCD.price
-				sellable = OCD.for_sale
-				dat += "<B>[ore]:</B> [OCD.amount] (<A href='?src=\ref[src];sellable=[ore]'>[sellable ? "For Sale" : "Not For Sale"]</A>) (<A href='?src=\ref[src];price=[ore]'>$[price] per ore</A>) (<A href='?src=\ref[src];eject=[ore]'>Eject</A>)<br>"
-		else
-			dat += "No ores currently loaded.<br>"
-
-		user.Browse(dat.Join(), "window=mining_dropbox;size=500x500")
-		onclose(user, "mining_dropbox")
-
-
-
-	Topic(href, href_list)
-
-		if(status & BROKEN || status & NOPOWER)
-			return
-
-		if(usr.stat || usr.restrained())
-			return
-
-		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))))
-			src.add_dialog(usr)
-
-			if (href_list["eject"])
-				var/ore = href_list["eject"]
-				src.eject_ores(ore,null,0,0,usr)
-
-			if (href_list["price"])
-				var/ore = href_list["price"]
-				var/new_price = null
-				new_price = input(usr,"What price would you like to set? (Min 0)","Set Sale Price",null) as num
-				update_ore_price(ore,new_price)
-
-			if (href_list["sellable"])
-				var/ore = href_list["sellable"]
-				update_ore_for_sale(ore)
-
-			src.updateUsrDialog()
-		return
-
 	proc/eject_ores(var/ore, var/eject_location, var/ejectamt, var/transmit = 0, var/user as mob)
 		var/amount_ejected = 0
 		if(!eject_location)
 			eject_location = get_output_location()
 		for(var/obj/item/raw_material/R in src.contents)
 			if (R.material_name == ore)
-				if (!ejectamt)
-					ejectamt = input(usr,"How many ores do you want to eject?","Eject Ores") as num
-				if ((ejectamt <= 0 || get_dist(src, user) > 1) && !transmit)
-					break
-				if (!eject_location)
-					break
+				//The new TGUI already does all of these checks, we don't need them here (and they would break it)
+				//if (!ejectamt)
+					//ejectamt = input(usr,"How many ores do you want to eject?","Eject Ores") as num
+				//if ((ejectamt <= 0 || get_dist(src, user) > 1) && !transmit)
+					//break
+				//if (!eject_location)
+					//break
 				R.set_loc(eject_location)
 				ejectamt--
 				amount_ejected++
@@ -376,22 +314,7 @@
 			return src.output_target
 
 		return src.loc
-/*
-	get_ores()
-		if(!ores.len)
-			return null
-		var/ore_list = list()
-		for(var/item/raw_material/ore in childrentypesof(obj/item/raw_material))
-			if(ores[ore.name])
 
-
-	get_ore_amounts()
-		if(!ores.len)
-			return null
-		var/ore_amount = list()
-		for(var/datum/ore_cloud_date/ore in ores)
-			ore_amount += ore.amount
-*/
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if (!ui)
@@ -399,10 +322,71 @@
 			ui.open()
 
 	ui_data(mob/user)
-		//ore_list = get_ores()
+		var/ore_list = list()
+		for(var/obj/item/raw_material/O as anything in childrentypesof(/obj/item/raw_material))
+			var/obj/item/raw_material/ore = new O()
+			if(ores[ore.material_name])
+				var/datum/ore_cloud_data/OCD = ores[ore.material_name]
+				var/datum/material_property/radioactivity/R =new/datum/material_property/radioactivity()
+				var/datum/material_property/neutron_radioactivity/N =new/datum/material_property/neutron_radioactivity()
+				var/datum/material_property/electrical_conductivity/E =new/datum/material_property/electrical_conductivity()
+				var/datum/material_property/thermal_conductivity/T =new/datum/material_property/thermal_conductivity()
+				var/datum/material_property/stability/S = new/datum/material_property/stability()
+				var/datum/material_property/hardness/H = new/datum/material_property/hardness()
+				var/datum/material_property/density/D = new/datum/material_property/density()
+				var/datum/material_property/flammability/F = new/datum/material_property/flammability()
+				var/datum/material_property/corrosion/C = new/datum/material_property/corrosion()
+				var/datum/material_property/reflectivity/L = new/datum/material_property/reflectivity()
+				var/datum/material_property/permeability/P = new/datum/material_property/permeability()
+
+				ore_list += list(list(
+					"name" = ore.material_name,
+					"amount" = OCD.amount,
+					"price" = OCD.price,
+					"forSale" = OCD.for_sale,
+					"radioactivity" = ore.material.getProperty("radioactive"),
+					"radioactivityAdj" = R.getAdjective(ore.material),
+					"neutron" = ore.material.getProperty("n_radioactive"),
+					"neutronAdj" = N.getAdjective(ore.material),
+					"conductivity" = ore.material.getProperty("electrical"),
+					"conductivityAdj" = E.getAdjective(ore.material),
+					"thermal" = ore.material.getProperty("thermal"),
+					"thermalAdj" = T.getAdjective(ore.material),
+					"stability" = ore.material.getProperty("stability"),
+					"stabilityAdj" = S.getAdjective(ore.material),
+					"hardness" = ore.material.getProperty("hard"),
+					"hardnessAdj" = H.getAdjective(ore.material),
+					"density" = ore.material.getProperty("density"),
+					"densityAdj" = D.getAdjective(ore.material),
+					"flammability" = ore.material.getProperty("flammable"),
+					"flammabilityAdj" = F.getAdjective(ore.material),
+					"corrosion" = ore.material.getProperty("corrosion"),
+					"corrosionAdj" = C.getAdjective(ore.material),
+					"reflectivity" = ore.material.getProperty("reflective"),
+					"reflectivityAdj" = L.getAdjective(ore.material),
+					"permeability" = ore.material.getProperty("permeable"),
+					"permeabilityAdj" = P.getAdjective(ore.material),
+				))
 
 		. = list(
-			"ores" = ores
+			"ores" = ore_list
 		)
-
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+		if(.)
+			return
+		switch(action)
+			if("dispense-ore")
+				var/ore = params["ore"]
+				var/datum/ore_cloud_data/OCD = ores[ore]
+				if(OCD.amount < params["take"])
+					return
+				eject_ores(ore, null, params["take"])
+			if("set-ore-sell-status")
+				var/ore = params["ore"]
+				update_ore_for_sale(ore)
+			if("set-ore-price")
+				var/ore = params["ore"]
+				var/price = params["newPrice"]
+				update_ore_price(ore, price)
 
