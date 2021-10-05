@@ -1,9 +1,5 @@
 
 (t)tue oct 05 21
-(u)Azrun & Gannets
-(p)6146
-(e)🆕🎨|feature, sprites
-(*)The nuclear operatives bard class is being added in a prototype state.
 (u)Gannets
 (p)6175
 (e)⚖|balance
