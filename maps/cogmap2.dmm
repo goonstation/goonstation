@@ -1724,6 +1724,7 @@
 /obj/machinery/computer/solar_control/west{
 	dir = 4
 	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
 "adA" = (
@@ -2297,6 +2298,7 @@
 /obj/machinery/computer/solar_control/small_backup2{
 	dir = 8
 	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating/airless,
 /area/station/solar/small_backup2)
 "aeM" = (
@@ -4044,6 +4046,10 @@
 /obj/table/wood/auto,
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer3/generic/personal,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "aiW" = (
@@ -4509,6 +4515,11 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
 "ajT" = (
@@ -4520,6 +4531,11 @@
 	name = "Catering Staff Quarters";
 	req_access_txt = "25|28"
 	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/maintenance/solar/north)
 "ajU" = (
@@ -4528,6 +4544,11 @@
 "ajV" = (
 /obj/stool/chair/comfy{
 	dir = 4
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
@@ -72801,6 +72822,7 @@
 /obj/machinery/computer/solar_control/small_backup1{
 	dir = 8
 	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/airless/plating/damaged3,
 /area/station/mining/magnet)
 "ddz" = (
@@ -74006,6 +74028,7 @@
 /obj/machinery/computer/solar_control/east{
 	dir = 4
 	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
 "dgo" = (
@@ -75473,6 +75496,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating,
 /area/research_outpost)
 "djs" = (
@@ -78610,6 +78634,14 @@
 	icon_state = "blue5"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"imd" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
 "ism" = (
 /obj/cable{
 	d1 = 2;
@@ -112040,7 +112072,7 @@ aeY
 adL
 ahV
 aiT
-ajU
+imd
 ald
 ahV
 ahV
@@ -112342,7 +112374,7 @@ aeY
 agk
 ahV
 aiU
-ajU
+imd
 ajU
 amu
 ahV
