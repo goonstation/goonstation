@@ -1118,3 +1118,122 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/costume)
 	path = /obj/item/clothing/suit/gimmick/dinosaur
 	slot = SLOT_WEAR_SUIT
 	cost = PAY_TRADESMAN/2
+
+//Western
+
+ABSTRACT_TYPE(/datum/clothingbooth_item/western)
+/datum/clothingbooth_item/western
+	name = "western"
+	slot = SLOT_HEAD
+	category = "Western"
+	cost = PAY_UNTRAINED/3
+
+/datum/clothingbooth_item/western/westhat
+	name = "Ten-gallon hat"
+	path = /obj/item/clothing/head/westhat
+	slot = SLOT_HEAD
+	cost = PAY_UNTRAINED/2
+
+/datum/clothingbooth_item/western/westhat_black
+	name = "Black Ten-gallon hat"
+	path = /obj/item/clothing/head/westhat_black
+	slot = SLOT_HEAD
+	cost = PAY_UNTRAINED/2
+
+/datum/clothingbooth_item/western/westhat_blue
+	name = "Blue Ten-gallon hat"
+	path = /obj/item/clothing/head/westhat_blue
+	slot = SLOT_HEAD
+	cost = PAY_UNTRAINED/2
+
+/datum/clothingbooth_item/western/westhat_brown
+	name = "Brown Ten-gallon hat"
+	path = /obj/item/clothing/head/westhat_brown
+	slot = SLOT_HEAD
+	cost = PAY_UNTRAINED/2
+
+/datum/clothingbooth_item/western/westhat_tan
+	name = "Tan Ten-gallon hat"
+	path = /obj/item/clothing/head/westhat_tan
+	slot = SLOT_HEAD
+	cost = PAY_UNTRAINED/2
+
+/datum/clothingbooth_item/western/westhat_red
+	name = "Red Ten-gallon hat"
+	path = /obj/item/clothing/head/westhat_red
+	slot = SLOT_HEAD
+	cost = PAY_UNTRAINED/2
+
+//Coats
+
+/datum/clothingbooth_item/western/guncoat
+	name = "Shotgun coat"
+	path = /obj/item/clothing/suit/gimmick/guncoat
+	slot = SLOT_WEAR_SUIT
+	cost = PAY_UNTRAINED/2
+
+/datum/clothingbooth_item/western/guncoat_dirty
+	name = "Dirty Shotgun coat"
+	path = /obj/item/clothing/suit/gimmick/guncoat_dirty
+	slot = SLOT_WEAR_SUIT
+	cost = PAY_UNTRAINED/2
+
+/datum/clothingbooth_item/western/guncoat_black
+	name = "Black Shotgun coat"
+	path = /obj/item/clothing/suit/gimmick/guncoat_black
+	slot = SLOT_WEAR_SUIT
+	cost = PAY_UNTRAINED/2
+
+/datum/clothingbooth_item/western/guncoat_tan
+	name = "Tan Shotgun coat"
+	path = /obj/item/clothing/suit/gimmick/guncoat_tan
+	slot = SLOT_WEAR_SUIT
+	cost = PAY_UNTRAINED/2
+
+//Ponchos
+
+/datum/clothingbooth_item/western/westflower
+	name = "Flower Poncho"
+	path = /obj/item/clothing/suit/westflower
+	slot = SLOT_WEAR_SUIT
+	cost = PAY_UNTRAINED/1
+
+/datum/clothingbooth_item/western/westleaf
+	name = "Leaf poncho"
+	path = /obj/item/clothing/suit/westleaf
+	slot = SLOT_WEAR_SUIT
+	cost = PAY_UNTRAINED/1
+
+//Jumpsuit
+
+/datum/clothingbooth_item/western/wester
+	name = "Western shirt and pants"
+	path = /obj/item/clothing/under/misc/wester
+	slot = SLOT_W_UNIFORM
+	cost = PAY_UNTRAINED/1
+
+//shoes
+
+/datum/clothingbooth_item/western/westboot
+	name = "Real Cowboy Boots"
+	path = /obj/item/clothing/shoes/westboot
+	slot = SLOT_SHOES
+	cost = PAY_UNTRAINED/2
+
+/datum/clothingbooth_item/western/westboot_dirty
+	name = "Dirty Cowboy Boots"
+	path = /obj/item/clothing/shoes/westboot_black
+	slot = SLOT_SHOES
+	cost = PAY_UNTRAINED/2
+
+/datum/clothingbooth_item/western/westboot_black
+	name = "Black Cowboy Boots"
+	path = /obj/item/clothing/shoes/westboot_black
+	slot = SLOT_SHOES
+	cost = PAY_UNTRAINED/2
+
+/datum/clothingbooth_item/western/westboot_brown
+	name = "Brown Cowboy Boots"
+	path = /obj/item/clothing/shoes/westboot_brown
+	slot = SLOT_SHOES
+	cost = PAY_UNTRAINED/2

@@ -682,3 +682,24 @@
 	icon_state = "mjwhite"
 	desc = "Dainty and formal. This pair is white."
 	step_sound = "footstep"
+
+//Western Boots
+/obj/item/clothing/shoes/westboot_black
+	name = "Black Cowboy Boots"
+	icon_state = "westboot_black"
+	desc = "100% real blackened Spacecow Leather, very stylish."
+
+/obj/item/clothing/shoes/westboot_dirty
+	name = "Dirty Cowboy Boots"
+	icon_state = "westboot_dirty"
+	desc = "100% real greyed Spacecow Leather, very stylish."
+
+/obj/item/clothing/shoes/westboot
+	name = "Real Cowboy Boots"
+	icon_state = "westboot"
+	desc = "100% real Spacecow Leather, very stylish."
+
+/obj/item/clothing/shoes/westboot_brown
+	name = "Brown Cowboy Boots"
+	icon_state = "westboot_brown"
+	desc = "100% real browned Spacecow Leather, very stylish."

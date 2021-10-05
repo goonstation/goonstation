@@ -1803,3 +1803,10 @@
     item_state = "racing_jump_prp"
     icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
     wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+
+//Western Jumpsuit
+/obj/item/clothing/under/misc/wester
+    name = "Western shirt and pants"
+    desc = "Now comes with a matching belt buckle and leather straps!"
+    icon_state = "wester"
+    item_state = "wester"

@@ -1782,3 +1782,42 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "pirate_brn"
 	item_state = "pirate_brn"
+
+
+//Western ten gallon hats!
+
+/obj/item/clothing/head/westhat
+	name = "ten-gallon"
+	desc = "Channel your true cowboy and call everyone partner!"
+	icon_state = "westhat"
+	item_state = "westhat"
+
+/obj/item/clothing/head/westhat_black
+	name = "black ten-gallon hat"
+	desc = "Channel your true cowboy and call everyone partner!"
+	icon_state = "westhat_black"
+	item_state = "westhat_black"
+
+/obj/item/clothing/head/westhat_red
+	name = "red ten-gallon hat"
+	desc = "Channel your true cowboy and call everyone partner!"
+	icon_state = "westhat_red"
+	item_state = "westhat_red"
+
+/obj/item/clothing/head/westhat_blue
+	name = "blue ten-gallon hat"
+	desc = "Channel your true cowboy and call everyone partner!"
+	icon_state = "westhat_blue"
+	item_state = "westhat_blue"
+
+/obj/item/clothing/head/westhat_tan
+	name = "tan ten-gallon hat"
+	desc = "Channel your true cowboy and call everyone partner!"
+	icon_state = "westhat_tan"
+	item_state = "westhat_tan"
+
+/obj/item/clothing/head/westhat_brown
+	name = "brown ten-gallon hat"
+	desc = "Channel your true cowboy and call everyone partner!"
+	icon_state = "westhat_brown"
+	item_state = "westhat_brown"
