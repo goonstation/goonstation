@@ -1712,6 +1712,19 @@ var/f_color_selector_handler/F_Color_Selector
 
 				return response.body
 
+			if ("getPlayerStats")
+				if (!plist["ckey"])
+					return 0
+
+				var/list/response = null
+				try
+					response = apiHandler.queryAPI("playerInfo/get", list("ckey" = ckey), forceResponse = 1)
+				catch
+					return 0
+				if (!response)
+					return 0
+				return json_encode(response)
+
 /world/proc/setMaxZ(new_maxz)
 	if (!isnum(new_maxz) || new_maxz <= src.maxz)
 		return src.maxz
