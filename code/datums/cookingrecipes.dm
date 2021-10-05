@@ -694,6 +694,26 @@
 			customSandwich.overlays += newFilling
 
 		return customSandwich
+		
+/datum/cookingrecipe/pizza_fresh
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pizza3
+	cookbonus = 18
+	output = /obj/item/reagent_containers/food/snacks/pizza/fresh
+
+/datum/cookingrecipe/pizza_ball
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pizzab
+	cookbonus = 18
+	output = /obj/item/reagent_containers/food/snacks/pizza/ball
+
+/datum/cookingrecipe/pizza_pepper
+	item1= /obj/item/reagent_containers/food/snacks/ingredient/pizzap
+	cookbonus = 18
+	output = /obj/item/reagent_containers/food/snacks/pizza/pepper
+
+/datum/cookingrecipe/pizza_shroom
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pizzam
+	cookbonus = 18
+	output = /obj/item/reagent_containers/food/snacks/pizza/shroom
 
 /datum/cookingrecipe/pizza
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pizza3
