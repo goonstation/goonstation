@@ -749,7 +749,7 @@
 	name = "blackberry"
 	desc = "A freshly picked blackberry."
 	icon_state = "blackberry"
-	planttype = /datum/plant/fruit/blackberry
+	planttype = /datum/plant/fruit/raspberry
 	amount = 1
 	heal_amt = 1
 	food_color = "#1d222f"

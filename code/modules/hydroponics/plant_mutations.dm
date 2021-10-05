@@ -722,3 +722,12 @@
 	crop = /obj/item/reagent_containers/food/snacks/plant/purplegoop/orangegoop
 	assoc_reagents = list("oil")
 	chance = 25
+
+//Raspberry Mutations
+
+/datum/plantmutation/raspberry/blackberry
+	name = "Blackberry"
+	iconmod = "Blackberry"
+	dont_rename_crop = true
+	crop = /obj/item/reagent_containers/food/snacks/plant/blackberry
+	assoc_reagents = list("juice_blackberry")
