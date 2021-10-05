@@ -128,7 +128,7 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 			animate(pixel_y = 0, transform = matrix(rdeg * -1, MATRIX_ROTATE), time = 10, loop = -1, easing = SINE_EASING)
 		else .=..()
 
-/obj/critter/domestic_bee/spookTypes = "Zombify"
+/obj/critter/domestic_bee/spookTypes = "Dance;Honey;Zombify"
 /obj/critter/domestic_bee/spook_act(what, data)
 	switch(what)
 		if("Zombify")
@@ -138,6 +138,10 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 			icon_body = "zombee"
 			sleeping_icon_state = "zombee-sleep"
 			honey_color = rgb(0, 255, 0)
+		if("Dance")
+			src.dance()
+		if("Honey")
+			src.puke_honey()
 		else
 			. = ..()
 
