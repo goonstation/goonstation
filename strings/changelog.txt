@@ -1,5 +1,9 @@
 
 (t)tue oct 05 21
+(u)TTerc
+(p)6107
+(e)|
+(+)You are now able to put critter corpses into disposal units via clickdrag.
 (u)112358sam
 (p)6120
 (e)🆕|feature
