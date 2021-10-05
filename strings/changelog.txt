@@ -1,4 +1,22 @@
 
+(t)tue oct 05 21
+(u)Wisemonster
+(p)6177
+(e)🐛🗺|bug, mapping
+(+)Destiny's science department no longer has as many public access doors.
+(+)Destiny's Medbay lobby is now accessible to the public.
+(u)TTerc
+(p)6107
+(e)|
+(+)You are now able to put critter corpses into disposal units via clickdrag.
+(u)112358sam
+(p)6120
+(e)🆕|feature
+(+)Added a new crew objective for miners
+(u)Gannets
+(p)6175
+(e)⚖|balance
+(+)Gwydion tranquilizer pistol magazine size reduced to 10. Tranquilizer ammo pouches now contain 3 spares.
 (t)mon oct 04 21
 (u)Waffleloffle
 (p)5915

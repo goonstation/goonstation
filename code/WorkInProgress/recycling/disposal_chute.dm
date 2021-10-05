@@ -136,18 +136,31 @@
 
 	// mouse drop another mob or self
 	//
-	MouseDrop_T(mob/target, mob/user)
+	MouseDrop_T(atom/target, mob/user)
 		//jesus fucking christ
-		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user) || isAI(target) || isghostcritter(user))
+		if (!IN_RANGE(src,user,1) || !IN_RANGE(src,target,1) || isAI(user) || is_incapacitated(user) || isghostcritter(user))
 			return
 
-		if (istype(src, /obj/machinery/disposal/mail) && isliving(target))
-			//Is this mob allowed to ride mailchutes?
-			if (!target.canRideMailchutes())
-				boutput(user, "<span class='alert'>That won't fit!</span>")
+		if (iscritter(target))
+			var/obj/critter/corpse = target
+			if (!corpse.alive)
+				corpse.set_loc(src)
+				user.visible_message("[user.name] places \the [corpse] into \the [src].")
+				actions.interrupt(user, INTERRUPT_ACT)
+			return
+
+		if (isliving(target))
+			var/mob/living/mobtarget = target
+			if  (mobtarget.buckled || isAI(mobtarget))
 				return
 
-		actions.start(new/datum/action/bar/icon/shoveMobIntoChute(src, target, user), user)
+			if (istype(src, /obj/machinery/disposal/mail))
+				//Is this mob allowed to ride mailchutes?
+				if (!mobtarget.canRideMailchutes())
+					boutput(user, "<span class='alert'>That won't fit!</span>")
+					return
+
+			actions.start(new/datum/action/bar/icon/shoveMobIntoChute(src, mobtarget, user), user)
 
 	hitby(atom/movable/MO, datum/thrown_thing/thr)
 		// This feature interferes with mail delivery, i.e. objects bouncing back into the chute.
