@@ -22599,7 +22599,6 @@
 	req_access_txt = null
 	},
 /obj/firedoor_spawn,
-<<<<<<< HEAD
 /obj/machinery/door/poddoor/blast{
 	density = 0;
 	icon_state = "bdoormid0";
@@ -22608,13 +22607,7 @@
 	name = "Teleporter Blast Shield";
 	opacity = 0
 	},
-<<<<<<< Updated upstream
-=======
 /obj/access_spawn/research,
->>>>>>> Stashed changes
-=======
-/obj/access_spawn/research,
->>>>>>> 28ac11f5c2c1a73f51edee0b70f0490b713b9728
 /turf/simulated/floor/stairs{
 	dir = 4;
 	icon_state = "medstairs_alone"
@@ -40516,10 +40509,7 @@
 	name = "EVA Storage"
 	},
 /obj/access_spawn/eva,
-<<<<<<< Updated upstream
 /obj/firedoor_spawn,
-=======
->>>>>>> Stashed changes
 /obj/machinery/door/poddoor/blast{
 	density = 0;
 	dir = 4;
