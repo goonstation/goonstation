@@ -1548,3 +1548,12 @@ var/zapLimiter = 0
 /obj/machinery/power/apc/powered()
 	//Always powered
 	return 1
+
+
+/obj/machinery/power/apc/spookTypes = "Toggle"
+/obj/machinery/power/apc/spook_act(what, data)
+	switch(what)
+		if("Toggle")
+			src.operating = !src.operating
+		else
+			. = ..()
