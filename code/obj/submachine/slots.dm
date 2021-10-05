@@ -86,19 +86,23 @@
 				src.icon_state = "[icon_base]-off"
 
 		if("eject")
-			if(!src.accessed_record)
-				return TRUE // jerks doing that "hide in a chute to glitch auto-update windows out" exploit caused a wall of runtime errors
 			usr.put_in_hand_or_eject(src.scan)
-			src.accessed_record.fields["current_money"] += src.available_funds
 			src.available_funds = 0
 			src.scan = null
 			src.accessed_record = null
 			src.working = FALSE
 			src.icon_state = "[icon_base]-off" // just in case, some fucker broke it earlier
+			if(!src.accessed_record)
+				src.visible_message("<span class='subtle'><b>[src]</b> says, 'Winnings not transferred, thank you for playing!'</span>")
+				return TRUE // jerks doing that "hide in a chute to glitch auto-update windows out" exploit caused a wall of runtime errors
 			src.visible_message("<span class='subtle'><b>[src]</b> says, 'Winnings transferred, thank you for playing!'</span>")
+			src.accessed_record.fields["current_money"] += src.available_funds
 			. = TRUE
 
 		if("cashin")
+			if(!src.accessed_record)
+				boutput(usr, "<span class='alert'>No account connected.</span>")
+				return TRUE
 			var/transfer_amount = input(usr, "Enter how much to transfer from your account.", "Deposit Credits", 0) as null|num
 			transfer_amount = clamp(transfer_amount,0,src.accessed_record.fields["current_money"])
 			src.accessed_record.fields["current_money"] -= transfer_amount
@@ -138,9 +142,14 @@
 				usr.put_in_hand_or_eject(I)
 				ui_interact(user)
 				return TRUE
+			src.accessed_record = FindBankAccountByName(idcard.registered)
+			if(isnull(src.accessed_record))
+				boutput(user, "<span class='alert'>That card has no bank account associated.</span>")
+				usr.put_in_hand_or_eject(I)
+				ui_interact(user)
+				return TRUE
 			boutput(user, "<span class='notice'>Card authorized.</span>")
 			src.scan = I
-			src.accessed_record = FindBankAccountByName(src.scan.registered)
 			ui_interact(user)
 			. = TRUE
 	else

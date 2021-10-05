@@ -10,6 +10,8 @@
 
 	var/datum/mind/mind
 
+	var/datacore_id = null
+
 	var/datum/abilityHolder/abilityHolder = null
 	var/datum/bioHolder/bioHolder = null
 	var/datum/appearanceHolder/AH_we_spawned_with = null	// Used to colorize things that need to be colorized before the player notices they aren't
@@ -2707,7 +2709,7 @@
 					if(!src.traitHolder.hasTrait("immigrant"))// stowaway entertainers shouldn't be on the manifest
 						for (var/L in list(data_core.bank, data_core.security, data_core.general, data_core.medical))
 							if (L)
-								var/datum/data/record/R = FindRecordByFieldValue(L, "name", src.real_name)
+								var/datum/data/record/R = FindRecordByFieldValue(L, "id", src.datacore_id)
 								if (R)
 									R.fields["name"] = newname
 									if (R.fields["full_name"])
@@ -2795,10 +2797,12 @@
 	playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 	if(specialType)
 		if(!locate(specialType) in src.loc)
-			new specialType(src.loc)
+			var/atom/A = new specialType(src.loc)
+			A.blood_DNA = src.bioHolder.Uid
 	else
 		if(!locate(custom_vomit_type) in src.loc)
-			make_cleanable(custom_vomit_type,src.loc)
+			var/obj/decal/cleanable/vomit = make_cleanable(custom_vomit_type,src.loc)
+			vomit.blood_DNA = src.bioHolder.Uid
 
 	src.nutrition -= nutrition
 
