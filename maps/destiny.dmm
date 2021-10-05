@@ -4889,7 +4889,6 @@
 	name = "Medbay"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/medical,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
 "atc" = (
@@ -7926,6 +7925,7 @@
 	name = "Medbay"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/medical,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -38896,7 +38896,6 @@
 	name = "Medbay"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/medical,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
 "mAO" = (
@@ -52292,6 +52291,7 @@
 	name = "Medbay"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/medical,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
