@@ -1718,7 +1718,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 				var/list/response = null
 				try
-					response = apiHandler.queryAPI("playerInfo/get", list("ckey" = ckey), forceResponse = 1)
+					response = apiHandler.queryAPI("playerInfo/get", list("ckey" = plits["ckey"]), forceResponse = 1)
 				catch
 					return 0
 				if (!response)
