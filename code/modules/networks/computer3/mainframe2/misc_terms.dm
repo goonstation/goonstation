@@ -1286,7 +1286,11 @@
 							playsound_global(world, 'sound/machines/engine_alert2.ogg', 40)
 							return
 						if(station_or_ship() == "station")
+<<<<<<< HEAD
 							command_alert("The station's self-destruct sequence has been activated, please evacuate the station or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Self-Destruct Activated")
+=======
+							command_alert("The station's self-destruct sequence has been activated, please evacuate the station or abort the sequence as soon as possible. Detonation in T-minus [src.time] seconds", "Self-Destruct Activated")
+>>>>>>> 2755de5b0c9184e030edd3d46a7b0fec0cf7c04a
 							playsound_global(world, 'sound/machines/engine_alert2.ogg', 40)
 							return
 					if("deact")
