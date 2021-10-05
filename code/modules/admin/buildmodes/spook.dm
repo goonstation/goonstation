@@ -30,7 +30,7 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 		if(activeSpook && activeType && (istype( object, activeType ) || (object.spookTypes && (activeSpook in object.spook_getspooks()))))
 			object.spook_act( activeSpook, spookData )
 
-/obj/machinery/light/spookTypes = "Break;Set Color"//list("Break", "Set Color")
+/obj/machinery/light/spookTypes = "Break;Set Color;Toggle"
 /obj/machinery/light/spook_data(what)
 	switch(what)
 		if("Set Color")
@@ -44,6 +44,8 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 			broken()
 		if("Set Color")
 			light.set_color( arglist(data || list(1,1,1)) )
+		if("Toggle")
+			src.seton(!src.on)
 		else
 			..()
 

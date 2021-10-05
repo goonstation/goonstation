@@ -363,15 +363,17 @@
 	//Prison -> Station -> Outpost -> Prison.
 	//Skip outpost if there's a lockdown there.
 	//drsingh took outpost out for cogmap prison shuttle
+	var/area/start_location
+	var/area/end_location
 	switch(brigshuttle_location)
 		if(0)
-			var/area/start_location = locate(/area/shuttle/brig/prison)
-			var/area/end_location = locate(/area/shuttle/brig/station)
+			start_location = locate(/area/shuttle/brig/prison)
+			end_location = locate(/area/shuttle/brig/station)
 			start_location.move_contents_to(end_location)
 			brigshuttle_location = 1
 		if(1)
-			var/area/start_location = locate(/area/shuttle/brig/station)
-			var/area/end_location = null
+			start_location = locate(/area/shuttle/brig/station)
+			end_location = null
 			//if(researchshuttle_lockdown)
 			end_location = locate(/area/shuttle/brig/prison)
 			//else
@@ -389,6 +391,11 @@
 			start_location.move_contents_to(end_location)
 			brigshuttle_location = 0
 		*/
+
+	if(station_repair.station_generator)
+		var/list/turf/turfs_to_fix = get_area_turfs(start_location)
+		if(length(turfs_to_fix))
+			station_repair.repair_turfs(turfs_to_fix)
 
 	for(var/obj/machinery/computer/prison_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 		active = 0
@@ -481,9 +488,6 @@
 
 	if(station_repair.station_generator)
 		var/list/turf/turfs_to_fix = get_area_turfs(start_location)
-		if(length(turfs_to_fix))
-			station_repair.repair_turfs(turfs_to_fix)
-		turfs_to_fix = get_area_turfs(end_location)
 		if(length(turfs_to_fix))
 			station_repair.repair_turfs(turfs_to_fix)
 
@@ -587,6 +591,11 @@
 					qdel(S)
 
 			start_location.move_contents_to(end_location)
+
+			if(station_repair.station_generator)
+				var/list/turf/turfs_to_fix = get_area_turfs(start_location)
+				if(length(turfs_to_fix))
+					station_repair.repair_turfs(turfs_to_fix)
 
 			for(var/obj/machinery/computer/asylum_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 				C.active = 0
