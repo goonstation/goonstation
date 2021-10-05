@@ -7726,6 +7726,10 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	dir = null
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
 "amj" = (
@@ -9202,6 +9206,11 @@
 /obj/machinery/computer/solar_control/alt{
 	dir = 8
 	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
 "aoC" = (
@@ -9483,6 +9492,11 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/computer/solar_control/east,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
 "aoY" = (

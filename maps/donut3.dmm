@@ -5570,6 +5570,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/black/grime,
 /area/station/medical/asylum/maintenance)
 "bqd" = (
@@ -35875,6 +35876,7 @@
 	},
 /obj/cable,
 /obj/machinery/light/incandescent/warm,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/solar/east)
 "kvq" = (
@@ -68621,6 +68623,7 @@
 	},
 /obj/cable,
 /obj/machinery/light/small/sticky,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/solar/west)
 "tTQ" = (
