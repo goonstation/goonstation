@@ -1741,7 +1741,7 @@ var/f_color_selector_handler/F_Color_Selector
 				UNTIL(playtime_request.is_complete())
 				var/datum/http_response/playtime_response = playtime_request.into_response()
 				if (!playtime_response.errored && playtime_response.body)
-					response['platime'] = playtime_response.body
+					response["playtime"] = playtime_response.body
 
 				return json_encode(response)
 
