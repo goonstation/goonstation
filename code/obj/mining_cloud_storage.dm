@@ -262,7 +262,7 @@
 			eject_location = get_output_location()
 		for(var/obj/item/raw_material/R in src.contents)
 			if (R.material_name == ore)
-				//The new TGUI already does all of these checks, we don't need them here (and they would break it)
+				
 				//if (!ejectamt)
 					//ejectamt = input(usr,"How many ores do you want to eject?","Eject Ores") as num
 				//if ((ejectamt <= 0 || get_dist(src, user) > 1) && !transmit)
