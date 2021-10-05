@@ -77,7 +77,7 @@ var/datum/score_tracker/score_tracker
 		else
 			score_enemy_failure_rate = get_percentage_of_fraction_and_whole(traitor_objectives_failed,traitor_objectives)
 
-		score_crew_survival_rate = get_percentage_of_fraction_and_whole(fatalities,crew_count)
+		score_crew_survival_rate = 100 - get_percentage_of_fraction_and_whole(fatalities,crew_count)
 
 		score_crew_survival_rate = clamp(score_crew_survival_rate,0,100)
 		score_enemy_failure_rate = clamp(score_enemy_failure_rate,0,100)

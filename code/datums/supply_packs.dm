@@ -1353,7 +1353,8 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	desc = "1x Ruckingenur frame, 1x Manufacturer frame, 1x reclaimer frame, 1x device analyzer, 1x soldering iron"
 	category = "Engineering Department"
 	contains = list(/obj/item/electronics/scanner,
-					/obj/item/electronics/soldering)
+					/obj/item/electronics/soldering,
+					/obj/item/deconstructor)
 	frames = list(/obj/machinery/rkit,
 					/obj/machinery/manufacturer/mechanic,
 					/obj/machinery/portable_reclaimer)
