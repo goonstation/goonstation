@@ -782,14 +782,14 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/lead)
 			if (WALL_CUTRERODS)
 				self_message = "You cut the reinforcing rods."
 				message = "[owner] cuts \the [the_wall]'s reinforcing rods."
+				the_wall.d_state = 1
+				the_wall.update_icon()
+			if (WALL_REMOVERERODS)
 				var/atom/A = new /obj/item/rods( the_wall )
 				if (the_wall.material)
 					A.setMaterial(the_wall.material)
 				else
 					A.setMaterial(getMaterial("steel"))
-				the_wall.d_state = 1
-				the_wall.update_icon()
-			if (WALL_REMOVERERODS)
 				self_message = "You remove the reinforcing rods."
 				message = "[owner] removes \the [the_wall]'s reinforcing rods."
 				the_wall.d_state = 2
