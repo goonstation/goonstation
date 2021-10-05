@@ -273,8 +273,8 @@
 
 /obj/item/cell/potato/New(var/loc, var/potency, var/endurance)
 	src.maxcharge += rand(1,100) //slight deviation by specimen
-	src.maxcharge += round(potency*(6+rand(1,4))) //more deviation
-	src.genrate = round(endurance/rand(12,16))
+	src.maxcharge += round(potency*(8+rand(1,4))) //more deviation
+	src.genrate = round(endurance/rand(9,12))
 	if(genrate) desc = "An improvised organic power cell. It seems to be holding up well."
 	src.charge = src.maxcharge
 	..()
@@ -301,9 +301,9 @@
 	recharge_rate = 0.0
 
 /obj/item/ammo/power_cell/self_charging/potato/New(var/loc, var/potency, var/endurance)
-	var/rngfactor = 2 + rand()
-	src.max_charge += round(potency/rngfactor)
-	src.recharge_rate = 0.5 * round(endurance/rand(25,30))
+	var/rngfactor = 3 + rand()
+	src.max_charge += round(2 * potency/rngfactor)
+	src.recharge_rate = 0.5 * round(endurance/rand(18,23))
 	src.charge = src.max_charge
 	..()
 
