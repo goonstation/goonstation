@@ -332,7 +332,7 @@
 				var/datum/material_property/reflectivity/L = new/datum/material_property/reflectivity()
 				var/datum/material_property/permeability/P = new/datum/material_property/permeability()
 
-				var/stats = addtext(
+				var/added_text = addtext(
 				R.getAdjective(ore.material),
 				R.getAdjective(ore.material) ? ", " : "",
 				N.getAdjective(ore.material),
@@ -355,6 +355,12 @@
 				L.getAdjective(ore.material) ? ", " : "",
 				P.getAdjective(ore.material),
 				)
+
+				var/stats
+				if(findtext(added_text, ",",length_char(added_text)-1))
+					stats = copytext(added_text, 1, length_char(stats)-2)
+				else
+					stats = added_text
 
 				ore_list += list(list(
 					"name" = ore.material_name,
