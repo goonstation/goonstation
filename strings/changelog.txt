@@ -1,5 +1,9 @@
 
 (t)wed oct 06 21
+(u)UnfunnyPerson
+(p)5937
+(e)⚖|balance
+(+)Chameleon bomb traitor purchase cost reduced to 3 tc and now gives a box of 2 chameleon bombs, power of chameleon bombs lowered to compensate.
 (u)Jan.antilles
 (p)6174
 (e)🆕🎨|feature, sprites
