@@ -332,33 +332,36 @@
 				var/datum/material_property/reflectivity/L = new/datum/material_property/reflectivity()
 				var/datum/material_property/permeability/P = new/datum/material_property/permeability()
 
+				var/stats = addtext(
+				R.getAdjective(ore.material),
+				R.getAdjective(ore.material) ? ", " : "",
+				N.getAdjective(ore.material),
+				N.getAdjective(ore.material) ?", " : "",
+				E.getAdjective(ore.material),
+				E.getAdjective(ore.material) ? ", " : "",
+				T.getAdjective(ore.material),
+				T.getAdjective(ore.material) ? ", " : "",
+				S.getAdjective(ore.material),
+				S.getAdjective(ore.material) ? ", " : "",
+				H.getAdjective(ore.material),
+				H.getAdjective(ore.material) ? ", " : "",
+				D.getAdjective(ore.material),
+				D.getAdjective(ore.material) ? ", " : "",
+				F.getAdjective(ore.material),
+				F.getAdjective(ore.material) ? ", " : "",
+				C.getAdjective(ore.material),
+				C.getAdjective(ore.material) ? ", " : "",
+				L.getAdjective(ore.material),
+				L.getAdjective(ore.material) ? ", " : "",
+				P.getAdjective(ore.material),
+				)
+
 				ore_list += list(list(
 					"name" = ore.material_name,
 					"amount" = OCD.amount,
 					"price" = OCD.price,
 					"forSale" = OCD.for_sale,
-					"radioactivity" = ore.material.getProperty("radioactive"),
-					"radioactivityAdj" = R.getAdjective(ore.material),
-					"neutron" = ore.material.getProperty("n_radioactive"),
-					"neutronAdj" = N.getAdjective(ore.material),
-					"conductivity" = ore.material.getProperty("electrical"),
-					"conductivityAdj" = E.getAdjective(ore.material),
-					"thermal" = ore.material.getProperty("thermal"),
-					"thermalAdj" = T.getAdjective(ore.material),
-					"stability" = ore.material.getProperty("stability"),
-					"stabilityAdj" = S.getAdjective(ore.material),
-					"hardness" = ore.material.getProperty("hard"),
-					"hardnessAdj" = H.getAdjective(ore.material),
-					"density" = ore.material.getProperty("density"),
-					"densityAdj" = D.getAdjective(ore.material),
-					"flammability" = ore.material.getProperty("flammable"),
-					"flammabilityAdj" = F.getAdjective(ore.material),
-					"corrosion" = ore.material.getProperty("corrosion"),
-					"corrosionAdj" = C.getAdjective(ore.material),
-					"reflectivity" = ore.material.getProperty("reflective"),
-					"reflectivityAdj" = L.getAdjective(ore.material),
-					"permeability" = ore.material.getProperty("permeable"),
-					"permeabilityAdj" = P.getAdjective(ore.material),
+					"stats" = stats
 				))
 
 		. = list(
