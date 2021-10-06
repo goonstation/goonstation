@@ -3991,6 +3991,24 @@
 /obj/machinery/light,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"kr" = (
+/obj/shrub{
+	dir = 1
+	},
+/obj/decal/tile_edge/line/blue{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/blue{
+	icon_state = "line1"
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grass/random,
+/area/station/hallway/primary/north)
 "ks" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -18955,24 +18973,6 @@
 /obj/item/rcd/construction/chiefEngineer,
 /turf/simulated/floor/yellow,
 /area/station/bridge/united_command)
-"Vr" = (
-/obj/shrub{
-	dir = 1
-	},
-/obj/decal/tile_edge/line/blue{
-	dir = 1;
-	icon_state = "line1"
-	},
-/obj/decal/tile_edge/line/blue{
-	icon_state = "line1"
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/grass/random,
-/area/station/hallway/primary/north)
 "Vt" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -72058,7 +72058,7 @@ TO
 QA
 qF
 uj
-Vr
+kr
 hV
 yh
 vZ
