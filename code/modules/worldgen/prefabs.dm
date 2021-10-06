@@ -208,10 +208,17 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 19
 		prefabSizeY = 22
 
+	dreamplaza // Walp's abandoned space mall... Well, what remains of it.
+		maxNum = 1
+		probability = 30
+		prefabPath = "assets/maps/prefabs/prefab_dreamplaza.dmm"
+		prefabSizeX = 30
+		prefabSizeY = 30
+
 	ship3151 // Eagle's soviet ship with a lot of lore stuff. And blood.
 		maxNum = 1
 		prefabPath = "assets/maps/prefabs/prefab_lostship.dmm"
-		probability = 10
+		probability = 100
 		prefabSizeX = 34
 		prefabSizeY = 19
 

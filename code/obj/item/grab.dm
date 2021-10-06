@@ -806,7 +806,9 @@
 				I.reagents.temperature_reagents(4000,10)
 			.= src.getProperty("I_block_[prop]")
 		if(real_hit)
-			SEND_SIGNAL(src, COMSIG_BLOCK_BLOCKED)
+			var/ret = list(.)
+			SEND_SIGNAL(src, COMSIG_BLOCK_BLOCKED, hit_type, ret)
+			. = ret[1]
 			block_spark(src.assailant)
 			fuckup_attack_particle()
 

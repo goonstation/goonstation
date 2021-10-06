@@ -18,7 +18,9 @@ export const GeneralTab = (_props, context) => {
               </Button.Checkbox>
             }>
             <Button onClick={() => act('update-nameFirst')}>{data.nameFirst}</Button>
-            <Button onClick={() => act('update-nameMiddle')}>{data.nameMiddle}</Button>
+            <Button onClick={() => act('update-nameMiddle')} color={data.nameMiddle === '' ? 'grey' : 'default'}>
+              {data.nameMiddle !== '' ? data.nameMiddle : <Box italic>None</Box>}
+            </Button>
             <Button onClick={() => act('update-nameLast')}>{data.nameLast}</Button>
           </LabeledList.Item>
           <LabeledList.Item label="Gender">

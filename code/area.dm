@@ -1212,6 +1212,11 @@ ABSTRACT_TYPE(/area/prefab)
 	name = "Shooting Range"
 	icon_state = "purple"
 
+/area/prefab/dreamplaza
+	name = "DreamPlaza Mall"
+	icon_state = "purple"
+
+/
 // Sealab trench areas //
 
 /area/shuttle/sea_elevator_room

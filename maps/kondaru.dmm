@@ -58822,6 +58822,12 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"vaO" = (
+/obj/landmark/spawner{
+	name = "dolly"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "vbJ" = (
 /obj/decal/garland/ephemeral{
 	dir = 8;
@@ -111533,7 +111539,7 @@ dZr
 emB
 buI
 bAJ
-emI
+vaO
 emI
 emI
 tah
