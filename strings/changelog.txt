@@ -1,5 +1,9 @@
 
 (t)wed oct 06 21
+(u)Arthur Holiday
+(p)5873
+(e)🆕⚖|feature, balance
+(+)You can now destroy printers and disposal chutes by shooting them.
 (u)MomoBerry
 (p)6010
 (e)⚖|balance
