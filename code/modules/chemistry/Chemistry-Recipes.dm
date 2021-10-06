@@ -3831,6 +3831,7 @@ datum
 			id = "expresso"
 			result = "expresso"
 			required_reagents = list("espresso" = 1, "neurotoxin" = 3)
+			required_temperature = T0C + 100
 			result_amount = 3
 			mix_phrase = "Irregardless and for all intense and purposes, the coffee becomes stupider."
 
