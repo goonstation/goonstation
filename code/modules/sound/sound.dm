@@ -98,6 +98,8 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 /// Sets and applies the volume for a channel (0-1)
 /client/proc/setVolume(channel, volume)
 	var/original_volume = volumes[channel + 1]
+	if(original_volume == 0)
+		original_volume = 1 // let's be safe and try to avoid division by zero
 	volume = clamp(volume, 0, 1)
 	volumes[channel + 1] = volume
 
