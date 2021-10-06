@@ -9,6 +9,7 @@
 	anchored = 0
 	mats = 50
 	layer = FLOOR_EQUIP_LAYER1
+	deconstruct_flags = DECON_DESTRUCT
 	var/obj/item/cell/PCEL = null
 	var/coveropen = 0
 	var/active = 0

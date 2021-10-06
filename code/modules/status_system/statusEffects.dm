@@ -335,7 +335,7 @@
 
 		tickSpacing = 3 SECONDS
 
-		damage_tox = 1
+		damage_tox = 0
 		damage_type = DAMAGE_BURN
 
 		var/howMuch = ""
@@ -382,8 +382,8 @@
 			var/mob/M = null
 			if(ismob(owner))
 				M = owner
-
-			damage_tox = (sqrt(duration/20 + 5) - 1)
+			if(!ismobcritter(M))
+				damage_tox = (sqrt(duration/20 + 5) - 1)
 			stage = get_stage(duration)
 			switch(stage)
 				if(1)

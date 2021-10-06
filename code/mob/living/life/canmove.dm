@@ -4,7 +4,9 @@
 		//check_if_buckled()
 		if (owner.buckled)
 			if (owner.buckled.loc != owner.loc)
-				owner.buckled.buckled_guy = null
+				if(istype(owner.buckled, /obj/stool))
+					owner.buckled.unbuckle()
+					owner.buckled.buckled_guy = null
 				owner.buckled = null
 				return ..()
 			owner.lying = istype(owner.buckled, /obj/stool/bed) || istype(owner.buckled, /obj/machinery/conveyor)

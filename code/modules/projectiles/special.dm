@@ -144,7 +144,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(split_type == 0)
 			split(P)
 
-	on_hit(var/atom/A,var/obj/projectile/P)
+	on_hit(var/atom/A,var/dir,var/obj/projectile/P)
 		if(split_type == 1)
 			split(P)
 
