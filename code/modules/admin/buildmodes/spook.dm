@@ -175,5 +175,7 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 	switch(what)
 		if("Toggle")
 			src.operating = !src.operating
+			src.update()
+			updateicon()
 		else
 			. = ..()
