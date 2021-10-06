@@ -852,7 +852,7 @@ toxic - poisons
 
 
 	on_hit(atom/hit)
-		for(var/turf/T in range(hit.loc, 4))
+		for(var/turf/T in range(get_turf(hit), 4))
 			new /obj/effects/explosion/dangerous(T)
 		explosion_new(null, get_turf(hit), 100)
 
