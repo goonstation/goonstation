@@ -231,7 +231,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		New()
 			..()
 			if (src.loc)
-				src.loc.invisibility = 100 //Hide the floor below us so people don't just right click and see two floors.
+				src.loc.invisibility = INVIS_ALWAYS_ISH //Hide the floor below us so people don't just right click and see two floors.
 
 		attackby(obj/item/O as obj, mob/user as mob)
 			if (src.alive && ispryingtool(O))
@@ -241,7 +241,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 					gibs(src.loc)
 					if (src.loc)
 						new /obj/item/tile/steel (src.loc)
-						src.loc.invisibility = 0
+						src.loc.invisibility = INVIS_NONE
 
 					qdel(src)
 					return
@@ -1540,7 +1540,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	name = "generic puzzle logic element"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	var/output_ids = null //legacy
 	var/inputs_required = 1
 	var/input_counter = 0

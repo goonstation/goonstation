@@ -714,7 +714,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 			var/obj/decal/D = new/obj/decal(get_turf(src))
 			D.name = null
 			D.icon = null
-			D.invisibility = 101
+			D.invisibility = INVIS_ALWAYS
 			D.create_reagents(5)
 			src.reagents.trans_to(D, 5)
 

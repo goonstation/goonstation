@@ -101,7 +101,7 @@
 	name = "water"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	var/canmove = 1 // can be used to completely stop movement
 	var/movecd = 0 // used in relaymove, so people don't move too quickly
 	density = 0
@@ -259,11 +259,11 @@
 	proc/set_cloaked(var/cloaked = 1)
 		if (use_cloakofdarkness)
 			if (cloaked == 1)
-				src.invisibility = 1
+				src.invisibility = INVIS_INFRA
 				src.alpha = 120
 				//src.UpdateOverlays(overlay_image, "batpoof_cloak")
 			else
-				src.invisibility = 0
+				src.invisibility = INVIS_NONE
 				src.alpha = 250
 				//src.UpdateOverlays(null, "batpoof_cloak")
 

@@ -927,7 +927,7 @@
 
 	disposing()
 		if(holoparticles)
-			holoparticles.invisibility = 101
+			holoparticles.invisibility = INVIS_ALWAYS
 			qdel(holoparticles)
 		..()
 

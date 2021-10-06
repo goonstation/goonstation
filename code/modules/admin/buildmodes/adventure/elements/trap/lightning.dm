@@ -52,7 +52,7 @@
 
 /obj/adventurepuzzle/triggerable/targetable/lightningtrap
 	name = "lightning trap"
-	invisibility = 20
+	invisibility = INVIS_ADVENTURE
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "spark"
 	density = 0

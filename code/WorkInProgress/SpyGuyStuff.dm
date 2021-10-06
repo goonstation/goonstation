@@ -108,7 +108,7 @@ proc/Create_Tommyname()
 /mob/proc/tommyize()
 	src.transforming = 1
 	src.canmove = 0
-	src.invisibility = 101
+	src.invisibility = INVIS_ALWAYS
 	for(var/obj/item/clothing/O in src)
 		src.u_equip(O)
 		if (O)
@@ -309,7 +309,7 @@ proc/Create_Tommyname()
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x2"
 	anchored = 1
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	event_handler_flags = USE_HASENTERED
 
 	HasEntered(atom/movable/AM)
@@ -557,7 +557,7 @@ proc/Create_Tommyname()
 /obj/solar_control
 	name = "solar panel servo"
 	desc = "This machine contains a neatly-folded solar panel, for use when the ship is at little risk of external impacts and low on power."
-	//invisibility = 100
+	//invisibility = INVIS_ALWAYS_ISH
 	icon = 'icons/obj/machines/nuclear.dmi'
 	icon_state = "engineoff"
 	var/extension_dir = WEST
@@ -801,11 +801,11 @@ proc/Create_Tommyname()
 //The dummy object that imitates a turf
 /obj/movedummy
 	name = "Dummy object."
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 
 /obj/movedummy/pooled()
 	..()
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 
 /obj/movedummy/proc/mimic_turf(var/turf_type, var/TTL)
 	ASSERT(ispath(turf_type, /turf))
@@ -818,7 +818,7 @@ proc/Create_Tommyname()
 	src.opacity = initial(T.opacity)
 	src.set_dir(initial(T.dir))
 	src.layer = initial(T.layer)
-	src.invisibility = 0
+	src.invisibility = INVIS_NONE
 	if(TTL)
 		SPAWN_DBG(TTL)
 			pool(src)

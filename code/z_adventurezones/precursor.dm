@@ -856,7 +856,7 @@
 			if(!src.active)
 				src.active = 1
 				src.set_density(1)
-				src.invisibility = 0
+				src.invisibility = INVIS_NONE
 				changing_state = 1
 				playsound(src.loc, "sound/effects/shielddown.ogg", 60, 1)
 				src.visible_message("<span class='notice'><b>[src] powers up!</b></span>")
@@ -872,7 +872,7 @@
 			if(src.active)
 				src.active = 0
 				src.set_density(0)
-				src.invisibility = 100
+				src.invisibility = INVIS_ALWAYS_ISH
 				playsound(src.loc, "sound/effects/shielddown2.ogg", 60, 1)
 				src.visible_message("<span class='notice'><b>[src] powers down!</b></span>")
 				changing_state = 1
@@ -1170,7 +1170,7 @@
 		overarmor = "heavy"
 
 /obj/effects/ydrone_summon //WIP
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	var/range = 5
 	var/end_float_effect = 0
@@ -1341,7 +1341,7 @@
 /obj/creepy_sound_trigger
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "ydn"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
 	var/active = 0
@@ -1361,7 +1361,7 @@
 /obj/creepy_sound_trigger_glacier
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "ydn"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
 	var/active = 0
