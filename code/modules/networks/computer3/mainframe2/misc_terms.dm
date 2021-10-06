@@ -1283,11 +1283,11 @@
 						//World announcement.
 						if(station_or_ship() == "ship")
 							command_alert("The ship's self-destruct sequence has been activated, please evacuate the ship or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Self-Destruct Activated")
-							playsound_global(world, 'sound/machines/engine_alert2.ogg', 40)
+							playsound_global(world, "sound/machines/engine_alert2.ogg", 40)
 							return
 						if(station_or_ship() == "station")
 							command_alert("The station's self-destruct sequence has been activated, please evacuate the station or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Self-Destruct Activated")
-							playsound_global(world, 'sound/machines/engine_alert2.ogg', 40)
+							playsound_global(world, "sound/machines/engine_alert2.ogg", 40)
 							return
 					if("deact")
 						if(data["auth"] != netpass_heads)
