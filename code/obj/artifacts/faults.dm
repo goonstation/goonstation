@@ -112,7 +112,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 			boutput(user, "<span class='alert'>The artifact shrinks away into nothingness!</span>")
 			user.u_equip(I)
 			I.set_loc(user.loc)
-			I.invisibility = 100
+			I.invisibility = INVIS_ALWAYS_ISH
 
 /datum/artifact_fault/murder
 	// gibs the user

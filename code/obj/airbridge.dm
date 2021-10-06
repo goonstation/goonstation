@@ -16,7 +16,7 @@
 	desc = "This is an invisible thing. Yet you can see it. You notice reality unraveling around you."
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "airbr"
-	invisibility = 99
+	invisibility = INVIS_ALWAYS_ISH
 	anchored = 1
 	density = 0
 

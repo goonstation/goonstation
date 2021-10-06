@@ -124,7 +124,7 @@
 			src.set_density(1)
 			REMOVE_MOB_PROPERTY(src, PROP_INVISIBILITY, src)
 			src.icon_state = "poltergeist-corp"
-			src.see_invisible = 0
+			src.see_invisible = INVIS_NONE
 			src.visible_message(pick("<span class='alert'>A horrible apparition fades into view!</span>", "<span class='alert'>A pool of shadow forms!</span>"), pick("<span class='alert'>A shell of ectoplasm forms around you!</span>", "<span class='alert'>You manifest!</span>"))
 		update_body()
 
@@ -134,7 +134,7 @@
 			src.set_density(0)
 			APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
 			src.icon_state = "poltergeist"
-			src.see_invisible = 16
+			src.see_invisible = INVIS_GHOST
 		update_body()
 
 	Move(var/turf/NewLoc, direct)

@@ -203,8 +203,8 @@
 					src.reagents.grenade_effects(src, A)
 					src.reagents.reaction(A, 1, 10, 0)
 
-		invisibility = 100 //Why am i doing this?
-		if (src.master) src.master.invisibility = 100
+		invisibility = INVIS_ALWAYS_ISH //Why am i doing this?
+		if (src.master) src.master.invisibility = INVIS_ALWAYS_ISH
 		SPAWN_DBG(5 SECONDS)		   //To make sure all reagents can work
 			if (src.master) qdel(src.master)
 			if (src) qdel(src)	   //correctly before deleting the grenade.

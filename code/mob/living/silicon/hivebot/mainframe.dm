@@ -49,7 +49,7 @@
 	src.sight |= SEE_MOBS
 	src.sight |= SEE_OBJS
 	src.see_in_dark = SEE_DARK_FULL
-	src.see_invisible = 2
+	src.see_invisible = INVIS_CLOAK
 	src.lying = 1
 	src.icon_state = "hive_main-crash"
 

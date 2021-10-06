@@ -107,7 +107,7 @@
 	icon_state = "false_wall"
 	name = "false wall triggerable endpoint"
 	var/turf/unsimulated/wall/adaptive/wizard_fake/attached
-	invisibility = 21
+	invisibility = INVIS_ADVENTURE
 	anchored = 1
 	density = 0
 	opacity = 0
@@ -287,7 +287,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 	density = 1
 	opacity = 0
 	anchored = 1
-	invisibility = 100
+	invisibility = INVIS_ALWAYS_ISH
 	icon = null
 	icon_state = null
 
