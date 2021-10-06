@@ -9856,8 +9856,7 @@
 	})
 "cOI" = (
 /obj/machinery/computer/robotics{
-	dir = 8;
-	perma = 1
+	dir = 8
 	},
 /obj/cable{
 	icon_state = "0-8"
