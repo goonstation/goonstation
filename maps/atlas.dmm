@@ -2302,20 +2302,6 @@
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/delivery,
 /area/station/hallway/primary/south)
-"fW" = (
-/obj/machinery/power/data_terminal/cable_tray,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/disjoint_connector/location/down{
-	conn_x = 175;
-	conn_y = 179;
-	conn_z = 1
-	},
-/obj/machinery/atmospherics/pipe/vertical_pipe/north,
-/turf/simulated/floor/plating/random,
-/area/station/hallway/primary/north)
 "fX" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/caution/northsouth,
@@ -3498,9 +3484,6 @@
 /obj/machinery/r_door_control/podbay/mainpod1,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/main)
-"ji" = (
-/turf/simulated/floor/plating/random,
-/area/station/hallway/primary/north)
 "jj" = (
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	name = "Mechanics"
@@ -3710,19 +3693,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
-"jH" = (
-/obj/machinery/power/data_terminal/cable_tray,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/disjoint_connector/location/up{
-	conn_x = 169;
-	conn_y = 179;
-	conn_z = 1
-	},
-/obj/machinery/atmospherics/pipe/vertical_pipe/north,
-/turf/simulated/floor/plating/random,
-/area/station/hallway/primary/north)
 "jI" = (
 /turf/simulated/floor/red/side{
 	dir = 4
@@ -4688,9 +4658,6 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
-	dir = 4
-	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "lW" = (
@@ -4727,7 +4694,6 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "ma" = (
@@ -5118,15 +5084,6 @@
 /obj/disposalpipe/junction/middle/east,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
-"na" = (
-/obj/disposalpipe/trunk/zlevel{
-	dir = 4
-	},
-/obj/disjoint_connector/id/up{
-	id = "disposal"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/hallway/primary/north)
 "nb" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -5475,6 +5432,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "nQ" = (
+/obj/shrub,
 /obj/decal/tile_edge/line/blue{
 	dir = 1;
 	icon_state = "line1"
@@ -5487,7 +5445,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor,
 /turf/simulated/floor/grass/random,
 /area/station/hallway/primary/north)
 "nR" = (
@@ -7618,9 +7575,6 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
-	dir = 10
-	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "sL" = (
@@ -8280,9 +8234,6 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
-	dir = 6
-	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "ub" = (
@@ -8375,9 +8326,6 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
-	dir = 10
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
@@ -10914,13 +10862,6 @@
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon5,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"Au" = (
-/obj/disposalpipe/trunk{
-	dir = 4
-	},
-/obj/machinery/disposal,
-/turf/simulated/floor,
-/area/station/hallway/primary/north)
 "Ax" = (
 /obj/machinery/atmospherics/valve,
 /turf/simulated/floor/engine,
@@ -11850,17 +11791,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/quartermaster/office)
-"CT" = (
-/obj/machinery/power/data_terminal/cable_tray,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/disjoint_connector/id/down{
-	id = "power"
-	},
-/obj/machinery/atmospherics/pipe/vertical_pipe/north,
-/turf/simulated/floor/plating/random,
-/area/station/hallway/primary/north)
 "CU" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
@@ -12404,14 +12334,6 @@
 "Eq" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/main)
-"Es" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/hallway/primary/north)
 "Et" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -14415,18 +14337,6 @@
 	},
 /turf/space,
 /area/space)
-"Jf" = (
-/obj/machinery/power/data_terminal/cable_tray,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/disjoint_connector/id/up{
-	id = "power"
-	},
-/obj/machinery/atmospherics/pipe/vertical_pipe/north,
-/turf/simulated/floor/plating/random,
-/area/station/hallway/primary/north)
 "Jg" = (
 /obj/machinery/portable_atmospherics/canister/empty,
 /turf/simulated/floor/plating,
@@ -18228,25 +18138,6 @@
 /obj/machinery/light/runway_light,
 /turf/space,
 /area/station/shield_zone)
-"Ta" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/north)
 "Tb" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -18798,13 +18689,6 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/bridge/united_command)
-"UC" = (
-/obj/machinery/light,
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/plating/random,
-/area/station/hallway/primary/north)
 "UD" = (
 /obj/machinery/power/terminal,
 /obj/cable,
@@ -19071,6 +18955,24 @@
 /obj/item/rcd/construction/chiefEngineer,
 /turf/simulated/floor/yellow,
 /area/station/bridge/united_command)
+"Vr" = (
+/obj/shrub{
+	dir = 1
+	},
+/obj/decal/tile_edge/line/blue{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/blue{
+	icon_state = "line1"
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grass/random,
+/area/station/hallway/primary/north)
 "Vt" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -19341,25 +19243,6 @@
 /obj/machinery/r_door_control/podbay/mining,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/mining/staff_room)
-"Wl" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
-	dir = 6
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/north)
 "Wn" = (
 /obj/machinery/atmospherics/portables_connector/south,
 /obj/machinery/firealarm{
@@ -20216,12 +20099,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/storage)
-"YC" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/plating/random,
-/area/station/hallway/primary/north)
 "YD" = (
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
@@ -20482,15 +20359,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/storage/tools)
-"Zq" = (
-/obj/disposalpipe/trunk/zlevel{
-	dir = 8
-	},
-/obj/disjoint_connector/id/down{
-	id = "disposal"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/hallway/primary/north)
 "Zr" = (
 /obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass,
@@ -69775,7 +69643,7 @@ qt
 kW
 wr
 ui
-Au
+hV
 vY
 mI
 To
@@ -70077,7 +69945,7 @@ qu
 rz
 iI
 mO
-YC
+hV
 vY
 mJ
 wX
@@ -70379,7 +70247,7 @@ nJ
 qy
 fl
 mO
-UC
+mv
 vY
 mK
 yD
@@ -70681,7 +70549,7 @@ nJ
 qy
 fl
 mO
-Zq
+hV
 dn
 vY
 vY
@@ -71587,7 +71455,7 @@ nD
 nD
 ua
 nQ
-fW
+hV
 yg
 rs
 yG
@@ -71889,7 +71757,7 @@ ZD
 nD
 lV
 mj
-Es
+hV
 yg
 vR
 yH
@@ -72190,8 +72058,8 @@ TO
 QA
 qF
 uj
-nQ
-CT
+Vr
+hV
 yh
 vZ
 zY
@@ -72793,9 +72661,9 @@ vu
 qL
 rL
 uc
-Wl
+ov
 nQ
-Jf
+hV
 yh
 wM
 yJ
@@ -73095,9 +72963,9 @@ pz
 rq
 qL
 uc
-Ta
+ov
 jU
-Es
+hV
 yh
 wO
 yK
@@ -73399,7 +73267,7 @@ rP
 nD
 sK
 lZ
-jH
+hV
 yh
 wQ
 yL
@@ -73701,7 +73569,7 @@ pA
 ud
 fl
 mO
-na
+hV
 yh
 wV
 yM
@@ -74003,7 +73871,7 @@ so
 uh
 ta
 mg
-YC
+hV
 yh
 vZ
 yN
@@ -74305,7 +74173,7 @@ sA
 um
 fl
 mO
-ji
+hV
 gD
 ow
 ow
