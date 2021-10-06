@@ -4,7 +4,7 @@
 	name = "wendigo"
 	desc = "Oh god."
 	icon_state = "wendigo"
-	invisibility = INVIS_INFRA6
+	invisibility = INVIS_SPOOKY
 	health = 60
 	firevuln = 1
 	brutevuln = 0.5
@@ -335,7 +335,7 @@
 		src.icon_state = "wendigo_melt"
 		set_density(0)
 		SPAWN_DBG(1.2 SECONDS)
-			src.invisibility = INVIS_INFRA6
+			src.invisibility = INVIS_SPOOKY
 			if(king)
 				src.icon_state = "wendigoking"
 			else
