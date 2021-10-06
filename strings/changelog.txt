@@ -1,5 +1,9 @@
 
 (t)wed oct 06 21
+(u)MomoBerry
+(p)6010
+(e)⚖|balance
+(+)Holy water and Firefighting Foam damage caps are now 80 and 74.75, respective to their antags.
 (u)Hans
 (p)5924
 (e)⚖|balance
