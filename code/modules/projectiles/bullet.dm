@@ -832,7 +832,7 @@ toxic - poisons
 	name = "howitzer round"
 	brightness = 0.7
 	window_pass = 0
-	icon = 'icons/obj/large/32x96.dmi'
+	icon = 'icons/obj/large/bigprojectiles.dmi'
 	icon_state = "152mm-shot"
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
