@@ -1,5 +1,9 @@
 
 (t)wed oct 06 21
+(u)HauntedAngel
+(p)6171
+(e)🆕⚖|feature, balance
+(+)Removes cast time from the prismatic spray spell, allowing you to cast it while on the go.
 (u)Arthur Holiday
 (p)5873
 (e)🆕⚖|feature, balance
