@@ -1708,6 +1708,7 @@
 
 	New()
 		..()
+		src.AddComponent(/datum/component/obj_projectile_damage)
 		if(!print_id)
 			src.print_id = "GENERIC"
 
@@ -1778,6 +1779,12 @@
 
 		else
 			return attack_hand(user)
+
+	onDestroy()
+		if (src.powered())
+			elecflash(src, power = 2)
+		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
+		. = ..()
 
 	attack_hand(mob/user as mob)
 		if(..() || (status & (NOPOWER|BROKEN)))
