@@ -452,10 +452,11 @@
 			med_note = src.client.preferences.medical_note
 		data_core.addManifest(src, sec_note, med_note)
 
-	SPAWN_DBG(0)
+	SPAWN_DBG(10 SECONDS)
 		if (ishuman(src))
+			var/mob/living/carbon/human/H = src
 			if (src.traitHolder && !src.traitHolder.hasTrait("immigrant"))
-				src:spawnId(rank)
+				H.spawnId(rank)
 			if (src.traitHolder && src.traitHolder.hasTrait("immigrant"))
 				//Has the immigrant trait - they're hiding in a random locker
 				var/list/obj/storage/SL = list()
