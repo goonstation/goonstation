@@ -50,6 +50,9 @@
 /datum/movement_modifier/hastened
 	additive_slowdown = -0.8
 
+/datum/movement_modifier/death_march
+	additive_slowdown = -0.4
+
 /datum/movement_modifier/janktank
 	health_deficiency_adjustment = -50
 
