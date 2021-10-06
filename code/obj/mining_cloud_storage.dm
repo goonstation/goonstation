@@ -262,13 +262,6 @@
 			eject_location = get_output_location()
 		for(var/obj/item/raw_material/R in src.contents)
 			if (R.material_name == ore)
-				
-				//if (!ejectamt)
-					//ejectamt = input(usr,"How many ores do you want to eject?","Eject Ores") as num
-				//if ((ejectamt <= 0 || get_dist(src, user) > 1) && !transmit)
-					//break
-				//if (!eject_location)
-					//break
 				R.set_loc(eject_location)
 				ejectamt--
 				amount_ejected++
