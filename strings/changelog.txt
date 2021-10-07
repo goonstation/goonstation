@@ -1,4 +1,9 @@
 
+(t)thu oct 07 21
+(u)MetricDuck
+(p)6048
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Added a new space prefab - a seemingly abandoned safe house.
 (t)wed oct 06 21
 (u)Emily & Eagletanker
 (p)6195
