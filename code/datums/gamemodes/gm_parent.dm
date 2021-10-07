@@ -248,11 +248,11 @@
 		if (!istype(player)) continue
 		if (ishellbanned(player)) continue //No treason for you
 
-		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
+		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !(player.mind in candidates))
 			if (player.client.preferences.vars[get_preference_for_role(type)])
 				candidates += player.mind
 
-	if(candidates.len < number)
+	if(length(candidates) < number)
 		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_[type] set to yes were ready. We need [number] so including players who don't want to be [type]s in the pool.")
 
 		for(var/client/C)
@@ -260,9 +260,9 @@
 			if (!istype(player)) continue
 			if (ishellbanned(player)) continue //No treason for you
 
-			if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
+			if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !(player.mind in candidates))
 				candidates += player.mind
-				if ((number > 1) && (candidates.len >= number))
+				if ((number > 1) && (length(candidates) >= number))
 					break
 
 	if(candidates.len < 1)
