@@ -229,7 +229,7 @@
 	desc = "Huh."
 	anchored = 1
 	density = 0
-	invisibility = 2
+	invisibility = INVIS_CLOAK
 	blend_mode = 4
 	icon = 'icons/misc/old_or_unused.dmi'
 	icon_state = "noise5"

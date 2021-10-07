@@ -1,4 +1,70 @@
 
+(t)thu oct 07 21
+(u)Carsontheking
+(p)5782
+(e)🆕🎨|feature, sprites
+(+)Gold ID card the hops equipment manufacturer can make now requires gold rather than reflective material.
+(u)Dr. Cogwerks 
+(e)🗺|mapping
+(*)Reworked cogmap2 engineering hallway so the PTL only bisects one side of the primary corridor by default
+(u)MetricDuck
+(p)6048
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Added a new space prefab - a seemingly abandoned safe house.
+(t)wed oct 06 21
+(u)Emily & Eagletanker
+(p)6195
+(e)🗺|mapping
+(*)Manta's Mining has moved from the Sea Turtle back shipside.
+(u)Flappybat
+(p)6006
+(e)⚖|balance
+(+)Wish granters now give out less dollars.
+(u)Tarmunora
+(+)adjust expresso recipe
+(u)HauntedAngel
+(p)6171
+(e)🆕⚖|feature, balance
+(+)Removes cast time from the prismatic spray spell, allowing you to cast it while on the go.
+(u)Arthur Holiday
+(p)5873
+(e)🆕⚖|feature, balance
+(+)You can now destroy printers and disposal chutes by shooting them.
+(u)MomoBerry
+(p)6010
+(e)⚖|balance
+(+)Holy water and Firefighting Foam damage caps are now 80 and 74.75, respective to their antags.
+(u)Hans
+(p)5924
+(e)⚖|balance
+(+)Enhances the capacity of some of the bottles so they can serve more glasses.
+(u)UnfunnyPerson
+(p)5937
+(e)⚖|balance
+(+)Chameleon bomb traitor purchase cost reduced to 3 tc and now gives a box of 2 chameleon bombs, power of chameleon bombs lowered to compensate.
+(u)Jan.antilles
+(p)6174
+(e)🆕🎨|feature, sprites
+(+)Added three new botany plants: Raspberry, Blackberry, and Blue Raspberry!
+(+)Added three new cocktail recipes: Blackberry Bramble, French Martini, and Jazzberry Hard Lemonade!
+(t)tue oct 05 21
+(u)Wisemonster
+(p)6177
+(e)🐛🗺|bug, mapping
+(+)Destiny's science department no longer has as many public access doors.
+(+)Destiny's Medbay lobby is now accessible to the public.
+(u)TTerc
+(p)6107
+(e)|
+(+)You are now able to put critter corpses into disposal units via clickdrag.
+(u)112358sam
+(p)6120
+(e)🆕|feature
+(+)Added a new crew objective for miners
+(u)Gannets
+(p)6175
+(e)⚖|balance
+(+)Gwydion tranquilizer pistol magazine size reduced to 10. Tranquilizer ammo pouches now contain 3 spares.
 (t)mon oct 04 21
 (u)Waffleloffle
 (p)5915

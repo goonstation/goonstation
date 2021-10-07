@@ -251,7 +251,7 @@
 	icon = 'icons/effects/mapeditor.dmi'
 	icon_state = "cordonturf"
 	fullbright = 1
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	explosion_resistance = 999999
 	density = 1
 	opacity = 1

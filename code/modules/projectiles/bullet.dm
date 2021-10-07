@@ -773,8 +773,6 @@ toxic - poisons
 		for(var/mob/M in range(proj.loc, 5))
 			shake_camera(M, 3, 8)
 
-
-
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
 
 		..()
@@ -830,14 +828,37 @@ toxic - poisons
 				T.throw_shrapnel(T, 1, 1)
 				T.ex_act(2)
 
+/datum/projectile/bullet/howitzer
+	name = "howitzer round"
+	brightness = 0.7
+	window_pass = 0
+	icon = 'icons/obj/large/bigprojectiles.dmi'
+	icon_state = "152mm-shot"
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	power = 400
+	dissipation_delay = 300
+	dissipation_rate = 5
+	cost = 1
+	shot_sound = 'sound/effects/explosion_new2.ogg'
+	shot_volume = 90
+	implanted = null
+
+	ks_ratio = 0.5
+	caliber = 6 // six inch gun
+	icon_turf_hit = "bhole-large"
+	casing = /obj/item/casing/cannon
+	shot_sound_extrarange = 1
 
 
+	on_hit(atom/hit)
+		for(var/turf/T in range(get_turf(hit), 4))
+			new /obj/effects/explosion/dangerous(T)
+		explosion_new(null, get_turf(hit), 100)
 
-
-
-
-
-
+	on_launch(obj/projectile/proj)
+		for(var/mob/M in range(proj.loc, 5))
+			shake_camera(M, 3, 6)
 
 
 
@@ -891,11 +912,12 @@ toxic - poisons
 	huge
 		icon_state = "400mm"
 		power = 100
-		caliber = 15.7
+		caliber = 15.7 // ?? what
 		icon_turf_hit = "bhole-large"
 
 		on_hit(atom/hit)
 			explosion_new(null, get_turf(hit), 80)
+
 
 	seeker
 		name = "drone-seeking grenade"

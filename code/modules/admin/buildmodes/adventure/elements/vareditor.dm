@@ -1,7 +1,7 @@
 /// Adventure puzzle thing - edits set var (via .name or .interesting)
 /obj/adventurepuzzle/triggerable/targetable/varedit
 	name = "vareditor"
-	invisibility = 20
+	invisibility = INVIS_ADVENTURE
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "var_editor"
 	density = 0

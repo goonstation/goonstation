@@ -859,7 +859,7 @@ Returns:
 	var/freeze_source = 1 //Attempt to make source mob immovable and invincible during cam?
 	nodamage = 1
 	canmove = 0
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	density = 0
 	anchored = 1
 
@@ -2084,7 +2084,7 @@ Returns:
 	anchored = 1
 	density = 0
 	opacity = 0
-	invisibility = 100
+	invisibility = INVIS_ALWAYS_ISH
 	var/image/oimage = null
 	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
@@ -2239,7 +2239,7 @@ Returns:
 	density = 0
 	anchored = 1
 	opacity = 0
-	invisibility = 100
+	invisibility = INVIS_ALWAYS_ISH
 	icon = 'icons/effects/ULIcons.dmi'
 	icon_state = "7-3-0"
 	var
@@ -2369,7 +2369,7 @@ Returns:
 	density = 0
 	anchored = 1
 	opacity = 0
-	invisibility = 100
+	invisibility = INVIS_ALWAYS_ISH
 	var/spawn_rate = 100 	   //Time before a new object spaws after the previous is gone.
 	var/spawn_check_rate = 10  //How often we check if we need to spawn something.
 	var/spawn_type = null	   //Type to spawn
@@ -2527,7 +2527,7 @@ Returns:
 	anchored = 1
 	density = 0
 	opacity = 0
-	invisibility = 99
+	invisibility = INVIS_ALWAYS_ISH
 /*
 /obj/item/rpg_rocket_shuttle
 	name = "MPRT rocket"
@@ -3202,9 +3202,9 @@ Returns:
 			return
 
 		var/turf/picked = pick(possible)
-		if(src.loc.invisibility) src.loc.invisibility = 0
+		if(src.loc.invisibility) src.loc.invisibility = INVIS_NONE
 		src.set_loc(picked)
-		SPAWN_DBG(0.5 SECONDS) picked.invisibility = 100
+		SPAWN_DBG(0.5 SECONDS) picked.invisibility = INVIS_ALWAYS_ISH
 
 		SPAWN_DBG(rand(50,80)) update()
 
@@ -3248,13 +3248,13 @@ Returns:
 			return
 
 		var/turf/picked = pick(possible)
-		if(src.loc.invisibility) src.loc.invisibility = 0
+		if(src.loc.invisibility) src.loc.invisibility = INVIS_NONE
 		if(src.loc.opacity) src.loc.opacity = 0
 
 		src.set_loc(picked)
 
 		SPAWN_DBG(0.5 SECONDS)
-			picked.invisibility = 100
+			picked.invisibility = INVIS_ALWAYS_ISH
 			picked.opacity = 1
 
 		SPAWN_DBG(rand(50,80)) update()
@@ -3427,7 +3427,7 @@ var/list/lag_list = new/list()
 
 /obj/spook
 	var/active = 0
-	invisibility = 100
+	invisibility = INVIS_ALWAYS_ISH
 	anchored = 1
 	density = 0
 	icon = 'icons/misc/hstation.dmi'
@@ -3462,10 +3462,10 @@ var/list/lag_list = new/list()
 		sleep(0.3 SECONDS)
 		active = 1
 		walk_towards(src,L,3)
-		src.invisibility = 0
+		src.invisibility = INVIS_NONE
 		flick("apparition",src)
 		sleep(1.5 SECONDS)
-		src.invisibility = 100
+		src.invisibility = INVIS_ALWAYS_ISH
 		src.set_loc(startloc)
 		walk(src,0)
 		SPAWN_DBG(10 SECONDS) active = 0
@@ -3880,9 +3880,9 @@ var/list/lag_list = new/list()
 
 /mob/living/intangible/aicamera/New()
 	. = ..()
-	src.invisibility = 0
+	src.invisibility = INVIS_NONE
 	src.sight = SEE_THRU
-	src.see_invisible = 0
+	src.see_invisible = INVIS_NONE
 
 /obj/ai_static
 	name = "static"

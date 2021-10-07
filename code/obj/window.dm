@@ -862,7 +862,7 @@
 	icon_state = "wingrille"
 	density = 1
 	anchored = 1.0
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	//layer = 99
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	var/win_path = "/obj/window"

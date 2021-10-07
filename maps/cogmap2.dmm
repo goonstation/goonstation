@@ -33765,6 +33765,11 @@
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
 /turf/simulated/floor/blueblack,
 /area/station/hallway/primary/west)
 "byP" = (
@@ -33936,8 +33941,8 @@
 /obj/disposalpipe/junction{
 	dir = 4
 	},
-/turf/simulated/floor/stairs{
-	dir = 4
+/turf/simulated/floor/caution/northsouth{
+	dir = 1
 	},
 /area/station/engine/inner)
 "bzi" = (
@@ -34516,21 +34521,7 @@
 	},
 /area/station/hallway/primary/west)
 "bAt" = (
-/obj/securearea{
-	desc = "This hazard stripe marks a high-intensity beamline.";
-	dir = 8;
-	icon_state = "magwarning";
-	layer = 2.5;
-	name = "Beamline"
-	},
-/obj/machinery/door/airlock/pyro/glass{
-	autoclose = 0;
-	density = 0;
-	icon_state = "glass_open";
-	id = "pt_laser";
-	name = "Beamline Interlock";
-	req_access_txt = "54"
-	},
+/obj/decal/tile_edge/stripe/big,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -34822,14 +34813,7 @@
 /turf/simulated/floor/circuit/off,
 /area/station/hallway/primary/west)
 "bAV" = (
-/obj/machinery/door/poddoor/pyro{
-	dir = 4;
-	id = "pt_laser";
-	name = "Beamline Interlock"
-	},
-/obj/window/reinforced/east,
-/obj/window/reinforced/west,
-/turf/simulated/floor/circuit/off,
+/turf/simulated/floor/engine,
 /area/station/hallway/primary/west)
 "bAW" = (
 /obj/machinery/vending/paint/broken,
@@ -35359,24 +35343,17 @@
 /turf/simulated/floor/blueblack,
 /area/station/hallway/primary/west)
 "bCd" = (
-/obj/securearea{
-	desc = "This hazard stripe marks a high-intensity beamline.";
-	dir = 4;
-	icon_state = "magwarning";
-	layer = 2.5;
-	name = "Beamline"
-	},
-/obj/machinery/door/airlock/pyro/glass{
-	autoclose = 0;
-	density = 0;
-	icon_state = "glass_open";
-	id = "pt_laser";
-	name = "Beamline Interlock";
-	req_access_txt = "54"
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
 	},
 /turf/simulated/floor/blueblack,
 /area/station/hallway/primary/west)
 "bCe" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -35412,6 +35389,11 @@
 /obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
+	},
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/blueblack{
 	dir = 1
@@ -36579,6 +36561,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/machinery/portable_atmospherics/canister/empty,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bEi" = (
@@ -37563,36 +37546,8 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "bGa" = (
-/obj/securearea{
-	desc = "This hazard stripe marks a high-intensity beamline.";
-	dir = 8;
-	icon_state = "magwarning";
-	layer = 2.5;
-	name = "Beamline"
-	},
-/obj/securearea{
-	desc = "This hazard stripe marks a high-intensity beamline.";
-	dir = 10;
-	icon_state = "magwarning";
-	layer = 2.5;
-	name = "Beamline"
-	},
-/obj/securearea{
-	desc = "This hazard stripe marks a high-intensity beamline.";
-	dir = 6;
-	icon_state = "magwarning";
-	layer = 2.5;
-	name = "Beamline"
-	},
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/machinery/door/airlock/pyro/glass{
-	autoclose = 0;
-	density = 0;
-	icon_state = "glass_open";
-	id = "pt_laser";
-	name = "Beamline Interlock";
-	req_access_txt = "54"
-	},
+/obj/decal/tile_edge/stripe/big,
 /turf/simulated/floor/delivery,
 /area/station/engine/inner)
 "bGb" = (
@@ -37603,6 +37558,10 @@
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
+	},
+/obj/table/reinforced/auto,
+/obj/item/storage/firstaid/fire{
+	pixel_y = -4
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -38555,6 +38514,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
+/obj/machinery/light,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
 "bHM" = (
@@ -38637,34 +38597,67 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "bHX" = (
+/obj/window/auto/reinforced,
 /obj/machinery/door/poddoor/pyro{
+	density = 0;
 	dir = 4;
-	id = "pt_laser";
-	name = "Beamline Interlock"
+	icon_state = "pdoor0";
+	id = "engine_observation";
+	name = "Observation Shutter";
+	opacity = 0
 	},
-/obj/window/reinforced/east,
-/obj/window/reinforced/west,
-/turf/simulated/floor/circuit/off,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/grille/steel,
+/turf/simulated/floor/engine,
 /area/station/engine/inner)
 "bHY" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/turf/simulated/floor/circuit/off,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
 /area/station/engine/inner)
 "bHZ" = (
 /obj/window/auto/reinforced,
-/turf/simulated/floor/plating/airless,
-/area/station/engine/core)
-"bIa" = (
-/obj/machinery/power/terminal{
-	dir = 8
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "engine_observation";
+	name = "Observation Shutter";
+	opacity = 0
 	},
 /obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
+	d2 = 4;
+	icon_state = "0-4"
 	},
-/obj/cable,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/grille/steel,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"bIa" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/bot,
+/area/station/hallway/primary/west)
 "bIb" = (
 /obj/machinery/atmospherics/binary/circulatorTemp,
 /turf/simulated/floor/caution/northsouth,
@@ -39973,53 +39966,27 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bJU" = (
-/obj/securearea{
-	desc = "This hazard stripe marks a high-intensity beamline.";
-	dir = 4;
-	icon_state = "magwarning";
-	layer = 2.5;
-	name = "Beamline"
-	},
-/obj/securearea{
-	desc = "This hazard stripe marks a high-intensity beamline.";
-	dir = 9;
-	icon_state = "magwarning";
-	layer = 2.5;
-	name = "Beamline"
-	},
-/obj/securearea{
-	desc = "This hazard stripe marks a high-intensity beamline.";
-	dir = 5;
-	icon_state = "magwarning";
-	layer = 2.5;
-	name = "Beamline"
-	},
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/machinery/door/airlock/pyro/glass{
-	autoclose = 0;
-	density = 0;
-	icon_state = "glass_open";
-	id = "pt_laser";
-	name = "Beamline Interlock";
-	req_access_txt = "54"
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
 	},
 /turf/simulated/floor/delivery,
 /area/station/engine/inner)
 "bJV" = (
-/obj/machinery/power/pt_laser{
-	dir = 8
-	},
-/obj/machinery/door_control{
-	id = "pt_laser";
-	name = "PTL Doors";
-	pixel_x = -24;
-	pixel_y = 8
-	},
 /obj/machinery/door_control{
 	id = "engine_observation";
 	name = "Observation Shutters";
 	pixel_x = -24;
 	pixel_y = -8
+	},
+/obj/rack,
+/obj/item/extinguisher{
+	pixel_x = 9;
+	pixel_y = 2
+	},
+/obj/item/extinguisher{
+	pixel_x = -6;
+	pixel_y = 2
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -43650,13 +43617,9 @@
 /turf/simulated/floor/caution/south,
 /area/station/engine/inner)
 "bQB" = (
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/turf/simulated/floor/stairs{
-	dir = 4
-	},
-/area/station/engine/inner)
+/obj/machinery/light,
+/turf/simulated/floor/blueblack,
+/area/station/hallway/primary/west)
 "bQC" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -44199,13 +44162,6 @@
 /turf/simulated/floor/bot,
 /area/station/storage/emergency)
 "bRS" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
-	dir = 4
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/inner)
-"bRT" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 8;
 	frequency = 1225;
@@ -44215,6 +44171,15 @@
 	target_pressure = 2000
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/inner)
+"bRT" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 4
+	},
+/obj/machinery/door/firedoor/pyro,
+/obj/machinery/door/airlock/pyro/engineering,
+/turf/simulated/floor/plating,
 /area/station/engine/inner)
 "bRU" = (
 /obj/window/auto/reinforced,
@@ -45012,13 +44977,12 @@
 	},
 /area/station/storage/emergency)
 "bTx" = (
-/obj/stool/chair/yellow{
-	dir = 4
+/obj/decal/tile_edge/line/blue{
+	dir = 1;
+	icon_state = "noedge-tile1"
 	},
-/turf/simulated/floor/yellow/side{
-	dir = 1
-	},
-/area/station/storage/emergency)
+/turf/simulated/floor/engine,
+/area/station/hallway/primary/west)
 "bTy" = (
 /obj/table/auto,
 /obj/item/storage/firstaid/fire{
@@ -45031,8 +44995,7 @@
 	},
 /area/station/storage/emergency)
 "bTz" = (
-/obj/machinery/manufacturer/general,
-/turf/simulated/floor/yellow/side{
+/turf/simulated/floor/stairs{
 	dir = 1
 	},
 /area/station/storage/emergency)
@@ -45736,9 +45699,17 @@
 /turf/simulated/floor/yellow/side,
 /area/station/storage/emergency)
 "bUY" = (
-/obj/machinery/light/emergency,
-/turf/simulated/floor/yellow/side,
-/area/station/storage/emergency)
+/obj/decal/tile_edge/line/blue{
+	dir = 1;
+	icon_state = "noedge-tile1"
+	},
+/obj/machinery/door_control{
+	id = "pt_laser";
+	name = "PTL Doors"
+	},
+/obj/table/reinforced/auto,
+/turf/simulated/floor/engine,
+/area/station/hallway/primary/west)
 "bUZ" = (
 /turf/simulated/floor/yellow/corner{
 	dir = 8
@@ -46399,21 +46370,14 @@
 	},
 /area/station/storage/emergency)
 "bWC" = (
-/obj/rack,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/firefighter,
-/obj/item/tank/air,
-/obj/item/chem_grenade/firefighting,
-/obj/item/chem_grenade/firefighting,
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
+/obj/table/reinforced/auto,
+/obj/decal/tile_edge/line/blue{
+	dir = 1;
+	icon_state = "noedge-tile1"
 	},
-/obj/item/extinguisher,
-/turf/simulated/floor/bot,
-/area/station/storage/emergency)
+/obj/item/device/radio/intercom/engineering,
+/turf/simulated/floor/engine,
+/area/station/hallway/primary/west)
 "bWD" = (
 /obj/rack,
 /obj/item/clothing/suit/space/engineer,
@@ -47059,17 +47023,20 @@
 	icon_state = "4-8"
 	},
 /obj/item/extinguisher,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
 /turf/simulated/floor/bot,
 /area/station/storage/emergency)
 "bXX" = (
-/obj/window/auto/reinforced,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/grille/steel,
-/turf/simulated/floor/plating,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/storage/emergency)
 "bXY" = (
 /obj/rack,
@@ -47085,6 +47052,11 @@
 	icon_state = "4-8"
 	},
 /obj/item/storage/toolbox/mechanical,
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
 /turf/simulated/floor/bot,
 /area/station/storage/emergency)
 "bXZ" = (
@@ -78353,6 +78325,14 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
+"eGa" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/hallway/primary/west)
 "eLQ" = (
 /obj/cable{
 	d1 = 1;
@@ -78396,6 +78376,15 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"fCU" = (
+/obj/machinery/power/pt_laser{
+	dir = 8
+	},
+/obj/decal/tile_edge/line/blue{
+	icon_state = "noedge-tile1"
+	},
+/turf/simulated/floor/engine,
+/area/station/hallway/primary/west)
 "fHh" = (
 /obj/machinery/light_switch/west,
 /obj/machinery/light{
@@ -78461,6 +78450,16 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"gQX" = (
+/obj/machinery/door/poddoor/pyro{
+	dir = 4;
+	id = "pt_laser";
+	name = "Beamline Interlock"
+	},
+/obj/window/reinforced/east,
+/obj/window/reinforced/west,
+/turf/simulated/floor/circuit/off,
+/area/station/hallway/primary/west)
 "hbJ" = (
 /obj/stool/chair/office,
 /obj/landmark/start{
@@ -78565,6 +78564,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
+"hNY" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	dir = 4;
+	name = "PTL Control"
+	},
+/turf/simulated/floor/engine,
+/area/station/hallway/primary/west)
 "hPv" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating,
@@ -78757,6 +78768,14 @@
 	icon_state = "blue5"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"jXO" = (
+/obj/securearea{
+	desc = "";
+	icon_state = "shock";
+	name = "Danger: High Voltage"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/inner)
 "kBU" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -78819,6 +78838,15 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"lud" = (
+/obj/disposalpipe/segment,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/hallway/primary/west)
 "luy" = (
 /obj/machinery/light{
 	dir = 1;
@@ -79135,6 +79163,13 @@
 	},
 /turf/simulated/floor/bot,
 /area/station/hydroponics/bay)
+"pgf" = (
+/obj/disposalpipe/segment,
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/turf/simulated/floor/blueblack,
+/area/station/hallway/primary/west)
 "ppH" = (
 /obj/machinery/ai_status_display{
 	pixel_y = 28
@@ -79285,6 +79320,11 @@
 /obj/machinery/light,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"qOB" = (
+/obj/machinery/light/emergency,
+/obj/machinery/manufacturer/general,
+/turf/simulated/floor/bot,
+/area/station/storage/emergency)
 "qXj" = (
 /obj/stool/chair,
 /obj/cable{
@@ -79301,6 +79341,14 @@
 	icon_state = "blue1"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"roZ" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 4
+	},
+/obj/machinery/light,
+/turf/simulated/floor/bot,
+/area/station/hallway/primary/west)
 "rsO" = (
 /obj/table/auto,
 /obj/item/kitchen/rollingpin,
@@ -79365,6 +79413,13 @@
 /obj/item/old_grenade/oxygen,
 /turf/simulated/floor/plating,
 /area/research_outpost)
+"sjf" = (
+/obj/decal/tile_edge/line/blue{
+	icon_state = "noedge-tile1"
+	},
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/simulated/floor/engine,
+/area/station/hallway/primary/west)
 "snI" = (
 /obj/stool/chair{
 	dir = 1
@@ -79447,6 +79502,18 @@
 /obj/item/clothing/mask/chicken,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"tbf" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/table/reinforced/auto,
+/obj/item/storage/firstaid/fire{
+	pixel_y = -4
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "tdV" = (
 /obj/table/wood/auto,
 /obj/item/item_box/gold_star{
@@ -79639,6 +79706,25 @@
 	icon_state = "blue1"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"ueZ" = (
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/stool/chair/yellow{
+	dir = 8
+	},
+/turf/simulated/floor/engine,
+/area/station/hallway/primary/west)
+"uqO" = (
+/obj/decal/tile_edge/line/blue{
+	icon_state = "noedge-tile1"
+	},
+/turf/simulated/floor/engine,
+/area/station/hallway/primary/west)
 "uvj" = (
 /obj/item/device/camera_viewer{
 	network = "Zeta"
@@ -79651,6 +79737,13 @@
 /obj/storage/crate,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/teleporter)
+"uDF" = (
+/obj/disposalpipe/segment,
+/obj/decal/tile_edge/stripe/big,
+/turf/simulated/floor/blueblack{
+	dir = 1
+	},
+/area/station/hallway/primary/west)
 "uUh" = (
 /obj/railing/orange/reinforced{
 	dir = 8
@@ -112096,7 +112189,7 @@ bwV
 bgQ
 bnZ
 btk
-byw
+bQB
 bAq
 bAy
 bAq
@@ -113003,9 +113096,9 @@ byM
 bpr
 buI
 bfc
-bAq
-bAy
-bAq
+bhA
+gQX
+bhA
 bfc
 cdr
 bFQ
@@ -113305,9 +113398,9 @@ bmw
 bpD
 bva
 bfc
-bfc
+bTx
 bAV
-bfc
+fCU
 bfc
 bCO
 bFW
@@ -113607,9 +113700,9 @@ bmx
 brd
 bvb
 bhA
-aaI
-aaa
-aam
+bTx
+bAV
+uqO
 bhA
 bEa
 bFX
@@ -113904,19 +113997,19 @@ bhu
 bhu
 biL
 bhA
-ble
+bIa
 bmy
 brv
 bvx
 bhA
-aaI
-aaa
-aam
+bTx
+bAV
+uqO
 bhA
 bvx
 bFY
 bHW
-bJS
+roZ
 bhA
 biK
 bvx
@@ -114211,9 +114304,9 @@ bhu
 brw
 bvY
 bhA
-aaI
-aaa
-aam
+bUY
+ueZ
+uqO
 bhA
 bvx
 bFZ
@@ -114513,9 +114606,9 @@ bnP
 brx
 bwu
 bfc
-bfc
-bAV
-bfc
+bWC
+eGa
+sjf
 bfc
 bEb
 bGA
@@ -114815,9 +114908,9 @@ bjF
 bsf
 bwv
 bfc
-bAq
-bAy
-bAq
+bhA
+hNY
+bhA
 bfc
 bEc
 bGB
@@ -115118,7 +115211,7 @@ bsQ
 bww
 byw
 bAt
-bAy
+eGa
 bCd
 bCh
 bww
@@ -115419,9 +115512,9 @@ byS
 boV
 bwY
 byx
-bAr
-bAT
-bCb
+uDF
+lud
+pgf
 bCf
 bwY
 bFB
@@ -115721,9 +115814,9 @@ bjF
 bsR
 bwZ
 byO
-bAq
-bAy
-bAq
+bAt
+eGa
+bCd
 bCi
 bEd
 bHL
@@ -115731,7 +115824,7 @@ bQm
 bRQ
 bTw
 bUX
-bWC
+bZl
 bXW
 bZl
 bQm
@@ -116023,17 +116116,17 @@ byT
 bAz
 bCm
 bEe
-byT
+jXO
 bHX
-byT
+jXO
 bLz
 bNp
 bOU
 byT
 bRR
-bTx
-bUY
-bQm
+bTw
+bUX
+qOB
 bXX
 bZm
 bQm
@@ -116930,7 +117023,7 @@ bAC
 bCp
 bEh
 bGb
-bGc
+tbf
 bJV
 bLC
 bNr
@@ -117232,7 +117325,7 @@ bAD
 bCq
 bEi
 bGc
-bGc
+bEk
 bGc
 bLD
 bNs
@@ -117534,7 +117627,7 @@ bAE
 bCr
 bEj
 bGc
-bGc
+bEk
 bGc
 bLE
 bNt
@@ -117836,7 +117929,7 @@ bAF
 bCs
 bEk
 bGd
-bIa
+bJZ
 bCu
 bEk
 bNu
@@ -122975,7 +123068,7 @@ bKi
 bLS
 bCy
 bPi
-bQB
+bQv
 bSj
 bTC
 bVt

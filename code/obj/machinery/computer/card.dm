@@ -29,14 +29,149 @@
 /obj/machinery/computer/card/New()
 	..()
 	src.allowed_access_list = civilian_access_list + engineering_access_list + supply_access_list + research_access_list + command_access_list + security_access_list - access_maxsec
-
-
 /obj/machinery/computer/card/console_upper
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "id1"
 /obj/machinery/computer/card/console_lower
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "id2"
+/obj/item/acesscomputerunfolder
+	icon = 'icons/obj/items/storage.dmi'
+	item_state = "hopcaseC"
+	icon_state = "hopcaseC"
+
+	force = 8.0
+	throw_speed = 1
+	throw_range = 4
+	w_class = W_CLASS_BULKY
+
+	burn_point = 2500
+	burn_output = 2500
+	burn_possible = 1
+	health = 10
+
+	New(var/loc, var/obj/object)
+		..(loc)
+		src.set_loc(loc)
+		src.name = "foldable portable identification computer"
+		src.desc = "A briefcase with a identification computer inside. A breakthrough in briefcase technology!"
+		BLOCK_SETUP(BLOCK_BOOK)
+
+	attack_self(mob/user)
+		deploy(user)
+
+	verb/unfold()
+		set src in view(1)
+		set category = "Local"
+		set name = "Unfold"
+		deploy(usr)
+
+	proc/deploy(var/mob/user)
+
+		if(src.loc == user)
+			user.drop_from_slot(src)
+		user.visible_message("<span class='alert'>[user] unfolds the foldable portable idendification computer from a briefcase!</span>")
+		var/obj/machinery/computer/card/portable/T = new/obj/machinery/computer/card/portable()
+		T.set_loc(get_turf(src))
+		qdel(src)
+
+/obj/machinery/computer/card/portable
+	name = "portable identification computer"
+	icon_state = "idportC"
+	density = 0
+	var/obj/item/cell/cell //We have limited power! Immersion!!
+	var/setup_charge_maximum = 15000
+	var/obj/item/luggable_computer/personal/case //The object that holds us when we're all closed up.
+	var/deployed = 1
+
+	New()
+		..()
+		src.AddComponent(/datum/component/foldable,/obj/item/objBriefcase/blue_green_stripe)
+		src.cell = new /obj/item/cell(src)
+		src.cell.maxcharge = setup_charge_maximum
+		src.cell.charge = src.cell.maxcharge
+
+	disposing()
+		if (src.cell)
+			src.cell.dispose()
+			src.cell = null
+
+		if (case && case.loc == src)
+			case.dispose()
+			case = null
+
+		..()
+
+	verb/fold_up()
+		set src in view(1)
+
+		if(usr.stat)
+			return
+
+		src.visible_message("<span class='alert'>[usr] folds [src] back up!</span>")
+		src.undeploy()
+		return
+
+	proc/undeploy()
+		if(!src.case)
+			src.case = new /obj/item/luggable_computer(src)
+			src.case.luggable = src
+
+		src.case.set_loc(get_turf(src))
+		src.set_loc(src.case)
+		src.deployed = 0
+		return
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/disk/data/floppy)) //IDK i just dont want to screw this up
+
+			return
+
+		else if (ispryingtool(W))
+			if(!src.cell)
+				boutput(user, "<span class='alert'>There is no energy cell inserted!</span>")
+				return
+
+			playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+			src.cell.set_loc(get_turf(src))
+			src.cell = null
+			user.visible_message("<span class='alert'>[user] removes the power cell from [src]!.</span>","<span class='alert'>You remove the power cell from [src]!</span>")
+			src.power_change()
+			return
+
+		else if (istype(W, /obj/item/cell))
+			if(src.cell)
+				boutput(user, "<span class='alert'>There is already an energy cell inserted!</span>")
+
+			else
+				user.drop_item()
+				W.set_loc(src)
+				src.cell = W
+				boutput(user, "You insert [W].")
+				src.power_change()
+				src.updateUsrDialog()
+
+			return
+
+		else
+			src.Attackhand(user)
+
+		return
+
+	powered()
+		if(!src.cell || src.cell.charge <= 0)
+			return 0
+
+		return 1
+
+	use_power(var/amount, var/chan=EQUIP)
+		if(!src.cell || !src.deployed)
+			return
+
+		cell.use(amount / 100)
+
+		src.power_change()
+		return
 
 /obj/machinery/computer/card/attack_hand(var/mob/user as mob)
 	if(..())

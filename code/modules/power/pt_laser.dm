@@ -305,7 +305,7 @@
 
 /obj/machinery/power/pt_laser/proc/stop_firing()
 	for(var/obj/lpt_laser/L in laser_parts)
-		L.invisibility = 101 //make it invisible
+		L.invisibility = INVIS_ALWAYS //make it invisible
 		L.active = 0
 		L.light.disable()
 	affecting_mobs = list()
@@ -320,14 +320,14 @@
 	var/counter = 1
 	for(var/obj/lpt_laser/L in laser_parts)
 		if(counter <= active_num)
-			L.invisibility = 0 //make it visible
+			L.invisibility = INVIS_NONE //make it visible
 			L.alpha = clamp(((log(10, L.power) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
 			L.active = 1
 			L.light.enable()
 			L.burn_all_living_contents()
 			counter++
 		else
-			L.invisibility = 101
+			L.invisibility = INVIS_ALWAYS
 			L.active = 0
 			L.light.disable()
 
@@ -481,7 +481,7 @@
 	anchored = 2
 	density = 0
 	luminosity = 1
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 	var/power = 0
 	var/active = 1

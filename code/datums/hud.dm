@@ -173,17 +173,17 @@
 		var/atom/movable/screen/S = get_by_id(id)
 		if(S)
 			if(visible)
-				S.invisibility = 0
+				S.invisibility = INVIS_NONE
 			else
-				S.invisibility = 101
+				S.invisibility = INVIS_ALWAYS
 		return
 
 	proc/set_visible(atom/movable/screen/S, visible)
 		if(S)
 			if(visible)
-				S.invisibility = 0
+				S.invisibility = INVIS_NONE
 			else
-				S.invisibility = 101
+				S.invisibility = INVIS_ALWAYS
 		return
 
 	proc/remove_screen(atom/movable/screen/S)

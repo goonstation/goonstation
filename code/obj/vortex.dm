@@ -39,7 +39,7 @@
 				/*if(5)
 					src.visible_message("<span class='alert'><b>[src] gives off an electromagnetic burst!</b></span>","<span class='alert'>You hear a sharp buzzing.</span>")
 					var/obj/item/old_grenade/emp/G = new /obj/item/old_grenade/emp(src.loc)
-					G.invisibility = 101
+					G.invisibility = INVIS_ALWAYS
 					G.prime()
 					qdel(src)
 					return*/
