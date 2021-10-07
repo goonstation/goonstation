@@ -162,7 +162,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 	name = "malevolent thing trigger"
 	icon = 'icons/misc/hospital.dmi'
 	icon_state = "specter"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
 	event_handler_flags = USE_HASENTERED
@@ -244,7 +244,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 /obj/gurney_trap
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "x4"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
 	var/ready = 1
@@ -526,7 +526,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 			src.mover.master = null
 			qdel(src.mover)
 
-		src.invisibility = 100
+		src.invisibility = INVIS_ALWAYS_ISH
 		var/obj/overlay/Ov = new/obj/overlay(T)
 		Ov.anchored = 1
 		Ov.name = "Explosion"

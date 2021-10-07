@@ -658,9 +658,15 @@ datum
 						L.changeStatus("burning", -30 SECONDS)
 						playsound(L, "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.8)
 					if (istype(L,/mob/living/critter/fire_elemental) && !ON_COOLDOWN(L, "fire_elemental_fffoam", 5 SECONDS))
+						L.emote("scream")
+						for(var/mob/O in AIviewers(M, null))
+							O.show_message(text("<span class='alert'><b>[] sputters and begins to dim!</b></span>", M), 1)
+							boutput(L, "<span class='alert'>The foam starts to smother your flames!</span>")
 						L.changeStatus("weakened", 2 SECONDS)
 						L.force_laydown_standup()
-						L.TakeDamage("All", volume * 1.5, 0, 0, DAMAGE_BLUNT)
+						var/brutedmg = volume * 1.5 //elementals take 1.15x damage, 65 is 74.75. 2 maxcap pitchers goes to .50 brute under death.
+						brutedmg = min(brutedmg, 65) //Ideally acts like vampire with holy water, capping it so they don't instadie.
+						L.TakeDamage("chest", brutedmg, 0, 0, DAMAGE_BLUNT) //120u pitcher of fffoam instantly killed elementals, lol.
 						playsound(L, "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.5)
 				return
 
@@ -1101,10 +1107,10 @@ datum
 			reaction_turf(var/turf/T, var/volume)
 				if (volume >= 5)
 					for (var/obj/decal/bloodtrace/B in T)
-						B.invisibility = 0
+						B.invisibility = INVIS_NONE
 						SPAWN_DBG(30 SECONDS)
 							if (B)
-								B.invisibility = 101
+								B.invisibility = INVIS_ALWAYS
 					for (var/obj/item/W in T)
 						if (W.get_forensic_trace("bDNA"))
 							var/icon/icon_old = W.icon

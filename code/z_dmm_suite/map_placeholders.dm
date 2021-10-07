@@ -6,7 +6,7 @@
 /obj/dmm_suite/comment
 	icon = 'icons/effects/mapeditor.dmi'
 	icon_state = "comment"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	layer = FLY_LAYER+1
 	var/coordinates

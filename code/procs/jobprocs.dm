@@ -452,55 +452,55 @@
 			med_note = src.client.preferences.medical_note
 		data_core.addManifest(src, sec_note, med_note)
 
-	SPAWN_DBG(0)
-		if (ishuman(src))
-			if (src.traitHolder && !src.traitHolder.hasTrait("immigrant"))
-				src:spawnId(rank)
-			if (src.traitHolder && src.traitHolder.hasTrait("immigrant"))
-				//Has the immigrant trait - they're hiding in a random locker
-				var/list/obj/storage/SL = list()
-				for_by_tcl(S, /obj/storage)
-					// Only closed, unsecured lockers/crates on Z1 that are not inside the listening post
-					if(S.z == 1 && !S.open && !istype(S, /obj/storage/secure) && !istype(S, /obj/storage/crate/loot) && !istype(get_area(S), /area/listeningpost))
-						var/turf/simulated/T = S.loc
-						//Simple checks done, now do some environment checks to make sure it's survivable
-						if(istype(T) && T.air && T.air.oxygen >= (MOLES_O2STANDARD - 1) && T.air.temperature >= T0C)
-							SL.Add(S)
+	if (ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if (src.traitHolder && !src.traitHolder.hasTrait("immigrant"))
+			H.spawnId(rank)
+		if (src.traitHolder && src.traitHolder.hasTrait("immigrant"))
+			//Has the immigrant trait - they're hiding in a random locker
+			var/list/obj/storage/SL = list()
+			for_by_tcl(S, /obj/storage)
+				// Only closed, unsecured lockers/crates on Z1 that are not inside the listening post
+				if(S.z == 1 && !S.open && !istype(S, /obj/storage/secure) && !istype(S, /obj/storage/crate/loot) && !istype(get_area(S), /area/listeningpost))
+					var/turf/simulated/T = S.loc
+					//Simple checks done, now do some environment checks to make sure it's survivable
+					if(istype(T) && T.air && T.air.oxygen >= (MOLES_O2STANDARD - 1) && T.air.temperature >= T0C)
+						SL.Add(S)
 
-				if(SL.len > 0)
-					src.set_loc(pick(SL))
+			if(SL.len > 0)
+				src.set_loc(pick(SL))
 
-			if (src.traitHolder && src.traitHolder.hasTrait("pilot"))		//Has the Pilot trait - they're drifting off-station in a pod. Note that environmental checks are not needed here.
-				var/turf/pilotSpawnLocation = null
+		if (src.traitHolder && src.traitHolder.hasTrait("pilot"))		//Has the Pilot trait - they're drifting off-station in a pod. Note that environmental checks are not needed here.
+			var/turf/pilotSpawnLocation = null
 
-				#ifdef UNDERWATER_MAP										//This part of the code executes only if the map is a water one.
-				while(!istype(pilotSpawnLocation, /turf/space/fluid))		//Trying to find a valid spawn location.
-					pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_MINING)
-				if (pilotSpawnLocation)										//Sanity check.
-					src.set_loc(pilotSpawnLocation)
-				var/obj/machinery/vehicle/tank/minisub/V = new/obj/machinery/vehicle/tank/minisub/pilot(pilotSpawnLocation)
-				#else														//This part of the code executes only if the map is a space one.
-				while(!istype(pilotSpawnLocation, /turf/space))				//Trying to find a valid spawn location.
-					pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), pick(Z_LEVEL_DEBRIS, Z_LEVEL_MINING))
-				if (pilotSpawnLocation)										//Sanity check.
-					src.set_loc(pilotSpawnLocation)
-				var/obj/machinery/vehicle/miniputt/V = new/obj/machinery/vehicle/miniputt/pilot(pilotSpawnLocation)
-				#endif
-				for(var/obj/critter/gunbot/drone/snappedDrone in V.loc)	//Spawning onto a drone doesn't sound fun so the spawn location gets cleaned up.
-					qdel(snappedDrone)
-				V.finish_board_pod(src)
+			#ifdef UNDERWATER_MAP										//This part of the code executes only if the map is a water one.
+			while(!istype(pilotSpawnLocation, /turf/space/fluid))		//Trying to find a valid spawn location.
+				pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_MINING)
+			if (pilotSpawnLocation)										//Sanity check.
+				src.set_loc(pilotSpawnLocation)
+			var/obj/machinery/vehicle/tank/minisub/V = new/obj/machinery/vehicle/tank/minisub/pilot(pilotSpawnLocation)
+			#else														//This part of the code executes only if the map is a space one.
+			while(!istype(pilotSpawnLocation, /turf/space))				//Trying to find a valid spawn location.
+				pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), pick(Z_LEVEL_DEBRIS, Z_LEVEL_MINING))
+			if (pilotSpawnLocation)										//Sanity check.
+				src.set_loc(pilotSpawnLocation)
+			var/obj/machinery/vehicle/miniputt/V = new/obj/machinery/vehicle/miniputt/pilot(pilotSpawnLocation)
+			#endif
+			for(var/obj/critter/gunbot/drone/snappedDrone in V.loc)	//Spawning onto a drone doesn't sound fun so the spawn location gets cleaned up.
+				qdel(snappedDrone)
+			V.finish_board_pod(src)
 
-			if (prob(10) && islist(random_pod_codes) && length(random_pod_codes))
-				var/obj/machinery/vehicle/V = pick(random_pod_codes)
-				random_pod_codes -= V
-				if (V?.lock?.code)
-					boutput(src, "<span class='notice'>The unlock code to your pod ([V]) is: [V.lock.code]</span>")
-					if (src.mind)
-						src.mind.store_memory("The unlock code to your pod ([V]) is: [V.lock.code]")
+		if (prob(10) && islist(random_pod_codes) && length(random_pod_codes))
+			var/obj/machinery/vehicle/V = pick(random_pod_codes)
+			random_pod_codes -= V
+			if (V?.lock?.code)
+				boutput(src, "<span class='notice'>The unlock code to your pod ([V]) is: [V.lock.code]</span>")
+				if (src.mind)
+					src.mind.store_memory("The unlock code to your pod ([V]) is: [V.lock.code]")
 
-			if (istraitor(src) && src.mind.late_special_role == 1)
-				//put this here because otherwise it's called before they have a PDA
-				equip_traitor(src)
+		if (istraitor(src) && src.mind.late_special_role == 1)
+			//put this here because otherwise it's called before they have a PDA
+			equip_traitor(src)
 
 		set_clothing_icon_dirty()
 		sleep(0.1 SECONDS)

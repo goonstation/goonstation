@@ -555,6 +555,15 @@
 		/obj/item/clothing/suit/space/syndicate/knight,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/knight)
 
+	bard
+		name = "Class Crate - Rocker"
+		desc = "A crate containing a Specialist Operative loadout."
+		spawn_contents = list(/obj/item/breaching_hammer/rock_sledge,
+		/obj/item/device/radio/headset/syndicate/bard,
+		/obj/item/storage/fanny/syndie,
+		/obj/item/clothing/suit/space/syndicate/specialist/firebrand, // Gannets should make a cool suit
+		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator) // Gannet should make cool helm
+
 	qm //Hi Gannets, I like your crate and wanted to use it for some QM stuff. Come yell at Azungar if this is not ok.
 		name = "Weapons crate"
 		desc = "Just a fancy crate that may or may not contain weapons."
