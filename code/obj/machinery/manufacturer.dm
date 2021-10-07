@@ -4,8 +4,8 @@
 	name = "Manufacturing Unit"
 	desc = "A standard fabricator unit capable of producing certain items from various materials."
 	icon = 'icons/obj/manufacturer.dmi'
-	icon_state = "fab"
-	var/icon_base = null
+	icon_state = "fab-general"
+	var/icon_base = "general"
 	density = 1
 	anchored = 1
 	mats = 20
@@ -823,8 +823,8 @@
 							minerSignal.transmission_method = TRANSMISSION_RADIO
 							//any non-divisible amounts go to the shipping budget
 							var/leftovers = 0
-							if(accounts.len)
-								leftovers = length(subtotal%accounts)
+							if(length(accounts))
+								leftovers = subtotal % length(accounts)
 								var/divisible_amount = subtotal - leftovers
 								if(divisible_amount)
 									var/amount_per_account = divisible_amount/length(accounts)

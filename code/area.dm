@@ -431,7 +431,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	name = "CORDON"
 	icon = 'icons/effects/mapeditor.dmi'
 	icon_state = "cordonarea"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	teleport_blocked = 2
 	force_fullbright = 1
 	expandable = 0//oh god i know some fucker would try this
@@ -1210,6 +1210,10 @@ ABSTRACT_TYPE(/area/prefab)
 
 /area/prefab/shooting_range
 	name = "Shooting Range"
+	icon_state = "purple"
+
+/area/prefab/dreamplaza
+	name = "DreamPlaza Mall"
 	icon_state = "purple"
 
 // Sealab trench areas //

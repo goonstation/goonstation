@@ -1098,6 +1098,33 @@ datum
 			required_reagents = list("v_gimlet" = 2, "juice_cran" = 1)
 			result_amount = 3
 
+		cocktail_blackbramble
+			name = "Blackberry Bramble"
+			id = "blackbramble"
+			result = "blackbramble"
+			required_reagents = list("gin" = 1, "juice_blackberry" = 1, "juice_lemon" = 1)
+			result_amount = 3
+			mix_phrase = "The blackberries turn almost purple as you muddle them into the gin and lemon."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		cocktail_frenchmartini
+			name = "French Martini"
+			id = "frenchmartini"
+			result = "frenchmartini"
+			required_reagents = list("vodka" = 1, "juice_raspberry" = 1, "juice_pineapple" = 1)
+			result_amount = 3
+			mix_phrase = "Mon dieu, zis isn't even a martini."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		cocktail_jazzberryhardlemonade
+			name = "Jazzberry Hard Lemonade"
+			id = "jazzlemon"
+			result = "jazzlemon"
+			required_reagents = list("lemonade" = 1, "juice_blueraspberry" = 1, "vodka" = 1)
+			result_amount = 3
+			mix_phrase = "The drink turns radically jazzalicious."
+			mix_sound = 'sound/musical_instruments/saxbonk3.ogg'
+
 		cocktail_v_gimlet
 			name = "Vodka Gimlet"
 			id = "v_gimlet"
@@ -1436,7 +1463,7 @@ datum
 			name = "Tequila Sunrise"
 			id = "tequilasunrise"
 			result = "tequilasunrise"
-			required_reagents = list("tequila" = 1, "juice_orange" = 1, "sugar" = 1)
+			required_reagents = list("tequila" = 1, "juice_orange" = 1, "grenadine" = 1)
 			result_amount = 3
 			mix_phrase = "The drink fizzes into some liquid sunshine for the soul."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
@@ -1642,7 +1669,7 @@ datum
 			result = "pinklemonade"
 			required_reagents = list("grenadine" = 1,"lemonade" = 1)
 			result_amount = 2
-			mix_phrase = "You watch the pink colour dance around the container and slowly combine with the lemonade"
+			mix_phrase = "You watch the pink colour dance around the container and slowly combine with the lemonade."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
@@ -3803,7 +3830,7 @@ datum
 			name = "expresso"
 			id = "expresso"
 			result = "expresso"
-			required_reagents = list("espresso" = 1, "neurotoxin" = 3)
+			required_reagents = list("espresso" = 1, "methamphetamine" = 3)
 			result_amount = 3
 			mix_phrase = "Irregardless and for all intense and purposes, the coffee becomes stupider."
 

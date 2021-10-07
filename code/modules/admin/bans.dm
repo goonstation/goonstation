@@ -205,11 +205,19 @@ var/global/list/playersSeen = list()
 		ircmsg["key2"] = "[row["ckey"]] (IP: [row["ip"]], CompID: [row["compID"]])"
 		ircmsg["msg"] = row["reason"]
 		ircmsg["time"] = expiry
+		ircmsg["timestamp"] = row["timestamp"]
 		ircbot.export("ban", ircmsg)
 
 		if(!targetC)
 			targetC = find_player(row["ckey"])?.client
 		if (targetC)
+			del(targetC)
+		else
+			logTheThing("debug", null, null, "<b>Bans:</b> Unable to find client with ckey '[row["ckey"]]' during banning.")
+
+		targetC = find_player(row["ckey"])?.client
+		if (targetC)
+			logTheThing("debug", null, null, "<b>Bans:</b> Client with ckey '[row["ckey"]]' somehow survived banning, retrying kick.")
 			del(targetC)
 
 		return 0

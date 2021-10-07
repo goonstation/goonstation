@@ -155,7 +155,7 @@
 	plane = PLANE_HUD
 	anchored = 1
 
-proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time=2 SECONDS, invisibility=0)
+proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time=2 SECONDS, invisibility=INVIS_NONE)
 	// note that `target` can also be a turf, but byond sux and I can't declare the var as atom because areas don't have vis_contents
 	var/obj/decal/point/point = new
 	point.pixel_x = pixel_x
@@ -377,7 +377,7 @@ obj/decal/fakeobjects/teleport_pad
 	name = "PCB constructor"
 	desc = "A combination pick and place machine and wave soldering gizmo.  For making boards.  Buddy boards.   Well, it would if the interface wasn't broken."
 	icon = 'icons/obj/manufacturer.dmi'
-	icon_state = "fab"
+	icon_state = "fab-general"
 	anchored = 1
 	density = 1
 
@@ -403,7 +403,7 @@ obj/decal/fakeobjects/teleport_pad
 	desc = "Oh my!!"
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "lum"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	blood_DNA = null
 	blood_type = null
 

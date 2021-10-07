@@ -291,6 +291,3 @@
 		SPAWN_DBG (rand(200, 900))
 			if (src.holder && src.holder.owner && ismob(src.holder.owner))
 				src.holder.owner.emote("flex")
-
-		SPAWN_DBG(calculate_cooldown() + 5)
-			holder.updateButtons()

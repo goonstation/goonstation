@@ -256,7 +256,7 @@ obj/machinery/atmospherics/pipe
 
 		hide(var/i)
 			if(level == 1 && istype(loc, /turf/simulated))
-				invisibility = i ? 101 : 0
+				invisibility = i ? INVIS_ALWAYS : INVIS_NONE
 			update_icon()
 
 		process()
@@ -1028,7 +1028,7 @@ obj/machinery/atmospherics/pipe
 
 		hide(var/i)
 			if(level == 1 && istype(loc, /turf/simulated))
-				invisibility = i ? 101 : 0
+				invisibility = i ? INVIS_ALWAYS : INVIS_NONE
 			update_icon()
 
 		pipeline_expansion()

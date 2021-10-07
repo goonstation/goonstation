@@ -575,6 +575,7 @@
 		if (src.client.has_contestwinner_medal)
 			msg = replacetext(msg, ":shelterbee:", "<img src='http://stuff.goonhub.com/shelterbee.png' width=32>")
 
+		phrase_log.log_phrase("ooc", msg)
 		var/rendered = "<span class=\"ooc [ooc_class]\"><span class=\"prefix\">OOC:</span> <span class=\"name\" data-ctx='\ref[src.mind]'>[display_name]:</span> <span class=\"message\">[msg]</span></span>"
 
 		if (C.holder)
@@ -675,6 +676,7 @@
 
 		var/rendered = "<span class=\"looc [looc_class]\"><span class=\"prefix\">LOOC:</span> <span class=\"name\" data-ctx='\ref[src.mind]'>[display_name]:</span> <span class=\"message\">[msg]</span></span>"
 
+		phrase_log.log_phrase("looc", msg)
 		if (C.holder)
 			rendered = "<span class='adminHearing' data-ctx='[C.chatOutput.getContextFlags()]'>[rendered]</span>"
 
@@ -716,6 +718,8 @@
 	var/modifier = 30
 	if (src.reagents && src.reagents.has_reagent("helium"))
 		modifier += 30
+	if (src.getStatusDuration("crunched") > 0)
+		modifier += 100
 	if (deep_farting)
 		modifier -= 120
 	if (modifier == 0)

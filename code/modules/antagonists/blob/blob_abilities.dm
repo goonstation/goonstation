@@ -186,6 +186,7 @@
 	icon_state = "blob-nucleus"
 	desc = "This will place the first blob on your current tile. You can only do this once. Once placed, a small amount of blob tiles will spawn around it."
 	targeted = 0
+	cooldown_time = 10
 
 	onUse(var/turf/T)
 		if (..())
@@ -255,9 +256,9 @@
 			var/amount = rand(20, 30)
 			src.auto_spread(startTurf, maxRange = 3, maxTurfs = amount)
 		owner.playsound_local(owner.loc, "sound/voice/blob/blobdeploy.ogg", 50, 1)
-		owner.remove_ability(/datum/blob_ability/plant_nucleus)
 		owner.remove_ability(/datum/blob_ability/set_color)
 		owner.remove_ability(/datum/blob_ability/tutorial)
+		owner.remove_ability(/datum/blob_ability/plant_nucleus)
 
 /datum/blob_ability/set_color
 	name = "Set Color"

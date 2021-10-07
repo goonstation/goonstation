@@ -213,7 +213,7 @@
 		if (istype(A, /obj/itemspecialeffect))
 			var/obj/itemspecialeffect/E = A
 			return (E.can_clash && world.time != E.create_time && E.clash_time > 0 && world.time <= E.create_time + E.clash_time)
-		.= ((istype(A, /obj/critter) || (ismob(A) && isliving(A))) && A != usr && A != user)
+		.= ((istype(A, /obj/critter) || (isliving(A)) || istype(A, /obj/machinery/bot)) && A != usr && A != user)
 
 	proc/showEffect(var/name = null, var/direction = NORTH, var/mob/user, alpha=255)
 		if(name == null || master == null) return
@@ -1080,15 +1080,16 @@
 			return
 
 
-		proc/on_hit(var/mob/hit, var/mult = 1)
+		proc/on_hit(var/hit, var/mult = 1)
 			if (ishuman(hit))
 				var/mob/living/carbon/human/H = hit
 				H.do_disorient(src.stamina_damage * mult, weakened = 10)
 
-			hit.TakeDamage("chest", 0, rand(2 * mult,5 * mult), 0, DAMAGE_BLUNT)
-			hit.bodytemperature += 4 * mult
-
-			playsound(hit, 'sound/effects/electric_shock.ogg', 60, 1, 0.1, 2.8)
+			if (ismob(hit))
+				var/mob/M = hit
+				M.TakeDamage("chest", 0, rand(2 * mult, 5 * mult), 0, DAMAGE_BLUNT)
+				M.bodytemperature += (4 * mult)
+				playsound(hit, 'sound/effects/electric_shock.ogg', 60, 1, 0.1, 2.8)
 
 	double
 		cooldown = 0
@@ -1409,16 +1410,17 @@
 					return 0
 			return 1
 
-		on_hit(var/mob/hit, var/mult = 1)
+		on_hit(var/hit, var/mult = 1)
 			//maybe add this in, chance to weaken. I dunno a good amount offhand so leaving out for now - kyle
 			// if (ishuman(hit))
 			// 	var/mob/living/carbon/human/H = hit
 			// 	H.do_disorient(src.stamina_damage * mult, weakened = 10)
 			if(istype(master, /obj/item))
-				hit.TakeDamage("chest", 0/*master.force*/, rand(2 * mult,5 * mult), 0, DAMAGE_BLUNT)
-				hit.bodytemperature += 4 * mult
-
-			playsound(hit, 'sound/effects/electric_shock.ogg', 60, 1, 0.1, 2.8)
+				if (ismob(hit))
+					var/mob/M = hit
+					M.TakeDamage("chest", 0, rand(2 * mult,5 * mult), 0, DAMAGE_BLUNT)
+					M.bodytemperature += (4 * mult)
+					playsound(hit, 'sound/effects/electric_shock.ogg', 60, 1, 0.1, 2.8)
 
 	katana_dash
 		cooldown = 9

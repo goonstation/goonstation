@@ -52,7 +52,8 @@
 		// currently, just update all controllers in world
 		// ***TODO: better communication system using network
 		var/datum/powernet/powernet = src.get_direct_powernet()
-
+		if (!istype(powernet))
+			return
 		for (var/obj/machinery/computer/solar_control/C in powernet.nodes)
 			if (!isnull(src.id) && src.id == C.solar_id)
 				C.tracker_update(angle)
@@ -375,6 +376,10 @@
 		if(S.id != solar_id) continue
 		S.control = src
 		S.ndir = cdir
+
+// hotfix until someone edits all maps to add proper wires underneath the computers
+/obj/machinery/computer/solar_control/get_power_wire()
+	return locate(/obj/cable) in get_turf(src)
 
 /obj/machinery/computer/solar_control/connection_scan()
 	// Find the closest solar panel ID and use that for the current one

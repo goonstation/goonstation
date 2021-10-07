@@ -1894,6 +1894,15 @@
 	var/succeeding = 0
 	var/did_warp = 0
 
+	New()
+		. = ..()
+		src.components -= src.engine
+		qdel(src.engine)
+		src.engine = new /obj/item/shipcomponent/engine/escape(src)
+		src.components += src.engine
+		src.engine.ship = src
+		src.engine.activate()
+
 	finish_board_pod(var/mob/boarder)
 		..()
 		if (!src.pilot) return //if they were stopped from entering by other parts of the board proc from ..()

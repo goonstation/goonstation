@@ -142,7 +142,7 @@
 			return
 
 		for (var/atom/X in range(7,src))
-			if (X == src)
+			if (X == src || (X.event_handler_flags & IMMUNE_SINGULARITY))
 				continue
 			var/area/A = get_area(X)
 			if(A?.sanctuary) continue
