@@ -265,7 +265,7 @@
 				if ((number > 1) && (length(candidates) >= number))
 					break
 
-	if(candidates.len < 1)
+	if(length(candidates) < 1)
 		return list()
 	else
 		return candidates
