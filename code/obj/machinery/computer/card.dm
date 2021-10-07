@@ -35,7 +35,7 @@
 /obj/machinery/computer/card/console_lower
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "id2"
-/obj/item/computerunfolder
+/obj/item/acesscomputerunfolder
 	icon = 'icons/obj/items/storage.dmi'
 	item_state = "hopcaseC"
 	icon_state = "hopcaseC"

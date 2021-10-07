@@ -2436,7 +2436,7 @@
 		/obj/item/material_piece/copper,
 		/obj/item/material_piece/glass)
 	available = list(/datum/manufacture/id_card, /datum/manufacture/implant_access,	/datum/manufacture/implanter) //hey if you update these please remember to add it to /hop_and_uniform's list too
-	hidden = list(/datum/manufacture/id_card_gold, /datum/manufacture/implant_access_infinite, /datum/manufacture/acesscase)
+	hidden = list(/datum/manufacture/id_card_gold, /datum/manufacture/implant_access_infinite)
 
 //combine personnel + uniform manufactuer here. this is 'cause destiny doesn't have enough room! arrg!
 //and i hate this, i do, but you're gonna have to update this list whenever you update /personnel or /uniform
@@ -2492,8 +2492,7 @@
 	/datum/manufacture/implant_access_infinite,
 	/datum/manufacture/breathmask,
 	/datum/manufacture/patch,
-	/datum/manufacture/hat_ltophat,
-	/datum/manufacture/acesscase)
+	/datum/manufacture/hat_ltophat)
 
 /obj/machinery/manufacturer/qm // This manufacturer just creates different crated and boxes for the QM. Lets give their boring lives at least something more interesting.
 	name = "Crate Manufacturer"

@@ -2590,7 +2590,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	name = "ID Briefcase"
 	item_paths = list("CON-1","CRY-1","MET-1","gold")
 	item_amounts = list(25,15,35,2)
-	item_outputs = list(/obj/item/computerunfolder)
+	item_outputs = list(/obj/item/acesscomputerunfolder)
 	time = 75 SECONDS
 	create = 1
 	category = "Resource"
