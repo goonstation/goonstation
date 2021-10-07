@@ -1,5 +1,9 @@
 
 (t)wed oct 06 21
+(u)Emily & Eagletanker
+(p)6195
+(e)🗺|mapping
+(*)Manta's Mining has moved from the Sea Turtle back shipside.
 (u)Flappybat
 (p)6006
 (e)⚖|balance
