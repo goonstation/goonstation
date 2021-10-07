@@ -901,6 +901,7 @@
 		if (src.c_color)
 			C.icon_state = src.c_color
 		C.set_dir(user.dir)
+		ON_COOLDOWN(user, "chair_stand", 1 SECOND)
 		boutput(user, "You unfold [C].")
 		user.drop_item()
 		qdel(src)
