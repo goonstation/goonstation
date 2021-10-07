@@ -1,5 +1,7 @@
-
 (t)wed oct 06 21
+(u)Dr. Cogwerks 
+(e)🗺|mapping
+(*)Reworked cogmap2 engineering hallway so the PTL only bisects one side of the primary corridor by default
 (u)Emily & Eagletanker
 (p)6195
 (e)🗺|mapping
