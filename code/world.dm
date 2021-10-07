@@ -534,7 +534,7 @@ var/f_color_selector_handler/F_Color_Selector
 			Ar.build_sims_score()
 
 	url_regex = new("(https?|byond|www)(\\.|:\\/\\/)", "i")
-	full_url_regex = new(@"(https?:\/\/)?((www\.)?([-\d\l]+\.)+[\d\l]+(\/\S+)*\/?)","ig")
+	full_url_regex = new(@"(https?:\/\/)?((www\.)?([-\d\l]+\.)+[\d\l]{2,}(\/\S+)*\/?)","ig")
 
 	UPDATE_TITLE_STATUS("Updating status")
 	Z_LOG_DEBUG("World/Init", "Updating status...")
