@@ -24,6 +24,9 @@
 # Mordent (mordent-goonstation)
 /code/modules/robotics/ @mordent-goonstation
 
+# Sovexe
+/code/modules/antagonists/arcfiend/ @Sovexe
+
 # Tarmunora
 /code/modules/projectiles/projectile_parent.dm @Tarmunora
 /code/modules/chemistry/Reagents-Base.dm @Tarmunora
