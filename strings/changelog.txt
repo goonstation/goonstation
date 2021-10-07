@@ -1,5 +1,9 @@
 
 (t)thu oct 07 21
+(u)Carsontheking
+(p)5782
+(e)🆕🎨|feature, sprites
+(+)Gold ID card the hops equipment manufacturer can make now requires gold rather than reflective material.
 (u)Dr. Cogwerks 
 (e)🗺|mapping
 (*)Reworked cogmap2 engineering hallway so the PTL only bisects one side of the primary corridor by default
