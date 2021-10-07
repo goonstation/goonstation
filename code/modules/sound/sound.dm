@@ -97,6 +97,9 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 
 /// Sets and applies the volume for a channel (0-1)
 /client/proc/setVolume(channel, volume)
+	var/original_volume = volumes[channel + 1]
+	if(original_volume == 0)
+		original_volume = 1 // let's be safe and try to avoid division by zero
 	volume = clamp(volume, 0, 1)
 	volumes[channel + 1] = volume
 
@@ -107,14 +110,14 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 		for( var/sound/s in playing )
 			s.status |= SOUND_UPDATE
 			var/list/vol = sound_playing[ s.channel ]
-			s.volume = vol[1] * volume * volumes[ vol[2] ] * 100
+			s.volume = vol[1] / original_volume * volume * volumes[ vol[2] ] * 100
 			src << s
 		src.chatOutput.adjustVolumeRaw( volume * getRealVolume(VOLUME_CHANNEL_ADMIN) )
 	else
 		for( var/sound/s in playing )
 			if( sound_playing[s.channel][2] == channel )
 				s.status |= SOUND_UPDATE
-				s.volume = sound_playing[s.channel][1] * volume * volumes[1] * 100
+				s.volume = sound_playing[s.channel][1] / original_volume * volume * volumes[1] * 100
 				src << s
 
 	if( channel == VOLUME_CHANNEL_ADMIN )
@@ -312,7 +315,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 
 /**
 	Plays a sound to some clients without caring about its source location and stuff.
-	`target` can be either a list of clients or a list of mobs or `world` or an area.
+	`target` can be either a list of clients or a list of mobs or `world` or an area or a z-level number.
 */
 /proc/playsound_global(target, soundin, vol as num, vary, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME)
 	// don't play if over the per-tick sound limit
@@ -336,6 +339,12 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 			CRASH("Incorrect object in target list `[target[1]]` in playsound_global.")
 	else if(target == world)
 		clients = global.clients
+	else if(isnum(target))
+		clients = list()
+		for(var/client/client as anything in global.clients)
+			var/turf/T = get_turf(client?.mob)
+			if(T?.z == target)
+				clients += client
 	else if(isarea(target))
 		clients = list()
 		for(var/mob/M in target)

@@ -232,7 +232,7 @@
 				if (apiKey) {
 					xmlHttp = new XMLHttpRequest();
 
-					xmlHttp.open('GET', 'http://goonhub.com/ss13/bans/get?search['+column+']='+term+'&sort='+sort+'&order='+order+'&offset='+offset+'&limit='+pageLimit+'&removed='+viewRemoved+'&bypass=1&forcejson=1&auth='+apiKey+'&'+apiDataParams+'&t='+Math.random(), false);
+					xmlHttp.open('GET', 'https://goonhub.com/ss13/bans/get?search['+column+']='+term+'&sort='+sort+'&order='+order+'&offset='+offset+'&limit='+pageLimit+'&removed='+viewRemoved+'&bypass=1&forcejson=1&auth='+apiKey+'&'+apiDataParams+'&t='+Math.random(), false);
 					xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 					xmlHttp.send();
 					var bansData = xmlHttp.responseText;
@@ -291,7 +291,7 @@
 
 			xmlHttp = new XMLHttpRequest();
 
-			xmlHttp.open('GET', 'http://goonhub.com/ss13/bans/getPrevious?id='+id+'&forcejson=1&bypass=1&auth='+apiKey+'&'+apiDataParams+'&t='+Math.random(), false);
+			xmlHttp.open('GET', 'https://goonhub.com/ss13/bans/getPrevious?id='+id+'&forcejson=1&bypass=1&auth='+apiKey+'&'+apiDataParams+'&t='+Math.random(), false);
 			xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 			xmlHttp.send();
 			var bansData = htmlEncode(xmlHttp.responseText);

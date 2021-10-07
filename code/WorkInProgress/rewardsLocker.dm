@@ -377,6 +377,66 @@
 			activator.set_clothing_icon_dirty()
 			M.wear_layer = MOB_BACK_LAYER_SATCHEL
 
+		else if (istype(activator.back, /obj/item/storage/backpack/robotics) || activator.back.icon_state == "bp_robotics")
+			var/obj/item/storage/backpack/robotics/M = activator.back
+			M.icon = 'icons/obj/items/storage.dmi'
+			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
+			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
+			M.wear_image_icon = 'icons/mob/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.icon_state = "satchel_robotics"
+			M.item_state = "satchel_robotics"
+			M.name = "robotics satchel"
+			M.real_name = "robotics satchel"
+			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects monochromaticly on the shoulder of roboticists.(Base Item: robotics backpack)"
+			activator.set_clothing_icon_dirty()
+			M.wear_layer = MOB_BACK_LAYER_SATCHEL
+
+		else if (istype(activator.back, /obj/item/storage/backpack/genetics) || activator.back.icon_state == "bp_genetics")
+			var/obj/item/storage/backpack/genetics/M = activator.back
+			M.icon = 'icons/obj/items/storage.dmi'
+			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
+			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
+			M.wear_image_icon = 'icons/mob/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.icon_state = "satchel_genetics"
+			M.item_state = "satchel_genetics"
+			M.name = "genetics satchel"
+			M.real_name = "genetics satchel"
+			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects safely on the shoulder of geneticists.(Base Item: genetics backpack)"
+			activator.set_clothing_icon_dirty()
+			M.wear_layer = MOB_BACK_LAYER_SATCHEL
+
+		else if (istype(activator.back, /obj/item/storage/backpack/engineering) || activator.back.icon_state == "bp_engineering")
+			var/obj/item/storage/backpack/engineering/M = activator.back
+			M.icon = 'icons/obj/items/storage.dmi'
+			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
+			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
+			M.wear_image_icon = 'icons/mob/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.icon_state = "satchel_engineering"
+			M.item_state = "satchel_engineering"
+			M.name = "engineering satchel"
+			M.real_name = "engineering satchel"
+			M.desc = "A sturdy, wearable container made of synthetic fibers, able to carry a number of objects effectively on the shoulder of engineers.(Base Item: engineering backpack)"
+			activator.set_clothing_icon_dirty()
+			M.wear_layer = MOB_BACK_LAYER_SATCHEL
+
+		else if (istype(activator.back, /obj/item/storage/backpack/research) || activator.back.icon_state == "bp_research")
+			var/obj/item/storage/backpack/research/M = activator.back
+			M.icon = 'icons/obj/items/storage.dmi'
+			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
+			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
+			M.wear_image_icon = 'icons/mob/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.icon_state = "satchel_research"
+			M.item_state = "satchel_research"
+			M.name = "research satchel"
+			M.real_name = "research satchel"
+			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects efficiently on the shoulder of scientists.(Base Item: research backpack)"
+			activator.set_clothing_icon_dirty()
+			M.wear_layer = MOB_BACK_LAYER_SATCHEL
+
 		else if (istype(activator.back, /obj/item/storage/backpack/captain/blue) || activator.back.icon_state == "capbackpack_blue")
 			var/obj/item/storage/backpack/M = activator.back
 			M.icon = 'icons/obj/items/storage.dmi'

@@ -200,7 +200,7 @@
 							continue
 						var/image/img = cableimgs[idx]
 						img.appearance = C.appearance
-						img.invisibility = 0
+						img.invisibility = INVIS_NONE
 						img.alpha = 255
 						img.layer = 100
 						img.plane = 100
@@ -229,7 +229,7 @@
 
 		var/atom/dummy = D
 		if(D)
-			dummy.invisibility = 101
+			dummy.invisibility = INVIS_ALWAYS
 
 		playsound(src, "sound/effects/shielddown2.ogg", 40, 1)
 		var/obj/overlay/O = new/obj/overlay(get_turf(target))

@@ -136,12 +136,13 @@
 				qdel(O)
 
 	proc/process()
-		if (time_to_die < ticker.round_elapsed_ticks)
+		var/turf/checkTurf = get_turf(src)
+		if (time_to_die < ticker.round_elapsed_ticks || isrestrictedz(checkTurf?.z))
 			qdel(src)
 			return
 
 		for (var/atom/X in range(7,src))
-			if (X == src)
+			if (X == src || || (X.event_handler_flags & IMMUNE_SINGULARITY))
 				continue
 			var/area/A = get_area(X)
 			if(A?.sanctuary) continue

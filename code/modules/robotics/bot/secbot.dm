@@ -208,6 +208,11 @@
 	desc = "A little security robot, apparently carved out of a pumpkin.  He looks...spooky?"
 	icon = 'icons/misc/halloween.dmi'
 
+/obj/machinery/bot/secbot/neon
+	name = "Beepsky (Mall Edition)"
+	desc = "This little security robot appears to have been redesigned to appeal to civilians. How colourful!"
+	icon = 'icons/misc/walp_decor.dmi'
+
 /obj/machinery/bot/secbot/brute
 	name = "Komisarz Beepinarska"
 	desc = "This little security robot seems to have a particularly large chip on its... shoulder? ...head?"
@@ -715,7 +720,7 @@
 			return
 
 		// If the target is or goes invisible, give up, securitrons don't have thermal vision! :p
-		if((src.target.invisibility > 0)  && (!src.is_beepsky))
+		if((src.target.invisibility > INVIS_NONE)  && (!src.is_beepsky))
 			speak("?!", just_float = 1)
 			src.KillPathAndGiveUp(kpagu)
 			return

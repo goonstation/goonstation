@@ -1144,7 +1144,7 @@
 				src.detonate()
 				return
 			if(src.time == DISARM_CUTOFF)
-				world << sound('sound/misc/airraid_loop_short.ogg')
+				playsound_global(world, "sound/misc/airraid_loop_short.ogg", 90)
 			if(src.time <= DISARM_CUTOFF)
 				src.icon_state = "net_nuke2"
 				boutput(world, "<span class='alert'><b>[src.time] seconds until nuclear charge detonation.</b></span>")
@@ -1323,7 +1323,7 @@
 		return
 
 	proc/detonate()
-		world << sound('sound/effects/kaboom.ogg')
+		playsound_global(world, "sound/effects/kaboom.ogg", 70)
 		//explosion(src, src.loc, 10, 20, 30, 35)
 		explosion_new(src, get_turf(src), 10000)
 		//dispose()
@@ -1708,6 +1708,7 @@
 
 	New()
 		..()
+		src.AddComponent(/datum/component/obj_projectile_damage)
 		if(!print_id)
 			src.print_id = "GENERIC"
 
@@ -1778,6 +1779,12 @@
 
 		else
 			return attack_hand(user)
+
+	onDestroy()
+		if (src.powered())
+			elecflash(src, power = 2)
+		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
+		. = ..()
 
 	attack_hand(mob/user as mob)
 		if(..() || (status & (NOPOWER|BROKEN)))
@@ -2787,7 +2794,7 @@
 	desc = "A beam of infrared light."
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "ibeam"
-	invisibility = 2
+	invisibility = INVIS_CLOAK
 	dir = 2
 	//var/obj/beam/ir_beam/next = null
 	var/obj/machinery/networked/secdetector/master = null

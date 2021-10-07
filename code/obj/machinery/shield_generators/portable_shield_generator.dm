@@ -9,6 +9,7 @@
 	anchored = 0
 	mats = 50
 	layer = FLOOR_EQUIP_LAYER1
+	deconstruct_flags = DECON_DESTRUCT
 	var/obj/item/cell/PCEL = null
 	var/coveropen = 0
 	var/active = 0
@@ -627,11 +628,11 @@
 		if(a)
 			icon_state = "shieldw"
 			powerlevel = 2
-			invisibility = 0
+			invisibility = INVIS_NONE
 		else
 			icon_state = ""
 			powerlevel = 0
-			invisibility = 100 //ehh whatever this "works"
+			invisibility = INVIS_ALWAYS_ISH //ehh whatever this "works"
 
 	meteorhit(obj/O as obj)
 		return

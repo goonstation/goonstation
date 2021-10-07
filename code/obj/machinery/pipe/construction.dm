@@ -44,7 +44,7 @@ Buildable meters
 
 /obj/item/weapon/pipe/hide(var/i)
 
-	invisibility = i ? 101 : 0		// make hidden pipe items invisible
+	invisibility = i ? INVIS_ALWAYS : INVIS_NONE		// make hidden pipe items invisible
 	updateicon()
 
 

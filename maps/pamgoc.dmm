@@ -21294,9 +21294,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/computer/robotics{
-	perma = 1
-	},
+/obj/machinery/computer/robotics,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "aLO" = (

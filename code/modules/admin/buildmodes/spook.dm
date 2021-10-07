@@ -30,7 +30,7 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 		if(activeSpook && activeType && (istype( object, activeType ) || (object.spookTypes && (activeSpook in object.spook_getspooks()))))
 			object.spook_act( activeSpook, spookData )
 
-/obj/machinery/light/spookTypes = "Break;Set Color"//list("Break", "Set Color")
+/obj/machinery/light/spookTypes = "Break;Set Color;Toggle"
 /obj/machinery/light/spook_data(what)
 	switch(what)
 		if("Set Color")
@@ -44,6 +44,8 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 			broken()
 		if("Set Color")
 			light.set_color( arglist(data || list(1,1,1)) )
+		if("Toggle")
+			src.seton(!src.on)
 		else
 			..()
 
@@ -117,11 +119,63 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 			throw_item()
 		else .=..()
 
-/obj/item/spookTypes = "Spook"
+/obj/item/spookTypes = "Spook;Come Alive"
 /obj/item/spook_act(what)
 	switch(what)
 		if("Spook")
 			var/rdeg = rand(15,30)
 			animate(src, pixel_y = 32, transform = matrix(rdeg, MATRIX_ROTATE), time = 10, loop = -1, easing = SINE_EASING)
 			animate(pixel_y = 0, transform = matrix(rdeg * -1, MATRIX_ROTATE), time = 10, loop = -1, easing = SINE_EASING)
-		else .=..()
+		if("Come Alive")
+			src.visible_message("<span class='alert'>\The [src] comes to life!</span>")
+			var/obj/critter/livingobj/L = new/obj/critter/livingobj(src.loc)
+			src.set_loc(L)
+			L.name = "Living [src.name]"
+			L.desc = "[src.desc]. It appears to be alive!"
+			L.overlays += src
+			L.health = rand(10, 150)
+			L.atk_brute_amt = rand(1, 35)
+			L.defensive = 1
+			L.aggressive = pick(1,0)
+			L.atkcarbon = pick(1,0)
+			L.atksilicon = pick(1,0)
+			L.opensdoors = pick(1,0)
+			L.original_object = src
+			animate_float(L, -1, 30)
+		else
+			.	=	..()
+
+/obj/critter/domestic_bee/spookTypes = "Dance;Honey;Zombify"
+/obj/critter/domestic_bee/spook_act(what, data)
+	switch(what)
+		if("Zombify")
+			name = "zombee"
+			desc = "Genetically engineered for extreme size and indistinct segmentation and bred for docility, the greater domestic space-bee is increasingly popular among space traders and science-types.<br>This one seems kinda sick, poor thing."
+			icon_state = "zombee-wings"
+			icon_body = "zombee"
+			sleeping_icon_state = "zombee-sleep"
+			honey_color = rgb(0, 255, 0)
+		if("Dance")
+			src.dance()
+		if("Honey")
+			src.puke_honey()
+		else
+			. = ..()
+
+/obj/machinery/light_switch/spookTypes = "Toggle"
+/obj/machinery/light_switch/spook_act(what, data)
+	switch(what)
+		if("Toggle")
+			src.attack_hand(usr)
+		else
+			. = ..()
+
+/obj/machinery/power/apc/spookTypes = "Toggle"
+/obj/machinery/power/apc/spook_act(what, data)
+	switch(what)
+		if("Toggle")
+			src.operating = !src.operating
+			src.update()
+			updateicon()
+		else
+			. = ..()

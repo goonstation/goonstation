@@ -335,7 +335,7 @@
 
 		tickSpacing = 3 SECONDS
 
-		damage_tox = 1
+		damage_tox = 0
 		damage_type = DAMAGE_BURN
 
 		var/howMuch = ""
@@ -382,8 +382,8 @@
 			var/mob/M = null
 			if(ismob(owner))
 				M = owner
-
-			damage_tox = (sqrt(duration/20 + 5) - 1)
+			if(!ismobcritter(M))
+				damage_tox = (sqrt(duration/20 + 5) - 1)
 			stage = get_stage(duration)
 			switch(stage)
 				if(1)
@@ -1788,13 +1788,13 @@
 	limb_or_organ = "organ"
 
 /datum/statusEffect/changeling_regrow/limb/l_arm
-	id = "c_regrow-l_hand"
+	id = "c_regrow-l_arm"
 	icon_state = "cspider-hand"
 	regrow_target_id = "l_arm"
 	regrow_target_name = "left arm"
 	regrow_target_path = /obj/item/parts/human_parts/arm/left
 /datum/statusEffect/changeling_regrow/limb/r_arm
-	id = "c_regrow-r_hand"
+	id = "c_regrow-r_arm"
 	icon_state = "cspider-hand"
 	regrow_target_id = "r_arm"
 	regrow_target_name = "right arm"
@@ -1890,7 +1890,7 @@
 	maxDuration = 2 MINUTES
 	id = "drowsy"
 	name = "Drowsy"
-	icon_state = "?1"
+	icon_state = "drowsy"
 	desc = "You feel very drowsy"
 	movement_modifier = new/datum/movement_modifier/drowsy
 	var/tickspassed = 0
@@ -1911,7 +1911,7 @@
 	id = "passing_out"
 	name = "Passing out"
 	desc = "You're so tired you're about to pass out!"
-	icon_state = "disorient"
+	icon_state = "passing_out"
 	maxDuration = 5 SECONDS
 
 	onRemove()

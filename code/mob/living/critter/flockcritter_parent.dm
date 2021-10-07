@@ -6,7 +6,7 @@
 	density = 0
 	say_language = "feather"
 	voice_name = "synthetic chirps"
-	see_invisible = 9
+	see_invisible = INVIS_FLOCKMIND
 	speechverb_say = "chirps"
 	speechverb_exclaim = "screeches"
 	speechverb_ask = "inquires"

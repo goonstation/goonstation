@@ -88,10 +88,13 @@
 					M.throw_at(destination, 8, 2)
 
 					return
-
+				if(ismob(M))
+					logTheThing("combat", M, null, "entered [src] at [log_loc(src)] and teleported to [src.target] at [log_loc(destination)]")
 				do_teleport(M, destination, 1)
 			else return
 		else
+			if(ismob(M))
+				logTheThing("combat", M, null, "entered [src] at [log_loc(src)] and teleported to [log_loc(src.target)]")
 			do_teleport(M, src.target, 1) ///You will appear adjacent to the beacon
 
 /obj/portal/wormhole

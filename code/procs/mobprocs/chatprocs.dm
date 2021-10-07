@@ -716,6 +716,8 @@
 	var/modifier = 30
 	if (src.reagents && src.reagents.has_reagent("helium"))
 		modifier += 30
+	if (src.getStatusDuration("crunched") > 0)
+		modifier += 100
 	if (deep_farting)
 		modifier -= 120
 	if (modifier == 0)
@@ -747,7 +749,8 @@
 	if (!L)
 		L = languages.language_cache["english"]
 
-	return prefix + L.get_messages(message)
+	var/list/messages = L.get_messages(message)
+	return list(prefix + messages[1], prefix + messages[2])
 
 /mob/proc/get_special_language(var/secure_mode)
 	return null

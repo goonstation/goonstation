@@ -142,7 +142,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 				continue
 
 			C.chatOutput.playMusic(data["file"], vol)
-			if (adminC && !(adminC.stealth && !adminC.fakekey))
+			if (!adminC || !(adminC.stealth && !adminC.fakekey))
 				// Stealthed admins won't show the "now playing music" message,
 				// for added ability to be spooky.
 				boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
@@ -155,7 +155,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	else
 		logTheThing("admin", data["key"], null, "loaded remote music: [data["file"]] ([data["filesize"]])")
 		logTheThing("diary", data["key"], null, "loaded remote music: [data["file"]] ([data["filesize"]])", "admin")
-		message_admins("[key_name(data["key"])] loaded remote music: [data["title"]] ([data["duration"]] / [data["filesize"]])")
+		message_admins("[data["key"]] loaded remote music: [data["title"]] ([data["duration"]] / [data["filesize"]])")
 	return 1
 
 /client/verb/change_volume(channel_name as anything in audio_channel_name_to_id)

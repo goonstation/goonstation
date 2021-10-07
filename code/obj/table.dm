@@ -478,6 +478,16 @@
 	auto
 		auto = 1
 
+/obj/table/neon
+	name = "neon table"
+	desc = "It's almost painfully bright."
+	icon = 'icons/obj/furniture/table_neon.dmi'
+	auto_type = /obj/table/neon/auto
+	parts_type = /obj/item/furniture_parts/table/neon
+
+	auto
+		auto = 1
+
 /obj/table/folding
 	name = "folding table"
 	desc = "A table with a faux wood top designed for quick assembly and toolless disassembly."

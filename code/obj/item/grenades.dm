@@ -769,7 +769,7 @@ PIPE BOMBS + CONSTRUCTION
 		var/obj/effects/explosion/E = new /obj/effects/explosion(src.loc)
 		E.fingerprintslast = src.fingerprintslast
 
-		invisibility = 100
+		invisibility = INVIS_ALWAYS_ISH
 		SPAWN_DBG(15 SECONDS)
 			qdel (src)
 
@@ -1286,7 +1286,7 @@ PIPE BOMBS + CONSTRUCTION
 				return
 
 			playsound(location, "sound/effects/bamf.ogg", 100, 0.5)
-			src.invisibility = 101
+			src.invisibility = INVIS_ALWAYS
 
 			for (var/turf/T in range(src.expl_range, location))
 				if( T?.loc:sanctuary ) continue
