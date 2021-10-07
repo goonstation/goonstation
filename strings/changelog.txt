@@ -1,5 +1,9 @@
 
 (t)wed oct 06 21
+(u)Flappybat
+(p)6006
+(e)⚖|balance
+(+)Wish granters now give out less dollars.
 (u)Tarmunora
 (+)adjust expresso recipe
 (u)HauntedAngel
