@@ -95,7 +95,7 @@
 
 		///Trail some dried blood I guess?
 		blood_trail()
-			if(src.trailing_blood == FALSE)
+			if(!src.trailing_blood)
 				src.tracked_blood = list("bDNA" = src.blood_DNA, "btype" = src.blood_type, "count" = INFINITY)
 				src.track_blood()
 				trailing_blood = TRUE
@@ -273,11 +273,11 @@
 			if(!src.mind || !M.mind)
 				src.visible_message("<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 104</span>")
 				return
-			if(!locate(M)) //M got gibbed
+			if(!M.loc) //M got gibbed
 				for (var/mob/M2 in mobs)
 					if(M2.key == src.slasher_key)
 						M2.mind.transfer_to(src) //the slasher's alive again at least
-			if(!locate(src)) //src got gibbed
+			if(!src.loc) //src got gibbed
 				return //well you're dead now, soz
 			M.mind.transfer_to(src)
 			sleep(5 DECI SECONDS)
@@ -350,7 +350,7 @@
 			src.visible_message("<span class='alert'>[src] begins emitting a dark aura.</span>")
 			sleep(3 SECONDS)
 			for(var/mob/living/M in oview(4, src))
-				if(!(M == src))
+				if(!(M == src) && !M?.traitHolder?.hasTrait("training_chaplain"))
 					boutput(M, "<span class='notice'>Your legs feel a bit stiff!</span>")
 					M.setStatus("staggered", 8 SECONDS)
 
@@ -371,10 +371,10 @@
 			abilityHolder.updateButtons()
 
 /datum/abilityHolder/slasher
-	usesPoints = 0
+	usesPoints = FALSE
 	regenRate = 0
 	tabName = "Abilities"
-	cast_while_dead = 0
+	cast_while_dead = FALSE
 
 ABSTRACT_TYPE(/datum/targetable/slasher)
 /datum/targetable/slasher
@@ -389,7 +389,7 @@ ABSTRACT_TYPE(/datum/targetable/slasher)
 	name = "Incorporealize"
 	desc = "Become a ghost, capable of moving through walls."
 	icon_state = "incorporealize"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 30 SECONDS
 
 	cast()
@@ -412,7 +412,7 @@ ABSTRACT_TYPE(/datum/targetable/slasher)
 	name = "Corporealize"
 	desc = "Manifest your being, allowing you to interact with the world."
 	icon_state = "corporealize"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 30 SECONDS
 
 	cast()
@@ -430,7 +430,7 @@ ABSTRACT_TYPE(/datum/targetable/slasher)
 	name = "Blood Trail"
 	desc = "Begin trailing blood behind you, to spook those who reside on station."
 	icon_state = "trail_blood"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 5 SECONDS
 
 	cast()
@@ -444,7 +444,7 @@ ABSTRACT_TYPE(/datum/targetable/slasher)
 	name = "Summon Machete"
 	desc = "Summon your machete to your active hand."
 	icon_state = "summon_machete"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 15 SECONDS
 
 	cast()
@@ -457,8 +457,8 @@ ABSTRACT_TYPE(/datum/targetable/slasher)
 	name = "Possess"
 	desc = "Possess a target temporarily."
 	icon_state = "slasher_possession"
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	cooldown = 3 MINUTES
 
 	cast(atom/target)
@@ -468,6 +468,10 @@ ABSTRACT_TYPE(/datum/targetable/slasher)
 		if (ishuman(target))
 			var/mob/living/carbon/human/H = target
 			var/mob/living/carbon/human/slasher/W = src.holder.owner
+			if(H?.traitHolder?.hasTrait("training_chaplain"))
+				boutput(usr, "<span class='alert'>You cannot possess a holy man!</span>")
+				JOB_XP(H, "Chaplain", 2)
+				return 1
 			if(isdead(H))
 				boutput(usr, "<span class='alert'>You cannot possess a corpse.</span>")
 				return 1
@@ -487,7 +491,7 @@ ABSTRACT_TYPE(/datum/targetable/slasher)
 	name = "Regenerate"
 	desc = "Regenerate your body, and remove all restraints."
 	icon_state = "regenerate"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 90 SECONDS
 
 	cast()
@@ -501,19 +505,19 @@ ABSTRACT_TYPE(/datum/targetable/slasher)
 	name = "Toggle Help Mode"
 	desc = "Enter or exit help mode."
 	icon_state = "help"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 5 SECONDS
-	helpable = 0
+	helpable = FALSE
 	special_screen_loc = "SOUTH,EAST"
 
 	cast(atom/target)
 		if (..())
 			return 1
 		if (holder.help_mode)
-			holder.help_mode = 0
+			holder.help_mode = FALSE
 		else
-			holder.help_mode = 1
-			boutput(holder.owner, "<span class='notice'><strong>Help Mode has been activated  To disable it, click on this button again.</strong></span>")
+			holder.help_mode = TRUE
+			boutput(holder.owner, "<span class='notice'><strong>Help Mode has been activated. To disable it, click on this button again.</strong></span>")
 			boutput(holder.owner, "<span class='notice'>Hold down Shift, Ctrl or Alt while clicking the button to set it to that key.</span>")
 			boutput(holder.owner, "<span class='notice'>You will then be able to use it freely by holding that button and left-clicking a tile.</span>")
 			boutput(holder.owner, "<span class='notice'>Alternatively, you can click with your middle mouse button to use the ability on your current tile.</span>")
@@ -524,7 +528,7 @@ ABSTRACT_TYPE(/datum/targetable/slasher)
 	name = "Open Nearby Doors"
 	desc = "Open doors within three tiles of you."
 	icon_state = "open_doors"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 25 SECONDS
 
 	cast()
@@ -558,6 +562,10 @@ ABSTRACT_TYPE(/datum/targetable/slasher)
 			return 1
 		var/mob/living/carbon/human/slasher/W = src.holder.owner
 		var/mob/living/carbon/human/M = target
+		if(M?.traitHolder?.hasTrait("training_chaplain"))
+			boutput(usr, "<span class='alert'>You cannot claim the soul of a holy man!</span>")
+			JOB_XP(H, "Chaplain", 2)
+			return 1
 		if(isdead(M))
 			if(ishuman(M) && M.mind && M.mind.soul >= 100)
 				if (get_dist(W, M) > 1)
@@ -568,7 +576,6 @@ ABSTRACT_TYPE(/datum/targetable/slasher)
 			else
 				boutput(usr, "<span class='alert'>[M]'s soul is inadequate for your purposes.</span>")
 				return 1
-
 		else
-			boutput(usr, "<span class='alert'>Your target must be dead to steal their soul.</span>")
+			boutput(usr, "<span class='alert'>Your target must be dead in order to steal their soul.</span>")
 			return 1
