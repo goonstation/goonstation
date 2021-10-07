@@ -45,7 +45,8 @@
 
 	proc/stick_to(var/atom/A, var/pox, var/poy)
 		if (!dont_make_an_overlay)
-			var/image/sticker = image('icons/misc/stickers.dmi', src.icon_state)
+			var/image/sticker = image(src.icon, src.icon_state)
+
 			//sticker.layer = //EFFECTS_LAYER_BASE // I swear to fuckin god stop being under CLOTHES you SHIT
 			sticker.layer = A.layer + 1 //Do this instead so the stickers don't show over bushes and stuff.
 			sticker.icon_state = src.icon_state
@@ -332,6 +333,84 @@
 	angry
 		name = "angry googly eye sticker"
 		random_icons = list("googly_angerL", "googly_angerR")
+
+/obj/item/sticker/pride
+	name = "pride flag sticker"
+	icon = 'icons/obj/items/prideflags.dmi'
+	icon_state = "poster_pride1"
+	desc = "Be Gay, Do Crime!"
+	toobig = TRUE
+
+/obj/item/sticker/pride/lgbt
+	name = "pride flag sticker"
+	icon_state = "poster_pride1"
+	desc = "Be Gay, Do Crime!"
+
+/obj/item/sticker/pride/agender
+	name = "agender pride sticker"
+	icon_state = "poster_pride2"
+	desc = "Proudly gender-free!"
+
+/obj/item/sticker/pride/aromantic
+	name = "aromantic pride sticker"
+	icon_state = "poster_pride3"
+	desc = "No romantic attraction? No problem!"
+
+/obj/item/sticker/pride/asexual
+	name = "asexual pride sticker"
+	icon_state = "poster_pride4"
+	desc = "No interest in sex? You're cool in my book!"
+
+/obj/item/sticker/pride/bisexual
+	name = "bisexual pride sticker"
+	icon_state = "poster_pride5"
+	desc = "Proudly Bi!"
+
+/obj/item/sticker/pride/genderfluid
+	name = "genderfluid pride sticker"
+	icon_state = "poster_pride6"
+	desc = "Change your gender more often than your socks? You're cool!"
+
+/obj/item/sticker/pride/genderqueer
+	name = "genderqueer pride sticker"
+	icon_state = "poster_pride7"
+	desc = "Gender is malleable, mould your own today!"
+
+/obj/item/sticker/pride/intersex
+	name = "intersex pride sticker"
+	icon_state = "poster_pride8"
+	desc = "Born outside the neatly labelled boxes, and refusing to be confined to one"
+
+/obj/item/sticker/pride/lesbian
+	name = "lesbian pride sticker"
+	icon_state = "poster_pride9"
+	desc = "Frankly, I'd rather live with a lesbian than a cat! Unless the lesbian sheds, that I don't know."
+
+/obj/item/sticker/pride/nonbinary
+	name = "nonbinary pride sticker"
+	icon_state = "poster_pride10"
+	desc = "Clear of mind; pure of heart; none of binary"
+
+/obj/item/sticker/pride/pansexual
+	name = "pansexual pride sticker"
+	icon_state = "poster_pride11"
+	desc = "Proudly attracted to people regardless of their sex or gender!"
+
+/obj/item/sticker/pride/polysexual
+	name = "polysexual pride sticker"
+	icon_state = "poster_pride12"
+	desc = "Attraction to many, or all, genders? Right on!"
+
+/obj/item/sticker/pride/transgender
+	name = "transgender pride sticker"
+	icon_state = "poster_pride13"
+	desc = "Who you are comes from inside, and you get to say who that is"
+
+/obj/item/sticker/pride/queer_villain
+	name = "queer villain pride sticker"
+	icon_state = "poster_pride14"
+	desc = "Chaos, and rebellion, against an oppressive and boring status quo!\
+		 Passion, community, queer history ... AND EVIL! MWAHAHAHAHAHAHAHAAA!"
 
 /obj/item/sticker/ribbon
 	name = "award ribbon"
