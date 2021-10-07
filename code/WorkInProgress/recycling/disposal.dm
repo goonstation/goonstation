@@ -919,7 +919,6 @@
 						newLoaf.loaf_factor += (newLoaf.loaf_factor / 10) + 50
 					if(!isdead(poorSoul))
 						poorSoul:emote("scream")
-					sleep(0.5 SECONDS)
 					poorSoul.death()
 					if (poorSoul.mind || poorSoul.client)
 						poorSoul.ghostize()
