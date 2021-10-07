@@ -36,14 +36,14 @@
 		..()
 		if(!active)
 			return
-		ship.invisibility = 2
+		ship.invisibility = INVIS_CLOAK
 		shield = image("icon" = 'icons/obj/ship.dmi', "icon_state" = "shield", "layer" = MOB_LAYER)
 		ship.overlays += shield
 		return
 
 	deactivate()
 		..()
-		ship.invisibility = 0
+		ship.invisibility = INVIS_NONE
 		ship.overlays -= shield
 		return
 

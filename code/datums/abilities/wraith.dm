@@ -744,8 +744,8 @@
 	desc = "What is this? You feel like you shouldn't be able to see it, but it has an ominous and slightly mischevious aura."
 	icon = 'icons/effects/wraitheffects.dmi'
 	icon_state = "acursed"
-	// invisibility = 101
-	invisibility = 10
+	// invisibility = INVIS_ALWAYS
+	invisibility = INVIS_GHOST
 	anchored = 1
 	density = 0
 	opacity = 0

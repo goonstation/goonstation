@@ -344,11 +344,11 @@ var/linenums = 0
 		is += "-b"
 
 	if ((src.level == 1 && isturf(src.loc) && T.intact))
-		src.invisibility = 101
+		src.invisibility = INVIS_ALWAYS
 		is += "-f"
 
 	else
-		src.invisibility = 0
+		src.invisibility = INVIS_NONE
 
 	src.icon_state = is
 

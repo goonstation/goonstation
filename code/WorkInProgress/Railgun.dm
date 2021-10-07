@@ -24,7 +24,7 @@
 	anchored = 1
 	density = 0
 	opacity = 0
-	invisibility = 99
+	invisibility = INVIS_ALWAYS_ISH
 
 /obj/item/railgun
 	name = "Railgun"

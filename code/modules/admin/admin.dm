@@ -5205,18 +5205,18 @@ var/global/noir = 0
 		boutput(usr, "Sorry, you have to be alive!")
 		return
 
-	if(!(usr.invisibility == 100))
+	if(!(usr.invisibility == INVIS_ALWAYS_ISH))
 		boutput(usr, "You are now cloaked")
 		usr.set_clothing_icon_dirty()
 
 		usr.overlays += image("icon" = 'icons/mob/mob.dmi', "icon_state" = "shield")
 
-		usr.invisibility = 100
+		usr.invisibility = INVIS_ALWAYS_ISH
 	else
 		boutput(usr, "You are no longer cloaked")
 
 		usr.set_clothing_icon_dirty()
-		usr.invisibility = 0
+		usr.invisibility = INVIS_NONE
 */
 //
 //

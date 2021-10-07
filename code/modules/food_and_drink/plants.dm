@@ -745,6 +745,39 @@
 	plant_reagent = "juice_blueberry"
 	food_effects = list("food_cold", "food_refreshed")
 
+/obj/item/reagent_containers/food/snacks/plant/blackberry/
+	name = "blackberry"
+	desc = "A freshly picked blackberry."
+	icon_state = "blackberry"
+	planttype = /datum/plant/fruit/raspberry
+	amount = 1
+	heal_amt = 1
+	food_color = "#1d222f"
+	plant_reagent = "juice_blackberry"
+	food_effects = list("food_cold", "food_refreshed")
+
+/obj/item/reagent_containers/food/snacks/plant/raspberry/
+	name = "raspberry"
+	desc = "A freshly picked raspberry."
+	icon_state = "raspberry"
+	planttype = /datum/plant/fruit/raspberry
+	amount = 1
+	heal_amt = 1
+	food_color = "#a30325"
+	plant_reagent = "juice_raspberry"
+	food_effects = list("food_cold", "food_refreshed")
+
+/obj/item/reagent_containers/food/snacks/plant/blueraspberry
+	name = "blue raspberry"
+	desc = "A freshly picked blue raspberry."
+	icon_state = "blueraspberry"
+	planttype = /datum/plant/fruit/raspberry
+	amount = 1
+	heal_amt = 1
+	food_color = "#65d8e6"
+	plant_reagent = "juice_blueraspberry"
+	food_effects = list("food_cold", "food_refreshed")
+
 /obj/item/reagent_containers/food/snacks/plant/pear/
 	name = "pear"
 	desc = "Whether or not you like the taste, its freshness is appearant."
@@ -1367,6 +1400,17 @@
 		..()
 		reagents.add_reagent("coffee",20)
 
+/obj/item/reagent_containers/food/snacks/plant/turmeric
+	name = "turmeric root"
+	crop_suffix = " root"
+	desc = "An aromatic root from the turmeric plant, a relative of ginger."
+	icon_state = "turmericroot"
+	planttype = /datum/plant/veg/turmeric
+	plant_reagent = "currypowder"
+	edible = 0
+	validforhat = 1
+	food_color = "#e0a80c"
+
 /obj/item/reagent_containers/food/snacks/plant/lashberry/
 	name = "lashberry"
 	desc = "Not nearly as violent as the plant it came from."
@@ -1425,3 +1469,4 @@
 		make_reagents()
 			..()
 			reagents.add_reagent("omnizine", 10)
+

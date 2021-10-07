@@ -30,7 +30,7 @@
 /datum/game_mode/disaster/announce()
 	if(derelict_mode)
 		boutput(world, "<tt>BUG: MEM ERR 0000FF88 00F90045</tt>")
-		playsound_global(world, 'sound/machines/glitch1.ogg', 60)
+		playsound_global(world, "sound/machines/glitch1.ogg", 60)
 		boutput(world, "<B>We are experiencing technical difficulties. Please remain calm. Help is on the way.</B>")
 		boutput(world, "<B>Report to your station's emergency rally point: CHAPEL.</B>")
 	else
@@ -81,7 +81,7 @@
 		emergency_shuttle.incall()
 		if(derelict_mode)
 			command_alert("Ev4C**!on shu9999999__ called. Prepare fo# evacua ****SIGNAL LOST****","Emergency Al&RT")
-			playsound_global(world, 'sound/machines/engine_alert2.ogg', 60)
+			playsound_global(world, "sound/machines/engine_alert2.ogg", 60)
 		else
 			command_alert("The shuttle has been called.","Emergency Shuttle Update")
 
@@ -91,7 +91,7 @@
 				H.flash(3 SECONDS)
 
 		SPAWN_DBG(10 SECONDS)
-			playsound_global(world, 'sound/effects/creaking_metal1.ogg', 60)
+			playsound_global(world, "sound/effects/creaking_metal1.ogg", 60)
 			for(var/mob/living/carbon/human/H in mobs)
 				shake_camera(H, 8, 32)
 				H.change_misstep_chance(5)
@@ -105,13 +105,13 @@
 				playsound_global(world, pick(scarysounds), 50)
 
 		SPAWN_DBG(40 SECONDS)
-			playsound_global(world, 'sound/effects/creaking_metal1.ogg', 60)
+			playsound_global(world, "sound/effects/creaking_metal1.ogg", 60)
 			for(var/mob/living/carbon/human/H in mobs)
 				shake_camera(H, 8, 24)
 				H.change_misstep_chance(5)
 
 		SPAWN_DBG(1 MINUTE)
-			playsound_global(world, 'sound/effects/creaking_metal1.ogg', 60)
+			playsound_global(world, "sound/effects/creaking_metal1.ogg", 60)
 			for(var/mob/living/carbon/human/H in mobs)
 				shake_camera(H, 7, 16)
 				H.change_misstep_chance(5)
@@ -168,7 +168,7 @@
 
 	if(derelict_mode)
 		command_alert("[disaster_name] eve## de####ed on **e stat!on. **$00AA curren#_ unava!l4ble due t0 [contrived_excuse]. All per#############ERR","Haz4rD*## Ev##_ A**Rt")
-		playsound_global(world, 'sound/machines/siren_generalquarters_quiet.ogg', 90)
+		playsound_global(world, "sound/machines/siren_generalquarters_quiet.ogg", 90)
 		SPAWN_DBG(0.5 SECONDS)
 			random_events.announce_events = 0
 			random_events.force_event("Power Outage","Scripted Disaster Mode Event")

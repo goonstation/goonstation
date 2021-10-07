@@ -2,19 +2,23 @@
 	var/obj/item/objBriefcase/the_briefcase
 	var/original_name
 	var/original_desc
+	var/briefcase_path
 	var/change_name = 1
 
 /datum/component/foldable/keep_name
 	change_name = 0
 
-/datum/component/foldable/Initialize()
+/datum/component/foldable/Initialize(var/briefcase_path = /obj/item/objBriefcase)
 	if(!istype(parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
+	if(!ispath(briefcase_path, /obj/item/objBriefcase))
+		return COMPONENT_INCOMPATIBLE
+	src.briefcase_path = briefcase_path
 
 /datum/component/foldable/RegisterWithParent()
 	. = ..()
 	var/atom/movable/object = src.parent
-	src.the_briefcase = new(null, object)
+	src.the_briefcase = new src.briefcase_path(null, object)
 	if(src.change_name)
 		src.original_name = object.name
 		src.original_desc = object.desc
@@ -112,3 +116,9 @@
 				fold_component.the_briefcase = null
 			src.thingInside = null
 		..()
+	blue_stripe
+		icon_state = "hopcase"
+		item_state = "hopcase"
+	blue_green_stripe
+		icon_state = "hopcaseC"
+		item_state = "hopcaseC"

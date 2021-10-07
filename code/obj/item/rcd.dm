@@ -1001,7 +1001,7 @@ Broken RCD + Effects
 					user.gib()
 
 /obj/effects/void_break
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	var/lifespan = 4
 	var/rangeout = 0

@@ -334,7 +334,7 @@
 		// EYE CAN SEE FOREVERRRR
 		src.sight |= SEE_MOBS | SEE_TURFS | SEE_OBJS
 		src.see_in_dark = SEE_DARK_FULL
-		src.see_invisible = 2
+		src.see_invisible = INVIS_CLOAK
 
 	// a slight breeze will kill these guys, such is life as a squishy li'l eye
 	setup_healths()
