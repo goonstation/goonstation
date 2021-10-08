@@ -153,8 +153,8 @@
 	see_face = 1
 	
 /obj/item/clothing/mask/moustache/Italian 
-	name = "a fake Italian moustache"
-	desc = "For those  who cant cut the lasagna."
+	name = "fake Italian moustache"
+	desc = "For those who can't cut the lasagna."
 	icon_state = "moustache-i"
 	item_state = "moustache-i"
 	see_face = 1
