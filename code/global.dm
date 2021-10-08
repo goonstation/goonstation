@@ -93,6 +93,8 @@ var/global
 
 	footstep_extrarange = 0 // lol same (modified hackily in mobs.dm to avoid lag from sound at high player coutns)
 
+	max_sound_range = MAX_SOUND_RANGE_NORMAL
+
 	list/cursors_selection = list("Default" = 'icons/cursors/target/default.dmi',
 	"Red" = 'icons/cursors/target/red.dmi',
 	"Green" = 'icons/cursors/target/green.dmi',
