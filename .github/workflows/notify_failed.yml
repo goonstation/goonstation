@@ -1,11 +1,11 @@
-name: notify_failed
+name: "Notify Workflow Failure"
 on:
   workflow_run:
     workflows: ["Automaton", "Beepsky"]
     types: [completed]
 
 jobs:
-  on-success:
+  on-failure:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'failure' && github.repository == 'goonstation/goonstation' }}
     steps:
