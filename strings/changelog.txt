@@ -1,5 +1,9 @@
 
 (t)fri oct 08 21
+(u)Flappybat
+(p)5928
+(e)⚖|balance
+(+)Antagonist critter gunbots now have muzzleflash, thermalvision and cyborg style punch immunity.
 (u)Tarmunora
 (e)⚖|balance
 (+)Port-a-nanomed and chemdepot non-scannable
