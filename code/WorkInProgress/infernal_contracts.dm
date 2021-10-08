@@ -116,7 +116,7 @@ proc/is_weak_rollable_contract(type)
 	src.partygib()
 
 /proc/soulcheck(var/mob/M as mob)
-	M.abilityHolder.updateText()
+	M?.abilityHolder?.updateText()
 	if ((ishuman(M)) && (isdiabolical(M)))
 		if (total_souls_value >= 10)
 			if (!M.bioHolder.HasEffect("demon_horns"))
