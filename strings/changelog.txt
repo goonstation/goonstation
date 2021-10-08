@@ -1,5 +1,9 @@
 
 (t)fri oct 08 21
+(u)Kubius
+(p)6043
+(e)🆕🗺|feature, mapping
+(*)Silverglass has been set adrift in deep space.
 (u)Arthur Holiday
 (p)6204
 (e)⚖|balance
