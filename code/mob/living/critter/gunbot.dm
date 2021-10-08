@@ -109,15 +109,13 @@
 					user.visible_message("<span class='alert'><B>[user] shoves [src]! [prob(40) ? pick_string("descriptors.txt", "jerks") : null]</B></span>")
 				if(INTENT_GRAB) //Shake
 					if (istype(user, /mob/living/carbon/human/machoman))
-						. = ..()
-						return
+						return ..()
 					playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 30, 1, -2)
 					user.visible_message("<span class='alert'>[user] shakes [src] [pick_string("descriptors.txt", "borg_shake")]!</span>")
 				if(INTENT_HARM) //Dumbo
 					if (istype(user, /mob/living/carbon/human/machoman))
-						. = ..()
-						return
-					if (ishuman(user) && !ishunter(user) && !iswerewolf(user) && !iswrestler(user))
+						return ..()
+					if (ishuman(user))
 						if (user.is_hulk())
 							src.TakeDamage("All", 5, 0)
 							if (prob(20))
@@ -128,12 +126,10 @@
 								else
 									src.visible_message("<span class='alert'><B>[user] punches [src]!</B></span>")
 							playsound(src.loc, pick(sounds_punch), 50, 1, -1)
-						/*if (user.glove_weaponcheck())
-							user.energyclaws_attack(src)*/
 						else
 							user.visible_message("<span class='alert'><B>[user] punches [src]! What [pick_string("descriptors.txt", "borg_punch")]!</span>", "<span class='alert'><B>You punch [src]![prob(20) ? " Turns out they were made of metal!" : null] Ouch!</B></span>")
 							random_brute_damage(user, rand(2,5))
 							playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 60, 1)
 							if(prob(10)) user.show_text("Your hand hurts...", "red")
 					else
-						. = ..()
+						return ..()
