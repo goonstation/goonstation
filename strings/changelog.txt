@@ -3,7 +3,7 @@
 (u)Ikea
 (p)5944
 (e)|
-(*)Engineering and Janitor lockers now come with lamp manufacturers.
+(*)Engineering now come with lamp manufacturers.
 (u)Dr. Cogwerks
 (e)🗺|mapping
 (*)Reworked Cogmap2 security checkpoint and podbay layouts. Added minibrig and a little pilot/merchant booth. 
