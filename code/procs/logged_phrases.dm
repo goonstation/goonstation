@@ -82,25 +82,11 @@ var/global/datum/phrase_log/phrase_log = new
 			@"imposter",
 			@"shitsec",
 			@"shitcurity",
-			@"(:?li|su)gma",
+			@"ligma",
 			@"ඞ",
-			@"spess",
 			@"we do a little .",
-			@"\b.ower\s?gam(:?er?|ing)",
-#ifdef RP_MODE
-			@"\bl(:?ol)+",
-			@"\blmao+",
-			@"\bwt[hf]+\b",
-			@"\bsmh\b",
-			@"\birl\b",
-			@"\bomg\b",
-			@"\bid[ck]\b",
-			@"\bic\b",
-			@"\bl?ooc\b",
-			@"\b(:?fail\s?)?rp\b",
-#endif
-			@"\bowo",
-			@"\buwu"
+			@"owo",
+			@"uwu"
 		)
 		sussy_words = regex(jointext(sussy_word_list, "|"), "i")
 
