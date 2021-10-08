@@ -124,7 +124,7 @@
 
 	New()
 		..()
-		src.invisibility = 100
+		src.invisibility = INVIS_ALWAYS_ISH
 
 ///////////////////
 //////spawner//////

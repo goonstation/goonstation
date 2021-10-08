@@ -15,7 +15,7 @@
 // this allows the gas flushed to be tracked
 
 /obj/disposalholder
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	var/datum/gas_mixture/gas = null	// gas used to flush, will appear at exit point
 	var/active = 0	// true if the holder is moving, otherwise inactive
 	dir = 0
@@ -263,7 +263,7 @@
 	// hide called by levelupdate if turf intact status changes
 	// change visibility status and force update of icon
 	hide(var/intact)
-		invisibility = intact ? 101: 0	// hide if floor is intact
+		invisibility = intact ? INVIS_ALWAYS : INVIS_NONE	// hide if floor is intact
 		updateicon()
 
 	// update actual icon_state depending on visibility
@@ -344,7 +344,7 @@
 					var/obj/disposalpipe/broken/P = new(src.loc)
 					P.set_dir(D)
 
-		src.invisibility = 101	// make invisible (since we won't delete the pipe immediately)
+		src.invisibility = INVIS_ALWAYS	// make invisible (since we won't delete the pipe immediately)
 		var/obj/disposalholder/H = locate() in src
 		if(H)
 			// holder was present
@@ -919,7 +919,6 @@
 						newLoaf.loaf_factor += (newLoaf.loaf_factor / 10) + 50
 					if(!isdead(poorSoul))
 						poorSoul:emote("scream")
-					sleep(0.5 SECONDS)
 					poorSoul.death()
 					if (poorSoul.mind || poorSoul.client)
 						poorSoul.ghostize()

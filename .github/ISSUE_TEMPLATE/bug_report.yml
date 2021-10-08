@@ -1,0 +1,48 @@
+name: Report a Bug
+description: Report a bug here on our issue tracker.
+body:
+- type: "input"
+  id: "labels"
+  attributes:
+    label: "Labels"
+    description: "To automatically label this issue, add the uppercase'd label(s) sourrounded by brackets"
+    value: "[BUG]"
+    placeholder: "[LABEL]"
+
+- type: "input"
+  id: "description"
+  attributes:
+    label: "Description"
+    description: "Give a short description of the bug"
+    placeholder: "Explosive bees do not explode after being fed."
+  validations:
+    required: true
+
+- type: "textarea"
+  id: "steps"
+  attributes:
+    label: "Steps to reproduce"
+    description: "Give a list of steps to reproduce this issue"
+    value: "1. "
+    placeholder: |
+       1. Obtain explosive bee from queen bee
+       2. Feed bee any food from the kitchen
+       3. Use explosive bee in hand to prime
+       4. Instead pet the bee
+  validations:
+    required: true
+
+- type: "input"
+  id: "expected_behavior"
+  attributes:
+    label: "Expected Behavior"
+    description: "Give a short description of what you expected to happen"
+    placeholder: "I expected the explosive bee to explode as it does when its not fed"
+  validations:
+    required: true
+    
+- type: "textarea"
+  id: "misc"
+  attributes:
+    label: "Additional Information & Screenshots"
+    description: "Add screenshots and any other information here"

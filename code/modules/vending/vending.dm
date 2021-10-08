@@ -1585,6 +1585,7 @@
 	light_g = 0.88
 	light_b = 0.3
 
+
 	create_products()
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/chefhat, 2)
@@ -1628,6 +1629,7 @@
 
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/breakfast, rand(2, 4), hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/snack_cake, rand(1, 3), hidden=1)
+		product_list += new/datum/data/vending_product(pick(/obj/item/paper/recipe_tandoori, /obj/item/paper/recipe_potatocurry, /obj/item/paper/recipe_coconutcurry, /obj/item/paper/recipe_chickenpapplecurry), 1, hidden = 1)
 
 //The burden of these machinations weighs on my shoulders
 //And thus you will be burdened

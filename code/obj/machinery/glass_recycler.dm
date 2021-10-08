@@ -46,7 +46,7 @@
 				else
 					if (istype(W,/obj/item/reagent_containers/food/drinks/bottle))
 						var/obj/item/reagent_containers/food/drinks/bottle/B = W
-						if (!B.broken) glass_amt += 1
+						if (!B.broken) glass_amt += 2
 					else
 						glass_amt += W.amount
 		else if (istype(W, /obj/item/material_piece) && W.material?.material_flags & MATERIAL_CRYSTAL && W.material?.alpha <= 180)
@@ -132,7 +132,7 @@
 			return 1
 */
 	proc/create(var/object)
-		if(src.glass_amt < 1 || ((object == "pitcher" || object == "largebeaker" || object == "round" || object == "plate") && src.glass_amt < 2))
+		if(src.glass_amt < 1 || ((object == "pitcher" || object == "largebeaker" || object == "round" || object == "plate" || object == "drinkbottles" || object == "longbottle" || object == "tallbottle" || object == "rectangularbottle" || object == "squarebottle" || object == "masculinebottle") && src.glass_amt < 2))
 			src.visible_message("<span class='alert'>[src] doesn't have enough glass to make that!</span>")
 			return
 
@@ -153,22 +153,22 @@
 				src.glass_amt -= 1
 			if("drinkbottle")
 				G = new /obj/item/reagent_containers/food/drinks/bottle/soda(get_turf(src))
-				src.glass_amt -= 1
+				src.glass_amt -= 2
 			if("longbottle")
 				G = new /obj/item/reagent_containers/food/drinks/bottle/empty/long(get_turf(src))
-				src.glass_amt -= 1
+				src.glass_amt -= 2
 			if("tallbottle")
 				G = new /obj/item/reagent_containers/food/drinks/bottle/empty/tall(get_turf(src))
-				src.glass_amt -= 1
+				src.glass_amt -= 2
 			if("rectangularbottle")
 				G = new /obj/item/reagent_containers/food/drinks/bottle/empty/rectangular(get_turf(src))
-				src.glass_amt -= 1
+				src.glass_amt -= 2
 			if("squarebottle")
 				G = new /obj/item/reagent_containers/food/drinks/bottle/empty/square(get_turf(src))
-				src.glass_amt -= 1
+				src.glass_amt -= 2
 			if("masculinebottle")
 				G = new /obj/item/reagent_containers/food/drinks/bottle/empty/masculine(get_turf(src))
-				src.glass_amt -= 1
+				src.glass_amt -= 2
 			if("plate")
 				G = new /obj/item/plate(get_turf(src))
 				src.glass_amt -= PLATE_COST

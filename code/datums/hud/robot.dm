@@ -548,7 +548,7 @@
 			// I put this here because there's nowhere else for it right now.
 			// @TODO robot hud needs a general update() call imo.
 			if (src.mainframe)
-				mainframe.invisibility = (master.mainframe ? 0 : 101)
+				mainframe.invisibility = (master.mainframe ? INVIS_NONE : INVIS_ALWAYS)
 
 
 		update_pulling()
