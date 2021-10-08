@@ -128,8 +128,6 @@
 								else
 									src.visible_message("<span class='alert'><B>[user] punches [src]!</B></span>")
 							playsound(src.loc, pick(sounds_punch), 50, 1, -1)
-						/*if (user.glove_weaponcheck())
-							user.energyclaws_attack(src)*/
 						else
 							user.visible_message("<span class='alert'><B>[user] punches [src]! What [pick_string("descriptors.txt", "borg_punch")]!</span>", "<span class='alert'><B>You punch [src]![prob(20) ? " Turns out they were made of metal!" : null] Ouch!</B></span>")
 							random_brute_damage(user, rand(2,5))
