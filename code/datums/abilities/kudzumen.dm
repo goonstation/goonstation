@@ -204,7 +204,7 @@
 /obj/kudzu_marker
 	name = "benign kudzu"
 	desc = "A flowering subspecies of the kudzu plant that, is a non-invasive plant on space stations."
-	// invisibility = 101
+	// invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
 	opacity = 0

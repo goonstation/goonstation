@@ -539,6 +539,7 @@
 		return
 
 	logTheThing("diary", src, null, ": [msg]", "ooc")
+	phrase_log.log_phrase("ooc", msg)
 
 #ifdef DATALOGGER
 	game_stats.ScanText(msg)
@@ -648,6 +649,7 @@
 		if (M.client.holder && !M.client.only_local_looc && !M.client.player_mode)
 			recipients += M.client
 
+	phrase_log.log_phrase("looc", msg)
 	for (var/client/C in recipients)
 		// DEBUGGING
 		if (!C.preferences)

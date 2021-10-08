@@ -228,13 +228,13 @@ ABSTRACT_TYPE(/datum/buildmode)
 		if (!usr.client.holder.buildmode_view)
 			usr.client.cmd_admin_aview()
 		usr.see_in_dark = initial(usr.see_in_dark)
-		usr.see_invisible = 16
+		usr.see_invisible = INVIS_GHOST
 	else
 		src.buildmode.activate()
 		if (!usr.client.holder.buildmode_view)
 			usr.client.cmd_admin_aview()
 		usr.see_in_dark = 10
-		usr.see_invisible = 21
+		usr.see_invisible = INVIS_ADVENTURE
 		src.show_popup_menus = 0
 
 /atom/movable/screen/buildmode/builddir

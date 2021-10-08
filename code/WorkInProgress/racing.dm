@@ -42,7 +42,7 @@
 	anchored = 1
 	density = 0
 	opacity = 0
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	var/spawn_time = 0
 	var/wait = 0
 

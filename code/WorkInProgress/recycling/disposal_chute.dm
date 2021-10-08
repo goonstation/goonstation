@@ -37,6 +37,7 @@
 	// find the attached trunk (if present) and init gas resvr.
 	New()
 		..()
+		src.AddComponent(/datum/component/obj_projectile_damage)
 		SPAWN_DBG(0.5 SECONDS)
 			if (src)
 				trunk = locate() in src.loc
@@ -62,6 +63,12 @@
 			pool(air_contents)
 			air_contents = null
 		..()
+
+	onDestroy()
+		if (src.powered())
+			elecflash(src, power = 2)
+		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
+		. = ..()
 
 	proc/initair()
 		air_contents = unpool(/datum/gas_mixture)
