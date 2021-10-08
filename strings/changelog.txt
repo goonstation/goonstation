@@ -1,5 +1,9 @@
 
 (t)fri oct 08 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Port-a-nanomed and chemdepot non-scannable
+(+)Organ Swap special order additional rewards of 3x medical restock cartridges and 1x advanced medical restock cartridge (portamed restock)
 (u)Danger Noodle
 (p)6214
 (e)🆕🗺🎨|feature, mapping, sprites

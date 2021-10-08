@@ -49,7 +49,7 @@
 	///piece of paper (subtypes) with order info etc
 	var/obj/item/paper/requisition
 	///bonus rewards shipped when order is filled
-	var/list/rewards
+	var/list/atom/movable/rewards
 	///credit value for filling the order
 	var/price
 	///weighting for event pick
@@ -94,20 +94,40 @@
 			requisition = new requisition
 		requisition.info = replacetext(requisition.info, "%ITEMS%", src.get_shopping_list())
 		requisition.info += "<BR/><BR/>Requisition Offer: <B>[price]</B>"
+		if(length(rewards))
+			requisition.info += get_rewards_list()
 
 	///formats src.order_items for being put onto paper
 	proc/get_shopping_list()
 		. = "<ul>"
 		for(var/datum/commodity/C as anything in src.order_items)
 			if(src.order_items[C])
-				. += "<li>([src.order_items[C]]) [initial(C.comname)]</li>"
+				. += "<li>([src.order_items[C]]) [capitalize(initial(C.comname))]</li>"
 			else
-				. += "<li>[initial(C.comname)]</li>"
+				. += "<li>[capitalize(initial(C.comname))]</li>"
+		. += "</ul>"
+
+	///formats src.rewards for being put on paper
+	proc/get_rewards_list()
+		. += "<br/><ul>"
+		for(var/atom/movable/AM as anything in rewards)
+			if(src.rewards[AM])
+				. += "<li>[src.rewards[AM]]x [capitalize(initial(AM.name))]</li>"
+			else
+				. += "<li>[capitalize(initial(AM.name))]</li>"
 		. += "</ul>"
 
 	///proc stub. Override this with code for filling sendingCrate during event setup
 	proc/pack_crate()
 		return
+
+	///if we have item rewards to send upon order fulfillment, shove them in a crate and ship it off to cargo
+	proc/send_rewards()
+		if(length(rewards))
+			var/obj/storage/crate/C = new
+			for(var/type in rewards)
+				new type(C)
+			shippingmarket.receive_crate(C)
 
 ABSTRACT_TYPE(/datum/special_order/reagents)
 /datum/special_order/reagents
@@ -166,6 +186,7 @@ ABSTRACT_TYPE(/datum/special_order/surgery)
 
 ABSTRACT_TYPE(/datum/special_order/chef)
 /datum/special_order/chef
+	weight = 50
 	price = 2000
 	requisition = new /obj/item/paper/requisition/food_order
 	var/list/food_order = list()
@@ -266,12 +287,13 @@ ABSTRACT_TYPE(/datum/special_order/chef)
 
 /datum/special_order/surgery/organ_swap
 	name = "Organ Swap"
-	weight = 25
+	weight = 50
 	price = 5000
 	sendingCrate = new /obj/storage/crate/wooden
 	requisition = new /obj/item/paper/requisition/surgery/organ_swap
 	var/mob/living/carbon/human/target
 	var/target_organs = list()
+	rewards = list(/obj/item/vending/restock_cartridge/medical = 3, /obj/item/vending/restock_cartridge/portamed = 1)
 
 	New()
 		..()
