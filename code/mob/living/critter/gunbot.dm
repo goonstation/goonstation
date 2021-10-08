@@ -105,7 +105,7 @@
 					playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -2)
 					user.visible_message("<span class='notice'>[user] gives [src] a [pick_string("descriptors.txt", "borg_pat")] pat on the [pick("back", "head", "shoulder")].</span>")
 				if(INTENT_DISARM) //Shove
-					SPAWN_DBG(0) playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 1)
+					playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 1)
 					user.visible_message("<span class='alert'><B>[user] shoves [src]! [prob(40) ? pick_string("descriptors.txt", "jerks") : null]</B></span>")
 				if(INTENT_GRAB) //Shake
 					if (istype(user, /mob/living/carbon/human/machoman))
