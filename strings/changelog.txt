@@ -1,4 +1,8 @@
-
+(t)fri oct 08 21
+(u)Dr. Cogwerks
+(e)🗺|mapping
+(*)Reworked Cogmap2 security checkpoint and podbay layouts. Added minibrig and a little pilot/merchant booth. 
+(*)Reinforced Mining Magnet viewing areas 
 (t)thu oct 07 21
 (u)Carsontheking
 (p)5782
