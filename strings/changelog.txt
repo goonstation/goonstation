@@ -1,5 +1,9 @@
 
 (t)fri oct 08 21
+(u)Arthur Holiday
+(p)6204
+(e)⚖|balance
+(+)When putting down a chair you will have to wait 1 second before climbing on it.
 (u)Ikea
 (p)5944
 (e)|
