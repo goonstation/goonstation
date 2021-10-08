@@ -1,5 +1,9 @@
 
 (t)fri oct 08 21
+(u)Danger Noodle
+(p)6214
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Added a new space prefab, a school for securitrons.
 (u)Kubius
 (p)6043
 (e)🆕🗺|feature, mapping
