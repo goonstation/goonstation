@@ -43834,10 +43834,13 @@
 	},
 /area/afterlife/arena)
 "cwe" = (
-/obj/landmark{
-	name = "Nuclear-Closet"
+/obj/item_dispenser/barricade,
+/obj/item/deployer/barricade,
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "bot2"
 	},
-/turf/unsimulated/floor/darkblue,
+/turf/unsimulated/floor/plating/random,
 /area/syndicate_station/battlecruiser)
 "cwf" = (
 /turf/unsimulated/floor/specialroom/gym,
@@ -43904,10 +43907,11 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/landmark{
-	name = "Syndicate-Gear-Closet"
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "bot2"
 	},
-/turf/unsimulated/floor/darkblue,
+/turf/unsimulated/floor/plating/random,
 /area/syndicate_station/battlecruiser)
 "cwp" = (
 /obj/decal/fakeobjects{

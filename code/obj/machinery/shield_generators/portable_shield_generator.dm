@@ -628,11 +628,11 @@
 		if(a)
 			icon_state = "shieldw"
 			powerlevel = 2
-			invisibility = 0
+			invisibility = INVIS_NONE
 		else
 			icon_state = ""
 			powerlevel = 0
-			invisibility = 100 //ehh whatever this "works"
+			invisibility = INVIS_ALWAYS_ISH //ehh whatever this "works"
 
 	meteorhit(obj/O as obj)
 		return

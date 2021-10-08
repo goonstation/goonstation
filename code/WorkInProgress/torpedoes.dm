@@ -402,6 +402,20 @@
 		else
 			return ..(I,user)
 
+	hitby(var/atom/movable/M, var/datum/thrown_thing/thr)
+		if (ishuman(M) && M.throwing)
+			var/mob/living/carbon/human/thrown_person = M
+			M.visible_message("<span class='alert'><b>[thrown_person] [thrown_person.throwing & THROW_SLIP ? "slips" : "falls"] onto [src]! [src] slams closed!</b></span>")
+			logTheThing("combat", thrown_person, null, " falls into \the [src] at [showCoords(src.x, src.y, src.z)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"])")
+			thrown_person.set_loc(src.loc)
+			parent?.close()
+			if (prob(25) || thrown_person.bioHolder.HasEffect("clumsy"))
+				SPAWN_DBG(0.5 SECONDS)
+					JOB_XP(thrown_person, "Clown", 5)
+					src.parent?.launch()
+		else
+			..()
+
 /obj/torpedo_tray
 	name = "torpedo tray"
 	desc = "A tray for wheeling around torpedos."
@@ -477,9 +491,10 @@
 		changeIcon()
 		return
 
-	proc/remove(var/turf/target, var/direction = null)
+	proc/remove(var/turf/target, var/direction = null, var/force = FALSE)
 		if(loaded == null) return
-		if(!can_act(usr) || !can_reach(usr, src) || !can_reach(usr, target)) return
+		if(!force && (!can_act(usr) || !can_reach(usr, src) || !can_reach(usr, target)))
+			return
 		var/obj/torpedo/T = loaded
 		loaded = null
 		T.set_dir((direction ? direction : src.dir))
@@ -501,6 +516,18 @@
 				remove(trg)
 			else if(istype(trg, /obj/torpedo_tube_tray))
 				remove(get_turf(over_object), trg.dir)
+
+	hitby(var/atom/movable/M, var/datum/thrown_thing/thr)
+		if (src.loaded && ishuman(M) && M.throwing)
+			var/mob/living/carbon/human/thrown_person = M
+			if (thrown_person.throwing & THROW_CHAIRFLIP)
+				logTheThing("combat", thrown_person, null, " flips into \the [src] at [showCoords(src.x, src.y, src.z)], setting it off.")
+				loaded.breakLaunch()
+			else if (prob(25) || thrown_person.bioHolder.HasEffect("clumsy"))
+				logTheThing("combat", thrown_person, null, " is thrown into \the [src] at [showCoords(src.x, src.y, src.z)], setting it off. (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"])")
+				loaded.breakLaunch()
+				JOB_XP(thrown_person, "Clown", 5)
+		..()
 
 /obj/torpedo_tray/explosive_loaded
 	icon = 'icons/obj/large/32x64.dmi'
@@ -678,7 +705,7 @@
 	proc/breakLaunch()
 		var/obj/torpedo_tray/T = src.loc
 		if(istype(T))
-			T.remove(get_turf(src))
+			T.remove(get_turf(src), force = TRUE)
 		var/atom/target = get_edge_target_turf(src, src.dir)
 		src.lockdir = src.dir
 		src.fired = 1

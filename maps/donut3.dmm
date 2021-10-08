@@ -70827,6 +70827,8 @@
 /obj/item/reagent_containers/hypospray,
 /obj/item/remote/porter/port_a_sci,
 /obj/machinery/light/incandescent/netural,
+/obj/item/disk/data/tape/artifact_research,
+/obj/item/disk/data/tape/master,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "uEg" = (

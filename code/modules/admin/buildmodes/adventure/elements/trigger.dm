@@ -50,7 +50,7 @@
 
 /obj/adventurepuzzle/triggerer/trigger
 	name = "invisible trigger"
-	invisibility = 20
+	invisibility = INVIS_ADVENTURE
 	icon_state = "trigger"
 	density = 0
 	opacity = 0

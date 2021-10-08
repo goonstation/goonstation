@@ -428,7 +428,7 @@
 		name = "Class Crate - Heavy Weapons Specialist"
 		desc = "A crate containing a Specialist Operative loadout. This one features a light machine gun, several belts of ammunition and a pouch of grenades."
 		spawn_contents = list(/obj/item/gun/kinetic/light_machine_gun,
-		/obj/item/ammo/bullets/lmg = 3,
+		/obj/item/storage/pouch/lmg,
 		/obj/item/storage/grenade_pouch/high_explosive,
 		/obj/item/storage/fanny/syndie,
 		/obj/item/clothing/suit/space/industrial/syndicate/specialist,
@@ -554,6 +554,15 @@
 		/obj/item/clothing/gloves/swat/knight,
 		/obj/item/clothing/suit/space/syndicate/knight,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/knight)
+
+	bard
+		name = "Class Crate - Rocker"
+		desc = "A crate containing a Specialist Operative loadout."
+		spawn_contents = list(/obj/item/breaching_hammer/rock_sledge,
+		/obj/item/device/radio/headset/syndicate/bard,
+		/obj/item/storage/fanny/syndie,
+		/obj/item/clothing/suit/space/syndicate/specialist/firebrand, // Gannets should make a cool suit
+		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator) // Gannet should make cool helm
 
 	qm //Hi Gannets, I like your crate and wanted to use it for some QM stuff. Come yell at Azungar if this is not ok.
 		name = "Weapons crate"

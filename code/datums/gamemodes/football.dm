@@ -82,7 +82,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 							if (!the_football)
 								the_football = new /obj/item/football/the_big_one()
 							the_football.set_loc(pick(football_spawns["football"]))
-							the_football.invisibility = 0
+							the_football.invisibility = INVIS_NONE
 
 					if (FOOTBALL_INGAME)
 						time_left -= delta
@@ -146,9 +146,9 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 				M.drop_item(the_football)
 
 			the_football.blowthefuckup(100, delete = 0)
-			the_football.invisibility = 101
+			the_football.invisibility = INVIS_ALWAYS
 			SPAWN_DBG(3 SECONDS)
-				the_football.invisibility = 0
+				the_football.invisibility = INVIS_NONE
 				the_football.set_loc(pick(football_spawns["football"]))
 			//qdel(the_football)
 			//the_football = null
