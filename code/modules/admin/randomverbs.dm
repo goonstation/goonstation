@@ -2435,7 +2435,7 @@ var/global/night_mode_enabled = 0
 			boutput(src, "Failed to clear medal; error!")
 			break
 
-/client/proc/give_mass_medals(var/medal as null|text, var/revoke = 0)
+/client/proc/give_mass_medals(var/medal as null|text)
 	set name = "Give Mass Medals"
 	set desc = "Give a bunch of players a medal. Don't use this while any of them are online please lol."
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -2451,6 +2451,7 @@ var/global/night_mode_enabled = 0
 		if (!medal)
 			return
 
+	var/revoke = (alert(src, "Mass grant or revoke medals?", "Mass grant/revoke", "Grant", "Revoke") == "Revoke")
 	var/key = input("Enter player key", "Player key", null) as null|text
 	while(key)
 		var/player = ckey(key)
