@@ -94,3 +94,20 @@
 	icon_state = "red"
 	name = "the barren wastes"
 	teleport_blocked = 0
+
+
+/obj/machinery/computer/sea_elevator/sec
+	upper = /area/shuttle/sea_elevator/upper/sec
+	lower = /area/shuttle/sea_elevator/lower/sec
+
+/obj/machinery/computer/sea_elevator/eng
+	upper = /area/shuttle/sea_elevator/upper/eng
+	lower = /area/shuttle/sea_elevator/lower/eng
+
+/obj/machinery/computer/sea_elevator/med
+	upper = /area/shuttle/sea_elevator/upper/med
+	lower = /area/shuttle/sea_elevator/lower/med
+
+/obj/machinery/computer/sea_elevator/QM
+	upper = /area/shuttle/sea_elevator/upper/QM
+	lower = /area/shuttle/sea_elevator/lower/QM

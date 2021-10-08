@@ -497,6 +497,8 @@
 	machine_registry_idx = MACHINES_ELEVATORCOMPS
 	var/active = 0
 	var/location = 1 // 0 for bottom, 1 for top
+	var/upper = /area/shuttle/sea_elevator/upper
+	var/lower = /area/shuttle/sea_elevator/lower
 
 /obj/machinery/computer/sea_elevator/attack_hand(mob/user as mob)
 	if(..())
@@ -544,13 +546,13 @@
 /obj/machinery/computer/sea_elevator/proc/call_shuttle()
 
 	if(location == 0) // at bottom
-		var/area/start_location = locate(/area/shuttle/sea_elevator/lower)
-		var/area/end_location = locate(/area/shuttle/sea_elevator/upper)
+		var/area/start_location = locate(lower)
+		var/area/end_location = locate(upper)
 		start_location.move_contents_to(end_location, /turf/simulated/floor/plating, ignore_fluid = 1)
 		location = 1
 	else // at top
-		var/area/start_location = locate(/area/shuttle/sea_elevator/upper)
-		var/area/end_location = locate(/area/shuttle/sea_elevator/lower)
+		var/area/start_location = locate(upper)
+		var/area/end_location = locate(lower)
 		for(var/mob/M in end_location) // oh dear, stay behind the yellow line kids
 			SPAWN_DBG(1 DECI SECOND)
 				random_brute_damage(M, 30)

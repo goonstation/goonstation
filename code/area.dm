@@ -1212,6 +1212,25 @@ ABSTRACT_TYPE(/area/prefab)
 	name = "Shooting Range"
 	icon_state = "purple"
 
+// stuff
+
+/area/shuttle/sea_elevator/lower/sec // gehenna sec elevator
+	name = "Security Elevator Shaft"
+/area/shuttle/sea_elevator/upper/sec // gehenna sec elevator
+	name = "Security Elevator Shaft"
+/area/shuttle/sea_elevator/lower/eng
+	name = "Engineering Elevator Shaft"
+/area/shuttle/sea_elevator/upper/eng
+	name = "Engineering Elevator Shaft"
+/area/shuttle/sea_elevator/lower/med
+	name = "Hospital Elevator Shaft"
+/area/shuttle/sea_elevator/upper/med
+	name = "Hospital Elevator Shaft"
+/area/shuttle/sea_elevator/lower/QM
+	name = "Cargo Elevator Shaft"
+/area/shuttle/sea_elevator/upper/QM
+	name = "Cargo Elevator Shaft"
+
 // Sealab trench areas //
 
 /area/shuttle/sea_elevator_room
