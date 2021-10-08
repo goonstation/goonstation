@@ -564,7 +564,7 @@ ABSTRACT_TYPE(/datum/targetable/slasher)
 		var/mob/living/carbon/human/M = target
 		if(M?.traitHolder?.hasTrait("training_chaplain"))
 			boutput(usr, "<span class='alert'>You cannot claim the soul of a holy man!</span>")
-			JOB_XP(H, "Chaplain", 2)
+			JOB_XP(usr, "Chaplain", 2)
 			return 1
 		if(isdead(M))
 			if(ishuman(M) && M.mind && M.mind.soul >= 100)
