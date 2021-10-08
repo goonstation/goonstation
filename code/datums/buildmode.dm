@@ -135,8 +135,8 @@ ABSTRACT_TYPE(/datum/buildmode)
 	proc/update_mode_icon()
 		button_mode.icon_state = mode.icon_state
 		button_mode.maptext_width = 256
-		button_mode.maptext_height = 64
-		button_mode.maptext_y = -64
+		button_mode.maptext_height = 96
+		button_mode.maptext_y = -96
 		button_mode.maptext_x = -62
 
 	proc/build_click(atom/target, location, control, list/params)

@@ -529,6 +529,8 @@ datum
 				var/mob/living/M = target
 				if (!iscarbon(M) && !ismobcritter(M))
 					return
+				if (volume_passed < 1)
+					return
 				if ((method == INGEST || (method == TOUCH && prob(25))) && (isdead(M) || istype(get_area(M),/area/afterlife/bar)))
 					var/came_back_wrong = 0
 					if (M.get_brute_damage() + M.get_burn_damage() >= 150)
@@ -1527,8 +1529,9 @@ datum
 				if (method == INGEST)
 					boutput(M, "<span class='alert'>Aaaagh! It tastes fucking horrendous!</span>")
 					SPAWN_DBG(1 SECOND)
-						M.visible_message("<span class='alert'>[M] pukes violently!</span>")
-						M.vomit()
+						if(!isdead(M) && volume >= 1)
+							M.visible_message("<span class='alert'>[M] pukes violently!</span>")
+							M.vomit()
 				else
 					boutput(M, "<span class='alert'>Oh god! It smells horrific! What the fuck IS this?!</span>")
 					if (prob(50))
@@ -1561,6 +1564,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				if(volume < 1)
+					return
 				if (method == TOUCH)
 					. = 0 // for depleting fluid pools
 				if(!ON_COOLDOWN(M, "ants_scream", 3 SECONDS))
@@ -1590,6 +1595,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				if(volume < 1)
+					return
 				if(method == TOUCH)
 					. = 0 // for depleting fluid pools
 				if (!ON_COOLDOWN(M, "spiders_scream", 3 SECONDS))
@@ -2698,9 +2705,7 @@ datum
 
 			grenade_effects(var/obj/grenade, var/atom/A)
 				if (isliving(A))
-					arcFlash(grenade, A, 0)
-					var/mob/M = A
-					M.shock(M, 1 MEGA , "chest", 0.75, 1)
+					arcFlash(grenade, A, 1 MEGA WATT, 0.75)
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if (reacting)
@@ -2718,18 +2723,18 @@ datum
 			on_mob_life(mob/M, var/mult = 1)
 
 				if (probmult(10))
-					elecflash(M)
+					elecflash(M, 1, 4, 1)
 				..()
 
 			proc/zap_dude_punching(source, mob/attacker)
 				src.zap_dude(source, null, attacker)
 			proc/zap_dude(source, item, mob/attacker)
 				if(volume >= 5 && prob(volume))
-					arcFlash(holder?.my_atom, attacker,  min(75000, volume * 1000))
+					arcFlash(holder?.my_atom, attacker,  min(75000, volume * 1000), 0.5)
 					holder.remove_reagent(id, 5)
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
-				if (prob(10))
+				if (probmult(10))
 					if (severity >= 2)
 						M.shock(M, 100000, "chest", 1, 1)
 						holder.remove_reagent(id, 20)
@@ -3734,6 +3739,13 @@ datum
 						boutput(M, "<span class='alert'>Oh god! The <i>smell</i>!!!</span>")
 					M.reagents.add_reagent("jenkem",0.1 * volume_passed)
 
+			very_toxic
+				id = "very_toxic_fart"
+				name = "very toxic fart"
+
+				on_mob_life(var/mob/M, var/mult = 1)
+					. =..()
+					M.take_toxin_damage(2 * mult)
 			//on_mob_life(var/mob/M, var/mult = 1)
 			//	if(!M) M = holder.my_atom
 			//	..()

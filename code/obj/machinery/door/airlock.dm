@@ -536,10 +536,9 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "thin glass airlock"
 	icon_state = "windoor_closed"
 	icon_base = "windoor"
-	panel_icon_state = "windoor"
+	panel_icon_state = "windoor_panel_open"
 	welded_icon_state = "fdoor_weld"
 	sound_airlock = 'sound/machines/windowdoor.ogg'
-	has_panel = 0
 	has_crush = 0
 	health = 500
 	health_max = 500
@@ -559,10 +558,9 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 /obj/machinery/door/airlock/pyro/glass/windoor/alt
 	icon_state = "windoor2_closed"
 	icon_base = "windoor2"
-	panel_icon_state = "windoor2"
+	panel_icon_state = null
 	welded_icon_state = "windoor2_weld"
 	sound_airlock = 'sound/machines/windowdoor.ogg'
-	has_panel = 0
 	has_crush = 0
 	layer = 3.5
 

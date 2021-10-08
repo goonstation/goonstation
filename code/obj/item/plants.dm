@@ -351,8 +351,8 @@
 	// module_research_type = /obj/item/plant/herb/cannabis
 	attack_hand(var/mob/user as mob)
 		if (iswerewolf(user))
-			user.changeStatus("weakened", 8 SECONDS)
-			user.take_toxin_damage(-10)
+			user.changeStatus("weakened", 3 SECONDS)
+			user.TakeDamage("All", 0, 5, 0, DAMAGE_BURN)
 			boutput(user, "<span class='alert'>You try to pick up [src], but it hurts and you fall over!</span>")
 			return
 		else ..()
@@ -362,7 +362,7 @@
 		if(iswerewolf(M))
 			M.changeStatus("weakened", 3 SECONDS)
 			M.force_laydown_standup()
-			M.take_toxin_damage(-10)
+			M.TakeDamage("All", 0, 5, 0, DAMAGE_BURN)
 			M.visible_message("<span class='alert'>The [M] steps too close to [src] and falls down!</span>")
 			return
 		..()

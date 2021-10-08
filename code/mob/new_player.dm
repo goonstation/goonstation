@@ -252,6 +252,7 @@ mob/new_player
 					if(latejoin)
 						close_spawn_windows()
 						latejoin.activated = 1
+						latejoin.owner = src.mind
 						src.mind.transfer_to(S)
 						SPAWN_DBG(1 DECI SECOND)
 							S.choose_name()

@@ -20,11 +20,10 @@
 			continue
 		if (player.ready && !candidates.Find(player.mind) && player.client.preferences.be_wraith)
 			candidates += player.mind
-	if (candidates.len == 0)
-		return 0
-	var/datum/mind/twraith = pick(candidates) // Just one for now
-	twraith.special_role = ROLE_WRAITH
-	Agimmicks += twraith
+	if (candidates.len != 0)
+		var/datum/mind/twraith = pick(candidates) // Just one for now
+		twraith.special_role = ROLE_WRAITH
+		Agimmicks += twraith
 
 	return 1
 

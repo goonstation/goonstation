@@ -1,15 +1,15 @@
 // Dummies so they can be put on the public maps
 /obj/submachine/chicken_incubator
 
-/obj/submachine/chicken_feed_grinder
+/obj/submachine/ranch_feed_grinder
 
 /obj/chicken_nesting_box
 
 /obj/item/chicken_carrier
 
-/mob/living/critter/small_animal/chicken
+/mob/living/critter/small_animal/ranch_base/chicken
 
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag
 	rand_pos = 0
 
 /obj/dialogueobj/dreambee

@@ -756,7 +756,7 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "abK" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "engout-solar";
 	name = "Outpost solar control"
 	},
@@ -4356,7 +4356,7 @@
 /area/station/bridge)
 "ajz" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/cable{
 	icon_state = "4-8";
@@ -9957,7 +9957,7 @@
 "awC" = (
 /obj/machinery/light,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/cable{
 	icon_state = "1-8"
@@ -14442,7 +14442,7 @@
 /area/station/crew_quarters/bar)
 "aHL" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
@@ -16688,7 +16688,7 @@
 /area/station/crew_quarters/cafeteria)
 "aNB" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/cafeteria)
@@ -17351,7 +17351,7 @@
 	amount = 50
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/storage/primary)
@@ -17592,7 +17592,7 @@
 /obj/item/crowbar,
 /obj/machinery/light,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/device/flash,
 /turf/simulated/floor/red/side{
@@ -18239,7 +18239,7 @@
 /area/station/hallway/primary/central)
 "aQW" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -18475,7 +18475,7 @@
 /area/station/quartermaster/office)
 "aRA" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -19379,7 +19379,7 @@
 /area/station/quartermaster/storage)
 "aTH" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/machinery/light_switch{
 	pixel_x = 25
@@ -20520,7 +20520,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/white,
 /area/station/science/lobby)
@@ -20584,7 +20584,7 @@
 /area/station/science/lab)
 "aWi" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
@@ -22125,7 +22125,7 @@
 /area/station/hydroponics/bay)
 "aZF" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
@@ -23362,7 +23362,7 @@
 "bcq" = (
 /obj/stool,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
@@ -24542,7 +24542,7 @@
 	pixel_y = 10
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/extinguisher,
 /turf/simulated/floor/white,
@@ -25564,7 +25564,7 @@
 /area/station/crew_quarters/fitness)
 "bhp" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/fitness)
@@ -25999,7 +25999,7 @@
 /area/station/hallway/primary/south)
 "biD" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/cable{
 	icon_state = "4-8";
@@ -27876,7 +27876,7 @@
 /area/station/crew_quarters/locker)
 "bmN" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/locker)
@@ -28634,7 +28634,7 @@
 /turf/simulated/wall,
 /area/station/engine/power)
 "bop" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -30976,7 +30976,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "bsT" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "westsolar";
 	name = "West Solar Control";
 	track = 2
@@ -31125,7 +31125,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
 "bte" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "eastsolar";
 	name = "East Solar Control";
 	track = 2
@@ -33132,7 +33132,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/space)
 "bwT" = (

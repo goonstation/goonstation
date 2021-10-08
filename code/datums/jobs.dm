@@ -751,7 +751,8 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	slot_head = list(/obj/item/clothing/head/helmet/space/engineer/diving/engineering)
 	items_in_backpack = list(/obj/item/crowbar,
 							/obj/item/paper/book/from_file/pocketguide/mining,
-							/obj/item/clothing/shoes/flippers)
+							/obj/item/clothing/shoes/flippers,
+							/obj/item/item_box/glow_sticker)
 	#else
 	slot_suit = list(/obj/item/clothing/suit/space/engineer)
 	slot_head = list(/obj/item/clothing/head/helmet/space/engineer)

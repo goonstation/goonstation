@@ -296,19 +296,20 @@
 			src.update_buttons()
 			return
 		else
-			if (T && (!isghostrestrictedz(T.z) || (isghostrestrictedz(T.z) && restricted_z_allowed(src, T)) || src.tutorial || (src.client && src.client.holder)))
-				if (src.tutorial)
-					if (!tutorial.PerformAction("clickmove", T))
-						return
-				src.set_loc(T)
-				return
+			if(params["right"])
+				if (T && (!isghostrestrictedz(T.z) || (isghostrestrictedz(T.z) && restricted_z_allowed(src, T)) || src.tutorial || (src.client && src.client.holder)))
+					if (src.tutorial)
+						if (!tutorial.PerformAction("clickmove", T))
+							return
+					src.set_loc(T)
+					return
 
-			if (T && isghostrestrictedz(T.z) && !restricted_z_allowed(src, T) && !(src.client && src.client.holder))
-				var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-				if (OS)
-					src.set_loc(OS)
-				else
-					src.z = 1
+				if (T && isghostrestrictedz(T.z) && !restricted_z_allowed(src, T) && !(src.client && src.client.holder))
+					var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
+					if (OS)
+						src.set_loc(OS)
+					else
+						src.z = 1
 
 	say_understands() return 1
 	can_use_hands()	return 0

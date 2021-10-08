@@ -869,7 +869,7 @@
 			src.icon_state = "pipe-loaf1"
 
 			var/doSuperLoaf = 0
-			for (var/atom/movable/O in H)
+			for (var/obj/item/reagent_containers/food/snacks/prison_loaf/O in H)
 				if(O.name == "strangelet loaf")
 					doSuperLoaf = 1
 					break

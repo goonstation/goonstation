@@ -289,7 +289,7 @@
 						return 1
 
 				if ("Anchor")
-					if (!isnull(P.master))
+					if (!isnull(P.marker))
 						P.set_loc(get_turf(P.marker))
 						boutput(P, "You retreat to your anchor...")
 					else

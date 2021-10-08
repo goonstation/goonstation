@@ -3126,7 +3126,7 @@
 /turf/simulated/floor,
 /area/mining/miningoutpost)
 "ajd" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8
 	},
 /obj/cable{
@@ -7814,7 +7814,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "auI" = (
@@ -15759,7 +15759,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/solar_control/derelict_ai_sat,
+/obj/machinery/computer/solar_control/derelict_ai_sat,
 /turf/simulated/floor/plating,
 /area/derelict_ai_sat)
 "aPl" = (
@@ -18323,7 +18323,7 @@
 /turf/simulated/floor/plating/random,
 /area/abandonedoutpostthing)
 "aVU" = (
-/obj/machinery/power/solar_control,
+/obj/machinery/computer/solar_control,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -22106,7 +22106,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "h7solar";
 	name = "Hemera Solar Control"
 	},

@@ -46,6 +46,8 @@
 #define ATTACK_SELF_DELAY		 (1<<20)
 /// Is currently scaled by bubsium
 #define IS_BUBSIUM_SCALED		 (1<<21)
+/// If click delay should be applied even if atom is in user's contents (e.g.: postit notes)
+#define CLICK_DELAY_IN_CONTENTS  (1<<22)
 
 
 //Item function flags

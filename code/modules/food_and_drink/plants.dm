@@ -895,8 +895,8 @@
 
 				return
 			boutput(user, "<span class='notice'>You peel [src].</span>")
-			src.name = copytext(src.name, 10)	// "unpeeled "
-			//src.name = "banana"
+			var/index = findtext(src.name, "unpeeled")
+			src.name = splicetext(src.name, index, index + 9)
 			src.icon_state = "banana-fruit"
 			new /obj/item/bananapeel(user.loc)
 		else

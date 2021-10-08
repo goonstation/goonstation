@@ -371,7 +371,7 @@
 	/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
 	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen)
 
-	connects_with_overlay = list(/turf/simulated/wall/false_wall/reinforced, /turf/simulated/wall/auto/shuttle,
+	connects_with_overlay = list(/turf/simulated/wall/auto/shuttle,
 	/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
 	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen)
 
@@ -399,8 +399,6 @@
 	connects_with_overlay = list(/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 	/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window,
 	/obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/paper)
-
-	connects_with_overlay_exceptions = list(/turf/simulated/wall/false_wall/reinforced)
 
 	the_tuff_stuff
 		explosion_resistance = 11

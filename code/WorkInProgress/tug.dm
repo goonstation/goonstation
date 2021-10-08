@@ -114,15 +114,7 @@
 		if (!isturf(T))
 			T = get_turf(T)
 
-		load.pixel_y -= 6
-		load.layer = initial(load.layer)
 		load.set_loc(src.loc)
-		if (T)
-			SPAWN_DBG(0.2 SECONDS)
-				if (load)
-					load.set_loc(T)
-					load = null
-		src.UpdateOverlays(null, "load")
 
 		// in case non-load items end up in contents, dump every else too
 		// this seems to happen sometimes due to race conditions
@@ -132,6 +124,14 @@
 			AM.set_loc(src.loc)
 			AM.layer = initial(AM.layer)
 			AM.pixel_y = initial(AM.pixel_y)
+
+	Exited(atom/movable/Obj, newloc)
+		. = ..()
+		if(src.load == Obj)
+			src.load.pixel_y -= 6
+			src.load.layer = initial(src.load.layer)
+			src.load = null
+			src.UpdateOverlays(null, "load")
 
 	Move()
 		var/oldloc = src.loc

@@ -1608,8 +1608,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 					if (istype(R.ai_interface))
 						R.shell = 1
 					R.dependent = 0
-				//else if (isAIeye(user))
-				//	var/mob/dead/aieye/E = user
 				user.name = user.real_name
 		return
 
@@ -2062,7 +2060,7 @@ proc/get_mobs_trackable_by_AI()
 			continue //cameras can't follow people who haven't started yet DUH OR DIDN'T YOU KNOW THAT
 		if (ishuman(M) && (istype(M:wear_id, /obj/item/card/id/syndicate) || (istype(M:wear_id, /obj/item/device/pda2) && M:wear_id:ID_card && istype(M:wear_id:ID_card, /obj/item/card/id/syndicate))))
 			continue
-		if (istype(M,/mob/living/critter/aquatic) || istype(M, /mob/living/critter/small_animal/chicken))
+		if (istype(M,/mob/living/critter/aquatic) || istype(M, /mob/living/critter/small_animal/ranch_base/chicken))
 			continue
 		if(M.z != 1 && M.z != usr.z)
 			continue

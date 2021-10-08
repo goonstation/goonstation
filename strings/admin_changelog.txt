@@ -1,3 +1,9 @@
+(t)wed sep 15 21
+(u)Gerhazo
+(*)New buildmode mode - "Paint Matrix" - similar to paint except using color matrices which allows for much cooler results.
+(t)mon sep 13 21
+(u)Gerhazo
+(*)Added a "remove component" button to the view variables panel.
 (t)tue aug 31 21
 (u)Sovexe
 (e)🐛|bug

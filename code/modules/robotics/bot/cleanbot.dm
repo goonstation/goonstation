@@ -416,7 +416,7 @@
 
 			if (T.active_liquid)
 				if (T.active_liquid.group)
-					T.active_liquid.group.drain(T.active_liquid,1,master)
+					T.active_liquid.group.drain(T.active_liquid, 1)
 
 			master.cleanbottargets -= master.turf2coordinates(get_turf(master.target))
 			ON_COOLDOWN(master, CLEANBOT_CLEAN_COOLDOWN, master.idle_delay)

@@ -2525,7 +2525,7 @@ turf/simulated/shuttle/wall{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/solar_control/diner{
+/obj/machinery/computer/solar_control/diner{
 	dir = 4;
 	icon_state = "solar"
 	},

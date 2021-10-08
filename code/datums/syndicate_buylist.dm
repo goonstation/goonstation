@@ -1048,7 +1048,7 @@ This is basically useless for anyone but miners.
 	name = "Pure Telecrystal"
 	item = /obj/item/uplink_telecrystal
 	cost = 1
-	desc = "A pure Telecrystal, only able to be found miles deep underground, on Earth. Used as currency in Syndicate Uplinks."
+	desc = "A pure Telecrystal, orignating from plasma giants. Used as currency in Syndicate Uplinks."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft)
 	telecrystal = TRUE
 	vr_allowed = 0

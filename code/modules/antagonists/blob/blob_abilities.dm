@@ -202,6 +202,10 @@
 				boutput(owner, __red("You need to start on the [station_or_ship()]!"))
 				return
 
+			if(IS_ARRIVALS(T.loc))
+				boutput(owner, "<spawn class='alert'>You can't start inside arrivals!</span>")
+				return
+
 			if (istype(T,/turf/unsimulated/))
 				boutput(owner, "<span class='alert'>This kind of tile cannot support a blob.</span>")
 				return

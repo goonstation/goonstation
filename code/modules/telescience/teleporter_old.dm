@@ -167,9 +167,6 @@
 	if (!istype(destturf))
 		return
 
-	if (isrestrictedz(destturf.z))
-		precision = 0
-
 	var/tx = destturf.x + rand(precision * -1, precision)
 	var/ty = destturf.y + rand(precision * -1, precision)
 
@@ -215,7 +212,7 @@
 
 	//if((istype(tmploc,/area/wizard_station)) || (istype(tmploc,/area/syndicate_station)))
 	var/area/myArea = get_area(tmploc)
-	if (myArea?.teleport_blocked || m_blocked)
+	if (myArea?.teleport_blocked || isrestrictedz(myArea.z) || m_blocked)
 		if(use_teleblocks)
 			if(isliving(M))
 				boutput(M, "<span class='alert'><b>Teleportation failed!</b></span>")

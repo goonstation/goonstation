@@ -1658,7 +1658,7 @@
 /area/station/maintenance/solar/west)
 "adS" = (
 /obj/cable,
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "westsolar";
 	name = "West Solar Control";
 	track = 2
@@ -1675,7 +1675,7 @@
 /area/station/maintenance/solar/west)
 "adU" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/machinery/computer/stockexchange{
 	icon_state = "QMreq";
@@ -1966,7 +1966,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -2160,7 +2160,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "eastsolar";
 	name = "East Solar Control";
 	track = 2
@@ -2716,7 +2716,7 @@
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/janitor/office)
@@ -2771,7 +2771,7 @@
 /area/station/hallway/primary/north)
 "age" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/machinery/light/small{
 	dir = 1;
@@ -3337,7 +3337,7 @@
 /obj/item/storage/box/mousetraps,
 /obj/item/storage/box/mousetraps,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/grime,
 /area/station/janitor/office)
@@ -6569,7 +6569,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "aoh" = (
@@ -7382,7 +7382,7 @@
 /area/station/turret_protected/ai_upload_foyer)
 "aqb" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/machinery/light/small{
 	tag = "icon-bulb1 (WEST)";
@@ -9478,7 +9478,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/machinery/light/small{
 	tag = "icon-bulb1 (WEST)";
@@ -30254,7 +30254,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "bll" = (
@@ -32294,7 +32294,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor,
 /area/station/engine/power)
 "bpV" = (
@@ -32783,7 +32783,7 @@
 /area/station/quartermaster/office)
 "bqX" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/machinery/light,
 /turf/simulated/floor/orangeblack/side,

@@ -860,10 +860,10 @@ datum
 		proc/get_smoke_spread_mod()
 			if (!total_volume)
 				return 0
-			var/smoke_spread_mod = 0
+			var/smoke_spread_mod = 9999
 			for (var/id in reagent_list)
 				var/datum/reagent/R = reagent_list[id]
-				if (R.smoke_spread_mod > smoke_spread_mod)
+				if (R.smoke_spread_mod < smoke_spread_mod)
 					smoke_spread_mod = R.smoke_spread_mod
 			return smoke_spread_mod
 

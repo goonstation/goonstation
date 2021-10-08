@@ -1346,3 +1346,21 @@ var/datum/flock/testflock
 
 
 	boutput(usr, "<span class='notice'>Returned: [!isnull(returnval) ? returnval : "null"]</span>")
+
+/proc/debugRemoveComponent(var/datum/target = null)
+	var/list/dc = target.datum_components
+	if(!dc)
+		boutput(usr, "<span class='notice'>No components present on [target].</span>")
+		return
+
+	var/list/comps = dc[/datum/component]
+	if(!islist(comps))
+		comps = list(comps)
+
+	var/datum/component/selection
+	selection = tgui_input_list(usr, "Select a component to remove", "Matches for pattern", comps)
+	if (!selection)
+		return // user cancelled
+
+	selection.RemoveComponent()
+	boutput(usr, "<span class='notice'>Removed [selection] from [target].</span>")

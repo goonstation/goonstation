@@ -570,8 +570,10 @@
 			if (iscarbon(target))
 				var/mob/living/carbon/C = target
 				C.do_disorient(25, disorient=3 SECONDS)
-		if (ishuman(target))
-			target.changeStatus("z_pre_inf", rand(5,9) SECONDS)
+		if (ishuman(target) && ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if (istype(H.mutantrace, /datum/mutantrace/zombie))
+				target.changeStatus("z_pre_inf", rand(5,9) SECONDS)
 		else if (issilicon(target))
 			special_attack_silicon(target, user)
 

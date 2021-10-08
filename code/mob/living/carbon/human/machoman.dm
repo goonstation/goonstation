@@ -13,7 +13,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 'sound/voice/macho/macho_mumbling05.ogg', 'sound/voice/macho/macho_mumbling07.ogg', 'sound/voice/macho/macho_shout08.ogg')
 
 /mob/living/carbon/human/machoman
-	var/list/macho_arena_turfs
+	var/list/macho_arena_turfs // NOTE: remove this and the clean_up_arena_turfs proc on the mob if we get around to getting rid of the macho verbs
 	New(loc, shitty)
 		..()
 		//src.mind = new
@@ -38,6 +38,10 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 				src.abilityHolder.addAbility(A)
 			src.abilityHolder.updateButtons()
 
+	disposing()
+		. = ..()
+		if (macho_arena_turfs)
+			src.clean_up_arena_turfs(src.macho_arena_turfs) // cleans up the macho_arena_turfs reference while animating the arena disappearing
 
 	initializeBioholder()
 		src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/long/dreads
@@ -536,27 +540,19 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 				for (var/obj/decal/boxingrope/F in arenaropes)
 					spawn_animation1(F)
 				src.verbs += /mob/living/carbon/human/machoman/verb/macho_summon_arena
-			else
-				var/list/arenaropes = macho_arena_turfs
-				macho_arena_turfs = null
-				/*   // too many issues with canpass and/or lights breaking, maybe sometime in the future?
-				for (var/turf/unsimulated/floor/specialroom/gym/macho_arena/F in arenaropes)
-					SPAWN_DBG(0)
-						arenaropes -= F
-						animate_buff_out(F)
-						sleep(10)
-						F.change_back()
-				*/
-				for (var/obj/decal/boxingrope/F in arenaropes)
-					SPAWN_DBG(0)
-						arenaropes -= F
-						leaving_animation(F)
-						qdel(F)
-				for (var/obj/stool/chair/boxingrope_corner/F in arenaropes)
-					SPAWN_DBG(0)
-						arenaropes -= F
-						leaving_animation(F)
-						qdel(F)
+			else // unsummon arena
+				clean_up_arena_turfs(src.macho_arena_turfs)
+
+	proc/clean_up_arena_turfs(var/list/arena_turfs_to_cleanup) // if we get to removing the verbs, remove this and the arena_turfs var on the mob too
+		src.macho_arena_turfs = null
+		for (var/obj/decal/boxingrope/F in arena_turfs_to_cleanup)
+			SPAWN_DBG(0)
+				leaving_animation(F)
+				qdel(F)
+		for (var/obj/stool/chair/boxingrope_corner/F in arena_turfs_to_cleanup)
+			SPAWN_DBG(0)
+				leaving_animation(F)
+				qdel(F)
 
 	verb/macho_slimjim_snap()
 		set name = "Macho Slim-Jim Snap"
@@ -1815,8 +1811,13 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 	desc = "Summon a wrestling ring."
 	icon_state = "lightning_cd"
 	var/list/macho_arena_turfs
-	cast(atom/target)
 
+	disposing()
+		. = ..()
+		if (macho_arena_turfs)
+			clean_up_arena_turfs(src.macho_arena_turfs)
+
+	cast(atom/target)
 		if (isalive(holder.owner) && !holder.owner.transforming)
 			if(!macho_arena_turfs) // no arena exists
 				//var/arena_time = 45 SECONDS
@@ -1887,27 +1888,27 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 				for (var/obj/decal/boxingrope/F in arenaropes)
 					spawn_animation1(F)
 				holder.owner.verbs += /mob/living/carbon/human/machoman/verb/macho_summon_arena
-			else
-				var/list/arenaropes = macho_arena_turfs
-				macho_arena_turfs = null
-				/*   // too many issues with canpass and/or lights breaking, maybe sometime in the future?
-				for (var/turf/unsimulated/floor/specialroom/gym/macho_arena/F in arenaropes)
-					SPAWN_DBG(0)
-						arenaropes -= F
-						animate_buff_out(F)
-						sleep(10)
-						F.change_back()
-				*/
-				for (var/obj/decal/boxingrope/F in arenaropes)
-					SPAWN_DBG(0)
-						arenaropes -= F
-						leaving_animation(F)
-						qdel(F)
-				for (var/obj/stool/chair/boxingrope_corner/F in arenaropes)
-					SPAWN_DBG(0)
-						arenaropes -= F
-						leaving_animation(F)
-						qdel(F)
+			else // desummon arena
+				clean_up_arena_turfs(src.macho_arena_turfs)
+
+	proc/clean_up_arena_turfs(var/list/arena_turfs_to_cleanup)
+		src.macho_arena_turfs = null
+		/*   // too many issues with canpass and/or lights breaking, maybe sometime in the future?
+			for (var/turf/unsimulated/floor/specialroom/gym/macho_arena/F in arenaropes)
+				SPAWN_DBG(0)
+					arenaropes -= F
+					animate_buff_out(F)
+					sleep(10)
+					F.change_back()
+			*/
+		for (var/obj/decal/boxingrope/F in arena_turfs_to_cleanup)
+			SPAWN_DBG(0)
+				leaving_animation(F)
+				qdel(F)
+		for (var/obj/stool/chair/boxingrope_corner/F in arena_turfs_to_cleanup)
+			SPAWN_DBG(0)
+				leaving_animation(F)
+				qdel(F)
 
 /datum/targetable/macho/macho_slimjim_snap
 	name = "Macho Slim-Jim Snap"
