@@ -539,6 +539,7 @@
 		return
 
 	logTheThing("diary", src, null, ": [msg]", "ooc")
+	phrase_log.log_phrase("ooc", msg)
 
 #ifdef DATALOGGER
 	game_stats.ScanText(msg)
@@ -575,7 +576,6 @@
 		if (src.client.has_contestwinner_medal)
 			msg = replacetext(msg, ":shelterbee:", "<img src='http://stuff.goonhub.com/shelterbee.png' width=32>")
 
-		phrase_log.log_phrase("ooc", msg)
 		var/rendered = "<span class=\"ooc [ooc_class]\"><span class=\"prefix\">OOC:</span> <span class=\"name\" data-ctx='\ref[src.mind]'>[display_name]:</span> <span class=\"message\">[msg]</span></span>"
 
 		if (C.holder)
@@ -649,6 +649,7 @@
 		if (M.client.holder && !M.client.only_local_looc && !M.client.player_mode)
 			recipients += M.client
 
+	phrase_log.log_phrase("looc", msg)
 	for (var/client/C in recipients)
 		// DEBUGGING
 		if (!C.preferences)
@@ -676,7 +677,6 @@
 
 		var/rendered = "<span class=\"looc [looc_class]\"><span class=\"prefix\">LOOC:</span> <span class=\"name\" data-ctx='\ref[src.mind]'>[display_name]:</span> <span class=\"message\">[msg]</span></span>"
 
-		phrase_log.log_phrase("looc", msg)
 		if (C.holder)
 			rendered = "<span class='adminHearing' data-ctx='[C.chatOutput.getContextFlags()]'>[rendered]</span>"
 
