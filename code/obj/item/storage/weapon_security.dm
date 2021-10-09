@@ -121,6 +121,13 @@
 	spawn_contents = list(/obj/item/gun/kinetic/flaregun,\
 	/obj/item/ammo/bullets/flare)
 
+/obj/item/storage/box/hunting_rifle
+	name = "hunting rifle box"
+	icon_state = "hard_case"
+	desc = "A box containing a hunting rifle and some ammo."
+	spawn_contents = list(/obj/item/gun/kinetic/hunting_rifle,\
+	/obj/item/ammo/bullets/rifle_3006 = 3)
+
 /* -------------------- Grenades -------------------- */
 
 /obj/item/storage/box/flashbang_kit
