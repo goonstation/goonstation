@@ -40,6 +40,8 @@
 		id = "small_backup4"
 	diner
 		id = "diner"
+	silverglass
+		id = "silverglass"
 
 	// called by datum/sun/calc_position() as sun's angle changes
 	proc/set_angle(var/angle)
@@ -105,8 +107,8 @@
 		id = "small_backup4"
 	diner
 		id = "diner"
-
-
+	silverglass
+		id = "silverglass"
 
 
 /obj/machinery/power/solar/New()
@@ -260,6 +262,8 @@
 		solar_id = "small_backup4"
 	diner
 		solar_id = "diner"
+	silverglass
+		solar_id = "silverglass"
 
 /obj/machinery/computer/solar_control/New()
 	..()

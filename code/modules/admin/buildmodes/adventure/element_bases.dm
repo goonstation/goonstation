@@ -375,7 +375,7 @@ var/global/list/adventure_elements_by_id = list()
 
 /obj/adventurepuzzle/invisible
 	name = "target marker"
-	invisibility = 100
+	invisibility = INVIS_ALWAYS_ISH
 	density = 0
 	opacity = 0
 	anchored = 1

@@ -240,7 +240,7 @@
 	P.pixel_y = target.pixel_y
 	P.color = src.bot_speech_color
 	SPAWN_DBG(2 SECONDS)
-		P.invisibility = 101
+		P.invisibility = INVIS_ALWAYS
 		qdel(P)
 
 /obj/machinery/bot/emp_act()

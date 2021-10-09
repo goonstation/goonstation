@@ -1890,7 +1890,7 @@
 	maxDuration = 2 MINUTES
 	id = "drowsy"
 	name = "Drowsy"
-	icon_state = "?1"
+	icon_state = "drowsy"
 	desc = "You feel very drowsy"
 	movement_modifier = new/datum/movement_modifier/drowsy
 	var/tickspassed = 0
@@ -1911,7 +1911,7 @@
 	id = "passing_out"
 	name = "Passing out"
 	desc = "You're so tired you're about to pass out!"
-	icon_state = "disorient"
+	icon_state = "passing_out"
 	maxDuration = 5 SECONDS
 
 	onRemove()

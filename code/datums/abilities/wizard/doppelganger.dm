@@ -60,7 +60,7 @@
 	name = ""
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
-	invisibility = 100
+	invisibility = INVIS_ALWAYS_ISH
 	var/can_move = 1
 	mouse_opacity = 0
 	density = 0

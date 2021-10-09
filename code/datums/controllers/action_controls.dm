@@ -144,6 +144,9 @@ var/datum/action_controller/actions
 	var/atom/movable/place_to_put_bar = null
 	/// In case we want the owner to have no visible action bar but still want to make the bar.
 	var/bar_on_owner = TRUE
+	/// Does bar fill or empty?
+	var/fill_bar = TRUE
+
 
 	onStart()
 		..()
@@ -280,13 +283,20 @@ var/datum/action_controller/actions
 		var/fakeduration = duration + ((animate && done < duration) ? (world.tick_lag * 7) : 0)
 		var/remain = max(0, fakeduration - done)
 		var/complete = clamp(done / fakeduration, 0, 1)
+		if(!fill_bar)
+			complete = 1 - complete
 		bar.transform = matrix(complete, 0, -15 * (1 - complete), 0, 1, 0)
 		if (target_bar)
 			target_bar.transform = matrix(complete, 0, -15 * (1 - complete), 0, 1, 0)
 		if (animate)
-			animate( bar, transform = matrix(1, 0, 0, 0, 1, 0), time = remain )
-			if (target_bar)
-				animate( target_bar, transform = matrix(1, 0, 0, 0, 1, 0), time = remain )
+			if(fill_bar)
+				animate( bar, transform = matrix(1, 0, 0, 0, 1, 0), time = remain )
+				if (target_bar)
+					animate( target_bar, transform = matrix(1, 0, 0, 0, 1, 0), time = remain )
+			else
+				animate( bar, transform = matrix(0, 0, -15, 0, 1, 0), time = remain )
+				if (target_bar)
+					animate( target_bar, transform = matrix(0, 0, -15, 0, 1, 0), time = remain )
 		else
 			animate( bar, flags = ANIMATION_END_NOW )
 			if (target_bar)
@@ -304,11 +314,11 @@ var/datum/action_controller/actions
 		if (!owner || !istype(owner) || !bar || !border) //Wire note: Fix for Cannot modify null.invisibility
 			return
 		if (B.health == B.health_max)
-			border.invisibility = 101
-			bar.invisibility = 101
+			border.invisibility = INVIS_ALWAYS
+			bar.invisibility = INVIS_ALWAYS
 		else
-			border.invisibility = 0
-			bar.invisibility = 0
+			border.invisibility = INVIS_NONE
+			bar.invisibility = INVIS_NONE
 		var/complete = B.health / B.health_max
 		bar.color = "#00FF00"
 		bar.transform = matrix(complete, 1, MATRIX_SCALE)
@@ -337,10 +347,10 @@ var/datum/action_controller/actions
 
 	onDelete()
 		..()
-		shield_bar.invisibility = 0
-		armor_bar.invisibility = 0
-		bar.invisibility = 0
-		border.invisibility = 0
+		shield_bar.invisibility = INVIS_NONE
+		armor_bar.invisibility = INVIS_NONE
+		bar.invisibility = INVIS_NONE
+		border.invisibility = INVIS_NONE
 		var/atom/movable/A = owner
 		if (owner != null && islist(A.attached_objs))
 			A.attached_objs.Remove(shield_bar)
@@ -359,21 +369,21 @@ var/datum/action_controller/actions
 		bar.transform = matrix(h_complete, 1, MATRIX_SCALE)
 		bar.pixel_x = -nround( ((30 - (30 * h_complete)) / 2) )
 		if (B.max_armor && B.armor)
-			armor_bar.invisibility = 0
+			armor_bar.invisibility = INVIS_NONE
 			var/a_complete = B.armor / B.max_armor
 			armor_bar.color = "#FF8800"
 			armor_bar.transform = matrix(a_complete, 1, MATRIX_SCALE)
 			armor_bar.pixel_x = -nround( ((30 - (30 * a_complete)) / 2) )
 		else
-			armor_bar.invisibility = 101
+			armor_bar.invisibility = INVIS_ALWAYS
 		if (B.max_shield && B.shield)
-			shield_bar.invisibility = 0
+			shield_bar.invisibility = INVIS_NONE
 			var/s_complete = B.shield / B.max_shield
 			shield_bar.color = "#3333FF"
 			shield_bar.transform = matrix(s_complete, 1, MATRIX_SCALE)
 			shield_bar.pixel_x = -nround( ((30 - (30 * s_complete)) / 2) )
 		else
-			shield_bar.invisibility = 101
+			shield_bar.invisibility = INVIS_ALWAYS
 
 
 /datum/action/bar/blob_replicator
@@ -382,20 +392,20 @@ var/datum/action_controller/actions
 		if (!owner)
 			return
 		if (!B.converting || (B.converting && !B.converting.maximum_volume))
-			border.invisibility = 101
-			bar.invisibility = 101
+			border.invisibility = INVIS_ALWAYS
+			bar.invisibility = INVIS_ALWAYS
 			return
 		else
-			border.invisibility = 0
-			bar.invisibility = 0
+			border.invisibility = INVIS_NONE
+			bar.invisibility = INVIS_NONE
 		var/complete = 1 - (B.converting.total_volume / B.converting.maximum_volume)
 		bar.color = "#0000FF"
 		bar.transform = matrix(complete, 1, MATRIX_SCALE)
 		bar.pixel_x = -nround( ((30 - (30 * complete)) / 2) )
 
 	onDelete()
-		bar.invisibility = 0
-		border.invisibility = 0
+		bar.invisibility = INVIS_NONE
+		border.invisibility = INVIS_NONE
 		..()
 
 /datum/action/bar/icon //Visible to everyone and has an icon.
@@ -752,7 +762,7 @@ var/datum/action_controller/actions
 	onStart()
 		..()
 		if(icon && icon_state && owner)
-			icon_image = image(icon ,owner,icon_state,10)
+			icon_image = image(icon, owner, icon_state, 10)
 			icon_image.pixel_y = icon_y_off
 			icon_image.pixel_x = icon_x_off
 			icon_image.plane = icon_plane

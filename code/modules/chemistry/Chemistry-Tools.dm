@@ -103,12 +103,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			var/atom/target_loc = usr.loc
 			var/ok = 1
 			var/atom/L = src
-			while(!istype(L, /turf) && L != target_loc)
+			while(!istype(L, /turf) && L != target_loc && L.loc)
 				L = L.loc
 				if(istype(L, /turf))
 					ok = 0
 			L = over_object
-			while(!istype(L, /turf) && L != target_loc)
+			while(!istype(L, /turf) && L != target_loc && L.loc)
 				L = L.loc
 				if(istype(L, /turf))
 					ok = 0
