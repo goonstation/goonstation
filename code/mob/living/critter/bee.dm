@@ -1057,4 +1057,220 @@
 				O.show_message("[src] beeps[prob(50) ? " in a comforted manner, and gives [user] the ASCII" : ""].",2)
 		return
 
+
+
+/mob/living/critter/small_animal/swarm/bee
+	name = "mini-bee"
+	real_name = "mini-bee"
+	desc = "Some kind of miniaturize bee!?!?"
+	icon = 'icons/misc/bee.dmi'
+	icon_state = "mini-bee"
+	icon_state_dead = "mini-bee-dead"
+	particles = new/particles/swarm/bees/start_none
+	health_brute = 10
+	health_brute_vuln = 0.7
+	health_burn = 10
+	health_burn_vuln = 1.5
+	base_move_delay = 3
+	base_walk_delay = 5
+	fits_under_table = 1
+	pull_w_class = W_CLASS_TINY
+	var/bee_count = 0
+	add_abilities = list(/datum/targetable/critter/bite/bee,
+						 /datum/targetable/critter/bee_sting)
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new/datum/limb/mouth/small/bee
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "mouth"
+		HH.name = "mouth"
+		HH.limb_name = "mandibles"
+		HH.can_hold_items = 0
+
+	Life(datum/controller/process/mobs/parent)
+		if (..(parent))
+			return 1
+		if(prob(10))
+			update_bees(1)
+		if(!bee_count && alpha==0)
+			qdel(src)
+		else if(prob(5) && src.bee_count > 3)
+			var/mob/living/critter/small_animal/swarm/bee/new_swarm = new/mob/living/critter/small_animal/swarm/bee/ai_controlled(get_turf(src))
+			new_swarm.bee_count = round(src.bee_count / 4)
+			src.bee_count -= new_swarm.bee_count
+
+	death(gibbed)
+		swarm_off()
+		..()
+
+	Move(var/atom/NewLoc, direct)
+		for(var/mob/living/critter/small_animal/swarm/bee/ai_controlled/B in NewLoc)
+			if(B == src)
+				continue
+			if(B && prob(80))
+				update_bees(B.bee_count + 1)
+				B.update_bees(-B.bee_count)
+				B.swarm_off(merged=TRUE)
+		.=..()
+
+	proc/swarm_off(merged=FALSE)
+		particles.spawning = 0
+		if(merged)
+			animate(src, time=8 SECONDS)
+			animate(alpha=0, time=1 SECONDS)
+			mouse_opacity = 0
+			icon_state = ""
+
+	proc/update_bees(value)
+		bee_count = max(bee_count+value, 0)
+		particles.count = bee_count
+
+	ai_controlled
+		is_npc = 1
+		bee_count = 0
+		New()
+			..()
+			src.ai = new /datum/aiHolder/bees(src)
+			remove_lifeprocess(/datum/lifeprocess/blindness)
+			remove_lifeprocess(/datum/lifeprocess/viruses)
+
+		death(var/gibbed)
+			qdel(src.ai)
+			src.ai = null
+			reduce_lifeprocess_on_death()
+			..()
+/datum/aiHolder/bees
+	New()
+		. = ..()
+		var/datum/aiTask/timed/wander/W =  get_instance(/datum/aiTask/timed/wander, list(src))
+		var/datum/aiTask/timed/targeted/swarm/bees/B = get_instance(/datum/aiTask/timed/targeted/swarm/bees, list(src))
+		W.transition_task = B
+		B.transition_task = W
+		default_task = W
+
+/datum/aiHolder/bees/was_harmed(obj/item/W, mob/M)
+	if(istype(M))
+		src.target = M
+	owner.a_intent = INTENT_HARM // "Let's fight"
+
+/datum/aiTask/timed/targeted/swarm/bees
+	name = "attack"
+	minimum_task_ticks = 7
+	maximum_task_ticks = 20
+	var/weight = 15
+	target_range = 8
+	frustration_threshold = 3
+	var/last_seek = 0
+
+/datum/aiTask/timed/targeted/swarm/bees/proc/precondition()
+	. = 1
+
+/datum/aiTask/timed/targeted/swarm/bees/frustration_check()
+	.= 0
+
+	if (holder)
+		if (!IN_RANGE(holder.owner, holder.target, target_range))
+			return 1
+
+		if (ismob(holder.target))
+			var/mob/M = holder.target
+			. = !(holder.target && isalive(M))
+		else
+			. = !(holder.target)
+
+/datum/aiTask/timed/targeted/swarm/bees/evaluate()
+	return precondition() * weight * score_target(get_best_target(get_targets()))
+
+/datum/aiTask/timed/targeted/swarm/bees/on_tick()
+	var/mob/living/critter/owncritter = holder.owner
+	if (HAS_MOB_PROPERTY(owncritter, PROP_CANTMOVE))
+		return
+
+	if(!holder.target)
+		if (world.time > last_seek + 4 SECONDS)
+			last_seek = world.time
+			var/list/possible = get_targets()
+			if (possible.len)
+				holder.target = pick(possible)
+	if(holder.target && holder.target.z == owncritter.z)
+		var/mob/living/M = holder.target
+		if(!isalive(M))
+			holder.target = null
+			holder.target = get_best_target(get_targets())
+			if(!holder.target)
+				return ..() // try again next tick
+		var/dist = get_dist(owncritter, M)
+		if (dist > 2)
+			holder.move_to(M)
+		else
+			holder.move_away(M,1)
+
+		if (dist < 4)
+			owncritter.set_dir(get_dir(owncritter, M))
+
+			if( owncritter.a_intent == INTENT_HARM )
+				var/list/params = list()
+				params["left"] = 1
+				params["ai"] = 1
+
+				var/datum/targetable/TA
+				if(length(owncritter.abilityHolder.abilities))
+					TA = pick(owncritter.abilityHolder.abilities)
+				if(TA?.cooldowncheck())
+					TA.cast(M)
+				else
+					owncritter.hand_range_attack(M, params)
+	..()
+
+/datum/aiTask/timed/targeted/swarm/bees/get_targets()
+	. = ..()
+	if(holder.owner)
+		for(var/mob/living/M in view(target_range, holder.owner))
+			if(M == holder.owner) continue
+			if(isalive(M))
+				. += M
+
+
+obj/effects/bees
+	plane = PLANE_NOSHADOW_ABOVE
+	particles = new/particles/swarm/bees
+
+	New(atom/movable/A)
+		..()
+		if(istype(A))
+			A.vis_contents += src
+
+	disposing()
+		var/atom/movable/A
+		A = src.loc
+		if(istype(A))
+			A.vis_contents -= src
+		. = ..()
+
+
+particles/swarm/bees
+	icon = 'icons/misc/bee.dmi'
+	icon_state = list("mini-bee"=1, "mini-bee2"=1)
+	friction = 0.10
+	count = 10
+	spawning = 0.35
+	fade = 5
+#ifndef SPACEMAN_DMM
+	fadein = 5
+#endif
+	lifespan = generator("num", 50, 80, LINEAR_RAND)
+	width = 64
+	position = generator("box", list(-10,-10,0), list(10,10,50))
+	bound1 = list(-32, -32, -100)
+	bound2 = list(32, 32, 100)
+	gravity = list(0, -0.1)
+	drift = generator("box", list(-0.4, -0.1, 0), list(0.4, 0.15, 0))
+	velocity = generator("box", list(-2, -0.1, 0), list(2, 0.5, 0))
+	height = 64
+
+	start_none
+		count = 0
+
 #undef ADMIN_BEES_ONLY
