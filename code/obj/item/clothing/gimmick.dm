@@ -1712,19 +1712,19 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	icon_state = "guncoat"
 	item_state = "guncoat"
 
-/obj/item/clothing/suit/gimmick/guncoat_black
+/obj/item/clothing/suit/gimmick/guncoat/black
 	name = "Black Shotgun Coat"
 	desc = "A coat that does not hinder you when shooting from horseback, how neat!"
 	icon_state = "guncoat_black"
 	item_state = "guncoat_black"
 
-/obj/item/clothing/suit/gimmick/guncoat_tan
+/obj/item/clothing/suit/gimmick/guncoat/tan
 	name = "Tan Shotgun Coat"
 	desc = "A coat that does not hinder you when shooting from horseback, how neat!"
 	icon_state = "guncoat_tan"
 	item_state = "guncoat_tan"
 
-/obj/item/clothing/suit/gimmick/guncoat_dirty
+/obj/item/clothing/suit/gimmick/guncoat/dirty
 	name = "Dirty Shotgun Coat"
 	desc = "A coat that does not hinder you when shooting from horseback, how neat!"
 	icon_state = "guncoat_dirty"
@@ -1732,14 +1732,14 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 
 //western Ponchos
 
-/obj/item/clothing/suit/westflower
+/obj/item/clothing/suit/poncho/flower
 	name = "Flower Poncho"
 	desc = "A handwoven poncho, it has an insignia of a flower!"
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "westflower"
 
-/obj/item/clothing/suit/westleaf
+/obj/item/clothing/suit/poncho/leaf
 	name = "Leaf Poncho"
 	desc = "A handwoven poncho, it has the pattern of multiple leaves!"
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'

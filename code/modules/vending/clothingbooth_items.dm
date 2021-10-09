@@ -1123,8 +1123,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/costume)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/western)
 /datum/clothingbooth_item/western
-	name = "western"
-	slot = SLOT_HEAD
 	category = "Western"
 	cost = PAY_UNTRAINED/3
 
@@ -1134,73 +1132,49 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/western)
 	slot = SLOT_HEAD
 	cost = PAY_UNTRAINED/2
 
-/datum/clothingbooth_item/western/westhat_black
+/datum/clothingbooth_item/western/westhat/black
 	name = "Black Ten-gallon hat"
-	path = /obj/item/clothing/head/westhat_black
+	path = /obj/item/clothing/head/westhat/black
 	slot = SLOT_HEAD
 	cost = PAY_UNTRAINED/2
 
-/datum/clothingbooth_item/western/westhat_blue
+/datum/clothingbooth_item/western/westhat/blue
 	name = "Blue Ten-gallon hat"
-	path = /obj/item/clothing/head/westhat_blue
+	path = /obj/item/clothing/head/westhat/blue
 	slot = SLOT_HEAD
 	cost = PAY_UNTRAINED/2
 
-/datum/clothingbooth_item/western/westhat_brown
+/datum/clothingbooth_item/western/westhat/brown
 	name = "Brown Ten-gallon hat"
-	path = /obj/item/clothing/head/westhat_brown
+	path = /obj/item/clothing/head/westhat/brown
 	slot = SLOT_HEAD
 	cost = PAY_UNTRAINED/2
 
-/datum/clothingbooth_item/western/westhat_tan
+/datum/clothingbooth_item/western/westhat/tan
 	name = "Tan Ten-gallon hat"
-	path = /obj/item/clothing/head/westhat_tan
+	path = /obj/item/clothing/head/westhat/tan
 	slot = SLOT_HEAD
 	cost = PAY_UNTRAINED/2
 
-/datum/clothingbooth_item/western/westhat_red
+/datum/clothingbooth_item/western/westhat/red
 	name = "Red Ten-gallon hat"
-	path = /obj/item/clothing/head/westhat_red
+	path = /obj/item/clothing/head/westhat/red
 	slot = SLOT_HEAD
 	cost = PAY_UNTRAINED/2
 
 //Coats
-
-/datum/clothingbooth_item/western/guncoat
-	name = "Shotgun coat"
-	path = /obj/item/clothing/suit/gimmick/guncoat
-	slot = SLOT_WEAR_SUIT
-	cost = PAY_UNTRAINED/2
-
-/datum/clothingbooth_item/western/guncoat_dirty
-	name = "Dirty Shotgun coat"
-	path = /obj/item/clothing/suit/gimmick/guncoat_dirty
-	slot = SLOT_WEAR_SUIT
-	cost = PAY_UNTRAINED/2
-
-/datum/clothingbooth_item/western/guncoat_black
-	name = "Black Shotgun coat"
-	path = /obj/item/clothing/suit/gimmick/guncoat_black
-	slot = SLOT_WEAR_SUIT
-	cost = PAY_UNTRAINED/2
-
-/datum/clothingbooth_item/western/guncoat_tan
-	name = "Tan Shotgun coat"
-	path = /obj/item/clothing/suit/gimmick/guncoat_tan
-	slot = SLOT_WEAR_SUIT
-	cost = PAY_UNTRAINED/2
-
+//Moved to Cargo Crate Supply pack: west_coats
 //Ponchos
 
-/datum/clothingbooth_item/western/westflower
+/datum/clothingbooth_item/western/poncho/flower
 	name = "Flower Poncho"
-	path = /obj/item/clothing/suit/westflower
+	path = /obj/item/clothing/suit/poncho/flower
 	slot = SLOT_WEAR_SUIT
 	cost = PAY_UNTRAINED/1
 
-/datum/clothingbooth_item/western/westleaf
+/datum/clothingbooth_item/western/poncho/leaf
 	name = "Leaf poncho"
-	path = /obj/item/clothing/suit/westleaf
+	path = /obj/item/clothing/suit/poncho/leaf
 	slot = SLOT_WEAR_SUIT
 	cost = PAY_UNTRAINED/1
 
@@ -1220,20 +1194,20 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/western)
 	slot = SLOT_SHOES
 	cost = PAY_UNTRAINED/2
 
-/datum/clothingbooth_item/western/westboot_dirty
+/datum/clothingbooth_item/western/westboot/dirty
 	name = "Dirty Cowboy Boots"
-	path = /obj/item/clothing/shoes/westboot_black
+	path = /obj/item/clothing/shoes/westboot/dirty
 	slot = SLOT_SHOES
 	cost = PAY_UNTRAINED/2
 
-/datum/clothingbooth_item/western/westboot_black
+/datum/clothingbooth_item/western/westboot/black
 	name = "Black Cowboy Boots"
-	path = /obj/item/clothing/shoes/westboot_black
+	path = /obj/item/clothing/shoes/westboot/black
 	slot = SLOT_SHOES
 	cost = PAY_UNTRAINED/2
 
-/datum/clothingbooth_item/western/westboot_brown
+/datum/clothingbooth_item/western/westboot/brown
 	name = "Brown Cowboy Boots"
-	path = /obj/item/clothing/shoes/westboot_brown
+	path = /obj/item/clothing/shoes/westboot/brown
 	slot = SLOT_SHOES
 	cost = PAY_UNTRAINED/2
