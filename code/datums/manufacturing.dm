@@ -851,7 +851,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	item_outputs = list(/obj/item/clothing/suit/cardboard_box/ai)
 	time = 5 SECONDS
 	create = 1
-	category = "Cothing"
+	category = "Clothing"
 
 /datum/manufacture/cyberappendix
 	name = "Cyberappendix"
