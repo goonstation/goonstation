@@ -1123,8 +1123,9 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/costume)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/western)
 /datum/clothingbooth_item/western
+	name = "western"
 	category = "Western"
-	cost = PAY_UNTRAINED/3
+	cost = PAY_UNTRAINED/1
 
 /datum/clothingbooth_item/western/westhat
 	name = "Ten-gallon hat"
@@ -1162,17 +1163,17 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/western)
 	slot = SLOT_HEAD
 	cost = PAY_UNTRAINED/2
 
-//Coats
-//Moved to Cargo Crate Supply pack: west_coats
+//Coats, Moved to Cargo Crate Supply pack: west_coats
+
 //Ponchos
 
-/datum/clothingbooth_item/western/poncho/flower
+/datum/clothingbooth_item/western/flowerponcho
 	name = "Flower Poncho"
 	path = /obj/item/clothing/suit/poncho/flower
 	slot = SLOT_WEAR_SUIT
 	cost = PAY_UNTRAINED/1
 
-/datum/clothingbooth_item/western/poncho/leaf
+/datum/clothingbooth_item/western/leafponcho
 	name = "Leaf poncho"
 	path = /obj/item/clothing/suit/poncho/leaf
 	slot = SLOT_WEAR_SUIT
@@ -1180,9 +1181,9 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/western)
 
 //Jumpsuit
 
-/datum/clothingbooth_item/western/wester
+/datum/clothingbooth_item/western/western
 	name = "Western shirt and pants"
-	path = /obj/item/clothing/under/misc/wester
+	path = /obj/item/clothing/under/misc/western
 	slot = SLOT_W_UNIFORM
 	cost = PAY_UNTRAINED/1
 

@@ -1805,8 +1805,8 @@
     wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
 
 //Western Jumpsuit
-/obj/item/clothing/under/misc/wester
+/obj/item/clothing/under/misc/western
     name = "Western shirt and pants"
     desc = "Now comes with a matching belt buckle and leather straps!"
-    icon_state = "wester"
-    item_state = "wester"
+    icon_state = "western"
+    item_state = "western"
