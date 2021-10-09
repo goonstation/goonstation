@@ -319,12 +319,12 @@
 
 	proc/butcher(var/mob/M, drop_brain = TRUE)
 		var/i = rand(2,4)
-		var/transfer = src.reagents.total_volume / i
+		var/transfer = src.reagents ? src.reagents.total_volume / i : 0
 
 		while (i-- > 0)
 			var/obj/item/reagent_containers/food/newmeat = new meat_type
 			newmeat.set_loc(src.loc)
-			src.reagents.trans_to(newmeat, transfer)
+			src.reagents?.trans_to(newmeat, transfer)
 			if (name_the_meat)
 				newmeat.name = "[src.name] meat"
 				newmeat.real_name = newmeat.name
