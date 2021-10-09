@@ -16,13 +16,6 @@
 		if (!real_name)
 			real_name = name
 
-	pooled()
-		..()
-
-
-	unpooled()
-		..()
-
 	proc/setup(var/L,var/list/viral_list)
 		set_loc(L)
 
@@ -510,12 +503,6 @@ obj/decal/fakeobjects/teleport_pad
 	icon_state = "avine_l1"
 	random_icon_states = list("avine_l1", "avine_l2", "avine_l3")
 	New()
-		..()
-		src.set_dir(pick(cardinal))
-		if (prob(20))
-			new /obj/decal/alienflower(src.loc)
-
-	unpooled()
 		..()
 		src.set_dir(pick(cardinal))
 		if (prob(20))

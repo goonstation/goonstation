@@ -1212,10 +1212,30 @@ ABSTRACT_TYPE(/area/prefab)
 	name = "Shooting Range"
 	icon_state = "purple"
 
+/area/prefab/silverglass
+	name = "Silverglass Platform"
+	icon_state = "orange"
+	requires_power = TRUE
+
+	research
+		name = "Entanglement Dynamics"
+		icon_state = "purple"
+
+	bay
+		name = "Docking Bay"
+		icon_state = "yellow"
+
+	eats
+		name = "Commissary"
+		icon_state = "green"
+
 /area/prefab/dreamplaza
 	name = "DreamPlaza Mall"
 	icon_state = "purple"
 
+/area/prefab/secbot_academy
+	name = "Securitron Academy"
+	icon_state = "red"
 // Sealab trench areas //
 
 /area/shuttle/sea_elevator_room

@@ -364,6 +364,7 @@
 		icon_state = "woodencrate[n]"
 		icon_opened = "woodencrate[n]_open"
 		icon_closed = "woodencrate[n]"
+		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
 		..()
 
 

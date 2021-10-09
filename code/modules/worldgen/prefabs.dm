@@ -208,6 +208,13 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 19
 		prefabSizeY = 22
 
+	silverglass // Ill-fated entanglement research facility
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_silverglass.dmm"
+		prefabSizeX = 32
+		prefabSizeY = 24
+
 	safehouse // A seemingly abandoned safehouse
 		maxNum = 1
 		probability = 15
@@ -222,6 +229,12 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 30
 		prefabSizeY = 30
 
+	secbot_academy // Danger Noodle's elite securitron school
+		maxNum = 1
+		probability = 15
+		prefabPath = "assets/maps/prefabs/prefab_securitron_academy.dmm"
+		prefabSizeX = 34
+		prefabSizeY = 37
 	//UNDERWATER AREAS FOR OSHAN
 
 	pit

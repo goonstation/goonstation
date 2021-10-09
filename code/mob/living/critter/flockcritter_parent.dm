@@ -114,11 +114,11 @@
 		SPAWN_DBG(5 SECONDS)
 			var/obj/fire_foam/F = (locate(/obj/fire_foam) in src.loc)
 			if (!F)
-				F = unpool(/obj/fire_foam)
+				F = new /obj/fire_foam
 				F.set_loc(src.loc)
 				SPAWN_DBG(10 SECONDS)
 					if (F && !F.disposed)
-						pool(F)
+						qdel(F)
 			playsound(src, "sound/effects/spray.ogg", 50, 1, -3)
 			update_burning(-100)
 			sleep(2 SECONDS)
@@ -175,9 +175,9 @@
 			// do effect
 			var/flick_anim = "spawn-floor"
 			if(istype(target, /turf/simulated/floor) || istype(target, /turf/space))
-				src.decal = unpool(/obj/decal/flock_build_floor)
+				src.decal = new /obj/decal/flock_build_floor
 			if(istype(target, /turf/simulated/wall))
-				src.decal = unpool(/obj/decal/flock_build_wall)
+				src.decal = new /obj/decal/flock_build_wall
 				flick_anim = "spawn-wall"
 			if(src.decal)
 				src.decal.set_loc(target)
@@ -193,7 +193,7 @@
 		var/mob/living/critter/flock/drone/F = owner
 		if(F)
 			if(src.decal)
-				pool(src.decal)
+				qdel(src.decal)
 			if(F.flock)
 				F.flock.unreserveTurf(target, F.real_name)
 
@@ -202,7 +202,7 @@
 		var/mob/living/critter/flock/drone/F = owner
 		if(F)
 			if(src.decal)
-				pool(src.decal)
+				qdel(src.decal)
 			if(F.flock)
 				F.flock.convert_turf(target, F.real_name)
 			else
@@ -251,7 +251,7 @@
 
 			// do effect
 			var/flick_anim = "spawn-wall"
-			src.decal = unpool(/obj/decal/flock_build_wall)
+			src.decal = new /obj/decal/flock_build_wall
 			if(src.decal)
 				src.decal.set_loc(target)
 				flick(flick_anim, src.decal)
@@ -259,12 +259,12 @@
 	onInterrupt(var/flag)
 		..()
 		if(src.decal)
-			pool(src.decal)
+			qdel(src.decal)
 
 	onEnd()
 		..()
 		if(src.decal)
-			pool(src.decal)
+			qdel(src.decal)
 		var/mob/living/critter/flock/drone/F = owner
 		if(F)
 			F.pay_resources(cost)
@@ -416,7 +416,7 @@
 					"You hear strange building noises.")
 				target.was_harmed(F, null, "flock", INTENT_DISARM)
 				// do effect
-				src.decal = unpool(/obj/decal/flock_build_wall)
+				src.decal = new /obj/decal/flock_build_wall
 				if(src.decal)
 					src.decal.set_loc(target)
 					flick("spawn-wall", src.decal)
@@ -425,12 +425,12 @@
 	onInterrupt()
 		..()
 		if(src.decal)
-			pool(src.decal)
+			qdel(src.decal)
 
 	onEnd()
 		..()
 		if(src.decal)
-			pool(src.decal)
+			qdel(src.decal)
 		var/mob/living/critter/flock/F = owner
 		if(F && target && in_interact_range(owner, target))
 			var/obj/icecube/flockdrone/cage = new /obj/icecube/flockdrone(target.loc, target, F.flock)
@@ -475,7 +475,7 @@
 				var/turf/T = get_turf(target)
 				var/obj/storage/closet/flock/c = target
 				playsound(T, "sound/impact_sounds/Glass_Shatter_3.ogg", 25, 1)
-				var/obj/item/raw_material/shard/S = unpool(/obj/item/raw_material/shard)
+				var/obj/item/raw_material/shard/S = new /obj/item/raw_material/shard
 				S.set_loc(T)
 				S.setMaterial(getMaterial("gnesisglass"))
 				c.dump_contents()
@@ -487,10 +487,10 @@
 			if(/obj/machinery/door/feather)
 				var/turf/T = get_turf(target)
 				playsound(T, "sound/impact_sounds/Glass_Shatter_3.ogg", 25, 1)
-				var/obj/item/raw_material/shard/S = unpool(/obj/item/raw_material/shard)
+				var/obj/item/raw_material/shard/S = new /obj/item/raw_material/shard
 				S.set_loc(T)
 				S.setMaterial(getMaterial("gnesisglass"))
-				S = unpool(/obj/item/raw_material/shard)
+				S = new /obj/item/raw_material/shard
 				S.set_loc(T)
 				S.setMaterial(getMaterial("gnesis"))
 				qdel(target)

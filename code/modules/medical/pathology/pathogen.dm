@@ -107,7 +107,7 @@ datum/controller/pathogen
 			CDC.patient_zero_kname = "[H]"
 		if (!(P.name in CDC.mutations))
 			CDC.mutations += P.name
-			var/datum/pathogen/template = unpool(/datum/pathogen)
+			var/datum/pathogen/template = new /datum/pathogen
 			template.setup(0, P, 0)
 			CDC.mutations[P.name] = template
 		if (!(H in CDC.infections))
@@ -555,7 +555,7 @@ datum/controller/pathogen
 	proc/gen_empty(var/key)
 		if (!(key in src.cdc_creator))
 			src.cdc_creator += key
-		var/datum/pathogen/P = unpool(/datum/pathogen)
+		var/datum/pathogen/P = new /datum/pathogen
 		P.mutation = pick(lnums)
 		do
 			P.name_base = pick(lalph) + pick(lnums) + pick(lalph)
@@ -866,7 +866,7 @@ datum/pathogen
 		curable_by_suppression = initial(curable_by_suppression)
 
 	proc/clone()
-		var/datum/pathogen/P = unpool(/datum/pathogen)
+		var/datum/pathogen/P = new /datum/pathogen
 		P.setup(0, src, 0)
 		return P
 
@@ -879,11 +879,6 @@ datum/pathogen
 	New()
 		..()
 		setup(0, null, 0)
-
-	unpooled()
-		clear()
-		setup(0, null, 0)
-		..()
 
 	proc/create_weak()
 		randomize(0)

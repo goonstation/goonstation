@@ -326,7 +326,7 @@
 
 	proc/mulch_item(var/obj/I, score)
 		playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 50, 1)
-		pool( I )
+		qdel( I )
 		total_score += score
 		round_score += score
 		update_totals()
@@ -777,7 +777,7 @@
 			src.monitored_ref = null
 
 		if (monitored)
-			if (monitored.pooled || monitored.qdeled)
+			if (monitored.disposed || monitored.qdeled)
 				// The thing we were watching was deleted/removed! Welp.
 				monitored = null
 				return 0
@@ -1288,11 +1288,6 @@ Other Goonstation servers:[serverList]</span>"})
 
 	proc/show_count()
 		invisibility = INVIS_NONE
-
-	pooled()
-		src.maptext = ""
-		src.invisibility = INVIS_ALWAYS
-		..()
 
 
 

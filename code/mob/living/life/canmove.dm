@@ -2,10 +2,11 @@
 /datum/lifeprocess/canmove
 	process()
 		//rescue lost mobs??
+		/*
 		if(QDELETED(owner.loc) && !QDELETED(owner) && !isdead(owner))
 			message_admins("[key_name(owner)] was stranded in nullspace, and sent to arrivals.")
 			owner.set_loc(pick_landmark(LANDMARK_LATEJOIN, locate(150, 150, 1)))
-
+*/
 
 		//check_if_buckled()
 		if (owner.buckled)
