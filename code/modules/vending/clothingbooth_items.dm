@@ -431,9 +431,19 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/formal)
 	name = "Waistcoat"
 	path = /obj/item/clothing/suit/wcoat
 
+/datum/clothingbooth_item/formal/black_wcoat
+	name = "Black Waistcoat"
+	path = /obj/item/clothing/under/gimmick/black_wcoat
+	cost = PAY_DOCTORATE/3
+
 /datum/clothingbooth_item/formal/red_wcoat
 	name = "Red Waistcoat"
 	path = /obj/item/clothing/under/gimmick/red_wcoat
+	cost = PAY_DOCTORATE/3
+
+/datum/clothingbooth_item/formal/blue_wcoat
+	name = "Blue Waistcoat"
+	path = /obj/item/clothing/under/gimmick/blue_wcoat
 	cost = PAY_DOCTORATE/3
 
 /datum/clothingbooth_item/formal/butler
