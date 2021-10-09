@@ -266,14 +266,14 @@ proc/build_syndi_buylist_cache()
 /datum/syndicate_buylist/traitor/champrojector
 	name = "Chameleon Projector"
 	item = /obj/item/device/chameleon
-	cost = 2
+	cost = 5
 	desc = "Advanced cloaking device that scans an object and, when activated, makes the bearer look like the object. Slows movement while in use."
 	blockedmode = list(/datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/holographic_disguiser
 	name = "Holographic Disguiser"
 	item = /obj/item/device/disguiser
-	cost = 3
+	cost = 2
 	desc = "A device capable of disguising your identity temporarily. Beware of flashes and projectiles!"
 	blockedmode = list(/datum/game_mode/revolution)
 
