@@ -29,9 +29,6 @@
 	}\
 } while(false)
 
-#define MAX_SOUND_RANGE max_sound_range
-#define MAX_SOUND_RANGE_NORMAL 33
-#define MAX_SOUND_RANGE_OVERLOADED 23
 #define MAX_SPACED_RANGE 6 //diff range for when youre in a vaccuum
 #define CLIENT_IGNORES_SOUND(C) (C?.ignore_sound_flags && ((ignore_flag && C.ignore_sound_flags & ignore_flag) || C.ignore_sound_flags & SOUND_ALL))
 
