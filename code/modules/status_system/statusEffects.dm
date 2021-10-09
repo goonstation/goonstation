@@ -565,6 +565,8 @@
 			switchStage(getStage())
 			owner.delStatus("shivering")
 
+			logTheThing("combat", owner, null, "gains the burning status effect at [log_loc(owner)]")
+
 			if(istype(owner, /mob/living))
 				var/mob/living/L = owner
 				L.update_burning_icon(0, src) // pass in src because technically our owner does not have us as a status effect yet (this happens immediately after onAdd())
