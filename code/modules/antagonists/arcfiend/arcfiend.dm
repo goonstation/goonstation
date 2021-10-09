@@ -28,7 +28,6 @@
 		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
 			SHOW_ARCFIEND_TIPS(src)
 
-	else return
 
 /datum/abilityHolder/arcfiend
 	usesPoints = 1
@@ -38,8 +37,8 @@
 
 	onAbilityStat()
 		..()
-		if (src.owner && src.owner.mind && src.owner.mind.special_role == ROLE_ARCFIEND)
-			.= list()
+		if (src.owner?.mind?.special_role == ROLE_ARCFIEND)
+			. = list()
 			.["Energy:"] = round(points)
 			.["Total:"] = round(lifetime_energy)
 
@@ -88,7 +87,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 		if (holder.owner.restrained())
 			boutput(holder.owner, __red("You need an active working hand to use [src]!"))
 			return 0
-/*
+/**
  * Sap Power
  * Arcfiend's main method of obtaining electrcity for their abilities
  * Also serves as a deadly attack if able to catch a target alone and off guard
@@ -113,7 +112,6 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 		..()
 		if(!IN_RANGE(user, target, 1))
 			interrupt(INTERRUPT_ALWAYS)
-			return
 
 	onStart()
 		..()
@@ -121,17 +119,12 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		src.loopStart()
-		return
-
-	loopStart()
-		..()
 
 
 	onEnd()
 		if(!IN_RANGE(user, target, 1))
 			..()
 			interrupt(INTERRUPT_ALWAYS)
-			return
 
 		if (ishuman(target))
 			var/mob/living/carbon/human/H = target
@@ -204,7 +197,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 		target.add_fingerprint(holder.owner)
 		src.onRestart()
 
-/*
+/**
  * Discharge
  * Melee attack, unleash stored charge to burn a target and blast them backwards
  */
@@ -239,7 +232,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 		s.start()
 		holder.owner.set_dir(get_dir(holder.owner, target))
 
-/*
+/**
  * Jamming Field
  * Makes you into a walking radio jammer for 30 seconds
  */
@@ -272,13 +265,13 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 
 	onAdd(optional)
 		. = ..()
-		if (!radio_controller.active_jammers.Find(owner))
+		if (!(owner in radio_controller.active_jammers))
 			radio_controller.active_jammers.Add(owner)
 		owner.UpdateOverlays(aura, "jamming_field_aura")
 
 	onRemove()
 		. = ..()
-		if (radio_controller.active_jammers.Find(owner))
+		if (owner in radio_controller.active_jammers)
 			radio_controller.active_jammers.Remove(owner)
 		owner.ClearSpecificOverlays("jamming_field_aura")
 
@@ -293,7 +286,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 		. = ..()
 		elecflash(holder.owner, 2, 6, TRUE)
 
-/*
+/**
  * Arc Flash
  * A ranged chain lightning attack
  */
@@ -334,7 +327,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 			arcFlash(chain_source, chain_target, (wattage / (i + 1)))
 			chain_source = chain_target
 
-/*
+/**
  * Jolt
  * Killing skill, also decent damage even if you don't finish. The final tick induces cardiac arrest
  */
@@ -393,10 +386,6 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		src.loopStart()
-		return
-
-	loopStart()
-		..()
 
 
 	onEnd()
@@ -429,7 +418,6 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 			cimg.layer = 100
 			cimg.plane = 100
 			cable_images[i] = cimg
-		return
 
 	cast(atom/target)
 		. = ..()
@@ -539,7 +527,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 			if (!holder.points)
 				ability.deactivate()
 
-/*
+/**
  * Polarize
  * Applies the magnetic aura effect to nearby mobs
  */
