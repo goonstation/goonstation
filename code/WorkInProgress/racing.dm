@@ -92,7 +92,7 @@
 			qdel(src)
 
 	proc/move_process()
-		if (src.qdeled || src.pooled)
+		if (src.qdeled || src.disposed)
 			return
 		step(src,dir)
 		SPAWN_DBG(1 DECI SECOND) move_process()
@@ -124,7 +124,7 @@
 			qdel(src)
 
 	proc/move_process()
-		if (src.qdeled || src.pooled)
+		if (src.qdeled || src.disposed)
 			return
 
 		var/atom/target = null

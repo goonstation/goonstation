@@ -415,10 +415,6 @@ datum
 			minimum_reaction_temperature = T0C + 100
 			var/reacted_to_temp = 0 // prevent infinite loop in a fluid
 
-			pooled()
-				..()
-				reacted_to_temp = 0
-
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(!reacted_to_temp)
 					reacted_to_temp = 1

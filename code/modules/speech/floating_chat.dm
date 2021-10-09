@@ -31,26 +31,6 @@
 	var/unique_id
 	var/measured_height = 8
 
-	unpooled(var/pooltype)
-		..()
-		// for optimization purposes some of these could probably be left out if necessary because they *shouldn't* ever change
-		src.bumped = initial(src.bumped)
-		src.layer = initial(src.layer)
-		src.plane = initial(src.plane)
-		src.maptext_x = initial(src.maptext_x)
-		src.maptext_y = initial(src.maptext_y)
-		src.maptext_width = initial(src.maptext_width)
-		src.maptext_height = initial(src.maptext_height)
-		src.alpha = initial(src.alpha)
-		src.icon = initial(src.icon)
-		src.appearance_flags = initial(src.appearance_flags)
-		src.measured_height = initial(src.measured_height)
-		src.transform = null
-		for(var/client/C in src.visible_to)
-			C.images -= src
-		src.visible_to = list()
-		src.unique_id = TIME
-
 	disposing()
 		if(istype(src.loc, /obj/chat_maptext_holder))
 			var/obj/chat_maptext_holder/holder = src.loc

@@ -21,15 +21,6 @@
 		..()
 		init()
 
-	pooled(var/pooltype)
-		src.set_loc(locate(1, 1, 1)) // Get them out of mob.contents.
-		..()
-		return
-
-	unpooled(var/poolname)
-		init()
-		..(poolname)
-
 	proc/init()
 		reagents = new/datum/reagents(100)
 		reagents.my_atom = src

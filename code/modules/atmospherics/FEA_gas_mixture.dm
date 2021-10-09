@@ -58,27 +58,6 @@ What are the archived variables for?
 	..()
 	total_gas_mixtures++
 
-
-/datum/gas_mixture/unpooled()
-	volume = initial(volume)
-	temperature = initial(temperature)
-	group_multiplier = initial(group_multiplier)
-	graphic = initial(graphic)
-#ifdef ATMOS_ARCHIVING
-	ARCHIVED(temperature) = initial(ARCHIVED(temperature))
-#endif
-	graphic_archived = initial(graphic_archived)
-	fuel_burnt = initial(fuel_burnt)
-	trace_gases = initial(trace_gases)
-	trace_gas_refs = initial(trace_gas_refs)
-	#define _UNPOOL_GAS(GAS, ...) GAS = initial(GAS);
-	APPLY_TO_GASES(_UNPOOL_GAS)
-#ifdef ATMOS_ARCHIVING
-	APPLY_TO_ARCHIVED_GASES(_UNPOOL_GAS)
-#endif
-	#undef _UNPOOL_GAS
-	..()
-
 // Mutator procs
 // For specific events
 /datum/gas_mixture/proc/zero()

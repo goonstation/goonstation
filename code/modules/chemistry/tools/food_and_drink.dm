@@ -19,16 +19,6 @@
 	var/made_ants = 0
 	rc_flags = 0
 
-	New()
-		..()
-
-	pooled()
-		..()
-
-	unpooled()
-		made_ants = 0
-		..()
-
 	proc/on_table()
 		if (!isturf(src.loc)) return 0
 		for (var/atom/movable/M in src.loc) //Arguably more elegant than a million locates. I don't think locate works with derived classes.
@@ -114,21 +104,6 @@
 			processing_items.Add(src)
 		create_time = world.time
 
-	unpooled()
-		..()
-		src.icon = start_icon
-		src.icon_state = start_icon_state
-		amount = initial(amount)
-		current_mask = 5
-		if (doants)
-			processing_items.Add(src)
-		create_time = world.time
-
-//	pooled()
-//		if(!made_ants)
-//			processing_items -= src
-//		..()
-
 	disposing()
 		if(!made_ants)
 			processing_items -= src
@@ -137,7 +112,7 @@
 	process()
 		if (world.time - create_time >= 3 MINUTES)
 			create_time = world.time
-			if (!src.pooled && isturf(src.loc) && !on_table())
+			if (!src.disposed && isturf(src.loc) && !on_table())
 				if (prob(50))
 					made_ants = 1
 					processing_items -= src
@@ -401,14 +376,6 @@
 	edible = 1
 	rand_pos = 1
 	var/did_react = 0
-
-	unpooled()
-		..()
-		did_react = 0
-
-	pooled()
-		..()
-		did_react = 0
 
 	proc/process_stomach(mob/living/owner, var/process_rate = 5)
 		if (owner && src.reagents)
@@ -799,16 +766,6 @@
 	on_reagent_change()
 		src.update_icon()
 
-	unpooled()
-		..()
-		src.broken = 0
-		src.shatter = 0
-		src.labeled = 0
-		src.update_icon()
-
-	pooled()
-		..()
-
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
@@ -1006,17 +963,6 @@
 	var/image/image_salt
 	var/image/image_wedge
 	var/image/image_doodad
-
-	unpooled()
-		..()
-		src.salted = 0
-		src.wedge = 0
-		src.umbrella = 0
-		src.in_glass = 0
-		src.smashed = 0
-
-	pooled()
-		..()
 
 	on_reagent_change()
 		src.update_icon()
@@ -1461,10 +1407,6 @@
 		..()
 		pick_style()
 
-	unpooled()
-		..()
-		pick_style()
-
 	proc/pick_style()
 		src.glass_style = pick("drink","shot","wine","cocktail","flute")
 		switch(src.glass_style)
@@ -1493,12 +1435,6 @@
 	var/list/blacklist = list("big_bang_precursor", "big_bang", "nitrotri_parent", "nitrotri_wet", "nitrotri_dry")
 
 	New()
-		..()
-		SPAWN_DBG(0)
-			if (src.reagents)
-				src.fill_it_up()
-
-	unpooled()
 		..()
 		SPAWN_DBG(0)
 			if (src.reagents)

@@ -65,7 +65,7 @@
 
 	SPAWN_DBG(3 SECONDS)
 		for (var/obj/hotspot/A as anything in hotspots)
-			if (!A.pooled)
+			if (!A.disposed)
 				qdel(A)
 			//LAGCHECK(LAG_REALTIME)  //MBC : maybe caused lighting bug?
 		hotspots.len = 0
@@ -164,7 +164,7 @@
 
 	SPAWN_DBG(3 SECONDS)
 		for(var/obj/hotspot/A in hotspots)
-			if (!A.pooled)
+			if (!A.disposed)
 				qdel(A)
 			//LAGCHECK(LAG_REALTIME)  //MBC : maybe caused lighting bug?
 		hotspots.len = 0

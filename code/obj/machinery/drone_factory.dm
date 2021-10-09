@@ -309,15 +309,14 @@ var/global/list/ghostdrone_candidates = list()
 	mats = 0
 	var/stage = 1
 
-	pooled()
-		..()
-		if (ghostdrone_factory_working == src)
-			ghostdrone_factory_working = null
-		stage = 1
-
-	unpooled()
+	New()
 		..()
 		src.icon_state = "drone-stage[src.stage]"
+
+	disposing()
+		if (ghostdrone_factory_working == src)
+			ghostdrone_factory_working = null
+		..()
 
 /obj/machinery/ghostdrone_conveyor_sensor
 	name = "conveyor sensor"

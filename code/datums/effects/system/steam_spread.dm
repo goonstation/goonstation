@@ -23,15 +23,6 @@ steam.start() -- spawns the effect
 	var/color = null
 	var/plane = null
 
-/datum/effects/system/steam_spread/pooled()
-	..()
-	number = initial(number)
-	cardinals = initial(cardinals)
-	location = null
-	holder = null
-	color = null
-	plane = null
-
 /datum/effects/system/steam_spread/proc/set_up(n = 3, c = 0, turf/loc, color=null, plane=null)
 	if(n > 10)
 		n = 10
@@ -40,11 +31,6 @@ steam.start() -- spawns the effect
 	src.location = loc
 	src.color = color
 	src.plane = plane
-
-/*
-/datum/effects/system/steam_spread/disposing()
-	qdel(src)
-*/
 
 /datum/effects/system/steam_spread/proc/attach(atom/atom)
 	holder = atom

@@ -1669,14 +1669,6 @@ Returns:
 	density = 0
 	opacity = 0
 
-	unpooled()
-		color = "#ffffff"
-		pixel_x = 0
-		pixel_y = 0
-		alpha = 255
-		transform = matrix()
-		..()
-
 /datum/admins/proc/turn_off_pixelexplosion()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Turn off pixel explosion mode"
@@ -3160,19 +3152,13 @@ Returns:
 	icon_state = "foam"
 	animate_movement = SLIDE_STEPS
 	mouse_opacity = 0
-	var/my_dir=1
+	var/my_dir = null
 
 	Move(NewLoc,Dir=0)
 		. = ..(NewLoc,Dir)
+		if(isnull(my_dir))
+			my_dir = pick(alldirs)
 		src.set_dir(my_dir)
-
-	unpooled(var/poolname)
-		..()
-		SPAWN_DBG(1 DECI SECOND)
-			var/atom/myloc = loc
-			if(myloc && !istype(myloc,/turf/space))
-				my_dir = pick(alldirs)
-				src.set_dir(my_dir)
 
 /obj/shifting_wall
 	name = "r wall"

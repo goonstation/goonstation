@@ -305,16 +305,6 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "smoke"
 
-	pooled()
-		..()
-		icon = null
-		icon_state = null
-
-	unpooled()
-		..()
-		icon = initial(icon)
-		icon_state = initial(icon_state)
-
 ////////////////////////////////////////////////////////////
 
 /obj/ability_button/cebelt_toggle

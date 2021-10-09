@@ -126,14 +126,14 @@ var/mutable_appearance/fluid_ma
 		.=0
 		//maybe slow, it was broke in the first place so lets just comment it out
 		//for(var/mob/M in src.loc)
-		//	if (src.pooled) return
+		//	if (src.disposed) return
 		//	src.HasEntered(M,M.loc)
 		//	LAGCHECK(LAG_MED)
 
 		/*
 		for(var/obj/O in src.loc)
 			LAGCHECK(LAG_MED)
-			if (src.pooled) return
+			if (src.disposed) return
 			if (O.submerged_images)
 				src.HasEntered(O,O.loc)
 		*/
@@ -142,8 +142,6 @@ var/mutable_appearance/fluid_ma
 		the_turf.active_liquid = null
 
 	disposing()
-		src.pooled = 1
-
 		if (src.group)
 			src.group.members -= src
 
@@ -182,19 +180,6 @@ var/mutable_appearance/fluid_ma
 		blocked_dirs = 0
 		blocked_perspective_objects["[dir]"] = 0
 		my_depth_level = 0
-
-		..()
-
-	unpooled()
-
-		src.pooled = 0
-		is_setup = 0
-		group = 0
-		touched_other_group = 0
-		src.step_sound = "sound/misc/splash_1.ogg"
-
-		if (isturf(src.loc))
-			turf_remove_cleanup(src.loc)
 		..()
 
 	get_desc(dist, mob/user)
@@ -233,7 +218,7 @@ var/mutable_appearance/fluid_ma
 	//incorporate touch_modifier?
 	HasEntered(atom/A, atom/oldloc)
 		..()
-		if (!src.group || !src.group.reagents || src.pooled || istype(A,/obj/fluid))
+		if (!src.group || !src.group.reagents || src.disposed || istype(A,/obj/fluid))
 			return
 
 		my_depth_level = last_depth_level
@@ -303,7 +288,7 @@ var/mutable_appearance/fluid_ma
 		src.removed()
 
 	proc/removed(var/sfx = 0)
-		if (src.pooled) return
+		if (src.disposed) return
 
 		if (sfx)
 			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
@@ -352,7 +337,7 @@ var/mutable_appearance/fluid_ma
 				if (IS_PERSPECTIVE_WALL(t))
 					blocked_perspective_objects["[dir]"] = 1
 				continue
-			if (t.active_liquid && !t.active_liquid.pooled)
+			if (t.active_liquid && !t.active_liquid.disposed)
 				blocked_dirs++
 				if (t.active_liquid.group && t.active_liquid.group != src.group)
 					touched_other_group = t.active_liquid.group
@@ -516,7 +501,7 @@ var/mutable_appearance/fluid_ma
 		for( var/dir in cardinal )
 			t = get_step( src, dir )
 			if( !t ) continue
-			if (!t.active_liquid || t.active_liquid.pooled) continue
+			if (!t.active_liquid || t.active_liquid.disposed) continue
 			if (t.active_liquid && t.active_liquid.group && src.group != t.active_liquid.group)
 				t.active_liquid.group.join(src.group)
 			LAGCHECK(LAG_HIGH)
@@ -688,7 +673,7 @@ var/mutable_appearance/fluid_ma
 
 /obj/ExitedFluid(obj/fluid/F as obj, atom/newloc)
 	if (src.submerged_images && src.is_submerged != 0)
-		if (F.pooled)
+		if (F.disposed)
 			src.show_submerged_image(0)
 			return
 
@@ -714,7 +699,7 @@ var/mutable_appearance/fluid_ma
 /mob/living/ExitedFluid(obj/fluid/F as obj, atom/newloc)
 	if (src.is_submerged == 0) return
 
-	if (F.pooled)
+	if (F.disposed)
 		src.show_submerged_image(0)
 		return
 	else if (isturf(newloc))

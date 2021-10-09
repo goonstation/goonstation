@@ -153,10 +153,6 @@
 	layer = TILE_EFFECT_OVERLAY_LAYER
 	animate_movement = NO_STEPS // fix for things gliding around all weird
 
-	pooled(var/poolname)
-		overlays.len = 0
-		..()
-
 	Move()
 		return 0
 
@@ -165,10 +161,6 @@
 	anchored = 1
 	density = 0
 	mouse_opacity = 0
-
-	pooled(var/poolname)
-		overlays.len = 0
-		..()
 
 	Move()
 		return 0

@@ -36,25 +36,6 @@
 		I.Blend(src.foamcolor, ICON_ADD)
 		src.overlays += I
 
-/obj/effects/foam/pooled()
-	..()
-	name = "foam"
-	icon_state = "foam"
-	opacity = 0
-	foamcolor = null
-	expand = 0
-	amount = 0
-	metal = 0
-	animate_movement = 0
-	foam_id = null
-	if(reagents)
-		reagents.clear_reagents()
-
-/obj/effects/foam/unpooled()
-	..()
-	amount = 3
-	expand = 1
-
 /obj/effects/foam/proc/set_up(loc, var/ismetal)
 	src.set_loc(loc)
 	expand = 1

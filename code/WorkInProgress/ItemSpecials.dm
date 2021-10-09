@@ -1803,12 +1803,6 @@
 			SPAWN_DBG(del_time)
 				qdel(src)
 
-	unpooled()
-		..()
-
-	pooled()
-		..()
-
 	attackby()
 		was_clashed()
 
@@ -1911,11 +1905,6 @@
 		pixel_x = 0
 		pixel_y = 0
 
-		pooled()
-			..()
-			transform = null
-			color = null
-
 	barrier
 		name = "energy barrier"
 		icon = 'icons/effects/effects.dmi'
@@ -1947,7 +1936,7 @@
 			qdel(src)
 
 		proc/deactivate()
-			if (src.qdeled || src.pooled)
+			if (src.qdeled || src.disposed)
 				return
 			playsound(src.loc, 'sound/items/miningtool_off.ogg', 30, 0.1, 0, 2)
 			qdel(src)
@@ -2044,8 +2033,7 @@
 	pixel_x = 0
 	pixel_y = 0
 
-
-	unpooled()
+	New()
 		pixel_x = rand(-3,3)
 		pixel_y = rand(-15,6)
 		..()
@@ -2053,7 +2041,7 @@
 /obj/itemspecialeffect/impact/blood
 	icon_state = "blood_impact1"
 
-	unpooled()
+	New()
 		..()
 		if (prob(50))
 			icon_state = "blood_impact2"
@@ -2067,7 +2055,7 @@
 /obj/itemspecialeffect/impact/silicon
 	icon_state = "silicon_impact1"
 
-	unpooled()
+	New()
 		..()
 		if (prob(66))
 			icon_state = "silicon_impact2"

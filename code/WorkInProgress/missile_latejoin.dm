@@ -25,12 +25,7 @@
 		src.ion_trail.set_up(src)
 		src.ion_trail.yoffset = 13
 
-	unpooled()
-		moved_on_flooring = 0
-		num_loops = 0
-		..()
-
-	pooled()
+	disposing()
 		ion_trail.stop()
 		passenger = null
 		var/turf/T = get_turf(src)
@@ -40,11 +35,6 @@
 		moved_on_flooring = 0
 		target = null
 		..()
-
-	//disposing()
-	//	ion_trail = null
-	//	passenger = null
-	//	..()
 
 	// its fucking lunch time
 	proc/lunch(atom/movable/sent, d=null)

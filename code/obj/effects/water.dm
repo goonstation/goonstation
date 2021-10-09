@@ -7,10 +7,9 @@
 	flags = TABLEPASS
 	mouse_opacity = 0
 
-/obj/effects/water/pooled(var/poolname)
-	 life = initial(life)
-	 owner = null
-	 ..()
+/obj/effects/water/disposing()
+	owner = null
+	..()
 
 /obj/effects/water/Move(turf/newloc)
 	//var/turf/T = src.loc

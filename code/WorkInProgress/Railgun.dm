@@ -5,19 +5,6 @@
 	density = 0
 	opacity = 0
 
-	unpooled(var/pool)
-		name = initial(name)
-		desc = initial(desc)
-		anchored = initial(anchored)
-		density = initial(density)
-		opacity = initial(opacity)
-		icon = initial(icon)
-		icon_state = initial(icon_state)
-		layer = initial(layer)
-		pixel_x = initial(pixel_x)
-		pixel_y = initial(pixel_y)
-		..()
-
 /obj/railgun_trg_dummy
 	name = ""
 	desc = ""

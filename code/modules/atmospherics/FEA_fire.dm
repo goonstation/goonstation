@@ -110,16 +110,6 @@
 			loc:active_hotspot = null
 		..()
 
-	pooled()
-		STOP_TRACKING
-		..()
-
-	unpooled()
-		..()
-		START_TRACKING
-		if (!light.attached_to)
-			light.attach(src)
-
 	// now this is ss13 level code
 	proc/set_real_color()
 		var/input = temperature / 100

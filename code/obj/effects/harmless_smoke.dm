@@ -10,9 +10,6 @@
 	pixel_x = -32
 	pixel_y = -32
 
-	pooled()
-		..()
-
 /*
 /obj/effects/harmless_smoke/New()
 	..()

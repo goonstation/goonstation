@@ -26,20 +26,8 @@
 
 	var/mail_tag = null //Switching junctions with the same tag will pass it out the secondary instead of primary
 
-	unpooled()
-		..()
+	disposing()
 		gas = null
-		active = 0
-		set_dir(0)
-		count = initial(count)
-		last_sound = 0
-		mail_tag = null
-
-	pooled()
-		gas = null
-		active = 0
-		set_dir(0)
-		last_sound = 0
 		mail_tag = null
 		..()
 

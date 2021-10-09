@@ -803,10 +803,6 @@ proc/Create_Tommyname()
 	name = "Dummy object."
 	invisibility = INVIS_ALWAYS
 
-/obj/movedummy/pooled()
-	..()
-	invisibility = INVIS_ALWAYS
-
 /obj/movedummy/proc/mimic_turf(var/turf_type, var/TTL)
 	ASSERT(ispath(turf_type, /turf))
 	var/turf/T = turf_type

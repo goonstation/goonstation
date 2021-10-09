@@ -27,21 +27,8 @@
 		if (!made_reagents)
 			make_reagents()
 
-	unpooled()
-		..()
-		if(ispath(src.planttype))
-			var/datum/plant/species = HY_get_species_from_path(src.planttype, src)
-			if (species)
-				src.planttype = species
-
-		src.plantgenes = new /datum/plantgenes(src)
-
-		if (!made_reagents)
-			make_reagents()
-
-	pooled()
-		src.plantgenes = 0
-		src.made_reagents = 0
+	disposing()
+		src.plantgenes = null
 		..()
 
 	proc/make_reagents()
@@ -117,7 +104,7 @@
 		var/mob/living/carbon/human/H = A
 		var/datum/plantgenes/DNA = src.plantgenes
 		if(!T) return
-		if(!T || src.pooled) return
+		if(!T || src.disposed) return
 		fireflash(T,1,1)
 		if(istype(H))
 			H.TakeDamage("chest",0,clamp(DNA.potency/2,10,50) + max(DNA.potency/5-20, 0)*(1-H.get_heat_protection()/100),0)//burn damage is half of the potency, soft capped at 50, with a minimum of 10, any extra potency is divided by 5 and added on. The resulting number is then reduced by heat resistance, and applied to the target.

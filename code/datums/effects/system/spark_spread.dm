@@ -6,20 +6,6 @@
 	var/total_sparks = 0 // To stop it being spammed and lagging!
 	var/list/livesparks = new
 
-///datum/effects/system/spark_spread/disposing()
-	//qdel(src)
-	//no no no no no stop doing this what the fuck man aaaaaaaa -singh
-
-/datum/effects/system/spark_spread/pooled()
-	number = initial(number)
-	cardinals = initial(cardinals)
-	location = null
-	holder = null
-	total_sparks = initial(total_sparks)
-	livesparks?.len = 0
-	livesparks = new
-	..()
-
 /datum/effects/system/spark_spread/proc/set_up(n = 3, c = 0, loca)
 	if(n > 10)
 		n = 10
@@ -66,7 +52,7 @@
 			else
 				// Kill the spark in 20 ticks
 				SPAWN_DBG(2 SECONDS)//ugly fuckin spawn todo fix
-					if (sparks && !sparks.pooled)
+					if (sparks && !sparks.disposed)
 						livesparks -= sparks
 						qdel(sparks)
 						src.total_sparks-- //  this might not be the intended behaviour but who knows at this point
