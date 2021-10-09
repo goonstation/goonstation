@@ -194,9 +194,9 @@
 					traitor.current.unlock_medal("You're no Elminster!", 1)
 				if (traitor.special_role == ROLE_WRESTLER && traitor.current)
 					traitor.current.unlock_medal("Cream of the Crop", 1)
-				stuff_to_output += "The [traitor.special_role] was <span class='success'>successful!</span>"
+				stuff_to_output += "<span class='success'>The [traitor.special_role] was successful!</span>"
 			else
-				stuff_to_output += "The [traitor.special_role] has <span class='alert'>failed!</span>"
+				stuff_to_output += "<span class='alert'>The [traitor.special_role] has failed!</span>"
 
 	#ifdef DATALOGGER
 			if (traitorwin)
