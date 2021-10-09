@@ -188,7 +188,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 			// drain is proportional to points gained
 			target_apc?.cell.use(POWER_CELL_DRAIN_RATE * (points_gained / SAP_LIMIT_APC))
 		if (prob(35))
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
+			var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 			s.set_up(2, FALSE, holder.owner)
 			s.start()
 
@@ -227,7 +227,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 			boutput(holder.owner, "<span class='alert'>You run a powerful current into [target] temporarily cutting the power!")
 		else
 			return TRUE
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
+		var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 		s.set_up(2, FALSE, target)
 		s.start()
 		holder.owner.set_dir(get_dir(holder.owner, target))
@@ -375,7 +375,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 		if (!ON_COOLDOWN(owner, "jolt", 1 SECOND))
 			playsound(holder.owner, "sound/effects/elec_bzzz.ogg", 25, 1)
 			target.shock(user, wattage, ignore_gloves = TRUE)
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
+			var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 			s.set_up(5, FALSE, target)
 			s.start()
 			owner.set_dir(get_dir(owner, target))
