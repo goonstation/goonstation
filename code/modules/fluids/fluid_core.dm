@@ -142,7 +142,7 @@ var/mutable_appearance/fluid_ma
 		the_turf.active_liquid = null
 
 	disposing()
-		if (src.group)
+		if (src.group && !src.group.disposed && src.group.members)
 			src.group.members -= src
 
 		src.group = null

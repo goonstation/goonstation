@@ -608,7 +608,7 @@
 
 				for (var/obj/fluid/C as anything in F.update())
 					LAGCHECK(LAG_HIGH)
-					if (!C || C.disposed) continue
+					if (!C || C.disposed || src.disposed) continue
 					var/turf/T = C.loc
 					if (istype(T) && drains_floor)
 						T.react_all_cleanables() // bug here regarding fluids doing their whole spread immediately if they're in a patch of cleanables. can't figure it out and its not TERRIBLE, fix later!!!
