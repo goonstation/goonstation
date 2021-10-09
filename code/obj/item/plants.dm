@@ -52,8 +52,8 @@
 			src.reagents.trans_to(P, src.reagents.total_volume)
 			W.force_drop(user)
 			src.force_drop(user)
-			pool (W)
-			pool (src)
+			qdel(W)
+			qdel(src)
 			user.put_in_hand_or_drop(P)
 			JOB_XP(user, "Botanist", 1)
 
@@ -71,7 +71,7 @@
 			W.force_drop(user)
 			src.force_drop(user)
 			qdel(W)
-			pool(src)
+			qdel(src)
 			user.put_in_hand_or_drop(doink)
 			JOB_XP(user, "Botanist", 2)
 

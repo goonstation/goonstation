@@ -181,6 +181,6 @@ var/list/observers = list()
 					my_ghost.z = 1
 
 			src.my_ghost = null
-			pool(src)
+			qdel(src)
 
 

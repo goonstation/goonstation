@@ -179,7 +179,7 @@
 
 			sleep(0.3 SECONDS)
 			for (var/obj/O in affected)
-				pool(O)
+				qdel(O)
 
 			if(istype(target_r, /obj/railgun_trg_dummy)) qdel(target_r)
 

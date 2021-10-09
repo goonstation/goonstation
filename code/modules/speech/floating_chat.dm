@@ -5,7 +5,7 @@
 
 	disposing()
 		for(var/image/chat_maptext/I in src.lines)
-			pool(I)
+			qdel(I)
 		src.lines = null
 		for(var/A in src.vis_locs)
 			if(isliving(A))
@@ -87,7 +87,7 @@
 		return measured * (1 + round(length(src.maptext_width) / 128))
 
 proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255, force = 0, time = 40)
-	var/image/chat_maptext/text = unpool(/image/chat_maptext)
+	var/image/chat_maptext/text = new /image/chat_maptext
 	animate(text, maptext_y = 28, time = 0.01) // this shouldn't be necessary but it keeps breaking without it
 	if (!force)
 		msg = copytext(msg, 1, 128) // 4 lines, seems fine to me
@@ -100,7 +100,7 @@ proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255, force = 0, tim
 		text.loc = L.chat_text
 		if(length(L.chat_text.lines) && L.chat_text.lines[length(L.chat_text.lines)].maptext == text.maptext)
 			L.chat_text.lines[length(L.chat_text.lines)].transform *= 1.05
-			pool(text)
+			qdel(text)
 			return null
 		L.chat_text.lines.Add(text)
 	else // hmm?
@@ -111,5 +111,5 @@ proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255, force = 0, tim
 		if(text_id == text.unique_id)
 			text.bump_up(invis=1)
 			sleep(0.5 SECONDS)
-			pool(text)
+			qdel(text)
 	return text

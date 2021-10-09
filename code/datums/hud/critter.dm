@@ -319,7 +319,7 @@
 
 	for(var/datum/statusEffect/S as anything in src.statusUiElements) //Remove stray effects.
 		if(!src.master.statusEffects || !(S in src.master.statusEffects))
-			pool(src.statusUiElements[S])
+			qdel(src.statusUiElements[S])
 			src.statusUiElements.Remove(S)
 			qdel(S)
 

@@ -43,7 +43,7 @@ steam.start() -- spawns the effect
 
 /*
 /datum/effects/system/steam_spread/disposing()
-	pool(src)
+	qdel(src)
 */
 
 /datum/effects/system/steam_spread/proc/attach(atom/atom)
@@ -57,7 +57,7 @@ steam.start() -- spawns the effect
 		SPAWN_DBG(0)
 			if(holder)
 				src.location = get_turf(holder)
-			var/obj/effects/steam/steam = unpool(/obj/effects/steam)
+			var/obj/effects/steam/steam = new /obj/effects/steam
 			if(src.color)
 				steam.color = src.color
 			if(src.plane)
@@ -73,5 +73,5 @@ steam.start() -- spawns the effect
 				step(steam,direction)
 			sleep(2 SECONDS)
 			if (steam)
-				pool(steam)
+				qdel(steam)
 

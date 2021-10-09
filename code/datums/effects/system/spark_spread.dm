@@ -7,7 +7,7 @@
 	var/list/livesparks = new
 
 ///datum/effects/system/spark_spread/disposing()
-	//pool(src)
+	//qdel(src)
 	//no no no no no stop doing this what the fuck man aaaaaaaa -singh
 
 /datum/effects/system/spark_spread/pooled()
@@ -39,7 +39,7 @@
 /datum/effects/system/spark_spread/proc/update()
 	while(1)
 		if(!livesparks.len && !holder)
-			pool(src)
+			qdel(src)
 			return
 		var/do_hotspot
 		for(var/obj/effects/sparks/sparks in livesparks)
@@ -68,7 +68,7 @@
 				SPAWN_DBG(2 SECONDS)//ugly fuckin spawn todo fix
 					if (sparks && !sparks.pooled)
 						livesparks -= sparks
-						pool(sparks)
+						qdel(sparks)
 						src.total_sparks-- //  this might not be the intended behaviour but who knows at this point
 		sleep(0.5 SECONDS)
 
@@ -87,7 +87,7 @@
 			if(!limiter.canISpawn(/obj/effects/sparks))
 				continue
 			// Create sparks
-			var/obj/effects/sparks/sparks = unpool(/obj/effects/sparks)
+			var/obj/effects/sparks/sparks = new /obj/effects/sparks
 			sparks.set_loc(src.location)
 			src.total_sparks++
 

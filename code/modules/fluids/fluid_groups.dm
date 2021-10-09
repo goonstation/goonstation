@@ -260,7 +260,7 @@
 		if(removed_loc)
 			F.turf_remove_cleanup(F.loc)
 
-		pool(F)
+		qdel(F)
 
 		if (!lightweight || lightweight == 2)
 			if (!src.try_split(removed_loc))
@@ -312,7 +312,7 @@
 				src.reagents.skip_next_update = 1
 				R = src.reagents.remove_any_to(amt_to_remove)
 				src.contained_amt = src.reagents.total_volume
-		pool(F)
+		qdel(F)
 
 		/*if (!lightweight || lightweight == 2)
 			if (!src.try_split(removed_loc))

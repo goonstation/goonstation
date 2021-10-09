@@ -134,7 +134,7 @@ var/datum/particleMaster/particleMaster = new
 		for (var/obj/particle/P in src.active_particles)
 			if (P.death < time)
 				src.active_particles -= P
-				pool(P)
+				qdel(P)
 				P = null
 			LAGCHECK(LAG_MED)
 
@@ -158,7 +158,7 @@ var/datum/particleMaster/particleMaster = new
 			return 0
 
 	proc/new_particle(var/lifetime)
-		var/obj/particle/P = unpool(/obj/particle)
+		var/obj/particle/P = new /obj/particle
 		P.death = world.time + lifetime
 		src.active_particles += P
 		return P

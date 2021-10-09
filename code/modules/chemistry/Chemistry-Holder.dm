@@ -69,7 +69,7 @@ datum
 				for(var/reagent_id in reagent_list)
 					var/datum/reagent/current_reagent = reagent_list[reagent_id]
 					if(current_reagent)
-						pool(current_reagent)
+						qdel(current_reagent)
 				reagent_list.len = 0
 				reagent_list = null
 			my_atom = null
@@ -580,7 +580,7 @@ datum
 
 					reagents_changed()
 
-					pool(current_reagent)
+					qdel(current_reagent)
 
 					return 0
 
@@ -772,7 +772,7 @@ datum
 				current_reagent = reagents_cache[reagent]
 
 				if(current_reagent)
-					current_reagent = unpool(current_reagent.type)
+					current_reagent = new current_reagent.type
 					reagent_list[reagent] = current_reagent
 					current_reagent.holder = src
 					current_reagent.volume = 0

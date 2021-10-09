@@ -82,7 +82,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	if (airborne)
 		if (!src.active_airborne_liquid)
 			FG = new /datum/fluid_group/airborne
-			F = unpool(/obj/fluid/airborne)
+			F = new /obj/fluid/airborne
 			src.active_airborne_liquid = F
 			F.set_up(src)
 			if (react_volume == 0)
@@ -99,7 +99,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	else
 		if (!src.active_liquid)
 			FG = new
-			F = unpool(/obj/fluid)
+			F = new /obj/fluid
 			src.active_liquid = F
 			F.set_up(src)
 			if (react_volume == 0)
@@ -146,7 +146,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	if (airborne)
 		if (!src.active_airborne_liquid)
 			FG = new /datum/fluid_group/airborne
-			F = unpool(/obj/fluid/airborne)
+			F = new /obj/fluid/airborne
 			src.active_airborne_liquid = F
 			F.set_up(src)
 			if (react_volume == 0)
@@ -163,7 +163,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	else
 		if (!src.active_liquid)
 			FG = new
-			F = unpool(/obj/fluid)
+			F = new /obj/fluid
 			src.active_liquid = F
 			F.set_up(src)
 			if (react_volume == 0)

@@ -51,7 +51,7 @@
 				sleep(0.1 SECONDS)
 				reagents.trans_to(user, reagents.total_volume)
 			user.u_equip(src)
-			pool(src)
+			qdel(src)
 		return
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
@@ -88,7 +88,7 @@
 				sleep(0.1 SECONDS)
 				reagents.trans_to(M, reagents.total_volume)
 			user.u_equip(src)
-			pool(src)
+			qdel(src)
 			return 1
 
 		return 0
@@ -126,7 +126,7 @@
 			logTheThing("combat", user, null, "dissolves a pill [log_reagents(src)] in [target] at [log_loc(user)].")
 			reagents.trans_to(target, src.reagents.total_volume)
 			user.u_equip(src)
-			pool(src)
+			qdel(src)
 			return
 		else
 			return ..()

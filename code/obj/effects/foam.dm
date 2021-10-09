@@ -106,7 +106,7 @@
 		if (reagents)
 			reagents.reaction(src.loc, TOUCH, 5, 0)
 			reagents.postfoam = 0
-	pool(src)
+	qdel(src)
 
 /obj/effects/foam/proc/process()
 	if(--amount < 0)
@@ -138,7 +138,7 @@
 
 				if(no_merge) continue
 
-			F = unpool(/obj/effects/foam)
+			F = new /obj/effects/foam
 			F.set_up(T, metal)
 			F.amount = amount
 			F.foam_id = src.foam_id //Just keep track of us being from the same source

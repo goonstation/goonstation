@@ -219,7 +219,7 @@ var/list/ban_from_airborne_fluid = list()
 					LAGCHECK(LAG_MED)
 					spawned_any = 1
 					src.icon_state = "airborne"
-					var/obj/fluid/F = unpool(/obj/fluid/airborne)
+					var/obj/fluid/F = new /obj/fluid/airborne
 					F.set_up(t,0)
 					if (!F || !src.group) continue //set_up may decide to remove F
 

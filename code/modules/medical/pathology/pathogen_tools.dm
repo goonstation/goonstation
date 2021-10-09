@@ -278,7 +278,7 @@
 		..()
 		SPAWN_DBG(2 SECONDS)
 			#ifdef CREATE_PATHOGENS // PATHOLOGY REMOVAL
-			var/datum/pathogen/P = unpool(/datum/pathogen)
+			var/datum/pathogen/P = new /datum/pathogen
 			if(FM)
 				P.forced_microbody = FM
 			P.create_weak()

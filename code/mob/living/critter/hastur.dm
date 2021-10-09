@@ -336,7 +336,7 @@ var/HasturPresent = 0
 
 			sleep(0.7 SECONDS)
 			for (var/obj/O in affected)
-				pool(O)
+				qdel(O)
 
 			if(istype(target_r, /obj/tentacle_trg_dummy)) qdel(target_r)
 
@@ -409,6 +409,6 @@ var/HasturPresent = 0
 
 			sleep(0.7 SECONDS)
 			for (var/obj/O in affected)
-				pool(O)
+				qdel(O)
 
 			if(istype(target_r, /obj/tentacle_trg_dummy)) qdel(target_r)

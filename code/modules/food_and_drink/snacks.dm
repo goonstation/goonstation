@@ -1678,7 +1678,7 @@
 			src.name = "herbal sausage"
 			desc = "A fancy herbal sausage! Spices really make the sausage."
 			W.reagents.trans_to(src,W.reagents.total_volume)
-			pool(W)
+			qdel(W)
 
 		else if (istype(W,/obj/item/kitchen/utensil/knife))
 			if(src.GetOverlayImage("bun"))
@@ -2604,7 +2604,7 @@
 		if (fortune)
 			desc = "Half of a fortune cookie."
 			icon_state = "fortune-bottom"
-			var/obj/item/paper/fortune/B = unpool(/obj/item/paper/fortune)
+			var/obj/item/paper/fortune/B = new /obj/item/paper/fortune
 			B.set_loc(user)
 
 			user.put_in_hand_or_drop(B)
