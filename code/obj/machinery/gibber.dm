@@ -75,7 +75,7 @@
 	set src in oview(1)
 	set category = "Local"
 
-	if (!isalive(usr)) return
+	if (!isalive(usr) || iswraith(usr)) return
 	if (src.operating) return
 	src.go_out()
 	add_fingerprint(usr)
