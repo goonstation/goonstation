@@ -304,7 +304,8 @@
 
 		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[O.ckey]
 		if(istype(respawnee))
-			respawnee.update_time_display()
+			if (!respawnee.update_time_display())
+				O.hud?.get_join_other() // if there's no respawn enabled, then remind them of the other server
 
 		O.update_item_abilities()
 		return O
