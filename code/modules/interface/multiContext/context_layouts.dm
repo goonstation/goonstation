@@ -75,7 +75,7 @@ var/list/datum/contextAction/globalContextActions = null
 
 			addButtonToHud(usr, C)
 
-			var/matrix/trans = unpool(/matrix)
+			var/matrix/trans = new /matrix
 			trans = trans.Reset()
 			trans.Translate(offX, offY)
 
@@ -112,7 +112,7 @@ var/list/datum/contextAction/globalContextActions = null
 
 			addButtonToHud(usr, C)
 
-			var/matrix/trans = unpool(/matrix)
+			var/matrix/trans = new /matrix
 			trans = trans.Reset()
 			trans.Translate(offX, offY)
 
@@ -176,7 +176,7 @@ var/list/datum/contextAction/globalContextActions = null
 					offY = spacingY
 					addButtonToHud(usr, C)
 
-					var/matrix/trans = unpool(/matrix)
+					var/matrix/trans = new /matrix
 					trans = trans.Reset()
 					trans.Translate(offX, offY)
 
@@ -189,7 +189,7 @@ var/list/datum/contextAction/globalContextActions = null
 			var/key = blackKeys[i]
 			addButtonToHud(usr, key)
 
-			var/matrix/trans = unpool(/matrix)
+			var/matrix/trans = new /matrix
 			trans = trans.Reset()
 			trans.Translate(blackKeysOffX[i], offY+blackKeyYOff)
 
@@ -233,7 +233,7 @@ var/list/datum/contextAction/globalContextActions = null
 			var/offX = round(dist * cos(anglePer * count)) + round(sizeX / 2)
 			var/offY = round(dist * sin(anglePer * count)) + round(sizeY / 2)
 
-			var/matrix/trans = unpool(/matrix)
+			var/matrix/trans = new /matrix
 			trans = trans.Reset()
 			trans.Translate(offX, offY)
 
@@ -254,7 +254,7 @@ var/list/datum/contextAction/globalContextActions = null
 
 			addButtonToHud(usr, C)
 
-			var/matrix/trans = unpool(/matrix)
+			var/matrix/trans = new /matrix
 			trans = trans.Reset()
 			trans.Translate(offX, offY)
 
@@ -281,7 +281,7 @@ var/list/datum/contextAction/globalContextActions = null
 
 			addButtonToHud(usr, C)
 
-			var/matrix/trans = unpool(/matrix)
+			var/matrix/trans = new /matrix
 			trans = trans.Reset()
 			trans.Translate(offX, offY + (first ? 16 : 0))
 
@@ -334,7 +334,7 @@ var/list/datum/contextAction/globalContextActions = null
 			var/mob/dead/observer/GO = usr
 			if(istype(GO)) GO.hud.add_screen(C)
 
-			var/matrix/trans = unpool(/matrix)
+			var/matrix/trans = new /matrix
 			trans = trans.Reset()
 			trans.Translate(0, -32*count)
 

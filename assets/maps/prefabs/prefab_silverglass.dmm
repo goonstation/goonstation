@@ -1,0 +1,2418 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ai" = (
+/obj/machinery/shower{
+	dir = 1;
+	pixel_y = 20
+	},
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8;
+	pixel_x = 5
+	},
+/turf/simulated/floor/darkblue,
+/area/prefab/silverglass/research)
+"am" = (
+/obj/machinery/drainage,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/airless/darkblue,
+/area/prefab/silverglass/research)
+"at" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/space)
+"ax" = (
+/obj/stool/bench/auto,
+/obj/machinery/light,
+/turf/simulated/floor/neutral/side,
+/area/prefab/silverglass)
+"aF" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/silverglass/research)
+"bi" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/lattice,
+/turf/space,
+/area/prefab/silverglass/eats)
+"bn" = (
+/turf/simulated/wall/auto/supernorn,
+/area/prefab/silverglass/bay)
+"bq" = (
+/turf/simulated/floor/blue/side{
+	dir = 1
+	},
+/area/prefab/silverglass)
+"by" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/space)
+"bB" = (
+/obj/decal/cleanable/ash,
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/silverglass/bay)
+"bD" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/darkblue,
+/area/prefab/silverglass/research)
+"bO" = (
+/obj/machinery/door/airlock/pyro,
+/turf/simulated/floor/sanitary,
+/area/prefab/silverglass)
+"cd" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/plating,
+/area/prefab/silverglass/research)
+"cj" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"ck" = (
+/obj/storage/closet/fire,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/airless/engine,
+/area/prefab/silverglass/research)
+"cs" = (
+/obj/stool/bench/blue,
+/turf/simulated/floor/sanitary,
+/area/prefab/silverglass)
+"cN" = (
+/obj/table/auto,
+/obj/item/decoration/ashtray{
+	butts = 5;
+	name = "grubby old ashtray";
+	pixel_x = -7;
+	pixel_y = 8
+	},
+/obj/item/paper{
+	info = "IT DOeS NOT MAKe SENSe<BR>eVeRY TIMe THeY TURN ON THOSe DAMNeD ReSONANCe THINGS POWeR DRAW DOeSNT INCReASe<BR>WHeRe IS THe eNeRGY COMING FROM";
+	name = "dirty note";
+	pixel_x = 3
+	},
+/obj/item/clothing/mask/cigarette{
+	pixel_x = -6
+	},
+/obj/item/pen,
+/turf/simulated/floor/carpet/grime,
+/area/prefab/silverglass)
+"cV" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/neutral/side,
+/area/prefab/silverglass)
+"do" = (
+/turf/simulated/floor/airless/plating/damaged3,
+/area/prefab/silverglass/research)
+"dY" = (
+/turf/simulated/floor/sanitary,
+/area/prefab/silverglass)
+"eb" = (
+/obj/storage/closet/emergency,
+/turf/simulated/floor/airless/engine,
+/area/prefab/silverglass/research)
+"eq" = (
+/obj/decal/cleanable/paper,
+/turf/simulated/floor/carpet/grime,
+/area/prefab/silverglass)
+"ez" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/grey,
+/area/prefab/silverglass/bay)
+"fa" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"ff" = (
+/obj/structure/girder,
+/turf/simulated/floor/airless/plating/damaged3,
+/area/prefab/silverglass/research)
+"fk" = (
+/turf/simulated/floor/airless/stairs/wide/other{
+	dir = 4
+	},
+/area/prefab/silverglass/research)
+"fL" = (
+/obj/rack,
+/obj/item/clothing/suit/fire/heavy,
+/obj/item/clothing/head/helmet/EOD,
+/turf/simulated/floor/airless/darkblue,
+/area/prefab/silverglass/research)
+"fU" = (
+/obj/machinery/drainage,
+/obj/machinery/shower{
+	dir = 8;
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/turf/simulated/floor/sanitary,
+/area/prefab/silverglass)
+"gl" = (
+/obj/machinery/door/airlock/pyro/glass/sci,
+/turf/simulated/floor/darkblue/checker,
+/area/prefab/silverglass)
+"gM" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4;
+	pixel_x = -8
+	},
+/turf/simulated/floor/sanitary,
+/area/prefab/silverglass)
+"gV" = (
+/turf/simulated/floor/airless/stairs/wide{
+	dir = 4
+	},
+/area/prefab/silverglass/research)
+"gW" = (
+/turf/simulated/floor/airless/stairs/wide{
+	dir = 1
+	},
+/area/prefab/silverglass/research)
+"hp" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/prefab/silverglass)
+"ib" = (
+/obj/lattice,
+/turf/space,
+/area/space)
+"il" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/silverglass)
+"im" = (
+/obj/stool/bed,
+/obj/item/reagent_containers/food/drinks/bottle/tequila{
+	pixel_x = 10;
+	pixel_y = 19
+	},
+/obj/item/clothing/suit/bedsheet/yellow,
+/turf/simulated/floor/carpet/grime,
+/area/prefab/silverglass)
+"io" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"ip" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"iH" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless/stairs/wide/middle{
+	dir = 4
+	},
+/area/prefab/silverglass/research)
+"iI" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/green/side{
+	dir = 1
+	},
+/area/prefab/silverglass)
+"iO" = (
+/turf/simulated/floor/caution/westeast,
+/area/prefab/silverglass/bay)
+"jo" = (
+/obj/machinery/door/window/eastleft,
+/obj/machinery/drainage,
+/turf/simulated/floor/sanitary,
+/area/prefab/silverglass)
+"ju" = (
+/obj/grille/catwalk{
+	dir = 6
+	},
+/obj/cable,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	icon_state = "catwalk_cross"
+	},
+/area/space)
+"kf" = (
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/grille/catwalk{
+	dir = 10
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1;
+	icon_state = "catwalk_cross"
+	},
+/area/space)
+"kk" = (
+/obj/stool/bed,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/item/storage/wall{
+	pixel_y = 32
+	},
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "pink";
+	icon_state = "bedsheet-pink"
+	},
+/turf/simulated/floor/carpet/purple/standard/narrow/west,
+/area/prefab/silverglass)
+"kq" = (
+/obj/stool/chair/couch{
+	dir = 4;
+	icon_state = "chair_couch-blue";
+	name = "ratty blue couch"
+	},
+/turf/simulated/floor/blue/side{
+	dir = 1
+	},
+/area/prefab/silverglass)
+"lb" = (
+/obj/lattice,
+/obj/structure/girder,
+/turf/space,
+/area/prefab/silverglass/research)
+"lq" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/prefab/silverglass/bay)
+"lB" = (
+/obj/machinery/vending/snack,
+/turf/simulated/floor/neutral/side,
+/area/prefab/silverglass)
+"mg" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/belt/utility{
+	pixel_x = 4;
+	pixel_y = 8
+	},
+/obj/item/wirecutters{
+	pixel_x = 3
+	},
+/obj/item/device/multitool{
+	pixel_x = -9
+	},
+/turf/simulated/floor/plating,
+/area/prefab/silverglass)
+"ml" = (
+/turf/simulated/wall/auto/supernorn,
+/area/prefab/silverglass/eats)
+"mt" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/prefab/silverglass/eats)
+"mM" = (
+/obj/shrub/dead{
+	dir = 4
+	},
+/turf/simulated/floor/neutral/side,
+/area/prefab/silverglass)
+"mO" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/plating/damaged3,
+/area/prefab/silverglass/eats)
+"mY" = (
+/obj/cable,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/grille/catwalk{
+	dir = 5
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	icon_state = "catwalk_cross"
+	},
+/area/space)
+"nj" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/obj/stool/chair/office{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/damaged1,
+/area/prefab/silverglass/research)
+"nB" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/prefab/silverglass/eats)
+"nS" = (
+/obj/stool/bed,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/item/storage/wall/random,
+/obj/item/paper{
+	info = "feddy, i'm out<BR>bail asap<BR>they're gonna fuck up sooner or later"
+	},
+/turf/simulated/floor/carpet/purple/standard/narrow/east,
+/area/prefab/silverglass)
+"oj" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/airless/engine,
+/area/prefab/silverglass/research)
+"ok" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light_switch/east,
+/turf/simulated/floor/stairs/wide/other,
+/area/prefab/silverglass/bay)
+"on" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/prefab/silverglass)
+"op" = (
+/obj/item/electronics/soldering{
+	pixel_y = 6
+	},
+/turf/space,
+/area/prefab/silverglass/research)
+"ox" = (
+/obj/stool/chair/couch{
+	dir = 8;
+	icon_state = "chair_couch-blue";
+	name = "ratty blue couch"
+	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/blue/side{
+	dir = 1
+	},
+/area/prefab/silverglass)
+"oQ" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/neutral/corner{
+	dir = 8
+	},
+/area/prefab/silverglass)
+"oU" = (
+/turf/simulated/floor/grey,
+/area/prefab/silverglass/bay)
+"pm" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/specialroom/cafeteria,
+/area/prefab/silverglass/eats)
+"pw" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/lattice,
+/turf/space,
+/area/prefab/silverglass/research)
+"pC" = (
+/obj/grille/steel,
+/turf/simulated/floor/airless/plating/damaged1,
+/area/prefab/silverglass/research)
+"pG" = (
+/obj/structure/girder,
+/turf/simulated/floor/airless/plating/damaged1,
+/area/prefab/silverglass/research)
+"pR" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless/specialroom/bar,
+/area/prefab/silverglass/eats)
+"pY" = (
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/grille/catwalk{
+	dir = 1;
+	icon_state = "catwalk_cross"
+	},
+/obj/machinery/power/tracker/silverglass,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/space)
+"qg" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/storage/closet/radiation,
+/turf/simulated/floor/airless/darkblue,
+/area/prefab/silverglass/research)
+"qx" = (
+/obj/stool/bed,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "pink";
+	icon_state = "bedsheet-pink"
+	},
+/obj/item/storage/wall/random,
+/turf/simulated/floor/carpet/purple/standard/narrow/west,
+/area/prefab/silverglass)
+"qQ" = (
+/turf/simulated/floor/stairs/wide,
+/area/prefab/silverglass/bay)
+"rd" = (
+/obj/machinery/door/airlock/pyro/glass/sci,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/darkblue/checker,
+/area/prefab/silverglass)
+"rL" = (
+/obj/cable,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/grille/catwalk{
+	dir = 9
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
+/area/space)
+"su" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/airless/circuit/purple,
+/area/prefab/silverglass/research)
+"sz" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/prefab/silverglass)
+"td" = (
+/obj/machinery/door/airlock/pyro/glass/sci{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless/darkblue,
+/area/prefab/silverglass/research)
+"th" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/sanitary,
+/area/prefab/silverglass)
+"tF" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/silverglass)
+"tN" = (
+/obj/item/reagent_containers/dropper/mechanical{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/turf/simulated/floor/airless/darkblue,
+/area/prefab/silverglass/research)
+"tQ" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/storage/tape_drive,
+/turf/simulated/floor/airless/darkblue,
+/area/prefab/silverglass/research)
+"uc" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/space)
+"uW" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/purple/standard/narrow/east,
+/area/prefab/silverglass)
+"vk" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/prefab/silverglass)
+"vC" = (
+/obj/table/reinforced/auto,
+/obj/item/interdictor_rod{
+	pixel_x = -5
+	},
+/obj/item/interdictor_rod/sigma{
+	pixel_x = 5
+	},
+/turf/simulated/floor/airless/darkblue,
+/area/prefab/silverglass/research)
+"vP" = (
+/obj/computer3frame/terminal{
+	dir = 4
+	},
+/turf/space,
+/area/prefab/silverglass/research)
+"vR" = (
+/turf/simulated/floor/airless/plating/damaged2,
+/area/prefab/silverglass/research)
+"wT" = (
+/obj/machinery/manufacturer/general{
+	desc = "There are bits and pieces of the internal mechanisms poking out the side. It's seen better days.";
+	free_resource_amt = 0;
+	free_resources = null;
+	malfunction = 1;
+	name = "grody manufacturer";
+	wires = 11
+	},
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/plating,
+/area/prefab/silverglass)
+"xp" = (
+/turf/simulated/floor,
+/area/prefab/silverglass)
+"xt" = (
+/obj/item/storage/toilet,
+/turf/simulated/floor/sanitary,
+/area/prefab/silverglass)
+"xZ" = (
+/obj/machinery/light/small,
+/obj/storage/closet/office,
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/plating,
+/area/prefab/silverglass)
+"yh" = (
+/turf/simulated/wall/false_wall{
+	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon_state = "norn-12"
+	},
+/area/prefab/silverglass)
+"yp" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/airless/plating/damaged1,
+/area/prefab/silverglass/eats)
+"yD" = (
+/obj/machinery/door/airlock/pyro/glass/sci,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/darkblue,
+/area/prefab/silverglass/research)
+"zb" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"zJ" = (
+/obj/machinery/light_switch/north,
+/turf/simulated/floor/green/corner{
+	dir = 1
+	},
+/area/prefab/silverglass)
+"zU" = (
+/obj/table/reinforced/auto,
+/obj/item/paper{
+	info = "<I>instability down to 17%, crystal slat cohesion matters wrt binding<BR><BR>need 10% before recursion paradox fix, ask federico for better sample + more stabilizer<BR><BR>HH wants unsafe test, DO NOT PROCEED, INTERDICTORS NOT READY. what part of black hole does he not understand</I>";
+	name = "wrinkled paper";
+	pixel_x = 3;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/glass/flask{
+	pixel_x = -7;
+	pixel_y = 2
+	},
+/turf/simulated/floor/airless/darkblue,
+/area/prefab/silverglass/research)
+"Bn" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/airless/darkblue,
+/area/prefab/silverglass/research)
+"Bv" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A large rack of server modules.  It doesn't seem to be in service.";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "server0";
+	name = "downed server"
+	},
+/turf/simulated/floor/airless/darkblue,
+/area/prefab/silverglass/research)
+"BO" = (
+/turf/simulated/floor/neutral/side,
+/area/prefab/silverglass)
+"BP" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/obj/item/cigbutt{
+	pixel_x = -11;
+	pixel_y = 10
+	},
+/turf/simulated/floor/carpet/grime,
+/area/prefab/silverglass)
+"BU" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/airless/plating/damaged2,
+/area/prefab/silverglass/research)
+"Ch" = (
+/obj/cable,
+/obj/machinery/power/solar/silverglass,
+/turf/simulated/floor/airless/solar,
+/area/space)
+"Cn" = (
+/obj/table/reinforced/auto,
+/turf/space,
+/area/prefab/silverglass/research)
+"Ct" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/prefab/silverglass)
+"Cv" = (
+/turf/simulated/floor/airless/circuit/purple,
+/area/prefab/silverglass/research)
+"CH" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	dir = 4;
+	id = "silverglass_dock";
+	name = "Silverglass Dock"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/silverglass/bay)
+"CW" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_north/nopoweralert,
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/plating,
+/area/prefab/silverglass)
+"Dx" = (
+/obj/item/screwdriver{
+	pixel_x = 3
+	},
+/turf/space,
+/area/prefab/silverglass/research)
+"DK" = (
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_x = 1
+	},
+/turf/space,
+/area/prefab/silverglass/research)
+"DR" = (
+/obj/item/rubberduck{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/turf/space,
+/area/prefab/silverglass/research)
+"Ey" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/storage/tape_drive,
+/obj/machinery/light_switch/east,
+/turf/simulated/floor/airless/darkblue,
+/area/prefab/silverglass/research)
+"EY" = (
+/obj/cable,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/grille/catwalk{
+	dir = 1;
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/space)
+"Fj" = (
+/obj/rack,
+/obj/item/extinguisher{
+	pixel_x = -6
+	},
+/obj/item/extinguisher{
+	pixel_x = 8
+	},
+/turf/simulated/floor/airless/darkblue,
+/area/prefab/silverglass/research)
+"Fx" = (
+/obj/item/device/light/glowstick{
+	pixel_x = 6;
+	pixel_y = -6
+	},
+/obj/item/instrument/cowbell{
+	pixel_x = -9
+	},
+/turf/simulated/floor/carpet/grime,
+/area/prefab/silverglass)
+"FH" = (
+/turf/simulated/floor/plating,
+/area/prefab/silverglass)
+"Ga" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/silverglass)
+"Gj" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/neutral/side{
+	dir = 4
+	},
+/area/prefab/silverglass/bay)
+"Gq" = (
+/obj/cable{
+	icon_state = "2-5"
+	},
+/obj/lattice,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/space,
+/area/prefab/silverglass/research)
+"Gx" = (
+/obj/machinery/manufacturer/mechanic,
+/turf/simulated/floor/airless/darkblue,
+/area/prefab/silverglass/research)
+"Hb" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"Hu" = (
+/obj/stool/bed,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/item/storage/wall{
+	pixel_y = 32
+	},
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "blue";
+	icon_state = "bedsheet-blue"
+	},
+/turf/simulated/floor/carpet/purple/standard/narrow/west,
+/area/prefab/silverglass)
+"Hx" = (
+/obj/decal/cleanable/dirt/dirt5,
+/obj/item/paper{
+	info = "<B>GENERAL CONTAINMENT ORDER 01</B><BR>RECOVER LAB DATATAPE<BR>RESET REMAINING SYSTEMS TO STATE 01<BR>RESOLVE ALL PERSONNEL";
+	name = "paper- 'Directive'";
+	pixel_x = 7;
+	pixel_y = -5
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/silverglass/bay)
+"HC" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/lattice,
+/turf/space,
+/area/prefab/silverglass/research)
+"HX" = (
+/obj/item/reagent_containers/food/drinks/mug,
+/turf/space,
+/area/prefab/silverglass/research)
+"Ij" = (
+/obj/decal/cleanable/paper,
+/turf/space,
+/area/prefab/silverglass/research)
+"Ik" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/silverglass)
+"Iq" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door_control/podbay{
+	id = "silverglass_dock";
+	pixel_x = 24
+	},
+/turf/simulated/floor/grey,
+/area/prefab/silverglass/bay)
+"IC" = (
+/obj/cable,
+/obj/machinery/power/apc/autoname_east/nopoweralert,
+/turf/simulated/floor/grey,
+/area/prefab/silverglass/bay)
+"IS" = (
+/obj/lattice,
+/turf/space,
+/area/prefab/silverglass/research)
+"Jb" = (
+/turf/simulated/wall/auto/supernorn,
+/area/prefab/silverglass)
+"Jc" = (
+/obj/machinery/drainage,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless/plating/damaged1,
+/area/prefab/silverglass/research)
+"JL" = (
+/obj/stool/bed,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/item/storage/wall{
+	pixel_y = 32
+	},
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "pink";
+	icon_state = "bedsheet-pink"
+	},
+/turf/simulated/floor/carpet/purple/standard/narrow/east,
+/area/prefab/silverglass)
+"JV" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/espresso_machine,
+/obj/cup_rack{
+	pixel_y = 32
+	},
+/turf/space,
+/area/prefab/silverglass/eats)
+"Kj" = (
+/obj/cable,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/grille/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/space)
+"Kt" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/silverglass/bay)
+"KR" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/table/reinforced/auto,
+/turf/simulated/floor/airless/plating/damaged1,
+/area/prefab/silverglass/research)
+"Lc" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless/darkblue,
+/area/prefab/silverglass/research)
+"Ll" = (
+/obj/machinery/vending/coffee,
+/turf/simulated/floor/neutral/side,
+/area/prefab/silverglass)
+"LO" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/prefab/silverglass/eats)
+"LY" = (
+/turf/simulated/floor/airless/plating/damaged1,
+/area/prefab/silverglass/research)
+"Me" = (
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing{
+	pixel_y = 9
+	},
+/turf/space,
+/area/prefab/silverglass/eats)
+"Mk" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor,
+/area/prefab/silverglass)
+"MB" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/airless/darkblue,
+/area/prefab/silverglass/research)
+"MR" = (
+/obj/decal/cleanable/machine_debris,
+/turf/space,
+/area/prefab/silverglass/eats)
+"MS" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/silverglass)
+"Nd" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/machinery/computer/solar_control/silverglass,
+/turf/simulated/floor/plating,
+/area/prefab/silverglass)
+"Ng" = (
+/obj/machinery/hydro_growlamp,
+/turf/simulated/floor/carpet/grime,
+/area/prefab/silverglass)
+"NE" = (
+/obj/machinery/light,
+/turf/simulated/floor/darkblue,
+/area/prefab/silverglass/research)
+"NI" = (
+/obj/item/extinguisher{
+	pixel_x = -3;
+	pixel_y = -10
+	},
+/turf/simulated/floor/grey,
+/area/prefab/silverglass/bay)
+"NN" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/silverglass/bay)
+"NW" = (
+/obj/rack,
+/obj/item/storage/toolbox/mechanical/empty,
+/turf/simulated/floor/plating,
+/area/prefab/silverglass)
+"NY" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/silverglass)
+"Oz" = (
+/obj/item/storage/wall{
+	dir = 4;
+	name = "bath cabinet";
+	pixel_x = -32;
+	spawn_contents = list(/obj/item/clothing/under/towel,/obj/item/clothing/under/towel)
+	},
+/turf/simulated/floor/sanitary,
+/area/prefab/silverglass)
+"OC" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/silverglass)
+"OL" = (
+/turf/simulated/floor/airless/grey,
+/area/prefab/silverglass/eats)
+"Px" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
+/turf/space,
+/area/prefab/silverglass/eats)
+"PI" = (
+/obj/table/reinforced/bar/auto,
+/obj/item_dispenser/icedispenser{
+	pixel_y = 11
+	},
+/turf/simulated/floor/airless/grey,
+/area/prefab/silverglass/eats)
+"PO" = (
+/obj/rack,
+/obj/item/device/light/flashlight,
+/turf/simulated/floor/grey,
+/area/prefab/silverglass/bay)
+"Qf" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/plate,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/grey,
+/area/prefab/silverglass/eats)
+"Qr" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/bowl,
+/turf/simulated/floor/airless/grey,
+/area/prefab/silverglass/eats)
+"QL" = (
+/obj/storage/closet/radiation,
+/turf/simulated/floor/airless/darkblue,
+/area/prefab/silverglass/research)
+"Ry" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/cashreg,
+/turf/simulated/floor/airless/grey,
+/area/prefab/silverglass/eats)
+"RA" = (
+/turf/simulated/floor/airless/darkblue,
+/area/prefab/silverglass/research)
+"RX" = (
+/obj/decal/cleanable/dirt/dirt2,
+/obj/stool/chair/yellow{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/prefab/silverglass)
+"Sf" = (
+/turf/space,
+/area/space)
+"St" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/caution/westeast,
+/area/prefab/silverglass/bay)
+"Sv" = (
+/obj/decal/cleanable/oil,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/silverglass/bay)
+"SD" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "This doesn't seem to be operating correctly.";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "dwaine";
+	name = "busted mainframe"
+	},
+/turf/simulated/floor/airless/darkblue,
+/area/prefab/silverglass/research)
+"SJ" = (
+/obj/machinery/vending/cigarette,
+/turf/simulated/floor/neutral/side,
+/area/prefab/silverglass)
+"Tk" = (
+/turf/simulated/floor/grey,
+/area/prefab/silverglass)
+"Tr" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/shaker/pepper{
+	pixel_x = -8;
+	pixel_y = 3
+	},
+/obj/item/shaker/salt{
+	pixel_x = 1
+	},
+/turf/simulated/floor/airless/grey,
+/area/prefab/silverglass/eats)
+"TC" = (
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/item/storage/wall{
+	pixel_y = 32
+	},
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/orange,
+/turf/simulated/floor/carpet/purple/standard/narrow/east,
+/area/prefab/silverglass)
+"TE" = (
+/obj/table/auto,
+/obj/window/cubicle{
+	dir = 4;
+	icon_state = "cubicle"
+	},
+/obj/item/paper_bin,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/sanitary,
+/area/prefab/silverglass)
+"TO" = (
+/obj/machinery/door/airlock/pyro,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/prefab/silverglass/eats)
+"TR" = (
+/turf/space,
+/area/prefab/silverglass/eats)
+"TU" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/silverglass/bay)
+"TZ" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/grille/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/space)
+"Um" = (
+/obj/shrub/dead,
+/turf/simulated/floor/blue/side{
+	dir = 1
+	},
+/area/prefab/silverglass)
+"Un" = (
+/turf/simulated/floor/plating,
+/area/prefab/silverglass/research)
+"UA" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/space)
+"UF" = (
+/turf/simulated/floor/airless/engine,
+/area/prefab/silverglass/research)
+"UH" = (
+/obj/machinery/light_switch/east,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/prefab/silverglass/eats)
+"UO" = (
+/obj/machinery/power/apc/autoname_north/nopoweralert,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/airless/plating/damaged2,
+/area/prefab/silverglass/research)
+"UP" = (
+/turf/simulated/floor/airless/specialroom/bar,
+/area/prefab/silverglass/eats)
+"UV" = (
+/obj/item/wrench,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/silverglass/bay)
+"Vk" = (
+/obj/storage/cart,
+/obj/item/raw_material/eldritch{
+	pixel_x = -7
+	},
+/obj/item/raw_material/martian{
+	pixel_x = 4;
+	pixel_y = -6
+	},
+/obj/item/raw_material/telecrystal{
+	pixel_y = 5
+	},
+/obj/item/raw_material/scrap_metal,
+/obj/item/raw_material/molitz{
+	pixel_x = -1;
+	pixel_y = -3
+	},
+/obj/decal/cleanable/dirt/dirt4,
+/turf/simulated/floor/plating,
+/area/prefab/silverglass)
+"Vw" = (
+/turf/simulated/floor/airless/plating/damaged2,
+/area/prefab/silverglass/eats)
+"Vx" = (
+/obj/stool/bar,
+/turf/simulated/floor/airless/specialroom/bar,
+/area/prefab/silverglass/eats)
+"VF" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/prefab/silverglass/research)
+"VP" = (
+/turf/simulated/floor/airless/plating/damaged1,
+/area/prefab/silverglass/eats)
+"VZ" = (
+/turf/simulated/floor/shuttlebay,
+/area/prefab/silverglass/bay)
+"Wl" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/silverglass/bay)
+"Wn" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/prefab/silverglass/eats)
+"Wr" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/green/side{
+	dir = 9
+	},
+/area/prefab/silverglass)
+"Wv" = (
+/obj/machinery/r_door_control{
+	id = "silverglass_dock"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/prefab/silverglass/bay)
+"Ww" = (
+/obj/lattice,
+/turf/space,
+/area/prefab/silverglass/eats)
+"WR" = (
+/obj/machinery/door/airlock/pyro/glass/sci,
+/turf/simulated/floor/airless/plating/damaged3,
+/area/prefab/silverglass/research)
+"Xb" = (
+/turf/space,
+/area/prefab/silverglass/research)
+"Xx" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/blue/side{
+	dir = 1
+	},
+/area/prefab/silverglass)
+"XH" = (
+/turf/simulated/floor/green/side{
+	dir = 1
+	},
+/area/prefab/silverglass)
+"XI" = (
+/obj/machinery/light,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/airless/specialroom/bar,
+/area/prefab/silverglass/eats)
+"XJ" = (
+/turf/simulated/floor/airless/specialroom/cafeteria,
+/area/prefab/silverglass/eats)
+"XL" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/green/side{
+	dir = 8
+	},
+/area/prefab/silverglass)
+"XM" = (
+/obj/rack,
+/obj/item/crowbar,
+/turf/simulated/floor/grey,
+/area/prefab/silverglass/bay)
+"YM" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/neutral/corner,
+/area/prefab/silverglass)
+"YN" = (
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/solar/silverglass,
+/turf/simulated/floor/airless/solar,
+/area/space)
+"YS" = (
+/obj/stool/bar,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/specialroom/bar,
+/area/prefab/silverglass/eats)
+"YY" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"Ze" = (
+/obj/item/clothing/head/emerg{
+	pixel_x = 7;
+	pixel_y = 11
+	},
+/obj/machinery/light,
+/turf/simulated/floor/caution/westeast,
+/area/prefab/silverglass/bay)
+"Zf" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/purple/standard/narrow/west,
+/area/prefab/silverglass)
+"Zj" = (
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/prefab/silverglass)
+"Zx" = (
+/obj/machinery/shower{
+	dir = 4;
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/stool/bench/blue,
+/turf/simulated/floor/sanitary,
+/area/prefab/silverglass)
+"ZD" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/green/side{
+	dir = 8
+	},
+/area/prefab/silverglass/bay)
+"ZF" = (
+/obj/stool/bench/auto,
+/turf/simulated/floor/neutral/side{
+	dir = 10
+	},
+/area/prefab/silverglass)
+"ZG" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+
+(1,1,1) = {"
+Sf
+cj
+Sf
+Sf
+Sf
+aF
+cd
+cd
+cd
+aF
+Sf
+Sf
+Sf
+cj
+Sf
+Sf
+cj
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+"}
+(2,1,1) = {"
+at
+aF
+aF
+aF
+aF
+aF
+vC
+zU
+BU
+aF
+aF
+LO
+LO
+ml
+LO
+LO
+ml
+Sf
+Sf
+Sf
+Sf
+Sf
+Sf
+cj
+"}
+(3,1,1) = {"
+Sf
+LY
+ck
+eb
+aF
+nj
+vR
+tN
+IS
+Gx
+aF
+JV
+OL
+PI
+UP
+UP
+ml
+CH
+CH
+CH
+CH
+CH
+CH
+Wv
+"}
+(4,1,1) = {"
+Sf
+UF
+IS
+IS
+IS
+KR
+IS
+Xb
+Dx
+Gq
+HC
+mO
+mO
+Qf
+YS
+XI
+ml
+VZ
+VZ
+VZ
+Wl
+VZ
+VZ
+bn
+"}
+(5,1,1) = {"
+Sf
+do
+IS
+UF
+gW
+IS
+Xb
+Xb
+Cn
+Xb
+cd
+yp
+Vw
+Qr
+Vx
+pR
+LO
+NN
+Kt
+VZ
+TU
+Kt
+VZ
+lq
+"}
+(6,1,1) = {"
+Sf
+IS
+UF
+UF
+pG
+op
+Xb
+Xb
+Xb
+HX
+Xb
+Ww
+OL
+Ry
+Vx
+pR
+LO
+VZ
+VZ
+Sv
+TU
+VZ
+UV
+lq
+"}
+(7,1,1) = {"
+Sf
+ff
+IS
+UF
+IS
+Xb
+Xb
+Xb
+Xb
+Xb
+TR
+TR
+Ww
+Tr
+UP
+pR
+ml
+VZ
+VZ
+TU
+bB
+TU
+Hx
+bn
+"}
+(8,1,1) = {"
+Xb
+LY
+UF
+UF
+Xb
+Xb
+Xb
+Xb
+Xb
+Xb
+TR
+TR
+Px
+ml
+Wn
+nB
+ml
+bn
+iO
+iO
+St
+Ze
+bn
+bn
+"}
+(9,1,1) = {"
+IS
+IS
+UF
+IS
+Xb
+Xb
+Xb
+Xb
+Xb
+Xb
+TR
+Me
+Ww
+ml
+Wr
+XL
+ZD
+qQ
+oU
+oU
+NI
+XM
+lq
+io
+"}
+(10,1,1) = {"
+aF
+UF
+UF
+UF
+Xb
+Xb
+Xb
+Xb
+Xb
+Xb
+TR
+Ww
+VP
+mt
+XH
+YM
+Gj
+ok
+ez
+Iq
+IC
+PO
+lq
+io
+"}
+(11,1,1) = {"
+aF
+IS
+lb
+UF
+Xb
+Xb
+Xb
+Xb
+Xb
+LY
+Ww
+MR
+XJ
+ml
+XH
+cV
+bn
+bn
+bn
+bn
+bn
+bn
+bn
+Jb
+"}
+(12,1,1) = {"
+IS
+UF
+UF
+IS
+Xb
+Xb
+Xb
+Xb
+Xb
+Xb
+Ww
+bi
+pm
+TO
+iI
+oQ
+ZF
+Jb
+qx
+Jb
+Hu
+Jb
+kk
+Jb
+"}
+(13,1,1) = {"
+Xb
+oj
+IS
+UF
+IS
+vP
+Xb
+Xb
+DK
+Xb
+TR
+Ww
+UH
+ml
+XH
+sz
+ax
+Jb
+uW
+Jb
+uW
+Jb
+uW
+Jb
+"}
+(14,1,1) = {"
+Xb
+UF
+pw
+UF
+IS
+Xb
+Xb
+Xb
+Xb
+Ij
+TR
+TR
+ml
+ml
+zJ
+sz
+xp
+Tk
+Tk
+Tk
+Tk
+Tk
+Tk
+Ct
+"}
+(15,1,1) = {"
+Xb
+gV
+iH
+fk
+pC
+IS
+Xb
+Xb
+DR
+Xb
+TR
+Ww
+ml
+ox
+xp
+sz
+lB
+Jb
+Zf
+Jb
+Zf
+Jb
+Zf
+Jb
+"}
+(16,1,1) = {"
+Xb
+cd
+td
+pC
+IS
+IS
+Xb
+Xb
+IS
+aF
+UO
+LY
+Jb
+kq
+xp
+sz
+Ll
+Jb
+JL
+Jb
+TC
+Jb
+nS
+Jb
+"}
+(17,1,1) = {"
+Un
+QL
+Lc
+LY
+LY
+Lc
+Cv
+IS
+Lc
+WR
+Jc
+RA
+gl
+bq
+xp
+sz
+SJ
+Jb
+Jb
+Jb
+Jb
+Jb
+Jb
+Jb
+"}
+(18,1,1) = {"
+cd
+qg
+MB
+bD
+yD
+Bn
+su
+su
+Bn
+yD
+am
+bD
+rd
+Xx
+vk
+hp
+BO
+bO
+gM
+Oz
+bO
+th
+fU
+Jb
+"}
+(19,1,1) = {"
+aF
+aF
+Fj
+fL
+cd
+tQ
+SD
+Bv
+Ey
+aF
+ai
+NE
+Jb
+Um
+Mk
+sz
+mM
+Jb
+TE
+jo
+Jb
+Zx
+cs
+Jb
+"}
+(20,1,1) = {"
+UA
+aF
+aF
+aF
+aF
+VF
+VF
+VF
+aF
+aF
+Jb
+Jb
+Jb
+Jb
+Jb
+Zj
+Jb
+Jb
+xt
+dY
+Jb
+Jb
+Jb
+Jb
+"}
+(21,1,1) = {"
+Sf
+ip
+Sf
+Sf
+Hb
+Sf
+Sf
+Sf
+Hb
+UA
+Jb
+NW
+Jb
+CW
+mg
+il
+wT
+Jb
+Jb
+Jb
+Jb
+Ng
+Jb
+by
+"}
+(22,1,1) = {"
+Sf
+Sf
+Sf
+Sf
+Hb
+Sf
+Sf
+Sf
+Hb
+Sf
+Jb
+NY
+MS
+tF
+Ik
+Ga
+FH
+Vk
+yh
+Fx
+eq
+im
+Jb
+Sf
+"}
+(23,1,1) = {"
+Sf
+Sf
+Sf
+Sf
+pY
+ZG
+ZG
+ZG
+ib
+ZG
+Jb
+OC
+Jb
+Nd
+RX
+FH
+on
+xZ
+Jb
+BP
+cN
+Jb
+Jb
+Sf
+"}
+(24,1,1) = {"
+Sf
+Sf
+Sf
+Sf
+TZ
+Sf
+Sf
+Sf
+Hb
+Sf
+YY
+TZ
+Jb
+Jb
+Ct
+Jb
+Jb
+Jb
+Jb
+Jb
+Jb
+Jb
+by
+Sf
+"}
+(25,1,1) = {"
+Sf
+Sf
+Sf
+Sf
+TZ
+Sf
+Sf
+Sf
+Hb
+Sf
+YY
+TZ
+io
+Sf
+Hb
+Sf
+Sf
+Sf
+Hb
+Sf
+Sf
+Sf
+Sf
+Sf
+"}
+(26,1,1) = {"
+Sf
+Sf
+Sf
+YN
+Kj
+Ch
+ZG
+YN
+rL
+Ch
+ib
+TZ
+ib
+YN
+rL
+Ch
+ZG
+YN
+rL
+Ch
+Sf
+Sf
+Sf
+Sf
+"}
+(27,1,1) = {"
+Sf
+Sf
+Sf
+YN
+Kj
+Ch
+Sf
+YN
+Kj
+Ch
+ib
+TZ
+ib
+YN
+Kj
+Ch
+Sf
+YN
+Kj
+Ch
+Sf
+Sf
+Sf
+Sf
+"}
+(28,1,1) = {"
+Sf
+Sf
+Sf
+YN
+Kj
+Ch
+fa
+YN
+Kj
+Ch
+ib
+TZ
+ib
+YN
+Kj
+Ch
+fa
+YN
+Kj
+Ch
+Sf
+Sf
+Sf
+Sf
+"}
+(29,1,1) = {"
+Sf
+Sf
+Sf
+YY
+kf
+uc
+uc
+uc
+EY
+uc
+uc
+mY
+uc
+uc
+EY
+uc
+uc
+uc
+ju
+io
+Sf
+Sf
+Sf
+Sf
+"}
+(30,1,1) = {"
+Sf
+Sf
+Sf
+YN
+Kj
+Ch
+zb
+YN
+Kj
+Ch
+zb
+zb
+zb
+YN
+Kj
+Ch
+zb
+YN
+Kj
+Ch
+Sf
+Sf
+Sf
+Sf
+"}
+(31,1,1) = {"
+Sf
+Sf
+Sf
+YN
+Kj
+Ch
+Sf
+YN
+Kj
+Ch
+Sf
+Sf
+Sf
+YN
+Kj
+Ch
+Sf
+YN
+Kj
+Ch
+Sf
+Sf
+Sf
+Sf
+"}
+(32,1,1) = {"
+Sf
+Sf
+Sf
+YN
+mY
+Ch
+ZG
+YN
+mY
+Ch
+Sf
+Sf
+Sf
+YN
+mY
+Ch
+ZG
+YN
+mY
+Ch
+Sf
+Sf
+Sf
+Sf
+"}

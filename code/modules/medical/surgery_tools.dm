@@ -954,7 +954,7 @@ CONTAINS:
 
 			else if (istype(tool, /obj/item/material_piece/cloth))
 				ownerMob.u_equip(tool)
-				pool(tool)
+				qdel(tool)
 
 /* =================================================== */
 /* -------------------- Blood Bag -------------------- */

@@ -458,7 +458,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	process()
 		if(broken == 1)
-			var/obj/sparks = unpool(/obj/effects/sparks/end)
+			var/obj/sparks = new /obj/effects/sparks/end
 			sparks.set_loc(src.loc)
 			playsound(src.loc, "sparks", 100, 1)
 			var/area/TT = get_area(src)
