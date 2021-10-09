@@ -58,7 +58,7 @@ proc/increment_pool_stats(var/type, var/index)
 proc/get_pool_size_limit(var/type)
 	return pool_limit_overrides[type] || DEFAULT_POOL_SIZE
 
-proc/unpool(var/type=null)
+proc/unpool_deprecated(var/type=null)
 	if(!type)
 		return null //Uh, here's your unpooled null. You weirdo.
 
@@ -97,7 +97,7 @@ proc/createPool(var/type)
 		object_pools[type] = list()
 	return object_pools[type]
 
-proc/pool(var/datum/to_pool)
+proc/pool_deprecated(var/datum/to_pool)
 	if (to_pool)
 
 		var/list/type_pool = object_pools[to_pool.type]
