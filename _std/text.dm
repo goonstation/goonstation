@@ -11,6 +11,11 @@
 
 	return ""
 
+/proc/startswith(text, start)
+	if(length(text) < length(start))
+		return FALSE
+	return copytext(text, 1, length(start) + 1) == start
+
 /proc/trim(text)
 	return trim_left(trim_right(text))
 

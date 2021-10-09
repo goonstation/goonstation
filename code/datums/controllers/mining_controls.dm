@@ -183,7 +183,7 @@ var/list/asteroid_blocked_turfs = list()
 	alpha = 175
 	opacity = 0
 	density = 0
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 
 /// *** MISC *** ///

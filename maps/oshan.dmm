@@ -2928,13 +2928,14 @@
 	})
 "ags" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
-	dir = 4
+	dir = 4;
+	req_access = null;
+	req_access_txt = "5"
 	},
-/obj/access_spawn/medical,
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/north)
+/area/station/medical/medbay/surgery/storage)
 "agt" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0
@@ -99527,13 +99528,13 @@ afq
 afq
 axA
 ags
-afA
-afA
-afA
-afA
-afA
-afA
-afA
+ajV
+ajV
+ajV
+ajV
+ajV
+ajV
+ajV
 aoi
 aqg
 aru

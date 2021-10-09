@@ -58,7 +58,7 @@
 			overlay_key = "sticker[world.timeofday]"
 			A.UpdateOverlays(sticker, overlay_key)
 			//	qdel(src) //Don't delete stickers when applied - remove them later through fire or acetone!
-			src.invisibility = 101
+			src.invisibility = INVIS_ALWAYS
 
 		else
 			src.pixel_x = pox
@@ -92,7 +92,7 @@
 			attached.ClearSpecificOverlays(overlay_key)
 			overlay_key = 0
 		active = 0
-		src.invisibility = 0
+		src.invisibility = INVIS_NONE
 		src.pixel_x = initial(pixel_x)
 		src.pixel_y = initial(pixel_y)
 		attached.visible_message("<span class='alert'><b>[src]</b> un-sticks from [attached] and falls to the floor!</span>")
@@ -461,7 +461,7 @@
 			src.camera.camera_status = 1.0
 			src.camera.updateCoverage()
 		if (src.radio)
-			src.radio.invisibility = 101
+			src.radio.invisibility = INVIS_ALWAYS
 		logTheThing("combat", user, A, "places a spy sticker on [constructTarget(A,"combat")] at [log_loc(user)].")
 
 		..()

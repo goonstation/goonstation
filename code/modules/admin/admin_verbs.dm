@@ -895,7 +895,8 @@ var/list/fun_images = list()
 			M << csound("sound/misc/klaxon.ogg")
 			boutput(M, "<span class='alert'><B>WARNING: An admin is likely very cross with you and wants you to read the rules right fucking now!</B></span>")
 
-	M << browse(rules, "window=rules;size=800x1000")
+	// M << browse(rules, "window=rules;size=800x1000")
+	M << link("http://wiki.ss13.co/Rules")
 
 /client/proc/view_fingerprints(obj/O as obj in world)
 	set name = "View Object Fingerprints"

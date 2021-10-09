@@ -530,7 +530,7 @@
 		var/image/warpOverlay = image('icons/obj/large/160x160.dmi',"warp")
 		overlays.Add(warpOverlay)
 		animate(src, alpha = 0, time = 10)
-		shield_obj.invisibility = 101
+		shield_obj.invisibility = INVIS_ALWAYS
 
 		sleep(2 SECONDS)
 
@@ -539,7 +539,7 @@
 
 		sleep(1.5 SECONDS)
 		overlays.Cut()
-		shield_obj.invisibility = 0
+		shield_obj.invisibility = INVIS_NONE
 		warping = 0
 		return
 
@@ -826,7 +826,7 @@
 
 /obj/cruiser_camera_dummy
 	name = ""
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
 

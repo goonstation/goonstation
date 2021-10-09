@@ -5,7 +5,7 @@
 	var/info = "There is nothing here."
 	infra_luminosity = 4
 	anchored = 1
-	invisibility = 1
+	invisibility = INVIS_INFRA
 
 /obj/infared_icon/examine(mob/user)
 	if(user.see_infrared)

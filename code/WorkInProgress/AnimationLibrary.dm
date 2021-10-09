@@ -170,13 +170,6 @@
 		alpha = 255
 		plane = PLANE_OVERLAY_EFFECTS
 
-		unpooled()
-			..()
-			src.alpha = 255
-
-		pooled()
-			..()
-
 
 
 /mob/var/obj/particle/attack/attack_particle
@@ -473,7 +466,7 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var/muzzle_light_color, var/offset=25)
 	if (!A || firing_angle == null || !muzzle_anim) return
 
-	var/obj/particle/attack/muzzleflash/muzzleflash = unpool(/obj/particle/attack/muzzleflash)
+	var/obj/particle/attack/muzzleflash/muzzleflash = new /obj/particle/attack/muzzleflash
 
 	if(isnull(muzzle_light_color))
 		muzzle_light_color = default_muzzle_flash_colors[muzzle_anim]
@@ -498,7 +491,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 	SPAWN_DBG(0.6 SECONDS)
 		A.vis_contents.Remove(muzzleflash)
-		pool(muzzleflash)
+		qdel(muzzleflash)
 
 
 
@@ -1072,7 +1065,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	var/turf/target_turf = get_turf(target)
 	if (!target_turf)
 		return
-	var/obj/decal/teleport_swirl/swirl = unpool(/obj/decal/teleport_swirl)
+	var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
 	swirl.set_loc(target_turf)
 	swirl.pixel_y = 10
 	if (play_sound)
@@ -1080,7 +1073,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	SPAWN_DBG(1.5 SECONDS)
 		if (swirl)
 			swirl.pixel_y = 0
-			pool(swirl)
+			qdel(swirl)
 	return
 
 /proc/leaveresidual(var/atom/target)
@@ -1091,11 +1084,11 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		return
 	if (locate(/obj/decal/residual_energy) in target_turf)
 		return
-	var/obj/decal/residual_energy/e = unpool(/obj/decal/residual_energy)
+	var/obj/decal/residual_energy/e = new /obj/decal/residual_energy
 	e.set_loc(target_turf)
 	SPAWN_DBG(10 SECONDS)
 		if (e)
-			pool(e)
+			qdel(e)
 	return
 
 /proc/leavepurge(var/atom/target, var/current_increment, var/sword_direction)
@@ -1108,16 +1101,16 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if(current_increment == 9)
 		if (locate(/obj/decal/purge_beam_end) in target_turf)
 			return
-		e = unpool(/obj/decal/purge_beam_end)
+		e = new /obj/decal/purge_beam_end
 	else
 		if (locate(/obj/decal/purge_beam) in target_turf)
 			return
-		e = unpool(/obj/decal/purge_beam)
+		e = new /obj/decal/purge_beam
 	e.set_loc(target_turf)
 	e.dir = sword_direction
 	SPAWN_DBG(7)
 		if (e)
-			pool(e)
+			qdel(e)
 	return
 
 /proc/leavescan(var/atom/target, var/scan_type)
@@ -1130,15 +1123,15 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if(scan_type == 0)
 		if (locate(/obj/decal/syndicate_destruction_scan_center) in target_turf)
 			return
-		e = unpool(/obj/decal/syndicate_destruction_scan_center)
+		e = new /obj/decal/syndicate_destruction_scan_center
 	else
 		if (locate(/obj/decal/syndicate_destruction_scan_side) in target_turf)
 			return
-		e = unpool(/obj/decal/syndicate_destruction_scan_side)
+		e = new /obj/decal/syndicate_destruction_scan_side
 	e.set_loc(target_turf)
 	SPAWN_DBG(7)
 		if (e)
-			pool(e)
+			qdel(e)
 	return
 
 /proc/sponge_size(var/atom/A, var/size = 1)

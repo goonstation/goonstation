@@ -66705,6 +66705,7 @@
 /obj/stool/chair/comfy/purple{
 	dir = 4
 	},
+/obj/item/clothing/head/longbee,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/ines)
 "dAw" = (
