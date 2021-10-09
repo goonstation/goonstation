@@ -155,7 +155,7 @@ datum/preferences
 			"profileName" = src.profile_name,
 			"profileModified" = src.profile_modified,
 
-			"preview" = src.preview.preview_id,
+			"preview" = src.preview?.preview_id,
 
 			"nameFirst" = src.name_first,
 			"nameMiddle" = src.name_middle,
