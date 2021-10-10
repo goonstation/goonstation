@@ -497,6 +497,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\mob\living\critter\bee.dm"
 #include "code\mob\living\critter\big_animal.dm"
 #include "code\mob\living\critter\changeling_critters.dm"
+#include "code\mob\living\critter\cryptid_plushie.dm"
 #include "code\mob\living\critter\drone.dm"
 #include "code\mob\living\critter\fermid.dm"
 #include "code\mob\living\critter\flockcritter_parent.dm"
