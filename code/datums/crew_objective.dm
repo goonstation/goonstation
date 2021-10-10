@@ -160,7 +160,7 @@ ABSTRACT_TYPE(/datum/objective/crew/chiefengineer)
 			return 0
 
 	reserves
-		explanation_text = "Make sure all SMES units on the station are at least half chaged at the end of the round."
+		explanation_text = "Make sure all SMES units on the station are at least half charged at the end of the round."
 		check_completion()
 			//Find the station powernet - largest z1 powernet
 			var/datum/powernet/stationnet = null
@@ -449,7 +449,7 @@ ABSTRACT_TYPE(/datum/objective/crew/engineer)
 			return 0
 
 	reserves
-		explanation_text = "Make sure all SMES units on the station are at least half chaged at the end of the round."
+		explanation_text = "Make sure all SMES units on the station are at least half charged at the end of the round."
 		check_completion()
 			//Find the station powernet - largest z1 powernet
 			var/datum/powernet/stationnet = null
