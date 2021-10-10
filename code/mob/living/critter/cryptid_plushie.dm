@@ -3,6 +3,8 @@
 	pull_w_class = W_CLASS_TINY
 	ghost_spawned = 1
 	canspeak = 0
+	health_brute = 40
+	health_burn = 40
 	var/being_seen = FALSE
 	var/atom/last_witness
 
