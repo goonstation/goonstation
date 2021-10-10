@@ -57,8 +57,6 @@
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
 			return 1
-		if (!src.stat)
-			return
 
 		if (last_witness) // optimization attempt
 			if(get_dist(src, last_witness) < 3) // still next to last person that saw us, might be for instance pulling us or sitting next to us
