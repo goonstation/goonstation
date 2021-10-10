@@ -33,7 +33,7 @@
 		else if (!istype(src.info))
 			var/datum/figure_info/randomInfo
 
-			var/potential_donator_ckey = usr?.mind.ckey
+			var/potential_donator_ckey = usr?.mind?.ckey
 			var/donator_figtype = null
 			if (potential_donator_ckey) // check if the player has a figurine (therefore a donator)
 				for (var/datum/figure_info/patreon/fig as anything in concrete_typesof(/datum/figure_info/patreon))

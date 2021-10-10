@@ -536,7 +536,7 @@
 var/global/datum/arena/gauntletController/gauntlet_controller = new()
 
 /obj/observable
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	name = "Observable"
 	desc = "observable"
 	anchored = 1
@@ -1001,7 +1001,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 				T.overlays.len = 0
 
 /obj/zapdummy
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
 

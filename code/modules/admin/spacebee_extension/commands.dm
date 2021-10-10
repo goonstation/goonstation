@@ -333,7 +333,7 @@
 	help_message = "Sends items in a crate to cargo. Separate typepaths by spaces."
 	argument_types = list(/datum/command_argument/the_rest="types")
 	execute(user, types)
-		var/obj/to_send = new /obj/storage/crate/packing
+		var/obj/to_send = new /obj/storage/crate/wooden
 		var/list/type_str_list = splittext(types, " ")
 		for(var/type_str in type_str_list)
 			var/type = text2path(type_str)

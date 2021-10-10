@@ -351,7 +351,7 @@
 		for(var/obj/O in new_turf)
 			if(istype(O, /obj/overlay))
 				continue
-			if(O.invisibility > 10)
+			if(O.invisibility > INVIS_GHOST)
 				continue
 			var/obj/item/I = O
 			if(size < 60 && (!istype(O, /obj/item) || I.w_class > size / 10 + 1))
