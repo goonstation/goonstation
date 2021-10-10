@@ -1208,6 +1208,10 @@ ABSTRACT_TYPE(/area/prefab)
 	name ="Space Ranch"
 	icon_state = "green"
 
+/area/prefab/synd_lab
+	name = "Syndicate TC Laboratory"
+	icon_state = "red"
+
 /area/prefab/shooting_range
 	name = "Shooting Range"
 	icon_state = "purple"

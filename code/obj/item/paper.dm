@@ -1581,6 +1581,25 @@ exposed to overconfident outbursts on the part of individuals unqualifed to embo
 	icon_state = "postit-writing"
 	info = {"-non-stable battery; keeps popping on use.<br>-design work (not final)<br>-battery capacity??? maybe?<br>Cheers,<br>O"}
 
+/obj/item/paper/synd_lab_note
+	name = "scribbled note"
+	info = {"So, we've been out here for a week already, and our insurmountable task isn't looking any easier.<br><br>
+	My colleague and I were asked to figure out a way to refine telecrystals into a version usable in our uplinks, but so far, no luck.
+	We were given this 'state of the art' facility to figure out how to make this work, when I keep saying that this fundamentally will not.
+	These damn crystals are a pain in the ass to refine normally, when we have a goddamn mining station built to do JUST that!<br>
+	And, we were hardly given proper lab equipment.<br>
+	We're stuck with only a few flasks, along with some shitty prototype chemi-something or other, which quite frankly we'd be better off with another pair of beakers, fuck, it can't even produce chemicals!
+	I'm trying anything at this point, even port, of all things.<br><br>
+	I'd better get back to it, I'm not being paid by the hour here."}
+
+/obj/item/paper/synd_lab_note2
+	name = "scribbled note"
+	info = {"I've been working on these faux, exploding 'telecrystals' for a while now, and I'm starting to think I got the better end of a rotten deal.<br><br>
+	I've been, as of yet, completely unable to emulate any of the teleporting aspects of regular telecrystals, which means these things can certainly feel fake if you give 'em enough testing.
+	Needless to say, I'm not a fan.<br>
+	I mean, just making these telecrystals the right color is a pain in the ass, requiring this bulky machine I hardly know how to operate take HOURS per crystal!<br><br>
+	Well, here's to hoping infusing these things with black powder won't blow up in my face."}
+
 /obj/item/paper/recipe_tandoori
 	name = "stained recipe clipping"
 	desc = "It's creased and worn, and smells a little like dried blood."
@@ -1604,3 +1623,4 @@ exposed to overconfident outbursts on the part of individuals unqualifed to embo
 	desc = "An old recipe clipped from a lifestyle magazine for space station chefs. Aw, the color's faded from the layout..."
 	icon_state = "paper_caution"
 	info = {"<i>Facing threats from the crew for putting pineapple on your pizzas and letting your chicken corpses spill out into the hall? Turn those trials into smiles when you serve up this scrumptious dish!</i><br><h3>Chicken Pineapple Curry</h3><br><h4>Ingredients:</h4><br> -a bag of curry powder <br> -some fresh chicken meat <br> -a tasty ring of pineapple <br> -a nice spicy chili pepper <br><br><i>With your oven, you don't even have to mix! Just add everything, set the heat to low, and let it all cook for 7 seconds!</i>"}
+
