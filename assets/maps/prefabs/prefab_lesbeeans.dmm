@@ -49,7 +49,7 @@
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 8
 	},
-/turf/simulated/floor/wood/five,
+/turf/unsimulated/floor/wood/five,
 /area/prefab/lesbeeans/interior)
 "dL" = (
 /turf/unsimulated/wall/auto/supernorn/wood,
@@ -65,7 +65,7 @@
 	pixel_x = -3;
 	pixel_y = 10
 	},
-/turf/simulated/floor/wood/five,
+/turf/unsimulated/floor/wood/five,
 /area/prefab/lesbeeans/interior)
 "fm" = (
 /obj/lattice{
@@ -86,7 +86,7 @@
 "jl" = (
 /obj/item/gardentrowel,
 /obj/decal/cleanable/dirt/jen,
-/turf/simulated/floor/wood/five,
+/turf/unsimulated/floor/wood/five,
 /area/prefab/lesbeeans/interior)
 "jq" = (
 /obj/lattice{
@@ -175,7 +175,7 @@
 /obj/critter/domestic_bee{
 	name = "lesbian space-farm bee"
 	},
-/turf/simulated/floor/wood/five,
+/turf/unsimulated/floor/wood/five,
 /area/prefab/lesbeeans/interior)
 "uH" = (
 /obj/lattice{
@@ -252,7 +252,7 @@
 /obj/machinery/light/small/cool{
 	dir = 8
 	},
-/turf/simulated/floor/wood/five,
+/turf/unsimulated/floor/wood/five,
 /area/prefab/lesbeeans/interior)
 "Ck" = (
 /obj/lattice{
@@ -378,7 +378,7 @@
 /obj/rack,
 /obj/item/reagent_containers/glass/wateringcan,
 /obj/item/shovel,
-/turf/simulated/floor/wood/five,
+/turf/unsimulated/floor/wood/five,
 /area/prefab/lesbeeans/interior)
 "Mu" = (
 /obj/decorative_pot,
@@ -387,7 +387,7 @@
 	pixel_x = -11;
 	pixel_y = 8
 	},
-/turf/simulated/floor/wood/five,
+/turf/unsimulated/floor/wood/five,
 /area/prefab/lesbeeans/interior)
 "NT" = (
 /obj/cable{
