@@ -73,8 +73,9 @@
 
 		if(src.loc == user)
 			user.drop_from_slot(src)
-		user.visible_message("<span class='alert'>[user] unfolds the foldable portable idendification computer from a briefcase!</span>")
+		user.visible_message("<span class='alert'>[user] unfolds the foldable portable idendification computer from a briefcase, there was also a pinpointer inside, how handy!</span>")
 		var/obj/machinery/computer/card/portable/T = new/obj/machinery/computer/card/portable()
+		new/obj/item/pinpointer/identificationcomputer(get_turf(src))
 		T.set_loc(get_turf(src))
 		qdel(src)
 
