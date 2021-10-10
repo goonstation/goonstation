@@ -137,7 +137,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/datum/bioHolder/parentHolder = null
 
 	var/gender = MALE
-	var/obj/pronouns/pronouns
+	var/datum/pronouns/pronouns
 	var/screamsound = "male"
 	var/fartsound = "default"
 	var/voicetype = 0
@@ -167,7 +167,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	New()
 		..()
 		voicetype = RANDOM_HUMAN_VOICE
-		pronouns = pronouns_theyThem
+		pronouns = get_singleton(/datum/pronouns/theyThem)
 
 	proc/CopyOther(var/datum/appearanceHolder/toCopy)
 		//Copies settings of another given holder. Used for the bioholder copy proc and such things.

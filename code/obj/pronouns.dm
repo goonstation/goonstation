@@ -1,9 +1,10 @@
-var/global/obj/pronouns/theyThem/pronouns_theyThem = new /obj/pronouns/theyThem
-var/global/obj/pronouns/heHim/pronouns_heHim = new /obj/pronouns/heHim
-var/global/obj/pronouns/sheHer/pronouns_sheHer = new /obj/pronouns/sheHer
-var/global/obj/pronouns/abomination/pronouns_abomination = new /obj/pronouns/abomination
+/proc/pronouns_filter_is_choosable(var/P)
+	var/datum/pronouns/pronouns = get_singleton(P)
+	return pronouns.choosable
 
-/obj/pronouns
+ABSTRACT_TYPE(/datum/pronouns)
+/datum/pronouns
+	var/name
 	var/preferredGender
 	var/subjective
 	var/objective
@@ -11,8 +12,9 @@ var/global/obj/pronouns/abomination/pronouns_abomination = new /obj/pronouns/abo
 	var/posessivePronoun
 	var/reflexive
 	var/pluralize = FALSE
+	var/choosable = TRUE
 
-/obj/pronouns/theyThem
+/datum/pronouns/theyThem
 	name = "they/them"
 	preferredGender = "person"
 	subjective = "they"
@@ -22,7 +24,7 @@ var/global/obj/pronouns/abomination/pronouns_abomination = new /obj/pronouns/abo
 	reflexive = "themself"
 	pluralize = TRUE
 
-/obj/pronouns/heHim
+/datum/pronouns/heHim
 	name = "he/him"
 	preferredGender = "man"
 	subjective = "he"
@@ -31,7 +33,7 @@ var/global/obj/pronouns/abomination/pronouns_abomination = new /obj/pronouns/abo
 	posessivePronoun = "his"
 	reflexive = "himself"
 
-/obj/pronouns/sheHer
+/datum/pronouns/sheHer
 	name = "she/her"
 	preferredGender = "woman"
 	subjective = "she"
@@ -40,7 +42,7 @@ var/global/obj/pronouns/abomination/pronouns_abomination = new /obj/pronouns/abo
 	posessivePronoun = "hers"
 	reflexive = "herself"
 
-/obj/pronouns/abomination
+/datum/pronouns/abomination
 	name = "abomination"
 	preferredGender = "abomination"
 	subjective = "we"
@@ -49,3 +51,4 @@ var/global/obj/pronouns/abomination/pronouns_abomination = new /obj/pronouns/abo
 	posessivePronoun = "ours"
 	reflexive = "ourself"
 	pluralize = TRUE
+	choosable = FALSE

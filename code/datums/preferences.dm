@@ -434,13 +434,14 @@ datum/preferences
 				return TRUE
 
 			if ("update-pronouns")
-				if (AH.pronouns?.name == pronouns_theyThem.name)
-					AH.pronouns = pronouns_heHim
-				else if (AH.pronouns?.name == pronouns_heHim.name)
-					AH.pronouns = pronouns_sheHer
-				else
-					AH.pronouns = pronouns_theyThem
-
+				var/list/types = filtered_concrete_typesof(/datum/pronouns, /proc/pronouns_filter_is_choosable)
+				var/selected
+				for (var/i = 1, i <= length(types), i++)
+					var/datum/pronouns/pronouns = get_singleton(types[i])
+					if (AH.pronouns == pronouns)
+						selected = i
+						break
+				AH.pronouns = get_singleton(types[selected < length(types) ? selected + 1 : 1])
 				src.profile_modified = TRUE
 				return TRUE
 

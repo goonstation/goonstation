@@ -225,12 +225,11 @@
 		if (src.AH)
 			var/saved_pronouns
 			F["[profileNum]_pronouns"] >> saved_pronouns
-			if (saved_pronouns == pronouns_heHim.name)
-				AH.pronouns = pronouns_heHim
-			else if (saved_pronouns == pronouns_sheHer.name)
-				AH.pronouns = pronouns_sheHer
-			else
-				AH.pronouns = pronouns_theyThem
+			for (var/P as anything in filtered_concrete_typesof(/datum/pronouns, /proc/pronouns_filter_is_choosable))
+				var/datum/pronouns/pronouns = get_singleton(P)
+				if (saved_pronouns == pronouns.name)
+					AH.pronouns = pronouns
+					break
 			F["[profileNum]_eye_color"] >> AH.e_color
 			F["[profileNum]_hair_color"] >> AH.customization_first_color
 			F["[profileNum]_hair_color"] >> AH.customization_first_color_original
