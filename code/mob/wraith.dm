@@ -143,6 +143,7 @@
 			src.abilityHolder.addBonus(src.hauntBonus * (life_time_passed / life_tick_spacing))
 
 		src.abilityHolder.generatePoints(mult = (life_time_passed / life_tick_spacing))
+		src.abilityHolder.updateText()
 
 		if (src.health < 1)
 			src.death(0)
