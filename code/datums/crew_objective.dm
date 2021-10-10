@@ -338,8 +338,6 @@ ABSTRACT_TYPE(/datum/objective/crew/janitor)
 					return 0
 			return 1
 
-//  HoP add 1 (High budget? make ID's? change ID's? make payroll?)
-//  Delete the above
 #define DRINK_OBJ_DONE 7
 #define DRINK_OBJ_1 1
 #define DRINK_OBJ_2 2
