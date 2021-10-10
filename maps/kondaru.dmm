@@ -41919,9 +41919,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/computer/robotics{
-	perma = 1
-	},
+/obj/machinery/computer/robotics,
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},

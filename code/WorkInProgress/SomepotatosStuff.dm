@@ -282,8 +282,8 @@ world/proc/updateCameraVisibility()
 	name = "AI Eyeball"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "a-eye"
-	invisibility = 9
-	see_invisible = 9
+	invisibility = INVIS_AI_EYE
+	see_invisible = INVIS_AI_EYE
 	layer = 101
 	see_in_dark = SEE_DARK_FULL
 

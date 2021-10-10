@@ -1,5 +1,47 @@
 //bot go brr?
 //GUNS GUNS GUNS
+/datum/projectile/special/target_designator
+	sname = "foo"
+	name = "bar"
+	cost = 0
+	dissipation_rate = 0
+	projectile_speed = 12800
+	casing = /obj/item/casing/cannon
+	power = 1
+	max_range = 500
+	damage_type = D_SPECIAL
+	shot_sound = null
+	hit_mob_sound = null
+	hit_object_sound = null
+	silentshot = TRUE
+
+	on_hit(atom/hit, direction, obj/projectile/P)
+		. = ..()
+		var/obj/railgun_trg_dummy/start = new(P.orig_turf)
+		var/obj/railgun_trg_dummy/end = new(get_turf(hit))
+		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,1,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0)
+		for(var/obj/O in affected)
+			O.alpha = 0
+			O.color = "#ff0000"
+			animate(O, time = 0.2 SECONDS, alpha = 255, easing = JUMP_EASING | EASE_IN)
+			animate(time = 0.1 SECONDS, alpha = 0, easing = JUMP_EASING | EASE_IN)
+			animate(time = 0.2 SECONDS, alpha = 255, easing = JUMP_EASING | EASE_IN)
+			animate(time = 0.1 SECONDS, alpha = 0, easing = JUMP_EASING | EASE_IN)
+			animate(time = 0.2 SECONDS, alpha = 255, easing = JUMP_EASING | EASE_IN)
+			animate(time = 0.1 SECONDS, alpha = 0, easing = JUMP_EASING | EASE_IN)
+			animate(time = 0.1 SECONDS, alpha = 255, easing = JUMP_EASING | EASE_IN)
+
+		SPAWN_DBG(1 SECOND)
+			for(var/obj/O in affected)
+				O.alpha = initial(O.alpha)
+				O.color = initial(O.color)
+				qdel(O)
+			var/datum/projectile/bullet/howitzer/hack = new
+			hack.on_hit(end)
+			qdel(hack)
+			qdel(start)
+			qdel(end)
+
 /datum/projectile/bullet/rifle_3006/rakshasa
 	sname = "\improper Rakshasa"
 	name = "\improper Rakshasa round"
@@ -23,7 +65,7 @@
 		SPAWN_DBG(1 SECOND)
 			for(var/obj/O in affected)
 				O.alpha = initial(O.alpha)
-				pool(O)
+				qdel(O)
 			qdel(start)
 			qdel(end)
 

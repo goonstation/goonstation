@@ -127,9 +127,9 @@
 			var/amtload = 0
 			for (var/obj/item/raw_material/M in O.contents)
 				if (istype(M,/obj/item/raw_material/char))
-					amtload += load_fuel_and_pool(M, 60)
+					amtload += load_fuel_and_qdel(M, 60)
 				else if (istype(M,/obj/item/raw_material/plasmastone))
-					amtload += load_fuel_and_pool(M, 800)
+					amtload += load_fuel_and_qdel(M, 800)
 				if (src.fuel >= src.maxfuel)
 					src.fuel = src.maxfuel
 					boutput(user, "<span class='notice'>The furnace is now full!</span>")
@@ -144,7 +144,7 @@
 			user.visible_message("<span class='notice'>[user] begins quickly stuffing ore into [src]!</span>")
 			var/staystill = user.loc
 			for(var/obj/item/raw_material/char/M in view(1,user))
-				load_fuel_and_pool(M, 60)
+				load_fuel_and_qdel(M, 60)
 				if (src.fuel >= src.maxfuel)
 					src.fuel = src.maxfuel
 					boutput(user, "<span class='notice'>The furnace is now full!</span>")
@@ -160,7 +160,7 @@
 			user.visible_message("<span class='notice'>[user] begins quickly stuffing weed into [src]!</span>") // four fuckin twenty all day
 			var/staystill = user.loc
 			for(var/obj/item/plant/herb/cannabis/M in view(1,user))
-				load_fuel_and_pool(M, 30, 5)
+				load_fuel_and_qdel(M, 30, 5)
 				if (src.fuel >= src.maxfuel)
 					src.fuel = src.maxfuel
 					boutput(user, "<span class='notice'>The furnace is now full!</span>")
@@ -176,7 +176,7 @@
 			user.visible_message("<span class='notice'>[user] begins quickly stuffing ore into [src]!</span>")
 			var/staystill = user.loc
 			for(var/obj/item/raw_material/plasmastone/M in view(1,user))
-				load_fuel_and_pool(M, 800)
+				load_fuel_and_qdel(M, 800)
 				if (src.fuel >= src.maxfuel)
 					src.fuel = src.maxfuel
 					boutput(user, "<span class='notice'>The furnace is now full!</span>")
@@ -203,7 +203,7 @@
 
 	// Loads items into furnace with provided fuel and stoked values
 	// Returns number of items loaded
-	proc/load_fuel_and_pool(obj/item/F, fuel_value, stoked_value=0)
+	proc/load_fuel_and_qdel(obj/item/F, fuel_value, stoked_value=0)
 		var/amtload = 0
 		stoked_value += round(F.reagents?.get_reagent_amount("THC") / 5)
 		if (istype(F))
@@ -212,7 +212,7 @@
 			src.stoked += stoked_value * amtload
 			F.amount -= amtload
 			if (F.amount <= 0)
-				pool(F)
+				qdel(F)
 			else
 				if(amtload && F.inventory_counter)
 					F.inventory_counter.update_number(F.amount)
@@ -244,16 +244,16 @@
 		var/started_full = fuel == maxfuel
 		var/fuel_name = initial(W.name)
 		if (istype(W, /obj/item/raw_material/char))
-			load_fuel_and_pool(W, 60)
+			load_fuel_and_qdel(W, 60)
 			pooled_type = TRUE
 		else if (istype(W, /obj/item/raw_material/plasmastone))
-			load_fuel_and_pool(W, 800)
+			load_fuel_and_qdel(W, 800)
 			pooled_type = TRUE
 		else if (istype(W, /obj/item/paper/))
-			load_fuel_and_pool(W, 6)
+			load_fuel_and_qdel(W, 6)
 			pooled_type = TRUE
 		else if (istype(W, /obj/item/spacecash/))
-			if( load_fuel_and_pool(W, 2) > 1)
+			if( load_fuel_and_qdel(W, 2) > 1)
 				fuel_name = "credits"
 			else
 				fuel_name = "a credit"
@@ -284,7 +284,7 @@
 					var/obj/item/O = fried_content
 					load_into_furnace(O, 0)
 		else if (istype(W, /obj/item/plant/herb/cannabis))
-			load_fuel_and_pool(W, 30, 5)
+			load_fuel_and_qdel(W, 30, 5)
 			pooled_type = TRUE
 		else
 			return 0

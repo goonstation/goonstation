@@ -260,7 +260,7 @@
 								if(prob(10) && istype(src.loc, /turf/simulated/floor/specialroom/freezer)) //ZeWaka: Fix for null.loc
 									message = "<b>[src]</B> farts. The fart freezes in MID-AIR!!!"
 									new/obj/item/material_piece/fart(src.loc)
-									var/obj/item/material_piece/fart/F = unpool(/obj/item/material_piece/fart)
+									var/obj/item/material_piece/fart/F = new /obj/item/material_piece/fart
 									F.set_loc(src.loc)
 
 						src.expel_fart_gas(oxyplasmafart)
@@ -2228,7 +2228,7 @@
 
 /mob/living/carbon/human/proc/expel_fart_gas(var/oxyplasmafart)
 	var/turf/T = get_turf(src)
-	var/datum/gas_mixture/gas = unpool(/datum/gas_mixture)
+	var/datum/gas_mixture/gas = new /datum/gas_mixture
 	gas.vacuum()
 	if(oxyplasmafart == 1)
 		gas.toxins += 1

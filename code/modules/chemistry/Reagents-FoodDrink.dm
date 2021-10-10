@@ -1412,6 +1412,35 @@ datum
 			description = "Named after an Italian composer and like a Bellini, but with strawberry purée instead of peach."
 			reagent_state = LIQUID
 
+		fooddrink/alcoholic/blackbramble
+			name = "Blackberry Bramble"
+			id = "blackbramble"
+			fluid_r = 69
+			fluid_g = 42
+			fluid_b = 86
+			alch_strength = 0.14
+			description = "This tart cocktail softens gin with blackberries and lemon juice."
+			reagent_state = LIQUID
+
+		fooddrink/alcoholic/frenchmartini
+			name = "French Martini"
+			id = "frenchmartini"
+			fluid_r = 229
+			fluid_g = 111
+			fluid_b = 111
+			alch_strength = 0.14
+			description = "Vodka, raspberry liqueur, and pineapple juice. Not actually French."
+			reagent_state = LIQUID
+		fooddrink/alcoholic/jazzlemon
+			name = "Jazzberry Hard Lemonade"
+			id = "jazzlemon"
+			fluid_r = 67
+			fluid_g = 219
+			fluid_b = 238
+			alch_strength = 0.14
+			description = "This unnaturally blue lemonade looks too radical not to drink."
+			reagent_state = LIQUID
+
 		fooddrink/alcoholic/moscowmule
 			name = "Moscow Mule"
 			id = "moscowmule"
@@ -1488,10 +1517,6 @@ datum
 			description = "Patience."
 			reagent_state = LIQUID
 			var/bioeffect_length = 0
-
-			pooled()
-				..()
-				bioeffect_length = 0
 
 			on_mob_life(var/mob/living/carbon/human/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -2220,10 +2245,6 @@ datum
 			bladder_value = 0.04
 			energy_value = 1
 			stun_resist = 25
-
-			pooled()
-				..()
-				tickcounter = 0
 
 			on_add()
 				if (ismob(holder?.my_atom))
@@ -3162,6 +3183,26 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 1.5
 
+		fooddrink/juice_blackberry
+			name = "blackberry juice"
+			id = "juice_blackberry"
+			fluid_r = 29
+			fluid_g = 34
+			fluid_b = 47
+			description = "Dark, fruity, and definitely going to stain."
+			reagent_state = LIQUID
+			thirst_value = 1.5
+
+		fooddrink/juice_raspberry
+			name = "raspberry juice"
+			id = "juice_raspberry"
+			fluid_r = 163
+			fluid_g = 3
+			fluid_b = 37
+			description = "Sweet, tart, and reminds you of summertime."
+			reagent_state = LIQUID
+			thirst_value = 1.5
+
 		fooddrink/juice_cherry
 			name = "cherry juice"
 			id = "juice_cherry"
@@ -3173,13 +3214,13 @@ datum
 			thirst_value = 1.5
 			bladder_value = -1.5
 
-		fooddrink/juice_raspberry
-			name = "raspberry juice"
-			id = "juice_raspberry"
+		fooddrink/juice_blueraspberry
+			name = "blue raspberry juice"
+			id = "juice_blueraspberry"
 			fluid_r = 101
 			fluid_g = 216
 			fluid_b = 230
-			description = "What do you mean? Rapsberries have always been this shade of blue."
+			description = "Radically flavorlicious. There's really nothing else to call it."
 			reagent_state = LIQUID
 			thirst_value = 1.5
 			bladder_value = -1.5
@@ -3949,10 +3990,6 @@ datum
 			fluid_b = 81
 			transparency = 200
 			var/alch_counter = 0 //ripped straight from amantin - moonlol
-
-			pooled()
-				..()
-				alch_counter = 0
 
 			on_mob_life(var/mob/M, var/mult = 0)
 

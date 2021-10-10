@@ -773,7 +773,7 @@
 			if (src.manip.exposed && src.manip.slots[src.manip.exposed] && src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION)
 				var/datum/reagent/blood/pathogen/P = new
 				var/datum/pathogendna/D = src.manip.slots[src.manip.exposed]
-				var/datum/pathogen/PT = unpool(/datum/pathogen)
+				var/datum/pathogen/PT = new /datum/pathogen
 				PT.setup(0, D.reference)
 				PT.dnasample = D
 				P.pathogens += PT.pathogen_uid

@@ -128,7 +128,7 @@
 		cash.amount = 0
 		user.show_text("<span class='notice'>You add [cash] to the credit in [src].</span>")
 		user.u_equip(W)
-		pool(W)
+		qdel(W)
 	else if (istype(W, /obj/item/disk/data/floppy))
 		if (!src.diskette)
 			user.drop_item()

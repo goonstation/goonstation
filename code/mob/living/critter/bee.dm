@@ -199,7 +199,7 @@
 				src.shorn = 1
 				src.shorn_time = world.time
 				user.visible_message("<b>[user]</b> shears \the [src]!","You shear \the [src].")
-				var/obj/item/material_piece/cloth/beewool/BW = unpool(/obj/item/material_piece/cloth/beewool)
+				var/obj/item/material_piece/cloth/beewool/BW = new /obj/item/material_piece/cloth/beewool
 				BW.set_loc(src.loc)
 				return
 

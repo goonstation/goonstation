@@ -160,7 +160,7 @@
 
 					if (!spacemove) // yes, this is dumb
 						// also fuck it.
-						var/obj/effects/ion_trails/I = unpool(/obj/effects/ion_trails)
+						var/obj/effects/ion_trails/I = new /obj/effects/ion_trails
 						I.set_loc(src.loc)
 						I.set_dir(src.dir)
 						flick("ion_fade", I)
@@ -168,7 +168,7 @@
 						I.pixel_x = src.pixel_x
 						I.pixel_y = src.pixel_y
 						SPAWN_DBG( 20 )
-							if (I && !I.disposed) pool(I)
+							if (I && !I.disposed) qdel(I)
 
 				if (!spacemove) // buh
 					// if the gameticker doesn't exist yet just work with no cooldown

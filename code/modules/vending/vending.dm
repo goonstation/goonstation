@@ -405,7 +405,7 @@
 			boutput(user, "<span class='notice'>You insert [W].</span>")
 			user.u_equip(W)
 			W.dropped()
-			pool( W )
+			qdel( W )
 			src.generate_HTML(1)
 			return
 		else
@@ -681,7 +681,7 @@
 		if (href_list["return_credits"])
 			SPAWN_DBG(src.vend_delay)
 				if (src.credit > 0)
-					var/obj/item/spacecash/returned = unpool(/obj/item/spacecash)
+					var/obj/item/spacecash/returned = new /obj/item/spacecash
 					returned.setup(src.get_output_location(), src.credit)
 
 					usr.put_in_hand_or_eject(returned) // try to eject it into the users hand, if we can
@@ -2490,6 +2490,7 @@
 	glitchy_slogans = 1
 	pay = 1
 	acceptcard = 1
+	mats = null
 	slogan_list = list("Hello!",
 	"Please state the item you wish to purchase.",
 	"Many goods at reasonable prices.",
@@ -2686,7 +2687,7 @@
 
 	New()
 		..()
-		gas_prototype = unpool(/datum/gas_mixture)
+		gas_prototype = new /datum/gas_mixture
 
 	proc/fill_cost()
 		if(!holding) return 0
