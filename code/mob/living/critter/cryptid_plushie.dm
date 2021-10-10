@@ -147,6 +147,8 @@
 				var/obj/storage/targetted_container
 				if(targetted_container.req_access != null)
 					target = get_turf(target) // couldn't find a container that wasn't access-locked
+			else
+				target = get_turf(target)
 		if (target == get_turf(holder.owner))
 			return 1
 		SPAWN_DBG(0)
