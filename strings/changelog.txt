@@ -1,5 +1,9 @@
 
 (t)sun oct 10 21
+(u)Batelite
+(p)6131
+(e)🆕|feature
+(+)Silicons no longer have control over the firelocks of airlocks with disabled AI control.
 (u)Zonespace
 (p)5978
 (e)🆕🗺🎨|feature, mapping, sprites
