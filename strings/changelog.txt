@@ -1,5 +1,10 @@
 
 (t)sun oct 10 21
+(u)Sovexe
+(p)6206
+(e)🆕🎨|feature, sprites
+(+)Arcfiend - max charge increased (2000 -> 2500)
+(+)Arcfiend - Jamming Field ability point cost reduced (200 -> 150)
 (u)Jan.antilles
 (p)6151
 (e)🆕🎨|feature, sprites
