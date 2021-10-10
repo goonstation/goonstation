@@ -5,6 +5,9 @@
 * @license MIT
 */
 
+#define COLOR_HALF_TRANSPARENT_BLACK    "#0000007A"
+#define COLOR_BLACK						"#000000"
+
 /datum/filter_editor
 	var/atom/target
 
