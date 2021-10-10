@@ -924,7 +924,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\medical\diseases\heart_removal.dm"
 #include "code\modules\medical\diseases\high_fever.dm"
 #include "code\modules\medical\diseases\infection.dm"
-#include "code\modules\medical\diseases\jungle_fever.dm"
+#include "code\modules\medical\diseases\chimpfluenza.dm"
 #include "code\modules\medical\diseases\kuru.dm"
 #include "code\modules\medical\diseases\lycanthropy.dm"
 #include "code\modules\medical\diseases\malady.dm"
