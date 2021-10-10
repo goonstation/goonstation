@@ -465,94 +465,60 @@
 	return 1
 
 /proc/man_or_woman(var/mob/subject)
-	if(isabomination(subject))
-		return "abomination"
+	if (isabomination(subject))
+		return pronouns_abomination.preferred_gender
 
-	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
-		return "person"
+	if (subject && subject?.bioHolder?.mobAppearance?.pronouns)
+		return	subject.bioHolder.mobAppearance.pronouns.preferred_gender
 
-	switch (subject.gender)
-		if ("male")
-			return "man"
-		if ("female")
-			return "woman"
-		else
-			return "person"
+	return pronouns_theyThem.preferred_gender
 
 /proc/his_or_her(var/mob/subject)
-	if(isabomination(subject))
-		return "our"
+	if (isabomination(subject))
+		return pronouns_abomination.possessive
 
-	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
-		return "their"
+	if (subject && subject?.bioHolder?.mobAppearance?.pronouns)
+		return subject.bioHolder.mobAppearance.pronouns.possessive
 
-	switch (subject.gender)
-		if ("male")
-			return "his"
-		if ("female")
-			return "her"
-		else
-			return "their"
+	return pronouns_theyThem.possessive
 
 /proc/him_or_her(var/mob/subject)
-	if(isabomination(subject))
-		return "us"
+	if (isabomination(subject))
+		return pronouns_abomination.objective
 
-	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
-		return "them"
+	if (subject && subject?.bioHolder?.mobAppearance?.pronouns)
+		return subject.bioHolder.mobAppearance.pronouns.objective
 
-	switch (subject.gender)
-		if ("male")
-			return "him"
-		if ("female")
-			return "her"
-		else
-			return "them"
+	return pronouns_theyThem.objective
 
 /proc/he_or_she(var/mob/subject)
-	if(isabomination(subject))
-		return "we"
+	if (isabomination(subject))
+		return pronouns_abomination.subjective
 
-	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
-		return "they"
+	if (subject && subject?.bioHolder?.mobAppearance?.pronouns)
+		return subject?.bioHolder?.mobAppearance?.pronouns.subjective
 
-	switch (subject.gender)
-		if ("male")
-			return "he"
-		if ("female")
-			return "she"
-		else
-			return "they"
+	return pronouns_theyThem.subjective
 
 /proc/hes_or_shes(var/mob/subject)
-	if(isabomination(subject))
-		return "we're"
+	var/obj/pronouns/pronouns = pronouns_theyThem
 
-	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
-		return "they're"
+	if (isabomination(subject))
+		pronouns = pronouns_abomination
 
-	switch (subject.gender)
-		if ("male")
-			return "he's"
-		if ("female")
-			return "she's"
-		else
-			return "they're"
+	if (subject && subject?.bioHolder?.mobAppearance?.pronouns)
+		pronouns = subject.bioHolder.mobAppearance.pronouns
+
+	return pronouns.subjective + (pronouns.pluralize ? "'re" : "'s")
 
 /proc/himself_or_herself(var/mob/subject)
-	if(isabomination(subject))
-		return "ourself"
+	if (isabomination(subject))
+		return pronouns_abomination.reflexive
 
-	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
-		return "themselves"
+	if (subject && subject?.bioHolder?.mobAppearance?.pronouns)
+		return subject?.bioHolder?.mobAppearance?.pronouns.reflexive
 
-	switch(subject.gender)
-		if ("male")
-			return "himself"
-		if ("female")
-			return "herself"
-		else
-			return "themselves"
+	return pronouns_theyThem.reflexive
 
 /mob/proc/get_explosion_resistance()
 	return 0

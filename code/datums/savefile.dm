@@ -65,7 +65,7 @@
 
 		// AppearanceHolder details
 		if (src.AH)
-			F["[profileNum]_neutral_pronouns"] << AH.pronouns
+			F["[profileNum]_pronouns"] << AH.pronouns.name
 			F["[profileNum]_eye_color"] << AH.e_color
 			F["[profileNum]_hair_color"] << AH.customization_first_color
 			F["[profileNum]_facial_color"] << AH.customization_second_color
@@ -223,7 +223,14 @@
 
 		// AppearanceHolder details
 		if (src.AH)
-			F["[profileNum]_neutral_pronouns"] >> AH.pronouns
+			var/saved_pronouns
+			F["[profileNum]_pronouns"] >> saved_pronouns
+			if (saved_pronouns == pronouns_heHim.name)
+				AH.pronouns = pronouns_heHim
+			else if (saved_pronouns == pronouns_sheHer.name)
+				AH.pronouns = pronouns_sheHer
+			else
+				AH.pronouns = pronouns_theyThem
 			F["[profileNum]_eye_color"] >> AH.e_color
 			F["[profileNum]_hair_color"] >> AH.customization_first_color
 			F["[profileNum]_hair_color"] >> AH.customization_first_color_original

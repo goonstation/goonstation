@@ -1206,6 +1206,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\playable_piano.dm"
 #include "code\obj\portal.dm"
 #include "code\obj\posters.dm"
+#include "code\obj\pronouns.dm"
 #include "code\obj\rack.dm"
 #include "code\obj\railing.dm"
 #include "code\obj\railway.dm"
