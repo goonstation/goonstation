@@ -162,17 +162,37 @@ ABSTRACT_TYPE(/datum/objective/crew/chiefengineer)
 	reserves
 		explanation_text = "Make sure all SMES units on the station are at least half chaged at the end of the round."
 		check_completion()
-			for(var/obj/machinery/power/smes/S in machine_registry[MACHINES_POWER])
+			//Find the station powernet - largest z1 powernet
+			var/datum/powernet/stationnet = null
+			for (var/datum/powernet/PN as anything in powernets)
+				if(length(PN.nodes))
+					if(PN.nodes[1].z != 1)
+						continue
+					if(!stationnet || length(PN.nodes) > length(stationnet.nodes))
+						stationnet = PN
+
+			for(var/obj/machinery/power/smes/S in stationnet.nodes)
 				if(S.charge < S.capacity/2)
 					return 0
 			return 1
 
 	apc
-		explanation_text = "Ensure all APC units on the station are working with at least 10% charge at the end of the round."
+		explanation_text = "Ensure all APC units on the station are operating at the end of the round."
 		check_completion()
-			for(var/obj/machinery/power/apc/A in machine_registry[MACHINES_POWER])
-				if(!A.operating || A.cell.percent() < 10)
-					return 0
+			//Find the station powernet - largest z1 powernet
+			var/datum/powernet/stationnet = null
+			for (var/datum/powernet/PN as anything in powernets)
+				if(length(PN.nodes))
+					if(PN.nodes[1].z != 1)
+						continue
+					if(!stationnet || length(PN.nodes) > length(stationnet.nodes))
+						stationnet = PN
+
+			for(var/obj/machinery/power/terminal/term in stationnet.nodes)
+				var/obj/machinery/power/apc/A = term.master
+				if(istype(A) && (!A.area || A.area.requires_power))
+					if(!A.operating)
+						return 0
 			return 1
 
 ABSTRACT_TYPE(/datum/objective/crew/securityofficer)
@@ -319,7 +339,6 @@ ABSTRACT_TYPE(/datum/objective/crew/janitor)
 			return 1
 
 //  HoP add 1 (High budget? make ID's? change ID's? make payroll?)
-//  QM add 1 (fill off-station orders? MULE deliveries? )
 //  Delete the above
 #define DRINK_OBJ_DONE 7
 #define DRINK_OBJ_1 1
@@ -434,17 +453,37 @@ ABSTRACT_TYPE(/datum/objective/crew/engineer)
 	reserves
 		explanation_text = "Make sure all SMES units on the station are at least half chaged at the end of the round."
 		check_completion()
-			for(var/obj/machinery/power/smes/S in machine_registry[MACHINES_POWER])
+			//Find the station powernet - largest z1 powernet
+			var/datum/powernet/stationnet = null
+			for (var/datum/powernet/PN as anything in powernets)
+				if(length(PN.nodes))
+					if(PN.nodes[1].z != 1)
+						continue
+					if(!stationnet || length(PN.nodes) > length(stationnet.nodes))
+						stationnet = PN
+
+			for(var/obj/machinery/power/smes/S in stationnet.nodes)
 				if(S.charge < S.capacity/2)
 					return 0
 			return 1
 
 	apc
-		explanation_text = "Ensure all APC units on the station are working with at least 10% charge at the end of the round."
+		explanation_text = "Ensure all APC units on the station are operating at the end of the round."
 		check_completion()
-			for(var/obj/machinery/power/apc/A in machine_registry[MACHINES_POWER])
-				if(!A.operating || A.cell.percent() < 10)
-					return 0
+			//Find the station powernet - largest z1 powernet
+			var/datum/powernet/stationnet = null
+			for (var/datum/powernet/PN as anything in powernets)
+				if(length(PN.nodes))
+					if(PN.nodes[1].z != 1)
+						continue
+					if(!stationnet || length(PN.nodes) > length(stationnet.nodes))
+						stationnet = PN
+
+			for(var/obj/machinery/power/terminal/term in stationnet.nodes)
+				var/obj/machinery/power/apc/A = term.master
+				if(istype(A) && (!A.area || A.area.requires_power))
+					if(!A.operating)
+						return 0
 			return 1
 
 ABSTRACT_TYPE(/datum/objective/crew/miner)
