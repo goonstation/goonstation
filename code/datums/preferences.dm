@@ -161,7 +161,7 @@ datum/preferences
 			"nameMiddle" = src.name_middle,
 			"nameLast" = src.name_last,
 			"randomName" = src.be_random_name,
-			"gender" = (src.gender == MALE ? "Male" : "Female"),
+			"gender" = src.gender == MALE ? "Male" : "Female",
 			"pronouns" = AH.pronouns.name,
 			"age" = src.age,
 			"bloodRandom" = src.random_blood,

@@ -469,7 +469,7 @@
 		return pronouns_abomination.preferred_gender
 
 	if (subject && subject?.bioHolder?.mobAppearance?.pronouns)
-		return	subject.bioHolder.mobAppearance.pronouns.preferred_gender
+		return subject.bioHolder.mobAppearance.pronouns.preferred_gender
 
 	return pronouns_theyThem.preferred_gender
 
