@@ -466,12 +466,12 @@
 
 /proc/man_or_woman(var/mob/subject)
 	if (isabomination(subject))
-		return pronouns_abomination.preferred_gender
+		return pronouns_abomination.preferredGender
 
 	if (subject && subject?.bioHolder?.mobAppearance?.pronouns)
-		return subject.bioHolder.mobAppearance.pronouns.preferred_gender
+		return subject.bioHolder.mobAppearance.pronouns.preferredGender
 
-	return pronouns_theyThem.preferred_gender
+	return pronouns_theyThem.preferredGender
 
 /proc/his_or_her(var/mob/subject)
 	if (isabomination(subject))

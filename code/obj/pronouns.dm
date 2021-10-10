@@ -4,7 +4,7 @@ var/global/obj/pronouns/sheHer/pronouns_sheHer = new /obj/pronouns/sheHer
 var/global/obj/pronouns/abomination/pronouns_abomination = new /obj/pronouns/abomination
 
 /obj/pronouns
-	var/preferred_gender
+	var/preferredGender
 	var/subjective
 	var/objective
 	var/possessive
@@ -14,7 +14,7 @@ var/global/obj/pronouns/abomination/pronouns_abomination = new /obj/pronouns/abo
 
 /obj/pronouns/theyThem
 	name = "they/them"
-	preferred_gender = "person"
+	preferredGender = "person"
 	subjective = "they"
 	objective = "them"
 	possessive = "their"
@@ -24,7 +24,7 @@ var/global/obj/pronouns/abomination/pronouns_abomination = new /obj/pronouns/abo
 
 /obj/pronouns/heHim
 	name = "he/him"
-	preferred_gender = "man"
+	preferredGender = "man"
 	subjective = "he"
 	objective = "him"
 	possessive = "his"
@@ -33,7 +33,7 @@ var/global/obj/pronouns/abomination/pronouns_abomination = new /obj/pronouns/abo
 
 /obj/pronouns/sheHer
 	name = "she/her"
-	preferred_gender = "woman"
+	preferredGender = "woman"
 	subjective = "she"
 	objective = "her"
 	possessive = "her"
@@ -42,7 +42,7 @@ var/global/obj/pronouns/abomination/pronouns_abomination = new /obj/pronouns/abo
 
 /obj/pronouns/abomination
 	name = "abomination"
-	preferred_gender = "abomination"
+	preferredGender = "abomination"
 	subjective = "we"
 	objective = "us"
 	possessive = "our"
