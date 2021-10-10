@@ -1,5 +1,8 @@
 
 (t)sat oct 09 21
+(u)Tarmunora
+(e)⚖|balance
+(+)increase napalm contact damage volume scaling (max unchanged), round burn DOT values
 (u)Nexusuxen & pali
 (+)When there's no roundstart AI it now gets replaced by a cardboard box. This box can also be made out of cardboard in a hacked robotics fabricator. (You can get cardboard by wrench-disassembling those cargo crates made out of cardboard for example!)
 (u)Flourish
