@@ -219,6 +219,10 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/casual)
 	name = "Long Sleeved Shirt"
 	path = /obj/item/clothing/suit/lshirt
 
+/datum/clothingbooth_item/casual/tracksuit_black
+	name = "Black Tracksuit"
+	path = /obj/item/clothing/under/gimmick/adidad
+
 /datum/clothingbooth_item/casual/yoga
 	name = "Yoga Outfit"
 	path = /obj/item/clothing/under/misc/yoga
@@ -1063,10 +1067,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/costume)
 	path = /obj/item/clothing/suit/labcoatlong
 	slot = SLOT_WEAR_SUIT
 	cost = PAY_DOCTORATE/3
-
-/datum/clothingbooth_item/costume/tracksuit_black
-	name = "Black Tracksuit"
-	path = /obj/item/clothing/under/gimmick/adidad
 
 /datum/clothingbooth_item/costume/russsianmob
 	name = "Russian Mobster Suit"
