@@ -1100,7 +1100,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 /datum/SWFuplinkspell/balefulpolymorph
 	name = "Baleful Polymorph"
 	eqtype = "Offensive"
-	desc = "This spell turns an adjacent target into some kind of an animal."
+	desc = "This spell turns an adjacent target into some kind of creature."
 	vr_allowed = 0
 	assoc_spell = /datum/targetable/spell/animal
 	cost = 2

@@ -2841,10 +2841,20 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	hand_count = 2
 	speechverb_say = "snips"
 	speechverb_exclaim = "snaps"
+	speechverb_gasp = "claks"
 	butcherable = 1
 	health_brute = 15
 	health_burn = 15
-	pet_text = list("gently pets", "rubs", "cuddles")
+	pet_text = list("gently pets", "rubs", "cuddles, coddles")
+
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream")
+				if (src.emote_check(voluntary, 50))
+					playsound(src, "sound/voice/animal/crab_chirp.ogg", 20, 1, 2, 2, channel=VOLUME_CHANNEL_EMOTE)
+					return "<b><span class='alert'>[src] blurbles!</span></b>"
+		return null
 
 	New()
 		..()
@@ -2865,6 +2875,47 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		HH.name = "right claw"
 		HH.limb_name = "claw"
 
+/mob/living/critter/small_animal/crab_polymorph
+	name = "crab"
+	real_name = "crab"
+	desc = "Snip snap"
+	icon_state = "crab_party"
+	hand_count = 2
+	speechverb_say = "snips"
+	speechverb_exclaim = "snaps"
+	speechverb_gasp = "claks"
+	butcherable = 1
+	health_brute = 45
+	health_burn = 20
+	pet_text = list("gently pets", "rubs", "cuddles, coddles")
+	add_abilities = list(/datum/targetable/critter/crabmaul)
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream")
+				if (src.emote_check(voluntary, 50))
+					playsound(src, "sound/voice/animal/crab_chirp.ogg", 30, 1, 1, 3, channel=VOLUME_CHANNEL_EMOTE)
+					return "<b><span class='alert'>[src] blurbles!</span></b>"
+		return null
+
+	New()
+		..()
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/small_critter
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "beak"
+		HH.name = "left claw"
+		HH.limb_name = "claw"
+
+		HH = hands[2]
+		HH.limb = new /datum/limb/small_critter
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "beak"
+		HH.name = "right claw"
+		HH.limb_name = "claw"
 
 
 /mob/living/critter/small_animal/trilobite

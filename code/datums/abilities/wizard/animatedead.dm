@@ -4,7 +4,7 @@
 	icon_state = "pet"
 	targeted = 1
 	max_range = 1
-	cooldown = 850
+	cooldown = 600
 	requires_robes = 1
 	offensive = 1
 	cooldown_staff = 1

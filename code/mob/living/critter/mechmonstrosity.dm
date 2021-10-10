@@ -33,7 +33,7 @@
 
 	New()
 		..()
-		abilityHolder.addAbility(/datum/targetable/critter/slam)
+		abilityHolder.addAbility(/datum/targetable/critter/slam_polymorph)
 		abilityHolder.updateButtons()
 
 	death(var/gibbed)
@@ -529,6 +529,7 @@
 				for(var/mob/O in viewers(src, null))
 					O.show_message("<span class='alert'><b>[src]</b> re-assembles itself and is ready to fight once more!</span>")
 		return
+
 
 /*/mob/living/critter/mechmonstrosity/test
 	name = "Mechanical Monstrosity"

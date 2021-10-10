@@ -30,7 +30,7 @@
 	icon_state = "fireball"
 	targeted = 1
 	target_anything = 1
-	cooldown = 350
+	cooldown = 300
 	requires_robes = 1
 	offensive = 1
 	sticky = 1
@@ -54,7 +54,7 @@
 	name = "Fireball"
 	icon_state = "fire-e-fireball"
 	desc = "Launches an explosive fireball at the target."
-	cooldown = 500
+	cooldown = 400
 	targeted = 1
 	target_anything = 1
 

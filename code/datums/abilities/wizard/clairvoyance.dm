@@ -3,7 +3,7 @@
 	desc = "Finds the location of a target."
 	icon_state = "clairvoyance"
 	targeted = 0
-	cooldown = 600
+	cooldown = 300
 	requires_robes = 1
 	cooldown_staff = 1
 	voice_grim = "sound/voice/wizard/ClairvoyanceGrim.ogg"

@@ -3,7 +3,7 @@
 	desc = "Summons a Golem made of the reagent you currently hold."
 	icon_state = "golem"
 	targeted = 0
-	cooldown = 500
+	cooldown = 300
 	requires_robes = 1
 	offensive = 1
 	cooldown_staff = 1

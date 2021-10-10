@@ -3,7 +3,7 @@
 	desc = "Violently throws nearby targets away from the caster."
 	icon_state = "shockwave"
 	targeted = 0
-	cooldown = 400
+	cooldown = 300
 	requires_robes = 1
 	offensive = 1
 	voice_grim = "sound/voice/wizard/EarthquakeGrim.ogg"

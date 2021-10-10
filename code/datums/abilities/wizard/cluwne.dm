@@ -4,7 +4,7 @@
 	icon_state = "clownrevenge"
 	targeted = 1
 	max_range = 1
-	cooldown = 1350
+	cooldown = 1200
 	requires_robes = 1
 	offensive = 1
 	sticky = 1

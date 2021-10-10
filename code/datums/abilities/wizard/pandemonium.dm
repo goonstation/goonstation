@@ -3,7 +3,7 @@
 	desc = "Calls upon spirits of chaos to summon unpredictable effects."
 	icon_state = "pandemonium"
 	targeted = 0
-	cooldown = 400
+	cooldown = 300
 	requires_robes = 1
 	offensive = 1
 	voice_grim = "sound/voice/wizard/PandemoniumGrim.ogg"

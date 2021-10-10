@@ -93,6 +93,7 @@
 /datum/targetable/critter/pounce
 	name = "Pounce"
 	desc = "Pounce on a mob, causing a short stun."
+	icon_state = "pounce_polymorph"
 	cooldown = 200
 	targeted = 1
 	target_anything = 1

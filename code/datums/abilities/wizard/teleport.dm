@@ -3,7 +3,7 @@
 	desc = "Teleports you to an area of your choice after a short delay."
 	icon_state = "phaseshift"
 	targeted = 0
-	cooldown = 450
+	cooldown = 900
 	requires_robes = 1
 	cooldown_staff = 1
 	restricted_area_check = 1
