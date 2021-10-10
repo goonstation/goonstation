@@ -110,7 +110,7 @@
 	name = "Talk"
 	desc = "Communicate through sound."
 	icon_state = "corruption"
-	cooldown = 40
+	cooldown = 50
 	var/words_min = 5
 	var/words_max = 10
 
@@ -161,8 +161,8 @@
 		if (!isturf(target))
 			if(istype(target, /obj/storage))
 				var/obj/storage/targetted_container
-				if(targetted_container.req_access != null)
-					target = get_turf(target) // couldn't find a container that wasn't access-locked
+				if(!targetted_container.locked)
+					target = get_turf(target) // couldn't find a container that wasn't locked
 			else
 				target = get_turf(target)
 		if (target == get_turf(holder.owner))
@@ -208,7 +208,7 @@
 
 			var/list/eligible_containers = list()
 			for_by_tcl(iterated_container, /obj/storage)
-				if (iterated_container.z == Z_LEVEL_STATION && iterated_container.req_access == null)
+				if (iterated_container.z == Z_LEVEL_STATION && !iterated_container.locked)
 					eligible_containers += iterated_container
 			if (!length(eligible_containers))
 				return
@@ -270,7 +270,7 @@
 
 					var/list/eligible_containers = list()
 					for_by_tcl(iterated_container, /obj/storage)
-						if (iterated_container.z == Z_LEVEL_STATION && iterated_container.req_access == null)
+						if (iterated_container.z == Z_LEVEL_STATION && !iterated_container.locked)
 							eligible_containers += iterated_container
 					if (!length(eligible_containers))
 						return
