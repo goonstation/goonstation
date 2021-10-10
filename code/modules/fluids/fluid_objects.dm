@@ -94,7 +94,7 @@
 			src.clogged += (20 * C.amount) //One piece of cloth clogs for about 1 minute. (cause the machine loop updates ~3 second interval)
 			user.show_text("You stuff [I] into the drain.")
 			logTheThing("station", user, null, "clogs [name] shut temporarily at [log_loc(user)].")
-			pool(I)
+			qdel(I)
 			src.update_icon()
 			return
 

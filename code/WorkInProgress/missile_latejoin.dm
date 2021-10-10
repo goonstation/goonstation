@@ -25,12 +25,7 @@
 		src.ion_trail.set_up(src)
 		src.ion_trail.yoffset = 13
 
-	unpooled()
-		moved_on_flooring = 0
-		num_loops = 0
-		..()
-
-	pooled()
+	disposing()
 		ion_trail.stop()
 		passenger = null
 		var/turf/T = get_turf(src)
@@ -40,11 +35,6 @@
 		moved_on_flooring = 0
 		target = null
 		..()
-
-	//disposing()
-	//	ion_trail = null
-	//	passenger = null
-	//	..()
 
 	// its fucking lunch time
 	proc/lunch(atom/movable/sent, d=null)
@@ -139,7 +129,7 @@
 			if(T.z != 1)
 				src.z = 1
 
-		pool(src)
+		qdel(src)
 
 	proc/reset_to_random_pos()
 		src.reset_to_aim_at(locate(rand(1, world.maxx), rand(1, world.maxy), 1))
@@ -152,7 +142,7 @@
 		src.loc = start
 
 proc/launch_with_missile(atom/movable/thing, turf/target)
-	var/obj/arrival_missile/missile = unpool(/obj/arrival_missile)
+	var/obj/arrival_missile/missile = new /obj/arrival_missile
 	if(!target)
 		missile.reset_to_random_pos()
 	else
@@ -162,7 +152,7 @@ proc/launch_with_missile(atom/movable/thing, turf/target)
 	return missile
 
 proc/latejoin_missile_spawn(var/mob/character)
-	var/obj/arrival_missile/M = unpool(/obj/arrival_missile)
+	var/obj/arrival_missile/M = new /obj/arrival_missile
 	var/turf/T = pick_landmark(LANDMARK_LATEJOIN_MISSILE)
 	var/missile_dir = landmarks[LANDMARK_LATEJOIN_MISSILE][T]
 	M.set_loc(T)

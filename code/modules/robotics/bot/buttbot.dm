@@ -294,7 +294,7 @@
 /// cant possibly be a bad idea
 /obj/machinery/bot/buttbot/proc/robo_expel_fart_gas(var/gross)
 	var/turf/T = get_turf(src)
-	var/datum/gas_mixture/gas = unpool(/datum/gas_mixture)
+	var/datum/gas_mixture/gas = new /datum/gas_mixture
 	gas.vacuum()
 	if(gross == 1)
 		gas.farts = 0.5
@@ -479,7 +479,7 @@
 		if(prob(10) && istype(src.loc, /turf/simulated/floor/specialroom/freezer)) //ZeWaka: Fix for null.loc
 			. = "<b>[src]</B> farts. The fart freezes in MID-AIR!!!"
 			new/obj/item/material_piece/fart(src.loc)
-			var/obj/item/material_piece/fart/F = unpool(/obj/item/material_piece/fart)
+			var/obj/item/material_piece/fart/F = new /obj/item/material_piece/fart
 			F.set_loc(src.loc)
 	fartcount++
 	if(fartcount == 69 || fartcount == 420)

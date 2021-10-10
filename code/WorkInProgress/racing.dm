@@ -92,7 +92,7 @@
 			qdel(src)
 
 	proc/move_process()
-		if (src.qdeled || src.pooled)
+		if (src.qdeled || src.disposed)
 			return
 		step(src,dir)
 		SPAWN_DBG(1 DECI SECOND) move_process()
@@ -124,7 +124,7 @@
 			qdel(src)
 
 	proc/move_process()
-		if (src.qdeled || src.pooled)
+		if (src.qdeled || src.disposed)
 			return
 
 		var/atom/target = null
@@ -489,7 +489,7 @@
 		return
 
 	remove_air(amount as num)
-		var/datum/gas_mixture/Air = unpool(/datum/gas_mixture)
+		var/datum/gas_mixture/Air = new /datum/gas_mixture
 		Air.oxygen = amount
 		Air.temperature = 310
 		return Air

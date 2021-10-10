@@ -61,7 +61,7 @@
 
 	blob_act(var/power)
 		if (prob(power * 2.5))
-			var/obj/item/I = unpool(/obj/item/raw_material/scrap_metal)
+			var/obj/item/I = new /obj/item/raw_material/scrap_metal
 			I.set_loc(get_turf(src))
 
 			if (src.material)

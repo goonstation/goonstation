@@ -415,10 +415,6 @@ datum
 			minimum_reaction_temperature = T0C + 100
 			var/reacted_to_temp = 0 // prevent infinite loop in a fluid
 
-			pooled()
-				..()
-				reacted_to_temp = 0
-
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(!reacted_to_temp)
 					reacted_to_temp = 1
@@ -931,7 +927,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				if (volume >= 5 && !(locate(/obj/item/raw_material/ice) in T))
-					var/obj/item/raw_material/ice/I = unpool(/obj/item/raw_material/ice)
+					var/obj/item/raw_material/ice/I = new /obj/item/raw_material/ice
 					I.set_loc(T)
 				return
 

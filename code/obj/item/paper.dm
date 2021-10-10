@@ -83,42 +83,6 @@
 		src.pixel_y = rand(-8, 8)
 		src.pixel_x = rand(-9, 9)
 
-/obj/item/paper/pooled()
-
-	..()
-	name = "paper"
-	info = 0
-	src.icon_state = "paper_blank"
-	health = 10
-
-/obj/item/paper/unpooled()
-
-	..()
-	name = initial(name)
-	info = initial(info)
-	icon_state = initial(icon_state)
-	health = initial(health)
-	sealed = initial(sealed)
-
-
-	if (src.reagents)
-		src.reagents.clear_reagents()
-		src.reagents.add_reagent("paper", 10)
-	else
-		src.create_reagents(10)
-		reagents.add_reagent("paper", 10)
-
-	if (!src.offset)
-		return
-	else
-		src.pixel_y = rand(-8, 8)
-		src.pixel_x = rand(-9, 9)
-	SPAWN_DBG(0)
-		if (src.info && src.icon_state == "paper_blank")
-			icon_state = "paper"
-
-	return
-
 /obj/item/paper/examine(mob/user)
 	. = ..()
 	ui_interact(user)
@@ -139,7 +103,7 @@
 		src.examine(user)
 	else
 		var/fold = alert("What would you like to fold [src] into?",,"Paper hat","Paper plane","Paper ball")
-		if(src.pooled) //It's possible to queue multiple of these menus before resolving any.
+		if(src.disposed) //It's possible to queue multiple of these menus before resolving any.
 			return
 		user.u_equip(src)
 		if (fold == "Paper hat")
@@ -159,7 +123,7 @@
 			F.old_icon_state = src.icon_state
 			user.put_in_hand_or_drop(F)
 
-		pool(src)
+		qdel(src)
 
 /obj/item/paper/attack_ai(var/mob/AI as mob)
 	var/mob/living/silicon/ai/user
@@ -362,7 +326,7 @@
 		var/obj/item/paper_mask/M = new /obj/item/paper_mask(get_turf(src.loc))
 		user.put_in_hand_or_drop(M)
 		user.u_equip(src)
-		pool(src)
+		qdel(src)
 	else
 		// cut paper?  the sky is the limit!
 		ui_interact(user)	// The other ui will be created with just read mode outside of this
@@ -1181,7 +1145,7 @@ as it may become compromised.
 	else
 		if (src.amount >= 1 && user) //Wire: Fix for Cannot read null.loc (&& user)
 			src.amount--
-			var/obj/item/paper/P = unpool(/obj/item/paper)
+			var/obj/item/paper/P = new /obj/item/paper
 			P.set_loc(src)
 			user.put_in_hand_or_drop(P)
 			if (rand(1,100) == 13)
@@ -1458,7 +1422,7 @@ as it may become compromised.
 		eat_twitch(M)
 		var/obj/item/paper/P = src
 		user.u_equip(P)
-		pool(P)
+		qdel(P)
 	else
 		..()
 

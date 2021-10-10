@@ -86,7 +86,7 @@
 			src.gas_amount_current = min(src.gas_amount_current + src.gas_amount_growth, src.gas_amount)
 		var/turf/simulated/L = get_turf(O)
 		if(istype(L))
-			var/datum/gas_mixture/gas = unpool(/datum/gas_mixture)
+			var/datum/gas_mixture/gas = new /datum/gas_mixture
 			switch(src.gas_type)
 				if("oxygen")
 					gas.oxygen = src.gas_amount_current

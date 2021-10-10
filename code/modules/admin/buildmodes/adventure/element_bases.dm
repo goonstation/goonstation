@@ -50,10 +50,6 @@ var/global/list/adventure_elements_by_id = list()
 	opacity = 0
 	anchored = 1
 
-	unpooled()
-		icon_state = "select_generic"
-		..()
-
 	disposing()
 		icon_state = null
 		..()

@@ -73,7 +73,7 @@
 			user.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
 			user.u_equip(W)
 			if (istype(W, /obj/item/raw_material/shard))
-				pool(W)
+				qdel(W)
 			else
 				qdel(W)
 			return 1

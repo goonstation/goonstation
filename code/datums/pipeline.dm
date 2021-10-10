@@ -15,7 +15,7 @@ datum/pipeline
 
 		if(air?.volume)
 			temporarily_store_air()
-			pool(air)
+			qdel(air)
 		air = null
 
 		if (members)
@@ -94,11 +94,11 @@ datum/pipeline
 
 		if(base.air_temporary)
 			if(air)
-				pool(air)
+				qdel(air)
 			air = base.air_temporary
 			base.air_temporary = null
 		else
-			air = unpool(/datum/gas_mixture)
+			air = new /datum/gas_mixture
 
 		while(possible_expansions.len>0)
 			for(var/obj/machinery/atmospherics/pipe/borderline in possible_expansions)
@@ -159,7 +159,7 @@ datum/pipeline
 
 		if(istype(target) && target.parent && target.parent.group_processing)
 			//Have to consider preservation of group statuses
-			var/datum/gas_mixture/turf_copy = unpool(/datum/gas_mixture)
+			var/datum/gas_mixture/turf_copy = new /datum/gas_mixture
 
 			turf_copy.copy_from(target.parent.air)
 			turf_copy.volume = target.parent.air.volume //Copy a good representation of the turf from parent group
@@ -179,7 +179,7 @@ datum/pipeline
 
 				target.parent.suspend_group_processing()
 				target.air.copy_from(turf_copy)
-				pool(turf_copy) // done with this
+				qdel(turf_copy) // done with this
 
 		else
 			var/datum/gas_mixture/turf_air = target.return_air()
