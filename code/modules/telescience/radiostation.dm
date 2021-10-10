@@ -330,7 +330,7 @@
 		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 		M.changeStatus("weakened", 2 SECONDS)
 		playsound(src, "shatter", 70, 1)
-		var/obj/O = unpool (/obj/item/raw_material/shard/glass)
+		var/obj/O = new /obj/item/raw_material/shard/glass
 		O.set_loc(get_turf(M))
 		if (src.material)
 			O.setMaterial(copyMaterial(src.material))

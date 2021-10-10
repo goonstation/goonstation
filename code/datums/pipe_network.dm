@@ -11,7 +11,7 @@ datum/pipe_network
 	var/datum/gas_mixture/air_transient = null
 
 	New()
-		air_transient = unpool(/datum/gas_mixture)
+		air_transient = new /datum/gas_mixture
 
 		..()
 
@@ -32,7 +32,7 @@ datum/pipe_network
 			line_members.len = 0
 		line_members = null
 		if (air_transient)
-			pool(air_transient)
+			qdel(air_transient)
 		air_transient = null
 		..()
 

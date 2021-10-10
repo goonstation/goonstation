@@ -77,13 +77,13 @@
 			else
 				trunk.linked = src	// link the pipe trunk to self
 
-			air_contents = unpool(/datum/gas_mixture)
+			air_contents = new /datum/gas_mixture
 			//gas.volume = 1.05 * CELLSTANDARD
 			update()
 
 	disposing()
 		if(air_contents)
-			pool(air_contents)
+			qdel(air_contents)
 			air_contents = null
 		..()
 
@@ -254,7 +254,7 @@
 		flushing = 1
 
 		closeup()
-		var/obj/disposalholder/H = unpool(/obj/disposalholder)	// virtual holder object which actually
+		var/obj/disposalholder/H = new /obj/disposalholder	// virtual holder object which actually
 																// travels through the pipes.
 
 		H.init(src)	// copy the contents of disposer to holder
@@ -312,7 +312,7 @@
 			AM?.throw_at(target, 5, 1)
 
 		H.vent_gas(loc)
-		pool(H)
+		qdel(H)
 
 
 /obj/machinery/floorflusher/industrial

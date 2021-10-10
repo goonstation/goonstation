@@ -40,11 +40,6 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		src.name = S.name
 		overImg.icon_state = S.icon_state
 
-	pooled()
-		src.name = "null"
-		ownerStatus = 0
-		..()
-
 	clicked(list/params)
 		if (ownerStatus)
 			ownerStatus.clicked(params)

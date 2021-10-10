@@ -1,14 +1,73 @@
+
+(t)sun oct 10 21
+(u)Batelite
+(p)6131
+(e)🆕|feature
+(+)Silicons no longer have control over the firelocks of airlocks with disabled AI control.
+(u)Zonespace
+(p)5978
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Added a new prefab to the asteroid field, a Syndicate Laboratory.
+(u)Zonespace
+(p)6086
+(e)⚖|balance
+(+)Only spy thieves can deploy and undeploy their camera's flash.
+(u)Gerhazo
+(e)🆕|feature
+(*)Halloween plush toy job is now in a true halloween mood.
+(u)Eagle
+(p)6021
+(e)🗺|mapping
+(+)Added a ranch to mushroom, along with some very very tiny qql things.
+(u)Flaborized
+(p)6219
+(e)🎨|sprites
+(+)Resprited wizard spell ability icons.
+(t)sat oct 09 21
+(u)Tarmunora
+(e)⚖|balance
+(+)increase napalm contact damage volume scaling (max unchanged), round burn DOT values
+(u)Nexusuxen & pali
+(+)When there's no roundstart AI it now gets replaced by a cardboard box. This box can also be made out of cardboard in a hacked robotics fabricator. (You can get cardboard by wrench-disassembling those cargo crates made out of cardboard for example!)
+(u)Flourish
+(+)The Devil has gone back to Hell to visit their parents. But what's that? A tattered plush toy? Aw, how adorable...
+(+)Holographic disguisers are now available in the Syndicate uplink for 2 bad guy bucks.
+(+)Chameleon projectors can now copy the appearance of <i>any</i> object. They also now cost 5 evil energy crystals.
 (t)fri oct 08 21
+(u)Flappybat
+(p)5928
+(e)⚖|balance
+(+)Antagonist critter gunbots now have muzzleflash, thermalvision and cyborg style punch immunity.
+(u)Tarmunora
+(e)⚖|balance
+(+)Port-a-nanomed and chemdepot non-scannable
+(+)Organ Swap special order additional rewards of 3x medical restock cartridges and 1x advanced medical restock cartridge (portamed restock)
+(u)Danger Noodle
+(p)6214
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Added a new space prefab, a school for securitrons.
+(u)Kubius
+(p)6043
+(e)🆕🗺|feature, mapping
+(*)Silverglass has been set adrift in deep space.
+(u)Arthur Holiday
+(p)6204
+(e)⚖|balance
+(+)When putting down a chair you will have to wait 1 second before climbing on it.
+(u)Ikea
+(p)5944
+(e)|
+(*)Engineering now come with lamp manufacturers.
 (u)Dr. Cogwerks
 (e)🗺|mapping
-(*)Reworked Cogmap2 security checkpoint and podbay layouts. Added minibrig and a little pilot/merchant booth. 
-(*)Reinforced Mining Magnet viewing areas 
+(*)Reworked Cogmap2 security checkpoint and podbay layouts. Added minibrig and a little pilot/merchant booth.
+(*)Reinforced Mining Magnet viewing areas
 (t)thu oct 07 21
 (u)Carsontheking
 (p)5782
 (e)🆕🎨|feature, sprites
 (+)Gold ID card the hops equipment manufacturer can make now requires gold rather than reflective material.
-(u)Dr. Cogwerks 
+(u)Dr. Cogwerks
 (e)🗺|mapping
 (*)Reworked cogmap2 engineering hallway so the PTL only bisects one side of the primary corridor by default
 (u)MetricDuck

@@ -1091,7 +1091,7 @@ MATERIAL
 		else
 			boutput(user, "<span class='notice'>You add [success] tiles to the stack. It now has [src.amount] tiles.</span>")
 		tooltip_rebuild = 1
-		if (!W.pooled)
+		if (!W.disposed)
 			W.add_fingerprint(user)
 			W.tooltip_rebuild = 1
 		return

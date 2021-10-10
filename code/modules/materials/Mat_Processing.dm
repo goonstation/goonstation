@@ -69,7 +69,7 @@
 					mat_id = exists_nearby.material.mat_id
 				else
 					var/newType = getProcessedMaterialForm(X.material)
-					var/obj/item/material_piece/P = unpool(newType)
+					var/obj/item/material_piece/P = new newType
 					P.set_loc(get_output_location())
 					P.setMaterial(copyMaterial(X.material))
 					P.change_stack_amount(out_amount - P.amount)
@@ -93,7 +93,7 @@
 						second_mat_id = second_exists_nearby.material.mat_id
 					else
 						var/newType = getProcessedMaterialForm(second_mat)
-						var/obj/item/material_piece/PC = unpool(newType)
+						var/obj/item/material_piece/PC = new newType
 						PC.set_loc(get_output_location())
 						PC.setMaterial(copyMaterial(second_mat))
 						PC.change_stack_amount(out_amount - PC.amount)
@@ -497,7 +497,7 @@
 		var/datum/material/M = new /datum/material/organic/flesh {desc="A disgusting wad of flesh."; color="#881111";} ()
 		M.name = "[user.real_name] flesh"
 
-		var/obj/item/material_piece/wad/dummyItem = unpool(/obj/item/material_piece/wad)
+		var/obj/item/material_piece/wad/dummyItem = new /obj/item/material_piece/wad
 		dummyItem.set_loc(src)
 		dummyItem.setMaterial(M)
 		dummyItem.change_stack_amount(5)
@@ -588,7 +588,7 @@
 			boutput(user, "<span class='notice'>You remove [output.name] from the [src].</span>")
 
 			var/bar_type = getProcessedMaterialForm(output)
-			var/obj/item/material_piece/M = unpool(bar_type)
+			var/obj/item/material_piece/M = new bar_type
 			M.set_loc(locate(src.x + 1, src.y, src.z))
 
 			M.add_fingerprint(user) // May not be the same person who smelted the materials (Convair880).
@@ -675,7 +675,7 @@
 			if(slag_level)
 				src.visible_message("<span class='notice'>[user] removes slag from the [src]</span>")
 				slag_level = 0
-				var/obj/item/material_piece/slag/S = unpool(/obj/item/material_piece/slag)
+				var/obj/item/material_piece/slag/S = new /obj/item/material_piece/slag
 				S.set_loc(src.loc)
 				return
 			else
