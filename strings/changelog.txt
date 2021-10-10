@@ -1,5 +1,9 @@
 
 (t)sun oct 10 21
+(u)Eagle
+(p)6021
+(e)🗺|mapping
+(+)Added a ranch to mushroom, along with some very very tiny qql things.
 (u)Flaborized
 (p)6219
 (e)🎨|sprites
