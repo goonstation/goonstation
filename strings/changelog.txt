@@ -1,5 +1,9 @@
 
 (t)sun oct 10 21
+(u)Zonespace
+(p)6086
+(e)⚖|balance
+(+)Only spy thieves can deploy and undeploy their camera's flash.
 (u)Gerhazo
 (e)🆕|feature
 (*)Halloween plush toy job is now in a true halloween mood.
