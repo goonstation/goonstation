@@ -338,7 +338,7 @@
 			if ("pulling")
 				if (master.pulling)
 					unpull_particle(master,pulling)
-				master.pulling = null
+				master.remove_pulling()
 				update_pulling()
 			if ("upgrades")
 				set_show_upgrades(!src.show_upgrades)
@@ -548,7 +548,7 @@
 			// I put this here because there's nowhere else for it right now.
 			// @TODO robot hud needs a general update() call imo.
 			if (src.mainframe)
-				mainframe.invisibility = (master.mainframe ? 0 : 101)
+				mainframe.invisibility = (master.mainframe ? INVIS_NONE : INVIS_ALWAYS)
 
 
 		update_pulling()

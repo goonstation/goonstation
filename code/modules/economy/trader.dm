@@ -799,6 +799,7 @@
 				src.illegal = 1
 				var/carlsell = rand(1,10)
 				src.goods_illegal += new /datum/commodity/contraband/command_suit(src)
+				src.goods_illegal += new /datum/commodity/contraband/command_helmet(src)
 				src.goods_illegal += new /datum/commodity/contraband/disguiser(src)
 				if (carlsell <= 3)
 					src.goods_illegal += new /datum/commodity/contraband/radiojammer(src)
@@ -915,6 +916,8 @@
 				src.goods_sell += new /datum/commodity/junk/voltron(src)
 				src.goods_sell += new /datum/commodity/junk/cloner_upgrade(src)
 				src.goods_sell += new /datum/commodity/junk/grinder_upgrade(src)
+				src.goods_sell += new /datum/commodity/junk/speedyclone(src)
+				src.goods_sell += new /datum/commodity/junk/efficientclone(src)
 				src.goods_sell += new /datum/commodity/podparts/goldarmor(src)
 
 				src.goods_buy += new /datum/commodity/salvage/scrap(src)

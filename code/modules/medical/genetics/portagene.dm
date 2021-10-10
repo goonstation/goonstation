@@ -182,7 +182,7 @@
 
 			var/mob/M = G.affecting
 			if (user.pulling == M)
-				user.pulling = null
+				user.remove_pulling()
 			src.go_in(M)
 
 			for(var/obj/O in src)

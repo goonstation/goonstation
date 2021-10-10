@@ -118,6 +118,32 @@
 				return
 		system.reply("Could not locate [ckey].", user)
 
+/datum/spacebee_extension_command/prison
+	name = "prison"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	help_message = "Sends a given ckey to the prison zone."
+	argument_types = list(/datum/command_argument/string/ckey="ckey")
+
+	execute(user, ckey)
+		for(var/client/C)
+			if (C.ckey == ckey)
+				var/mob/M = C.mob
+				if (M && ismob(M) && !isAI(M) && !isobserver(M))
+					var/prison = pick_landmark(LANDMARK_PRISONWARP)
+					if (prison)
+						M.changeStatus("paralysis", 8 SECONDS)
+						M.set_loc(prison)
+						M.show_text("<h2><font color=red><b>You have been sent to the penalty box, and an admin should contact you shortly. If nobody does within a minute or two, please inquire about it in adminhelp (F1 key).</b></font></h2>", "red")
+						logTheThing("admin", "[user] (Discord)", null, "prisoned [constructTarget(C,"admin")].")
+						logTheThing("diary", "[user] (Discord)", null, "prisoned [constructTarget(C,"diary")].", "admin")
+						system.reply("Prisoned [ckey].", user)
+						return
+					system.reply("Could not locate prison zone.", user)
+					return
+				system.reply("[ckey] was of mob type [M.type] and could not be prisoned.", user)
+				return
+		system.reply("Could not locate [ckey].", user)
+
 /datum/spacebee_extension_command/where_is
 	name = "whereis"
 	server_targeting = COMMAND_TARGETING_SINGLE_SERVER

@@ -49,7 +49,7 @@
 
 /obj/adventurepuzzle/triggerable/targetable/fireballtrap
 	name = "fireball trap"
-	invisibility = 20
+	invisibility = INVIS_ADVENTURE
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "fireball"
 	density = 0

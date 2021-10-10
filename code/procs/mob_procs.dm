@@ -141,7 +141,7 @@
 			playsound(src.loc, "sound/misc/slip.ogg", 50, 1, -3)
 		else
 			playsound(src.loc, "sound/misc/slip_big.ogg", 50, 1, -3)
-		src.pulling = null
+		src.remove_pulling()
 
 		var/turf/T = get_ranged_target_turf(src, src.last_move_dir, throw_range)
 		src.throw_at(T, intensity, 2, list("stun"=clamp(1.1 SECONDS * intensity, 1 SECOND, 5 SECONDS)), src.loc, throw_type = THROW_SLIP)

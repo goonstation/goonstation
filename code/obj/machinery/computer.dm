@@ -8,7 +8,6 @@
 	var/light_r = 1
 	var/light_g = 1
 	var/light_b = 1
-	var/powernet = null
 	var/list/records = null
 	var/id = null
 	var/frequency = null

@@ -1174,7 +1174,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 					src.visible_message("[src] [pick("ignores","pays no attention to","warily eyes","turns away from")] [user]!")
 					return
 				else
-					user.pulling = src
+					user.set_pulling(src)
 					src.wanderer = 0
 					if (src.task == "wandering")
 						src.task = "thinking"

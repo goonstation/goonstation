@@ -61,6 +61,9 @@
 					UpdateOverlays(null, okey, 0, 1)
 
 
+	was_deconstructed_to_frame(mob/user)
+		src.active = 0
+
 	attack_hand(var/mob/user as mob)
 		if (!src.fuel) boutput(user, "<span class='alert'>There is no fuel in the furnace!</span>")
 		else

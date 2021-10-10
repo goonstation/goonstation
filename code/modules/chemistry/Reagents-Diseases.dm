@@ -156,6 +156,7 @@ datum
 			fluid_g = 87
 			fluid_b = 44
 			transparency = 80
+			random_chem_blacklisted = 1
 			disease = /datum/ailment/disease/hootonium
 
 		disease/nanites // Robot Transformation
@@ -284,6 +285,7 @@ datum
 			fluid_g = 220
 			fluid_b = 200
 			transparency = 170
+			random_chem_blacklisted = 1
 			disease = /datum/ailment/disease/necrotic_degeneration
 
 		disease/viral_curative // Panacaea

@@ -47,7 +47,11 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	icon = 'icons/mob/spooktober_ghost_hud160x32.dmi'
 	icon_state = "empty"
 	name = "Spooktober Spookpoints Meter"
+	desc = "Seems to indicate how spooky the current ghosts are in this sector."
 	var/theme = null // for wire's tooltips, it's about time this got varized
+
+	get_desc()
+		. += "[spooktober_GH.points] Points!"
 
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)
@@ -57,7 +61,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			usr.client.tooltipHolder.showHover(src, list(
 				"params" = params,
 				"title" = "spooktober spook points",//src.name,
-				"content" = "[spooktober_GH.points] Points",//(src.desc ? src.desc : null),
+				"content" = "[spooktober_GH.points] Points <br>All Points are shared between ghosts. <br>Spinning chairs, flipping, using the ouija board, and farting on people as a ghost generates more points faster.",//(src.desc ? src.desc : null),
 				"theme" = theme
 			))
 
@@ -139,11 +143,11 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		if (display_buttons)
 			for (var/datum/targetable/ghost_observer/A in src.abilities)
 				if (!istype (A, /datum/targetable/ghost_observer/toggle_HUD) && istype(A.object))
-					A.object.invisibility = 0
+					A.object.invisibility = INVIS_NONE
 		else
 			for (var/datum/targetable/ghost_observer/A in src.abilities)
 				if (!istype (A, /datum/targetable/ghost_observer/toggle_HUD) && istype(A.object))
-					A.object.invisibility = 100
+					A.object.invisibility = INVIS_ALWAYS_ISH
 
 	proc/add_all_abilities()
 		src.addAbility(/datum/targetable/ghost_observer/toggle_HUD)
@@ -605,7 +609,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		if (istype(holder, /datum/abilityHolder/ghost_observer))
 			var/datum/abilityHolder/ghost_observer/GAH = holder
 			GAH.spooking = 1
-		src.holder.owner.invisibility = 0
+		src.holder.owner.invisibility = INVIS_NONE
 		boutput(holder.owner, "<span class='notice'>You start being spooky! The living can all see you!</span>")
 
 	//remove the filter animation when we're done.

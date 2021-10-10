@@ -1261,6 +1261,12 @@
 		icon_state = "espace-alt"
 		item_state = "es_suit"
 
+/obj/item/clothing/suit/space/neon
+	name = "neon space suit"
+	desc = "It comes in fun colours, but is as bulky and slow to move in as any standard space suit..."
+	icon_state = "space-neon"
+	item_state = "space-neon"
+
 // Sealab suits
 
 /obj/item/clothing/suit/space/diving
@@ -1573,6 +1579,12 @@
 	icon_state = "wintercoat-command"
 	item_state = "wintercoat-command"
 
+/obj/item/clothing/suit/wintercoat/detective
+	name = "detective's winter coat"
+	desc = "A comfy coat to protect against the cold. Popular with private investigators."
+	icon_state = "wintercoat-detective"
+	item_state = "wintercoat-detective"
+
 /obj/item/clothing/suit/hi_vis
 	name = "hi-vis vest"
 	desc = "For when you just have to be seen!"
@@ -1688,3 +1700,11 @@
 		setProperty("rangedprot", 0.5)
 		setProperty("movespeed", 0.5)
 		setProperty("disorient_resist", 15)
+
+/obj/item/clothing/suit/jean_jacket
+	name = "jean jacket"
+	desc = "Pants for your jealous arms."
+	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+	icon_state = "jean_jacket"
+	item_state = "jean_jacket"
+	body_parts_covered = TORSO|ARMS

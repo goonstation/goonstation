@@ -42,11 +42,12 @@
 	var/atom/movable/target
 	var/classic
 
-	New(atom/movable/target)
+	New(atom/movable/target, ignore_z = FALSE)
 		. = ..()
 		var/turf/T = get_turf(target)
 		src.target = target
-		src.classic = isrestrictedz(T.z)
+		if (!ignore_z)
+			src.classic = isrestrictedz(T.z)
 		if(!ismob(target))
 			duration = rand(0, 20) DECI SECONDS
 			src.bar_icon_state = ""

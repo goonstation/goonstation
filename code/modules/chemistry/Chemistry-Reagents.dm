@@ -203,6 +203,7 @@ datum
 
 		//mult is used to handle realtime metabolizations over byond time
 		proc/on_mob_life(var/mob/M, var/mult = 1)
+			SHOULD_CALL_PARENT(TRUE)
 			if (!M || !M.reagents)
 				return
 			if (!holder)

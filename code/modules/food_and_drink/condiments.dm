@@ -50,6 +50,8 @@
 	name = "mayonnaise"
 	desc = "The subject of many a tiresome innuendo."
 	icon_state = "mayonnaise" //why the fuck was this icon state called cookie
+	initial_volume = 5
+	initial_reagents = "mayo"
 
 /obj/item/reagent_containers/food/snacks/condiment/hotsauce
 	name = "hot sauce"

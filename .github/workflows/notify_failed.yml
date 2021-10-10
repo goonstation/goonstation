@@ -1,0 +1,24 @@
+name: "Notify Workflow Failure"
+on:
+  workflow_run:
+    workflows: ["Automaton", "Beepsky"]
+    types: [completed]
+
+jobs:
+  on-failure:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'failure' && github.repository == 'goonstation/goonstation' }}
+    steps:
+      - run: |
+          curl -X POST -H "Content-Type: application/json" \
+            -d '{
+              "name":"${{ github.event.workflow_run.name }}",
+              "url":"${{ github.event.workflow_run.html_url }}",
+              "branch": "${{ github.event.workflow_run.head_branch }}",
+              "author": "${{ github.event.workflow_run.head_commit.author.name }}",
+              "message": "${{ github.event.workflow_run.head_commit.message }}",
+              "commit": "${{ github.event.workflow_run.head_commit.id }}",
+              "api_key": "${{ secrets.MEDASS_API_KEY }}",
+              "repo": "${{ github.repository }}"
+              }' \
+            "${{ secrets.MEDASS_API_URL }}/workflow_failed"

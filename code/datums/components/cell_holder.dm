@@ -66,7 +66,13 @@
 
 /datum/component/cell_holder/proc/begin_swap(mob/user, atom/movable/P)
 	if(src.swappable_cell)
-		actions.start(new /datum/action/bar/icon/cellswap(user, P, parent), user)
+		var/list/ret = list()
+		if((SEND_SIGNAL(P, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST) && (ret["max_charge"] <= src.max_cell_size))
+			actions.start(new /datum/action/bar/icon/cellswap(user, P, parent), user)
+		else
+			boutput(user, "<span class='notice'>[parent] cannot handle the amount of power in [P].</span>")
+	else
+		boutput(user, "<span class='notice'>[parent] doesn't have a port to swap power cells.</span>")
 
 /datum/component/cell_holder/proc/do_swap(source, atom/movable/P, mob/user)
 	var/atom/movable/old_cell = src.cell
@@ -125,7 +131,7 @@
 
 /datum/action/bar/icon/cellswap
 	duration = 1 SECOND
-	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ATTACKED
+	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ATTACKED | INTERRUPT_ACTION
 	id = "powercellswap"
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "power_cell"

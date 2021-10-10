@@ -859,7 +859,7 @@ Returns:
 	var/freeze_source = 1 //Attempt to make source mob immovable and invincible during cam?
 	nodamage = 1
 	canmove = 0
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	density = 0
 	anchored = 1
 
@@ -1849,6 +1849,12 @@ Returns:
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "ouijaboard"
 	w_class = W_CLASS_NORMAL
+	var/emoji_prob = 30
+	var/emoji_min = 1
+	var/emoji_max = 3
+	var/words_prob = 100
+	var/words_min = 5
+	var/words_max = 10
 
 	New()
 		. = ..()
@@ -1859,43 +1865,59 @@ Returns:
 		. = ..()
 		STOP_TRACKING
 
+	proc/generate_words()
+		var/list/words = list()
+		if(prob(words_prob))
+			for(var/i in 1 to rand(words_min, words_max))
+				var/picked = pick(strings("ouija_board.txt", "ouija_board_words"))
+				words |= picked
+		if(prob(emoji_prob))
+			for(var/i in 1 to rand(emoji_min, emoji_max))
+				words |= random_emoji()
+		return words
+
 	Click(location,control,params)
 		if(isobserver(usr) || iswraith(usr))
 			if(isAIeye(usr))
 				boutput(usr, "<span class='notice'>Whoa, you can use this as an AI? Are you actually just a ghost trapped in a metal box??</span>")
 
-			if(GET_COOLDOWN(src, usr) == 0)
-				var/list/words = list()
-				for(var/i=0, i<rand(5, 10), i++)
-					var/picked = pick(strings("ouija_board.txt", "ouija_board_words"))
-					words |= picked
-
-				if(words.len)
-					var/selected = input(usr, "Select a word:", src.name) as null|anything in words
-					if(!selected) return
-
-					if(ON_COOLDOWN(src, usr, 3 SECONDS))
-						usr.show_text("Please wait a moment before using the board again.", "red")
-						return
-
-					if(src && selected)
-						animate_float(src, 1, 5, 1)
-						if(prob(20) && !ON_COOLDOWN(src, "bother chaplains", 1 MINUTE))
-							var/area/AR = get_area(src)
-							for(var/mob/M in by_cat[TR_CAT_CHAPLAINS])
-								if(M.client)
-									boutput(M, "<span class='notice'>You sense a disturbance emanating from \a [src] in \the [AR.name].</span>")
-						for (var/mob/O in observersviewers(7, src))
-							O.show_message("<B><span class='notice'>The board spells out a message ... \"[selected]\"</span></B>", 1)
-#ifdef HALLOWEEN
-						if (istype(usr.abilityHolder, /datum/abilityHolder/ghost_observer))
-							var/datum/abilityHolder/ghost_observer/GH = usr.abilityHolder
-							GH.change_points(30)
-#endif
-			else
+			if(ON_COOLDOWN(src, usr, 3 SECONDS))
 				usr.show_text("Please wait a moment before using the board again.", "red")
+				return
+
+			var/selected
+			do
+				var/list/words = list("*REFRESH*") + src.generate_words()
+				selected = tgui_input_list(usr, "Select a word:", src.name, words, allowIllegal=TRUE)
+			while(selected == "*REFRESH*")
+
+			if(!selected)
+				return
+
+			animate_float(src, 1, 5, 1)
+			if(prob(20) && !ON_COOLDOWN(src, "bother chaplains", 1 MINUTE))
+				var/area/AR = get_area(src)
+				for(var/mob/M in by_cat[TR_CAT_CHAPLAINS])
+					if(M.client)
+						boutput(M, "<span class='notice'>You sense a disturbance emanating from \a [src] in \the [AR.name].</span>")
+			for (var/mob/O in observersviewers(7, src))
+				O.show_message("<B><span class='notice'>The board spells out a message ... \"[selected]\"</span></B>", 1)
+			#ifdef HALLOWEEN
+			if (istype(usr.abilityHolder, /datum/abilityHolder/ghost_observer))
+				var/datum/abilityHolder/ghost_observer/GH = usr.abilityHolder
+				GH.change_points(30)
+			#endif
 		else
 			return ..(location,control,params)
+
+/obj/item/ghostboard/emouija
+	name = "Emouija board"
+	desc = "A wooden board that allows for communication with spirits and such things. Wait, this one doesn't even have proper letters on it."
+	emoji_prob = 100
+	emoji_min = 5
+	emoji_max = 10
+	words_prob = 0
+
 
 /proc/fartes()
 	for(var/imageToLoad in flist("images/"))
@@ -2062,7 +2084,7 @@ Returns:
 	anchored = 1
 	density = 0
 	opacity = 0
-	invisibility = 100
+	invisibility = INVIS_ALWAYS_ISH
 	var/image/oimage = null
 	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
@@ -2217,7 +2239,7 @@ Returns:
 	density = 0
 	anchored = 1
 	opacity = 0
-	invisibility = 100
+	invisibility = INVIS_ALWAYS_ISH
 	icon = 'icons/effects/ULIcons.dmi'
 	icon_state = "7-3-0"
 	var
@@ -2347,7 +2369,7 @@ Returns:
 	density = 0
 	anchored = 1
 	opacity = 0
-	invisibility = 100
+	invisibility = INVIS_ALWAYS_ISH
 	var/spawn_rate = 100 	   //Time before a new object spaws after the previous is gone.
 	var/spawn_check_rate = 10  //How often we check if we need to spawn something.
 	var/spawn_type = null	   //Type to spawn
@@ -2505,7 +2527,7 @@ Returns:
 	anchored = 1
 	density = 0
 	opacity = 0
-	invisibility = 99
+	invisibility = INVIS_ALWAYS_ISH
 /*
 /obj/item/rpg_rocket_shuttle
 	name = "MPRT rocket"
@@ -3069,6 +3091,8 @@ Returns:
 
 	Bumped(atom/movable/AM)
 		if(target && istype(target))
+			if(ismob(AM))
+				logTheThing("combat", AM, null, "entered [src] at [log_loc(src)] and teleported to [log_loc(target)]")
 			AM.set_loc(target)
 		else
 			src.visible_message("<span style='color: red; font-weight: bold'>The portal collapses in on itself!</span>")
@@ -3178,9 +3202,9 @@ Returns:
 			return
 
 		var/turf/picked = pick(possible)
-		if(src.loc.invisibility) src.loc.invisibility = 0
+		if(src.loc.invisibility) src.loc.invisibility = INVIS_NONE
 		src.set_loc(picked)
-		SPAWN_DBG(0.5 SECONDS) picked.invisibility = 100
+		SPAWN_DBG(0.5 SECONDS) picked.invisibility = INVIS_ALWAYS_ISH
 
 		SPAWN_DBG(rand(50,80)) update()
 
@@ -3224,13 +3248,13 @@ Returns:
 			return
 
 		var/turf/picked = pick(possible)
-		if(src.loc.invisibility) src.loc.invisibility = 0
+		if(src.loc.invisibility) src.loc.invisibility = INVIS_NONE
 		if(src.loc.opacity) src.loc.opacity = 0
 
 		src.set_loc(picked)
 
 		SPAWN_DBG(0.5 SECONDS)
-			picked.invisibility = 100
+			picked.invisibility = INVIS_ALWAYS_ISH
 			picked.opacity = 1
 
 		SPAWN_DBG(rand(50,80)) update()
@@ -3403,7 +3427,7 @@ var/list/lag_list = new/list()
 
 /obj/spook
 	var/active = 0
-	invisibility = 100
+	invisibility = INVIS_ALWAYS_ISH
 	anchored = 1
 	density = 0
 	icon = 'icons/misc/hstation.dmi'
@@ -3438,10 +3462,10 @@ var/list/lag_list = new/list()
 		sleep(0.3 SECONDS)
 		active = 1
 		walk_towards(src,L,3)
-		src.invisibility = 0
+		src.invisibility = INVIS_NONE
 		flick("apparition",src)
 		sleep(1.5 SECONDS)
-		src.invisibility = 100
+		src.invisibility = INVIS_ALWAYS_ISH
 		src.set_loc(startloc)
 		walk(src,0)
 		SPAWN_DBG(10 SECONDS) active = 0
@@ -3856,9 +3880,9 @@ var/list/lag_list = new/list()
 
 /mob/living/intangible/aicamera/New()
 	. = ..()
-	src.invisibility = 0
+	src.invisibility = INVIS_NONE
 	src.sight = SEE_THRU
-	src.see_invisible = 0
+	src.see_invisible = INVIS_NONE
 
 /obj/ai_static
 	name = "static"

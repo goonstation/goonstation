@@ -707,6 +707,9 @@ datum/chemicompiler_core/stationaryCore
 		qdel(src)
 		return
 
+	was_deconstructed_to_frame(mob/user)
+		status = NOPOWER // If it works.
+
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
 

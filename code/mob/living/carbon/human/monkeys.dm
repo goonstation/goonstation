@@ -285,6 +285,8 @@
 			pals ++
 			if (prob(40))
 				src.emote("scream")
+			if(src.client)
+				break
 		if(aggroed)
 			walk_towards(src, ai_target, ai_movedelay)
 

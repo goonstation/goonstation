@@ -94,6 +94,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 		src.name = initial(name)
 		src.desc = initial(desc)
 		color = initial(color)
+		blood_DNA = null
 
 		src.diseases.len = 0
 
@@ -807,7 +808,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	color = "#D20040"
 	random_icon_states = list("IRwriting1", "IRwriting2", "IRwriting3", "IRwriting4", "IRwriting5", "IRwriting6", "IRwriting7")
 	infra_luminosity = 4
-	invisibility = 1
+	invisibility = INVIS_INFRA
 	font_color = "#D20040"
 
 /obj/decal/cleanable/writing/postit
@@ -1097,7 +1098,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				for (var/mob/O in AIviewers(user, null))
 					if (O != user)
 						O.show_message("<span class='notice'><b>[user]</b> is sticking their fingers into [src] and pushing it into [W]. It's all slimy and stringy. Oh god.</span>", 1)
-						if (prob(33) && ishuman(O))
+						if (prob(33) && ishuman(O) && !isdead(O))
 							O.show_message("<span class='alert'>You feel ill from watching that.</span>")
 							for (var/mob/V in viewers(O, null))
 								V.show_message("<span class='alert'>[O] pukes all over \himself. Thanks, [user].</span>", 1)

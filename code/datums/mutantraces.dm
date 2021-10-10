@@ -210,7 +210,7 @@
 		return message
 
 	proc/say_verb()
-		return "says"
+		return null
 
 	proc/emote(var/act)
 		return null
@@ -775,7 +775,7 @@
 	sight_modifier()
 		mob.sight |= SEE_MOBS
 		mob.see_in_dark = SEE_DARK_FULL
-		mob.see_invisible = 3
+		mob.see_invisible = INVIS_CLOAK
 
 	emote(var/act)
 		var/message = null
@@ -837,7 +837,7 @@
 
 	sight_modifier()
 		mob.see_in_dark = SEE_DARK_HUMAN + 1
-		mob.see_invisible = 1
+		mob.see_invisible = INVIS_INFRA
 
 	say_filter(var/message)
 		return replacetext(message, "s", stutter("ss"))
@@ -905,6 +905,12 @@
 			M.full_heal()
 			M.real_name = "Zombie [M.real_name]"
 
+			//give em zombie arms if they don't have em...
+			if (!istype(M.limbs.r_arm, /obj/item/parts/human_parts/arm/right/zombie))
+				M.limbs.replace_with("r-arm", /obj/item/parts/human_parts/arm/right/zombie, M, 0)
+			if (!istype(M.limbs.l_arm, /obj/item/parts/human_parts/arm/left/zombie))
+				M.limbs.replace_with("l-arm", /obj/item/parts/human_parts/arm/left/zombie, M, 0)
+
 			SPAWN_DBG(rand(4, 30))
 				M.emote("scream")
 			SHOW_ZOMBIE_TIPS(M)
@@ -946,7 +952,7 @@
 	sight_modifier()
 		mob.sight |= SEE_MOBS
 		mob.see_in_dark = SEE_DARK_FULL
-		mob.see_invisible = 0
+		mob.see_invisible = INVIS_NONE
 
 	say_filter(var/message)
 		return pick("Urgh...", "Brains...", "Hungry...", "Kill...")
@@ -1321,7 +1327,7 @@
 		if (ishuman(mob))
 			mob.sight |= SEE_MOBS
 			mob.see_in_dark = SEE_DARK_FULL
-			mob.see_invisible = 2
+			mob.see_invisible = INVIS_CLOAK
 		return
 
 	// Werewolves (being a melee-focused role) are quite buff.
@@ -1716,7 +1722,7 @@
 
 	sight_modifier()
 		mob.see_in_dark = SEE_DARK_HUMAN + 1
-		mob.see_invisible = 1
+		mob.see_invisible = INVIS_INFRA
 
 	disposing()
 		if(ishuman(mob))
@@ -1752,7 +1758,7 @@
 
 	sight_modifier()
 		mob.see_in_dark = SEE_DARK_HUMAN + 1
-		mob.see_invisible = 1
+		mob.see_invisible = INVIS_INFRA
 
 	disposing()
 		if(ishuman(mob))

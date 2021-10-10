@@ -143,7 +143,7 @@
 
 		if(ishuman(usr))
 			var/mob/living/carbon/human/H = usr
-			if(H.traitHolder && H.traitHolder.hasTrait("smoothtalker"))
+			if (H.traitHolder.hasTrait("smoothtalker") || H.traitHolder.hasTrait("training_quartermaster"))
 				adjustedTolerance = round(adjustedTolerance * 1.5)
 
 		var/hikeperc = askingprice - goods.price

@@ -188,6 +188,17 @@
 	plant_reagent = "ethanol"
 	brew_result = "ethanol"
 
+/obj/item/reagent_containers/food/snacks/plant/corn/pepper
+	name = "Pepper corn cob"
+	desc = "Wha? Why's this called corn? It's pepper!"
+	icon_state = "peppercorn"
+	planttype = /datum/plant/crop/corn
+	amount = 3
+	heal_amt = 3
+	food_color = "#373232"
+	plant_reagent = "pepper"
+	brew_result = "pepper"
+
 /obj/item/reagent_containers/food/snacks/plant/soy
 	name = "soybean pod"
 	crop_suffix = " pod"
@@ -734,6 +745,39 @@
 	plant_reagent = "juice_blueberry"
 	food_effects = list("food_cold", "food_refreshed")
 
+/obj/item/reagent_containers/food/snacks/plant/blackberry/
+	name = "blackberry"
+	desc = "A freshly picked blackberry."
+	icon_state = "blackberry"
+	planttype = /datum/plant/fruit/raspberry
+	amount = 1
+	heal_amt = 1
+	food_color = "#1d222f"
+	plant_reagent = "juice_blackberry"
+	food_effects = list("food_cold", "food_refreshed")
+
+/obj/item/reagent_containers/food/snacks/plant/raspberry/
+	name = "raspberry"
+	desc = "A freshly picked raspberry."
+	icon_state = "raspberry"
+	planttype = /datum/plant/fruit/raspberry
+	amount = 1
+	heal_amt = 1
+	food_color = "#a30325"
+	plant_reagent = "juice_raspberry"
+	food_effects = list("food_cold", "food_refreshed")
+
+/obj/item/reagent_containers/food/snacks/plant/blueraspberry
+	name = "blue raspberry"
+	desc = "A freshly picked blue raspberry."
+	icon_state = "blueraspberry"
+	planttype = /datum/plant/fruit/raspberry
+	amount = 1
+	heal_amt = 1
+	food_color = "#65d8e6"
+	plant_reagent = "juice_blueraspberry"
+	food_effects = list("food_cold", "food_refreshed")
+
 /obj/item/reagent_containers/food/snacks/plant/pear/
 	name = "pear"
 	desc = "Whether or not you like the taste, its freshness is appearant."
@@ -895,8 +939,8 @@
 
 				return
 			boutput(user, "<span class='notice'>You peel [src].</span>")
-			src.name = copytext(src.name, 10)	// "unpeeled "
-			//src.name = "banana"
+			var/index = findtext(src.name, "unpeeled")
+			src.name = splicetext(src.name, index, index + 9)
 			src.icon_state = "banana-fruit"
 			new /obj/item/bananapeel(user.loc)
 		else
@@ -1356,6 +1400,17 @@
 		..()
 		reagents.add_reagent("coffee",20)
 
+/obj/item/reagent_containers/food/snacks/plant/turmeric
+	name = "turmeric root"
+	crop_suffix = " root"
+	desc = "An aromatic root from the turmeric plant, a relative of ginger."
+	icon_state = "turmericroot"
+	planttype = /datum/plant/veg/turmeric
+	plant_reagent = "currypowder"
+	edible = 0
+	validforhat = 1
+	food_color = "#e0a80c"
+
 /obj/item/reagent_containers/food/snacks/plant/lashberry/
 	name = "lashberry"
 	desc = "Not nearly as violent as the plant it came from."
@@ -1414,3 +1469,4 @@
 		make_reagents()
 			..()
 			reagents.add_reagent("omnizine", 10)
+

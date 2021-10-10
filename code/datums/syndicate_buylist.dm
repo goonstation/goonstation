@@ -509,10 +509,11 @@ This is basically useless for anyone but miners.
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/chambomb
-	name = "Chameleon Bomb"
-	item = /obj/item/device/chameleon/bomb
-	cost = 6
-	desc = "A questionable mixture of a chameleon projector and a bomb. Scan an object to take on its appearance, arm the bomb, and then explode the face(s) of whoever tries to touch it."
+	name = "Chameleon Bomb Case"
+	item = /obj/item/storage/box/chameleonbomb
+	cost = 3
+	vr_allowed = 0
+	desc = "2 questionable mixtures of a chameleon projector and a bomb. Scan an object to take on its appearance, arm the bomb, and then explode the face(s) of whoever tries to touch it."
 	job = list("Clown")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
@@ -1048,7 +1049,7 @@ This is basically useless for anyone but miners.
 	name = "Pure Telecrystal"
 	item = /obj/item/uplink_telecrystal
 	cost = 1
-	desc = "A pure Telecrystal, only able to be found miles deep underground, on Earth. Used as currency in Syndicate Uplinks."
+	desc = "A pure Telecrystal, orignating from plasma giants. Used as currency in Syndicate Uplinks."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft)
 	telecrystal = TRUE
 	vr_allowed = 0

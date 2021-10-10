@@ -1119,7 +1119,7 @@
 	else
 		//src.pickup(user) //This is called by the later put_in_hand() call
 		if (user.pulling == src)
-			user.pulling = null
+			user.remove_pulling()
 		if (isturf(src.loc))
 			pickup_particle(user,src)
 	if (!user)

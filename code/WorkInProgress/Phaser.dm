@@ -553,7 +553,7 @@ var/const/PHASER_SNIPER = 256
 		else if (href_list["overload"])
 			boutput(usr, "<span class='alert'>Your phaser overloads.</span>");
 			overloading = 1
-			playsound(usr, "sound/weapons/phaseroverload.ogg", 65, 1)
+			playsound(usr, "sound/weapons/phaseroverload.ogg", 65, 1) //this sound is now gone so find a new one if this code gets reimplemented
 			SPAWN_DBG(6 SECONDS)
 				var/turf/curr = get_turf(src)
 				curr.hotspot_expose(700,125)

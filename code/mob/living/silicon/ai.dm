@@ -145,7 +145,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	has_feet = 1
 	var/obj/churn = new/obj{icon = 'icons/misc/SomepotatoArt.dmi'; pixel_y = -14; icon_state = "feet"}
 	underlays += churn
-	del(churn)
+	qdel(churn)
 	canmove = 1
 
 /mob/living/silicon/ai/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
@@ -777,7 +777,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	src.sight |= SEE_MOBS
 	src.sight |= SEE_OBJS
 	src.see_in_dark = SEE_DARK_FULL
-	src.see_invisible = 2
+	src.see_invisible = INVIS_CLOAK
 	src.lying = 1
 	src.light.disable()
 	src.update_appearance()
@@ -1608,8 +1608,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 					if (istype(R.ai_interface))
 						R.shell = 1
 					R.dependent = 0
-				//else if (isAIeye(user))
-				//	var/mob/dead/aieye/E = user
 				user.name = user.real_name
 		return
 
@@ -2009,13 +2007,13 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			src.sight |= SEE_MOBS
 			src.sight |= SEE_OBJS
 		src.see_in_dark = SEE_DARK_FULL
-		src.see_invisible = 2
+		src.see_invisible = INVIS_CLOAK
 		src.ear_deaf = 0
 	else
 		vision.set_color_mod("#000000")
 		src.sight = src.sight & ~(SEE_TURFS | SEE_MOBS | SEE_OBJS)
 		src.see_in_dark = 0
-		src.see_invisible = 0
+		src.see_invisible = INVIS_NONE
 		src.ear_deaf = 1
 
 /mob/living/silicon/ai/verb/open_nearest_door()
@@ -2062,7 +2060,7 @@ proc/get_mobs_trackable_by_AI()
 			continue //cameras can't follow people who haven't started yet DUH OR DIDN'T YOU KNOW THAT
 		if (ishuman(M) && (istype(M:wear_id, /obj/item/card/id/syndicate) || (istype(M:wear_id, /obj/item/device/pda2) && M:wear_id:ID_card && istype(M:wear_id:ID_card, /obj/item/card/id/syndicate))))
 			continue
-		if (istype(M,/mob/living/critter/aquatic) || istype(M, /mob/living/critter/small_animal/chicken))
+		if (istype(M,/mob/living/critter/aquatic) || istype(M, /mob/living/critter/small_animal/ranch_base/chicken))
 			continue
 		if(M.z != 1 && M.z != usr.z)
 			continue
