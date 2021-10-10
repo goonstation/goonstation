@@ -1233,13 +1233,22 @@ ABSTRACT_TYPE(/area/prefab)
 	name = "DreamPlaza Mall"
 	icon_state = "purple"
 
-<<<<<<< HEAD
-/
-=======
 /area/prefab/secbot_academy
 	name = "Securitron Academy"
 	icon_state = "red"
->>>>>>> 6e2ba756c3615339d46f62c9d6dc92b13eee8921
+
+/area/prefab/threeonefiveone
+	name = "3151"
+	icon_state = "red"
+
+	level one
+		name = "3151 level 1"
+		icon_state = "red"
+
+	level two
+		name = "3151 level 2"
+		icon_state = red
+
 // Sealab trench areas //
 
 /area/shuttle/sea_elevator_room
