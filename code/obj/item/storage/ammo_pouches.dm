@@ -37,7 +37,8 @@
 	tranq_pistol_dart
 		name = "tranq pistol dart pouch"
 		icon_state = "ammopouch-double"
-		spawn_contents = list(/obj/item/ammo/bullets/tranq_darts/syndicate/pistol = 5)
+		slots = 4
+		spawn_contents = list(/obj/item/ammo/bullets/tranq_darts/syndicate/pistol = 4)
 
 	poison_dart
 		name = "poison dart pouch"
@@ -89,6 +90,11 @@
 		name = "MPRT rocket pouch"
 		slots = 4
 		spawn_contents = list(/obj/item/ammo/bullets/rpg = 2)
+
+	lmg
+		name = "LMG belt pouch"
+		icon_state = "ammopouch-double"
+		spawn_contents = list(/obj/item/ammo/bullets/lmg = 5)
 
 /obj/item/storage/grenade_pouch
 	name = "grenade pouch"

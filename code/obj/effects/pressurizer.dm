@@ -1,6 +1,6 @@
 //It pressurizes areas. - from halloween.dm
 /obj/effects/pressurizer
-	invisibility = 100
+	invisibility = INVIS_ALWAYS_ISH
 
 	New()
 		..()

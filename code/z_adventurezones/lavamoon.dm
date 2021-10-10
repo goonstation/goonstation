@@ -667,7 +667,7 @@ var/sound/iomoon_alarm_sound = null
 			var/list/affected = DrawLine(last, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 			for(var/obj/O in affected)
-				SPAWN_DBG(0.6 SECONDS) pool(O)
+				SPAWN_DBG(0.6 SECONDS) qdel(O)
 
 			if(isliving(target_r)) //Probably unsafe.
 				playsound(target_r:loc, "sound/effects/electric_shock.ogg", 50, 1)
@@ -1205,7 +1205,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 				end_iomoon_blowout()
 				SPAWN_DBG(0)
-					var/datum/effects/system/spark_spread/E = unpool(/datum/effects/system/spark_spread)
+					var/datum/effects/system/spark_spread/E = new /datum/effects/system/spark_spread
 					E.set_up(8,0, src.loc)
 					E.start()
 					src.icon_state = "powercore_core_die"
@@ -1231,7 +1231,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					playsound(src.loc, "explosion", 75, 1)
 					sleep(2.5 SECONDS)
 					//qdel(rotors)
-					src.invisibility = 100
+					src.invisibility = INVIS_ALWAYS_ISH
 
 					var/obj/decal/exitMarker = locate("IOMOON_BOSSDEATH_EXIT")
 					if (istype(exitMarker))
@@ -1265,7 +1265,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 				SPAWN_DBG(0.6 SECONDS)
 					for (var/obj/O in lineObjs)
-						pool(O)
+						qdel(O)
 
 				state = STATE_RECHARGING
 				last_state_time = ticker.round_elapsed_ticks
@@ -1501,7 +1501,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 		SPAWN_DBG(1 SECOND)
 			if (src.opened)
-				src.invisibility = 100
+				src.invisibility = INVIS_ALWAYS_ISH
 				src.set_density(0)
 				light.enable()
 			else
@@ -1525,7 +1525,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		playsound(src.loc, "sound/effects/mag_iceburstimpact.ogg", 25, 1)
 
 		set_density(0)
-		invisibility = 100
+		invisibility = INVIS_ALWAYS_ISH
 		light.disable()
 		SPAWN_DBG(1.3 SECONDS)
 			changing_state = 0
@@ -1549,7 +1549,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			L.gib()
 
 		set_density(1)
-		invisibility = 0
+		invisibility = INVIS_NONE
 
 		light.enable()
 		if (next && next != src)

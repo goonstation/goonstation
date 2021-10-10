@@ -2888,6 +2888,11 @@
 	get_valid_target_zones()
 		return list("head", "chest", "l_leg", "r_leg", "l_arm", "r_arm")
 
+	disposing()
+		if (src.shell)
+			available_ai_shells -= src
+		..()
+
 	proc/compborg_lose_limb(var/obj/item/parts/robot_parts/part)
 		if(!part) return
 

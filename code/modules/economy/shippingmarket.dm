@@ -238,7 +238,7 @@
 						if (istype(O, /obj/item/raw_material) || istype(O, /obj/item/sheet) || istype(O, /obj/item/material_piece) || istype(O, /obj/item/plant) || istype(O, /obj/item/reagent_containers/food/snacks/plant))
 							add *= O:amount // TODO: fix for snacks
 							if (sell)
-								pool(O)
+								qdel(O)
 						else
 							if (sell)
 								qdel(O)
@@ -247,7 +247,7 @@
 					else if (istype(O, /obj/item/spacecash))
 						duckets += 0.9 * O:amount
 						if (sell)
-							pool(O)
+							qdel(O)
 		else // Please excuse this duplicate code, I'm gonna change trader commodity lists into associative ones later I swear
 			for(var/obj/O in items)
 				for (var/datum/commodity/C in commodities_list)
@@ -258,7 +258,7 @@
 						if (istype(O, /obj/item/raw_material) || istype(O, /obj/item/sheet) || istype(O, /obj/item/material_piece) || istype(O, /obj/item/plant) || istype(O, /obj/item/reagent_containers/food/snacks/plant))
 							add *= O:amount // TODO: fix for snacks
 							if (sell)
-								pool(O)
+								qdel(O)
 						else
 							if (sell)
 								qdel(O)
@@ -267,7 +267,7 @@
 					else if (istype(O, /obj/item/spacecash))
 						duckets += O:amount
 						if (sell)
-							pool(O)
+							qdel(O)
 
 		return duckets
 
@@ -281,6 +281,7 @@
 				if(order.check_order(sell_crate))
 					duckets += order.price
 					complete_orders += order
+					order.send_rewards()
 					active_orders -= order
 
 		duckets += src.appraise_value(sell_crate, commodities_list, 1) + src.points_per_crate

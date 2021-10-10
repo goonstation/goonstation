@@ -50,10 +50,6 @@ var/global/list/adventure_elements_by_id = list()
 	opacity = 0
 	anchored = 1
 
-	unpooled()
-		icon_state = "select_generic"
-		..()
-
 	disposing()
 		icon_state = null
 		..()
@@ -375,7 +371,7 @@ var/global/list/adventure_elements_by_id = list()
 
 /obj/adventurepuzzle/invisible
 	name = "target marker"
-	invisibility = 100
+	invisibility = INVIS_ALWAYS_ISH
 	density = 0
 	opacity = 0
 	anchored = 1

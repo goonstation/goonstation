@@ -153,10 +153,6 @@
 	layer = TILE_EFFECT_OVERLAY_LAYER
 	animate_movement = NO_STEPS // fix for things gliding around all weird
 
-	pooled(var/poolname)
-		overlays.len = 0
-		..()
-
 	Move()
 		return 0
 
@@ -165,10 +161,6 @@
 	anchored = 1
 	density = 0
 	mouse_opacity = 0
-
-	pooled(var/poolname)
-		overlays.len = 0
-		..()
 
 	Move()
 		return 0
@@ -251,7 +243,7 @@
 	icon = 'icons/effects/mapeditor.dmi'
 	icon_state = "cordonturf"
 	fullbright = 1
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	explosion_resistance = 999999
 	density = 1
 	opacity = 1
@@ -592,9 +584,9 @@
 	new_turf.RL_ApplyGeneration = rlapplygen
 	new_turf.RL_UpdateGeneration = rlupdategen
 	if(new_turf.RL_MulOverlay)
-		pool(new_turf.RL_MulOverlay)
+		qdel(new_turf.RL_MulOverlay)
 	if(new_turf.RL_AddOverlay)
-		pool(new_turf.RL_AddOverlay)
+		qdel(new_turf.RL_AddOverlay)
 	new_turf.RL_MulOverlay = rlmuloverlay
 	new_turf.RL_AddOverlay = rladdoverlay
 

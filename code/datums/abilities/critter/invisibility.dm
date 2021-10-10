@@ -58,7 +58,7 @@
 /datum/targetable/critter/fadeout
 	name = "Fade Out"
 	desc = "Become invisible until you move. Invisibility lingers for a few seconds after moving or acting."
-	var/inv_level = 16
+	var/inv_level = INVIS_SPOOKY
 	var/fade_out_icon_state = null
 	var/fade_in_icon_state = null
 	var/fade_anim_length = 3

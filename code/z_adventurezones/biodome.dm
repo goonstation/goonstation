@@ -382,13 +382,13 @@ SYNDICATE DRONE FACTORY AREAS
 
 		active = 1
 
-		if(src.loc.invisibility) src.loc.invisibility = 0
+		if(src.loc.invisibility) src.loc.invisibility = INVIS_NONE
 		if(src.loc.opacity) src.loc.opacity = 0
 
 		src.set_loc(tile)
 
 		SPAWN_DBG(0.5 SECONDS)
-			tile.invisibility = 100
+			tile.invisibility = INVIS_ALWAYS_ISH
 			tile.opacity = 1
 			active = 0
 
@@ -423,13 +423,13 @@ SYNDICATE DRONE FACTORY AREAS
 				playsound(src.loc, 'sound/impact_sounds/Stone_Scrape_1.ogg', 40, 1)
 
 		var/turf/picked = pick(possible)
-		if(src.loc.invisibility) src.loc.invisibility = 0
+		if(src.loc.invisibility) src.loc.invisibility = INVIS_NONE
 		if(src.loc.opacity) src.loc.opacity = 0
 
 		src.set_loc(picked)
 
 		SPAWN_DBG(0.5 SECONDS)
-			picked.invisibility = 100
+			picked.invisibility = INVIS_ALWAYS_ISH
 			picked.opacity = 1
 			active = 0
 
@@ -448,7 +448,7 @@ SYNDICATE DRONE FACTORY AREAS
 	anchored = 1
 	density = 0
 	opacity = 0
-	invisibility = 99
+	invisibility = INVIS_ALWAYS_ISH
 
 /obj/item/whip
 	name = "whip"
@@ -493,7 +493,7 @@ SYNDICATE DRONE FACTORY AREAS
 				boutput(user, "<span class='alert'>You pull yourself to the stalagtite using the whip.</span>")
 				user.set_loc(T)
 
-			SPAWN_DBG(0.2 SECONDS) pool(O)
+			SPAWN_DBG(0.2 SECONDS) qdel(O)
 
 		if(istype(target_r, /obj/whip_trg_dummy)) qdel(target_r)
 
@@ -541,7 +541,7 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/boulder_trap
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "x4"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
 	var/ready = 1
@@ -622,7 +622,7 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/sneaky_wall_trigger
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "ydn"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
 	var/active = 0
@@ -745,7 +745,7 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/graveyard/lightning_trigger
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "ydn"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
 	var/active = 0
@@ -786,7 +786,7 @@ SYNDICATE DRONE FACTORY AREAS
 	proc/crumble()
 		src.visible_message("<span class='alert'><b>[src] crumbles!</b></span>")
 		playsound(src.loc, "sound/effects/stoneshift.ogg", 50, 1)
-		var/obj/effects/bad_smoke/smoke = unpool(/obj/effects/bad_smoke)
+		var/obj/effects/bad_smoke/smoke = new /obj/effects/bad_smoke
 		smoke.name = "dust cloud"
 		smoke.set_loc(src.loc)
 		icon_state = "rubble"
@@ -795,7 +795,7 @@ SYNDICATE DRONE FACTORY AREAS
 		SPAWN_DBG(18 SECONDS)
 			if ( smoke )
 				smoke.name = initial(smoke.name)
-				pool(smoke)
+				qdel(smoke)
 		return
 
 /////////////////////////////// ALCHEMY CIRCLE STUFF
@@ -1136,7 +1136,7 @@ var/satellite_crash_event_status = -1
 			satellite_crash_event_status = -1
 			return
 
-		src.invisibility = 100
+		src.invisibility = INVIS_ALWAYS_ISH
 		var/particle_count = rand(8,16)
 		while (particle_count--)
 			var/obj/effects/expl_particles/EP = new /obj/effects/expl_particles {pixel_y = 600; name = "space debris";} (pick(orange(src,3)))
