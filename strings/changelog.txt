@@ -1,4 +1,9 @@
 
+(t)sun oct 10 21
+(u)Flaborized
+(p)6219
+(e)🎨|sprites
+(+)Resprited wizard spell ability icons.
 (t)sat oct 09 21
 (u)Tarmunora
 (e)⚖|balance
