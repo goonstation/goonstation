@@ -58,10 +58,25 @@
 		if (..(parent))
 			return 1
 
+		being_seen_status_update()
+		SPAWN_DBG(2 SECONDS)  // gross bandaid to work around the life loop being a tad too slow
+			being_seen_status_update()
+
+	proc/set_dormant_status(var/enabled)
+		if(enabled)
+			if(!src.hasStatus("dormant"))
+				src.setStatus("dormant", INFINITE_STATUS)
+		else
+			src.delStatus("dormant")
+
+
+	proc/being_seen_status_update()
 		if (last_witness) // optimization attempt
 			if(get_dist(src, last_witness) < 3) // still next to last person that saw us, might be for instance pulling us or sitting next to us
+				set_dormant_status(TRUE)
 				return
 			else
+				set_dormant_status(FALSE)
 				last_witness = null
 
 		for (var/mob/M in viewers(src))
@@ -72,6 +87,7 @@
 			if (M.client) // Only players
 				last_witness = M
 				being_seen = TRUE
+				set_dormant_status(TRUE)
 				return
 		being_seen = FALSE
 
