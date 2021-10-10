@@ -686,7 +686,7 @@
 		var/mob/M = C.mob
 		if(speechpopups && M.chat_text && !C.preferences?.flying_chat_hidden)
 			var/image/chat_maptext/looc_text = null
-			looc_text = make_chat_maptext(src, "\[LOOC] [msg]", looc_style)
+			looc_text = make_chat_maptext(src, "\[LOOC: [msg]]", looc_style)
 			if(looc_text)
 				looc_text.measure(C)
 				for(var/image/chat_maptext/I in M.chat_text.lines)
