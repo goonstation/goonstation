@@ -32,16 +32,12 @@
 				if (src.emote_check(voluntary, 300))
 					playsound(src, "sound/misc/lincolnshire.ogg", 65, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='emote'><b>[src]</b> plays a song!</span>"
-				else
-					boutput(src, "TOO EARLY TO ACT AGAIN")
 			if ("fart")
 				return
 			if ("dance")
 				if (src.emote_check(voluntary, 100))
 					animate_bouncy(src)
 					return "<span class='emote'><b>[src]</b> dances!</span>"
-				else
-					boutput(src, "TOO EARLY TO ACT AGAIN")
 			if ("snap")
 				if (src.emote_check(voluntary, 100))
 					if (prob(33))
