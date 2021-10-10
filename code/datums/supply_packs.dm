@@ -1714,7 +1714,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 //Western
 
 /datum/supply_packs/west_coats
-	name = "Dusty old Coats"
+	name = "Dusty Old Coats"
 	desc = "4x coats in various colors."
 	category = "Civilian Department"
 	contains = list(/obj/item/clothing/suit/gimmick/guncoat,

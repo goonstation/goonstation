@@ -1806,7 +1806,7 @@
 
 //Western Jumpsuit
 /obj/item/clothing/under/misc/western
-    name = "Western shirt and pants"
+    name = "Western Shirt and Pants"
     desc = "Now comes with a matching belt buckle and leather straps!"
     icon_state = "western"
     item_state = "western"
