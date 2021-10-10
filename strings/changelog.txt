@@ -1,5 +1,10 @@
 
 (t)sun oct 10 21
+(u)Jan.antilles
+(p)6151
+(e)🆕🎨|feature, sprites
+(+)Added three new cooking recipes: Fettucine Alfredo, Chicken Alfredo, and Chicken Parmigiana!
+(+)Resprited existing spaghetti dishes to not use plates and look even tastier.
 (u)Batelite
 (p)6131
 (e)🆕|feature
