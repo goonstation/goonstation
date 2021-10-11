@@ -250,12 +250,20 @@
 			boutput(user, "The record player already has a record inside!")
 		else if(!is_playing)
 			boutput(user, "You insert the record into the record player.")
+			var/inserted_record = W
 			src.visible_message("<span class='notice'><b>[user] inserts the record into the record player.</b></span>")
 			user.drop_item()
 			W.set_loc(src)
 			src.record_inside = W
 			src.has_record = 1
 			var/R = html_encode(input("What is the name of this record?","Record Name") as null|text)
+			if(!in_interact_range(src, user))
+				boutput(user, "You're out of range of the [src.name]!")
+				return
+			if(src.is_playing) // someone queuing up several input windows
+				return
+			if(!inserted_record || (inserted_record != src.record_inside)) // record was removed/changed before input confirmation
+				return
 			if(R)
 				phrase_log.log_phrase("record", R)
 			if (!R)
@@ -322,7 +330,7 @@
 		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 		M.changeStatus("weakened", 2 SECONDS)
 		playsound(src, "shatter", 70, 1)
-		var/obj/O = unpool (/obj/item/raw_material/shard/glass)
+		var/obj/O = new /obj/item/raw_material/shard/glass
 		O.set_loc(get_turf(M))
 		if (src.material)
 			O.setMaterial(copyMaterial(src.material))

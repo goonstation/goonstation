@@ -799,14 +799,15 @@
 				src.illegal = 1
 				var/carlsell = rand(1,10)
 				src.goods_illegal += new /datum/commodity/contraband/command_suit(src)
+				src.goods_illegal += new /datum/commodity/contraband/command_helmet(src)
 				src.goods_illegal += new /datum/commodity/contraband/disguiser(src)
-				if (carlsell <= 2)
+				if (carlsell <= 3)
 					src.goods_illegal += new /datum/commodity/contraband/radiojammer(src)
-				if (carlsell >= 3 && carlsell <= 5)
+				if (carlsell >= 2 && carlsell <= 6)
 					src.goods_illegal += new /datum/commodity/contraband/stealthstorage(src)
-				if (carlsell >= 6 && carlsell <= 8)
+				if (carlsell >= 5 && carlsell <= 8)
 					src.goods_illegal += new /datum/commodity/contraband/voicechanger(src)
-				if (carlsell == 9) // if it rolls 10, then none of the three are sold
+				if (carlsell >= 9)
 					src.goods_illegal += new /datum/commodity/contraband/radiojammer(src)
 					src.goods_illegal += new /datum/commodity/contraband/stealthstorage(src)
 					src.goods_illegal += new /datum/commodity/contraband/voicechanger(src)
@@ -915,6 +916,8 @@
 				src.goods_sell += new /datum/commodity/junk/voltron(src)
 				src.goods_sell += new /datum/commodity/junk/cloner_upgrade(src)
 				src.goods_sell += new /datum/commodity/junk/grinder_upgrade(src)
+				src.goods_sell += new /datum/commodity/junk/speedyclone(src)
+				src.goods_sell += new /datum/commodity/junk/efficientclone(src)
 				src.goods_sell += new /datum/commodity/podparts/goldarmor(src)
 
 				src.goods_buy += new /datum/commodity/salvage/scrap(src)

@@ -38,6 +38,9 @@
 /datum/movement_modifier/status_salted // these are instantiated by the status effect and the slowdown adjusted there
 	health_deficiency_adjustment = 10
 
+/datum/movement_modifier/drowsy
+	additive_slowdown = 5
+
 /datum/movement_modifier/staggered_or_blocking
 	additive_slowdown = 0.4
 
@@ -46,6 +49,9 @@
 
 /datum/movement_modifier/hastened
 	additive_slowdown = -0.8
+
+/datum/movement_modifier/death_march
+	additive_slowdown = -0.4
 
 /datum/movement_modifier/janktank
 	health_deficiency_adjustment = -50

@@ -169,7 +169,7 @@
 						src.visible_message("<span class='alert'><b>[user]</b> attempts to wrangle [src], but [src] is [pick("mad","grumpy","hecka grumpy","agitated", "too angry")] and resists!</span>")
 					return
 
-				user.pulling = src
+				user.set_pulling(src)
 				src.wanderer = 0
 				if (src.task == "wandering")
 					src.task = "thinking"
@@ -374,7 +374,7 @@
 				shorn = 1
 				shorn_time = world.time
 				user.visible_message("<b>[user]</b> shears \the [src]!","You shear \the [src].")
-				var/obj/item/material_piece/cloth/beewool/BW = unpool(/obj/item/material_piece/cloth/beewool)
+				var/obj/item/material_piece/cloth/beewool/BW = new /obj/item/material_piece/cloth/beewool
 				BW.set_loc(src.loc)
 				if (shorn_item)
 					new shorn_item(src.loc)
@@ -1210,7 +1210,7 @@
 					src.visible_message("<span class='alert'><b>[user]</b> attempts to wrangle [src], but [src] is [pick("mad","grumpy","hecka grumpy","agitated", "too angry")] and resists!</span>")
 					return
 
-				user.pulling = src
+				user.set_pulling(src)
 				src.wanderer = 0
 				if (src.task == "wandering")
 					src.task = "thinking"
@@ -1834,6 +1834,7 @@
 		else
 			newLarva.desc = "A moon...larva.  A space bee larva, but kinda odd."
 			newLarva.custom_desc = "A moon bee.  It's like a regular space bee, but it has a peculiar gleam in its eyes..."
+		newLarva.custom_bee_type = /obj/critter/domestic_bee/moon
 		newLarva.throw_at(get_edge_target_turf(src, src.dir), 2, 1)
 		qdel (src)
 

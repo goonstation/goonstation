@@ -4,7 +4,7 @@
 
 /datum/artifact/healer_bio
 	associated_object = /obj/artifact/healer_bio
-	type_name = "Healer"
+	type_name = "Single Target Healer"
 	rarity_weight = 350
 	validtypes = list("martian","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,

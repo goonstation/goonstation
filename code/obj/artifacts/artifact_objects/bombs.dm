@@ -158,7 +158,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	deploy_payload(var/obj/O)
 		if (..())
 			return
-		explosion(O, O.loc, src.exp_deva, src.exp_hevy, src.exp_lite, src.exp_lite * 2)
+		explosion(O, get_turf(O), src.exp_deva, src.exp_hevy, src.exp_lite, src.exp_lite * 2)
 
 		O.ArtifactDestroyed()
 
@@ -200,7 +200,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			return
 		var/turf/T = get_turf(O)
 		playsound(T, "sound/machines/satcrash.ogg", 100, 0, 3, 0.8)
-		new /obj/bhole(O.loc,rand(100,300))
+		new /obj/bhole(T,rand(100,300))
 
 		if (O)
 			O.ArtifactDestroyed()

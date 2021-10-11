@@ -1254,3 +1254,10 @@ obj/decoration/floralarrangement
 	anchored = 1
 	density = 1
 
+obj/decoration/pottedfern
+	name = "potted fern"
+	desc = "These look... Very plastic. Huh."
+	icon = 'icons/misc/walp_decor.dmi'
+	icon_state = "plant_fern"
+	anchored = 1
+	density = 1

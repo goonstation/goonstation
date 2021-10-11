@@ -5,14 +5,6 @@
 	process(var/datum/gas_mixture/environment)
 		var/mult = get_multiplier()
 
-		// moved drowsy, confusion and such from handle_chemicals because it seems better here
-		if (owner.drowsyness)
-			owner.drowsyness = max(0, owner.drowsyness - mult)
-			owner.change_eye_blurry(2*mult)
-			if (probmult(5))
-				owner.sleeping = 1
-				owner.changeStatus("paralysis", 5 SECONDS)
-
 		if (owner.misstep_chance > 0)
 			switch(owner.misstep_chance)
 				if (50 to INFINITY)

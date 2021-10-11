@@ -334,7 +334,7 @@
 	luminosity = 1
 	force_fullbright = 1
 
-/obj/machinery/power/solar_control/derelict_ai_sat
+/obj/machinery/computer/solar_control/derelict_ai_sat
 	id = "derelict_ai_sat"
 
 

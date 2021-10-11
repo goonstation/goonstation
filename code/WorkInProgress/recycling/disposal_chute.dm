@@ -37,6 +37,7 @@
 	// find the attached trunk (if present) and init gas resvr.
 	New()
 		..()
+		src.AddComponent(/datum/component/obj_projectile_damage)
 		SPAWN_DBG(0.5 SECONDS)
 			if (src)
 				trunk = locate() in src.loc
@@ -59,12 +60,18 @@
 		trunk = null
 
 		if(air_contents)
-			pool(air_contents)
+			qdel(air_contents)
 			air_contents = null
 		..()
 
+	onDestroy()
+		if (src.powered())
+			elecflash(src, power = 2)
+		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
+		. = ..()
+
 	proc/initair()
-		air_contents = unpool(/datum/gas_mixture)
+		air_contents = new /datum/gas_mixture
 		air_contents.volume = 255
 		air_contents.nitrogen = 16.5
 		air_contents.oxygen = 4.4
@@ -136,18 +143,31 @@
 
 	// mouse drop another mob or self
 	//
-	MouseDrop_T(mob/target, mob/user)
+	MouseDrop_T(atom/target, mob/user)
 		//jesus fucking christ
-		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user) || isAI(target) || isghostcritter(user))
+		if (!IN_RANGE(src,user,1) || !IN_RANGE(src,target,1) || isAI(user) || is_incapacitated(user) || isghostcritter(user))
 			return
 
-		if (istype(src, /obj/machinery/disposal/mail) && isliving(target))
-			//Is this mob allowed to ride mailchutes?
-			if (!target.canRideMailchutes())
-				boutput(user, "<span class='alert'>That won't fit!</span>")
+		if (iscritter(target))
+			var/obj/critter/corpse = target
+			if (!corpse.alive)
+				corpse.set_loc(src)
+				user.visible_message("[user.name] places \the [corpse] into \the [src].")
+				actions.interrupt(user, INTERRUPT_ACT)
+			return
+
+		if (isliving(target))
+			var/mob/living/mobtarget = target
+			if  (mobtarget.buckled || isAI(mobtarget))
 				return
 
-		actions.start(new/datum/action/bar/icon/shoveMobIntoChute(src, target, user), user)
+			if (istype(src, /obj/machinery/disposal/mail))
+				//Is this mob allowed to ride mailchutes?
+				if (!mobtarget.canRideMailchutes())
+					boutput(user, "<span class='alert'>That won't fit!</span>")
+					return
+
+			actions.start(new/datum/action/bar/icon/shoveMobIntoChute(src, mobtarget, user), user)
 
 	hitby(atom/movable/MO, datum/thrown_thing/thr)
 		// This feature interferes with mail delivery, i.e. objects bouncing back into the chute.
@@ -362,7 +382,7 @@
 		var/atom/L = loc						// recharging from loc turf
 		var/datum/gas_mixture/env = L.return_air()
 		if (!air_contents)
-			air_contents = unpool(/datum/gas_mixture)
+			air_contents = new /datum/gas_mixture
 		var/pressure_delta = (3.5 * ONE_ATMOSPHERE) - MIXTURE_PRESSURE(air_contents) // purposefully trying to overshoot the target of 2 atmospheres to make it faster
 
 		if(env.temperature > 0)
@@ -389,7 +409,7 @@
 		flushing = 1
 		flick("[icon_style]-flush", src)
 
-		var/obj/disposalholder/H = unpool(/obj/disposalholder)	// virtual holder object which actually
+		var/obj/disposalholder/H = new /obj/disposalholder	// virtual holder object which actually
 																// travels through the pipes.
 
 		H.init(src)	// copy the contents of disposer to holder

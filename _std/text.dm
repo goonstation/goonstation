@@ -11,6 +11,11 @@
 
 	return ""
 
+/proc/startswith(text, start)
+	if(length(text) < length(start))
+		return FALSE
+	return copytext(text, 1, length(start) + 1) == start
+
 /proc/trim(text)
 	return trim_left(trim_right(text))
 
@@ -34,6 +39,15 @@ var/global/regex/is_blank_string_regex = new(@{"^(\s|[\u00A0\u2000\u2001\u2002\u
 var/global/regex/discord_emoji_regex = new(@{"(?:<|&lt;)(?:a)?:([-a-zA-Z0-9_]+):(\d{18})(?:>|&gt;)"}, "g")
 /proc/discord_emojify(text)
 	return discord_emoji_regex.Replace(text, {"<img src="https://cdn.discordapp.com/emojis/$2.gif" onerror="if (this.src != 'https://cdn.discordapp.com/emojis/$2.png') this.src = 'https://cdn.discordapp.com/emojis/$2.png';" title="$1" width="32" height="32">"})
+
+/proc/linkify(text)
+	. = text
+	while(full_url_regex.Find(text))
+		var/http_part = full_url_regex.group[1]
+		if(length(http_part) == 0)
+			http_part = "http://"
+		var/full_url = http_part + full_url_regex.group[2]
+		. = replacetext(., full_url_regex.match, "<a target='_blank' href='[full_url]'>[full_url]</a>")
 
 /// Generates a random Unicode emoji that will look ok in the chat
 /proc/random_emoji()

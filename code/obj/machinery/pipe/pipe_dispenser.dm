@@ -51,7 +51,7 @@
 /obj/machinery/disposal_pipedispenser
 	name = "Disposal Pipe Dispenser"
 	icon = 'icons/obj/manufacturer.dmi'
-	icon_state = "fab"
+	icon_state = "fab-general"
 	density = 1
 	anchored = 1.0
 	mats = 16

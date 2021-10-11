@@ -410,7 +410,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 	clickmove
 		name = "Click moving"
-		instructions = "Moving around with arrow keys or WASD is vastly inefficient when you need to cover large distances at once. You can also move around by clicking a tile, however. Click the marked tile to move there and proceed."
+		instructions = "Moving around with arrow keys or WASD is vastly inefficient when you need to cover large distances at once. You can also move around by right-clicking a tile, however. Right-click the marked tile to move there and proceed."
 		var/turf/target
 		finished = 0
 

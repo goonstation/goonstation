@@ -252,6 +252,7 @@ mob/new_player
 					if(latejoin)
 						close_spawn_windows()
 						latejoin.activated = 1
+						latejoin.owner = src.mind
 						src.mind.transfer_to(S)
 						SPAWN_DBG(1 DECI SECOND)
 							S.choose_name()
@@ -749,7 +750,6 @@ a.latejoin-card:hover {
 				traitormob.make_wraith()
 				generate_wraith_objectives(traitor)
 
-#ifdef SECRETS_ENABLED
 			if (ROLE_ARCFIEND)
 				traitor.special_role = ROLE_ARCFIEND
 				traitormob.make_arcfiend()
@@ -758,7 +758,6 @@ a.latejoin-card:hover {
 			#else
 				objective_set_path = pick(typesof(/datum/objective_set/traitor))
 			#endif
-#endif
 
 			else // Fallback if role is unrecognized.
 				traitor.special_role = ROLE_TRAITOR
@@ -809,7 +808,7 @@ a.latejoin-card:hover {
 		set name = ".ready"
 
 		if (ticker)
-			if(ticker.round_elapsed_ticks > 0 && ticker.round_elapsed_ticks < 3 SECONDS)
+			if(current_state == GAME_STATE_SETTING_UP || (current_state <= GAME_STATE_PREGAME && ticker.pregame_timeleft <= 1))
 				boutput(usr, "<span class='alert'>The round is currently being set up. Please wait.</span>")
 				return
 

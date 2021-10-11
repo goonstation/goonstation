@@ -153,10 +153,6 @@
 	layer = TILE_EFFECT_OVERLAY_LAYER
 	animate_movement = NO_STEPS // fix for things gliding around all weird
 
-	pooled(var/poolname)
-		overlays.len = 0
-		..()
-
 	Move()
 		return 0
 
@@ -165,10 +161,6 @@
 	anchored = 1
 	density = 0
 	mouse_opacity = 0
-
-	pooled(var/poolname)
-		overlays.len = 0
-		..()
 
 	Move()
 		return 0
@@ -251,7 +243,7 @@
 	icon = 'icons/effects/mapeditor.dmi'
 	icon_state = "cordonturf"
 	fullbright = 1
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	explosion_resistance = 999999
 	density = 1
 	opacity = 1
@@ -288,9 +280,13 @@
 				continue
 			if((mover != obstacle) && (forget != obstacle))
 				if(obstacle.event_handler_flags & USE_CHECKEXIT)
-					if(!obstacle.CheckExit(mover, src))
-						mover.Bump(obstacle, 1)
-						return 0
+					var/obj/obj_mover = mover
+					if (!istype(obj_mover) || !(HAS_FLAG(obj_mover.object_flags, HAS_DIRECTIONAL_BLOCKING) \
+					  && HAS_FLAG(obstacle.object_flags, HAS_DIRECTIONAL_BLOCKING) \
+					  && obstacle.dir == mover.dir)) //Allow objects that block the same dirs to be pushed past each other
+						if(!obstacle.CheckExit(mover, src))
+							mover.Bump(obstacle, 1)
+							return 0
 
 	//Then, check the turf itself
 	if (!src.CanPass(mover, src))
@@ -588,9 +584,9 @@
 	new_turf.RL_ApplyGeneration = rlapplygen
 	new_turf.RL_UpdateGeneration = rlupdategen
 	if(new_turf.RL_MulOverlay)
-		pool(new_turf.RL_MulOverlay)
+		qdel(new_turf.RL_MulOverlay)
 	if(new_turf.RL_AddOverlay)
-		pool(new_turf.RL_AddOverlay)
+		qdel(new_turf.RL_AddOverlay)
 	new_turf.RL_MulOverlay = rlmuloverlay
 	new_turf.RL_AddOverlay = rladdoverlay
 
@@ -953,9 +949,9 @@
 	if (ismob(user.pulling))
 		var/mob/M = user.pulling
 		var/mob/t = M.pulling
-		M.pulling = null
+		M.remove_pulling()
 		step(M, get_dir(fuck_u, src))
-		M.pulling = t
+		M.set_pulling(t)
 	else
 		step(user.pulling, get_dir(fuck_u, src))
 	return
@@ -978,9 +974,9 @@
 	if (ismob(user.pulling))
 		var/mob/M = user.pulling
 		var/t = M.pulling
-		M.pulling = null
+		M.remove_pulling()
 		step(M, get_dir(fuck_u, src))
-		M.pulling = t
+		M.set_pulling(t)
 	else
 		step(user.pulling, get_dir(fuck_u, src))
 	return

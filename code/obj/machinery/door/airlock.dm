@@ -536,10 +536,9 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "thin glass airlock"
 	icon_state = "windoor_closed"
 	icon_base = "windoor"
-	panel_icon_state = "windoor"
+	panel_icon_state = "windoor_panel_open"
 	welded_icon_state = "fdoor_weld"
 	sound_airlock = 'sound/machines/windowdoor.ogg'
-	has_panel = 0
 	has_crush = 0
 	health = 500
 	health_max = 500
@@ -559,10 +558,9 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 /obj/machinery/door/airlock/pyro/glass/windoor/alt
 	icon_state = "windoor2_closed"
 	icon_base = "windoor2"
-	panel_icon_state = "windoor2"
+	panel_icon_state = null
 	welded_icon_state = "windoor2_weld"
 	sound_airlock = 'sound/machines/windowdoor.ogg'
-	has_panel = 0
 	has_crush = 0
 	layer = 3.5
 
@@ -1307,7 +1305,7 @@ About the new airlock wires panel:
 		if(world.time - src.last_bump <= 30)
 			return
 
-		if (issilicon(AM) && (aiControlDisabled > 0 || cant_emag))
+		if (issilicon(AM) && (aiControlDisabled == 1 || cant_emag))
 			return
 
 		src.last_bump = world.time
@@ -1336,7 +1334,7 @@ About the new airlock wires panel:
 			if (src.shock(user, 100))
 				interact_particle(user,src)
 				return
-	else if (aiControlDisabled > 0 || cant_emag)
+	else if (aiControlDisabled == 1 || cant_emag)
 		return
 
 	if (ishuman(user) && src.density && src.brainloss_stumble && src.do_brainstumble(user) == 1)
@@ -1435,6 +1433,7 @@ About the new airlock wires panel:
 				else
 					src.RL_SetOpacity(0)
 			src.operating = 0
+			src.update_icon()
 
 	else if ((!src.density) && (!( src.welded ) && !( src.operating ) && !( src.locked )))
 		SPAWN_DBG( 0 )
@@ -1451,6 +1450,7 @@ About the new airlock wires panel:
 				else
 					src.RL_SetOpacity(1)
 			src.operating = 0
+			src.update_icon()
 	else if (src.welded)
 		boutput(usr, "<span class='alert'>You try to pry [src]  open, but it won't budge! The sides of \the [src] seem to be welded.</span>")
 
@@ -1803,7 +1803,7 @@ obj/machinery/door/airlock
 	if (!isAI(user) && !issilicon(user))
 		return
 
-	if (src.aiControlDisabled) return
+	if (src.aiControlDisabled == 1) return
 
 	if (user.client.check_key(KEY_OPEN) && user.client.check_key(KEY_BOLT))
 		. = 1

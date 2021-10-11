@@ -266,8 +266,15 @@ proc/build_syndi_buylist_cache()
 /datum/syndicate_buylist/traitor/champrojector
 	name = "Chameleon Projector"
 	item = /obj/item/device/chameleon
-	cost = 2
+	cost = 5
 	desc = "Advanced cloaking device that scans an object and, when activated, makes the bearer look like the object. Slows movement while in use."
+	blockedmode = list(/datum/game_mode/revolution)
+
+/datum/syndicate_buylist/traitor/holographic_disguiser
+	name = "Holographic Disguiser"
+	item = /obj/item/device/disguiser
+	cost = 2
+	desc = "A device capable of disguising your identity temporarily. Beware of flashes and projectiles!"
 	blockedmode = list(/datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/areacloak
@@ -509,10 +516,11 @@ This is basically useless for anyone but miners.
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/chambomb
-	name = "Chameleon Bomb"
-	item = /obj/item/device/chameleon/bomb
-	cost = 6
-	desc = "A questionable mixture of a chameleon projector and a bomb. Scan an object to take on its appearance, arm the bomb, and then explode the face(s) of whoever tries to touch it."
+	name = "Chameleon Bomb Case"
+	item = /obj/item/storage/box/chameleonbomb
+	cost = 3
+	vr_allowed = 0
+	desc = "2 questionable mixtures of a chameleon projector and a bomb. Scan an object to take on its appearance, arm the bomb, and then explode the face(s) of whoever tries to touch it."
 	job = list("Clown")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
@@ -1021,13 +1029,6 @@ This is basically useless for anyone but miners.
 	desc = "A pair of surplus cybereyes that can access the Security HUD system. Comes with a convenient but terrifying implanter."
 	blockedmode = list(/datum/game_mode/revolution)
 
-/datum/syndicate_buylist/surplus/holographic_disguiser
-	name = "Holographic Disguiser"
-	item = /obj/item/device/disguiser
-	cost = 1
-	desc = "A device capable of disguising your identity temporarily. Beware of flashes and projectiles!"
-	blockedmode = list(/datum/game_mode/revolution)
-
 /datum/syndicate_buylist/surplus/emaghypo
 	name = "Hacked Hypospray"
 	item = /obj/item/reagent_containers/hypospray/emagged
@@ -1048,7 +1049,7 @@ This is basically useless for anyone but miners.
 	name = "Pure Telecrystal"
 	item = /obj/item/uplink_telecrystal
 	cost = 1
-	desc = "A pure Telecrystal, only able to be found miles deep underground, on Earth. Used as currency in Syndicate Uplinks."
+	desc = "A pure Telecrystal, orignating from plasma giants. Used as currency in Syndicate Uplinks."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft)
 	telecrystal = TRUE
 	vr_allowed = 0

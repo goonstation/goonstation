@@ -27,12 +27,6 @@
 		icon_state = "mousetraparmed"
 		armed = 1
 
-		triggered(mob/target as mob, var/type = "feet")
-			..(target, type)
-			if(isturf(src.loc))
-				src.armed = 1
-			return
-
 		cleaner
 			name = "cleantrap"
 
