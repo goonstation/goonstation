@@ -815,7 +815,7 @@ mob/dead/observer/proc/insert_observer(var/atom/target)
 		newobs.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
 
 mob/dead/observer/proc/insert_slasher_observer(var/atom/target) //aaaaaa i had to create a new proc aaaaaa
-	var/mob/dead/target_observer/slasher_ghost/newobs = unpool(/mob/dead/target_observer/slasher_ghost)
+	var/mob/dead/target_observer/slasher_ghost/newobs = new /mob/dead/target_observer/slasher_ghost
 	newobs.attach_hud(hud)
 	newobs.set_observe_target(target)
 	newobs.name = src.name
