@@ -3,6 +3,7 @@
 (u)pali
 (*)For Spooktober the space colour now varies slightly
 (u)Zamujasa
+(*)Ghosts become visible to everyone at the end of a round.
 (e)🆕|feature
 (+)Using floor tiles in hand now acts like using them on the turf you're on. This means you can add tiles to plating with the use key, or (if holding a crowbar) swap out the tiles.
 (+)Using &lt; and &gt; in messages should now work. &lt;3? This might break things, though, so report any new issues...
