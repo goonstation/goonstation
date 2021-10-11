@@ -2366,7 +2366,7 @@
 		var/obj/item/organ/O = src.organHolder.organ_list[organ_slot]
 		if(istype(O))
 			O.unbreakme()
-		if(O?.augmentation_support && O?.installed_aug && istype(O?.installed_aug, /obj/item/augmentation))
+		if(!istype(O, /obj/item/clothing/head/butt) && !istype(O, /obj/item/skull) && O?.augmentation_support && O?.installed_aug && istype(O?.installed_aug, /obj/item/augmentation))
 			O.installed_aug.brute_dam = 0
 			O.installed_aug.burn_dam = 0
 			O.installed_aug.tox_dam = 0

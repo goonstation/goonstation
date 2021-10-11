@@ -173,6 +173,8 @@
 // ---- mob/living signals ----
 /// When a Life tick occurs
 #define COMSIG_LIVING_LIFE_TICK "human_life_tick"
+/// When you click on anything as a (target, params, location, control)
+#define COMSIG_CLICK "click"
 
 // ---- mob property signals ----
 /// When invisibility of a mob gets updated (old_value)
@@ -184,8 +186,6 @@
 #define COMSIG_ATTACKBY "attackby"
 /// Attacking without an item in-hand (attacker)
 #define COMSIG_ATTACKHAND "attackhand"
-/// When you click on anything as a 'mob/living' (target, params, location, control)
-#define COMSIG_CLICK "click"
 
 
 // ---- projectile signals ----
