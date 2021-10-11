@@ -790,11 +790,11 @@
 			if ("head") //returns nothing, use eyes/brain individually if you want returns
 				if (!src.head)
 					return 0
-				if (src?.brain?.installed_aug)
+				if (src.brain?.installed_aug)
 					src.brain.installed_aug = src.drop_organ_augmentation("brain")
-				if (src?.right_eye?.installed_aug)
+				if (src.right_eye?.installed_aug)
 					src.right_eye.installed_aug = src.drop_organ_augmentation("right_eye")
-				if (src?.left_eye?.installed_aug)
+				if (src.left_eye?.installed_aug)
 					src.left_eye.installed_aug = src.drop_organ_augmentation("left_eye")
 				src.donor.update_body()
 				src.donor.UpdateDamageIcon()
