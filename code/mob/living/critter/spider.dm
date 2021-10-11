@@ -40,7 +40,7 @@
 
 	blood_id = "black_goop"
 
-	var/bite_transfer_amt = 2
+	var/bite_transfer_amt = 1
 
 	New()
 		..()
@@ -164,7 +164,7 @@
 	venom2 = "black_goop"
 	babyspider = 1
 	adultpath = /mob/living/critter/spider/med
-	bite_transfer_amt = 0.5
+	bite_transfer_amt = 0.3
 
 /mob/living/critter/spider/med
 	name = "medium space spider"
@@ -183,7 +183,7 @@
 	venom2 = "black_goop"
 	babyspider = 1
 	adultpath = /mob/living/critter/spider
-	bite_transfer_amt = 1.2
+	bite_transfer_amt = 0.6
 
 /mob/living/critter/spider/ice
 	name = "ice spider"

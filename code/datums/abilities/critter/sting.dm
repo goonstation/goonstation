@@ -7,6 +7,7 @@
 	var/stealthy = 0
 	var/list/venom_ids = list("toxin")
 	var/inject_amount = 25
+	icon_state = "Fermid_Sting"
 	cooldown = 600
 	targeted = 1
 	target_anything = 1
@@ -55,6 +56,13 @@
 	fermid
 		name = "Fermid Sting"
 		desc = "Sting a dude with some nasty toxins."
+		icon_state = "Fermid_Sting"
 		venom_ids = list("haloperidol", "atropine")
 		inject_amount = 10
 
+	fermid_polymorph
+		name = "Fermid Sting"
+		desc = "Sting an adjacent target with some nasty toxins."
+		icon_state = "Fermid_Sting"
+		venom_ids = list("ants", "histamine")
+		inject_amount = 8

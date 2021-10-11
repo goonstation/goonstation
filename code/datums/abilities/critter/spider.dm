@@ -53,6 +53,7 @@
 	name = "Flail"
 	desc = "Flail at a mob, stunning them and injecting them with your venom. (You do have venom, don't you?)"
 	cooldown = 300
+	icon_state = "spider_flail"
 	targeted = 1
 	target_anything = 1
 
@@ -235,6 +236,7 @@
 	name = "Kick"
 	desc = "Kick a mob, doing a little damage and possibly causing a short stun."
 	cooldown = 100
+	icon_state = "clown_spider_kick"
 	targeted = 1
 	target_anything = 1
 	var/sound/sound_kick = 'sound/musical_instruments/Bikehorn_1.ogg'
