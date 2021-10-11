@@ -1,5 +1,4 @@
-var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/mouse,
-/mob/living/critter/small_animal/cat,
+var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 /mob/living/critter/small_animal/dog,
 /mob/living/critter/small_animal/dog/corgi,
 /mob/living/critter/small_animal/dog/shiba,
@@ -11,11 +10,8 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/mous
 /mob/living/critter/small_animal/bird/crow,
 /mob/living/critter/small_animal/bird/goose,
 /mob/living/critter/small_animal/bird/goose/swan,
-/mob/living/critter/small_animal/cockroach,
-/mob/living/critter/small_animal/cockroach/robo,
 /mob/living/critter/small_animal/floateye,
 /mob/living/critter/small_animal/pig,
-/mob/living/critter/spider/clown,
 /mob/living/critter/small_animal/bat,
 /mob/living/critter/small_animal/bat/angry,
 /mob/living/critter/spider/nice,
@@ -28,11 +24,13 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/mous
 /mob/living/critter/small_animal/slug,
 /mob/living/critter/small_animal/slug/snail,
 /mob/living/critter/small_animal/bee,
-/mob/living/critter/small_animal/butterfly)
+/mob/living/critter/maneater_polymorph,
+/mob/living/critter/fermid_polymorph,
+/mob/living/critter/small_animal/crab_polymorph)
 
 /datum/targetable/spell/animal
 	name = "Baleful Polymorph" // todo: a decent name - done?
-	desc = "Turns the target into an animal of some sort."
+	desc = "Turns the target into a creature of some sort."
 	icon_state = "animal"
 	targeted = 1
 	max_range = 1
@@ -84,6 +82,8 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/mous
 
 				H.unequip_all()
 				var/mob/living/critter/C = H.make_critter(pick(animal_spell_critter_paths))
+				C.real_name = "[H.real_name] the [C.real_name]"
+				C.name = C.real_name
 				if (istype(C, /mob/living/critter/small_animal/bee))
 					var/mob/living/critter/small_animal/bee/B = C
 					B.non_admin_bee_allowed = 1
