@@ -17,6 +17,7 @@
 	made_from = "bone"
 	tooltip_flags = REBUILD_ALWAYS //TODO: handle better??
 	MAX_DAMAGE = INFINITY
+	augmentation_support = FALSE
 
 	var/obj/item/organ/brain/brain = null
 	var/obj/item/skull/skull = null
