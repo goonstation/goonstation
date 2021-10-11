@@ -728,6 +728,12 @@ as it may become compromised.
     <br>
     <font size=1>- Head of Security </font>"}
 
+/obj/item/paper/CrashedHopShuttle
+	name = "paper - Shipping accident."
+	icon_state = "paper"
+	info ={"Hey HoP buddy, so uh, funny story, looks like the pilot we had driving your luxary office shuttle crashed it into some asteroids somewhere.<br>
+	Now I'm sure your insurance will cover it... eventually. BUT, there is some good news! Before we lost contact, we detected it picking up musical tunes from the north, again, real sorry, but I hope you can find it. "}
+
 /obj/item/paper/mantasecscanners
 	name = "paper - Security Officers are so dumb!"
 	icon_state = "paper"

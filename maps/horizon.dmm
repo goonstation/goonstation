@@ -20604,6 +20604,7 @@
 "aZs" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/drinks/rum_spaced,
+/obj/item/paper/CrashedHopShuttle,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/heads)
 "aZt" = (

@@ -33648,6 +33648,7 @@
 /obj/table/wood/auto,
 /obj/item/goldbar,
 /obj/item/stamp/hop,
+/obj/item/paper/CrashedHopShuttle,
 /turf/simulated/floor/carpet{
 	icon_state = "fblue2"
 	},

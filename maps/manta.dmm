@@ -9218,6 +9218,7 @@
 	icon_state = "4-8"
 	},
 /obj/item/paper/mantahopnote,
+/obj/item/acesscomputerunfolder,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fgreen1"

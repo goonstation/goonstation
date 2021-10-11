@@ -29927,6 +29927,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/item/clothing/suit/armor/hopcoat,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fgreen2"
@@ -30642,6 +30643,7 @@
 "bxX" = (
 /obj/table/wood/round/auto,
 /obj/item/item_box/gold_star,
+/obj/item/acesscomputerunfolder,
 /turf/simulated/floor/carpet{
 	icon_state = "green1"
 	},

@@ -64047,6 +64047,7 @@
 /obj/item/stamp/hop{
 	pixel_x = -7
 	},
+/obj/item/paper/CrashedHopShuttle,
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen2"
 	},

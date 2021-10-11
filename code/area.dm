@@ -1048,6 +1048,11 @@ ABSTRACT_TYPE(/area/adventure)
 	icon_state = "purple"
 	requires_power = FALSE
 
+/area/crashed_hop_shuttle
+	name = "HoP Shuttle"
+	icon_state = "purple"
+	requires_power = FALSE
+
 /area/iss
 	name = "Derelict Space Station"
 	icon_state = "derelict"
