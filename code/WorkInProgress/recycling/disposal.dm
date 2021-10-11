@@ -15,7 +15,7 @@
 // this allows the gas flushed to be tracked
 
 /obj/disposalholder
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	var/datum/gas_mixture/gas = null	// gas used to flush, will appear at exit point
 	var/active = 0	// true if the holder is moving, otherwise inactive
 	dir = 0
@@ -26,20 +26,8 @@
 
 	var/mail_tag = null //Switching junctions with the same tag will pass it out the secondary instead of primary
 
-	unpooled()
-		..()
+	disposing()
 		gas = null
-		active = 0
-		set_dir(0)
-		count = initial(count)
-		last_sound = 0
-		mail_tag = null
-
-	pooled()
-		gas = null
-		active = 0
-		set_dir(0)
-		last_sound = 0
 		mail_tag = null
 		..()
 
@@ -124,7 +112,7 @@
 			AM.set_loc(src)	// move everything in other holder to this one
 		if(other.mail_tag && !src.mail_tag)
 			src.mail_tag = other.mail_tag
-		pool(other)
+		qdel(other)
 
 
 	// called when player tries to move while in a pipe
@@ -263,7 +251,7 @@
 	// hide called by levelupdate if turf intact status changes
 	// change visibility status and force update of icon
 	hide(var/intact)
-		invisibility = intact ? 101: 0	// hide if floor is intact
+		invisibility = intact ? INVIS_ALWAYS : INVIS_NONE	// hide if floor is intact
 		updateicon()
 
 	// update actual icon_state depending on visibility
@@ -314,7 +302,7 @@
 				AM.pipe_eject(direction)
 				AM?.throw_at(target, 100, 1)
 			H.vent_gas(T)
-			pool(H)
+			qdel(H)
 
 		else	// no specified direction, so throw in random direction
 
@@ -327,7 +315,7 @@
 				AM?.throw_at(target, 5, 1)
 
 			H.vent_gas(T)	// all gas vent to turf
-			pool(H)
+			qdel(H)
 
 		return
 
@@ -344,7 +332,7 @@
 					var/obj/disposalpipe/broken/P = new(src.loc)
 					P.set_dir(D)
 
-		src.invisibility = 101	// make invisible (since we won't delete the pipe immediately)
+		src.invisibility = INVIS_ALWAYS	// make invisible (since we won't delete the pipe immediately)
 		var/obj/disposalholder/H = locate() in src
 		if(H)
 			// holder was present
@@ -357,7 +345,7 @@
 				for(var/atom/movable/AM in H)
 					AM.set_loc(T)
 					AM.pipe_eject(0)
-				pool(H)
+				qdel(H)
 				return
 
 			// otherswise, do normal expel from turf
@@ -919,7 +907,6 @@
 						newLoaf.loaf_factor += (newLoaf.loaf_factor / 10) + 50
 					if(!isdead(poorSoul))
 						poorSoul:emote("scream")
-					sleep(0.5 SECONDS)
 					poorSoul.death()
 					if (poorSoul.mind || poorSoul.client)
 						poorSoul.ghostize()
@@ -1318,7 +1305,7 @@
 				AM.pipe_eject(dir)
 				AM.throw_at(stuff_chucking_target, 3, 1)
 			H.vent_gas(src.loc)
-			pool(H)
+			qdel(H)
 
 			return null
 
@@ -1389,7 +1376,7 @@
 				AM.throw_at(stuff_chucking_target, 3, 1)
 			if (H.contents.len < 1)
 				H.vent_gas(src.loc)
-				pool(H)
+				qdel(H)
 				return null
 
 		var/turf/T = H.nextloc()
@@ -1750,7 +1737,7 @@
 			AM.pipe_eject(dir)
 			AM.throw_at(target, src.throw_range, src.throw_speed)
 		H.vent_gas(src.loc)
-		pool(H)
+		qdel(H)
 
 		return
 

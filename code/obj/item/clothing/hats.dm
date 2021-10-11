@@ -619,6 +619,12 @@ proc/filter_trait_hats(var/type)
 	icon_state = "cowboy"
 	item_state = "cowboy"
 
+/obj/item/clothing/head/longbee
+	name = "Longbee"
+	desc = "A gorgeous creature now on your head!"
+	icon_state = "longbee"
+	item_state = "longbee"
+
 /obj/item/clothing/head/fancy // placeholder icons until someone sprites an actual fancy hat
 	name = "fancy hat"
 	icon_state = "rank-fancy"

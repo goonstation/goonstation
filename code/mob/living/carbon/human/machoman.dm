@@ -1050,7 +1050,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					src.transforming = 0
 					src.bioHolder.AddEffect("fire_resist")
 					src.transforming = 1
-					playsound(src.loc, "sound/weapons/phaseroverload.ogg", 100)
+					playsound(src.loc, "sound/effects/mindkill.ogg", 50)
 					src.visible_message("<span class='alert'><b>[src] begins intensely staring [H] in the eyes!</b></span>")
 					boutput(H, "<span class='alert'>You feel a horrible pain in your head!</span>")
 					sleep(0.5 SECONDS)
@@ -2416,7 +2416,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 					holder.owner.transforming = 0
 					holder.owner.bioHolder.AddEffect("fire_resist")
 					holder.owner.transforming = 1
-					playsound(holder.owner.loc, "sound/weapons/phaseroverload.ogg", 100)
+					playsound(holder.owner.loc, "sound/effects/mindkill.ogg", 50)
 					holder.owner.visible_message("<span class='alert'><b>[holder.owner] begins intensely staring [H] in the eyes!</b></span>")
 					boutput(H, "<span class='alert'>You feel a horrible pain in your head!</span>")
 					sleep(0.5 SECONDS)

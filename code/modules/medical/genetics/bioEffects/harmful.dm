@@ -263,40 +263,6 @@
 			if (prob(tox_prob))
 				C.take_toxin_damage(tox_amount*mult)
 
-/datum/bioEffect/tourettes
-	name = "Tourettes"
-	desc = "Alters the subject's brain structure, causing periodic involuntary movements and outbursts."
-	id = "tourettes"
-	effectType = EFFECT_TYPE_DISABILITY
-	isBad = 1
-	probability = 66
-	msgGain = "You feel like you can't control your actions fully."
-	msgLose = "You feel in full control of yourself once again."
-	reclaim_fail = 15
-	stability_loss = -10
-	icon_state  = "bad"
-
-	OnLife(var/mult)
-		if(..()) return
-		if (isdead(owner))
-			return
-		if ((probmult(10) && !owner.getStatusDuration("paralysis")))
-			owner.changeStatus("stunned", 3 SECONDS)
-			SPAWN_DBG( 0 )
-				switch(rand(1, 3))
-					if (1 to 2)
-						owner.emote("twitch")
-					if (3)
-						if (owner.client)
-							var/enteredtext = winget(owner, "mainwindow.input", "text")
-							if ((copytext(enteredtext,1,6) == "say \"") && length(enteredtext) > 5)
-								winset(owner, "mainwindow.input", "text=\"\"")
-								if (prob(50))
-									owner.say(uppertext(copytext(enteredtext,6,0)))
-								else
-									owner.say(copytext(enteredtext,6,0))
-		return
-
 /datum/bioEffect/cough
 	name = "Chronic Cough"
 	desc = "Enhances the sensitivity of nerves in the subject's throat, causing periodic coughing fits."

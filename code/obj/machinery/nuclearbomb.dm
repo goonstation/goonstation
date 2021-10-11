@@ -93,7 +93,7 @@
 					. += "The authenticaion disk has been inserted."
 
 			if (!src.anchored)
-				. += "The floor bolts have been unsecured. The bomb can be moved around."
+				. += "The floor bolts are unsecure. The bomb can be moved around."
 			else
 				. += "It is firmly anchored to the floor by its floor bolts."
 

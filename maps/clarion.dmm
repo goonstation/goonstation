@@ -11700,6 +11700,9 @@
 /area/station/ranch)
 "awd" = (
 /obj/disposalpipe/segment,
+/obj/landmark/spawner{
+	name = "dolly"
+	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "awf" = (

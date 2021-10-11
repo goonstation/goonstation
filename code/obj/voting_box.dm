@@ -86,7 +86,7 @@
 			S.amount = 0
 			user.u_equip(S)
 			S.dropped()
-			pool( S )
+			qdel( S )
 			animate_storage_rustle(src)
 			playsound(src.loc, "sound/machines/ping.ogg", 75)
 			SPAWN_DBG(1 SECOND)
@@ -100,6 +100,6 @@
 			playsound(src.loc, "sound/machines/paper_shredder.ogg", 50, 1)
 			animate_storage_rustle(src)
 			user.u_equip(P)
-			pool(P)
+			qdel(P)
 			return
 		..()
