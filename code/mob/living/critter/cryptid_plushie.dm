@@ -305,7 +305,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/glowing_eyes)
 
 /datum/targetable/critter/cryptid_plushie/glowing_eyes/toggle_glowing_eyes
 	name = "Toggle glowing eyes"
-	desc = "Toggles whether your eyes glow red."
+	desc = "Toggles whether your eyes glow."
 	icon_state = "bullc_cd"
 	cooldown = 5
 	targeted = 0
@@ -323,8 +323,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/glowing_eyes)
 		return 0
 
 /datum/targetable/critter/cryptid_plushie/glowing_eyes/set_glowing_eyes_color
-	name = "Toggle glowing eyes"
-	desc = "Toggles whether your eyes glow red."
+	name = "Toggle glowing eyes color"
+	desc = "Toggles the color of your glowing eyes."
 	icon_state = "stinglsd"
 	cooldown = 5
 	targeted = 0
