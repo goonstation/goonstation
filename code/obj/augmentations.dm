@@ -319,4 +319,7 @@ Set `specific_augment` to the type of augment you're looking for, and it will on
 					if(!isnull(specific_organ) && istype(organ, specific_organ) && !isnull(specific_augment) && organ.installed_aug && istype(specific_augment, organ.installed_aug))
 						aug_list += organ
 
-	return aug_list
+	if(!length(aug_list))
+		return FALSE
+	else
+		return aug_list
