@@ -174,7 +174,7 @@
 				return
 
 			if(istype(target, /obj/storage))
-				var/obj/storage/targetted_container
+				var/obj/storage/targetted_container = target
 				if(targetted_container.open)
 					targetted_container.close()
 			holder.owner.set_loc(target)
