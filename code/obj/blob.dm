@@ -1225,6 +1225,7 @@
 	health_max = 75
 	can_absorb = 0
 	flags = ALWAYS_SOLID_FLUID
+	object_flags = BLOCKS_CHEMGAS_PROJ // this object blocks flamethrower gas
 
 	take_damage(var/amount,var/damage_mult = 1,var/damtype,var/mob/user)
 		if (damage_mult == 0)
@@ -1245,6 +1246,7 @@
 	special_icon = 1
 	armor = 1
 	can_absorb = 0
+	object_flags = BLOCKS_CHEMGAS_PROJ // this object blocks flamethrower gas
 
 	take_damage(amount, mult, damtype, mob/user)
 		if (damtype == "burn")
