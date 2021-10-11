@@ -701,6 +701,18 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/lead)
 	icon_state = "mapiconw"
 	mod = "leadw-"
 
+// Some fun walls by Walpvrgis
+ABSTRACT_TYPE(turf/unsimulated/wall/auto/hedge)
+/turf/unsimulated/wall/auto/hedge
+	name = "hedge"
+	desc = "This hedge is sturdy! No light seems to pass through it..."
+	icon = 'icons/turf/walls_hedge.dmi'
+	mod = "hedge-"
+	light_mod = "wall-"
+	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	connect_diagonal = 1
+	connects_to = list(/turf/unsimulated/wall/auto/hedge, /obj/machinery/door, /obj/window, /turf/unsimulated/wall/, /turf/simulated/wall/false_wall/)
+
 /datum/action/bar/icon/wall_tool_interact
 	id = "wall_tool_interact"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
