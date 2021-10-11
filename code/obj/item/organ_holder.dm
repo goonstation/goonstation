@@ -73,71 +73,71 @@
 		if (brain)
 			brain.donor = null
 			brain.holder = null
-			brain?.installed_aug = null
+			brain.installed_aug = null
 		if (left_eye)
 			left_eye.donor = null
 			left_eye.holder = null
-			left_eye?.installed_aug = null
+			left_eye.installed_aug = null
 		if (right_eye)
 			right_eye.donor = null
 			right_eye.holder = null
-			right_eye?.installed_aug = null
+			right_eye.installed_aug = null
 		if (chest)
 			chest.donor = null
 			chest?.bones?.donor = null
 			chest.holder = null
-			chest?.installed_aug = null
+			chest.installed_aug = null
 		if (heart)
 			heart.donor = null
 			heart.holder = null
-			heart?.installed_aug = null
+			heart.installed_aug = null
 		if (left_lung)
 			left_lung.donor = null
 			left_lung.holder = null
-			left_lung?.installed_aug = null
+			left_lung.installed_aug = null
 		if (right_lung)
 			right_lung.donor = null
 			right_lung.holder = null
-			left_lung?.installed_aug = null
+			left_lung.installed_aug = null
 		if (butt)
 			butt.donor = null
 			butt.holder = null
 		if (left_kidney)
 			left_kidney.donor = null
 			left_kidney.holder = null
-			left_kidney?.installed_aug = null
+			left_kidney.installed_aug = null
 		if (right_kidney)
 			right_kidney.donor = null
 			right_kidney.holder = null
-			right_kidney?.installed_aug = null
+			right_kidney.installed_aug = null
 		if (liver)
 			liver.donor = null
 			liver.holder = null
-			liver?.installed_aug = null
+			liver.installed_aug = null
 		if (stomach)
 			stomach.donor = null
 			stomach.holder = null
-			stomach?.installed_aug = null
+			stomach.installed_aug = null
 		if (intestines)
 			intestines.donor = null
 			intestines.holder = null
-			intestines?.installed_aug = null
+			intestines.installed_aug = null
 		if (spleen)
 			spleen.donor = null
 			spleen.holder = null
-			spleen?.installed_aug = null
+			spleen.installed_aug = null
 		if (pancreas)
 			pancreas.donor = null
 			pancreas.holder = null
-			pancreas?.installed_aug = null
+			pancreas.installed_aug = null
 		if (appendix)
 			appendix.donor = null
 			appendix.holder = null
-			appendix?.installed_aug = null
+			appendix.installed_aug = null
 		if (tail)
 			tail.donor = null
 			tail.holder = null
-			tail?.installed_aug = null
+			tail.installed_aug = null
 
 		head = null
 		skull = null

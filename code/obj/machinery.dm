@@ -152,7 +152,7 @@
 			//boutput(usr, "<span class='alert'>You must be near the machine to do this!</span>")
 			return 1
 	else
-		if ((!in_interact_range(src.loc, usr) || !istype(src.loc.loc, /turf)) && !issilicon(usr) && !isAI(usr) && !H.has_augmentation("Head", null, /obj/item/augmentation/head/wireless_interact))
+		if ((!in_interact_range(src.loc, usr) || !istype(src.loc.loc, /turf)) && !issilicon(usr) && !isAI(usr) && !H?.has_augmentation("Head", null, /obj/item/augmentation/head/wireless_interact))
 			//boutput(usr, "<span class='alert'>You must be near the machine to do this!</span>")
 			return 1
 	src.add_fingerprint(usr)
