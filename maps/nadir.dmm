@@ -256,10 +256,6 @@
 /obj/decal/xmas_lights/ephemeral{
 	pixel_y = 32
 	},
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
 /turf/simulated/floor/white/grime,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -320,6 +316,9 @@
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
 /obj/item/storage/wall/random,
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
 /turf/simulated/floor/engine,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -466,6 +465,9 @@
 /obj/stool/chair{
 	dir = 1
 	},
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
 /turf/simulated/floor/black/grime,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -590,6 +592,9 @@
 /obj/item/clothing/suit/bedsheet,
 /obj/item/storage/wall{
 	pixel_y = 32
+	},
+/obj/landmark/start{
+	name = "Staff Assistant"
 	},
 /turf/simulated/floor/engine,
 /area/station/hallway/secondary/construction{
@@ -861,6 +866,10 @@
 	},
 /obj/stool/chair,
 /obj/decal/cleanable/dirt,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -955,6 +964,9 @@
 	icon_state = "chair_couch-blue";
 	name = "ratty blue couch"
 	},
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -987,7 +999,6 @@
 /obj/decal/tile_edge/line/blue{
 	icon_state = "line1"
 	},
-/obj/machinery/light,
 /obj/stool/chair/comfy{
 	dir = 8
 	},
@@ -1130,7 +1141,7 @@
 	pixel_y = -3
 	},
 /turf/simulated/floor/engine,
-/area/space)
+/area/station/turret_protected/ai_upload)
 "iV" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/light/small,
@@ -1243,7 +1254,7 @@
 	pixel_y = -3
 	},
 /turf/simulated/floor/engine,
-/area/space)
+/area/station/turret_protected/ai_upload)
 "jr" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 4;
@@ -1266,6 +1277,9 @@
 	dir = 1
 	},
 /obj/random_item_spawner/junk/one_or_zero,
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
 /turf/simulated/floor/black/grime,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -1642,10 +1656,6 @@
 	})
 "ml" = (
 /obj/stool/chair,
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
 /turf/simulated/floor/engine,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -1757,7 +1767,7 @@
 	pixel_y = -3
 	},
 /turf/simulated/floor/engine,
-/area/space)
+/area/station/turret_protected/ai_upload)
 "nc" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
@@ -1765,6 +1775,9 @@
 	dir = 8;
 	pixel_x = 32;
 	pixel_y = 0
+	},
+/obj/landmark/start{
+	name = "Staff Assistant"
 	},
 /turf/simulated/floor/engine,
 /area/station/hallway/secondary/construction{
@@ -1854,6 +1867,9 @@
 	pixel_y = 28
 	},
 /obj/decal/cleanable/dirt,
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -1973,10 +1989,6 @@
 	},
 /area/shuttle/arrival/station)
 "os" = (
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
 /obj/table/auto,
 /obj/item/paper{
 	info = "<I>everything you should need is here. they're manipulating you. don't give in.</I>";
@@ -2240,6 +2252,10 @@
 	dir = 8;
 	icon_state = "chair"
 	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
 /turf/simulated/floor/white/grime,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -2268,6 +2284,9 @@
 	dir = 1
 	},
 /obj/decal/cleanable/dirt,
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -2391,10 +2410,6 @@
 /area/station/crew_quarters/quarters_west)
 "rc" = (
 /obj/machinery/vending/book,
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -2542,6 +2557,9 @@
 	dir = 8;
 	icon_state = "chair"
 	},
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
 /turf/simulated/floor/black/grime,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -2575,6 +2593,9 @@
 	},
 /obj/stool/chair{
 	dir = 4
+	},
+/obj/landmark/start{
+	name = "Staff Assistant"
 	},
 /turf/simulated/floor/black/grime,
 /area/station/hallway/secondary/construction{
@@ -2935,13 +2956,17 @@
 "uL" = (
 /obj/machinery/turret,
 /turf/simulated/floor/engine,
-/area/space)
+/area/station/turret_protected/ai_upload)
 "uN" = (
 /obj/decal/cleanable/dirt,
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/black,
 /obj/landmark/start{
 	name = "Clown"
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/hallway/secondary/construction{
@@ -3066,7 +3091,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/engine,
-/area/space)
+/area/station/turret_protected/ai_upload)
 "vR" = (
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	dir = 4
@@ -3153,6 +3178,9 @@
 	pixel_x = 32;
 	pixel_y = 0
 	},
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
 /turf/simulated/floor/engine,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -3162,7 +3190,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/engine,
-/area/space)
+/area/station/turret_protected/ai_upload)
 "wL" = (
 /obj/disposalpipe/segment/food{
 	dir = 4;
@@ -3696,6 +3724,9 @@
 	dir = 4;
 	pixel_x = 12
 	},
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
 /turf/simulated/floor/black/grime,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -3975,7 +4006,7 @@
 /area/station/medical/morgue)
 "Cw" = (
 /turf/simulated/floor/circuit,
-/area/space)
+/area/station/turret_protected/ai_upload)
 "CB" = (
 /obj/decal/cleanable/dirt,
 /obj/table/reinforced/auto,
@@ -4035,11 +4066,8 @@
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/northeast)
 "CN" = (
-/obj/machinery/light/small,
-/turf/simulated/floor/industrial,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/turret_protected/ai_upload)
 "CT" = (
 /obj/stool/bar,
 /turf/simulated/floor/engine,
@@ -4394,6 +4422,9 @@
 	dir = 4;
 	pixel_x = -32
 	},
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
 /turf/simulated/floor/engine,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -4572,6 +4603,9 @@
 	icon_state = "chair_couch-blue";
 	name = "ratty blue couch"
 	},
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -4620,10 +4654,6 @@
 	pixel_x = -8;
 	pixel_y = 7
 	},
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
 /turf/simulated/floor/engine,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -4661,7 +4691,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/engine,
-/area/space)
+/area/station/turret_protected/ai_upload)
 "Hw" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
@@ -5307,6 +5337,15 @@
 /area/station/maintenance/outer/ne{
 	name = "Northeast Breach Hull"
 	})
+"ML" = (
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/engine,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "MO" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 5;
@@ -5578,6 +5617,10 @@
 "OI" = (
 /obj/table/reinforced/auto,
 /obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
 /turf/simulated/floor/engine,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -5627,10 +5670,6 @@
 "Pd" = (
 /obj/stool/chair{
 	dir = 1
-	},
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
 	},
 /turf/simulated/floor/engine,
 /area/station/hallway/secondary/construction{
@@ -5727,6 +5766,9 @@
 /obj/stool/chair{
 	dir = 4
 	},
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
 /turf/simulated/floor/black/grime,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -5795,6 +5837,9 @@
 	},
 /obj/item/storage/wall/random,
 /obj/decal/cleanable/dirt,
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -6016,6 +6061,9 @@
 /obj/stool/chair{
 	dir = 8;
 	icon_state = "chair"
+	},
+/obj/landmark/start{
+	name = "Staff Assistant"
 	},
 /turf/simulated/floor/black/grime,
 /area/station/hallway/secondary/construction{
@@ -6380,14 +6428,8 @@
 	name = "Northeast Breach Hull"
 	})
 "UX" = (
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
 /turf/simulated/floor/engine,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
+/area/station/turret_protected/ai_upload)
 "UZ" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 8;
@@ -6656,6 +6698,9 @@
 /obj/stool/chair{
 	dir = 8
 	},
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
 /turf/simulated/floor/black/grime,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -6675,6 +6720,19 @@
 	icon_state = "floor3"
 	},
 /area/shuttle/arrival/station)
+"Xb" = (
+/obj/grille/catwalk{
+	dir = 1
+	},
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/black/grime,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "Xc" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 6;
@@ -54325,7 +54383,7 @@ jl
 KV
 VY
 VY
-zO
+Cl
 ed
 RQ
 kg
@@ -56800,7 +56858,7 @@ oa
 mP
 FF
 rO
-nk
+mG
 xz
 xv
 ml
@@ -56808,9 +56866,9 @@ OI
 WL
 Pd
 mG
+ML
 mG
 mG
-UX
 mG
 Qd
 dq
@@ -57404,7 +57462,7 @@ oa
 mP
 wG
 rO
-mG
+ML
 mG
 mG
 mG
@@ -61031,8 +61089,8 @@ YT
 RW
 zV
 RW
-OL
-FC
+zV
+Xb
 sg
 gJ
 nO
@@ -64889,14 +64947,14 @@ sR
 Vn
 sR
 vp
-vp
-vp
-vp
-vp
-vp
-vp
-vp
-Ok
+CN
+CN
+CN
+CN
+CN
+CN
+CN
+CN
 Ok
 Ok
 Ok
@@ -65191,14 +65249,14 @@ sR
 Vn
 sR
 sR
-JZ
+CN
 Cw
 Cw
 Cw
 Cw
 Cw
 Cw
-SQ
+CN
 RY
 RY
 RY
@@ -65493,14 +65551,14 @@ Jg
 Vn
 sR
 sR
-JZ
+CN
 Cw
 uL
-eK
-eK
+UX
+UX
 uL
 Cw
-SQ
+CN
 RY
 RY
 RY
@@ -65795,15 +65853,15 @@ sR
 Vn
 sR
 sR
-JZ
+CN
 Cw
-eK
+UX
 mX
 wJ
-eK
+UX
 Cw
-SQ
-RY
+CN
+UX
 RY
 RY
 qp
@@ -65853,7 +65911,7 @@ gJ
 gJ
 OU
 OU
-CN
+OU
 gJ
 ss
 WG
@@ -66097,14 +66155,14 @@ sR
 Vn
 sR
 sR
-JZ
+CN
 Cw
-eK
+UX
 iU
 Hv
-eK
+UX
 Cw
-RY
+UX
 RY
 Tv
 RY
@@ -66399,14 +66457,14 @@ HZ
 Vn
 JH
 Vn
-JZ
+CN
 Cw
-eK
+UX
 jo
 vQ
-eK
+UX
 Cw
-SQ
+CN
 RY
 RY
 RY
@@ -66701,14 +66759,14 @@ Vn
 Vn
 Mv
 Mv
-JZ
+CN
 Cw
 uL
-eK
-eK
+UX
+UX
 uL
 Cw
-SQ
+CN
 RY
 RY
 RY
@@ -67003,14 +67061,14 @@ Mv
 UW
 Mv
 Mv
-JZ
+CN
 Cw
 Cw
 Cw
 Cw
 Cw
 Cw
-SQ
+CN
 RY
 RY
 RY
@@ -67305,14 +67363,14 @@ aJ
 aJ
 Mv
 Mv
-Kk
-Kk
-Kk
-Kk
-Kk
-Kk
-yn
-yn
+CN
+CN
+CN
+CN
+CN
+CN
+CN
+CN
 yn
 yn
 yn
