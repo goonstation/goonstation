@@ -40,7 +40,7 @@
 		..()
 		.= list()
 		.["Points:"] = round(relay.points)
-		.["Gen. rate:"] = round(relay.regenRate)
+		.["Gen. rate:"] = round(relay.regenRate + relay.lastBonus)
 
 /datum/bioEffect/hidden/revenant
 	name = "Revenant"
