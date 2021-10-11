@@ -2103,6 +2103,62 @@
 			bleed(mob, 10, 3, T)
 			T.react_all_cleanables()
 
+/datum/mutantrace/pug
+	name = "pug"
+	icon = 'icons/mob/pug.dmi'
+	icon_state = "body"
+	human_compatible = TRUE
+	override_attack = 0
+	voice_override = "pug"
+	step_override = "footstep"
+	race_mutation = /datum/bioEffect/mutantrace/pug
+	mutant_organs = list("tail" = /obj/item/organ/tail/pug,
+	"left_eye" = /obj/item/organ/eye/pug,
+	"right_eye" = /obj/item/organ/eye/pug)
+	mutant_folder = 'icons/mob/pug.dmi'
+	special_head = HEAD_PUG
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/pug/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/pug/left
+	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/pug/right
+	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/pug/left
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_EYES | WEARS_UNDERPANTS)
+	eye_state = "eyes-pug"
+	dna_mutagen_banned = FALSE
+
+	New(var/mob/living/carbon/human/H)
+		..(H)
+		SPAWN_DBG(0)
+			if(ishuman(mob))
+				APPLY_MOB_PROPERTY(H, PROP_CANTSPRINT, src)
+				H.add_stam_mod_max("pug", -100)
+
+	say_verb()
+		return "barks"
+
+	emote(var/act, var/voluntary)
+		switch(act)
+			if ("scream")
+				if (mob.emote_check(voluntary, 50))
+					. = "<B>[mob]</B> screams!"
+					playsound(mob, "sound/voice/screams/moo.ogg", 50, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+			if ("snore")
+				if (mob.emote_check(voluntary, 10))
+					. = "<B>[mob]</B> snores."
+					playsound(mob, "sound/voice/snore.ogg", 30, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+					// TODO: cool snoring bubble
+			if ("sneeze")
+				if (!voluntary || mob.emote_check(voluntary, 20))
+					playsound(mob, "sound/voice/sneeze_pug.ogg", 30, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+					if (prob(1))
+						var/datum/organHolder/organs = mob.organHolder
+						var/obj/E = (organs.drop_organ("left_eye", null) || organs.drop_organ("right_eye", null))
+						if (E)
+							E.throw_at(get_edge_cheap(mob, mob.dir), 3, 1)
+							return "<B>[mob]</B> sneezes [his_or_her(mob)] eye out. <span class='alert'>What the fuck!</span>"
+					. = "<B>[mob]</B> sneezes."
+			else
+				.= ..()
+
 /datum/mutantrace/chicken
 	name = "Chicken"
 	icon_state = "chicken_m"

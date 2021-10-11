@@ -432,3 +432,8 @@ obj/item/organ/eye/skeleton
 	desc = "This takes 'hitting the bullseye' to another level."
 	icon_state = "eye-cow"
 	blood_reagent = "milk"
+
+/obj/item/organ/eye/pug
+	name = "pug eye"
+	desc = "Poor guy."
+	icon_state = "eye-cow"

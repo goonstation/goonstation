@@ -1344,6 +1344,20 @@
 		if(prob(1))
 			src.desc += " Bears the brand of a legendary roleplayer."
 
+//// PUG LIMBS ////
+
+/obj/item/parts/human_parts/arm/mutant/pug
+
+/obj/item/parts/human_parts/arm/mutant/pug/left
+
+/obj/item/parts/human_parts/arm/mutant/pug/right
+
+/obj/item/parts/human_parts/leg/mutant/pug
+
+/obj/item/parts/human_parts/leg/mutant/pug/left
+
+/obj/item/parts/human_parts/leg/mutant/pug/right
+
 //// LIZARD LIMBS ////
 //////  PARENT  //////
 

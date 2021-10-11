@@ -150,6 +150,16 @@
 	msgLose = "Your udders fall off!"
 	icon_state  = "cow"
 
+/datum/bioEffect/mutantrace/pug
+	name = "Canine Genetics"
+	desc = "The subject takes on the appearance of a domesticated space cow and gains milk production."
+	id = "pug"
+	mutantrace_option = "Pug"
+	mutantrace_path = /datum/mutantrace/pug
+	msgGain = "You feel like you're ready for some Cow RP."
+	msgLose = "Your udders fall off!"
+	icon_state  = "pug"
+
 /datum/bioEffect/mutantrace/chicken
 	name = "Experimental Strain Epsilon Gamma Gamma #5"
 	desc = "For exclusive use under the supervision of Dr. Cox MD. Unauthorized modification, replication, and distribution prohibited."
