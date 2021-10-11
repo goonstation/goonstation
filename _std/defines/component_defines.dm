@@ -184,7 +184,7 @@
 #define COMSIG_ATTACKBY "attackby"
 /// Attacking without an item in-hand (attacker)
 #define COMSIG_ATTACKHAND "attackhand"
-/// When you click on anything
+/// When you click on anything (target, params, location, control)
 #define COMSIG_CLICK "click"
 
 

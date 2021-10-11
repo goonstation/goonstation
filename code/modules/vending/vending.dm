@@ -633,7 +633,7 @@
 					var/atom/movable/vended = new product_path(src.get_output_location()) // changed from obj, because it could be a mob, THANKS VALUCHIMP
 					vended.layer = src.layer + 0.1 //So things stop spawning under the fukin thing
 					if(isitem(vended))
-						if(get_dist(usr, src) > 1)
+						if(!IN_RANGE(usr, src, 1))
 							vended.set_loc(src.loc)
 						else
 							usr.put_in_hand_or_eject(vended)

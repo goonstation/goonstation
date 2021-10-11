@@ -550,7 +550,9 @@
 
 
 	Topic(href, href_list)
-		var/mob/living/carbon/human/H = usr
+		var/mob/living/carbon/human/H = null
+		if(ishuman(usr))
+			H = usr
 		if(!(href_list["cutwire"] || href_list["pulsewire"]))
 			if(status & BROKEN || status & NOPOWER)
 				return

@@ -65,7 +65,7 @@
 			head.donor = null
 			chest?.bones?.donor = null
 			head.holder = null
-			head?.installed_aug = null
+			head.installed_aug = null
 
 		if (skull)
 			skull.donor = null
