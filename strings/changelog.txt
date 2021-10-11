@@ -1,5 +1,7 @@
 
 (t)mon oct 11 21
+(u)pali
+(*)For Spooktober the space colour now varies slightly
 (u)Zamujasa
 (e)🆕|feature
 (+)Using floor tiles in hand now acts like using them on the turf you're on. This means you can add tiles to plating with the use key, or (if holding a crowbar) swap out the tiles.
