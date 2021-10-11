@@ -96,6 +96,7 @@
 /datum/targetable/critter/cryptid_plushie
 	var/mob/living/critter/small_animal/plush/cryptid/our_plushie
 	icon = 'icons/mob/spell_buttons.dmi'
+	cast_in_storage = TRUE
 
 	onAttach(datum/abilityHolder/H)
 		. = ..()
