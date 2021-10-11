@@ -1505,7 +1505,7 @@
 				var/obj/item/manudrive/MD = src.manudrive
 				if(MD.fablimit == 0)
 					src.mode = "halt"
-					src.error = "This ManuDrive is unable to operate further."
+					src.error = "The inserted ManuDrive is unable to operate further."
 					src.queue = list()
 					return
 				else
