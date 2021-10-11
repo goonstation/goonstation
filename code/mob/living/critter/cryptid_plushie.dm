@@ -8,6 +8,14 @@
 	var/being_seen = FALSE
 	var/atom/last_witness
 
+	say(message) // gross workaround to allow emotes despite canspeak = 0
+		if(dd_hasprefix(message, "*"))
+			canspeak = 1
+			. = ..()
+			canspeak = 0
+		else
+			. = ..()
+
 	Login()
 		..()
 		boutput(src, "<h1><span class='alert'>You are NOT an antagonist unless stated otherwise through an obvious popup/message.</span></h1>")
