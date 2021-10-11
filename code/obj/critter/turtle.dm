@@ -2,6 +2,7 @@
 	name = "turtle"
 	desc = "A turtle. They are noble creatures of the land and sea."
 	icon_state = "turtle"
+	var/base_icon_state = "turtle"
 	density = 1
 	health = 100
 	aggressive = 0
@@ -22,6 +23,7 @@
 	var/rigged = FALSE
 	var/rigger = null
 	var/exploding = FALSE
+
 
 	New(loc)
 		. = ..()
@@ -148,7 +150,7 @@
 
 		brutevuln = 0.2
 		firevuln = 0.5
-		icon_state = "turtle-shell"
+		icon_state = "[base_icon_state]-shell"
 		density = 0
 
 		src.visible_message("<span class='alert'><b>[src]</b> retreats into [his_or_her()] shell!")
@@ -162,7 +164,7 @@
 
 		brutevuln = 0.7
 		firevuln = 1
-		icon_state = "turtle"
+		icon_state = base_icon_state
 		density = 1
 
 		src.visible_message("<span class='notice'><b>[src]</b> comes out of [his_or_her()] shell!")
@@ -209,7 +211,12 @@
 /obj/critter/turtle/sylvester
 	name = "Sylvester"
 	desc = "This turtle looks both cute and indimidating. It's a tough line to walk, but he does it effortlessly."
+	#ifdef HALLOWEEN
+	icon_state = "sylv_costume_1"
+	base_icon_state = "sylv_costume_1"
+	#else
 	icon_state = "turtle"		//I kinda wanna make sylvester stand out a bit amongs other turtles, even without the hat.
+	#endif
 	health = 100
 	generic = 0
 	is_pet = 2
@@ -280,18 +287,18 @@
 	CritterDeath()
 		..()
 		if (src.wearing_beret)
-			src.icon_state = "turtle-dead-beret"
+			src.icon_state = "[base_icon_state]-dead-beret"
 		else
-			src.icon_state = "turtle-dead"
+			src.icon_state = "[base_icon_state]-dead"
 
 		update_icon()
 
 	on_revive()
 		..()
 		if (src.wearing_beret)
-			src.icon_state = "turtle-beret"
+			src.icon_state = "[base_icon_state]-beret"
 		else
-			src.icon_state = "turtle"
+			src.icon_state = base_icon_state
 
 		update_icon()
 
@@ -381,26 +388,26 @@
 		if (src.alive)
 			if (src.wearing_beret)
 				if (istype(wearing_beret, /obj/item/clothing/head/hos_hat))
-					src.icon_state = "turtle-beret"
+					src.icon_state = "[base_icon_state]-beret"
 				else if (istype(wearing_beret, /obj/item/clothing/head/NTberet/commander))
-					src.icon_state = "turtle-beret-com"
+					src.icon_state = "[base_icon_state]-beret-com"
 
 			else
-				src.icon_state = "turtle"
+				src.icon_state = base_icon_state
 		else
 			if (src.wearing_beret)
 				if (istype(wearing_beret, /obj/item/clothing/head/hos_hat))
-					src.icon_state = "turtle-dead-beret"
+					src.icon_state = "[base_icon_state]-dead-beret"
 				else if (istype(wearing_beret, /obj/item/clothing/head/NTberet/commander))
-					src.icon_state = "turtle-dead-beret-com"
+					src.icon_state = "[base_icon_state]-dead-beret-com"
 
 			else
-				src.icon_state = "turtle-dead"
+				src.icon_state = "[base_icon_state]-dead"
 
 //Starts with the beret on!
 /obj/critter/turtle/sylvester/HoS
 	wearing_beret = 1
-	icon_state = "turtle-beret"
+	icon_state = "sylv_costume_1-beret"
 
 	New()
 		..()
@@ -416,7 +423,8 @@
 		wearing_beret = beret
 
 /obj/critter/turtle/sylvester/Commander
-	icon_state = "turtle-beret-com"
+	icon_state = "sylv_costume_1-beret-com"
+
 	preferred_hat = /obj/item/clothing/head/NTberet/commander 	//if this is not null then the only hat type he will wear is this path.
 
 	New()
