@@ -1065,9 +1065,17 @@ MATERIAL
 		else
 			var/S = T
 			if (!( istype(S, /turf/space) || istype(S, /turf/simulated/floor/metalfoam)))
-				boutput(user, "You cannot build on or repair this turf!")
-				return
+				// If this isn't space or metal foam...
+				if (istype(T, /turf/simulated/floor))
+					// If it's still a floor, attempt to place or replace the floor tile
+					var/turf/simulated/floor/F = T
+					F.attackby(src, user)
+					tooltip_rebuild = 1
+				else
+					boutput(user, "You cannot build on or repair this turf!")
+					return
 			else
+				// Otherwise, try to build on top of it
 				src.build(S)
 				tooltip_rebuild = 1
 		src.add_fingerprint(user)
@@ -1078,7 +1086,7 @@ MATERIAL
 		if (!( istype(W, /obj/item/tile) ))
 			return
 		if (W.material && src.material && !isSameMaterial(W.material, src.material))
-			boutput(user, "<span class='alert'>You can't mix 2 stacks of different materials!</span>")
+			boutput(user, "<span class='alert'>You can't mix two stacks of different materials!</span>")
 			return
 		var/success = stack_item(W)
 		if (!success)

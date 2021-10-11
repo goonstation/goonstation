@@ -1,4 +1,8 @@
 
+(t)mon oct 11 21
+(u)Zamujasa
+(e)🆕|feature
+(+)Using floor tiles in hand now acts like using them on the turf you're on. This means you can add tiles to plating with the use key, or (if holding a crowbar) swap out the tiles.
 (t)sun oct 10 21
 (u)Sovexe
 (p)6206
