@@ -21,9 +21,9 @@
 	New()
 		. = ..()
 		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/talk)
-		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/blink)
-		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/teleport_away)
-		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/vengeful_retreat)
+		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/teleportation/blink)
+		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/teleportation/disappear)
+		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/teleportation/vengeful_retreat)
 		abilityHolder.updateButtons()
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
@@ -69,10 +69,8 @@
 	proc/being_seen_status_update()
 		if (last_witness) // optimization attempt
 			if(get_dist(src, last_witness) < 3) // still next to last person that saw us, might be for instance pulling us or sitting next to us
-				set_dormant_status(TRUE)
 				return
 			else
-				set_dormant_status(FALSE)
 				last_witness = null
 
 		for (var/mob/M in viewers(src))
@@ -86,6 +84,7 @@
 				set_dormant_status(TRUE)
 				return
 		being_seen = FALSE
+		set_dormant_status(FALSE)
 
 	update_canmove()
 		src.canmove = !being_seen
@@ -93,6 +92,7 @@
 	setup_hands() // no hands
 		return
 
+ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 /datum/targetable/critter/cryptid_plushie
 	var/mob/living/critter/small_animal/plush/cryptid/our_plushie
 	icon = 'icons/mob/spell_buttons.dmi'
@@ -140,7 +140,47 @@
 			var/picked = pick(strings("ouija_board.txt", "ouija_board_words"))
 			words |= picked
 		return words
-/datum/targetable/critter/cryptid_plushie/blink
+
+ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
+/datum/targetable/critter/cryptid_plushie/teleportation
+
+	proc/get_a_random_station_unlocked_container()
+		var/list/eligible_containers = list()
+		for_by_tcl(iterated_container, /obj/storage)
+			if (iterated_container.z == Z_LEVEL_STATION && !iterated_container.locked)
+				eligible_containers += iterated_container
+		if (!length(eligible_containers))
+			return null
+		return pick(eligible_containers)
+
+	proc/teleport_to_a_target(var/teleportation_target = null, var/target_a_random_container = FALSE)
+		playsound(get_turf(holder.owner), "sound/effects/ghostbreath.ogg", 75, 1)
+		animate(holder.owner, alpha=0, time=1.5 SECONDS)
+		sleep(0.1 SECONDS)
+		animate_ripple(holder.owner, 4)
+		animate_wave(holder.owner, 3)
+		sleep(1.4 SECONDS)
+		if(!holder || !holder.owner)
+			return
+
+		if(target_a_random_container)
+			teleportation_target = get_a_random_station_unlocked_container()
+		if(istype(teleportation_target, /obj/storage))
+			var/obj/storage/container = teleportation_target
+			if(container.open)
+				container.close()
+		else
+			teleportation_target = get_turf(teleportation_target)
+		holder.owner.set_loc(teleportation_target)
+
+		playsound(get_turf(teleportation_target), "sound/effects/ghostlaugh.ogg", 75, 1)
+		animate(holder.owner, alpha=255, time=1.5 SECONDS)
+		sleep(1.5 SECONDS)
+		if(!holder || !holder.owner)
+			return
+		animate(holder.owner)
+
+/datum/targetable/critter/cryptid_plushie/teleportation/blink
 	name = "Teleport"
 	desc = "Phase yourself to a nearby visible spot when not being looked at."
 	icon_state = "blink"
@@ -157,37 +197,18 @@
 		if (!isturf(target))
 			if(istype(target, /obj/storage))
 				var/obj/storage/targetted_container = target
-				if(!targetted_container.locked)
-					target = get_turf(target) // couldn't find a container that wasn't locked
+				if(targetted_container.locked)
+					target = get_turf(target) // the container we picked is locked, we don't want to trap ourselves inside
 			else
 				target = get_turf(target)
 		if (target == get_turf(holder.owner))
 			return 1
+
 		SPAWN_DBG(0)
-			playsound(get_turf(holder.owner), "sound/effects/ghostbreath.ogg", 75, 1)
-			animate(holder.owner, alpha=0, time=1.5 SECONDS)
-			sleep(0.1 SECONDS)
-			animate_ripple(holder.owner, 4)
-			animate_wave(holder.owner, 3)
-			sleep(1.4 SECONDS)
-			if(!holder || !holder.owner)
-				return
-
-			if(istype(target, /obj/storage))
-				var/obj/storage/targetted_container
-				if(targetted_container.open)
-					targetted_container.close()
-			holder.owner.set_loc(target)
-
-			playsound(get_turf(holder.owner), "sound/effects/ghostlaugh.ogg", 75, 1)
-			animate(holder.owner, alpha=255, time=1.5 SECONDS)
-			sleep(1.5 SECONDS)
-			if(!holder || !holder.owner)
-				return
-			animate(holder.owner)
+			teleport_to_a_target(teleportation_target = target)
 		return 0
 
-/datum/targetable/critter/cryptid_plushie/teleport_away
+/datum/targetable/critter/cryptid_plushie/teleportation/disappear
 	name = "Disappear"
 	desc = "Teleport to a random container to hide, regardless of whether you're being looked at."
 	icon_state = "teleport"
@@ -200,36 +221,10 @@
 			return 1
 
 		SPAWN_DBG(0)
-			var/obj/storage/container = null
-
-			var/list/eligible_containers = list()
-			for_by_tcl(iterated_container, /obj/storage)
-				if (iterated_container.z == Z_LEVEL_STATION && !iterated_container.locked)
-					eligible_containers += iterated_container
-			if (!length(eligible_containers))
-				return
-			container = pick(eligible_containers)
-
-			playsound(get_turf(holder.owner), "sound/effects/ghostbreath.ogg", 75, 1)
-			animate(holder.owner, alpha=0, time=1.5 SECONDS)
-			sleep(0.1 SECONDS)
-			animate_ripple(holder.owner, 4)
-			animate_wave(holder.owner, 3)
-			sleep(1.4 SECONDS)
-			if(!holder || !holder.owner)
-				return
-			if(container.open)
-				container.close()
-			holder.owner.set_loc(container)
-			playsound(get_turf(container), "sound/effects/ghostlaugh.ogg", 75, 1)
-			animate(holder.owner, alpha=255, time=1.5 SECONDS)
-			sleep(1.5 SECONDS)
-			if(!holder || !holder.owner)
-				return
-			animate(holder.owner)
+			teleport_to_a_target(target_a_random_container = TRUE)
 		return 0
 
-/datum/targetable/critter/cryptid_plushie/vengeful_retreat
+/datum/targetable/critter/cryptid_plushie/teleportation/vengeful_retreat
 	name = "Vengeful Retreat"
 	desc = "After being attacked, harass your attacker and disappear."
 	icon_state = "blind"
@@ -262,33 +257,7 @@
 				holder.owner.lastattacker = null
 
 				SPAWN_DBG(0)
-					var/obj/storage/container = null
-
-					var/list/eligible_containers = list()
-					for_by_tcl(iterated_container, /obj/storage)
-						if (iterated_container.z == Z_LEVEL_STATION && !iterated_container.locked)
-							eligible_containers += iterated_container
-					if (!length(eligible_containers))
-						return
-					container = pick(eligible_containers)
-
-					playsound(get_turf(holder.owner), "sound/effects/ghostbreath.ogg", 75, 1)
-					animate(holder.owner, alpha=0, time=1.5 SECONDS)
-					sleep(0.1 SECONDS)
-					animate_ripple(holder.owner, 4)
-					animate_wave(holder.owner, 3)
-					sleep(1.4 SECONDS)
-					if(!holder || !holder.owner)
-						return
-					if(container.open)
-						container.close()
-					holder.owner.set_loc(container)
-					playsound(get_turf(container), "sound/effects/ghostlaugh.ogg", 75, 1)
-					animate(holder.owner, alpha=255, time=1.5 SECONDS)
-					sleep(1.5 SECONDS)
-					if(!holder || !holder.owner)
-						return
-					animate(holder.owner)
+					teleport_to_a_target(target_a_random_container = TRUE)
 				return 0
 		else
 			return 1
