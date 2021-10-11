@@ -1800,30 +1800,25 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 
 /obj/item/clothing/head/westhat/black
 	name = "Black Ten-Gallon hat"
-	desc = "Channel your true cowboy and call everyone partner!"
 	icon_state = "westhat_black"
 	item_state = "westhat_black"
 
 /obj/item/clothing/head/westhat/red
 	name = "Red Ten-Gallon hat"
-	desc = "Channel your true cowboy and call everyone partner!"
 	icon_state = "westhat_red"
 	item_state = "westhat_red"
 
 /obj/item/clothing/head/westhat/blue
 	name = "Blue Ten-Gallon hat"
-	desc = "Channel your true cowboy and call everyone partner!"
 	icon_state = "westhat_blue"
 	item_state = "westhat_blue"
 
 /obj/item/clothing/head/westhat/tan
 	name = "Tan Ten-Gallon hat"
-	desc = "Channel your true cowboy and call everyone partner!"
 	icon_state = "westhat_tan"
 	item_state = "westhat_tan"
 
 /obj/item/clothing/head/westhat/brown
 	name = "Brown Ten-Gallon hat"
-	desc = "Channel your true cowboy and call everyone partner!"
 	icon_state = "westhat_brown"
 	item_state = "westhat_brown"
