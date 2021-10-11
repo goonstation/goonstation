@@ -261,7 +261,7 @@
 			return list(access_security, access_brig, access_forensics_lockers, access_armory,
 				access_medical, access_medlab, access_morgue, access_securitylockers,
 				access_tox, access_tox_storage, access_chemistry, access_carrypermit, access_contrabandpermit,
-				access_emergency_storage, access_chapel_office, access_kitchen, access_medical_lockers,
+				access_emergency_storage, access_chapel_office, access_kitchen,
 				access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_construction, access_hydro, access_mail,
 				access_engineering, access_maint_tunnels, access_external_airlocks,
 				access_tech_storage, access_engineering_storage, access_engineering_eva,

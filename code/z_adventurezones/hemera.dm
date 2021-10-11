@@ -441,7 +441,7 @@ Obsidian Crown
 		host.delStatus("weakened")
 		host.delStatus("paralysis")
 		host.dizziness = max(0,host.dizziness-10)
-		host.drowsyness = max(0,host.drowsyness-10)
+		host.changeStatus("drowsy", -20 SECONDS)
 		host.sleeping = 0
 
 		health_update_queue |= host

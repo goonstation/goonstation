@@ -170,13 +170,6 @@
 		alpha = 255
 		plane = PLANE_OVERLAY_EFFECTS
 
-		unpooled()
-			..()
-			src.alpha = 255
-
-		pooled()
-			..()
-
 
 
 /mob/var/obj/particle/attack/attack_particle
@@ -473,7 +466,7 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var/muzzle_light_color, var/offset=25)
 	if (!A || firing_angle == null || !muzzle_anim) return
 
-	var/obj/particle/attack/muzzleflash/muzzleflash = unpool(/obj/particle/attack/muzzleflash)
+	var/obj/particle/attack/muzzleflash/muzzleflash = new /obj/particle/attack/muzzleflash
 
 	if(isnull(muzzle_light_color))
 		muzzle_light_color = default_muzzle_flash_colors[muzzle_anim]
@@ -498,7 +491,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 	SPAWN_DBG(0.6 SECONDS)
 		A.vis_contents.Remove(muzzleflash)
-		pool(muzzleflash)
+		qdel(muzzleflash)
 
 
 
@@ -659,25 +652,16 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 // for vampire standup :)
 /proc/violent_standup_twitch(var/atom/A)
 	SPAWN_DBG(-1)
-		var/matrix/start = matrix(A.transform)
-		var/matrix/target = matrix(A.transform)
-		var/last_angle = rand(-45,45)
-		target.Turn(last_angle)
-		A.transform = target
-		var/orig_x = A.pixel_x
-		var/orig_y = A.pixel_y
-
+		var/offx
+		var/offy
+		var/angle
 		for (var/i = 0, (i < 7 && A), i++)
-			var/new_angle = rand(-45, 45)
-			target = A.transform.Turn(-last_angle + new_angle)
-			last_angle = new_angle
-			A.transform = target
-
-			A.pixel_x = orig_x + rand(-3,3)
-			A.pixel_y = orig_y + rand(-2,2)
+			offx = rand(-3,3)
+			offy = rand(-2,2)
+			angle = rand(-45,45)
+			animate(A, time = 0.5, transform = matrix().Turn(angle), easing = JUMP_EASING, pixel_x = offx, pixel_y = offy, flags = ANIMATION_PARALLEL|ANIMATION_RELATIVE)
+			animate(time = 0.5, transform = matrix().Turn(-angle), easing = JUMP_EASING, pixel_x = -offx, pixel_y = -offy, flags = ANIMATION_RELATIVE)
 			sleep(0.1 SECONDS)
-
-		animate(A, pixel_x = orig_x, pixel_y = orig_y, transform = UNDO_TRANSFORMATION(start, target, A.transform), time = 1, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 
 /proc/eat_twitch(var/atom/A)
 	var/matrix/squish_matrix = matrix(A.transform)
@@ -1081,7 +1065,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	var/turf/target_turf = get_turf(target)
 	if (!target_turf)
 		return
-	var/obj/decal/teleport_swirl/swirl = unpool(/obj/decal/teleport_swirl)
+	var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
 	swirl.set_loc(target_turf)
 	swirl.pixel_y = 10
 	if (play_sound)
@@ -1089,7 +1073,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	SPAWN_DBG(1.5 SECONDS)
 		if (swirl)
 			swirl.pixel_y = 0
-			pool(swirl)
+			qdel(swirl)
 	return
 
 /proc/leaveresidual(var/atom/target)
@@ -1100,11 +1084,11 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		return
 	if (locate(/obj/decal/residual_energy) in target_turf)
 		return
-	var/obj/decal/residual_energy/e = unpool(/obj/decal/residual_energy)
+	var/obj/decal/residual_energy/e = new /obj/decal/residual_energy
 	e.set_loc(target_turf)
 	SPAWN_DBG(10 SECONDS)
 		if (e)
-			pool(e)
+			qdel(e)
 	return
 
 /proc/leavepurge(var/atom/target, var/current_increment, var/sword_direction)
@@ -1117,16 +1101,16 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if(current_increment == 9)
 		if (locate(/obj/decal/purge_beam_end) in target_turf)
 			return
-		e = unpool(/obj/decal/purge_beam_end)
+		e = new /obj/decal/purge_beam_end
 	else
 		if (locate(/obj/decal/purge_beam) in target_turf)
 			return
-		e = unpool(/obj/decal/purge_beam)
+		e = new /obj/decal/purge_beam
 	e.set_loc(target_turf)
 	e.dir = sword_direction
 	SPAWN_DBG(7)
 		if (e)
-			pool(e)
+			qdel(e)
 	return
 
 /proc/leavescan(var/atom/target, var/scan_type)
@@ -1139,15 +1123,15 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if(scan_type == 0)
 		if (locate(/obj/decal/syndicate_destruction_scan_center) in target_turf)
 			return
-		e = unpool(/obj/decal/syndicate_destruction_scan_center)
+		e = new /obj/decal/syndicate_destruction_scan_center
 	else
 		if (locate(/obj/decal/syndicate_destruction_scan_side) in target_turf)
 			return
-		e = unpool(/obj/decal/syndicate_destruction_scan_side)
+		e = new /obj/decal/syndicate_destruction_scan_side
 	e.set_loc(target_turf)
 	SPAWN_DBG(7)
 		if (e)
-			pool(e)
+			qdel(e)
 	return
 
 /proc/sponge_size(var/atom/A, var/size = 1)
@@ -1161,8 +1145,8 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	var/matrix/M2 = matrix()
 	M2.Scale(1.2,0.8)
 
-	animate(A, transform = M2, time = 30, easing = ELASTIC_EASING, flags = ANIMATION_END_NOW)
-	animate(A, transform = M1, time = 20, easing = ELASTIC_EASING)
+	animate(A, transform = M2, time = 3, easing = SINE_EASING, flags = ANIMATION_END_NOW)
+	animate(transform = M1, time = 2, easing = SINE_EASING)
 
 /proc/shrink_teleport(var/atom/teleporter)
 	var/matrix/M = matrix(0.1, 0.1, MATRIX_SCALE)

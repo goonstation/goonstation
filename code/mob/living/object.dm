@@ -132,7 +132,7 @@
 		delStatus("slowed")
 		sleeping = 0
 		change_misstep_chance(-INFINITY)
-		drowsyness = 0.0
+		src.delStatus("drowsy")
 		dizziness = 0
 		is_dizzy = 0
 		is_jittery = 0

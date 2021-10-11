@@ -144,7 +144,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(split_type == 0)
 			split(P)
 
-	on_hit(var/atom/A,var/obj/projectile/P)
+	on_hit(var/atom/A,var/dir,var/obj/projectile/P)
 		if(split_type == 1)
 			split(P)
 
@@ -378,7 +378,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		var/turf/T = get_turf(A)
 		playsound(A, "sound/effects/ExplosionFirey.ogg", 60, 1)
 		if(!src.impacted)
-			playsound_global(world, 'sound/weapons/energy/howitzer_impact.ogg', 60)
+			playsound_global(world, "sound/weapons/energy/howitzer_impact.ogg", 60)
 			src.impacted = 1
 			SPAWN_DBG(1 DECI SECOND)
 				for(var/mob/living/M in mobs)
@@ -387,7 +387,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		SPAWN_DBG(0)
 			explosion_new(null, T, 30, 1)
 		if(prob(10))
-			playsound_global(world, 'sound/effects/creaking_metal1.ogg', 40)
+			playsound_global(world, "sound/effects/creaking_metal1.ogg", 40)
 
 // A weapon by Sovexe
 /datum/projectile/special/meowitzer //what have I done

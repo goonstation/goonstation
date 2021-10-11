@@ -43,24 +43,6 @@
 	target = null
 	..()
 
-/obj/portal/pooled(var/poolname)
-	..()
-	name = initial(name)
-	icon = initial(icon)
-	icon_state = initial(icon_state)
-	density = initial(density)
-	failchance = initial(failchance)
-	anchored = initial(anchored)
-
-/obj/portal/unpooled(var/poolname)
-	portal_lums = initial(portal_lums)
-	light.set_brightness(portal_lums / 3)
-	light.enable()
-	SPAWN_DBG(0)
-		animate_portal_appear(src)
-		playsound(src.loc, "warp", 50, 1, 0.1, 0.7)
-	..()
-
 /obj/portal/proc/teleport(atom/movable/M as mob|obj)
 	if( istype(M, /obj/effects)) //sparks don't teleport
 		return
@@ -88,10 +70,13 @@
 					M.throw_at(destination, 8, 2)
 
 					return
-
+				if(ismob(M))
+					logTheThing("combat", M, null, "entered [src] at [log_loc(src)] and teleported to [src.target] at [log_loc(destination)]")
 				do_teleport(M, destination, 1)
 			else return
 		else
+			if(ismob(M))
+				logTheThing("combat", M, null, "entered [src] at [log_loc(src)] and teleported to [log_loc(src.target)]")
 			do_teleport(M, src.target, 1) ///You will appear adjacent to the beacon
 
 /obj/portal/wormhole
@@ -116,10 +101,6 @@
 
 /obj/portal/afterlife
 	desc = "Enter this to return to your ghostly form"
-
-	New()
-		..()
-		unpooled()
 
 	Bumped(mob/M as mob|obj)
 		SPAWN_DBG(0)

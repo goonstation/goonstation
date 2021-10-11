@@ -128,7 +128,7 @@
 		cash.amount = 0
 		user.show_text("<span class='notice'>You add [cash] to the credit in [src].</span>")
 		user.u_equip(W)
-		pool(W)
+		qdel(W)
 	else if (istype(W, /obj/item/disk/data/floppy))
 		if (!src.diskette)
 			user.drop_item()
@@ -475,7 +475,7 @@ proc/find_ghost_by_key(var/find_key)
 	proc/move_mob_inside(var/mob/M)
 		if (!can_operate(M) || !ishuman(M)) return
 
-		M.pulling = null
+		M.remove_pulling()
 		M.set_loc(src)
 		src.occupant = M
 		src.icon_state = "scanner_1"

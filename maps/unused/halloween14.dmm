@@ -829,7 +829,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "abN" = (
@@ -6149,7 +6149,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "rozetasolar";
 	name = "Zeta Solar Control";
 	track = 2
@@ -11614,7 +11614,7 @@
 /area/station/crew_quarters/quarters)
 "axr" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/crate,
 /obj/item/clothing/under/gimmick/princess,
@@ -12806,7 +12806,7 @@
 /turf/simulated/wall/r_wall,
 /area/station/ai_monitored/storage/eva)
 "azV" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -21402,7 +21402,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "aRf" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -24358,7 +24358,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor,
 /area/station/engine/substation/east)
 "aWq" = (
@@ -24896,7 +24896,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	name = "Engine Output Monitoring"
 	},
 /turf/simulated/floor/yellow/side{
@@ -26030,7 +26030,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/cable{
 	icon_state = "4-8";
@@ -34575,7 +34575,7 @@
 /area/station/crew_quarters/juryroom)
 "brd" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/juryroom)
@@ -35050,7 +35050,7 @@
 "brZ" = (
 /obj/stool,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
@@ -35593,7 +35593,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "btf" = (
@@ -36902,7 +36902,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "solar_starboard";
 	name = "East Solar Control"
 	},
@@ -38674,7 +38674,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/solar/south)
 "bzA" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "solar_aft";
 	name = "South Solar Control"
 	},
@@ -38855,7 +38855,7 @@
 	},
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/device/radio/signaler{
 	pixel_x = 2;
@@ -46397,7 +46397,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/maint)
 "bRu" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable,
 /obj/cable{
 	d1 = 1;
@@ -46673,7 +46673,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/upper_arctic/pod1)
 "bRT" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -84055,7 +84055,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	name = "SS2 Solar Control"
 	},
 /turf/simulated/floor/grime,
@@ -86513,7 +86513,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	name = "SS2 Solar Control"
 	},
 /obj/cable{

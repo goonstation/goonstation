@@ -2,7 +2,10 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	if(mat in material_category_names)
 		return material_category_names[mat]
 	else
-		return capitalize(mat)
+		var/datum/material/nice_mat = getMaterial(mat)
+		if (istype(nice_mat))
+			return capitalize(nice_mat.name)
+		return capitalize(mat) //if all else fails (probably a category instead of a material)
 
 /datum/manufacture
 	var/name = null                // Name of the schematic
@@ -840,6 +843,15 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	time = 15 SECONDS
 	create = 1
 	category = "Component"
+
+/datum/manufacture/cardboard_ai
+	name = "Cardboard 'AI'"
+	item_paths = list("cardboard")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/clothing/suit/cardboard_box/ai)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
 
 /datum/manufacture/cyberappendix
 	name = "Cyberappendix"
@@ -2576,7 +2588,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 
 /datum/manufacture/id_card_gold
 	name = "Gold ID card"
-	item_paths = list("REF-1", "CON-2","CRY-1")
+	item_paths = list("gold", "CON-2","CRY-1")
 	item_amounts = list(5,4,3)
 	item_outputs = list(/obj/item/card/id/gold)
 	time = 30 SECONDS
@@ -2589,6 +2601,15 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	item_amounts = list(3,3)
 	item_outputs = list(/obj/item/implantcase/access)
 	time = 20 SECONDS
+	create = 1
+	category = "Resource"
+
+/datum/manufacture/acesscase
+	name = "ID Briefcase"
+	item_paths = list("CON-1","CRY-1","MET-1","gold")
+	item_amounts = list(25,15,35,2)
+	item_outputs = list(/obj/item/acesscomputerunfolder)
+	time = 75 SECONDS
 	create = 1
 	category = "Resource"
 

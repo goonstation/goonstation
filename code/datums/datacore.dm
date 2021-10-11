@@ -35,6 +35,8 @@
 	S.fields["name"] = G.fields["name"]
 	S.fields["id"] = G.fields["id"]
 
+	H.datacore_id = G.fields["id"]
+
 	B.fields["name"] = G.fields["name"]
 	B.fields["id"] = G.fields["id"]
 
@@ -186,6 +188,7 @@
 	src.medical += M
 	src.security += S
 	src.bank += B
+	wagesystem.payroll_stipend += B.fields["wage"]
 
 	//Add email group
 	if ("[H.mind.assigned_role]" in job_mailgroup_list)

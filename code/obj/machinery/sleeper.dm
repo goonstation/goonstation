@@ -585,7 +585,7 @@
 
 		if (!can_operate(usr)) return
 
-		usr.pulling = null
+		usr.remove_pulling()
 		usr.set_loc(src)
 		src.occupant = usr
 		src.update_icon()

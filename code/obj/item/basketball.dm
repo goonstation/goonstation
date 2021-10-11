@@ -197,10 +197,10 @@
 			return
 		src.active = 1
 		playsound(src, "rustle", 75, 1)
-		A.invisibility = 100
+		A.invisibility = INVIS_ALWAYS_ISH
 		flick("bbasket1", src)
 		SPAWN_DBG(1.5 SECONDS)
-			A.invisibility = 0
+			A.invisibility = INVIS_NONE
 			src.active = 0
 
 /obj/item/bballbasket/testing

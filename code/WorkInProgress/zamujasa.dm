@@ -186,7 +186,7 @@
 	density = 0
 	var/id = null
 	var/which_end = 0
-	invisibility = 0
+	invisibility = INVIS_NONE
 	var/busy = 0
 
 	New()
@@ -326,7 +326,7 @@
 
 	proc/mulch_item(var/obj/I, score)
 		playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 50, 1)
-		pool( I )
+		qdel( I )
 		total_score += score
 		round_score += score
 		update_totals()
@@ -462,7 +462,8 @@
 		alpha = 128
 		boutput(user, "Spawning target dummy, stand by") //no need to be rude
 
-		new /mob/living/carbon/human/tdummy(locate(src.x+1, src.y, src.z))
+		var/mob/living/carbon/human/tdummy/tdu = new /mob/living/carbon/human/tdummy(locate(src.x+1, src.y, src.z))
+		tdu.shutup = TRUE
 		//T.x = src.x + 1 // move it to the right
 
 
@@ -776,7 +777,7 @@
 			src.monitored_ref = null
 
 		if (monitored)
-			if (monitored.pooled || monitored.qdeled)
+			if (monitored.disposed || monitored.qdeled)
 				// The thing we were watching was deleted/removed! Welp.
 				monitored = null
 				return 0
@@ -1248,7 +1249,7 @@ Other Goonstation servers:[serverList]</span>"})
 
 /obj/overlay/inventory_counter
 	name = "inventory amount counter"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	plane = PLANE_HUD
 	layer = HUD_LAYER_3
 	appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
@@ -1283,15 +1284,10 @@ Other Goonstation servers:[serverList]</span>"})
 		if(src.transform) src.transform = null
 
 	proc/hide_count()
-		invisibility = 101
+		invisibility = INVIS_ALWAYS
 
 	proc/show_count()
-		invisibility = 0
-
-	pooled()
-		src.maptext = ""
-		src.invisibility = 101
-		..()
+		invisibility = INVIS_NONE
 
 
 

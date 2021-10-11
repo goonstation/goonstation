@@ -74,7 +74,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	else // if all else fails?
 		return 1 // head surgery is okay
 
-#define UNPOOL_BLOOD_SPLOOSH(T) var/obj/itemspecialeffect/impact/E = unpool(/obj/itemspecialeffect/impact/blood);\
+#define UNPOOL_BLOOD_SPLOOSH(T) var/obj/itemspecialeffect/impact/E = new /obj/itemspecialeffect/impact/blood;\
 			if (E){E.setup(get_turf(T));}
 
 /obj/item/proc/surgeryConfusion(var/mob/living/carbon/human/patient as mob, var/mob/surgeon as mob, var/damage as num)
@@ -136,7 +136,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		screw_up_prob -= 10
 	if (patient.getStatusDuration("stunned")) // stunned?
 		screw_up_prob -= 5
-	if (patient.drowsyness) // sleepy?
+	if (patient.hasStatus("drowsy")) // sleepy?
 		screw_up_prob -= 5
 
 	if (patient.reagents) // check for anesthetics/analgetics

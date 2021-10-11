@@ -272,17 +272,17 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					dat += "<B>Request item:</B><BR>"
 					dat += "<I>Each item costs a number of [syndicate_currency] as indicated by the number following their name.</I><BR><table cellspacing=5>"
 				if (src.items_telecrystal && islist(src.items_telecrystal) && length(src.items_telecrystal))
-					dat += "</table><B>Telecrystals:</B><BR><table cellspacing=5>"
+					dat += "</table><B>Ejectable [syndicate_currency]:</B><BR><table cellspacing=5>"
 					for (var/T in src.items_telecrystal)
 						var/datum/syndicate_buylist/I4 = src.items_telecrystal[T]
 						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_telecrystal[T]]'>[I4.name]</A> ([I4.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_telecrystal[T]]'>About</A></td>"
 				if (src.items_objective && islist(src.items_objective) && length(src.items_objective))
-					dat += "</table><B>Objective specific:</B><BR><table cellspacing=5>"
+					dat += "</table><B>Objective Specific:</B><BR><table cellspacing=5>"
 					for (var/O in src.items_objective)
 						var/datum/syndicate_buylist/I3 = src.items_objective[O]
 						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_objective[O]]'>[I3.name]</A> ([I3.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_objective[O]]'>About</A></td>"
 				if (src.items_job && islist(src.items_job) && length(src.items_job))
-					dat += "</table><B>Job specific:</B><BR><table cellspacing=5>"
+					dat += "</table><B>Job Specific:</B><BR><table cellspacing=5>"
 					for (var/J in src.items_job)
 						var/datum/syndicate_buylist/I2 = src.items_job[J]
 						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_job[J]]'>[I2.name]</A> ([I2.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_job[J]]'>About</A></td>"
@@ -397,7 +397,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					boutput(usr, "<span class='alert'>The uplink doesn't have enough [syndicate_currency] left for that!</span>")
 					return
 				src.uses = max(0, src.uses - I.cost)
-				if (usr.mind)
+				if (usr.mind && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
 					usr.mind.purchased_traitor_items += I
 				logTheThing("debug", usr, null, "bought this from uplink: [I.name]")
 
@@ -554,17 +554,17 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				var/datum/syndicate_buylist/I1 = src.items_general[G]
 				src.menu_message += "<tr><td><A href='byond://?src=\ref[src];buy_item=\ref[src.items_general[G]]'>[I1.name]</A> ([I1.cost])</td><td><A href='byond://?src=\ref[src];abt_item=\ref[src.items_general[G]]'>About</A></td>"
 		if (src.items_job && islist(src.items_job) && length(src.items_job))
-			src.menu_message += "</table><B>Job specific:</B><BR><table cellspacing=5>"
+			src.menu_message += "</table><B>Job Specific:</B><BR><table cellspacing=5>"
 			for (var/J in src.items_job)
 				var/datum/syndicate_buylist/I2 = src.items_job[J]
 				src.menu_message += "<tr><td><A href='byond://?src=\ref[src];buy_item=\ref[src.items_job[J]]'>[I2.name]</A> ([I2.cost])</td><td><A href='byond://?src=\ref[src];abt_item=\ref[src.items_job[J]]'>About</A></td>"
 		if (src.items_objective && islist(src.items_objective) && length(src.items_objective))
-			src.menu_message += "</table><B>Objective specific:</B><BR><table cellspacing=5>"
+			src.menu_message += "</table><B>Objective Specific:</B><BR><table cellspacing=5>"
 			for (var/O in src.items_objective)
 				var/datum/syndicate_buylist/I3 = src.items_objective[O]
 				src.menu_message += "<tr><td><A href='byond://?src=\ref[src];buy_item=\ref[src.items_objective[O]]'>[I3.name]</A> ([I3.cost])</td><td><A href='byond://?src=\ref[src];abt_item=\ref[src.items_objective[O]]'>About</A></td>"
 		if (src.items_telecrystal && islist(src.items_telecrystal) && length(src.items_telecrystal))
-			src.menu_message += "</table><B>Telecrystals:</B><BR><table cellspacing=5>"
+			src.menu_message += "</table><B>Ejectable [syndicate_currency]:</B><BR><table cellspacing=5>"
 			for (var/O in src.items_telecrystal)
 				var/datum/syndicate_buylist/I3 = src.items_telecrystal[O]
 				src.menu_message += "<tr><td><A href='byond://?src=\ref[src];buy_item=\ref[src.items_telecrystal[O]]'>[I3.name]</A> ([I3.cost])</td><td><A href='byond://?src=\ref[src];abt_item=\ref[src.items_telecrystal[O]]'>About</A></td>"
@@ -601,7 +601,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					boutput(usr, "<span class='alert'>The uplink doesn't have enough [syndicate_currency] left for that!</span>")
 					return
 				src.uses = max(0, src.uses - I.cost)
-				if (usr.mind)
+				if (usr.mind && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
 					usr.mind.purchased_traitor_items += I
 				logTheThing("debug", usr, null, "bought this from uplink: [I.name]")
 

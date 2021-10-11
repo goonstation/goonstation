@@ -287,7 +287,7 @@
 		if (src.alive && istype(W, /obj/item/plant/herb/catnip))
 			user.visible_message("<b>[user]</b> gives [src.name] the [W]!","You give [src.name] the [W].")
 			src.catnip_effect()
-			pool(W)
+			qdel(W)
 		else
 			..()
 
@@ -1174,7 +1174,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 					src.visible_message("[src] [pick("ignores","pays no attention to","warily eyes","turns away from")] [user]!")
 					return
 				else
-					user.pulling = src
+					user.set_pulling(src)
 					src.wanderer = 0
 					if (src.task == "wandering")
 						src.task = "thinking"
@@ -1311,7 +1311,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			src.say(pick("Ha en bra dag!", "Kom igen!"))
 			if (C.amount <= 0) // no mo monay
 				user.u_equip(C)
-				pool(C)
+				qdel(C)
 			else
 				C.update_stack_appearance()
 

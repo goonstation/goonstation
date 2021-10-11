@@ -148,21 +148,19 @@
 
 /mob/living/silicon/hivebot/New()
 	..()
-	//add_lifeprocess(/datum/lifeprocess/arrest_icon)
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/hud)
 	add_lifeprocess(/datum/lifeprocess/sight)
-	add_lifeprocess(/datum/lifeprocess/statusupdate)
+	add_lifeprocess(/datum/lifeprocess/hivebot_statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 
 /mob/living/silicon/robot/New()
 	..()
-	//add_lifeprocess(/datum/lifeprocess/arrest_icon)
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/hud)
 	add_lifeprocess(/datum/lifeprocess/sight)
-	add_lifeprocess(/datum/lifeprocess/statusupdate)
+	add_lifeprocess(/datum/lifeprocess/robot_statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/robot_oil)
@@ -171,12 +169,11 @@
 
 /mob/living/silicon/drone/New()
 	..()
-	//add_lifeprocess(/datum/lifeprocess/arrest_icon)
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 
 /mob/living/Life(datum/controller/process/mobs/parent)
-	set invisibility = 0
+	set invisibility = INVIS_NONE
 	if (..())
 		return 1
 
