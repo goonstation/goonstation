@@ -213,6 +213,59 @@
 		min_amt2spawn = 5
 		max_amt2spawn = 7
 
+/obj/random_item_spawner/hop_cloths
+	name = "random hop clothing"
+	icon_state = "rand_tool"
+	min_amt2spawn = 1
+	max_amt2spawn = 1
+	items2spawn = list(/obj/item/crowbar,
+	/obj/item/clothing/under/rank/head_of_personnel/alt,
+	/obj/item/clothing/under/rank/head_of_personnel/dress_alt,
+	/obj/item/clothing/under/rank/head_of_personnel/fancy_alt,
+	/obj/item/clothing/under/suit/hop/dress_alt,
+	/obj/item/clothing/under/suit/hop/navy)
+
+	one
+		amt2spawn = 1
+
+	two
+		amt2spawn = 2
+
+	three
+		amt2spawn = 3
+
+	four
+		amt2spawn = 4
+
+	five
+		amt2spawn = 5
+
+	six
+		amt2spawn = 6
+
+	seven
+		amt2spawn = 7
+
+	one_or_zero
+		min_amt2spawn = 0
+		max_amt2spawn = 1
+
+	maybe_few
+		min_amt2spawn = 0
+		max_amt2spawn = 2
+
+	few
+		min_amt2spawn = 1
+		max_amt2spawn = 3
+
+	some
+		min_amt2spawn = 3
+		max_amt2spawn = 5
+
+	lots
+		min_amt2spawn = 5
+		max_amt2spawn = 7
+
 /obj/random_item_spawner/tools_w_igloves
 	name = "random tool spawner (includes insulated gloves)"
 	icon_state = "rand_tool_iglove"
@@ -1513,7 +1566,7 @@
 						/obj/item/reagent_containers/food/drinks/bottle/soda/orange,
 						/obj/item/reagent_containers/food/drinks/bottle/soda/grones)
 	rare_items2spawn = list(/obj/item/reagent_containers/food/drinks/bottle/soda/softsoft_pizza)
-	
+
 /obj/random_item_spawner/hat
 	name = "random hat spawner"
 	icon_state = "rand_hat"

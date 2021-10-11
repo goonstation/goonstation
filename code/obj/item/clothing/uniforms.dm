@@ -321,6 +321,19 @@
 
 	dress
 		icon_state = "hop-dress"
+		item_state = "hop-dress"
+
+	alt
+		icon_state = "hop-alt"
+		item_state = "hop-alt"
+
+	dress_alt
+		icon_state = "hop-dress-alt"
+		item_state = "hop-dress-alt"
+
+	fancy_alt
+		icon_state = "hop-fancy-alt"
+		item_state = "hop-fancy-alt"
 
 /obj/item/clothing/under/rank/head_of_securityold
 	name = "head of security's uniform"
@@ -1125,8 +1138,20 @@
 		icon_state = "suitR"
 		item_state = "suitR"
 
+	dress_alt
+		icon_state = "suitT-dress-alt"
+		item_state = "suitT-dress-alt"
+
+	navy
+		desc = "A navy suit and green necktie. An authoritative yet tacky ensemble."
+		icon_state = "suitT-alt"
+		item_state = "suitT-alt"
+
 	dress
 		icon_state = "suitT-dress"
+		item_state = "suitT-dress"
+
+
 
 /obj/item/clothing/under/suit/hos
 	name = "\improper Head of Security's suit"

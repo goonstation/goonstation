@@ -89,8 +89,7 @@
 	/obj/item/clothing/suit/armor/vest,
 	/obj/item/stamp/hop,
 	/obj/item/device/radio/headset/command/hop,
-	/obj/item/device/accessgun,
-	/obj/item/acesscomputerunfolder)
+	/obj/item/device/accessgun)
 
 /obj/storage/secure/closet/command/research_director
 	name = "\improper Research Director's locker"

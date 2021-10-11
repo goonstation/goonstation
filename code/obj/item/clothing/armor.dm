@@ -299,6 +299,10 @@
 	icon_state = "hopcoat"
 	item_state = "hopcoat"
 
+	alt
+		icon_state = "hopcoat-alt"
+		item_state = "hopcoat-alt"
+
 	setupProperties()
 		..()
 		setProperty("coldprot", 35)
