@@ -156,7 +156,7 @@
 			return 1
 		if (!isturf(target))
 			if(istype(target, /obj/storage))
-				var/obj/storage/targetted_container
+				var/obj/storage/targetted_container = target
 				if(!targetted_container.locked)
 					target = get_turf(target) // couldn't find a container that wasn't locked
 			else
