@@ -4,7 +4,7 @@
 		I, the author of this book, Trent Durinste, dedicate this book to me, the author, Trent Druinste. <br><small>I just made Dotty Spud  write the foreword, not the actual book. For space-god's sake, the name of the Book is called "Trent's Anatomy". Like the TV Show Grey's Anatomy and classic medical texbook that it inspired. Ever heard of it? What is <i>wrong</i> with you people?!</small>
 		<hr>
 		<h3><b>FOREWARD</b></h3>
-		<i<p>While snails share many organs in common with the human body, they have no sense of hearing.<br>
+		<p>While snails share many organs in common with the human body, they have no sense of hearing.<br>
 		<i>by Dorothy "Dotty" Spud</i></p>
 	    <hr>
 
