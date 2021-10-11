@@ -175,6 +175,7 @@
 	#endif
 					if (istype(objective, /datum/objective/miscreant)) continue
 
+					obj_count++
 					if (objective.check_completion())
 						stuff_to_output += "Objective #[obj_count]: [objective.explanation_text] <span class='success'><B>Success</B></span>"
 						logTheThing("diary",traitor,null,"completed objective: [objective.explanation_text]")
@@ -184,7 +185,6 @@
 						stuff_to_output += "Objective #[obj_count]: [objective.explanation_text] <span class='alert'>Failed</span>"
 						logTheThing("diary",traitor,null,"failed objective: [objective.explanation_text]. Womp womp.")
 						traitorwin = 0
-					obj_count++
 
 			// Please use objective.medal_name for medals that are tied to a specific objective instead of adding them here.
 			if (obj_count)
@@ -195,11 +195,9 @@
 						traitor.current.unlock_medal("You're no Elminster!", 1)
 					if (traitor.special_role == ROLE_WRESTLER && traitor.current)
 						traitor.current.unlock_medal("Cream of the Crop", 1)
-					stuff_to_output += "<span class='success'>The [traitor.special_role] was successful!</span>"
+					stuff_to_output += "<span class='success'>The [traitor.special_role] was successful!</span><br>"
 				else
-					stuff_to_output += "<span class='alert'>The [traitor.special_role] has failed!</span>"
-			// New line for formatting
-			stuff_to_output += ""
+					stuff_to_output += "<span class='alert'>The [traitor.special_role] has failed!</span><br>"
 
 	#ifdef DATALOGGER
 			if (traitorwin)
