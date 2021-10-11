@@ -683,6 +683,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\admin\spacebee_extension\command_structure.dm"
 #include "code\modules\admin\spacebee_extension\commands.dm"
 #include "code\modules\admin\spacebee_extension\system.dm"
+#include "code\modules\antagonists\arcfiend\arcfiend.dm"
 #include "code\modules\antagonists\blob\blob_abilities.dm"
 #include "code\modules\antagonists\changeling\abilities\abomination.dm"
 #include "code\modules\antagonists\changeling\abilities\absorb.dm"
