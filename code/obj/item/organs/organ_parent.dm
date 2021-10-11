@@ -113,11 +113,10 @@
 				return
 		else if (istool(W, TOOL_SNIPPING) && src.installed_aug)
 			var/obj/item/augmentation/A = src.installed_aug
-			if(src.installed_aug)
-				A.set_loc(get_turf(src))
-				A.on_cutout(src)
-				boutput(user, "<span class='notice'><b>You cut out a [A.name] from [src.name].</span>")
-				return
+			A.set_loc(get_turf(src))
+			A.on_cutout(src)
+			boutput(user, "<span class='notice'><b>You cut out a [A.name] from [src.name].</span>")
+			return
 		else
 			user.lastattacked = src
 			attack_particle(user,src)
