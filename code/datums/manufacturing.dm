@@ -844,6 +844,15 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 1
 	category = "Component"
 
+/datum/manufacture/cardboard_ai
+	name = "Cardboard 'AI'"
+	item_paths = list("cardboard")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/clothing/suit/cardboard_box/ai)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
 /datum/manufacture/cyberappendix
 	name = "Cyberappendix"
 	item_paths = list("MET-1","CON-1","ALL")

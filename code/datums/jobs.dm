@@ -2175,7 +2175,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
-		M.critterize(/mob/living/critter/small_animal/plush)
+		M.critterize(/mob/living/critter/small_animal/plush/cryptid)
 
 /datum/job/special/halloween/critter/remy
 	name = "Remy"
