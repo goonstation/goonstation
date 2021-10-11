@@ -2,6 +2,7 @@
 	var/amount
 	var/price
 	var/for_sale
+	var/stats
 
 /obj/machinery/ore_cloud_storage_container
 	name = "Rockbox™ Ore Cloud Storage Container"
@@ -212,7 +213,7 @@
 				user.u_equip(R)
 				R.dropped()
 			pool(R)
-		update_ore_amount(R.material_name,amount_loaded)
+		update_ore_amount(R.material_name,amount_loaded,R)
 
 
 	proc/accept_loading(var/mob/user,var/allow_silicon = 0)
@@ -229,7 +230,7 @@
 			return 0
 		return 1
 
-	proc/update_ore_amount(var/material_name,var/delta)
+	proc/update_ore_amount(var/material_name,var/delta,var/obj/item/raw_material/ore)
 		if(ores[material_name])
 			var/datum/ore_cloud_data/OCD = ores[material_name]
 			OCD.amount += delta
@@ -239,7 +240,17 @@
 			OCD.amount += delta
 			OCD.for_sale = 0
 			OCD.price = 0
+			OCD.stats = get_ore_properties(ore)
 			ores[material_name] = OCD
+
+	proc/get_ore_properties(var/obj/item/raw_material/ore)
+		if(isnull(ore) || isnull(ore.material))
+			return
+		var/list/stat_list = list()
+		for(var/datum/material_property/stat in ore.material.properties)
+			stat_list += stat.getAdjective(ore.material)
+		return stat_list.Join(", ")
+
 
 	proc/update_ore_for_sale(var/material_name,var/new_for_sale)
 		if(ores[material_name])
@@ -317,57 +328,16 @@
 	ui_data(mob/user)
 		var/ore_list = list()
 		for(var/obj/item/raw_material/O as anything in childrentypesof(/obj/item/raw_material))
-			var/obj/item/raw_material/ore = new O()
-			if(ores[ore.material_name])
-				var/datum/ore_cloud_data/OCD = ores[ore.material_name]
-				var/datum/material_property/radioactivity/R =new/datum/material_property/radioactivity()
-				var/datum/material_property/neutron_radioactivity/N =new/datum/material_property/neutron_radioactivity()
-				var/datum/material_property/electrical_conductivity/E =new/datum/material_property/electrical_conductivity()
-				var/datum/material_property/thermal_conductivity/T =new/datum/material_property/thermal_conductivity()
-				var/datum/material_property/stability/S = new/datum/material_property/stability()
-				var/datum/material_property/hardness/H = new/datum/material_property/hardness()
-				var/datum/material_property/density/D = new/datum/material_property/density()
-				var/datum/material_property/flammability/F = new/datum/material_property/flammability()
-				var/datum/material_property/corrosion/C = new/datum/material_property/corrosion()
-				var/datum/material_property/reflectivity/L = new/datum/material_property/reflectivity()
-				var/datum/material_property/permeability/P = new/datum/material_property/permeability()
-
-				var/added_text = addtext(
-				R.getAdjective(ore.material),
-				R.getAdjective(ore.material) ? ", " : "",
-				N.getAdjective(ore.material),
-				N.getAdjective(ore.material) ?", " : "",
-				E.getAdjective(ore.material),
-				E.getAdjective(ore.material) ? ", " : "",
-				T.getAdjective(ore.material),
-				T.getAdjective(ore.material) ? ", " : "",
-				S.getAdjective(ore.material),
-				S.getAdjective(ore.material) ? ", " : "",
-				H.getAdjective(ore.material),
-				H.getAdjective(ore.material) ? ", " : "",
-				D.getAdjective(ore.material),
-				D.getAdjective(ore.material) ? ", " : "",
-				F.getAdjective(ore.material),
-				F.getAdjective(ore.material) ? ", " : "",
-				C.getAdjective(ore.material),
-				C.getAdjective(ore.material) ? ", " : "",
-				L.getAdjective(ore.material),
-				L.getAdjective(ore.material) ? ", " : "",
-				P.getAdjective(ore.material),
-				)
-
-				var/stats
-				if(findtext(added_text, ",",length_char(added_text)-1))
-					stats = copytext(added_text, 1, length_char(stats)-2)
-				else
-					stats = added_text
+			var/ore_name = initial(O.material_name)
+			if(ores[ore_name])
+				var/datum/ore_cloud_data/OCD = ores[ore_name]
 
 				ore_list += list(list(
-					"name" = ore.material_name,
+					"name" = ore_name,
 					"amount" = OCD.amount,
 					"price" = OCD.price,
 					"forSale" = OCD.for_sale,
-					"stats" = stats
+					"stats" = OCD.stats
 				))
 
 		. = list(
@@ -384,11 +354,14 @@
 				if(OCD.amount < params["take"])
 					return
 				eject_ores(ore, null, params["take"])
+				. = TRUE
 			if("set-ore-sell-status")
 				var/ore = params["ore"]
 				update_ore_for_sale(ore)
+				. = TRUE
 			if("set-ore-price")
 				var/ore = params["ore"]
 				var/price = params["newPrice"]
 				update_ore_price(ore, price)
+				. = TRUE
 
