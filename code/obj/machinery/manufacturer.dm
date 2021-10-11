@@ -2183,7 +2183,8 @@
 	/datum/manufacture/cybereye_thermal,
 	/datum/manufacture/cybereye_laser,
 	/datum/manufacture/cyberbutt,
-	/datum/manufacture/robup_expand)
+	/datum/manufacture/robup_expand,
+	/datum/manufacture/cardboard_ai)
 
 /obj/machinery/manufacturer/medical
 	name = "Medical Fabricator"

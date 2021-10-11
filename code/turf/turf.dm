@@ -176,9 +176,6 @@
 	name = "\proper space"
 	icon_state = "placeholder"
 	fullbright = 1
-#ifndef HALLOWEEN
-	color = "#898989"
-#endif
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
@@ -189,6 +186,7 @@
 	plane = PLANE_SPACE
 	special_volume_override = 0
 	text = ""
+	var/static/list/space_color = generate_space_color()
 
 	flags = ALWAYS_SOLID_FLUID
 	turf_flags = CAN_BE_SPACE_SAMPLE
@@ -224,6 +222,63 @@
 		icon_state = "wiggle"
 		src.desc = "There appears to be a spatial disturbance in this area of space."
 		new/obj/item/device/key/random(src)
+
+	if(!isnull(space_color) && !istype(src, /turf/space/fluid))
+		src.color = space_color
+
+proc/repaint_space(regenerate=TRUE)
+	for(var/turf/space/T)
+		if(regenerate)
+			T.space_color = generate_space_color()
+			regenerate = FALSE
+		if(istype(T, /turf/space/fluid))
+			continue
+		T.color = T.space_color
+
+proc/generate_space_color()
+#ifndef HALLOWEEN
+	return "#898989"
+#else
+	var/bg = list(0, 0, 0)
+	bg[1] += rand(0, 35)
+	bg[3] += rand(0, 35)
+	var/main_star = list(255, 255, 255)
+	main_star = list(150 + rand(-40, 40), 100 + rand(-40, 40), 50 + rand(-40, 40))
+	var/hsv_main = rgb2hsv(main_star[1], main_star[2], main_star[3])
+	hsv_main[2] = 100
+	main_star = hsv2rgblist(hsv_main[1], hsv_main[2], hsv_main[3])
+	if(prob(5))
+		main_star = list(230, 0, 0)
+	var/misc_star_1 = main_star
+	var/misc_star_2 = main_star
+	if(prob(33))
+		misc_star_2 = list(main_star[2], main_star[3], main_star[1])
+		misc_star_1 = list(main_star[3], main_star[1], main_star[2])
+	else if(prob(50))
+		misc_star_1 = list(main_star[2], main_star[3], main_star[1])
+		misc_star_2 = list(main_star[3], main_star[1], main_star[2])
+	else
+		misc_star_1 = list(150 + rand(-40, 40), 100 + rand(-40, 40), 50 + rand(-40, 40))
+		misc_star_2 = list(150 + rand(-40, 40), 100 + rand(-40, 40), 50 + rand(-40, 40))
+	if(prob(5))
+		misc_star_1 = list(230, 0, 0)
+	misc_star_1 = list(misc_star_1[1] + rand(-25, 25), misc_star_1[2] + rand(-25, 25), misc_star_1[3] + rand(-25, 25))
+	misc_star_2 = list(misc_star_2[1] + rand(-25, 25), misc_star_2[2] + rand(-25, 25), misc_star_2[3] + rand(-25, 25))
+	if(prob(5))
+		misc_star_2 = list(230, 0, 0)
+	if(prob(1.5))
+		bg = list(255 - bg[1], 255 - bg[2], 255 - bg[3])
+		if(prob(50))
+			main_star = list(180 - main_star[1], 180 - main_star[2], 180 - main_star[3])
+			misc_star_1 = list(255 - misc_star_1[1], 255 - misc_star_1[2], 255 - misc_star_1[3])
+			misc_star_2 = list(255 - misc_star_2[1], 255 - misc_star_2[2], 255 - misc_star_2[3])
+	if(prob(2))
+		bg = list(120 + rand(-30, 30), rand(20, 50), rand(20, 50))
+	return affine_color_mapping_matrix(
+		list("#000000", "#ffffff", "#ff0000", "#0080FF"), // original misc_star_2 = "#64C5D2", but that causes issues for some frames
+		list(bg, main_star, misc_star_1, misc_star_2)
+	)
+#endif
 
 // override for space turfs, since they should never hide anything
 /turf/space/levelupdate()

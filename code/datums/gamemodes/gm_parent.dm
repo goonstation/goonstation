@@ -82,18 +82,18 @@
 				traitor_name = "[traitor.key] (character destroyed)"
 
 			if (traitor.special_role == ROLE_MINDSLAVE)
-				stuff_to_output += "<B>[traitor_name] was a mindslave!</B>"
+				stuff_to_output += "<B>[traitor_name]</B> was a mindslave!"
 				continue // Objectives are irrelevant for mindslaves and thralls.
 			else if (traitor.special_role == ROLE_VAMPTHRALL)
-				stuff_to_output += "<B>[traitor_name] was a vampire's thrall!</B>"
+				stuff_to_output += "<B>[traitor_name]</B> was a vampire's thrall!"
 				continue // Ditto.
 			else
 				if (traitor.late_special_role)
-					stuff_to_output += "<B>[traitor_name] was a late-joining [traitor.special_role]!</B>"
+					stuff_to_output += "<B>[traitor_name]</B> was a late-joining [traitor.special_role]!"
 				else if (traitor.random_event_special_role)
-					stuff_to_output += "<B>[traitor_name] was a random event [traitor.special_role]!</B>"
+					stuff_to_output += "<B>[traitor_name]</B> was a random event [traitor.special_role]!"
 				else
-					stuff_to_output += "<B>[traitor_name] was a [traitor.special_role]!</B>"
+					stuff_to_output += "<B>[traitor_name]</B> was a [traitor.special_role]!"
 
 				if (traitor.special_role == ROLE_CHANGELING && traitor.current)
 					var/dna_absorbed = 0
@@ -127,7 +127,7 @@
 
 				if (traitor.special_role == ROLE_BLOB)
 					var/victims = length(traitor.blob_absorb_victims)
-					stuff_to_output += "<b>\ [victims <= 0 ? "Not a single person was" : "[victims] lifeform[s_es(victims)] were"] absorbed by them  <span class='success'>Players in Green</span></b>"
+					stuff_to_output += "\ [victims <= 0 ? "Not a single person was" : "[victims] lifeform[s_es(victims)] were"] absorbed by them  <span class='success'>Players in Green</span>"
 					if (victims)
 						var/absorbed_announce = "They absorbed: "
 						for (var/mob/living/carbon/human/AV in traitor.blob_absorb_victims)
@@ -140,7 +140,7 @@
 				if (traitor.special_role == ROLE_TRAITOR)
 					var/purchases = length(traitor.purchased_traitor_items)
 					var/surplus = length(traitor.traitor_crate_items)
-					stuff_to_output += "<b>They purchased [purchases <= 0 ? "nothing" : "[purchases] item[s_es(purchases)]"] with their [syndicate_currency]![purchases <= 0 ? " [pick("Wow", "Dang", "Gosh", "Good work", "Good job")]!" : null]</b>"
+					stuff_to_output += "They purchased [purchases <= 0 ? "nothing" : "[purchases] item[s_es(purchases)]"] with their [syndicate_currency]![purchases <= 0 ? " [pick("Wow", "Dang", "Gosh", "Good work", "Good job")]!" : null]"
 					if (purchases)
 						var/item_detail = "They purchased: "
 						for (var/i in traitor.purchased_traitor_items)
@@ -156,7 +156,7 @@
 				if (traitor.special_role == ROLE_SPY_THIEF)
 					var/purchases = length(traitor.purchased_traitor_items)
 					var/stolen = length(traitor.spy_stolen_items)
-					stuff_to_output += "<b>They stole [stolen <= 0 ? "nothing" : "[stolen] items"]!</b>"
+					stuff_to_output += "They stole [stolen <= 0 ? "nothing" : "[stolen] items"]!"
 					if (purchases)
 						var/stolen_detail = "Items Thieved: "
 						for (var/i in traitor.spy_stolen_items)
@@ -176,12 +176,12 @@
 					if (istype(objective, /datum/objective/miscreant)) continue
 
 					if (objective.check_completion())
-						stuff_to_output += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='success'><B>Success</B></span>"
+						stuff_to_output += "Objective #[count]: [objective.explanation_text] <span class='success'><B>Success</B></span>"
 						logTheThing("diary",traitor,null,"completed objective: [objective.explanation_text]")
 						if (!isnull(objective.medal_name) && !isnull(traitor.current))
 							traitor.current.unlock_medal(objective.medal_name, objective.medal_announce)
 					else
-						stuff_to_output += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='alert'>Failed</span>"
+						stuff_to_output += "Objective #[count]: [objective.explanation_text] <span class='alert'>Failed</span>"
 						logTheThing("diary",traitor,null,"failed objective: [objective.explanation_text]. Womp womp.")
 						traitorwin = 0
 					count++
@@ -194,9 +194,9 @@
 					traitor.current.unlock_medal("You're no Elminster!", 1)
 				if (traitor.special_role == ROLE_WRESTLER && traitor.current)
 					traitor.current.unlock_medal("Cream of the Crop", 1)
-				stuff_to_output += "<B>The [traitor.special_role] was successful!<B>"
+				stuff_to_output += "<span class='success'>The [traitor.special_role] was successful!</span>"
 			else
-				stuff_to_output += "<B>The [traitor.special_role] has failed!<B>"
+				stuff_to_output += "<span class='alert'>The [traitor.special_role] has failed!</span>"
 
 	#ifdef DATALOGGER
 			if (traitorwin)
