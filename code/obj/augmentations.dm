@@ -8,9 +8,6 @@ ABSTRACT_TYPE(/obj/item/augmentation)
 	var/mob/living/carbon/human/owner
 	///The organ that currently contains the aug
 	var/obj/item/organ/owner_organ
-	///The first person to have the organ
-	var/mob/living/carbon/human/owner_original = null
-	///The organ type used in the augmentation
 	var/brute_dam = 0
 	var/burn_dam = 0
 	var/tox_dam = 0
@@ -123,7 +120,6 @@ ABSTRACT_TYPE(/obj/item/augmentation)
 	disposing()
 		src.owner = null
 		src.owner_organ = null
-		src.owner_original = null
 		..()
 
 ABSTRACT_TYPE(/obj/item/augmentation/head)
@@ -135,13 +131,12 @@ ABSTRACT_TYPE(/obj/item/augmentation/head)
 	name = "wireless interactor"
 	icon_state = "augmentation_wire"
 	desc = "An augmentation that allows for ranged interaction with various electronic devices."
-	var/flashed = FALSE
 
 	proc/ranged_click(atom/target, params, location, control)
 		var/mob/M = src.owner
 		var/inrange = in_interact_range(target, M)
 		var/obj/item/equipped = M.equipped()
-		if(src.flashed)
+		if(src.hasStatus("flashed"))
 			return
 		if (M.client.check_any_key(KEY_EXAMINE | KEY_POINT) || (equipped && (inrange || (equipped.flags & EXTRADELAY))) || ishelpermouse(target)) // slightly hacky, oh well, tries to check whether we want to click normally or use attack_ai
 			return
@@ -151,38 +146,36 @@ ABSTRACT_TYPE(/obj/item/augmentation/head)
 
 			target.attack_ai(M, params, location, control)
 
-	proc/flash_check(atom/A, obj/item/device/flash/I, mob/user)
-		if(istype(I, /obj/item/device/flash) && I.status)
-			src.flashed = TRUE
-			src.take_damage(5, 5, 0) //owie
-			src.owner.remove_stamina(25)
-			SPAWN_DBG(15 SECONDS)
-				src.flashed = FALSE
+	proc/flash_check()
+		src.setStatus("flashed", duration = 15 SECONDS)
+		src.take_damage(5, 5, 0) //owie
+		src.owner.remove_stamina(25)
 		if(src.broken)
 			src.owner.remove_stamina(15)
 
 	on_organ_transplant(var/mob/M as mob)
 		..()
 		if(!broken)
-			RegisterSignal(src.owner, COMSIG_CLICK, .proc/ranged_click)
-			RegisterSignal(src.owner, COMSIG_ATTACKBY, .proc/flash_check)
+			RegisterSignal(src.owner, COMSIG_LIVING_CLICK, .proc/ranged_click)
 			M.mob_flags |= USR_DIALOG_UPDATES_RANGE
+		RegisterSignal(src.owner, COMSIG_MOB_FLASHED, .proc/flash_check)
 
 	on_organ_removal()
 		..()
 		var/mob/M = src.owner
 		if(!broken)
-			UnregisterSignal(src.owner, COMSIG_CLICK)
+			UnregisterSignal(src.owner, COMSIG_LIVING_CLICK)
 			M.mob_flags &= ~USR_DIALOG_UPDATES_RANGE
-		UnregisterSignal(src.owner, COMSIG_ATTACKBY)
+		UnregisterSignal(src.owner, COMSIG_MOB_FLASHED)
 
 	on_broken(var/mult = 1)
 		var/mob/M = src.owner
 		if (!..())
 			return
 		src.owner.reagents.add_reagent("nanites", 0.5 * mult) //you want borg powers? Well, come and get 'em!
-		UnregisterSignal(src.owner, COMSIG_CLICK)
-		M.mob_flags &= ~USR_DIALOG_UPDATES_RANGE
+		if(M.mob_flags & USR_DIALOG_UPDATES_RANGE)
+			UnregisterSignal(src.owner, COMSIG_LIVING_CLICK)
+			M.mob_flags &= ~USR_DIALOG_UPDATES_RANGE
 
 	organ_is_valid(var/obj/item/organ/chosen_organ)
 		if(istype(chosen_organ, /obj/item/organ/brain) && !chosen_organ.robotic && !chosen_organ.synthetic)

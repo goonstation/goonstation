@@ -240,6 +240,7 @@
 		safety = 1
 
 	if (safety == 0 && ishuman(src))
+		SEND_SIGNAL(src, COMSIG_MOB_FLASHED)
 		var/mob/living/carbon/human/H = src
 		var/hulk = 0
 		if (H.is_hulk())

@@ -240,7 +240,7 @@
 		if (obfuscate)
 			return obfuscate_organ_health(O)
 		else
-			if(O.augmentation_support && O.installed_aug)
+			if(O.installed_aug)
 				var/obj/item/augmentation/A = O.installed_aug
 				aug_damage = A.brute_dam + A.burn_dam + A.tox_dam
 				if (damage > 0 && (aug_damage == 0)) //organ damage, aug isn't
@@ -289,7 +289,7 @@
 			ret += "<br><span style='color:purple'><b>[O.name]</b></span>"
 		if (O.robotic)
 			ret += "<span style='color:purple'> - Robotic organ detected</span>"
-	if(O.augmentation_support && O.installed_aug)
+	if(O.installed_aug)
 		var/obj/item/augmentation/A = O.installed_aug
 		aug_damage = A.brute_dam + A.burn_dam + A.tox_dam
 		if(damage > 0 && aug_damage > 0)

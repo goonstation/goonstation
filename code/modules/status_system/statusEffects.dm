@@ -1923,3 +1923,10 @@
 			M.changeStatus("paralysis", 5 SECONDS)
 			M.force_laydown_standup()
 			M.delStatus("drowsy")
+
+/datum/statusEffect/flashed
+	id = "flashed"
+	name = "Flashed"
+	desc = "You've been flashed, so now your Wireless Interactor's been disabled!"
+	icon_state = "flashed"
+	maxDuration = 15 SECONDS

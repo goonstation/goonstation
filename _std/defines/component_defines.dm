@@ -168,13 +168,17 @@
 
 /// sent when radiation status ticks on mob (stage)
 #define COMSIG_MOB_GEIGER_TICK "mob_geiger"
+
+/// When a mob gets flashed and is effected by it
+#define COMSIG_MOB_FLASHED "mob_flashed"
+
 /// on mouseup
 #define COMSIG_MOUSEUP "mouseup"
 // ---- mob/living signals ----
 /// When a Life tick occurs
 #define COMSIG_LIVING_LIFE_TICK "human_life_tick"
 /// When you click on anything as a (target, params, location, control)
-#define COMSIG_CLICK "click"
+#define COMSIG_LIVING_CLICK "living_click"
 
 // ---- mob property signals ----
 /// When invisibility of a mob gets updated (old_value)
