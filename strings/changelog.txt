@@ -1,6 +1,7 @@
 
 (t)wed nov 10 21
 (u)Zamujasa
+(*)Ghosts become visible to everyone at the end of a round.
 (e)🆕|feature
 (*)Testing out canvases, little icons you can draw on with crayons, pens, etc.
 (*)You can use a paint can on them to reet the canvas color as well.
