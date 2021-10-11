@@ -223,7 +223,7 @@
 		src.desc = "There appears to be a spatial disturbance in this area of space."
 		new/obj/item/device/key/random(src)
 
-	if(!isnull(space_color))
+	if(!isnull(space_color) && !istype(src, /turf/space/fluid))
 		src.color = space_color
 
 proc/repaint_space(regenerate=TRUE)
@@ -231,6 +231,8 @@ proc/repaint_space(regenerate=TRUE)
 		if(regenerate)
 			T.space_color = generate_space_color()
 			regenerate = FALSE
+		if(istype(T, /turf/space/fluid))
+			continue
 		T.color = T.space_color
 
 proc/generate_space_color()
