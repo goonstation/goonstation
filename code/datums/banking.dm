@@ -234,7 +234,7 @@
 				boutput(user, "<span class='notice'>You insert the cash into the ATM.</span>")
 				src.accessed_record.fields["current_money"] += I.amount
 				I.amount = 0
-				pool(I)
+				qdel(I)
 			else boutput(user, "<span class='alert'>You need to log in before depositing cash!</span>")
 			return
 		if(istype(I, /obj/item/lotteryTicket))
@@ -272,7 +272,7 @@
 					src.accessed_record.fields["current_money"] += I.amount
 
 				I.amount = 0
-				pool(I)
+				qdel(I)
 			else boutput(user, "<span class='alert'>You need to log in before depositing cash!</span>")
 		else if(istype(I, /obj/item/lotteryTicket))
 			if (src.accessed_record)
@@ -398,7 +398,7 @@
 					boutput(usr, "<span class='alert'>Insufficient funds in account.</span>")
 				else
 					src.accessed_record.fields["current_money"] -= amount
-					var/obj/item/spacecash/S = unpool(/obj/item/spacecash)
+					var/obj/item/spacecash/S = new /obj/item/spacecash
 					S.setup(src.loc, amount)
 					usr.put_in_hand_or_drop(S)
 
@@ -770,7 +770,7 @@
 				boutput(user, "<span class='notice'>You insert the cash into the ATM.</span>")
 				src.accessed_record.fields["current_money"] += I.amount
 				I.amount = 0
-				pool(I)
+				qdel(I)
 				attack_hand(user)
 			else boutput(user, "<span class='alert'>You need to log in before depositing cash!</span>")
 			return
@@ -923,7 +923,7 @@
 					boutput(usr, "<span class='alert'>Insufficient funds in account.</span>")
 				else
 					src.accessed_record.fields["current_money"] -= amount
-					var/obj/item/spacecash/S = unpool(/obj/item/spacecash)
+					var/obj/item/spacecash/S = new /obj/item/spacecash
 					S.setup(src.loc, amount)
 					usr.put_in_hand_or_drop(S)
 

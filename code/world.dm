@@ -1406,7 +1406,7 @@ var/f_color_selector_handler/F_Color_Selector
 					var/count = 0
 					var/list/whois_result
 					for (var/who in whom)
-						whois_result = whois(who, 5)
+						whois_result = whois(who)
 						if (whois_result)
 							for (var/mob/M in whois_result)
 								count++
@@ -1711,6 +1711,39 @@ var/f_color_selector_handler/F_Color_Selector
 					return 0
 
 				return response.body
+
+			if ("getPlayerStats")
+				if (!plist["ckey"])
+					return 0
+
+				// playtime stats
+				var/list/data = list(
+					"auth" = config.player_notes_auth,
+					"action" = "user_stats",
+					"ckey" = plist["ckey"],
+					"format" = "json"
+				)
+				var/datum/http_request/playtime_request = new()
+				playtime_request.prepare(RUSTG_HTTP_METHOD_GET, "[config.player_notes_baseurl]/?[list2params(data)]", "", "")
+				playtime_request.begin_async()
+
+				// round stats
+				// cleverly making this request inbetween the start and the wait of the playtime request
+				var/list/response = null
+				try
+					response = apiHandler.queryAPI("playerInfo/get", list("ckey" = plist["ckey"]), forceResponse = 1)
+				catch
+					return 0
+				if (!response)
+					return 0
+
+				// finish playtime stats
+				UNTIL(playtime_request.is_complete())
+				var/datum/http_response/playtime_response = playtime_request.into_response()
+				if (!playtime_response.errored && playtime_response.body)
+					response["playtime"] = playtime_response.body
+
+				return json_encode(response)
 
 /world/proc/setMaxZ(new_maxz)
 	if (!isnum(new_maxz) || new_maxz <= src.maxz)

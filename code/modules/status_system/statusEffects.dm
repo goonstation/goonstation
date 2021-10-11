@@ -565,6 +565,8 @@
 			switchStage(getStage())
 			owner.delStatus("shivering")
 
+			logTheThing("combat", owner, null, "gains the burning status effect at [log_loc(owner)]")
+
 			if(istype(owner, /mob/living))
 				var/mob/living/L = owner
 				L.update_burning_icon(0, src) // pass in src because technically our owner does not have us as a status effect yet (this happens immediately after onAdd())
@@ -636,13 +638,13 @@
 
 			switch(stage)
 				if(1)
-					damage_burn = 0.9 * prot
+					damage_burn = 1 * prot
 					howMuch = ""
 				if(2)
 					damage_burn = 2 * prot
 					howMuch = "very much "
 				if(3)
-					damage_burn = 3.5 * prot
+					damage_burn = 4 * prot
 					howMuch = "extremely "
 
 			return ..(timePassed)
@@ -1579,7 +1581,7 @@
 			weighted_average = 0
 			#ifdef CREATE_PATHOGENS
 			if(!isdead(L))
-				var/datum/pathogen/P = unpool(/datum/pathogen)
+				var/datum/pathogen/P = new /datum/pathogen
 				P.create_weak()
 				P.spread = 0
 				wrap_pathogen(L.reagents, P, 10)
@@ -1890,7 +1892,7 @@
 	maxDuration = 2 MINUTES
 	id = "drowsy"
 	name = "Drowsy"
-	icon_state = "?1"
+	icon_state = "drowsy"
 	desc = "You feel very drowsy"
 	movement_modifier = new/datum/movement_modifier/drowsy
 	var/tickspassed = 0
@@ -1911,7 +1913,7 @@
 	id = "passing_out"
 	name = "Passing out"
 	desc = "You're so tired you're about to pass out!"
-	icon_state = "disorient"
+	icon_state = "passing_out"
 	maxDuration = 5 SECONDS
 
 	onRemove()

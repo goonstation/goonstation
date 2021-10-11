@@ -1073,7 +1073,7 @@ datum/pump_ui/circulator_ui
 			var/list/affected = DrawLine(last, target, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 			for(var/obj/O in affected)
-				SPAWN_DBG(0.6 SECONDS) pool(O)
+				SPAWN_DBG(0.6 SECONDS) qdel(O)
 
 			//var/turf/currTurf = get_turf(target)
 			//currTurf.hotspot_expose(2000, 400)

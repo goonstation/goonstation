@@ -40,6 +40,8 @@
 		id = "small_backup4"
 	diner
 		id = "diner"
+	silverglass
+		id = "silverglass"
 
 	// called by datum/sun/calc_position() as sun's angle changes
 	proc/set_angle(var/angle)
@@ -105,8 +107,8 @@
 		id = "small_backup4"
 	diner
 		id = "diner"
-
-
+	silverglass
+		id = "silverglass"
 
 
 /obj/machinery/power/solar/New()
@@ -132,9 +134,9 @@
 		if(!(status & BROKEN))
 			broken()
 		else
-			var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+			var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 			G.set_loc(src.loc)
-			G = unpool(/obj/item/raw_material/shard/glass)
+			G = new /obj/item/raw_material/shard/glass
 			G.set_loc(src.loc)
 
 			qdel(src)
@@ -205,7 +207,7 @@
 		if(1.0)
 			qdel(src)
 			if(prob(15))
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+				var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 				G.set_loc(src.loc)
 			return
 		if(2.0)
@@ -260,6 +262,8 @@
 		solar_id = "small_backup4"
 	diner
 		solar_id = "diner"
+	silverglass
+		solar_id = "silverglass"
 
 /obj/machinery/computer/solar_control/New()
 	..()

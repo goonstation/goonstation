@@ -1001,7 +1001,7 @@ Broken RCD + Effects
 					user.gib()
 
 /obj/effects/void_break
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	var/lifespan = 4
 	var/rangeout = 0
@@ -1042,9 +1042,9 @@ Broken RCD + Effects
 
 		for (var/turf/simulated/T in range(src, (rangeout-lifespan)))
 			if (prob(5 + lifespan) && limiter.canISpawn(/obj/effects/sparks))
-				var/obj/sparks = unpool(/obj/effects/sparks)
+				var/obj/sparks = new /obj/effects/sparks
 				sparks.set_loc(T)
-				SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
+				SPAWN_DBG(2 SECONDS) if (sparks) qdel(sparks)
 
 			T.ex_act((rangeout-lifespan) < 2 ? 1 : 2)
 

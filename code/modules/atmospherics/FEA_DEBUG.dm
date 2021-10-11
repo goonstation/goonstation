@@ -423,7 +423,7 @@ turf/simulated
 			set category = "Minor"
 
 			if(amount>1)
-				var/datum/gas_mixture/adding = unpool(/datum/gas_mixture)
+				var/datum/gas_mixture/adding = new /datum/gas_mixture
 				var/datum/gas/sleeping_agent/trace_gas = adding.get_or_add_trace_gas_by_type(var/datum/gas/sleeping_agent)
 
 				trace_gas.moles = amount

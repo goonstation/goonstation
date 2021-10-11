@@ -258,6 +258,10 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				command_alert("Reports indicate that the engine on-board [station_name()] has not yet been started. Setting up the engine is strongly recommended, or else stationwide power failures may occur.", "Power Grid Warning")
 			break
 
+	for(var/turf/T in job_start_locations["AI"])
+		if(isnull(locate(/mob/living/silicon/ai) in T))
+			new /obj/item/clothing/suit/cardboard_box/ai(T)
+
 	processScheduler.start()
 
 	if (total_clients() >= OVERLOAD_PLAYERCOUNT)

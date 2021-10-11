@@ -74,7 +74,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	else // if all else fails?
 		return 1 // head surgery is okay
 
-#define UNPOOL_BLOOD_SPLOOSH(T) var/obj/itemspecialeffect/impact/E = unpool(/obj/itemspecialeffect/impact/blood);\
+#define UNPOOL_BLOOD_SPLOOSH(T) var/obj/itemspecialeffect/impact/E = new /obj/itemspecialeffect/impact/blood;\
 			if (E){E.setup(get_turf(T));}
 
 /obj/item/proc/surgeryConfusion(var/mob/living/carbon/human/patient as mob, var/mob/surgeon as mob, var/damage as num)

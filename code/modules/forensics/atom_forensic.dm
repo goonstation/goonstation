@@ -204,12 +204,12 @@
 			C.clean_stains()
 
 		else if (istype(src, /obj/decal/cleanable) || istype(src, /obj/reagent_dispensers/cleanable))
-			pool(src)
+			qdel(src)
 
 		else if (isturf(src))
 			var/turf/T = get_turf(src)
 			for (var/obj/decal/cleanable/mess in T)
-				pool(mess)
+				qdel(mess)
 			T.messy = 0
 
 		else // Don't think it should clean doors and the like. Give the detective at least something to work with.

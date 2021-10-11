@@ -2583,6 +2583,60 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 4
 	health_burn = 4
 
+/mob/living/critter/small_animal/plush
+	name = "plush toy"
+	real_name = "plush toy"
+	desc = "In your heart of hearts, you knew that they were real. And you never stopped believing!"
+	flags = TABLEPASS | DOORPASS
+	fits_under_table = 1
+	hand_count = 2
+	icon = 'icons/obj/plushies.dmi'
+	health_brute = 20
+	health_burn = 20
+	pull_w_class = W_CLASS_NORMAL
+
+	New()
+		..()
+		icon_state = pick("bee", "buddy", "kitten", "monkey", "possum", "wendigo", "bunny", "penguin")
+		icon_state_dead = src.icon_state
+
+	death(var/gibbed)
+		if (!gibbed)
+			src.Turn(180)
+		..()
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream")
+				if (src.emote_check(voluntary, 50))
+					playsound(src, "sound/voice/animal/mouse_squeak.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					return "<span class='emote'><b>[src]</b> squeaks!</span>"
+			if ("fart")
+				if (src.emote_check(voluntary, 10))
+					playsound(src, 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
+					return "<span class='emote'><b>[src]</b> farts!</span>"
+			if ("dance")
+				if (src.emote_check(voluntary, 50))
+					animate_bouncy(src)
+					return "<span class='emote'><b>[src]</b> dances!</span>"
+		return ..()
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/small_critter
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "tiny hand"
+		HH.limb_name = "tiny hand"
+
+		HH = hands[2]
+		HH.limb = new /datum/limb/small_critter
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "tiny hand"
+		HH.limb_name = "tiny hand"
+
 /mob/living/critter/small_animal/figure
 	name = "collectible figure"
 	real_name = "collectible figure"
@@ -2815,6 +2869,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state = "mouse-admin"
 	icon_state_dead = "mouse-admin-dead"
 	icon_state_exclaim = "mouse-admin-exclaim"
+	pull_w_class = W_CLASS_BULKY
 
 	New()
 		..()
