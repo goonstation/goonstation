@@ -6,15 +6,27 @@
 	health_brute = 40
 	health_burn = 40
 	var/being_seen = FALSE
-	var/atom/last_witness
+	var/mob/last_witness
+	var/icon_states_with_supported_eyes = list("bee", "buddy", "kitten", "monkey", "possum", "wendigo", "bunny", "penguin")
+	var/image/eye_light
+	var/glowing_eye_color = "#c40000ff"
+	var/glowing_eyes_enabled_alpha = 190
+	var/glowing_eyes_active = 0
 
-	say(message) // gross workaround to allow emotes despite canspeak = 0
-		if(dd_hasprefix(message, "*"))
-			canspeak = 1
-			. = ..()
-			canspeak = 0
-		else
-			. = ..()
+	New()
+		. = ..()
+		if(src.icon_state in icon_states_with_supported_eyes)
+			eye_light = image('icons/obj/plushies.dmi', "[src.icon_state]-eyes")
+			eye_light.plane = PLANE_SELFILLUM
+			set_glowing_eyes(FALSE)
+
+		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/talk)
+		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/teleportation/blink)
+		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/teleportation/disappear)
+		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/teleportation/vengeful_retreat)
+		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/glowing_eyes/toggle_glowing_eyes)
+		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/glowing_eyes/set_glowing_eyes_color)
+		abilityHolder.updateButtons()
 
 	Login()
 		..()
@@ -24,15 +36,29 @@
 		boutput(src, "<span class='notice'>Your blink ability lets you teleport when you're not being watched.</span>")
 		boutput(src, "<span class='notice'>Your teleport away ability lets you teleport away and hide in a random station container.</span>")
 		boutput(src, "<span class='notice'>Your vengeful retreat will stun your recent attacker and teleport you away.</span>")
+		boutput(src, "<span class='notice'>Your toggle glowing eyes ability lets you toggle your eyes glowing at will.</span>")
+		boutput(src, "<span class='notice'>Your set glowing eyes color ability lets you set your eyes' glowing color.</span>")
 		boutput(src, "<span class='notice'>Access special emotes through *scream, *dance and *snap.</span>")
 
-	New()
-		. = ..()
-		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/talk)
-		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/teleportation/blink)
-		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/teleportation/disappear)
-		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/teleportation/vengeful_retreat)
-		abilityHolder.updateButtons()
+	proc/set_glowing_eyes(var/enabled)
+		if (eye_light)
+			if(enabled)
+				eye_light.color = glowing_eye_color
+				eye_light.alpha = glowing_eyes_enabled_alpha
+				boutput(src, "<span class='notice'>Glowing eyes enabled.</span>")
+			else
+				eye_light.alpha = 0
+				boutput(src, "<span class='notice'>Glowing eyes disabled.</span>")
+			glowing_eyes_active = enabled
+			src.UpdateOverlays(eye_light, "eye_light")
+
+	say(message) // gross workaround to allow emotes despite canspeak = 0
+		if(dd_hasprefix(message, "*"))
+			canspeak = 1
+			. = ..()
+			canspeak = 0
+		else
+			. = ..()
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -75,7 +101,7 @@
 
 
 	proc/being_seen_status_update()
-		if (last_witness) // optimization attempt
+		if (last_witness && last_witness.client) // optimization attempt
 			if(get_dist(src, last_witness) < 3) // still next to last person that saw us, might be for instance pulling us or sitting next to us
 				return
 			else
@@ -269,3 +295,49 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
 				return 0
 		else
 			return 1
+
+ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/glowing_eyes)
+/datum/targetable/critter/cryptid_plushie/glowing_eyes
+	onAttach(datum/abilityHolder/H)
+		. = ..()
+		if(!our_plushie || our_plushie.eye_light == null) // no plushie or our plushie doesn't have glowing eyes
+			qdel(src)
+
+/datum/targetable/critter/cryptid_plushie/glowing_eyes/toggle_glowing_eyes
+	name = "Toggle glowing eyes"
+	desc = "Toggles whether your eyes glow red."
+	icon_state = "bullc_cd"
+	cooldown = 5
+	targeted = 0
+	var/active_icon_state = "bullc"
+	var/inactive_icon_state = "bullc_cd"
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		our_plushie.glowing_eyes_active = !our_plushie.glowing_eyes_active
+		our_plushie.set_glowing_eyes(our_plushie.glowing_eyes_active)
+		icon_state = our_plushie.glowing_eyes_active ? active_icon_state : inactive_icon_state
+
+		return 0
+
+/datum/targetable/critter/cryptid_plushie/glowing_eyes/set_glowing_eyes_color
+	name = "Toggle glowing eyes"
+	desc = "Toggles whether your eyes glow red."
+	icon_state = "stinglsd"
+	cooldown = 5
+	targeted = 0
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		var/picked_color = input("Pick a color for the glowing eyes.", "Color", our_plushie.glowing_eye_color) as color
+		if(picked_color)
+			our_plushie.glowing_eye_color = picked_color
+
+		if(our_plushie.glowing_eyes_active) // refresh the color if eyes are active
+			our_plushie.set_glowing_eyes(TRUE)
+
+		return 0
