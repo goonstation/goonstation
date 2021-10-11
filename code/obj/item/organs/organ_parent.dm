@@ -99,7 +99,7 @@
 				return
 		else if (istype(W, /obj/item/augmentation))
 			var/obj/item/augmentation/A = W
-			if(!src.installed_aug && istype(src, A.valid_organ) && !src.synthetic && !src.robotic)
+			if(!src.installed_aug && A.organ_is_valid(src))
 				A.set_loc(src)
 				A.on_insertion(src, null)
 				user.u_equip(A)
@@ -108,21 +108,15 @@
 			else if(src.installed_aug)
 				boutput(user, "<span class='alert'><b>There's already an augmentation installed!</span>")
 				return
-			else if(!istype(src, A.valid_organ))
+			else if(!A.organ_is_valid(src))
 				boutput(user, "<span class='alert'><b>The [A.name] isn't built for [src.name]!</span>")
-				return
-			else if(src.synthetic)
-				boutput(user, "<span class='alert'><b>There's nothing to connect the [A.name] to!</span>")
-				return
-			else if(src.robotic)
-				boutput(user, "<span class='alert'><b>The [A.name] has no organic matter to connect to!</span>")
 				return
 		else if (istool(W, TOOL_SNIPPING))
 			var/obj/item/augmentation/A = src.installed_aug
 			if(src.installed_aug)
 				A.set_loc(get_turf(src))
 				A.on_cutout(src)
-				boutput(user, "=<span class='notice'><b>You cut out a [A.name] from [src.name].</span>")
+				boutput(user, "<span class='notice'><b>You cut out a [A.name] from [src.name].</span>")
 				return
 		else
 			user.lastattacked = src

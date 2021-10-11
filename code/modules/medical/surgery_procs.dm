@@ -204,7 +204,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 /proc/insertAugment(var/mob/living/carbon/human/patient as mob, var/mob/surgeon as mob)
 	var/obj/item/augmentation/head/I = surgeon.equipped()
 	if(surgeon.zone_sel.selecting == "head")
-		if(patient.organHolder.head.scalp_op_stage == 2.0 && I.valid_organ == /obj/item/organ/brain && !patient.organHolder.brain.installed_aug) //splitting the if for the sake of other head organs
+		if(patient.organHolder.head.scalp_op_stage == 2.0 && I.organ_is_valid(patient.organHolder.brain) && !patient.organHolder.brain.installed_aug) //splitting the if for the sake of other head organs
 			if(patient == surgeon) //Balance reasons
 				surgeon.show_text("<span class='alert'>You can't quite reach far enough back to insert [I]!</span>")
 				return 1
@@ -214,15 +214,15 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient, "<span class='notice'>[patient == surgeon ? "You attach" : "<b>[surgeon]</b> attaches"] [I] to your brain stem.</span>")
 				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 				I.set_loc(patient.organHolder.brain)
-				I.donor = patient
-				I.donor_organ = patient.organHolder.brain
+				I.owner = patient
+				I.owner_organ = patient.organHolder.brain
 				I.on_insertion(patient.organHolder.brain, patient)
 				surgeon.u_equip(I)
 			else
 				surgeon.show_text("<span class='alert'>[patient] already has an augment in their head.</span>")
 			return 1
 	/*else if(surgeon.zone_sel.selecting == "chest")
-		if(I.valid_organ == /obj/item/organ/heart && !patient.organHolder.heart.installed_aug)
+		if(I.organ_is_valid(patient.organHolder.heart) && !patient.organHolder.heart.installed_aug)
 			if(patient == surgeon) //Balance reasons
 				surgeon.show_text("<span class='alert'>You can't quite reach far enough back to insert [I]!</span>")
 				return 1
@@ -232,8 +232,8 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient, "<span class='notice'>[patient == surgeon ? "You attach" : "<b>[surgeon]</b> attaches"] [I] to your heart.</span>")
 				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 				I.set_loc(patient.organHolder.heart)
-				I.donor = patient
-				I.donor_organ = patient.organHolder.heart
+				I.owner = patient
+				I.owner_organ = patient.organHolder.heart
 				I.on_insertion(patient.organHolder.heart, patient)
 				surgeon.u_equip(I)
 			else

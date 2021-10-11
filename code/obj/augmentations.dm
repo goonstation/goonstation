@@ -5,13 +5,12 @@ ABSTRACT_TYPE(/obj/item/augmentation)
 	icon_state = "augmentation"
 	desc = "A thin, metal oval with some wires sticking out. It seems like it'd do well attached to the nervous system."
 	///The person who has the aug inside one of their organs
-	var/mob/living/carbon/human/donor
+	var/mob/living/carbon/human/owner
 	///The organ that currently contains the aug
-	var/obj/item/organ/donor_organ
+	var/obj/item/organ/owner_organ
 	///The first person to have the organ
-	var/mob/living/carbon/human/donor_original = null
+	var/mob/living/carbon/human/owner_original = null
 	///The organ type used in the augmentation
-	var/valid_organ = /obj/item/organ/brain
 	var/brute_dam = 0
 	var/burn_dam = 0
 	var/tox_dam = 0
@@ -29,18 +28,18 @@ ABSTRACT_TYPE(/obj/item/augmentation)
 
 		if (brute_dam + burn_dam + tox_dam >= max_aug_health)
 			src.breakme()
-			donor?.contract_disease(failure_disease,null,null,1)
-		health_update_queue |= donor
+			owner?.contract_disease(failure_disease,null,null,1)
+		health_update_queue |= owner
 		return 1
 
 	///Handling .broken and abilities when the aug breaks
 	proc/breakme()
 		if (!broken && islist(src.augmentation_abilities) && length(src.augmentation_abilities))// remove abilities when broken
 			var/datum/abilityHolder/aholder
-			if (src.donor && src.donor.abilityHolder)
-				aholder = src.donor.abilityHolder
-			else if (src.donor && src.donor.abilityHolder)
-				aholder = src.donor.abilityHolder
+			if (src.owner && src.owner.abilityHolder)
+				aholder = src.owner.abilityHolder
+			else if (src.owner && src.owner.abilityHolder)
+				aholder = src.owner.abilityHolder
 			if (istype(aholder))
 				for (var/abil in src.augmentation_abilities)
 					src.remove_ability(aholder, abil)
@@ -49,9 +48,9 @@ ABSTRACT_TYPE(/obj/item/augmentation)
 	///Handling fixing .broken and abilities when the aug breaks
 	proc/unbreakme()
 		if (broken && islist(src.augmentation_abilities) && length(src.augmentation_abilities)) //put them back if fixed (somehow)
-			var/datum/abilityHolder/organ/A = donor?.get_ability_holder(/datum/abilityHolder/organ)
+			var/datum/abilityHolder/organ/A = owner?.get_ability_holder(/datum/abilityHolder/organ)
 			if (!istype(A))
-				A = donor?.add_ability_holder(/datum/abilityHolder/organ)
+				A = owner?.add_ability_holder(/datum/abilityHolder/organ)
 			if (!A)
 				return
 			for (var/abil in src.augmentation_abilities)
@@ -60,9 +59,13 @@ ABSTRACT_TYPE(/obj/item/augmentation)
 
 	///Standard life loop proc
 	proc/on_life(var/mult = 1)
-		if (donor && (src.broken || (src.brute_dam + src.burn_dam + src.tox_dam) > max_aug_health))
+		if (owner && (src.broken || (src.brute_dam + src.burn_dam + src.tox_dam) > max_aug_health))
 			return 0
 		return 1
+
+	///Want it to only accept one kind of organ / only do cyberorgans / only fully healed organs? Put it here (in the child)
+	proc/organ_is_valid(var/obj/item/organ/chosen_organ)
+		return
 
 	///For handling inserting the aug into the organ, not necessarily (but can be) handling the organ being inside someone too
 	proc/on_insertion(var/obj/I as obj, var/mob/M as mob) // Mob accepts null
@@ -71,7 +74,7 @@ ABSTRACT_TYPE(/obj/item/augmentation)
 
 		var/obj/item/organ/O = I
 		O.installed_aug = src
-		donor_organ = O
+		owner_organ = O
 		if(O.donor && !isnull(M)) //currently in someone on augment insertion
 			on_organ_transplant(M)
 
@@ -79,14 +82,14 @@ ABSTRACT_TYPE(/obj/item/augmentation)
 	proc/on_cutout(var/obj/I as obj)
 		var/obj/item/organ/O = I
 		O.installed_aug = null
-		donor_organ = null
+		owner_organ = null
 
-		if (islist(src.augmentation_abilities) && length(src.augmentation_abilities))// && src.donor.abilityHolder)
+		if (islist(src.augmentation_abilities) && length(src.augmentation_abilities))// && src.owner.abilityHolder)
 			var/datum/abilityHolder/aholder
-			if (src.donor && src.donor.abilityHolder)
-				aholder = src.donor.abilityHolder
-			else if (src.donor && src.donor.abilityHolder)
-				aholder = src.donor.abilityHolder
+			if (src.owner && src.owner.abilityHolder)
+				aholder = src.owner.abilityHolder
+			else if (src.owner && src.owner.abilityHolder)
+				aholder = src.owner.abilityHolder
 			if (istype(aholder))
 				for (var/abil in src.augmentation_abilities)
 					src.remove_ability(aholder, abil)
@@ -118,9 +121,9 @@ ABSTRACT_TYPE(/obj/item/augmentation)
 		return 0
 
 	disposing()
-		src.donor = null
-		src.donor_organ = null
-		src.donor_original = null
+		src.owner = null
+		src.owner_organ = null
+		src.owner_original = null
 		..()
 
 ABSTRACT_TYPE(/obj/item/augmentation/head)
@@ -135,7 +138,7 @@ ABSTRACT_TYPE(/obj/item/augmentation/head)
 	var/flashed = FALSE
 
 	proc/ranged_click(atom/target, params, location, control)
-		var/mob/M = src.donor
+		var/mob/M = src.owner
 		var/inrange = in_interact_range(target, M)
 		var/obj/item/equipped = M.equipped()
 		if(src.flashed)
@@ -152,34 +155,40 @@ ABSTRACT_TYPE(/obj/item/augmentation/head)
 		if(istype(I, /obj/item/device/flash) && I.status)
 			src.flashed = TRUE
 			src.take_damage(5, 5, 0) //owie
-			src.donor.remove_stamina(25)
+			src.owner.remove_stamina(25)
 			SPAWN_DBG(15 SECONDS)
 				src.flashed = FALSE
 		if(src.broken)
-			src.donor.remove_stamina(15)
+			src.owner.remove_stamina(15)
 
 	on_organ_transplant(var/mob/M as mob)
 		..()
 		if(!broken)
-			RegisterSignal(src.donor, COMSIG_CLICK, .proc/ranged_click)
-			RegisterSignal(src.donor, COMSIG_ATTACKBY, .proc/flash_check)
+			RegisterSignal(src.owner, COMSIG_CLICK, .proc/ranged_click)
+			RegisterSignal(src.owner, COMSIG_ATTACKBY, .proc/flash_check)
 			M.mob_flags |= USR_DIALOG_UPDATES_RANGE
 
 	on_organ_removal()
 		..()
-		var/mob/M = src.donor
+		var/mob/M = src.owner
 		if(!broken)
-			UnregisterSignal(src.donor, COMSIG_CLICK)
+			UnregisterSignal(src.owner, COMSIG_CLICK)
 			M.mob_flags &= ~USR_DIALOG_UPDATES_RANGE
-		UnregisterSignal(src.donor, COMSIG_ATTACKBY)
+		UnregisterSignal(src.owner, COMSIG_ATTACKBY)
 
 	on_broken(var/mult = 1)
-		var/mob/M = src.donor
+		var/mob/M = src.owner
 		if (!..())
 			return
-		src.donor.reagents.add_reagent("nanites", 0.5 * mult) //you want borg powers? Well, come and get 'em!
-		UnregisterSignal(src.donor, COMSIG_CLICK)
+		src.owner.reagents.add_reagent("nanites", 0.5 * mult) //you want borg powers? Well, come and get 'em!
+		UnregisterSignal(src.owner, COMSIG_CLICK)
 		M.mob_flags &= ~USR_DIALOG_UPDATES_RANGE
+
+	organ_is_valid(var/obj/item/organ/chosen_organ)
+		if(istype(chosen_organ, /obj/item/organ/brain) && !chosen_organ.robotic && !chosen_organ.synthetic)
+			return TRUE
+		else
+			return FALSE
 
 
 /datum/abilityHolder/augmentation //unused currently but laying the path for future augmentations
