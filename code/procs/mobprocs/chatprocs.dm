@@ -483,7 +483,7 @@
 			src.emote_allowed = 0
 			return 0
 		if (world.time >= (src.last_emote_time + src.last_emote_wait))
-			if (!(src.client && (src.client.holder && admin_bypass) && !src.client.player_mode) && voluntary)
+			if (!no_emote_cooldowns && !(src.client && (src.client.holder && admin_bypass) && !src.client.player_mode) && voluntary)
 				src.emote_allowed = 0
 				src.last_emote_time = world.time
 				src.last_emote_wait = time
