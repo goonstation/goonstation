@@ -1468,7 +1468,7 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 	"formal_turban" = /obj/item/clothing/head/formal_turban,
 	"snake" = /obj/item/clothing/head/snake,
 	"powdered_wig" = /obj/item/clothing/head/powdered_wig,
-	"westhat" = /obj/item/clothing/head/westhat)
+	"westhat_black" = /obj/item/clothing/head/westhat/black)
 
 	//items purchasable from gangs
 /datum/gang_item
