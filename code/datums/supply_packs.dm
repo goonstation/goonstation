@@ -1718,9 +1718,9 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	desc = "4x coats in various colors."
 	category = "Civilian Department"
 	contains = list(/obj/item/clothing/suit/gimmick/guncoat,
-					/obj/item/clothing/suit/gimmick/guncoat/black,
-					/obj/item/clothing/suit/gimmick/guncoat/tan,
-					/obj/item/clothing/suit/gimmick/guncoat/dirty)
+			/obj/item/clothing/suit/gimmick/guncoat/black,
+			/obj/item/clothing/suit/gimmick/guncoat/tan,
+			/obj/item/clothing/suit/gimmick/guncoat/dirty)
 	cost = 2000
 	containername = "Dusty Old Clothing Crate"
 	containertype = /obj/storage/crate/wooden
