@@ -113,6 +113,7 @@
 
 		name = "[replacetext(holo_type, "_", " ")] hologram"
 		icon_state = holo_type
+		src.flags |= UNCRUSHABLE
 		//might still want to use this, idk yet. For like descriptions or names or something...
 		// switch(holo_type)
 		// 	if ("caution")
