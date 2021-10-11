@@ -65,7 +65,7 @@ ABSTRACT_TYPE(/obj/item/augmentation)
 
 	///Want it to only accept one kind of organ / only do cyberorgans / only fully healed organs? Put it here (in the child)
 	proc/organ_is_valid(var/obj/item/organ/chosen_organ)
-		return
+		return FALSE
 
 	///For handling inserting the aug into the organ, not necessarily (but can be) handling the organ being inside someone too
 	proc/on_insertion(var/obj/I as obj, var/mob/M as mob) // Mob accepts null

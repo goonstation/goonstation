@@ -156,11 +156,11 @@
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the output target for [src].</span>")
 			return
 
-		if(get_dist(over_object,src) > 1)
+		if(!IN_RANGE(over_object,src,1))
 			boutput(usr, "<span class='alert'>[src] is too far away from the target!</span>")
 			return
 
-		if(get_dist(over_object,usr) > 1)
+		if(!IN_RANGE(over_object,usr,1))
 			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
@@ -189,7 +189,7 @@
 		if (!src.output_target)
 			return src.loc
 
-		if (get_dist(src.output_target,src) > 1)
+		if (!IN_RANGE(src.output_target, src, 1))
 			src.output_target = null
 			return src.loc
 
@@ -640,7 +640,7 @@
 					// else, just let it spawn where it is
 				else if (player_list)
 					playervended.layer = src.layer + 0.3 //To get over the CRT layer
-					if(get_dist(usr, src.loc) > 1)
+					if(!IN_RANGE(usr, src.loc, 1))
 						playervended.set_loc(src.loc)
 					else
 						usr.put_in_hand_or_eject(playervended) // try to eject it into the users hand, if we can
@@ -683,7 +683,7 @@
 				if (src.credit > 0)
 					var/obj/item/spacecash/returned = unpool(/obj/item/spacecash)
 					returned.setup(src.get_output_location(), src.credit)
-					if(get_dist(usr, src) > 1)
+					if(!IN_RANGE(usr, src, 1))
 						returned.set_loc(src.loc)
 					else
 						usr.put_in_hand_or_eject(returned) // try to eject it into the users hand, if we can
@@ -794,7 +794,7 @@
 //		src.icon_state = "[initial(icon_state)]-fall"
 //		SPAWN_DBG(2 SECONDS)
 //			src.icon_state = "[initial(icon_state)]-fallen"
-	if (istype(victim) && vicTurf && (get_dist(vicTurf, src) <= 1))
+	if (istype(victim) && vicTurf && (IN_RANGE(vicTurf, src, 1)))
 		victim.changeStatus("weakened", 30 SECONDS)
 		src.visible_message("<b><font color=red>[src.name] tips over onto [victim]!</font></b>")
 		victim.force_laydown_standup()
@@ -2748,7 +2748,7 @@
 
 		if(href_list["eject"])
 			if(holding)
-				if(get_dist(usr, src) > 1)
+				if(!IN_RANGE(usr, src, 1))
 					holding.set_loc(src.loc)
 				else
 					usr.put_in_hand_or_eject(holding) // try to eject it into the users hand, if we can

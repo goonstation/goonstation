@@ -748,8 +748,6 @@
 				organ = "left_eye"
 			else if(organ == right_eye)
 				organ = "right_eye"
-			else if(organ == chest)
-				organ = "chest"
 			else if(organ == heart)
 				organ = "heart"
 			else if(organ == left_lung)
@@ -784,186 +782,174 @@
 					for (var/thing in src.organ_list)
 						if (!src.organ_list[thing])
 							continue
+						if (istype(thing, /obj/item/organ/chest)) //Chests don't and shouldn't support augmentations
+							continue
 						src.drop_organ_augmentation(thing, location)
 					return 1
 
-			if ("head")
+			if ("head") //returns nothing, use eyes/brain individually if you want returns
 				if (!src.head)
 					return 0
-				var/obj/item/organ/head/myHead = src.head
-				if (src.brain.installed_aug)
+				if (src?.brain?.installed_aug)
 					myHead.brain.installed_aug = src.drop_organ_augmentation("brain", myHead)
-				if (src.right_eye.installed_aug)
+				if (src?.right_eye?.installed_aug)
 					myHead.right_eye.installed_aug = src.drop_organ_augmentation("right_eye", myHead)
-				if (src.left_eye.installed_aug)
+				if (src?.left_eye?.installed_aug)
 					myHead.left_eye.installed_aug = src.drop_organ_augmentation("left_eye", myHead)
-				myHead.installed_aug.set_loc(location)
-				myHead.installed_aug.on_organ_removal()
-				src.head.installed_aug = null
 				src.donor.update_body()
 				src.donor.UpdateDamageIcon()
 				src.donor.update_clothing()
-				return myHead.installed_aug
+				return 1
 
 			if ("brain")
 				if (!src.brain)
 					return 0
-				var/obj/item/organ/brain/myBrain = src.brain
-				myBrain.installed_aug.set_loc(location)
-				myBrain.installed_aug.on_organ_removal()
+				var/obj/item/augmentation/myAug = src.brain?.installed_aug
+				src.brain.installed_aug.set_loc(location)
+				src.brain.installed_aug.on_organ_removal()
 				src.brain.installed_aug = null
 				src.donor.update_body()
-				return myBrain.installed_aug
+				return myAug
 
 			if ("left_eye")
 				if (!src.left_eye)
 					return 0
-				var/obj/item/organ/eye/myLeftEye = src.left_eye
-				myLeftEye.installed_aug.set_loc(location)
-				myLeftEye.installed_aug.on_organ_removal()
+				var/obj/item/augmentation/myAug = src.left_eye?.installed_aug
+				src.left_eye.installed_aug.set_loc(location)
+				src.left_eye.installed_aug.on_organ_removal()
 				src.left_eye.installed_aug = null
 				src.donor.update_body()
-				return myLeftEye.installed_aug
+				return myAug
 
 			if ("right_eye")
 				if (!src.right_eye)
 					return 0
-				var/obj/item/organ/eye/myRightEye = src.right_eye
-				myRightEye.installed_aug.set_loc(location)
-				myRightEye.installed_aug.on_organ_removal()
+				var/obj/item/augmentation/myAug = src.right_eye?.installed_aug
+				src.right_eye.installed_aug.set_loc(location)
+				src.right_eye.installed_aug.on_organ_removal()
 				src.right_eye.installed_aug = null
 				src.donor.update_body()
-				return myRightEye.installed_aug
-
-			if ("chest")
-				if (!src.chest)
-					return 0
-				var/obj/item/organ/chest/myChest = src.chest
-				myChest.installed_aug.set_loc(location)
-				myChest.installed_aug.on_organ_removal()
-				src.chest.installed_aug = null
-				src.donor.update_body()
-				return myChest.installed_aug
+				return myAug
 
 			if ("heart")
 				if (!src.heart)
 					return 0
-				var/obj/item/organ/heart/myHeart = src.heart
-				myHeart.installed_aug.set_loc(location)
-				myHeart.installed_aug.on_organ_removal()
+				var/obj/item/augmentation/myAug = src.heart?.installed_aug
+				src.heart.installed_aug.set_loc(location)
+				src.heart.installed_aug.on_organ_removal()
 				src.heart.installed_aug = null
 				src.donor.update_body()
-				return myHeart.installed_aug
+				return myAug
 
 			if ("left_lung")
 				if (!src.left_lung)
 					return 0
-				var/obj/item/organ/lung/left/myLeftLung = src.left_lung
-				myLeftLung.installed_aug.set_loc(location)
-				myLeftLung.installed_aug.on_organ_removal()
+				var/obj/item/augmentation/myAug = src.left_lung?.installed_aug
+				src.left_lung.installed_aug.set_loc(location)
+				src.left_lung.installed_aug.on_organ_removal()
 				src.left_lung.installed_aug = null
 				src.donor.update_body()
-				return myLeftLung.installed_aug
+				return myAug
 
 			if ("right_lung")
 				if (!src.right_lung)
 					return 0
-				var/obj/item/organ/lung/right/myRightLung = src.right_lung
-				myRightLung.installed_aug.set_loc(location)
-				myRightLung.installed_aug.on_organ_removal()
+				var/obj/item/augmentation/myAug = src.right_lung?.installed_aug
+				src.right_lung.installed_aug.set_loc(location)
+				src.right_lung.installed_aug.on_organ_removal()
 				src.right_lung.installed_aug = null
 				src.donor.update_body()
-				return myRightLung.installed_aug
+				return myAug
 
 			if ("left_kidney")
 				if (!src.left_kidney)
 					return 0
-				var/obj/item/organ/kidney/left/myleft_kidney = src.left_kidney
-				myleft_kidney.installed_aug.set_loc(location)
-				myleft_kidney.installed_aug.on_organ_removal()
+				var/obj/item/augmentation/myAug = src.left_kidney?.installed_aug
+				src.left_kidney.installed_aug.set_loc(location)
+				src.left_kidney.installed_aug.on_organ_removal()
 				src.left_kidney.installed_aug = null
 				src.donor.update_body()
-				return myleft_kidney.installed_aug
+				return myAug
 
 			if ("right_kidney")
 				if (!src.right_kidney)
 					return 0
-				var/obj/item/organ/kidney/right/myright_kidney = src.right_kidney
-				myright_kidney.installed_aug.set_loc(location)
-				myright_kidney.installed_aug.on_organ_removal()
+				var/obj/item/augmentation/myAug = src.right_kidney?.installed_aug
+				src.right_kidney.installed_aug.set_loc(location)
+				src.right_kidney.installed_aug.on_organ_removal()
 				src.right_kidney.installed_aug = null
 				src.donor.update_body()
-				return myright_kidney.installed_aug
+				return myAug
 
 			if ("liver")
 				if (!src.liver)
 					return 0
-				var/obj/item/organ/liver/myliver = src.liver
-				myliver.installed_aug.set_loc(location)
-				myliver.installed_aug.on_organ_removal()
+				var/obj/item/augmentation/myAug = src.liver?.installed_aug
+				src.liver.installed_aug.set_loc(location)
+				src.liver.installed_aug.on_organ_removal()
 				src.liver.installed_aug = null
 				src.donor.update_body()
-				return myliver.installed_aug
+				return myAug
 
 			if ("stomach")
 				if (!src.stomach)
 					return 0
-				var/obj/item/organ/stomach/mystomach = src.stomach
-				mystomach.installed_aug.set_loc(location)
-				mystomach.installed_aug.on_organ_removal()
+				var/obj/item/augmentation/myAug = src.stomach?.installed_aug
+				src.stomach.installed_aug.set_loc(location)
+				src.stomach.installed_aug.on_organ_removal()
 				src.stomach.installed_aug = null
 				src.donor.update_body()
-				return mystomach.installed_aug
+				return myAug
 
 			if ("intestines")
 				if (!src.intestines)
 					return 0
-				var/obj/item/organ/intestines/myintestines = src.intestines
-				myintestines.installed_aug.set_loc(location)
-				myintestines.installed_aug.on_organ_removal()
+				var/obj/item/augmentation/myAug = src.intestines?.installed_aug
+				src.intestines.installed_aug.set_loc(location)
+				src.intestines.installed_aug.on_organ_removal()
 				src.intestines.installed_aug = null
 				src.donor.update_body()
-				return myintestines.installed_aug
+				return myAug
 
 			if ("spleen")
 				if (!src.spleen)
 					return 0
-				var/obj/item/organ/spleen/myspleen = src.spleen
-				myspleen.installed_aug.set_loc(location)
-				myspleen.installed_aug.on_organ_removal()
+				var/obj/item/augmentation/myAug = src.spleen?.installed_aug
+				src.spleen.installed_aug.set_loc(location)
+				src.spleen.installed_aug.on_organ_removal()
 				src.spleen.installed_aug = null
 				src.donor.update_body()
-				return myspleen.installed_aug
+				return myAug
 
 			if ("pancreas")
 				if (!src.pancreas)
 					return 0
-				var/obj/item/organ/pancreas/mypancreas = src.pancreas
-				mypancreas.installed_aug.set_loc(location)
-				mypancreas.installed_aug.on_organ_removal()
+				var/obj/item/augmentation/myAug = src.pancreas?.installed_aug
+				src.pancreas.installed_aug.set_loc(location)
+				src.pancreas.installed_aug.on_organ_removal()
 				src.pancreas.installed_aug = null
 				src.donor.update_body()
-				return mypancreas.installed_aug
+				return myAug
 
 			if ("appendix")
 				if (!src.appendix)
 					return 0
-				var/obj/item/organ/appendix/myappendix = src.appendix
-				myappendix.installed_aug.set_loc(location)
-				myappendix.installed_aug.on_organ_removal()
+				var/obj/item/augmentation/myAug = src.appendix?.installed_aug
+				src.appendix.installed_aug.set_loc(location)
+				src.appendix.installed_aug.on_organ_removal()
 				src.appendix.installed_aug = null
 				src.donor.update_body()
-				return myappendix.installed_aug
+				return myAug
 
 			if ("tail")
 				if (!src.tail)
 					return 0
-				var/obj/item/organ/tail/mytail = src.tail
-				mytail.installed_aug.set_loc(location)
-				mytail.installed_aug.on_organ_removal()
+				var/obj/item/augmentation/myAug = src.tail?.installed_aug
+				src.tail.installed_aug.set_loc(location)
+				src.tail.installed_aug.on_organ_removal()
 				src.tail.installed_aug = null
 				src.donor.update_body()
-				return mytail.installed_aug
+				return myAug
 
 	/// drops the organ, then hurls it somewhere
 	proc/drop_and_throw_organ(var/organ, var/location, var/direction, var/dist, var/speed, var/showtext)

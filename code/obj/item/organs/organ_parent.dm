@@ -111,7 +111,7 @@
 			else if(!A.organ_is_valid(src))
 				boutput(user, "<span class='alert'><b>The [A.name] isn't built for [src.name]!</span>")
 				return
-		else if (istool(W, TOOL_SNIPPING))
+		else if (istool(W, TOOL_SNIPPING) && src.installed_aug)
 			var/obj/item/augmentation/A = src.installed_aug
 			if(src.installed_aug)
 				A.set_loc(get_turf(src))

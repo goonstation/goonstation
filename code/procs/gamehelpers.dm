@@ -104,9 +104,9 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 	else if (source in bible_contents && locate(/obj/item/storage/bible) in range(1, user)) // whoever added the global bibles, fuck you
 		return TRUE
 	else
-		if (iscarbon(user) && !istype(source, /obj/machinery))
+		if (iscarbon(user))
 			var/mob/living/carbon/C = user
-			if ((C.bioHolder.HasEffect("telekinesis")) && get_dist(source, user) <= 7) //You can only reach stuff within your screen.
+			if (C.bioHolder.HasEffect("telekinesis") && get_dist(source, user) <= 7) //You can only reach stuff within your screen.
 				var/X = source:x
 				var/Y = source:y
 				var/Z = source:z

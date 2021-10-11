@@ -210,7 +210,6 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				return 1
 			else if (!patient.organHolder.brain.installed_aug)
 				patient.tri_message("<span class='notice'><b>[surgeon]</b> attaches [I] to [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] brain stem.</span>",\
-				surgeon, "<span class='notice'>You attach [I] to [surgeon == patient ? "your" : "[patient]'s"] brain stem.</span>",\
 				patient, "<span class='notice'>[patient == surgeon ? "You attach" : "<b>[surgeon]</b> attaches"] [I] to your brain stem.</span>")
 				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 				I.set_loc(patient.organHolder.brain)

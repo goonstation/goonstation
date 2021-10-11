@@ -151,7 +151,7 @@
 				var/obfuscate = (disease_detection != 255 ? 1 : 0)		//this is so admin check_health verb see exact numbs, scanners don't. Can remove, not exactly necessary, but thought they might want it.
 
 				organ_data1 += organ_health_scan("heart", H, obfuscate)
-				organ_data1 += organ_health_scan("brain", H, TRUE) //this is gonna be obfuscated regardless
+				organ_data1 += organ_health_scan("brain", H, obfuscate) //they get specially obfuscated down below
 
 				organ_data1 += organ_health_scan("left_lung", H, obfuscate)
 				organ_data1 += organ_health_scan("right_lung", H, obfuscate)
@@ -267,20 +267,28 @@
 	var/list/ret = list()
 	var/damage = O.get_damage()
 	var/aug_damage
-	if (damage >= O.MAX_DAMAGE)
-		ret += "<br><span class='alert'><b>[O.name]</b> - Dead</span>"
-	else if (damage >= O.MAX_DAMAGE*0.9)
-		ret += "<br><span class='alert'><b>[O.name]</b> - Critical</span>"
-	else if (damage >= O.MAX_DAMAGE*0.65)
-		ret += "<br><span class='alert'><b>[O.name]</b> - Significant</span>"
-	else if (damage >= O.MAX_DAMAGE*0.30)
-		ret += "<br><span style='color:purple'><b>[O.name]</b> - Moderate</span>"
-	else if (damage > 0)
-		ret += "<br><span style='color:purple'><b>[O.name]</b> - Minor</span>"
-	else if (O.robotic)
-		ret += "<br><span style='color:purple'><b>[O.name]</b></span>"
-	if (O.robotic)
-		ret += "<span style='color:purple'> - Robotic organ detected</span>"
+	if(istype(O, /obj/item/organ/brain))
+		if (damage >= 10)
+			ret += "<br><span class='alert'><b>[O.name]</b> - Minor</span>"
+		else if (damage >= 60)
+			ret += "<br><span class='alert'><b>[O.name]</b> - Major</span>"
+		else if (damage >= 100)
+			ret += "<br><span class='alert'><b>[O.name]</b> - Braindead</span>"
+	else
+		if (damage >= O.MAX_DAMAGE)
+			ret += "<br><span class='alert'><b>[O.name]</b> - Dead</span>"
+		else if (damage >= O.MAX_DAMAGE*0.9)
+			ret += "<br><span class='alert'><b>[O.name]</b> - Critical</span>"
+		else if (damage >= O.MAX_DAMAGE*0.65)
+			ret += "<br><span class='alert'><b>[O.name]</b> - Significant</span>"
+		else if (damage >= O.MAX_DAMAGE*0.30)
+			ret += "<br><span style='color:purple'><b>[O.name]</b> - Moderate</span>"
+		else if (damage > 0)
+			ret += "<br><span style='color:purple'><b>[O.name]</b> - Minor</span>"
+		else if (O.robotic)
+			ret += "<br><span style='color:purple'><b>[O.name]</b></span>"
+		if (O.robotic)
+			ret += "<span style='color:purple'> - Robotic organ detected</span>"
 	if(O.augmentation_support && O.installed_aug)
 		var/obj/item/augmentation/A = O.installed_aug
 		aug_damage = A.brute_dam + A.burn_dam + A.tox_dam
