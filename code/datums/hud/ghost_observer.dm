@@ -21,8 +21,10 @@
 
 	proc/get_join_other()
 		RETURN_TYPE(/atom/movable/screen/join_other)
+		if(isnull(config.server_buddy_id))
+			return null
 		if(isnull(src.join_other))
-			src.join_other = new
+			src.join_other = new(null, config.server_buddy_id, config.server_buddy_name)
 			src.add_object(src.join_other)
 		return src.join_other
 

@@ -227,8 +227,12 @@ var/datum/respawn_controls/respawn_controller
 	var/server_id = "main2"
 	var/server_name = "2 Classic: Bombini"
 
-	New()
+	New(loc, server_id=null, server_name=null)
 		..()
+		if(!isnull(server_id))
+			src.server_id = server_id
+		if(!isnull(server_name))
+			src.server_name = server_name
 		if (server_id == config.server_id)
 			return
-		maptext = {"<span class='pixel c ol' style='font-size:16px;'>Dead? No worries. <br><a style='color:#8f8;text-decoration:underline;' href='byond://winset?command=Change-Server [server_id]'>Click here to join Goonstation [server_name]!</a></span>"}
+		maptext = {"<span class='pixel c ol' style='font-size:16px;'>Dead? No worries. <br><a style='color:#8f8;text-decoration:underline;' href='byond://winset?command=Change-Server [server_id]'>Click here to join [server_name]!</a></span>"}
