@@ -780,6 +780,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\chemistry\tools\vendor_items.dm"
 #include "code\modules\cross_server\cross_server_message.dm"
 #include "code\modules\cross_server\game_servers.dm"
+#include "code\modules\cross_server\server_list.dm"
 #include "code\modules\cross_server\cross_server_messages\announce.dm"
 #include "code\modules\economy\persistent_bank.dm"
 #include "code\modules\economy\persistent_bank_purchases.dm"
