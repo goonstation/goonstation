@@ -45,7 +45,7 @@
 	var/last_queue_op = 0
 
 	var/category = null
-	var/list/categories = list("Tool","Clothing","Resource","Component","Machinery","Miscellaneous", "Drive_recipes", "Downloaded")
+	var/list/categories = list("Tool","Clothing","Resource","Component","Machinery","Miscellaneous", "Downloaded")
 	var/search = null
 	var/wires = 15
 	var/image/work_display = null
