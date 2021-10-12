@@ -7,7 +7,7 @@
 	density = 1
 	flags = FPRINT | ALWAYS_SOLID_FLUID
 	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
-	object_flags = BOTS_DIRBLOCK
+	object_flags = BOTS_DIRBLOCK | BLOCKS_CHEMGAS_PROJ
 	text = "<font color=#D2691E>+"
 	var/secondsElectrified = 0
 	var/visible = 1

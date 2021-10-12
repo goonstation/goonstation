@@ -148,7 +148,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	icon_state = "door_closed"
 
 	deconstruct_flags = DECON_ACCESS | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_SCREWDRIVER | DECON_MULTITOOL
-	object_flags = BOTS_DIRBLOCK | CAN_REPROGRAM_ACCESS
+	object_flags = BOTS_DIRBLOCK | CAN_REPROGRAM_ACCESS | BLOCKS_CHEMGAS_PROJ
 
 	var/image/panel_image = null
 	var/panel_icon_state = "panel_open"
@@ -261,7 +261,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	cant_emag = 1
 	hardened = 1
 	aiControlDisabled = 1
-	object_flags = BOTS_DIRBLOCK
+	object_flags = BOTS_DIRBLOCK | BLOCKS_CHEMGAS_PROJ
 
 	meteorhit()
 		return
@@ -275,7 +275,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	cant_emag = 1
 	hardened = 1
 	aiControlDisabled = 1
-	object_flags = BOTS_DIRBLOCK
+	object_flags = BOTS_DIRBLOCK | BLOCKS_CHEMGAS_PROJ
 
 	meteorhit()
 		return
@@ -543,7 +543,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	health = 500
 	health_max = 500
 	layer = 3.5
-	object_flags = BOTS_DIRBLOCK | CAN_REPROGRAM_ACCESS | HAS_DIRECTIONAL_BLOCKING
+	object_flags = BOTS_DIRBLOCK | CAN_REPROGRAM_ACCESS | HAS_DIRECTIONAL_BLOCKING | BLOCKS_CHEMGAS_PROJ
 
 	bumpopen(mob/user as mob)
 		if (src.density)

@@ -5,7 +5,7 @@
 	icon_base = "pdoor"
 	cant_emag = 1
 	layer = 2.8
-	object_flags = 0
+	object_flags = BLOCKS_CHEMGAS_PROJ
 
 	health = 1800
 	health_max = 1800
