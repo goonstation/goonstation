@@ -13,7 +13,7 @@
 "cL" = (/turf/simulated/floor/plating/damaged3,/area/prefab/discount_dans_asteroid)
 "cV" = (/obj/machinery/vending/snack,/turf/simulated/floor/airless/snow,/area/prefab/discount_dans_asteroid)
 "dg" = (/obj/item/ammo/power_cell/self_charging/potato{pixel_x = 5; pixel_y = 3},/obj/decal/cleanable/dirt/dirt4,/obj/item/reagent_containers/food/drinks/covfefe{pixel_x = -10; pixel_y = 9},/turf/simulated/floor/shuttle{icon_state = "floor3"},/area/prefab/discount_dans_asteroid)
-"dB" = (/obj/item/ticket/platinum,/obj/item/sword/discount{pixel_x = -2; pixel_y = -3},/obj/item/clothing/suit/jacket/dan{pixel_x = 4; pixel_y = -3},/obj/item/clothing/head/apprentice/dan{pixel_x = -5; pixel_y = -5},/obj/item/ticket/golden,/obj/item/ticket/golden,/obj/item/ticket/golden,/obj/item/ticket/golden,/turf/simulated/floor/airless/snow,/area/prefab/discount_dans_asteroid)
+"dB" = (/obj/rack,/obj/item/ticket/platinum,/obj/item/clothing/suit/jacket/dan{pixel_x = 4; pixel_y = -3},/obj/item/clothing/head/apprentice/dan{pixel_x = -5; pixel_y = -5},/obj/item/ticket/golden,/obj/item/ticket/golden,/obj/item/ticket/golden,/obj/item/ticket/golden,/turf/simulated/floor/airless/snow,/area/prefab/discount_dans_asteroid)
 "dJ" = (/obj/item/device/pda_module/flashlight/dan{pixel_x = -6; pixel_y = 6},/turf/simulated/floor/airless/snow,/area/prefab/discount_dans_asteroid)
 "dS" = (/obj/decal/cleanable/blood{icon_state = "floor6"},/obj/item/parts/human_parts/arm/left{dir = 8; pixel_x = -6; pixel_y = -4},/turf/simulated/floor/airless/snow,/area/prefab/discount_dans_asteroid)
 "eK" = (/obj/decal/cleanable/blood{icon_state = "u_guilty"},/turf/simulated/floor/airless/snow,/area/prefab/discount_dans_asteroid)

@@ -258,6 +258,26 @@
 	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/lasagna
 
+/datum/cookingrecipe/alfredo
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/spaghetti
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/cream
+	cookbonus = 16
+	output = /obj/item/reagent_containers/food/snacks/spaghetti/alfredo
+
+/datum/cookingrecipe/chickenparm
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/spaghetti
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/ketchup
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
+	cookbonus = 16
+	output = /obj/item/reagent_containers/food/snacks/spaghetti/chickenparm
+
+/datum/cookingrecipe/chickenalfredo
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/spaghetti
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/cream
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
+	cookbonus = 16
+	output = /obj/item/reagent_containers/food/snacks/spaghetti/chickenalfredo
+
 /datum/cookingrecipe/spaghetti_pg
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/spaghetti
 	item2 = /obj/item/reagent_containers/food/snacks/condiment/ketchup
@@ -694,6 +714,26 @@
 			customSandwich.overlays += newFilling
 
 		return customSandwich
+		
+/datum/cookingrecipe/pizza_fresh
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pizza3
+	cookbonus = 18
+	output = /obj/item/reagent_containers/food/snacks/pizza/fresh
+
+/datum/cookingrecipe/pizza_ball
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pizzab
+	cookbonus = 18
+	output = /obj/item/reagent_containers/food/snacks/pizza/ball
+
+/datum/cookingrecipe/pizza_pepper
+	item1= /obj/item/reagent_containers/food/snacks/ingredient/pizzap
+	cookbonus = 18
+	output = /obj/item/reagent_containers/food/snacks/pizza/pepper
+
+/datum/cookingrecipe/pizza_shroom
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pizzam
+	cookbonus = 18
+	output = /obj/item/reagent_containers/food/snacks/pizza/shroom
 
 /datum/cookingrecipe/pizza
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pizza3
@@ -1635,6 +1675,38 @@
 	item4 = /obj/item/reagent_containers/food/snacks/plant/garlic
 	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/risotto
+
+/datum/cookingrecipe/tandoorichicken
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/currypowder
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
+	item3 = /obj/item/reagent_containers/food/snacks/plant/chili
+	item4 = /obj/item/reagent_containers/food/snacks/plant/garlic
+	cookbonus = 18
+	output = /obj/item/reagent_containers/food/snacks/tandoorichicken
+
+/datum/cookingrecipe/potatocurry
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/currypowder
+	item2 = /obj/item/reagent_containers/food/snacks/plant/potato
+	item3 = /obj/item/reagent_containers/food/snacks/plant/carrot
+	item4 = /obj/item/reagent_containers/food/snacks/plant/peas
+	cookbonus = 7
+	output = /obj/item/reagent_containers/food/snacks/potatocurry
+
+/datum/cookingrecipe/coconutcurry
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/currypowder
+	item2 = /obj/item/reagent_containers/food/snacks/plant/coconutmeat
+	item3 = /obj/item/reagent_containers/food/snacks/plant/carrot
+	item4 = /obj/item/reagent_containers/food/snacks/ingredient/rice
+	cookbonus = 7
+	output = /obj/item/reagent_containers/food/snacks/coconutcurry
+
+/datum/cookingrecipe/chickenpineapplecurry
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/currypowder
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
+	item3 = /obj/item/reagent_containers/food/snacks/plant/chili
+	item4 = /obj/item/reagent_containers/food/snacks/plant/pineappleslice
+	cookbonus = 7
+	output = /obj/item/reagent_containers/food/snacks/chickenpineapplecurry
 
 // Recipe for zongzi is a WIP; we're gonna need rice balls or something
 

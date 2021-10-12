@@ -205,13 +205,13 @@
 		else if(R.amount>1)
 			R.set_loc(src)
 			for(R.amount,R.amount > 0, R.amount--)
-				var/obj/item/raw_material/new_mat = unpool(R.type)
+				var/obj/item/raw_material/new_mat = new R.type
 				new_mat.set_loc(src)
 				amount_loaded++
 			if (user && R)
 				user.u_equip(R)
 				R.dropped()
-			pool(R)
+			qdel(R)
 		update_ore_amount(R.material_name,amount_loaded)
 
 

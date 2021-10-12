@@ -142,7 +142,7 @@
 			return
 
 		for (var/atom/X in range(7,src))
-			if (X == src)
+			if (X == src || (X.event_handler_flags & IMMUNE_SINGULARITY))
 				continue
 			var/area/A = get_area(X)
 			if(A?.sanctuary) continue
@@ -226,7 +226,7 @@
 		else if (istype(T,/turf/simulated/wall))
 			var/atom/A = new /obj/structure/girder/reinforced(T)
 
-			var/atom/movable/B = unpool(/obj/item/raw_material/scrap_metal)
+			var/atom/movable/B = new /obj/item/raw_material/scrap_metal
 			B.set_loc(T)
 
 			if(T.material)

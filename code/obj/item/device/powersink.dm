@@ -12,6 +12,7 @@
 	throw_range = 2
 	m_amt = 750
 	w_amt = 750
+	deconstruct_flags = DECON_DESTRUCT
 	var/drain_rate = 400000		// amount of power to drain per tick
 	var/power_drained = 0 		// has drained this much power
 	var/max_power = 2e8		// maximum power that can be drained before exploding

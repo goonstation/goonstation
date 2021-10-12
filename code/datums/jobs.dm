@@ -931,7 +931,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_glov = list(/obj/item/clothing/gloves/black)
 	slot_poc1 = list(/obj/item/paper/ranch_guide)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
-	items_in_backpack = list(/obj/item/fishing_rod, /obj/item/chicken_carrier, /obj/item/device/camera_viewer/ranch)
+	items_in_backpack = list(/obj/item/fishing_rod, /obj/item/chicken_carrier, /obj/item/device/camera_viewer/ranch,/obj/item/storage/box/knitting)
 
 	New()
 		..()
@@ -974,7 +974,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		M.traitHolder.addTrait("training_chaplain")
 		OTHER_START_TRACKING_CAT(M, TR_CAT_CHAPLAINS)
 		if (prob(15))
-			M.see_invisible = 15
+			M.see_invisible = INVIS_GHOST
 
 /datum/job/civilian/staff_assistant
 	name = "Staff Assistant"
@@ -1105,7 +1105,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/special/head_surgeon
 	name = "Head Surgeon"
 	linkcolor = "#00CC00"
-	limit = 0
+	limit = 1
 	wages = PAY_IMPORTANT
 	cant_spawn_as_rev = 1
 	slot_card = /obj/item/card/id/command
@@ -1221,7 +1221,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/special/research_assistant
 	name = "Research Assistant"
 	linkcolor = "#9900FF"
-	limit = 0
+	limit = 1
 	wages = PAY_UNTRAINED
 	low_priority_job = 1
 	slot_jump = list(/obj/item/clothing/under/color/white)
@@ -1235,7 +1235,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/special/medical_assistant
 	name = "Medical Assistant"
 	linkcolor = "#9900FF"
-	limit = 0
+	limit = 1
 	wages = PAY_UNTRAINED
 	low_priority_job = 1
 	slot_jump = list(/obj/item/clothing/under/color/white)
@@ -1267,7 +1267,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/special/tech_assistant
 	name = "Technical Assistant"
 	linkcolor = "#FF9900"
-	limit = 0
+	limit = 1
 	wages = PAY_UNTRAINED
 	low_priority_job = 1
 	slot_jump = list(/obj/item/clothing/under/color/yellow)
@@ -1412,7 +1412,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 	New()
 		..()
-		if (prob(15))
+		if (prob(40))
 			limit = 1
 		if (src.alt_names.len)
 			name = pick(src.alt_names)
@@ -1441,9 +1441,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 		var/obj/item/storage/secure/sbriefcase/B = M.find_type_in_hand(/obj/item/storage/secure/sbriefcase)
 		if (B && istype(B))
-			var/obj/item/material_piece/gold/G = unpool(/obj/item/material_piece/gold)
+			var/obj/item/material_piece/gold/G = new /obj/item/material_piece/gold
 			G.set_loc(B)
-			G = unpool(/obj/item/material_piece/gold)
+			G = new /obj/item/material_piece/gold
 			G.set_loc(B)
 
 		return
@@ -1581,9 +1581,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
 		if (B && istype(B))
-			var/obj/item/material_piece/gold/G = unpool(/obj/item/material_piece/gold)
+			var/obj/item/material_piece/gold/G = new /obj/item/material_piece/gold
 			G.set_loc(B)
-			G = unpool(/obj/item/material_piece/gold)
+			G = new /obj/item/material_piece/gold
 			G.set_loc(B)
 
 		return
@@ -1842,14 +1842,14 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	wages = PAY_UNTRAINED
 	limit = 1
 
-	slot_head = /obj/item/clothing/head/headband/bee
-	slot_suit = /obj/item/clothing/suit/bee
-	slot_ears = /obj/item/device/radio/headset
-	slot_jump = /obj/item/clothing/under/rank/beekeeper
-	slot_foot = /obj/item/clothing/shoes/black
-	slot_belt = /obj/item/device/pda2
-	slot_poc1 = /obj/item/reagent_containers/food/snacks/ingredient/egg/bee
-	slot_poc2 = /obj/item/reagent_containers/food/snacks/ingredient/egg/bee/buddy
+	slot_head = list(/obj/item/clothing/head/headband/bee)
+	slot_suit = list(/obj/item/clothing/suit/bee)
+	slot_ears = list(/obj/item/device/radio/headset)
+	slot_jump = list(/obj/item/clothing/under/rank/beekeeper)
+	slot_foot = list(/obj/item/clothing/shoes/black)
+	slot_belt = list(/obj/item/device/pda2)
+	slot_poc1 = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/bee)
+	slot_poc2 = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/buddy)
 	items_in_backpack = list(/obj/item/reagent_containers/food/snacks/b_cupcake, /obj/item/reagent_containers/food/snacks/ingredient/royal_jelly)
 
 	New()
@@ -2083,7 +2083,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 /datum/job/special/halloween/devil
 	name = "Devil"
 	wages = PAY_UNTRAINED
-	limit = 1
+	limit = 0
 	change_name_on_spawn = 1
 	slot_head = list(/obj/item/clothing/head/devil)
 	slot_mask = list(/obj/item/clothing/mask/moustache/safe)
@@ -2125,7 +2125,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 
 	New()
 		..()
-		src.access = get_access("Security Officer")
+		src.access = get_access("Staff Assistant")
 		return
 
 	special_setup(var/mob/living/carbon/human/M)
@@ -2157,16 +2157,29 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 		be.safety = 1
 		be.altered = 1
 
-
-/datum/job/special/halloween/remy
-	name = "Remy"
+ABSTRACT_TYPE(/datum/job/special/halloween/critter)
+/datum/job/special/halloween/critter
 	wages = PAY_DUMBCLOWN
 	requires_whitelist = 1
-	limit = 1
 	allow_traitors = 0
 	slot_ears = list()
 	slot_card = null
 	slot_back = list()
+
+/datum/job/special/halloween/critter/plush
+	name = "Plush Toy"
+	limit = 1
+	requires_whitelist = 0
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.critterize(/mob/living/critter/small_animal/plush/cryptid)
+
+/datum/job/special/halloween/critter/remy
+	name = "Remy"
+	limit = 1
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2174,15 +2187,9 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 			return
 		M.critterize(/mob/living/critter/small_animal/mouse/remy)
 
-/datum/job/special/halloween/bumblespider
+/datum/job/special/halloween/critter/bumblespider
 	name = "Bumblespider"
-	wages = PAY_DUMBCLOWN
-	requires_whitelist = 1
 	limit = 1
-	allow_traitors = 0
-	slot_ears = list()
-	slot_card = null
-	slot_back = list()
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2190,15 +2197,9 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 			return
 		M.critterize(/mob/living/critter/spider/nice)
 
-/datum/job/special/halloween/crow
+/datum/job/special/halloween/critter/crow
 	name = "Crow"
-	wages = PAY_DUMBCLOWN
-	requires_whitelist = 1
 	limit = 1
-	allow_traitors = 0
-	slot_ears = list()
-	slot_card = null
-	slot_back = list()
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()

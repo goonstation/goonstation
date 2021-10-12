@@ -223,7 +223,7 @@
 
 						//boutput(world, "got [transfer_moles] moles at [removed.temperature]")
 
-					if(removed)
+					if(removed && TOTAL_MOLES(removed) > 0)
 
 						var/heat_capacity = HEAT_CAPACITY(removed)
 						//boutput(world, "heating ([heat_capacity])")

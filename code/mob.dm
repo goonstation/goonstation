@@ -10,6 +10,8 @@
 
 	var/datum/mind/mind
 
+	var/datacore_id = null
+
 	var/datum/abilityHolder/abilityHolder = null
 	var/datum/bioHolder/bioHolder = null
 	var/datum/appearanceHolder/AH_we_spawned_with = null	// Used to colorize things that need to be colorized before the player notices they aren't
@@ -2707,7 +2709,7 @@
 					if(!src.traitHolder.hasTrait("immigrant"))// stowaway entertainers shouldn't be on the manifest
 						for (var/L in list(data_core.bank, data_core.security, data_core.general, data_core.medical))
 							if (L)
-								var/datum/data/record/R = FindRecordByFieldValue(L, "name", src.real_name)
+								var/datum/data/record/R = FindRecordByFieldValue(L, "id", src.datacore_id)
 								if (R)
 									R.fields["name"] = newname
 									if (R.fields["full_name"])

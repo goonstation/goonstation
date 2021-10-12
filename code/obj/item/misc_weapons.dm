@@ -154,7 +154,7 @@
 	return "RAND"
 
 /obj/item/sword/proc/handle_deflect_visuals(mob/user)
-	var/obj/itemspecialeffect/clash/C = unpool(/obj/itemspecialeffect/clash)
+	var/obj/itemspecialeffect/clash/C = new /obj/itemspecialeffect/clash
 	C.setup(user.loc)
 	C.color = get_hex_color_from_blade(src.bladecolor)
 	var/matrix/m = matrix()
@@ -174,7 +174,7 @@
 		if (!S)
 			S = H.find_type_in_hand(/obj/item/sword, "left")
 		if (S && S.active && !(H.lying || isdead(H) || H.hasStatus("stunned", "weakened", "paralysis")))
-			var/obj/itemspecialeffect/clash/C = unpool(/obj/itemspecialeffect/clash)
+			var/obj/itemspecialeffect/clash/C = new /obj/itemspecialeffect/clash
 			if(target.gender == MALE) playsound(target, pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 0, 5, max(0.7, min(1.2, 1.0 + (30 - H.bioHolder.age)/60)))
 			else playsound(target, pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 0, 5, max(0.7, min(1.4, 1.0 + (30 - H.bioHolder.age)/50)))
 			C.setup(H.loc)
@@ -707,6 +707,8 @@
 		take_bleeding_damage(C, null, 10, DAMAGE_CUT)
 
 		playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
+	else
+		..()
 
 /obj/item/knife/butcher/attack(target as mob, mob/user as mob)
 	if (!istype(src,/obj/item/knife/butcher/predspear) && ishuman(target) && ishuman(user))
@@ -987,6 +989,7 @@
 	contraband = 7 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
 	w_class = W_CLASS_BULKY
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
+	tool_flags = TOOL_CUTTING
 
 	// pickup_sfx = "sound/items/blade_pull.ogg"
 	custom_suicide = 1
@@ -1060,7 +1063,7 @@
 	if (target != user && ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if (H.find_type_in_hand(/obj/item/katana, "right") || H.find_type_in_hand(/obj/item/katana, "left"))
-			var/obj/itemspecialeffect/clash/C = unpool(/obj/itemspecialeffect/clash)
+			var/obj/itemspecialeffect/clash/C = new /obj/itemspecialeffect/clash
 			playsound(target, pick("sound/effects/sword_clash1.ogg","sound/effects/sword_clash2.ogg","sound/effects/sword_clash3.ogg"), 70, 0, 0)
 			C.setup(H.loc)
 			var/matrix/m = matrix()

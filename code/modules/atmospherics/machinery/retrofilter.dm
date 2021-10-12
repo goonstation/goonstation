@@ -68,9 +68,9 @@ obj/machinery/atmospherics/retrofilter
 		if(radio_controller)
 			initialize()
 
-		air_in = unpool(/datum/gas_mixture)
-		air_out1 = unpool(/datum/gas_mixture)
-		air_out2 = unpool(/datum/gas_mixture)
+		air_in = new /datum/gas_mixture
+		air_out1 = new /datum/gas_mixture
+		air_out2 = new /datum/gas_mixture
 
 		air_in.volume = 200
 		air_out1.volume = 200
@@ -102,11 +102,11 @@ obj/machinery/atmospherics/retrofilter
 		network_in = null
 
 		if(air_in)
-			pool(air_in)
+			qdel(air_in)
 		if(air_out1)
-			pool(air_out1)
+			qdel(air_out1)
 		if(air_out2)
-			pool(air_out2)
+			qdel(air_out2)
 
 		air_in = null
 		air_out1 = null
@@ -260,7 +260,7 @@ obj/machinery/atmospherics/retrofilter
 		if(transfer_moles > 0)
 			var/datum/gas_mixture/removed = air_in.remove_ratio(transfer_ratio)//air_in.remove(transfer_moles)
 
-			var/datum/gas_mixture/filtered_out = unpool(/datum/gas_mixture)
+			var/datum/gas_mixture/filtered_out = new /datum/gas_mixture
 			if(air_in.temperature)
 				filtered_out.temperature = air_in.temperature
 
