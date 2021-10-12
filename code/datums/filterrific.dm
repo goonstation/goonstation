@@ -70,6 +70,10 @@
 		filter_data[name]["priority"] = new_priority
 		update_filters()
 
+	proc/clear_filters()
+		filter_data = null
+		filters = null
+
 /datum/filter_editor
 	var/atom/target
 
