@@ -1270,7 +1270,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	icon_state = "tuxjacket"
 
 /obj/item/clothing/suit/guards_coat
-	name = "guard`s coat"
+	name = "guard's coat"
 	desc = "A formal double breasted overcoat of British origin."
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
