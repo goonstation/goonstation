@@ -768,8 +768,9 @@
 			boutput(usr, "If a direction, direction is: [dir]")
 
 	var/list/classes = list("text", "num","num adjust","type","reference","mob reference","turf by coordinates","reference picker","new instance of a type","icon","file","color","list","json","edit referenced object","create new list", "matrix","null", "ref", "restore to default")
-	if(variable=="filter")
-		classes += "filter editor"
+	if(variable=="filters")
+		default = "filter editor"
+		classes += default
 	var/class = input("What kind of variable?","Variable Type",default) as null|anything in classes
 
 
