@@ -927,6 +927,15 @@ var/global/curr_day = null
 		if (4, "main4")
 			serverName = "Goonstation 4 Roleplay: Sylvester"
 			serverURL = "byond://goon4.goonhub.com:26400"
+		if (11, "streamer1")
+			serverName = "Goonstation Nightshade 1"
+			serverURL = "byond://tomato.goonhub.com:27111"
+		if (12, "streamer2")
+			serverName = "Goonstation Nightshade 2"
+			serverURL = "byond://tomato.goonhub.com:27112"
+		if (13, "streamer3")
+			serverName = "Goonstation Nightshade 3"
+			serverURL = "byond://tomato.goonhub.com:27113"
 
 	if (serverURL)
 		boutput(usr, "You are being redirected to [serverName]...")
