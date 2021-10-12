@@ -659,6 +659,7 @@
 			continue
 
 		var looc_class = ""
+		var looc_style = ""
 		var display_name = src.key
 
 		if (src.client.stealth || src.client.alt_key)
@@ -670,10 +671,13 @@
 		if (src.client.holder && (!src.client.stealth || C.holder))
 			if (src.client.holder.level == LEVEL_BABBY)
 				looc_class = "gfartlooc"
+				looc_style = "color: #4cb7db;"
 			else
 				looc_class = "adminlooc"
+				looc_style = "color: #cd6c4c;"
 		else if (src.client.is_mentor() && !src.client.stealth)
 			looc_class = "mentorlooc"
+			looc_style = "color: #a24cff;"
 
 		var/rendered = "<span class=\"looc [looc_class]\"><span class=\"prefix\">LOOC:</span> <span class=\"name\" data-ctx='\ref[src.mind]'>[display_name]:</span> <span class=\"message\">[msg]</span></span>"
 
@@ -681,6 +685,16 @@
 			rendered = "<span class='adminHearing' data-ctx='[C.chatOutput.getContextFlags()]'>[rendered]</span>"
 
 		boutput(C, rendered)
+		var/mob/M = C.mob
+		if(speechpopups && M.chat_text && !C.preferences?.flying_chat_hidden)
+			var/image/chat_maptext/looc_text = null
+			looc_text = make_chat_maptext(src, "\[LOOC: [msg]]", looc_style)
+			if(looc_text)
+				looc_text.measure(C)
+				for(var/image/chat_maptext/I in M.chat_text.lines)
+					if(I != looc_text)
+						I.bump_up(looc_text.measured_height)
+				looc_text.show_to(C)
 
 	logTheThing("ooc", src, null, "LOOC: [msg]")
 
