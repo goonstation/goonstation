@@ -1,5 +1,9 @@
 
 (t)tue oct 12 21
+(u)alexkar598
+(p)6179
+(e)|
+(+)The description instructing you how to deconstruct reinforced walls now has bolded words to hint to the next step.
 (u)Zamujasa
 (*)Trying to move while dead will now ghost you. Don't worry, you can still wiggle with IJKL.
 (t)mon oct 11 21
