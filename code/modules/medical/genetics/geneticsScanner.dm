@@ -153,7 +153,7 @@ var/list/genetek_hair_styles = list()
 
 
 	verb/eject_occupant(var/mob/user)
-		if (!isalive(user))
+		if (!isalive(user) || iswraith(user))
 			return
 		if (src.locked)
 			boutput(user, "<span class='alert'><b>The scanner door is locked!</b></span>")

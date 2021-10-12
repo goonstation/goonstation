@@ -1,5 +1,13 @@
 
 (t)tue oct 12 21
+(u)112358sam
+(p)6173
+(e)🆕|feature
+(+)Made LOOC text visible over the head of the speaker.
+(u)Azrun
+(p)6221
+(e)🆕🎨|feature, sprites
+(+)Nectar Perspiration visual effect upgraded to slightly larger buzzing insects.
 (u)alexkar598
 (p)6179
 (e)|

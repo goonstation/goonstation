@@ -506,7 +506,7 @@ proc/find_ghost_by_key(var/find_key)
 		return
 
 	verb/eject_occupant(var/mob/user)
-		if (!isalive(user))
+		if (!isalive(user) || iswraith(user))
 			return
 		src.go_out()
 		add_fingerprint(user)

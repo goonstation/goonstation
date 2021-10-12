@@ -655,7 +655,7 @@
 		set src in oview(1)
 		set category = "Local"
 
-		if (!isalive(usr))
+		if (!isalive(usr) || iswraith(usr))
 			return
 		src.go_out()
 		add_fingerprint(usr)
@@ -852,7 +852,7 @@
 	verb/eject()
 		set src in oview(1)
 		set category = "Local"
-		if (!isalive(usr)) return
+		if (!isalive(usr) || iswraith(usr)) return
 		if (src.process_timer > 0) return
 		src.eject_meats()
 		src.go_out()
