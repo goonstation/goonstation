@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 AndrewL97 (https://github.com/AndrewL97)
+ * Copyright 2021 Gomble (https://github.com/AndrewL97)
  * Licensed under MIT to Goonstation only (https://choosealicense.com/licenses/mit/)
  */
 

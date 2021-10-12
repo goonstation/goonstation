@@ -1,12 +1,13 @@
 /**
  * @file
- * @copyright 2021 AndrewL97 (https://github.com/AndrewL97)
- * @author Original AndrewL97 (https://github.com/AndrewL97)
+ * @copyright 2021 Gomble (https://github.com/AndrewL97)
+ * @author Original Gomble (https://github.com/AndrewL97)
  * @author Changes Azrun
  * @license MIT
  */
 
 import { toFixed } from 'common/math';
+import { numberOfDecimalDigits } from "../../common/math";
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Collapsible, ColorBox, Flex, Input, LabeledList, NoticeBox, NumberInput, Section, Tooltip } from '../components';
 import { Window } from '../layouts';
@@ -62,25 +63,28 @@ const ParticleMatrixEntry = (props, context) => {
 };
 
 const ParticleFloatEntry = (props, context) => {
-  const { value, name } = props;
+  const { value, tooltip, name } = props;
   const { act } = useBackend(context);
   const [step, setStep] = useLocalState(context, 'particleFloatStep', 0.01);
   return (
     <>
-      <NumberInput
-        value={value}
-        stepPixelSize={4}
-        step={step}
-        format={value => toFixed(value, 2)}
-        width="80px"
-        onDrag={(e, value) =>
-          act('modify_particle_value', {
-            new_data: {
-              name: name,
-              value: value,
-              type: 'float',
-            },
-          })} />
+      <Tooltip position="bottom" content={tooltip}>
+        <NumberInput
+          value={value}
+          stepPixelSize={4}
+          step={step}
+          format={value => toFixed(value, numberOfDecimalDigits(step))}
+          width="80px"
+          onDrag={(e, value) =>
+            act('modify_particle_value', {
+              new_data: {
+                name: name,
+                value: value,
+                type: 'float',
+              },
+            })} />
+
+      </Tooltip>
       <Box
         inline
         ml={2}
@@ -90,7 +94,7 @@ const ParticleFloatEntry = (props, context) => {
       <NumberInput
         value={step}
         step={0.001}
-        format={value => toFixed(value, 2)}
+        format={value => toFixed(value, numberOfDecimalDigits(step))}
         width="70px"
         onChange={(e, value) => setStep(value)} />
     </>
@@ -275,30 +279,30 @@ const ParticleIconEntry = (props, context) => {
 
 const particleEntryMap = {
 
-  width: 'float',
-  height: 'float',
-  count: 'int',
-  spawning: 'float',
-  bound1: 'numlist',
-  bound2: 'numlist',
-  gravity: 'numlist',
-  gradient: 'string',
-  transform: 'matrix',
-  lifespan: 'float',
-  fade: 'float',
-  fadein: 'float',
-  icon: 'icon',
-  icon_state: 'string',
-  color: 'color',
-  color_change: 'float',
-  position: 'generator',
-  velocity: 'generator',
-  scale: 'generator',
-  grow: 'generator',
-  rotation: 'float',
-  spin: 'float',
-  friction: 'float',
-  drift: 'generator',
+  width: { type: 'float', tooltip: 'Size of particle image in pixels' },
+  height: { type: 'float', tooltip: 'Size of particle image in pixels' },
+  count: { type: 'int', tooltip: "Maximum particle count" },
+  spawning: { type: 'float', tooltip: "Number of particles to spawn per tick (can be fractional)" },
+  bound1: { type: 'numlist', tooltip: "Minimum particle position in x,y,z space" },
+  bound2: { type: 'numlist', tooltip: "Maximum particle position in x,y,z space" },
+  gravity: { type: 'numlist', tooltip: "Constant acceleration applied to all particles in this set (pixels per squared tick)" },
+  gradient: { type: 'string', tooltip: "Color gradient used, if any" },
+  transform: { type: 'matrix', tooltip: "Transform done to all particles, if any (can be higher than 2D)" },
+  lifespan: { type: 'float', tooltip: "Maximum life of the particle, in ticks" },
+  fade: { type: 'float', tooltip: "Fade-out time at end of lifespan, in ticks" },
+  fadein: { type: 'float', tooltip: "Fade-in time, in ticks" },
+  icon: { type: 'icon', tooltip: "Icon to use, if any; no icon means this particle will be a dot" },
+  icon_state: { type: 'string', tooltip: "Icon state to use, if any" },
+  color: { type: 'color', tooltip: "Particle color; can be a number if a gradient is used" },
+  color_change: { type: 'float', tooltip: "Color change per tick; only applies if gradient is used" },
+  position: { type: 'generator', tooltip: "x,y,z position, from center in pixels" },
+  velocity: { type: 'generator', tooltip: "x,y,z velocity, in pixels" },
+  scale: { type: 'generator', tooltip: "(2D)	Scale applied to icon, if used; defaults to list(1,1)" },
+  grow: { type: 'generator', tooltip: "Change in scale per tick; defaults to list(0,0)" },
+  rotation: { type: 'float', tooltip: "Angle of rotation (clockwise); applies only if using an icon" },
+  spin: { type: 'float', tooltip: "Change in rotation per tick" },
+  friction: { type: 'float', tooltip: "Amount of velocity to shed (0 to 1) per tick, also applied to acceleration from drift" },
+  drift: { type: 'generator', tooltip: "Added acceleration every tick; e.g. a circle or sphere generator can be applied to produce snow or ember effects" },
 };
 
 const ParticleDataEntry = (props, context) => {
@@ -317,7 +321,7 @@ const ParticleDataEntry = (props, context) => {
 
   return (
     <LabeledList.Item label={name}>
-      {particleEntryTypes[particleEntryMap[name]] || "Not Found (This is an error)"}
+      {particleEntryTypes[particleEntryMap[name].type] || particleEntryMap[name].type || "Not Found (This is an error)"}
     </LabeledList.Item>
   );
 };
@@ -329,10 +333,12 @@ const ParticleEntry = (props, context) => {
     <LabeledList>
       {Object.keys(particleEntryMap).map(entryName => {
         const value = particle[entryName];
+        const tooltip = particleEntryMap[entryName].tooltip || "Oh Bees! Tooltip is missing.";
         return (
           <ParticleDataEntry
             key={entryName}
             name={entryName}
+            tooltip={tooltip}
             value={value} />
         );
       })}

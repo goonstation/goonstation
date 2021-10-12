@@ -771,8 +771,8 @@
 	if(variable=="filters" && !istype(D, /image))
 		default = "filter editor"
 		classes += default
-	if("particles")
-		default += "particle editor"
+	else if(variable=="particles")
+		default = "particle editor"
 		classes += default
 	var/class = input("What kind of variable?","Variable Type",default) as null|anything in classes
 
