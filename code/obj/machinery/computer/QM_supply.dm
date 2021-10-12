@@ -100,7 +100,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 						if (7)
 							df = "an incredibly symptomatic"
 					D.desc = "It is [df] pathogen with a hazard rating of [rating]. We identify it to be a [ds] organism made up of [P.body_type.plural]. [P.suppressant.desc]"
-					var/datum/pathogen/copy = unpool(/datum/pathogen)
+					var/datum/pathogen/copy = new /datum/pathogen
 					copy.setup(0, P, 0, null)
 					D.assoc_pathogen = copy
 					src.analysis_by_uid[uid] = D

@@ -444,7 +444,7 @@
 		var/atom/movable/A
 		// catastrophic event litter reduction
 		if(limiter.canISpawn(/obj/item/raw_material/shard))
-			A = unpool(/obj/item/raw_material/shard)
+			A = new /obj/item/raw_material/shard
 			A.set_loc(src.loc)
 			if(src.material)
 				A.setMaterial(src.material)
@@ -863,7 +863,7 @@
 	icon_state = "wingrille"
 	density = 1
 	anchored = 1.0
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	//layer = 99
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	var/win_path = "/obj/window"

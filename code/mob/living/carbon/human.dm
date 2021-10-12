@@ -716,6 +716,8 @@
 
 	src.canmove = 0
 	src.lying = 1
+	src.last_sleep = 0
+	src.UpdateOverlays(null, "sleep_bubble")
 	var/h = src.hand
 	src.hand = 0
 	drop_item()
@@ -2146,6 +2148,7 @@
 			if (slot != slot_in_backpack && slot != slot_in_belt)
 				I.show_buttons()
 		src.update_clothing()
+	return equipped
 
 
 /mob/living/carbon/human/proc/update_equipment_screen_loc()
@@ -2270,8 +2273,7 @@
 
 /mob/living/carbon/human/proc/equip_if_possible(obj/item/I, slot)
 	if (can_equip(I, slot))
-		force_equip(I, slot)
-		return 1
+		return force_equip(I, slot)
 	else
 		return 0
 
@@ -2432,7 +2434,7 @@
 			src.cured(PA)
 
 		// and get the new one instead
-		var/datum/pathogen/Q = unpool(/datum/pathogen)
+		var/datum/pathogen/Q = new /datum/pathogen
 		Q.setup(0, P, 1)
 		pathogen_controller.mob_infected(Q, src)
 		src.pathogens += Q.pathogen_uid
@@ -2443,12 +2445,12 @@
 	else
 		var/datum/pathogen/C = src.pathogens[P.pathogen_uid]
 		if (C.generation < P.generation)
-			var/datum/pathogen/Q = unpool(/datum/pathogen)
+			var/datum/pathogen/Q = new /datum/pathogen
 			Q.setup(0, P, 1)
 			logTheThing("pathology", src, null, "'s pathogen mutation [C] is replaced by mutation [Q] due to a higher generation number.")
 			pathogen_controller.mob_infected(Q, src)
 			Q.stage = min(C.stage, Q.stages)
-			pool(C)
+			qdel(C)
 			src.pathogens[Q.pathogen_uid] = Q
 			Q.infected = src
 			return 1
@@ -2463,7 +2465,7 @@
 		var/datum/microbody/M = P.body_type
 		if (M.auto_immunize)
 			immunity(P)
-		pool(Q)
+		qdel(Q)
 		logTheThing("pathology", src, null, "is cured of [pname].")
 
 /mob/living/carbon/human/remission(var/datum/pathogen/P)

@@ -415,10 +415,6 @@ datum
 			minimum_reaction_temperature = T0C + 100
 			var/reacted_to_temp = 0 // prevent infinite loop in a fluid
 
-			pooled()
-				..()
-				reacted_to_temp = 0
-
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(!reacted_to_temp)
 					reacted_to_temp = 1
@@ -835,7 +831,7 @@ datum
 							O.show_message(text("<span class='alert'><b>[] begins to crisp and burn!</b></span>", M), 1)
 						boutput(M, "<span class='alert'>Holy Water! It burns!</span>")
 						var/burndmg = volume * 1.25
-						burndmg = min(burndmg, 110) //cap burn at 110 so we can't instant-kill vampires. just crit em ok.
+						burndmg = min(burndmg, 80) //cap burn at 110(80 now >:) so we can't instant-kill vampires. just crit em ok.
 						M.TakeDamage("chest", 0, burndmg, 0, DAMAGE_BURN)
 						M.change_vampire_blood(-burndmg)
 						reacted = 1
@@ -931,7 +927,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				if (volume >= 5 && !(locate(/obj/item/raw_material/ice) in T))
-					var/obj/item/raw_material/ice/I = unpool(/obj/item/raw_material/ice)
+					var/obj/item/raw_material/ice/I = new /obj/item/raw_material/ice
 					I.set_loc(T)
 				return
 

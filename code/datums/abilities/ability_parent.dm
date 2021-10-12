@@ -866,13 +866,15 @@
 
 	proc
 		handleCast(atom/target, params)
+			var/datum/abilityHolder/localholder = src.holder
 			var/result = tryCast(target, params)
 			if (result && result != 999)
 				last_cast = 0 // reset cooldown
 			else if (result != 999)
 				doCooldown()
 			afterCast()
-			holder.updateButtons()
+			if(!QDELETED(localholder))
+				localholder.updateButtons()
 
 		cast(atom/target)
 			if(interrupt_action_bars) actions.interrupt(holder.owner, INTERRUPT_ACT)
@@ -931,10 +933,12 @@
 			if (!castcheck())
 				src.holder.locked = 0
 				return 998
+			var/datum/abilityHolder/localholder = src.holder
 			. = cast(target, params)
-			src.holder.locked = 0
-			if (!.)
-				holder.deductPoints(pointCost)
+			if(!QDELETED(localholder))
+				localholder.locked = 0
+				if (!.)
+					localholder.deductPoints(pointCost)
 
 		updateObject()
 			return
