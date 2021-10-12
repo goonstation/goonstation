@@ -26,6 +26,7 @@ const createStats = verbose => ({
 
 module.exports = (env = {}, argv) => {
   const mode = argv.mode === 'production' ? 'production' : 'development';
+  const bench = env.TGUI_BENCH;
   const config = {
     mode,
     context: path.resolve(__dirname),
@@ -59,7 +60,9 @@ module.exports = (env = {}, argv) => {
           use: [
             {
               loader: require.resolve('babel-loader'),
-              options: createBabelConfig({ mode }),
+              options: createBabelConfig({
+                removeConsole: !bench,
+              }),
             },
           ],
         },
@@ -91,7 +94,7 @@ module.exports = (env = {}, argv) => {
               options: {
                 esModule: false,
               },
-            }
+            },
           ],
         },
       ],
@@ -128,13 +131,13 @@ module.exports = (env = {}, argv) => {
     ],
   };
 
-  // Add a bundle analyzer to the plugins array
-  if (argv.analyze) {
-    const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-    config.plugins = [
-      ...config.plugins,
-      new BundleAnalyzerPlugin(),
-    ];
+  if (bench) {
+    config.entry = {
+    'tgui-bench': [
+        './packages/tgui-polyfill',
+        './packages/tgui-bench/entrypoint',
+      ],
+    };
   }
 
   // Production build specific options
