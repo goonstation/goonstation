@@ -105,7 +105,6 @@
 
 	//Which server can ghosts join by clicking on an on-screen link
 	var/server_buddy_id = null
-	var/server_buddy_name = null
 
 /datum/configuration/New()
 	..()
@@ -374,9 +373,6 @@
 
 			if ("server_buddy_id")
 				config.server_buddy_id = trim(value)
-
-			if ("server_buddy_name")
-				config.server_buddy_name = trim(value)
 
 			else
 				logDiary("Unknown setting in configuration: '[name]'")

@@ -21,10 +21,11 @@
 
 	proc/get_join_other()
 		RETURN_TYPE(/atom/movable/screen/join_other)
-		if(isnull(config.server_buddy_id))
+		var/datum/game_server/buddy = global.game_servers.get_buddy()
+		if(isnull(buddy))
 			return null
 		if(isnull(src.join_other))
-			src.join_other = new(null, config.server_buddy_id, config.server_buddy_name)
+			src.join_other = new(null, buddy.id, buddy.name)
 			src.add_object(src.join_other)
 		return src.join_other
 

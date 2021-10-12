@@ -912,34 +912,11 @@ var/global/curr_day = null
 /client/verb/changeServer(var/server as text)
 	set name = "Change Server"
 	set hidden = 1
-	var/serverURL
-	var/serverName
-	switch (server)
-		if (1, "main1")
-			serverName = "Goonstation 1 Classic: Heisenbee"
-			serverURL = "byond://goon1.goonhub.com:26100"
-		if (2, "main2")
-			serverName = "Goonstation 2 Classic: Bombini"
-			serverURL = "byond://goon2.goonhub.com:26200"
-		if (3, "main3")
-			serverName = "Goonstation 3 Roleplay: Morty"
-			serverURL = "byond://goon3.goonhub.com:26300"
-		if (4, "main4")
-			serverName = "Goonstation 4 Roleplay: Sylvester"
-			serverURL = "byond://goon4.goonhub.com:26400"
-		if (11, "streamer1")
-			serverName = "Goonstation Nightshade 1"
-			serverURL = "byond://tomato.goonhub.com:27111"
-		if (12, "streamer2")
-			serverName = "Goonstation Nightshade 2"
-			serverURL = "byond://tomato.goonhub.com:27112"
-		if (13, "streamer3")
-			serverName = "Goonstation Nightshade 3"
-			serverURL = "byond://tomato.goonhub.com:27113"
+	var/datum/game_server/game_server = global.game_servers.find_server(server)
 
-	if (serverURL)
-		boutput(usr, "You are being redirected to [serverName]...")
-		usr << link(serverURL)
+	if (server)
+		boutput(usr, "You are being redirected to [game_server.name]...")
+		usr << link(game_server.url)
 
 
 /*
