@@ -23,17 +23,6 @@
 	var/override_state = null
 	var/death = 0
 
-	unpooled()
-		src.alpha = 255
-		src.blend_mode = 0
-		src.color = null
-		src.pixel_x = 0
-		src.pixel_y = 0
-		src.transform = null
-		src.override_state = null
-		animate(src)
-		..()
-
 	disposing()
 		particleMaster.active_particles -= src
 		..()
@@ -134,7 +123,7 @@ var/datum/particleMaster/particleMaster = new
 		for (var/obj/particle/P in src.active_particles)
 			if (P.death < time)
 				src.active_particles -= P
-				pool(P)
+				qdel(P)
 				P = null
 			LAGCHECK(LAG_MED)
 
@@ -158,7 +147,7 @@ var/datum/particleMaster/particleMaster = new
 			return 0
 
 	proc/new_particle(var/lifetime)
-		var/obj/particle/P = unpool(/obj/particle)
+		var/obj/particle/P = new /obj/particle
 		P.death = world.time + lifetime
 		src.active_particles += P
 		return P

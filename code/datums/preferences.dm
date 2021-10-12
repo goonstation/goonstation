@@ -155,7 +155,7 @@ datum/preferences
 			"profileName" = src.profile_name,
 			"profileModified" = src.profile_modified,
 
-			"preview" = src.preview.preview_id,
+			"preview" = src.preview?.preview_id,
 
 			"nameFirst" = src.name_first,
 			"nameMiddle" = src.name_middle,
@@ -1248,7 +1248,7 @@ datum/preferences
 					continue
 				if (JD.needs_college && !user.has_medal("Unlike the director, I went to college"))
 					continue
-				if (JD.requires_whitelist && !NT.Find(ckey(user.mind.key)))
+				if (JD.requires_whitelist && !NT.Find(user.ckey))
 					continue
 				if (jobban_isbanned(user, JD.name))
 					if (cat != "unwanted")

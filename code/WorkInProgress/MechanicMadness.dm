@@ -608,7 +608,7 @@
 				current_buffer = 0
 
 				user.drop_item()
-				pool(W)
+				qdel(W)
 
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, null)
 				flick("comp_money1", src)
@@ -618,7 +618,7 @@
 
 	proc/ejectmoney()
 		if (collected)
-			var/obj/item/spacecash/S = unpool(/obj/item/spacecash)
+			var/obj/item/spacecash/S = new /obj/item/spacecash
 			S.setup(get_turf(src), collected)
 			collected = 0
 			tooltip_rebuild = 1
@@ -641,7 +641,7 @@
 
 	disposing()
 		if(air_contents)
-			pool(air_contents)
+			qdel(air_contents)
 			air_contents = null
 		trunk = null
 		..()
@@ -652,12 +652,12 @@
 				trunk = locate() in src.loc
 				if(trunk)
 					trunk.linked = src
-					air_contents = unpool(/datum/gas_mixture)
+					air_contents = new /datum/gas_mixture
 			else if (src.level == 2) //loose
 				if (trunk) //ZeWaka: Fix for null.linked
 					trunk.linked = null
 				if(air_contents)
-					pool(air_contents)
+					qdel(air_contents)
 				air_contents = null
 				trunk = null
 			return 1
@@ -675,7 +675,7 @@
 	proc/flushit()
 		if(!trunk) return
 		LIGHT_UP_HOUSING
-		var/obj/disposalholder/H = unpool(/obj/disposalholder)
+		var/obj/disposalholder/H = new /obj/disposalholder
 
 		H.init(src)
 
@@ -700,7 +700,7 @@
 			AM?.throw_at(target, 5, 1)
 
 		H.vent_gas(loc)
-		pool(H)
+		qdel(H)
 
 /obj/item/mechanics/thprint
 	name = "Thermal printer"
@@ -2312,6 +2312,7 @@
 			particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(get_turf(picked.loc)))
 			for(var/atom/movable/M in src.loc)
 				if(M == src || M.invisibility || M.anchored) continue
+				logTheThing("combat", M, null, "entered [src] at [log_loc(src)] and teleported to [log_loc(picked)]")
 				M.set_loc(get_turf(picked.loc))
 				count_sent++
 			input.signal = count_sent

@@ -26,7 +26,7 @@
 
 /obj/machinery/portable_atmospherics/scrubber/proc/scrub(datum/gas_mixture/removed)
 	//Filter it
-	var/datum/gas_mixture/filtered_out = unpool(/datum/gas_mixture)
+	var/datum/gas_mixture/filtered_out = new /datum/gas_mixture
 	if (filtered_out && removed)
 		filtered_out.temperature = removed.temperature
 		#define _FILTER_OUT_GAS(GAS, ...) \

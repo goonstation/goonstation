@@ -1281,9 +1281,14 @@
 							admessage += "<b> ([T.x],[T.y],[T.z])</b>"
 						message_admins(admessage)
 						//World announcement.
-						boutput(world, "<span class='alert'><b>Alert: Self-Destruct Sequence has been engaged.</b></span>")
-						boutput(world, "<span class='alert'><b>Detonation in T-[src.time] seconds!</b></span>")
-						return
+						if(station_or_ship() == "ship")
+							command_alert("The ship's self-destruct sequence has been activated, please evacuate the ship or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Self-Destruct Activated")
+							playsound_global(world, "sound/machines/engine_alert2.ogg", 40)
+							return
+						if(station_or_ship() == "station")
+							command_alert("The station's self-destruct sequence has been activated, please evacuate the station or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Self-Destruct Activated")
+							playsound_global(world, "sound/machines/engine_alert2.ogg", 40)
+							return
 					if("deact")
 						if(data["auth"] != netpass_heads)
 							src.post_status(target,"command","term_message","data","command=status&status=badauth&session=[sessionid]")
@@ -1737,7 +1742,7 @@
 				return
 
 			user.drop_item()
-			pool(W)
+			qdel(W)
 			boutput(user, "You load the paper into [src].")
 			if(!src.sheets_remaining && !src.jam)
 				src.clear_alert()
@@ -1760,7 +1765,7 @@
 				boutput(user, "You load [W:amount] sheets into the tray.")
 				src.sheets_remaining += W:amount
 				user.drop_item()
-				pool(W)
+				qdel(W)
 
 			if(!src.jam)
 				src.clear_alert()
@@ -2056,7 +2061,7 @@
 					P.name = IMG.img_name
 					P.desc = IMG.img_desc*/
 				else
-					var/obj/item/paper/P = unpool(/obj/item/paper)
+					var/obj/item/paper/P = new /obj/item/paper
 					P.set_loc(src.loc)
 
 

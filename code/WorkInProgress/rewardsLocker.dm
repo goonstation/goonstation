@@ -925,7 +925,7 @@
 				succ = TRUE
 
 			if (!succ)
-				boutput(activator, "<span class='alert'>Unable to redeem... you need to be wearing a something in your suit/exosuit slots.</span>")
+				boutput(activator, "<span class='alert'>Unable to redeem... you need to be wearing something in your suit/exosuit slots.</span>")
 
 			return succ
 
