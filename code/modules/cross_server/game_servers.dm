@@ -98,6 +98,8 @@ var/global/datum/game_servers/game_servers = new
 	proc/get_ip_port()
 		if(isnull(src.ip_port))
 			src.ip_port = src.send_message(list("type"="game_servers", "subtype"="get_ip_port"))
+			if(!src.ip_port)
+				src.ip_port = null
 			global.game_servers.by_ip_port[src.ip_port] = src
 		return src.ip_port
 
