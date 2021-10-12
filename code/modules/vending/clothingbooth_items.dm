@@ -617,7 +617,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/outerwear)
 	hidden = 1
 
 /datum/clothingbooth_item/outerwear/guardscoat
-	name = "Guard`s Coat"
+	name = "Guard's Coat"
 	path = /obj/item/clothing/suit/guards_coat
 	cost = PAY_IMPORTANT/3
 
