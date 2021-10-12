@@ -213,7 +213,7 @@
 		SPAWN_DBG(0)
 			..()
 			if(!src.current)
-				var /obj/item/seed/alien/SEED = unpool(/obj/item/seed/alien)
+				var /obj/item/seed/alien/SEED = new /obj/item/seed/alien
 				SEED.set_loc(src)
 				if(SEED.planttype)
 					src.HYPnewplant(SEED)

@@ -136,11 +136,11 @@
 			var/obj/item/seed/S
 			if (prob(50)) // 50-50 if it is a strange seed or a random regular plant
 				var/species = pick(hydro_controls.plant_species)
-				S = unpool(/obj/item/seed)
+				S = new /obj/item/seed
 				S.removecolor()
 				S.generic_seed_setup(species)
 			else
-				S = unpool(/obj/item/seed/alien) // Strange seed
+				S = new /obj/item/seed/alien // Strange seed
 			// now plant the generated seed
 			S.set_loc(planter.loc)
 			if(S.planttype && !planter.current)
@@ -148,7 +148,7 @@
 				src.visible_message("<b>[src]</b> plants [S] in a tray.")
 			else
 				src.visible_message("<b>[src]</b> tried to plant [S] in [planter], but it already had something in!")
-				pool(S)
+				qdel(S)
 		src.reset_plant_plan()
 
 	proc/reset_plant_plan()
