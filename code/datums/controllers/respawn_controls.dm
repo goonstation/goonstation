@@ -227,6 +227,11 @@ var/datum/respawn_controls/respawn_controller
 	var/server_id = "main2"
 	var/server_name = "2 Classic: Bombini"
 
+	Topic(href, href_list)
+		. = ..()
+		if(href_list["action"] == "close")
+			src.maptext= null
+
 	New(loc, server_id=null, server_name=null)
 		..()
 		if(!isnull(server_id))
@@ -235,4 +240,4 @@ var/datum/respawn_controls/respawn_controller
 			src.server_name = server_name
 		if (server_id == config.server_id)
 			return
-		maptext = {"<span class='pixel c ol' style='font-size:16px;'>Dead? No worries. <br><a style='color:#8f8;text-decoration:underline;' href='byond://winset?command=Change-Server [server_id]'>Click here to join [server_name]!</a></span>"}
+		maptext = {"<span class='pixel c ol' style='font-size:16px;'>Dead? No worries. <a style='color:red;background-color:black;' href="?src=\ref[src]&action=close">&nbsp;X&nbsp;</a><br><a style='color:#8f8;text-decoration:underline;' href='byond://winset?command=Change-Server [server_id]'>Click here to join [server_name]!</a></span>"}
