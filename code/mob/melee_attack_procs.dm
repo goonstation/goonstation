@@ -37,7 +37,7 @@
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
 		var/obj/item/clothing/gloves/G = H.gloves
-		if (G && G.hasProperty("heatprot") && (G.getProperty("heatprot") >= 7))
+		if ((G && G.hasProperty("heatprot") && (G.getProperty("heatprot") >= 7)) || src.is_heat_resistant())
 			M.update_burning(-2.5)
 			boutput(H, "<span class='notice'>Your [G] protect you from the flames!</span>")
 		else
