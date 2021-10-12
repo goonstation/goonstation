@@ -1054,10 +1054,10 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				return
 
 			// Trying to spawn things you shouldn't, eh?
-			/*for(var/S in commander_buylist)
+			for(var/S in commander_buylist)
 				if(!(SB == commander_buylist[S]))
-					trigger_anti_cheat(usr, "tried to href exploit the syndicate buylist")
-					return*/
+					trigger_anti_cheat(usr, "tried to href exploit the syndicate commander buylist")
+					return
 
 			if (I.item)
 				var/obj/item = new I.item(get_turf(src))
