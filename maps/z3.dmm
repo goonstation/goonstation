@@ -25319,14 +25319,6 @@
 /obj/item/reagent_containers/food/drinks/moonshine{
 	initial_volume = 50
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	environ = 2;
-	equipment = 0;
-	lighting = 0;
-	name = "Remote W APC";
-	pixel_x = -24
-	},
 /obj/table/regal/auto,
 /turf/simulated/floor/carpet/purple/standard/edge/west,
 /area/crashed_hop_shuttle)
