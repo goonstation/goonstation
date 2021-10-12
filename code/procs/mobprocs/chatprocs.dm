@@ -478,7 +478,7 @@
 /mob/proc/emote(var/act, var/voluntary = 0)
 	return
 
-/mob/proc/emote_check(var/voluntary = 1, var/time = 10, var/admin_bypass = 1, var/dead_check = 1)
+/mob/proc/emote_check(var/voluntary = 1, var/time = 10, var/admin_bypass = 0, var/dead_check = 1)
 	if (src.emote_allowed)
 		if (dead_check && isdead(src))
 			src.emote_allowed = 0
