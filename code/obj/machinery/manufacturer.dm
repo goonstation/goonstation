@@ -1050,7 +1050,7 @@
 				W.set_loc(src)
 				src.manudrive = W
 				var/obj/item/manudrive/MD = W
-				src.drive_recipes += MD.drivestored
+				src.drive_recipes = MD.drivestored
 				if (user && W)
 					user.u_equip(W)
 					W.dropped()
