@@ -67,6 +67,8 @@ var/global/datum/game_servers/game_servers = new
 			return get_buddy()
 		for(var/server_id in src.servers)
 			var/datum/game_server/server = src.servers[server_id]
+			if(server.is_me())
+				continue
 			if(server.get_ip_port() == ip_port)
 				return server
 		return null
@@ -142,7 +144,7 @@ var/global/datum/game_servers/game_servers = new
 
 	proc/get_ip_port()
 		if(isnull(src.ip_port))
-			src.ip_port = src.send_message(list("type"="game_servers", "command"="get_ip_port"))
+			src.ip_port = src.send_message(list("type"="game_servers", "subtype"="get_ip_port"))
 			global.game_servers.by_ip_port[src.ip_port] = src
 		return src.ip_port
 
