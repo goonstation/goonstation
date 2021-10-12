@@ -81,7 +81,7 @@
 		src.visible_message("<span class='alert'>The [src] beeps, before locking itself to the ground.</span>")
 		src.desc = "A handheld beacon that allows you to call a Syndicate reinforcement to the user's current location. It seems to currently be transmitting something."
 		sleep(5 SECONDS)
-		/*var/list/text_messages = list()
+		var/list/text_messages = list()
 		text_messages.Add("Would you like to respawn as a nuclear operative reinforcement? You may be randomly selected from the list of candidates.")
 		text_messages.Add("You are eligible to be respawned as a nuclear operative reinforcement. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
 		text_messages.Add("You have been added to the list of eligible candidates. Please wait for the game to choose, good luck!")
@@ -92,11 +92,10 @@
 		var/datum/mind/chosen = pick(candidates)
 		var/mob/living/carbon/human/synd = new/mob/living/carbon/human
 		chosen.transfer_to(synd)
-		equip_syndicate(synd)*/
-		var/mob/living/carbon/human/synd = new/mob/living/carbon/human
-		randomize_look(synd)
-		H.mind.transfer_to(synd)
 		equip_syndicate(synd)
+		randomize_look(synd)
+		//H.mind.transfer_to(synd) //comment out ghost messages & uncomment this to make *you* the reinforcement for testing purposes
+		synd.real_name = "[syndicate_name()] Backup Operative [rand(10, 99)]"
 		synd.mind.special_role = ROLE_NUKEOP
 		synd.mind.current.antagonist_overlay_refresh(1, 0)
 		SHOW_NUKEOP_TIPS(synd.mind.current)
@@ -246,7 +245,7 @@
 		..()
 
 /obj/item/device/weapon_vendor/syndicate/preloaded
-	desc = "A pre-loaded uplink which allows you to buy a sidearm on the go. Nifty!"
+	desc = "A pre-loaded uplink which allows you to buy a sidearm and utility on the go. Nifty!"
 	token_accepted = null
 	credits = list(WEAPON_VENDOR_CATEGORY_SIDEARM = 1, WEAPON_VENDOR_CATEGORY_LOADOUT = 0, WEAPON_VENDOR_CATEGORY_UTILITY = 1, WEAPON_VENDOR_CATEGORY_ASSISTANT = 0)
 
@@ -270,7 +269,7 @@
 	var/list/obj/nuclear_bombs = list() //why the fuck would there be multiple
 	var/total_pod_time
 	var/used = FALSE
-	var/image/valid_overlay_area = null //5 second overlay to indicate the area that is acceptable
+	var/image/valid_overlay_area = null //5 second overlay to indicate the area that will grab people & the nuke
 	var/list/turf/overlayed_turfs = list()
 
 	New()
@@ -404,8 +403,7 @@
 					qdel(R)
 			nuclear_bombs += NB
 		src.used = TRUE
-		//var/obj/machinery/computer/security/S = new /obj/machinery/computer/security(pick_landmark(LANDMARK_SYNDICATE_ASSAULT_POD_COMP))
-		for(var/obj/machinery/computer/security/pod_timer/S in range(1, pick_landmark(LANDMARK_SYNDICATE_ASSAULT_POD_COMP)))
+		for(var/obj/machinery/computer/security/pod_timer/S in range(1, pick_landmark(LANDMARK_SYNDICATE_ASSAULT_POD_COMP))) //This is the only way I could make this work
 			var/rand_time = rand(450, 600)
 			S.total_pod_time = TIME + rand_time + 75
 			sleep(75)

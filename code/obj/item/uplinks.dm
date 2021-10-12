@@ -960,7 +960,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 100
-	var/points = 4
+	var/points = 2
 	var/list/commander_buylist = list()
 	var/datum/syndicate_buylist/reading_about = null
 
@@ -973,7 +973,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				continue
 			if (player.ready)
 				num_players++
-		//points = max(2, round(num_players / 20))
+		points = max(2, round(num_players / 20))
 		sleep(1 SECOND)
 		if (src && istype(src) && (!length(src.commander_buylist)))
 			src.setup()
