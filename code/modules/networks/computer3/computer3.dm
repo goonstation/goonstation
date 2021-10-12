@@ -693,7 +693,7 @@ function lineEnter (ev)
 			A.set_dir(src.dir)
 			if (src.status & BROKEN)
 				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+				var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 				G.set_loc( src.loc )
 				A.state = 3
 				A.icon_state = "3"

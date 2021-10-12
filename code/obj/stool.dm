@@ -61,7 +61,7 @@
 
 	blob_act(var/power)
 		if (prob(power * 2.5))
-			var/obj/item/I = unpool(/obj/item/raw_material/scrap_metal)
+			var/obj/item/I = new /obj/item/raw_material/scrap_metal
 			I.set_loc(get_turf(src))
 
 			if (src.material)
@@ -901,6 +901,7 @@
 		if (src.c_color)
 			C.icon_state = src.c_color
 		C.set_dir(user.dir)
+		ON_COOLDOWN(user, "chair_stand", 1 SECOND)
 		boutput(user, "You unfold [C].")
 		user.drop_item()
 		qdel(src)

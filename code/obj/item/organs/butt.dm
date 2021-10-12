@@ -170,17 +170,6 @@
 			W.set_loc(B)
 			user.u_equip(W)
 
-		else if (istype(W, /obj/item/spacecash) && W.type != /obj/item/spacecash/buttcoin)
-			user.u_equip(W)
-			pool(W)
-
-			var/obj/item/spacecash/buttcoin/S = unpool(/obj/item/spacecash/buttcoin)
-			S.setup(get_turf(src))
-			user.put_in_hand_or_drop(S)
-
-			user.show_text("You stuff the cash into the butt... (What is wrong with you?)")
-			qdel(src)
-
 		else
 			return ..()
 

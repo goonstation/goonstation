@@ -1644,7 +1644,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 
 // the adminbus has a pressurized cabin!
 /obj/vehicle/adminbus/handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
-	var/datum/gas_mixture/GM = unpool(/datum/gas_mixture)
+	var/datum/gas_mixture/GM = new /datum/gas_mixture
 
 	var/oxygen = MOLES_O2STANDARD
 	var/nitrogen = MOLES_N2STANDARD

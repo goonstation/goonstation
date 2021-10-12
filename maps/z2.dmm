@@ -65548,9 +65548,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/studenterhue)
-"dwZ" = (
-/turf/unsimulated/outdoors/snow,
-/area/centcom/offices/virvatuli)
 "dxa" = (
 /obj/machinery/light{
 	dir = 8
@@ -66707,6 +66704,7 @@
 /obj/stool/chair/comfy/purple{
 	dir = 4
 	},
+/obj/item/clothing/head/longbee,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/ines)
 "dAw" = (
@@ -76535,7 +76533,7 @@
 /obj/decal/cleanable/blood{
 	icon_state = "floor5"
 	},
-/turf/unsimulated/outdoors/snow,
+/turf/unsimulated/floor/snowrough,
 /area/centcom/offices/virvatuli)
 "kiU" = (
 /obj/indestructible/shuttle_corner{
@@ -76942,7 +76940,7 @@
 	info = "<b>Listen, I know it looks weird and smells bad, but you'll like it even less when it's hungry and annoyed. Make sure you bring the kibble!</b>";
 	name = "reminder"
 	},
-/turf/unsimulated/outdoors/snow,
+/turf/unsimulated/floor/snowrough,
 /area/centcom/offices/virvatuli)
 "lqh" = (
 /turf/space,
@@ -77335,7 +77333,7 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "gibbl2"
 	},
-/turf/unsimulated/outdoors/snow,
+/turf/unsimulated/floor/snowrough,
 /area/centcom/offices/virvatuli)
 "mrw" = (
 /turf/unsimulated/floor/dream/beach{
@@ -77506,9 +77504,7 @@
 /turf/unsimulated/floor/engine/caution/north,
 /area/hospital/samostrel)
 "mPW" = (
-/turf/unsimulated/floor/arctic/cliff{
-	dir = 4
-	},
+/turf/unsimulated/floor/snowrough,
 /area/centcom/offices/virvatuli)
 "mSp" = (
 /obj/stool/chair,
@@ -79598,7 +79594,7 @@
 /obj/item/organ/spleen{
 	pixel_y = -4
 	},
-/turf/unsimulated/outdoors/snow,
+/turf/unsimulated/floor/snowrough,
 /area/centcom/offices/virvatuli)
 "rIU" = (
 /turf/simulated/shuttle/wall{
@@ -79754,7 +79750,7 @@
 /obj/item/parts/human_parts/arm/left{
 	dir = 4
 	},
-/turf/unsimulated/outdoors/snow,
+/turf/unsimulated/floor/snowrough,
 /area/centcom/offices/virvatuli)
 "rUf" = (
 /obj/critter/roach{
@@ -80125,7 +80121,7 @@
 /area/centcom/offices/sord)
 "sNO" = (
 /obj/decal/cleanable/blood,
-/turf/unsimulated/outdoors/snow,
+/turf/unsimulated/floor/snowrough,
 /area/centcom/offices/virvatuli)
 "sON" = (
 /obj/cable{
@@ -80745,7 +80741,7 @@
 	pixel_x = -4;
 	pixel_y = -3
 	},
-/turf/unsimulated/outdoors/snow,
+/turf/unsimulated/floor/snowrough,
 /area/centcom/offices/virvatuli)
 "uVd" = (
 /obj/table/reinforced,
@@ -81781,7 +81777,7 @@
 	mouse_opacity = 0
 	},
 /obj/decal/cleanable/blood/splatter/extra,
-/turf/unsimulated/outdoors/snow,
+/turf/unsimulated/floor/snowrough,
 /area/centcom/offices/virvatuli)
 "yld" = (
 /turf/space,
@@ -159837,7 +159833,7 @@ hnO
 hnO
 jEZ
 wel
-dwZ
+mPW
 ykp
 rIL
 ePs

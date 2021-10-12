@@ -159,7 +159,7 @@
 		else if(material_progress < 100)
 			process_materials = PROCESS_ACTIVE
 			var/progress = min(src.process_rate * 5,100-material_progress)
-			var/datum/gas_mixture/GM = unpool(/datum/gas_mixture)
+			var/datum/gas_mixture/GM = new /datum/gas_mixture
 			GM.temperature = T20C
 			if(target_material.material?.name in src.whitelist)
 				switch(target_material.material.name)
@@ -302,7 +302,7 @@
 							temp = temp.remove_ratio(1/count)
 						var/datum/gas_mixture/GM
 						for(var/turf/simulated/MT as() in T.parent.members)
-							GM = unpool(/datum/gas_mixture)
+							GM = new /datum/gas_mixture
 							GM.copy_from(temp)
 							MT.assume_air(GM)
 					else

@@ -566,7 +566,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 		var/turf/T = get_turf(holder.owner)
 		if (!istype(T, /turf/space) && !T.density)
-			var/obj/itemspecialeffect/poof/P = unpool(/obj/itemspecialeffect/poof)
+			var/obj/itemspecialeffect/poof/P = new /obj/itemspecialeffect/poof
 			P.setup(T)
 			playsound(T,"sound/effects/poff.ogg", 50, 1, pitch = 1)
 			new /obj/critter/bat(T)

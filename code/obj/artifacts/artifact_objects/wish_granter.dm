@@ -70,7 +70,7 @@
 					var/list/affected = DrawLine(O,user,/obj/line_obj/elec,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 					for(var/obj/OB in affected)
 						SPAWN_DBG(0.6 SECONDS)
-							pool(OB)
+							qdel(OB)
 					user.elecgib()
 		else
 			switch(wish)
@@ -79,7 +79,7 @@
 					for(var/turf/T in range(user,1))
 						if (T.density)
 							continue
-						var/obj/item/spacecash/million/S = unpool(/obj/item/spacecash/million)
+						var/obj/item/spacecash/million/S = new /obj/item/spacecash/million
 						S.setup(T)
 
 				if("I wish for great power!")

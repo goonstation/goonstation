@@ -444,7 +444,7 @@
 		var/atom/movable/A
 		// catastrophic event litter reduction
 		if(limiter.canISpawn(/obj/item/raw_material/shard))
-			A = unpool(/obj/item/raw_material/shard)
+			A = new /obj/item/raw_material/shard
 			A.set_loc(src.loc)
 			if(src.material)
 				A.setMaterial(src.material)

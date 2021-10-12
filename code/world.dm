@@ -905,6 +905,10 @@ var/f_color_selector_handler/F_Color_Selector
 
 	else // Discord bot communication (or callbacks)
 
+		var/game_servers_response = game_servers?.topic(T, addr)
+		if(!isnull(game_servers_response))
+			return game_servers_response
+
 #ifdef TWITCH_BOT_ALLOWED
 		//boutput(world,"addres : [addr]     twitchbotaddr : [TWITCH_BOT_ADDR]")
 		if (addr == TWITCH_BOT_ADDR)
@@ -1406,7 +1410,7 @@ var/f_color_selector_handler/F_Color_Selector
 					var/count = 0
 					var/list/whois_result
 					for (var/who in whom)
-						whois_result = whois(who, 5)
+						whois_result = whois(who)
 						if (whois_result)
 							for (var/mob/M in whois_result)
 								count++
