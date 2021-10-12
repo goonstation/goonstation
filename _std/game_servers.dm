@@ -4,14 +4,16 @@
 	var/url
 	var/numeric_id
 	var/publ = TRUE
+	var/ghost_notif_target = TRUE
 
-	New(id, name, url, numeric_id, publ=TRUE)
+	New(id, name, url, numeric_id, publ=TRUE, ghost_notif_target=TRUE)
 		..()
 		src.id = id
 		src.name = name
 		src.url = url
 		src.numeric_id = numeric_id
 		src.publ = publ
+		src.ghost_notif_target = ghost_notif_target
 
 	proc/is_me()
 		return src.id == config.server_id
@@ -30,7 +32,7 @@
 			"main1",
 			"Goonstation 1 Classic: Heisenbee",
 			"byond://goon1.goonhub.com:26100",
-			1
+			1, ghost_notif_target=FALSE
 			))
 		add_server(new/datum/game_server(
 			"main2",
@@ -42,7 +44,7 @@
 			"main3",
 			"Goonstation 3 Roleplay: Morty",
 			"byond://goon3.goonhub.com:26300",
-			3
+			3, ghost_notif_target=FALSE
 			))
 		add_server(new/datum/game_server(
 			"main4",
@@ -71,7 +73,9 @@
 			))
 
 	proc/add_server(datum/game_server/server)
+		RETURN_TYPE(/datum/game_server)
 		src.servers[server.id] = server
+		return server
 
 	proc/find_server(text)
 		RETURN_TYPE(/datum/game_server)
