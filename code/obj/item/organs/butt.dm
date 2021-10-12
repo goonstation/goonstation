@@ -112,6 +112,7 @@
 			H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff]s [src] onto the [fluff2] where your butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>")
 			if (user.find_in_hand(src))
 				user.u_equip(src)
+				set_loc(get_turf(H))
 			return null
 		else
 			return 0
