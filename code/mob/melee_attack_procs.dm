@@ -40,7 +40,7 @@
 		if ((G && G.hasProperty("heatprot") && (G.getProperty("heatprot") >= 7)) || src.is_heat_resistant())
 			M.update_burning(-2.5)
 			if (src.is_heat_resistant())
-				boutput(H, "<span class='notice'>Being fire resistant protect you from the flames!</span>")
+				boutput(H, "<span class='notice'>Being fire resistant protects you from the flames!</span>")
 			else
 				boutput(H, "<span class='notice'>Your [G] protect you from the flames!</span>")
 		else
