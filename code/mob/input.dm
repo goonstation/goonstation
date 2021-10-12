@@ -54,6 +54,10 @@
 			return controller.process_move(src, keys)
 
 	if (isdead(src) && !isobserver(src) && !istype(src, /mob/zoldorf))
+		if (keys)
+			// Ghostize people who are trying to move while in a dead body.
+			boutput(src, "<span class='notice'>You leave your dead body. You can use the 'Re-enter Corpse' command to return to it.</span>")
+			src.ghostize()
 		return
 
 	if (src.next_move - world.time >= world.tick_lag / 10)

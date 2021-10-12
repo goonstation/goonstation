@@ -1,4 +1,7 @@
 
+(t)tue oct 12 21
+(u)Zamujasa
+(*)Trying to move while dead will now ghost you. Don't worry, you can still wiggle with IJKL.
 (t)mon oct 11 21
 (u)pali
 (*)For Spooktober the space colour now varies slightly
