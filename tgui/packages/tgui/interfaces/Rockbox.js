@@ -1,6 +1,6 @@
 import { Fragment } from 'inferno';
 import { useBackend, useSharedState } from '../backend';
-import { Button, Section, NumberInput, Box, Divider, Tooltip, Stack, Flex, Table, LabeledList } from '../components';
+import { Button, Section, NumberInput, Box, Divider, Tooltip, Stack, Table } from '../components';
 import { ButtonCheckbox } from '../components/Button';
 import { Window } from '../layouts';
 
