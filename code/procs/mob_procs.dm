@@ -1173,6 +1173,8 @@
 	var/prev_invis = ghost_invisibility
 	ghost_invisibility = new_invis
 	for (var/mob/dead/observer/G in mobs)
+		G.invisibility = new_invis
+		REMOVE_MOB_PROPERTY(G, PROP_INVISIBILITY, G)
 		APPLY_MOB_PROPERTY(G, PROP_INVISIBILITY, G, new_invis)
 		if (new_invis != prev_invis && (new_invis == 0 || prev_invis == 0))
 			boutput(G, "<span class='notice'>You are [new_invis == 0 ? "now" : "no longer"] visible to the living!</span>")
