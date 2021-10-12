@@ -172,9 +172,9 @@
 
 		else if (istype(W, /obj/item/spacecash) && W.type != /obj/item/spacecash/buttcoin)
 			user.u_equip(W)
-			pool(W)
+			qdel(W)
 
-			var/obj/item/spacecash/buttcoin/S = unpool(/obj/item/spacecash/buttcoin)
+			var/obj/item/spacecash/buttcoin/S = new /obj/item/spacecash/buttcoin
 			S.setup(get_turf(src))
 			user.put_in_hand_or_drop(S)
 

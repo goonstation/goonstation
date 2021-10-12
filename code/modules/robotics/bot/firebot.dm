@@ -306,7 +306,7 @@
 		playsound(src.loc, "sound/effects/spray.ogg", 30, 1, -3)
 
 	for(var/a in 0 to 5)
-		var/obj/effects/water/W = unpool(/obj/effects/water)
+		var/obj/effects/water/W = new /obj/effects/water
 		if(!W) return
 		W.set_loc( get_turf(src) )
 		var/turf/my_target = pick(the_targets)

@@ -28,7 +28,7 @@
 	New()
 		..()
 
-		air_contents = unpool(/datum/gas_mixture)
+		air_contents = new /datum/gas_mixture
 
 		air_contents.volume = volume
 		air_contents.temperature = T20C
@@ -48,7 +48,7 @@
 
 	disposing()
 		if (air_contents)
-			pool(air_contents)
+			qdel(air_contents)
 			air_contents = null
 
 		..()

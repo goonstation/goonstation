@@ -16,40 +16,8 @@ var/list/observers = list()
 		mobs += src
 		//set_observe_target(target)
 
-	unpooled()
-		..()
-		src.mob_properties = list()
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
-		observers += src
-		mobs += src
-		src.move_dir = 0
-
-	pooled()
-		mobs -= src
-		//Remove ourselves from the global observer list
-		observers -= src
-		//If our target is a mob we should also clean ourselves up and leave their observer list without a null in it.
-		var/mob/living/M = src.target
-		if(istype(M))
-			M.observers -= src
-
-		if (my_ghost )
-			my_ghost.set_loc(get_turf(src))
-		my_ghost = null
-		target = null
-
-
-		for (var/datum/hud/H in huds)
-			for (var/atom/movable/screen/hud/S in H.objects)
-				if (S:master == src)
-					S:master = null
-			detach_hud(H)
-			H.mobs -= src
-		huds.len = 0
-
-		..()
-
 	disposing()
+		mobs -= src
 		//Remove ourselves from the global observer list
 		observers -= src
 		//If our target is a mob we should also clean ourselves up and leave their observer list without a null in it.
@@ -181,6 +149,6 @@ var/list/observers = list()
 					my_ghost.z = 1
 
 			src.my_ghost = null
-			pool(src)
+			qdel(src)
 
 

@@ -1,6 +1,7 @@
 /datum/hud/ghost_observer
 	var/mob/dead/observer/master
 	var/atom/movable/screen/respawn_timer/respawn_timer
+	var/atom/movable/screen/join_other/join_other
 
 	New(I)
 		master = I
@@ -17,6 +18,13 @@
 			src.respawn_timer = new
 			src.add_object(src.respawn_timer)
 		return src.respawn_timer
+
+	proc/get_join_other()
+		RETURN_TYPE(/atom/movable/screen/join_other)
+		if(isnull(src.join_other))
+			src.join_other = new
+			src.add_object(src.join_other)
+		return src.join_other
 
 	proc/update_ability_hotbar()
 		if (!master.client)

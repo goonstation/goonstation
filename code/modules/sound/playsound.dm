@@ -155,7 +155,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	else
 		logTheThing("admin", data["key"], null, "loaded remote music: [data["file"]] ([data["filesize"]])")
 		logTheThing("diary", data["key"], null, "loaded remote music: [data["file"]] ([data["filesize"]])", "admin")
-		message_admins("[adminC] loaded remote music: [data["title"]] ([data["duration"]] / [data["filesize"]])")
+		message_admins("[data["key"]] loaded remote music: [data["title"]] ([data["duration"]] / [data["filesize"]])")
 	return 1
 
 /client/verb/change_volume(channel_name as anything in audio_channel_name_to_id)

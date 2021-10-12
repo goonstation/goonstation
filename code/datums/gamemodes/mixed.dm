@@ -324,9 +324,7 @@
 			#else
 				objective_set_path = pick(typesof(/datum/objective_set/traitor))
 			#endif
-			#ifdef SECRETS_ENABLED
 				traitor.current.make_arcfiend()
-			#endif
 
 		if (!isnull(objective_set_path)) // Cannot create objects of type null. [wraiths use a special proc]
 			new objective_set_path(traitor)

@@ -5,7 +5,7 @@
 	icon_state = "itemspawn"
 	density = 0
 	anchored = 1.0
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	layer = 99
 	var/amt2spawn = 0
 	var/min_amt2spawn = 0
@@ -937,7 +937,7 @@
 	icon_state = "podspawn"
 	density = 0
 	anchored = 1.0
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	layer = 99
 	var/obj/machinery/vehicle/pod2spawn = null
 
