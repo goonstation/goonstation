@@ -1084,6 +1084,12 @@ This is basically useless for anyone but miners.
 	cost = 4
 	desc = "A handheld remote allowing you, your team, and the nuclear device to be sent in anywhere at a moment's notice!"
 
+/datum/syndicate_buylist/commander/bomb_remote
+	name = "Nuclear Bomb Teleporter"
+	item = /obj/item/remote/nuke_summon_remote
+	cost = 1
+	desc = "Did you lose the nuke? Have no fear, with this handy one-use remote, you can immediately call it back to you!"
+
 /////////////////////////////////////////// Telecrystals //////////////////////////////////////////////////
 
 /datum/syndicate_buylist/generic/telecrystal
