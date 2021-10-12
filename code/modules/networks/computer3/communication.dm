@@ -181,7 +181,7 @@
 						else if(lowertext(command) == "message")
 							if(GET_COOLDOWN(global, "transmit_station"))
 								menu = MENU_MAIN
-								src.print_text("Partner station communication beam recharging. Available in [time_to_text(GET_COOLDOWN(global, "transmit_centcom"))].")
+								src.print_text("Partner station communication beam recharging. Available in [time_to_text(GET_COOLDOWN(global, "transmit_station"))].")
 							else
 								src.print_text("Contacting the partner space station.")
 								src.transmit_type = "station"
