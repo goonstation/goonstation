@@ -67,7 +67,6 @@
 		desc = "A handheld beacon that allows you to call a Syndicate reinforcement to the user's current location. It has [src.uses] charge left."
 
 /obj/item/remote/reinforcement_beacon/attack_self(mob/user as mob)
-	var/mob/living/carbon/human/H = user
 	if(isrestrictedz(user.z) || isrestrictedz(src.z))
 		boutput(user, "<span class='alert'>The [src] can't be used here, try again on station!</span>")
 		return
