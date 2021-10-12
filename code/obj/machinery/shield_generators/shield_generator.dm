@@ -127,7 +127,7 @@
 	// for testing atm
 	attack_hand(mob/user as mob)
 		if (status & (NOPOWER|BROKEN) || !src.link)
-			user.show_text("The device seems inoperable, as pressing the button does nothing.")
+			user.show_text("[src] seems inoperable, as pressing the button does nothing.")
 			return
 
 		var/diff = world.timeofday - lastuse
