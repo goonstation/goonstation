@@ -163,8 +163,9 @@ obj/item/ammo/bullets/flechette_mag
 	object_flags = NO_ARM_ATTACH
 	w_class = W_CLASS_NORMAL
 	spread_angle = 3
+	default_magazine = /obj/item/ammo/bullets/flechette_mag
 
 	New()
-		ammo = new/obj/item/ammo/bullets/flechette_mag
+		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/flechette)
 		..()

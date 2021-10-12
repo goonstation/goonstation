@@ -1557,6 +1557,13 @@
 	},
 /turf/unsimulated/floor/caution/east,
 /area/hospital/samostrel)
+"agj" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	icon_state = "wall3_trans"
+	},
+/turf/space,
+/area/syndicate_station/assault_pod)
 "agk" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -59871,15 +59878,10 @@
 	},
 /area/iomoon)
 "dgk" = (
-/obj/rack,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
+/obj/table/auto,
+/obj/item/shipcomponent/mainweapon/gun,
+/obj/item/shipcomponent/mainweapon/gun,
+/obj/item/storage/toolbox/mechanical,
 /turf/unsimulated/floor/bot/darkpurple,
 /area/syndicate_station/battlecruiser)
 "dgl" = (
@@ -74445,6 +74447,10 @@
 /obj/item/clothing/glasses/regular,
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/rd)
+"dWb" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/unsimulated/floor/black,
+/area/syndicate_station/assault_pod)
 "dWx" = (
 /obj/decal/fakeobjects/apc_broken,
 /turf/unsimulated/wall/auto/lead/gray,
@@ -74783,6 +74789,16 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/john/owlery)
+"eOO" = (
+/obj/stool/chair/comfy/shuttle/red,
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/landmark{
+	name = "Syndicate-Assault-Pod-Tele"
+	},
+/turf/unsimulated/floor/circuit/red,
+/area/syndicate_station/assault_pod)
 "ePc" = (
 /obj/decal/poster/wallsign/bar,
 /turf/unsimulated/wall/auto/lead/blue,
@@ -75328,6 +75344,12 @@
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"gJt" = (
+/obj/decal/fakeobjects/shuttlethruster{
+	icon_state = "alt_propulsion"
+	},
+/turf/space,
+/area/syndicate_station/assault_pod)
 "gJV" = (
 /turf/unsimulated/floor/bluewhite,
 /area/centcom/offices/varshie)
@@ -75891,6 +75913,21 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"iyG" = (
+/obj/machinery/light,
+/obj/rack,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/turf/unsimulated/floor/darkpurple,
+/area/syndicate_station/battlecruiser)
 "iyY" = (
 /turf/unsimulated/floor/grey/side{
 	dir = 8
@@ -76088,6 +76125,9 @@
 	dir = 8
 	},
 /area/shuttle/escape/centcom/sealab)
+"jew" = (
+/turf/unsimulated/floor/red,
+/area/syndicate_station/assault_pod)
 "jeV" = (
 /obj/machinery/door/unpowered/wood{
 	icon = 'icons/obj/doors/door_office.dmi';
@@ -76299,6 +76339,12 @@
 	icon_state = "diagonalWall"
 	},
 /area/hospital/samostrel)
+"jKS" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans"
+	},
+/turf/space,
+/area/syndicate_station/assault_pod)
 "jMC" = (
 /obj/storage/crate,
 /turf/unsimulated/floor{
@@ -76513,6 +76559,16 @@
 	icon_state = "wall3"
 	},
 /area/hospital/samostrel)
+"kjV" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 1
+	},
+/obj/machinery/light,
+/obj/landmark{
+	name = "Syndicate-Assault-Pod-Tele"
+	},
+/turf/unsimulated/floor/circuit/red,
+/area/syndicate_station/assault_pod)
 "kkX" = (
 /turf/unsimulated/wall/auto/lead/white,
 /area/moon/museum)
@@ -76598,6 +76654,13 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/donut3)
+"kri" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	icon_state = "wall3_trans"
+	},
+/turf/space,
+/area/syndicate_station/assault_pod)
 "krJ" = (
 /obj/machinery/door/airlock/pyro/medical/alt,
 /turf/unsimulated/floor/shuttle,
@@ -77279,6 +77342,18 @@
 	icon_state = "shore-23"
 	},
 /area/titlescreen)
+"mtg" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/landmark{
+	name = "Syndicate-Assault-Pod-Tele"
+	},
+/turf/unsimulated/floor/circuit/red,
+/area/syndicate_station/assault_pod)
 "muz" = (
 /obj/shrub{
 	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
@@ -78132,6 +78207,12 @@
 	icon_state = "shore-36"
 	},
 /area/titlescreen)
+"ohA" = (
+/obj/decal/fakeobjects/shuttleengine{
+	icon_state = "alt_heater-R"
+	},
+/turf/space,
+/area/syndicate_station/assault_pod)
 "oiq" = (
 /obj/table/wood/auto/desk,
 /obj/item/clipboard,
@@ -78477,6 +78558,13 @@
 /obj/window/south,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"oYL" = (
+/obj/machinery/computer/security/pod_timer,
+/obj/landmark{
+	name = "Syndicate-Assault-Pod-Comp"
+	},
+/turf/unsimulated/floor/red,
+/area/syndicate_station/assault_pod)
 "oZS" = (
 /obj/machinery/light,
 /obj/table/wood/auto/desk,
@@ -78760,6 +78848,18 @@
 	},
 /turf/unsimulated/wall/auto/lead/gray,
 /area/sim/bball)
+"pMe" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/landmark{
+	name = "Syndicate-Assault-Pod-Tele"
+	},
+/turf/unsimulated/floor/circuit/red,
+/area/syndicate_station/assault_pod)
 "pNh" = (
 /obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable{
 	pixel_x = -11;
@@ -79155,6 +79255,12 @@
 "qJS" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/comms)
+"qKW" = (
+/obj/decal/fakeobjects/shuttleengine{
+	icon_state = "alt_heater-L"
+	},
+/turf/space,
+/area/syndicate_station/assault_pod)
 "qMN" = (
 /obj/machinery/light{
 	dir = 1
@@ -79256,10 +79362,11 @@
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
 "qZu" = (
-/obj/table/auto,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/shipcomponent/mainweapon/gun,
-/obj/item/shipcomponent/mainweapon/gun,
+/obj/machinery/computer3/terminal{
+	desc = "A computer for controlling the laser-designated artillery cannon aboard the Cairngorm.";
+	dir = 4;
+	name = "Fire Control Terminal"
+	},
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
 "qZX" = (
@@ -79403,6 +79510,15 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/donut3)
+"ryj" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 1
+	},
+/obj/landmark{
+	name = "Syndicate-Assault-Pod-Tele"
+	},
+/turf/unsimulated/floor/red,
+/area/syndicate_station/assault_pod)
 "rAl" = (
 /obj/window/crystal/reinforced/west,
 /obj/window/crystal/reinforced/north,
@@ -79484,6 +79600,11 @@
 	},
 /turf/unsimulated/outdoors/snow,
 /area/centcom/offices/virvatuli)
+"rIU" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/syndicate_station/assault_pod)
 "rJe" = (
 /obj/storage/crate/bin/lostandfound{
 	desc = "Just what it sounds like.";
@@ -79659,6 +79780,13 @@
 	icon_state = "shore-37"
 	},
 /area/titlescreen)
+"rVX" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall3_trans"
+	},
+/turf/space,
+/area/syndicate_station/assault_pod)
 "rWC" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
@@ -80619,6 +80747,21 @@
 	},
 /turf/unsimulated/outdoors/snow,
 /area/centcom/offices/virvatuli)
+"uVd" = (
+/obj/table/reinforced,
+/obj/item/breaching_charge{
+	pixel_x = -7;
+	pixel_y = -1
+	},
+/obj/item/breaching_charge{
+	pixel_y = 4
+	},
+/obj/item/breaching_charge{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/turf/unsimulated/floor/red,
+/area/syndicate_station/assault_pod)
 "uVv" = (
 /turf/simulated/wall/r_wall,
 /area/diner/cow)
@@ -81118,6 +81261,9 @@
 	icon_state = "shore-43"
 	},
 /area/titlescreen)
+"wMh" = (
+/turf/unsimulated/floor/plating/random,
+/area/syndicate_station/battlecruiser)
 "wMi" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-26"
@@ -81401,6 +81547,10 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/donut3)
+"xLg" = (
+/obj/machinery/broadside_gun/artillery_cannon/syndicate,
+/turf/space,
+/area/space)
 "xMP" = (
 /obj/machinery/light/small,
 /turf/unsimulated/outdoors/grass,
@@ -87749,21 +87899,21 @@ cnw
 axy
 aaa
 aab
-aab
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+aaa
 cnw
 cnw
 cnw
@@ -88051,7 +88201,8 @@ cnw
 axy
 aaa
 aab
-aab
+aaa
+abj
 cnw
 cnw
 cnw
@@ -88063,9 +88214,8 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
+abj
+aaa
 cnw
 cnw
 cnw
@@ -88353,21 +88503,21 @@ cnw
 axy
 aaa
 aab
-aab
+aaa
+abj
+cnw
+cnw
+agj
+rIU
+dWb
+dWb
+rIU
+jKS
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+abj
+aaa
 cnw
 cnw
 cnw
@@ -88655,21 +88805,21 @@ cnw
 axy
 aaa
 aab
-aab
+aaa
+abj
 cnw
+agj
+rIU
+pMe
+jew
+jew
+pMe
+rIU
+qKW
+gJt
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+abj
+aaa
 cnw
 cnw
 cnw
@@ -88957,21 +89107,21 @@ cnw
 axy
 aaa
 aab
-aab
+aaa
+abj
+cnw
+rIU
+eOO
+jew
+jew
+jew
+jew
+kjV
+rIU
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+abj
+aaa
 cnw
 cnw
 cnw
@@ -89260,20 +89410,20 @@ axy
 aaa
 aaa
 aaa
+abj
+cnw
+dWb
+oYL
+jew
+jew
+jew
+jew
+ryj
+rIU
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+abj
+aaa
 cnw
 cnw
 cnw
@@ -89562,20 +89712,20 @@ axy
 axy
 axy
 aaa
+abj
+cnw
+dWb
+uVd
+jew
+jew
+jew
+jew
+ryj
+rIU
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+abj
+aaa
 cnw
 cnw
 cnw
@@ -89864,20 +90014,20 @@ cnw
 axy
 axy
 aaa
+abj
+cnw
+rIU
+eOO
+jew
+jew
+jew
+jew
+kjV
+rIU
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+abj
+aaa
 cnw
 cnw
 cnw
@@ -90166,20 +90316,20 @@ cnw
 cnw
 axy
 aaa
+abj
 cnw
+rVX
+rIU
+mtg
+jew
+jew
+mtg
+rIU
+ohA
+gJt
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+abj
+aaa
 cnw
 cnw
 cnw
@@ -90468,20 +90618,20 @@ cnw
 cnw
 axy
 aaa
+abj
+cnw
+cnw
+rVX
+rIU
+dWb
+dWb
+rIU
+kri
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+abj
+aaa
 cnw
 cnw
 cnw
@@ -90770,6 +90920,7 @@ cnw
 cnw
 axy
 aaa
+abj
 cnw
 cnw
 cnw
@@ -90781,9 +90932,8 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
+abj
+aaa
 cnw
 cnw
 cnw
@@ -91072,20 +91222,20 @@ cnw
 cnw
 axy
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+aaa
 cnw
 cnw
 cnw
@@ -91374,20 +91524,20 @@ cnw
 cnw
 axy
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 cnw
 cnw
 cnw
@@ -105224,7 +105374,7 @@ cnw
 cnw
 cnw
 cnw
-cnw
+xLg
 cnw
 cnw
 cnw
@@ -105828,7 +105978,7 @@ cnw
 aJC
 aKf
 aKz
-aKz
+wMh
 aKz
 aKf
 aKf
@@ -106434,7 +106584,7 @@ bqV
 bqV
 bqV
 bqV
-dgv
+iyG
 aKf
 dgP
 aQz

@@ -950,7 +950,134 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		src.print_to_host(src.menu_message)
 		return
 
+/obj/item/device/nukeop_commander_uplink
+	name = "station bounced radio"
+	icon = 'icons/obj/items/device.dmi'
+	icon_state = "radio"
+	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	w_class = W_CLASS_SMALL
+	item_state = "radio"
+	throw_speed = 4
+	throw_range = 20
+	m_amt = 100
+	var/points = 4
+	var/list/commander_buylist = list()
+	var/datum/syndicate_buylist/reading_about = null
 
+	New()
+		..()
+		var/num_players
+		for(var/client/C)
+			var/mob/new_player/player = C.mob
+			if (!istype(player))
+				continue
+			if (player.ready)
+				num_players++
+		//points = max(2, round(num_players / 20))
+		sleep(1 SECOND)
+		if (src && istype(src) && (!length(src.commander_buylist)))
+			src.setup()
+
+	attackby(obj/item/W, mob/user, params)
+		if(istype(W, /obj/item/remote/reinforcement_beacon))
+			var/obj/item/remote/reinforcement_beacon/R = W
+			if(R.uses >= 1 && !R.anchored)
+				R.force_drop(user)
+				sleep(1 DECI SECOND)
+				qdel(R)
+				src.points += 2
+		else
+			..()
+
+	proc/setup()
+		for (var/datum/syndicate_buylist/S in syndi_buylist_cache)
+			if (istype(S, /datum/syndicate_buylist/commander) && !src.commander_buylist.Find(S))
+				src.commander_buylist.Add(S)
+
+		var/list/names = list()
+		var/list/namecounts = list()
+		if (length(src.commander_buylist))
+			var/list/sort1 = list()
+
+			for (var/datum/syndicate_buylist/S in src.commander_buylist)
+				var/name = S.name
+				if (name in names) // Should never, ever happen, but better safe than sorry.
+					namecounts[name]++
+					name = text("[] ([])", name, namecounts[name])
+				else
+					names.Add(name)
+					namecounts[name] = 1
+
+				sort1[name] = S
+
+			src.commander_buylist = sortList(sort1)
+
+	attack_self()
+		var/list/dat = list()
+		if(reading_about)
+			var/item_about = "<b>Error:</b> We're sorry, but there is no current entry for this item!<br>For full information on Syndicate Tools, call 1-555-SYN-DKIT."
+			if(reading_about.desc) item_about = "[reading_about.desc]"
+			dat += "<b>Extended Item Information:</b><hr>[item_about]<hr><A href='byond://?src=\ref[src];back=1'>Back</A>"
+		else
+			dat += "<B>Syndicate Uplink Console:</B><BR>"
+			dat += "Points left: [src.points]<BR>"
+			dat += "<HR>"
+			dat += "<B>Request item:</B><BR>"
+			dat += "<I>Each item costs a number of points as indicated by the number following their name.</I><BR><table cellspacing=5>"
+			if (src.commander_buylist && islist(src.commander_buylist) && length(src.commander_buylist))
+				dat += "</table><B>Uplink Items:</B><BR><table cellspacing=5>"
+				for (var/T in src.commander_buylist)
+					var/datum/syndicate_buylist/I = src.commander_buylist[T]
+					dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.commander_buylist[T]]'>[I.name]</A> ([I.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.commander_buylist[T]]'>About</A></td>"
+			dat += "</table>"
+		usr.Browse(jointext(dat, ""), "window=nukeuplink")
+		onclose(usr, "nukeuplink")
+
+#define CHECK1 (get_dist(src, usr) > 1 || !usr.contents.Find(src) || !isliving(usr) || iswraith(usr) || isintangible(usr))
+#define CHECK2 (is_incapacitated(usr) || usr.restrained())
+	Topic(href, href_list)
+		..()
+		if (src.points < 0)
+			src.points = 0
+		if (CHECK1)
+			return
+		if (CHECK2)
+			return
+
+		src.add_dialog(usr)
+
+		if (href_list["spawn"])
+			var/datum/syndicate_buylist/I = locate(href_list["spawn"])
+			if (!I || !istype(I))
+				return
+			if(I.cost > src.points)
+				return
+
+			// Trying to spawn things you shouldn't, eh?
+			/*for(var/S in commander_buylist)
+				if(!(SB == commander_buylist[S]))
+					trigger_anti_cheat(usr, "tried to href exploit the syndicate buylist")
+					return*/
+
+			if (I.item)
+				var/obj/item = new I.item(get_turf(src))
+				I.run_on_spawn(item, usr)
+				src.points -= I.cost
+			if (I.item2)
+				new I.item2(get_turf(src))
+			if (I.item3)
+				new I.item3(get_turf(src))
+
+		else if (href_list["about"])
+			reading_about = locate(href_list["about"])
+
+		else if (href_list["back"])
+			reading_about = null
+
+		src.attack_self(usr)
+		return
+#undef CHECK1
+#undef CHECK2
 ///////////////////////////////////////// Wizard's spellbook ///////////////////////////////////////////////////
 
 /obj/item/SWF_uplink

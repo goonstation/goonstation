@@ -1043,6 +1043,47 @@ This is basically useless for anyone but miners.
 	desc = "A terrifying grenade containing a potent nerve gas. Try not to get caught in the smoke."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
+/////////////////////////////////////////// Irregular Items //////////////////////////////////////////////////
+// For things that aren't seen in a regular uplink but are in the buylist datum, e.g. Syndicate commander uplink gear
+
+/datum/syndicate_buylist/commander
+	name = "You shouldn't see me!"
+	cost = 0
+	desc = "You shouldn't see me!"
+
+/datum/syndicate_buylist/commander/reinforcement
+	name = "Reinforcements"
+	item = /obj/item/remote/reinforcement_beacon
+	item2 = /obj/item/paper/reinforcement_info
+	cost = 2
+	desc = "Request another teammate, equipped with a sidearm and utility token."
+
+/datum/syndicate_buylist/commander/ammobag
+	name = "Ammo Bag"
+	item = /obj/item/ammo/ammobox/nukeop
+	cost = 2
+	desc = "A bag that allows you to fabricate standard ammo for most Syndicate weaponry. Due to power restrictions, ammo can only be fabricated a certain amount of times per bag. Ammo size restrictions apply."
+
+/datum/syndicate_buylist/commander/ammobag_spec
+	name = "Specialist Ammo Bag"
+	item = /obj/item/ammo/ammobox/nukeop/spec_ammo
+	cost = 3
+	desc = "A bag that allows you to fabricate specialist ammo for some Syndicate weaponry. It even lets you fabricate explosive ammunition!"
+
+/datum/syndicate_buylist/commander/designator
+	name = "Laser Designator"
+	item = /obj/item/device/laser_designator/syndicate
+	item2 = /obj/item/paper/designator_info
+	cost = 3
+	desc = "A handheld, monocular laser designator that allows you to call in heavy fire support from the Cairngorm. Comes with 2 charges."
+
+/datum/syndicate_buylist/commander/deployment_pods
+	name = "Rapid Deployment Remote"
+	item = /obj/item/device/deployment_remote
+	item2 = /obj/item/paper/deployment_info
+	cost = 4
+	desc = "A handheld remote allowing you, your team, and the nuclear device to be sent in anywhere at a moment's notice!"
+
 /////////////////////////////////////////// Telecrystals //////////////////////////////////////////////////
 
 /datum/syndicate_buylist/generic/telecrystal

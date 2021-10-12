@@ -3162,6 +3162,10 @@ ABSTRACT_TYPE(/area/station/catwalk)
 		name = "firing range"
 		icon_state = "blue"
 
+/area/syndicate_station/assault_pod
+		name = "forward assault pod"
+		icon_state = "red"
+
 // end syndie //
 
 /// Wizard den area for the wizard shuttle spawn

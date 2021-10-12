@@ -48,7 +48,8 @@
 #define IS_BUBSIUM_SCALED		 (1<<21)
 /// If click delay should be applied even if atom is in user's contents (e.g.: postit notes)
 #define CLICK_DELAY_IN_CONTENTS  (1<<22)
-
+/// Has the possibility for a TGUI interface via `attackself`, only use for items
+#define TGUI_INTERACTIVE_ITEM		 (1<<23)
 
 //Item function flags
 
