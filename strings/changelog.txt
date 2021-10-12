@@ -1,5 +1,9 @@
 
 (t)tue oct 12 21
+(u)Azrun
+(p)6221
+(e)🆕🎨|feature, sprites
+(+)Nectar Perspiration visual effect upgraded to slightly larger buzzing insects.
 (u)alexkar598
 (p)6179
 (e)|
