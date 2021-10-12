@@ -140,7 +140,7 @@
 	get_desc()
 		switch (src.d_state)
 			if (0)
-				. += "<br>Looks like disassembling it starts with <b>snipping some</b> of those reinforcing rods."
+				. += "<br>Looks like disassembling it starts with <b>snipping</b> some of those reinforcing rods."
 			if (1)
 				. += "<br>Up next in this long journey is <b>unscrewing</b> the reinforced rods."
 			if (2)
