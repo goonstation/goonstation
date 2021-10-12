@@ -219,7 +219,7 @@ var/datum/respawn_controls/respawn_controller
 #undef RESPAWNEE_STATE_ALIVE
 
 /atom/movable/screen/join_other
-	screen_loc = "CENTER, NORTH"
+	screen_loc = "CENTER, NORTH-1"
 	maptext_height = 32 * 2
 	maptext_width = 32 * 5
 	maptext_x = -32 * 2
