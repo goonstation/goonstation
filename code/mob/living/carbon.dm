@@ -10,7 +10,7 @@
 	//var/heart_op_stage = 0.0
 
 	infra_luminosity = 4
-	var/poop_amount
+	var/poop_amount = 5
 
 /mob/living/carbon/New()
 	START_TRACKING
