@@ -579,8 +579,8 @@
 	name = "7.62 NATO magazine"
 	ammo_type = new/datum/projectile/bullet/rifle_762_NATO
 	icon_state = "rifle_box_mag" //todo
-	amount_left = 4
-	max_amount = 4
+	amount_left = 6
+	max_amount = 6
 	caliber = 0.308
 
 /obj/item/ammo/bullets/tranq_darts
@@ -599,7 +599,7 @@
 		pistol
 			sname = ".355 Tranqilizer"
 			name = ".355 tranquilizer pistol darts"
-			amount_left = 15
+			amount_left = 10
 			max_amount = 15
 			caliber = 0.355
 			ammo_type = new/datum/projectile/bullet/tranq_dart/syndicate/pistol

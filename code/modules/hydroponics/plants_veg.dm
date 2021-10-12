@@ -87,3 +87,18 @@ ABSTRACT_TYPE(/datum/plant/veg)
 	genome = 13
 	commuts = list(/datum/plant_gene_strain/growth_fast,/datum/plant_gene_strain/terminator)
 	assoc_reagents = list("water_holy")
+
+/datum/plant/veg/turmeric
+	name = "Turmeric"
+	seedcolor = "#e0a80c"
+	crop = /obj/item/reagent_containers/food/snacks/plant/turmeric
+	starthealth = 40
+	growtime = 80
+	harvtime = 140
+	cropsize = 4
+	harvests = 1
+	isgrass = 1
+	endurance = 3
+	genome = 13
+	commuts = list(/datum/plant_gene_strain/metabolism_slow,/datum/plant_gene_strain/immunity_toxin)
+	assoc_reagents = list("currypowder")

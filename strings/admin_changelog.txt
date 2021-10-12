@@ -1,3 +1,8 @@
+(t)mon oct 11 21
+(u)Zamujasa
+(*)"Toggle Emote Cooldowns". Does what it says. Don't be stupid.
+(*)Or do, I don't care.
+(*)Also new shortcuts for command bar losers: iddqd, idclip, iddt. Some familiarity with Doom suggested.
 (t)sun sep 19 21
 (u)pali
 (+)New verb spawn-figurine for when you want to spawn a specific figurine.

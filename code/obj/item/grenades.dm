@@ -564,7 +564,7 @@ PIPE BOMBS + CONSTRUCTION
 
 	prime()
 		var/turf/simulated/T = ..()
-		var/datum/gas_mixture/GM = unpool(/datum/gas_mixture)
+		var/datum/gas_mixture/GM = new /datum/gas_mixture
 		GM.temperature = T20C + 15
 		GM.oxygen = 1500
 		GM.carbon_dioxide = 100
@@ -587,7 +587,7 @@ PIPE BOMBS + CONSTRUCTION
 					if (count)
 						for (var/turf/simulated/MT as() in T.parent.members)
 							if (GM.disposed)
-								GM = unpool(/datum/gas_mixture)
+								GM = new /datum/gas_mixture
 							GM.temperature = T20C + 15
 							GM.oxygen = 1500 / count
 							GM.carbon_dioxide = 100 / count
@@ -605,7 +605,7 @@ PIPE BOMBS + CONSTRUCTION
 
 			animate(E, alpha=0, time=2.5 SECONDS)
 			playsound(T, "sound/weapons/flashbang.ogg", 30, 1)
-			var/datum/effects/system/steam_spread/steam = unpool(/datum/effects/system/steam_spread)
+			var/datum/effects/system/steam_spread/steam = new /datum/effects/system/steam_spread
 			steam.set_up(10, 0, get_turf(src), color="#0ff", plane=PLANE_NOSHADOW_ABOVE)
 			steam.attach(src.loc)
 			steam.start()
@@ -769,7 +769,7 @@ PIPE BOMBS + CONSTRUCTION
 		var/obj/effects/explosion/E = new /obj/effects/explosion(src.loc)
 		E.fingerprintslast = src.fingerprintslast
 
-		invisibility = 100
+		invisibility = INVIS_ALWAYS_ISH
 		SPAWN_DBG(15 SECONDS)
 			qdel (src)
 
@@ -1286,7 +1286,7 @@ PIPE BOMBS + CONSTRUCTION
 				return
 
 			playsound(location, "sound/effects/bamf.ogg", 100, 0.5)
-			src.invisibility = 101
+			src.invisibility = INVIS_ALWAYS
 
 			for (var/turf/T in range(src.expl_range, location))
 				if( T?.loc:sanctuary ) continue
@@ -1683,7 +1683,7 @@ PIPE BOMBS + CONSTRUCTION
 						if(target.parent?.group_processing)
 							target.parent.suspend_group_processing()
 
-						var/datum/gas_mixture/payload = unpool(/datum/gas_mixture)
+						var/datum/gas_mixture/payload = new /datum/gas_mixture
 						payload.toxins = plasma * 100
 						payload.temperature = T20C
 						payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000

@@ -520,7 +520,7 @@
 						submissiveDNA = P1DNA
 
 				// Create the new seed
-				var/obj/item/seed/S = unpool(/obj/item/seed)
+				var/obj/item/seed/S = new /obj/item/seed
 				S.set_loc(src)
 				var/dominantType = dominantspecies.type
 				var/datum/plant/P = new dominantType(S)
@@ -1237,10 +1237,10 @@
 				//new getseed(src.loc)
 				var/obj/item/seed/S
 				if (I.unique_seed)
-					S = unpool(I.unique_seed)
+					S = new I.unique_seed
 					S.set_loc(src.loc)
 				else
-					S = unpool(/obj/item/seed)
+					S = new /obj/item/seed
 					S.set_loc(src.loc)
 					S.removecolor()
 				S.generic_seed_setup(I)

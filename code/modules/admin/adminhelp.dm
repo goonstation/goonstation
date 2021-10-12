@@ -66,7 +66,7 @@
 	var/dead = isdead(client.mob) ? "Dead " : ""
 	var/ircmsg[] = new()
 	ircmsg["key"] = client.key
-	ircmsg["name"] = client.mob.job ? "[stripTextMacros(client.mob.real_name)] [dead][client.mob.mind?.special_role] [client.mob.job]]" : (istype(client.mob, /mob/new_player) ? "<not ingame>" : "[stripTextMacros(client.mob.real_name)] [dead][client.mob.mind?.special_role]]")
+	ircmsg["name"] = client.mob.job ? "[stripTextMacros(client.mob.real_name)] \[[dead][client.mob.mind?.special_role] [client.mob.job]]" : (istype(client.mob, /mob/new_player) ? "<not ingame>" : "[stripTextMacros(client.mob.real_name)] \[[dead][client.mob.mind?.special_role]]")
 	ircmsg["msg"] = html_decode(msg)
 	ircbot.export("help", ircmsg)
 
@@ -111,6 +111,8 @@
 	var/msg = input("Please enter your help request to mentors:") as null|text
 
 	msg = copytext(strip_html(msg), 1, MAX_MESSAGE_LEN)
+	if (client.can_see_mentor_pms())
+		msg = linkify(msg)
 
 	if (!msg)
 		return

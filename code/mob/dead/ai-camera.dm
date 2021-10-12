@@ -18,7 +18,7 @@
 	name = "AI Eye"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "a-eye"
-	see_invisible = 9
+	see_invisible = INVIS_AI_EYE
 	density = 0
 	layer = 101
 	see_in_dark = SEE_DARK_FULL

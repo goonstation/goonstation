@@ -82,6 +82,6 @@
 	icon_state = "X"
 	icon = 'icons/misc/mark.dmi'
 	name = "X"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	opacity = 0

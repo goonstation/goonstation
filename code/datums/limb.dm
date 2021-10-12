@@ -179,7 +179,7 @@
 
 			sleep(0.3 SECONDS)
 			for (var/obj/O in affected)
-				pool(O)
+				qdel(O)
 
 			if(istype(target_r, /obj/railgun_trg_dummy)) qdel(target_r)
 
@@ -209,6 +209,7 @@
 	var/reloaded_at = 0
 	var/next_shot_at = 0
 	var/image/default_obscurer
+	var/muzzle_flash = null
 
 	attack_range(atom/target, var/mob/user, params)
 		if (reloaded_at > ticker.round_elapsed_ticks && !current_shots)
@@ -223,6 +224,10 @@
 			var/pox = text2num(params["icon-x"]) - 16
 			var/poy = text2num(params["icon-y"]) - 16
 			shoot_projectile_ST_pixel(user, proj, target, pox, poy)
+			if (src.muzzle_flash)
+				if (isturf(user.loc))
+					var/turf/origin = user.loc
+					muzzle_flash_attack_particle(user, origin, target, src.muzzle_flash)
 			user.visible_message("<b class='alert'>[user] fires at [target] with the [holder.name]!</b>")
 			next_shot_at = ticker.round_elapsed_ticks + cooldown
 			if (!current_shots)
@@ -267,6 +272,7 @@
 		current_shots = 3
 		cooldown = 30
 		reload_time = 200
+		muzzle_flash = "muzzle_flash"
 
 	abg
 		proj = new/datum/projectile/bullet/abg
@@ -274,6 +280,7 @@
 		current_shots = 6
 		cooldown = 30
 		reload_time = 300
+		muzzle_flash = "muzzle_flash"
 
 	phaser
 		proj = new/datum/projectile/laser/light
@@ -1223,7 +1230,7 @@
 		if (no_logs != 1)
 			logTheThing("combat", user, target, "claws [constructTarget(target,"combat")] with claw arms at [log_loc(user)].")
 		var/obj/item/affecting = target.get_affecting(user)
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 2, 7, rand(1,3) * quality)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 10, 10, rand(1,3) * quality)
 		user.attack_effects(target, affecting)
 		var/action = pick("maim", "stab", "rip", "claw", "slashe")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their [src.holder]!</span></b>"

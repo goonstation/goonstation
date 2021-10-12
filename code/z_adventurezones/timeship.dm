@@ -155,7 +155,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 			src.mover.master = null
 			qdel(src.mover)
 
-		src.invisibility = 100
+		src.invisibility = INVIS_ALWAYS_ISH
 		var/obj/overlay/Ov = new/obj/overlay(T)
 		Ov.anchored = 1
 		Ov.name = "Explosion"

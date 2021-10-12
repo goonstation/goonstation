@@ -15,7 +15,7 @@
 
 	make_my_stuff() //Let's spawn the backpack/satchel in random colours!
 		. = ..()
-		if (. == 1) //if we've not spawned stuff before
+		if (. == 1 && length(spawn_contents)) //if we've not spawned stuff before (also empty lockers get no backpack)
 			var/backwear = pick(/obj/item/storage/backpack,/obj/item/storage/backpack/blue,/obj/item/storage/backpack/red,/obj/item/storage/backpack/green)
 			new backwear(src)
 			backwear = pick(/obj/item/storage/backpack/satchel,/obj/item/storage/backpack/satchel/blue,/obj/item/storage/backpack/satchel/red,/obj/item/storage/backpack/satchel/green)
@@ -569,7 +569,8 @@
 	/obj/item/clothing/glasses/meson,
 	/obj/item/pen/infrared,
 	/obj/item/clothing/head/helmet/welding,
-	/obj/item/clothing/suit/hi_vis)
+	/obj/item/clothing/suit/hi_vis,
+	/obj/item/lamp_manufacturer/organic)
 
 /obj/storage/secure/closet/engineering/mining
 	name = "\improper Miner's locker"

@@ -284,7 +284,8 @@ Contents:
 		target.temperature -= 5
 		target.set_real_color()
 		icon_image.color =  target.color
-		outline:color = target.color
+		if(outline)
+			outline:color = target.color
 		border.UpdateOverlays(icon_image, "action_icon")
 		if(target.temperature < (500 + T0C) )
 			interrupt(INTERRUPT_ALWAYS)
@@ -301,11 +302,11 @@ Contents:
 			interrupt(INTERRUPT_ALWAYS)
 			boutput(user,"[target] is too cold to be forged.")
 			return
-		if(!outline)
-			outline = icon_image.filters[length(icon_image.filters)]
 		target.set_real_color()
+		if(!outline && length(icon_image.filters))
+			outline = icon_image.filters[length(icon_image.filters)]
+			outline:color = target.color
 		icon_image.color =  target.color
-		outline:color = target.color
 		border.UpdateOverlays(icon_image, "action_icon")
 		if(get_dist(user, target) > 1 || user == null || target == null)
 			interrupt(INTERRUPT_ALWAYS)

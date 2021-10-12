@@ -76,11 +76,11 @@
 		// or use :
 		// if anyone tries to add a simple light to an area it will crash but WHY WOULD YOU EVER DO THAT
 		src:vis_contents += simple_light
-	src.simple_light.invisibility = 0
+	src.simple_light.invisibility = INVIS_NONE
 
 /atom/proc/hide_simple_light()
 	if (src.simple_light)
-		src.simple_light.invisibility = 101
+		src.simple_light.invisibility = INVIS_ALWAYS
 
 /atom/proc/destroy_simple_light()
 	if (length(simple_light_rgbas))
@@ -187,12 +187,12 @@
 			src:vis_contents += light
 			src.medium_lights += light
 	for(var/obj/overlay/simple_light/medium/light in src.medium_lights)
-		light.invisibility = 0
+		light.invisibility = INVIS_NONE
 	update_medium_light_visibility()
 
 /atom/proc/hide_medium_light()
 	for(var/obj/overlay/simple_light/medium/light in src.medium_lights)
-		light.invisibility = 101
+		light.invisibility = INVIS_ALWAYS
 
 /atom/proc/destroy_medium_light()
 	if (length(medium_light_rgbas))
@@ -309,12 +309,12 @@
 			src:vis_contents += light
 			src.mdir_lights += light
 	for(var/obj/overlay/simple_light/medium/directional/light in src.mdir_lights)
-		light.invisibility = 0
+		light.invisibility = INVIS_NONE
 	update_mdir_light_visibility(src.dir)
 
 /atom/proc/hide_mdir_light()
 	for(var/obj/overlay/simple_light/medium/directional/light in src.mdir_lights)
-		light.invisibility = 101
+		light.invisibility = INVIS_ALWAYS
 
 /atom/proc/destroy_mdir_light()
 	if (length(mdir_light_rgbas))

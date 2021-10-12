@@ -506,7 +506,7 @@ datum
 			fluid_g = 163
 			fluid_b = 30
 			transparency = 190
-			alch_strength = 0.25 //half vodka by content, half vodka strength
+			alch_strength = 0.1 //half vodka by content, half vodka strength
 
 		fooddrink/alcoholic/cocktail_bloodymary
 			name = "Bloody Mary"
@@ -518,7 +518,7 @@ datum
 			fluid_g = 53
 			fluid_b = 0
 			transparency = 190
-			alch_strength = 0.25
+			alch_strength = 0.1
 
 		fooddrink/alcoholic/cocktail_bloodyscary
 			name = "Bloody Scary"
@@ -552,7 +552,7 @@ datum
 			fluid_r = 240
 			fluid_g = 236
 			fluid_b = 110
-			alch_strength = 0.25
+			alch_strength = 0.1
 
 		fooddrink/alcoholic/piscosour
 			name = "Pisco Sour"
@@ -933,7 +933,7 @@ datum
 			fluid_r = 244
 			fluid_g = 244
 			fluid_b = 244
-			alch_strength = 0.3
+			alch_strength = 0.15
 			description = "Nice drink, Dude."
 			reagent_state = LIQUID
 
@@ -943,7 +943,7 @@ datum
 			fluid_r = 99
 			fluid_g = 32
 			fluid_b = 15
-			alch_strength = 0.15 //adding milk shouldn't quadruple the alcohol per volume
+			alch_strength = 0.2 //adding milk shouldn't quadruple the alcohol per volume
 			description = "A vodka-infused coffee cocktail. Supposedly created in honor of a US Ambassador that no one remembers."
 			reagent_state = LIQUID
 
@@ -986,7 +986,7 @@ datum
 			fluid_g = 195
 			fluid_b = 195
 			transparency = 50
-			alch_strength = 0.25
+			alch_strength = 0.1
 			description = "Once made to make bitter medication taste better, now drunk for its flavor."
 			reagent_state = LIQUID
 
@@ -997,7 +997,7 @@ datum
 			fluid_g = 195
 			fluid_b = 195
 			transparency = 50
-			alch_strength = 0.25
+			alch_strength = 0.1
 			description = "All the bitterness of a gin and tonic, now without any other flavor but alcohol burn!"
 			reagent_state = LIQUID
 
@@ -1042,7 +1042,7 @@ datum
 			fluid_r = 253
 			fluid_g = 212
 			fluid_b = 212
-			alch_strength = 0.3
+			alch_strength = 0.1
 			description = "A gin and tonic for people who think the gin gets in the way."
 			reagent_state = LIQUID
 
@@ -1188,7 +1188,7 @@ datum
 			fluid_r = 240
 			fluid_g = 185
 			fluid_b =  19
-			alch_strength = 0.5
+			alch_strength = 0.3
 			description = "The favorite drink of unfaithful, alcoholic executives in really nice suits."
 			reagent_state = LIQUID
 
@@ -1307,7 +1307,7 @@ datum
 			fluid_r = 174
 			fluid_g = 171
 			fluid_b = 51
-			alch_strength = 0.4
+			alch_strength = 0.2
 			description = "Preferred by housewives, raging alcoholics, and the rather large overlap between them."
 			reagent_state = LIQUID
 
@@ -1317,7 +1317,7 @@ datum
 			fluid_r = 229
 			fluid_g = 54
 			fluid_b = 77
-			alch_strength = 0.4
+			alch_strength = 0.3
 			description = "For when you want a healthier glass of knocks-you-the-fuck-out."
 			reagent_state = LIQUID
 
@@ -1327,7 +1327,7 @@ datum
 			fluid_r = 255
 			fluid_g = 255
 			fluid_b = 204
-			alch_strength = 0.2
+			alch_strength = 0.1
 			description = "I don't really like being caught in the rain all that much, to be honest."
 			reagent_state = LIQUID
 
@@ -1357,7 +1357,7 @@ datum
 			fluid_r = 124
 			fluid_g = 26
 			fluid_b = 54
-			alch_strength = 0.2
+			alch_strength = 0.15
 			description = "A tasty fruit wine cocktail."
 			reagent_state = LIQUID
 
@@ -1412,6 +1412,35 @@ datum
 			description = "Named after an Italian composer and like a Bellini, but with strawberry purée instead of peach."
 			reagent_state = LIQUID
 
+		fooddrink/alcoholic/blackbramble
+			name = "Blackberry Bramble"
+			id = "blackbramble"
+			fluid_r = 69
+			fluid_g = 42
+			fluid_b = 86
+			alch_strength = 0.14
+			description = "This tart cocktail softens gin with blackberries and lemon juice."
+			reagent_state = LIQUID
+
+		fooddrink/alcoholic/frenchmartini
+			name = "French Martini"
+			id = "frenchmartini"
+			fluid_r = 229
+			fluid_g = 111
+			fluid_b = 111
+			alch_strength = 0.14
+			description = "Vodka, raspberry liqueur, and pineapple juice. Not actually French."
+			reagent_state = LIQUID
+		fooddrink/alcoholic/jazzlemon
+			name = "Jazzberry Hard Lemonade"
+			id = "jazzlemon"
+			fluid_r = 67
+			fluid_g = 219
+			fluid_b = 238
+			alch_strength = 0.14
+			description = "This unnaturally blue lemonade looks too radical not to drink."
+			reagent_state = LIQUID
+
 		fooddrink/alcoholic/moscowmule
 			name = "Moscow Mule"
 			id = "moscowmule"
@@ -1428,7 +1457,7 @@ datum
 			fluid_r = 255
 			fluid_g = 124
 			fluid_b = 30
-			alch_strength = 0.22
+			alch_strength = 0.1
 			description = "A strikingly orange drink."
 			reagent_state = LIQUID
 
@@ -1474,7 +1503,7 @@ datum
 			fluid_r = 55
 			fluid_g = 179
 			fluid_b = 102
-			alch_strength = 0.4
+			alch_strength = 0.2
 			description = "Strikingly green and surprisingly sweet."
 			reagent_state = LIQUID
 
@@ -1488,10 +1517,6 @@ datum
 			description = "Patience."
 			reagent_state = LIQUID
 			var/bioeffect_length = 0
-
-			pooled()
-				..()
-				bioeffect_length = 0
 
 			on_mob_life(var/mob/living/carbon/human/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -1591,7 +1616,7 @@ datum
 			fluid_r = 167
 			fluid_g = 0
 			fluid_b = 0
-			alch_strength = 0.6
+			alch_strength = 0.25
 			description = "A sweet gin cocktail."
 			reagent_state = LIQUID
 
@@ -1611,7 +1636,7 @@ datum
 			fluid_r = 164
 			fluid_g = 77
 			fluid_b = 65
-			alch_strength = 0.3
+			alch_strength = 0.15
 			description = "A refreshing Spanish mixture of cola and wine."
 			reagent_state = LIQUID
 
@@ -1661,7 +1686,7 @@ datum
 			fluid_r = 253
 			fluid_g = 116
 			fluid_b = 101
-			alch_strength = 0.2
+			alch_strength = 0.1
 			description = "A refreshing mixed drink evocative of the seaside."
 			reagent_state = LIQUID
 
@@ -1671,7 +1696,7 @@ datum
 			fluid_r = 253
 			fluid_g = 198
 			fluid_b = 47
-			alch_strength = 0.3
+			alch_strength = 0.25
 			description = "Contains no monkeys or brass."
 			reagent_state = LIQUID
 
@@ -2220,10 +2245,6 @@ datum
 			bladder_value = 0.04
 			energy_value = 1
 			stun_resist = 25
-
-			pooled()
-				..()
-				tickcounter = 0
 
 			on_add()
 				if (ismob(holder?.my_atom))
@@ -3162,6 +3183,26 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 1.5
 
+		fooddrink/juice_blackberry
+			name = "blackberry juice"
+			id = "juice_blackberry"
+			fluid_r = 29
+			fluid_g = 34
+			fluid_b = 47
+			description = "Dark, fruity, and definitely going to stain."
+			reagent_state = LIQUID
+			thirst_value = 1.5
+
+		fooddrink/juice_raspberry
+			name = "raspberry juice"
+			id = "juice_raspberry"
+			fluid_r = 163
+			fluid_g = 3
+			fluid_b = 37
+			description = "Sweet, tart, and reminds you of summertime."
+			reagent_state = LIQUID
+			thirst_value = 1.5
+
 		fooddrink/juice_cherry
 			name = "cherry juice"
 			id = "juice_cherry"
@@ -3173,13 +3214,13 @@ datum
 			thirst_value = 1.5
 			bladder_value = -1.5
 
-		fooddrink/juice_raspberry
-			name = "raspberry juice"
-			id = "juice_raspberry"
+		fooddrink/juice_blueraspberry
+			name = "blue raspberry juice"
+			id = "juice_blueraspberry"
 			fluid_r = 101
 			fluid_g = 216
 			fluid_b = 230
-			description = "What do you mean? Rapsberries have always been this shade of blue."
+			description = "Radically flavorlicious. There's really nothing else to call it."
 			reagent_state = LIQUID
 			thirst_value = 1.5
 			bladder_value = -1.5
@@ -3288,6 +3329,61 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 1
 			bladder_value = -1
+
+		fooddrink/turmeric
+			name = "turmeric powder"
+			id = "currypowder"
+			description = "Has a warm, spicy scent and nausea-soothing properties. But if you get this shit on something, the stain's NEVER coming out."
+			reagent_state = SOLID
+			fluid_r = 224
+			fluid_g = 168
+			fluid_b = 12
+			transparency = 255
+
+			reaction_mob(var/mob/M, var/method = TOUCH, var/volume)
+				. = ..()
+				if(method == TOUCH && volume >= 10)
+					boutput(M, "<span class='notice'><b>The chemical stains your skin!</b></span>")
+					var/oldcol = M.color
+					M.color = list(
+						0.5, 0, 0,
+						0, 0.5, 0,
+						0, 0, 0.5,
+						0.5, 0.35, 0.0625)
+					M.onVarChanged("color", oldcol, M.color)
+
+			reaction_obj(var/obj/O, var/volume)
+				if(volume >= 10)
+					var/oldcol = O.color
+					O.color = list(
+						0.5, 0, 0,
+						0, 0.5, 0,
+						0, 0, 0.5,
+						0.5, 0.35, 0.0625)
+					O.onVarChanged("color", oldcol, O.color)
+
+			reaction_turf(var/turf/T, var/volume)
+				if(volume >= 20)
+					var/oldcol = T.color
+					T.color = list(
+						0.5, 0, 0,
+						0, 0.5, 0,
+						0, 0, 0.5,
+						0.5, 0.35, 0.0625)
+					T.onVarChanged("color", oldcol, T.color)
+
+			on_mob_life(var/mob/living/M, var/mult = 1)
+				for(var/datum/ailment_data/disease/virus in M.ailments)
+					if(probmult(10) && istype(virus.master,/datum/ailment/disease/cold))
+						M.cure_disease(virus)
+						boutput(M,"<span class= 'notice'>You feel a little less ill.</span>")
+					if(probmult(10) && istype(virus.master,/datum/ailment/disease/flu))
+						M.cure_disease(virus)
+						boutput(M,"<span class= 'notice'>You feel a little less ill.</span>")
+					if(probmult(10) && istype(virus.master,/datum/ailment/disease/food_poisoning))
+						M.cure_disease(virus)
+						boutput(M,"<span class= 'notice'>You feel a little less sickly.</span>")
+				..()
 
 		fooddrink/juice_pickle
 			name = "pickle juice"
@@ -3894,10 +3990,6 @@ datum
 			fluid_b = 81
 			transparency = 200
 			var/alch_counter = 0 //ripped straight from amantin - moonlol
-
-			pooled()
-				..()
-				alch_counter = 0
 
 			on_mob_life(var/mob/M, var/mult = 0)
 

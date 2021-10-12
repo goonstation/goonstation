@@ -5448,6 +5448,12 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
+"boE" = (
+/obj/landmark/spawner{
+	name = "dolly"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "boW" = (
 /obj/cable,
 /obj/disposalpipe/switch_junction/right/south,
@@ -70821,6 +70827,8 @@
 /obj/item/reagent_containers/hypospray,
 /obj/item/remote/porter/port_a_sci,
 /obj/machinery/light/incandescent/netural,
+/obj/item/disk/data/tape/artifact_research,
+/obj/item/disk/data/tape/master,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "uEg" = (
@@ -130967,7 +130975,7 @@ vzA
 wYJ
 mBB
 mBB
-mBB
+boE
 mBB
 mBB
 mBB

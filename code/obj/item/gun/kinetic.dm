@@ -1441,7 +1441,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	wear_image_icon = 'icons/mob/back.dmi'
 	force = MELEE_DMG_RIFLE
 	caliber = 0.308
-	max_ammo_capacity = 4
+	max_ammo_capacity = 6
 	auto_eject = 1
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
 	object_flags = NO_ARM_ATTACH
