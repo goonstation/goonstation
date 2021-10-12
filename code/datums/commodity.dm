@@ -529,10 +529,9 @@
 	comtype = /obj/item/seed/alien
 	desc = "Sprouted from an unknown origin, these seeds hold many secrets."
 	onmarket = 0
-	price = 100
-	baseprice = 50
-	upperfluc = 10
-	lowerfluc = -10
+	price = 800
+	upperfluc = 100
+	lowerfluc = -100
 	onmarket = 0
 
 /datum/commodity/pisscher
@@ -540,7 +539,7 @@
 	comtype = /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher/pisscher
 	desc = "Botanist's friend and precursor for a great fertilizer... but why is it in a pitcher!?"
 	onmarket = 0
-	price = 1000
+	price = 1300
 	upperfluc = 400
 	lowerfluc = -200
 
@@ -567,7 +566,7 @@
 	comtype = /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/
 	desc_buy = "Better not ask where it is needed."
 	onmarket = 0
-	price = 5000
+	price = 1000
 	upperfluc = 500
 	lowerfluc = -500
 
@@ -576,7 +575,7 @@
 	comtype = /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat
 	desc_buy = "Not as ... uh... nutritious as its sapient form."
 	onmarket = 0
-	price = 1000
+	price = 500
 	upperfluc = 150
 	lowerfluc = -150
 
