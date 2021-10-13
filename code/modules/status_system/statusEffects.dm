@@ -638,13 +638,13 @@
 
 			switch(stage)
 				if(1)
-					damage_burn = 0.9 * prot
+					damage_burn = 1 * prot
 					howMuch = ""
 				if(2)
 					damage_burn = 2 * prot
 					howMuch = "very much "
 				if(3)
-					damage_burn = 3.5 * prot
+					damage_burn = 4 * prot
 					howMuch = "extremely "
 
 			return ..(timePassed)

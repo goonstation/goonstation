@@ -2598,6 +2598,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	New()
 		..()
 		icon_state = pick("bee", "buddy", "kitten", "monkey", "possum", "wendigo", "bunny", "penguin")
+		icon_state_alive = src.icon_state
 		icon_state_dead = src.icon_state
 
 	death(var/gibbed)

@@ -532,6 +532,8 @@ toxic - poisons
 		if(isliving(hit))
 			var/mob/living/L = hit
 			L.bodytemperature = max(50, L.bodytemperature - proj.power * 5)
+			if(L.getStatusDuration("shivering" < power))
+				L.setStatus("shivering", power/2 SECONDS)
 			var/obj/icecube/I = new/obj/icecube(get_turf(L), L)
 			I.health = proj.power / 2
 

@@ -534,7 +534,7 @@ var/f_color_selector_handler/F_Color_Selector
 			Ar.build_sims_score()
 
 	url_regex = new("(https?|byond|www)(\\.|:\\/\\/)", "i")
-	full_url_regex = new(@"(https?:\/\/)?((www\.)?([-\d\l]+\.)+[\d\l]+(\/\S+)*\/?)","ig")
+	full_url_regex = new(@"(https?:\/\/)?((www\.)?([-\w]+\.)+[\l]+(\/\S+)*\/?)","ig")
 
 	UPDATE_TITLE_STATUS("Updating status")
 	Z_LOG_DEBUG("World/Init", "Updating status...")
@@ -904,6 +904,10 @@ var/f_color_selector_handler/F_Color_Selector
 		return list2params(s)
 
 	else // Discord bot communication (or callbacks)
+
+		var/game_servers_response = game_servers?.topic(T, addr)
+		if(!isnull(game_servers_response))
+			return game_servers_response
 
 #ifdef TWITCH_BOT_ALLOWED
 		//boutput(world,"addres : [addr]     twitchbotaddr : [TWITCH_BOT_ADDR]")

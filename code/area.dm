@@ -1208,9 +1208,22 @@ ABSTRACT_TYPE(/area/prefab)
 	name ="Space Ranch"
 	icon_state = "green"
 
+/area/prefab/synd_lab
+	name = "Syndicate TC Laboratory"
+	icon_state = "red"
+
 /area/prefab/shooting_range
 	name = "Shooting Range"
 	icon_state = "purple"
+
+/area/prefab/lesbeeans/interior
+	name = "Lesbian Bee Farm"
+	icon_state = "ranch"
+
+/area/prefab/lesbeeans/exterior
+	name = "Lesbian Bee Farm"
+	icon_state = "park"
+	force_fullbright = 1
 
 /area/prefab/silverglass
 	name = "Silverglass Platform"
@@ -3566,10 +3579,6 @@ ABSTRACT_TYPE(/area/mining)
 		#ifdef UNDERWATER_MAP
 		src.ambient_light = OCEAN_LIGHT
 		#endif
-#ifdef HALLOWEEN
-		alpha = 128
-		icon = 'icons/effects/dark.dmi'
-#endif
 
 	if(!requires_power)
 		power_light = 1

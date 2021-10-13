@@ -417,8 +417,10 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		STOP_TRACKING_CAT(TR_CAT_SHITTYBILLS)
 
 		if (!src.client && src.z != 2)
-			var/turf/target_turf = pick(get_area_turfs(/area/afterlife/bar/barspawn))
-
+			var/list/afterlife_bar_turfs = get_area_turfs(/area/afterlife/bar/barspawn)
+			if(!length(afterlife_bar_turfs))
+				return
+			var/turf/target_turf = pick(afterlife_bar_turfs)
 			var/mob/living/carbon/human/biker/newbody = new()
 			newbody.set_loc(target_turf)
 			newbody.overlays += image('icons/misc/32x64.dmi',"halo")
