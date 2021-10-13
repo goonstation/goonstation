@@ -305,7 +305,14 @@
 	CritterDeath()
 		..()
 		if (src.wearing_beret)
-			src.icon_state = "[base_icon_state]-dead-beret"
+			if (istype(wearing_beret, /obj/item/clothing/head/hos_hat))
+				var/obj/item/clothing/head/hos_hat/HH = wearing_beret
+				if(HH.blue)
+					src.icon_state = "[base_icon_state]-dead-beret-blue"
+				else
+					src.icon_state = "[base_icon_state]-dead-beret"
+			else if (istype(wearing_beret, /obj/item/clothing/head/NTberet/commander))
+				src.icon_state = "[base_icon_state]-dead-beret-com"
 		else
 			src.icon_state = "[base_icon_state]-dead"
 
@@ -313,8 +320,15 @@
 
 	on_revive()
 		..()
-		if (src.wearing_beret)
-			src.icon_state = "[base_icon_state]-beret"
+		if(src.wearing_beret)
+			if (istype(wearing_beret, /obj/item/clothing/head/hos_hat))
+				var/obj/item/clothing/head/hos_hat/HH = wearing_beret
+				if(HH.blue)
+					src.icon_state = "[base_icon_state]-beret-blue"
+				else
+					src.icon_state = "[base_icon_state]-beret"
+			else if (istype(wearing_beret, /obj/item/clothing/head/NTberet/commander))
+				src.icon_state = "[base_icon_state]-beret-com"
 		else
 			src.icon_state = base_icon_state
 
@@ -410,7 +424,7 @@
 		if (src.alive)
 			if (src.wearing_beret)
 				if (istype(wearing_beret, /obj/item/clothing/head/hos_hat))
-					var/obj/item/clothing/head/hos_hat/HH
+					var/obj/item/clothing/head/hos_hat/HH = wearing_beret
 					if(HH.blue)
 						src.icon_state = "[base_icon_state]-beret-blue"
 					else
@@ -426,7 +440,7 @@
 		else
 			if (src.wearing_beret)
 				if (istype(wearing_beret, /obj/item/clothing/head/hos_hat))
-					var/obj/item/clothing/head/hos_hat/HH
+					var/obj/item/clothing/head/hos_hat/HH = wearing_beret
 					if(HH.blue)
 						src.icon_state = "[base_icon_state]-dead-beret-blue"
 					else
