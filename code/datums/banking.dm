@@ -872,10 +872,9 @@
 			src.take_damage(70)
 
 	proc/TryToFindRecord()
-		for(var/datum/db_record/B in data_core.bank.records)
-			if(src.scan && (B["name"] == src.scan.registered) )
-				src.accessed_record = B
-				return 1
+		if(src.scan)
+			src.accessed_record = data_core.bank.find_record("name", src.scan.registered)
+			return !!src.accessed_record
 		return 0
 
 
@@ -1046,8 +1045,6 @@
 		STOP_TRACKING
 
 proc/FindBankAccountByName(var/nametosearch)
+	RETURN_TYPE(/datum/db_record)
 	if (!nametosearch) return
-	for(var/datum/db_record/B in data_core.bank.records)
-		if(B["name"] == nametosearch)
-			return B
-	return
+	return data_core.bank.find_record("name", nametosearch)
