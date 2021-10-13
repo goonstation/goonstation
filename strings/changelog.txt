@@ -1,5 +1,9 @@
 
 (t)wed oct 13 21
+(u)Luxizzle
+(p)6239
+(e)📄|tgui
+(*)You can now select your pronouns separately from your sex. Saved pronouns have been reset to they/them.
 (u)BatElite
 (p)6080
 (e)🆕🗺🎨|feature, mapping, sprites
