@@ -35594,8 +35594,8 @@
 /obj/item/clothing/suit/hoodie{
 	desc = "Smells vaguely of cabbage and diesel."
 	},
-/obj/item/clothing/head/helmet/space/blackstronaut{
-	desc = "This was cheaply spray-painted with flames at some point, but only a few flecks remain. There's a little tag on the back that says 'NASSA'.";
+/obj/item/clothing/head/helmet/space/mcpsuit{
+	desc = "This was cheaply spray-painted with flames at some point, but only a few flecks remain.";
 	name = "dented motorbike helm"
 	},
 /obj/machinery/light{

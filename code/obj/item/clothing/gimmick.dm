@@ -251,18 +251,18 @@
 	icon_state = "devil"
 	item_state = "devil"
 
-// NASSA
+// DAVA space suits
 
-/obj/item/clothing/head/helmet/space/blackstronaut
-	name = "NASSA space helmet"
+/obj/item/clothing/head/helmet/space/mcpsuit
+	name = "DAVA space helmet"
 	desc = "A helmet with a self-contained pressurized environment. Kinda resembles a motorcycle helmet."
 	icon_state = "EOD"
 
-/obj/item/clothing/under/gimmick/blackstronaut
-	name = "NASSA space suit"
-	desc = "A space activity suit embroidered with the NASSA logo. Space is one cold muthafucka."
-	icon_state = "nassa"
-	item_state = "nassa"
+/obj/item/clothing/under/gimmick/mcpsuit
+	name = "DAVA suit"
+	desc = "A easy to put on spacesuit for those living in conditions that require heavy EVA."
+	icon_state = "dava"
+	item_state = "dava"
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
 	permeability_coefficient = 0.02
@@ -276,7 +276,7 @@
 
 /obj/item/clothing/under/gimmick/snazza
 	name = "SNAZZA suit"
-	desc = "A NASSA Suit that appears to have been gussied and repurposed as a space bikini. Snazzy, but utterly useless for space travel."
+	desc = "A Dava Suit that appears to have been gussied and repurposed as a space bikini. Snazzy, but utterly useless for space travel."
 	icon_state = "snazza"
 	item_state = "snazza"
 
