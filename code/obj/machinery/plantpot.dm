@@ -114,7 +114,7 @@
 			status |= BROKEN
 
 			if(P)
-				var/obj/item/seed/S = unpool(/obj/item/seed)
+				var/obj/item/seed/S = new /obj/item/seed
 
 				S.generic_seed_setup(P)
 				src.HYPnewplant(S)
@@ -688,7 +688,7 @@
 					src.contributors += user
 			else
 				boutput(user, "<span class='alert'>You plant the seed, but nothing happens.</span>")
-				pool (SEED)
+				qdel(SEED)
 			return
 
 		else if(istype(W, /obj/item/seedplanter/))
@@ -702,9 +702,9 @@
 			user.visible_message("<span class='notice'>[user] plants a seed in the [src].</span>")
 			var/obj/item/seed/SEED
 			if(SP.selected.unique_seed)
-				SEED = unpool(SP.selected.unique_seed)
+				SEED = new SP.selected.unique_seed
 			else
-				SEED = unpool(/obj/item/seed)
+				SEED = new /obj/item/seed
 			SEED.generic_seed_setup(SP.selected)
 			SEED.set_loc(src)
 			if(SEED.planttype)
@@ -715,7 +715,7 @@
 					src.contributors += user
 			else
 				boutput(user, "<span class='alert'>You plant the seed, but nothing happens.</span>")
-				pool (SEED)
+				qdel(SEED)
 
 		else if(istype(W, /obj/item/reagent_containers/glass/))
 			// Not just watering cans - any kind of glass can be used to pour stuff in.
@@ -737,12 +737,12 @@
 			// Planting a crystal shard simply puts a crystal seed inside the plant pot for
 			// a moment, spawns a new plant from it, then deletes both the seed and the shard.
 			user.visible_message("<span class='notice'>[user] plants [W] in the tray.</span>")
-			var/obj/item/seed/crystal/WS = unpool(/obj/item/seed/crystal)
+			var/obj/item/seed/crystal/WS = new /obj/item/seed/crystal
 			WS.set_loc(src)
 			HYPnewplant(WS)
-			pool(W)
+			qdel(W)
 			sleep(0.5 SECONDS)
-			pool(WS)
+			qdel(WS)
 			if(!(user in src.contributors))
 				src.contributors += user
 
@@ -868,6 +868,7 @@
 					usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
 					src.reagents.clear_reagents()
 					src.do_update_icon = 1
+					logTheThing("combat", usr, null, "cleared a hydroponics tray containing [current.name] at [log_loc(src)]")
 					HYPdestroyplant()
 		else
 			if(alert("Clear this tray?",,"Yes","No") == "Yes")
@@ -1186,7 +1187,7 @@
 
 				// Start up the loop of grabbing all our produce. Remember, each iteration of
 				// this loop is for one item each.
-				var/obj/CROP = unpool(itemtype)
+				var/obj/CROP = new itemtype
 				CROP.set_loc(src)
 				// I bet this will go real well.
 				if(!dont_rename_crop)
@@ -1295,10 +1296,10 @@
 					// need to pass genes and whatnot along like we did for fruit.
 					var/obj/item/seed/S = CROP
 					if(growing.unique_seed)
-						S = unpool(growing.unique_seed)
+						S = new growing.unique_seed
 						S.set_loc(src)
 					else
-						S = unpool(/obj/item/seed)
+						S = new /obj/item/seed
 						S.set_loc(src)
 						S.removecolor()
 
@@ -1357,10 +1358,10 @@
 					// incase you couldn't get them otherwise, though.
 					var/obj/item/seed/S
 					if(growing.unique_seed)
-						S = unpool(growing.unique_seed)
+						S = new growing.unique_seed
 						S.set_loc(src)
 					else
-						S = unpool(/obj/item/seed)
+						S = new /obj/item/seed
 						S.set_loc(src)
 						S.removecolor()
 					var/datum/plantgenes/HDNA = src.plantgenes
@@ -1541,7 +1542,7 @@
 		// then get rid of the seed, mutate the genes a little and update the pot sprite.
 		if(growing.harvestable) src.harvests = growing.harvests + DNA.harvests
 		if(src.harvests < 1) src.harvests = 1
-		pool (SEED)
+		qdel(SEED)
 
 		HYPmutateplant(1)
 		post_alert("event_new")

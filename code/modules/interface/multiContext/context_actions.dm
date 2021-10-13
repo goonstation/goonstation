@@ -708,6 +708,9 @@
 	special
 		icon_background = "key_special"
 
+	black
+		icon_background = "keyb"
+
 
 /datum/contextAction/kudzu
 	icon = 'icons/ui/context16x16.dmi'

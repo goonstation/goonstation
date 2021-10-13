@@ -61,7 +61,7 @@
 
 	blob_act(var/power)
 		if (prob(power * 2.5))
-			var/obj/item/I = unpool(/obj/item/raw_material/scrap_metal)
+			var/obj/item/I = new /obj/item/raw_material/scrap_metal
 			I.set_loc(get_turf(src))
 
 			if (src.material)
@@ -139,6 +139,12 @@
 	icon_state = "beebed"
 	desc = "A soft little bed the general size and shape of a space bee."
 	parts_type = /obj/item/furniture_parts/stool/bee_bed
+
+/obj/stool/bee_bed/double // Prefab variant
+	name = "double bee bed"
+	icon_state = "beebed_double"
+	desc = "A bee bed shaped to accomodate two sleeping bees while also gently smushing them together, creating one of the most adorable sights in the universe."
+	parts_type = /obj/item/furniture_parts/stool/bee_bed/double
 
 /obj/stool/bar
 	name = "bar stool"
@@ -901,6 +907,7 @@
 		if (src.c_color)
 			C.icon_state = src.c_color
 		C.set_dir(user.dir)
+		ON_COOLDOWN(user, "chair_stand", 1 SECOND)
 		boutput(user, "You unfold [C].")
 		user.drop_item()
 		qdel(src)

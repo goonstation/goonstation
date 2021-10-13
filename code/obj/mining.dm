@@ -128,7 +128,7 @@
 /obj/magnet_target_marker
 	name = "mineral magnet target"
 	desc = "Marks the location of an area of asteroid magnetting."
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	var/width = 15
 	var/height = 15
 	var/scan_range = 7
@@ -271,7 +271,7 @@
 		if (istype(W, /obj/item/raw_material/plasmastone) && !loaded)
 			loaded = 1
 			boutput(user, "<span class='notice'>You charge the magnetizer with the plasmastone.</span>")
-			pool(W)
+			qdel(W)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (!magnet)
@@ -405,7 +405,7 @@
 			for (var/obj/forcefield/mining/M in wall_bits)
 				M.opacity = 1
 				M.set_density(1)
-				M.invisibility = 0
+				M.invisibility = INVIS_NONE
 
 			active = 1
 
@@ -445,7 +445,7 @@
 				for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
 					M.opacity = 0
 					M.set_density(0)
-					M.invisibility = 1
+					M.invisibility = INVIS_INFRA
 				active = 0
 				boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder! (ERROR: NO ENCOUNTER)")
 				return
@@ -460,7 +460,7 @@
 			for (var/obj/forcefield/mining/M in wall_bits)
 				M.opacity = 0
 				M.set_density(0)
-				M.invisibility = 101
+				M.invisibility = INVIS_ALWAYS
 
 			src.updateUsrDialog()
 			return
@@ -632,7 +632,7 @@
 		for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
 			M.opacity = 1
 			M.set_density(1)
-			M.invisibility = 0
+			M.invisibility = INVIS_NONE
 
 		active = 1
 
@@ -683,7 +683,7 @@
 			for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
 				M.opacity = 0
 				M.set_density(0)
-				M.invisibility = 1
+				M.invisibility = INVIS_INFRA
 			active = 0
 			boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder! (ERROR: NO ENCOUNTER)")
 			return
@@ -704,7 +704,7 @@
 		for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
 			M.opacity = 0
 			M.set_density(0)
-			M.invisibility = 101
+			M.invisibility = INVIS_ALWAYS
 
 		src.updateUsrDialog()
 		return
@@ -1341,7 +1341,7 @@
 				O.onExcavate(src)
 			var/makeores
 			for(makeores = src.amount, makeores > 0, makeores--)
-				var/obj/item/raw_material/MAT = unpool(ore_to_create)
+				var/obj/item/raw_material/MAT = new ore_to_create
 				MAT.set_loc(src)
 
 				if(MAT.material)

@@ -299,7 +299,7 @@
 			if (src.skinresult && max_skins)
 				if (istype(I, /obj/item/circular_saw) || istype(I, /obj/item/kitchen/utensil/knife) || istype(I, /obj/item/scalpel) || istype(I, /obj/item/raw_material/shard) || istype(I, /obj/item/sword) || istype(I, /obj/item/saw) || istype(I, /obj/item/wirecutters))
 					for (var/i, i<rand(1, max_skins), i++)
-						var/obj/item/S = unpool(src.skinresult)
+						var/obj/item/S = new src.skinresult
 						S.set_loc(src.loc)
 					src.skinresult = null
 					M.visible_message("<span class='alert'>[M] skins [src].</span>","You skin [src].")
@@ -319,12 +319,12 @@
 
 	proc/butcher(var/mob/M, drop_brain = TRUE)
 		var/i = rand(2,4)
-		var/transfer = src.reagents.total_volume / i
+		var/transfer = src.reagents ? src.reagents.total_volume / i : 0
 
 		while (i-- > 0)
 			var/obj/item/reagent_containers/food/newmeat = new meat_type
 			newmeat.set_loc(src.loc)
-			src.reagents.trans_to(newmeat, transfer)
+			src.reagents?.trans_to(newmeat, transfer)
 			if (name_the_meat)
 				newmeat.name = "[src.name] meat"
 				newmeat.real_name = newmeat.name

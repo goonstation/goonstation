@@ -1407,7 +1407,7 @@
 			// 	// shock(user, 70)
 			// 	random_burn_damage(user, 50)
 			// 	user.changeStatus("weakened", 4 SECONDS)
-			// 	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
+			// 	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 			// 	s.set_up(2, 1, (get_turf(src)))
 			// 	s.start()
 			// 	user.visible_message("<span class='alert'>[user] tries to fire [src]! The gun initiates its failsafe mode.</span>")

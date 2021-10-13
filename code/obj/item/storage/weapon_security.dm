@@ -361,6 +361,12 @@
 	spawn_contents = list(/obj/item/gun/kinetic/blowgun,\
 	/obj/item/storage/pouch/poison_dart = 2)
 
+/obj/item/storage/box/chameleonbomb
+	name = "chameleon bomb case"
+	desc = "A case that contains 2 syndicate chameleon bombs"
+	icon_state = "hard_case"
+	spawn_contents = list(/obj/item/device/chameleon/bomb = 2)
+
 // Starter kit used in the conspiracy/spy game mode.
 /obj/item/storage/box/spykit
 	name = "spy starter kit"

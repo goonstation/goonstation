@@ -160,6 +160,10 @@
 
 
 /obj/machinery/door/firedoor/attack_ai(mob/user as mob)
+	var/obj/machinery/door/airlock/mydoor = locate(/obj/machinery/door/airlock) in src.loc
+	if(mydoor?.aiControlDisabled == 1)
+		boutput(user, "<span class='notice'>You cannot control this firelock because its associated airlock's AI control is disabled!</span>")
+		return
 	if(!blocked && !operating)
 		if(density)
 			set_open()

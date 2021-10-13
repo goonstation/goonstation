@@ -258,7 +258,7 @@ Frequency:
 			user.show_text("The [src.name] does not seem to work here!", "red")
 			return
 
-		var/obj/portal/P = unpool(/obj/portal)
+		var/obj/portal/P = new /obj/portal
 		P.set_loc(our_loc)
 		portals += P
 		if (!src.our_target)
@@ -272,6 +272,6 @@ Frequency:
 		SPAWN_DBG(30 SECONDS)
 			if (P)
 				portals -= P
-				pool(P)
+				qdel(P)
 
 		return

@@ -100,7 +100,7 @@ var/global/obj/flashDummy
 	var/list/affected = DrawLine(from, O, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 	for(var/obj/Q in affected)
-		SPAWN_DBG(0.6 SECONDS) pool(Q)
+		SPAWN_DBG(0.6 SECONDS) qdel(Q)
 
 	for(var/mob/living/M in get_turf(target))
 		M.shock(from, wattage, "chest", 1, 1)
@@ -132,7 +132,7 @@ var/global/obj/flashDummy
 	var/list/affected = DrawLine(from, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 	for(var/obj/O in affected)
-		SPAWN_DBG(0.6 SECONDS) pool(O)
+		SPAWN_DBG(0.6 SECONDS) qdel(O)
 
 	if(wattage && isliving(target)) //Probably unsafe.
 		target:shock(from, wattage, "chest", stun_coeff, 1)
@@ -307,6 +307,7 @@ proc/get_angle(atom/a, atom/b)
 		index = findtext(t, "\t")
 	return t // fuk.
 
+// This function is literally the exact same as sanitize(). ???
 /proc/sanitize_noencode(var/t)
 	var/index = findtext(t, "\n")
 	while(index)
@@ -325,14 +326,19 @@ proc/get_angle(atom/a, atom/b)
 		var/list/bad_characters = list("_", "'", "\"", "<", ">", ";", "[", "]", "{", "}", "|", "\\", "/")
 		for(var/c in bad_characters)
 			t = replacetext(t, c, "")
-	var/index = findtext(t, "<")
-	while(index)
-		t = copytext(t, 1, index) + copytext(t, index+1)
-		index = findtext(t, "<")
-	index = findtext(t, ">")
-	while(index)
-		t = copytext(t, 1, index) + copytext(t, index+1)
-		index = findtext(t, ">")
+
+	// html_encode(t) will convert < and > to &lt; and &gt;
+	// which will allow them to be used (safely) in messages
+	t = html_encode(t)
+
+	// var/index = findtext(t, "<")
+	// while(index)
+	// 	t = copytext(t, 1, index) + "&lt;" + copytext(t, index+1)
+	// 	index = findtext(t, "<")
+	// index = findtext(t, ">")
+	// while(index)
+	// 	t = copytext(t, 1, index) + "&gt;" + copytext(t, index+1)
+	// 	index = findtext(t, ">")
 	. = sanitize(t)
 
 /proc/strip_html_tags(var/t,var/limit=MAX_MESSAGE_LEN)
@@ -342,14 +348,18 @@ proc/get_angle(atom/a, atom/b)
 
 /proc/adminscrub(var/t,var/limit=MAX_MESSAGE_LEN)
 	t = html_decode(copytext(t,1,limit))
-	var/index = findtext(t, "<")
-	while(index)
-		t = copytext(t, 1, index) + copytext(t, index+1)
-		index = findtext(t, "<")
-	index = findtext(t, ">")
-	while(index)
-		t = copytext(t, 1, index) + copytext(t, index+1)
-		index = findtext(t, ">")
+
+	// html_encode(t) will convert < and > to &lt; and &gt;
+	// which will allow them to be used (safely) in messages
+
+	// var/index = findtext(t, "<")
+	// while(index)
+	// 	t = copytext(t, 1, index) + "&lt;" + copytext(t, index+1)
+	// 	index = findtext(t, "<")
+	// index = findtext(t, ">")
+	// while(index)
+	// 	t = copytext(t, 1, index) + "&gt;" + copytext(t, index+1)
+	// 	index = findtext(t, ">")
 	. = html_encode(t)
 
 /proc/map_numbers(var/x, var/in_min, var/in_max, var/out_min, var/out_max)
@@ -2101,7 +2111,7 @@ var/global/lastDectalkUse = 0
 
 		// Fetch via HTTP from goonhub
 		var/datum/http_request/request = new()
-		request.prepare(RUSTG_HTTP_METHOD_GET, "http://spacebee.goonhub.com/api/tts?dectalk=[url_encode(msg)]&api_key=[url_encode(ircbot.apikey)]", "", "")
+		request.prepare(RUSTG_HTTP_METHOD_GET, "https://spacebee.goonhub.com/api/tts?dectalk=[url_encode(msg)]&api_key=[config.spacebee_api_key]", "", "")
 		request.begin_async()
 		UNTIL(request.is_complete())
 		var/datum/http_response/response = request.into_response()
