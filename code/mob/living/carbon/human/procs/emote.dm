@@ -717,11 +717,11 @@
 
 					animate_stomp(src)
 
-					animate(hat, time=0.6 SECONDS) // delay hat icon change
-					if (hat_or_beret == "beret")
-						animate(icon_state="hosberet-smash")
-					else
-						animate(icon_state="hoscap-smash")
+					SPAWN_DBG(0.5 SECONDS)
+						if (hat_or_beret == "beret")
+							hat.icon_state="hosberet-smash"
+						else
+							hat.icon_state="hoscap-smash"
 					if(src.mind && src.mind.assigned_role != "Head of Security")
 						src.add_karma(5)
 				else
