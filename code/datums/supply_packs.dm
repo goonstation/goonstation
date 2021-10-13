@@ -1710,3 +1710,17 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	containername = "Percussion Band Kit"
 	contains = list(/obj/item/instrument/tambourine,/obj/item/instrument/triangle,/obj/item/instrument/cowbell)
 	containertype = /obj/storage/crate/wooden
+
+//Western
+
+/datum/supply_packs/west_coats
+	name = "Dusty Old Coats"
+	desc = "4x coats in various colors."
+	category = "Civilian Department"
+	contains = list(/obj/item/clothing/suit/gimmick/guncoat,
+			/obj/item/clothing/suit/gimmick/guncoat/black,
+			/obj/item/clothing/suit/gimmick/guncoat/tan,
+			/obj/item/clothing/suit/gimmick/guncoat/dirty)
+	cost = 2000
+	containername = "Dusty Old Clothing Crate"
+	containertype = /obj/storage/crate/wooden
