@@ -112,6 +112,7 @@
 			H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff]s [src] onto the [fluff2] where your butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>")
 			if (user.find_in_hand(src))
 				user.u_equip(src)
+				set_loc(get_turf(H))
 			return null
 		else
 			return 0
@@ -169,17 +170,6 @@
 			user.u_equip(src)
 			W.set_loc(B)
 			user.u_equip(W)
-
-		else if (istype(W, /obj/item/spacecash) && W.type != /obj/item/spacecash/buttcoin)
-			user.u_equip(W)
-			qdel(W)
-
-			var/obj/item/spacecash/buttcoin/S = new /obj/item/spacecash/buttcoin
-			S.setup(get_turf(src))
-			user.put_in_hand_or_drop(S)
-
-			user.show_text("You stuff the cash into the butt... (What is wrong with you?)")
-			qdel(src)
 
 		else
 			return ..()

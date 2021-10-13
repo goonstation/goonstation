@@ -296,6 +296,9 @@ var/global
 	blowout = 0
 	farty_party = 0
 	deep_farting = 0
+	no_emote_cooldowns = 0
+	// Default ghost invisibility. Set when the game is over
+	ghost_invisibility = INVIS_GHOST
 
 	datum/titlecard/lobby_titlecard
 

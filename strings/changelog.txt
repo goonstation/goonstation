@@ -1,5 +1,42 @@
 
+(t)tue oct 12 21
+(u)Mr. Moriarty
+(p)6223
+(e)🎨|sprites
+(*)Added three new waistcoats and a guard's coat to the clothing booth.
+(u)112358sam
+(p)6173
+(e)🆕|feature
+(+)Made LOOC text visible over the head of the speaker.
+(u)Azrun
+(p)6221
+(e)🆕🎨|feature, sprites
+(+)Nectar Perspiration visual effect upgraded to slightly larger buzzing insects.
+(u)alexkar598
+(p)6179
+(e)|
+(+)The description instructing you how to deconstruct reinforced walls now has bolded words to hint to the next step.
+(u)Zamujasa
+(*)Trying to move while dead will now ghost you. Don't worry, you can still wiggle with IJKL.
+(t)mon oct 11 21
+(u)pali
+(*)For Spooktober the space colour now varies slightly
+(u)Zamujasa
+(*)Ghosts become visible to everyone at the end of a round.
+(e)🆕|feature
+(+)Using floor tiles in hand now acts like using them on the turf you're on. This means you can add tiles to plating with the use key, or (if holding a crowbar) swap out the tiles.
+(+)Using &lt; and &gt; in messages should now work. &lt;3? This might break things, though, so report any new issues...
 (t)sun oct 10 21
+(u)Sovexe
+(p)6206
+(e)🆕🎨|feature, sprites
+(+)Arcfiend - max charge increased (2000 -> 2500)
+(+)Arcfiend - Jamming Field ability point cost reduced (200 -> 150)
+(u)Jan.antilles
+(p)6151
+(e)🆕🎨|feature, sprites
+(+)Added three new cooking recipes: Fettucine Alfredo, Chicken Alfredo, and Chicken Parmigiana!
+(+)Resprited existing spaghetti dishes to not use plates and look even tastier.
 (u)Batelite
 (p)6131
 (e)🆕|feature

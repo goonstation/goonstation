@@ -6,7 +6,27 @@
 	health_brute = 40
 	health_burn = 40
 	var/being_seen = FALSE
-	var/atom/last_witness
+	var/mob/last_witness
+	var/icon_states_with_supported_eyes = list("bee", "buddy", "kitten", "monkey", "possum", "wendigo", "bunny", "penguin")
+	var/image/eye_light
+	var/glowing_eye_color = "#c40000ff"
+	var/glowing_eyes_enabled_alpha = 190
+	var/glowing_eyes_active = 0
+
+	New()
+		. = ..()
+		if(src.icon_state in icon_states_with_supported_eyes)
+			eye_light = image('icons/obj/plushies.dmi', "[src.icon_state]-eyes")
+			eye_light.plane = PLANE_SELFILLUM
+			set_glowing_eyes(FALSE)
+
+		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/talk)
+		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/teleportation/blink)
+		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/teleportation/disappear)
+		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/teleportation/vengeful_retreat)
+		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/glowing_eyes/toggle_glowing_eyes)
+		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/glowing_eyes/set_glowing_eyes_color)
+		abilityHolder.updateButtons()
 
 	Login()
 		..()
@@ -16,15 +36,29 @@
 		boutput(src, "<span class='notice'>Your blink ability lets you teleport when you're not being watched.</span>")
 		boutput(src, "<span class='notice'>Your teleport away ability lets you teleport away and hide in a random station container.</span>")
 		boutput(src, "<span class='notice'>Your vengeful retreat will stun your recent attacker and teleport you away.</span>")
+		boutput(src, "<span class='notice'>Your toggle glowing eyes ability lets you toggle your eyes glowing at will.</span>")
+		boutput(src, "<span class='notice'>Your set glowing eyes color ability lets you set your eyes' glowing color.</span>")
 		boutput(src, "<span class='notice'>Access special emotes through *scream, *dance and *snap.</span>")
 
-	New()
-		. = ..()
-		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/talk)
-		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/blink)
-		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/teleport_away)
-		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/vengeful_retreat)
-		abilityHolder.updateButtons()
+	proc/set_glowing_eyes(var/enabled)
+		if (eye_light)
+			if(enabled)
+				eye_light.color = glowing_eye_color
+				eye_light.alpha = glowing_eyes_enabled_alpha
+				boutput(src, "<span class='notice'>Glowing eyes enabled.</span>")
+			else
+				eye_light.alpha = 0
+				boutput(src, "<span class='notice'>Glowing eyes disabled.</span>")
+			glowing_eyes_active = enabled
+			src.UpdateOverlays(eye_light, "eye_light")
+
+	say(message) // gross workaround to allow emotes despite canspeak = 0
+		if(dd_hasprefix(message, "*"))
+			canspeak = 1
+			. = ..()
+			canspeak = 0
+		else
+			. = ..()
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -67,12 +101,10 @@
 
 
 	proc/being_seen_status_update()
-		if (last_witness) // optimization attempt
+		if (last_witness && last_witness.client) // optimization attempt
 			if(get_dist(src, last_witness) < 3) // still next to last person that saw us, might be for instance pulling us or sitting next to us
-				set_dormant_status(TRUE)
 				return
 			else
-				set_dormant_status(FALSE)
 				last_witness = null
 
 		for (var/mob/M in viewers(src))
@@ -86,6 +118,7 @@
 				set_dormant_status(TRUE)
 				return
 		being_seen = FALSE
+		set_dormant_status(FALSE)
 
 	update_canmove()
 		src.canmove = !being_seen
@@ -93,6 +126,7 @@
 	setup_hands() // no hands
 		return
 
+ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 /datum/targetable/critter/cryptid_plushie
 	var/mob/living/critter/small_animal/plush/cryptid/our_plushie
 	icon = 'icons/mob/spell_buttons.dmi'
@@ -140,7 +174,47 @@
 			var/picked = pick(strings("ouija_board.txt", "ouija_board_words"))
 			words |= picked
 		return words
-/datum/targetable/critter/cryptid_plushie/blink
+
+ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
+/datum/targetable/critter/cryptid_plushie/teleportation
+
+	proc/get_a_random_station_unlocked_container()
+		var/list/eligible_containers = list()
+		for_by_tcl(iterated_container, /obj/storage)
+			if (iterated_container.z == Z_LEVEL_STATION && !iterated_container.locked)
+				eligible_containers += iterated_container
+		if (!length(eligible_containers))
+			return null
+		return pick(eligible_containers)
+
+	proc/teleport_to_a_target(var/teleportation_target = null, var/target_a_random_container = FALSE)
+		playsound(get_turf(holder.owner), "sound/effects/ghostbreath.ogg", 75, 1)
+		animate(holder.owner, alpha=0, time=1.5 SECONDS)
+		sleep(0.1 SECONDS)
+		animate_ripple(holder.owner, 4)
+		animate_wave(holder.owner, 3)
+		sleep(1.4 SECONDS)
+		if(!holder || !holder.owner)
+			return
+
+		if(target_a_random_container)
+			teleportation_target = get_a_random_station_unlocked_container()
+		if(istype(teleportation_target, /obj/storage))
+			var/obj/storage/container = teleportation_target
+			if(container.open)
+				container.close()
+		else
+			teleportation_target = get_turf(teleportation_target)
+		holder.owner.set_loc(teleportation_target)
+
+		playsound(get_turf(teleportation_target), "sound/effects/ghostlaugh.ogg", 75, 1)
+		animate(holder.owner, alpha=255, time=1.5 SECONDS)
+		sleep(1.5 SECONDS)
+		if(!holder || !holder.owner)
+			return
+		animate(holder.owner)
+
+/datum/targetable/critter/cryptid_plushie/teleportation/blink
 	name = "Teleport"
 	desc = "Phase yourself to a nearby visible spot when not being looked at."
 	icon_state = "blink"
@@ -156,38 +230,19 @@
 			return 1
 		if (!isturf(target))
 			if(istype(target, /obj/storage))
-				var/obj/storage/targetted_container
-				if(!targetted_container.locked)
-					target = get_turf(target) // couldn't find a container that wasn't locked
+				var/obj/storage/targetted_container = target
+				if(targetted_container.locked)
+					target = get_turf(target) // the container we picked is locked, we don't want to trap ourselves inside
 			else
 				target = get_turf(target)
 		if (target == get_turf(holder.owner))
 			return 1
+
 		SPAWN_DBG(0)
-			playsound(get_turf(holder.owner), "sound/effects/ghostbreath.ogg", 75, 1)
-			animate(holder.owner, alpha=0, time=1.5 SECONDS)
-			sleep(0.1 SECONDS)
-			animate_ripple(holder.owner, 4)
-			animate_wave(holder.owner, 3)
-			sleep(1.4 SECONDS)
-			if(!holder || !holder.owner)
-				return
-
-			if(istype(target, /obj/storage))
-				var/obj/storage/targetted_container
-				if(targetted_container.open)
-					targetted_container.close()
-			holder.owner.set_loc(target)
-
-			playsound(get_turf(holder.owner), "sound/effects/ghostlaugh.ogg", 75, 1)
-			animate(holder.owner, alpha=255, time=1.5 SECONDS)
-			sleep(1.5 SECONDS)
-			if(!holder || !holder.owner)
-				return
-			animate(holder.owner)
+			teleport_to_a_target(teleportation_target = target)
 		return 0
 
-/datum/targetable/critter/cryptid_plushie/teleport_away
+/datum/targetable/critter/cryptid_plushie/teleportation/disappear
 	name = "Disappear"
 	desc = "Teleport to a random container to hide, regardless of whether you're being looked at."
 	icon_state = "teleport"
@@ -200,36 +255,10 @@
 			return 1
 
 		SPAWN_DBG(0)
-			var/obj/storage/container = null
-
-			var/list/eligible_containers = list()
-			for_by_tcl(iterated_container, /obj/storage)
-				if (iterated_container.z == Z_LEVEL_STATION && !iterated_container.locked)
-					eligible_containers += iterated_container
-			if (!length(eligible_containers))
-				return
-			container = pick(eligible_containers)
-
-			playsound(get_turf(holder.owner), "sound/effects/ghostbreath.ogg", 75, 1)
-			animate(holder.owner, alpha=0, time=1.5 SECONDS)
-			sleep(0.1 SECONDS)
-			animate_ripple(holder.owner, 4)
-			animate_wave(holder.owner, 3)
-			sleep(1.4 SECONDS)
-			if(!holder || !holder.owner)
-				return
-			if(container.open)
-				container.close()
-			holder.owner.set_loc(container)
-			playsound(get_turf(container), "sound/effects/ghostlaugh.ogg", 75, 1)
-			animate(holder.owner, alpha=255, time=1.5 SECONDS)
-			sleep(1.5 SECONDS)
-			if(!holder || !holder.owner)
-				return
-			animate(holder.owner)
+			teleport_to_a_target(target_a_random_container = TRUE)
 		return 0
 
-/datum/targetable/critter/cryptid_plushie/vengeful_retreat
+/datum/targetable/critter/cryptid_plushie/teleportation/vengeful_retreat
 	name = "Vengeful Retreat"
 	desc = "After being attacked, harass your attacker and disappear."
 	icon_state = "blind"
@@ -262,33 +291,53 @@
 				holder.owner.lastattacker = null
 
 				SPAWN_DBG(0)
-					var/obj/storage/container = null
-
-					var/list/eligible_containers = list()
-					for_by_tcl(iterated_container, /obj/storage)
-						if (iterated_container.z == Z_LEVEL_STATION && !iterated_container.locked)
-							eligible_containers += iterated_container
-					if (!length(eligible_containers))
-						return
-					container = pick(eligible_containers)
-
-					playsound(get_turf(holder.owner), "sound/effects/ghostbreath.ogg", 75, 1)
-					animate(holder.owner, alpha=0, time=1.5 SECONDS)
-					sleep(0.1 SECONDS)
-					animate_ripple(holder.owner, 4)
-					animate_wave(holder.owner, 3)
-					sleep(1.4 SECONDS)
-					if(!holder || !holder.owner)
-						return
-					if(container.open)
-						container.close()
-					holder.owner.set_loc(container)
-					playsound(get_turf(container), "sound/effects/ghostlaugh.ogg", 75, 1)
-					animate(holder.owner, alpha=255, time=1.5 SECONDS)
-					sleep(1.5 SECONDS)
-					if(!holder || !holder.owner)
-						return
-					animate(holder.owner)
+					teleport_to_a_target(target_a_random_container = TRUE)
 				return 0
 		else
 			return 1
+
+ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/glowing_eyes)
+/datum/targetable/critter/cryptid_plushie/glowing_eyes
+	onAttach(datum/abilityHolder/H)
+		. = ..()
+		if(!our_plushie || our_plushie.eye_light == null) // no plushie or our plushie doesn't have glowing eyes
+			qdel(src)
+
+/datum/targetable/critter/cryptid_plushie/glowing_eyes/toggle_glowing_eyes
+	name = "Toggle glowing eyes"
+	desc = "Toggles whether your eyes glow."
+	icon_state = "bullc_cd"
+	cooldown = 5
+	targeted = 0
+	var/active_icon_state = "bullc"
+	var/inactive_icon_state = "bullc_cd"
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		our_plushie.glowing_eyes_active = !our_plushie.glowing_eyes_active
+		our_plushie.set_glowing_eyes(our_plushie.glowing_eyes_active)
+		icon_state = our_plushie.glowing_eyes_active ? active_icon_state : inactive_icon_state
+
+		return 0
+
+/datum/targetable/critter/cryptid_plushie/glowing_eyes/set_glowing_eyes_color
+	name = "Toggle glowing eyes color"
+	desc = "Toggles the color of your glowing eyes."
+	icon_state = "stinglsd"
+	cooldown = 5
+	targeted = 0
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		var/picked_color = input("Pick a color for the glowing eyes.", "Color", our_plushie.glowing_eye_color) as color
+		if(picked_color)
+			our_plushie.glowing_eye_color = picked_color
+
+		if(our_plushie.glowing_eyes_active) // refresh the color if eyes are active
+			our_plushie.set_glowing_eyes(TRUE)
+
+		return 0

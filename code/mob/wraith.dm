@@ -84,6 +84,7 @@
 		last_life_update = world.timeofday
 		src.hud = new hud_path (src)
 		src.attach_hud(hud)
+		src.flags |= UNCRUSHABLE
 
 		if (!movement_controller)
 			movement_controller = new /datum/movement_controller/poltergeist (src)
@@ -167,6 +168,7 @@
 		src.abilityHolder.regenRate = 1
 		src.health = initial(src.health) // oh sweet jesus it spammed so hard
 		src.haunting = 0
+		src.flags |= UNCRUSHABLE
 		src.hauntBonus = 0
 		deaths++
 		src.makeIncorporeal()
@@ -535,10 +537,12 @@
 
 			src.makeCorporeal()
 			src.haunting = 1
+			src.flags &= !UNCRUSHABLE
 
 			SPAWN_DBG (haunt_duration)
 				src.makeIncorporeal()
 				src.haunting = 0
+				src.flags |= UNCRUSHABLE
 
 			return 0
 

@@ -103,6 +103,9 @@
 	var/whitelistEnabled = 0
 	var/whitelist_path = "strings/whitelist.txt"
 
+	//Which server can ghosts join by clicking on an on-screen link
+	var/server_buddy_id = null
+
 /datum/configuration/New()
 	..()
 	var/list/L = childrentypesof(/datum/game_mode)
@@ -367,6 +370,9 @@
 
 			if ("whitelist_path")
 				config.whitelist_path = trim(value)
+
+			if ("server_buddy_id")
+				config.server_buddy_id = trim(value)
 
 			else
 				logDiary("Unknown setting in configuration: '[name]'")

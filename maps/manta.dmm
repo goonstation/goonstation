@@ -25745,10 +25745,10 @@
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
 "bsc" = (
-/obj/machinery/smelter,
 /obj/decal/tile_edge/stripe/big{
 	dir = 8
 	},
+/obj/machinery/neosmelter,
 /turf/simulated/floor/shuttlebay,
 /area/station/mining/refinery)
 "bsd" = (

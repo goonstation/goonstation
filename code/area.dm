@@ -3570,10 +3570,6 @@ ABSTRACT_TYPE(/area/mining)
 		#ifdef UNDERWATER_MAP
 		src.ambient_light = OCEAN_LIGHT
 		#endif
-#ifdef HALLOWEEN
-		alpha = 128
-		icon = 'icons/effects/dark.dmi'
-#endif
 
 	if(!requires_power)
 		power_light = 1

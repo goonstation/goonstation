@@ -98,7 +98,7 @@ var/mutable_appearance/fluid_ma
 				src.removed()
 				return
 
-		flags |= OPENCONTAINER
+		flags |= OPENCONTAINER | UNCRUSHABLE
 
 		//src.floated_atoms = list()
 
