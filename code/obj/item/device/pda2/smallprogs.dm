@@ -908,11 +908,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 					var/can_approve = 0
 
 					var/PDAowner = src.master.owner
-					var/PDAownerjob = "Unknown Job"
-					for(var/datum/db_record/G in data_core.general.records) //there is probably a better way of doing this
-						if(G["name"] == PDAowner)
-							PDAownerjob = G["rank"]
-							break
+					var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
 
 					if(PDAownerjob in list("Head of Security","Head of Personnel","Captain")) can_approve = 1
 
@@ -955,11 +951,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 
 		if(href_list["ticket"])
 			var/PDAowner = src.master.owner
-			var/PDAownerjob = "Unknown Job"
-			for(var/datum/db_record/G in data_core.general.records) //there is probably a better way of doing this
-				if(G["name"] == PDAowner)
-					PDAownerjob = G["rank"]
-					break
+			var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
 
 			var/ticket_target = input(usr, "Ticket recipient:",src.name) as text
 			if(!ticket_target) return
@@ -999,20 +991,12 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 
 		else if(href_list["fine"])
 			var/PDAowner = src.master.owner
-			var/PDAownerjob = "Unknown Job"
-			for(var/datum/db_record/G in data_core.general.records) //there is probably a better way of doing this
-				if(G["name"] == PDAowner)
-					PDAownerjob = G["rank"]
-					break
+			var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
 
 			var/ticket_target = input(usr, "Fine recipient:",src.name) as text
 			if(!ticket_target) return
 			ticket_target = copytext(strip_html(ticket_target),	 1, MAX_MESSAGE_LEN)
-			var/has_bank_record = 0
-			for(var/datum/db_record/B in data_core.bank.records) //this too
-				if(B["name"] == ticket_target)
-					has_bank_record = 1
-					break
+			var/has_bank_record = !!data_core.bank.find_record("name", ticket_target)
 			if(!has_bank_record)
 				message = "Error: No bank records found for [ticket_target]."
 				src.master.updateSelfDialog()
@@ -1051,11 +1035,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 
 		else if(href_list["approve"])
 			var/PDAowner = src.master.owner
-			var/PDAownerjob = "Unknown Job"
-			for(var/datum/db_record/G in data_core.general.records) //there is probably a better way of doing this
-				if(G["name"] == PDAowner)
-					PDAownerjob = G["rank"]
-					break
+			var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
 
 			var/datum/fine/F = locate(href_list["approve"])
 
