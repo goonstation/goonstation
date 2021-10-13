@@ -55,6 +55,83 @@
 		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/glowing_eyes/set_glowing_eyes_color)
 		abilityHolder.updateButtons()
 
+	death(gibbed)
+		. = ..()
+		// do stuff with old dead body
+		if(!gibbed)
+			src.visible_message("<span class='alert'>[src] lets out a haunting shriek as its body begins to lose its form and fades into mist...</span>",
+				"<span class='alert'>Your grasp on the physical realm weakens. Your form dissolves...</span>")
+			playsound(get_turf(src), "sound/ambience/spooky/Hospital_Haunted3.ogg", 50, 1)
+			SPAWN_DBG(0)
+				animate(src, alpha=0, time=7 SECONDS)
+				sleep(0.1 SECONDS)
+				if(!src || src.disposed)
+					return
+				animate_ripple(src, 4)
+				animate_wave(src, 3)
+				sleep(7 SECONDS)
+				if(!src || src.disposed)
+					return
+				qdel(src)
+		var/ckey_of_dead_player = src.ckey
+		var/mob/ghost_mob = src.ghostize()
+		if(!ghost_mob || !ghost_mob.client) // somewhere on the way we lost our dead player, try to find them
+			ghost_mob = null
+			if(ckey_of_dead_player)
+				for (var/mob/M in mobs)
+					if(M.ckey == ckey_of_dead_player)
+						ghost_mob = M
+		var/our_icon_state = src.icon_state
+		// resurrection attempt
+		if(!ghost_mob)
+			return
+		SPAWN_DBG(0)
+			if (tgui_alert(ghost_mob, "You have fallen, but the curse is not lifted this easily. Do you wish to return to the physical realm?", "Resurrection",
+				list("Yes", "No"), timeout = 60 SECOND) == "Yes")
+				// get a random not locked station container
+				var/list/eligible_containers = list()
+				for_by_tcl(iterated_container, /obj/storage)
+					if (iterated_container.z == Z_LEVEL_STATION && !iterated_container.locked && !istype(get_area(iterated_container), /area/listeningpost))
+						eligible_containers += iterated_container
+				if (!length(eligible_containers))
+					return
+				var/obj/storage/spawn_target = pick(eligible_containers)
+				if(spawn_target == null)
+					boutput(ghost_mob, "<h3><span class='alert'>Couldn't find a suitable location to respawn. Resurrection impossible.</span></h3>")
+					return
+				if(spawn_target.open) // close the container if it's opened
+					spawn_target.close()
+				var/path_to_obj_plushie = get_plush_for_icon_state(our_icon_state)
+				var/atom/new_vessel = new path_to_obj_plushie(spawn_target)
+				var/time_to_respawn = 2.5 MINUTES
+				boutput(ghost_mob, "<h3><span class='alert'>Your plushie has manifested inside [spawn_target] on the station. In [time_to_respawn/10] seconds you will possess it once more as long as the vessel is not destroyed before then.</span></h3>")
+				ghost_mob.set_loc(get_turf(spawn_target))
+				playsound(get_turf(spawn_target), "sound/ambience/spooky/Void_Calls.ogg", 100, 1)
+				sleep(time_to_respawn)
+				if(!ghost_mob || !ghost_mob.client) // somewhere on the way we lost our dead player, try to find them
+					ghost_mob = null
+					for (var/mob/M in mobs)
+						if(M.ckey == ckey_of_dead_player)
+							ghost_mob = M
+				if(!new_vessel || new_vessel.disposed)
+					if(ghost_mob)
+						boutput(ghost_mob, "<h3><span class='alert'>The vessel has been destroyed. Your return to the physical realm has been prevented.</span></h3>")
+				else // respawn the cryptid mob and reassign the ckey
+					if(ghost_mob)
+						boutput(ghost_mob, "<h3><span class='alert'>You awaken once more. The cycle continues.</span></h3>")
+					var/location_of_plushie = new_vessel.loc
+					if(!isturf(location_of_plushie) && !istype(location_of_plushie, /obj/storage)) // if the location isn't a turf or storage, get turf
+						location_of_plushie = get_turf(new_vessel)
+					qdel(new_vessel)
+					var/cryptid_mob_path = get_cryptid_mob_for_icon_state(our_icon_state)
+					var/mob/living/critter/small_animal/plush/cryptid/reborn_cryptid = new cryptid_mob_path(location_of_plushie)
+					reborn_cryptid.ckey = ckey_of_dead_player
+					SPAWN_DBG(0.5 SECONDS)
+						if(reborn_cryptid && !reborn_cryptid.disposed)
+							playsound(get_turf(reborn_cryptid), "sound/misc/jester_laugh.ogg", 60, 1)
+			else
+				boutput(ghost_mob, "<h3><span class='alert'>The cycle has been stopped.</span></h3>")
+
 	proc/get_plush_for_icon_state(var/input_icon_state)
 		var/path = "/obj/item/toy/plush/small/[input_icon_state]"
 		return text2path(path)
