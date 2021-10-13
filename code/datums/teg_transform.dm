@@ -118,7 +118,7 @@ datum/teg_transformation
   // TEG TRANFORMATIONS //
   //                    //
 
-	/// Default TEG Transformation we know and ""love""
+	/// Default TEG Transformation we know and ""love[""
 	default
 		mat_id = "steel"
 

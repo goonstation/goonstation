@@ -276,13 +276,13 @@ THROWING DARTS
 		if (!H.mini_health_hud)
 			H.mini_health_hud = 1
 
-		var/datum/data/record/probably_my_record = null
-		for (var/datum/data/record/R in data_core.medical)
-			if (R.fields["name"] == H.real_name)
+		var/datum/db_record/probably_my_record = null
+		for (var/datum/db_record/R in data_core.medical.records)
+			if (R["name"] == H.real_name)
 				probably_my_record = R
 				break
 		if (probably_my_record)
-			probably_my_record.fields["h_imp"] = "[src.sensehealth()]"
+			probably_my_record["h_imp"] = "[src.sensehealth()]"
 		..()
 
 	on_crit()

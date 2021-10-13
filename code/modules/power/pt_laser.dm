@@ -196,11 +196,11 @@
 	undistributed_earnings = 0
 
 	var/list/accounts = list()
-	for(var/datum/data/record/t in data_core.bank)
-		if(t.fields["job"] == "Chief Engineer")
+	for(var/datum/db_record/t in data_core.bank.records)
+		if(t["job"] == "Chief Engineer")
 			accounts += t
 			accounts += t //fuck it
-		else if(t.fields["job"] == "Engineer")
+		else if(t["job"] == "Engineer")
 			accounts += t
 
 	if(!length(accounts)) // no engineering staff but someone still started the PTL
@@ -209,8 +209,8 @@
 		wagesystem.station_budget += round(generated_moolah/2)
 		generated_moolah -= round(generated_moolah/2) //no coming up with $$$ out of air!
 
-		for(var/datum/data/record/t in accounts)
-			t.fields["current_money"] += round(generated_moolah/accounts.len)
+		for(var/datum/db_record/t in accounts)
+			t["current_money"] += round(generated_moolah/accounts.len)
 		undistributed_earnings += generated_moolah-(round(generated_moolah/accounts.len) * (length(accounts)))
 	else
 		undistributed_earnings += generated_moolah

@@ -956,8 +956,8 @@
 
 		if(perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird"))
 			threatcount += 5
-			for (var/datum/data/record/R as anything in data_core.security)
-				if (R.fields["name"] == perp.name)
+			for (var/datum/db_record/R as anything in data_core.security.records)
+				if (R["name"] == perp.name)
 					threatcount -= 5
 
 		//Agent cards lower threat level
@@ -979,10 +979,10 @@
 
 			var/perpname = see_face ? perp.real_name : perp.name
 
-			for (var/datum/data/record/E as anything in data_core.general)
-				if (E.fields["name"] == perpname)
-					for (var/datum/data/record/R as anything in data_core.security)
-						if ((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
+			for (var/datum/db_record/E as anything in data_core.general.records)
+				if (E["name"] == perpname)
+					for (var/datum/db_record/R as anything in data_core.security.records)
+						if ((R["id"] == E["id"]) && (R["criminal"] == "*Arrest*"))
 							threatcount = 7
 							break
 					break

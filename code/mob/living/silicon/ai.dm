@@ -1373,8 +1373,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	set name = "View Crew Manifest"
 
 	var/crew = ""
-	for(var/datum/data/record/t in data_core.general)
-		crew += "[t.fields["name"]] - [t.fields["rank"]]<br>"
+	for(var/datum/db_record/t in data_core.general.records)
+		crew += "[t["name"]] - [t["rank"]]<br>"
 
 	usr.Browse("<head><title>Crew Manifest</title></head><body><tt><b>Crew Manifest:</b><hr>[crew]</tt></body>", "window=aimanifest")
 

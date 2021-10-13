@@ -119,14 +119,14 @@
 			if(src:wear_id && src:wear_id:registered)
 				perpname = src:wear_id:registered
 			// find the matching security record
-			for(var/datum/data/record/R in data_core.general)
-				if(R.fields["name"] == perpname)
-					for (var/datum/data/record/S in data_core.security)
-						if (S.fields["id"] == R.fields["id"])
+			for(var/datum/db_record/R in data_core.general.records)
+				if(R["name"] == perpname)
+					for (var/datum/db_record/S in data_core.security.records)
+						if (S["id"] == R["id"])
 							// now add to rap sheet
 
-							S.fields["criminal"] = "*Arrest*"
-							S.fields["mi_crim"] = "Public urination."
+							S["criminal"] = "*Arrest*"
+							S["mi_crim"] = "Public urination."
 
 							break
 

@@ -274,7 +274,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	proc/attempt_remote_scan(mob/living/carbon/human/H)
 		for_by_tcl(C, /obj/machinery/computer/cloning) //Scan success or corruption is on a by-computer basis, results allowed to differ.
 			C.scan_mob(H) //Take advantage of scan_mob's checks
-			var/datum/data/record/R = new /datum/data/record()
+			var/datum/db_record/R = new /datum/db_record()
 			R = C.find_record(H.ckey)
 			if(!isnull(R))// Proceed if scan was a success or user has been scanned previously, our broadcast is interfering with the existing scan.
 				boutput(H,"Link to cloning computer establised succesfully.")
