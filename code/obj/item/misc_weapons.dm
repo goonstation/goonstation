@@ -622,6 +622,7 @@
 	throw_range = 5
 	hit_type = DAMAGE_BLUNT
 	w_class = W_CLASS_NORMAL
+	object_flags = NO_ARM_ATTACH
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	c_flags = EQUIPPED_WHILE_HELD
 	desc = "An ancient and effective weapon. It's not just a stick alright!"
@@ -843,6 +844,7 @@
 	icon_state = "fireaxe"
 	item_state = "fireaxe"
 	flags = FPRINT | CONDUCT | TABLEPASS | USEDELAY | ONBELT
+	object_flags = NO_ARM_ATTACH
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING //TOOL_CHOPPING flagged items to 4 times as much damage to doors.
 	hit_type = DAMAGE_CUT
 	click_delay = 10
@@ -1461,7 +1463,6 @@ obj/item/whetstone
 	flags = ONBACK
 	hit_type = DAMAGE_CUT | DAMAGE_STAB
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING
-	object_flags = NO_ARM_ATTACH
 	contraband = 5
 	w_class = W_CLASS_BULKY
 	force = 25
