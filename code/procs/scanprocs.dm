@@ -151,7 +151,7 @@
 				var/obfuscate = (disease_detection != 255 ? 1 : 0)		//this is so admin check_health verb see exact numbs, scanners don't. Can remove, not exactly necessary, but thought they might want it.
 
 				organ_data1 += organ_health_scan("heart", H, obfuscate)
-				organ_data1 += organ_health_scan("brain", H, obfuscate) //they get specially obfuscated down below
+				organ_data1 += organ_health_scan("brain", H, obfuscate)
 
 				organ_data1 += organ_health_scan("left_lung", H, obfuscate)
 				organ_data1 += organ_health_scan("right_lung", H, obfuscate)
@@ -267,14 +267,7 @@
 	var/list/ret = list()
 	var/damage = O.get_damage()
 	var/aug_damage
-	if(istype(O, /obj/item/organ/brain))
-		if (damage >= 10)
-			ret += "<br><span class='alert'><b>[O.name]</b> - Minor</span>"
-		else if (damage >= 60)
-			ret += "<br><span class='alert'><b>[O.name]</b> - Major</span>"
-		else if (damage >= 100)
-			ret += "<br><span class='alert'><b>[O.name]</b> - Braindead</span>"
-	else
+	if(!istype(O, /obj/item/organ/brain))
 		if (damage >= O.MAX_DAMAGE)
 			ret += "<br><span class='alert'><b>[O.name]</b> - Dead</span>"
 		else if (damage >= O.MAX_DAMAGE*0.9)
@@ -292,8 +285,10 @@
 	if(O.installed_aug)
 		var/obj/item/augmentation/A = O.installed_aug
 		aug_damage = A.brute_dam + A.burn_dam + A.tox_dam
-		if(damage > 0 && aug_damage > 0)
+		if(damage > 0 && aug_damage > 0 && !istype(O, /obj/item/organ/brain))
 			ret += "<span style='color:purple'> |"
+		if(aug_damage > 0 && istype(O, /obj/item/organ/brain))
+			ret += "<br><span class='alert'><b>[O.name]</b>: </span>"
 		if (aug_damage >= A.max_aug_health)
 			ret += "<span class='alert'> Cybernetic Augmentation Detected: <b>[A.name]</b> - Dead</span>"
 		else if (aug_damage >= A.max_aug_health*0.9)
