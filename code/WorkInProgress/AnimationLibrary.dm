@@ -1482,19 +1482,20 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 		animate(filter, size=size, time=0, loop=-1, radius=0, flags=ANIMATION_PARALLEL)
 		animate(size=0, radius=rand()*10+10, time=rand()*20+10)
 
-/proc/animate_stomp(atom/A)
+/proc/animate_stomp(atom/A, stomp_height=8, stomps=3, stomp_duration=0.7 SECONDS)
 	var/mob/M = A
 	if(ismob(A))
 		APPLY_MOB_PROPERTY(M, PROP_CANTMOVE, "hatstomp")
 		M.update_canmove()
-	for(var/i = 0 to 2)
+	var/one_anim_duration = stomp_duration / 2 / stomps
+	for(var/i = 0 to stomps - 1)
 		if(i == 0)
-			animate(A, time=0.1 SECONDS, pixel_y=5, easing=SINE_EASING, flags=ANIMATION_PARALLEL)
+			animate(A, time=one_anim_duration, pixel_y=stomp_height, easing=SINE_EASING | EASE_OUT, flags=ANIMATION_PARALLEL)
 		else
-			animate(time=0.1 SECONDS, pixel_y=5, easing=SINE_EASING)
-		animate(time=0.1 SECONDS, pixel_y=0, easing=SINE_EASING)
-	SPAWN_DBG(0.6 SECONDS)
-		if(ismob(A))
+			animate(time=one_anim_duration, pixel_y=stomp_height, easing=SINE_EASING | EASE_OUT)
+		animate(time=one_anim_duration, pixel_y=0, easing=SINE_EASING | EASE_IN)
+	if(ismob(A))
+		SPAWN_DBG(stomp_duration)
 			REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, "hatstomp")
 			M.update_canmove()
 

@@ -717,7 +717,7 @@
 
 					animate_stomp(src)
 
-					animate(hat, time=0.3 SECONDS) // delay hat icon change by 0.3 seconds
+					animate(hat, time=0.6 SECONDS) // delay hat icon change
 					if (hat_or_beret == "beret")
 						animate(icon_state="hosberet-smash")
 					else
