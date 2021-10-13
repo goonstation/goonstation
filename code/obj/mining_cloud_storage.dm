@@ -244,7 +244,7 @@
 			ores[material_name] = OCD
 
 	proc/get_ore_properties(var/obj/item/raw_material/ore)
-		if(isnull(ore) || isnull(ore.material))
+		if (!ore?.material)
 			return
 		var/list/stat_list = list()
 		for(var/datum/material_property/stat in ore.material.properties)
@@ -351,7 +351,7 @@
 			if("dispense-ore")
 				var/ore = params["ore"]
 				var/datum/ore_cloud_data/OCD = ores[ore]
-				if(OCD.amount < params["take"])
+				if (OCD && OCD.amount < params["take"])
 					return
 				eject_ores(ore, null, params["take"])
 				. = TRUE

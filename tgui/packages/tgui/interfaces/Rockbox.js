@@ -4,18 +4,17 @@ import { Button, Section, NumberInput, Box, Divider, Tooltip, Stack, Table } fro
 import { ButtonCheckbox } from '../components/Button';
 import { Window } from '../layouts';
 
-export const Rockbox = (props, context) => {
-  const { act, data }=useBackend(context);
+export const Rockbox = (_props, context) => {
+  const { act, data } = useBackend(context);
   const {
-    name,
     amount,
     forSale,
+    name,
     price,
     stats,
-  }=data;
+  } = data;
   const [takeAmount, setTakeAmount] = useSharedState(context, 'takeAmount', 1);
   return (
-
     <Window
       title="Rockbox"
       width={375}
@@ -44,13 +43,13 @@ export const Rockbox = (props, context) => {
                   {data.ores.map((currentOre) => (
                     <Fragment key={currentOre.name}>
                       <Tooltip
-                        position={"bottom"}
+                        position="bottom"
                         content={currentOre.name === 'Gem' ? 'Properties vary' : currentOre.stats}
                       >
                         <Table>
                           <Table.Row>
                             <Table.Cell>
-                              <Box>{currentOre.name+': '+currentOre.amount}</Box>
+                              <Box>{`${currentOre.name}: ${currentOre.amount}`}</Box>
 
 
                             </Table.Cell>
@@ -68,13 +67,17 @@ export const Rockbox = (props, context) => {
                                   content="For Sale"
                                   color={currentOre.forSale ? 'green' : 'red'}
                                   checked={currentOre.forSale}
-                                  onClick={() => act('set-ore-sell-status', { ore: currentOre.name })}
+                                  onClick={() => act('toggle-ore-sell-status', { ore: currentOre.name })}
                                 />
                                 <Button
-                                  content={"Eject"}
                                   disabled={takeAmount > currentOre.amount}
-                                  onClick={() => act('dispense-ore', { ore: currentOre.name, take: takeAmount })}
-                                />
+                                  onClick={() => act('dispense-ore', {
+                                    ore: currentOre.name,
+                                    take: takeAmount,
+                                  })}
+                                >
+                                  Eject
+                                </Button>
                               </Box>
                             </Table.Cell>
                           </Table.Row>
