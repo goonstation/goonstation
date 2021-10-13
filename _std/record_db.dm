@@ -27,7 +27,7 @@
 		if(key in indices)
 			if(isnum(value))
 				value = "[value]"
-			if(!(value in indices[key]))
+			if(!(value in indices[key]) || length(indices[key][value]) == 0)
 				return null
 			return indices[key][value][1]
 		for(var/datum/db_record/record as anything in records)
