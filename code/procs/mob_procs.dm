@@ -1204,3 +1204,18 @@
 		(src.shoes 		&& src.shoes.permeability_coefficient 		<= 0.10) && \
 		(src.gloves 	&& src.gloves.permeability_coefficient 		<= 0.02 ))
 		.=1
+
+
+/// Changes ghost invisibility for the round.
+// Default value set in global.dm: INVIS_GHOST
+/proc/change_ghost_invisibility(var/new_invis)
+	var/prev_invis = ghost_invisibility
+	ghost_invisibility = new_invis
+	for (var/mob/dead/observer/G in mobs)
+		G.invisibility = new_invis
+		REMOVE_MOB_PROPERTY(G, PROP_INVISIBILITY, G)
+		APPLY_MOB_PROPERTY(G, PROP_INVISIBILITY, G, new_invis)
+		if (new_invis != prev_invis && (new_invis == 0 || prev_invis == 0))
+			boutput(G, "<span class='notice'>You are [new_invis == 0 ? "now" : "no longer"] visible to the living!</span>")
+
+

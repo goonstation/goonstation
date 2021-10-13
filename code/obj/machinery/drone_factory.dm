@@ -169,7 +169,7 @@ var/global/list/ghostdrone_candidates = list()
 	disposing()
 		..()
 		if (src.current_assembly)
-			pool(src.current_assembly)
+			qdel(src.current_assembly)
 		if (src.conveyors.len)
 			src.conveyors.len = 0
 
@@ -242,7 +242,7 @@ var/global/list/ghostdrone_candidates = list()
 			src.icon_state = "factory[src.factory_section]1"
 
 		else if ((src.factory_section == 1 || src.single_system) && !ghostdrone_factory_working && !src.current_assembly)
-			src.current_assembly = unpool(/obj/item/ghostdrone_assembly)
+			src.current_assembly = new /obj/item/ghostdrone_assembly
 			if (!src.current_assembly)
 				src.current_assembly = new(src)
 			src.current_assembly.set_loc(src)
@@ -289,7 +289,7 @@ var/global/list/ghostdrone_candidates = list()
 		return 1
 
 	proc/force_new_drone()
-		var/obj/item/ghostdrone_assembly/G = unpool(/obj/item/ghostdrone_assembly)
+		var/obj/item/ghostdrone_assembly/G = new /obj/item/ghostdrone_assembly
 		ghostdrone_factory_working = G
 		src.start_work(G)
 
@@ -309,15 +309,14 @@ var/global/list/ghostdrone_candidates = list()
 	mats = 0
 	var/stage = 1
 
-	pooled()
-		..()
-		if (ghostdrone_factory_working == src)
-			ghostdrone_factory_working = null
-		stage = 1
-
-	unpooled()
+	New()
 		..()
 		src.icon_state = "drone-stage[src.stage]"
+
+	disposing()
+		if (ghostdrone_factory_working == src)
+			ghostdrone_factory_working = null
+		..()
 
 /obj/machinery/ghostdrone_conveyor_sensor
 	name = "conveyor sensor"

@@ -1192,6 +1192,31 @@ DEFINE_FLOORS(techfloor/green,
 
 /////////////////////////////////////////
 
+/* Outdoors tilesets - Walp */
+
+DEFINE_FLOORS(grasslush,
+	name = "lush grass";\
+	desc = "This grass somehow thrives in space.";\
+	icon = 'icons/turf/outdoors.dmi';\
+	icon_state = "grass_lush";\
+	mat_appearances_to_ignore = list("steel","synthrubber");\
+	mat_changename = 0;\
+	mat_changedesc = 0;\
+	step_material = "step_outdoors";\
+	step_priority = STEP_PRIORITY_MED)
+
+DEFINE_FLOORS(grasslush/border,
+	icon_state = "grass_lush_border")
+
+DEFINE_FLOORS(grasslush/corner,
+	icon_state = "grass_lush_corner")
+
+DEFINE_FLOORS(grasslush/thinner,
+	icon_state = "grass_lesslush")
+
+DEFINE_FLOORS(grasslush/thin,
+	icon_state = "grass_thin")
+
 /* ._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._. */
 /*-=-=-=-=-=-=-=-FUCK THAT SHIT MY WRIST HURTS=-=-=-=-=-=-=-=-=*/
 /* '~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~' */
@@ -1332,7 +1357,7 @@ DEFINE_FLOORS(techfloor/green,
 			switch(pick(1,2;75,3))
 				if (1)
 					if(prob(33))
-						var/obj/item/I = unpool(/obj/item/raw_material/scrap_metal)
+						var/obj/item/I = new /obj/item/raw_material/scrap_metal
 						I.set_loc(src)
 						if (src.material)
 							I.setMaterial(src.material)
@@ -1344,7 +1369,7 @@ DEFINE_FLOORS(techfloor/green,
 					src.ReplaceWithSpace()
 				if(3)
 					if(prob(33))
-						var/obj/item/I = unpool(/obj/item/raw_material/scrap_metal)
+						var/obj/item/I = new /obj/item/raw_material/scrap_metal
 						I.set_loc(src)
 						if (src.material)
 							I.setMaterial(src.material)

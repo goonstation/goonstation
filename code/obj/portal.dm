@@ -43,24 +43,6 @@
 	target = null
 	..()
 
-/obj/portal/pooled(var/poolname)
-	..()
-	name = initial(name)
-	icon = initial(icon)
-	icon_state = initial(icon_state)
-	density = initial(density)
-	failchance = initial(failchance)
-	anchored = initial(anchored)
-
-/obj/portal/unpooled(var/poolname)
-	portal_lums = initial(portal_lums)
-	light.set_brightness(portal_lums / 3)
-	light.enable()
-	SPAWN_DBG(0)
-		animate_portal_appear(src)
-		playsound(src.loc, "warp", 50, 1, 0.1, 0.7)
-	..()
-
 /obj/portal/proc/teleport(atom/movable/M as mob|obj)
 	if( istype(M, /obj/effects)) //sparks don't teleport
 		return
@@ -119,10 +101,6 @@
 
 /obj/portal/afterlife
 	desc = "Enter this to return to your ghostly form"
-
-	New()
-		..()
-		unpooled()
 
 	Bumped(mob/M as mob|obj)
 		SPAWN_DBG(0)

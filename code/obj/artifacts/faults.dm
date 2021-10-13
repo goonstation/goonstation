@@ -161,7 +161,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 			return
 		var/turf/T = get_turf(O)
 		T.visible_message("<span class='alert'><b>[user.name]</b> is shocked by a surge of energy from [cosmeticSource.name]!</span>")
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
+		var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 		s.set_up(4, 1, user)
 		s.start()
 		elecflash(user,power = 6, exclude_center = 0)

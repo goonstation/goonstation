@@ -222,7 +222,7 @@
 
 /mob/dead/observer/New(mob/corpse)
 	. = ..()
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
+	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, ghost_invisibility)
 	src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	src.see_invisible = INVIS_SPOOKY
 	src.see_in_dark = SEE_DARK_FULL
@@ -305,6 +305,7 @@
 		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[O.ckey]
 		if(istype(respawnee))
 			respawnee.update_time_display()
+			O.hud?.get_join_other() // remind them of the other server
 
 		O.update_item_abilities()
 		return O
@@ -792,7 +793,7 @@
 	insert_observer(creatures[eye_name])
 
 mob/dead/observer/proc/insert_observer(var/atom/target)
-	var/mob/dead/target_observer/newobs = unpool(/mob/dead/target_observer)
+	var/mob/dead/target_observer/newobs = new /mob/dead/target_observer
 	newobs.attach_hud(hud)
 	newobs.set_observe_target(target)
 	newobs.name = src.name
