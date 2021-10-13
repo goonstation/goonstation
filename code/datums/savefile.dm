@@ -65,7 +65,7 @@
 
 		// AppearanceHolder details
 		if (src.AH)
-			F["[profileNum]_neutral_pronouns"] << AH.pronouns
+			F["[profileNum]_pronouns"] << AH.pronouns.name
 			F["[profileNum]_eye_color"] << AH.e_color
 			F["[profileNum]_hair_color"] << AH.customization_first_color
 			F["[profileNum]_facial_color"] << AH.customization_second_color
@@ -223,7 +223,13 @@
 
 		// AppearanceHolder details
 		if (src.AH)
-			F["[profileNum]_neutral_pronouns"] >> AH.pronouns
+			var/saved_pronouns
+			F["[profileNum]_pronouns"] >> saved_pronouns
+			for (var/P as anything in filtered_concrete_typesof(/datum/pronouns, /proc/pronouns_filter_is_choosable))
+				var/datum/pronouns/pronouns = get_singleton(P)
+				if (saved_pronouns == pronouns.name)
+					AH.pronouns = pronouns
+					break
 			F["[profileNum]_eye_color"] >> AH.e_color
 			F["[profileNum]_hair_color"] >> AH.customization_first_color
 			F["[profileNum]_hair_color"] >> AH.customization_first_color_original
