@@ -1,5 +1,9 @@
 
 (t)tue oct 12 21
+(u)Mr. Moriarty
+(p)6223
+(e)🎨|sprites
+(*)Added three new waistcoats and a guard's coat to the clothing booth.
 (u)112358sam
 (p)6173
 (e)🆕|feature
