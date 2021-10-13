@@ -219,6 +219,10 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/casual)
 	name = "Long Sleeved Shirt"
 	path = /obj/item/clothing/suit/lshirt
 
+/datum/clothingbooth_item/casual/tracksuit_black
+	name = "Black Tracksuit"
+	path = /obj/item/clothing/under/gimmick/adidad
+
 /datum/clothingbooth_item/casual/yoga
 	name = "Yoga Outfit"
 	path = /obj/item/clothing/under/misc/yoga
