@@ -325,6 +325,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
 					teleport_to_a_target(target_a_random_container = TRUE)
 				return 0
 		else
+			boutput(holder.owner, "<span class='alert'>No recent attacker to retaliate against.</span>")
 			return 1
 
 ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/glowing_eyes)
@@ -372,3 +373,4 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/glowing_eyes)
 			our_plushie.set_glowing_eyes(TRUE)
 
 		return 0
+
