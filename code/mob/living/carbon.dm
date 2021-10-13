@@ -99,7 +99,13 @@
 			return
 		playsound(H, 'sound/voice/hoooagh2.ogg', 50, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 		if(H.wear_suit || H.w_uniform) // wearing pants while shitting? fine!!
-			H.visible_message("<span class='alert'><B>[H] shits [his_or_her(H)] pants!</B></span>")
+			if(H.bioHolder.HasEffect("teflon_colon") || H.traitHolder.hasTrait("teflon_colon"))
+				H.visible_message("<span class='alert'><B>[H] fires the poop cannon, right through [his_or_her(H)] pants!</B></span>")
+				yeetapoop(H, shit)
+				playsound(H, 'sound/effects/ExplosionFirey.ogg', 75, 1)
+				// ... also set suit/uniform to bottomless? I dunno
+			else
+				H.visible_message("<span class='alert'><B>[H] shits [his_or_her(H)] pants!</B></span>")
 			if(H.w_uniform)
 				H.w_uniform.add_mud(H, H.poop_amount ? H.poop_amount : 5)
 			else
