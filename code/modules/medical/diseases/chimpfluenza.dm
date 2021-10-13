@@ -1,5 +1,5 @@
-/datum/ailment/disease/jungle_fever
-	name = "Jungle Fever"
+/datum/ailment/disease/chimpfluenza
+	name = "Chimpfluenza"
 	max_stages = 1
 	cure = "Incurable"
 	associated_reagent = "banana peel"

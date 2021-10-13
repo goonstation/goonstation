@@ -15,6 +15,7 @@
 
 		if (!real_name)
 			real_name = name
+		src.flags |= UNCRUSHABLE
 
 	proc/setup(var/L,var/list/viral_list)
 		set_loc(L)

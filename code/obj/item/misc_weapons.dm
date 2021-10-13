@@ -707,6 +707,8 @@
 		take_bleeding_damage(C, null, 10, DAMAGE_CUT)
 
 		playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
+	else
+		..()
 
 /obj/item/knife/butcher/attack(target as mob, mob/user as mob)
 	if (!istype(src,/obj/item/knife/butcher/predspear) && ishuman(target) && ishuman(user))

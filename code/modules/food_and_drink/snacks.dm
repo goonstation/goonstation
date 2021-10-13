@@ -1104,6 +1104,7 @@
 	desc = "Just noodles on their own."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "spag-plain"
+	var/random_name = TRUE
 	needfork = 1
 	heal_amt = 1
 	amount = 3
@@ -1112,7 +1113,8 @@
 
 	New()
 		. = ..()
-		name = "[random_spaghetti_name()] noodles"
+		if (random_name)
+			name = "[random_spaghetti_name()] noodles"
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W,/obj/item/reagent_containers/food/snacks/condiment/ketchup) && icon_state == "spag_plain" )// don't forget, other shit inherits this too!
@@ -1203,6 +1205,17 @@
 			qdel(src)
 		else return ..()
 
+/obj/item/reagent_containers/food/snacks/spaghetti/alfredo
+	name = "fettucine alfredo"
+	desc = "Pasta in a creamy, cheesy sauce."
+	icon_state = "spag-alfredo"
+	random_name = FALSE
+	needfork = 1
+	heal_amt = 3
+	amount = 5
+	food_effects = list("food_energized","food_brute","food_burn")
+	meal_time_flags = MEAL_TIME_DINNER
+
 /obj/item/reagent_containers/food/snacks/spaghetti/spicy
 	name = "spaghetti arrabbiata"
 	desc = "Quite spicy!"
@@ -1234,6 +1247,32 @@
 	New()
 		. = ..()
 		name = "[random_spaghetti_name()] and meatballs"
+
+/obj/item/reagent_containers/food/snacks/spaghetti/chickenparm
+	name = "chicken parmigiana"
+	desc = "Spaghetti AND fried chicken? You must be dreaming."
+	icon_state = "spag-chickenparm"
+	random_name = FALSE
+	needfork = 1
+	heal_amt = 2
+	amount = 5
+	initial_volume = 10
+	initial_reagents = "synaptizine"
+	food_effects = list("food_energized","food_hp_up","food_brute","food_burn")
+	meal_time_flags = MEAL_TIME_DINNER
+
+/obj/item/reagent_containers/food/snacks/spaghetti/chickenalfredo
+	name = "chicken alfredo"
+	desc = "Fettucine alfredo with grilled chicken on top."
+	icon_state = "spag-c-alfredo"
+	random_name = FALSE
+	needfork = 1
+	heal_amt = 2
+	amount = 5
+	initial_volume = 10
+	initial_reagents = "synaptizine"
+	food_effects = list("food_energized","food_hp_up","food_brute","food_burn")
+	meal_time_flags = MEAL_TIME_DINNER
 
 /obj/item/reagent_containers/food/snacks/lasagna
 	name = "lasagna"

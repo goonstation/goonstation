@@ -905,6 +905,10 @@ var/f_color_selector_handler/F_Color_Selector
 
 	else // Discord bot communication (or callbacks)
 
+		var/game_servers_response = game_servers?.topic(T, addr)
+		if(!isnull(game_servers_response))
+			return game_servers_response
+
 #ifdef TWITCH_BOT_ALLOWED
 		//boutput(world,"addres : [addr]     twitchbotaddr : [TWITCH_BOT_ADDR]")
 		if (addr == TWITCH_BOT_ADDR)
