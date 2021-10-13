@@ -30256,7 +30256,7 @@
 "bJG" = (
 /obj/storage/crate,
 /obj/item/shipcomponent/engine/helios,
-/obj/item/clothing/under/gimmick/blackstronaut,
+/obj/item/clothing/under/gimmick/mcpsuit,
 /turf/unsimulated/floor,
 /area/solarium)
 "bJH" = (
@@ -36083,7 +36083,7 @@
 /turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "caY" = (
-/obj/item/clothing/under/gimmick/blackstronaut,
+/obj/item/clothing/under/gimmick/mcpsuit,
 /turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "caZ" = (

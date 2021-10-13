@@ -1474,7 +1474,7 @@
 "aeR" = (
 /obj/stool/bed,
 /obj/item/clothing/under/gimmick/snazza,
-/obj/item/clothing/head/helmet/space/blackstronaut,
+/obj/item/clothing/under/gimmick/mcpsuit,
 /obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/grime,
 /area/abandonedmedicalship/robot_trader)

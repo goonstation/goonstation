@@ -3104,7 +3104,7 @@
 "iG" = (
 /obj/storage/crate,
 /obj/item/shipcomponent/engine/helios,
-/obj/item/clothing/under/gimmick/blackstronaut,
+/obj/item/clothing/under/gimmick/mcpsuit,
 /turf/unsimulated/floor,
 /area/space)
 "iH" = (

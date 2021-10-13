@@ -8355,8 +8355,8 @@
 /turf/simulated/floor,
 /area/station/engine/elect)
 "azF" = (
-/obj/item/clothing/under/gimmick/blackstronaut,
-/obj/item/clothing/head/helmet/space/blackstronaut,
+/obj/item/clothing/under/gimmick/mcpsuit,
+/obj/item/clothing/head/helmet/space/mcpsuit,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/juryroom)
 "azH" = (

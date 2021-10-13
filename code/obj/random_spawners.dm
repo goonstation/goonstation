@@ -1341,7 +1341,7 @@
 		/obj/item/clothing/under/gimmick/fake_waldo,
 		/obj/item/clothing/under/gimmick/johnny,
 		/obj/item/clothing/under/gimmick/police,
-		/obj/item/clothing/under/gimmick/blackstronaut,
+		/obj/item/clothing/under/gimmick/mcpsuit,
 		/obj/item/clothing/under/gimmick/duke,
 		/obj/item/clothing/under/gimmick/mj_clothes,
 		/obj/item/clothing/under/gimmick/viking,
@@ -1513,7 +1513,7 @@
 						/obj/item/reagent_containers/food/drinks/bottle/soda/orange,
 						/obj/item/reagent_containers/food/drinks/bottle/soda/grones)
 	rare_items2spawn = list(/obj/item/reagent_containers/food/drinks/bottle/soda/softsoft_pizza)
-	
+
 /obj/random_item_spawner/hat
 	name = "random hat spawner"
 	icon_state = "rand_hat"

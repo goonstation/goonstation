@@ -17962,7 +17962,7 @@
 /turf/simulated/floor/sanitary,
 /area/abandonedoutpostthing)
 "aUV" = (
-/obj/item/clothing/under/gimmick/blackstronaut,
+/obj/item/clothing/under/gimmick/mcpsuit,
 /turf/simulated/floor/sanitary,
 /area/abandonedoutpostthing)
 "aUW" = (
@@ -18231,7 +18231,7 @@
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "aVL" = (
-/obj/item/clothing/head/helmet/space/blackstronaut,
+/obj/item/clothing/under/gimmick/mcpsuit,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "aVM" = (
