@@ -197,7 +197,7 @@ var/static/master_filter_info = list(
 			"size" = 1
 		)
 	),
-	/* Not supported because making a proper matrix editor on the frontend would be a huge dick pain.
+	/* Not supported because making a proper matrix editor is more complicated than it seems.
 		Uncomment if you ever implement it
 	"color" = list(
 		"defaults" = list(
