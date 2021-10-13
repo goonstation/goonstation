@@ -2950,7 +2950,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/voice/animal/crab_chirp.ogg", 20, 1, 1, 3, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, "sound/voice/animal/crab_chirp.ogg", 20, 3, 1, 2, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] blurbles!</span></b>"
 		return null
 
