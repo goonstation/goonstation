@@ -130,7 +130,7 @@
 /datum/targetable/critter/slam_polymorph
 	name = "Slam"
 	desc = "Charge over a short distance, until you hit a mob or an object. Knocks down mobs."
-	icon_state = "Slam_Polymorph"
+	icon_state = "slam_polymorph"
 	cooldown = 100
 	targeted = 1
 	target_anything = 1

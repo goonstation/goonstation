@@ -73,10 +73,10 @@
 /datum/targetable/critter/crabmaul
 	name = "Crustaceous Frenzy"
 	desc = "Go into a primal rage, snipping a target to ribbons with your claws."
-	cooldown = 600
+	cooldown = 1 MINUTE
 	targeted = 1
 	target_anything = 1
-	icon_state = "Claw_Maul"
+	icon_state = "claw_maul"
 
 	var/datum/projectile/slam/proj = new
 
