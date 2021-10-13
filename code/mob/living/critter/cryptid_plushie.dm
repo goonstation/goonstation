@@ -212,7 +212,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
 	proc/get_a_random_station_unlocked_container()
 		var/list/eligible_containers = list()
 		for_by_tcl(iterated_container, /obj/storage)
-			if (iterated_container.z == Z_LEVEL_STATION && !iterated_container.locked)
+			if (iterated_container.z == Z_LEVEL_STATION && !iterated_container.locked && !istype(get_area(iterated_container), /area/listeningpost))
 				eligible_containers += iterated_container
 		if (!length(eligible_containers))
 			return null
@@ -303,7 +303,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
 				var/mob/M = holder.owner.lastattacker
 				if (!istype(M))
 					return
-
 				var/mob/attacker = holder.owner.lastattacker
 				holder.owner.visible_message("<span class='alert'><B>[holder.owner]'s eyes emit a vengeful glare at [attacker]!</B></span>")
 				var/obj/itemspecialeffect/glare/E = new /obj/itemspecialeffect/glare
