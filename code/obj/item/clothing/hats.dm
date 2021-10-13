@@ -1789,6 +1789,14 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 	icon_state = "pirate_brn"
 	item_state = "pirate_brn"
 
+//Lesbian Hat
+
+/obj/item/clothing/head/lesbian_hat
+	name = "very lesbian hat"
+	desc = "And they say subtlety is dead."
+	mats = list("FAB-1"=5, "honey"=5)
+	icon_state = "lesbeean"
+	item_state = "lesbeean"
 
 //Western Ten-Gallon hats!
 
