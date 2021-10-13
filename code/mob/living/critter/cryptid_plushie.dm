@@ -62,6 +62,7 @@
 	proc/get_cryptid_mob_for_icon_state(var/input_icon_state)
 		var/path = "/mob/living/critter/small_animal/plush/cryptid/[input_icon_state]"
 		return text2path(path)
+
 	Login()
 		..()
 		boutput(src, "<h1><span class='alert'>You are NOT an antagonist unless stated otherwise through an obvious popup/message.</span></h1>")
@@ -144,11 +145,14 @@
 
 
 	proc/being_seen_status_update()
+		if(istype(src.loc, /obj/storage)) // inside a container
+			being_seen = FALSE
+			set_dormant_status(FALSE)
+			return
 		if (last_witness && last_witness.client) // optimization attempt
 			if(get_dist(src, last_witness) < 3) // still next to last person that saw us, might be for instance pulling us or sitting next to us
 				return
-			else
-				last_witness = null
+		last_witness = null
 
 		for (var/mob/M in viewers(src))
 			if (M == src)
