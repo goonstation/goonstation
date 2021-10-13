@@ -52,6 +52,13 @@
 		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/glowing_eyes/set_glowing_eyes_color)
 		abilityHolder.updateButtons()
 
+	proc/get_plush_for_icon_state(var/input_icon_state)
+		var/path = "/obj/item/toy/plush/small/[input_icon_state]"
+		return text2path(path)
+
+	proc/get_cryptid_mob_for_icon_state(var/input_icon_state)
+		var/path = "/mob/living/critter/small_animal/plush/cryptid/[input_icon_state]"
+		return text2path(path)
 	Login()
 		..()
 		boutput(src, "<h1><span class='alert'>You are NOT an antagonist unless stated otherwise through an obvious popup/message.</span></h1>")
