@@ -12,6 +12,8 @@
 	var/glowing_eye_color = "#c40000ff"
 	var/glowing_eyes_enabled_alpha = 190
 	var/glowing_eyes_active = 0
+	var/override_steps  // can move this many steps whether being seen or not, granted for a short time after movement_override ability
+
 	bee
 		icon_state = "bee"
 		pick_random_icon_state = 0
@@ -44,7 +46,8 @@
 			eye_light.plane = PLANE_SELFILLUM
 			set_glowing_eyes(FALSE)
 
-		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/talk)
+		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/plushie_talk)
+		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/movement_override)
 		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/teleportation/blink)
 		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/teleportation/disappear)
 		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/teleportation/vengeful_retreat)
@@ -63,13 +66,22 @@
 		..()
 		boutput(src, "<h1><span class='alert'>You are NOT an antagonist unless stated otherwise through an obvious popup/message.</span></h1>")
 		boutput(src, "<span class='notice'>You can't move when being watched.</span>")
-		boutput(src, "<span class='notice'>Use your talk ability to communicate.</span>")
+		boutput(src, "<span class='notice'>Use your Plushie Talk ability to communicate.</span>")
+		boutput(src, "<span class='notice'>Your override sensors ability lets you temporarily move a few steps even if being watched.</span>")
 		boutput(src, "<span class='notice'>Your blink ability lets you teleport when you're not being watched.</span>")
 		boutput(src, "<span class='notice'>Your teleport away ability lets you teleport away and hide in a random station container.</span>")
 		boutput(src, "<span class='notice'>Your vengeful retreat will stun your recent attacker and teleport you away.</span>")
 		boutput(src, "<span class='notice'>Your toggle glowing eyes ability lets you toggle your eyes glowing at will.</span>")
 		boutput(src, "<span class='notice'>Your set glowing eyes color ability lets you set your eyes' glowing color.</span>")
 		boutput(src, "<span class='notice'>Access special emotes through *scream, *dance and *snap.</span>")
+
+	proc/plushie_speech(var/text_to_say)
+		src.speechpopupstyle = "font-style: italic; font-family: 'XFont 6x9'; font-size: 7px;"
+		if(prob(20))
+			src.speechpopupstyle += " color: red !important"
+		src.canspeak = 1
+		src.say(text_to_say)
+		src.canspeak = 0
 
 	proc/set_glowing_eyes(var/enabled)
 		if (eye_light)
@@ -152,6 +164,10 @@
 		set_dormant_status(FALSE)
 
 	update_canmove()
+		if(override_steps > 0)
+			src.canmove = TRUE
+			override_steps -= 1
+			return
 		src.canmove = !being_seen
 
 	setup_hands() // no hands
@@ -161,17 +177,22 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 /datum/targetable/critter/cryptid_plushie
 	var/mob/living/critter/small_animal/plush/cryptid/our_plushie
 	icon = 'icons/mob/spell_buttons.dmi'
+	var/qdel_itself_if_not_attached_to_plushie = 0
 
 	onAttach(datum/abilityHolder/H)
 		. = ..()
 		if(istype(src.holder.owner, /mob/living/critter/small_animal/plush/cryptid))
 			our_plushie = src.holder.owner
+		if(qdel_itself_if_not_attached_to_plushie)
+			if(!our_plushie)
+				qdel(src)
 
-/datum/targetable/critter/cryptid_plushie/talk // mostly stolen from ouija board
-	name = "Talk"
-	desc = "Communicate through sound."
+/datum/targetable/critter/cryptid_plushie/plushie_talk // mostly stolen from ouija board
+	name = "Plushie Talk"
+	desc = "Communicate."
 	icon_state = "corruption"
 	cooldown = 50
+	qdel_itself_if_not_attached_to_plushie = 1
 	var/words_min = 5
 	var/words_max = 10
 
@@ -190,13 +211,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 			return
 		playsound(holder.owner, "sound/misc/automaton_scratch.ogg", 50, 1)
 		selected = uppertext(selected)
-		var/mob/living/our_mob = holder.owner
-		our_mob.speechpopupstyle = "font-style: italic; font-family: 'XFont 6x9'; font-size: 7px;"
-		if(prob(20))
-			our_mob.speechpopupstyle += " color: red !important"
-		our_mob.canspeak = 1
-		our_mob.say(selected)
-		our_mob.canspeak = 0
+		our_plushie.plushie_speech(selected)
 		return 0
 
 	proc/generate_words()
@@ -204,6 +219,114 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 		for(var/i in 1 to rand(words_min, words_max))
 			var/picked = pick(strings("ouija_board.txt", "ouija_board_words"))
 			words |= picked
+		return words
+
+/datum/targetable/critter/cryptid_plushie/movement_override
+	name = "Override Sensors"
+	desc = "Be able to move a few steps in spite of whether you're being looked at."
+	icon = 'icons/mob/genetics_powers.dmi'
+	icon_state = "adrenaline"
+	cooldown = 450
+	targeted = 0
+	qdel_itself_if_not_attached_to_plushie = 1
+	var/list/minor_event_sounds = list("sound/machines/giantdrone_boop1.ogg", "sound/machines/giantdrone_boop3.ogg", "sound/machines/giantdrone_boop4.ogg")
+	var/list/moderate_event_sounds = list("sound/machines/giantdrone_boop2.ogg")
+	var/list/major_event_sounds = list("sound/misc/android_scream.ogg")
+	var/cycle
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		/* debugging
+		cycle++
+		cycle = cycle % 3
+		if(cycle == 0)
+			minor_event()
+		else if(cycle == 1)
+			moderate_event()
+		else if(cycle == 2)
+			major_event()
+		*/
+
+		var/roll = rand(1, 100)
+		if(roll <= 60)
+			minor_event()
+		else if(roll <= 94)
+			moderate_event()
+		else if(roll >= 95)
+			major_event()
+
+		SPAWN_DBG(4 SECONDS)
+			our_plushie.override_steps = 0
+
+		return 0
+
+	proc/minor_event()
+		playsound(get_turf(holder.owner), "[pick(minor_event_sounds)]", 45, 1)
+		our_plushie.override_steps = rand(7, 10)
+		glitch_out(0.8 SECONDS, 1, 0.7)
+
+	proc/moderate_event()
+		playsound(get_turf(holder.owner), "[pick(moderate_event_sounds)]", 45, 1)
+		our_plushie.override_steps = rand(9, 15)
+		glitch_out(1.4 SECONDS, 1, 0.9)
+
+	proc/major_event()
+		playsound(get_turf(holder.owner), "[pick(major_event_sounds)]", 45, 1)
+		our_plushie.override_steps = rand(20, 50)
+		glitch_out(3 SECONDS, 1, 1.2, say_gibberish = 1)
+
+	proc/glitch_out(var/length, var/iteration_length_scaling, var/effect_scaling, var/say_gibberish = 0)
+		var/iteration_length = 0.2 SECONDS * iteration_length_scaling
+		var/iterations = round(length / iteration_length)
+		var/original_transform = our_plushie.transform
+
+		var/x_lower = -0.1 * effect_scaling
+		var/x_upper = 0.1 * effect_scaling
+		var/y_lower = -0.1 * effect_scaling
+		var/y_upper = 0.1 * effect_scaling
+
+		var/penalty_multiplier = 1.8 / iterations
+
+		var/scratch_chance = 40
+		var/gibberish_words_chance = 30
+		for(var/i = 0 to iterations)
+			if(prob(scratch_chance))
+				playsound(get_turf(holder.owner), "sound/misc/automaton_scratch.ogg", 20, 1)
+				scratch_chance -= 10
+			else
+				scratch_chance += 10
+			if(say_gibberish)
+				if(prob(gibberish_words_chance))
+					plushie_says_gibberish_word()
+					gibberish_words_chance -= 10
+				else
+					gibberish_words_chance += 10
+
+			var/scale_penalty = 1 - (penalty_multiplier * abs((iterations/2) - i))  // animation is less intense on the edges (start, end)
+			violent_standup_twitch_parametrized(our_plushie, effect_scale = effect_scaling * scale_penalty)
+			var/x_scale = 1 + ((rand(x_lower * 100, x_upper * 100) / 100) * scale_penalty)
+			var/y_scale = 1 + ((rand(y_lower * 100, y_upper * 100) / 100) * scale_penalty)
+			our_plushie.Scale(x_scale, y_scale)
+			sleep(iteration_length)
+
+		if(say_gibberish && prob(75))
+			var/list/last_words = list("FAILED TO RESOLVE ERROR, REBOOTING", "INITIATING REBOOT", "AVAILABLE IN STORES NOW", "AVAILABLE IN SEVERAL MODELS", "HELP")
+			our_plushie.plushie_speech(pick(last_words))
+		our_plushie.transform = original_transform
+
+	proc/plushie_says_gibberish_word()
+		our_plushie.plushie_speech(pick(generate_gibberish_words()))
+
+	proc/generate_gibberish_words()
+		var/list/words = list()
+		for(var/i in 1 to rand(5, 10))
+			var/picked = pick(strings("ouija_board.txt", "ouija_board_words"))
+			picked = uppertext(picked)
+			words |= picked
+		var/list/more_words = list("... hello?", "Is anyone there?", "Please...", "Help...", "Help, please...", "Can anyone hear me?", "It hurts.", "It's so dark...")
+		words += pick(more_words)
 		return words
 
 ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
