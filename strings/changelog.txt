@@ -1,5 +1,25 @@
 
+(t)wed oct 13 21
+(u)BatElite
+(p)6080
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)A bee farm has drifted into the asteroid field recently. The bees do the farming. They're lesbians.
+(u)TTerc
+(p)6271
+(e)|
+(+)Clicking backpacks/satchels/belts with an item that does not fit in them will now open them.
+(u)TTerc
+(p)6243
+(e)🐛|bug
+(+)Small update for wraith/revenant UI: Added points and generation rate counter + turning into a revenant removes all the wraith ability buttons, instead of making them unusable.
 (t)tue oct 12 21
+(u)kyle
+(e)⚖|balance(e)
+(+)Ritual AOE creation effects now require energy per each thing it attempts to effect.
+(u)Mr. Moriarty
+(p)6223
+(e)🎨|sprites
+(*)Added three new waistcoats and a guard's coat to the clothing booth.
 (u)112358sam
 (p)6173
 (e)🆕|feature
