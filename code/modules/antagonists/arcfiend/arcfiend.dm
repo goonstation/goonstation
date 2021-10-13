@@ -81,6 +81,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 		if (ishuman(target) || issilicon(target) || istype(target, /obj/machinery))
 			holder.owner.visible_message("[holder.owner] places their hand onto [target].", "You place your hand onto [target]", "A static charge fills the air")
 			actions.start(new/datum/action/bar/private/icon/sap_power(holder.owner, target, holder), holder.owner)
+			logTheThing("combat", holder.owner, target, "[key_name(holder.owner)] used <b>[src.name]</b> on [key_name(target)] [log_loc(holder.owner)].")
 
 	castcheck()
 		. = ..()
@@ -219,6 +220,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 			var/mob/M = target
 			M.shock(holder.owner, wattage, ignore_gloves = TRUE)
 			target.add_fingerprint(holder.owner)
+			logTheThing("combat", holder.owner, target, "[key_name(holder.owner)] used <b>[src.name]</b> on [key_name(target)] [log_loc(holder.owner)].")
 		else if (istype(target, /obj/machinery/door/airlock))
 			var/obj/machinery/door/airlock/airlock = target
 			airlock.loseMainPower()
@@ -310,6 +312,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 		if (target == holder.owner) return TRUE
 		if (!IN_RANGE(holder.owner, target, (WIDE_TILE_WIDTH / 2))) return TRUE
 		arcFlash(holder.owner, target, wattage)
+		logTheThing("combat", holder.owner, target, "[key_name(holder.owner)] used <b>[src.name]</b> on [key_name(target)] [log_loc(holder.owner)].")
 
 		var/list/exempt_targets = list(holder.owner, target)
 		var/mob/chain_source = target
@@ -325,6 +328,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 				exempt_targets += chain_target
 			else break
 			arcFlash(chain_source, chain_target, (wattage / (i + 1)))
+			logTheThing("combat", holder.owner, target, "[key_name(holder.owner)] hit [key_name(target)] with chain lightning [log_loc(holder.owner)].")
 			chain_source = chain_target
 
 /**
@@ -347,6 +351,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 		if (!IN_RANGE(holder.owner, target, 1)) return TRUE
 		if (ishuman(target))
 			actions.start(new/datum/action/bar/private/icon/jolt(holder.owner, target, holder, wattage), holder.owner)
+			logTheThing("combat", holder.owner, target, "[key_name(holder.owner)] used <b>[src.name]</b> on [key_name(target)] [log_loc(holder.owner)].")
 		else return TRUE
 
 /datum/action/bar/private/icon/jolt

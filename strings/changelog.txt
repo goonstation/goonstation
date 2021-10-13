@@ -1,10 +1,47 @@
 
+(t)wed oct 13 21
+(u)BatElite
+(p)6080
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)A bee farm has drifted into the asteroid field recently. The bees do the farming. They're lesbians.
+(u)TTerc
+(p)6271
+(e)|
+(+)Clicking backpacks/satchels/belts with an item that does not fit in them will now open them.
+(u)TTerc
+(p)6243
+(e)🐛|bug
+(+)Small update for wraith/revenant UI: Added points and generation rate counter + turning into a revenant removes all the wraith ability buttons, instead of making them unusable.
+(t)tue oct 12 21
+(u)kyle
+(e)⚖|balance(e)
+(+)Ritual AOE creation effects now require energy per each thing it attempts to effect.
+(u)Mr. Moriarty
+(p)6223
+(e)🎨|sprites
+(*)Added three new waistcoats and a guard's coat to the clothing booth.
+(u)112358sam
+(p)6173
+(e)🆕|feature
+(+)Made LOOC text visible over the head of the speaker.
+(u)Azrun
+(p)6221
+(e)🆕🎨|feature, sprites
+(+)Nectar Perspiration visual effect upgraded to slightly larger buzzing insects.
+(u)alexkar598
+(p)6179
+(e)|
+(+)The description instructing you how to deconstruct reinforced walls now has bolded words to hint to the next step.
+(u)Zamujasa
+(*)Trying to move while dead will now ghost you. Don't worry, you can still wiggle with IJKL.
 (t)mon oct 11 21
 (u)pali
 (*)For Spooktober the space colour now varies slightly
 (u)Zamujasa
+(*)Ghosts become visible to everyone at the end of a round.
 (e)🆕|feature
 (+)Using floor tiles in hand now acts like using them on the turf you're on. This means you can add tiles to plating with the use key, or (if holding a crowbar) swap out the tiles.
+(+)Using &lt; and &gt; in messages should now work. &lt;3? This might break things, though, so report any new issues...
 (t)sun oct 10 21
 (u)Sovexe
 (p)6206

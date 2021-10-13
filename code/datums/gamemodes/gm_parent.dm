@@ -74,6 +74,7 @@
 	for (var/datum/mind/traitor in antags)
 		try
 			var/traitorwin = 1
+			var/obj_count = 0
 			var/traitor_name
 
 			if (traitor.current)
@@ -168,35 +169,35 @@
 						stuff_to_output += stolen_detail
 						stuff_to_output += rewarded_detail
 
-				var/count = 1
 				for (var/datum/objective/objective in traitor.objectives)
 	#ifdef CREW_OBJECTIVES
 					if (istype(objective, /datum/objective/crew)) continue
 	#endif
 					if (istype(objective, /datum/objective/miscreant)) continue
 
+					obj_count++
 					if (objective.check_completion())
-						stuff_to_output += "Objective #[count]: [objective.explanation_text] <span class='success'><B>Success</B></span>"
+						stuff_to_output += "Objective #[obj_count]: [objective.explanation_text] <span class='success'><B>Success</B></span>"
 						logTheThing("diary",traitor,null,"completed objective: [objective.explanation_text]")
 						if (!isnull(objective.medal_name) && !isnull(traitor.current))
 							traitor.current.unlock_medal(objective.medal_name, objective.medal_announce)
 					else
-						stuff_to_output += "Objective #[count]: [objective.explanation_text] <span class='alert'>Failed</span>"
+						stuff_to_output += "Objective #[obj_count]: [objective.explanation_text] <span class='alert'>Failed</span>"
 						logTheThing("diary",traitor,null,"failed objective: [objective.explanation_text]. Womp womp.")
 						traitorwin = 0
-					count++
 
 			// Please use objective.medal_name for medals that are tied to a specific objective instead of adding them here.
-			if (traitorwin)
-				if (traitor.current)
-					traitor.current.unlock_medal("MISSION COMPLETE", 1)
-				if (traitor.special_role == ROLE_WIZARD && traitor.current)
-					traitor.current.unlock_medal("You're no Elminster!", 1)
-				if (traitor.special_role == ROLE_WRESTLER && traitor.current)
-					traitor.current.unlock_medal("Cream of the Crop", 1)
-				stuff_to_output += "<span class='success'>The [traitor.special_role] was successful!</span>"
-			else
-				stuff_to_output += "<span class='alert'>The [traitor.special_role] has failed!</span>"
+			if (obj_count)
+				if (traitorwin)
+					if (traitor.current)
+						traitor.current.unlock_medal("MISSION COMPLETE", 1)
+					if (traitor.special_role == ROLE_WIZARD && traitor.current)
+						traitor.current.unlock_medal("You're no Elminster!", 1)
+					if (traitor.special_role == ROLE_WRESTLER && traitor.current)
+						traitor.current.unlock_medal("Cream of the Crop", 1)
+					stuff_to_output += "<span class='success'>The [traitor.special_role] was successful!</span><br>"
+				else
+					stuff_to_output += "<span class='alert'>The [traitor.special_role] has failed!</span><br>"
 
 	#ifdef DATALOGGER
 			if (traitorwin)
