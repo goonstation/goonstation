@@ -195,13 +195,11 @@
 	generated_moolah += undistributed_earnings
 	undistributed_earnings = 0
 
-	var/list/accounts = list()
-	for(var/datum/db_record/t in data_core.bank.records)
-		if(t["job"] == "Chief Engineer")
-			accounts += t
-			accounts += t //fuck it
-		else if(t["job"] == "Engineer")
-			accounts += t
+	// the double chief engineer seems to be intentional however silly it may seem
+	var/list/accounts = \
+		data_core.bank.find_records("job", "Chief Engineer") + \
+		data_core.bank.find_records("job", "Chief Engineer") + \
+		data_core.bank.find_records("job", "Engineer")
 
 	if(!length(accounts)) // no engineering staff but someone still started the PTL
 		wagesystem.station_budget += generated_moolah
