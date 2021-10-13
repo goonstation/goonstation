@@ -1,5 +1,8 @@
 
 (t)tue oct 12 21
+(u)kyle
+(e)⚖|balance(e)
+(+)Ritual AOE creation effects now require energy per each thing it attempts to effect.
 (u)Mr. Moriarty
 (p)6223
 (e)🎨|sprites
