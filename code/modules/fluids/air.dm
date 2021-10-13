@@ -46,7 +46,7 @@ var/list/ban_from_airborne_fluid = list()
 	done_init()
 		var/i = 0
 		for(var/atom/A in range(0,src))
-			if (src.pooled) return
+			if (src.disposed) return
 			//var/atom/A = atom
 			src.HasEntered(A,A.loc)
 			i++
@@ -56,43 +56,15 @@ var/list/ban_from_airborne_fluid = list()
 	turf_remove_cleanup(turf/the_turf)
 		the_turf.active_airborne_liquid = null
 
-	pooled()
-		src.pooled = 1
-
+	disposing()
 		//this is slow, hopefully we can do without
 		//if (src.group)
 			//if (src in src.group.members)
 			//	src.group.members -= src
 
-		src.group = 0
-		opacity = 0
-
-		name = "cloud"
-		icon_state = "airborne"
-
-		finalcolor = "#ffffff"
-		finalalpha = 100
-		alpha = 255
-		color = "#ffffff"
-		amt = 0
-		avg_viscosity = initial(avg_viscosity)
-		movement_speed_mod = 0
-		group = 0
-		touched_other_group = 0
-		//float_anim = 0
-		step_sound = 0
-		last_spread_was_blocked = 0
-		last_depth_level = 0
-		touched_channel = 0
-		is_setup = 0
-		blocked_dirs = 0
-		blocked_perspective_objects["[dir]"] = 0
-		my_depth_level = 0
+		src.group = null
+		src.touched_other_group = null
 		..()
-
-	unpooled()
-		..()
-		src.step_sound = 0
 
 	//ALTERNATIVE to force ingest in life
 	proc/just_do_the_apply_thing(var/mob/M, var/mult = 1, var/hasmask = 0)
@@ -139,7 +111,7 @@ var/list/ban_from_airborne_fluid = list()
 
 	//incorporate touch_modifier?
 	HasEntered(atom/A, atom/oldloc)
-		if (!src.group || !src.group.reagents || src.pooled || istype(A,/obj/fluid))
+		if (!src.group || !src.group.reagents || src.disposed || istype(A,/obj/fluid))
 			return
 
 		A.EnteredAirborneFluid(src,oldloc)
@@ -177,7 +149,7 @@ var/list/ban_from_airborne_fluid = list()
 				if (IS_PERSPECTIVE_WALL(t))
 					blocked_perspective_objects["[dir]"] = 1
 				continue
-			if (t.active_airborne_liquid && !t.active_airborne_liquid.pooled)
+			if (t.active_airborne_liquid && !t.active_airborne_liquid.disposed)
 				blocked_dirs++
 				if (t.active_airborne_liquid.group && t.active_airborne_liquid.group != src.group)
 					touched_other_group = t.active_airborne_liquid.group
@@ -219,7 +191,7 @@ var/list/ban_from_airborne_fluid = list()
 					LAGCHECK(LAG_MED)
 					spawned_any = 1
 					src.icon_state = "airborne"
-					var/obj/fluid/F = unpool(/obj/fluid/airborne)
+					var/obj/fluid/F = new /obj/fluid/airborne
 					F.set_up(t,0)
 					if (!F || !src.group) continue //set_up may decide to remove F
 
@@ -308,7 +280,7 @@ var/list/ban_from_airborne_fluid = list()
 		for( var/dir in cardinal )
 			t = get_step( src, dir )
 			if( !t ) continue
-			if (!t.active_airborne_liquid || t.active_airborne_liquid.pooled) continue
+			if (!t.active_airborne_liquid || t.active_airborne_liquid.disposed) continue
 			if (t.active_airborne_liquid && t.active_airborne_liquid.group && src.group != t.active_airborne_liquid.group)
 				t.active_airborne_liquid.group.join(src.group)
 

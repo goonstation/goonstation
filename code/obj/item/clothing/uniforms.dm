@@ -1248,7 +1248,7 @@
 					return
 				else
 					for (var/i=3, i>0, i--)
-						var/obj/item/material_piece/cloth/cottonfabric/CF = unpool(/obj/item/material_piece/cloth/cottonfabric)
+						var/obj/item/material_piece/cloth/cottonfabric/CF = new /obj/item/material_piece/cloth/cottonfabric
 						CF.set_loc(get_turf(src))
 					boutput(user, "You rip up [src].")
 					user.u_equip(src)
@@ -1297,10 +1297,10 @@
 			T.wet = 0
 			dried ++
 		for (var/obj/decal/cleanable/water/W in T)
-			pool(W)
+			qdel(W)
 			dried ++
 		for (var/obj/decal/cleanable/urine/U in T) // ew
-			pool(U)
+			qdel(U)
 			dried ++
 		return dried
 
@@ -1561,6 +1561,12 @@
     desc = "Soothing bubbles for a calm shirt."
     icon_state = "bubble"
     item_state = "bubble"
+	
+/obj/item/clothing/under/misc/tricolor
+    name = "Tricolor Jumpsuit"
+    desc = "A jumpsuit that shows your serious about pizza."
+    icon_state = "tricolor"
+    item_state = "tricolor"	
 
 // WALPVRGIS fashion
 

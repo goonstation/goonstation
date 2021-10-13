@@ -59,19 +59,8 @@ datum
 
 		disposing()
 			holder = null
-			..()
-
-		pooled()
-			..()
-			transparency = initial(transparency)
-			fluid_r = initial(fluid_r)
-			fluid_b = initial(fluid_b)
-			fluid_g = initial(fluid_g)
-			holder = null
 			data = null
-			volume = 0
-			reacting = 0
-
+			..()
 
 		proc/on_add()
 			if (stun_resist > 0)

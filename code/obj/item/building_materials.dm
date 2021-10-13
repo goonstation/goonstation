@@ -119,7 +119,7 @@ MATERIAL
 	attack_hand(mob/user as mob)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many sheets do you want to take from the stack?","Stack of [src.amount]",1) as num)
-			if(src.loc != user)
+			if(!in_interact_range(src, user))
 				return
 			splitnum = round(clamp(splitnum, 0, src.amount))
 			if(amount == 0)
@@ -190,7 +190,7 @@ MATERIAL
 					return
 				sheetsinput = min(sheetsinput,makesheets)
 
-				if (!R) //Wire note: Fix for Cannot read null.material (the rods are getting destroyed during the input())
+				if (!in_interact_range(src, user) || !R) //moving, or the rods are getting destroyed during the input()
 					return
 
 				var/obj/item/sheet/S = new /obj/item/sheet(get_turf(user))
@@ -332,6 +332,9 @@ MATERIAL
 					if (rodsinput < 1) return
 					rodsinput = min(rodsinput,makerods)
 
+					if (!in_interact_range(src, usr)) //no walking away
+						return
+
 					a_type = /obj/item/rods
 					a_amount = rodsinput * 2
 					a_cost = rodsinput
@@ -344,6 +347,9 @@ MATERIAL
 					var/tileinput = input("Use how many sheets? (Get 4 tiles for each sheet used)","Max: [maketiles]",1) as num
 					if (tileinput < 1) return
 					tileinput = min(tileinput,maketiles)
+
+					if (!in_interact_range(src, usr)) //no walking away
+						return
 
 					a_type = /obj/item/tile
 					a_amount = tileinput * 4
@@ -576,6 +582,10 @@ MATERIAL
 					var/input = input("Use how many sheets?","Max: [src.amount]",1) as num
 					if (input < 1) return
 					input = min(input,src.amount)
+
+					if (!in_interact_range(src, usr)) //no walking away
+						return
+
 					var/obj/item/sheet/C = new /obj/item/sheet(usr.loc)
 					var/obj/item/rods/R = new /obj/item/rods(usr.loc)
 					if(src.material)
@@ -707,6 +717,10 @@ MATERIAL
 	attack_hand(mob/user as mob)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many rods do you want to take from the stack?","Stack of [src.amount]",1) as num)
+
+			if (!in_interact_range(src, user)) //no walking away
+				return
+
 			var/obj/item/rods/new_stack = split_stack(splitnum)
 			if (!istype(new_stack))
 				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
@@ -737,6 +751,10 @@ MATERIAL
 				boutput(user, "<span class='notice'>You could make up to [makemetal] sheets by welding this stack.</span>")
 				weldinput = input("How many sheets do you want to make?","Welding",1) as num
 				makemetal = round(src.amount / 2) // could have changed during input()
+
+				if (!in_interact_range(src, user)) //no walking away
+					return
+
 				if (weldinput < 1) return
 				if (weldinput > makemetal) weldinput = makemetal
 			var/obj/item/sheet/M = new /obj/item/sheet/steel(user.loc)
@@ -1065,9 +1083,17 @@ MATERIAL
 		else
 			var/S = T
 			if (!( istype(S, /turf/space) || istype(S, /turf/simulated/floor/metalfoam)))
-				boutput(user, "You cannot build on or repair this turf!")
-				return
+				// If this isn't space or metal foam...
+				if (istype(T, /turf/simulated/floor))
+					// If it's still a floor, attempt to place or replace the floor tile
+					var/turf/simulated/floor/F = T
+					F.attackby(src, user)
+					tooltip_rebuild = 1
+				else
+					boutput(user, "You cannot build on or repair this turf!")
+					return
 			else
+				// Otherwise, try to build on top of it
 				src.build(S)
 				tooltip_rebuild = 1
 		src.add_fingerprint(user)
@@ -1078,7 +1104,7 @@ MATERIAL
 		if (!( istype(W, /obj/item/tile) ))
 			return
 		if (W.material && src.material && !isSameMaterial(W.material, src.material))
-			boutput(user, "<span class='alert'>You can't mix 2 stacks of different materials!</span>")
+			boutput(user, "<span class='alert'>You can't mix two stacks of different materials!</span>")
 			return
 		var/success = stack_item(W)
 		if (!success)
@@ -1091,7 +1117,7 @@ MATERIAL
 		else
 			boutput(user, "<span class='notice'>You add [success] tiles to the stack. It now has [src.amount] tiles.</span>")
 		tooltip_rebuild = 1
-		if (!W.pooled)
+		if (!W.disposed)
 			W.add_fingerprint(user)
 			W.tooltip_rebuild = 1
 		return

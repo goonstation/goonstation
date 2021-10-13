@@ -45,7 +45,7 @@
 	"butt-nc","butt-plant","butt-cyber","purplebutt","santa","yellow","blue","red","green","black","white",
 	"psyche","wizard","wizardred","wizardpurple","witch","obcrown","macrown","safari","viking","dolan",
 	"camhat","redcamhat","mailcap","paper","policehelm","bikercap","apprentice","chavcap","flatcap","ntberet",
-	"captain-fancy","rank-fancy","mime_beret","mime_bowler","buckethat", "syndicate_top", "syndicate_top_biggest")
+	"captain-fancy","rank-fancy","mime_beret","mime_bowler","buckethat", "syndicate_top", "syndicate_top_biggest", "lesbeean")
 
 	var/sleep_y_offset = 5 // this amount removed from the hat's pixel_y on sleep or death
 	var/hat_y_offset = 0
@@ -374,7 +374,7 @@
 				shorn = 1
 				shorn_time = world.time
 				user.visible_message("<b>[user]</b> shears \the [src]!","You shear \the [src].")
-				var/obj/item/material_piece/cloth/beewool/BW = unpool(/obj/item/material_piece/cloth/beewool)
+				var/obj/item/material_piece/cloth/beewool/BW = new /obj/item/material_piece/cloth/beewool
 				BW.set_loc(src.loc)
 				if (shorn_item)
 					new shorn_item(src.loc)
@@ -1834,6 +1834,7 @@
 		else
 			newLarva.desc = "A moon...larva.  A space bee larva, but kinda odd."
 			newLarva.custom_desc = "A moon bee.  It's like a regular space bee, but it has a peculiar gleam in its eyes..."
+		newLarva.custom_bee_type = /obj/critter/domestic_bee/moon
 		newLarva.throw_at(get_edge_target_turf(src, src.dir), 2, 1)
 		qdel (src)
 

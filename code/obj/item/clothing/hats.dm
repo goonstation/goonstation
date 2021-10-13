@@ -619,6 +619,12 @@ proc/filter_trait_hats(var/type)
 	icon_state = "cowboy"
 	item_state = "cowboy"
 
+/obj/item/clothing/head/longbee
+	name = "Longbee"
+	desc = "A gorgeous creature now on your head!"
+	icon_state = "longbee"
+	item_state = "longbee"
+
 /obj/item/clothing/head/fancy // placeholder icons until someone sprites an actual fancy hat
 	name = "fancy hat"
 	icon_state = "rank-fancy"
@@ -1782,3 +1788,10 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "pirate_brn"
 	item_state = "pirate_brn"
+
+/obj/item/clothing/head/lesbian_hat
+	name = "very lesbian hat"
+	desc = "And they say subtlety is dead."
+	mats = list("FAB-1"=5, "honey"=5)
+	icon_state = "lesbeean"
+	item_state = "lesbeean"
