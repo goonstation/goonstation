@@ -18231,7 +18231,7 @@
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "aVL" = (
-/obj/item/clothing/under/gimmick/mcpsuit,
+/obj/item/clothing/head/helmet/space/mcpsuit,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "aVM" = (
