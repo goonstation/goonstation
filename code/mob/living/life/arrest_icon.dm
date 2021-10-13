@@ -21,10 +21,10 @@
 			var/datum/db_record/record = data_core.security.find_record("name", visibleName)
 			if(record)
 				var/criminal = record["criminal"]
-				if(H.traitHolder.hasTrait("immigrant") && H.traitHolder.hasTrait("jailbird"))
-					arrestState = "*Arrest*"
 				else if(criminal == "*Arrest*" || criminal == "Parolled" || criminal == "Incarcerated" || criminal == "Released")
 					arrestState = criminal
+			else if(H.traitHolder.hasTrait("immigrant") && H.traitHolder.hasTrait("jailbird"))
+				arrestState = "*Arrest*"
 
 			if (arrestState != "*Arrest*") // Contraband overrides non-arrest statuses, now check for contraband
 				if (locate(/obj/item/implant/antirev) in H.implant)
