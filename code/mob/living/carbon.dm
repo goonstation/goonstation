@@ -119,7 +119,7 @@
 			if(src:wear_id && src:wear_id:registered)
 				perpname = src:wear_id:registered
 
-			var/datum/db_record/sec_record = data_core.security.find_record("id", datacore_id)
+			var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
 			if(sec_record && sec_record["criminal"] != "*Arrest*")
 				sec_record["criminal"] = "*Arrest*"
 				sec_record["mi_crim"] = "Public urination."
