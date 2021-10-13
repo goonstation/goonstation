@@ -54,7 +54,7 @@
 	name = "Munch"
 	desc = "Munch down on a mob, dealing brute damage and a short stun."
 	icon_state = "Maneater_Munch"
-	cooldown = 250
+	cooldown = 25 SECONDS
 	targeted = 1
 	target_anything = 1
 	var/sound_bite = 'sound/impact_sounds/Flesh_Crush_1.ogg'
@@ -89,7 +89,7 @@
 	name = "Chomp"
 	desc = "Chomp down on a target, causing brute damage and bleed."
 	icon_state = "Fermid_Bite"
-	cooldown = 150
+	cooldown = 15 SECONDS
 	targeted = 1
 	target_anything = 1
 	var/sound_bite = 'sound/impact_sounds/Flesh_Crush_1.ogg'
@@ -122,7 +122,7 @@
 /datum/targetable/critter/tomato_bite
 	name = "Chomp"
 	desc = "Chomp down on a target, causing some serious pain."
-	cooldown = 100
+	cooldown = 10 SECONDS
 	icon_state = "tomato_bite"
 	var/sound_bite = 'sound/impact_sounds/Flesh_Crush_1.ogg'
 	var/brute_damage = 15

@@ -1,6 +1,5 @@
 
 // a lot of these are probably gunna just be copy/paste jobs because eh.
-//...Thank you, code jesus.
 /datum/targetable/critter/bite/small
 	name = "Bite"
 	desc = "Bite down on a mob, causing a little damage."
