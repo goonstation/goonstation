@@ -325,12 +325,9 @@ Custom Books
 			if (!istype(jerk))
 				return
 
-			for(var/datum/db_record/R in data_core.general.records)
-				if(R["name"] == jerk.real_name)
-					for (var/datum/db_record/S in data_core.security.records)
-						if (S["id"] == R["id"])
-							S["criminal"] = "*Arrest*"
-							S["mi_crim"] = "Reading highly-confidential private information."
+			var/datum/db_record/S = data_core.security.find_record("id", jerk.datacore_id)
+			S["criminal"] = "*Arrest*"
+			S["mi_crim"] = "Reading highly-confidential private information."
 		else
 			return list("It appears to be heavily encrypted information.")
 
