@@ -2087,18 +2087,11 @@
 					if(!dab_id && locate(/obj/machinery/bot/secbot/beepsky) in view(7, get_turf(src)))
 						// determine the name of the perp (goes by ID if wearing one)
 						var/perpname = src.name
-						//if(src:wear_id && src:wear_id:registered)
-						//	perpname = src:wear_id:registered
 
-						// find the matching security record
-						for(var/datum/db_record/R in data_core.general.records)
-							if(R["name"] == perpname)
-								for (var/datum/db_record/S in data_core.security.records)
-									if (S["id"] == R["id"])
-									// now add to rap sheet
-
-										S["criminal"] = "*Arrest*"
-										S["mi_crim"] = "Public Dabbing."
+						var/datum/db_record/sec_record = data_core.security.find_record("name", src.name)
+						if(sec_record && sec_record["criminal"] != "*Arrest*")
+							sec_record["criminal"] = "*Arrest*"
+							sec_record["mi_crim"] = "Public dabbing."
 
 					if(src.reagents) src.reagents.add_reagent("dabs",5)
 
