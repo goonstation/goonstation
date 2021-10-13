@@ -1,4 +1,9 @@
 
+(t)wed oct 13 21
+(u)TTerc
+(p)6243
+(e)🐛|bug
+(+)Small update for wraith/revenant UI: Added points and generation rate counter + turning into a revenant removes all the wraith ability buttons, instead of making them unusable.
 (t)tue oct 12 21
 (u)kyle
 (e)⚖|balance(e)
