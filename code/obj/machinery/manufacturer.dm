@@ -809,13 +809,10 @@
 							storage.eject_ores(ore, get_output_location(), quantity, transmit=1, user=usr)
 
 							 // This next bit is stolen from PTL Code
-							var/list/accounts = list()
-							for(var/datum/db_record/t in data_core.bank.records)
-								if(t["job"] == "Chief Engineer")
-									accounts += t
-									accounts += t //fuck it x2
-								else if(t["job"] == "Miner")
-									accounts += t
+							var/list/accounts = \
+								data_core.bank.find_records("job", "Chief Engineer") + \
+								data_core.bank.find_records("job", "Chief Engineer") + \
+								data_core.bank.find_records("job", "Engineer")
 
 
 							var/datum/signal/minerSignal = get_free_signal()
