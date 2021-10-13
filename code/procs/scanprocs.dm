@@ -352,28 +352,26 @@
 	if (M:wear_id && M:wear_id:registered)
 		patientname = M.wear_id:registered
 
-	for (var/datum/db_record/E in data_core.general.records)
-		if (E["name"] == patientname)
-			switch (M.stat)
-				if (0)
-					if (M.bioHolder && M.bioHolder.HasEffect("strong"))
-						E["p_stat"] = "Very Active"
-					else
-						E["p_stat"] = "Active"
-				if (1)
-					E["p_stat"] = "*Unconscious*"
-				if (2)
-					E["p_stat"] = "*Deceased*"
-			for (var/datum/db_record/R in data_core.medical.records)
-				if ((R["id"] == E["id"]))
-					R["bioHolder.bloodType"] = M.bioHolder.bloodType
-					R["cdi"] = english_list(M.ailments, "No diseases have been diagnosed at the moment.")
-					if (M.ailments.len)
-						R["cdi_d"] = "Diseases detected at [time2text(world.realtime,"hh:mm")]."
-					else
-						R["cdi_d"] = "No notes."
-					break
-			break
+	var/datum/db_record/E = data_core.general.find_record("name", patientname)
+	if(E)
+		switch (M.stat)
+			if (0)
+				if (M.bioHolder && M.bioHolder.HasEffect("strong"))
+					E["p_stat"] = "Very Active"
+				else
+					E["p_stat"] = "Active"
+			if (1)
+				E["p_stat"] = "*Unconscious*"
+			if (2)
+				E["p_stat"] = "*Deceased*"
+		var/datum/db_record/R = data_core.medical.find_record("id", E["id"])
+		if(R)
+			R["bioHolder.bloodType"] = M.bioHolder.bloodType
+			R["cdi"] = english_list(M.ailments, "No diseases have been diagnosed at the moment.")
+			if (M.ailments.len)
+				R["cdi_d"] = "Diseases detected at [time2text(world.realtime,"hh:mm")]."
+			else
+				R["cdi_d"] = "No notes."
 	return
 
 // output a health pop-up overhead thing to the client
