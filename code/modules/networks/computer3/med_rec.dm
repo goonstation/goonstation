@@ -133,12 +133,10 @@
 					return
 
 				src.active_general = check
-				src.active_medical = null
 				if (data_core.general.records.Find(check))
-					for (var/datum/db_record/E in data_core.medical.records)
-						if ((E["name"] == src.active_general["name"] || E["id"] == src.active_general["id"]))
-							src.active_medical = E
-							break
+					src.active_medical = data_core.medical.find_record("id", src.active_general["id"])
+					if(!src.active_medical)
+						data_core.medical.find_record("name", src.active_general["name"])
 
 				src.log_string += "<br>Log loaded: [src.active_general["id"]]"
 
@@ -509,11 +507,9 @@
 					return
 
 				src.active_general = result
-				src.active_medical = null //Time to find the accompanying medical record, if it even exists.
-				for (var/datum/db_record/E in data_core.medical.records)
-					if ((E["name"] == src.active_general["name"] || E["id"] == src.active_general["id"]))
-						src.active_medical = E
-						break
+				src.active_medical = data_core.medical.find_record("id", src.active_general["id"])
+				if(!src.active_medical)
+					data_core.medical.find_record("name", src.active_general["name"])
 
 				src.menu = MENU_IN_RECORD
 				src.print_active_record()
