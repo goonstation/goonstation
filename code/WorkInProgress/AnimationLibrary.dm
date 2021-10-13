@@ -1481,3 +1481,21 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 		filter = A.filters[A.filters.len]
 		animate(filter, size=size, time=0, loop=-1, radius=0, flags=ANIMATION_PARALLEL)
 		animate(size=0, radius=rand()*10+10, time=rand()*20+10)
+
+/proc/animate_stomp(atom/A)
+	var/mob/M = A
+	if(ismob(A))
+		APPLY_MOB_PROPERTY(M, PROP_CANTMOVE, "hatstomp")
+		M.update_canmove()
+	for(var/i = 0 to 2)
+		if(i == 0)
+			animate(A, time=0.1 SECONDS, pixel_y=5, easing=SINE_EASING, flags=ANIMATION_PARALLEL)
+		else
+			animate(time=0.1 SECONDS, pixel_y=5, easing=SINE_EASING)
+		animate(time=0.1 SECONDS, pixel_y=0, easing=SINE_EASING)
+	SPAWN_DBG(0.6 SECONDS)
+		if(ismob(A))
+			REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, "hatstomp")
+			M.update_canmove()
+
+
