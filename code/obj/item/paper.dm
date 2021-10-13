@@ -1581,6 +1581,19 @@ exposed to overconfident outbursts on the part of individuals unqualifed to embo
 	icon_state = "postit-writing"
 	info = {"-non-stable battery; keeps popping on use.<br>-design work (not final)<br>-battery capacity??? maybe?<br>Cheers,<br>O"}
 
+/obj/item/paper/bee_love_letter //For lesbeeans prefab
+	name = "bee love letter"
+	desc = "This smells as sweet as the prose on it."
+	icon_state = "paper_caution"
+	info = {"<i>You have no hope of deciphering the weird marks on this paper, nor are you entirely certain it's even actual writing, but the splotchy heart with prints of bee pretarsi at the bottom kindles a warmth deep within your heart.</i>"}
+
+/obj/item/paper/folded/ball/bee_farm_note //Idem, let's see if anyone thinks to unfold this
+	name = "wadded-up note"
+	desc = "A crumpled, chewed-on wad of paper. A bee appears to have tried eating this."
+	info = {"Janus, I can see why you're so fond of these two and spend so much time on them. It's adorable watching those two together at work, and I think we're seeing new and unique behaviour here!<br><br>
+But please, please do something about the fact it's hanging on by just the data cables, they're not remotely capable of tugging this kind of mass.<br><br>
+That clump of dirt has a metal substrate, we can just ask Rachid to weld it to the station while we keep the lovebirds at a safe distance. A little wrangling never hurt a bee."}
+
 /obj/item/paper/synd_lab_note
 	name = "scribbled note"
 	info = {"So, we've been out here for a week already, and our insurmountable task isn't looking any easier.<br><br>
