@@ -520,7 +520,7 @@ this is already used where it needs to be used, you can probably ignore it.
 		var/list/SP = A.reagents.aggregate_pathogens()
 		for (var/uid in some_human_idiot.pathogens)
 			if (!(uid in SP))
-				var/datum/pathogen/P = unpool(/datum/pathogen)
+				var/datum/pathogen/P = new /datum/pathogen
 				P.setup(0, some_human_idiot.pathogens[uid], 0)
 				B.pathogens[uid] = P
 

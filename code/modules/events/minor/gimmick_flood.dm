@@ -65,10 +65,10 @@
 
 		message_admins("Random flood event triggered on ([showCoords(target.x, target.y, target.z)]) with [amount] [reagent.name].")
 
-		var/obj/decal/teleport_swirl/swirl = unpool(/obj/decal/teleport_swirl)
+		var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
 		swirl.set_loc(target)
 		SPAWN_DBG(1.5 SECONDS)
-			pool(swirl)
+			qdel(swirl)
 
 		src.target = initial(src.target)
 		src.amount = initial(src.amount)

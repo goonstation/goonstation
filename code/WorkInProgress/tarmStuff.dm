@@ -35,7 +35,7 @@
 			for(var/obj/O in affected)
 				O.alpha = initial(O.alpha)
 				O.color = initial(O.color)
-				pool(O)
+				qdel(O)
 			var/datum/projectile/bullet/howitzer/hack = new
 			hack.on_hit(end)
 			qdel(hack)
@@ -65,7 +65,7 @@
 		SPAWN_DBG(1 SECOND)
 			for(var/obj/O in affected)
 				O.alpha = initial(O.alpha)
-				pool(O)
+				qdel(O)
 			qdel(start)
 			qdel(end)
 

@@ -331,13 +331,13 @@ obj/item/reagent_containers/iv_drip/dead_exec
 
 	New()
 		..()
-		var/obj/item/spacecash/random/tourist/S1 = unpool(/obj/item/spacecash/random/tourist)
+		var/obj/item/spacecash/random/tourist/S1 = new /obj/item/spacecash/random/tourist
 		S1.setup(src)
-		var/obj/item/spacecash/random/tourist/S2 = unpool(/obj/item/spacecash/random/tourist)
+		var/obj/item/spacecash/random/tourist/S2 = new /obj/item/spacecash/random/tourist
 		S2.setup(src)
-		var/obj/item/spacecash/random/tourist/S3 = unpool(/obj/item/spacecash/random/tourist)
+		var/obj/item/spacecash/random/tourist/S3 = new /obj/item/spacecash/random/tourist
 		S3.setup(src)
-		var/obj/item/spacecash/random/tourist/S4 = unpool(/obj/item/spacecash/random/tourist)
+		var/obj/item/spacecash/random/tourist/S4 = new /obj/item/spacecash/random/tourist
 		S4.setup(src)
 
 /obj/decal/poster/wallsign/dead_exec_portrait

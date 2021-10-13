@@ -26,20 +26,8 @@
 
 	var/mail_tag = null //Switching junctions with the same tag will pass it out the secondary instead of primary
 
-	unpooled()
-		..()
+	disposing()
 		gas = null
-		active = 0
-		set_dir(0)
-		count = initial(count)
-		last_sound = 0
-		mail_tag = null
-
-	pooled()
-		gas = null
-		active = 0
-		set_dir(0)
-		last_sound = 0
 		mail_tag = null
 		..()
 
@@ -124,7 +112,7 @@
 			AM.set_loc(src)	// move everything in other holder to this one
 		if(other.mail_tag && !src.mail_tag)
 			src.mail_tag = other.mail_tag
-		pool(other)
+		qdel(other)
 
 
 	// called when player tries to move while in a pipe
@@ -314,7 +302,7 @@
 				AM.pipe_eject(direction)
 				AM?.throw_at(target, 100, 1)
 			H.vent_gas(T)
-			pool(H)
+			qdel(H)
 
 		else	// no specified direction, so throw in random direction
 
@@ -327,7 +315,7 @@
 				AM?.throw_at(target, 5, 1)
 
 			H.vent_gas(T)	// all gas vent to turf
-			pool(H)
+			qdel(H)
 
 		return
 
@@ -357,7 +345,7 @@
 				for(var/atom/movable/AM in H)
 					AM.set_loc(T)
 					AM.pipe_eject(0)
-				pool(H)
+				qdel(H)
 				return
 
 			// otherswise, do normal expel from turf
@@ -1317,7 +1305,7 @@
 				AM.pipe_eject(dir)
 				AM.throw_at(stuff_chucking_target, 3, 1)
 			H.vent_gas(src.loc)
-			pool(H)
+			qdel(H)
 
 			return null
 
@@ -1388,7 +1376,7 @@
 				AM.throw_at(stuff_chucking_target, 3, 1)
 			if (H.contents.len < 1)
 				H.vent_gas(src.loc)
-				pool(H)
+				qdel(H)
 				return null
 
 		var/turf/T = H.nextloc()
@@ -1749,7 +1737,7 @@
 			AM.pipe_eject(dir)
 			AM.throw_at(target, src.throw_range, src.throw_speed)
 		H.vent_gas(src.loc)
-		pool(H)
+		qdel(H)
 
 		return
 

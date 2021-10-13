@@ -134,9 +134,9 @@
 		if(!(status & BROKEN))
 			broken()
 		else
-			var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+			var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 			G.set_loc(src.loc)
-			G = unpool(/obj/item/raw_material/shard/glass)
+			G = new /obj/item/raw_material/shard/glass
 			G.set_loc(src.loc)
 
 			qdel(src)
@@ -207,7 +207,7 @@
 		if(1.0)
 			qdel(src)
 			if(prob(15))
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+				var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 				G.set_loc(src.loc)
 			return
 		if(2.0)

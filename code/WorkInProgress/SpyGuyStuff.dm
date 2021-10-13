@@ -694,7 +694,7 @@ proc/Create_Tommyname()
 //calculate new px / py
 	if(istype(O, /turf))
 		var/turf/T = O
-		var/obj/movedummy/MD = unpool(/obj/movedummy)
+		var/obj/movedummy/MD = new /obj/movedummy
 		MD.mimic_turf(T.type, 0)
 		MD.set_loc(T)
 		T.ReplaceWithSpace()
@@ -717,7 +717,7 @@ proc/Create_Tommyname()
 	animate_slide(O, npx, npy, animtime)
 	sleep(animtime)
 	if(istype(O, /obj/movedummy))
-		pool(O)
+		qdel(O)
 	else
 		qdel(O)
 
@@ -757,7 +757,7 @@ proc/Create_Tommyname()
 				if(!is_turf)
 					O = new t_type(null)
 				else
-					var/obj/movedummy/MD = unpool(/obj/movedummy)
+					var/obj/movedummy/MD = new /obj/movedummy
 					MD.mimic_turf(t_type, animtime)
 					O = MD
 
@@ -803,10 +803,6 @@ proc/Create_Tommyname()
 	name = "Dummy object."
 	invisibility = INVIS_ALWAYS
 
-/obj/movedummy/pooled()
-	..()
-	invisibility = INVIS_ALWAYS
-
 /obj/movedummy/proc/mimic_turf(var/turf_type, var/TTL)
 	ASSERT(ispath(turf_type, /turf))
 	var/turf/T = turf_type
@@ -821,7 +817,7 @@ proc/Create_Tommyname()
 	src.invisibility = INVIS_NONE
 	if(TTL)
 		SPAWN_DBG(TTL)
-			pool(src)
+			qdel(src)
 
 #undef STAT_STANDBY
 #undef STAT_MOVING
