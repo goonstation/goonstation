@@ -937,7 +937,7 @@
 		src.deduct_bio_points()
 
 		if (do_pool)
-			pool(I)
+			qdel(I)
 		else
 			qdel(I)
 

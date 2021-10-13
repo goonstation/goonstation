@@ -7,6 +7,7 @@
 	name = "projectile"
 	flags = TABLEPASS
 	layer = EFFECTS_LAYER_BASE
+	anchored = 1
 
 	var/xo
 	var/yo
@@ -547,15 +548,15 @@ datum/projectile
 			switch (type)
 				if ("K")
 					if (iscarbon(hit))
-						E = unpool(/obj/itemspecialeffect/impact/blood)
+						E = new /obj/itemspecialeffect/impact/blood
 					else if (issilicon(hit))
-						E = unpool(/obj/itemspecialeffect/impact/silicon)
+						E = new /obj/itemspecialeffect/impact/silicon
 				if ("E")
 					if (iscarbon(hit))
-						E = unpool(/obj/itemspecialeffect/impact/energy)
+						E = new /obj/itemspecialeffect/impact/energy
 				if ("T")
 					if (iscarbon(hit))
-						E = unpool(/obj/itemspecialeffect/impact/taser)
+						E = new /obj/itemspecialeffect/impact/taser
 
 			if (E)
 				E.setup(hit.loc)

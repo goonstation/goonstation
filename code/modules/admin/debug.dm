@@ -683,7 +683,7 @@ body
 	switch (selected)
 		if ("Disco Inferno")
 			for (var/turf/T in landmarks[LANDMARK_BLOBSTART])
-				var/datum/gas_mixture/gas = unpool(/datum/gas_mixture)
+				var/datum/gas_mixture/gas = new /datum/gas_mixture
 				gas.toxins = 10000
 				gas.oxygen = 10000
 				gas.temperature = 10000

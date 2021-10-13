@@ -3,7 +3,7 @@
 var/global/mutable_appearance/elecflash_ma = null
 
 /proc/elecflash(var/atom/center, var/radius = 0, var/power=1, var/exclude_center = 1)//power 1 to 6
-	if (!center || center.qdeled || center.pooled || center.disposed)
+	if (!center || center.qdeled || center.disposed)
 		return
 
 	var/turf/center_turf = get_turf(center)

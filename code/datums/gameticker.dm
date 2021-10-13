@@ -258,6 +258,10 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				command_alert("Reports indicate that the engine on-board [station_name()] has not yet been started. Setting up the engine is strongly recommended, or else stationwide power failures may occur.", "Power Grid Warning")
 			break
 
+	for(var/turf/T in job_start_locations["AI"])
+		if(isnull(locate(/mob/living/silicon/ai) in T))
+			new /obj/item/clothing/suit/cardboard_box/ai(T)
+
 	processScheduler.start()
 
 	if (total_clients() >= OVERLOAD_PLAYERCOUNT)
@@ -431,6 +435,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			// Official go-ahead to be an end-of-round asshole
 			boutput(world, "<h3>The round has ended!</h3><strong style='color: #393;'>Further actions will have no impact on round results. Go hog wild!</strong>")
 
+			SPAWN_DBG(0)
+				change_ghost_invisibility(INVIS_NONE)
+
 			// i feel like this should probably be a proc call somewhere instead but w/e
 			if (!ooc_allowed)
 				ooc_allowed = 1
@@ -551,9 +558,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				logTheThing("diary",crewMind,null,"failed objective: [CO.explanation_text]. Bummer!")
 				allComplete = 0
 				crewMind.all_objs = 0
-
 		if (allComplete && count)
 			successfulCrew += "[crewMind.current.real_name] ([crewMind.key])"
+		boutput(crewMind.current, "<br>")
 #endif
 
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] mode.declare_completion()")

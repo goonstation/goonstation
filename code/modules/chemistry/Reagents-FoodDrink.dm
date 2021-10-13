@@ -1518,10 +1518,6 @@ datum
 			reagent_state = LIQUID
 			var/bioeffect_length = 0
 
-			pooled()
-				..()
-				bioeffect_length = 0
-
 			on_mob_life(var/mob/living/carbon/human/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				if(istype(M) && !M.mutantrace)
@@ -2249,10 +2245,6 @@ datum
 			bladder_value = 0.04
 			energy_value = 1
 			stun_resist = 25
-
-			pooled()
-				..()
-				tickcounter = 0
 
 			on_add()
 				if (ismob(holder?.my_atom))
@@ -3998,10 +3990,6 @@ datum
 			fluid_b = 81
 			transparency = 200
 			var/alch_counter = 0 //ripped straight from amantin - moonlol
-
-			pooled()
-				..()
-				alch_counter = 0
 
 			on_mob_life(var/mob/M, var/mult = 0)
 

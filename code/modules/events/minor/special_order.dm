@@ -30,9 +30,9 @@
 		var/datum/special_order/new_order = new order_type
 		LAZYLISTADD(shippingmarket.active_orders, new_order)
 
-		if(new_order.C)
+		if(new_order.sendingCrate)
 			new_order.pack_crate()
-			shippingmarket.receive_crate(new_order.C)
+			shippingmarket.receive_crate(new_order.sendingCrate)
 		else
 			shippingmarket.receive_crate(new_order.requisition)
 
@@ -40,12 +40,19 @@
 		return TRUE
 
 /datum/special_order
+	///name of the order - used for manually calling event
 	var/name
+	///list of items needed to fill order - not used when check_order is overridden
 	var/list/datum/commodity/order_items
-	var/obj/storage/crate/C
+	///specify a crate to be sent - pack_crate proc generally to fill it
+	var/obj/storage/crate/sendingCrate
+	///piece of paper (subtypes) with order info etc
 	var/obj/item/paper/requisition
-	var/list/stamps
+	///bonus rewards shipped when order is filled
+	var/list/atom/movable/rewards
+	///credit value for filling the order
 	var/price
+	///weighting for event pick
 	var/weight = 100
 
 	New()
@@ -61,6 +68,7 @@
 				shopping_list += order_items[i]
 		order_items = shopping_list
 
+	///check if order is filled by a given crate
 	proc/check_order(obj/storage/crate/sell_crate)
 		var/contents = list()
 		contents += sell_crate.contents
@@ -80,23 +88,46 @@
 			if(!found)
 				return FALSE
 
+	///updates requisition paper with shopping list, and appends the price reward for the order
 	proc/update_requisition(obj/item/paper/requisition)
 		if(ispath(requisition))
 			requisition = new requisition
 		requisition.info = replacetext(requisition.info, "%ITEMS%", src.get_shopping_list())
 		requisition.info += "<BR/><BR/>Requisition Offer: <B>[price]</B>"
+		if(length(rewards))
+			requisition.info += get_rewards_list()
 
+	///formats src.order_items for being put onto paper
 	proc/get_shopping_list()
 		. = "<ul>"
 		for(var/datum/commodity/C as anything in src.order_items)
 			if(src.order_items[C])
-				. += "<li>([src.order_items[C]]) [initial(C.comname)]</li>"
+				. += "<li>([src.order_items[C]]) [capitalize(initial(C.comname))]</li>"
 			else
-				. += "<li>[initial(C.comname)]</li>"
+				. += "<li>[capitalize(initial(C.comname))]</li>"
 		. += "</ul>"
 
+	///formats src.rewards for being put on paper
+	proc/get_rewards_list()
+		. += "<br/><ul>"
+		for(var/atom/movable/AM as anything in rewards)
+			if(src.rewards[AM])
+				. += "<li>[src.rewards[AM]]x [capitalize(initial(AM.name))]</li>"
+			else
+				. += "<li>[capitalize(initial(AM.name))]</li>"
+		. += "</ul>"
+
+	///proc stub. Override this with code for filling sendingCrate during event setup
 	proc/pack_crate()
 		return
+
+	///if we have item rewards to send upon order fulfillment, shove them in a crate and ship it off to cargo
+	proc/send_rewards()
+		if(length(rewards))
+			var/obj/storage/crate/C = new
+			for(var/type in rewards)
+				new type(C)
+			shippingmarket.receive_crate(C)
 
 ABSTRACT_TYPE(/datum/special_order/reagents)
 /datum/special_order/reagents
@@ -155,6 +186,7 @@ ABSTRACT_TYPE(/datum/special_order/surgery)
 
 ABSTRACT_TYPE(/datum/special_order/chef)
 /datum/special_order/chef
+	weight = 50
 	price = 2000
 	requisition = new /obj/item/paper/requisition/food_order
 	var/list/food_order = list()
@@ -255,12 +287,13 @@ ABSTRACT_TYPE(/datum/special_order/chef)
 
 /datum/special_order/surgery/organ_swap
 	name = "Organ Swap"
-	weight = 25
+	weight = 50
 	price = 5000
-	C = new /obj/storage/crate/wooden
+	sendingCrate = new /obj/storage/crate/wooden
 	requisition = new /obj/item/paper/requisition/surgery/organ_swap
 	var/mob/living/carbon/human/target
 	var/target_organs = list()
+	rewards = list(/obj/item/vending/restock_cartridge/medical = 3, /obj/item/vending/restock_cartridge/portamed = 1)
 
 	New()
 		..()
@@ -280,7 +313,7 @@ ABSTRACT_TYPE(/datum/special_order/chef)
 		var/datum/reagent/capulettium_plus/E = target.reagents.get_reagent("ether")
 		E.counter = 36
 		target.ai_lastaction = TIME + 2 MINUTES
-		target.set_loc(C)
+		target.set_loc(sendingCrate)
 		//Fuck up Organs
 		target.TakeDamage("All", rand(10, 20), rand(10, 20))
 		target.organHolder.damage_organs(1, 6, 10, target_organs)
@@ -292,7 +325,7 @@ ABSTRACT_TYPE(/datum/special_order/chef)
 					target.u_equip(O)
 					qdel(O)
 
-		requisition.set_loc(C)
+		requisition.set_loc(sendingCrate)
 
 	check_order(obj/storage/crate/sell_crate)
 		if(target in sell_crate)
