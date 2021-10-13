@@ -39,7 +39,7 @@
 			for(var/x in T2)
 				try
 					qdel(x)
-				except // suppress errors
+				catch // suppress errors
 					;
 			T2.ReplaceWithSpaceForce()
 	boutput(world, "<span class='alert'>Generated prefabs Level in [((world.timeofday - startTime)/10)] seconds!")
