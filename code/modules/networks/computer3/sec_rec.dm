@@ -244,7 +244,7 @@
 					src.print_text("Invalid record.")
 					return
 
-				var/datum/db_record/check = src.record_database[index_number]
+				var/datum/db_record/check = src.record_database.records[index_number]
 				if(!check || !istype(check))
 					src.print_text("<b>Error:</b> Record Data Invalid.")
 					return
@@ -682,7 +682,7 @@
 				dat = "Please select a record:"
 				var/leadingZeroCount = length("[src.record_database.records.len]")
 				for(var/x = 1, x <= src.record_database.records.len, x++)
-					var/datum/db_record/R = src.record_database[x]
+					var/datum/db_record/R = src.record_database.records[x]
 					if(!R || !istype(R))
 						dat += "<br><b>\[[add_zero("[x]",leadingZeroCount)]]</b><font color=red>ERR: REDACTED</font>"
 						continue

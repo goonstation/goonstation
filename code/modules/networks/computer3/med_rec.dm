@@ -127,7 +127,7 @@
 					src.print_text("Invalid record.")
 					return
 
-				var/datum/db_record/check = src.record_database[index_number]
+				var/datum/db_record/check = src.record_database.records[index_number]
 				if(!check || !istype(check))
 					src.print_text("<b>Error:</b> Record Data Invalid.")
 					return
