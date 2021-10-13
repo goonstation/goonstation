@@ -200,12 +200,12 @@
 	/obj/item/sheet/glass/fullstack,
 	/obj/item/ai_interface,
 	/obj/item/parts/robot_parts/robot_frame,
-	/obj/item/parts/robot_parts/leg/left,
-	/obj/item/parts/robot_parts/leg/right,
-	/obj/item/parts/robot_parts/arm/left,
-	/obj/item/parts/robot_parts/arm/right,
-	/obj/item/parts/robot_parts/chest,
-	/obj/item/parts/robot_parts/head,
+	/obj/item/parts/robot_parts/leg/left/standard,
+	/obj/item/parts/robot_parts/leg/right/standard,
+	/obj/item/parts/robot_parts/arm/left/standard,
+	/obj/item/parts/robot_parts/arm/right/standard,
+	/obj/item/parts/robot_parts/chest/standard,
+	/obj/item/parts/robot_parts/head/standard,
 	/obj/item/cell/supercell = 4,
 	/obj/item/cable_coil = 2)
 
@@ -322,6 +322,39 @@
 				for(var/obj/item/bee_egg_carton/carton in src)
 					carton.ourEgg.blog += blog
 				return 1
+
+//There is also /obj/storage/crate/robotics_supplies_borg that's on destiny & clarion, they only have the one crate
+//This one has just the bring-your-own-brain-and-cell borg parts (but does lovely pixel offsets I stole from cog1, thanks f1!)
+/obj/storage/crate/robotparts
+	make_my_stuff() //since we want offsets we're gonna have to do this manually (mimicking office closets)
+		if(..()) //obj/storage/proc/make_my_stuff returns 1 only the first time it's run, so this is how we only spawn stuff once. It's a bit of a weird system
+			new /obj/item/cable_coil/cut(src)
+
+			var/obj/item/parts/robot_parts/robot_frame/B1 = new /obj/item/parts/robot_parts/robot_frame(src)
+			B1.pixel_y = 3
+
+			new /obj/item/parts/robot_parts/head/standard(src) //Was B2 but no offsets needed
+
+			var/obj/item/parts/robot_parts/chest/standard/B3 = new /obj/item/parts/robot_parts/chest/standard/(src)
+			B3.pixel_y = -5
+
+
+			var/obj/item/parts/robot_parts/arm/left/standard/B4 = new /obj/item/parts/robot_parts/arm/left/standard(src)
+			B4.pixel_y = 0
+			B4.pixel_x = 11
+
+			var/obj/item/parts/robot_parts/arm/right/standard/B5 = new /obj/item/parts/robot_parts/arm/right/standard(src)
+
+			B5.pixel_y = 0
+			B5.pixel_x = -12
+
+			var/obj/item/parts/robot_parts/leg/left/standard/B6 = new /obj/item/parts/robot_parts/leg/left/standard(src)
+			B6.pixel_y = -6
+			B6.pixel_x = 7
+
+			var/obj/item/parts/robot_parts/leg/right/standard/B7 = new /obj/item/parts/robot_parts/leg/right/standard(src)
+			B7.pixel_y = -6
+			B7.pixel_x = -8
 
 // New crates woo. (Gannets)
 

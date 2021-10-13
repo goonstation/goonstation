@@ -232,7 +232,7 @@
 					src.part_head.brain = B
 				else
 					// how the hell would this happen. oh well
-					var/obj/item/parts/robot_parts/head/H = new /obj/item/parts/robot_parts/head(src)
+					var/obj/item/parts/robot_parts/head/standard/H = new /obj/item/parts/robot_parts/head/standard(src)
 					src.part_head = H
 					B.set_loc(H)
 					H.brain = B
@@ -3119,15 +3119,15 @@
 /mob/living/silicon/robot/spawnable/standard
 	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
 		if (!src.part_chest)
-			src.part_chest = new/obj/item/parts/robot_parts/chest(src)
+			src.part_chest = new/obj/item/parts/robot_parts/chest/standard(src)
 			src.part_chest.wires = 1
 			src.part_chest.cell = new/obj/item/cell/supercell/charged(src.part_chest)
 			src.cell = src.part_chest.cell
-		if (!src.part_head) src.part_head = new/obj/item/parts/robot_parts/head(src)
-		if (!src.part_arm_l) src.part_arm_l = new/obj/item/parts/robot_parts/arm/left(src)
-		if (!src.part_arm_r) src.part_arm_r = new/obj/item/parts/robot_parts/arm/right(src)
-		if (!src.part_leg_l) src.part_leg_l = new/obj/item/parts/robot_parts/leg/left(src)
-		if (!src.part_leg_r) src.part_leg_r = new/obj/item/parts/robot_parts/leg/right(src)
+		if (!src.part_head) src.part_head = new/obj/item/parts/robot_parts/head/standard(src)
+		if (!src.part_arm_l) src.part_arm_l = new/obj/item/parts/robot_parts/arm/left/standard(src)
+		if (!src.part_arm_r) src.part_arm_r = new/obj/item/parts/robot_parts/arm/right/standard(src)
+		if (!src.part_leg_l) src.part_leg_l = new/obj/item/parts/robot_parts/leg/left/standard(src)
+		if (!src.part_leg_r) src.part_leg_r = new/obj/item/parts/robot_parts/leg/right/standard(src)
 		..(loc, frame, starter, syndie, frame_emagged)
 
 	shell
@@ -3145,13 +3145,13 @@
 /mob/living/silicon/robot/spawnable/standard_thruster
 	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
 		if (!src.part_chest)
-			src.part_chest = new/obj/item/parts/robot_parts/chest(src)
+			src.part_chest = new/obj/item/parts/robot_parts/chest/standard(src)
 			src.part_chest.wires = 1
 			src.part_chest.cell = new/obj/item/cell/supercell/charged(src.part_chest)
 			src.cell = src.part_chest.cell
-		if (!src.part_head) src.part_head = new/obj/item/parts/robot_parts/head(src)
-		if (!src.part_arm_l) src.part_arm_l = new/obj/item/parts/robot_parts/arm/left(src)
-		if (!src.part_arm_r) src.part_arm_r = new/obj/item/parts/robot_parts/arm/right(src)
+		if (!src.part_head) src.part_head = new/obj/item/parts/robot_parts/head/standard(src)
+		if (!src.part_arm_l) src.part_arm_l = new/obj/item/parts/robot_parts/arm/left/standard(src)
+		if (!src.part_arm_r) src.part_arm_r = new/obj/item/parts/robot_parts/arm/right/standard(src)
 		if (!src.part_leg_l) src.part_leg_l = new/obj/item/parts/robot_parts/leg/left/thruster(src)
 		if (!src.part_leg_r) src.part_leg_r = new/obj/item/parts/robot_parts/leg/right/thruster(src)
 		..(loc, frame, starter, syndie, frame_emagged)
@@ -3160,7 +3160,7 @@
 /mob/living/silicon/robot/spawnable/sturdy
 	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
 		if (!src.part_chest)
-			src.part_chest = new/obj/item/parts/robot_parts/chest(src)
+			src.part_chest = new/obj/item/parts/robot_parts/chest/standard(src)
 			src.part_chest.wires = 1
 			src.part_chest.cell = new/obj/item/cell/cerenkite/charged(src.part_chest)
 			src.cell = src.part_chest.cell
@@ -3179,7 +3179,7 @@
 /mob/living/silicon/robot/spawnable/heavy
 	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
 		if (!src.part_chest)
-			src.part_chest = new/obj/item/parts/robot_parts/chest(src)
+			src.part_chest = new/obj/item/parts/robot_parts/chest/standard(src)
 			src.part_chest.wires = 1
 			src.part_chest.cell = new/obj/item/cell/cerenkite/charged(src.part_chest)
 			src.cell = src.part_chest.cell
