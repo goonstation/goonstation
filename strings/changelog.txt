@@ -1,6 +1,10 @@
 
 (t)wed oct 13 21
 (u)TTerc
+(p)6271
+(e)|
+(+)Clicking backpacks/satchels/belts with an item that does not fit in them will now open them.
+(u)TTerc
 (p)6243
 (e)🐛|bug
 (+)Small update for wraith/revenant UI: Added points and generation rate counter + turning into a revenant removes all the wraith ability buttons, instead of making them unusable.
