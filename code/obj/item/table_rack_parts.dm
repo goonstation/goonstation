@@ -296,6 +296,12 @@ RACK PARTS
 	furniture_type = /obj/stool/bee_bed
 	furniture_name = "bee bed"
 
+/obj/item/furniture_parts/stool/bee_bed/double
+	name = "double bee bed parts"
+	desc = "A pile of cloth and wicker that you can attempt to fumble back into a double bee bed."
+	furniture_type = /obj/stool/bee_bed/double
+	furniture_name = "double bee bed"
+
 /obj/item/furniture_parts/stool/bar
 	name = "bar stool parts"
 	desc = "A collection of parts that can be used to make a bar stool."

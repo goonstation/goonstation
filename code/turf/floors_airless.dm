@@ -30,6 +30,14 @@
 	step_material = "step_lattice"
 	step_priority = STEP_PRIORITY_MED
 
+/turf/unsimulated/floor/airless/plating/catwalk
+	name = "catwalk support"
+	icon_state = "catwalk"
+	allows_vehicles = 1
+	step_material = "step_lattice"
+	step_priority = STEP_PRIORITY_MED
+
+
 ////////////////////////////////////////////////////////////
 
 /turf/simulated/floor/airless/scorched
