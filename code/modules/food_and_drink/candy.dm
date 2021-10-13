@@ -53,7 +53,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 			icon_state = "nougat1"
 
 /obj/item/reagent_containers/food/snacks/candy/caramel
-	name = "goatse's caramel creme"
+	name = "goatze's caramel creme"
 	desc = "The only twice-distended caramel on the market!"
 	real_name = "caramel"
 	icon_state = "caramel"
