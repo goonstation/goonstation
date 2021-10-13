@@ -134,6 +134,6 @@
 
 	proc/copy()
 		RETURN_TYPE(/datum/db_record)
-		var/datum/db_record/clone = new(null, fields.Copy())
+		return new/datum/db_record(null, fields.Copy())
 
 /mob/var/datum/record_database/rdb = new

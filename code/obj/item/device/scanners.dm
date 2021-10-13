@@ -609,7 +609,7 @@ that cannot be itched
 			found = 0
 
 		////Security Records
-		var/datum/db_record/E = data_core.security..find_record("name", src.active1["name"])
+		var/datum/db_record/E = data_core.security.find_record("name", src.active1["name"])
 		if(E)
 			if(src.mode == 1)
 				E["criminal"] = "Incarcerated"
