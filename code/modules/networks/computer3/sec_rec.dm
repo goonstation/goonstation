@@ -674,7 +674,7 @@
 		print_index()
 			src.master.temp = null
 			var/dat = ""
-			if(!src.record_database || !length(src.record_database))
+			if(!src.record_database || !length(src.record_database.records))
 				src.print_text("<b>Error:</b> No records found in database.")
 				dat += "<br><b>\[99]</b> Create New Record.<br>"
 
