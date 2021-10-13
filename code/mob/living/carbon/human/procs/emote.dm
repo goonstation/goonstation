@@ -2085,9 +2085,6 @@
 						dab_id.tooltip_rebuild = 1
 					src.add_karma(-4)
 					if(!dab_id && locate(/obj/machinery/bot/secbot/beepsky) in view(7, get_turf(src)))
-						// determine the name of the perp (goes by ID if wearing one)
-						var/perpname = src.name
-
 						var/datum/db_record/sec_record = data_core.security.find_record("name", src.name)
 						if(sec_record && sec_record["criminal"] != "*Arrest*")
 							sec_record["criminal"] = "*Arrest*"
