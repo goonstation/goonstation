@@ -28,7 +28,7 @@
 		AM.set_loc(get_turf(user))
 
 	remove_air(amount as num)
-		var/datum/gas_mixture/Air = unpool(/datum/gas_mixture)
+		var/datum/gas_mixture/Air = new /datum/gas_mixture
 		Air.oxygen = amount
 		Air.temperature = 310
 		return Air
@@ -37,9 +37,9 @@
 		SPAWN_DBG(0)
 			// Check spawn limits
 			if(limiter.canISpawn(/obj/effects/sparks))
-				var/obj/effects/sparks/O = unpool(/obj/effects/sparks)
+				var/obj/effects/sparks/O = new /obj/effects/sparks
 				O.set_loc(src.loc)
-				SPAWN_DBG(2 SECONDS) if (O) pool(O)
+				SPAWN_DBG(2 SECONDS) if (O) qdel(O)
 
 	relaymove(mob/user, direction)
 
@@ -200,7 +200,7 @@
 							continue
 						var/image/img = cableimgs[idx]
 						img.appearance = C.appearance
-						img.invisibility = 0
+						img.invisibility = INVIS_NONE
 						img.alpha = 255
 						img.layer = 100
 						img.plane = 100
@@ -229,7 +229,7 @@
 
 		var/atom/dummy = D
 		if(D)
-			dummy.invisibility = 101
+			dummy.invisibility = INVIS_ALWAYS
 
 		playsound(src, "sound/effects/shielddown2.ogg", 40, 1)
 		var/obj/overlay/O = new/obj/overlay(get_turf(target))

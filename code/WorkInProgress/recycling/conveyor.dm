@@ -43,6 +43,7 @@
 	// create a conveyor
 
 /obj/machinery/conveyor/New()
+	src.flags |= UNCRUSHABLE
 	..()
 	basedir = dir
 	setdir()

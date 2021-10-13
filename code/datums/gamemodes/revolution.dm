@@ -202,7 +202,7 @@
 		logTheThing("combat", rev_mind.current, null, "was made a member of the revolution.")
 		. = 1
 
-		var/obj/itemspecialeffect/derev/E = unpool(/obj/itemspecialeffect/derev)
+		var/obj/itemspecialeffect/derev/E = new /obj/itemspecialeffect/derev
 		E.color = "#FF5555"
 		E.setup(rev_mind.current.loc)
 
@@ -224,7 +224,7 @@
 
 		.= 1
 
-		var/obj/itemspecialeffect/derev/E = unpool(/obj/itemspecialeffect/derev)
+		var/obj/itemspecialeffect/derev/E = new /obj/itemspecialeffect/derev
 		E.color = "#5555FF"
 		E.setup(rev_mind.current.loc)
 

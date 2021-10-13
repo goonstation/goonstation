@@ -124,7 +124,7 @@ var/datum/respawn_controls/respawn_controller
 
 	proc/update_time_display()
 		if(!master.respawns_enabled)
-			return
+			return 0
 		if(isnull(the_client))
 			the_client = src.player?.client
 		var/time_left = master.respawn_time * respawn_time_modifier - (TIME - src.died_time)
@@ -138,6 +138,7 @@ var/datum/respawn_controls/respawn_controller
 			observer?.hud?.get_respawn_timer().set_time_left(time_left)
 		else
 			observer?.hud?.get_respawn_timer().activate_clickability(master.rp_alert)
+		return 1
 
 
 	proc/checkValid()
@@ -216,3 +217,27 @@ var/datum/respawn_controls/respawn_controller
 #undef RESPAWNEE_STATE_WAITING
 #undef RESPAWNEE_STATE_ELIGIBLE
 #undef RESPAWNEE_STATE_ALIVE
+
+/atom/movable/screen/join_other
+	screen_loc = "CENTER, NORTH-1"
+	maptext_height = 32 * 2
+	maptext_width = 32 * 7
+	maptext_x = -32 * 3
+	maptext_y = -32 * 0.5
+	var/server_id = "main2"
+	var/server_name = "2 Classic: Bombini"
+
+	Topic(href, href_list)
+		. = ..()
+		if(href_list["action"] == "close")
+			src.maptext= null
+
+	New(loc, server_id=null, server_name=null)
+		..()
+		if(!isnull(server_id))
+			src.server_id = server_id
+		if(!isnull(server_name))
+			src.server_name = server_name
+		if (server_id == config.server_id)
+			return
+		maptext = {"<span class='pixel c ol' style='font-size:16px;'>Dead? No worries. <a style='color:red;background-color:black;' href="?src=\ref[src]&action=close">X</a><br><a style='color:#8f8;text-decoration:underline;' href='byond://winset?command=Change-Server [server_id]'>Click here to join<br>[server_name]!</a></span>"}

@@ -835,7 +835,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	anchored = 0
 	p_class = 1.2
 	can_fall = 0
-	mats = 30
+	mats = null
 	ai_control_enabled = 1
 	var/homeloc = null
 

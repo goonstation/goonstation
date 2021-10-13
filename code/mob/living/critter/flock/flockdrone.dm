@@ -338,7 +338,7 @@
 				src.resources += C.resources
 				boutput(src, "<span class='notice'>You break down the resource cache, adding <span class='bold'>[C.resources]</span> resources to your own (you now have [src.resources] resource[src.resources == 1 ? "" : "s"]). </span>")
 			if(istype(I, /obj/item/raw_material))
-				pool(I) //gotta pool stuff bruh
+				qdel(I) //gotta pool stuff bruh
 			else
 				qdel(I)
 	// AI ticks are handled in mob_ai.dm, as they ought to be
@@ -551,11 +551,11 @@
 	for(var/i=1 to num_pieces)
 		switch(rand(100))
 			if(0 to 45)
-				B = unpool(/obj/item/raw_material/scrap_metal)
+				B = new /obj/item/raw_material/scrap_metal
 				B.set_loc(my_turf)
 				B.setMaterial(getMaterial("gnesis"))
 			if(46 to 90)
-				B = unpool(/obj/item/raw_material/shard)
+				B = new /obj/item/raw_material/shard
 				B.set_loc(my_turf)
 				B.setMaterial(getMaterial("gnesisglass"))
 			if(91 to 100)

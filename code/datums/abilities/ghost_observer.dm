@@ -143,11 +143,11 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		if (display_buttons)
 			for (var/datum/targetable/ghost_observer/A in src.abilities)
 				if (!istype (A, /datum/targetable/ghost_observer/toggle_HUD) && istype(A.object))
-					A.object.invisibility = 0
+					A.object.invisibility = INVIS_NONE
 		else
 			for (var/datum/targetable/ghost_observer/A in src.abilities)
 				if (!istype (A, /datum/targetable/ghost_observer/toggle_HUD) && istype(A.object))
-					A.object.invisibility = 100
+					A.object.invisibility = INVIS_ALWAYS_ISH
 
 	proc/add_all_abilities()
 		src.addAbility(/datum/targetable/ghost_observer/toggle_HUD)
@@ -566,7 +566,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 		var/turf/T = get_turf(holder.owner)
 		if (!istype(T, /turf/space) && !T.density)
-			var/obj/itemspecialeffect/poof/P = unpool(/obj/itemspecialeffect/poof)
+			var/obj/itemspecialeffect/poof/P = new /obj/itemspecialeffect/poof
 			P.setup(T)
 			playsound(T,"sound/effects/poff.ogg", 50, 1, pitch = 1)
 			new /obj/critter/bat(T)
@@ -609,7 +609,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		if (istype(holder, /datum/abilityHolder/ghost_observer))
 			var/datum/abilityHolder/ghost_observer/GAH = holder
 			GAH.spooking = 1
-		src.holder.owner.invisibility = 0
+		src.holder.owner.invisibility = INVIS_NONE
 		boutput(holder.owner, "<span class='notice'>You start being spooky! The living can all see you!</span>")
 
 	//remove the filter animation when we're done.

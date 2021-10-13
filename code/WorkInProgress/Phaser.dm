@@ -430,8 +430,8 @@ var/const/PHASER_SNIPER = 256
 								sleep(0.5 SECONDS)
 								step_towards(M,myloc)
 
-					var/obj/projectile/PBul = unpool(/obj/projectile)
-					var/obj/projectile/PLas = unpool(/obj/projectile)
+					var/obj/projectile/PBul = new /obj/projectile
+					var/obj/projectile/PLas = new /obj/projectile
 					PBul.proj_data = new /datum/projectile/bullet/revolver_357(  )
 					PLas.proj_data = new /datum/projectile/laser(  )
 					for(var/obj/machinery/bot/B in view(O.range,O.loc))
@@ -493,10 +493,10 @@ var/const/PHASER_SNIPER = 256
 					switch(O.power)
 						if(1 to 33)
 							for(var/turf/simulated/floor/T in view(O.range,O.loc))
-								var/obj/OV = unpool(/obj/effects/sparks)
+								var/obj/OV = new /obj/effects/sparks
 								OV.set_loc(T)
 								OV.set_dir(pick(alldirs))
-								SPAWN_DBG(2 SECONDS) if (OV) pool(OV)
+								SPAWN_DBG(2 SECONDS) if (OV) qdel(OV)
 						if(34 to 66)
 							playsound(O.loc, "sound/effects/exlow.ogg", 65, 1)
 							for(var/turf/simulated/floor/T in view(O.range,O.loc))

@@ -592,7 +592,7 @@
 							if (ejectamt == O.amount)
 								O.set_loc(get_output_location(O,1))
 							else
-								var/obj/item/material_piece/P = unpool(O.type)
+								var/obj/item/material_piece/P = new O.type
 								P.setMaterial(copyMaterial(O.material))
 								P.change_stack_amount(ejectamt - P.amount)
 								O.change_stack_amount(-ejectamt)
@@ -1407,7 +1407,7 @@
 						var/target_amount = round(src.resource_amounts[mat_id] / 10)
 						if (!target_amount)
 							src.contents -= I
-							pool(I)
+							qdel(I)
 						else if (I.amount != target_amount)
 							I.change_stack_amount(-(I.amount - target_amount))
 						break
@@ -1795,7 +1795,7 @@
 				if (istype(M, P) && M.material && isSameMaterial(M.material, P.material))
 					M.change_stack_amount(P.amount)
 					src.update_resource_amount(M.material.mat_id, P.amount * 10)
-					pool(P)
+					qdel(P)
 					return
 			src.update_resource_amount(P.material.mat_id, P.amount * 10)
 
@@ -1838,7 +1838,7 @@
 		else if (free_resources.len && free_resource_amt > 0)
 			for (var/X in src.free_resources)
 				if (ispath(X))
-					var/obj/item/material_piece/P = unpool(X)
+					var/obj/item/material_piece/P = new X
 					P.set_loc(src)
 					if (free_resource_amt > 1)
 						P.change_stack_amount(free_resource_amt - P.amount)
@@ -1914,7 +1914,7 @@
 			if (ispath(src.blueprint))
 				src.blueprint = get_schematic_from_path(src.blueprint)
 			else
-				pool(src)
+				qdel(src)
 				return 0
 		else
 			if (istext(schematic))
@@ -2183,7 +2183,8 @@
 	/datum/manufacture/cybereye_thermal,
 	/datum/manufacture/cybereye_laser,
 	/datum/manufacture/cyberbutt,
-	/datum/manufacture/robup_expand)
+	/datum/manufacture/robup_expand,
+	/datum/manufacture/cardboard_ai)
 
 /obj/machinery/manufacturer/medical
 	name = "Medical Fabricator"

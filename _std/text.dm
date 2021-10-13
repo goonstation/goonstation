@@ -11,6 +11,11 @@
 
 	return ""
 
+/proc/startswith(text, start)
+	if(length(text) < length(start))
+		return FALSE
+	return copytext(text, 1, length(start) + 1) == start
+
 /proc/trim(text)
 	return trim_left(trim_right(text))
 
@@ -42,7 +47,7 @@ var/global/regex/discord_emoji_regex = new(@{"(?:<|&lt;)(?:a)?:([-a-zA-Z0-9_]+):
 		if(length(http_part) == 0)
 			http_part = "http://"
 		var/full_url = http_part + full_url_regex.group[2]
-		. = replacetext(., full_url_regex.match, "<a target='_blank' href='[full_url]'>[full_url]</a>")
+		. = replacetext(., full_url_regex.match, "<a target='_blank' href='[full_url]'>[full_url_regex.match]</a>")
 
 /// Generates a random Unicode emoji that will look ok in the chat
 /proc/random_emoji()

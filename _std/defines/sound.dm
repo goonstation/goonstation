@@ -36,3 +36,7 @@ var/global/list/audio_channel_name_to_id = list(
 
 //playsound flags
 #define SOUND_IGNORE_SPACE (1<<0)
+
+#define MAX_SOUND_RANGE max_sound_range
+#define MAX_SOUND_RANGE_NORMAL 33
+#define MAX_SOUND_RANGE_OVERLOADED 23

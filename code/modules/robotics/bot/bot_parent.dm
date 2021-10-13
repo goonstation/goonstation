@@ -240,7 +240,7 @@
 	P.pixel_y = target.pixel_y
 	P.color = src.bot_speech_color
 	SPAWN_DBG(2 SECONDS)
-		P.invisibility = 101
+		P.invisibility = INVIS_ALWAYS
 		qdel(P)
 
 /obj/machinery/bot/emp_act()
@@ -353,7 +353,7 @@
 
 				if(length(master?.path) && master.path[1])
 					if(istype(get_turf(master), /turf/space)) // frick it, duckie toys get jetpacks
-						var/obj/effects/ion_trails/I = unpool(/obj/effects/ion_trails)
+						var/obj/effects/ion_trails/I = new /obj/effects/ion_trails
 						I.set_loc(get_turf(master))
 						I.set_dir(master.dir)
 						flick("ion_fade", I)
@@ -361,7 +361,7 @@
 						I.pixel_x = master.pixel_x
 						I.pixel_y = master.pixel_y
 						SPAWN_DBG( 20 )
-							if (I && !I.disposed) pool(I)
+							if (I && !I.disposed) qdel(I)
 
 					step_to(master, master?.path[1])
 					if(isnull(master))
