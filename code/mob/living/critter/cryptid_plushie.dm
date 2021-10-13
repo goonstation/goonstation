@@ -12,6 +12,30 @@
 	var/glowing_eye_color = "#c40000ff"
 	var/glowing_eyes_enabled_alpha = 190
 	var/glowing_eyes_active = 0
+	bee
+		icon_state = "bee"
+		pick_random_icon_state = 0
+	buddy
+		icon_state = "buddy"
+		pick_random_icon_state = 0
+	kitten
+		icon_state = "kitten"
+		pick_random_icon_state = 0
+	monkey
+		icon_state = "monkey"
+		pick_random_icon_state = 0
+	possum
+		icon_state = "possum"
+		pick_random_icon_state = 0
+	wendigo
+		icon_state = "wendigo"
+		pick_random_icon_state = 0
+	bunny
+		icon_state = "bunny"
+		pick_random_icon_state = 0
+	penguin
+		icon_state = "penguin"
+		pick_random_icon_state = 0
 
 	New()
 		. = ..()
