@@ -19,16 +19,6 @@
 	var/made_ants = 0
 	rc_flags = 0
 
-	New()
-		..()
-
-	pooled()
-		..()
-
-	unpooled()
-		made_ants = 0
-		..()
-
 	proc/on_table()
 		if (!isturf(src.loc)) return 0
 		for (var/atom/movable/M in src.loc) //Arguably more elegant than a million locates. I don't think locate works with derived classes.
@@ -114,21 +104,6 @@
 			processing_items.Add(src)
 		create_time = world.time
 
-	unpooled()
-		..()
-		src.icon = start_icon
-		src.icon_state = start_icon_state
-		amount = initial(amount)
-		current_mask = 5
-		if (doants)
-			processing_items.Add(src)
-		create_time = world.time
-
-//	pooled()
-//		if(!made_ants)
-//			processing_items -= src
-//		..()
-
 	disposing()
 		if(!made_ants)
 			processing_items -= src
@@ -137,7 +112,7 @@
 	process()
 		if (world.time - create_time >= 3 MINUTES)
 			create_time = world.time
-			if (!src.pooled && isturf(src.loc) && !on_table())
+			if (!src.disposed && isturf(src.loc) && !on_table())
 				if (prob(50))
 					made_ants = 1
 					processing_items -= src
@@ -254,10 +229,10 @@
 							if (istype(stored) && !stored.isgrass)
 								var/obj/item/seed/S
 								if (stored.unique_seed)
-									S = unpool(stored.unique_seed)
+									S = new stored.unique_seed
 									S.set_loc(user.loc)
 								else
-									S = unpool(/obj/item/seed)
+									S = new /obj/item/seed
 									S.set_loc(user.loc)
 									S.removecolor()
 
@@ -341,7 +316,7 @@
 
 		if (isliving(eater))
 			if (src.reagents && src.reagents.total_volume) //only create food chunks for reagents
-				var/obj/item/reagent_containers/food/snacks/bite/B = unpool(/obj/item/reagent_containers/food/snacks/bite)
+				var/obj/item/reagent_containers/food/snacks/bite/B = new /obj/item/reagent_containers/food/snacks/bite
 				B.set_loc(eater)
 				B.reagents.maximum_volume = reagents.total_volume/(src.amount ? src.amount : 1) //MBC : I copied this from the Eat proc. It doesn't really handle the reagent transfer evenly??
 				src.reagents.trans_to(B,B.reagents.maximum_volume,1,0)						//i'll leave it tho because i dont wanna mess anything up
@@ -402,14 +377,6 @@
 	rand_pos = 1
 	var/did_react = 0
 
-	unpooled()
-		..()
-		did_react = 0
-
-	pooled()
-		..()
-		did_react = 0
-
 	proc/process_stomach(mob/living/owner, var/process_rate = 5)
 		if (owner && src.reagents)
 			if (!src.did_react)
@@ -420,7 +387,7 @@
 
 			if (src.reagents.total_volume <= 0)
 				owner.stomach_process -= src
-				pool(src)
+				qdel(src)
 
 
 
@@ -799,16 +766,6 @@
 	on_reagent_change()
 		src.update_icon()
 
-	unpooled()
-		..()
-		src.broken = 0
-		src.shatter = 0
-		src.labeled = 0
-		src.update_icon()
-
-	pooled()
-		..()
-
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
@@ -906,7 +863,7 @@
 				var/turf/U = user.loc
 				user.visible_message("<span class='alert'>[src] shatters completely!</span>")
 				playsound(U, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+				var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 				G.set_loc(U)
 				qdel(src)
 				if (prob (25))
@@ -952,7 +909,7 @@
 
 		//have to do all this stuff anyway, so do it now
 		playsound(U, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
-		var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+		var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 		G.set_loc(U)
 
 		if (src.reagents)
@@ -1006,17 +963,6 @@
 	var/image/image_salt
 	var/image/image_wedge
 	var/image/image_doodad
-
-	unpooled()
-		..()
-		src.salted = 0
-		src.wedge = 0
-		src.umbrella = 0
-		src.in_glass = 0
-		src.smashed = 0
-
-	pooled()
-		..()
 
 	on_reagent_change()
 		src.update_icon()
@@ -1088,7 +1034,7 @@
 					src.reagents.reaction(get_turf(user), TOUCH, src.reagents.total_volume / 2)
 					src.reagents.add_reagent("ice", 10, null, (T0C - 50))
 					JOB_XP(user, "Clown", 1)
-					pool(W)
+					qdel(W)
 					return
 				else
 					boutput(user, "<span class='alert'>[src] is too full!</span>")
@@ -1097,7 +1043,7 @@
 				user.visible_message("[user] adds [W] to [src].",\
 				"You add [W] to [src].")
 				src.reagents.add_reagent("ice", 10, null, (T0C - 50))
-				pool(W)
+				qdel(W)
 				if ((user.mind.assigned_role == "Bartender") && (prob(40)))
 					JOB_XP(user, "Bartender", 1)
 				return
@@ -1282,7 +1228,7 @@
 		T.visible_message("<span class='alert'>[src] shatters!</span>")
 		playsound(T, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
 		for (var/i=src.shard_amt, i > 0, i--)
-			var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+			var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 			G.set_loc(src.loc)
 		if (src.in_glass)
 			src.in_glass.set_loc(src.loc)
@@ -1461,10 +1407,6 @@
 		..()
 		pick_style()
 
-	unpooled()
-		..()
-		pick_style()
-
 	proc/pick_style()
 		src.glass_style = pick("drink","shot","wine","cocktail","flute")
 		switch(src.glass_style)
@@ -1493,12 +1435,6 @@
 	var/list/blacklist = list("big_bang_precursor", "big_bang", "nitrotri_parent", "nitrotri_wet", "nitrotri_dry")
 
 	New()
-		..()
-		SPAWN_DBG(0)
-			if (src.reagents)
-				src.fill_it_up()
-
-	unpooled()
 		..()
 		SPAWN_DBG(0)
 			if (src.reagents)
@@ -1705,7 +1641,7 @@
 		T.visible_message("<span class='alert'>[src] shatters!</span>")
 		playsound(T, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
 		for (var/i=src.shard_amt, i > 0, i--)
-			var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+			var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 			G.set_loc(src.loc)
 		qdel(src)
 
@@ -1724,7 +1660,7 @@
 		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 		M.changeStatus("weakened", 2 SECONDS)
 		playsound(M, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
-		var/obj/O = unpool(/obj/item/raw_material/shard/glass)
+		var/obj/O = new /obj/item/raw_material/shard/glass
 		O.set_loc(get_turf(M))
 		if (src.material)
 			O.setMaterial(copyMaterial(src.material))

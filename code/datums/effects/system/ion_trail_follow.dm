@@ -27,7 +27,7 @@
 			if(T != src.oldposition)
 				if(istype(T, /turf/space) || (istype(holder, /obj/machinery/vehicle) && (istype(T, /turf/simulated) && T:allows_vehicles)) )
 					if (istext(istate) && istate != "blank")
-						var/obj/effects/ion_trails/I = unpool(/obj/effects/ion_trails)
+						var/obj/effects/ion_trails/I = new /obj/effects/ion_trails
 						I.set_loc(src.oldposition)
 						src.oldposition = T
 						I.set_dir(src.holder.dir)
@@ -36,7 +36,7 @@
 						I.pixel_x = xoffset
 						I.pixel_y = yoffset
 						SPAWN_DBG( 20 )
-							if (I && !I.disposed) pool(I)
+							if (I && !I.disposed) qdel(I)
 				SPAWN_DBG(0.2 SECONDS)
 					if(src.on)
 						src.processing = 1

@@ -34,7 +34,7 @@
 	if (active_hotspot)
 		if (locate(/obj/fire_foam) in src)
 			active_hotspot.dispose() // have to call this now to force the lighting cleanup
-			pool(active_hotspot)
+			qdel(active_hotspot)
 			active_hotspot = null
 
 		if (soh)
@@ -61,7 +61,7 @@
 		if (parent?.group_processing)
 			parent.suspend_group_processing()
 
-		active_hotspot = unpool(/obj/hotspot)
+		active_hotspot = new /obj/hotspot
 		active_hotspot.temperature = exposed_temperature
 		active_hotspot.volume = exposed_volume
 		active_hotspot.set_loc(src)
@@ -109,16 +109,6 @@
 		if (loc)
 			loc:active_hotspot = null
 		..()
-
-	pooled()
-		STOP_TRACKING
-		..()
-
-	unpooled()
-		..()
-		START_TRACKING
-		if (!light.attached_to)
-			light.attach(src)
 
 	// now this is ss13 level code
 	proc/set_real_color()
@@ -233,15 +223,15 @@
 
 		var/turf/simulated/floor/location = loc
 		if (!istype(location) || (locate(/obj/fire_foam) in location))
-			pool(src)
+			qdel(src)
 			return 0
 
 		if ((temperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST) || (volume <= 1))
-			pool(src)
+			qdel(src)
 			return 0
 
 		if (!location.air || location.air.toxins < 0.5 || location.air.oxygen < 0.5)
-			pool(src)
+			qdel(src)
 			return 0
 
 		for (var/mob/living/L in loc)

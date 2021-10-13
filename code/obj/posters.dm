@@ -418,7 +418,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			"You load [W] into [src].")
 			src.papers ++
 			user.u_equip(W)
-			pool(W)
+			qdel(W)
 			return
 
 		else if (istype(W, /obj/item/paper_bin))
@@ -436,7 +436,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 				if (B.amount <= 0)
 					var/obj/item/paper/P = locate(/obj/item/paper) in B
 					if (P)
-						pool(P)
+						qdel(P)
 				else
 					B.amount --
 			B.update()

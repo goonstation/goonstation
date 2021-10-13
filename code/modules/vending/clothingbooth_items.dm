@@ -219,6 +219,10 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/casual)
 	name = "Long Sleeved Shirt"
 	path = /obj/item/clothing/suit/lshirt
 
+/datum/clothingbooth_item/casual/tracksuit_black
+	name = "Black Tracksuit"
+	path = /obj/item/clothing/under/gimmick/adidad
+
 /datum/clothingbooth_item/casual/yoga
 	name = "Yoga Outfit"
 	path = /obj/item/clothing/under/misc/yoga
@@ -431,6 +435,21 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/formal)
 	name = "Waistcoat"
 	path = /obj/item/clothing/suit/wcoat
 
+/datum/clothingbooth_item/formal/black_wcoat
+	name = "Black Waistcoat"
+	path = /obj/item/clothing/under/gimmick/black_wcoat
+	cost = PAY_DOCTORATE/3
+
+/datum/clothingbooth_item/formal/red_wcoat
+	name = "Red Waistcoat"
+	path = /obj/item/clothing/under/gimmick/red_wcoat
+	cost = PAY_DOCTORATE/3
+
+/datum/clothingbooth_item/formal/blue_wcoat
+	name = "Blue Waistcoat"
+	path = /obj/item/clothing/under/gimmick/blue_wcoat
+	cost = PAY_DOCTORATE/3
+
 /datum/clothingbooth_item/formal/butler
 	name = "Butler's Suit"
 	path = /obj/item/clothing/under/gimmick/butler
@@ -600,6 +619,11 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/outerwear)
 	path = /obj/item/clothing/suit/tuxedo_jacket
 	cost = PAY_DOCTORATE/3
 	hidden = 1
+
+/datum/clothingbooth_item/outerwear/guardscoat
+	name = "Guard's Coat"
+	path = /obj/item/clothing/suit/guards_coat
+	cost = PAY_IMPORTANT/3
 
 //Shoes
 

@@ -19,7 +19,7 @@ client/proc/delete_fluids()
 	var/i = 0
 	SPAWN_DBG(0)
 		for(var/obj/fluid/fluid in world)
-			if (fluid.pooled) continue
+			if (fluid.disposed) continue
 
 			for (var/mob/living/M in fluid.loc)
 				fluid.HasExited(M,M.loc)

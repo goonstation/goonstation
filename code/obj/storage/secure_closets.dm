@@ -569,7 +569,8 @@
 	/obj/item/clothing/glasses/meson,
 	/obj/item/pen/infrared,
 	/obj/item/clothing/head/helmet/welding,
-	/obj/item/clothing/suit/hi_vis)
+	/obj/item/clothing/suit/hi_vis,
+	/obj/item/lamp_manufacturer/organic)
 
 /obj/storage/secure/closet/engineering/mining
 	name = "\improper Miner's locker"

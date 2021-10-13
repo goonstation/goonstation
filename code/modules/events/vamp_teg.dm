@@ -331,7 +331,7 @@ datum/teg_transformation/vampire
 					C.reagents.remove_reagent("water_holy", 8)
 					if (!(locate(/datum/effects/system/steam_spread) in C.loc))
 						playsound(C.loc, "sound/effects/bubbles3.ogg", 80, 1, -3, pitch=0.7)
-						var/datum/effects/system/steam_spread/steam = unpool(/datum/effects/system/steam_spread)
+						var/datum/effects/system/steam_spread/steam = new /datum/effects/system/steam_spread
 						steam.set_up(1, 0, get_turf(C))
 						steam.attach(C)
 						steam.start(clear_holder=1)
@@ -412,13 +412,13 @@ datum/teg_transformation/vampire
 			return 1
 
 		O.visible_message("<span class='alert'><B>[O] emits a blinding flash at [target]!</B></span>")
-		var/obj/itemspecialeffect/glare/E = unpool(/obj/itemspecialeffect/glare)
+		var/obj/itemspecialeffect/glare/E = new /obj/itemspecialeffect/glare
 		E.color = "#FFFFFF"
 		E.setup(O.loc)
 		playsound(O.loc,"sound/effects/glare.ogg", 50, 1, pitch = 1, extrarange = -4)
 
 		SPAWN_DBG(1 DECI SECOND)
-			var/obj/itemspecialeffect/glare/EE = unpool(/obj/itemspecialeffect/glare)
+			var/obj/itemspecialeffect/glare/EE = new /obj/itemspecialeffect/glare
 			EE.color = "#FFFFFF"
 			EE.setup(target.loc)
 			playsound(target.loc,"sound/effects/glare.ogg", 50, 1, pitch = 0.8, extrarange = -4)

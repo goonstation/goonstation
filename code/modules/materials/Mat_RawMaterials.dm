@@ -17,16 +17,6 @@
 			src.setMaterial(M)
 		setup_material()
 
-	unpooled()
-		..()
-		if (istext(default_material))
-			var/datum/material/M = getMaterial(default_material)
-			src.setMaterial(M)
-		setup_material()
-
-	pooled()
-		..()
-
 	proc/setup_material()
 		.=0
 
@@ -53,7 +43,7 @@
 
 	split_stack(var/toRemove)
 		if(toRemove >= amount || toRemove < 1) return 0
-		var/obj/item/material_piece/P = unpool(src.type)
+		var/obj/item/material_piece/P = new src.type
 		P.set_loc(src.loc)
 		P.setMaterial(copyMaterial(src.material))
 		src.change_stack_amount(-toRemove)
