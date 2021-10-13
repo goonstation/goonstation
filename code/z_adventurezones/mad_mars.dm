@@ -137,7 +137,7 @@
 	filler_turf = "/turf/unsimulated/mars"
 
 
-// """Foliage["""
+// """Foliage"""
 
 /obj/shrub/redweed
 	name = "red weed"
