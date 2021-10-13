@@ -79,7 +79,7 @@
 			C.turfs |= destination
 
 
-/turf/proc/get_disjoint_objects_by_type(flag, target_type, limit_key)
+/turf/proc/get_disjoint_objects_by_type(flag, target_type, limit_key=null)
 	. = list()
 	if(length(connections))
 		for(var/key in connections)
