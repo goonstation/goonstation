@@ -79,10 +79,9 @@
 			var/datum/db_record/S = locate(href_list["select_rec"])
 
 			if (data_core.general.records.Find(R))
-				for (var/datum/db_record/E in data_core.security.records)
-					if ((E["name"] == R["name"] || E["id"] == R["id"]))
-						S = E
-						break
+				S = data_core.security.find_record("id", R["id"])
+				if(!S) S = data_core.security.find_record("name", R["name"])
+				if(!S) S = locate(href_list["select_rec"])
 
 				src.active1 = R
 				src.active2 = S
@@ -171,10 +170,9 @@
 			var/datum/db_record/M = locate(href_list["select_rec"])
 
 			if (data_core.general.records.Find(R))
-				for (var/datum/db_record/E in data_core.medical.records)
-					if ((E["name"] == R["name"] || E["id"] == R["id"]))
-						M = E
-						break
+				M = data_core.medical.find_record("id", R["id"])
+				if(!M) M = data_core.medical.find_record("name", R["name"])
+				if(!M) M = locate(href_list["select_rec"])
 
 				src.active1 = R
 				src.active2 = M
