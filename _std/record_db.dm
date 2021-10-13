@@ -44,19 +44,25 @@
 				indices[index_key][index_value] -= record
 		records -= record
 
-	proc/add_record(list/fields)
-		RETURN_TYPE(/datum/db_record)
-		var/datum/db_record/record = new(src, fields)
+	proc/add_record(datum/db_record/record)
+		if(!isnull(record.get_db()))
+			CRASH("Attempt to insert a record already belonging to a database.")
+		record.set_db(src)
 		records[record] = 1 // associative so deletion is faster
 		for(var/index_key in indices)
-			if(index_key in fields)
-				var/index_value = fields[index_key]
+			if(record.has_field(index_key))
+				var/index_value = record.get_field(index_key)
 				if(isnum(index_value))
 					index_value = "[index_value]"
 				if(index_value in indices[index_key])
 					indices[index_key][index_value][record] = 1
 				else
 					indices[index_key][index_value]=list((record) = 1)
+
+	proc/create_record(list/fields)
+		RETURN_TYPE(/datum/db_record)
+		var/datum/db_record/record = new(null, fields)
+		src.add_record(record)
 		return record
 
 	proc/notify_field_change(datum/db_record/record, key, old_value, new_value)
@@ -82,15 +88,27 @@
 
 /datum/db_record
 	VAR_PRIVATE/datum/record_database/db
-	VAR_PRIVATE/list/fields = list()
+	VAR_PRIVATE/list/fields
 
-	New(datum/record_database/db, list/fields)
+	New(datum/record_database/db=null, list/fields=null)
 		..()
-		src.db = db
-		src.fields = fields
+		if(db)
+			src.db = db
+		if(fields)
+			src.fields = fields
+		else
+			src.fields = list()
+
+	proc/get_db()
+		RETURN_TYPE(/datum/record_database)
+		return src.db
+
+	/// Don't call this unless you know what you're doing
+	proc/set_db(new_db)
+		src.db = new_db
 
 	proc/delete()
-		db.delete_record(src)
+		db?.delete_record(src)
 		src.db = null
 
 	disposing()
@@ -108,10 +126,14 @@
 		return src.get_field(key)
 
 	proc/set_field(key, value)
-		db.notify_field_change(src, key, src[key], value)
+		db?.notify_field_change(src, key, src[key], value)
 		fields[key] = value
 
 	proc/operator[]=(key, value)
 		return src.set_field(key, value)
+
+	proc/copy()
+		RETURN_TYPE(/datum/db_record)
+		var/datum/db_record/clone = new(null, fields.Copy())
 
 /mob/var/datum/record_database/rdb = new
