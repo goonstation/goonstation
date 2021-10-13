@@ -609,17 +609,17 @@ that cannot be itched
 			found = 0
 
 		////Security Records
-		for(var/datum/db_record/E in data_core.security.records)
-			if (E["name"] == src.active1["name"])
-				if(src.mode == 1)
-					E["criminal"] = "Incarcerated"
-				else if(src.mode == 2)
-					E["criminal"] = "Parolled"
-				else if(src.mode == 3)
-					E["criminal"] = "Released"
-				else
-					E["criminal"] = "None"
-				return
+		var/datum/db_record/E = data_core.security..find_record("name", src.active1["name"])
+		if(E)
+			if(src.mode == 1)
+				E["criminal"] = "Incarcerated"
+			else if(src.mode == 2)
+				E["criminal"] = "Parolled"
+			else if(src.mode == 3)
+				E["criminal"] = "Released"
+			else
+				E["criminal"] = "None"
+			return
 
 		src.active2 = new /datum/db_record()
 		src.active2["name"] = src.active1["name"]
