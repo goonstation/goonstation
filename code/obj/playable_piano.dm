@@ -200,9 +200,6 @@
 		for (var/string in piano_notes)
 			var/list/curr_notes = splittext("[string]", ",")
 			note_names += curr_notes[1]
-			if (curr_notes.len < 4)
-				is_busy = 0
-				return
 			switch(lowertext(curr_notes[4]))
 				if ("r")
 					curr_notes[4] = "r"
