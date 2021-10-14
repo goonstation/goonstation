@@ -213,7 +213,7 @@
 		min_amt2spawn = 5
 		max_amt2spawn = 7
 
-/obj/random_item_spawner/hop_cloths
+/obj/random_item_spawner/hop_clothes
 	name = "random hop clothing"
 	icon_state = "rand_tool"
 	min_amt2spawn = 1
