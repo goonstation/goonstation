@@ -1,6 +1,10 @@
 
 (t)thu oct 14 21
 (u)pali
+(p)6308
+(e)|
+(+)Nukie default radio channel is now in Syndicate red instead of being green.
+(u)pali
 (p)6284
 (e)🆕|feature
 (+)*hatstomp emote is now animated.
