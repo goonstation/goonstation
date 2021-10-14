@@ -207,12 +207,9 @@
 		if("Captain")
 			return get_all_accesses()
 		if("Head of Personnel")
-			return list(access_security, access_carrypermit, access_contrabandpermit, access_brig, access_forensics_lockers, access_armory,
-						access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab,
-						access_emergency_storage, access_change_ids, access_eva, access_heads, access_head_of_personnel, access_medical_lockers,
-						access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
-						access_crematorium, access_kitchen, access_robotics, access_cargo, access_supply_console,
-						access_research, access_hydro, access_ranch, access_mail, access_ai_upload, access_pathology)
+			// super janitor
+			return list(access_carrypermit, access_emergency_storage, access_change_ids, access_eva, access_heads, access_head_of_personnel,
+						access_tech_storage, access_maint_tunnels, access_bar, access_janitor, access_kitchen, access_hydro, access_ranch)
 		if("Head of Security")
 #ifdef RP_MODE
 			var/list/hos_access = get_all_accesses()
