@@ -460,7 +460,7 @@ ABSTRACT_TYPE(/datum/job/security)
 #ifdef MAP_OVERRIDE_MANTA
 	limit = 4
 #else
-	limit = 5
+	limit = 10
 #endif
 	wages = PAY_TRADESMAN
 	allow_traitors = 0
@@ -495,7 +495,8 @@ ABSTRACT_TYPE(/datum/job/security)
 		M.traitHolder.addTrait("training_security")
 
 	assistant
-		name = "Security Assistant"
+		// name = "Security Assistant"
+		name = null
 		limit = 3
 		cant_spawn_as_con = 1
 		wages = PAY_UNTRAINED
@@ -535,7 +536,7 @@ ABSTRACT_TYPE(/datum/job/security)
 			M.show_text("<b>Something has gone terribly wrong here! Search for survivors and escape together.</b>", "blue")
 
 /datum/job/security/detective
-	name = "Detective"
+	// name = "Detective"
 	limit = 1
 	wages = PAY_TRADESMAN
 	//allow_traitors = 0
@@ -574,7 +575,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	slot_card = /obj/item/card/id/research
 
 /datum/job/research/geneticist
-	name = "Geneticist"
+	// name = "Geneticist"
 	limit = 2
 	wages = PAY_DOCTORATE
 	slot_back = list(/obj/item/storage/backpack/genetics)
@@ -619,7 +620,7 @@ ABSTRACT_TYPE(/datum/job/research)
 		return
 
 /datum/job/research/roboticist
-	name = "Roboticist"
+	// name = "Roboticist"
 	limit = 3
 	wages = 200
 	slot_back = list(/obj/item/storage/backpack/robotics)
@@ -717,7 +718,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	slot_card = /obj/item/card/id/engineering
 
 /datum/job/engineering/quartermaster
-	name = "Quartermaster"
+	// name = "Quartermaster"
 	limit = 3
 	wages = PAY_TRADESMAN
 	slot_glov = list(/obj/item/clothing/gloves/black)
@@ -740,7 +741,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 		M.traitHolder.addTrait("training_quartermaster")
 
 /datum/job/engineering/miner
-	name = "Miner"
+	// name = "Miner"
 	#ifdef UNDERWATER_MAP
 	limit = 6
 	#else
@@ -784,7 +785,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 			M.bioHolder.AddEffect("dwarf", magical=1)
 
 /datum/job/engineering/mechanic
-	name = "Mechanic"
+	// name = "Mechanic"
 	limit = 3
 	wages = PAY_DOCTORATE
 
@@ -807,7 +808,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 #ifdef MAP_OVERRIDE_MANTA
 	limit = 4
 #else
-	limit = 5
+	limit = 10
 #endif
 	wages = PAY_TRADESMAN
 	slot_back = list(/obj/item/storage/backpack/engineering)
@@ -853,8 +854,22 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	linkcolor = "#0099FF"
 	slot_card = /obj/item/card/id/civilian
 
+/datum/job/civilian/service
+	name = "Service Worker"
+	limit = 10
+	wages = PAY_TRADESMAN
+	slot_belt = list(/obj/item/device/pda2/botanist)
+	slot_jump = list(/obj/item/clothing/under/color/green)
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+
+	New()
+		..()
+		src.access = get_access("Service")
+		return
+
 /datum/job/civilian/chef
-	name = "Chef"
+	// name = "Chef"
 	limit = 1
 	wages = PAY_UNTRAINED
 	slot_belt = list(/obj/item/device/pda2/chef)
@@ -876,7 +891,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 			return
 
 /datum/job/civilian/bartender
-	name = "Bartender"
+	// name = "Bartender"
 	alias_names = list("Barman")
 	limit = 1
 	wages = PAY_UNTRAINED
@@ -901,7 +916,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		M.traitHolder.addTrait("training_drinker")
 
 /datum/job/civilian/botanist
-	name = "Botanist"
+	// name = "Botanist"
 	#ifdef MAP_OVERRIDE_DONUT3
 	limit = 7
 	#else
@@ -921,7 +936,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		return
 
 /datum/job/civilian/rancher
-	name = "Rancher"
+	// name = "Rancher"
 	limit = 1
 	wages = PAY_TRADESMAN
 	slot_belt = list(/obj/item/device/pda2/botanist)
@@ -939,7 +954,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		return
 
 /datum/job/civilian/janitor
-	name = "Janitor"
+	// name = "Janitor"
 	limit = 2
 	wages = PAY_TRADESMAN
 	slot_belt = list(/obj/item/device/pda2/janitor)
@@ -1028,7 +1043,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 // AI and Cyborgs
 
 /datum/job/civilian/AI
-	name = "AI"
+	// name = "AI"
 	linkcolor = "#999999"
 	limit = 1
 	no_late_join = 1
@@ -1048,7 +1063,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		return M.AIize()
 
 /datum/job/civilian/cyborg
-	name = "Cyborg"
+	// name = "Cyborg"
 	linkcolor = "#999999"
 	limit = 8
 	no_late_join = 1

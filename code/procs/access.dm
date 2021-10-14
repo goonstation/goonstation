@@ -231,7 +231,8 @@
 		if("Research Director")
 			return list(access_research, access_research_director, access_dwaine_superuser,
 						access_tech_storage, access_maint_tunnels, access_heads, access_eva, access_tox,
-						access_tox_storage, access_chemistry, access_teleporter, access_ai_upload
+						access_tox_storage, access_chemistry, access_teleporter, access_ai_upload,
+						access_robotics, access_medical, access_medical_lockers, access_morgue
 						#ifdef SCIENCE_PATHO_MAP
 						, access_pathology
 						#endif
@@ -305,7 +306,10 @@
 
 		///////////////////////////// Science
 		if("Scientist")
-			return list(access_tox, access_tox_storage, access_research, access_chemistry)
+			return list(access_tox, access_tox_storage, access_research, access_chemistry, access_maint_tunnels,
+			// Past this line, Scientist now has Roboticist access
+			access_robotics, access_tech_storage, access_medical, access_medical_lockers, access_morgue)
+		// Old job-specific access levels
 		if("Chemist")
 			return list(access_research, access_chemistry)
 		if("Toxins Researcher")
@@ -314,15 +318,20 @@
 			return list(access_maint_tunnels, access_tech_storage, access_research)
 
 		//////////////////////////// Engineering
+		if("Engineer")
+			return list(access_engineering,access_maint_tunnels,access_external_airlocks, access_engineering_control,
+						access_engineering_storage,access_engineering_atmos,access_engineering_engine,access_engineering_power,
+						// Past this line, Engineer now has Miner, Quartermaster, and Mechanic access
+						access_engineering_eva, access_cargo, access_supply_console, access_hangar,
+						access_mining_shuttle, access_mining, access_mining_outpost, access_tech_storage,
+						access_engineering_mechanic)
+		// Old job-specific access levels
 		if("Mechanic")
 			return list(access_maint_tunnels, access_external_airlocks, access_engineering_control,
 						access_tech_storage,access_engineering_mechanic,access_engineering_power)
 		if("Atmospheric Technician")
 			return list(access_maint_tunnels, access_external_airlocks, access_construction, access_engineering_control,
 						access_eva, access_engineering, access_engineering_storage, access_engineering_eva, access_engineering_atmos)
-		if("Engineer")
-			return list(access_engineering,access_maint_tunnels,access_external_airlocks, access_engineering_control,
-						access_engineering_storage,access_engineering_atmos,access_engineering_engine,access_engineering_power)
 		if("Miner")
 			return list(access_maint_tunnels, access_external_airlocks,
 						access_engineering_eva, access_mining_shuttle, access_mining,
@@ -334,8 +343,12 @@
 						access_engineering_storage,access_engineering_atmos,access_engineering_engine,access_engineering_power)
 
 		///////////////////////////// Civilian
+		if("Service")
+			return list(access_janitor, access_maint_tunnels, access_hydro, access_ranch, access_bar, access_kitchen)
+
+		// Old job-specific access levels
 		if("Chaplain")
-			return list(access_morgue, access_chapel_office, access_crematorium)
+			return list(access_maint_tunnels, access_morgue, access_chapel_office, access_crematorium)
 		if("Janitor")
 			return list(access_janitor, access_maint_tunnels, access_medical, access_morgue, access_crematorium)
 		if("Botanist", "Apiculturist")
