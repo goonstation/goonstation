@@ -939,7 +939,7 @@ MATERIAL
 
 
 		if(length(heads) > 0)
-			var/pixely = 8 - 8*length(heads)
+			var/pixely = 8 - 8*head_offset - 8*length(heads)
 			for(var/obj/item/organ/head/H in heads)
 				H.pixel_x = 0
 				H.pixel_y = pixely
