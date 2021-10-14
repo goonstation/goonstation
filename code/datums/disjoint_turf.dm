@@ -1,5 +1,5 @@
 /datum/disjoint_turf
-	var/connections
+	var/connection_types
 	var/list/turf/turfs
 
 /obj/disjoint_connector/
@@ -65,14 +65,14 @@
 			LAZYLISTINIT(source.connections)
 			LAZYLISTINIT(source.connections[name])
 			for(var/datum/disjoint_turf/existing_connection in source.connections[name])
-				if(existing_connection.connections == flags)
+				if(existing_connection.connection_types == flags)
 					C = existing_connection
 					break
 
 			// Create new connection since none were found
 			if(!C)
 				C = new
-				C.connections = flags
+				C.connection_types = flags
 				source.connections[name] += C
 
 			LAZYLISTINIT(C.turfs)
@@ -87,7 +87,7 @@
 				key = limit_key
 
 			for(var/datum/disjoint_turf/C in connections[key] )
-				if(C.connections & flag)
+				if(C.connection_types & flag)
 					for(var/turf/T in C.turfs)
 						var/atom/A = locate(target_type) in T
 						if(A)
