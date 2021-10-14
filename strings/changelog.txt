@@ -1,5 +1,9 @@
 
 (t)thu oct 14 21
+(u)Flaborized & pali
+(p)6300
+(e)🆕|feature
+(*)Nukie radio icons are now letters based on their callsigns
 (u)pali
 (p)6298
 (e)🆕|feature
