@@ -18,12 +18,12 @@
 	RegisterSignal(parent, list(COMSIG_MOVABLE_THROW_END), .proc/on_after_throw)
 
 /datum/component/fragile_item/proc/on_after_attack(var/obj/item/I, var/mob/M, var/mob/user, var/damage)
-	potentially_break_melee_swing(I, user)
+	potentially_break_melee_swinged(I, user)
 
 /datum/component/fragile_item/proc/on_after_throw(var/obj/item/thrown_thing)
 	potentially_break_thrown(thrown_thing)
 
-/datum/component/fragile_item/proc/potentially_break_melee_swing(var/obj/item/I, var/mob/user)
+/datum/component/fragile_item/proc/potentially_break_melee_swinged(var/obj/item/I, var/mob/user)
 	if(safe_hits > 0)
 		safe_hits--
 		return
