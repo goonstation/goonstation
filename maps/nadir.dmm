@@ -1482,6 +1482,10 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
 /area/station/hallway/secondary/exit)
+"iP" = (
+/obj/machinery/door/airlock/pyro/glass,
+/turf/simulated/floor/engine,
+/area/station/hallway/secondary/construction2)
 "iS" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
@@ -4205,6 +4209,12 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
+"xy" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 1
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/quarters_east)
 "xz" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/engine,
@@ -4497,6 +4507,10 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/medical/medbay)
+"zH" = (
+/obj/machinery/door/airlock/pyro/glass,
+/turf/simulated/floor/engine,
+/area/station/storage/emergency2)
 "zL" = (
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction2)
@@ -4822,6 +4836,10 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/medical/medbay/surgery)
+"Bi" = (
+/obj/machinery/door/unpowered/wood/pyro,
+/turf/simulated/floor/sanitary,
+/area/station/storage/emergencyinternals)
 "Bk" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 5;
@@ -4964,6 +4982,10 @@
 /area/station/maintenance/outer/ne{
 	name = "Northeast Breach Hull"
 	})
+"BV" = (
+/obj/machinery/door/airlock/pyro/alt,
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/quarters_east)
 "BW" = (
 /obj/table/reinforced/auto,
 /turf/simulated/floor/engine,
@@ -6138,6 +6160,14 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/storage)
+"IV" = (
+/obj/machinery/door/airlock/pyro/command/alt{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/crew_quarters/heads{
+	name = "Diplomatic Quarters"
+	})
 "IW" = (
 /obj/machinery/door/airlock/pyro/command/alt,
 /turf/simulated/floor/engine,
@@ -42631,7 +42661,7 @@ Ny
 Tr
 Tr
 Tr
-Tr
+Bi
 Tr
 ff
 NS
@@ -43235,7 +43265,7 @@ Ny
 Tr
 Tr
 Tr
-Tr
+Bi
 Tr
 ff
 NS
@@ -66779,7 +66809,7 @@ gx
 gx
 aD
 aD
-WT
+IV
 aD
 aD
 Xe
@@ -67071,7 +67101,7 @@ uS
 uS
 cz
 VL
-VL
+xy
 VL
 VL
 VL
@@ -67675,11 +67705,11 @@ uS
 uS
 cz
 VL
+xy
 VL
 VL
 VL
-VL
-VL
+BV
 VL
 VL
 VL
@@ -67693,7 +67723,7 @@ Xe
 Xe
 Xe
 Xe
-OG
+iP
 OG
 OG
 OG
@@ -68279,7 +68309,7 @@ uS
 uS
 cz
 VL
-VL
+xy
 VL
 VL
 VL
@@ -69807,7 +69837,7 @@ Ve
 xJ
 xJ
 XF
-nT
+zH
 nT
 nT
 nT
