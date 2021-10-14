@@ -8,7 +8,7 @@
 /proc/resource(file, group)
 	if (!file) return
 	if (cdn)
-		. = "[cdn]/[file]?serverrev=[vcs_revision]"
+		. = "[cdn]/[file]?v=[vcs_revision]"
 	else
 		if (findtext(file, "{{resource")) //Got here via the dumb regex proc (local only)
 			file = group
@@ -36,7 +36,7 @@
 
 			//Actually get the file contents from the CDN
 			var/datum/http_request/request = new()
-			request.prepare(RUSTG_HTTP_METHOD_GET, "[cdn]/[path]?serverrev=[vcs_revision]", "", "")
+			request.prepare(RUSTG_HTTP_METHOD_GET, "[cdn]/[path]?v=[vcs_revision]", "", "")
 			request.begin_async()
 			UNTIL(request.is_complete())
 			var/datum/http_response/response = request.into_response()
