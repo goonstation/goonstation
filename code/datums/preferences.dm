@@ -161,7 +161,8 @@ datum/preferences
 			"nameMiddle" = src.name_middle,
 			"nameLast" = src.name_last,
 			"randomName" = src.be_random_name,
-			"gender" = (src.gender == MALE ? "Male" : "Female") + " " + (!AH.pronouns ? (src.gender == MALE ? "(he/him)" : "(she/her)") : "(they/them)"),
+			"gender" = src.gender == MALE ? "Male" : "Female",
+			"pronouns" = AH.pronouns.name,
 			"age" = src.age,
 			"bloodRandom" = src.random_blood,
 			"bloodType" = src.blType,
@@ -422,23 +423,25 @@ datum/preferences
 					return TRUE
 
 			if ("update-gender")
-				if (!AH.pronouns)
-					if (src.gender == MALE)
-						src.gender = FEMALE
-						AH.gender = FEMALE
-					else if (src.gender == FEMALE)
-						src.gender = MALE
-						AH.gender = MALE
-						AH.pronouns = 1
+				if (src.gender == MALE)
+					src.gender = FEMALE
+					AH.gender = FEMALE
 				else
-					if (src.gender == MALE)
-						src.gender = FEMALE
-						AH.gender = FEMALE
-					else if (src.gender == FEMALE)
-						src.gender = MALE
-						AH.gender = MALE
-						AH.pronouns = 0
+					src.gender = MALE
+					AH.gender = MALE
 				update_preview_icon()
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("update-pronouns")
+				var/list/types = filtered_concrete_typesof(/datum/pronouns, /proc/pronouns_filter_is_choosable)
+				var/selected
+				for (var/i = 1, i <= length(types), i++)
+					var/datum/pronouns/pronouns = get_singleton(types[i])
+					if (AH.pronouns == pronouns)
+						selected = i
+						break
+				AH.pronouns = get_singleton(types[selected < length(types) ? selected + 1 : 1])
 				src.profile_modified = TRUE
 				return TRUE
 

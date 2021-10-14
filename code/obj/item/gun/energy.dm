@@ -1517,6 +1517,7 @@
 	desc = "It's a handgun? Or an smg? You can't tell."
 	icon_state = "signifer2"
 	w_class = W_CLASS_NORMAL		//for clarity
+	object_flags = NO_ARM_ATTACH
 	force = 8
 	two_handed = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_signifer

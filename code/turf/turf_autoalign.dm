@@ -471,6 +471,7 @@
 /turf/simulated/wall/auto/supernorn/wood
 	icon = 'icons/turf/walls_wood.dmi'
 	connect_diagonal = 0
+	mod = ""
 	connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 	/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
 	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen)
@@ -655,6 +656,16 @@
 	connects_to = list(/turf/unsimulated/wall/auto/supernorn, /turf/unsimulated/wall/auto/reinforced/supernorn, /obj/machinery/door,
 	/obj/window)
 	connects_with_overlay = list(/obj/machinery/door, /obj/window)
+
+/turf/unsimulated/wall/auto/supernorn/wood
+	icon = 'icons/turf/walls_wood.dmi'
+	connect_diagonal = 0
+	mod = ""
+	connects_to = list(/turf/unsimulated/wall/auto/supernorn, /turf/unsimulated/wall/auto/reinforced/supernorn,
+	/turf/unsimulated/wall/auto/supernorn/wood, /obj/machinery/door, /obj/window, /obj/wingrille_spawn)
+
+	connects_with_overlay = list(/turf/unsimulated/wall/auto/supernorn, /turf/unsimulated/wall/auto/reinforced/supernorn,
+	/turf/unsimulated/wall/auto/supernorn/wood, /obj/machinery/door, /obj/window, /obj/wingrille_spawn)
 
 /turf/unsimulated/wall/auto/gannets
 	icon = 'icons/turf/walls_destiny.dmi'

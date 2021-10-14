@@ -247,6 +247,7 @@
 						duckets += 0.9 * O:amount
 						if (sell)
 							qdel(O)
+						break
 		else // Please excuse this duplicate code, I'm gonna change trader commodity lists into associative ones later I swear
 			for(var/obj/O in items)
 				for (var/datum/commodity/C in commodities_list)
@@ -267,6 +268,7 @@
 						duckets += O:amount
 						if (sell)
 							qdel(O)
+						break
 
 		return duckets
 

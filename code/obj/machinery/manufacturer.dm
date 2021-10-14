@@ -2396,6 +2396,7 @@
 
 	hidden = list(/datum/manufacture/breathmask,
 	/datum/manufacture/patch,
+	/datum/manufacture/tricolor,
 	/datum/manufacture/hat_ltophat)
 	///datum/manufacture/hermes) //all hail the shoe lord - needs adjusting for the new movement system which I cba to do right now
 
@@ -2493,6 +2494,7 @@
 	/datum/manufacture/implant_access_infinite,
 	/datum/manufacture/breathmask,
 	/datum/manufacture/patch,
+	/datum/manufacture/tricolor,
 	/datum/manufacture/hat_ltophat)
 
 /obj/machinery/manufacturer/qm // This manufacturer just creates different crated and boxes for the QM. Lets give their boring lives at least something more interesting.
