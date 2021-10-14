@@ -2125,7 +2125,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 
 	New()
 		..()
-		src.access = get_access("Staff Assistant")
+		src.access = get_access("Security Assistant")
 		return
 
 	special_setup(var/mob/living/carbon/human/M)
