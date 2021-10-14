@@ -91,7 +91,7 @@
 				// get a random not locked station container
 				var/list/eligible_containers = list()
 				for_by_tcl(iterated_container, /obj/storage)
-					if (iterated_container.z == Z_LEVEL_STATION && !iterated_container.locked && !istype(get_area(iterated_container), /area/listeningpost))
+					if (iterated_container.z == Z_LEVEL_STATION && !iterated_container.locked && !iterated_container.welded && !istype(get_area(iterated_container), /area/listeningpost))
 						eligible_containers += iterated_container
 				if (!length(eligible_containers))
 					return
@@ -416,7 +416,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
 	proc/get_a_random_station_unlocked_container()
 		var/list/eligible_containers = list()
 		for_by_tcl(iterated_container, /obj/storage)
-			if (iterated_container.z == Z_LEVEL_STATION && !iterated_container.locked && !istype(get_area(iterated_container), /area/listeningpost))
+			if (iterated_container.z == Z_LEVEL_STATION && !iterated_container.locked && !iterated_container.welded && !istype(get_area(iterated_container), /area/listeningpost))
 				eligible_containers += iterated_container
 		if (!length(eligible_containers))
 			return null
@@ -466,8 +466,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
 		if (!isturf(target))
 			if(istype(target, /obj/storage))
 				var/obj/storage/targetted_container = target
-				if(targetted_container.locked)
-					target = get_turf(target) // the container we picked is locked, we don't want to trap ourselves inside
+				if(targetted_container.locked || targetted_container.welded)
+					target = get_turf(target) // the container we picked is locked or welded, we don't want to trap ourselves inside
 			else
 				target = get_turf(target)
 		if (target == get_turf(holder.owner))
