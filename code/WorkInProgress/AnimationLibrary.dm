@@ -663,6 +663,19 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 			animate(time = 0.5, transform = matrix().Turn(-angle), easing = JUMP_EASING, pixel_x = -offx, pixel_y = -offy, flags = ANIMATION_RELATIVE)
 			sleep(0.1 SECONDS)
 
+/proc/violent_standup_twitch_parametrized(var/atom/A, var/off_x = 3, var/off_y = 2, var/input_angle = 45, var/iterations = 7, var/sleep_length = 0.1 SECONDS, var/effect_scale = 1)
+	SPAWN_DBG(-1)
+		var/offx = off_x
+		var/offy = off_y
+		var/angle = input_angle
+		for (var/i = 0, (i < iterations && A), i++)
+			offx = rand(-off_x, off_x) * effect_scale
+			offy = rand(-off_y, off_y) * effect_scale
+			angle = rand(-angle, angle) * effect_scale
+			animate(A, time = 0.5, transform = matrix().Turn(angle), easing = JUMP_EASING, pixel_x = offx, pixel_y = offy, flags = ANIMATION_PARALLEL|ANIMATION_RELATIVE)
+			animate(time = 0.5, transform = matrix().Turn(-angle), easing = JUMP_EASING, pixel_x = -offx, pixel_y = -offy, flags = ANIMATION_RELATIVE)
+			sleep(sleep_length)
+
 /proc/eat_twitch(var/atom/A)
 	var/matrix/squish_matrix = matrix(A.transform)
 	squish_matrix.Scale(1,0.92)
@@ -1481,3 +1494,22 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 		filter = A.filters[A.filters.len]
 		animate(filter, size=size, time=0, loop=-1, radius=0, flags=ANIMATION_PARALLEL)
 		animate(size=0, radius=rand()*10+10, time=rand()*20+10)
+
+/proc/animate_stomp(atom/A, stomp_height=8, stomps=3, stomp_duration=0.7 SECONDS)
+	var/mob/M = A
+	if(ismob(A))
+		APPLY_MOB_PROPERTY(M, PROP_CANTMOVE, "hatstomp")
+		M.update_canmove()
+	var/one_anim_duration = stomp_duration / 2 / stomps
+	for(var/i = 0 to stomps - 1)
+		if(i == 0)
+			animate(A, time=one_anim_duration, pixel_y=stomp_height, easing=SINE_EASING | EASE_OUT, flags=ANIMATION_PARALLEL)
+		else
+			animate(time=one_anim_duration, pixel_y=stomp_height, easing=SINE_EASING | EASE_OUT)
+		animate(time=one_anim_duration, pixel_y=0, easing=SINE_EASING | EASE_IN)
+	if(ismob(A))
+		SPAWN_DBG(stomp_duration)
+			REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, "hatstomp")
+			M.update_canmove()
+
+

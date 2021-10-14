@@ -12,6 +12,32 @@
 	var/glowing_eye_color = "#c40000ff"
 	var/glowing_eyes_enabled_alpha = 190
 	var/glowing_eyes_active = 0
+	var/override_steps  // can move this many steps whether being seen or not, granted for a short time after movement_override ability
+
+	bee
+		icon_state = "bee"
+		pick_random_icon_state = 0
+	buddy
+		icon_state = "buddy"
+		pick_random_icon_state = 0
+	kitten
+		icon_state = "kitten"
+		pick_random_icon_state = 0
+	monkey
+		icon_state = "monkey"
+		pick_random_icon_state = 0
+	possum
+		icon_state = "possum"
+		pick_random_icon_state = 0
+	wendigo
+		icon_state = "wendigo"
+		pick_random_icon_state = 0
+	bunny
+		icon_state = "bunny"
+		pick_random_icon_state = 0
+	penguin
+		icon_state = "penguin"
+		pick_random_icon_state = 0
 
 	New()
 		. = ..()
@@ -20,7 +46,8 @@
 			eye_light.plane = PLANE_SELFILLUM
 			set_glowing_eyes(FALSE)
 
-		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/talk)
+		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/plushie_talk)
+		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/movement_override)
 		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/teleportation/blink)
 		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/teleportation/disappear)
 		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/teleportation/vengeful_retreat)
@@ -28,17 +55,111 @@
 		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/glowing_eyes/set_glowing_eyes_color)
 		abilityHolder.updateButtons()
 
+	death(gibbed)
+		. = ..()
+		// do stuff with old dead body
+		if(!gibbed)
+			src.visible_message("<span class='alert'>[src] lets out a haunting shriek as its body begins to lose its form and fades into mist...</span>",
+				"<span class='alert'>Your grasp on the physical realm weakens. Your form dissolves...</span>")
+			playsound(get_turf(src), "sound/ambience/spooky/Hospital_Haunted3.ogg", 50, 1)
+			SPAWN_DBG(0)
+				animate(src, alpha=0, time=7 SECONDS)
+				sleep(0.1 SECONDS)
+				if(!src || src.disposed)
+					return
+				animate_ripple(src, 4)
+				animate_wave(src, 3)
+				sleep(7 SECONDS)
+				if(!src || src.disposed)
+					return
+				qdel(src)
+		var/ckey_of_dead_player = src.ckey
+		var/mob/ghost_mob = src.ghostize()
+		if(!ghost_mob || !ghost_mob.client) // somewhere on the way we lost our dead player, try to find them
+			ghost_mob = null
+			if(ckey_of_dead_player)
+				for (var/mob/M in mobs)
+					if(M.ckey == ckey_of_dead_player)
+						ghost_mob = M
+		var/our_icon_state = src.icon_state
+		// resurrection attempt
+		if(!ghost_mob)
+			return
+		SPAWN_DBG(0)
+			if (tgui_alert(ghost_mob, "You have fallen, but the curse is not lifted this easily. Do you wish to return to the physical realm?", "Resurrection",
+				list("Yes", "No"), timeout = 60 SECOND) == "Yes")
+				// get a random not locked station container
+				var/list/eligible_containers = list()
+				for_by_tcl(iterated_container, /obj/storage)
+					if (iterated_container.z == Z_LEVEL_STATION && !iterated_container.locked && !iterated_container.welded && !istype(get_area(iterated_container), /area/listeningpost))
+						eligible_containers += iterated_container
+				if (!length(eligible_containers))
+					return
+				var/obj/storage/spawn_target = pick(eligible_containers)
+				if(spawn_target == null)
+					boutput(ghost_mob, "<h3><span class='alert'>Couldn't find a suitable location to respawn. Resurrection impossible.</span></h3>")
+					return
+				if(spawn_target.open) // close the container if it's opened
+					spawn_target.close()
+				var/path_to_obj_plushie = get_plush_for_icon_state(our_icon_state)
+				var/atom/new_vessel = new path_to_obj_plushie(spawn_target)
+				var/time_to_respawn = 2.5 MINUTES
+				boutput(ghost_mob, "<h3><span class='alert'>Your plushie has manifested inside [spawn_target] on the station. In [time_to_respawn/10] seconds you will possess it once more as long as the vessel is not destroyed before then.</span></h3>")
+				ghost_mob.set_loc(get_turf(spawn_target))
+				playsound(get_turf(spawn_target), "sound/ambience/spooky/Void_Calls.ogg", 100, 1)
+				sleep(time_to_respawn)
+				if(!ghost_mob || !ghost_mob.client) // somewhere on the way we lost our dead player, try to find them
+					ghost_mob = null
+					for (var/mob/M in mobs)
+						if(M.ckey == ckey_of_dead_player)
+							ghost_mob = M
+				if(!new_vessel || new_vessel.disposed)
+					if(ghost_mob)
+						boutput(ghost_mob, "<h3><span class='alert'>The vessel has been destroyed. Your return to the physical realm has been prevented.</span></h3>")
+				else // respawn the cryptid mob and reassign the ckey
+					if(ghost_mob)
+						boutput(ghost_mob, "<h3><span class='alert'>You awaken once more. The cycle continues.</span></h3>")
+					var/location_of_plushie = new_vessel.loc
+					if(!isturf(location_of_plushie) && !istype(location_of_plushie, /obj/storage)) // if the location isn't a turf or storage, get turf
+						location_of_plushie = get_turf(new_vessel)
+					qdel(new_vessel)
+					var/cryptid_mob_path = get_cryptid_mob_for_icon_state(our_icon_state)
+					var/mob/living/critter/small_animal/plush/cryptid/reborn_cryptid = new cryptid_mob_path(location_of_plushie)
+					reborn_cryptid.ckey = ckey_of_dead_player
+					SPAWN_DBG(0.5 SECONDS)
+						if(reborn_cryptid && !reborn_cryptid.disposed)
+							playsound(get_turf(reborn_cryptid), "sound/misc/jester_laugh.ogg", 60, 1)
+			else
+				boutput(ghost_mob, "<h3><span class='alert'>The cycle has been stopped.</span></h3>")
+
+	proc/get_plush_for_icon_state(var/input_icon_state)
+		var/path = "/obj/item/toy/plush/small/[input_icon_state]"
+		return text2path(path)
+
+	proc/get_cryptid_mob_for_icon_state(var/input_icon_state)
+		var/path = "/mob/living/critter/small_animal/plush/cryptid/[input_icon_state]"
+		return text2path(path)
+
 	Login()
 		..()
-		boutput(src, "<h1><span class='alert'>You are NOT an antagonist unless stated otherwise through an obvious popup/message.</span></h1>")
-		boutput(src, "<span class='notice'>You can't move when being watched.</span>")
-		boutput(src, "<span class='notice'>Use your talk ability to communicate.</span>")
-		boutput(src, "<span class='notice'>Your blink ability lets you teleport when you're not being watched.</span>")
-		boutput(src, "<span class='notice'>Your teleport away ability lets you teleport away and hide in a random station container.</span>")
-		boutput(src, "<span class='notice'>Your vengeful retreat will stun your recent attacker and teleport you away.</span>")
-		boutput(src, "<span class='notice'>Your toggle glowing eyes ability lets you toggle your eyes glowing at will.</span>")
-		boutput(src, "<span class='notice'>Your set glowing eyes color ability lets you set your eyes' glowing color.</span>")
-		boutput(src, "<span class='notice'>Access special emotes through *scream, *dance and *snap.</span>")
+		boutput(src, {"<h1><span class='alert'>You are NOT an antagonist unless stated otherwise through an obvious popup/message.</span></h1>
+			<span class='notice'>You can't move when being watched.</span>
+			<br><span class='notice'>Use your Plushie Talk ability to communicate.</span>
+			<br><span class='notice'>Your override sensors ability lets you temporarily move a few steps even if being watched.</span>
+			<br><span class='notice'>Your blink ability lets you teleport when you're not being watched.</span>
+			<br><span class='notice'>Your teleport away ability lets you teleport away and hide in a random station container.</span>
+			<br><span class='notice'>Your vengeful retreat will stun your recent attacker and teleport you away.</span>
+			<br><span class='notice'>Your toggle glowing eyes ability lets you toggle your eyes glowing at will.</span>
+			<br><span class='notice'>Your set glowing eyes color ability lets you set your eyes' glowing color.</span>
+			<br><span class='notice'>Access special emotes through *scream, *dance and *snap.</span>"})
+
+	proc/plushie_speech(var/text_to_say)
+		src.speechpopupstyle = "font-style: italic; font-family: 'XFont 6x9'; font-size: 7px;"
+		if(prob(20))
+			src.speechpopupstyle += " color: red !important"
+		src.canspeak = 1
+		src.say(text_to_say)
+		src.canspeak = 0
 
 	proc/set_glowing_eyes(var/enabled)
 		if (eye_light)
@@ -101,16 +222,21 @@
 
 
 	proc/being_seen_status_update()
+		if(istype(src.loc, /obj/storage)) // inside a container
+			being_seen = FALSE
+			set_dormant_status(FALSE)
+			return
 		if (last_witness && last_witness.client) // optimization attempt
 			if(get_dist(src, last_witness) < 3) // still next to last person that saw us, might be for instance pulling us or sitting next to us
 				return
-			else
-				last_witness = null
+		last_witness = null
 
 		for (var/mob/M in viewers(src))
 			if (M == src)
 				continue
 			if (!isalive(M))
+				continue
+			if (istype(M, /mob/living/critter/small_animal/plush/cryptid)) // other cryptids are ok
 				continue
 			if (M.client) // Only players
 				last_witness = M
@@ -121,6 +247,10 @@
 		set_dormant_status(FALSE)
 
 	update_canmove()
+		if(override_steps > 0)
+			src.canmove = TRUE
+			override_steps -= 1
+			return
 		src.canmove = !being_seen
 
 	setup_hands() // no hands
@@ -130,18 +260,23 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 /datum/targetable/critter/cryptid_plushie
 	var/mob/living/critter/small_animal/plush/cryptid/our_plushie
 	icon = 'icons/mob/spell_buttons.dmi'
+	var/qdel_itself_if_not_attached_to_plushie = 0
 
 	onAttach(datum/abilityHolder/H)
 		. = ..()
 		if(istype(src.holder.owner, /mob/living/critter/small_animal/plush/cryptid))
 			our_plushie = src.holder.owner
+		if(qdel_itself_if_not_attached_to_plushie)
+			if(!our_plushie)
+				qdel(src)
 
-/datum/targetable/critter/cryptid_plushie/talk // mostly stolen from ouija board
-	name = "Talk"
-	desc = "Communicate through sound."
+/datum/targetable/critter/cryptid_plushie/plushie_talk // mostly stolen from ouija board
+	name = "Plushie Talk"
+	desc = "Communicate."
 	icon_state = "corruption"
 	cooldown = 50
-	var/words_min = 5
+	qdel_itself_if_not_attached_to_plushie = 1
+	var/words_min = 7
 	var/words_max = 10
 
 	cast(atom/target)
@@ -150,7 +285,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 
 		var/selected
 		do
-			var/list/words = list("*REFRESH*") + src.generate_words()
+			var/list/words = list("*REFRESH*") + get_ouija_word_list(src, words_min, words_max)
 			selected = tgui_input_list(usr, "Select a word:", src.name, words, allowIllegal=FALSE)
 		while(selected == "*REFRESH*")
 		if(!selected)
@@ -159,20 +294,115 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 			return
 		playsound(holder.owner, "sound/misc/automaton_scratch.ogg", 50, 1)
 		selected = uppertext(selected)
-		var/mob/living/our_mob = holder.owner
-		our_mob.speechpopupstyle = "font-style: italic; font-family: 'XFont 6x9'; font-size: 7px;"
-		if(prob(20))
-			our_mob.speechpopupstyle += " color: red !important"
-		our_mob.canspeak = 1
-		our_mob.say(selected)
-		our_mob.canspeak = 0
+		our_plushie.plushie_speech(selected)
 		return 0
 
-	proc/generate_words()
+/datum/targetable/critter/cryptid_plushie/movement_override
+	name = "Override Sensors"
+	desc = "Be able to move a few steps in spite of whether you're being looked at."
+	icon = 'icons/mob/genetics_powers.dmi'
+	icon_state = "adrenaline"
+	cooldown = 400
+	targeted = 0
+	qdel_itself_if_not_attached_to_plushie = 1
+	var/list/minor_event_sounds = list("sound/machines/giantdrone_boop1.ogg", "sound/machines/giantdrone_boop3.ogg", "sound/machines/giantdrone_boop4.ogg")
+	var/list/moderate_event_sounds = list("sound/machines/giantdrone_boop2.ogg")
+	var/list/major_event_sounds = list("sound/misc/android_scream.ogg")
+	var/cycle
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		/* debugging
+		cycle++
+		cycle = cycle % 3
+		if(cycle == 0)
+			minor_event()
+		else if(cycle == 1)
+			moderate_event()
+		else if(cycle == 2)
+			major_event()
+		*/
+
+		var/roll = rand(1, 100)
+		if(roll <= 55)
+			minor_event()
+		else if(roll <= 89)
+			moderate_event()
+		else if(roll >= 90)
+			major_event()
+
+		SPAWN_DBG(4 SECONDS)
+			our_plushie.override_steps = 0
+
+		return 0
+
+	proc/minor_event()
+		playsound(get_turf(holder.owner), "[pick(minor_event_sounds)]", 45, 1)
+		our_plushie.override_steps = rand(6, 10)
+		glitch_out(0.8 SECONDS, 1, 0.7)
+
+	proc/moderate_event()
+		playsound(get_turf(holder.owner), "[pick(moderate_event_sounds)]", 45, 1)
+		our_plushie.override_steps = rand(8, 13)
+		glitch_out(1.4 SECONDS, 1, 0.9)
+
+	proc/major_event()
+		playsound(get_turf(holder.owner), "[pick(major_event_sounds)]", 45, 1)
+		our_plushie.override_steps = rand(20, 50)
+		glitch_out(3 SECONDS, 1, 1.2, say_gibberish = 1)
+
+	proc/glitch_out(var/length, var/iteration_length_scaling, var/effect_scaling, var/say_gibberish = 0)
+		var/iteration_length = 0.2 SECONDS * iteration_length_scaling
+		var/iterations = round(length / iteration_length)
+		var/original_transform = our_plushie.transform
+
+		var/x_lower = -0.1 * effect_scaling
+		var/x_upper = 0.1 * effect_scaling
+		var/y_lower = -0.1 * effect_scaling
+		var/y_upper = 0.1 * effect_scaling
+
+		var/penalty_multiplier = 1.8 / iterations
+
+		var/scratch_chance = 40
+		var/gibberish_words_chance = 30
+		for(var/i = 0 to iterations)
+			if(prob(scratch_chance))
+				playsound(get_turf(holder.owner), "sound/misc/automaton_scratch.ogg", 20, 1)
+				scratch_chance -= 10
+			else
+				scratch_chance += 10
+			if(say_gibberish)
+				if(prob(gibberish_words_chance))
+					plushie_says_gibberish_word()
+					gibberish_words_chance -= 10
+				else
+					gibberish_words_chance += 10
+
+			var/scale_penalty = 1 - (penalty_multiplier * abs((iterations/2) - i))  // animation is less intense on the edges (start, end)
+			violent_standup_twitch_parametrized(our_plushie, effect_scale = effect_scaling * scale_penalty)
+			var/x_scale = 1 + ((rand(x_lower * 100, x_upper * 100) / 100) * scale_penalty)
+			var/y_scale = 1 + ((rand(y_lower * 100, y_upper * 100) / 100) * scale_penalty)
+			our_plushie.Scale(x_scale, y_scale)
+			sleep(iteration_length)
+
+		if(say_gibberish && prob(75))
+			var/list/last_words = list("FAILED TO RESOLVE ERROR, REBOOTING", "INITIATING REBOOT", "AVAILABLE IN STORES NOW", "AVAILABLE IN SEVERAL MODELS", "HELP")
+			our_plushie.plushie_speech(pick(last_words))
+		our_plushie.transform = original_transform
+
+	proc/plushie_says_gibberish_word()
+		our_plushie.plushie_speech(pick(generate_gibberish_words()))
+
+	proc/generate_gibberish_words()
 		var/list/words = list()
-		for(var/i in 1 to rand(words_min, words_max))
+		for(var/i in 1 to rand(5, 10))
 			var/picked = pick(strings("ouija_board.txt", "ouija_board_words"))
+			picked = uppertext(picked)
 			words |= picked
+		var/list/more_words = list("... hello?", "Is anyone there?", "Please...", "Help...", "Help, please...", "Can anyone hear me?", "It hurts.", "It's so dark...")
+		words += pick(more_words)
 		return words
 
 ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
@@ -181,7 +411,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
 	proc/get_a_random_station_unlocked_container()
 		var/list/eligible_containers = list()
 		for_by_tcl(iterated_container, /obj/storage)
-			if (iterated_container.z == Z_LEVEL_STATION && !iterated_container.locked)
+			if (iterated_container.z == Z_LEVEL_STATION && !iterated_container.locked && !iterated_container.welded && !istype(get_area(iterated_container), /area/listeningpost))
 				eligible_containers += iterated_container
 		if (!length(eligible_containers))
 			return null
@@ -231,8 +461,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
 		if (!isturf(target))
 			if(istype(target, /obj/storage))
 				var/obj/storage/targetted_container = target
-				if(targetted_container.locked)
-					target = get_turf(target) // the container we picked is locked, we don't want to trap ourselves inside
+				if(targetted_container.locked || targetted_container.welded)
+					target = get_turf(target) // the container we picked is locked or welded, we don't want to trap ourselves inside
 			else
 				target = get_turf(target)
 		if (target == get_turf(holder.owner))
@@ -272,7 +502,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
 				var/mob/M = holder.owner.lastattacker
 				if (!istype(M))
 					return
-
 				var/mob/attacker = holder.owner.lastattacker
 				holder.owner.visible_message("<span class='alert'><B>[holder.owner]'s eyes emit a vengeful glare at [attacker]!</B></span>")
 				var/obj/itemspecialeffect/glare/E = new /obj/itemspecialeffect/glare
@@ -294,6 +523,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
 					teleport_to_a_target(target_a_random_container = TRUE)
 				return 0
 		else
+			boutput(holder.owner, "<span class='alert'>No recent attacker to retaliate against.</span>")
 			return 1
 
 ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/glowing_eyes)
@@ -341,3 +571,4 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/glowing_eyes)
 			our_plushie.set_glowing_eyes(TRUE)
 
 		return 0
+

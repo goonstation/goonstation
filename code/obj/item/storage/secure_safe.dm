@@ -583,7 +583,7 @@
 				new /obj/item/storage/firstaid/brain(src)
 				new /obj/item/storage/firstaid/toxin(src)
 				new /obj/item/storage/firstaid/old(src)
-				new /obj/item/parts/robot_parts/head(src)
+				new /obj/item/parts/robot_parts/head/standard(src)
 			if (2)
 				new /obj/item/injector_belt(src)
 				new /obj/item/reagent_containers/glass/bottle/morphine(src)

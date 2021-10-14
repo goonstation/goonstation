@@ -25592,16 +25592,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bxI" = (
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
 /obj/decal/cleanable/dirt,
+/obj/storage/crate/robotparts,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bxJ" = (
@@ -28518,10 +28510,10 @@
 	},
 /obj/item/guardbot_core,
 /obj/item/device/guardbot_tool/medicator,
-/obj/item/parts/robot_parts/arm/right,
-/obj/item/parts/robot_parts/arm/right,
 /obj/storage/crate,
 /obj/item/clothing/suit/robuddy,
+/obj/item/parts/robot_parts/arm/right/standard,
+/obj/item/parts/robot_parts/arm/right/standard,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "bGg" = (
@@ -29134,15 +29126,7 @@
 /turf/simulated/floor,
 /area/station/storage/warehouse)
 "bHH" = (
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
+/obj/storage/crate/robotparts,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "bHI" = (

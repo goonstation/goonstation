@@ -701,3 +701,22 @@
 			setProperty("coldprot", 5)
 			setProperty("heatprot", 5)
 			setProperty("exploprot", 15)
+//Western Boots
+
+/obj/item/clothing/shoes/westboot
+	name = "Real Cowboy Boots"
+	icon_state = "westboot"
+	desc = "Perfect for riding horses, if only you had one!"
+
+/obj/item/clothing/shoes/westboot/black
+	name = "Black Cowboy Boots"
+	icon_state = "westboot_black"
+
+/obj/item/clothing/shoes/westboot/dirty
+	name = "Dirty Cowboy Boots"
+	icon_state = "westboot_dirty"
+
+/obj/item/clothing/shoes/westboot/brown
+	name = "Brown Cowboy Boots"
+	icon_state = "westboot_brown"
+
