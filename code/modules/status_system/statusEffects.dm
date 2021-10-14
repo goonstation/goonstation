@@ -383,7 +383,7 @@
 			if(ismob(owner))
 				M = owner
 			if(!ismobcritter(M))
-				damage_tox = (sqrt(duration/20 + 5) - 1)
+				damage_tox = (sqrt(min(duration, 90 SECONDS)/20 + 5) - 1)
 			stage = get_stage(duration)
 			switch(stage)
 				if(1)
@@ -491,7 +491,7 @@
 				M = owner
 
 
-			damage_tox = (sqrt(duration/20 + 5) - 0.5)
+			damage_tox = (sqrt(min(duration, 90 SECONDS)/20 + 5) - 0.5)
 			damage_brute = damage_tox/2
 
 			stage = get_stage(duration)
