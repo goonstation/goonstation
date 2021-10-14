@@ -236,7 +236,7 @@
 				continue
 			if (!isalive(M))
 				continue
-			if (istype(M, /mob/living/critter/plushie/cryptid)) // other cryptids are ok
+			if (istype(M, /mob/living/critter/small_animal/plush/cryptid)) // other cryptids are ok
 				continue
 			if (M.client) // Only players
 				last_witness = M
@@ -276,7 +276,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 	icon_state = "corruption"
 	cooldown = 50
 	qdel_itself_if_not_attached_to_plushie = 1
-	var/words_min = 5
+	var/words_min = 7
 	var/words_max = 10
 
 	cast(atom/target)
@@ -285,7 +285,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 
 		var/selected
 		do
-			var/list/words = list("*REFRESH*") + src.generate_words()
+			var/list/words = list("*REFRESH*") + get_ouija_word_list(src, words_min, words_max)
 			selected = tgui_input_list(usr, "Select a word:", src.name, words, allowIllegal=FALSE)
 		while(selected == "*REFRESH*")
 		if(!selected)
@@ -296,13 +296,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 		selected = uppertext(selected)
 		our_plushie.plushie_speech(selected)
 		return 0
-
-	proc/generate_words()
-		var/list/words = list()
-		for(var/i in 1 to rand(words_min, words_max))
-			var/picked = pick(strings("ouija_board.txt", "ouija_board_words"))
-			words |= picked
-		return words
 
 /datum/targetable/critter/cryptid_plushie/movement_override
 	name = "Override Sensors"
