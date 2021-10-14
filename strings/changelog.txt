@@ -1,5 +1,9 @@
 
 (t)thu oct 14 21
+(u)pali
+(p)6284
+(e)🆕|feature
+(+)*hatstomp emote is now animated.
 (u)Flaborized & pali
 (p)6300
 (e)🆕|feature
