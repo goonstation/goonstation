@@ -2375,7 +2375,7 @@
 	abilityHolder.removeAbility(abilityType)
 
 /mob/proc/getAbility(var/abilityType)
-	return abilityHolder.getAbility(abilityType)
+	return abilityHolder?.getAbility(abilityType)
 
 /mob/proc/full_heal()
 	src.HealDamage("All", 100000, 100000)

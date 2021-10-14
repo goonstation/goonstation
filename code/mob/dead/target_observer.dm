@@ -165,7 +165,7 @@ var/list/observers = list()
 
 
 	stop_observing()
-		if(start_time >= world.time + 5 SECONDS)
+		if(start_time <= world.time + 45 SECONDS)
 			return ..()
 		else
 			return
@@ -180,7 +180,7 @@ var/list/observers = list()
 			O.bioHolder.CopyOther(src.bioHolder, copyActiveEffects = 0)
 			if (isghostrestrictedz(O.z) && !restricted_z_allowed(O, get_turf(O)) && !(src.client && src.client.holder))
 				O.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
-			if (client) client.color = null  //needed for mesons dont kill me thx - ZeWaka
+			if (client) client.color = null
 			if (src.client && src.client.holder && src.stat !=2)
 				// genuinely not sure what this is here for since we're setting the
 				// alive/dead status of the *ghost*.
