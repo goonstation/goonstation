@@ -310,13 +310,19 @@
 			M.equip_new_if_possible(/obj/item/clothing/gloves/black, M.slot_gloves)
 			M.equip_new_if_possible(/obj/item/clothing/shoes/slasher_shoes, M.slot_shoes)
 
-		///`fullheal()` but with some extra flavor and readding detox
+		///heals a bunch of bad things the Slasher can get hit with, but not all
 		regenerate()
 			playsound(src, 'sound/machines/ArtifactEld1.ogg', 60, 0)
 			if(src.hasStatus("handcuffed"))
-				src.visible_message("<span class='alert'>[src]'s wrists dissolve into the shadows, dropping the handcuffs to the ground!</span>")
+				src.visible_message("<span class='alert'>[src]'s wrists dissolve into the shadows, making the handcuffs vanish!</span>")
+				src.handcuffs.destroy_handcuffs(src)
 			sleep(5 DECI SECONDS)
-			src.full_heal() //this won't turn out badly
+			src.losebreath = 0
+			src.delStatus("paralysis")
+			src.delStatus("stunned")
+			src.delStatus("weakened")
+			src.HealDamage("All", 100, 100)
+			src.take_brain_damage(-INFINITY)
 			src.visible_message("<span class='alert'>[src] appears to partially dissolve into the shadows, but then reforms!</span>")
 			src.bioHolder.AddEffect("detox", 0, 0, 0, 1) //full_heal gets rid of this
 
