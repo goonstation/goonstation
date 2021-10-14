@@ -199,7 +199,7 @@
 
 		for (var/string in piano_notes)
 			var/list/curr_notes = splittext("[string]", ",")
-			if (curr_notes.len < 4) // Music syntax not followed
+			if (length(curr_notes) < 4) // Music syntax not followed
 				break
 			note_names += curr_notes[1]
 			switch(lowertext(curr_notes[4]))
