@@ -20,13 +20,14 @@
 		return
 	else
 		if(prob(probability_of_breaking))
+			user.u_equip(I)
+			var/new_object = new type_to_break_into(get_turf(user))
+			if(stay_in_hand)
+				if(isitem(new_object))
+					var/obj/item/new_item = new_object
+					user.put_in_hand_or_drop(new_item)
+			qdel(I)
 
-
-/*
-	if (I.reagents && I.reagents.total_volume)
-		logTheThing("combat", user, M, "used [I] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(I)]")
-		I.reagents.trans_to(M, trans_amt * damage / 10) //amount transferred is based on damage dealt
-*/
 
 /datum/component/fragile_item/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_POST)
