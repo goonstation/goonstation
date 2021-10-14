@@ -259,16 +259,18 @@
 	if(length(candidates) < number) // ran out of eligible players with the preference on, filling the gap with other players
 		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [length(candidates)] players with be_[type] set to yes were ready. We need [number] so including players who don't want to be [type]s in the pool.")
 
-		while(length(candidates) < number)
-			var/client/random_client = pick(unpicked_clients)
-			unpicked_clients.Remove(random_client)
-			var/mob/new_player/player = random_client.mob
-			candidates += player.mind
-			if (!length(unpicked_clients)) // ran out of clients
-				if(length(candidates) < number) // somehow ran out of clients without filling our candidate quota
-					message_admins("<span class='alert'><b>WARNING:</b> get_possible_enemies was asked for more antagonists ([number]) than it could find candidates ([length(candidates)]) for. This could be a freak accident or an error in the code requesting more antagonists than possible. The round may have an irregular number of antagonists of type [type].")
-					logTheThing("debug", null, null, "<b>WARNING:</b> get_possible_enemies was asked for more antagonists ([number]) than it could find candidates ([length(candidates)]) for. This could be a freak accident or an error in the code requesting more antagonists than possible. The round may have an irregular number of antagonists of type [type].")
-				break
+		if(length(unpicked_clients))
+			while(length(candidates) < number)
+				var/client/random_client = pick(unpicked_clients)
+				unpicked_clients.Remove(random_client)
+				var/mob/new_player/player = random_client.mob
+				candidates += player.mind
+				if (!length(unpicked_clients)) // ran out of eligible clients
+					break
+
+	if(length(candidates) < number) // somehow failed to meet our candidate amount quota
+		message_admins("<span class='alert'><b>WARNING:</b> get_possible_enemies was asked for more antagonists ([number]) than it could find candidates ([length(candidates)]) for. This could be a freak accident or an error in the code requesting more antagonists than possible. The round may have an irregular number of antagonists of type [type].")
+		logTheThing("debug", null, null, "<b>WARNING:</b> get_possible_enemies was asked for more antagonists ([number]) than it could find candidates ([length(candidates)]) for. This could be a freak accident or an error in the code requesting more antagonists than possible. The round may have an irregular number of antagonists of type [type].")
 
 	if(length(candidates) < 1)
 		return list()
