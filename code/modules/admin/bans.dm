@@ -141,7 +141,6 @@ var/global/list/playersSeen = list()
 		var/details = "[row["reason"]]<br>"
 		details += "Banned By: [oakey]<br>"
 		details += "This ban applies to [row["server"] ? "this server only" : "all servers"].<br>"
-		details += "(This is a permanent ban)"
 		return details
 
 /proc/addBan(data)
@@ -181,12 +180,12 @@ var/global/list/playersSeen = list()
 		var/serverLogSnippet = row["server"] ? "from [row["server"]]" : "from all servers"
 
 		if (text2num(row["timestamp"]) == 0)
-			if (targetC) boutput(targetC, "<span class='alert'>This is a permanent ban.</span>")
-			logTheThing("admin", adminC, targetC, "has banned [targetC ? "[constructTarget(targetC,"admin")]" : replacement_text] [serverLogSnippet]. Reason: [row["reason"]]. This is a permanent ban.")
-			logTheThing("diary", adminC, targetC, "has banned [targetC ? "[constructTarget(targetC,"diary")]" : replacement_text] [serverLogSnippet]. Reason: [row["reason"]]. This is a permanent ban.", "admin")
+			if (targetC) boutput(targetC, "<span class='alert'>You have received a ban. It will last until appealed.</span>")
+			logTheThing("admin", adminC, targetC, "has banned [targetC ? "[constructTarget(targetC,"admin")]" : replacement_text] [serverLogSnippet]. Reason: [row["reason"]].")
+			logTheThing("diary", adminC, targetC, "has banned [targetC ? "[constructTarget(targetC,"diary")]" : replacement_text] [serverLogSnippet]. Reason: [row["reason"]].", "admin")
 			var/adminMsg = "<span class='notice'>"
 			adminMsg += (isclient(adminC) ? key_name(adminC) : adminC)
-			adminMsg += " has banned [targetC ? targetC : replacement_text] [serverLogSnippet].<br>Reason: [row["reason"]]<br>This is a permanent ban.</span>"
+			adminMsg += " has banned [targetC ? targetC : replacement_text] [serverLogSnippet].<br>Reason: [row["reason"]]</span>"
 			message_admins(adminMsg)
 		else
 			if (targetC) boutput(targetC, "<span class='alert'>This is a temporary ban, it will be removed in [expiry].</span>")
