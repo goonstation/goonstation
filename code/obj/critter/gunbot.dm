@@ -81,8 +81,8 @@
 		..()
 		if (get_area(src) != colosseum_controller.colosseum)
 			var/turf/Ts = get_turf(src)
-			var/obj/item/drop1 = pick(/obj/item/electronics/battery,/obj/item/electronics/board,/obj/item/electronics/buzzer,/obj/item/electronics/frame,/obj/item/electronics/resistor,/obj/item/electronics/screen,/obj/item/electronics/relay, /obj/item/parts/robot_parts/arm/left, /obj/item/parts/robot_parts/arm/right)
-			var/obj/item/drop2 = pick(/obj/item/electronics/battery,/obj/item/electronics/board,/obj/item/electronics/buzzer,/obj/item/electronics/frame,/obj/item/electronics/resistor,/obj/item/electronics/screen,/obj/item/electronics/relay, /obj/item/parts/robot_parts/arm/left, /obj/item/parts/robot_parts/arm/right)
+			var/obj/item/drop1 = pick(/obj/item/electronics/battery,/obj/item/electronics/board,/obj/item/electronics/buzzer,/obj/item/electronics/frame,/obj/item/electronics/resistor,/obj/item/electronics/screen,/obj/item/electronics/relay, /obj/item/parts/robot_parts/arm/left/standard, /obj/item/parts/robot_parts/arm/right/standard)
+			var/obj/item/drop2 = pick(/obj/item/electronics/battery,/obj/item/electronics/board,/obj/item/electronics/buzzer,/obj/item/electronics/frame,/obj/item/electronics/resistor,/obj/item/electronics/screen,/obj/item/electronics/relay, /obj/item/parts/robot_parts/arm/left/standard, /obj/item/parts/robot_parts/arm/right/standard)
 
 			make_cleanable( /obj/decal/cleanable/robot_debris,Ts)
 			new drop1(Ts)

@@ -371,7 +371,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				if(target.parent?.group_processing)
 					target.parent.suspend_group_processing()
 
-				var/datum/gas_mixture/payload = unpool(/datum/gas_mixture)
+				var/datum/gas_mixture/payload = new /datum/gas_mixture
 				payload.toxins = 25
 				total_plasma -= payload.toxins
 				payload.temperature = T20C
@@ -398,7 +398,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		var/datum/gas_mixture/air = target.return_air()
 		if(!air) return
 
-		var/datum/gas_mixture/payload = unpool(/datum/gas_mixture)
+		var/datum/gas_mixture/payload = new /datum/gas_mixture
 		payload.temperature = T20C
 		payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 
@@ -435,7 +435,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(maxexplode <= 0) return
 		var/turf/target = get_turf(location)
 		if(sev > 0 && sev < 4) // Use pipebombs not canbombs!
-			var/datum/gas_mixture/payload = unpool(/datum/gas_mixture)
+			var/datum/gas_mixture/payload = new /datum/gas_mixture
 			payload.oxygen = 50
 			payload.temperature = T20C
 			target.assume_air(payload)

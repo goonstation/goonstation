@@ -976,10 +976,7 @@
 			var/toxic = owner.bioHolder.HasEffect("toxic_farts")
 			if(toxic)
 				var/turf/fart_turf = get_turf(owner)
-				var/datum/reagents/R = new(toxic * 100)
-				R.add_reagent("toxic_fart", 50 * toxic)
-				R.add_reagent("toxin", (toxic - 1) * 50)
-				fart_turf.fluid_react(R, R.total_volume, airborne = 1)
+				fart_turf.fluid_react_single("[toxic > 1 ?"very_":""]toxic_fart", toxic*2, airborne = 1)
 
 			SF.farting = 0
 			if (linked_power.power > 1)

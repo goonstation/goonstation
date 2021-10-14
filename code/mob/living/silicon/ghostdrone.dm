@@ -1107,9 +1107,9 @@
 		setFace(pick("happy", "sad", "mad"), random_color())
 
 		if (limiter.canISpawn(/obj/effects/sparks))
-			var/obj/sparks = unpool(/obj/effects/sparks)
+			var/obj/sparks = new /obj/effects/sparks
 			sparks.set_loc(get_turf(src))
-			SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
+			SPAWN_DBG(2 SECONDS) if (sparks) qdel(sparks)
 
 	ex_act(severity)
 		if (src.nodamage) return
@@ -1338,9 +1338,9 @@
 			src.see_in_dark = SEE_DARK_FULL
 
 			if (client.adventure_view)
-				src.see_invisible = 21
+				src.see_invisible = INVIS_ADVENTURE
 			else
-				src.see_invisible = 9
+				src.see_invisible = INVIS_CONSTRUCTION
 
 		..()
 

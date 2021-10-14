@@ -114,11 +114,11 @@
 	for(var/i=1 to num_pieces)
 		switch(rand(100))
 			if(0 to 50)
-				B = unpool(/obj/item/raw_material/scrap_metal)
+				B = new /obj/item/raw_material/scrap_metal
 				B.set_loc(location)
 				B.setMaterial(getMaterial("gnesis"))
 			if(51 to 100)
-				B = unpool(/obj/item/raw_material/shard)
+				B = new /obj/item/raw_material/shard
 				B.set_loc(location)
 				B.setMaterial(getMaterial("gnesisglass"))
 		if(prob(30))

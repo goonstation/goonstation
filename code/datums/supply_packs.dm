@@ -710,11 +710,11 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/takeout_pizza
 	name = "Soft Soft Pizzeria Delivery"
-	desc = "Two fresh-baked pizza meals, straight from the oven to your airlock."
+	desc = "Two soft serve pizzas, straight from the oven to your airlock."
 	category = "Civilian Department"
-	contains = list(/obj/item/reagent_containers/food/snacks/pizza = 2,
+	contains = list(/obj/random_item_spawner/pizza = 1,
 					/obj/item/reagent_containers/food/snacks/fries = 2,
-					/obj/item/reagent_containers/food/drinks/cola = 2)
+					/obj/random_item_spawner/cola = 1)
 	cost = 200
 	containertype = /obj/storage/crate/pizza
 	containername = "Soft Soft Pizza Delivery"
@@ -773,11 +773,11 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	category = "Medical Department"
 	contains = list(/obj/item/parts/robot_parts/robot_frame,
 					/obj/item/parts/robot_parts/head/sturdy,
-					/obj/item/parts/robot_parts/chest,
+					/obj/item/parts/robot_parts/chest/standard,
 					/obj/item/parts/robot_parts/arm/left/sturdy,
 					/obj/item/parts/robot_parts/arm/right/sturdy,
-					/obj/item/parts/robot_parts/leg/left,
-					/obj/item/parts/robot_parts/leg/right,
+					/obj/item/parts/robot_parts/leg/left/standard,
+					/obj/item/parts/robot_parts/leg/right/standard,
 					/obj/item/cable_coil)
 	cost = 4500
 	containertype = /obj/storage/crate/wooden
@@ -1353,7 +1353,8 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	desc = "1x Ruckingenur frame, 1x Manufacturer frame, 1x reclaimer frame, 1x device analyzer, 1x soldering iron"
 	category = "Engineering Department"
 	contains = list(/obj/item/electronics/scanner,
-					/obj/item/electronics/soldering)
+					/obj/item/electronics/soldering,
+					/obj/item/deconstructor)
 	frames = list(/obj/machinery/rkit,
 					/obj/machinery/manufacturer/mechanic,
 					/obj/machinery/portable_reclaimer)
@@ -1708,4 +1709,18 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	cost = 2000
 	containername = "Percussion Band Kit"
 	contains = list(/obj/item/instrument/tambourine,/obj/item/instrument/triangle,/obj/item/instrument/cowbell)
+	containertype = /obj/storage/crate/wooden
+
+//Western
+
+/datum/supply_packs/west_coats
+	name = "Dusty Old Coats"
+	desc = "4x coats in various colors."
+	category = "Civilian Department"
+	contains = list(/obj/item/clothing/suit/gimmick/guncoat,
+			/obj/item/clothing/suit/gimmick/guncoat/black,
+			/obj/item/clothing/suit/gimmick/guncoat/tan,
+			/obj/item/clothing/suit/gimmick/guncoat/dirty)
+	cost = 2000
+	containername = "Dusty Old Clothing Crate"
 	containertype = /obj/storage/crate/wooden

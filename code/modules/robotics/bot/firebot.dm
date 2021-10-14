@@ -306,7 +306,7 @@
 		playsound(src.loc, "sound/effects/spray.ogg", 30, 1, -3)
 
 	for(var/a in 0 to 5)
-		var/obj/effects/water/W = unpool(/obj/effects/water)
+		var/obj/effects/water/W = new /obj/effects/water
 		if(!W) return
 		W.set_loc( get_turf(src) )
 		var/turf/my_target = pick(the_targets)
@@ -371,7 +371,7 @@
 	new /obj/item/extinguisher(Tsec)
 
 	if (prob(50))
-		new /obj/item/parts/robot_parts/arm/left(Tsec)
+		new /obj/item/parts/robot_parts/arm/left/standard(Tsec)
 
 	var/obj/item/storage/toolbox/emergency/emptybox = new /obj/item/storage/toolbox/emergency(Tsec)
 	for(var/obj/item/I in emptybox.contents) //Empty the toolbox so we don't have infinite crowbars or whatever

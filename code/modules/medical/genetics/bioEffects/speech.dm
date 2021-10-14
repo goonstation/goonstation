@@ -35,6 +35,7 @@
 	lockedDiff = 2
 	lockedChars = list("G","C")
 	lockedTries = 3
+	icon_state = "speech_smile"
 
 	OnSpeak(var/message)
 		if (!istext(message))
@@ -205,6 +206,7 @@
 	lockedDiff = 2
 	lockedChars = list("T","A")
 	lockedTries = 3
+	icon_state = "speech_clown"
 
 	OnAdd()
 		var/mob/living/L = owner
@@ -265,6 +267,7 @@
 	lockedDiff = 2
 	lockedChars = list("T","A")
 	lockedTries = 3
+	icon_state = "speech_bad"
 
 	OnSpeak(var/message)
 		if (!istext(message))
@@ -289,6 +292,7 @@
 	lockedDiff = 2
 	lockedChars = list("G","C")
 	lockedTries = 3
+	icon_state = "speech_bad"
 
 	OnSpeak(var/message)
 		if (!istext(message))
@@ -309,6 +313,7 @@
 	lockedDiff = 2
 	lockedChars = list("G","C")
 	lockedTries = 3
+	icon_state = "speech_bad"
 	var/vowel_lower = "a"
 	var/vowel_upper = "A"
 
@@ -365,6 +370,7 @@
 	lockedDiff = 2
 	lockedChars = list("G","C")
 	lockedTries = 3
+	icon_state = "speech_loud"
 
 	OnSpeak(var/message)
 		if (!istext(message))
@@ -413,6 +419,7 @@
 	lockedDiff = 2
 	lockedChars = list("G","C")
 	lockedTries = 3
+	icon_state = "speech_mime"
 
 	OnSpeak(var/message)
 		if (!istext(message))
@@ -573,6 +580,7 @@
 	lockedDiff = 2
 	lockedChars = list("G","C")
 	lockedTries = 3
+	icon_state = "speech_bad"
 	OnSpeak(var/message)
 		if (!istext(message))
 			return ""

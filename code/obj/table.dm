@@ -478,6 +478,16 @@
 	auto
 		auto = 1
 
+/obj/table/neon
+	name = "neon table"
+	desc = "It's almost painfully bright."
+	icon = 'icons/obj/furniture/table_neon.dmi'
+	auto_type = /obj/table/neon/auto
+	parts_type = /obj/item/furniture_parts/table/neon
+
+	auto
+		auto = 1
+
 /obj/table/folding
 	name = "folding table"
 	desc = "A table with a faux wood top designed for quick assembly and toolless disassembly."
@@ -653,7 +663,7 @@
 			gnesis_smash()
 		else
 			for (var/i=rand(3,4), i>0, i--)
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+				var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 				G.set_loc(src.loc)
 				if (src.material)
 					G.setMaterial(src.material)

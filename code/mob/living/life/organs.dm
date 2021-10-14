@@ -76,10 +76,10 @@
 		if (oH.heart.loc != src)
 			oH.heart = null
 		else if (oH.heart.robotic && oH.heart.emagged && !oH.heart.broken)
-			src.drowsyness = max (src.drowsyness - 8, 0)
+			src.changeStatus("drowsy", -20 SECONDS)
 			if (src.sleeping) src.sleeping = 0
 		else if (oH.heart.robotic && !oH.heart.broken)
-			src.drowsyness = max (src.drowsyness - 4, 0)
+			src.changeStatus("drowsy", -10 SECONDS)
 			if (src.sleeping) src.sleeping = 0
 		else if (oH.heart.broken)
 			if (src.get_oxygen_deprivation())

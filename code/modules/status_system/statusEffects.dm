@@ -304,7 +304,7 @@
 					M.change_misstep_chance(-INFINITY)
 				M.make_jittery(1000)
 				M.dizziness = max(0,M.dizziness-10)
-				M.drowsyness = max(0,M.drowsyness-10)
+				M.changeStatus("drowsy", -20 SECONDS)
 				M.sleeping = 0
 
 	simpledot //Simple damage over time.
@@ -335,11 +335,21 @@
 
 		tickSpacing = 3 SECONDS
 
-		damage_tox = 1
+		damage_tox = 0
 		damage_type = DAMAGE_BURN
 
 		var/howMuch = ""
 		var/stage = 1
+
+		modify_change(change)
+			. = change
+
+			if (owner && ismob(owner) && change > 0)
+				var/mob/M = owner
+				SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, get_stage(duration + change))
+				var/percent_protection = GET_MOB_PROPERTY(M, PROP_RADPROT)
+				percent_protection = 1 - (percent_protection/100) //scale from 0 to 1
+				. *= percent_protection
 
 		getTooltip()
 			. = "You are [howMuch]irradiated.<br>Taking [round(damage_tox, 0.1)] toxin damage every [tickSpacing/(1 SECOND)] sec.<br>Damage reduced by radiation resistance on gear."
@@ -349,39 +359,43 @@
 			if(issilicon(A) || isobserver(A) || isintangible(A))
 				. = 0
 
+		proc/get_stage(val)
+			. = 1
+			switch(val/(1 SECOND))
+				if(0 to 10)
+					. = 1
+				if(10 to 20)
+					. = 2
+				if(20 to 45)
+					. = 3
+				if(45 to 90)
+					. = 4
+				if(90 to INFINITY)
+					. = 5
+
 		onUpdate(timePassed)
 			if(locate(/obj/item/implant/health) in owner)
 				src.visible = 1
 			else
 				src.visible = 0
 
-
 			var/mob/M = null
 			if(ismob(owner))
 				M = owner
-
-			var/prot = 1
-			if(istype(owner, /mob/living))
-				var/mob/living/L = owner
-				prot = (1 - (L.get_rad_protection() / 100))
-
-			damage_tox = (sqrt(duration/20 + 5) - 1) * prot
-			switch(duration/(1 SECOND))
-				if(0 to 10)
+			if(!ismobcritter(M))
+				damage_tox = (sqrt(min(duration, 90 SECONDS)/20 + 5) - 1)
+			stage = get_stage(duration)
+			switch(stage)
+				if(1)
 					howMuch = ""
-					stage = 1
-				if(10 to 20)
+				if(2)
 					howMuch = "significantly "
-					stage = 2
-				if(20 to 45)
+				if(3)
 					howMuch = "very much "
-					stage = 3
-				if(45 to 90)
+				if(4)
 					howMuch = "extremely "
-					stage = 4
-				if(90 to INFINITY)
+				if(5)
 					howMuch = "horribly "
-					stage = 5
 
 			if(M)
 				SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, stage)
@@ -389,10 +403,10 @@
 					src.visible = 1
 				else
 					src.visible = 0
-				if (prob((stage - 2 - !!(M.traitHolder?.hasTrait("stablegenes"))) * prot) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
+				if (prob(stage - 2 - !!(M.traitHolder?.hasTrait("stablegenes"))) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
 					boutput(M, "<span class='alert'>You mutate!</span>")
 					M.bioHolder.RandomEffect("either")
-				if(prob((stage - 1) * prot) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
+				if(!ON_COOLDOWN(M, "radiation_stun_check", 1 SECOND) && prob(stage - 1) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
 					M.changeStatus("weakened", 3 SECONDS)
 					boutput(M, "<span class='alert'>You feel weak.</span>")
 					M.emote("collapse")
@@ -425,6 +439,29 @@
 			. = 1
 			if(issilicon(A) || isobserver(A) || isintangible(A))
 				. = 0
+		proc/get_stage(val)
+			. = 1
+			switch(val/(1 SECOND))
+				if(0 to 10)
+					. = 1
+				if(10 to 20)
+					. = 2
+				if(20 to 30)
+					. = 3
+				if(30 to 60)
+					. = 4
+				if(60 to INFINITY)
+					. = 5
+
+		modify_change(change)
+			. = change
+
+			if (owner && ismob(owner) && change > 0)
+				var/mob/M = owner
+				SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, get_stage(duration + change))
+				var/percent_protection = GET_MOB_PROPERTY(M, PROP_RADPROT)
+				percent_protection = 1 - (percent_protection/100) //scale from 0 to 1
+				. *= percent_protection
 
 		proc/update_lights(add = 1)
 			owner.remove_simple_light("neutron_rad")
@@ -453,30 +490,22 @@
 			if(ismob(owner))
 				M = owner
 
-			var/prot = 1
-			if(istype(owner, /mob/living))
-				var/mob/living/L = owner
-				prot = (1 - (L.get_rad_protection() / 100))
 
-			damage_tox = (sqrt(duration/20 + 5) - 0.5) * prot
+			damage_tox = (sqrt(min(duration, 90 SECONDS)/20 + 5) - 0.5)
 			damage_brute = damage_tox/2
 
-			switch(duration/(1 SECOND))
-				if(0 to 10)
+			stage = get_stage(duration)
+			switch(stage)
+				if(1)
 					howMuch = ""
-					stage = 1
-				if(10 to 20)
+				if(2)
 					howMuch = "significantly "
-					stage = 2
-				if(20 to 30)
+				if(3)
 					howMuch = "very much "
-					stage = 3
-				if(30 to 60)
+				if(4)
 					howMuch = "extremely "
-					stage = 4
-				if(60 to INFINITY)
+				if(5)
 					howMuch = "horribly "
-					stage = 5
 
 			if(M)
 				SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, stage)
@@ -484,10 +513,10 @@
 					src.visible = 1
 				else
 					src.visible = 0
-				if (prob((stage - !!(M.traitHolder?.hasTrait("stablegenes"))) * prot) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
+				if (prob(stage - !!(M.traitHolder?.hasTrait("stablegenes"))) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
 					boutput(M, "<span class='alert'>You mutate!</span>")
 					M.bioHolder.RandomEffect("either")
-				if(prob((stage-1) * prot) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
+				if(!ON_COOLDOWN(M, "n_radiation_stun_check", 1 SECOND) && prob(stage-1) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
 					M.changeStatus("weakened", 5 SECONDS)
 					boutput(M, "<span class='alert'>You feel weak.</span>")
 					M.emote("collapse")
@@ -535,6 +564,8 @@
 
 			switchStage(getStage())
 			owner.delStatus("shivering")
+
+			logTheThing("combat", owner, null, "gains the burning status effect at [log_loc(owner)]")
 
 			if(istype(owner, /mob/living))
 				var/mob/living/L = owner
@@ -607,13 +638,13 @@
 
 			switch(stage)
 				if(1)
-					damage_burn = 0.9 * prot
+					damage_burn = 1 * prot
 					howMuch = ""
 				if(2)
 					damage_burn = 2 * prot
 					howMuch = "very much "
 				if(3)
-					damage_burn = 3.5 * prot
+					damage_burn = 4 * prot
 					howMuch = "extremely "
 
 			return ..(timePassed)
@@ -637,7 +668,7 @@
 			tickspassed = optional
 			if(ismob(owner))
 				var/mob/M = owner
-				APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, -5, "stim_withdrawl")
+				APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stim_withdrawl", -5)
 				M.jitteriness = 0
 
 		onUpdate(timePassed)
@@ -1028,31 +1059,31 @@
 		unique = 1
 		duration = INFINITE_STATUS
 		maxDuration = null
-		var/mob/living/carbon/human/H
+		var/mob/living/L
 		var/sleepcount = 5 SECONDS
 
 		onAdd(optional=null)
 			. = ..()
-			if (ishuman(owner))
-				H = owner
+			if (isliving(owner))
+				L = owner
 				sleepcount = 5 SECONDS
 			else
 				owner.delStatus("buckled")
 
 		clicked(list/params)
-			if(H.buckled)
-				H.buckled.Attackhand(H)
+			if(L.buckled)
+				L.buckled.Attackhand(L)
 
 		onUpdate(timePassed)
-			if (H && !H.buckled)
+			if (L && !L.buckled)
 				owner.delStatus("buckled")
 			else
 				if (sleepcount > 0)
 					sleepcount -= timePassed
 					if (sleepcount <= 0)
-						if (H.hasStatus("resting") && istype(H.buckled,/obj/stool/bed))
-							var/obj/stool/bed/B = H.buckled
-							B.sleep_in(H)
+						if (L.hasStatus("resting") && istype(L.buckled,/obj/stool/bed))
+							var/obj/stool/bed/B = L.buckled
+							B.sleep_in(L)
 						else
 							sleepcount = 3 SECONDS
 
@@ -1081,6 +1112,10 @@
 						return
 			else
 				owner.delStatus("resting")
+
+		onRemove()
+			. = ..()
+			ON_COOLDOWN(owner, "unlying_speed_cheesy", 0.3 SECONDS)
 
 		clicked(list/params)
 			if(ON_COOLDOWN(src.owner, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
@@ -1185,9 +1220,9 @@
 		onRemove()
 			. = ..()
 			if(ismob(owner))
-				owner.changeStatus("janktank_withdrawl", 10 MINUTES)
 				var/mob/M = owner
 				M.remove_stun_resist_mod("janktank")
+				owner.changeStatus("janktank_withdrawl", 10 MINUTES)
 
 		onUpdate(timePassed)
 			var/mob/living/carbon/human/H
@@ -1224,13 +1259,13 @@
 			var/mob/living/carbon/human/M
 			if(ishuman(owner))
 				M = owner
-			if (prob(15))
-				M.TakeDamage("All", 0, 0, 1)
-			if (prob(10))
-				owner.changeStatus("stunned", 2 SECONDS)
-			if (prob(20))
-				violent_twitch(owner)
-				M.make_jittery(rand(6,9))
+				if (prob(15))
+					M.TakeDamage("All", 0, 0, 1)
+				if (prob(10))
+					owner.changeStatus("stunned", 2 SECONDS)
+				if (prob(20))
+					violent_twitch(owner)
+					M.make_jittery(rand(6,9))
 
 	mutiny
 		id = "mutiny"
@@ -1546,7 +1581,7 @@
 			weighted_average = 0
 			#ifdef CREATE_PATHOGENS
 			if(!isdead(L))
-				var/datum/pathogen/P = unpool(/datum/pathogen)
+				var/datum/pathogen/P = new /datum/pathogen
 				P.create_weak()
 				P.spread = 0
 				wrap_pathogen(L.reagents, P, 10)
@@ -1755,13 +1790,13 @@
 	limb_or_organ = "organ"
 
 /datum/statusEffect/changeling_regrow/limb/l_arm
-	id = "c_regrow-l_hand"
+	id = "c_regrow-l_arm"
 	icon_state = "cspider-hand"
 	regrow_target_id = "l_arm"
 	regrow_target_name = "left arm"
 	regrow_target_path = /obj/item/parts/human_parts/arm/left
 /datum/statusEffect/changeling_regrow/limb/r_arm
-	id = "c_regrow-r_hand"
+	id = "c_regrow-r_arm"
 	icon_state = "cspider-hand"
 	regrow_target_id = "r_arm"
 	regrow_target_name = "right arm"
@@ -1797,3 +1832,94 @@
 	regrow_target_id = "butt"
 	regrow_target_name = "butt"
 	regrow_target_path = /obj/item/clothing/head/butt
+
+
+/datum/statusEffect/z_pre_infection
+	id = "z_pre_inf"
+	name = "Zombie Scratch"
+	desc = "You breathed in some gross miasma."
+	icon_state = "z_pre_infection-1"
+	maxDuration = 90 SECONDS
+	visible = 0
+
+	var/timer = 0
+	var/static/infect_time = 50 SECONDS
+
+	var/mob/living/carbon/human/H
+	var/image/onfire = null
+
+	getTooltip()
+		. = ""
+
+	clicked(list/params)
+		if (H)
+			H.resist()
+
+	preCheck(atom/A)
+		. = 1
+		if(!ishuman(A))
+			. = 0
+		// I'd LIKE to put this check here, but proc/find_ailment_by_type and is a bit too inefficient for my comfort
+		// and this will be applied on combat hit. The ailments should use a assoc list for Constant lookup time or something...
+		// if (isliving(A))
+		// 	var/mob/living/L = A
+		// 	if (L.find_ailment_by_type(/datum/ailment/disease/necrotic_degeneration/can_infect_more))
+		// 		. = 0 //Already have the disease, don't need to bother with this
+
+	onAdd()
+		. = ..()
+		timer = 0
+		if (ishuman(owner))
+			H = owner
+			//If dead, instaconvert.
+			if(isdead(H))
+				H.set_mutantrace(/datum/mutantrace/zombie/can_infect)
+				if (H.ghost?.mind && !(H.mind && H.mind.dnr)) // if they have dnr set don't bother shoving them back in their body (Shamelessly ripped from SR code. Fight me.)
+					H.ghost.show_text("<span class='alert'><B>You feel yourself being dragged out of the afterlife!</B></span>")
+					H.ghost.mind.transfer_to(H)
+				H.delStatus(id)
+
+	onUpdate(timePassed)
+		timer += timePassed
+
+		if (timer >= infect_time && H)
+			H.contract_disease(/datum/ailment/disease/necrotic_degeneration/can_infect_more, null, null, 1) // path, name, strain, bypass resist
+			H.delStatus(id)
+			return
+		return ..(timePassed)
+
+/datum/statusEffect/drowsy
+	maxDuration = 2 MINUTES
+	id = "drowsy"
+	name = "Drowsy"
+	icon_state = "drowsy"
+	desc = "You feel very drowsy"
+	movement_modifier = new/datum/movement_modifier/drowsy
+	var/tickspassed = 0
+
+	onUpdate(timePassed)
+		. = ..()
+		tickspassed += timePassed
+		movement_modifier.additive_slowdown = 1.5 + tickspassed/(10 SECONDS)
+		if(ismob(owner) && prob(5))
+			var/mob/M = owner
+			M.change_eye_blurry(2, 40)
+
+		if(prob(round(tickspassed/(5 SECONDS)) / 2))
+			if(!owner.hasStatus("passing_out"))
+				owner.setStatus("passing_out", 5 SECONDS)
+
+/datum/statusEffect/passing_out
+	id = "passing_out"
+	name = "Passing out"
+	desc = "You're so tired you're about to pass out!"
+	icon_state = "passing_out"
+	maxDuration = 5 SECONDS
+
+	onRemove()
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			M.changeStatus("paralysis", 5 SECONDS)
+			M.force_laydown_standup()
+			M.delStatus("drowsy")

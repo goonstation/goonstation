@@ -280,7 +280,7 @@
 			*/
 			#ifdef CREATE_PATHOGENS //PATHOLOGY_REMOVAL
 			if (value < 5 && prob(1) && prob(25))
-				var/datum/pathogen/P = unpool(/datum/pathogen)
+				var/datum/pathogen/P = new /datum/pathogen
 				P.create_weak()
 				P.spread = 0
 				holder.owner.infected(P)

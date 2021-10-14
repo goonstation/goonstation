@@ -4,7 +4,7 @@
 	var/stealthy = 1
 	var/venom_id = "toxin"
 	var/inject_amount = 50
-	cooldown = 900
+	cooldown = 1400
 	targeted = 1
 	target_anything = 1
 	target_in_inventory = 1
@@ -18,6 +18,10 @@
 			if (get_dist(holder.owner, target) > 1)
 				boutput(holder.owner, __red("We cannot reach that target with our stinger."))
 				return 1
+			if (!target.reagents)
+				boutput(holder.owner, "<span class='notice'>We cannot seem to sting [target].</span>")
+				return 1
+
 			if (target.reagents.total_volume >= target.reagents.maximum_volume)
 				boutput(holder.owner, "<span class='alert'>[target] is full.</span>")
 				return 1

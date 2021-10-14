@@ -94,7 +94,7 @@
 			src.clogged += (20 * C.amount) //One piece of cloth clogs for about 1 minute. (cause the machine loop updates ~3 second interval)
 			user.show_text("You stuff [I] into the drain.")
 			logTheThing("station", user, null, "clogs [name] shut temporarily at [log_loc(user)].")
-			pool(I)
+			qdel(I)
 			src.update_icon()
 			return
 
@@ -124,7 +124,7 @@
 
 	New()
 		..()
-		src.invisibility = 100
+		src.invisibility = INVIS_ALWAYS_ISH
 
 ///////////////////
 //////spawner//////
@@ -420,7 +420,7 @@
 	desc = "A deployable sea ladder that will allow you to descend to and ascend from the trench."
 	icon = 'icons/obj/fluid.dmi'
 	icon_state = "ladder_off"
-	item_state = "folded_chair"
+	item_state = "sea_ladder"
 	w_class = W_CLASS_NORMAL
 	throwforce = 10
 	flags = FPRINT | TABLEPASS | CONDUCT

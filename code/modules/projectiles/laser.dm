@@ -99,7 +99,7 @@ toxic - poisons
 /datum/projectile/laser/asslaser // heh
 	name = "assault laser"
 	icon_state = "u_laser"
-	power = 75
+	power = 25
 	cost = 65
 	dissipation_delay = 5
 	dissipation_rate = 0

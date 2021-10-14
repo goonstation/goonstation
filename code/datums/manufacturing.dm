@@ -2,7 +2,10 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	if(mat in material_category_names)
 		return material_category_names[mat]
 	else
-		return capitalize(mat)
+		var/datum/material/nice_mat = getMaterial(mat)
+		if (istype(nice_mat))
+			return capitalize(nice_mat.name)
+		return capitalize(mat) //if all else fails (probably a category instead of a material)
 
 /datum/manufacture
 	var/name = null                // Name of the schematic
@@ -841,6 +844,15 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 1
 	category = "Component"
 
+/datum/manufacture/cardboard_ai
+	name = "Cardboard 'AI'"
+	item_paths = list("cardboard")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/clothing/suit/cardboard_box/ai)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
 /datum/manufacture/cyberappendix
 	name = "Cyberappendix"
 	item_paths = list("MET-1","CON-1","ALL")
@@ -1050,9 +1062,9 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	name = "Standard Cyborg Parts"
 	item_paths = list("MET-2")
 	item_amounts = list(48)
-	item_outputs = list(/obj/item/parts/robot_parts/chest,/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/right,/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/leg/right,/obj/item/parts/robot_parts/leg/left)
+	item_outputs = list(/obj/item/parts/robot_parts/chest/standard,/obj/item/parts/robot_parts/head/standard,
+/obj/item/parts/robot_parts/arm/right/standard,/obj/item/parts/robot_parts/arm/left/standard,
+/obj/item/parts/robot_parts/leg/right/standard,/obj/item/parts/robot_parts/leg/left/standard)
 	time = 120 SECONDS
 	create = 1
 	category = "Component"
@@ -1072,7 +1084,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	name = "Cyborg Chest"
 	item_paths = list("MET-2")
 	item_amounts = list(12)
-	item_outputs = list(/obj/item/parts/robot_parts/chest)
+	item_outputs = list(/obj/item/parts/robot_parts/chest/standard)
 	time = 30 SECONDS
 	create = 1
 	category = "Component"
@@ -1090,7 +1102,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	name = "Cyborg Head"
 	item_paths = list("MET-2")
 	item_amounts = list(12)
-	item_outputs = list(/obj/item/parts/robot_parts/head)
+	item_outputs = list(/obj/item/parts/robot_parts/head/standard)
 	time = 30 SECONDS
 	create = 1
 	category = "Component"
@@ -1117,7 +1129,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	name = "Cyborg Arm (Right)"
 	item_paths = list("MET-2")
 	item_amounts = list(6)
-	item_outputs = list(/obj/item/parts/robot_parts/arm/right)
+	item_outputs = list(/obj/item/parts/robot_parts/arm/right/standard)
 	time = 15 SECONDS
 	create = 1
 	category = "Component"
@@ -1135,7 +1147,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	name = "Cyborg Arm (Left)"
 	item_paths = list("MET-2")
 	item_amounts = list(6)
-	item_outputs = list(/obj/item/parts/robot_parts/arm/left)
+	item_outputs = list(/obj/item/parts/robot_parts/arm/left/standard)
 	time = 15 SECONDS
 	create = 1
 	category = "Component"
@@ -1153,7 +1165,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	name = "Cyborg Leg (Right)"
 	item_paths = list("MET-2")
 	item_amounts = list(6)
-	item_outputs = list(/obj/item/parts/robot_parts/leg/right)
+	item_outputs = list(/obj/item/parts/robot_parts/leg/right/standard)
 	time = 15 SECONDS
 	create = 1
 	category = "Component"
@@ -1171,7 +1183,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	name = "Cyborg Leg (Left)"
 	item_paths = list("MET-2")
 	item_amounts = list(6)
-	item_outputs = list(/obj/item/parts/robot_parts/leg/left)
+	item_outputs = list(/obj/item/parts/robot_parts/leg/left/standard)
 	time = 15 SECONDS
 	create = 1
 	category = "Component"
@@ -2109,6 +2121,15 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
+	
+/datum/manufacture/tricolor
+	name = "Tricolor Jumpsuit"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/clothing/under/misc/tricolor)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
 
 /datum/manufacture/pride_lgbt
 	name = "LGBT Pride Jumpsuit"
@@ -2581,7 +2602,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 
 /datum/manufacture/id_card_gold
 	name = "Gold ID card"
-	item_paths = list("REF-1", "CON-2","CRY-1")
+	item_paths = list("gold", "CON-2","CRY-1")
 	item_amounts = list(5,4,3)
 	item_outputs = list(/obj/item/card/id/gold)
 	time = 30 SECONDS
@@ -2594,6 +2615,15 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	item_amounts = list(3,3)
 	item_outputs = list(/obj/item/implantcase/access)
 	time = 20 SECONDS
+	create = 1
+	category = "Resource"
+
+/datum/manufacture/acesscase
+	name = "ID Briefcase"
+	item_paths = list("CON-1","CRY-1","MET-1","gold")
+	item_amounts = list(25,15,35,2)
+	item_outputs = list(/obj/item/acesscomputerunfolder)
+	time = 75 SECONDS
 	create = 1
 	category = "Resource"
 

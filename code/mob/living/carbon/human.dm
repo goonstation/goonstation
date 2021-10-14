@@ -514,12 +514,15 @@
 	if(health_mon)
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(health_mon)
 		health_mon.dispose()
+		health_mon = null
 	if(health_implant)
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(health_implant)
 		health_implant.dispose()
+		health_implant = null
 	if(arrestIcon)
 		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_image(arrestIcon)
 		arrestIcon.dispose()
+		arrestIcon = null
 
 	src.chest_item = null
 
@@ -655,14 +658,14 @@
 			SPAWN_DBG(0)
 				var/datum/mind/M = src.mind
 				emote("deathgasp")
-				src.visible_message("<span class='alert'><B>[src]</B> begins to grow another head!</span>")
+				src.visible_message("<span class='alert'><B>[src]</B> head starts to shift around!</span>")
 				src.show_text("<b>We begin to grow a headspider...</b>", "blue")
 				sleep(20 SECONDS)
 				if(!M || M.disposed)
 					return
 				if (M?.current)
 					M.current.show_text("<b>We released a headspider, using up some of our DNA reserves.</b>", "blue")
-				src.visible_message("<span class='alert'><B>[src]</B> grows a head, which sprouts legs and wanders off, looking for food!</span>")
+				src.visible_message("<span class='alert'><B>[src]</B> head detaches, sprouts legs and wanders off looking for food!</span>")
 				//make a headspider, have it crawl to find a host, give the host the disease, hand control to the player again afterwards
 				var/mob/living/critter/changeling/headspider/HS = new /mob/living/critter/changeling/headspider(get_turf(src))
 				C.points = max(0, C.points - 10) // This stuff isn't free, you know.
@@ -681,6 +684,24 @@
 				HS.changeling.transferOwnership(HS)
 				HS.changeling.owner = HS
 				HS.changeling.reassign_hivemind_target_mob()
+				if(src.wear_mask)
+					var/obj/item/dropped_mask = src.wear_mask
+					src.u_equip(dropped_mask)
+					dropped_mask.set_loc(src.loc)
+				if(src.glasses)
+					var/obj/item/dropped_glasses = src.glasses
+					src.u_equip(dropped_glasses)
+					dropped_glasses.set_loc(src.loc)
+				if(src.head)
+					var/obj/item/dropped_headwear = src.head
+					src.u_equip(dropped_headwear)
+					dropped_headwear.set_loc(src.loc)
+				if(src.ears)
+					var/obj/item/dropped_earwear = src.ears
+					src.u_equip(dropped_earwear)
+					dropped_earwear.set_loc(src.loc)
+				var/obj/item/organ/head/organ_head = src.organHolder.drop_organ("head")
+				qdel(organ_head)
 
 				//HS.process() //A little kickstart to get you out into the big world (and some chump), li'l guy! O7
 
@@ -695,6 +716,8 @@
 
 	src.canmove = 0
 	src.lying = 1
+	src.last_sleep = 0
+	src.UpdateOverlays(null, "sleep_bubble")
 	var/h = src.hand
 	src.hand = 0
 	drop_item()
@@ -989,6 +1012,8 @@
 	..()
 	var/turf/thrown_from = get_turf(src)
 	src.throw_mode_off()
+	if (HAS_MOB_PROPERTY(src, PROP_CANTTHROW))
+		return
 	if (src.stat)
 		return
 
@@ -1480,13 +1505,12 @@
 		return 1*/
 
 /mob/living/carbon/human/say_quote(var/text)
+	var/sayverb = null
 	if (src.mutantrace)
 		if (src.mutantrace.voice_message)
 			src.voice_name = src.mutantrace.voice_name
 			src.voice_message = src.mutantrace.voice_message
-		if (text == "" || !text)
-			return src.mutantrace.say_verb()
-		return "[src.mutantrace.say_verb()], \"[text]\""
+		sayverb = src.mutantrace.say_verb()
 	else
 		src.voice_name = initial(src.voice_name)
 		src.voice_message = initial(src.voice_message)
@@ -1497,7 +1521,7 @@
 	if (src.oxyloss > 10)
 		special = "gasp_whisper"
 
-	return ..(text,special)
+	return ..(text, special, sayverb)
 
 //Lallander was here
 /mob/living/carbon/human/whisper(message as text, forced=FALSE)
@@ -2124,6 +2148,7 @@
 			if (slot != slot_in_backpack && slot != slot_in_belt)
 				I.show_buttons()
 		src.update_clothing()
+	return equipped
 
 
 /mob/living/carbon/human/proc/update_equipment_screen_loc()
@@ -2248,8 +2273,7 @@
 
 /mob/living/carbon/human/proc/equip_if_possible(obj/item/I, slot)
 	if (can_equip(I, slot))
-		force_equip(I, slot)
-		return 1
+		return force_equip(I, slot)
 	else
 		return 0
 
@@ -2371,7 +2395,6 @@
 				boutput(src, "[I] falls out of you!")
 				I.on_remove(src)
 				implant.Remove(I)
-				//del(I)
 				I.set_loc(get_turf(src))
 				continue
 
@@ -2411,7 +2434,7 @@
 			src.cured(PA)
 
 		// and get the new one instead
-		var/datum/pathogen/Q = unpool(/datum/pathogen)
+		var/datum/pathogen/Q = new /datum/pathogen
 		Q.setup(0, P, 1)
 		pathogen_controller.mob_infected(Q, src)
 		src.pathogens += Q.pathogen_uid
@@ -2422,12 +2445,12 @@
 	else
 		var/datum/pathogen/C = src.pathogens[P.pathogen_uid]
 		if (C.generation < P.generation)
-			var/datum/pathogen/Q = unpool(/datum/pathogen)
+			var/datum/pathogen/Q = new /datum/pathogen
 			Q.setup(0, P, 1)
 			logTheThing("pathology", src, null, "'s pathogen mutation [C] is replaced by mutation [Q] due to a higher generation number.")
 			pathogen_controller.mob_infected(Q, src)
 			Q.stage = min(C.stage, Q.stages)
-			pool(C)
+			qdel(C)
 			src.pathogens[Q.pathogen_uid] = Q
 			Q.infected = src
 			return 1
@@ -2442,7 +2465,7 @@
 		var/datum/microbody/M = P.body_type
 		if (M.auto_immunize)
 			immunity(P)
-		pool(Q)
+		qdel(Q)
 		logTheThing("pathology", src, null, "is cured of [pname].")
 
 /mob/living/carbon/human/remission(var/datum/pathogen/P)
@@ -3311,7 +3334,7 @@
 		if (!src.limbs.r_leg) missing_legs++
 		if (!src.limbs.l_arm) missing_arms++
 		if (!src.limbs.r_arm) missing_arms++
-	if (src.lying)
+	if (src.lying || GET_COOLDOWN(src, "unlying_speed_cheesy"))
 		missing_legs = 2
 	else if (src.shoes && src.shoes.chained)
 		missing_legs = 2

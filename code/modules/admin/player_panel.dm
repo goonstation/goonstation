@@ -137,7 +137,8 @@
 					<div class='r'>
 						<a href='[playeropt_link(M, "checkhealth")]'>Check</a> &bull;
 						<a href='[playeropt_link(M, "revive")]'>Heal</a> &bull;
-						[(M.stat == 2 || M.max_health == 0) ? "Dead" : "[round(100 * M.health / M.max_health)]%"]
+						[(M.stat == 2 || M.max_health == 0) ? "Dead" : "[round(100 * M.health / M.max_health)]%"] &bull;
+						<a href='[playeropt_link(M, "kill")]'>Kill</a>
 					</div>
 					"} : ""]
 					<div class='l'>Reagents<a href='?src=\ref[src];action=secretsfun;type=reagent_help'>*</a></div>

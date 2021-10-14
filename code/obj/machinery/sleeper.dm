@@ -585,7 +585,7 @@
 
 		if (!can_operate(usr)) return
 
-		usr.pulling = null
+		usr.remove_pulling()
 		usr.set_loc(src)
 		src.occupant = usr
 		src.update_icon()
@@ -614,7 +614,7 @@
 		return
 
 	verb/eject_occupant(var/mob/user)
-		if (!isalive(user)) return
+		if (!isalive(user) || iswraith(user)) return
 		src.go_out()
 		add_fingerprint(user)
 

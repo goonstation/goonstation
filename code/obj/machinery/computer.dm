@@ -8,7 +8,6 @@
 	var/light_r = 1
 	var/light_g = 1
 	var/light_b = 1
-	var/powernet = null
 	var/list/records = null
 	var/id = null
 	var/frequency = null
@@ -47,7 +46,7 @@
 				var/obj/computerframe/A = new /obj/computerframe(src.loc)
 				if (src.status & BROKEN)
 					user.show_text("The broken glass falls out.", "blue")
-					var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+					var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 					G.set_loc(src.loc)
 					A.state = 3
 					A.icon_state = "3"

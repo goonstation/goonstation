@@ -72,10 +72,10 @@
 	New(var/mob/M)
 		. = ..()
 		src.poltergeists = list()
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
+		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_SPOOKY)
 		//src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.sight |= SEE_SELF // let's not make it see through walls
-		src.see_invisible = 16
+		src.see_invisible = INVIS_SPOOKY
 		src.a_intent = "disarm"
 		src.see_in_dark = SEE_DARK_FULL
 		src.abilityHolder = new /datum/abilityHolder/wraith(src)
@@ -84,6 +84,7 @@
 		last_life_update = world.timeofday
 		src.hud = new hud_path (src)
 		src.attach_hud(hud)
+		src.flags |= UNCRUSHABLE
 
 		if (!movement_controller)
 			movement_controller = new /datum/movement_controller/poltergeist (src)
@@ -143,6 +144,7 @@
 			src.abilityHolder.addBonus(src.hauntBonus * (life_time_passed / life_tick_spacing))
 
 		src.abilityHolder.generatePoints(mult = (life_time_passed / life_tick_spacing))
+		src.abilityHolder.updateText()
 
 		if (src.health < 1)
 			src.death(0)
@@ -167,6 +169,7 @@
 		src.abilityHolder.regenRate = 1
 		src.health = initial(src.health) // oh sweet jesus it spammed so hard
 		src.haunting = 0
+		src.flags |= UNCRUSHABLE
 		src.hauntBonus = 0
 		deaths++
 		src.makeIncorporeal()
@@ -517,16 +520,16 @@
 				src.set_density(1)
 				REMOVE_MOB_PROPERTY(src, PROP_INVISIBILITY, src)
 				src.alpha = 255
-				src.see_invisible = 0
+				src.see_invisible = INVIS_NONE
 				src.visible_message(pick("<span class='alert'>A horrible apparition fades into view!</span>", "<span class='alert'>A pool of shadow forms!</span>"), pick("<span class='alert'>A shell of ectoplasm forms around you!</span>", "<span class='alert'>You manifest!</span>"))
 
 		makeIncorporeal()
 			if (src.density)
 				src.visible_message(pick("<span class='alert'>[src] vanishes!</span>", "<span class='alert'>The wraith dissolves into shadow!</span>"), pick("<span class='notice'>The ectoplasm around you dissipates!</span>", "<span class='notice'>You fade into the aether!</span>"))
 				src.set_density(0)
-				APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
+				APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_SPOOKY)
 				src.alpha = 160
-				src.see_invisible = 16
+				src.see_invisible = INVIS_SPOOKY
 
 		haunt()
 			if (src.density)
@@ -535,10 +538,12 @@
 
 			src.makeCorporeal()
 			src.haunting = 1
+			src.flags &= !UNCRUSHABLE
 
 			SPAWN_DBG (haunt_duration)
 				src.makeIncorporeal()
 				src.haunting = 0
+				src.flags |= UNCRUSHABLE
 
 			return 0
 

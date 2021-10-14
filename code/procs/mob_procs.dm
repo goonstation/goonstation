@@ -141,7 +141,7 @@
 			playsound(src.loc, "sound/misc/slip.ogg", 50, 1, -3)
 		else
 			playsound(src.loc, "sound/misc/slip_big.ogg", 50, 1, -3)
-		src.pulling = null
+		src.remove_pulling()
 
 		var/turf/T = get_ranged_target_turf(src, src.last_move_dir, throw_range)
 		src.throw_at(T, intensity, 2, list("stun"=clamp(1.1 SECONDS * intensity, 1 SECOND, 5 SECONDS)), src.loc, throw_type = THROW_SLIP)
@@ -465,94 +465,76 @@
 	return 1
 
 /proc/man_or_woman(var/mob/subject)
-	if(isabomination(subject))
-		return "abomination"
+	var/datum/pronouns/pronouns
 
-	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
-		return "person"
+	if (isabomination(subject))
+		pronouns = get_singleton(/datum/pronouns/abomination)
+	else if (subject && subject?.bioHolder?.mobAppearance?.pronouns)
+		pronouns = subject.bioHolder.mobAppearance.pronouns
+	else
+		pronouns = get_singleton(/datum/pronouns/theyThem)
 
-	switch (subject.gender)
-		if ("male")
-			return "man"
-		if ("female")
-			return "woman"
-		else
-			return "person"
+	return pronouns.preferredGender
 
 /proc/his_or_her(var/mob/subject)
-	if(isabomination(subject))
-		return "our"
+	var/datum/pronouns/pronouns
 
-	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
-		return "their"
+	if (isabomination(subject))
+		pronouns = get_singleton(/datum/pronouns/abomination)
+	else if (subject && subject?.bioHolder?.mobAppearance?.pronouns)
+		pronouns = subject.bioHolder.mobAppearance.pronouns
+	else
+		pronouns = get_singleton(/datum/pronouns/theyThem)
 
-	switch (subject.gender)
-		if ("male")
-			return "his"
-		if ("female")
-			return "her"
-		else
-			return "their"
+	return pronouns.possessive
 
 /proc/him_or_her(var/mob/subject)
-	if(isabomination(subject))
-		return "us"
+	var/datum/pronouns/pronouns
 
-	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
-		return "them"
+	if (isabomination(subject))
+		pronouns = get_singleton(/datum/pronouns/abomination)
+	else if (subject && subject?.bioHolder?.mobAppearance?.pronouns)
+		pronouns = subject.bioHolder.mobAppearance.pronouns
+	else
+		pronouns = get_singleton(/datum/pronouns/theyThem)
 
-	switch (subject.gender)
-		if ("male")
-			return "him"
-		if ("female")
-			return "her"
-		else
-			return "them"
+	return pronouns.objective
 
 /proc/he_or_she(var/mob/subject)
-	if(isabomination(subject))
-		return "we"
+	var/datum/pronouns/pronouns
 
-	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
-		return "they"
+	if (isabomination(subject))
+		pronouns = get_singleton(/datum/pronouns/abomination)
+	else if (subject && subject?.bioHolder?.mobAppearance?.pronouns)
+		pronouns = subject.bioHolder.mobAppearance.pronouns
+	else
+		pronouns = get_singleton(/datum/pronouns/theyThem)
 
-	switch (subject.gender)
-		if ("male")
-			return "he"
-		if ("female")
-			return "she"
-		else
-			return "they"
+	return pronouns.subjective
 
 /proc/hes_or_shes(var/mob/subject)
-	if(isabomination(subject))
-		return "we're"
+	var/datum/pronouns/pronouns
 
-	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
-		return "they're"
+	if (isabomination(subject))
+		pronouns = get_singleton(/datum/pronouns/abomination)
+	else if (subject && subject?.bioHolder?.mobAppearance?.pronouns)
+		pronouns = subject.bioHolder.mobAppearance.pronouns
+	else
+		pronouns = get_singleton(/datum/pronouns/theyThem)
 
-	switch (subject.gender)
-		if ("male")
-			return "he's"
-		if ("female")
-			return "she's"
-		else
-			return "they're"
+	return pronouns.subjective + (pronouns.pluralize ? "'re" : "'s")
 
 /proc/himself_or_herself(var/mob/subject)
-	if(isabomination(subject))
-		return "ourself"
+	var/datum/pronouns/pronouns
 
-	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
-		return "themselves"
+	if (isabomination(subject))
+		pronouns = get_singleton(/datum/pronouns/abomination)
+	else if (subject && subject?.bioHolder?.mobAppearance?.pronouns)
+		pronouns = subject.bioHolder.mobAppearance.pronouns
+	else
+		pronouns = get_singleton(/datum/pronouns/theyThem)
 
-	switch(subject.gender)
-		if ("male")
-			return "himself"
-		if ("female")
-			return "herself"
-		else
-			return "themselves"
+	return pronouns.reflexive
 
 /mob/proc/get_explosion_resistance()
 	return 0
@@ -981,6 +963,11 @@
 							if (!see_everything && isobserver(M.current)) continue
 							var/I = image(antag_spy_theft, loc = M.current)
 							can_see.Add(I)
+				if (ROLE_ARCFIEND)
+					if (see_everything)
+						if (M.current)
+							var/I = image(antag_arcfiend, loc = M.current)
+							can_see.Add(I)
 				else
 					if (see_everything)
 						if (M.current)
@@ -1199,3 +1186,18 @@
 		(src.shoes 		&& src.shoes.permeability_coefficient 		<= 0.10) && \
 		(src.gloves 	&& src.gloves.permeability_coefficient 		<= 0.02 ))
 		.=1
+
+
+/// Changes ghost invisibility for the round.
+// Default value set in global.dm: INVIS_GHOST
+/proc/change_ghost_invisibility(var/new_invis)
+	var/prev_invis = ghost_invisibility
+	ghost_invisibility = new_invis
+	for (var/mob/dead/observer/G in mobs)
+		G.invisibility = new_invis
+		REMOVE_MOB_PROPERTY(G, PROP_INVISIBILITY, G)
+		APPLY_MOB_PROPERTY(G, PROP_INVISIBILITY, G, new_invis)
+		if (new_invis != prev_invis && (new_invis == 0 || prev_invis == 0))
+			boutput(G, "<span class='notice'>You are [new_invis == 0 ? "now" : "no longer"] visible to the living!</span>")
+
+

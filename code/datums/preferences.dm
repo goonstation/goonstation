@@ -155,13 +155,14 @@ datum/preferences
 			"profileName" = src.profile_name,
 			"profileModified" = src.profile_modified,
 
-			"preview" = src.preview.preview_id,
+			"preview" = src.preview?.preview_id,
 
 			"nameFirst" = src.name_first,
 			"nameMiddle" = src.name_middle,
 			"nameLast" = src.name_last,
 			"randomName" = src.be_random_name,
-			"gender" = (src.gender == MALE ? "Male" : "Female") + " " + (!AH.pronouns ? (src.gender == MALE ? "(he/him)" : "(she/her)") : "(they/them)"),
+			"gender" = src.gender == MALE ? "Male" : "Female",
+			"pronouns" = AH.pronouns.name,
 			"age" = src.age,
 			"bloodRandom" = src.random_blood,
 			"bloodType" = src.blType,
@@ -422,23 +423,25 @@ datum/preferences
 					return TRUE
 
 			if ("update-gender")
-				if (!AH.pronouns)
-					if (src.gender == MALE)
-						src.gender = FEMALE
-						AH.gender = FEMALE
-					else if (src.gender == FEMALE)
-						src.gender = MALE
-						AH.gender = MALE
-						AH.pronouns = 1
+				if (src.gender == MALE)
+					src.gender = FEMALE
+					AH.gender = FEMALE
 				else
-					if (src.gender == MALE)
-						src.gender = FEMALE
-						AH.gender = FEMALE
-					else if (src.gender == FEMALE)
-						src.gender = MALE
-						AH.gender = MALE
-						AH.pronouns = 0
+					src.gender = MALE
+					AH.gender = MALE
 				update_preview_icon()
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("update-pronouns")
+				var/list/types = filtered_concrete_typesof(/datum/pronouns, /proc/pronouns_filter_is_choosable)
+				var/selected
+				for (var/i = 1, i <= length(types), i++)
+					var/datum/pronouns/pronouns = get_singleton(types[i])
+					if (AH.pronouns == pronouns)
+						selected = i
+						break
+				AH.pronouns = get_singleton(types[selected < length(types) ? selected + 1 : 1])
 				src.profile_modified = TRUE
 				return TRUE
 
@@ -1248,7 +1251,7 @@ datum/preferences
 					continue
 				if (JD.needs_college && !user.has_medal("Unlike the director, I went to college"))
 					continue
-				if (JD.requires_whitelist && !NT.Find(ckey(user.mind.key)))
+				if (JD.requires_whitelist && !NT.Find(user.ckey))
 					continue
 				if (jobban_isbanned(user, JD.name))
 					if (cat != "unwanted")
@@ -1280,7 +1283,6 @@ datum/preferences
 			HTML += "</td>"
 
 		HTML += "<td valign='top' class='antagprefs'>"
-
 		if (jobban_isbanned(user, "Syndicate"))
 			HTML += "You are banned from playing antagonist roles."
 			src.be_traitor = 0
