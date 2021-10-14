@@ -142,16 +142,16 @@
 
 	Login()
 		..()
-		boutput(src, "<h1><span class='alert'>You are NOT an antagonist unless stated otherwise through an obvious popup/message.</span></h1>")
-		boutput(src, "<span class='notice'>You can't move when being watched.</span>")
-		boutput(src, "<span class='notice'>Use your Plushie Talk ability to communicate.</span>")
-		boutput(src, "<span class='notice'>Your override sensors ability lets you temporarily move a few steps even if being watched.</span>")
-		boutput(src, "<span class='notice'>Your blink ability lets you teleport when you're not being watched.</span>")
-		boutput(src, "<span class='notice'>Your teleport away ability lets you teleport away and hide in a random station container.</span>")
-		boutput(src, "<span class='notice'>Your vengeful retreat will stun your recent attacker and teleport you away.</span>")
-		boutput(src, "<span class='notice'>Your toggle glowing eyes ability lets you toggle your eyes glowing at will.</span>")
-		boutput(src, "<span class='notice'>Your set glowing eyes color ability lets you set your eyes' glowing color.</span>")
-		boutput(src, "<span class='notice'>Access special emotes through *scream, *dance and *snap.</span>")
+		boutput(src, {"<h1><span class='alert'>You are NOT an antagonist unless stated otherwise through an obvious popup/message.</span></h1>
+			<span class='notice'>You can't move when being watched.</span>
+			<br><span class='notice'>Use your Plushie Talk ability to communicate.</span>
+			<br><span class='notice'>Your override sensors ability lets you temporarily move a few steps even if being watched.</span>
+			<br><span class='notice'>Your blink ability lets you teleport when you're not being watched.</span>
+			<br><span class='notice'>Your teleport away ability lets you teleport away and hide in a random station container.</span>
+			<br><span class='notice'>Your vengeful retreat will stun your recent attacker and teleport you away.</span>
+			<br><span class='notice'>Your toggle glowing eyes ability lets you toggle your eyes glowing at will.</span>
+			<br><span class='notice'>Your set glowing eyes color ability lets you set your eyes' glowing color.</span>
+			<br><span class='notice'>Access special emotes through *scream, *dance and *snap.</span>"})
 
 	proc/plushie_speech(var/text_to_say)
 		src.speechpopupstyle = "font-style: italic; font-family: 'XFont 6x9'; font-size: 7px;"
