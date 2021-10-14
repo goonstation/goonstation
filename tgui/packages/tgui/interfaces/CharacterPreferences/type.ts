@@ -5,7 +5,7 @@ export interface CharacterPreferencesData {
 
   profiles: CharacterPreferencesProfile[];
 
-  cloudSaves?: string[]
+  cloudSaves?: string[];
 
   preview: string;
   profileName: string;
@@ -15,6 +15,7 @@ export interface CharacterPreferencesData {
   nameLast: string;
   randomName: number;
   gender: string;
+  pronouns: string;
   age: string;
   bloodRandom: string;
   bloodType: string;

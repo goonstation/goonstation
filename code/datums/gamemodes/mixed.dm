@@ -336,58 +336,6 @@
 	SPAWN_DBG (rand(waittime_l, waittime_h))
 		send_intercept()
 
-/datum/game_mode/mixed/proc/get_possible_enemies(type,number)
-	var/list/candidates = list()
-
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if (ishellbanned(player)) continue //No treason for you
-		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-			switch(type)
-				if(ROLE_WIZARD)
-					if(player.client.preferences.be_wizard) candidates += player.mind
-				if(ROLE_TRAITOR)
-					if(player.client.preferences.be_traitor) candidates += player.mind
-				if(ROLE_CHANGELING)
-					if(player.client.preferences.be_changeling) candidates += player.mind
-				if(ROLE_VAMPIRE)
-					if(player.client.preferences.be_vampire) candidates += player.mind
-				if(ROLE_WRAITH)
-					if(player.client.preferences.be_wraith) candidates += player.mind
-				if(ROLE_BLOB)
-					if(player.client.preferences.be_blob) candidates += player.mind
-				if(ROLE_SPY_THIEF)
-					if(player.client.preferences.be_spy) candidates += player.mind
-				if(ROLE_WEREWOLF)
-					if(player.client.preferences.be_werewolf) candidates += player.mind
-				if(ROLE_ARCFIEND)
-					if(player.client.preferences.be_arcfiend) candidates += player.mind
-				else
-					if(player.client.preferences.be_misc) candidates += player.mind
-
-	if(candidates.len < number)
-		if(type in list(ROLE_WIZARD, ROLE_TRAITOR, ROLE_CHANGELING, ROLE_WRAITH, ROLE_BLOB, ROLE_WEREWOLF))
-			logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_[type] set to yes were ready. We need [number] so including players who don't want to be [type]s in the pool.")
-		else
-			logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Not enough players with be_misc set to yes, including players who don't want to be misc enemies in the pool for [type] assignment.")
-
-		for(var/client/C)
-			var/mob/new_player/player = C.mob
-			if (!istype(player)) continue
-
-			if (ishellbanned(player)) continue //No treason for you
-			if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-				candidates += player.mind
-				if ((number > 1) && (candidates.len >= number))
-					break
-
-	if(candidates.len < 1)
-		return list()
-	else
-		return candidates
-
 /datum/game_mode/mixed/send_intercept()
 	var/intercepttext = "Cent. Com. Update Requested staus information:<BR>"
 	intercepttext += " Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:"

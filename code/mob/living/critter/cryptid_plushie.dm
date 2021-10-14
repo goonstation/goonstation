@@ -91,7 +91,7 @@
 				// get a random not locked station container
 				var/list/eligible_containers = list()
 				for_by_tcl(iterated_container, /obj/storage)
-					if (iterated_container.z == Z_LEVEL_STATION && !iterated_container.locked && !istype(get_area(iterated_container), /area/listeningpost))
+					if (iterated_container.z == Z_LEVEL_STATION && !iterated_container.locked && !iterated_container.welded && !istype(get_area(iterated_container), /area/listeningpost))
 						eligible_containers += iterated_container
 				if (!length(eligible_containers))
 					return
@@ -142,16 +142,16 @@
 
 	Login()
 		..()
-		boutput(src, "<h1><span class='alert'>You are NOT an antagonist unless stated otherwise through an obvious popup/message.</span></h1>")
-		boutput(src, "<span class='notice'>You can't move when being watched.</span>")
-		boutput(src, "<span class='notice'>Use your Plushie Talk ability to communicate.</span>")
-		boutput(src, "<span class='notice'>Your override sensors ability lets you temporarily move a few steps even if being watched.</span>")
-		boutput(src, "<span class='notice'>Your blink ability lets you teleport when you're not being watched.</span>")
-		boutput(src, "<span class='notice'>Your teleport away ability lets you teleport away and hide in a random station container.</span>")
-		boutput(src, "<span class='notice'>Your vengeful retreat will stun your recent attacker and teleport you away.</span>")
-		boutput(src, "<span class='notice'>Your toggle glowing eyes ability lets you toggle your eyes glowing at will.</span>")
-		boutput(src, "<span class='notice'>Your set glowing eyes color ability lets you set your eyes' glowing color.</span>")
-		boutput(src, "<span class='notice'>Access special emotes through *scream, *dance and *snap.</span>")
+		boutput(src, {"<h1><span class='alert'>You are NOT an antagonist unless stated otherwise through an obvious popup/message.</span></h1>
+			<span class='notice'>You can't move when being watched.</span>
+			<br><span class='notice'>Use your Plushie Talk ability to communicate.</span>
+			<br><span class='notice'>Your override sensors ability lets you temporarily move a few steps even if being watched.</span>
+			<br><span class='notice'>Your blink ability lets you teleport when you're not being watched.</span>
+			<br><span class='notice'>Your teleport away ability lets you teleport away and hide in a random station container.</span>
+			<br><span class='notice'>Your vengeful retreat will stun your recent attacker and teleport you away.</span>
+			<br><span class='notice'>Your toggle glowing eyes ability lets you toggle your eyes glowing at will.</span>
+			<br><span class='notice'>Your set glowing eyes color ability lets you set your eyes' glowing color.</span>
+			<br><span class='notice'>Access special emotes through *scream, *dance and *snap.</span>"})
 
 	proc/plushie_speech(var/text_to_say)
 		src.speechpopupstyle = "font-style: italic; font-family: 'XFont 6x9'; font-size: 7px;"
@@ -236,6 +236,8 @@
 				continue
 			if (!isalive(M))
 				continue
+			if (istype(M, /mob/living/critter/small_animal/plush/cryptid)) // other cryptids are ok
+				continue
 			if (M.client) // Only players
 				last_witness = M
 				being_seen = TRUE
@@ -274,7 +276,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 	icon_state = "corruption"
 	cooldown = 50
 	qdel_itself_if_not_attached_to_plushie = 1
-	var/words_min = 5
+	var/words_min = 7
 	var/words_max = 10
 
 	cast(atom/target)
@@ -283,7 +285,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 
 		var/selected
 		do
-			var/list/words = list("*REFRESH*") + src.generate_words()
+			var/list/words = list("*REFRESH*") + get_ouija_word_list(src, words_min, words_max)
 			selected = tgui_input_list(usr, "Select a word:", src.name, words, allowIllegal=FALSE)
 		while(selected == "*REFRESH*")
 		if(!selected)
@@ -295,19 +297,12 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 		our_plushie.plushie_speech(selected)
 		return 0
 
-	proc/generate_words()
-		var/list/words = list()
-		for(var/i in 1 to rand(words_min, words_max))
-			var/picked = pick(strings("ouija_board.txt", "ouija_board_words"))
-			words |= picked
-		return words
-
 /datum/targetable/critter/cryptid_plushie/movement_override
 	name = "Override Sensors"
 	desc = "Be able to move a few steps in spite of whether you're being looked at."
 	icon = 'icons/mob/genetics_powers.dmi'
 	icon_state = "adrenaline"
-	cooldown = 450
+	cooldown = 400
 	targeted = 0
 	qdel_itself_if_not_attached_to_plushie = 1
 	var/list/minor_event_sounds = list("sound/machines/giantdrone_boop1.ogg", "sound/machines/giantdrone_boop3.ogg", "sound/machines/giantdrone_boop4.ogg")
@@ -331,11 +326,11 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 		*/
 
 		var/roll = rand(1, 100)
-		if(roll <= 60)
+		if(roll <= 55)
 			minor_event()
-		else if(roll <= 91)
+		else if(roll <= 89)
 			moderate_event()
-		else if(roll >= 92)
+		else if(roll >= 90)
 			major_event()
 
 		SPAWN_DBG(4 SECONDS)
@@ -345,12 +340,12 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 
 	proc/minor_event()
 		playsound(get_turf(holder.owner), "[pick(minor_event_sounds)]", 45, 1)
-		our_plushie.override_steps = rand(7, 10)
+		our_plushie.override_steps = rand(6, 10)
 		glitch_out(0.8 SECONDS, 1, 0.7)
 
 	proc/moderate_event()
 		playsound(get_turf(holder.owner), "[pick(moderate_event_sounds)]", 45, 1)
-		our_plushie.override_steps = rand(9, 15)
+		our_plushie.override_steps = rand(8, 13)
 		glitch_out(1.4 SECONDS, 1, 0.9)
 
 	proc/major_event()
@@ -416,7 +411,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
 	proc/get_a_random_station_unlocked_container()
 		var/list/eligible_containers = list()
 		for_by_tcl(iterated_container, /obj/storage)
-			if (iterated_container.z == Z_LEVEL_STATION && !iterated_container.locked && !istype(get_area(iterated_container), /area/listeningpost))
+			if (iterated_container.z == Z_LEVEL_STATION && !iterated_container.locked && !iterated_container.welded && !istype(get_area(iterated_container), /area/listeningpost))
 				eligible_containers += iterated_container
 		if (!length(eligible_containers))
 			return null
@@ -466,8 +461,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
 		if (!isturf(target))
 			if(istype(target, /obj/storage))
 				var/obj/storage/targetted_container = target
-				if(targetted_container.locked)
-					target = get_turf(target) // the container we picked is locked, we don't want to trap ourselves inside
+				if(targetted_container.locked || targetted_container.welded)
+					target = get_turf(target) // the container we picked is locked or welded, we don't want to trap ourselves inside
 			else
 				target = get_turf(target)
 		if (target == get_turf(holder.owner))

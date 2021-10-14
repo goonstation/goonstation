@@ -1,5 +1,34 @@
 
+(t)thu oct 14 21
+(u)pali
+(p)6308
+(e)|
+(+)Nukie default radio channel is now in Syndicate red instead of being green.
+(u)pali
+(p)6284
+(e)🆕|feature
+(+)*hatstomp emote is now animated.
+(u)Flaborized & pali
+(p)6300
+(e)🆕|feature
+(*)Nukie radio icons are now letters based on their callsigns
+(u)pali
+(p)6298
+(e)🆕|feature
+(*)Nukie commander is now a separate antag preference. Turn it on if you want to be the commander (you still need regular nukie antag preference toggled on).
+(u)FlamingLily
+(p)6295
+(e)⚖|balance
+(+)After a long and intense class action legal battle, Discount Dan's has finally removed Ghost Chili Juice from their products, dine away without fear of incineration!
+(u)FlamingLily
+(p)6294
+(e)|
+(+)Added hot-swapping of beakers to chem dispensers, no need to eject when replacing a beaker
 (t)wed oct 13 21
+(u)Luxizzle
+(p)6239
+(e)📄|tgui
+(*)You can now select your pronouns separately from your sex. Saved pronouns have been reset to they/them.
 (u)BatElite
 (p)6080
 (e)🆕🗺🎨|feature, mapping, sprites
