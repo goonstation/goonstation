@@ -84,6 +84,7 @@
 		F["[profileNum]_job_prefs_4"] << src.jobs_unwanted
 		F["[profileNum]_be_traitor"] << src.be_traitor
 		F["[profileNum]_be_syndicate"] << src.be_syndicate
+		F["[profileNum]_be_syndicate_commander"] << src.be_syndicate_commander
 		F["[profileNum]_be_spy"] << src.be_spy
 		F["[profileNum]_be_gangleader"] << src.be_gangleader
 		F["[profileNum]_be_revhead"] << src.be_revhead
@@ -267,6 +268,7 @@
 		F["[profileNum]_job_prefs_4"] >> src.jobs_unwanted
 		F["[profileNum]_be_traitor"] >> src.be_traitor
 		F["[profileNum]_be_syndicate"] >> src.be_syndicate
+		F["[profileNum]_be_syndicate_commander"] >> src.be_syndicate_commander
 		F["[profileNum]_be_spy"] >> src.be_spy
 		F["[profileNum]_be_gangleader"] >> src.be_gangleader
 		F["[profileNum]_be_revhead"] >> src.be_revhead

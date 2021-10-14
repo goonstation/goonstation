@@ -25,6 +25,7 @@ datum/preferences
 
 	var/be_traitor = 0
 	var/be_syndicate = 0
+	var/be_syndicate_commander = 0
 	var/be_spy = 0
 	var/be_gangleader = 0
 	var/be_revhead = 0
@@ -874,6 +875,7 @@ datum/preferences
 				use_click_buffer = 0
 				be_traitor = 0
 				be_syndicate = 0
+				be_syndicate_commander = 0
 				be_spy = 0
 				be_gangleader = 0
 				be_revhead = 0
@@ -1287,6 +1289,7 @@ datum/preferences
 			HTML += "You are banned from playing antagonist roles."
 			src.be_traitor = 0
 			src.be_syndicate = 0
+			src.be_syndicate_commander = 0
 			src.be_spy = 0
 			src.be_gangleader = 0
 			src.be_revhead = 0
@@ -1304,6 +1307,7 @@ datum/preferences
 			HTML += {"
 			<a href="byond://?src=\ref[src];preferences=1;b_traitor=1" class="[src.be_traitor ? "yup" : "nope"]">[crap_checkbox(src.be_traitor)] Traitor</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_syndicate=1" class="[src.be_syndicate ? "yup" : "nope"]">[crap_checkbox(src.be_syndicate)] Nuclear Operative</a>
+			<a href="byond://?src=\ref[src];preferences=1;b_syndicate_commander=1" class="[src.be_syndicate_commander ? "yup" : "nope"]">[crap_checkbox(src.be_syndicate_commander)] Nuclear Operative Commander</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_spy=1" class="[src.be_spy ? "yup" : "nope"]">[crap_checkbox(src.be_spy)] Spy/Thief</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_gangleader=1" class="[src.be_gangleader ? "yup" : "nope"]">[crap_checkbox(src.be_gangleader)] Gang Leader</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_revhead=1" class="[src.be_revhead ? "yup" : "nope"]">[crap_checkbox(src.be_revhead)] Revolution Leader</a>
@@ -1514,6 +1518,12 @@ datum/preferences
 
 		if (link_tags["b_syndicate"])
 			src.be_syndicate = !( src.be_syndicate )
+			src.SetChoices(user)
+			return
+
+		if (link_tags["b_syndicate_commander"])
+			src.be_syndicate_commander = !( src.be_syndicate_commander )
+			src.be_syndicate |= src.be_syndicate_commander
 			src.SetChoices(user)
 			return
 
