@@ -147,9 +147,9 @@ ABSTRACT_TYPE(/datum/objective/crew/chiefengineer)
 		medal_name = "Slow Burn"
 		check_completion()
 			for(var/obj/machinery/power/furnace/F in machine_registry[MACHINES_POWER])
-				if(F.z == 1 && F.active == 1)
-					return 1
-			return 0
+				if(F.z == 1 && F.active == 0 && !istype(F.loc.loc, /area/listeningpost))
+					return 0
+			return 1
 	ptl
 		explanation_text = "Earn at least a million credits via the PTL."
 		medal_name = "1.21 Jiggawatts"
@@ -356,7 +356,30 @@ ABSTRACT_TYPE(/datum/objective/crew/bartender)
 		var/ids[3]
 		New()
 			..()
-			var/list/cocktails = filtered_concrete_typesof(/datum/reagent/fooddrink/alcoholic, .proc/filter_cocktails)
+			var/list/cocktails = concrete_typesof(/datum/reagent/fooddrink/alcoholic)
+			var/list/blacklist = list(
+				/datum/reagent/fooddrink/alcoholic/bitters,
+				/datum/reagent/fooddrink/alcoholic/beer,
+				/datum/reagent/fooddrink/alcoholic/bojack,
+				/datum/reagent/fooddrink/alcoholic/bourbon,
+				/datum/reagent/fooddrink/alcoholic/champagne,
+				/datum/reagent/fooddrink/alcoholic/cider,
+				/datum/reagent/fooddrink/alcoholic/cocktail_grog,
+				/datum/reagent/fooddrink/alcoholic/curacao,
+				/datum/reagent/fooddrink/alcoholic/dbreath,
+				/datum/reagent/fooddrink/alcoholic/freeze,
+				/datum/reagent/fooddrink/alcoholic/gin,
+				/datum/reagent/fooddrink/alcoholic/mead,
+				/datum/reagent/fooddrink/alcoholic/moonshine,
+				/datum/reagent/fooddrink/alcoholic/ricewine,
+				/datum/reagent/fooddrink/alcoholic/rum,
+				/datum/reagent/fooddrink/alcoholic/tequila,
+				/datum/reagent/fooddrink/alcoholic/vermouth,
+				/datum/reagent/fooddrink/alcoholic/vodka,
+				/datum/reagent/fooddrink/alcoholic/wine,
+				/datum/reagent/fooddrink/alcoholic/wine/white
+			)
+			cocktails -= blacklist
 			var/list/names[3]
 			for(var/i = 1, i <= 3, i++)
 				var/choiceType = pick(cocktails)
@@ -367,42 +390,38 @@ ABSTRACT_TYPE(/datum/objective/crew/bartender)
 		check_completion()
 			return completed == DRINK_OBJ_DONE //Uses bit flags
 
-	proc/filter_cocktails(cocktail_type)
-		var/list/blacklist = list(
-			/datum/reagent/fooddrink/alcoholic/beer,
-			/datum/reagent/fooddrink/alcoholic/cider,
-			/datum/reagent/fooddrink/alcoholic/mead,
-			/datum/reagent/fooddrink/alcoholic/wine,
-			/datum/reagent/fooddrink/alcoholic/wine/white,
-			/datum/reagent/fooddrink/alcoholic/champagne,
-			/datum/reagent/fooddrink/alcoholic/rum,
-			/datum/reagent/fooddrink/alcoholic/vodka,
-			/datum/reagent/fooddrink/alcoholic/bourbon,
-			/datum/reagent/fooddrink/alcoholic/tequila,
-			/datum/reagent/fooddrink/alcoholic/ricewine,
-			/datum/reagent/fooddrink/alcoholic/moonshine,
-			/datum/reagent/fooddrink/alcoholic/bojack,
-			/datum/reagent/fooddrink/alcoholic/gin,
-			/datum/reagent/fooddrink/alcoholic/vermouth,
-			/datum/reagent/fooddrink/alcoholic/bitters,
-			/datum/reagent/fooddrink/alcoholic/curacao
-		)
-		return !(cocktail_type in blacklist)
-
 ABSTRACT_TYPE(/datum/objective/crew/chef)
 /datum/objective/crew/chef
+	var/list/blacklist = list(
+		/obj/item/reagent_containers/food/snacks/burger/humanburger,
+		/obj/item/reagent_containers/food/snacks/donut/custom/robust,
+		/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat,
+		/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock,
+		/obj/item/reagent_containers/food/snacks/ingredient/pepperoni,
+		/obj/item/reagent_containers/food/snacks/meatball,
+		/obj/item/reagent_containers/food/snacks/mushroom,
+		/obj/item/reagent_containers/food/snacks/pickle/trash,
+		/obj/item/reagent_containers/food/snacks/pizza/xmas,
+		/obj/item/reagent_containers/food/snacks/plant,
+		/obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable,
+	)
 	cake
 		var/choices[3]
 		var/completed = 0
 		New()
 			..()
 			//Result is cached so it should just access the list after the first time
-			var/list/ingredients = filtered_concrete_typesof(/obj/item/reagent_containers/food/snacks, .proc/filter_ingredients)
+			var/list/ingredients = concrete_typesof(/obj/item/reagent_containers/food/snacks)
+			ingredients -= src.blacklist
+			ingredients -= concrete_typesof(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter)
 			var/list/names[3]
 			for(var/i = 1, i <= 3, i++)
 				choices[i] = pick(ingredients)
 				var/choiceType = choices[i]
-				var/obj/instance =  new choiceType
+				var/obj/item/reagent_containers/food/snacks/instance =  new choiceType
+				if(!instance.custom_food)
+					i--
+					continue
 				names[i] = instance.name
 			explanation_text = "Create a custom, three-tier cake with layers of [names[1]], [names[2]], and [names[3]] infused cake in any order."
 		check_completion()
@@ -413,29 +432,21 @@ ABSTRACT_TYPE(/datum/objective/crew/chef)
 		var/completed = 0
 		New()
 			..()
-			var/list/ingredients = filtered_concrete_typesof(/obj/item/reagent_containers/food/snacks, .proc/filter_ingredients)
+			var/list/ingredients = concrete_typesof(/obj/item/reagent_containers/food/snacks)
+			ingredients -= src.blacklist
+			ingredients -= concrete_typesof(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter)
 			var/list/names[3]
 			for(var/i = 1, i <= 3, i++)
 				choices[i] = pick(ingredients)
 				var/choiceType = choices[i]
-				var/obj/instance =  new choiceType
+				var/obj/item/reagent_containers/food/snacks/instance =  new choiceType
+				if(!instance.custom_food)
+					i--
+					continue
 				names[i] = instance.name
 			explanation_text = "Create a custom pizza with [names[1]], [names[2]], and [names[3]] toppings."
 		check_completion()
 			return completed
-
-	proc/filter_ingredients(ingredient_type)
-		var/list/blacklist = list(
-			/obj/item/reagent_containers/food/snacks/burger/humanburger,
-			/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat,
-			/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock,
-			/obj/item/reagent_containers/food/snacks/plant,
-			/obj/item/reagent_containers/food/snacks/sandwich,
-			/obj/item/reagent_containers/food/snacks/pizza/xmas,
-			/obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable
-		)
-		blacklist += concrete_typesof(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter)
-		return !(ingredient_type in blacklist)
 
 ABSTRACT_TYPE(/datum/objective/crew/engineer)
 /datum/objective/crew/engineer
@@ -444,9 +455,9 @@ ABSTRACT_TYPE(/datum/objective/crew/engineer)
 		medal_name = "Slow Burn"
 		check_completion()
 			for(var/obj/machinery/power/furnace/F in machine_registry[MACHINES_POWER])
-				if(F.z == 1 && F.active == 1)
-					return 1
-			return 0
+				if(F.z == 1 && F.active == 0 && !istype(F.loc.loc, /area/listeningpost))
+					return 0
+			return 1
 
 	reserves
 		explanation_text = "Make sure all SMES units on the station are at least half charged at the end of the round."
