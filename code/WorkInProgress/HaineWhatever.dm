@@ -1328,6 +1328,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		if (!istype(target, /turf) || !istype(start, /turf))
 			return
 		if (target == user.loc || target == loc)
+			boutput(user, "<span class='success'>\The [src] beeps, \"You're a big shot, this end needs to point in the direction of poor people!\"</span>")
 			return
 
 		if ((last_shot + shot_delay) <= world.time)
