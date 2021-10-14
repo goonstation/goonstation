@@ -341,7 +341,7 @@
 						access_engineering_storage,access_engineering_atmos,access_engineering_engine,access_engineering_power)
 
 		///////////////////////////// Civilian
-		if("Civilian")
+		if("Service Worker")
 			return list(access_janitor, access_maint_tunnels, access_hydro, access_ranch, access_bar, access_kitchen)
 
 		// Old job-specific access levels

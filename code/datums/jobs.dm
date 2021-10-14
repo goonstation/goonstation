@@ -854,8 +854,8 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	linkcolor = "#0099FF"
 	slot_card = /obj/item/card/id/civilian
 
-/datum/job/civilian/worker
-	name = "Civilian Worker"
+/datum/job/civilian/service_worker
+	name = "Service Worker"
 	limit = 10
 	wages = PAY_TRADESMAN
 	slot_belt = list(/obj/item/device/pda2/botanist)
@@ -865,7 +865,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 	New()
 		..()
-		src.access = get_access("Civilian")
+		src.access = get_access("Service Worker")
 		return
 
 /datum/job/civilian/chef
