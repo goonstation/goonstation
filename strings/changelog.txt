@@ -1,6 +1,10 @@
 
 (t)thu oct 14 21
 (u)FlamingLily
+(p)6295
+(e)⚖|balance
+(+)After a long and intense class action legal battle, Discount Dan's has finally removed Ghost Chili Juice from their products, dine away without fear of incineration!
+(u)FlamingLily
 (p)6294
 (e)|
 (+)Added hot-swapping of beakers to chem dispensers, no need to eject when replacing a beaker
