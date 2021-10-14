@@ -155,9 +155,9 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			pixel_x = rand(-6, 6)
 			pixel_y = rand(-6, 6)
 			if(prob(5) && limiter.canISpawn(/obj/effects/sparks))
-				var/obj/sparks = unpool(/obj/effects/sparks)
+				var/obj/sparks = new /obj/effects/sparks
 				sparks.set_loc(src.loc)
-				SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
+				SPAWN_DBG(2 SECONDS) if (sparks) qdel(sparks)
 			return TRUE
 
 /obj/machinery/bot/guardbot/xmas
@@ -181,7 +181,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			src.mover.master = null
 			qdel(src.mover)
 
-		src.invisibility = 100
+		src.invisibility = INVIS_ALWAYS_ISH
 		var/obj/overlay/Ov = new/obj/overlay(T)
 		Ov.anchored = 1
 		Ov.name = "Explosion"
@@ -194,7 +194,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		src.tool.set_loc(get_turf(src))
 
 		var/list/throwparts = list()
-		throwparts += new /obj/item/parts/robot_parts/arm/left(T)
+		throwparts += new /obj/item/parts/robot_parts/arm/left/standard(T)
 		throwparts += new /obj/item/device/flash(T)
 		//throwparts += core
 		throwparts += src.tool
@@ -888,7 +888,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	sight_modifier()
 		mob.sight |= SEE_MOBS
 		mob.see_in_dark = SEE_DARK_FULL
-		mob.see_invisible = 1
+		mob.see_invisible = INVIS_INFRA
 
 /mob/living/carbon/human/krampus
 	New()

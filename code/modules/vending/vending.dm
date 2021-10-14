@@ -405,7 +405,7 @@
 			boutput(user, "<span class='notice'>You insert [W].</span>")
 			user.u_equip(W)
 			W.dropped()
-			pool( W )
+			qdel( W )
 			src.generate_HTML(1)
 			return
 		else
@@ -681,7 +681,7 @@
 		if (href_list["return_credits"])
 			SPAWN_DBG(src.vend_delay)
 				if (src.credit > 0)
-					var/obj/item/spacecash/returned = unpool(/obj/item/spacecash)
+					var/obj/item/spacecash/returned = new /obj/item/spacecash
 					returned.setup(src.get_output_location(), src.credit)
 
 					usr.put_in_hand_or_eject(returned) // try to eject it into the users hand, if we can
@@ -1627,8 +1627,10 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/corn, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/seaweed, 10)
 
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/breakfast, rand(2, 4), hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/snack_cake, rand(1, 3), hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/breakfast, rand(2, 4), hidden=1,)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/snack_cake, rand(1, 3), hidden=1,)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/apron/tricolor, rand(2, 2), hidden=1,)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/moustache/Italian , rand(2, 2), hidden=1,)
 		product_list += new/datum/data/vending_product(pick(/obj/item/paper/recipe_tandoori, /obj/item/paper/recipe_potatocurry, /obj/item/paper/recipe_coconutcurry, /obj/item/paper/recipe_chickenpapplecurry), 1, hidden = 1)
 
 //The burden of these machinations weighs on my shoulders
@@ -2490,6 +2492,7 @@
 	glitchy_slogans = 1
 	pay = 1
 	acceptcard = 1
+	mats = null
 	slogan_list = list("Hello!",
 	"Please state the item you wish to purchase.",
 	"Many goods at reasonable prices.",
@@ -2686,7 +2689,7 @@
 
 	New()
 		..()
-		gas_prototype = unpool(/datum/gas_mixture)
+		gas_prototype = new /datum/gas_mixture
 
 	proc/fill_cost()
 		if(!holding) return 0

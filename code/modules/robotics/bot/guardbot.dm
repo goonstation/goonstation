@@ -1423,7 +1423,7 @@
 			//qdel(src.mover)
 			src.mover = null
 		if((allow_big_explosion && cell && (cell.charge / cell.maxcharge > 0.85) && prob(25)) || istype(src.cell, /obj/item/cell/erebite))
-			src.invisibility = 100
+			src.invisibility = INVIS_ALWAYS_ISH
 			var/obj/overlay/Ov = new/obj/overlay(T)
 			Ov.anchored = 1
 			Ov.name = "Explosion"
@@ -1446,7 +1446,7 @@
 			core.created_model_task = src.model_task
 
 			var/list/throwparts = list()
-			throwparts += new /obj/item/parts/robot_parts/arm/left(T)
+			throwparts += new /obj/item/parts/robot_parts/arm/left/standard(T)
 			throwparts += core
 			if(src.tool.tool_id == "GUN")
 				qdel(src.tool)	// Throw your phantom gun in the trash, not on the ground!
@@ -1483,7 +1483,7 @@
 			if(src.budgun)
 				DropTheThing("gun", null, 0, 0, T, 1)
 			if(prob(50))
-				new /obj/item/parts/robot_parts/arm/left(T)
+				new /obj/item/parts/robot_parts/arm/left/standard(T)
 			src.hat?.set_loc(T)
 
 			new /obj/item/guardbot_frame(T)
@@ -2273,7 +2273,7 @@
 				var/list/affected = DrawLine(last, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 				for(var/obj/O in affected)
-					SPAWN_DBG(0.6 SECONDS) pool(O)
+					SPAWN_DBG(0.6 SECONDS) qdel(O)
 
 				if(isliving(target_r)) //Probably unsafe.
 					playsound(target_r:loc, "sound/effects/electric_shock.ogg", 50, 1)
@@ -3856,7 +3856,7 @@
 							master.set_emotion(desired_emotion)
 							END_NEAT
 
-					if (!(src.neat_things & NT_CLOAKER) && H.invisibility > 0)
+					if (!(src.neat_things & NT_CLOAKER) && H.invisibility > INVIS_NONE)
 						FOUND_NEAT(NT_CLOAKER)
 							src.speak_with_maptext("As a courtesy to other tourgroup members, you are requested, though not required, to deactivate any cloaking devices, stealth suits, light redirection field packs, and/or unholy blood magic.")
 							END_NEAT
@@ -4895,7 +4895,7 @@
 			src.mover.master = null
 			qdel(src.mover)
 
-		src.invisibility = 100
+		src.invisibility = INVIS_ALWAYS_ISH
 		var/obj/overlay/Ov = new/obj/overlay(T)
 		Ov.anchored = 1
 		Ov.name = "Explosion"
@@ -4912,7 +4912,7 @@
 		if(src.budgun)
 			DropTheThing("gun", null, 0, 0, T, 1)
 		if(prob(50))
-			new /obj/item/parts/robot_parts/arm/left(T)
+			new /obj/item/parts/robot_parts/arm/left/standard(T)
 		src.hat?.set_loc(T)
 
 		var/obj/item/guardbot_core/old/core = new /obj/item/guardbot_core/old(T)
@@ -4921,7 +4921,7 @@
 		core.created_model_task = src.model_task
 
 		var/list/throwparts = list()
-		throwparts += new /obj/item/parts/robot_parts/arm/left(T)
+		throwparts += new /obj/item/parts/robot_parts/arm/left/standard(T)
 		throwparts += new /obj/item/device/flash(T)
 		throwparts += core
 		if(src.tool.tool_id == "GUN")

@@ -1427,7 +1427,8 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 	"vault13" = /obj/item/clothing/under/gimmick/vault13,
 	"duke" = /obj/item/clothing/under/gimmick/duke,
 	"psyche" = /obj/item/clothing/under/gimmick/psyche,
-	"tourist" = /obj/item/clothing/under/misc/tourist)
+	"tourist" = /obj/item/clothing/under/misc/tourist,
+	"western" = /obj/item/clothing/under/misc/western)
 
 	//must be mask or hat. type /obj/item/clothing/mask or /obj/item/clothing/head
 	headwear_list = list(
@@ -1466,7 +1467,8 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 	"psyche" = /obj/item/clothing/head/psyche,
 	"formal_turban" = /obj/item/clothing/head/formal_turban,
 	"snake" = /obj/item/clothing/head/snake,
-	"powdered_wig" = /obj/item/clothing/head/powdered_wig)
+	"powdered_wig" = /obj/item/clothing/head/powdered_wig,
+	"westhat_black" = /obj/item/clothing/head/westhat/black)
 
 	//items purchasable from gangs
 /datum/gang_item

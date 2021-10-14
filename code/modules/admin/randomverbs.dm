@@ -1144,18 +1144,18 @@
 		boutput(src, "Only administrators may use this command.")
 		return
 
-	if (!adventure_view || mob.see_invisible < 21)
+	if (!adventure_view || mob.see_invisible < INVIS_ADVENTURE)
 		adventure_view = 1
-		mob.see_invisible = 21
+		mob.see_invisible = INVIS_ADVENTURE
 		boutput(src, "Adventure View activated.")
 
 	else
 		adventure_view = 0
 		boutput(src, "Adventure View deactivated.")
 		if (!isliving(mob))
-			mob.see_invisible = 16 // this seems to be quasi-standard for dead and wraith mobs? might fuck up target observers but WHO CARES
+			mob.see_invisible = INVIS_GHOST // this seems to be quasi-standard for dead and wraith mobs? might fuck up target observers but WHO CARES
 		else
-			mob.see_invisible = 0 // it'll sort itself out on the next Life() tick anyway
+			mob.see_invisible = INVIS_NONE // it'll sort itself out on the next Life() tick anyway
 
 /proc/possess(obj/O as obj in world)
 	set name = "Possess"
@@ -1477,7 +1477,7 @@
 
 	A.reagents.add_reagent("pathogen", amount)
 	var/datum/reagent/blood/pathogen/R = A.reagents.get_reagent("pathogen")
-	var/datum/pathogen/P = unpool(/datum/pathogen)
+	var/datum/pathogen/P = new /datum/pathogen
 	P.setup(1)
 	R.pathogens += P.pathogen_uid
 	R.pathogens[P.pathogen_uid] = P
@@ -2296,7 +2296,7 @@ var/global/night_mode_enabled = 0
 	if (!M || !src.mob || !M.client || !M.client.player || M.client.player.shamecubed)
 		return 0
 	if(isdead(M))
-		M.invisibility = 0
+		M.invisibility = INVIS_NONE
 	var/announce = alert("Announce this cubing to the server?", "Announce", "Yes", "No")
 
 	var/turf/targetLoc = src.mob.loc
@@ -2435,7 +2435,7 @@ var/global/night_mode_enabled = 0
 			boutput(src, "Failed to clear medal; error!")
 			break
 
-/client/proc/give_mass_medals(var/medal as null|text, var/revoke = 0)
+/client/proc/give_mass_medals(var/medal as null|text)
 	set name = "Give Mass Medals"
 	set desc = "Give a bunch of players a medal. Don't use this while any of them are online please lol."
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -2451,6 +2451,7 @@ var/global/night_mode_enabled = 0
 		if (!medal)
 			return
 
+	var/revoke = (alert(src, "Mass grant or revoke medals?", "Mass grant/revoke", "Grant", "Revoke") == "Revoke")
 	var/key = input("Enter player key", "Player key", null) as null|text
 	while(key)
 		var/player = ckey(key)

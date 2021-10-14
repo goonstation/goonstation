@@ -203,7 +203,7 @@
 		set src in oview(1)
 		set category = "Local"
 
-		if (!isalive(usr))
+		if (!isalive(usr) || iswraith(usr))
 			return
 		if (src.locked)
 			boutput(usr, "<span class='alert'><b>The scanner door is locked!</b></span>")

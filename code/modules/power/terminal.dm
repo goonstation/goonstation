@@ -30,7 +30,7 @@
 	..()
 
 /obj/machinery/power/terminal/hide(var/i)
-	invisibility = i ? 101 : 0
+	invisibility = i ? INVIS_ALWAYS : INVIS_NONE
 	alpha = invisibility ? 128 : 255
 
 //A regular terminal that can ferry signals between the network and the connected APC.
@@ -144,7 +144,7 @@
 			return
 
 	hide(var/i)
-		invisibility = i ? 101 : 0
+		invisibility = i ? INVIS_ALWAYS : INVIS_NONE
 		alpha = invisibility ? 128 : 255
 
 /obj/machinery/power/data_terminal/cable_tray

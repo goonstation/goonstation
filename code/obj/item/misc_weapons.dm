@@ -154,7 +154,7 @@
 	return "RAND"
 
 /obj/item/sword/proc/handle_deflect_visuals(mob/user)
-	var/obj/itemspecialeffect/clash/C = unpool(/obj/itemspecialeffect/clash)
+	var/obj/itemspecialeffect/clash/C = new /obj/itemspecialeffect/clash
 	C.setup(user.loc)
 	C.color = get_hex_color_from_blade(src.bladecolor)
 	var/matrix/m = matrix()
@@ -174,7 +174,7 @@
 		if (!S)
 			S = H.find_type_in_hand(/obj/item/sword, "left")
 		if (S && S.active && !(H.lying || isdead(H) || H.hasStatus("stunned", "weakened", "paralysis")))
-			var/obj/itemspecialeffect/clash/C = unpool(/obj/itemspecialeffect/clash)
+			var/obj/itemspecialeffect/clash/C = new /obj/itemspecialeffect/clash
 			if(target.gender == MALE) playsound(target, pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 0, 5, max(0.7, min(1.2, 1.0 + (30 - H.bioHolder.age)/60)))
 			else playsound(target, pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 0, 5, max(0.7, min(1.4, 1.0 + (30 - H.bioHolder.age)/50)))
 			C.setup(H.loc)
@@ -622,6 +622,7 @@
 	throw_range = 5
 	hit_type = DAMAGE_BLUNT
 	w_class = W_CLASS_NORMAL
+	object_flags = NO_ARM_ATTACH
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	c_flags = EQUIPPED_WHILE_HELD
 	desc = "An ancient and effective weapon. It's not just a stick alright!"
@@ -707,6 +708,8 @@
 		take_bleeding_damage(C, null, 10, DAMAGE_CUT)
 
 		playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
+	else
+		..()
 
 /obj/item/knife/butcher/attack(target as mob, mob/user as mob)
 	if (!istype(src,/obj/item/knife/butcher/predspear) && ishuman(target) && ishuman(user))
@@ -841,6 +844,7 @@
 	icon_state = "fireaxe"
 	item_state = "fireaxe"
 	flags = FPRINT | CONDUCT | TABLEPASS | USEDELAY | ONBELT
+	object_flags = NO_ARM_ATTACH
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING //TOOL_CHOPPING flagged items to 4 times as much damage to doors.
 	hit_type = DAMAGE_CUT
 	click_delay = 10
@@ -1061,7 +1065,7 @@
 	if (target != user && ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if (H.find_type_in_hand(/obj/item/katana, "right") || H.find_type_in_hand(/obj/item/katana, "left"))
-			var/obj/itemspecialeffect/clash/C = unpool(/obj/itemspecialeffect/clash)
+			var/obj/itemspecialeffect/clash/C = new /obj/itemspecialeffect/clash
 			playsound(target, pick("sound/effects/sword_clash1.ogg","sound/effects/sword_clash2.ogg","sound/effects/sword_clash3.ogg"), 70, 0, 0)
 			C.setup(H.loc)
 			var/matrix/m = matrix()
@@ -1459,7 +1463,6 @@ obj/item/whetstone
 	flags = ONBACK
 	hit_type = DAMAGE_CUT | DAMAGE_STAB
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING
-	object_flags = NO_ARM_ATTACH
 	contraband = 5
 	w_class = W_CLASS_BULKY
 	force = 25

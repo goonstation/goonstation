@@ -248,6 +248,7 @@ var/list/admin_verbs = list(
 		// moved up from admin
 		//client/proc/cmd_admin_delete,
 		/client/proc/noclip,
+		/client/proc/idclip,
 		///client/proc/addpathogens,
 		/client/proc/respawn_as_self,
 		/client/proc/cmd_give_pet,
@@ -304,6 +305,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_debug_del_all,
 		/client/proc/cmd_admin_godmode,
 		/client/proc/cmd_admin_godmode_self,
+		/client/proc/iddqd,
 		/client/proc/cmd_admin_omnipresence,
 		/client/proc/cmd_admin_get_mobject,
 		/client/proc/cmd_admin_get_mobject_loc,
@@ -332,6 +334,7 @@ var/list/admin_verbs = list(
 		/client/proc/show_image_to_all,
 		/client/proc/sharkban,
 		/client/proc/toggle_literal_disarm,
+		/datum/admins/proc/toggle_emote_cooldowns,
 		/client/proc/implant_all,
 		/client/proc/cmd_crusher_walls,
 		/client/proc/cmd_disco_lights,

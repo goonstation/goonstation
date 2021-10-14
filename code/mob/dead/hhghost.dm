@@ -17,7 +17,7 @@
 	. = ..()
 	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_HHGHOST)
 	src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-	src.see_invisible = 0
+	src.see_invisible = INVIS_NONE
 
 /mob/dead/hhghost/Login()
 	..()
