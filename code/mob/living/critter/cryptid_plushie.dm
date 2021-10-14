@@ -307,7 +307,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 	desc = "Be able to move a few steps in spite of whether you're being looked at."
 	icon = 'icons/mob/genetics_powers.dmi'
 	icon_state = "adrenaline"
-	cooldown = 450
+	cooldown = 400
 	targeted = 0
 	qdel_itself_if_not_attached_to_plushie = 1
 	var/list/minor_event_sounds = list("sound/machines/giantdrone_boop1.ogg", "sound/machines/giantdrone_boop3.ogg", "sound/machines/giantdrone_boop4.ogg")
@@ -331,11 +331,11 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 		*/
 
 		var/roll = rand(1, 100)
-		if(roll <= 60)
+		if(roll <= 55)
 			minor_event()
-		else if(roll <= 91)
+		else if(roll <= 89)
 			moderate_event()
-		else if(roll >= 92)
+		else if(roll >= 90)
 			major_event()
 
 		SPAWN_DBG(4 SECONDS)
@@ -345,12 +345,12 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 
 	proc/minor_event()
 		playsound(get_turf(holder.owner), "[pick(minor_event_sounds)]", 45, 1)
-		our_plushie.override_steps = rand(7, 10)
+		our_plushie.override_steps = rand(6, 10)
 		glitch_out(0.8 SECONDS, 1, 0.7)
 
 	proc/moderate_event()
 		playsound(get_turf(holder.owner), "[pick(moderate_event_sounds)]", 45, 1)
-		our_plushie.override_steps = rand(9, 15)
+		our_plushie.override_steps = rand(8, 13)
 		glitch_out(1.4 SECONDS, 1, 0.9)
 
 	proc/major_event()
