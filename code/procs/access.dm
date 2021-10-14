@@ -305,8 +305,8 @@
 		///////////////////////////// Science
 		if("Scientist")
 			return list(access_tox, access_tox_storage, access_research, access_chemistry, access_maint_tunnels,
-			// Past this line, Scientist now has Roboticist access
-			access_robotics, access_tech_storage, access_medical, access_medical_lockers, access_morgue)
+			// Past this line, Scientist now has Roboticist and Geneticist access (though without medlocker access).
+			access_robotics, access_tech_storage, access_medical, access_morgue, access_medlab)
 		// Old job-specific access levels
 		if("Chemist")
 			return list(access_research, access_chemistry)
@@ -341,7 +341,7 @@
 						access_engineering_storage,access_engineering_atmos,access_engineering_engine,access_engineering_power)
 
 		///////////////////////////// Civilian
-		if("Service")
+		if("Civilian")
 			return list(access_janitor, access_maint_tunnels, access_hydro, access_ranch, access_bar, access_kitchen)
 
 		// Old job-specific access levels
