@@ -1,5 +1,9 @@
 
 (t)thu oct 14 21
+(u)pali
+(p)6298
+(e)🆕|feature
+(*)Nukie commander is now a separate antag preference. Turn it on if you want to be the commander (you still need regular nukie antag preference toggled on).
 (u)FlamingLily
 (p)6295
 (e)⚖|balance
