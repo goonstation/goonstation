@@ -236,6 +236,8 @@
 				continue
 			if (!isalive(M))
 				continue
+			if (istype(M, /mob/living/critter/plushie/cryptid)) // other cryptids are ok
+				continue
 			if (M.client) // Only players
 				last_witness = M
 				being_seen = TRUE
