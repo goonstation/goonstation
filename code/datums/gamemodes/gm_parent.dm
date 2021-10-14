@@ -260,12 +260,13 @@
 		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [length(candidates)] players with be_[type] set to yes were ready. We need [number] so including players who don't want to be [type]s in the pool.")
 
 		if(length(unpicked_clients))
+			shuffle_list(unpicked_clients)
+			var/iteration = 1
 			while(length(candidates) < number)
-				var/client/random_client = pick(unpicked_clients)
-				unpicked_clients.Remove(random_client)
+				var/client/random_client = unpicked_clients[iteration]
 				var/mob/new_player/player = random_client.mob
 				candidates += player.mind
-				if (!length(unpicked_clients)) // ran out of eligible clients
+				if (iteration > length(unpicked_clients)) // ran out of eligible clients
 					break
 
 	if(length(candidates) < number) // somehow failed to meet our candidate amount quota
