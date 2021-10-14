@@ -1523,6 +1523,7 @@ datum/preferences
 
 		if (link_tags["b_syndicate_commander"])
 			src.be_syndicate_commander = !( src.be_syndicate_commander )
+			src.be_syndicate |= src.be_syndicate_commander
 			src.SetChoices(user)
 			return
 
