@@ -14,9 +14,11 @@
 /// space move gear suffers no penalty on these turfs
 #define SPACE_MOVE 64
 
-
+/// Allows connections for disposal pipes
 #define DISJOINT_TURF_CONNECTION_DISPOSAL (1<<0)
+/// Allows connections for atmos machinary (nodes)
 #define DISJOINT_TURF_CONNECTION_ATMOS_MACHINERY (1<<1)
+/// Allows for connections for powernets
 #define DISJOINT_TURF_CONNECTION_POWERNETS (1<<2)
 #define DISJOINT_TURF_CONNECTION_ATMOS (1<<3) // Someday
 #define DISJOINT_TURF_CONNECTION_FLUID (1<<4) // Somehow

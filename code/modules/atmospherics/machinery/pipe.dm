@@ -1028,6 +1028,7 @@ obj/machinery/atmospherics/pipe
 					node1 = target
 					break
 
+			// Search disjoint connections for vertical pipe
 			node2 = locate() in T.get_disjoint_objects_by_type(DISJOINT_TURF_CONNECTION_ATMOS_MACHINERY, /obj/machinery/atmospherics/pipe/vertical_pipe)
 			update_icon()
 
