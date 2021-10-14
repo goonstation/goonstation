@@ -140,7 +140,7 @@ var/global/list/playersSeen = list()
 	else //Permaban found, the player is DENIED
 		var/details = "[row["reason"]]<br>"
 		details += "Banned By: [oakey]<br>"
-		details += "This ban applies to [row["server"] ? "this server only" : "all servers"].<br>"
+		details += "This ban applies to [row["server"] ? "this server only" : "all servers"]."
 		return details
 
 /proc/addBan(data)
