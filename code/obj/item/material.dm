@@ -25,16 +25,6 @@
 		if(src.material?.name)
 			initial_material_name = src.material.name
 
-	unpooled()
-		..()
-		src.pixel_x = rand(0 - wiggle, wiggle)
-		src.pixel_y = rand(0 - wiggle, wiggle)
-		setup_material()
-
-	pooled()
-		..()
-		name = initial(name)
-
 	proc/setup_material()
 		.= 0
 
@@ -591,10 +581,6 @@
 		icon_state += "[rand(1,3)]"
 		src.setItemSpecial(/datum/item_special/double)
 
-	unpooled()
-		. = ..()
-		src.setItemSpecial(/datum/item_special/double)
-
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if(!scalpel_surgery(M,user)) return ..()
 		else return
@@ -798,11 +784,7 @@
 
 			else if (istype(M, /obj/item/raw_material/shard))
 				if (output_bar_from_item(M, 10))
-					pool(M)
-
-			else if (istype(M, /obj/item/raw_material))
-				output_bar_from_item(M)
-				pool(M)
+					qdel(M)
 
 			else if (istype(M, /obj/item/sheet))
 				if (output_bar_from_item(M, 10))
@@ -824,6 +806,10 @@
 			else if (istype(M, /obj/item/wizard_crystal))
 				if (output_bar_from_item(M))
 					qdel(M)
+
+			else
+				output_bar_from_item(M)
+				qdel(M)
 
 			sleep(smelt_interval)
 
@@ -874,7 +860,7 @@
 		var/output_location = src.get_output_location()
 
 		var/bar_type = getProcessedMaterialForm(MAT)
-		var/obj/item/material_piece/BAR = unpool(bar_type)
+		var/obj/item/material_piece/BAR = new bar_type
 		BAR.quality = quality
 		BAR.name += getQualityName(quality)
 		BAR.setMaterial(MAT)
@@ -890,7 +876,7 @@
 
 	proc/load_reclaim(obj/item/W as obj, mob/user as mob)
 		. = FALSE
-		if (istype(W,/obj/item/raw_material/) || istype(W,/obj/item/sheet/) || istype(W,/obj/item/rods/) || istype(W,/obj/item/tile/) || istype(W,/obj/item/cable_coil) || istype(W,/obj/item/wizard_crystal))
+		if ((W.material && !istype(W,/obj/item/material_piece)) || istype(W,/obj/item/wizard_crystal))
 			W.set_loc(src)
 			if (user) user.u_equip(W)
 			W.dropped()

@@ -124,3 +124,8 @@
 	name = "cardboard box - 'Clown'"
 	desc = "Much like a real clown car, it's more spacious on the inside. Must be, to fit the clown."
 	face = "clown"
+
+/obj/item/clothing/suit/cardboard_box/ai
+	name = "cardboard box - 'AI'"
+	desc = "It can probably still open doors!"
+	face = "ai"

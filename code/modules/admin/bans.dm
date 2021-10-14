@@ -161,12 +161,6 @@ var/global/list/playersSeen = list()
 			if (C.ckey == row["ckey"])
 				targetC = C
 
-		var/mob/targetM
-		if (!targetC)
-			for (var/mob/M in mobs) //Grab the mob if no target clients were found
-				if (M.ckey == row["ckey"])
-					targetM = M
-
 		row["reason"] = html_decode(row["reason"])
 
 		if (text2num(row["chain"]) > 0) //Prepend our evasion attempt info for: the user, admins, notes (everything except the actual ban reason in the db)
@@ -211,20 +205,20 @@ var/global/list/playersSeen = list()
 		ircmsg["key2"] = "[row["ckey"]] (IP: [row["ip"]], CompID: [row["compID"]])"
 		ircmsg["msg"] = row["reason"]
 		ircmsg["time"] = expiry
+		ircmsg["timestamp"] = row["timestamp"]
 		ircbot.export("ban", ircmsg)
 
+		if(!targetC)
+			targetC = find_player(row["ckey"])?.client
 		if (targetC)
-			if (targetC.mob)
-				if (targetC.mob.contents) //for observers
-					for (var/mob/M in targetC.mob.contents)
-						M.set_loc(get_turf(M))
-				del(targetC.mob)
 			del(targetC)
-		if (targetM)
-			if (targetM.contents) //for observers
-				for (var/mob/M in targetM.contents)
-					M.set_loc(get_turf(M))
-			del(targetM)
+		else
+			logTheThing("debug", null, null, "<b>Bans:</b> Unable to find client with ckey '[row["ckey"]]' during banning.")
+
+		targetC = find_player(row["ckey"])?.client
+		if (targetC)
+			logTheThing("debug", null, null, "<b>Bans:</b> Client with ckey '[row["ckey"]]' somehow survived banning, retrying kick.")
+			del(targetC)
 
 		return 0
 

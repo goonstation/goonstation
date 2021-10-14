@@ -74,6 +74,7 @@
 	var/num = 0
 	var/list/topping_colors = list()
 	var/list/topping_holder = list()
+	var/sliced_icon = "pslice"
 	custom_food = 0
 
 	mat_changeappearance = 0
@@ -121,7 +122,7 @@
 			P.sharpened = src.sharpened
 			P.sliced = TRUE
 			P.amount = 1
-			P.icon_state = "pslice"
+			P.icon_state = sliced_icon
 			P.quality = src.quality
 			P.heal_amt += round((src.heal_amt/makeslices))
 			P.topping_color = src.topping_color
@@ -248,6 +249,48 @@
 	New()
 		..()
 		src.add_topping(0)
+
+/obj/item/reagent_containers/food/snacks/pizza/fresh
+    name = "fresh pizza"
+    desc = "A cheesy pizza pie with thick tomato sauce."
+    icon_state = "cheesy"
+    sliced_icon = "cheesy-slice"
+
+/obj/item/reagent_containers/food/snacks/pizza/ball
+    name = "fresh meatball pizza"
+    desc = "A fresh pizza pie topped with succulent meatballs."
+    icon_state = "meatball"
+    sliced_icon = "meatball-slice"
+
+/obj/item/reagent_containers/food/snacks/pizza/pepper
+    name = "fresh pepperoni  pizza"
+    desc = "A cheesy pizza pie toped with bright red sizzling pepperoni slices."
+    icon_state = "peper"
+    sliced_icon = "peper-slice"
+
+/obj/item/reagent_containers/food/snacks/pizza/shroom
+    name = "fresh mushroom  pizza"
+    desc = "A pizza pie toped fresh picked mushrooms."
+    icon_state = "shroom"
+    sliced_icon = "shroom-slice"
+
+/obj/item/reagent_containers/food/snacks/pizza/bad
+    name = "soft serve cheese pizza"
+    desc = "A pizza shipped from god knows where straight to cargo."
+    icon_state = "pizza-b"
+    sliced_icon = "slice-b"
+
+/obj/item/reagent_containers/food/snacks/pizza/pepperbad
+    name = "soft serve pepperoni pizza"
+    desc = "A pizza shipped from god knows where straight to cargo."
+    icon_state = "pizza_m"
+    sliced_icon = "psliceM"
+
+/obj/item/reagent_containers/food/snacks/pizza/mushbad
+    name = "soft serve mushroom pizza"
+    desc = "A pizza shipped from god knows where straight to cargo."
+    icon_state = "pizza_v"
+    sliced_icon = "psliceV"
 
 /obj/item/reagent_containers/food/snacks/stroopwafel
 	name = "stroopwafel"
@@ -817,10 +860,6 @@
 				src.name = "donk-pocket"
 		return
 
-#undef DONK_COLD
-#undef DONK_WARM
-#undef DONK_SCALDING
-
 /obj/item/reagent_containers/food/snacks/donkpocket_w
 	name = "donk-pocket"
 	desc = "This donk-pocket is emitting a small amount of heat."
@@ -846,19 +885,22 @@
 		warm = 1
 
 	heal(var/mob/M)
-		if(src.warm && M.reagents)
-			M.reagents.add_reagent("honk_fart",15)
+		if(src.warm == DONK_WARM)
+			M.reagents?.add_reagent("honk_fart",15)
 		else
-			boutput(M, "<span class='alert'>It's just not good enough cold...</span>")
-			M.reagents.add_reagent("simethicone",15)
+			M.reagents?.add_reagent("simethicone",15)
 		..()
 
 	cooltime()
 		if (src.warm)
 			SPAWN_DBG( 420 SECONDS )
-				src.warm = 0
+				src.warm = DONK_COLD
 				src.name = "honk-pocket"
 		return
+
+#undef DONK_COLD
+#undef DONK_WARM
+#undef DONK_SCALDING
 
 /obj/item/reagent_containers/food/snacks/breakfast
 	name = "bacon and eggs"
@@ -1062,6 +1104,7 @@
 	desc = "Just noodles on their own."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "spag-plain"
+	var/random_name = TRUE
 	needfork = 1
 	heal_amt = 1
 	amount = 3
@@ -1070,7 +1113,8 @@
 
 	New()
 		. = ..()
-		name = "[random_spaghetti_name()] noodles"
+		if (random_name)
+			name = "[random_spaghetti_name()] noodles"
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W,/obj/item/reagent_containers/food/snacks/condiment/ketchup) && icon_state == "spag_plain" )// don't forget, other shit inherits this too!
@@ -1161,6 +1205,17 @@
 			qdel(src)
 		else return ..()
 
+/obj/item/reagent_containers/food/snacks/spaghetti/alfredo
+	name = "fettucine alfredo"
+	desc = "Pasta in a creamy, cheesy sauce."
+	icon_state = "spag-alfredo"
+	random_name = FALSE
+	needfork = 1
+	heal_amt = 3
+	amount = 5
+	food_effects = list("food_energized","food_brute","food_burn")
+	meal_time_flags = MEAL_TIME_DINNER
+
 /obj/item/reagent_containers/food/snacks/spaghetti/spicy
 	name = "spaghetti arrabbiata"
 	desc = "Quite spicy!"
@@ -1192,6 +1247,32 @@
 	New()
 		. = ..()
 		name = "[random_spaghetti_name()] and meatballs"
+
+/obj/item/reagent_containers/food/snacks/spaghetti/chickenparm
+	name = "chicken parmigiana"
+	desc = "Spaghetti AND fried chicken? You must be dreaming."
+	icon_state = "spag-chickenparm"
+	random_name = FALSE
+	needfork = 1
+	heal_amt = 2
+	amount = 5
+	initial_volume = 10
+	initial_reagents = "synaptizine"
+	food_effects = list("food_energized","food_hp_up","food_brute","food_burn")
+	meal_time_flags = MEAL_TIME_DINNER
+
+/obj/item/reagent_containers/food/snacks/spaghetti/chickenalfredo
+	name = "chicken alfredo"
+	desc = "Fettucine alfredo with grilled chicken on top."
+	icon_state = "spag-c-alfredo"
+	random_name = FALSE
+	needfork = 1
+	heal_amt = 2
+	amount = 5
+	initial_volume = 10
+	initial_reagents = "synaptizine"
+	food_effects = list("food_energized","food_hp_up","food_brute","food_burn")
+	meal_time_flags = MEAL_TIME_DINNER
 
 /obj/item/reagent_containers/food/snacks/lasagna
 	name = "lasagna"
@@ -1636,7 +1717,7 @@
 			src.name = "herbal sausage"
 			desc = "A fancy herbal sausage! Spices really make the sausage."
 			W.reagents.trans_to(src,W.reagents.total_volume)
-			pool(W)
+			qdel(W)
 
 		else if (istype(W,/obj/item/kitchen/utensil/knife))
 			if(src.GetOverlayImage("bun"))
@@ -2562,7 +2643,7 @@
 		if (fortune)
 			desc = "Half of a fortune cookie."
 			icon_state = "fortune-bottom"
-			var/obj/item/paper/fortune/B = unpool(/obj/item/paper/fortune)
+			var/obj/item/paper/fortune/B = new /obj/item/paper/fortune
 			B.set_loc(user)
 
 			user.put_in_hand_or_drop(B)
@@ -2671,3 +2752,51 @@
 	initial_volume = 20
 	initial_reagents = list("THC"=10,"CBD"=10)
 	food_effects = list("food_brute","food_burn")
+
+/obj/item/reagent_containers/food/snacks/tandoorichicken
+	name = "tandoori chicken"
+	desc = "This one wasn't actually cooked in a tandoor, the cylindrical clay oven for which the dish is named. Don't tell."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "tandoorichicken"
+	needfork = 1
+	heal_amt = 2
+	amount = 4
+	initial_volume = 20
+	initial_reagents = list("currypowder"=10, "capsaicin"=5, "holywater"=5)
+	food_effects = list("food_hp_up","food_tox","food_warm")
+
+/obj/item/reagent_containers/food/snacks/potatocurry
+	name = "potato curry"
+	desc = "A rich Indian curry full of potatoes, carrots, and peas."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "potatocurry"
+	needfork = 1
+	heal_amt = 2
+	amount = 5
+	initial_volume = 15
+	initial_reagents = list("currypowder"=10, "oculine"=5)
+	food_effects = list("food_energized","food_tox","food_warm")
+
+/obj/item/reagent_containers/food/snacks/coconutcurry
+	name = "coconut curry"
+	desc = "A creamy Thai curry made with coconut milk, served on a bed of rice."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "coconutcurry"
+	needfork = 1
+	heal_amt = 2
+	amount = 5
+	initial_volume = 15
+	initial_reagents = list("currypowder"=10, "oculine"=5)
+	food_effects = list("food_refreshed","food_tox","food_warm")
+
+/obj/item/reagent_containers/food/snacks/chickenpineapplecurry
+	name = "chicken pineapple curry"
+	desc = "A sweet-and-spicy curry that expertly balances the tang of pineapple with the heat of the curry powder."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "chickenpapplecurry"
+	needfork = 1
+	heal_amt = 2
+	amount = 5
+	initial_volume = 25
+	initial_reagents = list("currypowder"=10, "capsaicin"=5, "salicylic_acid"=10)
+	food_effects = list("food_brute","food_tox","food_warm")

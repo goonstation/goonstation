@@ -2659,17 +2659,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/medical/robotics)
 "afO" = (
-/obj/item/cable_coil/cut,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/obj/storage/crate{
-	name = "robotics crate"
-	},
+/obj/storage/crate/robotparts,
 /turf/simulated/floor/plating/random,
 /area/station/medical/robotics)
 "afP" = (
@@ -2928,13 +2918,14 @@
 	})
 "ags" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
-	dir = 4
+	dir = 4;
+	req_access = null;
+	req_access_txt = "5"
 	},
-/obj/access_spawn/medical,
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/north)
+/area/station/medical/medbay/surgery/storage)
 "agt" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0
@@ -14302,10 +14293,10 @@
 /obj/item/sheet/steel{
 	amount = 50
 	},
-/obj/item/parts/robot_parts/arm/right,
-/obj/item/parts/robot_parts/arm/right,
 /obj/item/device/guardbot_tool/xmas,
 /obj/machinery/light/incandescent/greenish,
+/obj/item/parts/robot_parts/arm/right/standard,
+/obj/item/parts/robot_parts/arm/right/standard,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "aHG" = (
@@ -38888,15 +38879,7 @@
 	},
 /area/station/storage/warehouse)
 "bSn" = (
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
+/obj/storage/crate/robotparts,
 /turf/simulated/floor/plating/random,
 /area/station/storage/warehouse)
 "bSo" = (
@@ -47115,6 +47098,15 @@
 /area/space{
 	pixel_y = 32
 	})
+"mkl" = (
+/obj/landmark/spawner{
+	name = "dolly"
+	},
+/turf/simulated/floor/grasstodirt{
+	icon_state = "dirt";
+	name = "not grass"
+	},
+/area/station/ranch)
 "mlT" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/south,
@@ -85664,7 +85656,7 @@ aDr
 chc
 cgn
 ciP
-aOo
+mkl
 cgx
 cjx
 ciB
@@ -99518,13 +99510,13 @@ afq
 afq
 axA
 ags
-afA
-afA
-afA
-afA
-afA
-afA
-afA
+ajV
+ajV
+ajV
+ajV
+ajV
+ajV
+ajV
 aoi
 aqg
 aru

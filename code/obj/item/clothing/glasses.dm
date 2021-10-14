@@ -253,10 +253,11 @@
 
 				SPAWN_DBG(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
-					if(upgraded)
-						APPLY_MOB_PROPERTY(H, PROP_THERMALVISION_MK2, src)
-					else
-						APPLY_MOB_PROPERTY(H, PROP_THERMALVISION, src)
+					if(H.glasses == src)
+						if(upgraded)
+							APPLY_MOB_PROPERTY(H, PROP_THERMALVISION_MK2, src)
+						else
+							APPLY_MOB_PROPERTY(H, PROP_THERMALVISION, src)
 		return
 
 /obj/item/clothing/glasses/thermal/traitor //sees people through walls

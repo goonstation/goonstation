@@ -522,7 +522,7 @@
 					src.printing = 0
 					return 1
 				SPAWN_DBG(5 SECONDS)
-					var/obj/item/paper/thermal/P = unpool(/obj/item/paper/thermal)
+					var/obj/item/paper/thermal/P = new /obj/item/paper/thermal
 					P.set_loc(src.host.loc)
 
 					playsound(src.host.loc, "sound/machines/printer_thermal.ogg", 50, 1)
@@ -669,7 +669,7 @@
 					src.printing = 0
 					return 1
 				SPAWN_DBG(5 SECONDS)
-					var/obj/item/paper/thermal/P = unpool(/obj/item/paper/thermal)
+					var/obj/item/paper/thermal/P = new /obj/item/paper/thermal
 					P.set_loc(src.host.loc)
 
 					playsound(src.host.loc, "sound/machines/printer_thermal.ogg", 50, 1)
@@ -869,7 +869,7 @@
 				src.printing = 0
 				return
 			SPAWN_DBG(5 SECONDS)
-				var/obj/item/paper/thermal/P = unpool(/obj/item/paper/thermal)
+				var/obj/item/paper/thermal/P = new /obj/item/paper/thermal
 				P.set_loc(src.host.loc)
 
 				playsound(src.host.loc, "sound/machines/printer_thermal.ogg", 50, 1)
@@ -937,7 +937,7 @@
 
 		switch(prizeselect)
 			if(1)
-				var/obj/item/spacecash/P = unpool(/obj/item/spacecash)
+				var/obj/item/spacecash/P = new /obj/item/spacecash
 				P.setup(prize_location)
 				prize = P
 				prize.name = "space ticket"

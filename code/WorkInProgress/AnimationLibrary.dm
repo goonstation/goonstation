@@ -170,13 +170,6 @@
 		alpha = 255
 		plane = PLANE_OVERLAY_EFFECTS
 
-		unpooled()
-			..()
-			src.alpha = 255
-
-		pooled()
-			..()
-
 
 
 /mob/var/obj/particle/attack/attack_particle
@@ -473,7 +466,7 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var/muzzle_light_color, var/offset=25)
 	if (!A || firing_angle == null || !muzzle_anim) return
 
-	var/obj/particle/attack/muzzleflash/muzzleflash = unpool(/obj/particle/attack/muzzleflash)
+	var/obj/particle/attack/muzzleflash/muzzleflash = new /obj/particle/attack/muzzleflash
 
 	if(isnull(muzzle_light_color))
 		muzzle_light_color = default_muzzle_flash_colors[muzzle_anim]
@@ -498,7 +491,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 	SPAWN_DBG(0.6 SECONDS)
 		A.vis_contents.Remove(muzzleflash)
-		pool(muzzleflash)
+		qdel(muzzleflash)
 
 
 
@@ -669,6 +662,19 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 			animate(A, time = 0.5, transform = matrix().Turn(angle), easing = JUMP_EASING, pixel_x = offx, pixel_y = offy, flags = ANIMATION_PARALLEL|ANIMATION_RELATIVE)
 			animate(time = 0.5, transform = matrix().Turn(-angle), easing = JUMP_EASING, pixel_x = -offx, pixel_y = -offy, flags = ANIMATION_RELATIVE)
 			sleep(0.1 SECONDS)
+
+/proc/violent_standup_twitch_parametrized(var/atom/A, var/off_x = 3, var/off_y = 2, var/input_angle = 45, var/iterations = 7, var/sleep_length = 0.1 SECONDS, var/effect_scale = 1)
+	SPAWN_DBG(-1)
+		var/offx = off_x
+		var/offy = off_y
+		var/angle = input_angle
+		for (var/i = 0, (i < iterations && A), i++)
+			offx = rand(-off_x, off_x) * effect_scale
+			offy = rand(-off_y, off_y) * effect_scale
+			angle = rand(-angle, angle) * effect_scale
+			animate(A, time = 0.5, transform = matrix().Turn(angle), easing = JUMP_EASING, pixel_x = offx, pixel_y = offy, flags = ANIMATION_PARALLEL|ANIMATION_RELATIVE)
+			animate(time = 0.5, transform = matrix().Turn(-angle), easing = JUMP_EASING, pixel_x = -offx, pixel_y = -offy, flags = ANIMATION_RELATIVE)
+			sleep(sleep_length)
 
 /proc/eat_twitch(var/atom/A)
 	var/matrix/squish_matrix = matrix(A.transform)
@@ -1072,7 +1078,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	var/turf/target_turf = get_turf(target)
 	if (!target_turf)
 		return
-	var/obj/decal/teleport_swirl/swirl = unpool(/obj/decal/teleport_swirl)
+	var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
 	swirl.set_loc(target_turf)
 	swirl.pixel_y = 10
 	if (play_sound)
@@ -1080,7 +1086,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	SPAWN_DBG(1.5 SECONDS)
 		if (swirl)
 			swirl.pixel_y = 0
-			pool(swirl)
+			qdel(swirl)
 	return
 
 /proc/leaveresidual(var/atom/target)
@@ -1091,11 +1097,11 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		return
 	if (locate(/obj/decal/residual_energy) in target_turf)
 		return
-	var/obj/decal/residual_energy/e = unpool(/obj/decal/residual_energy)
+	var/obj/decal/residual_energy/e = new /obj/decal/residual_energy
 	e.set_loc(target_turf)
 	SPAWN_DBG(10 SECONDS)
 		if (e)
-			pool(e)
+			qdel(e)
 	return
 
 /proc/leavepurge(var/atom/target, var/current_increment, var/sword_direction)
@@ -1108,16 +1114,16 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if(current_increment == 9)
 		if (locate(/obj/decal/purge_beam_end) in target_turf)
 			return
-		e = unpool(/obj/decal/purge_beam_end)
+		e = new /obj/decal/purge_beam_end
 	else
 		if (locate(/obj/decal/purge_beam) in target_turf)
 			return
-		e = unpool(/obj/decal/purge_beam)
+		e = new /obj/decal/purge_beam
 	e.set_loc(target_turf)
 	e.dir = sword_direction
 	SPAWN_DBG(7)
 		if (e)
-			pool(e)
+			qdel(e)
 	return
 
 /proc/leavescan(var/atom/target, var/scan_type)
@@ -1130,15 +1136,15 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if(scan_type == 0)
 		if (locate(/obj/decal/syndicate_destruction_scan_center) in target_turf)
 			return
-		e = unpool(/obj/decal/syndicate_destruction_scan_center)
+		e = new /obj/decal/syndicate_destruction_scan_center
 	else
 		if (locate(/obj/decal/syndicate_destruction_scan_side) in target_turf)
 			return
-		e = unpool(/obj/decal/syndicate_destruction_scan_side)
+		e = new /obj/decal/syndicate_destruction_scan_side
 	e.set_loc(target_turf)
 	SPAWN_DBG(7)
 		if (e)
-			pool(e)
+			qdel(e)
 	return
 
 /proc/sponge_size(var/atom/A, var/size = 1)
@@ -1488,3 +1494,22 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 		filter = A.filters[A.filters.len]
 		animate(filter, size=size, time=0, loop=-1, radius=0, flags=ANIMATION_PARALLEL)
 		animate(size=0, radius=rand()*10+10, time=rand()*20+10)
+
+/proc/animate_stomp(atom/A, stomp_height=8, stomps=3, stomp_duration=0.7 SECONDS)
+	var/mob/M = A
+	if(ismob(A))
+		APPLY_MOB_PROPERTY(M, PROP_CANTMOVE, "hatstomp")
+		M.update_canmove()
+	var/one_anim_duration = stomp_duration / 2 / stomps
+	for(var/i = 0 to stomps - 1)
+		if(i == 0)
+			animate(A, time=one_anim_duration, pixel_y=stomp_height, easing=SINE_EASING | EASE_OUT, flags=ANIMATION_PARALLEL)
+		else
+			animate(time=one_anim_duration, pixel_y=stomp_height, easing=SINE_EASING | EASE_OUT)
+		animate(time=one_anim_duration, pixel_y=0, easing=SINE_EASING | EASE_IN)
+	if(ismob(A))
+		SPAWN_DBG(stomp_duration)
+			REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, "hatstomp")
+			M.update_canmove()
+
+

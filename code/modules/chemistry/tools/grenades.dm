@@ -192,7 +192,7 @@
 			G.reagents.trans_to(src, G.reagents.total_volume)
 
 		if (src.reagents.total_volume) //The possible reactions didnt use up all reagents.
-			var/datum/effects/system/steam_spread/steam = unpool(/datum/effects/system/steam_spread)
+			var/datum/effects/system/steam_spread/steam = new /datum/effects/system/steam_spread
 			steam.set_up(10, 0, get_turf(src))
 			steam.attach(src)
 			steam.start()
@@ -203,8 +203,8 @@
 					src.reagents.grenade_effects(src, A)
 					src.reagents.reaction(A, 1, 10, 0)
 
-		invisibility = 100 //Why am i doing this?
-		if (src.master) src.master.invisibility = 100
+		invisibility = INVIS_ALWAYS_ISH //Why am i doing this?
+		if (src.master) src.master.invisibility = INVIS_ALWAYS_ISH
 		SPAWN_DBG(5 SECONDS)		   //To make sure all reagents can work
 			if (src.master) qdel(src.master)
 			if (src) qdel(src)	   //correctly before deleting the grenade.

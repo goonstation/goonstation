@@ -433,6 +433,14 @@
 	item_state = "sousapron"
 	body_parts_covered = TORSO
 	permeability_coefficient = 0.70
+	
+/obj/item/clothing/suit/apron/tricolor
+	name = "pizza apron"
+	desc = "An apron made specifically to protect from tomato sauce."
+	icon_state = "triapron"
+	item_state = "triapron"
+	body_parts_covered = TORSO
+	permeability_coefficient = 0.70
 
 /obj/item/clothing/suit/apron/botanist
 	name = "blue apron"
@@ -649,7 +657,7 @@
 					return
 				else
 					for (var/i=3, i>0, i--)
-						var/obj/item/material_piece/cloth/cottonfabric/CF = unpool(/obj/item/material_piece/cloth/cottonfabric)
+						var/obj/item/material_piece/cloth/cottonfabric/CF = new /obj/item/material_piece/cloth/cottonfabric
 						CF.set_loc(get_turf(src))
 					boutput(user, "You rip up [src].")
 					user.u_equip(src)
@@ -1260,6 +1268,12 @@
 	april_fools
 		icon_state = "espace-alt"
 		item_state = "es_suit"
+
+/obj/item/clothing/suit/space/neon
+	name = "neon space suit"
+	desc = "It comes in fun colours, but is as bulky and slow to move in as any standard space suit..."
+	icon_state = "space-neon"
+	item_state = "space-neon"
 
 // Sealab suits
 

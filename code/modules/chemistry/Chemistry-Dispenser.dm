@@ -99,9 +99,10 @@
 			B.reagents.handle_reactions()
 			return
 		*/
+		var/ejected_beaker = null
 		if (src.beaker)
-			boutput(user, "A [glass_name] is already loaded into the machine.")
-			return
+			ejected_beaker = src.beaker
+			user.put_in_hand_or_drop(ejected_beaker)
 
 		src.beaker =  B
 		if(!B.cant_drop)
@@ -111,7 +112,10 @@
 		if(B.qdeled)
 			B = null
 		else
-			boutput(user, "You add the [glass_name] to the machine!")
+			if(ejected_beaker)
+				boutput(user, "You swap the [B] with the [glass_name] already loaded into the machine.")
+			else
+				boutput(user, "You add the [glass_name] to the machine!")
 		src.update_icon()
 		src.ui_interact(user)
 

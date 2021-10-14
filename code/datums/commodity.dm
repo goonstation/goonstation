@@ -952,6 +952,15 @@
 	upperfluc = 5000
 	lowerfluc = -5000
 
+/datum/commodity/contraband/command_helmet
+	comname = "Armored Helmet"
+	comtype = /obj/item/clothing/head/helmet/space/industrial/syndicate/
+	desc = "An armored helmet issued to Syndicate squad leaders."
+	price = 15000
+	baseprice = 15000
+	upperfluc = 5000
+	lowerfluc = -2000
+
 /datum/commodity/contraband/swatmask
 	comname = "Scary Gasmask"
 	comtype = /obj/item/clothing/mask/gas/swat
@@ -1242,6 +1251,22 @@
 	comtype = /obj/item/grinder_upgrade
 	price = 2500
 	baseprice = 2500
+	upperfluc = 750
+	lowerfluc = -500
+
+/datum/commodity/junk/speedyclone
+	comname = "SpeedyClone2000"
+	comtype = /obj/item/cloneModule/speedyclone
+	price = 5000
+	baseprice = 5000
+	upperfluc = 750
+	lowerfluc = -500
+
+/datum/commodity/junk/efficientclone
+	comname = "Biomatter recycling unit"
+	comtype = /obj/item/cloneModule/efficientclone
+	price = 5000
+	baseprice = 5000
 	upperfluc = 750
 	lowerfluc = -500
 

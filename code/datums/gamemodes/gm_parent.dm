@@ -74,6 +74,7 @@
 	for (var/datum/mind/traitor in antags)
 		try
 			var/traitorwin = 1
+			var/obj_count = 0
 			var/traitor_name
 
 			if (traitor.current)
@@ -82,18 +83,18 @@
 				traitor_name = "[traitor.key] (character destroyed)"
 
 			if (traitor.special_role == ROLE_MINDSLAVE)
-				stuff_to_output += "<B>[traitor_name] was a mindslave!</B>"
+				stuff_to_output += "<B>[traitor_name]</B> was a mindslave!"
 				continue // Objectives are irrelevant for mindslaves and thralls.
 			else if (traitor.special_role == ROLE_VAMPTHRALL)
-				stuff_to_output += "<B>[traitor_name] was a vampire's thrall!</B>"
+				stuff_to_output += "<B>[traitor_name]</B> was a vampire's thrall!"
 				continue // Ditto.
 			else
 				if (traitor.late_special_role)
-					stuff_to_output += "<B>[traitor_name] was a late-joining [traitor.special_role]!</B>"
+					stuff_to_output += "<B>[traitor_name]</B> was a late-joining [traitor.special_role]!"
 				else if (traitor.random_event_special_role)
-					stuff_to_output += "<B>[traitor_name] was a random event [traitor.special_role]!</B>"
+					stuff_to_output += "<B>[traitor_name]</B> was a random event [traitor.special_role]!"
 				else
-					stuff_to_output += "<B>[traitor_name] was a [traitor.special_role]!</B>"
+					stuff_to_output += "<B>[traitor_name]</B> was a [traitor.special_role]!"
 
 				if (traitor.special_role == ROLE_CHANGELING && traitor.current)
 					var/dna_absorbed = 0
@@ -127,7 +128,7 @@
 
 				if (traitor.special_role == ROLE_BLOB)
 					var/victims = length(traitor.blob_absorb_victims)
-					stuff_to_output += "<b>\ [victims <= 0 ? "Not a single person was" : "[victims] lifeform[s_es(victims)] were"] absorbed by them  <span class='success'>Players in Green</span></b>"
+					stuff_to_output += "\ [victims <= 0 ? "Not a single person was" : "[victims] lifeform[s_es(victims)] were"] absorbed by them  <span class='success'>Players in Green</span>"
 					if (victims)
 						var/absorbed_announce = "They absorbed: "
 						for (var/mob/living/carbon/human/AV in traitor.blob_absorb_victims)
@@ -140,7 +141,7 @@
 				if (traitor.special_role == ROLE_TRAITOR)
 					var/purchases = length(traitor.purchased_traitor_items)
 					var/surplus = length(traitor.traitor_crate_items)
-					stuff_to_output += "<b>They purchased [purchases <= 0 ? "nothing" : "[purchases] item[s_es(purchases)]"] with their [syndicate_currency]![purchases <= 0 ? " [pick("Wow", "Dang", "Gosh", "Good work", "Good job")]!" : null]</b>"
+					stuff_to_output += "They purchased [purchases <= 0 ? "nothing" : "[purchases] item[s_es(purchases)]"] with their [syndicate_currency]![purchases <= 0 ? " [pick("Wow", "Dang", "Gosh", "Good work", "Good job")]!" : null]"
 					if (purchases)
 						var/item_detail = "They purchased: "
 						for (var/i in traitor.purchased_traitor_items)
@@ -156,7 +157,7 @@
 				if (traitor.special_role == ROLE_SPY_THIEF)
 					var/purchases = length(traitor.purchased_traitor_items)
 					var/stolen = length(traitor.spy_stolen_items)
-					stuff_to_output += "<b>They stole [stolen <= 0 ? "nothing" : "[stolen] items"]!</b>"
+					stuff_to_output += "They stole [stolen <= 0 ? "nothing" : "[stolen] items"]!"
 					if (purchases)
 						var/stolen_detail = "Items Thieved: "
 						for (var/i in traitor.spy_stolen_items)
@@ -168,35 +169,35 @@
 						stuff_to_output += stolen_detail
 						stuff_to_output += rewarded_detail
 
-				var/count = 1
 				for (var/datum/objective/objective in traitor.objectives)
 	#ifdef CREW_OBJECTIVES
 					if (istype(objective, /datum/objective/crew)) continue
 	#endif
 					if (istype(objective, /datum/objective/miscreant)) continue
 
+					obj_count++
 					if (objective.check_completion())
-						stuff_to_output += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='success'><B>Success</B></span>"
+						stuff_to_output += "Objective #[obj_count]: [objective.explanation_text] <span class='success'><B>Success</B></span>"
 						logTheThing("diary",traitor,null,"completed objective: [objective.explanation_text]")
 						if (!isnull(objective.medal_name) && !isnull(traitor.current))
 							traitor.current.unlock_medal(objective.medal_name, objective.medal_announce)
 					else
-						stuff_to_output += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='alert'>Failed</span>"
+						stuff_to_output += "Objective #[obj_count]: [objective.explanation_text] <span class='alert'>Failed</span>"
 						logTheThing("diary",traitor,null,"failed objective: [objective.explanation_text]. Womp womp.")
 						traitorwin = 0
-					count++
 
 			// Please use objective.medal_name for medals that are tied to a specific objective instead of adding them here.
-			if (traitorwin)
-				if (traitor.current)
-					traitor.current.unlock_medal("MISSION COMPLETE", 1)
-				if (traitor.special_role == ROLE_WIZARD && traitor.current)
-					traitor.current.unlock_medal("You're no Elminster!", 1)
-				if (traitor.special_role == ROLE_WRESTLER && traitor.current)
-					traitor.current.unlock_medal("Cream of the Crop", 1)
-				stuff_to_output += "<B>The [traitor.special_role] was successful!<B>"
-			else
-				stuff_to_output += "<B>The [traitor.special_role] has failed!<B>"
+			if (obj_count)
+				if (traitorwin)
+					if (traitor.current)
+						traitor.current.unlock_medal("MISSION COMPLETE", 1)
+					if (traitor.special_role == ROLE_WIZARD && traitor.current)
+						traitor.current.unlock_medal("You're no Elminster!", 1)
+					if (traitor.special_role == ROLE_WRESTLER && traitor.current)
+						traitor.current.unlock_medal("Cream of the Crop", 1)
+					stuff_to_output += "<span class='success'>The [traitor.special_role] was successful!</span><br>"
+				else
+					stuff_to_output += "<span class='alert'>The [traitor.special_role] has failed!</span><br>"
 
 	#ifdef DATALOGGER
 			if (traitorwin)
@@ -232,6 +233,43 @@
 	boutput(world, stuff_to_output.Join("<br>"))
 
 	return 1
+
+/**
+  * Get a list of viable candidates for an antagonist type and expected number of antagonists, taking antagonist preferences into account if possible.
+  *
+  * Arguments:
+  * * type - requested antagonist type.
+  * * number - requested number of antagonists. If it can't find that many it will try to look again, but ignoring antagonist preferences.
+  */
+/datum/game_mode/proc/get_possible_enemies(type,number)
+	var/list/candidates = list()
+
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+		if (ishellbanned(player)) continue //No treason for you
+
+		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !(player.mind in candidates))
+			if (player.client.preferences.vars[get_preference_for_role(type)])
+				candidates += player.mind
+
+	if(length(candidates) < number)
+		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_[type] set to yes were ready. We need [number] so including players who don't want to be [type]s in the pool.")
+
+		for(var/client/C)
+			var/mob/new_player/player = C.mob
+			if (!istype(player)) continue
+			if (ishellbanned(player)) continue //No treason for you
+
+			if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !(player.mind in candidates))
+				candidates += player.mind
+				if ((number > 1) && (length(candidates) >= number))
+					break
+
+	if(length(candidates) < 1)
+		return list()
+	else
+		return candidates
 
 /datum/game_mode/proc/check_win()
 

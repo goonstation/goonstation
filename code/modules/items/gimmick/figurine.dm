@@ -33,7 +33,7 @@
 		else if (!istype(src.info))
 			var/datum/figure_info/randomInfo
 
-			var/potential_donator_ckey = usr?.mind.ckey
+			var/potential_donator_ckey = usr?.mind?.ckey
 			var/donator_figtype = null
 			if (potential_donator_ckey) // check if the player has a figurine (therefore a donator)
 				for (var/datum/figure_info/patreon/fig as anything in concrete_typesof(/datum/figure_info/patreon))
@@ -712,7 +712,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "vicky"
 		ckey = "mrprogamer96"
 
-	vicky
+	camrynstern
 		name = "\improper Camryn Stern"
 		icon_state = "camrynstern"
 		ckey = "richardgere"
@@ -731,6 +731,11 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Bruce McAfee"
 		icon_state = "brucemcafee"
 		ckey = "mysticmidgit"
+
+	chefbot
+		name = "\improper ChefBot"
+		icon_state = "chefbot"
+		ckey = "skeletondoot"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"

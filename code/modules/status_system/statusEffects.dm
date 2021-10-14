@@ -335,7 +335,7 @@
 
 		tickSpacing = 3 SECONDS
 
-		damage_tox = 1
+		damage_tox = 0
 		damage_type = DAMAGE_BURN
 
 		var/howMuch = ""
@@ -382,8 +382,8 @@
 			var/mob/M = null
 			if(ismob(owner))
 				M = owner
-
-			damage_tox = (sqrt(duration/20 + 5) - 1)
+			if(!ismobcritter(M))
+				damage_tox = (sqrt(min(duration, 90 SECONDS)/20 + 5) - 1)
 			stage = get_stage(duration)
 			switch(stage)
 				if(1)
@@ -406,7 +406,7 @@
 				if (prob(stage - 2 - !!(M.traitHolder?.hasTrait("stablegenes"))) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
 					boutput(M, "<span class='alert'>You mutate!</span>")
 					M.bioHolder.RandomEffect("either")
-				if(prob(stage - 1) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
+				if(!ON_COOLDOWN(M, "radiation_stun_check", 1 SECOND) && prob(stage - 1) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
 					M.changeStatus("weakened", 3 SECONDS)
 					boutput(M, "<span class='alert'>You feel weak.</span>")
 					M.emote("collapse")
@@ -491,7 +491,7 @@
 				M = owner
 
 
-			damage_tox = (sqrt(duration/20 + 5) - 0.5)
+			damage_tox = (sqrt(min(duration, 90 SECONDS)/20 + 5) - 0.5)
 			damage_brute = damage_tox/2
 
 			stage = get_stage(duration)
@@ -516,7 +516,7 @@
 				if (prob(stage - !!(M.traitHolder?.hasTrait("stablegenes"))) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
 					boutput(M, "<span class='alert'>You mutate!</span>")
 					M.bioHolder.RandomEffect("either")
-				if(prob(stage-1) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
+				if(!ON_COOLDOWN(M, "n_radiation_stun_check", 1 SECOND) && prob(stage-1) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
 					M.changeStatus("weakened", 5 SECONDS)
 					boutput(M, "<span class='alert'>You feel weak.</span>")
 					M.emote("collapse")
@@ -564,6 +564,8 @@
 
 			switchStage(getStage())
 			owner.delStatus("shivering")
+
+			logTheThing("combat", owner, null, "gains the burning status effect at [log_loc(owner)]")
 
 			if(istype(owner, /mob/living))
 				var/mob/living/L = owner
@@ -636,13 +638,13 @@
 
 			switch(stage)
 				if(1)
-					damage_burn = 0.9 * prot
+					damage_burn = 1 * prot
 					howMuch = ""
 				if(2)
 					damage_burn = 2 * prot
 					howMuch = "very much "
 				if(3)
-					damage_burn = 3.5 * prot
+					damage_burn = 4 * prot
 					howMuch = "extremely "
 
 			return ..(timePassed)
@@ -1057,31 +1059,31 @@
 		unique = 1
 		duration = INFINITE_STATUS
 		maxDuration = null
-		var/mob/living/carbon/human/H
+		var/mob/living/L
 		var/sleepcount = 5 SECONDS
 
 		onAdd(optional=null)
 			. = ..()
-			if (ishuman(owner))
-				H = owner
+			if (isliving(owner))
+				L = owner
 				sleepcount = 5 SECONDS
 			else
 				owner.delStatus("buckled")
 
 		clicked(list/params)
-			if(H.buckled)
-				H.buckled.Attackhand(H)
+			if(L.buckled)
+				L.buckled.Attackhand(L)
 
 		onUpdate(timePassed)
-			if (H && !H.buckled)
+			if (L && !L.buckled)
 				owner.delStatus("buckled")
 			else
 				if (sleepcount > 0)
 					sleepcount -= timePassed
 					if (sleepcount <= 0)
-						if (H.hasStatus("resting") && istype(H.buckled,/obj/stool/bed))
-							var/obj/stool/bed/B = H.buckled
-							B.sleep_in(H)
+						if (L.hasStatus("resting") && istype(L.buckled,/obj/stool/bed))
+							var/obj/stool/bed/B = L.buckled
+							B.sleep_in(L)
 						else
 							sleepcount = 3 SECONDS
 
@@ -1579,7 +1581,7 @@
 			weighted_average = 0
 			#ifdef CREATE_PATHOGENS
 			if(!isdead(L))
-				var/datum/pathogen/P = unpool(/datum/pathogen)
+				var/datum/pathogen/P = new /datum/pathogen
 				P.create_weak()
 				P.spread = 0
 				wrap_pathogen(L.reagents, P, 10)
@@ -1890,7 +1892,7 @@
 	maxDuration = 2 MINUTES
 	id = "drowsy"
 	name = "Drowsy"
-	icon_state = "?1"
+	icon_state = "drowsy"
 	desc = "You feel very drowsy"
 	movement_modifier = new/datum/movement_modifier/drowsy
 	var/tickspassed = 0
@@ -1911,7 +1913,7 @@
 	id = "passing_out"
 	name = "Passing out"
 	desc = "You're so tired you're about to pass out!"
-	icon_state = "disorient"
+	icon_state = "passing_out"
 	maxDuration = 5 SECONDS
 
 	onRemove()

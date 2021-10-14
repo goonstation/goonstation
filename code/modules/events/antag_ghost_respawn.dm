@@ -316,9 +316,7 @@
 			if ("Arcfiend")
 				var/mob/living/L = M3.humanize()
 				if (istype(L))
-#ifdef SECRETS_ENABLED
 					L.make_arcfiend()
-#endif
 					role = ROLE_ARCFIEND
 #ifdef RP_MODE
 					objective_path = /datum/objective_set/traitor/rp_friendly

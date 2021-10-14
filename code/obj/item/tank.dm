@@ -33,7 +33,8 @@ Contains:
 
 	New()
 		..()
-		src.air_contents = unpool(/datum/gas_mixture)
+		src.air_contents = new /datum/gas_mixture
+		src.air_contents.vacuum()
 		src.air_contents.volume = 70 //liters
 		src.air_contents.temperature = T20C
 		processing_items |= src
@@ -43,7 +44,7 @@ Contains:
 
 	disposing()
 		if(air_contents)
-			pool(air_contents)
+			qdel(air_contents)
 			air_contents = null
 		processing_items.Remove(src)
 		..()

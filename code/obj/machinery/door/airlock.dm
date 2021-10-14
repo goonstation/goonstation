@@ -1305,7 +1305,7 @@ About the new airlock wires panel:
 		if(world.time - src.last_bump <= 30)
 			return
 
-		if (issilicon(AM) && (aiControlDisabled > 0 || cant_emag))
+		if (issilicon(AM) && (aiControlDisabled == 1 || cant_emag))
 			return
 
 		src.last_bump = world.time
@@ -1334,7 +1334,7 @@ About the new airlock wires panel:
 			if (src.shock(user, 100))
 				interact_particle(user,src)
 				return
-	else if (aiControlDisabled > 0 || cant_emag)
+	else if (aiControlDisabled == 1 || cant_emag)
 		return
 
 	if (ishuman(user) && src.density && src.brainloss_stumble && src.do_brainstumble(user) == 1)
@@ -1433,6 +1433,7 @@ About the new airlock wires panel:
 				else
 					src.RL_SetOpacity(0)
 			src.operating = 0
+			src.update_icon()
 
 	else if ((!src.density) && (!( src.welded ) && !( src.operating ) && !( src.locked )))
 		SPAWN_DBG( 0 )
@@ -1449,6 +1450,7 @@ About the new airlock wires panel:
 				else
 					src.RL_SetOpacity(1)
 			src.operating = 0
+			src.update_icon()
 	else if (src.welded)
 		boutput(usr, "<span class='alert'>You try to pry [src]  open, but it won't budge! The sides of \the [src] seem to be welded.</span>")
 
@@ -1801,7 +1803,7 @@ obj/machinery/door/airlock
 	if (!isAI(user) && !issilicon(user))
 		return
 
-	if (src.aiControlDisabled) return
+	if (src.aiControlDisabled == 1) return
 
 	if (user.client.check_key(KEY_OPEN) && user.client.check_key(KEY_BOLT))
 		. = 1

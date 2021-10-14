@@ -81,7 +81,7 @@
 
 
 	name = "adventure bomb"
-	invisibility = 20
+	invisibility = INVIS_ADVENTURE
 	icon = 'icons/obj/items/assemblies.dmi'
 	icon_state = "Pipe_Timed"
 	density = 0
@@ -121,7 +121,7 @@
 /obj/adventurepuzzle/triggerable/targetable/portal
 
 	name = "adventure portal"
-	invisibility = 20
+	invisibility = INVIS_ADVENTURE
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "portal"
 	density = 0
