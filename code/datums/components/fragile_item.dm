@@ -57,11 +57,3 @@
 	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_POST)
 	UnregisterSignal(parent, COMSIG_MOVABLE_THROW_END)
 	. = ..()
-
-
-/obj/item/knife/butcher/fragile
-	name = "bacon sword"
-
-	New()
-		. = ..()
-		AddComponent(/datum/component/fragile_item, safe_hits = 3, probability_of_breaking = 100, stay_in_hand = 1, type_to_break_into = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon)
