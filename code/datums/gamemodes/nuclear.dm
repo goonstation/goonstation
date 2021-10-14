@@ -156,13 +156,24 @@
 
 	return 1
 
+/datum/game_mode/nuclear/proc/pick_leader()
+	RETURN_TYPE(/datum/mind)
+	var/list/datum/mind/possible_leaders = list()
+	for(var/datum/mind/mind in syndicates)
+		if(mind.current.client.preferences.be_syndicate_commander)
+			possible_leaders += mind
+	if(length(possible_leaders))
+		return pick(possible_leaders)
+	return pick(syndicates)
+
 /datum/game_mode/nuclear/post_setup()
 	var/leader_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord", "General", "Warlord", "Commissar")
-	var/leader_selected = 0
 
 	var/list/callsign_pool_keys = list("nato", "melee_weapons", "colors", "birds", "mammals", "moons")
 	//Alphabetical agent callsign lists are delcared here, seperated in to catagories.
 	var/list/callsign_list = strings("agent_callsigns.txt", pick(callsign_pool_keys))
+
+	var/datum/mind/leader_mind = src.pick_leader()
 
 	for(var/datum/mind/synd_mind in syndicates)
 		bestow_objective(synd_mind,/datum/objective/specialist/nuclear)
@@ -176,14 +187,13 @@
 		synd_mind.store_memory("The bomb must be armed in <B>[src.target_location_name]</B>.", 0, 0)
 		boutput(synd_mind.current, "We have identified a major structural weakness in the [station_or_ship()]'s design. Arm the bomb in <B>[src.target_location_name]</B> to obliterate [station_name(1)].")
 
-		if(!leader_selected)
+		if(synd_mind == leader_mind)
 			synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE_BOSS))
 			if(!synd_mind.current.loc)
 				synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE))
 			synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
 			equip_syndicate(synd_mind.current, 1)
 			new /obj/item/device/audio_log/nuke_briefing(synd_mind.current.loc, target_location_name)
-			leader_selected = 1
 		else
 			synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE))
 			var/callsign = pick(callsign_list)
