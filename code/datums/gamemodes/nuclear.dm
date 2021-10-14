@@ -200,6 +200,8 @@
 			synd_mind.current.real_name = "[syndicate_name()] Operative [callsign]" //new naming scheme
 			callsign_list -= callsign
 			equip_syndicate(synd_mind.current, 0)
+			var/obj/item/device/radio/headset/syndicate/headset = synd_mind.current.ears
+			headset.icon_override = "syndie_letters/[copytext(callsign, 1, 2)]"
 		boutput(synd_mind.current, "<span class='alert'>Your headset allows you to communicate on the syndicate radio channel by prefacing messages with :h, as (say \":h Agent reporting in!\").</span>")
 
 		synd_mind.current.antagonist_overlay_refresh(1, 0)
