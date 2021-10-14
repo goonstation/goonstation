@@ -1043,7 +1043,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 // AI and Cyborgs
 
 /datum/job/civilian/AI
-	// name = "AI"
+	name = "AI"
 	linkcolor = "#999999"
 	limit = 1
 	no_late_join = 1
@@ -1063,7 +1063,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		return M.AIize()
 
 /datum/job/civilian/cyborg
-	// name = "Cyborg"
+	name = "Cyborg"
 	linkcolor = "#999999"
 	limit = 8
 	no_late_join = 1
