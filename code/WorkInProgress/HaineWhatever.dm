@@ -1311,6 +1311,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	mat_changename = 0
 	mat_changedesc = 0
 	mat_appearances_to_ignore = list("gold") // we already look fine ty
+	muzzle_flash = "muzzle_flash_launch"
 	var/last_shot = 0
 	var/shot_delay = 15
 	var/cash_amt = 1000
@@ -1337,6 +1338,11 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 				return
 
 			last_shot = world.time
+
+			if (src.muzzle_flash)
+				if (isturf(user.loc))
+					var/turf/origin = user.loc
+					muzzle_flash_attack_particle(user, origin, target, src.muzzle_flash)
 
 			var/turf/T = get_turf(src)
 			var/chosen_bling// = pick(60;/obj/item/spacecash,20;/obj/item/coin,10;/obj/item/raw_material/gemstone,10;/obj/item/raw_material/gold)
