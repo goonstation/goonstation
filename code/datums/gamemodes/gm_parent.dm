@@ -243,6 +243,7 @@
   */
 /datum/game_mode/proc/get_possible_enemies(type,number)
 	var/list/candidates = list()
+	var/list/unpicked_clients = list() // used to fill in the quota if we can't find enough players with the antag preference on
 
 	for(var/client/C)
 		var/mob/new_player/player = C.mob
@@ -252,19 +253,22 @@
 		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !(player.mind in candidates))
 			if (player.client.preferences.vars[get_preference_for_role(type)])
 				candidates += player.mind
+			else // eligible but has the preference off, keeping in mind in case we don't find enough candidates with it on to fill the gap
+				unpicked_clients.Add(player)
 
-	if(length(candidates) < number)
-		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_[type] set to yes were ready. We need [number] so including players who don't want to be [type]s in the pool.")
+	if(length(candidates) < number) // ran out of eligible players with the preference on, filling the gap with other players
+		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [length(candidates)] players with be_[type] set to yes were ready. We need [number] so including players who don't want to be [type]s in the pool.")
 
-		for(var/client/C)
-			var/mob/new_player/player = C.mob
-			if (!istype(player)) continue
-			if (ishellbanned(player)) continue //No treason for you
-
-			if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !(player.mind in candidates))
-				candidates += player.mind
-				if ((number > 1) && (length(candidates) >= number))
-					break
+		while(length(candidates) < number)
+			var/client/random_client = pick(unpicked_clients)
+			unpicked_clients.Remove(random_client)
+			var/mob/new_player/player = random_client.mob
+			candidates += player.mind
+			if (!length(unpicked_clients)) // ran out of clients
+				if(length(candidates) < number) // somehow ran out of clients without filling our candidate quota
+					message_admins("<span class='alert'><b>WARNING:</b> get_possible_enemies was asked for more antagonists ([number]) than it could find candidates ([length(candidates)]) for. This could be a freak accident or an error in the code requesting more antagonists than possible. The round may have an irregular number of antagonists of type [type].")
+					logTheThing("debug", null, null, "<b>WARNING:</b> get_possible_enemies was asked for more antagonists ([number]) than it could find candidates ([length(candidates)]) for. This could be a freak accident or an error in the code requesting more antagonists than possible. The round may have an irregular number of antagonists of type [type].")
+				break
 
 	if(length(candidates) < 1)
 		return list()
