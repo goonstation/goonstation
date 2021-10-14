@@ -458,6 +458,17 @@ var/global/noir = 0
 					ircmsg["msg"] = "Added a note for [player]: [the_note]"
 					ircbot.export("admin", ircmsg)
 
+		if("loginnotice")
+			var/player = null
+			var/mob/M = locate(href_list["target"])
+			if(M)
+				player = M.ckey
+			else
+				player = href_list["target"]
+			if(!player)
+				return
+			src.setLoginNotice(player)
+
 		if("viewcompids")
 			var/player = href_list["targetckey"]
 

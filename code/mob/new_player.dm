@@ -151,6 +151,10 @@ mob/new_player
 		else if(client)
 			winshow(src.last_client, "pregameBrowser", 0)
 			src.last_client << browse("", "window=pregameBrowser")
+
+		if(client)
+			client.show_login_notice()
+
 /*
 		var/output = "<HR><B>New Player Options</B><BR>"
 		output += "<HR><br><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A><BR><BR>"
@@ -184,6 +188,10 @@ mob/new_player
 						stat("[player.key]", (player.ready)?("(Playing)"):(null)) // show them normally
 
 	Topic(href, href_list[])
+		if (client.has_login_notice_pending(TRUE))
+			// do nothing, they'll get the alert sent again
+			return
+
 		if(href_list["show_preferences"])
 			client.preferences.ShowChoices(src)
 			return 1

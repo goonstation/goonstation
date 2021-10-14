@@ -580,6 +580,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\admin\gibverbs.dm"
 #include "code\modules\admin\jobban.dm"
 #include "code\modules\admin\lag_hacks.dm"
+#include "code\modules\admin\loginnotice.dm"
 #include "code\modules\admin\massmodifyvariables.dm"
 #include "code\modules\admin\modifyvariables.dm"
 #include "code\modules\admin\oocban.dm"
