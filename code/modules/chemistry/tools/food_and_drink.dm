@@ -459,14 +459,12 @@
 				//Make them fall over, they lost their balance.
 				C.changeStatus("weakened", 2 SECONDS)
 		else
-			if (ishuman(C))
-				var/mob/living/carbon/human/H = C
-				if (H.restrained()) // Can't chug if your arms are not available
-					if (prob(1)) // Actually you can if you're really lucky
-						H.visible_message("<span class='alert'>Holy shit! [H] grabs the [src] with their teeth and prepares to chug!</span>")
-					else
-						boutput(H, "<span class='alert'>You can't grab the [src] with your arms to chug it.</span>")
-						return
+			if (C.restrained()) // Can't chug if your arms are not available
+				if (prob(1)) // Actually you can if you're really lucky
+					C.visible_message("<span class='alert'>Holy shit! [C] grabs the [src] with their teeth and prepares to chug!</span>")
+				else
+					boutput(C, "<span class='alert'>You can't grab the [src] with your arms to chug it.</span>")
+					return
 			actions.start(new /datum/action/bar/icon/chug(C, src), C)
 
 	//Wow, we copy+pasted the heck out of this... (Source is chemistry-tools dm)
