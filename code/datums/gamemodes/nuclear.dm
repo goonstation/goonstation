@@ -108,7 +108,6 @@
 			"the central warehouse" = list(/area/station/storage/warehouse),
 			"the courtroom" = list(/area/station/crew_quarters/courtroom, /area/station/crew_quarters/juryroom),
 			"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/surgery, /area/station/medical/medbay/lobby),
-			"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
 			"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
 			"the main bridge" = list(/area/station/bridge),
 			"the robotics lab" = list(/area/station/medical/robotics))
