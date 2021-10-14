@@ -243,7 +243,8 @@
   */
 /datum/game_mode/proc/get_possible_enemies(type,number)
 	var/list/candidates = list()
-	var/list/unpicked_clients = list() // used to fill in the quota if we can't find enough players with the antag preference on
+	/// Used to fill in the quota if we can't find enough players with the antag preference on.
+	var/list/unpicked_candidate_minds = list()
 
 	for(var/client/C)
 		var/mob/new_player/player = C.mob
@@ -254,19 +255,18 @@
 			if (player.client.preferences.vars[get_preference_for_role(type)])
 				candidates += player.mind
 			else // eligible but has the preference off, keeping in mind in case we don't find enough candidates with it on to fill the gap
-				unpicked_clients.Add(player)
+				unpicked_candidate_minds.Add(player.mind)
 
 	if(length(candidates) < number) // ran out of eligible players with the preference on, filling the gap with other players
 		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [length(candidates)] players with be_[type] set to yes were ready. We need [number] so including players who don't want to be [type]s in the pool.")
 
-		if(length(unpicked_clients))
-			shuffle_list(unpicked_clients)
+		if(length(unpicked_candidate_minds))
+			shuffle_list(unpicked_candidate_minds)
 			var/iteration = 1
 			while(length(candidates) < number)
-				var/client/random_client = unpicked_clients[iteration]
-				var/mob/new_player/player = random_client.mob
-				candidates += player.mind
-				if (iteration > length(unpicked_clients)) // ran out of eligible clients
+				candidates += unpicked_candidate_minds[iteration]
+				iteration++
+				if (iteration > length(unpicked_candidate_minds)) // ran out of eligible clients
 					break
 
 	if(length(candidates) < number) // somehow failed to meet our candidate amount quota
