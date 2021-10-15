@@ -1,8 +1,20 @@
+	/**
+		* Defines a "fragile item" component.
+		*
+		* An item with this component will be prone to breaking when it's used to attack or is being thrown and being replaced by another object (i.e. a glass shard).
+		*
+		* The component defines default values but they can also be manually set when initializing the component.
+		*/
 /datum/component/fragile_item
-	var/safe_hits // number of attacks this item can perform safely before having any chance to break
-	var/probability_of_breaking // after we run out of safe_hits, every further hit has prob(this var) to break
-	var/stay_in_hand // will try to put new broken into item back into user's hand if possible (note: will only work if type_to_break_into is an item)
-	var/type_to_break_into // type that's spawned in place of this item when it breaks, i.e. of a glass shard
+	/// The number of violent interactions (attacks with it, being thrown) this item can perform safely before rolling for chances to break.
+	var/safe_hits
+	/// When safe_hits run out, every further violent interaction has a prob(this_variable) to break.
+	var/probability_of_breaking
+	/// If set, the item will try to put itself back into the user's hand upon breaking (will only work for item types).
+	var/stay_in_hand
+	/// When the item breaks, it will be replaced by the type defined by this variable.
+	var/type_to_break_into
+	/// Sound played at the location of the item breaking.
 	var/sound_to_play_on_breaking
 
 /datum/component/fragile_item/Initialize(var/safe_hits = 3, var/probability_of_breaking = 40, var/stay_in_hand = 1, var/type_to_break_into = /obj/item/raw_material/shard/glass, var/sound_to_play_on_breaking = "sound/impact_sounds/Crystal_Shatter_1.ogg")
