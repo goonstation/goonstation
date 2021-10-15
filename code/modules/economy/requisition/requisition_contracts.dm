@@ -2,6 +2,8 @@
 //adapted in small part from azrun's special order stuff
 //this does not send its own crate so it's a lot more cut down
 
+//todo: pinning one contract to persist past market cycles
+
 //contract entries: contract creation instantiates these for "this much of whatever"
 //these entries each have their own "validation protocol", automatically set up when instantiated
 
@@ -28,13 +30,17 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath)
 /datum/rc_entry/itembypath
 	entryclass = RC_ITEMBYPATH
 	var/typepath = /obj/gibtyson //item that must be sold
+	var/exactpath = FALSE //evaluates precise path, instead of path and subtypes
 
 	rc_eval(obj/eval_item)
 		..()
 		. = FALSE
-		if(eval_item.type == typepath)
+		if(exactpath && eval_item.type == typepath)
 			src.rollcount++
-			. = TRUE //let manager know something was found in passed eval item
+			. = TRUE //let manager know passed eval item is claimed by contract
+		else if(istype(eval_item,typepath))
+			src.rollcount++
+			. = TRUE
 		return
 
 //reagents, by the unit
@@ -49,13 +55,25 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent)
 		if(istype(eval_item,/obj/item/reagent_containers))
 			var/obj/item/reagent_containers/C = eval_item
 			rollcount += C.reagents.get_reagent_amount(chemname)
-			. = TRUE //let manager know something was found in passed eval item
+			. = TRUE //let manager know reagent was found in passed eval item
 		return
 
-//stackeroo, yet to do
-//ABSTRACT_TYPE(/datum/rc_entry/stack)
-//datum/rc_entry/stack
-//	entryclass = RC_STACK
+
+ABSTRACT_TYPE(/datum/rc_entry/stack)
+/datum/rc_entry/stack
+	entryclass = RC_STACK
+	name = "super bass" //for things like ores, you may want to tag as plural, so you end up with something like "4 or more Bohrum"
+	var/typepath = /obj/item/raw_material/bohrum
+	var/typepath_alt //use when an item can have two stackable forms, such as with a raw and refined ore
+
+	rc_eval(obj/item/eval_item)
+		..()
+		. = FALSE
+		if(eval_item.type == typepath || (typepath_alt && eval_item.type == typepath_alt))
+			if(eval_item.amount)
+				rollcount += eval_item.amount
+				. = TRUE //let manager know passed eval item is claimed by contract
+		return
 
 //contracts, which contain entries and are what are exposed to the qm side of things
 ABSTRACT_TYPE(/datum/req_contract)
@@ -74,10 +92,10 @@ ABSTRACT_TYPE(/datum/req_contract)
 				if(RC_ITEMBYPATH)
 					src.requis_desc += "[rce.count]x [rce.name][rce.isplural ? null : s_es(rce.count,rce.es)]<br>"
 				if(RC_REAGENT)
-					src.requis_desc += "[rce.count] unit[s_es(rce.count)] of [rce.name]<br>"
+					src.requis_desc += "[rce.count] or more unit[s_es(rce.count)] of [rce.name]<br>"
 				if(RC_STACK)
-					src.requis_desc += "[rce.count] count of [rce.name]<br>"
-			src.payout += rce.feemod
+					src.requis_desc += "[rce.count] or more [rce.name][rce.isplural ? null : s_es(rce.count,rce.es)]<br>"
+			src.payout += rce.feemod * rce.count
 
 	proc/requisify(obj/storage/crate/sell_crate)
 		var/contents = list() //everything in crate
