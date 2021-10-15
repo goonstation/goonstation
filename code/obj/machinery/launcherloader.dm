@@ -390,6 +390,10 @@
 	desc = "Used to print barcode stickers for the cargo routing system, and to mark crates for sale to traders."
 	icon_state = "qm_barcode_comp"
 
+	New() //requisition support, lets you not have to readd this to subtypes for different stations
+		destinations += "Requisitions"
+		..()
+
 	attack_hand(var/mob/user as mob)
 		if (..(user))
 			return
