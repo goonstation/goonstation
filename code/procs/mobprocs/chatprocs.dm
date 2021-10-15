@@ -649,6 +649,14 @@
 		if (M.client.holder && !M.client.only_local_looc && !M.client.player_mode)
 			recipients += M.client
 
+	var looc_style = ""
+	if (src.client.holder && !src.client.stealth)
+		if (src.client.holder.level == LEVEL_BABBY)
+			looc_style = "color: #4cb7db;"
+		else
+			looc_style = "color: #cd6c4c;"
+	else if (src.client.is_mentor() && !src.client.stealth)
+		looc_style = "color: #a24cff;"
 
 	var/image/chat_maptext/looc_text = null
 	looc_text = make_chat_maptext(src, "\[LOOC: [msg]]", looc_style)
@@ -668,7 +676,6 @@
 			continue
 
 		var looc_class = ""
-		var looc_style = ""
 		var display_name = src.key
 
 		if (src.client.stealth || src.client.alt_key)
@@ -680,13 +687,10 @@
 		if (src.client.holder && (!src.client.stealth || C.holder))
 			if (src.client.holder.level == LEVEL_BABBY)
 				looc_class = "gfartlooc"
-				looc_style = "color: #4cb7db;"
 			else
 				looc_class = "adminlooc"
-				looc_style = "color: #cd6c4c;"
 		else if (src.client.is_mentor() && !src.client.stealth)
 			looc_class = "mentorlooc"
-			looc_style = "color: #a24cff;"
 
 		var/rendered = "<span class=\"looc [looc_class]\"><span class=\"prefix\">LOOC:</span> <span class=\"name\" data-ctx='\ref[src.mind]'>[display_name]:</span> <span class=\"message\">[msg]</span></span>"
 
