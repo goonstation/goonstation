@@ -299,7 +299,7 @@ Returns:
 		src.underlays += alphaMask
 		src.underlays += compImage
 
-		src.filters += filter(type="layer", render_source="*portaltrg")
+		add_filter("layer", 1, layering_filter(render_source="*portaltrg"))
 
 	New()
 		..()

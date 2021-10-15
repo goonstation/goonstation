@@ -226,8 +226,9 @@
 
 	New()
 		..()
-		src.filters += filter(type="rays", size=64, density=src.ray_density, factor=1, offset=rand(1000), threshold=0, color=src.color, x=shift_x, y=shift_y)
-		var/f = src.filters[length(src.filters)]
+		add_filter("rays", 1, rays_filter(size=64, density=src.ray_density, factor=1, offset=rand(1000), threshold=0, color=src.color, x=shift_x, y=shift_y))
+
+		var/f = src.get_filter("rays")
 		animate(f, offset=f:offset + 100, time=5 MINUTES, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=-1)
 
 
@@ -389,20 +390,17 @@
 	icon_state = "machobelt"
 	item_state = "machobelt"
 	var/muscliness_factor = 7
-	var/filter
 
 	equipped(var/mob/user)
 		..()
-		user.filters += filter(type="displace", icon=icon('icons/effects/distort.dmi', "muscly"), size=0)
-		src.filter = user.filters[length(user.filters)]
-		animate(filter, size=src.muscliness_factor, time=1 SECOND, easing=SINE_EASING)
+		user.add_filter("muscly", 1, displacement_map_filter(icon=icon('icons/effects/distort.dmi', "muscly"), size=0))
+		animate(user.get_filter("muscly"), size=src.muscliness_factor, time=1 SECOND, easing=SINE_EASING)
 
 	unequipped(var/mob/user)
 		..()
-		animate(filter, size=0, time=1 SECOND, easing=SINE_EASING)
+		animate(user.get_filter("muscly"), size=0, time=1 SECOND, easing=SINE_EASING)
 		SPAWN_DBG(1 SECOND)
-			user.filters -= filter
-			filter = null
+			user.remove_filter("muscly")
 
 
 // Among Us memery

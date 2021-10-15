@@ -1,4 +1,9 @@
 
+(t)fri oct 15 21
+(u)Zamujasa
+(e)🆕|feature
+(*)Admins can now set a message for a player that will be displayed on next login, for when we need to tell you something but you aren't online.
+(*)The future is now.
 (t)thu oct 14 21
 (u)pali
 (p)6308
