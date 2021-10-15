@@ -42,13 +42,16 @@
 	else
 		if(prob(probability_of_breaking))
 			user.u_equip(I)
-			var/new_object = new type_to_break_into(get_turf(user))
-			if(stay_in_hand)
-				if(isitem(new_object))
-					var/obj/item/new_item = new_object
-					user.put_in_hand_or_drop(new_item)
-			user.visible_message("<span class='alert'>As [user] swings with the [I], a shattering sound echoes, leaving behind \a [new_object]!</span>")
-			playsound(get_turf(new_object), sound_to_play_on_breaking, 80, 1)
+			if(!type_to_break_into)
+				user.visible_message("<span class='alert'>As [user] swings with the [I], a shattering sound echoes, leaving behind nothing but dust!</span>")
+			else
+				var/new_object = new type_to_break_into(get_turf(user))
+				if(stay_in_hand)
+					if(isitem(new_object))
+						var/obj/item/new_item = new_object
+						user.put_in_hand_or_drop(new_item)
+				user.visible_message("<span class='alert'>As [user] swings with the [I], a shattering sound echoes, leaving behind \a [new_object]!</span>")
+			playsound(get_turf(user), sound_to_play_on_breaking, 80, 1)
 			qdel(I)
 			return
 
@@ -59,8 +62,11 @@
 	else
 		if(prob(probability_of_breaking))
 			SPAWN_DBG(0)
-				var/new_object = new type_to_break_into(get_turf(thrown_item))
-				thrown_item.visible_message("<span class='alert'>As [thrown_item] stops, a shattering sound echoes, leaving behind \a [new_object]!</span>")
+				if(!type_to_break_into)
+					thrown_item.visible_message("<span class='alert'>As [thrown_item] stops, a shattering sound echoes, leaving nothing but dust!</span>")
+				else
+					var/new_object = new type_to_break_into(get_turf(thrown_item))
+					thrown_item.visible_message("<span class='alert'>As [thrown_item] stops, a shattering sound echoes, leaving behind \a [new_object]!</span>")
 				playsound(get_turf(thrown_item), sound_to_play_on_breaking, 80, 1)
 				qdel(thrown_item)
 				return
