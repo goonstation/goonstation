@@ -246,7 +246,7 @@ var/list/headset_channel_lookup
 	var/tooltip = src.icon_tooltip
 	if(isnull(tooltip))
 		tooltip = src.name
-	if(src.icon_tooltip)
+	if(tooltip)
 		. = {"<div class='tooltip'>[.]<span class="tooltiptext">[tooltip]</span></div>"}
 
 /obj/item/device/radio/talk_into(mob/M as mob, messages, secure, real_name, lang_id)
