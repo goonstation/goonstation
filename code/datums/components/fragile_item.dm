@@ -1,10 +1,10 @@
-	/**
-		* Defines a "fragile item" component.
-		*
-		* An item with this component will be prone to breaking when it's used to attack or is being thrown and being replaced by another object (i.e. a glass shard).
-		*
-		* The component defines default values but they can also be manually set when initializing the component.
-		*/
+/**
+  * Defines a "fragile item" component.
+  *
+  * An item with this component will be prone to breaking when it's used to attack or is being thrown and being replaced by another object (i.e. a glass shard).
+  *
+  * The component defines default values but they can also be manually set when initializing the component.
+  */
 /datum/component/fragile_item
 	/// The number of violent interactions (attacks with it, being thrown) this item can perform safely before rolling for chances to break.
 	var/safe_hits
