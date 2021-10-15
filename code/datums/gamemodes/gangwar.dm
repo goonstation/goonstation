@@ -57,7 +57,7 @@
 
 	var/num_teams = max(setup_min_teams, min(round((num_players) / 9), setup_max_teams)) //1 gang per 9 players
 
-	var/list/leaders_possible = get_possible_leaders(num_teams)
+	var/list/leaders_possible = get_possible_enemies(ROLE_GANG_LEADER, num_teams)
 	if (num_teams > leaders_possible.len)
 		num_teams = length(leaders_possible)
 
@@ -187,37 +187,6 @@
 	item2_used += leaderMind.gang.item2
 
 	return
-
-
-/datum/game_mode/gang/proc/get_possible_leaders(minimum_leaders=1)
-	var/list/candidates = list()
-
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-		if (ishellbanned(player)) continue //No treason for you
-
-		if ((player.ready) && !(player.mind in leaders) && !(player.mind in token_players) && !candidates.Find(player.mind))
-			if(player.client.preferences.be_gangleader)
-				candidates += player.mind
-
-	if(candidates.len < minimum_leaders)
-		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Not enough players with be_gangleader set to yes, including players who don't want to be misc enemies in the pool for Gang Leader selection.")
-		for(var/client/C)
-			var/mob/new_player/player = C.mob
-			if (!istype(player)) continue
-
-			if (ishellbanned(player)) continue //No treason for you
-			if ((player.ready) && !(player.mind in leaders) && !(player.mind in token_players) && !candidates.Find(player.mind))
-				candidates += player.mind
-
-				if (candidates.len >= minimum_leaders)
-					break
-
-	if(candidates.len < 1)
-		return list()
-	else
-		return candidates
 
 /datum/game_mode/gang/check_finished()
 	if(emergency_shuttle.location == SHUTTLE_LOC_RETURNED)
@@ -1427,7 +1396,8 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 	"vault13" = /obj/item/clothing/under/gimmick/vault13,
 	"duke" = /obj/item/clothing/under/gimmick/duke,
 	"psyche" = /obj/item/clothing/under/gimmick/psyche,
-	"tourist" = /obj/item/clothing/under/misc/tourist)
+	"tourist" = /obj/item/clothing/under/misc/tourist,
+	"western" = /obj/item/clothing/under/misc/western)
 
 	//must be mask or hat. type /obj/item/clothing/mask or /obj/item/clothing/head
 	headwear_list = list(
@@ -1466,7 +1436,8 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 	"psyche" = /obj/item/clothing/head/psyche,
 	"formal_turban" = /obj/item/clothing/head/formal_turban,
 	"snake" = /obj/item/clothing/head/snake,
-	"powdered_wig" = /obj/item/clothing/head/powdered_wig)
+	"powdered_wig" = /obj/item/clothing/head/powdered_wig,
+	"westhat_black" = /obj/item/clothing/head/westhat/black)
 
 	//items purchasable from gangs
 /datum/gang_item

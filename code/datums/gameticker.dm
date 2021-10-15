@@ -558,9 +558,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				logTheThing("diary",crewMind,null,"failed objective: [CO.explanation_text]. Bummer!")
 				allComplete = 0
 				crewMind.all_objs = 0
-
 		if (allComplete && count)
 			successfulCrew += "[crewMind.current.real_name] ([crewMind.key])"
+		boutput(crewMind.current, "<br>")
 #endif
 
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] mode.declare_completion()")

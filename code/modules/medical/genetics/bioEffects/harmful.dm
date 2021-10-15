@@ -647,11 +647,15 @@
 	stability_loss = -10	//maybe 5
 	var/prob_sting = 10;
 	icon_state  = "bad"
+	var/obj/effects/bees/effect
 
 	OnAdd()
 		if (ishuman(owner))
-			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "buzz", layer = MOB_EFFECT_LAYER)
+			effect = new/obj/effects/bees(owner)
 		..()
+
+	OnRemove()
+		qdel(effect)
 
 	OnLife(var/mult)
 		var/mob/living/L = owner
