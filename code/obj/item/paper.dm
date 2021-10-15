@@ -919,7 +919,7 @@ as it may become compromised.
 
 		if(!initialized)
 			initialized = TRUE
-			for(var/datum/db_record/t in data_core.general.records)
+			for(var/datum/db_record/t as anything in data_core.general.records)
 				who += "[t["name"]]"
 
 		switch(randme)

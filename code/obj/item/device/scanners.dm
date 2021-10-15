@@ -149,7 +149,7 @@ that cannot be itched
 		search = copytext(sanitize(search), 1, 200)
 		search = lowertext(search)
 
-		for (var/datum/db_record/R in data_core.general.records)
+		for (var/datum/db_record/R as anything in data_core.general.records)
 			if (search == lowertext(R["dna"]) || search == lowertext(R["fingerprint"]) || search == lowertext(R["name"]))
 
 				var/data = "--------------------------------<br>\
@@ -575,7 +575,7 @@ that cannot be itched
 		//	return
 		boutput(user, "<span class='notice'>You scan in [M]</span>")
 		boutput(M, "<span class='alert'>[user] scans you with the Securotron-5000</span>")
-		for(var/datum/db_record/R in data_core.general.records)
+		for(var/datum/db_record/R as anything in data_core.general.records)
 			if (lowertext(R["name"]) == lowertext(M.name))
 				//Update Information
 				R["name"] = M.name

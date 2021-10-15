@@ -64,7 +64,7 @@
 
 				if (SECREC_LIST_RECORDS)
 					dat += "<h3>Security Record List</h3><hr>"
-					for (var/datum/db_record/R in data_core.general.records)
+					for (var/datum/db_record/R as anything in data_core.general.records)
 						dat += {"
 							<a href="javascript:goBYOND('action=view_record;rec=\ref[R]');">[R["id"]]: [R["name"]]
 							<br>
@@ -427,7 +427,7 @@
 
 			if ("del_all_records")
 				if (href_list["answer"] == "yes")
-					for (var/datum/db_record/R in data_core.security.records)
+					for (var/datum/db_record/R as anything in data_core.security.records)
 						qdel(R)
 					src.temp = "All records deleted."
 				else
@@ -625,7 +625,7 @@
 
 			if ("del_full_record")
 				if (href_list["answer"] == "yes")
-					for (var/datum/db_record/R in data_core.medical.records)
+					for (var/datum/db_record/R as anything in data_core.medical.records)
 						if ((R["name"] == src.active_record_general["name"] || R["id"] == src.active_record_general["id"]))
 							qdel(R)
 					if (src.active_record_security)
@@ -647,7 +647,7 @@
 				if (!data_core.general.has_record(R))
 					src.temp = "Record Not Found!"
 					return
-				for (var/datum/db_record/E in data_core.security.records)
+				for (var/datum/db_record/E as anything in data_core.security.records)
 					if ((E["name"] == R["name"] || E["id"] == R["id"]))
 						S = E
 				src.active_record_general = R
@@ -723,13 +723,13 @@
 				src.active_record_general = null
 				src.active_record_security = null
 				t1 = lowertext(t1)
-				for (var/datum/db_record/R in data_core.general.records)
+				for (var/datum/db_record/R as anything in data_core.general.records)
 					if (lowertext(R["fingerprint"]) == t1)
 						src.active_record_general = R
 				if (!src.active_record_general)
 					src.temp = "Could not locate record matching '[t1]''."
 				else
-					for (var/datum/db_record/E in data_core.security.records)
+					for (var/datum/db_record/E as anything in data_core.security.records)
 						if ((E["name"] == src.active_record_general["name"] || E["id"] == src.active_record_general["id"]))
 							src.active_record_security = E
 					src.screen = SECREC_VIEW_RECORD
@@ -742,13 +742,13 @@
 				src.active_record_general = null
 				src.active_record_security = null
 				t1 = lowertext(t1)
-				for (var/datum/db_record/R in data_core.general.records)
+				for (var/datum/db_record/R as anything in data_core.general.records)
 					if ((lowertext(R["name"]) == t1 || t1 == lowertext(R["dna"]) || t1 == lowertext(R["id"])))
 						src.active_record_general = R
 				if (!src.active_record_general)
 					src.temp = "Could not locate record [t1]."
 				else
-					for (var/datum/db_record/E in data_core.security.records)
+					for (var/datum/db_record/E as anything in data_core.security.records)
 						if ((E["name"] == src.active_record_general["name"] || E["id"] == src.active_record_general["id"]))
 							src.active_record_security = E
 					src.screen = SECREC_VIEW_RECORD

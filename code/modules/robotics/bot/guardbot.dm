@@ -661,7 +661,7 @@
 		var/obj/item/gun/energy/lawbringer/prints = src.budgun
 		if (prints.owner_prints && !loose)
 			var/search = lowertext(prints.owner_prints)
-			for (var/datum/db_record/R in data_core.general.records)
+			for (var/datum/db_record/R as anything in data_core.general.records)
 				if (search == lowertext(R["fingerprint"]))
 					law_prints = R["name"]
 					break

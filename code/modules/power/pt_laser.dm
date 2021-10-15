@@ -207,7 +207,7 @@
 		wagesystem.station_budget += round(generated_moolah/2)
 		generated_moolah -= round(generated_moolah/2) //no coming up with $$$ out of air!
 
-		for(var/datum/db_record/t in accounts)
+		for(var/datum/db_record/t as anything in accounts)
 			t["current_money"] += round(generated_moolah/accounts.len)
 		undistributed_earnings += generated_moolah-(round(generated_moolah/accounts.len) * (length(accounts)))
 	else

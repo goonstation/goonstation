@@ -496,7 +496,7 @@
 					return
 
 				var/datum/db_record/result = null
-				for(var/datum/db_record/R in data_core.general.records)
+				for(var/datum/db_record/R as anything in data_core.general.records)
 					if((ckey(R["name"]) == searchText) || (ckey(R["dna"]) == searchText) || (ckey(R["id"]) == searchText) || (ckey(R["fingerprint"]) == searchText))
 						result = R
 						break

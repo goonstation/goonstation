@@ -23,7 +23,7 @@
 			if(0)
 				dat += "<h4>Security Record List</h4>"
 
-				for (var/datum/db_record/R in data_core.general.records)
+				for (var/datum/db_record/R as anything in data_core.general.records)
 					dat += "<a href='byond://?src=\ref[src];select_rec=\ref[R]'>[R["id"]]: [R["name"]]<br>"
 
 				dat += "<br>"
@@ -106,7 +106,7 @@
 			if(0)
 
 				dat += "<h4>Medical Record List</h4>"
-				for (var/datum/db_record/R in data_core.general.records)
+				for (var/datum/db_record/R as anything in data_core.general.records)
 					dat += "<a href='byond://?src=\ref[src];select_rec=\ref[R]'>[R["id"]]: [R["name"]]<br>"
 				dat += "<br>"
 

@@ -23,7 +23,7 @@
 		if (istype(W, /obj/item/card/id))
 			var/obj/item/card/id/card = W
 			if (!mainaccount)
-				for (var/datum/db_record/account in data_core.bank.records)
+				for (var/datum/db_record/account as anything in data_core.bank.records)
 					if (ckey(account["name"]) == ckey(card.registered))
 						mainaccount = account
 						break
@@ -40,7 +40,7 @@
 				boutput(user, "<span class='alert'>Your account cannot currently be liquidated due to active borrows.</span>")
 				return
 			var/datum/db_record/target_account = null
-			for (var/datum/db_record/account in data_core.bank.records)
+			for (var/datum/db_record/account as anything in data_core.bank.records)
 				if (ckey(account["name"]) == ckey(card.registered))
 					target_account = account
 					break
