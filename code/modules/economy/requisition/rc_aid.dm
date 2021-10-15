@@ -29,7 +29,7 @@ ABSTRACT_TYPE(/datum/req_contract/aid)
 
 /datum/rc_entry/itembypath/spacesuit
 	name = "space suit"
-	typepath = /obj/item/clothing/suit/spacesuit
+	typepath = /obj/item/clothing/suit/space
 	feemod = 320
 
 /datum/rc_entry/itembypath/spacehelmet
