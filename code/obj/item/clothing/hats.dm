@@ -976,9 +976,9 @@ proc/filter_trait_hats(var/type)
 
 		// Guess what? you wear the hat, you go to jail. Easy Peasy.
 		var/datum/db_record/S = data_core.security.find_record("id", user.datacore_id)
-		S["criminal"] = "*Arrest*"
-		S["ma_crim"] = pick("Being unstoppable","Swagging out so hard","Stylin on \'em","Puttin\' in work")
-		S["ma_crim_d"] = pick("Convicted Badass, to the bone.","Certified Turbonerd, home-grown.","Absolute Salad.","King of crimes, Queen of Flexxin\'")
+		S?["criminal"] = "*Arrest*"
+		S?["ma_crim"] = pick("Being unstoppable","Swagging out so hard","Stylin on \'em","Puttin\' in work")
+		S?["ma_crim_d"] = pick("Convicted Badass, to the bone.","Certified Turbonerd, home-grown.","Absolute Salad.","King of crimes, Queen of Flexxin\'")
 
 	custom_suicide = 1
 	suicide_in_hand = 0
