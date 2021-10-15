@@ -18,8 +18,8 @@ ABSTRACT_TYPE(/datum/req_contract/aid)
 		src.rc_entries += ssuit
 
 		var/datum/rc_entry/shelm = new /datum/rc_entry/itembypath/spacehelmet
-		ssuit.count = suitsets
-		src.rc_entries += ssuit
+		shelm.count = suitsets
+		src.rc_entries += shelm
 
 		for(var/S in concrete_typesof(/datum/rc_entry/itembypath/basictool))
 			var/datum/rc_entry/crow = new S()

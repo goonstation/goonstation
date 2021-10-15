@@ -9,7 +9,7 @@ ABSTRACT_TYPE(/datum/req_contract/scientific)
 		src.flavor_desc = "Mycological laboratory seeking additional xenophilic fungus. Precise origin is irrelevant."
 		src.payout += rand(0,10) * 10
 
-		var/chungus = new /datum/rc_entry/reagent_fungus
+		var/datum/rc_entry/chungus = new /datum/rc_entry/reagent/fungus
 		chungus.count = rand(40,100)
 		src.rc_entries += chungus
 		..()
