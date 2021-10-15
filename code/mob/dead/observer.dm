@@ -830,7 +830,7 @@ mob/dead/observer/proc/insert_slasher_observer(var/atom/target) //aaaaaa i had t
 		corpse.ghost = newobs
 	if (src.mind)
 		mind.transfer_to(newobs)
-	else if (src.client) //Wire: Fix for Cannot modify null.mob.
+	else if (src.client)
 		src.client.mob = newobs
 	set_loc(newobs)
 	if (isghostrestrictedz(newobs.z) && !restricted_z_allowed(newobs, get_turf(newobs)) && !(src.client && src.client.holder))

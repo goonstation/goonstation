@@ -165,28 +165,14 @@ var/list/observers = list()
 
 
 	stop_observing()
-		if(start_time <= world.time + 45 SECONDS)
-			return ..()
-		else
 			return
 
 	proc/slasher_ghostize()
 		RETURN_TYPE(/mob/dead/observer)
 		if(src.key || src.client)
-			if(src.mind && src.mind.damned) // Wow so much sin. Off to hell with you.
-				INVOKE_ASYNC(src, /mob.proc/hell_respawn, src.mind)
-				return null
 			var/mob/dead/observer/O = new/mob/dead/observer(src)
 			O.bioHolder.CopyOther(src.bioHolder, copyActiveEffects = 0)
-			if (isghostrestrictedz(O.z) && !restricted_z_allowed(O, get_turf(O)) && !(src.client && src.client.holder))
-				O.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
 			if (client) client.color = null
-			if (src.client && src.client.holder && src.stat !=2)
-				// genuinely not sure what this is here for since we're setting the
-				// alive/dead status of the *ghost*.
-				// this seems to have made bizarre issues where
-				// some parts would think you were still alive even as a ghost
-				setalive(O)
 
 			// so, fuck that, you're dead, shithead. get over it.
 			setdead(O)

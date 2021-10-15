@@ -356,7 +356,7 @@
 			src.visible_message("<span class='alert'>[src] begins emitting a dark aura.</span>")
 			sleep(3 SECONDS)
 			for(var/mob/living/M in oview(4, src))
-				if(!(M == src) && !M?.traitHolder?.hasTrait("training_chaplain"))
+				if((M != src) && !M?.traitHolder?.hasTrait("training_chaplain"))
 					boutput(M, "<span class='notice'>Your legs feel a bit stiff!</span>")
 					M.setStatus("staggered", 8 SECONDS)
 
@@ -404,13 +404,13 @@ ABSTRACT_TYPE(/datum/targetable/slasher)
 
 		var/mob/living/carbon/human/slasher/W = src.holder.owner
 		if(!W.density)
-			boutput(usr, __red("<span class='alert'>You must be corporeal to use this ability.</span>"))
+			boutput(src.holder.owner, __red("<span class='alert'>You must be corporeal to use this ability.</span>"))
 			return 1
 		else
-			if(usr.client)
-				for (var/mob/living/L in view(usr.client.view, usr))
-					if (isalive(L) && L.sight_check(1) && L.ckey != usr.ckey)
-						boutput(usr, __red("<span class='alert'>You can only use that when nobody can see you!</span>"))
+			if(src.holder.owner.client)
+				for (var/mob/living/L in view(src.holder.owner.client.view, src.holder.owner))
+					if (isalive(L) && L.sight_check(1) && L.ckey != src.holder.owner.ckey)
+						boutput(src.holder.owner, __red("<span class='alert'>You can only use that when nobody can see you!</span>"))
 						return 1
 		return W.incorporealize()
 
@@ -427,7 +427,7 @@ ABSTRACT_TYPE(/datum/targetable/slasher)
 
 		var/mob/living/carbon/human/slasher/W = src.holder.owner
 		if(W.density)
-			boutput(usr, __red("<span class='alert'>You must be incorporeal to use this ability.</span>"))
+			boutput(src.holder.owner, __red("<span class='alert'>You must be incorporeal to use this ability.</span>"))
 			return 1
 		else
 			return W.corporealize()
@@ -475,22 +475,22 @@ ABSTRACT_TYPE(/datum/targetable/slasher)
 			var/mob/living/carbon/human/H = target
 			var/mob/living/carbon/human/slasher/W = src.holder.owner
 			if(H?.traitHolder?.hasTrait("training_chaplain"))
-				boutput(usr, "<span class='alert'>You cannot possess a holy man!</span>")
+				boutput(src.holder.owner, "<span class='alert'>You cannot possess a holy man!</span>")
 				JOB_XP(H, "Chaplain", 2)
 				return 1
 			if(isdead(H))
-				boutput(usr, "<span class='alert'>You cannot possess a corpse.</span>")
+				boutput(src.holder.owner, "<span class='alert'>You cannot possess a corpse.</span>")
 				return 1
 			if(H.client)
-				boutput(usr, "<b>You begin to possess [H].</b>")
-				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
+				boutput(src.holder.owner, "<b>You begin to possess [H].</b>")
+				src.holder.owner.playsound_local(src.holder.owner.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
 				H.playsound_local(H.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
 				return W.take_control(H)
 			else
-				boutput(usr, "<b>The target must have a consciousness to be possessed.</b>")
+				boutput(src.holder.owner, "<b>The target must have a consciousness to be possessed.</b>")
 				return 1
 		else
-			boutput(usr, "<span class='alert'>You cannot possess a non-human.</span>")
+			boutput(src.holder.owner, "<span class='alert'>You cannot possess a non-human.</span>")
 			return 1
 
 /datum/targetable/slasher/regenerate
@@ -569,19 +569,19 @@ ABSTRACT_TYPE(/datum/targetable/slasher)
 		var/mob/living/carbon/human/slasher/W = src.holder.owner
 		var/mob/living/carbon/human/M = target
 		if(M?.traitHolder?.hasTrait("training_chaplain"))
-			boutput(usr, "<span class='alert'>You cannot claim the soul of a holy man!</span>")
-			JOB_XP(usr, "Chaplain", 2)
+			boutput(src.holder.owner, "<span class='alert'>You cannot claim the soul of a holy man!</span>")
+			JOB_XP(src.holder.owner, "Chaplain", 2)
 			return 1
 		if(isdead(M))
 			if(ishuman(M) && M.mind && M.mind.soul >= 100)
 				if (get_dist(W, M) > 1)
-					boutput(usr, "<span class='alert'>You must be closer in order to steal [M]'s soul.</span>")
+					boutput(src.holder.owner, "<span class='alert'>You must be closer in order to steal [M]'s soul.</span>")
 					return 1
 				else
 					return W.soulStealSetup(M)
 			else
-				boutput(usr, "<span class='alert'>[M]'s soul is inadequate for your purposes.</span>")
+				boutput(src.holder.owner, "<span class='alert'>[M]'s soul is inadequate for your purposes.</span>")
 				return 1
 		else
-			boutput(usr, "<span class='alert'>Your target must be dead in order to steal their soul.</span>")
+			boutput(src.holder.owner, "<span class='alert'>Your target must be dead in order to steal their soul.</span>")
 			return 1

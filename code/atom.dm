@@ -1009,17 +1009,3 @@
 	message_admins("[key_name(usr)] rotated [target] by [rot] degrees")
 	target.Turn(rot)
 	return
-
-
-/atom/proc/interact(var/mob/user)
-	if (isdead(user) || (!iscarbon(user) && !ismobcritter(user) && !issilicon(user)))
-		return
-
-	if (!isturf(src) && !istype(src.loc, /turf) || is_incapacitated(user) || user.restrained() || user.hasStatus("incorporeal"))
-		return
-
-	if (!can_reach(user, src))
-		return
-
-	if (user.client)
-		user.client.Click(src,get_turf(src))
