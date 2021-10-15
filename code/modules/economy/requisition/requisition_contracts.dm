@@ -111,7 +111,6 @@ ABSTRACT_TYPE(/datum/req_contract)
 
 	proc/youcanhaveitback(obj/storage/crate/sold_crate)
 		if(sold_crate)
-			stop_move(sold_crate)
 			SPAWN_DBG(2 SECONDS)
 				animate(sold_crate)
 				shippingmarket.receive_crate(sold_crate)
