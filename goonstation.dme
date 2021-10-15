@@ -791,6 +791,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\economy\trader.dm"
 #include "code\modules\economy\requisition\rc_aid.dm"
 #include "code\modules\economy\requisition\rc_civilian.dm"
+#include "code\modules\economy\requisition\rc_scientific.dm"
 #include "code\modules\economy\requisition\requisition_contracts.dm"
 #include "code\modules\economy\stocks\stock_articles.dm"
 #include "code\modules\economy\stocks\stock_borrow.dm"
