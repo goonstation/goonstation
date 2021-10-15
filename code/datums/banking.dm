@@ -583,7 +583,7 @@
 		if(..())
 			return
 		var/usr_is_robot = issilicon(usr) || isAIeye(usr)
-		if (!(src.active1 in data_core.bank.records))
+		if (!data_core.bank.has_record(src.active1))
 			src.active1 = null
 		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (usr_is_robot))
 			src.add_dialog(usr)

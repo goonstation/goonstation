@@ -34,7 +34,7 @@
 
 				dat += "<a href='byond://?src=\ref[src];mode=0'>Back</a><br>"
 
-				if (istype(src.active1, /datum/db_record) && data_core.general.records.Find(src.active1))
+				if (istype(src.active1, /datum/db_record) && data_core.general.has_record(src.active1))
 					dat += "Full Name: [src.active1["full_name"]] ID: [src.active1["id"]]<br>"
 					dat += "Sex: [src.active1["sex"]]<br>"
 					dat += "Age: [src.active1["age"]]<br>"
@@ -48,7 +48,7 @@
 				dat += "<br>"
 
 				dat += "<h4>Security Data</h4>"
-				if (istype(src.active2, /datum/db_record) && data_core.security.records.Find(src.active2))
+				if (istype(src.active2, /datum/db_record) && data_core.security.has_record(src.active2))
 					dat += "Criminal Status: [src.active2["criminal"]]<br>"
 
 					dat += "Minor Crimes: [src.active2["mi_crim"]]<br>"
@@ -78,7 +78,7 @@
 			var/datum/db_record/R = locate(href_list["select_rec"])
 			var/datum/db_record/S = locate(href_list["select_rec"])
 
-			if (data_core.general.records.Find(R))
+			if (data_core.general.has_record(R))
 				S = data_core.security.find_record("id", R["id"])
 				if(!S) S = data_core.security.find_record("name", R["name"])
 				if(!S) S = locate(href_list["select_rec"])
@@ -116,7 +116,7 @@
 
 				dat += "<a href='byond://?src=\ref[src];mode=0'>Back</a><br>"
 
-				if (istype(src.active1, /datum/db_record) && data_core.general.records.Find(src.active1))
+				if (istype(src.active1, /datum/db_record) && data_core.general.has_record(src.active1))
 					dat += "Full Name: [src.active1["full_name"]] ID: [src.active1["id"]]<br>"
 					dat += "Sex: [src.active1["sex"]]<br>"
 					dat += "Age: [src.active1["age"]]<br>"
@@ -130,7 +130,7 @@
 				dat += "<br>"
 
 				dat += "<h4>Medical Data</h4>"
-				if (istype(src.active2, /datum/db_record) && data_core.medical.records.Find(src.active2))
+				if (istype(src.active2, /datum/db_record) && data_core.medical.has_record(src.active2))
 					dat += "Current Health: [src.active2["h_imp"]]<br><br>"
 
 					dat += "Blood Type: [src.active2["bioHolder.bloodType"]]<br><br>"
@@ -169,7 +169,7 @@
 			var/datum/db_record/R = locate(href_list["select_rec"])
 			var/datum/db_record/M = locate(href_list["select_rec"])
 
-			if (data_core.general.records.Find(R))
+			if (data_core.general.has_record(R))
 				M = data_core.medical.find_record("id", R["id"])
 				if(!M) M = data_core.medical.find_record("name", R["name"])
 				if(!M) M = locate(href_list["select_rec"])

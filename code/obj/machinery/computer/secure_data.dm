@@ -342,9 +342,9 @@
 
 /obj/machinery/computer/secure_data/proc/validate_records()
 	// Most of these checks were done inline; moved here for ease-of-use
-	if (src.active_record_general && (!istype(src.active_record_general, /datum/db_record) || !data_core.general.records.Find(src.active_record_general)))
+	if (src.active_record_general && (!istype(src.active_record_general, /datum/db_record) || !data_core.general.has_record(src.active_record_general)))
 		src.active_record_general = null
-	if (src.active_record_security && (!istype(src.active_record_security, /datum/db_record) || !data_core.security.records.Find(src.active_record_security)))
+	if (src.active_record_security && (!istype(src.active_record_security, /datum/db_record) || !data_core.security.has_record(src.active_record_security)))
 		src.active_record_security = null
 
 /obj/machinery/computer/secure_data/proc/validate_can_still_use(var/datum/db_record/general_record, var/datum/db_record/security_record, mob/user as mob)
@@ -644,7 +644,7 @@
 			if ("view_record")
 				var/datum/db_record/R = locate(href_list["rec"])
 				var/S = locate(href_list["rec"])
-				if (!(R in data_core.general))
+				if (!data_core.general.has_record(R))
 					src.temp = "Record Not Found!"
 					return
 				for (var/datum/db_record/E in data_core.security.records)
