@@ -373,6 +373,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			<br>
 			Contact CDC &middot;
 			Traders
+			Requisitions
 			RockBox Controls
 		</div>
 	</div>
@@ -389,6 +390,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			<br>
 			<a href='[topicLink("contact_cdc")]'>Contact CDC</a> &bull;
 			<a href='[topicLink("trader_list")]'>Traders</a> &bull;
+			<a href='[topicLink("requis_list")]'>Requisitions</a> &bull;
 			<a href='[topicLink("rockbox_controls")]'>Rockbox Controls</a>
 		</div>
 	</div>
@@ -1009,6 +1011,24 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			T.wipe_cart()
 			src.trader_dialogue_update("cart",T)
 
+		if ("requis_list")
+			if (!shippingmarket.req_contracts.len)
+				boutput(usr, "<span class='alert'>No requisitions are currently on offer.</span>")
+				return
+			if (signal_loss >= 75)
+				boutput(usr, "<span class='alert'>Severe signal interference is preventing a connection to requisition hub.</span>")
+				return
+
+			src.temp = "<h2>Open Requisitions</h2><br><div style='text-align: center;'>"
+			src.temp += "To fulfill these requisitions, please send full requested<br>"
+			src.temp += "complement of items with a REQ_HUB tag.<br>"
+			for (var/datum/req_contract/RC in shippingmarket.req_contracts)
+				if (!RC.hidden)
+					src.temp += "<h3>[RC.name]</h3><br>"
+					src.temp += "Contract Reward: [RC.payout]<br>"
+					if(RC.flavor_desc) src.temp += "[RC.flavor_desc]<br><br>"
+					src.temp += "[RC.requis_desc]<br>"
+			src.temp += "</div>"
 
 		if ("mainmenu")
 			src.temp = null

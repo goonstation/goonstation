@@ -1,6 +1,10 @@
 #define SUPPLY_OPEN_TIME 1 SECOND //Time it takes to open supply door in seconds.
 #define SUPPLY_CLOSE_TIME 15 SECONDS //Time it takes to close supply door in seconds.
 
+#define CIV_CONTRACT 1 //Identification numbers for requisition contract class
+#define AID_CONTRACT 2 //Used for generation and anti-redundancy
+#define SCI_CONTRACT 3
+
 /datum/shipping_market
 
 	var/list/commodities = list()
@@ -10,6 +14,12 @@
 	var/list/active_traders = list()
 	var/max_buy_items_at_once = 99
 	var/last_market_update = 0
+
+	var/list/datum/req_contract/req_contracts = list() // Requisition contracts for export
+	var/max_req_contracts = 5
+	var/civ_contract_active = 0 // To ensure at least one contract of each type is available
+	var/aid_contract_active = 0 // after market shift, these keep track of that
+	var/sci_contract_active = 0
 
 	var/list/supply_requests = list() // Pending requests, of type /datum/supply_order
 	var/list/supply_history = list() // History of all approved requests, of type string
@@ -45,11 +55,29 @@
 		src.active_traders += new /datum/trader/generic(src)
 		src.active_traders += new /datum/trader/generic(src)
 
+		while(length(src.req_contracts) < src.max_req_contracts)
+			src.add_req_contract()
+
 		time_between_shifts = 6000 // 10 minutes
 		time_until_shift = time_between_shifts + rand(-900,1200)
 
 	proc/add_commodity(var/datum/commodity/new_c)
 		src.commodities["[new_c.comtype]"] = new_c
+
+	proc/add_req_contract()
+		if(length(req_contracts) >= max_req_contracts)
+			return
+		var/contract2make
+		if(civ_contract_active == 0) //is this right lmao
+			var/contract2make = pick(concrete_typesof(/datum/req_contract/rc_civilian))
+		else if(aid_contract_active == 0)
+			var/contract2make = pick(concrete_typesof(/datum/req_contract/rc_aid))
+		else if(sci_contract_active == 0)
+			var/contract2make = pick(concrete_typesof(/datum/req_contract/rc_scientific))
+		else
+			var/contract2make = pick(concrete_typesof(/datum/req_contract))
+		var/contractmade = new contract2make
+		src.req_contracts += contractmade
 
 	proc/timeleft()
 		var/timeleft = src.time_until_shift - ticker.round_elapsed_ticks
@@ -276,7 +304,18 @@
 		var/obj/item/card/id/scan = sell_crate.scan
 		var/datum/data/record/account = sell_crate.account
 		var/duckets
+		var/preservecrate
 
+		if(sell_crate.delivery_destination && sell_crate.delivery_destination == "REQ_HUB")
+			//standard contract-hub requisitions
+			if(length(req_contracts))
+				for(var/datum/req_contract/contract in req_contracts)
+					if(contract.requisify(sell_crate))
+						duckets += contract.payout
+						req_contracts -= contract
+						preservecrate = TRUE
+
+		//special requisitions, not necessarily handled through the hub
 		if(length(active_orders) && !commodities_list)
 			for(var/datum/special_order/order in active_orders)
 				if(order.check_order(sell_crate))
@@ -291,7 +330,7 @@
 		send_to_brazil(sell_crate)
 		#endif
 
-		qdel(sell_crate)
+		if(!preservecrate) qdel(sell_crate)
 
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
@@ -461,3 +500,7 @@
 
 #undef SUPPLY_OPEN_TIME
 #undef SUPPLY_CLOSE_TIME
+
+#undef CIV_CONTRACT
+#undef AID_CONTRACT
+#undef SCI_CONTRACT
