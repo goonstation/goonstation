@@ -53,18 +53,18 @@ ABSTRACT_TYPE(/datum/req_contract/civilian)
 	var/list/desc3 = list("researcher","technician","clown","soldier","medic","surgeon","freighter captain","rescue crew","mariachi band","comedian")
 
 	New()
-		src.flavor_desc = "A [pick(desc0)] is being held for [pick(desc1)][pick(desc2)] [pick(desc3)]. Catered services requested."
+		src.flavor_desc = "A [pick(desc0)] is being held for [pick(desc1)][pick(desc2)] [pick(desc3)]. Catering services are requested posthaste."
 		src.payout += rand(0,50) * 10
 
 		for(var/S in concrete_typesof(/datum/rc_entry/itembypath/caterfood))
 			if(prob(60))
 				var/datum/rc_entry/burg = new S()
-				burg.count = rand(8,18)
+				burg.count = rand(8,16)
 				src.rc_entries += burg
 
 		if(!length(src.rc_entries))
 			var/datum/rc_entry/wich = new /datum/rc_entry/itembypath/caterfood/sandwich
-			wich.count = rand(19,30)
+			wich.count = rand(16,30)
 			src.rc_entries += wich
 
 		for(var/S in concrete_typesof(/datum/rc_entry/reagent/caterdrink))
@@ -78,22 +78,23 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/caterfood)
 /datum/rc_entry/itembypath/caterfood/sandwich
 	name = "sandwich"
 	typepath = /obj/item/reagent_containers/food/snacks/sandwich
-	feemod = 190
+	feemod = 330
+	es = TRUE
 
 /datum/rc_entry/itembypath/caterfood/burger
 	name = "burger"
 	typepath = /obj/item/reagent_containers/food/snacks/burger
-	feemod = 240
+	feemod = 330
 
 /datum/rc_entry/itembypath/caterfood/soup
 	name = "pre-portioned soup bowl"
 	typepath = /obj/item/reagent_containers/food/snacks/soup
-	feemod = 190
+	feemod = 280
 
 /datum/rc_entry/itembypath/caterfood/salad
-	name = "salad"
+	name = "pre-portioned salad"
 	typepath = /obj/item/reagent_containers/food/snacks/salad
-	feemod = 180
+	feemod = 240
 
 ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/reagent/caterdrink/appletini
@@ -126,7 +127,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	var/list/desc2 = list("its commissary","the docking wing","crew quarters","staff facilities","additional operating space","a storage bay")
 
 	New()
-		src.flavor_desc = "[pick(desc0)] [pick(desc1)] requires supplies to furnish [pick(desc2)]. Please pack as flat as possible."
+		src.flavor_desc = "[pick(desc0)] [pick(desc1)] requires supplies to furnish [pick(desc2)]. Please use standard compact packing techniques."
 		src.payout += rand(0,50) * 10
 
 		if(prob(70))
@@ -167,34 +168,34 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/stack/floortiles
 	name = "floor tile"
 	typepath = /obj/item/tile
-	feemod = 40
+	feemod = 20
 
 /datum/rc_entry/reagent/carpet
 	name = "liquid carpet"
 	chemname = "carpet"
-	feemod = 70
+	feemod = 60
 
 /datum/rc_entry/itembypath/table
 	name = "table"
 	typepath = /obj/item/furniture_parts/table
-	feemod = 200
+	feemod = 120
 
 /datum/rc_entry/itembypath/rack
 	name = "rack part set"
 	typepath = /obj/item/furniture_parts/rack
-	feemod = 180
+	feemod = 100
 
 /datum/rc_entry/itembypath/chair
 	name = "folding chair"
 	typepath = /obj/item/chair/folded
-	feemod = 150
+	feemod = 100
 
 /datum/rc_entry/itembypath/light_bulb
 	name = "light bulb"
 	typepath = /obj/item/light/bulb
-	feemod = 80
+	feemod = 60
 
 /datum/rc_entry/itembypath/light_tube
 	name = "light bulb"
 	typepath = /obj/item/light/tube
-	feemod = 80
+	feemod = 60

@@ -3,17 +3,18 @@ ABSTRACT_TYPE(/datum/req_contract/aid)
 
 /datum/req_contract/aid/wrecked
 	name = "Breach Recovery"
-	payout = 5000
+	payout = 3500
 	var/list/desc0 = list("research","mining","security","cargo transfer")
 	var/list/desc1 = list("vessel","ship","station","outpost")
-	var/list/desc2 = list("severe","catastrophic","hazardous","critical","disastrous")
-	var/list/desc3 = list("reactor failure","integrity breach","core breach","hull rupture","gravimetric shear","collision","canister explosion")
+	var/list/desc2 = list("suffered","experienced","been damaged by","incurred")
+	var/list/desc3 = list("severe","catastrophic","hazardous","critical","disastrous")
+	var/list/desc4 = list("reactor failure","integrity breach","core breach","hull rupture","gravimetric shear","collision","canister explosion")
 
 	New()
-		src.flavor_desc = "An affiliated [pick(desc0)] [pick(desc1)] has suffered a [pick(desc2)] [pick(desc3)] and requires recovery supplies as soon as possible."
-		src.payout += rand(0,200) * 10
+		src.flavor_desc = "An affiliated [pick(desc0)] [pick(desc1)] has [pick(desc2)] a [pick(desc3)] [pick(desc4)] and requires recovery supplies as soon as possible."
+		src.payout += rand(0,100) * 10
 
-		var/suitsets = rand(2,5)
+		var/suitsets = rand(2,4)
 		var/datum/rc_entry/ssuit = new /datum/rc_entry/itembypath/spacesuit
 		ssuit.count = suitsets
 		src.rc_entries += ssuit
@@ -24,19 +25,19 @@ ABSTRACT_TYPE(/datum/req_contract/aid)
 
 		for(var/S in concrete_typesof(/datum/rc_entry/itembypath/basictool))
 			var/datum/rc_entry/crow = new S()
-			crow.count = rand(1,6)
+			crow.count = rand(1,4)
 			src.rc_entries += crow
 		..()
 
 /datum/rc_entry/itembypath/spacesuit
 	name = "space suit"
 	typepath = /obj/item/clothing/suit/space
-	feemod = 440
+	feemod = 540
 
 /datum/rc_entry/itembypath/spacehelmet
 	name = "space helmet"
 	typepath = /obj/item/clothing/head/helmet/space
-	feemod = 440
+	feemod = 540
 
 ABSTRACT_TYPE(/datum/rc_entry/itembypath/basictool)
 /datum/rc_entry/itembypath/basictool/crowbar

@@ -304,11 +304,9 @@
 		return duckets
 
 	proc/handle_returns(obj/storage/crate/sold_crate)
-		if(sold_crate)
-			sold_crate.name = "Returned Requisitions Crate"
-			SPAWN_DBG(2 SECONDS)
-				animate(sold_crate)
-				shippingmarket.receive_crate(sold_crate)
+		sold_crate.name = "Returned Requisitions Crate"
+		SPAWN_DBG(rand(18,24) SECONDS)
+			shippingmarket.receive_crate(sold_crate)
 
 	proc/sell_crate(obj/storage/crate/sell_crate, var/list/commodities_list)
 		var/obj/item/card/id/scan = sell_crate.scan
@@ -317,7 +315,7 @@
 
 		var/returntosender
 		//used for crate return management after requisitions
-		//0 or null if no sendback is necessary, 1 if sendback after failed transaction, 2 if sendback after successful transaction
+		//0 or null if no sendback is necessary, 1 if sendback after failed transaction, 2 if sendback after successful transaction, 3 if clean sale
 
 		if(sell_crate.delivery_destination && sell_crate.delivery_destination == "Requisitions")
 			returntosender = 1
@@ -328,7 +326,7 @@
 					if(success)
 						duckets += contract.payout
 						req_contracts -= contract
-						returntosender = 2
+						returntosender = success + 1 //you may not like it but this is what peak programming looks like
 						break
 
 		//special requisitions, not necessarily handled through the hub
@@ -339,28 +337,29 @@
 					order.send_rewards()
 					active_orders -= order
 
-		duckets += src.appraise_value(sell_crate, commodities_list, 1) + src.points_per_crate
-
-
 		#ifdef SECRETS_ENABLED
 		send_to_brazil(sell_crate)
 		#endif
 
 		if(returntosender)
-			handle_returns(sell_crate)
-			if(returntosender == 1)
-				var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
-				var/datum/signal/pdaSignal = get_free_signal()
-				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: No contract fulfilled by Requisition crate. Returning as sent.")
-				pdaSignal.transmission_method = TRANSMISSION_RADIO
-				if(transmit_connection != null)
-					transmit_connection.post_signal(null, pdaSignal)
-				return
+			if(returntosender >= 3)
+				qdel(sell_crate)
+			else
+				handle_returns(sell_crate)
+				if(returntosender == 1)
+					var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
+					var/datum/signal/pdaSignal = get_free_signal()
+					pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: No contract fulfilled by Requisition crate. Returning as sent.")
+					pdaSignal.transmission_method = TRANSMISSION_RADIO
+					if(transmit_connection != null)
+						transmit_connection.post_signal(null, pdaSignal)
+					return
 		else
+			duckets += src.appraise_value(sell_crate, commodities_list, 1) + src.points_per_crate
 			qdel(sell_crate)
 
 		var/salesource = "last outgoing shipment"
-		if(returntosender == 2) //modify sale message if special conditions were fulfilled
+		if(returntosender >= 2) //modify sale message if requisitions are source of income
 			salesource = "requisition contract fulfillment"
 
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
