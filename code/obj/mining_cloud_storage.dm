@@ -327,18 +327,16 @@
 
 	ui_data(mob/user)
 		var/ore_list = list()
-		for(var/obj/item/raw_material/O as anything in childrentypesof(/obj/item/raw_material))
-			var/ore_name = initial(O.material_name)
-			if(ores[ore_name])
-				var/datum/ore_cloud_data/OCD = ores[ore_name]
+		for(var/O as anything in ores)
+			var/datum/ore_cloud_data/OCD = ores[O]
 
-				ore_list += list(list(
-					"name" = ore_name,
-					"amount" = OCD.amount,
-					"price" = OCD.price,
-					"forSale" = OCD.for_sale,
-					"stats" = OCD.stats
-				))
+			ore_list += list(list(
+				"name" = O,
+				"amount" = OCD.amount,
+				"price" = OCD.price,
+				"forSale" = OCD.for_sale,
+				"stats" = OCD.stats
+			))
 
 		. = list(
 			"ores" = ore_list
@@ -355,7 +353,7 @@
 					return
 				eject_ores(ore, null, params["take"])
 				. = TRUE
-			if("set-ore-sell-status")
+			if("toggle-ore-sell-status")
 				var/ore = params["ore"]
 				update_ore_for_sale(ore)
 				. = TRUE

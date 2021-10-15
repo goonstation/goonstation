@@ -1,6 +1,6 @@
 import { Fragment } from 'inferno';
-import { useBackend, useSharedState } from '../backend';
-import { Button, Section, NumberInput, Box, Divider, Tooltip, Stack, Table } from '../components';
+import { useBackend, useLocalState } from '../backend';
+import { Button, Box, Divider, NumberInput, Section, Stack, Tooltip, Table } from '../components';
 import { ButtonCheckbox } from '../components/Button';
 import { Window } from '../layouts';
 
@@ -13,7 +13,7 @@ export const Rockbox = (_props, context) => {
     price,
     stats,
   } = data;
-  const [takeAmount, setTakeAmount] = useSharedState(context, 'takeAmount', 1);
+  const [takeAmount, setTakeAmount] = useLocalState(context, 'takeAmount', 1);
   return (
     <Window
       title="Rockbox"
@@ -37,59 +37,62 @@ export const Rockbox = (_props, context) => {
             </Section>
           </Stack.Item>
           <Stack.Item grow={1}>
-            <Section scrollable>
-              {data.ores.length ? (
-                <Box>
-                  {data.ores.map((currentOre) => (
-                    <Fragment key={currentOre.name}>
-                      <Tooltip
-                        position="bottom"
-                        content={currentOre.name === 'Gem' ? 'Properties vary' : currentOre.stats}
-                      >
-                        <Table>
-                          <Table.Row>
-                            <Table.Cell>
-                              <Box>{`${currentOre.name}: ${currentOre.amount}`}</Box>
+            <Section fill scrollable>
+              {data.ores.length
+                ? (
+                  <Box>
+                    {data.ores.map((currentOre) => (
+                      <Fragment key={currentOre.name}>
+                        <Tooltip
+                          position="bottom"
+                          content={currentOre.name === 'Gem' ? 'Properties vary' : currentOre.stats}
+                        >
+                          <Table>
+                            <Table.Row>
+                              <Table.Cell>
+                                <Box>{`${currentOre.name}: ${currentOre.amount}`}</Box>
 
 
-                            </Table.Cell>
-                            <Table.Cell textAlign="right">
-                              <Box>
-                                {'Price: '}
-                                <NumberInput
-                                  value={currentOre.price}
-                                  width={4}
-                                  minValue={0}
-                                  format={value => "$" + value}
-                                  onChange={(e, value) => act('set-ore-price', { newPrice: value, ore: currentOre.name })}
-                                />
-                                <ButtonCheckbox
-                                  content="For Sale"
-                                  color={currentOre.forSale ? 'green' : 'red'}
-                                  checked={currentOre.forSale}
-                                  onClick={() => act('toggle-ore-sell-status', { ore: currentOre.name })}
-                                />
-                                <Button
-                                  disabled={takeAmount > currentOre.amount}
-                                  onClick={() => act('dispense-ore', {
-                                    ore: currentOre.name,
-                                    take: takeAmount,
-                                  })}
-                                >
-                                  Eject
-                                </Button>
-                              </Box>
-                            </Table.Cell>
-                          </Table.Row>
-                        </Table>
-                      </Tooltip>
-                      <Divider />
-                    </Fragment>
-                  ))}
-                </Box>
-              )
-                : (
-                  <Box>No ores stored</Box>
+                              </Table.Cell>
+                              <Table.Cell textAlign="right">
+                                <Box>
+                                  {'Price: '}
+                                  <NumberInput
+                                    value={currentOre.price}
+                                    width={4}
+                                    minValue={0}
+                                    format={value => "$" + value}
+                                    onChange={(e, value) => act('set-ore-price', {
+                                      newPrice: value,
+                                      ore: currentOre.name,
+                                    })}
+                                  />
+                                  <ButtonCheckbox
+                                    content="For Sale"
+                                    color={currentOre.forSale ? 'green' : 'red'}
+                                    checked={currentOre.forSale}
+                                    onClick={() => act('toggle-ore-sell-status', { ore: currentOre.name })}
+                                  />
+                                  <Button
+                                    disabled={takeAmount > currentOre.amount}
+                                    onClick={() => act('dispense-ore', {
+                                      ore: currentOre.name,
+                                      take: takeAmount,
+                                    })}
+                                  >
+                                    Eject
+                                  </Button>
+                                </Box>
+                              </Table.Cell>
+                            </Table.Row>
+                          </Table>
+                        </Tooltip>
+                        <Divider />
+                      </Fragment>
+                    ))}
+                  </Box>
+                )
+                : (<Box>No ores stored</Box>
                 )}
             </Section>
           </Stack.Item>
