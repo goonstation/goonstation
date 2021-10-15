@@ -16,7 +16,9 @@
 	var/last_market_update = 0
 
 	var/list/datum/req_contract/req_contracts = list() // Requisition contracts for export
-	var/max_req_contracts = 5
+	var/max_req_contracts = 5 // Maximum contracts active at one time (refills to this at each cycle)
+	var/has_pinned_contract = 0 // One contract at a time may be pinned to prevent it from disappearing in cycle
+
 	var/civ_contract_active = 0 // To ensure at least one contract of each type is available
 	var/aid_contract_active = 0 // after market shift, these keep track of that
 	var/sci_contract_active = 0
@@ -178,6 +180,18 @@
 			else
 				if (prob(T.chance_leave))
 					T.hidden = 1
+
+		// Clear and re-generate unpinned contracts
+		for(var/datum/req_contract/RC in src.req_contracts)
+			if(!RC.pinned)
+				src.req_contracts -= RC
+
+		civ_contract_active = 0
+		aid_contract_active = 0
+		sci_contract_active = 0
+
+		while(length(src.req_contracts) < src.max_req_contracts)
+			src.add_req_contract()
 
 		SPAWN_DBG(5 SECONDS)
 			// 20% chance to shuffle out generic traders for a new one

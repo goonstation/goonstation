@@ -1011,6 +1011,17 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			T.wipe_cart()
 			src.trader_dialogue_update("cart",T)
 
+		if ("pin_contract")
+			var/datum/req_contract/RC = locate(href_list["subaction"]) in shippingmarket.req_contracts
+			if(RC)
+				if(RC.pinned)
+					RC.pinned = 0
+					shippingmarket.has_pinned_contract = 0
+				else if(!shippingmarket.has_pinned_contract)
+					RC.pinned = 1
+					shippingmarket.has_pinned_contract = 1
+			src.requisitions_update()
+
 		if ("requis_list")
 			if (!shippingmarket.req_contracts.len)
 				boutput(usr, "<span class='alert'>No requisitions are currently on offer.</span>")
@@ -1018,16 +1029,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			if (signal_loss >= 75)
 				boutput(usr, "<span class='alert'>Severe signal interference is preventing a connection to requisition hub.</span>")
 				return
-
-			src.temp = "<h2>Open Requisition Contracts</h2><div style='text-align: center;'>"
-			src.temp += "To fulfill these contracts, please send full requested<br>"
-			src.temp += "complement of items with a Requisitions tag.<br>"
-			for (var/datum/req_contract/RC in shippingmarket.req_contracts)
-				src.temp += "<h3>[RC.name]</h3>"
-				src.temp += "Contract Reward: [RC.payout]<br>"
-				if(RC.flavor_desc) src.temp += "[RC.flavor_desc]<br><br>"
-				src.temp += "[RC.requis_desc]"
-			src.temp += "</div>"
+			src.requisitions_update()
 
 		if ("mainmenu")
 			src.temp = null
@@ -1035,6 +1037,21 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
 	return
+
+
+/obj/machinery/computer/supplycomp/proc/requisitions_update()
+	src.temp = "<h2>Open Requisition Contracts</h2><div style='text-align: center;'>"
+	src.temp += "To fulfill these contracts, please send full requested<br>"
+	src.temp += "complement of items with a Requisitions tag.<br>"
+	src.temp += "One contract at a time may be pinned, which reserves it<br>"
+	src.temp += "for your use, even through market shifts.<br>"
+	for (var/datum/req_contract/RC in shippingmarket.req_contracts)
+		src.temp += "<h3>[RC.name][RC.pinned ? " (Pinned)" : null]</h3>"
+		src.temp += "Contract Reward: [RC.payout]<br>"
+		if(RC.flavor_desc) src.temp += "[RC.flavor_desc]<br><br>"
+		src.temp += "[RC.requis_desc]"
+		src.temp += "<A href='[topicLink("pin_contract","\ref[RC]")]'>[RC.pinned ? "Unpin Contract" : "Pin Contract"]</A>"
+
 
 /obj/machinery/computer/supplycomp/proc/trader_dialogue_update(var/dialogue,var/datum/trader/T)
 	if (!dialogue || !T)

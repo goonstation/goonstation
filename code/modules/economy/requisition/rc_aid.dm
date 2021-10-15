@@ -24,9 +24,10 @@ ABSTRACT_TYPE(/datum/req_contract/aid)
 		src.rc_entries += shelm
 
 		for(var/S in concrete_typesof(/datum/rc_entry/itembypath/basictool))
-			var/datum/rc_entry/crow = new S()
-			crow.count = rand(1,4)
-			src.rc_entries += crow
+			if(prob(90))
+				var/datum/rc_entry/crow = new S()
+				crow.count = rand(1,4)
+				src.rc_entries += crow
 		..()
 
 /datum/rc_entry/itembypath/spacesuit

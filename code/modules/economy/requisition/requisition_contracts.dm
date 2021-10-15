@@ -1,6 +1,6 @@
 //quartermasters export requisition contracts
-//adapted in small part from azrun's special order stuff
-//this does not send its own crate so it's a lot more cut down
+//inspired by azrun's special order events
+//but a whole other thing
 
 //todo: pinning one contract to persist past market cycles
 
@@ -82,7 +82,8 @@ ABSTRACT_TYPE(/datum/req_contract)
 	var/payout = 0 // a baseline amount of cash you'll be given for fulfilling the requisition, modified by entries
 	var/flavor_desc // optional flavor text for the contract
 	var/requis_desc = "" // mandatory descriptive text for the contract contents, to be generated alongside them
-	var/list/rc_entries = list() //list of requisition contact entries
+	var/list/rc_entries = list() // list of requisition contact entries
+	var/pinned = 0 // one contract at a time may be pinned, preventing it from rotating out with market shift
 
 	New() //in individual definitions, create entries and THEN call this, it'll get things set up for you
 		..()
@@ -116,6 +117,7 @@ ABSTRACT_TYPE(/datum/req_contract)
 				successes_needed--
 
 		if(!successes_needed)
+			if(src.pinned) shippingmarket.has_pinned_contract = 0
 			. = 1 //sale, but may be leftover items
 			for(var/obj/item/X in contents_to_cull)
 				if(X) qdel(X)

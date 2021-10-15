@@ -159,7 +159,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 			furn.count = rand(2,8)
 			src.rc_entries += furn
 
-		if(prob(40))
+		if(prob(30))
 			var/datum/rc_entry/carpent = new /datum/rc_entry/reagent/carpet
 			carpent.count = rand(3,9) * 10
 			src.rc_entries += carpent
