@@ -24,7 +24,8 @@ module.exports = function (grunt) {
 
   var rev = grunt.file.read('revision') || '1';
   rev = rev.replace(/(\r\n|\n|\r)/gm, '');
-  var cdn = 'http://cdn.goonhub.com';
+	var serverType = grunt.option('servertype') || '';
+  var cdn = 'https://cdn'+serverType+'.goonhub.com';
 
   // Define the configuration for all the tasks
   grunt.initConfig({
