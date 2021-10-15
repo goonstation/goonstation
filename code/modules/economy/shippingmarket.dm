@@ -70,10 +70,13 @@
 		var/contract2make
 		if(src.civ_contract_active == 0) //is this right lmao
 			contract2make = pick(concrete_typesof(/datum/req_contract/civilian))
+			civ_contract_active = 1
 		else if(src.aid_contract_active == 0)
 			contract2make = pick(concrete_typesof(/datum/req_contract/aid))
+			aid_contract_active = 1
 		else if(src.sci_contract_active == 0)
 			contract2make = pick(concrete_typesof(/datum/req_contract/scientific))
+			sci_contract_active = 1
 		else
 			contract2make = pick(concrete_typesof(/datum/req_contract))
 		var/contractmade = new contract2make

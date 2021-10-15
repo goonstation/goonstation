@@ -26,6 +26,7 @@ ABSTRACT_TYPE(/datum/rc_entry)
 //items, by the path
 ABSTRACT_TYPE(/datum/rc_entry/itembypath)
 /datum/rc_entry/itembypath
+	entryclass = RC_ITEMBYPATH
 	var/typepath = /obj/gibtyson //item that must be sold
 
 	rc_eval(obj/eval_item)
@@ -39,6 +40,7 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath)
 //reagents, by the unit
 ABSTRACT_TYPE(/datum/rc_entry/reagent)
 /datum/rc_entry/reagent
+	entryclass = RC_REAGENT
 	var/chemname = "water" //chem being looked for in the evaluation
 
 	rc_eval(obj/eval_item)
@@ -53,6 +55,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent)
 //stackeroo, yet to do
 //ABSTRACT_TYPE(/datum/rc_entry/stack)
 //datum/rc_entry/stack
+//	entryclass = RC_STACK
 
 //contracts, which contain entries and are what are exposed to the qm side of things
 ABSTRACT_TYPE(/datum/req_contract)
@@ -69,11 +72,11 @@ ABSTRACT_TYPE(/datum/req_contract)
 		for(var/datum/rc_entry/rce in rc_entries)
 			switch(rce.entryclass)
 				if(RC_ITEMBYPATH)
-					src.requis_desc += "[rce.count]x [rce.name][rce.isplural ? null : s_es(rce.count,rce.es)]"
+					src.requis_desc += "[rce.count]x [rce.name][rce.isplural ? null : s_es(rce.count,rce.es)]<br>"
 				if(RC_REAGENT)
-					src.requis_desc += "[rce.count] unit[s_es(rce.count)] of [rce.name]"
+					src.requis_desc += "[rce.count] unit[s_es(rce.count)] of [rce.name]<br>"
 				if(RC_STACK)
-					src.requis_desc += "[rce.count] count of [rce.name]"
+					src.requis_desc += "[rce.count] count of [rce.name]<br>"
 			src.payout += rce.feemod
 
 	proc/requisify(obj/storage/crate/sell_crate)

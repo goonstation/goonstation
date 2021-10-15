@@ -4,12 +4,12 @@ ABSTRACT_TYPE(/datum/req_contract/aid)
 /datum/req_contract/aid/wrecked
 	name = "Breach Recovery"
 	payout = 5000
-	var/list/desc0 = list("Research","Mining","Security","Cargo transfer")
+	var/list/desc0 = list("research","mining","security","cargo transfer")
 	var/list/desc1 = list("vessel","ship","station","outpost")
 	var/list/desc2 = list("reactor failure","integrity breach","core breach","hull rupture","gravimetric shear","collision","canister explosion")
 
 	New()
-		src.flavor_desc = "[pick(desc0)] [pick(desc1)] has suffered a catastrophic [pick(desc2)] and requires recovery supplies as soon as possible."
+		src.flavor_desc = "An affiliated [pick(desc0)] [pick(desc1)] has suffered a catastrophic [pick(desc2)] and requires recovery supplies as soon as possible."
 		src.payout += rand(0,200) * 10
 
 		var/suitsets = rand(1,5)
@@ -37,7 +37,7 @@ ABSTRACT_TYPE(/datum/req_contract/aid)
 	typepath = /obj/item/clothing/head/helmet/space
 	feemod = 320
 
-ABSTRACT_TYPE(/datum/req_contract/basictool)
+ABSTRACT_TYPE(/datum/req_contract/itembypath/basictool)
 /datum/rc_entry/itembypath/basictool/crowbar
 	name = "crowbar"
 	typepath = /obj/item/crowbar
@@ -58,6 +58,7 @@ ABSTRACT_TYPE(/datum/req_contract/basictool)
 	name = "wrench"
 	typepath = /obj/item/wrench
 	feemod = 110
+	es = TRUE
 
 /datum/rc_entry/itembypath/basictool/welder
 	name = "welding tool"

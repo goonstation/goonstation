@@ -5,7 +5,7 @@ ABSTRACT_TYPE(/datum/req_contract/civilian)
 	name = "Slumber Party"
 	payout = 1000
 	var/list/desc0 = list("space ranchers","monkey monks","self-styled Rad Dudes","freelancers","Stations and Syndicates enthusiasts")
-	var/list/desc1 = list("quiet","relaxing","radical","excellent","tubular","bodacious","zesty","robust")
+	var/list/desc1 = list("quiet","relaxing","radical","most excellent","tubular","bodacious","zesty","robust")
 	var/list/desc2 = list("sleepover","hangout session","slumber party","stay-over convention")
 
 	New()
