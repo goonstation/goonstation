@@ -303,20 +303,31 @@
 
 		return duckets
 
+	proc/handle_returns(obj/storage/crate/sold_crate)
+		if(sold_crate)
+			animate(sold_crate)
+			SPAWN_DBG(2 SECONDS)
+				shippingmarket.receive_crate(sold_crate)
+
 	proc/sell_crate(obj/storage/crate/sell_crate, var/list/commodities_list)
 		var/obj/item/card/id/scan = sell_crate.scan
 		var/datum/data/record/account = sell_crate.account
 		var/duckets
-		var/preservecrate
+
+		var/returntosender
+		//used for crate return management after requisitions
+		//0 if you didn't use requisition hub, 1 if you did and there's items left over (send them back), 2 if you did and no items left over
 
 		if(sell_crate.delivery_destination && sell_crate.delivery_destination == "Requisitions")
+			returntosender = 1
 			//standard contract-hub requisitions
 			if(length(req_contracts))
 				for(var/datum/req_contract/contract in req_contracts)
-					if(contract.requisify(sell_crate))
+					var/success = contract.requisify(sell_crate) //0 is did not sell, 1 is sold, 2 is sold with no remnants
+					if(success)
 						duckets += contract.payout
 						req_contracts -= contract
-						preservecrate = TRUE
+						returntosender = success
 
 		//special requisitions, not necessarily handled through the hub
 		if(length(active_orders) && !commodities_list)
@@ -333,7 +344,10 @@
 		send_to_brazil(sell_crate)
 		#endif
 
-		if(!preservecrate) qdel(sell_crate)
+		if(returntosender = 1)
+			handle_returns(sell_crate)
+		else
+			qdel(sell_crate)
 
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()

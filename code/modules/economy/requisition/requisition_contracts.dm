@@ -88,7 +88,7 @@ ABSTRACT_TYPE(/datum/req_contract)
 		for(var/obj/item/storage/S in contents)
 			contents |= S.get_all_contents()
 
-		. = FALSE
+		. = 0 //by default return no success
 		for(var/datum/rc_entry/shoppin as anything in rc_entries)
 			for(var/obj/O in contents)
 				if(shoppin.rc_eval(O)) //found something that the requisition asked for, time to delet
@@ -97,23 +97,14 @@ ABSTRACT_TYPE(/datum/req_contract)
 			if(shopped.rollcount >= shopped.count)
 				successes_needed--
 
-		if(successes_needed)
-			youcanhaveitback(sell_crate)
-		else
-			. = TRUE
+		if(!successes_needed)
+			. = 1 //sale, but may be leftover items
 			for(var/obj/item/X in contents_to_cull)
-				qdel(X)
+				if(X) qdel(X)
 				contents_to_cull -= X
-			if(length(sell_crate.contents))
-				youcanhaveitback(sell_crate)
-			else
-				qdel(sell_crate)
-
-	proc/youcanhaveitback(obj/storage/crate/sold_crate)
-		if(sold_crate)
-			SPAWN_DBG(2 SECONDS)
-				animate(sold_crate)
-				shippingmarket.receive_crate(sold_crate)
+			if(!length(sell_crate.contents)) //total clean sale, tell shipping manager to del the crate
+				. = 2
+		return
 
 
 
