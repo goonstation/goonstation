@@ -93,7 +93,6 @@ ABSTRACT_TYPE(/datum/req_contract)
 			for(var/obj/O in contents)
 				if(shoppin.rc_eval(O)) //found something that the requisition asked for, time to delet
 					contents_to_cull |= O
-					contents -= O
 		for(var/datum/rc_entry/shopped as anything in rc_entries)
 			if(shopped.rollcount >= shopped.count)
 				successes_needed--
@@ -102,17 +101,20 @@ ABSTRACT_TYPE(/datum/req_contract)
 			youcanhaveitback(sell_crate)
 		else
 			. = TRUE
-			if(length(contents))
-				for(var/obj/item/X in contents_to_cull)
-					qdel(X)
-					contents_to_cull -= X
+			for(var/obj/item/X in contents_to_cull)
+				qdel(X)
+				contents_to_cull -= X
+			if(length(sell_crate.contents))
 				youcanhaveitback(sell_crate)
 			else
 				qdel(sell_crate)
 
 	proc/youcanhaveitback(obj/storage/crate/sold_crate)
 		if(sold_crate)
-			shippingmarket.receive_crate(sold_crate)
+			stop_move(sold_crate)
+			SPAWN_DBG(2 SECONDS)
+				animate(sold_crate)
+				shippingmarket.receive_crate(sold_crate)
 
 
 

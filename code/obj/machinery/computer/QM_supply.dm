@@ -1019,14 +1019,14 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				boutput(usr, "<span class='alert'>Severe signal interference is preventing a connection to requisition hub.</span>")
 				return
 
-			src.temp = "<h2>Open Requisitions</h2><br><div style='text-align: center;'>"
+			src.temp = "<h2>Open Requisitions</h2><div style='text-align: center;'>"
 			src.temp += "To fulfill these requisitions, please send full requested<br>"
-			src.temp += "complement of items with a REQ_HUB tag.<br>"
+			src.temp += "complement of items with a Requisitions tag.<br>"
 			for (var/datum/req_contract/RC in shippingmarket.req_contracts)
-				src.temp += "<h3>[RC.name]</h3><br>"
+				src.temp += "<h3>[RC.name]</h3>"
 				src.temp += "Contract Reward: [RC.payout]<br>"
 				if(RC.flavor_desc) src.temp += "[RC.flavor_desc]<br><br>"
-				src.temp += "[RC.requis_desc]<br>"
+				src.temp += "[RC.requis_desc]"
 			src.temp += "</div>"
 
 		if ("mainmenu")

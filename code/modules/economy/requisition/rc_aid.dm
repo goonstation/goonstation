@@ -12,7 +12,7 @@ ABSTRACT_TYPE(/datum/req_contract/aid)
 		src.flavor_desc = "An affiliated [pick(desc0)] [pick(desc1)] has suffered a catastrophic [pick(desc2)] and requires recovery supplies as soon as possible."
 		src.payout += rand(0,200) * 10
 
-		var/suitsets = rand(1,5)
+		var/suitsets = rand(2,5)
 		var/datum/rc_entry/ssuit = new /datum/rc_entry/itembypath/spacesuit
 		ssuit.count = suitsets
 		src.rc_entries += ssuit
@@ -37,7 +37,7 @@ ABSTRACT_TYPE(/datum/req_contract/aid)
 	typepath = /obj/item/clothing/head/helmet/space
 	feemod = 320
 
-ABSTRACT_TYPE(/datum/req_contract/itembypath/basictool)
+ABSTRACT_TYPE(/datum/rc_entry/itembypath/basictool)
 /datum/rc_entry/itembypath/basictool/crowbar
 	name = "crowbar"
 	typepath = /obj/item/crowbar

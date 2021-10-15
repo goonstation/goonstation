@@ -309,7 +309,7 @@
 		var/duckets
 		var/preservecrate
 
-		if(sell_crate.delivery_destination && sell_crate.delivery_destination == "REQ_HUB")
+		if(sell_crate.delivery_destination && sell_crate.delivery_destination == "Requisitions")
 			//standard contract-hub requisitions
 			if(length(req_contracts))
 				for(var/datum/req_contract/contract in req_contracts)
