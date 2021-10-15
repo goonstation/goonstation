@@ -1023,11 +1023,10 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			src.temp += "To fulfill these requisitions, please send full requested<br>"
 			src.temp += "complement of items with a REQ_HUB tag.<br>"
 			for (var/datum/req_contract/RC in shippingmarket.req_contracts)
-				if (!RC.hidden)
-					src.temp += "<h3>[RC.name]</h3><br>"
-					src.temp += "Contract Reward: [RC.payout]<br>"
-					if(RC.flavor_desc) src.temp += "[RC.flavor_desc]<br><br>"
-					src.temp += "[RC.requis_desc]<br>"
+				src.temp += "<h3>[RC.name]</h3><br>"
+				src.temp += "Contract Reward: [RC.payout]<br>"
+				if(RC.flavor_desc) src.temp += "[RC.flavor_desc]<br><br>"
+				src.temp += "[RC.requis_desc]<br>"
 			src.temp += "</div>"
 
 		if ("mainmenu")

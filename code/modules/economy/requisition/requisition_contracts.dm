@@ -20,7 +20,7 @@ ABSTRACT_TYPE(/datum/rc_entry)
 	var/isplural = FALSE //skips item pluralization, i.e. you'd set this to true for "jeans". can usually be ignored
 	var/es = FALSE //used for item pluralization, i.e. you'd set this to true for "tomato". can usually be ignored
 
-	proc/rc_eval(/obj/eval_item) //evaluation procedure, used in different entry classes
+	proc/rc_eval(obj/eval_item) //evaluation procedure, used in different entry classes
 		if(rollcount >= count) return FALSE //if you've already got enough, skip and tell the manager as such
 
 //items, by the path
@@ -28,10 +28,10 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath)
 /datum/rc_entry/itembypath
 	var/typepath = /obj/gibtyson //item that must be sold
 
-	rc_eval(/obj/eval_item)
+	rc_eval(obj/eval_item)
 		..()
 		. = FALSE
-		if(eval_shoppin.type == typepath)
+		if(eval_item.type == typepath)
 			src.rollcount++
 			. = TRUE //let manager know something was found in passed eval item
 		return
@@ -41,7 +41,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent)
 /datum/rc_entry/reagent
 	var/chemname = "water" //chem being looked for in the evaluation
 
-	rc_eval(/obj/eval_item)
+	rc_eval(obj/eval_item)
 		..()
 		. = FALSE
 		if(istype(eval_item,/obj/item/reagent_containers))
@@ -69,7 +69,7 @@ ABSTRACT_TYPE(/datum/req_contract)
 		for(var/datum/rc_entry/rce in rc_entries)
 			switch(rce.entryclass)
 				if(RC_ITEMBYPATH)
-					src.requis_desc += "[rce.count]x [rce.name][rce.isplural ? : s_es(rce.count,rce.es)]"
+					src.requis_desc += "[rce.count]x [rce.name][rce.isplural ? null : s_es(rce.count,rce.es)]"
 				if(RC_REAGENT)
 					src.requis_desc += "[rce.count] unit[s_es(rce.count)] of [rce.name]"
 				if(RC_STACK)
@@ -108,11 +108,11 @@ ABSTRACT_TYPE(/datum/req_contract)
 				qdel(sell_crate)
 
 	proc/youcanhaveitback(obj/storage/crate/sold_crate)
-		if(sold_crate))
+		if(sold_crate)
 			shippingmarket.receive_crate(sold_crate)
 
 
 
 #undef RC_ITEMBYPATH
-#undef RC_ITEMBYFLAG
 #undef RC_REAGENT
+#undef RC_STACK

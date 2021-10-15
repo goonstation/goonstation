@@ -2,8 +2,8 @@ ABSTRACT_TYPE(/datum/req_contract/scientific)
 /datum/req_contract/scientific
 
 /datum/req_contract/scientific/bigbigfungus
-	var/name = "Fungal Analysis"
-	var/payout = 500
+	name = "Fungal Analysis"
+	payout = 500
 
 	New()
 		src.flavor_desc = "Mycological laboratory seeking additional xenophilic fungus. Precise origin is irrelevant."

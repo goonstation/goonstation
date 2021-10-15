@@ -2,27 +2,27 @@ ABSTRACT_TYPE(/datum/req_contract/aid)
 /datum/req_contract/aid
 
 /datum/req_contract/aid/wrecked
-	var/name = "Breach Recovery"
-	var/payout = 5000
-	var/list/desc0 = ("Research","Mining","Security","Cargo transfer")
-	var/list/desc1 = ("vessel","ship","station","outpost")
-	var/list/desc2 = ("reactor failure","integrity breach","core breach","hull rupture","gravimetric shear","collision","canister explosion")
+	name = "Breach Recovery"
+	payout = 5000
+	var/list/desc0 = list("Research","Mining","Security","Cargo transfer")
+	var/list/desc1 = list("vessel","ship","station","outpost")
+	var/list/desc2 = list("reactor failure","integrity breach","core breach","hull rupture","gravimetric shear","collision","canister explosion")
 
 	New()
 		src.flavor_desc = "[pick(desc0)] [pick(desc1)] has suffered a catastrophic [pick(desc2)] and requires recovery supplies as soon as possible."
 		src.payout += rand(0,200) * 10
 
 		var/suitsets = rand(1,5)
-		var/ssuit = new /datum/rc_entry/itembypath/spacesuit
+		var/datum/rc_entry/ssuit = new /datum/rc_entry/itembypath/spacesuit
 		ssuit.count = suitsets
 		src.rc_entries += ssuit
 
-		var/shelm = new /datum/rc_entry/itembypath/spacehelmet
+		var/datum/rc_entry/shelm = new /datum/rc_entry/itembypath/spacehelmet
 		ssuit.count = suitsets
 		src.rc_entries += ssuit
 
 		for(var/S in concrete_typesof(/datum/rc_entry/itembypath/basictool))
-			var/crow = new S()
+			var/datum/rc_entry/crow = new S()
 			crow.count = rand(3,6)
 			src.rc_entries += crow
 		..()

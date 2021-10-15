@@ -68,14 +68,14 @@
 		if(length(req_contracts) >= max_req_contracts)
 			return
 		var/contract2make
-		if(civ_contract_active == 0) //is this right lmao
-			var/contract2make = pick(concrete_typesof(/datum/req_contract/rc_civilian))
-		else if(aid_contract_active == 0)
-			var/contract2make = pick(concrete_typesof(/datum/req_contract/rc_aid))
-		else if(sci_contract_active == 0)
-			var/contract2make = pick(concrete_typesof(/datum/req_contract/rc_scientific))
+		if(src.civ_contract_active == 0) //is this right lmao
+			contract2make = pick(concrete_typesof(/datum/req_contract/rc_civilian))
+		else if(src.aid_contract_active == 0)
+			contract2make = pick(concrete_typesof(/datum/req_contract/rc_aid))
+		else if(src.sci_contract_active == 0)
+			contract2make = pick(concrete_typesof(/datum/req_contract/rc_scientific))
 		else
-			var/contract2make = pick(concrete_typesof(/datum/req_contract))
+			contract2make = pick(concrete_typesof(/datum/req_contract))
 		var/contractmade = new contract2make
 		src.req_contracts += contractmade
 
