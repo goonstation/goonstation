@@ -49,7 +49,7 @@ ABSTRACT_TYPE(/datum/req_contract/civilian)
 
 	var/list/desc0 = list("reception","formal event","welcoming party","going-away party","commemorative dinner","dinner")
 	var/list/desc1 = list("an esteemed","an infamous","a famous","a renowned")
-	var/list/desc2 = list(" Nanotrasen"," Martian"," freelancing"," frontier"," - if only barely -","-in-their-field")
+	var/list/desc2 = list(" Nanotrasen"," Martian"," freelancing"," frontier"," - if only barely -"," retired")
 	var/list/desc3 = list("researcher","technician","clown","soldier","medic","surgeon","freighter captain","rescue crew","mariachi band","comedian")
 
 	New()
@@ -161,7 +161,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 		if(prob(30))
 			var/datum/rc_entry/carpent = new /datum/rc_entry/reagent/carpet
-			carpent.count = rand(3,9) * 10
+			carpent.count = rand(3,7) * 10
 			src.rc_entries += carpent
 		..()
 
