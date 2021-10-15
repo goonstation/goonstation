@@ -5,6 +5,11 @@
 (*)Testing out canvases, little icons you can draw on with crayons, pens, etc.
 (*)You can use a paint can on them to reet the canvas color as well.
 (*)Please report any bugs. I'd like to make a way for these to persist over rounds!
+(t)fri oct 15 21
+(u)Zamujasa
+(e)🆕|feature
+(*)Admins can now set a message for a player that will be displayed on next login, for when we need to tell you something but you aren't online.
+(*)The future is now.
 (t)sun aug 29 21
 (u)Zamujasa
 (e)🆕|feature

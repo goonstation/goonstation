@@ -1,3 +1,10 @@
+
+(t)fri oct 15 21
+(u)Zamujasa
+(*)The "View Player Notes" function now has a "Set Login Notice" option.
+(*)"Login Notices" will pop up on the player's next login, and they cannot join a round until acknowledging it.
+(*)Both the notice itself and the acknowledgement are automatically added as notes to the player's account.
+(*)The future is now.
 (t)fri aug 21 21
 (u)Sovexe
 (*)Wide Area Spawn's marked tile now has a visual indicator

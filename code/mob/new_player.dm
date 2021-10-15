@@ -152,24 +152,6 @@ mob/new_player
 			winshow(src.last_client, "pregameBrowser", 0)
 			src.last_client << browse("", "window=pregameBrowser")
 
-		if(client)
-			client.show_login_notice()
-
-/*
-		var/output = "<HR><B>New Player Options</B><BR>"
-		output += "<HR><br><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A><BR><BR>"
-		if(!ticker || ticker.current_state <= GAME_STATE_PREGAME)
-			if(!ready)
-				output += "<a href='byond://?src=\ref[src];ready=1'>Declare Ready</A><BR>"
-			else
-				output += "You are ready.<BR>"
-		else
-			output += "<a href='byond://?src=\ref[src];late_join=1'>Join Game!</A><BR>"
-
-		output += "<BR><a href='byond://?src=\ref[src];observe=1'>Observe</A><BR>"
-
-		src.Browse(output,"window=playersetup;size=250x200;can_close=0")
-*/
 	Stat()
 		..()
 		if(current_state <= GAME_STATE_PREGAME)
@@ -188,9 +170,6 @@ mob/new_player
 						stat("[player.key]", (player.ready)?("(Playing)"):(null)) // show them normally
 
 	Topic(href, href_list[])
-		if (client.has_login_notice_pending(TRUE))
-			// do nothing, they'll get the alert sent again
-			return
 
 		if(href_list["show_preferences"])
 			client.preferences.ShowChoices(src)
@@ -792,6 +771,9 @@ a.latejoin-card:hover {
 		set hidden = 1
 		set name = ".ready_antag"
 
+		if (src.client.has_login_notice_pending(TRUE))
+			return
+
 		if(!(!ticker || current_state <= GAME_STATE_PREGAME))
 			src.show_text("Round has already started. You can't redeem tokens now. (You have [src.client.antag_tokens].)", "red")
 		else if(src.client.antag_tokens > 0)
@@ -806,6 +788,9 @@ a.latejoin-card:hover {
 	verb/declare_ready()
 		set hidden = 1
 		set name = ".ready"
+
+		if (src.client.has_login_notice_pending(TRUE))
+			return
 
 		if (ticker)
 			if (ticker.mode)
@@ -834,6 +819,9 @@ a.latejoin-card:hover {
 		set hidden = 1
 		set name = ".cancel_ready"
 
+		if (src.client.has_login_notice_pending(TRUE))
+			return
+
 		if (ticker)
 			if(ticker.pregame_timeleft <= 1 SECOND)
 				boutput(usr, "<span class='alert'>It is too close to roundstart for you to unready. Please wait until setup finishes.</span>")
@@ -858,6 +846,9 @@ a.latejoin-card:hover {
 	verb/observe_round()
 		set hidden = 1
 		set name = ".observe_round"
+
+		if (src.client.has_login_notice_pending(TRUE))
+			return
 
 		if(alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No") == "Yes")
 			if(!src.client) return
