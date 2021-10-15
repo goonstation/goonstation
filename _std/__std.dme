@@ -112,6 +112,7 @@
 #include "color.dm"
 #include "copy.dm"
 #include "datum.dm"
+#include "filters.dm"
 #include "machinery.dm"
 #include "map.dm"
 #include "math.dm"
