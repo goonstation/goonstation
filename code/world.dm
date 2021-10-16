@@ -226,6 +226,7 @@ var/f_color_selector_handler/F_Color_Selector
 		world.log << "========================================"
 		world.log << ""
 #endif
+		logLength += 5
 
 		Z_LOG_DEBUG("Preload", "Loading config...")
 		config = new /datum/configuration()
