@@ -407,6 +407,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 
 ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
 /datum/targetable/critter/cryptid_plushie/teleportation
+	var/animation_ripples = 4
+	var/animation_waves = 3
 
 	proc/get_a_random_station_unlocked_container()
 		var/list/eligible_containers = list()
@@ -421,8 +423,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
 		playsound(get_turf(holder.owner), "sound/effects/ghostbreath.ogg", 75, 1)
 		animate(holder.owner, alpha=0, time=1.5 SECONDS)
 		sleep(0.1 SECONDS)
-		animate_ripple(holder.owner, 4)
-		animate_wave(holder.owner, 3)
+		animate_ripple(holder.owner, animation_ripples)
+		animate_wave(holder.owner, animation_waves)
 		sleep(1.4 SECONDS)
 		if(!holder || !holder.owner)
 			return
@@ -443,6 +445,10 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
 		if(!holder || !holder.owner)
 			return
 		animate(holder.owner)
+		for(var/i=1, i<=animation_ripples, ++i)
+			holder.owner.remove_filter("ripple-[i]")
+		for(var/i=1, i<=animation_waves, ++i)
+			holder.owner.remove_filter("wave-[i]")
 
 /datum/targetable/critter/cryptid_plushie/teleportation/blink
 	name = "Teleport"
