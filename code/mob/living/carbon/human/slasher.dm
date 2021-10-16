@@ -231,7 +231,7 @@
 				M.equip_new_if_possible(/obj/item/clothing/under/color/unremovable, M.slot_w_uniform)
 				M.equip_new_if_possible(/obj/item/slasher_machete/possessed, M.slot_r_hand)
 				M.equip_new_if_possible(/obj/item/clothing/gloves/black/slasher, M.slot_gloves)
-				if(src.density)
+				if(!W.hasStatus("incorporeal"))
 					W.incorporealize()
 
 				APPLY_MOB_PROPERTY(M, PROP_NO_SELF_HARM, src)
@@ -393,7 +393,7 @@ ABSTRACT_TYPE(/datum/targetable/slasher)
 			return 1
 
 		var/mob/living/carbon/human/slasher/W = src.holder.owner
-		if(!W.density)
+		if(W.hasStatus("incorporeal"))
 			boutput(src.holder.owner, __red("<span class='alert'>You must be corporeal to use this ability.</span>"))
 			return 1
 		else
@@ -416,7 +416,7 @@ ABSTRACT_TYPE(/datum/targetable/slasher)
 			return 1
 
 		var/mob/living/carbon/human/slasher/W = src.holder.owner
-		if(W.density)
+		if(!W.hasStatus("incorporeal"))
 			boutput(src.holder.owner, __red("<span class='alert'>You must be incorporeal to use this ability.</span>"))
 			return 1
 		else
