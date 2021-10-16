@@ -262,6 +262,9 @@ var/f_color_selector_handler/F_Color_Selector
 			screenOverlayLibrary.Add(over)
 			screenOverlayLibrary[over] = E
 
+		url_regex = new("(https?|byond|www)(\\.|:\\/\\/)", "i")
+		full_url_regex = new(@"(https?:\/\/)?((www\.)?([-\w]+\.)+[\l]+(\/\S+)*\/?)","ig")
+
 		Z_LOG_DEBUG("Preload", "initLimiter() (whatever the fuck that does)")
 		initLimiter()
 		Z_LOG_DEBUG("Preload", "Creating named color list...")
@@ -533,9 +536,6 @@ var/f_color_selector_handler/F_Color_Selector
 	if (global_sims_mode)
 		for (var/area/Ar in world)
 			Ar.build_sims_score()
-
-	url_regex = new("(https?|byond|www)(\\.|:\\/\\/)", "i")
-	full_url_regex = new(@"(https?:\/\/)?((www\.)?([-\w]+\.)+[\l]+(\/\S+)*\/?)","ig")
 
 	UPDATE_TITLE_STATUS("Updating status")
 	Z_LOG_DEBUG("World/Init", "Updating status...")
