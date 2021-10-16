@@ -89,6 +89,11 @@ ABSTRACT_TYPE(/obj/item/parts)
 			limb_data.holder = null
 		limb_data = null
 
+		if(ishuman(holder))
+			var/mob/living/carbon/human/H = holder
+			if(H.limbs.vars[src.slot] == src)
+				H.limbs.vars[src.slot] = null
+
 		if (holder)
 			if (holder.organHolder)
 				for(var/thing in holder.organHolder.organ_list)
