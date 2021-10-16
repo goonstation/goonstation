@@ -68,7 +68,7 @@
 	ircmsg["key"] = client.key
 	ircmsg["name"] = client.mob.job ? "[stripTextMacros(client.mob.real_name)] \[[dead][client.mob.mind?.special_role] [client.mob.job]]" : (istype(client.mob, /mob/new_player) ? "<not ingame>" : "[stripTextMacros(client.mob.real_name)] \[[dead][client.mob.mind?.special_role]]")
 	ircmsg["msg"] = html_decode(msg)
-	ircmsg["log_link"] = "https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html#L[global.logLength]"
+	ircmsg["log_link"] = "https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html#l[global.logLength]"
 	ircbot.export("help", ircmsg)
 
 /mob/verb/mentorhelp()
