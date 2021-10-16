@@ -1847,7 +1847,6 @@ Returns:
 	var/words_prob = 100
 	var/words_min = 7
 	var/words_max = 10
-	var/logged_say_prob = 10
 
 	New()
 		. = ..()
@@ -1862,8 +1861,6 @@ Returns:
 		var/list/words = list()
 		if(prob(words_prob))
 			words |= get_ouija_word_list(src, words_min, words_max)
-		if(prob(logged_say_prob))
-			words += phrase_log.random_phrase("say")
 		if(prob(emoji_prob))
 			for(var/i in 1 to rand(emoji_min, emoji_max))
 				words |= random_emoji()
@@ -1910,7 +1907,6 @@ Returns:
 	emoji_min = 5
 	emoji_max = 10
 	words_prob = 0
-	logged_say_prob = 0
 
 
 /proc/fartes()
