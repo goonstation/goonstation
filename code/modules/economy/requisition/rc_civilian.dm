@@ -1,77 +1,40 @@
 ABSTRACT_TYPE(/datum/req_contract/civilian)
 /datum/req_contract/civilian
-/*
-/datum/req_contract/civilian/slumber_party
-	name = "Slumber Party"
-	payout = 1000
-	var/list/desc0 = list("space ranchers","monkey monks","self-styled Rad Dudes","freelancers","Stations and Syndicates enthusiasts")
-	var/list/desc1 = list("quiet","relaxing","radical","most excellent","tubular","bodacious","zesty","robust")
-	var/list/desc2 = list("sleepover","hangout session","slumber party","stay-over convention")
-
-	New()
-		src.flavor_desc = "A group of [pick(desc0)] seek to host a [pick(desc1)] [pick(desc2)], and require supplies to this end."
-		src.payout += rand(0,50) * 10
-
-		var/datum/rc_entry/sheets = new /datum/rc_entry/itembypath/bedsheet
-		sheets.count = rand(4,8)
-		src.rc_entries += sheets
-
-		var/pajamasets = rand(1,5)
-		var/datum/rc_entry/jammies = new /datum/rc_entry/itembypath/pajamas
-		jammies.count = pajamasets
-		src.rc_entries += jammies
-		if(prob(60))
-			var/datum/rc_entry/hats = new /datum/rc_entry/itembypath/pajamacap
-			hats.count = pajamasets
-			src.rc_entries += hats
-		..()
-
-/datum/rc_entry/itembypath/bedsheet
-	name = "Bedsheet"
-	typepath = /obj/item/clothing/suit/bedsheet
-	feemod = 180
-
-/datum/rc_entry/itembypath/pajamas
-	name = "Pajamas"
-	typepath = /obj/item/clothing/under/gimmick/pajamas
-	feemod = 280
-	isplural = TRUE
-
-/datum/rc_entry/itembypath/pajamacap
-	name = "Nightcap"
-	typepath = /obj/item/clothing/head/pajama_cap
-	feemod = 240
-*/
+	req_class = 1
 
 /datum/req_contract/civilian/event_catering
 	name = "Event Catering"
 	payout = 500
-
 	var/list/desc0 = list("reception","formal event","welcoming party","going-away party","commemorative dinner","dinner")
 	var/list/desc1 = list("an esteemed","an infamous","a famous","a renowned")
 	var/list/desc2 = list(" Nanotrasen"," Martian"," freelancing"," frontier"," - if only barely -"," retired")
 	var/list/desc3 = list("researcher","technician","clown","soldier","medic","surgeon","freighter captain","rescue crew","mariachi band","comedian")
+	var/list/desc4 = list(
+		"Catering services are requested posthaste.",
+		"Please ensure goods are well-chilled before shipment.",
+		"Inadequate cooking of shipped food will result in immediate retaliatory action.",
+		"Deliver promptly.",
+		"Please pack securely; cargo service to destination is unreliable.",
+		"The guest of honor is mildly allergic to nuts. Prepare on cleaned surfaces.",
+		"Prompt service may result in a thank-you letter, if the guest of honor sobers up for long enough.",
+		"Stay excellent, cargo dudes.",
+		"okay i gout out of the template. dont throw in any weed. it would be dope but they wouldnt sejd it to us."
+	)
 
 	New()
-		src.flavor_desc = "A [pick(desc0)] is being held for [pick(desc1)][pick(desc2)] [pick(desc3)]. Catering services are requested posthaste."
+		src.flavor_desc = "A [pick(desc0)] is being held for [pick(desc1)][pick(desc2)] [pick(desc3)]. [pick(desc4)]"
 		src.payout += rand(0,50) * 10
 
 		for(var/S in concrete_typesof(/datum/rc_entry/itembypath/caterfood))
 			if(prob(60))
-				var/datum/rc_entry/burg = new S()
-				burg.count = rand(8,16)
-				src.rc_entries += burg
+				src.rc_entries += rc_buildentry(S,rand(8,16))
 
 		if(!length(src.rc_entries))
-			var/datum/rc_entry/wich = new /datum/rc_entry/itembypath/caterfood/sandwich
-			wich.count = rand(16,30)
-			src.rc_entries += wich
+			src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/caterfood/sandwich,rand(16,30))
 
 		for(var/S in concrete_typesof(/datum/rc_entry/reagent/caterdrink))
 			if(prob(40))
-				var/datum/rc_entry/bev = new S()
-				bev.count = rand(3,10) * 10
-				src.rc_entries += bev
+				src.rc_entries += rc_buildentry(S,rand(3,10) * 10)
 		..()
 
 ABSTRACT_TYPE(/datum/rc_entry/itembypath/caterfood)
@@ -118,7 +81,6 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	feemod = 30
 
 
-//NEEDS STACK TO WORK
 /datum/req_contract/civilian/furnishing
 	name = "Interior Outfitting"
 	payout = 800
@@ -131,19 +93,11 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 		src.payout += rand(0,50) * 10
 
 		if(prob(70))
-			var/datum/rc_entry/furn = new /datum/rc_entry/itembypath/table
-			furn.count = rand(2,8)
-			src.rc_entries += furn
-			var/datum/rc_entry/bern = new /datum/rc_entry/itembypath/chair
-			bern.count = rand(4,12)
-			src.rc_entries += bern
+			src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/table,rand(2,8))
+			src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/chair,rand(4,12))
 		else
-			var/datum/rc_entry/floort = new /datum/rc_entry/stack/floortiles
-			floort.count = rand(5,20) * 4
-			src.rc_entries += floort
-			var/datum/rc_entry/bark = new /datum/rc_entry/itembypath/basictool/crowbar //defined over in aid
-			bark.count = rand(1,3)
-			src.rc_entries += bark
+			src.rc_entries += rc_buildentry(/datum/rc_entry/stack/floortiles,rand(5,20)*4)
+			src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/basictool/crowbar,rand(1,3))
 
 		if(prob(70))
 			var/datum/rc_entry/furn
@@ -155,14 +109,10 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 			src.rc_entries += furn
 
 		if(prob(60))
-			var/datum/rc_entry/furn = new /datum/rc_entry/itembypath/rack
-			furn.count = rand(2,8)
-			src.rc_entries += furn
+			src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/rack,rand(2,8))
 
 		if(prob(30))
-			var/datum/rc_entry/carpent = new /datum/rc_entry/reagent/carpet
-			carpent.count = rand(3,7) * 10
-			src.rc_entries += carpent
+			src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/carpet,rand(3,7) * 10)
 		..()
 
 /datum/rc_entry/stack/floortiles
@@ -199,3 +149,81 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	name = "light bulb"
 	typepath = /obj/item/light/tube
 	feemod = 60
+
+
+/datum/req_contract/civilian/greytide
+	name = "Crew Embarcation"
+	payout = 700
+
+	var/list/desc0 = list("mining","hydroponics","cargo handling","engineering","medical","research","cartographic")
+	var/list/desc1 = list("vessel","station","platform","outpost")
+	var/list/desc2 = list("hired","acquired","recruited","reassigned","graduated")
+	var/list/desc3 = list("personnel","crew members","staff","interns")
+
+	New()
+		var/task = pick(desc0) //subvariation
+		src.flavor_desc = "An affiliated [task] [pick(desc1)] requires sets of attire for newly [pick(desc2)] [pick(desc3)]."
+		src.payout += rand(0,10) * 10
+
+		var/crewcount = rand(4,12)
+
+		//uniform pickin
+		if(prob(70))
+			switch(task)
+				if("mining") src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/jumpsuit/orange,crewcount)
+				if("hydroponics") src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/jumpsuit/green,crewcount)
+				if("cargo handling") src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/jumpsuit/brown,crewcount)
+				if("engineering") src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/jumpsuit/yellow,crewcount)
+				if("medical") src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/jumpsuit/blue,crewcount)
+				if("research") src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/jumpsuit/white,crewcount)
+				if("cartographic") src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/jumpsuit,crewcount)
+		else
+			src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/jumpsuit/grey,crewcount)
+		src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/shoes,crewcount)
+
+		//job related gearsets should also be added here sometimes
+
+		..()
+
+/datum/rc_entry/itembypath/jumpsuit
+	name = "black jumpsuit"
+	feemod = 120
+
+	white
+		name = "white jumpsuit"
+		typepath = /obj/item/clothing/under/color/white
+
+	grey
+		name = "grey jumpsuit"
+		typepath = /obj/item/clothing/under/color/grey
+
+	brown
+		name = "brown jumpsuit"
+		typepath = /obj/item/clothing/under/color/brown
+
+	orange
+		name = "orange jumpsuit"
+		typepath = /obj/item/clothing/under/color/orange
+
+	yellow
+		name = "yellow jumpsuit"
+		typepath = /obj/item/clothing/under/color/yellow
+
+	green
+		name = "green jumpsuit"
+		typepath = /obj/item/clothing/under/color/green
+
+	blue
+		name = "blue jumpsuit"
+		typepath = /obj/item/clothing/under/color/blue
+
+/datum/rc_entry/itembypath/backpack
+	name = "backpack"
+	typepath = /obj/item/storage/backpack
+	feemod = 250
+
+/datum/rc_entry/itembypath/shoes
+	name = "pair of shoes"
+	typepath = /obj/item/clothing/shoes
+	feemod = 110
+	isplural = TRUE

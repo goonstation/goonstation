@@ -2,11 +2,16 @@
 //inspired by azrun's special order events
 //but a whole other thing
 
-//todo: pinning one contract to persist past market cycles
+//simplify entry creation
+/proc/rc_buildentry(entry_datum_type,number_of)
+	var/datum/rc_entry/entryize = new entry_datum_type
+	entryize.count = number_of
+	return entryize
 
 //contract entries: contract creation instantiates these for "this much of whatever"
 //these entries each have their own "validation protocol", automatically set up when instantiated
 
+//entry classes
 #define RC_ITEMBYPATH 1
 #define RC_REAGENT 2
 #define RC_STACK 3
@@ -58,7 +63,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent)
 			. = TRUE //let manager know reagent was found in passed eval item
 		return
 
-
+//stacks, path (or alt path) and amount
 ABSTRACT_TYPE(/datum/rc_entry/stack)
 /datum/rc_entry/stack
 	entryclass = RC_STACK
@@ -75,10 +80,18 @@ ABSTRACT_TYPE(/datum/rc_entry/stack)
 				. = TRUE //let manager know passed eval item is claimed by contract
 		return
 
+//contract class defs
+#define CIV_CONTRACT 1
+#define AID_CONTRACT 2
+#define SCI_CONTRACT 3
+
 //contracts, which contain entries and are what are exposed to the qm side of things
 ABSTRACT_TYPE(/datum/req_contract)
 /datum/req_contract
 	var/name = "Henry Whip a Zamboni" // title text that gets a big front row seat
+	var/req_class = 0 // class of the requisition contract; aid requisitions are urgent and will not wait for you
+	//0 is unclassified/misc, 1 is civilian, 2 is emergency aid, 3 is scientific (as defined above)
+
 	var/payout = 0 // a baseline amount of cash you'll be given for fulfilling the requisition, modified by entries
 	var/flavor_desc // optional flavor text for the contract
 	var/requis_desc = "" // mandatory descriptive text for the contract contents, to be generated alongside them
@@ -117,7 +130,7 @@ ABSTRACT_TYPE(/datum/req_contract)
 				successes_needed--
 
 		if(!successes_needed)
-			if(src.pinned) shippingmarket.has_pinned_contract = 0
+			if(src.pinned) shippingmarket.has_pinned_contract = 0 //tell shipping market pinned contract was fulfilled
 			. = 1 //sale, but may be leftover items
 			for(var/obj/item/X in contents_to_cull)
 				if(X) qdel(X)
@@ -126,7 +139,9 @@ ABSTRACT_TYPE(/datum/req_contract)
 				. = 2
 		return
 
-
+#undef CIV_CONTRACT
+#undef AID_CONTRACT
+#undef SCI_CONTRACT
 
 #undef RC_ITEMBYPATH
 #undef RC_REAGENT

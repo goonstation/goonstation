@@ -1050,7 +1050,10 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		src.temp += "Contract Reward: [RC.payout]<br>"
 		if(RC.flavor_desc) src.temp += "[RC.flavor_desc]<br><br>"
 		src.temp += "[RC.requis_desc]"
-		src.temp += "<A href='[topicLink("pin_contract","\ref[RC]")]'>[RC.pinned ? "Unpin Contract" : "Pin Contract"]</A>"
+		if(RC.req_class == 2) //aid contract
+			src.temp += "URGENT - Cannot Be Reserved"
+		else
+			src.temp += "<A href='[topicLink("pin_contract","\ref[RC]")]'>[RC.pinned ? "Unpin Contract" : "Pin Contract"]</A>"
 
 
 /obj/machinery/computer/supplycomp/proc/trader_dialogue_update(var/dialogue,var/datum/trader/T)

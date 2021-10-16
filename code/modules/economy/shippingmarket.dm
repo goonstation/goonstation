@@ -19,9 +19,9 @@
 	var/max_req_contracts = 5 // Maximum contracts active at one time (refills to this at each cycle)
 	var/has_pinned_contract = 0 // One contract at a time may be pinned to prevent it from disappearing in cycle
 
-	var/civ_contract_active = 0 // To ensure at least one contract of each type is available
-	var/aid_contract_active = 0 // after market shift, these keep track of that
-	var/sci_contract_active = 0
+	var/civ_contracts_active = 0 // To ensure at least one contract of each type is available
+	var/aid_contracts_active = 0 // after market shift, these keep track of that
+	var/sci_contracts_active = 0
 
 	var/list/supply_requests = list() // Pending requests, of type /datum/supply_order
 	var/list/supply_history = list() // History of all approved requests, of type string
@@ -70,18 +70,22 @@
 		if(length(req_contracts) >= max_req_contracts)
 			return
 		var/contract2make
-		if(src.civ_contract_active == 0) //is this right lmao
+		if(src.civ_contracts_active == 0) //is this right lmao
 			contract2make = pick(concrete_typesof(/datum/req_contract/civilian))
-			civ_contract_active = 1
-		else if(src.aid_contract_active == 0)
+			civ_contracts_active = 1
+		else if(src.aid_contracts_active == 0)
 			contract2make = pick(concrete_typesof(/datum/req_contract/aid))
-			aid_contract_active = 1
-		else if(src.sci_contract_active == 0)
+			aid_contracts_active = 1
+		else if(src.sci_contracts_active == 0)
 			contract2make = pick(concrete_typesof(/datum/req_contract/scientific))
-			sci_contract_active = 1
+			sci_contracts_active = 1
 		else
 			contract2make = pick(concrete_typesof(/datum/req_contract))
-		var/contractmade = new contract2make
+		var/datum/req_contract/contractmade = new contract2make
+		switch(contractmade.req_class)
+			if(CIV_CONTRACT) civ_contracts_active++
+			if(AID_CONTRACT) aid_contracts_active++
+			if(SCI_CONTRACT) sci_contracts_active++
 		src.req_contracts += contractmade
 
 	proc/timeleft()
@@ -183,12 +187,12 @@
 
 		// Clear and re-generate unpinned contracts
 		for(var/datum/req_contract/RC in src.req_contracts)
-			if(!RC.pinned)
+			if(!RC.pinned && prob(70))
+				switch(RC.req_class)
+					if(CIV_CONTRACT) civ_contracts_active--
+					if(AID_CONTRACT) aid_contracts_active--
+					if(SCI_CONTRACT) sci_contracts_active--
 				src.req_contracts -= RC
-
-		civ_contract_active = 0
-		aid_contract_active = 0
-		sci_contract_active = 0
 
 		while(length(src.req_contracts) < src.max_req_contracts)
 			src.add_req_contract()
@@ -338,6 +342,10 @@
 				for(var/datum/req_contract/contract in req_contracts)
 					var/success = contract.requisify(sell_crate) //0 is did not sell, 1 is sold, 2 is sold with no remnants
 					if(success)
+						switch(contract.req_class) //track loss of categoried contracts
+							if(CIV_CONTRACT) civ_contracts_active--
+							if(AID_CONTRACT) aid_contracts_active--
+							if(SCI_CONTRACT) sci_contracts_active--
 						duckets += contract.payout
 						req_contracts -= contract
 						returntosender = success + 1 //you may not like it but this is what peak programming looks like
