@@ -632,9 +632,19 @@ proc
 	plane = PLANE_LIGHTING
 	blend_mode = BLEND_DEFAULT // this maybe (???) fixes a bug where lighting doesn't render on clients when teleporting
 	layer = LIGHTING_LAYER_ROBUST
+	disposing()
+		var/turf/T = src.loc
+		if(T?.RL_MulOverlay == src)
+			T.RL_MulOverlay = null
+		..()
 
 /obj/overlay/tile_effect/lighting/add
 	plane = PLANE_SELFILLUM
+	disposing()
+		var/turf/T = src.loc
+		if(T?.RL_AddOverlay == src)
+			T.RL_AddOverlay = null
+		..()
 
 
 turf
