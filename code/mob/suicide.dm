@@ -51,8 +51,8 @@
 
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
-		if(isslasher(H) || H.slasher_possessed)
-			boutput(H, "Your curse prevents you from commiting suicide!")
+		if(HAS_MOB_PROPERTY(H, PROP_NO_SELF_HARM))
+			boutput(H, "Your cannot bring yourself to commit suicide!")
 			return
 
 

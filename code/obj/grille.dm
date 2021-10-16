@@ -534,7 +534,7 @@
 				if (!isliving(AM) || isintangible(AM)) // I assume this was left out by accident (Convair880).
 					return
 				var/mob/M = AM
-				if (M.client && M.client.flying) // noclip
+				if (M.client && M.client.flying || (ismob(M) && HAS_MOB_PROPERTY(M, PROP_NOCLIP))) // noclip
 					return
 				var/s_chance = 10
 				if (M.m_intent != "walk") // move carefully

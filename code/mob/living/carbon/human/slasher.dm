@@ -2,6 +2,8 @@
 	real_name = "The Slasher"
 	var/trailing_blood = FALSE
 	var/slasher_key
+	var/last_bdna = null
+	var/last_btype = null
 
 	New(loc)
 		..()
@@ -15,29 +17,20 @@
 		src.equip_new_if_possible(/obj/item/clothing/mask/gas/emergency/unremovable, slot_wear_mask)
 		src.equip_new_if_possible(/obj/item/clothing/gloves/black/slasher, slot_gloves)
 
-		src.see_in_dark = SEE_DARK_FULL
-		src.sight |= SEE_SELF
-		src.see_invisible = 16
+		src.see_invisible = INVIS_GHOST
 		src.bioHolder.AddEffect("breathless", 0, 0, 0, 1)
 		src.bioHolder.AddEffect("food_rad_resist", 0, 0, 0, 1)
 		src.bioHolder.AddEffect("detox", 0, 0, 0, 1)
 		src.add_stun_resist_mod("slasher_stun_resistance", 75)
 		START_TRACKING
+		APPLY_MOB_PROPERTY(src, PROP_NO_SELF_HARM, src)
 
 	Life()
-		var/turf/T = get_turf(src)
-		if(!src.density && T && isrestrictedz(T.z))
-			src.delStatus("incorporeal")
-			src.set_density(1)
-			REMOVE_MOB_PROPERTY(src, PROP_INVISIBILITY, src)
-			REMOVE_MOB_PROPERTY(src, PROP_NEVER_DENSE, src)
-			REMOVE_MOB_PROPERTY(src, PROP_NO_MOVEMENT_PUFFS, src)
-			src.alpha = 254
-			src.see_invisible = 0
-			src.nodamage = FALSE
-			src.client.flying = 0
+		..()
+		if(src.hasStatus("incorporeal") && inrestrictedz(src))
+			src.corporealize()
 			src.gib() //not taking any risks here with noclip
-		else if((!src.density && T.z == 3) || (!src.density && T.z == 5))
+		else if(src.hasStatus("incorporeal") && !inonstationz(src)) //inonstationz() covers z2/z4 as well but that's covered in the first if
 			src.corporealize() //we can afford to be less stringent on these
 
 	initializeBioholder()
@@ -50,15 +43,13 @@
 		STOP_TRACKING
 		..()
 
+
 	proc
 		///Go invisible, get noclip, be unable to interact with the world
 		incorporealize()
 			var/turf/T = get_turf(src)
-			if(src.density)
-				if(T && isrestrictedz(T.z))
-					boutput(src, __red("You seem unable to become incorporeal here."))
-					return
-				if((T && T.z == 3) || (T && T.z == 5))
+			if(!src.hasStatus("incorporeal"))
+				if(!inonstationz(src))
 					boutput(src, __red("You seem unable to become incorporeal here."))
 					return
 				new /obj/overlay/darkness_field(T, 4 SECONDS, radius = 4, max_alpha = 250)
@@ -70,37 +61,40 @@
 				APPLY_MOB_PROPERTY(src, PROP_NEVER_DENSE, src)
 				APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
 				APPLY_MOB_PROPERTY(src, PROP_NO_MOVEMENT_PUFFS, src)
+				APPLY_MOB_PROPERTY(src, PROP_NOCLIP, src)
 				src.nodamage = TRUE
 				src.alpha = 160
-				src.see_invisible = 16
-				src.client.flying = 1
+				src.see_invisible = INVIS_GHOST
 
 		///undo `incorporealize()`
 		corporealize()
-			if(!src.density)
+			if(src.hasStatus("incorporeal"))
 				var/turf/T = get_turf(src)
 				new /obj/overlay/darkness_field(T, 4 SECONDS, radius = 4, max_alpha = 250)
 				new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, 4 SECONDS, radius = 4, max_alpha = 250)
-				sleep(15 DECI SECONDS)
+				sleep(1.5 SECONDS)
 				src.delStatus("incorporeal")
 				src.set_density(1)
 				REMOVE_MOB_PROPERTY(src, PROP_INVISIBILITY, src)
 				REMOVE_MOB_PROPERTY(src, PROP_NEVER_DENSE, src)
 				REMOVE_MOB_PROPERTY(src, PROP_NO_MOVEMENT_PUFFS, src)
+				REMOVE_MOB_PROPERTY(src, PROP_NOCLIP, src)
 				src.alpha = 254
-				src.see_invisible = 0
+				src.see_invisible = INVIS_NONE
 				src.visible_message("<span class='alert'>[src] appears out of the shadows!</span>")
 				src.nodamage = FALSE
-				src.client.flying = 0
 
 		///Trail some dried blood I guess?
 		blood_trail()
+			if(isnull(src.last_btype) || isnull(src.last_bdna))
+				src.last_btype = src.blood_type
+				src.last_bdna = src.blood_DNA
 			if(!src.trailing_blood)
-				src.tracked_blood = list("bDNA" = src.blood_DNA, "btype" = src.blood_type, "count" = INFINITY)
+				src.tracked_blood = list("bDNA" = src.last_bdna, "btype" = src.last_btype, "count" = INFINITY)
 				src.track_blood()
 				trailing_blood = TRUE
 			else
-				src.tracked_blood = list("bDNA" = src.blood_DNA, "btype" = src.blood_type, "count" = 0)
+				src.tracked_blood = list("bDNA" = src.last_bdna, "btype" = src.last_btype, "count" = 0)
 				trailing_blood = FALSE
 
 		///Handles creating a machete/the circumstances where we DON'T summon it
@@ -109,10 +103,7 @@
 			var/we_hold_it = 0
 			var/mob/living/M = src
 
-			if (!M)
-				return 1
-
-			if (M.getStatusDuration("stunned") > 0 || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") > 0 || !isalive(M) || M.restrained())
+			if (M.hasStatus("stunned") || M.hasStatus("weakened") || M.hasStatus("paralysis") || !isalive(M) || M.restrained())
 				boutput(M, __red("Not when you're incapacitated, restrained, or incorporeal."))
 				return 1
 
@@ -137,14 +128,11 @@
 						return 0
 
 				if (1)
-					var/obj/item/slasher_machete/W
-					for (var/C in machetes)
-						W = machetes[C]
-						break
+					var/obj/item/slasher_machete/W = machetes[machetes[1]]
 
-					if (!W || !istype(W))
+					if (!istype(W))
 						boutput(M, __red("You are unable to summon your machete."))
-						return 0
+						return 1
 
 					src.send_machete_to_target(W)
 
@@ -156,17 +144,17 @@
 
 					var/obj/item/slasher_machete/K2 = machetes[t1]
 
-					if (!M || !ismob(M) || !isliving(M || !M.mind))
-						return 0
-					if (!K2 || !istype(K2))
+					if (!M || !ismob(M) || !isliving(M) || !M.mind)
+						return 1
+					if (!istype(K2))
 						boutput(M, __red("You are unable to summon your machete."))
-						return 0
-					if (M.getStatusDuration("stunned") > 0 || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") > 0 || !isalive(M) || M.restrained())
+						return 1
+					if (M.hasStatus("stunned") || M.hasStatus("weakened") || M.hasStatus("paralysis") || !isalive(M) || M.restrained())
 						boutput(M, __red("Not when you're incapacitated, restrained, or incorporeal."))
-						return 0
+						return 1
 					if (M.mind.key != K2.slasher_key)
 						boutput(M, __red("You are unable to summon your machete."))
-						return 0
+						return 1
 
 					src.send_machete_to_target(K2)
 
@@ -174,17 +162,13 @@
 
 		///Actually sending the machete to the Slasher if one exists already
 		send_machete_to_target(var/obj/item/I)
-			if(!src || !istype(src) || !I || !istype(I))
+			if(!istype(I))
 				return
-			if(ismob(locate(I)))
-				var/mob/M = locate(I)
-				I.set_loc(locate(M))
-				sleep(5 DECI SECONDS)
 
 			I.visible_message("<span class='alert'><b>The [I.name] is suddenly warped away!</b></span>")
 			elecflash(I)
 
-			if(ismob(locate(src)))
+			if(ismob(src.loc))
 				src.u_equip(I)
 			if(istype(locate(I), /obj/item/storage))
 				var/obj/item/storage/S = locate(I)
@@ -203,112 +187,116 @@
 		take_control(var/mob/living/carbon/human/M)
 			var/mob/living/carbon/human/slasher/W = src
 			slasher_key = src.key
-			if(!src || !istype(src) || !M || !istype(M))
+			if(!istype(M))
 				return
-
-			boutput(M, __red("<span class='notice'>You notice that your legs are feeling a bit stiff.</span>"))
-			M.change_misstep_chance(30)
-			if(prob(33))
-				M.emote("faint")
-				M.setStatus("weakened", max(M.getStatusDuration("weakened"), 4 SECONDS))
-			else
-				M.emote("tremble")
-			sleep(20 SECONDS)
-			boutput(M, __red("<span class='notice'>You feel like you can't control your legs!</span>"))
-			if(prob(50))
-				M.emote("shudder")
-				M.setStatus("weakened", max(M.getStatusDuration("weakened"), 1 SECONDS))
-				M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 1 SECONDS))
-				M.force_laydown_standup()
-			else
+			SPAWN_DBG(0)
+				boutput(M, __red("<span class='notice'>You notice that your legs are feeling a bit stiff.</span>"))
+				M.change_misstep_chance(30)
+				if(prob(33))
+					M.emote("faint")
+					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 4 SECONDS))
+				else
+					M.emote("tremble")
+				sleep(20 SECONDS)
+				boutput(M, __red("<span class='notice'>You feel like you can't control your legs!</span>"))
+				if(prob(50))
+					M.emote("shudder")
+					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 1 SECONDS))
+					M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 1 SECONDS))
+					M.force_laydown_standup()
+				else
+					M.emote("faint")
+					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 8 SECONDS))
+				M.change_misstep_chance(40)
+				sleep(10 SECONDS)
+				M.change_misstep_chance(-70)
+				boutput(M, __red("<span class='notice'>You collapse!</span>"))
+				M.emote("scream")
 				M.emote("faint")
 				M.setStatus("weakened", max(M.getStatusDuration("weakened"), 8 SECONDS))
-			M.change_misstep_chance(40)
-			sleep(10 SECONDS)
-			M.change_misstep_chance(-70)
-			boutput(M, __red("<span class='notice'>You collapse!</span>"))
-			M.emote("scream")
-			M.emote("faint")
-			M.setStatus("weakened", max(M.getStatusDuration("weakened"), 8 SECONDS))
-			M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 8 SECONDS))
-			sleep(8 SECONDS)
+				M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 8 SECONDS))
+				sleep(8 SECONDS)
 
-			var/turf/T = get_turf(M)
-			new /obj/overlay/darkness_field(T, 3 SECONDS, radius = 3, max_alpha = 220)
-			new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, 3 SECONDS, radius = 3, max_alpha = 220)
-			M.visible_message("<span class='alert'>A brown apron and gas mask form out of the shadows on [M]!</span>")
-			M.drop_from_slot(M.wear_mask)
-			M.drop_from_slot(M.wear_suit)
-			M.drop_from_slot(M.shoes)
-			sleep(2) //just gotta make sure everything drops
-			M.equip_new_if_possible(/obj/item/clothing/mask/gas/emergency/unremovable, M.slot_wear_mask)
-			M.equip_new_if_possible(/obj/item/clothing/suit/apron/slasher, M.slot_wear_suit)
-			M.equip_new_if_possible(/obj/item/clothing/shoes/slasher_shoes/noslip, M.slot_shoes)
-			M.equip_new_if_possible(/obj/item/clothing/under/color/unremovable, M.slot_w_uniform)
-			M.equip_new_if_possible(/obj/item/slasher_machete/possessed, M.slot_r_hand)
-			M.equip_new_if_possible(/obj/item/clothing/gloves/black/slasher, M.slot_gloves)
-			if(src.density)
-				W.incorporealize()
-				W.client.flying = 0
+				var/turf/T = get_turf(M)
+				new /obj/overlay/darkness_field(T, 3 SECONDS, radius = 3, max_alpha = 220)
+				new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, 3 SECONDS, radius = 3, max_alpha = 220)
+				M.visible_message("<span class='alert'>A brown apron and gas mask form out of the shadows on [M]!</span>")
+				M.drop_from_slot(M.wear_mask)
+				M.drop_from_slot(M.wear_suit)
+				M.drop_from_slot(M.shoes)
+				sleep(2) //just gotta make sure everything drops
+				M.equip_new_if_possible(/obj/item/clothing/mask/gas/emergency/unremovable, M.slot_wear_mask)
+				M.equip_new_if_possible(/obj/item/clothing/suit/apron/slasher, M.slot_wear_suit)
+				M.equip_new_if_possible(/obj/item/clothing/shoes/slasher_shoes/noslip, M.slot_shoes)
+				M.equip_new_if_possible(/obj/item/clothing/under/color/unremovable, M.slot_w_uniform)
+				M.equip_new_if_possible(/obj/item/slasher_machete/possessed, M.slot_r_hand)
+				M.equip_new_if_possible(/obj/item/clothing/gloves/black/slasher, M.slot_gloves)
+				if(src.density)
+					W.incorporealize()
 
-			M.slasher_possessed = TRUE
-			var/mob/dead/observer/O = M.ghostize()
-			if(isnull(O))
-				boutput(src, "<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 101</span>")
-				return
-			if (O.mind)
-				O.Browse(grabResource("html/slasher_possession.html"),"window=slasher_possession;size=600x440;title=Slasher Possession")
-			boutput(O, "<span class='bold' style='color:red;font-size:150%'>You have been temporarily removed from your body!</span>")
-			if(!src.mind || !M.mind)
-				src.visible_message("<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 102</span>")
-				return
-			src.mind.swap_with(M)
-			var/mob/dead/target_observer/slasher_ghost/WG = O.insert_slasher_observer(src)
-			if(isnull(WG))
-				boutput(src, "<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 103</span>")
-				return
-			WG.mind.dnr = 1
-			WG.verbs -= list(/mob/verb/setdnr)
-			sleep(45 SECONDS)
-			if(!src.mind || !M.mind)
-				src.visible_message("<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 104</span>")
-				return
-			if(!M.loc) //M got gibbed
-				for (var/mob/M2 in mobs)
-					if(M2.key == src.slasher_key)
-						M2.mind.transfer_to(src) //the slasher's alive again at least
-			if(!src.loc) //src got gibbed
-				return //well you're dead now, soz
-			M.mind.transfer_to(src)
-			sleep(5 DECI SECONDS)
-			WG.mind.dnr = 0
-			WG.verbs += list(/mob/verb/setdnr)
-			if(!WG || !M)
-				src.visible_message("<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 105</span>")
-				return
-			if(!WG.mind || !M.mind)
-				src.visible_message("<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 106</span>")
-				return
-			WG.mind.transfer_to(M)
-			M.slasher_possessed = FALSE
-			qdel(WG)
+				APPLY_MOB_PROPERTY(M, PROP_NO_SELF_HARM, src)
+				var/mob/dead/observer/O = M.ghostize()
+				if(isnull(O))
+					boutput(src, "<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 101</span>")
+					return
+				if (O.mind)
+					O.Browse(grabResource("html/slasher_possession.html"),"window=slasher_possession;size=600x440;title=Slasher Possession")
+				boutput(O, "<span class='bold' style='color:red;font-size:150%'>You have been temporarily removed from your body!</span>")
+				if(!src.mind || !M.mind)
+					src.visible_message("<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 102</span>")
+					return
+				src.mind.swap_with(M)
+				var/mob/dead/target_observer/slasher_ghost/WG = O.insert_slasher_observer(src)
+				if(isnull(WG))
+					boutput(src, "<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 103</span>")
+					return
+				WG.mind.dnr = 1
+				WG.verbs -= list(/mob/verb/setdnr)
+				sleep(45 SECONDS)
+				if(!src.mind || !M.mind)
+					src.visible_message("<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 104</span>")
+					return
+				if(!M.loc) //M got gibbed
+					for (var/mob/M2 in mobs)
+						if(M2.key == src.slasher_key)
+							M2.mind.transfer_to(src) //the slasher's alive again at least
+				if(!src.loc) //src got gibbed
+					return //well you're dead now, soz
+				M.mind.transfer_to(src)
+				sleep(5 DECI SECONDS)
+				WG.mind.dnr = 0
+				WG.verbs += list(/mob/verb/setdnr)
+				if(!WG || !M)
+					src.visible_message("<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 105</span>")
+					return
+				if(!WG.mind || !M.mind)
+					src.visible_message("<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 106</span>")
+					return
+				WG.mind.transfer_to(M)
+				REMOVE_MOB_PROPERTY(M, PROP_NO_SELF_HARM, src)
+				qdel(WG)
 
-			for(var/obj/item/clothing/suit/apron/slasher/A in M)
-				qdel(A)
-			for(var/obj/item/clothing/gloves/black/slasher/G in M)
-				qdel(G)
-			for(var/obj/item/clothing/shoes/slasher_shoes/B in M)
-				qdel(B)
-			for(var/obj/item/slasher_machete/possessed/P in M)
-				P.visible_message("<span class='alert'><b>The [P.name] crumbles into ash!</b></span>")
-				qdel(P)
-			for(var/obj/item/clothing/mask/gas/emergency/unremovable/U in M)
-				qdel(U)
-			M.equip_new_if_possible(/obj/item/clothing/under/color, M.slot_w_uniform)
-			M.equip_new_if_possible(/obj/item/clothing/mask/gas/emergency/postpossession, M.slot_wear_mask)
-			M.equip_new_if_possible(/obj/item/clothing/suit/apron/slasher/postpossession, M.slot_wear_suit)
-			M.equip_new_if_possible(/obj/item/clothing/gloves/black, M.slot_gloves)
-			M.equip_new_if_possible(/obj/item/clothing/shoes/slasher_shoes, M.slot_shoes)
+				for(var/obj/item/clothing/suit/apron/slasher/A in M)
+					M.u_equip(A)
+					qdel(A)
+				for(var/obj/item/clothing/gloves/black/slasher/G in M)
+					M.u_equip(G)
+					qdel(G)
+				for(var/obj/item/clothing/shoes/slasher_shoes/B in M)
+					M.u_equip(B)
+					qdel(B)
+				for(var/obj/item/slasher_machete/possessed/P in M)
+					P.visible_message("<span class='alert'><b>\The [P] crumbles into ash!</b></span>")
+					M.u_equip(P)
+					qdel(P)
+				for(var/obj/item/clothing/mask/gas/emergency/unremovable/U in M)
+					M.u_equip(U)
+					qdel(U)
+				M.equip_new_if_possible(/obj/item/clothing/under/color, M.slot_w_uniform)
+				M.equip_new_if_possible(/obj/item/clothing/mask/gas/emergency/postpossession, M.slot_wear_mask)
+				M.equip_new_if_possible(/obj/item/clothing/suit/apron/slasher/postpossession, M.slot_wear_suit)
+				M.equip_new_if_possible(/obj/item/clothing/gloves/black, M.slot_gloves)
+				M.equip_new_if_possible(/obj/item/clothing/shoes/slasher_shoes, M.slot_shoes)
 
 		///heals a bunch of bad things the Slasher can get hit with, but not all
 		regenerate()
@@ -328,7 +316,7 @@
 
 		///Actionbar handler for stealing a dead body's soul.
 		soulStealSetup(var/mob/living/carbon/human/M)
-			boutput(usr, "<span class='alert'>You begin stealing [M]'s soul.</span>")
+			boutput(src, "<span class='alert'>You begin stealing [M]'s soul.</span>")
 			SETUP_GENERIC_ACTIONBAR(src, null, 3 SECONDS, /mob/living/carbon/human/slasher/proc/soulSteal, M, src.icon, src.icon_state,\
 	 		"Something barely visible seems to come out of [M]'s mouth, which then is absorbed into [src]'s body!", null)
 
@@ -337,6 +325,8 @@
 			var/mob/living/W = src
 			boutput(src, "<span class='alert'>You steal [M]'s soul!</span>")
 			playsound(src, "sound/voice/wraith/wraithpossesobject.ogg", 60, 0)
+			src.last_bdna = W.blood_DNA
+			src.last_btype = W.blood_type
 			if(M.mind)
 				M.mind.soul = 0
 			for_by_tcl(K, /obj/item/slasher_machete)
@@ -349,16 +339,16 @@
 		openDoors()
 			for(var/obj/machinery/door/G in oview(3, src))
 				SPAWN_DBG(1 DECI SECOND)
-				G.open()
+					G.open()
 
 		///Crowd control ability to stop people from running as easily, applies stagger
 		staggerNearby()
 			src.visible_message("<span class='alert'>[src] begins emitting a dark aura.</span>")
-			sleep(3 SECONDS)
-			for(var/mob/living/M in oview(4, src))
-				if((M != src) && !M?.traitHolder?.hasTrait("training_chaplain"))
-					boutput(M, "<span class='notice'>Your legs feel a bit stiff!</span>")
-					M.setStatus("staggered", 8 SECONDS)
+			SPAWN_DBG(3 SECONDS)
+				for(var/mob/living/M in oview(4, src))
+					if((M != src) && !M?.traitHolder?.hasTrait("training_chaplain"))
+						boutput(M, "<span class='notice'>Your legs feel a bit stiff!</span>")
+						M.setStatus("staggered", 8 SECONDS)
 
 		///Gives the Slasher their abilities
 		addAllAbilities()

@@ -80,9 +80,6 @@
 
 	var/in_throw_mode = 0
 
-	///To check if the person is possessed by the Slasher
-	var/slasher_possessed = FALSE
-
 	var/yeet_chance = 0.1 //yeet
 
 	var/decomp_stage = 0 // 1 = bloat, 2 = decay, 3 = advanced decay, 4 = skeletonized
@@ -2916,6 +2913,11 @@
 	.=..()
 
 /mob/living/carbon/human/attack_hand(mob/M)
+	if(ishuman(M) && M == src && M.a_intent == "harm")
+		var/mob/living/carbon/human/H = M
+		if(HAS_MOB_PROPERTY(H, PROP_NO_SELF_HARM))
+			boutput(H, "You can't bring yourself to attack yourself!")
+			return
 	..()
 	if (!surgeryCheck(src, M))
 		src.activate_chest_item_on_attack(M)
@@ -2926,8 +2928,8 @@
 		return
 	if(ishuman(M) && M == src && (W.force > 0))
 		var/mob/living/carbon/human/H = M
-		if(isslasher(H) || H.slasher_possessed)
-			boutput(H, "Your curse prevents you from attacking yourself!")
+		if(HAS_MOB_PROPERTY(H, PROP_NO_SELF_HARM))
+			boutput(H, "You can't bring yourself to attack yourself!")
 			return
 	..()
 	if (!surgeryCheck(src, M))

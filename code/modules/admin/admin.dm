@@ -5177,7 +5177,7 @@ var/global/noir = 0
 	boutput(usr, "You are [usr.client.flying ? "now" : "no longer"] flying through matter.")
 
 /client/Move(NewLoc, direct)
-	if(usr.client.flying)
+	if(usr.client.flying || (ismob(usr) && HAS_MOB_PROPERTY(usr, PROP_NOCLIP)))
 		if(!isturf(usr.loc))
 			usr.set_loc(get_turf(usr))
 

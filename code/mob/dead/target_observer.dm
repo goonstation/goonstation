@@ -165,7 +165,7 @@ var/list/observers = list()
 
 
 	stop_observing()
-			return
+		return
 
 	proc/slasher_ghostize()
 		RETURN_TYPE(/mob/dead/observer)
@@ -173,18 +173,10 @@ var/list/observers = list()
 			var/mob/dead/observer/O = new/mob/dead/observer(src)
 			O.bioHolder.CopyOther(src.bioHolder, copyActiveEffects = 0)
 			if (client) client.color = null
-
-			// so, fuck that, you're dead, shithead. get over it.
 			setdead(O)
 
 			src.mind?.transfer_to(O)
 			src.ghost = O
-			if(istype(get_area(src),/area/afterlife))
-				qdel(src)
-
-			var/datum/respawnee/respawnee = global.respawn_controller.respawnees[O.ckey]
-			if(istype(respawnee))
-				respawnee.update_time_display()
 
 			O.update_item_abilities()
 			return O
