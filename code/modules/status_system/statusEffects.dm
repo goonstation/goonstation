@@ -227,8 +227,8 @@
 		onAdd(optional=null)
 			. = ..()
 			var/list/statusargs = optional
-			owner.filters += filter(type="displace", icon=icon('icons/effects/distort.dmi', "acid"), size=0)
-			src.filter = owner.filters[length(owner.filters)]
+			owner.add_filter("acid_displace", 0, displacement_map_filter(icon=icon('icons/effects/distort.dmi', "acid"), size=0))
+			src.filter = owner.get_filter("acid_displace")
 			if(length(statusargs))
 				src.leave_cleanable = statusargs["leave_cleanable"]
 				src.mob_owner = statusargs["mob_owner"]
@@ -241,7 +241,7 @@
 
 		onRemove()
 			. = ..()
-			owner.filters -= filter
+			owner.remove_filter("acid_displace")
 			filter = null
 			if(src.leave_cleanable)
 				var/obj/decal/cleanable/molten_item/I = make_cleanable(/obj/decal/cleanable/molten_item,get_turf(owner))

@@ -15,6 +15,9 @@
 /code/obj/item/toys.dm @flrsh
 /maps/oshan.dmm @flrsh
 
+# Gannets 
+/code/datums/gamemodes/nuclear.dm @Gannets
+
 # Kyle
 /code/WorkInProgress/JobXpRewards.dm @Kyle2143
 /code/modules/events/gimmick/kudzu.dm @Kyle2143

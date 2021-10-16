@@ -93,7 +93,7 @@
 	#ifndef UNDERWATER_MAP
 			for (var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 				LAGCHECK(LAG_LOW)
-				S.color = null
+				S.color = S.space_color
 	#endif
 			for (var/mob/N in mobs)
 				N.flash(3 SECONDS)

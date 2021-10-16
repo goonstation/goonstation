@@ -144,8 +144,8 @@
 	..()
 	src.attack_particle = new /obj/particle/attack //don't use pooling for these particles
 	src.attack_particle.appearance_flags = TILE_BOUND
-	src.attack_particle.filters = filter (type="blur", size=0.2)
-	src.attack_particle.filters += filter (type="drop_shadow", x=1, y=-1, size=0.7)
+	src.attack_particle.add_filter("attack blur", 1, gauss_blur_filter(size=0.2))
+	src.attack_particle.add_filter("attack drop shadow", 2, drop_shadow_filter(x=1, y=-1, size=0.7))
 
 	src.sprint_particle = new /obj/particle/attack/sprint //don't use pooling for these particles
 
@@ -1299,15 +1299,15 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 /proc/animate_scanning(var/atom/target, var/color, var/time=18, var/alpha_hex="96")
 	var/fade_time = time / 2
-	target.filters += filter(type = "layer", blend_mode = BLEND_INSET_OVERLAY, icon = scanline_icon, color = color + "00")
-	var/filter = target.filters[target.filters.len]
+	target.add_filter("scan lines", 1, layering_filter(blend_mode = BLEND_INSET_OVERLAY, icon = scanline_icon, color = color + "00"))
+	var/filter = target.get_filter("scan lines")
 	if(!filter) return
 	animate(filter, y = -28, easing = QUAD_EASING, time = time)
 	// animate(y = 0, easing = QUAD_EASING, time = time / 2) // TODO: add multiple passes option later
 	animate(color = color + alpha_hex, time = fade_time, flags = ANIMATION_PARALLEL, easing = QUAD_EASING | EASE_IN)
 	animate(color = color + "00", time = fade_time, easing = QUAD_EASING | EASE_IN)
 	SPAWN_DBG(time)
-		target.filters -= filter
+		target.remove_filter("scan lines")
 
 /proc/animate_storage_thump(var/atom/A, wiggle=6)
 	if(!istype(A))
@@ -1427,31 +1427,30 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 		T.RL_Init()
 
 /proc/animate_open_from_floor(atom/A, time=1 SECOND, self_contained=1)
-	A.filters += filter(type="alpha", icon='icons/effects/white.dmi', x=16)
-	A.filters += filter(type="alpha", icon='icons/effects/black.dmi', x=-16) // has to be a different dmi because byond
-	animate(A.filters[A.filters.len], x=0, time=time, easing=CUBIC_EASING | EASE_IN)
-	animate(A.filters[A.filters.len - 1], x=0, time=time, easing=CUBIC_EASING | EASE_IN, flags=ANIMATION_PARALLEL)
+	A.add_filter("alpha white", 200, alpha_mask_filter(icon='icons/effects/white.dmi', x=16))
+	A.add_filter("alpha black", 201, alpha_mask_filter(icon='icons/effects/black.dmi', x=-16)) // has to be a different dmi because byond
+	animate(A.get_filter("alpha black"), x=0, time=time, easing=CUBIC_EASING | EASE_IN)
+	animate(A.get_filter("alpha white"), x=0, time=time, easing=CUBIC_EASING | EASE_IN, flags=ANIMATION_PARALLEL)
 	if(self_contained) // assume we're starting from being invisible
 		A.alpha = 255
 	if(self_contained)
 		SPAWN_DBG(time)
-			A.filters.len -= 2
+			A.remove_filter(list("alpha white", "alpha black"))
 
 /proc/animate_close_into_floor(atom/A, time=1 SECOND, self_contained=1)
-	A.filters += filter(type="alpha", icon='icons/effects/white.dmi', x=0)
-	A.filters += filter(type="alpha", icon='icons/effects/black.dmi', x=0) // has to be a different dmi because byond
-	animate(A.filters[A.filters.len], x=-16, time=time, easing=CUBIC_EASING | EASE_IN)
-	animate(A.filters[A.filters.len - 1], x=16, time=time, easing=CUBIC_EASING | EASE_IN, flags=ANIMATION_PARALLEL)
+	A.add_filter("alpha white", 200, alpha_mask_filter(icon='icons/effects/white.dmi', x=0))
+	A.add_filter("alpha black", 201, alpha_mask_filter(icon='icons/effects/black.dmi', x=0)) // has to be a different dmi because byond
+	animate(A.get_filter("alpha black"), x=-16, time=time, easing=CUBIC_EASING | EASE_IN)
+	animate(A.get_filter("alpha white"), x=16, time=time, easing=CUBIC_EASING | EASE_IN, flags=ANIMATION_PARALLEL)
 	if(self_contained)
 		SPAWN_DBG(time)
-			A.filters.len -= 2
+			A.remove_filter(list("alpha white", "alpha black"))
 			A.alpha = 0
 
 //size_max really can't go higher than 0.2 on 32x32 sprites that are sized about the same as humans. Can go higher on larger sprite resolutions or smaller sprites that are in the center, like cigarettes or coins.
 /proc/anim_f_ghost_blur(atom/A, var/size_min = 0.075 as num, var/size_max=0.18 as num)
-	A.filters += filter(type="radial_blur",size=size_min)
-
-	animate(A.filters[A.filters.len], time = 10, size=size_max, loop=-1,easing = SINE_EASING, flags=ANIMATION_PARALLEL)
+	A.add_filter("ghost blur", gauss_blur_filter(1, size=size_min))
+	animate(A.get_filter("ghost_blur"), time = 10, size=size_max, loop=-1,easing = SINE_EASING, flags=ANIMATION_PARALLEL)
 	animate(time = 10, size=size_min, loop=-1,easing = SINE_EASING)
 
 /proc/animate_bouncy(atom/A) // little bouncy dance for admin and mentor mice, could be used for other stuff
@@ -1465,7 +1464,6 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 /proc/animate_wave(atom/A, waves=7) // https://secure.byond.com/docs/ref/info.html#/{notes}/filters/wave
 	if (!istype(A))
 		return
-	var/start = A.filters.len
 	var/X,Y,rsq,i,f
 	for(i=1, i<=waves, ++i)
 		// choose a wave with a random direction and a period between 10 and 30 pixels
@@ -1476,11 +1474,11 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 		while(rsq<100 || rsq>900)   // keep trying if we don't like the numbers
 		// keep distortion (size) small, from 0.5 to 3 pixels
 		// choose a random phase (offset)
-		A.filters += filter(type="wave", x=X, y=Y, size=rand()*2.5+0.5, offset=rand())
+		A.add_filter("wave-[i]", i, wave_filter(x=X, y=Y, size=rand()*2.5+0.5, offset=rand()))
 	for(i=1, i<=waves, ++i)
 		// animate phase of each wave from its original phase to phase-1 and then reset;
 		// this moves the wave forward in the X,Y direction
-		f = A.filters[start+i]
+		f = A.get_filter("wave-[i]")
 		animate(f, offset=f:offset, time=0, loop=-1, flags=ANIMATION_PARALLEL)
 		animate(offset=f:offset-1, time=rand()*20+10)
 
@@ -1490,7 +1488,26 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	var/filter,size
 	for(var/i=1, i<=ripples, ++i)
 		size=rand()*2.5+1
-		A.filters += filter(type="ripple", x=0, y=0, size=size, repeat=rand()*2.5+1, radius=0)
-		filter = A.filters[A.filters.len]
+		A.add_filter("ripple-[i]", i, ripple_filter(x=0, y=0, size=size, repeat=rand()*2.5+1, radius=0))
+		filter = A.get_filter("ripple-[i]")
 		animate(filter, size=size, time=0, loop=-1, radius=0, flags=ANIMATION_PARALLEL)
 		animate(size=0, radius=rand()*10+10, time=rand()*20+10)
+
+/proc/animate_stomp(atom/A, stomp_height=8, stomps=3, stomp_duration=0.7 SECONDS)
+	var/mob/M = A
+	if(ismob(A))
+		APPLY_MOB_PROPERTY(M, PROP_CANTMOVE, "hatstomp")
+		M.update_canmove()
+	var/one_anim_duration = stomp_duration / 2 / stomps
+	for(var/i = 0 to stomps - 1)
+		if(i == 0)
+			animate(A, time=one_anim_duration, pixel_y=stomp_height, easing=SINE_EASING | EASE_OUT, flags=ANIMATION_PARALLEL)
+		else
+			animate(time=one_anim_duration, pixel_y=stomp_height, easing=SINE_EASING | EASE_OUT)
+		animate(time=one_anim_duration, pixel_y=0, easing=SINE_EASING | EASE_IN)
+	if(ismob(A))
+		SPAWN_DBG(stomp_duration)
+			REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, "hatstomp")
+			M.update_canmove()
+
+

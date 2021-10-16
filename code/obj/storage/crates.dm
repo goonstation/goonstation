@@ -355,6 +355,7 @@
 			var/obj/item/parts/robot_parts/leg/right/standard/B7 = new /obj/item/parts/robot_parts/leg/right/standard(src)
 			B7.pixel_y = -6
 			B7.pixel_x = -8
+			return TRUE
 
 // New crates woo. (Gannets)
 
