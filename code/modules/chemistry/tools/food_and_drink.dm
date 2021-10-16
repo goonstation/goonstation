@@ -513,15 +513,25 @@
 					reag_list += ", [current_reagent.name]"
 				reag_list = copytext(reag_list, 3)
 				boutput(M, "<span class='notice'>Tastes like there might be some [reag_list] in this.</span>")
-/*			else
-				var/reag_list = ""
+			else
+				var/list/reag_list = list()
 
 				for (var/current_id in reagents.reagent_list)
 					var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
-					reag_list += "[current_reagent.taste], "
+					if (current_reagent.taste)
+						reag_list[current_reagent.taste] += current_reagent.volume
 
-				boutput(M, "<span class='notice'>You taste [reag_list]in this.</span>")
-*/
+				reag_list = reverse_list(sortList(reag_list))
+				switch (length(reag_list))
+					if (0)
+						boutput(M, "<span class='notice'>Tastes pretty bland.</span>")
+					if (1)
+						boutput(M, "<span class='notice'>Tastes kind of [reag_list[1]].</span>")
+					if (2)
+						boutput(M, "<span class='notice'>Tastes kind of [reag_list[1]] and [reag_list[2]].</span>")
+					else
+						boutput(M, "<span class='notice'>Tastes kind of [reag_list[1]], [reag_list[2]], and a little bit [reag_list[3]].</span>")
+
 			if (src.reagents.total_volume)
 				logTheThing("combat", user, M, "[user == M ? "takes a sip from" : "makes [constructTarget(M,"combat")] drink from"] [src] [log_reagents(src)] at [log_loc(user)].")
 				src.reagents.reaction(M, INGEST, max(min(reagents.total_volume, gulp_size, (M.reagents?.maximum_volume-M.reagents?.total_volume)), CHEM_EPSILON))
