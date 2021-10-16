@@ -28,7 +28,6 @@
 
 /obj/machinery/gibber/New()
 	..()
-	src.overlays += image('icons/obj/kitchen.dmi', "grindnotinuse")
 	UnsubscribeProcess()
 
 /obj/machinery/gibber/disposing()
