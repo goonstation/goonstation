@@ -584,6 +584,7 @@ proc/put_mob_in_centcom_cloner(mob/living/L)
 	var/area/AR = get_area(L)
 	if(!istype(AR, /area/centcom/reconstitutioncenter))
 		L.set_loc(get_centcom_mob_cloner_spawn_loc())
+	L.density = TRUE
 	L.a_intent = INTENT_HARM
 	L.dir_locked = TRUE
 	playsound(L, "sound/machines/ding.ogg", 50, 1)
