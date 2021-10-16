@@ -2618,7 +2618,7 @@
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 	else
 		src.name = "[name_prefix(null, 1)][initial(src.name)][name_suffix(null, 1)]"
-	src.name_tag.set_name(src.name)
+	src.name_tag.set_name(src.name, strip_parentheses=TRUE)
 
 /mob/proc/protected_from_space()
 	return 0
