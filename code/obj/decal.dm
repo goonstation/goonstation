@@ -65,7 +65,7 @@
 	blend_mode = 2
 
 	New()
-		src.filters += filter(type="motion_blur", x=0, y=3)
+		add_filter("motion blur", 1, motion_blur_filter(x=0, y=3))
 		..()
 
 /obj/decal/skeleton

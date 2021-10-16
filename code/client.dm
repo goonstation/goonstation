@@ -539,6 +539,9 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 						else
 							volumes += old_volumes[i]
 
+				// Show login notice, if one exists
+				src.show_login_notice()
+
 		src.mob.reset_keymap()
 
 		if(current_state <= GAME_STATE_PREGAME && src.antag_tokens)
@@ -1098,6 +1101,10 @@ var/global/curr_day = null
 		if("resourcePreloadComplete")
 			boutput(src, "<span class='notice'><b>Preload completed.</b></span>")
 			src.Browse(null, "window=resourcePreload")
+			return
+
+		if ("loginnotice_ack")
+			src.acknowledge_login_notice()
 			return
 
 	. = ..()

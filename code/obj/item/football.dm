@@ -197,7 +197,7 @@
 		indicator.maptext_y = 38
 		indicator.maptext_height = 64
 		setProperty("movespeed", 1)
-		src.filters += filter(type="outline", size=0.5, color=rgb(255,255,255))
+		add_filter("outline", 1, outline_filter(size=0.5, color=rgb(255,255,255)))
 
 	pickup(mob/M)
 		..()
