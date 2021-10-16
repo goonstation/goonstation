@@ -108,6 +108,8 @@ var/global/harddel_count = 0
 			del(D)
 	#else
 			if(isliving(D))
+				D.disposed = FALSE
+				D.qdeled = FALSE
 				put_mob_in_centcom_cloner(D)
 	#endif
 
