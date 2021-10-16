@@ -491,6 +491,7 @@ Contents:
 	density = 1
 	anchored = 2
 	parts_type = null
+	hulk_immune = TRUE
 
 	attackby(obj/item/W as obj, mob/user as mob, params)
 		if (istype(W) && src.place_on(W, user, params))
