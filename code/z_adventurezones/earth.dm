@@ -572,11 +572,22 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 
 
 
-proc/put_mob_in_centcom_cloner(mob/living/carbon/human/H)
-	H.a_intent = INTENT_HARM
-	H.dir_locked = TRUE
-	playsound(H, "sound/machines/ding.ogg", 50, 1)
-	H.visible_message("<span class='notice'>[H.name || "A clone"] pops out of the cloner.</span>")
+proc/get_centcom_mob_cloner_spawn_loc()
+	RETURN_TYPE(/turf)
+	if(length(landmarks[LANDMARK_CHARACTER_PREVIEW_SPAWN]))
+		shuffle_list(landmarks[LANDMARK_CHARACTER_PREVIEW_SPAWN])
+		for(var/turf/T in landmarks[LANDMARK_CHARACTER_PREVIEW_SPAWN])
+			if(isnull(locate(/mob/living) in T))
+				return T
+
+proc/put_mob_in_centcom_cloner(mob/living/L)
+	var/area/AR = get_area(L)
+	if(!istype(AR, /area/centcom/reconstitutioncenter))
+		L.set_loc(get_centcom_mob_cloner_spawn_loc())
+	L.a_intent = INTENT_HARM
+	L.dir_locked = TRUE
+	playsound(L, "sound/machines/ding.ogg", 50, 1)
+	L.visible_message("<span class='notice'>[L.name || "A clone"] pops out of the cloner.</span>")
 	var/static/list/obj/machinery/conveyor/conveyors = null
 	var/static/conveyor_running_count = 0
 	if(isnull(conveyors))

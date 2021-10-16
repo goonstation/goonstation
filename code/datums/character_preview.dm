@@ -46,7 +46,7 @@ datum/character_preview
 		src.handler.screen_loc = "[src.preview_id]:1,1"
 		src.viewer?.screen += src.handler
 
-		var/mob/living/carbon/human/H = new(src.get_mob_spawn_loc())
+		var/mob/living/carbon/human/H = new(global.get_centcom_mob_cloner_spawn_loc())
 		mobs -= H
 		src.preview_mob = H
 		H.screen_loc = "[src.preview_id];1,1"
@@ -70,13 +70,6 @@ datum/character_preview
 		src.background.mouse_opacity = 0
 		src.handler.vis_contents |= src.background
 		src.viewer?.screen |= src.background
-
-	proc/get_mob_spawn_loc()
-		if(length(landmarks[LANDMARK_CHARACTER_PREVIEW_SPAWN]))
-			shuffle_list(landmarks[LANDMARK_CHARACTER_PREVIEW_SPAWN])
-			for(var/turf/T in landmarks[LANDMARK_CHARACTER_PREVIEW_SPAWN])
-				if(isnull(locate(/mob/living) in T))
-					return T
 
 	disposing()
 		STOP_TRACKING
