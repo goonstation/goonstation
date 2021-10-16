@@ -6086,12 +6086,6 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0
 	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0
-	},
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -6429,11 +6423,11 @@
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "aoS" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
