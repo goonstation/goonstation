@@ -1221,6 +1221,7 @@
 				src.name = "[src.name_prefix(null, 1)]Unknown[src.wear_id ? " (as [src.wear_id:registered])" : ""][src.name_suffix(null, 1)]"
 			else
 				src.name = "[src.name_prefix(null, 1)][src.real_name][src.name_suffix(null, 1)]"
+	src.name_tag.set_name(src.name)
 
 /mob/living/carbon/human/find_in_equipment(var/eqtype)
 	if (istype(w_uniform, eqtype))

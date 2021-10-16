@@ -35,6 +35,7 @@
 
 	//var/atom/movable/screen/zone_sel/zone_sel = null
 	var/datum/hud/zone_sel/zone_sel = null
+	var/atom/movable/name_tag/name_tag
 
 	var/obj/item/device/energy_shield/energy_shield = null
 
@@ -250,6 +251,10 @@
 	render_target = "\ref[src]"
 	mob_properties = list()
 	src.chat_text = new
+
+	src.name_tag = new
+	src.name_tag.set_name(src.name)
+	src.vis_contents += src.name_tag
 	START_TRACKING
 	. = ..()
 
@@ -303,6 +308,10 @@
 
 /mob/disposing()
 	STOP_TRACKING
+
+	src.vis_contents -= src.name_tag
+	qdel(src.name_tag)
+	src.name_tag = null
 
 	for(var/mob/dead/target_observer/TO in observers)
 		observers -= TO
@@ -2609,6 +2618,7 @@
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 	else
 		src.name = "[name_prefix(null, 1)][initial(src.name)][name_suffix(null, 1)]"
+	src.name_tag.set_name(src.name)
 
 /mob/proc/protected_from_space()
 	return 0
