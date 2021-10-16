@@ -6,7 +6,7 @@ var/datum/manufacturing_controller/manuf_controls
 	var/list/custom_schematics = list()
 
 	proc/set_up()
-		for (var/M in childrentypesof(/datum/manufacture))
+		for (var/M in concrete_typesof(/datum/manufacture, FALSE))
 			var/datum/manufacture/man = new M
 			if(!man.disposed)
 				src.normal_schematics += man
