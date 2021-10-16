@@ -23,7 +23,7 @@ ABSTRACT_TYPE(/datum/req_contract/scientific)
 
 /datum/req_contract/scientific/internalaffairs
 	name = "Organ Analysis"
-	payout = 1250
+	payout = 1750
 	var/list/desc0 = list("conducting","performing","beginning","initiating","seeking supplies for","organizing")
 	var/list/desc1 = list("long-term study","intensive trialing","in-depth analysis","study","regulatory assessment")
 	var/list/desc2 = list("decay","function","robustness","response to a new medication","atrophy in harsh conditions","therapies","bounciness")

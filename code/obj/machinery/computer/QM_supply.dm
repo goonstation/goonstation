@@ -1043,6 +1043,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	src.temp = "<h2>Open Requisition Contracts</h2><div style='text-align: center;'>"
 	src.temp += "To fulfill these contracts, please send full requested<br>"
 	src.temp += "complement of items with a Requisitions tag.<br>"
+	src.temp += "Insufficient or extra items will be returned to you.<br>"
 	src.temp += "One contract at a time may be pinned, which reserves it<br>"
 	src.temp += "for your use, even through market shifts.<br>"
 	for (var/datum/req_contract/RC in shippingmarket.req_contracts)
