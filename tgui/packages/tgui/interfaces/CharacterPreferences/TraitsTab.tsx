@@ -7,6 +7,7 @@ import {
   Collapsible,
   Divider,
   Flex,
+  Image,
   Input,
   LabeledList,
   Section,
@@ -122,13 +123,16 @@ const TraitCategoryList = (props: TraitCategoryListProps, context) => {
 const Trait = (props: CharacterPreferencesTrait, context) => {
   const { act } = useBackend<CharacterPreferencesData>(context);
 
-  const { id, name, desc, points, selected, available } = props;
+  const { id, name, desc, points, selected, available, image } = props;
 
   return (
-    <Stack vertical>
+    <Stack>
       <Stack.Item>
-        <Stack justify="space-between" align="center">
-          <Stack.Item>
+        <Image pixelated width="32px" height="32px" src={image} backgroundColor="transparent" />
+      </Stack.Item>
+      <Stack.Item grow={1}>
+        <Stack align="center" mb={1}>
+          <Stack.Item grow>
             {name}{' '}
             <Box as="span" color={points < 0 ? 'bad' : points > 0 ? 'good' : 'label'}>
               ({points})
@@ -143,12 +147,9 @@ const Trait = (props: CharacterPreferencesTrait, context) => {
             </Button>
           </Stack.Item>
         </Stack>
+
+        <BlockQuote>{desc}</BlockQuote>
       </Stack.Item>
-      <Stack>
-        <Stack.Item grow>
-          <BlockQuote>{desc}</BlockQuote>
-        </Stack.Item>
-      </Stack>
     </Stack>
   );
 };

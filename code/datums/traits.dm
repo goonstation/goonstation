@@ -159,8 +159,7 @@
 
 //Yes these are objs because grid control. Shut up. I don't like it either.
 /obj/trait
-	icon = 'icons/ui/traits.dmi'
-	icon_state = "placeholder"
+	var/image_name = "placeholder.png"
 	var/id = ""        //Unique ID
 	var/points = 0	   //The change in points when this is selected.
 	var/isPositive = 1 //Is this a positive, good effect or a bad one.
@@ -193,7 +192,7 @@
 	cleanName = "Robotic arms"
 	desc = "Your arms have been replaced with light robotic arms."
 	id = "roboarms"
-	icon_state = "robotarmsR"
+	image_name = "robotarmsR.png"
 	points = 0
 	isPositive = 1
 	category = "body"
@@ -214,7 +213,7 @@
 	cleanName = "Green Fingers"
 	desc = "Excess exposure to radiation, mutagen and gardening have turned your arms into plants. The horror!"
 	id = "syntharms"
-	icon_state = "robotarmsR"
+	image_name = "robotarmsR.png"
 	points = -2
 	isPositive = 0
 	category = "body"
@@ -244,7 +243,7 @@
 	cleanName = "Deaf"
 	desc = "Spawn with permanent deafness and an auditory headset."
 	id = "deaf"
-	icon_state = "deaf"
+	image_name = "deaf.png"
 	category = "body"
 	points = 1
 	isPositive = 0
@@ -267,7 +266,7 @@
 	cleanName = "Swedish"
 	desc = "You are from sweden. Meat balls and so on."
 	id = "swedish"
-	icon_state = "swedenY"
+	image_name = "swedenY.png"
 	points = 0
 	isPositive = 1
 	category = "language"
@@ -280,7 +279,7 @@
 	cleanName = "French"
 	desc = "You are from Quebec. y'know, the other Canada."
 	id = "french"
-	icon_state = "frY"
+	image_name = "frY.png"
 	points = 0
 	isPositive = 1
 	category = "language"
@@ -293,7 +292,7 @@
 	cleanName = "Scottish"
 	desc = "Hear the pipes are calling, down thro' the glen. Och aye!"
 	id = "scottish"
-	icon_state = "scott"
+	image_name = "scott.png"
 	points = 0
 	isPositive = 1
 	category = "language"
@@ -306,7 +305,7 @@
 	cleanName = "Chav"
 	desc = "U wot m8? I sware i'll fite u."
 	id = "chav"
-	icon_state = "ukY"
+	image_name = "ukY.png"
 	points = 0
 	isPositive = 1
 	category = "language"
@@ -319,7 +318,7 @@
 	cleanName = "Funky Accent"
 	desc = "Give a man a banana and he will clown for a day. Teach a man to clown and he will live in a cold dark corner of a space station for the rest of his days. - Elvis, probably."
 	id = "elvis"
-	icon_state = "elvis"
+	image_name = "elvis.png"
 	points = 0
 	isPositive = 1
 	category = "language"
@@ -332,7 +331,7 @@
 	cleanName = "New Jersey Accent"
 	desc = "Ha ha ha. What a story, Mark."
 	id = "tommy"
-	icon_state = "whatY"
+	image_name = "whatY.png"
 	points = 0
 //	isPositive = 1
 	category = "language"
@@ -348,7 +347,7 @@
 	cleanName = "Finnish Accent"
 	desc = "...and you thought space didn't have Finns?"
 	id = "finnish"
-	icon_state = "finnish"
+	image_name = "finnish.png"
 	points = 0
 	isPositive = 1
 	category = "language"
@@ -361,7 +360,7 @@
 	cleanName = "Tyke"
 	desc = "You're from Oop North in Yorkshire, and don't let anyone forget it!"
 	id = "tyke"
-	icon_state = "yorkshire"
+	image_name = "yorkshire.png"
 	points = 0
 	isPositive = 1
 	category = "language"
@@ -376,7 +375,7 @@
 	cleanName = "Cat eyes"
 	desc = "You can see 2 tiles further in the dark."
 	id = "cateyes"
-	icon_state = "catseyeG"
+	image_name = "catseyeG.png"
 	points = -1
 	isPositive = 1
 	category = "vision"
@@ -386,7 +385,7 @@
 	cleanName = "Infravision"
 	desc = "You can always see messages written in infra-red ink."
 	id = "infravision"
-	icon_state = "infravisionG"
+	image_name = "infravisionG.png"
 	points = -1
 	isPositive = 0
 	category = "vision"
@@ -396,7 +395,7 @@
 	cleanName = "Short-sighted"
 	desc = "Spawn with permanent short-sightedness and glasses."
 	id = "shortsighted"
-	icon_state = "glassesG"
+	image_name = "glassesG.png"
 	category = "vision"
 	points = 1
 	isPositive = 0
@@ -416,7 +415,7 @@
 	name = "Blind (+2)"
 	cleanName = "Blind"
 	desc = "Spawn with permanent blindness and a VISOR."
-	icon_state = "blind"
+	image_name = "blind.png"
 	id = "blind"
 	category = "vision"
 	points = 2
@@ -440,7 +439,7 @@
 	cleanName = "Mildly Mutated"
 	desc = "A random mutation in your gene pool starts activated."
 	id = "mildly_mutated"
-	icon_state = "mildly_mutatedB"
+	image_name = "mildly_mutatedB.png"
 	points = 0
 	isPositive = 0
 	category = "genetics"
@@ -454,7 +453,7 @@
 	cleanName = "Stable Genes"
 	desc = "You are less likely to mutate from radiation or mutagens."
 	id = "stablegenes"
-	icon_state = "dontmutateB"
+	image_name = "dontmutateB.png"
 	points = -2
 	isPositive = 0
 	category = "genetics"
@@ -466,7 +465,7 @@
 	cleanName = "NT loyalist"
 	desc = "Start with a Nanotrasen Beret as your trinket."
 	id = "loyalist"
-	icon_state = "beretP"
+	image_name = "beretP.png"
 	points = -1
 	isPositive = 1
 	category = "trinkets"
@@ -476,7 +475,7 @@
 	cleanName = "Petasusaphilic"
 	desc = "Start with a random hat as your trinket."
 	id = "petasusaphilic"
-	icon_state = "hatP"
+	image_name = "hatP.png"
 	points = -1
 	isPositive = 1
 	category = "trinkets"
@@ -486,7 +485,7 @@
 	cleanName = "Conspiracy Theorist"
 	desc = "Start with a tin foil hat as your trinket."
 	id = "conspiracytheorist"
-	icon_state = "conspP"
+	image_name = "conspP.png"
 	points = -1
 	isPositive = 1
 	category = "trinkets"
@@ -496,7 +495,7 @@
 	cleanName = "Pawn Star"
 	desc = "You sold your trinket before you departed for the station. You start with a bonus of 25% of your starting cash in your inventory."
 	id = "pawnstar"
-	icon_state = "pawnP"
+	image_name = "pawnP.png"
 	points = -1
 	isPositive = 1
 	category = "trinkets"
@@ -506,7 +505,7 @@
 	cleanName = "BEEst friend"
 	desc = "Start with a bee egg as your trinket."
 	id = "beestfriend"
-	icon_state = "bee"
+	image_name = "bee.png"
 	points = -1
 	isPositive = 1
 	category = "trinkets"
@@ -516,7 +515,7 @@
 	cleanName = "Lunchbox"
 	desc = "Start your shift with a cute little lunchbox, packed with all your favourite foods!"
 	id = "lunchbox"
-	icon_state = "lunchbox"
+	image_name = "lunchbox.png"
 	points = -1
 	isPositive = 1
 	category = "trinkets"
@@ -555,7 +554,7 @@
 	cleanName = "Claw School Graduate"
 	desc = "Your skill at claw machines is unparalleled."
 	id = "claw"
-	icon_state = "claw"
+	image_name = "claw.png"
 	category = "skill"
 	points = -1
 	isPositive = 1
@@ -671,7 +670,7 @@
 	cleanName = "Stowaway"
 	desc = "You spawn hidden away on-station without an ID, PDA, or entry in NT records."
 	id = "immigrant"
-	icon_state = "stowaway"
+	image_name = "stowaway.png"
 	category = "background"
 	points = 1
 	isPositive = 0
@@ -681,7 +680,7 @@ obj/trait/pilot
 	cleanName = "Pilot"
 	desc = "You spawn in a pod off-station with a Space GPS, Emergency Oxygen Tank, Breath Mask and proper protection, but you have no PDA and your pod cannot open wormholes."
 	id = "pilot"
-	icon_state = "pilot"
+	image_name = "pilot.png"
 	category = "background"
 	points = 0
 	isPositive = 0
@@ -723,7 +722,7 @@ obj/trait/pilot
 	cleanName = "Career alcoholic"
 	desc = "You gain alcohol resistance but your speech is permanently slurred."
 	id = "alcoholic"
-	icon_state = "beer"
+	image_name = "beer.png"
 	points = 0
 	isPositive = 1
 
@@ -770,7 +769,7 @@ obj/trait/pilot
 	cleanName = "Addict"
 	desc = "You spawn with a random addiction. Once cured there is a small chance that you will suffer a relapse."
 	id = "addict"
-	icon_state = "syringe"
+	image_name = "syringe.png"
 	points = 2
 	isPositive = 0
 	var/selected_reagent = "ethanol"
@@ -806,7 +805,7 @@ obj/trait/pilot
 	cleanName = "Strong willed"
 	desc = "You are more resistant to addiction."
 	id = "strongwilled"
-	icon_state = "nosmoking"
+	image_name = "nosmoking.png"
 	points = -1
 	isPositive = 1
 
@@ -815,7 +814,7 @@ obj/trait/pilot
 	cleanName = "Addictive Personality"
 	desc = "You are less resistant to addiction."
 	id = "addictive_personality"
-	icon_state = "syringe"
+	image_name = "syringe.png"
 	points = 1
 	isPositive = 0
 
@@ -824,7 +823,7 @@ obj/trait/pilot
 	cleanName = "Clown Disbelief"
 	desc = "You refuse to acknowledge that clowns could exist on a space station."
 	id = "clown_disbelief"
-	icon_state = "clown_disbelief"
+	image_name = "clown_disbelief.png"
 	points = 0
 	isPositive = 0
 
@@ -860,7 +859,7 @@ obj/trait/pilot
 	cleanName = "Unionized"
 	desc = "You start with a higher paycheck than normal."
 	id = "unionized"
-	icon_state = "handshake"
+	image_name = "handshake.png"
 	points = -1
 	isPositive = 1
 
@@ -869,7 +868,7 @@ obj/trait/pilot
 	cleanName = "Jailbird"
 	desc = "You have a criminal record and are currently on the run!"
 	id = "jailbird"
-	icon_state = "jail"
+	image_name = "jail.png"
 	points = 0
 	isPositive = 0
 
@@ -878,7 +877,7 @@ obj/trait/pilot
 	cleanName = "Clerical Error"
 	desc = "The name on your starting ID is misspelled."
 	id = "clericalerror"
-	icon_state = "spellingerror"
+	image_name = "spellingerror.png"
 	points = 0
 	isPositive = 1
 
@@ -911,7 +910,7 @@ obj/trait/pilot
 	cleanName = "Smoker"
 	desc = "You will not absorb any chemicals from smoking cigarettes."
 	id = "smoker"
-	icon_state = "smoker"
+	image_name = "smoker.png"
 	points = -1
 	isPositive = 1
 
@@ -920,7 +919,7 @@ obj/trait/pilot
 	cleanName = "Nervous"
 	desc = "Witnessing injuries or violence will sometimes make you freak out."
 	id = "nervous"
-	icon_state = "nervous"
+	image_name = "nervous.png"
 	points = 1
 	isPositive = 0
 
@@ -937,7 +936,7 @@ obj/trait/pilot
 	cleanName = "Human Torch"
 	desc = "Extends the time that you remain on fire for, when burning."
 	id = "burning"
-	icon_state = "onfire"
+	image_name = "onfire.png"
 	points = 1
 	isPositive = 0
 
@@ -945,7 +944,7 @@ obj/trait/pilot
 	name = "Carpenter (-1)"
 	cleanName = "Carpenter"
 	desc = "You can construct things more quickly than other people."
-	icon_state = "carpenter"
+	image_name = "carpenter.png"
 	id = "carpenter"
 	points = -1
 	isPositive = 1
@@ -989,7 +988,7 @@ obj/trait/pilot
 	cleanName = "Scared Shitless"
 	desc = "Literally. When you scream, you fart. Be careful around Bibles!"
 	id = "scaredshitless"
-	icon_state = "poo"
+	image_name = "poo.png"
 	points = 0
 	isPositive = 0
 
@@ -998,7 +997,7 @@ obj/trait/pilot
 	cleanName = "Hyperallergic"
 	desc = "You have a severe sensitivity to allergens and are liable to slip into anaphylactic shock upon exposure."
 	id = "allergic"
-	icon_state = "placeholder"
+	image_name = "placeholder.png"
 	points = 1
 	isPositive = 0
 
@@ -1021,7 +1020,7 @@ obj/trait/pilot
 /obj/trait/lizard
 	name = "Reptilian (-1) \[Species\]"
 	cleanName = "Reptilian"
-	icon_state = "lizardT"
+	image_name = "lizardT.png"
 	desc = "You are an abhorrent humanoid reptile, cold-blooded and ssssibilant."
 	id = "lizard"
 	points = -1
@@ -1032,7 +1031,7 @@ obj/trait/pilot
 /obj/trait/cow
 	name = "Bovine (-1) \[Species\]"
 	cleanName = "Bovine"
-	icon_state = "cowT"
+	image_name = "cowT.png"
 	desc = "You are a hummman, always have been, always will be, and any claimmms to the contrary are mmmoooonstrous lies."
 	id = "cow"
 	points = -1
@@ -1043,7 +1042,7 @@ obj/trait/pilot
 /obj/trait/skeleton
 	name = "Skeleton (-2) \[Species\]"
 	cleanName = "Skeleton"
-	icon_state = "skeletonT"
+	image_name = "skeletonT.png"
 	desc = "Compress all of your skin and flesh into your bones, making you resemble a skeleton. Not as uncomfortable as it sounds."
 	id = "skeleton"
 	points = -2
@@ -1054,7 +1053,7 @@ obj/trait/pilot
 /obj/trait/roach
 	name = "Roach (-1) \[Species\]"
 	cleanName = "Roach"
-	icon_state = "roachT"
+	image_name = "roachT.png"
 	desc = "One space-morning, on the shuttle-ride to the station, you found yourself transformed in your seat into a horrible vermin. A cockroach, specifically."
 	id = "roach"
 	points = -1

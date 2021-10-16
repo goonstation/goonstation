@@ -69,6 +69,7 @@ export interface CharacterPreferencesTrait {
   name: string;
   desc: string;
   category?: string;
+  image: string;
   points: number;
   selected?: BooleanLike;
   available: BooleanLike;

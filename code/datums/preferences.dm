@@ -155,6 +155,7 @@ datum/preferences
 				"name" = C.cleanName,
 				"desc" = C.desc,
 				"category" = C.category,
+				"image" = C.image_name,
 				"points" = C.points,
 				"selected" = selected,
 				"available" = src.traitPreferences.isAvailableTrait(C.id, selected)
