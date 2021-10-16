@@ -232,7 +232,7 @@
 		src.corpse = corpse
 		src.set_loc(get_turf(corpse))
 		src.real_name = corpse.real_name
-		src.name = corpse.real_name
+		src.UpdateName()
 		src.verbs += /mob/dead/observer/proc/reenter_corpse
 
 	hud = new(src)
