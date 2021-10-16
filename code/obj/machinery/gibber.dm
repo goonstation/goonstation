@@ -169,11 +169,11 @@
 
 		playsound(src.loc, machine_startup_sound, 80, 1)
 		sleep(1.5 SECONDS)
-		if(!src || src.disposed)
+		if(src.disposed)
 			return
 		playsound(src.loc, rotor_sound, 80, 1)
 		for(var/i = 1, i < 10; i++)
-			if(!src || src.disposed)
+			if(src.disposed)
 				return
 			if(i % 3 == 0) // alternate between dispensing meat or gibs
 				var/atom/movable/generated_meat = generate_meat(sourcename, sourcejob, decomp, get_turf(src))
@@ -189,7 +189,7 @@
 			if(i % 2 == 0)
 				playsound(src.loc, rotor_sound, 80, 1)
 			sleep(0.8 SECONDS)
-		if(!src || src.disposed)
+		if(src.disposed)
 			return
 		icon_state = "grinder"
 		playsound(src.loc, machine_shutdown_sound, 80, 1)
