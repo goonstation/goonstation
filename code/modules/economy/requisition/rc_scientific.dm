@@ -1,5 +1,5 @@
 ABSTRACT_TYPE(/datum/req_contract/scientific)
-/datum/req_contract/scientific
+/datum/req_contract/scientific //adam savage dense gas voice: it's scientific!
 	req_class = 3
 
 /datum/req_contract/scientific/bigbigfungus
@@ -21,7 +21,8 @@ ABSTRACT_TYPE(/datum/req_contract/scientific)
 	chemname = "space_fungus"
 	feemod = 30
 
-/datum/req_contract/scientific/internalaffairs
+
+/datum/req_contract/scientific/internalaffairs //get it?
 	name = "Organ Analysis"
 	payout = 1750
 	var/list/desc0 = list("conducting","performing","beginning","initiating","seeking supplies for","organizing")

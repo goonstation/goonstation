@@ -1,5 +1,5 @@
 ABSTRACT_TYPE(/datum/req_contract/aid)
-/datum/req_contract/aid
+/datum/req_contract/aid //in your final hour, astral wolf...
 	req_class = 2
 
 /datum/req_contract/aid/wrecked
