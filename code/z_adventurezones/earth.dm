@@ -567,3 +567,31 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 			var/matrix/M = L.transform
 			animate(L, transform = matrix(M, -90, MATRIX_ROTATE | MATRIX_MODIFY), time = 3)
 			animate( transform = matrix(M, -90, MATRIX_ROTATE | MATRIX_MODIFY), time = 3)
+
+
+
+
+
+proc/put_mob_in_centcom_cloner(mob/living/carbon/human/H)
+	H.a_intent = INTENT_HARM
+	H.dir_locked = TRUE
+	playsound(H, "sound/machines/ding.ogg", 50, 1)
+	H.visible_message("<span class='notice'>[H.name || "A clone"] pops out of the cloner.</span>")
+	var/static/list/obj/machinery/conveyor/conveyors = null
+	var/static/conveyor_running_count = 0
+	if(isnull(conveyors))
+		conveyors = list()
+		for(var/obj/machinery/conveyor/C as anything in machine_registry[MACHINES_CONVEYORS])
+			if(C.id == "centcom cloning")
+				conveyors += C
+	if(conveyor_running_count == 0)
+		for(var/obj/machinery/conveyor/conveyor as anything in conveyors)
+			conveyor.operating = 1
+			conveyor.setdir()
+	conveyor_running_count++
+	SPAWN_DBG(8 SECONDS)
+		conveyor_running_count--
+		if(conveyor_running_count == 0)
+			for(var/obj/machinery/conveyor/conveyor as anything in conveyors)
+				conveyor.operating = 0
+				conveyor.setdir()
