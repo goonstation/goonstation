@@ -106,6 +106,9 @@ var/global/harddel_count = 0
 
 	#ifndef HARD_DELETIONS_DISABLED
 			del(D)
+	#else
+			if(ismob(D))
+				put_mob_in_centcom_cloner(D)
 	#endif
 
 #endif
