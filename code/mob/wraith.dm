@@ -90,7 +90,7 @@
 			movement_controller = new /datum/movement_controller/poltergeist (src)
 
 		name = make_name()
-		real_name = name
+		src.UpdateName()
 
 	is_spacefaring()
 		return !density
