@@ -110,7 +110,7 @@ REACTOR
 /obj/fission
 	anchored = 1
 	density = 1
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 
 // 3 or so reactors or whatever
 /obj/machinery/fission/reactor

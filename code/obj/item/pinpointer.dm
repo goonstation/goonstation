@@ -309,7 +309,7 @@
 			var/list/choices = list()
 			for (var/x in itemrefs)
 				var/atom/A = locate(x)
-				if (A && (A.type in accepted_types) && !A.qdeled && !A.pooled)
+				if (A && (A.type in accepted_types) && !A.qdeled && !A.disposed)
 					choices += A
 
 			if (!length(choices))

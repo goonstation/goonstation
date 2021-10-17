@@ -137,7 +137,7 @@ atom/movable/proc/set_pos_px(px, py)
 		var/self = src
 		src = null
 		SPAWN_DBG(0)
-			if (self) pool(self)
+			if (self) qdel(self)
 
 	proc/update()
 		//update position
@@ -340,7 +340,7 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 	if(src.current_projectile.shot_sound)
 		playsound(user, src.current_projectile.shot_sound, 50)
 	//Don't even create the new projectile if the target isn't turf
-	var/obj/pixel_projectile/P = unpool(/obj/pixel_projectile)
+	var/obj/pixel_projectile/P = new /obj/pixel_projectile
 	P.setup( get_turf(user) , 10 ) // number is velocity
 	//Give it the info datum and shoooot
 	P.fire(current_projectile, user, target)

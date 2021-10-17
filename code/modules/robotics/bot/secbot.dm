@@ -542,7 +542,7 @@
 			new loot_baton_type(Tsec)
 
 		if (prob(50))
-			new /obj/item/parts/robot_parts/arm/left(Tsec)
+			new /obj/item/parts/robot_parts/arm/left/standard(Tsec)
 
 		elecflash(src, radius=1, power=3, exclude_center = 0)
 		qdel(src)
@@ -720,7 +720,7 @@
 			return
 
 		// If the target is or goes invisible, give up, securitrons don't have thermal vision! :p
-		if((src.target.invisibility > 0)  && (!src.is_beepsky))
+		if((src.target.invisibility > INVIS_NONE)  && (!src.is_beepsky))
 			speak("?!", just_float = 1)
 			src.KillPathAndGiveUp(kpagu)
 			return

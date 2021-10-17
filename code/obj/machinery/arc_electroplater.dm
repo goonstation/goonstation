@@ -30,7 +30,7 @@
 		user.visible_message("<span class='alert'><b>[user] jumps into \the [src].</b></span>", "<span class='alert'><b>You jump into \the [src].</b></span>")
 		var/obj/statue = user.become_statue(src.my_bar.material, survive=TRUE)
 		user.TakeDamage("All", burn=200)
-		pool(src.my_bar)
+		qdel(src.my_bar)
 		src.my_bar = null
 		statue.set_loc(src)
 		src.cooktime = 0
@@ -151,7 +151,7 @@
 
 		if(my_bar?.material && isnull(target_item.material))
 			target_item.setMaterial(my_bar.material)
-			pool(my_bar)
+			qdel(my_bar)
 		my_bar = null
 
 		for (var/atom/movable/AM in src) //Things can get dropped somehow sometimes ok

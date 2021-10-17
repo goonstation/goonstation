@@ -62,22 +62,22 @@ Contains:
 				if(O.level != 1)
 					continue
 
-				if(O.invisibility == 101)
-					O.invisibility = 0
+				if(O.invisibility == INVIS_ALWAYS)
+					O.invisibility = INVIS_NONE
 					O.alpha = 128
 					SPAWN_DBG(1 SECOND)
 						if(O && isturf(O.loc))
 							var/turf/U = O.loc
 							if(U.intact)
-								O.invisibility = 101
+								O.invisibility = INVIS_ALWAYS
 								O.alpha = 255
 
 			var/mob/living/M = locate() in T
-			if(M?.invisibility == 2)
-				M.invisibility = 0
+			if(M?.invisibility == INVIS_CLOAK)
+				M.invisibility = INVIS_NONE
 				SPAWN_DBG(0.6 SECONDS)
 					if(M)
-						M.invisibility = 2
+						M.invisibility = INVIS_CLOAK
 
 
 
@@ -107,11 +107,11 @@ Contains:
 				continue
 
 			var/mob/living/M = locate() in T
-			if(M?.invisibility == 2)
-				M.invisibility = 0
+			if(M?.invisibility == INVIS_CLOAK)
+				M.invisibility = INVIS_NONE
 				SPAWN_DBG(0.6 SECONDS)
 					if(M)
-						M.invisibility = 2
+						M.invisibility = INVIS_CLOAK
 
 		for(var/obj/O in range(2, loc_to_check) )
 			if(O.interesting)
@@ -568,6 +568,10 @@ that cannot be itched
 	mats = 3
 
 	attack(mob/living/carbon/human/M as mob, mob/user as mob)
+		if (!istype(M))
+			boutput(user, "<span class='alert'>The device displays an error about an \"incompatible target\".</span>")
+			return
+
 		////General Records
 		var/found = 0
 		//if( !istype(get_area(src), /area/security/prison) && !istype(get_area(src), /area/security/main))
@@ -716,7 +720,7 @@ that cannot be itched
 		logTheThing("admin", user, null, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
 		playsound(src, "sound/machines/printer_thermal.ogg", 50, 1)
 		SPAWN_DBG(3 SECONDS)
-			var/obj/item/paper/p = unpool(/obj/item/paper)
+			var/obj/item/paper/p = new /obj/item/paper
 			p.set_loc(get_turf(src))
 			p.name = "Official Caution - [ticket_target]"
 			p.info = ticket_text

@@ -1,5 +1,237 @@
 
+(t)sun oct 17 21
+(u)tarmunora
+(e)⚖|balance(e)
+(+)Adjust moonshine efficacy, omnizine return, and bottle size.
+(u)Gerhazo
+(p)6344
+(e)🎨|sprites
+(+)The kitchen gibber has received some mechanical upgrades.
+(t)fri oct 15 21
+(u)UnfunnyPerson
+(p)6333
+(e)⚖|balance
+(+)It now takes 3 seconds to shove someone in the portabrig instead of 1 second.
+(u)Zamujasa
+(e)🆕|feature
+(*)Admins can now set a message for a player that will be displayed on next login, for when we need to tell you something but you aren't online.
+(*)The future is now.
+(t)thu oct 14 21
+(u)pali
+(p)6308
+(e)|
+(+)Nukie default radio channel is now in Syndicate red instead of being green.
+(u)pali
+(p)6284
+(e)🆕|feature
+(+)*hatstomp emote is now animated.
+(u)Flaborized & pali
+(p)6300
+(e)🆕|feature
+(*)Nukie radio icons are now letters based on their callsigns
+(u)pali
+(p)6298
+(e)🆕|feature
+(*)Nukie commander is now a separate antag preference. Turn it on if you want to be the commander (you still need regular nukie antag preference toggled on).
+(u)FlamingLily
+(p)6295
+(e)⚖|balance
+(+)After a long and intense class action legal battle, Discount Dan's has finally removed Ghost Chili Juice from their products, dine away without fear of incineration!
+(u)FlamingLily
+(p)6294
+(e)|
+(+)Added hot-swapping of beakers to chem dispensers, no need to eject when replacing a beaker
+(t)wed oct 13 21
+(u)Luxizzle
+(p)6239
+(e)📄|tgui
+(*)You can now select your pronouns separately from your sex. Saved pronouns have been reset to they/them.
+(u)BatElite
+(p)6080
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)A bee farm has drifted into the asteroid field recently. The bees do the farming. They're lesbians.
+(u)TTerc
+(p)6271
+(e)|
+(+)Clicking backpacks/satchels/belts with an item that does not fit in them will now open them.
+(u)TTerc
+(p)6243
+(e)🐛|bug
+(+)Small update for wraith/revenant UI: Added points and generation rate counter + turning into a revenant removes all the wraith ability buttons, instead of making them unusable.
+(t)tue oct 12 21
+(u)kyle
+(e)⚖|balance(e)
+(+)Ritual AOE creation effects now require energy per each thing it attempts to effect.
+(u)Mr. Moriarty
+(p)6223
+(e)🎨|sprites
+(*)Added three new waistcoats and a guard's coat to the clothing booth.
+(u)112358sam
+(p)6173
+(e)🆕|feature
+(+)Made LOOC text visible over the head of the speaker.
+(u)Azrun
+(p)6221
+(e)🆕🎨|feature, sprites
+(+)Nectar Perspiration visual effect upgraded to slightly larger buzzing insects.
+(u)alexkar598
+(p)6179
+(e)|
+(+)The description instructing you how to deconstruct reinforced walls now has bolded words to hint to the next step.
+(u)Zamujasa
+(*)Trying to move while dead will now ghost you. Don't worry, you can still wiggle with IJKL.
+(t)mon oct 11 21
+(u)pali
+(*)For Spooktober the space colour now varies slightly
+(u)Zamujasa
+(*)Ghosts become visible to everyone at the end of a round.
+(e)🆕|feature
+(+)Using floor tiles in hand now acts like using them on the turf you're on. This means you can add tiles to plating with the use key, or (if holding a crowbar) swap out the tiles.
+(+)Using &lt; and &gt; in messages should now work. &lt;3? This might break things, though, so report any new issues...
+(t)sun oct 10 21
+(u)Sovexe
+(p)6206
+(e)🆕🎨|feature, sprites
+(+)Arcfiend - max charge increased (2000 -> 2500)
+(+)Arcfiend - Jamming Field ability point cost reduced (200 -> 150)
+(u)Jan.antilles
+(p)6151
+(e)🆕🎨|feature, sprites
+(+)Added three new cooking recipes: Fettucine Alfredo, Chicken Alfredo, and Chicken Parmigiana!
+(+)Resprited existing spaghetti dishes to not use plates and look even tastier.
+(u)Batelite
+(p)6131
+(e)🆕|feature
+(+)Silicons no longer have control over the firelocks of airlocks with disabled AI control.
+(u)Zonespace
+(p)5978
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Added a new prefab to the asteroid field, a Syndicate Laboratory.
+(u)Zonespace
+(p)6086
+(e)⚖|balance
+(+)Only spy thieves can deploy and undeploy their camera's flash.
+(u)Gerhazo
+(e)🆕|feature
+(*)Halloween plush toy job is now in a true halloween mood.
+(u)Eagle
+(p)6021
+(e)🗺|mapping
+(+)Added a ranch to mushroom, along with some very very tiny qql things.
+(u)Flaborized
+(p)6219
+(e)🎨|sprites
+(+)Resprited wizard spell ability icons.
+(t)sat oct 09 21
+(u)Tarmunora
+(e)⚖|balance
+(+)increase napalm contact damage volume scaling (max unchanged), round burn DOT values
+(u)Nexusuxen & pali
+(+)When there's no roundstart AI it now gets replaced by a cardboard box. This box can also be made out of cardboard in a hacked robotics fabricator. (You can get cardboard by wrench-disassembling those cargo crates made out of cardboard for example!)
+(u)Flourish
+(+)The Devil has gone back to Hell to visit their parents. But what's that? A tattered plush toy? Aw, how adorable...
+(+)Holographic disguisers are now available in the Syndicate uplink for 2 bad guy bucks.
+(+)Chameleon projectors can now copy the appearance of <i>any</i> object. They also now cost 5 evil energy crystals.
+(t)fri oct 08 21
+(u)Flappybat
+(p)5928
+(e)⚖|balance
+(+)Antagonist critter gunbots now have muzzleflash, thermalvision and cyborg style punch immunity.
+(u)Tarmunora
+(e)⚖|balance
+(+)Port-a-nanomed and chemdepot non-scannable
+(+)Organ Swap special order additional rewards of 3x medical restock cartridges and 1x advanced medical restock cartridge (portamed restock)
+(u)Danger Noodle
+(p)6214
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Added a new space prefab, a school for securitrons.
+(u)Kubius
+(p)6043
+(e)🆕🗺|feature, mapping
+(*)Silverglass has been set adrift in deep space.
+(u)Arthur Holiday
+(p)6204
+(e)⚖|balance
+(+)When putting down a chair you will have to wait 1 second before climbing on it.
+(u)Ikea
+(p)5944
+(e)|
+(*)Engineering now come with lamp manufacturers.
+(u)Dr. Cogwerks
+(e)🗺|mapping
+(*)Reworked Cogmap2 security checkpoint and podbay layouts. Added minibrig and a little pilot/merchant booth.
+(*)Reinforced Mining Magnet viewing areas
+(t)thu oct 07 21
+(u)Carsontheking
+(p)5782
+(e)🆕🎨|feature, sprites
+(+)Gold ID card the hops equipment manufacturer can make now requires gold rather than reflective material.
+(u)Dr. Cogwerks
+(e)🗺|mapping
+(*)Reworked cogmap2 engineering hallway so the PTL only bisects one side of the primary corridor by default
+(u)MetricDuck
+(p)6048
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Added a new space prefab - a seemingly abandoned safe house.
+(t)wed oct 06 21
+(u)Emily & Eagletanker
+(p)6195
+(e)🗺|mapping
+(*)Manta's Mining has moved from the Sea Turtle back shipside.
+(u)Flappybat
+(p)6006
+(e)⚖|balance
+(+)Wish granters now give out less dollars.
+(u)Tarmunora
+(+)adjust expresso recipe
+(u)HauntedAngel
+(p)6171
+(e)🆕⚖|feature, balance
+(+)Removes cast time from the prismatic spray spell, allowing you to cast it while on the go.
+(u)Arthur Holiday
+(p)5873
+(e)🆕⚖|feature, balance
+(+)You can now destroy printers and disposal chutes by shooting them.
+(u)MomoBerry
+(p)6010
+(e)⚖|balance
+(+)Holy water and Firefighting Foam damage caps are now 80 and 74.75, respective to their antags.
+(u)Hans
+(p)5924
+(e)⚖|balance
+(+)Enhances the capacity of some of the bottles so they can serve more glasses.
+(u)UnfunnyPerson
+(p)5937
+(e)⚖|balance
+(+)Chameleon bomb traitor purchase cost reduced to 3 tc and now gives a box of 2 chameleon bombs, power of chameleon bombs lowered to compensate.
+(u)Jan.antilles
+(p)6174
+(e)🆕🎨|feature, sprites
+(+)Added three new botany plants: Raspberry, Blackberry, and Blue Raspberry!
+(+)Added three new cocktail recipes: Blackberry Bramble, French Martini, and Jazzberry Hard Lemonade!
+(t)tue oct 05 21
+(u)Wisemonster
+(p)6177
+(e)🐛🗺|bug, mapping
+(+)Destiny's science department no longer has as many public access doors.
+(+)Destiny's Medbay lobby is now accessible to the public.
+(u)TTerc
+(p)6107
+(e)|
+(+)You are now able to put critter corpses into disposal units via clickdrag.
+(u)112358sam
+(p)6120
+(e)🆕|feature
+(+)Added a new crew objective for miners
+(u)Gannets
+(p)6175
+(e)⚖|balance
+(+)Gwydion tranquilizer pistol magazine size reduced to 10. Tranquilizer ammo pouches now contain 3 spares.
 (t)mon oct 04 21
+(u)Waffleloffle
+(p)5915
+(e)🎨|sprites
+(*)Adds a new botany plant, turmeric, and its associated reagent. Turmeric root can be put in a food processor to make curry powder, which can be used in some new recipes.
 (u)Wisemonster
 (p)6158
 (e)🐛🗺|bug, mapping

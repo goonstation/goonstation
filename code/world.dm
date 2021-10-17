@@ -243,6 +243,7 @@ var/f_color_selector_handler/F_Color_Selector
 			roundLog << "\[[time2text(world.timeofday,"hh:mm:ss")]] <b>Starting new round</b><br>"
 			roundLog << "========================================<br>"
 			roundLog << "<br>"
+			logLength += 4
 
 		Z_LOG_DEBUG("Preload", "Applying config...")
 		// apply some settings from config..
@@ -260,6 +261,9 @@ var/f_color_selector_handler/F_Color_Selector
 			var/datum/overlayComposition/E = new over()
 			screenOverlayLibrary.Add(over)
 			screenOverlayLibrary[over] = E
+
+		url_regex = new("(https?|byond|www)(\\.|:\\/\\/)", "i")
+		full_url_regex = new(@"(https?:\/\/)?((www\.)?([-\w]+\.)+[\l]+(\/\S+)*\/?)","ig")
 
 		Z_LOG_DEBUG("Preload", "initLimiter() (whatever the fuck that does)")
 		initLimiter()
@@ -532,9 +536,6 @@ var/f_color_selector_handler/F_Color_Selector
 	if (global_sims_mode)
 		for (var/area/Ar in world)
 			Ar.build_sims_score()
-
-	url_regex = new("(https?|byond|www)(\\.|:\\/\\/)", "i")
-	full_url_regex = new(@"(https?:\/\/)?((www\.)?([-\d\l]+\.)+[\d\l]+(\/\S+)*\/?)","ig")
 
 	UPDATE_TITLE_STATUS("Updating status")
 	Z_LOG_DEBUG("World/Init", "Updating status...")
@@ -904,6 +905,10 @@ var/f_color_selector_handler/F_Color_Selector
 		return list2params(s)
 
 	else // Discord bot communication (or callbacks)
+
+		var/game_servers_response = game_servers?.topic(T, addr)
+		if(!isnull(game_servers_response))
+			return game_servers_response
 
 #ifdef TWITCH_BOT_ALLOWED
 		//boutput(world,"addres : [addr]     twitchbotaddr : [TWITCH_BOT_ADDR]")
@@ -1327,7 +1332,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/game_msg = linkify(msg)
 				game_msg = discord_emojify(game_msg)
 
-				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
+				var/mob/M = ckey_to_mob(who, exact=0)
 				if (M?.client)
 					boutput(M, {"
 						<div style='border: 2px solid red; font-size: 110%;'>
@@ -1368,7 +1373,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/nick = plist["nick"]
 				var/msg = html_encode(plist["msg"])
 				var/who = lowertext(plist["target"])
-				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
+				var/mob/M = ckey_to_mob(who, exact=0)
 				var/game_msg = linkify(msg)
 				game_msg = discord_emojify(game_msg)
 
@@ -1406,7 +1411,7 @@ var/f_color_selector_handler/F_Color_Selector
 					var/count = 0
 					var/list/whois_result
 					for (var/who in whom)
-						whois_result = whois(who, 5)
+						whois_result = whois(who)
 						if (whois_result)
 							for (var/mob/M in whois_result)
 								count++
@@ -1711,6 +1716,39 @@ var/f_color_selector_handler/F_Color_Selector
 					return 0
 
 				return response.body
+
+			if ("getPlayerStats")
+				if (!plist["ckey"])
+					return 0
+
+				// playtime stats
+				var/list/data = list(
+					"auth" = config.player_notes_auth,
+					"action" = "user_stats",
+					"ckey" = plist["ckey"],
+					"format" = "json"
+				)
+				var/datum/http_request/playtime_request = new()
+				playtime_request.prepare(RUSTG_HTTP_METHOD_GET, "[config.player_notes_baseurl]/?[list2params(data)]", "", "")
+				playtime_request.begin_async()
+
+				// round stats
+				// cleverly making this request inbetween the start and the wait of the playtime request
+				var/list/response = null
+				try
+					response = apiHandler.queryAPI("playerInfo/get", list("ckey" = plist["ckey"]), forceResponse = 1)
+				catch
+					return 0
+				if (!response)
+					return 0
+
+				// finish playtime stats
+				UNTIL(playtime_request.is_complete())
+				var/datum/http_response/playtime_response = playtime_request.into_response()
+				if (!playtime_response.errored && playtime_response.body)
+					response["playtime"] = playtime_response.body
+
+				return json_encode(response)
 
 /world/proc/setMaxZ(new_maxz)
 	if (!isnum(new_maxz) || new_maxz <= src.maxz)

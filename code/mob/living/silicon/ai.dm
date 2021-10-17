@@ -695,7 +695,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (relay_laws_for_shell && ismob(relay_laws_for_shell))
 		vamp = relay_laws_for_shell
 	if (vamp.mind && vamp.mind.special_role == ROLE_VAMPTHRALL && vamp.mind.master)
-		var/mob/mymaster = whois_ckey_to_mob_reference(vamp.mind.master)
+		var/mob/mymaster = ckey_to_mob(vamp.mind.master)
 		if (mymaster)
 			boutput(who, "1. Only your master [mymaster.real_name] is human. Obey and serve them to the best of your ability.")
 			return
@@ -777,7 +777,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	src.sight |= SEE_MOBS
 	src.sight |= SEE_OBJS
 	src.see_in_dark = SEE_DARK_FULL
-	src.see_invisible = 2
+	src.see_invisible = INVIS_CLOAK
 	src.lying = 1
 	src.light.disable()
 	src.update_appearance()
@@ -2007,13 +2007,13 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			src.sight |= SEE_MOBS
 			src.sight |= SEE_OBJS
 		src.see_in_dark = SEE_DARK_FULL
-		src.see_invisible = 2
+		src.see_invisible = INVIS_CLOAK
 		src.ear_deaf = 0
 	else
 		vision.set_color_mod("#000000")
 		src.sight = src.sight & ~(SEE_TURFS | SEE_MOBS | SEE_OBJS)
 		src.see_in_dark = 0
-		src.see_invisible = 0
+		src.see_invisible = INVIS_NONE
 		src.ear_deaf = 1
 
 /mob/living/silicon/ai/verb/open_nearest_door()

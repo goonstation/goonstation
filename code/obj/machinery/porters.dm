@@ -461,7 +461,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		return
 
 /datum/action/bar/portabrig_shove_in
-	duration = 1 SECOND
+	duration = 3 SECONDS
 	var/mob/victim
 	var/obj/item/grab/G
 	var/obj/machinery/port_a_brig/brig
@@ -835,7 +835,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	anchored = 0
 	p_class = 1.2
 	can_fall = 0
-	mats = 30
+	mats = null
 	ai_control_enabled = 1
 	var/homeloc = null
 

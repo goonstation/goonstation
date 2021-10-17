@@ -13,7 +13,7 @@
 		for(var/obj/kudzu_marker/M in T) qdel(M)
 //		for(var/obj/alien/weeds/V in T) qdel(V)
 
-		var/obj/hotspot/h = unpool(/obj/hotspot)
+		var/obj/hotspot/h = new /obj/hotspot
 		h.temperature = temp
 		h.volume = 400
 		h.set_real_color()
@@ -65,8 +65,8 @@
 
 	SPAWN_DBG(3 SECONDS)
 		for (var/obj/hotspot/A as anything in hotspots)
-			if (!A.pooled)
-				pool(A)
+			if (!A.disposed)
+				qdel(A)
 			//LAGCHECK(LAG_REALTIME)  //MBC : maybe caused lighting bug?
 		hotspots.len = 0
 
@@ -102,7 +102,7 @@
 		var/need_expose = 0
 		var/expose_temp = 0
 		if (!existing_hotspot)
-			var/obj/hotspot/h = unpool(/obj/hotspot)
+			var/obj/hotspot/h = new /obj/hotspot
 			need_expose = 1
 			h.temperature = temp - dist * falloff
 			expose_temp = h.temperature
@@ -164,8 +164,8 @@
 
 	SPAWN_DBG(3 SECONDS)
 		for(var/obj/hotspot/A in hotspots)
-			if (!A.pooled)
-				pool(A)
+			if (!A.disposed)
+				qdel(A)
 			//LAGCHECK(LAG_REALTIME)  //MBC : maybe caused lighting bug?
 		hotspots.len = 0
 

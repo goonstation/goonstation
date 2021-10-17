@@ -3337,6 +3337,13 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/door/airlock/pyro/command{
+	name = "Bridge"
+	},
+/obj/firedoor_spawn,
 /obj/machinery/door/poddoor/blast{
 	density = 0;
 	dir = 4;
@@ -3346,13 +3353,6 @@
 	name = "Bridge Lockdown Door";
 	opacity = 0
 	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/machinery/door/airlock/pyro/command{
-	name = "Bridge"
-	},
-/obj/firedoor_spawn,
 /obj/access_spawn/heads,
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -4889,7 +4889,6 @@
 	name = "Medbay"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/medical,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
 "atc" = (
@@ -7926,6 +7925,7 @@
 	name = "Medbay"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/medical,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -17831,6 +17831,7 @@
 	name = "Test Chamber"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/chemistry,
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "bMy" = (
@@ -22586,14 +22587,6 @@
 	},
 /area/station/science/teleporter)
 "dVw" = (
-/obj/machinery/door/poddoor/blast{
-	density = 0;
-	icon_state = "bdoormid0";
-	id = "scienceteleporter";
-	layer = 4;
-	name = "Teleporter Blast Shield";
-	opacity = 0
-	},
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -22606,6 +22599,15 @@
 	req_access_txt = null
 	},
 /obj/firedoor_spawn,
+/obj/machinery/door/poddoor/blast{
+	density = 0;
+	icon_state = "bdoormid0";
+	id = "scienceteleporter";
+	layer = 4;
+	name = "Teleporter Blast Shield";
+	opacity = 0
+	},
+/obj/access_spawn/research,
 /turf/simulated/floor/stairs{
 	dir = 4;
 	icon_state = "medstairs_alone"
@@ -38894,7 +38896,6 @@
 	name = "Medbay"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/medical,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
 "mAO" = (
@@ -39047,6 +39048,7 @@
 	name = "Guardbot Depot"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/research,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "mFb" = (
@@ -40493,15 +40495,6 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/barber_shop)
 "nvG" = (
-/obj/machinery/door/poddoor/blast{
-	density = 0;
-	dir = 4;
-	icon_state = "bdoormid0";
-	id = "eva_shield";
-	layer = 4;
-	name = "E.V.A. Security Shield";
-	opacity = 0
-	},
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -40515,8 +40508,17 @@
 	dir = 1;
 	name = "EVA Storage"
 	},
-/obj/firedoor_spawn,
 /obj/access_spawn/eva,
+/obj/firedoor_spawn,
+/obj/machinery/door/poddoor/blast{
+	density = 0;
+	dir = 4;
+	icon_state = "bdoormid0";
+	id = "eva_shield";
+	layer = 4;
+	name = "E.V.A. Security Shield";
+	opacity = 0
+	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/storage/eva)
 "nvQ" = (
@@ -40688,6 +40690,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	name = "Atmospherics"
+	},
+/obj/firedoor_spawn,
 /obj/machinery/door/poddoor/blast{
 	density = 0;
 	dir = 4;
@@ -40697,10 +40703,6 @@
 	name = "Atmospherics Security Shield";
 	opacity = 0
 	},
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	name = "Atmospherics"
-	},
-/obj/firedoor_spawn,
 /obj/access_spawn/engineering,
 /turf/simulated/floor/black,
 /area/station/atmos/highcap_storage)
@@ -44324,8 +44326,7 @@
 /area/station/medical/medbay)
 "pAh" = (
 /obj/machinery/computer/robotics{
-	dir = 8;
-	perma = 1
+	dir = 8
 	},
 /obj/machinery/light{
 	dir = 4
@@ -47949,8 +47950,8 @@
 /obj/item/sheet/steel{
 	amount = 50
 	},
-/obj/item/parts/robot_parts/arm/right,
-/obj/item/parts/robot_parts/arm/right,
+/obj/item/parts/robot_parts/arm/right/standard,
+/obj/item/parts/robot_parts/arm/right/standard,
 /obj/item/storage/box/costume/robuddy,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
@@ -48526,6 +48527,7 @@
 	name = "Chemistry"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/chemistry,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "rRk" = (
@@ -49905,6 +49907,7 @@
 	name = "Guardbot Depot"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/research,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "sJu" = (
@@ -52287,6 +52290,7 @@
 	name = "Medbay"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/medical,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -52726,6 +52730,7 @@
 	name = "Research"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/research,
 /turf/simulated/floor/sanitary,
 /area/station/science/restroom)
 "uhv" = (
@@ -54863,6 +54868,7 @@
 	req_access_txt = null
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/research,
 /turf/simulated/floor/black,
 /area/station/science/teleporter)
 "vgb" = (
