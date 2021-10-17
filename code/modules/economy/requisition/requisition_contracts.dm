@@ -24,8 +24,8 @@ ABSTRACT_TYPE(/datum/rc_entry)
 	var/count = 1 // how much this contract entry is for, be it in item quantity, stack quantity or reagent units
 	var/rollcount = 0 //when an item is analyzed, this increments on a successful evaluation, for later tallying
 	var/feemod = 0 // how much cash this item adds to the overall payout
-	var/isplural = FALSE //skips item pluralization, i.e. you'd set this to true for "jeans". can usually be ignored
-	var/es = FALSE //used for item pluralization, i.e. you'd set this to true for "tomato". can usually be ignored
+	var/isplural = FALSE // skips item pluralization, i.e. you'd set this to true for "jeans". can usually be ignored
+	var/es = FALSE // used for item pluralization, i.e. you'd set this to true for "tomato". can usually be ignored
 
 	proc/rc_eval(obj/eval_item) //evaluation procedure, used in different entry classes
 		if(rollcount >= count) return FALSE //if you've already got enough, skip and tell the manager as such
@@ -80,6 +80,19 @@ ABSTRACT_TYPE(/datum/rc_entry/stack)
 				. = TRUE //let manager know passed eval item is claimed by contract
 		return
 
+//reward items: contract creation instantiates these to fill item payout list if applicable
+//distinct from rc_entry datums, these -!! are instantiators of their own !!- that the requisition handler calls on
+/datum/rc_itemreward
+	var/name = "something" // what the reward is, description wise
+	var/count // how many of the reward you'll get; optional, used for front end descriptive purposes
+	var/isplural = FALSE // skips item pluralization, i.e. you'd set this to true for "jeans". can usually be ignored
+	var/es = FALSE // used for item pluralization, i.e. you'd set this to true for "tomato". can usually be ignored
+
+	New()
+		..()
+
+	proc/build_reward() // this should return an item or list of items, for requisition handler to pack
+
 //contract class defs
 #define CIV_CONTRACT 1
 #define AID_CONTRACT 2
@@ -93,6 +106,8 @@ ABSTRACT_TYPE(/datum/req_contract)
 	//0 is unclassified/misc, 1 is civilian, 2 is emergency aid, 3 is scientific (as defined above)
 
 	var/payout = 0 // a baseline amount of cash you'll be given for fulfilling the requisition, modified by entries
+	var/list/item_rewarders = list() // optional list for items you're sent as payment; will be shown on contract unless flagged otherwise
+	var/hide_item_payouts // set this to prevent the item payout from being shown on contract
 	var/flavor_desc // optional flavor text for the contract
 	var/requis_desc = "" // mandatory descriptive text for the contract contents, to be generated alongside them
 	var/list/rc_entries = list() // list of requisition contact entries
@@ -121,10 +136,12 @@ ABSTRACT_TYPE(/datum/req_contract)
 			contents |= S.get_all_contents()
 
 		. = 0 //by default return no success
-		for(var/datum/rc_entry/shoppin as anything in rc_entries)
-			for(var/obj/O in contents)
-				if(shoppin.rc_eval(O)) //found something that the requisition asked for, time to delet
+		for(var/obj/O in contents)
+			LAGCHECK(LAG_LOW)
+			for(var/datum/rc_entry/shoppin as anything in rc_entries)
+				if(shoppin.rc_eval(O)) //found something that the requisition asked for, let it know
 					contents_to_cull |= O
+
 		for(var/datum/rc_entry/shopped as anything in rc_entries)
 			if(shopped.rollcount >= shopped.count)
 				successes_needed--

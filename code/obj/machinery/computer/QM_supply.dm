@@ -1048,7 +1048,15 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	src.temp += "for your use, even through market shifts.<br>"
 	for (var/datum/req_contract/RC in shippingmarket.req_contracts)
 		src.temp += "<h3>[RC.name][RC.pinned ? " (Pinned)" : null]</h3>"
-		src.temp += "Contract Reward: [RC.payout]<br>"
+		src.temp += "Contract Reward:"
+		if(length(RC.item_rewarders) && !RC.hide_item_payouts)
+			src.temp += "<br>"
+			if(RC.payout > 0) src.temp += "[RC.payout]<br>"
+			for(var/datum/rc_itemreward/RI in RC.item_rewarders)
+				if(RI.count) src.temp += "[RI.count]x [RI.name]<br>"
+				else src.temp += "[RI.name]<br>"
+		else
+			src.temp += " [RC.payout]<br>"
 		if(RC.flavor_desc) src.temp += "[RC.flavor_desc]<br><br>"
 		src.temp += "[RC.requis_desc]"
 		if(RC.req_class == 2) //aid contract

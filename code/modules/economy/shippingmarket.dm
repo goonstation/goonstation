@@ -15,9 +15,11 @@
 	var/max_buy_items_at_once = 99
 	var/last_market_update = 0
 
-	var/list/datum/req_contract/req_contracts = list() // Requisition contracts for export
-	var/max_req_contracts = 5 // Maximum contracts active at one time (refills to this at each cycle)
+	var/list/datum/req_contract/req_contracts = list() // Requisition contracts for export, listed in clearinghouse
+	var/max_req_contracts = 5 // Maximum contracts active in clearinghouse at one time (refills to this at each cycle)
 	var/has_pinned_contract = 0 // One contract at a time may be pinned to prevent it from disappearing in cycle
+
+	var/list/datum/req_contract/special_orders = list() // Special orders: contract manually sent by interested party, do not count towards limit
 
 	var/civ_contracts_active = 0 // To ensure at least one contract of each type is available
 	var/aid_contracts_active = 0 // after market shift, these keep track of that
@@ -29,8 +31,6 @@
 	var/points_per_crate = 10
 
 	var/artifact_resupply_amount = 0 // amount of artifacts in next resupply crate
-
-	var/list/datum/special_order/active_orders
 
 	New()
 		..()
@@ -71,7 +71,7 @@
 			return
 		var/contract2make
 		if(src.civ_contracts_active == 0) //is this right lmao
-			contract2make = pick(concrete_typesof(/datum/req_contract/civilian))
+			contract2make = pick(concrete_typesof(/datum/req_contract/civilian/birthdaybash)) //DEBUG DEBUG DEBUG
 			src.civ_contracts_active = 1
 		else if(src.aid_contracts_active == 0)
 			contract2make = pick(concrete_typesof(/datum/req_contract/aid))
@@ -80,7 +80,10 @@
 			contract2make = pick(concrete_typesof(/datum/req_contract/scientific))
 			src.sci_contracts_active = 1
 		else
-			contract2make = pick(concrete_typesof(/datum/req_contract))
+			switch(rand(1,10)) //civ weighted slightly higher
+				if(1 to 4) contract2make = pick(concrete_typesof(/datum/req_contract/civilian))
+				if(5 to 7) contract2make = pick(concrete_typesof(/datum/req_contract/aid))
+				if(8 to 10) contract2make = pick(concrete_typesof(/datum/req_contract/scientific))
 		var/datum/req_contract/contractmade = new contract2make
 		switch(contractmade.req_class)
 			if(CIV_CONTRACT) src.civ_contracts_active++
@@ -193,6 +196,7 @@
 					if(AID_CONTRACT) src.aid_contracts_active--
 					if(SCI_CONTRACT) src.sci_contracts_active--
 				src.req_contracts -= RC
+				qdel(RC)
 
 		while(length(src.req_contracts) < src.max_req_contracts)
 			src.add_req_contract()
@@ -279,11 +283,11 @@
 			for(var/obj/O in items)
 				for (var/C in src.commodities) // Key is type of the commodity
 					var/datum/commodity/CM = commodities[C]
-					if (istype(O, CM.comtype) && CM.item_check(O))
+					if (istype(O, CM.comtype))
 						add = CM.price
 						if (CM.indemand)
 							add *= shippingmarket.demand_multiplier
-						if (istype(O, /obj/item/raw_material) || istype(O, /obj/item/sheet) || istype(O, /obj/item/material_piece) || istype(O, /obj/item/plant) || istype(O, /obj/item/reagent_containers/food/snacks/plant))
+						if (istype(O, /obj/item/raw_material) || istype(O, /obj/item/sheet) || istype(O, /obj/item/material_piece) || istype(O, /obj/item/plant) || istype(O, /obj/item/reagent_containers/food/snacks/plant) || istype(O, /obj/item/reagent_containers/food/snacks/pizza)) //not many wanderers travel to these far reaches. welcome, honored guest.
 							add *= O:amount // TODO: fix for snacks
 							if (sell)
 								qdel(O)
@@ -300,11 +304,11 @@
 		else // Please excuse this duplicate code, I'm gonna change trader commodity lists into associative ones later I swear
 			for(var/obj/O in items)
 				for (var/datum/commodity/C in commodities_list)
-					if (istype(O, C.comtype) && C.item_check(O))
+					if (istype(O, C.comtype))
 						add = C.price
 						if (C.indemand)
 							add *= shippingmarket.demand_multiplier
-						if (istype(O, /obj/item/raw_material) || istype(O, /obj/item/sheet) || istype(O, /obj/item/material_piece) || istype(O, /obj/item/plant) || istype(O, /obj/item/reagent_containers/food/snacks/plant))
+						if (istype(O, /obj/item/raw_material) || istype(O, /obj/item/sheet) || istype(O, /obj/item/material_piece) || istype(O, /obj/item/plant) || istype(O, /obj/item/reagent_containers/food/snacks/plant) || istype(O, /obj/item/reagent_containers/food/snacks/pizza)) //have you come to bring us from this desolate land?
 							add *= O:amount // TODO: fix for snacks
 							if (sell)
 								qdel(O)
@@ -331,33 +335,52 @@
 		var/datum/data/record/account = sell_crate.account
 		var/duckets
 
+		var/datum/req_contract/contractQ //track picked contract for later cleanup
+
 		var/returntosender
 		//used for crate return management after requisitions
 		//0 or null if no sendback is necessary, 1 if sendback after failed transaction, 2 if sendback after successful transaction, 3 if clean sale
 
+		//requisition contract shipments receive different messages and handling
 		if(sell_crate.delivery_destination && sell_crate.delivery_destination == "Requisitions")
 			returntosender = 1
-			//standard contract-hub requisitions
+
 			if(length(req_contracts))
 				for(var/datum/req_contract/contract in req_contracts)
 					var/success = contract.requisify(sell_crate) //0 is did not sell, 1 is sold, 2 is sold with no remnants
 					if(success)
+						contractQ = contract
 						switch(contract.req_class) //track loss of categoried contracts
 							if(CIV_CONTRACT) src.civ_contracts_active--
 							if(AID_CONTRACT) src.aid_contracts_active--
 							if(SCI_CONTRACT) src.sci_contracts_active--
 						duckets += contract.payout
-						req_contracts -= contract
-						returntosender = success + 1 //you may not like it but this is what peak programming looks like
+						if(length(contract.item_rewarders))
+							for(var/datum/rc_itemreward/giftback in contract.item_rewarders)
+								var/reward = giftback.build_reward()
+								if(reward) sell_crate.contents += reward //intending to pass either a single item or a list of items
+								else logTheThing("debug",null,null,"QM contract [contract.type] failed to build [giftback.type]")
+							returntosender = 2
+						else
+							returntosender = success + 1
 						break
 
-		//special requisitions, not necessarily handled through the hub
-		if(length(active_orders) && !commodities_list)
-			for(var/datum/special_order/order in active_orders)
-				if(order.check_order(sell_crate))
-					duckets += order.price
-					order.send_rewards()
-					active_orders -= order
+			if(length(special_orders))
+				for(var/datum/req_contract/special/contract in special_orders)
+					LAGCHECK(LAG_LOW)
+					contractQ = contract
+					var/success = contract.requisify(sell_crate)
+					if(success)
+						duckets += contract.payout
+						if(length(contract.item_rewarders))
+							for(var/datum/rc_itemreward/giftback in contract.item_rewarders)
+								var/reward = giftback.build_reward()
+								if(reward) sell_crate.contents += reward
+								else logTheThing("debug",null,null,"QM contract [contract.type] failed to build [giftback.type]")
+							returntosender = 2
+						else
+							returntosender = success + 1
+						break
 
 		#ifdef SECRETS_ENABLED
 		send_to_brazil(sell_crate)
@@ -376,6 +399,12 @@
 					if(transmit_connection != null)
 						transmit_connection.post_signal(null, pdaSignal)
 					return
+			if(req_contracts.Find(contractQ))
+				req_contracts -= contractQ
+				qdel(contractQ)
+			else if(special_orders.Find(contractQ))
+				special_orders -= contractQ
+				qdel(contractQ)
 		else
 			duckets += src.appraise_value(sell_crate, commodities_list, 1) + src.points_per_crate
 			qdel(sell_crate)
