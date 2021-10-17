@@ -494,7 +494,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 			return
 		if (ismob(O))
 			var/mob/jerk = O
-			if ((jerk.client && jerk.client.flying) || (ismob(usr) && HAS_MOB_PROPERTY(usr, PROP_NOCLIP)))
+			if ((jerk.client && jerk.client.flying) || (ismob(jerk) && HAS_MOB_PROPERTY(jerk, PROP_NOCLIP)))
 				return
 			setdead(jerk)
 			jerk.remove()

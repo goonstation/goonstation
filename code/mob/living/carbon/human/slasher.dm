@@ -186,7 +186,7 @@
 
 		take_control(var/mob/living/carbon/human/M)
 			var/mob/living/carbon/human/slasher/W = src
-			slasher_key = src.key
+			slasher_key = src.ckey
 			if(!istype(M))
 				return
 			SPAWN_DBG(0)
@@ -257,9 +257,8 @@
 					src.visible_message("<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 104</span>")
 					return
 				if(!M.loc) //M got gibbed
-					for (var/mob/M2 in mobs)
-						if(M2.key == src.slasher_key)
-							M2.mind.transfer_to(src) //the slasher's alive again at least
+					var/mob/M2 = ckey_to_mob(src.slasher_key)
+					M2.mind.transfer_to(src) //the slasher's alive again at least
 				if(!src.loc) //src got gibbed
 					return //well you're dead now, soz
 				M.mind.transfer_to(src)
