@@ -104,9 +104,7 @@
 				sleep(time_to_respawn)
 				if(!ghost_mob || !ghost_mob.client) // somewhere on the way we lost our dead player, try to find them
 					ghost_mob = null
-					for (var/mob/M in mobs)
-						if(M.ckey == ckey_of_dead_player)
-							ghost_mob = M
+					ghost_mob = ckey_to_mob(ckey_of_dead_player, 1)
 				if(!new_vessel || new_vessel.disposed)
 					if(ghost_mob)
 						boutput(ghost_mob, "<h3><span class='alert'>The vessel has been destroyed. Your return to the physical realm has been prevented.</span></h3>")
