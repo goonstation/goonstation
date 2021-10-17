@@ -104,6 +104,8 @@ ABSTRACT_TYPE(/datum/req_contract)
 	var/name = "Henry Whip a Zamboni" // title text that gets a big front row seat
 	var/req_class = 0 // class of the requisition contract; aid requisitions are urgent and will not wait for you
 	//0 is unclassified/misc, 1 is civilian, 2 is emergency aid, 3 is scientific (as defined above)
+	var/req_code // requisition code for cargo handling purposes
+	// clearinghouse requisitions will get a randomly-generated one, third party ones will get REQ-THIRDPARTY and require their requisition papers
 
 	var/payout = 0 // a baseline amount of cash you'll be given for fulfilling the requisition, modified by entries
 	var/list/item_rewarders = list() // optional list for items you're sent as payment; will be shown on contract unless flagged otherwise
@@ -115,6 +117,13 @@ ABSTRACT_TYPE(/datum/req_contract)
 
 	New() //in individual definitions, create entries and THEN call this, it'll get things set up for you
 		..()
+		if(!src.req_code)
+			var/flavoraffix = rand(0,9)
+			switch(req_class)
+				if(1) flavoraffix = prob(50) ? "C" : "P"
+				if(2) flavoraffix = prob(50) ? "A" : "E"
+				if(3) flavoraffix = prob(50) ? "S" : "R"
+			src.req_code = "REQ-[flavoraffix][rand(0,9)][rand(0,9)][rand(0,9)]-[pick(consonants_upper)][prob(20) ? pick(consonants_upper) : rand(0,9)]"
 
 		for(var/datum/rc_entry/rce in rc_entries)
 			switch(rce.entryclass)

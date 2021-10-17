@@ -1042,12 +1042,15 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 /obj/machinery/computer/supplycomp/proc/requisitions_update()
 	src.temp = "<h2>Open Requisition Contracts</h2><div style='text-align: center;'>"
 	src.temp += "To fulfill these contracts, please send full requested<br>"
-	src.temp += "complement of items with a Requisitions tag.<br>"
-	src.temp += "Insufficient or extra items will be returned to you.<br>"
+	src.temp += "complement of items with the contract's Requisitions tag.<br>"
+	src.temp += "Insufficient or extra items will be returned to you.<br><br>"
 	src.temp += "One contract at a time may be pinned, which reserves it<br>"
-	src.temp += "for your use, even through market shifts.<br>"
+	src.temp += "for your use, even through market shifts.<br><br>"
+	src.temp += "Third-party requisitions are not handled through this<br>"
+	src.temp += "clearinghouse and <B>will not be returned if invalid</B>."
 	for (var/datum/req_contract/RC in shippingmarket.req_contracts)
 		src.temp += "<h3>[RC.name][RC.pinned ? " (Pinned)" : null]</h3>"
+		src.temp += "Requisition Code: [RC.req_code]<br>"
 		src.temp += "Contract Reward:"
 		if(length(RC.item_rewarders) && !RC.hide_item_payouts)
 			src.temp += "<br>"

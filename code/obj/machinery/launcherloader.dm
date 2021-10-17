@@ -390,8 +390,7 @@
 	desc = "Used to print barcode stickers for the cargo routing system, and to mark crates for sale to traders."
 	icon_state = "qm_barcode_comp"
 
-	New() //requisition support, lets you not have to readd this to subtypes for different stations
-		destinations += "Requisitions"
+	New()
 		..()
 
 	attack_hand(var/mob/user as mob)
@@ -407,6 +406,11 @@
 		for(var/datum/trader/T in shippingmarket.active_traders)
 			if (!T.hidden)
 				dat += "<b><A href='?src=\ref[src];print=[T.crate_tag]'>Sell to [T.name]</A></b><BR>"
+
+		dat += "<BR><b>Requisition Fulfillment:</b><BR>"
+		dat += "<b><A href='?src=\ref[src];print=["REQ-THIRDPARTY"]'>REQ-THIRDPARTY</A></b><BR>"
+		for(var/datum/req_contract/RC in shippingmarket.req_contracts)
+			dat += "<b><A href='?src=\ref[src];print=[RC.req_code]'>[RC.req_code]</A></b><BR>"
 
 		//dat += "<BR><b><A href='?src=\ref[src];add=1'>Add Tag</A></b>"
 
