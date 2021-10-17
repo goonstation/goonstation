@@ -58,7 +58,7 @@
 	New()
 		..()
 		var/list/datum/commodity/shopping_list = list()
-		src.requisition = update_requisition(requisition)
+		update_requisition(requisition)
 		for(var/i in 1 to length(order_items))
 			if(ispath(order_items[i]))
 				var/path = order_items[i]
@@ -96,7 +96,6 @@
 		requisition.info += "<BR/><BR/>Requisition Offer: <B>[price]</B>"
 		if(length(rewards))
 			requisition.info += get_rewards_list()
-		return requisition
 
 	///formats src.order_items for being put onto paper
 	proc/get_shopping_list()
@@ -171,25 +170,25 @@ ABSTRACT_TYPE(/datum/special_order/surgery)
 /datum/special_order/weed_sampler
 	name = "Weed Flight"
 	order_items = list(/datum/commodity/trader/buford/megaweed=1, /datum/commodity/trader/buford/whiteweed=1, /datum/commodity/trader/buford/omegaweed=1, /datum/commodity/special_order/pizza=1)
-	requisition = /obj/item/paper/requisition/weed_sample
+	requisition = new /obj/item/paper/requisition/weed_sample
 	price = 41834
 
 /datum/special_order/pizza_party
 	name = "Pizza Party"
 	order_items = list(/datum/commodity/special_order/pizza=20)
-	requisition = /obj/item/paper/requisition/pizza_party
+	requisition = new /obj/item/paper/requisition/pizza_party
 	price = 5000
 
 	nt
 		name = "Pizza Party (NanoTrasen)"
-		requisition = /obj/item/paper/requisition/pizza_party/nt
+		requisition = new /obj/item/paper/requisition/pizza_party/nt
 		price = 6000
 
 ABSTRACT_TYPE(/datum/special_order/chef)
 /datum/special_order/chef
 	weight = 50
 	price = 2000
-	requisition = /obj/item/paper/requisition/food_order
+	requisition = new /obj/item/paper/requisition/food_order
 	var/list/food_order = list()
 	var/static/list/breakfast
 	var/static/list/lunch
@@ -282,7 +281,7 @@ ABSTRACT_TYPE(/datum/special_order/chef)
 
 /datum/special_order/reagents/blood
 	name = "Blood Request"
-	requisition = /obj/item/paper/requisition/blood
+	requisition = new /obj/item/paper/requisition/blood
 	price = 9000
 	reagents_list = list("blood"=1000)
 
@@ -291,7 +290,7 @@ ABSTRACT_TYPE(/datum/special_order/chef)
 	weight = 50
 	price = 5000
 	sendingCrate = new /obj/storage/crate/wooden
-	requisition = /obj/item/paper/requisition/surgery/organ_swap
+	requisition = new /obj/item/paper/requisition/surgery/organ_swap
 	var/mob/living/carbon/human/target
 	var/target_organs = list()
 	rewards = list(/obj/item/vending/restock_cartridge/medical = 3, /obj/item/vending/restock_cartridge/portamed = 1)
