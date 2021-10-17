@@ -1220,7 +1220,7 @@
 				src.update_name_tag(id_name)
 			else
 				src.name = "[src.name_prefix(null, 1)][src.real_name][id_name ? " (as [id_name])" : ""][src.name_suffix(null, 1)]"
-				src.update_name_tag(id_name)
+				src.update_name_tag(src.real_name)
 		else
 			if (src.decomp_stage > 2)
 				src.name = "[src.name_prefix(null, 1)]Unknown[src.wear_id ? " (as [id_name])" : ""][src.name_suffix(null, 1)]"
