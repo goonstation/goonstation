@@ -1,6 +1,6 @@
 import { KEY_LEFT, KEY_RIGHT } from 'common/keycodes';
 import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, ByondUi, Input, LabeledList, Section, Stack, Tabs } from '../../components';
+import { Box, Button, ByondUi, LabeledList, Section, Stack, Tabs } from '../../components';
 import { Window } from '../../layouts';
 import { CharacterTab } from './CharacterTab';
 import { GameSettingsTab } from './GameSettingsTab';
