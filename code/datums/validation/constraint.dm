@@ -1,6 +1,6 @@
 
 /datum/validation/constrait
-	proc/Validate(/datum/validation/item/item)
+	proc/Validate(var/datum/validation/item/item)
 		. = TRUE
 
 	string
@@ -12,7 +12,7 @@
 				..()
 				src.min_length = min_length
 
-			Validate(/datum/validation/item/item)
+			Validate(var/datum/validation/item/item)
 				if (length(item.value) < src.min_length)
 					return new /datum/validation/error("[item.name] is shorter than [src.min_length] characters")
 
@@ -23,6 +23,6 @@
 				..()
 				src.max_length = max_length
 
-			Validate(/datum/validation/item/item)
+			Validate(var/datum/validation/item/item)
 				if (length(item.value) > src.max_length)
 					return new /datum/validation/error("[item.name] is longer than [src.max_length] characters")

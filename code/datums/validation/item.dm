@@ -7,7 +7,7 @@
 	var/has_errors = FALSE
 	var/list/datum/validation/error/errors = list()
 
-	New(name, /list/datum/validation/constrait/constraints)
+	New(var/name, var/list/datum/validation/constrait/constraints)
 		..()
 		src.name = name
 		src.constraints = constraints

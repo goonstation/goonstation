@@ -1,6 +1,3 @@
-
-// Preferences group:
-
 /datum/validation/group/preferences
 	items = list(
 		"nameFirst" = new /datum/validation/item("first name", list(
