@@ -71,7 +71,7 @@
 			return
 		var/contract2make
 		if(src.civ_contracts_active == 0) //is this right lmao
-			contract2make = pick(concrete_typesof(/datum/req_contract/civilian/birthdaybash)) //DEBUG DEBUG DEBUG
+			contract2make = pick(concrete_typesof(/datum/req_contract/civilian))
 			src.civ_contracts_active = 1
 		else if(src.aid_contracts_active == 0)
 			contract2make = pick(concrete_typesof(/datum/req_contract/aid))

@@ -318,8 +318,6 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 			)
 			src.flavor_desc += "[pick(bonusducks)]"
 
-		src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/cake,1)
-		/*
 		if(prob(70)) //cookies or cakes?
 			src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/cake,1+prob(20))
 		else //yep cookies
@@ -342,8 +340,8 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 				src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/glitter,rand(4,8)*5)
 			if(30 to 40)
 				src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/paperhat,rand(6,12))
-			*/
-		if(prob(100)) //DEBUG DEBUG DEBUG
+
+		if(prob(20))
 			var/collate = "[desc1] [desc2]"
 			var/datum/rc_itemreward/birthdaypic/picc = new /datum/rc_itemreward/birthdaypic
 			picc.whodatflag = whodat
