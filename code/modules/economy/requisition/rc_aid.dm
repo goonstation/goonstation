@@ -169,7 +169,7 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/surgical)
 
 /datum/req_contract/aid/geeksquad
 	name = "Computer Failure"
-	payout = 700
+	payout = 900
 	var/list/namevary = list("Systems Failure","Short Circuit","Computer Overload","Electronics Failure","Systems Breakdown")
 	var/list/desc0 = list("research","mining","security","cargo transfer","communications","deep-space survey")
 	var/list/desc1 = list("vessel","ship","station","outpost")
