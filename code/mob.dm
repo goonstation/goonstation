@@ -2743,7 +2743,7 @@
 								ID.registered = newname
 								ID.update_name()
 					src.real_name = newname
-					src.name = newname
+					src.UpdateName()
 					return 1
 				else
 					continue
@@ -2754,7 +2754,7 @@
 			src.real_name = src.client.preferences.real_name
 		else
 			src.real_name = random_name(src.gender)
-		src.name = src.real_name
+		src.UpdateName()
 
 /mob/proc/set_mutantrace(var/mutantrace_type)
 	return
