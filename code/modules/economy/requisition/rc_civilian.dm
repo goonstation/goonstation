@@ -84,11 +84,13 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/req_contract/civilian/furnishing
 	name = "Interior Outfitting"
 	payout = 800
+	var/list/namevary = list("Interior Outfitting","Furnishing Assistance","Interior Decorating","Occupancy Preparations","Last-Minute Furnishing")
 	var/list/desc0 = list("A new gaming","An extraction","A medical","A research","A cartographic","A transit")
 	var/list/desc1 = list("vessel","station","platform","outpost")
 	var/list/desc2 = list("its commissary","the docking wing","crew quarters","staff facilities","additional operating space","a storage bay")
 
 	New()
+		src.name = pick(namevary)
 		src.flavor_desc = "[pick(desc0)] [pick(desc1)] requires supplies to furnish [pick(desc2)]. Please use standard compact packing techniques."
 		src.payout += rand(0,50) * 10
 
@@ -154,13 +156,14 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/req_contract/civilian/greytide
 	name = "Crew Embarcation"
 	payout = 700
-
+	var/list/namevary = list("Crew Embarcation","Crew Onboarding","New Hands on Deck","Expedited Outfitting","Personnel Rotation")
 	var/list/desc0 = list("mining","hydroponics","cargo handling","engineering","medical","research","cartographic")
 	var/list/desc1 = list("vessel","station","platform","outpost")
 	var/list/desc2 = list("hired","acquired","recruited","reassigned","graduated")
 	var/list/desc3 = list("personnel","crew members","staff","interns")
 
 	New()
+		src.name = pick(namevary)
 		var/task = pick(desc0) //subvariation
 		src.flavor_desc = "An affiliated [task] [pick(desc1)] requires sets of attire for newly [pick(desc2)] [pick(desc3)]."
 		src.payout += rand(0,10) * 10
@@ -185,14 +188,14 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 		if(prob(60))
 			src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/literallyanyfood,crewcount)
 		if(prob(50))
-			src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/water,crewcount*5*rand(1,5))
+			src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/water,crewcount*10*rand(1,3))
 		//job related gearsets should also be added here sometimes
 
 		..()
 
 /datum/rc_entry/itembypath/jumpsuit
 	name = "black jumpsuit"
-	feemod = 120
+	feemod = 90
 	exactpath = TRUE
 
 	white
@@ -248,12 +251,13 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/reagent/water
 	name = "water"
 	chemname = "water"
-	feemod = 10
+	feemod = 4
 
 
 /datum/req_contract/civilian/birthdaybash
 	name = "Birthday Party"
 	payout = 700
+	var/list/namevary = list("Birthday Party","Birthday Bash","Surprise Party","One Year Older")
 	var/list/desc0 = list("party","celebration","gathering","party","event") //yes party twice
 
 	var/list/descpacito = list("ducks","Stations and Syndicates","cool hats","pride gear","instruments","sports","candy","electronics","tinkering")
@@ -273,6 +277,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	)
 
 	New()
+		src.name = pick(namevary)
 		//let's get personal!
 		var/whodat = prob(50)
 		var/desc1 = whodat ? pick_string_autokey("names/first_male.txt") : pick_string_autokey("names/first_female.txt")
@@ -355,7 +360,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/reagent/cola
 	name = "cola"
 	chemname = "cola"
-	feemod = 10
+	feemod = 6
 
 /datum/rc_entry/itembypath/chaps
 	name = "assless chaps"

@@ -25,11 +25,13 @@ ABSTRACT_TYPE(/datum/req_contract/scientific)
 /datum/req_contract/scientific/internalaffairs //get it?
 	name = "Organ Analysis"
 	payout = 1750
+	var/list/namevary = list("Organ Analysis","Organ Research","Biolab Supply","Biolab Partnership","CLASSIFIED REQUISITION")
 	var/list/desc0 = list("conducting","performing","beginning","initiating","seeking supplies for","organizing")
 	var/list/desc1 = list("long-term study","intensive trialing","in-depth analysis","study","regulatory assessment")
 	var/list/desc2 = list("decay","function","robustness","response to a new medication","atrophy in harsh conditions","therapies","bounciness")
 
 	New()
+		src.name = pick(namevary)
 		var/dombler = pick(concrete_typesof(/datum/rc_entry/itembypath/organ))
 		var/datum/rc_entry/organic = new dombler
 		organic.count = rand(2,4)
