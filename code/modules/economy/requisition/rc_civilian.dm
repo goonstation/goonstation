@@ -95,13 +95,6 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 		src.payout += rand(0,50) * 10
 
 		if(prob(70))
-			src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/table,rand(2,8))
-			src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/chair,rand(4,12))
-		else
-			src.rc_entries += rc_buildentry(/datum/rc_entry/stack/floortiles,rand(5,20)*4)
-			src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/basictool/crowbar,rand(1,3))
-
-		if(prob(70))
 			var/datum/rc_entry/furn
 			if(prob(40))
 				furn = new /datum/rc_entry/itembypath/light_bulb
@@ -113,8 +106,15 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 		if(prob(60))
 			src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/rack,rand(2,8))
 
-		if(prob(30))
+		if(!length(src.rc_entries) || prob(30))
 			src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/carpet,rand(3,7) * 10)
+
+		if(prob(70))
+			src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/table,rand(2,8))
+			src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/chair,rand(4,12))
+		else
+			src.rc_entries += rc_buildentry(/datum/rc_entry/stack/floortiles,rand(5,20)*4)
+			src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/basictool/crowbar,rand(1,3))
 		..()
 
 /datum/rc_entry/stack/floortiles
@@ -317,10 +317,10 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 			)
 			src.flavor_desc += "[pick(bonusducks)]"
 
-		if(prob(60)) //cookies or cakes?
+		if(prob(70)) //cookies or cakes?
 			src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/cake,1+prob(20))
 		else //yep cookies
-			src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/cookie,rand(1,3)*12)
+			src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/cookie,rand(2,4)*6)
 
 		if(prob(70)) //pizza party
 			src.rc_entries += rc_buildentry(/datum/rc_entry/stack/pizza,rand(2,3)*6)
@@ -355,7 +355,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/itembypath/cookie
 	name = "cookie"
 	typepath = /obj/item/reagent_containers/food/snacks/cookie
-	feemod = 70
+	feemod = 120
 
 /datum/rc_entry/stack/pizza
 	name = "slices' worth of pizza"
