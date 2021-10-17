@@ -971,10 +971,10 @@ This is basically useless for anyone but miners.
 	blockedmode = list(/datum/game_mode/spy)
 
 /datum/syndicate_buylist/surplus/rifle
-	name = "Hunting Rifle Box"
-	item = /obj/item/storage/box/hunting_rifle
-	cost = 7
-	desc = "A box containing a hunting rifle and some ammo."
+	name = "Old Hunting Rifle"
+	item = /obj/item/gun/kinetic/hunting_rifle
+	cost = 3
+	desc = "An old hunting rifle, comes with only four bullets. Use them wisely."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/surplus/bananagrenades
