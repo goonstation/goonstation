@@ -1,5 +1,8 @@
 
 (t)sun oct 17 21
+(u)tarmunora
+(e)⚖|balance(e)
+(+)Adjust moonshine efficacy, omnizine return, and bottle size.
 (u)Gerhazo
 (p)6344
 (e)🎨|sprites
