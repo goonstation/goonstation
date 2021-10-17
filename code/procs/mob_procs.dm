@@ -451,7 +451,7 @@
 		return 0
 
 	if (src.mind.master)
-		var/mob/mymaster = whois_ckey_to_mob_reference(src.mind.master)
+		var/mob/mymaster = ckey_to_mob(src.mind.master)
 		if (mymaster && (mymaster == dominator))
 			return 1
 

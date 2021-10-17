@@ -638,10 +638,6 @@ proc/generate_space_color()
 
 	new_turf.RL_ApplyGeneration = rlapplygen
 	new_turf.RL_UpdateGeneration = rlupdategen
-	if(new_turf.RL_MulOverlay)
-		qdel(new_turf.RL_MulOverlay)
-	if(new_turf.RL_AddOverlay)
-		qdel(new_turf.RL_AddOverlay)
 	new_turf.RL_MulOverlay = rlmuloverlay
 	new_turf.RL_AddOverlay = rladdoverlay
 

@@ -125,11 +125,9 @@ var/datum/particleMaster/particleMaster = new
 				src.active_particles -= P
 				qdel(P)
 				P = null
-			LAGCHECK(LAG_MED)
 
 	//Spawns specified particle. If type can be recycled, do that - else create new. After time is over, move particle to recycling to avoid del and new calls.
 	proc/SpawnParticle(var/atom/location, var/particleTypeName, var/particleTime, var/particleColor, var/atom/target, var/particleSprite) //This should be the only thing you access from the outside.
-		LAGCHECK(LAG_MED)
 		var/datum/particleType/pType = particleTypes[particleTypeName]
 
 		if (istype(pType))
@@ -173,7 +171,6 @@ var/datum/particleMaster/particleMaster = new
 		return
 
 	proc/Apply(var/obj/particle/par)
-		LAGCHECK(LAG_MED)
 		if (istype(par))
 			par.icon = icon
 			par.icon_state = par.override_state ? par.override_state : icon_state
