@@ -35,7 +35,7 @@
 
 	//var/atom/movable/screen/zone_sel/zone_sel = null
 	var/datum/hud/zone_sel/zone_sel = null
-	var/atom/movable/name_tag/name_tag
+	var/atom/movable/name_tag/outer/name_tag
 
 	var/obj/item/device/energy_shield/energy_shield = null
 
@@ -253,7 +253,7 @@
 	src.chat_text = new
 
 	src.name_tag = new
-	src.name_tag.set_name(src.name)
+	src.update_name_tag()
 	src.vis_contents += src.name_tag
 	START_TRACKING
 	. = ..()
@@ -2625,6 +2625,7 @@
 		name = src.name
 	if(name == "Unknown")
 		name = ""
+	src.name_tag.set_extra(src.bioHolder?.mobAppearance?.pronouns?.subjective)
 	src.name_tag.set_name(name, strip_parentheses=TRUE)
 
 /mob/proc/protected_from_space()
@@ -3069,3 +3070,11 @@
 // to check if someone is abusing cameras with stuff like artifacts, power gloves, etc
 /mob/proc/in_real_view_range(var/turf/T)
 	return src.client && IN_RANGE(T, src, WIDE_TILE_WIDTH)
+
+
+/mob/MouseEntered(location, control, params)
+	if(usr.client.check_key(KEY_EXAMINE))
+		src.name_tag.show_hover(usr.client)
+
+/mob/MouseExited(location, control, params)
+	src.name_tag.hide_hover(usr.client)
