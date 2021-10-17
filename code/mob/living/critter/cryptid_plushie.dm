@@ -99,6 +99,9 @@
 				if(!ghost_mob || !ghost_mob.client) // somewhere on the way we lost our dead player, try to find them
 					ghost_mob = null
 					ghost_mob = ckey_to_mob(ckey_of_dead_player, 1)
+				if(!(isobserver(ghost_mob) || inafterlife(ghost_mob))) // the plushie player is no longer a ghost/in afterlife, probably revived, abort
+					return
+
 				if(!new_vessel || new_vessel.disposed)
 					if(ghost_mob)
 						boutput(ghost_mob, "<h3><span class='alert'>The vessel has been destroyed. Your return to the physical realm has been prevented.</span></h3>")
