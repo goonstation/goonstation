@@ -75,12 +75,6 @@
 				qdel(src)
 		var/ckey_of_dead_player = src.ckey
 		var/mob/ghost_mob = src.ghostize()
-		if(!ghost_mob || !ghost_mob.client) // somewhere on the way we lost our dead player, try to find them
-			ghost_mob = null
-			if(ckey_of_dead_player)
-				for (var/mob/M in mobs)
-					if(M.ckey == ckey_of_dead_player)
-						ghost_mob = M
 		var/our_icon_state = src.icon_state
 		// resurrection attempt
 		if(!ghost_mob)
