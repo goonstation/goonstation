@@ -86,12 +86,15 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 				if (src.debugging)
 					src.logDebug("Export, final args: [text_args(args)]. Final route: [src.interface]/[iface]?[text_args(args)]")
 
-				// Via rust-g HTTP
-				var/datum/http_request/request = new()
-				request.prepare(RUSTG_HTTP_METHOD_GET, "[src.interface]/[iface]?[list2params(args)]", "", "")
-				request.begin_async()
-				UNTIL(request.is_complete())
-				var/datum/http_response/response = request.into_response()
+				var/n_tries = 3
+				var/datum/http_response/response = null
+				while(--n_tries > 0 && (isnull(response) || response.errored))
+					// Via rust-g HTTP
+					var/datum/http_request/request = new()
+					request.prepare(RUSTG_HTTP_METHOD_GET, "[src.interface]/[iface]?[list2params(args)]", "", "")
+					request.begin_async()
+					UNTIL(request.is_complete())
+					response = request.into_response()
 
 				if (response.errored || !response.body)
 					logTheThing("debug", null, null, "<b>IRCBOT:</b> No return data from export. <b>errored:</b> [response.errored] <b>status_code:</b> [response.status_code] <b>iface:</b> [iface]. <b>args:</b> [text_args(args)] <br> <b>error:</b> [response.error]")
