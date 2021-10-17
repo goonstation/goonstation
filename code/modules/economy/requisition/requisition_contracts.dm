@@ -106,9 +106,9 @@ ABSTRACT_TYPE(/datum/req_contract)
 				if(RC_ITEMBYPATH)
 					src.requis_desc += "[rce.count]x [rce.name][rce.isplural ? null : s_es(rce.count,rce.es)]<br>"
 				if(RC_REAGENT)
-					src.requis_desc += "[rce.count] or more unit[s_es(rce.count)] of [rce.name]<br>"
+					src.requis_desc += "[rce.count]+ unit[s_es(rce.count)] of [rce.name]<br>"
 				if(RC_STACK)
-					src.requis_desc += "[rce.count] or more [rce.name][rce.isplural ? null : s_es(rce.count,rce.es)]<br>"
+					src.requis_desc += "[rce.count]+ [rce.name][rce.isplural ? null : s_es(rce.count,rce.es)]<br>"
 			src.payout += rce.feemod * rce.count
 
 	proc/requisify(obj/storage/crate/sell_crate)
