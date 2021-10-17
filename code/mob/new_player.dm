@@ -411,7 +411,7 @@ mob/new_player
 
 			//If it's Revolution time, lets show all command jobs as filled to (try to) prevent metagaming.
 			if(istype(J, /datum/job/command/) && istype(ticker.mode, /datum/game_mode/revolution))
-				c = limit
+				c = max(c, limit)
 
 			// probalby could be a define but dont give a shite
 			var/maxslots = 5
