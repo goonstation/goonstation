@@ -51,8 +51,6 @@ export const Rockbox = (_props, context) => {
                             <Table.Row>
                               <Table.Cell>
                                 <Box>{`${currentOre.name}: ${currentOre.amount}`}</Box>
-
-
                               </Table.Cell>
                               <Table.Cell textAlign="right">
                                 <Box>
