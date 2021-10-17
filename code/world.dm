@@ -243,6 +243,7 @@ var/f_color_selector_handler/F_Color_Selector
 			roundLog << "\[[time2text(world.timeofday,"hh:mm:ss")]] <b>Starting new round</b><br>"
 			roundLog << "========================================<br>"
 			roundLog << "<br>"
+			logLength += 4
 
 		Z_LOG_DEBUG("Preload", "Applying config...")
 		// apply some settings from config..
@@ -260,6 +261,9 @@ var/f_color_selector_handler/F_Color_Selector
 			var/datum/overlayComposition/E = new over()
 			screenOverlayLibrary.Add(over)
 			screenOverlayLibrary[over] = E
+
+		url_regex = new("(https?|byond|www)(\\.|:\\/\\/)", "i")
+		full_url_regex = new(@"(https?:\/\/)?((www\.)?([-\w]+\.)+[\l]+(\/\S+)*\/?)","ig")
 
 		Z_LOG_DEBUG("Preload", "initLimiter() (whatever the fuck that does)")
 		initLimiter()
@@ -532,9 +536,6 @@ var/f_color_selector_handler/F_Color_Selector
 	if (global_sims_mode)
 		for (var/area/Ar in world)
 			Ar.build_sims_score()
-
-	url_regex = new("(https?|byond|www)(\\.|:\\/\\/)", "i")
-	full_url_regex = new(@"(https?:\/\/)?((www\.)?([-\w]+\.)+[\l]+(\/\S+)*\/?)","ig")
 
 	UPDATE_TITLE_STATUS("Updating status")
 	Z_LOG_DEBUG("World/Init", "Updating status...")

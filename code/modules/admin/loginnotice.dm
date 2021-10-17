@@ -51,6 +51,7 @@
 
 	// New note saved, usual player notes bookkeeping
 	addPlayerNote(target_key, src.owner.ckey + " (AUTO)", "New login notice set:\n\n[message_text]")
+	message_admins("<span class='internal'>[key_name(src.owner.mob)] added a login notice for <a href='?src=%admin_ref%;action=notes&target=[target_key]'>[target_key]</A>:<br><div style='whitespace: pre-wrap;'>[message_text]</div></span>")
 	tgui_alert(src.owner.mob, "Login notice for '[target_key]' has been set. They should see it next time they connect.")
 
 
@@ -83,22 +84,25 @@
 							<head>
 								<title>Admin Alert!!!</title>
 								<style>
-									h1 { font-color:#F00; }
+									h1 { font-color:#F00; text-align: center; border-bottom: 1px solid red; padding: 0.25em; }
 									body, h1 { font-family: Verdana; }
+									.c { text-align: center; }
+									.a { display: inline-block; text-align: center; padding: 0.25em 1em; border: 2px solid black; background: #2a2; color: #fff; }
+									.a:hover { border: 2px solid #141; background: #5c5; color: #fff; }
 								</style>
 							</head>
 							<body>
 								<h1>Admin Notice</h1>
-								<p><strong>You need to read and acknowledge this message to play.
-								<br>If you need to communicate with an admin, please adminhelp or post on the forums.</strong></p>
+								<p class="c"><strong>You need to read and acknowledge this message to play.</strong></p>
+								<p>If you need to talk with an admin, please <a href="byond://winset?command=adminhelp">Adminhelp</a> or post on the <a href="https://forums.ss13.co/">forums</a>.</strong></p>
 								<hr>
 								<p style='white-space: pre-wrap;'>[message]</p>
 								<hr>
-								<p><a href="?src=\ref[src];action=loginnotice_ack">Acknowledge Message</a></p>
+								<p class='c'><a class='a' href="?src=\ref[src];action=loginnotice_ack">Acknowledge Message</a></p>
 							</body>
 						</html>
 					"}
-		src.mob.Browse(login_notice_html, "window=loginnotice")
+		src.mob.Browse(login_notice_html, "window=loginnotice;size=600x400")
 		boutput(src, "<span class='warning'>You have a pending login notice! You must acknowledge it before you can play!</span>")
 
 /client/proc/acknowledge_login_notice()
@@ -112,6 +116,7 @@
 			tgui_alert(src.mob, "ERROR: Failed to clear login notice for some reason...")
 			return
 
+		message_admins("<span class='internal'>[src.ckey] acknowledged their login notice.</span>")
 		addPlayerNote(src.ckey, "(AUTO)", "Acknowledged their login notice.")
 		src.mob.Browse(null, "window=loginnotice")
 		src << csound("sound/machines/futurebuddy_beep.ogg")

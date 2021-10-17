@@ -1,4 +1,13 @@
 
+(t)fri oct 15 21
+(u)UnfunnyPerson
+(p)6333
+(e)⚖|balance
+(+)It now takes 3 seconds to shove someone in the portabrig instead of 1 second.
+(u)Zamujasa
+(e)🆕|feature
+(*)Admins can now set a message for a player that will be displayed on next login, for when we need to tell you something but you aren't online.
+(*)The future is now.
 (t)thu oct 14 21
 (u)pali
 (p)6308

@@ -65,12 +65,12 @@
 			SPAWN_DBG(0)
 				animate(src, alpha=0, time=7 SECONDS)
 				sleep(0.1 SECONDS)
-				if(!src || src.disposed)
+				if(src.disposed)
 					return
 				animate_ripple(src, 4)
 				animate_wave(src, 3)
 				sleep(7 SECONDS)
-				if(!src || src.disposed)
+				if(src.disposed)
 					return
 				qdel(src)
 		var/ckey_of_dead_player = src.ckey
@@ -89,14 +89,8 @@
 			if (tgui_alert(ghost_mob, "You have fallen, but the curse is not lifted this easily. Do you wish to return to the physical realm?", "Resurrection",
 				list("Yes", "No"), timeout = 60 SECOND) == "Yes")
 				// get a random not locked station container
-				var/list/eligible_containers = list()
-				for_by_tcl(iterated_container, /obj/storage)
-					if (iterated_container.z == Z_LEVEL_STATION && !iterated_container.locked && !iterated_container.welded && !istype(get_area(iterated_container), /area/listeningpost))
-						eligible_containers += iterated_container
-				if (!length(eligible_containers))
-					return
-				var/obj/storage/spawn_target = pick(eligible_containers)
-				if(spawn_target == null)
+				var/obj/storage/spawn_target = get_a_random_station_unlocked_container_with_no_others_on_the_turf()
+				if(isnull(spawn_target))
 					boutput(ghost_mob, "<h3><span class='alert'>Couldn't find a suitable location to respawn. Resurrection impossible.</span></h3>")
 					return
 				if(spawn_target.open) // close the container if it's opened
@@ -368,6 +362,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 		var/scratch_chance = 40
 		var/gibberish_words_chance = 30
 		for(var/i = 0 to iterations)
+			if(!our_plushie || our_plushie.disposed || src.disposed)
+				return
 			if(prob(scratch_chance))
 				playsound(get_turf(holder.owner), "sound/misc/automaton_scratch.ogg", 20, 1)
 				scratch_chance -= 10
@@ -407,42 +403,55 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 
 ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
 /datum/targetable/critter/cryptid_plushie/teleportation
+	var/animation_ripples = 4
+	var/animation_waves = 3
 
 	proc/get_a_random_station_unlocked_container()
-		var/list/eligible_containers = list()
-		for_by_tcl(iterated_container, /obj/storage)
-			if (iterated_container.z == Z_LEVEL_STATION && !iterated_container.locked && !iterated_container.welded && !istype(get_area(iterated_container), /area/listeningpost))
-				eligible_containers += iterated_container
-		if (!length(eligible_containers))
-			return null
-		return pick(eligible_containers)
+		return get_a_random_station_unlocked_container_with_no_others_on_the_turf()
 
 	proc/teleport_to_a_target(var/teleportation_target = null, var/target_a_random_container = FALSE)
 		playsound(get_turf(holder.owner), "sound/effects/ghostbreath.ogg", 75, 1)
 		animate(holder.owner, alpha=0, time=1.5 SECONDS)
 		sleep(0.1 SECONDS)
-		animate_ripple(holder.owner, 4)
-		animate_wave(holder.owner, 3)
+		if(!holder.owner || holder.owner.disposed || src.disposed)
+			return
+		animate_ripple(holder.owner, animation_ripples)
+		animate_wave(holder.owner, animation_waves)
 		sleep(1.4 SECONDS)
-		if(!holder || !holder.owner)
+		if(!holder || !holder.owner || src.disposed)
 			return
 
 		if(target_a_random_container)
 			teleportation_target = get_a_random_station_unlocked_container()
 		if(istype(teleportation_target, /obj/storage))
+			var/is_valid_storage_target = TRUE
 			var/obj/storage/container = teleportation_target
-			if(container.open)
-				container.close()
+			var/turf/container_turf = get_turf(container)
+			for(var/obj/storage/storage_object in container_turf)
+				if(storage_object == container)
+					continue
+				is_valid_storage_target = FALSE // found another storage object on the same turf as our container, teleport onto the turf instead
+				teleportation_target = get_turf(teleportation_target)
+			if(is_valid_storage_target)
+				if(container.open)
+					container.close()
 		else
 			teleportation_target = get_turf(teleportation_target)
-		holder.owner.set_loc(teleportation_target)
+		if(teleportation_target)
+			holder.owner.set_loc(teleportation_target)
+		else
+			boutput(holder.owner, "<span class='alert'>Couldn't find a container to teleport to!</span>")
 
 		playsound(get_turf(teleportation_target), "sound/effects/ghostlaugh.ogg", 75, 1)
 		animate(holder.owner, alpha=255, time=1.5 SECONDS)
 		sleep(1.5 SECONDS)
-		if(!holder || !holder.owner)
+		if(!holder || !holder.owner || src.disposed)
 			return
 		animate(holder.owner)
+		for(var/i=1, i<=animation_ripples, ++i)
+			holder.owner.remove_filter("ripple-[i]")
+		for(var/i=1, i<=animation_waves, ++i)
+			holder.owner.remove_filter("wave-[i]")
 
 /datum/targetable/critter/cryptid_plushie/teleportation/blink
 	name = "Teleport"
@@ -572,3 +581,24 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/glowing_eyes)
 
 		return 0
 
+proc/get_a_random_station_unlocked_container_with_no_others_on_the_turf()
+	var/list/eligible_containers = list()
+	for_by_tcl(iterated_container, /obj/storage)
+		if (iterated_container.z == Z_LEVEL_STATION && !iterated_container.locked && !iterated_container.welded && !istype(get_area(iterated_container), /area/listeningpost))
+			eligible_containers += iterated_container
+	if (!length(eligible_containers))
+		return null
+	var/potential_container = null
+	while(isnull(potential_container))
+		potential_container = pick(eligible_containers)
+		eligible_containers.Remove(potential_container)
+		var/turf/turf_of_potential_container = get_turf(potential_container)
+		for(var/obj/storage/storage_object in turf_of_potential_container)
+			if(storage_object == potential_container)
+				continue
+			potential_container = null // found another storage object on the same turf as our picked potential container, look for another
+			break
+		if(!length(eligible_containers)) // ran out of containers to look at
+			break
+
+	return potential_container

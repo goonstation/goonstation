@@ -227,8 +227,8 @@
 		onAdd(optional=null)
 			. = ..()
 			var/list/statusargs = optional
-			owner.filters += filter(type="displace", icon=icon('icons/effects/distort.dmi', "acid"), size=0)
-			src.filter = owner.filters[length(owner.filters)]
+			owner.add_filter("acid_displace", 0, displacement_map_filter(icon=icon('icons/effects/distort.dmi', "acid"), size=0))
+			src.filter = owner.get_filter("acid_displace")
 			if(length(statusargs))
 				src.leave_cleanable = statusargs["leave_cleanable"]
 				src.mob_owner = statusargs["mob_owner"]
@@ -241,7 +241,7 @@
 
 		onRemove()
 			. = ..()
-			owner.filters -= filter
+			owner.remove_filter("acid_displace")
 			filter = null
 			if(src.leave_cleanable)
 				var/obj/decal/cleanable/molten_item/I = make_cleanable(/obj/decal/cleanable/molten_item,get_turf(owner))
@@ -338,6 +338,8 @@
 		damage_tox = 0
 		damage_type = DAMAGE_BURN
 
+		maxDuration = 4 MINUTES
+
 		var/howMuch = ""
 		var/stage = 1
 
@@ -383,7 +385,7 @@
 			if(ismob(owner))
 				M = owner
 			if(!ismobcritter(M))
-				damage_tox = (sqrt(min(duration, 90 SECONDS)/20 + 5) - 1)
+				damage_tox = (sqrt(min(duration, 2 MINUTES)/20 + 5) - 1)
 			stage = get_stage(duration)
 			switch(stage)
 				if(1)
@@ -428,6 +430,8 @@
 		damage_tox = 2
 		damage_brute = 2
 		damage_type = DAMAGE_STAB | DAMAGE_BURN
+
+		maxDuration = 4 MINUTES
 
 		var/howMuch = ""
 		var/stage = 1
@@ -491,7 +495,7 @@
 				M = owner
 
 
-			damage_tox = (sqrt(min(duration, 90 SECONDS)/20 + 5) - 0.5)
+			damage_tox = (sqrt(min(duration, 2 MINUTES)/20 + 5) - 0.5)
 			damage_brute = damage_tox/2
 
 			stage = get_stage(duration)
