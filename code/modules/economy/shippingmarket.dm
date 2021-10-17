@@ -345,41 +345,40 @@
 		if(sell_crate.delivery_destination && sell_crate.delivery_destination == "Requisitions")
 			returntosender = 1
 
-			if(length(req_contracts))
-				for(var/datum/req_contract/contract in req_contracts)
+			if(length(special_orders)) //special contracts have priority and do not
+				for(var/datum/req_contract/special/contract in special_orders)
 					var/success = contract.requisify(sell_crate) //0 is did not sell, 1 is sold, 2 is sold with no remnants
 					if(success)
 						contractQ = contract
-						switch(contract.req_class) //track loss of categoried contracts
-							if(CIV_CONTRACT) src.civ_contracts_active--
-							if(AID_CONTRACT) src.aid_contracts_active--
-							if(SCI_CONTRACT) src.sci_contracts_active--
-						duckets += contract.payout
-						if(length(contract.item_rewarders))
-							for(var/datum/rc_itemreward/giftback in contract.item_rewarders)
-								var/reward = giftback.build_reward()
-								if(reward) sell_crate.contents += reward //intending to pass either a single item or a list of items
-								else logTheThing("debug",null,null,"QM contract [contract.type] failed to build [giftback.type]")
-							returntosender = 2
-						else
-							returntosender = success + 1
-						break
-
-			if(length(special_orders))
-				for(var/datum/req_contract/special/contract in special_orders)
-					LAGCHECK(LAG_LOW)
-					contractQ = contract
-					var/success = contract.requisify(sell_crate)
-					if(success)
 						duckets += contract.payout
 						if(length(contract.item_rewarders))
 							for(var/datum/rc_itemreward/giftback in contract.item_rewarders)
 								var/reward = giftback.build_reward()
 								if(reward) sell_crate.contents += reward
 								else logTheThing("debug",null,null,"QM contract [contract.type] failed to build [giftback.type]")
-							returntosender = 2
+							returntosender = 2 // crate return always active if there's something to return with it
 						else
-							returntosender = success + 1
+							returntosender = success + 1 // successful sale in both cases, but disables crate return if no leftover items
+						break
+
+			if(returntosender == 1 && length(req_contracts)) //only proceed to regular contract evaluation if a special contract was not fulfilled
+				for(var/datum/req_contract/contract in req_contracts)
+					var/success = contract.requisify(sell_crate) //0 is did not sell, 1 is sold, 2 is sold with no remnants
+					if(success)
+						contractQ = contract
+						//switch(contract.req_class) // code for if unpinned contracts are changed to not wipe entirely
+						//	if(CIV_CONTRACT) src.civ_contracts_active--
+						//	if(AID_CONTRACT) src.aid_contracts_active--
+						//	if(SCI_CONTRACT) src.sci_contracts_active--
+						duckets += contract.payout
+						if(length(contract.item_rewarders))
+							for(var/datum/rc_itemreward/giftback in contract.item_rewarders)
+								var/reward = giftback.build_reward()
+								if(reward) sell_crate.contents += reward //intending to pass either a single item or a list of items
+								else logTheThing("debug",null,null,"QM contract [contract.type] failed to build [giftback.type]")
+							returntosender = 2 // crate return always active if there's something to return with it
+						else
+							returntosender = success + 1 // successful sale in both cases, but disables crate return if no leftover items
 						break
 
 		#ifdef SECRETS_ENABLED
