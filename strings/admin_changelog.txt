@@ -1,3 +1,9 @@
+(t)fri oct 15 21
+(u)Zamujasa
+(*)The "View Player Notes" function now has a "Set Login Notice" option.
+(*)"Login Notices" will pop up on the player's next login, and they cannot join a round until acknowledging it.
+(*)Both the notice itself and the acknowledgement are automatically added as notes to the player's account.
+(*)The future is now.
 (t)mon oct 11 21
 (u)Zamujasa
 (*)"Toggle Emote Cooldowns". Does what it says. Don't be stupid.

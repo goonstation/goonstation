@@ -1561,12 +1561,12 @@
     desc = "Soothing bubbles for a calm shirt."
     icon_state = "bubble"
     item_state = "bubble"
-	
+
 /obj/item/clothing/under/misc/tricolor
     name = "Tricolor Jumpsuit"
     desc = "A jumpsuit that shows your serious about pizza."
     icon_state = "tricolor"
-    item_state = "tricolor"	
+    item_state = "tricolor"
 
 // WALPVRGIS fashion
 
@@ -1809,3 +1809,10 @@
     item_state = "racing_jump_prp"
     icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
     wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+
+//Western Jumpsuit
+/obj/item/clothing/under/misc/western
+    name = "Western Shirt and Pants"
+    desc = "Now comes with a matching belt buckle and leather straps!"
+    icon_state = "western"
+    item_state = "western"

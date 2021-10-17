@@ -79,7 +79,7 @@
 							mobtohit = nearbymob
 				hit.len = 0//clean up
 				charge = 1
-				var/filter = src.filters[length(src.filters)]//force the visual to power down
+				var/filter = src.get_filter("flock_sentinel_rays")
 				animate(filter, size=((-(cos(180*(3/100))-1)/2)*32), time=1 SECONDS, flags = ANIMATION_PARALLEL)
 				charge_status = CHARGING
 				return
@@ -99,7 +99,7 @@
 
 
 /obj/flock_structure/sentinel/proc/updatefilter()
-	var/filter = rays.filters[length(rays.filters)]
+	var/filter = rays.get_filter("flock_sentinel_rays")
 	if(charge > 2)//else it just makes the sprite invisible, due to floats. this is small enough that it doesnt even showup anyway since its under the sprite
 		animate(filter, size=((-(cos(180*(charge/100))-1)/2)*32), time=10 SECONDS, flags = ANIMATION_PARALLEL)
 	else
@@ -111,8 +111,8 @@
 	blend_mode = BLEND_ADD
 
 	New()
-		src.filters = filter(type="rays", x=-0.2, y=6, size=1, color=rgb(255,255,255), offset=rand(1000), density=20, threshold=0.2, factor=1)
-		var/f = src.filters[length(src.filters)]
+		src.add_filter("flock_sentinel_rays", 0, rays_filter(x=-0.2, y=6, size=1, color=rgb(255,255,255), offset=rand(1000), density=20, threshold=0.2, factor=1))
+		var/f = src.get_filter("flock_sentinel_rays")
 		animate(f, size=((-(cos(180*(3/100))-1)/2)*32), time=5 MINUTES, easing=LINEAR_EASING, loop=-1, offset=f:offset + 100, flags=ANIMATION_PARALLEL)
 		..()
 

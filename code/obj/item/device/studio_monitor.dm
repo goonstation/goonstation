@@ -615,7 +615,7 @@ obj/effects/music
 
 	New()
 		..()
-		src.filters += filter(type="outline", size=0.5, color="#444")
+		add_filter("outline", 1, outline_filter(size=0.5, color="#444"))
 		src.particles.lifespan = 0
 
 	proc/is_playing()

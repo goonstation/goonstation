@@ -160,7 +160,6 @@ obj/item/ammo/bullets/flechette_mag
 	can_dual_wield = 0
 	two_handed = 1
 	auto_eject = 1
-	object_flags = NO_ARM_ATTACH
 	w_class = W_CLASS_NORMAL
 	spread_angle = 3
 
