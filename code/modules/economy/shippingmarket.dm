@@ -72,20 +72,20 @@
 		var/contract2make
 		if(src.civ_contracts_active == 0) //is this right lmao
 			contract2make = pick(concrete_typesof(/datum/req_contract/civilian))
-			civ_contracts_active = 1
+			src.civ_contracts_active = 1
 		else if(src.aid_contracts_active == 0)
 			contract2make = pick(concrete_typesof(/datum/req_contract/aid))
-			aid_contracts_active = 1
+			src.aid_contracts_active = 1
 		else if(src.sci_contracts_active == 0)
 			contract2make = pick(concrete_typesof(/datum/req_contract/scientific))
-			sci_contracts_active = 1
+			src.sci_contracts_active = 1
 		else
 			contract2make = pick(concrete_typesof(/datum/req_contract))
 		var/datum/req_contract/contractmade = new contract2make
 		switch(contractmade.req_class)
-			if(CIV_CONTRACT) civ_contracts_active++
-			if(AID_CONTRACT) aid_contracts_active++
-			if(SCI_CONTRACT) sci_contracts_active++
+			if(CIV_CONTRACT) src.civ_contracts_active++
+			if(AID_CONTRACT) src.aid_contracts_active++
+			if(SCI_CONTRACT) src.sci_contracts_active++
 		src.req_contracts += contractmade
 
 	proc/timeleft()
@@ -185,13 +185,13 @@
 				if (prob(T.chance_leave))
 					T.hidden = 1
 
-		// Clear and re-generate unpinned contracts
+		// Thin out and re-generate unpinned contracts
 		for(var/datum/req_contract/RC in src.req_contracts)
-			if(!RC.pinned && prob(70))
+			if(!RC.pinned && prob(80))
 				switch(RC.req_class)
-					if(CIV_CONTRACT) civ_contracts_active--
-					if(AID_CONTRACT) aid_contracts_active--
-					if(SCI_CONTRACT) sci_contracts_active--
+					if(CIV_CONTRACT) src.civ_contracts_active--
+					if(AID_CONTRACT) src.aid_contracts_active--
+					if(SCI_CONTRACT) src.sci_contracts_active--
 				src.req_contracts -= RC
 
 		while(length(src.req_contracts) < src.max_req_contracts)
@@ -343,9 +343,9 @@
 					var/success = contract.requisify(sell_crate) //0 is did not sell, 1 is sold, 2 is sold with no remnants
 					if(success)
 						switch(contract.req_class) //track loss of categoried contracts
-							if(CIV_CONTRACT) civ_contracts_active--
-							if(AID_CONTRACT) aid_contracts_active--
-							if(SCI_CONTRACT) sci_contracts_active--
+							if(CIV_CONTRACT) src.civ_contracts_active--
+							if(AID_CONTRACT) src.aid_contracts_active--
+							if(SCI_CONTRACT) src.sci_contracts_active--
 						duckets += contract.payout
 						req_contracts -= contract
 						returntosender = success + 1 //you may not like it but this is what peak programming looks like

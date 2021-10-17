@@ -166,7 +166,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 		src.name = pick(namevary)
 		var/task = pick(desc0) //subvariation
 		src.flavor_desc = "An affiliated [task] [pick(desc1)] requires sets of attire for newly [pick(desc2)] [pick(desc3)]."
-		src.payout += rand(0,10) * 10
+		src.payout += rand(0,20) * 10
 
 		var/crewcount = rand(4,12)
 
@@ -181,7 +181,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 				if("research") src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/jumpsuit/white,crewcount)
 				if("cartographic") src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/jumpsuit,crewcount)
 		else
-			src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/jumpsuit/grey,crewcount)
+			src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/jumpsuit/any,crewcount)
 		src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/shoes,crewcount)
 		if(prob(30))
 			src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/headset,crewcount)
@@ -195,8 +195,14 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 /datum/rc_entry/itembypath/jumpsuit
 	name = "black jumpsuit"
-	feemod = 90
+	typepath = /obj/item/clothing/under/color
+	feemod = 160
 	exactpath = TRUE
+
+	any
+		name = "single-color jumpsuit"
+		feemod = 90
+		exactpath = FALSE
 
 	white
 		name = "white jumpsuit"

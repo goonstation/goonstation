@@ -4,7 +4,7 @@ ABSTRACT_TYPE(/datum/req_contract/aid)
 
 /datum/req_contract/aid/wrecked
 	name = "Breach Recovery"
-	payout = 1000
+	payout = 1200
 	var/list/namevary = list("Breach Recovery","Breach Response","Integrity Failure","Crisis Response","Disaster Assistance","Disaster Response")
 	var/list/desc0 = list("research","mining","security","cargo transfer")
 	var/list/desc1 = list("vessel","ship","station","outpost")
@@ -15,7 +15,7 @@ ABSTRACT_TYPE(/datum/req_contract/aid)
 	New()
 		src.name = pick(namevary)
 		src.flavor_desc = "An affiliated [pick(desc0)] [pick(desc1)] has [pick(desc2)] a [pick(desc3)] [pick(desc4)] and requires repair supplies as soon as possible."
-		src.payout += rand(0,80) * 10
+		src.payout += rand(0,60) * 10
 
 		var/suitsets = rand(2,4)
 
@@ -48,23 +48,23 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/basictool)
 /datum/rc_entry/itembypath/basictool/crowbar
 	name = "crowbar"
 	typepath = /obj/item/crowbar
-	feemod = 70
+	feemod = 90
 
 /datum/rc_entry/itembypath/basictool/screwdriver
 	name = "screwdriver"
 	typepath = /obj/item/screwdriver
-	feemod = 90
+	feemod = 110
 
 /datum/rc_entry/itembypath/basictool/wirecutters
 	name = "wirecutters"
 	typepath = /obj/item/wirecutters
-	feemod = 90
+	feemod = 120
 	isplural = TRUE
 
 /datum/rc_entry/itembypath/basictool/wrench
 	name = "wrench"
 	typepath = /obj/item/wrench
-	feemod = 80
+	feemod = 110
 	es = TRUE
 
 /datum/rc_entry/itembypath/basictool/welder
@@ -74,7 +74,7 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/basictool)
 
 /datum/req_contract/aid/triage
 	name = "Medical Aid"
-	payout = 1500
+	payout = 1100
 	var/list/namevary = list("Medical Aid","Medical Emergency","Triage Support","Aid Request","Critical Condition")
 	var/list/desc0 = list("A medical facility","An affiliated station's medical bay","A triage center","A medical outpost","Our nearest station")
 	var/list/desc1 = list("to assist with","after heavy load due to","to restock after")
@@ -98,7 +98,7 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/basictool)
 	New()
 		src.name = pick(namevary)
 		src.flavor_desc = "[pick(desc0)] requires additional supplies [pick(desc1)] [pick(desc2)]. [pick(desc3)]"
-		src.payout += rand(0,80) * 10
+		src.payout += rand(0,40) * 10
 
 		for(var/S in concrete_typesof(/datum/rc_entry/itembypath/surgical))
 			if(prob(50))
@@ -163,5 +163,103 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/surgical)
 
 /datum/rc_entry/itembypath/med_analyzer
 	name = "health analyzer"
-	feemod = 220
+	feemod = 350
 	typepath = /obj/item/device/analyzer/healthanalyzer
+
+
+/datum/req_contract/aid/geeksquad
+	name = "Computer Failure"
+	payout = 700
+	var/list/namevary = list("Systems Failure","Short Circuit","Computer Overload","Electronics Failure","Systems Breakdown")
+	var/list/desc0 = list("research","mining","security","cargo transfer","communications","deep-space survey")
+	var/list/desc1 = list("vessel","ship","station","outpost")
+	var/list/desc2 = list("experienced","lost systems control due to","ceased operation after","suffered a power surge resulting in")
+	var/list/desc3 = list("severe damage to","near-total failure of","erratic behavior in","considerable damage to","concerning readings from")
+	var/list/desc4 = list(
+		"atmospheric monitoring systems",
+		"short-range communications",
+		"grid regulation systems",
+		"main computer core",
+		"lighting control system",
+		"espresso machine",
+		"gyroscopic stabilizers",
+		"adjustment thruster controls",
+		"docking guidance computer",
+		"atmospheric regulators",
+		"carbon dioxide scrubbers",
+		"proximity sensors",
+		"artificial intelligence core")
+	var/list/desc5 = list(
+		"Expedience is of the utmost importance.",
+		"Further systems failures are expected if the issue is not rectified.",
+		"The situation is stable for now, but will likely deteriorate if repairs do not begin promptly.",
+		"Ensure shipping container meets standard ESD protection specifications.",
+		"Where applicable, please update firmware on included items.",
+		"The system is hard-wired into several others, and malfunctions may propagate if not repaired."
+	)
+
+	New()
+		src.name = pick(namevary)
+		src.flavor_desc = "An affiliated [pick(desc0)] [pick(desc1)] has [pick(desc2)] [pick(desc3)] its [pick(desc4)]. [pick(desc5)]"
+		src.payout += rand(0,40) * 10
+
+		if(prob(70)) src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/mainboard,rand(1,3))
+		if(prob(60))
+			if(prob(40))
+				src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/cardscan,1)
+			else
+				src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/netcard,1)
+
+		if(!length(src.rc_entries)) src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/interfaceboard,1)
+
+		if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/basictool/screwdriver,1)
+		if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/basictool/wirecutters,1)
+		if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/t_ray,rand(1,2))
+		if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/soldering,rand(1,2))
+		if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/multitool,1)
+		if(prob(70)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/cable,rand(8,25))
+
+		..()
+
+/datum/rc_entry/itembypath/mainboard
+	name = "computer mainboard"
+	typepath = /obj/item/motherboard
+	feemod = 320
+
+/datum/rc_entry/itembypath/cardscan
+	name = "ID scanner module"
+	typepath = /obj/item/peripheral/card_scanner
+	exactpath = TRUE
+	feemod = 360
+
+/datum/rc_entry/itembypath/netcard
+	name = "wired network card"
+	typepath = /obj/item/peripheral/network/powernet_card
+	exactpath = TRUE
+	feemod = 340
+
+/datum/rc_entry/itembypath/interfaceboard
+	name = "AI interface board"
+	typepath = /obj/item/ai_interface
+	feemod = 750
+
+/datum/rc_entry/itembypath/t_ray
+	name = "T-ray scanner"
+	typepath = /obj/item/device/t_scanner
+	feemod = 340
+
+/datum/rc_entry/itembypath/soldering
+	name = "soldering iron"
+	typepath = /obj/item/electronics/soldering
+	feemod = 260
+
+/datum/rc_entry/itembypath/multitool
+	name = "multitool"
+	typepath = /obj/item/device/multitool
+	feemod = 450
+
+/datum/rc_entry/stack/cable
+	name = "lengths of electrical cabling"
+	typepath = /obj/item/cable_coil
+	feemod = 30
+	isplural = TRUE
