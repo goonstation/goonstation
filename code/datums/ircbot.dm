@@ -50,13 +50,13 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 			if (data) eventArgs |= data
 			return src.export("event", eventArgs)
 
-		proc/apikey_scrub(text)
+		apikey_scrub(text)
 			if(config.ircbot_api)
 				return replacetext(text, config.ircbot_api, "***")
 			else
 				return text
 
-		proc/text_args(list/arguments)
+		text_args(list/arguments)
 			return src.apikey_scrub(list2params(arguments))
 
 		//Send a message to an irc bot! Yay!
