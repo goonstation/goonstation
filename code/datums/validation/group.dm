@@ -1,4 +1,4 @@
-/datum/validation/group
+/datum/validation_group
 	var/list/datum/validation_item/items
 
 	var/validated = FALSE
