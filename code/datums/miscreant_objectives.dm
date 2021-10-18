@@ -164,9 +164,6 @@ ABSTRACT_TYPE(/datum/objective/miscreantrp)
 	detective
 		explanation_text = "Found a private detective agency and attempt to solve cases before the detective can. Come up with absurd explanations for crimes and insist that security is secretly in on it."
 
-	exterminator
-		explanation_text = "Kill as many non-monkey, non-pet animals aboard the station as possible and bring their corpses to the bridge. Once finished, claim to be a trained exterminator and demand payment for your services."
-
 	business
 		explanation_text = "Establish a business and attempt to convince the command staff and security to recognize the legitimacy of your emerging enterprise."
 
