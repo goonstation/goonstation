@@ -2129,7 +2129,6 @@
 		..(H)
 		SPAWN_DBG(0)
 			if(ishuman(mob))
-				APPLY_MOB_PROPERTY(H, PROP_CANTSPRINT, src)
 				H.add_stam_mod_max("pug", -100)
 
 	say_verb()
