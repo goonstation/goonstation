@@ -12339,6 +12339,10 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"baN" = (
+/obj/machinery/chem_dispenser/chef,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "baO" = (
 /obj/cable,
 /obj/wingrille_spawn/auto/crystal,
@@ -110429,7 +110433,7 @@ wNu
 wNu
 wNu
 fWu
-wNu
+baN
 cor
 fGo
 auT

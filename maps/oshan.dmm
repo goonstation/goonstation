@@ -47953,6 +47953,10 @@
 /obj/machinery/drainage/big,
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/sea_elevator_room)
+"sbw" = (
+/obj/machinery/chem_dispenser/chef,
+/turf/simulated/floor/white,
+/area/station/crew_quarters/kitchen)
 "scc" = (
 /obj/table/wood/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -78724,7 +78728,7 @@ bmU
 bhC
 bhC
 bkL
-bhC
+nab
 bhC
 bhC
 bmW
@@ -79328,7 +79332,7 @@ bhC
 aQH
 bhC
 bkN
-nab
+sbw
 blR
 bhC
 bmW

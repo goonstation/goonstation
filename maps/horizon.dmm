@@ -60850,11 +60850,11 @@
 /turf/simulated/floor/plating/random,
 /area/station/security/main)
 "wUP" = (
-/obj/submachine/chef_sink,
 /obj/noticeboard/persistent{
 	name = "Kitchen persistent notice board";
 	persistent_id = "kitchen"
 	},
+/obj/machinery/chem_dispenser/chef,
 /turf/simulated/floor/white/checker{
 	dir = 6
 	},

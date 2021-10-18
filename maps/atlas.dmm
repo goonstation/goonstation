@@ -16769,6 +16769,10 @@
 	dir = 9
 	},
 /area/station/mining/staff_room)
+"Pr" = (
+/obj/machinery/chem_dispenser/chef,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "Ps" = (
 /obj/lattice,
 /turf/space,
@@ -70223,7 +70227,7 @@ cw
 dH
 em
 fA
-gT
+Pr
 hF
 iF
 jF

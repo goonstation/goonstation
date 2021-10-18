@@ -13274,6 +13274,7 @@
 	pixel_y = 21
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/horizontal,
+/obj/machinery/vending/monkey,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
 "azR" = (
@@ -14943,7 +14944,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aDC" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/chem_dispenser/chef,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aDD" = (

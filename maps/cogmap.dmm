@@ -3479,7 +3479,7 @@
 	},
 /area/station/security/checkpoint/arrivals)
 "akc" = (
-/obj/submachine/chef_sink,
+/obj/machinery/chem_dispenser/chef,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "akd" = (

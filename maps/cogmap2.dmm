@@ -9840,10 +9840,9 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "awp" = (
-/obj/window/auto/reinforced,
-/obj/grille/steel,
 /obj/disposalpipe/segment/mail/horizontal,
-/turf/simulated/floor/plating,
+/obj/machinery/chem_dispenser/chef,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "awq" = (
 /obj/disposalpipe/segment/mail/horizontal,
@@ -78824,6 +78823,14 @@
 	icon_state = "blue5"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"jTn" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/submachine/chef_sink{
+	dir = 4;
+	name = "bar sink"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/bar)
 "jUq" = (
 /obj/machinery/atmospherics/pipe/manifold/west,
 /turf/simulated/floor/orangeblack,
@@ -112956,7 +112963,7 @@ ard
 asf
 atz
 aoD
-awr
+jTn
 axP
 azD
 aAW
