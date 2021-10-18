@@ -79,7 +79,6 @@
 	min_amt2spawn = 1
 	max_amt2spawn = 1
 	items2spawn = list(/obj/item/reagent_containers/food/snacks/candy/chocolate,
-	/obj/item/reagent_containers/food/snacks/candy/chocolate,
 	/obj/item/reagent_containers/food/snacks/candy/nougat,
 	/obj/item/reagent_containers/food/snacks/candy/butterscotch,
 	/obj/item/reagent_containers/food/snacks/sandwich/meat_h,
