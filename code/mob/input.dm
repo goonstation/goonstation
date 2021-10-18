@@ -66,7 +66,9 @@
 	if (src.move_dir)
 		var/running = 0
 		var/mob/living/carbon/human/H = src
-		if ((keys & KEY_RUN) && H.get_stamina() > STAMINA_SPRINT && !HAS_MOB_PROPERTY(src, PROP_CANTSPRINT))
+		if ((keys & KEY_RUN) && \
+		      ((H.get_stamina() > STAMINA_COST_SPRINT && HAS_MOB_PROPERTY(src, PROP_FAILED_SPRINT_FLOP)) ||  H.get_stamina() > STAMINA_SPRINT) && \
+			  !HAS_MOB_PROPERTY(src, PROP_CANTSPRINT))
 			running = 1
 		if (H.pushing && get_dir(H,H.pushing) != H.move_dir) //Stop pushing before calculating move_delay if we've changed direction
 			H.pushing = 0
@@ -226,6 +228,13 @@
 							src.remove_stamina((src.lying ? 3 : 1) * STAMINA_COST_SPRINT)
 							if (src.pulling)
 								src.remove_stamina((src.lying ? 3 : 1) * (STAMINA_COST_SPRINT-1))
+
+						if(src.get_stamina() < STAMINA_COST_SPRINT && HAS_MOB_PROPERTY(src, PROP_FAILED_SPRINT_FLOP)) //Check after move rather than before so we cleanly transition from sprint to flop
+							if (!src.client.flying) //noclipping? you get a pass
+								src.throw_at(get_step(src, move_dir), 1, 1)
+								src.setStatus("resting", duration = INFINITE_STATUS)
+								src.force_laydown_standup()
+								boutput(src, "<span class='alert'>You flop over, too winded to continue running!</span>")
 
 						var/list/pulling = list()
 						if (src.pulling)

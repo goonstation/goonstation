@@ -393,6 +393,29 @@
 		initial_reagents = list("sugar"=20)
 		food_effects = list("food_deep_burp")
 
+	dog
+		name = "dog biscuit"
+		desc = "It looks tasty! To dogs."
+		icon_state = "cookie-sugar" //TODO
+		frosted = 1
+		amount = 5
+		heal_amt = 3 //for pugs only. Strong, but there's no recipe for these (just the one you start with).
+		initial_volume = 20
+		initial_reagents = list("meat_slurry" = 10)
+
+		heal(var/mob/M)
+			//Stolen from donuts for now. Could be made more interesting.
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if (istype(H.mutantrace, /datum/mutantrace/pug))
+					..()
+					boutput(H, "<span class='notice'>That tasted delicious!</span>")
+				else
+					src.heal_amt = 0
+					..()
+					src.heal_amt = initial(src.heal_amt)
+					boutput(H, "<span class='notice'>That tasted awful! Why would you eat it!?</span>")
+
 /obj/item/reagent_containers/food/snacks/moon_pie
 	name = "sugar moon pie"
 	desc = "A confection consisting of a creamy filling sandwiched between two cookies."
