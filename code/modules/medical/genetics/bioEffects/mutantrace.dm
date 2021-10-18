@@ -152,12 +152,12 @@
 
 /datum/bioEffect/mutantrace/pug
 	name = "Canine Genetics"
-	desc = "The subject takes on the appearance of a domesticated space cow and gains milk production."
+	desc = "The subject takes on the appearance of a fluffy pug."
 	id = "pug"
 	mutantrace_option = "Pug"
 	mutantrace_path = /datum/mutantrace/pug
-	msgGain = "You feel like you're ready for some Cow RP."
-	msgLose = "Your udders fall off!"
+	msgGain = "You feel like barking up the wrong tree."
+	msgLose = "Dog treats no longer look appealing."
 	icon_state  = "pug"
 
 /datum/bioEffect/mutantrace/chicken

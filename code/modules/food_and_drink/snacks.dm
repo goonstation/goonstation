@@ -398,20 +398,22 @@
 		desc = "It looks tasty! To dogs."
 		icon_state = "cookie-sugar" //TODO
 		frosted = 1
-		heal_amt = 3 //for pugs only. Strong, but there's no recipe for these (just the one you start with). Probably make it 2 if we decide to add a recipe.
+		heal_amt = 3 //for pugs only. Strong, but there's no recipe for these (just the one you start with).
 		initial_volume = 20
 		initial_reagents = list("meat_slurry" = 10)
 
 		heal(var/mob/M)
 			//Stolen from donuts for now. Could be made more interesting.
-			if (istype(M.mutant_race, /datum/mutantrace/pug))
-				..()
-				boutput(M, "<span class='notice'>That tasted delicious!</span>")
-			else
-				src.heal_amt = 0
-				..()
-				src.heal_amt = initial(src.heal_amt)
-				boutput(M, "<span class='notice'>That tasted awful! Why would you eat it!?</span>")
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if (istype(H.mutantrace, /datum/mutantrace/pug))
+					..()
+					boutput(H, "<span class='notice'>That tasted delicious!</span>")
+				else
+					src.heal_amt = 0
+					..()
+					src.heal_amt = initial(src.heal_amt)
+					boutput(H, "<span class='notice'>That tasted awful! Why would you eat it!?</span>")
 
 /obj/item/reagent_containers/food/snacks/moon_pie
 	name = "sugar moon pie"
