@@ -5,13 +5,17 @@
 	var/has_errors = FALSE
 	var/list/datum/validation_error/errors = list()
 
-	proc/set_value(key, value)
+	proc/set_value(var/key, var/value)
 		var/datum/validation_item/item = src.items[key]
 
 		var/validated = item?.set_value(value)
 		src.validated = validated && src.validated ? TRUE : FALSE
 
 		. = src.validated
+
+	proc/set_values(var/list/values)
+		for(var/key in values)
+			src.set_value(key, values[key])
 
 	proc/validate()
 		src.errors = list()
