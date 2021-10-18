@@ -411,3 +411,19 @@
 	/obj/item/clothing/gloves/handcomp,
 	/obj/item/clothing/glasses/ftscanplate)
 
+/obj/item/storage/box/costume/purpwitch
+	name = "purple witch costume set"
+	desc = "They won't give you any real magic, but you always have the magic of Imagination."
+	spawn_contents = list(/obj/item/clothing/head/witchhat_purple,
+	/obj/item/clothing/shoes/witchboots,
+	/obj/item/clothing/suit/witchcape_purple,
+	/obj/item/device/light/glowstick/purple)
+
+/obj/item/storage/box/costume/mintwitch
+	name = "mint witch costume set"
+	desc = "They won't give you any real magic, but you always have the magic of Imagination."
+	spawn_contents = list(/obj/item/clothing/head/witchhat_mint,
+	/obj/item/clothing/shoes/witchboots,
+	/obj/item/clothing/suit/witchcape_mint,
+	/obj/item/device/light/glowstick/cyan)
+
