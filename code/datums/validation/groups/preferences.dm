@@ -1,4 +1,4 @@
-/datum/validation/group/preferences
+/datum/validation_group/preferences
 	items = list(
 		"nameFirst" = new /datum/validation_item("first name", list(
 			new /datum/validation_constraint/min_length(2),
