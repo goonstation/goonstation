@@ -1,6 +1,6 @@
-/datum/validation/error
+/datum/validation_error
 	var/message
-	var/path
+	var/key
 
 	New(message)
 		..()
