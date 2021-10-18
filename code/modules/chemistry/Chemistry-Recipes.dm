@@ -500,6 +500,31 @@ datum
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
+		milk_punch
+			name = "Milk Punch"
+			id = "milk_punch"
+			result = "milk_punch"
+			required_reagents = list("simplesyrup" = 1, "juice_lime" = 1, "juice_apple" = 1, "ginger_ale" = 1, "juice_pineapple" = 1, "milk" = 1)
+			result_amount = 6
+			mix_phrase = "You wonder why you made this drink at all."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
+		milk_punch/milk_punch2
+			id = "milk_punch2"
+			required_reagents = list("fruit_punch" = 5, "milk" = 1)
+			result_amount = 6
+
+		fruit_punch
+			name = "Fruit Punch"
+			id = "fruit punch"
+			result = "fruit_punch"
+			required_reagents = list("simplesyrup" = 1, "juice_apple" = 1, "juice_lime" = 1, "ginger_ale" = 1, "juice_pineapple" = 1)
+			result_amount = 5
+			mix_phrase = "You are reminded of family picnics and school functions as the syrup mixes with the juices."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
 		lipolicide // COGWERKS REPLACEMENT NOTES: FEN-PHEN? EPHEDRINE?
 			name = "Lipolicide"
 			id = "lipolicide"
@@ -627,7 +652,6 @@ datum
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
-
 		sodawater
 			name = "soda water"
 			id = "sodawater"
@@ -647,6 +671,16 @@ datum
 			result_amount = 2
 			mix_phrase = "The sugar and water congeal in the heat into a gloopy syrup."
 			mix_sound = 'sound/impact_sounds/slimy_hit_3.ogg'
+			drinkrecipe = 1
+
+		cocktail_hardpunch
+			name = "Hard Punch"
+			id = "hard_punch"
+			result = "hard_punch"
+			required_reagents = list("simplesyrup" = 1, "sangria" = 1, "juice_apple" = 1, "ginger_ale" = 1, "juice_pineapple" = 1)
+			result_amount = 2
+			mix_phrase = "This drink is so disgustingly sweet you start to get a headache from smelling it."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
 		cocktail_kalimoxto
@@ -871,6 +905,16 @@ datum
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
+		cocktail_piscosour
+			name = "Pisco Sour"
+			id = "piscosour"
+			result = "piscosour"
+			required_reagents = list("egg" = 1, "simplesyrup" = 1, "bitters"= 1, "juice_lime" = 1, "white_wine" = 1)
+			result_amount = 5
+			mix_phrase = "The egg white foams and floats atop the lime-colored drink."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
 		cocktail_diesel
 			name = "Diesel"
 			id = "diesel"
@@ -968,6 +1012,15 @@ datum
 			mix_phrase = "James Bond would be ashamed."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
+		cocktail_appletini
+			name = "Appletini"
+			id = "appletini"
+			result = "appletini"
+			required_reagents = list("vodka" = 1, "cider" = 1, "juice_apple" = 1)
+			result_amount = 3
+			mix_phrase = "James Bond probably wouldn't know what this is."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
 		cocktail_murdini
 			name = "Murdini"
 			id = "murdini"
@@ -1044,6 +1097,33 @@ datum
 			id = "cosmo2"
 			required_reagents = list("v_gimlet" = 2, "juice_cran" = 1)
 			result_amount = 3
+
+		cocktail_blackbramble
+			name = "Blackberry Bramble"
+			id = "blackbramble"
+			result = "blackbramble"
+			required_reagents = list("gin" = 1, "juice_blackberry" = 1, "juice_lemon" = 1)
+			result_amount = 3
+			mix_phrase = "The blackberries turn almost purple as you muddle them into the gin and lemon."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		cocktail_frenchmartini
+			name = "French Martini"
+			id = "frenchmartini"
+			result = "frenchmartini"
+			required_reagents = list("vodka" = 1, "juice_raspberry" = 1, "juice_pineapple" = 1)
+			result_amount = 3
+			mix_phrase = "Mon dieu, zis isn't even a martini."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		cocktail_jazzberryhardlemonade
+			name = "Jazzberry Hard Lemonade"
+			id = "jazzlemon"
+			result = "jazzlemon"
+			required_reagents = list("lemonade" = 1, "juice_blueraspberry" = 1, "vodka" = 1)
+			result_amount = 3
+			mix_phrase = "The drink turns radically jazzalicious."
+			mix_sound = 'sound/musical_instruments/saxbonk3.ogg'
 
 		cocktail_v_gimlet
 			name = "Vodka Gimlet"
@@ -1171,6 +1251,20 @@ datum
 			mix_phrase = "A little pink umbrella magically appears in the drink."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
+		cocktail_lemondrop
+			name = "Lemon Drop"
+			id = "lemondrop"
+			result = "lemondrop"
+			required_reagents = list("simplesyrup" = 1, "juice_lemon" = 1, "juice_orange" = 1, "vodka" = 1)
+			result_amount = 4
+			mix_phrase = "The sweet and sour contents mix together nicely to make a pastel yellow drink."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		cocktail_lemondrop/lemondrop2
+			id = "lemondrop2"
+			required_reagents = list("simplesyrup" = 1, "juice_lemon" = 1, "screwdriver" = 2)
+			result_amount = 4
+
 		cocktail_harlow
 			name = "Jean Harlow"
 			id = "harlow"
@@ -1248,6 +1342,7 @@ datum
 			id = "lingtea"
 			result = "lingtea"
 			required_reagents = list("longisland" = 1, "neurotoxin" = 1)
+			required_temperature = T0C + 100
 			result_amount = 2
 			mix_phrase = "The toxin upsets the delicate balance of alcohol and sours in this mix. Ew."
 
@@ -1333,6 +1428,24 @@ datum
 			mix_phrase = "The vodka and peach juice fizz into a pleasantly pink hue."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
+		cocktail_bellini
+			name = "Peach Bellini"
+			id = "peachbellini"
+			result = "peachbellini"
+			required_reagents = list("white_wine" = 2, "juice_peach" = 1)
+			result_amount = 3
+			mix_phrase = "You contemplate Renaissance paintings as the peach purée suspends in the white wine."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		cocktail_rossini
+			name = "Rossini"
+			id = "rossini"
+			result = "rossini"
+			required_reagents = list("white_wine" = 2, "juice_strawberry" = 1)
+			result_amount = 3
+			mix_phrase = "Faint opera music echoes from the glass."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
 		cocktail_moscowmule
 			name = "Moscow Mule"
 			id = "moscowmule"
@@ -1350,7 +1463,7 @@ datum
 			name = "Tequila Sunrise"
 			id = "tequilasunrise"
 			result = "tequilasunrise"
-			required_reagents = list("tequila" = 1, "juice_orange" = 1, "sugar" = 1)
+			required_reagents = list("tequila" = 1, "juice_orange" = 1, "grenadine" = 1)
 			result_amount = 3
 			mix_phrase = "The drink fizzes into some liquid sunshine for the soul."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
@@ -1556,7 +1669,7 @@ datum
 			result = "pinklemonade"
 			required_reagents = list("grenadine" = 1,"lemonade" = 1)
 			result_amount = 2
-			mix_phrase = "You watch the pink colour dance around the container and slowly combine with the lemonade"
+			mix_phrase = "You watch the pink colour dance around the container and slowly combine with the lemonade."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
@@ -1781,19 +1894,19 @@ datum
 				var/location = get_turf(holder.my_atom)
 				for(var/mob/M in all_viewers(null, location))
 					boutput(M, "<span class='alert'>The solution generates a strong vapor!</span>")
-
-				// A slightly less stupid way of smoking contents. Maybe.
-				var/datum/reagents/smokeContents = new/datum/reagents/
-				smokeContents.add_reagent("sarin", holder.reagent_list["sarin"].volume / 6)
-				//particleMaster.SpawnSystem(new /datum/particleSystem/chemSmoke(location, smokeContents, 10, 2))
-				smoke_reaction(smokeContents, 2, location)
-				/*
-				for(var/mob/living/carbon/human/H in range(location, 2)) // nurfed.
-					if(ishuman(H))
-						if(!H.wear_mask)
-							H.reagents.add_reagent("sarin",4) // griff
-				*/
-				return
+				if(holder?.my_atom?.is_open_container())
+					// A slightly less stupid way of smoking contents. Maybe.
+					var/datum/reagents/smokeContents = new/datum/reagents/
+					smokeContents.add_reagent("sarin", holder.reagent_list["sarin"].volume / 6)
+					//particleMaster.SpawnSystem(new /datum/particleSystem/chemSmoke(location, smokeContents, 10, 2))
+					smoke_reaction(smokeContents, 2, location)
+					/*
+					for(var/mob/living/carbon/human/H in range(location, 2)) // nurfed.
+						if(ishuman(H))
+							if(!H.wear_mask)
+								H.reagents.add_reagent("sarin",4) // griff
+					*/
+					return
 
 
 
@@ -2528,47 +2641,14 @@ datum
 			name = "stable bose-einstein macro-condensate"
 			id = "big_bang_precursor"
 			result = "big_bang_precursor"
+			#ifdef SECRETS_ENABLED
+				// It's secret now bucko
+			#else
 			required_reagents = list("ldmatter" = 1, "voltagen" = 12, "something" = 3, "sorium" = 1)
 			result_amount = 1
+			#endif
 			mix_phrase = "The solution settles and congeals into a strange viscous fluid that seems to have the properties of both a liquid and a gas."
-			required_temperature = T0C - 277
-
-		big_bang
-			name = "quark-gluon plasma"
-			id = "big_bang"
-			result = "big_bang"
-			required_reagents = list("big_bang_precursor" = 1)
-			result_amount = 50
-			// This should really require a closed container and an extreme phase change... or some other pseudo-science thing
-			mix_phrase = "A tiny point of light blooms within the material, and quickly grows to envelop the entire container. Your life flashes before your eyes."
-			required_temperature = T0C + 6344 // IMPOSSIBRUUUU
-#ifdef CHEM_REACTION_PRIORITY
-			priority = INFINITY // should hopefully be handled in blacklists now
-#endif
-
-			on_reaction(var/datum/reagents/holder, var/created_volume)
-				..()
-				var/turf/location = 0
-				if (holder?.my_atom)
-					location = get_turf(holder.my_atom)
-					for(var/mob/M in AIviewers(5, location))
-						boutput(M, "<span class='alert'>You feel the air around you spark with electricity!</span>")
-
-					var/datum/effects/system/foam_spread/s = new()
-					s.set_up(created_volume, location, holder, 0)
-					s.start()
-					holder.clear_reagents()
-				else
-					var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
-					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
-						location = pick(holder.covered_cache)
-						holder.covered_cache -= location
-						var/datum/effects/system/foam_spread/s = new()
-						s.set_up(created_volume/amt, location, holder, 0)
-						s.start()
-					holder.clear_reagents()
-
-				return
+			required_temperature = 0
 
 
 		smokepowder
@@ -2601,11 +2681,17 @@ datum
 			priority = 9
 #endif
 			on_reaction(var/datum/reagents/holder, var/created_volume) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
+
 				if (holder)
-					holder.smoke_start(created_volume)
 					holder.del_reagent("potassium")
 					holder.del_reagent("sugar")
 					holder.del_reagent("phosphorus")
+					if(!holder?.my_atom?.is_open_container())
+						if(holder.my_atom)
+							for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
+								boutput(M, "<span class='notice'>With nowhere to go, the smoke settles.</span>")
+							return
+					holder.smoke_start(created_volume)
 
 		blackpowder // oh no
 			name = "Black Powder"
@@ -2864,6 +2950,11 @@ datum
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				if (holder.postfoam)
 					return
+				if(!holder?.my_atom?.is_open_container())
+					if(holder.my_atom)
+						for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
+							boutput(M, "<span class='notice'>With nowhere to go, the bubbles settle.</span>")
+						return
 				var/turf/location = 0
 				if (holder.my_atom && holder.covered_cache.len <= 1)
 					location = get_turf(holder.my_atom)
@@ -2900,6 +2991,12 @@ datum
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/turf/location = 0
+				if(!holder?.my_atom?.is_open_container())
+					if(holder.my_atom)
+						for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
+							boutput(M, "<span class='notice'>With nowhere to go, the metal settles.</span>")
+						return
+
 				if (holder.my_atom && holder.covered_cache.len <= 1)
 					location = get_turf(holder.my_atom)
 					for(var/mob/M in AIviewers(5, location))
@@ -2929,6 +3026,12 @@ datum
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/turf/location = 0
+				if(!holder?.my_atom?.is_open_container())
+					if(holder.my_atom)
+						for(var/mob/M in AIviewers(5, location))
+							boutput(M, "<span class='notice'>With nowhere to go, the metal settles.</span>")
+						return
+
 				if (holder?.my_atom)
 					location = get_turf(holder.my_atom)
 					for(var/mob/M in AIviewers(5, location))
@@ -3681,7 +3784,7 @@ datum
 			mix_phrase = "The mixture starts to rapidly fizzle and heat up."
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				holder.temperature_reagents(holder.total_temperature + created_volume*200)
+				holder.temperature_reagents(holder.total_temperature + created_volume*200, 400, change_min = 1)
 
 		cryostylane_cold
 			name = "cryostylane chilling"
@@ -3694,7 +3797,7 @@ datum
 			mix_phrase = "The mixture begins to rapidly freeze."
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				holder.temperature_reagents(holder.total_temperature - created_volume*200)
+				holder.temperature_reagents(holder.total_temperature - created_volume*200, 400, change_min = 1)
 
 		reversium
 			name = "Reversium"
@@ -3727,7 +3830,7 @@ datum
 			name = "expresso"
 			id = "expresso"
 			result = "expresso"
-			required_reagents = list("espresso" = 1, "neurotoxin" = 3)
+			required_reagents = list("espresso" = 1, "methamphetamine" = 3)
 			result_amount = 3
 			mix_phrase = "Irregardless and for all intense and purposes, the coffee becomes stupider."
 

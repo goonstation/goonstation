@@ -575,7 +575,7 @@ Code:
 		if(length(by_type[/obj/machinery/power/vent_capture]))
 			. += "<BR><h4>Vent Capture Unit Status</h4>"
 			for_by_tcl(V, /obj/machinery/power/vent_capture)
-				if(V.z == 1 && (locate(/obj/machinery/power/monitor/smes) in V.powernet?.nodes) )
+				if(V.z == 1 && (locate(/obj/machinery/computer/power_monitor/smes) in V.powernet?.nodes) )
 					engine_found = TRUE
 					. += "Output : [engineering_notation(V.last_gen)]W<BR>"
 			. += "<BR>"
@@ -686,10 +686,13 @@ Code:
 				dat += "Alert Sent -- Please wait for a response.<br>Additional alerts will be available shortly."
 
 			else
-				dat += "<center>Please select alert type:<br>"
-				dat += "<a href='?src=\ref[src];alert=1'>Medical Alert</a><br>"
-				dat += "<a href='?src=\ref[src];alert=2'>Engineering Alert</a><br>"
-				dat += "<a href='?src=\ref[src];alert=3'>Security Alert</a>"
+				dat += {"
+				<center>Please select alert type:<br>
+				<a href='?src=\ref[src];alert=1'>Medical Alert</a><br>
+				<a href='?src=\ref[src];alert=2'>Engineering Alert</a><br>
+				<a href='?src=\ref[src];alert=3'>Security Alert</a><br>
+				<a href='?src=\ref[src];alert=4'>Janitor Alert</a>
+				"}
 
 		else
 			dat += "<center><b>Please confirm: <a href='?src=\ref[src];confirm=y'>Y</a> / <a href='?src=\ref[src];confirm=n'>N</a></b></center>"
@@ -724,8 +727,10 @@ Code:
 				mailgroup = MGD_MEDBAY
 			if (2)
 				mailgroup = MGO_ENGINEER
-			if (3 to INFINITY)
+			if (3)
 				mailgroup = MGD_SECURITY
+			if (4 to INFINITY)
+				mailgroup = MGO_JANITOR
 
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src.master
@@ -975,9 +980,10 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			T.issuer_byond_key = usr.key
 			data_core.tickets += T
 
+			logTheThing("admin", usr, null, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
 			playsound(src.master, "sound/machines/printer_thermal.ogg", 50, 1)
 			SPAWN_DBG(3 SECONDS)
-				var/obj/item/paper/p = unpool(/obj/item/paper)
+				var/obj/item/paper/p = new /obj/item/paper
 				p.set_loc(get_turf(src.master))
 				p.name = "Official Caution - [ticket_target]"
 				p.info = ticket_text
@@ -1029,12 +1035,13 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			F.issuer_byond_key = usr.key
 			data_core.fines += F
 
+			logTheThing("admin", usr, null, "fines <b>[ticket_target]</b> with the reason: [ticket_reason].")
 			if(PDAownerjob in list("Head of Security","Head of Personnel","Captain"))
 				var/ticket_text = "[ticket_target] has been fined [fine_amount] credits by Nanotrasen Corporate Security for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued and approved by: [PDAowner] - [PDAownerjob]<br>"
 				playsound(src.master, "sound/machines/printer_thermal.ogg", 50, 1)
 				SPAWN_DBG(3 SECONDS)
 					F.approve(PDAowner,PDAownerjob)
-					var/obj/item/paper/p = unpool(/obj/item/paper)
+					var/obj/item/paper/p = new /obj/item/paper
 					p.set_loc(get_turf(src.master))
 					p.name = "Official Fine Notification - [ticket_target]"
 					p.info = ticket_text
@@ -1056,7 +1063,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			SPAWN_DBG(3 SECONDS)
 				F.approve(PDAowner,PDAownerjob)
 				var/ticket_text = "[F.target] has been fined [F.amount] credits by Nanotrasen Corporate Security for [F.reason] on [time2text(world.realtime, "DD/MM/53")].<br>Requested by: [F.issuer] - [F.issuer_job]<br>Approved by: [PDAowner] - [PDAownerjob]<br>"
-				var/obj/item/paper/p = unpool(/obj/item/paper)
+				var/obj/item/paper/p = new /obj/item/paper
 				p.set_loc(get_turf(src.master))
 				p.name = "Official Fine Notification - [F.target]"
 				p.info = ticket_text

@@ -28,10 +28,10 @@
 
 	equipped(mob/user)
 		. = ..()
-		APPLY_MOB_PROPERTY(user, PROP_THERMALSIGHT_MK2, src)
+		APPLY_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
 
 	unequipped(mob/user)
-		REMOVE_MOB_PROPERTY(user, PROP_THERMALSIGHT_MK2, src)
+		REMOVE_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
 		. = ..()
 
 /obj/item/clothing/under/gimmick/hunter
@@ -659,7 +659,6 @@
 	name = "super happy funtime cat head"
 	desc = "This cat head was built to the highest ethical standards.  50% less child labor used in production than competing novelty cat heads."
 	icon_state = "genki"
-	permeability_coefficient = 0.01
 	c_flags = COVERSEYES | COVERSMOUTH | MASKINTERNALS
 
 //birdman for nieks
@@ -694,6 +693,7 @@
 	icon_state = "adeptus"
 	item_state = "adeptus"
 	permeability_coefficient = 0.50
+	over_hair = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
 	wear_layer = MOB_OVERLAY_BASE
 
@@ -853,6 +853,7 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "monkey"
 	item_state = "monkey"
+	over_hair = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
 	c_flags = COVERSMOUTH | COVERSEYES
 
@@ -889,6 +890,7 @@
 	item_state = "light_borg"
 	body_parts_covered = TORSO|LEGS|ARMS
 	c_flags = COVERSMOUTH | COVERSEYES
+	over_hair = TRUE
 	see_face = 0.0
 
 /obj/item/clothing/under/gimmick/utena //YJHTGHTFH's utena suit
@@ -933,6 +935,14 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
 	icon_state = "sneakmans"
 	item_state = "sneakmans"
+
+/obj/item/clothing/suit/armor/sneaking_suit/costume
+	desc = "On closer inspection this is a cheap cosplay outfit with an obvious zipper."
+
+	setupProperties()
+		..()
+		setProperty("meleeprot", 2)
+		delProperty("rangedprot")
 
 /obj/item/clothing/suit/bio_suit/beekeeper
 	name = "apiculturist's suit"
@@ -1259,6 +1269,35 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "tuxjacket"
 
+/obj/item/clothing/suit/guards_coat
+	name = "guard's coat"
+	desc = "A formal double breasted overcoat of British origin."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "guardscoat"
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 35)
+
+/obj/item/clothing/under/gimmick/black_wcoat
+	name = "dress shirt and waistcoat"
+	desc = "A formal waistcoat meant to be worn alongside an overcoat."
+	icon_state = "black_wcoat"
+	item_state = "black_wcoat"
+
+/obj/item/clothing/under/gimmick/red_wcoat
+	name = "dress shirt and red waistcoat"
+	desc = "A formal red waistcoat meant to be worn alongside an overcoat."
+	icon_state = "red_wcoat"
+	item_state = "red_wcoat"
+
+/obj/item/clothing/under/gimmick/blue_wcoat
+	name = "dress shirt and red waistcoat"
+	desc = "A formal blue waistcoat meant to be worn alongside an overcoat."
+	icon_state = "blue_wcoat"
+	item_state = "blue_wcoat"
+
 /obj/item/clothing/under/rank/bartender/tuxedo // look I really want to make the clothes vendor just produce clothing directly and not have to spawn this in a box with a custom name or something
 	name = "dress shirt and bowtie"
 	desc = "A nice, crisp shirt, dress pants and a black bowtie. Fancy."
@@ -1323,6 +1362,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	icon_state = "joyful"
 	body_parts_covered = TORSO|LEGS|ARMS
 	wear_layer = MOB_OVERLAY_BASE
+	over_hair = TRUE
 
 /obj/item/clothing/head/rando
 	name = "red skull mask and cowl"
@@ -1471,6 +1511,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	body_parts_covered = HEAD|TORSO|LEGS|ARMS
 	wear_layer = MOB_OVERLAY_BASE
 	icon_state = "hotdogsuit"
+	over_hair = TRUE
 
 /obj/item/clothing/under/gimmick/vampire
 	name = "absurdly stylish suit and vest"
@@ -1524,7 +1565,6 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 /obj/item/clothing/shoes/rollerskates
 	name = "rollerskates"
 	desc = "A pair of rollerskates, invented when experimental teleportation technology fused a pair of tacky boots and a shopping cart."
-	c_flags = NOSLIP
 	icon_state = "rollerskates"
 
 /obj/item/clothing/under/gimmick/itsyourcousin
@@ -1644,3 +1684,90 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	icon_state = "labcoat-long"
 	item_state = "labcoat-long"
 	body_parts_covered = TORSO|LEGS|ARMS
+
+//monkey island reference
+
+/obj/item/clothing/under/gimmick/guybrush
+	name = "wannabe pirate outfit"
+	desc = "It smells like monkeys."
+	icon_state = "guybrush"
+	item_state = "guybrush"
+
+//fake lizard stuff
+
+/obj/item/clothing/suit/gimmick/dinosaur
+	name = "dinosaur pajamas"
+	desc = "It has a little hood you can flip up and down. Rawr!"
+	icon_state = "dinosaur"
+	item_state = "dinosaur"
+	var/hood = 0
+
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 25)
+
+	attack_self(mob/user as mob)
+		src.hood = !(src.hood)
+		user.show_text("You flip [src]'s hood [src.hood ? "up" : "down"].")
+		if (src.hood)
+			src.over_hair = 1
+			src.icon_state = "dinosaur-up"
+			src.item_state = "dinosaur-up"
+		else
+			src.over_hair = 0
+			src.icon_state = "dinosaur"
+			src.item_state = "dinosaur"
+
+/obj/item/clothing/head/biglizard
+	name = "giant novelty lizard head"
+	desc = "Wow! It's just like the real thing!"
+	icon_state = "big_lizard"
+	item_state = "big_lizard"
+
+//sock hats
+
+/obj/item/clothing/head/link
+	name = "hero hat"
+	desc = "What kind of hero would wear this dumb thing?"
+	icon_state = "link"
+	item_state = "link"
+
+//Western Coats
+
+/obj/item/clothing/suit/gimmick/guncoat
+	name = "Shotgun Coat"
+	desc = "A coat that does not hinder you when shooting from horseback, how neat!"
+	icon_state = "guncoat"
+	item_state = "guncoat"
+
+/obj/item/clothing/suit/gimmick/guncoat/black
+	name = "Black Shotgun Coat"
+	icon_state = "guncoat_black"
+	item_state = "guncoat_black"
+
+/obj/item/clothing/suit/gimmick/guncoat/tan
+	name = "Tan Shotgun Coat"
+	icon_state = "guncoat_tan"
+	item_state = "guncoat_tan"
+
+/obj/item/clothing/suit/gimmick/guncoat/dirty
+	name = "Dirty Shotgun Coat"
+	icon_state = "guncoat_dirty"
+	item_state = "guncoat_dirty"
+
+//western Ponchos
+
+/obj/item/clothing/suit/poncho/flower
+	name = "Flower Poncho"
+	desc = "A handwoven poncho, it has an insignia of a flower!"
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "westflower"
+
+/obj/item/clothing/suit/poncho/leaf
+	name = "Leaf Poncho"
+	desc = "A handwoven poncho, it has the pattern of multiple leaves!"
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "westleaf"

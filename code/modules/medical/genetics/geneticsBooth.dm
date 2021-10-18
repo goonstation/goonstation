@@ -35,7 +35,7 @@
 /obj/machinery/genetics_booth
 	name = "gene booth"
 	desc = "A luxury booth that will exchange genetic upgrades for cash. It automatically bills your account using advanced magnet technology. It's safe!"
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "genebooth"
 	pixel_x = -3
 	anchored = 1
@@ -79,7 +79,7 @@
 		contextLayout = new /datum/contextLayout/flexdefault(4, 32, 32)
 
 		START_TRACKING
-		screenoverlay = SafeGetOverlayImage("screen", 'icons/obj/64x64.dmi', "genebooth_screen")
+		screenoverlay = SafeGetOverlayImage("screen", 'icons/obj/large/64x64.dmi', "genebooth_screen")
 		screenoverlay.blend_mode = BLEND_MULTIPLY
 		screenoverlay.layer = src.layer + 0.2
 

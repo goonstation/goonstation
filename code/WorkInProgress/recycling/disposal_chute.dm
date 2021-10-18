@@ -37,6 +37,7 @@
 	// find the attached trunk (if present) and init gas resvr.
 	New()
 		..()
+		src.AddComponent(/datum/component/obj_projectile_damage)
 		SPAWN_DBG(0.5 SECONDS)
 			if (src)
 				trunk = locate() in src.loc
@@ -59,12 +60,18 @@
 		trunk = null
 
 		if(air_contents)
-			pool(air_contents)
+			qdel(air_contents)
 			air_contents = null
 		..()
 
+	onDestroy()
+		if (src.powered())
+			elecflash(src, power = 2)
+		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
+		. = ..()
+
 	proc/initair()
-		air_contents = unpool(/datum/gas_mixture)
+		air_contents = new /datum/gas_mixture
 		air_contents.volume = 255
 		air_contents.nitrogen = 16.5
 		air_contents.oxygen = 4.4
@@ -120,12 +127,8 @@
 				if (istype(src, /obj/machinery/disposal/mail) && !GM.canRideMailchutes())
 					boutput(user, "<span class='alert'>That won't fit!</span>")
 					return
-				GM.set_loc(src)
-				user.visible_message("<span class='alert'><b>[user.name] stuffs [GM.name] into [src]!</b></span>")
+				actions.start(new/datum/action/bar/icon/shoveMobIntoChute(src, GM, user), user)
 				qdel(G)
-				logTheThing("combat", user, GM, "places [constructTarget(GM,"combat")] into [src] at [log_loc(src)].")
-				actions.interrupt(G.affecting, INTERRUPT_MOVE)
-				actions.interrupt(user, INTERRUPT_ACT)
 		else
 			if (istype(mag))
 				actions.stopId("magpickerhold", user)
@@ -140,46 +143,31 @@
 
 	// mouse drop another mob or self
 	//
-	MouseDrop_T(mob/target, mob/user)
+	MouseDrop_T(atom/target, mob/user)
 		//jesus fucking christ
-		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user) || isAI(target) || isghostcritter(user))
+		if (!IN_RANGE(src,user,1) || !IN_RANGE(src,target,1) || isAI(user) || is_incapacitated(user) || isghostcritter(user))
 			return
 
-		if (istype(src, /obj/machinery/disposal/mail) && isliving(target))
-			//Is this mob allowed to ride mailchutes?
-			if (!target.canRideMailchutes())
-				boutput(user, "<span class='alert'>That won't fit!</span>")
+		if (iscritter(target))
+			var/obj/critter/corpse = target
+			if (!corpse.alive)
+				corpse.set_loc(src)
+				user.visible_message("[user.name] places \the [corpse] into \the [src].")
+				actions.interrupt(user, INTERRUPT_ACT)
+			return
+
+		if (isliving(target))
+			var/mob/living/mobtarget = target
+			if  (mobtarget.buckled || isAI(mobtarget))
 				return
 
-		var/msg
-		var/turf/Q = target.loc
-		sleep (5)
-		//heyyyy maybe we should check distance AFTER the sleep??											//If you get stunned while *climbing* into a chute, you can still go in
-		if (target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || (is_incapacitated(user) && user != target))
-			return
+			if (istype(src, /obj/machinery/disposal/mail))
+				//Is this mob allowed to ride mailchutes?
+				if (!mobtarget.canRideMailchutes())
+					boutput(user, "<span class='alert'>That won't fit!</span>")
+					return
 
-		if(target == user && !user.stat)	// if drop self, then climbed in
-												// must be awake
-			msg = "[user.name] climbs into the [src]."
-			boutput(user, "You climb into the [src].")
-		else if(target != user && !user.restrained() && Q == target.loc)
-			msg = "[user.name] stuffs [target.name] into the [src]!"
-			boutput(user, "You stuff [target.name] into the [src]!")
-			logTheThing("combat", user, target, "places [constructTarget(target,"combat")] into [src] at [log_loc(src)].")
-		else
-			return
-		actions.interrupt(target, INTERRUPT_MOVE)
-		actions.interrupt(user, INTERRUPT_ACT)
-		target.set_loc(src)
-
-		if (msg)
-			src.visible_message(msg)
-
-		if (target == user && !istype(src,/obj/machinery/disposal/transport))
-			src.ui_interact(user)
-
-		update()
-		return
+			actions.start(new/datum/action/bar/icon/shoveMobIntoChute(src, mobtarget, user), user)
 
 	hitby(atom/movable/MO, datum/thrown_thing/thr)
 		// This feature interferes with mail delivery, i.e. objects bouncing back into the chute.
@@ -394,7 +382,7 @@
 		var/atom/L = loc						// recharging from loc turf
 		var/datum/gas_mixture/env = L.return_air()
 		if (!air_contents)
-			air_contents = unpool(/datum/gas_mixture)
+			air_contents = new /datum/gas_mixture
 		var/pressure_delta = (3.5 * ONE_ATMOSPHERE) - MIXTURE_PRESSURE(air_contents) // purposefully trying to overshoot the target of 2 atmospheres to make it faster
 
 		if(env.temperature > 0)
@@ -421,7 +409,7 @@
 		flushing = 1
 		flick("[icon_style]-flush", src)
 
-		var/obj/disposalholder/H = unpool(/obj/disposalholder)	// virtual holder object which actually
+		var/obj/disposalholder/H = new /obj/disposalholder	// virtual holder object which actually
 																// travels through the pipes.
 
 		H.init(src)	// copy the contents of disposer to holder
@@ -660,6 +648,71 @@
 
 	attack_hand(mob/user as mob)
 		return
+
+
+/datum/action/bar/icon/shoveMobIntoChute
+	duration = 0.2 SECONDS
+	interrupt_flags =  INTERRUPT_STUNNED | INTERRUPT_ACT
+	id = "shoveMobIntoChute"
+	icon = 'icons/obj/disposal.dmi'
+	icon_state = "shoveself-disposal" //varies, see below
+	var/obj/machinery/disposal/chute
+	var/mob/user
+	var/mob/target
+
+	New(var/obj/machinery/disposal/chute, var/mob/target, var/mob/user)
+		..()
+		src.chute = chute
+		src.user = user
+		src.target = target
+		icon_state = "shoveself-[chute.icon_style]"
+		if(target != user) icon_state = "shoveother-[chute.icon_style]"
+
+	onStart()
+		..()
+		if(!checkStillValid()) return
+
+
+	onUpdate()
+		..()
+		if(!checkStillValid()) return
+
+	onEnd()
+		if(checkStillValid())
+			if (target.buckled || get_dist(user, chute) > 1 || get_dist(user, target) > 1 || ((is_incapacitated(user) && user != target)))
+				..()
+				return
+
+			var/msg
+			if(target == user)
+				msg = "[user.name] climbs into the [chute]."
+				boutput(user, "You climb into the [chute].")
+			else if(target != user && !user.restrained())
+				msg = "[user.name] stuffs [target.name] into the [chute]!"
+				boutput(user, "You stuff [target.name] into the [chute]!")
+				logTheThing("combat", user, target, "places [constructTarget(target,"combat")] into [chute] at [log_loc(chute)].")
+			else
+				..()
+				return
+			actions.interrupt(target, INTERRUPT_MOVE)
+			target.set_loc(chute)
+
+			if (msg)
+				chute.visible_message(msg)
+
+			chute.ui_interact(user)
+
+			chute.update()
+		..()
+
+	onDelete()
+		..()
+
+	proc/checkStillValid()
+		if(isnull(user) || isnull(target) || isnull(chute))
+			interrupt(INTERRUPT_ALWAYS)
+			return false
+		return true
 
 #undef DISPOSAL_CHUTE_OFF
 #undef DISPOSAL_CHUTE_CHARGING

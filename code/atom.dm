@@ -25,6 +25,9 @@
 	/// Anything can speak... if it can speak
 	var/obj/chat_maptext_holder/chat_text
 
+	/// A multiplier that changes how an atom stands up from resting. Yes.
+	var/rest_mult = 0
+
 	/// Gets the atoms name with all the ugly prefixes things remove
 	proc/clean_name()
 		return strip_special(name)
@@ -305,11 +308,11 @@
 /atom/movable/overlay/attackby(a, b)
 	//Wire note: hascall check below added as fix for: undefined proc or verb /datum/targetable/changeling/monkey/attackby() (lmao)
 	if (src.master && hascall(src.master, "attackby"))
-		return src.master.attackby(a, b)
+		return src.master.Attackby(a, b)
 
 /atom/movable/overlay/attack_hand(a, b, c, d, e)
 	if (src.master)
-		return src.master.attack_hand(a, b, c, d, e)
+		return src.master.Attackhand(a, b, c, d, e)
 
 /atom/movable/overlay/New()
 	..()
@@ -557,7 +560,7 @@
 
 	if (istype(src,/obj/item/old_grenade/light_gimmick))
 		boutput(usr, "<span class='notice'>You feel your hand reach out and clasp the grenade.</span>")
-		src.attack_hand(usr)
+		src.Attackhand(usr)
 		return
 	if (!( src.anchored ))
 		var/mob/user = usr
@@ -621,7 +624,14 @@
 /atom/proc/MouseDrop_T()
 	return
 
+/atom/proc/Attackhand(mob/user as mob)
+	SHOULD_NOT_OVERRIDE(1)
+	if(SEND_SIGNAL(src, COMSIG_ATTACKHAND, user))
+		return
+	src.attack_hand(user)
+
 /atom/proc/attack_hand(mob/user as mob)
+	PROTECTED_PROC(TRUE)
 	if (flags & TGUI_INTERACTIVE)
 		return ui_interact(user)
 	return
@@ -629,10 +639,17 @@
 /atom/proc/attack_ai(mob/user as mob)
 	return
 
-//mbc : sorry, i added a 'is_special' arg to this proc to avoid race conditions.
-/atom/proc/attackby(obj/item/W as obj, mob/user as mob, params, is_special = 0)
+///wrapper proc for /atom/proc/attackby so that signals are always sent. Call this, but do not override it.
+/atom/proc/Attackby(obj/item/W as obj, mob/user as mob, params, is_special = 0)
+	SHOULD_NOT_OVERRIDE(1)
 	if(SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user))
 		return
+	src.attackby(W, user, params, is_special)
+
+//mbc : sorry, i added a 'is_special' arg to this proc to avoid race conditions.
+///internal proc for when an atom is attacked by an item. Override this, but do not call it,
+/atom/proc/attackby(obj/item/W as obj, mob/user as mob, params, is_special = 0)
+	PROTECTED_PROC(TRUE)
 	src.material?.triggerOnHit(src, W, user, 1)
 	if (user && W && !(W.flags & SUPPRESSATTACK))  //!( istype(W, /obj/item/grab)  || istype(W, /obj/item/spraybottle) || istype(W, /obj/item/card/emag)))
 		user.visible_message("<span class='combat'><B>[user] hits [src] with [W]!</B></span>")
@@ -992,17 +1009,3 @@
 	message_admins("[key_name(usr)] rotated [target] by [rot] degrees")
 	target.Turn(rot)
 	return
-
-
-/atom/proc/interact(var/mob/user)
-	if (isdead(user) || (!iscarbon(user) && !ismobcritter(user) && !issilicon(user)))
-		return
-
-	if (!isturf(src) && !istype(src.loc, /turf) || is_incapacitated(user) || user.restrained())
-		return
-
-	if (!can_reach(user, src))
-		return
-
-	if (user.client)
-		user.client.Click(src,get_turf(src))

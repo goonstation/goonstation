@@ -196,3 +196,87 @@ var/list/list/by_cat = list()
 #define TR_CAT_CLOWN_DISBELIEF_MOBS "clown_disbelief_mobs"
 // powernets? processing_items?
 // mobs? ai-mobs?
+
+
+/// type-level information type
+/typeinfo
+	parent_type = /datum
+
+/typeinfo/datum
+
+/typeinfo/atom
+	parent_type = /typeinfo/datum
+
+/typeinfo/turf
+	parent_type = /typeinfo/atom
+
+/typeinfo/area
+	parent_type = /typeinfo/atom
+
+/typeinfo/atom/movable
+
+/typeinfo/obj
+	parent_type = /typeinfo/atom/movable
+
+/typeinfo/mob
+	parent_type = /typeinfo/atom/movable
+
+/**
+ * Declares typeinfo for some type.
+ *
+ * Example:
+ * ```
+ * TYPEINFO(/atom)
+ * 	var/monkeys_hate = FALSE
+ *
+ * TYPEINFO(/obj/item/clothing/glasses/blindfold)
+ * 	monkeys_hate = TRUE
+ * ```
+ *
+ * Treat this as if you were defining a type. You can add vars and procs, override vars and procs etc.
+ * There might be minor issues if you define TYPEINFO of one type multiple times. Consider using `/typeinfo/THE_TYPE` for subsequent additions
+ * to the object's typeinfo **if you know it has already been declared once using TYPEINFO**.
+*/
+#define TYPEINFO(TYPE) \
+	TYPE/typeinfo_type = /typeinfo ## TYPE; \
+	TYPE/get_typeinfo() { /* maybe unnecessary, possibly replace the proc with a macro */ \
+		RETURN_TYPE(/typeinfo ## TYPE); \
+		return get_singleton(src.typeinfo_type); \
+	} \
+	/typeinfo ## TYPE
+
+
+/// var storing the subtype of /typeinfo relevant for this object
+/datum/var/typeinfo_type = /typeinfo/datum
+
+/**
+ * Retrieves the typeinfo datum for this datum's type.
+ *
+ * Example:
+ * ```
+ * var/obj/item/item_in_hand = src.equipped()
+ * var/typeinfo/atom/typeinfo = item_in_hand.get_typeinfo()
+ * if(typeinfo.monkeys_hate)
+ * 	src.throw(src.equipped(), somewhere)
+ * ```
+*/
+/datum/proc/get_typeinfo()
+	RETURN_TYPE(/typeinfo/datum)
+	return get_singleton(src.typeinfo_type)
+
+/**
+ * Retrieves the typeinfo datum for a given type.
+ *
+ * Example:
+ * ```
+ * for(var/type in types)
+ * 	var/typeinfo/atom/typeinfo = get_type_typeinfo(type)
+ * 	if(!typeinfo.admin_spawnable)
+ * 		continue
+ * 	valid_types += type
+ * ```
+*/
+proc/get_type_typeinfo(type)
+	RETURN_TYPE(/typeinfo/datum) // change to /typeinfo if we ever implement /typeinfo for non-datums for some reason
+	var/datum/type_dummy = type
+	return get_singleton(initial(type_dummy.typeinfo_type))

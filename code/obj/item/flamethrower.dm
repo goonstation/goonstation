@@ -14,7 +14,7 @@ A Flamethrower in various states of assembly
 #define FLAMER_MAX_TEMP 1000 KELVIN + T0C
 #define FLAMER_DEFAULT_CHEM_AMT 40
 #define FLAMER_BACKTANK_CHEM_AMT 40
-#define FLAMER_MIN_CHEM_AMT 25
+#define FLAMER_MIN_CHEM_AMT 35
 #define FLAMER_MAX_CHEM_AMT 100
 #define FLAMER_MODE_AUTO 1
 #define FLAMER_MODE_BURST 2
@@ -147,7 +147,7 @@ A Flamethrower in various states of assembly
 			if(FLAMER_MODE_BACKTANK)
 				rem_ratio = 0.004
 		var/turf/T = get_turf(src)
-		var/datum/gas_mixture/airgas = unpool(/datum/gas_mixture)
+		var/datum/gas_mixture/airgas = new /datum/gas_mixture
 		airgas.volume = 1
 		airgas.merge(gastank_aircontents.remove_ratio(rem_ratio * 0.9))
 		T.assume_air(gastank_aircontents.remove_ratio(rem_ratio * 0.1))
@@ -418,6 +418,7 @@ A Flamethrower in various states of assembly
 		var/turf/T = src.loc
 		if (ismob(T))
 			T = T.loc
+		user.show_message("<span class='notice'>You remove the rod from the welding tool.</span>", 1)
 		src.welder.set_loc(T)
 		src.rod.set_loc(T)
 		src.welder.master = null
@@ -434,6 +435,7 @@ A Flamethrower in various states of assembly
 		var/obj/item/device/igniter/I = W
 		if (!( I.status ))
 			return
+		user.show_message("<span class='notice'>You put the igniter in place, it still needs to be firmly attached.</span>", 1)
 		var/obj/item/assembly/weld_rod/S = src
 		var/obj/item/assembly/w_r_ignite/R = new /obj/item/assembly/w_r_ignite( user )
 		R.welder = S.welder
@@ -465,6 +467,7 @@ A Flamethrower in various states of assembly
 		var/turf/T = src.loc
 		if (ismob(T))
 			T = T.loc
+		user.show_message("<span class='notice'>You disassemble the [src.name]</span>", 1)
 		src.welder.set_loc(T)
 		src.rod.set_loc(T)
 		src.igniter.set_loc(T)
@@ -547,16 +550,11 @@ A Flamethrower in various states of assembly
 		src.gastank = F
 	else
 		src.fueltank = F
-	src.inventory_counter.update_percent(src.fueltank.reagents.total_volume, src.fueltank.reagents.maximum_volume)
 
-	var/fuel = "_no_fuel"
-	if(src.fueltank)
-		fuel = "_fuel"
-	src.icon_state = "flamethrower_oxy[fuel]"
-	var/oxy = "_no_oxy"
-	if(src.gastank)
-		oxy = "_oxy"
-	src.icon_state = "flamethrower[oxy]_fuel"
+	if (src.fueltank)
+		src.inventory_counter.update_percent(src.fueltank.reagents.total_volume, src.fueltank.reagents.maximum_volume)
+
+	src.icon_state = "flamethrower[src.gastank ? "_oxy" : "_no_oxy"][src.fueltank ? "_fuel" : "_no_fuel"]"
 
 	src.updateSelfDialog()
 	SPAWN_DBG(0.5 SECONDS)
@@ -807,7 +805,7 @@ A Flamethrower in various states of assembly
 
 	dat += "<br>Launcher Chamber Volume: [src.amt_chem]<BR>"
 	if(src.adjustable_chem_amt)
-		dat += "| <a href='?src=\ref[src];c_amt=-5'>-5</a> | <a href='?src=\ref[src];c_amt=-1'>-1</a> | <a href='?src=\ref[src];c_amt=reset'>reset (10)</a> | <a href='?src=\ref[src];c_amt=1'>+1</a> | <a href='?src=\ref[src];c_amt=5'>+5</a> |"
+		dat += "| <a href='?src=\ref[src];c_amt=-5'>-5</a> | <a href='?src=\ref[src];c_amt=-1'>-1</a> | <a href='?src=\ref[src];c_amt=reset'>reset (40)</a> | <a href='?src=\ref[src];c_amt=1'>+1</a> | <a href='?src=\ref[src];c_amt=5'>+5</a> |"
 
 	dat += "<BR><br><A HREF='?src=\ref[src];close=1'>Close</A></TT>"
 	user.Browse(dat, "window=flamethrower;size=600x300")

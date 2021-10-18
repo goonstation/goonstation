@@ -141,7 +141,7 @@
 			playsound(src.loc, "sound/misc/slip.ogg", 50, 1, -3)
 		else
 			playsound(src.loc, "sound/misc/slip_big.ogg", 50, 1, -3)
-		src.pulling = null
+		src.remove_pulling()
 
 		var/turf/T = get_ranged_target_turf(src, src.last_move_dir, throw_range)
 		src.throw_at(T, intensity, 2, list("stun"=clamp(1.1 SECONDS * intensity, 1 SECOND, 5 SECONDS)), src.loc, throw_type = THROW_SLIP)
@@ -311,14 +311,8 @@
 		src.TakeDamage("head", 0, 5)
 
 	if (prob(max(0, min(uncloak_prob, 100))))
-		for (var/obj/item/cloaking_device/C in src)
-			if (C.active)
-				C.deactivate(src)
-				src.visible_message("<span class='notice'><b>[src]'s cloak is disrupted!</b></span>")
-		for (var/obj/item/device/disguiser/D in src)
-			if (D.on)
-				D.disrupt(src)
-				src.visible_message("<span class='notice'><b>[src]'s disguiser is disrupted!</b></span>")
+		SEND_SIGNAL(src, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+		SEND_SIGNAL(src, COMSIG_DISGUISER_DEACTIVATE)
 
 	if (safety)
 		return 0
@@ -457,7 +451,7 @@
 		return 0
 
 	if (src.mind.master)
-		var/mob/mymaster = whois_ckey_to_mob_reference(src.mind.master)
+		var/mob/mymaster = ckey_to_mob(src.mind.master)
 		if (mymaster && (mymaster == dominator))
 			return 1
 
@@ -471,94 +465,76 @@
 	return 1
 
 /proc/man_or_woman(var/mob/subject)
-	if(isabomination(subject))
-		return "abomination"
+	var/datum/pronouns/pronouns
 
-	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
-		return "person"
+	if (isabomination(subject))
+		pronouns = get_singleton(/datum/pronouns/abomination)
+	else if (subject && subject?.bioHolder?.mobAppearance?.pronouns)
+		pronouns = subject.bioHolder.mobAppearance.pronouns
+	else
+		pronouns = get_singleton(/datum/pronouns/theyThem)
 
-	switch (subject.gender)
-		if ("male")
-			return "man"
-		if ("female")
-			return "woman"
-		else
-			return "person"
+	return pronouns.preferredGender
 
 /proc/his_or_her(var/mob/subject)
-	if(isabomination(subject))
-		return "our"
+	var/datum/pronouns/pronouns
 
-	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
-		return "their"
+	if (isabomination(subject))
+		pronouns = get_singleton(/datum/pronouns/abomination)
+	else if (subject && subject?.bioHolder?.mobAppearance?.pronouns)
+		pronouns = subject.bioHolder.mobAppearance.pronouns
+	else
+		pronouns = get_singleton(/datum/pronouns/theyThem)
 
-	switch (subject.gender)
-		if ("male")
-			return "his"
-		if ("female")
-			return "her"
-		else
-			return "their"
+	return pronouns.possessive
 
 /proc/him_or_her(var/mob/subject)
-	if(isabomination(subject))
-		return "us"
+	var/datum/pronouns/pronouns
 
-	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
-		return "them"
+	if (isabomination(subject))
+		pronouns = get_singleton(/datum/pronouns/abomination)
+	else if (subject && subject?.bioHolder?.mobAppearance?.pronouns)
+		pronouns = subject.bioHolder.mobAppearance.pronouns
+	else
+		pronouns = get_singleton(/datum/pronouns/theyThem)
 
-	switch (subject.gender)
-		if ("male")
-			return "him"
-		if ("female")
-			return "her"
-		else
-			return "them"
+	return pronouns.objective
 
 /proc/he_or_she(var/mob/subject)
-	if(isabomination(subject))
-		return "we"
+	var/datum/pronouns/pronouns
 
-	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
-		return "they"
+	if (isabomination(subject))
+		pronouns = get_singleton(/datum/pronouns/abomination)
+	else if (subject && subject?.bioHolder?.mobAppearance?.pronouns)
+		pronouns = subject.bioHolder.mobAppearance.pronouns
+	else
+		pronouns = get_singleton(/datum/pronouns/theyThem)
 
-	switch (subject.gender)
-		if ("male")
-			return "he"
-		if ("female")
-			return "she"
-		else
-			return "they"
+	return pronouns.subjective
 
 /proc/hes_or_shes(var/mob/subject)
-	if(isabomination(subject))
-		return "we're"
+	var/datum/pronouns/pronouns
 
-	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
-		return "they're"
+	if (isabomination(subject))
+		pronouns = get_singleton(/datum/pronouns/abomination)
+	else if (subject && subject?.bioHolder?.mobAppearance?.pronouns)
+		pronouns = subject.bioHolder.mobAppearance.pronouns
+	else
+		pronouns = get_singleton(/datum/pronouns/theyThem)
 
-	switch (subject.gender)
-		if ("male")
-			return "he's"
-		if ("female")
-			return "she's"
-		else
-			return "they're"
+	return pronouns.subjective + (pronouns.pluralize ? "'re" : "'s")
 
 /proc/himself_or_herself(var/mob/subject)
-	if(isabomination(subject))
-		return "ourself"
+	var/datum/pronouns/pronouns
 
-	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
-		return "themselves"
+	if (isabomination(subject))
+		pronouns = get_singleton(/datum/pronouns/abomination)
+	else if (subject && subject?.bioHolder?.mobAppearance?.pronouns)
+		pronouns = subject.bioHolder.mobAppearance.pronouns
+	else
+		pronouns = get_singleton(/datum/pronouns/theyThem)
 
-	switch(subject.gender)
-		if ("male")
-			return "himself"
-		if ("female")
-			return "herself"
-		else
-			return "themselves"
+	return pronouns.reflexive
 
 /mob/proc/get_explosion_resistance()
 	return 0
@@ -834,7 +810,7 @@
 	var/datum/gang/gang_to_see = null
 	var/PWT_to_see = null
 
-	if (isadminghost(src))
+	if (isadminghost(src) || src.client?.adventure_view)
 		see_everything = 1
 	else
 		if (istype(ticker.mode, /datum/game_mode/revolution))
@@ -860,7 +836,7 @@
 			PWT_to_see = get_pod_wars_team_num(src)
 		if (issilicon(src)) // We need to look for borged antagonists too.
 			var/mob/living/silicon/S = src
-			if (src.mind.special_role == "syndicate robot" || (S.syndicate && !S.dependent)) // No AI shells.
+			if (src.mind.special_role == ROLE_SYNDICATE_ROBOT || (S.syndicate && !S.dependent)) // No AI shells.
 				see_traitors = 1
 				see_nukeops = 1
 				see_revs = 1
@@ -868,7 +844,7 @@
 			see_nukeops = 1
 		if (iswizard(src))
 			see_wizards = 1
-		if (src.mind && src.mind.special_role == "grinch")
+		if (src.mind && src.mind.special_role == ROLE_GRINCH)
 			see_xmas = 1
 
 	// Clear existing overlays.
@@ -899,13 +875,13 @@
 
 		if (M.current && issilicon(M.current)) // We need to look for borged antagonists too.
 			var/mob/living/silicon/S = M.current
-			if (M.special_role == "syndicate robot" || (S.syndicate && !S.dependent)) // No AI shells.
+			if (M.special_role == ROLE_SYNDICATE_ROBOT || (S.syndicate && !S.dependent)) // No AI shells.
 				if (see_everything || see_traitors)
 					if (!see_everything && isdead(S)) continue
 					var/I = image(antag_syndieborg, loc = M.current)
 					can_see.Add(I)
 					robot_override = 1
-			if (M.special_role == "emagged robot" || (S.emagged && !S.dependent))
+			if (M.special_role == ROLE_EMAGGED_ROBOT || (S.emagged && !S.dependent))
 				if (see_everything)
 					var/I = image(antag_emagged, loc = M.current)
 					can_see.Add(I)
@@ -913,79 +889,84 @@
 
 		if (robot_override != 1)
 			switch (M.special_role)
-				if ("traitor", "hard-mode traitor", "sleeper agent")
+				if (ROLE_TRAITOR, ROLE_HARDMODE_TRAITOR, ROLE_SLEEPER_AGENT)
 					if (see_everything || see_traitors)
 						if (M.current)
 							if (!see_everything && isobserver(M.current)) continue
 							var/I = image(antag_traitor, loc = M.current)
 							can_see.Add(I)
-				if ("changeling")
+				if (ROLE_CHANGELING)
 					if (see_everything)
 						if (M.current)
 							var/I = image(antag_changeling, loc = M.current)
 							can_see.Add(I)
-				if ("wizard")
+				if (ROLE_WIZARD)
 					if (see_everything || see_wizards)
 						if (M.current)
 							if (!see_everything && isobserver(M.current)) continue
 							var/I = image(antag_wizard, loc = M.current)
 							can_see.Add(I)
-				if ("vampire")
+				if (ROLE_VAMPIRE)
 					if (see_everything)
 						if (M.current)
 							var/I = image(antag_vampire, loc = M.current)
 							can_see.Add(I)
-				if ("hunter")
+				if (ROLE_HUNTER)
 					if (see_everything)
 						if (M.current)
 							var/I = image(antag_hunter, loc = M.current)
 							can_see.Add(I)
-				if ("werewolf")
+				if (ROLE_WEREWOLF)
 					if (see_everything)
 						if (M.current)
 							var/I = image(antag_werewolf, loc = M.current)
 							can_see.Add(I)
-				if ("mindslave")
+				if (ROLE_MINDSLAVE)
 					if (see_everything)
 						if (M.current)
 							var/I = image(antag_mindslave, loc = M.current)
 							can_see.Add(I)
-				if ("vampthrall")
+				if (ROLE_VAMPTHRALL)
 					if (see_everything)
 						if (M.current)
 							var/I = image(antag_vampthrall, loc = M.current)
 							can_see.Add(I)
-				if ("wraith")
+				if (ROLE_WRAITH)
 					if (see_everything)
 						if (M.current)
 							var/I = image(antag_wraith, loc = M.current)
 							can_see.Add(I)
-				if ("blob")
+				if (ROLE_BLOB)
 					if (see_everything)
 						if (M.current)
 							var/I = image(antag_blob, loc = M.current)
 							can_see.Add(I)
-				if ("omnitraitor")
+				if (ROLE_OMNITRAITOR)
 					if (see_everything)
 						if (M.current)
 							var/I = image(antag_omnitraitor, loc = M.current)
 							can_see.Add(I)
-				if ("wrestler")
+				if (ROLE_WRESTLER)
 					if (see_everything)
 						if (M.current)
 							var/I = image(antag_wrestler, loc = M.current)
 							can_see.Add(I)
-				if ("grinch")
+				if (ROLE_GRINCH)
 					if (see_everything || see_xmas)
 						if (M.current)
 							if (!see_everything && isobserver(M.current)) continue
 							var/I = image(antag_grinch, loc = M.current)
 							can_see.Add(I)
-				if ("spy_thief")
+				if (ROLE_SPY_THIEF)
 					if (see_everything)
 						if (M.current)
 							if (!see_everything && isobserver(M.current)) continue
 							var/I = image(antag_spy_theft, loc = M.current)
+							can_see.Add(I)
+				if (ROLE_ARCFIEND)
+					if (see_everything)
+						if (M.current)
+							var/I = image(antag_arcfiend, loc = M.current)
 							can_see.Add(I)
 				else
 					if (see_everything)
@@ -1201,7 +1182,22 @@
 	if (\
 		(src.wear_suit 	&& src.wear_suit.permeability_coefficient 	<= 0.01) && \
 		(src.head 		&& src.head.permeability_coefficient 		<= 0.01) && \
-		(src.wear_mask 	&& src.wear_mask.permeability_coefficient 	<= 0.01) && \
+		(src.wear_mask 	&& src.wear_mask.permeability_coefficient 	<= 0.10) && \
 		(src.shoes 		&& src.shoes.permeability_coefficient 		<= 0.10) && \
 		(src.gloves 	&& src.gloves.permeability_coefficient 		<= 0.02 ))
 		.=1
+
+
+/// Changes ghost invisibility for the round.
+// Default value set in global.dm: INVIS_GHOST
+/proc/change_ghost_invisibility(var/new_invis)
+	var/prev_invis = ghost_invisibility
+	ghost_invisibility = new_invis
+	for (var/mob/dead/observer/G in mobs)
+		G.invisibility = new_invis
+		REMOVE_MOB_PROPERTY(G, PROP_INVISIBILITY, G)
+		APPLY_MOB_PROPERTY(G, PROP_INVISIBILITY, G, new_invis)
+		if (new_invis != prev_invis && (new_invis == 0 || prev_invis == 0))
+			boutput(G, "<span class='notice'>You are [new_invis == 0 ? "now" : "no longer"] visible to the living!</span>")
+
+

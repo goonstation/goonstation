@@ -332,7 +332,7 @@
 			maxTemperature = max(maxTemperature, member.air.temperature)
 			LAGCHECK(LAG_REALTIME)
 
-		if(totalPressure / members.len < 5 && maxTemperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+		if(totalPressure / max(length(members), 1) < 5 && maxTemperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 			resume_group_processing()
 			return
 	else

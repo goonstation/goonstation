@@ -71,7 +71,11 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 
 			music_sound.volume = client_vol
 			C << music_sound
-			boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
+			if (src && !(src.stealth && !src.fakekey))
+				// Stealthed admins won't show the "now playing music" message,
+				// for added ability to be spooky.
+				boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
+
 			//DEBUG_MESSAGE("Playing sound for [C] on channel [music_sound.channel] with volume [music_sound.volume]")
 		dj_panel.move_admin_sound_channel()
 	logTheThing("admin", src, null, "started loading music [S]")
@@ -138,7 +142,10 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 				continue
 
 			C.chatOutput.playMusic(data["file"], vol)
-			boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
+			if (!adminC || !(adminC.stealth && !adminC.fakekey))
+				// Stealthed admins won't show the "now playing music" message,
+				// for added ability to be spooky.
+				boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
 
 
 	if (adminC)
@@ -148,14 +155,15 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	else
 		logTheThing("admin", data["key"], null, "loaded remote music: [data["file"]] ([data["filesize"]])")
 		logTheThing("diary", data["key"], null, "loaded remote music: [data["file"]] ([data["filesize"]])", "admin")
-		message_admins("[key_name(data["key"])] loaded remote music: [data["title"]] ([data["duration"]] / [data["filesize"]])")
+		message_admins("[data["key"]] loaded remote music: [data["title"]] ([data["duration"]] / [data["filesize"]])")
 	return 1
 
 /client/verb/change_volume(channel_name as anything in audio_channel_name_to_id)
 	var/channel_id = audio_channel_name_to_id[channel_name]
 	if(isnull(channel_id))
 		alert(usr, "Invalid channel.")
-	var/vol = input("Goes from 0-100. Default is [getDefaultVolume(channel_id) * 100]", "[channel_name] Volume", src.getRealVolume(channel_id) * 100) as num
+	var/vol = input("Goes from 0-100. Default is [getDefaultVolume(channel_id) * 100]\n[src.getVolumeChannelDescription(channel_id)]", \
+	 "[capitalize(channel_name)] Volume", src.getRealVolume(channel_id) * 100) as num
 	vol = max(0,min(vol,100))
 	src.setVolume(channel_id, vol/100 )
 	boutput(usr, "<span class='notice'>You have changed [channel_name] Volume to [vol].</span>")

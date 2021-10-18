@@ -28,7 +28,8 @@
 	/obj/item/toy/plush/small/fancyflippers,\
 	/obj/item/toy/plush/small/billy,\
 	/obj/item/toy/plush/small/arthur,\
-	/obj/item/toy/plush/small/deneb)
+	/obj/item/toy/plush/small/deneb,\
+	/obj/item/toy/plush/small/singuloose)
 
 /obj/submachine/claw_machine/attack_hand(var/mob/user as mob)
 	src.add_dialog(user)
@@ -250,3 +251,7 @@
 		src.audible_message("<span class='emote'>[src] honks!</span>")
 	else if (menuchoice == "Say")
 		src.say_something(user)
+
+/obj/item/toy/plush/small/singuloose
+	name = "Singuloose the Singulo"
+	icon_state = "singuloose"

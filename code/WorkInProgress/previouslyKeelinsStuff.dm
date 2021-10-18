@@ -413,10 +413,10 @@ var/reverse_mode = 0
 						if (prob(1))
 							user.bioHolder.AddEffect("telekinesis_drag", 0, 0, 1) //because really
 							user.bioHolder.AddEffect("thermal_resist", 0, 0, 1) //if they're lucky enough to get this
-							user.bioHolder.AddEffect("xray", 0, 0, 1) //they're lucky enough to keep it
+							user.bioHolder.AddEffect("xray", 2, 0, 1) //they're lucky enough to keep it
 							user.bioHolder.AddEffect("hulk", 0, 0, 1) //probably
 							boutput(user, "<span class='alert'>The relic crumbles into nothingness...</span>")
-							src.invisibility = 101
+							src.invisibility = INVIS_ALWAYS
 							var/obj/effects/explosion/E = new/obj/effects/explosion( get_turf(src) )
 							E.fingerprintslast = src.fingerprintslast
 							sleep(0.5 SECONDS)
@@ -459,7 +459,7 @@ var/reverse_mode = 0
 /obj/effect_sparker
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "x4"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
 

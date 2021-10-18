@@ -33,7 +33,7 @@
 	boutput(world, "<B>Some crewmembers are attempting to start a revolution!<BR><br>Revolutionaries - Kill the heads of staff. Convert other crewmembers (excluding synthetics and security) to your cause by flashing them. Protect your leaders.<BR><br>Personnel - Protect the heads of staff. Kill the leaders of the revolution, and brainwash the other revolutionaries (by using an electropack, electric chair or beating them in the head).</B>")
 
 /datum/game_mode/revolution/pre_setup()
-	var/list/revs_possible = get_possible_revolutionaries()
+	var/list/revs_possible = get_possible_enemies(ROLE_HEAD_REV, 1)
 
 	if (!revs_possible.len)
 		return 0
@@ -55,10 +55,10 @@
 		logTheThing("admin", tplayer.current, null, "successfully redeems an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeems an antag token.")
 
-	var/list/chosen_revolutionaries = antagWeighter.choose(pool = revs_possible, role = "head_rev", amount = rev_number, recordChosen = 1)
+	var/list/chosen_revolutionaries = antagWeighter.choose(pool = revs_possible, role = ROLE_HEAD_REV, amount = rev_number, recordChosen = 1)
 	head_revolutionaries |= chosen_revolutionaries
 	for (var/datum/mind/rev in head_revolutionaries)
-		rev.special_role = "head_rev"
+		rev.special_role = ROLE_HEAD_REV
 		revs_possible.Remove(rev)
 
 	return 1
@@ -202,7 +202,7 @@
 		logTheThing("combat", rev_mind.current, null, "was made a member of the revolution.")
 		. = 1
 
-		var/obj/itemspecialeffect/derev/E = unpool(/obj/itemspecialeffect/derev)
+		var/obj/itemspecialeffect/derev/E = new /obj/itemspecialeffect/derev
 		E.color = "#FF5555"
 		E.setup(rev_mind.current.loc)
 
@@ -224,7 +224,7 @@
 
 		.= 1
 
-		var/obj/itemspecialeffect/derev/E = unpool(/obj/itemspecialeffect/derev)
+		var/obj/itemspecialeffect/derev/E = new /obj/itemspecialeffect/derev
 		E.color = "#5555FF"
 		E.setup(rev_mind.current.loc)
 
@@ -263,33 +263,6 @@
 			M.current.antagonist_overlay_refresh(1, 0)
 
 	return
-
-/datum/game_mode/revolution/proc/get_possible_revolutionaries()
-	var/list/candidates = list()
-
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if (ishellbanned(player)) continue //No treason for you
-		if ((player.ready) && !(player.mind in head_revolutionaries) && !(player.mind in token_players) && !candidates.Find(player.mind))
-			if(player.client.preferences.be_revhead)
-				candidates += player.mind
-
-	if(candidates.len < 1)
-		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Not enough players with be_revhead set to yes, so we're adding players who don't want to be rev leaders to the pool.")
-		for(var/client/C)
-			var/mob/new_player/player = C.mob
-			if (!istype(player)) continue
-
-			if (ishellbanned(player)) continue //No treason for you
-			if ((player.ready) && !(player.mind in head_revolutionaries) && !(player.mind in token_players) && !candidates.Find(player.mind))
-				candidates += player.mind
-
-	if(candidates.len < 1)
-		return list()
-	else
-		return candidates
 
 /datum/game_mode/revolution/proc/get_living_heads()
 	var/list/heads = list()

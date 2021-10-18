@@ -280,7 +280,7 @@
 			*/
 			#ifdef CREATE_PATHOGENS //PATHOLOGY_REMOVAL
 			if (value < 5 && prob(1) && prob(25))
-				var/datum/pathogen/P = unpool(/datum/pathogen)
+				var/datum/pathogen/P = new /datum/pathogen
 				P.create_weak()
 				P.spread = 0
 				holder.owner.infected(P)
@@ -779,11 +779,11 @@ var/global/datum/simsControl/simsController = new()
 	// relay procs
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (owner)
-			owner.attackby(W, user)
+			owner.Attackby(W, user)
 
 	attack_hand(mob/user as mob)
 		if (owner)
-			owner.attack_hand(user)
+			owner.Attackhand(user)
 
 	attack_ai(mob/user as mob)
 		if (owner)

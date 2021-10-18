@@ -22,7 +22,7 @@
 	src.blend_mode = BLEND_ADD
 	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_FLOCKMIND)
 	src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-	src.see_invisible = 15
+	src.see_invisible = INVIS_GHOST
 	src.see_in_dark = SEE_DARK_FULL
 	/// funk that color matrix up, my friend
 	src.apply_color_matrix(COLOR_MATRIX_FLOCKMIND, COLOR_MATRIX_FLOCKMIND_LABEL)
@@ -153,12 +153,8 @@
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 	logTheThing("diary", src, null, ": [message]", "say")
 
-	if (dd_hasprefix(message, ":lh") || dd_hasprefix(message, ":rh") || dd_hasprefix(message, ":in"))
-		message = copytext(message, 4)
-	else if (dd_hasprefix(message, ":"))
-		message = copytext(message, 3)
-	else if (dd_hasprefix(message, ";"))
-		message = copytext(message, 2)
+	var/prefixAndMessage = separate_radio_prefix_and_message(message)
+	message = prefixAndMessage[2]
 
 	flock_speak(src, message, src.flock)
 

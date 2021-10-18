@@ -25,8 +25,6 @@ var/list/rollList = list()
 	var/loadnumber
 	var/loadprob
 	var/mob/living/carbon/human/hitmob
-	module_research = list("vice" = 5)
-	module_research_type = /obj/item/dice
 	rand_pos = 1
 	var/initialName = "die"
 	var/initialDesc = "A six-sided die."

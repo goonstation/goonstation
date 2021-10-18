@@ -141,3 +141,15 @@
 	icon_state = "cards"
 	desc = "A cartridge that restocks cards vending machines."
 	vendingType = "cards"
+
+/obj/item/vending/restock_cartridge/capsule
+	name = "capsule restock cartridge"
+	icon_state = "capsule"
+	desc = "A cartridge that restocks capsule vending machines."
+	vendingType = "capsule"
+
+/obj/item/vending/restock_cartridge/portamed
+	name = "advanced medical restock cartridge"
+	icon_state = "medical"
+	desc = "A cartridge that restocks the portable nanomed vending machine."
+	vendingType = "port_a_nanomed"

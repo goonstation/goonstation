@@ -315,7 +315,7 @@ var/global/meteor_shower_active = 0
 			var/type
 			if (prob(1)) type = pick(oredrops_rare)
 			else type = pick(oredrops)
-			var/atom/movable/A = unpool(type)
+			var/atom/movable/A = new type
 			A.set_loc(T)
 			A.name = "meteor chunk"
 
@@ -326,7 +326,7 @@ var/global/meteor_shower_active = 0
 
 /obj/newmeteor/massive
 	name = "huge asteroid"
-	icon = 'icons/obj/meteor96x96.dmi'
+	icon = 'icons/obj/large/meteor96x96.dmi'
 	icon_state = "flaming"
 	density = 1
 	anchored = 1.0

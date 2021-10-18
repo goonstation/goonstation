@@ -78,15 +78,13 @@
 
 	var/defaultSignal = "1"
 
-/datum/component/mechanics_holder/Initialize(can_manually_set_signal = 0)
+/datum/component/mechanics_holder/Initialize()
 	src.connected_outgoing = list()
 	src.connected_incoming = list()
 	src.inputs = list()
 	src.configs = list()
 
 	src.configs.Add(list(DC_ALL))
-	if(can_manually_set_signal)
-		allowManualSingalSetting()
 	..()
 
 /datum/component/mechanics_holder/RegisterWithParent()
@@ -299,6 +297,10 @@
 
 //If it's a multi-tool, let the user configure the device.
 /datum/component/mechanics_holder/proc/attackby(var/comsig_target, obj/item/W as obj, mob/user)
+	if(istype(comsig_target, /obj/machinery/door))
+		var/obj/machinery/door/hacked_door = comsig_target
+		if(hacked_door.p_open)
+			return
 	if(!ispulsingtool(W) || !isliving(user) || user.stat)
 		return 0
 	if(length(src.configs))

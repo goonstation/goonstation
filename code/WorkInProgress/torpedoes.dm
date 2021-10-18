@@ -106,7 +106,7 @@
 /obj/machinery/torpedo_console
 	desc = ""
 	name = "torpedo console"
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "periscope"
 	anchored = 1.0
 	appearance_flags = TILE_BOUND
@@ -217,7 +217,7 @@
 /obj/machinery/torpedo_tube
 	name = "torpedo tube"
 	desc = ""
-	icon = 'icons/obj/32x96.dmi'
+	icon = 'icons/obj/large/32x96.dmi'
 	icon_state = "base"
 	density = 1
 	anchored = 1
@@ -242,12 +242,12 @@
 
 	New()
 		. =..()
-		light = image('icons/obj/32x96.dmi')
+		light = image('icons/obj/large/32x96.dmi')
 
-		tray = image('icons/obj/32x96.dmi')
+		tray = image('icons/obj/large/32x96.dmi')
 		tray.pixel_y = -16
 
-		tube = image('icons/obj/32x96.dmi',icon_state_tube)
+		tube = image('icons/obj/large/32x96.dmi',icon_state_tube)
 		tube.pixel_y = 16
 		underlays.Add(tube)
 
@@ -317,7 +317,7 @@
 			if(targetTurf)
 				target = targetTurf
 			else
-				target = get_edge_target_turf(src, src.dir)
+				target = get_steps(start, src.dir, 3)
 
 			if(ismob(loaded))
 				var/mob/M = loaded
@@ -352,7 +352,7 @@
 /obj/torpedo_tube_tray
 	name = "torpedo tube tray"
 	desc = ""
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "tray"
 	dir = NORTH
 	density = 1
@@ -402,10 +402,24 @@
 		else
 			return ..(I,user)
 
+	hitby(var/atom/movable/M, var/datum/thrown_thing/thr)
+		if (ishuman(M) && M.throwing)
+			var/mob/living/carbon/human/thrown_person = M
+			M.visible_message("<span class='alert'><b>[thrown_person] [thrown_person.throwing & THROW_SLIP ? "slips" : "falls"] onto [src]! [src] slams closed!</b></span>")
+			logTheThing("combat", thrown_person, null, " falls into \the [src] at [showCoords(src.x, src.y, src.z)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"])")
+			thrown_person.set_loc(src.loc)
+			parent?.close()
+			if (prob(25) || thrown_person.bioHolder.HasEffect("clumsy"))
+				SPAWN_DBG(0.5 SECONDS)
+					JOB_XP(thrown_person, "Clown", 5)
+					src.parent?.launch()
+		else
+			..()
+
 /obj/torpedo_tray
 	name = "torpedo tray"
 	desc = "A tray for wheeling around torpedos."
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "emptymissiletray"
 	density = 1
 	pixel_y = 0
@@ -419,8 +433,8 @@
 	var/lastdir = null
 
 	New()
-		northsouth = icon('icons/obj/32x64.dmi')
-		eastwest = icon('icons/obj/64x32.dmi')
+		northsouth = icon('icons/obj/large/32x64.dmi')
+		eastwest = icon('icons/obj/large/64x32.dmi')
 		changeIcon()
 		..()
 
@@ -466,7 +480,7 @@
 		changeIcon()
 
 	attackby(var/obj/item/I as obj, var/mob/user as mob)
-		if(loaded) return loaded.attackby(I, user)
+		if(loaded) return loaded.Attackby(I, user)
 		else return ..()
 
 	proc/add(var/obj/torpedo/T)
@@ -477,9 +491,10 @@
 		changeIcon()
 		return
 
-	proc/remove(var/turf/target, var/direction = null)
+	proc/remove(var/turf/target, var/direction = null, var/force = FALSE)
 		if(loaded == null) return
-		if(!can_act(usr) || !can_reach(usr, src) || !can_reach(usr, target)) return
+		if(!force && (!can_act(usr) || !can_reach(usr, src) || !can_reach(usr, target)))
+			return
 		var/obj/torpedo/T = loaded
 		loaded = null
 		T.set_dir((direction ? direction : src.dir))
@@ -502,8 +517,20 @@
 			else if(istype(trg, /obj/torpedo_tube_tray))
 				remove(get_turf(over_object), trg.dir)
 
+	hitby(var/atom/movable/M, var/datum/thrown_thing/thr)
+		if (src.loaded && ishuman(M) && M.throwing)
+			var/mob/living/carbon/human/thrown_person = M
+			if (thrown_person.throwing & THROW_CHAIRFLIP)
+				logTheThing("combat", thrown_person, null, " flips into \the [src] at [showCoords(src.x, src.y, src.z)], setting it off.")
+				loaded.breakLaunch()
+			else if (prob(25) || thrown_person.bioHolder.HasEffect("clumsy"))
+				logTheThing("combat", thrown_person, null, " is thrown into \the [src] at [showCoords(src.x, src.y, src.z)], setting it off. (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"])")
+				loaded.breakLaunch()
+				JOB_XP(thrown_person, "Clown", 5)
+		..()
+
 /obj/torpedo_tray/explosive_loaded
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "emptymissiletray"
 
 	New()
@@ -515,7 +542,7 @@
 		return
 
 /obj/torpedo_tray/hiexp_loaded
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "emptymissiletray"
 
 	New()
@@ -527,7 +554,7 @@
 		return
 
 /obj/torpedo_tray/incendiary_loaded
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "emptymissiletray"
 
 	New()
@@ -539,7 +566,7 @@
 		return
 
 /obj/torpedo_tray/toxic_loaded
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "emptymissiletray"
 
 	New()
@@ -551,7 +578,7 @@
 		return
 
 /obj/torpedo_tray/random_loaded
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "emptymissiletray"
 	New()
 		..()
@@ -590,8 +617,8 @@
 	var/sleepPerStep = 2 //How long to sleep between steps.
 
 	New()
-		northsouth = icon('icons/obj/32x64.dmi')
-		eastwest = icon('icons/obj/64x32.dmi')
+		northsouth = icon('icons/obj/large/32x64.dmi')
+		eastwest = icon('icons/obj/large/64x32.dmi')
 		changeIcon()
 		dmg_threshold = rand(20,60)
 		..()
@@ -678,7 +705,7 @@
 	proc/breakLaunch()
 		var/obj/torpedo_tray/T = src.loc
 		if(istype(T))
-			T.remove(get_turf(src))
+			T.remove(get_turf(src), force = TRUE)
 		var/atom/target = get_edge_target_turf(src, src.dir)
 		src.lockdir = src.dir
 		src.fired = 1

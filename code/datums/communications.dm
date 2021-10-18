@@ -16,6 +16,7 @@ On the map:
 1354 for research headsets
 1356 for medical headsets
 1352 for syndicate headsets
+1467 for Ruckingenur kits
 */
 
 //moved transmission type defines to _setup.dm
@@ -108,6 +109,9 @@ datum/radio_frequency
 			signal.channels_passed += "[src.frequency];"
 
 			for(var/obj/device in devices)
+				if(!istype(device))
+					continue
+					
 				if(device != source)
 
 					//MBC : Do checks here and call check_for_jammer_bare instead. reduces proc calls.
@@ -124,6 +128,7 @@ datum/radio_frequency
 								device.receive_signal(signal, TRANSMISSION_RADIO, frequency)
 					else
 						device.receive_signal(signal, TRANSMISSION_RADIO, frequency)
+					LAGCHECK(LAG_REALTIME)
 
 			if (!reusable_signals || reusable_signals.len > 10)
 				signal.dispose()
@@ -152,6 +157,7 @@ datum/signal
 	//1 = radio transmission
 
 	var/data = list()
+	///Set to the error message displayed when sniffing the encrypted packet
 	var/encryption
 	//We can carry a computer file around, why not.
 	var/datum/computer/file/data_file

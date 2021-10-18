@@ -13,7 +13,6 @@
 	m_amt = 100
 	mats = 2
 	desc = "A device that emits a signal when the time reaches 0."
-	module_research = list("devices" = 1, "miniaturization" = 4)
 
 /obj/item/device/timer/proc/time()
 	src.c_state(0)

@@ -13,7 +13,7 @@
 /obj/cruiser_shield_visual//This is dumb but required because icons and images don't animate properly as overlays AND their icon_state cannot be changed properly once added (images)
 	name = ""
 	desc = ""
-	icon = 'icons/obj/160x160.dmi'
+	icon = 'icons/obj/large/160x160.dmi'
 	icon_state = "shield"
 	mouse_opacity = 0
 	bound_width = 160
@@ -29,7 +29,7 @@
 		return
 
 /obj/machinery/cruiser
-	icon = 'icons/obj/160x160.dmi'
+	icon = 'icons/obj/large/160x160.dmi'
 	icon_state = "placeholder"
 	name = "Experimental someone-didnt-give-me-a-name cruiser"
 	desc = "Ruh-roh"
@@ -195,7 +195,7 @@
 			interior_area = locate(interior_area)
 			interior_area.ship = src
 		else
-			del(src)
+			qdel(src)
 
 		shield_obj = new(src.loc)
 		var/matrix/mtx = new
@@ -213,11 +213,11 @@
 			pooObj.transform = mtx
 			pooList += pooObj
 
-		frames = image('icons/obj/160x160.dmi',src,"frames",src.layer+1)
-		overframes = image('icons/obj/160x160.dmi',src,"overframes",src.layer+2)
-		bar_top = image('icons/obj/160x160.dmi',src,"bartop",src.layer+1)
-		bar_middle = image('icons/obj/160x160.dmi',src,"barmiddle",src.layer+1)
-		bar_bottom = image('icons/obj/160x160.dmi',src,"barbottom",src.layer+1)
+		frames = image('icons/obj/large/160x160.dmi',src,"frames",src.layer+1)
+		overframes = image('icons/obj/large/160x160.dmi',src,"overframes",src.layer+2)
+		bar_top = image('icons/obj/large/160x160.dmi',src,"bartop",src.layer+1)
+		bar_middle = image('icons/obj/large/160x160.dmi',src,"barmiddle",src.layer+1)
+		bar_bottom = image('icons/obj/large/160x160.dmi',src,"barbottom",src.layer+1)
 
 		bar_top.color = "#8A1919"
 		bar_middle.color = "#19688A"
@@ -236,7 +236,7 @@
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_PODS_AND_CRUISERS)
 
-		del(camera)
+		qdel(camera)
 		if(interior_area)
 			interior_area = null
 		..()
@@ -350,7 +350,7 @@
 		src.addPowerUse("shieldOverload", 90, -1)
 		src.shield_regen_always += 1
 		src.shield_regen_boost += 10
-		var/image/I = image('icons/obj/160x160.dmi',shield_obj,"shieldoverload",shield_obj.layer+1)
+		var/image/I = image('icons/obj/large/160x160.dmi',shield_obj,"shieldoverload",shield_obj.layer+1)
 		I.alpha = 150
 		shield_obj.overlays += I
 		internal_sound(src.loc, 'sound/machines/shieldoverload.ogg', 80, 0, -1)
@@ -527,10 +527,10 @@
 			return
 
 		internal_sound(src.loc, 'sound/machines/cruiser_warp.ogg', 85, 0, 1)
-		var/image/warpOverlay = image('icons/obj/160x160.dmi',"warp")
+		var/image/warpOverlay = image('icons/obj/large/160x160.dmi',"warp")
 		overlays.Add(warpOverlay)
 		animate(src, alpha = 0, time = 10)
-		shield_obj.invisibility = 101
+		shield_obj.invisibility = INVIS_ALWAYS
 
 		sleep(2 SECONDS)
 
@@ -539,7 +539,7 @@
 
 		sleep(1.5 SECONDS)
 		overlays.Cut()
-		shield_obj.invisibility = 0
+		shield_obj.invisibility = INVIS_NONE
 		warping = 0
 		return
 
@@ -826,7 +826,7 @@
 
 /obj/cruiser_camera_dummy
 	name = ""
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
 
@@ -1228,7 +1228,7 @@
 		return
 
 /obj/machinery/cruiser_destroyable/cruiser_pod
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "pod_command_0"
 	var/mob/using = null
 	var/area/cruiser/interior

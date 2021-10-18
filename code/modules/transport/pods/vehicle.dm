@@ -320,7 +320,7 @@
 				if (src.m_w_system)
 					m_w_system.deactivate()
 					components -= m_w_system
-					if (uses_weapon_overlays)
+					if (uses_weapon_overlays && m_w_system.appearanceString)
 						src.overlays -= image('icons/effects/64x64.dmi', "[m_w_system.appearanceString]")
 					m_w_system.set_loc(src.loc)
 					m_w_system = null
@@ -798,7 +798,7 @@
 					boutput(usr, "Weapons cannot be installed in this ship!")
 					return
 				m_w_system = S
-				if(uses_weapon_overlays)
+				if(uses_weapon_overlays && m_w_system.appearanceString)
 					src.overlays += image('icons/effects/64x64.dmi', "[m_w_system.appearanceString]")
 
 				m_w_system.activate()
@@ -1836,6 +1836,36 @@
 		..()
 		name = "civilian minisub"
 
+/obj/machinery/vehicle/tank/minisub/heavy
+	body_type = "minisub"
+	icon_state = "graysub_body"
+	health = 130
+	maxhealth = 130
+
+	New()
+		..()
+		name = "heavy minisub"
+
+/obj/machinery/vehicle/tank/minisub/industrial
+	body_type = "minisub"
+	icon_state = "blacksub_body"
+	health = 150
+	maxhealth = 150
+
+	New()
+		..()
+		name = "industrial minisub"
+
+/obj/machinery/vehicle/tank/minisub/black
+	body_type = "minisub"
+	icon_state = "blacksub_body"
+	health = 175
+	maxhealth = 175
+
+	New()
+		..()
+		name = "strange minisub"
+
 /obj/machinery/vehicle/tank/minisub/engineer
 	body_type = "minisub"
 	icon_state = "graysub_body"
@@ -1863,6 +1893,15 @@
 	var/failing = 0
 	var/succeeding = 0
 	var/did_warp = 0
+
+	New()
+		. = ..()
+		src.components -= src.engine
+		qdel(src.engine)
+		src.engine = new /obj/item/shipcomponent/engine/escape(src)
+		src.components += src.engine
+		src.engine.ship = src
+		src.engine.activate()
 
 	finish_board_pod(var/mob/boarder)
 		..()
@@ -1908,7 +1947,7 @@
 
 			playsound(src.loc, "warp", 50, 1, 0.1, 0.7)
 
-			var/obj/portal/P = unpool(/obj/portal)
+			var/obj/portal/P = new /obj/portal
 			P.set_loc(get_turf(src))
 			var/turf/T = pick_landmark(LANDMARK_ESCAPE_POD_SUCCESS)
 			P.target = T

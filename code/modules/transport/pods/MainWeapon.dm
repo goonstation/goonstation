@@ -498,20 +498,20 @@
 /datum/projectile/laser/pod
 	dissipation_rate = 2
 	dissipation_delay = 16
-	projectile_speed = 32
+	projectile_speed = 42
 
 /datum/projectile/laser/light/pod
 	impact_range = 2
 	dissipation_rate = 1
 	dissipation_delay = 14
-	projectile_speed = 32
+	projectile_speed = 42
 
 /datum/projectile/disruptor
 	impact_range = 4
 	dissipation_delay = 16
-	projectile_speed = 32
+	projectile_speed = 42
 
 /datum/projectile/disruptor/high
 	impact_range = 4
 	dissipation_delay = 16
-	projectile_speed = 32
+	projectile_speed = 42

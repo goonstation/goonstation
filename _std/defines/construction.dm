@@ -15,13 +15,13 @@
 #define GIRDER_PLATE 6
 
 //wall construction defines
-#define WALL_REMOVERERODS 0
-#define WALL_REMOVESUPPORTLINES 1
-#define WALL_SLICECOVER 3
-#define WALL_REMOVESUPPORTRODS 4
-#define WALL_PRYCOVER 5
+#define WALL_CUTRERODS 0
+#define WALL_REMOVERERODS 1
+#define WALL_SLICECOVER 2
+#define WALL_PRYCOVER 3
+#define WALL_LOOSENSUPPORTRODS 4
+#define WALL_REMOVESUPPORTRODS 5
 #define WALL_PRYSHEATH 6
-#define WALL_DETATCHSUPPORTRODS 7
 
 //railing defines
 #define RAILING_DISASSEMBLE 0
@@ -43,3 +43,5 @@
 #define DECON_BUILT 128
 /// can only be deconstructed if access required is null
 #define DECON_ACCESS 256
+/// item will be saved by path instead of stored in the frame
+#define DECON_DESTRUCT 512

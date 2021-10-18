@@ -114,7 +114,7 @@ See `_stdlib/_types.dm` for details.
 
 # Whack BYOND shit
 
-### Startup/Runtime trade-offs with lists and the "hidden" init() proc
+## Startup/Runtime trade-offs with lists and the "hidden" init() proc
 
 First, read the comments in [this BYOND thread](http://www.byond.com/forum/post/2086980?page=2#comment19776775).
 
@@ -180,6 +180,33 @@ This does **not** mean that you can access it everywhere like a global var. Inst
 Isn't that confusing?
 
 There is also an undocumented keyword called `static` that has the same behavior as global but more correctly describes DM's behavior. Therefore, always use `static` instead of `global` in variables, as it reduces surprise when reading code.
+
+## Avoid unnecessary type checks and obscuring nulls in lists
+Typecasting in `for` loops carries an implied `istype()` check that filters non-matching types, nulls included. The `as anything` keyword phrase can be used to skip the check.
+
+If we know the list is supposed to only contain the desired type then we want to skip the check not only for the small optimization it offers, but also to catch any null entries that may creep into the list.
+
+Nulls in lists tend to point to improperly-handled references, making hard deletes hard to debug. Generating a runtime in those cases is more often than not positive.
+
+This is bad:
+```javascript
+var/list/bag_of_atoms = list(new /obj, new /atom, new /atom/movable, new /atom/movable)
+var/highest_alpha = 0
+for(var/atom/thing in bag_of_atoms)
+	if(thing.alpha <= highest_alpha)
+		continue
+	highest_alpha = thing.alpha
+```
+
+This is good:
+```javascript
+var/list/bag_of_atoms = list(new /obj, new /atom, new /atom/movable, new /atom/movable)
+var/highest_alpha = 0
+for(var/atom/thing as anything in bag_of_atoms)
+	if(thing.alpha <= highest_alpha)
+		continue
+	highest_alpha = thing.alpha
+```
 
 # Useful Things
 

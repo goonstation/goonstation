@@ -353,7 +353,7 @@
 	electric_expose(var/power = 1) //lets throw in ANOTHER hack to the temp expose one above
 		if (reagents)
 			for (var/i = 0, i < 3, i++)
-				reagents.temperature_reagents(power*500, power*125)
+				reagents.temperature_reagents(power*500, power*400, 1000, 1000, 1)
 
 /obj/reagent_dispensers/heliumtank
 	name = "heliumtank"
@@ -419,7 +419,7 @@
 			playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 30, 1)
 			user.u_equip(W)
 			W.dropped()
-			pool( W )
+			qdel( W )
 			return
 		else ..()
 
@@ -452,7 +452,7 @@
 					amount = 15
 				playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 30, 1)
 				src.reagents.add_reagent("poo", amount)
-				pool( P )
+				qdel( P )
 				sleep(0.3 SECONDS)
 			boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
 		else ..()
@@ -464,32 +464,31 @@
 	icon_state = "still"
 	amount_per_transfer_from_this = 25
 	event_handler_flags = NO_MOUSEDROP_QOL
-	// what was the point here exactly
-	//New()
-		//..()
 
 	proc/brew(var/obj/item/W as obj)
-		if (!W || !(istype(W,/obj/item/reagent_containers/food) || istype(W, /obj/item/plant)))
+		var/brewable
+		var/list/brew_result
+
+		if(istype(W,/obj/item/reagent_containers/food))
+			var/obj/item/reagent_containers/food/F = W
+			brewable = F.brewable
+			brew_result = F.brew_result
+
+		else if(istype(W, /obj/item/plant))
+			var/obj/item/plant/P = W
+			brewable = P.brewable
+			brew_result = P.brew_result
+
+		if (!brewable || !brew_result)
 			return 0
 
-		if (!W:brewable || !W:brew_result)
-			return 0
-
-		if (istype(W,/obj/item/reagent_containers/food/snacks/snack_cake) || istype(W,/obj/item/reagent_containers/food/snacks/burrito))
-			if (islist(W:brew_result) && W:brew_result:len)
-				W:brew_result += W.reagents.reagent_list
-
-		//var/brewed_name = null
-		if (islist(W:brew_result) && W:brew_result:len)
-			for (var/i in W:brew_result)
-				//brewed_name += ", [reagent_id_to_name(i)]"
+		if (islist(brew_result) && length(brew_result))
+			for (var/i in brew_result)
 				src.reagents.add_reagent(i, 10)
-			//brewed_name = copytext(brewed_name, 3)
 		else
-			src.reagents.add_reagent(W:brew_result, 20)
-			//brewed_name = reagent_id_to_name(W:brew_result)
+			src.reagents.add_reagent(brew_result, 20)
 
-		src.visible_message("<span class='notice'>[src] brews up [W]!</span>")// into [brewed_name]!")
+		src.visible_message("<span class='notice'>[src] brews up [W]!</span>")
 		return 1
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -503,7 +502,7 @@
 			if (load)
 				user.u_equip(W)
 				W.dropped()
-				pool(W)
+				qdel(W)
 				return
 			else  ..()
 		else ..()
@@ -529,7 +528,7 @@
 					break
 				if (src.brew(P))
 					amtload++
-					pool(P)
+					qdel(P)
 				else
 					continue
 			if (amtload)
@@ -548,14 +547,13 @@
 					user.show_text("You were interrupted!", "red")
 					break
 				if (src.brew(O))
-					pool(O)
+					qdel(O)
 				else
 					continue
 			user.visible_message("<span class='notice'><b>[user]</b> finishes stuffing items into [src].</span>",\
 			"<span class='notice'>You finish stuffing items into [src].</span>")
 		else
 			return ..()
-
 
 /* ==================================================== */
 /* --------------- Water Cooler Bottle ---------------- */
@@ -571,6 +569,7 @@
 	initial_volume = 500
 	w_class = W_CLASS_BULKY
 	incompatible_with_chem_dispensers = 1
+	can_chug = 0
 
 	var/image/fluid_image
 

@@ -564,7 +564,7 @@ PIPE BOMBS + CONSTRUCTION
 
 	prime()
 		var/turf/simulated/T = ..()
-		var/datum/gas_mixture/GM = unpool(/datum/gas_mixture)
+		var/datum/gas_mixture/GM = new /datum/gas_mixture
 		GM.temperature = T20C + 15
 		GM.oxygen = 1500
 		GM.carbon_dioxide = 100
@@ -587,7 +587,7 @@ PIPE BOMBS + CONSTRUCTION
 					if (count)
 						for (var/turf/simulated/MT as() in T.parent.members)
 							if (GM.disposed)
-								GM = unpool(/datum/gas_mixture)
+								GM = new /datum/gas_mixture
 							GM.temperature = T20C + 15
 							GM.oxygen = 1500 / count
 							GM.carbon_dioxide = 100 / count
@@ -605,7 +605,7 @@ PIPE BOMBS + CONSTRUCTION
 
 			animate(E, alpha=0, time=2.5 SECONDS)
 			playsound(T, "sound/weapons/flashbang.ogg", 30, 1)
-			var/datum/effects/system/steam_spread/steam = unpool(/datum/effects/system/steam_spread)
+			var/datum/effects/system/steam_spread/steam = new /datum/effects/system/steam_spread
 			steam.set_up(10, 0, get_turf(src), color="#0ff", plane=PLANE_NOSHADOW_ABOVE)
 			steam.attach(src.loc)
 			steam.start()
@@ -726,7 +726,7 @@ PIPE BOMBS + CONSTRUCTION
 								W.layer = HUD_LAYER
 						else
 							qdel(W)
-				else
+				else if (!issilicon(user)) //borgs could drop all their tools/internal items trying to pull one
 					user.unequip_all()
 
 				for (var/mob/N in viewers(user, null))
@@ -769,7 +769,7 @@ PIPE BOMBS + CONSTRUCTION
 		var/obj/effects/explosion/E = new /obj/effects/explosion(src.loc)
 		E.fingerprintslast = src.fingerprintslast
 
-		invisibility = 100
+		invisibility = INVIS_ALWAYS_ISH
 		SPAWN_DBG(15 SECONDS)
 			qdel (src)
 
@@ -1190,8 +1190,22 @@ PIPE BOMBS + CONSTRUCTION
 
 			location.hotspot_expose(700, 125)
 
-			explosion(src, location, src.expl_devas, src.expl_heavy, src.expl_light, src.expl_flash)
+			//Explosive effect for breaching charges only
+			if (!(istype(src, /obj/item/breaching_charge/mining)))
+				// NT charge shake
+				if (expl_heavy)
+					for(var/client/C in clients)
+						if(C.mob && (C.mob.z == src.z))
+							shake_camera(C.mob, 8, 24) // remove if this is too laggy
+							playsound(C.mob, explosions.distant_sound, 100, 0)
+							new /obj/effects/explosion (src.loc)
+				else
+					playsound(src.loc, pick(sounds_explosion), 75, 1)
+					new/obj/effect/supplyexplosion(src.loc)
+			else
+				playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
 
+			explosion(src, location, src.expl_devas, src.expl_heavy, src.expl_light, src.expl_flash)
 			// Breaching charges should be, you know, actually be decent at breaching walls and windows (Convair880).
 			for (var/turf/simulated/wall/W in range(src.expl_range, location))
 				if (W && istype(W) && !location.loc:sanctuary)
@@ -1271,8 +1285,8 @@ PIPE BOMBS + CONSTRUCTION
 				qdel(src)
 				return
 
-			playsound(location, "sound/effects/bamf.ogg", 50, 1)
-			src.invisibility = 101
+			playsound(location, "sound/effects/bamf.ogg", 100, 0.5)
+			src.invisibility = INVIS_ALWAYS
 
 			for (var/turf/T in range(src.expl_range, location))
 				if( T?.loc:sanctuary ) continue
@@ -1412,15 +1426,15 @@ PIPE BOMBS + CONSTRUCTION
 			if (!ok)
 				//There is less room for explosive material when you use item mods
 				var/max_allowed = 20 - item_mods.len * 5
-				boutput(user, "<span class='notice'>You fill the pipe with [max_allowed] units of the reagents.</span>")
 				src.state = 3
 				var/avg_volatility = 0
 				src.reagents = new /datum/reagents(max_allowed)
 				src.reagents.my_atom = src
 				W.reagents.trans_to(src, max_allowed)
+				boutput(user, "<span class='notice'>You fill the pipe with [src.reagents.total_volume] units of the reagents.</span>")
 				for (var/id in src.reagents.reagent_list)
 					var/datum/reagent/R = src.reagents.reagent_list[id]
-					avg_volatility += R.volatility * R.volume / src.reagents.total_volume
+					avg_volatility += R.volatility * R.volume / src.reagents.maximum_volume
 
 				qdel(src.reagents)
 				src.reagents = null
@@ -1669,7 +1683,7 @@ PIPE BOMBS + CONSTRUCTION
 						if(target.parent?.group_processing)
 							target.parent.suspend_group_processing()
 
-						var/datum/gas_mixture/payload = unpool(/datum/gas_mixture)
+						var/datum/gas_mixture/payload = new /datum/gas_mixture
 						payload.toxins = plasma * 100
 						payload.temperature = T20C
 						payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000

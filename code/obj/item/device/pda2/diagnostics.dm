@@ -272,6 +272,11 @@
 			t += "ERR_12939_CORRUPT_PACKET:"
 			t2 = stars(t2, 15)
 
+		// ruck kit lock packets use this
+		if(signal.encryption)
+			t += "[signal.encryption]"
+			t2 = stars(t2, 15)
+
 		result += "[t][t2]"
 
 

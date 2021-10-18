@@ -25,7 +25,7 @@ This text serves as a comprehensive overview to Materials Science. It is detaile
 <h2>
   Contents</h2>
 <nav><ul><li><a href="MatSci-W">Materials Science: What, Where, and Why?</a></li><li><a href="Index-of-Properties"> <a href="">Index of Properties</a></li> <li><a href="Basic-Mats">Basic Ores</a></li> <li><a href="Advanced-Mats">Advanced Materials</a></li> <li><a href="Alloyed-Mats">Alloyed Materials</a></li><li><a href="Alloying">Alloying</a></li>
-<li>a href="Enchanting">Enchanting</a></li><li><a href="Infusing">Infusing</a></li></ul></nav>
+<li><a href="Enchanting">Enchanting</a></li><li><a href="Infusing">Infusing</a></li></ul></nav>
 
   <section id="MatSci-W"><h3>Materials Science: What is it, Where is it, and Why is it?</h3></section>
 <hr>
@@ -507,7 +507,18 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 <td align="right">n/a</td>
 <td align="right">n/a</td>
 </tr>
-</table><br/>
+<tr><td align="right">King Wendigo Hide</td>
+<td align="right">n/a</td>
+<td align="right"><b>45</b></td>
+<td align="right"><b>10</b></td>
+<td align="right">n/a</td>
+<td align="right"><b>30</b></td>
+<td align="right"><b>30</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+</table><br>
 <table>
 <tr><th align="right">METAL</th>
 <th align="right">Rad.</th>
@@ -774,7 +785,20 @@ The properties in full and in order are Radioactivity, Neutron Radiation, Electr
 <td align="right">n/a</td>
 <td align="right">n/a</td>
 </tr>
-<tr><td align="right">Plasmasteel</td>
+<tr><td align="right">Plasma Glass</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>75</b></td>
+<td align="right"><b>30</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+<tr><td align="right">Plasma Steel</td>
 <td align="right">n/a</td>
 <td align="right">n/a</td>
 <td align="right">n/a</td>
@@ -817,16 +841,17 @@ The properties in full and in order are Radioactivity, Neutron Radiation, Electr
 
 <section id="Alloying"><h3>Alloying</h3></section>
 Alloying is done in the Nano-Crucible using processed materials. When you alloy two materials together, the stats of the created alloy is an average of the two progenitor materials. So, if you were looking to create a dense material and you alloyed Plasmasteel (density 75) with Viscerite (density 65), the resulting alloy would have a density of 70.
+However, if one material being alloyed lacks a certain property (indicated in the table by an "n/a"), then it will simply inherit the full value of the material that <b><i>does</i></ib> have the stat.
 When you alloy a material, the material passes on any unique properties to the resulting alloy.<br><br>
 
 Two additional notes on how <b>Melee Damage Protection</b> and <b><i>Ranged Damage Protection</i></b> are determined on wearables. Melee Damage Protection is equal to the density of the material the piece is made from divided by 13.
 <b><i>Ranged Damage Protection</i></b> is equal to (material density divided by 13) divided by 10, and then 0.2 is added to the resulting number.
 
-<br><br>So if you had a Plasmasteel alloy at 70 density, it would provide 5 <b><i>Melee Damage Protection</b></i> (70/13 = 5.3) when made into a wearable, and 0.7 <b><i>Ranged Damage Protection</b></i> (0.5+0.2) when made into a wearable.
+<br><br>So if you had a Plasma Steel alloy at 70 density, it would provide 5 <b><i>Melee Damage Protection</b></i> (70/13 = 5.3) when made into a wearable, and 0.7 <b><i>Ranged Damage Protection</b></i> (0.5+0.2) when made into a wearable.
 <br>
 <br>
 You can directly transfer the stats of a material to an object by putting the material in the <b>Arc Electroplater</b> and then putting the desired object in with the plating. This process takes a few moments, and results in an object that is plated in and has the properties of your material.
-<section id="Enchanting""><h3>Enchanting</h3></section>
+<section id="Enchanting"><h3>Enchanting</h3></section>
 Enchanting is done using rare magical crystals that can be alloyed with other materials and then made into an item or used to plate an item in the Arc Electroplater. When used on a non-wearable item, three additional damage of whatever the primary damage type is gets added.
 When used on a wearable item, three additional armor is added to the item when it is worn, though the stats on the armor itself do not reflect this.
 <section id="Infusing""><h3>Infusing</h3></section>

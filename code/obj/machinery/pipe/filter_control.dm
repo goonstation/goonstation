@@ -10,7 +10,7 @@
 		desc = "A remote control for a filter: [control]"
 
 /obj/machinery/filter_control/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/filter_control/attackby(obj/item/weapon/W, mob/user as mob)
 	if (istype(W, /obj/item/weapon/detective_scanner))
@@ -34,8 +34,8 @@
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("<span class='alert'>[] has shorted out the []'s access system with an electromagnetic card!</span>", user, src), 1)
 		src.updateicon()
-		return src.attack_hand(user)
-	return src.attack_hand(user)
+		return src.Attackhand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/filter_control/process()
 	if(!(status & NOPOWER))

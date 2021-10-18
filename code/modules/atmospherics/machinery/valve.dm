@@ -62,7 +62,7 @@ obj/machinery/atmospherics/valve
 				dir = EAST
 
 		attack_ai(mob/user as mob)
-			return src.attack_hand(user)
+			return src.Attackhand(user)
 
 		//Radio remote control
 

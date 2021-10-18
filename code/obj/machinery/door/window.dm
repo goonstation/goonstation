@@ -13,6 +13,8 @@
 	var/base_state = "left"
 	visible = 0
 	flags = ON_BORDER
+	health = 500
+	health_max = 500
 	opacity = 0
 	brainloss_stumble = 1
 	autoclose = 1
@@ -32,7 +34,7 @@
 			user.show_text("You cannot control this door.", "red")
 			return
 		else
-			return src.attackby(null, user)
+			return src.Attackby(null, user)
 
 	attackby(obj/item/I as obj, mob/user as mob)
 		if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat || user.restrained())

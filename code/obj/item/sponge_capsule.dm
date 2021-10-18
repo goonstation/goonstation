@@ -48,8 +48,15 @@
 	else
 		return
 
-/obj/item/toy/sponge_capsule/attack()
-	return
+/obj/item/toy/sponge_capsule/attack(mob/M as mob, mob/user as mob)
+	if (iscarbon(M) && M == user)
+		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and and eats it.</span>")
+		playsound(M,"sound/misc/gulp.ogg", 30, 1)
+		eat_twitch(M)
+		user.u_equip(src)
+		qdel(src)
+	else
+		return
 
 /obj/item/toy/sponge_capsule/proc/add_water()
 	playsound(src.loc, 'sound/effects/cheridan_pop.ogg', 100, 1)
@@ -75,9 +82,6 @@
 		boutput(user, "<span class='alert'>You awkwardly [pick("cram", "stuff", "jam", "pack")] [src] into [target], but it won't stay!</span>")
 		return
 	return ..()
-
-/obj/item/toy/sponge_capsule/attack()
-	return
 
 /obj/item/spongecaps
 	name = "\improper BioToys Sponge Capsules"

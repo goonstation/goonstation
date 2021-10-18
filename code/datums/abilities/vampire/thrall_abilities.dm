@@ -1,7 +1,7 @@
-/datum/targetable/vampiric_zombie/speak
+/datum/targetable/vampiric_thrall/speak
 	name = "Speak"
 	desc = "Telepathically speak to your master and your fellow ghouls."
-	icon_state = "ghoulspeak"
+	icon_state = "thrallspeak"
 	targeted = 0
 	target_nodamage_check = 1
 	max_range = 1
@@ -20,7 +20,7 @@
 			return 1
 
 		var/mob/living/M = holder.owner
-		var/datum/abilityHolder/vampiric_zombie/H = holder
+		var/datum/abilityHolder/vampiric_thrall/H = holder
 
 		if (!M)
 			return 1

@@ -32,13 +32,22 @@
 	var/dog_bark = 1
 	var/affect_fun = 5
 	var/special_index = 0
-
-	module_research = list("audio" = 7)
+	var/notes = list("c4")
+	var/note = "c4"
+	var/use_new_interface = 0
+	/*At which key the notes start at*/
+	/*1=C,2=C#,3=D,4=D#,5=E,F=6,F#=7,G=8,G#=9,A=10,A#=11,B=12*/
+	var/key_offset = 1
 
 	New()
 		..()
+
+
 		if (!pick_random_note)
-			contextLayout = new /datum/contextLayout/instrumental()
+			if(use_new_interface == 0)
+				contextLayout = new /datum/contextLayout/instrumental()
+			else
+				contextLayout = new /datum/contextLayout/newinstrumental(KeyOffset = key_offset)
 
 			//src.contextActions = childrentypesof(/datum/contextAction/vehicle)
 
@@ -51,6 +60,8 @@
 
 				if (special_index && i >= special_index)
 					newcontext = new /datum/contextAction/instrument/special
+				else if (findtext(sounds_instrument[i], "-"))
+					newcontext = new /datum/contextAction/instrument/black
 				else
 					newcontext = new /datum/contextAction/instrument
 				newcontext.note = i
@@ -68,7 +79,6 @@
 
 		var/turf/T = get_turf(src)
 		playsound(T, sounds_instrument[note], src.volume, randomized_pitch, pitch = pitch_set)
-
 
 
 		if (prob(5) || sounds_instrument.len == 1)
@@ -115,7 +125,7 @@
 	volume = 100
 	note_time = 200
 	affect_fun = 15 // a little higher, why not?
-	module_research = list("audio" = 14) // I don't think this is even relevant without being able to pick up the thing and also the research thing isn't even enabled atm but well. why not?
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 
 	attack_hand(mob/user as mob)
 		src.add_fingerprint(user)
@@ -144,16 +154,17 @@
 	icon_state = "piano"
 	item_state = "piano"
 	sounds_instrument = null
-	special_index = 13
 	note_time = 0.18 SECONDS
 	randomized_pitch = 0
+	use_new_interface = 1
 
 	New()
+		notes = list("c4","c-4", "d4", "d-4", "e4","f4","f-4","g4", "g-4","a4","a-4","b4","c5","c-5", "d5", "d-5", "e5","f5","f-5","g5", "g-5","a5","a-5","b5","c6","c-6", "d6", "d-6", "e6","f6","f-6","g6", "g-6","a6","a-6","b6","c7")
 		sounds_instrument = list()
-		for (var/i in 1 to 12)
-			sounds_instrument += "sound/musical_instruments/piano/piano_[i].ogg"
+		for (var/i in 1 to length(notes))
+			note = notes[i]
+			sounds_instrument += "sound/musical_instruments/piano/notes/[note].ogg" // [i]
 
-		sounds_instrument += list("sound/musical_instruments/piano/furelise.ogg","sound/musical_instruments/piano/gymno.ogg","sound/musical_instruments/piano/lune.ogg","sound/musical_instruments/piano/nachtmusik1.ogg","sound/musical_instruments/piano/nachtmusik2.ogg")
 		..()
 
 
@@ -204,15 +215,19 @@
 	icon_state = "sax"
 	item_state = "sax"
 	desc_sound = list("sexy", "sensuous", "libidinous","spicy", "flirtatious", "salacious","sizzling", "carnal", "hedonistic")
-	module_research = list("audio" = 7, "metals" = 3)
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
 	randomized_pitch = 0
+	use_new_interface = 1
+	//Start at G
+	key_offset = 8
 
 	New()
+		notes = list("g3","g-3","a3","a-3","b3","c4","c-4", "d4", "d-4", "e4","f4","f-4","g4", "g-4","a4","a-4","b4","c5","c-5", "d5", "d-5", "e5","f5","f-5","g5", "g-5","a5","a-5","b5","c6")
 		sounds_instrument = list()
-		for (var/i in 1 to 12)
-			sounds_instrument += "sound/musical_instruments/sax/sax_[i].ogg"
+		for (var/i in 1 to length(notes))
+			note = notes[i]
+			sounds_instrument += "sound/musical_instruments/sax/notes/[note].ogg"
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
 
@@ -234,7 +249,6 @@
 	item_state = "bagpipe"
 	sounds_instrument = list('sound/musical_instruments/Bagpipes_1.ogg', 'sound/musical_instruments/Bagpipes_2.ogg','sound/musical_instruments/Bagpipes_3.ogg')
 	desc_sound = list("patriotic", "rowdy", "wee", "grand", "free", "Glaswegian", "sizzling", "carnal", "hedonistic")
-	module_research = list("audio" = 7, "metals" = 3)
 	pick_random_note = 1
 
 	New()
@@ -261,6 +275,11 @@
 				sounds_instrument += "sound/musical_instruments/guitar/guitar_[i].ogg"
 		..()
 
+	attack(mob/M as mob, mob/user as mob)
+		if(ismob(M))
+			playsound(src, pick('sound/musical_instruments/Guitar_bonk1.ogg', 'sound/musical_instruments/Guitar_bonk2.ogg', 'sound/musical_instruments/Guitar_bonk3.ogg'), 50, 1, -1)
+		..()
+
 
 /* -------------------- Bike Horn -------------------- */
 
@@ -276,11 +295,15 @@
 	sounds_instrument = list('sound/musical_instruments/Bikehorn_1.ogg')
 	desc_verb = list("honks")
 	note_time = 8
-	module_research = list("audio" = 8)
 	pick_random_note = 1
 
 	show_play_message(mob/user as mob)
 		return
+
+	attack(mob/M as mob, mob/user as mob)
+		if(ismob(M))
+			playsound(src, pick('sound/musical_instruments/Bikehorn_bonk1.ogg', 'sound/musical_instruments/Bikehorn_bonk2.ogg', 'sound/musical_instruments/Bikehorn_bonk3.ogg'), 50, 1, -1)
+		..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (!istype(W, /obj/item/parts/robot_parts/arm))
@@ -471,7 +494,6 @@
 	icon_state = "trumpet"
 	item_state = "trumpet"
 	desc_sound = list("slick", "egotistical", "snazzy", "technical", "impressive")
-	module_research = list("audio" = 7, "metals" = 3)
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
 	randomized_pitch = 0

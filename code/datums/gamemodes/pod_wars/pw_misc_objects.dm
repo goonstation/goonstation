@@ -1,6 +1,6 @@
 /obj/pod_base_critical_system
 	name = "Critical System"
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "critical_system"
 	anchored = 1
 	density = 1
@@ -620,7 +620,7 @@
 	meteorhit(var/obj/O as obj)
 		return
 
-	//called from the action bar completion in src.attack_hand()
+	//called from the action bar completion in src.Attackhand()
 	proc/capture(var/mob/user)
 		var/team_num = get_pod_wars_team_num(user)
 		owner_team = team_num
@@ -711,7 +711,7 @@
 	//so nobody will be able to warp to them, they can only navigate towards them with pod sensors.
 	spacejunk
 		name = "spacejunk warp_beacon"
-		invisibility = 101
+		invisibility = INVIS_ALWAYS
 		alpha = 100			//just to be clear
 
 

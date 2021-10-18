@@ -9,8 +9,8 @@
 	var/maximum_value = 100						// the maximum amount of health this holder has
 	var/value = 100								// the current amount of health this holder has
 	var/last_value = 100						// value at the last call of Life() - maintained automatically
-	var/minimum_value = -200					// the lowest amount of health this holder can represent
-	var/depletion_threshold = -200				// if the value reaches this threshold, on_deplete() is called
+	var/minimum_value = -INFINITY					// the lowest amount of health this holder can represent
+	var/depletion_threshold = -INFINITY				// if the value reaches this threshold, on_deplete() is called
 	var/current_overlay = 0						// currently displayed level of overlay, helps to check if update is needed
 	var/assume_blood_color = 0					// if true, damage overlay will be blood colored
 	var/damage_multiplier = 1

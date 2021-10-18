@@ -193,14 +193,6 @@ var/list/globalPropList = null
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "+[propVal]% block chance"
 
-	deflection
-		name = "Deflection"
-		id = "deflection"
-		desc = "Improves chance to resist being disarmed." //Value is extra block chance.
-		tooltipImg = "block.png"
-		defaultValue = 10
-		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "+[propVal]% additional chance to deflect disarm attempts"
 	pierceprot
 		name = "Piercing Resistance"
 		id = "pierceprot"
@@ -281,33 +273,6 @@ var/list/globalPropList = null
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "+[propVal] damage increased."
 
-	disorient_resist
-		name = "Body Insulation (Disorient Resist)"
-		id = "disorient_resist"
-		desc = "Reduces disorient effects on the wearer." //Value is % protection.
-		tooltipImg = "protdisorient.png"
-		defaultValue = 0
-		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "[propVal]%"
-
-	disorient_resist_eye
-		name = "Eye Insulation (Disorient Resist)"
-		id = "disorient_resist_eye"
-		desc = "Reduces disorient effects that apply through vision on the wearer." //Value is % protection.
-		tooltipImg = "protdisorient_eye.png"
-		defaultValue = 0
-		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "[propVal]%"
-
-	disorient_resist_ear
-		name = "Ear Insulation (Disorient Resist)"
-		id = "disorient_resist_ear"
-		desc = "Reduces disorient effects that apply through sound on the wearer." //Value is % protection.
-		tooltipImg = "protdisorient_ear.png"
-		defaultValue = 0
-		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "[propVal]%"
-
 	enchantweapon
 		hidden = 1
 		name = "Enchantment"
@@ -357,14 +322,7 @@ var/list/globalPropList = null
 	inline //Seriously, if anyone has a better idea, tell me.
 		inline = 1
 		hidden = 1
-		disorient_resist
-			name = "Body Insulation (Disorient Resist)"
-			id = "I_disorient_resist"
-			desc = "Reduces disorient effects on the wearer." //Value is % protection.
-			tooltipImg = "protdisorient.png"
-			defaultValue = 0
-			getTooltipDesc(var/obj/propOwner, var/propVal)
-				return "[propVal]%"
+
 		block_blunt
 			name = "Block"
 			id = "I_block_blunt"
@@ -568,5 +526,65 @@ to say if there's demand for that.
 		return "[propVal] stamina regen."
 
 	ASSOCIATE_MOB_PROPERTY(PROP_STAMINA_REGEN_BONUS)
+
+/datum/objectProperty/equipment/deflection
+	name = "Deflection"
+	id = "deflection"
+	desc = "Improves chance to resist being disarmed." //Value is extra block chance.
+	tooltipImg = "block.png"
+	defaultValue = 10
+
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "+[propVal]% additional chance to deflect disarm attempts"
+
+	ASSOCIATE_MOB_PROPERTY(PROP_DISARM_RESIST)
+
+/datum/objectProperty/equipment/disorient_resist
+	name = "Body Insulation (Disorient Resist)"
+	id = "disorient_resist"
+	desc = "Reduces disorient effects on the wearer." //Value is % protection.
+	tooltipImg = "protdisorient.png"
+	defaultValue = 0
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "[propVal]%"
+
+	ASSOCIATE_MOB_PROPERTY(PROP_DISORIENT_RESIST_BODY)
+	ASSOCIATE_MOB_PROPERTY(PROP_DISORIENT_RESIST_BODY_MAX)
+
+	inline
+		inline = 1
+		hidden = 1
+		name = "Body Insulation (Disorient Resist)"
+		id = "I_disorient_resist"
+		desc = "Reduces disorient effects on the wearer." //Value is % protection.
+		tooltipImg = "protdisorient.png"
+		defaultValue = 0
+		getTooltipDesc(var/obj/propOwner, var/propVal)
+			return "[propVal]%"
+
+/datum/objectProperty/equipment/disorient_resist_eye
+	name = "Eye Insulation (Disorient Resist)"
+	id = "disorient_resist_eye"
+	desc = "Reduces disorient effects that apply through vision on the wearer." //Value is % protection.
+	tooltipImg = "protdisorient_eye.png"
+	defaultValue = 0
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "[propVal]%"
+
+	ASSOCIATE_MOB_PROPERTY(PROP_DISORIENT_RESIST_EYE)
+	ASSOCIATE_MOB_PROPERTY(PROP_DISORIENT_RESIST_EYE_MAX)
+
+/datum/objectProperty/equipment/disorient_resist_ear
+	name = "Ear Insulation (Disorient Resist)"
+	id = "disorient_resist_ear"
+	desc = "Reduces disorient effects that apply through sound on the wearer." //Value is % protection.
+	tooltipImg = "protdisorient_ear.png"
+	defaultValue = 0
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "[propVal]%"
+
+	ASSOCIATE_MOB_PROPERTY(PROP_DISORIENT_RESIST_EAR)
+	ASSOCIATE_MOB_PROPERTY(PROP_DISORIENT_RESIST_EAR_MAX)
+
 
 #undef ASSOCIATE_MOB_PROPERTY

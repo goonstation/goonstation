@@ -170,7 +170,7 @@
 			user.show_text("It won't open!", "red")
 			return
 		else if (!src.toggle(user))
-			return src.attackby(null, user)
+			return src.Attackby(null, user)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/cargotele))
@@ -420,7 +420,7 @@
 
 	attack_ai(mob/user)
 		if (can_reach(user, src) <= 1 && (isrobot(user) || isshell(user)))
-			. = src.attack_hand(user)
+			. = src.Attackhand(user)
 
 	alter_health()
 		. = get_turf(src)
@@ -530,7 +530,7 @@
 			if (halloween_mode && prob(5)) //remove the prob() if you want, it's just a little broken if dudes are constantly teleporting
 				var/list/obj/storage/myPals = list()
 				for_by_tcl(O, /obj/storage)
-					if (O.z != src.z || O.open || !O.can_open())
+					if (O.z != src.z || O.open || !O.can_open() || isrestrictedz(O.z))
 						continue
 					myPals.Add(O)
 

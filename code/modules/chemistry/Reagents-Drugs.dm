@@ -439,7 +439,12 @@ datum
 				if(M.client && probmult(5))
 					for (var/obj/critter/domestic_bee/bee in view(7,M))
 						var/chat_text = null
-						var/text = pick_smart_string("shit_bees_say_when_youre_high.txt", "strings", list("M"="[M]", "beeMom"=bee.beeMom ? bee.beeMom : "Mom", "other_bee"=istype(bee, /obj/critter/domestic_bee/sea) ? "Seabee" : "Spacebee"), bee)
+						var/text = pick_smart_string("shit_bees_say_when_youre_high.txt", "strings", list(
+							"M"="[M]",
+							"beeMom"=bee.beeMom ? bee.beeMom : "Mom",
+							"other_bee"=istype(bee, /obj/critter/domestic_bee/sea) ? "Spacebee" : "Seabee",
+							"bee"=istype(bee, /obj/critter/domestic_bee/sea) ? "Seabee" : "Spacebee"
+							))
 						if(!M.client.preferences.flying_chat_hidden)
 							var/speechpopupstyle = "font-family: 'Comic Sans MS'; font-size: 8px;"
 							chat_text = make_chat_maptext(bee, text, "color: [rgb(194,190,190)];" + speechpopupstyle, alpha = 140)
@@ -454,7 +459,7 @@ datum
 					M.change_misstep_chance(10 * mult)
 				if (holder.get_reagent_amount(src.id) >= 50 && probmult(25))
 					if(prob(10))
-						M.drowsyness = 10
+						M.setStatus("drowsy", 20 SECONDS)
 				..()
 				return
 
@@ -483,7 +488,7 @@ datum
 					M.delStatus("weakened")
 				if (holder.get_reagent_amount(src.id) >= 70 && probmult(25))
 					if (holder.get_reagent_amount("THC") <= 20)
-						M.drowsyness = 10
+						M.setStatus("drowsy", 20 SECONDS)
 				if(prob(25))
 					M.HealDamage("All", 2 * mult, 0)
 				..()
@@ -958,7 +963,7 @@ datum
 				if(!M) M = holder.my_atom
 				if(probmult(5)) M.emote(pick("twitch","blink_r","shiver"))
 				M.make_jittery(5)
-				M.drowsyness = max(M.drowsyness-10, 0)
+				M.changeStatus("drowsy", -20 SECONDS)
 				if(M.sleeping) M.sleeping = 0
 				if(prob(50))
 					M.take_brain_damage(1 * mult)

@@ -214,7 +214,7 @@
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/audio_tape) && in_interact_range(src, user) && in_interact_range(W, user))
-			return src.attackby(W, user)
+			return src.Attackby(W, user)
 		return ..()
 
 	New()

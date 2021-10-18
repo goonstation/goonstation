@@ -31,6 +31,7 @@
 			W.set_loc(src)
 			W.dropped()
 			boutput(user, "<span class='notice'>You put [W] in [src].</span>")
+			W.add_fingerprint(user)
 			if (src.contents.len == src.maxitems) boutput(user, "<span class='notice'>[src] is now full!</span>")
 			src.satchel_updateicon()
 			tooltip_rebuild = 1
@@ -41,6 +42,7 @@
 			var/turf/T = user.loc
 			for (var/obj/item/I in src.contents)
 				I.set_loc(T)
+				I.add_fingerprint(user)
 			boutput(user, "<span class='notice'>You empty out [src].</span>")
 			src.satchel_updateicon()
 			tooltip_rebuild = 1
@@ -130,6 +132,7 @@
 				if (I in user)
 					continue
 				I.set_loc(src)
+				I.add_fingerprint(user)
 				if (!(interval++ % 5))
 					src.satchel_updateicon()
 					sleep(0.2 SECONDS)

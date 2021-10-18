@@ -3,7 +3,6 @@
 	icon = 'icons/obj/artifacts/artifactsitem.dmi'
 	desc = "You have no idea what this thing is!"
 	artifact = 1
-	module_research_no_diminish = 1
 	mat_changename = 0
 	mat_changedesc = 0
 	can_recycle = FALSE
@@ -167,9 +166,8 @@
 	validtypes = list("martian","wizard","precursor")
 	min_triggers = 0
 	max_triggers = 0
+	no_activation = TRUE
 	react_xray = list(2,90,15,11,"HOLLOW")
-	module_research = list("medicine" = 5, "science" = 5, "miniaturization" = 15)
-	module_research_insight = 3
 
 
 	New()

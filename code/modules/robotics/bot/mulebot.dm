@@ -16,6 +16,8 @@
 	locked = 1
 	access_lookup = "Captain"
 	var/atom/movable/load = null		// the loaded crate (usually)
+	///sanitycheck so we can't try to unload during an unload operation
+	var/unloading = FALSE
 
 	var/beacon_freq = 1445
 	var/control_freq = 1447
@@ -457,14 +459,16 @@
 	// called to unload the bot
 	// argument is optional direction to unload
 	// if zero, unload at bot's location
-	proc/unload(var/dirn = 0)
-		if(!load)
+	proc/unload(var/dirn = 0, var/setloc = 1)
+		if(!load || unloading)
 			return
+		unloading = TRUE
 
 		mode = 1
 		overlays = null
 
-		load.set_loc(src.loc)
+		if(setloc)
+			load.set_loc(src.loc)
 		load.pixel_y -= 9
 		load.layer = initial(load.layer)
 		if(ismob(load))
@@ -489,7 +493,14 @@
 			AM.pixel_y = initial(AM.pixel_y)
 		mode = 0
 
+		unloading = FALSE
+
 	var/last_process_time
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == load)
+			unload(0, 0)
 
 	process()
 		. = ..()
@@ -500,9 +511,9 @@
 			return
 		if(on)
 			SPAWN_DBG(0)
-				var/speed = ((wires & wire_motor1) ? 1:0) + ((wires & wire_motor2) ? 2:0)
-				//boutput(world, "speed: [speed]")
-
+				// speed varies between 1-4 depending on how many wires are cut (and which of the two)
+				var/speed = ((wires & wire_motor1) ? 1:0) + ((wires & wire_motor2) ? 2:0) + 1
+				// both wires results in no speed at all :(
 				var/n_steps = list(0, 12, 7, 6)[speed]
 
 				var/sleep_time = n_steps ? clamp(time_since_last / n_steps, 0.04 SECONDS, 1.5 SECONDS) : 0
@@ -699,7 +710,7 @@
 					src.visible_message("<span class='alert'>[src] bumps into [M]!</span>")
 				else
 					src.visible_message("<span class='alert'>[src] knocks over [M]!</span>")
-					M.pulling = null
+					M.remove_pulling()
 					M.changeStatus("stunned", 8 SECONDS)
 					M.changeStatus("weakened", 5 SECONDS)
 					M.lying = 1

@@ -35,6 +35,7 @@ var/global/datum/phrase_log/phrase_log = new
 	var/list/original_lengths
 	var/list/cached_api_phrases
 	var/regex/uncool_words
+	var/regex/sussy_words
 	var/api_cache_size = 40
 	var/static/regex/non_freeform_laws
 	var/static/regex/name_regex = new(@"\b[A-Z][a-z]* [A-Z][a-z]*\b", "g")
@@ -65,7 +66,29 @@ var/global/datum/phrase_log/phrase_log = new
 			"suicide",
 			"turn yourself",
 			"murder")
-		non_freeform_laws = regex(jointext(non_freeform_laws_list, "|"))
+		non_freeform_laws = regex(jointext(non_freeform_laws_list, "|"), "i")
+		var/list/sussy_word_list = list(
+			@"\bsus(:?|sy)\b",
+			@"\bpog(:?|gers|gies)\b",
+			@"\bbaka\b",
+			@"😳",
+			@"amon?g",
+			@"pepe",
+			@"kappa",
+			@"monka",
+			@"kek",
+			@"baited",
+			@"feels.*man",
+			@"imposter",
+			@"shitsec",
+			@"shitcurity",
+			@"ligma",
+			@"ඞ",
+			@"we do a little .",
+			@"owo",
+			@"uwu"
+		)
+		sussy_words = regex(jointext(sussy_word_list, "|"), "i")
 
 	proc/load()
 		if(fexists(src.uncool_words_filename))
@@ -98,6 +121,8 @@ var/global/datum/phrase_log/phrase_log = new
 	/// Logs a phrase to a selected category duh
 	proc/log_phrase(category, phrase, no_duplicates=FALSE)
 		phrase = html_decode(phrase)
+		if(is_sussy(phrase))
+			SEND_GLOBAL_SIGNAL(COMSIG_SUSSY_PHRASE, "<span class=\"admin\">Sussy word - [key_name(usr)] [category]: \"[phrase]\"</span>")
 		if(is_uncool(phrase))
 			message_admins("Uncool word - [key_name(usr)] [category]: \"[phrase]\"")
 			return
@@ -113,6 +138,11 @@ var/global/datum/phrase_log/phrase_log = new
 		if(isnull(src.uncool_words))
 			return FALSE
 		return !!(findtext(phrase, src.uncool_words))
+
+	proc/is_sussy(phrase)
+		if(isnull(src.sussy_words))
+			return FALSE
+		return !!(findtext(phrase, src.sussy_words))
 
 	proc/upload_uncool_words()
 		var/new_uncool = input("Upload a json list of uncool words.", "Uncool words", null) as null|file

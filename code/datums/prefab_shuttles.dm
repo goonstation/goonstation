@@ -52,6 +52,10 @@ var/list/prefab_shuttles = list()
 		prefab_path = "assets/maps/shuttles/cog1/cog1-syndicate.dmm"
 	zen
 		prefab_path = "assets/maps/shuttles/cog1/cog1-zenshuttle.dmm"
+	disaster
+		prefab_path = "assets/maps/shuttles/cog1/cog1-disaster.dmm"
+	royal
+		prefab_path = "assets/maps/shuttles/cog1/cog1-royal.dmm"
 
 /datum/prefab_shuttle/cog2
 	prefab_path = "assets/maps/shuttles/cog2/cog2_default.dmm"
@@ -59,10 +63,19 @@ var/list/prefab_shuttles = list()
 
 	martian
 		prefab_path = "assets/maps/shuttles/cog2/cog2_martian.dmm"
+	disaster
+		prefab_path = "assets/maps/shuttles/cog2/cog2-disaster.dmm"
+	royal
+		prefab_path = "assets/maps/shuttles/cog2/cog2-royal.dmm"
 
 /datum/prefab_shuttle/manta
 	prefab_path = "assets/maps/shuttles/manta/manta_default.dmm"
 	landmark = LANDMARK_SHUTTLE_MANTA
+
+	disaster
+		prefab_path = "assets/maps/shuttles/manta/manta_disaster.dmm"
+	royal
+		prefab_path = "assets/maps/shuttles/manta/manta_royal.dmm"
 
 /datum/prefab_shuttle/sealab
 	prefab_path = "assets/maps/shuttles/sealab/oshan_default.dmm"
@@ -72,10 +85,21 @@ var/list/prefab_shuttles = list()
 		prefab_path = "assets/maps/shuttles/sealab/oshan-meat.dmm"
 	minisubs
 		prefab_path = "assets/maps/shuttles/sealab/oshan-minisubs.dmm"
+	disaster
+		prefab_path = "assets/maps/shuttles/sealab/oshan-disaster.dmm"
+	royal
+		prefab_path = "assets/maps/shuttles/sealab/oshan-royal.dmm"
 
 /datum/prefab_shuttle/donut2
 	prefab_path = "assets/maps/shuttles/donut2/donut2_default.dmm"
 	landmark = LANDMARK_SHUTTLE_DONUT2
+
+	disaster
+		prefab_path = "assets/maps/shuttles/donut2/donut2_disaster.dmm"
+	syndicate
+		prefab_path =  "assets/maps/shuttles/donut2/donut2_syndicate.dmm"
+	royal
+		prefab_path =  "assets/maps/shuttles/donut2/donut2_royal.dmm"
 
 /datum/prefab_shuttle/donut3
 	prefab_path = "assets/maps/shuttles/donut3/donut3_default.dmm"
@@ -83,7 +107,18 @@ var/list/prefab_shuttles = list()
 
 	cave
 		prefab_path = "assets/maps/shuttles/donut3/donut3-cave.dmm"
+	disaster
+		prefab_path = "assets/maps/shuttles/donut3/donut3-disaster.dmm"
+	syndicate
+		prefab_path = "assets/maps/shuttles/donut3/donut3-syndicate.dmm"
+	royal
+		prefab_path = "assets/maps/shuttles/donut3/donut3-royal.dmm"
 
 /datum/prefab_shuttle/destiny
 	prefab_path = "assets/maps/shuttles/destiny/destiny_default.dmm"
 	landmark = LANDMARK_SHUTTLE_DESTINY
+
+	disaster
+		prefab_path = "assets/maps/shuttles/destiny/destiny_disaster.dmm"
+	royal
+		prefab_path = "assets/maps/shuttles/destiny/destiny_royal.dmm"

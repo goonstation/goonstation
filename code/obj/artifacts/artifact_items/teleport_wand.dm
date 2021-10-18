@@ -3,7 +3,6 @@
 	artifact = 1
 	associated_datum = /datum/artifact/telewand
 	flags =  FPRINT | CONDUCT | EXTRADELAY
-	module_research_no_diminish = 1
 
 	// this is necessary so that this returns null
 	// else afterattack will not be called when out of range
@@ -39,8 +38,6 @@
 	var/recharge_phrase = ""
 	var/error_phrase = ""
 	examine_hint = "It seems to have a handle you're supposed to hold it by."
-	module_research = list("energy" = 15, "engineering" = 3, "science" = 8)
-	module_research_insight = 4
 
 	New()
 		..()

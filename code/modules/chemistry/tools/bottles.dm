@@ -15,8 +15,6 @@
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	amount_per_transfer_from_this = 10
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
-	module_research = list("science" = 0.5, "medicine" = 0.5)
-	module_research_type = /obj/item/reagent_containers/glass/bottle
 
 	New()
 		if (!src.bottle_style)
@@ -41,7 +39,7 @@
 /* =================================================== */
 
 /obj/item/reagent_containers/glass/bottle/epinephrine
-	name = "epinephrine bottle"
+	name = "bottle (epinephrine)"
 	desc = "A small bottle. Contains epinephrine - used to stabilize patients."
 	bottle_style = "1"
 	amount_per_transfer_from_this = 10
@@ -55,25 +53,67 @@
 	initial_reagents = "toxin"
 
 /obj/item/reagent_containers/glass/bottle/atropine
-	name = "atropine bottle"
+	name = "bottle (atropine)"
 	desc = "A small bottle containing atropine, used for cardiac emergencies."
 	bottle_style = "2"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "atropine"
 
 /obj/item/reagent_containers/glass/bottle/saline
-	name = "saline-glucose bottle"
+	name = "bottle (saline-glucose)"
 	desc = "A small bottle containing saline-glucose solution."
 	bottle_style = "2"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "saline"
 
 /obj/item/reagent_containers/glass/bottle/aspirin
-	name = "salicylic acid bottle"
+	name = "bottle (salicylic acid)"
 	desc = "A small bottle containing medicine for pain and fevers."
 	bottle_style = "2"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "salicylic_acid"
+
+/obj/item/reagent_containers/glass/bottle/insulin
+	name = "bottle (insulin)"
+	desc = "A small bottle of insulin, for treating hyperglycaemic shock."
+	bottle_style = "2"
+	amount_per_transfer_from_this = 5
+	initial_reagents = "insulin"
+
+/obj/item/reagent_containers/glass/bottle/heparin
+	name = "bottle (heparin)"
+	desc = "A small bottle of anticoagulants, for helping with blood clots and heart disease."
+	bottle_style = "2"
+	amount_per_transfer_from_this = 5
+	initial_reagents = "heparin"
+
+/obj/item/reagent_containers/glass/bottle/proconvertin
+	name = "bottle (proconvertin)"
+	desc = "A small bottle of coagulants, for helping with blood loss and blood pressure."
+	bottle_style = "2"
+	amount_per_transfer_from_this = 5
+	initial_reagents = "proconvertin"
+
+/obj/item/reagent_containers/glass/bottle/filgrastim
+	name = "bottle (filgrastim)"
+	desc = "A small bottle of filgrastim, for stimulating blood production."
+	bottle_style = "2"
+	amount_per_transfer_from_this = 5
+	initial_reagents = "filgrastim"
+
+/obj/item/reagent_containers/glass/bottle/calomel
+	name = "bottle (calomel)"
+	desc = "A small bottle of calomel, for flushing chemicals from the blood stream."
+	bottle_style = "2"
+	amount_per_transfer_from_this = 5
+	initial_reagents = "calomel"
+
+/obj/item/reagent_containers/glass/bottle/spaceacillin
+	name = "bottle (spaceacillin)"
+	desc = "A small bottle of spaceacillin, for curing minor diseases."
+	bottle_style = "2"
+	amount_per_transfer_from_this = 5
+	initial_reagents = "spaceacillin"
 
 /// cogwerks - adding some new bottles for traitor medics
 // haine - I added beedril/royal beedril to these, and my heart-related disease reagents. yolo (remove these if they're a dumb idea, idk)
@@ -103,7 +143,7 @@
 		initial_reagents = "neurotoxin"
 
 /obj/item/reagent_containers/glass/bottle/morphine
-	name = "morphine bottle"
+	name = "bottle (morphine)"
 	desc = "A small bottle of morphine, a powerful painkiller."
 	bottle_style = "4"
 	amount_per_transfer_from_this = 5
@@ -154,7 +194,7 @@
 	initial_reagents = "sulfonal"
 
 /obj/item/reagent_containers/glass/bottle/synaptizine
-	name = "synaptizine bottle"
+	name = "bottle (synaptizine)"
 	desc = "A small bottle."
 	bottle_style = "3"
 	amount_per_transfer_from_this = 5
@@ -168,28 +208,28 @@
 	initial_reagents = "pancuronium"
 
 /obj/item/reagent_containers/glass/bottle/antitoxin
-	name = "charcoal bottle"
+	name = "bottle (charcoal)"
 	desc = "A small bottle."
 	bottle_style = "3"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "charcoal"
 
 /obj/item/reagent_containers/glass/bottle/antihistamine
-	name = "antihistamine bottle"
+	name = "bottle (antihistamine)"
 	desc = "A small bottle of allergy medication."
 	bottle_style = "1"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "antihistamine"
 
 /obj/item/reagent_containers/glass/bottle/eyedrops
-	name = "oculine bottle"
+	name = "bottle (oculine)"
 	desc = "A small bottle of combined eye and ear medication."
 	bottle_style = "1"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "oculine"
 
 /obj/item/reagent_containers/glass/bottle/antirad
-	name = "potassium iodide bottle"
+	name = "bottle (potassium iodide)"
 	desc = "A small bottle of potassium iodide."
 	bottle_style = "3"
 	amount_per_transfer_from_this = 5

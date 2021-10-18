@@ -261,8 +261,13 @@
 				if (prog.disposed)
 					src.processing[progIndex] = null
 					continue
-
-				prog.process()
+				try
+					prog.process()
+				catch(var/exception/e)
+					if(findtext(e.name, "Maximum recursion level reached"))
+						src.unload_all()
+					else
+						throw e
 /*
 		for(var/datum/computer/file/mainframe_program/P in src.processing)
 			if (P)

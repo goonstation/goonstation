@@ -1065,7 +1065,7 @@
 /obj/item/electronics/relay,
 /obj/item/electronics/bulb,
 /obj/item/electronics/capacitor,
-/obj/item/pod/armor_industrial,
+/obj/item/podarmor/armor_industrial,
 /obj/item/pod/engine,
 /obj/item/putt/frame_box,
 /obj/item/putt/engine,
@@ -3042,7 +3042,7 @@
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "hn" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4
 	},
 /obj/cable,

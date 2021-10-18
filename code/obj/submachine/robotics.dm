@@ -51,52 +51,72 @@
 	var/max_ammo = 20
 	var/load_interval = 5
 
+	//These costs are in terms of borg cell charge. For crew every action takes 1 sheet (except a fitting gets its lamp immediately replaced making it 2 in total)
 	var/cost_broken = 50 //For broken/burned lamps (the old lamp gets recycled in the tool)
 	var/cost_empty = 75
+	var/cost_fitting = 200 //Putting a new fitting on a turf
+	var/cost_removal = 400 //Eating a fitting
+	var/removing_toggled = FALSE
 	var/setting = "white"
 	var/dispensing_tube = /obj/item/light/tube
 	var/dispensing_bulb = /obj/item/light/bulb
+	//can be obj/machinery/light for wall tubes, obj/machinery/light/small for wall bulbs. Either mode does floor fittings because there's only one type of those
+	var/dispensing_fitting = /obj/machinery/light
+	var/list/setting_context_actions
+	contextLayout = new /datum/contextLayout/experimentalcircle
+
+	New()
+		..()
+		setting_context_actions = list()
+		for(var/actionType in childrentypesof(/datum/contextAction/lamp_manufacturer)) //see context_actions.dm for those
+			var/datum/contextAction/lamp_manufacturer/action = new actionType(src)
+			setting_context_actions += action
 
 	attack_self(var/mob/user as mob)
-		switch (src.setting) //This should be relatively easily expandable I think
-			if ("white")
-				setting = "red"
-				dispensing_tube = /obj/item/light/tube/red
-				dispensing_bulb = /obj/item/light/bulb/red
-			if ("red")
-				setting = "yellow"
-				dispensing_tube = /obj/item/light/tube/yellow
-				dispensing_bulb = /obj/item/light/bulb/yellow
-			if ("yellow")
-				setting = "green"
-				dispensing_tube = /obj/item/light/tube/green
-				dispensing_bulb = /obj/item/light/bulb/green
-			if ("green")
-				setting = "cyan"
-				dispensing_tube = /obj/item/light/tube/cyan
-				dispensing_bulb = /obj/item/light/bulb/cyan
-			if ("cyan")
-				setting = "blue"
-				dispensing_tube = /obj/item/light/tube/blue
-				dispensing_bulb = /obj/item/light/bulb/blue
-			if ("blue")
-				setting = "purple"
-				dispensing_tube = /obj/item/light/tube/purple
-				dispensing_bulb = /obj/item/light/bulb/purple
-			if ("purple")
-				setting = "blacklight"
-				dispensing_tube = /obj/item/light/tube/blacklight
-				dispensing_bulb = /obj/item/light/bulb/blacklight
-			if ("blacklight")
-				setting = "white"
-				dispensing_tube = /obj/item/light/tube
-				dispensing_bulb = /obj/item/light/bulb
-		set_icon_state("[prefix]-[setting]")
-		tooltip_rebuild = 1
-
+		user.showContextActions(setting_context_actions, src, contextLayout)
 
 	get_desc()
-		. = "It is currently set to dispense [setting] lamps."
+
+		. = {"It is currently set to [removing_toggled == TRUE ? "remove fittings" : "dispense [setting] lamps"].<br>
+		It will build new [dispensing_fitting == /obj/machinery/light/small ? "bulb" : "tube"] fittings."}
+
+	afterattack(atom/A, mob/user as mob, reach, params)
+		if (removing_toggled)
+			if (!istype(A, /obj/machinery/light))
+				return
+			if (!check_ammo(user, cost_removal))
+				return
+			var/obj/machinery/light/lamp = A
+			if (lamp.removable_bulb == 0)
+				boutput(user, "This fitting isn't user-serviceable.")
+				return
+			boutput(user, "<span class='notice'>Removing fitting...</span>")
+			playsound(user, "sound/machines/click.ogg", 50, 1)
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/remove_light, list(A, user), null, null, null, null)
+
+
+		if (!istype(A, /turf/simulated) && !istype(A, /obj/window) || !check_ammo(user, cost_fitting))
+			..()
+			return
+
+		if (istype(A, /turf/simulated/floor))
+			boutput(user, "<span class='notice'>Installing a floor bulb...</span>")
+			playsound(user, "sound/machines/click.ogg", 50, 1)
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/add_floor_light, list(A, user), null, null, null, null)
+
+
+		else if (istype(A, /turf/simulated/wall) || istype(A, /obj/window))
+			if (!(islist(params) && params["icon-y"] && params["icon-x"]))
+				return
+			var/atom/B = get_adjacent_floor(A, user, text2num(params["icon-x"]), text2num(params["icon-y"]))
+			if (!istype(B, /turf/simulated/floor) && !istype(B, /turf/space))
+				return
+			if (locate(/obj/window) in B)
+				return
+			boutput(user, "<span class='notice'>Installing a wall [dispensing_fitting == /obj/machinery/light/small ? "bulb" : "tube"]...</span>")
+			playsound(user, "sound/machines/click.ogg", 50, 1)
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/add_wall_light, list(A, B, user), null, null, null, null)
+
 
 /obj/item/lamp_manufacturer/attackby(obj/item/W, mob/user)
 	if (issilicon(user))
@@ -124,6 +144,61 @@
 				boutput(user, "You can't load that! You need metal sheets.")
 		else
 			..()
+
+/// Procs for the action bars
+/obj/item/lamp_manufacturer/proc/add_wall_light(atom/A, turf/B, mob/user)
+	var/obj/machinery/light/newfitting = new dispensing_fitting(B)
+	newfitting.nostick = 0 //regular tube lights don't do autoposition for some reason.
+	newfitting.autoposition(get_dir(B,A))
+	newfitting.Attackby(src, user) //plop in an appropriate colour lamp
+	if (!isghostdrone(user))
+		elecflash(user)
+	take_ammo(user, cost_fitting)
+
+/obj/item/lamp_manufacturer/proc/add_floor_light(turf/A, mob/user)
+	var/obj/machinery/light/newfitting = new /obj/machinery/light/small/floor(A)
+	newfitting.Attackby(src, user) //plop in an appropriate colour lamp
+	if (!isghostdrone(user))
+		elecflash(user)
+	take_ammo(user, cost_fitting)
+
+/obj/item/lamp_manufacturer/proc/remove_light(obj/machinery/light/A, mob/user)
+	qdel(A) //RIP
+	if (!isghostdrone(user))
+		elecflash(user)
+	take_ammo(user, cost_removal)
+	return
+
+/obj/item/lamp_manufacturer/proc/check_ammo(mob/user, cost)
+	if (issilicon(user))
+		var/mob/living/silicon/S = user
+		if (S.cell)
+			if (S.cell.charge >= cost)
+				return 1
+			else
+				boutput(user, "Not enough cell charge.")
+			return 0
+	else
+		if (cost == cost_fitting) //hacky but placing fixtures is the only thing that takes 2 in total
+			if (metal_ammo > 1)
+				return 1
+		else
+			if (metal_ammo > 0)
+				return 1
+		boutput(user, "You need to load up more metal sheets.")
+		return 0
+
+/obj/item/lamp_manufacturer/proc/take_ammo(mob/user, cost) //Cost is in cell charge, everything costs 1 sheet
+	if (issilicon(user))
+		var/mob/living/silicon/S = user
+		if (S.cell)
+			S.cell.charge -= cost
+	else
+		if (metal_ammo > 0) //shouldn't be possible to fail
+			metal_ammo--
+			inventory_counter.update_number(metal_ammo)
+
+
 
 /obj/item/robot_chemaster
 	name = "mini-CheMaster"
@@ -337,6 +412,7 @@ ported and crapped up by: haine
 	amount_per_transfer_from_this = 10
 	initial_volume = 200
 	tooltip_flags = REBUILD_DIST
+	can_chug = 0
 
 	afterattack(obj/target, mob/user)
 		if (get_dist(user, src) > 1 || get_dist(user, target) > 1)

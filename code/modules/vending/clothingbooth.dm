@@ -5,8 +5,8 @@ var/list/clothingbooth_items = list()
 
 /proc/clothingbooth_setup() //sends items to the interface far, far away from byond fuckery land
 	var/list/list/list/boothlist = list()
-	for(var/T in childrentypesof(/datum/clothingbooth_item))
-		var/datum/clothingbooth_item/I = new T
+	for(var/datum/clothingbooth_item/type as anything in concrete_typesof(/datum/clothingbooth_item))
+		var/datum/clothingbooth_item/I = new type
 		var/itemname = I.name
 		var/pathname = "[I.path]"
 		var/categoryname = I.category
@@ -204,3 +204,6 @@ var/list/clothingbooth_items = list()
 
 		else
 			boutput(user, "<span class='alert'>Someone is already working up the nerve to pull the ouccupant out.</span>")
+
+/obj/machinery/clothingbooth/Exited()
+	src.set_open(1)

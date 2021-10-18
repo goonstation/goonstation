@@ -45,6 +45,7 @@ var/list/popup_verbs_to_toggle = list(\
 // if it's in Toggles (Server) it should be in here, ya dig?
 var/list/server_toggles_tab_verbs = list(\
 /client/proc/toggle_attack_messages,\
+/client/proc/toggle_rp_word_filtering,\
 /client/proc/toggle_toggles,\
 /client/proc/toggle_jobban_announcements,\
 /client/proc/toggle_banlogin_announcements,\
@@ -175,6 +176,18 @@ var/global/IP_alerts = 1
 	src.holder.attacktoggle = !src.holder.attacktoggle
 	boutput(usr, "<span class='notice'>Toggled attack log messages [src.holder.attacktoggle ?"on":"off"]!</span>")
 
+/client/proc/toggle_rp_word_filtering()
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set name = "Toggle \"Low RP\" Word Alerts"
+	set desc = "Toggles notifications for players saying \"fail-rp\" words (sussy, poggers, etc)"
+	admin_only
+	src.holder.rp_word_filtering = !src.holder.rp_word_filtering
+	if(src.holder.rp_word_filtering)
+		src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_SUSSY_PHRASE, .proc/message_one_admin)
+	else
+		src.UnregisterSignal(GLOBAL_SIGNAL, COMSIG_SUSSY_PHRASE)
+	boutput(usr, "<span class='notice'>Toggled RP word filter notifications [src.holder.rp_word_filtering ?"on":"off"]!</span>")
+
 /client/proc/toggle_hear_prayers()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Hearing Prayers"
@@ -183,6 +196,15 @@ var/global/IP_alerts = 1
 
 	src.holder.hear_prayers = !src.holder.hear_prayers
 	boutput(usr, "<span class='notice'>Toggled prayers [src.holder.hear_prayers ?"on":"off"]!</span>")
+
+/client/proc/toggle_atags()
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set name = "Toggle ATags"
+	set desc = "Toggle local atags on or off"
+	admin_only
+
+	src.holder.see_atags = !src.holder.see_atags
+	boutput(usr, "<span class='notice'>Toggled ATags [src.holder.see_atags ?"on":"off"]!</span>")
 
 /client/proc/toggle_buildmode_view()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
@@ -318,6 +340,21 @@ var/global/IP_alerts = 1
 
 	usr.client.flying = !usr.client.flying
 	boutput(usr, "Noclip mode [usr.client.flying ? "ON" : "OFF"].")
+
+/client/proc/iddqd()
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "iddqd"
+	set popup_menu = 0
+	admin_only
+	usr.client.cmd_admin_godmode_self()
+	boutput(usr, "<span class='notice'><b>Degreelessness mode [usr.nodamage ? "On" : "Off"]</b></span>")
+
+/client/proc/idclip()
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "idclip"
+	set popup_menu = 0
+	admin_only
+	usr.client.noclip()
 
 /client/proc/cmd_admin_omnipresence()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
@@ -616,6 +653,16 @@ var/global/IP_alerts = 1
 	logTheThing("diary", usr, null, "toggled Farting [farting_allowed ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled Farting [farting_allowed ? "on" : "off"]")
 
+/datum/admins/proc/toggle_emote_cooldowns()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	set desc="Let everyone spam emotes, including farts/filps/suplexes. Oh no."
+	set name="Toggle Emote Cooldowns"
+	NOT_IF_TOGGLES_ARE_OFF
+	no_emote_cooldowns = !( no_emote_cooldowns )
+	logTheThing("admin", usr, null, "toggled emote cooldowns [!no_emote_cooldowns ? "on" : "off"].")
+	logTheThing("diary", usr, null, "toggled emote cooldowns [!no_emote_cooldowns ? "on" : "off"].", "admin")
+	message_admins("[key_name(usr)] toggled emote cooldowns [!no_emote_cooldowns ? "on" : "off"].")
+
 /datum/admins/proc/toggle_blood_system()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc = "Toggle the blood system on or off."
@@ -666,6 +713,7 @@ var/global/IP_alerts = 1
 	config.allow_admin_rev = !(config.allow_admin_rev)
 	deadchat_allowed = !( deadchat_allowed )
 	farting_allowed = !( farting_allowed )
+	no_emote_cooldowns = !( no_emote_cooldowns )
 	suicide_allowed = !( suicide_allowed )
 	monkeysspeakhuman = !( monkeysspeakhuman )
 	no_automatic_ending = !( no_automatic_ending )

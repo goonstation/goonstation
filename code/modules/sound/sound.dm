@@ -29,7 +29,6 @@
 	}\
 } while(false)
 
-#define MAX_SOUND_RANGE 33
 #define MAX_SPACED_RANGE 6 //diff range for when youre in a vaccuum
 #define CLIENT_IGNORES_SOUND(C) (C?.ignore_sound_flags && ((ignore_flag && C.ignore_sound_flags & ignore_flag) || C.ignore_sound_flags & SOUND_ALL))
 
@@ -46,9 +45,9 @@
 			//if (istype(T, /turf/space))
 			//	return 0 // in space nobody can hear you fart
 		if (T.turf_flags & IS_TYPE_SIMULATED) //danger :)
-			var/turf/simulated/sim_T = T
-			if (sim_T.air)
-				attenuate *= MIXTURE_PRESSURE(sim_T.air) / ONE_ATMOSPHERE
+			var/datum/gas_mixture/air = T.return_air()
+			if (air)
+				attenuate *= MIXTURE_PRESSURE(air) / ONE_ATMOSPHERE
 				attenuate = min(1, max(0, attenuate))
 
 	return attenuate
@@ -72,11 +71,16 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 
 /// Returns the default volume for a channel, unattenuated for the master channel (0-1)
 /client/proc/getDefaultVolume(channel)
-	return volumes[channel + 1]
+	return default_channel_volumes[channel + 1]
 
 /// Returns a list of friendly descriptions for available sound channels
 /client/proc/getVolumeDescriptions()
-	return list("Most in-game audio will use this channel.", "Ambient background music in various areas will use this channel.", "Any music played from the radio station", "Any music or sounds played by admins.", "Screams and farts.", "Mentor PM notification sound.")
+	return list("This will affect all sounds.", "Most in-game audio will use this channel.", "Ambient background music in various areas will use this channel.", "Any music played from the radio station", "Any music or sounds played by admins.", "Screams and farts.", "Mentor PM notification sound.")
+
+/// Get the friendly description for a specific sound channel.
+/client/proc/getVolumeChannelDescription(channel)
+	// +1 since master channel is 0, while byond arrays start at 1
+	return getVolumeDescriptions()[channel+1]
 
 /// Returns the volume to set /sound/var/volume to for the given channel(so 0-100)
 /client/proc/getVolume(id)
@@ -92,6 +96,9 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 
 /// Sets and applies the volume for a channel (0-1)
 /client/proc/setVolume(channel, volume)
+	var/original_volume = volumes[channel + 1]
+	if(original_volume == 0)
+		original_volume = 1 // let's be safe and try to avoid division by zero
 	volume = clamp(volume, 0, 1)
 	volumes[channel + 1] = volume
 
@@ -102,14 +109,14 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 		for( var/sound/s in playing )
 			s.status |= SOUND_UPDATE
 			var/list/vol = sound_playing[ s.channel ]
-			s.volume = vol[1] * volume * volumes[ vol[2] ] * 100
+			s.volume = vol[1] / original_volume * volume * volumes[ vol[2] ] * 100
 			src << s
 		src.chatOutput.adjustVolumeRaw( volume * getRealVolume(VOLUME_CHANNEL_ADMIN) )
 	else
 		for( var/sound/s in playing )
 			if( sound_playing[s.channel][2] == channel )
 				s.status |= SOUND_UPDATE
-				s.volume = sound_playing[s.channel][1] * volume * volumes[1] * 100
+				s.volume = sound_playing[s.channel][1] / original_volume * volume * volumes[1] * 100
 				src << s
 
 	if( channel == VOLUME_CHANNEL_ADMIN )
@@ -307,7 +314,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 
 /**
 	Plays a sound to some clients without caring about its source location and stuff.
-	`target` can be either a list of clients or a list of mobs or `world` or an area.
+	`target` can be either a list of clients or a list of mobs or `world` or an area or a z-level number.
 */
 /proc/playsound_global(target, soundin, vol as num, vary, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME)
 	// don't play if over the per-tick sound limit
@@ -331,6 +338,12 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 			CRASH("Incorrect object in target list `[target[1]]` in playsound_global.")
 	else if(target == world)
 		clients = global.clients
+	else if(isnum(target))
+		clients = list()
+		for(var/client/client as anything in global.clients)
+			var/turf/T = get_turf(client?.mob)
+			if(T?.z == target)
+				clients += client
 	else if(isarea(target))
 		clients = list()
 		for(var/mob/M in target)
@@ -628,7 +641,7 @@ sound
 	disposing()
 		// Haha you cant delete me you fuck
 		if(!qdeled)
-			pool(src)
+			qdel(src)
 		else
 			//Yes I can
 			..()

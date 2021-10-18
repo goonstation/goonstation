@@ -33,7 +33,7 @@
 		else if (!istype(src.info))
 			var/datum/figure_info/randomInfo
 
-			var/potential_donator_ckey = usr?.mind.ckey
+			var/potential_donator_ckey = usr?.mind?.ckey
 			var/donator_figtype = null
 			if (potential_donator_ckey) // check if the player has a figurine (therefore a donator)
 				for (var/datum/figure_info/patreon/fig as anything in concrete_typesof(/datum/figure_info/patreon))
@@ -712,7 +712,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "vicky"
 		ckey = "mrprogamer96"
 
-	vicky
+	camrynstern
 		name = "\improper Camryn Stern"
 		icon_state = "camrynstern"
 		ckey = "richardgere"
@@ -721,6 +721,26 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Newt Treitor"
 		icon_state = "newttreitor"
 		ckey = "edwardly"
+
+	ook
+		name = "\improper Ook"
+		icon_state = "ook"
+		ckey = "taocat"
+
+	brucemcafee
+		name = "\improper Bruce McAfee"
+		icon_state = "brucemcafee"
+		ckey = "mysticmidgit"
+
+	chefbot
+		name = "\improper ChefBot"
+		icon_state = "chefbot"
+		ckey = "skeletondoot"
+
+	flyntloach
+		name = "\improper Flynt Loach"
+		icon_state = "flyntloach"
+		ckey = "profomii"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"
@@ -757,6 +777,14 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 			src.cap_image.icon_state = "cap-cap[src.item_amount ? 1 : 0]"
 			src.UpdateOverlays(src.cap_image, "cap")
 
+	attack_self(mob/user as mob)
+		if (open && item_amount == 0)
+			user.playsound_local(user, "sound/items/can_crush-3.ogg", 50, 1)
+			boutput(user, "<span class='notice'>You crush the empty capsule into an insignificant speck.</span>")
+			qdel(src)
+			return
+		..()
+
 /obj/machinery/vending/capsule
 	name = "capsule machine"
 	desc = "A little figure in every capsule, guaranteed*!"
@@ -768,9 +796,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	var/sound_vend = 'sound/machines/capsulebuy.ogg'
 	var/image/capsule_image = null
 
-	New()
-		..()
-		//Products
+	create_products()
 		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule, 26, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/satchel/figurines, 2, cost=PAY_UNTRAINED*3)
 		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule/gaming_capsule, rand(4,10), cost=PAY_UNTRAINED/3, hidden=1)

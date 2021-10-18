@@ -178,7 +178,7 @@
 /obj/item/idtracker/spy
 	attack_hand(mob/user as mob)
 		..(user)
-		if (!user.mind || user.mind.special_role != "spy_thief")
+		if (!user.mind || user.mind.special_role != ROLE_SPY_THIEF)
 			boutput(user, "<span class='alert'>The target locator emits a sorrowful ping!</span>")
 
 			//B LARGHHHHJHH
@@ -190,7 +190,7 @@
 
 	attack_self()
 		if(!active)
-			if (!src.owner || !src.owner.mind || src.owner.mind.special_role != "spy_thief")
+			if (!src.owner || !src.owner.mind || src.owner.mind.special_role != ROLE_SPY_THIEF)
 				boutput(usr, "<span class='alert'>The target locator emits a sorrowful ping!</span>")
 				return
 			active = 1
@@ -309,7 +309,7 @@
 			var/list/choices = list()
 			for (var/x in itemrefs)
 				var/atom/A = locate(x)
-				if (A && (A.type in accepted_types) && !A.qdeled && !A.pooled)
+				if (A && (A.type in accepted_types) && !A.qdeled && !A.disposed)
 					choices += A
 
 			if (!length(choices))

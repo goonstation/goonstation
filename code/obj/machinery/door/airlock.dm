@@ -157,8 +157,8 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/welded_icon_state = "welded"
 
 	explosion_resistance = 2
-	health = 1200
-	health_max = 1200
+	health = 600
+	health_max = 600
 
 	var/ai_no_access = 0 //This is the dumbest var.
 	var/aiControlDisabled = 0 //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
@@ -204,6 +204,11 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 			src.name = A.name
 		src.net_access_code = rand(1, NET_ACCESS_OPTIONS)
 		START_TRACKING
+
+
+	was_built_from_frame(mob/user, newly_built)
+		. = ..()
+		req_access = list()
 
 	disposing()
 		. = ..()
@@ -325,8 +330,8 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	icon_state = "com_closed"
 	icon_base = "com"
 	req_access = list(access_heads)
-	health = 1600
-	health_max = 1600
+	health = 800
+	health_max = 800
 
 /obj/machinery/door/airlock/pyro/command/alt
 	icon_state = "com2_closed"
@@ -531,12 +536,14 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "thin glass airlock"
 	icon_state = "windoor_closed"
 	icon_base = "windoor"
-	panel_icon_state = "windoor"
+	panel_icon_state = "windoor_panel_open"
 	welded_icon_state = "fdoor_weld"
 	sound_airlock = 'sound/machines/windowdoor.ogg'
-	has_panel = 0
 	has_crush = 0
+	health = 500
+	health_max = 500
 	layer = 3.5
+	object_flags = BOTS_DIRBLOCK | CAN_REPROGRAM_ACCESS | HAS_DIRECTIONAL_BLOCKING
 
 	bumpopen(mob/user as mob)
 		if (src.density)
@@ -551,10 +558,9 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 /obj/machinery/door/airlock/pyro/glass/windoor/alt
 	icon_state = "windoor2_closed"
 	icon_base = "windoor2"
-	panel_icon_state = "windoor2"
+	panel_icon_state = null
 	welded_icon_state = "windoor2_weld"
 	sound_airlock = 'sound/machines/windowdoor.ogg'
-	has_panel = 0
 	has_crush = 0
 	layer = 3.5
 
@@ -1153,7 +1159,7 @@ About the new airlock wires panel:
 
 //		message_admins("<span class='internal'><B>ADMIN: </B>DEBUG: shock_damage = [shock_damage] PN.avail = [PN.avail] user = [user] netnum = [netnum]</span>")
 
-	if (user.bioHolder.HasEffect("resist_electric") == 2)
+	if (user.bioHolder.HasEffect("resist_electric_heal"))
 		var/healing = 0
 		if (shock_damage)
 			healing = shock_damage / 3
@@ -1161,7 +1167,7 @@ About the new airlock wires panel:
 		user.take_toxin_damage(0 - healing)
 		boutput(user, "<span class='notice'>You absorb the electrical shock, healing your body!</span>")
 		return
-	else if (user.bioHolder.HasEffect("resist_electric") == 1)
+	else if (user.bioHolder.HasEffect("resist_electric"))
 		boutput(user, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
 		return
 
@@ -1299,7 +1305,7 @@ About the new airlock wires panel:
 		if(world.time - src.last_bump <= 30)
 			return
 
-		if (issilicon(AM) && (aiControlDisabled > 0 || cant_emag))
+		if (issilicon(AM) && (aiControlDisabled == 1 || cant_emag))
 			return
 
 		src.last_bump = world.time
@@ -1328,7 +1334,7 @@ About the new airlock wires panel:
 			if (src.shock(user, 100))
 				interact_particle(user,src)
 				return
-	else if (aiControlDisabled > 0 || cant_emag)
+	else if (aiControlDisabled == 1 || cant_emag)
 		return
 
 	if (ishuman(user) && src.density && src.brainloss_stumble && src.do_brainstumble(user) == 1)
@@ -1396,11 +1402,11 @@ About the new airlock wires panel:
 		tgui_process.update_uis(src)
 		src.update_icon()
 	else if (issnippingtool(C) && src.p_open)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 	else if (ispulsingtool(C))
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 	else if (istype(C, /obj/item/device/radio/signaler))
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 	else if (ispryingtool(C))
 		src.unpowered_open_close()
 	else
@@ -1427,6 +1433,7 @@ About the new airlock wires panel:
 				else
 					src.RL_SetOpacity(0)
 			src.operating = 0
+			src.update_icon()
 
 	else if ((!src.density) && (!( src.welded ) && !( src.operating ) && !( src.locked )))
 		SPAWN_DBG( 0 )
@@ -1443,6 +1450,7 @@ About the new airlock wires panel:
 				else
 					src.RL_SetOpacity(1)
 			src.operating = 0
+			src.update_icon()
 	else if (src.welded)
 		boutput(usr, "<span class='alert'>You try to pry [src]  open, but it won't budge! The sides of \the [src] seem to be welded.</span>")
 
@@ -1781,13 +1789,21 @@ obj/machinery/door/airlock
 				src.secondsElectrified = 0
 	return
 
+/obj/machinery/door/airlock/emag_act(mob/user, obj/item/card/emag/E)
+	. = ..()
+	if(src.welded && !src.locked)
+		audible_message("<span class='alert'>[src] lets out a loud whirring and grinding noise!</span>")
+		animate_shake(src, 5, 2, 2, src.pixel_x, src.pixel_y)
+		playsound(src, 'sound/items/mining_drill.ogg', 25, 1, 0, 0.8)
+		src.take_damage(src.health * 0.8)
+
 /obj/machinery/door/airlock/receive_silicon_hotkey(var/mob/user)
 	..()
 
 	if (!isAI(user) && !issilicon(user))
 		return
 
-	if (src.aiControlDisabled) return
+	if (src.aiControlDisabled == 1) return
 
 	if (user.client.check_key(KEY_OPEN) && user.client.check_key(KEY_BOLT))
 		. = 1

@@ -132,7 +132,7 @@
 		delStatus("slowed")
 		sleeping = 0
 		change_misstep_chance(-INFINITY)
-		drowsyness = 0.0
+		src.delStatus("drowsy")
 		dizziness = 0
 		is_dizzy = 0
 		is_jittery = 0
@@ -213,9 +213,9 @@
 				src.item.attack_self(src)
 			else
 				if(!isitem(src.item))
-					src.item.attack_hand(src)
+					src.item.Attackhand(src)
 				else //This shouldnt ever happen.
-					src.item.attackby(src.item, src)
+					src.item.Attackby(src.item, src)
 		else
 			if(src.a_intent == INTENT_GRAB && istype(target, /atom/movable) && get_dist(src, target) <= 1)
 				var/atom/movable/M = target
@@ -245,6 +245,12 @@
 		src.opacity = src.item.opacity
 
 	death(gibbed)
+
+		if (src.item && !gibbed)
+			src.item.set_dir(src.dir)
+			if (src.item.loc == src)
+				src.item.set_loc(get_turf(src))
+
 		if (src.owner)
 			src.owner.set_loc(get_turf(src))
 			src.visible_message("<span class='alert'><b>[src] is no longer possessed.</b></span>")
@@ -272,13 +278,11 @@
 
 		playsound(src.loc, "sound/voice/wraith/wraithleaveobject.ogg", 40, 1, -1, 0.6)
 
-		if (src.item)
-			src.item.set_dir(src.dir)
-			if (src.item.loc == src)
-				src.item.set_loc(get_turf(src))
-			if (gibbed)
-				qdel(src.item)
+		if (gibbed && src.item)
+			qdel(src.item)
+
 		src.owner = null
+		src.item = null
 		qdel(src)
 		..(gibbed)
 

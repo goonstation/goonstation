@@ -1,5 +1,5 @@
 /datum/component/wearertargeting/unarmedblock/concussive
-	var/hitcounter = 0
+	var/charged = 0
 
 /datum/component/wearertargeting/unarmedblock/concussive/on_equip(datum/source, mob/equipper, slot)
 	. = ..()
@@ -15,7 +15,7 @@
 	. = ..()
 	RegisterSignal(B, COMSIG_BLOCK_BLOCKED, .proc/blocked_hit)
 	RegisterSignal(B, COMSIG_TOOLTIP_BLOCKING_APPEND, .proc/append_to_tooltip)
-	hitcounter = 0
+	charged = 0
 
 
 
@@ -29,14 +29,17 @@
 
 /datum/component/wearertargeting/unarmedblock/concussive/proc/blocked_hit(obj/item/grab/block/B)
 	var/obj/item/clothing/gloves/concussive/conc = parent
-	if(hitcounter++ == 3)
-		conc.setSpecialOverride(/datum/item_special/slam/no_item_attack, true)
+	if(!charged)
+		charged = 1
+		conc.punch_damage_modifier += 10
+		conc.setSpecialOverride(/datum/item_special/slam, null)
 		playsound(conc, "sound/items/miningtool_on.ogg", 20, 1, 0, 1.3)
 
 /datum/component/wearertargeting/unarmedblock/concussive/proc/used_special(obj/item/clothing/gloves/concussive/conc, mob/user)
-	if(hitcounter > 3)
+	if(charged)
 		conc.setSpecialOverride(null, 0)
-		hitcounter = 0
+		conc.punch_damage_modifier -= 10
+		charged = 0
 		playsound(conc, "sound/items/miningtool_off.ogg", 20, 1, 0, 1.3)
 
 /datum/component/wearertargeting/unarmedblock/concussive/proc/append_to_tooltip(parent, list/tooltip)

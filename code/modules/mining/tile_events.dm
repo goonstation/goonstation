@@ -31,7 +31,7 @@
 	onExcavate(var/turf/simulated/wall/asteroid/AST)
 		if (..())
 			return
-		var/obj/item/I = unpool(gem_type)
+		var/obj/item/I = new gem_type
 		I.set_loc(AST)
 		I.quality = AST.quality + rand(-50,50)
 		I.name = "[getGemQualityName(I.quality)] [I.name]"
@@ -46,7 +46,7 @@
 		gem_type = /obj/item/raw_material/molitz_beta
 
 	onExcavate(var/turf/simulated/wall/asteroid/AST)
-		var/quantity = rand(3,5)
+		var/quantity = rand(2,3)
 		for(var/i in 1 to quantity)
 			..()
 

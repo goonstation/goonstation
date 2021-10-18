@@ -11,8 +11,6 @@
 	icon_state = "beaker"
 	item_state = "beaker"
 	initial_volume = 50
-	module_research = list("science" = 2, "medicine" = 2)
-	module_research_type = /obj/item/reagent_containers/glass/beaker
 	var/image/fluid_image
 	var/icon_style = "beaker"
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
@@ -229,3 +227,6 @@
 	name = "round flask"
 	icon_state = "roundflask"
 	icon_style = "roundflask"
+
+/obj/item/reagent_containers/glass/flask/black_powder //prefab shit
+	initial_reagents = "blackpowder"

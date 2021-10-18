@@ -12,8 +12,6 @@
 	icon_state = "heart"
 	item_state = "heart"
 	// var/broken = 0		//Might still want this. As like a "dead organ var", maybe not needed at all tho?
-	module_research = list("medicine" = 1, "efficiency" = 5)
-	module_research_type = /obj/item/organ/heart
 	var/list/diseases = null
 	var/body_image = null // don't have time to completely refactor this, but, what name does the heart icon have in human.dmi?
 	var/transplant_XP = 5

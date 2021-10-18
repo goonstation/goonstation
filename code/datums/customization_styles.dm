@@ -19,12 +19,16 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 	var/name = null
 	var/id = null
 	var/gender = 0
+	/// Which mob icon layer this should go on (under or over glasses)
+	var/default_layer = MOB_HAIR_LAYER1 //Under by default, more direct subtypes where that makes sense
 
 	none
 		name = "None"
 		id = "none"
 		gender = MASCULINE
 	hair
+		default_layer = MOB_HAIR_LAYER2
+
 		short
 			afro
 				name = "Afro"
@@ -456,6 +460,15 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 			zapped
 				name = "Zapped"
 				id = "zapped"
+			shitty_hair
+				name = "Shitty Hair"
+				id = "shitty_hair"
+			shitty_beard
+				name = "Shitty Beard"
+				id = "shitty_beard"
+			shitty_beard_stains
+				name = "Shitty Beard Stains"
+				id = "shitty_beard_stains"
 	moustache
 		fu
 			name = "Biker"

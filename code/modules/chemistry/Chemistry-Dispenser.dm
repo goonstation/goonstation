@@ -99,9 +99,10 @@
 			B.reagents.handle_reactions()
 			return
 		*/
-		if (src.beaker)
-			boutput(user, "A [glass_name] is already loaded into the machine.")
-			return
+		var/ejected_beaker = null
+		if (src.beaker?.loc == src)
+			ejected_beaker = src.beaker
+			user.put_in_hand_or_drop(ejected_beaker)
 
 		src.beaker =  B
 		if(!B.cant_drop)
@@ -111,7 +112,10 @@
 		if(B.qdeled)
 			B = null
 		else
-			boutput(user, "You add the [glass_name] to the machine!")
+			if(ejected_beaker)
+				boutput(user, "You swap the [B] with the [glass_name] already loaded into the machine.")
+			else
+				boutput(user, "You add the [glass_name] to the machine!")
 		src.update_icon()
 		src.ui_interact(user)
 
@@ -283,6 +287,7 @@
 				beaker.reagents.handle_reactions()
 				src.update_icon()
 				playsound(src.loc, dispense_sound, 50, 1, 0.3)
+				use_power(10)
 				. = TRUE
 			if ("eject")
 				if (beaker)
@@ -370,6 +375,7 @@
 							beaker.reagents.add_reagent(reagent,amt)
 							beaker.reagents.handle_reactions()
 					src.update_icon()
+					use_power(length(group.reagents) * 10)
 				playsound(src.loc, dispense_sound, 50, 1, 0.3)
 				. = TRUE
 			if ("card")

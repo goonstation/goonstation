@@ -4,8 +4,8 @@
 	name = "Manufacturing Unit"
 	desc = "A standard fabricator unit capable of producing certain items from various materials."
 	icon = 'icons/obj/manufacturer.dmi'
-	icon_state = "fab"
-	var/icon_base = null
+	icon_state = "fab-general"
+	var/icon_base = "general"
 	density = 1
 	anchored = 1
 	mats = 20
@@ -467,16 +467,16 @@
 
 			var/icon_text = "<img class='icon'>"
 			// @todo probably refactor this since it's copy pasted twice now.
-			// if (A.item_outputs)
-			// 	var/icon_rsc = getItemIcon(A.item_outputs[1], C = usr.client)
-			// 	// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
-			// 	icon_text = "<img class='icon' src='[icon_rsc]'>"
+			if (A.item_outputs)
+				var/icon_rsc = getItemIcon(A.item_outputs[1], C = usr.client)
+				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
+				icon_text = "<img class='icon' src='[icon_rsc]'>"
 
-			// if (istype(A, /datum/manufacture/mechanics))
-			// 	var/datum/manufacture/mechanics/F = A
-			// 	var/icon_rsc = getItemIcon(F.frame_path, C = usr.client)
-			// 	// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
-			// 	icon_text = "<img class='icon' src='[icon_rsc]'>"
+			if (istype(A, /datum/manufacture/mechanics))
+				var/datum/manufacture/mechanics/F = A
+				var/icon_rsc = getItemIcon(F.frame_path, C = usr.client)
+				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
+				icon_text = "<img class='icon' src='[icon_rsc]'>"
 
 			var/list/material_text = list()
 			var/list/material_count = 0
@@ -592,7 +592,7 @@
 							if (ejectamt == O.amount)
 								O.set_loc(get_output_location(O,1))
 							else
-								var/obj/item/material_piece/P = unpool(O.type)
+								var/obj/item/material_piece/P = new O.type
 								P.setMaterial(copyMaterial(O.material))
 								P.change_stack_amount(ejectamt - P.amount)
 								O.change_stack_amount(-ejectamt)
@@ -707,16 +707,14 @@
 					return
 
 			if (href_list["ejectbeaker"])
-				var/obj/item/reagent_containers/glass/beaker/B = locate(href_list["ejectbeaker"])
-				if (!istype(B,/obj/item/reagent_containers/glass/beaker/))
-					return
-				src.beaker.set_loc(get_output_location(B,1))
+				if (src.beaker)
+					src.beaker.set_loc(get_output_location(beaker,1))
 				src.beaker = null
 
 			if (href_list["transto"])
 				// reagents are going into beaker
-				var/obj/item/reagent_containers/glass/beaker/B = locate(href_list["transto"])
-				if (!istype(B,/obj/item/reagent_containers/glass/beaker/))
+				var/obj/item/reagent_containers/glass/B = locate(href_list["transto"])
+				if (!istype(B,/obj/item/reagent_containers/glass/))
 					return
 				var/howmuch = input("Transfer how much to [B]?","[src.name]",B.reagents.maximum_volume - B.reagents.total_volume) as null|num
 				if (!howmuch || !B || B != src.beaker )
@@ -725,8 +723,8 @@
 
 			if (href_list["transfrom"])
 				// reagents are being drawn from beaker
-				var/obj/item/reagent_containers/glass/beaker/B = locate(href_list["transfrom"])
-				if (!istype(B,/obj/item/reagent_containers/glass/beaker/))
+				var/obj/item/reagent_containers/glass/B = locate(href_list["transfrom"])
+				if (!istype(B,/obj/item/reagent_containers/glass/))
 					return
 				var/howmuch = input("Transfer how much from [B]?","[src.name]",B.reagents.total_volume) as null|num
 				if (!howmuch)
@@ -801,7 +799,7 @@
 
 					////////////
 
-					if(OCD.amount >= quantity)
+					if(OCD.amount >= quantity && quantity > 0)
 						var/subtotal = round(price * quantity)
 						var/sum_taxes = round(taxes * quantity)
 						var/rockbox_fees = (!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0) * quantity
@@ -825,8 +823,8 @@
 							minerSignal.transmission_method = TRANSMISSION_RADIO
 							//any non-divisible amounts go to the shipping budget
 							var/leftovers = 0
-							if(accounts.len)
-								leftovers = length(subtotal%accounts)
+							if(length(accounts))
+								leftovers = subtotal % length(accounts)
 								var/divisible_amount = subtotal - leftovers
 								if(divisible_amount)
 									var/amount_per_account = divisible_amount/length(accounts)
@@ -843,7 +841,10 @@
 						else
 							src.temp = {"You don't have enough dosh, bucko.<BR>"}
 					else
-						src.temp = {"I don't have that many for sale, champ.<BR>"}
+						if(quantity > 0)
+							src.temp = {"I don't have that many for sale, champ.<BR>"}
+						else
+							src.temp = {"Enter some actual valid number, you doofus!<BR>"}
 				else
 					src.temp = {"That card doesn't have an account anymore, you might wanna get that checked out.<BR>"}
 
@@ -862,6 +863,10 @@
 		if (src.electrified)
 			if (src.manuf_zap(usr, 33))
 				return
+
+		if (istype(W, /obj/item/ore_scoop))
+			var/obj/item/ore_scoop/scoop = W
+			W = scoop.satchel
 
 		if (istype(W, /obj/item/paper/manufacturer_blueprint))
 			if (!src.accept_blueprints)
@@ -1024,9 +1029,18 @@
 					user.u_equip(W)
 					W.dropped()
 
+		else if (istype(W,/obj/item/sheet/) || (istype(W,/obj/item/cable_coil/ || (istype(W,/obj/item/raw_material/ )))))
+			boutput(user, "<span class='alert'>The fabricator rejects the [W]. You'll need to refine them in a reclaimer first.</span>")
+			playsound(src.loc, src.sound_grump, 50, 1)
+			return
+
 		else if (istype(W, src.base_material_class) && src.accept_loading(user))
 			user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>", "<span class='notice'>You load [W] into the [src].</span>")
 			src.load_item(W,user)
+
+		else if (src.panelopen && (issnippingtool(W) || ispulsingtool(W)))
+			src.Attackhand(user)
+			return
 
 		else if(scan_card(W))
 			return
@@ -1136,7 +1150,7 @@
 
 
 		if (istype(O, /obj/item/paper/manufacturer_blueprint))
-			src.attackby(O, user)
+			src.Attackby(O, user)
 
 		if (istype(O, /obj/storage/crate/) || istype(O, /obj/storage/cart/) && src.accept_loading(user,1))
 			if (O:welded || O:locked)
@@ -1393,7 +1407,7 @@
 						var/target_amount = round(src.resource_amounts[mat_id] / 10)
 						if (!target_amount)
 							src.contents -= I
-							pool(I)
+							qdel(I)
 						else if (I.amount != target_amount)
 							I.change_stack_amount(-(I.amount - target_amount))
 						break
@@ -1739,16 +1753,16 @@
 				remove_link = "&#8987; Working..."
 
 			var/icon_text = "<img class='icon'>"
-			// if (A.item_outputs)
-			// 	var/icon_rsc = getItemIcon(A.item_outputs[1], C = usr.client)
-			// 	// usr << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
-			// 	icon_text = "<img class='icon' src='[icon_rsc]'>"
+			if (A.item_outputs)
+				var/icon_rsc = getItemIcon(A.item_outputs[1], C = usr.client)
+				// usr << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
+				icon_text = "<img class='icon' src='[icon_rsc]'>"
 
-			// if (istype(A, /datum/manufacture/mechanics))
-			// 	var/datum/manufacture/mechanics/F = A
-			// 	var/icon_rsc = getItemIcon(F.frame_path, C = usr.client)
-			// 	// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
-			// 	icon_text = "<img class='icon' src='[icon_rsc]'>"
+			if (istype(A, /datum/manufacture/mechanics))
+				var/datum/manufacture/mechanics/F = A
+				var/icon_rsc = getItemIcon(F.frame_path, C = usr.client)
+				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
+				icon_text = "<img class='icon' src='[icon_rsc]'>"
 
 
 			dat += {"
@@ -1781,7 +1795,7 @@
 				if (istype(M, P) && M.material && isSameMaterial(M.material, P.material))
 					M.change_stack_amount(P.amount)
 					src.update_resource_amount(M.material.mat_id, P.amount * 10)
-					pool(P)
+					qdel(P)
 					return
 			src.update_resource_amount(P.material.mat_id, P.amount * 10)
 
@@ -1824,7 +1838,7 @@
 		else if (free_resources.len && free_resource_amt > 0)
 			for (var/X in src.free_resources)
 				if (ispath(X))
-					var/obj/item/material_piece/P = unpool(X)
+					var/obj/item/material_piece/P = new X
 					P.set_loc(src)
 					if (free_resource_amt > 1)
 						P.change_stack_amount(free_resource_amt - P.amount)
@@ -1887,6 +1901,7 @@
 	icon_state = "blueprint"
 	item_state = "sheet"
 	var/datum/manufacture/blueprint = null
+	var/override_name_desc = 1
 
 
 
@@ -1899,7 +1914,7 @@
 			if (ispath(src.blueprint))
 				src.blueprint = get_schematic_from_path(src.blueprint)
 			else
-				pool(src)
+				qdel(src)
 				return 0
 		else
 			if (istext(schematic))
@@ -1910,9 +1925,9 @@
 		if (!src.blueprint)
 			qdel(src)
 			return 0
-
-		src.name = "Manufacturer Blueprint: [src.blueprint.name]"
-		src.desc = "This blueprint will allow a manufacturer unit to build a [src.blueprint.name]"
+		if(src.override_name_desc)
+			src.name = "Manufacturer Blueprint: [src.blueprint.name]"
+			src.desc = "This blueprint will allow a manufacturer unit to build a [src.blueprint.name]"
 
 		src.pixel_x = rand(-4,4)
 		src.pixel_y = rand(-4,4)
@@ -1997,6 +2012,16 @@
 	icon_state = "interdictor_blueprint"
 	blueprint = /datum/manufacture/interdictor_rod_sigma
 
+/******************** Phaser Drone *******************/
+/obj/item/paper/manufacturer_blueprint/gunbot
+	name = "Security Robot blueprint"
+	icon = 'icons/obj/electronics.dmi'
+	info = "<h3>AP-Class Security Robot</h3><i>A schematic blueprint for a security robot, modified to fit a station-grade manufacturer.</i>"
+	icon_state = "blueprint"
+	item_state = "sheet"
+	blueprint = /datum/manufacture/mechanics/gunbot
+	override_name_desc = 0
+
 // Fabricator Defines
 
 /obj/machinery/manufacturer/general
@@ -2022,7 +2047,7 @@
 		/datum/manufacture/glass,
 		/datum/manufacture/glassR,
 		/datum/manufacture/atmos_can,
-		/datum/manufacture/circuit_board,
+		/datum/manufacture/player_module,
 		/datum/manufacture/cable,
 		/datum/manufacture/powercell,
 		/datum/manufacture/powercellE,
@@ -2158,7 +2183,8 @@
 	/datum/manufacture/cybereye_thermal,
 	/datum/manufacture/cybereye_laser,
 	/datum/manufacture/cyberbutt,
-	/datum/manufacture/robup_expand)
+	/datum/manufacture/robup_expand,
+	/datum/manufacture/cardboard_ai)
 
 /obj/machinery/manufacturer/medical
 	name = "Medical Fabricator"
@@ -2274,8 +2300,7 @@
 	hidden = list(/datum/manufacture/RCD,
 	/datum/manufacture/RCDammo,
 	/datum/manufacture/RCDammomedium,
-	/datum/manufacture/RCDammolarge,
-	/datum/manufacture/sds)
+	/datum/manufacture/RCDammolarge)
 
 /obj/machinery/manufacturer/hangar
 	name = "Ship Component Fabricator"
@@ -2287,10 +2312,17 @@
 		/obj/item/material_piece/copper,
 		/obj/item/material_piece/glass)
 	available = list(
+#ifdef UNDERWATER_MAP
+		/datum/manufacture/sub/engine,
+		/datum/manufacture/sub/boards,
+		/datum/manufacture/sub/control,
+		/datum/manufacture/sub/parts,
+#else
 		/datum/manufacture/putt/engine,
 		/datum/manufacture/putt/boards,
 		/datum/manufacture/putt/control,
 		/datum/manufacture/putt/parts,
+#endif
 		/datum/manufacture/pod/engine,
 		/datum/manufacture/pod/boards,
 		/datum/manufacture/pod/armor_light,
@@ -2310,10 +2342,6 @@
 		/datum/manufacture/pod/lock,
 		/datum/manufacture/beaconkit
 	)
-	hidden = list(
-		/datum/manufacture/pod/sps,
-		/datum/manufacture/pod/srs
-		)
 
 /obj/machinery/manufacturer/uniform // add more stuff to this as needed, but it should be for regular uniforms the HoP might hand out, not tons of gimmicks. -cogwerks
 	name = "Uniform Manufacturer"
@@ -2358,10 +2386,17 @@
 	/datum/manufacture/hat_orange,
 	/datum/manufacture/hat_tophat,
 	/datum/manufacture/backpack,
-	/datum/manufacture/satchel)
+	/datum/manufacture/backpack_red,
+	/datum/manufacture/backpack_green,
+	/datum/manufacture/backpack_blue,
+	/datum/manufacture/satchel,
+	/datum/manufacture/satchel_red,
+	/datum/manufacture/satchel_green,
+	/datum/manufacture/satchel_blue)
 
 	hidden = list(/datum/manufacture/breathmask,
 	/datum/manufacture/patch,
+	/datum/manufacture/tricolor,
 	/datum/manufacture/hat_ltophat)
 	///datum/manufacture/hermes) //all hail the shoe lord - needs adjusting for the new movement system which I cba to do right now
 
@@ -2459,6 +2494,7 @@
 	/datum/manufacture/implant_access_infinite,
 	/datum/manufacture/breathmask,
 	/datum/manufacture/patch,
+	/datum/manufacture/tricolor,
 	/datum/manufacture/hat_ltophat)
 
 /obj/machinery/manufacturer/qm // This manufacturer just creates different crated and boxes for the QM. Lets give their boring lives at least something more interesting.
@@ -2579,7 +2615,7 @@
 
 /proc/build_manufacturer_icons()
 	// pre-build all the icons for shit manufacturers make
-	for (var/datum/manufacture/P as anything in typesof(/datum/manufacture))
+	for (var/datum/manufacture/P as anything in concrete_typesof(/datum/manufacture, FALSE))
 		if (ispath(P, /datum/manufacture/mechanics))
 			var/datum/manufacture/mechanics/M = P
 			if (!initial(M.frame_path))

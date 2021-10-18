@@ -71,7 +71,7 @@
 	var/list/wtfbyond = list()
 	var/turf/OT = get_turf(src)
 	for(var/turf/wp in landmarks[LANDMARK_GPS_WAYPOINT])
-		var/path = AStar(OT, get_turf(wp), /turf/proc/AllDirsTurfsWithAccess, /turf/proc/Distance, adjacent_param = ID, maxtraverse=300)
+		var/path = AStar(OT, get_turf(wp), /turf/proc/AllDirsTurfsWithAccess, /turf/proc/Distance, adjacent_param = ID, maxtraverse=600)
 		if(path)
 			var/name = landmarks[LANDMARK_GPS_WAYPOINT][wp]
 			if(!name)
@@ -282,8 +282,8 @@ world/proc/updateCameraVisibility()
 	name = "AI Eyeball"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "a-eye"
-	invisibility = 9
-	see_invisible = 9
+	invisibility = INVIS_AI_EYE
+	see_invisible = INVIS_AI_EYE
 	layer = 101
 	see_in_dark = SEE_DARK_FULL
 

@@ -1,5 +1,3 @@
-#define QDELETED(thing) (!thing || thing.disposed)
-
 /datum
 	/**
 		* Components attached to this datum

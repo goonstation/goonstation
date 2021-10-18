@@ -23,6 +23,7 @@
 	// christ, if we only had components
 	proc/play(mob/user as mob)
 		if (!spam_flag)
+			src.ArtifactFaultUsed(user)
 			spam_flag = 1
 			src.add_fingerprint(user)
 			show_play_message(user)
@@ -37,7 +38,6 @@
 	attack_self(mob/user as mob)
 		..()
 		src.play(user)
-		src.ArtifactFaultUsed(user)
 
 /datum/artifact/instrument
 	associated_object = /obj/item/artifact/instrument

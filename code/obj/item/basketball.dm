@@ -43,7 +43,7 @@
 					JOB_XP(M, "Clown", 1)
 					return
 				// catch the ball!
-				src.attack_hand(M)
+				src.Attackhand(M)
 				M.visible_message("<span class='combat'>[M] catches the [src.name]!</span>", "<span class='combat'>You catch the [src.name]!</span>")
 				logTheThing("combat", M, null, "catches [src]")
 				return
@@ -197,10 +197,10 @@
 			return
 		src.active = 1
 		playsound(src, "rustle", 75, 1)
-		A.invisibility = 100
+		A.invisibility = INVIS_ALWAYS_ISH
 		flick("bbasket1", src)
 		SPAWN_DBG(1.5 SECONDS)
-			A.invisibility = 0
+			A.invisibility = INVIS_NONE
 			src.active = 0
 
 /obj/item/bballbasket/testing
@@ -279,11 +279,11 @@
 					src.visible_message("<span class='combat'>[T] catches the [src.name] but gets cut.</span>")
 					T.TakeDamage(T.hand == 1 ? "l_arm" : "r_arm", 15, 0)
 					take_bleeding_damage(T, null, 10, DAMAGE_CUT)
-					src.attack_hand(T)
+					src.Attackhand(T)
 					return
 				// catch the ball!
 				else
-					src.attack_hand(T)
+					src.Attackhand(T)
 					T.visible_message("<span class='combat'>[M] catches the [src.name]!</span>")
 					return
 	return

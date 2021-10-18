@@ -27,11 +27,12 @@
 #define MOB_OVERMASK_LAYER (MOB_OVERLAY_BASE-4.8) // for mutant details that go over masks
 #define MOB_HEAD_LAYER1		(MOB_OVERLAY_BASE-5) // masks
 #define MOB_EARS_LAYER		(MOB_OVERLAY_BASE-5.5)
-#define MOB_GLASSES_LAYER	(MOB_OVERLAY_BASE-6)
-#define MOB_HAIR_LAYER2 	(MOB_OVERLAY_BASE-7)
+#define MOB_HAIR_LAYER2 	(MOB_OVERLAY_BASE-6)
+#define MOB_GLASSES_LAYER	(MOB_OVERLAY_BASE-7)
 #define MOB_BACK_LAYER 		(MOB_OVERLAY_BASE-8)
-#define MOB_OVERSUIT_LAYER1 (MOB_OVERLAY_BASE-8.7)	// For mutant oversuit (de)tails when facing north
-#define MOB_OVERSUIT_LAYER2 (MOB_OVERLAY_BASE-8.8)	// If we have another one
+#define MOB_OVERSUIT_LAYER1 (MOB_OVERLAY_BASE-8.6)	// For mutant oversuit (de)tails when facing north
+#define MOB_OVERSUIT_LAYER2 (MOB_OVERLAY_BASE-8.7)	// If we have another one
+#define MOB_SHEATH_LAYER 	(MOB_OVERLAY_BASE-8.8)
 #define MOB_BACK_LAYER_SATCHEL  (MOB_OVERLAY_BASE-8.9)  // For satchels so they don't show over a tail or something
 #define MOB_ARMOR_LAYER 	(MOB_OVERLAY_BASE-9)
 #define MOB_HAND_LAYER2 	(MOB_OVERLAY_BASE-10) 	// gloves

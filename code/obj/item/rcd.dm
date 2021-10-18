@@ -56,8 +56,6 @@ Broken RCD + Effects
 	stamina_damage = 15
 	stamina_cost = 15
 	stamina_crit_chance = 5
-	module_research = list("tools" = 8, "engineering" = 8, "devices" = 3, "efficiency" = 5)
-	module_research_type = /obj/item/rcd
 	inventory_counter_enabled = 1
 
 	// Borgs/drones can't really use matter units.
@@ -873,7 +871,7 @@ Broken RCD + Effects
 
 	attackby(obj/item/W, mob/user, params)
 		if(istype(W, /obj/item/rcd))
-			W.attackby(src, user, params)
+			W.Attackby(src, user, params)
 			return
 		. = ..()
 
@@ -1003,7 +1001,7 @@ Broken RCD + Effects
 					user.gib()
 
 /obj/effects/void_break
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	var/lifespan = 4
 	var/rangeout = 0
@@ -1044,9 +1042,9 @@ Broken RCD + Effects
 
 		for (var/turf/simulated/T in range(src, (rangeout-lifespan)))
 			if (prob(5 + lifespan) && limiter.canISpawn(/obj/effects/sparks))
-				var/obj/sparks = unpool(/obj/effects/sparks)
+				var/obj/sparks = new /obj/effects/sparks
 				sparks.set_loc(T)
-				SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
+				SPAWN_DBG(2 SECONDS) if (sparks) qdel(sparks)
 
 			T.ex_act((rangeout-lifespan) < 2 ? 1 : 2)
 

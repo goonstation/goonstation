@@ -37,7 +37,7 @@
 			if (prob(4) || freebie)
 				freebie = 0
 				SPAWN_DBG(50+rand(0,550))
-					world << sound('sound/voice/farts/superfart.ogg', volume = 67)
+					playsound_global(world, "sound/voice/farts/superfart.ogg", 60)
 					for (var/mob/M in mobs)
 						if (M.client)
 							shake_camera(M, 20, 8)
@@ -91,9 +91,7 @@
 			ThrowRandom(B, dist = 6, speed = 1)
 		H.visible_message("<span class='alert'><b>[H]</b>'s [magical ? "arse" : "ass"] tears itself away from \his body[magical ? " in a magical explosion" : null]!</span>",\
 		"<span class='alert'>[changer ? "Our" : "Your"] [magical ? "arse" : "ass"] tears itself away from [changer ? "our" : "your"] body[magical ? " in a magical explosion" : null]!</span>")
-		H.changeStatus("weakened", 2 SECONDS)
 		severed_something = TRUE
-		H.force_laydown_standup()
 
 	/// If that didn't work, try severing a limb or tail
 	else if (!is_bot && prob(limbloss_prob)) // It'll try to sever an arm, then a leg, then an arm, then a leg
@@ -157,10 +155,10 @@
 		boutput(H, "<span class='notification'>[changer ? "We" : "You"] hear an otherworldly force let out a short, disappointed cluck at [changer ? "our" : "your"] lack of an arse.</span>")
 	H.visible_message("<span class='alert'>[is_bot ? "Oily chunks of twisted shrapnel" : "Wadded hunks of blood and gore"] burst out of where <b>[H]</b>'s [magical ? "arse" : "ass"] used to be!</span>",\
 	"<span class='alert'>[nobutt_phrase[assmagic]]</span>")
-	if(magical)
-		H.changeStatus("weakened", 1 DECI SECOND)
-	else
+	if(!magical)
 		H.changeStatus("weakened", 3 SECONDS)
+	else
+		H.changeStatus("weakened", 1 DECI SECOND)
 	H.force_laydown_standup()
 	if(!severed_something)
 		H.emote("scream")

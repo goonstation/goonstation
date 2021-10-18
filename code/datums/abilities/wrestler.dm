@@ -35,6 +35,11 @@
 						A2 = C.add_ability_holder(/datum/abilityHolder/wrestler)
 					if (!A2 || !istype(A2, /datum/abilityHolder/))
 						return
+				if(make_inherent)
+					src.add_stam_mod_max("wrestler", 50)
+					APPLY_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "wrestler", 5)
+					src.max_health += 50
+					health_update_queue |= src
 				C.abilityHolder.addAbility("/datum/targetable/wrestler/kick[fake_wrestler ? "/fake" : ""]")
 				C.abilityHolder.addAbility("/datum/targetable/wrestler/strike[fake_wrestler ? "/fake" : ""]")
 				C.abilityHolder.addAbility("/datum/targetable/wrestler/drop[fake_wrestler ? "/fake" : ""]")
@@ -45,22 +50,17 @@
 			var/mob/living/carbon/human/H = src
 
 			if (remove_powers == 1)
-				var/datum/abilityHolder/wrestler/A3 = H.get_ability_holder(/datum/abilityHolder/wrestler)
+				var/datum/abilityHolder/wrestler/A3 = H.get_ability_holder(fake_wrestler ? /datum/abilityHolder/wrestler/fake : /datum/abilityHolder/wrestler)
 				if (istype(A3))
 					if (belt_check == 1 && A3.is_inherent == 1) // Wrestler/omnitraitor vs wrestling belt.
 						return
-					H.remove_ability_holder(/datum/abilityHolder/wrestler)
-				else if (fake_wrestler && istype(H.get_ability_holder(/datum/abilityHolder/wrestler/fake), /datum/abilityHolder/wrestler/fake))
-					H.remove_ability_holder(/datum/abilityHolder/wrestler)
-
-				else
 					if (!isnull(H.abilityHolder))
 						H.abilityHolder.removeAbility("/datum/targetable/wrestler/kick[fake_wrestler ? "/fake" : ""]")
 						H.abilityHolder.removeAbility("/datum/targetable/wrestler/strike[fake_wrestler ? "/fake" : ""]")
 						H.abilityHolder.removeAbility("/datum/targetable/wrestler/drop[fake_wrestler ? "/fake" : ""]")
 						H.abilityHolder.removeAbility("/datum/targetable/wrestler/throw[fake_wrestler ? "/fake" : ""]")
 						H.abilityHolder.removeAbility("/datum/targetable/wrestler/slam[fake_wrestler ? "/fake" : ""]")
-
+					H.remove_ability_holder(fake_wrestler ? /datum/abilityHolder/wrestler/fake : /datum/abilityHolder/wrestler)
 
 				return
 
@@ -89,8 +89,13 @@
 
 				if (make_inherent == 1)
 					A5.is_inherent = 1
+					src.add_stam_mod_max("wrestler", 50)
+					APPLY_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "wrestler", 5)
+					src.max_health += 50
+					health_update_queue |= src
 
-		if (belt_check != 1 && (src.mind && src.mind.special_role != "omnitraitor" && src.mind.special_role != "Faustian Wrestler"))
+
+		if (belt_check != 1 && (src.mind && src.mind.special_role != ROLE_OMNITRAITOR && src.mind.special_role != "Faustian Wrestler"))
 			SHOW_WRESTLER_TIPS(src)
 
 	else return
@@ -286,6 +291,3 @@
 		SPAWN_DBG (rand(200, 900))
 			if (src.holder && src.holder.owner && ismob(src.holder.owner))
 				src.holder.owner.emote("flex")
-
-		SPAWN_DBG(calculate_cooldown() + 5)
-			holder.updateButtons()

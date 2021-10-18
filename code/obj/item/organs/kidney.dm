@@ -7,6 +7,9 @@
 	icon_state = "kidneys"
 	failure_disease = /datum/ailment/disease/kidney_failure
 	var/chem_metabolism_modifier = 1
+	// this is just used for setting them, so I will use the *100 values
+	var/min_chem_metabolism_modifier = 100
+	var/max_chem_metabolism_modifier = 100
 
 	on_life(var/mult = 1)
 		if (!..())
@@ -96,6 +99,14 @@
 		else
 			return 0
 
+	/// sets the chem_metabolism_modifier for this kidney, clamping it to the min and max value and dividing it by 100
+	proc/set_chem_metabolism_modifier(var/new_modifier)
+		src.chem_metabolism_modifier = clamp(new_modifier, src.min_chem_metabolism_modifier, src.max_chem_metabolism_modifier)/100
+
+	/// randomizes the kidneys chem_metabolism_modifier to a value between its min and max
+	proc/randomize_modifier()
+		src.set_chem_metabolism_modifier(rand(src.min_chem_metabolism_modifier, src.max_chem_metabolism_modifier))
+
 /obj/item/organ/kidney/left
 	name = "left kidney"
 	organ_name = "kidney_L"
@@ -132,6 +143,8 @@
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0
 	mats = 6
+	min_chem_metabolism_modifier = 75
+	max_chem_metabolism_modifier = 150
 
 	emag_act(mob/user, obj/item/card/emag/E)
 		. = ..()
@@ -172,8 +185,10 @@
 
 	attackby(obj/item/W, mob/user)
 		if(ispulsingtool(W)) //TODO kyle's robotics configuration console/machine/thing
-			chem_metabolism_modifier = input(user, "Enter a percentage to clock the cyberkidney at, from 75 to 150.", "Organ clocking", "100") as num
-			chem_metabolism_modifier = clamp(chem_metabolism_modifier, 75, 150) / 100
+			var/new_modifier = input(user, \
+			"Enter a percentage to clock the cyberkidney at, from [src.min_chem_metabolism_modifier] to [src.max_chem_metabolism_modifier].",\
+			 "Organ clocking", src.chem_metabolism_modifier*100) as num
+			src.set_chem_metabolism_modifier(new_modifier)
 		else
 			. = ..()
 

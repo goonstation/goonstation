@@ -49,7 +49,7 @@
 	on_end(var/obj/projectile/O)
 		proj_tracer_on_end(O)
 
-	projectile_speed = 18
+	projectile_speed = 24
 	power = 30
 	dissipation_delay = 8
 	dissipation_rate = 5

@@ -384,7 +384,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	proc/pickAmbience()
 		switch(src.name)
 			if ("Chapel") sound_fx_1 = pick('sound/ambience/station/Chapel_FemaleChoir.ogg','sound/ambience/station/Chapel_ChoirTwoNote1.ogg','sound/ambience/station/Chapel_ChoirTwoNote2.ogg','sound/ambience/station/Chapel_HighFemaleSolo.ogg')
-			if ("Morgue") sound_fx_1 = pick('sound/ambience/station/Station_SpookyAtmosphere1.ogg','sound/ambience/station/Station_SpookyAtmosphere2.ogg')
+			//if ("Morgue") sound_fx_1 = pick('sound/ambience/station/Station_SpookyAtmosphere1.ogg','sound/ambience/station/Station_SpookyAtmosphere2.ogg') // spooky shouldn't mean overly loud wailing, replace with something lowkey
 			if ("Jazz Lounge") sound_fx_1 = 'sound/ambience/station/JazzLounge1.ogg'
 			if ("Zen Garden") sound_fx_1 = pick('sound/ambience/station/ZenGarden1.ogg','sound/ambience/station/ZenGarden2.ogg')
 			//if ("Engine Control") sound_fx_1 = pick(ambience_engine)
@@ -396,7 +396,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 			if ("Biodome South") sound_fx_1 = pick('sound/ambience/nature/Biodome_Bugs.ogg', 'sound/ambience/nature/Biodome_Birds1.ogg', 'sound/ambience/nature/Biodome_Birds2.ogg', 'sound/ambience/nature/Biodome_Monkeys.ogg')
 			if ("Caves") sound_fx_1 = pick('sound/ambience/nature/Cave_Bugs.ogg', 'sound/ambience/nature/Cave_Rumbling.ogg', 'sound/ambience/nature/Cave_Wind1.ogg', 'sound/ambience/nature/Cave_Wind2.ogg', 'sound/ambience/nature/Cave_Drips.ogg')
 			if ("Glacial Abyss") sound_fx_1 = pick('sound/ambience/nature/Glacier_DeepRumbling1.ogg','sound/ambience/nature/Glacier_DeepRumbling1.ogg', 'sound/ambience/nature/Glacier_DeepRumbling1.ogg', 'sound/ambience/nature/Glacier_IceCracking.ogg', 'sound/ambience/nature/Glacier_DeepRumbling1.ogg', 'sound/ambience/nature/Glacier_Scuttling.ogg')
-			if ("AI Satellite Core") sound_fx_1 = pick('sound/ambience/station/Station_SpookyAtmosphere1.ogg','sound/ambience/station/Station_SpookyAtmosphere2.ogg')
+			//if ("AI Satellite Core") sound_fx_1 = pick('sound/ambience/station/Station_SpookyAtmosphere1.ogg','sound/ambience/station/Station_SpookyAtmosphere2.ogg') // same as above
 			if ("The Blind Pig") sound_fx_1 = pick('sound/ambience/spooky/TheBlindPig.ogg','sound/ambience/spooky/TheBlindPig2.ogg')
 			if ("M. Fortuna's House of Fortune") sound_fx_1 = 'sound/ambience/spooky/MFortuna.ogg'
 			#ifdef SUBMARINE_MAP
@@ -431,7 +431,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	name = "CORDON"
 	icon = 'icons/effects/mapeditor.dmi'
 	icon_state = "cordonarea"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	teleport_blocked = 2
 	force_fullbright = 1
 	expandable = 0//oh god i know some fucker would try this
@@ -1148,6 +1148,11 @@ ABSTRACT_TYPE(/area/diner)
 	name = "Bill E Bheezes"
 	icon_state = "red"
 
+/area/diner/cow
+	name = "Void Diner"
+	icon_state = "purple"
+	requires_power = FALSE
+
 /area/tech_outpost
 	name = "Tech Outpost"
 	icon_state = "storage"
@@ -1195,6 +1200,55 @@ ABSTRACT_TYPE(/area/prefab)
 	sound_loop = 'sound/ambience/music/shoptheme.ogg'
 	sound_environment = 2
 
+/area/prefab/space_casino
+	name ="Space Casino"
+	icon_state = "blue"
+
+/area/prefab/ranch
+	name ="Space Ranch"
+	icon_state = "green"
+
+/area/prefab/synd_lab
+	name = "Syndicate TC Laboratory"
+	icon_state = "red"
+
+/area/prefab/shooting_range
+	name = "Shooting Range"
+	icon_state = "purple"
+
+/area/prefab/lesbeeans/interior
+	name = "Lesbian Bee Farm"
+	icon_state = "ranch"
+
+/area/prefab/lesbeeans/exterior
+	name = "Lesbian Bee Farm"
+	icon_state = "park"
+	force_fullbright = 1
+
+/area/prefab/silverglass
+	name = "Silverglass Platform"
+	icon_state = "orange"
+	requires_power = TRUE
+
+	research
+		name = "Entanglement Dynamics"
+		icon_state = "purple"
+
+	bay
+		name = "Docking Bay"
+		icon_state = "yellow"
+
+	eats
+		name = "Commissary"
+		icon_state = "green"
+
+/area/prefab/dreamplaza
+	name = "DreamPlaza Mall"
+	icon_state = "purple"
+
+/area/prefab/secbot_academy
+	name = "Securitron Academy"
+	icon_state = "red"
 // Sealab trench areas //
 
 /area/shuttle/sea_elevator_room
@@ -1844,11 +1898,14 @@ ABSTRACT_TYPE(/area/station/hallway/secondary)
 	name = "Main Hallway"
 	icon_state = "entry"
 
+/area/station/hallway/secondary/oshan_arrivals
+	name = "Oshan Arrivals"
+	icon_state = "blue"
+	do_not_irradiate = 1
+
 /area/station/hallway/secondary/shuttle
 	name = "Shuttle Bay"
 	icon_state = "shuttle3"
-
-
 
 /area/station/mailroom
 	name = "Mailroom"
@@ -2224,6 +2281,7 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 /area/station/crewquarters/cryotron
 	name ="Cryogenic Crew Storage"
 	icon_state = "blue"
+	do_not_irradiate = 1
 
 ABSTRACT_TYPE(/area/station/com_dish)
 /area/station/com_dish
@@ -3149,7 +3207,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 
 	CanEnter( var/atom/movable/A )
 		var/mob/living/M = A
-		if( istype(M) && M.mind && M.mind.special_role != "wizard" && isliving(M) )
+		if( istype(M) && M.mind && M.mind.special_role != ROLE_WIZARD && isliving(M) )
 			if(M.client && M.client.holder)
 				return 1
 			boutput( M, "<span class='alert'>A magical barrier prevents you from entering!</span>" ) //or something
@@ -3521,10 +3579,6 @@ ABSTRACT_TYPE(/area/mining)
 		#ifdef UNDERWATER_MAP
 		src.ambient_light = OCEAN_LIGHT
 		#endif
-#ifdef HALLOWEEN
-		alpha = 128
-		icon = 'icons/effects/dark.dmi'
-#endif
 
 	if(!requires_power)
 		power_light = 1
@@ -5297,6 +5351,10 @@ area/station/security/visitation
 
 /area/pod_wars/spacejunk/dorgun
 	name = "DORGUN'S GREAT SHIP 10/10"
+	icon_state = "yellow"
+
+/area/pod_wars/spacejunk/memorial_stats
+	name = "Mission Memorial Ruins"
 	icon_state = "yellow"
 
 /area/pod_wars/spacejunk/brightwell

@@ -72,8 +72,8 @@
   HH.can_hold_items = 0
 
 /mob/living/critter/fermid/setup_healths()
-  add_hh_flesh(-unified_health, unified_health, brutevuln)
-  add_hh_flesh_burn(-unified_health, unified_health, firevuln)
+  add_hh_flesh(unified_health, brutevuln)
+  add_hh_flesh_burn(unified_health, firevuln)
   add_health_holder(/datum/healthHolder/toxin)
   add_health_holder(/datum/healthHolder/brain)
 

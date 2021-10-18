@@ -363,10 +363,10 @@
 			var/obj/item/material_piece/D = W
 			var/which = determine_material(D, user)
 			if (which == "metal")
-				pool(W)
+				qdel(W)
 				metal_count += 10
 			else if (which == "glass")
-				pool(W)
+				qdel(W)
 				glass_count += 10
 			else
 				return
@@ -434,7 +434,7 @@
 						metal_count += 10
 					else
 						glass_count += 10
-					pool(M)
+					qdel(M)
 					sleep(0.1 SECONDS)
 			processing = 0
 			user.visible_message("<span class='notice'>[user] finishes stuffing materials into [src].</span>")
@@ -517,7 +517,7 @@
 				old = K
 				break
 		if (old)
-			old.attackby(src, user)
+			old.Attackby(src, user)
 		else
 			var/class = marker_class[mode]
 			old = new class(T, selected)
@@ -537,7 +537,7 @@
 	anchored = 1
 	density = 0
 	opacity = 0
-	invisibility = 8
+	invisibility = INVIS_CONSTRUCTION
 	var/allows_vehicles = 0
 	var/turf_op = 1
 
@@ -554,7 +554,7 @@
 			return
 		var/turf/T = get_turf(src)
 		if (T)
-			T.attackby(W, user)
+			T.Attackby(W, user)
 			W.afterattack(T, user)
 
 /obj/plan_marker/glass_shaper
@@ -564,7 +564,7 @@
 	anchored = 1
 	density = 0
 	opacity = 0
-	invisibility = 8
+	invisibility = INVIS_CONSTRUCTION
 
 	var/static/image/wE = null
 	var/static/image/wW = null

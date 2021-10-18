@@ -48,6 +48,7 @@
 		return 1
 
 	proc/deactivate(mob/user as mob)
+		UnregisterSignal(user, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
 		if(src.active && istype(user))
 			user.visible_message("<span class='notice'><b>[user]'s cloak is disrupted!</b></span>")
 		src.active = 0

@@ -124,6 +124,21 @@
 		if(frustration >= 8)
 			src.KillPathAndGiveUp(1)
 
+/obj/machinery/bot/duckbot/attack_ai(var/mob/user as mob)
+	if(!ON_COOLDOWN(src,"ai_quack", 1 SECOND))
+		var/quack_now = TRUE
+		var/quack_time_remaining = GET_COOLDOWN(src, DUCKBOT_QUACK_COOLDOWN)
+		if(quack_time_remaining)
+			if(prob(66))
+				src.cooldowns[DUCKBOT_QUACK_COOLDOWN] = 0
+				quack_now = FALSE
+
+		if(quack_now)
+			var/message = pick("wacka", "quack", "quacky", "gaggle")
+			src.speak(message, 1, 0)
+			src.cooldowns[DUCKBOT_QUACK_COOLDOWN] = TIME + src.quack_cooldown
+	..()
+
 /obj/machinery/bot/duckbot/Topic(href, href_list)
 	if (!(usr in range(1)))
 		return

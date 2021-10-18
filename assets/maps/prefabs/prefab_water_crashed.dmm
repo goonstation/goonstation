@@ -55,7 +55,7 @@
 "bh" = (/obj/table/wood,/turf/simulated/floor/grime,/area/station/turret_protected/sea_crashed)
 "bi" = (/obj/decal/fakeobjects{anchored = 1; desc = "A security camera that is not on but, instead, off."; dir = 1; icon = 'icons/obj/monitors.dmi'; icon_state = "camerax"; name = "security camera"},/obj/table/wood,/turf/simulated/floor/grime,/area/station/turret_protected/sea_crashed)
 "bj" = (/obj/table/wood,/obj/item/reagent_containers/food/drinks/bottle/gin,/turf/simulated/floor/grime,/area/station/turret_protected/sea_crashed)
-"bk" = (/obj/decal/cleanable/dirt,/obj/rack,/obj/item/implantcase/robust,/turf/simulated/floor/grime,/area/station/turret_protected/sea_crashed)
+"bk" = (/obj/decal/cleanable/dirt,/obj/rack,/turf/simulated/floor/grime,/area/station/turret_protected/sea_crashed)
 "bl" = (/obj/decal/fakeobjects{anchored = 1; desc = "A security camera that is not on but, instead, off."; dir = 1; icon = 'icons/obj/monitors.dmi'; icon_state = "camerax"; name = "security camera"},/turf/simulated/floor/darkblue,/area/station/turret_protected/sea_crashed)
 "bm" = (/obj/item/raw_material/shard,/turf/simulated/floor/darkblue,/area/station/turret_protected/sea_crashed)
 "bn" = (/obj/decal/cleanable/dirt,/obj/item/scrap,/turf/simulated/floor/darkblue,/area/station/turret_protected/sea_crashed)
@@ -200,6 +200,7 @@
 "ee" = (/obj/grille/catwalk{dir = 10; icon_state = "catwalk_cross"},/turf/variableTurf/clear,/area/station/turret_protected/sea_crashed)
 "eg" = (/obj/grille/catwalk{dir = 6},/turf/variableTurf/clear,/area/station/turret_protected/sea_crashed)
 "ei" = (/obj/grille/catwalk{dir = 6; icon_state = "catwalk_cross"},/turf/variableTurf/clear,/area/station/turret_protected/sea_crashed)
+"sR" = (/obj/critter/gunbot/heavy{dir = 4; icon_state = "mars_sec_bot"},/obj/item/implantcase/robust,/turf/simulated/floor/black/grime,/area/station/turret_protected/sea_crashed)
 
 (1,1,1) = {"
 aaaaaaababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -215,7 +216,7 @@ aaaabebobebebebpbebebebqbqbebebebobebebobebeabaa
 aaaabebrbsarbtasasbubvasbwasbxasasbyasbsbrbeahaa
 aaaabebsbsasbzbAbAbAbAbAbAbAbAbAbAbBasbsbsbeabaa
 aaaaboasbwasbCbDbEbFbFbFbFbFbFbFbGbHasasasbeabaa
-aaaabebIbJbKbCbLbMbNbObPbPbObNbQbLbHbRbSbTbeabaa
+aaaabebIbJbKbCbLsRbNbObPbPbObNbQbLbHbRbSbTbeabaa
 aaaabeasasasbUbLbFbVbPbWbXbPbYbFbLbZascaasboabaa
 aaaabecbcccdbCbLbMbNbObPbPbOcebQbLbHcfcgchbeabaa
 aaaabearasasbCcibFbFcjckckcjbFbEclbHasarasbeabaa

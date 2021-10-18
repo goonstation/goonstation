@@ -22,7 +22,7 @@
 /obj/displaycase/ex_act(severity)
 	switch(severity)
 		if (1)
-			var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+			var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 			G.set_loc(src.loc)
 
 			qdel(src)
@@ -71,7 +71,7 @@
 		if (!( src.destroyed ))
 			src.set_density(0)
 			src.destroyed = 1
-			var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+			var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 			G.set_loc(src.loc)
 			if (displayed)
 				displayed.set_loc(src.loc)
@@ -253,9 +253,7 @@
 				if (!isnull(src.our_projectile2))
 					src.our_projectiles = list(new src.our_projectile, new src.our_projectile2)
 					L.projectiles = src.our_projectiles
-				src.our_cell.set_loc(L)
-				L.cell = src.our_cell
-
+				AddComponent(/datum/component/cell_holder, our_cell)
 				// The man with the golden gun.
 				if (src.quality_counter >= src.q_threshold2)
 					L.setMaterial(getMaterial("gold"), appearance = 0, setname = 0)

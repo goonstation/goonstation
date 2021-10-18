@@ -90,7 +90,7 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 	harvests = 5
 	endurance = 5
 	genome = 19
-	assoc_reagents = list("water")
+	assoc_reagents = list("juice_watermelon")
 	nectarlevel = 15
 	mutations = list(/datum/plantmutation/melon/george, /datum/plantmutation/melon/bowling)
 	commuts = list(/datum/plant_gene_strain/immortal,/datum/plant_gene_strain/seedless)
@@ -271,6 +271,21 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 	genome = 18
 	nectarlevel = 10
 	assoc_reagents = list("juice_blueberry")
+
+/datum/plant/fruit/raspberry
+	name = "Raspberry"
+	seedcolor = "#a30325"
+	crop = /obj/item/reagent_containers/food/snacks/plant/raspberry
+	starthealth = 10
+	growtime = 60
+	harvtime = 120
+	cropsize = 2
+	harvests = 3
+	endurance = 1
+	genome = 7
+	nectarlevel = 10
+	mutations = list(/datum/plantmutation/raspberry/blackberry, /datum/plantmutation/raspberry/blueraspberry)
+	assoc_reagents = list("juice_raspberry")
 
 /datum/plant/fruit/coconut
 	name = "Coconut"

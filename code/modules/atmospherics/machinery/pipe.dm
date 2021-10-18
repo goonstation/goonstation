@@ -256,7 +256,7 @@ obj/machinery/atmospherics/pipe
 
 		hide(var/i)
 			if(level == 1 && istype(loc, /turf/simulated))
-				invisibility = i ? 101 : 0
+				invisibility = i ? INVIS_ALWAYS : INVIS_NONE
 			update_icon()
 
 		process()
@@ -392,18 +392,7 @@ obj/machinery/atmospherics/pipe
 					return
 
 				boutput(user, "You start to repair the [src.name].")
-
-				if (do_after(user, 2 SECONDS))
-					ruptured --
-				else
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-					return
-				if(!ruptured)
-					boutput(user, "You have fully repaired the [src.name].")
-					icon_state = initial_icon_state
-					desc = initial(desc)
-				else boutput(user, "You have partially repaired the [src.name].")
-				return
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/atmospherics/pipe/simple/proc/repair_pipe, list(), W.icon, W.icon_state, "You repair the [src.name].", null)
 
 			else if(destroyed && istype(W, /obj/item/rods))
 				var/duration = 15 SECONDS
@@ -413,6 +402,11 @@ obj/machinery/atmospherics/pipe
 				var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, duration, /obj/machinery/atmospherics/pipe/simple/proc/reconstruct_pipe,\
 				list(user, S), W.icon, W.icon_state, "[user] finishes working with \the [src].")
 				actions.start(action_bar, user)
+
+		proc/repair_pipe()
+			src.ruptured = 0
+			icon_state = initial_icon_state
+			desc = initial(desc)
 
 		proc/reconstruct_pipe(mob/M, obj/item/rods/R)
 			if(istype(R) && istype(M))
@@ -677,7 +671,7 @@ obj/machinery/atmospherics/pipe
 				dir = WEST
 
 			New()
-				air_temporary = unpool(/datum/gas_mixture)
+				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
 
@@ -699,7 +693,7 @@ obj/machinery/atmospherics/pipe
 				dir = WEST
 
 			New()
-				air_temporary = unpool(/datum/gas_mixture)
+				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
 
@@ -721,7 +715,7 @@ obj/machinery/atmospherics/pipe
 				dir = WEST
 
 			New()
-				air_temporary = unpool(/datum/gas_mixture)
+				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T0C
 
@@ -744,7 +738,7 @@ obj/machinery/atmospherics/pipe
 				dir = WEST
 
 			New()
-				air_temporary = unpool(/datum/gas_mixture)
+				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T0C
 
@@ -768,7 +762,7 @@ obj/machinery/atmospherics/pipe
 				dir = WEST
 
 			New()
-				air_temporary = unpool(/datum/gas_mixture)
+				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
 
@@ -790,7 +784,7 @@ obj/machinery/atmospherics/pipe
 				dir = WEST
 
 			New()
-				air_temporary = unpool(/datum/gas_mixture)
+				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
 
@@ -812,7 +806,7 @@ obj/machinery/atmospherics/pipe
 				dir = WEST
 
 			New()
-				air_temporary = unpool(/datum/gas_mixture)
+				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
 
@@ -835,7 +829,7 @@ obj/machinery/atmospherics/pipe
 				dir = WEST
 
 			New()
-				air_temporary = unpool(/datum/gas_mixture)
+				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
 
@@ -862,7 +856,7 @@ obj/machinery/atmospherics/pipe
 				dir = WEST
 
 			New()
-				air_temporary = unpool(/datum/gas_mixture)
+				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
 
@@ -1034,7 +1028,7 @@ obj/machinery/atmospherics/pipe
 
 		hide(var/i)
 			if(level == 1 && istype(loc, /turf/simulated))
-				invisibility = i ? 101 : 0
+				invisibility = i ? INVIS_ALWAYS : INVIS_NONE
 			update_icon()
 
 		pipeline_expansion()

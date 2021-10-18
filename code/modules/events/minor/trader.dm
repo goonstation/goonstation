@@ -20,6 +20,9 @@
 #endif
 		var/docked_where = shuttle == "diner" ? "space diner" : "station";
 		command_alert("A merchant shuttle has docked with the [docked_where].", "Commerce and Customs Alert")
+		for(var/client/C in clients)
+			if(C.mob && (C.mob.z == Z_LEVEL_STATION))
+				C.mob.playsound_local(C.mob, 'sound/misc/announcement_chime.ogg', 30, 0)
 		var/area/start_location = null
 		var/area/end_location = null
 		if(shuttle == "diner")
@@ -90,6 +93,8 @@
 			#ifdef UNDERWATER_MAP
 			start_location.color = OCEAN_COLOR
 			#endif
+
+			station_repair.repair_turfs(dstturfs)
 
 			active = 0
 

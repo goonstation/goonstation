@@ -16,7 +16,6 @@
 	stamina_crit_chance = 15
 
 	m_amt = 150
-	module_research = list("tools" = 4, "metals" = 2)
 	rand_pos = 1
 
 	New()
@@ -34,7 +33,6 @@
 	desc = "What the FUCK is that thing???"
 	icon_state = "wrench-monkey"
 	item_state = "wrench"
-	module_research = list("tools" = 8)
 
 /obj/item/wrench/vr
 	icon_state = "wrench-vr"

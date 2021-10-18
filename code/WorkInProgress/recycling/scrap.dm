@@ -19,7 +19,7 @@
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_TINY
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT | UNCRUSHABLE
 
 #define MAX_SCRAP	15000	// maximum content amount of a scrap pile
 
@@ -226,7 +226,7 @@
 	if(src.is_single_piece())
 		return ..(user)
 	var/obj/item/scrap/S = src.get_single_piece()
-	S.attack_hand(user)
+	S.Attackhand(user)
 	return
 */
 

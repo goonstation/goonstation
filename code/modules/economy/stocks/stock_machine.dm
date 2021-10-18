@@ -161,7 +161,7 @@
 		else
 			boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
 			src.logged_in = null
-	else src.attack_hand(user)
+	else ..()
 	return
 
 /obj/machinery/computer/stockexchange/proc/sell_some_shares(datum/stock/ticker/S, mob/user)

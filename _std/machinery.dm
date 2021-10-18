@@ -4,6 +4,8 @@
 //this file is not in defines or macros because this one is kind of a frankenstein
 #define NETWORK_MACHINE_RESET_DELAY 40 //Time (in 1/10 of a second) before we can be manually reset again (machines).
 
+#define MACHINE_PROC_INTERVAL (0.4 SECONDS)
+
 //communications stuff
 #define TRANSMISSION_WIRE	0
 #define TRANSMISSION_RADIO	1
@@ -38,6 +40,9 @@
 #define SHIP_ALERT_BAD 1
 
 #define DATA_TERMINAL_IS_VALID_MASTER(terminal, master) (master && (get_turf(master) == terminal.loc))
+
+#define PROCESSING_TIER_MULTI(target) (1<<(target.current_processing_tier-1)) //! Scalar to behave as if it were running at full speed
+#define MACHINE_PROCS_PER_SEC (MACHINE_PROC_INTERVAL / (1 SECOND))
 
 #define PROCESSING_FULL      1
 #define PROCESSING_HALF      2

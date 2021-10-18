@@ -25,6 +25,7 @@ datum/preferences
 
 	var/be_traitor = 0
 	var/be_syndicate = 0
+	var/be_syndicate_commander = 0
 	var/be_spy = 0
 	var/be_gangleader = 0
 	var/be_revhead = 0
@@ -32,6 +33,7 @@ datum/preferences
 	var/be_wizard = 0
 	var/be_werewolf = 0
 	var/be_vampire = 0
+	var/be_arcfiend = 0
 	var/be_wraith = 0
 	var/be_blob = 0
 	var/be_conspirator = 0
@@ -119,7 +121,7 @@ datum/preferences
 	ui_data(mob/user)
 		if (isnull(src.preview))
 			src.preview = new(user.client, "preferences", "preferences_character_preview")
-			src.preview.add_background("#191919")
+			src.preview.add_background()
 			src.update_preview_icon()
 
 		var/client/client = ismob(user) ? user.client : user
@@ -154,13 +156,14 @@ datum/preferences
 			"profileName" = src.profile_name,
 			"profileModified" = src.profile_modified,
 
-			"preview" = src.preview.preview_id,
+			"preview" = src.preview?.preview_id,
 
 			"nameFirst" = src.name_first,
 			"nameMiddle" = src.name_middle,
 			"nameLast" = src.name_last,
 			"randomName" = src.be_random_name,
-			"gender" = (src.gender == MALE ? "Male" : "Female") + " " + (!AH.pronouns ? (src.gender == MALE ? "(he/him)" : "(she/her)") : "(they/them)"),
+			"gender" = src.gender == MALE ? "Male" : "Female",
+			"pronouns" = AH.pronouns.name,
 			"age" = src.age,
 			"bloodRandom" = src.random_blood,
 			"bloodType" = src.blType,
@@ -421,23 +424,25 @@ datum/preferences
 					return TRUE
 
 			if ("update-gender")
-				if (!AH.pronouns)
-					if (src.gender == MALE)
-						src.gender = FEMALE
-						AH.gender = FEMALE
-					else if (src.gender == FEMALE)
-						src.gender = MALE
-						AH.gender = MALE
-						AH.pronouns = 1
+				if (src.gender == MALE)
+					src.gender = FEMALE
+					AH.gender = FEMALE
 				else
-					if (src.gender == MALE)
-						src.gender = FEMALE
-						AH.gender = FEMALE
-					else if (src.gender == FEMALE)
-						src.gender = MALE
-						AH.gender = MALE
-						AH.pronouns = 0
+					src.gender = MALE
+					AH.gender = MALE
 				update_preview_icon()
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("update-pronouns")
+				var/list/types = filtered_concrete_typesof(/datum/pronouns, /proc/pronouns_filter_is_choosable)
+				var/selected
+				for (var/i = 1, i <= length(types), i++)
+					var/datum/pronouns/pronouns = get_singleton(types[i])
+					if (AH.pronouns == pronouns)
+						selected = i
+						break
+				AH.pronouns = get_singleton(types[selected < length(types) ? selected + 1 : 1])
 				src.profile_modified = TRUE
 				return TRUE
 
@@ -486,7 +491,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-securityNote")
-				var/new_text = input(usr, "Please enter new flavor text (appears when examining you):", "Character Generation", src.security_note) as null|text
+				var/new_text = input(usr, "Please enter new flavor text (appears when examining your security record):", "Character Generation", src.security_note) as null|text
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
@@ -498,7 +503,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-medicalNote")
-				var/new_text = input(usr, "Please enter new flavor text (appears when examining you):", "Character Generation", src.medical_note) as null|text
+				var/new_text = input(usr, "Please enter new flavor text (appears when examining your medical record):", "Character Generation", src.medical_note) as null|text
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
@@ -558,7 +563,28 @@ datum/preferences
 						update_preview_icon()
 						src.profile_modified = TRUE
 						return TRUE
+			if ("decrease-skinTone")
+				var/units = 1
+				if (params["alot"])
+					units = 8
+				var/list/L = hex_to_rgb_list(AH.s_tone)
+				AH.s_tone = rgb(max(L[1]-units, 61), max(L[2]-units, 8), max(L[3]-units, 0))
+				AH.s_tone_original = AH.s_tone
 
+				update_preview_icon()
+				src.profile_modified = TRUE
+				return TRUE
+			if ("increase-skinTone")
+				var/units = 1
+				if (params["alot"])
+					units = 8
+				var/list/L = hex_to_rgb_list(AH.s_tone)
+				AH.s_tone = rgb(min(L[1]+units, 255), min(L[2]+units, 236), min(L[3]+units, 183))
+				AH.s_tone_original = AH.s_tone
+
+				update_preview_icon()
+				src.profile_modified = TRUE
+				return TRUE
 			if ("update-eyeColor")
 				var/new_color = input(usr, "Please select an eye color.", "Character Generation", AH.e_color) as null|color
 				if (new_color)
@@ -849,6 +875,7 @@ datum/preferences
 				use_click_buffer = 0
 				be_traitor = 0
 				be_syndicate = 0
+				be_syndicate_commander = 0
 				be_spy = 0
 				be_gangleader = 0
 				be_revhead = 0
@@ -1226,7 +1253,7 @@ datum/preferences
 					continue
 				if (JD.needs_college && !user.has_medal("Unlike the director, I went to college"))
 					continue
-				if (JD.requires_whitelist && !NT.Find(ckey(user.mind.key)))
+				if (JD.requires_whitelist && !NT.Find(user.ckey))
 					continue
 				if (jobban_isbanned(user, JD.name))
 					if (cat != "unwanted")
@@ -1258,11 +1285,11 @@ datum/preferences
 			HTML += "</td>"
 
 		HTML += "<td valign='top' class='antagprefs'>"
-
 		if (jobban_isbanned(user, "Syndicate"))
 			HTML += "You are banned from playing antagonist roles."
 			src.be_traitor = 0
 			src.be_syndicate = 0
+			src.be_syndicate_commander = 0
 			src.be_spy = 0
 			src.be_gangleader = 0
 			src.be_revhead = 0
@@ -1270,6 +1297,7 @@ datum/preferences
 			src.be_wizard = 0
 			src.be_werewolf = 0
 			src.be_vampire = 0
+			src.be_arcfiend = 0
 			src.be_wraith = 0
 			src.be_blob = 0
 			src.be_conspirator = 0
@@ -1279,6 +1307,7 @@ datum/preferences
 			HTML += {"
 			<a href="byond://?src=\ref[src];preferences=1;b_traitor=1" class="[src.be_traitor ? "yup" : "nope"]">[crap_checkbox(src.be_traitor)] Traitor</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_syndicate=1" class="[src.be_syndicate ? "yup" : "nope"]">[crap_checkbox(src.be_syndicate)] Nuclear Operative</a>
+			<a href="byond://?src=\ref[src];preferences=1;b_syndicate_commander=1" class="[src.be_syndicate_commander ? "yup" : "nope"]">[crap_checkbox(src.be_syndicate_commander)] Nuclear Operative Commander</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_spy=1" class="[src.be_spy ? "yup" : "nope"]">[crap_checkbox(src.be_spy)] Spy/Thief</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_gangleader=1" class="[src.be_gangleader ? "yup" : "nope"]">[crap_checkbox(src.be_gangleader)] Gang Leader</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_revhead=1" class="[src.be_revhead ? "yup" : "nope"]">[crap_checkbox(src.be_revhead)] Revolution Leader</a>
@@ -1286,6 +1315,7 @@ datum/preferences
 			<a href="byond://?src=\ref[src];preferences=1;b_wizard=1" class="[src.be_wizard ? "yup" : "nope"]">[crap_checkbox(src.be_wizard)] Wizard</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_werewolf=1" class="[src.be_werewolf ? "yup" : "nope"]">[crap_checkbox(src.be_werewolf)] Werewolf</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_vampire=1" class="[src.be_vampire ? "yup" : "nope"]">[crap_checkbox(src.be_vampire)] Vampire</a>
+			<a href="byond://?src=\ref[src];preferences=1;b_arcfiend=1" class="[src.be_arcfiend ? "yup" : "nope"]">[crap_checkbox(src.be_arcfiend)] Arcfiend</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_wraith=1" class="[src.be_wraith ? "yup" : "nope"]">[crap_checkbox(src.be_wraith)] Wraith</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_blob=1" class="[src.be_blob ? "yup" : "nope"]">[crap_checkbox(src.be_blob)] Blob</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_conspirator=1" class="[src.be_conspirator ? "yup" : "nope"]">[crap_checkbox(src.be_conspirator)] Conspirator</a>
@@ -1491,6 +1521,12 @@ datum/preferences
 			src.SetChoices(user)
 			return
 
+		if (link_tags["b_syndicate_commander"])
+			src.be_syndicate_commander = !( src.be_syndicate_commander )
+			src.be_syndicate |= src.be_syndicate_commander
+			src.SetChoices(user)
+			return
+
 		if (link_tags["b_spy"])
 			src.be_spy = !( src.be_spy)
 			src.SetChoices(user)
@@ -1522,6 +1558,11 @@ datum/preferences
 
 		if (link_tags["b_vampire"])
 			src.be_vampire = !( src.be_vampire)
+			src.SetChoices(user)
+			return
+
+		if (link_tags["b_arcfiend"])
+			src.be_arcfiend = !( src.be_arcfiend)
 			src.SetChoices(user)
 			return
 

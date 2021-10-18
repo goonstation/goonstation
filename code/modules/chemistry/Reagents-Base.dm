@@ -154,9 +154,9 @@ datum
 				if(!M) M = holder.my_atom
 				if (isliving(M))
 					var/mob/living/H = M
-					if(H?.reagents.has_reagent("moonshine"))
-						mult *= 3
 					var/ethanol_amt = holder.get_reagent_amount(src.id)
+					if(H?.reagents.has_reagent("moonshine"))
+						mult *= 7
 					var/liver_damage = 0
 					if (!isalcoholresistant(H) || H?.reagents.has_reagent("moonshine"))
 						if (ethanol_amt >= 15)
@@ -195,7 +195,7 @@ datum
 								H.make_dizzy(5 * mult)
 						if (ethanol_amt >= 60)
 							H.change_eye_blurry(10 , 50)
-							if(probmult(6)) H.drowsyness += 5
+							if(probmult(6)) H.changeStatus("drowsy", 15 SECONDS)
 							if(prob(5)) H.take_toxin_damage(rand(1,2) * mult)
 
 					if (ishuman(M))
@@ -203,7 +203,8 @@ datum
 						if (HH.organHolder && HH.organHolder.liver)			//Hax here, lazy. currently only organ is liver. fix when adding others. -kyle
 							if (HH.organHolder.liver.robotic)
 								M.take_toxin_damage(-liver_damage * 3 * mult)
-								HH.organHolder.heal_organ(liver_damage *mult, liver_damage *mult, liver_damage *mult, "liver")
+								if(!HH.organHolder.liver.emagged)
+									HH.organHolder.heal_organ(liver_damage *mult, liver_damage *mult, liver_damage *mult, "liver")
 							else
 								if (ethanol_amt < 40 && HH.organHolder.liver.get_damage() < 10)
 									HH.organHolder.damage_organ(0, 0, liver_damage*mult, "liver")
@@ -413,10 +414,6 @@ datum
 			minimum_reaction_temperature = T0C + 100
 			var/reacted_to_temp = 0 // prevent infinite loop in a fluid
 
-			pooled()
-				..()
-				reacted_to_temp = 0
-
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(!reacted_to_temp)
 					reacted_to_temp = 1
@@ -561,7 +558,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.make_jittery(2 )
-				M.drowsyness = max(M.drowsyness-(5), 0)
+				M.changeStatus("drowsy", -10 SECONDS)
 				if(prob(4))
 					M.reagents.add_reagent("epinephrine", 1.2 * mult) // let's not metabolize into meth anymore
 				//if(prob(2))
@@ -729,6 +726,7 @@ datum
 			taste = "bland"
 			minimum_reaction_temperature = -INFINITY
 			target_organs = list("left_kidney", "right_kidney")
+			heat_capacity = 400
 #ifdef UNDERWATER_MAP
 			block_slippy = 1
 			description = "A little strange. Not like any water you've seen. But definitely OSHA approved."
@@ -832,7 +830,7 @@ datum
 							O.show_message(text("<span class='alert'><b>[] begins to crisp and burn!</b></span>", M), 1)
 						boutput(M, "<span class='alert'>Holy Water! It burns!</span>")
 						var/burndmg = volume * 1.25
-						burndmg = min(burndmg, 110) //cap burn at 110 so we can't instant-kill vampires. just crit em ok.
+						burndmg = min(burndmg, 80) //cap burn at 110(80 now >:) so we can't instant-kill vampires. just crit em ok.
 						M.TakeDamage("chest", 0, burndmg, 0, DAMAGE_BURN)
 						M.change_vampire_blood(-burndmg)
 						reacted = 1
@@ -928,7 +926,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				if (volume >= 5 && !(locate(/obj/item/raw_material/ice) in T))
-					var/obj/item/raw_material/ice/I = unpool(/obj/item/raw_material/ice)
+					var/obj/item/raw_material/ice/I = new /obj/item/raw_material/ice
 					I.set_loc(T)
 				return
 

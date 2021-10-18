@@ -42,11 +42,11 @@
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.limb_name = "fire essence"
 		HH.can_hold_items = 0
-		HH.can_attack = 0
+		HH.can_attack = 1
 		HH.can_range_attack = 1
 
 	setup_healths()
-		add_hh_flesh(-150, 150, 1.15)
+		add_hh_flesh(150, 1.15)
 		add_health_holder(/datum/healthHolder/brain)
 
 	New()

@@ -29,4 +29,5 @@
 		"*.dmi": "imagePreview.previewEditor"
 	},
 	"gitlens.advanced.blame.customArguments": ["-w"],
+    "tgstationTestExplorer.project.defines": [
 }

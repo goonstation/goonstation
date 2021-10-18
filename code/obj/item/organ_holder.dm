@@ -919,9 +919,9 @@
 						return 0
 				var/obj/item/organ/heart/newHeart = I
 				if (newHeart.robotic)
-					if (src.donor.bioHolder.HasEffect("elecres"))
+					if (src.donor.bioHolder.HasEffect("resist_electric"))
 						newHeart.breakme()
-					if (newHeart.broken || src.donor.bioHolder.HasEffect("elecres"))
+					if (newHeart.broken)
 						src.donor.show_text("Something is wrong with [newHeart], it fails to start beating!", "red")
 						src.donor.contract_disease(/datum/ailment/malady/flatline,null,null,1)
 					//Like above, I commented this out for a reason I cannot remember. might just be because I changed how that stamina modifier works, I dunno.

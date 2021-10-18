@@ -197,7 +197,7 @@
 		indicator.maptext_y = 38
 		indicator.maptext_height = 64
 		setProperty("movespeed", 1)
-		src.filters += filter(type="outline", size=0.5, color=rgb(255,255,255))
+		add_filter("outline", 1, outline_filter(size=0.5, color=rgb(255,255,255)))
 
 	pickup(mob/M)
 		..()
@@ -243,7 +243,7 @@
 				var/mob/living/carbon/human/user = usr
 				if (H.mind && user.mind && H.mind.special_role == user.mind.special_role)
 					playsound(src.loc, "sound/items/bball_bounce.ogg", 65, 1)
-					src.attack_hand(H)
+					src.Attackhand(H)
 					H.visible_message("<span class='combat'>[user] passes \the [src] to [H]!</span>", "<span class='combat'>You pass \the [src] to [H]!</span>")
 					return
 

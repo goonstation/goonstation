@@ -11,7 +11,7 @@ proc/pick_landmark(name, default=null)
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x2"
 	anchored = 1
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	var/deleted_on_start = TRUE
 	var/add_to_landmarks = TRUE
 	var/data = null // data to associatively save with the landmark
@@ -186,7 +186,8 @@ var/global/list/job_start_locations = list()
 		"seamonkeyspawn_rich" = /mob/living/carbon/human/npc/monkey/sea/rich,
 		"seamonkeyspawn_lab" = /mob/living/carbon/human/npc/monkey/sea/lab,
 		"waiter" = /mob/living/carbon/human/waiter,
-		"monkeyspawn_inside" = /mob/living/carbon/human/npc/monkey
+		"monkeyspawn_inside" = /mob/living/carbon/human/npc/monkey,
+		"dolly" = /mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled
 	)
 
 	New()
@@ -240,6 +241,9 @@ var/global/list/job_start_locations = list()
 /obj/landmark/lrt/workshop
 	name = "Hidden Workshop"
 
+/obj/landmark/lrt/voiddiner
+	name = "Void Diner"
+
 /obj/landmark/character_preview_spawn
 	name = LANDMARK_CHARACTER_PREVIEW_SPAWN
 
@@ -248,11 +252,15 @@ var/global/list/job_start_locations = list()
 	desc = "Links a pair of corresponding turfs in holy Viscontent Matrimony. You shouldnt be seeing this."
 	icon = 'icons/effects/mapeditor.dmi'
 	icon_state = "landmark"
-	color = "#D1CFAE"
-	var/targetZ = 1 // target z-level to push it's contents to
-	var/xOffset = 0 // use only for pushing to the same z-level
-	var/yOffset = 0 // use only for pushing to the same z-level
+	color = "#FF0000"
+	/// target z-level to push it's contents to
+	var/targetZ = 1
+	/// x offset relative to the landmark, will cause visual jump effect due to set_loc not gliding
+	var/xOffset = 0
+	/// /y offset relative to the landmark, will cause visual jump effect due to set_loc not gliding
+	var/yOffset = 0
 	add_to_landmarks = FALSE
+	/// modifier for restricting criteria of what gets warped by mirror
 	var/warptarget_modifier = LANDMARK_VM_WARP_ALL
 	var/novis = FALSE
 
@@ -284,10 +292,12 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/viscontents_spawn/no_warp
 	warptarget_modifier = LANDMARK_VM_WARP_NONE
-
-/turf/var/turf/vistarget = null	// target turf for projecting its contents elsewhere
-/turf/var/turf/warptarget = null // target turf for teleporting its contents elsewhere
-/turf/var/turf/warptarget_modifier = null // control who gets warped
+/// target turf for projecting its contents elsewhere
+/turf/var/turf/vistarget = null
+/// target turf for teleporting its contents elsewhere
+/turf/var/turf/warptarget = null
+/// control who gets warped to warptarget
+/turf/var/turf/warptarget_modifier = null
 
 /turf/proc/updateVis()
 	if(vistarget)

@@ -26,7 +26,6 @@
 	count_in_total = 1
 	maximum_value = 0
 	value = 0
-	minimum_value = -200
 	depletion_threshold = -200
 
 	var/prime_breathing = "o"

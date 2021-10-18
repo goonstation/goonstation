@@ -11,7 +11,7 @@
 #define HEAD_ROACH 8
 #define HEAD_FROG 9
 #define HEAD_SHELTER 10
-#define HEAD_VAMPZOMBIE 11
+#define HEAD_VAMPTHRALL 11
 #define HEAD_RELI 12
 #define HEAD_CHICKEN 13
 #define HEAD_HUNTER 14

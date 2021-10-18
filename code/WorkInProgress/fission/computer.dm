@@ -22,13 +22,6 @@
 	process()
 		..()
 
-	attackby(I as obj, user as mob)
-		src.attack_hand(user)
-		return
-
-	attack_ai(var/mob/user as mob)
-		return src.attack_hand(user)
-
 	attack_hand(var/mob/user as mob)
 		if(..())
 			return

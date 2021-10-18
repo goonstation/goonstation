@@ -47,6 +47,9 @@
 		if (W.cant_self_remove)
 			boutput(user, "<span class='alert'>You can't get [W] to come off of you!</span>")
 			return
+		if (istype(W, /obj/item/clothing/under/trash_bag))
+			boutput(user, "<span class='alert'>You can't put a [W] into another trash bag?! Are you crazy?!</span>")
+			return
 		else if ((src.current_stuff + W.w_class) > src.max_stuff) // we too full
 			boutput(user, "<span class='alert'>\The [src] is too full for [W] to fit!</span>")
 			return

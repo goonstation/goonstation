@@ -1,6 +1,6 @@
 /atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if (reagents)
-		reagents.temperature_reagents(exposed_temperature, exposed_volume)
+		reagents.temperature_reagents(exposed_temperature, exposed_volume, 350, 300, 1)
 	if (src.material)
 		src.material.triggerTemp(src, exposed_temperature)
 	return null
@@ -10,7 +10,7 @@
 	if (src.material)
 		src.material.triggerTemp(src, exposed_temperature)
 	if (reagents)
-		reagents.temperature_reagents(exposed_temperature, 10, 10, 300)
+		reagents.temperature_reagents(exposed_temperature, exposed_volume, 350, 300, 1)
 	if(!ON_COOLDOWN(src, "hotspot_expose_to_atoms__1", 1 SECOND) || !ON_COOLDOWN(src, "hotspot_expose_to_atoms__2", 1 SECOND) || !ON_COOLDOWN(src, "hotspot_expose_to_atoms__3", 1 SECOND) || !ON_COOLDOWN(src, "hotspot_expose_to_atoms__4", 1 SECOND) || !ON_COOLDOWN(src, "hotspot_expose_to_atoms__5", 1 SECOND))
 		if (electric) //mbc : i'm putting electric zaps on here because eleczaps ALWAYS happen alongside hotspot expose and i dont want to loop all atoms twice
 			for (var/atom/item in src) //I hate having to add this here too but too many things use hotspot_expose. This might cause lag on large fires.
@@ -34,7 +34,7 @@
 	if (active_hotspot)
 		if (locate(/obj/fire_foam) in src)
 			active_hotspot.dispose() // have to call this now to force the lighting cleanup
-			pool(active_hotspot)
+			qdel(active_hotspot)
 			active_hotspot = null
 
 		if (soh)
@@ -61,7 +61,7 @@
 		if (parent?.group_processing)
 			parent.suspend_group_processing()
 
-		active_hotspot = unpool(/obj/hotspot)
+		active_hotspot = new /obj/hotspot
 		active_hotspot.temperature = exposed_temperature
 		active_hotspot.volume = exposed_volume
 		active_hotspot.set_loc(src)
@@ -109,16 +109,6 @@
 		if (loc)
 			loc:active_hotspot = null
 		..()
-
-	pooled()
-		STOP_TRACKING
-		..()
-
-	unpooled()
-		..()
-		START_TRACKING
-		if (!light.attached_to)
-			light.attach(src)
 
 	// now this is ss13 level code
 	proc/set_real_color()
@@ -233,15 +223,15 @@
 
 		var/turf/simulated/floor/location = loc
 		if (!istype(location) || (locate(/obj/fire_foam) in location))
-			pool(src)
+			qdel(src)
 			return 0
 
 		if ((temperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST) || (volume <= 1))
-			pool(src)
+			qdel(src)
 			return 0
 
 		if (!location.air || location.air.toxins < 0.5 || location.air.oxygen < 0.5)
-			pool(src)
+			qdel(src)
 			return 0
 
 		for (var/mob/living/L in loc)

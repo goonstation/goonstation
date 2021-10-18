@@ -77,6 +77,11 @@
 			for (var/i in src.stains)
 				. += i + " "
 
+	proc/clean_stains()
+		if (islist(src.stains) && length(src.stains))
+			src.stains = list()
+			src.UpdateName()
+
 /obj/item/clothing/under
 	equipped(var/mob/user, var/slot)
 		..()

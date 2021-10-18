@@ -18,7 +18,6 @@
 	stamina_damage = 15
 	stamina_cost = 10
 	stamina_crit_chance = 30
-	module_research = list("tools" = 4, "metals" = 1)
 	rand_pos = 1
 
 	New()

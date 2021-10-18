@@ -33,7 +33,8 @@ Contains:
 
 	New()
 		..()
-		src.air_contents = unpool(/datum/gas_mixture)
+		src.air_contents = new /datum/gas_mixture
+		src.air_contents.vacuum()
 		src.air_contents.volume = 70 //liters
 		src.air_contents.temperature = T20C
 		processing_items |= src
@@ -43,7 +44,7 @@ Contains:
 
 	disposing()
 		if(air_contents)
-			pool(air_contents)
+			qdel(air_contents)
 			air_contents = null
 		processing_items.Remove(src)
 		..()
@@ -278,7 +279,6 @@ Contains:
 	name = "Gas Tank (Sleeping Agent)"
 	icon_state = "anesthetic"
 	desc = "This tank is labelled that it contains an anaesthetic capable of keeping somebody unconscious while they breathe it."
-	module_research = list("atmospherics" = 3, "metals" = 1, "medicine" = 2)
 	distribute_pressure = 81 // setting these things to start at the minimum pressure needed to breathe - Haine
 
 	New()
@@ -303,7 +303,6 @@ Contains:
 	stamina_damage = 55
 	stamina_cost = 30
 	desc = "A jetpack that can be toggled on, letting the user use the gas inside as a propellant. Can also be hooked up to a compatible mask to allow you to breathe the gas inside. This is labelled to contain oxygen."
-	module_research = list("atmospherics" = 4)
 	distribute_pressure = 17 // setting these things to start at the minimum pressure needed to breathe - Haine
 	c_flags = IS_JETPACK
 
@@ -359,7 +358,6 @@ Contains:
 	mats = 16
 	force = 8
 	desc = "A jetpack that can be toggled on, letting the user use the gas inside as a propellant. Can also be hooked up to a compatible mask to allow you to breathe the gas inside. This is labelled to contain oxygen."
-	module_research = list("atmospherics" = 4)
 	distribute_pressure = 17 // setting these things to start at the minimum pressure needed to breathe - Haine
 	compatible_with_TTV = 0
 
@@ -408,7 +406,6 @@ Contains:
 	name = "Gas Tank (Oxygen)"
 	icon_state = "oxygen"
 	desc = "This is a tank that can be worn on one's back, as well as hooked up to a compatible receptacle. When a mask is worn and the release valve on the tank is open, the user will breathe the gas inside the tank. This is labelled to contain oxygen."
-	module_research = list("atmospherics" = 2)
 	distribute_pressure = 17 // setting these things to start at the minimum pressure needed to breathe - Haine
 
 	New()
@@ -430,7 +427,6 @@ Contains:
 	stamina_cost = 16
 	desc = "A small tank that is labelled to contain oxygen. In emergencies, wear a mask that can be used to transfer air, such as a breath mask, turn on the release valve on the oxygen tank, and put it on your belt."
 	wear_image_icon = 'icons/mob/belt.dmi'
-	module_research = list("atmospherics" = 1)
 	distribute_pressure = 17 // setting these things to start at the minimum pressure needed to breathe - Haine
 
 	New()
@@ -448,7 +444,6 @@ Contains:
 	icon_state = "airmix"
 	item_state = "airmix"
 	desc = "This is a tank that can be worn on one's back, as well as hooked up to a compatible recepticle. When a mask is worn and the release valve on the tank is open, the user will breathe the gas inside the tank. This is labelled to contain nitrogen and oxygen."
-	module_research = list("atmospherics" = 2)
 	distribute_pressure = 81 // setting these things to start at the minimum pressure needed to breathe - Haine
 
 	New()
@@ -466,7 +461,6 @@ Contains:
 	icon_state = "plasma"
 	item_state = "plasma"
 	desc = "This is a tank that can be hooked up to a compatible recepticle. When a mask is worn and the release valve on the tank is open, the user will breathe the gas inside the tank. This is labelled to contain deadly plasma."
-	module_research = list("atmospherics" = 2)
 
 	New()
 		..()
@@ -617,7 +611,6 @@ Contains:
 	mats = 16
 	force = 8
 	desc = "An upgraded jetpack that can be toggled on, letting the user use the gas inside as a propellant. Can also be hooked up to a compatible mask to allow you to breathe the gas inside. This is labelled to contain oxygen."
-	module_research = list("atmospherics" = 4)
 	distribute_pressure = 17 // setting these things to start at the minimum pressure needed to breathe - Haine
 
 	New()

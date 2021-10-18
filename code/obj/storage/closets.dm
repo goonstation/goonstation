@@ -98,7 +98,7 @@
 	icon_state = "coffin"
 	icon_closed = "coffin"
 	icon_opened = "coffin-open"
-	layer = 2.2
+	layer = 2.5
 	icon_welded = "welded-coffin-4dirs"
 
 	wood
@@ -317,7 +317,7 @@
 /obj/storage/closet/mantacontainerred
 	name = "shipping container"
 	desc = "It's a shipping container, they are frequently used to ship different goods securely across oceans."
-	icon = 'icons/obj/32x96.dmi'
+	icon = 'icons/obj/large/32x96.dmi'
 	icon_state = "mantacontainerleft"
 	icon_closed = "mantacontainerleft"
 	icon_opened = "mantacontainerleft-open"
@@ -480,7 +480,7 @@
 /*
 		else if (issilicon(user))
 			if (get_dist(src, user) <= 1)
-				return src.attack_hand(user)
+				return src.Attackhand(user)
 */
 		else
 			return ..()
@@ -489,7 +489,7 @@
 /obj/storage/closet/mantacontainerred/right
 	name = "shipping container"
 	desc = "It's a shipping container, they are frequently used to ship different goods securely across oceans."
-	icon = 'icons/obj/32x96.dmi'
+	icon = 'icons/obj/large/32x96.dmi'
 	icon_closed = "mantacontainerright"
 	icon_state = "mantacontainerright"
 	icon_opened = "mantacontainerright-open"

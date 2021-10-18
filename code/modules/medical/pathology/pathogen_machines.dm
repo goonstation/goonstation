@@ -127,7 +127,7 @@
 					src.process_pathogen = P
 					src.process_source = S
 					counter = 25
-		src.attack_hand(usr)
+		src.Attackhand(usr)
 
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
 		if (istype(O, /obj/item/bloodslide))
@@ -773,7 +773,7 @@
 			if (src.manip.exposed && src.manip.slots[src.manip.exposed] && src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION)
 				var/datum/reagent/blood/pathogen/P = new
 				var/datum/pathogendna/D = src.manip.slots[src.manip.exposed]
-				var/datum/pathogen/PT = unpool(/datum/pathogen)
+				var/datum/pathogen/PT = new /datum/pathogen
 				PT.setup(0, D.reference)
 				PT.dnasample = D
 				P.pathogens += PT.pathogen_uid

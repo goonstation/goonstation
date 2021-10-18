@@ -769,7 +769,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 						END_NEAT
 					return
 
-				if (!(src.neat_things & NT_CLOAKER) && H.invisibility > 0)
+				if (!(src.neat_things & NT_CLOAKER) && H.invisibility > INVIS_NONE)
 					FOUND_NEAT(NT_CLOAKER)
 						speak_with_maptext("This is a reminder that cloaking technology is illegal within the inner solar system.  Please remain opaque to the visible spectrum as a courtesy to your fellow guests.  Thanks!")
 						END_NEAT
@@ -1577,7 +1577,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 					src.dynamicUpdate(M, reason|updateFlags)
 					updateFlags = REASON_NONE
 				else
-					src.attack_hand(M)
+					src.Attackhand(M)
 
 		if (issilicon(usr))
 			if (!(usr in nearby))

@@ -19,6 +19,7 @@
 	proc/update_maptext()
 		if (!src.current)
 			src.maptext = "<span class='pixel ol c vb'></span>"
+			return
 		maptext_width = 96
 		maptext_y = 32
 		maptext_x = -32
@@ -68,6 +69,7 @@
 	name = "hydroponics tray"
 	desc = "A tray filled with nutrient solution capable of sustaining plantlife... Made of plants."
 	icon_state = "kudzutray"
+	power_usage = 0
 
 	attackby(var/obj/item/W as obj, var/mob/user as mob)
 		//Can only attempt to destroy the plant pot if the plant in it is dead or empty.
@@ -83,6 +85,123 @@
 				return ..()
 		..()
 
+/obj/machinery/plantpot/bareplant
+	name = "arable soil"
+	desc = "A small mound of arable soil for planting and plant based activities."
+	anchored = 1
+	mats = 0
+	deconstruct_flags = 0
+	icon_state = null
+	power_usage = 0
+	growth_rate = 1
+	/// plant to grow
+	var/datum/plant/spawn_plant = null
+	/// growth level to spawn with
+	var/spawn_growth = null
+	/// list of commuts to apply to plant
+	var/list/datum/plant_gene_strain/spawn_commuts = list()
+	var/auto_water = TRUE
+
+	New()
+		SPAWN_DBG(0) // delay for prefab attribute assignment
+			var/datum/plant/P
+			//Adjust processing tier to slow down server burden unless necessary
+			if(spawn_plant)
+				P = new spawn_plant()
+				if(!P.special_proc)
+					processing_tier = PROCESSING_32TH
+			..()
+			status |= BROKEN
+
+			if(P)
+				var/obj/item/seed/S = new /obj/item/seed
+
+				S.generic_seed_setup(P)
+				src.HYPnewplant(S)
+
+				for(var/commutes in spawn_commuts)
+					HYPaddCommut(src.current, src.plantgenes, commutes)
+
+				if(spawn_growth)
+					src.grow_level = spawn_growth
+				else
+					src.grow_level = pick(3,4,4)
+				switch(grow_level)
+					if(2)
+						src.growth = (src.current.growtime - src.plantgenes.growtime) / 2
+					if(3)
+						src.growth = src.current.growtime - src.plantgenes.growtime
+					if(4)
+						src.growth = src.current.harvtime - src.plantgenes.harvtime
+				update_icon()
+			else
+				if(!src.current)
+					qdel(src)
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		// Filter out the following item interactions
+		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
+			boutput(user, "<span class='alert'>[W] does not seem like the right tool for the job.</span>")
+		else if(istype(W, /obj/item/seed/) || istype(W, /obj/item/seedplanter/))
+			boutput(user, "<span class='alert'>Something is already growing there.</span>")
+		else
+			..()
+
+	attack_hand(var/mob/user as mob)
+
+		if(isAI(user) || isobserver(user)) return // naughty AIs used to be able to harvest plants
+		src.add_fingerprint(user)
+		if(src.current)
+			var/datum/plant/growing = src.current
+
+			if(src.dead)
+				boutput(user, "<span class='notice'>You clear the dead plant.</span>")
+				HYPdestroyplant()
+				return
+
+			if(HYPcheck_if_harvestable())
+				if(!growing.harvest_tools) //if the plant needs a specific tool or set of tools to harvest
+					HYPharvesting(user,null)
+				else
+					if(!growing.harvest_tool_fail_message)
+						boutput(user, "<span><b>You don't have the right tool to harvest this plant!</b></span>")
+					else
+						boutput(user,growing.harvest_tool_fail_message)
+
+	HYPdestroyplant()
+		..()
+		qdel(src)
+
+	update_water_icon()
+		return
+
+	process()
+		..()
+		if(auto_water)
+			if(!src.reagents.has_reagent("water", 50))
+				src.reagents.add_reagent("water", 200)
+
+	flower
+		New()
+			spawn_plant = pick(/datum/plant/flower/rose)
+			..()
+
+	crop
+		New()
+			spawn_plant = pick(/datum/plant/crop/cotton, /datum/plant/crop/oat, /datum/plant/crop/peanut, /datum/plant/crop/soy)
+			..()
+
+	tree
+		New()
+			spawn_plant = pick(/datum/plant/crop/tree, /datum/plant/fruit/cherry, /datum/plant/fruit/apple, /datum/plant/fruit/peach)
+			..()
+
+	weed
+		New()
+			spawn_plant = pick(/datum/plant/weed/creeper, /datum/plant/weed/lasher, /datum/plant/weed/slurrypod, /datum/plant/artifact/pukeplant)
+			..()
+
+
 /obj/machinery/plantpot
 	// The central object for Hydroponics. All plant growing and most of everything goes on in
 	// this object - that said you don't want to have too many of them on the map because they
@@ -94,9 +213,11 @@
 	anchored = 0
 	density = 1
 	mats = 2
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR
 	flags = NOSPLASH
 	processing_tier = PROCESSING_SIXTEENTH
 	machine_registry_idx = MACHINES_PLANTPOTS
+	power_usage = 25
 	var/datum/plant/current = null // What is currently growing in the plant pot
 	var/datum/plantgenes/plantgenes = null // Set this up in New
 	var/tickcount = 0  // Automatic. Tracks how many ticks have elapsed, for CPU efficiency things.
@@ -151,6 +272,7 @@
 		..()
 
 	proc/post_alert(var/alert_msg)
+		if(status & (NOPOWER|BROKEN)) return
 
 		var/datum/radio_frequency/frequency = radio_controller.return_frequency("[report_freq]")
 
@@ -196,6 +318,14 @@
 	on_reagent_change()
 		src.do_update_water_icon = 1
 		src.update_water_level()
+
+	power_change()
+		. = ..()
+		update_icon()
+
+	was_deconstructed_to_frame(mob/user)
+		src.current = null // Dont think this would lead to any frustrations, considering like, youre chopping the machine up of course itd destroy the plant.
+		boutput( user, "<span class='alert'>In the process of deconstructing the tray you destroy the plant.</span>" )
 
 	process()
 		..()
@@ -382,7 +512,8 @@
 			update_icon()
 			update_name()
 
-		return
+		if(!HAS_FLAG(status, NOPOWER))
+			use_power(power_usage)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(src.current)
@@ -557,7 +688,7 @@
 					src.contributors += user
 			else
 				boutput(user, "<span class='alert'>You plant the seed, but nothing happens.</span>")
-				pool (SEED)
+				qdel(SEED)
 			return
 
 		else if(istype(W, /obj/item/seedplanter/))
@@ -571,9 +702,9 @@
 			user.visible_message("<span class='notice'>[user] plants a seed in the [src].</span>")
 			var/obj/item/seed/SEED
 			if(SP.selected.unique_seed)
-				SEED = unpool(SP.selected.unique_seed)
+				SEED = new SP.selected.unique_seed
 			else
-				SEED = unpool(/obj/item/seed)
+				SEED = new /obj/item/seed
 			SEED.generic_seed_setup(SP.selected)
 			SEED.set_loc(src)
 			if(SEED.planttype)
@@ -584,7 +715,7 @@
 					src.contributors += user
 			else
 				boutput(user, "<span class='alert'>You plant the seed, but nothing happens.</span>")
-				pool (SEED)
+				qdel(SEED)
 
 		else if(istype(W, /obj/item/reagent_containers/glass/))
 			// Not just watering cans - any kind of glass can be used to pour stuff in.
@@ -606,12 +737,12 @@
 			// Planting a crystal shard simply puts a crystal seed inside the plant pot for
 			// a moment, spawns a new plant from it, then deletes both the seed and the shard.
 			user.visible_message("<span class='notice'>[user] plants [W] in the tray.</span>")
-			var/obj/item/seed/crystal/WS = unpool(/obj/item/seed/crystal)
+			var/obj/item/seed/crystal/WS = new /obj/item/seed/crystal
 			WS.set_loc(src)
 			HYPnewplant(WS)
-			pool(W)
+			qdel(W)
 			sleep(0.5 SECONDS)
-			pool(WS)
+			qdel(WS)
 			if(!(user in src.contributors))
 				src.contributors += user
 
@@ -639,7 +770,7 @@
 		else ..()
 
 	attack_ai(mob/user as mob)
-		if(isrobot(user) && get_dist(src, user) <= 1) return src.attack_hand(user)
+		if(isrobot(user) && get_dist(src, user) <= 1) return src.Attackhand(user)
 
 	attack_hand(var/mob/user as mob)
 		if(isAI(user) || isobserver(user)) return // naughty AIs used to be able to harvest plants
@@ -737,6 +868,7 @@
 					usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
 					src.reagents.clear_reagents()
 					src.do_update_icon = 1
+					logTheThing("combat", usr, null, "cleared a hydroponics tray containing [current.name] at [log_loc(src)]")
 					HYPdestroyplant()
 		else
 			if(alert("Clear this tray?",,"Yes","No") == "Yes")
@@ -755,7 +887,7 @@
 			if(get_dist(user, over_object) > 1)
 				boutput(user, "<span class='alert'>[over_object] is too far away!</span>")
 				return
-			src.attackby(over_object, user)  // Activates the same command as would be used with a seed in hand on the tray.
+			src.Attackby(over_object, user)  // Activates the same command as would be used with a seed in hand on the tray.
 			return
 		else // if it's not a seed...
 			return ..() // call our parents and ask what to do.
@@ -814,6 +946,8 @@
 			UpdateOverlays(null, "health_display")
 			UpdateOverlays(null, "plant")
 			UpdateOverlays(null, "plantdeath")
+			if(status & (NOPOWER|BROKEN))
+				UpdateOverlays(null, "water_meter")
 			return
 
 		var/datum/plant/growing = src.current
@@ -859,6 +993,12 @@
 		src.plant_sprite.icon_state = planticon
 		src.plant_sprite.layer = 4
 		UpdateOverlays(plant_sprite, "plant")
+
+		if(status & (NOPOWER|BROKEN))
+			UpdateOverlays(null, "water_meter")
+			UpdateOverlays(null, "harvest_display")
+			UpdateOverlays(null, "health_display")
+			UpdateOverlays(null, "plantdeath")
 
 	proc/update_name()
 		if(!src.current)
@@ -942,7 +1082,7 @@
 		else
 			logTheThing("debug", null, null, "<b>Hydro Controls</b>: Could not access Hydroponics Controller to get Harvest cap.")
 
-		src.growth = growing.growtime - DNA.growtime
+		src.growth = max(0, growing.growtime - DNA.growtime)
 		// Reset the growth back to the beginning of maturation so we can wait out the
 		// harvest time again.
 		var/getamount = growing.cropsize + DNA.cropsize
@@ -1047,7 +1187,7 @@
 
 				// Start up the loop of grabbing all our produce. Remember, each iteration of
 				// this loop is for one item each.
-				var/obj/CROP = unpool(itemtype)
+				var/obj/CROP = new itemtype
 				CROP.set_loc(src)
 				// I bet this will go real well.
 				if(!dont_rename_crop)
@@ -1156,10 +1296,10 @@
 					// need to pass genes and whatnot along like we did for fruit.
 					var/obj/item/seed/S = CROP
 					if(growing.unique_seed)
-						S = unpool(growing.unique_seed)
+						S = new growing.unique_seed
 						S.set_loc(src)
 					else
-						S = unpool(/obj/item/seed)
+						S = new /obj/item/seed
 						S.set_loc(src)
 						S.removecolor()
 
@@ -1218,10 +1358,10 @@
 					// incase you couldn't get them otherwise, though.
 					var/obj/item/seed/S
 					if(growing.unique_seed)
-						S = unpool(growing.unique_seed)
+						S = new growing.unique_seed
 						S.set_loc(src)
 					else
-						S = unpool(/obj/item/seed)
+						S = new /obj/item/seed
 						S.set_loc(src)
 						S.removecolor()
 					var/datum/plantgenes/HDNA = src.plantgenes
@@ -1295,15 +1435,18 @@
 					if(istype(I,/obj/item/seed/))
 						if(!satchelpick || satchelpick == "Seeds Only")
 							I.set_loc(SA)
+							I.add_fingerprint(user)
 					else
 						if(!satchelpick || satchelpick == "Produce Only")
 							I.set_loc(SA)
+							I.add_fingerprint(user)
 				SA.satchel_updateicon()
 
 			// if the satchel got filled up this will dump any unharvested items on the floor
 			// if we're harvesting by hand it'll just default to this anyway! truly magical~
 			for(var/obj/I in src.contents)
 				I.set_loc(user.loc)
+				I.add_fingerprint(user)
 
 		// Now we determine the harvests remaining or grant extra ones.
 		if(!HYPCheckCommut(DNA,/datum/plant_gene_strain/immortal))
@@ -1399,7 +1542,7 @@
 		// then get rid of the seed, mutate the genes a little and update the pot sprite.
 		if(growing.harvestable) src.harvests = growing.harvests + DNA.harvests
 		if(src.harvests < 1) src.harvests = 1
-		pool (SEED)
+		qdel(SEED)
 
 		HYPmutateplant(1)
 		post_alert("event_new")
@@ -1764,6 +1907,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 	mats = 6
 	var/active = 0
 	var/datum/light/light
+	power_usage = 100
 
 	New()
 		..()
@@ -1780,7 +1924,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 
 	process()
 		..()
-		if(src.active)
+		if(src.active && powered())
 			for (var/obj/machinery/plantpot/P in view(2,src))
 				if(!P.current || P.dead)
 					continue
@@ -1789,16 +1933,25 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 					var/datum/plantgenes/DNA = P.plantgenes
 					if(HYPCheckCommut(DNA,/datum/plant_gene_strain/photosynthesis))
 						P.growth += 4
+			use_power(power_usage)
 
 	attack_hand(var/mob/user as mob)
 		src.add_fingerprint(user)
 		src.active = !src.active
 		user.visible_message("<b>[user]</b> switches [src.name] [src.active ? "on" : "off"].")
 		src.icon_state = "growlamp[src.active]"
-		if(src.active)
+		if(src.active && !HAS_FLAG(status, (NOPOWER|BROKEN)))
 			light.enable()
 		else
 			light.disable()
+
+	power_change()
+		. = ..()
+		if(HAS_FLAG(status, NOPOWER))
+			light.disable()
+		else if(src.active)
+			light.enable()
+
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(isscrewingtool(W) || iswrenchingtool(W))

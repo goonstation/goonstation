@@ -198,7 +198,7 @@
 		STOP_TRACKING
 
 /obj/crematorium/proc/update()
-	if (src.connected.loc != src.loc)
+	if (src.connected.loc != src)
 		src.icon_state = "crema0"
 	else
 		if (src.contents.len > 1)  //the tray lives in contents
@@ -689,7 +689,7 @@
 	desc = "Used to control a tanning bed."
 	icon = 'icons/obj/stationobjs.dmi'
 	mats = 20
-	var/id = 2
+	id = 2
 	icon_state = "tanconsole"
 	var/state_str = ""
 	var/obj/crematorium/tanning/linked = null //The linked tanning bed
