@@ -319,6 +319,8 @@
 		..()
 
 	proc/master_move()
+		if(QDELETED(src))
+			return
 		if(!istype(master))
 			qdel(src)
 			return
@@ -341,7 +343,7 @@
 
 			master?.moving = 1
 
-			while(length(master?.path) && src.the_target)
+			while(length(master?.path) && src.the_target && !QDELETED(src))
 				if(compare_movepath != current_movepath) break
 				if(!master) break
 				if(!length(master.path)) break

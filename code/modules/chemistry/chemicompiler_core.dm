@@ -704,6 +704,9 @@
 		// Putting SOMETHING in
 		var/obj/item/I = usr.equipped()
 		if(istype(I, /obj/item/reagent_containers/glass))
+			if(I.cant_drop)
+				boutput(usr, "<span class='alert'>You cannot place the [I] into the [src.holder]!</span>")
+				return
 			//putting a reagent container in
 			boutput(usr, "<span class='notice'>You place the [I] into the [src.holder].</span>")
 			usr.drop_item()

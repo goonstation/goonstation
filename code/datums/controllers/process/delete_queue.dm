@@ -66,15 +66,20 @@ var/global/harddel_count = 0
 				gccount++
 				continue
 
+#ifdef HARD_DELETIONS_DISABLED
+			var/harddel_msg = "Didn't GC:"
+#else
+			var/harddel_msg = "HardDel of"
+#endif
 			if (log_hard_deletions)
 				if (D.type == /image)
 					var/image/I = D
-					logTheThing("debug", text="HardDel of [I.type] -- iconstate [I.icon_state], icon [I.icon]")
+					logTheThing("debug", text="[harddel_msg] [I.type] -- iconstate [I.icon_state], icon [I.icon]")
 				else if(istype(D, /atom))
 					var/atom/A = D
-					logTheThing("debug", text="HardDel of [D.type] -- name [A.name], iconstate [A.icon_state], icon [A.icon]")
+					logTheThing("debug", text="[harddel_msg] [D.type] -- name [A.name], iconstate [A.icon_state], icon [A.icon]")
 				else
-					logTheThing("debug", text="HardDel of [D.type]")
+					logTheThing("debug", text="[harddel_msg] [D.type]")
 #ifdef LOG_HARD_DELETE_REFERENCES
 				if (log_hard_deletions >= 2)
 					for(var/x in find_all_references_to(D))
@@ -101,6 +106,11 @@ var/global/harddel_count = 0
 
 	#ifndef HARD_DELETIONS_DISABLED
 			del(D)
+	#else
+			if(isliving(D))
+				D.disposed = FALSE
+				D.qdeled = FALSE
+				put_mob_in_centcom_cloner(D)
 	#endif
 
 #endif

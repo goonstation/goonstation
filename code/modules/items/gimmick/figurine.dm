@@ -737,6 +737,11 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "chefbot"
 		ckey = "skeletondoot"
 
+	flyntloach
+		name = "\improper Flynt Loach"
+		icon_state = "flyntloach"
+		ckey = "profomii"
+
 /obj/item/item_box/figure_capsule
 	name = "capsule"
 	desc = "A little plastic ball for keeping stuff in. Woah! We're truly in the future with technology like this."

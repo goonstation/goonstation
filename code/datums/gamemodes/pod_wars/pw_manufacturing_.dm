@@ -154,6 +154,11 @@
 	category = "Tool"
 
 ////////////pod-armor///////////////////////
+
+ABSTRACT_TYPE(/datum/manufacture/pod_wars)
+
+ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
+
 /datum/manufacture/pod_wars/pod/armor_light
 	name = "Light NT Pod Armor"
 	item_paths = list("MET-3","CON-1")
