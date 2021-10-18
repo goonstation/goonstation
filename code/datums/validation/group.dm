@@ -27,7 +27,7 @@
 		for(var/key in src.items)
 			var/datum/validation_item/item = src.items[key]
 			for (var/datum/validation_error/E in item.errors)
-				E.path = key
+				E.key = key
 			src.errors += item.errors
 
 		if (length(src.errors) > 0)
