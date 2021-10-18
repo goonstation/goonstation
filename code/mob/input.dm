@@ -230,6 +230,7 @@
 								src.throw_at(get_step(src, move_dir), 1, 1)
 								src.setStatus("resting", duration = INFINITE_STATUS)
 								src.force_laydown_standup()
+								boutput(src, "<span class='alert'>You flop over, too winded to continue running!</span>")
 
 						var/list/pulling = list()
 						if (src.pulling)
