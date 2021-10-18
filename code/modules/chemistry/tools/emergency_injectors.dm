@@ -250,7 +250,7 @@
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/cardiac
 	name = "cardiac combi-injector"
-	desc = "A combination medical injector containing saline and epineprine."
+	desc = "A combination medical injector containing saline and epinephrine."
 	initial_reagents = list("saline" = 25, "epinephrine" = 25)
 	label = "yellow"
 
