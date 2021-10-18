@@ -1,6 +1,6 @@
 ABSTRACT_TYPE(/datum/req_contract/special)
 //contracts for utilisation by the special order event
-//these are distinguished by a crate being sent with the requisition on paper
+//these are distinguished by the requisition being sent physically, either standalone or in a crate with stuff
 //they are not inspected by the requisitions handler, and do not receive the screwup protection that is afforded to regular contracts
 
 /datum/req_contract/special

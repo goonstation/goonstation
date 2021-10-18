@@ -15,6 +15,7 @@
 #define RC_ITEMBYPATH 1
 #define RC_REAGENT 2
 #define RC_STACK 3
+#define RC_SEED 4
 
 //base entry
 ABSTRACT_TYPE(/datum/rc_entry)
@@ -85,6 +86,52 @@ ABSTRACT_TYPE(/datum/rc_entry/stack)
 				. = TRUE //let manager know passed eval item is claimed by contract
 		return
 
+//seeds, analyzed by genetic composition
+ABSTRACT_TYPE(/datum/rc_entry/seed)
+/datum/rc_entry/seed
+	entryclass = RC_SEED
+	var/cropname = "Tomato"
+	var/gene_factors = 0
+	var/gene_count = 0
+
+	var/gene_reqs = list() //this and cropname are the only things you need to set
+	// add your key value pairs to this list, either hard-coded or with a thing in New before ..(), for evaluation
+	// available keys (strings): Maturation, Production, Lifespan, Yield, Potency, Endurance
+	// number paired with key should be a negative integer for maturation or production, or a positive integer otherwise
+
+	New()
+		src.gene_factors = length(src.gene_reqs)
+		..()
+
+	rc_eval(atom/eval_item)
+		. = ..()
+		gene_count = 0
+
+		if(!istype(eval_item,/obj/item/seed)) return
+		var/obj/item/seed/cultivar = eval_item
+		if(!cultivar.plantgenes) return
+		if(cultivar.planttype.name != cropname) return
+
+		for(var/index in gene_reqs)
+			switch(index)
+				if("Maturation")
+					if(cultivar.plantgenes.growtime <= gene_reqs["Maturation"]) gene_count++
+				if("Production")
+					if(cultivar.plantgenes.harvtime <= gene_reqs["Production"]) gene_count++
+				if("Lifespan")
+					if(cultivar.plantgenes.harvests >= gene_reqs["Lifespan"]) gene_count++
+				if("Yield")
+					if(cultivar.plantgenes.cropsize >= gene_reqs["Yield"]) gene_count++
+				if("Potency")
+					if(cultivar.plantgenes.potency >= gene_reqs["Potency"]) gene_count++
+				if("Endurance")
+					if(cultivar.plantgenes.endurance >= gene_reqs["Endurance"]) gene_count++
+
+		if(gene_count >= gene_factors)
+			src.rollcount++
+			. = TRUE
+		return
+
 //reward items: contract creation instantiates these to fill item payout list if applicable
 //distinct from rc_entry datums, these -!! are instantiators of their own !!- that the requisition handler calls on
 /datum/rc_itemreward
@@ -138,6 +185,14 @@ ABSTRACT_TYPE(/datum/req_contract)
 					src.requis_desc += "[rce.count]+ unit[s_es(rce.count)] of [rce.name]<br>"
 				if(RC_STACK)
 					src.requis_desc += "[rce.count]+ [rce.name][rce.isplural ? null : s_es(rce.count,rce.es)]<br>"
+				if(RC_SEED)
+					var/datum/rc_entry/seed/rceed = rce
+					src.requis_desc += "[rce.count]x [rceed.cropname] seed with following traits:<br>"
+					for(var/index in rceed.gene_reqs)
+						if(index == "Maturation" || index == "Production")
+							src.requis_desc += "* [index]: [rceed.gene_reqs[index]] or lower<br>"
+						else
+							src.requis_desc += "* [index]: [rceed.gene_reqs[index]] or higher<br>"
 			src.payout += rce.feemod * rce.count
 
 	proc/requisify(obj/storage/crate/sell_crate)
@@ -180,3 +235,4 @@ ABSTRACT_TYPE(/datum/req_contract)
 #undef RC_ITEMBYPATH
 #undef RC_REAGENT
 #undef RC_STACK
+#undef RC_SEED

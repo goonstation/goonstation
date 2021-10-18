@@ -49,6 +49,7 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/organ)
 	typepath = /obj/item/organ/spleen
 
 
+
 /datum/req_contract/scientific/spectrometry
 	name = "Totally Will Not Result In A Resonance Cascade"
 	payout = 750
@@ -58,7 +59,7 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/organ)
 		"Field laboratory at crystal excavation site",
 		"Anti-mass spectrometry platform",
 		"Transmission laser prototyping facility",
-		"Classified research operation",
+		"Restricted research operation",
 		"An affiliated research facility is",
 		"An affiliated research vessel is",
 		"An affiliated research outpost is"
@@ -114,3 +115,77 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/organ)
 	exactpath = TRUE
 	feemod = 1000
 
+
+
+/datum/req_contract/scientific/botanical
+	name = "Feed Me, Seymour (Butz)"
+	payout = 950
+	var/list/namevary = list("Botanical Prototyping","Hydroponic Acclimation","Cultivar Propagation","Plant Genotype Study")
+	var/list/desc0 = list(
+		"An affiliated hydroponics lab",
+		"A cultivation analysis project",
+		"A Nanotrasen botanical researcher",
+		"A genome profiling project",
+		"A terrestrial cultivar developer",
+		"The botanical wing of an affiliated station",
+		"The botanical team of an affiliated vessel",
+		"The botanist of an affiliated outpost"
+	)
+	var/list/desc1 = list("cultivars","seeds","plant specimens","plant strains")
+	var/list/desc2 = list(
+		null,
+		" Please ensure all involved seeds have not sprouted.",
+		" Secondary beneficial traits are preferred, but not required.",
+		" Make absolutely certain to remove all trace seeds of other species before shipping.",
+		" Please do not ship extra seeds; only a finite amount of space is available for cultivation.",
+		" Ensure any seed coatings used are non-flammable; test conditions may become harsh."
+	)
+
+	New()
+		src.name = pick(namevary)
+		src.flavor_desc = "[pick(desc0)] is seeking multiple pure [pick(desc1)] with certain desired genetic traits. [pick(desc2)]"
+		src.payout += rand(0,30) * 10
+
+		if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/seed/scientific/fruit,rand(1,3))
+		if(!length(src.rc_entries) || prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/seed/scientific/crop,rand(1,3))
+		if(length(src.rc_entries) == 1 || prob(30)) src.rc_entries += rc_buildentry(/datum/rc_entry/seed/scientific/veg,rand(1,3))
+
+		src.item_rewarders += new /datum/rc_itemreward/plant_cartridge
+		..()
+
+/datum/rc_entry/seed/scientific
+	name = "genetically fussy seed"
+	cropname = "Durian"
+	feemod = 140
+	var/crop_genpath = /datum/plant
+
+	fruit
+		crop_genpath = /datum/plant/fruit
+	veg
+		crop_genpath = /datum/plant/veg
+	crop
+		crop_genpath = /datum/plant/crop
+
+	New()
+		var/datum/plant/plantalyze = pick(concrete_typesof(crop_genpath))
+		src.cropname = initial(plantalyze.name)
+
+		switch(rand(1,7))
+			if(1) src.gene_reqs["Maturation"] = rand(10,20) * -1
+			if(2) src.gene_reqs["Production"] = rand(10,20) * -1
+			if(3) src.gene_reqs["Lifespan"] = rand(3,5)
+			if(4) src.gene_reqs["Yield"] = rand(3,5)
+			if(5) src.gene_reqs["Potency"] = rand(3,5)
+			if(6) src.gene_reqs["Endurance"] = rand(3,5)
+			if(7)
+				src.gene_reqs["Maturation"] = rand(5,10) * -1
+				src.gene_reqs["Production"] = rand(5,10) * -1
+		..()
+
+
+/datum/rc_itemreward/plant_cartridge
+	name = "Hydroponics restock cartridge"
+
+	build_reward()
+		var/cart = new /obj/item/vending/restock_cartridge/hydroponics
+		return cart

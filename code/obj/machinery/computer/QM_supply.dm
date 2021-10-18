@@ -1054,12 +1054,13 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		src.temp += "Contract Reward:"
 		if(length(RC.item_rewarders) && !RC.hide_item_payouts)
 			src.temp += "<br>"
-			if(RC.payout > 0) src.temp += "[RC.payout]<br>"
+			if(RC.payout > 0) src.temp += "[RC.payout] Credits<br>"
 			for(var/datum/rc_itemreward/RI in RC.item_rewarders)
 				if(RI.count) src.temp += "[RI.count]x [RI.name]<br>"
 				else src.temp += "[RI.name]<br>"
+			src.temp += "<br>"
 		else
-			src.temp += " [RC.payout]<br>"
+			src.temp += " [RC.payout] Credits<br>"
 		src.temp += "Requisition Code: [RC.req_code]<br><br>"
 		if(RC.flavor_desc) src.temp += "[RC.flavor_desc]<br><br>"
 		src.temp += "[RC.requis_desc]"

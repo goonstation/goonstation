@@ -343,7 +343,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 			)
 			src.flavor_desc += "[pick(bonusducks)]"
 
-		if(prob(20))
+		if(prob(30))
 			var/collate = "[desc1] [desc2]"
 			var/datum/rc_itemreward/birthdaypic/picc = new /datum/rc_itemreward/birthdaypic
 			picc.whodatflag = whodat
