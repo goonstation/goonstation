@@ -1046,11 +1046,11 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	src.temp += "Insufficient or extra items will be returned to you.<br><br>"
 	src.temp += "One contract at a time may be pinned, which reserves it<br>"
 	src.temp += "for your use, even through market shifts.<br><br>"
-	src.temp += "Third-party requisitions are not handled through this<br>"
-	src.temp += "clearinghouse and <B>will not be returned if invalid</B>."
+	src.temp += "When fulfilling third-party contracts, you <B>must</B><br>"
+	src.temp += "send the included requisition sheet; please be aware<br>"
+	src.temp += "<B>returns are not provided for third-party contracts.</B>"
 	for (var/datum/req_contract/RC in shippingmarket.req_contracts)
 		src.temp += "<h3>[RC.name][RC.pinned ? " (Pinned)" : null]</h3>"
-		src.temp += "Requisition Code: [RC.req_code]<br>"
 		src.temp += "Contract Reward:"
 		if(length(RC.item_rewarders) && !RC.hide_item_payouts)
 			src.temp += "<br>"
@@ -1060,6 +1060,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				else src.temp += "[RI.name]<br>"
 		else
 			src.temp += " [RC.payout]<br>"
+		src.temp += "Requisition Code: [RC.req_code]<br><br>"
 		if(RC.flavor_desc) src.temp += "[RC.flavor_desc]<br><br>"
 		src.temp += "[RC.requis_desc]"
 		if(RC.req_class == 2) //aid contract

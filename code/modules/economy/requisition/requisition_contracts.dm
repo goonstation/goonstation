@@ -28,7 +28,12 @@ ABSTRACT_TYPE(/datum/rc_entry)
 	var/es = FALSE // used for item pluralization, i.e. you'd set this to true for "tomato". can usually be ignored
 
 	proc/rc_eval(atom/eval_item) //evaluation procedure, used in different entry classes
-		if(rollcount >= count) return FALSE //if you've already got enough, skip and tell the manager as such
+		. = FALSE
+		if(rollcount >= count) return //if you've already got enough, skip and tell the manager as such
+
+//when performing custom evaluations, there are 2 actions that must occur
+//first, you must return true if the atom the entry has been passed contributes to satisfying the condition
+//second, you must increment rollcount on satisfying condition; for a simple "is satisfied or not", increment rollcount by 1 with count left default
 
 //items, by the path
 ABSTRACT_TYPE(/datum/rc_entry/itembypath)
@@ -38,9 +43,8 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath)
 	var/exactpath = FALSE //evaluates precise path, instead of path and subtypes
 
 	rc_eval(obj/eval_item)
+		. = ..()
 		if(!istype(eval_item)) return //if it's not an object, it's definitely not an itembypath
-		..()
-		. = FALSE
 		if(exactpath && eval_item.type == typepath)
 			src.rollcount++
 			. = TRUE //let manager know passed eval item is claimed by contract
@@ -56,8 +60,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent)
 	var/chemname = "water" //chem being looked for in the evaluation
 
 	rc_eval(atom/eval_item)
-		..()
-		. = FALSE
+		. = ..()
 		if(eval_item.reagents)
 			var/C = eval_item.reagents.get_reagent_amount(chemname)
 			if(C)
@@ -74,9 +77,8 @@ ABSTRACT_TYPE(/datum/rc_entry/stack)
 	var/typepath_alt //use when an item can have two stackable forms, such as with a raw and refined ore
 
 	rc_eval(obj/item/eval_item)
+		. = ..()
 		if(!istype(eval_item)) return //if it's not an item, it's not a stackable
-		..()
-		. = FALSE
 		if(eval_item.type == typepath || (typepath_alt && eval_item.type == typepath_alt))
 			if(eval_item.amount)
 				rollcount += eval_item.amount
@@ -150,20 +152,23 @@ ABSTRACT_TYPE(/datum/req_contract)
 		. = 0 //by default return no success
 		for(var/atom/A in contents)
 			LAGCHECK(LAG_LOW)
-			for(var/datum/rc_entry/shoppin as anything in rc_entries)
+			for(var/datum/rc_entry/shoppin in rc_entries)
 				if(shoppin.rc_eval(A)) //found something that the requisition asked for, let it know
 					contents_to_cull |= A
 
-		for(var/datum/rc_entry/shopped as anything in rc_entries)
+		for(var/datum/rc_entry/shopped in rc_entries)
 			if(shopped.rollcount >= shopped.count)
 				successes_needed--
 
 		if(!successes_needed)
+			if(src.req_code == "REQ-THIRDPARTY") //third party sales do not preserve leftover items, returns are only on item reward
+				for(var/atom/X in contents)
+					if(X) qdel(X)
+				return 2
 			if(src.pinned) shippingmarket.has_pinned_contract = 0 //tell shipping market pinned contract was fulfilled
 			. = 1 //sale, but may be leftover items
 			for(var/atom/X in contents_to_cull)
 				if(X) qdel(X)
-				contents_to_cull -= X
 			if(!length(sell_crate.contents)) //total clean sale, tell shipping manager to del the crate
 				. = 2
 		return

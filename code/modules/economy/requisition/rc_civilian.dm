@@ -294,6 +294,31 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 		src.flavor_desc = "A birthday [pick(desc0)] is being held for [desc1] [desc2]. [pick(desc3)]."
 		src.payout += rand(0,50) * 10
 
+		if(prob(70)) //pizza party
+			src.rc_entries += rc_buildentry(/datum/rc_entry/stack/pizza,rand(2,3)*6)
+			src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/cola,rand(4,8)*10)
+
+		switch(rand(1,50)) //Special Outcomes Zone
+			if(1)
+				src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/chaps,rand(3,6))
+			if(11 to 15)
+				src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/grapes,rand(3,6))
+			if(16 to 20)
+				src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/banana,rand(4,8))
+			if(21 to 25)
+				src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/cannabis,rand(4,8))
+			if(26 to 30)
+				src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/glitter,rand(4,8)*5)
+			if(30 to 40)
+				src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/paperhat,rand(6,12))
+
+		if(!length(src.rc_entries)) src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/paperhat,rand(6,12)) //fallback
+
+		if(prob(70)) //cookies or cakes?
+			src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/cake,1+prob(20))
+		else //yep cookies
+			src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/cookie,rand(2,4)*6)
+
 		var/bonusducks
 		if(prob(50))
 			bonusducks = list(
@@ -317,29 +342,6 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 				" The quality of your response to this contract will be reported to your regional manager."
 			)
 			src.flavor_desc += "[pick(bonusducks)]"
-
-		if(prob(70)) //cookies or cakes?
-			src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/cake,1+prob(20))
-		else //yep cookies
-			src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/cookie,rand(2,4)*6)
-
-		if(prob(70)) //pizza party
-			src.rc_entries += rc_buildentry(/datum/rc_entry/stack/pizza,rand(2,3)*6)
-			src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/cola,rand(4,8)*10)
-
-		switch(rand(1,50)) //Special Outcomes Zone
-			if(1)
-				src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/chaps,rand(3,6))
-			if(11 to 15)
-				src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/grapes,rand(3,6))
-			if(16 to 20)
-				src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/banana,rand(4,8))
-			if(21 to 25)
-				src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/cannabis,rand(4,8))
-			if(26 to 30)
-				src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/glitter,rand(4,8)*5)
-			if(30 to 40)
-				src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/paperhat,rand(6,12))
 
 		if(prob(20))
 			var/collate = "[desc1] [desc2]"
@@ -383,7 +385,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/stack/pizza
 	name = "slices' worth of pizza"
 	typepath = /obj/item/reagent_containers/food/snacks/pizza
-	feemod = 80
+	feemod = 20
 	isplural = TRUE
 
 /datum/rc_entry/reagent/cola

@@ -17,7 +17,7 @@
 	/datum/commodity/trader/buford/whiteweed,
 	/datum/commodity/trader/buford/omegaweed,
 	/datum/commodity/trader/buford/psilocybin,
-	/datum/commodity/trader/buford/pizza)// 6
+	/datum/commodity/trader/buford/pizza)
 
 	base_goods_sell = list(/datum/commodity/trader/buford/alienseeds,
 	/datum/commodity/trader/buford/weedseeds,

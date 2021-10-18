@@ -349,9 +349,11 @@
 			var/datum/req_contract/contract
 
 			if(length(special_orders) && delivery_code == "REQ-THIRDPARTY")
-				returntosender = 0
-				//for(var/datum/req_contract/prospective in special_orders)
-					//prospective.auth_paper()
+				for(var/datum/req_contract/special/prospective in special_orders)
+					if(locate(prospective.req_sheet) in sell_crate.contents)
+						returntosender = 4
+						contract = prospective
+						break
 
 			else if(length(req_contracts))
 				for(var/datum/req_contract/prospective in req_contracts)
@@ -360,7 +362,7 @@
 						break
 
 			if(contract)
-				var/success = contract.requisify(sell_crate) //0 is did not sell, 1 is sold, 2 is sold with no remnants, 5 is special failure
+				var/success = contract.requisify(sell_crate) //0 is did not sell, 1 is sold, 2 is sold with no remnants
 				if(success)
 					contractQ = contract
 					//switch(contract.req_class) // code for if unpinned contracts are changed to not wipe entirely
@@ -384,6 +386,7 @@
 		if(returntosender)
 			if(returntosender >= 3)
 				qdel(sell_crate)
+				if(returntosender == 4) return //special order failure: point of no return
 			else
 				handle_returns(sell_crate)
 				if(returntosender == 1)
