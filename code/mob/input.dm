@@ -227,7 +227,9 @@
 
 						if(src.get_stamina() < STAMINA_COST_SPRINT && HAS_MOB_PROPERTY(src, PROP_FAILED_SPRINT_FLOP)) //Check after move rather than before so we cleanly transition from sprint to flop
 							if (!src.client.flying) //noclipping? you get a pass
-								src.throw_at(get_step(src, move_dir), 1, 1) //TODO maybe change speed if this looks weird
+								src.throw_at(get_step(src, move_dir), 1, 1)
+								src.setStatus("resting", duration = INFINITE_STATUS)
+								src.force_laydown_standup()
 
 						var/list/pulling = list()
 						if (src.pulling)
