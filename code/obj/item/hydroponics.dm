@@ -425,7 +425,6 @@
 
 	flags = FPRINT | TABLEPASS | ONBELT
 	w_class = W_CLASS_TINY
-	mats = list("MET-1" = 1)
 
 	force = 5.0
 	throwforce = 5.0
