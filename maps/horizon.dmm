@@ -54622,6 +54622,11 @@
 /area/station/ranch)
 "hjl" = (
 /obj/disposalpipe/segment/bent/south,
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8;
+	pixel_x = 9;
+	pixel_y = -2
+	},
 /turf/simulated/floor/white/checker{
 	dir = 6
 	},
