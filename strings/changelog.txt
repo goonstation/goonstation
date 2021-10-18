@@ -1,5 +1,9 @@
 
 (t)mon oct 18 21
+(u)Wisemonster
+(p)6368
+(e)|
+(+)Security Assistants may spawn with a new(ish) objective.
 (u)Gannets
 (p)6358
 (e)|
