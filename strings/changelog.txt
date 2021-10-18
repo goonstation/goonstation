@@ -1,4 +1,9 @@
 
+(t)mon oct 18 21
+(u)Gannets
+(p)6358
+(e)|
+(+)Nuke ops medics can now see what reagents are contained in their combi-injectors.
 (t)sun oct 17 21
 (u)tarmunora
 (e)🧊🔥|balance
