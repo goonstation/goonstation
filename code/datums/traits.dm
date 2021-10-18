@@ -1093,10 +1093,6 @@ obj/trait/pilot
 	category = "species"
 	mutantRace = /datum/mutantrace/roach
 
-	onAdd(var/mob/owner)
-		..()
-		owner.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
-
 /obj/trait/pug
 	name = "Pug (-3) \[Species\]"
 	cleanName = "Pug"
@@ -1107,6 +1103,10 @@ obj/trait/pilot
 	isPositive = 1 //Debatably???? also this var never gets used so Who Cares
 	category = "species"
 	mutantRace = /datum/mutantrace/pug
+
+	onAdd(var/mob/owner)
+		..()
+		owner.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
 
 //Infernal Contract Traits
 /obj/trait/hair
