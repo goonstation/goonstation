@@ -1099,7 +1099,7 @@ obj/trait/pilot
 	icon_state = "?"
 	desc = "Should a pug really be on a space station? They aren't suited for space at all. They're practically a liability to the compan.... aww, look at the little ears!"
 	id = "roach"
-	points = -3 //Subject to change- requires 3 minor negative traits or 1 major + 1 minor to balance out
+	points = -4 //Subject to change- -3 feels too low as puritan is relatively common. Though Puritan Pug DOES make for a special sort of Hard Modes
 	isPositive = 1 //Debatably???? also this var never gets used so Who Cares
 	category = "species"
 	mutantRace = /datum/mutantrace/pug
