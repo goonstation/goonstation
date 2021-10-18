@@ -398,6 +398,7 @@
 		desc = "It looks tasty! To dogs."
 		icon_state = "cookie-sugar" //TODO
 		frosted = 1
+		amount = 5
 		heal_amt = 3 //for pugs only. Strong, but there's no recipe for these (just the one you start with).
 		initial_volume = 20
 		initial_reagents = list("meat_slurry" = 10)
