@@ -2129,7 +2129,8 @@
 		..(H)
 		SPAWN_DBG(0)
 			if(ishuman(mob))
-				H.add_stam_mod_max("pug", -100)
+				mob.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
+				APPLY_MOB_PROPERTY(mob, PROP_FAILED_SPRINT_FLOP)
 
 	say_verb()
 		return "barks"
