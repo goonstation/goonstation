@@ -29958,7 +29958,7 @@
 "bIM" = (
 /obj/table/reinforced/auto,
 /obj/item/motherboard,
-/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/left/standard,
 /turf/unsimulated/floor/setpieces/oldfloor,
 /area/solarium)
 "bIN" = (
@@ -60475,15 +60475,15 @@
 	},
 /area/shuttle/merchant_shuttle/left_centcom/donut2)
 "dhE" = (
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
 /obj/storage/crate{
 	name = "Robotic limbs"
 	},
 /obj/item/parts/robot_parts/leg/left/treads,
 /obj/item/parts/robot_parts/leg/right/treads,
+/obj/item/parts/robot_parts/arm/left/standard,
+/obj/item/parts/robot_parts/arm/right/standard,
+/obj/item/parts/robot_parts/leg/left/standard,
+/obj/item/parts/robot_parts/leg/right/standard,
 /turf/unsimulated/floor/red,
 /area/syndicate_station/battlecruiser)
 "dhF" = (

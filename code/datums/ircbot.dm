@@ -25,7 +25,6 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 		load()
 			if (config)
 				src.interface = config.irclog_url
-				src.apikey = config.ircbot_api
 				src.loaded = 1
 
 				if (src.queue && src.queue.len > 0)
@@ -51,11 +50,19 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 			if (data) eventArgs |= data
 			return src.export("event", eventArgs)
 
+		apikey_scrub(text)
+			if(config.ircbot_api)
+				return replacetext(text, config.ircbot_api, "***")
+			else
+				return text
+
+		text_args(list/arguments)
+			return src.apikey_scrub(list2params(arguments))
 
 		//Send a message to an irc bot! Yay!
 		export(iface, args)
 			if (src.debugging)
-				src.logDebug("Export called with <b>iface:</b> [iface]. <b>args:</b> [list2params(args)]. <b>src.interface:</b> [src.interface]. <b>src.loaded:</b> [src.loaded]")
+				src.logDebug("Export called with <b>iface:</b> [iface]. <b>args:</b> [text_args(args)]. <b>src.interface:</b> [src.interface]. <b>src.loaded:</b> [src.loaded]")
 
 			if (!config || !src.loaded)
 				src.queue += list(list("iface" = iface, "args" = args))
@@ -68,26 +75,29 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 						src.load()
 				return "queued"
 			else
-				if (config.env == "dev" || !apikey) // If we have no API key, why even bother
+				if (config.env == "dev" || !config.ircbot_api) // If we have no API key, why even bother
 					return 0
 
 				args = (args == null ? list() : args)
 				args["server_name"] = (config.server_name ? replacetext(config.server_name, "#", "") : null)
 				args["server"] = serverKey
-				args["api_key"] = (src.apikey ? src.apikey : null)
+				args["api_key"] = (config.ircbot_api ? config.ircbot_api : null)
 
 				if (src.debugging)
-					src.logDebug("Export, final args: [list2params(args)]. Final route: [src.interface]/[iface]?[list2params(args)]")
+					src.logDebug("Export, final args: [text_args(args)]. Final route: [src.interface]/[iface]?[text_args(args)]")
 
-				// Via rust-g HTTP
-				var/datum/http_request/request = new()
-				request.prepare(RUSTG_HTTP_METHOD_GET, "[src.interface]/[iface]?[list2params(args)]", "", "")
-				request.begin_async()
-				UNTIL(request.is_complete())
-				var/datum/http_response/response = request.into_response()
+				var/n_tries = 3
+				var/datum/http_response/response = null
+				while(--n_tries > 0 && (isnull(response) || response.errored))
+					// Via rust-g HTTP
+					var/datum/http_request/request = new()
+					request.prepare(RUSTG_HTTP_METHOD_GET, "[src.interface]/[iface]?[list2params(args)]", "", "")
+					request.begin_async()
+					UNTIL(request.is_complete())
+					response = request.into_response()
 
 				if (response.errored || !response.body)
-					logTheThing("debug", null, null, "<b>IRCBOT:</b> No return data from export. <b>iface:</b> [iface]. <b>args:</b> [list2params(args)]")
+					logTheThing("debug", null, null, "<b>IRCBOT:</b> No return data from export. <b>errored:</b> [response.errored] <b>status_code:</b> [response.status_code] <b>iface:</b> [iface]. <b>args:</b> [text_args(args)] <br> <b>error:</b> [response.error]")
 					return
 
 				var/content = response.body
@@ -98,14 +108,14 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 				//Handle the response
 				var/list/contentJson = json_decode(content)
 				if (!contentJson["status"])
-					logTheThing("debug", null, null, "<b>IRCBOT:</b> Object missing status parameter in export response: [list2params(contentJson)]")
+					logTheThing("debug", null, null, "<b>IRCBOT:</b> Object missing status parameter in export response: [json_encode(contentJson)]")
 					return 0
 				if (contentJson["status"] == "error")
 					var/log = ""
 					if (contentJson["errormsg"])
 						log = "Error returned from export: [contentJson["errormsg"]][(contentJson["error"] ? ". Error code: [contentJson["error"]]": "")]"
 					else
-						log = "An unknown error was returned from export: [list2params(contentJson)]"
+						log = "An unknown error was returned from export: [json_encode(contentJson)]"
 					logTheThing("debug", null, null, "<b>IRCBOT:</b> [log]")
 				return 1
 
@@ -113,20 +123,18 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 		//Format the response to an irc request juuuuust right
 		response(args)
 			if (src.debugging)
-				src.logDebug("Response called with args: [list2params(args)]")
+				src.logDebug("Response called with args: [text_args(args)]")
 
 			args = (args == null ? list() : args)
-			//args["api_key"] = (src.apikey ? src.apikey : null)
-			//WHY WAS THAT A THING?
 
 			if (config?.server_name)
 				args["server_name"] = replacetext(config.server_name, "#", "")
 				args["server"] = replacetext(config.server_name, "#", "") //TEMP FOR BACKWARD COMPAT WITH SHITFORMANT
 
 			if (src.debugging)
-				src.logDebug("Response, final args: [list2params(args)]")
+				src.logDebug("Response, final args: [text_args(args)]")
 
-			return list2params(args)
+			return text_args(args)
 
 
 		toggleDebug(client/C)

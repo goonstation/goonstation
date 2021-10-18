@@ -3,6 +3,11 @@
 	pointName = "Wraith Points"
 	cast_while_dead = 1
 	var/corpsecount = 0
+	onAbilityStat()
+		..()
+		.= list()
+		.["Points:"] = round(src.points)
+		.["Gen. rate:"] = round(src.regenRate + src.lastBonus)
 
 /atom/movable/screen/ability/topBar/wraith
 	tens_offset_x = 19

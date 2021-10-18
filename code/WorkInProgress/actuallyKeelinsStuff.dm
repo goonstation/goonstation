@@ -299,7 +299,7 @@ Returns:
 		src.underlays += alphaMask
 		src.underlays += compImage
 
-		src.filters += filter(type="layer", render_source="*portaltrg")
+		add_filter("layer", 1, layering_filter(render_source="*portaltrg"))
 
 	New()
 		..()
@@ -1834,7 +1834,7 @@ Returns:
 	return tube
 
 /obj/item/ghostboard
-	name = "Ouija board"
+	name = "\improper Ouija board"
 	desc = "A wooden board that allows for communication with spirits and such things. Or that's what the company that makes them claims, at least."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "lboard"
@@ -1845,7 +1845,7 @@ Returns:
 	var/emoji_min = 1
 	var/emoji_max = 3
 	var/words_prob = 100
-	var/words_min = 5
+	var/words_min = 7
 	var/words_max = 10
 
 	New()
@@ -1860,9 +1860,7 @@ Returns:
 	proc/generate_words()
 		var/list/words = list()
 		if(prob(words_prob))
-			for(var/i in 1 to rand(words_min, words_max))
-				var/picked = pick(strings("ouija_board.txt", "ouija_board_words"))
-				words |= picked
+			words |= get_ouija_word_list(src, words_min, words_max)
 		if(prob(emoji_prob))
 			for(var/i in 1 to rand(emoji_min, emoji_max))
 				words |= random_emoji()

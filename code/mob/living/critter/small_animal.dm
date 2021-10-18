@@ -2594,10 +2594,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 20
 	health_burn = 20
 	pull_w_class = W_CLASS_NORMAL
+	var/pick_random_icon_state = 1
 
 	New()
 		..()
-		icon_state = pick("bee", "buddy", "kitten", "monkey", "possum", "wendigo", "bunny", "penguin")
+		if(pick_random_icon_state)
+			icon_state = pick("bee", "buddy", "kitten", "monkey", "possum", "wendigo", "bunny", "penguin")
 		icon_state_alive = src.icon_state
 		icon_state_dead = src.icon_state
 
