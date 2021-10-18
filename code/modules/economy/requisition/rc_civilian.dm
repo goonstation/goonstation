@@ -177,7 +177,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 				if("hydroponics") src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/jumpsuit/green,crewcount)
 				if("cargo handling") src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/jumpsuit/brown,crewcount)
 				if("engineering") src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/jumpsuit/yellow,crewcount)
-				if("medical") src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/jumpsuit/blue,crewcount)
+				if("medical") src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/jumpsuit/scrubs,crewcount)
 				if("research") src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/jumpsuit/white,crewcount)
 				if("cartographic") src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/jumpsuit,crewcount)
 		else
@@ -204,6 +204,12 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 		feemod = 90
 		exactpath = FALSE
 
+	scrubs
+		name = "medical scrubs"
+		feemod = 130
+		typepath = /obj/item/clothing/under/scrub
+		exactpath = FALSE
+
 	white
 		name = "white jumpsuit"
 		typepath = /obj/item/clothing/under/color/white
@@ -227,10 +233,6 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	green
 		name = "green jumpsuit"
 		typepath = /obj/item/clothing/under/color/green
-
-	blue
-		name = "blue jumpsuit"
-		typepath = /obj/item/clothing/under/color/blue
 
 /datum/rc_entry/itembypath/backpack
 	name = "backpack"
@@ -262,7 +264,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 /datum/req_contract/civilian/birthdaybash
 	name = "Birthday Party"
-	payout = 700
+	payout = 900
 	hide_item_payouts = TRUE
 	var/list/namevary = list("Birthday Party","Birthday Bash","Surprise Party","One Year Older")
 	var/list/desc0 = list("party","celebration","gathering","party","event") //yes party twice

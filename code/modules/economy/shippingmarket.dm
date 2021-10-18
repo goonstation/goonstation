@@ -72,13 +72,10 @@
 		var/contract2make
 		if(src.civ_contracts_active == 0) //is this right lmao
 			contract2make = pick(concrete_typesof(/datum/req_contract/civilian))
-			src.civ_contracts_active = 1
 		else if(src.aid_contracts_active == 0)
 			contract2make = pick(concrete_typesof(/datum/req_contract/aid))
-			src.aid_contracts_active = 1
 		else if(src.sci_contracts_active == 0)
 			contract2make = pick(concrete_typesof(/datum/req_contract/scientific))
-			src.sci_contracts_active = 1
 		else
 			switch(rand(1,10)) //civ weighted slightly higher
 				if(1 to 4) contract2make = pick(concrete_typesof(/datum/req_contract/civilian))
@@ -365,10 +362,10 @@
 				var/success = contract.requisify(sell_crate) //0 is did not sell, 1 is sold, 2 is sold with no remnants
 				if(success)
 					contractQ = contract
-					//switch(contract.req_class) // code for if unpinned contracts are changed to not wipe entirely
-					//	if(CIV_CONTRACT) src.civ_contracts_active--
-					//	if(AID_CONTRACT) src.aid_contracts_active--
-					//	if(SCI_CONTRACT) src.sci_contracts_active--
+					switch(contract.req_class)
+						if(CIV_CONTRACT) src.civ_contracts_active--
+						if(AID_CONTRACT) src.aid_contracts_active--
+						if(SCI_CONTRACT) src.sci_contracts_active--
 					duckets += contract.payout
 					if(length(contract.item_rewarders))
 						for(var/datum/rc_itemreward/giftback in contract.item_rewarders)
