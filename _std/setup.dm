@@ -51,7 +51,7 @@
 
 #define CREW_OBJECTIVES
 
-#define MISCREANTS
+//#define MISCREANTS //uncomment to re-enable miscreants
 
 //#define RESTART_WHEN_ALL_DEAD 1
 
