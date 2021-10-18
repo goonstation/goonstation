@@ -1093,6 +1093,10 @@ obj/trait/pilot
 	category = "species"
 	mutantRace = /datum/mutantrace/roach
 
+	onAdd(var/mob/owner)
+		..()
+		owner.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
+
 /obj/trait/pug
 	name = "Pug (-3) \[Species\]"
 	cleanName = "Pug"
