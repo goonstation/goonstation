@@ -1,7 +1,10 @@
 
 (t)sun oct 17 21
 (u)tarmunora
-(e)⚖|balance(e)
+(e)🧊🔥|balance
+(+)Cryoxadone and Cryostaline on-life effects are surpressed by fire.
+(u)tarmunora
+(e)⚖|balance
 (+)Adjust moonshine efficacy, omnizine return, and bottle size.
 (u)Gerhazo
 (p)6344
