@@ -1,4 +1,5 @@
 
+ABSTRACT_TYPE(/datum/validation_constraint)
 /datum/validation_constraint
 	proc/validate(var/datum/validation_item/item)
 		. = TRUE
