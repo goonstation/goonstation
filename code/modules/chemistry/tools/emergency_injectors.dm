@@ -262,7 +262,7 @@
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/lifesupport
 	name = "lifesupport combi-injector"
-	desc = "A combination medical injector salbutamol and mannitol."
+	desc = "A combination medical injector containing salbutamol and mannitol."
 	initial_reagents = list("salbutamol" = 25, "mannitol" = 25)
 	label = "blue"
 
