@@ -2135,6 +2135,7 @@
 	disposing()
 		if (ishuman(mob))
 			REMOVE_MOB_PROPERTY(mob, PROP_FAILED_SPRINT_FLOP, src)
+		..()
 
 	say_verb()
 		return "barks"
