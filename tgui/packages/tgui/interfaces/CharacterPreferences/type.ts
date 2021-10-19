@@ -1,9 +1,9 @@
 /**
-* @file
-* @copyright 2021
-* @author Luxizzle (https://github.com/Luxizzle)
-* @license MIT
-*/
+ * @file
+ * @copyright 2021
+ * @author Luxizzle (https://github.com/Luxizzle)
+ * @license MIT
+ */
 
 import { BooleanLike } from 'common/react';
 
@@ -12,7 +12,7 @@ export interface CharacterPreferencesData {
 
   profiles: CharacterPreferencesProfile[];
 
-  cloudSaves?: string[]
+  cloudSaves?: string[];
 
   preview: string;
   profileName: string;
