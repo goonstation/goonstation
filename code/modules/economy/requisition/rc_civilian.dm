@@ -62,22 +62,22 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/reagent/caterdrink/appletini
 	name = "appletini"
 	chemname = "appletini"
-	feemod = 50
+	feemod = 30
 
 /datum/rc_entry/reagent/caterdrink/fruitpunch
 	name = "fruit punch"
 	chemname = "fruit_punch"
-	feemod = 60
+	feemod = 30
 
 /datum/rc_entry/reagent/caterdrink/margarita
 	name = "margarita"
 	chemname = "margarita"
-	feemod = 30
+	feemod = 10
 
 /datum/rc_entry/reagent/caterdrink/champagne
 	name = "champagne"
 	chemname = "champagne"
-	feemod = 30
+	feemod = 10
 
 
 /datum/req_contract/civilian/furnishing
@@ -256,7 +256,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/reagent/water
 	name = "water"
 	chemname = "water"
-	feemod = 4
+	feemod = 3
 
 
 /datum/req_contract/civilian/birthdaybash

@@ -87,7 +87,7 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/organ)
 		..()
 
 /datum/rc_entry/itembypath/lens
-	name = "lens"
+	name = "nano-fabricated lens"
 	typepath = /obj/item/lens
 	feemod = 260
 

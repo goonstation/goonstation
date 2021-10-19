@@ -307,7 +307,7 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/surgical)
 			if("liquid fuel")
 				src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/fuel,rand(40,60)*10)
 			if("coffee")
-				src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/coffee,rand(18,24)*5)
+				src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/coffee,rand(24,36)*10)
 			if("medical herbs")
 				src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/medherb/alpha,rand(12,18))
 				if(prob(60))
@@ -336,7 +336,7 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/surgical)
 		"expresso",
 		"energydrink"
 	)
-	feemod = 30
+	feemod = 4
 
 /datum/rc_entry/itembypath/medherb
 	name = "medical herb"

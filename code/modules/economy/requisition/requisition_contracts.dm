@@ -64,7 +64,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent)
 			var/C
 			if(islist(src.chemname))
 				for(var/chemplural in src.chemname)
-					C = eval_item.reagents.get_reagent_amount(chemplural)
+					C += eval_item.reagents.get_reagent_amount(chemplural)
 			else
 				C = eval_item.reagents.get_reagent_amount(src.chemname)
 			if(C)
