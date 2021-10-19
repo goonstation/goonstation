@@ -37774,7 +37774,7 @@
 	},
 /area/station/hallway/secondary/oshan_arrivals)
 "bPR" = (
-/obj/table/glass/auto,
+/obj/table/auto,
 /obj/shrub{
 	dir = 4;
 	icon = 'icons/obj/stationobjs.dmi';
@@ -37857,7 +37857,7 @@
 	},
 /area/station/hallway/secondary/oshan_arrivals)
 "bPX" = (
-/obj/table/glass/auto,
+/obj/table/auto,
 /obj/shrub{
 	dir = 4;
 	icon = 'icons/obj/stationobjs.dmi';
@@ -38288,7 +38288,7 @@
 	},
 /area/station/hallway/secondary/oshan_arrivals)
 "bQV" = (
-/obj/table/glass/auto,
+/obj/table/auto,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -38786,7 +38786,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/radio/lab)
 "bSa" = (
-/obj/table/glass/auto,
+/obj/table/auto,
 /obj/machinery/computer/tour_console,
 /obj/cable{
 	d1 = 1;
