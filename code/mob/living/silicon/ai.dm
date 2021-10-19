@@ -769,6 +769,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (deployed_to_eyecam)
 		eyecam.return_mainframe()
 
+	if (deployed_shell)
+		src.return_to(deployed_shell)
+
 	src.lastgasp() // calling lastgasp() here because we just died
 	setdead(src)
 	src.canmove = 0
