@@ -145,6 +145,7 @@
 	health_burn = 30
 	good_grip = 0
 	max_skins = 1
+	add_abilities = list(/datum/targetable/critter/spider_bite)
 	venom1 = "toxin"
 	venom2 = "black_goop"
 

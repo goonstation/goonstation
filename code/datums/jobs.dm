@@ -2160,7 +2160,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 /datum/job/special/halloween/critter
 	wages = PAY_DUMBCLOWN
-	requires_whitelist = 1
 	allow_traitors = 0
 	slot_ears = list()
 	slot_card = null
@@ -2169,7 +2168,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 /datum/job/special/halloween/critter/plush
 	name = "Plush Toy"
 	limit = 1
-	requires_whitelist = 0
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
