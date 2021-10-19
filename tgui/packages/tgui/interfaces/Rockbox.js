@@ -90,8 +90,7 @@ export const Rockbox = (_props, context) => {
                     ))}
                   </Box>
                 )
-                : <Box>No ores stored</Box>
-              }
+                : <Box>No ores stored</Box>}
             </Section>
           </Stack.Item>
         </Stack>
