@@ -1,9 +1,9 @@
 /**
-* @file
-* @copyright 2021
-* @author Luxizzle (https://github.com/Luxizzle)
-* @license MIT
-*/
+ * @file
+ * @copyright 2021
+ * @author Luxizzle (https://github.com/Luxizzle)
+ * @license MIT
+ */
 
 import { useBackend } from '../../backend';
 import { Chart, LabeledList, Stack, Table } from '../../components';
