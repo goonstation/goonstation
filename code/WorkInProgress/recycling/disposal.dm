@@ -1637,7 +1637,7 @@
 /obj/disposalpipe/trunk/zlevel
 	var/target_z
 	var/id
-	color = "#F0F"
+	color = "#FAF"
 
 	New()
 		..()

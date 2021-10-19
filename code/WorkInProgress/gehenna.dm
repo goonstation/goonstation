@@ -1,4 +1,7 @@
-#define GEHENNA_TIME 90
+#define GEHENNA_TIME 185
+#define WASTELAND_MIN_TEMP 250
+#define WASTELAND_MAX_TEMP 350
+
 
 // Gehenna shit tho
 /turf/gehenna
@@ -10,6 +13,11 @@
 	desc = "looks loosely packed"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "gehenna_rock"
+	New()
+		..()
+		src.icon_state = initial(src.icon_state)
+	space_overlays()
+		return
 
 /turf/simulated/wall/asteroid/gehenna/tough
 	name = "dense sulferous rock"
@@ -27,17 +35,17 @@
 	desc = "Looks really dry out there."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "gehenna"
-	carbon_dioxide = 5*(sin(GEHENNA_TIME + 3)+ 1)
+	carbon_dioxide = 5*(sin(GEHENNA_TIME - 90)+ 1)
 	oxygen = MOLES_O2STANDARD
-	//temperature = WASTELAND_MIN_TEMP + (0.5*sin(GEHENNA_TIME)+1)*(WASTELAND_MAX_TEMP - WASTELAND_MIN_TEMP)
+	temperature = WASTELAND_MIN_TEMP + ((0.5*sin(GEHENNA_TIME-45)+0.5)*(WASTELAND_MAX_TEMP - WASTELAND_MIN_TEMP))
 
 	luminosity = 0.5*(sin(GEHENNA_TIME)+ 1)
 
 	var/datum/light/point/light = null
 	var/light_r = 0.5*(sin(GEHENNA_TIME)+1)
 	var/light_g = 0.3*(sin(GEHENNA_TIME )+1)
-	var/light_b = 0.3*(sin(GEHENNA_TIME + 3 )+1)
-	var/light_brightness = 0.6*(sin(GEHENNA_TIME)+1)
+	var/light_b = 0.3*(sin(GEHENNA_TIME + 45 )+1)
+	var/light_brightness = 0.6*(sin(GEHENNA_TIME)+0.8) + 0.3
 	var/light_height = 3
 	var/generateLight = 1
 

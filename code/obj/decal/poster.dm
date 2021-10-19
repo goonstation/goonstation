@@ -647,19 +647,19 @@
 					// the fuck II poster
 					30;"fuckII",
 					// new contest winners
-					50;"contest1",
+					//50;"contest1",
 					50;"contest2",
-					50;"contest3",
+					//50;"contest3",
 					50;"contest4",
-					50;"contest5",
+					//50;"contest5",
 					// new contest not-winners but cool nonetheless
-					5 ;"contest-other1",
-					5 ;"contest-other2",
-					5 ;"contest-other3",
-					5 ;"contest-other4",
-					5 ;"contest-other5",
-					5 ;"contest-other6",
-					5 ;"contest-other7"
+					//5 ;"contest-other1",
+					//5 ;"contest-other2",
+					15 ;"contest-other3",
+					//5 ;"contest-other4",
+					//5 ;"contest-other5",
+					//5 ;"contest-other6",
+					15 ;"contest-other7"
 					)
 				switch(which)
 					if("tea1")
@@ -770,6 +770,12 @@
 			icon = 'icons/obj/items/prideflags.dmi'
 			icon_state = "poster_pride1"
 			desc = "Be Gay, Do Crime!"
+
+		pride/random
+			icon_state = "random_pride"
+			New()
+				..()
+				icon_state = "poster_pride[rand(1,14)]"
 
 		pride/agender
 			name = "Agender Pride"
