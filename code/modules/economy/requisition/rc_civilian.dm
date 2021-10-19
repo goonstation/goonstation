@@ -42,7 +42,6 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/caterfood)
 	name = "sandwich"
 	typepath = /obj/item/reagent_containers/food/snacks/sandwich
 	feemod = 330
-	es = TRUE
 
 /datum/rc_entry/itembypath/caterfood/burger
 	name = "burger"
@@ -243,7 +242,6 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	name = "pair of shoes"
 	typepath = /obj/item/clothing/shoes
 	feemod = 110
-	isplural = TRUE
 
 /datum/rc_entry/itembypath/headset
 	name = "radio headset"
@@ -254,7 +252,6 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	name = "solid food, preferably nutritious"
 	typepath = /obj/item/reagent_containers/food/snacks
 	feemod = 70
-	isplural = TRUE
 
 /datum/rc_entry/reagent/water
 	name = "water"
@@ -372,7 +369,6 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	name = "wrapped gift of your choice"
 	typepath = /obj/item/gift
 	feemod = 300
-	isplural = TRUE
 
 /datum/rc_entry/itembypath/cake
 	name = "cake"
@@ -388,7 +384,6 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	name = "slices' worth of pizza"
 	typepath = /obj/item/reagent_containers/food/snacks/pizza
 	feemod = 20
-	isplural = TRUE
 
 /datum/rc_entry/reagent/cola
 	name = "cola"
@@ -404,7 +399,6 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	name = "grapes"
 	typepath = /obj/item/reagent_containers/food/snacks/plant/grape
 	feemod = 90
-	isplural = TRUE
 
 /datum/rc_entry/itembypath/banana
 	name = "banana"
@@ -415,7 +409,6 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	name = "cannabis"
 	typepath = /obj/item/plant/herb/cannabis
 	feemod = 80
-	isplural = TRUE
 
 /datum/rc_entry/reagent/glitter
 	name = "glitter"

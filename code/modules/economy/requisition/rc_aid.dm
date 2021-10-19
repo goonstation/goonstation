@@ -59,18 +59,18 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/basictool)
 	name = "wirecutters"
 	typepath = /obj/item/wirecutters
 	feemod = 120
-	isplural = TRUE
 
 /datum/rc_entry/itembypath/basictool/wrench
 	name = "wrench"
 	typepath = /obj/item/wrench
 	feemod = 110
-	es = TRUE
 
 /datum/rc_entry/itembypath/basictool/welder
 	name = "welding tool"
 	typepath = /obj/item/weldingtool
 	feemod = 160
+
+
 
 /datum/req_contract/aid/triage
 	name = "Medical Aid"
@@ -131,7 +131,6 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/surgical)
 	scissors
 		name = "surgical scissors"
 		typepath = /obj/item/scissors/surgical_scissors
-		isplural = TRUE
 
 	hemostat
 		name = "hemostat"
@@ -165,6 +164,7 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/surgical)
 	name = "health analyzer"
 	feemod = 350
 	typepath = /obj/item/device/analyzer/healthanalyzer
+
 
 
 /datum/req_contract/aid/geeksquad
@@ -262,4 +262,111 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/surgical)
 	name = "lengths of electrical cabling"
 	typepath = /obj/item/cable_coil
 	feemod = 30
-	isplural = TRUE
+
+
+
+/datum/req_contract/aid/supplyshort
+	name = "Supply Chain Failure"
+	payout = 800
+	var/list/namevary = list("Urgent Restock","Supply Crisis","Supply Chain Failure","Short Stock","Emergency Resupply")
+	var/list/desc0 = list("research","mining","hydroponics","civilian","Nanotrasen")
+	var/list/desc1 = list("vessel","station","outpost","colony")
+	var/list/desc2 = list("food","rations","food and water","furnace fuel","liquid fuel","coffee","medical herbs")
+	var/list/desc3 = list("after","due to","following")
+	var/list/desc4 = list(
+		"its regular supply shuttle experiencing a disastrous hull breach",
+		"catastrophic damage to a storage bay",
+		"a ransacking by an unknown assailant",
+		"an influx of personnel rescued from a damaged vessel",
+		"a nearby station's purchase of almost all available supply, skyrocketing prices",
+		"theft by a group of disgruntled personnel"
+	)
+	var/list/desc5 = list(
+		null,
+		" Please assemble the listed items as soon as possible.",
+		" The urgency of this request cannot be overstated.",
+		" Supplies are only expected to last a few more days.",
+		" If the shortage gets much worse, unrest will likely escalate into a riot.",
+		" No further transmission has been sent since requisition posting."
+	)
+
+	New()
+		src.name = pick(namevary)
+		var/tilter = pick(desc2)
+		src.flavor_desc = "An affiliated [pick(desc0)] [pick(desc1)] is experiencing a severe shortage of [tilter] [pick(desc3)] [pick(desc4)].[pick(desc5)]"
+		src.payout += rand(0,40) * 10
+
+		switch(tilter)
+			if("food","rations")
+				src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/literallyanyfood,rand(30,48))
+			if("food and water")
+				src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/literallyanyfood,rand(24,40))
+				src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/water,rand(18,36)*10)
+			if("furnace fuel")
+				src.rc_entries += rc_buildentry(/datum/rc_entry/stack/char,rand(24,36))
+			if("liquid fuel")
+				src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/fuel,rand(40,60)*10)
+			if("coffee")
+				src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/coffee,rand(18,24)*5)
+			if("medical herbs")
+				src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/medherb/alpha,rand(12,18))
+				if(prob(60))
+					src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/medherb/beta,rand(12,18))
+				else
+					src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/medherb/gamma,rand(8,14))
+
+		..()
+
+/datum/rc_entry/stack/char
+	name = "char ore"
+	typepath = /obj/item/raw_material/char
+	feemod = 90
+
+/datum/rc_entry/reagent/fuel
+	name = "welding-grade liquid fuel"
+	chemname = "fuel"
+	feemod = 4
+
+/datum/rc_entry/reagent/coffee //TEST THIS COFFEE, TEST NEW CHECK PROTOCOL. DEBUG DEBUG DEBUG
+	name = "coffee"
+	chemname = list(
+		"coffee",
+		"coffee_fresh",
+		"espresso",
+		"expresso",
+		"energydrink"
+	)
+	feemod = 30
+
+/datum/rc_entry/itembypath/medherb
+	name = "medical herb"
+	typepath = /obj/item/plant/herb
+	feemod = 140
+	var/list/herblist = list()
+
+	alpha
+		herblist = list(
+			/obj/item/plant/herb/asomna,
+			/obj/item/plant/herb/commol,
+			/obj/item/plant/herb/contusine
+		)
+
+	beta
+		herblist = list(
+			/obj/item/plant/herb/mint,
+			/obj/item/plant/herb/nureous,
+			/obj/item/plant/herb/venne
+		)
+
+	gamma
+		herblist = list(
+			/obj/item/plant/herb/cannabis,
+			/obj/item/plant/herb/sassafras,
+			/obj/item/plant/herb/tobacco
+		)
+
+	New()
+		var/obj/plantalyze = pick(src.herblist)
+		src.name = initial(plantalyze.name)
+		src.typepath = plantalyze
+		..()

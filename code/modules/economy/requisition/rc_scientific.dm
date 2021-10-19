@@ -30,7 +30,6 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/organ)
 /datum/rc_entry/itembypath/organ/appendix
 	name = "appendix"
 	typepath = /obj/item/organ/appendix
-	es = TRUE
 
 /datum/rc_entry/itembypath/organ/brain
 	name = "brain"
@@ -91,7 +90,6 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/organ)
 	name = "lens"
 	typepath = /obj/item/lens
 	feemod = 260
-	es = TRUE
 
 /datum/rc_entry/stack/gemstone
 	name = "non-anomalous gemstone"
@@ -149,6 +147,7 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/organ)
 		if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/seed/scientific/fruit,rand(1,3))
 		if(!length(src.rc_entries) || prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/seed/scientific/crop,rand(1,3))
 		if(length(src.rc_entries) == 1 || prob(30)) src.rc_entries += rc_buildentry(/datum/rc_entry/seed/scientific/veg,rand(1,3))
+		if(length(src.rc_entries) == 3) src.item_rewarders += new /datum/rc_itemreward/strange_seed
 
 		src.item_rewarders += new /datum/rc_itemreward/plant_cartridge
 		..()
@@ -189,3 +188,10 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/organ)
 	build_reward()
 		var/cart = new /obj/item/vending/restock_cartridge/hydroponics
 		return cart
+
+/datum/rc_itemreward/strange_seed
+	name = "strange seed"
+
+	build_reward()
+		var/seed = new /obj/item/seed/alien
+		return seed

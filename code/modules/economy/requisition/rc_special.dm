@@ -36,7 +36,7 @@ ABSTRACT_TYPE(/datum/req_contract/special)
 					if(2) //reagent
 						. += "<li>[rce.count]+ unit[s_es(rce.count)] of [rce.name]</li>"
 					if(3) //item stacks
-						. += "<li>[rce.count]+ [rce.name][rce.isplural ? null : s_es(rce.count,rce.es)]</li>"
+						. += "<li>[rce.count]+ [rce.name]</li>"
 					else //something else entirely custom
 						. += "<li>[rce.name]</li>"
 		. += "</ul>"

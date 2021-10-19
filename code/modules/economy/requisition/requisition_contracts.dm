@@ -25,8 +25,6 @@ ABSTRACT_TYPE(/datum/rc_entry)
 	var/count = 1 // how much this contract entry is for, be it in item quantity, stack quantity or reagent units
 	var/rollcount = 0 //when an item is analyzed, this increments on a successful evaluation, for later tallying
 	var/feemod = 0 // how much cash this item adds to the overall payout
-	var/isplural = FALSE // skips item pluralization, i.e. you'd set this to true for "jeans". can usually be ignored
-	var/es = FALSE // used for item pluralization, i.e. you'd set this to true for "tomato". can usually be ignored
 
 	proc/rc_eval(atom/eval_item) //evaluation procedure, used in different entry classes
 		. = FALSE
@@ -58,12 +56,17 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath)
 ABSTRACT_TYPE(/datum/rc_entry/reagent)
 /datum/rc_entry/reagent
 	entryclass = RC_REAGENT
-	var/chemname = "water" //chem being looked for in the evaluation
+	var/chemname = "water" //chem(s) being looked for in the evaluation; can be a list of several, or just the one
 
 	rc_eval(atom/eval_item)
 		. = ..()
 		if(eval_item.reagents)
-			var/C = eval_item.reagents.get_reagent_amount(chemname)
+			var/C
+			if(islist(src.chemname))
+				for(var/chemplural in src.chemname)
+					C = eval_item.reagents.get_reagent_amount(chemplural)
+			else
+				C = eval_item.reagents.get_reagent_amount(src.chemname)
 			if(C)
 				rollcount += C
 				. = TRUE //let manager know reagent was found in passed eval item
@@ -137,8 +140,6 @@ ABSTRACT_TYPE(/datum/rc_entry/seed)
 /datum/rc_itemreward
 	var/name = "something" // what the reward is, description wise
 	var/count // how many of the reward you'll get; optional, used for front end descriptive purposes
-	var/isplural = FALSE // skips item pluralization, i.e. you'd set this to true for "jeans". can usually be ignored
-	var/es = FALSE // used for item pluralization, i.e. you'd set this to true for "tomato". can usually be ignored
 
 	New()
 		..()
@@ -180,11 +181,11 @@ ABSTRACT_TYPE(/datum/req_contract)
 		for(var/datum/rc_entry/rce in rc_entries)
 			switch(rce.entryclass)
 				if(RC_ITEMBYPATH)
-					src.requis_desc += "[rce.count]x [rce.name][rce.isplural ? null : s_es(rce.count,rce.es)]<br>"
+					src.requis_desc += "[rce.count]x [rce.name]<br>"
 				if(RC_REAGENT)
 					src.requis_desc += "[rce.count]+ unit[s_es(rce.count)] of [rce.name]<br>"
 				if(RC_STACK)
-					src.requis_desc += "[rce.count]+ [rce.name][rce.isplural ? null : s_es(rce.count,rce.es)]<br>"
+					src.requis_desc += "[rce.count]+ [rce.name]<br>"
 				if(RC_SEED)
 					var/datum/rc_entry/seed/rceed = rce
 					src.requis_desc += "[rce.count]x [rceed.cropname] seed with following traits:<br>"
