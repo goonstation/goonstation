@@ -331,7 +331,7 @@
 		dat += "<BR><b><A href='?src=\ref[src];add=1'>Add Tag</A></b>"
 
 		src.add_dialog(user)
-		user.Browse(dat, "title=Barcode Computer;window=bc_computer_[src];size=300x400")
+		user.Browse(dat, "title=Barcode Computer;window=bc_computer_[src];size=300x480")
 		onclose(user, "bc_computer_[src]")
 		return
 
@@ -417,8 +417,8 @@
 		src.add_dialog(user)
 		// Attempting to diagnose an infinite window refresh I can't duplicate, reverting the display style back to plain HTML to see what results that gets me.
 		// Hooray for having a playerbase to test shit on
-		//user.Browse(dat, "title=Barcode Computer;window=bc_computer_[src];size=300x400")
-		user.Browse(dat, "title=Barcode Computer;window=bc_computer_[src];size=300x400")
+		//user.Browse(dat, "title=Barcode Computer;window=bc_computer_[src];size=300x480")
+		user.Browse(dat, "title=Barcode Computer;window=bc_computer_[src];size=300x480")
 		onclose(user, "bc_computer_[src]")
 		return
 
