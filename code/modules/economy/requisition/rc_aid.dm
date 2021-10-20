@@ -1,9 +1,9 @@
 ABSTRACT_TYPE(/datum/req_contract/aid)
 /datum/req_contract/aid //in your final hour, astral wolf...
-	req_class = 2
+	req_class = AID_CONTRACT
 
 /datum/req_contract/aid/wrecked
-	name = "Breach Recovery"
+	//name = "Breach Recovery"
 	payout = 1200
 	var/list/namevary = list("Breach Recovery","Breach Response","Integrity Failure","Crisis Response","Disaster Assistance","Disaster Response")
 	var/list/desc0 = list("research","mining","security","cargo transfer")
@@ -73,7 +73,7 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/basictool)
 
 
 /datum/req_contract/aid/triage
-	name = "Medical Aid"
+	//name = "Medical Aid"
 	payout = 1100
 	var/list/namevary = list("Medical Aid","Medical Emergency","Triage Support","Aid Request","Critical Condition")
 	var/list/desc0 = list("A medical facility","An affiliated station's medical bay","A triage center","A medical outpost","Our nearest station")
@@ -168,7 +168,7 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/surgical)
 
 
 /datum/req_contract/aid/geeksquad
-	name = "Computer Failure"
+	//name = "Computer Failure"
 	payout = 900
 	var/list/namevary = list("Systems Failure","Short Circuit","Computer Overload","Electronics Failure","Systems Breakdown")
 	var/list/desc0 = list("research","mining","security","cargo transfer","communications","deep-space survey")
@@ -266,7 +266,7 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/surgical)
 
 
 /datum/req_contract/aid/supplyshort
-	name = "Supply Chain Failure"
+	//name = "Supply Chain Failure"
 	payout = 800
 	var/list/namevary = list("Urgent Restock","Supply Crisis","Supply Chain Failure","Short Stock","Emergency Resupply")
 	var/list/desc0 = list("research","mining","hydroponics","civilian","Nanotrasen")
@@ -327,7 +327,7 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/surgical)
 	chemname = "fuel"
 	feemod = 4
 
-/datum/rc_entry/reagent/coffee //TEST THIS COFFEE, TEST NEW CHECK PROTOCOL. DEBUG DEBUG DEBUG
+/datum/rc_entry/reagent/coffee
 	name = "coffee"
 	chemname = list(
 		"coffee",

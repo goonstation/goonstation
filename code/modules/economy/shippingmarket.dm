@@ -1,10 +1,6 @@
 #define SUPPLY_OPEN_TIME 1 SECOND //Time it takes to open supply door in seconds.
 #define SUPPLY_CLOSE_TIME 15 SECONDS //Time it takes to close supply door in seconds.
 
-#define CIV_CONTRACT 1 //Identification numbers for requisition contract class
-#define AID_CONTRACT 2 //Used for generation and anti-redundancy
-#define SCI_CONTRACT 3
-
 /datum/shipping_market
 
 	var/list/commodities = list()
@@ -576,7 +572,3 @@
 
 #undef SUPPLY_OPEN_TIME
 #undef SUPPLY_CLOSE_TIME
-
-#undef CIV_CONTRACT
-#undef AID_CONTRACT
-#undef SCI_CONTRACT

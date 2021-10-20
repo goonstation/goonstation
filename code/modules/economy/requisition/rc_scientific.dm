@@ -1,9 +1,9 @@
 ABSTRACT_TYPE(/datum/req_contract/scientific)
 /datum/req_contract/scientific //adam savage dense gas voice: it's scientific!
-	req_class = 3
+	req_class = SCI_CONTRACT
 
 /datum/req_contract/scientific/internalaffairs //get it?
-	name = "Don't Ask Too Many Questions"
+	//name = "Don't Ask Too Many Questions"
 	payout = 1750
 	var/list/namevary = list("Organ Analysis","Organ Research","Biolab Supply","Biolab Partnership","ERROR: CANNOT VERIFY ORIGIN")
 	var/list/desc0 = list("conducting","performing","beginning","initiating","seeking supplies for","organizing")
@@ -50,7 +50,7 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/organ)
 
 
 /datum/req_contract/scientific/spectrometry
-	name = "Totally Will Not Result In A Resonance Cascade"
+	//name = "Totally Will Not Result In A Resonance Cascade"
 	payout = 750
 	var/list/namevary = list("Beamline Calibration","Spectral Analysis","Chromatic Analysis","Refraction Survey")
 	var/list/desc0 = list(
@@ -116,7 +116,7 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/organ)
 
 
 /datum/req_contract/scientific/botanical
-	name = "Feed Me, Seymour (Butz)"
+	//name = "Feed Me, Seymour (Butz)"
 	payout = 950
 	var/list/namevary = list("Botanical Prototyping","Hydroponic Acclimation","Cultivar Propagation","Plant Genotype Study")
 	var/list/desc0 = list(

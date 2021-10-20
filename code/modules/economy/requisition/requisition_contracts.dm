@@ -146,17 +146,12 @@ ABSTRACT_TYPE(/datum/rc_entry/seed)
 
 	proc/build_reward() // this should return an item or list of items, for requisition handler to pack
 
-//contract class defs
-#define CIV_CONTRACT 1
-#define AID_CONTRACT 2
-#define SCI_CONTRACT 3
-
 //contracts, which contain entries and are what are exposed to the qm side of things
 ABSTRACT_TYPE(/datum/req_contract)
 /datum/req_contract
 	var/name = "Henry Whip a Zamboni" // title text that gets a big front row seat
 	var/req_class = 0 // class of the requisition contract; aid requisitions are urgent and will not wait for you
-	//0 is unclassified/misc, 1 is civilian, 2 is emergency aid, 3 is scientific (as defined above)
+	//0 is unclassified/misc, 1 is civilian, 2 is emergency aid, 3 is scientific
 	var/req_code // requisition code for cargo handling purposes
 	// clearinghouse requisitions will get a randomly-generated one, third party ones will get REQ-THIRDPARTY and require their requisition papers
 
@@ -173,9 +168,9 @@ ABSTRACT_TYPE(/datum/req_contract)
 		if(!src.req_code)
 			var/flavoraffix = rand(0,9)
 			switch(req_class)
-				if(1) flavoraffix = prob(50) ? "C" : "P"
-				if(2) flavoraffix = prob(50) ? "A" : "E"
-				if(3) flavoraffix = prob(50) ? "S" : "R"
+				if(CIV_CONTRACT) flavoraffix = prob(50) ? "C" : "P"
+				if(AID_CONTRACT) flavoraffix = prob(50) ? "A" : "E"
+				if(SCI_CONTRACT) flavoraffix = prob(50) ? "S" : "R"
 			src.req_code = "REQ-[flavoraffix][rand(0,9)][rand(0,9)][rand(0,9)]-[pick(consonants_upper)][prob(20) ? pick(consonants_upper) : rand(0,9)]"
 
 		for(var/datum/rc_entry/rce in rc_entries)
@@ -228,10 +223,6 @@ ABSTRACT_TYPE(/datum/req_contract)
 			if(!length(sell_crate.contents)) //total clean sale, tell shipping manager to del the crate
 				. = 2
 		return
-
-#undef CIV_CONTRACT
-#undef AID_CONTRACT
-#undef SCI_CONTRACT
 
 #undef RC_ITEMBYPATH
 #undef RC_REAGENT
