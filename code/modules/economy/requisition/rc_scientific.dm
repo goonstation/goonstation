@@ -6,9 +6,9 @@ ABSTRACT_TYPE(/datum/req_contract/scientific)
 	//name = "Don't Ask Too Many Questions"
 	payout = 1750
 	var/list/namevary = list("Organ Analysis","Organ Research","Biolab Supply","Biolab Partnership","ERROR: CANNOT VERIFY ORIGIN")
-	var/list/desc0 = list("conducting","performing","beginning","initiating","seeking supplies for","organizing")
-	var/list/desc1 = list("long-term study","intensive trialing","in-depth analysis","study","regulatory assessment")
-	var/list/desc2 = list("decay","function","robustness","response to a new medication","atrophy in harsh conditions","therapies","bounciness")
+	var/list/desc_begins = list("conducting","performing","beginning","initiating","seeking supplies for","organizing")
+	var/list/desc_whatstudy = list("long-term study","intensive trialing","in-depth analysis","study","regulatory assessment")
+	var/list/desc_whystudy = list("decay","function","robustness","response to a new medication","atrophy in harsh conditions","therapies","bounciness")
 
 	New()
 		src.name = pick(namevary)
@@ -17,7 +17,7 @@ ABSTRACT_TYPE(/datum/req_contract/scientific)
 		organic.count = rand(2,4)
 		src.rc_entries += organic
 
-		src.flavor_desc = "An affiliated research group is [pick(desc0)] a [pick(desc1)] of [organic.name] [pick(desc2)]"
+		src.flavor_desc = "An affiliated research group is [pick(desc_begins)] a [pick(desc_whatstudy)] of [organic.name] [pick(desc_whystudy)]"
 		src.flavor_desc += " and requires genetically-human specimens in adequate condition."
 		src.payout += rand(0,40) * 10
 		..()
@@ -53,7 +53,7 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/organ)
 	//name = "Totally Will Not Result In A Resonance Cascade"
 	payout = 750
 	var/list/namevary = list("Beamline Calibration","Spectral Analysis","Chromatic Analysis","Refraction Survey")
-	var/list/desc0 = list(
+	var/list/desc_wherestudy = list(
 		"Optics calibration laboratory",
 		"Field laboratory at crystal excavation site",
 		"Anti-mass spectrometry platform",
@@ -63,8 +63,8 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/organ)
 		"An affiliated research vessel is",
 		"An affiliated research outpost is"
 	)
-	var/list/desc1 = list("micro-reflection","latticed capacitive crystal","photonic data encoding","telecrystal stabilization")
-	var/list/desc2 = list(
+	var/list/desc_whystudy = list("micro-reflection","latticed capacitive crystal","photonic data encoding","telecrystal stabilization")
+	var/list/desc_bonusflavor = list(
 		null,
 		" Ensure all materials are free of flammable particulates.",
 		" Please use shock-absorbent packing material if possible.",
@@ -75,7 +75,7 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/organ)
 
 	New()
 		src.name = pick(namevary)
-		src.flavor_desc = "[pick(desc0)] seeking vital components for [pick(desc1)] research.[pick(desc2)]"
+		src.flavor_desc = "[pick(desc_wherestudy)] seeking vital components for [pick(desc_whystudy)] research.[pick(desc_bonusflavor)]"
 		src.payout += rand(0,40) * 10
 
 		if(prob(80)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/gemstone,rand(1,8))
@@ -119,7 +119,7 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/organ)
 	//name = "Feed Me, Seymour (Butz)"
 	payout = 950
 	var/list/namevary = list("Botanical Prototyping","Hydroponic Acclimation","Cultivar Propagation","Plant Genotype Study")
-	var/list/desc0 = list(
+	var/list/desc_wherestudy = list(
 		"An affiliated hydroponics lab",
 		"A cultivation analysis project",
 		"A Nanotrasen botanical researcher",
@@ -129,8 +129,8 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/organ)
 		"The botanical team of an affiliated vessel",
 		"The botanist of an affiliated outpost"
 	)
-	var/list/desc1 = list("cultivars","seeds","plant specimens","plant strains")
-	var/list/desc2 = list(
+	var/list/desc_seeds = list("cultivars","seeds","plant specimens","plant strains")
+	var/list/desc_bonusflavor = list(
 		null,
 		" Please ensure all involved seeds have not sprouted.",
 		" Secondary beneficial traits are preferred, but not required.",
@@ -141,7 +141,7 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/organ)
 
 	New()
 		src.name = pick(namevary)
-		src.flavor_desc = "[pick(desc0)] is seeking multiple pure [pick(desc1)] with certain desired genetic traits. [pick(desc2)]"
+		src.flavor_desc = "[pick(desc_wherestudy)] is seeking multiple pure [pick(desc_seeds)] with certain desired genetic traits. [pick(desc_bonusflavor)]"
 		src.payout += rand(0,30) * 10
 
 		if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/seed/scientific/fruit,rand(1,3))

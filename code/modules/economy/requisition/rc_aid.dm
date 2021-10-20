@@ -6,15 +6,16 @@ ABSTRACT_TYPE(/datum/req_contract/aid)
 	//name = "Breach Recovery"
 	payout = 1200
 	var/list/namevary = list("Breach Recovery","Breach Response","Integrity Failure","Crisis Response","Disaster Assistance","Disaster Response")
-	var/list/desc0 = list("research","mining","security","cargo transfer")
-	var/list/desc1 = list("vessel","ship","station","outpost")
-	var/list/desc2 = list("suffered","experienced","been damaged by","incurred")
-	var/list/desc3 = list("severe","catastrophic","hazardous","critical","disastrous")
-	var/list/desc4 = list("reactor failure","hull breach","core breach","hull rupture","gravimetric shear","collision","canister explosion")
+	var/list/desc_placejob = list("research","mining","security","cargo transfer")
+	var/list/desc_placetype = list("vessel","ship","station","outpost")
+	var/list/desc_enhancer1 = list("suffered","experienced","been damaged by","incurred")
+	var/list/desc_enhancer2 = list("severe","catastrophic","hazardous","critical","disastrous")
+	var/list/desc_whatborked = list("reactor failure","hull breach","core breach","hull rupture","gravimetric shear","collision","canister explosion")
 
 	New()
 		src.name = pick(namevary)
-		src.flavor_desc = "An affiliated [pick(desc0)] [pick(desc1)] has [pick(desc2)] a [pick(desc3)] [pick(desc4)] and requires repair supplies as soon as possible."
+		src.flavor_desc = "An affiliated [pick(desc_placejob)] [pick(desc_placetype)] has [pick(desc_enhancer1)] a [pick(desc_enhancer2)] [pick(desc_whatborked)]"
+		src.flavor_desc += " and requires repair supplies as soon as possible."
 		src.payout += rand(0,60) * 10
 
 		var/suitsets = rand(2,4)
@@ -76,9 +77,9 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/basictool)
 	//name = "Medical Aid"
 	payout = 1100
 	var/list/namevary = list("Medical Aid","Medical Emergency","Triage Support","Aid Request","Critical Condition")
-	var/list/desc0 = list("A medical facility","An affiliated station's medical bay","A triage center","A medical outpost","Our nearest station")
-	var/list/desc1 = list("to assist with","after heavy load due to","to restock after")
-	var/list/desc2 = list(
+	var/list/desc_helpsite = list("A medical facility","An affiliated station's medical bay","A triage center","A medical outpost","Our nearest station")
+	var/list/desc_tense = list("to assist with","after heavy load due to","to restock after")
+	var/list/desc_crisis = list(
 		"treatment of injuries from a skirmish",
 		"a mining accident that left several wounded",
 		"station unrest leading to multiple assaults",
@@ -87,7 +88,7 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/basictool)
 		"a Space Wizard Federation encounter",
 		"intensive care of several burn victims"
 	)
-	var/list/desc3 = list(
+	var/list/desc_emphasis = list(
 		"Please assemble the listed equipment as soon as possible.",
 		"Expedience is of the utmost importance.",
 		"No other transmission from the facility has been able to reach us.",
@@ -97,7 +98,7 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/basictool)
 
 	New()
 		src.name = pick(namevary)
-		src.flavor_desc = "[pick(desc0)] requires additional supplies [pick(desc1)] [pick(desc2)]. [pick(desc3)]"
+		src.flavor_desc = "[pick(desc_helpsite)] requires additional supplies [pick(desc_tense)] [pick(desc_crisis)]. [pick(desc_emphasis)]"
 		src.payout += rand(0,40) * 10
 
 		for(var/S in concrete_typesof(/datum/rc_entry/itembypath/surgical))
@@ -171,11 +172,11 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/surgical)
 	//name = "Computer Failure"
 	payout = 900
 	var/list/namevary = list("Systems Failure","Short Circuit","Computer Overload","Electronics Failure","Systems Breakdown")
-	var/list/desc0 = list("research","mining","security","cargo transfer","communications","deep-space survey")
-	var/list/desc1 = list("vessel","ship","station","outpost")
-	var/list/desc2 = list("experienced","lost systems control due to","ceased operation after","suffered a power surge resulting in")
-	var/list/desc3 = list("severe damage to","near-total failure of","erratic behavior in","considerable damage to","concerning readings from")
-	var/list/desc4 = list(
+	var/list/desc_wherebork = list("research","mining","security","cargo transfer","communications","deep-space survey")
+	var/list/desc_whobork = list("vessel","ship","station","outpost")
+	var/list/desc_whybork = list("experienced","lost systems control due to","ceased operation after","suffered a power surge resulting in")
+	var/list/desc_howmuchbork = list("severe damage to","near-total failure of","erratic behavior in","considerable damage to","concerning readings from")
+	var/list/desc_sys = list(
 		"atmospheric monitoring systems",
 		"short-range communications",
 		"grid regulation systems",
@@ -189,7 +190,7 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/surgical)
 		"carbon dioxide scrubbers",
 		"proximity sensors",
 		"artificial intelligence core")
-	var/list/desc5 = list(
+	var/list/desc_emphasis = list(
 		"Expedience is of the utmost importance.",
 		"Further systems failures are expected if the issue is not rectified.",
 		"The situation is stable for now, but will likely deteriorate if repairs do not begin promptly.",
@@ -200,7 +201,7 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/surgical)
 
 	New()
 		src.name = pick(namevary)
-		src.flavor_desc = "An affiliated [pick(desc0)] [pick(desc1)] has [pick(desc2)] [pick(desc3)] its [pick(desc4)]. [pick(desc5)]"
+		src.flavor_desc = "An affiliated [pick(desc_wherebork)] [pick(desc_whobork)] has [pick(desc_whybork)] [pick(desc_howmuchbork)] its [pick(desc_sys)]. [pick(desc_emphasis)]"
 		src.payout += rand(0,40) * 10
 
 		if(prob(70)) src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/mainboard,rand(1,3))
@@ -269,11 +270,11 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/surgical)
 	//name = "Supply Chain Failure"
 	payout = 800
 	var/list/namevary = list("Urgent Restock","Supply Crisis","Supply Chain Failure","Short Stock","Emergency Resupply")
-	var/list/desc0 = list("research","mining","hydroponics","civilian","Nanotrasen")
-	var/list/desc1 = list("vessel","station","outpost","colony")
-	var/list/desc2 = list("food","rations","food and water","furnace fuel","liquid fuel","coffee","certain herbs")
-	var/list/desc3 = list("after","due to","following")
-	var/list/desc4 = list(
+	var/list/desc_placejob = list("research","mining","hydroponics","civilian","Nanotrasen")
+	var/list/desc_place = list("vessel","station","outpost","colony")
+	var/list/desc_shortage = list("food","rations","food and water","furnace fuel","liquid fuel","coffee","certain herbs")
+	var/list/desc_after = list("after","due to","following")
+	var/list/desc_whybork = list(
 		"its regular supply shuttle experiencing a disastrous hull breach",
 		"catastrophic damage to a storage bay",
 		"a ransacking by an unknown assailant",
@@ -281,7 +282,7 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/surgical)
 		"a nearby station's purchase of almost all available supply, skyrocketing prices",
 		"theft by a group of disgruntled personnel"
 	)
-	var/list/desc5 = list(
+	var/list/desc_emphasis = list(
 		null,
 		" Please assemble the listed items as soon as possible.",
 		" The urgency of this request cannot be overstated.",
@@ -292,8 +293,9 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/surgical)
 
 	New()
 		src.name = pick(namevary)
-		var/tilter = pick(desc2)
-		src.flavor_desc = "An affiliated [pick(desc0)] [pick(desc1)] is experiencing a severe shortage of [tilter] [pick(desc3)] [pick(desc4)].[pick(desc5)]"
+		var/tilter = pick(desc_shortage)
+		src.flavor_desc = "An affiliated [pick(desc_placejob)] [pick(desc_place)] is experiencing"
+		src.flavor_desc += " a severe shortage of [tilter] [pick(desc_after)] [pick(desc_whybork)].[pick(desc_emphasis)]"
 		src.payout += rand(0,40) * 10
 
 		switch(tilter)
