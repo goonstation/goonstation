@@ -950,6 +950,11 @@ THROWING DARTS
 				..()
 				access.access = get_access("Staff Assistant")
 
+		chef // The mouse can have some access, as a treat
+			New()
+				..()
+				access.access = get_access("Chef")
+
 		shittybill //give im some access
 
 			New()
