@@ -88,6 +88,9 @@
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
 		message_admins("Sending offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
 		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 1)
+		if(!length(candidates))
+			src.visible_message("<span class='alert'>The [src] buzzes, before unbolting itself from the ground. There seems to be no reinforcements available currently.</span>")
+			src.anchored = FALSE
 		var/datum/mind/chosen = pick(candidates)
 		var/mob/living/carbon/human/synd = new/mob/living/carbon/human
 		chosen.transfer_to(synd)
@@ -306,6 +309,8 @@
 					for(var/obj/machinery/nuclearbomb/NB in range(4, user.loc))
 						is_the_nuke_there = TRUE
 					for(var/turf/T in range(4, user.loc))
+						if(length(overlayed_turfs))
+							break
 						if(!isfloor(T))
 							continue
 						overlayed_turfs += T
@@ -358,17 +363,24 @@
 
 
 	proc/choose_area(var/mob/user)
-		var/area/temp_area = input("Choose Landing Area") as null|anything in get_teleareas()
+		var/temp_people_count = 10 //sanity check to make sure there's enough turfs to land on
+		var/list/area/filtered_areas = get_teleareas()
+		var/list/turf/check_turfs = list()
+		for(var/mob/living/carbon/M in range(4, user.loc))
+			temp_people_count += 1
+		for(var/area/A in filtered_areas)
+			for(var/turf/T in get_area_turfs(A, TRUE))
+				check_turfs += T
+			if(!(length(check_turfs) >= temp_people_count))
+				filtered_areas -= A
+				continue
+		var/area/temp_area = input("Choose Landing Area") as null|anything in filtered_areas
 		src.landing_area = get_telearea(temp_area)
 		if (!src.landing_area)
 			return 0
 		var/list/turf/possible_turfs = list()
 		for(var/turf/T in get_area_turfs(src.landing_area, TRUE))
 			possible_turfs += T
-		if(!(length(possible_turfs) >= 15))
-			src.landing_area = null
-			boutput(user, "<span class='alert'>Invalid choice, there's not enough valid turfs in that area!</span>")
-			return 0
 
 	proc/send_to_pod(var/mob/user)
 		for(var/mob/living/carbon/M in range(4, user.loc))
@@ -426,6 +438,9 @@
 			SPAWN_DBG(0)
 				launch_with_missile(C, picked_turf)
 			possible_turfs -= picked_turf
+			if(!length(possible_turfs))
+				src.visible_message("<span class='alert'>The [src] makes a grumpy beep, it seems not everyone could get sent!!</span>")
+				break
 		command_alert("A group of [length(sent_mobs)] personnel missiles have been spotted launching from a Syndicate Assault pod towards [src.landing_area], be prepared for heavy contact.","Central Command Alert", "sound/misc/announcement_1.ogg")
 		qdel(src)
 
@@ -449,7 +464,7 @@
 		..()
 
 
-#define DESIGNATOR_MAX_RANGE 25
+#define DESIGNATOR_MAX_RANGE 30
 
 ////////// Laser Designator & Airstrikes //////////
 /obj/item/device/laser_designator
@@ -521,8 +536,10 @@
 		return src.airstrike(target, params, user, reach)
 
 	proc/airstrike(atom/target, params, mob/user, reach)
-		//put your custom code in a child of this
-		return 1
+		uses -= 1
+		in_use = TRUE
+		linked_gun.bombard(target, user)
+		in_use = FALSE
 
 	proc/remove_self(var/mob/living/M)
 		if (islist(M.move_laying))
@@ -585,27 +602,8 @@
 		desc = "A handheld monocular device with a laser built into it, used for calling in fire support from the Cairngorm. It has [src.uses] charge left."
 
 	airstrike(atom/target, params, mob/user, reach)
-		var/turf/target_turf = get_turf(target)
-		if(!(target_turf in view(DESIGNATOR_MAX_RANGE, usr.loc))) //view() is bad and slow but I cannot find a better way to do this
-			return 0
-		if(!isnull(src.target_overlay))
-			target_turf.overlays += src.target_overlay
-		uses -= 1
-		in_use = TRUE
-		playsound(user, "sound/machines/whistlebeep.ogg", 50, 1)
-		playsound(src.linked_gun, "sound/weapons/energy/howitzer_firing.ogg", 50, 1)
-		sleep(25)
-		var/area/designated_area = get_area(target_turf)
-		command_alert("Heavy ordinace has been detected launching from the Cairngorm towards the [initial(designated_area.name)], ETA 15 seconds.","Central Command Alert", "sound/machines/alarm_a.ogg") //iffy if needed, get new alarm sound if kept
-		flick("artillery_cannon_firing", src.linked_gun)
-		sleep(3 DECI SECONDS)
-		playsound(src.linked_gun, "sound/weapons/energy/howitzer_shot.ogg", 50, 1)
-		sleep(rand(90, 160))
-		if(!isnull(src.target_overlay))
-			target_turf.overlays -= src.target_overlay
-		explosion_new(user, target_turf, 75)
-		in_use = FALSE
-		src.desc = "A handheld monocular device with a laser built into it, used for calling in fire support. It has [src.uses] charge left."
+		..()
+		src.desc = "A handheld monocular device with a laser built into it, used for calling in fire support from the Cairngorm. It has [src.uses] charge left."
 		return 1
 
 	pixelaction(atom/target, params, mob/user, reach, continuousFire = 0)
@@ -633,7 +631,7 @@
 
 		return src.airstrike(target, params, user, reach)
 
-#undef DESIGNATOR_MAX_RANGE
+
 
 /obj/machinery/broadside_gun //Thanks to Cogwerks for the sprites
 	name = "Broadside Gun Parent"
@@ -649,14 +647,29 @@
 	var/broken = FALSE
 	///Amount of ammo the gun has, set to -1 for infinite
 	var/ammo = 1
+	///In case you need to offset the gun firing's sound by offset tiles (if it's aiming left for example)
+	var/sound_offset_length
+	///In case you need to offset the gun firing's sound dir (if it's aiming left for example)
+	var/sound_offset_dir
+	///Holding var for the exact turf to play the gun's firing sound from
+	var/turf/sound_turf
+	///Overlay sprite for where the strike will land, set to null for no overlay
+	var/image/target_overlay = null
+
+
+	proc/bombard(var/atom/target, var/mob/user)
+		return
 
 	New()
 		. = ..()
 		START_TRACKING
+		target_overlay = image('icons/effects/effects.dmi', "spinny_red")
+		sound_turf = get_turf(src)
 
 	disposing()
 		. = ..()
 		STOP_TRACKING
+		target_overlay = null
 
 /obj/machinery/broadside_gun/artillery_cannon
 	name = "Artillery Cannon"
@@ -666,10 +679,37 @@
 	bound_width = 96
 	firingfrom = ""
 	ammo = -1
+	sound_offset_dir = EAST
+	sound_offset_length = 2
+
+	bombard(atom/target, mob/user)
+		var/turf/target_turf = get_turf(target)
+		if(!(target_turf in view(DESIGNATOR_MAX_RANGE, usr.loc))) //view() is bad and slow but I cannot find a better way to do this
+			return 0
+		if(!isnull(src.target_overlay))
+			target_turf.overlays += src.target_overlay
+		while(sound_offset_length > 0)
+			sound_turf = get_step(src, sound_offset_dir)
+			sound_offset_length--
+		playsound(user, "sound/machines/whistlebeep.ogg", 50, 1)
+		playsound(sound_turf, "sound/weapons/energy/howitzer_firing.ogg", 50, 1)
+		sleep(2.5 SECONDS)
+		var/area/designated_area = get_area(target_turf)
+		command_alert("Heavy ordinace has been detected launching from the Cairngorm towards the [initial(designated_area.name)], ETA 10 seconds.","Central Command Alert", "sound/machines/alarm_a.ogg")
+		flick("artillery_cannon_firing", src)
+		sleep(3 DECI SECONDS)
+		playsound(sound_turf, "sound/weapons/energy/howitzer_shot.ogg", 50, 1)
+		sleep(rand(60, 110))
+		if(!isnull(src.target_overlay))
+			target_turf.overlays -= src.target_overlay
+		explosion_new(user, target_turf, 75)
+		return 1
+
 
 	syndicate
 		firingfrom = "Cairngorm"
 
+#undef DESIGNATOR_MAX_RANGE
 ////////// Ammoboxes & ammobags //////////
 //Not all used for nukeops, but theme stays the same throughout so they're all here
 

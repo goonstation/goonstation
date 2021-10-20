@@ -950,6 +950,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		src.print_to_host(src.menu_message)
 		return
 
+#define PLAYERS_PER_UPLINK_POINT 20
+
 /obj/item/device/nukeop_commander_uplink
 	name = "station bounced radio"
 	icon = 'icons/obj/items/device.dmi'
@@ -973,10 +975,10 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				continue
 			if (player.ready)
 				num_players++
-		points = max(2, round(num_players / 20))
-		sleep(1 SECOND)
-		if (src && istype(src) && (!length(src.commander_buylist)))
-			src.setup()
+		points = max(2, round(num_players / PLAYERS_PER_UPLINK_POINT))
+		SPAWN_DBG(1 SECOND)
+			if (src && istype(src) && (!length(src.commander_buylist)))
+				src.setup()
 
 	attackby(obj/item/W, mob/user, params)
 		if(istype(W, /obj/item/remote/reinforcement_beacon))
@@ -984,8 +986,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			if(R.uses >= 1 && !R.anchored)
 				R.force_drop(user)
 				sleep(1 DECI SECOND)
-				qdel(R)
+				boutput(user, "<span class='alert'>The [src] accepts the [R], warping it away.</span>")
 				src.points += 2
+				qdel(R)
 		else
 			..()
 
@@ -1054,10 +1057,10 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				return
 
 			// Trying to spawn things you shouldn't, eh?
-			for(var/S in commander_buylist)
+			/*for(var/S in commander_buylist)
 				if(!(I == commander_buylist[S]))
 					trigger_anti_cheat(usr, "tried to href exploit the syndicate commander buylist")
-					return
+					return*/ //Figure out why broken
 
 			if (I.item)
 				var/obj/item = new I.item(get_turf(src))
@@ -1078,6 +1081,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		return
 #undef CHECK1
 #undef CHECK2
+#undef PLAYERS_PER_UPLINK_POINT
 ///////////////////////////////////////// Wizard's spellbook ///////////////////////////////////////////////////
 
 /obj/item/SWF_uplink
