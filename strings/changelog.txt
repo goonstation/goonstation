@@ -1,4 +1,9 @@
 
+(t)wed oct 20 21
+(u)Gousaid67
+(p)6382
+(e)|
+(+)You can now see the charging progress of an item by examining the recharger while close!
 (t)tue oct 19 21
 (u)aloe
 (p)6362
