@@ -65,8 +65,8 @@
 	proc/add_req_contract()
 		if(length(req_contracts) >= max_req_contracts)
 			return
-		var/contract2make
-		if(src.civ_contracts_active == 0) //is this right lmao
+		var/contract2make //picking path from which to generate the newly-added contract
+		if(src.civ_contracts_active == 0)
 			contract2make = pick(concrete_typesof(/datum/req_contract/civilian))
 		else if(src.aid_contracts_active == 0)
 			contract2make = pick(concrete_typesof(/datum/req_contract/aid))
