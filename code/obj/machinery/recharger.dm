@@ -138,9 +138,8 @@ obj/machinery/recharger
 		// Something wrong with the item we inserted. Report an error
 		src.icon_state = sprite_error
 
-/obj/machinery/recharger/examine(mob/user)
+/obj/machinery/recharger/get_desc(dist ,mob/user)
 	. = ..()
-	var/dist = get_dist(src, user)
 	if(dist > 2)
 		return
 	. += "<br> <span class='notice'> It is currently recharging:"
