@@ -514,23 +514,16 @@
 				reag_list = copytext(reag_list, 3)
 				boutput(M, "<span class='notice'>Tastes like there might be some [reag_list] in this.</span>")
 			else
-				var/list/reag_list = list()
-
-				for (var/current_id in reagents.reagent_list)
-					var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
-					if (current_reagent.taste)
-						reag_list[current_reagent.taste] += current_reagent.volume
-
-				reag_list = reverse_list(sortList(reag_list))
-				switch (length(reag_list))
+				var/tastes = src.reagents.get_prevalent_tastes(3)
+				switch (length(tastes))
 					if (0)
 						boutput(M, "<span class='notice'>Tastes pretty bland.</span>")
 					if (1)
-						boutput(M, "<span class='notice'>Tastes kind of [reag_list[1]].</span>")
+						boutput(M, "<span class='notice'>Tastes kind of [tastes[1]].</span>")
 					if (2)
-						boutput(M, "<span class='notice'>Tastes kind of [reag_list[1]] and [reag_list[2]].</span>")
+						boutput(M, "<span class='notice'>Tastes kind of [tastes[1]] and [tastes[2]].</span>")
 					else
-						boutput(M, "<span class='notice'>Tastes kind of [reag_list[1]], [reag_list[2]], and a little bit [reag_list[3]].</span>")
+						boutput(M, "<span class='notice'>Tastes kind of [tastes[1]], [tastes[2]], and a little bit [tastes[3]].</span>")
 
 			if (src.reagents.total_volume)
 				logTheThing("combat", user, M, "[user == M ? "takes a sip from" : "makes [constructTarget(M,"combat")] drink from"] [src] [log_reagents(src)] at [log_loc(user)].")
