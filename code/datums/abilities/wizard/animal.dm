@@ -52,44 +52,82 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/mous
 			boutput(holder.owner, "Your target must be human!")
 			return 1
 		holder.owner.visible_message("<span class='alert'><b>[holder.owner] begins to cast a spell on [target]!</b></span>")
-		if (do_mob(holder.owner, target, 20))
-			if(!istype(get_area(holder.owner), /area/sim/gunsim))
-				holder.owner.say("YORAF UHRY") // AN EMAL? PAL EMORF? TURAN SPHORM?
-			..()
+		actions.start(new/datum/action/bar/polymorph(target, src), holder.owner)
 
-			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
-			smoke.set_up(5, 0, H.loc)
-			smoke.attach(H)
-			smoke.start()
+/datum/action/bar/polymorph
+	duration = 2 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	id = "polymorph_spell"
 
-			if (H.traitHolder.hasTrait("training_chaplain"))
-				boutput(holder.owner, "<span class='alert'>[H] has divine protection from magic.</span>")
-				H.visible_message("<span class='alert'>The spell has no effect on [H]!</span>")
-				JOB_XP(H, "Chaplain", 2)
-				return
+	var/datum/targetable/spell/animal/spell
+	var/mob/living/carbon/human/target
 
-			if (iswizard(H))
-				H.visible_message("<span class='alert'>The spell has no effect on [H]!</span>")
-				return
+	New(Target, Spell)
+		target = Target
+		spell = Spell
+		..()
 
-			if (check_target_immunity( H ))
-				H.visible_message("<span class='alert'>[H] seems to be warded from the effects!</span>")
-				return 1
+	onStart()
+		..()
 
-			if (H.mind && (H.mind.assigned_role != "Animal") || (!H.mind || !H.client))
-				boutput(H, "<span class='alert'><B>You feel your flesh painfully ripped apart and reformed into something else!</B></span>")
-				if (H.mind)
-					H.mind.assigned_role = "Animal"
-				H.emote("scream", 0)
+		var/mob/living/M = owner
+		var/datum/abilityHolder/A = spell.holder
+		var/mob/living/carbon/human/H = target
 
-				H.unequip_all()
-				var/mob/living/critter/C = H.make_critter(pick(animal_spell_critter_paths))
-				if (istype(C, /mob/living/critter/small_animal/bee))
-					var/mob/living/critter/small_animal/bee/B = C
-					B.non_admin_bee_allowed = 1
-				if (istype(C))
-					C.change_misstep_chance(30)
-					C.stuttering = 40
-					SHOW_POLYMORPH_TIPS(C)
-		else
-			return 1
+		if (!A || get_dist(M, H) > spell.max_range || !H || !M || !ishuman(H) || !A || !M.wizard_castcheck(spell))
+			interrupt(INTERRUPT_ALWAYS)
+
+	onUpdate()
+		..()
+
+		var/mob/living/M = owner
+		var/datum/abilityHolder/A = spell.holder
+		var/mob/living/carbon/human/H = target
+
+		if (!A || get_dist(M, H) > spell.max_range || !H || !M || !ishuman(H) || !A || !M.wizard_castcheck(spell))
+			interrupt(INTERRUPT_ALWAYS)
+
+	onEnd()
+		..()
+
+		var/mob/living/M = owner
+		var/datum/abilityHolder/A = spell.holder
+		var/mob/living/carbon/human/H = target
+
+		if(!istype(get_area(A), /area/sim/gunsim))
+			M.say("YORAF UHRY") // AN EMAL? PAL EMORF? TURAN SPHORM?
+
+		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+		smoke.set_up(5, 0, H.loc)
+		smoke.attach(H)
+		smoke.start()
+
+		if (H.traitHolder.hasTrait("training_chaplain"))
+			boutput(A, "<span class='alert'>[H] has divine protection from magic.</span>")
+			H.visible_message("<span class='alert'>The spell has no effect on [H]!</span>")
+			JOB_XP(H, "Chaplain", 2)
+			return
+
+		if (iswizard(H))
+			H.visible_message("<span class='alert'>The spell has no effect on [H]!</span>")
+			return
+
+		if (check_target_immunity( H ))
+			H.visible_message("<span class='alert'>[H] seems to be warded from the effects!</span>")
+			return
+
+		if (H.mind && (H.mind.assigned_role != "Animal") || (!H.mind || !H.client))
+			boutput(H, "<span class='alert'><B>You feel your flesh painfully ripped apart and reformed into something else!</B></span>")
+			if (H.mind)
+				H.mind.assigned_role = "Animal"
+			H.emote("scream", 0)
+
+			H.unequip_all()
+			var/mob/living/critter/C = H.make_critter(pick(animal_spell_critter_paths))
+			if (istype(C, /mob/living/critter/small_animal/bee))
+				var/mob/living/critter/small_animal/bee/B = C
+				B.non_admin_bee_allowed = 1
+			if (istype(C))
+				C.change_misstep_chance(30)
+				C.stuttering = 40
+				SHOW_POLYMORPH_TIPS(C)
