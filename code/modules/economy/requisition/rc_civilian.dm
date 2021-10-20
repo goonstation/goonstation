@@ -3,13 +3,13 @@ ABSTRACT_TYPE(/datum/req_contract/civilian)
 	req_class = CIV_CONTRACT
 
 /datum/req_contract/civilian/event_catering
-	//name = "Event Catering"
+	name = "Event Catering"
 	payout = 500
-	var/list/desc0 = list("reception","formal event","welcoming party","going-away party","commemorative dinner","dinner")
-	var/list/desc1 = list("an esteemed","an infamous","a famous","a renowned")
-	var/list/desc2 = list(" Nanotrasen"," Martian"," freelancing"," frontier"," - if only barely -"," retired")
-	var/list/desc3 = list("researcher","technician","clown","soldier","medic","surgeon","freighter captain","rescue crew","mariachi band","comedian")
-	var/list/desc4 = list(
+	var/list/desc_event = list("reception","formal event","welcoming party","going-away party","commemorative dinner","dinner")
+	var/list/desc_honorific = list("an esteemed","an infamous","a famous","a renowned")
+	var/list/desc_origin = list(" Nanotrasen"," Martian"," freelancing"," frontier"," - if only barely -"," retired")
+	var/list/desc_role = list("researcher","technician","clown","soldier","medic","surgeon","freighter captain","rescue crew","mariachi band","comedian")
+	var/list/desc_bonusflavor = list(
 		"Catering services are requested posthaste.",
 		"Please ensure goods are well-chilled before shipment.",
 		"Inadequate cooking of shipped food will result in immediate retaliatory action.",
@@ -22,7 +22,7 @@ ABSTRACT_TYPE(/datum/req_contract/civilian)
 	)
 
 	New()
-		src.flavor_desc = "A [pick(desc0)] is being held for [pick(desc1)][pick(desc2)] [pick(desc3)]. [pick(desc4)]"
+		src.flavor_desc = "A [pick(desc_event)] is being held for [pick(desc_honorific)][pick(desc_origin)] [pick(desc_role)]. [pick(desc_bonusflavor)]"
 		src.payout += rand(0,50) * 10
 
 		for(var/S in concrete_typesof(/datum/rc_entry/itembypath/caterfood))
@@ -84,13 +84,13 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	//name = "Interior Outfitting"
 	payout = 800
 	var/list/namevary = list("Interior Outfitting","Furnishing Assistance","Interior Decorating","Occupancy Preparations","Last-Minute Furnishing")
-	var/list/desc0 = list("A new gaming","An extraction","A medical","A research","A cartographic","A transit")
-	var/list/desc1 = list("vessel","station","platform","outpost")
-	var/list/desc2 = list("its commissary","the docking wing","crew quarters","staff facilities","additional operating space","a storage bay")
+	var/list/desc_whatitdoes = list("A new gaming","An extraction","A medical","A research","A cartographic","A transit")
+	var/list/desc_whatitis = list("vessel","station","platform","outpost")
+	var/list/desc_furnroom = list("its commissary","the docking wing","crew quarters","staff facilities","additional operating space","a storage bay")
 
 	New()
 		src.name = pick(namevary)
-		src.flavor_desc = "[pick(desc0)] [pick(desc1)] requires supplies to furnish [pick(desc2)]. Please use standard compact packing techniques."
+		src.flavor_desc = "[pick(desc_whatitdoes)] [pick(desc_whatitis)] requires supplies to furnish [pick(desc_furnroom)]. Please use standard compact packing techniques."
 		src.payout += rand(0,50) * 10
 
 		if(prob(70))
@@ -156,15 +156,15 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	//name = "Crew Embarcation"
 	payout = 700
 	var/list/namevary = list("Crew Embarcation","Crew Onboarding","New Hands on Deck","Expedited Outfitting","Personnel Rotation")
-	var/list/desc0 = list("mining","hydroponics","cargo handling","engineering","medical","research","cartographic")
-	var/list/desc1 = list("vessel","station","platform","outpost")
-	var/list/desc2 = list("hired","acquired","recruited","reassigned","graduated")
-	var/list/desc3 = list("personnel","crew members","staff","interns")
+	var/list/desc_task = list("mining","hydroponics","cargo handling","engineering","medical","research","cartographic")
+	var/list/desc_place = list("vessel","station","platform","outpost")
+	var/list/desc_hiring = list("hired","acquired","recruited","reassigned","graduated")
+	var/list/desc_noobs = list("personnel","crew members","staff","interns")
 
 	New()
 		src.name = pick(namevary)
-		var/task = pick(desc0) //subvariation
-		src.flavor_desc = "An affiliated [task] [pick(desc1)] requires sets of attire for newly [pick(desc2)] [pick(desc3)]."
+		var/task = pick(desc_task) //subvariation
+		src.flavor_desc = "An affiliated [task] [pick(desc_place)] requires sets of attire for newly [pick(desc_hiring)] [pick(desc_noobs)]."
 		src.payout += rand(0,20) * 10
 
 		var/crewcount = rand(4,12)
@@ -264,11 +264,11 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	payout = 900
 	hide_item_payouts = TRUE
 	var/list/namevary = list("Birthday Party","Birthday Bash","Surprise Party","One Year Older")
-	var/list/desc0 = list("party","celebration","gathering","party","event") //yes party twice
+	var/list/desc_event = list("party","celebration","gathering","party","event") //yes party twice
 
 	var/list/descpacito = list("ducks","Stations and Syndicates","cool hats","pride gear","instruments","sports","candy","electronics","tinkering")
 
-	var/list/desc3 = list(
+	var/list/desc_partyzone = list(
 		"at their station's cafeteria",
 		"at their outpost's mess hall",
 		"in a somewhat impromptu arrangement",
@@ -286,11 +286,11 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 		src.name = pick(namevary)
 		//let's get personal!
 		var/whodat = prob(50)
-		var/desc1 = whodat ? pick_string_autokey("names/first_male.txt") : pick_string_autokey("names/first_female.txt")
-		var/desc2 = prob(80) ? pick(consonants_upper) : pick(vowels_upper)
+		var/firstnom = whodat ? pick_string_autokey("names/first_male.txt") : pick_string_autokey("names/first_female.txt")
+		var/lastnom = prob(80) ? pick(consonants_upper) : pick(vowels_upper)
 		var/age = rand(23,55)
 
-		src.flavor_desc = "A birthday [pick(desc0)] is being held for [desc1] [desc2]. [pick(desc3)]."
+		src.flavor_desc = "A birthday [pick(desc_event)] is being held for [firstnom] [lastnom]. [pick(desc_partyzone)]."
 		src.payout += rand(0,50) * 10
 
 		if(prob(70)) //pizza party
@@ -323,7 +323,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 			bonusducks = list(
 				"Throw in a gift of your own for the birthday [whodat ? "boy" : "girl"]!",
 				"And how about you send along a present too?",
-				"We ask that you send a gift of your choice for [desc1]. [whodat ? "he" : "she"]'s fond of [pick(descpacito)].",
+				"We ask that you send a gift of your choice for [firstnom]. [whodat ? "he" : "she"]'s fond of [pick(descpacito)].",
 				"About the gift, wrap up whatever you want, but something to do with [pick(descpacito)] would be particularly nice.",
 				"If you could gift-wrap something extra for them, it'd be appreciated - they like [pick(descpacito)].",
 				"[whodat ? "He" : "She"]'s feeling a little down - a present of your own would be nice."
@@ -336,14 +336,14 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 				" Custom frosting is preferred on the baked goods.",
 				" It's not every day your pal turns [age]!",
 				" If contacted by their relatives, please refrain from discussing this.",
-				" Please do not contact [desc1] directly - we're trying to keep it a surprise.",
+				" Please do not contact [firstnom] directly - we're trying to keep it a surprise.",
 				" Suppliers which handle shedding animals are encouraged not to reply.",
 				" The quality of your response to this contract will be reported to your regional manager."
 			)
 			src.flavor_desc += "[pick(bonusducks)]"
 
 		if(prob(30))
-			var/collate = "[desc1] [desc2]"
+			var/collate = "[firstnom] [lastnom]"
 			var/datum/rc_itemreward/birthdaypic/picc = new /datum/rc_itemreward/birthdaypic
 			picc.whodatflag = whodat
 			picc.bdayname = collate
