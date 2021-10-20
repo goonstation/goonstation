@@ -184,11 +184,11 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 		src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/shoes,crewcount)
 		if(prob(30))
 			src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/headset,crewcount)
-		if(prob(60))
+		if(prob(50)) //turns out they need something to eat too
 			src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/literallyanyfood,crewcount)
-		if(prob(50))
-			src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/water,crewcount*10*rand(1,3))
-		//job related gearsets should also be added here sometimes
+			src.flavor_desc += " Food would also be appreciated."
+			if(prob(70)) src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/water,crewcount*10*rand(1,3))
+		//job related gearsets could also be added here sometimes
 
 		..()
 
