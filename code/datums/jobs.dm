@@ -2193,7 +2193,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
-		M.critterize(/mob/living/critter/spider/nice)
+		M.critterize(/mob/living/critter/spider/nice/halloween)
 
 /datum/job/special/halloween/critter/crow
 	name = "Crow"
