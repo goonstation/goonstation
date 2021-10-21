@@ -91,7 +91,7 @@
 	var/mode = 0
 
 	var/auto_patrol = 0		// set to make bot automatically patrol
-	var/beacon_freq = 1445		// navigation beacon frequency
+	var/beacon_freq = FREQ_NAVBEACON		// navigation beacon frequency
 	var/control_freq = 1447		// bot control frequency
 
 	var/turf/patrol_target	// this is turf to navigate to (location of beacon)
@@ -232,7 +232,7 @@
 	var/is_dead_beepsky = 0
 	var/build_step = 0
 	var/created_name = "Securitron" //To preserve the name if it's a unique securitron I guess
-	var/beacon_freq = 1445 //If it's running on another beacon circuit I guess
+	var/beacon_freq = FREQ_NAVBEACON //If it's running on another beacon circuit I guess
 	var/hat = null
 
 

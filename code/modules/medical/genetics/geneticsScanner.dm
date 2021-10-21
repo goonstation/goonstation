@@ -15,7 +15,7 @@ var/list/genetek_hair_styles = list()
 	soundproofing = 10
 
 	var/net_id = null
-	var/frequency = 1149
+	var/frequency = FREQ_PDA
 
 	New()
 		..()

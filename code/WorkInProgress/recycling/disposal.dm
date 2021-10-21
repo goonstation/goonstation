@@ -1659,7 +1659,7 @@
 	var/mailgroup = null
 	var/mailgroup2 = null //Do not refactor into a list, maps override these properties
 	var/net_id = null
-	var/frequency = 1149
+	var/frequency = FREQ_PDA
 	throw_speed = 1
 
 	ex_act(var/severity)

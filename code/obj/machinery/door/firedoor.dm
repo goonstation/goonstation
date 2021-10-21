@@ -30,7 +30,7 @@
 	opacity = 0
 	density = 0
 	var/nextstate = null
-	var/datum/radio_frequency/control_frequency = "1437"
+	var/datum/radio_frequency/control_frequency = FREQ_ALARM
 	var/zone
 	var/zone2 //mbc hack
 	var/image/welded_image = null

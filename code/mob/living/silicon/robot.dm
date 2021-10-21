@@ -2438,7 +2438,7 @@
 	proc/borg_death_alert(modifier = ROBOT_DEATH_MOD_NONE)
 		var/message = null
 		var/net_id = generate_net_id(src)
-		var/frequency = 1149
+		var/frequency = FREQ_PDA
 		var/datum/component/packet_connected/radio/radio_connection = MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 		var/area/myarea = get_area(src)
 

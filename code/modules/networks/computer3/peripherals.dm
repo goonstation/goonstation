@@ -122,7 +122,7 @@
 	desc = "A wireless computer card. It has a bit of a limited range."
 	icon_state = "radio_mod"
 	func_tag = "RAD_ADAPTER"
-	var/frequency = 1419
+	var/frequency = FREQ_FREE
 	var/range = 8 //How far can our signal travel?? HOW FAR
 	var/setup_freq_locked = 0 //If set, frequency cannot be adjusted.
 	var/setup_netmode_norange = 1 //If set, there is no range limit in network mode.
@@ -136,7 +136,7 @@
 		setup_freq_locked = 1
 
 		pda
-			frequency = 1149 //Standard PDA comm frequency.
+			frequency = FREQ_PDA //Standard PDA comm frequency.
 			range = 0
 			/*net_mode = 1
 			func_tag = "NET_ADAPTER"*/
@@ -550,7 +550,7 @@
 	var/obj/machinery/power/data_terminal/wired_link = null
 	var/subnet = null
 
-	var/frequency = 1419
+	var/frequency = FREQ_FREE
 	var/wireless_range = 8
 
 	New()

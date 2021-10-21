@@ -10,7 +10,7 @@
 	deconstruct_flags = DECON_WIRECUTTERS | DECON_MULTITOOL
 	machine_registry_idx = MACHINES_FIREALARMS
 	power_usage = 10
-	var/alarm_frequency = "1437"
+	var/alarm_frequency = FREQ_ALARM
 	var/detecting = 1.0
 	var/working = 1.0
 	var/lockdownbyai = 0

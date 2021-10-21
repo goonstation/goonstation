@@ -790,7 +790,7 @@
 	var/icon_redlight = "redlight"
 	var/icon_sparks = "sparks"
 	var/always_display_locks = 0
-	var/radio_control = 1431
+	var/radio_control = FREQ_SECURE_STORAGE
 	var/net_id
 
 	New()

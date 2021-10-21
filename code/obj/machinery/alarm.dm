@@ -8,7 +8,7 @@
 	icon_state = "alarm0"
 	anchored = 1.0
 	var/skipprocess = 0 //Experimenting
-	var/alarm_frequency = "1437"
+	var/alarm_frequency = FREQ_ALARM
 	var/alarm_zone = null
 	var/control_frequency = "1439"
 	var/id

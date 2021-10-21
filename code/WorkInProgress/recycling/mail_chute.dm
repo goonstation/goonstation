@@ -16,7 +16,7 @@
 	var/mailgroup = null
 	var/mailgroup2 = null
 	var/net_id = null
-	var/pdafrequency = 1149
+	var/pdafrequency = FREQ_PDA
 
 	New()
 		..()

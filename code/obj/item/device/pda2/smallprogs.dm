@@ -470,7 +470,7 @@ Code:
 	on_activated(obj/item/device/pda2/pda)
 		pda.AddComponent(/datum/component/packet_connected/radio, \
 			"report",\
-			1149, \
+			FREQ_PDA, \
 			pda.net_id, \
 			null, \
 			null \

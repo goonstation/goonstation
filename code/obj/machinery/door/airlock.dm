@@ -1529,7 +1529,7 @@ About the new airlock wires panel:
 // This code allows for airlocks to be controlled externally by setting an id_tag and comm frequency (disables ID access)
 obj/machinery/door/airlock
 	var/id_tag
-	var/frequency = 1411
+	var/frequency = FREQ_AIRLOCK
 	var/last_update_time = 0
 	var/last_radio_login = 0
 	mats = 18

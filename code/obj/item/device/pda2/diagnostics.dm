@@ -6,7 +6,7 @@
 /datum/computer/file/pda_program/pingtool
 	name = "Ping Tool"
 	size = 8
-	var/send_freq = 1149 //Frequency signal is sent at, should be kept within normal radio ranges.
+	var/send_freq = FREQ_PDA //Frequency signal is sent at, should be kept within normal radio ranges.
 	var/range = 32
 	var/mode = 0
 	var/tmp/list/result
@@ -134,7 +134,7 @@
 /datum/computer/file/pda_program/packet_sniffer
 	name = "Packet Sniffer"
 	size = 16
-	var/scan_freq = 1149
+	var/scan_freq = FREQ_PDA
 	var/range = 32
 	var/mode = 0
 	var/tmp/list/result
@@ -282,7 +282,7 @@
 /datum/computer/file/pda_program/packet_sender
 	name = "Packet Sender"
 	size = 8
-	var/send_freq = 1149
+	var/send_freq = FREQ_PDA
 	var/range = 32
 	var/tmp/list/keyval
 	var/mode = 0
@@ -436,7 +436,7 @@
 				for(var/key in keyval)
 					signal.data[key] = keyval[key]
 
-				if ((send_freq == 1149) && (!isnull(signal.data["message"])) && (signal.data["command"] == "text_message"))
+				if ((send_freq == FREQ_PDA) && (!isnull(signal.data["message"])) && (signal.data["command"] == "text_message"))
 					logTheThing("pdamsg", null, null, "<i><b>[src.master.owner]'s PDA used by [src.master.loc.name] ([src.master.fingerprintslast]) (as [isnull(signal.data["sender_name"]) ? "Nobody" : signal.data["sender_name"]]) &rarr; [isnull(signal.data["address_1"]) ? "Everybody" : "[signal.data["address_1"]]"]:</b></i> [signal.data["message"]]")
 
 				SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "sender")

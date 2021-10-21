@@ -1745,7 +1745,7 @@
 	var/range = 0
 
 	var/noise_enabled = true
-	var/frequency = 1419
+	var/frequency = FREQ_FREE
 
 	get_desc()
 		. += {"<br><span class='notice'>[forward_all ? "Sending full unprocessed Signals.":"Sending only processed sendmsg and pda Message Signals."]<br>

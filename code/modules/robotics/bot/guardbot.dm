@@ -184,7 +184,7 @@
 	////////////////////// GUN STUFF -^
 
 	var/control_freq = 1219		// bot control frequency
-	var/beacon_freq = 1445
+	var/beacon_freq = FREQ_NAVBEACON
 	var/net_id = null
 	var/last_comm = 0 //World time of last transmission
 	var/reply_wait = 0

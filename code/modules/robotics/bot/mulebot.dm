@@ -19,7 +19,7 @@
 	///sanitycheck so we can't try to unload during an unload operation
 	var/unloading = FALSE
 
-	var/beacon_freq = 1445
+	var/beacon_freq = FREQ_NAVBEACON
 	var/control_freq = 1447
 
 	suffix = ""

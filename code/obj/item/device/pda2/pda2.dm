@@ -28,8 +28,8 @@
 	var/closed = 1 //Can we insert a module now?
 	var/obj/item/uplink/integrated/pda/uplink = null
 	var/obj/item/device/pda_module/module = null
-	var/frequency = 1149
-	var/beacon_freq = 1445 //Beacon frequency for locating beacons (I love beacons)
+	var/frequency = FREQ_PDA
+	var/beacon_freq = FREQ_NAVBEACON //Beacon frequency for locating beacons (I love beacons)
 	var/net_id = null //Hello dude intercepting our radio transmissions, here is a number that is not just \ref
 
 	var/tmp/list/pdasay_autocomplete = list()

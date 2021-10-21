@@ -1372,8 +1372,8 @@
 		SPAWN_DBG(0.5 SECONDS)
 
 			if (radio_controller)
-				add_frequency(1411)
-				add_frequency(1419)
+				add_frequency(FREQ_AIRLOCK)
+				add_frequency(FREQ_FREE)
 
 			if(!src.link)
 				var/turf/T = get_turf(src)

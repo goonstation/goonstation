@@ -47,7 +47,7 @@
 	var/message = null
 	var/list/mailgroups
 	var/net_id = null
-	var/pdafrequency = 1149
+	var/pdafrequency = FREQ_PDA
 
 	var/datum/light/light
 

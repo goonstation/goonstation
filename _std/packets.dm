@@ -38,8 +38,13 @@ proc/get_radio_connection_by_id(atom/movable/AM, id)
 
 //Signal frequencies
 
-/// The number to make someone's PDA go BEEP BEEP
 #define FREQ_PDA "1149"
+#define FREQ_AIRLOCK "1411"
+#define FREQ_FREE "1419" /// frequency for "free packet communication", default for nerd stuff
+#define FREQ_NAVBEACON "1445"
+#define FREQ_SECURE_STORAGE "1431"
+#define FREQ_SECBUDDY_NAVBEACON "1431"
+#define FREQ_ALARM "1437"
 
 /*
 Special frequency list:
@@ -47,8 +52,8 @@ On the map:
 1149 for PDA messaging
 1433 for hydroponics alerts
 1435 for status displays
-1437 for atmospherics/fire alerts
-1445 for bot nav beacons
+FREQ_ALARM for atmospherics/fire alerts
+FREQ_NAVBEACON for bot nav beacons
 1447 for mulebot control
 1449 for airlock controls
 1453 for engineering access

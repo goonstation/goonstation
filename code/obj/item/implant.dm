@@ -32,7 +32,7 @@ THROWING DARTS
 	var/uses_radio = 0
 	var/list/mailgroups = null
 	var/net_id = null
-	var/pda_alert_frequency = 1149
+	var/pda_alert_frequency = FREQ_PDA
 
 	New()
 		..()
