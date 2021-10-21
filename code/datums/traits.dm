@@ -557,7 +557,7 @@
 	cleanName = "Bald"
 	desc = "Start your shift with a wig instead of hair. I'm sure no one will be able to tell."
 	id = "bald"
-	icon_state = "lunchbox"
+	icon_state = "placeholder"
 	points = 0
 	isPositive = 1
 	category = "trinkets"
