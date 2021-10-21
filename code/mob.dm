@@ -522,6 +522,7 @@
 /mob/Logout()
 
 	//logTheThing("diary", src, null, "logged out", "access") <- sometimes shits itself and has been known to out traitors. Disabling for now.
+	src.last_client?.get_plane(PLANE_EXAMINE).alpha = 0
 
 	SEND_SIGNAL(src, COMSIG_MOB_LOGOUT)
 
