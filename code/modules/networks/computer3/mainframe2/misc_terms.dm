@@ -1372,8 +1372,8 @@
 		SPAWN_DBG(0.5 SECONDS)
 
 			if (radio_controller)
-				frequencies["1411"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f1411", 1411)
-				frequencies["1419"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f1419", 1419)
+				add_frequency(1411)
+				add_frequency(1419)
 
 			if(!src.link)
 				var/turf/T = get_turf(src)
@@ -1381,6 +1381,9 @@
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
 					src.link.master = src
+
+	proc/add_frequency(newFreq)
+		frequencies[newFreq] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f[newFreq]", newFreq)
 
 	attack_hand(mob/user as mob)
 		if(..() || (status & (NOPOWER|BROKEN)))
@@ -1604,7 +1607,7 @@
 						if ("add")
 							var/newFreq = "[round(max(1000, min(text2num(data["_freq"]), 1500)))]"
 							if (newFreq && !(newFreq in frequencies))
-								frequencies[newFreq] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f[newFreq]", newFreq)
+								add_frequency(newFreq)
 
 						if ("remove")
 							var/newFreq = "[round(max(1000, min(text2num(data["_freq"]), 1500)))]"
