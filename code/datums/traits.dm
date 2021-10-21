@@ -558,7 +558,7 @@
 	desc = "Start your shift with a wig instead of hair. I'm sure no one will be able to tell."
 	id = "bald"
 	icon_state = "lunchbox"
-	points = -1
+	points = 0
 	isPositive = 1
 	category = "trinkets"
 
