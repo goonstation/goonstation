@@ -2178,7 +2178,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 /datum/job/special/halloween/critter/remy
 	name = "Remy"
 	limit = 1
-	recieves_implant = /obj/item/implant/access/infinite/chef
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()

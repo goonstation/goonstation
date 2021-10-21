@@ -229,6 +229,11 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	flags = TABLEPASS // No door pass please
 	pull_w_class = W_CLASS_NORMAL
 
+	New()
+		..()
+		var/obj/item/implant/access/infinite/chef/implant = new /obj/item/implant/access/infinite/chef(src) // Now dear reader, you may find yourself asking, hey Ikea, wouldnt it be sane if you just had the implant be for the job itself? And to that Id say yes, now you being a rational man/woman/being of science will of course go can you do that please? And to that I say no! Understandably this upsets you, this is bad coding! Well as it turns out, for some accursed reason it is very hard to give a critter job an implant. Now, you may understandably go, but Ikea! The ishuman checks Ikea! Turns out even if you remove those it still doesnt work! And Ive spent two hours on this and do not feel like trying further.
+		implant.implanted(src, src)
+
 	setup_overlays()
 		return
 
