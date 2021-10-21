@@ -112,7 +112,7 @@
 	return 1
 
 
-/mob/proc/slip(walking_matters = 1, running = 0, ignore_actual_delay = 0)
+/mob/proc/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0)
 	.= 0
 
 	if (!src.can_slip())
@@ -120,7 +120,7 @@
 
 	var/slip_delay = BASE_SPEED_SUSTAINED + (WALK_DELAY_ADD*0.15) //we need to fall under this movedelay value in order to slip :O
 
-	if (!walking_matters)
+	if (walking_matters)
 		slip_delay = BASE_SPEED_SUSTAINED + WALK_DELAY_ADD
 	var/movement_delay_real = max(src.movement_delay(get_step(src,src.move_dir), running),world.tick_lag)
 	var/movedelay = max(movement_delay_real, min(world.time - src.next_move,world.time - src.last_pulled_time))
@@ -145,7 +145,7 @@
 		src.throw_at(T, intensity, 2, list("stun"=clamp(1.1 SECONDS * intensity, 1 SECOND, 5 SECONDS)), src.loc, throw_type = THROW_SLIP)
 		.= 1
 
-/mob/living/carbon/human/slip(walking_matters = 1, running = 0, ignore_actual_delay = 0)
+/mob/living/carbon/human/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0)
 	. = ..(walking_matters, (src.client?.check_key(KEY_RUN) && src.get_stamina() > STAMINA_SPRINT), ignore_actual_delay)
 
 
