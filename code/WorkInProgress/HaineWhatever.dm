@@ -216,7 +216,7 @@
 		if (user.zone_sel.selecting == "head")
 			M.emote("sneeze")
 		else
-			M.emote(pick("giggle", "laugh")
+			M.emote(pick("giggle", "laugh"))
 
 var/list/parrot_species = list("eclectus" = /datum/species_info/parrot/eclectus,
 	"eclectusf" = /datum/species_info/parrot/eclectus/female,
