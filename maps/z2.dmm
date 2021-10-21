@@ -74959,14 +74959,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
-"fmP" = (
-/obj,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "fob" = (
 /obj/stool/chair/yellow{
 	dir = 8
@@ -77694,10 +77686,6 @@
 "npu" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/sim/racing_track)
-"npE" = (
-/obj,
-/turf/cordon,
-/area/cordon)
 "nrk" = (
 /obj/admin_plaque{
 	name = "Enakai's Office"
@@ -80296,7 +80284,7 @@
 "tIu" = (
 /obj/decal/poster/wallsign/poster_clown{
 	pixel_x = -3;
-	pixel_y = 2
+	pixel_y = 1
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/offices{
@@ -158884,9 +158872,9 @@ dvy
 dxI
 dvy
 dxn
-fmP
+dvy
 dwd
-fmP
+dvy
 dvy
 dvy
 dCZ
@@ -161318,7 +161306,7 @@ dCO
 dwF
 wel
 aaa
-npE
+aaa
 aaa
 aaa
 aaa
