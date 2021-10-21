@@ -11,6 +11,7 @@ var/list/observers = list()
 
 	New()
 		..()
+		APPLY_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)
 		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
 		observers += src
 		mobs += src
