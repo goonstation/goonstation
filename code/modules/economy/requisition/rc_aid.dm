@@ -20,56 +20,56 @@ ABSTRACT_TYPE(/datum/req_contract/aid)
 
 		var/suitsets = rand(2,4)
 
-		src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/spacesuit,suitsets)
-		src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/spacehelmet,suitsets)
+		src.rc_entries += rc_buildentry(/datum/rc_entry/item/spacesuit,suitsets)
+		src.rc_entries += rc_buildentry(/datum/rc_entry/item/spacehelmet,suitsets)
 
 		if(prob(70)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/steelsheet,rand(5,35)*2)
 
-		for(var/S in concrete_typesof(/datum/rc_entry/itembypath/basictool))
+		for(var/S in concrete_typesof(/datum/rc_entry/item/basictool))
 			if(prob(70))
 				src.rc_entries += rc_buildentry(S,rand(1,4))
 		..()
 
-/datum/rc_entry/itembypath/spacesuit
+/datum/rc_entry/item/spacesuit
 	name = "space suit"
 	typepath = /obj/item/clothing/suit/space
-	feemod = 430
+	feemod = 630
 
-/datum/rc_entry/itembypath/spacehelmet
+/datum/rc_entry/item/spacehelmet
 	name = "space helmet"
 	typepath = /obj/item/clothing/head/helmet/space
-	feemod = 430
+	feemod = 630
 
 /datum/rc_entry/stack/steelsheet
 	name = "NT-spec steel sheet"
 	typepath = /obj/item/sheet/steel
 	feemod = 15
 
-ABSTRACT_TYPE(/datum/rc_entry/itembypath/basictool)
-/datum/rc_entry/itembypath/basictool/crowbar
+ABSTRACT_TYPE(/datum/rc_entry/item/basictool)
+/datum/rc_entry/item/basictool/crowbar
 	name = "crowbar"
 	typepath = /obj/item/crowbar
-	feemod = 90
+	feemod = 130
 
-/datum/rc_entry/itembypath/basictool/screwdriver
+/datum/rc_entry/item/basictool/screwdriver
 	name = "screwdriver"
 	typepath = /obj/item/screwdriver
-	feemod = 110
+	feemod = 140
 
-/datum/rc_entry/itembypath/basictool/wirecutters
+/datum/rc_entry/item/basictool/wirecutters
 	name = "wirecutters"
 	typepath = /obj/item/wirecutters
-	feemod = 120
+	feemod = 140
 
-/datum/rc_entry/itembypath/basictool/wrench
+/datum/rc_entry/item/basictool/wrench
 	name = "wrench"
 	typepath = /obj/item/wrench
-	feemod = 110
+	feemod = 140
 
-/datum/rc_entry/itembypath/basictool/welder
+/datum/rc_entry/item/basictool/welder
 	name = "welding tool"
 	typepath = /obj/item/weldingtool
-	feemod = 160
+	feemod = 220
 
 
 
@@ -101,24 +101,24 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/basictool)
 		src.flavor_desc = "[pick(desc_helpsite)] requires additional supplies [pick(desc_tense)] [pick(desc_crisis)]. [pick(desc_emphasis)]"
 		src.payout += rand(0,40) * 10
 
-		for(var/S in concrete_typesof(/datum/rc_entry/itembypath/surgical))
+		for(var/S in concrete_typesof(/datum/rc_entry/item/surgical))
 			if(prob(50))
 				src.rc_entries += rc_buildentry(S,rand(1,4))
 
 		if(prob(80))
-			src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/bandage,rand(3,8))
+			src.rc_entries += rc_buildentry(/datum/rc_entry/item/bandage,rand(3,8))
 		else
-			src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/hypospray,rand(2,5))
+			src.rc_entries += rc_buildentry(/datum/rc_entry/item/hypospray,rand(2,5))
 
 		if(prob(70))
-			src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/lgloves,rand(3,8))
+			src.rc_entries += rc_buildentry(/datum/rc_entry/item/lgloves,rand(3,8))
 		else
-			src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/med_analyzer,rand(2,5))
+			src.rc_entries += rc_buildentry(/datum/rc_entry/item/med_analyzer,rand(2,5))
 		..()
 
-ABSTRACT_TYPE(/datum/rc_entry/itembypath/surgical)
-/datum/rc_entry/itembypath/surgical
-	feemod = 90
+ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
+/datum/rc_entry/item/surgical
+	feemod = 130
 
 	scalpel
 		name = "scalpel"
@@ -126,7 +126,7 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/surgical)
 
 	saw
 		name = "circular saw"
-		feemod = 110
+		feemod = 140
 		typepath = /obj/item/circular_saw
 
 	scissors
@@ -143,27 +143,27 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/surgical)
 
 	stapler
 		name = "staple gun"
-		feemod = 180
+		feemod = 230
 		typepath = /obj/item/staple_gun
 
-/datum/rc_entry/itembypath/bandage
+/datum/rc_entry/item/bandage
 	name = "bandage roll"
-	feemod = 80
+	feemod = 150
 	typepath = /obj/item/bandage
 
-/datum/rc_entry/itembypath/lgloves
+/datum/rc_entry/item/lgloves
 	name = "latex glove pair"
-	feemod = 70
+	feemod = 110
 	typepath = /obj/item/clothing/gloves/latex
 
-/datum/rc_entry/itembypath/hypospray
+/datum/rc_entry/item/hypospray
 	name = "hypospray"
-	feemod = 260
+	feemod = 350
 	typepath = /obj/item/reagent_containers/hypospray
 
-/datum/rc_entry/itembypath/med_analyzer
+/datum/rc_entry/item/med_analyzer
 	name = "health analyzer"
-	feemod = 350
+	feemod = 450
 	typepath = /obj/item/device/analyzer/healthanalyzer
 
 
@@ -204,57 +204,57 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/surgical)
 		src.flavor_desc = "An affiliated [pick(desc_wherebork)] [pick(desc_whobork)] has [pick(desc_whybork)] [pick(desc_howmuchbork)] its [pick(desc_sys)]. [pick(desc_emphasis)]"
 		src.payout += rand(0,40) * 10
 
-		if(prob(70)) src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/mainboard,rand(1,3))
+		if(prob(70)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/mainboard,rand(1,3))
 		if(prob(60))
 			if(prob(40))
-				src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/cardscan,1)
+				src.rc_entries += rc_buildentry(/datum/rc_entry/item/cardscan,1)
 			else
-				src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/netcard,1)
+				src.rc_entries += rc_buildentry(/datum/rc_entry/item/netcard,1)
 
-		if(!length(src.rc_entries)) src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/interfaceboard,1)
+		if(!length(src.rc_entries)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/interfaceboard,1)
 
-		if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/basictool/screwdriver,1)
-		if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/basictool/wirecutters,1)
-		if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/t_ray,rand(1,2))
-		if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/soldering,rand(1,2))
-		if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/multitool,1)
+		if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/basictool/screwdriver,1)
+		if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/basictool/wirecutters,1)
+		if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/t_ray,rand(1,2))
+		if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/soldering,rand(1,2))
+		if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/multitool,1)
 		if(prob(70)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/cable,rand(8,25))
 
 		..()
 
-/datum/rc_entry/itembypath/mainboard
+/datum/rc_entry/item/mainboard
 	name = "computer mainboard"
 	typepath = /obj/item/motherboard
-	feemod = 320
+	feemod = 520
 
-/datum/rc_entry/itembypath/cardscan
+/datum/rc_entry/item/cardscan
 	name = "ID scanner module"
 	typepath = /obj/item/peripheral/card_scanner
 	exactpath = TRUE
-	feemod = 360
+	feemod = 560
 
-/datum/rc_entry/itembypath/netcard
+/datum/rc_entry/item/netcard
 	name = "wired network card"
 	typepath = /obj/item/peripheral/network/powernet_card
 	exactpath = TRUE
-	feemod = 340
+	feemod = 540
 
-/datum/rc_entry/itembypath/interfaceboard
+/datum/rc_entry/item/interfaceboard
 	name = "AI interface board"
 	typepath = /obj/item/ai_interface
-	feemod = 750
+	feemod = 1250
 
-/datum/rc_entry/itembypath/t_ray
+/datum/rc_entry/item/t_ray
 	name = "T-ray scanner"
 	typepath = /obj/item/device/t_scanner
 	feemod = 340
 
-/datum/rc_entry/itembypath/soldering
+/datum/rc_entry/item/soldering
 	name = "soldering iron"
 	typepath = /obj/item/electronics/soldering
 	feemod = 260
 
-/datum/rc_entry/itembypath/multitool
+/datum/rc_entry/item/multitool
 	name = "multitool"
 	typepath = /obj/item/device/multitool
 	feemod = 450
@@ -268,7 +268,7 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/surgical)
 
 /datum/req_contract/aid/supplyshort
 	//name = "Supply Chain Failure"
-	payout = 800
+	payout = 900
 	var/list/namevary = list("Urgent Restock","Supply Crisis","Supply Chain Failure","Short Stock","Emergency Resupply")
 	var/list/desc_placejob = list("research","mining","hydroponics","civilian","Nanotrasen")
 	var/list/desc_place = list("vessel","station","outpost","colony")
@@ -300,9 +300,9 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/surgical)
 
 		switch(tilter)
 			if("food","rations")
-				src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/literallyanyfood,rand(30,48))
+				src.rc_entries += rc_buildentry(/datum/rc_entry/item/literallyanyfood,rand(30,48))
 			if("food and water")
-				src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/literallyanyfood,rand(24,40))
+				src.rc_entries += rc_buildentry(/datum/rc_entry/item/literallyanyfood,rand(24,40))
 				src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/water,rand(18,36)*10)
 			if("furnace fuel")
 				src.rc_entries += rc_buildentry(/datum/rc_entry/stack/char,rand(24,36))
@@ -311,18 +311,18 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/surgical)
 			if("coffee")
 				src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/coffee,rand(24,36)*10)
 			if("certain herbs")
-				src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/medherb/alpha,rand(12,18))
+				src.rc_entries += rc_buildentry(/datum/rc_entry/item/medherb/alpha,rand(12,18))
 				if(prob(60))
-					src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/medherb/beta,rand(12,18))
+					src.rc_entries += rc_buildentry(/datum/rc_entry/item/medherb/beta,rand(12,18))
 				else
-					src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/medherb/gamma,rand(8,14))
+					src.rc_entries += rc_buildentry(/datum/rc_entry/item/medherb/gamma,rand(8,14))
 
 		..()
 
 /datum/rc_entry/stack/char
 	name = "char ore"
-	typepath = /obj/item/raw_material/char
-	feemod = 90
+	commodity = /datum/commodity/ore/char
+	feemod = 50
 
 /datum/rc_entry/reagent/fuel
 	name = "welding-grade liquid fuel"
@@ -338,12 +338,13 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/surgical)
 		"expresso",
 		"energydrink"
 	)
-	feemod = 4
+	feemod = 5
 
-/datum/rc_entry/itembypath/medherb
+/datum/rc_entry/item/medherb
 	name = "medical herb"
 	typepath = /obj/item/plant/herb
-	feemod = 140
+	commodity = /datum/commodity/herbs
+	feemod = 80
 	var/list/herblist = list()
 
 	alpha

@@ -12,7 +12,7 @@ ABSTRACT_TYPE(/datum/req_contract/scientific)
 
 	New()
 		src.name = pick(namevary)
-		var/dombler = pick(concrete_typesof(/datum/rc_entry/itembypath/organ))
+		var/dombler = pick(concrete_typesof(/datum/rc_entry/item/organ))
 		var/datum/rc_entry/organic = new dombler
 		organic.count = rand(2,4)
 		src.rc_entries += organic
@@ -22,30 +22,26 @@ ABSTRACT_TYPE(/datum/req_contract/scientific)
 		src.payout += rand(0,40) * 10
 		..()
 
-ABSTRACT_TYPE(/datum/rc_entry/itembypath/organ)
-/datum/rc_entry/itembypath/organ
-	feemod = 1600
+ABSTRACT_TYPE(/datum/rc_entry/item/organ)
+/datum/rc_entry/item/organ
+	feemod = 200
 	exactpath = TRUE
 
-/datum/rc_entry/itembypath/organ/appendix
-	name = "appendix"
-	typepath = /obj/item/organ/appendix
-
-/datum/rc_entry/itembypath/organ/brain
+/datum/rc_entry/item/organ/brain
 	name = "brain"
-	typepath = /obj/item/organ/brain
+	commodity = /datum/commodity/bodyparts/brain
 
-/datum/rc_entry/itembypath/organ/heart
+/datum/rc_entry/item/organ/heart
 	name = "heart"
-	typepath = /obj/item/organ/heart
+	commodity = /datum/commodity/bodyparts/heart
 
-/datum/rc_entry/itembypath/organ/liver
+/datum/rc_entry/item/organ/liver
 	name = "liver"
-	typepath = /obj/item/organ/liver
+	commodity = /datum/commodity/bodyparts/liver
 
-/datum/rc_entry/itembypath/organ/spleen
+/datum/rc_entry/item/organ/spleen
 	name = "spleen"
-	typepath = /obj/item/organ/spleen
+	commodity = /datum/commodity/bodyparts/heart
 
 
 
@@ -81,24 +77,24 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/organ)
 		if(prob(80)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/gemstone,rand(1,8))
 		if(prob(20)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/telec,rand(1,3))
 		if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/cryox,rand(4,10)*5)
-		if(prob(40)) src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/lambdarod,1)
-		if(!length(src.rc_entries) || prob(70)) src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/lens,rand(2,6))
+		if(prob(40)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/lambdarod,1)
+		if(!length(src.rc_entries) || prob(70)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/lens,rand(2,6))
 
 		..()
 
-/datum/rc_entry/itembypath/lens
+/datum/rc_entry/item/lens
 	name = "nano-fabricated lens"
 	typepath = /obj/item/lens
-	feemod = 260
+	feemod = 500
 
 /datum/rc_entry/stack/gemstone
 	name = "non-anomalous gemstone"
 	typepath = /obj/item/raw_material/gemstone
-	feemod = 420
+	feemod = 1250
 
 /datum/rc_entry/stack/telec
 	name = "telecrystal"
-	typepath = /obj/item/raw_material/telecrystal
+	commodity = /datum/commodity/ore/telecrystal
 	typepath_alt = /obj/item/material_piece/telecrystal
 	feemod = 620
 
@@ -107,11 +103,11 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/organ)
 	chemname = "cryoxadone"
 	feemod = 30
 
-/datum/rc_entry/itembypath/lambdarod
+/datum/rc_entry/item/lambdarod
 	name = "Lambda phase-control rod"
 	typepath = /obj/item/interdictor_rod
 	exactpath = TRUE
-	feemod = 1000
+	feemod = 3000
 
 
 
@@ -155,7 +151,7 @@ ABSTRACT_TYPE(/datum/rc_entry/itembypath/organ)
 /datum/rc_entry/seed/scientific
 	name = "genetically fussy seed"
 	cropname = "Durian"
-	feemod = 140
+	feemod = 300
 	var/crop_genpath = /datum/plant
 
 	fruit

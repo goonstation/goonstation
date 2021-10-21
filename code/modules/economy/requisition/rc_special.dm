@@ -142,13 +142,13 @@ ABSTRACT_TYPE(/datum/req_contract/special/surgery)
 	payout = 41714
 
 	New()
-		src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/megaweed,1)
-		src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/whiteweed,1)
-		src.rc_entries += rc_buildentry(/datum/rc_entry/itembypath/omegaweed,1)
+		src.rc_entries += rc_buildentry(/datum/rc_entry/item/megaweed,1)
+		src.rc_entries += rc_buildentry(/datum/rc_entry/item/whiteweed,1)
+		src.rc_entries += rc_buildentry(/datum/rc_entry/item/omegaweed,1)
 		src.rc_entries += rc_buildentry(/datum/rc_entry/stack/pizza/spacer,6)
 		..()
 
-/datum/rc_entry/itembypath
+/datum/rc_entry/item
 	megaweed
 		name = "Rainbow Weed"
 		typepath = /obj/item/plant/herb/cannabis/mega
@@ -195,7 +195,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/chef)
 		New()
 			src.build_foodlist()
 			for(var/i in 1 to rand(3,6))
-				var/datum/rc_entry/itembypath/nom = new /datum/rc_entry/itembypath
+				var/datum/rc_entry/item/nom = new /datum/rc_entry/item
 				nom.typepath = pick(src.cornucopia)
 				nom.name = src.name_of_food[nom.typepath]
 				nom.count = pick(60; 1, 30; 2, 10; 3)
@@ -208,7 +208,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/chef)
 		New()
 			src.build_foodlist()
 			for(var/i in 1 to rand(3,6))
-				var/datum/rc_entry/itembypath/nom = new /datum/rc_entry/itembypath
+				var/datum/rc_entry/item/nom = new /datum/rc_entry/item
 				nom.typepath = pick(src.cornucopia)
 				nom.name = src.name_of_food[nom.typepath]
 				nom.count = pick(60; 1, 40; 2)
@@ -221,7 +221,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/chef)
 		New()
 			src.build_foodlist()
 			for(var/i in 1 to rand(3,6))
-				var/datum/rc_entry/itembypath/nom = new /datum/rc_entry/itembypath
+				var/datum/rc_entry/item/nom = new /datum/rc_entry/item
 				nom.typepath = pick(src.cornucopia)
 				nom.name = src.name_of_food[nom.typepath]
 				nom.count = pick(60; 1, 40; 2)
@@ -234,7 +234,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/chef)
 		New()
 			src.build_foodlist()
 			for(var/i in 1 to rand(3,6))
-				var/datum/rc_entry/itembypath/nom = new /datum/rc_entry/itembypath
+				var/datum/rc_entry/item/nom = new /datum/rc_entry/item
 				nom.typepath = pick(src.cornucopia)
 				nom.name = src.name_of_food[nom.typepath]
 				nom.count = pick(40; 1, 40; 2, 20; 3)

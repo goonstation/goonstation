@@ -12,7 +12,7 @@
 //these entries each have their own "validation protocol", automatically set up when instantiated
 
 //entry classes
-#define RC_ITEMBYPATH 1
+#define RC_ITEM 1
 #define RC_REAGENT 2
 #define RC_STACK 3
 #define RC_SEED 4
@@ -20,11 +20,11 @@
 //base entry
 ABSTRACT_TYPE(/datum/rc_entry)
 /datum/rc_entry
-	var/name //what the entry is for, description wise
-	var/entryclass = RC_ITEMBYPATH // type of entry this is, tracked like this for formatting purposes
+	var/name // title as shown on the requisition contract itself. can be different from your item's real name for flavor purposes
+	var/entryclass = RC_ITEM // type of entry this is, tracked like this for formatting purposes
 	var/count = 1 // how much this contract entry is for, be it in item quantity, stack quantity or reagent units
 	var/rollcount = 0 //when an item is analyzed, this increments on a successful evaluation, for later tallying
-	var/feemod = 0 // how much cash this item adds to the overall payout
+	var/feemod = 0 // can specify how much cash this item adds to the overall payout; commodities will add to this themselves
 
 	proc/rc_eval(atom/eval_item) //evaluation procedure, used in different entry classes
 		. = FALSE
@@ -35,15 +35,24 @@ ABSTRACT_TYPE(/datum/rc_entry)
 //second, you must increment rollcount on satisfying condition; for a simple "is satisfied or not", increment rollcount by 1 with count left default
 
 //items, by the path
-ABSTRACT_TYPE(/datum/rc_entry/itembypath)
-/datum/rc_entry/itembypath
-	entryclass = RC_ITEMBYPATH
-	var/typepath = /obj/gibtyson //item that must be sold
+ABSTRACT_TYPE(/datum/rc_entry/item)
+/datum/rc_entry/item
+	entryclass = RC_ITEM
+	var/typepath //item that must be sold
 	var/exactpath = FALSE //evaluates precise path, instead of path and subtypes
+	var/commodity //commodity path. if defined, will automatically adjust feemod and (if unset) typepath
+
+	New()
+		if(src.commodity)
+			var/datum/commodity/CM = src.commodity
+			if(!src.typepath) src.typepath = initial(CM.comtype)
+			src.feemod += initial(CM.baseprice)
+			src.feemod += initial(CM.upperfluc)
+		..()
 
 	rc_eval(obj/eval_item)
 		. = ..()
-		if(!istype(eval_item)) return //if it's not an object, it's definitely not an itembypath
+		if(!istype(eval_item)) return //if it's not an object, it's definitely not an item
 		if(exactpath && eval_item.type == typepath)
 			src.rollcount++
 			. = TRUE //let manager know passed eval item is claimed by contract
@@ -76,9 +85,17 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent)
 ABSTRACT_TYPE(/datum/rc_entry/stack)
 /datum/rc_entry/stack
 	entryclass = RC_STACK
-	name = "super bass" //for things like ores, you may want to tag as plural, so you end up with something like "4 or more Bohrum"
-	var/typepath = /obj/item/raw_material/bohrum
-	var/typepath_alt //use when an item can have two stackable forms, such as with a raw and refined ore
+	var/typepath
+	var/typepath_alt //use when an item can have two stackable forms, such as with a raw and refined ore (can use this along commodity)
+	var/commodity //commodity path. if defined, will automatically adjust feemod and (if unset) typepath
+
+	New()
+		if(src.commodity)
+			var/datum/commodity/CM = src.commodity
+			src.typepath = initial(CM.comtype)
+			src.feemod += initial(CM.baseprice)
+			src.feemod += initial(CM.upperfluc)
+		..()
 
 	rc_eval(obj/item/eval_item)
 		. = ..()
@@ -175,7 +192,7 @@ ABSTRACT_TYPE(/datum/req_contract)
 
 		for(var/datum/rc_entry/rce in rc_entries)
 			switch(rce.entryclass)
-				if(RC_ITEMBYPATH)
+				if(RC_ITEM)
 					src.requis_desc += "[rce.count]x [rce.name]<br>"
 				if(RC_REAGENT)
 					src.requis_desc += "[rce.count]+ unit[s_es(rce.count)] of [rce.name]<br>"
@@ -224,7 +241,7 @@ ABSTRACT_TYPE(/datum/req_contract)
 				. = 2
 		return
 
-#undef RC_ITEMBYPATH
+#undef RC_ITEM
 #undef RC_REAGENT
 #undef RC_STACK
 #undef RC_SEED
