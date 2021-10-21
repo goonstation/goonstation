@@ -12,7 +12,7 @@
 
 /mob/keys_changed(keys, changed)
 	if (changed & KEY_EXAMINE)
-		if (keys & KEY_EXAMINE)
+		if (keys & KEY_EXAMINE && HAS_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES))
 			src.client?.get_plane(PLANE_EXAMINE).alpha = 255
 		else
 			src.client?.get_plane(PLANE_EXAMINE).alpha = 0
