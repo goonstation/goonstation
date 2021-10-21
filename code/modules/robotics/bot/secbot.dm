@@ -157,9 +157,6 @@
 			our_baton.dispose()
 			our_baton = null
 		target = null
-		radio_controller.remove_object(src, FREQ_PDA)
-		radio_controller.remove_object(src, "[control_freq]")
-		radio_controller.remove_object(src, "[beacon_freq]")
 		..()
 
 /obj/machinery/bot/secbot/autopatrol
@@ -252,12 +249,13 @@
 		src.chatspam_cooldown = (1 SECOND) + (length(by_type[/obj/machinery/bot/secbot]) * 2) // big hordes of bots can really jam up the chat
 
 		SPAWN_DBG(0.5 SECONDS)
-			if(radio_controller)
-				radio_controller.add_object(src, "[control_freq]")
-				radio_controller.add_object(src, "[beacon_freq]")
 			if(src.hat)
 				bothat = image('icons/obj/bots/aibots.dmi', "hat-[src.hat]")
 				UpdateOverlays(bothat, "secbot_hat")
+
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("control", control_freq)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("beacon", beacon_freq)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
 	speak(var/message, var/sing, var/just_float)
 		if (src.emagged >= 2)
@@ -505,13 +503,10 @@
 	explode()
 		if (report_arrests)
 			var/bot_location = get_area(src)
-			var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency(FREQ_PDA)
 			var/datum/signal/pdaSignal = get_free_signal()
 			var/message2send = "Notification: [src] destroyed in [bot_location]! Officer down!"
 			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT", "group"=list(MGD_SECURITY, MGA_DEATH), "sender"="00000000", "message"="[message2send]")
-			pdaSignal.transmission_method = TRANSMISSION_RADIO
-			if(transmit_connection != null)
-				transmit_connection.post_signal(src, pdaSignal)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 
 		if(src.exploding) return
 		src.exploding = 1
@@ -832,20 +827,17 @@
 
 		if(pda_help && !ON_COOLDOWN(src, SECBOT_HELPME_COOLDOWN, src.helpme_cooldown))
 			// HELPMEPLZ
-			var/datum/radio_frequency/frequency = radio_controller.return_frequency(FREQ_PDA)
-			if(frequency)
-				var/message2send ="ALERT: Unit under attack by [src.target] in [get_area(src)]. Requesting backup."
+			var/message2send ="ALERT: Unit under attack by [src.target] in [get_area(src)]. Requesting backup."
 
-				var/datum/signal/signal = get_free_signal()
-				signal.source = src
-				signal.data["sender"] = src.botnet_id
-				signal.data["command"] = "text_message"
-				signal.data["sender_name"] = src
-				signal.data["group"] = list(MGD_SECURITY, MGA_ARREST)
-				signal.data["address_1"] = "00000000"
-				signal.data["message"] = message2send
-				signal.transmission_method = TRANSMISSION_RADIO
-				frequency.post_signal(src, signal)
+			var/datum/signal/signal = get_free_signal()
+			signal.source = src
+			signal.data["sender"] = src.botnet_id
+			signal.data["command"] = "text_message"
+			signal.data["sender_name"] = src
+			signal.data["group"] = list(MGD_SECURITY, MGA_ARREST)
+			signal.data["address_1"] = "00000000"
+			signal.data["message"] = message2send
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "pda")
 
 		src.KillPathAndGiveUp(KPAGU_CLEAR_PATH)
 		src.target = C
@@ -1182,18 +1174,12 @@
 
 	// send a radio signal with multiple data key/values
 	proc/post_signal_multiple(var/freq, var/list/keyval)
-
-		var/datum/radio_frequency/frequency = radio_controller.return_frequency("[freq]")
-
-		if(!frequency) return
-
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src
-		signal.transmission_method = 1
+		signal.data["sender"] = src.botnet_id
 		for(var/key in keyval)
 			signal.data[key] = keyval[key]
-			//boutput(world, "sent [key],[keyval[key]] on [freq]")
-		frequency.post_signal(src, signal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, freq)
 
 	// signals bot status etc. to controller
 	proc/send_status()
@@ -1313,8 +1299,6 @@
 					LT_loc = get_turf(master)
 
 					//////PDA NOTIFY/////
-				var/datum/radio_frequency/frequency = radio_controller.return_frequency(FREQ_PDA)
-				if(!frequency) return FALSE
 
 				var/message2send ="Notification: [last_target] detained by [master] in [bot_location] at coordinates [LT_loc.x], [LT_loc.y]."
 
@@ -1326,8 +1310,7 @@
 				signal.data["group"] = list(MGD_SECURITY, MGA_ARREST)
 				signal.data["address_1"] = "00000000"
 				signal.data["message"] = message2send
-				signal.transmission_method = TRANSMISSION_RADIO
-				frequency.post_signal(src, signal)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "pda")
 
 			switch(master.mode)
 				if(SECBOT_AGGRO)
@@ -1445,6 +1428,7 @@
 				boutput(user, "You give the [src] [W] and connect a cable in the arm to the baton's parallel port, completing the Securitron! Beep boop.")
 				var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot(get_turf(src))
 				S.beacon_freq = src.beacon_freq
+				get_radio_connection_by_id(S, "beacon").update_frequency(S.beacon_freq)
 				S.hat = src.hat
 				S.name = src.created_name		// We get an upgraded securitron
 				S.loot_baton_type = W.type	// So we can drop it all over again.
@@ -1468,6 +1452,7 @@
 				boutput(user, "You give the [src] a stun baton, completing the Securitron! Beep boop.")
 				var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot(get_turf(src))
 				S.beacon_freq = src.beacon_freq
+				get_radio_connection_by_id(S, "beacon").update_frequency(S.beacon_freq)
 				S.hat = src.hat
 				S.name = src.created_name
 				S.is_beepsky = IS_NOT_BEEPSKY_AND_HAS_SOME_GENERIC_BATON // You're still not Beepsky
@@ -1501,6 +1486,7 @@
 			boutput(user, "You add the wires to the rod, completing the Securitron! Beep boop.")
 			var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot(get_turf(src))
 			S.beacon_freq = src.beacon_freq
+			get_radio_connection_by_id(S, "beacon").update_frequency(S.beacon_freq)
 			S.hat = src.hat
 			S.name = src.created_name
 			qdel(src)

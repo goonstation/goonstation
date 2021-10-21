@@ -689,6 +689,7 @@
 		our_console.our_sleeper = src
 		src.homeloc = src.loc
 		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
 	disposing()
 		..()
@@ -746,9 +747,6 @@
 		return
 	if (!occupant)
 		return
-	var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency(FREQ_PDA)
-	if (!transmit_connection)
-		return
 
 	var/PDAalert = "[src.name] has returned to [get_area(src.homeloc)] with a "
 	var/alertgroup = MGA_MEDCRIT
@@ -763,8 +761,7 @@
 	var/datum/signal/PDAsignal = get_free_signal()
 
 	PDAsignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="HEALTH-MAILBOT",  "group"=mailgroups+alertgroup, "sender"="00000000", "message"="[PDAalert]")
-	PDAsignal.transmission_method = TRANSMISSION_RADIO
-	transmit_connection.post_signal(src, PDAsignal)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, PDAsignal)
 
 
 /obj/machinery/sleeper/compact

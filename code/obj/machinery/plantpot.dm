@@ -261,22 +261,13 @@
 		src.plant_sprite = image('icons/obj/hydroponics/plants_weed.dmi', "")
 		update_icon()
 
-		SPAWN_DBG(0.5 SECONDS)
-			radio_controller?.add_object(src, "[report_freq]")
-
-			if(!net_id)
-				net_id = generate_net_id(src)
-
-	disposing()
-		radio_controller.remove_object(src, "[report_freq]")
-		..()
+		if(!net_id)
+			net_id = generate_net_id(src)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, report_freq)
 
 	proc/post_alert(var/alert_msg)
 		if(status & (NOPOWER|BROKEN)) return
-
-		var/datum/radio_frequency/frequency = radio_controller.return_frequency("[report_freq]")
-
-		if(!frequency || !alert_msg) return
+		if(!alert_msg) return
 
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src
@@ -284,7 +275,7 @@
 		signal.data["data"] = alert_msg
 		signal.data["netid"] = net_id
 
-		frequency.post_signal(src, signal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 	proc/update_water_level() //checks reagent contents of the pot, then returns the cuurent water level
 		var/current_total_volume = (src.reagents ? src.reagents.total_volume : 0)
@@ -915,12 +906,9 @@
 			pingsignal.data["netid"] = src.net_id
 			pingsignal.data["address_1"] = signal.data["sender"]
 			pingsignal.data["command"] = "ping_reply"
-			pingsignal.transmission_method = TRANSMISSION_RADIO
 
-			var/datum/radio_frequency/frequency = radio_controller.return_frequency("[report_freq]")
-			if(!frequency) return
 			SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
-				frequency.post_signal(src, pingsignal)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal)
 
 		return //Just toss out the rest of the signal then I guess
 

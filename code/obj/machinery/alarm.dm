@@ -20,13 +20,10 @@
 	var/e_gas = 0
 	var/last_safe = 2
 
-	disposing()
-		radio_controller.remove_object(src, alarm_frequency)
-		radio_controller.remove_object(src, control_frequency)
-		..()
-
 /obj/machinery/alarm/New()
 	..()
+	MAKE_DEFAULT_RADIO_PACKET_COMPONENT("alarm", alarm_frequency)
+	MAKE_DEFAULT_RADIO_PACKET_COMPONENT("control", control_frequency) // seems to be unused?
 
 	if(!alarm_zone)
 		var/area/A = get_area(loc)
@@ -119,10 +116,6 @@
 	return
 
 /obj/machinery/alarm/proc/post_alert(alert_level)
-	var/datum/radio_frequency/frequency = radio_controller.return_frequency(alarm_frequency)
-
-	if(!frequency) return
-
 	var/datum/signal/alert_signal = get_free_signal()
 	alert_signal.source = src
 	alert_signal.transmission_method = 1
@@ -137,7 +130,7 @@
 		if (2)
 			alert_signal.data["alert"] = "reset"
 
-	frequency.post_signal(src, alert_signal)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, alert_signal, null, "alarm")
 
 /obj/machinery/alarm/attackby(var/obj/item/W as obj, user as mob)
 	if (issnippingtool(W))

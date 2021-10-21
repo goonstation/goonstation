@@ -855,15 +855,9 @@ function lineEnter (ev)
 		var/obj/item/peripheral/P = locate(target_ref) in src.peripherals
 		if(istype(P))
 			. = P.receive_command(src, command, signal)
-		//qdel(signal)
-		if (signal)
 
-			if (reusable_signals && reusable_signals.len < 11)
-				if (!(signal in reusable_signals))
-					reusable_signals += signal
-				signal.wipe()
-			else
-				signal.dispose()
+		if(signal)
+			qdel(signal)
 		return
 
 	receive_command(obj/source, command, datum/signal/signal)
@@ -871,18 +865,8 @@ function lineEnter (ev)
 
 			for(var/datum/computer/file/terminal_program/P in src.processing_programs)
 				P.receive_command(src, command, signal)
-//			if(src.host_program)
-//				src.host_program.receive_command(src, command, signal)
 
-			//qdel(signal)
-
-			if (signal)
-				if (reusable_signals && reusable_signals.len < 11)
-					if (!(signal in reusable_signals))
-						reusable_signals += signal
-					signal.wipe()
-				else
-					signal.dispose()
+			qdel(signal)
 		return
 
 	set_broken()

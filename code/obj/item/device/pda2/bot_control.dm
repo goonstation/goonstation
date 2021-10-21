@@ -28,10 +28,32 @@
 
 		src.post_signal(signal, freq)
 
-	init()
-		//boutput(world, "<h5>Adding [master]@[master.loc]:[master.bot_freq],[master.beacon_freq]")
-		radio_controller.add_object(master, "[master.bot_freq]")
-		radio_controller.add_object(master, "[master.beacon_freq]")
+	on_activated(obj/item/device/pda2/pda)
+		pda.AddComponent(
+			/datum/component/packet_connected/radio, \
+			"bot_beacon",\
+			pda.beacon_freq, \
+			pda.net_id, \
+			null, \
+			null \
+		)
+		pda.AddComponent(
+			/datum/component/packet_connected/radio, \
+			"bot_control",\
+			control_freq, \
+			pda.net_id, \
+			null, \
+			null \
+		)
+		RegisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET, .proc/receive_signal)
+
+	on_deactivated(obj/item/device/pda2/pda)
+		qdel(get_radio_connection_by_id(pda, "bot_beacon"))
+		qdel(get_radio_connection_by_id(pda, "bot_control"))
+		UnregisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET)
+
+	proc/receive_signal(obj/item/device/pda2/pda, datum/signal/signal, transmission_method, range, connection_id)
+		return
 
 #define SECACC_MENU_MAIN 1
 #define SECACC_MENU_AREAS 2
@@ -202,11 +224,8 @@
 		src.all_guard = 0
 		PDA.updateSelfDialog()
 
-	receive_signal(datum/signal/signal)
-		if(..())
-			return
-
-		if(signal.data["type"] == "secbot")
+	receive_signal(obj/item/device/pda2/pda, datum/signal/signal, transmission_method, range, connection_id)
+		if(connection_id == "bot_control" && signal.data["type"] == "secbot" && !signal.encryption)
 			if(!botlist)
 				botlist = new()
 
@@ -346,11 +365,8 @@
 				post_status(control_freq, cmd, "bot_status")
 		return
 
-	receive_signal(datum/signal/signal)
-		if(..())
-			return
-
-		if(signal.data["type"] == "mulebot")
+	receive_signal(obj/item/device/pda2/pda, datum/signal/signal, transmission_method, range, connection_id)
+		if(signal.data["type"] == "mulebot" && connection_id == "bot_control" && !signal.encryption)
 			if(!botlist)
 				botlist = new()
 
@@ -362,13 +378,11 @@
 
 			src.master.updateSelfDialog()
 
-		else if(signal.data["beacon"])
+		else if(signal.data["beacon"] && connection_id == "bot_beacon")
 			if(!beacons)
 				beacons = new()
 
 			beacons[signal.data["beacon"] ] = signal.source
-
-		return
 
 #undef SECACC_MENU_MAIN
 #undef SECACC_MENU_AREAS

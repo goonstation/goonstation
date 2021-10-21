@@ -99,14 +99,8 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
-			radio_controller?.add_object(src, "[frequency]")
-
-			src.net_id = format_net_id("\ref[src]")
-
-	disposing()
-		radio_controller.remove_object(src, "[frequency]")
-		..()
+		src.net_id = format_net_id("\ref[src]")
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
 	receive_signal(datum/signal/signal)
 		if(..())
@@ -122,13 +116,7 @@
 
 		signal.source = src
 
-		var/datum/radio_frequency/frequency = radio_controller.return_frequency("[freq]")
-
-		signal.transmission_method = TRANSMISSION_RADIO
-		if(frequency)
-			return frequency.post_signal(src, signal)
-		//else
-		//	qdel(signal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 	proc/open_hangar(mob/user as mob)
 		var/pass = input(user, "Please enter panel access number.", "Access Number") as text

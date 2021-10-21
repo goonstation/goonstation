@@ -56,21 +56,14 @@
 		var/area/A = get_area(loc)
 		if (A?.name)
 			zone = A.name
+	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, control_frequency)
 	SPAWN_DBG(0.5 SECONDS)
-		if (radio_controller)
-			radio_controller.add_object(src, "[control_frequency]")
-
 		if (!zone2) //MBC : Hey, this is pretty shitty! But I want to be able to handle firelocks that are bordering 2 areas... without reworking the whole dang thing
 			for (var/d in cardinal)
 				var/area/A = get_area(get_step(src,d))
 				if (A?.name && A.name != zone)
 					zone2 = A.name
 					break
-
-/obj/machinery/door/firedoor/disposing()
-	if (radio_controller)
-		radio_controller.remove_object(src, "[control_frequency]")
-	..()
 
 /obj/machinery/door/firedoor/proc/set_open()
 	if(!blocked)
