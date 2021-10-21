@@ -102,7 +102,7 @@
 		</li>
 		<li><b>Don't speak in IC like a chatroom.</b>
 			<ul style='list-style-type:circle'>
-				<li>Don't use txt spk (lol, wtf, etc) , ooc game terminology (even where "technically" justifiable in rp), or overly chatroomy/memey language (sus, pog, amogus, etc) when speaking in character. LOOC and OOC are fine.</li>
+				<li>Don't use txt spk (for example: lol, wtf) , ooc game terminology (even where "technically" justifiable in rp), or overly chatroomy/memey language (sus, pog, amogus, etc) when speaking in character. LOOC and OOC are fine.</li>
 			</ul>
 		</li>
 	</ul>"}, "window=rprules;title=RP+Rules" )
