@@ -118,9 +118,7 @@
 	if (!src.can_slip())
 		return
 
-	var/slip_delay = BASE_SPEED_SUSTAINED + (WALK_DELAY_ADD*0.9) //we need to fall under this movedelay value in order to slip :O
-	if (src.m_intent == "walk")
-		slip_delay = BASE_SPEED_SUSTAINED - (WALK_DELAY_ADD*0.5)
+	var/slip_delay = BASE_SPEED_SUSTAINED + (WALK_DELAY_ADD*0.15) //we need to fall under this movedelay value in order to slip :O
 
 	if (!walking_matters)
 		slip_delay = 10
