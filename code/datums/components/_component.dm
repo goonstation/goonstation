@@ -398,6 +398,8 @@
 	if(!dc)
 		return null
 	. = dc[c_type]
+	if(isnull(.))
+		return null
 	if(!length(.))
 		return list(.)
 
