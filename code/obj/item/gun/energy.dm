@@ -1035,7 +1035,9 @@
 			return
 
 /obj/item/gun/energy/laser_gun/pred/lowcharge
-	cell_type = /obj/item/ammo/power_cell/self_charging/pod_wars_standard// If the shoe fits, 50 charge per shot so only 6 shots, with 15 self recharge. Not bad at all.
+	name = "dusty laser rifle"
+	desc = "This model appears to cut costs of production severely by using a cheaper power cell."
+	cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig // 4 shots but with 20 self recharge, same chance to get as phaser so it should be as strong as one, trading less shots for more damage and self recharge.
 
 /obj/item/gun/energy/laser_gun/pred/vr
 	name = "advanced laser gun"
