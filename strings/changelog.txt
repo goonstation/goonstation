@@ -1,5 +1,9 @@
 
 (t)fri oct 22 21
+(u)Flappybat
+(p)6338
+(e)🗺|mapping
+(+)Removed cryotube system valves on cogmap2, destiny, kondaru and oshan to match the other maps cryo setup.
 (u)zjdtmkhzt
 (p)6400
 (e)|
