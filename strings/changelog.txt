@@ -1,5 +1,9 @@
 
 (t)fri oct 22 21
+(u)zjdtmkhzt
+(p)6400
+(e)|
+(+)Genetics abilities are now displayed by default, clicking the button now hides them.
 (u)Walpvrgis
 (p)6361
 (e)🆕🎨|feature, sprites
