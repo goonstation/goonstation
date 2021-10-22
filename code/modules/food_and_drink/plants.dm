@@ -118,19 +118,6 @@
 		qdel(src)
 		//..()
 
-/obj/item/reagent_containers/food/snacks/plant/tomato/tomacco
-	name = "tomacco"
-	crop_suffix = " tomacco"
-	desc = "Refreshingly addictive."
-	icon_state = "tomato"
-	amount = 1
-	heal_amt = 1
-	throwforce = 0
-	force = 0
-	make_reagents()
-		..()
-		reagents.add_reagent("nicotine",15)
-
 /obj/item/reagent_containers/food/snacks/plant/corn
 	name = "corn cob"
 	crop_suffix = " cob"
