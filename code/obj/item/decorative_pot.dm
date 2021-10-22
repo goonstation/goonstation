@@ -5,7 +5,7 @@
 		icon_state = "plantpot"
 		anchored = 0
 		density = 1
-		mats = 2
+		mats = list("ALL" = 1)
 
 		CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 				return 0
