@@ -410,6 +410,7 @@
 				var/mob/living/carbon/human/H = M
 				if (istype(H.mutantrace, /datum/mutantrace/pug))
 					..()
+					boutput(H, "<span class='notice'>That tasted delicious!</span>")
 				else
 					src.heal_amt = 0
 					..()
