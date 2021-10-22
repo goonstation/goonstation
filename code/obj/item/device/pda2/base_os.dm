@@ -744,7 +744,7 @@
 			UnregisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET)
 
 		proc/receive_signal(obj/item/device/pda2/pda, datum/signal/signal, transmission_method, range, connection_id)
-			if((!istype(holder)) || (!istype(master)))
+			if(!istype(holder) || !istype(master) || !src.master.owner)
 				return
 			if(!(holder in src.master.contents))
 				if(master.active_program == src)
