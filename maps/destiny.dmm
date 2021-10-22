@@ -5205,7 +5205,7 @@
 	},
 /area/station/science/research_director)
 "auu" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
 	},
 /obj/disposalpipe/segment/morgue,
