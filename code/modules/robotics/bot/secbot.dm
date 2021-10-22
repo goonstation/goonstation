@@ -92,7 +92,7 @@
 
 	var/auto_patrol = 0		// set to make bot automatically patrol
 	var/beacon_freq = FREQ_NAVBEACON		// navigation beacon frequency
-	var/control_freq = 1447		// bot control frequency
+	var/control_freq = FREQ_BOT_CONTROL		// bot control frequency
 
 	var/turf/patrol_target	// this is turf to navigate to (location of beacon)
 	var/new_destination		// pending new destination (waiting for beacon response)

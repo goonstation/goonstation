@@ -460,7 +460,7 @@ obj/machinery/embedded_controller/radio/access_controller
 	name = "Access Console"
 	density = 0
 
-	frequency = 1449
+	frequency = FREQ_AIRLOCK_CONTROL
 
 	// Setup parameters only
 	var/id_tag
@@ -526,7 +526,7 @@ obj/machinery/embedded_controller/radio/airlock_controller
 	name = "Airlock Console"
 	density = 0
 
-	frequency = 1449
+	frequency = FREQ_AIRLOCK_CONTROL
 
 	// Setup parameters only
 	var/id_tag
@@ -608,7 +608,7 @@ obj/machinery/embedded_controller/radio/department_controller
 	name = "Access Console"
 	density = 0
 
-	frequency = 1449
+	frequency = FREQ_AIRLOCK_CONTROL
 
 	// Setup parameters only
 	var/id_tag

@@ -7,7 +7,7 @@ obj/machinery/airlock_sensor
 
 	var/id_tag
 	var/master_tag
-	var/frequency = 1449
+	var/frequency = FREQ_AIRLOCK_CONTROL
 
 
 	var/on = 1

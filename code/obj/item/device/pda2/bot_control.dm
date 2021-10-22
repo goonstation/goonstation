@@ -11,9 +11,9 @@
 	var/obj/machinery/bot/active 	// the active bot; if null, show bot list
 	var/list/botstatus			// the status signal sent by the bot
 
-	var/control_freq = 1447 //Just for sending, adjust what the actual pda hooks to for receive
+	var/control_freq = FREQ_BOT_CONTROL //Just for sending, adjust what the actual pda hooks to for receive
 
-	proc/post_status(var/freq, var/key, var/value, var/key2, var/value2, var/key3, var/value3)
+	proc/post_status(var/conn_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3)
 		if(!src.master)
 			return
 
@@ -26,7 +26,7 @@
 		if(key3)
 			signal.data[key3] = value3
 
-		src.post_signal(signal, freq)
+		src.post_signal(signal, conn_id)
 
 	on_activated(obj/item/device/pda2/pda)
 		pda.AddComponent(
@@ -142,7 +142,7 @@
 			if("scanbots") // find all bots
 				botlist = null
 				self_text("Scanning for security robots...")
-				post_status(control_freq, "command", "bot_status")
+				post_status("bot_control", "command", "bot_status")
 
 			if("guardhere", "allguardhere", "lockdown", "alllockdown")
 				var/list/stationAreas = get_accessible_station_areas()
@@ -166,12 +166,12 @@
 				if(guardthis)
 					if(!src.all_guard)
 						if(src.lockdown)
-							post_status(control_freq, "command", "lockdown", "active", active, "target", guardthis)
+							post_status("bot_control", "command", "lockdown", "active", active, "target", guardthis)
 							self_text("[active] ordered to lockdown [guardthis].")
 						else
-							post_status(control_freq, "command", "guard", "active", active, "target", guardthis)
+							post_status("bot_control", "command", "guard", "active", active, "target", guardthis)
 							self_text("[active] ordered to guard [guardthis].")
-						post_status(control_freq, "command", "bot_status", "active", active)
+						post_status("bot_control", "command", "bot_status", "active", active)
 					else
 						src.all_guard = 0
 						if (!botlist.len)
@@ -187,21 +187,21 @@
 								self_text("[english_list(bots)] ordered to guard [guardthis].")
 
 			if("stop", "go")
-				post_status(control_freq, "command", href_list["op"], "active", active)
-				post_status(control_freq, "command", "bot_status", "active", active)
+				post_status("bot_control", "command", href_list["op"], "active", active)
+				post_status("bot_control", "command", "bot_status", "active", active)
 				if(href_list["op"] == "go")
 					self_text("[active] set to patrol.")
 				else
 					self_text("[active] set to not patrol.")
 
 			if("summon")
-				post_status(control_freq, "command", "summon", "active", active, "target", summon_turf )
-				post_status(control_freq, "command", "bot_status", "active", active)
+				post_status("bot_control", "command", "summon", "active", active, "target", summon_turf )
+				post_status("bot_control", "command", "bot_status", "active", active)
 				self_text("[active] summoned to [summon_turf]")
 
 			if("proc")
-				post_status(control_freq, "command", "proc", "active", active)
-				post_status(control_freq, "command", "bot_status", "active", active)
+				post_status("bot_control", "command", "proc", "active", active)
+				post_status("bot_control", "command", "bot_status", "active", active)
 				self_text("[active] action request sent.")
 
 			if("summonall")
@@ -322,47 +322,47 @@
 
 			if("control")
 				active = locate(href_list["bot"])
-				post_status(control_freq, cmd, "bot_status")
+				post_status("bot_control", cmd, "bot_status")
 
 			if("scanbots")		// find all bots
 				botlist = null
-				post_status(control_freq, "command", "bot_status")
+				post_status("bot_control", "command", "bot_status")
 
 			if("scanbeacons")
 				beacons = null
-				src.post_status(src.master.beacon_freq, "findbeacon", "delivery")
+				src.post_status("bot_beacon", "findbeacon", "delivery")
 
 			if("botlist")
 				active = null
 				PDA.updateSelfDialog()
 
 			if("unload")
-				post_status(control_freq, cmd, "unload")
-				post_status(control_freq, cmd, "bot_status")
+				post_status("bot_control", cmd, "unload")
+				post_status("bot_control", cmd, "bot_status")
 			if("setdest")
 				if(beacons)
 					var/dest = input("Select Bot Destination", "Mulebot [active.suffix] Interlink", active:destination) as null|anything in beacons
 					if(dest)
-						post_status(control_freq, cmd, "target", "destination", dest)
-						post_status(control_freq, cmd, "bot_status")
+						post_status("bot_control", cmd, "target", "destination", dest)
+						post_status("bot_control", cmd, "bot_status")
 
 			if("retoff")
-				post_status(control_freq, cmd, "autoret", "value", 0)
-				post_status(control_freq, cmd, "bot_status")
+				post_status("bot_control", cmd, "autoret", "value", 0)
+				post_status("bot_control", cmd, "bot_status")
 			if("reton")
-				post_status(control_freq, cmd, "autoret", "value", 1)
-				post_status(control_freq, cmd, "bot_status")
+				post_status("bot_control", cmd, "autoret", "value", 1)
+				post_status("bot_control", cmd, "bot_status")
 
 			if("pickoff")
-				post_status(control_freq, cmd, "autopick", "value", 0)
-				post_status(control_freq, cmd, "bot_status")
+				post_status("bot_control", cmd, "autopick", "value", 0)
+				post_status("bot_control", cmd, "bot_status")
 			if("pickon")
-				post_status(control_freq, cmd, "autopick", "value", 1)
-				post_status(control_freq, cmd, "bot_status")
+				post_status("bot_control", cmd, "autopick", "value", 1)
+				post_status("bot_control", cmd, "bot_status")
 
 			if("stop", "go", "home")
-				post_status(control_freq, cmd, href_list["op"])
-				post_status(control_freq, cmd, "bot_status")
+				post_status("bot_control", cmd, href_list["op"])
+				post_status("bot_control", cmd, "bot_status")
 		return
 
 	receive_signal(obj/item/device/pda2/pda, datum/signal/signal, transmission_method, range, connection_id)

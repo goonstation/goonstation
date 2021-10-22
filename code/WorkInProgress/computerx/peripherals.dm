@@ -145,7 +145,7 @@
 			func_tag = "NET_ADAPTER"
 
 		status //This one is for status display control.
-			frequency = 1435
+			frequency = FREQ_STATUS_DISPLAY
 			setup_netmode_norange = 0
 
 	New()

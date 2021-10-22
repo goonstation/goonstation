@@ -36,6 +36,12 @@
 	proc/on_unset_host(obj/item/device/pda2/pda)
 		return
 
+	proc/on_set_scan(obj/item/device/pda2/pda)
+		return
+
+	proc/on_unset_scan(obj/item/device/pda2/pda)
+		return
+
 	proc
 		return_text()
 			if((!src.holder) || (!src.master))

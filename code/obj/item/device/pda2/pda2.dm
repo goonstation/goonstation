@@ -362,8 +362,8 @@
 
 		if (src.setup_scanner_on && src.cartridge)
 			var/datum/computer/file/pda_program/scan/scan = locate() in src.cartridge.root.contents
-			if (scan && istype(scan))
-				src.scan_program = scan
+			if (istype(scan))
+				src.set_scan_program(scan)
 
 /obj/item/device/pda2/disposing()
 	if (src.cartridge)
@@ -372,7 +372,7 @@
 
 	src.set_active_program(null)
 	src.set_host_program(null)
-	src.scan_program = null
+	src.set_scan_program(null)
 	qdel(src.r_tone)
 	qdel(src.r_tone_temp)
 	src.r_tone = null
@@ -762,6 +762,11 @@
 		src.host_program = program
 		src.host_program?.on_set_host(src)
 
+	proc/set_scan_program(datum/computer/file/pda_program/program)
+		src.scan_program?.on_unset_scan(src)
+		src.scan_program = program
+		src.scan_program?.on_set_scan(src)
+
 	proc/is_user_in_interact_range(var/mob/user)
 		return in_interact_range(src, user) || loc == user || isAI(user)
 
@@ -788,7 +793,7 @@
 				src.set_host_program(null)
 
 			if(src.scan_program && (src.scan_program.holder == src.cartridge))
-				src.scan_program = null
+				src.set_scan_program(null)
 
 			src.cartridge.set_loc(T)
 			if (istype(user))
@@ -1026,9 +1031,9 @@
 
 		if(istype(program, /datum/computer/file/pda_program/scan))
 			if(program == src.scan_program)
-				src.scan_program = null
+				src.set_scan_program(null)
 			else
-				src.scan_program = program
+				src.set_scan_program(program)
 			return 1
 
 		src.set_active_program(program)

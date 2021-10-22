@@ -20,7 +20,7 @@
 	var/unloading = FALSE
 
 	var/beacon_freq = FREQ_NAVBEACON
-	var/control_freq = 1447
+	var/control_freq = FREQ_BOT_CONTROL
 
 	suffix = ""
 

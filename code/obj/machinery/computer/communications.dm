@@ -24,7 +24,7 @@
 		STATE_DELMESSAGE = 6
 		STATE_STATUSDISPLAY = 7
 
-	var/status_display_freq = "1435"
+	var/status_display_freq = FREQ_STATUS_DISPLAY
 	var/stat_msg1
 	var/stat_msg2
 	desc = "A computer that allows one to call and recall the emergency shuttle, as well as recieve messages from Centcom."

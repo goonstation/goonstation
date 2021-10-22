@@ -230,7 +230,7 @@
 	var/weedproof = 0  // Does this tray block weeds from appearing in it? (Won't stop deliberately planted weeds)
 	var/list/contributors = list() // Who helped grow this plant? Mainly used for critters.
 
-	var/report_freq = 1433 //Radio channel to report plant status/death/whatever.
+	var/report_freq = FREQ_HYDRO //Radio channel to report plant status/death/whatever.
 	var/net_id = null
 
 	var/health_warning = 0

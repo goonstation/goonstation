@@ -404,7 +404,7 @@
 
 			else if(href_list["scanner"])
 				if(src.master.scan_program)
-					src.master.scan_program = null
+					src.master.set_scan_program(null)
 
 			else if(href_list["trenchmap"])
 				if (usr.client && hotspot_controller)

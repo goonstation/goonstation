@@ -138,7 +138,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 	New()
 		..()
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, 1435)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, FREQ_STATUS_DISPLAY)
 
 /obj/machinery/computer/supplycomp/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if(!hacked)
@@ -1190,4 +1190,4 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	status_signal.transmission_method = 1
 	status_signal.data["command"] = command
 
-	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, status_signal, null, 1435)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, status_signal, null, FREQ_STATUS_DISPLAY)

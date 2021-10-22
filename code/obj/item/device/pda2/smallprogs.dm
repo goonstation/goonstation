@@ -151,7 +151,19 @@
 			if("alert")
 				status_signal.data["picture_state"] = data1
 
-		src.post_signal(status_signal,"1435")
+		src.post_signal(status_signal, "status_display")
+
+	on_activated(obj/item/device/pda2/pda)
+		pda.AddComponent(/datum/component/packet_connected/radio, \
+			"status_display",\
+			FREQ_STATUS_DISPLAY, \
+			pda.net_id, \
+			null, \
+			null \
+		)
+
+	on_deactivated(obj/item/device/pda2/pda)
+		qdel(get_radio_connection_by_id(pda, "status_display"))
 
 //Signaler
 /datum/computer/file/pda_program/signaler
@@ -204,11 +216,12 @@ Code:
 				signal.data["message"] = "ACTIVATE"
 				signal.data["code"] = send_code
 
-				src.post_signal(signal,"[send_freq]")
+				src.post_signal(signal, "signaller")
 				return
 
 		else if (href_list["adj_freq"])
 			src.send_freq = sanitize_frequency(src.send_freq + text2num(href_list["adj_freq"]))
+			get_radio_connection_by_id(master, "signaller").update_frequency(src.send_freq)
 
 		else if (href_list["adj_code"])
 			src.send_code += text2num(href_list["adj_code"])
@@ -219,6 +232,18 @@ Code:
 		src.master.add_fingerprint(usr)
 		src.master.updateSelfDialog()
 		return
+
+	on_activated(obj/item/device/pda2/pda)
+		pda.AddComponent(/datum/component/packet_connected/radio, \
+			"signaller",\
+			send_freq, \
+			pda.net_id, \
+			null, \
+			null \
+		)
+
+	on_deactivated(obj/item/device/pda2/pda)
+		qdel(get_radio_connection_by_id(pda, "signaller"))
 
 //Supply record monitor
 /datum/computer/file/pda_program/qm_records
@@ -612,7 +637,7 @@ Code:
 
 	var/temp = null
 	var/last_scan = 0
-	var/report_freq = 1447
+	var/report_freq = FREQ_HYDRO
 	var/list/status_reports = list()
 
 	proc/post_status(var/key, var/value, var/key2, var/value2, var/key3, var/value3)

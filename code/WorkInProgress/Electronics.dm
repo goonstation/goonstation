@@ -448,7 +448,7 @@
 
 	var/processing = 0
 	var/net_id = null
-	var/frequency = 1467
+	var/frequency = FREQ_RUCK
 	var/no_print_spam = 1 // In relation to world.time.
 	var/olde = 0
 	var/datum/mechanic_controller/ruck_controls

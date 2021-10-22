@@ -45,18 +45,24 @@ proc/get_radio_connection_by_id(atom/movable/AM, id)
 #define FREQ_SECURE_STORAGE "1431"
 #define FREQ_SECBUDDY_NAVBEACON "1431"
 #define FREQ_ALARM "1437"
+#define FREQ_HYDRO "1433"
+#define FREQ_STATUS_DISPLAY "1435"
+#define FREQ_BOT_CONTROL "1447"
+#define FREQ_AIRLOCK_CONTROL "1449" // seems to be unused nowadays?
+#define FREQ_GPS "1453"
+#define FREQ_RUCK "1467"
 
 /*
 Special frequency list:
 On the map:
 1149 for PDA messaging
-1433 for hydroponics alerts
-1435 for status displays
+FREQ_HYDRO for hydroponics alerts
+FREQ_STATUS_DISPLAY for status displays
 FREQ_ALARM for atmospherics/fire alerts
 FREQ_NAVBEACON for bot nav beacons
-1447 for mulebot control
-1449 for airlock controls
-1453 for engineering access
+FREQ_BOT_CONTROL for mulebot control
+FREQ_AIRLOCK_CONTROL for airlock controls
+FREQ_GPS for engineering access
 1457 for door access request
 1475 for Mail chute location
 1359 for security headsets

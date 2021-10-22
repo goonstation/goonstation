@@ -1033,7 +1033,7 @@
 	var/time = 180
 	power_usage = 120
 
-	var/status_display_freq = "1435"
+	var/status_display_freq = FREQ_STATUS_DISPLAY
 
 
 #define DISARM_CUTOFF 10 //Can't disarm past this point! OH NO!
