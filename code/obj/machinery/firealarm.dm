@@ -167,7 +167,7 @@
 /obj/machinery/firealarm/proc/post_alert(var/alarm, var/specific_target)
 	var/datum/signal/alert_signal = get_free_signal()
 	alert_signal.source = src
-	alert_signal.data["zone"] = alarm_zone
+	alert_signal.data["address_tag"] = alarm_zone
 	alert_signal.data["type"] = "Fire"
 	alert_signal.data["netid"] = net_id
 	alert_signal.data["sender"] = net_id
