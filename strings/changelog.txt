@@ -1,5 +1,10 @@
 
 (t)fri oct 22 21
+(u)Vocalpocal
+(p)6327
+(e)⛔|removal
+(+)Increased tobacco genome from 2 to 11
+(+)To make tomacco, you now have to use splicing instead of infusing tomato seed with nicotine
 (u)Nexusuxen
 (p)6391
 (e)|
