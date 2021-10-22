@@ -1293,7 +1293,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	item_state = "red_wcoat"
 
 /obj/item/clothing/under/gimmick/blue_wcoat
-	name = "dress shirt and red waistcoat"
+	name = "dress shirt and blue waistcoat"
 	desc = "A formal blue waistcoat meant to be worn alongside an overcoat."
 	icon_state = "blue_wcoat"
 	item_state = "blue_wcoat"
