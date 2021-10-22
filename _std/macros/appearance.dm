@@ -30,6 +30,7 @@
 #define TAIL_SEAMONKEY 6
 #define TAIL_CAT 7
 #define TAIL_ROACH 8
+#define TAIL_PUG 9
 
 /// appearanceholder color vars. Tells mutant races to stick this color into the specified special hair / limb overlay color slot
 #define CUST_1 1

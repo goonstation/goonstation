@@ -396,7 +396,7 @@
 	dog
 		name = "dog biscuit"
 		desc = "It looks tasty! To dogs."
-		icon_state = "cookie-sugar" //TODO
+		icon_state = "dog-biscuit"
 		frosted = 1
 		amount = 5
 		heal_amt = 3 //for pugs only. Strong, but there's no recipe for these (just the one you start with).
