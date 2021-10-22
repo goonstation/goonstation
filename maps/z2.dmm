@@ -81690,7 +81690,8 @@
 	icon = 'icons/misc/critter.dmi';
 	icon_state = "mouse-mentor-dead";
 	name = "Mentor mouse plush toy";
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 3
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/katzen)
