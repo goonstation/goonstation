@@ -677,7 +677,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 
 	proc/set_destination(var/new_dest)
 		new_destination = new_dest
-		master.post_find_beacon("patrol")
+		master.post_find_beacon(new_dest || "patrol")
 		awaiting_beacon = 5
 
 	receive_signal(datum/signal/signal)

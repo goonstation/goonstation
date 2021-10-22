@@ -1063,7 +1063,7 @@
 	// beacons will return a signal giving their locations
 	proc/set_destination(var/new_dest)
 		new_destination = new_dest
-		post_signal_multiple("beacon", list("findbeacon" = "patrol", "address_tag" = "patrol"))
+		post_signal_multiple("beacon", list("findbeacon" = new_dest || "patrol", "address_tag" = new_dest || "patrol"))
 		awaiting_beacon = 1
 
 	// receive a radio signal

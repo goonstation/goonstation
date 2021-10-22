@@ -3128,7 +3128,7 @@
 
 			set_destination(var/new_dest)
 				new_destination = new_dest
-				master.post_find_beacon("patrol")
+				master.post_find_beacon(new_dest || "patrol")
 				awaiting_beacon = 5
 
 			assess_perp(mob/living/carbon/human/perp as mob)
@@ -3640,7 +3640,7 @@
 					if (src.distracted)
 						awaiting_beacon += 2
 
-					master.post_find_beacon("tour")
+					master.post_find_beacon("[next_beacon_id]" || "tour")
 					return
 
 				if (STATE_PATHING_TO_BEACON)
