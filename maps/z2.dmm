@@ -81686,10 +81686,10 @@
 /area/shuttle/escape/centcom/donut2)
 "ycX" = (
 /obj/item/toy/plush{
-	desc = "Oh no, maybe a mentor cat wasn't the best idea...";
+	desc = "Ew, it's soggy.";
 	icon = 'icons/misc/critter.dmi';
 	icon_state = "mouse-mentor-dead";
-	name = "ex mentor mouse";
+	name = "Mentor mouse plush toy";
 	pixel_x = -8
 	},
 /turf/unsimulated/floor/wood/two,
