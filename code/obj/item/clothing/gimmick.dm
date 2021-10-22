@@ -1771,3 +1771,19 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "westleaf"
+
+//Witchy Capes
+
+/obj/item/clothing/suit/witchcape_purple
+	name = "Purple Witch Cape"
+	desc = "Magical, but the friendship and imagination kind, not the remove-your-butt kind."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "witchcape_purple"
+
+/obj/item/clothing/suit/witchcape_mint
+	name = "Mint Witch Cape"
+	desc = "Magical, but the friendship and imagination kind, not the remove-your-butt kind."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "witchcape_mint"
