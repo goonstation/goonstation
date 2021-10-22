@@ -330,7 +330,7 @@
 
 			if("scanbeacons")
 				beacons = null
-				src.post_status("bot_beacon", "findbeacon", "delivery")
+				src.post_status("bot_beacon", "findbeacon", "delivery", "address_tag", "delivery")
 
 			if("botlist")
 				active = null

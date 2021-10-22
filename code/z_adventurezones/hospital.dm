@@ -660,7 +660,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 	proc/find_nearest_beacon()
 		nearest_beacon = null
 		new_destination = "__nearest__"
-		master.post_status("!BEACON!", "findbeacon", "patrol")
+		master.post_find_beacon("patrol")
 		awaiting_beacon = 5
 		SPAWN_DBG(1 SECOND)
 			if(!master || !master.on || master.stunned || master.idle)
@@ -677,7 +677,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 
 	proc/set_destination(var/new_dest)
 		new_destination = new_dest
-		master.post_status("!BEACON!", "findbeacon", "patrol")
+		master.post_find_beacon("patrol")
 		awaiting_beacon = 5
 
 	receive_signal(datum/signal/signal)

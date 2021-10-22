@@ -27,14 +27,13 @@
 
 		UnsubscribeProcess()
 
-		set_codes()
-
 		var/turf/T = loc
 		hide(T.intact)
 
 		if(!net_id)
 			net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, freq)
+
+		set_codes()
 
 	// set the transponder codes assoc list from codes_txt
 	proc/set_codes()
@@ -53,6 +52,16 @@
 				codes[key] = val
 			else
 				codes[e] = "1"
+
+		src.AddComponent( \
+			/datum/component/packet_connected/radio, \
+			"navbeacon", \
+			src.freq, \
+			src.net_id, \
+			"receive_signal", \
+			codes + list(location, "any"), \
+			FALSE \
+		)
 
 
 	// called when turf state changes
@@ -74,7 +83,7 @@
 	receive_signal(datum/signal/signal)
 		if (!signal || signal.encryption) return
 
-		var/beaconrequest = signal.data["findbeacon"]
+		var/beaconrequest = signal.data["findbeacon"] || signal.data["address_tag"]
 		if(beaconrequest && ((beaconrequest in codes) || beaconrequest == "any" || beaconrequest == location))
 			SPAWN_DBG(1 DECI SECOND)
 				post_status(signal.data["sender"] || signal.data["netid"])
