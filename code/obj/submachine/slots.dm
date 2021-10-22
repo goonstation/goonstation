@@ -88,6 +88,8 @@
 		if("eject")
 			usr.put_in_hand_or_eject(src.scan)
 			src.scan = null
+			src.working = FALSE
+			src.icon_state = "[icon_base]-off" // just in case, some fucker broke it earlier
 			if(!src.accessed_record)
 				src.visible_message("<span class='subtle'><b>[src]</b> says, 'Winnings not transferred, thank you for playing!'</span>")
 				return TRUE // jerks doing that "hide in a chute to glitch auto-update windows out" exploit caused a wall of runtime errors
@@ -95,8 +97,6 @@
 			src.available_funds = 0
 			src.accessed_record = null
 			src.visible_message("<span class='subtle'><b>[src]</b> says, 'Winnings transferred, thank you for playing!'</span>")
-			src.working = FALSE
-			src.icon_state = "[icon_base]-off" // just in case, some fucker broke it earlier
 			. = TRUE
 
 		if("cashin")
