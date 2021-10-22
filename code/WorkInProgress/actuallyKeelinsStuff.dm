@@ -1,9 +1,5 @@
 //This file contains stuff that is still *mostly* my code.
 
-#define LINEMODE_SEGMENT 1
-#define LINEMODE_STRETCH 2
-#define LINEMODE_MOVE 3
-#define LINEMODE_SIMPLE 4
 /*
 Proc: drawLine
 Arguments:
