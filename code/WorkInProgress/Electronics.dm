@@ -470,7 +470,16 @@
 		src.net_id = generate_net_id(src)
 		ruck_controls.rkit_addresses += src.net_id
 		host_ruck = src.net_id
-	MAKE_DEFAULT_RADIO_PACKET_COMPONENT("main", frequency)
+
+	src.AddComponent( \
+		/datum/component/packet_connected/radio, \
+		"ruck", \
+		src.frequency, \
+		src.net_id, \
+		"receive_signal", \
+		"TRANSRKIT", \
+		FALSE \
+	)
 
 /obj/machinery/rkit/disposing()
 	if (src.net_id == host_ruck) send_sync(1) //Everyone needs to find a new master
@@ -502,7 +511,7 @@
 			newsignal.data["command"] = "SYNC"
 		else
 			newsignal.data["command"] = "DROP"
-		newsignal.data["address_1"] = "TRANSRKIT"
+		newsignal.data["address_tag"] = "TRANSRKIT"
 		newsignal.data["sender"] = src.net_id
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
 
@@ -518,6 +527,7 @@
 			newsignal.data["command"] = "NEW"
 		else
 			newsignal.data["command"] = "UPLOAD"
+		newsignal.data["address_tag"] = target
 		newsignal.data["address_1"] = target
 		newsignal.data["sender"] = src.net_id
 		newsignal.data_file = scanFile
@@ -549,7 +559,7 @@
 		newsignal.data["address_1"] = target
 		newsignal.data["sender"] = src.net_id
 		newsignal.data_file = rkitFile
-		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "main")
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "ruck")
 	known_rucks |= target
 
 //Run this if there's a file and return
@@ -571,9 +581,9 @@
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
 			newsignal.data["command"] = "SYNCREPLY"
-			newsignal.data["address_1"] = "TRANSRKIT"
+			newsignal.data["address_tag"] = "TRANSRKIT"
 			newsignal.data["sender"] = src.net_id
-			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "main")
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "ruck")
 		if(world.time - boot_time <= 3 SECONDS)
 			for (var/datum/electronics/scanned_item/O in originalData.scanned_items)
 				ruck_controls.scan_in(O.name, O.item_type, O.mats, O.locked) //Copy the database on digest so we never waste the effort
@@ -620,7 +630,7 @@
 	var/command = signal.data["command"]
 
 	//LOCK can come in encrypted
-	if(signal.data["address_1"] == "TRANSRKIT" && signal.data["acc_code"] == netpass_heads && !isnull(signal.data["DATA"]) && !isnull(signal.data["LOCK"]))
+	if(signal.data["address_tag"] == "TRANSRKIT" && signal.data["acc_code"] == netpass_heads && !isnull(signal.data["DATA"]) && !isnull(signal.data["LOCK"]))
 		var/targetitem = signal.data["DATA"]
 		var/targetlock = signal.data["LOCK"]
 		if (istext(targetlock))
@@ -646,12 +656,12 @@
 			newsignal.data["netid"] = src.net_id
 			newsignal.data["address_1"] = target
 			newsignal.data["sender"] = src.net_id
-			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "main")
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "ruck")
 
 		return
 
 	//Signals that take TRANSRKIT or the net_id
-	if (signal.data["address_1"] == "TRANSRKIT" || signal.data["address_1"] == src.net_id)
+	if (signal.data["address_tag"] == "TRANSRKIT" || signal.data["address_1"] == src.net_id)
 		if (!isnull(signal.data_file))
 			process_upload(signal)
 			return
@@ -660,7 +670,7 @@
 		return
 
 	//Signals that take TRANSRKIT
-	if(signal.data["address_1"] == "TRANSRKIT")
+	if(signal.data["address_tag"] == "TRANSRKIT")
 
 		if(command == "SYNCREPLY" && target)
 			if (target > host_ruck) //pick the highest net_id
@@ -688,9 +698,9 @@
 				var/datum/signal/newsignal = get_free_signal()
 				newsignal.source = src
 				newsignal.data["command"] = "SYNCREPLY"
-				newsignal.data["address_1"] = "TRANSRKIT"
+				newsignal.data["address_tag"] = "TRANSRKIT"
 				newsignal.data["sender"] = src.net_id
-				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "main")
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "ruck")
 
 			return
 	//And anything down here runs if addressed by only net_id
@@ -811,13 +821,13 @@
 					updateDialog()
 					var/datum/signal/newsignal = get_free_signal()
 					newsignal.source = src
-					newsignal.data["address_1"] = "TRANSRKIT"
+					newsignal.data["address_tag"] = "TRANSRKIT"
 					newsignal.data["acc_code"] = netpass_heads
 					newsignal.data["LOCK"] = O.locked
 					newsignal.data["DATA"] = O.name
 					newsignal.data["sender"] = src.net_id
 					newsignal.encryption = "ERR_12845_NT_SECURE_PACKET:"
-					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "main")
+					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "ruck")
 
 	else
 		usr.Browse(null, "window=rkit")

@@ -123,7 +123,7 @@
 			signal.source = src.master
 			signal.transmission_method = 1
 
-			signal.data["address_1"] = "TRANSRKIT"
+			signal.data["address_tag"] = "TRANSRKIT"
 			signal.data["command"] = "add"
 
 			signal.data_file = theScan
