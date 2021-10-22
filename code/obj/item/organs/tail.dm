@@ -216,7 +216,7 @@
 	name = "pug tail"
 	desc = "A rather stubby tail, covered in wiry hair."
 	icon_state = "tail-pug"
-	organ_human_icon = 'icons/mob/pug.dmi'
+	organ_image_icon = 'icons/mob/pug.dmi'
 	tail_num = TAIL_PUG
 	//TODO
 	organ_image_under_suit_1 = null
