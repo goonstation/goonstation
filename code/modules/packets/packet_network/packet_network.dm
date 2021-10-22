@@ -62,9 +62,9 @@
 		return
 	signal.transmission_method = transmission_method
 	LAZYLISTADD(signal.channels_passed, src.channel_name)
-	var/target_tag = signal.data["address_tag"] // unused for now
+	var/target_tag = signal.data["address_tag"]
 	var/target_address = signal.data["address_1"]
-	var/is_broadcast = target_address == "ping" || target_address == "!BEACON!" || (isnull(target_tag) && isnull(target_address))
+	var/is_broadcast = target_address == "ping" || (isnull(target_tag) && isnull(target_address))
 	if(is_broadcast)
 		for(var/t_address in src.devices_by_address)
 			var/datum/component/packet_connected/target = src.devices_by_address[t_address]
