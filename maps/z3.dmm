@@ -25318,7 +25318,7 @@
 "oxV" = (
 /obj/table/regal/auto,
 /obj/item/reagent_containers/food/drinks/bottle/bojackson{
-	desc = "Expensive whiskey, aged using cutting edge technology f- wha... ITS ALL GONE!";
+	desc = "This bottle, is Ambrosia worthy of the gods, aged using cutting edge technology  f- wha... ITS ALL GONE!";
 	initial_volume = 0;
 	name = "Anchient Blue Label Scotch";
 	pixel_x = 9
