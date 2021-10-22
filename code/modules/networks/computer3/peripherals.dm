@@ -149,7 +149,6 @@
 		..()
 		src.net_id = format_net_id("\ref[src]")
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("wireless", frequency)
-		get_radio_connection_by_id(src, "wireless").update_all_hearing(TRUE) // I guess
 
 	receive_command(obj/source, command, datum/signal/signal)
 		if(..())
@@ -184,10 +183,12 @@
 			if("mode_net")
 				src.net_mode = 1
 				func_tag = "NET_ADAPTER" //Pretend to be that fukken wired card.
+				get_radio_connection_by_id(src, "wireless").update_all_hearing(TRUE)
 				return 0
 
 			if("mode_free")
 				src.net_mode = 0
+				get_radio_connection_by_id(src, "wireless").update_all_hearing(FALSE)
 				func_tag = "RAD_ADAPTER"
 				return 0
 
@@ -561,7 +562,6 @@
 			//Let's blindy attempt to generate a unique network ID!
 		src.net_id = format_net_id("\ref[src]")
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("wireless", frequency)
-		get_radio_connection_by_id(src, "wireless").update_all_hearing(TRUE)
 
 
 	receive_command(obj/source, command, datum/signal/signal)
@@ -606,16 +606,19 @@
 
 			if ("mode_free")
 				src.mode = 0
+				get_radio_connection_by_id(src, "wireless").update_all_hearing(TRUE)
 				func_tag = "RAD_ADAPTER"
 				return 0
 
 			if ("mode_net")
 				src.mode = 1
+				get_radio_connection_by_id(src, "wireless").update_all_hearing(FALSE)
 				func_tag = "NET_ADAPTER"
 				return 0
 
 			if ("mode_wire")
 				src.mode = 2
+				get_radio_connection_by_id(src, "wireless").update_all_hearing(FALSE)
 				func_tag = "NET_ADAPTER"
 				return 0
 
