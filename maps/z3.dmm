@@ -25320,7 +25320,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/bojackson{
 	desc = "This bottle, is Ambrosia worthy of the gods, aged using cutting edge technology  f- wha... ITS ALL GONE!";
 	initial_volume = 0;
-	name = "Anchient Blue Label Scotch";
+	name = "Ancient Blue Label Scotch";
 	pixel_x = 9
 	},
 /turf/simulated/floor/carpet/purple/standard/edge/west,
