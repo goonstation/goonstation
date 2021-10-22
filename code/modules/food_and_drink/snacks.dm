@@ -418,11 +418,12 @@
 
 		on_bite(var/mob/M)
 			if (ishuman(M))
+				var/list/food_effects_pre = src.food_effects //would just use initial() but it was nulling the list. whatever
 				var/mob/living/carbon/human/H = M
 				if (!istype(H.mutantrace, /datum/mutantrace/pug))
 					src.food_effects = list()
 				..()
-				src.food_effects = initial(src.food_effects)
+				src.food_effects = food_effects_pre
 
 /obj/item/reagent_containers/food/snacks/moon_pie
 	name = "sugar moon pie"
