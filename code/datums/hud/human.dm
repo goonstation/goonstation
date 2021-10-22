@@ -42,7 +42,7 @@
 	var/list/atom/movable/screen/hud/inventory_bg = list()
 	var/list/obj/item/inventory_items = list()
 	var/show_inventory = 1
-	var/current_ability_set = 1
+	var/show_genetics_abilities = TRUE
 	var/icon/icon_hud = 'icons/mob/hud_human_new.dmi'
 
 	var/list/statusUiElements = list() //Assoc. List  STATUS EFFECT INSTANCE : UI ELEMENT add_screen(atom/movable/screen/S). Used to hold the ui elements since they shouldnt be on the status effects themselves.
@@ -462,15 +462,14 @@
 				//src.update_sprinting()
 
 			if ("ability")
-				switch(current_ability_set)
-					if(1)
-						current_ability_set = 2
-						boutput(master, "Now viewing genetic powers hotbar.")
-					else
-						current_ability_set = 1
-						boutput(master, "Now viewing standard hotbar.")
+				if(show_genetics_abilities)
+					show_genetics_abilities = FALSE
+					boutput(master, "No longer showing genetic abilities.")
+				else
+					show_genetics_abilities = TRUE
+					boutput(master, "Now showing genetic abilities.")
 
-				ability_toggle.icon_state = "[layouts[layout_style]["ability_icon"]][current_ability_set]"
+				ability_toggle.icon_state = "[layouts[layout_style]["ability_icon"]][show_genetics_abilities]"
 				update_ability_hotbar()
 
 			if ("health")
@@ -834,16 +833,17 @@
 			if (master.abilityHolder.any_abilities_displayed)
 				pos_y = master.abilityHolder.y_occupied + 1
 
-		if (current_ability_set == 1) // items + standard
-			for(var/obj/ability_button/B2 in master.item_abilities)
-				B2.screen_loc = "NORTH-[pos_y],[pos_x]"
-				master.client.screen += B2
-				pos_x++
-				if(pos_x > 15)
-					pos_x = 1
-					pos_y++
+		// always show regular abilities
+		for(var/obj/ability_button/B2 in master.item_abilities)
+			B2.screen_loc = "NORTH-[pos_y],[pos_x]"
+			master.client.screen += B2
+			pos_x++
+			if(pos_x > 15)
+				pos_x = 1
+				pos_y++
 
-		if (current_ability_set == 2) // genetics
+		// if toggled off, do not show genetics abilities
+		if (show_genetics_abilities)
 			var/datum/bioEffect/power/P
 			for(var/ID in master.bioHolder.effects)
 				P = master.bioHolder.GetEffect(ID)
