@@ -17,13 +17,14 @@
 		if(!islist(src.all_hearing))
 			src.all_hearing = list()
 		src.all_hearing[device] = 1
-	else if(device.net_tag)
+	else if(device.net_tags)
 		if(!islist(src.devices_by_tag))
 			src.devices_by_tag = list()
-		if(islist(src.devices_by_tag[device.net_tag]))
-			src.devices_by_tag[device.net_tag][device] = 1
-		else
-			src.devices_by_tag[device.net_tag] = list((device) = 1)
+		for(var/net_tag in device.net_tags)
+			if(islist(src.devices_by_tag[net_tag]))
+				src.devices_by_tag[net_tag][device] = 1
+			else
+				src.devices_by_tag[net_tag] = list((device) = 1)
 	if(!islist(src.devices_by_address))
 		src.devices_by_address = list()
 	src.devices_by_address[device.address] = device
@@ -35,12 +36,13 @@
 		src.all_hearing -= device
 		if(!length(src.all_hearing))
 			src.all_hearing = null
-	if(device.net_tag)
-		src.devices_by_tag[device.net_tag] -= device
-		if(!length(src.devices_by_tag[device.net_tag]))
-			src.devices_by_tag -= device.net_tag
-		if(!length(src.devices_by_tag))
-			src.devices_by_tag = null
+	if(device.net_tags)
+		for(var/net_tag in device.net_tags)
+			src.devices_by_tag[net_tag] -= device
+			if(!length(src.devices_by_tag[net_tag]))
+				src.devices_by_tag -= net_tag
+			if(!length(src.devices_by_tag))
+				src.devices_by_tag = null
 	src.devices_by_address -= device.address
 	if(!length(src.devices_by_address))
 		src.devices_by_address = null

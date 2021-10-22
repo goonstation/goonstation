@@ -1,13 +1,13 @@
 /datum/component/packet_connected
 	dupe_mode = COMPONENT_DUPE_SELECTIVE
 	var/address
-	var/net_tag = null
+	var/list/net_tags = null
 	var/all_hearing = FALSE
 	var/datum/packet_network/network
 	var/receive_packet_proc = null
 	var/connection_id
 
-/datum/component/packet_connected/Initialize(connection_id, datum/packet_network/network, address=null, receive_packet_proc=null, net_tag=null, all_hearing=FALSE)
+/datum/component/packet_connected/Initialize(connection_id, datum/packet_network/network, address=null, receive_packet_proc=null, net_tags=null, all_hearing=FALSE)
 	if(!istype(parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
 	src.connection_id = connection_id
@@ -16,17 +16,20 @@
 	if(isnull(address))
 		address = generate_net_id(src.parent)
 	src.address = address
-	src.net_tag = net_tag
+	if(islist(net_tags))
+		src.net_tags = net_tags
+	else if(!isnull(net_tags))
+		src.net_tags = list(net_tags)
 	src.all_hearing = all_hearing
 	src.network?.register(src)
 
-/datum/component/packet_connected/CheckDupeComponent(datum/component/packet_connected/C, connection_id, datum/packet_network/network, address=null, receive_packet_proc=null, net_tag=null, all_hearing=FALSE)
+/datum/component/packet_connected/CheckDupeComponent(datum/component/packet_connected/C, connection_id, datum/packet_network/network, address=null, receive_packet_proc=null, net_tags=null, all_hearing=FALSE)
 	. = !isnull(C?.connection_id) && C.connection_id == src.connection_id || \
 			!isnull(connection_id) && connection_id == src.connection_id
 	if(.)
 		src.network?.unregister(src)
 		src.address = C.address
-		src.net_tag = C.net_tag
+		src.net_tags = C.net_tags
 		src.all_hearing = C.all_hearing
 		src.receive_packet_proc = C.receive_packet_proc
 		src.network = C.network
@@ -46,11 +49,25 @@
 	src.address = new_address
 	src.network?.register(src)
 
-/datum/component/packet_connected/proc/update_tag(new_tag)
-	if(new_tag == src.net_tag)
+/datum/component/packet_connected/proc/add_tag(new_tag)
+	if(new_tag in src.net_tags)
 		return
 	src.network?.unregister(src)
-	src.net_tag = new_tag
+	if(isnull(src.net_tags))
+		src.net_tags = list()
+	src.net_tags |= new_tag
+	src.network?.register(src)
+
+/datum/component/packet_connected/proc/remove_tag(old_tag)
+	if(!(old_tag in src.net_tags))
+		return
+	src.network?.unregister(src)
+	src.net_tags -= old_tag
+	src.network?.register(src)
+
+/datum/component/packet_connected/proc/clear_tags()
+	src.network?.unregister(src)
+	src.net_tags = null
 	src.network?.register(src)
 
 /datum/component/packet_connected/proc/update_all_hearing(new_all_hearing)
@@ -77,10 +94,10 @@
 
 /datum/component/packet_connected/radio
 
-/datum/component/packet_connected/radio/Initialize(connection_id, network, address=null, receive_packet_proc=null, net_tag=null, all_hearing=FALSE)
+/datum/component/packet_connected/radio/Initialize(connection_id, network, address=null, receive_packet_proc=null, net_tags=null, all_hearing=FALSE)
 	if(isnum(network) || istext(network))
 		network = radio_controller.get_frequency(network).packet_network
-	. = ..(connection_id, network, address, receive_packet_proc, net_tag, all_hearing)
+	. = ..(connection_id, network, address, receive_packet_proc, net_tags, all_hearing)
 	RegisterSignal(parent, COMSIG_MOVABLE_POST_RADIO_PACKET, .proc/send_radio_packet)
 
 /datum/component/packet_connected/radio/proc/send_radio_packet(atom/movable/sender, datum/signal/signal, range=null, frequency_or_id=null)
