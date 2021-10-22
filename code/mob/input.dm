@@ -231,8 +231,9 @@
 
 						if(src.get_stamina() < STAMINA_COST_SPRINT && HAS_MOB_PROPERTY(src, PROP_FAILED_SPRINT_FLOP)) //Check after move rather than before so we cleanly transition from sprint to flop
 							if (!src.client.flying && !src.hasStatus("resting")) //no flop if laying or noclipping
-							    //just fall over in place when in space (to prevent zooming)
-								if (get_turf(src).turf_flags & CAN_BE_SPACE_SAMPLE)
+								//just fall over in place when in space (to prevent zooming)
+								var/turf/current_turf = get_turf(src)
+								if (!(current_turf.turf_flags & CAN_BE_SPACE_SAMPLE))
 									src.throw_at(get_step(src, move_dir), 1, 1)
 								src.setStatus("resting", duration = INFINITE_STATUS)
 								src.force_laydown_standup()
