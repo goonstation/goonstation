@@ -173,7 +173,7 @@
 	var/class = ""
 	switch (color)
 		if ("red") class = "alert"
-		if ("blue") class = "notify"
+		if ("blue") class = "notice"
 		if ("green") class = "success"
 
 	boutput(src, "<span class='[class]'>[message]</span>", group)

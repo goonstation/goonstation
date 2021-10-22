@@ -222,7 +222,7 @@
 	var/mob/living/carbon/human/H = target
 
 	if(!active)
-		src.visible_message("<span class='notify'>[user] gently taps [target] with the turned off [src].</span>")
+		src.visible_message("<span class='notice'>[user] gently taps [target] with the turned off [src].</span>")
 
 	if(active && prob(35))
 		gibs(target.loc, blood_DNA=H.bioHolder.Uid, blood_type=H.bioHolder.bloodType, headbits=FALSE, source=H)

@@ -608,7 +608,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		if (istype(holder, /datum/abilityHolder/ghost_observer))
 			var/datum/abilityHolder/ghost_observer/GAH = holder
 			GAH.spooking = 1
-		src.holder.owner.invisibility = INVIS_NONE
+		REMOVE_MOB_PROPERTY(src.holder.owner, PROP_INVISIBILITY, src.holder.owner)
 		boutput(holder.owner, "<span class='notice'>You start being spooky! The living can all see you!</span>")
 
 	//remove the filter animation when we're done.
@@ -617,7 +617,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		if (istype(holder, /datum/abilityHolder/ghost_observer))
 			var/datum/abilityHolder/ghost_observer/GAH = holder
 			GAH.spooking = 0
-		src.holder.owner.invisibility = initial(src.holder.owner.invisibility)
+		APPLY_MOB_PROPERTY(src.holder.owner, PROP_INVISIBILITY, src.holder.owner, ghost_invisibility)
 		boutput(holder.owner, "<span class='alert'>You stop being spooky!</span>")
 
 #endif
