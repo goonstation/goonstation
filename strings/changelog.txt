@@ -1,4 +1,9 @@
 
+(t)fri oct 22 21
+(u)Nexusuxen
+(p)6391
+(e)|
+(+)Recolored AI Intercom Monitor text from default green to color used by AI Intercoms
 (t)thu oct 21 21
 (u)Wisemonster
 (p)6376
