@@ -1,5 +1,9 @@
 
 (t)fri oct 22 21
+(u)zjdtmkhzt
+(p)6385
+(e)🆕|feature
+(+)Added new trait that spawns you with no hair, but a wig instead. Also works for mutantraces.
 (u)Vocalpocal
 (p)6327
 (e)⛔|removal
