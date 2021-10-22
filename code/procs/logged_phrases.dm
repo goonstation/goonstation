@@ -139,7 +139,7 @@ var/global/datum/phrase_log/phrase_log = new
 		if(is_sussy(phrase))
 			SEND_GLOBAL_SIGNAL(COMSIG_SUSSY_PHRASE, "<span class=\"admin\">Sussy word - [key_name(usr)] [category]: \"[phrase]\"</span>")
 		#ifdef RP_MODE
-		if(category != "ooc" && category != "looc" && ic_sussy(phrase))
+		if(category != "ooc" && category != "looc" && is_ic_sussy(phrase))
 			SEND_GLOBAL_SIGNAL(COMSIG_SUSSY_PHRASE, "<span class=\"admin\">Low RP word - [key_name(usr)] [category]: \"[phrase]\"</span>")
 		#endif
 		if(is_uncool(phrase))
