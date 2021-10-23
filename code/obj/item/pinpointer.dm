@@ -13,8 +13,6 @@
 	var/target_criteria = null
 	/// exact target reference
 	var/target_ref = null
-	/// z level of target
-	var/target_z = null
 	var/active = 0
 	var/icon_type = "disk"
 	mats = 4
@@ -52,10 +50,13 @@
 				active = 0
 				ClearSpecificOverlays("arrow")
 				return
-		if (target_z)
-			if ((src.z == 0 && (usr.z != target_z)) || (src.z != 0 && (src.z != target_z)))
+		var/turf/ST = get_turf(src)
+		var/turf/T = get_turf(target)
+		if (ST && T)
+			if (ST.z != T.z)
 				active = 0
 				ClearSpecificOverlays("arrow")
+				boutput(usr, "<span class='alert'>Pinpointer target out of range.</span>")
 				return
 		src.set_dir(get_dir(src,target))
 		switch(get_dist(src,target))
@@ -98,13 +99,13 @@
 	icon_type = "trench"
 	var/target_area = /area/shuttle/sea_elevator/lower
 
-	attack_self()
+	attack_self(mob/user)
 		if (!active)
 			var/area/A = locate(target_area)
 			var/turf/T = A.find_middle()
-			target_z = T.z
-			if (T.z != usr.z)
-				boutput(usr, "<span class='notice'>You must be in the trench to use this pinpointer.</span>")
+			var/turf/ST = get_turf(user)
+			if (ST.z != T.z)
+				boutput(user, "<span class='notice'>You must be in the trench to use this pinpointer.</span>")
 				return
 			target_ref = "\ref[A.find_middle()]"
 		. = ..()
