@@ -299,19 +299,21 @@
 
 		///heals a bunch of bad things the Slasher can get hit with, but not all
 		regenerate()
+			var/turf/T = get_turf(src)
+			new /obj/overlay/darkness_field(T, 2 SECONDS, radius = 3, max_alpha = 160)
+			new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, 2 SECONDS, radius = 3, max_alpha = 160)
 			playsound(src, 'sound/machines/ArtifactEld1.ogg', 60, 0)
 			if(src.hasStatus("handcuffed"))
 				src.visible_message("<span class='alert'>[src]'s wrists dissolve into the shadows, making the handcuffs vanish!</span>")
 				src.handcuffs.destroy_handcuffs(src)
-			sleep(5 DECI SECONDS)
-			src.losebreath = 0
-			src.delStatus("paralysis")
-			src.delStatus("stunned")
-			src.delStatus("weakened")
-			src.HealDamage("All", 100, 100)
-			src.take_brain_damage(-INFINITY)
-			src.visible_message("<span class='alert'>[src] appears to partially dissolve into the shadows, but then reforms!</span>")
-			src.bioHolder.AddEffect("detox", 0, 0, 0, 1) //full_heal gets rid of this
+			SPAWN_DBG(5 DECI SECONDS)
+				src.losebreath = 0
+				src.delStatus("paralysis")
+				src.delStatus("stunned")
+				src.delStatus("weakened")
+				src.HealDamage("All", 100, 100)
+				src.take_brain_damage(-INFINITY)
+				src.visible_message("<span class='alert'>[src] appears to partially dissolve into the shadows, but then reforms!</span>")
 
 		///Actionbar handler for stealing a dead body's soul.
 		soulStealSetup(var/mob/living/carbon/human/M)
@@ -339,11 +341,23 @@
 			for(var/obj/machinery/door/G in oview(3, src))
 				SPAWN_DBG(1 DECI SECOND)
 					G.open()
+					var/obj/overlay/pulse = new/obj/overlay(get_turf(G))
+					pulse.icon = 'icons/effects/effects.dmi'
+					pulse.icon_state = "emppulse"
+					pulse.name = "pulse"
+					pulse.anchored = 1
+					SPAWN_DBG(2 SECONDS)
+						if (pulse) //sanity check
+							qdel(pulse)
 
 		///Crowd control ability to stop people from running as easily, applies stagger
 		staggerNearby()
 			src.visible_message("<span class='alert'>[src] begins emitting a dark aura.</span>")
+			var/image/overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
+			overlay_image.color = "#1a1102"
+			src.UpdateOverlays(overlay_image, "slasher_aura")
 			SPAWN_DBG(3 SECONDS)
+				src.UpdateOverlays(null, "slasher_aura")
 				for(var/mob/living/M in oview(4, src))
 					if((M != src) && !M?.traitHolder?.hasTrait("training_chaplain"))
 						boutput(M, "<span class='notice'>Your legs feel a bit stiff!</span>")
