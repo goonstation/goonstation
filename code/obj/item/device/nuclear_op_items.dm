@@ -674,16 +674,17 @@
 /obj/machinery/broadside_gun/artillery_cannon
 	name = "Artillery Cannon"
 	icon = 'icons/obj/large/96x32.dmi'
-	icon_state = "artillery_cannon"
+	icon_state = "152mm"
 	desc = "A 152 millimeter artillery cannon, used for heavy fire support."
 	bound_width = 96
 	firingfrom = ""
 	ammo = -1
 	sound_offset_dir = EAST
-	sound_offset_length = 2
+	sound_offset_length = 3
 
 	bombard(atom/target, mob/user)
 		var/turf/target_turf = get_turf(target)
+		var/turf/firing_turf = get_turf(src)
 		if(!(target_turf in view(DESIGNATOR_MAX_RANGE, usr.loc))) //view() is bad and slow but I cannot find a better way to do this
 			return 0
 		if(!isnull(src.target_overlay))
@@ -696,8 +697,16 @@
 		sleep(2.5 SECONDS)
 		var/area/designated_area = get_area(target_turf)
 		command_alert("Heavy ordinace has been detected launching from the Cairngorm towards the [initial(designated_area.name)], ETA 10 seconds.","Central Command Alert", "sound/machines/alarm_a.ogg")
-		flick("artillery_cannon_firing", src)
-		sleep(3 DECI SECONDS)
+		flick("152mm_firing", src)
+		firing_turf = get_step(firing_turf, WEST)
+		firing_turf = get_step(firing_turf, WEST)
+		var/atom/movable/overlay/animation = new /atom/movable/overlay(firing_turf)
+		animation.icon = 'icons/obj/large/96x32.dmi'
+		animation.icon_state = "nothing"
+		SPAWN_DBG(0)
+			flick("152mm-flash", animation)
+			sleep(1.2 SECONDS)
+			qdel(animation)
 		playsound(sound_turf, "sound/weapons/energy/howitzer_shot.ogg", 50, 1)
 		sleep(rand(60, 110))
 		if(!isnull(src.target_overlay))
