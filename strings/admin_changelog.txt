@@ -1,3 +1,6 @@
+(t)sat oct 23 21
+(u)pali
+(*)Incoming mainframe commands are now logged (usually) in a new <i>computers</i> log cateogry
 (t)fri oct 15 21
 (u)Zamujasa
 (*)The "View Player Notes" function now has a "Set Login Notice" option.
