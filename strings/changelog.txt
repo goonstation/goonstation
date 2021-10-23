@@ -1,5 +1,9 @@
 
 (t)sat oct 23 21
+(u)pali
+(p)6373
+(e)|
+(+)Ghosting in cryo now starts respawn countdown on RP
 (u)Walpvrgis
 (p)6218
 (e)🎨|sprites
