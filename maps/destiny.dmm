@@ -31273,9 +31273,6 @@
 /obj/machinery/door/airlock/pyro/glass/med{
 	name = "Medbay"
 	},
-/obj/machinery/door/airlock/pyro/glass/med{
-	name = "Medbay"
-	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
 /turf/simulated/floor/bluewhite{
