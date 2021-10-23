@@ -701,6 +701,13 @@
 			setProperty("coldprot", 5)
 			setProperty("heatprot", 5)
 			setProperty("exploprot", 15)
+
+/obj/item/clothing/shoes/witchboots
+	name = "Witch Boots"
+	icon_state = "witchboots"
+	desc = "The curved front of these boots is reminiscent of a crescent moon, how magical."
+	step_sound = "footstep"
+
 //Western Boots
 
 /obj/item/clothing/shoes/westboot

@@ -69,12 +69,6 @@
 	crop = /obj/critter/killertomato
 	iconmod = "TomatoKiller"
 
-/datum/plantmutation/tomato/tomacco
-	name = "Tomacco"
-	name_suffix = " Tomacco"
-	crop = /obj/item/reagent_containers/food/snacks/plant/tomato/tomacco
-	iconmod = "TomatoTomacco" //ayy potayto potato tomayto tomacco ya dig
-
 // Corn Mutations
 
 /datum/plantmutation/corn/clear

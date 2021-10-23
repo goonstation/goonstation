@@ -100,7 +100,7 @@
 			return
 		*/
 		var/ejected_beaker = null
-		if (src.beaker)
+		if (src.beaker?.loc == src)
 			ejected_beaker = src.beaker
 			user.put_in_hand_or_drop(ejected_beaker)
 
