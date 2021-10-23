@@ -38,19 +38,19 @@ proc/get_radio_connection_by_id(atom/movable/AM, id)
 
 //Signal frequencies
 
-#define FREQ_PDA "1149"
-#define FREQ_AIRLOCK "1411"
-#define FREQ_FREE "1419" /// frequency for "free packet communication", default for nerd stuff
-#define FREQ_NAVBEACON "1445"
-#define FREQ_SECURE_STORAGE "1431"
-#define FREQ_SECBUDDY_NAVBEACON "1431"
-#define FREQ_ALARM "1437"
-#define FREQ_HYDRO "1433"
-#define FREQ_STATUS_DISPLAY "1435"
-#define FREQ_BOT_CONTROL "1447"
-#define FREQ_AIRLOCK_CONTROL "1449" // seems to be unused nowadays?
-#define FREQ_GPS "1453"
-#define FREQ_RUCK "1467"
+#define FREQ_PDA 1149
+#define FREQ_AIRLOCK 1411
+#define FREQ_FREE 1419 /// frequency for "free packet communication", default for nerd stuff
+#define FREQ_NAVBEACON 1445
+#define FREQ_SECURE_STORAGE 1431
+#define FREQ_SECBUDDY_NAVBEACON 1431
+#define FREQ_ALARM 1437
+#define FREQ_HYDRO 1433
+#define FREQ_STATUS_DISPLAY 1435
+#define FREQ_BOT_CONTROL 1447
+#define FREQ_AIRLOCK_CONTROL 1449 // seems to be unused nowadays?
+#define FREQ_GPS 1453
+#define FREQ_RUCK 1467
 
 /*
 Special frequency list:

@@ -1383,7 +1383,7 @@
 					src.link.master = src
 
 	proc/add_frequency(newFreq)
-		frequencies[newFreq] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f[newFreq]", newFreq)
+		frequencies["[newFreq]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f[newFreq]", newFreq)
 
 	attack_hand(mob/user as mob)
 		if(..() || (status & (NOPOWER|BROKEN)))
