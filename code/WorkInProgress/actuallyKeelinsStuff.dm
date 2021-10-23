@@ -31,7 +31,7 @@ Returns:
 	if(render_source_line == null) return
 	var/datum/lineResult/result = new()
 
-	if(mode != LINEMODE_SIMPLE)
+	if(mode != LINEMODE_SIMPLE && mode != LINEMODE_SIMPLE_REVERSED)
 		if(!islist(render_source_line))
 			if(!getGlobalRenderSource((copytext(render_source_line,1,2) == "*" ? render_source_line : "*[render_source_line]")))
 				if(copytext(render_source_line,1,2) == "*") render_source_line = copytext(render_source_line,2,0)
@@ -99,6 +99,13 @@ Returns:
 		I.icon = 'icons/effects/lines2.dmi'
 		I.icon_state = islist(render_source_line) ? pick(render_source_line) : render_source_line
 		var/matrix/M = UNLINT(matrix().Scale(scale,1).Translate(dist/2,0).Turn(angle).Translate(src_off_x - iconWidth / 4,src_off_y))
+		I.transform = M
+		result.lineImage = I
+	else if(mode == LINEMODE_SIMPLE_REVERSED)
+		var/image/I = image(null,source)
+		I.icon = 'icons/effects/lines2.dmi'
+		I.icon_state = islist(render_source_line) ? pick(render_source_line) : render_source_line
+		var/matrix/M = UNLINT(matrix().Scale(scale,1).Translate(-dist/2,0).Turn(180 + angle).Translate(src_off_x - iconWidth / 4,src_off_y))
 		I.transform = M
 		result.lineImage = I
 	else if(mode == LINEMODE_SEGMENT)

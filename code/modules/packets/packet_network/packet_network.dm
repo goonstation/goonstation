@@ -50,6 +50,24 @@
 	if(!length(src.devices_by_address))
 		src.devices_by_address = null
 
+/datum/packet_network/proc/draw_packet(datum/component/packet_connected/target, datum/component/packet_connected/source, datum/signal/signal, params=null)
+	var/turf/sourceT = get_turf(source.parent)
+	var/turf/targetT = get_turf(target.parent)
+	if(!sourceT || !targetT || sourceT.z != targetT.z)
+		return null
+	// we draw twice, once anchored to source, once to target; this is so the line is visible at both ends
+	var/datum/lineResult/R1 = drawLine(sourceT, targetT, "triangle", getCrossed = 0, mode = LINEMODE_SIMPLE)
+	var/datum/lineResult/R2 = drawLine(targetT, sourceT, "triangle", getCrossed = 0, mode = LINEMODE_SIMPLE_REVERSED)
+	. = list(R1.lineImage, R2.lineImage)
+	for(var/image/img as anything in .)
+		img.color = debug_color_of(src.channel_name)
+		img.alpha = 0
+		img.plane = PLANE_SCREEN_OVERLAYS
+		animate(img, alpha = 30, time = 0.1 SECOND, easing = SINE_EASING | EASE_IN)
+		animate(alpha = 50, time = 0.9 SECOND, easing = SINE_EASING | EASE_OUT)
+		animate(alpha = 0, time = 1 SECONDS, easing = SINE_EASING)
+		get_image_group(CLIENT_IMAGE_GROUP_PACKETVISION).add_image(img)
+
 /datum/packet_network/disposing()
 	src.in_disposing = TRUE
 	for(var/address in src.devices_by_address)
@@ -94,15 +112,35 @@
 	var/target_tag = signal.data["address_tag"]
 	var/target_address = signal.data["address_1"]
 	var/is_broadcast = target_address == "ping" || (isnull(target_tag) && isnull(target_address))
-	if(src.can_receive_necessary(source, signal, params))
-		POST_PACKET_INTERNAL( \
-			if(src.can_receive(target, source, signal, params)) \
+	var/use_can_receive = src.can_receive_necessary(source, signal, params)
+	var/draw_packet = length(global.client_image_groups?[CLIENT_IMAGE_GROUP_PACKETVISION]?.subscribed_mobs_with_subcount)
+	if(!draw_packet)
+		if(use_can_receive)
+			POST_PACKET_INTERNAL( \
+				if(src.can_receive(target, source, signal, params)) \
+					target.receive_packet(signal, src.transmission_method, params); \
+			)
+		else
+			POST_PACKET_INTERNAL( \
 				target.receive_packet(signal, src.transmission_method, params); \
-		)
+			)
 	else
-		POST_PACKET_INTERNAL( \
-			target.receive_packet(signal, src.transmission_method, params); \
-		)
+		var/list/image/images = list()
+		if(use_can_receive)
+			POST_PACKET_INTERNAL( \
+				if(src.can_receive(target, source, signal, params)) \
+					target.receive_packet(signal, src.transmission_method, params); \
+				images += src.draw_packet(target, source, signal, params); \
+			)
+		else
+			POST_PACKET_INTERNAL( \
+				target.receive_packet(signal, src.transmission_method, params); \
+				images += src.draw_packet(target, source, signal, params); \
+			)
+		SPAWN_DBG(2 SECONDS)
+			for(var/image/img in images)
+				get_image_group(CLIENT_IMAGE_GROUP_PACKETVISION).remove_image(img)
+				qdel(img)
 	qdel(signal)
 
 #undef POST_PACKET_INTERNAL
