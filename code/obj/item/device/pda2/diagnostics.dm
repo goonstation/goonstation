@@ -85,7 +85,7 @@
 
 				mode = 1
 				master.updateSelfDialog()
-				SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "ping")
+				SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, range, "ping")
 				sleep(2 SECONDS)
 				mode = 0
 				master.updateSelfDialog()
@@ -123,8 +123,7 @@
 		if(signal.data["address_1"] == master.net_id && signal.data["command"] == "ping_reply")
 			if(!result)
 				result = new/list()
-			if(get_dist(master,signal.source) <= range)
-				result += "[signal.data["device"]] \[[signal.data["netid"]]\] [signal.data["data"]]<BR>"
+			result += "[signal.data["device"]] \[[signal.data["netid"]]\] [signal.data["data"]]<BR>"
 
 	proc/adjust_frequency(var/old_freq, var/new_freq)
 		get_radio_connection_by_id(src.master, "ping").update_frequency(new_freq)
