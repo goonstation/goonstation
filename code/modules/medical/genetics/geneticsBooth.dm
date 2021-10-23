@@ -96,7 +96,7 @@
 		workingoverlay.pixel_y = 2
 		workingoverlay.layer = src.layer + 0.1
 
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
 	disposing()
 		STOP_TRACKING

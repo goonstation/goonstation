@@ -83,7 +83,7 @@
 
 	New()
 		..()
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
 	find_partners(var/in_range = 0)
 		if (in_range)

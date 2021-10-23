@@ -26,7 +26,7 @@
 
 	New()
 		..()
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
 	Crossed( atom/movable/O )
 		if(isliving(O))

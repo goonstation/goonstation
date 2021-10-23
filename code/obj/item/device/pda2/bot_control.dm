@@ -35,7 +35,9 @@
 			pda.beacon_freq, \
 			pda.net_id, \
 			null, \
-			null \
+			FALSE, \
+			null, \
+			FALSE \
 		)
 		pda.AddComponent(
 			/datum/component/packet_connected/radio, \
@@ -43,7 +45,9 @@
 			control_freq, \
 			pda.net_id, \
 			null, \
-			null \
+			FALSE, \
+			null, \
+			FALSE \
 		)
 		RegisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET, .proc/receive_signal)
 

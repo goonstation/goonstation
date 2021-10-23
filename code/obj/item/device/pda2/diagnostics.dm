@@ -18,7 +18,9 @@
 			send_freq, \
 			pda.net_id, \
 			null, \
-			null \
+			FALSE, \
+			null, \
+			FALSE \
 		)
 		RegisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET, .proc/receive_signal)
 
@@ -145,6 +147,7 @@
 			scan_freq, \
 			pda.net_id, \
 			null, \
+			FALSE, \
 			null, \
 			TRUE \
 		)
@@ -295,6 +298,7 @@
 			send_freq, \
 			pda.net_id, \
 			null, \
+			TRUE, \
 			null, \
 			TRUE \
 		)

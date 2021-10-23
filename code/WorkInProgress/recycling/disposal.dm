@@ -1688,7 +1688,7 @@
 			target = get_ranged_target_turf(src, dir, range)
 		if(!src.net_id)
 			src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
 
 	disposing()
 		var/obj/disposalpipe/trunk/trunk = locate() in src.loc

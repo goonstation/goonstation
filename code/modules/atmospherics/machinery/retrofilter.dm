@@ -42,9 +42,6 @@ obj/machinery/atmospherics/retrofilter
 	var/hacked = 0
 	var/emagged = 0
 
-	var/frequency = 0
-	var/net_id = null
-
 	New()
 		..()
 		src.tag = ""
@@ -432,8 +429,6 @@ obj/machinery/atmospherics/retrofilter
 				break
 
 		update_icon()
-
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
 	build_network()
 		if(!network_out1 && node_out1)

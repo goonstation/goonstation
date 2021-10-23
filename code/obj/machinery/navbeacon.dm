@@ -59,6 +59,7 @@
 			src.freq, \
 			src.net_id, \
 			"receive_signal", \
+			FALSE, \
 			codes + list(location, "any"), \
 			FALSE \
 		)
@@ -316,10 +317,8 @@ Transponder Codes:<UL>"}
 					updateDialog()
 
 	proc/set_frequency(var/new_freq)
-		for(var/datum/component/packet_connected/radio/comp in GetComponents(/datum/component/packet_connected/radio))
-			if(comp.get_frequency() == freq)
-				comp.update_frequency(new_freq)
 		freq = new_freq
+		get_radio_connection_by_id(src, "navbeacon").update_frequency(freq)
 
 //Wired nav device
 /obj/machinery/wirenav

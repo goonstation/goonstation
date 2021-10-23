@@ -159,7 +159,9 @@
 			FREQ_STATUS_DISPLAY, \
 			pda.net_id, \
 			null, \
-			null \
+			TRUE, \
+			null, \
+			FALSE \
 		)
 
 	on_deactivated(obj/item/device/pda2/pda)
@@ -239,7 +241,9 @@ Code:
 			send_freq, \
 			pda.net_id, \
 			null, \
-			null \
+			TRUE, \
+			null, \
+			FALSE \
 		)
 
 	on_deactivated(obj/item/device/pda2/pda)
@@ -498,7 +502,9 @@ Code:
 			FREQ_PDA, \
 			pda.net_id, \
 			null, \
-			null \
+			FALSE, \
+			null, \
+			FALSE \
 		)
 		RegisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET, .proc/receive_signal)
 
@@ -663,7 +669,9 @@ Code:
 			report_freq, \
 			pda.net_id, \
 			null, \
-			null \
+			FALSE, \
+			null, \
+			FALSE \
 		)
 
 	on_deactivated(obj/item/device/pda2/pda)

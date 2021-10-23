@@ -245,8 +245,8 @@
 	var/obj/item/record/record_inside = null
 
 	New()
-		. = ..()
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+		..()
+		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
 /obj/submachine/record_player/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/record))

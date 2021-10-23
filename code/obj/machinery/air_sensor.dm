@@ -64,5 +64,5 @@ obj/machinery/air_sensor
 
 	New()
 		..()
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
 

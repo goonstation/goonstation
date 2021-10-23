@@ -13,7 +13,7 @@
 	..()
 	SPAWN_DBG(1 SECOND)
 		src.target = locate(/obj/machinery/atmospherics/pipe) in loc
-	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+	MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
 
 /obj/machinery/meter/process()
 	if(!target)

@@ -22,7 +22,7 @@ var/list/genetek_hair_styles = list()
 		if(!src.net_id)
 			src.net_id = generate_net_id(src)
 			genescanner_addresses += src.net_id
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
 
 	disposing()
 		if (src.net_id)

@@ -414,7 +414,7 @@
 
 			MAKE_DEFAULT_RADIO_PACKET_COMPONENT("control", control_freq)
 			MAKE_DEFAULT_RADIO_PACKET_COMPONENT("beacon", beacon_freq)
-			MAKE_DEFAULT_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+			MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
 			var/obj/machinery/guardbot_dock/dock = null
 			if(setup_spawn_dock)

@@ -91,7 +91,9 @@
 				FREQ_RUCK, \
 				pda.net_id, \
 				null, \
-				null \
+				FALSE, \
+				null, \
+				FALSE \
 			)
 
 
