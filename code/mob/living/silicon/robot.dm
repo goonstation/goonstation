@@ -1777,7 +1777,7 @@
 		// You can enthrall silicon mobs and yes, they need special handling.
 		// Also, enthralled AIs should still see their master's name when in a robot suit (Convair880).
 		if (src.mind && src.mind.special_role == ROLE_VAMPTHRALL && src.mind.master)
-			var/mob/mymaster = whois_ckey_to_mob_reference(src.mind.master)
+			var/mob/mymaster = ckey_to_mob(src.mind.master)
 			if (mymaster)
 				boutput(who, "<b>Obey these laws:</b>")
 				boutput(who, "1. Only your master [mymaster.real_name] is human. Obey and serve them to the best of your ability.")

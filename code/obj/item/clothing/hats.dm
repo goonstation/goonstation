@@ -1830,3 +1830,21 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 	name = "Brown Ten-Gallon hat"
 	icon_state = "westhat_brown"
 	item_state = "westhat_brown"
+
+//Witchy Hats
+
+/obj/item/clothing/head/witchhat_purple
+	name = "purple witch hat"
+	desc = "Magical, but the friendship and imagination kind, not the remove-your-butt kind."
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "witchhat_purple"
+	item_state = "witchhat_purple"
+
+/obj/item/clothing/head/witchhat_mint
+	name = "mint witch hat"
+	desc = "Magical, but the friendship and imagination kind, not the remove-your-butt kind."
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "witchhat_mint"
+	item_state = "witchhat_mint"

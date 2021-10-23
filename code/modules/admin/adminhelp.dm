@@ -230,7 +230,7 @@
 
 /proc/do_admin_pm(var/C, var/mob/user) //C is a passed ckey
 
-	var/mob/M = whois_ckey_to_mob_reference(C)
+	var/mob/M = ckey_to_mob(C)
 	if(M)
 		if (!( ismob(M) ))
 			return
@@ -244,7 +244,7 @@
 
 		var/t = input("Message:", text("Private message to [admin_key(M.client, 1)]")) as null|text
 
-		M = whois_ckey_to_mob_reference(C)
+		M = ckey_to_mob(C)
 		user = user_client.mob
 
 		if(!(user && user.client && user.client.holder && (user.client.holder.rank in list("Host", "Coder"))))

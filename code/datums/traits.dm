@@ -552,6 +552,16 @@
 	isPositive = 1
 	category = "trinkets"
 
+/obj/trait/bald
+	name = "Bald (0) \[Trinkets\]"
+	cleanName = "Bald"
+	desc = "Start your shift with a wig instead of hair. I'm sure no one will be able to tell."
+	id = "bald"
+	icon_state = "placeholder"
+	points = 0
+	isPositive = 1
+	category = "trinkets"
+
 // Skill - White Border
 
 /obj/trait/smoothtalker
