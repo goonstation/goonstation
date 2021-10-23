@@ -13,6 +13,18 @@ proc/check_for_radio_jammers(atom/source)
 		freq, \
 		("net_id" in src.vars) ? src.vars["net_id"] : null, \
 		hascall(src, "receive_signal") ? "receive_signal" : null, \
+		FALSE, \
+		null, /*("id_tag" in src.vars) ? "[src.vars["id_tag"]]" : null, */\
+		FALSE \
+	))
+
+#define MAKE_SENDER_RADIO_PACKET_COMPONENT(conn_id, freq) src._AddComponent(list( \
+		/datum/component/packet_connected/radio, \
+		conn_id, \
+		freq, \
+		("net_id" in src.vars) ? src.vars["net_id"] : null, \
+		null, \
+		TRUE, \
 		null, /*("id_tag" in src.vars) ? "[src.vars["id_tag"]]" : null, */\
 		FALSE \
 	))

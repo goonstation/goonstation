@@ -6,8 +6,9 @@
 	var/datum/packet_network/network
 	var/receive_packet_proc = null
 	var/connection_id
+	var/send_only = FALSE
 
-/datum/component/packet_connected/Initialize(connection_id, datum/packet_network/network, address=null, receive_packet_proc=null, net_tags=null, all_hearing=FALSE)
+/datum/component/packet_connected/Initialize(connection_id, datum/packet_network/network, address=null, receive_packet_proc=null, send_only=FALSE, net_tags=null, all_hearing=FALSE)
 	if(!istype(parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
 	src.connection_id = connection_id
@@ -20,10 +21,11 @@
 		src.net_tags = net_tags
 	else if(!isnull(net_tags))
 		src.net_tags = list(net_tags)
+	src.send_only = send_only
 	src.all_hearing = all_hearing
-	src.network?.register(src)
+	if(!src.send_only) src.network?.register(src)
 
-/datum/component/packet_connected/CheckDupeComponent(datum/component/packet_connected/C, connection_id, datum/packet_network/network, address=null, receive_packet_proc=null, net_tags=null, all_hearing=FALSE)
+/datum/component/packet_connected/CheckDupeComponent(datum/component/packet_connected/C, connection_id, datum/packet_network/network, address=null, receive_packet_proc=null, send_only=FALSE, net_tags=null, all_hearing=FALSE)
 	. = !isnull(C?.connection_id) && C.connection_id == src.connection_id || \
 			!isnull(connection_id) && connection_id == src.connection_id
 	if(.)
@@ -33,49 +35,60 @@
 		src.all_hearing = C.all_hearing
 		src.receive_packet_proc = C.receive_packet_proc
 		src.network = C.network
-		src.network?.register(src)
+		src.send_only = send_only
+		if(src.send_only)
+			src.network?.register(src)
 
 /datum/component/packet_connected/proc/update_network(datum/packet_network/new_network)
 	if(new_network == src.network)
 		return
-	src.network?.unregister(src)
+	if(!src.send_only) src.network?.unregister(src)
 	src.network = new_network
-	src.network?.register(src)
+	if(!src.send_only) src.network?.register(src)
+
+/datum/component/packet_connected/proc/update_send_only(new_send_only)
+	if(send_only == new_send_only)
+		return
+	src.send_only = new_send_only
+	if(src.send_only)
+		src.network?.register(src)
+	else
+		src.network?.unregister(src)
 
 /datum/component/packet_connected/proc/update_address(new_address)
 	if(new_address == src.address)
 		return
-	src.network?.unregister(src)
+	if(!src.send_only) src.network?.unregister(src)
 	src.address = new_address
-	src.network?.register(src)
+	if(!src.send_only) src.network?.register(src)
 
 /datum/component/packet_connected/proc/add_tag(new_tag)
 	if(new_tag in src.net_tags)
 		return
-	src.network?.unregister(src)
+	if(!src.send_only) src.network?.unregister(src)
 	if(isnull(src.net_tags))
 		src.net_tags = list()
 	src.net_tags |= new_tag
-	src.network?.register(src)
+	if(!src.send_only) src.network?.register(src)
 
 /datum/component/packet_connected/proc/remove_tag(old_tag)
 	if(!(old_tag in src.net_tags))
 		return
-	src.network?.unregister(src)
+	if(!src.send_only) src.network?.unregister(src)
 	src.net_tags -= old_tag
-	src.network?.register(src)
+	if(!src.send_only) src.network?.register(src)
 
 /datum/component/packet_connected/proc/clear_tags()
-	src.network?.unregister(src)
+	if(!src.send_only) src.network?.unregister(src)
 	src.net_tags = null
-	src.network?.register(src)
+	if(!src.send_only) src.network?.register(src)
 
 /datum/component/packet_connected/proc/update_all_hearing(new_all_hearing)
 	if(new_all_hearing == src.all_hearing)
 		return
-	src.network?.unregister(src)
+	if(!src.send_only) src.network?.unregister(src)
 	src.all_hearing = new_all_hearing
-	src.network?.register(src)
+	if(!src.send_only) src.network?.register(src)
 
 /datum/component/packet_connected/disposing()
 	src.network?.unregister(src)
@@ -94,10 +107,10 @@
 
 /datum/component/packet_connected/radio
 
-/datum/component/packet_connected/radio/Initialize(connection_id, network, address=null, receive_packet_proc=null, net_tags=null, all_hearing=FALSE)
+/datum/component/packet_connected/radio/Initialize(connection_id, network, address=null, receive_packet_proc=null, send_only=FALSE, net_tags=null, all_hearing=FALSE)
 	if(isnum(network) || istext(network))
 		network = radio_controller.get_frequency(network).packet_network
-	. = ..(connection_id, network, address, receive_packet_proc, net_tags, all_hearing)
+	. = ..(connection_id, network, address, receive_packet_proc, send_only, net_tags, all_hearing)
 	RegisterSignal(parent, COMSIG_MOVABLE_POST_RADIO_PACKET, .proc/send_radio_packet)
 
 /datum/component/packet_connected/radio/proc/send_radio_packet(atom/movable/sender, datum/signal/signal, range=null, frequency_or_id=null)
