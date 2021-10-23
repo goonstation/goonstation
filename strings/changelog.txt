@@ -1,4 +1,9 @@
 
+(t)sat oct 23 21
+(u)Walpvrgis
+(p)6218
+(e)🎨|sprites
+(*)Station floor tiles have been resprited (and the floors available in the Floor and Wall Planner have been updated to match). Lemme know if you notice any weirdness with them!
 (t)fri oct 22 21
 (u)Flappybat
 (p)6338
