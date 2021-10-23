@@ -649,6 +649,23 @@
 		if (M.client.holder && !M.client.only_local_looc && !M.client.player_mode)
 			recipients += M.client
 
+	var looc_style = ""
+	if (src.client.holder && !src.client.stealth)
+		if (src.client.holder.level == LEVEL_BABBY)
+			looc_style = "color: #4cb7db;"
+		else
+			looc_style = "color: #cd6c4c;"
+	else if (src.client.is_mentor() && !src.client.stealth)
+		looc_style = "color: #a24cff;"
+
+	var/image/chat_maptext/looc_text = null
+	looc_text = make_chat_maptext(src, "\[LOOC: [msg]]", looc_style)
+	if(looc_text)
+		looc_text.measure(src.client)
+		for(var/image/chat_maptext/I in src.chat_text.lines)
+			if(I != looc_text)
+				I.bump_up(looc_text.measured_height)
+
 	phrase_log.log_phrase("looc", msg)
 	for (var/client/C in recipients)
 		// DEBUGGING
@@ -681,6 +698,9 @@
 			rendered = "<span class='adminHearing' data-ctx='[C.chatOutput.getContextFlags()]'>[rendered]</span>"
 
 		boutput(C, rendered)
+		var/mob/M = C.mob
+		if(speechpopups && M.chat_text && !C.preferences?.flying_chat_hidden)
+			looc_text.show_to(C)
 
 	logTheThing("ooc", src, null, "LOOC: [msg]")
 

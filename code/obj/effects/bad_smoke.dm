@@ -26,7 +26,8 @@
 			if (prob(25))
 				M.changeStatus("stunned", 1 SECOND)
 			M.take_oxygen_deprivation(1)
-			M.emote("cough")
+			if(!ON_COOLDOWN(M, "bad_smoke_cough", 0.2 SECONDS))
+				M.emote("cough")
 	return
 
 /obj/effects/bad_smoke/HasEntered(mob/living/carbon/M as mob )

@@ -317,7 +317,7 @@
 			if(targetTurf)
 				target = targetTurf
 			else
-				target = get_edge_target_turf(src, src.dir)
+				target = get_steps(start, src.dir, 3)
 
 			if(ismob(loaded))
 				var/mob/M = loaded

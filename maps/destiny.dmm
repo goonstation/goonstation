@@ -3337,6 +3337,13 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/door/airlock/pyro/command{
+	name = "Bridge"
+	},
+/obj/firedoor_spawn,
 /obj/machinery/door/poddoor/blast{
 	density = 0;
 	dir = 4;
@@ -3346,13 +3353,6 @@
 	name = "Bridge Lockdown Door";
 	opacity = 0
 	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/machinery/door/airlock/pyro/command{
-	name = "Bridge"
-	},
-/obj/firedoor_spawn,
 /obj/access_spawn/heads,
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -5205,7 +5205,7 @@
 	},
 /area/station/science/research_director)
 "auu" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
 	},
 /obj/disposalpipe/segment/morgue,
@@ -9549,18 +9549,10 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "aMd" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/decal/tile_edge/line/white{
 	icon_state = "line3"
 	},
-/obj/stool/chair/office/purple{
-	dir = 8
-	},
-/obj/landmark/start{
-	name = "Scientist"
-	},
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 1
 	},
@@ -10006,6 +9998,15 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/stool/chair/office/purple{
+	dir = 1
+	},
+/obj/landmark/start{
+	name = "Scientist"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 8
 	},
@@ -10030,13 +10031,11 @@
 	dir = 4;
 	icon_state = "line3"
 	},
-/obj/machinery/computer/telescope{
-	dir = 4
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	icon_state = "0-4"
+	icon_state = "0-2"
 	},
+/obj/machinery/computer/telescope,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -18841,9 +18840,6 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
 "cku" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
 /obj/decal/tile_edge/line/white{
 	icon_state = "line3"
 	},
@@ -22587,14 +22583,6 @@
 	},
 /area/station/science/teleporter)
 "dVw" = (
-/obj/machinery/door/poddoor/blast{
-	density = 0;
-	icon_state = "bdoormid0";
-	id = "scienceteleporter";
-	layer = 4;
-	name = "Teleporter Blast Shield";
-	opacity = 0
-	},
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -22607,6 +22595,14 @@
 	req_access_txt = null
 	},
 /obj/firedoor_spawn,
+/obj/machinery/door/poddoor/blast{
+	density = 0;
+	icon_state = "bdoormid0";
+	id = "scienceteleporter";
+	layer = 4;
+	name = "Teleporter Blast Shield";
+	opacity = 0
+	},
 /obj/access_spawn/research,
 /turf/simulated/floor/stairs{
 	dir = 4;
@@ -40495,15 +40491,6 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/barber_shop)
 "nvG" = (
-/obj/machinery/door/poddoor/blast{
-	density = 0;
-	dir = 4;
-	icon_state = "bdoormid0";
-	id = "eva_shield";
-	layer = 4;
-	name = "E.V.A. Security Shield";
-	opacity = 0
-	},
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -40517,8 +40504,17 @@
 	dir = 1;
 	name = "EVA Storage"
 	},
-/obj/firedoor_spawn,
 /obj/access_spawn/eva,
+/obj/firedoor_spawn,
+/obj/machinery/door/poddoor/blast{
+	density = 0;
+	dir = 4;
+	icon_state = "bdoormid0";
+	id = "eva_shield";
+	layer = 4;
+	name = "E.V.A. Security Shield";
+	opacity = 0
+	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/storage/eva)
 "nvQ" = (
@@ -40690,6 +40686,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	name = "Atmospherics"
+	},
+/obj/firedoor_spawn,
 /obj/machinery/door/poddoor/blast{
 	density = 0;
 	dir = 4;
@@ -40699,10 +40699,6 @@
 	name = "Atmospherics Security Shield";
 	opacity = 0
 	},
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	name = "Atmospherics"
-	},
-/obj/firedoor_spawn,
 /obj/access_spawn/engineering,
 /turf/simulated/floor/black,
 /area/station/atmos/highcap_storage)
@@ -47950,8 +47946,8 @@
 /obj/item/sheet/steel{
 	amount = 50
 	},
-/obj/item/parts/robot_parts/arm/right,
-/obj/item/parts/robot_parts/arm/right,
+/obj/item/parts/robot_parts/arm/right/standard,
+/obj/item/parts/robot_parts/arm/right/standard,
 /obj/item/storage/box/costume/robuddy,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
@@ -51864,17 +51860,6 @@
 	},
 /turf/simulated/floor/red/checker,
 /area/station/security/main)
-"tKO" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/decal/tile_edge/line/white{
-	icon_state = "line3"
-	},
-/turf/simulated/floor/orangeblack/side/white{
-	dir = 1
-	},
-/area/station/science/teleporter)
 "tKP" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -114073,7 +114058,7 @@ nor
 aPs
 qrb
 rhL
-tKO
+dKH
 tUb
 vsD
 biV

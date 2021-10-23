@@ -299,6 +299,7 @@
 	name = "Radio Headset"
 	desc = "A radio headset that is also capable of communicating over... wait, isn't that frequency illegal?"
 	icon_state = "headset"
+	chat_class = RADIOCL_SYNDICATE
 	secure_frequencies = list("z" = R_FREQ_SYNDICATE)
 	secure_classes = list(RADIOCL_SYNDICATE)
 	protected_radio = 1

@@ -281,6 +281,10 @@
 				return
 			if (istype(I,/obj/item/seed)) src.seeds.Remove(I)
 			else src.extractables.Remove(I)
+			if(I == src.splicing1)
+				src.splicing1 = null
+			if(I == src.splicing2)
+				src.splicing2 = null
 			I.set_loc(src.loc)
 			usr.put_in_hand_or_eject(I) // try to eject it into the users hand, if we can
 			src.updateUsrDialog()

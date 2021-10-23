@@ -358,3 +358,31 @@
 		return 0
 	else
 		return ((dead - observer) / all)
+
+/// Associative list of role defines and their respective client preferences.
+var/list/roles_to_prefs = list(
+	ROLE_TRAITOR = "be_traitor",
+	ROLE_SPY_THIEF = "be_spy",
+	ROLE_NUKEOP = "be_syndicate",
+	ROLE_VAMPIRE = "be_vampire",
+	ROLE_GANG_LEADER = "be_gangleader",
+	ROLE_WIZARD = "be_wizard",
+	ROLE_CHANGELING = "be_changeling",
+	ROLE_WEREWOLF = "be_werewolf",
+	ROLE_BLOB = "be_blob",
+	ROLE_WRAITH = "be_wraith",
+	ROLE_HEAD_REV = "be_revhead",
+	ROLE_CONSPIRATOR = "be_conspirator",
+	ROLE_ARCFIEND = "be_arcfiend",
+	ROLE_FLOCKMIND = "be_flock",
+	ROLE_MISC = "be_misc"
+	)
+
+/**
+  * Return the name of a preference variable for the given role define.
+  *
+  * Arguments:
+  * * role - role to return a client preference for.
+  */
+/proc/get_preference_for_role(var/role)
+	return roles_to_prefs[role]

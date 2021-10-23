@@ -25,13 +25,8 @@
 
 /obj/machinery/crusher/HasEntered(atom/movable/AM, atom/OldLoc)
 	. = ..()
-	if(istype(AM,/obj/item/scrap) || istype(AM, /obj/fluid) || istype(AM, /obj/decal) || isobserver(AM) || isintangible(AM) || istype(AM, /obj/machinery/conveyor) || istype(AM,/obj/hologram))
+	if(AM.flags & UNCRUSHABLE)
 		return
-
-	if(istype(AM,/mob/wraith))
-		var/mob/wraith/W = AM
-		if(!W.haunting)
-			return
 
 	if(!(AM.temp_flags & BEING_CRUSHERED))
 		actions.start(new /datum/action/bar/crusher(AM), src)
