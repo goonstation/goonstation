@@ -267,7 +267,7 @@
 //Find a specific record by key.
 /obj/machinery/computer/cloning/proc/find_record(var/find_key)
 	var/selected_record = null
-	for(var/datum/db_record/R in src.records)
+	for(var/datum/db_record/R as anything in src.records)
 		if (R["ckey"] == find_key)
 			selected_record = R
 			break

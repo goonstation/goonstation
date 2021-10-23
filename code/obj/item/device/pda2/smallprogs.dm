@@ -40,7 +40,7 @@
 		if (!src.master || !src.master.owner)
 			return 0
 
-		for(var/datum/db_record/B in data_core.bank.records)
+		for(var/datum/db_record/B as anything in data_core.bank.records)
 			if(lowertext(B["name"]) == lowertext(src.master.owner))
 				src.bank_record = B
 				return 1
@@ -60,7 +60,7 @@
 		dat += "<h4>Crew Manifest</h4>"
 		dat += "Entries cannot be modified from this terminal.<br><br>"
 
-		for (var/datum/db_record/t in data_core.general.records)
+		for (var/datum/db_record/t as anything in data_core.general.records)
 			dat += "[t["name"]] - [t["rank"]]<br>"
 		dat += "<br>"
 
@@ -982,7 +982,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 				p.icon_state = "paper_caution"
 
 
-/*			for(var/datum/db_record/S in data_core.security.records) //there is probably a better way of doing this too
+/*			for(var/datum/db_record/S as anything in data_core.security.records) //there is probably a better way of doing this too
 				if(S["name"] == ticket_target)
 					if(S["notes"] == "No notes.")
 						S["notes"] = ticket_text

@@ -133,7 +133,7 @@
 					return
 
 				src.active_general = check
-				if (data_core.general.records.Find(check))
+				if (data_core.general.has_record(check))
 					src.active_medical = data_core.medical.find_record("id", src.active_general["id"])
 					if(!src.active_medical)
 						data_core.medical.find_record("name", src.active_general["name"])
@@ -162,7 +162,7 @@
 
 						//Okay, let's put together something to print.
 						var/info = "<center><B>Medical Record</B></center><br>"
-						if (istype(src.active_general, /datum/db_record) && data_core.general.records.Find(src.active_general))
+						if (istype(src.active_general, /datum/db_record) && data_core.general.has_record(src.active_general))
 							info += {"
 							Full Name: [src.active_general["full_name"]] ID: [src.active_general["id"]]
 							<br><br>Sex: [src.active_general["sex"]]
@@ -175,7 +175,7 @@
 							<br><br>Mental Status: [src.active_general["m_stat"]]"}
 						else
 							info += "<b>General Record Lost!</b><br>"
-						if ((istype(src.active_medical, /datum/db_record) && data_core.medical.records.Find(src.active_medical)))
+						if ((istype(src.active_medical, /datum/db_record) && data_core.medical.has_record(src.active_medical)))
 							info += {"
 							<br><br><center><b>Medical Data</b></center><br>
 							<br><br>Current Health: [src.active_medical["h_imp"]]
@@ -496,7 +496,7 @@
 					return
 
 				var/datum/db_record/result = null
-				for(var/datum/db_record/R in data_core.general.records)
+				for(var/datum/db_record/R as anything in data_core.general.records)
 					if((ckey(R["name"]) == searchText) || (ckey(R["dna"]) == searchText) || (ckey(R["id"]) == searchText) || (ckey(R["fingerprint"]) == searchText))
 						result = R
 						break
@@ -685,7 +685,7 @@
 			<br>\[07]Physical Status: [src.active_general["p_stat"]]
 			<br>\[08]Mental Status: [src.active_general["m_stat"]]"}
 
-			if ((istype(src.active_medical, /datum/db_record) && data_core.medical.records.Find(src.active_medical)))
+			if ((istype(src.active_medical, /datum/db_record) && data_core.medical.has_record(src.active_medical)))
 				view_string += {"<br><center><b>Medical Data:</b></center>
 				<br>\[__]Current Health: [src.active_medical["h_imp"]]
 				<br>\[09]Blood Type: [src.active_medical["bioHolder.bloodType"]]

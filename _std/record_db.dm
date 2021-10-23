@@ -9,6 +9,9 @@
 			for(var/key in index_keys)
 				indices[key] = list()
 
+	proc/has_record(datum/db_record/record)
+		return record.get_db() == src
+
 	proc/find_records(key, value)
 		RETURN_TYPE(/list/datum/db_record)
 		if(key in indices)

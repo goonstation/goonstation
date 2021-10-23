@@ -400,7 +400,7 @@
 
 	var/payroll = 0
 	var/totalfunds = wagesystem.station_budget + wagesystem.research_budget + wagesystem.shipping_budget
-	for(var/datum/db_record/R in data_core.bank.records)
+	for(var/datum/db_record/R as anything in data_core.bank.records)
 		payroll += R["wage"]
 
 	var/dat = {"<B>Budget Variables:</B>

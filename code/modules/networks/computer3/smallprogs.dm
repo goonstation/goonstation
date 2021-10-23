@@ -1352,7 +1352,7 @@ file_save - Save file to local disk."}
 
 		var/dat = "Crew Manifest<br>Entries cannot be modified from this terminal.<br>"
 
-		for (var/datum/db_record/t in data_core.general.records)
+		for (var/datum/db_record/t as anything in data_core.general.records)
 			dat += "[t["name"]] - [t["rank"]]<br>"
 
 		src.master.temp = null

@@ -548,7 +548,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			if (isnull(ptext) || !length(ptext) || get_dist(usr,src) > 1)
 				return
 			var/datum/db_record/R
-			for (var/datum/db_record/rec in data_core.general.records)
+			for (var/datum/db_record/rec as anything in data_core.general.records)
 				if ((ckey(rec["name"]) == ckey(ptext) || rec["id"] == ptext))
 					R = rec
 					break

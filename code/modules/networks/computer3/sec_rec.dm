@@ -251,7 +251,7 @@
 
 				src.active_general = check
 				src.active_secure = null
-				if (data_core.general.records.Find(check))
+				if (data_core.general.has_record(check))
 					src.active_secure = data_core.security.find_record("id", src.active_general["id"])
 					if(!src.active_secure)
 						data_core.security.find_record("name", src.active_general["name"])
@@ -526,7 +526,7 @@
 					return
 
 				var/datum/db_record/result = null
-				for(var/datum/db_record/R in data_core.general.records)
+				for(var/datum/db_record/R as anything in data_core.general.records)
 					if((ckey(R["name"]) == searchText) || (ckey(R["dna"]) == searchText) || (ckey(R["id"]) == searchText) || (ckey(R["fingerprint"]) == searchText))
 						result = R
 						break
@@ -653,7 +653,7 @@
 			<br>\[__]Physical Status: [src.active_general["p_stat"]]
 			<br>\[__]Mental Status: [src.active_general["m_stat"]]"}
 
-			if ((istype(src.active_secure, /datum/db_record) && data_core.security.records.Find(src.active_secure)))
+			if ((istype(src.active_secure, /datum/db_record) && data_core.security.has_record(src.active_secure)))
 				view_string +={"
 				<br><center><b>Security Data</b></center>
 				<br>\[08]<b>Criminal Status:</b> [src.active_secure["criminal"]]
@@ -761,7 +761,7 @@
 
 			//Okay, let's put together something to print.
 			var/info = "<center><B>Security Record</B></center><br>"
-			if (istype(src.active_general, /datum/db_record) && data_core.general.records.Find(src.active_general))
+			if (istype(src.active_general, /datum/db_record) && data_core.general.has_record(src.active_general))
 				info += {"
 				Full Name: [src.active_general["full_name"]] ID: [src.active_general["id"]]
 				<br><br>Sex: [src.active_general["sex"]]
@@ -774,7 +774,7 @@
 				<br><br>Mental Status: [src.active_general["m_stat"]]"}
 			else
 				info += "<b>General Record Lost!</b><br>"
-			if ((istype(src.active_secure, /datum/db_record) && data_core.security.records.Find(src.active_secure)))
+			if ((istype(src.active_secure, /datum/db_record) && data_core.security.has_record(src.active_secure)))
 				info += {"
 				<br><br><center><b>Security Data</b></center><br>
 				<br>Criminal Status: [src.active_secure["criminal"]]
@@ -810,7 +810,7 @@
 			else
 				printRecord += "title=Security Record"
 				printRecord += "Security Record"
-				if (istype(src.active_general, /datum/db_record) && data_core.general.records.Find(src.active_general))
+				if (istype(src.active_general, /datum/db_record) && data_core.general.has_record(src.active_general))
 
 					printRecord += "Full Name: [src.active_general["full_name"]] ID: [src.active_general["id"]]"
 					printRecord += "Sex: [src.active_general["sex"]]"
@@ -824,7 +824,7 @@
 				else
 					printRecord += "General Record Lost!"
 
-				if ((istype(src.active_secure, /datum/db_record) && data_core.security.records.Find(src.active_secure)))
+				if ((istype(src.active_secure, /datum/db_record) && data_core.security.has_record(src.active_secure)))
 
 					printRecord += "Security Data"
 					printRecord += "Criminal Status: [src.active_secure["criminal"]]"

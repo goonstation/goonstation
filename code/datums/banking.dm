@@ -160,7 +160,7 @@
 		// if (station_budget < 1) return // we don't have any money so don't bother!
 		// technically this can be 0 now with payday stipends
 
-		for(var/datum/db_record/t in data_core.bank.records)
+		for(var/datum/db_record/t as anything in data_core.bank.records)
 			if(station_budget >= t["wage"])
 				t["current_money"] += t["wage"]
 				station_budget -= t["wage"]
@@ -516,7 +516,7 @@
 			if (src.authenticated)
 
 				var/payroll = 0
-				for(var/datum/db_record/R in data_core.bank.records)
+				for(var/datum/db_record/R as anything in data_core.bank.records)
 					payroll += R["wage"]
 				var/surplus = round(wagesystem.payroll_stipend - payroll)
 
@@ -561,7 +561,7 @@
 				<tbody>
 				"}
 
-				for(var/datum/db_record/R in data_core.bank.records)
+				for(var/datum/db_record/R as anything in data_core.bank.records)
 					dat += {"
 					<tr>
 						<th class='l'><a href='?src=\ref[src];Fname=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a> [R["name"]]</th>
@@ -583,7 +583,7 @@
 		if(..())
 			return
 		var/usr_is_robot = issilicon(usr) || isAIeye(usr)
-		if (!(src.active1 in data_core.bank.records))
+		if (!data_core.bank.has_record(src.active1))
 			src.active1 = null
 		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (usr_is_robot))
 			src.add_dialog(usr)
