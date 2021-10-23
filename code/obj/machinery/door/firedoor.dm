@@ -30,7 +30,7 @@
 	opacity = 0
 	density = 0
 	var/nextstate = null
-	var/datum/radio_frequency/control_frequency = FREQ_ALARM
+	var/control_frequency = FREQ_ALARM
 	var/image/welded_image = null
 	var/welded_icon_state = "welded"
 	has_crush = 0
@@ -85,6 +85,8 @@
 
 // listen for fire alert from firealarm
 /obj/machinery/door/firedoor/receive_signal(datum/signal/signal)
+	if(!("address_tag" in signal.data) && !("address_1" in signal.data))
+		return
 	if(signal.data["type"] == "Fire")
 		if(signal.data["alert"] == "fire")
 			set_closed()
