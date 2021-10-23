@@ -300,7 +300,7 @@
 	icon_state = "moonshine"
 	heal_amt = 1
 	rc_flags = RC_FULLNESS
-	initial_volume = 250
+	initial_volume = 125
 	initial_reagents = "moonshine"
 
 /obj/item/reagent_containers/food/drinks/curacao
