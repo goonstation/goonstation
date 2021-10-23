@@ -66,7 +66,8 @@
 	for(var/datum/component/packet_connected/radio/comp as anything in target.GetComponents(/datum/component/packet_connected/radio))
 		frequency = comp.get_frequency()
 		var/freq_name = comp.connection_id ? uppertext(comp.connection_id + "_FREQ") : "FREQ[freq_num++]"
-		boutput(user, "<span class='alert'>[freq_name]#[frequency]</span>")
+		var/RX = comp.send_only ? "" : " RX"
+		boutput(user, "<span class='alert'>[freq_name]#[frequency] TX[RX]</span>")
 
 	//Powernet Test Block
 	//If we have a net_id but no wireless frequency, we're probably a powernet device
