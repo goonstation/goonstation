@@ -83,42 +83,6 @@
 		src.pixel_y = rand(-8, 8)
 		src.pixel_x = rand(-9, 9)
 
-/obj/item/paper/pooled()
-
-	..()
-	name = "paper"
-	info = 0
-	src.icon_state = "paper_blank"
-	health = 10
-
-/obj/item/paper/unpooled()
-
-	..()
-	name = initial(name)
-	info = initial(info)
-	icon_state = initial(icon_state)
-	health = initial(health)
-	sealed = initial(sealed)
-
-
-	if (src.reagents)
-		src.reagents.clear_reagents()
-		src.reagents.add_reagent("paper", 10)
-	else
-		src.create_reagents(10)
-		reagents.add_reagent("paper", 10)
-
-	if (!src.offset)
-		return
-	else
-		src.pixel_y = rand(-8, 8)
-		src.pixel_x = rand(-9, 9)
-	SPAWN_DBG(0)
-		if (src.info && src.icon_state == "paper_blank")
-			icon_state = "paper"
-
-	return
-
 /obj/item/paper/examine(mob/user)
 	. = ..()
 	ui_interact(user)
@@ -139,7 +103,7 @@
 		src.examine(user)
 	else
 		var/fold = alert("What would you like to fold [src] into?",,"Paper hat","Paper plane","Paper ball")
-		if(src.pooled) //It's possible to queue multiple of these menus before resolving any.
+		if(src.disposed) //It's possible to queue multiple of these menus before resolving any.
 			return
 		user.u_equip(src)
 		if (fold == "Paper hat")
@@ -159,7 +123,7 @@
 			F.old_icon_state = src.icon_state
 			user.put_in_hand_or_drop(F)
 
-		pool(src)
+		qdel(src)
 
 /obj/item/paper/attack_ai(var/mob/AI as mob)
 	var/mob/living/silicon/ai/user
@@ -362,7 +326,7 @@
 		var/obj/item/paper_mask/M = new /obj/item/paper_mask(get_turf(src.loc))
 		user.put_in_hand_or_drop(M)
 		user.u_equip(src)
-		pool(src)
+		qdel(src)
 	else
 		// cut paper?  the sky is the limit!
 		ui_interact(user)	// The other ui will be created with just read mode outside of this
@@ -1181,7 +1145,7 @@ as it may become compromised.
 	else
 		if (src.amount >= 1 && user) //Wire: Fix for Cannot read null.loc (&& user)
 			src.amount--
-			var/obj/item/paper/P = unpool(/obj/item/paper)
+			var/obj/item/paper/P = new /obj/item/paper
 			P.set_loc(src)
 			user.put_in_hand_or_drop(P)
 			if (rand(1,100) == 13)
@@ -1458,7 +1422,7 @@ as it may become compromised.
 		eat_twitch(M)
 		var/obj/item/paper/P = src
 		user.u_equip(P)
-		pool(P)
+		qdel(P)
 	else
 		..()
 
@@ -1617,6 +1581,38 @@ exposed to overconfident outbursts on the part of individuals unqualifed to embo
 	icon_state = "postit-writing"
 	info = {"-non-stable battery; keeps popping on use.<br>-design work (not final)<br>-battery capacity??? maybe?<br>Cheers,<br>O"}
 
+/obj/item/paper/bee_love_letter //For lesbeeans prefab
+	name = "bee love letter"
+	desc = "This smells as sweet as the prose on it."
+	icon_state = "paper_caution"
+	info = {"<i>You have no hope of deciphering the weird marks on this paper, nor are you entirely certain it's even actual writing, but the splotchy heart with prints of bee pretarsi at the bottom kindles a warmth deep within your heart.</i>"}
+
+/obj/item/paper/folded/ball/bee_farm_note //Idem, let's see if anyone thinks to unfold this
+	name = "wadded-up note"
+	desc = "A crumpled, chewed-on wad of paper. A bee appears to have tried eating this."
+	info = {"Janus, I can see why you're so fond of these two and spend so much time on them. It's adorable watching those two together at work, and I think we're seeing new and unique behaviour here!<br><br>
+But please, please do something about the fact it's hanging on by just the data cables, they're not remotely capable of tugging this kind of mass.<br><br>
+That clump of dirt has a metal substrate, we can just ask Rachid to weld it to the station while we keep the lovebirds at a safe distance. A little wrangling never hurt a bee."}
+
+/obj/item/paper/synd_lab_note
+	name = "scribbled note"
+	info = {"So, we've been out here for a week already, and our insurmountable task isn't looking any easier.<br><br>
+	My colleague and I were asked to figure out a way to refine telecrystals into a version usable in our uplinks, but so far, no luck.
+	We were given this 'state of the art' facility to figure out how to make this work, when I keep saying that this fundamentally will not.
+	These damn crystals are a pain in the ass to refine normally, when we have a goddamn mining station built to do JUST that!<br>
+	And, we were hardly given proper lab equipment.<br>
+	We're stuck with only a few flasks, along with some shitty prototype chemi-something or other, which quite frankly we'd be better off with another pair of beakers, fuck, it can't even produce chemicals!
+	I'm trying anything at this point, even port, of all things.<br><br>
+	I'd better get back to it, I'm not being paid by the hour here."}
+
+/obj/item/paper/synd_lab_note2
+	name = "scribbled note"
+	info = {"I've been working on these faux, exploding 'telecrystals' for a while now, and I'm starting to think I got the better end of a rotten deal.<br><br>
+	I've been, as of yet, completely unable to emulate any of the teleporting aspects of regular telecrystals, which means these things can certainly feel fake if you give 'em enough testing.
+	Needless to say, I'm not a fan.<br>
+	I mean, just making these telecrystals the right color is a pain in the ass, requiring this bulky machine I hardly know how to operate take HOURS per crystal!<br><br>
+	Well, here's to hoping infusing these things with black powder won't blow up in my face."}
+
 /obj/item/paper/recipe_tandoori
 	name = "stained recipe clipping"
 	desc = "It's creased and worn, and smells a little like dried blood."
@@ -1640,3 +1636,4 @@ exposed to overconfident outbursts on the part of individuals unqualifed to embo
 	desc = "An old recipe clipped from a lifestyle magazine for space station chefs. Aw, the color's faded from the layout..."
 	icon_state = "paper_caution"
 	info = {"<i>Facing threats from the crew for putting pineapple on your pizzas and letting your chicken corpses spill out into the hall? Turn those trials into smiles when you serve up this scrumptious dish!</i><br><h3>Chicken Pineapple Curry</h3><br><h4>Ingredients:</h4><br> -a bag of curry powder <br> -some fresh chicken meat <br> -a tasty ring of pineapple <br> -a nice spicy chili pepper <br><br><i>With your oven, you don't even have to mix! Just add everything, set the heat to low, and let it all cook for 7 seconds!</i>"}
+

@@ -542,7 +542,7 @@
 			new loot_baton_type(Tsec)
 
 		if (prob(50))
-			new /obj/item/parts/robot_parts/arm/left(Tsec)
+			new /obj/item/parts/robot_parts/arm/left/standard(Tsec)
 
 		elecflash(src, radius=1, power=3, exclude_center = 0)
 		qdel(src)

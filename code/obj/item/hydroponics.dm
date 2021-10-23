@@ -222,7 +222,7 @@
 	var/mob/living/carbon/human/H = target
 
 	if(!active)
-		src.visible_message("<span class='notify'>[user] gently taps [target] with the turned off [src].</span>")
+		src.visible_message("<span class='notice'>[user] gently taps [target] with the turned off [src].</span>")
 
 	if(active && prob(35))
 		gibs(target.loc, blood_DNA=H.bioHolder.Uid, blood_type=H.bioHolder.bloodType, headbits=FALSE, source=H)
@@ -400,10 +400,10 @@
 			// 	S = new /obj/item/seed(src.loc,0)
 			// S.generic_seed_setup(selected)
 			if (selected.unique_seed)
-				S = unpool(selected.unique_seed)
+				S = new selected.unique_seed
 				S.set_loc(src.loc)
 			else
-				S = unpool(/obj/item/seed)
+				S = new /obj/item/seed
 				S.set_loc(src.loc)
 				S.removecolor()
 			S.generic_seed_setup(selected)

@@ -597,6 +597,11 @@
 
 	if (src.traitHolder && src.traitHolder.hasTrait("pawnstar"))
 		trinket = null //You better stay null, you hear me!
+	else if (src.traitHolder && src.traitHolder.hasTrait("bald"))
+		trinket = src.create_wig()
+		src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
+		src.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
+		src.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
 	else if (src.traitHolder && src.traitHolder.hasTrait("loyalist"))
 		trinket = new/obj/item/clothing/head/NTberet(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("petasusaphilic"))
@@ -694,7 +699,7 @@
 		if (src.traitHolder && src.traitHolder.hasTrait("pawnstar"))
 			cashModifier = 1.25
 
-		var/obj/item/spacecash/S = unpool(/obj/item/spacecash)
+		var/obj/item/spacecash/S = new /obj/item/spacecash
 		S.setup(src,wagesystem.jobs[JOB.name] * cashModifier)
 
 		if (isnull(src.get_slot(slot_r_store)))

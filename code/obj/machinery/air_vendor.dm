@@ -29,7 +29,7 @@ obj/machinery/air_vendor
 
 	New()
 		..()
-		gas_prototype = unpool(/datum/gas_mixture)
+		gas_prototype = new /datum/gas_mixture
 
 	proc/update_icon()
 		if(status & BROKEN)
@@ -68,7 +68,7 @@ obj/machinery/air_vendor
 			boutput(user, "<span class='notice'>You insert [W].</span>")
 			user.u_equip(W)
 			W.dropped()
-			pool(W)
+			qdel(W)
 			src.updateUsrDialog()
 		else if (istype(W, /obj/item/tank))
 			if(!src.holding)
@@ -175,7 +175,7 @@ obj/machinery/air_vendor
 
 			if (href_list["return_credits"])
 				if (src.credits > 0)
-					var/obj/item/spacecash/returned = unpool(/obj/item/spacecash)
+					var/obj/item/spacecash/returned = new /obj/item/spacecash
 					returned.setup(src.loc, src.credits)
 
 					usr.put_in_hand_or_eject(returned)

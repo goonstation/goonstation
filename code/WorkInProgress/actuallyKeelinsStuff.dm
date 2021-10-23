@@ -299,7 +299,7 @@ Returns:
 		src.underlays += alphaMask
 		src.underlays += compImage
 
-		src.filters += filter(type="layer", render_source="*portaltrg")
+		add_filter("layer", 1, layering_filter(render_source="*portaltrg"))
 
 	New()
 		..()
@@ -559,9 +559,9 @@ Returns:
 			AM.set_loc(T)
 		else
 			src.visible_message("<span style='color: red; font-weight: bold'>The portal collapses in on itself!</span>")
-			var/obj/sparks = unpool(/obj/effects/sparks)
+			var/obj/sparks = new /obj/effects/sparks
 			sparks.set_loc(get_turf(src))
-			SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
+			SPAWN_DBG(2 SECONDS) if (sparks) qdel(sparks)
 			qdel(src)
 		return
 
@@ -572,9 +572,9 @@ Returns:
 			AM.set_loc(T)
 		else
 			src.visible_message("<span style='color: red; font-weight: bold'>The portal collapses in on itself!</span>")
-			var/obj/sparks = unpool(/obj/effects/sparks)
+			var/obj/sparks = new /obj/effects/sparks
 			sparks.set_loc(get_turf(src))
-			SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
+			SPAWN_DBG(2 SECONDS) if (sparks) qdel(sparks)
 			qdel(src)
 		return
 	*/
@@ -1644,7 +1644,7 @@ Returns:
 			if(color != null)
 				var/actX = A.pixel_x + x - 1
 				var/actY = A.pixel_y + y - 1
-				var/obj/apixel/P = unpool(/obj/apixel)
+				var/obj/apixel/P = new /obj/apixel
 				P.set_loc(A.loc)
 				P.pixel_x = actX
 				P.pixel_y = actY
@@ -1656,7 +1656,7 @@ Returns:
 	qdel(A)
 	SPAWN_DBG(7 SECONDS)
 		for(var/datum/D in pixels)
-			pool(D)
+			qdel(D)
 
 	return
 
@@ -1668,14 +1668,6 @@ Returns:
 	anchored = 1
 	density = 0
 	opacity = 0
-
-	unpooled()
-		color = "#ffffff"
-		pixel_x = 0
-		pixel_y = 0
-		alpha = 255
-		transform = matrix()
-		..()
 
 /datum/admins/proc/turn_off_pixelexplosion()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -1842,7 +1834,7 @@ Returns:
 	return tube
 
 /obj/item/ghostboard
-	name = "Ouija board"
+	name = "\improper Ouija board"
 	desc = "A wooden board that allows for communication with spirits and such things. Or that's what the company that makes them claims, at least."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "lboard"
@@ -1853,7 +1845,7 @@ Returns:
 	var/emoji_min = 1
 	var/emoji_max = 3
 	var/words_prob = 100
-	var/words_min = 5
+	var/words_min = 7
 	var/words_max = 10
 
 	New()
@@ -1868,9 +1860,7 @@ Returns:
 	proc/generate_words()
 		var/list/words = list()
 		if(prob(words_prob))
-			for(var/i in 1 to rand(words_min, words_max))
-				var/picked = pick(strings("ouija_board.txt", "ouija_board_words"))
-				words |= picked
+			words |= get_ouija_word_list(src, words_min, words_max)
 		if(prob(emoji_prob))
 			for(var/i in 1 to rand(emoji_min, emoji_max))
 				words |= random_emoji()
@@ -3096,9 +3086,9 @@ Returns:
 			AM.set_loc(target)
 		else
 			src.visible_message("<span style='color: red; font-weight: bold'>The portal collapses in on itself!</span>")
-			var/obj/sparks = unpool(/obj/effects/sparks)
+			var/obj/sparks = new /obj/effects/sparks
 			sparks.set_loc(get_turf(src))
-			SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
+			SPAWN_DBG(2 SECONDS) if (sparks) qdel(sparks)
 			qdel(src)
 
 	ex_act()
@@ -3160,19 +3150,13 @@ Returns:
 	icon_state = "foam"
 	animate_movement = SLIDE_STEPS
 	mouse_opacity = 0
-	var/my_dir=1
+	var/my_dir = null
 
 	Move(NewLoc,Dir=0)
 		. = ..(NewLoc,Dir)
+		if(isnull(my_dir))
+			my_dir = pick(alldirs)
 		src.set_dir(my_dir)
-
-	unpooled(var/poolname)
-		..()
-		SPAWN_DBG(1 DECI SECOND)
-			var/atom/myloc = loc
-			if(myloc && !istype(myloc,/turf/space))
-				my_dir = pick(alldirs)
-				src.set_dir(my_dir)
 
 /obj/shifting_wall
 	name = "r wall"

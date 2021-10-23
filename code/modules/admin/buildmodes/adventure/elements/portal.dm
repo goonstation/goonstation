@@ -4,14 +4,14 @@
 	var/selection
 
 	initialize()
-		selection = unpool(/obj/adventurepuzzle/marker)
+		selection = new /obj/adventurepuzzle/marker
 		boutput(usr, "<span class='notice'>Select a target location with right click, then left click to place portals. Ctrl+click anywhere to finish.</span>")
 
 	proc/clear_selection()
 		if (!selection)
 			return
 		target.overlays -= selection
-		pool(selection)
+		qdel(selection)
 		selection = null
 
 	disposing()

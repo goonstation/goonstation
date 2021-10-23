@@ -418,6 +418,8 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 		boutput(holder.owner, "<span class='alert'>You exert some force to levitate [target]!</span>")
 		SPAWN_DBG(rand(30,50))
+			if (!holder)
+				return
 			//levitates the target chair, as well as any mobs mobs buckled in. Since buckled mobs are placed into the chair/bed's contents
 			//only doing chair. doing the bed levatate moves the mobs on it in a weird way, and I don't wanna spend the time to fix it
 			if (istype(target, /obj/stool/chair)/* || istype(target, /obj/stool/bed)*/)
@@ -566,7 +568,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 		var/turf/T = get_turf(holder.owner)
 		if (!istype(T, /turf/space) && !T.density)
-			var/obj/itemspecialeffect/poof/P = unpool(/obj/itemspecialeffect/poof)
+			var/obj/itemspecialeffect/poof/P = new /obj/itemspecialeffect/poof
 			P.setup(T)
 			playsound(T,"sound/effects/poff.ogg", 50, 1, pitch = 1)
 			new /obj/critter/bat(T)
@@ -604,23 +606,20 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	proc/start_spooking()
 		src.holder.owner.color = rgb(170, 0, 0)
 		anim_f_ghost_blur(src.holder.owner)
-		applied_filter_index = length(src.holder.owner.filters)
 
 		if (istype(holder, /datum/abilityHolder/ghost_observer))
 			var/datum/abilityHolder/ghost_observer/GAH = holder
 			GAH.spooking = 1
-		src.holder.owner.invisibility = INVIS_NONE
+		REMOVE_MOB_PROPERTY(src.holder.owner, PROP_INVISIBILITY, src.holder.owner)
 		boutput(holder.owner, "<span class='notice'>You start being spooky! The living can all see you!</span>")
 
 	//remove the filter animation when we're done.
 	proc/stop_spooking()
 		src.holder.owner.color = null
-		src.holder.owner.filters[applied_filter_index] = null
-		applied_filter_index = 0
 		if (istype(holder, /datum/abilityHolder/ghost_observer))
 			var/datum/abilityHolder/ghost_observer/GAH = holder
 			GAH.spooking = 0
-		src.holder.owner.invisibility = initial(src.holder.owner.invisibility)
+		APPLY_MOB_PROPERTY(src.holder.owner, PROP_INVISIBILITY, src.holder.owner, ghost_invisibility)
 		boutput(holder.owner, "<span class='alert'>You stop being spooky!</span>")
 
 #endif

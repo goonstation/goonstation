@@ -32,14 +32,14 @@
 		//M.emote("scream")
 		playsound(M.loc,"sound/effects/screech_tone.ogg", 90, 1, pitch = 1)
 
-		var/obj/itemspecialeffect/screech/E = unpool(/obj/itemspecialeffect/screech)
+		var/obj/itemspecialeffect/screech/E = new /obj/itemspecialeffect/screech
 		E.color = "#FFFFFF"
 		E.setup(M.loc)
 
 		if (level == 2)
 			//add effect
 			SPAWN_DBG(1 DECI SECOND)
-				var/obj/itemspecialeffect/screech/EE = unpool(/obj/itemspecialeffect/screech)
+				var/obj/itemspecialeffect/screech/EE = new /obj/itemspecialeffect/screech
 				EE.color = "#AAAAFF"
 				EE.setup(M.loc)
 
@@ -54,7 +54,7 @@
 						break
 		else
 			SPAWN_DBG(1 DECI SECOND)
-				var/obj/itemspecialeffect/screech/EE = unpool(/obj/itemspecialeffect/screech)
+				var/obj/itemspecialeffect/screech/EE = new /obj/itemspecialeffect/screech
 				EE.color = "#FFFFFF"
 				EE.setup(M.loc)
 

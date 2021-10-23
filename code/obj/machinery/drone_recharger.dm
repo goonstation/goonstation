@@ -157,7 +157,7 @@
 			return 0
 		var/mob/living/silicon/ghostdrone/GD = new(src.loc)
 		if (GD)
-			pool(G)
+			qdel(G)
 			GD.newDrone = 1
 			available_ghostdrones += GD
 			src.turnOn(GD)

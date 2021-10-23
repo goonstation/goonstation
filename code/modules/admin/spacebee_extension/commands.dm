@@ -20,7 +20,7 @@
 	help_message = "Locates a given ckey on all servers."
 	argument_types = list(/datum/command_argument/string/ckey="ckey")
 	execute(user, ckey)
-		var/mob/M = whois_ckey_to_mob_reference(ckey, exact=FALSE)
+		var/mob/M = ckey_to_mob(ckey, exact=FALSE)
 		if(!M)
 			return
 		var/list/result = list()
@@ -61,7 +61,7 @@
 			return
 		var/data[] = new()
 		data["ckey"] = ckey
-		var/mob/M = whois_ckey_to_mob_reference(ckey)
+		var/mob/M = ckey_to_mob(ckey)
 		if (M)
 			data["compID"] = M.computer_id
 			data["ip"] = M.lastKnownIP
@@ -151,7 +151,7 @@
 	argument_types = list(/datum/command_argument/string/ckey="ckey")
 
 	execute(user, ckey)
-		var/mob/M = whois_ckey_to_mob_reference(ckey)
+		var/mob/M = ckey_to_mob(ckey)
 		if (!M)
 			system.reply("Could not locate [ckey].", user)
 			return
@@ -333,7 +333,7 @@
 	help_message = "Sends items in a crate to cargo. Separate typepaths by spaces."
 	argument_types = list(/datum/command_argument/the_rest="types")
 	execute(user, types)
-		var/obj/to_send = new /obj/storage/crate/packing
+		var/obj/to_send = new /obj/storage/crate/wooden
 		var/list/type_str_list = splittext(types, " ")
 		for(var/type_str in type_str_list)
 			var/type = text2path(type_str)

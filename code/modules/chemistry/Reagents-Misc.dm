@@ -633,15 +633,15 @@ datum
 								lowertemp.toxins = max(lowertemp.toxins-50,0)
 								lowertemp.react()
 								T.assume_air(lowertemp)
-					pool(hotspot)
+					qdel(hotspot)
 
 				var/obj/fire_foam/F = (locate(/obj/fire_foam) in target)
 				if (!F)
-					F = unpool(/obj/fire_foam)
+					F = new /obj/fire_foam
 					F.set_loc(target)
 					SPAWN_DBG(20 SECONDS)
 						if (F && !F.disposed)
-							pool(F)
+							qdel(F)
 				return
 
 			reaction_obj(var/obj/item/O, var/volume)
@@ -1015,12 +1015,8 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				if (M.bodytemperature > 0)
+				if (M.bodytemperature > 0 && !M.hasStatus("burning"))
 					M.bodytemperature = max(M.bodytemperature-(10 * mult),0)
-				var/mob/living/L = M //for cryostylane not putting out fires during mob tick -Cirrial
-				var/fireDiff = L.bodytemperature - FIRE_MINIMUM_TEMPERATURE_TO_EXIST
-				if(istype(L) && L.getStatusDuration("burning") && fireDiff < 0)
-					L.changeStatus("burning", fireDiff SECONDS * mult) // by definition fireDiff will be negative
 				..()
 				return
 
@@ -1043,7 +1039,7 @@ datum
 							lowertemp.toxins = max(lowertemp.toxins-50,0)
 							lowertemp.react()
 							T.assume_air(lowertemp)
-					pool(hotspot)
+					qdel(hotspot)
 				return
 
 		booster_enzyme
@@ -1200,11 +1196,6 @@ datum
 			var/counter = 1
 			var/fakedeathed = 0
 
-			pooled()
-				..()
-				counter = 1
-				fakedeathed = 0
-
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
@@ -1235,11 +1226,6 @@ datum
 			viscosity = 0.17
 			var/counter = 1
 			var/fakedeathed = 0
-
-			pooled()
-				..()
-				counter = 1
-				fakedeathed = 0
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
@@ -2037,12 +2023,12 @@ datum
 					if (volume >= 10)
 						T.visible_message("<span class='notice'>The substance flows out and takes a solid form.</span>")
 						if(prob(50))
-							var/atom/movable/B = unpool(/obj/item/raw_material/scrap_metal)
+							var/atom/movable/B = new /obj/item/raw_material/scrap_metal
 							B.set_loc(T)
 							var/datum/material/mat = getMaterial("gnesis")
 							B.setMaterial(mat)
 						else
-							var/atom/movable/B = unpool(/obj/item/raw_material/shard)
+							var/atom/movable/B = new /obj/item/raw_material/shard
 							B.set_loc(T)
 							var/datum/material/mat = getMaterial("gnesisglass")
 							B.setMaterial(mat)
@@ -2125,14 +2111,6 @@ datum
 			var/anim_lock = 0
 			var/speed = 3
 			stun_resist = 9
-
-			pooled()
-				..()
-				direction = null
-				dir_lock = 0
-				anim_lock = 0
-				speed = 3
-
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
@@ -2378,10 +2356,6 @@ datum
 			overdose = 30
 			var/effect_length = 0
 
-			pooled()
-				..()
-				effect_length = 0
-
 			on_mob_life(var/mob/living/M, var/mult = 1) // humans only! invisible critters would be awful...
 				if(!M)
 					holder.remove_reagent("transparium")
@@ -2430,10 +2404,6 @@ datum
 			fluid_b = 254
 			transparency = 30
 			var/effect_length = 0
-
-			pooled()
-				..()
-				effect_length = 0
 
 			on_mob_life(var/mob/M, var/mult = 1) // now this is ok
 				if(!M) M = holder.my_atom
@@ -2695,8 +2665,6 @@ datum
 			overdose = 20
 			viscosity = 0.3
 			minimum_reaction_temperature = T0C+100
-			pooled()
-				..()
 
 			on_add()
 				..()
@@ -2960,11 +2928,6 @@ datum
 			hunger_value = 0.068
 			viscosity = 0.4
 			depletion_rate = 0
-
-			pooled()
-				..()
-				pathogens.Cut()
-				pathogens_processed = 0
 
 /*			var
 				blood_DNA = null
@@ -3407,12 +3370,6 @@ datum
 						H.visible_message("<span class='emote'><b>[M]</b> yees.</span>")
 						playsound(H, "sound/misc/yee.ogg", 50, 1)
 
-			pooled()
-				..()
-				if (src.music_given_to)
-					src.music_given_to << sound(null, channel = 391) // seriously, make sure we don't leave someone with music playing!!  gotta cover our bases
-					src.music_given_to = null
-
 			on_remove()
 				var/atom/A = holder.my_atom
 				if (src.music_given_to)
@@ -3464,20 +3421,10 @@ datum
 			reagent_state = LIQUID
 			depletion_rate = 1
 			minimum_reaction_temperature = -INFINITY
-
-
-
 			var/datum/reagents/contents = null
 			var/hardened = 0
 
 			disposing()
-				..()
-				contents = null
-				hardened = 0
-				reagent_state = LIQUID
-				update_identifiers()
-
-			pooled()
 				..()
 				contents = null
 				hardened = 0
@@ -3642,10 +3589,6 @@ datum
 			transparency = 255
 			var/counter = 1
 			value = 4
-
-			pooled()
-				..()
-				counter = 1
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom

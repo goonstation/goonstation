@@ -568,6 +568,10 @@ that cannot be itched
 	mats = 3
 
 	attack(mob/living/carbon/human/M as mob, mob/user as mob)
+		if (!istype(M))
+			boutput(user, "<span class='alert'>The device displays an error about an \"incompatible target\".</span>")
+			return
+
 		////General Records
 		var/found = 0
 		//if( !istype(get_area(src), /area/security/prison) && !istype(get_area(src), /area/security/main))
@@ -716,7 +720,7 @@ that cannot be itched
 		logTheThing("admin", user, null, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
 		playsound(src, "sound/machines/printer_thermal.ogg", 50, 1)
 		SPAWN_DBG(3 SECONDS)
-			var/obj/item/paper/p = unpool(/obj/item/paper)
+			var/obj/item/paper/p = new /obj/item/paper
 			p.set_loc(get_turf(src))
 			p.name = "Official Caution - [ticket_target]"
 			p.info = ticket_text

@@ -6,7 +6,7 @@
 	var/selection
 
 	initialize()
-		selection = unpool(/obj/adventurepuzzle/marker)
+		selection = new /obj/adventurepuzzle/marker
 		time_delay = input("Timing amount (in 1/10 seconds)", "Timing amount", 5) as num
 		var/per = input("Is this periodic? (Repeatedly triggers until aborted if started.)", "Periodic", "yes") in list("yes", "no")
 		periodic = (per == "yes") ? 1 : 0
@@ -21,7 +21,7 @@
 
 	disposing()
 		clear_selections()
-		pool(selection)
+		qdel(selection)
 		..()
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)

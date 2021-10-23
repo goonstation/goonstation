@@ -36,7 +36,7 @@
 		num_wraiths = 1
 
 
-	var/list/possible_traitors = get_possible_traitors(num_traitors)
+	var/list/possible_traitors = get_possible_enemies(ROLE_TRAITOR, num_traitors)
 
 	if (!possible_traitors.len)
 		return 0
@@ -66,7 +66,7 @@
 		possible_traitors.Remove(traitor)
 
 	if(num_wraiths)
-		var/list/possible_wraiths = get_possible_wraiths(num_wraiths)
+		var/list/possible_wraiths = get_possible_enemies(ROLE_WRAITH, num_wraiths)
 		var/list/chosen_wraiths = antagWeighter.choose(pool = possible_wraiths, role = ROLE_WRAITH, amount = num_wraiths, recordChosen = 1)
 		for (var/datum/mind/wraith in chosen_wraiths)
 			traitors += wraith
@@ -100,66 +100,6 @@
 
 	SPAWN_DBG (rand(waittime_l, waittime_h))
 		send_intercept()
-
-/datum/game_mode/traitor/proc/get_possible_traitors(minimum_traitors=1)
-	var/list/candidates = list()
-
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if (ishellbanned(player)) continue //No treason for you
-		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-			if(player.client.preferences.be_traitor)
-				candidates += player.mind
-
-	if(candidates.len < minimum_traitors)
-		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_traitor set to yes were ready. We need [minimum_traitors] traitors so including players who don't want to be traitors in the pool.")
-		for(var/client/C)
-			var/mob/new_player/player = C.mob
-			if (!istype(player)) continue
-
-			if (ishellbanned(player)) continue //No treason for you
-			if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-				candidates += player.mind
-
-				if ((minimum_traitors > 1) && (candidates.len >= minimum_traitors))
-					break
-
-	if(candidates.len < 1)
-		return list()
-	else
-		return candidates
-
-/datum/game_mode/traitor/proc/get_possible_wraiths(minimum_traitors=1)
-	var/list/candidates = list()
-
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if (ishellbanned(player)) continue //No treason for you
-		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-			if(player.client.preferences.be_wraith)
-				candidates += player.mind
-
-	if(candidates.len < minimum_traitors)
-		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_wraith set to yes were ready. We need [minimum_traitors] wraiths so including players who don't want to be wraiths in the pool.")
-		for(var/client/C)
-			var/mob/new_player/player = C.mob
-			if (!istype(player)) continue
-
-			if (ishellbanned(player)) continue //No treason for you
-			if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-				candidates += player.mind
-
-				if ((minimum_traitors > 1) && (candidates.len >= minimum_traitors))
-					break
-
-	if(candidates.len < 1)
-		return list()
-	else
-		return candidates
 
 /datum/game_mode/traitor/send_intercept()
 	var/intercepttext = "Cent. Com. Update Requested staus information:<BR>"

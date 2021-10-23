@@ -3,6 +3,9 @@
 	event_handler_flags = USE_CANPASS | IMMUNE_MANTA_PUSH
 
 // dead
+/mob/dead/New()
+	..()
+	src.flags |= UNCRUSHABLE
 
 // No log entries for unaffected mobs (Convair880).
 /mob/dead/ex_act(severity)

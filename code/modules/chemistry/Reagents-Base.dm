@@ -157,7 +157,6 @@ datum
 					var/ethanol_amt = holder.get_reagent_amount(src.id)
 					if(H?.reagents.has_reagent("moonshine"))
 						mult *= 7
-						ethanol_amt *= 2
 					var/liver_damage = 0
 					if (!isalcoholresistant(H) || H?.reagents.has_reagent("moonshine"))
 						if (ethanol_amt >= 15)
@@ -414,10 +413,6 @@ datum
 			transparency = 222
 			minimum_reaction_temperature = T0C + 100
 			var/reacted_to_temp = 0 // prevent infinite loop in a fluid
-
-			pooled()
-				..()
-				reacted_to_temp = 0
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(!reacted_to_temp)
@@ -931,7 +926,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				if (volume >= 5 && !(locate(/obj/item/raw_material/ice) in T))
-					var/obj/item/raw_material/ice/I = unpool(/obj/item/raw_material/ice)
+					var/obj/item/raw_material/ice/I = new /obj/item/raw_material/ice
 					I.set_loc(T)
 				return
 
