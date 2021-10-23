@@ -711,11 +711,17 @@
 
 					maptext_out = "<I>stomps on their hat!</I>"
 
-					if (hat_or_beret == "beret")
-						hat.icon_state = "hosberet-smash" // make sure it looks smushed!
-					else
-						hat.icon_state = "hoscap-smash"
 					src.drop_from_slot(hat) // we're done here, drop that hat!
+					hat.pixel_x = 0
+					hat.pixel_y = -16
+
+					animate_stomp(src)
+
+					SPAWN_DBG(0.5 SECONDS)
+						if (hat_or_beret == "beret")
+							hat.icon_state="hosberet-smash"
+						else
+							hat.icon_state="hoscap-smash"
 					if(src.mind && src.mind.assigned_role != "Head of Security")
 						src.add_karma(5)
 				else

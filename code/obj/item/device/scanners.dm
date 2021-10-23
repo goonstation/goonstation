@@ -568,6 +568,10 @@ that cannot be itched
 	mats = 3
 
 	attack(mob/living/carbon/human/M as mob, mob/user as mob)
+		if (!istype(M))
+			boutput(user, "<span class='alert'>The device displays an error about an \"incompatible target\".</span>")
+			return
+
 		////General Records
 		var/found = 0
 		//if( !istype(get_area(src), /area/security/prison) && !istype(get_area(src), /area/security/main))

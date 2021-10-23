@@ -198,7 +198,7 @@
 		STOP_TRACKING
 
 /obj/crematorium/proc/update()
-	if (src.connected.loc != src.loc)
+	if (src.connected.loc != src)
 		src.icon_state = "crema0"
 	else
 		if (src.contents.len > 1)  //the tray lives in contents

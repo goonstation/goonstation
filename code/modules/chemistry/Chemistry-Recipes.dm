@@ -505,7 +505,7 @@ datum
 			id = "milk_punch"
 			result = "milk_punch"
 			required_reagents = list("simplesyrup" = 1, "juice_lime" = 1, "juice_apple" = 1, "ginger_ale" = 1, "juice_pineapple" = 1, "milk" = 1)
-			result_amount = 2
+			result_amount = 6
 			mix_phrase = "You wonder why you made this drink at all."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
@@ -513,14 +513,14 @@ datum
 		milk_punch/milk_punch2
 			id = "milk_punch2"
 			required_reagents = list("fruit_punch" = 5, "milk" = 1)
-			result_amount = 2
+			result_amount = 6
 
 		fruit_punch
 			name = "Fruit Punch"
 			id = "fruit punch"
 			result = "fruit_punch"
 			required_reagents = list("simplesyrup" = 1, "juice_apple" = 1, "juice_lime" = 1, "ginger_ale" = 1, "juice_pineapple" = 1)
-			result_amount = 3
+			result_amount = 5
 			mix_phrase = "You are reminded of family picnics and school functions as the syrup mixes with the juices."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1

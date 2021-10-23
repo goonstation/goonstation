@@ -212,7 +212,7 @@ ABSTRACT_TYPE(/datum/plant/herb)
 	harvests = 1
 	endurance = 1
 	isgrass = 1
-	genome = 2 //no idea if this was set to the right thing aaa
+	genome = 11
 	nectarlevel = 5
 	assoc_reagents = list("nicotine")
 	mutations = list(/datum/plantmutation/tobacco/twobacco)
