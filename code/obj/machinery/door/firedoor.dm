@@ -53,7 +53,10 @@
 	SPAWN_DBG(0.5 SECONDS)
 		var/list/zones = list()
 		for (var/d in list(0) + cardinal)
-			var/area/A = get_area(get_step(src,d))
+			var/turf/T = get_step(src,d)
+			if(T.density)
+				continue
+			var/area/A = get_area(T)
 			if (A?.name)
 				zones |= A.name
 
