@@ -767,8 +767,12 @@
 		if(dir)
 			boutput(usr, "If a direction, direction is: [dir]")
 
-	var/class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-		"num","num adjust","type","reference","mob reference","turf by coordinates","reference picker","new instance of a type","icon","file","color","list","json","edit referenced object","create new list", "matrix","null", "ref", "restore to default")
+	var/list/classes = list("text", "num","num adjust","type","reference","mob reference","turf by coordinates","reference picker","new instance of a type","icon","file","color","list","json","edit referenced object","create new list", "matrix","null", "ref", "restore to default")
+	if(variable=="filters" && !istype(D, /image))
+		default = "filter editor"
+		classes += default
+	var/class = input("What kind of variable?","Variable Type",default) as null|anything in classes
+
 
 	if(!class)
 		return
@@ -1106,6 +1110,10 @@
 							D.vars[variable] = new match(D)
 			else
 				return
+		if ("filter editor")
+			if(src.holder)
+				src.holder.filteriffic = new /datum/filter_editor(D)
+				src.holder.filteriffic.ui_interact(mob)
 
 	logTheThing("admin", src, null, "modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""))
 	logTheThing("diary", src, null, "modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""), "admin")

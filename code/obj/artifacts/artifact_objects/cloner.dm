@@ -38,17 +38,14 @@
 			// fluff
 			if(swapSouls)
 				boutput(user, "<span class='alert'>You feel your soul being sucked out of your body by [O]!</span>")
-			var/filter = filter(type="outline", size=0.5, color=rgb(255,0,0), flags=OUTLINE_SHARP)
-			H.filters += filter
+			H.add_filter("cloner_art_outline", 0, outline_filter(size=0.5, color=rgb(255,0,0), flags=OUTLINE_SHARP))
 			SPAWN_DBG(0.7 SECONDS)
-				H.filters -= filter
+				H.remove_filter("cloner_art_outline")
 
 			if(deep_count > 0 && prob(5))
 				deep_count--
 				clone = semi_deep_copy(H, O, copy_flags=COPY_SKIP_EXPLOITABLE) // admins made me do it
-				var/lastFilterIndex = length(clone.filters)
-				if(lastFilterIndex)
-					clone.filters -= clone.filters[lastFilterIndex]
+				clone.remove_filter("cloner_art_outline")
 			else
 				// a bunch of stolen cloner code
 				clone = new /mob/living/carbon/human/clone(O)

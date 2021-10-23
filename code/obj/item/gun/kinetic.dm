@@ -1173,7 +1173,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	caliber = 0.223
 	max_ammo_capacity = 30
 	auto_eject = 1
-	object_flags = NO_ARM_ATTACH
 
 	two_handed = 1
 	can_dual_wield = 0
@@ -1231,7 +1230,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	auto_eject = 0
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
-	object_flags = NO_ARM_ATTACH
 	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
 
 	spread_angle = 8
@@ -1266,7 +1264,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	auto_eject = 1
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
-	object_flags = NO_ARM_ATTACH
 	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
 
 	can_dual_wield = 0
@@ -1304,7 +1301,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	max_ammo_capacity = 4 // to fuss with if i want 6 packs of ammo
 	two_handed = 1
 	can_dual_wield = 0
-	object_flags = NO_ARM_ATTACH
 	auto_eject = 1
 	default_magazine = /obj/item/ammo/bullets/grenade_round/explosive
 
@@ -1475,7 +1471,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	max_ammo_capacity = 4
 	auto_eject = 1
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
-	object_flags = NO_ARM_ATTACH
 	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
 	slowdown = 7
 	slowdown_time = 5
@@ -1572,7 +1567,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	auto_eject = 1
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
-	object_flags = NO_ARM_ATTACH
 	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
 
 	can_dual_wield = 0

@@ -307,7 +307,7 @@
 		return timeleft
 
 	proc/take_damage(var/amount)
-		if(!isitspacemas)
+		if(startswith(src.icon_state, "nuclearbomb") && src.icon == initial(src.icon))
 			switch(src._health)
 				if(80 to 125)
 					src.icon_state = "nuclearbomb1"

@@ -927,6 +927,7 @@ This is basically useless for anyone but miners.
 	cost = 3
 	desc = "A small device that may be installed in a headset to grant access to all station channels."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+	vr_allowed = 0
 
 /datum/syndicate_buylist/traitor/tape
 	name = "Ducktape"

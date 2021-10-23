@@ -773,11 +773,11 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	category = "Medical Department"
 	contains = list(/obj/item/parts/robot_parts/robot_frame,
 					/obj/item/parts/robot_parts/head/sturdy,
-					/obj/item/parts/robot_parts/chest,
+					/obj/item/parts/robot_parts/chest/standard,
 					/obj/item/parts/robot_parts/arm/left/sturdy,
 					/obj/item/parts/robot_parts/arm/right/sturdy,
-					/obj/item/parts/robot_parts/leg/left,
-					/obj/item/parts/robot_parts/leg/right,
+					/obj/item/parts/robot_parts/leg/left/standard,
+					/obj/item/parts/robot_parts/leg/right/standard,
 					/obj/item/cable_coil)
 	cost = 4500
 	containertype = /obj/storage/crate/wooden
@@ -1709,4 +1709,18 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	cost = 2000
 	containername = "Percussion Band Kit"
 	contains = list(/obj/item/instrument/tambourine,/obj/item/instrument/triangle,/obj/item/instrument/cowbell)
+	containertype = /obj/storage/crate/wooden
+
+//Western
+
+/datum/supply_packs/west_coats
+	name = "Dusty Old Coats"
+	desc = "4x coats in various colors."
+	category = "Civilian Department"
+	contains = list(/obj/item/clothing/suit/gimmick/guncoat,
+			/obj/item/clothing/suit/gimmick/guncoat/black,
+			/obj/item/clothing/suit/gimmick/guncoat/tan,
+			/obj/item/clothing/suit/gimmick/guncoat/dirty)
+	cost = 2000
+	containername = "Dusty Old Clothing Crate"
 	containertype = /obj/storage/crate/wooden
