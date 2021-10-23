@@ -12,6 +12,9 @@
 /datum/packet_network/proc/can_receive(datum/component/packet_connected/target, datum/component/packet_connected/source, datum/signal/signal, params=null)
 	return TRUE
 
+/datum/packet_network/proc/can_receive_necessary(datum/component/packet_connected/source, datum/signal/signal, params=null)
+	return FALSE
+
 /datum/packet_network/proc/register(datum/component/packet_connected/device)
 	if(device.all_hearing)
 		if(!islist(src.all_hearing))
@@ -57,6 +60,32 @@
 	src.all_hearing = null
 	. = ..()
 
+#define POST_PACKET_INTERNAL(RECEIVE_PACKET) \
+	if(is_broadcast) { \
+		for(var/t_address in src.devices_by_address) { \
+			var/datum/component/packet_connected/target = src.devices_by_address[t_address]; \
+			if(target == source) \
+				continue; \
+			RECEIVE_PACKET \
+		} \
+	} \
+	else { \
+		var/list/datum/component/packet_connected/sharing_tag = src.devices_by_tag?[target_tag]; \
+		var/datum/component/packet_connected/direct_target = src.devices_by_address?[target_address]; \
+		if(direct_target && direct_target != source) { \
+			var/datum/component/packet_connected/target = direct_target; \
+			RECEIVE_PACKET \
+		} \
+		for(var/datum/component/packet_connected/target as anything in sharing_tag) \
+			if(target != source && target != direct_target) { \
+				RECEIVE_PACKET \
+			} \
+		for(var/datum/component/packet_connected/target as anything in src.all_hearing) \
+			if(target != source && target != direct_target) { \
+				RECEIVE_PACKET \
+			} \
+	}
+
 /datum/packet_network/proc/post_packet(datum/component/packet_connected/source, datum/signal/signal, params=null)
 	if(!src.can_send(source, signal, params))
 		return
@@ -65,22 +94,15 @@
 	var/target_tag = signal.data["address_tag"]
 	var/target_address = signal.data["address_1"]
 	var/is_broadcast = target_address == "ping" || (isnull(target_tag) && isnull(target_address))
-	if(is_broadcast)
-		for(var/t_address in src.devices_by_address)
-			var/datum/component/packet_connected/target = src.devices_by_address[t_address]
-			if(target == source)
-				continue
-			if(src.can_receive(target, source, signal, params))
-				target.receive_packet(signal, src.transmission_method, params)
+	if(src.can_receive_necessary(source, signal, params))
+		POST_PACKET_INTERNAL( \
+			if(src.can_receive(target, source, signal, params)) \
+				target.receive_packet(signal, src.transmission_method, params); \
+		)
 	else
-		var/list/datum/component/packet_connected/sharing_tag = src.devices_by_tag?[target_tag]
-		var/datum/component/packet_connected/direct_target = src.devices_by_address?[target_address]
-		if(direct_target && direct_target != source && src.can_receive(direct_target, source, signal, params))
-			direct_target.receive_packet(signal, src.transmission_method, params)
-		for(var/datum/component/packet_connected/target as anything in sharing_tag)
-			if(target != source && target != direct_target && src.can_receive(target, source, signal, params))
-				target.receive_packet(signal, src.transmission_method, params)
-		for(var/datum/component/packet_connected/target as anything in src.all_hearing)
-			if(target != source && target != direct_target && src.can_receive(target, source, signal, params))
-				target.receive_packet(signal, src.transmission_method, params)
+		POST_PACKET_INTERNAL( \
+			target.receive_packet(signal, src.transmission_method, params); \
+		)
 	qdel(signal)
+
+#undef POST_PACKET_INTERNAL
