@@ -128,6 +128,7 @@
 	var/setup_netmode_norange = 1 //If set, there is no range limit in network mode.
 	var/net_mode = 0 //If 1, act like a powernet card (ignore tranmissions not addressed to us.)
 	//var/logstring = null //Log incoming transmissions.  With a string.
+	var/send_only = FALSE
 
 	locked //Locked wireless card
 		name = "Limited Wireless card"
@@ -141,6 +142,9 @@
 			/*net_mode = 1
 			func_tag = "NET_ADAPTER"*/
 
+			transmit_only
+				send_only = TRUE
+
 		status //This one is for status display control.
 			frequency = FREQ_STATUS_DISPLAY
 			setup_netmode_norange = 0
@@ -148,7 +152,10 @@
 	New()
 		..()
 		src.net_id = format_net_id("\ref[src]")
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("wireless", frequency)
+		if(send_only)
+			MAKE_SENDER_RADIO_PACKET_COMPONENT("wireless", frequency)
+		else
+			MAKE_DEFAULT_RADIO_PACKET_COMPONENT("wireless", frequency)
 
 	receive_command(obj/source, command, datum/signal/signal)
 		if(..())
