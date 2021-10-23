@@ -20,5 +20,5 @@
 		return FALSE
 	return TRUE
 
-/datum/packet_network/radio/can_receive_necessary(datum/component/packet_connected/source, datum/signal/signal, params=null)
-	return length(by_cat[TR_CAT_RADIO_JAMMERS])
+/datum/packet_network/radio/can_receive_necessary(datum/component/packet_connected/source, datum/signal/signal, range=null)
+	return length(by_cat[TR_CAT_RADIO_JAMMERS]) || !isnull(range)

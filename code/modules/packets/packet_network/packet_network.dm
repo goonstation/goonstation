@@ -127,11 +127,13 @@
 	else
 		var/list/image/images = list()
 		if(use_can_receive)
-			POST_PACKET_INTERNAL( \
-				if(src.can_receive(target, source, signal, params)) \
+			#define RECEIVE_PACKET \
+				if(src.can_receive(target, source, signal, params)) { \
 					target.receive_packet(signal, src.transmission_method, params); \
-				images += src.draw_packet(target, source, signal, params); \
-			)
+					images += src.draw_packet(target, source, signal, params); \
+				} // don't ask, it has to be like this
+			POST_PACKET_INTERNAL(RECEIVE_PACKET)
+			#undef RECEIVE_PACKET
 		else
 			POST_PACKET_INTERNAL( \
 				target.receive_packet(signal, src.transmission_method, params); \
