@@ -209,7 +209,7 @@
 	signal.data["sender_name"] = src
 	signal.data["message"] = "BUMP N GO TO [src.duck_migration_target]."
 	signal.data["target"] = src.duck_migration_target
-	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "pda")
 	return TRUE
 
 /obj/machinery/bot/duckbot/receive_signal(datum/signal/signal)
@@ -253,7 +253,7 @@
 		sigsend.data["sender_name"] = src
 		sigsend.data["message"] = "[msg]"
 		sigsend.data["address_1"] = target
-		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, sigsend)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, sigsend, null, "pda")
 
 /obj/machinery/bot/duckbot/KillPathAndGiveUp(give_up)
 	. = ..()
