@@ -103,7 +103,7 @@ var/global/datum/phrase_log/phrase_log = new
 			@"\bl?ooc\b",
 			@"\b(:?fail\s?)?rp\b"
 		)
-		sussy_words = regex(jointext(ic_sussy_word_list, "|"), "i")
+		ic_sussy_words = regex(jointext(ic_sussy_word_list, "|"), "i")
 
 	proc/load()
 		if(fexists(src.uncool_words_filename))
