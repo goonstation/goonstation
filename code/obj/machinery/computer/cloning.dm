@@ -821,7 +821,7 @@ proc/find_ghost_by_key(var/find_key)
 		. += list("diskReadOnly" = src.diskette.read_only)
 
 	var/list/recordsTemp = list()
-	for (var/r in records)
+	for (var/datum/db_record/r as anything in records)
 		var/saved = FALSE
 		var/obj/item/implant/cloner/implant = locate(r["imp"])
 		var/currentHealth = ""
@@ -829,13 +829,13 @@ proc/find_ghost_by_key(var/find_key)
 			currentHealth = implant.getHealthList()
 		if(src.diskette) // checks if saved to disk
 			for (var/datum/computer/file/clone/F in src.diskette.root.contents)
-				if(F["ckey"] == r["fields"]["ckey"])
+				if(F["ckey"] == r["ckey"])
 					saved = TRUE
 
 		recordsTemp.Add(list(list(
-			name = r["fields"]["name"],
-			id = r["fields"]["id"],
-			ckey = r["fields"]["ckey"],
+			name = r["name"],
+			id = r["id"],
+			ckey = r["ckey"],
 			health = currentHealth,
 			implant = !isnull(implant),
 			saved = saved
