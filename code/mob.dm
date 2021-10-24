@@ -2626,6 +2626,9 @@
 		name = src.name
 	if(name == "Unknown")
 		name = ""
+	var/the_pos = findtext(name, " the")
+	if(the_pos)
+		name = copytext(name, 1, the_pos)
 	src.name_tag.set_extra(src.bioHolder?.mobAppearance?.pronouns?.subjective)
 	src.name_tag.set_name(name, strip_parentheses=TRUE)
 
