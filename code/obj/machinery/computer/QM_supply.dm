@@ -1064,7 +1064,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		src.temp += "Requisition Code: [RC.req_code]<br><br>"
 		if(RC.flavor_desc) src.temp += "[RC.flavor_desc]<br><br>"
 		src.temp += "[RC.requis_desc]"
-		if(RC.req_class == 2) //aid contract
+		if(RC.req_class == AID_CONTRACT)
 			src.temp += "URGENT - Cannot Be Reserved"
 		else
 			src.temp += "<A href='[topicLink("pin_contract","\ref[RC]")]'>[RC.pinned ? "Unpin Contract" : "Pin Contract"]</A>"

@@ -379,13 +379,15 @@
 		if(returntosender)
 			if(returntosender >= 3)
 				qdel(sell_crate)
-				if(returntosender == 4) return //special order failure: point of no return
+				if(returntosender == 4) return //special order failure: point of no (value) return(ed)
 			else
 				handle_returns(sell_crate)
 				if(returntosender == 1)
 					var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 					var/datum/signal/pdaSignal = get_free_signal()
-					pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: No contract fulfilled by Requisition crate. Returning as sent.")
+					var/returnmsg = "Notification: No contract fulfilled by Requisition crate. Returning as sent."
+					if(delivery_code == "REQ-THIRDPARTY") returnmsg = "Notification: Third-party delivery requires physical requisition sheet. Returning as sent."
+					pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="[returnmsg]")
 					pdaSignal.transmission_method = TRANSMISSION_RADIO
 					if(transmit_connection != null)
 						transmit_connection.post_signal(null, pdaSignal)

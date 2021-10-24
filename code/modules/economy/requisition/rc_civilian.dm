@@ -116,6 +116,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 		if(prob(70))
 			src.rc_entries += rc_buildentry(/datum/rc_entry/item/table,rand(2,8))
 			src.rc_entries += rc_buildentry(/datum/rc_entry/item/chair,rand(4,12))
+			src.rc_entries += rc_buildentry(/datum/rc_entry/item/basictool/wrench,rand(1,3))
 		else
 			src.rc_entries += rc_buildentry(/datum/rc_entry/stack/floortiles,rand(5,20)*4)
 			src.rc_entries += rc_buildentry(/datum/rc_entry/item/basictool/crowbar,rand(1,3))
@@ -246,7 +247,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/item/shoes
 	name = "pair of shoes"
 	typepath = /obj/item/clothing/shoes
-	feemod = 320
+	feemod = 220
 
 /datum/rc_entry/item/headset
 	name = "radio headset"
@@ -326,15 +327,14 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 		var/bonusducks
 		if(prob(50))
 			bonusducks = list(
-				"Throw in a gift of your own for the birthday [whodat ? "boy" : "girl"]!",
-				"And how about you send along a present too?",
-				"We ask that you send a gift of your choice for [firstnom]. [whodat ? "he" : "she"]'s fond of [pick(descpacito)].",
-				"About the gift, wrap up whatever you want, but something to do with [pick(descpacito)] would be particularly nice.",
-				"If you could gift-wrap something extra for them, it'd be appreciated - they like [pick(descpacito)].",
-				"[whodat ? "He" : "She"]'s feeling a little down - a present of your own would be nice."
+				" Throw in a gift of your own for the birthday [whodat ? "boy" : "girl"]!",
+				" And how about you send along a present too?",
+				" We ask that you send a gift of your choice for [firstnom]. [whodat ? "he" : "she"]'s fond of [pick(descpacito)].",
+				" About the gift, wrap up whatever you want, but something to do with [pick(descpacito)] would be particularly nice.",
+				" If you could gift-wrap something extra for them, it'd be appreciated - they like [pick(descpacito)].",
+				" [whodat ? "He" : "She"]'s feeling a little down - a present of your own would be nice."
 			)
 			src.rc_entries += rc_buildentry(/datum/rc_entry/item/yourowngift,1)
-			src.flavor_desc += " [pick(bonusducks)]"
 		else
 			bonusducks = list(
 				null,
@@ -345,7 +345,8 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 				" Suppliers which handle shedding animals are encouraged not to reply.",
 				" The quality of your response to this contract will be reported to your regional manager."
 			)
-			src.flavor_desc += "[pick(bonusducks)]"
+
+		src.flavor_desc += "[pick(bonusducks)]"
 
 		if(prob(30))
 			var/collate = "[firstnom] [lastnom]"
