@@ -647,7 +647,7 @@ mob/verb/checkrewards()
 /////////////Medical Director////////////////
 /datum/jobXpReward/MedicalDirector/lollipop
 	name = "Medical Lollipop Synthesizer"
-	desc = "NT figured that the bowl on the desk wasent the only place medical lolloipops should be avalable."
+	desc = "NT figured that the bowl on the desk wasn't the only place medical lollipops should be available."
 	required_levels = list("Medical Director"=0)
 	icon_state = "?"
 	claimable = 1
