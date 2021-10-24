@@ -19,12 +19,18 @@
 
 //base entry
 ABSTRACT_TYPE(/datum/rc_entry)
+///Requisition contract entry: analyzes objects passed to it, returns whether they were needed, and is checked for completion at end of analyses
 /datum/rc_entry
-	var/name // title as shown on the requisition contract itself. can be different from your item's real name for flavor purposes
-	var/entryclass = RC_ITEM // type of entry this is, tracked like this for formatting purposes
-	var/count = 1 // how much this contract entry is for, be it in item quantity, stack quantity or reagent units
-	var/rollcount = 0 //when an item is analyzed, this increments on a successful evaluation, for later tallying
-	var/feemod = 0 // can specify how much cash this item adds to the overall payout; commodities will add to this themselves
+	///Name as shown on the requisition contract itself. Can be different from your item's real name for flavor purposes
+	var/name
+	///The evaluation class of the entry; used when building the text form of a contract's list of requirements
+	var/entryclass = RC_ITEM
+	///What quantity this entry requires, be it in item quantity, stack quantity or reagent units; can be adjusted at any point during creation
+	var/count = 1
+	///When an item fulfills a requirement, this value should be incremented; when it matches or exceeds the count, the entry is fully satisfied
+	var/rollcount = 0
+	///How much this entry will contribute to a contract's overall payout, PER COUNT; commodities will add to this themselves
+	var/feemod = 0
 
 	proc/rc_eval(atom/eval_item) //evaluation procedure, used in different entry classes
 		. = FALSE
@@ -173,11 +179,14 @@ ABSTRACT_TYPE(/datum/req_contract)
 	var/list/rc_entries = list()
 	///Optional list of item rewarder datums; their descriptions will be shown on contract unless flagged otherwise
 	var/list/item_rewarders = list()
-	var/hide_item_payouts // set this to prevent the item payout from being shown on contract
-	var/flavor_desc // optional flavor text for the contract
-	var/requis_desc = "" // mandatory descriptive text for the contract contents, to be generated alongside them
-
-	var/pinned = FALSE // one contract at a time may be pinned, preventing it from rotating out with market shift
+	///Is set to true to prevent any included item rewarders from being shown on contract
+	var/hide_item_payouts
+	///Optional but recommended flavor text to accompany the contract
+	var/flavor_desc
+	///Mandatory descriptive text that lists contract requirements; automatically populated from the list of rc_entries
+	var/requis_desc = ""
+	///Tracks whether contract is pinned; one contract at a time may be pinned, reserving it for QM and preventing it from leaving with market shift
+	var/pinned = FALSE
 
 	New() //in individual definitions, create entries and THEN call this, it'll get things set up for you
 		..()
