@@ -1,6 +1,18 @@
 #define SUPPLY_OPEN_TIME 1 SECOND //Time it takes to open supply door in seconds.
 #define SUPPLY_CLOSE_TIME 15 SECONDS //Time it takes to close supply door in seconds.
 
+//Codes for requisition post-transaction returns handling
+///Requisition was not used, conduct a standard QM sale
+#define RET_IGNORE 0
+///Requisition was used, but no contract was fulfilled; return crate and do not process income.
+#define RET_INSUFFICIENT 1
+///Requisition was used successfully, and items are to be returned (either item rewards or excess goods shipped)
+#define RET_SALE_SENDBACK 2
+///Requisition was used successfully, and no items are to be returned (either no spare items, or a third party sale without item rewards)
+#define RET_NOSENDBACK 3
+///Requisition sheet was used and cargo was sent to third party requisitioner, but contract was not satisfied; no returns, no payment
+#define RET_VOID 4
+
 /datum/shipping_market
 
 	var/list/commodities = list()
@@ -328,23 +340,22 @@
 		var/datum/db_record/account = sell_crate.account
 		var/duckets
 
-		var/datum/req_contract/contractQ //track picked contract for later cleanup
+		var/datum/req_contract/contract_to_clear //track picked contract for later cleanup
 
-		var/returntosender //used for crate return management after requisitions
-		//0 or null if no sendback is necessary, 1 if sendback after failed transaction, 2 if sendback after successful transaction, 3 if clean sale
+		var/return_handling = RET_IGNORE //used for crate return management after requisitions
 
 		var/delivery_code = sell_crate.delivery_destination
 		var/has_requisition_code = !!findtext(delivery_code,"REQ-")
 
 		//requisition contract shipments receive different messages and handling
 		if(has_requisition_code)
-			returntosender = 1
+			return_handling = RET_INSUFFICIENT
 			var/datum/req_contract/contract
 
 			if(length(special_orders) && delivery_code == "REQ-THIRDPARTY")
 				for(var/datum/req_contract/special/prospective in special_orders)
 					if(locate(prospective.req_sheet) in sell_crate.contents)
-						returntosender = 4
+						return_handling = RET_VOID // once a third party recipient is confirmed, sending your crate is irrevocable
 						contract = prospective
 						break
 
@@ -355,9 +366,10 @@
 						break
 
 			if(contract)
-				var/success = contract.requisify(sell_crate) //0 is did not sell, 1 is sold, 2 is sold with no remnants
+				var/success = contract.requisify(sell_crate)
 				if(success)
-					contractQ = contract
+					return_handling = RET_SALE_SENDBACK
+					contract_to_clear = contract
 					switch(contract.req_class)
 						if(CIV_CONTRACT) src.civ_contracts_active--
 						if(AID_CONTRACT) src.aid_contracts_active--
@@ -368,21 +380,21 @@
 							var/reward = giftback.build_reward()
 							if(reward) sell_crate.contents += reward
 							else logTheThing("debug",null,null,"QM contract [contract.type] failed to build [giftback.type]")
-						returntosender = 2 // crate return always active if there's something to return with it
-					else
-						returntosender = success + 1 // successful sale in both cases, but disables crate return if no leftover items
+					else if(success == REQ_RETURN_FULLSALE)
+						return_handling = RET_NOSENDBACK
+
 
 		#ifdef SECRETS_ENABLED
 		send_to_brazil(sell_crate)
 		#endif
 
-		if(returntosender)
-			if(returntosender >= 3)
+		if(return_handling)
+			if(return_handling >= RET_NOSENDBACK)
 				qdel(sell_crate)
-				if(returntosender == 4) return //special order failure: point of no (value) return(ed)
+				if(return_handling == RET_VOID) return
 			else
 				handle_returns(sell_crate)
-				if(returntosender == 1)
+				if(return_handling == RET_INSUFFICIENT)
 					var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 					var/datum/signal/pdaSignal = get_free_signal()
 					var/returnmsg = "Notification: No contract fulfilled by Requisition crate. Returning as sent."
@@ -392,18 +404,18 @@
 					if(transmit_connection != null)
 						transmit_connection.post_signal(null, pdaSignal)
 					return
-			if(req_contracts.Find(contractQ))
-				req_contracts -= contractQ
-				qdel(contractQ)
-			else if(special_orders.Find(contractQ))
-				special_orders -= contractQ
-				qdel(contractQ)
+			if(req_contracts.Find(contract_to_clear))
+				req_contracts -= contract_to_clear
+				qdel(contract_to_clear)
+			else if(special_orders.Find(contract_to_clear))
+				special_orders -= contract_to_clear
+				qdel(contract_to_clear)
 		else
 			duckets += src.appraise_value(sell_crate, commodities_list, 1) + src.points_per_crate
 			qdel(sell_crate)
 
 		var/salesource = "last outgoing shipment"
-		if(returntosender >= 2) //modify sale message if requisitions are source of income
+		if(return_handling >= RET_SALE_SENDBACK) //modify sale message if requisitions are source of income
 			salesource = "requisition contract fulfillment"
 
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")

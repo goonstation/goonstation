@@ -28,7 +28,7 @@ ABSTRACT_TYPE(/datum/rc_entry)
 
 	proc/rc_eval(atom/eval_item) //evaluation procedure, used in different entry classes
 		. = FALSE
-		if(rollcount >= count) return //if you've already got enough, skip and tell the manager as such
+		if(rollcount >= count) throw //if you've already got enough, hard-skip this evaluation pass
 
 //when performing custom evaluations, there are 2 actions that must occur
 //first, you must return true if the atom the entry has been passed contributes to satisfying the condition
@@ -52,14 +52,10 @@ ABSTRACT_TYPE(/datum/rc_entry/item)
 
 	rc_eval(obj/eval_item)
 		. = ..()
-		if(!istype(eval_item)) return //if it's not an object, it's definitely not an item
-		if(exactpath && eval_item.type == typepath)
-			src.rollcount++
-			. = TRUE //let manager know passed eval item is claimed by contract
-		else if(istype(eval_item,typepath))
-			src.rollcount++
-			. = TRUE
-		return
+		if(src.exactpath && eval_item.type != typepath) return // more fussy type evaluation
+		else if(!istype(eval_item)) return // if it's not an object, it's definitely not an item
+		src.rollcount++
+		. = TRUE
 
 //reagents, by the unit
 ABSTRACT_TYPE(/datum/rc_entry/reagent)
@@ -79,7 +75,6 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent)
 			if(C)
 				rollcount += C
 				. = TRUE //let manager know reagent was found in passed eval item
-		return
 
 //stacks, path (or alt path) and amount
 ABSTRACT_TYPE(/datum/rc_entry/stack)
@@ -101,10 +96,8 @@ ABSTRACT_TYPE(/datum/rc_entry/stack)
 		. = ..()
 		if(!istype(eval_item)) return //if it's not an item, it's not a stackable
 		if(eval_item.type == typepath || (typepath_alt && eval_item.type == typepath_alt))
-			if(eval_item.amount)
-				rollcount += eval_item.amount
-				. = TRUE //let manager know passed eval item is claimed by contract
-		return
+			rollcount += eval_item.amount
+			. = TRUE //let manager know passed eval item is claimed by contract
 
 //seeds, analyzed by genetic composition
 ABSTRACT_TYPE(/datum/rc_entry/seed)
@@ -150,9 +143,8 @@ ABSTRACT_TYPE(/datum/rc_entry/seed)
 		if(gene_count >= gene_factors)
 			src.rollcount++
 			. = TRUE
-		return
 
-//reward items: contract creation instantiates these to fill item payout list if applicable
+//item rewarders: contract creation instantiates these to fill item payout list if applicable
 //distinct from rc_entry datums, these -!! are instantiators of their own !!- that the requisition handler calls on
 /datum/rc_itemreward
 	var/name = "something" // what the reward is, description wise
@@ -163,22 +155,28 @@ ABSTRACT_TYPE(/datum/rc_entry/seed)
 
 	proc/build_reward() // this should return an item or list of items, for requisition handler to pack
 
-//contracts, which contain entries and are what are exposed to the qm side of things
-ABSTRACT_TYPE(/datum/req_contract)
-/datum/req_contract
-	var/name = "Henry Whip a Zamboni" // title text that gets a big front row seat
-	var/req_class = 0 // class of the requisition contract; aid requisitions are urgent and will not wait for you
-	//0 is unclassified/misc, 1 is civilian, 2 is emergency aid, 3 is scientific
-	var/req_code // requisition code for cargo handling purposes
-	// clearinghouse requisitions will get a randomly-generated one, third party ones will get REQ-THIRDPARTY and require their requisition papers
 
-	var/payout = 0 // a baseline amount of cash you'll be given for fulfilling the requisition, modified by entries
-	var/list/item_rewarders = list() // optional list for items you're sent as payment; will be shown on contract unless flagged otherwise
+ABSTRACT_TYPE(/datum/req_contract)
+///Datum that holds and manages contract entries; most handling of contracts should reference these
+/datum/req_contract
+	///Title of the contract as used by the requisitions clearinghouse seen in the QM supply computer
+	var/name = "Gary's Secret Mission"
+	///Class of the requisition contract, defaulting to misc (0); aid requisitions are urgent and will not wait for you
+	var/req_class = MISC_CONTRACT
+	///Requisition code used for standard contracts; is automatically generated if not specified, but can be manually set if desired
+	var/req_code
+
+	///A baseline amount of cash you'll be given for fulfilling the requisition; this is modified by entries
+	var/payout = 0
+	///List of contract entry datums; sent cargo will be passed into these for evaluation
+	var/list/rc_entries = list()
+	///Optional list of item rewarder datums; their descriptions will be shown on contract unless flagged otherwise
+	var/list/item_rewarders = list()
 	var/hide_item_payouts // set this to prevent the item payout from being shown on contract
 	var/flavor_desc // optional flavor text for the contract
 	var/requis_desc = "" // mandatory descriptive text for the contract contents, to be generated alongside them
-	var/list/rc_entries = list() // list of requisition contact entries
-	var/pinned = 0 // one contract at a time may be pinned, preventing it from rotating out with market shift
+
+	var/pinned = FALSE // one contract at a time may be pinned, preventing it from rotating out with market shift
 
 	New() //in individual definitions, create entries and THEN call this, it'll get things set up for you
 		..()
@@ -217,11 +215,16 @@ ABSTRACT_TYPE(/datum/req_contract)
 		for(var/obj/item/storage/S in contents)
 			contents |= S.get_all_contents()
 
-		. = 0 //by default return no success
+		. = REQ_RETURN_NOSALE //by default return no success
 		for(var/atom/A in contents)
 			LAGCHECK(LAG_LOW)
 			for(var/datum/rc_entry/shoppin in rc_entries)
-				if(shoppin.rc_eval(A)) //found something that the requisition asked for, let it know
+				var/eval
+				try
+					eval = shoppin.rc_eval(A)
+				catch(var/E)
+					boutput(world,"pali why is this even working")
+				if(eval) //found something that the requisition asked for, let it know
 					contents_to_cull |= A
 
 		for(var/datum/rc_entry/shopped in rc_entries)
@@ -229,16 +232,16 @@ ABSTRACT_TYPE(/datum/req_contract)
 				successes_needed--
 
 		if(!successes_needed)
-			if(src.req_code == "REQ-THIRDPARTY") //third party sales do not preserve leftover items, returns are only on item reward
+			if(src.req_code == "REQ-THIRDPARTY") //third party sales do not preserve leftover items, returns are only done if there is an item reward
 				for(var/atom/X in contents)
 					if(X) qdel(X)
-				return 2
-			if(src.pinned) shippingmarket.has_pinned_contract = 0 //tell shipping market pinned contract was fulfilled
-			. = 1 //sale, but may be leftover items
+				return REQ_RETURN_FULLSALE
+			if(src.pinned) shippingmarket.has_pinned_contract = FALSE //tell shipping market pinned contract was fulfilled
+			. = REQ_RETURN_SALE //sale, but may be leftover items. find out by culling
 			for(var/atom/X in contents_to_cull)
 				if(X) qdel(X)
 			if(!length(sell_crate.contents)) //total clean sale, tell shipping manager to del the crate
-				. = 2
+				. = REQ_RETURN_FULLSALE
 		return
 
 #undef RC_ITEM

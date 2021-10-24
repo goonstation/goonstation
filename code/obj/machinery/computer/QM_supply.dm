@@ -1015,11 +1015,11 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			var/datum/req_contract/RC = locate(href_list["subaction"]) in shippingmarket.req_contracts
 			if(RC)
 				if(RC.pinned)
-					RC.pinned = 0
-					shippingmarket.has_pinned_contract = 0
+					RC.pinned = FALSE
+					shippingmarket.has_pinned_contract = FALSE
 				else if(!shippingmarket.has_pinned_contract)
-					RC.pinned = 1
-					shippingmarket.has_pinned_contract = 1
+					RC.pinned = TRUE
+					shippingmarket.has_pinned_contract = TRUE
 			src.requisitions_update()
 
 		if ("requis_list")
