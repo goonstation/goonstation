@@ -28,7 +28,8 @@ ABSTRACT_TYPE(/datum/rc_entry)
 
 	proc/rc_eval(atom/eval_item) //evaluation procedure, used in different entry classes
 		. = FALSE
-		if(rollcount >= count) throw //if you've already got enough, hard-skip this evaluation pass
+		if(rollcount >= count)
+			throw null //if you've already got enough, hard-skip this evaluation pass
 
 //when performing custom evaluations, there are 2 actions that must occur
 //first, you must return true if the atom the entry has been passed contributes to satisfying the condition
@@ -222,8 +223,8 @@ ABSTRACT_TYPE(/datum/req_contract)
 				var/eval
 				try
 					eval = shoppin.rc_eval(A)
-				catch(var/E)
-					//boutput(world,"pali why is this even working")
+				catch()
+					boutput(world,"pali why is this even working")
 				if(eval) //found something that the requisition asked for, let it know
 					contents_to_cull |= A
 
