@@ -901,9 +901,9 @@
 				message = stutter(message)
 
 	UpdateOverlays(speech_bubble, "speech_bubble")
-	var/speech_bubble_icon_state = speech_bubble.icon_state
+	var/speech_bubble_time = src.last_typing
 	SPAWN_DBG(1.5 SECONDS)
-		if(speech_bubble.icon_state == speech_bubble_icon_state)
+		if(speech_bubble_time == src.last_typing)
 			UpdateOverlays(null, "speech_bubble")
 
 	//Blobchat handling
