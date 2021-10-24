@@ -1103,6 +1103,21 @@ obj/trait/pilot
 	category = "species"
 	mutantRace = /datum/mutantrace/roach
 
+/obj/trait/pug
+	name = "Pug (-3) \[Species\]"
+	cleanName = "Pug"
+	icon_state = "pug"
+	desc = "Should a pug really be on a space station? They aren't suited for space at all. They're practically a liability to the compan.... aww, look at the little ears!"
+	id = "pug"
+	points = -4 //Subject to change- -3 feels too low as puritan is relatively common. Though Puritan Pug DOES make for a special sort of Hard Modes
+	isPositive = 1 //Debatably???? also this var never gets used so Who Cares
+	category = "species"
+	mutantRace = /datum/mutantrace/pug
+
+	onAdd(var/mob/owner)
+		..()
+		owner.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
+
 //Infernal Contract Traits
 /obj/trait/hair
 	name = "Wickedly Good Hair"
