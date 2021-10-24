@@ -18,7 +18,6 @@
 	set name = "start say"
 	set hidden = 1
 
-	boutput(src, "start_say called...")
 	var/mob/living/M = null
 	if (istype(src, /mob/living))
 		M = src
