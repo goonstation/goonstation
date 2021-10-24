@@ -91,4 +91,3 @@ ENV dev
 
 # Spacebee API
 SPACEBEE_API_URL https://spacebee.goonhub.com
-#SPACEBEE_API_KEY
