@@ -633,7 +633,7 @@ mob/verb/checkrewards()
 	desc = "A sugary treat will calm the styptic stings and bring a smile to any face."
 	required_levels = list("Medical Doctor"=0)
 	icon_state = "?"
-	claimable = 1
+	claimable = TRUE
 	claimPerRound = 1
 
 	activate(var/client/C)
@@ -646,7 +646,7 @@ mob/verb/checkrewards()
 /////////////Medical Director////////////////
 /datum/jobXpReward/MedicalDirector/lollipop
 	name = "Medical Lollipop Synthesizer"
-	desc = "NT figured that the bowl on the desk wasent the only place medical lolloipops should be avalable."
+	desc = "NT figured that the bowl on the desk wasn't the only place medical lollipops should be available."
 	required_levels = list("Medical Director"=0)
 	icon_state = "?"
 	claimable = 1
