@@ -364,6 +364,10 @@
 		src.contextLayout.dispose()
 		src.contextLayout = null
 
+	if(hasvar(src, hud)) // ew
+		qdel(src.vars["hud"])
+		srv.vars["hud"] = null
+
 	mobs.Remove(src)
 	if (ai)
 		qdel(ai)
