@@ -1,5 +1,9 @@
 
 (t)sat oct 23 21
+(u)pali
+(p)6270
+(e)🆕|feature
+(*)COMMaster Message command has been added. It lets you send a message to another Goonstation server.
 (u)Flaborized
 (p)6335
 (e)🎨|sprites

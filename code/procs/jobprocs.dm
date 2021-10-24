@@ -531,28 +531,27 @@
 			if(JOB.receives_disk)
 				var/obj/item/disk/data/floppy/read_only/D = new /obj/item/disk/data/floppy/read_only(src)
 				src.equip_if_possible(D, slot_in_backpack)
-				var/datum/computer/file/clone/R = new
-				R.fields["ckey"] = ckey(src.key)
-				R.fields["name"] = src.real_name
-				R.fields["id"] = copytext(md5(src.real_name), 2, 6)
+				var/datum/db_record/R = new
+				R["ckey"] = ckey(src.key)
+				R["name"] = src.real_name
+				R["id"] = copytext(md5(src.real_name), 2, 6)
 
 				var/datum/bioHolder/B = new/datum/bioHolder(null)
 				B.CopyOther(src.bioHolder)
 
-				R.fields["holder"] = B
+				R["holder"] = B
 
-				R.fields["abilities"] = null
+				R["abilities"] = null
 				if (src.abilityHolder)
 					var/datum/abilityHolder/A = src.abilityHolder.deepCopy()
-					R.fields["abilities"] = A
+					R["abilities"] = A
 
 				SPAWN_DBG(0)
 					if(src.traitHolder && length(src.traitHolder.traits))
-						R.fields["traits"] = src.traitHolder.traits.Copy()
+						R["traits"] = src.traitHolder.traits.Copy()
 
-				R.fields["imp"] = null
-				R.fields["mind"] = src.mind
-				R.name = "CloneRecord-[ckey(src.real_name)]"
+				R["imp"] = null
+				R["mind"] = src.mind
 				D.root.add_file(R)
 
 				if (JOB.receives_security_disk)
@@ -670,9 +669,9 @@
 			if(prob(50)) realName = replacetext(realName, "t", pick("d", "k"))
 			if(prob(50)) realName = replacetext(realName, "p", pick("b", "t"))
 
-			var/datum/data/record/B = FindBankAccountByName(src.real_name)
-			if (B?.fields["name"])
-				B.fields["name"] = realName
+			var/datum/db_record/B = FindBankAccountByName(src.real_name)
+			if (B?["name"])
+				B["name"] = realName
 
 		C.registered = realName
 		C.assignment = JOB.name
