@@ -452,9 +452,7 @@ proc/create_fluff(datum/mind/target)
 			for (var/obj/item/spacecash/C in L)
 				current_cash += C.amount
 
-		for (var/datum/data/record/Ba in data_core.bank)
-			if (Ba.fields["name"] == owner.current.real_name)
-				current_cash += Ba.fields["current_money"]
+		current_cash += data_core.bank.find_record("id", owner.current.datacore_id)?["current_money"] || 0
 
 		if (current_cash >= target_cash)
 			return 1
@@ -1234,7 +1232,7 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 		var/objective_text = "Frame [target.current.real_name], the [target.assigned_role == "MODE" ? target.special_role : target.assigned_role] for murder."
 		explanation_text = objective_text
 		targetname = target.current.real_name
-	
+
 
 /*/datum/objective/conspiracy/escape
 	explanation_text = "Survive and ensure more living conspirators escape to Centcom than non-conspirators."

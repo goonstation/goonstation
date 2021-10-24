@@ -66452,39 +66452,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/pacra)
-"dzG" = (
-/obj/machinery/light{
-	dir = 1;
-	on = 1
-	},
-/obj/fitness/speedbag/wizard,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
-"dzH" = (
-/obj/machinery/chem_master{
-	pixel_y = 34
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
-"dzI" = (
-/obj/fitness/stacklifter,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
-"dzJ" = (
-/obj/fitness/weightlifter,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
-"dzK" = (
-/obj/admin_plaque{
-	name = "HukHukHuk's Office";
-	pixel_x = -32
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "dzL" = (
 /obj/admin_plaque{
 	name = "Wire's Office";
@@ -66657,29 +66624,6 @@
 /obj/table/auto,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/pacra)
-"dAn" = (
-/obj/table/wood/auto/desk{
-	icon_state = "2"
-	},
-/obj/machinery/computer3/luggable/personal,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
-"dAo" = (
-/obj/stool/chair/comfy{
-	dir = 8
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
-"dAq" = (
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
-"dAr" = (
-/obj/machinery/door/unpowered/wood{
-	icon = 'icons/obj/doors/door_office.dmi';
-	lock_dir = 8
-	},
-/turf/unsimulated/floor/black,
-/area/centcom/offices/hukhukhuk)
 "dAs" = (
 /obj/machinery/door/unpowered/wood{
 	icon = 'icons/obj/doors/door_office.dmi';
@@ -66811,48 +66755,6 @@
 /obj/machinery/light,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/pacra)
-"dAO" = (
-/obj/machinery/light_area_manager,
-/obj/table/wood/auto/desk{
-	icon_state = "5"
-	},
-/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
-	desc = "It's just water.";
-	dir = 8;
-	icon_state = "bottle-clear";
-	name = "Huk's Bottle";
-	pixel_x = -6;
-	pixel_y = 5
-	},
-/obj/item/chem_pill_bottle{
-	average = "#c38ecc";
-	desc = "Contains 20 Huk Brand Max Beff pills.";
-	name = "Huk Brand Max Beff pill bottle";
-	pcount = 20;
-	pixel_x = 2;
-	pixel_y = 5;
-	pname = "Huk Brand Max Beff";
-	pvol = 5
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
-"dAQ" = (
-/obj/storage/crate/wooden{
-	desc = "Lookin cute, feelin cute.";
-	name = "Huk's clothing crate"
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
-"dAR" = (
-/obj/machinery/light{
-	on = 1
-	},
-/obj/machinery/chem_dispenser_admin{
-	desc = "This object has been obsolete for 8 stations.";
-	name = "Ancient Chemical Dispenser"
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
 "dAS" = (
 /obj/shrub{
 	icon = 'icons/obj/stationobjs.dmi';
@@ -75096,14 +74998,6 @@
 	icon_state = "floor6"
 	},
 /area/shuttle/escape/centcom/donut3)
-"fOt" = (
-/obj/table/wood/auto/desk{
-	icon_state = "8"
-	},
-/obj/item/paper/book/from_file/cookbook,
-/obj/item/paper/book/from_file/pharmacopia,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
 "fQJ" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
@@ -164801,9 +164695,9 @@ dDb
 dDH
 dDZ
 wel
-dzG
-dAn
-dAO
+dvW
+dvW
+dCj
 wel
 dBy
 dBY
@@ -165103,9 +164997,9 @@ dDc
 dDF
 dEa
 wel
-dzH
-dAo
-fOt
+dvW
+dvW
+dvW
 wel
 dBz
 dBZ
@@ -165405,9 +165299,9 @@ dDd
 dDG
 dEb
 wel
-dzI
-dAq
-dAQ
+dvX
+dvW
+dvW
 wel
 dBz
 dCa
@@ -165707,9 +165601,9 @@ dDe
 dDF
 dEc
 wel
-dzJ
-dAq
-dAR
+dvW
+dvW
+dvW
 wel
 dBz
 dBz
@@ -166010,7 +165904,7 @@ dDD
 wel
 wel
 wel
-dAr
+kKw
 wel
 wel
 wel
@@ -166311,7 +166205,7 @@ dDO
 dvy
 dxa
 dvy
-dzK
+rUQ
 dvy
 dvy
 dvy
