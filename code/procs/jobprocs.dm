@@ -531,7 +531,7 @@
 			if(JOB.receives_disk)
 				var/obj/item/disk/data/floppy/read_only/D = new /obj/item/disk/data/floppy/read_only(src)
 				src.equip_if_possible(D, slot_in_backpack)
-				var/datum/computer/file/clone/R = new
+				var/datum/db_record/R = new
 				R["ckey"] = ckey(src.key)
 				R["name"] = src.real_name
 				R["id"] = copytext(md5(src.real_name), 2, 6)
@@ -552,7 +552,6 @@
 
 				R["imp"] = null
 				R["mind"] = src.mind
-				R.name = "CloneRecord-[ckey(src.real_name)]"
 				D.root.add_file(R)
 
 				if (JOB.receives_security_disk)

@@ -280,11 +280,11 @@ obj/item/reagent_containers/iv_drip/dead_exec
 				boutput(H,"Link to cloning computer establised succesfully.")
 				playsound(src.loc, 'sound/machines/ping.ogg', 50, 1)
 				var/has_puritan = FALSE
-				if("puritan" in R["fields"]["traits"]) //Does the user's clone record have puritan?
+				if("puritan" in R["traits"]) //Does the user's clone record have puritan?
 					has_puritan = TRUE
 					boutput(H,"Subject had puritan")
 				if(prob(20) && !has_puritan) //If the scan doesn't have puritan, roll a dice. Too uncommon to weaponise too common for general use.
-					R["fields"]["traits"] += "puritan" // Signal has degraded. Did the player learn nothing from the prefab??
+					R["traits"] += "puritan" // Signal has degraded. Did the player learn nothing from the prefab??
 
 //DECORATIVE OBJECTS
 
