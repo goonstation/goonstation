@@ -224,7 +224,6 @@ ABSTRACT_TYPE(/datum/req_contract)
 				try
 					eval = shoppin.rc_eval(A)
 				catch()
-					boutput(world,"pali why is this even working")
 				if(eval) //found something that the requisition asked for, let it know
 					contents_to_cull |= A
 
