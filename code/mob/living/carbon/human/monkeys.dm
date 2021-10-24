@@ -211,7 +211,6 @@
 		if (src.name == "monkey" || !src.name)
 			randomize_look(src, 1, 1, 1, 0, 1, 0)
 			src.gender = src.bioHolder?.mobAppearance.gender
-		var/datum/pronouns/pronouns = src.bioHolder?.mobAppearance?.pronouns
 		switch(src.gender)
 			if("male")
 				src.bioHolder?.mobAppearance?.pronouns = get_singleton(/datum/pronouns/heHim)
