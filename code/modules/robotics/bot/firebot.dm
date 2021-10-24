@@ -444,8 +444,3 @@
 		src.created_name = t
 
 #undef FIREBOT_MOVE_SPEED
-
-/mob/living/critter/bot/firebot
-	name = "firebot"
-
-	emagged

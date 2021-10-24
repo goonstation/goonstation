@@ -76,6 +76,10 @@
 	if(!throwing_controller) return
 	if(!target) return
 	if(src.anchored && !allow_anchored) return
+	var/turf/targets_turf = get_turf(target)
+	if(!targets_turf)
+		return
+
 	reagents?.physical_shock(14)
 	src.throwing = throw_type
 
@@ -96,9 +100,6 @@
 		animate(transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
 		animate(transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
 
-	var/turf/targets_turf = get_turf(target)
-	if(!targets_turf)
-		return
 	var/target_true_x = targets_turf.x
 	var/target_true_y = targets_turf.y
 	if(islist(params))

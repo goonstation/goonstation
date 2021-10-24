@@ -292,7 +292,7 @@
 				// visible targeted emotes
 				if (!src.restrained())
 					var/M = null
-					var/range = 8
+					var/range = 5
 					if (act == "hug" || act == "sidehug")
 						range = 1
 					if (param)
@@ -301,7 +301,7 @@
 								M = A
 								break
 					else if(act != "wave" && act != "salute") // use *waveto to wave to someone, *saluteto too salute someone
-						var/list/target_list = src.get_targets(range, "both") // Dorko McEnginerd hugs the Thermoelectric Generator!
+						var/list/target_list = src.get_targets(range, "mob")
 						if(length(target_list))
 							var/action_phrase = "emote upon"
 							switch(act)
@@ -379,29 +379,24 @@
 					maptext_out = "<I>struggles to move</I>"
 
 				m_type = 1
-			if ("nod","nodto","glare","stare","look","leer")
+			if ("nod","nodat","glare","glareat","stare","stareat","look")
 				var/M = null
 				if (param)
 					for (var/mob/A in view(null, null))
 						if (ckey(param) == ckey(A.name))
 							M = A
 							break
-				else if(act != "nod") // use *nodto to nod to something
-					var/list/target_list = src.get_targets(8, "both") // Chemmi Dweebus leers at the chemi-compiler!
+				else if(act != "nod" && act != "glare" && act != "stare") // use *nodat to nod to something
+					var/list/target_list = src.get_targets(5, "mob")
 					if(length(target_list))
-						var/action_phrase = "emote upon"
-						switch(act)
-							if("nodat")
-								action_phrase = "nod to"
-							else
-								action_phrase = "[act] at"
+						var/action_phrase = "[act] at"
 						M = tgui_input_list(src, "Pick something to [action_phrase]!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
-						if (M && !IN_RANGE(get_turf(src), get_turf(M), 8))
+						if (M && !IN_RANGE(get_turf(src), get_turf(M), 5))
 							var/inaction_phrase = "emote upon"
 							switch(act)
-								if("nodto")
+								if("nodat")
 									inaction_phrase = "not in acknowledgement distance"
-								if("glare", "stare", "look", "leer")
+								if("glareat", "stareat", "look")
 									inaction_phrase = "[prob(1) ? "out of sight" : "not in sight"]"
 							boutput(src, "<span class='emote'><B>[M]</B> is [inaction_phrase]!</span>")
 							return
@@ -409,13 +404,16 @@
 				act = lowertext(act)
 				if (M)
 					switch(act)
-						if ("nod")
-							message = "<B>[src]</B> [act]s to [M]."
-							maptext_out = "<I>[act]s to [M]</I>"
-						if ("nodto")
-							message = "<B>[src]</B> nods to [M]."
-							maptext_out = "<I>nods to [M]</I>"
-						if ("glare","stare","look","leer")
+						if ("nodat")
+							message = "<B>[src]</B> nods at [M]."
+							maptext_out = "<I>nods at [M]</I>"
+						if ("stareat")
+							message = "<B>[src]</B> stares at [M]."
+							maptext_out = "<I>stares at [M]</I>"
+						if ("glareat")
+							message = "<B>[src]</B> glares at [M]."
+							maptext_out = "<I>glares at [M]</I>"
+						if ("glare","stare","look","nod")
 							message = "<B>[src]</B> [act]s at [M]."
 							maptext_out = "<I>[act]s at [M]</I>"
 				else
@@ -527,7 +525,7 @@
 				burp, fart, monologue, contemplate, custom")
 
 			if ("listtarget")
-				src.show_text("salute, bow, hug, wave, glare, stare, look, leer, nod, flipoff, doubleflip, shakefist, handshake, daps, slap, boggle, highfive, fingerguns")
+				src.show_text("salute, bow, hug, wave, glare, stare, look, nod, flipoff, doubleflip, shakefist, handshake, daps, slap, boggle, highfive, fingerguns")
 
 			if ("suicide")
 				src.show_text("Suicide is a command, not an emote.  Please type 'suicide' in the input bar at the bottom of the game window to kill yourself.", "red")
@@ -1105,7 +1103,7 @@
 								M = A
 								break
 					else
-						var/list/target_list = src.get_targets(8, "both") // Staffie Graytides flips off the cryptographic sequencer!
+						var/list/target_list = src.get_targets(5, "mob")
 						if(length(target_list))
 							var/action_phrase = "emote upon"
 							switch(act)
@@ -1138,7 +1136,7 @@
 								M = A
 								break
 					else
-						var/list/target_list = src.get_targets(8, "both") // Staffie Graytides flips off the cryptographic sequencer!
+						var/list/target_list = src.get_targets(5, "mob")
 						if(length(target_list))
 							var/action_phrase = "emote upon"
 							switch(act)
@@ -1172,7 +1170,7 @@
 							M = A
 							break
 				else
-					var/list/target_list = src.get_targets(8, "both") // Dr. Dingus boggles at robotics manufacturer's stupidity.
+					var/list/target_list = src.get_targets(5, "both") // Dr. Dingus boggles at robotics manufacturer's stupidity.
 					if(length(target_list))
 						M = tgui_input_list(src, "Pick something to boggle at!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
 
@@ -1193,7 +1191,7 @@
 								M = A
 								break
 					else
-						var/list/target_list = src.get_targets(8, "both") // Dr. Dingus boggles at robotics manufacturer's stupidity.
+						var/list/target_list = src.get_targets(5, "mob") // Dr. Dingus boggles at robotics manufacturer's stupidity.
 						if(length(target_list))
 							M = tgui_input_list(src, "Pick something to shake your fist at!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
 
@@ -2091,20 +2089,10 @@
 						dab_id.tooltip_rebuild = 1
 					src.add_karma(-4)
 					if(!dab_id && locate(/obj/machinery/bot/secbot/beepsky) in view(7, get_turf(src)))
-						// determine the name of the perp (goes by ID if wearing one)
-						var/perpname = src.name
-						//if(src:wear_id && src:wear_id:registered)
-						//	perpname = src:wear_id:registered
-
-						// find the matching security record
-						for(var/datum/data/record/R in data_core.general)
-							if(R.fields["name"] == perpname)
-								for (var/datum/data/record/S in data_core.security)
-									if (S.fields["id"] == R.fields["id"])
-									// now add to rap sheet
-
-										S.fields["criminal"] = "*Arrest*"
-										S.fields["mi_crim"] = "Public Dabbing."
+						var/datum/db_record/sec_record = data_core.security.find_record("name", src.name)
+						if(sec_record && sec_record["criminal"] != "*Arrest*")
+							sec_record["criminal"] = "*Arrest*"
+							sec_record["mi_crim"] = "Public dabbing."
 
 					if(src.reagents) src.reagents.add_reagent("dabs",5)
 

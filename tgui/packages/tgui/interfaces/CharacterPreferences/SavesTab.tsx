@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2021
+ * @author Luxizzle (https://github.com/Luxizzle)
+ * @license MIT
+ */
+
 import { Fragment } from 'inferno';
 import { useBackend } from '../../backend';
 import { Box, Button, Divider, LabeledList, Section } from '../../components';
@@ -30,9 +37,9 @@ export const SavesTab = (_props, context) => {
 };
 
 type CloudSaveProps = {
-  name: string,
-  index: number
-}
+  name: string;
+  index: number;
+};
 
 const Cloudsave = ({ name, index }: CloudSaveProps, context: any) => {
   const { act } = useBackend<CharacterPreferencesData>(context);

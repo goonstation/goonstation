@@ -186,6 +186,7 @@
 	var/list/datum/hud/huds = null
 
 	var/client/last_client // actually the current client, used by Logout due to BYOND
+	var/last_ckey
 	var/joined_date = null
 	mat_changename = 0
 	mat_changedesc = 0
@@ -397,9 +398,7 @@
 	src.mob_properties = null
 
 /mob/Login()
-	// drsingh for cannot read null.address (still popping up though)
-	if (!src || !src.client)
-		return
+	src.last_ckey = src.ckey
 
 	if (!src.client.chatOutput)
 		//At least once, some dude has gotten here without a chatOutput datum. Fuck knows how.
@@ -2707,13 +2706,12 @@
 			else
 				if (force_instead || alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
 					if(!src.traitHolder.hasTrait("immigrant"))// stowaway entertainers shouldn't be on the manifest
-						for (var/L in list(data_core.bank, data_core.security, data_core.general, data_core.medical))
-							if (L)
-								var/datum/data/record/R = FindRecordByFieldValue(L, "id", src.datacore_id)
-								if (R)
-									R.fields["name"] = newname
-									if (R.fields["full_name"])
-										R.fields["full_name"] = newname
+						for (var/datum/record_database/DB in list(data_core.bank, data_core.security, data_core.general, data_core.medical))
+							var/datum/db_record/R = DB.find_record("id", src.datacore_id)
+							if (R)
+								R["name"] = newname
+								if (R["full_name"])
+									R["full_name"] = newname
 						for (var/obj/item/card/id/ID in src.contents)
 							ID.registered = newname
 							ID.update_name()

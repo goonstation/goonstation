@@ -314,7 +314,7 @@
 
 	// log account information for QM sales
 	var/obj/item/card/id/scan = null
-	var/datum/data/record/account = null
+	var/datum/db_record/account = null
 
 
 	var/list/destinations = list("Airbridge", "Cafeteria", "EVA", "Engine", "Disposals", "QM", "Catering", "MedSci", "Security") //These have to match the ones on the cargo routers for the routers to work.
@@ -437,7 +437,7 @@
 
 	// log account information for QM sales
 	var/obj/item/card/id/scan = null
-	var/datum/data/record/account = null
+	var/datum/db_record/account = null
 
 	attack()
 		return
