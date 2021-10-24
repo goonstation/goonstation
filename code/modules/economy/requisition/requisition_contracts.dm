@@ -29,7 +29,11 @@ ABSTRACT_TYPE(/datum/rc_entry)
 	proc/rc_eval(atom/eval_item) //evaluation procedure, used in different entry classes
 		. = FALSE
 		if(rollcount >= count)
+<<<<<<< HEAD
 			throw null //if you've already got enough, hard-skip this evaluation pass
+=======
+			throw //if you've already got enough, hard-skip this evaluation pass
+>>>>>>> 50b88540032b9d1b2b14496dd237f22cf1c1d2d1
 
 //when performing custom evaluations, there are 2 actions that must occur
 //first, you must return true if the atom the entry has been passed contributes to satisfying the condition
