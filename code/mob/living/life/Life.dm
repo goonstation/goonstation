@@ -541,6 +541,8 @@
 			L.process()
 
 	force_laydown_standup() //immediately force a laydown
+		if(!lifeprocesses)
+			return
 		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/stuns_lying]
 		if (L)
 			L.process()

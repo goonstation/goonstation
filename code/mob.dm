@@ -364,10 +364,6 @@
 		src.contextLayout.dispose()
 		src.contextLayout = null
 
-	if(hasvar(src, "hud")) // ew
-		qdel(src.vars["hud"])
-		src.vars["hud"] = null
-
 	mobs.Remove(src)
 	if (ai)
 		qdel(ai)
@@ -398,6 +394,13 @@
 	lastattacked = null
 	lastattacker = null
 	health_update_queue -= src
+
+	for(var/x in src)
+		qdel(x)
+	if(hasvar(src, "hud")) // ew
+		qdel(src.vars["hud"])
+		src.vars["hud"] = null
+
 	..()
 	src.mob_properties = null
 
