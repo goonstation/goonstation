@@ -173,6 +173,8 @@ ABSTRACT_TYPE(/obj/item/augmentation/head)
 		if (!..())
 			return
 		src.owner.reagents.add_reagent("nanites", 0.5 * mult) //you want borg powers? Well, come and get 'em!
+
+	breakme()
 		if(M.mob_flags & USR_DIALOG_UPDATES_RANGE)
 			UnregisterSignal(src.owner, COMSIG_LIVING_CLICK)
 			M.mob_flags &= ~USR_DIALOG_UPDATES_RANGE
