@@ -6649,12 +6649,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tools)
-"arL" = (
-/obj/landmark/start{
-	name = "Geneticist"
-	},
-/turf/simulated/floor/green,
-/area/station/medical/dome)
 "arM" = (
 /obj/cable,
 /turf/simulated/floor/airless/solar,
@@ -6920,10 +6914,18 @@
 /turf/simulated/floor/plating/airless/random,
 /area/space)
 "asz" = (
-/obj/grille/steel,
-/obj/window/auto/reinforced,
-/turf/simulated/floor/plating,
-/area/space)
+/obj/machinery/genetics_scanner,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/greenblack{
+	dir = 1
+	},
+/area/station/medical/research{
+	name = "Genetic Research"
+	})
 "asA" = (
 /turf/space,
 /area/shuttle/escape/station/cogmap2)
@@ -7168,10 +7170,20 @@
 /turf/space,
 /area/space)
 "atn" = (
+/obj/machinery/light_switch/north,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 20
+	},
 /obj/machinery/computer/genetics,
-/obj/decal/cleanable/dirt/dirt2,
-/turf/simulated/floor/green,
-/area/space)
+/turf/simulated/floor/greenblack{
+	dir = 1
+	},
+/area/station/medical/research{
+	name = "Genetic Research"
+	})
 "ato" = (
 /turf/simulated/floor/purpleblack{
 	dir = 5
@@ -7377,10 +7389,18 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/treatment1)
 "atQ" = (
-/obj/machinery/genetics_scanner,
-/obj/decal/cleanable/dirt/dirt2,
-/turf/simulated/floor/green,
-/area/space)
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north,
+/obj/monkeyplant,
+/turf/simulated/floor/greenblack{
+	dir = 5
+	},
+/area/station/medical/research{
+	name = "Genetic Research"
+	})
 "atR" = (
 /obj/item/storage/toilet,
 /obj/decal/cleanable/dirt/dirt2,
@@ -7424,7 +7444,9 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersB)
 "atX" = (
-/turf/simulated/floor/green,
+/obj/grille/steel,
+/obj/window/auto/reinforced,
+/turf/simulated/floor/plating,
 /area/station/medical/dome)
 "atY" = (
 /obj/cable{
@@ -12818,20 +12840,6 @@
 /obj/access_spawn/medlab,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
-"aHO" = (
-/obj/table/auto,
-/obj/item/storage/toolbox/emergency,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/northeast)
-"aHP" = (
-/obj/table/auto,
-/obj/item/crowbar,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/tank/air,
-/obj/item/clothing/mask/gas/emergency,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/northeast)
 "aHQ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/secondary/east)
@@ -13321,7 +13329,10 @@
 /obj/item/robodefibrillator,
 /obj/item/storage/firstaid/brain,
 /obj/item/clothing/glasses/eyepatch,
-/turf/simulated/floor/green,
+/obj/item/device/radio/intercom/medical,
+/turf/simulated/floor/greenblack{
+	dir = 9
+	},
 /area/station/medical/research{
 	name = "Genetic Research"
 	})
@@ -13388,6 +13399,8 @@
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
 "aJn" = (
+/obj/table/auto,
+/obj/item/storage/toolbox/emergency,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -14193,60 +14206,42 @@
 	dir = 4
 	},
 /turf/simulated/floor/greenblack{
-	dir = 9
+	dir = 8
 	},
 /area/station/medical/research{
 	name = "Genetic Research"
 	})
 "aLc" = (
-/obj/landmark/start{
-	name = "Geneticist"
-	},
-/obj/item/device/radio/intercom/medical,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/greenblack{
-	dir = 1
-	},
+/turf/simulated/floor/black,
 /area/station/medical/research{
 	name = "Genetic Research"
 	})
 "aLd" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/storage/pill_bottle/mutadone,
-/obj/item/genetics_injector/dna_activator,
-/obj/item/genetics_injector/dna_activator,
-/obj/item/bandage,
-/obj/item/clothing/glasses/blindfold,
-/obj/item/suture,
-/obj/item/scalpel,
-/obj/machinery/light_switch/north,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20
-	},
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/greenblack{
+/obj/stool/chair/office{
 	dir = 1
 	},
+/obj/landmark/start{
+	name = "Geneticist"
+	},
+/turf/simulated/floor/black,
 /area/station/medical/research{
 	name = "Genetic Research"
 	})
 "aLe" = (
-/obj/monkeyplant,
 /obj/cable{
+	d1 = 1;
 	d2 = 2;
-	icon_state = "0-2"
+	icon_state = "1-2"
 	},
-/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/greenblack{
-	dir = 5
+	dir = 4
 	},
 /area/station/medical/research{
 	name = "Genetic Research"
@@ -14290,6 +14285,12 @@
 	},
 /area/station/science/testchamber)
 "aLk" = (
+/obj/table/auto,
+/obj/item/crowbar,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/tank/air,
+/obj/item/clothing/mask/gas/emergency,
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
@@ -15023,6 +15024,14 @@
 	name = "Genetic Research"
 	})
 "aNc" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/item/storage/pill_bottle/mutadone,
+/obj/item/genetics_injector/dna_activator,
+/obj/item/genetics_injector/dna_activator,
+/obj/item/bandage,
+/obj/item/clothing/glasses/blindfold,
+/obj/item/suture,
+/obj/item/scalpel,
 /turf/simulated/floor/greenblack{
 	dir = 8
 	},
@@ -16043,11 +16052,6 @@
 	})
 "aPn" = (
 /obj/machinery/genetics_scanner,
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
 /obj/cable{
 	d1 = 1;
 	d2 = 8;
@@ -123141,8 +123145,8 @@ aab
 arr
 amk
 arN
-asz
-asz
+aaa
+aaa
 ati
 aub
 avl
@@ -123443,8 +123447,8 @@ aai
 arr
 arA
 arN
-asz
-atn
+aaa
+aaa
 atX
 atZ
 avm
@@ -123745,9 +123749,9 @@ ape
 ape
 arB
 aaa
-asz
-atQ
-arL
+aaa
+aaa
+atX
 avo
 avn
 avo
@@ -124047,8 +124051,8 @@ aaa
 arr
 amk
 arN
-asz
-asz
+aaa
+aaa
 ati
 avw
 avo
@@ -127993,7 +127997,7 @@ arn
 uhZ
 wFe
 aDp
-aKZ
+asz
 aLc
 xzj
 aPm
@@ -128294,8 +128298,8 @@ aaa
 arn
 aJn
 uJm
-aHO
-aKZ
+aDp
+atn
 aLd
 aNd
 aPm
@@ -128596,8 +128600,8 @@ aaa
 arn
 aLk
 uJm
-aHP
-aKZ
+aDp
+atQ
 aLe
 aNe
 aPn
