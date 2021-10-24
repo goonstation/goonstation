@@ -1927,3 +1927,43 @@
 			M.changeStatus("paralysis", 5 SECONDS)
 			M.force_laydown_standup()
 			M.delStatus("drowsy")
+
+/datum/statusEffect/poisoned
+	id = "poisoned"
+	name = "Poisoned"
+	desc = "Something <i>really</i> didn't sit well with you."
+	icon_state = "miasma"
+	movement_modifier = /datum/movement_modifier/status_slowed
+
+	onUpdate(var/timePassed)
+		var/mob/living/L = owner
+		var/tox = 0
+		var/puke_prob = 0
+		var/faint_prob = 0
+		switch(timePassed)
+			if(0 to 200)
+				tox = 0.1
+				puke_prob = 0.5
+				faint_prob = 0.2
+			if(200 to 600)
+				tox = 0.4
+				puke_prob = 1
+				faint_prob = 0.5
+			if(600 to INFINITY)
+				tox = 1
+				puke_prob = 2
+				faint_prob = 1
+		L.take_toxin_damage(tox)
+		if(prob(2))
+			L.emote("groan")
+		else if(prob(2))
+			L.emote("moan")
+		else if(prob(2))
+			L.emote("shudder")
+		else if(prob(2))
+			L.change_eye_blurry(rand(5,10))
+		if(prob(puke_prob))
+			L.visible_message("<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>", "<span class='alert'>You puke all over yourself!</span>")
+			L.vomit()
+		if(prob(faint_prob))
+			L.emote("faint")

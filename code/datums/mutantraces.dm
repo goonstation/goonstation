@@ -2106,7 +2106,7 @@
 /datum/mutantrace/pug
 	name = "pug"
 	icon = 'icons/mob/pug.dmi'
-	icon_state = "body"
+	icon_state = "body_m"
 	human_compatible = TRUE
 	override_attack = 0
 	voice_override = "pug"
@@ -2138,6 +2138,9 @@
 
 	say_verb()
 		return "barks"
+
+	say_filter(var/message)
+		return replacetext(message, "rough", "ruff")
 
 	emote(var/act, var/voluntary)
 		switch(act)
