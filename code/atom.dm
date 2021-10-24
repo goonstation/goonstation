@@ -388,6 +388,8 @@
 		if(isturf(src.loc)) // call it on the area too
 			src.loc.loc.Entered(src, null)
 
+	src.last_turf = isturf(src.loc) ? src.loc : null
+
 
 /atom/movable/disposing()
 	if (temp_flags & MANTA_PUSHING)
