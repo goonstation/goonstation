@@ -1103,7 +1103,7 @@
 								M = A
 								break
 					else
-						var/list/target_list = src.get_targets(5, "both") // Staffie Graytides flips off the cryptographic sequencer!
+						var/list/target_list = src.get_targets(5, "mob")
 						if(length(target_list))
 							var/action_phrase = "emote upon"
 							switch(act)
