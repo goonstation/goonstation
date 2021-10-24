@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2021
+ * @author Luxizzle (https://github.com/Luxizzle)
+ * @license MIT
+ */
+
 import { decodeHtmlEntities } from 'common/string';
 import { useBackend } from '../../backend';
 import { BlockQuote, Box, Button, ColorButton, LabeledList, Section } from '../../components';

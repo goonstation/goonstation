@@ -43,7 +43,7 @@
 		..()
 
 	proc/add_depth_shadow()
-		src.filters += filter(type="drop_shadow", x=2, y=-2, color=rgb(4, 8, 16, 150), size=4, offset=1)
+		add_filter("depth_shadow", 1, drop_shadow_filter(x=2, y=-2, color=rgb(4, 8, 16, 150), size=4, offset=1))
 
 
 /atom/movable/screen/plane_display
@@ -118,7 +118,7 @@ client
 				if (shadows_checked)
 					P.add_depth_shadow()
 				else
-					P.filters = null
+					P.clear_filters()
 
 	proc/setup_special_screens()
 		for (var/atom/A as anything in plane_parents)

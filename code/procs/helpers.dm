@@ -744,6 +744,7 @@ proc/get_angle(atom/a, atom/b)
 	var/mob/the_mob = null
 	var/client/the_client = null
 	var/the_key = ""
+	var/last_ckey = null
 
 	if (isnull(whom))
 		return "*null*"
@@ -755,6 +756,7 @@ proc/get_angle(atom/a, atom/b)
 		the_mob = whom
 		the_client = the_mob.client
 		the_key = html_encode(the_mob.key)
+		last_ckey = the_mob.last_ckey
 	else if (istype(whom, /datum))
 		if (ismind(whom))
 			var/datum/mind/the_mind = whom
@@ -786,7 +788,10 @@ proc/get_angle(atom/a, atom/b)
 	var/text = ""
 
 	if (!the_key)
-		text += "*no client*"
+		if(last_ckey)
+			text += "*last ckey: [last_ckey]*"
+		else
+			text += "*no client*"
 	else
 		if (!isnull(the_mob))
 			if(custom_href) text += "<a href=\"[custom_href]\">"
@@ -1960,7 +1965,7 @@ proc/countJob(rank)
 		return
 
 	// Find our master's mob reference (if any).
-	var/mob/mymaster = whois_ckey_to_mob_reference(M.mind.master)
+	var/mob/mymaster = ckey_to_mob(M.mind.master)
 
 	switch (slave_type)
 		if ("mslave")
@@ -2066,7 +2071,7 @@ proc/countJob(rank)
 /**
   * A universal ckey -> mob reference lookup proc, adapted from whois() (Convair880).
   */
-/proc/whois_ckey_to_mob_reference(target as text, exact=1)
+/proc/ckey_to_mob(target as text, exact=1)
 	if(isnull(target))
 		return
 	target = ckey(target)

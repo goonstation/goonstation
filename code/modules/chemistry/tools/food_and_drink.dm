@@ -336,7 +336,7 @@
 
 			if (desired_mask != current_mask)
 				current_mask = desired_mask
-				src.filters = list(filter(type="alpha", icon=icon('icons/obj/foodNdrink/food.dmi', "eating[desired_mask]")))
+				src.add_filter("bite", 0, alpha_mask_filter(icon=icon('icons/obj/foodNdrink/food.dmi', "eating[desired_mask]")))
 
 		eat_twitch(eater)
 		eater.on_eat(src)
@@ -459,8 +459,13 @@
 				//Make them fall over, they lost their balance.
 				C.changeStatus("weakened", 2 SECONDS)
 		else
+			if (C.restrained()) // Can't chug if your arms are not available
+				if (prob(1)) // Actually you can if you're really lucky
+					C.visible_message("<span class='alert'>Holy shit! [C] grabs the [src] with their teeth and prepares to chug!</span>")
+				else
+					boutput(C, "<span class='alert'>You can't grab the [src] with your arms to chug it.</span>")
+					return
 			actions.start(new /datum/action/bar/icon/chug(C, src), C)
-		return
 
 	//Wow, we copy+pasted the heck out of this... (Source is chemistry-tools dm)
 	attack_self(mob/user as mob)
@@ -946,7 +951,7 @@
 	desc = "Caution - fragile."
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	icon_state = "glass-drink"
-	item_state = "glass-drink"
+	item_state = "drink_glass"
 	var/icon_style = "drink"
 	g_amt = 30
 	var/glass_style = "drink"

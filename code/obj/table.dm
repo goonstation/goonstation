@@ -18,6 +18,7 @@
 	var/has_storage = 0
 	var/obj/item/storage/desk_drawer/desk_drawer = null
 	var/slaps = 0
+	var/hulk_immune = FALSE
 
 
 	New(loc, obj/a_drawer)
@@ -284,7 +285,7 @@
 			return ..()
 
 	attack_hand(mob/user as mob)
-		if (user.is_hulk())
+		if (user.is_hulk() && !hulk_immune)
 			user.visible_message("<span class='alert'>[user] destroys the table!</span>")
 			if (prob(40))
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
@@ -694,8 +695,8 @@
 				var/duration= round(regrow_duration / loops, 2)
 
 				// Ripple inwards
-				src.filters += filter(type="ripple", x=0, y=0, size=size, repeat=rand()*2.5+3, radius=0, flags=WAVE_BOUNDED)
-				filter = src.filters[src.filters.len]
+				add_filter("gnesis regrowth", 1, ripple_filter(x=0, y=0, size=size, repeat=rand()*2.5+3, radius=0, flags=WAVE_BOUNDED))
+				filter = get_filter("gnesis regrowth")
 				animate(filter, size=0, time=0, loop=loops, radius=12, flags=ANIMATION_PARALLEL)
 				animate(size=size, radius=0, time=duration)
 
@@ -705,7 +706,7 @@
 				sleep(regrow_duration)
 
 				// Remove filter and reset color
-				src.filters -= filter
+				remove_filter("gnesis regrowth")
 				animate(src, loop=0, color=color, time=duration/2)
 				src.visible_message("<span class='alert'>\The [src] fully reforms!</span>")
 				src.glass_broken = GLASS_INTACT

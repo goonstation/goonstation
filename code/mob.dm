@@ -186,6 +186,7 @@
 	var/list/datum/hud/huds = null
 
 	var/client/last_client // actually the current client, used by Logout due to BYOND
+	var/last_ckey
 	var/joined_date = null
 	mat_changename = 0
 	mat_changedesc = 0
@@ -397,9 +398,7 @@
 	src.mob_properties = null
 
 /mob/Login()
-	// drsingh for cannot read null.address (still popping up though)
-	if (!src || !src.client)
-		return
+	src.last_ckey = src.ckey
 
 	if (!src.client.chatOutput)
 		//At least once, some dude has gotten here without a chatOutput datum. Fuck knows how.
@@ -567,7 +566,7 @@
 				var/mob/living/L = src
 				L.viral_transmission(AM,"Contact",1)
 
-			if ((tmob.bioHolder.HasEffect("magnets_pos") && src.bioHolder.HasEffect("magnets_pos")) || (tmob.bioHolder.HasEffect("magnets_neg") && src.bioHolder.HasEffect("magnets_neg")))
+			if ((tmob.bioHolder?.HasEffect("magnets_pos") && src.bioHolder?.HasEffect("magnets_pos")) || (tmob.bioHolder?.HasEffect("magnets_neg") && src.bioHolder?.HasEffect("magnets_neg")))
 				//prevent ping-pong loops by deactivating for a second, as they can crash the server under some circumstances
 				var/datum/bioEffect/hidden/magnetic/tmob_effect = tmob.bioHolder.GetEffect("magnets_pos")
 				if(tmob_effect == null) tmob_effect = tmob.bioHolder.GetEffect("magnets_neg")
@@ -609,7 +608,7 @@
 				tmob.throw_at(get_edge_cheap(source, get_dir(src, tmob)),  20, 3)
 				src.throw_at(get_edge_cheap(source, get_dir(tmob, src)),  20, 3)
 				return
-			if ((!tmob.now_pushing && !src.now_pushing) && (tmob.bioHolder.HasEffect("magnets_pos") && src.bioHolder.HasEffect("magnets_neg")) || (tmob.bioHolder.HasEffect("magnets_neg") && src.bioHolder.HasEffect("magnets_pos")))
+			if ((!tmob.now_pushing && !src.now_pushing) && (tmob.bioHolder?.HasEffect("magnets_pos") && src.bioHolder?.HasEffect("magnets_neg")) || (tmob.bioHolder?.HasEffect("magnets_neg") && src.bioHolder?.HasEffect("magnets_pos")))
 				//prevent ping-pong loops by deactivating for a second, as they can crash the server under some circumstances
 				var/datum/bioEffect/hidden/magnetic/tmob_effect = tmob.bioHolder.GetEffect("magnets_pos")
 				if(tmob_effect == null) tmob_effect = tmob.bioHolder.GetEffect("magnets_neg")
@@ -2707,13 +2706,12 @@
 			else
 				if (force_instead || alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
 					if(!src.traitHolder.hasTrait("immigrant"))// stowaway entertainers shouldn't be on the manifest
-						for (var/L in list(data_core.bank, data_core.security, data_core.general, data_core.medical))
-							if (L)
-								var/datum/data/record/R = FindRecordByFieldValue(L, "id", src.datacore_id)
-								if (R)
-									R.fields["name"] = newname
-									if (R.fields["full_name"])
-										R.fields["full_name"] = newname
+						for (var/datum/record_database/DB in list(data_core.bank, data_core.security, data_core.general, data_core.medical))
+							var/datum/db_record/R = DB.find_record("id", src.datacore_id)
+							if (R)
+								R["name"] = newname
+								if (R["full_name"])
+									R["full_name"] = newname
 						for (var/obj/item/card/id/ID in src.contents)
 							ID.registered = newname
 							ID.update_name()
