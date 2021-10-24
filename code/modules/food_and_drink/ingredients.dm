@@ -319,6 +319,11 @@
 	heal_amt = 1
 	food_color = "#FFD700"
 	custom_food = 1
+	initial_volume = 5
+	initial_reagents = "cheese"
+	sliceable = 1
+	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/cheeseslice
+	slice_amount = 5
 
 /obj/item/reagent_containers/food/snacks/ingredient/gcheese
 	name = "weird cheese"
@@ -331,6 +336,9 @@
 	initial_volume = 50
 	initial_reagents = list("mercury"=5,"LSD"=5,"ethanol"=5,"gcheese"=5)
 	food_effects = list("food_sweaty","food_bad_breath")
+	sliceable = 1
+	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/gcheeseslice
+	slice_amount = 5
 
 /obj/item/reagent_containers/food/snacks/ingredient/pancake_batter
 	name = "pancake batter"
@@ -651,7 +659,7 @@
 			var/pizzap = new /obj/item/reagent_containers/food/snacks/ingredient/pizzap
 			user.put_in_hand_or_drop(pizzap)
 			qdel (W)
-			qdel (src)			
+			qdel (src)
 		else if (istype(W, /obj/item/reagent_containers/food/snacks/))
 			var/obj/item/reagent_containers/food/snacks/F = W
 			if(!F.custom_food)
@@ -700,7 +708,7 @@
 	name = "uncooked mushroom pizza"
 	desc = "A cheese and mushroom pizza. You need to bake it..."
 	icon_state = "pizzabasem"
-	
+
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if (user == M)
 			boutput(user, "<span class='alert'>You need to bake it, you greedy beast!</span>")
@@ -714,7 +722,7 @@
 	name = "uncooked meatball pizza"
 	desc = "A cheese and meatball pizza. You need to bake it..."
 	icon_state = "pizzabaseb"
-	
+
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if (user == M)
 			boutput(user, "<span class='alert'>You need to bake it, you greedy beast!</span>")
@@ -728,7 +736,7 @@
 	name = "uncooked pepperoni pizza"
 	desc = "A cheese and pepperoni pizza. You need to bake it..."
 	icon_state = "pizzabasep"
-	
+
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if (user == M)
 			boutput(user, "<span class='alert'>You need to bake it, you greedy beast!</span>")
@@ -748,7 +756,7 @@
 	heal(var/mob/M)
 		boutput(M, "<span class='alert'>... You must be really hungry.</span>")
 		..()
-	
+
 /obj/item/reagent_containers/food/snacks/ingredient/pasta/sheet
 	name = "pasta sheet"
 	desc = "An uncooked sheet of pasta."
@@ -840,14 +848,10 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	doants = 0
 	initial_volume = 40
 	initial_reagents = "pepperoni"
+	sliceable = 1
+	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/pepperoni
+	slice_amount = 4
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher))
-			var/turf/T = get_turf(src)
-			user.visible_message("[user] cuts [src] into slices.", "You cut [src] into slices.")
-			for (var/i in 1 to 4)
-				new /obj/item/reagent_containers/food/snacks/ingredient/pepperoni(T)
-			qdel (src)
 
 /obj/item/reagent_containers/food/snacks/ingredient/seaweed
 	name = "seaweed sheets"
@@ -866,3 +870,37 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	food_color = "#e0a80c"
 	initial_volume = 10
 	initial_reagents = "currypowder"
+
+/obj/item/reagent_containers/food/snacks/ingredient/tomatoslice
+	name = "tomato slice"
+	desc = "A slice of some kind of tomato, presumably."
+	icon_state = "tomatoslice"
+	amount = 1
+	heal_amt = 1
+	food_color = "#f2500c"
+	custom_food = 1
+	initial_volume = 4
+	initial_reagents = "juice_tomato"
+
+/obj/item/reagent_containers/food/snacks/ingredient/cheeseslice
+	name = "slice of cheese"
+	desc = "A slice of hopefully fresh cheese."
+	icon_state = "cheeseslice"
+	amount = 1
+	heal_amt = 1
+	food_color = "#FFD700"
+	custom_food = 1
+	initial_volume = 1
+	initial_reagents = "cheese"
+
+/obj/item/reagent_containers/food/snacks/ingredient/gcheeseslice
+	name = "slice of weird cheese"
+	desc = "A slice of what you assume was, at one point, cheese."
+	icon_state = "gcheeseslice"
+	amount = 1
+	heal_amt = 1
+	food_color = "#669966"
+	custom_food = 1
+	initial_volume = 4
+	initial_reagents = list("mercury"=1,"LSD"=1,"ethanol"=1,"gcheese"=1)
+	food_effects = list("food_sweaty","food_bad_breath")

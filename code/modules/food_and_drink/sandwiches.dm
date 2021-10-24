@@ -388,11 +388,24 @@
 
 /obj/item/reagent_containers/food/snacks/burger/cheeseburger
 	name = "cheeseburger"
-	desc = "Tasty, but not paticularly healthy."
+	desc = "Tasty, but not particularly healthy."
 	icon_state = "cburger"
 	amount = 6
 	heal_amt = 2
+	initial_volume = 50
+	initial_reagents = list("cholesterol"=10,"cheese"=1)
 	food_effects = list("food_brute", "food_burn")
+	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
+
+/obj/item/reagent_containers/food/snacks/burger/wcheeseburger
+	name = "weird cheeseburger"
+	desc = "You're not sure if you should eat this, considering the green hue of what you assume to be the cheese."
+	icon_state = "wcburger"
+	amount = 6
+	heal_amt = 2
+	initial_volume = 50
+	initial_reagents = list("mercury"=1,"LSD"=1,"ethanol"=1,"gcheese"=1,"yuck"=5,"cholesterol"=10)
+	food_effects = list("food_tox","food_sweaty","food_bad_breath","food_deep_burp")
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
 
 /obj/item/reagent_containers/food/snacks/burger/cheeseburger_m
@@ -401,6 +414,8 @@
 	icon_state = "cburger"
 	amount = 6
 	heal_amt = 2
+	initial_volume = 50
+	initial_reagents = list("cholesterol"=10,"cheese"=5)
 	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 	heal(var/mob/M)

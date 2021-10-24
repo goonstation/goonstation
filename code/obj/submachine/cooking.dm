@@ -411,6 +411,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/butterburger(src)
 			src.recipes += new /datum/cookingrecipe/cheeseburger_m(src)
 			src.recipes += new /datum/cookingrecipe/cheeseburger(src)
+			src.recipes += new /datum/cookingrecipe/wcheeseburger(src)
 			src.recipes += new /datum/cookingrecipe/tikiburger(src)
 			src.recipes += new /datum/cookingrecipe/luauburger(src)
 			src.recipes += new /datum/cookingrecipe/coconutburger(src)
