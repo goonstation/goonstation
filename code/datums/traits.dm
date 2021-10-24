@@ -1096,7 +1096,7 @@ obj/trait/pilot
 /obj/trait/pug
 	name = "Pug (-3) \[Species\]"
 	cleanName = "Pug"
-	icon_state = "?"
+	icon_state = "pug"
 	desc = "Should a pug really be on a space station? They aren't suited for space at all. They're practically a liability to the compan.... aww, look at the little ears!"
 	id = "pug"
 	points = -4 //Subject to change- -3 feels too low as puritan is relatively common. Though Puritan Pug DOES make for a special sort of Hard Modes
