@@ -274,7 +274,7 @@
 	if (src.restrain_time > TIME)
 		return
 
-	if (src.buckled && istype(src.buckled))
+	if (src.buckled && istype(src.buckled) && src.buckled != src)
 		var/glide_size = src.glide_size
 		src.buckled.Move(a, b, flag)
 		src.buckled.glide_size = glide_size // dumb hack
