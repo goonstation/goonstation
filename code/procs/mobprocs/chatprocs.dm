@@ -59,7 +59,12 @@
 	src.say(message)
 	if (!dd_hasprefix(message, "*")) // if this is an emote it is logged in emote
 		logTheThing("say", src, null, "SAY: [html_encode(message)] [log_loc(src)]")
-		//logit("say", 0, src, " said ", message)
+
+/mob/living/say_verb(message as text)
+	set name = "say"
+	. = ..()
+	if (src.speech_bubble?.icon_state == "typing")
+		src.UpdateOverlays(null, "speech_bubble")
 
 /mob/verb/say_radio()
 	set name = "say_radio"
