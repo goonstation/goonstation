@@ -266,6 +266,7 @@
 
 //Find a specific record by key.
 /obj/machinery/computer/cloning/proc/find_record(var/find_key)
+	RETURN_TYPE(/datum/db_record)
 	var/selected_record = null
 	for(var/datum/db_record/R as anything in src.records)
 		if (R["ckey"] == find_key)
@@ -692,7 +693,7 @@ proc/find_ghost_by_key(var/find_key)
 				return TRUE
 			var/selected_record =	find_record(params["ckey"])
 			if(selected_record)
-				logTheThing("station", usr, null, "deletes the cloning record [selected_record["fields"]["name"]] for player [selected_record["fields"]["ckey"]] at [log_loc(src)].")
+				logTheThing("station", usr, null, "deletes the cloning record [selected_record["name"]] for player [selected_record["ckey"]] at [log_loc(src)].")
 				src.records.Remove(selected_record)
 				qdel(selected_record)
 				selected_record = null
@@ -721,19 +722,19 @@ proc/find_ghost_by_key(var/find_key)
 				. = TRUE
 		if("saveToDisk")
 			var/ckey = params["ckey"]
-			var/selected_record = find_record(ckey)
+			var/datum/db_record/selected_record = find_record(ckey)
 			if ((isnull(src.diskette)) || (src.diskette.read_only) || (isnull(selected_record)))
 				show_message("Save error.", "warning")
 				. = TRUE
 
 			for (var/datum/computer/file/clone/R in src.diskette.root.contents)
-				if (R["ckey"] == selected_record["fields"]["ckey"])
+				if (R["ckey"] == selected_record["ckey"])
 					show_message("Record already exists on disk.", "info")
 					. = TRUE
 
 			var/datum/computer/file/clone/cloneFile = new
-			cloneFile.name = "CloneRecord-[ckey(selected_record["fields"]["name"])]"
-			cloneFile.fields = selected_record["fields"]
+			cloneFile.name = "CloneRecord-[ckey(selected_record["name"])]"
+			cloneFile.fields = selected_record.get_fields_copy()
 			if((src.diskette.file_used + cloneFile.size) > src.diskette.file_amount)
 				show_message("Disk is full.", "danger")
 				return TRUE
@@ -752,7 +753,7 @@ proc/find_ghost_by_key(var/find_key)
 			var/loaded = 0
 
 			for(var/datum/computer/file/clone/cloneRecord in src.diskette.root.contents)
-				if (!find_record(cloneRecord["ckey"]))
+				if (!find_record(cloneRecord.fields["ckey"]))
 					var/datum/db_record/R = new(null, cloneRecord.fields.Copy())
 					src.records += R
 					loaded++
@@ -829,7 +830,7 @@ proc/find_ghost_by_key(var/find_key)
 			currentHealth = implant.getHealthList()
 		if(src.diskette) // checks if saved to disk
 			for (var/datum/computer/file/clone/F in src.diskette.root.contents)
-				if(F["ckey"] == r["ckey"])
+				if(F.fields["ckey"] == r["ckey"])
 					saved = TRUE
 
 		recordsTemp.Add(list(list(

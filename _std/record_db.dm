@@ -139,4 +139,7 @@
 		RETURN_TYPE(/datum/db_record)
 		return new/datum/db_record(null, fields.Copy())
 
+	proc/get_fields_copy()
+		return fields.Copy()
+
 /mob/var/datum/record_database/rdb = new

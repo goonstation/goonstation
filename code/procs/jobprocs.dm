@@ -531,27 +531,27 @@
 			if(JOB.receives_disk)
 				var/obj/item/disk/data/floppy/read_only/D = new /obj/item/disk/data/floppy/read_only(src)
 				src.equip_if_possible(D, slot_in_backpack)
-				var/datum/db_record/R = new
-				R["ckey"] = ckey(src.key)
-				R["name"] = src.real_name
-				R["id"] = copytext(md5(src.real_name), 2, 6)
+				var/datum/computer/file/clone/R = new
+				R.fields["ckey"] = ckey(src.key)
+				R.fields["name"] = src.real_name
+				R.fields["id"] = copytext(md5(src.real_name), 2, 6)
 
 				var/datum/bioHolder/B = new/datum/bioHolder(null)
 				B.CopyOther(src.bioHolder)
 
-				R["holder"] = B
+				R.fields["holder"] = B
 
-				R["abilities"] = null
+				R.fields["abilities"] = null
 				if (src.abilityHolder)
 					var/datum/abilityHolder/A = src.abilityHolder.deepCopy()
-					R["abilities"] = A
+					R.fields["abilities"] = A
 
 				SPAWN_DBG(0)
 					if(src.traitHolder && length(src.traitHolder.traits))
-						R["traits"] = src.traitHolder.traits.Copy()
+						R.fields["traits"] = src.traitHolder.traits.Copy()
 
-				R["imp"] = null
-				R["mind"] = src.mind
+				R.fields["imp"] = null
+				R.fields["mind"] = src.mind
 				D.root.add_file(R)
 
 				if (JOB.receives_security_disk)
