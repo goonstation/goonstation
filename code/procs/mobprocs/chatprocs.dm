@@ -8,6 +8,45 @@
 	set name = "whisper"
 	return src.whisper(message)
 
+// actually a semi-replacement for say that does an input() rather than using the verb
+// this allows it to be, synchronious and let us remove the overlay later
+// if they close/cancel without saying anything
+//
+// hopefully it doesn't break anything but as usual i did some testing and it seemed ok
+// normal "say" is still there in the command bar if you want stealthy
+/mob/verb/start_say()
+	set name = "start say"
+	set hidden = 1
+
+	boutput(src, "start_say called...")
+	var/mob/living/M = null
+	if (istype(src, /mob/living))
+		M = src
+
+	if (M)
+		M.speech_bubble.icon_state = "typing"
+		UpdateOverlays(M.speech_bubble, "speech_bubble")
+		var/current_time = TIME
+		M.last_typing = current_time
+
+		SPAWN_DBG(15 SECONDS)
+			if (M?.last_typing != current_time)
+				return
+			if (M?.speech_bubble?.icon_state == "typing")
+				M.UpdateOverlays(null, "speech_bubble")
+
+	var/msg = input("", "Say") as null|text
+
+	if (msg)
+		// assume it will handle its own way of doing this
+		src.say_verb(msg)
+		return
+
+	if (M && M.speech_bubble?.icon_state == "typing")
+		M.last_typing = null
+		M.UpdateOverlays(null, "speech_bubble")
+
+
 /mob/verb/say_verb(message as text)
 	set name = "say"
 	//&& !src.client.holder

@@ -1,4 +1,9 @@
-
+(t)sun oct 42 21
+(u)zmauajsa
+(e)🆕|"feature"
+(*)) made it so that when you push [t] (or whatever0 to talk you get a little bubble over your head that looks like you're typing something in.
+(*)this will probably have bugs but i did testing and nothing immediately caught on fire.
+(*)if something does catch on fire feel free to revert it (action_associations.dm)
 (t)sat oct 23 21
 (u)pali
 (p)6270
