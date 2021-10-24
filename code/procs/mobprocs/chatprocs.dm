@@ -22,17 +22,16 @@
 	if (istype(src, /mob/living))
 		M = src
 
+	var/current_time = TIME
 	if (M)
 		M.speech_bubble.icon_state = "typing"
 		UpdateOverlays(M.speech_bubble, "speech_bubble")
-		var/current_time = TIME
 		M.last_typing = current_time
 
 		SPAWN_DBG(15 SECONDS)
 			if (M?.last_typing != current_time)
 				return
-			if (M?.speech_bubble?.icon_state == "typing")
-				M.UpdateOverlays(null, "speech_bubble")
+			M.UpdateOverlays(null, "speech_bubble")
 
 	var/msg = input("", "Say") as null|text
 
@@ -41,7 +40,7 @@
 		src.say_verb(msg)
 		return
 
-	if (M && M.speech_bubble?.icon_state == "typing")
+	if (M?.last_typing == current_time)
 		M.last_typing = null
 		M.UpdateOverlays(null, "speech_bubble")
 
