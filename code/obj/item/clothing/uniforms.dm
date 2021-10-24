@@ -323,15 +323,15 @@
 		icon_state = "hop-dress"
 		item_state = "hop-dress"
 
-	alt
+	navy
 		icon_state = "hop-alt"
 		item_state = "hop-alt"
 
-	dress_alt
+	dress_navy
 		icon_state = "hop-dress-alt"
 		item_state = "hop-dress-alt"
 
-	fancy_alt
+	fancy_navy
 		icon_state = "hop-fancy-alt"
 		item_state = "hop-fancy-alt"
 
@@ -1138,7 +1138,7 @@
 		icon_state = "suitR"
 		item_state = "suitR"
 
-	dress_alt
+	dress_navy
 		icon_state = "suitT-dress-alt"
 		item_state = "suitT-dress-alt"
 

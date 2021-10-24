@@ -299,7 +299,7 @@
 	icon_state = "hopcoat"
 	item_state = "hopcoat"
 
-	alt
+	grey
 		icon_state = "hopcoat-alt"
 		item_state = "hopcoat-alt"
 

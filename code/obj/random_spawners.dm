@@ -218,11 +218,10 @@
 	icon_state = "rand_tool"
 	min_amt2spawn = 1
 	max_amt2spawn = 1
-	items2spawn = list(/obj/item/crowbar,
-	/obj/item/clothing/under/rank/head_of_personnel/alt,
-	/obj/item/clothing/under/rank/head_of_personnel/dress_alt,
-	/obj/item/clothing/under/rank/head_of_personnel/fancy_alt,
-	/obj/item/clothing/under/suit/hop/dress_alt,
+	items2spawn = list(/obj/item/clothing/under/rank/head_of_personnel/navy,
+	/obj/item/clothing/under/rank/head_of_personnel/dress_navy,
+	/obj/item/clothing/under/rank/head_of_personnel/fancy_navy,
+	/obj/item/clothing/under/suit/hop/dress_navy,
 	/obj/item/clothing/under/suit/hop/navy)
 
 	one
