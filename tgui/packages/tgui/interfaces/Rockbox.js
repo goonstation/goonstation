@@ -45,7 +45,7 @@ export const Rockbox = (_props, context) => {
                       <Fragment key={currentOre.name}>
                         <Tooltip
                           position="bottom"
-                          content={currentOre.name === 'Gem' ? 'Properties vary' : currentOre.stats}
+                          content={currentOre.stats}
                         >
                           <Table>
                             <Table.Row>

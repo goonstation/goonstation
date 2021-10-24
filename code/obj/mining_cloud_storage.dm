@@ -246,9 +246,11 @@
 	proc/get_ore_properties(var/obj/item/raw_material/ore)
 		if (!ore?.material)
 			return
+		if (istype(ore, /obj/item/raw_material/gemstone)) return "varied levels of hardness and density"
 		var/list/stat_list = list()
 		for(var/datum/material_property/stat in ore.material.properties)
 			stat_list += stat.getAdjective(ore.material)
+		if (!stat_list.len) return "no properties"
 		return stat_list.Join(", ")
 
 
