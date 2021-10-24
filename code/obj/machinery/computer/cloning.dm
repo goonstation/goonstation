@@ -821,7 +821,7 @@ proc/find_ghost_by_key(var/find_key)
 		. += list("diskReadOnly" = src.diskette.read_only)
 
 	var/list/recordsTemp = list()
-	for (var/datum/db_record/r as anything in src.records)
+	for (var/datum/db_record/r as anything in records)
 		var/saved = FALSE
 		var/obj/item/implant/cloner/implant = locate(r["imp"])
 		var/currentHealth = ""
