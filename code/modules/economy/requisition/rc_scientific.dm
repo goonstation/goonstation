@@ -41,7 +41,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 /datum/rc_entry/item/organ/spleen
 	name = "spleen"
-	commodity = /datum/commodity/bodyparts/heart
+	commodity = /datum/commodity/bodyparts/spleen
 
 
 
