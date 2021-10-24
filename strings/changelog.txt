@@ -1,5 +1,7 @@
 
 (t)sun oct 24 21
+(u)pali
+(*)the <b>GPS</b> verb has been made better. Try it today to find your way around the station. It's in the Commands tab above chat.
 (u)Flappybat
 (p)6339
 (e)🐛|bug
