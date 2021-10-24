@@ -823,7 +823,7 @@ proc/find_ghost_by_key(var/find_key)
 	var/list/recordsTemp = list()
 	for (var/r in records)
 		var/saved = FALSE
-		var/obj/item/implant/cloner/implant = locate(r["fields"]["imp"])
+		var/obj/item/implant/cloner/implant = locate(r["imp"])
 		var/currentHealth = ""
 		if(istype(implant))
 			currentHealth = implant.getHealthList()
