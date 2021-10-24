@@ -141,3 +141,5 @@ var/ZLOG_START_TIME
 
 //do we want to check incoming clients to see if theyre using a vpn?
 #define DO_VPN_CHECKS 1
+
+#define DELETE_QUEUE_DEBUG
