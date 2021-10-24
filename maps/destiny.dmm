@@ -5205,7 +5205,7 @@
 	},
 /area/station/science/research_director)
 "auu" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
 	},
 /obj/disposalpipe/segment/morgue,
@@ -9549,18 +9549,10 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "aMd" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/decal/tile_edge/line/white{
 	icon_state = "line3"
 	},
-/obj/stool/chair/office/purple{
-	dir = 8
-	},
-/obj/landmark/start{
-	name = "Scientist"
-	},
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 1
 	},
@@ -10006,6 +9998,15 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/stool/chair/office/purple{
+	dir = 1
+	},
+/obj/landmark/start{
+	name = "Scientist"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 8
 	},
@@ -10030,13 +10031,11 @@
 	dir = 4;
 	icon_state = "line3"
 	},
-/obj/machinery/computer/telescope{
-	dir = 4
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	icon_state = "0-4"
+	icon_state = "0-2"
 	},
+/obj/machinery/computer/telescope,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -18841,9 +18840,6 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
 "cku" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
 /obj/decal/tile_edge/line/white{
 	icon_state = "line3"
 	},
@@ -31273,9 +31269,6 @@
 	},
 /obj/cable{
 	icon_state = "2-4"
-	},
-/obj/machinery/door/airlock/pyro/glass/med{
-	name = "Medbay"
 	},
 /obj/machinery/door/airlock/pyro/glass/med{
 	name = "Medbay"
@@ -51864,17 +51857,6 @@
 	},
 /turf/simulated/floor/red/checker,
 /area/station/security/main)
-"tKO" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/decal/tile_edge/line/white{
-	icon_state = "line3"
-	},
-/turf/simulated/floor/orangeblack/side/white{
-	dir = 1
-	},
-/area/station/science/teleporter)
 "tKP" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -114073,7 +114055,7 @@ nor
 aPs
 qrb
 rhL
-tKO
+dKH
 tUb
 vsD
 biV

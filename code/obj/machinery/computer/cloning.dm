@@ -231,33 +231,33 @@
 		show_message("Subject already in database.", "info")
 		return
 
-	var/datum/data/record/R = new /datum/data/record(  )
-	R.fields["ckey"] = ckey(subjMind.key)
-	R.fields["name"] = subject.real_name
-	R.fields["id"] = copytext(md5(subject.real_name), 2, 6)
+	var/datum/db_record/R = new /datum/db_record(  )
+	R["ckey"] = ckey(subjMind.key)
+	R["name"] = subject.real_name
+	R["id"] = copytext(md5(subject.real_name), 2, 6)
 
 	var/datum/bioHolder/H = new/datum/bioHolder(null)
 	H.CopyOther(subject.bioHolder)
 
-	R.fields["holder"] = H
+	R["holder"] = H
 
-	R.fields["abilities"] = null
+	R["abilities"] = null
 	if (subject.abilityHolder)
 		var/datum/abilityHolder/A = subject.abilityHolder.deepCopy()
-		R.fields["abilities"] = A
+		R["abilities"] = A
 
-	R.fields["traits"] = list()
+	R["traits"] = list()
 	if(subject.traitHolder && length(subject.traitHolder.traits))
-		R.fields["traits"] = subject.traitHolder.traits.Copy()
+		R["traits"] = subject.traitHolder.traits.Copy()
 
 	var/obj/item/implant/cloner/imp = new(subject)
 	imp.implanted = TRUE
 	imp.owner = subject
 	subject.implant.Add(imp)
-	R.fields["imp"] = "\ref[imp]"
+	R["imp"] = "\ref[imp]"
 
 	if (!isnull(subjMind)) //Save that mind so traitors can continue traitoring after cloning.
-		R.fields["mind"] = subjMind
+		R["mind"] = subjMind
 
 	src.records += R
 	show_message("Subject successfully scanned.", "success")
@@ -266,14 +266,15 @@
 
 //Find a specific record by key.
 /obj/machinery/computer/cloning/proc/find_record(var/find_key)
+	RETURN_TYPE(/datum/db_record)
 	var/selected_record = null
-	for(var/datum/data/record/R in src.records)
-		if (R.fields["ckey"] == find_key)
+	for(var/datum/db_record/R as anything in src.records)
+		if (R["ckey"] == find_key)
 			selected_record = R
 			break
 	return selected_record
 
-/obj/machinery/computer/cloning/proc/clone_record(datum/data/record/C)
+/obj/machinery/computer/cloning/proc/clone_record(datum/db_record/C)
 	if (!istype(C))
 		show_message("Invalid or corrupt record.", "danger")
 		return
@@ -312,7 +313,7 @@
 		show_message("Abnormal reading from cloning pod.", "danger")
 		return
 
-	var/mob/selected = find_ghost_by_key(C.fields["ckey"])
+	var/mob/selected = find_ghost_by_key(C["ckey"])
 
 	if (!selected)
 		show_message("Can't clone: Unable to locate mind.", "danger")
@@ -333,19 +334,19 @@
 	// at this point selected = the dude we wanna revive.
 
 	if (wagesystem.clones_for_cash)
-		var/datum/data/record/Ba = FindBankAccountByName(C.fields["name"])
+		var/datum/db_record/Ba = FindBankAccountByName(C["name"])
 		var/account_credit = 0
 
-		if (Ba?.fields["current_money"])
-			account_credit = Ba.fields["current_money"]
+		if (Ba?["current_money"])
+			account_credit = Ba["current_money"]
 
 		if ((src.held_credit + account_credit) >= wagesystem.clone_cost)
-			if (pod1.growclone(selected, C.fields["name"], C.fields["mind"], C.fields["holder"], C.fields["abilities"] , C.fields["traits"]))
+			if (pod1.growclone(selected, C["name"], C["mind"], C["holder"], C["abilities"] , C["traits"]))
 				var/from_account = min(wagesystem.clone_cost, account_credit)
 				if (from_account > 0)
-					Ba.fields["current_money"] -= from_account
+					Ba["current_money"] -= from_account
 				src.held_credit -= (wagesystem.clone_cost - from_account)
-				show_message("Payment of [wagesystem.clone_cost] credits accepted. [from_account > 0 ? "Deducted [from_account] credits from [C.fields["name"]]'s account.' " : ""][from_account < wagesystem.clone_cost ? "Deducted [wagesystem.clone_cost - from_account] credits from machine credit." : ""] Cloning cycle activated.", "info")
+				show_message("Payment of [wagesystem.clone_cost] credits accepted. [from_account > 0 ? "Deducted [from_account] credits from [C["name"]]'s account.' " : ""][from_account < wagesystem.clone_cost ? "Deducted [wagesystem.clone_cost - from_account] credits from machine credit." : ""] Cloning cycle activated.", "info")
 				src.records.Remove(C)
 				qdel(C)
 				src.menu = 1
@@ -354,7 +355,7 @@
 		else
 			show_message("Insufficient funds to begin clone cycle.", "warning")
 
-	else if (pod1.growclone(selected, C.fields["name"], C.fields["mind"], C.fields["holder"], C.fields["abilities"] , C.fields["traits"]))
+	else if (pod1.growclone(selected, C["name"], C["mind"], C["holder"], C["abilities"] , C["traits"]))
 		show_message("Cloning cycle activated.", "success")
 		src.records.Remove(C)
 		qdel(C)
@@ -692,7 +693,7 @@ proc/find_ghost_by_key(var/find_key)
 				return TRUE
 			var/selected_record =	find_record(params["ckey"])
 			if(selected_record)
-				logTheThing("station", usr, null, "deletes the cloning record [selected_record["fields"]["name"]] for player [selected_record["fields"]["ckey"]] at [log_loc(src)].")
+				logTheThing("station", usr, null, "deletes the cloning record [selected_record["name"]] for player [selected_record["ckey"]] at [log_loc(src)].")
 				src.records.Remove(selected_record)
 				qdel(selected_record)
 				selected_record = null
@@ -721,19 +722,19 @@ proc/find_ghost_by_key(var/find_key)
 				. = TRUE
 		if("saveToDisk")
 			var/ckey = params["ckey"]
-			var/selected_record = find_record(ckey)
+			var/datum/db_record/selected_record = find_record(ckey)
 			if ((isnull(src.diskette)) || (src.diskette.read_only) || (isnull(selected_record)))
 				show_message("Save error.", "warning")
 				. = TRUE
 
 			for (var/datum/computer/file/clone/R in src.diskette.root.contents)
-				if (R.fields["ckey"] == selected_record["fields"]["ckey"])
+				if (R["ckey"] == selected_record["ckey"])
 					show_message("Record already exists on disk.", "info")
 					. = TRUE
 
 			var/datum/computer/file/clone/cloneFile = new
-			cloneFile.name = "CloneRecord-[ckey(selected_record["fields"]["name"])]"
-			cloneFile.fields = selected_record["fields"]
+			cloneFile.name = "CloneRecord-[ckey(selected_record["name"])]"
+			cloneFile.fields = selected_record.get_fields_copy()
 			if((src.diskette.file_used + cloneFile.size) > src.diskette.file_amount)
 				show_message("Disk is full.", "danger")
 				return TRUE
@@ -753,8 +754,7 @@ proc/find_ghost_by_key(var/find_key)
 
 			for(var/datum/computer/file/clone/cloneRecord in src.diskette.root.contents)
 				if (!find_record(cloneRecord.fields["ckey"]))
-					var/datum/data/record/R = new
-					R.fields = cloneRecord.fields
+					var/datum/db_record/R = new(null, cloneRecord.fields.Copy())
 					src.records += R
 					loaded++
 					show_message("Load successful, [loaded] [loaded > 1 ? "records" : "record"] transferred.", "success")
@@ -822,21 +822,21 @@ proc/find_ghost_by_key(var/find_key)
 		. += list("diskReadOnly" = src.diskette.read_only)
 
 	var/list/recordsTemp = list()
-	for (var/r in records)
+	for (var/datum/db_record/r as anything in records)
 		var/saved = FALSE
-		var/obj/item/implant/cloner/implant = locate(r["fields"]["imp"])
+		var/obj/item/implant/cloner/implant = locate(r["imp"])
 		var/currentHealth = ""
 		if(istype(implant))
 			currentHealth = implant.getHealthList()
 		if(src.diskette) // checks if saved to disk
 			for (var/datum/computer/file/clone/F in src.diskette.root.contents)
-				if(F.fields["ckey"] == r["fields"]["ckey"])
+				if(F.fields["ckey"] == r["ckey"])
 					saved = TRUE
 
 		recordsTemp.Add(list(list(
-			name = r["fields"]["name"],
-			id = r["fields"]["id"],
-			ckey = r["fields"]["ckey"],
+			name = r["name"],
+			id = r["id"],
+			ckey = r["ckey"],
 			health = currentHealth,
 			implant = !isnull(implant),
 			saved = saved

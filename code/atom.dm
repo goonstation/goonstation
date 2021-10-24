@@ -381,12 +381,16 @@
 			T.checkinghasentered++
 		if (src.event_handler_flags & USE_PROXIMITY)
 			T.checkinghasproximity++
+			for (var/turf/T2 in range(1, T))
+				T2.neighcheckinghasproximity++
 		if(src.opacity)
 			T.opaque_atom_count++
 	if(!isnull(src.loc))
 		src.loc.Entered(src, null)
 		if(isturf(src.loc)) // call it on the area too
 			src.loc.loc.Entered(src, null)
+
+	src.last_turf = isturf(src.loc) ? src.loc : null
 
 
 /atom/movable/disposing()
@@ -496,6 +500,8 @@
 			last_turf.checkinghasentered = max(last_turf.checkinghasentered-1, 0)
 		if (src.event_handler_flags & USE_PROXIMITY)
 			last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
+			for (var/turf/T2 in range(1, last_turf))
+				T2.neighcheckinghasproximity--
 
 	if (isturf(src.loc))
 		last_turf = src.loc
@@ -512,6 +518,8 @@
 			T.checkinghasentered++
 		if (src.event_handler_flags & USE_PROXIMITY)
 			T.checkinghasproximity++
+			for (var/turf/T2 in range(1, T))
+				T2.neighcheckinghasproximity++
 	else
 		last_turf = 0
 
@@ -862,6 +870,8 @@
 			last_turf.checkinghasentered = max(last_turf.checkinghasentered-1, 0)
 		if (src.event_handler_flags & USE_PROXIMITY)
 			last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
+			for (var/turf/T2 in range(1, last_turf))
+				T2.neighcheckinghasproximity--
 
 	if (do_checks && isturf(src.loc))
 		last_turf = src.loc
@@ -877,6 +887,8 @@
 			last_turf.checkinghasentered++
 		if (src.event_handler_flags & USE_PROXIMITY)
 			last_turf.checkinghasproximity++
+			for (var/turf/T2 in range(1, last_turf))
+				T2.neighcheckinghasproximity++
 	else
 		last_turf = 0
 
