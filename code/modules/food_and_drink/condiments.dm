@@ -231,7 +231,7 @@
 
 	mustard
 		name = "mustard bottle"
-		desc = "A little bottle for putting condiments on stuff. It has some mustard in it."
+		desc = "A little bottle of John Johnsson's finest mustard. It has a picture of a fire-fighting boat on it for some reason."
 		icon_state = "bottle-mustard"
 		stuff = "mustard"
 		myVerb = "squirt"
