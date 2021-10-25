@@ -309,6 +309,21 @@
 	afterattack(obj/target, mob/user , flag)
 		return
 
+	get_desc(mob/user)
+		. = ..()
+		if(!user.traitHolder.hasTrait("training_chef"))
+			return
+		if(food_effects != null)
+			. += "<br><span class='notice'> This food has the following effects: "
+			for(var/id as anything in food_effects)
+				. += hasStatus(id).name + "; "
+			. += "</span>"
+
+
+
+
+
+
 	proc/on_bite(mob/eater)
 		//if (reagents?.total_volume)
 		//	reagents.reaction(M, INGEST)
