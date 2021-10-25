@@ -50870,7 +50870,6 @@
 	},
 /obj/decal/mule/dropoff,
 /obj/disposalpipe/trunk/brig,
-/obj/table/auto,
 /turf/simulated/floor/redblack,
 /area/station/security/main)
 "oMG" = (
