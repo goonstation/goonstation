@@ -473,7 +473,7 @@
 	else if(!new_comp)
 		new_comp = new nt(raw_args) // Dupes are allowed, act like normal
 
-	if(!old_comp && !QDELETED(new_comp)) // Nothing related to duplicate components happened and the new component is healthy
+	if(new_comp && !QDELETED(new_comp)) // Nothing related to duplicate components happened and the new component is healthy
 		SEND_SIGNAL(src, COMSIG_COMPONENT_ADDED, new_comp)
 		return new_comp
 	return old_comp
