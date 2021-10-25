@@ -119,7 +119,7 @@
 	LAZYLISTADD(signal.channels_passed, src.channel_name)
 	var/target_tag = signal.data["address_tag"]
 	var/target_address = signal.data["address_1"]
-	var/is_broadcast = target_address == "ping" || (isnull(target_tag) && isnull(target_address))
+	var/is_broadcast = target_address == "ping" || target_address == "00000000" || (isnull(target_tag) && isnull(target_address))
 	var/use_can_receive = src.can_receive_necessary(source, signal, params)
 	var/draw_packet = length(global.client_image_groups?[CLIENT_IMAGE_GROUP_PACKETVISION]?.subscribed_mobs_with_subcount)
 	if(!draw_packet)
