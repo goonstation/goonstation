@@ -32,6 +32,11 @@
 		src.devices_by_address = list()
 	src.devices_by_address[device.address] = device
 
+	if(is_analog(device?.parent))
+		if(isnull(src.analog_devices))
+			src.analog_devices = list()
+		src.analog_devices[device.parent] = 1
+
 /datum/packet_network/proc/unregister(datum/component/packet_connected/device)
 	if(src.in_disposing)
 		return // it gets cleaned en-masse
@@ -49,6 +54,9 @@
 	src.devices_by_address -= device.address
 	if(!length(src.devices_by_address))
 		src.devices_by_address = null
+
+	if(is_analog(device?.parent))
+		src.analog_devices -= device.parent
 
 /datum/packet_network/proc/draw_packet(datum/component/packet_connected/target, datum/component/packet_connected/source, datum/signal/signal, params=null)
 	var/turf/sourceT = get_turf(source.parent)
@@ -144,5 +152,13 @@
 				get_image_group(CLIENT_IMAGE_GROUP_PACKETVISION).remove_image(img)
 				qdel(img)
 	qdel(signal)
+
+
+// temporary handling of headset-like radios until that gets refactored into a better system
+
+/datum/packet_network/var/list/obj/analog_devices = null
+
+/datum/packet_network/proc/is_analog(obj/device)
+	return istype(device, /obj/item/device/radio) || istype(device, /obj/item/mechanics/radioscanner)
 
 #undef POST_PACKET_INTERNAL
