@@ -1,4 +1,9 @@
 
+(t)mon oct 25 21
+(u)UnfunnyPerson
+(p)6414
+(e)⚖|balance
+(+)Antag cleanbots and firebots can now pick up small-tiny items instead of only being able to pick up tiny items.
 (t)sun oct 24 21
 (u)pali
 (*)the <b>GPS</b> verb has been made better. Try it today to find your way around the station. It's in the Commands tab above chat.
