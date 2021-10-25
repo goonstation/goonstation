@@ -1158,7 +1158,6 @@
 				return
 			choices += "drink from it"
 		if (!choices.len)
-
 			boutput(user, "<span class='notice'>You can't think of anything to do with [src].</span>")
 			return
 
