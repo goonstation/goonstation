@@ -21,14 +21,14 @@ jobs:
               "repo": "%s"
               }'
           curl -X POST -H "Content-Type: application/json" \
-            -d $(printf "$JSON_FMT"
-                "${{ github.event.workflow_run.name }}"
-                "${{ github.event.workflow_run.html_url }}"
-                "${{ github.event.workflow_run.head_branch }}",
-                "${{ github.event.workflow_run.head_commit.author.name }}"
-                "${{ github.event.workflow_run.head_commit.message }}"
-                "${{ github.event.workflow_run.head_commit.id }}"
-                "${{ secrets.MEDASS_API_KEY }}"
-                "${{ github.event.workflow_run.head_repository.full_name }}"
-              )
+            -d "$(printf "$JSON_FMT" \
+                "${{ github.event.workflow_run.name }}" \
+                "${{ github.event.workflow_run.html_url }}" \
+                "${{ github.event.workflow_run.head_branch }}" \
+                "${{ github.event.workflow_run.head_commit.author.name }}" \
+                "${{ github.event.workflow_run.head_commit.message }}" \
+                "${{ github.event.workflow_run.head_commit.id }}" \
+                "${{ secrets.MEDASS_API_KEY }}" \
+                "${{ github.event.workflow_run.head_repository.full_name }}" \
+              )" \
             "${{ secrets.MEDASS_API_URL }}/workflow_failed"

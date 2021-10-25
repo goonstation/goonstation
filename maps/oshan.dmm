@@ -6423,7 +6423,9 @@
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "aoS" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0
+	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},

@@ -336,7 +336,7 @@
 
 			if (desired_mask != current_mask)
 				current_mask = desired_mask
-				src.filters = list(filter(type="alpha", icon=icon('icons/obj/foodNdrink/food.dmi', "eating[desired_mask]")))
+				src.add_filter("bite", 0, alpha_mask_filter(icon=icon('icons/obj/foodNdrink/food.dmi', "eating[desired_mask]")))
 
 		eat_twitch(eater)
 		eater.on_eat(src)
@@ -951,7 +951,7 @@
 	desc = "Caution - fragile."
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	icon_state = "glass-drink"
-	item_state = "glass-drink"
+	item_state = "drink_glass"
 	var/icon_style = "drink"
 	g_amt = 30
 	var/glass_style = "drink"

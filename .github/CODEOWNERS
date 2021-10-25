@@ -43,7 +43,7 @@
 /code/modules/chemistry/Chemistry-Recipes.dm @Tarmunora
 
 # Virvatuli
-/sound/ @virvatuli-gh
+#/sound/ @virvatuli-gh
 
 # ZeWaka
 *.md @ZeWaka

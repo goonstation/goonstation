@@ -1777,7 +1777,7 @@
 		// You can enthrall silicon mobs and yes, they need special handling.
 		// Also, enthralled AIs should still see their master's name when in a robot suit (Convair880).
 		if (src.mind && src.mind.special_role == ROLE_VAMPTHRALL && src.mind.master)
-			var/mob/mymaster = whois_ckey_to_mob_reference(src.mind.master)
+			var/mob/mymaster = ckey_to_mob(src.mind.master)
 			if (mymaster)
 				boutput(who, "<b>Obey these laws:</b>")
 				boutput(who, "1. Only your master [mymaster.real_name] is human. Obey and serve them to the best of your ability.")
@@ -2438,8 +2438,8 @@
 	proc/borg_death_alert(modifier = ROBOT_DEATH_MOD_NONE)
 		var/message = null
 		var/net_id = generate_net_id(src)
-		var/frequency = 1149
-		var/datum/radio_frequency/radio_connection = radio_controller.add_object(src, "[frequency]")
+		var/frequency = FREQ_PDA
+		var/datum/component/packet_connected/radio/radio_connection = MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
 		var/area/myarea = get_area(src)
 
 		switch(modifier)
@@ -2452,10 +2452,9 @@
 			else	//Someone passed us an unkown modifier
 				message = "UNKNOWN ERROR: [src] in [myarea]"
 
-		if (message && radio_connection)
+		if (message)
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
-			newsignal.transmission_method = TRANSMISSION_RADIO
 			newsignal.data["command"] = "text_message"
 			newsignal.data["sender_name"] = "CYBORG-DAEMON"
 			newsignal.data["message"] = message
@@ -2463,8 +2462,8 @@
 			newsignal.data["group"] = list(MGD_MEDRESEACH, MGO_SILICON, MGA_DEATH)
 			newsignal.data["sender"] = net_id
 
-			radio_connection.post_signal(src, newsignal)
-			radio_controller.remove_object(src, "[frequency]")
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
+			qdel(radio_connection)
 
 	proc/mainframe_check()
 		if (!src.dependent) // shells are available for use, dependent borgs are already in use by an AI. do not kill empty shells!!

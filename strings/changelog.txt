@@ -1,5 +1,100 @@
 
+(t)sun oct 24 21
+(u)pali
+(*)the <b>GPS</b> verb has been made better. Try it today to find your way around the station. It's in the Commands tab above chat.
+(u)Flappybat
+(p)6339
+(e)🐛|bug
+(+)Fixed Oshan trench elevator pinpointers.
+(t)sun oct 42 21
+(u)zmauajsa
+(e)🆕|"feature"
+(*)) made it so that when you push [t] (or whatever0 to talk you get a little bubble over your head that looks like you're typing something in.
+(*)this will probably have bugs but i did testing and nothing immediately caught on fire.
+(*)if something does catch on fire feel free to revert it (action_associations.dm)
+(t)sat oct 23 21
+(u)pali
+(p)6270
+(e)🆕|feature
+(*)COMMaster Message command has been added. It lets you send a message to another Goonstation server.
+(u)Flaborized
+(p)6335
+(e)🎨|sprites
+(+)Resprited crematoriums and morgue slabs.
+(u)pali
+(p)6373
+(e)|
+(+)Ghosting in cryo now starts respawn countdown on RP
+(u)Walpvrgis
+(p)6218
+(e)🎨|sprites
+(*)Station floor tiles have been resprited (and the floors available in the Floor and Wall Planner have been updated to match). Lemme know if you notice any weirdness with them!
+(t)fri oct 22 21
+(u)Flappybat
+(p)6338
+(e)🗺|mapping
+(+)Removed cryotube system valves on cogmap2, destiny, kondaru and oshan to match the other maps cryo setup.
+(u)zjdtmkhzt
+(p)6400
+(e)|
+(+)Genetics abilities are now displayed by default, clicking the button now hides them.
+(u)Walpvrgis
+(p)6361
+(e)🆕🎨|feature, sprites
+(*)Geoff the clown trader is now selling Witch Costumes in two cute colours. It's still October, I'm not too late!!
+(u)zjdtmkhzt
+(p)6385
+(e)🆕|feature
+(+)Added new trait that spawns you with no hair, but a wig instead. Also works for mutantraces.
+(u)Vocalpocal
+(p)6327
+(e)⛔|removal
+(+)Increased tobacco genome from 2 to 11
+(+)To make tomacco, you now have to use splicing instead of infusing tomato seed with nicotine
+(u)Nexusuxen
+(p)6391
+(e)|
+(+)Recolored AI Intercom Monitor text from default green to color used by AI Intercoms
+(t)thu oct 21 21
+(u)Wisemonster
+(p)6376
+(e)🗺|mapping
+(*)Added a long-range teleporter to Destiny's science department.
+(t)wed oct 20 21
+(u)Gousaid67
+(p)6382
+(e)|
+(+)You can now see the charging progress of an item by examining the recharger while close!
+(t)tue oct 19 21
+(u)aloe
+(p)6362
+(e)🗺⛔|mapping, removal
+(+)NanoTrasen finally realized that they shouldn't be selling Generic Candy in vending machines. They now sell chocolate bars, which work in all the same recipes that the old candy did.
+(t)mon oct 18 21
+(u)Wisemonster
+(p)6368
+(e)|
+(+)Security Assistants may spawn with a new(ish) objective.
+(u)Gannets
+(p)6358
+(e)|
+(+)Nuke ops medics can now see what reagents are contained in their combi-injectors.
+(t)sun oct 17 21
+(u)tarmunora
+(e)🧊🔥|balance
+(+)Cryoxadone and Cryostaline on-life effects are surpressed by fire.
+(u)tarmunora
+(e)⚖|balance
+(+)Adjust moonshine efficacy, omnizine return, and bottle size.
+(u)Gerhazo
+(p)6344
+(e)🎨|sprites
+(+)The kitchen gibber has received some mechanical upgrades.
 (t)fri oct 15 21
+(u)UnfunnyPerson
+(p)6333
+(e)⚖|balance
+(+)It now takes 3 seconds to shove someone in the portabrig instead of 1 second.
 (u)Zamujasa
 (e)🆕|feature
 (*)Admins can now set a message for a player that will be displayed on next login, for when we need to tell you something but you aren't online.
