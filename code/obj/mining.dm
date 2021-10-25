@@ -971,6 +971,7 @@
 	var/datum/ore/ore = null
 	var/datum/ore/event/event = null
 	var/list/space_overlays = list()
+	var/floor_turf = "/turf/simulated/floor/plating/airless/asteroid"
 
 	//NEW VARS
 	var/mining_health = 120
@@ -1317,6 +1318,7 @@
 		return
 
 	proc/destroy_asteroid(var/dropOre=1)
+		var/temp_floor_turf = floor_turf
 		var/datum/ore/O = src.ore
 		var/datum/ore/event/E = src.event
 		if (src.invincible)
@@ -1350,13 +1352,14 @@
 
 		var/new_color = src.stone_color
 		src.RL_SetOpacity(0)
-		src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid)
+		src.ReplaceWith(temp_floor_turf)
 		src.stone_color = new_color
 		src.opacity = 0
 		src.levelupdate()
 
-		for (var/turf/simulated/floor/plating/airless/asteroid/A in range(src,1))
-			A.update_icon()
+		for (var/turf/simulated/floor/A in range(src,1))
+			if(istype(A, temp_floor_turf))
+				A.update_icon()
 #ifdef UNDERWATER_MAP
 		if (current_state == GAME_STATE_PLAYING)
 			hotspot_controller.disturb_turf(src)
