@@ -59,8 +59,8 @@
 		src.analog_devices -= device.parent
 
 /datum/packet_network/proc/draw_packet(datum/component/packet_connected/target, datum/component/packet_connected/source, datum/signal/signal, params=null)
-	var/turf/sourceT = get_turf(source.parent)
-	var/turf/targetT = get_turf(target.parent)
+	var/turf/sourceT = get_turf(source?.parent)
+	var/turf/targetT = get_turf(target?.parent)
 	if(!sourceT || !targetT || sourceT.z != targetT.z)
 		return null
 	// we draw twice, once anchored to source, once to target; this is so the line is visible at both ends
