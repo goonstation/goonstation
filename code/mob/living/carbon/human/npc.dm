@@ -34,7 +34,6 @@
 
 /mob/living/carbon/human/npc/assistant
 	ai_aggressive = 1
-	var/just_got_griefed = 0
 
 	New()
 		..()
@@ -72,7 +71,7 @@
 
 	attack_hand(mob/M)
 		..()
-		if(!just_got_griefed && (M.a_intent in list(INTENT_HARM,INTENT_DISARM,INTENT_GRAB)))
+		if(M.a_intent in list(INTENT_HARM,INTENT_DISARM,INTENT_GRAB))
 			if(!ON_COOLDOWN(src, "cry_grief", 5 SECONDS))
 				SPAWN_DBG(rand(10,30))
 					src.cry_grief(M)
