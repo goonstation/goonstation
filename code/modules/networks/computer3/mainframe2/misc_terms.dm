@@ -1642,7 +1642,7 @@
 				rsignal.data["sender"] = src.net_id
 
 				SPAWN_DBG(0)
-					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, transmission_range, "f[newFreq]")
+					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, rsignal, transmission_range, "f[newFreq]")
 					flick("net_radio-blink", src)
 				src.post_status(target,"command","term_message","data","command=status&status=success")
 
