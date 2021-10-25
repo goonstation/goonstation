@@ -20,7 +20,7 @@
 		if(!islist(src.all_hearing))
 			src.all_hearing = list()
 		src.all_hearing[device] = 1
-	else if(device.net_tags)
+	if(device.net_tags)
 		if(!islist(src.devices_by_tag))
 			src.devices_by_tag = list()
 		for(var/net_tag in device.net_tags)
