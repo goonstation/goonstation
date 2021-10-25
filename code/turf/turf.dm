@@ -425,7 +425,8 @@ proc/generate_space_color()
 	///////////////////////////////////////////////////////////////////////////////////
 	..()
 	return_if_overlay_or_effect(M)
-	src.material?.triggerOnEntered(src, M)
+	if(length(src.material?.triggersOnEntered))
+		src.material?.triggerOnEntered(src, M)
 
 	if (global_sims_mode)
 		var/area/Ar = loc
