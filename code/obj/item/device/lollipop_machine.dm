@@ -3,7 +3,6 @@
 	desc = "A portable synthesizer used to make sugary treats."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "lollipop-h"
-	var/lastUse = null
 
 	attack_self(var/mob/user as mob)
 

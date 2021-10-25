@@ -334,7 +334,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 /obj/item/reagent_containers/food/snacks/lollipop/fruit
 	icon_state = "lpop-"
 	var/list/flavors = list("juice_lime", "juice_lemon", "juice_orange", "juice_cran", "juice_cherry", "juice_pineapple")
-	var/image/candy_color
 
 	New()
 		..()
