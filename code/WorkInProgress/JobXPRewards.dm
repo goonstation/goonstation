@@ -634,7 +634,7 @@ mob/verb/checkrewards()
 	required_levels = list("Medical Doctor"=0)
 	icon_state = "?"
 	claimable = TRUE
-	claimPerRound = 1
+	claimPerRound = TRUE
 
 	activate(var/client/C)
 		boutput(C, "You wish you had something like this when you were a kid.")
@@ -642,18 +642,3 @@ mob/verb/checkrewards()
 		I.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand(I)
 		return
-
-/////////////Medical Director////////////////
-/datum/jobXpReward/MedicalDirector/lollipop
-	name = "Medical Lollipop Synthesizer"
-	desc = "NT figured that the bowl on the desk wasn't the only place medical lollipops should be available."
-	required_levels = list("Medical Director"=0)
-	icon_state = "?"
-	claimable = 1
-	claimPerRound = 1
-
-	activate(var/client/C)
-		boutput(C, "You wish you had something like this when you were a lowly Medical Doctor.")
-		var/obj/item/I = new/obj/item/device/lollipopmaker/md()
-		I.set_loc(get_turf(C.mob))
-		C.mob.put_in_hand(I)
