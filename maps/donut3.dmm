@@ -8146,7 +8146,14 @@
 "cbC" = (
 /obj/table/auto,
 /obj/machinery/light/incandescent/warm,
-/obj/item/storage/box/handcuff_kit,
+/obj/item/chem_grenade/flashbang{
+	pixel_x = 7;
+	pixel_y = 2
+	},
+/obj/item/storage/box/handcuff_kit{
+	pixel_x = -9;
+	pixel_y = 4
+	},
 /turf/simulated/floor/redblack,
 /area/station/security/main)
 "cbJ" = (
@@ -50863,19 +50870,7 @@
 	},
 /obj/decal/mule/dropoff,
 /obj/disposalpipe/trunk/brig,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/table/auto,
-/obj/item/storage/box/handcuff_kit{
-	pixel_x = -9;
-	pixel_y = 4
-	},
-/obj/item/chem_grenade/flashbang{
-	pixel_x = 7;
-	pixel_y = 2
-	},
-/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/redblack,
 /area/station/security/main)
 "oMG" = (
