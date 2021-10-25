@@ -1,5 +1,5 @@
 /datum/packet_network
-	var/list/devices_by_address // list of /datum/component/packet_connected
+	var/list/list/datum/component/packet_connected/devices_by_address = list()
 	var/list/list/datum/component/packet_connected/devices_by_tag
 	var/list/datum/component/packet_connected/all_hearing
 	var/channel_name = "?"
@@ -28,9 +28,12 @@
 				src.devices_by_tag[net_tag][device] = 1
 			else
 				src.devices_by_tag[net_tag] = list((device) = 1)
-	if(!islist(src.devices_by_address))
-		src.devices_by_address = list()
-	src.devices_by_address[device.address] = device
+	if(islist(src.devices_by_address[device.address]))
+		src.devices_by_address[device.address][device] = 1
+	else if(isnull(src.devices_by_address[device.address]))
+		src.devices_by_address[device.address] = device
+	else // it is a single object
+		src.devices_by_address[device.address] = list((device) = 1, (src.devices_by_address[device.address]) = 1)
 
 	if(is_analog(device?.parent))
 		if(isnull(src.analog_devices))
@@ -51,9 +54,12 @@
 				src.devices_by_tag -= net_tag
 			if(!length(src.devices_by_tag))
 				src.devices_by_tag = null
-	src.devices_by_address -= device.address
-	if(!length(src.devices_by_address))
-		src.devices_by_address = null
+	if(islist(src.devices_by_address[device.address]))
+		src.devices_by_address[device.address] -= device
+		if(length(src.devices_by_address[device.address]) == 1)
+			src.devices_by_address[device.address] = src.devices_by_address[device.address][1]
+	else
+		src.devices_by_address -= device.address
 
 	if(is_analog(device?.parent))
 		src.analog_devices -= device.parent
@@ -79,8 +85,11 @@
 /datum/packet_network/disposing()
 	src.in_disposing = TRUE
 	for(var/address in src.devices_by_address)
-		var/datum/component/packet_connected/device = src.devices_by_address[address]
-		qdel(device)
+		if(islist(src.devices_by_address[address]))
+			for(var/datum/component/packet_connected/device as anything in src.devices_by_address[address])
+				qdel(device)
+		else
+			qdel(src.devices_by_address[address])
 	src.devices_by_address = null
 	src.devices_by_tag = null
 	src.all_hearing = null
@@ -89,27 +98,29 @@
 #define POST_PACKET_INTERNAL(RECEIVE_PACKET) \
 	if(is_broadcast) { \
 		for(var/t_address in src.devices_by_address) { \
-			var/datum/component/packet_connected/target = src.devices_by_address[t_address]; \
-			if(target == source) \
-				continue; \
-			RECEIVE_PACKET \
+			if(islist(src.devices_by_address[t_address])) \
+				for(var/datum/component/packet_connected/target as anything in src.devices_by_address[t_address]) { \
+					if(target == source) \
+						continue; \
+					RECEIVE_PACKET \
+				} \
+			else { \
+				var/datum/component/packet_connected/target = src.devices_by_address[t_address]; \
+				if(target == source) \
+					continue; \
+				RECEIVE_PACKET \
+			} \
 		} \
 	} \
 	else { \
+		var/list/datum/component/packet_connected/targets = src.all_hearing ? src.all_hearing.Copy() : list(); \
 		var/list/datum/component/packet_connected/sharing_tag = src.devices_by_tag?[target_tag]; \
-		var/datum/component/packet_connected/direct_target = src.devices_by_address?[target_address]; \
-		if(direct_target && direct_target != source) { \
-			var/datum/component/packet_connected/target = direct_target; \
+		if(sharing_tag) targets |= sharing_tag; \
+		if(src.devices_by_address?[target_address]) \
+			targets |= src.devices_by_address?[target_address]; \
+		for(var/datum/component/packet_connected/target as anything in targets) { \
 			RECEIVE_PACKET \
 		} \
-		for(var/datum/component/packet_connected/target as anything in sharing_tag) \
-			if(target != source && target != direct_target) { \
-				RECEIVE_PACKET \
-			} \
-		for(var/datum/component/packet_connected/target as anything in src.all_hearing) \
-			if(target != source && target != direct_target) { \
-				RECEIVE_PACKET \
-			} \
 	}
 
 /datum/packet_network/proc/post_packet(datum/component/packet_connected/source, datum/signal/signal, params=null)
