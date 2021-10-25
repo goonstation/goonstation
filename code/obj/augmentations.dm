@@ -169,13 +169,13 @@ ABSTRACT_TYPE(/obj/item/augmentation/head)
 		UnregisterSignal(src.owner, COMSIG_MOB_FLASHED)
 
 	on_broken(var/mult = 1)
-		var/mob/M = src.owner
 		if (!..())
 			return
 		src.owner.reagents.add_reagent("nanites", 0.5 * mult) //you want borg powers? Well, come and get 'em!
 
 	breakme()
 		..()
+		var/mob/M = src.owner
 		if(M.mob_flags & USR_DIALOG_UPDATES_RANGE)
 			UnregisterSignal(src.owner, COMSIG_LIVING_CLICK)
 			M.mob_flags &= ~USR_DIALOG_UPDATES_RANGE
