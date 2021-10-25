@@ -4,7 +4,7 @@
 	desc = "Oh god."
 	density = 1
 	icon_state = "fire_elemental"
-	icon_state_dead = "fire_elemental-dead"
+	//icon_state_dead = "fire_elemental-dead" No longer needed with the new death effects
 	custom_gib_handler = /proc/gibs
 	hand_count = 3
 	can_throw = 1
@@ -67,3 +67,13 @@
 
 	get_disorient_protection_eye()
 		return(max(..(), 80))
+	death(var/gibbed)
+		..(gibbed, 0)
+		if (!gibbed)
+			playsound(src.loc, "sound/impact_sounds/burn_sizzle.ogg", 100, 1)
+			make_cleanable(/obj/decal/cleanable/ash,src.loc)
+			ghostize()
+			qdel(src)
+		else
+			playsound(src.loc, "sound/impact_sounds/burn_sizzle.ogg", 100, 1)
+			make_cleanable(/obj/decal/cleanable/ash,src.loc)
