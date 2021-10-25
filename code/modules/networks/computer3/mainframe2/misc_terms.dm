@@ -1516,7 +1516,7 @@
 						var/datum/signal/rsignal = get_free_signal()
 						rsignal.source = src
 						rsignal.data = list("address_1"=target, "command"="ping_reply", "device"=src.device_tag, "netid"=src.net_id, "net"="[net_number]", "sender" = src.net_id)
-						SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, connection_id)
+						SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, rsignal, null, connection_id)
 					else
 						src.post_status(target, "command", "ping_reply", "device", src.device_tag, "netid", src.net_id, "net", "[net_number]")
 				return
