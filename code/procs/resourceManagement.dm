@@ -138,7 +138,14 @@
 
 //Puts all files in a directory into a list
 /proc/recursiveFileLoader(dir)
-	for(var/i in flist(dir))
+	var/list/dir_listing = flist(dir)
+	// for some reason if there are many resource files those at the end don't work, no idea why
+	// this is an ugly """fix""" which gives higher priority to tgui so it works locally
+	for(var/fname in dir_listing)
+		if(findtext(fname, "tgui"))
+			dir_listing -= fname
+			dir_listing.Insert(1, fname)
+	for(var/i in dir_listing)
 		if (copytext(i, -1) == "/") //Is Directory
 			//Skip certain directories
 			if (i == "unused/" || i == "html/" || i == "node_modules/" || i == "build/")

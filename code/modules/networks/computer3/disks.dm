@@ -160,7 +160,7 @@
 //It's good to have a more permanent source of programs when somebody deletes everything (until they space all the disks)
 //Remember to actually set them as read only after adding files in New()
 /obj/item/disk/data/floppy/read_only
-	name = "Permafloppy"
+	name = "permafloppy"
 
 	attack_self(mob/user as mob)
 		boutput(user, "<span class='alert'>You can't flip the write-protect tab, it's held in place with glue or something!</span>")

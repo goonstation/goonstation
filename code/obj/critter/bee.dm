@@ -1692,6 +1692,7 @@
 			return
 		user.visible_message("[user] primes [src] and puts it down.", "You twist [src], priming it to hatch, then place it on the ground.")
 		user.u_equip(src)
+		logTheThing("station", user, null, "primes a bee egg for hatching at [log_loc(user)]")
 
 		SPAWN_DBG(0)
 			src.hatch(user,get_turf(user))
