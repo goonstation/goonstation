@@ -2183,6 +2183,24 @@
 	upperfluc = 150
 	lowerfluc = -100
 
+/datum/commodity/costume/purpwitch
+	comname = "Purple Witch Costume Set"
+	comtype = /obj/item/storage/box/costume/purpwitch
+	desc = "It won't give you any real magic, but you always have the magic of Imagination."
+	price = 300
+	baseprice = 100
+	upperfluc = 150
+	lowerfluc = -100
+
+/datum/commodity/costume/mintwitch
+	comname = "Mint Witch Costume Set"
+	comtype = /obj/item/storage/box/costume/mintwitch
+	desc = "It won't give you any real magic, but you always have the magic of Imagination."
+	price = 300
+	baseprice = 100
+	upperfluc = 150
+	lowerfluc = -100
+
 /datum/commodity/costume/mime
 	comname = "Mime Clothes"
 	comtype = /obj/item/storage/box/costume/mime

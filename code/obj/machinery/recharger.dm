@@ -138,6 +138,19 @@ obj/machinery/recharger
 		// Something wrong with the item we inserted. Report an error
 		src.icon_state = sprite_error
 
+/obj/machinery/recharger/get_desc(dist)
+	. = ..()
+	if(dist > 2)
+		return
+	. += "<br> <span class='notice'> It is currently recharging:"
+	if(charge_status == STATUS_ACTIVE || charge_status == STATUS_COMPLETE)
+		var/list/charge = list();
+		if(SEND_SIGNAL(src.charging, COMSIG_CELL_CHECK_CHARGE, charge) & CELL_RETURNED_LIST)
+			. += "<br> <span class='notice'> \The [charging.name]! Progress: [charge["charge"]]/[charge["max_charge"]]PU </span>"
+	else
+		. += "<br>Nothing! </span>"
+	return
+
 
 /obj/machinery/recharger/process(var/mult)
 	if(status & NOPOWER)

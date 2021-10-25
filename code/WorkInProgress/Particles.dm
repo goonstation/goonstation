@@ -123,7 +123,7 @@ var/datum/particleMaster/particleMaster = new
 		for (var/obj/particle/P in src.active_particles)
 			if (P.death < time)
 				src.active_particles -= P
-				qdel(P)
+				P.dispose() // skip the tiny qdel overhead
 				P = null
 
 	//Spawns specified particle. If type can be recycled, do that - else create new. After time is over, move particle to recycling to avoid del and new calls.
