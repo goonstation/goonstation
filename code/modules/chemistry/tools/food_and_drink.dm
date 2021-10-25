@@ -1151,7 +1151,14 @@
 		if (src.wedge)
 			choices += "remove [src.wedge]"
 			choices += "eat [src.wedge]"
+		if (reagents.total_volume > 0)
+			if (!choices.len)
+				if (!ON_COOLDOWN(src, "hotkey_drink", 0.6 SECONDS))
+					attack(user, user) //Most glasses people use won't have fancy cocktail stuff, so just skip the crap and drink for dear life
+				return
+			choices += "drink from it"
 		if (!choices.len)
+
 			boutput(user, "<span class='notice'>You can't think of anything to do with [src].</span>")
 			return
 
@@ -1175,6 +1182,10 @@
 			else
 				boutput(H, "<span class='alert'>You don't feel like you need to go.</span>")
 			return
+
+		else if (selection == "drink from it")
+			if (!ON_COOLDOWN(src, "hotkey_drink", 0.6 SECONDS))
+				attack(user, user)
 
 		else if (selection == "remove [src.in_glass]")
 			remove_thing = src.in_glass
