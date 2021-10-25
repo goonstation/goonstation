@@ -91,7 +91,8 @@
 	if(!src.send_only) src.network?.register(src)
 
 /datum/component/packet_connected/disposing()
-	src.network?.unregister(src)
+	if(!src.send_only)
+		src.network?.unregister(src)
 	src.network = null
 	..()
 
