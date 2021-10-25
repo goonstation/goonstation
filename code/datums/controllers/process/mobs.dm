@@ -40,7 +40,7 @@
 				schedule_interval = 6.5 SECONDS
 				footstep_extrarange = 0
 				max_sound_range = MAX_SOUND_RANGE_NORMAL
-			else if (clients_num <= FAST_LIFE_PLATERCOUNT)
+			else if (clients_num <= FAST_LIFE_PLAYERCOUNT)
 				schedule_interval = 2 SECONDS
 				footstep_extrarange = 0
 				max_sound_range = MAX_SOUND_RANGE_NORMAL
