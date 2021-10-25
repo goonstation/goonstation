@@ -53,7 +53,6 @@ var/list/headset_channel_lookup
 
 	MAKE_DEFAULT_RADIO_PACKET_COMPONENT("main", frequency)
 
-	set_frequency(frequency)
 	if(src.secure_frequencies)
 		set_secure_frequencies()
 
