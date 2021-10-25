@@ -14,7 +14,7 @@
 	m_amt = 50
 	g_amt = 100
 	mats = 2
-	var/frequency = "FREQ_GPS"
+	var/frequency = FREQ_GPS
 	var/net_id
 
 	proc/get_z_info(var/turf/T)
