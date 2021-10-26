@@ -1096,12 +1096,12 @@ obj/trait/pilot
 	mutantRace = /datum/mutantrace/cow
 
 /obj/trait/skeleton
-	name = "Skeleton (-2) \[Species\]"
+	name = "Skeleton (-1) \[Species\]"
 	cleanName = "Skeleton"
 	icon_state = "skeletonT"
 	desc = "Compress all of your skin and flesh into your bones, making you resemble a skeleton. Not as uncomfortable as it sounds."
 	id = "skeleton"
-	points = -2
+	points = -1
 	isPositive = 1
 	category = list("species", "cloner_stuff")
 	mutantRace = /datum/mutantrace/skeleton

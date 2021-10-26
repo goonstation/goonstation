@@ -1,4 +1,6 @@
 (t)tue oct 26 21
+(u)pali
+(*)Skeleton is now a -1 trait
 (u)Flourish
 (+)Medical doctors and roboticists now spawn with upgraded ProDoc health goggles.
 (u)Sovexe
