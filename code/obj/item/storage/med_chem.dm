@@ -240,7 +240,7 @@
 	name = "Lollipop Synthesizer box"
 	icon_state = "lps"
 	desc = "A box filled with Lollipop Synthesizers."
-	spawn_contents = list(/obj/item/device/lollipopmaker = 7)
+	spawn_contents = list(/obj/item/device/lollipopmaker = 4)
 
 /obj/item/storage/box/lglo_kit
 	name = "latex gloves box"
