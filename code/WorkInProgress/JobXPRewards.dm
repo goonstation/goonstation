@@ -627,18 +627,3 @@ mob/verb/checkrewards()
 		I.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand(I)
 
-/////////////Doctor////////////////
-/datum/jobXpReward/doctor/lollipop
-	name = "Lollipop Synthesizer"
-	desc = "A sugary treat will calm the styptic stings and bring a smile to any face."
-	required_levels = list("Medical Doctor"=0)
-	icon_state = "?"
-	claimable = TRUE
-	claimPerRound = TRUE
-
-	activate(var/client/C)
-		boutput(C, "You wish you had something like this when you were a kid.")
-		var/obj/item/I = new/obj/item/device/lollipopmaker()
-		I.set_loc(get_turf(C.mob))
-		C.mob.put_in_hand(I)
-		return
