@@ -206,23 +206,26 @@
 	return ..() && !istype(M.get_id(), /obj/item/card/id/syndicate)
 
 //smart extinguisher
-/obj/item/gun/flamethrower/assembled/loaded/extinguisher
+/obj/item/gun/flamethrower/extinguisher
 	name = "smart fire extinguisher"
 	desc = "An advanced fire extinguisher that locks onto nearby burning personnel and sprays them down with fire-fighting foam."
 	icon = 'icons/obj/items/items.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "fire_extinguisher0"
 	item_state = "fireextinguisher0"
+	swappable_tanks = 0
+	spread_angle = 10
+	mode = 1 //magic number bad
 
 	New()
 		. = ..()
-		src.fueltank.reagents.remove_any(400)
-		src.fueltank.reagents.add_reagent("fffoam", 400)
-		src.amt_chem = 10
+		fueltank = new/obj/item/reagent_containers/glass/beaker/extractor_tank/thick(src)
+		gastank = new/obj/item/tank/oxygen(src)
+		src.fueltank.reagents.add_reagent("ff-foam", 1000)
+		src.amt_chem = 20
 		AddComponent(/datum/component/holdertargeting/smartgun/extinguisher, 1)
-
-	attack_hand()
-		return//:shelterfrog:
+		src.current_projectile.shot_number = 3
+		src.chem_divisor = 3
 
 /datum/component/holdertargeting/smartgun/extinguisher/is_valid_target(mob/user, mob/M)
 	return (M.hasStatus("burning"))

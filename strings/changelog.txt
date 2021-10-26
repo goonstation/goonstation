@@ -1,5 +1,20 @@
 
+(t)tue oct 26 21
+(u)Hypertripp
+(p)6420
+(e)🎨|sprites
+(*)Added a new kind of lollipop, a sugary fruity one
+(*)Made and gave machines to make said lollipops to doctors and the MD in there respective lockers
+(+)Added the regular one to the back pack of the candy salesman
+(u)pali
+(*)Skeleton is now a -1 trait
+(u)Flourish
+(+)Medical doctors and roboticists now spawn with upgraded ProDoc health goggles.
+(u)Sovexe
+(+)Morgue trays now have a neat opening animation.
 (t)mon oct 25 21
+(u)kyle
+(+)Give legless spacebux purchase a wheelchair.
 (u)TTerc
 (p)6389
 (e)⚖|balance
@@ -16,10 +31,9 @@
 (p)6339
 (e)🐛|bug
 (+)Fixed Oshan trench elevator pinpointers.
-(t)sun oct 42 21
-(u)zmauajsa
-(e)🆕|"feature"
-(*)) made it so that when you push [t] (or whatever0 to talk you get a little bubble over your head that looks like you're typing something in.
+(u)Zamujasa
+(e)🆕|feature
+(*)made it so that when you push [t] (or whatever) to talk you get a little bubble over your head that looks like you're typing something in.
 (*)this will probably have bugs but i did testing and nothing immediately caught on fire.
 (*)if something does catch on fire feel free to revert it (action_associations.dm)
 (t)sat oct 23 21
