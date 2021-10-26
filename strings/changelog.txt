@@ -1,4 +1,6 @@
-
+(t)tue oct 26 21
+(u)Sovexe
+(+)Morgue trays now have a neat opening animation.
 (t)mon oct 25 21
 (u)kyle
 (*)Mutantraces can't use the wig trait. Mutantraces all already are bald, why would they want a wig? (Leave <i>something</i> special for the humans, hair is all they have!)
@@ -19,10 +21,9 @@
 (p)6339
 (e)🐛|bug
 (+)Fixed Oshan trench elevator pinpointers.
-(t)sun oct 42 21
-(u)zmauajsa
-(e)🆕|"feature"
-(*)) made it so that when you push [t] (or whatever0 to talk you get a little bubble over your head that looks like you're typing something in.
+(u)Zamujasa
+(e)🆕|feature
+(*)made it so that when you push [t] (or whatever) to talk you get a little bubble over your head that looks like you're typing something in.
 (*)this will probably have bugs but i did testing and nothing immediately caught on fire.
 (*)if something does catch on fire feel free to revert it (action_associations.dm)
 (t)sat oct 23 21
