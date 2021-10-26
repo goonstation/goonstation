@@ -86,7 +86,7 @@
 			icon_state = "datasec"
 			base_icon_state = "datasec"
 			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
-			setup_starting_peripheral2 = /obj/item/peripheral/network/radio/locked/pda
+			setup_starting_peripheral2 = /obj/item/peripheral/network/radio/locked/pda/transmit_only
 			setup_starting_program = /datum/computer/file/terminal_program/secure_records
 
 			console_upper
@@ -156,7 +156,7 @@
 
 			setup_starting_program = /datum/computer/file/terminal_program/engine_control
 			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
-			setup_starting_peripheral2 = /obj/item/peripheral/network/radio/locked/pda
+			setup_starting_peripheral2 = /obj/item/peripheral/network/radio/locked/pda/transmit_only
 			setup_drive_size = 48
 
 			console_upper
@@ -855,15 +855,9 @@ function lineEnter (ev)
 		var/obj/item/peripheral/P = locate(target_ref) in src.peripherals
 		if(istype(P))
 			. = P.receive_command(src, command, signal)
-		//qdel(signal)
-		if (signal)
 
-			if (reusable_signals && reusable_signals.len < 11)
-				if (!(signal in reusable_signals))
-					reusable_signals += signal
-				signal.wipe()
-			else
-				signal.dispose()
+		if(signal)
+			qdel(signal)
 		return
 
 	receive_command(obj/source, command, datum/signal/signal)
@@ -871,18 +865,8 @@ function lineEnter (ev)
 
 			for(var/datum/computer/file/terminal_program/P in src.processing_programs)
 				P.receive_command(src, command, signal)
-//			if(src.host_program)
-//				src.host_program.receive_command(src, command, signal)
 
-			//qdel(signal)
-
-			if (signal)
-				if (reusable_signals && reusable_signals.len < 11)
-					if (!(signal in reusable_signals))
-						reusable_signals += signal
-					signal.wipe()
-				else
-					signal.dispose()
+			qdel(signal)
 		return
 
 	set_broken()

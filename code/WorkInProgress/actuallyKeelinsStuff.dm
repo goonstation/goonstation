@@ -1,8 +1,5 @@
 //This file contains stuff that is still *mostly* my code.
 
-#define LINEMODE_SEGMENT 1
-#define LINEMODE_STRETCH 2
-#define LINEMODE_MOVE 3
 /*
 Proc: drawLine
 Arguments:
@@ -34,37 +31,38 @@ Returns:
 	if(render_source_line == null) return
 	var/datum/lineResult/result = new()
 
-	if(!islist(render_source_line))
-		if(!getGlobalRenderSource((copytext(render_source_line,1,2) == "*" ? render_source_line : "*[render_source_line]")))
-			if(copytext(render_source_line,1,2) == "*") render_source_line = copytext(render_source_line,2,0)
-			addGlobalRenderSource(image('icons/effects/lines2.dmi',null, render_source_line), "*[render_source_line]")
-		if(copytext(render_source_line,1,2) != "*") render_source_line = "*[render_source_line]"
-	else
-		for(var/X in render_source_line)
-			var/current = X
-			if(!getGlobalRenderSource((copytext(current,1,2) == "*" ? current : "*[current]")))
-				if(copytext(current,1,2) == "*") current = copytext(current,2,0)
-				addGlobalRenderSource(image('icons/effects/lines2.dmi',null, current), "*[current]")
-			if(copytext(X,1,2) != "*")
-				current = "*[current]"
-			render_source_line -= X
-			render_source_line += current
+	if(mode != LINEMODE_SIMPLE && mode != LINEMODE_SIMPLE_REVERSED)
+		if(!islist(render_source_line))
+			if(!getGlobalRenderSource((copytext(render_source_line,1,2) == "*" ? render_source_line : "*[render_source_line]")))
+				if(copytext(render_source_line,1,2) == "*") render_source_line = copytext(render_source_line,2,0)
+				addGlobalRenderSource(image('icons/effects/lines2.dmi',null, render_source_line), "*[render_source_line]")
+			if(copytext(render_source_line,1,2) != "*") render_source_line = "*[render_source_line]"
+		else
+			for(var/X in render_source_line)
+				var/current = X
+				if(!getGlobalRenderSource((copytext(current,1,2) == "*" ? current : "*[current]")))
+					if(copytext(current,1,2) == "*") current = copytext(current,2,0)
+					addGlobalRenderSource(image('icons/effects/lines2.dmi',null, current), "*[current]")
+				if(copytext(X,1,2) != "*")
+					current = "*[current]"
+				render_source_line -= X
+				render_source_line += current
 
-	if(!islist(render_source_cap))
-		if(render_source_cap != null && !getGlobalRenderSource((copytext(render_source_cap,1,2) == "*" ? render_source_cap : "*[render_source_cap]")))
-			if(copytext(render_source_cap,1,2) == "*") render_source_cap = copytext(render_source_cap,2,0)
-			addGlobalRenderSource(image('icons/effects/lines2.dmi',null, render_source_cap), "*[render_source_cap]")
-		if(copytext(render_source_cap,1,2) != "*") render_source_cap = "*[render_source_cap]"
-	else
-		for(var/X in render_source_cap)
-			var/current = X
-			if(!getGlobalRenderSource((copytext(current,1,2) == "*" ? current : "*[current]")))
-				if(copytext(current,1,2) == "*") current = copytext(current,2,0)
-				addGlobalRenderSource(image('icons/effects/lines2.dmi',null, current), "*[current]")
-			if(copytext(X,1,2) != "*")
-				current = "*[current]"
-			render_source_cap -= X
-			render_source_cap += current
+		if(!islist(render_source_cap))
+			if(render_source_cap != null && !getGlobalRenderSource((copytext(render_source_cap,1,2) == "*" ? render_source_cap : "*[render_source_cap]")))
+				if(copytext(render_source_cap,1,2) == "*") render_source_cap = copytext(render_source_cap,2,0)
+				addGlobalRenderSource(image('icons/effects/lines2.dmi',null, render_source_cap), "*[render_source_cap]")
+			if(copytext(render_source_cap,1,2) != "*") render_source_cap = "*[render_source_cap]"
+		else
+			for(var/X in render_source_cap)
+				var/current = X
+				if(!getGlobalRenderSource((copytext(current,1,2) == "*" ? current : "*[current]")))
+					if(copytext(current,1,2) == "*") current = copytext(current,2,0)
+					addGlobalRenderSource(image('icons/effects/lines2.dmi',null, current), "*[current]")
+				if(copytext(X,1,2) != "*")
+					current = "*[current]"
+				render_source_cap -= X
+				render_source_cap += current
 
 	var/iconWidth = 64
 	var/dx = ((target.x * world.icon_size) + trg_off_x) - ((source.x * world.icon_size) + src_off_x)
@@ -95,6 +93,20 @@ Returns:
 			var/matrix/M2 = UNLINT(matrix().Translate(-(iconWidth / 2),0).Turn(angle).Translate(src_off_x,src_off_y))
 			I.filters += filter(type="layer", render_source = (islist(render_source_cap) ? pick(render_source_cap) : render_source_cap), transform=M2)
 		I.transform = UNLINT(matrix().Turn(-angle).Translate((dist),0).Turn(angle))
+		result.lineImage = I
+	else if(mode == LINEMODE_SIMPLE)
+		var/image/I = image(null,source)
+		I.icon = 'icons/effects/lines2.dmi'
+		I.icon_state = islist(render_source_line) ? pick(render_source_line) : render_source_line
+		var/matrix/M = UNLINT(matrix().Scale(scale,1).Translate(dist/2,0).Turn(angle).Translate(src_off_x - iconWidth / 4,src_off_y))
+		I.transform = M
+		result.lineImage = I
+	else if(mode == LINEMODE_SIMPLE_REVERSED)
+		var/image/I = image(null,source)
+		I.icon = 'icons/effects/lines2.dmi'
+		I.icon_state = islist(render_source_line) ? pick(render_source_line) : render_source_line
+		var/matrix/M = UNLINT(matrix().Scale(scale,1).Translate(-dist/2,0).Turn(180 + angle).Translate(src_off_x - iconWidth / 4,src_off_y))
+		I.transform = M
 		result.lineImage = I
 	else if(mode == LINEMODE_SEGMENT)
 		var/image/composite = image(null,source)
