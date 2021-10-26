@@ -331,20 +331,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 				for (var/i=5, i>0, i--)
 					src.reagents.add_reagent(pick(src.flavors), 1)
 
-/obj/item/reagent_containers/food/snacks/lollipop/fruit
-	icon_state = "lpop-"
-	var/list/flavors = list("juice_lime", "juice_lemon", "juice_orange", "juice_cran", "juice_cherry", "juice_pineapple")
-
-	New()
-		..()
-		src.reagents.inert = 1
-		SPAWN_DBG(0)
-			reagents.add_reagent("sugar",5)
-			if (src.icon_state == "lpop-")
-				src.icon_state = "lpop-[rand(1,6)]"
-			if (islist(src.flavors) && length(src.flavors))
-				src.reagents.add_reagent(pick(src.flavors), 5)
-
 /obj/item/reagent_containers/food/snacks/swedish_fish
 	name = "swedish fisk"
 	desc = "A chewy gummy bright red fish. Those crazy Swedes and their fish obesssion."

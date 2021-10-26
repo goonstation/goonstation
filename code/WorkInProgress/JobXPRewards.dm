@@ -626,4 +626,4 @@ mob/verb/checkrewards()
 		var/obj/item/I = new/obj/item/clothing/under/misc/mimedress()
 		I.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand(I)
-
+		return

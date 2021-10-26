@@ -1806,7 +1806,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_belt = list(/obj/item/device/pda2)
 	slot_poc1 = list(/obj/item/storage/pill_bottle/cyberpunk)
 	slot_poc2 = list(/obj/item/storage/pill_bottle/catdrugs)
-	items_in_backpack = list(/obj/item/storage/goodybag, /obj/item/kitchen/everyflavor_box, /obj/item/item_box/heartcandy, /obj/item/kitchen/peach_rings, /obj/item/device/lollipopmaker)
+	items_in_backpack = list(/obj/item/storage/goodybag, /obj/item/kitchen/everyflavor_box, /obj/item/item_box/heartcandy, /obj/item/kitchen/peach_rings)
 
 	New()
 		..()
