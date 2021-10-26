@@ -1,6 +1,10 @@
 
 (t)tue oct 26 21
 (u)pali
+(p)6423
+(e)|
+(*)You can now press ; directly to talk over the main radio channel instead of having to press T and then type in ;.
+(u)pali
 (*)Skeleton is now a -1 trait
 (u)Flourish
 (+)Medical doctors and roboticists now spawn with upgraded ProDoc health goggles.
