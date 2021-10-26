@@ -132,8 +132,7 @@
 	/obj/item/reagent_containers/hypospray,
 	/obj/item/device/flash,
 	/obj/item/stamp/md,
-	/obj/item/device/radio/headset/command/md,
-	/obj/item/device/lollipopmaker/md)
+	/obj/item/device/radio/headset/command/md)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
@@ -407,8 +406,7 @@
 	/obj/item/storage/belt/medical,
 	/obj/item/storage/box/stma_kit,
 	/obj/item/storage/box/lglo_kit/random,
-	/obj/item/clothing/glasses/healthgoggles,
-	/obj/item/storage/box/lps_kit)
+	/obj/item/clothing/glasses/healthgoggles)
 
 /obj/storage/secure/closet/medical/chemical
 	name = "restricted medical locker"
