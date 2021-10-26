@@ -868,6 +868,7 @@
 					usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
 					src.reagents.clear_reagents()
 					src.do_update_icon = 1
+					logTheThing("combat", usr, null, "cleared a hydroponics tray containing [current.name] at [log_loc(src)]")
 					HYPdestroyplant()
 		else
 			if(alert("Clear this tray?",,"Yes","No") == "Yes")
@@ -1264,7 +1265,8 @@
 						// We need to do special shit with the genes if the plant is a spliced
 						// hybrid since they run off instanced datums rather than referencing
 						// a specific already-existing one.
-						var/datum/plant/hybrid = new /datum/plant(F)
+						var/plantType = growing.type
+						var/datum/plant/hybrid = new plantType(F)
 						for(var/V in growing.vars)
 							if(issaved(growing.vars[V]) && V != "holder")
 								hybrid.vars[V] = growing.vars[V]

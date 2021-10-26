@@ -137,7 +137,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/datum/bioHolder/parentHolder = null
 
 	var/gender = MALE
-	var/pronouns = 0		//1 if using neutral pronouns (they/their);  0 if using gendered pronouns matching their gender var
+	var/datum/pronouns/pronouns
 	var/screamsound = "male"
 	var/fartsound = "default"
 	var/voicetype = 0
@@ -167,8 +167,9 @@ var/list/datum/bioEffect/mutini_effects = list()
 	New()
 		..()
 		voicetype = RANDOM_HUMAN_VOICE
+		pronouns = get_singleton(/datum/pronouns/theyThem)
 
-	proc/CopyOther(var/datum/appearanceHolder/toCopy)
+	proc/CopyOther(var/datum/appearanceHolder/toCopy, no_mutantrace)
 		//Copies settings of another given holder. Used for the bioholder copy proc and such things.
 		mob_appearance_flags = toCopy.mob_appearance_flags
 
@@ -222,7 +223,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 		mob_oversuit_1_color_ref = toCopy.mob_oversuit_1_color_ref
 		mob_oversuit_1_offset_y = toCopy.mob_oversuit_1_offset_y
 
-		mutant_race = toCopy.mutant_race
+		if(!no_mutantrace)
+			mutant_race = toCopy.mutant_race
 
 		e_color = toCopy.e_color
 		e_icon = toCopy.e_icon
@@ -574,10 +576,10 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		return newUid
 
-	proc/CopyOther(var/datum/bioHolder/toCopy, var/copyAppearance = 1, var/copyPool = 1, var/copyEffectBlocks = 0, var/copyActiveEffects = 1)
+	proc/CopyOther(var/datum/bioHolder/toCopy, var/copyAppearance = 1, var/copyPool = 1, var/copyEffectBlocks = 0, var/copyActiveEffects = 1, noMutantrace = 0)
 		//Copies the settings of another given holder. Used for syringes, the dna spread virus and such things.
 		if(copyAppearance)
-			mobAppearance.CopyOther(toCopy.mobAppearance)
+			mobAppearance.CopyOther(toCopy.mobAppearance, noMutantrace)
 			mobAppearance.UpdateMob()
 
 			age = toCopy.age

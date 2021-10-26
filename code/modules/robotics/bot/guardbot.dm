@@ -661,12 +661,12 @@
 		var/obj/item/gun/energy/lawbringer/prints = src.budgun
 		if (prints.owner_prints && !loose)
 			var/search = lowertext(prints.owner_prints)
-			for (var/datum/data/record/R in data_core.general)
-				if (search == lowertext(R.fields["fingerprint"]))
-					law_prints = R.fields["name"]
+			for (var/datum/db_record/R as anything in data_core.general.records)
+				if (search == lowertext(R["fingerprint"]))
+					law_prints = R["name"]
 					break
-				else if (lowertext(R.fields["rank"]))
-					law_prints = R.fields["name"]
+				else if (lowertext(R["rank"]))
+					law_prints = R["name"]
 					break
 			if (!law_prints)	// If we didn't get anything
 				law_prints = "[pick(NT)]"	// I dunno just pick someone
@@ -1446,7 +1446,7 @@
 			core.created_model_task = src.model_task
 
 			var/list/throwparts = list()
-			throwparts += new /obj/item/parts/robot_parts/arm/left(T)
+			throwparts += new /obj/item/parts/robot_parts/arm/left/standard(T)
 			throwparts += core
 			if(src.tool.tool_id == "GUN")
 				qdel(src.tool)	// Throw your phantom gun in the trash, not on the ground!
@@ -1483,7 +1483,7 @@
 			if(src.budgun)
 				DropTheThing("gun", null, 0, 0, T, 1)
 			if(prob(50))
-				new /obj/item/parts/robot_parts/arm/left(T)
+				new /obj/item/parts/robot_parts/arm/left/standard(T)
 			src.hat?.set_loc(T)
 
 			new /obj/item/guardbot_frame(T)
@@ -4912,7 +4912,7 @@
 		if(src.budgun)
 			DropTheThing("gun", null, 0, 0, T, 1)
 		if(prob(50))
-			new /obj/item/parts/robot_parts/arm/left(T)
+			new /obj/item/parts/robot_parts/arm/left/standard(T)
 		src.hat?.set_loc(T)
 
 		var/obj/item/guardbot_core/old/core = new /obj/item/guardbot_core/old(T)
@@ -4921,7 +4921,7 @@
 		core.created_model_task = src.model_task
 
 		var/list/throwparts = list()
-		throwparts += new /obj/item/parts/robot_parts/arm/left(T)
+		throwparts += new /obj/item/parts/robot_parts/arm/left/standard(T)
 		throwparts += new /obj/item/device/flash(T)
 		throwparts += core
 		if(src.tool.tool_id == "GUN")

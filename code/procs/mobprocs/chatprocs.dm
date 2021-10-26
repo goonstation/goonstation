@@ -8,6 +8,43 @@
 	set name = "whisper"
 	return src.whisper(message)
 
+// actually a semi-replacement for say that does an input() rather than using the verb
+// this allows it to be, synchronious and let us remove the overlay later
+// if they close/cancel without saying anything
+//
+// hopefully it doesn't break anything but as usual i did some testing and it seemed ok
+// normal "say" is still there in the command bar if you want stealthy
+/mob/verb/start_say()
+	set name = "start say"
+	set hidden = 1
+
+	var/mob/living/M = null
+	if (istype(src, /mob/living))
+		M = src
+
+	var/current_time = TIME
+	if (M)
+		M.speech_bubble.icon_state = "typing"
+		UpdateOverlays(M.speech_bubble, "speech_bubble")
+		M.last_typing = current_time
+
+		SPAWN_DBG(15 SECONDS)
+			if (M?.last_typing != current_time)
+				return
+			M.UpdateOverlays(null, "speech_bubble")
+
+	var/msg = input("", "Say") as null|text
+
+	if (msg)
+		// assume it will handle its own way of doing this
+		src.say_verb(msg)
+		return
+
+	if (M?.last_typing == current_time)
+		M.last_typing = null
+		M.UpdateOverlays(null, "speech_bubble")
+
+
 /mob/verb/say_verb(message as text)
 	set name = "say"
 	//&& !src.client.holder
@@ -21,7 +58,12 @@
 	src.say(message)
 	if (!dd_hasprefix(message, "*")) // if this is an emote it is logged in emote
 		logTheThing("say", src, null, "SAY: [html_encode(message)] [log_loc(src)]")
-		//logit("say", 0, src, " said ", message)
+
+/mob/living/say_verb(message as text)
+	set name = "say"
+	. = ..()
+	if (src.speech_bubble?.icon_state == "typing")
+		src.UpdateOverlays(null, "speech_bubble")
 
 /mob/verb/say_radio()
 	set name = "say_radio"
@@ -486,7 +528,7 @@
 		if (voluntary && src.getStatusDuration("paralysis") > 0)
 			return 0
 		if (world.time >= (src.last_emote_time + src.last_emote_wait))
-			if (!(src.client && (src.client.holder && admin_bypass) && !src.client.player_mode) && voluntary)
+			if (!no_emote_cooldowns && !(src.client && (src.client.holder && admin_bypass) && !src.client.player_mode) && voluntary)
 				src.emote_allowed = 0
 				src.last_emote_time = world.time
 				src.last_emote_wait = time
@@ -649,6 +691,23 @@
 		if (M.client.holder && !M.client.only_local_looc && !M.client.player_mode)
 			recipients += M.client
 
+	var looc_style = ""
+	if (src.client.holder && !src.client.stealth)
+		if (src.client.holder.level == LEVEL_BABBY)
+			looc_style = "color: #4cb7db;"
+		else
+			looc_style = "color: #cd6c4c;"
+	else if (src.client.is_mentor() && !src.client.stealth)
+		looc_style = "color: #a24cff;"
+
+	var/image/chat_maptext/looc_text = null
+	looc_text = make_chat_maptext(src, "\[LOOC: [msg]]", looc_style)
+	if(looc_text)
+		looc_text.measure(src.client)
+		for(var/image/chat_maptext/I in src.chat_text.lines)
+			if(I != looc_text)
+				I.bump_up(looc_text.measured_height)
+
 	phrase_log.log_phrase("looc", msg)
 	for (var/client/C in recipients)
 		// DEBUGGING
@@ -681,6 +740,9 @@
 			rendered = "<span class='adminHearing' data-ctx='[C.chatOutput.getContextFlags()]'>[rendered]</span>"
 
 		boutput(C, rendered)
+		var/mob/M = C.mob
+		if(speechpopups && M.chat_text && !C.preferences?.flying_chat_hidden)
+			looc_text.show_to(C)
 
 	logTheThing("ooc", src, null, "LOOC: [msg]")
 

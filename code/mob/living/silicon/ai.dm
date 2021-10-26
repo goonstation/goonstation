@@ -223,6 +223,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.cell.charge = src.cell.maxcharge
 		src.radio1.name = "Primary Radio"
 		src.radio2.name = "AI Intercom Monitor"
+		src.radio2.device_color = "#7F7FE2"
 		src.radio3.name = "Secure Channels Monitor"
 		src.radio1.broadcasting = 1
 		src.radio2.set_frequency(R_FREQ_INTERCOM_AI)
@@ -695,7 +696,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (relay_laws_for_shell && ismob(relay_laws_for_shell))
 		vamp = relay_laws_for_shell
 	if (vamp.mind && vamp.mind.special_role == ROLE_VAMPTHRALL && vamp.mind.master)
-		var/mob/mymaster = whois_ckey_to_mob_reference(vamp.mind.master)
+		var/mob/mymaster = ckey_to_mob(vamp.mind.master)
 		if (mymaster)
 			boutput(who, "1. Only your master [mymaster.real_name] is human. Obey and serve them to the best of your ability.")
 			return
@@ -768,6 +769,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 /mob/living/silicon/ai/death(gibbed)
 	if (deployed_to_eyecam)
 		eyecam.return_mainframe()
+
+	if (deployed_shell)
+		src.return_to(deployed_shell)
 
 	src.lastgasp() // calling lastgasp() here because we just died
 	setdead(src)
@@ -1373,8 +1377,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	set name = "View Crew Manifest"
 
 	var/crew = ""
-	for(var/datum/data/record/t in data_core.general)
-		crew += "[t.fields["name"]] - [t.fields["rank"]]<br>"
+	for(var/datum/db_record/t as anything in data_core.general.records)
+		crew += "[t["name"]] - [t["rank"]]<br>"
 
 	usr.Browse("<head><title>Crew Manifest</title></head><body><tt><b>Crew Manifest:</b><hr>[crew]</tt></body>", "window=aimanifest")
 

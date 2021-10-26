@@ -43,6 +43,7 @@
 	var/tmp/checkingcanpass = 0 // "" how many implement canpass()
 	var/tmp/checkinghasentered = 0 // "" hasproximity as well as items with a mat that hasproximity
 	var/tmp/checkinghasproximity = 0
+	var/tmp/neighcheckinghasproximity = 0
 	/// directions of this turf being blocked by directional blocking objects. So we don't need to loop through the entire contents
 	var/tmp/blocked_dirs = 0
 	/// this turf is allowing unrestricted hotbox reactions
@@ -176,9 +177,6 @@
 	name = "\proper space"
 	icon_state = "placeholder"
 	fullbright = 1
-#ifndef HALLOWEEN
-	color = "#898989"
-#endif
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
@@ -189,6 +187,7 @@
 	plane = PLANE_SPACE
 	special_volume_override = 0
 	text = ""
+	var/static/list/space_color = generate_space_color()
 
 	flags = ALWAYS_SOLID_FLUID
 	turf_flags = CAN_BE_SPACE_SAMPLE
@@ -224,6 +223,63 @@
 		icon_state = "wiggle"
 		src.desc = "There appears to be a spatial disturbance in this area of space."
 		new/obj/item/device/key/random(src)
+
+	if(!isnull(space_color) && !istype(src, /turf/space/fluid))
+		src.color = space_color
+
+proc/repaint_space(regenerate=TRUE)
+	for(var/turf/space/T)
+		if(regenerate)
+			T.space_color = generate_space_color()
+			regenerate = FALSE
+		if(istype(T, /turf/space/fluid))
+			continue
+		T.color = T.space_color
+
+proc/generate_space_color()
+#ifndef HALLOWEEN
+	return "#898989"
+#else
+	var/bg = list(0, 0, 0)
+	bg[1] += rand(0, 35)
+	bg[3] += rand(0, 35)
+	var/main_star = list(255, 255, 255)
+	main_star = list(150 + rand(-40, 40), 100 + rand(-40, 40), 50 + rand(-40, 40))
+	var/hsv_main = rgb2hsv(main_star[1], main_star[2], main_star[3])
+	hsv_main[2] = 100
+	main_star = hsv2rgblist(hsv_main[1], hsv_main[2], hsv_main[3])
+	if(prob(5))
+		main_star = list(230, 0, 0)
+	var/misc_star_1 = main_star
+	var/misc_star_2 = main_star
+	if(prob(33))
+		misc_star_2 = list(main_star[2], main_star[3], main_star[1])
+		misc_star_1 = list(main_star[3], main_star[1], main_star[2])
+	else if(prob(50))
+		misc_star_1 = list(main_star[2], main_star[3], main_star[1])
+		misc_star_2 = list(main_star[3], main_star[1], main_star[2])
+	else
+		misc_star_1 = list(150 + rand(-40, 40), 100 + rand(-40, 40), 50 + rand(-40, 40))
+		misc_star_2 = list(150 + rand(-40, 40), 100 + rand(-40, 40), 50 + rand(-40, 40))
+	if(prob(5))
+		misc_star_1 = list(230, 0, 0)
+	misc_star_1 = list(misc_star_1[1] + rand(-25, 25), misc_star_1[2] + rand(-25, 25), misc_star_1[3] + rand(-25, 25))
+	misc_star_2 = list(misc_star_2[1] + rand(-25, 25), misc_star_2[2] + rand(-25, 25), misc_star_2[3] + rand(-25, 25))
+	if(prob(5))
+		misc_star_2 = list(230, 0, 0)
+	if(prob(1.5))
+		bg = list(200 - bg[1], 200 - bg[2], 200 - bg[3])
+		if(prob(50))
+			main_star = list(180 - main_star[1], 180 - main_star[2], 180 - main_star[3])
+			misc_star_1 = list(255 - misc_star_1[1], 255 - misc_star_1[2], 255 - misc_star_1[3])
+			misc_star_2 = list(255 - misc_star_2[1], 255 - misc_star_2[2], 255 - misc_star_2[3])
+	if(prob(2))
+		bg = list(120 + rand(-30, 30), rand(20, 50), rand(20, 50))
+	return affine_color_mapping_matrix(
+		list("#000000", "#ffffff", "#ff0000", "#0080FF"), // original misc_star_2 = "#64C5D2", but that causes issues for some frames
+		list(bg, main_star, misc_star_1, misc_star_2)
+	)
+#endif
 
 // override for space turfs, since they should never hide anything
 /turf/space/levelupdate()
@@ -369,7 +425,8 @@
 	///////////////////////////////////////////////////////////////////////////////////
 	..()
 	return_if_overlay_or_effect(M)
-	src.material?.triggerOnEntered(src, M)
+	if(length(src.material?.triggersOnEntered))
+		src.material?.triggerOnEntered(src, M)
 
 	if (global_sims_mode)
 		var/area/Ar = loc
@@ -393,15 +450,16 @@
 			if(A.material)
 				A.material.triggerOnEntered(A, M)
 	i = 0
-	for (var/turf/T in range(1,src))
-		if (T.checkinghasproximity > 0)
-			for(var/thing in T)
-				var/atom/A = thing
-				// I Said No sanity check
-				if(i++ >= 50)
-					break
-				if (A.event_handler_flags & USE_PROXIMITY)
-					A.HasProximity(M, 1) //IMPORTANT MBCNOTE : ADD USE_PROXIMITY FLAG TO ANY ATOM USING HASPROX THX BB
+	if (src.neighcheckinghasproximity > 0)
+		for (var/turf/T in range(1,src))
+			if (T.checkinghasproximity > 0)
+				for(var/thing in T)
+					var/atom/A = thing
+					// I Said No sanity check
+					if(i++ >= 50)
+						break
+					if (A.event_handler_flags & USE_PROXIMITY)
+						A.HasProximity(M, 1) //IMPORTANT MBCNOTE : ADD USE_PROXIMITY FLAG TO ANY ATOM USING HASPROX THX BB
 
 	if(!src.throw_unlimited && M?.no_gravity)
 		BeginSpacePush(M)
@@ -532,6 +590,7 @@
 	var/old_checkinghasentered = src.checkinghasentered
 	var/old_blocked_dirs = src.blocked_dirs
 	var/old_checkinghasproximity = src.checkinghasproximity
+	var/old_neighcheckinghasproximity = src.neighcheckinghasproximity
 
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
 	var/old_process_cell_operations = src.process_cell_operations
@@ -583,10 +642,6 @@
 
 	new_turf.RL_ApplyGeneration = rlapplygen
 	new_turf.RL_UpdateGeneration = rlupdategen
-	if(new_turf.RL_MulOverlay)
-		qdel(new_turf.RL_MulOverlay)
-	if(new_turf.RL_AddOverlay)
-		qdel(new_turf.RL_AddOverlay)
 	new_turf.RL_MulOverlay = rlmuloverlay
 	new_turf.RL_AddOverlay = rladdoverlay
 
@@ -607,6 +662,7 @@
 	new_turf.checkinghasentered = old_checkinghasentered
 	new_turf.blocked_dirs = old_blocked_dirs
 	new_turf.checkinghasproximity = old_checkinghasproximity
+	new_turf.neighcheckinghasproximity = old_neighcheckinghasproximity
 
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
 	new_turf.process_cell_operations = old_process_cell_operations

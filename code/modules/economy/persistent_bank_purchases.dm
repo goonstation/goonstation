@@ -384,6 +384,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	legless
 		name = "No Legs"
 		cost = 5000
+		path = /obj/item/furniture_parts/wheelchair
 
 		Create(var/mob/living/M)
 			if (ishuman(M))
@@ -435,7 +436,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			if (istype(M.loc, /obj/storage)) // also for stowaways; we really should have a system for integrating this stuff
 				S = M.loc
 			else
-				S = new /obj/storage/crate/packing()
+				S = new /obj/storage/crate/wooden()
 				M.set_loc(S)
 			shippingmarket.receive_crate(S)
 			return 1

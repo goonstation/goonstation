@@ -49,6 +49,8 @@
 	var/maxReservoir = 10
 	var/datum/holder
 	var/heading = "don't touch!!!"
+	var/minStored = 1
+	var/maxStored = 6
 
 /datum/chemicompiler_core/New(datum/holder)
 	..()
@@ -486,7 +488,7 @@
 
 	// lol butts
 	var/datum/tag/button/butt
-	for(i=1,i<=6,i++)
+	for(i=minStored,i<=maxStored,i++)
 		butt = new
 		butt.setText(i)
 		butt.setId("butt-[i]")
@@ -702,6 +704,9 @@
 		// Putting SOMETHING in
 		var/obj/item/I = usr.equipped()
 		if(istype(I, /obj/item/reagent_containers/glass))
+			if(I.cant_drop)
+				boutput(usr, "<span class='alert'>You cannot place the [I] into the [src.holder]!</span>")
+				return
 			//putting a reagent container in
 			boutput(usr, "<span class='notice'>You place the [I] into the [src.holder].</span>")
 			usr.drop_item()

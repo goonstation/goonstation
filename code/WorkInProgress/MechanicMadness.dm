@@ -2312,6 +2312,7 @@
 			particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(get_turf(picked.loc)))
 			for(var/atom/movable/M in src.loc)
 				if(M == src || M.invisibility || M.anchored) continue
+				logTheThing("combat", M, null, "entered [src] at [log_loc(src)] and teleported to [log_loc(picked)]")
 				M.set_loc(get_turf(picked.loc))
 				count_sent++
 			input.signal = count_sent

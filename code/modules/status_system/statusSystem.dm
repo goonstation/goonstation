@@ -30,8 +30,8 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		src.maptext_y = -12
 		maptext_width = 16
 		maptext_height = 16
-		filters += filter(type="outline", size=0.7,color=rgb(0,0,0))
-		filters += filter(type="drop_shadow", size=1.5, color=rgb(0,0,0))
+		add_filter("outline", 1, outline_filter(size=0.7,color=rgb(0,0,0)))
+		add_filter("drop shadow", 2, drop_shadow_filter(size=1.5, color=rgb(0,0,0)))
 		..()
 
 	proc/init(mob/living/C, datum/statusEffect/S)
