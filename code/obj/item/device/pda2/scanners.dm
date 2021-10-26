@@ -19,7 +19,7 @@
 
 		if(!(holder in src.master.contents))
 			if(master.scan_program == src)
-				src.master.set_scan_program(null)
+				master.scan_program = null
 			return 1
 
 		return 0
@@ -84,22 +84,6 @@
 		size = 16
 		var/last_address = "02000000"
 
-		on_set_scan(obj/item/device/pda2/pda)
-			pda.AddComponent(
-				/datum/component/packet_connected/radio, \
-				"ruckkit",\
-				FREQ_RUCK, \
-				pda.net_id, \
-				null, \
-				FALSE, \
-				null, \
-				FALSE \
-			)
-
-
-		on_unset_scan(obj/item/device/pda2/pda)
-			qdel(get_radio_connection_by_id(pda, "ruckkit"))
-
 		scan_atom(atom/A as obj)
 			if (..() || !istype(A, /obj))
 				return
@@ -125,11 +109,11 @@
 			signal.source = src.master
 			signal.transmission_method = 1
 
-			signal.data["address_tag"] = "TRANSRKIT"
+			signal.data["address_1"] = "TRANSRKIT"
 			signal.data["command"] = "add"
 
 			signal.data_file = theScan
-			post_signal(signal, "ruckkit")
+			post_signal(signal, 1467)
 
 	medrecord_scan
 		name = "MedTrak Scanner"

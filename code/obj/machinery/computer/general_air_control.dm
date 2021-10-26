@@ -11,14 +11,15 @@ obj/machinery/computer/general_air_control
 	var/list/sensors = list()
 
 	var/list/sensor_information = list()
+	var/datum/radio_frequency/radio_connection
 
 	light_r =0.6
 	light_g = 1
 	light_b = 0.1
 
-	New()
+	disposing()
+		radio_controller.remove_object(src, "[frequency]")
 		..()
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
 	special_deconstruct(obj/computerframe/frame as obj)
 		frame.circuit.frequency = src.frequency
@@ -86,6 +87,15 @@ obj/machinery/computer/general_air_control
 
 		return output
 
+	proc
+		set_frequency(new_frequency)
+			radio_controller.remove_object(src, "[frequency]")
+			frequency = new_frequency
+			radio_connection = radio_controller.add_object(src, "[frequency]")
+
+	initialize()
+		set_frequency(frequency)
+
 	large_tank_control
 		icon = 'icons/obj/computer.dmi'
 		icon_state = "tank"
@@ -152,6 +162,8 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 
 			if(href_list["in_refresh_status"])
 				input_info = null
+				if(!radio_connection)
+					return 0
 
 				var/datum/signal/signal = get_free_signal()
 				signal.transmission_method = 1 //radio signal
@@ -161,10 +173,12 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 				signal.data["status"] = 1
 				signal.data["command"] = "refresh"
 
-				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+				radio_connection.post_signal(src, signal)
 
 			if(href_list["in_toggle_injector"])
 				input_info = null
+				if(!radio_connection)
+					return 0
 
 				var/datum/signal/signal = get_free_signal()
 				signal.transmission_method = 1 //radio signal
@@ -173,10 +187,12 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 				signal.data["tag"] = input_tag
 				signal.data["command"] = "power_toggle"
 
-				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+				radio_connection.post_signal(src, signal)
 
 			if(href_list["out_refresh_status"])
 				output_info = null
+				if(!radio_connection)
+					return 0
 
 				var/datum/signal/signal = get_free_signal()
 				signal.transmission_method = 1 //radio signal
@@ -186,10 +202,12 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 				signal.data["status"] = 1
 				signal.data["command"] = "refresh"
 
-				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+				radio_connection.post_signal(src, signal)
 
 			if(href_list["out_toggle_power"])
 				output_info = null
+				if(!radio_connection)
+					return 0
 
 				var/datum/signal/signal = get_free_signal()
 				signal.transmission_method = 1 //radio signal
@@ -198,10 +216,12 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 				signal.data["tag"] = output_tag
 				signal.data["command"] = "power_toggle"
 
-				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+				radio_connection.post_signal(src, signal)
 
 			if(href_list["out_set_pressure"])
 				output_info = null
+				if(!radio_connection)
+					return 0
 
 				var/datum/signal/signal = get_free_signal()
 				signal.transmission_method = 1 //radio signal
@@ -211,7 +231,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 				signal.data["command"] = "set_internal_pressure"
 				signal.data["parameter"] = "[pressure_setting]"
 
-				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+				radio_connection.post_signal(src, signal)
 
 			if(href_list["adj_pressure"])
 				var/change = text2num(href_list["adj_pressure"])
@@ -238,6 +258,8 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 
 		process()
 			if(automation)
+				if(!radio_connection)
+					return 0
 
 				var/injecting = 0
 				for(var/id_tag in sensor_information)
@@ -260,7 +282,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 				else
 					signal.data["command"] = "power_off"
 
-				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+				radio_connection.post_signal(src, signal)
 
 			..()
 
@@ -302,6 +324,8 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 
 			if(href_list["refresh_status"])
 				device_info = null
+				if(!radio_connection)
+					return 0
 
 				var/datum/signal/signal = get_free_signal()
 				signal.transmission_method = 1 //radio signal
@@ -311,13 +335,15 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 				signal.data["status"] = 1
 				signal.data["command"] = "refresh"
 
-				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+				radio_connection.post_signal(src, signal)
 
 			if(href_list["toggle_automation"])
 				automation = !automation
 
 			if(href_list["toggle_injector"])
 				device_info = null
+				if(!radio_connection)
+					return 0
 
 				var/datum/signal/signal = get_free_signal()
 				signal.transmission_method = 1 //radio signal
@@ -326,9 +352,11 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 				signal.data["tag"] = device_tag
 				signal.data["command"] = "power_toggle"
 
-				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+				radio_connection.post_signal(src, signal)
 
 			if(href_list["injection"])
+				if(!radio_connection)
+					return 0
 
 				var/datum/signal/signal = get_free_signal()
 				signal.transmission_method = 1 //radio signal
@@ -337,9 +365,11 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 				signal.data["tag"] = device_tag
 				signal.data["command"] = "inject"
 
-				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+				radio_connection.post_signal(src, signal)
 
 			if(href_list["change_vol"])
+				if(!radio_connection)
+					return 0
 				var/amount = text2num(href_list["change_vol"])
 				var/datum/signal/signal = get_free_signal()
 				var/volume_rate = device_info["volume_rate"]
@@ -348,21 +378,23 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 				signal.data["tag"] = device_tag
 				signal.data["command"] = "set_volume_rate"
 				signal.data["parameter"] = num2text(volume_rate + amount)
-				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+				radio_connection.post_signal(src, signal)
 
 /obj/machinery/computer/general_alert
-	New()
-		..()
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("control", frequency)
-		MAKE_SENDER_RADIO_PACKET_COMPONENT("respond", respond_frequency)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("receive", receive_frequency)
+	var/datum/radio_frequency/radio_connection
+
+	initialize()
+		set_frequency(receive_frequency)
+		radio_controller.add_object(src, "[respond_frequency]")
 
 	receive_signal(datum/signal/signal)
 		if(!signal || signal.encryption) return
 
 		//Oh, someone is asking us for data instead of reporting a thing.
 		if((signal.data["command"] == "report_alerts") && signal.data["sender"])
+			var/datum/radio_frequency/frequency = radio_controller.return_frequency("[src.respond_frequency]")
 			var/datum/signal/newsignal = get_free_signal()
+			newsignal.transmission_method = TRANSMISSION_RADIO
 
 			newsignal.data["address_1"] = signal.data["sender"]
 			newsignal.data["command"] = "reply_alerts"
@@ -371,7 +403,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 			if(minor_alarms.len)
 				newsignal.data["minor_list"] = jointext(minor_alarms, ";")
 
-			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "respond")
+			frequency.post_signal(src, newsignal)
 			return
 
 
@@ -387,6 +419,12 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 			priority_alarms += zone
 		else if (severity == "minor")
 			minor_alarms += zone
+
+	proc
+		set_frequency(new_frequency)
+			radio_controller.remove_object(src, "[receive_frequency]")
+			receive_frequency = new_frequency
+			radio_connection = radio_controller.add_object(src, "[receive_frequency]")
 
 
 	attack_hand(mob/user)
@@ -463,10 +501,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 	var/message_delay = 600
 
 	frequency = 1439
-
-	New()
-		..()
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+	var/datum/radio_frequency/radio_connection
 
 	special_deconstruct(obj/computerframe/frame as obj)
 		frame.circuit.frequency = src.frequency
@@ -550,6 +585,8 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 	Topic(href, href_list)
 		if (..())
 			return 0
+		if (!radio_connection)
+			return 0
 		if (!src.allowed(usr))
 			boutput(usr, "<span class='alert'>Access denied!</span>")
 			return 0
@@ -617,8 +654,17 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 		if (href_list["refresh_status"])
 			signal.data["status"] = 1
 
-		if (signal)
-			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+		if (radio_connection && signal)
+			radio_connection.post_signal(src, signal)
+
+	proc
+		set_frequency(new_frequency)
+			radio_controller.remove_object(src, "[frequency]")
+			frequency = new_frequency
+			radio_connection = radio_controller.add_object(src, "[frequency]")
+
+	initialize()
+		set_frequency(frequency)
 #undef MAX_PRESSURE
 
 #undef _GET_SIGNAL_GAS

@@ -26,10 +26,6 @@ obj/machinery/atmospherics/binary/pump
 
 	var/datum/pump_ui/ui
 
-	New()
-		..()
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
-
 	attack_hand(mob/user)
 		//on = !on
 		update_icon()
@@ -76,27 +72,45 @@ obj/machinery/atmospherics/binary/pump
 
 		return 1
 
-	proc/broadcast_status()
-		var/datum/signal/signal = get_free_signal()
-		signal.transmission_method = 1 //radio signal
-		signal.source = src
+	//Radio remote control
 
-		signal.data["tag"] = id
-		signal.data["device"] = "AGP"
-		signal.data["power"] = on ? "on" : "off"
-		signal.data["target_output"] = target_pressure
+	proc
+		set_frequency(new_frequency)
+			radio_controller.remove_object(src, "[frequency]")
+			frequency = new_frequency
+			if(frequency)
+				radio_connection = radio_controller.add_object(src, "[frequency]")
 
-		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+		broadcast_status()
+			if(!radio_connection)
+				return 0
 
-		return 1
+			var/datum/signal/signal = get_free_signal()
+			signal.transmission_method = 1 //radio signal
+			signal.source = src
+
+			signal.data["tag"] = id
+			signal.data["device"] = "AGP"
+			signal.data["power"] = on ? "on" : "off"
+			signal.data["target_output"] = target_pressure
+
+			radio_connection.post_signal(src, signal)
+
+			return 1
 
 	var/frequency = 0
 	var/id = null
+	var/datum/radio_frequency/radio_connection
 
 	initialize()
 		..()
+		if(frequency)
+			set_frequency(frequency)
 		ui = new/datum/pump_ui/basic_pump_ui(src)
 
+	disposing()
+		radio_controller.remove_object(src, "[frequency]")
+		..()
 
 	receive_signal(datum/signal/signal)
 		if(signal.data["tag"] && (signal.data["tag"] != id))

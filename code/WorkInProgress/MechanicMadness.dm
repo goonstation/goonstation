@@ -1745,7 +1745,8 @@
 	var/range = 0
 
 	var/noise_enabled = true
-	var/frequency = FREQ_FREE
+	var/frequency = 1419
+	var/datum/radio_frequency/radio_connection
 
 	get_desc()
 		. += {"<br><span class='notice'>[forward_all ? "Sending full unprocessed Signals.":"Sending only processed sendmsg and pda Message Signals."]<br>
@@ -1761,7 +1762,8 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle NetID Filtering","toggleAddressFiltering")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Forward All","toggleForwardAll")
 
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("main", frequency)
+		if(radio_controller)
+			set_frequency(frequency)
 
 		src.net_id = format_net_id("\ref[src]")
 
@@ -1778,7 +1780,6 @@
 
 	proc/toggleAddressFiltering(obj/item/W as obj, mob/user as mob)
 		only_directed = !only_directed
-		get_radio_connection_by_id(src, "main").update_all_hearing(!only_directed)
 		boutput(user, "[only_directed ? "Now only reacting to Messages directed at this Component":"Now reacting to ALL Messages."]")
 		tooltip_rebuild = 1
 		return 1
@@ -1807,6 +1808,7 @@
 
 		sendsig.source = src
 		sendsig.data["sender"] = src.net_id
+		sendsig.transmission_method = TRANSMISSION_RADIO
 
 		for(var/X in converted)
 			sendsig.data["[X]"] = "[converted[X]]"
@@ -1820,7 +1822,7 @@
 				playsound(src, "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
 				SPAWN_DBG(WIFI_NOISE_COOLDOWN)
 					src.noise_enabled = true
-			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, sendsig, src.range, "main")
+			src.radio_connection.post_signal(src, sendsig, src.range)
 
 		animate_flash_color_fill(src,"#FF0000",2, 2)
 		return
@@ -1839,6 +1841,7 @@
 				pingsignal.data["address_1"] = signal.data["sender"]
 				pingsignal.data["command"] = "ping_reply"
 				pingsignal.data["data"] = "Wifi Component"
+				pingsignal.transmission_method = TRANSMISSION_RADIO
 
 				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
 					if(src.noise_enabled)
@@ -1846,7 +1849,7 @@
 						playsound(src, "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
 						SPAWN_DBG(WIFI_NOISE_COOLDOWN)
 							src.noise_enabled = true
-					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal, src.range)
+					src.radio_connection.post_signal(src, pingsignal, src.range)
 
 			if(signal.data["command"] == "text_message" && signal.data["batt_adjust"] == netpass_syndicate)
 				var/packets = ""
@@ -1889,8 +1892,9 @@
 		if(!radio_controller) return
 		tooltip_rebuild = 1
 		new_frequency = clamp(new_frequency, 1000, 1500)
+		radio_controller.remove_object(src, "[frequency]")
 		frequency = new_frequency
-		get_radio_connection_by_id(src, "main").update_frequency(frequency)
+		radio_connection = radio_controller.add_object(src, "[frequency]")
 
 	updateIcon()
 		icon_state = "[under_floor ? "u":""]comp_radiosig"
@@ -2453,6 +2457,7 @@
 	icon_state = "comp_radioscanner"
 
 	var/frequency = R_FREQ_DEFAULT
+	var/datum/radio_frequency/radio_connection
 
 	get_desc()
 		. += "<br><span style=\"color:blue\">Current Frequency: [frequency]</span>"
@@ -2461,7 +2466,10 @@
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set frequency", "setfreq")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Frequency","setFreqMan")
-		// TODO: analog registration
+
+
+		if(radio_controller)
+			set_frequency(frequency)
 
 	proc/setFreqMan(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user, "New frequency ([R_FREQ_MINIMUM] - [R_FREQ_MAXIMUM]):", "Enter new frequency", frequency) as num
@@ -2479,13 +2487,15 @@
 		var/newfreq = text2num(input.signal)
 		if (!newfreq) return
 		set_frequency(newfreq)
+		return
 
 	proc/set_frequency(new_frequency)
 		if (!radio_controller) return
 		new_frequency = sanitize_frequency(new_frequency)
 		componentSay("New frequency: [new_frequency]")
+		radio_controller.remove_object(src, "[frequency]")
 		frequency = new_frequency
-		// TODO: analog registration
+		radio_connection = radio_controller.add_object(src, "[frequency]")
 		tooltip_rebuild = 1
 	proc/hear_radio(atom/movable/AM, msg, lang_id)
 		if (level == 2) return
