@@ -8,7 +8,7 @@
 	icon_state = "alarm0"
 	anchored = 1.0
 	var/skipprocess = 0 //Experimenting
-	var/alarm_frequency = FREQ_ALARM
+	var/alarm_frequency = "1437"
 	var/alarm_zone = null
 	var/control_frequency = "1439"
 	var/id
@@ -20,10 +20,13 @@
 	var/e_gas = 0
 	var/last_safe = 2
 
+	disposing()
+		radio_controller.remove_object(src, alarm_frequency)
+		radio_controller.remove_object(src, control_frequency)
+		..()
+
 /obj/machinery/alarm/New()
 	..()
-	MAKE_SENDER_RADIO_PACKET_COMPONENT("alarm", alarm_frequency)
-	MAKE_SENDER_RADIO_PACKET_COMPONENT("control", control_frequency) // seems to be unused?
 
 	if(!alarm_zone)
 		var/area/A = get_area(loc)
@@ -116,6 +119,10 @@
 	return
 
 /obj/machinery/alarm/proc/post_alert(alert_level)
+	var/datum/radio_frequency/frequency = radio_controller.return_frequency(alarm_frequency)
+
+	if(!frequency) return
+
 	var/datum/signal/alert_signal = get_free_signal()
 	alert_signal.source = src
 	alert_signal.transmission_method = 1
@@ -130,7 +137,7 @@
 		if (2)
 			alert_signal.data["alert"] = "reset"
 
-	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, alert_signal, null, "alarm")
+	frequency.post_signal(src, alert_signal)
 
 /obj/machinery/alarm/attackby(var/obj/item/W as obj, user as mob)
 	if (issnippingtool(W))

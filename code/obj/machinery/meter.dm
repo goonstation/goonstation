@@ -13,7 +13,12 @@
 	..()
 	SPAWN_DBG(1 SECOND)
 		src.target = locate(/obj/machinery/atmospherics/pipe) in loc
-	MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
+
+	return 1
+
+/obj/machinery/meter/disposing()
+	radio_controller.remove_object(src, "[frequency]")
+	..()
 
 /obj/machinery/meter/process()
 	if(!target)
@@ -54,6 +59,10 @@
 
 
 	if(frequency)
+		var/datum/radio_frequency/radio_connection = radio_controller.return_frequency("[frequency]")
+
+		if(!radio_connection) return
+
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src
 		signal.transmission_method = 1
@@ -62,8 +71,7 @@
 		signal.data["device"] = "AM"
 		signal.data["pressure"] = round(env_pressure)
 
-		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
-
+		radio_connection.post_signal(src, signal)
 
 /obj/machinery/meter/examine()
 	. = list("A gas flow meter. ")

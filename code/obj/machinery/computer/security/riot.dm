@@ -4,9 +4,10 @@
 	density = 0
 	var/auth_need = 3.0
 	var/list/authorized
-	var/list/authorized_registered = null
+	var/list/authorized_registered
+	var/datum/radio_frequency/radio_connection = null
 	var/net_id = null
-	var/control_frequency = "1461"
+	var/datum/radio_frequency/control_frequency = "1461"
 	var/radiorange = 3
 	desc = "Use this computer to authorize security access to the Armory. You need an ID with security access to do so."
 
@@ -23,13 +24,20 @@
 			armory_area = get_area_by_type(/area/station/security/armory)
 
 		src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, control_frequency)
+		SPAWN_DBG(0.5 SECONDS)
+			if (radio_controller)
+				radio_connection = radio_controller.add_object(src, "[control_frequency]")
 
 		/*for (var/obj/machinery/door/airlock/D in armory_area)
 			if (D.has_access(access_maxsec))
 				D.no_access = 1
 		*/
 		..()
+
+	disposing()
+		if (radio_controller)
+			radio_controller.remove_object(src, "[control_frequency]")
+		. = ..()
 
 	receive_signal(datum/signal/signal)
 		if(!signal || signal.encryption || signal.transmission_method != TRANSMISSION_RADIO)
@@ -47,8 +55,9 @@
 				pingsignal.data["sender"] = src.net_id
 				pingsignal.data["address_1"] = target
 				pingsignal.data["command"] = "ping_reply"
+				pingsignal.transmission_method = TRANSMISSION_RADIO
 
-				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal, radiorange)
+				radio_connection.post_signal(src, pingsignal, radiorange)
 			return
 
 		var/datum/signal/returnsignal = get_free_signal()
@@ -97,7 +106,7 @@
 					returnsignal.data["data"] = "badpass"
 			else
 				return //COMMAND NOT RECOGNIZED
-		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, returnsignal, radiorange)
+		radio_connection.post_signal(src, returnsignal, radiorange)
 
 
 	proc/authorize()

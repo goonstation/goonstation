@@ -394,10 +394,12 @@
   * * c_type The component type path
   */
 /datum/proc/GetComponents(c_type)
-	var/list/components = datum_components?[c_type]
-	if(!components)
-		return list()
-	return islist(components) ? components : list(components)
+	var/list/dc = datum_components
+	if(!dc)
+		return null
+	. = dc[c_type]
+	if(!length(.))
+		return list(.)
 
 /**
   * Creates an instance of `new_type` in the datum and attaches to it as parent
