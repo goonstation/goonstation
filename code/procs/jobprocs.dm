@@ -597,13 +597,10 @@
 	if (src.traitHolder && src.traitHolder.hasTrait("pawnstar"))
 		trinket = null //You better stay null, you hear me!
 	else if (src.traitHolder && src.traitHolder.hasTrait("bald"))
-		if (src.mutantrace)
-			boutput(src, "<span class='notice'>You wouldn't own a wig, you can't even grow hair! It makes no sense!</span>")
-		else
-			trinket = src.create_wig()
-			src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
-			src.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
-			src.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
+		trinket = src.create_wig()
+		src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
+		src.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
+		src.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
 	else if (src.traitHolder && src.traitHolder.hasTrait("loyalist"))
 		trinket = new/obj/item/clothing/head/NTberet(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("petasusaphilic"))
