@@ -1,5 +1,9 @@
 
 (t)tue oct 26 21
+(u)Vocalpocal
+(p)6430
+(e)|
+(+)Botany's plantmaster mk3 now has sounds for most of its functions.
 (u)pali
 (p)6423
 (e)|
