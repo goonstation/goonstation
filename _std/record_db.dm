@@ -10,7 +10,7 @@
 				indices[key] = list()
 
 	proc/has_record(datum/db_record/record)
-		return record.get_db() == src
+		return record?.get_db() == src
 
 	proc/find_records(key, value)
 		RETURN_TYPE(/list/datum/db_record)
@@ -138,5 +138,8 @@
 	proc/copy()
 		RETURN_TYPE(/datum/db_record)
 		return new/datum/db_record(null, fields.Copy())
+
+	proc/get_fields_copy()
+		return fields.Copy()
 
 /mob/var/datum/record_database/rdb = new

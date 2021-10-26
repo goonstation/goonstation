@@ -837,9 +837,9 @@ proc/debug_map_apc_count(delim,zlim)
 
 	checkinghasproximity
 		name = "checkinghasproximity"
-		help = "Green = yes."
+		help = "Green = yes. Red = no. Yellow = next to yes."
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
-			img.app.color = theTurf.checkinghasproximity ? "#0f0" : "#f00"
+			img.app.color = theTurf.checkinghasproximity ? "#0f0" : (theTurf.neighcheckinghasproximity ? "#ff0" : "#f00")
 
 	blood_owner/no_items
 		name = "blood owner - no items"

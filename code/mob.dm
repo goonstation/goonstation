@@ -394,6 +394,13 @@
 	lastattacked = null
 	lastattacker = null
 	health_update_queue -= src
+
+	for(var/x in src)
+		qdel(x)
+	if(hasvar(src, "hud")) // ew
+		qdel(src.vars["hud"])
+		src.vars["hud"] = null
+
 	..()
 	src.mob_properties = null
 
