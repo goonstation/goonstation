@@ -1,5 +1,7 @@
 
 (t)mon oct 25 21
+(u)kyle
+(*)Mutantraces can't use the wig trait. It's supposed to be the hair that *would* have been your hair, and mutantraces don't have hair...
 (u)UnfunnyPerson
 (p)6414
 (e)⚖|balance
