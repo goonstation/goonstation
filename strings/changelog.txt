@@ -1,4 +1,6 @@
 (t)tue oct 26 21
+(u)Flourish
+(+)Medical doctors and roboticists now spawn with upgraded ProDoc health goggles.
 (u)Sovexe
 (+)Morgue trays now have a neat opening animation.
 (t)mon oct 25 21
