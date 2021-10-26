@@ -1035,9 +1035,15 @@
 			return
 
 /obj/item/gun/energy/laser_gun/pred/lowcharge
-	name = "dusty laser rifle"
-	desc = "This model appears to cut costs of production severely by using a cheaper power cell."
-	cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig // 4 shots but with 20 self recharge, same chance to get as phaser so it should be as strong as one, trading less shots for more damage and self recharge.
+	name = "shiny laser rifle"
+	desc = "This is a newer model of laser rifles focusing on power efficency. Thanks to this reduced cost of firing, a weaker and far cheaper battery can be used to get the same performance as older models at a lesser cost."
+	cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig // Same performance as normal one due to halved laser cost.
+
+	New()
+		..()
+		set_current_projectile(new/datum/projectile/laser/pred/cheap)
+		projectiles = list(new/datum/projectile/laser/pred/cheap)
+
 
 /obj/item/gun/energy/laser_gun/pred/vr
 	name = "advanced laser gun"
