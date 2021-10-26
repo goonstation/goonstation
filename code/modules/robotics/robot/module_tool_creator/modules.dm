@@ -146,6 +146,7 @@
 		/obj/item/reagent_containers/mender/burn/medbot,
 		/obj/item/robospray, // TODO: make large version
 		/obj/item/reagent_containers/hypospray, // TODO: make large version
+		/obj/item/device/lollipopmaker/md,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/glass/beaker/large,
