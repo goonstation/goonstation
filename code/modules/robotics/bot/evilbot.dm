@@ -7,7 +7,7 @@
 	icon = 'icons/misc/hstation.dmi'
 
 	control_freq = 1089
-	beacon_freq = FREQ_SECBUDDY_NAVBEACON
+	beacon_freq = 1431
 
 	no_camera = 1
 	flashlight_red = 0.4

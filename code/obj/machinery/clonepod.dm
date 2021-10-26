@@ -47,7 +47,8 @@
 	var/message = null
 	var/list/mailgroups
 	var/net_id = null
-	var/pdafrequency = FREQ_PDA
+	var/pdafrequency = 1149
+	var/datum/radio_frequency/pda_connection
 
 	var/datum/light/light
 
@@ -77,13 +78,15 @@
 		light.set_height(0.75)
 		light.attach(src)
 
-		if (!src.net_id)
-			src.net_id = generate_net_id(src)
-		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
-
+		SPAWN_DBG(10 SECONDS)
+			if (radio_controller)
+				pda_connection = radio_controller.add_object(src, "[pdafrequency]")
+			if (!src.net_id)
+				src.net_id = generate_net_id(src)
 
 	disposing()
 		mailgroups.len = 0
+		radio_controller.remove_object(src, "[pdafrequency]")
 		genResearch?.clonepods?.Remove(src) //Bye bye
 		connected?.linked_pods -= src
 		if(connected?.scanner?.pods)
@@ -117,9 +120,12 @@
 			msg = src.message
 		else if (!msg)
 			return
+		if(!pda_connection)
+			return
 
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
+		newsignal.transmission_method = TRANSMISSION_RADIO
 		newsignal.data["command"] = "text_message"
 		newsignal.data["sender_name"] = "CLONEPOD-MAILBOT"
 		newsignal.data["message"] = "[msg]"
@@ -128,7 +134,7 @@
 		newsignal.data["group"] = mailgroups + MGA_CLONER
 		newsignal.data["sender"] = src.net_id
 
-		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "pda")
+		pda_connection.post_signal(src, newsignal)
 
 	attack_hand(mob/user as mob)
 		interact_particle(user, src)

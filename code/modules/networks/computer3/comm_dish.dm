@@ -11,6 +11,7 @@
 	var/obj/machinery/power/data_terminal/link = null
 	//Radio inter-dish communications
 	var/frequency = "0000"
+	var/datum/radio_frequency/radio_connection
 	var/list/cargo_logs = list()
 
 	mats = 25
@@ -27,14 +28,19 @@
 					src.link = test_link
 					src.link.master = src
 
-		src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+			if(radio_controller)
+				initialize()
+			src.net_id = generate_net_id(src)
+
+	initialize()
+		radio_connection = radio_controller.add_object(src, "[frequency]")
 
 	disposing()
 		STOP_TRACKING
 		if (link)
 			link.master = null
 		link = null
+		radio_controller.remove_object(src, "[frequency]")
 		..()
 
 	proc

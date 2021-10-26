@@ -7,8 +7,9 @@ obj/machinery/airlock_sensor
 
 	var/id_tag
 	var/master_tag
-	var/frequency = FREQ_AIRLOCK_CONTROL
+	var/frequency = 1449
 
+	var/datum/radio_frequency/radio_connection
 
 	var/on = 1
 	var/alert = 0
@@ -28,7 +29,7 @@ obj/machinery/airlock_sensor
 		signal.data["tag"] = master_tag
 		signal.data["command"] = "cycle"
 
-		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, AIRLOCK_CONTROL_RANGE)
+		radio_connection.post_signal(src, signal, AIRLOCK_CONTROL_RANGE)
 		flick("airlock_sensor_cycle", src)
 
 	process()
@@ -45,10 +46,25 @@ obj/machinery/airlock_sensor
 
 			signal.data["pressure"] = num2text(pressure)
 
-			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, AIRLOCK_CONTROL_RANGE)
+			radio_connection.post_signal(src, signal, AIRLOCK_CONTROL_RANGE)
 
 		update_icon()
 
+	proc
+		set_frequency(new_frequency)
+			radio_controller.remove_object(src, "[frequency]")
+			frequency = new_frequency
+			radio_connection = radio_controller.add_object(src, "[frequency]")
+
+	initialize()
+		set_frequency(frequency)
+
 	New()
 		..()
-		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
+
+		if(radio_controller)
+			set_frequency(frequency)
+
+	disposing()
+		radio_controller.remove_object(src, "[frequency]")
+		..()

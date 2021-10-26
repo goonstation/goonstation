@@ -64,13 +64,27 @@ obj/machinery/atmospherics/valve
 		attack_ai(mob/user as mob)
 			return src.Attackhand(user)
 
+		//Radio remote control
+
+		proc
+			set_frequency(new_frequency)
+				radio_controller.remove_object(src, "[frequency]")
+				frequency = new_frequency
+				if(frequency)
+					radio_connection = radio_controller.add_object(src, "[frequency]")
+
+		disposing()
+			radio_controller.remove_object(src, "[frequency]")
+			..()
 
 		var/frequency = 0
 		var/id = null
+		var/datum/radio_frequency/radio_connection
 
-		New()
+		initialize()
 			..()
-			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+			if(frequency)
+				set_frequency(frequency)
 
 		receive_signal(datum/signal/signal)
 			if(signal.data["tag"] && (signal.data["tag"] != id))
@@ -335,6 +349,7 @@ obj/machinery/atmospherics/manifold_valve
 
 	var/frequency = "1439"
 	var/id = null
+	var/datum/radio_frequency/radio_connection
 
 	north
 		dir = NORTH
@@ -344,6 +359,12 @@ obj/machinery/atmospherics/manifold_valve
 		dir = SOUTH
 	west
 		dir = WEST
+
+	proc/set_frequency(new_frequency)
+		radio_controller.remove_object(src, "[frequency]")
+		frequency = new_frequency
+		if(frequency)
+			radio_connection = radio_controller.add_object(src, "[frequency]")
 
 	update_icon(animation)
 		if(animation)
@@ -365,7 +386,16 @@ obj/machinery/atmospherics/manifold_valve
 			if(WEST)
 				initialize_directions = SOUTH|NORTH|EAST
 
+		if(radio_controller)
+			set_frequency(frequency)
+
+	disposing()
+		radio_controller.remove_object(src, "[frequency]")
+		..()
+
 	network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
+
+
 		if(reference == node1)
 			network_node1 = new_network
 			if(!divert)
@@ -484,12 +514,17 @@ obj/machinery/atmospherics/manifold_valve
 		else if(!divert && (!node1 || !node2))
 			divert()
 
+		if(!radio_connection)
+			return
+
 		var/datum/signal/signal = get_free_signal()
 		signal.transmission_method = 1 //radio signal
 		signal.data["tag"] = tag
 		signal.data["timestamp"] = air_master.current_cycle
 		signal.data["valve_diverting"] = divert
-		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+		radio_connection.post_signal(src, signal)
+
+		return
 
 	initialize()
 		if(node1 && node2 && node3) return
@@ -514,7 +549,8 @@ obj/machinery/atmospherics/manifold_valve
 				node3 = target
 				break
 
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+		if(frequency)
+			set_frequency(frequency)
 
 	build_network()
 		if(!network_node1 && node1)

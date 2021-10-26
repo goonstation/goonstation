@@ -126,7 +126,8 @@
 	desc = "A wireless computer card. It has a bit of a limited range."
 	icon_state = "power_mod"
 	func_tag = "RAD_ADAPTER"
-	var/frequency = FREQ_FREE
+	var/frequency = 1419
+	var/datum/radio_frequency/radio_connection
 	var/range = 8 //How far can our signal travel?? HOW FAR
 	var/setup_freq_locked = 0 //If set, frequency cannot be adjusted.
 	var/setup_netmode_norange = 1 //If set, there is no range limit in network mode.
@@ -140,29 +141,37 @@
 		setup_freq_locked = 1
 
 		pda
-			frequency = FREQ_PDA //Standard PDA comm frequency.
+			frequency = 1149 //Standard PDA comm frequency.
 			net_mode = 1
 			func_tag = "NET_ADAPTER"
 
 		status //This one is for status display control.
-			frequency = FREQ_STATUS_DISPLAY
+			frequency = 1435
 			setup_netmode_norange = 0
 
 	New()
 		..()
-		src.net_id = format_net_id("\ref[src]")
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("wireless", frequency)
-		get_radio_connection_by_id(src, "wireless").update_all_hearing(TRUE) // I guess
+		if(radio_controller)
+			initialize()
 
-	proc/set_frequency(new_frequency)
-		frequency = new_frequency
-		get_radio_connection_by_id(src, "wireless").update_frequency(new_frequency)
+		src.net_id = format_net_id("\ref[src]")
+
+
+	initialize()
+		set_frequency(frequency)
+
+	proc
+		set_frequency(new_frequency)
+			radio_controller.remove_object(src, "[frequency]")
+			frequency = new_frequency
+			radio_connection = radio_controller.add_object(src, "[frequency]")
+
 
 	receive_command(obj/source, command, datum/computer/file/signal/sfile)
 		if(..())
 			return
 
-		if(!istype(sfile))
+		if(!istype(sfile) || !radio_connection)
 			return
 
 		var/broadcast_range = src.range //No range in network mode!!
@@ -176,6 +185,7 @@
 				if(sfile.data_file) //Gonna transfer so many files.
 					newsignal.data_file = sfile.data_file.copy_file()
 				newsignal.encryption = src.code
+				newsignal.transmission_method = TRANSMISSION_RADIO
 				if(src.net_mode)
 					if(!newsignal.data["address_1"])
 						//Net_mode demands an address_1 value!
@@ -184,7 +194,7 @@
 
 					newsignal.data["sender"] = src.net_id
 
-				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, broadcast_range)
+				src.radio_connection.post_signal(src, newsignal, broadcast_range)
 
 				//src.logstring += "T@[src.frequency]:[src.code];"
 
@@ -207,7 +217,8 @@
 				var/datum/signal/newsignal = get_free_signal()
 				newsignal.data["address_1"] = "ping"
 				newsignal.data["sender"] = src.net_id
-				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, broadcast_range)
+				newsignal.transmission_method = TRANSMISSION_RADIO
+				src.radio_connection.post_signal(src, newsignal, broadcast_range)
 
 			else
 				if(!src.setup_freq_locked)
@@ -238,11 +249,12 @@
 					pingsignal.data["address_1"] = signal.data["sender"]
 					pingsignal.data["command"] = "ping_reply"
 					pingsignal.data["data"] = host.name
+					pingsignal.transmission_method = TRANSMISSION_RADIO
 					var/broadcast_range = src.range
 					if(src.setup_netmode_norange)
 						broadcast_range = 0
 					SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
-						SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal, broadcast_range)
+						src.radio_connection.post_signal(src, pingsignal, broadcast_range)
 
 				return //Just toss out the rest of the signal then I guess
 

@@ -1659,7 +1659,8 @@
 	var/mailgroup = null
 	var/mailgroup2 = null //Do not refactor into a list, maps override these properties
 	var/net_id = null
-	var/frequency = FREQ_PDA
+	var/frequency = 1149
+	var/datum/radio_frequency/radio_connection
 	throw_speed = 1
 
 	ex_act(var/severity)
@@ -1686,21 +1687,25 @@
 
 		SPAWN_DBG(1 DECI SECOND)
 			target = get_ranged_target_turf(src, dir, range)
-		if(!src.net_id)
-			src.net_id = generate_net_id(src)
-		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
+		SPAWN_DBG(0.8 SECONDS)
+			if(radio_controller)
+				radio_connection = radio_controller.add_object(src, "[frequency]")
+			if(!src.net_id)
+				src.net_id = generate_net_id(src)
 
 	disposing()
 		var/obj/disposalpipe/trunk/trunk = locate() in src.loc
 		if (trunk && trunk.linked == src)
 			trunk.linked = null
 		trunk = null
+
+		radio_controller.remove_object(src, "[frequency]")
 		..()
 
 	// expel the contents of the holder object, then delete it
 	// called when the holder exits the outlet
 	proc/expel(var/obj/disposalholder/H)
-		if (message && (mailgroup || mailgroup2))
+		if (message && (mailgroup || mailgroup2) && radio_connection)
 			var/groups = list()
 			if (mailgroup)
 				groups += mailgroup
@@ -1710,6 +1715,7 @@
 
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
+			newsignal.transmission_method = TRANSMISSION_RADIO
 			newsignal.data["command"] = "text_message"
 			newsignal.data["sender_name"] = "CHUTE-MAILBOT"
 			newsignal.data["message"] = "[message]"
@@ -1717,7 +1723,7 @@
 			newsignal.data["group"] = groups
 			newsignal.data["sender"] = src.net_id
 
-			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
+			radio_connection.post_signal(src, newsignal)
 
 		flick("outlet-open", src)
 		playsound(src, "sound/machines/warning-buzzer.ogg", 50, 0, 0)
