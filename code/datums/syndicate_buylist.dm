@@ -985,6 +985,11 @@ This is basically useless for anyone but miners.
 	desc = "An old hunting rifle, comes with only four bullets. Use them wisely."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution, /datum/game_mode/spy_theft)
 
+	spy
+		cost = 5
+		blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+		not_in_crates = FALSE
+
 /datum/syndicate_buylist/surplus/bananagrenades
 	name = "Banana Grenades"
 	item = /obj/item/storage/banana_grenade_pouch
