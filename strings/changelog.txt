@@ -1,5 +1,8 @@
 
 (t)mon oct 25 21
+(u)kyle
+(*)Mutantraces can't use the wig trait. Mutantraces all already are bald, why would they want a wig?
+(+)Give legless spacebux purchase a wheelchair.
 (u)TTerc
 (p)6389
 (e)⚖|balance
