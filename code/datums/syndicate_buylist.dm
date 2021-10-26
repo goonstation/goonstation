@@ -988,7 +988,7 @@ This is basically useless for anyone but miners.
 	spy
 		cost = 5
 		blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
-		not_in_crates = FALSE
+		not_in_crates = TRUE
 
 /datum/syndicate_buylist/surplus/bananagrenades
 	name = "Banana Grenades"
