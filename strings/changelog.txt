@@ -1,4 +1,11 @@
+
 (t)tue oct 26 21
+(u)Hypertripp
+(p)6420
+(e)🎨|sprites
+(*)Added a new kind of lollipop, a sugary fruity one
+(*)Made and gave machines to make said lollipops to doctors and the MD in there respective lockers
+(+)Added the regular one to the back pack of the candy salesman
 (u)pali
 (*)Skeleton is now a -1 trait
 (u)Flourish
