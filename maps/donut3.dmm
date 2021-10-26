@@ -41444,7 +41444,7 @@
 	},
 /area/station/engine/inner)
 "lZz" = (
-/obj/machinery/gibber/output_south,
+/obj/machinery/gibber/output_west,
 /obj/landmark{
 	name = "shitty_bill_respawn"
 	},

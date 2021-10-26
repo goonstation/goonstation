@@ -45,6 +45,8 @@
 		. = list("stock" = list())
 
 		for (var/datum/materiel/M as anything in materiel_stock)
+			if(!M.vr_allowed && istype(get_area(src), /area/sim))
+				continue
 			.["stock"] += list(list(
 				"ref" = "\ref[M]",
 				"name" = M.name,
@@ -195,6 +197,7 @@
 	var/category = null
 	var/path = null
 	var/description = "If you see me, gannets is an idiot."
+	var/vr_allowed = TRUE
 
 /datum/materiel/sidearm
 	category = WEAPON_VENDOR_CATEGORY_SIDEARM
@@ -429,6 +432,7 @@
 	name = "Military Headset"
 	path = /obj/item/device/radio/headset/syndicate/comtac
 	description = "A two-way radio headset designed to protect against any incoming hazardous noise, including flashbangs."
+	vr_allowed = FALSE
 // Requisition tokens
 
 /obj/item/requisition_token

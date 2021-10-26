@@ -552,7 +552,6 @@
 
 				R.fields["imp"] = null
 				R.fields["mind"] = src.mind
-				R.name = "CloneRecord-[ckey(src.real_name)]"
 				D.root.add_file(R)
 
 				if (JOB.receives_security_disk)
@@ -597,6 +596,11 @@
 
 	if (src.traitHolder && src.traitHolder.hasTrait("pawnstar"))
 		trinket = null //You better stay null, you hear me!
+	else if (src.traitHolder && src.traitHolder.hasTrait("bald"))
+		trinket = src.create_wig()
+		src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
+		src.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
+		src.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
 	else if (src.traitHolder && src.traitHolder.hasTrait("loyalist"))
 		trinket = new/obj/item/clothing/head/NTberet(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("petasusaphilic"))
@@ -665,9 +669,9 @@
 			if(prob(50)) realName = replacetext(realName, "t", pick("d", "k"))
 			if(prob(50)) realName = replacetext(realName, "p", pick("b", "t"))
 
-			var/datum/data/record/B = FindBankAccountByName(src.real_name)
-			if (B?.fields["name"])
-				B.fields["name"] = realName
+			var/datum/db_record/B = FindBankAccountByName(src.real_name)
+			if (B?["name"])
+				B["name"] = realName
 
 		C.registered = realName
 		C.assignment = JOB.name

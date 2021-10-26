@@ -959,7 +959,7 @@ var/global/curr_day = null
 	var/mob/M
 	if (href_list["target"])
 		var/targetCkey = href_list["target"]
-		M = whois_ckey_to_mob_reference(targetCkey)
+		M = ckey_to_mob(targetCkey)
 
 	switch(href_list["action"])
 		if ("priv_msg_irc")
@@ -1038,7 +1038,7 @@ var/global/curr_day = null
 
 				var/t = input("Message:", text("Mentor Message")) as null|text
 				if (href_list["target"])
-					M = whois_ckey_to_mob_reference(href_list["target"])
+					M = ckey_to_mob(href_list["target"])
 				if (!(src.holder && (src.holder.rank in list("Host", "Coder"))))
 					t = strip_html(t, 1500)
 				if (!( t ))

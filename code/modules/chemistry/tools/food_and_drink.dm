@@ -951,7 +951,7 @@
 	desc = "Caution - fragile."
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	icon_state = "glass-drink"
-	item_state = "glass-drink"
+	item_state = "drink_glass"
 	var/icon_style = "drink"
 	g_amt = 30
 	var/glass_style = "drink"

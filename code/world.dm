@@ -111,7 +111,7 @@ var/global/mob/twitch_mob = 0
 
 			var/pos = findtext(line, " - ", 1, null)
 			if (pos)
-				var/m_key = copytext(line, 1, pos)
+				var/m_key = ckey(copytext(line, 1, pos))
 				var/a_lev = copytext(line, pos + 3, length(line) + 1)
 				admins[m_key] = a_lev
 				logDiary("ADMIN: [m_key] = [a_lev]")
@@ -243,6 +243,7 @@ var/f_color_selector_handler/F_Color_Selector
 			roundLog << "\[[time2text(world.timeofday,"hh:mm:ss")]] <b>Starting new round</b><br>"
 			roundLog << "========================================<br>"
 			roundLog << "<br>"
+			logLength += 4
 
 		Z_LOG_DEBUG("Preload", "Applying config...")
 		// apply some settings from config..
@@ -260,6 +261,9 @@ var/f_color_selector_handler/F_Color_Selector
 			var/datum/overlayComposition/E = new over()
 			screenOverlayLibrary.Add(over)
 			screenOverlayLibrary[over] = E
+
+		url_regex = new("(https?|byond|www)(\\.|:\\/\\/)", "i")
+		full_url_regex = new(@"(https?:\/\/)?((www\.)?([-\w]+\.)+[\l]+(\/\S+)*\/?)","ig")
 
 		Z_LOG_DEBUG("Preload", "initLimiter() (whatever the fuck that does)")
 		initLimiter()
@@ -532,9 +536,6 @@ var/f_color_selector_handler/F_Color_Selector
 	if (global_sims_mode)
 		for (var/area/Ar in world)
 			Ar.build_sims_score()
-
-	url_regex = new("(https?|byond|www)(\\.|:\\/\\/)", "i")
-	full_url_regex = new(@"(https?:\/\/)?((www\.)?([-\w]+\.)+[\l]+(\/\S+)*\/?)","ig")
 
 	UPDATE_TITLE_STATUS("Updating status")
 	Z_LOG_DEBUG("World/Init", "Updating status...")
@@ -1331,7 +1332,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/game_msg = linkify(msg)
 				game_msg = discord_emojify(game_msg)
 
-				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
+				var/mob/M = ckey_to_mob(who, exact=0)
 				if (M?.client)
 					boutput(M, {"
 						<div style='border: 2px solid red; font-size: 110%;'>
@@ -1372,7 +1373,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/nick = plist["nick"]
 				var/msg = html_encode(plist["msg"])
 				var/who = lowertext(plist["target"])
-				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
+				var/mob/M = ckey_to_mob(who, exact=0)
 				var/game_msg = linkify(msg)
 				game_msg = discord_emojify(game_msg)
 
