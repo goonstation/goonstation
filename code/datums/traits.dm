@@ -950,6 +950,8 @@ obj/trait/pilot
 	id = "puritan"
 	points = 2
 	isPositive = 0
+	category = list("cloner_stuff")
+
 
 /obj/trait/survivalist
 	name = "Survivalist (-1)"
@@ -1101,7 +1103,7 @@ obj/trait/pilot
 	id = "skeleton"
 	points = -2
 	isPositive = 1
-	category = list("species")
+	category = list("species", "cloner_stuff")
 	mutantRace = /datum/mutantrace/skeleton
 
 /obj/trait/roach
