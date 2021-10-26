@@ -983,7 +983,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/gun/kinetic/hunting_rifle
 	cost = 3
 	desc = "An old hunting rifle, comes with only four bullets. Use them wisely."
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution, /datum/game_mode/spy_theft)
 
 /datum/syndicate_buylist/surplus/bananagrenades
 	name = "Banana Grenades"
