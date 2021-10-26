@@ -133,3 +133,26 @@
 							if(prob(10)) user.show_text("Your hand hurts...", "red")
 					else
 						return ..()
+
+/mob/living/critter/gunbot/syndicate
+	name = "robot"
+	real_name = "robot"
+	desc = "A retrofitted Syndicate gunbot, it seems angry."
+	icon = 'icons/misc/critter.dmi'
+	icon_state = "mars_sec_bot"
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/gun/dmr
+		HH.name = "7.62 Marksman Rifle Arm"
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "hand38"
+		HH.limb_name = "7.62 Marksman Rifle Arm"
+		HH.can_hold_items = 0
+		HH.can_attack = 1
+		HH.can_range_attack = 1
+
+	setup_healths()
+		add_hh_robot(75, 1)
+		add_hh_robot_burn(75, 1)

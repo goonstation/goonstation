@@ -92,21 +92,14 @@
 			src.visible_message("<span class='alert'>The [src] buzzes, before unbolting itself from the ground. There seems to be no reinforcements available currently.</span>")
 			src.anchored = FALSE
 		var/datum/mind/chosen = pick(candidates)
-		var/mob/living/carbon/human/synd = new/mob/living/carbon/human
+		var/mob/living/critter/gunbot/syndicate/synd = new/mob/living/critter/gunbot/syndicate
 		chosen.transfer_to(synd)
-		equip_syndicate(synd)
-		randomize_look(synd)
 		//H.mind.transfer_to(synd) //comment out ghost messages & uncomment this to make *you* the reinforcement for testing purposes
-		synd.real_name = "[syndicate_name()] Backup Operative [rand(10, 99)]"
 		synd.mind.special_role = ROLE_NUKEOP
 		synd.mind.current.antagonist_overlay_refresh(1, 0)
 		SHOW_NUKEOP_TIPS(synd.mind.current)
-		for(var/obj/item/requisition_token/R in synd.contents)
-			R.force_drop(synd)
-			qdel(R)
 		SPAWN_DBG(0)
 			launch_with_missile(synd, src.loc)
-		synd.equip_if_possible(new /obj/item/device/weapon_vendor/syndicate/preloaded, synd.slot_l_hand)
 		sleep(3 SECONDS)
 		if(src.uses <= 0)
 			elecflash(src)
@@ -282,8 +275,10 @@
 		landing_area = null
 		sent_mobs = null
 		nuclear_bombs = null
-		valid_overlay_area = null
+		for(var/turf/T in overlayed_turfs)
+			T.overlays -= valid_overlay_area
 		overlayed_turfs = null
+		valid_overlay_area = null
 		..()
 
 	attack_self(mob/user)
@@ -402,7 +397,7 @@
 		for(var/obj/machinery/nuclearbomb/NB in range(4, user.loc))
 			SPAWN_DBG(0)
 				var/L = pick_landmark(LANDMARK_SYNDICATE_ASSAULT_POD_TELE)
-				if(!L) //fuck
+				if(!L)
 					return
 				playsound(NB, "sound/effects/teleport.ogg", 30, 1)
 				var/obj/decal/teleport_swirl/S = new/obj/decal/teleport_swirl(NB)
@@ -415,9 +410,9 @@
 			nuclear_bombs += NB
 		src.used = TRUE
 		for(var/obj/machinery/computer/security/pod_timer/S in range(1, pick_landmark(LANDMARK_SYNDICATE_ASSAULT_POD_COMP))) //This is the only way I could make this work
-			var/rand_time = rand(450, 600)
-			S.total_pod_time = TIME + rand_time + 75
-			sleep(75)
+			var/rand_time = rand(45 SECONDS, 60 SECONDS)
+			S.total_pod_time = TIME + rand_time + 7.5 SECONDS
+			sleep(7.5 SECONDS)
 			command_alert("A Syndicate Assault pod is heading towards [station_name], be on high alert.", "Central Command Alert", "sound/misc/announcement_1.ogg")
 			sleep(rand_time / 2)
 			command_alert("Our sensors have determined the Syndicate Assault pod is headed towards [src.landing_area], a response would be advised.", "Central Command Alert", "sound/misc/announcement_1.ogg")
@@ -439,7 +434,7 @@
 				launch_with_missile(C, picked_turf)
 			possible_turfs -= picked_turf
 			if(!length(possible_turfs))
-				src.visible_message("<span class='alert'>The [src] makes a grumpy beep, it seems not everyone could get sent!!</span>")
+				src.visible_message("<span class='alert'>The [src] makes a grumpy beep, it seems not everyone could get sent!</span>")
 				break
 		command_alert("A group of [length(sent_mobs)] personnel missiles have been spotted launching from a Syndicate Assault pod towards [src.landing_area], be prepared for heavy contact.","Central Command Alert", "sound/misc/announcement_1.ogg")
 		qdel(src)
