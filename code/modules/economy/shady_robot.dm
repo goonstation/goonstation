@@ -357,17 +357,17 @@
 				src.updateUsrDialog()
 				return
 			updatecardprice() //should be updated but just to be sure
-			var/datum/data/record/account = null
+			var/datum/db_record/account = null
 			account = FindBankAccountByName(src.scan.registered)
 			if(!account)
 				src.temp = {"That's odd I can't seem to find your account
 							<BR><A href='?src=\ref[src];purchase=1'>OK</A>"}
-			else if(account.fields["current_money"] < src.card_price)
+			else if(account["current_money"] < src.card_price)
 				src.temp = {"Sorry [pick("buddy","pal","mate","friend","chief","bud","boss","champ")], you can't afford that!<BR>
 							<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"}
 			else
 				if(spawncard())
-					account.fields["current_money"] -= src.card_price
+					account["current_money"] -= src.card_price
 					src.temp = {"There ya go. You've got [src.card_duration] seconds to abuse that thing before its access is revoked.<BR>
 								<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"}
 					//reset to default so people can't go snooping and find out the last ordered card
@@ -401,7 +401,7 @@
 			if (src.scan.registered in FrozenAccounts)
 				boutput(usr, "<span class='alert'>Your account cannot currently be liquidated due to active borrows.</span>")
 				return
-			var/datum/data/record/account = null
+			var/datum/db_record/account = null
 			account = FindBankAccountByName(src.scan.registered)
 			if (account)
 				var/quantity = 1
@@ -416,8 +416,8 @@
 				var/datum/commodity/P = locate(href_list["doorder"])
 
 				if(P)
-					if(account.fields["current_money"] >= P.price * quantity)
-						account.fields["current_money"] -= P.price * quantity
+					if(account["current_money"] >= P.price * quantity)
+						account["current_money"] -= P.price * quantity
 						while(quantity-- > 0)
 							shopping_cart += new P.comtype()
 						src.temp = {"[pick(successful_purchase_dialogue)]<BR>
@@ -463,7 +463,7 @@
 				if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 					if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
 					boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
-					var/datum/data/record/account = null
+					var/datum/db_record/account = null
 					account = FindBankAccountByName(I:registered)
 					if(account)
 						var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num
@@ -515,10 +515,10 @@
 		dat = portrait_setup
 		dat +="<B>Scanned Card:</B> <A href='?src=\ref[src];card=1'>([src.scan])</A><BR>"
 		if(scan)
-			var/datum/data/record/account = null
+			var/datum/db_record/account = null
 			account = FindBankAccountByName(src.scan.registered)
 			if (account)
-				dat+="<B>Current Funds</B>: [account.fields["current_money"]] Credits<HR>"
+				dat+="<B>Current Funds</B>: [account["current_money"]] Credits<HR>"
 			else
 				dat+="<HR>"
 		else

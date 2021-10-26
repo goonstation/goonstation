@@ -1,4 +1,51 @@
-
+(t)tue oct 26 21
+(u)pali
+(*)Skeleton is now a -1 trait
+(u)Flourish
+(+)Medical doctors and roboticists now spawn with upgraded ProDoc health goggles.
+(u)Sovexe
+(+)Morgue trays now have a neat opening animation.
+(t)mon oct 25 21
+(u)kyle
+(+)Give legless spacebux purchase a wheelchair.
+(u)TTerc
+(p)6389
+(e)⚖|balance
+(*)Changed how slips work: you will no longer slip, as long as you won't exceed the "default" movespeed (running with full health). However, for example, sprinting, taking meth or having mechboots will make you vulnerable to slips again.
+(*)Clown PDAs, banana peels and ice will still slip you when running, as usual. Lube effect is also unaffected.
+(u)UnfunnyPerson
+(p)6414
+(e)⚖|balance
+(+)Antag cleanbots and firebots can now pick up small-tiny items instead of only being able to pick up tiny items.
+(t)sun oct 24 21
+(u)pali
+(*)the <b>GPS</b> verb has been made better. Try it today to find your way around the station. It's in the Commands tab above chat.
+(u)Flappybat
+(p)6339
+(e)🐛|bug
+(+)Fixed Oshan trench elevator pinpointers.
+(u)Zamujasa
+(e)🆕|feature
+(*)made it so that when you push [t] (or whatever) to talk you get a little bubble over your head that looks like you're typing something in.
+(*)this will probably have bugs but i did testing and nothing immediately caught on fire.
+(*)if something does catch on fire feel free to revert it (action_associations.dm)
+(t)sat oct 23 21
+(u)pali
+(p)6270
+(e)🆕|feature
+(*)COMMaster Message command has been added. It lets you send a message to another Goonstation server.
+(u)Flaborized
+(p)6335
+(e)🎨|sprites
+(+)Resprited crematoriums and morgue slabs.
+(u)pali
+(p)6373
+(e)|
+(+)Ghosting in cryo now starts respawn countdown on RP
+(u)Walpvrgis
+(p)6218
+(e)🎨|sprites
+(*)Station floor tiles have been resprited (and the floors available in the Floor and Wall Planner have been updated to match). Lemme know if you notice any weirdness with them!
 (t)fri oct 22 21
 (u)Flappybat
 (p)6338

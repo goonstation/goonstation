@@ -552,7 +552,6 @@
 
 				R.fields["imp"] = null
 				R.fields["mind"] = src.mind
-				R.name = "CloneRecord-[ckey(src.real_name)]"
 				D.root.add_file(R)
 
 				if (JOB.receives_security_disk)
@@ -621,6 +620,17 @@
 		trinket = new random_lunchbox_path(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("allergic"))
 		trinket = new/obj/item/reagent_containers/emergency_injector/epinephrine(src)
+	else if (src.traitHolder && src.traitHolder.hasTrait("onearmed"))
+		if (src.limbs)
+			SPAWN_DBG(6 SECONDS)
+
+				if (prob(50))
+					if (src.limbs.l_arm)
+						qdel(src.limbs.l_arm.remove(0))
+				else
+					if (src.limbs.r_arm)
+						qdel(src.limbs.r_arm.remove(0))
+				boutput(src, "<b>Your singular arm makes you feel responsible for crimes you couldn't possibly have committed.</b>" )
 	else
 		trinket = new T(src)
 
@@ -670,9 +680,9 @@
 			if(prob(50)) realName = replacetext(realName, "t", pick("d", "k"))
 			if(prob(50)) realName = replacetext(realName, "p", pick("b", "t"))
 
-			var/datum/data/record/B = FindBankAccountByName(src.real_name)
-			if (B?.fields["name"])
-				B.fields["name"] = realName
+			var/datum/db_record/B = FindBankAccountByName(src.real_name)
+			if (B?["name"])
+				B["name"] = realName
 
 		C.registered = realName
 		C.assignment = JOB.name

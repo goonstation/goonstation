@@ -70,8 +70,10 @@
 	var/list/targets = list()
 	var/list/wtfbyond = list()
 	var/turf/OT = get_turf(src)
-	for(var/turf/wp in landmarks[LANDMARK_GPS_WAYPOINT])
-		var/path = AStar(OT, get_turf(wp), /turf/proc/AllDirsTurfsWithAccess, /turf/proc/Distance, adjacent_param = ID, maxtraverse=600)
+	var/list/paths = AStarmulti(OT, landmarks[LANDMARK_GPS_WAYPOINT], /turf/proc/AllDirsTurfsWithAccess, /turf/proc/Distance, adjacent_param = ID, maxtraverse=6000)
+
+	for(var/turf/wp in paths)
+		var/path = paths[wp]
 		if(path)
 			var/name = landmarks[LANDMARK_GPS_WAYPOINT][wp]
 			if(!name)
@@ -121,7 +123,7 @@
 		if(doText)
 			boutput(usr, "You are on a different z-level!")
 		return
-	client.GPS_Path = AStar(start, dest, heuristic, /turf/proc/Distance, adjacent_param = param, maxtraverse=175 )
+	client.GPS_Path = AStar(start, dest, heuristic, /turf/proc/Distance, adjacent_param = param, maxtraverse=1000 )
 	if(client.GPS_Path)
 		if(doText)
 			boutput( usr, "Path located! Use the GPS verb again to clear the path!" )

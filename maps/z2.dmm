@@ -5,6 +5,10 @@
 "aab" = (
 /turf/space/no_replace,
 /area/space)
+"aaN" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/unsimulated/floor/black,
+/area/syndicate_station/assault_pod)
 "abg" = (
 /turf/space/no_replace,
 /turf/unsimulated/floor/void/channel{
@@ -1557,13 +1561,6 @@
 	},
 /turf/unsimulated/floor/caution/east,
 /area/hospital/samostrel)
-"agj" = (
-/obj/indestructible/shuttle_corner{
-	dir = 8;
-	icon_state = "wall3_trans"
-	},
-/turf/space,
-/area/syndicate_station/assault_pod)
 "agk" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -59877,13 +59874,6 @@
 	temperature = 372.15
 	},
 /area/iomoon)
-"dgk" = (
-/obj/table/auto,
-/obj/item/shipcomponent/mainweapon/gun,
-/obj/item/shipcomponent/mainweapon/gun,
-/obj/item/storage/toolbox/mechanical,
-/turf/unsimulated/floor/bot/darkpurple,
-/area/syndicate_station/battlecruiser)
 "dgl" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -66454,39 +66444,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/pacra)
-"dzG" = (
-/obj/machinery/light{
-	dir = 1;
-	on = 1
-	},
-/obj/fitness/speedbag/wizard,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
-"dzH" = (
-/obj/machinery/chem_master{
-	pixel_y = 34
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
-"dzI" = (
-/obj/fitness/stacklifter,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
-"dzJ" = (
-/obj/fitness/weightlifter,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
-"dzK" = (
-/obj/admin_plaque{
-	name = "HukHukHuk's Office";
-	pixel_x = -32
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "dzL" = (
 /obj/admin_plaque{
 	name = "Wire's Office";
@@ -66659,29 +66616,6 @@
 /obj/table/auto,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/pacra)
-"dAn" = (
-/obj/table/wood/auto/desk{
-	icon_state = "2"
-	},
-/obj/machinery/computer3/luggable/personal,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
-"dAo" = (
-/obj/stool/chair/comfy{
-	dir = 8
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
-"dAq" = (
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
-"dAr" = (
-/obj/machinery/door/unpowered/wood{
-	icon = 'icons/obj/doors/door_office.dmi';
-	lock_dir = 8
-	},
-/turf/unsimulated/floor/black,
-/area/centcom/offices/hukhukhuk)
 "dAs" = (
 /obj/machinery/door/unpowered/wood{
 	icon = 'icons/obj/doors/door_office.dmi';
@@ -66813,48 +66747,6 @@
 /obj/machinery/light,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/pacra)
-"dAO" = (
-/obj/machinery/light_area_manager,
-/obj/table/wood/auto/desk{
-	icon_state = "5"
-	},
-/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
-	desc = "It's just water.";
-	dir = 8;
-	icon_state = "bottle-clear";
-	name = "Huk's Bottle";
-	pixel_x = -6;
-	pixel_y = 5
-	},
-/obj/item/chem_pill_bottle{
-	average = "#c38ecc";
-	desc = "Contains 20 Huk Brand Max Beff pills.";
-	name = "Huk Brand Max Beff pill bottle";
-	pcount = 20;
-	pixel_x = 2;
-	pixel_y = 5;
-	pname = "Huk Brand Max Beff";
-	pvol = 5
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
-"dAQ" = (
-/obj/storage/crate/wooden{
-	desc = "Lookin cute, feelin cute.";
-	name = "Huk's clothing crate"
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
-"dAR" = (
-/obj/machinery/light{
-	on = 1
-	},
-/obj/machinery/chem_dispenser_admin{
-	desc = "This object has been obsolete for 8 stations.";
-	name = "Ancient Chemical Dispenser"
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
 "dAS" = (
 /obj/shrub{
 	icon = 'icons/obj/stationobjs.dmi';
@@ -74445,10 +74337,6 @@
 /obj/item/clothing/glasses/regular,
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/rd)
-"dWb" = (
-/obj/wingrille_spawn/auto/crystal,
-/turf/unsimulated/floor/black,
-/area/syndicate_station/assault_pod)
 "dWx" = (
 /obj/decal/fakeobjects/apc_broken,
 /turf/unsimulated/wall/auto/lead/gray,
@@ -74787,16 +74675,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/john/owlery)
-"eOO" = (
-/obj/stool/chair/comfy/shuttle/red,
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/landmark{
-	name = "Syndicate-Assault-Pod-Tele"
-	},
-/turf/unsimulated/floor/circuit/red,
-/area/syndicate_station/assault_pod)
 "ePc" = (
 /obj/decal/poster/wallsign/bar,
 /turf/unsimulated/wall/auto/lead/blue,
@@ -74819,6 +74697,13 @@
 	icon_state = "diagonalWall"
 	},
 /area/hospital/samostrel)
+"eQh" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall3_trans"
+	},
+/turf/space,
+/area/syndicate_station/assault_pod)
 "eTm" = (
 /obj/item/clothing/under/pride/ace,
 /obj/storage/closet{
@@ -74901,6 +74786,12 @@
 /obj/structure/woodwall,
 /turf/unsimulated/floor/plating,
 /area/retentioncenter)
+"ffB" = (
+/obj/decal/fakeobjects/shuttleengine{
+	icon_state = "alt_heater-L"
+	},
+/turf/space,
+/area/syndicate_station/assault_pod)
 "fge" = (
 /turf/space,
 /turf/unsimulated/floor/caution/corner/misc{
@@ -75112,14 +75003,6 @@
 	icon_state = "floor6"
 	},
 /area/shuttle/escape/centcom/donut3)
-"fOt" = (
-/obj/table/wood/auto/desk{
-	icon_state = "8"
-	},
-/obj/item/paper/book/from_file/cookbook,
-/obj/item/paper/book/from_file/pharmacopia,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
 "fQJ" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
@@ -75342,12 +75225,6 @@
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
-"gJt" = (
-/obj/decal/fakeobjects/shuttlethruster{
-	icon_state = "alt_propulsion"
-	},
-/turf/space,
-/area/syndicate_station/assault_pod)
 "gJV" = (
 /turf/unsimulated/floor/bluewhite,
 /area/centcom/offices/varshie)
@@ -75640,6 +75517,16 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
+"hCu" = (
+/obj/stool/chair/comfy/shuttle/red,
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/landmark{
+	name = "Syndicate-Assault-Pod-Tele"
+	},
+/turf/unsimulated/floor/circuit/red,
+/area/syndicate_station/assault_pod)
 "hEG" = (
 /obj/item/raw_material/shard/glass{
 	pixel_x = 4;
@@ -75911,21 +75798,6 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
-"iyG" = (
-/obj/machinery/light,
-/obj/rack,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/turf/unsimulated/floor/darkpurple,
-/area/syndicate_station/battlecruiser)
 "iyY" = (
 /turf/unsimulated/floor/grey/side{
 	dir = 8
@@ -76123,9 +75995,6 @@
 	dir = 8
 	},
 /area/shuttle/escape/centcom/sealab)
-"jew" = (
-/turf/unsimulated/floor/red,
-/area/syndicate_station/assault_pod)
 "jeV" = (
 /obj/machinery/door/unpowered/wood{
 	icon = 'icons/obj/doors/door_office.dmi';
@@ -76337,12 +76206,6 @@
 	icon_state = "diagonalWall"
 	},
 /area/hospital/samostrel)
-"jKS" = (
-/obj/indestructible/shuttle_corner{
-	icon_state = "wall3_trans"
-	},
-/turf/space,
-/area/syndicate_station/assault_pod)
 "jMC" = (
 /obj/storage/crate,
 /turf/unsimulated/floor{
@@ -76557,16 +76420,6 @@
 	icon_state = "wall3"
 	},
 /area/hospital/samostrel)
-"kjV" = (
-/obj/stool/chair/comfy/shuttle/red{
-	dir = 1
-	},
-/obj/machinery/light,
-/obj/landmark{
-	name = "Syndicate-Assault-Pod-Tele"
-	},
-/turf/unsimulated/floor/circuit/red,
-/area/syndicate_station/assault_pod)
 "kkX" = (
 /turf/unsimulated/wall/auto/lead/white,
 /area/moon/museum)
@@ -76652,13 +76505,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/donut3)
-"kri" = (
-/obj/indestructible/shuttle_corner{
-	dir = 4;
-	icon_state = "wall3_trans"
-	},
-/turf/space,
-/area/syndicate_station/assault_pod)
 "krJ" = (
 /obj/machinery/door/airlock/pyro/medical/alt,
 /turf/unsimulated/floor/shuttle,
@@ -76714,6 +76560,15 @@
 	icon_state = "shore-22"
 	},
 /area/titlescreen)
+"kEs" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 1
+	},
+/obj/landmark{
+	name = "Syndicate-Assault-Pod-Tele"
+	},
+/turf/unsimulated/floor/red,
+/area/syndicate_station/assault_pod)
 "kEC" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
@@ -76761,6 +76616,18 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"kMM" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/landmark{
+	name = "Syndicate-Assault-Pod-Tele"
+	},
+/turf/unsimulated/floor/circuit/red,
+/area/syndicate_station/assault_pod)
 "kNR" = (
 /obj/decal/tile_edge/stripe{
 	dir = 6;
@@ -77064,6 +76931,13 @@
 /obj/reagent_dispensers/still,
 /turf/simulated/floor/plating,
 /area/diner/cow)
+"lDE" = (
+/obj/table/auto,
+/obj/item/shipcomponent/mainweapon/gun,
+/obj/item/shipcomponent/mainweapon/gun,
+/obj/item/storage/toolbox/mechanical,
+/turf/unsimulated/floor/bot/darkpurple,
+/area/syndicate_station/battlecruiser)
 "lEt" = (
 /turf/space,
 /turf/unsimulated/floor/plating/scorched,
@@ -77340,18 +77214,6 @@
 	icon_state = "shore-23"
 	},
 /area/titlescreen)
-"mtg" = (
-/obj/stool/chair/comfy/shuttle/red{
-	dir = 8
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/landmark{
-	name = "Syndicate-Assault-Pod-Tele"
-	},
-/turf/unsimulated/floor/circuit/red,
-/area/syndicate_station/assault_pod)
 "muz" = (
 /obj/shrub{
 	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
@@ -77634,6 +77496,13 @@
 /turf/space,
 /turf/unsimulated/floor/carpet/office,
 /area/hospital/samostrel)
+"nel" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	icon_state = "wall3_trans"
+	},
+/turf/space,
+/area/syndicate_station/assault_pod)
 "ngg" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -78203,12 +78072,6 @@
 	icon_state = "shore-36"
 	},
 /area/titlescreen)
-"ohA" = (
-/obj/decal/fakeobjects/shuttleengine{
-	icon_state = "alt_heater-R"
-	},
-/turf/space,
-/area/syndicate_station/assault_pod)
 "oiq" = (
 /obj/table/wood/auto/desk,
 /obj/item/clipboard,
@@ -78554,13 +78417,6 @@
 /obj/window/south,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
-"oYL" = (
-/obj/machinery/computer/security/pod_timer,
-/obj/landmark{
-	name = "Syndicate-Assault-Pod-Comp"
-	},
-/turf/unsimulated/floor/red,
-/area/syndicate_station/assault_pod)
 "oZS" = (
 /obj/machinery/light,
 /obj/table/wood/auto/desk,
@@ -78577,6 +78433,9 @@
 	name = "wood floor"
 	},
 /area/centcom/offices/sord)
+"pfJ" = (
+/turf/unsimulated/floor/red,
+/area/syndicate_station/assault_pod)
 "pfL" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -78844,18 +78703,6 @@
 	},
 /turf/unsimulated/wall/auto/lead/gray,
 /area/sim/bball)
-"pMe" = (
-/obj/stool/chair/comfy/shuttle/red{
-	dir = 4
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/landmark{
-	name = "Syndicate-Assault-Pod-Tele"
-	},
-/turf/unsimulated/floor/circuit/red,
-/area/syndicate_station/assault_pod)
 "pNh" = (
 /obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable{
 	pixel_x = -11;
@@ -78963,6 +78810,14 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/studenterhue)
+"pWC" = (
+/obj/machinery/computer3/terminal{
+	desc = "A computer for controlling the laser-designated artillery cannon aboard the Cairngorm.";
+	dir = 4;
+	name = "Fire Control Terminal"
+	},
+/turf/unsimulated/floor/darkpurple,
+/area/syndicate_station/battlecruiser)
 "pXu" = (
 /obj/cable{
 	d1 = 1;
@@ -79209,6 +79064,21 @@
 /obj/machinery/computer3/generic/personal/meatland,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
+"qHz" = (
+/obj/table/reinforced,
+/obj/item/breaching_charge{
+	pixel_x = -7;
+	pixel_y = -1
+	},
+/obj/item/breaching_charge{
+	pixel_y = 4
+	},
+/obj/item/breaching_charge{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/turf/unsimulated/floor/red,
+/area/syndicate_station/assault_pod)
 "qHA" = (
 /obj/landmark/viscontents_spawn{
 	targetZ = 4
@@ -79231,6 +79101,12 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
+"qJF" = (
+/obj/decal/fakeobjects/shuttleengine{
+	icon_state = "alt_heater-R"
+	},
+/turf/space,
+/area/syndicate_station/assault_pod)
 "qJO" = (
 /obj/machinery/vending/cola/blue,
 /turf/unsimulated/floor{
@@ -79251,12 +79127,6 @@
 "qJS" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/comms)
-"qKW" = (
-/obj/decal/fakeobjects/shuttleengine{
-	icon_state = "alt_heater-L"
-	},
-/turf/space,
-/area/syndicate_station/assault_pod)
 "qMN" = (
 /obj/machinery/light{
 	dir = 1
@@ -79346,6 +79216,12 @@
 	icon_state = "fblue3"
 	},
 /area/centcom/lobby)
+"qXj" = (
+/obj/decal/fakeobjects/shuttlethruster{
+	icon_state = "alt_propulsion"
+	},
+/turf/space,
+/area/syndicate_station/assault_pod)
 "qZh" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/plate{
@@ -79357,20 +79233,17 @@
 /obj/item/plant/herb/grass,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
-"qZu" = (
-/obj/machinery/computer3/terminal{
-	desc = "A computer for controlling the laser-designated artillery cannon aboard the Cairngorm.";
-	dir = 4;
-	name = "Fire Control Terminal"
-	},
-/turf/unsimulated/floor/darkpurple,
-/area/syndicate_station/battlecruiser)
 "qZX" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"
 	},
 /area/shuttle/escape/centcom/destiny)
+"rcn" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/syndicate_station/assault_pod)
 "rcQ" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
@@ -79506,15 +79379,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/donut3)
-"ryj" = (
-/obj/stool/chair/comfy/shuttle/red{
-	dir = 1
-	},
-/obj/landmark{
-	name = "Syndicate-Assault-Pod-Tele"
-	},
-/turf/unsimulated/floor/red,
-/area/syndicate_station/assault_pod)
 "rAl" = (
 /obj/window/crystal/reinforced/west,
 /obj/window/crystal/reinforced/north,
@@ -79596,11 +79460,6 @@
 	},
 /turf/unsimulated/floor/snowrough,
 /area/centcom/offices/virvatuli)
-"rIU" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
-/area/syndicate_station/assault_pod)
 "rJe" = (
 /obj/storage/crate/bin/lostandfound{
 	desc = "Just what it sounds like.";
@@ -79776,13 +79635,6 @@
 	icon_state = "shore-37"
 	},
 /area/titlescreen)
-"rVX" = (
-/obj/indestructible/shuttle_corner{
-	dir = 1;
-	icon_state = "wall3_trans"
-	},
-/turf/space,
-/area/syndicate_station/assault_pod)
 "rWC" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
@@ -79950,6 +79802,18 @@
 /obj/table/regal/auto,
 /turf/unsimulated/floor/carpet/red/standard,
 /area/centcom/offices/questx)
+"slF" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/landmark{
+	name = "Syndicate-Assault-Pod-Tele"
+	},
+/turf/unsimulated/floor/circuit/red,
+/area/syndicate_station/assault_pod)
 "slL" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 10;
@@ -80316,6 +80180,9 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/donut2)
+"tvH" = (
+/turf/unsimulated/floor/plating/random,
+/area/syndicate_station/battlecruiser)
 "two" = (
 /obj/lattice,
 /turf/space,
@@ -80357,6 +80224,12 @@
 "tKt" = (
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"tNe" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans"
+	},
+/turf/space,
+/area/syndicate_station/assault_pod)
 "tNs" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
@@ -80743,21 +80616,6 @@
 	},
 /turf/unsimulated/floor/snowrough,
 /area/centcom/offices/virvatuli)
-"uVd" = (
-/obj/table/reinforced,
-/obj/item/breaching_charge{
-	pixel_x = -7;
-	pixel_y = -1
-	},
-/obj/item/breaching_charge{
-	pixel_y = 4
-	},
-/obj/item/breaching_charge{
-	pixel_x = 5;
-	pixel_y = 7
-	},
-/turf/unsimulated/floor/red,
-/area/syndicate_station/assault_pod)
 "uVv" = (
 /turf/simulated/wall/r_wall,
 /area/diner/cow)
@@ -80912,6 +80770,10 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/donut3)
+"vob" = (
+/obj/machinery/broadside_gun/artillery_cannon/syndicate,
+/turf/space,
+/area/space)
 "voQ" = (
 /turf/unsimulated/floor/orangeblack/corner,
 /area/centcom)
@@ -81068,6 +80930,21 @@
 	name = "plating"
 	},
 /area/hospital/samostrel)
+"wdn" = (
+/obj/machinery/light,
+/obj/rack,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/turf/unsimulated/floor/darkpurple,
+/area/syndicate_station/battlecruiser)
 "wel" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/offices{
@@ -81164,6 +81041,16 @@
 "wvy" = (
 /turf/unsimulated/floor/carpet/red/fancy/narrow/nw,
 /area/centcom/offices/sovexe)
+"wwb" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 1
+	},
+/obj/machinery/light,
+/obj/landmark{
+	name = "Syndicate-Assault-Pod-Tele"
+	},
+/turf/unsimulated/floor/circuit/red,
+/area/syndicate_station/assault_pod)
 "wxG" = (
 /obj/tombstone{
 	dir = 9
@@ -81176,6 +81063,13 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
+"wzf" = (
+/obj/machinery/computer/security/pod_timer,
+/obj/landmark{
+	name = "Syndicate-Assault-Pod-Comp"
+	},
+/turf/unsimulated/floor/red,
+/area/syndicate_station/assault_pod)
 "wAz" = (
 /turf/space,
 /turf/unsimulated/floor/engine/caution/corner2{
@@ -81257,9 +81151,6 @@
 	icon_state = "shore-43"
 	},
 /area/titlescreen)
-"wMh" = (
-/turf/unsimulated/floor/plating/random,
-/area/syndicate_station/battlecruiser)
 "wMi" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-26"
@@ -81333,6 +81224,13 @@
 /turf/space,
 /turf/unsimulated/floor/blackwhite/whitegrime,
 /area/hospital/samostrel)
+"xbX" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	icon_state = "wall3_trans"
+	},
+/turf/space,
+/area/syndicate_station/assault_pod)
 "xcp" = (
 /turf/space,
 /turf/unsimulated/wall{
@@ -81543,10 +81441,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/donut3)
-"xLg" = (
-/obj/machinery/broadside_gun/artillery_cannon/syndicate,
-/turf/space,
-/area/space)
 "xMP" = (
 /obj/machinery/light/small,
 /turf/unsimulated/outdoors/grass,
@@ -88503,12 +88397,12 @@ aaa
 abj
 cnw
 cnw
-agj
-rIU
-dWb
-dWb
-rIU
-jKS
+xbX
+rcn
+aaN
+aaN
+rcn
+tNe
 cnw
 cnw
 cnw
@@ -88804,15 +88698,15 @@ aaa
 aaa
 abj
 cnw
-agj
-rIU
-pMe
-jew
-jew
-pMe
-rIU
-qKW
-gJt
+xbX
+rcn
+kMM
+pfJ
+pfJ
+kMM
+rcn
+ffB
+qXj
 cnw
 abj
 aaa
@@ -89106,14 +89000,14 @@ aaa
 aaa
 abj
 cnw
-rIU
-eOO
-jew
-jew
-jew
-jew
-kjV
-rIU
+rcn
+hCu
+pfJ
+pfJ
+pfJ
+pfJ
+wwb
+rcn
 cnw
 cnw
 abj
@@ -89408,14 +89302,14 @@ aaa
 aaa
 abj
 cnw
-dWb
-oYL
-jew
-jew
-jew
-jew
-ryj
-rIU
+aaN
+wzf
+pfJ
+pfJ
+pfJ
+pfJ
+kEs
+rcn
 cnw
 cnw
 abj
@@ -89710,14 +89604,14 @@ axy
 aaa
 abj
 cnw
-dWb
-uVd
-jew
-jew
-jew
-jew
-ryj
-rIU
+aaN
+qHz
+pfJ
+pfJ
+pfJ
+pfJ
+kEs
+rcn
 cnw
 cnw
 abj
@@ -90012,14 +89906,14 @@ axy
 aaa
 abj
 cnw
-rIU
-eOO
-jew
-jew
-jew
-jew
-kjV
-rIU
+rcn
+hCu
+pfJ
+pfJ
+pfJ
+pfJ
+wwb
+rcn
 cnw
 cnw
 abj
@@ -90314,15 +90208,15 @@ axy
 aaa
 abj
 cnw
-rVX
-rIU
-mtg
-jew
-jew
-mtg
-rIU
-ohA
-gJt
+eQh
+rcn
+slF
+pfJ
+pfJ
+slF
+rcn
+qJF
+qXj
 cnw
 abj
 aaa
@@ -90617,12 +90511,12 @@ aaa
 abj
 cnw
 cnw
-rVX
-rIU
-dWb
-dWb
-rIU
-kri
+eQh
+rcn
+aaN
+aaN
+rcn
+nel
 cnw
 cnw
 cnw
@@ -105370,7 +105264,7 @@ cnw
 cnw
 cnw
 cnw
-xLg
+vob
 cnw
 cnw
 cnw
@@ -105974,7 +105868,7 @@ cnw
 aJC
 aKf
 aKz
-wMh
+tvH
 aKz
 aKf
 aKf
@@ -106276,8 +106170,8 @@ cnw
 aKf
 dey
 dfn
-qZu
-dgk
+pWC
+lDE
 dgu
 aKf
 dgO
@@ -106580,7 +106474,7 @@ bqV
 bqV
 bqV
 bqV
-iyG
+wdn
 aKf
 dgP
 aQz
@@ -164951,9 +164845,9 @@ dDb
 dDH
 dDZ
 wel
-dzG
-dAn
-dAO
+dvW
+dvW
+dCj
 wel
 dBy
 dBY
@@ -165253,9 +165147,9 @@ dDc
 dDF
 dEa
 wel
-dzH
-dAo
-fOt
+dvW
+dvW
+dvW
 wel
 dBz
 dBZ
@@ -165555,9 +165449,9 @@ dDd
 dDG
 dEb
 wel
-dzI
-dAq
-dAQ
+dvX
+dvW
+dvW
 wel
 dBz
 dCa
@@ -165857,9 +165751,9 @@ dDe
 dDF
 dEc
 wel
-dzJ
-dAq
-dAR
+dvW
+dvW
+dvW
 wel
 dBz
 dBz
@@ -166160,7 +166054,7 @@ dDD
 wel
 wel
 wel
-dAr
+kKw
 wel
 wel
 wel
@@ -166461,7 +166355,7 @@ dDO
 dvy
 dxa
 dvy
-dzK
+rUQ
 dvy
 dvy
 dvy
