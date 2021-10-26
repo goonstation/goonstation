@@ -3,7 +3,6 @@
 (+)Morgue trays now have a neat opening animation.
 (t)mon oct 25 21
 (u)kyle
-(*)Mutantraces can't use the wig trait. Mutantraces all already are bald, why would they want a wig? (Leave <i>something</i> special for the humans, hair is all they have!)
 (+)Give legless spacebux purchase a wheelchair.
 (u)TTerc
 (p)6389

@@ -563,7 +563,7 @@
 	icon_state = "placeholder"
 	points = 0
 	isPositive = 1
-	category = list("trinkets", "species")
+	category = list("trinkets")
 
 /obj/trait/one_armed
 	name = "One Armed Spaceman (-2)"	//it's so expensive cause right now, one arm is a benefit in that you can't be handcuffed...
