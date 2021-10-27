@@ -37,6 +37,7 @@
 
 	var/maptext_out = 0
 	var/message = null
+	var/bubble = null
 	if (src.mutantrace)
 		var/list/mutantrace_emote_stuff = src.mutantrace.emote(act, voluntary)
 		if(!islist(mutantrace_emote_stuff))
@@ -51,6 +52,7 @@
 			// most commonly used emotes first for minor performance improvements
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
+					bubble = "scream"
 					if(src.bioHolder?.HasEffect("mute"))
 						var/pre_message = "[pick("vibrates for a moment, then stops", "opens [his_or_her(src)] mouth, but no sound comes out",
 						"tries to scream, but can't", "emits an audible silence", "huffs and puffs with all [his_or_her(src)] might, but can't seem to make a sound",
@@ -334,6 +336,7 @@
 
 					act = lowertext(act)
 					if (M)
+						bubble = "[act]"
 						switch(act)
 							if ("bow","wave")
 								message = "<B>[src]</B> [act]s to [M]."
@@ -341,20 +344,25 @@
 							if ("waveto")
 								message = "<B>[src]</B> waves to [M]."
 								maptext_out = "<I>waves to [M]</I>"
+								bubble = "wave"
 							if ("saluteto")
 								message = "<B>[src]</B> salutes [M]."
 								maptext_out = "<I>salutes [M]</I>"
+								bubble = "salute"
 							if ("sidehug")
 								message = "<B>[src]</B> awkwardly side-hugs [M]."
 								maptext_out = "<I>awkwardly side-hugs [M]</I>"
+								bubble = "blush" // No unique emote yet, override.
 							if ("blowkiss")
 								message = "<B>[src]</B> blows a kiss to [M]."
 								maptext_out = "<I>blows a kiss to [M]</I>"
+								bubble = "blush" // No unique emote yet, override.
 								//var/atom/U = get_turf(param)
 								//shoot_projectile_ST(src, new/datum/projectile/special/kiss(), U) //I gave this all of 5 minutes of my time I give up
 							if ("fingerguns")
 								message = "<B>[src]</B> points finger guns at [M]!"
 								maptext_out = "<I>points finger guns at [M]!</I>"
+								bubble = "snap" // No unique emote yet, override.
 							else
 								message = "<B>[src]</B> [act]s [M]."
 								maptext_out = "<I>[act]s [M]</I>"
@@ -377,6 +385,7 @@
 				else
 					message = "<B>[src]</B> struggles to move."
 					maptext_out = "<I>struggles to move</I>"
+					bubble = "sweat"
 
 				m_type = 1
 			if ("nod","nodat","glare","glareat","stare","stareat","look")
@@ -403,16 +412,20 @@
 
 				act = lowertext(act)
 				if (M)
+					bubble = "[act]"
 					switch(act)
 						if ("nodat")
 							message = "<B>[src]</B> nods at [M]."
 							maptext_out = "<I>nods at [M]</I>"
+							bubble = "nod"
 						if ("stareat")
 							message = "<B>[src]</B> stares at [M]."
 							maptext_out = "<I>stares at [M]</I>"
+							bubble = "stare"
 						if ("glareat")
 							message = "<B>[src]</B> glares at [M]."
 							maptext_out = "<I>glares at [M]</I>"
+							bubble = "glare"
 						if ("glare","stare","look","nod")
 							message = "<B>[src]</B> [act]s at [M]."
 							maptext_out = "<I>[act]s at [M]</I>"
@@ -546,6 +559,7 @@
 					B.breathstate = 1
 
 				src.show_text("You breathe in.")
+				bubble = "gasp"
 
 			if ("exhale")
 				if (!manualbreathing)
@@ -560,6 +574,7 @@
 					B.breathstate = 0
 
 				src.show_text("You breathe out.")
+				bubble = "sigh"
 
 			if ("closeeyes")
 				if (!manualblinking)
@@ -575,6 +590,7 @@
 					S.blinktimer = 0
 
 				src.show_text("You close your eyes.")
+				bubble = "-_-"
 
 			if ("openeyes")
 				if (!manualblinking)
@@ -589,6 +605,7 @@
 					S.blinkstate = 0
 
 				src.show_text("You open your eyes.")
+				bubble = "look"
 
 	//april fools end
 
@@ -642,6 +659,7 @@
 							else
 								message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
 								maptext_out = "<I>wiggles [his_or_her(src)] fingers a bit.</I>"
+							bubble = "gesticulate"
 			if ("twirl", "spin"/*, "juggle"*/)
 				if (!src.restrained())
 					if (src.emote_check(voluntary, 25))
@@ -663,12 +681,15 @@
 						else
 							message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
 							maptext_out = "<I>wiggles [his_or_her(src)] fingers a bit.</I>"
+						bubble = "gesticulate"
 				else
 					message = "<B>[src]</B> struggles to move."
 					maptext_out = "<I>struggles to move</I>"
+					bubble = "sweat"
 
 			if ("tip")
 				if (!src.restrained() && !src.stat)
+					bubble = "smirk"
 					if (istype(src.head, /obj/item/clothing/head/mj_hat || /obj/item/clothing/head/det_hat/))
 						src.say (pick("M'lady", "M'lord", "M'liege")) //male, female and non-binary variants with alliteration
 						//maptext_out = "<I>tips their fedora</I>"
@@ -725,6 +746,7 @@
 				else
 					message = "<B>[src]</B> tries to move [his_or_her(src)] arm and grumbles."
 				m_type = 1
+				bubble = "angry"
 
 			if ("bubble")
 				var/obj/item/clothing/mask/bubblegum/gum = src.wear_mask
@@ -742,75 +764,98 @@
 					message = "<B>[src]</B> tries to make a noise."
 					maptext_out = "<I>tries to make a noise</I>"
 				m_type = 2
+				bubble = "0"
 
 			if ("handpuppet")
 				message = "<b>[src]</b> throws [his_or_her(src)] voice, badly, while flapping [his_or_her(src)] thumb and index finger like some sort of lips.[prob(10) ? " Admittedly, it is a pretty good impression of the [pick("captain", "head of personnel", "clown", "research director", "chief engineer", "head of security", "medical director", "AI", "chaplain", "detective")]." : null]"
 				m_type = 1
+				bubble = "wgesticulate"
 
 			if ("smile","grin","smirk","frown","scowl","grimace","sulk","pout","blink","drool","shrug","tremble","quiver","shiver","shudder","shake","think","ponder","contemplate","grump")
 				// basic visible single-word emotes
 				message = "<B>[src]</B> [act]s."
 				maptext_out = "<I>[act]s</I>"
 				m_type = 1
+				bubble = "[act]"
+				// handle variations of the same basic action
+				if (act in list("tremble","quiver","shiver","shudder","shake"))
+					bubble = "tremble"
+				if (act in list("think","ponder","contemplate"))
+					bubble = "think"
+				// no unique grump emote yet, use scowl
+				if (act in list("scowl","grump"))
+					bubble = "scowl"
 
 			if (":)")
 				message = "<B>[src]</B> smiles."
 				maptext_out = "<I>smiles</I>"
 				m_type = 1
+				bubble = "smile"
 
 			if (":(")
 				message = "<B>[src]</B> frowns."
 				maptext_out = "<I>frowns</I>"
 				m_type = 1
+				bubble = "frown"
 
 			if (":d", ">:)") // the switch is lowertext()ed so this is what :D would be
 				message = "<B>[src]</B> grins."
 				maptext_out = "<I>grins</I>"
 				m_type = 1
+				bubble = "grin"
 
 			if ("d:", "dx") // same as above for D: and DX
 				message = "<B>[src]</B> grimaces."
 				maptext_out = "<I>grimaces</I>"
 				m_type = 1
+				bubble = "grimace"
 
 			if (">:(")
 				message = "<B>[src]</B> scowls."
 				maptext_out = "<I>scowls</I>"
 				m_type = 1
+				bubble = "scowl"
 
 			if (":j")
 				message = "<B>[src]</B> smirks."
 				maptext_out = "<I>smirks</I>"
 				m_type = 1
+				bubble = "smirk"
 
 			if (":i")
 				message = "<B>[src]</B> grumps."
 				maptext_out = "<I>grumps</I>"
 				m_type = 1
+				bubble = "grump"
 
 			if (":|")
 				message = "<B>[src]</B> stares."
 				maptext_out = "<I>stares</I>"
 				m_type = 1
+				bubble = "stare"
 
 			if ("xd")
 				message = "<B>[src]</B> laughs."
 				maptext_out = "<I>laughs</I>"
 				m_type = 1
+				bubble = "laugh"
 
 			if (":c")
 				message = "<B>[src]</B> pouts."
 				maptext_out = "<I>pouts</I>"
 				m_type = 1
+				bubble = "pout"
 
 			if ("clap")
 				// basic visible single-word emotes - unusable while restrained
 				if (!src.restrained())
 					message = "<B>[src]</B> [lowertext(act)]s."
 					maptext_out = "<I>claps</I>"
+					bubble = "clap"
 				else
 					message = "<B>[src]</B> struggles to move."
 					maptext_out = "<I>struggles to move</I>"
+					bubble = "sweat"
 				m_type = 1
 
 			if ("cough","hiccup","sigh","mumble","grumble","groan","moan","sneeze","sniff","snore","whimper","yawn","choke","gasp","weep","sob","wail","whine","gurgle","gargle")
@@ -819,9 +864,27 @@
 					if (lowertext(act) == "sigh" && prob(1)) act = "singh" //1% chance to change sigh to singh. a bad joke for drsingh fans.
 					message = "<B>[src]</B> [act]s."
 					maptext_out = "<I>[act]s</I>"
+					// Bunch of overlap with emotes so use the appropriate emote bubble
+					if (act in list("sigh","singh"))
+						bubble = "sigh"
+					if (act in list("mumble","grumble"))
+						bubble = "pout"
+					if (act in list("groan","moan","whimper"))
+						bubble = "scream"
+					if (act == "sniff")
+						bubble = "flinch"
+					if (act == "snore")
+						bubble = "-_-"
+					if (act == "choke")
+						bubble = "cough"
+					if (act in list("wail","whine","gargle"))
+						bubble = "wail"
+					if (act in list("weep","sob","gurgle"))
+						bubble = "cry"
 				else
 					message = "<B>[src]</B> tries to make a noise."
 					maptext_out = "<I>tries to make a noise</I>"
+					bubble = "sweat"
 				m_type = 2
 
 				maptext_out = "<I>[act]s</I>"
@@ -844,6 +907,9 @@
 					message = "<B>[src]</B> tries to make a noise."
 					maptext_out = "<I>tries to make a noise</I>"
 				m_type = 2
+				bubble = "giggle"
+				if (act in list("laugh","chortle","guffaw","cackle"))
+					bubble = "laugh"
 
 			// basic emotes that change the wording a bit
 
@@ -851,32 +917,38 @@
 				message = "<B>[src]</B> blushes."
 				maptext_out = "<I>blushes</I>"
 				m_type = 1
+				bubble = "blush"
 
 			if ("flinch")
 				message = "<B>[src]</B> flinches."
 				maptext_out = "<I>flinches</I>"
 				m_type = 1
+				bubble = "flinch"
 
 			if ("blink_r")
 				message = "<B>[src]</B> blinks rapidly."
 				maptext_out = "<I>blinks rapidly</I>"
 				m_type = 1
+				bubble = "blink_r"
 
 			if ("eyebrow","raiseeyebrow")
 				message = "<B>[src]</B> raises an eyebrow."
 				maptext_out = "<I>raises an eyebrow</I>"
 				m_type = 1
+				bubble = "eyebrow"
 
 			if ("shakehead","smh")
 				message = "<B>[src]</B> shakes [his_or_her(src)] head."
 				maptext_out = "<I>shakes [his_or_her(src)] head</I>"
 				m_type = 1
+				bubble = "smh"
 
 			if ("shakebutt","shakebooty","shakeass","twerk")
 				message = "<B>[src]</B> shakes [his_or_her(src)] ass!"
 				maptext_out = "<I>shakes [his_or_her(src)] ass!</I>"
 				m_type = 1
 				src.add_karma(-3)
+				bubble = "tremble"
 
 				SPAWN_DBG(0.5 SECONDS)
 					var/beeMax = 15
@@ -896,21 +968,25 @@
 				message = "<B>[src]</B> goes pale for a second."
 				maptext_out = "<I>goes pale...</I>"
 				m_type = 1
+				bubble = "sweat"
 
 			if ("flipout")
 				message = "<B>[src]</B> flips the fuck out!"
 				maptext_out = "<I>flips the fuck out!</I>"
 				m_type = 1
+				bubble = "angry"
 
 			if ("rage","fury","angry")
 				message = "<B>[src]</B> becomes utterly furious!"
 				maptext_out = "<I>becomes utterly furious!</I>"
 				m_type = 1
+				bubble = "angry"
 
 			if ("shame","hanghead")
 				message = "<B>[src]</B> hangs [his_or_her(src)] head in shame."
 				maptext_out = "<I>hangs [his_or_her(src)] head in shame</I>"
 				m_type = 1
+				bubble = "shame"
 
 			// basic emotes with alternates for restraints
 
@@ -920,9 +996,11 @@
 					maptext_out = "<I>flaps [his_or_her(src)] arms!</I>"
 					if (src.sound_list_flap && length(src.sound_list_flap))
 						playsound(src.loc, pick(src.sound_list_flap), 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+					bubble = "flap"
 				else
 					message = "<B>[src]</B> writhes!"
 					maptext_out = "<I>writhes!</I>"
+					bubble = "sweat"
 				m_type = 1
 
 			if ("aflap")
@@ -931,21 +1009,26 @@
 					maptext_out = "<I>flaps [his_or_her(src)] arms ANGRILY!</I>"
 					if (src.sound_list_flap && length(src.sound_list_flap))
 						playsound(src.loc, pick(src.sound_list_flap), 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+					bubble = "aflap"
 				else
 					message = "<B>[src]</B> writhes angrily!"
 					maptext_out = "<I>writhes angrily!</I>"
+					bubble = "angry"
 				m_type = 1
 
 			if ("raisehand")
 				if (!src.restrained())
 					message = "<B>[src]</B> raises a hand."
 					maptext_out = "<I>raises a hand</I>"
+					bubble = "raisehand"
 				else
 					message = "<B>[src]</B> tries to move [his_or_her(src)] arm."
 					maptext_out = "<I>tries to move their arm</I>"
+					bubble = "sweat"
 				m_type = 1
 
 			if ("crackknuckles","knuckles")
+				bubble = "angry"
 				if (!src.restrained())
 					message = "<B>[src]</B> cracks [his_or_her(src)] knuckles."
 					maptext_out = "<I>cracks their knuckles</I>"
@@ -958,9 +1041,11 @@
 				if (!src.restrained())
 					message = "<B>[src]</B> stretches."
 					maptext_out = "<I>stretches</I>"
+					bubble = "stretch"
 				else
 					message = "<B>[src]</B> writhes around slowly."
 					maptext_out = "<I>writhes around slowly</I>"
+					bubble = "sweat"
 				m_type = 1
 
 			if ("rude")
@@ -973,6 +1058,7 @@
 				m_type = 1
 
 			if ("cry")
+				bubble = "cry"
 				if (!muzzled)
 					message = "<B>[src]</B> cries."
 					maptext_out = "<I>cries</I>"
@@ -982,6 +1068,7 @@
 				m_type = 2
 
 			if ("retch","gag")
+				bubble = "cough"
 				if (!muzzled)
 					message = "<B>[src]</B> retches in disgust!"
 					maptext_out = "<I>retches in disgust!</I>"
@@ -991,6 +1078,7 @@
 				m_type = 2
 
 			if ("raspberry")
+				bubble = "tongue"
 				if (!muzzled)
 					message = "<B>[src]</B> blows a raspberry."
 					maptext_out = "<I>blows a raspberry</I>"
@@ -1000,6 +1088,7 @@
 				m_type = 2
 
 			if ("tantrum")
+				bubble = "tantrum"
 				if (!src.restrained())
 					message = "<B>[src]</B> throws a tantrum!"
 					maptext_out = "<I>throws a tantrum!</I>"
@@ -1012,21 +1101,26 @@
 				if (!src.restrained())
 					message = "<B>[src]</B> gesticulates."
 					maptext_out = "<I>gesticulates</I>"
+					bubble = "gesticulate"
 				else
 					message = "<B>[src]</B> wriggles around a lot."
 					maptext_out = "<I>wriggles around a lot</I>"
+					bubble = "sweat"
 				m_type = 1
 
 			if ("wgesticulate")
 				if (!src.restrained())
 					message = "<B>[src]</B> gesticulates wildly."
 					maptext_out = "<I>gesticulates wildly</I>"
+					bubble = "wgesticulate"
 				else
 					message = "<B>[src]</B> enthusiastically wriggles around a lot!"
 					maptext_out = "<I>enthusiastically wriggles around a lot!</I>"
+					bubble = "sweat"
 				m_type = 1
 
 			if ("smug")
+				bubble = "smirk"
 				if (!src.restrained())
 					message = "<B>[src]</B> folds [his_or_her(src)] arms and smirks broadly, making a self-satisfied \"heh\"."
 					maptext_out = "<I>folds their arms and smirks broadly</I>"
@@ -1041,9 +1135,11 @@
 				if (!src.restrained())
 					message = "<B>[src]</B> picks [his_or_her(src)] nose."
 					maptext_out = "<I>picks their nose</I>"
+					bubble = "satisfied"
 				else
 					message = "<B>[src]</B> sniffs and scrunches [his_or_her(src)] face up irritably."
 					maptext_out = "<I>sniffs and scrunches their face up irritably</I>"
+					bubble = "twitch"
 				m_type = 1
 				if (src.mind)
 					src.add_karma(-1)
@@ -1057,9 +1153,11 @@
 					else
 						message = "<B>[src]</B> flexes [his_or_her(src)] muscles."
 						maptext_out = "<I>flexes [his_or_her(src)] muscles</I>"
+					bubble = "flex"
 				else
 					message = "<B>[src]</B> tries to stretch [his_or_her(src)] arms."
 					maptext_out = "<I>tries to stretch [his_or_her(src)] arms</I>"
+					bubble = "sweat"
 				m_type = 1
 
 				for (var/obj/item/C as anything in src.get_equipped_items())
@@ -1074,6 +1172,7 @@
 						break
 
 			if ("facepalm")
+				bubble = "-_-"
 				if (!src.restrained())
 					message = "<B>[src]</B> places [his_or_her(src)] hand on [his_or_her(src)] face in exasperation."
 					maptext_out = "<I>places [his_or_her(src)] hand on [his_or_her(src)] face in exasperation</I>"
@@ -1083,6 +1182,7 @@
 				m_type = 1
 
 			if ("panic","freakout")
+				bubble = "panic"
 				if (!src.restrained())
 					message = "<B>[src]</B> enters a state of hysterical panic!"
 					maptext_out = "<I>enters a state of hysterical panic!</I>"
@@ -1096,6 +1196,7 @@
 			if ("flipoff","flipbird","middlefinger")
 				m_type = 1
 				if (!src.restrained())
+					bubble = "rude"
 					var/M = null
 					if (param)
 						for (var/mob/A in view(null, null))
@@ -1123,12 +1224,14 @@
 						message = "<B>[src]</B> raises [his_or_her(src)] middle finger."
 						maptext_out = "<I>raises [his_or_her(src)] middle finger</I>"
 				else
+					bubble = "scowl"
 					message = "<B>[src]</B> scowls and tries to move [his_or_her(src)] arm."
 					maptext_out = "<I>scowls and tries to move [his_or_her(src)] arm</I>"
 
 			if ("doubleflip","doubledeuce","doublebird","flip2")
 				m_type = 1
 				if (!src.restrained())
+					bubble = "flip2"
 					var/M = null
 					if (param)
 						for (var/mob/A in view(null, null))
@@ -1158,12 +1261,14 @@
 						message = "<B>[src]</B> raises both of [his_or_her(src)] middle fingers."
 						maptext_out = "<I>raises both of [his_or_her(src)] middle fingers</I>"
 				else
+					bubble = "scowl"
 					message = "<B>[src]</B> scowls and tries to move [his_or_her(src)] arms."
 					maptext_out = "<I>scowls and tries to move [his_or_her(src)] arms.</I>"
 
 			if ("boggle")
 				m_type = 1
 				var/M = null
+				bubble = "shame"
 				if (param)
 					for (var/mob/A in view(null, null))
 						if (ckey(param) == ckey(A.name))
@@ -1184,6 +1289,7 @@
 			if ("shakefist")
 				m_type = 1
 				if (!src.restrained())
+					bubble = "shakefist"
 					var/M = null
 					if (param)
 						for (var/mob/A in view(null, null))
@@ -1202,6 +1308,7 @@
 						message = "<B>[src]</B> angrily shakes [his_or_her(src)] fist!"
 						maptext_out = "<I>angrily shakes [his_or_her(src)] fist!</I>"
 				else
+					bubble = "anger"
 					message = "<B>[src]</B> tries to move [his_or_her(src)] arm angrily!"
 					maptext_out = "<I>tries to move [his_or_her(src)] arm angrily!</I>"
 
@@ -1228,14 +1335,17 @@
 						if (M.canmove && !M.r_hand && !M.restrained())
 							message = "<B>[src]</B> shakes hands with [M]."
 							maptext_out = "<I>shakes hands with [M]</I>"
+							bubble = "handshake"
 						else
 							message = "<B>[src]</B> holds out [his_or_her(src)] hand to [M]."
 							maptext_out = "<I>holds out [his_or_her(src)] hand to [M]</I>"
+							bubble = "hand"
 
 			if ("daps","dap")
 				m_type = 1
 				if (!src.restrained())
 					var/M = null
+					bubble = "hand"
 					if (param)
 						for (var/mob/A in view(1, null))
 							if (ckey(param) == ckey(A.name))
@@ -1258,9 +1368,11 @@
 				else
 					message = "<B>[src]</B> wriggles around a bit."
 					maptext_out = "<I>wriggles around a bit</I>"
+					bubble = "sweat"
 
 			if ("slap","bitchslap","smack")
 				m_type = 1
+				bubble = "angry"
 				if (!src.restrained())
 					if (src.emote_check(voluntary))
 						if (src.bioHolder.HasEffect("chime_snaps"))
@@ -1317,21 +1429,25 @@
 							if (!M.restrained() && M.stat != 1 && !isunconscious(M) && !isdead(M))
 								if (alert(M, "[src] offers you a highfive! Do you accept it?", "Choice", "Yes", "No") == "Yes")
 									if (M in view(1,null))
+										bubble = "highfive"
 										message = "<B>[src]</B> and [M] highfive!"
 										maptext_out = "<I>highfives [M]!</I>"
 										playsound(src.loc, src.sound_snap, 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 								else
+									bubble = "frown"
 									message = "<B>[src]</B> offers [M] a highfive, but [M] leaves [him_or_her(src)] hanging!"
 									maptext_out = "<I>tries to highfive [M] but is left hanging!</I>"
 									if (M.mind)
 										src.add_karma(-5)
 							else
+								bubble = "highfive"
 								message = "<B>[src]</B> highfives [M]!"
 								maptext_out = "<I>highfives [M]!</I>"
 								playsound(src.loc, src.sound_snap, 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 						else
 							message = "<B>[src]</B> randomly raises [his_or_her(src)] hand!"
 							maptext_out = "<I>randomly raises [his_or_her(src)] hand!</I>"
+							bubble = "sweat"
 			// emotes that do STUFF! or are complex in some way i guess
 
 			if ("snap","snapfingers","fingersnap","click","clickfingers")
@@ -1358,8 +1474,10 @@
 								playsound(src.loc, 'sound/vox/deeoo.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 							else
 								playsound(src.loc, src.sound_fingersnap, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+						bubble = "snap"
 
 			if ("airquote","airquotes")
+				bubble = "quote"
 				if (param)
 					param = strip_html(param, 200)
 					message = "<B>[src]</B> sneers, \"Ah yes, \"[param]\". We have dismissed that claim.\""
@@ -1370,6 +1488,7 @@
 					m_type = 1
 
 			if ("twitch")
+				bubble = "twitch"
 				message = "<B>[src]</B> twitches."
 				m_type = 1
 				SPAWN_DBG(0)
@@ -1382,6 +1501,7 @@
 					src.pixel_y = old_y
 
 			if ("twitch_v","twitch_s")
+				bubble = "twitch_v"
 				message = "<B>[src]</B> twitches violently."
 				m_type = 1
 				SPAWN_DBG(0)
@@ -1394,6 +1514,7 @@
 					src.pixel_y = old_y
 
 			if ("faint")
+				bubble = "faint"
 				message = "<B>[src]</B> faints."
 				src.sleeping = 1
 				m_type = 1
@@ -1402,6 +1523,7 @@
 				if (!voluntary || src.emote_check(voluntary,50))
 					if (prob(15) && !ischangeling(src) && !isdead(src))
 						message = "<span class='regular'><B>[src]</B> seizes up and falls limp, peeking out of one eye sneakily.</span>"
+						bubble = "wink"
 					else
 						if (!isdead(src))
 							#ifdef COMSIG_MOB_FAKE_DEATH
@@ -1414,6 +1536,7 @@
 
 						message = "<span class='regular'><B>[src]</B> seizes up and falls limp, [his_or_her(src)] eyes dead and lifeless...</span>"
 						playsound(src, "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, src.get_age_pitch())
+						bubble = "death"
 					m_type = 1
 
 			if ("johnny")
@@ -1428,6 +1551,7 @@
 						if(nearby.len)
 							M = pick(nearby)
 					if(M)
+						bubble = "speech"
 						message = "<B>[src]</B> says, \"[M], please. He had a family.\" [src.name] takes a drag from a cigarette and blows [his_or_her(src)] name out in smoke."
 						particleMaster.SpawnSystem(new /datum/particleSystem/blow_cig_smoke(src.loc, src.dir))
 						m_type = 2
@@ -1435,6 +1559,7 @@
 			if ("point")
 				if (!src.restrained())
 					var/mob/M = null
+					bubble = "point"
 					if (param)
 						for (var/atom/A as mob|obj|turf|area in view(null, null))
 							if (ckey(param) == ckey(A.name))
@@ -1463,6 +1588,7 @@
 						else if (t1 <= 10 && (!src.r_hand && !src.l_hand))
 							message = "<B>[src]</B> raises [t1] finger\s."
 							maptext_out = "<I>raises [t1] finger\s</I>"
+						bubble = "[t1]"
 				m_type = 1
 
 			if ("wink")
@@ -1480,6 +1606,7 @@
 				message = "<B>[src]</B> winks."
 				maptext_out = "<I>winks</I>"
 				m_type = 1
+				bubble = "wink"
 
 			if ("collapse", "trip")
 				if (!src.getStatusDuration("paralysis"))
@@ -1793,6 +1920,7 @@
 
 			if ("burp")
 				if (src.emote_check(voluntary))
+					bubble = "burp"
 					if ((src.charges >= 1) && (!muzzled))
 						for (var/mob/O in viewers(src, null))
 							O.show_message("<B>[src]</B> burps.")
@@ -1835,6 +1963,7 @@
 
 			if ("pee", "piss", "urinate")
 				if (src.emote_check(voluntary))
+					bubble = "sweat"
 					var/bladder = sims?.getValue("Bladder")
 					if (!isnull(bladder))
 						var/obj/item/storage/toilet/toilet = locate() in src.loc
@@ -1934,6 +2063,7 @@
 
 			if ("poo", "poop", "shit", "crap")
 				if (src.emote_check(voluntary))
+					bubble = "grimace"
 					message = "<B>[src]</B> grunts for a moment. [prob(1) ? "Something" : "Nothing"] happens."
 					maptext_out = "<I>grunts</I>"
 
@@ -2082,6 +2212,7 @@
 				if(H && (!H.limbs.l_arm || !H.limbs.r_arm || H.restrained()))
 					src.show_text("You can't do that without free arms!")
 				else if((src.mind && (src.mind.assigned_role in list("Clown", "Staff Assistant", "Captain"))) || istraitor(H) || isnukeop(H) || ASS_JAM || istype(src.head, /obj/item/clothing/head/bighat/syndicate/) || istype(I, /obj/item/card/id/dabbing_license) || (src.reagents && src.reagents.has_reagent("puredabs")) || (src.reagents && src.reagents.has_reagent("extremedabs"))) //only clowns and the useless know the true art of dabbing
+					bubble = "dab"
 					var/obj/item/card/id/dabbing_license/dab_id = null
 					if(istype(I, /obj/item/card/id/dabbing_license)) // if we are using a dabbing license, save it so we can increment stats
 						dab_id = I
@@ -2212,6 +2343,16 @@
 				var/atom/A = src.loc
 				for (var/mob/O in A.contents)
 					O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
+
+	if (bubble != null)
+		speech_bubble.icon_state = bubble
+		// flick(bubble, speech_bubble) if only you could flick overlays...
+		UpdateOverlays(speech_bubble, "speech_bubble")
+		var/current_time = TIME
+		var/speech_bubble_time = current_time
+		SPAWN_DBG(1.5 SECONDS)
+			if(speech_bubble_time == current_time)
+				UpdateOverlays(null, "speech_bubble")
 
 // I'm very sorry for this but it's to trick the linter into thinking emote doesn't sleep (since it usually doesn't)
 // you see from the important places it's called as emote("scream") etc. which doesn't actually sleep but for the linter to recognize

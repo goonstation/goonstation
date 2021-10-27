@@ -36,7 +36,7 @@
 
 	var/move_laying = null
 	var/last_typing = null
-	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
+	var/static/image/speech_bubble = image('icons/mob/chat_bubble.dmi', "speech")
 	var/static/image/sleep_bubble = image('icons/mob/mob.dmi', "sleep")
 	var/image/static_image = null
 	var/static_type_override = null

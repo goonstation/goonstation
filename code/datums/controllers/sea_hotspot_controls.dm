@@ -469,7 +469,7 @@
 	stamina_cost = 15
 	stamina_crit_chance = 1
 	//two_handed = 1
-	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
+	var/static/image/speech_bubble = image('icons/mob/chat_bubble.dmi', "speech")
 	var/static/dowse_dist_fuzz = 3
 	var/static/speak_interval = 8 // speak every [x] process ticks (machine loop targets about 1 tick per 2 seconds)
 	var/speak_count = 8

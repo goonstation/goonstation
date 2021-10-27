@@ -23,7 +23,7 @@
 	var/list/secure_connections = null
 	var/datum/radio_frequency/radio_connection
 	var/speaker_range = 2
-	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
+	var/static/image/speech_bubble = image('icons/mob/chat_bubble.dmi', "speech")
 	var/hardened = 1	//This is for being able to run through signal jammers (just solar flares for now). acceptable values = 0 and 1.
 
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
