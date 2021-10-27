@@ -339,7 +339,7 @@
 								return
 
 					act = lowertext(act)
-						bubble = "[act]"
+					bubble = "[act]"
 					if (M)
 						switch(act)
 							if ("bow","wave")
@@ -420,7 +420,7 @@
 							return
 
 				act = lowertext(act)
-					bubble = "[act]"
+				bubble = "[act]"
 				if (M)
 					switch(act)
 						if ("nodat")
