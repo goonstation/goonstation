@@ -215,6 +215,16 @@
 				M.nutrition += src.heal_amt * 10
 				src.heal(M)
 				playsound(M.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
+				var/mob/living/L = M
+				if (L)
+					L.speech_bubble.icon_state = "" // We need to do this to reset the anim without using flick()
+					SPAWN_DBG(0.1 SECONDS)
+						L.speech_bubble.icon_state = "chew"
+					L.last_bubble = TIME
+					var/speech_bubble_time = TIME
+					SPAWN_DBG(1.5 SECONDS)
+						if(speech_bubble_time == L.last_bubble)
+							L.speech_bubble.icon_state = ""
 				on_bite(M)
 				if (src.festivity)
 					modify_christmas_cheer(src.festivity)
