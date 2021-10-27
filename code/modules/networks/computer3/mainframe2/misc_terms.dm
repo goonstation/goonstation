@@ -1354,7 +1354,7 @@
 	density = 1
 	icon_state = "net_radio"
 	device_tag = "PNET_PR6_RADIO"
-	//var/freq = 1219
+	//var/freq = FREQ_BUDDY
 	mats = 8
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	var/list/frequencies = list()

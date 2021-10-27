@@ -476,7 +476,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 	setup_default_startup_task = /datum/computer/file/guardbot_task/soviet
 
 	beacon_freq = 1440
-	control_freq = 1917
+	control_freq = FREQ_AINLEY_BUDDY
 
 	New()
 		..()
@@ -485,7 +485,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 #endif
 		SPAWN_DBG(1 SECOND)
 			if (src.botcard)
-				src.botcard.access += 1917
+				src.botcard.access += FREQ_AINLEY_BUDDY
 
 	speak(var/message)
 		return ..("<font face=Consolas>[russify( uppertext(message) )]</font>")

@@ -6,7 +6,7 @@
 	desc = "An early sub-model of the popular PR-6S Guardbuddy line. It seems to be in rather poor shape."
 	icon = 'icons/misc/hstation.dmi'
 
-	control_freq = 1089
+	control_freq = FREQ_SECBUDDY
 	beacon_freq = FREQ_SECBUDDY_NAVBEACON
 
 	no_camera = 1

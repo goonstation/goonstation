@@ -183,7 +183,7 @@
 	//
 	////////////////////// GUN STUFF -^
 
-	var/control_freq = 1219		// bot control frequency
+	var/control_freq = FREQ_BUDDY		// bot control frequency
 	var/beacon_freq = FREQ_NAVBEACON
 	var/net_id = null
 	var/last_comm = 0 //World time of last transmission
@@ -4283,7 +4283,7 @@
 	anchored = 1
 	var/panel_open = 0
 	var/autoeject = 0 //1: Eject fully charged robots automatically. 2: Eject robot when living carbon mob is in view.
-	var/frequency = 1219
+	var/frequency = FREQ_BUDDY
 	var/net_id = null //What is our network id???
 	var/net_number = 0
 	var/host_id = null //Who is linked to us?
