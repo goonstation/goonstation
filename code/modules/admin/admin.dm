@@ -4309,9 +4309,6 @@ var/global/noir = 0
 	set name = "Restart"
 	set desc= "Restarts the world"
 
-	if (mapSwitcher.locked)
-		return alert("The map switcher is currently compiling the map for next round. You must wait until it finishes.")
-
 	var/confirm = alert("Restart the game world?", "Restart", "Yes", "Cancel")
 	if(confirm == "Cancel")
 		return
