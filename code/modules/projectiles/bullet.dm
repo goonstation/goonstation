@@ -355,11 +355,6 @@ toxic - poisons
 	icon_turf_hit = "bhole"
 	casing = /obj/item/casing/derringer
 
-	on_hit(atom/hit)
-		if(ismob(hit) && hasvar(hit, "stunned"))
-			hit:stunned += 5
-		..()
-
 /datum/projectile/bullet/a12
 	name = "buckshot"
 	shot_sound = 'sound/weapons/shotgunshot.ogg'

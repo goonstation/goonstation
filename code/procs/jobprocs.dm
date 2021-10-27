@@ -620,6 +620,17 @@
 		trinket = new random_lunchbox_path(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("allergic"))
 		trinket = new/obj/item/reagent_containers/emergency_injector/epinephrine(src)
+	else if (src.traitHolder && src.traitHolder.hasTrait("onearmed"))
+		if (src.limbs)
+			SPAWN_DBG(6 SECONDS)
+
+				if (prob(50))
+					if (src.limbs.l_arm)
+						qdel(src.limbs.l_arm.remove(0))
+				else
+					if (src.limbs.r_arm)
+						qdel(src.limbs.r_arm.remove(0))
+				boutput(src, "<b>Your singular arm makes you feel responsible for crimes you couldn't possibly have committed.</b>" )
 	else
 		trinket = new T(src)
 

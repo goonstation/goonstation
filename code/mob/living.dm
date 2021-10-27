@@ -432,6 +432,8 @@
 			src.toggle_point_mode()
 		if ("say_radio")
 			src.say_radio()
+		if ("say_main_radio")
+			src.say_radio()
 		else
 			. = ..()
 
