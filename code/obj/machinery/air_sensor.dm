@@ -7,7 +7,7 @@ obj/machinery/air_sensor
 	anchored = 1
 
 	var/id_tag
-	var/frequency = 1439
+	var/frequency = FREQ_AIR_ALARM_CONTROL
 
 	var/on = 1
 	var/output = 3

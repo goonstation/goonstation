@@ -56,7 +56,7 @@ proc/get_radio_connection_by_id(atom/movable/AM, id)
 #define FREQ_NAVBEACON 1445
 #define FREQ_SECURE_STORAGE 1431
 #define FREQ_SECBUDDY_NAVBEACON 1431
-#define FREQ_ALARM 1437
+#define FREQ_ALARM 1437 // fire and air alarms
 #define FREQ_HYDRO 1433
 #define FREQ_STATUS_DISPLAY 1435
 #define FREQ_BOT_CONTROL 1447
@@ -66,23 +66,10 @@ proc/get_radio_connection_by_id(atom/movable/AM, id)
 #define FREQ_AINLEY_BUDDY 1917
 #define FREQ_BUDDY 1219
 #define FREQ_SECBUDDY 1089
-
-/*
-Special frequency list:
-On the map:
-1149 for PDA messaging
-FREQ_HYDRO for hydroponics alerts
-FREQ_STATUS_DISPLAY for status displays
-FREQ_ALARM for atmospherics/fire alerts
-FREQ_NAVBEACON for bot nav beacons
-FREQ_BOT_CONTROL for mulebot control
-FREQ_AIRLOCK_CONTROL for airlock controls
-FREQ_GPS for engineering access
-1457 for door access request
-1475 for Mail chute location
-1359 for security headsets
-1357 for engineering headsets
-1354 for research headsets
-1356 for medical headsets
-1352 for syndicate headsets
-*/
+#define FREQ_TOUR_NAVBEACON 1443
+#define FREQ_SIGNALER 1457
+#define FREQ_DOOR_CONTROL 1142 /// pods open podbay doors with this frequency but in theory more general
+#define FREQ_MAIL_CHUTE 1475
+#define FREQ_COMM_DISH 0000 // unused for now, supposed to be for communication across comm dishes
+#define FREQ_AIR_ALARM_CONTROL 1439
+#define FREQ_TRACKING_IMPLANT 1451

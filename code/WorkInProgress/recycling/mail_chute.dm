@@ -8,7 +8,7 @@
 	var/mail_tag = null
 	//var/destination_tag = null // dropped to parent /obj/machinery/disposal
 	var/list/destinations = list()
-	var/frequency = 1475
+	var/frequency = FREQ_MAIL_CHUTE
 	var/last_inquire = 0 //No signal spamming etc
 	var/autoname = 0
 

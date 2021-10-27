@@ -533,7 +533,7 @@
 	desc = "A remote recieving device for a door."
 	var/id = null
 	var/pass = null
-	var/frequency = 1142
+	var/frequency = FREQ_DOOR_CONTROL
 	var/open = 0 //open or not?
 	var/access_type = 1
 	var/access_type_secondary = null

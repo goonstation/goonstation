@@ -10,7 +10,7 @@
 	var/net_id = null
 	var/obj/machinery/power/data_terminal/link = null
 	//Radio inter-dish communications
-	var/frequency = "0000"
+	var/frequency = FREQ_COMM_DISH
 	var/list/cargo_logs = list()
 
 	mats = 25

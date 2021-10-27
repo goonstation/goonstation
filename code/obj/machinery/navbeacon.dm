@@ -705,7 +705,7 @@ Transponder Codes:<UL>"}
 
 /obj/machinery/navbeacon/tour
 	name = "tour beacon"
-	freq = 1443
+	freq = FREQ_TOUR_NAVBEACON
 
 /obj/machinery/navbeacon/tour/cog1
 	tour0

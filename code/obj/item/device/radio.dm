@@ -609,7 +609,7 @@ var/list/headset_channel_lookup
 	var/code = 2.0
 	var/on = 0.0
 //	var/e_pads = 0.0
-	frequency = 1451
+	frequency = FREQ_TRACKING_IMPLANT
 	throw_speed = 1
 	throw_range = 3
 	w_class = W_CLASS_HUGE
@@ -758,7 +758,7 @@ Code:
 	item_state = "signaler"
 	var/code = 30.0
 	w_class = W_CLASS_TINY
-	frequency = 1457
+	frequency = FREQ_SIGNALER
 	var/delay = 0
 	var/airlock_wire = null
 	desc = "A device used to send a coded signal over a specified frequency, with the effect depending on the device that recieves the signal."

@@ -6,7 +6,7 @@ obj/machinery/computer/general_air_control
 	icon_state = "computer_generic"
 	circuit_type = /obj/item/circuitboard/air_management
 	name = "Computer"
-	frequency = 1439
+	frequency = FREQ_AIR_ALARM_CONTROL
 
 	var/list/sensors = list()
 
@@ -462,7 +462,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 	var/last_change = 0
 	var/message_delay = 600
 
-	frequency = 1439
+	frequency = FREQ_AIR_ALARM_CONTROL
 
 	New()
 		..()
