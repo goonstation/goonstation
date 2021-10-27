@@ -336,20 +336,6 @@
 					K.throwforce = K.throwforce + 2.5
 					K.tooltip_rebuild = 1
 
-		///Easy ability to open a door if your target's behind, like, one
-		openDoors()
-			for(var/obj/machinery/door/G in oview(3, src))
-				SPAWN_DBG(1 DECI SECOND)
-					G.open()
-					var/obj/overlay/pulse = new/obj/overlay(get_turf(G))
-					pulse.icon = 'icons/effects/effects.dmi'
-					pulse.icon_state = "emppulse"
-					pulse.name = "pulse"
-					pulse.anchored = 1
-					SPAWN_DBG(2 SECONDS)
-						if (pulse) //sanity check
-							qdel(pulse)
-
 		///Crowd control ability to stop people from running as easily, applies stagger
 		staggerNearby()
 			src.visible_message("<span class='alert'>[src] begins emitting a dark aura.</span>")
@@ -373,7 +359,6 @@
 			src.addAbility(/datum/targetable/slasher/summon_machete)
 			src.addAbility(/datum/targetable/slasher/take_control)
 			src.addAbility(/datum/targetable/slasher/regenerate)
-			src.addAbility(/datum/targetable/slasher/open_doors)
 			src.addAbility(/datum/targetable/slasher/stagger)
 
 		updateButtons()
@@ -532,19 +517,6 @@ ABSTRACT_TYPE(/datum/targetable/slasher)
 			boutput(holder.owner, "<span class='notice'>Alternatively, you can click with your middle mouse button to use the ability on your current tile.</span>")
 		src.object.icon_state = "help[holder.help_mode]"
 		holder.updateButtons()
-
-/datum/targetable/slasher/open_doors
-	name = "Open Nearby Doors"
-	desc = "Open doors within three tiles of you."
-	icon_state = "open_doors"
-	targeted = FALSE
-	cooldown = 25 SECONDS
-
-	cast()
-		if(..())
-			return 1
-		var/mob/living/carbon/human/slasher/W = src.holder.owner
-		return W.openDoors()
 
 /datum/targetable/slasher/stagger
 	name = "Stagger Area"
