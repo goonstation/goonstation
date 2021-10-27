@@ -225,13 +225,13 @@
 		. = ..()
 		if(isliving(AM))
 			var/mob/living/L = AM
-			L?.name_tag.set_visibility(FALSE)
+			L.name_tag?.set_visibility(FALSE)
 
 	HasExited(atom/movable/AM, atom/NewLoc)
 		. = ..()
 		if(isliving(AM))
 			var/mob/living/L = AM
-			L?.name_tag.set_visibility(TRUE)
+			L.name_tag?.set_visibility(TRUE)
 
 	attackby(var/obj/item/W as obj, mob/user as mob)
 		user.lastattacked = src
