@@ -1911,7 +1911,7 @@
 
 			return
 
-		else if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/cheeseslice))
+		else if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/cheese/slice))
 			switch(src.stage)
 				if(0)
 					boutput(user, "<span class='alert'>You really should add the meat first.</span>")

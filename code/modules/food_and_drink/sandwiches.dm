@@ -46,6 +46,13 @@
 		name = "cheese sandwich"
 		desc = "Cheese between two slices of bread."
 		icon_state = "sandwich_c"
+		initial_reagents = list("cheese"=5)
+
+	blt
+		name = "BLT sandwich"
+		desc = "Crunchy bacon, lettuce, and tomato between two slices of bread."
+		icon_state = "sandwich_blt"
+		initial_reagents = list("juice_tomato"=2,"cholesterol"=3)
 
 	elvis_meat_h
 		name = "elvismanwich"
@@ -88,6 +95,12 @@
 		desc = "Cheese between two slices of elvis bread."
 		icon_state = "elviswich_c"
 		initial_reagents = list("essenceofelvis"=20,"cheese"=5)
+
+	elvis_blt
+		name = "BLT elviswich"
+		desc = "Crunchy bacon, lettuce, and tomato between two slices of elvis bread."
+		icon_state = "elviswich_blt"
+		initial_reagents = list("essenceofelvis"=20,"juice_tomato"=2,"cholesterol"=3)
 
 	spooky_cheese
 		name = "killed cheese sandwich"
@@ -136,6 +149,12 @@
 		initial_reagents = list("ectoplasm"=15,"synthflesh"=10)
 		food_effects = list("food_hp_up_big")
 		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
+
+	spooky_blt
+		name = "haunted BLT"
+		desc = "Cursed yet crunchy bacon, lettuce, and tomato between two slices of dread. It whispers false promises of a healthy meal, in spite of the bacon."
+		icon_state = "scarewich_blt"
+		initial_reagents = list("ectoplasm"=15,"juice_tomato"=2,"cholesterol"=3)
 
 	meatball
 		name = "meatball sub"

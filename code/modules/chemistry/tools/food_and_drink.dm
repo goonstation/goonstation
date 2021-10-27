@@ -17,7 +17,7 @@
 	var/from_emagged_oven = 0 // to prevent re-rolling of food in emagged ovens
 	var/doants = 1
 	var/made_ants = 0
-	var/sliceable = 0 // for if a food is intended to be able to be sliced
+	var/sliceable = TRUE // for if a food is intended to be able to be sliced
 	var/slice_product = null // what product to spawn when sliced
 	var/slice_amount = 0 // how much product to spawn when sliced
 	rc_flags = 0
@@ -67,15 +67,18 @@
 		else
 			M.HealDamage("All", healing, healing)
 
-	//slicing food can be done here using sliceable == 1, slice_amount, and slice_product
+	//slicing food can be done here using sliceable == TRUE, slice_amount, and slice_product
 	//there will probably be a good deal of food that can be sliced but use their own slicing mechanisms instead of this, just gonna make a few things sliceable for now (aka just tomatoes, pepperoni, and cheese)
 	attackby(obj/item/W as obj, mob/user as mob)
-		if ((istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher)) && src.sliceable == 1)
+		if (src.sliceable && istool(W, TOOL_CUTTING | TOOL_SAWING))
 			var/turf/T = get_turf(src)
-			user.visible_message("[user] cuts [src] into slices.", "You cut [src] into slices.")
+			user.visible_message("[user] cuts [src] into [src.slice_amount] slices.", "You cut [src] into [src.slice_amount] slices.")
 			for (var/i in 1 to src.slice_amount)
 				new src.slice_product(T)
 			qdel (src)
+		else
+			..()
+
 
 /* ================================================ */
 /* -------------------- Snacks -------------------- */
