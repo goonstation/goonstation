@@ -36,7 +36,8 @@
 
 	var/move_laying = null
 	var/last_typing = null
-	var/static/image/speech_bubble = image('icons/mob/chat_bubble.dmi', "speech")
+	var/last_bubble = null
+	var/obj/speech_bubble = null
 	var/static/image/sleep_bubble = image('icons/mob/mob.dmi', "sleep")
 	var/image/static_image = null
 	var/static_type_override = null
@@ -132,6 +133,12 @@
 	vision = new()
 	src.attach_hud(vision)
 	src.vis_contents += src.chat_text
+	src.speech_bubble = new()
+	src.speech_bubble.mouse_opacity = 0
+	src.speech_bubble.icon = 'icons/mob/chat_bubble.dmi'
+	src.speech_bubble.icon_state = ""
+	src.speech_bubble.vis_flags = VIS_INHERIT_LAYER
+	src.vis_contents += src.speech_bubble
 	if (can_bleed)
 		src.ensure_bp_list()
 
@@ -729,6 +736,8 @@
 	var/secure_headset_mode = null
 	var/skip_open_mics_in_range = 0 // For any radios or intercoms that happen to be in range.
 
+	var/bubble = "" // The speech bubble icon state
+
 	if (prob(50) && src.get_brain_damage() >= 60)
 		if (ishuman(src))
 			message_mode = "headset"
@@ -819,38 +828,38 @@
 		if (singing || (src.bioHolder?.HasEffect("elvis")))
 			if (src.get_brain_damage() >= 60 || src.bioHolder?.HasEffect("unintelligable") || src.hasStatus("drunk"))
 				singing |= BAD_SINGING
-				speech_bubble.icon_state = "notebad"
+				bubble = "notebad"
 			else
-				speech_bubble.icon_state = "note"
+				bubble = "note"
 				if (ending == "!" || (src.bioHolder?.HasEffect("loud_voice")))
 					singing |= LOUD_SINGING
-					speech_bubble.icon_state = "notebad"
+					bubble = "notebad"
 				else if (src.bioHolder?.HasEffect("quiet_voice"))
 					singing |= SOFT_SINGING
 			playsound(src, sounds_speak["[VT]"],  55, 0.01, 8, src.get_age_pitch_for_talk(), ignore_flag = SOUND_SPEECH)
 		else if (ending == "?")
 			playsound(src, sounds_speak["[VT]?"], 55, 0.01, 8, src.get_age_pitch_for_talk(), ignore_flag = SOUND_SPEECH)
-			speech_bubble.icon_state = "?"
+			bubble = "?"
 		else if (ending == "!")
 			playsound(src, sounds_speak["[VT]!"], 55, 0.01, 8, src.get_age_pitch_for_talk(), ignore_flag = SOUND_SPEECH)
-			speech_bubble.icon_state = "!"
+			bubble = "!"
 		else
 			playsound(src, sounds_speak["[VT]"],  55, 0.01, 8, src.get_age_pitch_for_talk(), ignore_flag = SOUND_SPEECH)
-			speech_bubble.icon_state = "speech"
+			bubble = "speech"
 
 		last_voice_sound = world.time
 	else
-		speech_bubble.icon_state = "speech"
+		bubble = "speech"
 
 	if ((isrobot(src) || isAI(src)) && singing)
-		speech_bubble.icon_state = "noterobot"
+		bubble = "noterobot"
 		if (copytext(message, length(message)) == "!")
 			singing |= LOUD_SINGING
 
 	if (text2num(message)) //mbc : check mob.dmi for the icons
 		var/n = round(text2num(message),1)
 		if ((n >= 0 && n <= 20) || n == 420)
-			speech_bubble.icon_state = "[n]"
+			bubble = "[n]"
 
 	if(src.client)
 		if(singing)
@@ -904,11 +913,14 @@
 			if(!src.stuttering && prob(8))
 				message = stutter(message)
 
-	UpdateOverlays(speech_bubble, "speech_bubble")
-	var/speech_bubble_time = src.last_typing
-	SPAWN_DBG(1.5 SECONDS)
-		if(speech_bubble_time == src.last_typing)
-			UpdateOverlays(null, "speech_bubble")
+	if (bubble != null)
+		speech_bubble.icon_state = bubble
+		// flick(bubble, speech_bubble)
+		src.last_bubble = TIME
+		var/speech_bubble_time = TIME
+		SPAWN_DBG(1.5 SECONDS)
+			if(speech_bubble_time == last_bubble)
+				src.speech_bubble.icon_state = ""
 
 	//Blobchat handling
 	if (src.mob_flags & SPEECH_BLOB)

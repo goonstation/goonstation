@@ -1713,11 +1713,11 @@
 
 	//mbc FUCK why doesn't this have any parent to call
 	speech_bubble.icon_state = "speech"
-	UpdateOverlays(speech_bubble, "speech_bubble")
-	var/speech_bubble_time = src.last_typing
+	src.last_bubble = TIME
+	var/speech_bubble_time = TIME
 	SPAWN_DBG(1.5 SECONDS)
-		if(speech_bubble_time == src.last_typing)
-			UpdateOverlays(null, "speech_bubble")
+		if(speech_bubble_time == last_bubble)
+			src.speech_bubble.icon_state = ""
 
 /mob/living/carbon/human/var/const
 	slot_back = 1

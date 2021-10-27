@@ -92,6 +92,8 @@
 							P.play_dead(rand(20,40)) // shorter than the regular "death" stun
 					else
 						message = "<B>[src]</B> makes a very loud noise."
+						maptext_out = "<I>makes a very loud noise.</I>"
+						bubble = "sweat"
 						m_type = 2
 					if (src.traitHolder && src.traitHolder.hasTrait("scaredshitless"))
 						src.emote("fart") //We can still fart if we're muzzled.
@@ -140,6 +142,7 @@
 									if (M == src || !M.lying)
 										continue
 									message = "<span class='alert'><B>[src]</B> farts in [M]'s face!</span>"
+									maptext_out = "<I>farts in [M]'s face!</I>"
 									if (sims)
 										sims.affectMotive("fun", 4)
 									if (src.mind)
@@ -176,6 +179,7 @@
 									//break deliberately omitted
 
 						if (!fart_on_other)
+							maptext_out = "<I>farts</I>"
 							switch(rand(1, 42))
 								if (1) message = "<B>[src]</B> lets out a girly little 'toot' from [his_or_her(src)] butt."
 								if (2) message = "<B>[src]</B> farts loudly!"
@@ -335,8 +339,8 @@
 								return
 
 					act = lowertext(act)
-					if (M)
 						bubble = "[act]"
+					if (M)
 						switch(act)
 							if ("bow","wave")
 								message = "<B>[src]</B> [act]s to [M]."
@@ -349,10 +353,12 @@
 								message = "<B>[src]</B> salutes [M]."
 								maptext_out = "<I>salutes [M]</I>"
 								bubble = "salute"
+							if ("hug")
+								bubble = "heart"
 							if ("sidehug")
 								message = "<B>[src]</B> awkwardly side-hugs [M]."
 								maptext_out = "<I>awkwardly side-hugs [M]</I>"
-								bubble = "blush" // No unique emote yet, override.
+								bubble = "heart"
 							if ("blowkiss")
 								message = "<B>[src]</B> blows a kiss to [M]."
 								maptext_out = "<I>blows a kiss to [M]</I>"
@@ -371,12 +377,15 @@
 							if ("hug", "sidehug")
 								message = "<B>[src]</b> [act]s [himself_or_herself(src)]."
 								maptext_out = "<I>[act]s [himself_or_herself(src)]</I>"
+								bubble = "heart"
 							if ("blowkiss")
 								message = "<B>[src]</b> blows a kiss to... [himself_or_herself(src)]?"
 								maptext_out = "<I> blows a kiss to... [himself_or_herself(src)]?</I>"
+								bubble = "blush" // No unique emote yet, override.
 							if ("fingerguns")
 								message = "<B>[src]</b> points finger guns at... [himself_or_herself(src)]?"
 								maptext_out = "<I> points finger guns at... [himself_or_herself(src)]?</I>"
+								bubble = "snap" // No unique emote yet, override.
 							else
 								message = "<B>[src]</b> [act]s."
 								maptext_out = "<I>[act]s [M]</I>"
@@ -411,8 +420,8 @@
 							return
 
 				act = lowertext(act)
-				if (M)
 					bubble = "[act]"
+				if (M)
 					switch(act)
 						if ("nodat")
 							message = "<B>[src]</B> nods at [M]."
@@ -521,6 +530,7 @@
 							return
 #endif
 						maptext_out = "<I>offers to [H]...</I>"
+						bubble = "hand"
 						src.give_to(H)
 						return
 				m_type = 1
@@ -658,7 +668,7 @@
 									src.add_juggle(thing)
 							else
 								message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
-								maptext_out = "<I>wiggles [his_or_her(src)] fingers a bit.</I>"
+								maptext_out = "<I>wiggles [his_or_her(src)] fingers</I>"
 							bubble = "gesticulate"
 			if ("twirl", "spin"/*, "juggle"*/)
 				if (!src.restrained())
@@ -680,7 +690,7 @@
 							animate(transform = trans, time = 0.7, flags = ANIMATION_PARALLEL)
 						else
 							message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
-							maptext_out = "<I>wiggles [his_or_her(src)] fingers a bit.</I>"
+							maptext_out = "<I>wiggles [his_or_her(src)] fingers</I>"
 						bubble = "gesticulate"
 				else
 					message = "<B>[src]</B> struggles to move."
@@ -728,7 +738,7 @@
 						message = "<B>[src]</B> throws [his_or_her(src)] [hat_or_beret] on the floor and stomps on it![already_stomped]\
 						<br><B>[src]</B> grumbles, \"<i>rasmn frasmn grmmn</i>.\""
 
-					maptext_out = "<I>stomps on their hat!</I>"
+					maptext_out = "<I>stomps on [his_or_her(src)] hat!</I>"
 
 					src.drop_from_slot(hat) // we're done here, drop that hat!
 					hat.pixel_x = 0
@@ -826,7 +836,7 @@
 				message = "<B>[src]</B> grumps."
 				maptext_out = "<I>grumps</I>"
 				m_type = 1
-				bubble = "grump"
+				bubble = "pout"
 
 			if (":|")
 				message = "<B>[src]</B> stares."
@@ -1049,6 +1059,7 @@
 				m_type = 1
 
 			if ("rude")
+				bubble = "rude"
 				if (!src.restrained())
 					message = "<B>[src]</B> makes a rude gesture."
 					maptext_out = "<I>makes a rude gesture</I>"
@@ -1134,11 +1145,11 @@
 			if ("nosepick","picknose")
 				if (!src.restrained())
 					message = "<B>[src]</B> picks [his_or_her(src)] nose."
-					maptext_out = "<I>picks their nose</I>"
+					maptext_out = "<I>picks [his_or_her(src)] nose</I>"
 					bubble = "satisfied"
 				else
 					message = "<B>[src]</B> sniffs and scrunches [his_or_her(src)] face up irritably."
-					maptext_out = "<I>sniffs and scrunches their face up irritably</I>"
+					maptext_out = "<I>sniffs and scrunches [his_or_her(src)] face up irritably</I>"
 					bubble = "twitch"
 				m_type = 1
 				if (src.mind)
@@ -1175,20 +1186,20 @@
 				bubble = "-_-"
 				if (!src.restrained())
 					message = "<B>[src]</B> places [his_or_her(src)] hand on [his_or_her(src)] face in exasperation."
-					maptext_out = "<I>places [his_or_her(src)] hand on [his_or_her(src)] face in exasperation</I>"
+					maptext_out = "<I>facepalms</I>"
 				else
 					message = "<B>[src]</B> looks rather exasperated."
-					maptext_out = "<I>looks rather exasperated</I>"
+					maptext_out = "<I>looks exasperated</I>"
 				m_type = 1
 
 			if ("panic","freakout")
 				bubble = "panic"
 				if (!src.restrained())
 					message = "<B>[src]</B> enters a state of hysterical panic!"
-					maptext_out = "<I>enters a state of hysterical panic!</I>"
+					maptext_out = "<I>panics!</I>"
 				else
 					message = "<B>[src]</B> starts writhing around in manic terror!"
-					maptext_out = "<I>starts writhing around in manic terror!</I>"
+					maptext_out = "<I>writhes around in terror!</I>"
 				m_type = 1
 
 			// targeted emotes
@@ -1302,11 +1313,11 @@
 							M = tgui_input_list(src, "Pick something to shake your fist at!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
 
 					if (M)
-						message = "<B>[src]</B> angrily shakes [his_or_her(src)] fist at [M]!"
-						maptext_out = "<I>angrily shakes [his_or_her(src)] fist at [M]!</I>"
+						message = "<B>[src]</B> shakes [his_or_her(src)] fist at [M]!"
+						maptext_out = "<I>shakes [his_or_her(src)] fist at [M]!</I>"
 					else
-						message = "<B>[src]</B> angrily shakes [his_or_her(src)] fist!"
-						maptext_out = "<I>angrily shakes [his_or_her(src)] fist!</I>"
+						message = "<B>[src]</B> shakes [his_or_her(src)] fist!"
+						maptext_out = "<I>shakes [his_or_her(src)] fist!</I>"
 				else
 					bubble = "anger"
 					message = "<B>[src]</B> tries to move [his_or_her(src)] arm angrily!"
@@ -2345,14 +2356,14 @@
 					O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
 
 	if (bubble != null)
+		speech_bubble.icon_state = "" // We need to do this to reset the anim without using flick()
+		SPAWN_DBG(0.1 SECONDS)
 		speech_bubble.icon_state = bubble
-		// flick(bubble, speech_bubble) if only you could flick overlays...
-		UpdateOverlays(speech_bubble, "speech_bubble")
-		var/current_time = TIME
-		var/speech_bubble_time = current_time
+		src.last_bubble = TIME
+		var/speech_bubble_time = TIME
 		SPAWN_DBG(1.5 SECONDS)
-			if(speech_bubble_time == current_time)
-				UpdateOverlays(null, "speech_bubble")
+			if(speech_bubble_time == last_bubble)
+				src.speech_bubble.icon_state = ""
 
 // I'm very sorry for this but it's to trick the linter into thinking emote doesn't sleep (since it usually doesn't)
 // you see from the important places it's called as emote("scream") etc. which doesn't actually sleep but for the linter to recognize

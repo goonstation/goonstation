@@ -1237,6 +1237,12 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 				else
 					playsound(src.loc, pick(snd_macho_rage), 75, 0, 0, src.get_age_pitch())
 					src.visible_message("<span class='alert'><b>[src] yells out a battle cry!</b></span>")
+					src.speech_bubble.icon_state = "scream"
+					src.last_bubble = TIME
+					var/speech_bubble_time = TIME
+					SPAWN_DBG(1.5 SECONDS)
+						if(speech_bubble_time == last_bubble)
+							src.speech_bubble.icon_state = ""
 			else
 				..()
 

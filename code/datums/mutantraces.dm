@@ -964,6 +964,12 @@
 				mob.emote_allowed = 0
 				message = "<B>[mob]</B> moans!"
 				playsound(mob, "sound/voice/Zgroan[pick("1","2","3","4")].ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)), channel=VOLUME_CHANNEL_EMOTE)
+				mob.speech_bubble.icon_state = "scream"
+				mob.last_bubble = TIME
+				var/speech_bubble_time = TIME
+				SPAWN_DBG(1.5 SECONDS)
+					if(speech_bubble_time == mob.last_bubble)
+						mob.speech_bubble.icon_state = ""
 				SPAWN_DBG(3 SECONDS)
 					mob.emote_allowed = 1
 			return message
@@ -1105,6 +1111,12 @@
 				mob.emote_allowed = 0
 				message = "<B>[mob]</B> moans!"
 				playsound(mob, "sound/voice/Zgroan[pick("1","2","3","4")].ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)), channel=VOLUME_CHANNEL_EMOTE)
+				mob.speech_bubble.icon_state = "scream"
+				mob.last_bubble = TIME
+				var/speech_bubble_time = TIME
+				SPAWN_DBG(1.5 SECONDS)
+					if(speech_bubble_time == mob.last_bubble)
+						mob.speech_bubble.icon_state = ""
 				SPAWN_DBG(3 SECONDS)
 					mob.emote_allowed = 1
 			return message
@@ -1249,6 +1261,12 @@
 					mob.emote_allowed = 0
 					message = "<span class='alert'><B>[mob] screeches!</B></span>"
 					playsound(mob, "sound/voice/creepyshriek.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+					mob.speech_bubble.icon_state = "scream"
+					mob.last_bubble = TIME
+					var/speech_bubble_time = TIME
+					SPAWN_DBG(1.5 SECONDS)
+						if(speech_bubble_time == mob.last_bubble)
+							mob.speech_bubble.icon_state = ""
 					SPAWN_DBG(3 SECONDS)
 						if (mob) mob.emote_allowed = 1
 		return message
@@ -1350,12 +1368,14 @@
 
 	emote(var/act)
 		var/message = null
+		var bubble = ""
 		switch(act)
 			if("howl", "scream")
 				if(mob.emote_allowed)
 					mob.emote_allowed = 0
 					message = "<span class='alert'><B>[mob] howls [pick("ominously", "eerily", "hauntingly", "proudly", "loudly")]!</B></span>"
 					playsound(mob, "sound/voice/animal/werewolf_howl.ogg", 65, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)), channel=VOLUME_CHANNEL_EMOTE)
+					bubble = "scream"
 					SPAWN_DBG(3 SECONDS)
 						mob.emote_allowed = 1
 			if("burp")
@@ -1363,8 +1383,16 @@
 					mob.emote_allowed = 0
 					message = "<B>[mob]</B> belches."
 					playsound(mob, "sound/voice/burp_alien.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+					bubble = "burp"
 					SPAWN_DBG(1 SECOND)
 						mob.emote_allowed = 1
+
+		mob.speech_bubble.icon_state = bubble
+		mob.last_bubble = TIME
+		var/speech_bubble_time = TIME
+		SPAWN_DBG(1.5 SECONDS)
+			if(speech_bubble_time == mob.last_bubble)
+				mob.speech_bubble.icon_state = ""
 		return message
 
 /datum/mutantrace/hunter
@@ -1499,6 +1527,7 @@
 
 	emote(var/act, var/voluntary)
 		. = null
+		var/bubble = ""
 		var/muzzled = istype(mob.wear_mask, /obj/item/clothing/mask/muzzle)
 		switch(act)
 			if("scratch")
@@ -1507,12 +1536,15 @@
 			if("whimper")
 				if (!muzzled)
 					. = "<B>[mob.name]</B> whimpers."
+					bubble = "scream"
 			if("yawn")
 				if (!muzzled)
 					. = "<b>[mob.name]</B> yawns."
+					bubble = "yawn"
 			if("roar")
 				if (!muzzled)
 					. = "<B>[mob.name]</B> roars."
+					bubble = "scream"
 			if("tail")
 				. = "<B>[mob.name]</B> waves \his tail."
 			if("paw")
@@ -1521,19 +1553,23 @@
 			if("scretch")
 				if (!muzzled)
 					. = "<B>[mob.name]</B> scretches."
+					bubble = "stretch"
 			if("sulk")
 				. = "<B>[mob.name]</B> sulks down sadly."
+				bubble = "sulk"
 			if("roll")
 				if (!mob.restrained())
 					. = "<B>[src.name]</B> rolls."
 			if("gnarl")
 				if (!muzzled)
 					. = "<B>[mob]</B> gnarls and shows \his teeth.."
+					bubble = "angry"
 			if("jump")
 				. = "<B>[mob.name]</B> jumps!"
 			if ("scream")
 				if (mob.emote_check(voluntary, 50))
 					. = "<B>[mob]</B> screams!"
+					bubble = "scream"
 					playsound(mob, src.sound_monkeyscream, 80, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			if ("fart")
 				if(farting_allowed && (!mob.reagents || !mob.reagents.has_reagent("anti_fart")))
@@ -1585,6 +1621,12 @@
 					mob.expel_fart_gas(0)
 					mob.add_karma(0.5)
 
+		mob.speech_bubble.icon_state = bubble
+		mob.last_bubble = TIME
+		var/speech_bubble_time = TIME
+		SPAWN_DBG(1.5 SECONDS)
+			if(speech_bubble_time == mob.last_bubble)
+				mob.speech_bubble.icon_state = ""
 
 /datum/mutantrace/monkey/seamonkey
 	name = "sea monkey"
@@ -1827,6 +1869,12 @@
 				if (mob.emote_allowed)
 					mob.emote_allowed = 0
 					message = "<span class='alert'><B>[mob] makes an awful noise!</B></span>"
+					mob.speech_bubble.icon_state = "scream"
+					mob.last_bubble = TIME
+					var/speech_bubble_time = TIME
+					SPAWN_DBG(1.5 SECONDS)
+						if(speech_bubble_time == mob.last_bubble)
+							mob.speech_bubble.icon_state = ""
 					playsound(mob, pick("sound/voice/screams/frogscream1.ogg","sound/voice/screams/frogscream3.ogg","sound/voice/screams/frogscream4.ogg"), 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN_DBG(3 SECONDS)
 						if (mob) mob.emote_allowed = 1
@@ -2061,6 +2109,12 @@
 			if ("scream")
 				if (mob.emote_check(voluntary, 50))
 					. = "<B>[mob]</B> moos!"
+					mob.speech_bubble.icon_state = "scream"
+					mob.last_bubble = TIME
+					var/speech_bubble_time = TIME
+					SPAWN_DBG(1.5 SECONDS)
+						if(speech_bubble_time == mob.last_bubble)
+							mob.speech_bubble.icon_state = ""
 					playsound(mob, "sound/voice/screams/moo.ogg", 50, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			if ("milk")
 				if (mob.emote_check(voluntary))
@@ -2120,6 +2174,12 @@
 			if ("scream")
 				if (mob.emote_check(voluntary, 50))
 					. = "<B>[mob]</B> BWAHCAWCKs!"
+					mob.speech_bubble.icon_state = "scream"
+					mob.last_bubble = TIME
+					var/speech_bubble_time = TIME
+					SPAWN_DBG(1.5 SECONDS)
+						if(speech_bubble_time == mob.last_bubble)
+							mob.speech_bubble.icon_state = ""
 					playsound(mob, "sound/voice/screams/chicken_bawk.ogg", 50, 0, 0, mob.get_age_pitch())
 
 #undef OVERRIDE_ARM_L
