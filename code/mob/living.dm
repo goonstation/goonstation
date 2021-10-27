@@ -133,12 +133,15 @@
 	vision = new()
 	src.attach_hud(vision)
 	src.vis_contents += src.chat_text
+
 	src.speech_bubble = new()
+	src.speech_bubble.appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | PIXEL_SCALE
 	src.speech_bubble.mouse_opacity = 0
 	src.speech_bubble.icon = 'icons/mob/chat_bubble.dmi'
 	src.speech_bubble.icon_state = ""
 	src.speech_bubble.vis_flags = VIS_INHERIT_LAYER
 	src.vis_contents += src.speech_bubble
+
 	if (can_bleed)
 		src.ensure_bp_list()
 
