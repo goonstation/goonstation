@@ -323,7 +323,7 @@
 	initial_reagents = "cheese"
 	sliceable = TRUE
 	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/cheese/slice
-	slice_amount = 5
+	slice_amount = 4
 
 /obj/item/reagent_containers/food/snacks/ingredient/gcheese
 	name = "weird cheese"
@@ -338,7 +338,7 @@
 	food_effects = list("food_sweaty","food_bad_breath")
 	sliceable = TRUE
 	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/gcheese/slice
-	slice_amount = 5
+	slice_amount = 4
 
 /obj/item/reagent_containers/food/snacks/ingredient/pancake_batter
 	name = "pancake batter"
@@ -837,6 +837,7 @@
 	doants = 1
 	initial_volume = 10
 	initial_reagents = "pepperoni"
+	sliceable = FALSE
 
 obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	name = "pepperoni log"
