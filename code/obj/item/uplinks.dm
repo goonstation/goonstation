@@ -1004,7 +1004,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 			for (var/datum/syndicate_buylist/S in src.commander_buylist)
 				var/name = S.name
-				if (name in names) // Should never, ever happen, but better safe than sorry.
+				if (name in names) // sanity check
 					namecounts[name]++
 					name = text("[] ([])", name, namecounts[name])
 				else
@@ -1057,10 +1057,15 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				return
 
 			// Trying to spawn things you shouldn't, eh?
-			/*for(var/S in commander_buylist)
-				if(!(I == commander_buylist[S]))
-					trigger_anti_cheat(usr, "tried to href exploit the syndicate commander buylist")
-					return*/ //Figure out why broken
+			var/present = FALSE
+			for(var/S in commander_buylist)
+				if(I == commander_buylist[S])
+					present = TRUE
+					break
+
+			if(!present)
+				trigger_anti_cheat(usr, "tried to href exploit the commnader buylist")
+				return
 
 			if (I.item)
 				var/obj/item = new I.item(get_turf(src))
