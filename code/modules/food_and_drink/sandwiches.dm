@@ -16,6 +16,7 @@
 		desc = "Human meat between two slices of bread."
 		icon_state = "sandwich_m"
 		food_effects = list("food_refreshed", "food_energized_big")
+		initial_reagents = list("bread"=10,"blood"=10)
 		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 	meat_m
@@ -23,6 +24,7 @@
 		desc = "Meat between two slices of bread."
 		icon_state = "sandwich_m"
 		food_effects = list("food_refreshed", "food_energized")
+		initial_reagents = list("bread"=10,"blood"=10)
 		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 	pb
@@ -30,35 +32,41 @@
 		desc = "Peanut butter between two slices of bread."
 		icon_state = "sandwich_p"
 		food_effects = list("food_refreshed", "food_energized")
+		initial_reagents = list("bread"=10)
 
 	pbh
 		name = "peanut butter and honey sandwich"
 		desc = "Peanut butter and honey between two slices of bread."
 		icon_state = "sandwich_p"
-		initial_reagents = list("honey"=10)
+		initial_reagents = list("bread"=10,"honey"=10)
 		food_effects = list("food_energized_big")
+
 	meat_s
 		name = "synthmeat sandwich"
 		desc = "Synthetic meat between two slices of bread."
 		icon_state = "sandwich_m"
+		initial_reagents = list("bread"=10,"synthflesh"=10)
+		food_effects = list("food_hp_up_big")
 
 	cheese
 		name = "cheese sandwich"
 		desc = "Cheese between two slices of bread."
 		icon_state = "sandwich_c"
-		initial_reagents = list("cheese"=5)
+		initial_reagents = list("bread"=10,"cheese"=2)
+		food_effects = list("food_energized","food_hp_up")
 
 	blt
 		name = "BLT sandwich"
 		desc = "Crunchy bacon, lettuce, and tomato between two slices of bread."
 		icon_state = "sandwich_blt"
-		initial_reagents = list("juice_tomato"=2,"cholesterol"=3)
+		initial_reagents = list("bread"=10,"juice_tomato"=2,"cholesterol"=3,"porktonium"=3)
+		food_effects = list("food_refreshed", "food_energized_big")
 
 	elvis_meat_h
 		name = "elvismanwich"
 		desc = "Human meat between two slices of elvis bread."
 		icon_state = "elviswich_m"
-		initial_reagents = list("essenceofelvis"=25)
+		initial_reagents = list("essenceofelvis"=25,"blood"=10)
 		food_effects = list("food_refreshed", "food_energized_big")
 		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
@@ -66,7 +74,7 @@
 		name = "monkey elviswich"
 		desc = "Meat between two slices of elvis bread."
 		icon_state = "elviswich_m"
-		initial_reagents = list("essenceofelvis"=25)
+		initial_reagents = list("essenceofelvis"=25,"blood"=10)
 		food_effects = list("food_refreshed", "food_energized")
 		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
@@ -88,25 +96,28 @@
 		name = "synthmeat elviswich"
 		desc = "Synthetic meat between two slices of elvis bread."
 		icon_state = "elviswich_m"
-		initial_reagents = list("essenceofelvis"=25)
+		initial_reagents = list("essenceofelvis"=25,"synthflesh"=10)
+		food_effects = list("food_hp_up_big")
 
 	elvis_cheese
 		name = "cheese elviswich"
 		desc = "Cheese between two slices of elvis bread."
 		icon_state = "elviswich_c"
-		initial_reagents = list("essenceofelvis"=20,"cheese"=5)
+		initial_reagents = list("essenceofelvis"=20,"cheese"=2)
+		food_effects = list("food_energized","food_hp_up")
 
 	elvis_blt
 		name = "BLT elviswich"
 		desc = "Crunchy bacon, lettuce, and tomato between two slices of elvis bread."
 		icon_state = "elviswich_blt"
-		initial_reagents = list("essenceofelvis"=20,"juice_tomato"=2,"cholesterol"=3)
+		initial_reagents = list("essenceofelvis"=20,"juice_tomato"=2,"cholesterol"=3,"porktonium"=3)
+		food_effects = list("food_refreshed", "food_energized_big")
 
 	spooky_cheese
 		name = "killed cheese sandwich"
 		desc = "Cheese that has been murdered and buried in a hasty grave of dread."
 		icon_state = "scarewich_c"
-		initial_reagents = list("ectoplasm"=15,"cheese"=10)
+		initial_reagents = list("ectoplasm"=15,"cheese"=2)
 		food_effects = list("food_energized","food_hp_up")
 		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
@@ -154,7 +165,9 @@
 		name = "haunted BLT"
 		desc = "Cursed yet crunchy bacon, lettuce, and tomato between two slices of dread. It whispers false promises of a healthy meal, in spite of the bacon."
 		icon_state = "scarewich_blt"
-		initial_reagents = list("ectoplasm"=15,"juice_tomato"=2,"cholesterol"=3)
+		initial_reagents = list("ectoplasm"=15,"juice_tomato"=2,"cholesterol"=3,"porktonium"=3)
+		food_effects = list("food_refreshed", "food_energized_big")
+		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 	meatball
 		name = "meatball sub"

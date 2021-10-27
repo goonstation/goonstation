@@ -322,7 +322,7 @@
 	initial_volume = 5
 	initial_reagents = "cheese"
 	sliceable = TRUE
-	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/cheese/slice
+	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/cheeseslice
 	slice_amount = 4
 
 /obj/item/reagent_containers/food/snacks/ingredient/gcheese
@@ -337,7 +337,7 @@
 	initial_reagents = list("mercury"=5,"LSD"=5,"ethanol"=5,"gcheese"=5)
 	food_effects = list("food_sweaty","food_bad_breath")
 	sliceable = TRUE
-	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/gcheese/slice
+	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/gcheeseslice
 	slice_amount = 4
 
 /obj/item/reagent_containers/food/snacks/ingredient/pancake_batter
@@ -872,7 +872,7 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	initial_volume = 10
 	initial_reagents = "currypowder"
 
-/obj/item/reagent_containers/food/snacks/plant/tomato/slice //yes it's not /snacks/ingredients, shut up
+/obj/item/reagent_containers/food/snacks/ingredient/tomatoslice //yes it's not /snacks/ingredients, shut up
 	name = "tomato slice"
 	desc = "A slice of some kind of tomato, presumably."
 	icon_state = "tomatoslice"
@@ -880,11 +880,10 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	heal_amt = 1
 	food_color = "#f2500c"
 	custom_food = 1
-	initial_volume = 4
-	initial_reagents = "juice_tomato"
-	sliceable = FALSE
+	initial_volume = 15
+	initial_reagents = list("juice_tomato"=4)
 
-/obj/item/reagent_containers/food/snacks/ingredient/cheese/slice
+/obj/item/reagent_containers/food/snacks/ingredient/cheeseslice
 	name = "slice of cheese"
 	desc = "A slice of hopefully fresh cheese."
 	icon_state = "cheeseslice"
@@ -892,11 +891,10 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	heal_amt = 1
 	food_color = "#FFD700"
 	custom_food = 1
-	initial_volume = 1
-	initial_reagents = "cheese"
-	sliceable = FALSE
+	initial_volume = 15
+	initial_reagents = list("cheese"=1)
 
-/obj/item/reagent_containers/food/snacks/ingredient/gcheese/slice
+/obj/item/reagent_containers/food/snacks/ingredient/gcheeseslice
 	name = "slice of weird cheese"
 	desc = "A slice of what you assume was, at one point, cheese."
 	icon_state = "gcheeseslice"
@@ -904,7 +902,6 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	heal_amt = 1
 	food_color = "#669966"
 	custom_food = 1
-	initial_volume = 4
+	initial_volume = 15
 	initial_reagents = list("mercury"=1,"LSD"=1,"ethanol"=1,"gcheese"=1)
 	food_effects = list("food_sweaty","food_bad_breath")
-	sliceable = FALSE

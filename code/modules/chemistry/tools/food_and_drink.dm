@@ -69,12 +69,16 @@
 
 	//slicing food can be done here using sliceable == TRUE, slice_amount, and slice_product
 	//there will probably be a good deal of food that can be sliced but use their own slicing mechanisms instead of this, just gonna make a few things sliceable for now (aka just tomatoes, pepperoni, and cheese)
+	//might be a good idea to call a proc in the src obj and carry over the new src.slice_product so the src can fuck with the new obj as necessary?
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (src.sliceable && istool(W, TOOL_CUTTING | TOOL_SAWING))
 			var/turf/T = get_turf(src)
 			user.visible_message("[user] cuts [src] into [src.slice_amount] slices.", "You cut [src] into [src.slice_amount] slices.")
+			var/amount_to_transfer = src.reagents.total_volume / src.slice_amount
 			for (var/i in 1 to src.slice_amount)
-				new src.slice_product(T)
+				var/obj/item/reagent_containers/food/slice = new src.slice_product(T)
+				slice.reagents.clear_reagents() // dont need initial_reagents when you're inheriting reagents of another obj (no cheese duping >:[ )
+				src.reagents.trans_to(slice, amount_to_transfer)
 			qdel (src)
 		else
 			..()

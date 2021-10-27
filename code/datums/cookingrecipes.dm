@@ -61,21 +61,21 @@
 /datum/cookingrecipe/cheeseburger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/
-	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese/slice
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheeseslice
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/burger/cheeseburger
 
 /datum/cookingrecipe/wcheeseburger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/
-	item3 = /obj/item/reagent_containers/food/snacks/ingredient/gcheese/slice
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/gcheeseslice
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/burger/wcheeseburger
 
 /datum/cookingrecipe/cheeseburger_m
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat
-	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese/slice
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheeseslice
 	amt3 = 2
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/burger/cheeseburger_m
@@ -140,7 +140,7 @@
 /datum/cookingrecipe/cheeseborger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	item2 = /obj/item/parts/robot_parts/head
-	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese/slice
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheeseslice
 	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/burger/cheeseborger
 
@@ -154,7 +154,7 @@
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat
 	amt2 = 2
-	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese/slice
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheeseslice
 	amt3 = 2
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/burger/bigburger
@@ -263,7 +263,7 @@
 /datum/cookingrecipe/lasagna
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pasta/sheet
 	item2 = /obj/item/reagent_containers/food/snacks/condiment/ketchup
-	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese/slice
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheeseslice
 	amt3 = 2
 	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/lasagna
@@ -420,7 +420,7 @@
 /datum/cookingrecipe/sandwich_c
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice
 	amt1 = 2
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/cheese/slice
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/cheeseslice
 	amt2 = 2
 	cookbonus = 7
 	output = /obj/item/reagent_containers/food/snacks/sandwich/cheese
@@ -444,7 +444,7 @@
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice
 	amt1 = 2
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
-	item3 = /obj/item/reagent_containers/food/snacks/plant/tomato/slice
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/tomatoslice
 	item4 = /obj/item/reagent_containers/food/snacks/plant/lettuce
 	cookbonus = 7
 	output = /obj/item/reagent_containers/food/snacks/sandwich/blt
@@ -475,7 +475,7 @@
 /datum/cookingrecipe/elviswich_c
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice/elvis
 	amt1 = 2
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/cheese/slice
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/cheeseslice
 	amt2 = 2
 	cookbonus = 7
 	output = /obj/item/reagent_containers/food/snacks/sandwich/elvis_cheese
@@ -499,7 +499,7 @@
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice/elvis
 	amt1 = 2
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
-	item3 = /obj/item/reagent_containers/food/snacks/plant/tomato/slice
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/tomatoslice
 	item4 = /obj/item/reagent_containers/food/snacks/plant/lettuce
 	cookbonus = 7
 	output = /obj/item/reagent_containers/food/snacks/sandwich/elvis_blt
@@ -507,7 +507,7 @@
 /datum/cookingrecipe/scarewich_c
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice/spooky
 	amt1 = 2
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/cheese/slice
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/cheeseslice
 	amt2 = 2
 	cookbonus = 7
 	output = /obj/item/reagent_containers/food/snacks/sandwich/spooky_cheese
@@ -553,7 +553,7 @@
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice/spooky
 	amt1 = 2
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
-	item3 = /obj/item/reagent_containers/food/snacks/plant/tomato/slice
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/tomatoslice
 	item4 = /obj/item/reagent_containers/food/snacks/plant/lettuce
 	cookbonus = 7
 	output = /obj/item/reagent_containers/food/snacks/sandwich/spooky_blt
@@ -561,7 +561,7 @@
 /datum/cookingrecipe/sandwich_mb //Original meatball sub recipe
 	item1 = /obj/item/reagent_containers/food/snacks/meatball
 	item2 = /obj/item/reagent_containers/food/snacks/breadloaf
-	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese/slice
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheeseslice
 	item4 = /obj/item/reagent_containers/food/snacks/condiment/ketchup
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/sandwich/meatball
@@ -569,7 +569,7 @@
 /datum/cookingrecipe/sandwich_mbalt //Secondary recipe that uses the baguette
 	item1 = /obj/item/reagent_containers/food/snacks/meatball
 	item2 = /obj/item/baguette
-	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese/slice
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheeseslice
 	item4 = /obj/item/reagent_containers/food/snacks/condiment/ketchup
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/sandwich/meatball
@@ -808,7 +808,7 @@
 
 /datum/cookingrecipe/cheesetoast
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/cheese/slice
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/cheeseslice
 	cookbonus = 5
 	output = /obj/item/reagent_containers/food/snacks/toastcheese
 
@@ -827,7 +827,7 @@
 
 /datum/cookingrecipe/elvischeesetoast
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice/elvis
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/cheese/slice
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/cheeseslice
 	cookbonus = 5
 	output = /obj/item/reagent_containers/food/snacks/toastcheese/elvis
 
@@ -888,7 +888,7 @@
 
 /datum/cookingrecipe/garlicbread_ch
 	item1 = /obj/item/baguette
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/cheese/slice
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/cheeseslice
 	item3 = /obj/item/reagent_containers/food/snacks/plant/garlic
 	item3 = /obj/item/reagent_containers/food/snacks/ingredient/butter
 	cookbonus = 6
@@ -1081,8 +1081,7 @@
 	output = /obj/item/reagent_containers/food/snacks/bakedpotato
 
 /datum/cookingrecipe/hotdog
-	item1 = /obj/item/reagent_containers/food/snacks/meatball
-	amt1 = 2
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meatpaste/
 	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/hotdog
 
@@ -1537,7 +1536,7 @@
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/egg
 	amt1 = 2
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/
-	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese/slice
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheeseslice
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/omelette
 
@@ -1600,6 +1599,8 @@
 
 /datum/cookingrecipe/meatloaf
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meatpaste
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/egg
+	item3 = /obj/item/reagent_containers/food/snacks/breadloaf
 	cookbonus = 8
 	output = /obj/item/reagent_containers/food/snacks/meatloaf
 
@@ -1642,7 +1643,7 @@
 /datum/cookingrecipe/macguffin
 	item1 = /obj/item/reagent_containers/food/snacks/emuffin
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat
-	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese/slice
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheeseslice
 	item4 = /obj/item/reagent_containers/food/snacks/ingredient/egg
 	amt1 = 2
 	cookbonus = 8

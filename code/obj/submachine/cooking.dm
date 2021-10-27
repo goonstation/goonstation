@@ -523,6 +523,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/cake_fruit(src)
 			#endif
 			src.recipes += new /datum/cookingrecipe/cake_custom(src)
+			src.recipes += new /datum/cookingrecipe/meatloaf(src)
 			src.recipes += new /datum/cookingrecipe/hotdog(src)
 			src.recipes += new /datum/cookingrecipe/stroopwafel(src)
 			src.recipes += new /datum/cookingrecipe/cookie_spooky(src)
@@ -576,7 +577,6 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/steak_m(src)
 			src.recipes += new /datum/cookingrecipe/steak_s(src)
 			src.recipes += new /datum/cookingrecipe/fish_fingers(src)
-			src.recipes += new /datum/cookingrecipe/meatloaf(src)
 			src.recipes += new /datum/cookingrecipe/hardboiled(src)
 			src.recipes += new /datum/cookingrecipe/bakedpotato(src)
 			src.recipes += new /datum/cookingrecipe/rice_ball(src)

@@ -84,7 +84,7 @@
 	plant_reagent = "juice_tomato"
 	validforhat = 1
 	sliceable = TRUE
-	slice_product = /obj/item/reagent_containers/food/snacks/plant/tomato/slice
+	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/tomatoslice
 	slice_amount = 3
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
