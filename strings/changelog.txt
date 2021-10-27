@@ -1,5 +1,9 @@
 
 (t)tue oct 26 21
+(u)UnfunnyPerson
+(p)6225
+(e)⚖|balance
+(+)Old hunting rifle surplus item cost reduced to 3 tc. Spy bounty for old hunting rifle made slightly more common.
 (u)Wisemonster
 (p)6374
 (e)🗺|mapping
