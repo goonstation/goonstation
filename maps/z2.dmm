@@ -76450,6 +76450,19 @@
 	icon_state = "diagonalWall"
 	},
 /area/hospital/samostrel)
+"jKE" = (
+/obj/critter/zombie/meatmonaut{
+	desc = "What the fuck is this thing";
+	dir = 1;
+	icon = 'icons/misc/soviet.dmi';
+	icon_state = "????";
+	name = "????"
+	},
+/turf/unsimulated/floor/airless/plating{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/space)
 "jMC" = (
 /obj/storage/crate,
 /turf/unsimulated/floor{
@@ -76788,6 +76801,7 @@
 	pixel_x = 10
 	},
 /obj/map/light/secretblue,
+/obj/item/ammo/bullets/ak47,
 /turf/unsimulated/floor/airless/plating{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -77236,6 +77250,10 @@
 	},
 /area/centcom)
 "lJH" = (
+/obj/item/gun/kinetic/ak47{
+	pixel_x = -4;
+	pixel_y = 8
+	},
 /obj/decal/skeleton{
 	desc = "The remains of some poor cosmonaut fellow.";
 	icon = 'icons/misc/hstation.dmi';
@@ -78752,6 +78770,23 @@
 /obj/item/paper/postcard/mushroom,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
+"pdY" = (
+/obj/critter/zombie/meatmonaut{
+	desc = "What the fuck is this thing";
+	dir = 4;
+	icon = 'icons/misc/soviet.dmi';
+	icon_state = "????";
+	name = "????"
+	},
+/obj/item/gun/kinetic/ak47{
+	pixel_x = 1;
+	pixel_y = 8
+	},
+/turf/unsimulated/floor/airless/plating{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/space)
 "pey" = (
 /obj/stool/bed,
 /turf/unsimulated/floor/airless/plating{
@@ -79355,6 +79390,24 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
+"qze" = (
+/obj/table/folding,
+/obj/item/ammo/bullets/ak47{
+	pixel_x = -7;
+	pixel_y = -1
+	},
+/obj/item/ammo/bullets/ak47{
+	pixel_y = 7
+	},
+/obj/item/ammo/bullets/ak47{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/turf/unsimulated/floor/airless/plating{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/space)
 "qzY" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -80845,6 +80898,18 @@
 /obj/sign_accidents,
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma)
+"uxk" = (
+/obj/critter/zombie/meatmonaut{
+	desc = "What the fuck is this thing. How the fuck did it get in there anyways.";
+	icon = 'icons/misc/soviet.dmi';
+	icon_state = "????";
+	name = "????"
+	},
+/turf/unsimulated/floor/airless/plating{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/space)
 "uxv" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-39"
@@ -80859,7 +80924,7 @@
 /area/centcom/offices/sovexe)
 "uAx" = (
 /obj/critter/zombie/meatmonaut{
-	desc = "What you think is the nametag reads ????????. Is it crying?";
+	desc = "You think is the nametag reads ????????. Is it crying?";
 	dir = 4;
 	icon = 'icons/misc/soviet.dmi';
 	icon_state = "????";
@@ -81293,9 +81358,6 @@
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/centcom/offices/marknstein)
 "vGl" = (
-/obj/railing{
-	dir = 4
-	},
 /obj/item/paper/empty_bloody{
 	desc = "The faded blood obscures some of the text.";
 	info = "<i>Они налились... выше, повторно для... около... мёртвый. Что... экипаж... забаррикадирован в... командном центре. Корнилов кричит присоединиться, чтобы... его, к джо... Я видел, как он умер в... перевернутый... ночью... Читая это, знайте, что мы боролись за конец. Я собираюсь пойти по легкому пути... превращение в один из них. До свидания.</i> Some of this jus too covered with blood to decipher";
@@ -81308,6 +81370,9 @@
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body9";
 	name = "corpse"
+	},
+/obj/railing{
+	dir = 4
 	},
 /turf/unsimulated/floor/airless/plating{
 	icon = 'icons/turf/shuttle.dmi';
@@ -167245,7 +167310,7 @@ jhk
 cgP
 cgP
 dEJ
-hVQ
+pdY
 cki
 cki
 tZB
@@ -167547,11 +167612,11 @@ jhk
 cgP
 chk
 dHc
-dEJ
+qze
 rQF
 cki
 cki
-dLP
+jKE
 cki
 sqw
 qFF
@@ -168154,7 +168219,7 @@ dHu
 pHZ
 dEJ
 cki
-dLP
+jKE
 dEJ
 cki
 sqw
@@ -170869,7 +170934,7 @@ aaa
 cnw
 cgP
 cgP
-dLP
+uxk
 cki
 cki
 cki
@@ -171174,7 +171239,7 @@ cgP
 cki
 iVZ
 cki
-dLP
+uxk
 iVZ
 cki
 cgP
