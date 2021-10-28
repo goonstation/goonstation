@@ -119,6 +119,7 @@
 #include "pathfinding.dm"
 #include "plane.dm"
 #include "rust_g.dm"
+#include "record_db.dm"
 #include "text.dm"
 #include "tgs.dm"
 #include "tgui.dm"

@@ -683,6 +683,12 @@
 	desc = "Dainty and formal. This pair is white."
 	step_sound = "footstep"
 
+/obj/item/clothing/shoes/witchboots
+	name = "Witch Boots"
+	icon_state = "witchboots"
+	desc = "The curved front of these boots is reminiscent of a crescent moon, how magical."
+	step_sound = "footstep"
+
 //Western Boots
 
 /obj/item/clothing/shoes/westboot

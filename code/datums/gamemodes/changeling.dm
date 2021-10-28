@@ -9,6 +9,12 @@
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
+#ifdef RP_MODE
+	var/const/pop_divisor = 20
+#else
+	var/const/pop_divisor = 15
+#endif
+
 /datum/game_mode/changeling/announce()
 	boutput(world, "<B>The current game mode is - Changeling!</B>")
 	boutput(world, "<B>There is a <span class='alert'>CHANGELING</span> on the station. Be on your guard! Trust no one!</B>")
@@ -23,7 +29,7 @@
 			num_players++
 
 	var/i = rand(5)
-	var/num_changelings = max(1, min(round((num_players + i) / 15), changelings_possible))
+	var/num_changelings = max(1, min(round((num_players + i) / pop_divisor), changelings_possible))
 
 	var/list/possible_changelings = get_possible_enemies(ROLE_CHANGELING, num_changelings)
 

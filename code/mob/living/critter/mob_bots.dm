@@ -47,6 +47,9 @@ ABSTRACT_TYPE(/mob/living/critter/bot)
 		HH.can_hold_items = 1
 		HH.can_attack = 1
 		HH.can_range_attack = 0
+		if(src.emagged == TRUE)
+			var/datum/limb/small_critter/L = HH.limb
+			L.max_wclass = W_CLASS_SMALL
 
 	setup_healths()
 		add_hh_robot(brute_hp, 1)

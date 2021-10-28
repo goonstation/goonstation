@@ -32,7 +32,7 @@ SYNDICATE DRONE FACTORY AREAS
 	sound_group = "biodome"
 
 /area/crater/biodome
-	name = "Botanical Research Biodome"
+	name = "Botanical Research Outpost Gamma"
 	icon_state = "green"
 	force_fullbright = 0
 	sound_environment = 1
@@ -92,7 +92,97 @@ SYNDICATE DRONE FACTORY AREAS
 	icon_state = "cave-dark"
 	fullbright = 0
 
-////////////////////// cogwerks - crypt place
+
+////////////////// BIODOME EXPANSION PROJECT AREAS ///////////////////
+/area/swampzone
+	name = "X-05 Fatuus"
+	icon_state = "green"
+	force_fullbright = 0
+	filler_turf = "/turf/unsimulated/floor/auto/dirt"
+	ambient_light = rgb(200, 150, 150)
+	sound_environment = 15
+	skip_sims = 1
+	sims_score = 0
+	sound_group = "swamp_outdoors"
+
+	heights
+		name = "X-05 Heights"
+		icon_state = "blue"
+		ambient_light = rgb(180, 150, 150)
+		sound_group = "swamp_heights"
+		sound_loop = 'sound/ambience/nature/Rain_Heavy.ogg'
+
+		New()
+			..()
+
+			overlays += image(icon = 'icons/turf/areas.dmi', icon_state = "rain_overlay", layer = EFFECTS_LAYER_BASE)
+			SPAWN_DBG(1 SECOND)
+				process()
+
+		proc/process()
+			while(current_state < GAME_STATE_FINISHED)
+				sleep(10 SECONDS)
+				if (current_state == GAME_STATE_PLAYING)
+					if(!played_fx_2 && prob(10))
+						sound_fx_2 = pick('sound/ambience/nature/Rain_ThunderDistant.ogg','sound/ambience/nature/Wind_Cold1.ogg','sound/ambience/nature/Wind_Cold2.ogg','sound/ambience/nature/Wind_Cold3.ogg','sound/ambience/nature/Lavamoon_RocksBreaking1.ogg', 'sound/voice/Zgroan1.ogg', 'sound/voice/Zgroan2.ogg', 'sound/voice/Zgroan3.ogg', 'sound/voice/Zgroan4.ogg', 'sound/voice/animal/werewolf_howl.ogg')
+						for(var/mob/M in src)
+							if (M.client)
+								M.client.playAmbience(src, AMBIENCE_FX_2, 50)
+
+	ground
+		name = "X-05 Swamplands"
+		sound_group = "swamp_surface"
+		sound_loop = 'sound/ambience/nature/Rain_Heavy.ogg'
+
+		New()
+			..()
+
+			overlays += image(icon = 'icons/turf/areas.dmi', icon_state = "rain_overlay", layer = EFFECTS_LAYER_BASE)
+			SPAWN_DBG(1 SECOND)
+				process()
+
+		proc/process()
+			while(current_state < GAME_STATE_FINISHED)
+				sleep(10 SECONDS)
+				if (current_state == GAME_STATE_PLAYING)
+					if(!played_fx_2 && prob(10))
+						sound_fx_2 = pick('sound/ambience/nature/Rain_ThunderDistant.ogg','sound/ambience/nature/Wind_Cold1.ogg','sound/ambience/nature/Wind_Cold2.ogg','sound/ambience/nature/Wind_Cold3.ogg','sound/ambience/nature/Lavamoon_RocksBreaking1.ogg', 'sound/voice/Zgroan1.ogg', 'sound/voice/Zgroan2.ogg', 'sound/voice/Zgroan3.ogg', 'sound/voice/Zgroan4.ogg', 'sound/voice/animal/werewolf_howl.ogg')
+						for(var/mob/M in src)
+							if (M.client)
+								M.client.playAmbience(src, AMBIENCE_FX_2, 50)
+
+
+	deeps
+		name = "X-05 Deep Swamp"
+		icon_state = "green"
+		ambient_light = rgb(60, 180, 75)
+		sound_group = "swamp_deeps"
+		sound_environment = 22
+		sound_loop = 'sound/ambience/nature/Cave_Rumbling.ogg'
+
+
+		New()
+			..()
+
+			overlays += image(icon = 'icons/turf/areas.dmi', icon_state = "swampwater_overlay", layer = EFFECTS_LAYER_BASE)
+			SPAWN_DBG(1 SECOND)
+				process()
+
+		proc/process()
+			while(current_state < GAME_STATE_FINISHED)
+				sleep(10 SECONDS)
+				if (current_state == GAME_STATE_PLAYING)
+					if(!played_fx_2 && prob(10))
+						sound_fx_2 = pick('sound/ambience/nature/Lavamoon_DeepBubble1.ogg','sound/ambience/nature/Lavamoon_DeepBubble2.ogg', 'sound/ambience/nature/Lavamoon_RocksBreaking1.ogg', 'sound/voice/Zgroan1.ogg', 'sound/voice/Zgroan2.ogg', 'sound/voice/Zgroan3.ogg', 'sound/voice/Zgroan4.ogg')
+						for(var/mob/M in src)
+							if (M.client)
+								M.client.playAmbience(src, AMBIENCE_FX_2, 50)
+
+
+
+
+
+////////////////////// crypt place
 
 /area/crypt
 	sound_group = "crypt"
@@ -185,7 +275,7 @@ SYNDICATE DRONE FACTORY AREAS
 	sims_score = 0
 	sound_group = "catacombs"
 
-////// cogwerks - lava turf
+////// lava turf
 
 /turf/unsimulated/floor/lava
 	name = "Lava"
@@ -1216,3 +1306,6 @@ var/satellite_crash_event_status = -1
 /area/drone/assembly
 	name = "Assembly Floor"
 	icon_state = "storage"
+
+
+

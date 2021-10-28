@@ -103,7 +103,7 @@ var/global/datum/phrase_log/phrase_log = new
 			@"\bl?ooc\b",
 			@"\b(:?fail\s?)?rp\b"
 		)
-		sussy_words = regex(jointext(ic_sussy_word_list, "|"), "i")
+		ic_sussy_words = regex(jointext(ic_sussy_word_list, "|"), "i")
 
 	proc/load()
 		if(fexists(src.uncool_words_filename))
@@ -139,7 +139,7 @@ var/global/datum/phrase_log/phrase_log = new
 		if(is_sussy(phrase))
 			SEND_GLOBAL_SIGNAL(COMSIG_SUSSY_PHRASE, "<span class=\"admin\">Sussy word - [key_name(usr)] [category]: \"[phrase]\"</span>")
 		#ifdef RP_MODE
-		if(category != "ooc" && category != "looc" && ic_sussy(phrase))
+		if(category != "ooc" && category != "looc" && is_ic_sussy(phrase))
 			SEND_GLOBAL_SIGNAL(COMSIG_SUSSY_PHRASE, "<span class=\"admin\">Low RP word - [key_name(usr)] [category]: \"[phrase]\"</span>")
 		#endif
 		if(is_uncool(phrase))
@@ -223,8 +223,8 @@ var/global/datum/phrase_log/phrase_log = new
 	proc/random_station_name_replacement_proc(old_name)
 		if(!length(data_core.general))
 			return old_name
-		var/datum/data/record/record = pick(data_core.general)
-		return record.fields["name"]
+		var/datum/db_record/record = pick(data_core.general)
+		return record["name"]
 
 	proc/random_custom_ai_law(max_tries=20, replace_names=FALSE)
 		while(max_tries-- > 0)

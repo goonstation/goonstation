@@ -1061,7 +1061,7 @@ datum
 
 			var/list/covered = covered_turf()
 
-			var/turf/T = covered.len ? covered[1] : 0
+			var/turf/T = length(covered) ? covered[1] : 0
 			var/mob/our_user = null
 			var/our_fingerprints = null
 

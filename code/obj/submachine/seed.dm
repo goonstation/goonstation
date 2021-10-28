@@ -249,6 +249,7 @@
 				if(2) src.mode = "extraction"
 				if(3) src.mode = "seedlist"
 				else src.mode = "overview"
+			playsound(src.loc, "sound/machines/click.ogg", 50, 1)
 			src.updateUsrDialog()
 
 		else if(href_list["ejectbeaker"])
@@ -305,6 +306,7 @@
 
 		else if(href_list["analyze"])
 			var/obj/item/I = locate(href_list["analyze"]) in src
+			playsound(src.loc, "sound/machines/click.ogg", 50, 1)
 
 			if (istype(I,/obj/item/seed/))
 				var/obj/item/seed/S = I
@@ -387,6 +389,7 @@
 			src.updateUsrDialog()
 
 		else if(href_list["splice_select"])
+			playsound(src, "sound/machines/keypress.ogg", 50, 1)
 			var/obj/item/I = locate(href_list["splice_select"]) in src
 			if (!istype(I))
 				return
@@ -401,6 +404,7 @@
 			src.updateUsrDialog()
 
 		else if(href_list["splice_cancel"])
+			playsound(src, "sound/machines/keypress.ogg", 50, 1)
 			src.splicing1 = null
 			src.splicing2 = null
 			src.mode = "seedlist"
@@ -432,10 +436,18 @@
 						if (!R || !S)
 							return
 						switch(S.HYPinfusionS(R.id,src))
-							if (1) boutput(usr, "<span class='alert'>ERROR: Seed has been destroyed.</span>")
-							if (2) boutput(usr, "<span class='alert'>ERROR: Reagent lost.</span>")
-							if (3) boutput(usr, "<span class='alert'>ERROR: Unknown error. Please try again.</span>")
-							else boutput(usr, "<span class='notice'>Infusion of [R.name] successful.</span>")
+							if (1)
+								playsound(src, "sound/machines/seed_destroyed.ogg", 50, 1)
+								boutput(usr, "<span class='alert'>ERROR: Seed has been destroyed.</span>")
+							if (2)
+								playsound(src, "sound/machines/buzz-sigh.ogg", 50, 1)
+								boutput(usr, "<span class='alert'>ERROR: Reagent lost.</span>")
+							if (3)
+								playsound(src, "sound/machines/buzz-sigh.ogg", 50, 1)
+								boutput(usr, "<span class='alert'>ERROR: Unknown error. Please try again.</span>")
+							else
+								playsound(src, "sound/effects/zzzt.ogg", 50, 1)
+								boutput(usr, "<span class='notice'>Infusion of [R.name] successful.</span>")
 						src.inserted.reagents.remove_reagent(R.id,10)
 						dialogue_open = 0
 
@@ -601,6 +613,7 @@
 				DNA.endurance = SpliceMK2(P1DNA.alleles[7],P2DNA.alleles[7],P1DNA.vars["endurance"],P2DNA.vars["endurance"])
 
 				boutput(usr, "<span class='notice'>Splice successful.</span>")
+				playsound(src, "sound/machines/ping.ogg", 50, 1)
 				//0 xp for a 100% splice, 4 xp for a 10% splice
 				JOB_XP(usr, "Botanist", clamp(round((100 - splice_chance) / 20), 0, 4))
 				if (!src.seedoutput) src.seeds.Add(S)
@@ -609,6 +622,7 @@
 			else
 				// It fucked up - we don't need to do anything else other than tell the user
 				boutput(usr, "<span class='alert'>Splice failed.</span>")
+				playsound(src, "sound/machines/seed_destroyed.ogg", 50, 1)
 
 			// Now get rid of the old seeds and go back to square one
 			src.seeds.Remove(seed1)

@@ -5205,7 +5205,7 @@
 	},
 /area/station/science/research_director)
 "auu" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
 	},
 /obj/disposalpipe/segment/morgue,
@@ -31269,9 +31269,6 @@
 	},
 /obj/cable{
 	icon_state = "2-4"
-	},
-/obj/machinery/door/airlock/pyro/glass/med{
-	name = "Medbay"
 	},
 /obj/machinery/door/airlock/pyro/glass/med{
 	name = "Medbay"

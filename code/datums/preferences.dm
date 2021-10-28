@@ -972,6 +972,12 @@ datum/preferences
 
 		src.preview?.update_appearance(src.AH, mutantRace, src.spessman_direction, name=src.real_name)
 
+		if (traitPreferences.traits_selected.Find("bald") && mutantRace)
+			var/mob/living/carbon/human/H = src.preview.preview_mob
+			var/ourWig = H.head
+			H.u_equip(ourWig)
+			qdel(ourWig)
+			H.equip_if_possible(H.create_wig(), H.slot_head)
 
 	proc/ShowChoices(mob/user)
 		src.ui_interact(user)
