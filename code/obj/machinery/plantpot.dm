@@ -1815,7 +1815,6 @@ proc/HYPnewmutationcheck(var/datum/plant/P,var/datum/plantgenes/DNA,var/obj/mach
 						playsound(PP, MUT.mutation_sfx, 20, 1)
 						PP.update_icon()
 						PP.update_name()
-						PP.visible_message("[PP] mutates!") // heh
 						animate_wiggle_then_reset(PP, 1, 2)
 					else if(S)
 						// If it is not in a pot, it is most likely in PlantMaster Mk3
