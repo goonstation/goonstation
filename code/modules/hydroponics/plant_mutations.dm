@@ -27,6 +27,8 @@
 
 	var/lasterr = 0
 
+	var/mutation_sfx = "sound/effects/plant_mutation.ogg"
+
 	proc/HYPharvested_proc_M(var/obj/machinery/plantpot/POT, var/mob/user)
 		lasterr = 0
 		if (!POT || !user) return 301
@@ -253,6 +255,7 @@
 	dont_rename_crop = true
 	crop = /obj/item/clothing/head/butt/synth
 	special_proc_override = 1
+	mutation_sfx = "sound/voice/farts/fart6.ogg"
 
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
 		..()
@@ -277,6 +280,7 @@
 	            /obj/item/parts/human_parts/arm/left/synth/bloom, /obj/item/parts/human_parts/arm/right/synth/bloom,
 	            /obj/item/parts/human_parts/leg/left/synth/bloom, /obj/item/parts/human_parts/leg/right/synth/bloom)
 	chance = 15
+	mutation_sfx = "sound/effects/Slimy_Splat2.ogg"
 
 /datum/plantmutation/synthmeat/heart
 	name = "Synthheart"
@@ -284,6 +288,7 @@
 	iconmod = "SynthHearts"
 	crop = /obj/item/organ/heart/synth
 	chance = 10
+	mutation_sfx = "sound/effects/Slimy_Splat2.ogg"
 
 /datum/plantmutation/synthmeat/eye
 	name = "Syntheye"
@@ -291,6 +296,7 @@
 	iconmod = "SynthEyes"
 	crop = /obj/item/organ/eye/synth
 	chance = 8
+	mutation_sfx = "sound/effects/Slimy_Splat2.ogg"
 
 /datum/plantmutation/synthmeat/brain
 	name = "Synthbrain"
@@ -298,12 +304,14 @@
 	iconmod = "SynthBrains"
 	crop = /obj/item/organ/brain/synth
 	chance = 4
+	mutation_sfx = "sound/effects/Slimy_Splat2.ogg"
 
 /datum/plantmutation/synthmeat/butt/buttbot
 	name = "Synthbuttbot"
 	dont_rename_crop = true
 	iconmod = "SynthButts"
 	crop = /obj/machinery/bot/buttbot
+	mutation_sfx = "sound/voice/virtual_gassy.ogg"
 
 /datum/plantmutation/synthmeat/lung
 	name = "Synthlung"
@@ -311,6 +319,7 @@
 	iconmod = "SynthLungs"
 	crop = list(/obj/item/organ/lung/synth/left, /obj/item/organ/lung/synth/right)
 	chance = 6
+	mutation_sfx = "sound/effects/Slimy_Splat2.ogg"
 
 /datum/plantmutation/synthmeat/appendix
 	name = "Synthappendix"
@@ -318,6 +327,7 @@
 	iconmod = "SynthAppendixes"
 	crop = /obj/item/organ/appendix/synth
 	chance = 6
+	mutation_sfx = "sound/effects/Slimy_Splat2.ogg"
 
 /datum/plantmutation/synthmeat/pancreas
 	name = "Synthpancreas"
@@ -325,6 +335,7 @@
 	iconmod = "SynthPancreata"
 	crop = /obj/item/organ/pancreas/synth
 	chance = 4
+	mutation_sfx = "sound/effects/Slimy_Splat2.ogg"
 
 /datum/plantmutation/synthmeat/liver
 	name = "Synthliver"
@@ -332,6 +343,7 @@
 	iconmod = "SynthLivers"
 	crop = /obj/item/organ/liver/synth
 	chance = 6
+	mutation_sfx = "sound/effects/Slimy_Splat2.ogg"
 
 /datum/plantmutation/synthmeat/kidney
 	name = "Synthkidney"
@@ -339,6 +351,7 @@
 	iconmod = "SynthKidneys"
 	crop = list(/obj/item/organ/kidney/synth/left, /obj/item/organ/kidney/synth/right)
 	chance = 7
+	mutation_sfx = "sound/effects/Slimy_Splat2.ogg"
 
 /datum/plantmutation/synthmeat/spleen
 	name = "Synthspleen"
@@ -346,6 +359,7 @@
 	iconmod = "SynthSpleens"
 	crop = /obj/item/organ/spleen/synth
 	chance = 5
+	mutation_sfx = "sound/effects/Slimy_Splat2.ogg"
 
 /datum/plantmutation/synthmeat/stomach
 	name = "Synthstomach"
@@ -353,6 +367,7 @@
 	iconmod = "SynthStomachs"
 	crop = list(/obj/item/organ/stomach/synth, /obj/item/organ/intestines/synth)
 	chance = 5
+	mutation_sfx = "sound/effects/Slimy_Splat2.ogg"
 
 // Soy Mutations
 
@@ -652,6 +667,8 @@
 	iconmod = "TreeDogwood"
 	special_proc_override = 1
 	attacked_proc_override = 1
+	mutation_sfx = "sound/voice/animal/dogbark.ogg"
+
 
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
 		..()

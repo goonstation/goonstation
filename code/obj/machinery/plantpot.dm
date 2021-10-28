@@ -1812,14 +1812,14 @@ proc/HYPnewmutationcheck(var/datum/plant/P,var/datum/plantgenes/DNA,var/obj/mach
 				if(HYPmutationcheck_full(P,DNA,MUT))
 					DNA.mutation = HY_get_mutation_from_path(MUT.type)
 					if(PP)
-						playsound(PP, "sound/effects/plant_mutation.ogg", 20, 1)
+						playsound(PP, MUT.mutation_sfx, 20, 1)
 						PP.update_icon()
 						PP.update_name()
 						PP.visible_message("[PP] mutates!") // heh
-						animate_wiggle_then_reset(PP, 1)
+						animate_wiggle_then_reset(PP, 1, 2)
 					else if(S)
 						// If it is not in a pot, it is most likely in PlantMaster Mk3
-						playsound(S, "sound/effects/plant_mutation.ogg", 30, 1)
+						playsound(S, MUT.mutation_sfx, 30, 1)
 					break
 
 proc/HYPCheckCommut(var/datum/plantgenes/DNA,var/searchtype)
