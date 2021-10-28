@@ -337,7 +337,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 
 	New()
 		..()
-		src.reagents.inert = 1
+		src.reagents.inert = true
 		SPAWN_DBG(0)
 			reagents.add_reagent("sugar",5)
 			if (src.icon_state == "lpop-")

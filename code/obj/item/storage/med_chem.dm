@@ -236,12 +236,6 @@
 	desc = "A box filled with corrective-lens glasses."
 	spawn_contents = list(/obj/item/clothing/glasses/regular = 7)
 
-/obj/item/storage/box/lps_kit
-	name = "Lollipop Synthesizer box"
-	icon_state = "lps"
-	desc = "A box filled with Lollipop Synthesizers."
-	spawn_contents = list(/obj/item/device/lollipopmaker = 4)
-
 /obj/item/storage/box/lglo_kit
 	name = "latex gloves box"
 	icon_state = "latex"
