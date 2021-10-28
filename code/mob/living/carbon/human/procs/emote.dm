@@ -874,6 +874,7 @@
 					if (lowertext(act) == "sigh" && prob(1)) act = "singh" //1% chance to change sigh to singh. a bad joke for drsingh fans.
 					message = "<B>[src]</B> [act]s."
 					maptext_out = "<I>[act]s</I>"
+					bubble = "[act]"
 					// Bunch of overlap with emotes so use the appropriate emote bubble
 					if (act in list("sigh","singh"))
 						bubble = "sigh"
