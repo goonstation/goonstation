@@ -1624,6 +1624,16 @@ datum
 			description = "A hellish cocktail that stinks of rotting garbage."
 			reagent_state = LIQUID
 
+		fooddrink/alcoholic/wellerman
+			name = "Wellerman"
+			id = "wellerman"
+			fluid_r = 121
+			fluid_g = 87
+			fluid_b = 33
+			alch_strength = 0.7
+			description = "A great shanty and a nice themed drink as well!"
+			reagent_state = LIQUID
+
 		fooddrink/alcoholic/kalimoxto
 			name = "Kalimoxto"
 			id = "kalimoxto"
