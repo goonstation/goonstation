@@ -1637,7 +1637,7 @@ datum
 			fluid_g = 87
 			fluid_b = 33
 			alch_strength = 0.7
-			description = "Great Shanty and a nice themed drink as well!"
+			description = "A great shanty and a nice themed drink as well!"
 			reagent_state = LIQUID
 
 		fooddrink/alcoholic/kalimoxto
