@@ -1948,16 +1948,29 @@ datum
 
 
 				else if (method == TOUCH)
-					if(iscarbon(M))
-						if(!M.wear_mask)
-							M.reagents.add_reagent("capsaicin",round(volume_passed/5))
-							if(prob(50))
-								M.emote("scream")
-								boutput(M, "<span class='alert'><b>Your eyes hurt!</b></span>")
-								M.take_eye_damage(1, 1)
-							M.change_eye_blurry(3)
-							M.changeStatus("stunned", 2 SECONDS)
-							M.change_misstep_chance(10)
+					if(ishuman(M))
+						var/mob/living/carbon/human/H = M
+						if((H.wear_mask?.c_flags & COVERSEYES) || (H.head?.c_flags & COVERSEYES))
+							return
+						else H.reagents.add_reagent("capsaicin",round(volume_passed/5))
+						if(prob(50))
+							H.emote("scream")
+							boutput(H, "<span class='alert'><b>Your eyes hurt!</b></span>")
+							H.take_eye_damage(1, 1)
+						H.change_eye_blurry(3)
+						H.changeStatus("stunned", 2 SECONDS)
+						H.change_misstep_chance(10)
+					else if(iscarbon(M))
+						if(M.wear_mask?.c_flags & COVERSEYES)
+							return
+						else M.reagents.add_reagent("capsaicin",round(volume_passed/5))
+						if(prob(50))
+							M.emote("scream")
+							boutput(M, "<span class='alert'><b>Your eyes hurt!</b></span>")
+							M.take_eye_damage(1, 1)
+						M.change_eye_blurry(3)
+						M.changeStatus("stunned", 2 SECONDS)
+						M.change_misstep_chance(10)
 
 
 		fooddrink/el_diablo
