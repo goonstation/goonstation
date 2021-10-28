@@ -392,6 +392,7 @@
 	iconmod = "ContusineShivering"
 	assoc_reagents = list("histamine")
 	chance = 10
+	mutation_sfx = "sound/impact_sounds/Bush_Hit.ogg"
 
 // Nureous Mutations
 
@@ -573,6 +574,7 @@
 	iconmod = "RadweedWhite"
 	special_proc_override = 1
 	assoc_reagents = list("penteticacid")
+	mutation_sfx = "sound/effects/fireworks1.ogg"
 
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
 		..()
@@ -607,6 +609,7 @@
 	name_prefix = "Smoldering "
 	iconmod = "RadweedRed"
 	assoc_reagents = list("infernite")
+	mutation_sfx = "sound/effects/fireworks1.ogg"
 
 // Slurrypod Mutations
 
