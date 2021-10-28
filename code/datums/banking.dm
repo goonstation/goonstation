@@ -160,10 +160,10 @@
 		// if (station_budget < 1) return // we don't have any money so don't bother!
 		// technically this can be 0 now with payday stipends
 
-		for(var/datum/data/record/t in data_core.bank)
-			if(station_budget >= t.fields["wage"])
-				t.fields["current_money"] += t.fields["wage"]
-				station_budget -= t.fields["wage"]
+		for(var/datum/db_record/t as anything in data_core.bank.records)
+			if(station_budget >= t["wage"])
+				t["current_money"] += t["wage"]
+				station_budget -= t["wage"]
 			else
 				command_alert("The station budget appears to have run dry. We regret to inform you that no further wage payments are possible until this situation is rectified.","Payroll Announcement")
 				wagesystem.pay_active = 0
@@ -212,7 +212,7 @@
 	name = "ATM"
 	icon_state = "atm"
 
-	var/datum/data/record/accessed_record = null
+	var/datum/db_record/accessed_record = null
 	var/obj/item/card/id/scan = null
 
 	var/state = STATE_LOGGEDOFF
@@ -232,7 +232,7 @@
 		if(istype(I, /obj/item/spacecash/))
 			if (src.accessed_record)
 				boutput(user, "<span class='notice'>You insert the cash into the ATM.</span>")
-				src.accessed_record.fields["current_money"] += I.amount
+				src.accessed_record["current_money"] += I.amount
 				I.amount = 0
 				qdel(I)
 			else boutput(user, "<span class='alert'>You need to log in before depositing cash!</span>")
@@ -242,7 +242,7 @@
 				boutput(user, "<span class='notice'>You insert the lottery ticket into the ATM.</span>")
 				if(I:winner)
 					boutput(user, "<span class='notice'>Congratulations, this ticket is a winner netting you [I:winner] credits</span>")
-					src.accessed_record.fields["current_money"] += I:winner
+					src.accessed_record["current_money"] += I:winner
 
 					if(wagesystem.lotteryJackpot > I:winner)
 						wagesystem.lotteryJackpot -= I:winner
@@ -269,7 +269,7 @@
 				if(istype(I, /obj/item/spacecash/buttcoin))
 					boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
 				else
-					src.accessed_record.fields["current_money"] += I.amount
+					src.accessed_record["current_money"] += I.amount
 
 				I.amount = 0
 				qdel(I)
@@ -279,7 +279,7 @@
 				boutput(user, "<span class='notice'>You insert the lottery ticket into the ATM.</span>")
 				if(I:winner)
 					boutput(user, "<span class='notice'>Congratulations, this ticket is a winner netting you [I:winner] credits</span>")
-					src.accessed_record.fields["current_money"] += I:winner
+					src.accessed_record["current_money"] += I:winner
 
 					if(wagesystem.lotteryJackpot > I:winner)
 						wagesystem.lotteryJackpot -= I:winner
@@ -323,7 +323,7 @@
 					dat += "<BR><A HREF='?src=\ref[src];operation=logout'>Logout</A>"
 
 					if (src.scan)
-						dat += "<BR><BR>Your balance is: $ [src.accessed_record.fields["current_money"]]."
+						dat += "<BR><BR>Your balance is: $ [src.accessed_record["current_money"]]."
 						dat += "<BR><A HREF='?src=\ref[src];operation=withdrawcash'>Withdraw Cash</A>"
 						dat += "<BR><BR><A HREF='?src=\ref[src];operation=buy'>Buy Lottery Ticket (100 credits)</A>"
 						dat += "<BR>To claim your winnings you'll need to insert your lottery ticket."
@@ -351,12 +351,8 @@
 
 
 	proc/TryToFindRecord()
-		for(var/datum/data/record/B in data_core.bank)
-			if(src.scan && (B.fields["name"] == src.scan.registered) )
-				src.accessed_record = B
-				return 1
-		return 0
-
+		src.accessed_record = data_core.bank.find_record("name", src.scan.registered)
+		return !!src.accessed_record
 
 	Topic(href, href_list)
 		if(..())
@@ -394,17 +390,17 @@
 				if( amount < 1)
 					boutput(usr, "<span class='alert'>Invalid amount!</span>")
 					return
-				if(amount > src.accessed_record.fields["current_money"])
+				if(amount > src.accessed_record["current_money"])
 					boutput(usr, "<span class='alert'>Insufficient funds in account.</span>")
 				else
-					src.accessed_record.fields["current_money"] -= amount
+					src.accessed_record["current_money"] -= amount
 					var/obj/item/spacecash/S = new /obj/item/spacecash
 					S.setup(src.loc, amount)
 					usr.put_in_hand_or_drop(S)
 
 			if("buy")
-				if(accessed_record.fields["current_money"] >= 100)
-					src.accessed_record.fields["current_money"] -= 100
+				if(accessed_record["current_money"] >= 100)
+					src.accessed_record["current_money"] -= 100
 					boutput(usr, "<span class='alert'>Ticket being dispensed. Good luck!</span>")
 
 					new /obj/item/lotteryTicket(src.loc)
@@ -468,7 +464,6 @@
 	var/authenticated = null
 	var/rank = null
 	var/screen = null
-	var/datum/data/record/active1 = null
 	var/a_id = null
 	var/temp = null
 	var/printing = null
@@ -520,8 +515,8 @@
 			if (src.authenticated)
 
 				var/payroll = 0
-				for(var/datum/data/record/R in data_core.bank)
-					payroll += R.fields["wage"]
+				for(var/datum/db_record/R as anything in data_core.bank.records)
+					payroll += R["wage"]
 				var/surplus = round(wagesystem.payroll_stipend - payroll)
 
 				dat += {"
@@ -565,13 +560,13 @@
 				<tbody>
 				"}
 
-				for(var/datum/data/record/R in data_core.bank)
+				for(var/datum/db_record/R as anything in data_core.bank.records)
 					dat += {"
 					<tr>
-						<th class='l'><a href='?src=\ref[src];Fname=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a> [R.fields["name"]]</th>
-						<td><a href='?src=\ref[src];Fjob=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a> [R.fields["job"]]</td>
-						<td class='r'>$[R.fields["wage"]] <a href='?src=\ref[src];Fwage=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a></td>
-						<td style="text-align: right; font-weight: bold;">$[R.fields["current_money"]] <a href='?src=\ref[src];Fmoney=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a></td>
+						<th class='l'><a href='?src=\ref[src];Fname=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a> [R["name"]]</th>
+						<td><a href='?src=\ref[src];Fjob=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a> [R["job"]]</td>
+						<td class='r'>$[R["wage"]] <a href='?src=\ref[src];Fwage=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a></td>
+						<td style="text-align: right; font-weight: bold;">$[R["current_money"]] <a href='?src=\ref[src];Fmoney=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a></td>
 					</tr>
 					"}
 
@@ -587,8 +582,6 @@
 		if(..())
 			return
 		var/usr_is_robot = issilicon(usr) || isAIeye(usr)
-		if (!( data_core.bank.Find(src.active1) ))
-			src.active1 = null
 		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (usr_is_robot))
 			src.add_dialog(usr)
 			if (href_list["temp"])
@@ -607,16 +600,13 @@
 				if (href_list["logout"])
 					src.authenticated = null
 					src.screen = null
-					src.active1 = null
 				else
 					if (href_list["login"])
 						if (usr_is_robot && !isghostdrone(usr))
-							src.active1 = null
 							src.authenticated = 1
 							src.rank = "AI"
 							src.screen = 1
 						if (istype(src.scan, /obj/item/card/id))
-							src.active1 = null
 							if(check_access(src.scan))
 								src.authenticated = src.scan.registered
 								src.rank = src.scan.assignment
@@ -624,26 +614,24 @@
 			if (src.authenticated)
 				if (href_list["list"])
 					src.screen = 2
-					src.active1 = null
 				else if (href_list["main"])
 					src.screen = 1
-					src.active1 = null
 				else if(href_list["Fname"])
-					var/datum/data/record/R = locate(href_list["Fname"])
-					var/t1 = input("Please input name:", "Secure. records", R.fields["name"], null)  as null|text
+					var/datum/db_record/R = locate(href_list["Fname"])
+					var/t1 = input("Please input name:", "Secure. records", R["name"], null)  as null|text
 					t1 = copytext(html_encode(t1), 1, MAX_MESSAGE_LEN)
 					if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_interact_range(src, usr) && (!usr_is_robot)))) return
-					R.fields["name"] = t1
+					R["name"] = t1
 				else if(href_list["Fjob"])
-					var/datum/data/record/R = locate(href_list["Fjob"])
-					var/t1 = input("Please input name:", "Secure. records", R.fields["job"], null)  as null|text
+					var/datum/db_record/R = locate(href_list["Fjob"])
+					var/t1 = input("Please input name:", "Secure. records", R["job"], null)  as null|text
 					t1 = copytext(html_encode(t1), 1, MAX_MESSAGE_LEN)
 					if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_interact_range(src, usr) && (!usr_is_robot)))) return
-					R.fields["job"] = t1
+					R["job"] = t1
 					playsound(src.loc, "keyboard", 50, 1, -15)
 				else if(href_list["Fwage"])
-					var/datum/data/record/R = locate(href_list["Fwage"])
-					var/t1 = input("Please input wage:", "Secure. records", R.fields["wage"], null)  as null|num
+					var/datum/db_record/R = locate(href_list["Fwage"])
+					var/t1 = input("Please input wage:", "Secure. records", R["wage"], null)  as null|num
 					if ((!( src.authenticated ) || usr.stat || usr.restrained() || (!in_interact_range(src, usr) && (!usr_is_robot)))) return
 					if (t1 < 0)
 						t1 = 0
@@ -652,30 +640,30 @@
 					if (t1 > 10000)
 						t1 = 10000
 						boutput(usr, "<span class='alert'>Maximum wage is $10,000.</span>")
-					R.fields["wage"] = t1
+					R["wage"] = t1
 				else if(href_list["Fmoney"])
-					var/datum/data/record/R = locate(href_list["Fmoney"])
+					var/datum/db_record/R = locate(href_list["Fmoney"])
 					var/avail = null
 					var/t2 = input("Withdraw or Deposit?", "Secure Records", null, null) in list("Withdraw", "Deposit")
-					var/t1 = input("How much?", "Secure. records", R.fields["current_money"], null)  as null|num
+					var/t1 = input("How much?", "Secure. records", R["current_money"], null)  as null|num
 					if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_interact_range(src, usr) && (!usr_is_robot)))) return
 					if (t2 == "Withdraw")
-						if (R.fields["name"] in FrozenAccounts)
+						if (R["name"] in FrozenAccounts)
 							boutput(usr, "<span class='alert'>This account cannot currently be liquidated due to active borrows.</span>")
 							return
-						avail = R.fields["current_money"]
+						avail = R["current_money"]
 						if (t1 > avail) t1 = avail
 						if (t1 < 1) return
-						R.fields["current_money"] -= t1
+						R["current_money"] -= t1
 						wagesystem.station_budget += t1
-						boutput(usr, "<span class='notice'>$[t1] added to station budget from [R.fields["name"]]'s account.</span>")
+						boutput(usr, "<span class='notice'>$[t1] added to station budget from [R["name"]]'s account.</span>")
 					else if (t2 == "Deposit")
 						avail = wagesystem.station_budget
 						if (t1 > avail) t1 = avail
 						if (t1 < 1) return
-						R.fields["current_money"] += t1
+						R["current_money"] += t1
 						wagesystem.station_budget -= t1
-						boutput(usr, "<span class='notice'>$[t1] added to [R.fields["name"]]'s account from station budget.</span>")
+						boutput(usr, "<span class='notice'>$[t1] added to [R["name"]]'s account from station budget.</span>")
 					else boutput(usr, "<span class='alert'>Error selecting withdraw/deposit mode.</span>")
 				else if(href_list["payroll"])
 					if(world.time >= src.payroll_rate_limit_time)
@@ -740,7 +728,7 @@
 
 	deconstruct_flags = DECON_MULTITOOL
 
-	var/datum/data/record/accessed_record = null
+	var/datum/db_record/accessed_record = null
 	var/obj/item/card/id/scan = null
 	var/health = 70
 	var/broken = 0
@@ -768,7 +756,7 @@
 				return
 			if (src.accessed_record)
 				boutput(user, "<span class='notice'>You insert the cash into the ATM.</span>")
-				src.accessed_record.fields["current_money"] += I.amount
+				src.accessed_record["current_money"] += I.amount
 				I.amount = 0
 				qdel(I)
 				attack_hand(user)
@@ -779,7 +767,7 @@
 				boutput(user, "<span class='notice'>You insert the lottery ticket into the ATM.</span>")
 				if(I:winner)
 					boutput(user, "<span class='notice'>Congratulations, this ticket is a winner netting you [I:winner] credits</span>")
-					src.accessed_record.fields["current_money"] += I:winner
+					src.accessed_record["current_money"] += I:winner
 
 					if(wagesystem.lotteryJackpot > I:winner)
 						wagesystem.lotteryJackpot -= I:winner
@@ -845,7 +833,7 @@
 					dat += "<BR><A HREF='?src=\ref[src];operation=logout'>Logout</A>"
 
 					if (src.scan)
-						dat += "<BR><BR>Your balance is: $ [src.accessed_record.fields["current_money"]]."
+						dat += "<BR><BR>Your balance is: $ [src.accessed_record["current_money"]]."
 						dat += "<BR><A HREF='?src=\ref[src];operation=withdrawcash'>Withdraw Cash</A>"
 						dat += "<BR><BR><A HREF='?src=\ref[src];operation=buy'>Buy Lottery Ticket (100 credits)</A>"
 						dat += "<BR>To claim your winnings you'll need to insert your lottery ticket."
@@ -876,10 +864,9 @@
 			src.take_damage(70)
 
 	proc/TryToFindRecord()
-		for(var/datum/data/record/B in data_core.bank)
-			if(src.scan && (B.fields["name"] == src.scan.registered) )
-				src.accessed_record = B
-				return 1
+		if(src.scan)
+			src.accessed_record = data_core.bank.find_record("name", src.scan.registered)
+			return !!src.accessed_record
 		return 0
 
 
@@ -919,17 +906,17 @@
 				if( amount < 1)
 					boutput(usr, "<span class='alert'>Invalid amount!</span>")
 					return
-				if(amount > src.accessed_record.fields["current_money"])
+				if(amount > src.accessed_record["current_money"])
 					boutput(usr, "<span class='alert'>Insufficient funds in account.</span>")
 				else
-					src.accessed_record.fields["current_money"] -= amount
+					src.accessed_record["current_money"] -= amount
 					var/obj/item/spacecash/S = new /obj/item/spacecash
 					S.setup(src.loc, amount)
 					usr.put_in_hand_or_drop(S)
 
 			if("buy")
-				if(accessed_record.fields["current_money"] >= 100)
-					src.accessed_record.fields["current_money"] -= 100
+				if(accessed_record["current_money"] >= 100)
+					src.accessed_record["current_money"] -= 100
 					boutput(usr, "<span class='alert'>Ticket being dispensed. Good luck!</span>")
 
 					new /obj/item/lotteryTicket(src.loc)
@@ -1050,8 +1037,6 @@
 		STOP_TRACKING
 
 proc/FindBankAccountByName(var/nametosearch)
+	RETURN_TYPE(/datum/db_record)
 	if (!nametosearch) return
-	for(var/datum/data/record/B in data_core.bank)
-		if(B.fields["name"] == nametosearch)
-			return B
-	return
+	return data_core.bank.find_record("name", nametosearch)

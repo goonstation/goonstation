@@ -274,7 +274,7 @@
 
 	proc/sell_crate(obj/storage/crate/sell_crate, var/list/commodities_list)
 		var/obj/item/card/id/scan = sell_crate.scan
-		var/datum/data/record/account = sell_crate.account
+		var/datum/db_record/account = sell_crate.account
 		var/duckets
 
 		if(length(active_orders) && !commodities_list)
@@ -297,7 +297,7 @@
 		var/datum/signal/pdaSignal = get_free_signal()
 		if(scan && account)
 			wagesystem.shipping_budget += duckets / 2
-			account.fields["current_money"] += duckets / 2
+			account["current_money"] += duckets / 2
 			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: [duckets] credits earned from last outgoing shipment. Splitting half of profits with [scan.registered].")
 		else
 			wagesystem.shipping_budget += duckets
@@ -400,8 +400,8 @@
 
 	var/payroll = 0
 	var/totalfunds = wagesystem.station_budget + wagesystem.research_budget + wagesystem.shipping_budget
-	for(var/datum/data/record/R in data_core.bank)
-		payroll += R.fields["wage"]
+	for(var/datum/db_record/R as anything in data_core.bank.records)
+		payroll += R["wage"]
 
 	var/dat = {"<B>Budget Variables:</B>
 	<BR><BR><u><b>Total Station Funds:</b> $[num2text(totalfunds,50)]</u>

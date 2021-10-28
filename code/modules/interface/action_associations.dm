@@ -37,6 +37,7 @@ var/list/action_names = list(
 
 	"say" = "Say",
 	"say_radio" = "Say Radio",
+	"say_main_radio" = "Say Main Radio",
 	"dsay" = "Dead Say",
 	"asay" = "Admin Say",
 	"whisper" = "Whisper",
@@ -91,8 +92,9 @@ var/list/action_names = list(
 
 ///Used for literal input of actions
 var/list/action_verbs = list(
-	"say" = "say",
+	"say" = "start-say",	// lord forgive me for i have sinned
 	"say_radio" = "say_radio",
+	"say_main_radio" = "say_main_radio",
 	"emote" = "say *customv",
 	"salute" = "me_hotkey salute",
 	"burp" = "me_hotkey burp",

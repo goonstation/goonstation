@@ -12,9 +12,9 @@
 /obj/machinery/computer/stockexchange/proc/balance()
 	if (!logged_in)
 		return 0
-	var/datum/data/record/B = FindBankAccountByName(logged_in)
+	var/datum/db_record/B = FindBankAccountByName(logged_in)
 	if (B)
-		return B.fields["current_money"]
+		return B["current_money"]
 	return "--- account not found ---"
 
 /obj/machinery/computer/stockexchange/attack_hand(mob/user)
@@ -148,7 +148,7 @@
 		if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
 		var/obj/item/card/id/ID = I
 		boutput(user, "<span class='notice'>You swipe the ID card.</span>")
-		var/datum/data/record/account = null
+		var/datum/db_record/account = null
 		account = FindBankAccountByName(ID.registered)
 		if(account)
 			var/enterpin = input(user, "Please enter your PIN number.", "Order Console", 0) as null|num
