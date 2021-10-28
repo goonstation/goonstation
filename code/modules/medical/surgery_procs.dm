@@ -217,6 +217,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				I.owner_organ = patient.organHolder.brain
 				I.on_insertion(patient.organHolder.brain, patient)
 				surgeon.u_equip(I)
+				patient.update_body()
 			else
 				surgeon.show_text("<span class='alert'>[patient] already has an augment in their head.</span>")
 			return 1

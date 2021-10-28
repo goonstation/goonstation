@@ -161,8 +161,10 @@
 				var/mob/living/silicon/ghostdrone/G = user
 				return !G.active_tool
 			. = TRUE
-		else if(istype(H) && H.has_augmentation("Head", null, /obj/item/augmentation/head/wireless_interact))
-			. = TRUE
+		else if(istype(H))
+			var/list/obj/item/augmentation/A = H.has_augmentation("Head", "brain")
+			if(locate(/obj/item/augmentation/head/wireless_interact) in A)
+				. = TRUE
 
 	proc/client_login(var/mob/user)
 		return

@@ -144,7 +144,7 @@
 		//boutput(usr, "<span class='alert'>You are unable to do that currently!</span>")
 		return 1
 	if(!hasvar(src,"portable") || !src:portable)
-		if ((!in_interact_range(src, usr) || !istype(src.loc, /turf)) && !issilicon(usr) && !isAI(usr) && !H?.has_augmentation("Head", null, /obj/item/augmentation/head/wireless_interact))
+		if ((!in_interact_range(src, usr) || !istype(src.loc, /turf)) && !issilicon(usr) && !isAI(usr) && !locate(/obj/item/augmentation/head/wireless_interact) in H?.has_augmentation("Head"))
 			if (!usr)
 				message_coders("[type]/Topic(): no usr in Topic - [name] at [showCoords(x, y, z)].")
 			else if ((x in list(usr.x - 1, usr.x, usr.x + 1)) && (y in list(usr.y - 1, usr.y, usr.y + 1)) && z == usr.z && isturf(loc))
@@ -152,7 +152,7 @@
 			//boutput(usr, "<span class='alert'>You must be near the machine to do this!</span>")
 			return 1
 	else
-		if ((!in_interact_range(src.loc, usr) || !istype(src.loc.loc, /turf)) && !issilicon(usr) && !isAI(usr) && !H?.has_augmentation("Head", null, /obj/item/augmentation/head/wireless_interact))
+		if ((!in_interact_range(src.loc, usr) || !istype(src.loc.loc, /turf)) && !issilicon(usr) && !isAI(usr) && !locate(/obj/item/augmentation/head/wireless_interact) in H?.has_augmentation("Head"))
 			//boutput(usr, "<span class='alert'>You must be near the machine to do this!</span>")
 			return 1
 	src.add_fingerprint(usr)

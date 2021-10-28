@@ -27,7 +27,7 @@ ABSTRACT_TYPE(/obj/item/augmentation)
 			src.breakme()
 			owner?.contract_disease(failure_disease,null,null,1)
 		health_update_queue |= owner
-		return 1
+		return TRUE
 
 	///Handling .broken and abilities when the aug breaks
 	proc/breakme()
@@ -57,8 +57,8 @@ ABSTRACT_TYPE(/obj/item/augmentation)
 	///Standard life loop proc
 	proc/on_life(var/mult = 1)
 		if (owner && (src.broken || (src.brute_dam + src.burn_dam + src.tox_dam) > max_aug_health))
-			return 0
-		return 1
+			return FALSE
+		return TRUE
 
 	///Want it to only accept one kind of organ / only do cyberorgans / only fully healed organs? Put it here (in the child)
 	proc/organ_is_valid(var/obj/item/organ/chosen_organ)
@@ -81,7 +81,7 @@ ABSTRACT_TYPE(/obj/item/augmentation)
 		O.installed_aug = null
 		owner_organ = null
 
-		if (islist(src.augmentation_abilities) && length(src.augmentation_abilities))// && src.owner.abilityHolder)
+		if (islist(src.augmentation_abilities) && length(src.augmentation_abilities))
 			var/datum/abilityHolder/aholder
 			if (src.owner && src.owner.abilityHolder)
 				aholder = src.owner.abilityHolder
@@ -114,8 +114,8 @@ ABSTRACT_TYPE(/obj/item/augmentation)
 	///What should happen every life cycle while an aug is broken
 	proc/on_broken(var/mult = 1)
 		if (broken)
-			return 1
-		return 0
+			return TRUE
+		return FALSE
 
 	disposing()
 		src.owner = null
@@ -132,19 +132,25 @@ ABSTRACT_TYPE(/obj/item/augmentation/head)
 	icon_state = "augmentation_wire"
 	desc = "An augmentation that allows for ranged interaction with various electronic devices."
 
-	proc/ranged_click(atom/target, params, location, control)
+	proc/ranged_click(mob/user, atom/target, location, control)
 		var/mob/M = src.owner
-		var/inrange = in_interact_range(target, M)
-		var/obj/item/equipped = M.equipped()
 		if(src.hasStatus("flashed"))
 			return
-		if (M.client.check_any_key(KEY_EXAMINE | KEY_POINT) || (equipped && (inrange || (equipped.flags & EXTRADELAY))) || ishelpermouse(target)) // slightly hacky, oh well, tries to check whether we want to click normally or use attack_ai
+		if (M.client.check_any_key(KEY_EXAMINE | KEY_POINT) || ishelpermouse(target)) // slightly hacky, oh well, tries to check whether we want to click normally or use attack_ai
 			return
 		else
 			if (get_dist(M, target) > 0)
 				set_dir(get_dir(M, target))
-
-			target.attack_ai(M, params, location, control)
+			var/turf/target_turf = get_turf(target)
+			var/obj/overlay/energy = new/obj/overlay(target_turf)
+			energy.icon = 'icons/effects/effects.dmi'
+			energy.icon_state = "energytwirlin_fast"
+			energy.name = "electronic energy pulse"
+			energy.anchored = 1
+			SPAWN_DBG(57 CENTI SECONDS)
+				if (energy)
+					qdel(energy)
+			target.attack_ai(M)
 
 	proc/flash_check()
 		src.setStatus("flashed", duration = 15 SECONDS)
@@ -293,27 +299,54 @@ Set `target_zone` to either "Chest" or "Head" to only scan a certain zone. Defau
 Set `specific_organ` to the type of the organ that you want in the list. Defaults to all organs.
 Set `specific_augment` to the type of augment you're looking for, and it will only return that. Defaults to all augments.
 */
-/mob/living/carbon/human/proc/has_augmentation(var/target_zone = "All", var/obj/item/organ/specific_organ = null, var/obj/item/augmentation/specific_augment = null)
+/mob/living/carbon/human/proc/has_augmentation(var/target_zone = "All", var/obj/item/organ/specific_organ = null)
 	var/list/aug_list = list()
+	var/list/organs = list()
 	if(target_zone == "All" && ishuman(src))
-		for(var/obj/item/organ/organ in src.organs)
-			if(!isnull(organ) && organ.augmentation_support && organ.installed_aug)
-				if(!isnull(specific_organ) && istype(organ, specific_organ) && !isnull(specific_augment) && organ.installed_aug && istype(specific_augment, organ.installed_aug))
-					aug_list += organ
+		organs = list("liver", "left_kidney", "right_kidney", "stomach", "intestines","spleen", "left_lung", "right_lung","appendix", "pancreas", "heart", "brain", "left_eye", "right_eye", "tail")
+		if(specific_organ)
+			for (var/organ in organs)
+				if((organ == specific_organ) && islist(src?.organHolder?.organ_list))
+					var/obj/item/organ/O = src.organHolder.organ_list[organ]
+					if(O.augmentation_support && O.installed_aug)
+						aug_list += O.installed_aug
+		else
+			for (var/organ in organs)
+				if(islist(src?.organHolder?.organ_list))
+					var/obj/item/organ/O = src.organHolder.organ_list[organ]
+					if(O.augmentation_support && O.installed_aug)
+						aug_list += O.installed_aug
 
 	else if(target_zone == "Chest" && ishuman(src))
-		for(var/obj/item/organ/organ in src.organs)
-			if(!isnull(organ) && organ.augmentation_support && organ.installed_aug)
-				if(!istype(organ, /obj/item/organ/brain) && !istype(organ, /obj/item/organ/eye))
-					if(!isnull(specific_organ) && istype(organ, specific_organ) && !isnull(specific_augment) && organ.installed_aug && istype(specific_augment, organ.installed_aug))
-						aug_list += organ
+		organs = list("liver", "left_kidney", "right_kidney", "stomach", "intestines","spleen", "left_lung", "right_lung","appendix", "pancreas", "heart", "tail")
+		if(specific_organ)
+			for (var/organ in organs)
+				if((organ == specific_organ) && islist(src?.organHolder?.organ_list))
+					var/obj/item/organ/O = src.organHolder.organ_list[organ]
+					if(O.augmentation_support && O.installed_aug)
+						aug_list += O.installed_aug
+		else
+			for (var/organ in organs)
+				if(islist(src?.organHolder?.organ_list))
+					var/obj/item/organ/O = src.organHolder.organ_list[organ]
+					if(O.augmentation_support && O.installed_aug)
+						aug_list += O.installed_aug
 
 	else if(target_zone == "Head" && ishuman(src))
-		for(var/obj/item/organ/organ in src.organs)
-			if(!isnull(organ) && organ.augmentation_support && organ.installed_aug)
-				if(istype(organ, /obj/item/organ/brain) || istype(organ, /obj/item/organ/eye))
-					if(!isnull(specific_organ) && istype(organ, specific_organ) && !isnull(specific_augment) && organ.installed_aug && istype(specific_augment, organ.installed_aug))
-						aug_list += organ
+		organs = list("left_eye", "right_eye", "brain")
+		if(specific_organ)
+			for (var/organ in organs)
+				if((organ == specific_organ) && islist(src?.organHolder?.organ_list))
+					var/obj/item/organ/O = src.organHolder.organ_list[organ]
+					if(O.augmentation_support && O.installed_aug)
+						aug_list += O.installed_aug
+		else
+			for (var/organ in organs)
+				if(islist(src?.organHolder?.organ_list))
+					var/obj/item/organ/O = src.organHolder.organ_list[organ]
+					if(O.augmentation_support && O.installed_aug)
+						aug_list += O.installed_aug
+
 
 	if(!length(aug_list))
 		return FALSE

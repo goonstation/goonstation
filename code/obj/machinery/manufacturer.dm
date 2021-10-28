@@ -565,7 +565,7 @@
 				if (src.manuf_zap(usr, 10))
 					return
 
-		if (usr.contents.Find(src) || ((get_dist(src, usr) <= 1 || isAI(usr) || H?.has_augmentation("Head", null, /obj/item/augmentation/head/wireless_interact) && istype(src.loc, /turf))))
+		if (usr.contents.Find(src) || ((get_dist(src, usr) <= 1 || isAI(usr) || locate(/obj/item/augmentation/head/wireless_interact) in H.has_augmentation("Head", "brain")) && istype(src.loc, /turf)))
 			src.add_dialog(usr)
 
 			if (src.malfunction && prob(10))
