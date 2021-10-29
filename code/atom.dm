@@ -265,13 +265,22 @@
 	//return !(src.flags & ON_BORDER) || src.CanPass(mover, target, 1, 0)
 	return 1 // fuck it
 
-//atom.event_handler_flags & USE_HASENTERED MUST EVALUATE AS TRUE OR THIS PROC WONT BE CALLED
 /atom/proc/HasEntered(atom/movable/AM as mob|obj, atom/OldLoc)
 	return
 
-//atom.event_handler_flags & USE_HASENTERED MUST EVALUATE AS TRUE OR THIS PROC WONT BE CALLED EITHER
-/atom/proc/HasExited(atom/movable/AM as mob|obj, atom/NewLoc)
+/atom/Crossed(atom/movable/AM)
+	. = ..()
+	return_if_overlay_or_effect(AM)
+	src.HasEntered(AM, AM.last_turf)
+	if(src.material?.triggersOnEntered)
+		src.material.triggerOnEntered(src, AM)
+
+/atom/proc/HasExited(atom/movable/AM)
 	return
+
+/atom/Uncrossed(atom/movable/AM)
+	. = ..()
+	src.HasExited(AM)
 
 /atom/proc/ProximityLeave(atom/movable/AM as mob|obj)
 	return
@@ -377,8 +386,6 @@
 					BT.checkingcanpass++
 			else
 				T.checkingcanpass++
-		if (src.event_handler_flags & USE_HASENTERED)
-			T.checkinghasentered++
 		if (src.event_handler_flags & USE_PROXIMITY)
 			T.checkinghasproximity++
 			for (var/turf/T2 in range(1, T))
@@ -496,8 +503,6 @@
 					T.checkingcanpass = max(T.checkingcanpass-1, 0)
 			else
 				last_turf.checkingcanpass = max(last_turf.checkingcanpass-1, 0)
-		if (src.event_handler_flags & USE_HASENTERED)
-			last_turf.checkinghasentered = max(last_turf.checkinghasentered-1, 0)
 		if (src.event_handler_flags & USE_PROXIMITY)
 			last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
 			for (var/turf/T2 in range(1, last_turf))
@@ -514,8 +519,6 @@
 					BT.checkingcanpass++
 			else
 				T.checkingcanpass++
-		if (src.event_handler_flags & USE_HASENTERED)
-			T.checkinghasentered++
 		if (src.event_handler_flags & USE_PROXIMITY)
 			T.checkinghasproximity++
 			for (var/turf/T2 in range(1, T))
@@ -866,8 +869,6 @@
 					T.checkingcanpass = max(T.checkingcanpass-1, 0)
 			else
 				last_turf.checkingcanpass = max(last_turf.checkingcanpass-1, 0)
-		if (src.event_handler_flags & USE_HASENTERED)
-			last_turf.checkinghasentered = max(last_turf.checkinghasentered-1, 0)
 		if (src.event_handler_flags & USE_PROXIMITY)
 			last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
 			for (var/turf/T2 in range(1, last_turf))
@@ -883,8 +884,6 @@
 					T.checkingcanpass++
 			else
 				last_turf.checkingcanpass++
-		if (src.event_handler_flags & USE_HASENTERED)
-			last_turf.checkinghasentered++
 		if (src.event_handler_flags & USE_PROXIMITY)
 			last_turf.checkinghasproximity++
 			for (var/turf/T2 in range(1, last_turf))
@@ -927,34 +926,6 @@
 						else
 							T.checkingcanpass = max(T.checkingcanpass-1, 0)
 	..()
-
-//same as above :)
-/atom/movable/setMaterial(var/datum/material/mat1, var/appearance = 1, var/setname = 1, var/copy = 1, var/use_descriptors = 0)
-	var/prev_mat_triggeronentered = (src.material && src.material.triggersOnEntered && length(src.material.triggersOnEntered))
-	var/prev_added_hasentered = src.material?.owner_hasentered_added
-	..(mat1,appearance,setname,copy,use_descriptors)
-	var/cur_mat_triggeronentered = (src.material && src.material.triggersOnEntered && length(src.material.triggersOnEntered))
-	src.material?.owner_hasentered_added = prev_added_hasentered
-
-	if (prev_mat_triggeronentered != cur_mat_triggeronentered)
-		if (isturf(src.loc))
-			// Check if USE_HASENTERED needs to be added if atom is missing the flag and onEnter trigger was added
-			if (!(src.event_handler_flags & USE_HASENTERED) && cur_mat_triggeronentered)
-				var/turf/T = src.loc
-				if (T)
-					T.checkinghasentered++
-				//Slap flag on so moving the atom will properly adjust checkinghasentered
-				src.event_handler_flags |= USE_HASENTERED
-				src.material.owner_hasentered_added = TRUE
-			// Check USE_HASENTERED needs to be removed when current material doesn't have onEnter trigger now and flag was added
-			else
-				if (!cur_mat_triggeronentered && prev_added_hasentered)
-					var/turf/T = src.loc
-					if (T)
-						T.checkinghasentered = max(T.checkinghasentered-1, 0)
-
-					src.event_handler_flags &= ~USE_HASENTERED
-					src.material.owner_hasentered_added = FALSE
 
 // standardized damage procs
 
