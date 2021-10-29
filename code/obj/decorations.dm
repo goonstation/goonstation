@@ -34,7 +34,7 @@
 		return ..()
 
 	HasExited(atom/movable/A)
-		var/turf/T = get_turf(newloc)
+		var/turf/T = get_turf(A)
 		if (istype(T))
 			var/obj/poolwater/P = locate() in T
 			if (!istype(P))

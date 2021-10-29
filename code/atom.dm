@@ -292,7 +292,7 @@
 /atom/proc/EnteredFluid(obj/fluid/F as obj, /atom/oldloc)
 	.=0
 
-/atom/proc/ExitedFluid(obj/fluid/F as obj, /atom/newloc)
+/atom/proc/ExitedFluid(obj/fluid/F as obj)
 	.=0
 
 /atom/proc/EnteredAirborneFluid(obj/fluid/F as obj, /atom/old_loc)

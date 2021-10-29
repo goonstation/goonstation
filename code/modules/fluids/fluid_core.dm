@@ -267,7 +267,7 @@ var/mutable_appearance/fluid_ma
 				floated_atoms -= AM*/
 
 		if (AM.event_handler_flags & USE_FLUID_ENTER)
-			AM.ExitedFluid(src,newloc)
+			AM.ExitedFluid(src)
 
 
 	proc/add_tracked_blood(atom/movable/AM as mob|obj)
@@ -671,14 +671,14 @@ var/mutable_appearance/fluid_ma
 
 	..()
 
-/obj/ExitedFluid(obj/fluid/F as obj, atom/newloc)
+/obj/ExitedFluid(obj/fluid/F as obj)
 	if (src.submerged_images && src.is_submerged != 0)
 		if (F.disposed)
 			src.show_submerged_image(0)
 			return
 
-		if (isturf(newloc))
-			var/turf/T = newloc
+		if (isturf(F.loc))
+			var/turf/T = F.loc
 			if (!T.active_liquid || (T.active_liquid && T.active_liquid.amt < depth_levels[1]))
 				src.show_submerged_image(0)
 				return
@@ -696,14 +696,14 @@ var/mutable_appearance/fluid_ma
 		src.show_submerged_image(F.my_depth_level)
 	..()
 
-/mob/living/ExitedFluid(obj/fluid/F as obj, atom/newloc)
+/mob/living/ExitedFluid(obj/fluid/F as obj)
 	if (src.is_submerged == 0) return
 
 	if (F.disposed)
 		src.show_submerged_image(0)
 		return
-	else if (isturf(newloc))
-		var/turf/T = newloc
+	else if (isturf(F.loc))
+		var/turf/T = F.loc
 		if (!T.active_liquid || (T.active_liquid && T.active_liquid.amt < depth_levels[1]))
 			src.show_submerged_image(0)
 			return
