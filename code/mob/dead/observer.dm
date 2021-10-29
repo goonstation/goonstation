@@ -287,7 +287,6 @@
 		O.bioHolder.CopyOther(src.bioHolder, copyActiveEffects = 0)
 		if (isghostrestrictedz(O.z) && !restricted_z_allowed(O, get_turf(O)) && !(src.client && src.client.holder))
 			O.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
-		if (client) client.color = null  //needed for mesons dont kill me thx - ZeWaka
 
 		src.mind?.transfer_to(O)
 		src.ghost = O
