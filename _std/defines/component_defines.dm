@@ -168,8 +168,13 @@
 
 /// sent when radiation status ticks on mob (stage)
 #define COMSIG_MOB_GEIGER_TICK "mob_geiger"
+
+/// When the mob vomits
+#define COMSIG_MOB_VOMIT "mob_vomit"
+
 /// on mouseup
 #define COMSIG_MOUSEUP "mouseup"
+
 // ---- mob/living signals ----
 /// When a Life tick occurs
 #define COMSIG_LIVING_LIFE_TICK "human_life_tick"
