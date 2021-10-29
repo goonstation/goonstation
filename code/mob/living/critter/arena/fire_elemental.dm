@@ -4,7 +4,6 @@
 	desc = "Oh god."
 	density = 1
 	icon_state = "fire_elemental"
-	//icon_state_dead = "fire_elemental-dead" No longer needed with the new death effects
 	custom_gib_handler = /proc/gibs
 	hand_count = 3
 	can_throw = 1
