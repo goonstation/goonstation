@@ -1941,15 +1941,15 @@
 		var/puke_prob = 0
 		var/faint_prob = 0
 		switch(timePassed)
-			if(0 to 200)
+			if(0 to 20 SECONDS)
 				tox = 0.1
 				puke_prob = 0.5
 				faint_prob = 0.2
-			if(200 to 600)
+			if(20 SECONDS to 60 SECONDS)
 				tox = 0.4
 				puke_prob = 1
 				faint_prob = 0.5
-			if(600 to INFINITY)
+			if(60 SECONDS to INFINITY)
 				tox = 1
 				puke_prob = 2
 				faint_prob = 1
