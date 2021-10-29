@@ -171,8 +171,8 @@
 				for (var/name in H.sims.motives)
 					H.sims.affectMotive(name, 100)
 
-		var/datum/db_record/crew_record = data_core.general.find_record("name", L.real_name)
-		if (!(crew_record == null))
+		var/datum/db_record/crew_record = data_core.general.find_record("id", L.datacore_id)
+		if (!isnull(crew_record))
 			crew_record["p_stat"] = "In Cryogenic Storage"
 
 		return 1
@@ -248,10 +248,10 @@
 			return 0
 		if (add_person_to_queue(user, null))
 			stored_mobs[user] = null
-			stored_mobs -= user.real_name
+			stored_mobs -= user
 			stored_crew_names -= user.real_name
-			var/datum/db_record/crew_record = data_core.general.find_record("name", user.real_name)
-			if (!(crew_record == null))
+			var/datum/db_record/crew_record = data_core.general.find_record("id", user.datacore_id)
+			if (!isnull(crew_record))
 				crew_record["p_stat"] = "Active"
 			return 1
 		return 0
@@ -265,10 +265,10 @@
 				L.removeOverlayComposition(/datum/overlayComposition/blinded)
 				stored_mobs[L] = null
 				stored_mobs -= L
-				if(!(L.loc == null))
-					stored_crew_names -= L.real_name // loc only goes null when you ghost, probably
-					var/datum/db_record/crew_record = data_core.general.find_record("name", L.real_name)
-					if (!(crew_record == null))
+				if(!isnull(L.loc)) // loc only goes null when you ghost, probably
+					stored_crew_names -= L.real_name // we want to keep people logged as being in cryo even when ghosted after all
+					var/datum/db_record/crew_record = data_core.general.find_record("id", L.datacore_id)
+					if (!isnull(crew_record))
 						crew_record["p_stat"] = "Active"
 
 	attack_hand(var/mob/user as mob)
