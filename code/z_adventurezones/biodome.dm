@@ -99,7 +99,7 @@ SYNDICATE DRONE FACTORY AREAS
 	icon_state = "green"
 	force_fullbright = 0
 	filler_turf = "/turf/unsimulated/floor/auto/dirt"
-	ambient_light = rgb(200, 150, 150)
+	ambient_light = rgb(75, 100, 100)
 	sound_environment = 15
 	skip_sims = 1
 	sims_score = 0
@@ -133,6 +133,7 @@ SYNDICATE DRONE FACTORY AREAS
 		name = "X-05 Swamplands"
 		sound_group = "swamp_surface"
 		sound_loop = 'sound/ambience/nature/Rain_Heavy.ogg'
+		sound_environment = 19
 
 		New()
 			..()
@@ -151,20 +152,30 @@ SYNDICATE DRONE FACTORY AREAS
 							if (M.client)
 								M.client.playAmbience(src, AMBIENCE_FX_2, 50)
 
+		forest
+			name = "X-05 Forest"
+			sound_group = "swamp_forest"
+			sound_environment = 15
+
+		canyon
+			name = "X-05 Canyon"
+			sound_group = "swamp_canyon"
+			sound_environment = 14
+
 
 	deeps
 		name = "X-05 Deep Swamp"
 		icon_state = "green"
-		ambient_light = rgb(60, 180, 75)
+		ambient_light = rgb(10, 50, 35)
 		sound_group = "swamp_deeps"
 		sound_environment = 22
-		sound_loop = 'sound/ambience/nature/Cave_Rumbling.ogg'
+		sound_loop = 'sound/ambience/station/Underwater/ocean_ambi2.ogg'
 
 
 		New()
 			..()
 
-			overlays += image(icon = 'icons/turf/areas.dmi', icon_state = "swampwater_overlay", layer = EFFECTS_LAYER_BASE)
+			overlays += image(icon = 'icons/turf/areas.dmi', icon_state = "swampwater-overlay", layer = EFFECTS_LAYER_BASE)
 			SPAWN_DBG(1 SECOND)
 				process()
 
@@ -179,9 +190,100 @@ SYNDICATE DRONE FACTORY AREAS
 								M.client.playAmbience(src, AMBIENCE_FX_2, 50)
 
 
+////// interiors /////
+/area/swampzone/interiors
+	name = "X-05 Settlement"
+	icon_state = "yellow"
+	ambient_light = null
+	sound_environment = 2
+	sound_loop = 'sound/ambience/station/Station_MechanicalThrum2.ogg'
+
+	outbuildings
+		name = "X-05 Outbuildings"
+		sound_group = "swamp_outbuildings"
+		icon_state = "blue"
+
+	tunnels
+		name = "X-05 Utility Tunnels"
+		sound_group = "swamp_tunnels"
+		icon_state = "orange"
+		sound_environment = 13
+
+	basements
+		name = "X-05 Basements"
+		sound_group = null
+		icon_state = "yellow"
+		sound_environment = 5
+
+	bonktek
+		name = "BonkTek Pyramid"
+		sound_group = "swamp_bonktek"
+		icon_state = "purple"
+		sound_environment = 9
+		sound_loop = 'sound/ambience/station/Station_MechanicalThrum5.ogg'
+
+		lounge
+			name = "Zero G-Tek Lounge"
+			sound_environment = 11
+			sound_loop = 'sound/ambience/station/JazzLounge1.ogg'
+
+		security
+			name = "Bonktek Security Office"
+			icon_state = "red"
+			sound_environment = 2
+
+		waffletek
+			name = "WaffleTek Restaurant"
+			icon_state = "blue"
+			sound_environment = 4
+
+		funktek
+			name = "FunkTek Shop"
+			icon_state = "blue"
+			sound_environment = 4
+
+		blastotek
+			name = "BlastoTek Shop"
+			icon_state = "blue"
+			sound_environment = 4
+
+		shootingrange
+			name = "BlastoTek Shooting Range"
+			icon_state = "red"
+			sound_environment = 10
+
+		genetek
+			name = "GeneTek Office"
+			icon_state = "blue"
+			sound_environment = 5
+
+		electek
+			name = "ElecTek Substation"
+			icon_state = "yellow"
+			sound_environment = 2
+
+		bathroom
+			name = "Bathroom"
+			icon_state = "white"
+			sound_environment = 3
+
+		maintenance
+			name = "Bonktek Maintenance Corridors"
+			icon_state = "orange"
+			sound_environment = 13
+
+	quarry
+		name = "X-05 Quarry"
+		icon_state = "orange"
+		sound_group = "swamp_quarry"
+		sound_environment = 18
 
 
-
+	caves
+		name = "X-05 Caves"
+		icon_state = "blue"
+		sound_group = "swamp_caves"
+		sound_environment = 8
 ////////////////////// crypt place
 
 /area/crypt
