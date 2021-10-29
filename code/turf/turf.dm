@@ -425,7 +425,8 @@ proc/generate_space_color()
 	///////////////////////////////////////////////////////////////////////////////////
 	..()
 	return_if_overlay_or_effect(M)
-	src.material?.triggerOnEntered(src, M)
+	if(length(src.material?.triggersOnEntered))
+		src.material?.triggerOnEntered(src, M)
 
 	if (global_sims_mode)
 		var/area/Ar = loc
@@ -995,7 +996,7 @@ proc/generate_space_color()
 		return
 	if ((user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1))
 		return
-	if (isobj(user.pulling.loc))
+	if (!isturf(user.pulling.loc))
 		var/obj/container = user.pulling.loc
 		if (user.pulling in container.contents)
 			return
@@ -1020,10 +1021,8 @@ proc/generate_space_color()
 		return
 	if ((user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1))
 		return
-	if (isobj(user.pulling.loc))
-		var/obj/container = user.pulling.loc
-		if (user.pulling in container.contents)
-			return
+	if (!isturf(user.pulling.loc))
+		return
 
 	var/turf/fuck_u = user.pulling.loc
 	if (ismob(user.pulling))
