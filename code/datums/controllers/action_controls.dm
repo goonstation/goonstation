@@ -739,18 +739,22 @@ var/datum/action_controller/actions
 	border_icon_state = "border-private"
 	onStart()
 		..()
-		bar.icon = null
-		border.icon = null
-		owner.images += bar.img
-		owner.images += border.img
+		if (ismob(owner))
+			var/mob/M = owner
+			bar.icon = null
+			border.icon = null
+			M.client?.images += bar.img
+			M.client?.images += border.img
 
 	onDelete()
 		bar.icon = 'icons/ui/actions.dmi'
 		border.icon = 'icons/ui/actions.dmi'
-		owner.images -= bar.img
-		owner.images -= border.img
-		qdel(bar.img)
-		qdel(border.img)
+		if (ismob(owner))
+			var/mob/M = owner
+			M.client?.images -= bar.img
+			M.client?.images -= border.img
+			qdel(bar.img)
+			qdel(border.img)
 		..()
 
 /datum/action/bar/private/icon //Only visible to the owner and has a little icon on the bar.
@@ -770,10 +774,14 @@ var/datum/action_controller/actions
 			icon_image.plane = icon_plane
 
 			icon_image.filters += filter(type="outline", size=0.5, color=rgb(255,255,255))
-			owner.images += icon_image
+			if (ismob(owner))
+				var/mob/M = owner
+				owner.client?.images += icon_image
 
 	onDelete()
-		owner.images -= icon_image
+		if (ismob(owner))
+			var/mob/M = owner
+			M.client?.images -= icon_image
 		qdel(icon_image)
 		..()
 
