@@ -293,6 +293,7 @@
 		if(istype(get_area(src),/area/afterlife))
 			qdel(src)
 
+		respawn_controller.subscribeNewRespawnee(src.ckey)
 		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[O.ckey]
 		if(istype(respawnee))
 			respawnee.update_time_display()
