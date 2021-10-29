@@ -243,7 +243,7 @@
 			if(prob(ai_poke_thing_chance))
 				var/list/atom/things_to_pick = list(src)
 				for(var/obj/O in range(1, get_turf(src)))
-					if(istype(O, /obj/overlay) || istype(O, /obj/effect) || O.invisibility > 0)
+					if(istype(O, /obj/overlay) || istype(O, /obj/effect) || O.invisibility > 0 || !O.mouse_opacity)
 						continue
 					things_to_pick += O
 				if(prob(15))
