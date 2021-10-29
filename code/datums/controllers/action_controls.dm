@@ -776,7 +776,7 @@ var/datum/action_controller/actions
 			icon_image.filters += filter(type="outline", size=0.5, color=rgb(255,255,255))
 			if (ismob(owner))
 				var/mob/M = owner
-				owner.client?.images += icon_image
+				M.client?.images += icon_image
 
 	onDelete()
 		if (ismob(owner))
