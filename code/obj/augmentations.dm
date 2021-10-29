@@ -308,13 +308,13 @@ Set `specific_augment` to the type of augment you're looking for, and it will on
 			for (var/organ in organs)
 				if((organ == specific_organ) && islist(src?.organHolder?.organ_list))
 					var/obj/item/organ/O = src.organHolder.organ_list[organ]
-					if(O.augmentation_support && O.installed_aug)
+					if(O?.augmentation_support && O.installed_aug)
 						aug_list += O.installed_aug
 		else
 			for (var/organ in organs)
 				if(islist(src?.organHolder?.organ_list))
 					var/obj/item/organ/O = src.organHolder.organ_list[organ]
-					if(O.augmentation_support && O.installed_aug)
+					if(O?.augmentation_support && O.installed_aug)
 						aug_list += O.installed_aug
 
 	else if(target_zone == "Chest" && ishuman(src))
@@ -323,13 +323,13 @@ Set `specific_augment` to the type of augment you're looking for, and it will on
 			for (var/organ in organs)
 				if((organ == specific_organ) && islist(src?.organHolder?.organ_list))
 					var/obj/item/organ/O = src.organHolder.organ_list[organ]
-					if(O.augmentation_support && O.installed_aug)
+					if(O?.augmentation_support && O.installed_aug)
 						aug_list += O.installed_aug
 		else
 			for (var/organ in organs)
 				if(islist(src?.organHolder?.organ_list))
 					var/obj/item/organ/O = src.organHolder.organ_list[organ]
-					if(O.augmentation_support && O.installed_aug)
+					if(O?.augmentation_support && O.installed_aug)
 						aug_list += O.installed_aug
 
 	else if(target_zone == "Head" && ishuman(src))
@@ -338,13 +338,13 @@ Set `specific_augment` to the type of augment you're looking for, and it will on
 			for (var/organ in organs)
 				if((organ == specific_organ) && islist(src?.organHolder?.organ_list))
 					var/obj/item/organ/O = src.organHolder.organ_list[organ]
-					if(O.augmentation_support && O.installed_aug)
+					if(O?.augmentation_support && O.installed_aug)
 						aug_list += O.installed_aug
 		else
 			for (var/organ in organs)
 				if(islist(src?.organHolder?.organ_list))
 					var/obj/item/organ/O = src.organHolder.organ_list[organ]
-					if(O.augmentation_support && O.installed_aug)
+					if(O?.augmentation_support && O.installed_aug)
 						aug_list += O.installed_aug
 
 
