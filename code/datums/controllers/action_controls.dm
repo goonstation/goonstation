@@ -741,12 +741,14 @@ var/datum/action_controller/actions
 		..()
 		bar.icon = null
 		border.icon = null
-		owner << bar.img
-		owner << border.img
+		owner.images += bar.img
+		owner.images += border.img
 
 	onDelete()
 		bar.icon = 'icons/ui/actions.dmi'
 		border.icon = 'icons/ui/actions.dmi'
+		owner.images -= bar.img
+		owner.images -= border.img
 		qdel(bar.img)
 		qdel(border.img)
 		..()
@@ -768,9 +770,10 @@ var/datum/action_controller/actions
 			icon_image.plane = icon_plane
 
 			icon_image.filters += filter(type="outline", size=0.5, color=rgb(255,255,255))
-			owner << icon_image
+			owner.images += icon_image
 
 	onDelete()
+		owner.images -= icon_image
 		qdel(icon_image)
 		..()
 
