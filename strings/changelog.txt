@@ -1,4 +1,7 @@
 
+(t)sat oct 30 21
+(u)pali
+(*)PDA ringtone sound range drastically decreased
 (t)thu oct 28 21
 (u)Gannets
 (p)6473
