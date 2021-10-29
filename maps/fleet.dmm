@@ -10338,6 +10338,7 @@
 /obj/machinery/light_switch/north{
 	pixel_x = -12
 	},
+/obj/item/paper/CrashedHopShuttle,
 /turf/simulated/floor/wood/two,
 /area/station/bridge/hos)
 "uR" = (

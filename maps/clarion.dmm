@@ -24494,6 +24494,7 @@
 	layer = 3.5;
 	pixel_y = 24
 	},
+/obj/item/paper/CrashedHopShuttle,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fgreen2"

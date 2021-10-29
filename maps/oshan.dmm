@@ -30635,7 +30635,8 @@
 "bxX" = (
 /obj/table/wood/round/auto,
 /obj/item/item_box/gold_star,
-/obj/item/acesscomputerunfolder/turf/simulated/floor/carpet{
+/obj/item/acesscomputerunfolder,
+/turf/simulated/floor/carpet{
 	icon_state = "green1"
 	},
 /area/station/bridge/hos)
