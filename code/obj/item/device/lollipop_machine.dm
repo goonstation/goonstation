@@ -1,5 +1,5 @@
 /obj/item/device/lollipopmaker
-	name = "Lollipop Synthesizer"
+	name = "lollipop synthesizer"
 	desc = "A portable synthesizer used to make fruity treats."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "lollipop-h"
