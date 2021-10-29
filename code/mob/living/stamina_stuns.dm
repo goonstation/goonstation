@@ -198,7 +198,7 @@
 /mob/proc/stamina_stun()
 	return
 
-/mob/living/stamina_stun()
+/mob/living/stamina_stun(stunmult = 1)
 	if(!src.use_stamina) return
 	if(src.stamina <= 0)
 		var/chance = STAMINA_SCALING_KNOCKOUT_BASE
@@ -206,7 +206,7 @@
 		if(prob(chance))
 			if(!src.getStatusDuration("weakened"))
 				src.visible_message("<span class='alert'>[src] collapses!</span>")
-				src.changeStatus("weakened", (STAMINA_STUN_TIME) SECONDS)
+				src.changeStatus("weakened", (STAMINA_STUN_TIME * stunmult) SECONDS)
 				src.force_laydown_standup()
 
 //new disorient thing
