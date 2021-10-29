@@ -6,6 +6,12 @@
 	var/transmission_method = TRANSMISSION_INVALID
 	var/in_disposing = FALSE
 
+	var/count_current_devices = 0
+	var/count_post = 0
+	var/count_receive = 0
+	var/count_broadcast = 0
+	var/count_register = 0
+
 /datum/packet_network/proc/can_send(datum/component/packet_connected/source, datum/signal/signal, params=null)
 	return TRUE
 
@@ -16,6 +22,8 @@
 	return FALSE
 
 /datum/packet_network/proc/register(datum/component/packet_connected/device)
+	src.count_register++
+	src.count_current_devices++
 	if(device.all_hearing)
 		if(!islist(src.all_hearing))
 			src.all_hearing = list()
@@ -41,6 +49,7 @@
 		src.analog_devices[device.parent] = 1
 
 /datum/packet_network/proc/unregister(datum/component/packet_connected/device)
+	src.count_current_devices--
 	if(src.in_disposing)
 		return // it gets cleaned en-masse
 	if(device.all_hearing)
@@ -97,6 +106,8 @@
 
 #define POST_PACKET_INTERNAL(RECEIVE_PACKET) \
 	if(is_broadcast) { \
+		count_broadcast++; \
+		count_receive += count_current_devices; \
 		for(var/t_address in src.devices_by_address) { \
 			if(islist(src.devices_by_address[t_address])) \
 				for(var/datum/component/packet_connected/target as anything in src.devices_by_address[t_address]) { \
@@ -118,12 +129,14 @@
 		if(sharing_tag) targets |= sharing_tag; \
 		if(src.devices_by_address?[target_address]) \
 			targets |= src.devices_by_address?[target_address]; \
+		count_receive += length(targets); \
 		for(var/datum/component/packet_connected/target as anything in targets) { \
 			RECEIVE_PACKET \
 		} \
 	}
 
 /datum/packet_network/proc/post_packet(datum/component/packet_connected/source, datum/signal/signal, params=null)
+	count_post++
 	if(!src.can_send(source, signal, params))
 		return
 	signal.transmission_method = transmission_method
@@ -159,7 +172,7 @@
 				images += src.draw_packet(target, source, signal, params); \
 			)
 		SPAWN_DBG(2 SECONDS)
-			for(var/image/img in images)
+			for(var/image/img as anything in images)
 				get_image_group(CLIENT_IMAGE_GROUP_PACKETVISION).remove_image(img)
 				qdel(img)
 	qdel(signal)
@@ -171,5 +184,100 @@
 
 /datum/packet_network/proc/is_analog(obj/device)
 	return istype(device, /obj/item/device/radio) || istype(device, /obj/item/mechanics/radioscanner)
+
+
+// debugging / profiling / inspection tools
+
+/datum/packet_network/proc/brief_debug_info()
+	. = list(
+		"name" = channel_name,
+		"device count" = count_current_devices,
+		"packets sent" = count_post,
+		"packets received" = count_receive,
+		"received/send" = count_post ? count_receive / count_post : 0,
+		"broadcast%" = count_post ? 100 * count_broadcast / count_post : 0,
+		"send/minute" = count_post / (TIME / (1 MINUTE)),
+		"received/minute" = count_receive / (TIME / (1 MINUTE))
+	)
+
+/datum/packet_network/proc/debug_device_text(datum/component/packet_connected/device, client/cl)
+	. = list()
+	. += ""
+	. += "<a href='byond://?src=\ref[cl];Refresh=\ref[device.parent]'>[device.parent]</a> ([device.address])"
+	. += "(<a href='byond://?src=\ref[cl];Refresh=\ref[device]'>[device.connection_id || "conn"]</a>)"
+	if(device.all_hearing)
+		. += " AH"
+	for(var/tag in device.net_tags)
+		. += " #[tag]"
+
+/datum/packet_network/Topic(href, href_list)
+	. = ..()
+	if(href_list["debug_window"])
+		src.display_debug_window(usr.client)
+
+/datum/packet_network/proc/display_debug_window(client/cl)
+	if(isnull(cl))
+		cl = usr.client
+
+	var/list/html = list()
+	html += "<title>Packet Network [channel_name]</title>"
+	html += "<a style='display:block;position:fixed;right:0;' href='byond://?src=\ref[src];debug_window=1'>🔄</a>"
+	html += "<h1>[channel_name]</h1><br>"
+	html += "[type]<br>"
+	html += "<b>Transmission method: </b>[transmission_method]<br>"
+	html += "<br>"
+
+	html += "<b># current devices: </b>[count_current_devices]<br>"
+	html += "<b># current addresses: </b>[length(devices_by_address)]<br>"
+	html += "<b># current tags: </b>[length(devices_by_tag)]<br>"
+	html += "<b># current all-hearing: </b>[length(all_hearing)]<br>"
+	html += "<br>"
+
+	html += "<b>packets sent: </b>[count_post]<br>"
+	html += "<b>packet receive calls: </b>[count_receive]<br>"
+	html += "<b>packets truly broadcasted: </b>[count_broadcast]<br>"
+	html += "<b>device register calls: </b>[count_register]<br>"
+	html += "<b>average receives per post: </b>[count_post ? count_receive / count_post : 0]<br>"
+	html += "<b>average broadcast percentage: </b>[count_post ? 100 * count_broadcast / count_post : 0]%<br>"
+	html += "<b>packets per minute: </b>[count_post / (TIME / (1 MINUTE))]<br>"
+	html += "<b>receive calls per minute: </b>[count_receive / (TIME / (1 MINUTE))]<br>"
+	html += "<br>"
+
+	html += "<h3>All-Hearing</h3><br>"
+	if(!length(all_hearing))
+		html += "None<br>"
+	for(var/d in all_hearing)
+		html += debug_device_text(d, cl)
+
+	html += "<h3>By Tag</h3><br>"
+	if(!length(devices_by_tag))
+		html += "None<br>"
+	for(var/tag in devices_by_tag)
+		html += "<b>[tag]</b>"
+		html += "<ul>"
+		for(var/d in devices_by_tag[tag])
+			html += "<li>"
+			html += debug_device_text(d, cl)
+			html += "</li>"
+		html += "</ul>"
+
+	html += "<h3>By Address</h3><br>"
+	if(!length(devices_by_address))
+		html += "None<br>"
+	for(var/address in devices_by_address)
+		if(islist(devices_by_address[address]))
+			html += "<b>[address]</b>"
+			html += "<ul>"
+			for(var/d in devices_by_address[address])
+				html += "<li>"
+				html += debug_device_text(d, cl)
+				html += "</li>"
+			html += "</ul>"
+		else
+			html += "<b>[address]</b> "
+			html += debug_device_text(devices_by_address[address], cl)
+			html += "<br>"
+
+	cl.Browse(jointext(html, ""), "window=packet_network_\ref[src];size=500x700")
 
 #undef POST_PACKET_INTERNAL
