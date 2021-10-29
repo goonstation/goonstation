@@ -242,8 +242,8 @@
 			if(oldholder?.mobAppearance?.mutant_race?.dna_mutagen_banned)
 				no_copy_mutantrace = 1
 
-			src.occupant?.set_mutantrace(no_copy_mutantrace ? null : oldholder?.mobAppearance?.mutant_race?.type)
 			src.occupant.bioHolder.CopyOther(oldholder, copyActiveEffects = connected?.gen_analysis, noMutantrace = no_copy_mutantrace)
+			src.occupant?.set_mutantrace(no_copy_mutantrace ? null : oldholder?.mobAppearance?.mutant_race?.type)
 			if(ishuman(src.occupant))
 				var/mob/living/carbon/human/H = src.occupant
 				H.update_colorful_parts()
