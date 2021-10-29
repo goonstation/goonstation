@@ -1,5 +1,9 @@
 
 (t)thu oct 28 21
+(u)Gannets
+(p)6473
+(e)🗺⚖|mapping, balance
+(+)Removed the sanctuary zone from the Battlecruiser Cairngorm's medbay.
 (u)Grokberg and pkfiremain710
 (p)6464
 (e)|
