@@ -13,7 +13,6 @@
 			new /obj/item/reagent_containers/food/snacks/lollipop/fruit(get_turf(src))
 			playsound(src.loc, "sound/machines/click.ogg", 50, 1)
 			user.visible_message("<span class='notice'>[user] dispenses a lollipop.</span>")
-		return
 
 /obj/item/device/lollipopmaker/md
 		name = "NT Lollipop Synthesizer"
