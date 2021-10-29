@@ -64047,6 +64047,7 @@
 	pixel_x = -3;
 	pixel_y = 7
 	},
+/obj/item/paper/CrashedHopShuttle,
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/cafeteria)
 "cnK" = (

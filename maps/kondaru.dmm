@@ -51400,6 +51400,7 @@
 	},
 /obj/item/device/radio/intercom/bridge,
 /obj/blind_switch/area/west,
+/obj/item/paper/CrashedHopShuttle,
 /turf/simulated/floor/carpet/green/fancy/edge/nw,
 /area/station/bridge/hos)
 "njL" = (

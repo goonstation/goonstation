@@ -321,6 +321,19 @@
 
 	dress
 		icon_state = "hop-dress"
+		item_state = "hop-dress"
+
+	navy
+		icon_state = "hop-alt"
+		item_state = "hop-alt"
+
+	dress_navy
+		icon_state = "hop-dress-alt"
+		item_state = "hop-dress-alt"
+
+	fancy_navy
+		icon_state = "hop-fancy-alt"
+		item_state = "hop-fancy-alt"
 
 /obj/item/clothing/under/rank/head_of_securityold
 	name = "head of security's uniform"
@@ -1125,8 +1138,20 @@
 		icon_state = "suitR"
 		item_state = "suitR"
 
+	dress_navy
+		icon_state = "suitT-dress-alt"
+		item_state = "suitT-dress-alt"
+
+	navy
+		desc = "A navy suit and green necktie. An authoritative yet tacky ensemble."
+		icon_state = "suitT-alt"
+		item_state = "suitT-alt"
+
 	dress
 		icon_state = "suitT-dress"
+		item_state = "suitT-dress"
+
+
 
 /obj/item/clothing/under/suit/hos
 	name = "\improper Head of Security's suit"
@@ -1248,7 +1273,7 @@
 					return
 				else
 					for (var/i=3, i>0, i--)
-						var/obj/item/material_piece/cloth/cottonfabric/CF = new /obj/item/material_piece/cloth/cottonfabric
+						var/obj/item/material_piece/cloth/cottonfabric/CF = unpool(/obj/item/material_piece/cloth/cottonfabric)
 						CF.set_loc(get_turf(src))
 					boutput(user, "You rip up [src].")
 					user.u_equip(src)
@@ -1297,10 +1322,10 @@
 			T.wet = 0
 			dried ++
 		for (var/obj/decal/cleanable/water/W in T)
-			qdel(W)
+			pool(W)
 			dried ++
 		for (var/obj/decal/cleanable/urine/U in T) // ew
-			qdel(U)
+			pool(U)
 			dried ++
 		return dried
 
@@ -1562,12 +1587,6 @@
     icon_state = "bubble"
     item_state = "bubble"
 
-/obj/item/clothing/under/misc/tricolor
-    name = "Tricolor Jumpsuit"
-    desc = "A jumpsuit that shows your serious about pizza."
-    icon_state = "tricolor"
-    item_state = "tricolor"
-
 // WALPVRGIS fashion
 
 /obj/item/clothing/under/misc/casdressblk
@@ -1809,10 +1828,3 @@
     item_state = "racing_jump_prp"
     icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
     wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
-
-//Western Jumpsuit
-/obj/item/clothing/under/misc/western
-    name = "Western Shirt and Pants"
-    desc = "Now comes with a matching belt buckle and leather straps!"
-    icon_state = "western"
-    item_state = "western"

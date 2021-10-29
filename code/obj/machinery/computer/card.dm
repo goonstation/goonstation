@@ -44,6 +44,9 @@
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_BULKY
+	stamina_damage = 40
+	stamina_cost = 17
+	stamina_crit_chance = 10
 
 	burn_point = 2500
 	burn_output = 2500
@@ -70,8 +73,9 @@
 
 		if(src.loc == user)
 			user.drop_from_slot(src)
-		user.visible_message("<span class='alert'>[user] unfolds the foldable portable idendification computer from a briefcase!</span>")
+		user.visible_message("<span class='alert'>[user] unfolds the foldable portable idendification computer from a briefcase, there was also a pinpointer inside, how handy!</span>")
 		var/obj/machinery/computer/card/portable/T = new/obj/machinery/computer/card/portable()
+		new/obj/item/pinpointer/identificationcomputer(get_turf(src))
 		T.set_loc(get_turf(src))
 		qdel(src)
 
@@ -183,8 +187,8 @@
 		return
 	if (src.mode) // accessing crew manifest
 		var/crew = ""
-		for(var/datum/db_record/t as anything in data_core.general.records)
-			crew += "[t["name"]] - [t["rank"]]<br>"
+		for(var/datum/data/record/t in data_core.general)
+			crew += "[t.fields["name"]] - [t.fields["rank"]]<br>"
 		dat = "<tt><b>Crew Manifest:</b><br>Please use security record computer to modify entries.<br>[crew]<a href='?src=\ref[src];print=1'>Print</a><br><br><a href='?src=\ref[src];mode=0'>Access ID modification console.</a><br></tt>"
 	else
 		var/header = "<b>Identification Card Modifier</b><br><i>Please insert the cards into the slots</i><br>"
@@ -445,12 +449,12 @@
 		if (!( src.printing ))
 			src.printing = 1
 			sleep(5 SECONDS)
-			var/obj/item/paper/P = new /obj/item/paper
+			var/obj/item/paper/P = unpool(/obj/item/paper)
 			P.set_loc(src.loc)
 
 			var/t1 = "<B>Crew Manifest:</B><BR>"
-			for(var/datum/db_record/t as anything in data_core.general.records)
-				t1 += "<B>[t["name"]]</B> - [t["rank"]]<BR>"
+			for(var/datum/data/record/t in data_core.general)
+				t1 += "<B>[t.fields["name"]]</B> - [t.fields["rank"]]<BR>"
 			P.info = t1
 			P.name = "paper- 'Crew Manifest'"
 			src.printing = null

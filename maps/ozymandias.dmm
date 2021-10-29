@@ -40869,6 +40869,7 @@
 /obj/item/pen/crayon/golden{
 	pixel_y = -11
 	},
+/obj/item/paper/CrashedHopShuttle,
 /turf/simulated/floor/carpet/green/fancy/edge/west,
 /area/station/crew_quarters/hop)
 "liA" = (
