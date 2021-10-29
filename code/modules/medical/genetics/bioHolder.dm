@@ -225,8 +225,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		if(!no_mutantrace)
 			mutant_race = toCopy.mutant_race
-		else
-			mutant_race = null
 
 		e_color = toCopy.e_color
 		e_icon = toCopy.e_icon
