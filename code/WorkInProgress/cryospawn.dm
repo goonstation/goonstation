@@ -30,6 +30,7 @@
 	var/list/folks_to_spawn = list()
 	var/list/their_jobs = list()
 	var/list/stored_mobs = list() // people who've bowed out of the round
+	var/list/stored_crew_names = list() // stores real_names and only removes names if you leave cryo, not ghost
 	var/tmp/busy = 0
 
 	New()
@@ -151,6 +152,7 @@
 				return 1
 
 		stored_mobs += L
+		stored_crew_names += L.real_name
 		if (!voluntary) // someone shoved us in here, mark them as not being in here of their own choice (this can only be done with braindead people who have a ckey, so you can't just grief some guy by shoving them in)
 			stored_mobs[L] = "involuntary"
 		else
@@ -168,6 +170,11 @@
 			if (H.sims)
 				for (var/name in H.sims.motives)
 					H.sims.affectMotive(name, 100)
+
+		var/datum/db_record/crew_record = data_core.general.find_record("name", L.real_name)
+		if (!(crew_record == null))
+			crew_record["p_stat"] = "In Cryogenic Storage"
+
 		return 1
 
 	proc/enter_prompt(var/mob/living/user as mob)
@@ -241,7 +248,11 @@
 			return 0
 		if (add_person_to_queue(user, null))
 			stored_mobs[user] = null
-			stored_mobs -= user
+			stored_mobs -= user.real_name
+			stored_crew_names -= user.real_name
+			var/datum/db_record/crew_record = data_core.general.find_record("name", user.real_name)
+			if (!(crew_record == null))
+				crew_record["p_stat"] = "Active"
 			return 1
 		return 0
 
@@ -254,6 +265,11 @@
 				L.removeOverlayComposition(/datum/overlayComposition/blinded)
 				stored_mobs[L] = null
 				stored_mobs -= L
+				if(!(L.loc == null))
+					stored_crew_names -= L.real_name // loc only goes null when you ghost, probably
+					var/datum/db_record/crew_record = data_core.general.find_record("name", L.real_name)
+					if (!(crew_record == null))
+						crew_record["p_stat"] = "Active"
 
 	attack_hand(var/mob/user as mob)
 		if(isgrab(user.l_hand))
