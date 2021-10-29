@@ -146,7 +146,7 @@ var/global/list/playersSeen = list()
 		details += "This ban applies to [row["server"] ? "this server only" : "all servers"].<br>"
 		if(timestamp == 0)
 			details += "This is a permanent ban, you can't appeal this ban until 30 days have passed."
-		else if(timestamp == 1)
+		else if(timestamp == -1)
 			details += "Please make an <a href='https://forum.ss13.co/showthread.php?tid=14863'>appeal on the forums</a> to have it lifted."
 		return details
 
@@ -186,9 +186,9 @@ var/global/list/playersSeen = list()
 		var/expiry = getExpiry(row["timestamp"])
 		var/serverLogSnippet = row["server"] ? "from [row["server"]]" : "from all servers"
 
-		var/duration = expiry == 0 ? data["text_ban_length"] || "Permanent" : expiry
+		var/duration = expiry == 0 ? (data["text_ban_length"] || (text2num(row["timestamp"]) == 0 ? "Permanent" : "Until Appeal")) : expiry
 
-		if (text2num(row["timestamp"]) == 0)
+		if (text2num(row["timestamp"]) <= 0)
 			if (targetC)
 				if(duration == "Permanent")
 					boutput(targetC, "<span class='alert'>You have received a permanent ban, you can't appeal this ban until 30 days have passed.</span>")
