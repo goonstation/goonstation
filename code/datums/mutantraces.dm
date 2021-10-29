@@ -2146,20 +2146,19 @@
 	emote(var/act, var/voluntary)
 		switch(act)
 			if ("scream")
-				if (mob.emote_check(voluntary, 50))
+				if (mob.emote_check(voluntary, 5 SECONDS))
 					. = "<B>[mob]</B> screams!"
 					playsound(mob, "sound/voice/screams/moo.ogg", 50, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			if ("snore")
-				if (mob.emote_check(voluntary, 10))
+				if (mob.emote_check(voluntary, 3 SECONDS))
 					. = "<B>[mob]</B> snores."
 					playsound(mob, "sound/voice/snore.ogg", 30, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-					if (!ON_COOLDOWN(mob, "snore_bubble", 5 SECONDS)) //could be reduced a bit
-						mob.UpdateOverlays(snore_bubble, "snore_bubble")
-						SPAWN_DBG(2 SECONDS)
-							mob.UpdateOverlays(null, "snore_bubble")
+					mob.UpdateOverlays(snore_bubble, "snore_bubble")
+					SPAWN_DBG(1.5 SECONDS)
+						mob.UpdateOverlays(null, "snore_bubble")
 
 			if ("sneeze")
-				if (!voluntary || mob.emote_check(voluntary, 20))
+				if (!voluntary || mob.emote_check(voluntary, 2 SECONDS))
 					playsound(mob, "sound/voice/sneeze_pug.ogg", 30, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 					if (prob(1))
 						var/datum/organHolder/organs = mob.organHolder
