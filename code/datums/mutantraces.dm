@@ -2124,7 +2124,7 @@
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_EYES | WEARS_UNDERPANTS)
 	eye_state = "eyes-pug"
 	dna_mutagen_banned = FALSE
-	var/snore_bubble = image('icons/mob/pug.dmi', "bubble")
+	var/static/image/snore_bubble = image('icons/mob/pug.dmi', "bubble")
 
 	New(var/mob/living/carbon/human/H)
 		..(H)
@@ -2154,9 +2154,9 @@
 					. = "<B>[mob]</B> snores."
 					playsound(mob, "sound/voice/snore.ogg", 30, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 					if (!ON_COOLDOWN(mob, "snore_bubble", 5 SECONDS)) //could be reduced a bit
-						mob.UpdateOverlay(snore_bubble, "snore_bubble")
+						mob.UpdateOverlays(snore_bubble, "snore_bubble")
 						SPAWN_DBG(2 SECONDS)
-							mob.UpdateOverlay(null, "snore_bubble")
+							mob.UpdateOverlays(null, "snore_bubble")
 
 			if ("sneeze")
 				if (!voluntary || mob.emote_check(voluntary, 20))
