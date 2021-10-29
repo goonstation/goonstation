@@ -244,7 +244,7 @@ var/mutable_appearance/fluid_ma
 		src.group.reagents.reaction(M, INGEST, react_volume,1,src.group.members.len)
 		src.group.reagents.trans_to(M, react_volume)
 
-	HasExited(atom/movable/AM, atom/newloc)
+	HasExited(atom/movable/AM)
 
 		/*var/cancel_float = 0
 		if (AM.loc == newloc)

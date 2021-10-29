@@ -136,7 +136,7 @@
 		return
 	move_thing(AM)
 
-/obj/machinery/conveyor/HasExited(var/atom/movable/AM, var/atom/newloc)
+/obj/machinery/conveyor/HasExited(var/atom/movable/AM)
 	..()
 	if(status & (BROKEN | NOPOWER))
 		return
@@ -145,7 +145,7 @@
 	if(!loc)
 		return
 
-	if(src.next_conveyor && src.next_conveyor.loc == newloc)
+	if(src.next_conveyor && src.next_conveyor.loc == AM.loc)
 		//Ok, they will soon walk() according to the new conveyor
 		var/mob/M = AM
 		if(istype(M) && M.buckled == src) //Transfer the buckle

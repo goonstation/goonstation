@@ -33,7 +33,7 @@
 		reagents.reaction(A, TOUCH, 2)
 		return ..()
 
-	HasExited(atom/movable/A, atom/newloc)
+	HasExited(atom/movable/A)
 		var/turf/T = get_turf(newloc)
 		if (istype(T))
 			var/obj/poolwater/P = locate() in T
