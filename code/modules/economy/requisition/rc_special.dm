@@ -5,7 +5,6 @@ ABSTRACT_TYPE(/datum/req_contract/special)
 
 /datum/req_contract/special
 	req_code = "REQ-THIRDPARTY"
-	var/weight = 100 //weighting for event pick
 
 	var/obj/storage/crate/sendingCrate // specify crate to send, if desired
 
@@ -24,6 +23,7 @@ ABSTRACT_TYPE(/datum/req_contract/special)
 		req_sheet.info += "<BR/><BR/>Requisition Offer: <B>[payout]</B>"
 		if(length(item_rewarders))
 			req_sheet.info += get_rewards_list()
+		req_sheet.info += "<BR/><BR/><font face='System' size='1'><span style='color:#666666;'><center>╔ REQHUB: THIRD PARTY REQUISITION ╗<br>TAG SENT CRATE WITH REQ_THIRDPARTY<br>╚ RETURNS AT DISCRETION OF CLIENT ╝</center></span>"
 
 	//formats src.rc_entries for being put onto paper
 	proc/get_shopping_list()

@@ -24,7 +24,7 @@
 			if(!special_order_weights)
 				special_order_weights = list()
 				for(var/type in concrete_typesof(/datum/req_contract/special))
-					var/datum/req_contract/special/O = type
+					var/datum/req_contract/O = type
 					special_order_weights[type] = initial(O.weight)
 			order_type = weighted_pick(special_order_weights)
 		var/datum/req_contract/special/new_order = new order_type

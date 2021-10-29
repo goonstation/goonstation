@@ -5,6 +5,7 @@ ABSTRACT_TYPE(/datum/req_contract/scientific)
 /datum/req_contract/scientific/internalaffairs //get it?
 	//name = "Don't Ask Too Many Questions"
 	payout = 1750
+	weight = 80
 	var/list/namevary = list("Organ Analysis","Organ Research","Biolab Supply","Biolab Partnership","ERROR: CANNOT VERIFY ORIGIN")
 	var/list/desc_begins = list("conducting","performing","beginning","initiating","seeking supplies for","organizing")
 	var/list/desc_whatstudy = list("long-term study","intensive trialing","in-depth analysis","study","regulatory assessment")

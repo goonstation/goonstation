@@ -34,8 +34,6 @@ ABSTRACT_TYPE(/datum/rc_entry)
 
 	proc/rc_eval(atom/eval_item) //evaluation procedure, used in different entry classes
 		. = FALSE
-		if(rollcount >= count)
-			throw null //if you've already got enough, hard-skip this evaluation pass
 
 //when performing custom evaluations, there are 2 actions that must occur
 //first, you must return true if the atom the entry has been passed contributes to satisfying the condition
@@ -59,6 +57,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item)
 
 	rc_eval(obj/eval_item)
 		. = ..()
+		if(rollcount >= count) return // standard skip-if-complete
 		if(src.exactpath && eval_item.type != typepath) return // more fussy type evaluation
 		else if(!istype(eval_item)) return // if it's not an object, it's definitely not an item
 		src.rollcount++
@@ -72,6 +71,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent)
 
 	rc_eval(atom/eval_item)
 		. = ..()
+		if(rollcount >= count) return // standard skip-if-complete
 		if(eval_item.reagents)
 			var/C
 			if(islist(src.chemname))
@@ -101,6 +101,7 @@ ABSTRACT_TYPE(/datum/rc_entry/stack)
 
 	rc_eval(obj/item/eval_item)
 		. = ..()
+		if(rollcount >= count) return // standard skip-if-complete
 		if(!istype(eval_item)) return //if it's not an item, it's not a stackable
 		if(eval_item.type == typepath || (typepath_alt && eval_item.type == typepath_alt))
 			rollcount += eval_item.amount
@@ -125,6 +126,7 @@ ABSTRACT_TYPE(/datum/rc_entry/seed)
 
 	rc_eval(atom/eval_item)
 		. = ..()
+		if(rollcount >= count) return // standard skip-if-complete
 		gene_count = 0
 
 		if(!istype(eval_item,/obj/item/seed)) return
@@ -172,6 +174,8 @@ ABSTRACT_TYPE(/datum/req_contract)
 	var/req_class = MISC_CONTRACT
 	///Requisition code used for standard contracts; is automatically generated if not specified, but can be manually set if desired
 	var/req_code
+	///Contract's roll weight; dictates frequency of market appearance, or probability of selection for special order event. Can be left default
+	var/weight = 100
 
 	///A baseline amount of cash you'll be given for fulfilling the requisition; this is modified by entries
 	var/payout = 0
@@ -229,11 +233,7 @@ ABSTRACT_TYPE(/datum/req_contract)
 		for(var/atom/A in contents)
 			LAGCHECK(LAG_LOW)
 			for(var/datum/rc_entry/shoppin in rc_entries)
-				var/eval
-				try
-					eval = shoppin.rc_eval(A)
-				catch()
-				if(eval) //found something that the requisition asked for, let it know
+				if(shoppin.rc_eval(A)) //found something that the requisition asked for, let it know
 					contents_to_cull |= A
 
 		for(var/datum/rc_entry/shopped in rc_entries)

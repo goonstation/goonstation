@@ -26,12 +26,11 @@
 	var/list/datum/req_contract/req_contracts = list() // Requisition contracts for export, listed in clearinghouse
 	var/max_req_contracts = 5 // Maximum contracts active in clearinghouse at one time (refills to this at each cycle)
 	var/has_pinned_contract = 0 // One contract at a time may be pinned to prevent it from disappearing in cycle
-
-	var/list/datum/req_contract/special_orders = list() // Special orders: contract manually sent by interested party, do not count towards limit
-
 	var/civ_contracts_active = 0 // To ensure at least one contract of each type is available
 	var/aid_contracts_active = 0 // after market shift, these keep track of that
 	var/sci_contracts_active = 0
+
+	var/list/datum/req_contract/special_orders = list() // Special orders: contract manually sent by interested party, do not count towards limit
 
 	var/list/supply_requests = list() // Pending requests, of type /datum/supply_order
 	var/list/supply_history = list() // History of all approved requests, of type string
@@ -79,22 +78,30 @@
 			return
 		var/contract2make //picking path from which to generate the newly-added contract
 		if(src.civ_contracts_active == 0)
-			contract2make = pick(concrete_typesof(/datum/req_contract/civilian))
+			contract2make = pick_req_contract(/datum/req_contract/civilian)
 		else if(src.aid_contracts_active == 0)
-			contract2make = pick(concrete_typesof(/datum/req_contract/aid))
+			contract2make = pick_req_contract(/datum/req_contract/aid)
 		else if(src.sci_contracts_active == 0)
-			contract2make = pick(concrete_typesof(/datum/req_contract/scientific))
+			contract2make = pick_req_contract(/datum/req_contract/scientific)
 		else
 			switch(rand(1,10)) //civ weighted slightly higher
-				if(1 to 4) contract2make = pick(concrete_typesof(/datum/req_contract/civilian))
-				if(5 to 7) contract2make = pick(concrete_typesof(/datum/req_contract/aid))
-				if(8 to 10) contract2make = pick(concrete_typesof(/datum/req_contract/scientific))
+				if(1 to 4) contract2make = pick_req_contract(/datum/req_contract/civilian)
+				if(5 to 7) contract2make = pick_req_contract(/datum/req_contract/aid)
+				if(8 to 10) contract2make = pick_req_contract(/datum/req_contract/scientific)
 		var/datum/req_contract/contractmade = new contract2make
 		switch(contractmade.req_class)
 			if(CIV_CONTRACT) src.civ_contracts_active++
 			if(AID_CONTRACT) src.aid_contracts_active++
 			if(SCI_CONTRACT) src.sci_contracts_active++
 		src.req_contracts += contractmade
+
+	proc/pick_req_contract(var/contract_path)
+		var/order_weights = list()
+		for(var/type in concrete_typesof(contract_path))
+			var/datum/req_contract/O = type
+			order_weights[type] = initial(O.weight)
+		var/picked_contract = weighted_pick(order_weights)
+		return picked_contract
 
 	proc/timeleft()
 		var/timeleft = src.time_until_shift - ticker.round_elapsed_ticks

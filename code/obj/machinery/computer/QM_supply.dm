@@ -1048,7 +1048,8 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	src.temp += "for your use, even through market shifts.<br><br>"
 	src.temp += "When fulfilling third-party contracts, you <B>must</B><br>"
 	src.temp += "send the included requisition sheet; please be aware<br>"
-	src.temp += "<B>returns are not provided for third-party contracts.</B>"
+	src.temp += "<B>third-party returns are at clients' discretion</B><br>"
+	src.temp += "and your shipment may not be returned if insufficient."
 	for (var/datum/req_contract/RC in shippingmarket.req_contracts)
 		src.temp += "<h3>[RC.name][RC.pinned ? " (Pinned)" : null]</h3>"
 		src.temp += "Contract Reward:"
