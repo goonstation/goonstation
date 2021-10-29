@@ -7,7 +7,7 @@
 	attack_self(var/mob/user as mob)
 
 		if(ON_COOLDOWN(src, "vend_cooldown", 10 SECONDS))
-			user.show_text("It's still recharging, give it a moment. ", "red")
+			user.show_text("It's still recharging, give it a moment.", "red")
 
 		else
 			new /obj/item/reagent_containers/food/snacks/lollipop/fruit(get_turf(src))
