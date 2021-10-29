@@ -1950,7 +1950,7 @@ datum
 				else if (method == TOUCH)
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
-						if((H.wear_mask?.c_flags & COVERSEYES) || (H.head?.c_flags & COVERSEYES))
+						if((H.wear_mask?.c_flags & COVERSEYES) || (H.head?.c_flags & COVERSEYES) || H.glasses && istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
 							return
 						else H.reagents.add_reagent("capsaicin",round(volume_passed/5))
 						if(prob(50))
