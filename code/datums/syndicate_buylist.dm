@@ -981,9 +981,14 @@ This is basically useless for anyone but miners.
 /datum/syndicate_buylist/surplus/rifle
 	name = "Old Hunting Rifle"
 	item = /obj/item/gun/kinetic/hunting_rifle
-	cost = 7
+	cost = 3
 	desc = "An old hunting rifle, comes with only four bullets. Use them wisely."
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution, /datum/game_mode/spy_theft)
+
+	spy
+		cost = 5
+		blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+		not_in_crates = TRUE
 
 /datum/syndicate_buylist/surplus/bananagrenades
 	name = "Banana Grenades"
