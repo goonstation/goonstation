@@ -460,7 +460,8 @@
 				for(var/L as anything in cryo_unit.stored_crew_names)
 					stored += "<i>- [L]<i><br>"
 			for(var/datum/db_record/t as anything in data_core.general.records)
-				t1 += "<B>[t["name"]]</B> - [t["rank"]]<br><br><b>In Cryogenic Storage:</b><hr>[stored]<BR>"
+				t1 += "<B>[t["name"]]</B> - [t["rank"]]<br>"
+			t1 += "<br><b>In Cryogenic Storage:</b><hr>[stored]<br>"
 			P.info = t1
 			P.name = "paper- 'Crew Manifest'"
 			src.printing = null
