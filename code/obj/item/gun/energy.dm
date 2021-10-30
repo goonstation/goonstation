@@ -1016,7 +1016,7 @@
 	item_state = "bullpup"
 	uses_multiple_icon_states = 1
 	force = 5.0
-	cell_type = /obj/item/ammo/power_cell/self_charging/big
+	cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig
 	muzzle_flash = "muzzle_flash_plaser"
 	mats = list("MET-3"=7, "CRY-1"=13, "POW-2"=10)
 
@@ -1033,17 +1033,6 @@
 			ratio = round(ratio, 0.25) * 100
 			src.icon_state = "bullpup[ratio]"
 			return
-
-/obj/item/gun/energy/laser_gun/pred/lowcharge
-	name = "shiny laser rifle"
-	desc = "This is a newer model of laser rifles focusing on power efficency. Thanks to this reduced cost of firing, a weaker and far cheaper battery can be used to get the same performance as older models at a lesser cost."
-	cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig // Same performance as normal one due to halved laser cost.
-
-	New()
-		..()
-		set_current_projectile(new/datum/projectile/laser/pred/cheap)
-		projectiles = list(new/datum/projectile/laser/pred/cheap)
-
 
 /obj/item/gun/energy/laser_gun/pred/vr
 	name = "advanced laser gun"
