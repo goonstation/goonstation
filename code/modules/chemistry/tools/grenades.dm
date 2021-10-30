@@ -159,8 +159,11 @@
 		if (src.name == "grenade")
 			for (var/obj/item/reagent_containers/glass/G in src.beakers)
 				if (G.reagents.total_volume) log_reagents += "[log_reagents(G)] "
-		message_admins("[log_reagents ? "Custom grenade" : "Grenade ([src])"] primed at [log_loc(src)] by [key_name(user)].")
-		logTheThing("combat", user, null, "primes a [log_reagents ? "custom grenade" : "grenade ([src.type])"] at [log_loc(user)].[log_reagents ? " [log_reagents]" : ""]")
+
+		//I do not give a flying FUCK about what goes on in the sims. =I
+		if(!istype(get_area(epicenter), /area/sim)) && istype(src.source))
+			message_admins("[log_reagents ? "Custom grenade" : "Grenade ([src])"] primed at [log_loc(src)] by [key_name(user)].")
+			logTheThing("combat", user, null, "primes a [log_reagents ? "custom grenade" : "grenade ([src.type])"] at [log_loc(user)].[log_reagents ? " [log_reagents]" : ""]")
 
 		boutput(user, "<span class='alert'>You prime the grenade! 3 seconds!</span>")
 		src.state = 1
