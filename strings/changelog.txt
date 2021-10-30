@@ -1,5 +1,7 @@
 
 (t)sat oct 30 21
+(u)pali
+(+)Falling over or laying down over a puddle of fluid will make you splash into it now
 (u)Flourish
 (+)You can now print up to five QM barcodes at a time.
 (+)The automatic lockers in the brig now start anchored.
