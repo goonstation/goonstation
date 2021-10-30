@@ -287,22 +287,13 @@
 		O.bioHolder.CopyOther(src.bioHolder, copyActiveEffects = 0)
 		if (isghostrestrictedz(O.z) && !restricted_z_allowed(O, get_turf(O)) && !(src.client && src.client.holder))
 			O.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
-		if (client) client.color = null  //needed for mesons dont kill me thx - ZeWaka
-		if (src.client && src.client.holder && src.stat !=2)
-			// genuinely not sure what this is here for since we're setting the
-			// alive/dead status of the *ghost*.
-			// this seems to have made bizarre issues where
-			// some parts would think you were still alive even as a ghost
-			setalive(O)
-
-		// so, fuck that, you're dead, shithead. get over it.
-		setdead(O)
 
 		src.mind?.transfer_to(O)
 		src.ghost = O
 		if(istype(get_area(src),/area/afterlife))
 			qdel(src)
 
+		respawn_controller.subscribeNewRespawnee(O.ckey)
 		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[O.ckey]
 		if(istype(respawnee))
 			respawnee.update_time_display()
