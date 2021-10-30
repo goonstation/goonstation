@@ -1277,7 +1277,6 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	icon = 'icons/misc/AzungarAdventure.dmi'
 	icon_state = "lava_floor"
 	anchored = TRUE
-	event_handler_flags = USE_HASENTERED
 
 	New()
 		. = ..()

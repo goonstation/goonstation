@@ -145,7 +145,6 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_NOSHADOW_ABOVE
 	mouse_opacity = 0
-	event_handler_flags = USE_HASENTERED
 
 	New()
 		..()

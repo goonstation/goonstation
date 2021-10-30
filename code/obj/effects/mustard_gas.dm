@@ -10,7 +10,6 @@
 	anchored = 0.0
 	mouse_opacity = 0
 	var/amount = 6.0
-	event_handler_flags = USE_HASENTERED
 
 /obj/effects/mustard_gas/New()
 	..()

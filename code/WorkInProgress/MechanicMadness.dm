@@ -795,7 +795,7 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "ibeam"
 	anchored = 1
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	var/obj/item/mechanics/triplaser/holder
 
@@ -929,7 +929,7 @@
 	can_rotate = 1
 	cabinet_banned = true // non-functional
 	var/active = 0
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	New()
 		..()

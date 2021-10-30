@@ -19,7 +19,6 @@
 	anchored = 1
 	density = 0
 	opacity = 0
-	event_handler_flags = USE_HASENTERED
 
 	Crossed(atom/movable/A)
 		..()
@@ -150,7 +149,6 @@
 	density = 0
 	opacity = 0
 	var/delete = 1
-	event_handler_flags = USE_HASENTERED
 	var/spawn_time = 0
 
 	New()
@@ -184,7 +182,6 @@
 	anchored = 1
 	density = 0
 	opacity = 0
-	event_handler_flags = USE_HASENTERED
 
 	Crossed(atom/movable/A)
 		..()

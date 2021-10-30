@@ -93,7 +93,7 @@
 	anchored = 0
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "bbasket0"
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 	var/mounted = 0
 	var/active = 0
 	var/probability = 40

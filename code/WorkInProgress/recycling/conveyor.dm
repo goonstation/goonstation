@@ -28,7 +28,7 @@
 	var/move_lag = 4	// The lag at which the movement happens. Lower = faster
 	var/obj/machinery/conveyor/next_conveyor = null
 	var/obj/machinery/conveyor_switch/owner = null
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 
 /obj/machinery/conveyor/north

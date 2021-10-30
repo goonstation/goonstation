@@ -480,7 +480,7 @@
 	density = 0
 	luminosity = 1
 	invisibility = INVIS_ALWAYS
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 	var/power = 0
 	var/active = 1
 	var/obj/machinery/power/pt_laser/source = null

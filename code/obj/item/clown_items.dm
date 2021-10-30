@@ -20,7 +20,7 @@ VUVUZELA
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 5
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	var/mob/living/carbon/human/last_touched
 

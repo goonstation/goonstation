@@ -2751,7 +2751,7 @@
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	anchored = 1.0
 	flags = TABLEPASS
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	disposing()
 		if (src.next)
@@ -2807,7 +2807,7 @@
 	//var/limit = 24
 	anchored = 1.0
 	flags = TABLEPASS
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	New(location, newLimit)
 		..()

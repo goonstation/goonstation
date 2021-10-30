@@ -636,7 +636,6 @@ SYNDICATE DRONE FACTORY AREAS
 	density = 0
 	var/ready = 1
 	var/resets = 0
-	event_handler_flags = USE_HASENTERED
 
 	Crossed(atom/movable/AM as mob|obj)
 		..()
@@ -717,7 +716,6 @@ SYNDICATE DRONE FACTORY AREAS
 	anchored = 1
 	density = 0
 	var/active = 0
-	event_handler_flags = USE_HASENTERED
 
 	Crossed(atom/movable/AM as mob|obj)
 		..()
@@ -841,7 +839,6 @@ SYNDICATE DRONE FACTORY AREAS
 	anchored = 1
 	density = 0
 	var/active = 0
-	event_handler_flags = USE_HASENTERED
 
 	Crossed(atom/movable/AM as mob|obj)
 		..()

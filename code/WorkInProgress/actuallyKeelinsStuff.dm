@@ -2077,7 +2077,7 @@ Returns:
 	opacity = 0
 	invisibility = INVIS_ALWAYS_ISH
 	var/image/oimage = null
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	New()
 		oimage = image('icons/misc/exploration.dmi',src,"sfrag")
@@ -2111,7 +2111,7 @@ Returns:
 	anchored = 1
 	density = 0
 	opacity = 0
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	Crossed(atom/movable/A)
 		if(!ismob(A) || !isliving(A)) return

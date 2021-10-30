@@ -11,7 +11,7 @@
 	layer = OBJ_LAYER + 0.9
 	plane = PLANE_NOSHADOW_BELOW
 	mouse_opacity = 0
-	event_handler_flags = USE_HASENTERED | USE_CANPASS
+	event_handler_flags = USE_CANPASS
 	var/foamcolor
 	var/amount = 3
 	var/expand = 1

@@ -9,7 +9,7 @@
 	icon_state = "mine"
 	is_syndicate = 1
 	mats = 6
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 	var/suppress_flavourtext = 0
 	var/armed = 0
 	var/used_up = 0

@@ -4,7 +4,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "atmos_field"
 	layer = OBJ_LAYER+0.5
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
 
 	New()
 		..()

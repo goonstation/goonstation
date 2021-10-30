@@ -8,7 +8,7 @@
 	density = 0
 	opacity = 0
 	var/last_score = 0
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	Crossed(atom/movable/M)
 		..()

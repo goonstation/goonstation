@@ -9,7 +9,6 @@
 	anchored = 1
 	density = 0
 	flags = NOSPLASH
-	event_handler_flags = USE_HASENTERED
 	plane = PLANE_NOSHADOW_BELOW
 
 	var/open = 0 //is it open
@@ -320,7 +319,6 @@
 	name = "industrial loading chute"
 	desc = "Totally just a giant disposal chute"
 	icon = 'icons/obj/delivery.dmi'
-	event_handler_flags = USE_HASENTERED
 
 	New()
 		..()

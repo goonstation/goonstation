@@ -8,7 +8,6 @@
 	layer = EFFECTS_LAYER_UNDER_3
 	mouse_opacity = 0
 	var/float_anim = 1
-	event_handler_flags = USE_HASENTERED
 
 	New()
 		..()
