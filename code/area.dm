@@ -3195,6 +3195,10 @@ ABSTRACT_TYPE(/area/station/catwalk)
 		name = "firing range"
 		icon_state = "blue"
 
+/area/syndicate_station/medbay
+		name = "medical bay"
+		icon_state = "purple"
+
 // end syndie //
 
 /// Wizard den area for the wizard shuttle spawn

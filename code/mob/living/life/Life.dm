@@ -79,9 +79,11 @@
 	last_life_tick = TIME
 
 /mob/living/disposing()
-	..()
 	for (var/datum/lifeprocess/L in lifeprocesses)
 		remove_lifeprocess(L)
+	lifeprocesses.len = 0
+	lifeprocesses = null
+	..()
 
 /mob/living/carbon/human
 	var/list/heartbeatOverlays = list()
@@ -539,6 +541,8 @@
 			L.process()
 
 	force_laydown_standup() //immediately force a laydown
+		if(!lifeprocesses)
+			return
 		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/stuns_lying]
 		if (L)
 			L.process()

@@ -1406,7 +1406,7 @@ DEFINE_FLOORS(grasslush/thin,
 		user.remove_pulling()
 		return
 	//if the object being pulled's loc is another object (being in their contents) return
-	if (isobj(user.pulling.loc))
+	if (!isturf(user.pulling.loc))
 		var/obj/container = user.pulling.loc
 		if (user.pulling in container.contents)
 			return

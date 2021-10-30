@@ -824,7 +824,7 @@
 	icon_state = "gr_helmet"
 	setupProperties()
 		..()
-		setProperty("meleeprot_head", 7)
+		setProperty("meleeprot_head", 2)
 
 /*/obj/item/clothing/head/helmet/escape
 	name = "escape helmet"

@@ -5,7 +5,6 @@
 	artifact = 1
 	mat_changename = 0
 	can_recycle = 0
-	can_chug = 0
 
 	New(var/loc, var/forceartiorigin)
 		..()
