@@ -52,7 +52,7 @@
 				return
 		return 1
 
-	HasEntered(atom/movable/AM as mob|obj, atom/OldLoc)
+	Crossed(atom/movable/AM as mob|obj)
 		..()
 		if (!src.occupant && isghostdrone(AM) && !src.transition)
 			src.turnOn(AM)
@@ -147,7 +147,7 @@
 	mats = 0
 	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
-	HasEntered(atom/movable/AM as mob|obj, atom/OldLoc)
+	Crossed(atom/movable/AM as mob|obj)
 		if (!src.occupant && istype(AM, /obj/item/ghostdrone_assembly) && !src.transition)
 			src.createDrone(AM)
 		..()

@@ -21,7 +21,7 @@
 					if (!A.anchored)
 						animate_bumble(A, floatspeed = 8, Y1 = 3, Y2 = 0)
 
-	HasEntered(atom/A)
+	Crossed(atom/movable/A)
 		if (src.float_anim)
 			if (istype(A, /atom/movable) && !isobserver(A) && !istype(A, /mob/living/critter/small_animal/bee) && !istype(A, /obj/critter/domestic_bee))
 				var/atom/movable/AM = A

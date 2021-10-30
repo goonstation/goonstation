@@ -85,7 +85,8 @@
 				break
 			if(drive) activate()
 
-	HasEntered(atom/A)
+	Crossed(atom/movable/A)
+		..()
 		if (istype(A, /mob/dead) || isintangible(A) || iswraith(A)) return
 		return_if_overlay_or_effect(A)
 		activate()
@@ -179,7 +180,8 @@
 				break
 			if(drive) activate()
 
-	HasEntered(atom/A)
+	Crossed(atom/movable/A)
+		..()
 		if (istype(A, /mob/dead) || isintangible(A) || iswraith(A)) return
 
 		if (!trigger_when_no_match)

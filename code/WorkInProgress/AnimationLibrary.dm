@@ -1284,7 +1284,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		src.plane = PLANE_UNDERFLOOR - 1
 		src.icon_state = pick("lava_floor", "lava_floor_bubbling", "lava_floor_bubbling2")
 
-	HasEntered(atom/movable/AM, atom/OldLoc)
+	Crossed(atom/movable/AM)
 		. = ..()
 		if (isliving(AM))
 			var/mob/living/M = AM

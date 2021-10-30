@@ -350,7 +350,7 @@
 			return
 		else ..()
 	//stolen from glass shard
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
 		var/mob/M = AM
 		if(iswerewolf(M))
 			M.changeStatus("weakened", 3 SECONDS)

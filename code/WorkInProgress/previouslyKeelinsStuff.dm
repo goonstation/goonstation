@@ -569,7 +569,8 @@ var/reverse_mode = 0
 	my_target.show_message("<span class='alert'><B>[src] has been attacked by [my_target] </B></span>", 1) //Lazy.
 	return
 
-/obj/fake_attacker/HasEntered(var/mob/M, somenumber)
+/obj/fake_attacker/Crossed(atom/movable/M)
+	..()
 	if (M == my_target)
 		step_away(src,my_target,2)
 		if (prob(30))

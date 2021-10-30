@@ -126,7 +126,7 @@
 		walk(A, movedir, move_lag, (32 / move_lag) * world.tick_lag)
 		A.glide_size = (32 / move_lag) * world.tick_lag
 
-/obj/machinery/conveyor/HasEntered(var/atom/movable/AM, atom/oldloc)
+/obj/machinery/conveyor/Crossed(atom/movable/AM)
 	..()
 	if(status & (BROKEN | NOPOWER))
 		return

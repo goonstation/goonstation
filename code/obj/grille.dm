@@ -528,7 +528,7 @@
 
 		return ..()
 
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
 		..()
 		if (src.shock_when_entered)
 			if (ismob(AM))

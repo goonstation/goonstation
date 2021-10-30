@@ -118,7 +118,8 @@
 		src.triggered(user)
 		return 1
 
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if (AM == src || !(istype(AM, /obj/vehicle) || istype(AM, /obj/machinery/bot) || ismob(AM)))
 			return
 		if (ismob(AM) && (!isliving(AM) || isintangible(AM) || iswraith(AM)))

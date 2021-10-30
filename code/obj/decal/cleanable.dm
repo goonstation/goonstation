@@ -108,7 +108,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			var/turf/F = src.loc
 			F.messy++
 
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
 		..()
 		if (src.qdeled || src.disposed)
 			return
@@ -325,7 +325,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 				src.color = rgb(reagent.fluid_r, reagent.fluid_g, reagent.fluid_b)
 
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
 		..()
 		if (!istype(AM))
 			return
@@ -660,7 +660,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	can_dry = 1
 	can_fluid_absorb = 0
 
-	HasEntered(AM)
+	Crossed(atom/movable/AM)
 		. = ..()
 		if(prob(4))
 			src.reagents.reaction(AM, TOUCH)
@@ -677,7 +677,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	can_dry = 1
 	can_fluid_absorb = 0
 
-	HasEntered(AM)
+	Crossed(atom/movable/AM)
 		. = ..()
 		if(!ishuman(AM))
 			return
@@ -1454,7 +1454,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		if (T)
 			updateSurroundingSalt(T)
 
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
 		..()
 		if (istype(AM, /obj/critter/slug))
 			var/obj/critter/slug/S = AM
@@ -1644,7 +1644,8 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	can_dry = 1
 	var/do_bang = 0
 
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if( !src.dry || !(isliving(AM) || isobj(AM)) ) return
 		src.bang()
 

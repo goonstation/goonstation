@@ -117,11 +117,10 @@
 		return
 	return
 
-/obj/warp_portal/HasEntered(AM as mob|obj)
+/obj/warp_portal/Crossed(atom/movable/AM as mob|obj)
+	..()
 	SPAWN_DBG(0)
 		src.teleport(AM)
-		return
-	return
 
 /obj/warp_portal/New()
 	..()

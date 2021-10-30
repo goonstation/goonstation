@@ -21,7 +21,7 @@
 		. = ..()
 		STOP_TRACKING
 
-	HasEntered(atom/movable/O)
+	Crossed(atom/movable/O)
 		if (!istype(O, /mob/dead/observer))
 			return ..()
 		var/mob/dead/observer/G = O

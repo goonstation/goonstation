@@ -210,6 +210,7 @@
 		set_real_color()
 
 	Crossed(var/atom/A)
+		..()
 		A.temperature_expose(null, temperature, volume)
 		if (isliving(A))
 			var/mob/living/H = A

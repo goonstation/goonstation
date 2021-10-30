@@ -30,9 +30,10 @@
 				M.emote("cough")
 	return
 
-/obj/effects/bad_smoke/HasEntered(mob/living/carbon/M as mob )
+/obj/effects/bad_smoke/Crossed(atom/movable/AM)
 	..()
-	if(iscarbon(M))
+	if(iscarbon(AM))
+		var/mob/living/carbon/M = AM
 		if (issmokeimmune(M))
 			return
 		else

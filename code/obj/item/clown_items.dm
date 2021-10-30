@@ -28,7 +28,8 @@ VUVUZELA
 	last_touched = user
 	..()
 
-/obj/item/bananapeel/HasEntered(AM as mob|obj)
+/obj/item/bananapeel/Crossed(atom/movable/AM as mob|obj)
+	..()
 	if(istype(src.loc, /turf/space))
 		return
 	if (iscarbon(AM))

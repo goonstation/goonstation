@@ -64,7 +64,8 @@
 		else
 			..(user)
 
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if (isobserver(AM))
 			return
 		else if (isliving(AM))
@@ -585,7 +586,7 @@
 		if(!scalpel_surgery(M,user)) return ..()
 		else return
 
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
 			if(H.getStatusDuration("stunned") || H.getStatusDuration("weakened")) // nerf for dragging a person and a shard to damage them absurdly fast - drsingh

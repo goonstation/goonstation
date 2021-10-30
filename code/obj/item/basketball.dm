@@ -151,7 +151,8 @@
 							src.pixel_x = -20
 		return
 
-	HasEntered(atom/A)
+	Crossed(atom/movable/A)
+		..()
 		if (src.active)
 			return
 		if (istype(A, /obj/item/bballbasket)) // oh for FUCK'S SAKE

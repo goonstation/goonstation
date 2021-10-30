@@ -312,7 +312,7 @@ proc/Create_Tommyname()
 	invisibility = INVIS_ALWAYS
 	event_handler_flags = USE_HASENTERED
 
-	HasEntered(atom/movable/AM)
+	Crossed(atom/movable/AM)
 		..()
 		on_trigger(AM)
 

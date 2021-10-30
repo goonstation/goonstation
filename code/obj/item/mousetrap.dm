@@ -249,7 +249,7 @@
 			..()
 		return
 
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
 		if ((ishuman(AM)) && (src.armed))
 			var/mob/living/carbon/H = AM
 			if (H.m_intent == "run")

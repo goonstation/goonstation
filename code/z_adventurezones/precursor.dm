@@ -1347,7 +1347,8 @@
 	var/active = 0
 	event_handler_flags = USE_HASENTERED
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if(active) return
 		if(ismob(AM))
 			if(AM:client)
@@ -1367,7 +1368,8 @@
 	var/active = 0
 	event_handler_flags = USE_HASENTERED
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if(active) return
 		if(ismob(AM))
 			if(AM:client)

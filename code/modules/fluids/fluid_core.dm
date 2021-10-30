@@ -216,7 +216,7 @@ var/mutable_appearance/fluid_ma
 		src.group.reagents.add_reagent(reagent_name,volume)
 
 	//incorporate touch_modifier?
-	HasEntered(atom/A, atom/oldloc)
+	Crossed(atom/movable/A)
 		..()
 		if (!src.group || !src.group.reagents || src.disposed || istype(A,/obj/fluid))
 			return
@@ -231,7 +231,7 @@ var/mutable_appearance/fluid_ma
 					src.floated_atoms += AM*/
 
 		if (A.event_handler_flags & USE_FLUID_ENTER)
-			A.EnteredFluid(src,oldloc)
+			A.EnteredFluid(src, A.last_turf)
 
 	proc/force_mob_to_ingest(var/mob/M, var/mult = 1)//called when mob is drowning
 		if (!M) return

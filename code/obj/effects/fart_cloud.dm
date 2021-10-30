@@ -44,9 +44,10 @@
 		R.reagents.add_reagent("jenkem",1)
 	return
 
-/obj/effects/fart_cloud/HasEntered(mob/living/carbon/human/R as mob )
+/obj/effects/fart_cloud/Crossed(atom/movable/AM)
 	..()
-	if (ishuman(R))
+	if (ishuman(AM))
+		var/mob/living/carbon/human/R = AM
 		if (R.internal != null && R.wear_mask && (R.wear_mask.c_flags & MASKINTERNALS))
 			return
 		if (R == src.fartowner)

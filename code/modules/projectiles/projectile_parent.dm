@@ -320,6 +320,7 @@
 		src.collide(A)
 
 	Crossed(var/atom/movable/A)
+		..()
 		if (!istype(A))
 			return // can't happen will happen
 		if (!A.CanPass(src, get_step(src, A.dir), 1, 0))

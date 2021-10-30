@@ -43,7 +43,8 @@
 		..()
 		update_icon()
 
-	HasEntered(atom/movable/A)
+	Crossed(atom/movable/A)
+		..()
 		if (ismob(A))
 			src.collapsing++
 			SPAWN_DBG(1 SECOND)

@@ -1521,7 +1521,7 @@ var/datum/action_controller/actions
 
 			var/turf/T = get_turf(M)
 			if (T.active_liquid)
-				T.active_liquid.HasEntered(M, T)
+				T.active_liquid.Crossed(M)
 
 		else
 			interrupt(INTERRUPT_ALWAYS)

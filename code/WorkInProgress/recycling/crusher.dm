@@ -23,7 +23,7 @@
 	if(!(AM.temp_flags & BEING_CRUSHERED))
 		actions.start(new /datum/action/bar/crusher(AM), src)
 
-/obj/machinery/crusher/HasEntered(atom/movable/AM, atom/OldLoc)
+/obj/machinery/crusher/Crossed(atom/movable/AM)
 	. = ..()
 	if(AM.flags & UNCRUSHABLE)
 		return

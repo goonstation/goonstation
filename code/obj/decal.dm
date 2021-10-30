@@ -520,7 +520,8 @@ obj/decal/fakeobjects/teleport_pad
 	plane = PLANE_FLOOR
 	event_handler_flags = USE_HASENTERED
 
-/obj/decal/icefloor/HasEntered(var/atom/movable/AM)
+/obj/decal/icefloor/Crossed(atom/movable/AM)
+	..()
 	if (iscarbon(AM))
 		var/mob/M =	AM
 		// drsingh fix for undefined variable mob/living/carbon/monkey/var/shoes

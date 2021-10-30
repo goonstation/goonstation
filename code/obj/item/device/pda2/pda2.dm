@@ -222,7 +222,8 @@
 		setup_default_cartridge = /obj/item/disk/data/cartridge/clown
 		event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
-		HasEntered(AM as mob|obj) //Clown PDA is slippery.
+		Crossed(atom/movable/AM)
+			..()
 			if (istype(src.loc, /turf/space))
 				return
 			if (iscarbon(AM))

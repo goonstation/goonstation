@@ -265,15 +265,13 @@
 	//return !(src.flags & ON_BORDER) || src.CanPass(mover, target, 1, 0)
 	return 1 // fuck it
 
-/atom/proc/HasEntered(atom/movable/AM as mob|obj, atom/OldLoc)
-	return
-
 /atom/Crossed(atom/movable/AM)
-	. = ..()
-	return_if_overlay_or_effect(AM)
-	if(src.event_handler_flags & USE_HASENTERED)
-		src.HasEntered(AM, AM.last_turf)
+	SHOULD_CALL_PARENT(TRUE)
+	#ifdef SPACEMAN_DMM // idk a tiny optimization to omit the parent call here, I don't think it actually breaks anything in byond internals
+	..()
+	#endif
 	if(src.material && src.material.triggersOnEntered)
+		return_if_overlay_or_effect(AM)
 		src.material.triggerOnEntered(src, AM)
 
 /atom/proc/ProximityLeave(atom/movable/AM as mob|obj)

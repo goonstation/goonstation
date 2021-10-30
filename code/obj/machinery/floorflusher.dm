@@ -117,7 +117,8 @@
 
 	// mouse drop another mob or self
 
-	HasEntered(atom/AM)
+	Crossed(atom/movable/AM)
+		..()
 		//you can fall in if its open
 		if (open == 1)
 			if (isobj(AM))
@@ -291,7 +292,7 @@
 		flick("floorflush_a", src)
 		src.icon_state = "floorflush_o"
 		for(var/atom/movable/AM in src.loc)
-			src.HasEntered(AM) // try to flush them
+			src.Crossed(AM) // try to flush them
 
 	proc/closeup()
 		open = 0
@@ -326,13 +327,10 @@
 		SPAWN_DBG(1 SECOND)
 			openup()
 
-	Crossed(atom/movable/AM)
-		if (AM && AM.loc == src.loc)
-			HasEntered(AM)
-
 		return 1
 
-	HasEntered(atom/movable/AM)
+	Crossed(atom/movable/AM)
+		..()
 		if (open == 1)
 			if (isobj(AM))
 				if (AM.anchored) return

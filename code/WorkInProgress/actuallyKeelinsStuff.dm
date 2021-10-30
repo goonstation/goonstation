@@ -614,6 +614,7 @@ Returns:
 		return
 
 	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if (isobserver(AM))
 			return
 		AM.set_loc(locate(src.x, src.y, src.targetZ))
@@ -2088,7 +2089,7 @@ Returns:
 		del(oimage)
 		..()
 
-	HasEntered(atom/A)
+	Crossed(atom/movable/A)
 		if(!istype(A,/mob/dead/hhghost)) return
 		var/mob/dead/hhghost/M = A
 		M.adventure_variables.hh_soul += 1
@@ -2112,7 +2113,7 @@ Returns:
 	opacity = 0
 	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
-	HasEntered(atom/A)
+	Crossed(atom/movable/A)
 		if(!ismob(A) || !isliving(A)) return
 		qdel(src)
 		var/mob/living/M = A
@@ -2260,6 +2261,7 @@ Returns:
 		return
 
 	Crossed(atom/movable/O)
+		..()
 		if(!canTrigger) return
 		canTrigger = 0
 		SPAWN_DBG(procCooldown) canTrigger = 1

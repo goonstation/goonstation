@@ -149,7 +149,8 @@
 			expand = 0
 
 
-/obj/effects/foam/HasEntered(var/atom/movable/AM)
+/obj/effects/foam/Crossed(atom/movable/AM)
+	..()
 	if (metal) //If we've transferred our contents then there's another foam tile that can do it thing.
 		return
 

@@ -809,7 +809,8 @@
 		else
 			holder.tripped()
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if (isobserver(AM) || !AM.density) return
 		if (!istype(AM, /obj/mechbeam))
 			SPAWN_DBG(0) tripped()
@@ -970,7 +971,8 @@
 		thr?.user = (owner || usr)
 		return
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if(level == 2) return
 		if(active)
 			throwstuff(AM)
@@ -2558,6 +2560,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
 
 	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if (level == 2 || isobserver(AM))
 			return
 		if (limiter && (ticker.round_elapsed_ticks < limiter))

@@ -19,13 +19,14 @@
 			return 0 // completely opaque to air
 		return 1
 
-	HasEntered(atom/A, turf/OldLoc)
-		if (ishuman(A) && !locate(/obj/atmos_field, OldLoc)) // stepping around in the field while you're already inside it is fine
+	Crossed(atom/movable/A)
+		..()
+		if (ishuman(A) && !locate(/obj/atmos_field, A.last_turf)) // stepping around in the field while you're already inside it is fine
 			var/mob/living/carbon/human/M = A
 			if (prob(50))
 				M.shock(src, 10000, "chest", 1, 1)
 				M.lying = 1 // prevent them from running into the field multiple times
-				M.throw_at(get_edge_target_turf(M, get_dir(M, OldLoc)), 25, 4)
+				M.throw_at(get_edge_target_turf(M, get_dir(M, M.last_turf)), 25, 4)
 
 	proc/update_nearby_tiles(need_rebuild)
 		var/turf/simulated/source = loc

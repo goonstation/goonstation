@@ -1279,7 +1279,7 @@
 				L.TakeDamage("chest", brute=12)
 			src.split()
 
-	HasEntered(atom/movable/AM, atom/OldLoc)
+	Crossed(atom/movable/AM)
 		. = ..()
 		if(isliving(AM))
 			var/mob/living/L = AM

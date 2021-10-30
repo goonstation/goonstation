@@ -2763,7 +2763,8 @@
 		src.hit()
 		return
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if (istype(AM, /obj/beam) || istype(AM, /obj/critter/aberration))
 			return
 		SPAWN_DBG( 0 )
@@ -2829,7 +2830,8 @@
 		..()
 
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if(isobserver(AM) || isintangible(AM)) return
 		if (istype(AM, /obj/beam))
 			return
@@ -3276,7 +3278,7 @@
 		src.hit()
 		return
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
 		if (istype(AM, /obj/beam) || istype(AM, /obj/critter/aberration))
 			return
 		SPAWN_DBG( 0 )

@@ -200,7 +200,7 @@
 		src.maptext_width = 128
 		*/
 
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
 		if (AM == src)
 			// jesus christ don't teleport OURSELVES
 			return

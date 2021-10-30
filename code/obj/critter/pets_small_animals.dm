@@ -370,7 +370,7 @@
 		src.catnip = 45
 		src.visible_message("[src.name]'s eyes dilate.")
 
-	HasEntered(mob/living/carbon/M as mob)
+	Crossed(atom/movable/M as mob)
 		..()
 		if (src.sleeping || !src.alive)
 			return
