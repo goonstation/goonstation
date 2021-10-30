@@ -318,6 +318,8 @@
 	fancy
 		icon_state = "hop-fancy"
 		item_state = "hop-fancy"
+	dress
+		icon_state = "hop-dress"
 
 /obj/item/clothing/under/rank/head_of_securityold
 	name = "head of security's uniform"
