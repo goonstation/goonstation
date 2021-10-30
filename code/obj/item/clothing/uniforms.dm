@@ -319,22 +319,6 @@
 		icon_state = "hop-fancy"
 		item_state = "hop-fancy"
 
-	dress
-		icon_state = "hop-dress"
-		item_state = "hop-dress"
-
-	navy
-		icon_state = "hop-alt"
-		item_state = "hop-alt"
-
-	dress_navy
-		icon_state = "hop-dress-alt"
-		item_state = "hop-dress-alt"
-
-	fancy_navy
-		icon_state = "hop-fancy-alt"
-		item_state = "hop-fancy-alt"
-
 /obj/item/clothing/under/rank/head_of_securityold
 	name = "head of security's uniform"
 	desc = "It's bright red and rather crisp, much like security's victims tend to be."

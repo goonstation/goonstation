@@ -25184,7 +25184,6 @@
 /obj/item/clothing/under/suit/hop/april_fools,
 /obj/item/clothing/gloves/ring/gold,
 /obj/item/clothing/suit/armor/hopcoat,
-/obj/random_item_spawner/hop_clothes/few,
 /turf/simulated/floor/carpet/purple/standard/edge/nw,
 /area/crashed_hop_shuttle)
 "kag" = (
