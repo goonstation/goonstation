@@ -746,7 +746,7 @@ PIPE BOMBS + CONSTRUCTION
 					user.mind.transfer_to(newmob)
 					qdel(user)
 				else
-					logTheThing("combat", user, null, "was teleported by touching a [src] at [log_loc(src)].")
+					logTheThing("combat", user, null, "was teleported by touching [src] ([src.type]) at [log_loc(src)].")
 					if (destination)
 						user.set_loc(destination)
 					else
