@@ -238,7 +238,6 @@
 
 		if (istype(oldholder))
 			oldholder.clone_generation++
-			var/no_copy_mutantrace = 0
 			src.occupant?.set_mutantrace(oldholder?.mobAppearance?.mutant_race?.type)
 			src.occupant.bioHolder.CopyOther(oldholder, copyActiveEffects = connected?.gen_analysis)
 			if(oldholder?.mobAppearance?.mutant_race?.dna_mutagen_banned)
