@@ -2813,10 +2813,6 @@ Returns:
 			qdel(src)
 			return
 		var/turf/trg = source.loc
-
-		var/area/trgar = trg.loc
-		trgar.Entered(AM, AM.loc)
-
 		AM.set_loc(trg)
 
 /obj/dfissure_from

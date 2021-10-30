@@ -314,8 +314,7 @@ proc/generate_space_color()
 	if (density)
 		pathable = 0
 	for(var/atom/movable/AM as mob|obj in src)
-		if (AM) // ???? x2
-			src.Entered(AM)
+		src.Entered(AM)
 	if(!RL_Started)
 		RL_Init()
 

@@ -3353,9 +3353,6 @@
 							telehop(AM, 5, 1)
 							return
 
-						var/area/sourceArea = get_area(source)
-						sourceArea.Entered(AM, AM.loc)
-
 						AM.set_loc(get_turf(source))
 						return
 
