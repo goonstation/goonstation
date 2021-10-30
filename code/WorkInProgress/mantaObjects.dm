@@ -765,7 +765,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		return ..()
 
 
-/obj/sea_plant_manta/HasExited(atom/movable/A as mob|obj)
+/obj/sea_plant_manta/Uncrossed(atom/movable/A as mob|obj)
 	..()
 	if (ismob(A))
 		if (A.dir & SOUTH) //If mob exiting south, dont break perspective

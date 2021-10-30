@@ -244,7 +244,7 @@ var/mutable_appearance/fluid_ma
 		src.group.reagents.reaction(M, INGEST, react_volume,1,src.group.members.len)
 		src.group.reagents.trans_to(M, react_volume)
 
-	HasExited(atom/movable/AM)
+	Uncrossed(atom/movable/AM)
 
 		/*var/cancel_float = 0
 		if (AM.loc == newloc)
@@ -304,11 +304,11 @@ var/mutable_appearance/fluid_ma
 				var/mob/living/M = A
 				var/obj/O = A
 				if (istype(M))
-					src.HasExited(M,M.loc)
+					src.Uncrossed(M)
 					M.show_submerged_image(0)
 				else if (istype(O))
 					if (O.submerged_images)
-						src.HasExited(O,O.loc)
+						src.Uncrossed(O)
 						if ((O.submerged_images && length(O.submerged_images)) && (O.is_submerged != 0))
 							O.show_submerged_image(0)
 
@@ -677,8 +677,8 @@ var/mutable_appearance/fluid_ma
 			src.show_submerged_image(0)
 			return
 
-		if (isturf(F.loc))
-			var/turf/T = F.loc
+		if (isturf(src.loc))
+			var/turf/T = src.loc
 			if (!T.active_liquid || (T.active_liquid && T.active_liquid.amt < depth_levels[1]))
 				src.show_submerged_image(0)
 				return
@@ -702,8 +702,8 @@ var/mutable_appearance/fluid_ma
 	if (F.disposed)
 		src.show_submerged_image(0)
 		return
-	else if (isturf(F.loc))
-		var/turf/T = F.loc
+	else if (isturf(src.loc))
+		var/turf/T = src.loc
 		if (!T.active_liquid || (T.active_liquid && T.active_liquid.amt < depth_levels[1]))
 			src.show_submerged_image(0)
 			return

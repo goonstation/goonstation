@@ -271,16 +271,10 @@
 /atom/Crossed(atom/movable/AM)
 	. = ..()
 	return_if_overlay_or_effect(AM)
-	src.HasEntered(AM, AM.last_turf)
-	if(src.material?.triggersOnEntered)
+	if(src.event_handler_flags & USE_HASENTERED)
+		src.HasEntered(AM, AM.last_turf)
+	if(src.material && src.material.triggersOnEntered)
 		src.material.triggerOnEntered(src, AM)
-
-/atom/proc/HasExited(atom/movable/AM)
-	return
-
-/atom/Uncrossed(atom/movable/AM)
-	. = ..()
-	src.HasExited(AM)
 
 /atom/proc/ProximityLeave(atom/movable/AM as mob|obj)
 	return

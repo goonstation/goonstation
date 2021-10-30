@@ -136,7 +136,7 @@
 		return
 	move_thing(AM)
 
-/obj/machinery/conveyor/HasExited(var/atom/movable/AM)
+/obj/machinery/conveyor/Uncrossed(var/atom/movable/AM)
 	..()
 	if(status & (BROKEN | NOPOWER))
 		return

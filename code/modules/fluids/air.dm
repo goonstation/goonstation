@@ -116,7 +116,7 @@ var/list/ban_from_airborne_fluid = list()
 
 		A.EnteredAirborneFluid(src,oldloc)
 
-	HasExited(atom/movable/AM, atom/newloc)
+	Uncrossed(atom/movable/AM, atom/newloc)
 		return
 		//if (AM.event_handler_flags & USE_FLUID_ENTER)
 		//	AM.ExitedFluid(src,newloc)

@@ -57,7 +57,7 @@
 		if (!src.occupant && isghostdrone(AM) && !src.transition)
 			src.turnOn(AM)
 
-	HasExited(atom/movable/AM as mob|obj)
+	Uncrossed(atom/movable/AM as mob|obj)
 		..()
 		if (AM.loc != src.loc && src.occupant == AM && isghostdrone(AM))
 			src.turnOff()

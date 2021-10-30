@@ -92,7 +92,7 @@
 	//	return 1
 	else return 1
 
-/obj/sea_plant/HasExited(atom/movable/A as mob|obj)
+/obj/sea_plant/Uncrossed(atom/movable/A as mob|obj)
 	..()
 	if (ismob(A))
 		if (A.dir & SOUTH) //If mob exiting south, dont break perspective
