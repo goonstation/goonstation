@@ -1297,6 +1297,8 @@
 /mob/living/carbon/human/restrained()
 	if (src.hasStatus("handcuffed"))
 		return 1
+	if (src.hasStatus("incorporeal"))
+		return 1
 	if (src.wear_suit && src.wear_suit.restrain_wearer)
 		return 1
 	if (src.limbs && (src.hand ? !src.limbs.l_arm : !src.limbs.r_arm))
@@ -2913,6 +2915,11 @@
 	.=..()
 
 /mob/living/carbon/human/attack_hand(mob/M)
+	if(ishuman(M) && M == src && M.a_intent == "harm")
+		var/mob/living/carbon/human/H = M
+		if(HAS_MOB_PROPERTY(H, PROP_NO_SELF_HARM))
+			boutput(H, "You can't bring yourself to attack yourself!")
+			return
 	..()
 	if (!surgeryCheck(src, M))
 		src.activate_chest_item_on_attack(M)
@@ -2921,6 +2928,11 @@
 	if (isghostcritter(M) && src.health < 80) //there's another one of these in attack_hand(). Same file. see, the quality of my code doens't matter as long as i leave a very helpful comment!!!
 		boutput(M, "Your spectral conscience refuses to damage this human any further.")
 		return
+	if(ishuman(M) && M == src && (W.force > 0))
+		var/mob/living/carbon/human/H = M
+		if(HAS_MOB_PROPERTY(H, PROP_NO_SELF_HARM))
+			boutput(H, "You can't bring yourself to attack yourself!")
+			return
 	..()
 	if (!surgeryCheck(src, M))
 		src.activate_chest_item_on_attack(M)
