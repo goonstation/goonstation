@@ -53,7 +53,7 @@
 				message_admins("Sleeper Agents are disabled in this game mode, aborting.")
 				return
 #ifdef RP_MODE
-			if(source=="random")
+			if(source==null)
 				return
 #endif
 			if (emergency_shuttle.online)
@@ -145,7 +145,7 @@
 			objective.owner = H.mind
 			objective.set_up()
 			H.mind.objectives += objective
-		logTheThing("admin", H, null, "awakened as a sleeper agent antagonist. Source: [source == "spawn_antag" ? "random event" : "[source]"]")
+		logTheThing("admin", H, null, "awakened as a sleeper agent antagonist. Source: [source ? "[source]" : "random event"]")
 		H.show_text("<h2><font color=red><B>You have awakened as a syndicate sleeper agent!</B></font></h2>", "red")
 		H.mind.special_role = ROLE_SLEEPER_AGENT
 		H << browse(grabResource("html/traitorTips/traitorsleeperTips.html"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")

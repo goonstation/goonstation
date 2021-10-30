@@ -36,6 +36,7 @@ var/global/datum/phrase_log/phrase_log = new
 	var/list/cached_api_phrases
 	var/regex/uncool_words
 	var/regex/sussy_words
+	var/regex/ic_sussy_words
 	var/api_cache_size = 40
 	var/static/regex/non_freeform_laws
 	var/static/regex/name_regex = new(@"\b[A-Z][a-z]* [A-Z][a-z]*\b", "g")
@@ -85,10 +86,24 @@ var/global/datum/phrase_log/phrase_log = new
 			@"ligma",
 			@"ඞ",
 			@"we do a little .",
-			@"owo",
-			@"uwu"
+			@"\b.ower\s?gam(:?er?|ing)",
+			@"\bowo",
+			@"\buwu"
 		)
 		sussy_words = regex(jointext(sussy_word_list, "|"), "i")
+		var/list/ic_sussy_word_list = list(
+			@"\bl(:?ol)+",
+			@"\blmao+",
+			@"\bwt[hf]+\b",
+			@"\bsmh\b",
+			@"\birl\b",
+			@"\bomg\b",
+			@"\bid[ck]\b",
+			@"\bic\b",
+			@"\bl?ooc\b",
+			@"\b(:?fail\s?)?rp\b"
+		)
+		ic_sussy_words = regex(jointext(ic_sussy_word_list, "|"), "i")
 
 	proc/load()
 		if(fexists(src.uncool_words_filename))
@@ -123,6 +138,10 @@ var/global/datum/phrase_log/phrase_log = new
 		phrase = html_decode(phrase)
 		if(is_sussy(phrase))
 			SEND_GLOBAL_SIGNAL(COMSIG_SUSSY_PHRASE, "<span class=\"admin\">Sussy word - [key_name(usr)] [category]: \"[phrase]\"</span>")
+		#ifdef RP_MODE
+		if(category != "ooc" && category != "looc" && is_ic_sussy(phrase))
+			SEND_GLOBAL_SIGNAL(COMSIG_SUSSY_PHRASE, "<span class=\"admin\">Low RP word - [key_name(usr)] [category]: \"[phrase]\"</span>")
+		#endif
 		if(is_uncool(phrase))
 			message_admins("Uncool word - [key_name(usr)] [category]: \"[phrase]\"")
 			return
@@ -143,6 +162,11 @@ var/global/datum/phrase_log/phrase_log = new
 		if(isnull(src.sussy_words))
 			return FALSE
 		return !!(findtext(phrase, src.sussy_words))
+
+	proc/is_ic_sussy(phrase)
+		if(isnull(src.ic_sussy_words))
+			return FALSE
+		return !!(findtext(phrase, src.ic_sussy_words))
 
 	proc/upload_uncool_words()
 		var/new_uncool = input("Upload a json list of uncool words.", "Uncool words", null) as null|file
@@ -199,8 +223,8 @@ var/global/datum/phrase_log/phrase_log = new
 	proc/random_station_name_replacement_proc(old_name)
 		if(!length(data_core.general))
 			return old_name
-		var/datum/data/record/record = pick(data_core.general)
-		return record.fields["name"]
+		var/datum/db_record/record = pick(data_core.general)
+		return record["name"]
 
 	proc/random_custom_ai_law(max_tries=20, replace_names=FALSE)
 		while(max_tries-- > 0)
