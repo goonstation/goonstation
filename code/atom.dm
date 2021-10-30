@@ -270,9 +270,7 @@
 	#ifdef SPACEMAN_DMM // idk a tiny optimization to omit the parent call here, I don't think it actually breaks anything in byond internals
 	..()
 	#endif
-	if(src.material && src.material.triggersOnEntered)
-		return_if_overlay_or_effect(AM)
-		src.material.triggerOnEntered(src, AM)
+	SEND_SIGNAL(src, COMSIG_ATOM_CROSSED, AM)
 
 /atom/proc/ProximityLeave(atom/movable/AM as mob|obj)
 	return
