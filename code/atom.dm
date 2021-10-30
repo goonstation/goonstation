@@ -369,6 +369,7 @@
 //some more of these event handler flag things are handled in set_loc far below . . .
 /atom/movable/New()
 	..()
+	src.last_turf = isturf(src.loc) ? src.loc : null
 	//hey this is mbc, there is probably a faster way to do this but i couldnt figure it out yet
 	if (isturf(src.loc))
 		var/turf/T = src.loc
@@ -390,8 +391,9 @@
 		src.loc.Entered(src, null)
 		if(isturf(src.loc)) // call it on the area too
 			src.loc.loc.Entered(src, null)
-
-	src.last_turf = isturf(src.loc) ? src.loc : null
+			for(var/atom/A in src.loc)
+				if(A != src)
+					A.Crossed(src)
 
 
 /atom/movable/disposing()
@@ -836,11 +838,21 @@
 
 	oldloc?.Exited(src, newloc)
 
+	if(isturf(oldloc))
+		for(var/atom/A in oldloc)
+			if(A != src)
+				A.Uncrossed(src)
+
 	// area.Exited called if we are on turfs and changing areas or if exiting a turf into a non-turf (just like Move does it internally)
 	if((my_area != new_area || !isturf(newloc)) && isturf(oldloc))
 		my_area.Exited(src, newloc)
 
 	newloc?.Entered(src, oldloc)
+
+	if(isturf(newloc))
+		for(var/atom/A in newloc)
+			if(A != src)
+				A.Crossed(src)
 
 	// area.Entered called if we are on turfs and changing areas or if entering a turf from a non-turf (just like Move does it internally)
 	if((my_area != new_area || !isturf(oldloc)) && isturf(newloc))
