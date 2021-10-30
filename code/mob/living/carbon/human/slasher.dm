@@ -170,12 +170,12 @@
 
 			if(ismob(src.loc))
 				src.u_equip(I)
-			if(istype(locate(I), /obj/item/storage))
-				var/obj/item/storage/S = locate(I)
+			if(istype(I.loc, /obj/item/storage))
+				var/obj/item/storage/S = I.loc
 				var/datum/hud/storage/H = S.hud
 				H.remove_object(I)
-			if(istype(locate(I), /mob/living))
-				var/mob/living/L = locate(I)
+			if(istype(I.loc, /mob/living))
+				var/mob/living/L = I.loc
 				L.drop_item(I)
 			I.set_loc(get_turf(src))
 			if(!src.put_in_hand(I))
