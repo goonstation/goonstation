@@ -184,16 +184,15 @@ var/global/harddel_count = 0
 
 	tickDetail()
 		#ifdef DELETE_QUEUE_DEBUG
-		if (length(detailed_delete_count))
-			var/stats = "<b>Delete Stats:</b><br>"
-			var/count
-			for (var/thing in detailed_delete_count)
-				count = detailed_delete_count[thing]
-				stats += "[thing] deleted [count] times.<br>"
-			for (var/thing in detailed_delete_gc_count)
-				count = detailed_delete_gc_count[thing]
-				stats += "[thing] gracefully deleted [count] times.<br>"
-			boutput(usr, "<br>[stats]")
+		var/stats = "<b>Delete Stats:</b><br>"
+		var/count
+		for (var/thing in detailed_delete_count)
+			count = detailed_delete_count[thing]
+			stats += "[thing] deleted [count] times.<br>"
+		for (var/thing in detailed_delete_gc_count)
+			count = detailed_delete_gc_count[thing]
+			stats += "[thing] gracefully deleted [count] times.<br>"
+		boutput(usr, "<br>[stats]")
 		#endif
 		boutput(usr, "<b>Current Queue Length:</b> [delete_queue.count()]")
 		boutput(usr, "<b>Total Items Deleted:</b> [delcount] (Explictly) [gccount] (Gracefully GC'd)")

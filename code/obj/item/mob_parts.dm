@@ -102,7 +102,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 					if(holder.organHolder.organ_list[thing] == src)
 						holder.organHolder.organ_list[thing] = null
 
-			if (holder.organs[src.slot] == src)
+			if (holder?.organs?[src.slot] == src)
 				holder.organs[src.slot] = null
 		holder = null
 

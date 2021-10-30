@@ -28,22 +28,19 @@
 		<tbody>
 	"}
 
-	var/V = global.vars[S]
-	if (V == logs || V == logs["audit"])
-		src.audit(AUDIT_ACCESS_DENIED, "tried to access the logs datum for modification.")
-		boutput(usr, "<span class='alert'>Yeah, no.</span>")
-		return
-	if (V)
+	try
+		var/V = global.vars[S]
+		if (V == logs || V == logs["audit"])
+			src.audit(AUDIT_ACCESS_DENIED, "tried to access the logs datum for modification.")
+			boutput(usr, "<span class='alert'>Yeah, no.</span>")
+			return
 		body += debug_variable(S, V, "GLOB", 0)
-	else
-		boutput(usr, "<span class='alert'>Could not find [S] in the Global Variables list!!</span>" )
-		return
-	body += "</tbody></table>"
+		body += "</tbody></table>"
 
-	var/title = "[S][src.holder.level >= LEVEL_ADMIN ? " (\ref[V])" : ""]"
+		var/title = "[S][src.holder.level >= LEVEL_ADMIN ? " (\ref[V])" : ""]"
 
-	//stole this from view_variables below
-	var/html = {"
+		//stole this from view_variables below
+		var/html = {"
 <html>
 <head>
 	<title>[title]</title>
@@ -61,7 +58,10 @@
 </html>
 "}
 
-	usr.Browse(html, "window=variables\ref[V];size=600x400")
+		usr.Browse(html, "window=variables\ref[V];size=600x400")
+	catch
+		boutput(usr, "<span class='alert'>Could not find [S] in the Global Variables list!!</span>" )
+		return
 
 /client/proc/debug_variables(datum/D in world) // causes GC to lock up for a few minutes, the other option is to use atom/D but that doesn't autocomplete in the command bar
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)

@@ -75,6 +75,7 @@
 		auto = FALSE
 		connects_to_turf = null
 		connects_to_turf = null
+		event_handler_flags = 0
 
 		update_icon(special_icon_state)
 			if (ruined)

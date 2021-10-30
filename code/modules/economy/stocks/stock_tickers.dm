@@ -268,11 +268,11 @@
 		borrow_brokers += B
 
 	proc/modifyAccount(whose, by, force=0)
-		var/datum/data/record/B = FindBankAccountByName(whose)
+		var/datum/db_record/B = FindBankAccountByName(whose)
 		if (B)
-			if (by < 0 && B.fields["current_money"] + by < 0 && !force)
+			if (by < 0 && B["current_money"] + by < 0 && !force)
 				return 0
-			B.fields["current_money"] += by
+			B["current_money"] += by
 			stockExchange.balanceLog(whose, by)
 			return 1
 		return 0
