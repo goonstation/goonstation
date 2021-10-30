@@ -1938,7 +1938,9 @@
 	onAdd()
 		..()
 		RegisterSignal(owner, COMSIG_MOB_VOMIT, .proc/reduce_duration_on_vomit)
+
 	onRemove()
+		..()
 		UnregisterSignal(owner, COMSIG_MOB_VOMIT)
 
 	onUpdate(var/timePassed)
@@ -1947,13 +1949,13 @@
 		var/puke_prob = 0
 		switch(timePassed)
 			if(0 to 20 SECONDS)
-				tox = 0.4
+				tox = 0.1
 				puke_prob = 0.5
 			if(20 SECONDS to 60 SECONDS)
-				tox = 0.8
+				tox = 0.4
 				puke_prob = 1
 			if(60 SECONDS to INFINITY)
-				tox = 2
+				tox = 1
 				puke_prob = 2
 		L.take_toxin_damage(tox)
 		if(prob(2))
