@@ -251,7 +251,7 @@
 						things_to_pick += M
 				if(src.equipped())
 					var/atom/thing_to_poke = pick(things_to_pick)
-					src.weapon_attack(thing_to_poke, src.equipped())
+					src.weapon_attack(thing_to_poke, src.equipped(), TRUE)
 				else
 					var/atom/thing_to_poke = pick(things_to_pick)
 					src.hand_attack(thing_to_poke)
