@@ -245,6 +245,8 @@
 				for(var/obj/O in range(1, get_turf(src)))
 					if(istype(O, /obj/overlay) || istype(O, /obj/effect) || O.invisibility > 0 || !O.mouse_opacity)
 						continue
+					if(istype(O, /obj/machinery/light) && prob(90)) // don't break lights too often pls
+						continue
 					things_to_pick += O
 				if(prob(15))
 					for(var/mob/M in range(1, get_turf(src)))
