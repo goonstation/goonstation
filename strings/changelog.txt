@@ -1,8 +1,102 @@
 
+(t)mon oct 18 21
+(u)Wisemonster
+(p)6368
+(e)|
+(+)Security Assistants may spawn with a new(ish) objective.
+(u)Gannets
+(p)6358
+(e)|
+(+)Nuke ops medics can now see what reagents are contained in their combi-injectors.
+(t)sun oct 17 21
+(u)tarmunora
+(e)🧊🔥|balance
+(+)Cryoxadone and Cryostaline on-life effects are surpressed by fire.
+(u)tarmunora
+(e)⚖|balance
+(+)Adjust moonshine efficacy, omnizine return, and bottle size.
+(u)Gerhazo
+(p)6344
+(e)🎨|sprites
+(+)The kitchen gibber has received some mechanical upgrades.
+(t)fri oct 15 21
+(u)UnfunnyPerson
+(p)6333
+(e)⚖|balance
+(+)It now takes 3 seconds to shove someone in the portabrig instead of 1 second.
+(u)Zamujasa
+(e)🆕|feature
+(*)Admins can now set a message for a player that will be displayed on next login, for when we need to tell you something but you aren't online.
+(*)The future is now.
+(t)thu oct 14 21
+(u)pali
+(p)6308
+(e)|
+(+)Nukie default radio channel is now in Syndicate red instead of being green.
+(u)pali
+(p)6284
+(e)🆕|feature
+(+)*hatstomp emote is now animated.
+(u)Flaborized & pali
+(p)6300
+(e)🆕|feature
+(*)Nukie radio icons are now letters based on their callsigns
+(u)pali
+(p)6298
+(e)🆕|feature
+(*)Nukie commander is now a separate antag preference. Turn it on if you want to be the commander (you still need regular nukie antag preference toggled on).
+(u)FlamingLily
+(p)6295
+(e)⚖|balance
+(+)After a long and intense class action legal battle, Discount Dan's has finally removed Ghost Chili Juice from their products, dine away without fear of incineration!
+(u)FlamingLily
+(p)6294
+(e)|
+(+)Added hot-swapping of beakers to chem dispensers, no need to eject when replacing a beaker
+(t)wed oct 13 21
+(u)Luxizzle
+(p)6239
+(e)📄|tgui
+(*)You can now select your pronouns separately from your sex. Saved pronouns have been reset to they/them.
+(u)BatElite
+(p)6080
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)A bee farm has drifted into the asteroid field recently. The bees do the farming. They're lesbians.
+(u)TTerc
+(p)6271
+(e)|
+(+)Clicking backpacks/satchels/belts with an item that does not fit in them will now open them.
+(u)TTerc
+(p)6243
+(e)🐛|bug
+(+)Small update for wraith/revenant UI: Added points and generation rate counter + turning into a revenant removes all the wraith ability buttons, instead of making them unusable.
+(t)tue oct 12 21
+(u)kyle
+(e)⚖|balance(e)
+(+)Ritual AOE creation effects now require energy per each thing it attempts to effect.
+(u)Mr. Moriarty
+(p)6223
+(e)🎨|sprites
+(*)Added three new waistcoats and a guard's coat to the clothing booth.
+(u)112358sam
+(p)6173
+(e)🆕|feature
+(+)Made LOOC text visible over the head of the speaker.
+(u)Azrun
+(p)6221
+(e)🆕🎨|feature, sprites
+(+)Nectar Perspiration visual effect upgraded to slightly larger buzzing insects.
+(u)alexkar598
+(p)6179
+(e)|
+(+)The description instructing you how to deconstruct reinforced walls now has bolded words to hint to the next step.
+(u)Zamujasa
+(*)Trying to move while dead will now ghost you. Don't worry, you can still wiggle with IJKL.
 (t)mon oct 11 21
 (u)pali
 (*)For Spooktober the space colour now varies slightly
 (u)Zamujasa
+(*)Ghosts become visible to everyone at the end of a round.
 (e)🆕|feature
 (+)Using floor tiles in hand now acts like using them on the turf you're on. This means you can add tiles to plating with the use key, or (if holding a crowbar) swap out the tiles.
 (+)Using &lt; and &gt; in messages should now work. &lt;3? This might break things, though, so report any new issues...

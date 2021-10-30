@@ -219,6 +219,10 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/casual)
 	name = "Long Sleeved Shirt"
 	path = /obj/item/clothing/suit/lshirt
 
+/datum/clothingbooth_item/casual/tracksuit_black
+	name = "Black Tracksuit"
+	path = /obj/item/clothing/under/gimmick/adidad
+
 /datum/clothingbooth_item/casual/yoga
 	name = "Yoga Outfit"
 	path = /obj/item/clothing/under/misc/yoga
@@ -431,6 +435,21 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/formal)
 	name = "Waistcoat"
 	path = /obj/item/clothing/suit/wcoat
 
+/datum/clothingbooth_item/formal/black_wcoat
+	name = "Black Waistcoat"
+	path = /obj/item/clothing/under/gimmick/black_wcoat
+	cost = PAY_DOCTORATE/3
+
+/datum/clothingbooth_item/formal/red_wcoat
+	name = "Red Waistcoat"
+	path = /obj/item/clothing/under/gimmick/red_wcoat
+	cost = PAY_DOCTORATE/3
+
+/datum/clothingbooth_item/formal/blue_wcoat
+	name = "Blue Waistcoat"
+	path = /obj/item/clothing/under/gimmick/blue_wcoat
+	cost = PAY_DOCTORATE/3
+
 /datum/clothingbooth_item/formal/butler
 	name = "Butler's Suit"
 	path = /obj/item/clothing/under/gimmick/butler
@@ -600,6 +619,11 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/outerwear)
 	path = /obj/item/clothing/suit/tuxedo_jacket
 	cost = PAY_DOCTORATE/3
 	hidden = 1
+
+/datum/clothingbooth_item/outerwear/guardscoat
+	name = "Guard's Coat"
+	path = /obj/item/clothing/suit/guards_coat
+	cost = PAY_IMPORTANT/3
 
 //Shoes
 
@@ -1118,3 +1142,91 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/costume)
 	path = /obj/item/clothing/suit/gimmick/dinosaur
 	slot = SLOT_WEAR_SUIT
 	cost = PAY_TRADESMAN/2
+
+//Western
+
+ABSTRACT_TYPE(/datum/clothingbooth_item/western)
+/datum/clothingbooth_item/western
+	name = "western"
+	category = "Western"
+	cost = PAY_UNTRAINED/1
+
+ABSTRACT_TYPE(/datum/clothingbooth_item/western/westhat)
+/datum/clothingbooth_item/western/westhat
+	name = "Ten-gallon Hat"
+	slot = SLOT_HEAD
+	cost = PAY_UNTRAINED/2
+
+	beige
+		name = "Ten-gallon Hat"
+		path = /obj/item/clothing/head/westhat
+
+	black
+		name = "Black Ten-gallon Hat"
+		path = /obj/item/clothing/head/westhat/black
+
+	blue
+		name = "Blue Ten-gallon Hat"
+		path = /obj/item/clothing/head/westhat/blue
+
+	brown
+		name = "Brown Ten-gallon Hat"
+		path = /obj/item/clothing/head/westhat/brown
+
+	tan
+		name = "Tan Ten-gallon Hat"
+		path = /obj/item/clothing/head/westhat/tan
+
+	red
+		name = "Red Ten-gallon Hat"
+		path = /obj/item/clothing/head/westhat/red
+
+//Coats, Moved to Cargo Crate Supply pack: west_coats
+
+//Ponchos
+
+/datum/clothingbooth_item/western/flowerponcho
+	name = "Flower Poncho"
+	path = /obj/item/clothing/suit/poncho/flower
+	slot = SLOT_WEAR_SUIT
+	cost = PAY_UNTRAINED/1
+
+/datum/clothingbooth_item/western/leafponcho
+	name = "Leaf poncho"
+	path = /obj/item/clothing/suit/poncho/leaf
+	slot = SLOT_WEAR_SUIT
+	cost = PAY_UNTRAINED/1
+
+//Jumpsuit
+
+/datum/clothingbooth_item/western/western
+	name = "Western Shirt and Pants"
+	path = /obj/item/clothing/under/misc/western
+	slot = SLOT_W_UNIFORM
+	cost = PAY_UNTRAINED/1
+
+//shoes
+
+ABSTRACT_TYPE(/datum/clothingbooth_item/western/westboot)
+/datum/clothingbooth_item/western/westboot
+	name = "Real Cowboy Boots"
+	slot = SLOT_SHOES
+	cost = PAY_UNTRAINED/2
+
+	real
+		name = "Real Cowboy Boots"
+		path = /obj/item/clothing/shoes/westboot
+
+	dirty
+		name = "Dirty Cowboy Boots"
+		path = /obj/item/clothing/shoes/westboot/dirty
+
+	black
+		name = "Black Cowboy Boots"
+		path = /obj/item/clothing/shoes/westboot/black
+
+	brown
+		name = "Brown Cowboy Boots"
+		path = /obj/item/clothing/shoes/westboot/brown
+
+

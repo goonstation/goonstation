@@ -614,7 +614,7 @@
 		return
 
 	verb/eject_occupant(var/mob/user)
-		if (!isalive(user)) return
+		if (!isalive(user) || iswraith(user)) return
 		src.go_out()
 		add_fingerprint(user)
 

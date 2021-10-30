@@ -1788,3 +1788,45 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "pirate_brn"
 	item_state = "pirate_brn"
+
+//Lesbian Hat
+
+/obj/item/clothing/head/lesbian_hat
+	name = "very lesbian hat"
+	desc = "And they say subtlety is dead."
+	mats = list("FAB-1"=5, "honey"=5)
+	icon_state = "lesbeean"
+	item_state = "lesbeean"
+
+//Western Ten-Gallon hats!
+
+/obj/item/clothing/head/westhat
+	name = "Ten-Gallon hat"
+	desc = "Channel your true cowboy and call everyone partner!"
+	icon_state = "westhat"
+	item_state = "westhat"
+
+/obj/item/clothing/head/westhat/black
+	name = "Black Ten-Gallon hat"
+	icon_state = "westhat_black"
+	item_state = "westhat_black"
+
+/obj/item/clothing/head/westhat/red
+	name = "Red Ten-Gallon hat"
+	icon_state = "westhat_red"
+	item_state = "westhat_red"
+
+/obj/item/clothing/head/westhat/blue
+	name = "Blue Ten-Gallon hat"
+	icon_state = "westhat_blue"
+	item_state = "westhat_blue"
+
+/obj/item/clothing/head/westhat/tan
+	name = "Tan Ten-Gallon hat"
+	icon_state = "westhat_tan"
+	item_state = "westhat_tan"
+
+/obj/item/clothing/head/westhat/brown
+	name = "Brown Ten-Gallon hat"
+	icon_state = "westhat_brown"
+	item_state = "westhat_brown"
