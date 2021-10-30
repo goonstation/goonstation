@@ -1941,13 +1941,13 @@
 		var/puke_prob = 0
 		switch(timePassed)
 			if(0 to 20 SECONDS)
-				tox = 0.1
+				tox = 0.4s
 				puke_prob = 0.5
 			if(20 SECONDS to 60 SECONDS)
-				tox = 0.4
+				tox = 0.8
 				puke_prob = 1
 			if(60 SECONDS to INFINITY)
-				tox = 1
+				tox = 2
 				puke_prob = 2
 		L.take_toxin_damage(tox)
 		if(prob(2))
