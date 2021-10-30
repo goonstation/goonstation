@@ -45,7 +45,7 @@ var/list/ban_from_airborne_fluid = list()
 
 	done_init()
 		var/i = 0
-		for(var/atom/A in range(0,src))
+		for(var/atom/movable/A in range(0,src))
 			if (src.disposed) return
 			src.Crossed(A)
 			i++
