@@ -1813,6 +1813,9 @@
 		W.unequipped(src)
 		src.shoes = null
 		src.update_clothing()
+		var/turf/T = get_turf(src)
+		if(T.active_liquid)
+			T.active_liquid.Crossed(src)
 	else if (W == src.belt)
 		W.unequipped(src)
 		src.belt = null
