@@ -311,6 +311,7 @@
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
 
 	var/printing = 0
+	var/print_amount = 1
 
 	// log account information for QM sales
 	var/obj/item/card/id/scan = null
@@ -360,16 +361,24 @@
 		if (..(href, href_list))
 			return
 
+		if (href_list["amount"] && !printing)
+			var/amount = input(usr, "How many labels to print?", "[src.name]", 0) as null|num
+			if (!amount || amount < 0) return
+			if (amount > 5) amount = 5
+			src.print_amount = amount
+			src.updateUsrDialog()
+
 		if (href_list["print"] && !printing)
 			printing = 1
 			playsound(src.loc, "sound/machines/printer_cargo.ogg", 75, 0)
 			sleep(1.75 SECONDS)
-			var/obj/item/sticker/barcode/B = new/obj/item/sticker/barcode(src.loc)
-			var/dest = strip_html(href_list["print"], 64)
-			B.name = "Barcode Sticker ([dest])"
-			B.destination = dest
-			B.scan = src.scan
-			B.account = src.account
+			for (var/i = 0; i < src.print_amount; i++)
+				var/obj/item/sticker/barcode/B = new/obj/item/sticker/barcode(src.loc)
+				var/dest = strip_html(href_list["print"], 64)
+				B.name = "Barcode Sticker ([dest])"
+				B.destination = dest
+				B.scan = src.scan
+				B.account = src.account
 			printing = 0
 		// cogwerks - uncomment this stuff if/when custom locations are ready
 		/*else if (href_list["remove"])
@@ -395,7 +404,10 @@
 			return
 
 		var/dat = ""
-		dat += "<b>Available Destinations:</b><BR>"
+
+		dat += "<b>Print Amount:</b> <a href='?src=\ref[src];amount=1'>[src.print_amount]</a><BR>"
+
+		dat += "<BR><b>Available Destinations:</b><BR>"
 		for(var/I in destinations)
 			dat += "<b><A href='?src=\ref[src];print=[I]'>[I]</A></b><BR>"
 
