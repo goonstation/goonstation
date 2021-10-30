@@ -101,6 +101,9 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 
 /// Simply removes a material from an object.
 /atom/proc/removeMaterial()
+	if(src.material)
+		src.material.UnregisterSignal(src, COMSIG_ATOM_CROSSED)
+
 	if(src.mat_changename)
 		src.remove_prefixes(99)
 		src.remove_suffixes(99)
@@ -112,12 +115,6 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 
 	src.alpha = initial(src.alpha)
 	src.color = initial(src.color)
-
-	if(src.material?.owner_hasentered_added)
-		if (isturf(src.loc))
-			var/turf/T = src.loc
-			T.checkinghasentered = max(T.checkinghasentered-1, 0)
-		src.event_handler_flags &= ~USE_HASENTERED
 
 	src.UpdateOverlays(null, "material")
 
@@ -158,6 +155,12 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	var/traitDesc = get_material_trait_desc(mat1)
 	var/strPrefix = jointext(mat1.prefixes, " ")
 	var/strSuffix = jointext(mat1.suffixes, " ")
+
+	if(src.material)
+		src.material.UnregisterSignal(src, COMSIG_ATOM_CROSSED)
+
+	if(mat1?.triggersOnEntered)
+		mat1.RegisterSignal(src, COMSIG_ATOM_CROSSED, /datum/material/proc/triggerOnEntered)
 
 	for(var/X in getMaterialPrefixList(mat1))
 		strPrefix += " [X]"

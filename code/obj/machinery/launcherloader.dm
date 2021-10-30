@@ -11,7 +11,6 @@
 	opacity = 0
 	layer = 2.6
 	anchored = 1
-	event_handler_flags = USE_HASENTERED
 	plane = PLANE_NOSHADOW_BELOW
 
 	var/obj/machinery/mass_driver/driver = null
@@ -85,7 +84,8 @@
 				break
 			if(drive) activate()
 
-	HasEntered(atom/A)
+	Crossed(atom/movable/A)
+		..()
 		if (istype(A, /mob/dead) || isintangible(A) || iswraith(A)) return
 		return_if_overlay_or_effect(A)
 		activate()
@@ -111,7 +111,7 @@
 	density = 0
 	opacity = 0
 	anchored = 1
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 	plane = PLANE_NOSHADOW_BELOW
 
 	var/default_direction = NORTH //The direction things get sent into when the router does not have a destination for the given barcode or when there is none attached.
@@ -179,7 +179,8 @@
 				break
 			if(drive) activate()
 
-	HasEntered(atom/A)
+	Crossed(atom/movable/A)
+		..()
 		if (istype(A, /mob/dead) || isintangible(A) || iswraith(A)) return
 
 		if (!trigger_when_no_match)

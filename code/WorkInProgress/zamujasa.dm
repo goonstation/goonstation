@@ -179,7 +179,6 @@
 /obj/invisible_teleporter
 	name = "invisible teleporter side 1"
 	desc = "Totally not a portal."
-	event_handler_flags = USE_HASENTERED
 	icon = 'icons/effects/letter_overlay.dmi'
 	icon_state = "A"
 	anchored = 1
@@ -200,7 +199,7 @@
 		src.maptext_width = 128
 		*/
 
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
 		if (AM == src)
 			// jesus christ don't teleport OURSELVES
 			return

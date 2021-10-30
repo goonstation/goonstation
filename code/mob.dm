@@ -1212,7 +1212,6 @@
 		item.dropped(src)
 		if (item)
 			item.layer = initial(item.layer)
-	T.Entered(item)
 
 /mob/proc/drop_item(obj/item/W)
 	.= 0

@@ -365,7 +365,6 @@
 			src.set_dir(get_dir(loc, NewLoc))
 			src.set_loc(NewLoc)
 			OnMove()
-			NewLoc.HasEntered(src)
 
 			//if tile contains salt, wraith becomes corporeal
 			if (salted && !src.density && !src.justdied)

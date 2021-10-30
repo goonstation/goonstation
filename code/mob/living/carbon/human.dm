@@ -9,7 +9,7 @@
 	throw_range = 4
 	p_class = 1.5 // 1.5 while standing, 2.5 while resting (see update_icon.dm for the place where this change happens)
 
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER | USE_CANPASS | IS_FARTABLE
+	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS | IS_FARTABLE
 	mob_flags = IGNORE_SHIFT_CLICK_MODIFIER
 
 	var/dump_contents_chance = 20
@@ -1363,7 +1363,8 @@
 
 // called when something steps onto a human
 // this could be made more general, but for now just handle mulebot
-/mob/living/carbon/human/HasEntered(var/atom/movable/AM)
+/mob/living/carbon/human/Crossed(atom/movable/AM)
+	..()
 	var/obj/machinery/bot/mulebot/MB = AM
 	if (istype(MB))
 		MB.RunOver(src)
