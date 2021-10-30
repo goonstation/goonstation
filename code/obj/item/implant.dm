@@ -730,7 +730,7 @@ THROWING DARTS
 					return
 				if (!src || !owner || (M != owner) || src.expired)
 					return
-				boutput(M, "<span class='alert'>Your will begins to return. What is this strange compulsion [I.real_name] has over you? Yet you must obey.</span>")
+				boutput(M, "<h3><span class='alert'>Your will begins to return. What is this strange compulsion [I.real_name] has over you? Yet you must obey.</span></h3>")
 
 				// 1 minute left
 				sleep(1 MINUTE)

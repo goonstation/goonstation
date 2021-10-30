@@ -448,7 +448,7 @@
 			if (M && M.client && M.client.computer_id == src.client.computer_id)
 				logTheThing("admin", src, M, "has same computer ID as [constructTarget(M,"admin")]")
 				logTheThing("diary", src, M, "has same computer ID as [constructTarget(M,"diary")]", "access")
-				message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same </span><span class='alert'><B>computer ID</B><font color='blue'> as [key_name(M)]</span>")
+				message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same </span><span class='alert'><B>computer ID</B><font class='internal'> as [key_name(M)]</span>")
 				SPAWN_DBG(0)
 					if(M.lastKnownIP == src.client.address)
 						alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
@@ -2373,6 +2373,15 @@
 			src.gib()
 
 	return ..()
+
+/mob/proc/addAbility(var/abilityType)
+	abilityHolder.addAbility(abilityType)
+
+/mob/proc/removeAbility(var/abilityType)
+	abilityHolder.removeAbility(abilityType)
+
+/mob/proc/getAbility(var/abilityType)
+	return abilityHolder?.getAbility(abilityType)
 
 /mob/proc/full_heal()
 	src.HealDamage("All", 100000, 100000)

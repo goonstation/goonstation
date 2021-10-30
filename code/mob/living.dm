@@ -1330,7 +1330,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		T.active_liquid.HasEntered(src, T)
 		src.visible_message("<span class='alert'>[src] splashes around in [T.active_liquid]!</b></span>", "<span class='notice'>You splash around in [T.active_liquid].</span>")
 
-	if (!src.restrained())
+	if (!src.restrained() && isalive(src)) //isalive returns false for both dead and unconcious, which is what we want
 		var/struggled_grab = 0
 		if (src.canmove)
 			if(src.grabbed_by.len > 0)

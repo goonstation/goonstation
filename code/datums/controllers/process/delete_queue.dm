@@ -108,9 +108,7 @@ var/global/harddel_count = 0
 			del(D)
 	#else
 			if(isliving(D))
-				D.disposed = FALSE
-				D.qdeled = FALSE
-				put_mob_in_centcom_cloner(D)
+				gimmick_ungcd_mob_stuff(D)
 	#endif
 
 #endif
@@ -181,6 +179,16 @@ var/global/harddel_count = 0
 			if (deleteChunkSize > MIN_DELETE_CHUNK_SIZE)
 				deleteChunkSize--
 		*/
+
+	proc/gimmick_ungcd_mob_stuff(mob/living/L)
+		L.disposed = FALSE
+		L.qdeled = FALSE
+		L.mob_flags = 0 // one of these fixes an infinite recursion bug... I think
+		L.flags = 0
+		L.event_handler_flags = 0
+		L.lying = FALSE
+		L.update_lying()
+		put_mob_in_centcom_cloner(L)
 
 	tickDetail()
 		#ifdef DELETE_QUEUE_DEBUG

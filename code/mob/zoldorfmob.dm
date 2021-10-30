@@ -29,9 +29,6 @@
 		src.see_invisible = INVIS_GHOST
 		src.see_in_dark = SEE_DARK_FULL
 
-	proc/addAbility(var/abilityType)
-		abilityHolder.addAbility(abilityType)
-
 	proc/addAllAbilities()
 		src.addAbility(/datum/targetable/zoldorfAbility/fortune)
 		src.addAbility(/datum/targetable/zoldorfAbility/omen)
@@ -46,9 +43,6 @@
 		//debug stuffs
 		//src.addAbility(/datum/targetable/zoldorfAbility/addsoul)
 		//src.addAbility(/datum/targetable/zoldorfAbility/removesoul)
-
-	proc/removeAbility(var/abilityType)
-		abilityHolder.removeAbility(abilityType)
 
 	proc/removeAllAbilities()
 		src.removeAbility(/datum/targetable/zoldorfAbility/fortune)
@@ -67,9 +61,6 @@
 
 	proc/updateButtons()
 		abilityHolder.updateButtons()
-
-	proc/getAbility(var/abilityType)
-		return abilityHolder.getAbility(abilityType)
 
 	proc/free() //since making two mobs would be pretty redundant. zoldorf mobs have two states. free and unfree. freed = souldorf, unfree = zoldorf
 		src.free = 1 //this proc handles the transforming of a zoldorf into a souldorf
