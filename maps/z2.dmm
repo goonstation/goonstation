@@ -38036,7 +38036,10 @@
 	},
 /area/meat_derelict/boss)
 "cgP" = (
-/turf/unsimulated/wall/auto/lead/white,
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	icon = 'icons/turf/walls_tempus-white.dmi';
+	icon_state = "5"
+	},
 /area/space)
 "cgQ" = (
 /turf/unsimulated/floor/black,
@@ -65097,7 +65100,11 @@
 /turf/unsimulated/grass,
 /area/centcom/lounge)
 "dvw" = (
-/obj/machinery/door/unpowered/shuttle,
+/obj/machinery/door/unpowered/shuttle{
+	dir = 4;
+	icon = 'icons/Testing/newicons/obj/NEWdoors/door_command.dmi';
+	icon_state = "sdoor"
+	},
 /turf/unsimulated/floor/airless/plating{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -74558,6 +74565,12 @@
 /area/sim/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
+"efG" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	icon = 'icons/turf/walls_tempus-white.dmi';
+	icon_state = "14"
+	},
+/area/space)
 "ehl" = (
 /obj/window/cubicle{
 	dir = 4
@@ -74976,6 +74989,12 @@
 /obj/item/paper/book/from_file/monster_manual,
 /turf/unsimulated/floor/black,
 /area/crypt/sigma/rd)
+"fjD" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	icon = 'icons/turf/walls_tempus-white.dmi';
+	icon_state = "0"
+	},
+/area/space)
 "fls" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -75221,13 +75240,17 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "gibbl2"
 	},
+/obj/map/light/secretblue,
+/obj/item/gun/kinetic/ak47{
+	pixel_x = 1;
+	pixel_y = 8
+	},
 /obj/decal/skeleton{
 	desc = "The remains of some poor cosmonaut fellow.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body9";
 	name = "corpse"
 	},
-/obj/map/light/secretblue,
 /turf/unsimulated/floor/airless/plating{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -76331,6 +76354,12 @@
 	icon_state = "shore-34"
 	},
 /area/titlescreen)
+"jsn" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	icon = 'icons/turf/walls_tempus-white.dmi';
+	icon_state = "13"
+	},
+/area/space)
 "jup" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/cashreg,
@@ -76616,6 +76645,12 @@
 /turf/space,
 /turf/unsimulated/floor/carpet/office,
 /area/hospital/samostrel)
+"kcH" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	icon = 'icons/turf/walls_tempus-white.dmi';
+	icon_state = "7"
+	},
+/area/space)
 "kcN" = (
 /obj/stool/chair/couch/green{
 	dir = 9;
@@ -76789,6 +76824,16 @@
 /area/centcom/lobby)
 "ksO" = (
 /obj/table/wood/auto/desk,
+/obj/decal/cleanable/blood{
+	icon_state = "floor5";
+	pixel_x = 10
+	},
+/obj/map/light/secretblue,
+/obj/item/gun/kinetic/ak47{
+	pixel_x = 1;
+	pixel_y = 8
+	},
+/obj/item/ammo/bullets/ak47,
 /obj/decal/skeleton{
 	desc = "The remains of some poor cosmonaut fellow.";
 	icon = 'icons/misc/hstation.dmi';
@@ -76796,12 +76841,6 @@
 	name = "corpse";
 	pixel_x = -10
 	},
-/obj/decal/cleanable/blood{
-	icon_state = "floor5";
-	pixel_x = 10
-	},
-/obj/map/light/secretblue,
-/obj/item/ammo/bullets/ak47,
 /turf/unsimulated/floor/airless/plating{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -77555,6 +77594,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/diner/cow)
+"myA" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	icon = 'icons/turf/walls_tempus-white.dmi';
+	icon_state = "2"
+	},
+/area/space)
 "mzt" = (
 /obj/stove,
 /obj/item/soup_pot,
@@ -77768,6 +77813,12 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/donut2)
+"naA" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	icon = 'icons/turf/walls_tempus-white.dmi';
+	icon_state = "6"
+	},
+/area/space)
 "nbb" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-4"
@@ -81263,6 +81314,12 @@
 	icon_state = "floor"
 	},
 /area/meat_derelict/guts)
+"vtu" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	icon = 'icons/turf/walls_tempus-white.dmi';
+	icon_state = "15"
+	},
+/area/space)
 "vum" = (
 /obj/machinery/door/airlock/gannets/glass,
 /obj/decal/tile_edge/line/green{
@@ -81449,6 +81506,12 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"wgW" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	icon = 'icons/turf/walls_tempus-white.dmi';
+	icon_state = "9"
+	},
+/area/space)
 "wgY" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -81617,6 +81680,12 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
+"wGq" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	icon = 'icons/turf/walls_tempus-white.dmi';
+	icon_state = "10"
+	},
+/area/space)
 "wHY" = (
 /obj/item/clothing/shoes/red{
 	desc = "Aren't these the HoS's? You feel like he can probably live without these.";
@@ -81911,6 +81980,12 @@
 	},
 /turf/unsimulated/floor/void,
 /area/diner/cow)
+"xIR" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	icon = 'icons/turf/walls_tempus-white.dmi';
+	icon_state = "11"
+	},
+/area/space)
 "xJg" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-25"
@@ -163385,9 +163460,9 @@ cnw
 cnw
 cnw
 cnw
-cgP
-cgP
-cgP
+naA
+myA
+myA
 cgP
 cnw
 cnw
@@ -163686,11 +163761,11 @@ aaa
 cnw
 cnw
 cnw
-cgP
-cgP
+naA
+wgW
 cki
 pey
-cgP
+wGq
 cgP
 cnw
 cnw
@@ -163988,12 +164063,12 @@ aaa
 cnw
 cnw
 cnw
-cgP
+fjD
 xbV
 usz
 lJH
 fPx
-cgP
+fjD
 cnw
 cnw
 cnw
@@ -164289,13 +164364,13 @@ kmt
 aaa
 cnw
 cnw
-cgP
-cgP
+naA
+xIR
 dvw
-cgP
-cgP
-cgP
-cgP
+myA
+myA
+myA
+xIR
 cgP
 cnw
 cnw
@@ -164591,14 +164666,14 @@ kmt
 aaa
 cnw
 cnw
-cgP
+fjD
 cki
 cki
 cki
 cki
 omY
 qzY
-cgP
+fjD
 cnw
 cnw
 aaa
@@ -164893,14 +164968,14 @@ kmt
 aaa
 cnw
 cnw
-cgP
+fjD
 dLP
 sva
 tZB
 wrC
 ksO
 nrB
-cgP
+fjD
 cnw
 cnw
 aaa
@@ -165194,15 +165269,15 @@ axa
 kmt
 aaa
 cnw
-cgP
-cgP
+naA
+jsn
 cki
 dEJ
 cki
 cki
 cki
 rHb
-cgP
+efG
 cgP
 cnw
 aaa
@@ -165496,16 +165571,16 @@ axa
 kmt
 aaa
 cnw
-cgP
-cgP
-cgP
-cgP
+efG
+xIR
+myA
+myA
 dvw
 dvw
-cgP
-cgP
-cgP
-cgP
+myA
+myA
+xIR
+jsn
 cnw
 aaa
 cnw
@@ -165798,7 +165873,7 @@ axa
 kmt
 aaa
 cnw
-cgP
+fjD
 dDa
 esO
 cki
@@ -165807,7 +165882,7 @@ wzg
 vCJ
 cki
 cki
-cgP
+fjD
 cnw
 aaa
 cnw
@@ -166100,7 +166175,7 @@ axa
 kmt
 aaa
 cnw
-cgP
+fjD
 dDs
 ftk
 lTJ
@@ -166109,7 +166184,7 @@ cki
 qmd
 wcC
 jQH
-cgP
+fjD
 cnw
 aaa
 cnw
@@ -166402,7 +166477,7 @@ axa
 kmt
 aaa
 cnw
-cgP
+fjD
 dDs
 gPB
 mtp
@@ -166411,7 +166486,7 @@ cki
 joy
 uFU
 dDs
-cgP
+fjD
 cnw
 aaa
 cnw
@@ -166704,7 +166779,7 @@ asq
 mnh
 jhk
 cnw
-cgP
+fjD
 dDs
 dDs
 nfJ
@@ -166713,7 +166788,7 @@ cki
 fnX
 cki
 dDs
-cgP
+fjD
 cnw
 aaa
 cnw
@@ -167006,16 +167081,16 @@ asq
 mnh
 jhk
 cnw
-cgP
-cgP
-cgP
-cgP
+efG
+myA
+myA
+myA
 dvw
 dvw
-cgP
-cgP
-cgP
-cgP
+myA
+myA
+myA
+jsn
 cnw
 aaa
 cnw
@@ -167307,8 +167382,8 @@ vFr
 asq
 mnh
 jhk
-cgP
-cgP
+naA
+wgW
 dEJ
 pdY
 cki
@@ -167317,7 +167392,7 @@ tZB
 cki
 cki
 cki
-cgP
+wGq
 cgP
 aaa
 cnw
@@ -167609,7 +167684,7 @@ sTU
 asq
 mnh
 jhk
-cgP
+fjD
 chk
 dHc
 qze
@@ -167620,7 +167695,7 @@ jKE
 cki
 sqw
 qFF
-cgP
+fjD
 aaa
 cnw
 cnw
@@ -167911,7 +167986,7 @@ yld
 asq
 mnh
 jhk
-cgP
+fjD
 chQ
 dHj
 nYa
@@ -167922,7 +167997,7 @@ dEJ
 wcC
 sqw
 qFF
-cgP
+fjD
 aaa
 cnw
 cnw
@@ -168213,7 +168288,7 @@ kjA
 kjA
 mnh
 jhk
-cgP
+fjD
 cki
 dHu
 pHZ
@@ -168224,7 +168299,7 @@ dEJ
 cki
 sqw
 qFF
-cgP
+fjD
 aaa
 cnw
 cnw
@@ -168515,7 +168590,7 @@ kjA
 lqh
 mnh
 jhk
-cgP
+fjD
 dwB
 dJr
 rQF
@@ -168526,7 +168601,7 @@ cki
 cki
 sqw
 qFF
-cgP
+fjD
 aaa
 cnw
 cnw
@@ -168817,18 +168892,18 @@ lqh
 lqh
 mnh
 jhk
-cgP
-cgP
-cgP
-cgP
+wGq
+kcH
+kcH
+myA
 dvw
-cgP
-cgP
+myA
+myA
 dvw
-cgP
-cgP
-cgP
-cgP
+myA
+kcH
+kcH
+wgW
 aaa
 cnw
 cnw
@@ -169120,16 +169195,16 @@ abn
 kmt
 aaa
 cnw
-cgP
-cgP
+wGq
+jsn
 uAx
 cki
 rQF
 cki
 dEJ
 cki
-cgP
-cgP
+efG
+wgW
 cnw
 aaa
 cnw
@@ -169423,14 +169498,14 @@ aCb
 aaa
 cnw
 cnw
-cgP
+fjD
 vGl
 teA
 cki
 qfP
 iMu
 iMu
-cgP
+fjD
 cnw
 cnw
 aaa
@@ -169725,14 +169800,14 @@ aCb
 aaa
 cnw
 cnw
-cgP
+fjD
 dDs
 aHz
 vYw
 hJX
 cki
 nIy
-cgP
+fjD
 cnw
 cnw
 aaa
@@ -170027,14 +170102,14 @@ kmt
 aaa
 cnw
 cnw
-cgP
+fjD
 dDs
 ojb
 hVQ
 cki
 fSx
 dDs
-cgP
+fjD
 cnw
 cnw
 aaa
@@ -170328,15 +170403,15 @@ kfa
 kmt
 aaa
 cnw
-cgP
-cgP
+naA
+jsn
 dDs
 dDs
 cki
 cki
 cki
 dDs
-cgP
+efG
 cgP
 cnw
 aaa
@@ -170630,16 +170705,16 @@ kfa
 kmt
 aaa
 cnw
-cgP
-cgP
-cgP
-cgP
+efG
+jsn
+myA
+myA
 oJG
 oJG
-cgP
-cgP
-cgP
-cgP
+myA
+myA
+vtu
+jsn
 cnw
 aaa
 cnw
@@ -170932,16 +171007,16 @@ kfa
 kmt
 aaa
 cnw
-cgP
-cgP
+efG
+jsn
 uxk
 cki
 cki
 cki
 cki
 cki
-cgP
-cgP
+efG
+jsn
 cnw
 aaa
 cnw
@@ -171234,16 +171309,16 @@ kfa
 kmt
 aaa
 cnw
-cgP
-cgP
+wGq
+jsn
 cki
 iVZ
 cki
 uxk
 iVZ
 cki
-cgP
-cgP
+efG
+wgW
 cnw
 aaa
 cnw
@@ -171537,14 +171612,14 @@ kmt
 aaa
 cnw
 cnw
-cgP
+fjD
 cki
 cki
 tkJ
 tkJ
 cki
 cki
-cgP
+fjD
 cnw
 cnw
 aaa
@@ -171839,14 +171914,14 @@ kmt
 aaa
 cnw
 cnw
-cgP
+fjD
 cki
 cki
 cki
 cki
 cki
 cki
-cgP
+fjD
 cnw
 cnw
 aaa
@@ -172141,14 +172216,14 @@ kmt
 aaa
 cnw
 cnw
-cgP
-cgP
-cgP
-cgP
-cgP
-cgP
-cgP
-cgP
+wGq
+myA
+myA
+myA
+myA
+myA
+myA
+wgW
 cnw
 cnw
 aaa
