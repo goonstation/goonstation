@@ -70,8 +70,7 @@ export class AlertModal extends Component {
       <Window
         title={title}
         width={350}
-        height={150}
-        canClose={timeout > 0}>
+        height={150}>
         {timeout && <Loader value={timeout} />}
         <Window.Content
           onFocus={focusCurrentButton}

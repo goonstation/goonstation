@@ -7,6 +7,7 @@
 	name = "projectile"
 	flags = TABLEPASS
 	layer = EFFECTS_LAYER_BASE
+	anchored = 1
 
 	var/xo
 	var/yo

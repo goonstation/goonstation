@@ -19,6 +19,7 @@ var/global/roundLog_name = "data/logs/full/[roundLog_date].html"
 var/global/roundLog = file(roundLog_name)
 var/global/disable_log_lists = 0
 var/global/first_adminhelp_happened = 0
+var/global/logLength = 0
 
 /proc/logTheThing(type, source, target, text, diaryType)
 	var/diaryLogging
@@ -56,6 +57,7 @@ var/global/first_adminhelp_happened = 0
 		//A little trial run of full logs saved to disk. They are cleared by the server every so often (cronjob) (HEH NOT ANYMORE)
 		if (!diaryLogging && config.allowRotatingFullLogs)
 			WRITE_LOG(roundLog_name, "\[[type]] [source && source != "<span class='blank'>(blank)</span>" ? "[source]: ": ""][text]<br>")
+			logLength++
 
 	else
 		var/ingameLog = "<td class='duration'>\[[round(world.time/600)]:[(world.time%600)/10]\]</td><td class='source'>[source]</td><td class='text'>[text]</td>"
@@ -107,6 +109,7 @@ var/global/first_adminhelp_happened = 0
 		//A little trial run of full logs saved to disk. They are cleared by the server every so often (cronjob) (HEH NOT ANYMORE)
 		if (!diaryLogging && config.allowRotatingFullLogs)
 			WRITE_LOG(roundLog_name, "\[[type]] [source && source != "<span class='blank'>(blank)</span>" ? "[source]: ": ""][text]<br>")
+			logLength++
 	return
 
 /proc/logDiary(text)
@@ -144,6 +147,7 @@ var/global/first_adminhelp_happened = 0
 		entry += "<br>[message]" // |GOONSTATION-CHANGE| (\n->br)
 	entry += "<br>" // |GOONSTATION-CHANGE| (br)
 	WRITE_LOG(roundLog_name, entry)
+	logLength++
 
 /* Close open log handles. This should be called as late as possible, and no logging should hapen after. */
 /proc/shutdown_logging()

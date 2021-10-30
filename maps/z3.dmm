@@ -183,7 +183,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/radiostation/bridge)
 "aaE" = (
-/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/leg/right/standard,
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "aaF" = (

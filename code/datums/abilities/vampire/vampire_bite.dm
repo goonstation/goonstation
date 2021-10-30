@@ -214,7 +214,7 @@
 
 	var/mob/master = null
 	if(src.owner.mind && src.owner.mind.master)
-		master = whois_ckey_to_mob_reference(src.owner.mind.master)
+		master = ckey_to_mob(src.owner.mind.master)
 	if ((target.mind && target.mind.special_role == ROLE_VAMPTHRALL) && target.is_mentally_dominated_by(master))
 		boutput(M, __red("You can't drink the blood of your master's thralls!"))
 		return 0

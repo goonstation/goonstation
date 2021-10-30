@@ -150,6 +150,8 @@
 					if(src.check_can_hold(I) > 0)
 						src.Attackby(I, user, S)
 				return
+			if(!does_not_open_in_pocket)
+				attack_hand(user)
 			switch (canhold)
 				if(0)
 					boutput(user, "<span class='alert'>[src] cannot hold [W].</span>")

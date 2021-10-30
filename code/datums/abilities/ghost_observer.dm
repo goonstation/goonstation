@@ -604,23 +604,20 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	proc/start_spooking()
 		src.holder.owner.color = rgb(170, 0, 0)
 		anim_f_ghost_blur(src.holder.owner)
-		applied_filter_index = length(src.holder.owner.filters)
 
 		if (istype(holder, /datum/abilityHolder/ghost_observer))
 			var/datum/abilityHolder/ghost_observer/GAH = holder
 			GAH.spooking = 1
-		src.holder.owner.invisibility = INVIS_NONE
+		REMOVE_MOB_PROPERTY(src.holder.owner, PROP_INVISIBILITY, src.holder.owner)
 		boutput(holder.owner, "<span class='notice'>You start being spooky! The living can all see you!</span>")
 
 	//remove the filter animation when we're done.
 	proc/stop_spooking()
 		src.holder.owner.color = null
-		src.holder.owner.filters[applied_filter_index] = null
-		applied_filter_index = 0
 		if (istype(holder, /datum/abilityHolder/ghost_observer))
 			var/datum/abilityHolder/ghost_observer/GAH = holder
 			GAH.spooking = 0
-		src.holder.owner.invisibility = initial(src.holder.owner.invisibility)
+		APPLY_MOB_PROPERTY(src.holder.owner, PROP_INVISIBILITY, src.holder.owner, ghost_invisibility)
 		boutput(holder.owner, "<span class='alert'>You stop being spooky!</span>")
 
 #endif

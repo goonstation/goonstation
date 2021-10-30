@@ -15,6 +15,7 @@
 
 		if (!real_name)
 			real_name = name
+		src.flags |= UNCRUSHABLE
 
 	proc/setup(var/L,var/list/viral_list)
 		set_loc(L)
@@ -64,7 +65,7 @@
 	blend_mode = 2
 
 	New()
-		src.filters += filter(type="motion_blur", x=0, y=3)
+		add_filter("motion blur", 1, motion_blur_filter(x=0, y=3))
 		..()
 
 /obj/decal/skeleton

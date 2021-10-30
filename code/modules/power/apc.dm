@@ -622,7 +622,7 @@ var/zapLimiter = 0
 		t += "<I>This APC has no configurable settings.</I>"
 	else if((locked || (setup_networkapc > 1)) && !can_access_remotely(user))
 		if (setup_networkapc < 2)
-			t += "<I>(Swipe ID card to unlock inteface.)</I><BR>"
+			t += "<I>(Swipe ID card to unlock interface.)</I><BR>"
 		else
 			t += "Host Connection: <B>[src.host_id ? "<font color=green>OK</font>" : "<font color=red>NONE</font>"]</B><BR>"
 		t += "Main breaker : <B>[operating ? "On" : "Off"]</B><BR>"

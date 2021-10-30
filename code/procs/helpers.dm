@@ -1960,7 +1960,7 @@ proc/countJob(rank)
 		return
 
 	// Find our master's mob reference (if any).
-	var/mob/mymaster = whois_ckey_to_mob_reference(M.mind.master)
+	var/mob/mymaster = ckey_to_mob(M.mind.master)
 
 	switch (slave_type)
 		if ("mslave")
@@ -2066,7 +2066,7 @@ proc/countJob(rank)
 /**
   * A universal ckey -> mob reference lookup proc, adapted from whois() (Convair880).
   */
-/proc/whois_ckey_to_mob_reference(target as text, exact=1)
+/proc/ckey_to_mob(target as text, exact=1)
 	if(isnull(target))
 		return
 	target = ckey(target)

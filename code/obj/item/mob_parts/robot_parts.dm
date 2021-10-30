@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 /obj/item/parts/robot_parts
 	name = "robot parts"
 	icon = 'icons/obj/robot_parts.dmi'
@@ -155,13 +156,14 @@
 				if (src.dmg_blunt || src.dmg_burns) return ((src.dmg_blunt + src.dmg_burns) / src.max_health) * 100
 				else return 0
 
+ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 /obj/item/parts/robot_parts/head
-	name = "standard cyborg head"
+	name = "cyborg head"
 	desc = "A serviceable head unit for a potential cyborg."
 	icon_state_base = "head"
 	icon_state = "head-generic"
 	slot = "head"
-	max_health = 175
+
 	var/obj/item/organ/brain/brain = null
 	var/obj/item/ai_interface/ai_interface = null
 	var/visible_eyes = 1
@@ -240,9 +242,14 @@
 				boutput(user, "<span class='notice'>You open the head's compartment and take out [src.brain].</span>")
 				user.put_in_hand_or_drop(src.brain)
 				src.brain = null
+		else
+			..()
 
-		else if (istype(W,/obj/item/sheet) && (src.type == /obj/item/parts/robot_parts/head))
-			// second check up there is just watching out for those ..() calls
+/obj/item/parts/robot_parts/head/standard
+	name = "standard cyborg head"
+	max_health = 175
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
 			if (M.amount >= 2)
 				boutput(user, "<span class='notice'>You reinforce [src.name] with the metal.</span>")
@@ -262,7 +269,6 @@
 			else
 				boutput(user, "<span class='alert'>You need at least two metal sheets to reinforce this component.</span>")
 				return
-
 		else
 			..()
 
@@ -276,7 +282,7 @@
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY) // shush
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W,/obj/item/sheet) && (src.type == /obj/item/parts/robot_parts/head/sturdy))
+		if (istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
 			if (!M.reinforcement)
 				boutput(user, "<span class='alert'>You'll need reinforced sheets to reinforce the head.</span>")
@@ -377,13 +383,14 @@
 	max_health = 90
 	var/list/expressions = list("happy", "veryhappy", "neutral", "sad", "angry", "curious", "surprised", "unsure", "content", "tired", "cheeky")
 
+ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 /obj/item/parts/robot_parts/chest
-	name = "standard cyborg chest"
-	desc = "The centerpiece of any cyborg. It wouldn't get very far without it."
+	name = "cyborg chest"
+	desc = "Oh no I'm an abstract parent object, how did you get me?"
 	icon_state_base = "body"
 	icon_state = "body-generic"
 	slot = "chest"
-	max_health = 250
+	//These vars track the wiring/cell that the chest needs before you can stuff it on a frame
 	var/wires = 0
 	var/obj/item/cell/cell = null
 
@@ -448,7 +455,15 @@
 			C.amount = src.wires
 			src.wires = 0
 
-		else if (isweldingtool(W) && src.type == /obj/item/parts/robot_parts/chest)
+		else ..()
+
+/obj/item/parts/robot_parts/chest/standard
+	name = "standard cyborg chest"
+	desc = "The centerpiece of any cyborg. It wouldn't get very far without it."
+	max_health = 250
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (isweldingtool(W))
 			var/obj/item/weldingtool/welder = W
 			if (welder.try_weld(user, 3, 3))
 				var/obj/item/clothing/suit/armor/makeshift/R = new /obj/item/clothing/suit/armor/makeshift(get_turf(user))
@@ -456,8 +471,9 @@
 				user.u_equip(src)
 				user.put_in_hand_or_drop(R)
 				qdel(src)
+		else
+			..()
 
-		else ..()
 
 /obj/item/parts/robot_parts/chest/light
 	name = "light cyborg chest"
@@ -467,6 +483,7 @@
 	max_health = 75
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT) // hush
 
+ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 /obj/item/parts/robot_parts/arm
 	name = "placeholder item (don't use this!)"
 	desc = "A metal arm for a cyborg. It won't be able to use as many tools without it!"
@@ -534,16 +551,18 @@
 			return "has [bicon(src)] \an [initial(src.name)] attached as a"
 		return
 
+ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 /obj/item/parts/robot_parts/arm/left
-	name = "standard cyborg left arm"
+	name = "cyborg left arm"
 	slot = "l_arm"
 	icon_state_base = "l_arm"
 	icon_state = "l_arm-generic"
 	handlistPart = "armL-generic"
 
+/obj/item/parts/robot_parts/arm/left/standard
+	name = "standard cyborg left arm"
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W,/obj/item/sheet) && ((src.type == /obj/item/parts/robot_parts/arm/left)))
-			// second check up there is just watching out for those ..() calls
+		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
 			if (M.amount >= 2)
 				boutput(user, "<span class='notice'>You reinforce [src.name] with the metal.</span>")
@@ -568,8 +587,7 @@
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY)
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W,/obj/item/sheet) && (src.type == /obj/item/parts/robot_parts/arm/left/sturdy))
-			// second check up there is just watching out for those ..() calls
+		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
 			if (!M.reinforcement)
 				boutput(user, "<span class='alert'>You'll need reinforced sheets to reinforce the [src.name].</span>")
@@ -605,17 +623,20 @@
 	robot_movement_modifier = /datum/movement_modifier/robot_part/arm_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 
+ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 /obj/item/parts/robot_parts/arm/right
-	name = "standard cyborg right arm"
+	name = "cyborg right arm"
 	icon_state = "r_arm"
 	slot = "r_arm"
 	icon_state_base = "r_arm"
 	icon_state = "r_arm-generic"
 	handlistPart = "armR-generic"
 
+
+/obj/item/parts/robot_parts/arm/right/standard
+	name = "standard cyborg right arm"
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W,/obj/item/sheet) && (src.type == /obj/item/parts/robot_parts/arm/right))
-			// second check up there is just watching out for those ..() calls
+		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
 			if (M.amount >= 2)
 				boutput(user, "<span class='notice'>You reinforce [src.name] with the metal.</span>")
@@ -640,8 +661,7 @@
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY)
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W,/obj/item/sheet) && (src.type == /obj/item/parts/robot_parts/arm/right/sturdy))
-			// second check up there is just watching out for those ..() calls
+		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
 			if (!M.reinforcement)
 				boutput(user, "<span class='alert'>You'll need reinforced sheets to reinforce the [src.name].</span>")
@@ -677,6 +697,7 @@
 	robot_movement_modifier = /datum/movement_modifier/robot_part/arm_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 
+ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg)
 /obj/item/parts/robot_parts/leg
 	name = "placeholder item (don't use this!)"
 	desc = "A metal leg for a cyborg. It won't be able to move very well without this!"
@@ -764,14 +785,18 @@
 			return "has [bicon(src)] \an [initial(src.name)] attached as a"
 		return
 
+ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 /obj/item/parts/robot_parts/leg/left
-	name = "standard cyborg left leg"
+	name = "cyborg left leg"
 	slot = "l_leg"
+	step_image_state = "footprintsL"
 	icon_state_base = "l_leg"
 	icon_state = "l_leg-generic"
 	handlistPart = "legL-generic"
-	step_image_state = "footprintsL"
 	movement_modifier = /datum/movement_modifier/robotleg_left
+
+/obj/item/parts/robot_parts/leg/left/standard
+	name = "standard cyborg left leg"
 
 /obj/item/parts/robot_parts/leg/left/light
 	name = "light cyborg left leg"
@@ -795,14 +820,18 @@
 	robot_movement_modifier = /datum/movement_modifier/robot_part/tread_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_TREADS)
 
+ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 /obj/item/parts/robot_parts/leg/right
-	name = "standard cyborg right leg"
+	name = "cyborg right leg"
 	slot = "r_leg"
+	step_image_state = "footprintsR"
 	icon_state_base = "r_leg"
 	icon_state = "r_leg-generic"
 	handlistPart = "legR-generic"
-	step_image_state = "footprintsR"
 	movement_modifier = /datum/movement_modifier/robotleg_right
+
+/obj/item/parts/robot_parts/leg/right/standard
+	name = "standard cyborg right leg"
 
 /obj/item/parts/robot_parts/leg/right/light
 	name = "light cyborg right leg"
