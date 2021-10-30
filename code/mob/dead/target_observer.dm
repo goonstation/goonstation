@@ -158,9 +158,6 @@ var/list/observers = list()
 
 	New()
 		..()
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
-		observers += src
-		mobs += src
 		start_time = world.time
 
 
