@@ -384,6 +384,7 @@ var/mutable_appearance/fluid_ma
 					F.finalalpha = src.finalalpha
 					F.avg_viscosity = src.avg_viscosity
 					F.last_depth_level = src.last_depth_level
+					F.my_depth_level = src.last_depth_level
 					F.step_sound = src.step_sound
 					F.movement_speed_mod = src.movement_speed_mod
 
@@ -407,6 +408,10 @@ var/mutable_appearance/fluid_ma
 									step_away(I,src)
 						else
 							step_away(push_thing,src)
+
+					for(var/atom/A in F.loc)
+						if (A.event_handler_flags & USE_FLUID_ENTER)
+							A.EnteredFluid(F, F.loc)
 
 		if (spawned_any && prob(40))
 			playsound( src.loc, 'sound/misc/waterflow.ogg', 30,0.7,7)
