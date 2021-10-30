@@ -1984,6 +1984,7 @@
 			for(var/obj/O in F.contents)
 				owner.reagents.reaction(O,TOUCH)
 		owner.reagents.clear_reagents()
+		SEND_SIGNAL(owner, COMSIG_MOB_VOMIT, 10)
 		return 0
 
 /datum/bioEffect/power/bigpuke/acidpuke
