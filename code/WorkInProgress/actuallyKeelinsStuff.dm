@@ -2805,9 +2805,6 @@ Returns:
 	icon_state = "fissure"
 
 	Bumped(atom/movable/AM)
-		var/area/srcar = AM.loc.loc
-		srcar.Exited(AM)
-
 		var/obj/source = locate(/obj/dfissure_from)
 		if (!istype(source))
 			qdel(src)
@@ -2825,9 +2822,6 @@ Returns:
 	icon_state = "fissure"
 
 	Bumped(atom/movable/AM)
-		var/area/srcar = AM.loc.loc
-		srcar.Exited(AM)
-
 		var/obj/source = locate(/obj/dfissure_to)
 		if (!istype(source))
 			boutput(AM, "<span class='combat'>You try to squeeze into the hole in space-time, but it's really dense right now!  Weird!  Who knew holes in reality could be so strange?!</span>")
@@ -3788,7 +3782,6 @@ var/list/lag_list = new/list()
 	attack_hand(mob/user as mob)
 		switch(alert("Travel back to ss13?",,"Yes","No"))
 			if("Yes")
-				user.loc.loc.Exited(user)
 				user.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 			if("No")
 				return

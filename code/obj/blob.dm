@@ -167,9 +167,6 @@
 				gen_rate_value = 0
 			overmind.spread_mitigation -= spread_value
 		var/turf/T = get_turf(src)
-		if (istype(src.loc,/turf))
-			if (istype(src.loc.loc,/area))
-				src.loc.loc.Exited(src)
 		healthbar?.onDelete()
 		qdel(healthbar)
 		healthbar = null
