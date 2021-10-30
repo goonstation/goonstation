@@ -1932,7 +1932,7 @@
 	id = "poisoned"
 	name = "Poisoned"
 	desc = "Something <i>really</i> didn't sit well with you."
-	icon_state = "miasma"
+	icon_state = "poisoned"
 	movement_modifier = /datum/movement_modifier/poisoned //bit less punishing than regular slowed
 
 	onAdd()
@@ -1967,8 +1967,7 @@
 			L.vomit()
 
 	//firstly: sorry
-	//secondly: arg is a proportional scale. 1 is standard, 5 is every port-a-puke tic, 10 is mass emesis.
-	proc/reduce_duration_on_vomit(var/vomit_power)
-		if (!ON_COOLDOWN(owner, "vomit_poison_reduction", 5 SECONDS)) //prevent use of sewage, etc to instacure
-			owner.changeStatus("poisoned", -20 SECONDS * vomit_power)
-			boutput(owner, "<span class='notice'>Your stomach feels a lot better.</span>")
+	//secondly: second arg is a proportional scale. 1 is standard, 5 is every port-a-puke tick, 10 is mass emesis.
+	proc/reduce_duration_on_vomit(var/mob/M, var/vomit_power)
+		owner.changeStatus("poisoned", -20 SECONDS * vomit_power)
+		boutput(owner, "<span class='notice'>Your stomach feels a lot better.</span>")
