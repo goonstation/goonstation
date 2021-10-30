@@ -212,11 +212,12 @@ For a list of all the icons you can use, see the [FontAwesome website](https://f
 
 ## License
 
-Source code is covered by /tg/station's parent license - **AGPL-3.0**
-(see the main [README](https://github.com/tgstation/tgstation/blob/master/README.md)), unless otherwise indicated.
+All tgui code in the Goonstation repository is licensed under **MIT** unless otherwise indicated.
+The original source code on the tgstation repository is covered by /tg/station's parent license - **AGPL-3.0**
+(see their main [README](https://github.com/tgstation/tgstation/blob/master/README.md)).
 
-Some files are annotated with a copyright header, which explicitly states
-the copyright holder and license of the file. Most of the core tgui
-source code is available under the **MIT** license.
+However, tgui files from tgstation used by us are annotated with a copyright header,
+which explicitly states the copyright holder and license of the file. 
+Most of the tgui source code is available under the **MIT** or **ISC** license.
 
 The Authors retain all copyright to their respective work here submitted.

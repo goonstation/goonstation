@@ -147,10 +147,10 @@
 
 			//maybe other debuffs here in the future
 
-			newBioPoints = clamp((src.bio_points + (base_gen_rate + genBonus - gen_rate_used) * mult), 0, src.bio_points_max) //these are rounded in point displays
+			newBioPoints = clamp((src.bio_points + (base_gen_rate + genBonus - gen_rate_used) * mult), 0, src.bio_points_max + (base_gen_rate + gen_rate_bonus - gen_rate_used) * (mult - 1)) //these are rounded in point displays
 
 		else
-			newBioPoints = clamp((src.bio_points + (base_gen_rate + gen_rate_bonus - gen_rate_used) * mult), 0, src.bio_points_max) //ditto above
+			newBioPoints = clamp((src.bio_points + (base_gen_rate + gen_rate_bonus - gen_rate_used) * mult), 0, src.bio_points_max + (base_gen_rate + gen_rate_bonus - gen_rate_used) * (mult - 1)) //ditto above
 
 		src.bio_points = newBioPoints
 

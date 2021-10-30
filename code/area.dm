@@ -1216,6 +1216,15 @@ ABSTRACT_TYPE(/area/prefab)
 	name = "Shooting Range"
 	icon_state = "purple"
 
+/area/prefab/lesbeeans/interior
+	name = "Lesbian Bee Farm"
+	icon_state = "ranch"
+
+/area/prefab/lesbeeans/exterior
+	name = "Lesbian Bee Farm"
+	icon_state = "park"
+	force_fullbright = 1
+
 /area/prefab/silverglass
 	name = "Silverglass Platform"
 	icon_state = "orange"
@@ -3185,6 +3194,10 @@ ABSTRACT_TYPE(/area/station/catwalk)
 /area/syndicate_station/firing_range
 		name = "firing range"
 		icon_state = "blue"
+
+/area/syndicate_station/medbay
+		name = "medical bay"
+		icon_state = "purple"
 
 // end syndie //
 

@@ -87,6 +87,14 @@
 			ircmsg["msg"] = "[user ? user : "Unknown"] sent a message to Central Command:\n**[title]**\n[message]"
 			ircbot.export("admin", ircmsg)
 
+		transmit_to_partner_station(var/title, var/message, var/user)
+			var/sound_to_play = "sound/misc/announcement_1.ogg"
+			command_alert(message, title, sound_to_play, override_big_title="Transmission to Partner Station")
+			var/ircmsg[] = new()
+			ircmsg["msg"] = "[user ? user : "Unknown"] sent a message to __[game_servers.get_buddy().name]__:\n**[title]**\n[message]"
+			ircbot.export("admin", ircmsg)
+			return game_servers.send_to_buddy("announce", title, message)
+
 		add_cargo_logs(var/atom/A)
 			if (!A)
 				return
@@ -188,11 +196,21 @@
 			if("transmit")
 				if(signal.data["acc_code"] != netpass_heads)
 					return
-				if(ON_COOLDOWN(global, "transmit_centcom", 10 MINUTES))
-					src.post_reply("TRANSMIT_E_COOLDOWN", target, "time", ON_COOLDOWN(global, "transmit_centcom", 0))
-					return
-				src.transmit_to_centcom(signal.data["title"], signal.data["data"], signal.data["user"])
-				src.post_reply("TRANSMIT_E_SUCCESS", target)
+				if(signal.data["transmit_type"] == "centcom")
+					if(ON_COOLDOWN(global, "transmit_centcom", 10 MINUTES))
+						src.post_reply("TRANSMIT_E_COOLDOWN", target, "time", ON_COOLDOWN(global, "transmit_centcom", 0))
+						return
+					src.transmit_to_centcom(signal.data["title"], signal.data["data"], signal.data["user"])
+					src.post_reply("TRANSMIT_E_SUCCESS", target)
+				else if(signal.data["transmit_type"] == "station")
+					if(ON_COOLDOWN(global, "transmit_station", 5 MINUTES))
+						src.post_reply("TRANSMIT_E_COOLDOWN", target, "time", ON_COOLDOWN(global, "transmit_station", 0))
+						return
+					if(src.transmit_to_partner_station(signal.data["title"], signal.data["data"], signal.data["user"]))
+						src.post_reply("TRANSMIT_E_SUCCESS", target)
+					else
+						global.cooldowns["transmit_station"] = 0
+						src.post_reply("TRANSMIT_E_FAILURE", target)
 			if("term_connect") //Terminal interface stuff.
 				if(target in src.terminals)
 					//something might be wrong here, disconnect them!

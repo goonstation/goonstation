@@ -15,6 +15,7 @@
 
 		if (!real_name)
 			real_name = name
+		src.flags |= UNCRUSHABLE
 
 	proc/setup(var/L,var/list/viral_list)
 		set_loc(L)
@@ -64,7 +65,7 @@
 	blend_mode = 2
 
 	New()
-		src.filters += filter(type="motion_blur", x=0, y=3)
+		add_filter("motion blur", 1, motion_blur_filter(x=0, y=3))
 		..()
 
 /obj/decal/skeleton
@@ -527,7 +528,7 @@ obj/decal/fakeobjects/teleport_pad
 		if (M.getStatusDuration("weakened") || M.getStatusDuration("stunned") || M.getStatusDuration("frozen"))
 			return
 
-		if (!(M.bioHolder?.HasEffect("cold_resist") > 1) && M.slip(0))
+		if (!(M.bioHolder?.HasEffect("cold_resist") > 1) && M.slip(walking_matters = 1))
 			boutput(M, "<span class='alert'>You slipped on [src]!</span>")
 			if (prob(5))
 				M.TakeDamage("head", 5, 0, 0, DAMAGE_BLUNT)

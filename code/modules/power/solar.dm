@@ -19,6 +19,7 @@
 	directwired = 1
 	var/id = 1
 	var/sun_angle = 0		// sun angle as set by sun datum
+	var/obj/machinery/computer/solar_control/control
 
 	north
 		id = "north"
@@ -50,15 +51,12 @@
 		//set icon dir to show sun illumination
 		set_dir(turn(NORTH, -angle - 22.5))	// 22.5 deg bias ensures, e.g. 67.5-112.5 is EAST
 
-		// find all solar controls and update them
-		// currently, just update all controllers in world
-		// ***TODO: better communication system using network
 		var/datum/powernet/powernet = src.get_direct_powernet()
-		if (!istype(powernet))
+		if (!istype(powernet) || !control)
 			return
-		for (var/obj/machinery/computer/solar_control/C in powernet.nodes)
-			if (!isnull(src.id) && src.id == C.solar_id)
-				C.tracker_update(angle)
+		if(control.get_direct_powernet() == powernet)
+			if (!isnull(src.id) && src.id == control.solar_id)
+				control.tracker_update(angle)
 
 	// override power change to do nothing since we don't care about area power
 	// (and it would be pointless anyway given that solar panels and the associated tracker are usually on a separate powernet)
@@ -116,11 +114,6 @@
 	SPAWN_DBG(1 SECOND)
 		updateicon()
 		update_solar_exposure()
-
-		if(powernet)
-			for(var/obj/machinery/computer/solar_control/SC in powernet.nodes)
-				if(SC.id == id)
-					control = SC
 
 /obj/machinery/power/solar/attackby(obj/item/W, mob/user)
 	..()
@@ -273,8 +266,7 @@
 		for(var/obj/machinery/power/solar/S in powernet.nodes)
 			if(S.id != solar_id) continue
 			cdir = S.adir
-
-
+		set_panels(cdir)
 
 /obj/machinery/computer/solar_control/process()
 	..()
@@ -373,13 +365,18 @@
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/computer/solar_control/proc/set_panels(var/cdir)
+/obj/machinery/computer/solar_control/proc/set_panels(var/cdir=null)
 	var/datum/powernet/powernet = src.get_direct_powernet()
 	if(!powernet) return
 	for(var/obj/machinery/power/solar/S in powernet.nodes)
 		if(S.id != solar_id) continue
 		S.control = src
-		S.ndir = cdir
+		if(cdir)
+			S.ndir = cdir
+
+	for(var/obj/machinery/power/tracker/T in powernet.nodes)
+		if(T.id != solar_id) continue
+		T.control = src
 
 // hotfix until someone edits all maps to add proper wires underneath the computers
 /obj/machinery/computer/solar_control/get_power_wire()
@@ -400,6 +397,7 @@
 		closest_solar_distance = get_dist(src, S)
 
 	src.solar_id = closest_solar_id
+	set_panels(cdir)
 
 // solar panels which ignore occlusion
 
@@ -421,7 +419,7 @@
 		var/sgen = SOLARGENRATE * sunfrac
 		add_avail(sgen)
 		if(powernet && control)
-			if(control in powernet.nodes) //this line right here...
+			if(control.get_direct_powernet() == powernet) //this line right here...
 				control.gen += sgen
 
 		if(adir != ndir)

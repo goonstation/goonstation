@@ -1220,18 +1220,12 @@ Read the rules, don't grief, and have fun!</div>"}
 			if (length(landmarks[LANDMARK_LOBBY_LEFTSIDE]))
 				src.set_loc(landmarks[LANDMARK_LOBBY_LEFTSIDE][1])
 
-			// This is gross. I'm sorry.
-			var/list/servers = list()
-			servers["main1"] = "1 Classic: Heisenbee"
-			servers["main2"] = "2 Classic: Bombini"
-			servers["main3"] = "3 Roleplay: Morty"
-			servers["main4"] = "4 Roleplay: Sylvester"
-
 			var/serverList = ""
-			for (var/serverId in servers)
-				if (serverId == config.server_id)
+			for (var/serverId in global.game_servers.servers)
+				var/datum/game_server/server = global.game_servers.servers[serverId]
+				if (server.is_me() || !server.publ)
 					continue
-				serverList += {"\n<a style='color: #88f;' href='byond://winset?command=Change-Server "[serverId]'>Goonstation [servers[serverId]]</a>"}
+				serverList += {"\n<a style='color: #88f;' href='byond://winset?command=Change-Server "[server.id]'>[server.name]</a>"}
 
 			src.maptext_x = 0
 			src.maptext_width = 600

@@ -433,6 +433,14 @@
 	item_state = "sousapron"
 	body_parts_covered = TORSO
 	permeability_coefficient = 0.70
+	
+/obj/item/clothing/suit/apron/tricolor
+	name = "pizza apron"
+	desc = "An apron made specifically to protect from tomato sauce."
+	icon_state = "triapron"
+	item_state = "triapron"
+	body_parts_covered = TORSO
+	permeability_coefficient = 0.70
 
 /obj/item/clothing/suit/apron/botanist
 	name = "blue apron"

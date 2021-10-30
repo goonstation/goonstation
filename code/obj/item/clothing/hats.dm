@@ -975,18 +975,10 @@ proc/filter_trait_hats(var/type)
 			playsound(src.loc, "sound/vox/crime.ogg", 100, 1)
 
 		// Guess what? you wear the hat, you go to jail. Easy Peasy.
-		var/perpname = user.name
-		if(user:wear_id && user:wear_id:registered)
-			perpname = user:wear_id:registered
-		// find the matching security record
-		for(var/datum/data/record/R in data_core.general)
-			if(R.fields["name"] == perpname)
-				for (var/datum/data/record/S in data_core.security)
-					if (S.fields["id"] == R.fields["id"])
-						// now add to rap sheet
-						S.fields["criminal"] = "*Arrest*"
-						S.fields["ma_crim"] = pick("Being unstoppable","Swagging out so hard","Stylin on \'em","Puttin\' in work")
-						S.fields["ma_crim_d"] = pick("Convicted Badass, to the bone.","Certified Turbonerd, home-grown.","Absolute Salad.","King of crimes, Queen of Flexxin\'")
+		var/datum/db_record/S = data_core.security.find_record("id", user.datacore_id)
+		S?["criminal"] = "*Arrest*"
+		S?["ma_crim"] = pick("Being unstoppable","Swagging out so hard","Stylin on \'em","Puttin\' in work")
+		S?["ma_crim_d"] = pick("Convicted Badass, to the bone.","Certified Turbonerd, home-grown.","Absolute Salad.","King of crimes, Queen of Flexxin\'")
 
 	custom_suicide = 1
 	suicide_in_hand = 0
@@ -1788,3 +1780,63 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "pirate_brn"
 	item_state = "pirate_brn"
+
+//Lesbian Hat
+
+/obj/item/clothing/head/lesbian_hat
+	name = "very lesbian hat"
+	desc = "And they say subtlety is dead."
+	mats = list("FAB-1"=5, "honey"=5)
+	icon_state = "lesbeean"
+	item_state = "lesbeean"
+
+//Western Ten-Gallon hats!
+
+/obj/item/clothing/head/westhat
+	name = "Ten-Gallon hat"
+	desc = "Channel your true cowboy and call everyone partner!"
+	icon_state = "westhat"
+	item_state = "westhat"
+
+/obj/item/clothing/head/westhat/black
+	name = "Black Ten-Gallon hat"
+	icon_state = "westhat_black"
+	item_state = "westhat_black"
+
+/obj/item/clothing/head/westhat/red
+	name = "Red Ten-Gallon hat"
+	icon_state = "westhat_red"
+	item_state = "westhat_red"
+
+/obj/item/clothing/head/westhat/blue
+	name = "Blue Ten-Gallon hat"
+	icon_state = "westhat_blue"
+	item_state = "westhat_blue"
+
+/obj/item/clothing/head/westhat/tan
+	name = "Tan Ten-Gallon hat"
+	icon_state = "westhat_tan"
+	item_state = "westhat_tan"
+
+/obj/item/clothing/head/westhat/brown
+	name = "Brown Ten-Gallon hat"
+	icon_state = "westhat_brown"
+	item_state = "westhat_brown"
+
+//Witchy Hats
+
+/obj/item/clothing/head/witchhat_purple
+	name = "purple witch hat"
+	desc = "Magical, but the friendship and imagination kind, not the remove-your-butt kind."
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "witchhat_purple"
+	item_state = "witchhat_purple"
+
+/obj/item/clothing/head/witchhat_mint
+	name = "mint witch hat"
+	desc = "Magical, but the friendship and imagination kind, not the remove-your-butt kind."
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "witchhat_mint"
+	item_state = "witchhat_mint"
