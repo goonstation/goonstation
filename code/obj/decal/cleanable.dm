@@ -45,9 +45,6 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 		..()
 		setup(loc,viral_list)
 
-		if(src.stain || src.slippery)
-			event_handler_flags |= USE_HASENTERED
-
 	setup(var/L,var/list/viral_list)
 		..()
 		src.real_name = src.name
@@ -421,7 +418,6 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	color = null
 	var/last_volume = 1
 	reagents_max = 100
-	event_handler_flags = USE_HASENTERED
 
 	disposing()
 		diseases = list()

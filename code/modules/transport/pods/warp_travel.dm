@@ -108,8 +108,7 @@
 	icon_state = "fatportal"
 	density = 0
 	var/obj/target = null
-	anchored = 1.0
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	anchored = 1.0 | USE_FLUID_ENTER
 
 /obj/warp_portal/Bumped(mob/M as mob|obj)
 	SPAWN_DBG(0)
