@@ -1133,6 +1133,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	linkcolor = "#FF0000"
 	wages = PAY_DOCTORATE
 	limit = 0
+	receives_badge = 1
 	slot_jump = list(/obj/item/clothing/under/misc/lawyer)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_lhan = list(/obj/item/storage/briefcase)
@@ -1453,6 +1454,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	wages = PAY_IMPORTANT
 	recieves_miranda = 1
 	cant_spawn_as_rev = 1
+	receives_badge = 1
 	slot_back = list(/obj/item/storage/backpack/withO2)
 	slot_belt = list(/obj/item/device/pda2/heads)
 	slot_jump = list(/obj/item/clothing/under/misc/lawyer/black) // so they can slam tables
@@ -2619,6 +2621,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	linkcolor = "#FF0000"
 	wages = PAY_DOCTORATE
 	limit = 4
+	receives_badge = 1
 	slot_jump = list(/obj/item/clothing/under/misc/lawyer)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_lhan = list(/obj/item/storage/briefcase)
