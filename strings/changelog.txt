@@ -1,4 +1,21 @@
 
+(t)sat oct 30 21
+(u)pali
+(*)PDA ringtone sound range drastically decreased
+(t)thu oct 28 21
+(u)Gannets
+(p)6473
+(e)🗺⚖|mapping, balance
+(+)Removed the sanctuary zone from the Battlecruiser Cairngorm's medbay.
+(u)Grokberg and pkfiremain710
+(p)6464
+(e)|
+(*)Adds a new drink, the Wellerman (sweet tea + rum)
+(t)wed oct 27 21
+(u)Tarmunora
+(p)6465
+(e)|
+(+)Reduce RP antag counts.
 (t)tue oct 26 21
 (u)UnfunnyPerson
 (p)6225
