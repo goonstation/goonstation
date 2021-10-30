@@ -58,7 +58,7 @@ datum
 					if (virus.cure == "Antibiotics")
 						virus.state = "Remissive"
 				if(M.hasStatus("poisoned"))
-					M.changeStatus("poisoned", -15 SECONDS)
+					M.changeStatus("poisoned", -10 SECONDS)
 				..()
 				return
 

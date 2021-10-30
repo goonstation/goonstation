@@ -1933,7 +1933,7 @@
 	name = "Poisoned"
 	desc = "Something <i>really</i> didn't sit well with you."
 	icon_state = "miasma"
-	movement_modifier = /datum/movement_modifier/status_slowed
+	movement_modifier = /datum/movement_modifier/poisoned //bit less punishing than regular slowed
 
 	onAdd()
 		..()
@@ -1959,12 +1959,8 @@
 				puke_prob = 2
 		L.take_toxin_damage(tox)
 		if(prob(2))
-			L.emote("groan")
-		else if(prob(2))
-			L.emote("moan")
-		else if(prob(2))
-			L.emote("shudder")
-		else if(prob(2))
+			L.emote(pick("groan", "moan", "shudder"))
+		if(prob(2))
 			L.change_eye_blurry(rand(5,10))
 		if(prob(puke_prob))
 			L.visible_message("<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>", "<span class='alert'>You puke all over yourself!</span>")
