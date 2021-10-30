@@ -152,8 +152,9 @@
 	proc/arm(mob/user as mob)
 		if (src.state || src.stage != 2)
 			return 1
-		var/area/a = get_area(src)
-		if(a.sanctuary) return
+		var/area/A = get_area(src)
+		if(A.sanctuary)
+			return
 		// Custom grenades only. Metal foam etc grenades cannot be modified (Convair880).
 		var/log_reagents = null
 		if (src.name == "grenade")
@@ -161,7 +162,7 @@
 				if (G.reagents.total_volume) log_reagents += "[log_reagents(G)] "
 
 		//I do not give a flying FUCK about what goes on in the sims. =I
-		if(!istype(get_area(epicenter), /area/sim)) && istype(src.source))
+		if(!istype(A, /area/sim))
 			message_admins("[log_reagents ? "Custom grenade" : "Grenade ([src])"] primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing("combat", user, null, "primes a [log_reagents ? "custom grenade" : "grenade ([src.type])"] at [log_loc(user)].[log_reagents ? " [log_reagents]" : ""]")
 
@@ -171,8 +172,6 @@
 		playsound(src, "sound/weapons/armbomb.ogg", 75, 1, -3)
 		SPAWN_DBG(3 SECONDS)
 			if (src && !src.disposed)
-				a = get_area(src)
-				if(a.sanctuary) return
 				if(user?.equipped() == src)
 					user.u_equip(src)
 				explode()
