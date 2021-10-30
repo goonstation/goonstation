@@ -47,10 +47,10 @@
 		dat += {"<B>Shipping Budget:</B> [wagesystem.shipping_budget] Credits<BR>
 		<B>Scanned Card:</B> <A href='?src=\ref[src];card=1'>([src.scan])</A><BR><HR>"}
 		if(src.scan != null)
-			var/datum/data/record/account = null
+			var/datum/db_record/account = null
 			account = FindBankAccountByName(src.scan.registered)
 			if(account)
-				dat += "<B>Credits on Account:</B> [account.fields["current_money"]] Credits<BR><HR>"
+				dat += "<B>Credits on Account:</B> [account["current_money"]] Credits<BR><HR>"
 		dat += {"<A href='?src=\ref[src];viewrequests=1'>View Requests</A><BR>
 		<A href='?src=\ref[src];order=1'>Request Items</A><BR>
 		<A href='?src=\ref[src];buypoints=1'>Purchase Supply Points</A><BR>
@@ -64,7 +64,7 @@
 	if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 		if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
 		boutput(user, "<span class='notice'>You swipe the ID card.</span>")
-		var/datum/data/record/account = null
+		var/datum/db_record/account = null
 		account = FindBankAccountByName(I:registered)
 		if(account)
 			var/enterpin = input(user, "Please enter your PIN number.", "Order Console", 0) as null|num
@@ -95,10 +95,10 @@
 		src.add_dialog(usr)
 
 	if (href_list["order"])
-		var/datum/data/record/account = null
+		var/datum/db_record/account = null
 		if(src.scan) account = FindBankAccountByName(src.scan.registered)
 		if(account)
-			src.temp = "<B>Credits on Account:</B> [account.fields["current_money"]] Credits<BR><HR>"
+			src.temp = "<B>Credits on Account:</B> [account["current_money"]] Credits<BR><HR>"
 		else
 			src.temp = "<B>Shipping Budget:</B> [wagesystem.shipping_budget] Credits<BR><HR>"
 		src.temp += "<B>Please select the Supply Package you would like to request:</B><BR><BR>"
@@ -137,7 +137,7 @@
 		src.temp += "<hr><A href='?src=\ref[src];mainmenu=1'>Main Menu</A><br>"
 
 	else if (href_list["doorder"])
-		var/datum/data/record/account = null
+		var/datum/db_record/account = null
 		if(src.scan) account = FindBankAccountByName(src.scan.registered)
 		var/datum/supply_order/O = new/datum/supply_order ()
 		var/datum/supply_packs/P = locate(href_list["doorder"])
@@ -152,10 +152,10 @@
 
 				return
 			if(account) //buy it with their money
-				if(account.fields["current_money"] < P.cost)
+				if(account["current_money"] < P.cost)
 					boutput(usr, "Insufficient funds in account. Log out to request purchase using supply budget.")
 				else
-					account.fields["current_money"] -= P.cost
+					account["current_money"] -= P.cost
 					O.object = P
 					O.orderedby = usr.name
 					O.console_location = src.console_location
@@ -206,7 +206,7 @@
 			if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 				if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
 				boutput(usr, "<span class='notice'>You swipe the ID card.</span>")
-				var/datum/data/record/account = null
+				var/datum/db_record/account = null
 				account = FindBankAccountByName(I:registered)
 				if(account)
 					var/enterpin = input(usr, "Please enter your PIN number.", "Order Console", 0) as null|num
@@ -226,7 +226,7 @@
 	else if (href_list["buypoints"])
 
 		if (src.scan)
-			var/datum/data/record/account = null
+			var/datum/db_record/account = null
 			account = FindBankAccountByName(src.scan.registered)
 			if (!account)
 				src.temp = {"<B>ERROR:</B> No bank account associated with this ID card found.<BR>
@@ -234,7 +234,7 @@
 			else
 				src.temp = {"<B>Contribute to Shipping Budget</B><BR>
 							<B>Shipping Budget:</b> [wagesystem.shipping_budget] Credits<BR>
-							<B>Credits in Account:</B> [account.fields["current_money"]] Credits<BR><HR>
+							<B>Credits in Account:</B> [account["current_money"]] Credits<BR><HR>
 							<A href='?src=\ref[src];buy=1'>Make Transaction</A><BR>
 							<A href='?src=\ref[src];mainmenu=1'>Cancel Purchase</A>"}
 		else
@@ -246,14 +246,14 @@
 			if (src.scan.registered in FrozenAccounts)
 				boutput(usr, "<span class='alert'>Your account cannot currently be liquidated due to active borrows.</span>")
 				return
-			var/datum/data/record/account = null
+			var/datum/db_record/account = null
 			account = FindBankAccountByName(src.scan.registered)
 			if (!account)
 				src.temp = {"<B>ERROR:</B> No bank account associated with this ID card found.<BR>
 							<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"}
 			var/transaction = input("How much?", "Shipping Budget", null, null)  as null|num
-			if (account.fields["current_money"] >= transaction && (transaction > 0))
-				account.fields["current_money"] -= transaction
+			if (account["current_money"] >= transaction && (transaction > 0))
+				account["current_money"] -= transaction
 				wagesystem.shipping_budget += transaction
 				src.temp = "Transaction successful. Thank you for your patronage.<BR>"
 				////// PDA NOTIFY/////
