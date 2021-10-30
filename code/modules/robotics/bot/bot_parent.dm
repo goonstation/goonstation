@@ -101,8 +101,6 @@
 		if(cam)
 			cam.dispose()
 			cam = null
-		qdel(bot_mover)
-		bot_mover = null
 		..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
