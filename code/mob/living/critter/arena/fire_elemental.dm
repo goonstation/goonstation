@@ -68,7 +68,6 @@
 		return(max(..(), 80))
 	death(var/gibbed)
 		..(gibbed, 0)
-		if (!gibbed)
 		playsound(src.loc, "sound/impact_sounds/burn_sizzle.ogg", 100, 1)
 		make_cleanable(/obj/decal/cleanable/ash,src.loc)
 		if (!gibbed)
