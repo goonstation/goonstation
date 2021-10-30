@@ -1935,6 +1935,12 @@
 	icon_state = "miasma"
 	movement_modifier = /datum/movement_modifier/status_slowed
 
+	onAdd()
+		..()
+		RegisterSignal(owner, COMSIG_MOB_VOMIT, .proc/reduce_duration_on_vomit)
+	onRemove()
+		UnregisterSignal(owner, COMSIG_MOB_VOMIT)
+
 	onUpdate(var/timePassed)
 		var/mob/living/L = owner
 		var/tox = 0
@@ -1961,3 +1967,8 @@
 		if(prob(puke_prob))
 			L.visible_message("<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>", "<span class='alert'>You puke all over yourself!</span>")
 			L.vomit()
+
+	//firstly: sorry
+	//secondly: arg is a proportional scale. 1 is standard, 5 is every port-a-puke tic, 10 is mass emesis.
+	proc/reduce_duration_on_vomit(var/vomit_power)
+		owner.changeStatus("poisoned", -20 SECONDS * vomit_power)
