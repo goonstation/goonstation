@@ -36,7 +36,8 @@
 	layer = EFFECTS_LAYER_UNDER_1
 	var/database_id = null
 	var/random_color = 1
-	var/drop_type = 0 | USE_FLUID_ENTER | USE_CANPASS
+	var/drop_type = 0
+	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER | USE_CANPASS
 
 	New()
 		..()

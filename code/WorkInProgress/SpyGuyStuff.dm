@@ -310,6 +310,7 @@ proc/Create_Tommyname()
 	icon_state = "x2"
 	anchored = 1
 	invisibility = INVIS_ALWAYS
+	event_handler_flags = USE_HASENTERED
 
 	Crossed(atom/movable/AM)
 		..()

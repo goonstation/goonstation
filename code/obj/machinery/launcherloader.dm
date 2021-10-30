@@ -11,6 +11,7 @@
 	opacity = 0
 	layer = 2.6
 	anchored = 1
+	event_handler_flags = USE_HASENTERED
 	plane = PLANE_NOSHADOW_BELOW
 
 	var/obj/machinery/mass_driver/driver = null
@@ -110,7 +111,8 @@
 	desc = "Scans the barcode on objects and reroutes them accordingly."
 	density = 0
 	opacity = 0
-	anchored = 1 | USE_FLUID_ENTER
+	anchored = 1
+	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 	plane = PLANE_NOSHADOW_BELOW
 
 	var/default_direction = NORTH //The direction things get sent into when the router does not have a destination for the given barcode or when there is none attached.

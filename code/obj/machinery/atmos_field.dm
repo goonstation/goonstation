@@ -3,7 +3,8 @@
 	desc = "Keeps gases in but lets metallic objects pass through. Contact with organic materials is discouraged."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "atmos_field"
-	layer = OBJ_LAYER+0.5 | USE_FLUID_ENTER | USE_CANPASS
+	layer = OBJ_LAYER+0.5
+	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER | USE_CANPASS
 
 	New()
 		..()

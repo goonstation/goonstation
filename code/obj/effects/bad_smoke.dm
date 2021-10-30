@@ -15,6 +15,7 @@
 	icon = 'icons/effects/96x96.dmi'
 	pixel_x = -32
 	pixel_y = -32
+	event_handler_flags = USE_HASENTERED
 
 /obj/effects/bad_smoke/Move()
 	. = ..()

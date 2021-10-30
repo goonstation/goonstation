@@ -12,6 +12,7 @@
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 5
+	event_handler_flags = USE_HASENTERED
 
 	armed
 		icon_state = "bear_trap-open"

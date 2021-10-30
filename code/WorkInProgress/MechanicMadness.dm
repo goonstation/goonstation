@@ -794,7 +794,8 @@
 	desc = "A beam of light that will trigger a device when passed."
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "ibeam"
-	anchored = 1 | USE_FLUID_ENTER
+	anchored = 1
+	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
 	var/obj/item/mechanics/triplaser/holder
 
@@ -927,7 +928,8 @@
 	icon_state = "comp_accel"
 	can_rotate = 1
 	cabinet_banned = true // non-functional
-	var/active = 0 | USE_FLUID_ENTER
+	var/active = 0
+	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
 	New()
 		..()

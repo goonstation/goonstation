@@ -177,7 +177,8 @@ var/global/list/bible_contents = list()
 			return 0
 
 /obj/item/storage/bible/evil
-	name = "frayed bible" | USE_FLUID_ENTER | IS_FARTABLE
+	name = "frayed bible"
+	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER | IS_FARTABLE
 
 	Crossed(atom/movable/AM as mob)
 		..()

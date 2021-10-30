@@ -1238,7 +1238,7 @@
 	edible = 0
 	food_color = "#4D2600"
 	validforhat = 1
-	event_handler_flags = USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER | USE_HASENTERED
 
 	make_reagents()
 		..()

@@ -7,7 +7,8 @@
 	var/obj/item/target = null
 	anchored = 1.0
 	var/portal_lums = 2
-	var/datum/light/light | USE_FLUID_ENTER
+	var/datum/light/light
+	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
 /obj/portal/New()
 	..()

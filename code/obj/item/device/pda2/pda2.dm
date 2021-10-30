@@ -219,7 +219,8 @@
 		icon_state = "pda-clown"
 		desc = "A portable microcomputer by Thinktronic Systems, LTD. The surface is coated with polytetrafluoroethylene and banana drippings."
 		setup_default_pen = /obj/item/pen/crayon/random
-		setup_default_cartridge = /obj/item/disk/data/cartridge/clown | USE_FLUID_ENTER
+		setup_default_cartridge = /obj/item/disk/data/cartridge/clown
+		event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
 		Crossed(atom/movable/AM)
 			..()

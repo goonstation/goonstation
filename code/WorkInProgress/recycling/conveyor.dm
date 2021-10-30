@@ -27,7 +27,8 @@
 	var/divdir = 0		// if diverting, will be conveyer dir needed to divert (otherwise dense)
 	var/move_lag = 4	// The lag at which the movement happens. Lower = faster
 	var/obj/machinery/conveyor/next_conveyor = null
-	var/obj/machinery/conveyor_switch/owner = null | USE_FLUID_ENTER
+	var/obj/machinery/conveyor_switch/owner = null
+	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
 
 /obj/machinery/conveyor/north

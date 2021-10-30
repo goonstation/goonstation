@@ -282,7 +282,8 @@
 
 //A locker that traps folks.  I guess it's haunted.
 /obj/storage/closet/haunted
-	var/throw_strength = 100 | USE_FLUID_ENTER
+	var/throw_strength = 100
+	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
 	New()
 		..()

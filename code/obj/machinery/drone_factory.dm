@@ -10,7 +10,8 @@
 	icon = 'icons/mob/ghost_drone.dmi'
 	icon_state = "ghostcatcher0"
 	mats = 0
-	//var/id = "ghostdrone" | USE_FLUID_ENTER
+	//var/id = "ghostdrone"
+	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
 	New()
 		. = ..()

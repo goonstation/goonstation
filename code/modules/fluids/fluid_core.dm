@@ -35,7 +35,9 @@ var/mutable_appearance/fluid_ma
 	icon_state = "15"
 	anchored = 1
 	mouse_opacity = 1
-	layer = FLUID_LAYER | IMMUNE_MANTA_PUSH
+	layer = FLUID_LAYER
+
+	event_handler_flags = USE_HASENTERED | IMMUNE_MANTA_PUSH
 
 	var/finalcolor = "#ffffff"
 	color = "#ffffff"

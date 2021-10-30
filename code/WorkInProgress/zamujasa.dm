@@ -179,6 +179,7 @@
 /obj/invisible_teleporter
 	name = "invisible teleporter side 1"
 	desc = "Totally not a portal."
+	event_handler_flags = USE_HASENTERED
 	icon = 'icons/effects/letter_overlay.dmi'
 	icon_state = "A"
 	anchored = 1

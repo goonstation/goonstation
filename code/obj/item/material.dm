@@ -14,7 +14,8 @@
 	var/scoopable = 1
 	burn_type = 1
 	var/wiggle = 6 // how much we want the sprite to be deviated fron center
-	max_stack = INFINITY | USE_FLUID_ENTER
+	max_stack = INFINITY
+	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
 	New()
 		..()
@@ -572,7 +573,8 @@
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 35
-	burn_possible = 0 | USE_FLUID_ENTER
+	burn_possible = 0
+	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 	var/sound_stepped = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
 
 	New()

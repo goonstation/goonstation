@@ -35,7 +35,8 @@
 /obj/grille/catwalk/dubious
 	name = "rusty catwalk"
 	desc = "This one looks even less safe than usual."
-	var/collapsing = 0 | USE_FLUID_ENTER
+	var/collapsing = 0
+	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
 	New()
 		health = rand(5, 10)

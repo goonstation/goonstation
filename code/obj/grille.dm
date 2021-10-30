@@ -20,7 +20,8 @@
 	anchored = 1
 	flags = FPRINT | CONDUCT | USEDELAY
 	pressure_resistance = 5*ONE_ATMOSPHERE
-	layer = GRILLE_LAYER | USE_FLUID_ENTER | USE_CANPASS
+	layer = GRILLE_LAYER
+	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER | USE_CANPASS
 
 	New()
 		..()

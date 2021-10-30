@@ -94,6 +94,7 @@ var/maniac_previous_victim = "Unknown"
 	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
+	event_handler_flags = USE_HASENTERED
 
 	Crossed(atom/movable/AM as mob|obj)
 		..()
@@ -114,6 +115,7 @@ var/maniac_previous_victim = "Unknown"
 	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
+	event_handler_flags = USE_HASENTERED
 
 	Crossed(atom/movable/AM as mob|obj)
 		..()

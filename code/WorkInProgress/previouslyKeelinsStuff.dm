@@ -559,7 +559,8 @@ var/reverse_mode = 0
 	anchored = 1
 	opacity = 0
 	var/mob/living/carbon/human/my_target = null
-	var/weapon_name = null | USE_FLUID_ENTER
+	var/weapon_name = null
+	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
 /obj/fake_attacker/attackby()
 	step_away(src,my_target,2)

@@ -165,6 +165,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
+	event_handler_flags = USE_HASENTERED
 
 	Crossed(atom/movable/AM as mob|obj)
 		..()
@@ -248,6 +249,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 	anchored = 1
 	density = 0
 	var/ready = 1
+	event_handler_flags = USE_HASENTERED
 
 	Crossed(atom/movable/AM as mob|obj)
 		..()

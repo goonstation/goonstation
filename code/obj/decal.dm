@@ -518,6 +518,7 @@ obj/decal/fakeobjects/teleport_pad
 	opacity = 0
 	anchored = 1
 	plane = PLANE_FLOOR
+	event_handler_flags = USE_HASENTERED
 
 /obj/decal/icefloor/Crossed(atom/movable/AM)
 	..()
