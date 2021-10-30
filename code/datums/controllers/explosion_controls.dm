@@ -157,8 +157,8 @@ var/datum/explosion_controller/explosions
 		src.user = user
 
 	proc/logMe(var/power)
-		//I do not give a flying FUCK about what goes on in the colosseum. =I
-		if(!istype(get_area(epicenter), /area/colosseum) && istype(src.source))
+		//I do not give a flying FUCK about what goes on in the colosseum and sims. =I
+		if((!istype(get_area(epicenter), /area/colosseum) || !istype(get_area(epicenter), /area/sim)) && istype(src.source))
 			// Cannot read null.name
 			var/logmsg = "Explosion with power [power] (Source: [source ? "[source.name]" : "*unknown*"])  at [log_loc(epicenter)]. Source last touched by: [key_name(source?.fingerprintslast)] (usr: [ismob(user) ? key_name(user) : user])"
 			if(power > 10)
