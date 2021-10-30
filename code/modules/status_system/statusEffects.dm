@@ -1947,7 +1947,7 @@
 		var/puke_prob = 0
 		switch(timePassed)
 			if(0 to 20 SECONDS)
-				tox = 0.4s
+				tox = 0.4
 				puke_prob = 0.5
 			if(20 SECONDS to 60 SECONDS)
 				tox = 0.8
@@ -1971,6 +1971,6 @@
 	//firstly: sorry
 	//secondly: arg is a proportional scale. 1 is standard, 5 is every port-a-puke tic, 10 is mass emesis.
 	proc/reduce_duration_on_vomit(var/vomit_power)
-		if (!ON_COOLDOWN(owner, "vomit_poison_reduction", 5 SECONDS) //prevent use of sewage, etc to instacure
+		if (!ON_COOLDOWN(owner, "vomit_poison_reduction", 5 SECONDS)) //prevent use of sewage, etc to instacure
 			owner.changeStatus("poisoned", -20 SECONDS * vomit_power)
 			boutput(owner, "<span class='notice'>Your stomach feels a lot better.</span>")
