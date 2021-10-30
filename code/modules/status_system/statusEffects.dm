@@ -1939,20 +1939,16 @@
 		var/mob/living/L = owner
 		var/tox = 0
 		var/puke_prob = 0
-		var/faint_prob = 0
 		switch(timePassed)
 			if(0 to 20 SECONDS)
 				tox = 0.1
 				puke_prob = 0.5
-				faint_prob = 0.2
 			if(20 SECONDS to 60 SECONDS)
 				tox = 0.4
 				puke_prob = 1
-				faint_prob = 0.5
 			if(60 SECONDS to INFINITY)
 				tox = 1
 				puke_prob = 2
-				faint_prob = 1
 		L.take_toxin_damage(tox)
 		if(prob(2))
 			L.emote("groan")
@@ -1965,5 +1961,3 @@
 		if(prob(puke_prob))
 			L.visible_message("<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>", "<span class='alert'>You puke all over yourself!</span>")
 			L.vomit()
-		if(prob(faint_prob))
-			L.emote("faint")
