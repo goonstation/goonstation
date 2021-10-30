@@ -2397,7 +2397,7 @@ datum
 				if (ishuman(holder?.my_atom))
 					var/mob/living/carbon/human/H = holder.my_atom
 					if (istype(H.mutantrace, /datum/mutantrace/pug))
-						H.changeStatus("poisoned", 8 SECONDS)
+						H.changeStatus("poisoned", 8 SECONDS * mult)
 				..()
 
 			reaction_turf(var/turf/T, var/volume)
