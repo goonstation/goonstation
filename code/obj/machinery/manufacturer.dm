@@ -508,10 +508,10 @@
 		// This is not re-formatted yet just b/c i don't wanna mess with it
 		dat +="<B>Scanned Card:</B> <A href='?src=\ref[src];card=1'>([src.scan])</A><BR>"
 		if(scan)
-			var/datum/data/record/account = null
+			var/datum/db_record/account = null
 			account = FindBankAccountByName(src.scan.registered)
 			if (account)
-				dat+="<B>Current Funds</B>: [account.fields["current_money"]] Credits<br>"
+				dat+="<B>Current Funds</B>: [account["current_money"]] Credits<br>"
 		dat+= src.temp
 		dat += "<HR><B>Ores Available for Purchase:</B><br><small>"
 		for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
@@ -791,7 +791,7 @@
 				if (src.scan.registered in FrozenAccounts)
 					boutput(usr, "<span class='alert'>Your account cannot currently be liquidated due to active borrows.</span>")
 					return
-				var/datum/data/record/account = null
+				var/datum/db_record/account = null
 				account = FindBankAccountByName(src.scan.registered)
 				if (account)
 					var/quantity = 1
@@ -804,18 +804,15 @@
 						var/sum_taxes = round(taxes * quantity)
 						var/rockbox_fees = (!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0) * quantity
 						var/total = subtotal + sum_taxes + rockbox_fees
-						if(account.fields["current_money"] >= total)
-							account.fields["current_money"] -= total
+						if(account["current_money"] >= total)
+							account["current_money"] -= total
 							storage.eject_ores(ore, get_output_location(), quantity, transmit=1, user=usr)
 
 							 // This next bit is stolen from PTL Code
-							var/list/accounts = list()
-							for(var/datum/data/record/t in data_core.bank)
-								if(t.fields["job"] == "Chief Engineer")
-									accounts += t
-									accounts += t //fuck it x2
-								else if(t.fields["job"] == "Miner")
-									accounts += t
+							var/list/accounts = \
+								data_core.bank.find_records("job", "Chief Engineer") + \
+								data_core.bank.find_records("job", "Chief Engineer") + \
+								data_core.bank.find_records("job", "Engineer")
 
 
 							var/datum/signal/minerSignal = get_free_signal()
@@ -828,8 +825,8 @@
 								var/divisible_amount = subtotal - leftovers
 								if(divisible_amount)
 									var/amount_per_account = divisible_amount/length(accounts)
-									for(var/datum/data/record/t in accounts)
-										t.fields["current_money"] += amount_per_account
+									for(var/datum/db_record/t as anything in accounts)
+										t["current_money"] += amount_per_account
 									minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGO_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox&trade; sale, deposited to your account.")
 							else
 								leftovers = subtotal
@@ -1074,7 +1071,7 @@
 		if (istype(I, /obj/item/card/id))
 			var/obj/item/card/id/ID = I
 			boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
-			var/datum/data/record/account = null
+			var/datum/db_record/account = null
 			account = FindBankAccountByName(ID.registered)
 			if(account)
 				var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num

@@ -1,3 +1,7 @@
+
+(t)sat oct 16 21
+(u)pali
+(*)You can now choose an "Until Appeal" ban duration. It's the same thing as "Permanent" but the message will tell the person to appel. The "Permanent" option now tells people to wait 30 days until appealing.
 (t)fri oct 15 21
 (u)Zamujasa
 (*)The "View Player Notes" function now has a "Set Login Notice" option.

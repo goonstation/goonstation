@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2021 @Azrun
+ * SPDX-License-Identifier: MIT
+ */
+
 import { useBackend } from '../backend';
 import { Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';

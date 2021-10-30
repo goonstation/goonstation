@@ -9,6 +9,7 @@
 	size = 16
 	req_access = list(access_heads)
 	var/tmp/menu = MENU_MAIN
+	var/tmp/transmit_type
 	var/tmp/authenticated = null //Are we currently logged in?
 	var/datum/computer/file/user_data/account = null
 	var/obj/item/peripheral/network/radio/radiocard = null
@@ -61,6 +62,7 @@
 		<br>(Recall) to recall shuttle.
 		<br>(Logs) to view logs of potentially lost cargo.
 		<br>(Transmit) to send a message to Central Command
+		<br>(Message) to send a message to the partner station
 		<br>(Clear) to clear the screen.
 		<br>(Quit) to exit COMMaster."}
 		src.print_text(intro_text)
@@ -154,7 +156,7 @@
 									src.print_text(logg)
 									sleep(0.1 SECONDS)
 
-					if("transmit")
+					if("transmit", "message")
 						if(!src.pnet_card)
 							src.print_text("<b>Error:</b> Network card required.")
 							src.master.add_fingerprint(usr)
@@ -167,10 +169,26 @@
 								src.print_text("<b>Error:</b> Unable to detect comm dish.  Please check network cabling.")
 								return
 
-						src.print_text("Contacting Central Command. Warning: Frivolous use of this communication channel is punishable by bloodline termination.")
+						transmit_type = null
 
-						src.print_text("Please type and enter the title of your emergency message:")
-						menu = MENU_TRANSMIT_TITLE
+						if(lowertext(command) == "transmit")
+							if(GET_COOLDOWN(global, "transmit_centcom"))
+								menu = MENU_MAIN
+								src.print_text("Centcom communication beam recharging. Available in [time_to_text(GET_COOLDOWN(global, "transmit_centcom"))].")
+							else
+								src.print_text("Contacting Central Command. Warning: Frivolous use of this communication channel is punishable by bloodline termination.")
+								src.transmit_type = "centcom"
+						else if(lowertext(command) == "message")
+							if(GET_COOLDOWN(global, "transmit_station"))
+								menu = MENU_MAIN
+								src.print_text("Partner station communication beam recharging. Available in [time_to_text(GET_COOLDOWN(global, "transmit_station"))].")
+							else
+								src.print_text("Contacting the partner space station.")
+								src.transmit_type = "station"
+
+						if(transmit_type)
+							src.print_text("Please type and enter the TITLE of your message:")
+							menu = MENU_TRANSMIT_TITLE
 
 					if("help")
 						var/help_text = {"<b>Commands:</b>
@@ -180,6 +198,7 @@
 						<br>(Recall) to recall shuttle.
 						<br>(Logs) to view logs of potentially lost cargo.
 						<br>(Transmit) to send a message to Central Command
+						<br>(Message) to send a message to the partner station
 						<br>(Clear) to clear the screen.
 						<br>(Quit) to exit COMMaster."}
 						src.print_text(help_text)
@@ -229,7 +248,7 @@
 					src.print_text("Transmission cancelled.")
 					menu = MENU_MAIN
 				src.print_text(src.transmit_title)
-				src.print_text("Please type and enter your emergency message:")
+				src.print_text("Please type and enter your message:")
 				menu = MENU_TRANSMIT_MESSAGE
 
 			if(MENU_TRANSMIT_MESSAGE)
@@ -252,9 +271,13 @@
 					src.print_text("Transmission cancelled.")
 					return
 				src.print_text(transmit_message)
-				generate_signal(comm_net_id, "command", "transmit", "acc_code", netpass_heads, "title", src.transmit_title, "data", transmit_message, "user", usr.real_name)
-				logTheThing("admin", usr, null,  "attempted to contanct CentCom (title: [src.transmit_title], message: [transmit_message])")
-				logTheThing("diary", usr, null, "attempted to contanct CentCom (title: [src.transmit_title], message: [transmit_message])", "admin")
+				generate_signal(comm_net_id, "command", "transmit", "acc_code", netpass_heads, "title", src.transmit_title, "data", transmit_message, "user", usr.real_name, "transmit_type", transmit_type)
+				if(transmit_type == "centcom")
+					logTheThing("admin", usr, null,  "attempted to contanct CentCom (title: [src.transmit_title], message: [transmit_message])")
+					logTheThing("diary", usr, null, "attempted to contanct CentCom (title: [src.transmit_title], message: [transmit_message])", "admin")
+				else if(transmit_type == "station")
+					logTheThing("admin", usr, null,  "attempted to contanct the partner space station (title: [src.transmit_title], message: [transmit_message])")
+					logTheThing("diary", usr, null, "attempted to contanct the partner space station (title: [src.transmit_title], message: [transmit_message])", "admin")
 
 
 		src.master.add_fingerprint(usr)
@@ -313,6 +336,9 @@
 					if("transmit_e_cooldown")
 						src.print_text("Communication dish recharging. Available in [time_to_text(signal.data["time"])].")
 
+					if("transmit_e_failure")
+						src.print_text("Unable to reach recipient, try again later.")
+
 				return
 
 
@@ -343,7 +369,7 @@
 			src.peripheral_command("ping", newsignal, "\ref[src.pnet_card]")
 
 		// i take it this proc was written before varargs were a thing - cirr, 2017
-		generate_signal(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3, var/key4, var/value4, var/key5, var/value5)
+		generate_signal(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3, var/key4, var/value4, var/key5, var/value5, var/key6, var/value6)
 			if(!src.pnet_card || !comm_net_id)
 				return
 
@@ -359,6 +385,8 @@
 				signal.data[key4] = value4
 			if(key5)
 				signal.data[key5] = value5
+			if(key6)
+				signal.data[key6] = value6
 
 			src.reply_wait = 5
 			src.peripheral_command("transmit", signal, "\ref[src.pnet_card]")
