@@ -18,6 +18,7 @@
 	density = 1
 	icon = 'icons/obj/large/64x96.dmi'
 	icon_state = "cryotron_up"
+	event_handler_flags = IMMUNE_SINGULARITY
 	bound_width = 96
 	bound_x = -32
 	bound_height = 64
