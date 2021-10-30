@@ -136,20 +136,23 @@ ABSTRACT_TYPE(/obj/item/augmentation/head)
 		var/mob/M = src.owner
 		if(src.hasStatus("flashed"))
 			return
+		if(get_dist(user, target) <= 1)
+			return
 		if (M.client.check_any_key(KEY_EXAMINE | KEY_POINT) || ishelpermouse(target)) // slightly hacky, oh well, tries to check whether we want to click normally or use attack_ai
 			return
 		else
 			if (get_dist(M, target) > 0)
 				set_dir(get_dir(M, target))
-			var/turf/target_turf = get_turf(target)
-			var/obj/overlay/energy = new/obj/overlay(target_turf)
-			energy.icon = 'icons/effects/effects.dmi'
-			energy.icon_state = "energytwirlin_fast"
-			energy.name = "electronic energy pulse"
-			energy.anchored = 1
-			SPAWN_DBG(57 CENTI SECONDS)
-				if (energy)
-					qdel(energy)
+			if(istype(target, /obj/machinery))
+				var/turf/target_turf = get_turf(target)
+				var/obj/overlay/energy = new/obj/overlay(target_turf)
+				energy.icon = 'icons/effects/effects.dmi'
+				energy.icon_state = "energytwirlin_fast"
+				energy.name = "electronic energy pulse"
+				energy.anchored = 1
+				SPAWN_DBG(57 CENTI SECONDS)
+					if (energy)
+						qdel(energy)
 			target.attack_ai(M)
 
 	proc/flash_check()

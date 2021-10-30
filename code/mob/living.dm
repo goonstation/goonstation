@@ -517,6 +517,11 @@
 				if (src.invisibility > INVIS_NONE && (isturf(target) || (target != src && isturf(target.loc)))) // dont want to check for a cloaker every click if we're not invisible
 					SEND_SIGNAL(src, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
 
+				if(ishuman(src))
+					var/mob/living/carbon/human/H = src
+					if ((locate(/obj/item/augmentation/head/wireless_interact) in H.has_augmentation("Head", "brain")) && (get_dist(src, target) > 1))
+						return
+
 				if (equipped)
 					weapon_attack(target, equipped, reach, params)
 				else
