@@ -52,7 +52,7 @@
 /datum/spacebee_extension_command/ban
 	name = "ban"
 	server_targeting = COMMAND_TARGETING_MAIN_SERVER
-	help_message = "Bans a given ckey. Arguments in the order of ckey, length (number of minutes, or put \"hour\", \"day\", \"week\", \"month\",or \"perma\"), and ban reason. Make sure you specify the server that the person is on. Also keep in mind that this bans them from all servers. e.g. ban1 shelterfrog perma Lol rip."
+	help_message = "Bans a given ckey. Arguments in the order of ckey, length (number of minutes, or put \"hour\", \"day\", \"week\", \"month\", \"perma\" or \"untilappeal\"), and ban reason. Make sure you specify the server that the person is on. Also keep in mind that this bans them from all servers. e.g. ban1 shelterfrog perma Lol rip."
 	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/string="length",
 	/datum/command_argument/the_rest="reason")
 	execute(user, ckey, length, reason)
@@ -77,6 +77,7 @@
 				return
 			data["ip"] = response["last_ip"]
 			data["compID"] = response["last_compID"]
+		data["text_ban_length"] = length
 		data["reason"] = reason
 		if (length == "hour")
 			length = 60
@@ -88,6 +89,10 @@
 			length = 43200
 		else if (length == "perma")
 			length = 0
+			data["text_ban_length"] = "Permanent"
+		else if (ckey(length) == "untilappeal")
+			length = -1
+			data["text_ban_length"] = "Until Appeal"
 		else
 			length = text2num(length)
 		if (!isnum(length))
