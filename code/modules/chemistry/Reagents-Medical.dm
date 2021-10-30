@@ -52,18 +52,13 @@ datum
 			depletion_rate = 0.2
 			value = 3 // 2c + 1c
 
-			on_add()
-				if (ishuman(holder?.my_atom))
-					var/mob/living/carbon/human/H = holder.my_atom
-					if(H.hasStatus("poisoned"))
-						H.changeStatus("poisoned", 1 MINUTE)
-						boutput(H, "<span class='notice'>You start to feel a lot better.</span>")
-
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				for(var/datum/ailment_data/disease/virus in M.ailments)
 					if (virus.cure == "Antibiotics")
 						virus.state = "Remissive"
+				if(M.hasStatus("poisoned"))
+					M.changeStatus("poisoned", -15 SECONDS)
 				..()
 				return
 
