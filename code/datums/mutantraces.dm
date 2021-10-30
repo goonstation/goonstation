@@ -2121,7 +2121,7 @@
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/pug/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/pug/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/pug/left
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_EYES | WEARS_UNDERPANTS)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_EYES | WEARS_UNDERPANTS | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 	eye_state = "eyes-pug"
 	dna_mutagen_banned = FALSE
 	var/static/image/snore_bubble = image('icons/mob/pug.dmi', "bubble")
