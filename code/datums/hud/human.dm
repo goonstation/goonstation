@@ -884,7 +884,7 @@
 			return
 
 		var/stage = 0
-		if (master.mini_health_hud)
+		if (master?.mini_health_hud)
 			health.icon_state = "blank"
 			if (isdead(master) || master.fakedead)
 				health_brute.icon_state = "mhealth7" // rip

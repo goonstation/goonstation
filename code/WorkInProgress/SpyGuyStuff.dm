@@ -310,9 +310,8 @@ proc/Create_Tommyname()
 	icon_state = "x2"
 	anchored = 1
 	invisibility = INVIS_ALWAYS
-	event_handler_flags = USE_HASENTERED
 
-	HasEntered(atom/movable/AM)
+	Crossed(atom/movable/AM)
 		..()
 		on_trigger(AM)
 
@@ -326,7 +325,7 @@ proc/Create_Tommyname()
 	on_trigger(atom/movable/triggerer)
 		if(isliving(triggerer) || locate(/mob) in triggerer)
 			if(!assigned_area) assigned_area = get_area(src)
-			assigned_area.wake_critters()
+			assigned_area.wake_critters(isliving(triggerer) ? triggerer : locate(/mob/living) in triggerer)
 
 /obj/trigger/throw
 	name = "throw trigger"

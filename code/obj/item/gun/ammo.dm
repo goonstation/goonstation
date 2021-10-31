@@ -269,7 +269,7 @@
 	update_icon()
 		if (src.amount_left < 0)
 			src.amount_left = 0
-		inventory_counter.update_number(src.amount_left)
+		inventory_counter?.update_number(src.amount_left)
 		src.tooltip_rebuild = 1
 		if (src.amount_left > 0)
 			if (src.icon_dynamic && src.icon_short)

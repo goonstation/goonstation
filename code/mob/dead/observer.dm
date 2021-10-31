@@ -287,22 +287,13 @@
 		O.bioHolder.CopyOther(src.bioHolder, copyActiveEffects = 0)
 		if (isghostrestrictedz(O.z) && !restricted_z_allowed(O, get_turf(O)) && !(src.client && src.client.holder))
 			O.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
-		if (client) client.color = null  //needed for mesons dont kill me thx - ZeWaka
-		if (src.client && src.client.holder && src.stat !=2)
-			// genuinely not sure what this is here for since we're setting the
-			// alive/dead status of the *ghost*.
-			// this seems to have made bizarre issues where
-			// some parts would think you were still alive even as a ghost
-			setalive(O)
-
-		// so, fuck that, you're dead, shithead. get over it.
-		setdead(O)
 
 		src.mind?.transfer_to(O)
 		src.ghost = O
 		if(istype(get_area(src),/area/afterlife))
 			qdel(src)
 
+		respawn_controller.subscribeNewRespawnee(O.ckey)
 		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[O.ckey]
 		if(istype(respawnee))
 			respawnee.update_time_display()
@@ -814,3 +805,26 @@ mob/dead/observer/proc/insert_observer(var/atom/target)
 	set_loc(newobs)
 	if (isghostrestrictedz(newobs.z) && !restricted_z_allowed(newobs, get_turf(newobs)) && !(src.client && src.client.holder))
 		newobs.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
+
+mob/dead/observer/proc/insert_slasher_observer(var/atom/target) //aaaaaa i had to create a new proc aaaaaa
+	var/mob/dead/target_observer/slasher_ghost/newobs = new /mob/dead/target_observer/slasher_ghost
+	newobs.attach_hud(hud)
+	newobs.set_observe_target(target)
+	newobs.name = src.name
+	newobs.real_name = src.real_name
+	newobs.corpse = src.corpse
+	newobs.my_ghost = src
+	delete_on_logout_reset = delete_on_logout
+	delete_on_logout = 0
+	if (target?.invisibility)
+		newobs.see_invisible = target.invisibility
+	if (src.corpse)
+		corpse.ghost = newobs
+	if (src.mind)
+		mind.transfer_to(newobs)
+	else if (src.client)
+		src.client.mob = newobs
+	set_loc(newobs)
+	if (isghostrestrictedz(newobs.z) && !restricted_z_allowed(newobs, get_turf(newobs)) && !(src.client && src.client.holder))
+		newobs.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
+	return newobs

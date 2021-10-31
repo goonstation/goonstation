@@ -661,12 +661,12 @@
 		var/obj/item/gun/energy/lawbringer/prints = src.budgun
 		if (prints.owner_prints && !loose)
 			var/search = lowertext(prints.owner_prints)
-			for (var/datum/data/record/R in data_core.general)
-				if (search == lowertext(R.fields["fingerprint"]))
-					law_prints = R.fields["name"]
+			for (var/datum/db_record/R as anything in data_core.general.records)
+				if (search == lowertext(R["fingerprint"]))
+					law_prints = R["name"]
 					break
-				else if (lowertext(R.fields["rank"]))
-					law_prints = R.fields["name"]
+				else if (lowertext(R["rank"]))
+					law_prints = R["name"]
 					break
 			if (!law_prints)	// If we didn't get anything
 				law_prints = "[pick(NT)]"	// I dunno just pick someone
