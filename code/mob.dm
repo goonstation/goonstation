@@ -3040,6 +3040,7 @@
 	return 1
 
 /mob/proc/get_id()
+	RETURN_TYPE(/obj/item/card/id)
 	if(istype(src.equipped(), /obj/item/card/id))
 		return src.equipped()
 	if(istype(src.equipped(), /obj/item/device/pda2))
@@ -3132,9 +3133,11 @@
 	RETURN_TYPE(/datum/pronouns)
 	if(isabomination(src))
 		return get_singleton(/datum/pronouns/abomination)
-	. = src?.bioHolder?.mobAppearance?.pronouns
+	. = src.get_id()?.pronouns
 	if(isnull(.))
-		switch(src.gender)
+		. = src?.bioHolder?.mobAppearance?.pronouns
+	if(isnull(.))
+		switch(src.bioHolder?.mobAppearance?.gender || src.gender)
 			if(MALE)
 				. = get_singleton(/datum/pronouns/heHim)
 			if(FEMALE)

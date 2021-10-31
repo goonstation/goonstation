@@ -74,6 +74,7 @@ GAUNTLET CARDS
 	flags = FPRINT | TABLEPASS | ATTACK_SELF_DELAY
 	click_delay = 0.4 SECONDS
 	wear_layer = MOB_BELT_LAYER
+	var/datum/pronouns/pronouns = null
 	var/list/access = list()
 	var/registered = null
 	var/assignment = null
@@ -93,6 +94,11 @@ GAUNTLET CARDS
 
 	proc/update_name()
 		name = "[src.registered]'s ID Card ([src.assignment])"
+
+	get_desc()
+		. = ..()
+		if(src.pronouns)
+			. += " Pronouns: [src.pronouns.name]"
 
 	registered_owner()
 		.= registered
