@@ -87,17 +87,19 @@
 		"<span class='combat'><b>You dive on [MT]!</b></span>")
 		playsound(holder.owner, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 0, pitch = 1.6)
 		MT.TakeDamageAccountArmor("All", rand(4,10), 0, 0, DAMAGE_STAB)
+		if (MT.loc && holder.owner.loc != MT.loc)
+			holder.owner.set_loc(MT.loc)
 		if (!isdead(MT))
 			MT.emote("scream")
 		disabled = 1
 		SPAWN_DBG(0)
 			var/flail = rand(10, 15)
-			holder.owner.canmove = 0
+			holder.owner.canmove = 1
 			while (flail > 0 && MT && !MT.disposed)
-				MT.changeStatus("weakened", 2 SECONDS)
-				MT.canmove = 0
-				if (MT.loc)
-					holder.owner.set_loc(MT.loc)
+				MT.changeStatus("weakened", 0.7 SECONDS)
+				MT.canmove = 1
+				if (get_dist(holder.owner, target) > 1)
+					break
 				if (holder.owner.getStatusDuration("stunned") || holder.owner.getStatusDuration("weakened") || holder.owner.getStatusDuration("paralysis"))
 					break
 				if (istype(S))

@@ -122,10 +122,12 @@
 /datum/targetable/critter/tomato_bite
 	name = "Chomp"
 	desc = "Chomp down on a target, causing some serious pain."
-	cooldown = 10 SECONDS
 	icon_state = "tomato_bite"
+	cooldown = 10 SECONDS
+	targeted = 1
+	target_anything = 1
 	var/sound_bite = 'sound/impact_sounds/Flesh_Crush_1.ogg'
-	var/brute_damage = 15
+	var/brute_damage = 8
 
 	var/datum/projectile/slam/proj = new
 
