@@ -12,7 +12,7 @@
 	var/working = 0
 	var/obj/item/card/id/scan = null
 	var/icon_base = "slots"
-	var/datum/data/record/accessed_record = null
+	var/datum/db_record/accessed_record = null
 	var/available_funds = 0
 	var/emagged = 0
 	///break-even point for slots when this is set to 2500. make lower to make slots pay out better, or higher to give the house an edge
@@ -41,7 +41,7 @@
 		"busy" = working,
 		"scannedCard" = src.scan,
 		"money" = available_funds,
-		"account_funds" = src.accessed_record?.fields["current_money"],
+		"account_funds" = src.accessed_record?["current_money"],
 		"plays" = plays,
 		"wager" = wager,
 	)
@@ -87,16 +87,16 @@
 
 		if("eject")
 			usr.put_in_hand_or_eject(src.scan)
-			src.available_funds = 0
 			src.scan = null
-			src.accessed_record = null
 			src.working = FALSE
 			src.icon_state = "[icon_base]-off" // just in case, some fucker broke it earlier
 			if(!src.accessed_record)
 				src.visible_message("<span class='subtle'><b>[src]</b> says, 'Winnings not transferred, thank you for playing!'</span>")
 				return TRUE // jerks doing that "hide in a chute to glitch auto-update windows out" exploit caused a wall of runtime errors
+			src.accessed_record["current_money"] += src.available_funds
+			src.available_funds = 0
+			src.accessed_record = null
 			src.visible_message("<span class='subtle'><b>[src]</b> says, 'Winnings transferred, thank you for playing!'</span>")
-			src.accessed_record.fields["current_money"] += src.available_funds
 			. = TRUE
 
 		if("cashin")
@@ -104,13 +104,13 @@
 				boutput(usr, "<span class='alert'>No account connected.</span>")
 				return TRUE
 			var/transfer_amount = input(usr, "Enter how much to transfer from your account.", "Deposit Credits", 0) as null|num
-			transfer_amount = clamp(transfer_amount,0,src.accessed_record.fields["current_money"])
-			src.accessed_record.fields["current_money"] -= transfer_amount
+			transfer_amount = clamp(transfer_amount,0,src.accessed_record["current_money"])
+			src.accessed_record["current_money"] -= transfer_amount
 			src.available_funds += transfer_amount
 			boutput(usr, "<span class='notice'>Funds transferred.</span>")
 
 		if("cashout")
-			src.accessed_record.fields["current_money"] += src.available_funds
+			src.accessed_record["current_money"] += src.available_funds
 			src.available_funds = 0
 			boutput(usr, "<span class='notice'>Funds transferred.</span>")
 

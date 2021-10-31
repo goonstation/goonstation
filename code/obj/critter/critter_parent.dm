@@ -346,13 +346,13 @@
 
 	proc/on_damaged(mob/user)
 		if(registered_area) //In case some butt fiddles with a hibernating critter
-			registered_area.wake_critters()
+			registered_area.wake_critters(user)
 		return
 
 
 	proc/on_pet(mob/user)
 		if(registered_area) //In case some nice person fiddles with a hibernating critter
-			registered_area.wake_critters()
+			registered_area.wake_critters(user)
 		if (!user)
 			return 1 // so things can do if (..())
 		return

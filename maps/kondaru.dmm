@@ -22728,7 +22728,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "bnJ" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -23205,9 +23205,9 @@
 	},
 /area/station/medical/medbay)
 "bpa" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4;
-	level = 2
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 4
 	},
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -23229,9 +23229,9 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
 "bpb" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4;
-	level = 2
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "4-8"

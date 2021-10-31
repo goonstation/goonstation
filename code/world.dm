@@ -111,7 +111,7 @@ var/global/mob/twitch_mob = 0
 
 			var/pos = findtext(line, " - ", 1, null)
 			if (pos)
-				var/m_key = copytext(line, 1, pos)
+				var/m_key = ckey(copytext(line, 1, pos))
 				var/a_lev = copytext(line, pos + 3, length(line) + 1)
 				admins[m_key] = a_lev
 				logDiary("ADMIN: [m_key] = [a_lev]")
@@ -1332,7 +1332,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/game_msg = linkify(msg)
 				game_msg = discord_emojify(game_msg)
 
-				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
+				var/mob/M = ckey_to_mob(who, exact=0)
 				if (M?.client)
 					boutput(M, {"
 						<div style='border: 2px solid red; font-size: 110%;'>
@@ -1373,7 +1373,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/nick = plist["nick"]
 				var/msg = html_encode(plist["msg"])
 				var/who = lowertext(plist["target"])
-				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
+				var/mob/M = ckey_to_mob(who, exact=0)
 				var/game_msg = linkify(msg)
 				game_msg = discord_emojify(game_msg)
 

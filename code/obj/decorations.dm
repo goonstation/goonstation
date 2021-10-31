@@ -8,7 +8,6 @@
 	layer = EFFECTS_LAYER_UNDER_3
 	mouse_opacity = 0
 	var/float_anim = 1
-	event_handler_flags = USE_HASENTERED
 
 	New()
 		..()
@@ -21,7 +20,7 @@
 					if (!A.anchored)
 						animate_bumble(A, floatspeed = 8, Y1 = 3, Y2 = 0)
 
-	HasEntered(atom/A)
+	Crossed(atom/movable/A)
 		if (src.float_anim)
 			if (istype(A, /atom/movable) && !isobserver(A) && !istype(A, /mob/living/critter/small_animal/bee) && !istype(A, /obj/critter/domestic_bee))
 				var/atom/movable/AM = A
@@ -33,8 +32,8 @@
 		reagents.reaction(A, TOUCH, 2)
 		return ..()
 
-	HasExited(atom/movable/A, atom/newloc)
-		var/turf/T = get_turf(newloc)
+	Uncrossed(atom/movable/A)
+		var/turf/T = get_turf(A)
 		if (istype(T))
 			var/obj/poolwater/P = locate() in T
 			if (!istype(P))

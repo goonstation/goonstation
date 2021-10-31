@@ -187,6 +187,7 @@
 	var/list/datum/hud/huds = null
 
 	var/client/last_client // actually the current client, used by Logout due to BYOND
+	var/last_ckey
 	var/joined_date = null
 	mat_changename = 0
 	mat_changedesc = 0
@@ -207,6 +208,7 @@
 	var/unobservable = 0
 
 	var/mob_flags = 0
+	var/skipped_mobs_list = FALSE
 	var/click_delay = DEFAULT_CLICK_DELAY
 	var/combat_click_delay = COMBAT_CLICK_DELAY
 
@@ -246,7 +248,15 @@
 		src.bioHolder = new /datum/bioHolder(src)
 		src.initializeBioholder()
 	attach_hud(render_special)
-	mobs.Add(src)
+
+	var/turf/T = get_turf(src)
+	if(isnull(T) || T.z <= Z_LEVEL_STATION)
+		mobs.Add(src)
+	else if(!(src.mob_flags & LIGHTWEIGHT_AI_MOB) && (!src.ai || !src.ai.exclude_from_mobs_list))
+		skipped_mobs_list = TRUE
+		var/area/AR = get_area(src)
+		LAZYLISTADD(AR.mobs_not_in_global_mobs_list, src)
+
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
 	mob_properties = list()
@@ -312,6 +322,11 @@
 	src.vis_contents -= src.name_tag
 	qdel(src.name_tag)
 	src.name_tag = null
+
+	if(src.skipped_mobs_list)
+		skipped_mobs_list = FALSE
+		var/area/AR = get_area(src)
+		AR?.mobs_not_in_global_mobs_list?.Remove(src)
 
 	for(var/mob/dead/target_observer/TO in observers)
 		observers -= TO
@@ -402,13 +417,24 @@
 	lastattacked = null
 	lastattacker = null
 	health_update_queue -= src
+
+	for(var/x in src)
+		qdel(x)
+	if(hasvar(src, "hud")) // ew
+		qdel(src.vars["hud"])
+		src.vars["hud"] = null
+
 	..()
 	src.mob_properties = null
 
 /mob/Login()
-	// drsingh for cannot read null.address (still popping up though)
-	if (!src || !src.client)
-		return
+	if(src.skipped_mobs_list)
+		skipped_mobs_list = FALSE
+		global.mobs |= src
+		var/area/AR = get_area(src)
+		AR?.mobs_not_in_global_mobs_list?.Remove(src)
+
+	src.last_ckey = src.ckey
 
 	if (!src.client.chatOutput)
 		//At least once, some dude has gotten here without a chatOutput datum. Fuck knows how.
@@ -451,7 +477,7 @@
 			if (M && M.client && M.client.computer_id == src.client.computer_id)
 				logTheThing("admin", src, M, "has same computer ID as [constructTarget(M,"admin")]")
 				logTheThing("diary", src, M, "has same computer ID as [constructTarget(M,"diary")]", "access")
-				message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same </span><span class='alert'><B>computer ID</B><font color='blue'> as [key_name(M)]</span>")
+				message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same </span><span class='alert'><B>computer ID</B><font class='internal'> as [key_name(M)]</span>")
 				SPAWN_DBG(0)
 					if(M.lastKnownIP == src.client.address)
 						alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
@@ -577,7 +603,7 @@
 				var/mob/living/L = src
 				L.viral_transmission(AM,"Contact",1)
 
-			if ((tmob.bioHolder.HasEffect("magnets_pos") && src.bioHolder.HasEffect("magnets_pos")) || (tmob.bioHolder.HasEffect("magnets_neg") && src.bioHolder.HasEffect("magnets_neg")))
+			if ((tmob.bioHolder?.HasEffect("magnets_pos") && src.bioHolder?.HasEffect("magnets_pos")) || (tmob.bioHolder?.HasEffect("magnets_neg") && src.bioHolder?.HasEffect("magnets_neg")))
 				//prevent ping-pong loops by deactivating for a second, as they can crash the server under some circumstances
 				var/datum/bioEffect/hidden/magnetic/tmob_effect = tmob.bioHolder.GetEffect("magnets_pos")
 				if(tmob_effect == null) tmob_effect = tmob.bioHolder.GetEffect("magnets_neg")
@@ -619,7 +645,7 @@
 				tmob.throw_at(get_edge_cheap(source, get_dir(src, tmob)),  20, 3)
 				src.throw_at(get_edge_cheap(source, get_dir(tmob, src)),  20, 3)
 				return
-			if ((!tmob.now_pushing && !src.now_pushing) && (tmob.bioHolder.HasEffect("magnets_pos") && src.bioHolder.HasEffect("magnets_neg")) || (tmob.bioHolder.HasEffect("magnets_neg") && src.bioHolder.HasEffect("magnets_pos")))
+			if ((!tmob.now_pushing && !src.now_pushing) && (tmob.bioHolder?.HasEffect("magnets_pos") && src.bioHolder?.HasEffect("magnets_neg")) || (tmob.bioHolder?.HasEffect("magnets_neg") && src.bioHolder?.HasEffect("magnets_pos")))
 				//prevent ping-pong loops by deactivating for a second, as they can crash the server under some circumstances
 				var/datum/bioEffect/hidden/magnetic/tmob_effect = tmob.bioHolder.GetEffect("magnets_pos")
 				if(tmob_effect == null) tmob_effect = tmob.bioHolder.GetEffect("magnets_neg")
@@ -1216,7 +1242,6 @@
 		item.dropped(src)
 		if (item)
 			item.layer = initial(item.layer)
-	T.Entered(item)
 
 /mob/proc/drop_item(obj/item/W)
 	.= 0
@@ -2378,6 +2403,15 @@
 
 	return ..()
 
+/mob/proc/addAbility(var/abilityType)
+	abilityHolder.addAbility(abilityType)
+
+/mob/proc/removeAbility(var/abilityType)
+	abilityHolder.removeAbility(abilityType)
+
+/mob/proc/getAbility(var/abilityType)
+	return abilityHolder?.getAbility(abilityType)
+
 /mob/proc/full_heal()
 	src.HealDamage("All", 100000, 100000)
 	src.delStatus("drowsy")
@@ -2729,13 +2763,12 @@
 			else
 				if (force_instead || alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
 					if(!src.traitHolder.hasTrait("immigrant"))// stowaway entertainers shouldn't be on the manifest
-						for (var/L in list(data_core.bank, data_core.security, data_core.general, data_core.medical))
-							if (L)
-								var/datum/data/record/R = FindRecordByFieldValue(L, "id", src.datacore_id)
-								if (R)
-									R.fields["name"] = newname
-									if (R.fields["full_name"])
-										R.fields["full_name"] = newname
+						for (var/datum/record_database/DB in list(data_core.bank, data_core.security, data_core.general, data_core.medical))
+							var/datum/db_record/R = DB.find_record("id", src.datacore_id)
+							if (R)
+								R["name"] = newname
+								if (R["full_name"])
+									R["full_name"] = newname
 						for (var/obj/item/card/id/ID in src.contents)
 							ID.registered = newname
 							ID.update_name()

@@ -65,22 +65,16 @@
 			SPAWN_DBG(0)
 				animate(src, alpha=0, time=7 SECONDS)
 				sleep(0.1 SECONDS)
-				if(!src || src.disposed)
+				if(src.disposed)
 					return
 				animate_ripple(src, 4)
 				animate_wave(src, 3)
 				sleep(7 SECONDS)
-				if(!src || src.disposed)
+				if(src.disposed)
 					return
 				qdel(src)
 		var/ckey_of_dead_player = src.ckey
 		var/mob/ghost_mob = src.ghostize()
-		if(!ghost_mob || !ghost_mob.client) // somewhere on the way we lost our dead player, try to find them
-			ghost_mob = null
-			if(ckey_of_dead_player)
-				for (var/mob/M in mobs)
-					if(M.ckey == ckey_of_dead_player)
-						ghost_mob = M
 		var/our_icon_state = src.icon_state
 		// resurrection attempt
 		if(!ghost_mob)
@@ -104,9 +98,10 @@
 				sleep(time_to_respawn)
 				if(!ghost_mob || !ghost_mob.client) // somewhere on the way we lost our dead player, try to find them
 					ghost_mob = null
-					for (var/mob/M in mobs)
-						if(M.ckey == ckey_of_dead_player)
-							ghost_mob = M
+					ghost_mob = ckey_to_mob(ckey_of_dead_player, 1)
+				if(!(isobserver(ghost_mob) || inafterlife(ghost_mob))) // the plushie player is no longer a ghost/in afterlife, probably revived, abort
+					return
+
 				if(!new_vessel || new_vessel.disposed)
 					if(ghost_mob)
 						boutput(ghost_mob, "<h3><span class='alert'>The vessel has been destroyed. Your return to the physical realm has been prevented.</span></h3>")
@@ -362,6 +357,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 		var/scratch_chance = 40
 		var/gibberish_words_chance = 30
 		for(var/i = 0 to iterations)
+			if(!our_plushie || our_plushie.disposed || src.disposed)
+				return
 			if(prob(scratch_chance))
 				playsound(get_turf(holder.owner), "sound/misc/automaton_scratch.ogg", 20, 1)
 				scratch_chance -= 10
@@ -411,10 +408,12 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
 		playsound(get_turf(holder.owner), "sound/effects/ghostbreath.ogg", 75, 1)
 		animate(holder.owner, alpha=0, time=1.5 SECONDS)
 		sleep(0.1 SECONDS)
+		if(!holder.owner || holder.owner.disposed || src.disposed)
+			return
 		animate_ripple(holder.owner, animation_ripples)
 		animate_wave(holder.owner, animation_waves)
 		sleep(1.4 SECONDS)
-		if(!holder || !holder.owner)
+		if(!holder || !holder.owner || src.disposed)
 			return
 
 		if(target_a_random_container)
@@ -441,7 +440,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
 		playsound(get_turf(teleportation_target), "sound/effects/ghostlaugh.ogg", 75, 1)
 		animate(holder.owner, alpha=255, time=1.5 SECONDS)
 		sleep(1.5 SECONDS)
-		if(!holder || !holder.owner)
+		if(!holder || !holder.owner || src.disposed)
 			return
 		animate(holder.owner)
 		for(var/i=1, i<=animation_ripples, ++i)

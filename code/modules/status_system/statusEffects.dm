@@ -338,6 +338,8 @@
 		damage_tox = 0
 		damage_type = DAMAGE_BURN
 
+		maxDuration = 4 MINUTES
+
 		var/howMuch = ""
 		var/stage = 1
 
@@ -383,7 +385,7 @@
 			if(ismob(owner))
 				M = owner
 			if(!ismobcritter(M))
-				damage_tox = (sqrt(min(duration, 90 SECONDS)/20 + 5) - 1)
+				damage_tox = (sqrt(min(duration, 2 MINUTES)/20 + 5) - 1)
 			stage = get_stage(duration)
 			switch(stage)
 				if(1)
@@ -428,6 +430,8 @@
 		damage_tox = 2
 		damage_brute = 2
 		damage_type = DAMAGE_STAB | DAMAGE_BURN
+
+		maxDuration = 4 MINUTES
 
 		var/howMuch = ""
 		var/stage = 1
@@ -491,7 +495,7 @@
 				M = owner
 
 
-			damage_tox = (sqrt(min(duration, 90 SECONDS)/20 + 5) - 0.5)
+			damage_tox = (sqrt(min(duration, 2 MINUTES)/20 + 5) - 0.5)
 			damage_brute = damage_tox/2
 
 			stage = get_stage(duration)
@@ -1050,6 +1054,64 @@
 
 		clicked(list/params)
 			H.resist()
+
+	incorporeal
+		id = "incorporeal"
+		name = "Incorporeal"
+		desc = "You are incorporeal.<br>You cannot use your hands. Become corporeal again to interact with the world."
+		icon_state = "incorporeal"
+		unique = TRUE
+		duration = INFINITE_STATUS
+		maxDuration = null
+		var/mob/living/carbon/human/H
+
+		onAdd(optional=null)
+			. = ..()
+			if (ishuman(owner))
+				H = owner
+
+	possessing
+		id = "possessing"
+		name = "Possessing"
+		desc = "You are possessing someone.<br>Once the status effect ends, you will be temporarily transferred into their body."
+		icon_state = "possess"
+		unique = TRUE
+		maxDuration = 45 SECONDS
+		var/mob/living/carbon/human/H
+
+		onAdd(optional=null)
+			. = ..()
+			if (ishuman(owner))
+				H = owner
+
+	possessed
+		id = "possessed"
+		name = "Possessed"
+		desc = "You are possessing someone.<br>Once the status effect ends, you will be transferred back into your body."
+		icon_state = "possess"
+		unique = TRUE
+		maxDuration = 45 SECONDS
+		var/mob/living/carbon/human/H
+
+		onAdd(optional=null)
+			. = ..()
+			if (ishuman(owner))
+				H = owner
+
+	soulstolen
+		id = "soulstolen"
+		name = "soulstolen"
+		desc = "The Slasher has stolen your soul!"
+		icon_state = "incorporeal"
+		unique = TRUE
+		visible = FALSE
+		maxDuration = INFINITE_STATUS
+		var/mob/living/carbon/human/H
+
+		onAdd(optional=null)
+			. = ..()
+			if (ishuman(owner))
+				H = owner
 
 	buckled
 		id = "buckled"

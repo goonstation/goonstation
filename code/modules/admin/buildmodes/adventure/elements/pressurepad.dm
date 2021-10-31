@@ -76,6 +76,7 @@
 	var/list/pressing = list()
 
 	Crossed(atom/movable/O)
+		..()
 		if (isliving(O) && !(O in pressing) && O.loc == loc)
 			pressing += O
 			press()

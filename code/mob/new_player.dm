@@ -5,6 +5,7 @@ mob/new_player
 	var/spawning = 0
 	var/keyd
 	var/adminspawned = 0
+	var/is_respawned_player = 0
 
 #ifdef TWITCH_BOT_ALLOWED
 	var/twitch_bill_spawn = 0
@@ -411,7 +412,7 @@ mob/new_player
 
 			//If it's Revolution time, lets show all command jobs as filled to (try to) prevent metagaming.
 			if(istype(J, /datum/job/command/) && istype(ticker.mode, /datum/game_mode/revolution))
-				c = limit
+				c = max(c, limit)
 
 			// probalby could be a define but dont give a shite
 			var/maxslots = 5
@@ -640,7 +641,7 @@ a.latejoin-card:hover {
 			new_character.mind.late_special_role = 1
 			logTheThing("debug", new_character, null, "<b>Late join</b>: assigned antagonist role: [bad_type].")
 		else
-			if (ishuman(new_character) && allow_late_antagonist && current_state == GAME_STATE_PLAYING && ticker.round_elapsed_ticks >= 6000 && emergency_shuttle.timeleft() >= 300 && !C.hellbanned) // no new evils for the first 10 minutes or last 5 before shuttle
+			if (ishuman(new_character) && allow_late_antagonist && current_state == GAME_STATE_PLAYING && ticker.round_elapsed_ticks >= 6000 && emergency_shuttle.timeleft() >= 300 && !C.hellbanned && !src.is_respawned_player) // no new evils for the first 10 minutes or last 5 before shuttle
 				if (late_traitors && ticker.mode && ticker.mode.latejoin_antag_compatible == 1)
 					var/livingtraitor = 0
 

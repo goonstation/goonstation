@@ -229,6 +229,7 @@
 /obj/storage/secure/closet/brig/automatic
 	name = "\improper Automatic Locker"
 	desc = "Card-locked closet linked to a brig timer. Will unlock automatically when timer reaches zero."
+	anchored = 1
 	var/obj/machinery/door_timer/our_timer = null
 	var/id = null
 

@@ -178,9 +178,9 @@ var/global/list/bible_contents = list()
 
 /obj/item/storage/bible/evil
 	name = "frayed bible"
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER | IS_FARTABLE
+	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
 
-	HasEntered(atom/movable/AM as mob)
+	Crossed(atom/movable/AM as mob)
 		..()
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM

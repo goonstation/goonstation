@@ -88,7 +88,7 @@
 /obj/icecube
 	name = "ice cube"
 	desc = "That is a surprisingly large ice cube."
-	icon = 'icons/effects/effects.dmi'
+	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "icecube"
 	density = 1
 	layer = EFFECTS_LAYER_BASE
