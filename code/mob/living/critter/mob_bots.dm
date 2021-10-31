@@ -227,6 +227,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 				var/cleaner_amt = master.reagents.get_reagent_amount(cleaning_reagent)
 				if (cleaner_amt <= 10)
 					master.reagents.add_reagent(cleaning_reagent, 10 - cleaner_amt)
+				master.reagents.del_reagent("water")
 				master.reagents.reaction(T, TOUCH, 10)
 
 			if (T.active_liquid)
