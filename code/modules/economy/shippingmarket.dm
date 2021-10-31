@@ -193,7 +193,7 @@
 					// actual shipment
 					var/obj/storage/crate/artcrate = new /obj/storage/crate()
 					artcrate.name = "Artifact Resupply Crate"
-					for(var/i = 0 to artifact_resupply_amount)
+					for(var/i = 1 to artifact_resupply_amount)
 						new /obj/artifact_type_spawner/vurdalak(artcrate)
 					artifact_resupply_amount = 0
 					shippingmarket.receive_crate(artcrate)
