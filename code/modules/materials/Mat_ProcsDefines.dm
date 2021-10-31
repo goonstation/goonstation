@@ -52,7 +52,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		var/datum/material/M = new base.type ()
 		M.properties = mergeProperties(base.properties)
 		for(var/X in base.vars)
-			if(X == "type" || X == "parent_type" || X == "tag" || X == "vars" || X == "properties") continue
+			if(X == "type" || X == "parent_type" || X == "tag" || X == "vars" || X == "properties" || X == "datum_components" || X == "comp_lookup" || X == "signal_procs" || X == "signal_enabled") continue
 
 			if(X in triggerVars)
 				M.vars[X] = getFusedTriggers(base.vars[X], list(), M) //Pass in an empty list to basically copy the first one.
