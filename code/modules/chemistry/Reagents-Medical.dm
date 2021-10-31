@@ -1292,7 +1292,7 @@ datum
 							silent = TRUE
 
 					if (!silent)
-						if(!ON_COOLDOWN(M, "rubbing alcohol gasp", 3 SECONDS))
+						if(!ON_COOLDOWN(M, "rubbing_alcohol_gasp", 3 SECONDS))
 							boutput(M, "<span class='notice'>The rubbing alcohol stings as it sterilizes your wounds.</span>")
 							M.emote("gasp")
 				else if(method == INGEST)
