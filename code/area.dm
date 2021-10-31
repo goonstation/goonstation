@@ -324,6 +324,8 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	proc/wake_critters(mob/enteringM = null)
 		if(waking_critters || (!length(src.registered_critters) && !length(src.registered_mob_critters) && !length(src.mobs_not_in_global_mobs_list))) return
 		waking_critters = 1
+		if(isnull(enteringM))
+			enteringM = usr
 		for(var/obj/critter/C in src.registered_critters)
 			C.wake_from_hibernation()
 		if(enteringM?.client)
