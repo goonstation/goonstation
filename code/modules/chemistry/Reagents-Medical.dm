@@ -1286,7 +1286,7 @@ datum
 					. = 0
 					M.HealDamage("All", volume_passed/2, 0)
 
-					var/silent = 0
+					var/silent = FALSE
 					if (length(paramslist))
 						if ("silent" in paramslist)
 							silent = TRUE
