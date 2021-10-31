@@ -1,6 +1,11 @@
 
 (t)sun oct 31 21
 (u)pali
+(p)6342
+(e)🆕|feature
+(*)Holding alt + hovering over people with your cursor shows their names and pronouns
+(*)AI, borgs and ghosts see all mobs' names when holding alt
+(u)pali
 (p)6331
 (e)|
 (+)Hovering over radio icons now shows their name.
