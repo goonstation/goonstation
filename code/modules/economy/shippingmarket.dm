@@ -183,9 +183,9 @@
 			score_tracker.artifacts_correctly_analyzed++
 
 		// add to artifact resupply amount
-		src.artifact_resupply_amount += modifier*0.8*pap?.lastAnalysis*rand(1,1.2) // t1 artifact: 0.25 artifacts, t4 artifact: 1.53 artifacts
+		src.artifact_resupply_amount += modifier*0.8*pap?.lastAnalysis*randfloat(1,1.2) // t1 artifact: 0.25 artifacts, t4 artifact: 1.53 artifacts
 		// send artifact resupply
-		if(src.artifact_resupply_amount > 1 && !src.artifacts_on_the_way) // range from 0% to ~78% for fully researched t4 artifact
+		if(src.artifact_resupply_amount > 1 && !src.artifacts_on_the_way)
 			src.artifacts_on_the_way = TRUE
 			SPAWN_DBG(rand(1,5) MINUTES)
 				// handle the artifact amount
