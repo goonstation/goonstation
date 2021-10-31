@@ -78,6 +78,7 @@
 	name = "health scanner"
 	desc = "An in-floor health scanner that sends its data to connected status screens."
 	icon_state = "floorscan1"
+	plane = PLANE_FLOOR
 	var/time_between_scans = 3 SECONDS
 	var/on_cooldown = FALSE
 
