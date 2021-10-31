@@ -4252,6 +4252,8 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=view_logs_pathology_strain'><small>(Find pathogen)</small></A><BR>
 				<A href='?src=\ref[src];action=view_logs;type=vehicle_log'>Vehicle Log</A>
 				<A href='?src=\ref[src];action=view_logs;type=vehicle_log_string'><small>(Search)</small></A><br>
+				<A href='?src=\ref[src];action=view_logs;type=computers_log'>Computers Log</A>
+				<A href='?src=\ref[src];action=view_logs;type=computers_log_string'><small>(Search)</small></A>
 				<hr>
 				<A href='?src=\ref[src];action=view_runtimes'>View Runtimes</A>
 			"}
