@@ -1289,7 +1289,7 @@ datum
 					var/silent = 0
 					if (length(paramslist))
 						if ("silent" in paramslist)
-							silent = 1
+							silent = TRUE
 
 					if (!silent)
 						if(!ON_COOLDOWN(M, "rubbing alcohol gasp", 3 SECONDS))
