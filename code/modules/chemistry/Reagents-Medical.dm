@@ -1266,6 +1266,7 @@ datum
 			transparency = 10
 			value = 2 //Not sure what to set this, so it'll just be low
 			var/alch_strength = 0.6
+			hygiene_value = 1
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
