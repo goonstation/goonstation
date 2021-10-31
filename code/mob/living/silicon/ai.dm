@@ -62,6 +62,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/net_id = null
 	var/obj/machinery/power/data_terminal/link = null
 	var/list/terminals = list() //Stuff connected to us over the powernet
+	var/messageLog = null
 	var/hologramdown = 0 //is the hologram downed?
 	var/canvox = 1
 	var/can_announce = 1
@@ -264,9 +265,13 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 /mob/living/silicon/ai/show_message(msg, type, alt, alt_type, group = 0, var/image/chat_maptext/assoc_maptext = null)
 	..()
+	var/mob/messageTarget = null
 	if (deployed_to_eyecam && src.eyecam)
-		src.eyecam.show_message(msg, 1, 0, 0, group)
-	return
+		messageTarget = src.eyecam
+	else if (deployed_shell)
+		messageTarget = deployed_shell
+	if (messageTarget)
+		messageTarget.show_message(msg, 1, 0, 0, group)
 
 /mob/living/silicon/ai/show_text(var/message, var/color = "#000000", var/hearing_check = 0, var/sight_check = 0, var/allow_corruption = 0, var/group)
 	..()
@@ -397,6 +402,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				src.verbs += /mob/living/silicon/ai/verb/access_internal_pda
 				src.verbs += /mob/living/silicon/ai/proc/ai_colorchange
 				src.verbs += /mob/living/silicon/ai/proc/ai_station_announcement
+				src.verbs += /mob/living/silicon/ai/proc/view_messageLog
 				src.job = "AI"
 				if (src.mind)
 					src.mind.assigned_role = "AI"
@@ -640,19 +646,25 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (href_list["termmsg"]) //Oh yeah, message that terminal!
 		var/termid = href_list["termmsg"]
 		if(!termid || !(termid in src.terminals))
-			boutput(src, "That terminal is not connected!")
+			src.show_message("That terminal is not connected!", 2)
 			return
 		var/t = input(usr, "Please enter message", termid, null) as text
 		if (!t)
 			return
 
 		if(isdead(src))
-			boutput(src, "You cannot interface with a terminal because you are dead!")
+			src.show_message("You cannot interface with a terminal because you are dead!", 2)
 			return
 
-		t = copytext(adminscrub(t), 1, 65)
+		if(!(termid in src.terminals)) // for if the jerk disconnected while we were typing a response >:(
+			src.show_message("--- [termid] is disconnected!")
+			return
+
+		t = copytext(adminscrub(t), 1, 300)
 		//Send the actual message signal
-		boutput(src, "<b>([termid]):</b> [t]")
+
+		src.show_message("<b>Replied to [termid] with:</b> \"</i>[t]</i>\"", 2)
+		//boutput(src, "<b>([termid]):</b> [t]")
 		src.post_status(termid, "command","term_message","data",t)
 		//Might as well log what they said too!
 		logTheThing("diary", src, null, ": [t]", "say")
@@ -1388,6 +1400,14 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 	src.show_laws(0)
 	return
+
+/mob/living/silicon/ai/proc/view_messageLog()
+	set name = "View Message Log"
+	set desc = "View all messages sent by terminal connections."
+	set category = "AI Commands"
+	usr.Browse("<head><title>Terminal Message History</title></head><body>[messageLog]</body>", "window=Message Log")
+
+
 /*
 /mob/living/silicon/ai/proc/ai_custom_arrival_alert()
 	set category = "AI Commands"
@@ -1852,14 +1872,30 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				return
 
 			src.terminals.Add(target)
-			boutput(src, "--- Terminal connection from <a href='byond://?src=\ref[src];termmsg=[target]'>[target]</a>!")
+
+			if (src.deployed_to_eyecam && src.eyecam)
+				src.eyecam.playsound_local(src.eyecam, 'sound/machines/bweep.ogg', 25, channel = VOLUME_CHANNEL_GAME)
+			else if (deployed_shell)
+				src.deployed_shell.playsound_local(src.deployed_shell, 'sound/machines/bweep.ogg', 25, channel = VOLUME_CHANNEL_GAME)
+			else
+				src.playsound_local(src, 'sound/machines/bweep.ogg', 25, channel = VOLUME_CHANNEL_GAME)
+
+			src.show_message("--- Terminal connection from <a href='byond://?src=\ref[src];termmsg=[target]'>[target]</a> established to your mainframe!", 2)
 			src.post_status(target, "command","term_connect","data","noreply")
 			return
 
 		if("term_disconnect")
 			if(target in src.terminals)
 				src.terminals.Remove(target)
-				boutput(src, "--- [target] has closed the connection!!")
+
+				if (src.deployed_to_eyecam && src.eyecam)
+					src.eyecam.playsound_local(src.eyecam, 'sound/machines/phones/remote_hangup.ogg', 35, channel = VOLUME_CHANNEL_GAME)
+				else if (deployed_shell)
+					src.deployed_shell.playsound_local(src.deployed_shell, 'sound/machines/phones/remote_hangup.ogg', 35, channel = VOLUME_CHANNEL_GAME)
+				else
+					src.playsound_local(src, 'sound/machines/phones/remote_hangup.ogg', 35, channel = VOLUME_CHANNEL_GAME)
+
+				src.show_message("--- [target] has disconnected from your mainframe!", 2)
 				SPAWN_DBG(0.3 SECONDS)
 					src.post_status(target, "command","term_disconnect")
 				return
@@ -1876,6 +1912,16 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			var/rendered = "<span class='game say'><span class='name'><a href='byond://?src=\ref[src];termmsg=[target]'><b>([target]):</b></a></span>"
 			rendered += "<span class='message'> [message]</span></span>"
 
+			src.messageLog += "\[[formattedShiftTime(TRUE)]\]<br>[rendered]<hr>"
+
+			// I am well aware of the fact that this chunk of code appears basically 3 times and could be compacted down to a proc for convenience
+			// Unfortunately I just do not know enough about how gooncode and dreammaker work to do that, but I might revisit it later - Nex
+			if (src.deployed_to_eyecam && src.eyecam)
+				src.eyecam.playsound_local(src.eyecam, 'sound/machines/tone_beep.ogg', 15, channel = VOLUME_CHANNEL_GAME)
+			else if (deployed_shell)
+				src.deployed_shell.playsound_local(src.deployed_shell, 'sound/machines/tone_beep.ogg', 15, channel = VOLUME_CHANNEL_GAME)
+			else
+				src.playsound_local(src, 'sound/machines/tone_beep.ogg', 15, channel = VOLUME_CHANNEL_GAME)
 			src.show_message(rendered, 2)
 			return
 

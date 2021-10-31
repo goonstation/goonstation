@@ -438,6 +438,14 @@
 		if(mainframe)
 			mainframe.ai_station_announcement()
 
+	verb/view_messageLog()
+		set name = "View Message Log"
+		set desc = "View all messages sent by terminal connections."
+		set category = "AI Commands"
+		if(mainframe)
+			usr.Browse("<head><title>Terminal Message History</title></head><body>[mainframe.messageLog]</body>", "window=Message Log")
+
+
 //---TURF---//
 /turf/var/image/aiImage
 /turf/var/list/cameras = null
