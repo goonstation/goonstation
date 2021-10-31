@@ -2270,10 +2270,10 @@ datum
 			result_amount = 4
 			mix_phrase = "The solution yields an astringent powder."
 
-		rubbing_alcohol
-			name = "Rubbing Alcohol"
-			id = "rubbing_alcohol"
-			result = "rubbing_alcohol"
+		isopropanol
+			name = "Isopropanol"
+			id = "isopropanol"
+			result = "isopropanol"
 			required_reagents = list("hydrogen" = 1, "oxygen" = 1, "ethanol" = 2)
 			result_amount = 2
 			mix_phrase = "The solution gives off a very strong alcoholic scent."
