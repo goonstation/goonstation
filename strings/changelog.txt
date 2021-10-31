@@ -1,5 +1,9 @@
 
 (t)sun oct 31 21
+(u)BatElite
+(p)6433
+(e)|
+(+)You can use the hotkey to drink from glasses now.
 (u)pali
 (p)6342
 (e)🆕|feature
