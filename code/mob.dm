@@ -207,7 +207,7 @@
 	var/unobservable = 0
 
 	var/mob_flags = 0
-	var/skipped_mobs_list = FALSE
+	var/skipped_mobs_list = 0
 	var/click_delay = DEFAULT_CLICK_DELAY
 	var/combat_click_delay = COMBAT_CLICK_DELAY
 
@@ -252,7 +252,7 @@
 	if(isnull(T) || T.z <= Z_LEVEL_STATION)
 		mobs.Add(src)
 	else if(!(src.mob_flags & LIGHTWEIGHT_AI_MOB) && (!src.ai || !src.ai.exclude_from_mobs_list))
-		skipped_mobs_list = TRUE
+		skipped_mobs_list |= SKIPPED_MOBS_LIST
 		var/area/AR = get_area(src)
 		LAZYLISTADD(AR.mobs_not_in_global_mobs_list, src)
 
@@ -315,7 +315,7 @@
 	STOP_TRACKING
 
 	if(src.skipped_mobs_list)
-		skipped_mobs_list = FALSE
+		skipped_mobs_list = 0
 		var/area/AR = get_area(src)
 		AR?.mobs_not_in_global_mobs_list?.Remove(src)
 
@@ -420,10 +420,19 @@
 
 /mob/Login()
 	if(src.skipped_mobs_list)
-		skipped_mobs_list = FALSE
-		global.mobs |= src
 		var/area/AR = get_area(src)
 		AR?.mobs_not_in_global_mobs_list?.Remove(src)
+	if(src.skipped_mobs_list & SKIPPED_MOBS_LIST && !(src.mob_flags & LIGHTWEIGHT_AI_MOB))
+		skipped_mobs_list &= ~SKIPPED_MOBS_LIST
+		global.mobs |= src
+	if(src.skipped_mobs_list & SKIPPED_AI_MOBS_LIST)
+		skipped_mobs_list &= ~SKIPPED_AI_MOBS_LIST
+		global.ai_mobs |= src
+
+	if(!src.last_ckey)
+		SPAWN_DBG(0)
+			var/area/AR = get_area(src)
+			AR?.wake_critters(src)
 
 	src.last_ckey = src.ckey
 

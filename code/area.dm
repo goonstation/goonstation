@@ -332,14 +332,18 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 		for(var/obj/critter/C in src.registered_critters)
 			C.wake_from_hibernation()
 		if(enteringM?.client)
-			for (var/mob/living/critter/M as anything in src.registered_mob_critters)
-				M.wake_from_hibernation()
 			for (var/mob/living/M as anything in src.mobs_not_in_global_mobs_list)
 				if(!M.skipped_mobs_list)
 					stack_trace("Attempting to add [M] to global mobs list but its flag is not set.")
-				global.mobs |= M
-				M.skipped_mobs_list = FALSE
+				if(M.skipped_mobs_list & SKIPPED_AI_MOBS_LIST)
+					global.ai_mobs |= M
+					M.skipped_mobs_list &= ~SKIPPED_AI_MOBS_LIST
+				if(M.skipped_mobs_list & SKIPPED_MOBS_LIST && !(M.mob_flags & LIGHTWEIGHT_AI_MOB))
+					global.mobs |= M
+					M.skipped_mobs_list &= ~SKIPPED_MOBS_LIST
 			src.mobs_not_in_global_mobs_list = null
+			for (var/mob/living/critter/M as anything in src.registered_mob_critters)
+				M.wake_from_hibernation()
 		waking_critters = 0
 
 	proc/calculate_area_value()
