@@ -11,7 +11,7 @@
 	layer = OBJ_LAYER + 0.9
 	plane = PLANE_NOSHADOW_BELOW
 	mouse_opacity = 0
-	event_handler_flags = USE_HASENTERED | USE_CANPASS
+	event_handler_flags = USE_CANPASS
 	var/foamcolor
 	var/amount = 3
 	var/expand = 1
@@ -149,7 +149,8 @@
 			expand = 0
 
 
-/obj/effects/foam/HasEntered(var/atom/movable/AM)
+/obj/effects/foam/Crossed(atom/movable/AM)
+	..()
 	if (metal) //If we've transferred our contents then there's another foam tile that can do it thing.
 		return
 

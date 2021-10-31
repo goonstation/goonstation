@@ -720,7 +720,7 @@
 	alter_health()
 		return get_turf(src)
 
-	// called from mob/living/carbon/human/HasEntered()
+	// called from mob/living/carbon/human/Crossed(atom/movable/)
 	// when mulebot is in the same loc
 	proc/RunOver(var/mob/living/carbon/human/H)
 		src.visible_message("<span class='alert'>[src] drives over [H]!</span>")

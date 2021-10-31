@@ -92,6 +92,7 @@
 					possible_partner.add_partner(src)
 
 	Crossed(atom/movable/AM)
+		..()
 		if (ishuman(AM))
 			boutput(AM, src.scan(TRUE))
 

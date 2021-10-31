@@ -37,7 +37,7 @@ var/mutable_appearance/fluid_ma
 	mouse_opacity = 1
 	layer = FLUID_LAYER
 
-	event_handler_flags = USE_HASENTERED | IMMUNE_MANTA_PUSH
+	event_handler_flags = IMMUNE_MANTA_PUSH
 
 	var/finalcolor = "#ffffff"
 	color = "#ffffff"
@@ -216,7 +216,7 @@ var/mutable_appearance/fluid_ma
 		src.group.reagents.add_reagent(reagent_name,volume)
 
 	//incorporate touch_modifier?
-	HasEntered(atom/A, atom/oldloc)
+	Crossed(atom/movable/A)
 		..()
 		if (!src.group || !src.group.reagents || src.disposed || istype(A,/obj/fluid))
 			return
@@ -231,7 +231,7 @@ var/mutable_appearance/fluid_ma
 					src.floated_atoms += AM*/
 
 		if (A.event_handler_flags & USE_FLUID_ENTER)
-			A.EnteredFluid(src,oldloc)
+			A.EnteredFluid(src, A.last_turf)
 
 	proc/force_mob_to_ingest(var/mob/M, var/mult = 1)//called when mob is drowning
 		if (!M) return
@@ -244,7 +244,7 @@ var/mutable_appearance/fluid_ma
 		src.group.reagents.reaction(M, INGEST, react_volume,1,src.group.members.len)
 		src.group.reagents.trans_to(M, react_volume)
 
-	HasExited(atom/movable/AM, atom/newloc)
+	Uncrossed(atom/movable/AM)
 
 		/*var/cancel_float = 0
 		if (AM.loc == newloc)
@@ -267,7 +267,7 @@ var/mutable_appearance/fluid_ma
 				floated_atoms -= AM*/
 
 		if (AM.event_handler_flags & USE_FLUID_ENTER)
-			AM.ExitedFluid(src,newloc)
+			AM.ExitedFluid(src)
 
 
 	proc/add_tracked_blood(atom/movable/AM as mob|obj)
@@ -304,11 +304,11 @@ var/mutable_appearance/fluid_ma
 				var/mob/living/M = A
 				var/obj/O = A
 				if (istype(M))
-					src.HasExited(M,M.loc)
+					src.Uncrossed(M)
 					M.show_submerged_image(0)
 				else if (istype(O))
 					if (O.submerged_images)
-						src.HasExited(O,O.loc)
+						src.Uncrossed(O)
 						if ((O.submerged_images && length(O.submerged_images)) && (O.is_submerged != 0))
 							O.show_submerged_image(0)
 
@@ -384,6 +384,7 @@ var/mutable_appearance/fluid_ma
 					F.finalalpha = src.finalalpha
 					F.avg_viscosity = src.avg_viscosity
 					F.last_depth_level = src.last_depth_level
+					F.my_depth_level = src.last_depth_level
 					F.step_sound = src.step_sound
 					F.movement_speed_mod = src.movement_speed_mod
 
@@ -407,6 +408,10 @@ var/mutable_appearance/fluid_ma
 									step_away(I,src)
 						else
 							step_away(push_thing,src)
+
+					for(var/atom/A in F.loc)
+						if (A.event_handler_flags & USE_FLUID_ENTER)
+							A.EnteredFluid(F, F.loc)
 
 		if (spawned_any && prob(40))
 			playsound( src.loc, 'sound/misc/waterflow.ogg', 30,0.7,7)
@@ -671,14 +676,14 @@ var/mutable_appearance/fluid_ma
 
 	..()
 
-/obj/ExitedFluid(obj/fluid/F as obj, atom/newloc)
+/obj/ExitedFluid(obj/fluid/F as obj)
 	if (src.submerged_images && src.is_submerged != 0)
 		if (F.disposed)
 			src.show_submerged_image(0)
 			return
 
-		if (isturf(newloc))
-			var/turf/T = newloc
+		if (isturf(src.loc))
+			var/turf/T = src.loc
 			if (!T.active_liquid || (T.active_liquid && T.active_liquid.amt < depth_levels[1]))
 				src.show_submerged_image(0)
 				return
@@ -696,14 +701,14 @@ var/mutable_appearance/fluid_ma
 		src.show_submerged_image(F.my_depth_level)
 	..()
 
-/mob/living/ExitedFluid(obj/fluid/F as obj, atom/newloc)
+/mob/living/ExitedFluid(obj/fluid/F as obj)
 	if (src.is_submerged == 0) return
 
 	if (F.disposed)
 		src.show_submerged_image(0)
 		return
-	else if (isturf(newloc))
-		var/turf/T = newloc
+	else if (isturf(src.loc))
+		var/turf/T = src.loc
 		if (!T.active_liquid || (T.active_liquid && T.active_liquid.amt < depth_levels[1]))
 			src.show_submerged_image(0)
 			return
@@ -805,14 +810,15 @@ var/mutable_appearance/fluid_ma
 
 	var/do_reagent_reaction = 1
 
-	if (F.my_depth_level <= 1 && src.shoes)
-		do_reagent_reaction = 0
 	if (F.my_depth_level == 2 || F.my_depth_level == 3)
 		if (src.wear_suit && src.wear_suit.permeability_coefficient <= 0.01)
 			do_reagent_reaction = 0
 	if (F.my_depth_level == 4)
 		if ((src.wear_suit && src.wear_suit.permeability_coefficient <= 0.01) && (src.head && src.head.seal_hair))
 			do_reagent_reaction = 0
+
+	if(!shoes)
+		do_reagent_reaction = 1
 
 	if (src.lying)
 		if (!((src.wear_suit && src.wear_suit.permeability_coefficient <= 0.01) && (src.head && src.head.seal_hair)))

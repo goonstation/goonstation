@@ -1841,6 +1841,18 @@ var/global/noir = 0
 			if (alert("Make [M] a macho man?", "Make Macho", "Yes", "No") == "Yes")
 				M.machoize()
 
+		if ("makeslasher")
+			if( src.level < LEVEL_PA )
+				alert("You must be at least a Primary Administrator to make someone a Slasher.")
+				return
+			if(!ticker || !ticker.mode)
+				alert("The game hasn't started yet!")
+				return
+			var/mob/M = locate(href_list["target"])
+			if (!M) return
+			if (alert("Make [M] into a Slasher?", "Make Slasher", "Yes", "No") == "Yes")
+				M.slasherize()
+
 		if ("makecritter")
 			if( src.level < LEVEL_PA )
 				alert("You must be at least a Primary Administrator to make someone a Critter.")
@@ -4240,6 +4252,8 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=view_logs_pathology_strain'><small>(Find pathogen)</small></A><BR>
 				<A href='?src=\ref[src];action=view_logs;type=vehicle_log'>Vehicle Log</A>
 				<A href='?src=\ref[src];action=view_logs;type=vehicle_log_string'><small>(Search)</small></A><br>
+				<A href='?src=\ref[src];action=view_logs;type=computers_log'>Computers Log</A>
+				<A href='?src=\ref[src];action=view_logs;type=computers_log_string'><small>(Search)</small></A>
 				<hr>
 				<A href='?src=\ref[src];action=view_runtimes'>View Runtimes</A>
 			"}
@@ -5176,7 +5190,7 @@ var/global/noir = 0
 	boutput(usr, "You are [usr.client.flying ? "now" : "no longer"] flying through matter.")
 
 /client/Move(NewLoc, direct)
-	if(usr.client.flying)
+	if(usr.client.flying || (ismob(usr) && HAS_MOB_PROPERTY(usr, PROP_NOCLIP)))
 		if(!isturf(usr.loc))
 			usr.set_loc(get_turf(usr))
 

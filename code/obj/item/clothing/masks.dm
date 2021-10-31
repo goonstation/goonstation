@@ -165,6 +165,32 @@
 	icon_state = "gas_alt"
 	item_state = "gas_alt"
 
+	unremovable
+		name = "slasher's gas mask"
+		desc = "A close-fitting sealed gas mask, this one seems to be protruding some kind of dark aura."
+		cant_self_remove = 1
+		cant_other_remove = 1
+		icon_state = "slasher_mask"
+		item_state = "slasher_mask"
+		item_function_flags = IMMUNE_TO_ACID
+		see_face = 1.0
+		setupProperties()
+			..()
+			setProperty("meleeprot_head", 6)
+			setProperty("disorient_resist_eye", 100)
+			setProperty("movespeed", 0.2)
+			setProperty("exploprot", 40)
+
+	postpossession
+		name = "worn gas mask"
+		desc = "A close-fitting sealed gas mask, from the looks of it, it's well over a hundred years old."
+		icon_state = "slasher_mask"
+		item_state = "slasher_mask"
+		see_face = 1.0
+		setupProperties()
+			..()
+			setProperty("movespeed", 0.2)
+
 /obj/item/clothing/mask/gas/swat
 	name = "SWAT mask"
 	desc = "A close-fitting tactical mask that can filter some environmental toxins or be connected to an air supply."
