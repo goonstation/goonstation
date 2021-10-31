@@ -1270,7 +1270,9 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				M.HealDamage ("All", mult, 0)
+				M.reagents.add_reagent("ethanol", alch_strength * mult)
+				M.reagents.remove_reagent(src, 1 * mult)
+				M.take_toxin_damage (0.25 * mult)
 				M.UpdateDamageIcon()
 				..()
 				return
@@ -1298,8 +1300,9 @@ datum
 							boutput(M, "<span class='notice'>The isopropanol stings as it sterilizes your wounds.</span>")
 							M.emote("gasp")
 				else if(method == INGEST)
-					boutput(M, "<span class='notice'>You feel sickly!</span>")
-					M.take_toxin_damage(volume/2.5)
+					boutput(M, "<span class='alert'>You feel sickly!</span>")
+					if (volume_passed > 0)
+						M.take_toxin_damage(volume/3)
 
 			reaction_obj(var/obj/O, var/volume)
 				remove_stickers(O, volume)
