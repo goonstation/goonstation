@@ -2672,7 +2672,10 @@
 	var/the_pos = findtext(name, " the")
 	if(the_pos)
 		name = copytext(name, 1, the_pos)
-	src.name_tag.set_extra(he_or_she(src))
+	if(name)
+		src.name_tag.set_extra(he_or_she(src))
+	else
+		src.name_tag.set_extra("")
 	src.name_tag.set_name(name, strip_parentheses=TRUE)
 
 /mob/proc/protected_from_space()
