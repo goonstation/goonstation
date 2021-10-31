@@ -636,6 +636,7 @@
 	req_access = list(access_kitchen)
 	spawn_contents = list(/obj/item/storage/box/clothing/chef,\
 	/obj/item/storage/box/clothing/souschef,\
+	/obj/item/clothing/head/chefhatpuffy,\
 	/obj/item/storage/box/cutlery,\
 	/obj/item/kitchen/rollingpin,\
 	/obj/item/paper/book/from_file/cookbook,\
