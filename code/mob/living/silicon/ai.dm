@@ -265,13 +265,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 /mob/living/silicon/ai/show_message(msg, type, alt, alt_type, group = 0, var/image/chat_maptext/assoc_maptext = null)
 	..()
-	var/mob/messageTarget = null
 	if (deployed_to_eyecam && src.eyecam)
-		messageTarget = src.eyecam
-	else if (deployed_shell)
-		messageTarget = deployed_shell
-	if (messageTarget)
-		messageTarget.show_message(msg, 1, 0, 0, group)
+		src.eyecam.show_message(msg, 1, 0, 0, group)
+	return
 
 /mob/living/silicon/ai/show_text(var/message, var/color = "#000000", var/hearing_check = 0, var/sight_check = 0, var/allow_corruption = 0, var/group)
 	..()
@@ -279,7 +275,25 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.eyecam.show_text(message, color, 0, sight_check, allow_corruption, group)
 	return
 
+// For use when you want to send text to the AI player regardless of it's in its mainframe, eye, or shell
+// Calls show_text(), use its syntax
+/mob/living/silicon/ai/proc/textToPlayer(var/message, var/color = "#000000", var/hearing_check = 0, var/sight_check = 0, var/allow_corruption = 0, var/group)
+	if (src.deployed_shell)
+		src.deployed_shell.show_text(message, color, hearing_check, sight_check, allow_corruption, group)
+	else
+		src.show_text(message, color, hearing_check, sight_check, allow_corruption, group)
+	return
 
+// For use when you want to play a sound to the AI player regardless of if it's in mainframe, eye, or shell
+// Calls playsound_local(), use its syntax
+/mob/living/silicon/ai/proc/soundToPlayer(soundin, vol as num, vary, extrarange as num, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
+	if (deployed_to_eyecam && src.eyecam)
+		src.eyecam.playsound_local(src.eyecam, soundin, vol, vary, extrarange, pitch, ignore_flag, channel, flags)
+	else if (src.deployed_shell)
+		src.deployed_shell.playsound_local(src.deployed_shell, soundin, vol, vary, extrarange, pitch, ignore_flag, channel, flags)
+	else
+		src.playsound_local(src, soundin, vol, vary, extrarange, pitch, ignore_flag, channel, flags)
+	return
 
 ///mob/living/silicon/ai/playsound_local(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME)
 //sound.dm
@@ -646,24 +660,24 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (href_list["termmsg"]) //Oh yeah, message that terminal!
 		var/termid = href_list["termmsg"]
 		if(!termid || !(termid in src.terminals))
-			src.show_message("That terminal is not connected!", 2)
+			src.textToPlayer("That terminal is not connected!")
 			return
 		var/t = input(usr, "Please enter message", termid, null) as text
 		if (!t)
 			return
 
 		if(isdead(src))
-			src.show_message("You cannot interface with a terminal because you are dead!", 2)
+			src.textToPlayer("You cannot interface with a terminal because you are dead!")
 			return
 
 		if(!(termid in src.terminals)) // for if the jerk disconnected while we were typing a response >:(
-			src.show_message("--- [termid] is disconnected!")
+			src.textToPlayer("--- [termid] is disconnected!")
 			return
 
 		t = copytext(adminscrub(t), 1, 300)
 		//Send the actual message signal
 
-		src.show_message("<b>Replied to [termid] with:</b> \"</i>[t]</i>\"", 2)
+		src.textToPlayer("<b>Replied to [termid] with:</b> \"</i>[t]</i>\"")
 		//boutput(src, "<b>([termid]):</b> [t]")
 		src.post_status(termid, "command","term_message","data",t)
 		//Might as well log what they said too!
@@ -1866,36 +1880,22 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			if(target in src.terminals)
 				//something might be wrong here, disconnect them!
 				src.terminals.Remove(target)
-				boutput(src, "--- Connection closed with [target]!")
+				textToPlayer("--- Connection closed with [target]!")
 				SPAWN_DBG(0.3 SECONDS)
 					src.post_status(target, "command","term_disconnect")
 				return
 
 			src.terminals.Add(target)
-
-			if (src.deployed_to_eyecam && src.eyecam)
-				src.eyecam.playsound_local(src.eyecam, 'sound/machines/bweep.ogg', 25, channel = VOLUME_CHANNEL_GAME)
-			else if (deployed_shell)
-				src.deployed_shell.playsound_local(src.deployed_shell, 'sound/machines/bweep.ogg', 25, channel = VOLUME_CHANNEL_GAME)
-			else
-				src.playsound_local(src, 'sound/machines/bweep.ogg', 25, channel = VOLUME_CHANNEL_GAME)
-
-			src.show_message("--- Terminal connection from <a href='byond://?src=\ref[src];termmsg=[target]'>[target]</a> established to your mainframe!", 2)
+			src.soundToPlayer('sound/machines/bweep.ogg', 15, channel = VOLUME_CHANNEL_GAME)
+			src.textToPlayer("--- Terminal connection from <a href='byond://?src=\ref[src];termmsg=[target]'>[target]</a> established to your mainframe!")
 			src.post_status(target, "command","term_connect","data","noreply")
 			return
 
 		if("term_disconnect")
 			if(target in src.terminals)
 				src.terminals.Remove(target)
-
-				if (src.deployed_to_eyecam && src.eyecam)
-					src.eyecam.playsound_local(src.eyecam, 'sound/machines/phones/remote_hangup.ogg', 35, channel = VOLUME_CHANNEL_GAME)
-				else if (deployed_shell)
-					src.deployed_shell.playsound_local(src.deployed_shell, 'sound/machines/phones/remote_hangup.ogg', 35, channel = VOLUME_CHANNEL_GAME)
-				else
-					src.playsound_local(src, 'sound/machines/phones/remote_hangup.ogg', 35, channel = VOLUME_CHANNEL_GAME)
-
-				src.show_message("--- [target] has disconnected from your mainframe!", 2)
+				src.soundToPlayer('sound/machines/phones/remote_hangup.ogg', 35, channel = VOLUME_CHANNEL_GAME)
+				src.textToPlayer("--- [target] has disconnected from your mainframe!")
 				SPAWN_DBG(0.3 SECONDS)
 					src.post_status(target, "command","term_disconnect")
 				return
@@ -1913,16 +1913,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			rendered += "<span class='message'> [message]</span></span>"
 
 			src.messageLog += "\[[formattedShiftTime(TRUE)]\]<br>[rendered]<hr>"
-
-			// I am well aware of the fact that this chunk of code appears basically 3 times and could be compacted down to a proc for convenience
-			// Unfortunately I just do not know enough about how gooncode and dreammaker work to do that, but I might revisit it later - Nex
-			if (src.deployed_to_eyecam && src.eyecam)
-				src.eyecam.playsound_local(src.eyecam, 'sound/machines/tone_beep.ogg', 15, channel = VOLUME_CHANNEL_GAME)
-			else if (deployed_shell)
-				src.deployed_shell.playsound_local(src.deployed_shell, 'sound/machines/tone_beep.ogg', 15, channel = VOLUME_CHANNEL_GAME)
-			else
-				src.playsound_local(src, 'sound/machines/tone_beep.ogg', 15, channel = VOLUME_CHANNEL_GAME)
-			src.show_message(rendered, 2)
+			src.soundToPlayer('sound/machines/tone_beep.ogg', 15, channel = VOLUME_CHANNEL_GAME)
+			src.textToPlayer(rendered)
 			return
 
 	return
