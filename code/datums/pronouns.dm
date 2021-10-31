@@ -52,3 +52,13 @@ ABSTRACT_TYPE(/datum/pronouns)
 	reflexive = "ourself"
 	pluralize = TRUE
 	choosable = FALSE
+
+/datum/pronouns/itIts
+	name = "it/its"
+	preferredGender = "neuter"
+	subjective = "it"
+	objective = "its"
+	possessive = "its"
+	posessivePronoun = "its"
+	reflexive = "itself"
+	choosable = FALSE

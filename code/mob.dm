@@ -3136,5 +3136,7 @@
 				. = get_singleton(/datum/pronouns/heHim)
 			if("female")
 				. = get_singleton(/datum/pronouns/sheHer)
+			if("neuter")
+				. = get_singleton(/datum/pronouns/itIts)
 			else
 				. = get_singleton(/datum/pronouns/theyThem)
