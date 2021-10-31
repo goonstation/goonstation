@@ -173,7 +173,7 @@
 		var/obj/item/sticker/postit/artifact_paper/pap = locate(/obj/item/sticker/postit/artifact_paper/) in sell_art.vis_contents
 		if(pap?.lastAnalysis)
 			price *= pap.lastAnalysis
-		price *= rand(0.9,1.3)
+		price *= randfloat(0.9, 1.3)
 		price = round(price, 5)
 
 		// track score
