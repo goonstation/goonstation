@@ -137,4 +137,5 @@ client
 
 	proc/get_plane(var/plane)
 		RETURN_TYPE(/atom/movable/screen/plane_parent)
-		return src.plane_parents?["[plane]"]
+		if(length(src.plane_parents))
+			return src.plane_parents["[plane]"]
