@@ -3124,3 +3124,17 @@
 
 /mob/MouseExited(location, control, params)
 	src.name_tag?.hide_hover(usr.client)
+
+/mob/proc/get_pronouns()
+	RETURN_TYPE(/datum/pronouns)
+	if(isabomination(src))
+		return get_singleton(/datum/pronouns/abomination)
+	. = src?.bioHolder?.mobAppearance?.pronouns
+	if(isnull(.))
+		switch(src.gender)
+			if("male")
+				. = get_singleton(/datum/pronouns/heHim)
+			if("female")
+				. = get_singleton(/datum/pronouns/sheHer)
+			else
+				. = get_singleton(/datum/pronouns/theyThem)
