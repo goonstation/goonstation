@@ -90,7 +90,7 @@
 		if (!movement_controller)
 			movement_controller = new /datum/movement_controller/poltergeist (src)
 
-		name = make_name()
+		real_name = make_name()
 		src.UpdateName()
 
 	is_spacefaring()
