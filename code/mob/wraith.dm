@@ -182,12 +182,15 @@
 
 		if (deaths < 2)
 			boutput(src, "<span class='alert'><b>You have been defeated...for now. The strain of banishment has weakened you, and you will not survive another.</b></span>")
+			logTheThing("combat", src, null, "lost a life as a wraith at [log_loc(src.loc)].")
 			src.justdied = 1
 			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 			SPAWN_DBG(15 SECONDS) //15 seconds
 				src.justdied = 0
 		else
 			boutput(src, "<span class='alert'><b>Your connection with the mortal realm is severed. You have been permanently banished.</b></span>")
+			message_admins("Wraith [key_name(src)] died with no more respawns at [log_loc(src.loc)].")
+			logTheThing("combat", src, null, "died as a wraith with no more respawns at [log_loc(src.loc)].")
 			if (src.mind)
 				for (var/datum/objective/specialist/wraith/WO in src.mind.objectives)
 					WO.onBanished()
