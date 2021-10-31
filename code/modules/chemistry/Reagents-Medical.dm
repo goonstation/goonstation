@@ -1297,7 +1297,7 @@ datum
 							M.emote("gasp")
 				else if(method == INGEST)
 					boutput(M, "<span class='notice'>You feel sickly!</span>")
-					M.take_toxin_damage(volume/2.5)
+					M.take_toxin_damage(volume/1.5)
 
 		medical/cryoxadone // COGWERKS CHEM REVISION PROJECT. magic drug, but isn't working right correctly
 			name = "cryoxadone"
