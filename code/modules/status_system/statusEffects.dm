@@ -1060,9 +1060,52 @@
 		name = "Incorporeal"
 		desc = "You are incorporeal.<br>You cannot use your hands. Become corporeal again to interact with the world."
 		icon_state = "incorporeal"
-		unique = 1
+		unique = TRUE
 		duration = INFINITE_STATUS
 		maxDuration = null
+		var/mob/living/carbon/human/H
+
+		onAdd(optional=null)
+			. = ..()
+			if (ishuman(owner))
+				H = owner
+
+	possessing
+		id = "possessing"
+		name = "Possessing"
+		desc = "You are possessing someone.<br>Once the status effect ends, you will be temporarily transferred into their body."
+		icon_state = "possess"
+		unique = TRUE
+		maxDuration = 45 SECONDS
+		var/mob/living/carbon/human/H
+
+		onAdd(optional=null)
+			. = ..()
+			if (ishuman(owner))
+				H = owner
+
+	possessed
+		id = "possessed"
+		name = "Possessed"
+		desc = "You are possessing someone.<br>Once the status effect ends, you will be transferred back into your body."
+		icon_state = "possess"
+		unique = TRUE
+		maxDuration = 45 SECONDS
+		var/mob/living/carbon/human/H
+
+		onAdd(optional=null)
+			. = ..()
+			if (ishuman(owner))
+				H = owner
+
+	soulstolen
+		id = "soulstolen"
+		name = "soulstolen"
+		desc = "The Slasher has stolen your soul!"
+		icon_state = "incorporeal"
+		unique = TRUE
+		visible = FALSE
+		maxDuration = INFINITE_STATUS
 		var/mob/living/carbon/human/H
 
 		onAdd(optional=null)
