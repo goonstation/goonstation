@@ -1,4 +1,9 @@
 
+(t)sun oct 31 21
+(u)Nexusuxen
+(p)6480
+(e)|
+(*)You can now see who's in cryo by looking at the manifest or, if they have one, their security/medical record.
 (t)sat oct 30 21
 (u)pali
 (+)Falling over or laying down over a puddle of fluid will make you splash into it now
