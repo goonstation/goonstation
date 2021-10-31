@@ -3120,7 +3120,7 @@
 
 /mob/MouseEntered(location, control, params)
 	if(usr.client.check_key(KEY_EXAMINE))
-		src.name_tag.show_hover(usr.client)
+		src.name_tag?.show_hover(usr.client)
 
 /mob/MouseExited(location, control, params)
-	src.name_tag.hide_hover(usr.client)
+	src.name_tag?.hide_hover(usr.client)
