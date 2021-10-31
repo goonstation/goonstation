@@ -328,6 +328,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 			if (H.mutantrace && H.mutantrace.voice_override)
 				H.voice_type = H.mutantrace.voice_override
+
+			H.update_name_tag()
 		// if the owner's not human I don't think this would do anything anyway so fuck it
 		return
 

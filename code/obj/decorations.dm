@@ -219,6 +219,18 @@
 
 		interact_particle(user,src)
 
+	Crossed(atom/movable/AM)
+		. = ..()
+		if(isliving(AM))
+			var/mob/living/L = AM
+			L.name_tag?.set_visibility(FALSE)
+
+	Uncrossed(atom/movable/AM)
+		. = ..()
+		if(isliving(AM))
+			var/mob/living/L = AM
+			L.name_tag?.set_visibility(TRUE)
+
 	attackby(var/obj/item/W as obj, mob/user as mob)
 		user.lastattacked = src
 		hit_twitch(src)

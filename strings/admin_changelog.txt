@@ -1,3 +1,6 @@
+(t)sat oct 31 21
+(u)pali
+(*)Incoming mainframe commands are now logged (usually) in a new <i>computers</i> log cateogry
 (t)sat oct 30 21
 (u)Zonespace
 (*)New admin-spawn antagonist, the Slasher! Make someone a slasher through the player panel, like how you would do it for floor goblins or Macho Men.

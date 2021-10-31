@@ -217,6 +217,11 @@
 		if (src.name == "monkey" || !src.name)
 			randomize_look(src, 1, 1, 1, 0, 1, 0)
 			src.gender = src.bioHolder?.mobAppearance.gender
+		switch(src.gender)
+			if("male")
+				src.bioHolder?.mobAppearance?.pronouns = get_singleton(/datum/pronouns/heHim)
+			if("female")
+				src.bioHolder?.mobAppearance?.pronouns = get_singleton(/datum/pronouns/sheHer)
 		. = ..()
 
 	ai_action()
