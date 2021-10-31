@@ -1,5 +1,9 @@
 
 (t)sun oct 31 21
+(u)zjdtmkhzt
+(p)6348
+(e)🆕⚖|feature, balance
+(+)Non-bartenders will now be able to taste some of the reagents they drink. (Bartenders will continue to know exactly what they drink.)
 (u)Nexusuxen
 (p)6480
 (e)|
