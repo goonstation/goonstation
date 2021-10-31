@@ -158,7 +158,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	if(src.material)
 		src.material.UnregisterSignal(src, COMSIG_ATOM_CROSSED)
 
-	if(mat1?.triggersOnEntered)
+	if(length(mat1?.triggersOnEntered))
 		mat1.RegisterSignal(src, COMSIG_ATOM_CROSSED, /datum/material/proc/triggerOnEntered)
 
 	for(var/X in getMaterialPrefixList(mat1))
