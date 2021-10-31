@@ -519,7 +519,7 @@
 
 				if(ishuman(src))
 					var/mob/living/carbon/human/H = src
-					if ((locate(/obj/item/augmentation/head/wireless_interact) in H.has_augmentation("Head", "brain")) && (get_dist(src, target) > 1))
+					if ((locate(/obj/item/augmentation/head/wireless_interact) in H.has_augmentation("Head", "brain")) && (get_dist(src, target) > 1) && istype(target, /obj/machinery) && equipped)
 						return
 
 				if (equipped)
