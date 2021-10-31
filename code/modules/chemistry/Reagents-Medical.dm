@@ -1257,7 +1257,7 @@ datum
 
 		medical/rubbing_alcohol
 			name = "Isopropanol"
-			id = "rubbing_alcohol"
+			id = "isopropanol"
 			description = "Isopropanol (rubbing alcohol) helps to sterilize cuts and scrapes and promote healing"
 			reagent_state = LIQUID
 			fluid_r = 0
@@ -1293,7 +1293,7 @@ datum
 
 					if (!silent)
 						if(!ON_COOLDOWN(M, "rubbing_alcohol_gasp", 3 SECONDS))
-							boutput(M, "<span class='notice'>The rubbing alcohol stings as it sterilizes your wounds.</span>")
+							boutput(M, "<span class='notice'>The isopropanol stings as it sterilizes your wounds.</span>")
 							M.emote("gasp")
 				else if(method == INGEST)
 					boutput(M, "<span class='notice'>You feel sickly!</span>")
