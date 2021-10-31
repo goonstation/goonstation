@@ -57,12 +57,11 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			if(X in triggerVars)
 				M.vars[X] = getFusedTriggers(base.vars[X], list(), M) //Pass in an empty list to basically copy the first one.
 			else
-				if(X in M.vars)
-					if(istype(base.vars[X],/list))
-						var/list/oldList = base.vars[X]
-						M.vars[X] = oldList.Copy()
-					else
-						M.vars[X] = base.vars[X]
+				if(istype(base.vars[X],/list))
+					var/list/oldList = base.vars[X]
+					M.vars[X] = oldList.Copy()
+				else
+					M.vars[X] = base.vars[X]
 		return M
 
 /proc/isSameMaterial(var/datum/material/M1, var/datum/material/M2) //Compares two materials to determine if stacking should be allowed.
