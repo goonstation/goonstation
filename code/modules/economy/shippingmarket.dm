@@ -169,11 +169,11 @@
 		var/modifier = sell_art_datum.get_rarity_modifier()
 
 		// calculate price
-		price = modifier*modifier * 10000
+		price = modifier*modifier * 20000
 		var/obj/item/sticker/postit/artifact_paper/pap = locate(/obj/item/sticker/postit/artifact_paper/) in sell_art.vis_contents
 		if(pap?.lastAnalysis)
 			price *= pap.lastAnalysis
-		price += rand(-50,50)
+		price *= rand(0.9,1.3)
 		price = round(price, 5)
 
 		// track score
