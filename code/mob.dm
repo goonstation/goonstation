@@ -249,7 +249,7 @@
 	attach_hud(render_special)
 
 	var/turf/T = get_turf(src)
-	if(T.z <= Z_LEVEL_STATION)
+	if(isnull(T) || T.z <= Z_LEVEL_STATION)
 		mobs.Add(src)
 	else if(!(src.mob_flags & LIGHTWEIGHT_AI_MOB) && (!src.ai || !src.ai.exclude_from_mobs_list))
 		skipped_mobs_list = TRUE
