@@ -321,12 +321,12 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 				sims_score -= penalty
 		sims_score = max(sims_score, 0)
 
-	proc/wake_critters(mob/enteringM)
+	proc/wake_critters(mob/enteringM = null)
 		if(waking_critters || (!length(src.registered_critters) && !length(src.registered_mob_critters) && !length(src.mobs_not_in_global_mobs_list))) return
 		waking_critters = 1
 		for(var/obj/critter/C in src.registered_critters)
 			C.wake_from_hibernation()
-		if(enteringM.client)
+		if(enteringM?.client)
 			for (var/mob/living/critter/M as anything in src.registered_mob_critters)
 				M.wake_from_hibernation()
 			for (var/mob/living/M as anything in src.mobs_not_in_global_mobs_list)
