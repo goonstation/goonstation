@@ -246,7 +246,7 @@
 				M.equip_new_if_possible(/obj/item/clothing/gloves/black/slasher, M.slot_gloves)
 				if(!W.hasStatus("incorporeal"))
 					W.incorporealize()
-				SPAWN_DBG(3 SECONDS)
+				SPAWN_DBG(3.5 SECONDS)
 					if(O1) //sanity check for it breaking sometime
 						qdel(O1)
 					if(O2)
@@ -330,8 +330,8 @@
 		///heals a bunch of bad things the Slasher can get hit with, but not all
 		regenerate()
 			var/turf/T = get_turf(src)
-			new /obj/overlay/darkness_field(T, 2 SECONDS, radius = 3, max_alpha = 160)
-			new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, 2 SECONDS, radius = 3, max_alpha = 160)
+			var/obj/overlay/O1 = new /obj/overlay/darkness_field(T, 2 SECONDS, radius = 3, max_alpha = 160)
+			var/obj/overlay/O2 = new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, 2 SECONDS, radius = 3, max_alpha = 160)
 			playsound(src, 'sound/machines/ArtifactEld1.ogg', 60, 0)
 			if(src.hasStatus("handcuffed"))
 				src.visible_message("<span class='alert'>[src]'s wrists dissolve into the shadows, making the handcuffs vanish!</span>")
@@ -346,6 +346,11 @@
 				src.take_brain_damage(-INFINITY)
 				src.visible_message("<span class='alert'>[src] appears to partially dissolve into the shadows, but then reforms!</span>")
 				repair_bleeding_damage(src, 100, 5)
+				SPAWN_DBG(3 SECONDS)
+					if(O1) //sanity check for it breaking sometime
+						qdel(O1)
+					if(O2)
+						qdel(O2)
 
 		///Actionbar handler for stealing a dead body's soul.
 		soulStealSetup(var/mob/living/carbon/human/M)
