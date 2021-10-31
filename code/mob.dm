@@ -3132,11 +3132,11 @@
 	. = src?.bioHolder?.mobAppearance?.pronouns
 	if(isnull(.))
 		switch(src.gender)
-			if("male")
+			if(MALE)
 				. = get_singleton(/datum/pronouns/heHim)
-			if("female")
+			if(FEMALE)
 				. = get_singleton(/datum/pronouns/sheHer)
-			if("neuter")
+			if(NEUTER)
 				. = get_singleton(/datum/pronouns/itIts)
 			else
 				. = get_singleton(/datum/pronouns/theyThem)
