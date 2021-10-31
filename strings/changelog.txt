@@ -1,5 +1,9 @@
 
 (t)sun oct 31 21
+(u)pali
+(p)6331
+(e)|
+(+)Hovering over radio icons now shows their name.
 (u)Ikea
 (p)6119
 (e)⚖|balance
