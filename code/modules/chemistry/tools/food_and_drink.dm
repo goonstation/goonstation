@@ -1152,7 +1152,7 @@
 			choices += "remove [src.wedge]"
 			choices += "eat [src.wedge]"
 		if (reagents.total_volume > 0)
-			if (!choices.len)
+			if (!length(choices))
 				if (!ON_COOLDOWN(src, "hotkey_drink", 0.6 SECONDS))
 					attack(user, user) //Most glasses people use won't have fancy cocktail stuff, so just skip the crap and drink for dear life
 				return
