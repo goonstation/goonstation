@@ -207,6 +207,7 @@
 	var/unobservable = 0
 
 	var/mob_flags = 0
+	var/skipped_mobs_list = FALSE
 	var/click_delay = DEFAULT_CLICK_DELAY
 	var/combat_click_delay = COMBAT_CLICK_DELAY
 
@@ -246,7 +247,15 @@
 		src.bioHolder = new /datum/bioHolder(src)
 		src.initializeBioholder()
 	attach_hud(render_special)
-	mobs.Add(src)
+
+	var/turf/T = src
+	if(T.z <= Z_LEVEL_STATION)
+		mobs.Add(src)
+	else if(!(src.mob_flags & LIGHTWEIGHT_AI_MOB) && (!src.ai || !src.ai.exclude_from_mobs_list))
+		skipped_mobs_list = TRUE
+		var/area/AR = get_area(src)
+		LAZYLISTADD(AR.mobs_not_in_global_mobs_list, src)
+
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
 	mob_properties = list()
@@ -304,6 +313,11 @@
 
 /mob/disposing()
 	STOP_TRACKING
+
+	if(src.skipped_mobs_list)
+		skipped_mobs_list = FALSE
+		var/area/AR = get_area(src)
+		AR?.mobs_not_in_global_mobs_list?.Remove(src)
 
 	for(var/mob/dead/target_observer/TO in observers)
 		observers -= TO
@@ -405,6 +419,12 @@
 	src.mob_properties = null
 
 /mob/Login()
+	if(src.skipped_mobs_list)
+		skipped_mobs_list = FALSE
+		global.mobs |= src
+		var/area/AR = get_area(src)
+		AR?.mobs_not_in_global_mobs_list?.Remove(src)
+
 	src.last_ckey = src.ckey
 
 	if (!src.client.chatOutput)

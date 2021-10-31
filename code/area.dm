@@ -113,7 +113,8 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	var/workplace = 0
 
 	var/list/obj/critter/registered_critters = list()
-	var/list/obj/critter/registered_mob_critters = list()
+	var/list/mob/living/critter/registered_mob_critters = list()
+	var/list/mob/living/mobs_not_in_global_mobs_list
 	var/waking_critters = 0
 
 	// this chunk zone is for Area Ambience
@@ -195,7 +196,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 					if( !(isliving(enteringM) || iswraith(enteringM)) ) continue
 					//Wake up a bunch of lazy darn critters
 					if (isliving(enteringM))
-						wake_critters()
+						wake_critters(enteringM)
 
 					//If it's a real fuckin player
 					if (enteringM.ckey && enteringM.client)
@@ -320,13 +321,20 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 				sims_score -= penalty
 		sims_score = max(sims_score, 0)
 
-	proc/wake_critters()
-		if(waking_critters || (!length(src.registered_critters) && !length(src.registered_mob_critters))) return
+	proc/wake_critters(mob/enteringM)
+		if(waking_critters || (!length(src.registered_critters) && !length(src.registered_mob_critters) && !length(src.mobs_not_in_global_mobs_list))) return
 		waking_critters = 1
 		for(var/obj/critter/C in src.registered_critters)
 			C.wake_from_hibernation()
-		for (var/mob/living/critter/M as anything in src.registered_mob_critters)
-			M.wake_from_hibernation()
+		if(enteringM.client)
+			for (var/mob/living/critter/M as anything in src.registered_mob_critters)
+				M.wake_from_hibernation()
+			for (var/mob/living/M as anything in src.mobs_not_in_global_mobs_list)
+				if(!M.skipped_mobs_list)
+					stack_trace("Attempting to add [M] to global mobs list but its flag is not set.")
+				global.mobs |= M
+				M.skipped_mobs_list = FALSE
+			src.mobs_not_in_global_mobs_list = null
 		waking_critters = 0
 
 	proc/calculate_area_value()
