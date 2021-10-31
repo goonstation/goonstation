@@ -161,8 +161,7 @@
 			for (var/obj/item/reagent_containers/glass/G in src.beakers)
 				if (G.reagents.total_volume) log_reagents += "[log_reagents(G)] "
 
-		//I do not give a flying FUCK about what goes on in the sims. =I
-		if(!istype(A, /area/sim))
+		if(!A.dont_log_combat)
 			message_admins("[log_reagents ? "Custom grenade" : "Grenade ([src])"] primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing("combat", user, null, "primes a [log_reagents ? "custom grenade" : "grenade ([src.type])"] at [log_loc(user)].[log_reagents ? " [log_reagents]" : ""]")
 

@@ -100,7 +100,7 @@ PIPE BOMBS + CONSTRUCTION
 
 	proc/logGrenade(mob/user)
 		var/area/A = get_area(src)
-		if(!istype(A, /area/sim))
+		if(!A.dont_log_combat)
 			message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing("combat", user, null, "primes a grenade ([src.type]) at [log_loc(user)].")
 
@@ -1153,7 +1153,9 @@ PIPE BOMBS + CONSTRUCTION
 					return
 				if (user.bioHolder && user.bioHolder.HasEffect("clumsy"))
 					boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
-					logTheThing("combat", user, null, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
+					var/area/A = get_area(src)
+					if(!A.dont_log_combat)
+						logTheThing("combat", user, null, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
 					SPAWN_DBG(0.5 SECONDS)
 						user.u_equip(src)
 						src.boom()
@@ -1168,7 +1170,9 @@ PIPE BOMBS + CONSTRUCTION
 					src.state = 1
 
 					// Yes, please (Convair880).
-					logTheThing("combat", user, null, "attaches a [src] to [target] at [log_loc(target)].")
+					var/area/A = get_area(src)
+					if(!A.dont_log_combat)
+						logTheThing("combat", user, null, "attaches a [src] to [target] at [log_loc(target)].")
 
 					SPAWN_DBG (src.det_time)
 						if (src)
@@ -1254,7 +1258,9 @@ PIPE BOMBS + CONSTRUCTION
 					return
 				if (user.bioHolder && user.bioHolder.HasEffect("clumsy"))
 					boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
-					logTheThing("combat", user, null, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
+					var/area/A = get_area(src)
+					if(!A.dont_log_combat)
+						logTheThing("combat", user, null, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
 					SPAWN_DBG(0.5 SECONDS)
 						user.u_equip(src)
 						src.boom()
@@ -1269,7 +1275,9 @@ PIPE BOMBS + CONSTRUCTION
 					src.state = 1
 
 					// Yes, please (Convair880).
-					logTheThing("combat", user, null, "attaches a [src] to [target] at [log_loc(target)].")
+					var/area/A = get_area(src)
+					if(!A.dont_log_combat)
+						logTheThing("combat", user, null, "attaches a [src] to [target] at [log_loc(target)].")
 
 					SPAWN_DBG (src.det_time)
 						if (src)
@@ -1572,7 +1580,7 @@ PIPE BOMBS + CONSTRUCTION
 		boutput(user, "<span class='alert'>You activate the pipe bomb! 5 seconds!</span>")
 		armed = 1
 		var/area/A = get_area(src)
-		if(!istype(A, /area/sim))
+		if(!A.dont_log_combat)
 			message_admins("[key_name(user)] arms a pipe bomb (power [strength]) at [log_loc(src)] by [key_name(user)].")
 			logTheThing("combat", user, null, "arms a pipe bomb (power [strength]) at [log_loc(src)])")
 

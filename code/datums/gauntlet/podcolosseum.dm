@@ -2,6 +2,8 @@
 	name = "The Colosseum"
 	virtual = 1
 	ambient_light = "#bfbfbf"
+	dont_log_combat = TRUE
+
 
 	Entered(var/atom/A)
 		..()

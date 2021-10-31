@@ -44,6 +44,9 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	/// for escape checks
 	var/is_centcom = 0
 
+	/// Don't combat/explosion log this area (for VR and other gimmicks)
+	var/dont_log_combat = FALSE
+
 	level = null
 	#ifdef UNDERWATER_MAP
 	name = "Ocean"
@@ -1384,6 +1387,7 @@ ABSTRACT_TYPE(/area/sim)
 	skip_sims = 1
 	sims_score = 100
 	sound_group = "vr"
+	dont_log_combat = TRUE
 
 
 
