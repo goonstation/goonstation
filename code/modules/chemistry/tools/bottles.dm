@@ -262,7 +262,7 @@
 	icon_state = "plasticbottle"
 	initial_volume = 50
 	amount_per_transfer_from_this = 5
-	initial_reagents = "ethanol"
+	initial_reagents = "rubbing_alcohol"
 
 /obj/item/reagent_containers/glass/bottle/mercury
 	name = "mercury bottle"

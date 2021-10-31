@@ -1255,6 +1255,50 @@ datum
 							var/mob/living/L = M
 							L.contract_disease(/datum/ailment/malady/bloodclot,null,null,1)
 
+		medical/rubbing_alcohol
+			name = "Rubbing Alcohol"
+			id = "rubbing_alcohol"
+			description = "Rubbing Alcohol (hydrogen peroxide) helps to sterilize cuts and scrapes and promote healing"
+			reagent_state = LIQUID
+			fluid_r = 0
+			fluid_g = 0
+			fluid_b = 0
+			transparency = 10
+			value = 2 //Not sure what to set this, so it'll just be low
+			var/alch_strength = 0.6
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M) M = holder.my_atom
+				M.HealDamage ("All", mult, 0)
+				M.UpdateDamageIcon()
+				..()
+				return
+
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/list/paramslist = 0)
+				. = ..()
+				if(!volume_passed)
+					return
+				if(!isliving(M))
+					return
+				volume_passed = clamp(volume_passed, 0, 10)
+
+				if(method == TOUCH)
+					. = 0
+					M.HealDamage("All", volume_passed/2, 0)
+
+					var/silent = 0
+					if (length(paramslist))
+						if ("silent" in paramslist)
+							silent = 1
+
+					if (!silent)
+						if(!ON_COOLDOWN(M, "rubbing alcohol gasp", 3 SECONDS))
+							boutput(M, "<span class='notice'>The rubbing alcohol stings as it sterilizes your wounds.</span>")
+							M.emote("gasp")
+				else if(method == INGEST)
+					boutput(M, "<span class='notice'>You feel sickly!</span>")
+					M.take_toxin_damage(volume/2.5)
+
 		medical/cryoxadone // COGWERKS CHEM REVISION PROJECT. magic drug, but isn't working right correctly
 			name = "cryoxadone"
 			id = "cryoxadone"
