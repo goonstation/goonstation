@@ -149,7 +149,6 @@
 	density = 0
 	layer = EFFECTS_LAYER_UNDER_1
 	flags = FLUID_SUBMERGE
-	event_handler_flags = USE_HASENTERED
 	text = "<font color=#5c5>s"
 	var/health = 50
 	var/destroyed = 0 // Broken shrubs are unable to vend prizes, this is also used to track a objective.
@@ -220,13 +219,13 @@
 
 		interact_particle(user,src)
 
-	HasEntered(atom/movable/AM, atom/OldLoc)
+	Crossed(atom/movable/AM)
 		. = ..()
 		if(isliving(AM))
 			var/mob/living/L = AM
 			L.name_tag?.set_visibility(FALSE)
 
-	HasExited(atom/movable/AM, atom/NewLoc)
+	Uncrossed(atom/movable/AM)
 		. = ..()
 		if(isliving(AM))
 			var/mob/living/L = AM
