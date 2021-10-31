@@ -1256,9 +1256,9 @@ datum
 							L.contract_disease(/datum/ailment/malady/bloodclot,null,null,1)
 
 		medical/rubbing_alcohol
-			name = "Rubbing Alcohol"
+			name = "Isopropanol"
 			id = "rubbing_alcohol"
-			description = "Rubbing Alcohol (hydrogen peroxide) helps to sterilize cuts and scrapes and promote healing"
+			description = "Isopropanol (rubbing alcohol) helps to sterilize cuts and scrapes and promote healing"
 			reagent_state = LIQUID
 			fluid_r = 0
 			fluid_g = 0
