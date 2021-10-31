@@ -637,6 +637,7 @@ obj/machinery/atmospherics/pipe
 		volume = 1620 //in liters, 0.9 meters by 0.9 meters by 2 meters
 		dir = SOUTH
 		initialize_directions = SOUTH
+		plane = PLANE_DEFAULT
 		density = 1
 		var/obj/machinery/atmospherics/node1
 
