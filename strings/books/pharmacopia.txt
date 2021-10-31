@@ -5,6 +5,20 @@
 		<hr>
 		<h2>PHYSICAL TRAUMA</h2>
 		<hr>
+		<h3>Isopropanol<h3>
+		<div class ="isopropanol">
+		<ul>
+			<li>Isopropanol is an ethanol based sterilizer that is toxic if ingested.
+			<li>This compund can be created by combining hydrogen and oxygen with ethanol.
+		<br>
+		<h4><i>Advanced:</i><h4>
+		<ul>
+			<li>Styptic Powder (topical)
+			<li>Cryoxadone (cryogenics)
+			<li>Omnizine (systemic)
+		</div>
+		<br>
+		<hr>
 		<h3>Styptic Powder</h3>
 		<div class ="styptic">
 		<ul>

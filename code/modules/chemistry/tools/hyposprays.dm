@@ -1,6 +1,6 @@
 var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "insulin", "mutadone", "teporone",\
 "silver_sulfadiazine", "salbutamol", "perfluorodecalin", "omnizine", "synaptizine", "anti_rad",\
-"oculine", "mannitol", "penteticacid", "styptic_powder", "methamphetamine", "spaceacillin", "saline",\
+"oculine", "mannitol", "penteticacid", "styptic_powder", "methamphetamine", "spaceacillin", "saline", "isopropanol",\
 "salicylic_acid", "cryoxadone", "blood", "bloodc", "synthflesh",\
 "menthol", "cold_medicine", "antihistamine", "ipecac",\
 "booster_enzyme", "anti_fart", "goodnanites", "smelling_salt", "CBD")
