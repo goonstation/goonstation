@@ -101,7 +101,8 @@ PIPE BOMBS + CONSTRUCTION
 	proc/logGrenade(mob/user)
 		var/area/A = get_area(src)
 		if(!A.dont_log_combat)
-			message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
+			if(!istype(src, /obj/item/old_grenade/oxygen)) //I DON'T GIVE A DAMN!!
+				message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing("combat", user, null, "primes a grenade ([src.type]) at [log_loc(user)].")
 
 /obj/item/old_grenade/banana
