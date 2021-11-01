@@ -58,7 +58,8 @@
 			var/obj/deployable_turret/turret = src.spawn_turret(spawn_direction)
 			turret.set_angle(get_angle(thrown_from,thrown_to))
 			turret.quick_deploy()
-			qdel(src)
+			SPAWN_DBG(0.5)
+				qdel(src)
 
 
 
