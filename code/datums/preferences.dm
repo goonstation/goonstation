@@ -435,14 +435,7 @@ datum/preferences
 				return TRUE
 
 			if ("update-pronouns")
-				var/list/types = filtered_concrete_typesof(/datum/pronouns, /proc/pronouns_filter_is_choosable)
-				var/selected
-				for (var/i = 1, i <= length(types), i++)
-					var/datum/pronouns/pronouns = get_singleton(types[i])
-					if (AH.pronouns == pronouns)
-						selected = i
-						break
-				AH.pronouns = get_singleton(types[selected < length(types) ? selected + 1 : 1])
+				AH.pronouns = AH.pronouns.next_pronouns()
 				src.profile_modified = TRUE
 				return TRUE
 

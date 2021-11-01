@@ -568,10 +568,12 @@
 	name = "Space American Football Stadium"
 	force_fullbright = 1
 	icon_state = "purple"
+	dont_log_combat = TRUE
 
 /area/football/field
 	name = "Space American Football Field"
 	icon_state = "green"
+	dont_log_combat = TRUE
 
 	endzone
 		icon_state = "yellow"

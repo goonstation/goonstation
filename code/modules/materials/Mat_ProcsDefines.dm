@@ -52,17 +52,16 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		var/datum/material/M = new base.type ()
 		M.properties = mergeProperties(base.properties)
 		for(var/X in base.vars)
-			if(X == "type" || X == "parent_type" || X == "tag" || X == "vars" || X == "properties") continue
+			if(X == "type" || X == "parent_type" || X == "tag" || X == "vars" || X == "properties" || X == "datum_components" || X == "comp_lookup" || X == "signal_procs" || X == "signal_enabled") continue
 
 			if(X in triggerVars)
 				M.vars[X] = getFusedTriggers(base.vars[X], list(), M) //Pass in an empty list to basically copy the first one.
 			else
-				if(X in M.vars)
-					if(istype(base.vars[X],/list))
-						var/list/oldList = base.vars[X]
-						M.vars[X] = oldList.Copy()
-					else
-						M.vars[X] = base.vars[X]
+				if(istype(base.vars[X],/list))
+					var/list/oldList = base.vars[X]
+					M.vars[X] = oldList.Copy()
+				else
+					M.vars[X] = base.vars[X]
 		return M
 
 /proc/isSameMaterial(var/datum/material/M1, var/datum/material/M2) //Compares two materials to determine if stacking should be allowed.
@@ -159,7 +158,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	if(src.material)
 		src.material.UnregisterSignal(src, COMSIG_ATOM_CROSSED)
 
-	if(mat1?.triggersOnEntered)
+	if(length(mat1?.triggersOnEntered))
 		mat1.RegisterSignal(src, COMSIG_ATOM_CROSSED, /datum/material/proc/triggerOnEntered)
 
 	for(var/X in getMaterialPrefixList(mat1))

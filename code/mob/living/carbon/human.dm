@@ -1204,23 +1204,30 @@
 		see_face = 0
 	else if (istype(src.wear_suit) && !src.wear_suit.see_face)
 		see_face = 0
+	var/id_name = src.wear_id?:registered
 	if (!see_face)
-		if (istype(src.wear_id) && src.wear_id:registered)
-			src.name = "[src.name_prefix(null, 1)][src.wear_id:registered][src.name_suffix(null, 1)]"
+		if (id_name)
+			src.name = "[src.name_prefix(null, 1)][id_name][src.name_suffix(null, 1)]"
+			src.update_name_tag(id_name)
 		else
 			src.unlock_medal("Suspicious Character", 1)
 			src.name = "[src.name_prefix(null, 1)]Unknown[src.name_suffix(null, 1)]"
+			src.update_name_tag("")
 	else
-		if (istype(src.wear_id) && src.wear_id:registered != src.real_name)
+		if (id_name != src.real_name)
 			if (src.decomp_stage > 2)
-				src.name = "[src.name_prefix(null, 1)]Unknown[src.wear_id:registered ? " (as [src.wear_id:registered])" : ""][src.name_suffix(null, 1)]"
+				src.name = "[src.name_prefix(null, 1)]Unknown[id_name ? " (as [id_name])" : ""][src.name_suffix(null, 1)]"
+				src.update_name_tag(id_name)
 			else
-				src.name = "[src.name_prefix(null, 1)][src.real_name][src.wear_id:registered ? " (as [src.wear_id:registered])" : ""][src.name_suffix(null, 1)]"
+				src.name = "[src.name_prefix(null, 1)][src.real_name][id_name ? " (as [id_name])" : ""][src.name_suffix(null, 1)]"
+				src.update_name_tag(src.real_name)
 		else
 			if (src.decomp_stage > 2)
-				src.name = "[src.name_prefix(null, 1)]Unknown[src.wear_id ? " (as [src.wear_id:registered])" : ""][src.name_suffix(null, 1)]"
+				src.name = "[src.name_prefix(null, 1)]Unknown[src.wear_id ? " (as [id_name])" : ""][src.name_suffix(null, 1)]"
+				src.update_name_tag(id_name)
 			else
 				src.name = "[src.name_prefix(null, 1)][src.real_name][src.name_suffix(null, 1)]"
+				src.update_name_tag(src.real_name)
 
 /mob/living/carbon/human/find_in_equipment(var/eqtype)
 	if (istype(w_uniform, eqtype))
@@ -3467,3 +3474,19 @@
 			var/obj/item/organ/tail/T = H.organHolder.tail
 			T.colorize_tail(H.bioHolder.mobAppearance)
 		H?.bioHolder?.mobAppearance.UpdateMob()
+
+/mob/living/carbon/human/get_pronouns()
+	RETURN_TYPE(/datum/pronouns)
+	if(isabomination(src))
+		return get_singleton(/datum/pronouns/abomination)
+	if(src.wear_id)
+		// not using get_id() because we don't want held IDs
+		var/obj/item/card/id/id = null
+		if(istype(src.wear_id, /obj/item/card/id))
+			id = src.wear_id
+		else if(istype(src.wear_id, /obj/item/device/pda2))
+			var/obj/item/device/pda2/pda = src.wear_id
+			id = pda.ID_card
+		. = id?.pronouns
+	if(isnull(.))
+		return ..()

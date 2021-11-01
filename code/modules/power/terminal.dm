@@ -146,3 +146,41 @@
 	hide(var/i)
 		invisibility = i ? INVIS_ALWAYS : INVIS_NONE
 		alpha = invisibility ? 128 : 255
+
+/obj/machinery/power/data_terminal/cable_tray
+	name = "cable tray"
+	desc = "A connector that goes off into somewhere..."
+	icon_state = "vterm"
+	mats = 0 // uh no thanks
+
+	New()
+		..()
+		var/turf/T = get_turf(src)
+		if(!src.netnum && !length(T.connections) )
+			//Re-attempt connection to power nets due to delayed disjoint connections
+			SPAWN_DBG(0.2 SECONDS)
+				src.netnum = 0
+				if(makingpowernets)
+					return
+				for(var/obj/machinery/power/data_terminal/cable_tray/CT in src.get_connections())
+					if(src.netnum == 0 && CT.netnum != 0)
+						src.netnum = CT.netnum
+				for(var/obj/cable/C in src.get_connections())
+					if(src.netnum == 0 && C.netnum != 0)
+						src.netnum = C.netnum
+					else if(C.netnum != 0 && C.netnum != src.netnum)
+						makepowernets()
+						return
+				if(src.netnum)
+					src.powernet = powernets[src.netnum]
+					src.powernet.nodes += src
+					if(src.use_datanet)
+						src.powernet.data_nodes += src
+
+/obj/machinery/power/data_terminal/cable_tray/get_connections(unmarked = 0)
+	. = ..()
+	var/turf/T = get_turf(src)
+	for(var/obj/machinery/power/data_terminal/cable_tray/C in T.get_disjoint_objects_by_type(DISJOINT_TURF_CONNECTION_POWERNETS, /obj/machinery/power/data_terminal/cable_tray))
+		if(C.netnum && unmarked)
+			continue
+		. |= C

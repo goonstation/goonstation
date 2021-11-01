@@ -125,6 +125,7 @@
 				var/obj/O = AM
 				src.visible_message("[O] falls into [src].")
 				O.set_loc(src)
+				flush = 1
 				update()
 
 			if (isliving(AM))

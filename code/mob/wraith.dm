@@ -73,6 +73,7 @@
 		. = ..()
 		src.poltergeists = list()
 		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_SPOOKY)
+		APPLY_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)
 		//src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.sight |= SEE_SELF // let's not make it see through walls
 		src.see_invisible = INVIS_SPOOKY
@@ -89,8 +90,8 @@
 		if (!movement_controller)
 			movement_controller = new /datum/movement_controller/poltergeist (src)
 
-		name = make_name()
-		real_name = name
+		real_name = make_name()
+		src.UpdateName()
 
 	is_spacefaring()
 		return !density
