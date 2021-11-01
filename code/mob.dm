@@ -2665,6 +2665,8 @@
 	src.update_name_tag()
 
 /mob/proc/update_name_tag(name=null)
+	if(isnull(src.name_tag))
+		return
 	if(isnull(name))
 		name = src.name
 	if(name == "Unknown")
