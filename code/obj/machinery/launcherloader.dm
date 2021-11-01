@@ -40,7 +40,7 @@
 				src.set_dir(get_dir(src,driver))
 
 	proc/activate()
-		if(operating || !isturf(src.loc)) return
+		if(operating || !isturf(src.loc) || driver_operating) return
 		operating = 1
 		flick("launcher_loader_1",src)
 		playsound(src, "sound/effects/pump.ogg",50, 1)
@@ -69,7 +69,7 @@
 							if (door)
 								door.close()
 
-				SPAWN_DBG(door ? 25 : 20) driver_operating = 0
+				SPAWN_DBG(door ? 30 : 20) driver_operating = 0
 
 				sleep(door ? 20 : 10)
 				if (driver)
