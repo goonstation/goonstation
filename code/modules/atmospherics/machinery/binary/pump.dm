@@ -85,6 +85,7 @@ obj/machinery/atmospherics/binary/pump
 		signal.data["device"] = "AGP"
 		signal.data["power"] = on ? "on" : "off"
 		signal.data["target_output"] = target_pressure
+		signal.data["address_tag"] = "pumpcontrol"
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 

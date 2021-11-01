@@ -466,7 +466,16 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 
 	New()
 		..()
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+		src.AddComponent( \
+			/datum/component/packet_connected/radio, \
+			null, \
+			frequency, \
+			null, \
+			"receive_signal", \
+			FALSE, \
+			"mixercontrol", \
+			FALSE \
+	)
 
 	special_deconstruct(obj/computerframe/frame as obj)
 		frame.circuit.frequency = src.frequency
