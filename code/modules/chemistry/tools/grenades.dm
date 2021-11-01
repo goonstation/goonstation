@@ -24,7 +24,7 @@
 	stamina_cost = 0
 	stamina_crit_chance = 0
 	move_triggered = 1
-	var/is_dangerous = 1
+	var/is_dangerous = TRUE
 	var/detonating = 0
 
 
@@ -281,7 +281,7 @@
 	icon_state = "cleaner"
 	icon_state_armed = "cleaner1"
 	stage = 2
-	is_dangerous = 0
+	is_dangerous = FALSE
 
 	New()
 		..()
@@ -498,7 +498,7 @@
 	icon_state = "luminol"
 	icon_state_armed = "luminol1"
 	stage = 2
-	is_dangerous = 0
+	is_dangerous = FALSE
 
 	New()
 		..()
@@ -521,7 +521,7 @@
 	icon_state = "fog"
 	icon_state_armed = "fog1"
 	stage = 2
-	is_dangerous = 0
+	is_dangerous = FALSE
 
 	New()
 		..()
