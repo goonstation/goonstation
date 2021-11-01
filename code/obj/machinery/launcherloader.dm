@@ -65,11 +65,11 @@
 						SPAWN_DBG(0)
 							if (door)
 								door.open()
-						SPAWN_DBG(10 SECONDS)
+						SPAWN_DBG(3 SECONDS)
 							if (door)
-								door.close() //this may need some adjusting still
+								door.close()
 
-				SPAWN_DBG(door ? 55 : 20) driver_operating = 0
+				SPAWN_DBG(door ? 25 : 20) driver_operating = 0
 
 				sleep(door ? 20 : 10)
 				if (driver)
