@@ -136,7 +136,7 @@ var/datum/particleMaster/particleMaster = new
 		if (istype(pType))
 			var/obj/particle/p = new_particle(particleTime)
 			var/turf/T = get_turf(location)
-			T.vis_contents += p
+			T?.vis_contents += p
 			p.color = particleColor
 			if (particleSprite)
 				p.override_state = particleSprite
@@ -486,8 +486,12 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 
 			par.transform = first
 
-			var/move_x = ((par.target.x-par.loc.x) * 2) * 32 + rand(-14, 14)
-			var/move_y = ((par.target.y-par.loc.y) * 2) * 32 + rand(-14, 14)
+			if(!length(par.vis_locs))
+				return
+			var/turf/T = par.vis_locs[1]
+
+			var/move_x = ((par.target.x-T.x) * 2) * 32 + rand(-14, 14)
+			var/move_y = ((par.target.y-T.y) * 2) * 32 + rand(-14, 14)
 
 			animate(par,transform = second, time = 25, pixel_y = move_y,  pixel_x = move_x , easing = SINE_EASING)
 			animate(transform = third, time = 5, easing = LINEAR_EASING|EASE_OUT)
@@ -617,12 +621,13 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			var/move_x
 			var/move_y
 
-			if (!par.loc)
+			if(!length(par.vis_locs))
 				return
+			var/turf/T = par.vis_locs[1]
 
 			if (par.target)
-				move_x = (par.target.x-par.loc.x)*32 + rand(-32, 0)
-				move_y = (par.target.y-par.loc.y)*32 + rand(-32, 0)
+				move_x = (par.target.x-T.x)*32 + rand(-32, 0)
+				move_y = (par.target.y-T.y)*32 + rand(-32, 0)
 			else
 				move_x = rand(-64, 64)
 				move_y = rand(-64, 64)
@@ -650,12 +655,13 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			var/move_x
 			var/move_y
 
-			if (!par.loc)
+			if(!length(par.vis_locs))
 				return
+			var/turf/T = par.vis_locs[1]
 
 			if (par.target)
-				move_x = (par.target.x-par.loc.x)*32 + rand(-32, 0)
-				move_y = (par.target.y-par.loc.y)*32 + rand(-32, 0)
+				move_x = (par.target.x-T.x)*32 + rand(-32, 0)
+				move_y = (par.target.y-T.y)*32 + rand(-32, 0)
 			else
 				move_x = rand(-64, 64)
 				move_y = rand(-64, 64)
