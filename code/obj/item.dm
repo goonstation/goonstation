@@ -1483,6 +1483,10 @@
 	if (!src.inventory_counter)
 		src.inventory_counter = new /obj/overlay/inventory_counter
 		src.vis_contents += src.inventory_counter
+		if(ismob(src.loc))
+			var/mob/M = src.loc
+			if(src in M.equipped_list())
+				src.inventory_counter.show_count()
 
 /obj/item/proc/dropped(mob/user)
 	if (user)
