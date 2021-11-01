@@ -138,7 +138,7 @@ ABSTRACT_TYPE(/obj/item/augmentation/head)
 			return
 		if(get_dist(user, target) <= 1)
 			return
-		if (M.client.check_any_key(KEY_EXAMINE | KEY_POINT) || ishelpermouse(target)) // slightly hacky, oh well, tries to check whether we want to click normally or use attack_ai
+		if (M.client.check_any_key(KEY_EXAMINE | KEY_POINT) || ishelpermouse(target) || M.equipped()) // slightly hacky, oh well, tries to check whether we want to click normally or use attack_ai
 			return
 		else
 			if (get_dist(M, target) > 0)
