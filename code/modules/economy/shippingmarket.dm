@@ -396,15 +396,12 @@
 			else
 				handle_returns(sell_crate)
 				if(return_handling == RET_INSUFFICIENT)
-					var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 					var/datum/signal/pdaSignal = get_free_signal()
 					var/returnmsg = "Notification: No contract fulfilled by Requisition crate. Returning as sent."
 					if(delivery_code == "REQ-THIRDPARTY") returnmsg = "Notification: Third-party delivery requires physical requisition sheet. Returning as sent."
 					pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="[returnmsg]")
 					pdaSignal.transmission_method = TRANSMISSION_RADIO
-					if(transmit_connection != null)
-						transmit_connection.post_signal(null, pdaSignal)
-					return
+					radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 			if(req_contracts.Find(contract_to_clear))
 				req_contracts -= contract_to_clear
 				qdel(contract_to_clear)
