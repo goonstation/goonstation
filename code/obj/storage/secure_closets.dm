@@ -408,7 +408,8 @@
 	/obj/item/storage/belt/medical,
 	/obj/item/storage/box/stma_kit,
 	/obj/item/storage/box/lglo_kit/random,
-	/obj/item/clothing/glasses/healthgoggles)
+	/obj/item/clothing/glasses/healthgoggles,
+	/obj/item/device/lollipopmaker = 2)
 
 /obj/storage/secure/closet/medical/chemical
 	name = "restricted medical locker"
