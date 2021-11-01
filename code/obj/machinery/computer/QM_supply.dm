@@ -171,7 +171,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 	var/timer = shippingmarket.get_market_timeleft()
 	src.add_dialog(user)
-	post_signal("supply")
+	// post_signal("supply") // I'm pretty sure this doesn't do anything except create lag every time someone clicks it
 	var/HTML
 
 	var/header_thing_chui_toggle = (user.client && !user.client.use_chui) ? {"
