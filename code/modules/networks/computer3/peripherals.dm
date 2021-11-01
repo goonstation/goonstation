@@ -138,7 +138,7 @@
 
 		pda
 			frequency = FREQ_PDA //Standard PDA comm frequency.
-			range = 0
+			range = null
 			/*net_mode = 1
 			func_tag = "NET_ADAPTER"*/
 
@@ -163,7 +163,7 @@
 
 		var/broadcast_range = src.range //No range in network mode!!
 		if(setup_netmode_norange && src.net_mode)
-			broadcast_range = 0
+			broadcast_range = null
 
 		switch(command)
 			if("transmit")
