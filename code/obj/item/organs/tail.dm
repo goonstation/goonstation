@@ -34,11 +34,11 @@
 			update_tail_icon()
 
 	disposing()
-		on_removal()
-		donor = null
 		if(holder)
+			on_removal()
 			holder.tail = null
 			holder.donor.update_body()
+		donor = null
 		. = ..()
 
 	proc/colorize_tail(var/datum/appearanceHolder/AHL)
