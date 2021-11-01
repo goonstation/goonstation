@@ -218,7 +218,7 @@ var/mutable_appearance/fluid_ma
 	//incorporate touch_modifier?
 	Crossed(atom/movable/A)
 		..()
-		if (!src.group || !src.group.reagents || src.disposed || istype(A,/obj/fluid))
+		if (!src.group || !src.group.reagents || src.disposed || istype(A,/obj/fluid) || istype(src, /obj/fluid/airborne))
 			return
 
 		my_depth_level = last_depth_level
