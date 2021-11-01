@@ -226,9 +226,9 @@
 			L.name_tag?.set_visibility(FALSE)
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
-			H.arrestIcon.alpha = 0
-			H.health_implant.alpha = 0
-			H.health_mon.alpha = 0
+			H.arrestIcon?.alpha = 0
+			H.health_implant?.alpha = 0
+			H.health_mon?.alpha = 0
 
 	Uncrossed(atom/movable/AM)
 		. = ..()
@@ -237,9 +237,9 @@
 			L.name_tag?.set_visibility(TRUE)
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
-			H.arrestIcon.alpha = 255
-			H.health_implant.alpha = 255
-			H.health_mon.alpha = 255
+			H.arrestIcon?.alpha = 255
+			H.health_implant?.alpha = 255
+			H.health_mon?.alpha = 255
 
 	attackby(var/obj/item/W as obj, mob/user as mob)
 		user.lastattacked = src
