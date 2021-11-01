@@ -274,6 +274,7 @@
 		signal.transmission_method = 1
 		signal.data["data"] = alert_msg
 		signal.data["netid"] = net_id
+		signal.data["address_tag"] = "plantpot_listener" // prevents unnecessarily sending to other plantpots
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
