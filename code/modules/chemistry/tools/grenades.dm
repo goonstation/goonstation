@@ -159,7 +159,8 @@
 		if (src.name == "grenade")
 			for (var/obj/item/reagent_containers/glass/G in src.beakers)
 				if (G.reagents.total_volume) log_reagents += "[log_reagents(G)] "
-		message_admins("[log_reagents ? "Custom grenade" : "Grenade ([src])"] primed at [log_loc(src)] by [key_name(user)].")
+		if(!istype(src, /obj/item/chem_grenade/cleaner) && !istype(src, /obj/item/chem_grenade/luminol) && !istype(src, /obj/item/chem_grenade/fog)) //I DON'T GIVE A DAMN!!!
+			message_admins("[log_reagents ? "Custom grenade" : "Grenade ([src])"] primed at [log_loc(src)] by [key_name(user)].")
 		logTheThing("combat", user, null, "primes a [log_reagents ? "custom grenade" : "grenade ([src.type])"] at [log_loc(user)].[log_reagents ? " [log_reagents]" : ""]")
 
 		boutput(user, "<span class='alert'>You prime the grenade! 3 seconds!</span>")
