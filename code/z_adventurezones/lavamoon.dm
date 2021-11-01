@@ -1332,6 +1332,27 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		I.layer = FLY_LAYER
 		src.overlays += I
 
+/obj/ladder/auto
+
+	broken
+		name = "broken ladder"
+		desc = "it's too damaged to climb."
+		icon_state = "ladder_wall_broken"
+		broken = TRUE
+
+	New()
+		..()
+		if(z!=1)
+			icon_state = "ladder_wall"
+
+		if (!id || id == "generic")
+			id = "[x][y]"
+
+		src.tag = "ladder_[id][src.icon_state == "ladder" ? 0 : 1]"
+
+
+
+
 /obj/ladder
 	name = "ladder"
 	desc = "A series of parallel bars designed to allow for controlled change of elevation.  You know, by climbing it.  You climb it."
