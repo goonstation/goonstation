@@ -24,6 +24,7 @@
 	stamina_cost = 0
 	stamina_crit_chance = 0
 	move_triggered = 1
+	var/is_dangerous = 1
 	var/detonating = 0
 
 
@@ -162,7 +163,7 @@
 				if (G.reagents.total_volume) log_reagents += "[log_reagents(G)] "
 
 		if(!A.dont_log_combat)
-			if(!istype(src, /obj/item/chem_grenade/cleaner) && !istype(src, /obj/item/chem_grenade/luminol) && !istype(src, /obj/item/chem_grenade/fog)) //I DON'T GIVE A DAMN!!!
+			if(is_dangerous)
 				message_admins("[log_reagents ? "Custom grenade" : "Grenade ([src])"] primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing("combat", user, null, "primes a [log_reagents ? "custom grenade" : "grenade ([src.type])"] at [log_loc(user)].[log_reagents ? " [log_reagents]" : ""]")
 
@@ -280,6 +281,7 @@
 	icon_state = "cleaner"
 	icon_state_armed = "cleaner1"
 	stage = 2
+	is_dangerous = 0
 
 	New()
 		..()
@@ -496,6 +498,7 @@
 	icon_state = "luminol"
 	icon_state_armed = "luminol1"
 	stage = 2
+	is_dangerous = 0
 
 	New()
 		..()
@@ -518,6 +521,7 @@
 	icon_state = "fog"
 	icon_state_armed = "fog1"
 	stage = 2
+	is_dangerous = 0
 
 	New()
 		..()
