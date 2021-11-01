@@ -25,6 +25,8 @@
 
 	disposing()
 		particleMaster.active_particles -= src
+		for(var/turf/T in src.vis_locs)
+			T.vis_contents -= src
 		..()
 
 // --------------------------------------------------------------------------------------------------------------------------------------
@@ -132,7 +134,8 @@ var/datum/particleMaster/particleMaster = new
 
 		if (istype(pType))
 			var/obj/particle/p = new_particle(particleTime)
-			p.loc = get_turf(location)
+			var/turf/T = get_turf(location)
+			T.vis_contents += p
 			p.color = particleColor
 			if (particleSprite)
 				p.override_state = particleSprite
