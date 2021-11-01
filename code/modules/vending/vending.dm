@@ -1426,8 +1426,8 @@
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/wificomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/wifisplit, 30)
 /obj/machinery/vending/mechanics/attackby(obj/item/W as obj, mob/user as mob)
-	..()
 	if(!istype(W,/obj/item/mechanics))
+		..()
 		return
 	for(var/datum/data/vending_product/product in product_list)
 		if(W.type == product.product_path)
