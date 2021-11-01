@@ -25,7 +25,7 @@
 
 	disposing()
 		particleMaster.active_particles -= src
-		for(var/turf/T in src.vis_locs)
+		for(var/turf/T in par.vis_locs)
 			T.vis_contents -= src
 		..()
 
@@ -486,9 +486,9 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 
 			par.transform = first
 
-			if(!length(src.vis_locs))
+			if(!length(par.vis_locs))
 				return
-			var/turf/T = src.vis_locs[1]
+			var/turf/T = par.vis_locs[1]
 
 			var/move_x = ((par.target.x-T.x) * 2) * 32 + rand(-14, 14)
 			var/move_y = ((par.target.y-T.y) * 2) * 32 + rand(-14, 14)
@@ -621,9 +621,9 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			var/move_x
 			var/move_y
 
-			if(!length(src.vis_locs))
+			if(!length(par.vis_locs))
 				return
-			var/turf/T = src.vis_locs[1]
+			var/turf/T = par.vis_locs[1]
 
 			if (par.target)
 				move_x = (par.target.x-T.x)*32 + rand(-32, 0)
@@ -655,9 +655,9 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			var/move_x
 			var/move_y
 
-			if(!length(src.vis_locs))
+			if(!length(par.vis_locs))
 				return
-			var/turf/T = src.vis_locs[1]
+			var/turf/T = par.vis_locs[1]
 
 			if (par.target)
 				move_x = (par.target.x-T.x)*32 + rand(-32, 0)
