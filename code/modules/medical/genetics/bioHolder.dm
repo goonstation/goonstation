@@ -137,7 +137,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/datum/bioHolder/parentHolder = null
 
 	var/gender = MALE
-	var/datum/pronouns/pronouns
+	var/datum/pronouns/pronouns = new /datum/pronouns/theyThem //a fine default
 	var/screamsound = "male"
 	var/fartsound = "default"
 	var/voicetype = 0
