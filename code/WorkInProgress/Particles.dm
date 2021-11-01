@@ -49,6 +49,7 @@ var/datum/particleMaster/particleMaster = new
 			particleTypes[typeDatum.name] = typeDatum
 
 	proc/SpawnSystem(var/datum/particleSystem/system)
+		RETURN_TYPE(/datum/particleSystem)
 		if (!istype(system))
 			return
 
@@ -356,6 +357,8 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	name = "tpbeam"
 	icon = 'icons/effects/particles.dmi'
 	icon_state = "tpbeam"
+	var/start_y = -16
+	var/end_y = 32
 
 	MatrixInit()
 		first = matrix(1, 0.1, MATRIX_SCALE)
@@ -363,16 +366,21 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 
 	Apply(var/obj/particle/par)
 		if(..())
-			par.pixel_x += rand (-16, 16)
-			par.pixel_y = -16
+			par.pixel_x += rand (-10, 10)
+			par.pixel_y = start_y
 			par.alpha = 0
 
 			par.transform = first
 
 			animate(par, time = 3, alpha = 255)
-			animate(transform = second, time = 15 + rand(0,6), pixel_y = 32, alpha = 0)
+			animate(transform = second, time = 2.2 SECONDS + rand(0,6), pixel_y = end_y, alpha = 0)
 
 			MatrixInit()
+
+/datum/particleType/tpbeam/down
+	name = "tpbeamdown"
+	start_y = 16
+	end_y = -16
 
 /datum/particleType/swoosh
 	name = "swoosh"
@@ -1264,13 +1272,30 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 		..(location, "tpbeam", 28)
 
 	Init()
-		sleepCounter = 20
+		sleepCounter = 6
 
 	Run()
 		if (..())
 			if (sleepCounter > 0)
 				sleepCounter--
-				for(var/i=0, i<rand(1,3), i++)
+				for(var/i=0, i<rand(1,4), i++)
+					SpawnParticle()
+				Sleep(1)
+			else
+				Die()
+
+/datum/particleSystem/tpbeamdown
+	New(var/atom/location = null)
+		..(location, "tpbeamdown", 28)
+
+	Init()
+		sleepCounter = 6
+
+	Run()
+		if (..())
+			if (sleepCounter > 0)
+				sleepCounter--
+				for(var/i=0, i<rand(1,4), i++)
 					SpawnParticle()
 				Sleep(1)
 			else

@@ -2240,6 +2240,7 @@
 	cabinet_banned = true // potentially abusable. b&
 	var/teleID = "tele1"
 	var/send_only = 0
+	var/image/telelight
 
 	get_desc()
 		. += {"<br><span class='notice'>Current ID: [teleID].<br>
@@ -2252,6 +2253,9 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"setID", "setidmsg")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Teleporter ID","setID")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Send-only Mode","toggleSendOnly")
+		telelight = image('icons/misc/mechanicsExpansion.dmi', icon_state="telelight")
+		telelight.plane = PLANE_SELFILLUM
+		telelight.alpha = 180
 
 	disposing()
 		STOP_TRACKING
@@ -2272,9 +2276,9 @@
 	proc/toggleSendOnly(obj/item/W as obj, mob/user as mob)
 		send_only = !send_only
 		if(send_only)
-			src.overlays += image('icons/misc/mechanicsExpansion.dmi', icon_state = "comp_teleoverlay")
+			src.UpdateOverlays(image('icons/misc/mechanicsExpansion.dmi', icon_state = "comp_teleoverlay"), "sendonly")
 		else
-			src.overlays.Cut()
+			src.UpdateOverlays(null, "sendonly")
 		boutput(user, "Send-only Mode now [send_only ? "on":"off"]")
 		tooltip_rebuild = 1
 		return 1
@@ -2291,7 +2295,7 @@
 		if(level == 2 || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		LIGHT_UP_HOUSING
 		flick("[under_floor ? "u":""]comp_tele1", src)
-		particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(get_turf(src.loc)))
+		particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(get_turf(src.loc))).Run()
 		playsound(src.loc, "sound/mksounds/boost.ogg", 50, 1)
 		var/list/destinations = new/list()
 
@@ -2311,7 +2315,7 @@
 		if(length(destinations))
 			var/atom/picked = pick(destinations)
 			var/count_sent = 0
-			particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(get_turf(picked.loc)))
+			particleMaster.SpawnSystem(new /datum/particleSystem/tpbeamdown(get_turf(picked.loc))).Run()
 			for(var/atom/movable/M in src.loc)
 				if(M == src || M.invisibility || M.anchored) continue
 				logTheThing("combat", M, null, "entered [src] at [log_loc(src)] and teleported to [log_loc(picked)]")
@@ -2325,6 +2329,10 @@
 
 	updateIcon()
 		icon_state = "[under_floor ? "u":""]comp_tele"
+		if(src.level == 1)
+			src.UpdateOverlays(telelight, "telelight")
+		else
+			src.UpdateOverlays(null, "telelight")
 		return
 
 /obj/item/mechanics/ledcomp

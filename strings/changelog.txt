@@ -1,4 +1,7 @@
 
+(t)mon nov 01 21
+(u)pali
+(+)Mechanics teleporter component got some fancier new visuals and also is harder to hide.
 (t)sun oct 31 21
 (u)pali
 (+)ID cards now have pronouns on them, HoP console can modify those. Useful if you want to fully impersonate someone
