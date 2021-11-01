@@ -11,6 +11,7 @@
 	var/servertoggles_toggle = 0
 	var/animtoggle = 1
 	var/attacktoggle = 1
+	var/adminwho_alerts = 1
 	var/rp_word_filtering = 0
 	var/auto_stealth = 0
 	var/auto_stealth_name = null
@@ -128,6 +129,7 @@
 		if (src.owner:holder:level >= LEVEL_PA)
 			HTML += "<b>Hide Atom Verbs \[old\]?: <a href='?src=\ref[src];action=toggle_atom_verbs'>[(src.animtoggle ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Hide Attack Alerts?: <a href='?src=\ref[src];action=toggle_attack_messages'>[(src.attacktoggle ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Receive Who/Adminwho alerts?: <a href='?src=\ref[src];action=toggle_adminwho_alerts'>[(src.adminwho_alerts ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Receive Alerts For \"Low RP\" Words?: <a href='?src=\ref[src];action=toggle_rp_word_filtering'>[(src.rp_word_filtering ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>See Prayers?: <a href='?src=\ref[src];action=toggle_hear_prayers'>[(src.hear_prayers ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Audible Prayers?: <a href='?src=\ref[src];action=toggle_audible_prayers'>[list("No", "Yes", "Dectalk")[src.audible_prayers + 1]]</a></b><br>"
@@ -190,6 +192,14 @@
 		if (saved_attacktoggle == 0 && attacktoggle != 0)
 			src.owner:toggle_attack_messages()
 		attacktoggle = saved_attacktoggle
+
+		var/saved_adminwho_alerts
+		AP["[ckey]_adminwho_alerts"] >> saved_adminwho_alerts
+		if (isnull(saved_adminwho_alerts))
+			saved_adminwho_alerts = 1
+		if (saved_adminwho_alerts == 0 && adminwho_alerts != 0)
+			src.owner:toggle_adminwho_alerts()
+		adminwho_alerts = saved_adminwho_alerts
 
 		var/saved_rp_word_filtering
 		AP["[ckey]_rp_word_filtering"] >> saved_rp_word_filtering
@@ -291,6 +301,7 @@
 		AP["[ckey]_servertoggles_toggle"] << servertoggles_toggle
 		AP["[ckey]_animtoggle"] << animtoggle
 		AP["[ckey]_attacktoggle"] << attacktoggle
+		AP["[ckey]_adminwho_alerts"] << adminwho_alerts
 		AP["[ckey]_rp_word_filtering"] << rp_word_filtering
 		AP["[ckey]_auto_stealth"] << auto_stealth
 		AP["[ckey]_auto_stealth_name"] << auto_stealth_name
