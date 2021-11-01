@@ -162,14 +162,18 @@
 			#define RECEIVE_PACKET \
 				if(src.can_receive(target, source, signal, params)) { \
 					target.receive_packet(signal, src.transmission_method, params); \
-					images += src.draw_packet(target, source, signal, params); \
+					var/image/img = src.draw_packet(target, source, signal, params); \
+					if(img) \
+						images += img; \
 				} // don't ask, it has to be like this
 			POST_PACKET_INTERNAL(RECEIVE_PACKET)
 			#undef RECEIVE_PACKET
 		else
 			POST_PACKET_INTERNAL( \
 				target.receive_packet(signal, src.transmission_method, params); \
-				images += src.draw_packet(target, source, signal, params); \
+				var/image/img = src.draw_packet(target, source, signal, params); \
+				if(img) \
+					images += img; \
 			)
 		SPAWN_DBG(2 SECONDS)
 			for(var/image/img as anything in images)
