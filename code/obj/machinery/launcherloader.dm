@@ -11,7 +11,6 @@
 	opacity = 0
 	layer = 2.6
 	anchored = 1
-	event_handler_flags = USE_HASENTERED
 	plane = PLANE_NOSHADOW_BELOW
 
 	var/obj/machinery/mass_driver/driver = null
@@ -85,7 +84,8 @@
 				break
 			if(drive) activate()
 
-	HasEntered(atom/A)
+	Crossed(atom/movable/A)
+		..()
 		if (istype(A, /mob/dead) || isintangible(A) || iswraith(A)) return
 		return_if_overlay_or_effect(A)
 		activate()
@@ -111,7 +111,7 @@
 	density = 0
 	opacity = 0
 	anchored = 1
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 	plane = PLANE_NOSHADOW_BELOW
 
 	var/default_direction = NORTH //The direction things get sent into when the router does not have a destination for the given barcode or when there is none attached.
@@ -179,7 +179,8 @@
 				break
 			if(drive) activate()
 
-	HasEntered(atom/A)
+	Crossed(atom/movable/A)
+		..()
 		if (istype(A, /mob/dead) || isintangible(A) || iswraith(A)) return
 
 		if (!trigger_when_no_match)
@@ -311,6 +312,7 @@
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
 
 	var/printing = 0
+	var/print_amount = 1
 
 	// log account information for QM sales
 	var/obj/item/card/id/scan = null
@@ -360,16 +362,24 @@
 		if (..(href, href_list))
 			return
 
+		if (href_list["amount"] && !printing)
+			var/amount = input(usr, "How many labels to print?", "[src.name]", 0) as null|num
+			if (!amount || amount < 0) return
+			if (amount > 5) amount = 5
+			src.print_amount = amount
+			src.updateUsrDialog()
+
 		if (href_list["print"] && !printing)
 			printing = 1
 			playsound(src.loc, "sound/machines/printer_cargo.ogg", 75, 0)
 			sleep(1.75 SECONDS)
-			var/obj/item/sticker/barcode/B = new/obj/item/sticker/barcode(src.loc)
-			var/dest = strip_html(href_list["print"], 64)
-			B.name = "Barcode Sticker ([dest])"
-			B.destination = dest
-			B.scan = src.scan
-			B.account = src.account
+			for (var/i = 0; i < src.print_amount; i++)
+				var/obj/item/sticker/barcode/B = new/obj/item/sticker/barcode(src.loc)
+				var/dest = strip_html(href_list["print"], 64)
+				B.name = "Barcode Sticker ([dest])"
+				B.destination = dest
+				B.scan = src.scan
+				B.account = src.account
 			printing = 0
 		// cogwerks - uncomment this stuff if/when custom locations are ready
 		/*else if (href_list["remove"])
@@ -395,7 +405,10 @@
 			return
 
 		var/dat = ""
-		dat += "<b>Available Destinations:</b><BR>"
+
+		dat += "<b>Print Amount:</b> <a href='?src=\ref[src];amount=1'>[src.print_amount]</a><BR>"
+
+		dat += "<BR><b>Available Destinations:</b><BR>"
 		for(var/I in destinations)
 			dat += "<b><A href='?src=\ref[src];print=[I]'>[I]</A></b><BR>"
 

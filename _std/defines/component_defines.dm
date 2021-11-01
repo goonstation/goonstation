@@ -69,6 +69,8 @@
 #define COMSIG_ATOM_EXAMINE "atom_examine"
 /// when something happens that should trigger an icon update. Or something.
 #define COMSIG_UPDATE_ICON "atom_update_icon"
+/// when something triggers Crossed by entering this atom's turf (/atom/movable)
+#define COMSIG_ATOM_CROSSED "atom_crossed"
 
 // ---- atom/movable signals ----
 

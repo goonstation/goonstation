@@ -12,7 +12,7 @@
 	req_access = list(access_heads)
 	event_handler_flags = NO_MOUSEDROP_QOL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
-	flags = NOSPLASH
+	flags = NOSPLASH | FLUID_SUBMERGE
 	var/health = 100
 	var/mode = "ready"
 	var/error = null

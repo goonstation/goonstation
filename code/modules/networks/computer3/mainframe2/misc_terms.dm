@@ -2730,7 +2730,7 @@
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	anchored = 1.0
 	flags = TABLEPASS
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	disposing()
 		if (src.next)
@@ -2742,7 +2742,8 @@
 		src.hit()
 		return
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if (istype(AM, /obj/beam) || istype(AM, /obj/critter/aberration))
 			return
 		SPAWN_DBG( 0 )
@@ -2785,7 +2786,7 @@
 	//var/limit = 24
 	anchored = 1.0
 	flags = TABLEPASS
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	New(location, newLimit)
 		..()
@@ -2808,7 +2809,8 @@
 		..()
 
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if(isobserver(AM) || isintangible(AM)) return
 		if (istype(AM, /obj/beam))
 			return
@@ -3255,7 +3257,7 @@
 		src.hit()
 		return
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
 		if (istype(AM, /obj/beam) || istype(AM, /obj/critter/aberration))
 			return
 		SPAWN_DBG( 0 )
@@ -3331,9 +3333,6 @@
 						if (!source)
 							telehop(AM, 5, 1)
 							return
-
-						var/area/sourceArea = get_area(source)
-						sourceArea.Entered(AM, AM.loc)
 
 						AM.set_loc(get_turf(source))
 						return

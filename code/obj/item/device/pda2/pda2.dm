@@ -218,9 +218,10 @@
 		desc = "A portable microcomputer by Thinktronic Systems, LTD. The surface is coated with polytetrafluoroethylene and banana drippings."
 		setup_default_pen = /obj/item/pen/crayon/random
 		setup_default_cartridge = /obj/item/disk/data/cartridge/clown
-		event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+		event_handler_flags = USE_FLUID_ENTER
 
-		HasEntered(AM as mob|obj) //Clown PDA is slippery.
+		Crossed(atom/movable/AM)
+			..()
 			if (istype(src.loc, /turf/space))
 				return
 			if (iscarbon(AM))

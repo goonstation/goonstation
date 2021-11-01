@@ -1621,6 +1621,46 @@
 		else
 			return 0
 
+/obj/disposalpipe/trunk/zlevel
+	icon_state = "pipe-v"
+
+	getlinked()
+		return
+
+	welded()
+		return
+
+	ex_act(severity)
+		return
+
+	// test health for brokenness
+	healthcheck()
+		return
+
+	transfer(var/obj/disposalholder/H)
+		if(H.dir == DOWN)		// we just entered from a disposer
+			return ..()		// so do base transfer proc
+
+		// otherwise, go to the linked object
+		var/turf/T = get_turf(src)
+		var/obj/disposalpipe/P
+
+		P = locate() in T.get_disjoint_objects_by_type(DISJOINT_TURF_CONNECTION_DISPOSAL, /obj/disposalpipe/trunk)
+		if(P)
+			H.set_dir(DOWN)
+			// find other holder in next loc, if inactive merge it with current
+			var/obj/disposalholder/H2 = locate() in P
+			if(H2 && !H2.active)
+				H.merge(H2)
+
+			H.set_loc(P)
+		else			// if wasn't a pipe, then set loc to turf
+			H.set_loc(T)
+			return null
+
+		return P
+
+
 // a broken pipe
 /obj/disposalpipe/broken
 	icon_state = "pipe-b"

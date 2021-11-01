@@ -269,7 +269,7 @@
 	update_icon()
 		if (src.amount_left < 0)
 			src.amount_left = 0
-		inventory_counter.update_number(src.amount_left)
+		inventory_counter?.update_number(src.amount_left)
 		src.tooltip_rebuild = 1
 		if (src.amount_left > 0)
 			if (src.icon_dynamic && src.icon_short)
@@ -1009,6 +1009,16 @@
 	charge = 300.0
 	max_charge = 300.0
 
+/obj/item/ammo/power_cell/higherish_power
+	name = "Power Cell - 400"
+	desc = "A power cell that holds a max of 400PU"
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "power_cell"
+	m_amt = 20000
+	g_amt = 40000
+	charge = 400.0
+	max_charge = 400.0
+
 /obj/item/ammo/power_cell/self_charging
 	name = "Power Cell - Atomic"
 	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 40PU."
@@ -1088,12 +1098,19 @@
 
 /obj/item/ammo/power_cell/self_charging/medium
 	name = "Power Cell - Hicap RTG"
-	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 100PU."
+	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 200PU."
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "recharger_cell"
 	charge = 200
 	max_charge = 200
 	recharge_rate = 7.5
+
+/obj/item/ammo/power_cell/self_charging/mediumbig
+	name = "Power Cell - Fission"
+	desc = "Half the power of a Fusion model power cell with a tenth of the cost. Holds 200PU"
+	max_charge = 200
+	charge = 200
+	recharge_rate = 20
 
 /obj/item/ammo/power_cell/self_charging/big
 	name = "Power Cell - Fusion"

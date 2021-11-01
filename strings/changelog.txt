@@ -1,4 +1,61 @@
 
+(t)sun oct 31 21
+(u)pali
+(+)ID cards now have pronouns on them, HoP console can modify those. Useful if you want to fully impersonate someone
+(+)Hiding in shrubs / bushes now hides your arrest status / health status from people with appropriate goggles
+(u)BatElite
+(p)6433
+(e)|
+(+)You can use the hotkey to drink from glasses now.
+(u)pali
+(p)6342
+(e)🆕|feature
+(*)Holding alt + hovering over people with your cursor shows their names and pronouns
+(*)AI, borgs and ghosts see all mobs' names when holding alt
+(u)pali
+(p)6331
+(e)|
+(+)Hovering over radio icons now shows their name.
+(u)Ikea
+(p)6119
+(e)⚖|balance
+(*)Loot crates contents have undergone some balance changes, check minor changes for more details.
+(*)Predator rifles now come with half the charge and half the self recharge rate, but with half the firing costs.
+(+)Crates will now pull from a pool of handheld arts instead of just telewands. Telegun has been completely removed from loot crates. The atomic cell and disruptor cell have been replaced with better cells. The one million crates from loot crates has been replaced with three hundred thousand credits.
+(u)zjdtmkhzt
+(p)6348
+(e)🆕⚖|feature, balance
+(+)Non-bartenders will now be able to taste some of the reagents they drink. (Bartenders will continue to know exactly what they drink.)
+(u)Nexusuxen
+(p)6480
+(e)|
+(*)You can now see who's in cryo by looking at the manifest or, if they have one, their security/medical record.
+(t)sat oct 30 21
+(u)pali
+(+)Falling over or laying down over a puddle of fluid will make you splash into it now
+(u)Flourish
+(+)You can now print up to five QM barcodes at a time.
+(+)The automatic lockers in the brig now start anchored.
+(u)Zonespace
+(p)6094
+(e)🆕🎨|feature, sprites
+(*)There's a new admin-spawn antagonist on the loose, try not to get stabbed!
+(u)pali
+(*)PDA ringtone sound range drastically decreased
+(t)thu oct 28 21
+(u)Gannets
+(p)6473
+(e)🗺⚖|mapping, balance
+(+)Removed the sanctuary zone from the Battlecruiser Cairngorm's medbay.
+(u)Grokberg and pkfiremain710
+(p)6464
+(e)|
+(*)Adds a new drink, the Wellerman (sweet tea + rum)
+(t)wed oct 27 21
+(u)Tarmunora
+(p)6465
+(e)|
+(+)Reduce RP antag counts.
 (t)tue oct 26 21
 (u)UnfunnyPerson
 (p)6225
