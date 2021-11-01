@@ -69,7 +69,7 @@
 							if (door)
 								door.close()
 
-				SPAWN_DBG(door ? 30 : 20) driver_operating = 0
+				SPAWN_DBG(door ? 30 : 20) driver_operating = FALSE
 
 				sleep(door ? 20 : 10)
 				if (driver)
