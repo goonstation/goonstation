@@ -1664,7 +1664,7 @@ obj/machinery/door/airlock
 			signal.data["tag"] = id_tag
 		signal.data["sender"] = net_id
 		signal.data["timestamp"] = "[air_master.current_cycle]"
-		signal.data["address_tag"] = "door" // prevents other doors from receiving this packet unnecessarily
+		signal.data["address_tag"] = "airlock_listener" // prevents other doors from receiving this packet unnecessarily
 
 		if (userid)
 			signal.data["user_id"] = "[userid]"
