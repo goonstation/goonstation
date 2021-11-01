@@ -877,7 +877,7 @@
 
 	proc/load_reclaim(obj/item/W as obj, mob/user as mob)
 		. = FALSE
-		if ((W.material && !istype(W,/obj/item/material_piece)) || istype(W,/obj/item/wizard_crystal))
+		if (src.is_valid(W))
 			W.set_loc(src)
 			if (user) user.u_equip(W)
 			W.dropped()
@@ -996,7 +996,7 @@
 			if (amtload) boutput(user, "<span class='notice'>[amtload] materials loaded from [O]!</span>")
 			else boutput(user, "<span class='alert'>No material loaded!</span>")
 
-		else if (istype(O, /obj/item/raw_material/) || istype(O, /obj/item/sheet/) || istype(O, /obj/item/rods/) || istype(O, /obj/item/tile/) || istype(O, /obj/item/cable_coil))
+		else if (is_valid(O))
 			quickload(user,O)
 		else
 			..()
@@ -1011,12 +1011,8 @@
 				continue
 			if (M.name != O.name)
 				continue
-			if(!istype(M, /obj/item/cable_coil))
-				if (!istype(M.material))
-					continue
-				if (!(M.material.material_flags & MATERIAL_CRYSTAL) && !(M.material.material_flags & MATERIAL_METAL))
-					continue
-
+			if(!src.is_valid(M))
+				continue
 			M.set_loc(src)
 			playsound(src, sound_load, 40, 1)
 			sleep(0.5)
@@ -1045,3 +1041,8 @@
 			return S
 
 		return output_location
+
+	proc/is_valid(var/obj/item/I)
+		if (!istype(I))
+			return
+		return (I.material && !istype(I,/obj/item/material_piece)) || istype(I,/obj/item/wizard_crystal)
