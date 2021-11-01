@@ -63,6 +63,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/obj/machinery/power/data_terminal/link = null
 	var/list/terminals = list() //Stuff connected to us over the powernet
 	var/messageLog = null
+	var/termMute = FALSE // controls whether or not the ai will hear termos message notifications
 	var/hologramdown = 0 //is the hologram downed?
 	var/canvox = 1
 	var/can_announce = 1
@@ -648,7 +649,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 /mob/living/silicon/ai/Topic(href, href_list)
 	..()
-	if (usr != src && usr != src.eyecam)
+	if (usr != src && usr != src.eyecam && usr != src.deployed_shell)
 		return
 
 	if (href_list["switchcamera"])
@@ -675,13 +676,20 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			return
 
 		t = copytext(adminscrub(t), 1, 300)
-		//Send the actual message signal
+		src.textToPlayer("<b>Replied to [termid] with:</b> \"<i>[t]</i>\"")
 
-		src.textToPlayer("<b>Replied to [termid] with:</b> \"</i>[t]</i>\"")
-		//boutput(src, "<b>([termid]):</b> [t]")
+		//Send the actual message signal
 		src.post_status(termid, "command","term_message","data",t)
+
 		//Might as well log what they said too!
 		logTheThing("diary", src, null, ": [t]", "say")
+		src.messageLog += "\[[formattedShiftTime(TRUE)]\] <i>Replied to </i><b>[termid]</b><i> with:</i><br>[t]<hr>"
+
+	if (href_list["mute"])
+		src.toggleTermMute()
+
+	if (href_list["refresh"])
+		src.view_messageLog()
 
 	return
 
@@ -1419,7 +1427,26 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	set name = "View Message Log"
 	set desc = "View all messages sent by terminal connections."
 	set category = "AI Commands"
-	usr.Browse("<head><title>Terminal Message History</title></head><body>[messageLog]</body>", "window=Message Log")
+
+
+	var/muteText = src.termMute ? "Muted" : "Unmuted"
+	var/mute_button = "<a href='byond://?src=\ref[src];mute=mute;refresh=[TRUE]'><u>[muteText]</u></a>"
+	var/info = "<head><title>Terminal Message History</title></head><body>"
+	info += "Audio notifications are currently: [mute_button]<br>"
+	info += "<a href='byond://?src=\ref[src];refresh=[TRUE]'><u>REFRESH</u></a><br><br>"
+	info += "<b>Connected Terminals:</b><hr>"
+	if (!terminals.len)
+		info += "No terminals connected at this time.<br>"
+	else
+		for (var/address as anything in terminals)
+			info += "<a href='byond://?src=\ref[src];termmsg=[address];refresh=[TRUE]'><b>\[[address]\]</b></a><br>"
+	info += "<br><b>Message History:</b><hr>[messageLog]</body>"
+
+	usr.Browse(info, "window=Message Log")
+
+/mob/living/silicon/ai/proc/toggleTermMute()
+	src.termMute = src.termMute ? FALSE : TRUE
+
 
 
 /*
@@ -1886,7 +1913,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				return
 
 			src.terminals.Add(target)
-			src.soundToPlayer('sound/machines/bweep.ogg', 15, channel = VOLUME_CHANNEL_GAME)
+			if (!termMute)
+				src.soundToPlayer('sound/machines/bweep.ogg', 15, channel = VOLUME_CHANNEL_GAME, flags = SOUND_IGNORE_SPACE)
 			src.textToPlayer("--- Terminal connection from <a href='byond://?src=\ref[src];termmsg=[target]'>[target]</a> established to your mainframe!")
 			src.post_status(target, "command","term_connect","data","noreply")
 			return
@@ -1894,7 +1922,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		if("term_disconnect")
 			if(target in src.terminals)
 				src.terminals.Remove(target)
-				src.soundToPlayer('sound/machines/phones/remote_hangup.ogg', 35, channel = VOLUME_CHANNEL_GAME)
+				if (!termMute)
+					src.soundToPlayer('sound/machines/phones/remote_hangup.ogg', 35, channel = VOLUME_CHANNEL_GAME, flags = SOUND_IGNORE_SPACE)
 				src.textToPlayer("--- [target] has disconnected from your mainframe!")
 				SPAWN_DBG(0.3 SECONDS)
 					src.post_status(target, "command","term_disconnect")
@@ -1911,9 +1940,11 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			var/message = signal.data["data"]
 			var/rendered = "<span class='game say'><span class='name'><a href='byond://?src=\ref[src];termmsg=[target]'><b>([target]):</b></a></span>"
 			rendered += "<span class='message'> [message]</span></span>"
-
-			src.messageLog += "\[[formattedShiftTime(TRUE)]\]<br>[rendered]<hr>"
-			src.soundToPlayer('sound/machines/tone_beep.ogg', 15, channel = VOLUME_CHANNEL_GAME)
+			// we need to let the game know that when a log href is clicked, we need to refresh the window
+			var/logAddress = "<span class='game say'><span class='name'><a href='byond://?src=\ref[src];termmsg=[target];refresh=[TRUE]'><b>([target])</b></a></span>"
+			src.messageLog += "\[[formattedShiftTime(TRUE)]\] Sent by: [logAddress]<br><span class='message'> [message]</span></span><hr>"
+			if (!termMute)
+				src.soundToPlayer('sound/machines/tone_beep.ogg', 15, channel = VOLUME_CHANNEL_GAME, flags = SOUND_IGNORE_SPACE)
 			src.textToPlayer(rendered)
 			return
 

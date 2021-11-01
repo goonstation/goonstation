@@ -199,25 +199,7 @@
 			mainframe.switchCamera(locate(href_list["switchcamera"]))
 		if (href_list["showalerts"])
 			mainframe.ai_alerts()
-		if (href_list["termmsg"]) //Oh yeah, message that terminal!
-			var/termid = href_list["termmsg"]
-			if(!termid || !(termid in mainframe.terminals))
-				boutput(src, "That terminal is not connected!")
-				return
-			var/t = input(usr, "Please enter message", termid, null) as text
-			if (!t)
-				return
 
-			if(isdead(mainframe))
-				boutput(src, "You cannot interface with a terminal because you are dead!")
-				return
-
-			t = copytext(adminscrub(t), 1, 65)
-			//Send the actual message signal
-			boutput(src, "<b>([termid]):</b> [t]")
-			mainframe.post_status(termid, "command","term_message","data",t)
-			//Might as well log what they said too!
-			logTheThing("diary", src, null, ": [t]", "say")
 		return
 
 	Stat()
@@ -443,8 +425,7 @@
 		set desc = "View all messages sent by terminal connections."
 		set category = "AI Commands"
 		if(mainframe)
-			usr.Browse("<head><title>Terminal Message History</title></head><body>[mainframe.messageLog]</body>", "window=Message Log")
-
+			mainframe.view_messageLog()
 
 //---TURF---//
 /turf/var/image/aiImage
