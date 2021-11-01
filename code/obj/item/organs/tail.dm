@@ -36,10 +36,11 @@
 	disposing()
 		on_removal()
 		donor = null
-		holder.tail = null
-		holder.donor.update_body()
-		holder.organ_list["tail"] = null
-		holder = null
+		if(holder)
+			holder.tail = null
+			holder.donor.update_body()
+			holder.organ_list["tail"] = null
+			holder = null
 		. = ..()
 
 	proc/colorize_tail(var/datum/appearanceHolder/AHL)
