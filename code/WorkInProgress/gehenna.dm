@@ -13,6 +13,7 @@
 	desc = "looks loosely packed"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "gehenna_rock"
+	floor_turf = "/turf/gehenna/desert/path"
 	New()
 		..()
 		src.icon_state = initial(src.icon_state)
