@@ -33,6 +33,14 @@
 			build_mob_tail_image()
 			update_tail_icon()
 
+	disposing()
+		on_removal()
+		holder.tail = null
+		holder.donor.update_body()
+		holder.organ_list["tail"] = null
+		holder = null
+		. = ..()
+
 	proc/colorize_tail(var/datum/appearanceHolder/AHL)
 		if(src.colorful)
 			if (AHL && istype(AHL, /datum/appearanceHolder))
