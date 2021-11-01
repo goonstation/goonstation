@@ -163,7 +163,7 @@ datum/preferences
 			"nameLast" = src.name_last,
 			"randomName" = src.be_random_name,
 			"gender" = src.gender == MALE ? "Male" : "Female",
-			"pronouns" = AH.pronouns.name,
+			"pronouns" = isnull(AH.pronouns) ? "Default" : AH.pronouns.name,
 			"age" = src.age,
 			"bloodRandom" = src.random_blood,
 			"bloodType" = src.blType,
@@ -435,7 +435,12 @@ datum/preferences
 				return TRUE
 
 			if ("update-pronouns")
-				AH.pronouns = AH.pronouns.next_pronouns()
+				if(isnull(AH.pronouns))
+					AH.pronouns = get_singleton(/datum/pronouns/theyThem)
+				else
+					AH.pronouns = AH.pronouns.next_pronouns()
+					if(AH.pronouns == get_singleton(/datum/pronouns/theyThem))
+						AH.pronouns = null
 				src.profile_modified = TRUE
 				return TRUE
 
