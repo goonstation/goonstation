@@ -163,7 +163,7 @@ datum/preferences
 			"nameLast" = src.name_last,
 			"randomName" = src.be_random_name,
 			"gender" = src.gender == MALE ? "Male" : "Female",
-			"pronouns" = AH.pronouns ? AH.pronouns.name : "they/them",
+			"pronouns" = AH.pronouns.name,
 			"age" = src.age,
 			"bloodRandom" = src.random_blood,
 			"bloodType" = src.blType,
