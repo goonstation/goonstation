@@ -864,6 +864,20 @@ proc/debug_map_apc_count(delim,zlim)
 			else
 				img.app.alpha = 0
 
+	RL_lights
+		name = "RL lights"
+		help = "Displays number of RL lights on theach turf"
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			var/n_lights = length(theTurf.RL_Lights)
+			if (n_lights)
+				img.app.overlays = list(src.makeText(n_lights))
+				switch(n_lights)
+					if(1) img.app.color = "#00ff00"
+					if(2) img.app.color = "#ffff00"
+					else img.app.color = "#ff0000"
+			else
+				img.app.alpha = 0
+
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
 	process_cell_operations
 		name = "process cell stats"
