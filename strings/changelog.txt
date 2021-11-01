@@ -1,5 +1,8 @@
 
 (t)sun oct 31 21
+(u)pali
+(+)ID cards now have pronouns on them, HoP console can modify those. Useful if you want to fully impersonate someone
+(+)Hiding in shrubs / bushes now hides your arrest status / health status from people with appropriate goggles
 (u)BatElite
 (p)6433
 (e)|
