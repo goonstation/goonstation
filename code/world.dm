@@ -227,6 +227,8 @@ var/f_color_selector_handler/F_Color_Selector
 		world.log << ""
 #endif
 
+		radio_controller = new /datum/controller/radio()
+
 		Z_LOG_DEBUG("Preload", "Loading config...")
 		config = new /datum/configuration()
 		config.load("config/config.txt")
@@ -277,8 +279,6 @@ var/f_color_selector_handler/F_Color_Selector
 
 		Z_LOG_DEBUG("Preload", "Starting controllers")
 		Z_LOG_DEBUG("Preload", "  radio")
-
-		radio_controller = new /datum/controller/radio()
 
 		Z_LOG_DEBUG("Preload", "  data_core")
 		data_core = new /datum/datacore()
