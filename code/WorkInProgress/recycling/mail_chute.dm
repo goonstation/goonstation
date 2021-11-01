@@ -246,7 +246,7 @@
 	mining
 		name = "Mining"
 		mail_tag = "mining"
-		mailgroup = MGO_MINING
+		mailgroup = MGD_MINING
 		message = 1
 	qm
 		name = "QM"
@@ -543,7 +543,7 @@
 	mining
 		name = "Mining"
 		mail_tag = "mining"
-		mailgroup = MGO_MINING
+		mailgroup = MGD_MINING
 		message = 1
 
 		north
