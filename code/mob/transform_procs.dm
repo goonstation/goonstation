@@ -235,6 +235,7 @@
 	O.bioHolder?.mobAppearance?.pronouns = src.bioHolder?.mobAppearance?.pronouns
 	O.name = "Cyborg"
 	O.real_name = "Cyborg"
+	O.UpdateName()
 	if (src.client)
 		O.lastKnownIP = src.client.address
 		src.client.mob = O

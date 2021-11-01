@@ -223,6 +223,7 @@
 /mob/dead/observer/New(mob/corpse)
 	. = ..()
 	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, ghost_invisibility)
+	APPLY_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)
 	src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	src.see_invisible = INVIS_SPOOKY
 	src.see_in_dark = SEE_DARK_FULL
@@ -232,7 +233,9 @@
 		src.corpse = corpse
 		src.set_loc(get_turf(corpse))
 		src.real_name = corpse.real_name
-		src.name = corpse.real_name
+		src.bioHolder.mobAppearance.CopyOther(corpse.bioHolder.mobAppearance)
+		src.gender = src.bioHolder.mobAppearance.gender
+		src.UpdateName()
 		src.verbs += /mob/dead/observer/proc/reenter_corpse
 
 	hud = new(src)

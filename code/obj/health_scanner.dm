@@ -78,6 +78,7 @@
 	name = "health scanner"
 	desc = "An in-floor health scanner that sends its data to connected status screens."
 	icon_state = "floorscan1"
+	plane = PLANE_FLOOR
 	var/time_between_scans = 3 SECONDS
 	var/on_cooldown = FALSE
 
@@ -92,6 +93,7 @@
 					possible_partner.add_partner(src)
 
 	Crossed(atom/movable/AM)
+		..()
 		if (ishuman(AM))
 			boutput(AM, src.scan(TRUE))
 

@@ -795,7 +795,7 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "ibeam"
 	anchored = 1
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	var/obj/item/mechanics/triplaser/holder
 
@@ -809,7 +809,8 @@
 		else
 			holder.tripped()
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if (isobserver(AM) || !AM.density) return
 		if (!istype(AM, /obj/mechbeam))
 			SPAWN_DBG(0) tripped()
@@ -928,7 +929,7 @@
 	can_rotate = 1
 	cabinet_banned = true // non-functional
 	var/active = 0
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	New()
 		..()
@@ -970,7 +971,8 @@
 		thr?.user = (owner || usr)
 		return
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if(level == 2) return
 		if(active)
 			throwstuff(AM)
@@ -2558,6 +2560,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
 
 	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if (level == 2 || isobserver(AM))
 			return
 		if (limiter && (ticker.round_elapsed_ticks < limiter))

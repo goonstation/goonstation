@@ -248,6 +248,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "medium"
 	w_class = W_CLASS_TINY
 	var/forensic_ID = null
+	burn_possible = 0
 
 	small
 		icon_state = "small"

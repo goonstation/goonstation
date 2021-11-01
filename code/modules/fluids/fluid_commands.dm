@@ -22,11 +22,11 @@ client/proc/delete_fluids()
 			if (fluid.disposed) continue
 
 			for (var/mob/living/M in fluid.loc)
-				fluid.HasExited(M,M.loc)
+				fluid.Uncrossed(M)
 				M.show_submerged_image(0)
 			for(var/obj/O in fluid.loc)
 				if (O.submerged_images)
-					fluid.HasExited(O,O.loc)
+					fluid.Uncrossed(O)
 					O.show_submerged_image(0)
 			if(fluid.group)
 				fluid.group.evaporate()
