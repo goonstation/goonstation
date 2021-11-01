@@ -964,6 +964,7 @@ proc/debug_map_apc_count(delim,zlim)
 		src.maptext = initial(src.maptext)
 		src.alpha = initial(src.alpha)
 		src.appearance_flags = initial(src.appearance_flags)
+		src.transform = initial(src.transform)
 
 
 /client/proc/RenderOverlay()
