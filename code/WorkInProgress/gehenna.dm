@@ -49,6 +49,7 @@
 	var/light_brightness = 0.6*(sin(GEHENNA_TIME)+0.8) + 0.3
 	var/light_height = 3
 	var/generateLight = 1
+	var/stone_color
 
 	New()
 		..()
