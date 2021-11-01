@@ -1927,3 +1927,11 @@
 			M.changeStatus("paralysis", 5 SECONDS)
 			M.force_laydown_standup()
 			M.delStatus("drowsy")
+
+/datum/statusEffect/sterilized
+	id = "sterilized"
+	name = "Sterilized"
+	desc = "Surgery is a bit less dangerous with this sterilizing chemical on you!"
+	icon_state = "drowsy" //Placeholder till a unique icon is made
+	maxDuration = 20 SECONDS
+

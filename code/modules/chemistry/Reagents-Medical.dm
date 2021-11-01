@@ -1258,7 +1258,7 @@ datum
 		medical/rubbing_alcohol
 			name = "Isopropanol"
 			id = "isopropanol"
-			description = "Isopropanol (rubbing alcohol) helps to sterilize cuts and scrapes and promote healing"
+			description = "Isopropanol (rubbing alcohol) helps to sterilize cuts and scrapes during surgery and promote healing"
 			reagent_state = LIQUID
 			fluid_r = 0
 			fluid_g = 0
@@ -1288,6 +1288,8 @@ datum
 				if(method == TOUCH)
 					. = 0
 					remove_stickers(M, volume)
+					if(!ishuman(M)) //Was healing borgs without this, now it won't
+						return
 					M.HealDamage("All", volume_passed/2, 0)
 
 					var/silent = FALSE
@@ -1299,6 +1301,10 @@ datum
 						if(!ON_COOLDOWN(M, "rubbing_alcohol_gasp", 3 SECONDS))
 							boutput(M, "<span class='notice'>The isopropanol stings as it sterilizes your wounds.</span>")
 							M.emote("gasp")
+
+					if(volume_passed >= 10)
+						M.setStatus("sterilized", max(M.getStatusDuration("sterilized"), 20 SECONDS))
+
 				else if(method == INGEST)
 					boutput(M, "<span class='alert'>You feel sickly!</span>")
 					if (volume_passed > 0)
