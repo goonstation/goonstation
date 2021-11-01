@@ -3131,9 +3131,6 @@
 
 /mob/proc/get_pronouns()
 	RETURN_TYPE(/datum/pronouns)
-	if(isabomination(src))
-		return get_singleton(/datum/pronouns/abomination)
-	. = src.get_id()?.pronouns
 	if(isnull(.))
 		. = src?.bioHolder?.mobAppearance?.pronouns
 	if(isnull(.))
