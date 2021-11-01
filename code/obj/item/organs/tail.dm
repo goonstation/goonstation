@@ -38,7 +38,6 @@
 			on_removal()
 			holder.tail = null
 			holder.donor.update_body()
-		donor = null
 		. = ..()
 
 	proc/colorize_tail(var/datum/appearanceHolder/AHL)
