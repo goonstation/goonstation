@@ -34,55 +34,57 @@
 
 /mob/living/carbon/human/npc/assistant
 	ai_aggressive = 1
-	var/just_got_griefed = 0
+
 	New()
 		..()
 		SPAWN_DBG(0)
 			JobEquipSpawned("Staff Assistant")
+
 	ai_findtarget_new()
 		if((world.timeofday - ai_threatened) < 600)
 			..()
-	proc
-		cry_grief(mob/M)
-			if(!M)
-				return
-			src.target = M
-			src.ai_state = AI_ATTACKING
-			src.ai_threatened = world.timeofday
-			var/target_name = M.name
-			//var/area/current_loc = get_area(src)
-			//var/tmp/loc_name = lowertext(current_loc.name) // removing this because nobody believes it
-			var/complaint = pick("[target_name] [pick("is killing","is griefing","is trying to kill","just fucking tried to kill")] me",\
-			"getting griefed, help",\
-			"security!!!",\
-			"[target_name] just fucking attacked me",\
-			"SOMEONE [prob(40) ? "FUCKING " : ""]ARREST [uppertext(target_name)]",\
-			"need help",\
-			"[pick("HLEP","HELP")] ME [uppertext(target_name)] IS [prob(40) ? "FUCKING " : ""]KILLING ME")
-			if(prob(60))
-				complaint = uppertext(complaint)
-			var/max_excl = rand(-2,4)
-			for(var/i = 0, i < max_excl, i++)
-				complaint += "!"
-			src.say(";[complaint]")
+
+	proc/cry_grief(mob/M)
+		if(!M)
+			return
+		if(isdead(src))
+			return
+		src.target = M
+		src.ai_state = AI_ATTACKING
+		src.ai_threatened = world.timeofday
+		var/target_name = M.name
+		//var/area/current_loc = get_area(src)
+		//var/tmp/loc_name = lowertext(current_loc.name) // removing this because nobody believes it
+		var/complaint = pick("[target_name] [pick("is killing","is griefing","is trying to kill","just fucking tried to kill")] me",\
+		"getting griefed, help",\
+		"security!!!",\
+		"[target_name] just fucking attacked me",\
+		"SOMEONE [prob(40) ? "FUCKING " : ""]ARREST [uppertext(target_name)]",\
+		"need help",\
+		"[pick("HLEP","HELP")] ME [uppertext(target_name)] IS [prob(40) ? "FUCKING " : ""]KILLING ME")
+		if(prob(60))
+			complaint = uppertext(complaint)
+		var/max_excl = rand(-2,4)
+		for(var/i = 0, i < max_excl, i++)
+			complaint += "!"
+		src.say(";[complaint]")
+
 	attack_hand(mob/M)
 		..()
-		if(!just_got_griefed && (M.a_intent in list(INTENT_HARM,INTENT_DISARM,INTENT_GRAB)))
-			just_got_griefed = 1
-			SPAWN_DBG(rand(10,30))
-				src.cry_grief(M)
-				just_got_griefed = 0
+		if(M.a_intent in list(INTENT_HARM,INTENT_DISARM,INTENT_GRAB))
+			if(!ON_COOLDOWN(src, "cry_grief", 5 SECONDS))
+				SPAWN_DBG(rand(10,30))
+					src.cry_grief(M)
+
 	attackby(obj/item/W, mob/M)
 		var/oldbloss = get_brute_damage()
 		var/oldfloss = get_burn_damage()
 		..()
 		var/damage = ((get_brute_damage() - oldbloss) + (get_burn_damage() - oldfloss))
 		if((damage > 0) || W.force)
-			if(!just_got_griefed)
-				just_got_griefed = 1
+			if(!ON_COOLDOWN(src, "cry_grief", 5 SECONDS))
 				SPAWN_DBG(rand(10,30))
 					src.cry_grief(M)
-					just_got_griefed = 0
 
 
 
@@ -133,8 +135,12 @@
 		ai_active = active
 
 		if (ai_active)
-			ai_mobs.Add(src)
+			if(src.skipped_mobs_list & SKIPPED_MOBS_LIST)
+				src.skipped_mobs_list |= SKIPPED_AI_MOBS_LIST
+			else
+				ai_mobs.Add(src)
 		else
+			src.skipped_mobs_list &= ~SKIPPED_AI_MOBS_LIST
 			ai_mobs.Remove(src)
 
 /mob/living/carbon/human/proc/ai_init()

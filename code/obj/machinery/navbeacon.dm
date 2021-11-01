@@ -13,7 +13,7 @@
 
 	var/open = 0		// true if cover is open
 	var/locked = 1		// true if controls are locked
-	var/freq = 1445		// radio frequency
+	var/freq = FREQ_NAVBEACON		// radio frequency
 	var/location = ""	// location response text
 	var/list/codes		// assoc. list of transponder codes
 	var/codes_txt = ""	// codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"
@@ -27,20 +27,13 @@
 
 		UnsubscribeProcess()
 
-		set_codes()
-
 		var/turf/T = loc
 		hide(T.intact)
 
-		SPAWN_DBG(0.5 SECONDS)	// must wait for map loading to finish
-			radio_controller?.add_object(src, "[freq]")
+		if(!net_id)
+			net_id = generate_net_id(src)
 
-			if(!net_id)
-				net_id = generate_net_id(src)
-
-	disposing()
-		radio_controller.remove_object(src, "[freq]")
-		..()
+		set_codes()
 
 	// set the transponder codes assoc list from codes_txt
 	proc/set_codes()
@@ -59,6 +52,17 @@
 				codes[key] = val
 			else
 				codes[e] = "1"
+
+		src.AddComponent( \
+			/datum/component/packet_connected/radio, \
+			"navbeacon", \
+			src.freq, \
+			src.net_id, \
+			"receive_signal", \
+			FALSE, \
+			codes + list(location, "any"), \
+			FALSE \
+		)
 
 
 	// called when turf state changes
@@ -80,10 +84,10 @@
 	receive_signal(datum/signal/signal)
 		if (!signal || signal.encryption) return
 
-		var/beaconrequest = signal.data["findbeacon"]
+		var/beaconrequest = signal.data["findbeacon"] || signal.data["address_tag"]
 		if(beaconrequest && ((beaconrequest in codes) || beaconrequest == "any" || beaconrequest == location))
 			SPAWN_DBG(1 DECI SECOND)
-				post_status()
+				post_status(signal.data["sender"] || signal.data["netid"])
 			return
 
 		if (!signal.data["address_1"] || !signal.data["sender"])
@@ -120,9 +124,7 @@
 							reply.data["args"] = "code_key,code_value"
 						else
 							reply.data["description"] = "ERROR: UNKNOWN TOPIC"
-				var/datum/radio_frequency/frequency = radio_controller.return_frequency("[freq]")
-				if(!frequency) return
-				frequency.post_signal(src, reply)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply)
 			if ("status")
 				post_status(signal.data["sender"])
 			if ("set_location")
@@ -141,11 +143,6 @@
 
 	// return a signal giving location and transponder codes
 	proc/post_status(var/target)
-
-		var/datum/radio_frequency/frequency = radio_controller.return_frequency("[freq]")
-
-		if(!frequency) return
-
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src
 		signal.transmission_method = 1
@@ -157,11 +154,10 @@
 		for(var/key in codes)
 			signal.data[key] = codes[key]
 
-		frequency.post_signal(src, signal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 	proc/send_ping_response(var/target)
-		var/datum/radio_frequency/frequency = radio_controller.return_frequency("[freq]")
-		if (!frequency || !target) return
+		if (!target) return
 
 		var/datum/signal/pingsignal = get_free_signal()
 		pingsignal.source = src
@@ -170,9 +166,8 @@
 		pingsignal.data["sender"] = src.net_id
 		pingsignal.data["address_1"] = target
 		pingsignal.data["command"] = "ping_reply"
-		pingsignal.transmission_method = TRANSMISSION_RADIO
 
-		frequency.post_signal(src, pingsignal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal)
 
 	attackby(var/obj/item/I, var/mob/user)
 		var/turf/T = loc
@@ -322,9 +317,8 @@ Transponder Codes:<UL>"}
 					updateDialog()
 
 	proc/set_frequency(var/new_freq)
-		radio_controller.remove_object(src, "[freq]")
 		freq = new_freq
-		radio_controller.add_object(src, "[freq]")
+		get_radio_connection_by_id(src, "navbeacon").update_frequency(freq)
 
 //Wired nav device
 /obj/machinery/wirenav
@@ -711,7 +705,7 @@ Transponder Codes:<UL>"}
 
 /obj/machinery/navbeacon/tour
 	name = "tour beacon"
-	freq = 1443
+	freq = FREQ_TOUR_NAVBEACON
 
 /obj/machinery/navbeacon/tour/cog1
 	tour0

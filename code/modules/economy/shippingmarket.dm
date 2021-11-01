@@ -249,12 +249,9 @@
 			if(!src.artifact_resupply_amount)
 				SPAWN_DBG(rand(1,5) MINUTES)
 					// message
-					var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 					var/datum/signal/pdaSignal = get_free_signal()
 					pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGD_SCIENCE), "sender"="00000000", "message"="Notification: Incoming artifact resupply crate. ([artifact_resupply_amount] objects)")
-					pdaSignal.transmission_method = TRANSMISSION_RADIO
-					if(transmit_connection != null)
-						transmit_connection.post_signal(null, pdaSignal)
+					radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 					// actual shipment
 					var/obj/storage/crate/artcrate = new /obj/storage/crate()
 					artcrate.name = "Artifact Resupply Crate"
@@ -269,7 +266,6 @@
 		qdel(sell_art)
 
 		// give PDA group messages
-		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
 		var/message = "Notification: [price] credits earned from outgoing artifact \'[sell_art.name]\'. "
 		if(pap)
@@ -277,9 +273,7 @@
 		else
 			message += "Artifact was not analyzed."
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGD_SCIENCE, MGA_SALES), "sender"="00000000", "message"=message)
-		pdaSignal.transmission_method = TRANSMISSION_RADIO
-		if(transmit_connection != null)
-			transmit_connection.post_signal(null, pdaSignal)
+		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 	// Returns value of whatever the list of objects would sell for
 	proc/appraise_value(var/list/obj/items, var/list/commodities_list, var/sell = 1)
@@ -425,7 +419,6 @@
 		if(return_handling >= RET_SALE_SENDBACK) //modify sale message if requisitions are source of income
 			salesource = "requisition contract fulfillment"
 
-		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
 		if(scan && account)
 			wagesystem.shipping_budget += duckets / 2
@@ -435,9 +428,7 @@
 			wagesystem.shipping_budget += duckets
 			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: [duckets] credits earned from [salesource].")
 
-		pdaSignal.transmission_method = TRANSMISSION_RADIO
-		if(transmit_connection != null)
-			transmit_connection.post_signal(null, pdaSignal)
+		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 	proc/receive_crate(atom/movable/shipped_thing)
 
@@ -461,11 +452,9 @@
 
 		shipped_thing.set_loc(spawnpoint)
 
-		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Shipment arriving to Cargo Bay: [shipped_thing.name].")
-		pdaSignal.transmission_method = TRANSMISSION_RADIO
-		transmit_connection.post_signal(null, pdaSignal)
+		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 
 

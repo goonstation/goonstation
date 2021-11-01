@@ -25,7 +25,12 @@ var/list/ai_move_scheduled = list()
 		if (exclude_from_mobs_list)
 			mobs.Remove(M)
 			M.mob_flags |= LIGHTWEIGHT_AI_MOB
-		ai_mobs.Add(M)
+
+		var/turf/T = get_turf(M)
+		if(isnull(T) || T.z <= Z_LEVEL_STATION)
+			ai_mobs.Add(M)
+		else
+			M.skipped_mobs_list |= SKIPPED_AI_MOBS_LIST
 
 	disposing()
 		..()

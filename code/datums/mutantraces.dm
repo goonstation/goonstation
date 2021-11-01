@@ -1297,6 +1297,7 @@
 			health_update_queue |= mob
 			src.original_name = mob.real_name
 			mob.real_name = "werewolf"
+			mob.UpdateName()
 
 			mob.bioHolder.AddEffect("protanopia", null, null, 0, 1)
 			mob.bioHolder.AddEffect("accent_scoob_nerf", null, null, 0, 1)
@@ -1319,6 +1320,7 @@
 
 			if (!isnull(src.original_name))
 				mob.real_name = src.original_name
+				mob.UpdateName()
 
 			mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
 		. = ..()

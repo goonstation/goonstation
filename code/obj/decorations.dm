@@ -8,7 +8,6 @@
 	layer = EFFECTS_LAYER_UNDER_3
 	mouse_opacity = 0
 	var/float_anim = 1
-	event_handler_flags = USE_HASENTERED
 
 	New()
 		..()
@@ -21,7 +20,7 @@
 					if (!A.anchored)
 						animate_bumble(A, floatspeed = 8, Y1 = 3, Y2 = 0)
 
-	HasEntered(atom/A)
+	Crossed(atom/movable/A)
 		if (src.float_anim)
 			if (istype(A, /atom/movable) && !isobserver(A) && !istype(A, /mob/living/critter/small_animal/bee) && !istype(A, /obj/critter/domestic_bee))
 				var/atom/movable/AM = A
@@ -33,8 +32,8 @@
 		reagents.reaction(A, TOUCH, 2)
 		return ..()
 
-	HasExited(atom/movable/A, atom/newloc)
-		var/turf/T = get_turf(newloc)
+	Uncrossed(atom/movable/A)
+		var/turf/T = get_turf(A)
 		if (istype(T))
 			var/obj/poolwater/P = locate() in T
 			if (!istype(P))
@@ -219,6 +218,28 @@
 						L.changeStatus("stunned", 2 SECONDS)
 
 		interact_particle(user,src)
+
+	Crossed(atom/movable/AM)
+		. = ..()
+		if(isliving(AM))
+			var/mob/living/L = AM
+			L.name_tag?.set_visibility(FALSE)
+		if(ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			H.arrestIcon?.alpha = 0
+			H.health_implant?.alpha = 0
+			H.health_mon?.alpha = 0
+
+	Uncrossed(atom/movable/AM)
+		. = ..()
+		if(isliving(AM))
+			var/mob/living/L = AM
+			L.name_tag?.set_visibility(TRUE)
+		if(ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			H.arrestIcon?.alpha = 255
+			H.health_implant?.alpha = 255
+			H.health_mon?.alpha = 255
 
 	attackby(var/obj/item/W as obj, mob/user as mob)
 		user.lastattacked = src

@@ -106,12 +106,9 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 					src.analysis_by_uid[uid] = D
 					src.ready_to_analyze += D
 			qdel(sell_crate)
-		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Notification: Pathogen sample crate delivered to the CDC.")
-		pdaSignal.transmission_method = TRANSMISSION_RADIO
-		if(transmit_connection != null)
-			transmit_connection.post_signal(null, pdaSignal)
+		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 var/global/datum/cdc_contact_controller/QM_CDC = new()
 
@@ -139,9 +136,9 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	light_g = 0.7
 	light_b = 0.03
 
-	disposing()
-		radio_controller.remove_object(src, "1435")
+	New()
 		..()
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, FREQ_STATUS_DISPLAY)
 
 /obj/machinery/computer/supplycomp/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if(!hacked)
@@ -174,7 +171,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 	var/timer = shippingmarket.get_market_timeleft()
 	src.add_dialog(user)
-	post_signal("supply")
+	// post_signal("supply") // I'm pretty sure this doesn't do anything except create lag every time someone clicks it
 	var/HTML
 
 	var/header_thing_chui_toggle = (user.client && !user.client.use_chui) ? {"
@@ -1242,14 +1239,9 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	return 1
 
 /obj/machinery/computer/supplycomp/proc/post_signal(var/command)
-
-	var/datum/radio_frequency/frequency = radio_controller.return_frequency("1435")
-
-	if(!frequency) return
-
 	var/datum/signal/status_signal = get_free_signal()
 	status_signal.source = src
 	status_signal.transmission_method = 1
 	status_signal.data["command"] = command
 
-	frequency.post_signal(src, status_signal)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, status_signal, null, FREQ_STATUS_DISPLAY)

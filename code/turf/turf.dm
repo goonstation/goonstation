@@ -41,8 +41,8 @@
 	var/tmp/messy = 0 //value corresponds to how many cleanables exist on this turf. Exists for the purpose of making fluid spreads do less checks.
 	var/tmp/checkingexit = 0 //value corresponds to how many objs on this turf implement checkexit(). lets us skip a costly loop later!
 	var/tmp/checkingcanpass = 0 // "" how many implement canpass()
-	var/tmp/checkinghasentered = 0 // "" hasproximity as well as items with a mat that hasproximity
 	var/tmp/checkinghasproximity = 0
+	var/tmp/neighcheckinghasproximity = 0
 	/// directions of this turf being blocked by directional blocking objects. So we don't need to loop through the entire contents
 	var/tmp/blocked_dirs = 0
 	/// this turf is allowing unrestricted hotbox reactions
@@ -56,6 +56,7 @@
 	var/special_volume_override = -1 //if greater than or equal to 0, override
 
 	var/turf_flags = 0
+	var/list/list/datum/disjoint_turf/connections
 
 	disposing() // DOES NOT GET CALLED ON TURFS!!!
 		SHOULD_NOT_OVERRIDE(TRUE)
@@ -267,7 +268,7 @@ proc/generate_space_color()
 	if(prob(5))
 		misc_star_2 = list(230, 0, 0)
 	if(prob(1.5))
-		bg = list(255 - bg[1], 255 - bg[2], 255 - bg[3])
+		bg = list(200 - bg[1], 200 - bg[2], 200 - bg[3])
 		if(prob(50))
 			main_star = list(180 - main_star[1], 180 - main_star[2], 180 - main_star[3])
 			misc_star_1 = list(255 - misc_star_1[1], 255 - misc_star_1[2], 255 - misc_star_1[3])
@@ -314,8 +315,7 @@ proc/generate_space_color()
 	if (density)
 		pathable = 0
 	for(var/atom/movable/AM as mob|obj in src)
-		if (AM) // ???? x2
-			src.Entered(AM)
+		src.Entered(AM)
 	if(!RL_Started)
 		RL_Init()
 
@@ -390,22 +390,7 @@ proc/generate_space_color()
 	return 1 //Nothing found to block so return success!
 
 /turf/Exited(atom/movable/Obj, atom/newloc)
-	var/i = 0
-
 	//MBC : nothing in the game even uses PrxoimityLeave meaningfully. I'm disabling the proc call here.
-	//for(var/atom/A as mob|obj|turf|area in range(1, src))
-	if (src.checkinghasentered > 0)  //dont bother checking unless the turf actually contains a checkable :)
-		for(var/thing in src)
-			var/atom/A = thing
-			if(A == Obj)
-				continue
-			// I Said No sanity check
-			if(i >= 50)
-				break
-			i++
-			if(A.loc == src && A.event_handler_flags & USE_HASENTERED)
-				A.HasExited(Obj, newloc)
-			//A.ProximityLeave(Obj)
 
 	if (global_sims_mode)
 		var/area/Ar = loc
@@ -413,7 +398,6 @@ proc/generate_space_color()
 			if (isitem(Obj))
 				if (!(locate(/obj/table) in src) && !(locate(/obj/rack) in src))
 					Ar.sims_score = min(Ar.sims_score + 4, 100)
-
 
 	return ..(Obj, newloc)
 
@@ -424,7 +408,6 @@ proc/generate_space_color()
 	///////////////////////////////////////////////////////////////////////////////////
 	..()
 	return_if_overlay_or_effect(M)
-	src.material?.triggerOnEntered(src, M)
 
 	if (global_sims_mode)
 		var/area/Ar = loc
@@ -434,29 +417,17 @@ proc/generate_space_color()
 					Ar.sims_score = max(Ar.sims_score - 4, 0)
 
 	var/i = 0
-	if (src.checkinghasentered > 0)  //dont bother checking unless the turf actually contains a checkable :)
-		for(var/thing in src)
-			var/atom/A = thing
-			if(A == M)
-				continue
-			// I Said No sanity check
-			if(i++ >= 50)
-				break
-
-			if (A.event_handler_flags & USE_HASENTERED)
-				A.HasEntered(M, OldLoc)
-			if(A.material)
-				A.material.triggerOnEntered(A, M)
 	i = 0
-	for (var/turf/T in range(1,src))
-		if (T.checkinghasproximity > 0)
-			for(var/thing in T)
-				var/atom/A = thing
-				// I Said No sanity check
-				if(i++ >= 50)
-					break
-				if (A.event_handler_flags & USE_PROXIMITY)
-					A.HasProximity(M, 1) //IMPORTANT MBCNOTE : ADD USE_PROXIMITY FLAG TO ANY ATOM USING HASPROX THX BB
+	if (src.neighcheckinghasproximity > 0)
+		for (var/turf/T in range(1,src))
+			if (T.checkinghasproximity > 0)
+				for(var/thing in T)
+					var/atom/A = thing
+					// I Said No sanity check
+					if(i++ >= 50)
+						break
+					if (A.event_handler_flags & USE_PROXIMITY)
+						A.HasProximity(M, 1) //IMPORTANT MBCNOTE : ADD USE_PROXIMITY FLAG TO ANY ATOM USING HASPROX THX BB
 
 	if(!src.throw_unlimited && M?.no_gravity)
 		BeginSpacePush(M)
@@ -495,7 +466,7 @@ proc/generate_space_color()
 	if (src.throw_unlimited)//ignore inertia if we're in the ocean (faster but kind of dumb check)
 		if ((ismob(A) && src.x > 2 && src.x < (world.maxx - 1))) //fuck?
 			var/mob/M = A
-			if( M.client && M.client.flying )
+			if((M.client && M.client.flying) || (ismob(M) && HAS_MOB_PROPERTY(M, PROP_NOCLIP)))
 				return//aaaaa
 			BeginSpacePush(M)
 
@@ -584,9 +555,9 @@ proc/generate_space_color()
 
 	var/old_checkingexit = src.checkingexit
 	var/old_checkingcanpass = src.checkingcanpass
-	var/old_checkinghasentered = src.checkinghasentered
 	var/old_blocked_dirs = src.blocked_dirs
 	var/old_checkinghasproximity = src.checkinghasproximity
+	var/old_neighcheckinghasproximity = src.neighcheckinghasproximity
 
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
 	var/old_process_cell_operations = src.process_cell_operations
@@ -655,9 +626,9 @@ proc/generate_space_color()
 
 	new_turf.checkingexit = old_checkingexit
 	new_turf.checkingcanpass = old_checkingcanpass
-	new_turf.checkinghasentered = old_checkinghasentered
 	new_turf.blocked_dirs = old_blocked_dirs
 	new_turf.checkinghasproximity = old_checkinghasproximity
+	new_turf.neighcheckinghasproximity = old_neighcheckinghasproximity
 
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
 	new_turf.process_cell_operations = old_process_cell_operations
@@ -991,7 +962,7 @@ proc/generate_space_color()
 		return
 	if ((user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1))
 		return
-	if (isobj(user.pulling.loc))
+	if (!isturf(user.pulling.loc))
 		var/obj/container = user.pulling.loc
 		if (user.pulling in container.contents)
 			return
@@ -1016,10 +987,8 @@ proc/generate_space_color()
 		return
 	if ((user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1))
 		return
-	if (isobj(user.pulling.loc))
-		var/obj/container = user.pulling.loc
-		if (user.pulling in container.contents)
-			return
+	if (!isturf(user.pulling.loc))
+		return
 
 	var/turf/fuck_u = user.pulling.loc
 	if (ismob(user.pulling))

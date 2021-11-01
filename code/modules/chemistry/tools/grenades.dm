@@ -152,15 +152,18 @@
 	proc/arm(mob/user as mob)
 		if (src.state || src.stage != 2)
 			return 1
-		var/area/a = get_area(src)
-		if(a.sanctuary) return
+		var/area/A = get_area(src)
+		if(A.sanctuary)
+			return
 		// Custom grenades only. Metal foam etc grenades cannot be modified (Convair880).
 		var/log_reagents = null
 		if (src.name == "grenade")
 			for (var/obj/item/reagent_containers/glass/G in src.beakers)
 				if (G.reagents.total_volume) log_reagents += "[log_reagents(G)] "
-		message_admins("[log_reagents ? "Custom grenade" : "Grenade ([src])"] primed at [log_loc(src)] by [key_name(user)].")
-		logTheThing("combat", user, null, "primes a [log_reagents ? "custom grenade" : "grenade ([src.type])"] at [log_loc(user)].[log_reagents ? " [log_reagents]" : ""]")
+
+		if(!A.dont_log_combat)
+			message_admins("[log_reagents ? "Custom grenade" : "Grenade ([src])"] primed at [log_loc(src)] by [key_name(user)].")
+			logTheThing("combat", user, null, "primes a [log_reagents ? "custom grenade" : "grenade ([src.type])"] at [log_loc(user)].[log_reagents ? " [log_reagents]" : ""]")
 
 		boutput(user, "<span class='alert'>You prime the grenade! 3 seconds!</span>")
 		src.state = 1
@@ -168,8 +171,6 @@
 		playsound(src, "sound/weapons/armbomb.ogg", 75, 1, -3)
 		SPAWN_DBG(3 SECONDS)
 			if (src && !src.disposed)
-				a = get_area(src)
-				if(a.sanctuary) return
 				if(user?.equipped() == src)
 					user.u_equip(src)
 				explode()

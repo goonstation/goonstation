@@ -2,6 +2,7 @@
 	name = "The Gauntlet"
 	icon_state = "dk_yellow"
 	virtual = 1
+	dont_log_combat = TRUE
 
 	Entered(var/atom/A)
 		..()

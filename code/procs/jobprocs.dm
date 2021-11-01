@@ -532,27 +532,26 @@
 				var/obj/item/disk/data/floppy/read_only/D = new /obj/item/disk/data/floppy/read_only(src)
 				src.equip_if_possible(D, slot_in_backpack)
 				var/datum/computer/file/clone/R = new
-				R["ckey"] = ckey(src.key)
-				R["name"] = src.real_name
-				R["id"] = copytext(md5(src.real_name), 2, 6)
+				R.fields["ckey"] = ckey(src.key)
+				R.fields["name"] = src.real_name
+				R.fields["id"] = copytext(md5(src.real_name), 2, 6)
 
 				var/datum/bioHolder/B = new/datum/bioHolder(null)
 				B.CopyOther(src.bioHolder)
 
-				R["holder"] = B
+				R.fields["holder"] = B
 
-				R["abilities"] = null
+				R.fields["abilities"] = null
 				if (src.abilityHolder)
 					var/datum/abilityHolder/A = src.abilityHolder.deepCopy()
-					R["abilities"] = A
+					R.fields["abilities"] = A
 
 				SPAWN_DBG(0)
 					if(src.traitHolder && length(src.traitHolder.traits))
-						R["traits"] = src.traitHolder.traits.Copy()
+						R.fields["traits"] = src.traitHolder.traits.Copy()
 
-				R["imp"] = null
-				R["mind"] = src.mind
-				R.name = "CloneRecord-[ckey(src.real_name)]"
+				R.fields["imp"] = null
+				R.fields["mind"] = src.mind
 				D.root.add_file(R)
 
 				if (JOB.receives_security_disk)
@@ -647,6 +646,16 @@
 			if (!equipped) // we've tried most available storage solutions here now so uh just put it on the ground
 				trinket.set_loc(get_turf(src))
 
+	if (src.traitHolder && src.traitHolder.hasTrait("onearmed"))
+		if (src.limbs)
+			SPAWN_DBG(6 SECONDS)
+				if (prob(50))
+					if (src.limbs.l_arm)
+						qdel(src.limbs.l_arm.remove(0))
+				else
+					if (src.limbs.r_arm)
+						qdel(src.limbs.r_arm.remove(0))
+				boutput(src, "<b>Your singular arm makes you feel responsible for crimes you couldn't possibly have committed.</b>" )
 	return
 
 /mob/living/carbon/human/proc/spawnId(rank)
@@ -678,6 +687,7 @@
 		C.assignment = JOB.name
 		C.name = "[C.registered]'s ID Card ([C.assignment])"
 		C.access = JOB.access.Copy()
+		C.pronouns = src.get_pronouns()
 
 		if(!src.equip_if_possible(C, slot_wear_id))
 			src.equip_if_possible(C, slot_in_backpack)

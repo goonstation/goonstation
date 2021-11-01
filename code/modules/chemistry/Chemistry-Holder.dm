@@ -1002,6 +1002,38 @@ datum
 			var/datum/color/average = get_average_color()
 			return rgb(average.r, average.g, average.b)
 
+		/// give a list of the n tastes that are most present in this mixture
+		/// takes argument of how many tastes
+		proc/get_prevalent_tastes(var/num_val)
+			RETURN_TYPE(/list)
+			// create associative list with key = taste, val = total volume
+			var/list/reag_list = list()
+			for (var/current_id in src.reagent_list)
+				var/datum/reagent/current_reagent = src.reagent_list[current_id]
+				if (current_reagent.taste)
+					reag_list[current_reagent.taste] += current_reagent.volume
+			// restrict number of tastes
+			num_val = min(num_val, length(reag_list))
+			// make empty lists for results
+			var/list/result_name[num_val]
+			var/list/result_amount[num_val]
+			// go through all tastes
+			for (var/current_taste in reag_list)
+				// check if it is higher than one of our top values
+				for (var/top_index in 1 to num_val)
+					if (reag_list[current_taste] > result_amount[top_index])
+						// move all the values down
+						for (var/i = num_val; i >= (top_index+1); i--)
+							result_name[i] = result_name[i-1]
+							result_amount[i] = result_amount[i-1]
+						// set new top value
+						result_name[top_index] = current_taste
+						result_amount[top_index] = reag_list[current_taste]
+						break
+			// create associative list for result
+			. = list()
+			for (var/i in 1 to num_val)
+				.[result_name[i]] = result_amount[i]
 
 		//returns whether reagents are solid, liquid, gas, or mixture
 		proc/get_state_description()
@@ -1061,7 +1093,7 @@ datum
 
 			var/list/covered = covered_turf()
 
-			var/turf/T = covered.len ? covered[1] : 0
+			var/turf/T = length(covered) ? covered[1] : 0
 			var/mob/our_user = null
 			var/our_fingerprints = null
 

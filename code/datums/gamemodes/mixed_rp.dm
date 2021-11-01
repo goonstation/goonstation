@@ -9,6 +9,8 @@
 	has_werewolves = 0
 	has_blobs = 0
 
+	num_enemies_divisor = 12
+
 
 /datum/game_mode/mixed/mixed_rp/announce()
 	boutput(world, "<B>The current game mode is - Mixed Mild!</B>")

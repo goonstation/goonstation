@@ -9,6 +9,7 @@
 		"Mars Station"=/client/proc/cmd_marsify_station,
 		"Swamp Station"=/client/proc/cmd_swampify_station,
 		"Trench Station"=/client/proc/cmd_trenchify_station,
+		"Void Station"=/client/proc/cmd_voidify_station,
 		"Winter Station"=/client/proc/cmd_winterify_station,
 		)
 
@@ -36,6 +37,43 @@ var/datum/station_zlevel_repair/station_repair = new
 					T.UpdateOverlays(src.weather_img, "weather")
 				if(src.weather_effect)
 					new src.weather_effect(T)
+
+
+/client/proc/cmd_voidify_station()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Void Station"
+	set desc = "Turns space into the THE VOID..."
+	admin_only
+#ifdef UNDERWATER_MAP
+	//to prevent tremendous lag from the entire map flooding from a single ocean tile.
+	boutput(src, "You cannot use this command on underwater maps. Sorry!")
+	return
+#else
+	if(src.holder.level >= LEVEL_ADMIN)
+		switch(alert("Turn space into the unknowable void? This is probably going to lag a bunch when it happens and there's no easy undo!",,"Yes","No"))
+			if("Yes")
+				station_repair.ambient_light = new /image/ambient
+				station_repair.ambient_light.color = rgb(6.9, 4.20, 6.9)
+
+				station_repair.station_generator = new/datum/map_generator/void_generator
+
+				var/list/space = list()
+				for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+					space += S
+				station_repair.station_generator.generate_terrain(space)
+				for (var/turf/S in space)
+					S.UpdateOverlays(station_repair.ambient_light, "ambient")
+
+				shippingmarket.clear_path_to_market()
+
+				logTheThing("admin", src, null, "turned space into an THE VOID.")
+				logTheThing("diary", src, null, "turned space into an THE VOID.", "admin")
+				message_admins("[key_name(src)] turned space into THE VOID.")
+	else
+		boutput(src, "You must be at least an Administrator to use this command.")
+#endif
+
+
 
 /client/proc/cmd_ice_moon_station()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
