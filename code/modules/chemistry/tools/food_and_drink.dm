@@ -512,7 +512,7 @@
 						tasteMessage = "<span class='notice'>Tastes kind of [tastes[1]], [tastes[2]], and a little bit [tastes[3]].</span>"
 
 			if (M == user)
-				M.visible_message("<span class='notice'>[M] takes a sip from [src].</span>\n[tasteMessage]", group = "drinkMessages")
+				M.visible_message("<span class='notice'>[M] takes a sip from [src].</span>","<span class='notice'>You take a sip from [src].</span>\n[tasteMessage]", group = "drinkMessages")
 			else
 				user.visible_message("<span class='alert'>[user] attempts to force [M] to drink from [src].</span>")
 				logTheThing("combat", user, M, "attempts to force [constructTarget(M,"combat")] to drink from [src] [log_reagents(src)] at [log_loc(user)].")
