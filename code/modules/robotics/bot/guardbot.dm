@@ -1511,8 +1511,9 @@
 			cell.use(to_draw)
 
 			if(cell.charge < GUARDBOT_LOWPOWER_IDLE_LEVEL)
-				speak("Critical battery.")
-				INVOKE_ASYNC(src, /obj/machinery/bot/guardbot.proc/snooze)
+				if(!ON_COOLDOWN(src, "critical_battery_speak", 5 SECONDS))
+					speak("Critical battery.")
+					INVOKE_ASYNC(src, /obj/machinery/bot/guardbot.proc/snooze)
 				return 0
 
 			if(cell.charge < GUARDBOT_LOWPOWER_ALERT_LEVEL && !(locate(/datum/computer/file/guardbot_task/recharge) in src.tasks) )
