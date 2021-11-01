@@ -84,8 +84,6 @@
 	if (!usr.client.holder)
 		logTheThing("admin", usr, null, "used Who and saw [whoAdmins.len] admins.")
 		logTheThing("diary", usr, null, "used Who and saw [whoAdmins.len] admins.", "admin")
-		if (whoAdmins.len < 1)
-			message_admins("<span class='internal'>[key_name(usr)] used Who and saw [whoAdmins.len] admins.</span>")
 
 /client/verb/adminwho()
 	set category = "Commands"
@@ -124,4 +122,3 @@
 	if(!usr.client.holder)
 		logTheThing("admin", usr, null, "used adminwho and saw [adwnum] admins.")
 		logTheThing("diary", usr, null, "used adminwho and saw [adwnum] admins.", "admin")
-		message_admins("<span class='internal'>[key_name(usr)] used adminwho and saw [adwnum] admins.</span>")
