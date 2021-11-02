@@ -391,7 +391,7 @@ This is basically useless for anyone but miners.
 
 /datum/syndicate_buylist/traitor/idtracker
 	name = "Target ID Tracker"
-	item = /obj/item/idtracker
+	item = /obj/item/pinpointer/idtracker
 	cost = 1
 	desc = "Allows you to track the IDs of your assassination targets, but only the ID. If they have changed or destroyed it, the pin pointer will not be useful."
 	not_in_crates = 1
@@ -399,13 +399,12 @@ This is basically useless for anyone but miners.
 	objective = /datum/objective/regular/assassinate
 	blockedmode = list(/datum/game_mode/spy_theft)
 
-	run_on_spawn(var/obj/item/idtracker/tracker,var/mob/living/owner, in_surplus_crate)
+	run_on_spawn(var/obj/item/pinpointer/idtracker/tracker, var/mob/living/owner, in_surplus_crate)
 		tracker.owner = owner
-		return
 
 /datum/syndicate_buylist/traitor/idtracker/spy
 	name = "Target ID Tracker (SPY)"
-	item = /obj/item/idtracker/spy
+	item = /obj/item/pinpointer/idtracker/spy
 	cost = 1
 	desc = "Allows you to track the IDs of all other antagonists, but only the ID. If they have changed or destroyed it, the pin pointer will not be useful."
 	vr_allowed = 0
@@ -413,9 +412,8 @@ This is basically useless for anyone but miners.
 	objective = /datum/objective/spy_theft/assasinate
 	blockedmode = list(/datum/game_mode/spy_theft) // Unused due to balance. Previously disabled by not_in_crates, now blocked directly
 
-	run_on_spawn(var/obj/item/idtracker/tracker,var/mob/living/owner, in_surplus_crate)
+	run_on_spawn(var/obj/item/pinpointer/idtracker/tracker,var/mob/living/owner, in_surplus_crate)
 		tracker.owner = owner
-		return
 
 // Gannets Nuke Ops Class Crates - now found under weapon_vendor.dm
 

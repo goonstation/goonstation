@@ -766,15 +766,11 @@ var/global/datum/simsControl/simsController = new()
 	anchored = 1.0
 	pixel_y = 32
 	var/mob/living/owner
-	var/datum/light/light
 
 	New()
 		..()
 		animate_bumble(src, Y1 = 32, Y2 = 30, slightly_random = 0)
-		light = new /datum/light/point
-		light.attach(src)
-		light.set_brightness(0.5)
-		light.enable()
+		add_simple_light("plumbob", list(255, 255, 255, 100))
 
 	// relay procs
 	attackby(obj/item/W as obj, mob/user as mob)
