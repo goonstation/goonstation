@@ -243,45 +243,45 @@
 	var/list/Medsci = list()
 	var/list/Civilian = list()
 	var/list/Unassigned = list()
-	for(var/datum/data/record/staff_record in data_core.general)
-		var/rank = staff_record.fields["rank"]
+	for(var/datum/db_record/staff_record as anything in data_core.general.records)
+		var/rank = staff_record["rank"]
 		if(rank in command_jobs)
 			if(rank == "Captain")
-				Command.Insert(1, "<b>[staff_record.fields["name"]] - [staff_record.fields["rank"]]</b><br>")
+				Command.Insert(1, "<b>[staff_record["name"]] - [staff_record["rank"]]</b><br>")
 				continue // Only Continue as Captain, as non-captain command staff appear both in the command section and their departmental section
 			else
-				Command.Add("[staff_record.fields["name"]] - [staff_record.fields["rank"]]<br>")
+				Command.Add("[staff_record["name"]] - [staff_record["rank"]]<br>")
 
 		if(rank in security_jobs)
 			if(rank == "Head of Security")
-				Security.Insert(1, "<b>[staff_record.fields["name"]] - [staff_record.fields["rank"]]</b><br>")
+				Security.Insert(1, "<b>[staff_record["name"]] - [staff_record["rank"]]</b><br>")
 			else if(rank == "Nanotrasen Security Operative")
-				Security.Insert(2, "<b>[staff_record.fields["name"]] - [staff_record.fields["rank"]]</b><br>")
+				Security.Insert(2, "<b>[staff_record["name"]] - [staff_record["rank"]]</b><br>")
 			else
-				Security.Add("[staff_record.fields["name"]] - [staff_record.fields["rank"]]<br>")
+				Security.Add("[staff_record["name"]] - [staff_record["rank"]]<br>")
 			continue
 
 		if(rank in engineering_jobs)
 			if(rank == "Chief Engineer")
-				Engineering.Insert(1, "<b>[staff_record.fields["name"]] - [staff_record.fields["rank"]]</b><br>")
+				Engineering.Insert(1, "<b>[staff_record["name"]] - [staff_record["rank"]]</b><br>")
 			else
-				Engineering.Add("[staff_record.fields["name"]] - [staff_record.fields["rank"]]<br>")
+				Engineering.Add("[staff_record["name"]] - [staff_record["rank"]]<br>")
 			continue
 
 		if(rank in medsci_jobs)
 			if(rank == "Medical Director" || rank == "Research Director")
-				Medsci.Insert(1, "<b>[staff_record.fields["name"]] - [staff_record.fields["rank"]]</b><br>")
+				Medsci.Insert(1, "<b>[staff_record["name"]] - [staff_record["rank"]]</b><br>")
 			else
-				Medsci.Add("[staff_record.fields["name"]] - [staff_record.fields["rank"]]<br>")
+				Medsci.Add("[staff_record["name"]] - [staff_record["rank"]]<br>")
 			continue
 
 		if(rank in civilian_jobs)
 			if(rank == "Head of Personnel")
-				Civilian.Insert(1, "<b>[staff_record.fields["name"]] - [staff_record.fields["rank"]]</b><br>")
+				Civilian.Insert(1, "<b>[staff_record["name"]] - [staff_record["rank"]]</b><br>")
 			else
-				Civilian.Add("[staff_record.fields["name"]] - [staff_record.fields["rank"]]<br>")
+				Civilian.Add("[staff_record["name"]] - [staff_record["rank"]]<br>")
 			continue
-		Unassigned += "[staff_record.fields["name"]] - [staff_record.fields["rank"]]<br>"
+		Unassigned += "[staff_record["name"]] - [staff_record["rank"]]<br>"
 
 	sorted_manifest += "<b><u>Station Command:</b></u><br>"
 	for(var/crew in Command)
