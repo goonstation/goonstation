@@ -194,7 +194,7 @@ proc/filter_trait_hats(var/type)
 			src.on = !src.on
 
 		if (src.on)
-			src.firesource = TRUE
+			src.firesource = FIRESOURCE_OPEN_FLAME
 			src.force = 10
 			src.hit_type = DAMAGE_BURN
 			src.icon_state = "cakehat1"

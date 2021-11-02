@@ -438,7 +438,7 @@
 		START_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
 		src.visible_message("<span class='alert'>[src] catches on fire!</span>")
 		src.burning = 1
-		src.firesource = TRUE
+		src.firesource = FIRESOURCE_OPEN_FLAME
 		if (istype(src, /obj/item/plant))
 			if (!GET_COOLDOWN(global, "hotbox_adminlog"))
 				var/list/hotbox_plants = list()
@@ -1490,7 +1490,7 @@
 
 /obj/item/proc/log_firesource(obj/item/O, datum/thrown_thing/thr, mob/user)
 	UnregisterSignal(O, COMSIG_MOVABLE_THROW_END)
-	if (!O?.firesource) return
+	if (!O?.firesource == FIRESOURCE_OPEN_FLAME) return
 	var/turf/T = get_turf(O)
 	if (!T) return
 	var/mob/M = usr
@@ -1511,9 +1511,9 @@
 
 /obj/item/proc/dropped(mob/user)
 	SPAWN_DBG(0) //need to spawn to know if we've been dropped or thrown instead
-		if (firesource && throwing)
+		if ((firesource == FIRESOURCE_OPEN_FLAME) && throwing)
 			RegisterSignal(src, COMSIG_MOVABLE_THROW_END, .proc/log_firesource)
-		else if (firesource)
+		else if (firesource == FIRESOURCE_OPEN_FLAME)
 			log_firesource(src, null, user)
 
 	if (user)
