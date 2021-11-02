@@ -2520,6 +2520,7 @@ Returns:
 
 /obj/line_obj/elec
 	name = "electricity"
+	plane = PLANE_ABOVE_LIGHTING
 	desc = ""
 	anchored = 1
 	density = 0
