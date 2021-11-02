@@ -1488,7 +1488,33 @@
 			if(src in M.equipped_list())
 				src.inventory_counter.show_count()
 
+/obj/item/proc/log_firesource(obj/item/O, datum/thrown_thing/thr, mob/user)
+	if (!O?.firesource) return
+	var/turf/T = get_turf(O)
+	if (!T) return
+	var/mob/M = usr
+	if (user) // throwing doesn't pass user, only usr
+		M = user
+	if (!istype(M)) return
+	var/turf/simulated/simulated = T
+
+	var/msg = "[key_name(M)] [thr ? "threw" : "dropped"] firesource ([O]) at [showCoords(T.x,T.y,T.z)]."
+
+	if (istype(simulated) && simulated.air.toxins)
+		msg += " Turf contains <b>plasma gas</b>."
+	if (T.active_liquid?.group)
+		msg += " Turf contains <b>fluid</b> [log_reagents(T.active_liquid.group)]."
+	if (T.active_airborne_liquid?.group)
+		msg += " Turf contains <b>smoke</b> [log_reagents(T.active_airborne_liquid.group)]."
+	logTheThing("bombing", M, null, "[msg]")
+
 /obj/item/proc/dropped(mob/user)
+	SPAWN_DBG(0) //need to spawn to know if we've been dropped or thrown instead
+		if (firesource && throwing)
+			RegisterSignal(src, COMSIG_MOVABLE_THROW_END, .proc/log_firesource)
+		else if (firesource)
+			log_firesource(src, null, user)
+
 	if (user)
 		src.set_dir(user.dir)
 		#ifdef COMSIG_MOB_DROPPED
