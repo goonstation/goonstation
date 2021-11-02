@@ -21,6 +21,8 @@
 	stamina_cost = 0
 	stamina_crit_chance = 1
 	var/image/arrow = null
+	var/atom/movable/hudarrow
+	var/hudarrow_color = "#67cd22"
 
 	New()
 		..()
@@ -38,42 +40,83 @@
 				return
 			active = 1
 			work()
+			if(hudarrow)
+				animate(hudarrow, alpha=127, time=1 SECOND)
 			boutput(user, "<span class='notice'>You activate the pinpointer</span>")
 		else
-			active = 0
-			ClearSpecificOverlays("arrow")
+			src.turn_off()
 			boutput(user, "<span class='notice'>You deactivate the pinpointer</span>")
 
-	proc/work(mob/user)
-		if(!active) return
-		if(!target)
-			if (target_ref)
-				target = locate(target_ref)
-			else if (target_criteria)
-				target = locate(target_criteria)
-			if(!target || target.qdeled)
-				active = 0
-				ClearSpecificOverlays("arrow")
-				return
-		var/turf/ST = get_turf(src)
-		var/turf/T = get_turf(target)
-		if(!ST || !T || ST.z != T.z)
-			active = 0
-			ClearSpecificOverlays("arrow")
-			boutput(user, "<span class='alert'>Pinpointer target out of range.</span>")
+	pickup(mob/user)
+		. = ..()
+		if(!hasvar(user, "hud")) // I'm so sorry
 			return
-		src.set_dir(get_dir(src,target))
-		switch(GET_DIST(src,target))
-			if(0)
-				arrow.icon_state = "pinondirect"
-			if(1 to 8)
-				arrow.icon_state = "pinonclose"
-			if(9 to 16)
-				arrow.icon_state = "pinonmedium"
-			if(16 to INFINITY)
-				arrow.icon_state = "pinonfar"
-		UpdateOverlays(arrow, "arrow")
-		SPAWN_DBG(0.5 SECONDS) .(user)
+		var/datum/hud/hud = user:hud
+		if(isnull(hudarrow))
+			hudarrow = hud.create_screen("pinpointer", "Pinpointer", 'icons/obj/items/pinpointers.dmi', "hudarrow", "CENTER, CENTER")
+			hudarrow.mouse_opacity = 0
+			hudarrow.appearance_flags = 0
+			hudarrow.alpha = active ? 127 : 0
+			hudarrow.color = hudarrow_color
+		else
+			hud.add_object(hudarrow)
+
+	dropped(mob/user)
+		. = ..()
+		if(!hasvar(user, "hud") || isnull(hudarrow)) // very sorry once more
+			return
+		var/datum/hud/hud = user:hud
+		hud.remove_object(hudarrow)
+
+	proc/turn_off()
+		active = 0
+		ClearSpecificOverlays("arrow")
+		if(hudarrow)
+			animate(hudarrow, alpha=0, time=1 SECOND)
+
+	proc/work()
+		set waitfor = FALSE
+		while(active)
+			if(!target)
+				if (target_ref)
+					target = locate(target_ref)
+				else if (target_criteria)
+					target = locate(target_criteria)
+				if(!target || target.qdeled)
+					src.turn_off()
+					return
+			var/turf/ST = get_turf(src)
+			var/turf/T = get_turf(target)
+			if(!ST || !T || ST.z != T.z)
+				src.turn_off()
+				if(ismob(src.loc))
+					boutput(src.loc, "<span class='alert'>Pinpointer target out of range.</span>")
+				return
+			src.set_dir(get_dir(src,target))
+			var/dist = GET_DIST(src,target)
+			switch(dist)
+				if(0)
+					arrow.icon_state = "pinondirect"
+				if(1 to 8)
+					arrow.icon_state = "pinonclose"
+				if(9 to 16)
+					arrow.icon_state = "pinonmedium"
+				if(16 to INFINITY)
+					arrow.icon_state = "pinonfar"
+			UpdateOverlays(arrow, "arrow")
+
+			if(hudarrow && ismob(src.loc))
+				var/ang = get_angle(get_turf(src), get_turf(target))
+				var/hudarrow_dist = 16 + 32 / (1 + 3 ** (3 - dist / 10))
+				var/matrix/M = matrix()
+				M = M.Turn(ang)
+				if(dist == 0)
+					hudarrow_dist += 6
+					M.Turn(180) // point at yourself :)
+				M = M.Translate(hudarrow_dist * sin(ang), hudarrow_dist * cos(ang))
+				animate(hudarrow, transform=M, time=0.5 SECONDS, flags=ANIMATION_PARALLEL)
+
+			sleep(0.5 SECONDS)
 
 /// tracks something using by_type or by_cat, see types.dm for more info
 /obj/item/pinpointer/category
@@ -123,12 +166,14 @@
 	icon_state = "nuke_pinoff"
 	icon_type = "nuke"
 	target_criteria = /obj/machinery/nuclearbomb
+	hudarrow_color = "#ad1400"
 
 /obj/item/pinpointer/disk
 	name = "pinpointer (authentication disk)"
 	desc = "Points in the direction of the authentication disk."
 	icon_state = "disk_pinoff"
 	icon_type = "disk"
+	hudarrow_color = "#14ad00"
 	target_criteria = /obj/item/disk/data/floppy/read_only/authentication
 
 /obj/item/pinpointer/teg_semi
@@ -136,6 +181,7 @@
 	desc = "Points in the direction of the NT Prototype Semiconductor."
 	icon_state = "semi_pinoff"
 	icon_type = "semi"
+	hudarrow_color = "#adad00"
 	target_criteria = /obj/item/teg_semiconductor
 
 /obj/item/pinpointer/trench
@@ -143,6 +189,7 @@
 	desc = "Points in the direction of the sea elevator."
 	icon_state = "trench_pinoff"
 	icon_type = "trench"
+	hudarrow_color = "#3395dd"
 	var/target_area = /area/shuttle/sea_elevator/lower
 
 	attack_self(mob/user)
@@ -346,6 +393,7 @@
 	icon_type = "sec"
 	var/list/itemrefs
 	var/list/accepted_types
+	hudarrow_color = "#ee4444"
 	mats = null
 	desc = "An extremely advanced scanning device used to locate lost security tools. It displays this with an extremely technicalogically advanced arrow."
 
