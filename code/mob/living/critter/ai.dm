@@ -27,7 +27,8 @@ var/list/ai_move_scheduled = list()
 			M.mob_flags |= LIGHTWEIGHT_AI_MOB
 
 		var/turf/T = get_turf(M)
-		if(isnull(T) || T.z <= Z_LEVEL_STATION)
+		var/area/AR = get_area(M)
+		if(isnull(T) || T.z <= Z_LEVEL_STATION || AR.active)
 			ai_mobs.Add(M)
 		else
 			M.skipped_mobs_list |= SKIPPED_AI_MOBS_LIST
