@@ -621,6 +621,36 @@
 	if (extra)
 		. += " [extra]"
 
+	// handles PDA messaging shortcut for the AI
+	if (isAI(user) && ishuman(src))
+		var/mob/living/silicon/ai/mainframe
+		var/mob/living/carbon/human/person = src
+		if (isAIeye(user))
+			var/mob/dead/aieye/ai = user
+			mainframe = ai.mainframe
+		else
+			mainframe = user
+
+		// we need to check to see if any of these are PDAs so that we can render them to the ai.
+		// these are where pdas can be visible in an inventory - lets check to see whats in them!
+		var/list/inv_list = list()
+		inv_list += person.get_slot(SLOT_BELT)
+		inv_list += person.get_slot(SLOT_WEAR_ID)
+		inv_list += person.get_slot(SLOT_L_HAND)
+		inv_list += person.get_slot(SLOT_R_HAND)
+
+		var/hasPDA = FALSE
+		for (var/obj/item/device/pda2/pda in inv_list) // we only care about PDAs
+			var/textToAdd
+			if (pda.host_program.message_on && pda.owner) // is their messenger enabled, is their pda swiped in??
+				textToAdd += "<br>[bicon(pda)][pda.name] - <a href='byond://?src=\ref[mainframe];net_id=[pda.net_id];owner=[pda.owner]'><u>*MESSAGE*</u></a>" // see ai.dm under Topic() to continue from here!
+			else if (pda.owner) // ownerless PDAs will not render, but we'll tell the AI when someone's messenger is disabled!
+				textToAdd += "<br>[bicon(pda)][pda.name] - *MESSENGER DISABLED*"
+			. += textToAdd
+			if (pda.owner) hasPDA = TRUE // we need at least ONE pda to be visible, or else we add the text below
+		if (!hasPDA)
+			. += "<br>*No PDA detected!*"
+
 /atom/proc/MouseDrop_T()
 	return
 
