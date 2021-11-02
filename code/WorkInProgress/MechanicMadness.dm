@@ -1744,7 +1744,7 @@
 
 	var/net_id = null //What is our ID on the network?
 	var/last_ping = 0
-	var/range = 0
+	var/range = null
 
 	var/noise_enabled = true
 	var/frequency = FREQ_FREE
