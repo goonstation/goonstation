@@ -24448,7 +24448,7 @@
 /obj/item/suture,
 /obj/item/scissors/surgical_scissors,
 /turf/unsimulated/floor/white,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "bvB" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4
@@ -24636,7 +24636,7 @@
 /obj/item/suture,
 /obj/item/scissors/surgical_scissors,
 /turf/unsimulated/floor/white,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "bwb" = (
 /obj/machinery/light{
 	dir = 4;
@@ -60344,7 +60344,7 @@
 /turf/unsimulated/floor/redwhite{
 	dir = 9
 	},
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "dhq" = (
 /obj/machinery/light{
 	dir = 1;
@@ -60354,12 +60354,12 @@
 /turf/unsimulated/floor/redwhite{
 	dir = 1
 	},
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "dhr" = (
 /turf/unsimulated/floor/redwhite{
 	dir = 1
 	},
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "dhs" = (
 /obj/storage/crate/medical{
 	name = "Medkits"
@@ -60370,7 +60370,7 @@
 /turf/unsimulated/floor/redwhite{
 	dir = 5
 	},
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "dht" = (
 /obj/machinery/vending/cigarette,
 /obj/decal/tile_edge/stripe{
@@ -60464,7 +60464,7 @@
 /area/iomoon)
 "dhC" = (
 /turf/unsimulated/floor/white,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "dhD" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -60485,7 +60485,7 @@
 /obj/item/parts/robot_parts/leg/left/standard,
 /obj/item/parts/robot_parts/leg/right/standard,
 /turf/unsimulated/floor/red,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "dhF" = (
 /obj/npc/trader/random{
 	trader_area = "/area/shuttle/merchant_shuttle/right_station"
@@ -60507,7 +60507,7 @@
 /turf/unsimulated/floor/redwhite{
 	dir = 4
 	},
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "dhH" = (
 /obj/decal/poster/wallsign/medbay,
 /turf/simulated/shuttle/wall{
@@ -60563,7 +60563,7 @@
 /turf/unsimulated/floor/redwhite{
 	dir = 8
 	},
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "dhP" = (
 /obj/machinery/optable,
 /obj/decal/tile_edge/stripe{
@@ -60571,17 +60571,17 @@
 	icon_state = "delivery2"
 	},
 /turf/unsimulated/floor/red,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "dhQ" = (
 /obj/table/auto,
 /obj/machinery/defib_mount,
 /turf/unsimulated/floor/red,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "dhR" = (
 /turf/unsimulated/floor/redwhite{
 	dir = 4
 	},
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "dhS" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -60663,14 +60663,14 @@
 	icon_state = "bot2"
 	},
 /turf/unsimulated/floor/red,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "did" = (
 /obj/decal/tile_edge/stripe{
 	dir = 6;
 	icon_state = "bot2"
 	},
 /turf/unsimulated/floor/white,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "die" = (
 /obj/shrub{
 	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
@@ -60720,14 +60720,14 @@
 	icon_state = "bot2"
 	},
 /turf/unsimulated/floor/red,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "dil" = (
 /obj/machinery/light,
 /turf/unsimulated/floor/redwhite,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "dim" = (
 /turf/unsimulated/floor/redwhite,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "dio" = (
 /obj/storage/crate{
 	name = "footlocker"
@@ -76564,7 +76564,7 @@
 "kJE" = (
 /obj/machinery/bot/medbot/no_camera,
 /turf/unsimulated/floor/red,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "kJJ" = (
 /turf/unsimulated/floor/bluewhite{
 	dir = 4
@@ -78481,7 +78481,7 @@
 /turf/unsimulated/floor/redwhite{
 	dir = 8
 	},
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "pnm" = (
 /obj/tombstone{
 	dir = 6
@@ -78666,7 +78666,7 @@
 /obj/item/reagent_containers/emergency_injector/atropine,
 /obj/item/reagent_containers/emergency_injector/atropine,
 /turf/unsimulated/floor/redwhite,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "pPX" = (
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/rodney)

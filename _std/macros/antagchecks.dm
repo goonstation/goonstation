@@ -16,12 +16,12 @@
 #define isblob(x) istype(x, /mob/living/intangible/blob_overmind)
 #define isspythief(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:special_role == ROLE_SPY_THIEF)
 #define isfloorgoblin(x) (x:mind && x:mind:special_role == ROLE_FLOOR_GOBLIN)
+#define isslasher(x) (istype(x, /mob/living/carbon/human/slasher) && x:mind:special_role == ROLE_SLASHER)
 
 // Why the separate mask check? NPCs don't use assigned_role and we still wanna play the cluwne-specific sound effects.
 #define iscluwne(x) ((x?.job == "Cluwne") || istype(x.wear_mask, /obj/item/clothing/mask/cursedclown_hat))
 #define ishorse(x) (istype(x, /mob/living/carbon/human) && ((x.mind?.assigned_role == "Horse") || istype(x.wear_mask, /obj/item/clothing/mask/horse_mask/cursed)))
 #define isdiabolical(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:diabolical == 1)
-#define iswelder(x) istype(x, /mob/living/carbon/human/welder)
 #define ismartian(x) (istype(x, /mob/living/critter/martian) || (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/martian)))
 #define isprematureclone(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/premature_clone))
 #define iskudzuman(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/kudzu))

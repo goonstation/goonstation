@@ -185,7 +185,12 @@
 		var/crew = ""
 		for(var/datum/db_record/t as anything in data_core.general.records)
 			crew += "[t["name"]] - [t["rank"]]<br>"
-		dat = "<tt><b>Crew Manifest:</b><br>Please use security record computer to modify entries.<br>[crew]<a href='?src=\ref[src];print=1'>Print</a><br><br><a href='?src=\ref[src];mode=0'>Access ID modification console.</a><br></tt>"
+		var/stored = ""
+		if(length(by_type[/obj/cryotron]))
+			var/obj/cryotron/cryo_unit = pick(by_type[/obj/cryotron])
+			for(var/L as anything in cryo_unit.stored_crew_names)
+				stored += "<i>- [L]<i><br>"
+		dat = "<tt><b>Crew Manifest:</b><br>Please use security record computer to modify entries.<br>[crew]<br><b>In Cryogenic Storage:</b><hr>[stored]<a href='?src=\ref[src];print=1'>Print</a><br><br><a href='?src=\ref[src];mode=0'>Access ID modification console.</a><br></tt>"
 	else
 		var/header = "<b>Identification Card Modifier</b><br><i>Please insert the cards into the slots</i><br>"
 
@@ -223,6 +228,10 @@
 		if (src.authenticated && src.modify)
 			body += "Registered: <a href='?src=\ref[src];reg=1'>[target_owner]</a><br>"
 			body += "Assignment: <a href='?src=\ref[src];assign=Custom Assignment'>[replacetext(target_rank, " ", "&nbsp")]</a><br>"
+			body += "Pronouns: <a href='?src=\ref[src];pronouns=next'>[src.modify.pronouns?.name || "-"]</a>"
+			if(!isnull(src.modify.pronouns))
+				body += " <a href='?src=\ref[src];pronouns=remove'>X</a>"
+			body += "<br>"
 			body += "PIN: <a href='?src=\ref[src];pin=1'>****</a>"
 
 			//Jobs organised into sections
@@ -392,6 +401,16 @@
 				if(access_allowed == 1)
 					src.modify.access += access_type
 
+	if (href_list["pronouns"])
+		if (src.authenticated && src.modify)
+			if(href_list["pronouns"] == "next")
+				if(src.modify?.pronouns)
+					src.modify.pronouns = src.modify.pronouns.next_pronouns()
+				else
+					src.modify.pronouns = get_singleton(/datum/pronouns/theyThem)
+			else if(href_list["pronouns"] == "remove")
+				src.modify.pronouns = null
+
 	if (href_list["assign"])
 		if (src.authenticated && src.modify)
 			var/t1 = href_list["assign"]
@@ -448,9 +467,15 @@
 			var/obj/item/paper/P = new /obj/item/paper
 			P.set_loc(src.loc)
 
-			var/t1 = "<B>Crew Manifest:</B><BR>"
+			var/t1 = "<B>Crew Manifest:</B><hr>"
+			var/stored = ""
+			if(length(by_type[/obj/cryotron]))
+				var/obj/cryotron/cryo_unit = pick(by_type[/obj/cryotron])
+				for(var/L as anything in cryo_unit.stored_crew_names)
+					stored += "<i>- [L]<i><br>"
 			for(var/datum/db_record/t as anything in data_core.general.records)
-				t1 += "<B>[t["name"]]</B> - [t["rank"]]<BR>"
+				t1 += "<B>[t["name"]]</B> - [t["rank"]]<br>"
+			t1 += "<br><b>In Cryogenic Storage:</b><hr>[stored]<br>"
 			P.info = t1
 			P.name = "paper- 'Crew Manifest'"
 			src.printing = null

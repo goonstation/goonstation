@@ -44,6 +44,9 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	/// for escape checks
 	var/is_centcom = 0
 
+	/// Don't combat/explosion log this area (for VR and other gimmicks)
+	var/dont_log_combat = FALSE
+
 	level = null
 	#ifdef UNDERWATER_MAP
 	name = "Ocean"
@@ -113,7 +116,8 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	var/workplace = 0
 
 	var/list/obj/critter/registered_critters = list()
-	var/list/obj/critter/registered_mob_critters = list()
+	var/list/mob/living/critter/registered_mob_critters = list()
+	var/list/mob/living/mobs_not_in_global_mobs_list
 	var/waking_critters = 0
 
 	// this chunk zone is for Area Ambience
@@ -195,7 +199,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 					if( !(isliving(enteringM) || iswraith(enteringM)) ) continue
 					//Wake up a bunch of lazy darn critters
 					if (isliving(enteringM))
-						wake_critters()
+						wake_critters(enteringM)
 
 					//If it's a real fuckin player
 					if (enteringM.ckey && enteringM.client)
@@ -320,13 +324,26 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 				sims_score -= penalty
 		sims_score = max(sims_score, 0)
 
-	proc/wake_critters()
-		if(waking_critters || (!length(src.registered_critters) && !length(src.registered_mob_critters))) return
+	proc/wake_critters(mob/enteringM = null)
+		if(waking_critters || (!length(src.registered_critters) && !length(src.registered_mob_critters) && !length(src.mobs_not_in_global_mobs_list))) return
 		waking_critters = 1
+		if(isnull(enteringM))
+			enteringM = usr
 		for(var/obj/critter/C in src.registered_critters)
 			C.wake_from_hibernation()
-		for (var/mob/living/critter/M as anything in src.registered_mob_critters)
-			M.wake_from_hibernation()
+		if(enteringM?.client)
+			for (var/mob/living/M as anything in src.mobs_not_in_global_mobs_list)
+				if(!M.skipped_mobs_list)
+					stack_trace("Attempting to add [M] to global mobs list but its flag is not set.")
+				if(M.skipped_mobs_list & SKIPPED_AI_MOBS_LIST)
+					global.ai_mobs |= M
+					M.skipped_mobs_list &= ~SKIPPED_AI_MOBS_LIST
+				if(M.skipped_mobs_list & SKIPPED_MOBS_LIST && !(M.mob_flags & LIGHTWEIGHT_AI_MOB))
+					global.mobs |= M
+					M.skipped_mobs_list &= ~SKIPPED_MOBS_LIST
+			src.mobs_not_in_global_mobs_list = null
+			for (var/mob/living/critter/M as anything in src.registered_mob_critters)
+				M.wake_from_hibernation()
 		waking_critters = 0
 
 	proc/calculate_area_value()
@@ -443,7 +460,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 			return
 		if (ismob(O))
 			var/mob/jerk = O
-			if ((jerk.client && jerk.client.flying))
+			if ((jerk.client && jerk.client.flying) || (ismob(jerk) && HAS_MOB_PROPERTY(jerk, PROP_NOCLIP)))
 				return
 			setdead(jerk)
 			jerk.remove()
@@ -494,7 +511,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 			return
 		if (ismob(O))
 			var/mob/jerk = O
-			if ((jerk.client && jerk.client.flying))
+			if ((jerk.client && jerk.client.flying) || (ismob(jerk) && HAS_MOB_PROPERTY(jerk, PROP_NOCLIP)))
 				return
 			setdead(jerk)
 			jerk.remove()
@@ -1384,6 +1401,7 @@ ABSTRACT_TYPE(/area/sim)
 	skip_sims = 1
 	sims_score = 100
 	sound_group = "vr"
+	dont_log_combat = TRUE
 
 
 
@@ -3194,6 +3212,10 @@ ABSTRACT_TYPE(/area/station/catwalk)
 /area/syndicate_station/firing_range
 		name = "firing range"
 		icon_state = "blue"
+
+/area/syndicate_station/medbay
+		name = "medical bay"
+		icon_state = "purple"
 
 // end syndie //
 

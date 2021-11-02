@@ -673,6 +673,16 @@ datum
 			mix_sound = 'sound/impact_sounds/slimy_hit_3.ogg'
 			drinkrecipe = 1
 
+		cocktail_wellerman
+			name = "Wellerman"
+			id = "wellerman"
+			result = "wellerman"
+			required_reagents = list("sweet_tea" = 2, "rum" = 1)
+			result_amount = 3
+			mix_phrase = "Soon may the Wellerman come. To bring us sugar and tea and rum."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
 		cocktail_hardpunch
 			name = "Hard Punch"
 			id = "hard_punch"

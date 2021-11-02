@@ -12,7 +12,7 @@
 	req_access = list(access_heads)
 	event_handler_flags = NO_MOUSEDROP_QOL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
-	flags = NOSPLASH
+	flags = NOSPLASH | FLUID_SUBMERGE
 	var/health = 100
 	var/mode = "ready"
 	var/error = null
@@ -65,8 +65,7 @@
 	var/list/text_bad_output_adjective = list("janky","crooked","warped","shoddy","shabby","lousy","crappy","shitty")
 	var/obj/item/card/id/scan = null
 	var/temp = null
-	var/frequency = 1149
-	var/datum/radio_frequency/transmit_connection = null
+	var/frequency = FREQ_PDA
 	var/net_id = null
 
 	var/datum/action/action_bar = null
@@ -81,7 +80,7 @@
 		..()
 		var/area/area = get_area(src)
 		src.area_name = area?.name
-		src.transmit_connection = radio_controller.add_object(src,"[frequency]")
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
 		src.net_id = generate_net_id(src)
 
 		if (istype(manuf_controls,/datum/manufacturing_controller))
@@ -122,8 +121,6 @@
 		src.sound_beginwork = null
 		src.sound_damaged = null
 		src.sound_destroyed = null
-		radio_controller.remove_object(src,"[frequency]")
-		src.transmit_connection = null
 
 		for (var/obj/O in src.contents)
 			O.set_loc(src.loc)
@@ -817,7 +814,6 @@
 
 							var/datum/signal/minerSignal = get_free_signal()
 							minerSignal.source = src
-							minerSignal.transmission_method = TRANSMISSION_RADIO
 							//any non-divisible amounts go to the shipping budget
 							var/leftovers = 0
 							if(length(accounts))
@@ -832,7 +828,7 @@
 								leftovers = subtotal
 								minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGO_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox&trade; sale, deposited to the shipping budget.")
 							wagesystem.shipping_budget += (leftovers + sum_taxes)
-							transmit_connection.post_signal(src, minerSignal)
+							SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, minerSignal)
 
 							src.temp = {"Enjoy your purchase!<BR>"}
 						else

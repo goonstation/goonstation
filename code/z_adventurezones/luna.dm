@@ -1238,9 +1238,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 				wired_connection.post_signal(src, signal)
 
 		else
-			signal.transmission_method = TRANSMISSION_RADIO
-			if(radio_connection)
-				return radio_connection.post_signal(src, signal, 100)
+			return SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, 100)
 
 	initialize()
 		..()
@@ -1253,7 +1251,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 			new_prog.do_setup(setup_string)
 
 
-	receive_signal(datum/signal/signal, receive_method, receive_param)
+	receive_signal(datum/signal/signal, receive_method, receive_param, connection_id)
 		if(!signal || signal.encryption)
 			return
 
@@ -1741,7 +1739,7 @@ datum/computer/file/embedded_program/maintpanel
 
 		return
 
-	receive_signal(datum/signal/signal, receive_method, receive_param)
+	receive_signal(datum/signal/signal, receive_method, receive_param, connection_id)
 		if (signal.data["sender"] in src.sessions)
 			var/datum/maintpanel_device_entry/entry = src.sessions[signal.data["sender"]]
 			src.sessions -= signal.data["sender"]

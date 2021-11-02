@@ -76,6 +76,20 @@ var/global/datum/game_servers/game_servers = new
 		arguments[1] = buddy // remove message_name, replace with server
 		return csm.send(arglist(arguments))
 
+	proc/input_server(mob/user, text, title, can_pick_all=FALSE, public_only=FALSE)
+		RETURN_TYPE(/datum/game_server)
+		var/list/pick_list = list()
+		if(can_pick_all)
+			pick_list["All"] = "all"
+		for(var/id in src.servers)
+			var/datum/game_server/server = src.servers[id]
+			if(public_only && !server.publ)
+				continue
+			pick_list[server.name] = server
+		var/text_result = input(user, text, title) as null|anything in pick_list
+		if(isnull(text_result))
+			return null
+		return pick_list[text_result]
 
 /datum/game_server
 	var/id

@@ -187,3 +187,9 @@
 #define W_CLASS_HUGE 5
 #define W_CLASS_GIGANTIC 6
 #define W_CLASS_BUBSIAN 10
+
+// for firesource logging
+/// Firesource is capable of starting fires on its own when dropped
+#define FIRESOURCE_OPEN_FLAME 1
+/// Firesource can not cause fires on its own when dropped
+#define FIRESOURCE_IGNITER 2
