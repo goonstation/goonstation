@@ -306,11 +306,12 @@
 			if(istype(A, /obj/fluid))
 				var/obj/fluid/fluid = A
 				reagents = fluid.group.reagents
-			for(var/reag_id in list("blood", "bloodc"))
-				var/datum/reagent/blood/blood = reagents.reagent_list[reag_id]
-				var/datum/bioHolder/bioholder = blood?.data
-				if(istype(bioholder))
-					blood_dna = bioholder.Uid
+			if(!isnull(reagents))
+				for(var/reag_id in list("blood", "bloodc"))
+					var/datum/reagent/blood/blood = reagents.reagent_list[reag_id]
+					var/datum/bioHolder/bioholder = blood?.data
+					if(istype(bioholder))
+						blood_dna = bioholder.Uid
 		if(!blood_dna)
 			return
 		for(var/mob/living/carbon/human/H in mobs)
