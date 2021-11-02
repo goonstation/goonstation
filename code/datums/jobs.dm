@@ -873,7 +873,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	special_setup(var/mob/living/carbon/human/M)
 		..()
 		if (!M)
-			return¨
+			return
 		M.traitHolder.addTrait("training_chef")
 
 /datum/job/civilian/bartender

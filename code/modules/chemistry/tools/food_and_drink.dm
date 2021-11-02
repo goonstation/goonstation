@@ -311,12 +311,16 @@
 
 	get_desc(mob/user)
 		. = ..()
-		if(!user.traitHolder.hasTrait("training_chef"))
+		if(!usr.traitHolder?.hasTrait("training_chef"))
 			return
-		if(food_effects != null)
+		if(food_effects.len > 0)
 			. += "<br><span class='notice'> This food has the following effects: "
-			for(var/id as anything in food_effects)
-				. += hasStatus(id).name + "; "
+			for(var/id as anything in src.food_effects)
+				var/datum/statusEffect/S = getStatusPrototype(id)
+				if(S == null)
+					.+= "oh oh its null! report to the coders! ID:" + id //This really shouldnt happen except for var editing or other wierdness, but this is here just in case.
+					break
+				. += S.name + "; "
 			. += "</span>"
 
 
