@@ -7067,7 +7067,7 @@
 	},
 /area/station/chapel/sanctuary)
 "bKa" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/storage/auxillary{
@@ -18670,7 +18670,7 @@
 /area/station/maintenance/inner/nw)
 "fhl" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille,
+/obj/grille/steel,
 /obj/machinery/light/small/sticky{
 	dir = 8
 	},
@@ -28224,7 +28224,7 @@
 	},
 /area/station/crew_quarters/kitchen)
 "iad" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/item/clothing/head/helmet/space/santahat,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
@@ -30885,7 +30885,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/garden/owlery)
 "iPr" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/black,
 /area/station/medical/medbay)
 "iPz" = (
@@ -36590,7 +36590,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "kES" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
@@ -47240,7 +47240,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "nOq" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/structure/woodwall,
 /obj/cable{
 	d1 = 4;
@@ -62729,7 +62729,7 @@
 /obj/machinery/light/incandescent/cool{
 	dir = 1
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/black,
 /area/station/medical/medbay)
 "sdN" = (
@@ -68571,7 +68571,7 @@
 /obj/railing/orange{
 	dir = 1
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
 "tSy" = (
@@ -77516,7 +77516,7 @@
 /area/station/maintenance/outer/north)
 "wxD" = (
 /obj/lattice,
-/obj/grille,
+/obj/grille/steel,
 /turf/space,
 /area/space)
 "wxG" = (

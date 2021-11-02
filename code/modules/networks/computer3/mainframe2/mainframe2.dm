@@ -360,7 +360,9 @@
 					file = signal.data_file.copy_file()
 				if(src.os && data)
 					src.os.term_input(data, target, file)
-					//qdel(file)
+					if(!isnull(usr))
+						var/atom/source = signal.source
+						logTheThing("computers", usr, null, "message '[html_encode(data)]' sent to [src] [log_loc(src)] from [source] [log_loc(source)]")
 
 				return
 

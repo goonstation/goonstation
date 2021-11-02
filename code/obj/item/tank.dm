@@ -130,8 +130,8 @@ Contains:
 		//Allow for reactions
 		if (air_contents) //Wire: Fix for Cannot execute null.react().
 			air_contents.react()
+			src.inventory_counter.update_text("[round(MIXTURE_PRESSURE(air_contents))]\nkPa")
 		check_status()
-		src.inventory_counter.update_text("[round(MIXTURE_PRESSURE(air_contents))]\nkPa")
 
 	proc/check_status()
 		//Handle exploding, leaking, and rupturing of the tank

@@ -206,7 +206,7 @@
 	/obj/item/storage/box/lglo_kit/random,
 	/obj/item/clothing/head/det_hat/gadget,
 	/obj/item/device/detective_scanner/detective,
-	/obj/item/bloodtracker,
+	/obj/item/pinpointer/bloodtracker,
 	/obj/item/device/flash,
 	/obj/item/camera_film,
 	/obj/item/storage/box/luminol_grenade_kit)
@@ -230,6 +230,7 @@
 /obj/storage/secure/closet/brig/automatic
 	name = "\improper Automatic Locker"
 	desc = "Card-locked closet linked to a brig timer. Will unlock automatically when timer reaches zero."
+	anchored = 1
 	var/obj/machinery/door_timer/our_timer = null
 	var/id = null
 
