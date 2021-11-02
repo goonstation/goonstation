@@ -373,3 +373,51 @@
 			arrow.icon_state = ""
 			UpdateOverlays(arrow, "arrow")
 			boutput(user, "<span class='notice'>You deactivate the pinpointer</span>")
+
+
+// gimmick pinpointers because I feel like adding them now that I made the by_cat pinpointer base version
+
+/obj/item/pinpointer/category/pets
+	name = "pet tracker"
+	category = TR_CAT_PETS
+	thing_name = "pet"
+
+/obj/item/pinpointer/category/pwpets // pod wars
+	name = "pet tracker"
+	category = TR_CAT_PW_PETS
+	thing_name = "pet"
+
+/obj/item/pinpointer/category/critters
+	name = "critter tracker"
+	category = TR_CAT_CRITTERS
+	thing_name = "critter"
+
+/obj/item/pinpointer/category/pods
+	name = "pod tracker"
+	category = TR_CAT_PODS_AND_CRUISERS
+	thing_name = "pod"
+
+/obj/item/pinpointer/category/teleport_jammers
+	name = "teleport jammer tracker"
+	category = TR_CAT_TELEPORT_JAMMERS
+	thing_name = "teleport jammer"
+
+/obj/item/pinpointer/category/radio_jammers
+	name = "radio jammer tracker"
+	category = TR_CAT_RADIO_JAMMERS
+	thing_name = "radio jammer"
+
+/obj/item/pinpointer/category/burning_mobs
+	name = "burning mob tracker"
+	category = TR_CAT_BURNING_MOBS
+	thing_name = "burning mob"
+
+/obj/item/pinpointer/category/burning_items
+	name = "burning item tracker"
+	category = TR_CAT_BURNING_ITEMS
+	thing_name = "burning item"
+
+/obj/item/pinpointer/category/chaplains
+	name = "chaplain tracker"
+	category = TR_CAT_CHAPLAINS
+	thing_name = "chaplain"
