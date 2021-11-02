@@ -1,5 +1,9 @@
 
 (t)tue nov 02 21
+(u)Wisemonster
+(p)6463
+(e)🗺|mapping
+(+)Adds 3 breaching charges to the Oshan armory
 (u)Kubius
 (p)6379
 (e)🆕|feature
