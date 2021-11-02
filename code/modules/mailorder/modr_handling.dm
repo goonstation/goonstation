@@ -42,7 +42,7 @@
 	proc/launch_procedure()
 		if(src.registered)
 			src.name = "[src.registered]'s mail-order crate"
-			src.desc = "A crate that holds mail-ordered items. It's registered to [src.registered]."
+			src.desc = "A crate that holds mail-ordered items. It's registered to [src.registered]'s ID card."
 
 //Auto chute that accepts boxes for mail-based delivery, and nothing else
 /obj/machinery/floorflusher/industrial/mailorder
@@ -50,7 +50,7 @@
 	desc = "A large chute that only accepts specially designed mail-order boxes."
 	var/destination_tag = null
 
-	HasEntered(atom/movable/AM)
+	Crossed(atom/movable/AM)
 		if(istype(AM,/obj/item/storage/box/mailorder))
 			..()
 
@@ -70,7 +70,7 @@
 		flushing = 1
 
 		closeup()
-		var/obj/disposalholder/H = unpool(/obj/disposalholder)	// virtual holder object which actually
+		var/obj/disposalholder/H = new /obj/disposalholder	// virtual holder object which actually
 																// travels through the pipes.
 
 		for(var/atom/movable/AM in src)

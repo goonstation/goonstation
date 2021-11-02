@@ -179,9 +179,9 @@
 							src.master.display_alert(alert_beep)
 							var/displayMessage = "[bicon(master)] Purchase unsuccessful due to lack of mail-order service to your area."
 							if(buy_success)
-								var/datum/data/record/spender = FindBankAccountByName(src.master.ID_card.registered)
+								var/datum/db_record/spender = FindBankAccountByName(src.master.ID_card.registered)
 								if(spender)
-									spender.fields["current_money"] -= final_bill
+									spender["current_money"] -= final_bill
 								else
 									message_admins("<span class='alert'>[src] tried to charge a card that doesn't exist, yell at kubius</span>")
 								switch(buy_success)
@@ -303,12 +303,12 @@
 				break
 		if(!purchase_authed)
 			return "INSUFFICIENT AUTHORIZATION"
-		var/datum/data/record/account = null
+		var/datum/db_record/account = null
 		account = FindBankAccountByName(src.master.ID_card.registered)
 		if (account)
 			var/enterpin = input(user, "Please enter your PIN number.", "Enter PIN", 0) as null|num
 			if (enterpin == src.master.ID_card.pin)
-				var/bux = account.fields["current_money"]
+				var/bux = account["current_money"]
 				if (bux < src.cartcost)
 					return "INSUFFICIENT FUNDS ([bux] OF [src.cartcost])"
 				return "SUCCESS"
