@@ -1255,7 +1255,7 @@ datum
 							var/mob/living/L = M
 							L.contract_disease(/datum/ailment/malady/bloodclot,null,null,1)
 
-		medical/rubbing_alcohol
+		medical/isopropanol
 			name = "Isopropanol"
 			id = "isopropanol"
 			description = "Isopropanol (rubbing alcohol) helps to sterilize cuts and scrapes during surgery and promote healing"
