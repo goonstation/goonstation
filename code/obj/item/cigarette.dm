@@ -99,7 +99,7 @@
 	proc/light(var/mob/user as mob, var/message as text)
 		if (src.on == 0)
 			src.on = 1
-			src.firesource = TRUE
+			src.firesource = FIRESOURCE_OPEN_FLAME
 			src.hit_type = DAMAGE_BURN
 			src.force = 3
 			src.icon_state = litstate
@@ -945,7 +945,7 @@
 
 	proc/light(var/mob/user as mob)
 		src.on = 1
-		src.firesource = TRUE
+		src.firesource = FIRESOURCE_OPEN_FLAME
 		src.icon_state = "match-lit"
 
 		playsound(user, "sound/items/matchstick_light.ogg", 50, 1)
@@ -1137,7 +1137,7 @@
 
 	proc/activate(mob/user as mob)
 		src.on = 1
-		src.firesource = TRUE
+		src.firesource = FIRESOURCE_OPEN_FLAME
 		set_icon_state(src.icon_on)
 		src.item_state = "[item_state_base]on"
 		light.enable()

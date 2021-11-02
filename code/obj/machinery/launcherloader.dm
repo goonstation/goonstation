@@ -333,7 +333,7 @@
 		dat += "<BR><b><A href='?src=\ref[src];add=1'>Add Tag</A></b>"
 
 		src.add_dialog(user)
-		user.Browse(dat, "title=Barcode Computer;window=bc_computer_[src];size=300x400")
+		user.Browse(dat, "title=Barcode Computer;window=bc_computer_[src];size=300x480")
 		onclose(user, "bc_computer_[src]")
 		return
 
@@ -400,6 +400,9 @@
 	desc = "Used to print barcode stickers for the cargo routing system, and to mark crates for sale to traders."
 	icon_state = "qm_barcode_comp"
 
+	New()
+		..()
+
 	attack_hand(var/mob/user as mob)
 		if (..(user))
 			return
@@ -417,13 +420,18 @@
 			if (!T.hidden)
 				dat += "<b><A href='?src=\ref[src];print=[T.crate_tag]'>Sell to [T.name]</A></b><BR>"
 
+		dat += "<BR><b>Requisition Fulfillment:</b><BR>"
+		dat += "<b><A href='?src=\ref[src];print=["REQ-THIRDPARTY"]'>REQ-THIRDPARTY</A></b><BR>"
+		for(var/datum/req_contract/RC in shippingmarket.req_contracts)
+			dat += "<b><A href='?src=\ref[src];print=[RC.req_code]'>[RC.req_code]</A></b><BR>"
+
 		//dat += "<BR><b><A href='?src=\ref[src];add=1'>Add Tag</A></b>"
 
 		src.add_dialog(user)
 		// Attempting to diagnose an infinite window refresh I can't duplicate, reverting the display style back to plain HTML to see what results that gets me.
 		// Hooray for having a playerbase to test shit on
-		//user.Browse(dat, "title=Barcode Computer;window=bc_computer_[src];size=300x400")
-		user.Browse(dat, "title=Barcode Computer;window=bc_computer_[src];size=300x400")
+		//user.Browse(dat, "title=Barcode Computer;window=bc_computer_[src];size=300x480")
+		user.Browse(dat, "title=Barcode Computer;window=bc_computer_[src];size=300x480")
 		onclose(user, "bc_computer_[src]")
 		return
 
