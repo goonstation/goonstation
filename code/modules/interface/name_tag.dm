@@ -1,7 +1,7 @@
 /image/name_tag_hover
 	plane = PLANE_NOSHADOW_ABOVE
 	maptext_x = -64
-	maptext_y = -5 - 7 // -7 to accomodate extra text
+	maptext_y = -5 - 8 // -7 to accomodate extra text
 	maptext_width = 160
 	maptext_height = 48
 	icon = null

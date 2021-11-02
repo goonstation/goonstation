@@ -163,7 +163,7 @@ datum/preferences
 			"nameLast" = src.name_last,
 			"randomName" = src.be_random_name,
 			"gender" = src.gender == MALE ? "Male" : "Female",
-			"pronouns" = AH.pronouns.name,
+			"pronouns" = isnull(AH.pronouns) ? "Default" : AH.pronouns.name,
 			"age" = src.age,
 			"bloodRandom" = src.random_blood,
 			"bloodType" = src.blType,
@@ -435,14 +435,12 @@ datum/preferences
 				return TRUE
 
 			if ("update-pronouns")
-				var/list/types = filtered_concrete_typesof(/datum/pronouns, /proc/pronouns_filter_is_choosable)
-				var/selected
-				for (var/i = 1, i <= length(types), i++)
-					var/datum/pronouns/pronouns = get_singleton(types[i])
-					if (AH.pronouns == pronouns)
-						selected = i
-						break
-				AH.pronouns = get_singleton(types[selected < length(types) ? selected + 1 : 1])
+				if(isnull(AH.pronouns))
+					AH.pronouns = get_singleton(/datum/pronouns/theyThem)
+				else
+					AH.pronouns = AH.pronouns.next_pronouns()
+					if(AH.pronouns == get_singleton(/datum/pronouns/theyThem))
+						AH.pronouns = null
 				src.profile_modified = TRUE
 				return TRUE
 

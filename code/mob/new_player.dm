@@ -881,14 +881,16 @@ a.latejoin-card:hover {
 			observer.observe_round = 1
 			if(client.preferences && client.preferences.be_random_name) //Wire: fix for Cannot read null.be_random_name (preferences &&)
 				client.preferences.randomize_name()
-			observer.name = client.preferences.real_name
+			observer.real_name = client.preferences.real_name
+			observer.bioHolder.mobAppearance.CopyOther(client.preferences.AH)
+			observer.gender = observer.bioHolder.mobAppearance.gender
+			observer.UpdateName()
 
 			if(!src.mind) src.mind = new(src)
 
 			//src.mind.dnr=1
 			src.mind.joined_observer=1
 			src.mind.transfer_to(observer)
-			observer.real_name = observer.name
 			if(observer?.client)
 				observer.client.loadResources()
 

@@ -1880,6 +1880,7 @@
 		can_clash = 1
 
 	spark
+		plane = PLANE_ABOVE_LIGHTING
 		icon = 'icons/effects/effects.dmi'
 		icon_state = "sparks_attack"
 		pixel_x = 0
@@ -1997,6 +1998,7 @@
 		can_clash = 0
 
 	flame
+		plane = PLANE_ABOVE_LIGHTING
 		icon = 'icons/effects/effects.dmi'
 		icon_state = "flame"
 		pixel_x = 0

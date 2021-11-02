@@ -20,8 +20,7 @@
 	var/b_stat = 0
 	var/broadcasting = FALSE
 	var/listening = TRUE
-	var/list/secure_connections = null
-	var/datum/radio_frequency/radio_connection
+	var/list/datum/component/packet_connected/radio/secure_connections = null
 	var/speaker_range = 2
 	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
 	var/hardened = 1	//This is for being able to run through signal jammers (just solar flares for now). acceptable values = 0 and 1.
@@ -47,37 +46,25 @@ var/list/headset_channel_lookup
 
 /obj/item/device/radio/New()
 	..()
-	if(radio_controller)
-		initialize()
-
-/obj/item/device/radio/initialize()
 	if ((src.frequency < R_FREQ_MINIMUM || src.frequency > R_FREQ_MAXIMUM) && !src.locked_frequency)
 		// if the frequency is somehow set outside of the normal range, put it back in range
 		world.log << "[src] ([src.type]) has a frequency of [src.frequency], sanitizing."
 		src.frequency = sanitize_frequency(src.frequency)
 
-	set_frequency(frequency)
+	MAKE_DEFAULT_RADIO_PACKET_COMPONENT("main", frequency)
+
 	if(src.secure_frequencies)
 		set_secure_frequencies()
 
 /obj/item/device/radio/disposing()
-	radio_controller.remove_object(src, "[frequency]")
-
-	if(istype(src.secure_frequencies))
-		for (var/sayToken in src.secure_frequencies)
-			var/frequency_id = src.secure_frequencies["[sayToken]"]
-			if (frequency_id)
-				radio_controller.remove_object(src, "[frequency_id]")
-
 	src.secure_connections = null
 	src.secure_frequencies = null
 
 	..()
 
 /obj/item/device/radio/proc/set_frequency(new_frequency)
-	radio_controller.remove_object(src, "[frequency]")
 	frequency = new_frequency
-	radio_connection = radio_controller.add_object(src, "[frequency]")
+	get_radio_connection_by_id(src, "main").update_frequency(frequency)
 
 /obj/item/device/radio/proc/set_secure_frequencies()
 	if(istype(src.secure_frequencies))
@@ -86,7 +73,7 @@ var/list/headset_channel_lookup
 			if (frequency_id)
 				if (!istype(src.secure_connections))
 					src.secure_connections = list()
-				src.secure_connections["[sayToken]"] = radio_controller.add_object(src, "[frequency_id]")
+				src.secure_connections["[sayToken]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f[frequency_id]", frequency_id)
 			else
 				src.secure_frequencies -= "[sayToken]"
 
@@ -100,11 +87,11 @@ var/list/headset_channel_lookup
 	if(!istype(src.secure_connections))
 		secure_connections = list()
 
-	var/oldFrequency = src.secure_frequencies["[frequencyToken]"]
-	if (oldFrequency)
-		radio_controller.remove_object(src, "[oldFrequency]")
+	var/oldConnection = src.secure_connections["[frequencyToken]"]
+	if (oldConnection)
+		qdel(oldConnection)
 
-	src.secure_connections["[frequencyToken]"] = radio_controller.add_object(src, "[newFrequency]")
+	src.secure_connections["[frequencyToken]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f[newFrequency]", newFrequency)
 	src.secure_frequencies["[frequencyToken]"] = newFrequency
 	return
 
@@ -244,9 +231,7 @@ var/list/headset_channel_lookup
 		return bicon(src)
 
 /obj/item/device/radio/talk_into(mob/M as mob, messages, secure, real_name, lang_id)
-	// According to a pair of DEBUG calls set up for testing, no radio jammer check for the src radio was performed.
-	// As improbable as this sounds, there are bug reports too to back up the findings. So uhm...
-	if (radio_controller.active_jammers.len && src.radio_connection.check_for_jammer(src) != 0)	//First bit is basically can_check_jammer but on this connection
+	if (length(by_cat[TR_CAT_RADIO_JAMMERS]) && check_for_radio_jammers(src))
 		return
 	if (!(src.wires & WIRE_TRANSMIT))
 		return
@@ -276,27 +261,28 @@ var/list/headset_channel_lookup
 
 	var/display_freq = src.frequency //Frequency to display on radio broadcast messages
 
-	var/datum/radio_frequency/connection = null
-	if (secure && src.secure_connections && istype(src.secure_connections["[secure]"], /datum/radio_frequency))
+	var/datum/component/packet_connected/radio/connection = null
+	if (secure && src.secure_connections && istype(src.secure_connections["[secure]"], /datum/component/packet_connected))
 		connection = src.secure_connections["[secure]"]
 		display_freq = src.secure_frequencies["[secure]"]
 	else
-		connection = src.radio_connection
+		connection = get_radio_connection_by_id(src, "main")
 		secure = 0
 
-	for (var/obj/item/I in connection.devices)
+	var/freq = connection.get_frequency()
+
+	for (var/obj/item/I as anything in connection.network?.analog_devices)
 		if (istype(I, /obj/item/device/radio))
 			var/obj/item/device/radio/R = I
-			//MBC : Do checks here and call check_for_jammer_bare instead. reduces proc calls.
-			if (can_check_jammer)
-				if (connection.check_for_jammer(R))
-					continue
+
+			if (length(by_cat[TR_CAT_RADIO_JAMMERS]) && check_for_radio_jammers(R))
+				continue
 			//if we have signal_loss (solar flare), and the radio isn't hardened don't send message, then block general frequencies.
 			if (signal_loss && !src.hardened && !secure)
-				if (text2num(connection.frequency) >= R_FREQ_MINIMUM && text2num(connection.frequency) <= R_FREQ_MAXIMUM)
+				if (text2num(freq) >= R_FREQ_MINIMUM && text2num(freq) <= R_FREQ_MAXIMUM)
 					continue
 
-			if (R.accept_rad(src, messages, connection))
+			if (R.accept_rad(src, messages, connection.network))
 				R.speech_bubble()
 				if (secure)
 					for (var/i in R.send_hear())
@@ -487,7 +473,7 @@ var/list/headset_channel_lookup
 		talk_into(M, msgs, null, real_name, lang_id)
 
 // Hope I didn't butcher this, but I couldn't help but notice some odd stuff going on when I tried to debug radio jammers (Convair880).
-/obj/item/device/radio/proc/accept_rad(obj/item/device/radio/R as obj, message, var/datum/radio_frequency/freq)
+/obj/item/device/radio/proc/accept_rad(obj/item/device/radio/R as obj, message, var/datum/packet_network/radio/freq)
 	if (message)
 		// Simple frequency match. The only check that used to be here.
 		if (src.frequency == R.frequency)
@@ -497,16 +483,8 @@ var/list/headset_channel_lookup
 		// Secure channel lookup when R.frequency != src.frequency. According to DEBUG calls set up for testing,
 		// this meant the receiving radio would decline the message even though both share a secure channel.
 		else if (src.secure_connections && istype(src.secure_connections) && src.secure_connections.len && freq && istype(freq))
-			var/list/datum/radio_frequency/RF = list()
-
-			for (var/key in src.secure_connections)
-				if (!RF.Find(src.secure_connections["[key]"]) && istype(src.secure_connections["[key]"], /datum/radio_frequency))
-					RF.Add(src.secure_connections["[key]"])
-
-			// Secure channel match. Easy.
-			if ((freq in RF) && (src in freq.devices))
-				//DEBUG_MESSAGE("Match found for transmission from [R] at [log_loc(R)] (list/devices match)")
-				return 1
+			if(get_radio_connection_by_id(src, "f[freq.frequency]"))
+				return TRUE
 
 			// Sender didn't use a secure channel prefix, giving us the 145.9 radio frequency datum.
 			// The devices list is useless here, but we can still receive the message if one of our
@@ -593,17 +571,15 @@ var/list/headset_channel_lookup
 		if (src.active)
 			boutput(user, "You activate [src].")
 			src.icon_state = "shieldon"
-			if (!radio_controller.active_jammers.Find(src))
-				radio_controller.active_jammers.Add(src)
+			START_TRACKING_CAT(TR_CAT_RADIO_JAMMERS)
 		else
 			boutput(user, "You shut off [src].")
 			icon_state = "shieldoff"
-			if (radio_controller.active_jammers.Find(src))
-				radio_controller.active_jammers.Remove(src)
+			STOP_TRACKING_CAT(TR_CAT_RADIO_JAMMERS)
 
 	disposing()
-		if (radio_controller && istype(radio_controller) && radio_controller.active_jammers.Find(src))
-			radio_controller.active_jammers.Remove(src)
+		if(src in by_cat[TR_CAT_RADIO_JAMMERS])
+			STOP_TRACKING_CAT(TR_CAT_RADIO_JAMMERS)
 		..()
 /obj/item/device/radio/beacon
 	name = "tracking beacon"
@@ -633,7 +609,7 @@ var/list/headset_channel_lookup
 	var/code = 2.0
 	var/on = 0.0
 //	var/e_pads = 0.0
-	frequency = 1451
+	frequency = FREQ_TRACKING_IMPLANT
 	throw_speed = 1
 	throw_range = 3
 	w_class = W_CLASS_HUGE
@@ -782,7 +758,7 @@ Code:
 	item_state = "signaler"
 	var/code = 30.0
 	w_class = W_CLASS_TINY
-	frequency = 1457
+	frequency = FREQ_SIGNALER
 	var/delay = 0
 	var/airlock_wire = null
 	desc = "A device used to send a coded signal over a specified frequency, with the effect depending on the device that recieves the signal."
@@ -919,7 +895,7 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 	signal.data["code"] = code
 	signal.data["message"] = message
 
-	radio_connection.post_signal(src, signal)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, src.frequency)
 
 	return
 

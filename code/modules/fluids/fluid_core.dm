@@ -218,7 +218,7 @@ var/mutable_appearance/fluid_ma
 	//incorporate touch_modifier?
 	Crossed(atom/movable/A)
 		..()
-		if (!src.group || !src.group.reagents || src.disposed || istype(A,/obj/fluid))
+		if (!src.group || !src.group.reagents || src.disposed || istype(A,/obj/fluid) || istype(src, /obj/fluid/airborne))
 			return
 
 		my_depth_level = last_depth_level
@@ -266,7 +266,7 @@ var/mutable_appearance/fluid_ma
 				AM.pixel_y = initial(AM.pixel_y)
 				floated_atoms -= AM*/
 
-		if (AM.event_handler_flags & USE_FLUID_ENTER)
+		if ((AM.event_handler_flags & USE_FLUID_ENTER) && !istype(src, /obj/fluid/airborne))
 			AM.ExitedFluid(src)
 
 

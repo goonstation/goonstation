@@ -250,12 +250,12 @@
 	attach_hud(render_special)
 
 	var/turf/T = get_turf(src)
-	if(isnull(T) || T.z <= Z_LEVEL_STATION)
+	var/area/AR = get_area(src)
+	if(isnull(T) || T.z <= Z_LEVEL_STATION || AR.active)
 		mobs.Add(src)
 	else if(!(src.mob_flags & LIGHTWEIGHT_AI_MOB) && (!src.ai || !src.ai.exclude_from_mobs_list))
 		skipped_mobs_list |= SKIPPED_MOBS_LIST
-		var/area/AR = get_area(src)
-		LAZYLISTADD(AR.mobs_not_in_global_mobs_list, src)
+		LAZYLISTADDUNIQUE(AR.mobs_not_in_global_mobs_list, src)
 
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
@@ -2665,6 +2665,8 @@
 	src.update_name_tag()
 
 /mob/proc/update_name_tag(name=null)
+	if(isnull(src.name_tag))
+		return
 	if(isnull(name))
 		name = src.name
 	if(name == "Unknown")
@@ -2672,7 +2674,10 @@
 	var/the_pos = findtext(name, " the")
 	if(the_pos)
 		name = copytext(name, 1, the_pos)
-	src.name_tag.set_extra(src.bioHolder?.mobAppearance?.pronouns?.subjective)
+	if(name)
+		src.name_tag.set_extra(he_or_she(src))
+	else
+		src.name_tag.set_extra("")
 	src.name_tag.set_name(name, strip_parentheses=TRUE)
 
 /mob/proc/protected_from_space()
@@ -3037,6 +3042,7 @@
 	return 1
 
 /mob/proc/get_id()
+	RETURN_TYPE(/obj/item/card/id)
 	if(istype(src.equipped(), /obj/item/card/id))
 		return src.equipped()
 	if(istype(src.equipped(), /obj/item/device/pda2))
@@ -3124,3 +3130,18 @@
 
 /mob/MouseExited(location, control, params)
 	src.name_tag?.hide_hover(usr.client)
+
+/mob/proc/get_pronouns()
+	RETURN_TYPE(/datum/pronouns)
+	if(isnull(.))
+		. = src?.bioHolder?.mobAppearance?.pronouns
+	if(isnull(.))
+		switch(src.bioHolder?.mobAppearance?.gender || src.gender)
+			if(MALE)
+				. = get_singleton(/datum/pronouns/heHim)
+			if(FEMALE)
+				. = get_singleton(/datum/pronouns/sheHer)
+			if(NEUTER)
+				. = get_singleton(/datum/pronouns/itIts)
+			else
+				. = get_singleton(/datum/pronouns/theyThem)
