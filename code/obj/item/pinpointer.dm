@@ -63,7 +63,7 @@
 			boutput(user, "<span class='alert'>Pinpointer target out of range.</span>")
 			return
 		src.set_dir(get_dir(src,target))
-		switch(get_dist(src,target))
+		switch(GET_DIST(src,target))
 			if(0)
 				arrow.icon_state = "pinondirect"
 			if(1 to 8)
