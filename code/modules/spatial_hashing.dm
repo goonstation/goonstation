@@ -96,6 +96,8 @@ var/global/list/datum/spatial_hashmap/spatial_z_maps = init_spatial_maps()
 		//but this is for our sounds system, where the shapes of collision actually resemble a diamond
 		//so : sample 8 points around the edges of the diamond shape created by our atom
 
+		ADD_BUCKET(A.x, A.y)
+
 		//N,W,E,S
 		min_x = A.x - atomboundsize
 		min_y = A.y - atomboundsize
