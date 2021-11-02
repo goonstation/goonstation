@@ -9,6 +9,13 @@
 
 	var/const/traitors_possible = 5
 
+#ifdef RP_MODE
+	var/const/pop_divisor = 10
+#else
+	var/const/pop_divisor = 6
+#endif
+
+
 /datum/game_mode/traitor/announce()
 	boutput(world, "<B>The current game mode is - Traitor!</B>")
 	boutput(world, "<B>There is a syndicate traitor on the [station_or_ship()]. Do not let the traitor succeed!!</B>")
@@ -29,7 +36,7 @@
 	var/token_wraith = 0
 
 	if(traitor_scaling)
-		num_traitors = max(1, min(round((num_players + randomizer) / 6), traitors_possible)) // adjust the randomizer as needed
+		num_traitors = max(1, min(round((num_players + randomizer) / pop_divisor), traitors_possible)) // adjust the randomizer as needed
 
 	if(num_traitors > 2 && prob(10))
 		num_traitors -= 2

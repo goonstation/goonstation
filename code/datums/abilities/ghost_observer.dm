@@ -418,6 +418,8 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 		boutput(holder.owner, "<span class='alert'>You exert some force to levitate [target]!</span>")
 		SPAWN_DBG(rand(30,50))
+			if (!holder)
+				return
 			//levitates the target chair, as well as any mobs mobs buckled in. Since buckled mobs are placed into the chair/bed's contents
 			//only doing chair. doing the bed levatate moves the mobs on it in a weird way, and I don't wanna spend the time to fix it
 			if (istype(target, /obj/stool/chair)/* || istype(target, /obj/stool/bed)*/)

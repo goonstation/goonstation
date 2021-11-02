@@ -53,10 +53,6 @@
 	if(!isturf(src.loc)) src.set_loc(get_turf(src))
 	if(NewLoc)
 		src.set_loc(NewLoc)
-		NewLoc.HasEntered(src)
-		for(var/atom/A in NewLoc)
-			if(A == src) continue
-			A.HasEntered(src)
 		return
 	if((direct & NORTH) && src.y < world.maxy)
 		src.y++

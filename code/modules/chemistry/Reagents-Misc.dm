@@ -2927,7 +2927,7 @@ datum
 			hygiene_value = -2
 			hunger_value = 0.068
 			viscosity = 0.4
-			depletion_rate = 0
+			depletion_rate = 0.4
 
 /*			var
 				blood_DNA = null

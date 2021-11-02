@@ -248,6 +248,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "medium"
 	w_class = W_CLASS_TINY
 	var/forensic_ID = null
+	burn_possible = 0
 
 	small
 		icon_state = "small"
@@ -714,7 +715,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				src.casings_to_eject = 0
 				if (src.ammo.amount_left < 8) // Do not eject shells if you're racking a full "clip"
 					var/turf/T = get_turf(src)
-					if (T) // Eject shells on rack instead of on shoot()
+					if (T && src.current_projectile.casing) // Eject shells on rack instead of on shoot()
 						var/obj/item/casing/C = new src.current_projectile.casing(T)
 						C.forensic_ID = src.forensic_ID
 						C.set_loc(T)

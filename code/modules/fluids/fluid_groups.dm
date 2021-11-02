@@ -521,7 +521,7 @@
 				for(var/obj/O in F.loc)
 					LAGCHECK(LAG_MED)
 					if (O?.submerged_images)
-						F.HasEntered(O,O.loc)
+						F.Crossed(O)
 
 				depth_changed = 1
 

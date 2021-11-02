@@ -90,8 +90,8 @@
 	icon_state = "alert:0"
 	var/list/priority_alarms = list()
 	var/list/minor_alarms = list()
-	var/receive_frequency = "1437"
-	var/respond_frequency = "1149"
+	var/receive_frequency = FREQ_ALARM
+	var/respond_frequency = FREQ_PDA
 
 /obj/machinery/computer/hangar
 	name = "Hangar"

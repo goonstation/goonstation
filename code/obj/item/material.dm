@@ -15,7 +15,7 @@
 	burn_type = 1
 	var/wiggle = 6 // how much we want the sprite to be deviated fron center
 	max_stack = INFINITY
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	New()
 		..()
@@ -64,7 +64,8 @@
 		else
 			..(user)
 
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if (isobserver(AM))
 			return
 		else if (isliving(AM))
@@ -573,7 +574,7 @@
 	stamina_cost = 5
 	stamina_crit_chance = 35
 	burn_possible = 0
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 	var/sound_stepped = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
 
 	New()
@@ -585,7 +586,7 @@
 		if(!scalpel_surgery(M,user)) return ..()
 		else return
 
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
 			if(H.getStatusDuration("stunned") || H.getStatusDuration("weakened")) // nerf for dragging a person and a shard to damage them absurdly fast - drsingh

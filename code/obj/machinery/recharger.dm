@@ -145,7 +145,7 @@ obj/machinery/recharger
 	. += "<br> <span class='notice'> It is currently recharging:"
 	if(charge_status == STATUS_ACTIVE || charge_status == STATUS_COMPLETE)
 		var/list/charge = list();
-		if(SEND_SIGNAL(src.charging, COMSIG_CELL_CHECK_CHARGE, charge))
+		if(SEND_SIGNAL(src.charging, COMSIG_CELL_CHECK_CHARGE, charge) & CELL_RETURNED_LIST)
 			. += "<br> <span class='notice'> \The [charging.name]! Progress: [charge["charge"]]/[charge["max_charge"]]PU </span>"
 	else
 		. += "<br>Nothing! </span>"

@@ -144,7 +144,7 @@
 		if(H)
 			choke_count += 1 * mult
 			H.remove_stamina((STAMINA_REGEN+8.5) * mult)
-			H.stamina_stun()
+			H.stamina_stun(mult)
 			if(H.stamina <= -75)
 				H.losebreath += (3 * mult)
 			else if(H.stamina <= -50)
