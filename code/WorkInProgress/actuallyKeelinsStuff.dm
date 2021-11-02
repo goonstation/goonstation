@@ -2814,6 +2814,14 @@ Returns:
 		var/turf/trg = source.loc
 		AM.set_loc(trg)
 
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
+
 /obj/dfissure_from
 	name = "dimensional fissure"
 	desc = "a rip in time and space"
