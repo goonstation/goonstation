@@ -255,8 +255,7 @@
 		mobs.Add(src)
 	else if(!(src.mob_flags & LIGHTWEIGHT_AI_MOB) && (!src.ai || !src.ai.exclude_from_mobs_list))
 		skipped_mobs_list |= SKIPPED_MOBS_LIST
-		var/area/AR = get_area(src)
-		LAZYLISTADD(AR.mobs_not_in_global_mobs_list, src)
+		LAZYLISTADDUNIQUE(AR.mobs_not_in_global_mobs_list, src)
 
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
