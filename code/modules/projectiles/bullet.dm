@@ -20,6 +20,7 @@ ABSTRACT_TYPE(/datum/projectile/bullet)
 	// caliber list: update as needed
 	// 0.22 pistol / zipgun
 	// 0.308 - rifles
+	// 0.311 - soviet rifles. do not let them accept anything other than soviet bullets!
 	// 0.357 - revolver
 	// 0.38 - detective
 	// 0.40 - blowgun darts
@@ -651,6 +652,25 @@ toxic - poisons
 	icon_turf_hit = "bhole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
+
+/datum/projectile/bullet/paint //dont question it
+	name = "training magazine"
+	window_pass = 0
+	power = 0
+	icon_state = "kss_training"
+	damage_type = D_KINETIC
+	cost = 1
+	shot_number = 1
+	icon_turf_hit = "bhole-small"
+	hit_type = DAMAGE_BLUNT
+	hit_mob_sound = "sound/misc/splash_1.ogg"
+	hit_object_sound = "sound/misc/splash_1.ogg"
+	implanted = null
+	ks_ratio = 0.0
+
+	on_hit(atom/hit, dirflag, atom/projectile)
+		..()
+		hit.setStatus("marker_painted", 30 SECONDS)
 
 /datum/projectile/bullet/assault_rifle
 	name = "bullet"

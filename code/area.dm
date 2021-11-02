@@ -1254,13 +1254,13 @@ ABSTRACT_TYPE(/area/prefab)
 	name = "3151"
 	icon_state = "red"
 
-	level one
+	level_one
 		name = "3151 level 1"
 		icon_state = "red"
 
-	level two
+	level_two
 		name = "3151 level 2"
-		icon_state = red
+		icon_state = "red"
 
 // Sealab trench areas //
 
