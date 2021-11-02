@@ -188,6 +188,17 @@ ABSTRACT_TYPE(/datum/objective/crew/securityofficer)
 					return 1
 			return 0
 
+ABSTRACT_TYPE(/datum/objective/crew/securityassistant)
+/datum/objective/crew/securityassistant
+	brigstir
+		explanation_text = "Keep Monsieur Stirstir brigged but also make sure that he comes to absolutely no harm."
+		medal_name = "Monkey Duty"
+		check_completion()
+			for(var/mob/living/carbon/human/npc/monkey/stirstir/M in mobs)
+				if(!isdead(M) && (M.get_brute_damage() + M.get_oxygen_deprivation() + M.get_burn_damage() + M.get_toxin_damage()) == 0 && istype(get_area(M),/area/station/security/brig))
+					return 1
+			return 0
+
 ABSTRACT_TYPE(/datum/objective/crew/quartermaster)
 /datum/objective/crew/quartermaster
 	profit
@@ -314,6 +325,20 @@ ABSTRACT_TYPE(/datum/objective/crew/miner)
 				suitcount++
 			if(suitcount > 2) return 1
 			else return 0
+	forsale
+		explanation_text = "Have at least ten different ores available for purchase from the Rockbox at the end of the round."
+		check_completion()
+			var/list/materials = list()
+			for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
+				if(S.broken)
+					continue
+				var/list/ores = S.ores
+				for(var/ore in ores)
+					var/datum/ore_cloud_data/OCD = ores[ore]
+					if(OCD.for_sale && OCD.amount)
+						materials |= ore
+			return materials.len >= 10
+
 
 ABSTRACT_TYPE(/datum/objective/crew/mechanic)
 /datum/objective/crew/mechanic

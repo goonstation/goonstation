@@ -141,7 +141,7 @@
 
 
 /datum/component/holdertargeting/fullauto/proc/begin_shootloop(mob/living/user, object, location, control, params)
-	if(!stopping)
+	if(!stopping && !shooting)
 		src.retarget(user, object, location, control, params)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user

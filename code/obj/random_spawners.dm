@@ -5,7 +5,7 @@
 	icon_state = "itemspawn"
 	density = 0
 	anchored = 1.0
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	layer = 99
 	var/amt2spawn = 0
 	var/min_amt2spawn = 0
@@ -78,8 +78,7 @@
 	icon_state = "rand_snacks"
 	min_amt2spawn = 1
 	max_amt2spawn = 1
-	items2spawn = list(/obj/item/reagent_containers/food/snacks/candy/regular,
-	/obj/item/reagent_containers/food/snacks/candy/chocolate,
+	items2spawn = list(/obj/item/reagent_containers/food/snacks/candy/chocolate,
 	/obj/item/reagent_containers/food/snacks/candy/nougat,
 	/obj/item/reagent_containers/food/snacks/candy/butterscotch,
 	/obj/item/reagent_containers/food/snacks/sandwich/meat_h,
@@ -937,7 +936,7 @@
 	icon_state = "podspawn"
 	density = 0
 	anchored = 1.0
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	layer = 99
 	var/obj/machinery/vehicle/pod2spawn = null
 
@@ -1513,7 +1512,7 @@
 						/obj/item/reagent_containers/food/drinks/bottle/soda/orange,
 						/obj/item/reagent_containers/food/drinks/bottle/soda/grones)
 	rare_items2spawn = list(/obj/item/reagent_containers/food/drinks/bottle/soda/softsoft_pizza)
-	
+
 /obj/random_item_spawner/hat
 	name = "random hat spawner"
 	icon_state = "rand_hat"

@@ -214,7 +214,7 @@ var/datum/score_tracker/score_tracker
 			else grade = "Somebody fucked something up."
 
 		score_calculated = 1
-		boutput(world, "<b>Final Rating: <font size='4'>[final_score_all]%</font></b>")
+		boutput(world, "<br><b>Final Rating: <font size='4'>[final_score_all]%</font></b>")
 		boutput(world, "<b>Grade: <font size='4'>[grade]</font></b>")
 
 #ifndef  MAP_OVERRIDE_POD_WARS

@@ -69,12 +69,6 @@
 	crop = /obj/critter/killertomato
 	iconmod = "TomatoKiller"
 
-/datum/plantmutation/tomato/tomacco
-	name = "Tomacco"
-	name_suffix = " Tomacco"
-	crop = /obj/item/reagent_containers/food/snacks/plant/tomato/tomacco
-	iconmod = "TomatoTomacco" //ayy potayto potato tomayto tomacco ya dig
-
 // Corn Mutations
 
 /datum/plantmutation/corn/clear
@@ -722,3 +716,19 @@
 	crop = /obj/item/reagent_containers/food/snacks/plant/purplegoop/orangegoop
 	assoc_reagents = list("oil")
 	chance = 25
+
+//Raspberry Mutations
+
+/datum/plantmutation/raspberry/blackberry
+	name = "Blackberry"
+	iconmod = "Blackberry"
+	dont_rename_crop = true
+	crop = /obj/item/reagent_containers/food/snacks/plant/blackberry
+	assoc_reagents = list("juice_blackberry")
+
+/datum/plantmutation/raspberry/blueraspberry
+	name = "Blue Raspberry"
+	iconmod = "BlueRaspberry"
+	dont_rename_crop = true
+	crop = /obj/item/reagent_containers/food/snacks/plant/blueraspberry
+	assoc_reagents = list("juice_blueraspberry")

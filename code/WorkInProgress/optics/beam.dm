@@ -96,7 +96,7 @@
 */
 
 
-	HasEntered(var/atom/movable/AM)
+	Crossed(atom/movable/AM)
 		if(istype(AM, /obj/beam))
 			return
 		if(blocked(AM))

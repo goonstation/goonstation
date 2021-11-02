@@ -35,6 +35,7 @@
 	var/is_npc = 0
 
 	var/move_laying = null
+	var/last_typing = null
 	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
 	var/static/image/sleep_bubble = image('icons/mob/mob.dmi', "sleep")
 	var/image/static_image = null
@@ -275,6 +276,10 @@
 	else
 		boutput(usr, "<span class='alert'>You are not dead yet!</span>")
 
+/mob/living/Logout()
+	. = ..()
+	src.UpdateOverlays(null, "speech_bubble")
+
 /mob/living/Login()
 	..()
 	// If...
@@ -427,6 +432,8 @@
 			src.toggle_point_mode()
 		if ("say_radio")
 			src.say_radio()
+		if ("say_main_radio")
+			src.say_radio()
 		else
 			. = ..()
 
@@ -513,7 +520,7 @@
 				if (use_delay)
 					src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)
 
-				if (src.invisibility > 0 && (isturf(target) || (target != src && isturf(target.loc)))) // dont want to check for a cloaker every click if we're not invisible
+				if (src.invisibility > INVIS_NONE && (isturf(target) || (target != src && isturf(target.loc)))) // dont want to check for a cloaker every click if we're not invisible
 					SEND_SIGNAL(src, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
 
 				if (equipped)
@@ -900,8 +907,10 @@
 				message = stutter(message)
 
 	UpdateOverlays(speech_bubble, "speech_bubble")
+	var/speech_bubble_time = src.last_typing
 	SPAWN_DBG(1.5 SECONDS)
-		UpdateOverlays(null, "speech_bubble")
+		if(speech_bubble_time == src.last_typing)
+			UpdateOverlays(null, "speech_bubble")
 
 	//Blobchat handling
 	if (src.mob_flags & SPEECH_BLOB)
@@ -1126,7 +1135,7 @@
 			else if(istype(M, /mob/zoldorf))
 				viewrange = (((istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2)
 				if (get_dist(M,src) <= viewrange)
-					if((!istype(M.loc,/obj/machinery/playerzoldorf))&&(!istype(M.loc,/mob))&&(M.invisibility == 10))
+					if((!istype(M.loc,/obj/machinery/playerzoldorf))&&(!istype(M.loc,/mob))&&(M.invisibility == INVIS_GHOST))
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
 				else
 					M.show_message(thisR, 2, assoc_maptext = chat_text)
@@ -1327,10 +1336,10 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	var/turf/T = get_turf(src)
 	if (T.active_liquid && src.lying)
-		T.active_liquid.HasEntered(src, T)
+		T.active_liquid.Crossed(src)
 		src.visible_message("<span class='alert'>[src] splashes around in [T.active_liquid]!</b></span>", "<span class='notice'>You splash around in [T.active_liquid].</span>")
 
-	if (!src.restrained())
+	if (!src.restrained() && isalive(src)) //isalive returns false for both dead and unconcious, which is what we want
 		var/struggled_grab = 0
 		if (src.canmove)
 			if(src.grabbed_by.len > 0)
@@ -1374,7 +1383,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	var/atom/oldloc = src.loc
 	. = ..()
 	if(src && !src.disposed && src.loc && (!istype(src.loc, /turf) || !istype(oldloc, /turf)))
-		if(src.chat_text.vis_locs.len)
+		if(src.chat_text?.vis_locs?.len)
 			var/atom/movable/AM = src.chat_text.vis_locs[1]
 			AM.vis_contents -= src.chat_text
 		if(istype(src.loc, /turf))
@@ -1733,7 +1742,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		src.ai.was_harmed(weapon,M)
 		if(src.is_hibernating)
 			if (src.registered_area)
-				src.registered_area.wake_critters()
+				src.registered_area.wake_critters(M)
 			else
 				src.wake_from_hibernation()
 	..()

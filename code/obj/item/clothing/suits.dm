@@ -433,12 +433,53 @@
 	item_state = "sousapron"
 	body_parts_covered = TORSO
 	permeability_coefficient = 0.70
+	
+/obj/item/clothing/suit/apron/tricolor
+	name = "pizza apron"
+	desc = "An apron made specifically to protect from tomato sauce."
+	icon_state = "triapron"
+	item_state = "triapron"
+	body_parts_covered = TORSO
+	permeability_coefficient = 0.70
 
 /obj/item/clothing/suit/apron/botanist
 	name = "blue apron"
 	desc = "This will keep you safe from tomato stains. Unless they're the exploding ones"
 	icon_state = "apron-botany"
 	item_state = "apron-botany"
+
+/obj/item/clothing/suit/apron/slasher
+	name = "butcher's apron"
+	desc = "A brown butcher's apron, you can feel an aura of something dark radiating off of it."
+	icon_state = "apron-welder"
+	item_state = "apron-welder"
+	cant_self_remove = TRUE
+	cant_other_remove = TRUE
+	item_function_flags = IMMUNE_TO_ACID
+
+	setupProperties()
+		..()
+		setProperty("meleeprot", 7)
+		setProperty("rangedprot", 2)
+		setProperty("coldprot", 75)
+		setProperty("heatprot", 75)
+		setProperty("movespeed", 0.4)
+		setProperty("exploprot", 30)
+
+
+	postpossession
+		cant_self_remove = FALSE
+		cant_other_remove = FALSE
+		name = "worn apron"
+		desc = "A brown, faded butcher's apron, it looks as though it's over a hundred years old."
+
+		setupProperties()
+			..()
+			setProperty("meleeprot", 1)
+			setProperty("rangedprot", 0)
+			setProperty("coldprot", 10)
+			setProperty("heatprot", 10)
+			setProperty("movespeed", 0.4)
 
 /obj/item/clothing/suit/labcoat
 	name = "labcoat"
@@ -649,7 +690,7 @@
 					return
 				else
 					for (var/i=3, i>0, i--)
-						var/obj/item/material_piece/cloth/cottonfabric/CF = unpool(/obj/item/material_piece/cloth/cottonfabric)
+						var/obj/item/material_piece/cloth/cottonfabric/CF = new /obj/item/material_piece/cloth/cottonfabric
 						CF.set_loc(get_turf(src))
 					boutput(user, "You rip up [src].")
 					user.u_equip(src)

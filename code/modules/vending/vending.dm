@@ -278,7 +278,7 @@
 	if (!card || !user || !src.acceptcard)
 		return
 	boutput(user, "<span class='notice'>You swipe [card].</span>")
-	var/datum/data/record/account = null
+	var/datum/db_record/account = null
 	account = FindBankAccountByName(card.registered)
 	if (account)
 		var/enterpin = input(user, "Please enter your PIN number.", "Enter PIN", 0) as null|num
@@ -324,10 +324,10 @@
 				html_parts += "<B>You have selected the following item for purchase:</b><br>"
 				html_parts += "&emsp;[src.paying_for.product_name]<br>"
 				html_parts += "<B>Please swipe your card to authorize payment.</b><br>"
-			var/datum/data/record/account = null
+			var/datum/db_record/account = null
 			account = FindBankAccountByName(src.scan.registered)
 			html_parts += "<B>Current ID:</B> <a href='byond://?src=\ref[src];logout=1'><u>([src.scan])</u></A><BR>"
-			html_parts += "<B>Credits on Account: [account.fields["current_money"]] Credits</B> <BR>"
+			html_parts += "<B>Credits on Account: [account["current_money"]] Credits</B> <BR>"
 		else
 			html_parts += "<B>Current ID:</B> None<BR>"
 
@@ -405,7 +405,7 @@
 			boutput(user, "<span class='notice'>You insert [W].</span>")
 			user.u_equip(W)
 			W.dropped()
-			pool( W )
+			qdel( W )
 			src.generate_HTML(1)
 			return
 		else
@@ -573,7 +573,7 @@
 				trigger_anti_cheat(usr, "tried to href exploit [src] to spawn an invalid item.")
 				return
 
-			var/datum/data/record/account = null
+			var/datum/db_record/account = null
 			if (src.pay)
 				if (src.acceptcard && src.scan)
 					account = FindBankAccountByName(src.scan.registered)
@@ -584,7 +584,7 @@
 						src.paying_for = R
 						src.generate_HTML(1)
 						return
-					if (account.fields["current_money"] < R.product_cost)
+					if (account["current_money"] < R.product_cost)
 						boutput(usr, "<span class='alert'>Insufficient funds in account. To use machine credit, log out.</span>")
 						flick(src.icon_deny,src)
 						src.vend_ready = 1
@@ -614,7 +614,7 @@
 
 			if (src.pay)
 				if (src.acceptcard && account)
-					account.fields["current_money"] -= R.product_cost
+					account["current_money"] -= R.product_cost
 				else
 					src.credit -= R.product_cost
 				if (!isplayer)
@@ -622,7 +622,7 @@
 				else
 					//Players get 90% of profit from player vending machines QMs get 10%
 					var/obj/machinery/vending/player/T = src
-					T.owneraccount.fields["current_money"] += round(R.product_cost * profit)
+					T.owneraccount["current_money"] += round(R.product_cost * profit)
 					wagesystem.shipping_budget += round(R.product_cost * (1 - profit))
 				if(R.product_amount <= 0 && !isplayer == 0)
 					src.player_list -= R
@@ -681,7 +681,7 @@
 		if (href_list["return_credits"])
 			SPAWN_DBG(src.vend_delay)
 				if (src.credit > 0)
-					var/obj/item/spacecash/returned = unpool(/obj/item/spacecash)
+					var/obj/item/spacecash/returned = new /obj/item/spacecash
 					returned.setup(src.get_output_location(), src.credit)
 
 					usr.put_in_hand_or_eject(returned) // try to eject it into the users hand, if we can
@@ -1076,7 +1076,7 @@
 
 	create_products()
 		..()
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/candy/regular, 10, cost=PAY_UNTRAINED/20)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/candy/chocolate, 10, cost=PAY_UNTRAINED/20)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/chips, 10, cost=PAY_UNTRAINED/15)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/donut, 10, cost=PAY_TRADESMAN/20)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/fries, 10, cost=PAY_TRADESMAN/15)
@@ -1627,8 +1627,10 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/corn, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/seaweed, 10)
 
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/breakfast, rand(2, 4), hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/snack_cake, rand(1, 3), hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/breakfast, rand(2, 4), hidden=1,)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/snack_cake, rand(1, 3), hidden=1,)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/apron/tricolor, rand(2, 2), hidden=1,)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/moustache/Italian , rand(2, 2), hidden=1,)
 		product_list += new/datum/data/vending_product(pick(/obj/item/paper/recipe_tandoori, /obj/item/paper/recipe_potatocurry, /obj/item/paper/recipe_coconutcurry, /obj/item/paper/recipe_chickenpapplecurry), 1, hidden = 1)
 
 //The burden of these machinations weighs on my shoulders
@@ -1833,7 +1835,7 @@
 	//card display name
 	var/cardname
 	//Bank account
-	var/datum/data/record/owneraccount = null
+	var/datum/db_record/owneraccount = null
 	var/image/crtoverlay = null
 	var/image/promoimage = null
 	player_list = list()
@@ -2490,6 +2492,7 @@
 	glitchy_slogans = 1
 	pay = 1
 	acceptcard = 1
+	mats = null
 	slogan_list = list("Hello!",
 	"Please state the item you wish to purchase.",
 	"Many goods at reasonable prices.",
@@ -2686,7 +2689,7 @@
 
 	New()
 		..()
-		gas_prototype = unpool(/datum/gas_mixture)
+		gas_prototype = new /datum/gas_mixture
 
 	proc/fill_cost()
 		if(!holding) return 0
@@ -2727,10 +2730,10 @@
 		html += "<TT><b>Welcome!</b><br>"
 		html += "<b>Current balance: <a href='byond://?src=\ref[src];return_credits=1'>[src.credit] credits</a></b><br>"
 		if (src.scan)
-			var/datum/data/record/account = null
+			var/datum/db_record/account = null
 			account = FindBankAccountByName(src.scan.registered)
 			html += "<b>Current ID:</b> <a href='?src=\ref[src];logout=1'>[src.scan]</a><br />"
-			html += "<b>Credits on Account: [account.fields["current_money"]] Credits</b> <br>"
+			html += "<b>Credits on Account: [account["current_money"]] Credits</b> <br>"
 		else
 			html += "<b>Current ID:</b> None<br>"
 		if(src.holding)
@@ -2771,9 +2774,9 @@
 					src.updateUsrDialog()
 					return
 				else if(scan)
-					var/datum/data/record/account = FindBankAccountByName(src.scan.registered)
-					if (account && account.fields["current_money"] >= cost)
-						account.fields["current_money"] -= cost
+					var/datum/db_record/account = FindBankAccountByName(src.scan.registered)
+					if (account && account["current_money"] >= cost)
+						account["current_money"] -= cost
 						src.fill()
 						boutput(usr, "<span class='notice'>You fill up the [src.holding].</span>")
 						src.updateUsrDialog()

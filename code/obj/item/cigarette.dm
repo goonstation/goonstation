@@ -99,7 +99,7 @@
 	proc/light(var/mob/user as mob, var/message as text)
 		if (src.on == 0)
 			src.on = 1
-			src.firesource = TRUE
+			src.firesource = FIRESOURCE_OPEN_FLAME
 			src.hit_type = DAMAGE_BURN
 			src.force = 3
 			src.icon_state = litstate
@@ -195,6 +195,11 @@
 				else
 					src.light(user, "<span class='alert'><b>[user]</b> lights [his_or_her(user)] [src.name] with [M]'s flaming body. That's cold, man. That's real cold.</span>")
 				return
+			else if (istype(M, /mob/living/critter/fire_elemental))
+				if (M == user)
+					src.light(user, "<span class='alert'><b>[user]</b> lights [his_or_her(user)] [src.name] with [his_or_her(user)] OWN flaming body.")
+				else
+					src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [M]. Good thinking!</span>")
 			else if (src.on == 1)
 				src.put_out(user, "<span class='alert'><b>[user]</b> puts [src] out on [target].</span>")
 				if (ishuman(target))
@@ -940,7 +945,7 @@
 
 	proc/light(var/mob/user as mob)
 		src.on = 1
-		src.firesource = TRUE
+		src.firesource = FIRESOURCE_OPEN_FLAME
 		src.icon_state = "match-lit"
 
 		playsound(user, "sound/items/matchstick_light.ogg", 50, 1)
@@ -1132,7 +1137,7 @@
 
 	proc/activate(mob/user as mob)
 		src.on = 1
-		src.firesource = TRUE
+		src.firesource = FIRESOURCE_OPEN_FLAME
 		set_icon_state(src.icon_on)
 		src.item_state = "[item_state_base]on"
 		light.enable()

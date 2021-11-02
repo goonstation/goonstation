@@ -38,13 +38,13 @@
 			return 0 // Cooldown because spam is bad.
 
 		M.visible_message("<span class='alert'><B>[M]'s eyes emit a blinding flash at [target]!</B></span>")
-		var/obj/itemspecialeffect/glare/E = unpool(/obj/itemspecialeffect/glare)
+		var/obj/itemspecialeffect/glare/E = new /obj/itemspecialeffect/glare
 		E.color = "#FFFFFF"
 		E.setup(M.loc)
 		playsound(M.loc,"sound/effects/glare.ogg", 50, 1, pitch = 1, extrarange = -4)
 
 		SPAWN_DBG(1 DECI SECOND)
-			var/obj/itemspecialeffect/glare/EE = unpool(/obj/itemspecialeffect/glare)
+			var/obj/itemspecialeffect/glare/EE = new /obj/itemspecialeffect/glare
 			EE.color = "#FFFFFF"
 			EE.setup(target.loc)
 			playsound(target.loc,"sound/effects/glare.ogg", 50, 1, pitch = 0.8, extrarange = -4)

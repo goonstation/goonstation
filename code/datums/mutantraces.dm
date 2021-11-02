@@ -775,7 +775,7 @@
 	sight_modifier()
 		mob.sight |= SEE_MOBS
 		mob.see_in_dark = SEE_DARK_FULL
-		mob.see_invisible = 3
+		mob.see_invisible = INVIS_CLOAK
 
 	emote(var/act)
 		var/message = null
@@ -837,7 +837,7 @@
 
 	sight_modifier()
 		mob.see_in_dark = SEE_DARK_HUMAN + 1
-		mob.see_invisible = 1
+		mob.see_invisible = INVIS_INFRA
 
 	say_filter(var/message)
 		return replacetext(message, "s", stutter("ss"))
@@ -952,7 +952,7 @@
 	sight_modifier()
 		mob.sight |= SEE_MOBS
 		mob.see_in_dark = SEE_DARK_FULL
-		mob.see_invisible = 0
+		mob.see_invisible = INVIS_NONE
 
 	say_filter(var/message)
 		return pick("Urgh...", "Brains...", "Hungry...", "Kill...")
@@ -1297,6 +1297,7 @@
 			health_update_queue |= mob
 			src.original_name = mob.real_name
 			mob.real_name = "werewolf"
+			mob.UpdateName()
 
 			mob.bioHolder.AddEffect("protanopia", null, null, 0, 1)
 			mob.bioHolder.AddEffect("accent_scoob_nerf", null, null, 0, 1)
@@ -1319,6 +1320,7 @@
 
 			if (!isnull(src.original_name))
 				mob.real_name = src.original_name
+				mob.UpdateName()
 
 			mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
 		. = ..()
@@ -1327,7 +1329,7 @@
 		if (ishuman(mob))
 			mob.sight |= SEE_MOBS
 			mob.see_in_dark = SEE_DARK_FULL
-			mob.see_invisible = 2
+			mob.see_invisible = INVIS_CLOAK
 		return
 
 	// Werewolves (being a melee-focused role) are quite buff.
@@ -1722,7 +1724,7 @@
 
 	sight_modifier()
 		mob.see_in_dark = SEE_DARK_HUMAN + 1
-		mob.see_invisible = 1
+		mob.see_invisible = INVIS_INFRA
 
 	disposing()
 		if(ishuman(mob))
@@ -1758,7 +1760,7 @@
 
 	sight_modifier()
 		mob.see_in_dark = SEE_DARK_HUMAN + 1
-		mob.see_invisible = 1
+		mob.see_invisible = INVIS_INFRA
 
 	disposing()
 		if(ishuman(mob))

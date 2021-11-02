@@ -232,6 +232,19 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		..()
 		setProperty("heatprot", 7)
 
+	slasher
+		name = "Padded Gloves"
+		desc = "These gloves are padded and lined with insulating material."
+		cant_self_remove = 1
+		cant_other_remove = 1
+		material_prints = "black insulative fibers"
+
+		setupProperties()
+			..()
+			setProperty("heatprot", 15)
+			setProperty("conductivity", 0)
+			setProperty("exploprot", 10)
+
 /obj/item/clothing/gloves/black/attackby(obj/item/W, mob/user)
 	if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
 		user.visible_message("<span class='notice'>[user] cuts off the fingertips from [src].</span>")
@@ -516,7 +529,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 				var/list/affected = DrawLine(last, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 				for(var/obj/O in affected)
-					SPAWN_DBG(0.6 SECONDS) pool(O)
+					SPAWN_DBG(0.6 SECONDS) qdel(O)
 
 				if(istype(target_r, /obj/machinery/power/generatorTemp))
 					var/obj/machinery/power/generatorTemp/gen = target_r

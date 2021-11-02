@@ -2,6 +2,8 @@
 	name = "The Colosseum"
 	virtual = 1
 	ambient_light = "#bfbfbf"
+	dont_log_combat = TRUE
+
 
 	Entered(var/atom/A)
 		..()
@@ -1469,7 +1471,7 @@ proc/get_colosseum_message(var/name, var/message)
 				explosion_new(src, T, 5)
 			for(T in range(src,1))
 				make_cleanable(/obj/decal/cleanable/machine_debris, T)
-				var/obj/decal/cleanable/machine_debris/C = unpool(/obj/decal/cleanable/machine_debris)
+				var/obj/decal/cleanable/machine_debris/C = new /obj/decal/cleanable/machine_debris
 				C.setup(T)
 
 			qdel(src)
@@ -1544,6 +1546,7 @@ proc/get_colosseum_message(var/name, var/message)
 				icon_state = "powerup_primary"
 
 		Crossed(var/atom/A)
+			..()
 			if (disposed)
 				return
 			if (istype(A, /obj/machinery/colosseum_putt))
@@ -1577,6 +1580,7 @@ proc/get_colosseum_message(var/name, var/message)
 			return 1
 
 		Crossed(var/atom/A)
+			..()
 			if (disposed)
 				return
 			if (istype(A, /obj/machinery/colosseum_putt))
@@ -1751,6 +1755,7 @@ proc/get_colosseum_message(var/name, var/message)
 			explosion_new(src, get_turf(src), 5)
 
 	Crossed(var/atom/A)
+		..()
 		if (disposed)
 			return
 		if (istype(A, /obj/machinery/colosseum_putt) || istype(A, /obj/critter/gunbot/drone))

@@ -13,14 +13,3 @@
 	MA.layer = layer
 	MA.plane = plane
 	return MA
-
-mutable_appearance/pooled(pooltype)
-	. = ..()
-	src.icon = initial(src.icon)
-	src.icon_state = initial(src.icon_state)
-	src.layer = initial(src.layer)
-	src.plane = initial(src.plane)
-	src.color = initial(src.color)
-	src.alpha = initial(src.alpha)
-	src.maptext = initial(src.maptext)
-	src.overlays = initial(src.overlays)

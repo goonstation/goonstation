@@ -79,9 +79,11 @@
 	last_life_tick = TIME
 
 /mob/living/disposing()
-	..()
 	for (var/datum/lifeprocess/L in lifeprocesses)
 		remove_lifeprocess(L)
+	lifeprocesses.len = 0
+	lifeprocesses = null
+	..()
 
 /mob/living/carbon/human
 	var/list/heartbeatOverlays = list()
@@ -173,7 +175,7 @@
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 
 /mob/living/Life(datum/controller/process/mobs/parent)
-	set invisibility = 0
+	set invisibility = INVIS_NONE
 	if (..())
 		return 1
 
@@ -539,6 +541,8 @@
 			L.process()
 
 	force_laydown_standup() //immediately force a laydown
+		if(!lifeprocesses)
+			return
 		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/stuns_lying]
 		if (L)
 			L.process()

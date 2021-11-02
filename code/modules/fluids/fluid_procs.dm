@@ -82,7 +82,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	if (airborne)
 		if (!src.active_airborne_liquid)
 			FG = new /datum/fluid_group/airborne
-			F = unpool(/obj/fluid/airborne)
+			F = new /obj/fluid/airborne
 			src.active_airborne_liquid = F
 			F.set_up(src)
 			if (react_volume == 0)
@@ -99,7 +99,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	else
 		if (!src.active_liquid)
 			FG = new
-			F = unpool(/obj/fluid)
+			F = new /obj/fluid
 			src.active_liquid = F
 			F.set_up(src)
 			if (react_volume == 0)
@@ -114,8 +114,9 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 				if (react_volume == 0)
 					react_volume = 1
 
-	R.trans_to_direct(FG.reagents, react_volume, index=index)
 	FG.add(F, react_volume, guarantee_is_member = fluid_and_group_already_exist)
+	R.trans_to_direct(FG.reagents, react_volume, index=index)
+	F.update_icon()
 
 	if (!airborne)
 		var/turf/simulated/floor/T = src
@@ -146,7 +147,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	if (airborne)
 		if (!src.active_airborne_liquid)
 			FG = new /datum/fluid_group/airborne
-			F = unpool(/obj/fluid/airborne)
+			F = new /obj/fluid/airborne
 			src.active_airborne_liquid = F
 			F.set_up(src)
 			if (react_volume == 0)
@@ -163,7 +164,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	else
 		if (!src.active_liquid)
 			FG = new
-			F = unpool(/obj/fluid)
+			F = new /obj/fluid
 			src.active_liquid = F
 			F.set_up(src)
 			if (react_volume == 0)
@@ -214,7 +215,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	if (!IS_VALID_FLUIDREACT_TURF(src)) return
 	//if possible_cleanable has a value, handle exclusively this decal. don't search thru the turf.
 	if (possible_cleanable)
-		if (possible_cleanable.qdeled || possible_cleanable.pooled) return
+		if (possible_cleanable.qdeled || possible_cleanable.disposed) return
 		if (istype(possible_cleanable, /obj/decal/cleanable/blood/dynamic))
 			var/obj/decal/cleanable/blood/dynamic/blood = possible_cleanable
 			var/blood_dna = blood.blood_DNA
@@ -242,7 +243,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	//all right, tally up the cleanables and attempt to call fluid_reacts on them
 	var/list/cleanables = list()
 	for (var/obj/decal/cleanable/C in src)
-		if (C.qdeled || C.pooled) continue
+		if (C.qdeled || C.disposed) continue
 		//if (C.dry) continue
 		if (istype(C,/obj/decal/cleanable/blood/dynamic)) continue // handled above
 		if (!C.can_fluid_absorb) continue

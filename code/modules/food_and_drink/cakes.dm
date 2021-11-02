@@ -79,6 +79,12 @@
 					tag = "cake[clayer]-lime"
 				if(/obj/item/reagent_containers/food/snacks/plant/strawberry)
 					tag = "cake[clayer]-strawberry"
+				if(/obj/item/reagent_containers/food/snacks/plant/blackberry)
+					tag = "cake[clayer]-blackberry"
+				if(/obj/item/reagent_containers/food/snacks/plant/raspberry)
+					tag = "cake[clayer]-raspberry"
+				if(/obj/item/reagent_containers/food/snacks/plant/blueraspberry)
+					tag = "cake[clayer]-braspberry"
 
 		if(tag && src.GetOverlayImage(tag)) //if there's a duplicate non-generic overlay, return a list of empty data
 			return list(0,0)
@@ -383,7 +389,7 @@
 		if (!src)
 			return
 		if (!src.litfam)
-			src.firesource = TRUE
+			src.firesource = FIRESOURCE_OPEN_FLAME
 			src.litfam = TRUE
 			src.hit_type = DAMAGE_BURN
 			src.force = 3

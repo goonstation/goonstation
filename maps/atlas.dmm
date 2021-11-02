@@ -884,6 +884,7 @@
 	icon_state = "0-2"
 	},
 /obj/stool/bench/blue,
+/obj/submachine/claw_machine,
 /turf/simulated/floor/white/checker,
 /area/station/hallway/secondary/exit)
 "cf" = (
@@ -12287,15 +12288,7 @@
 /turf/simulated/floor/bot,
 /area/station/medical/robotics)
 "Ei" = (
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
+/obj/storage/crate/robotparts,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "Ej" = (
@@ -17008,6 +17001,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon10,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "PN" = (
@@ -18973,6 +18967,10 @@
 /obj/item/rcd/construction/chiefEngineer,
 /turf/simulated/floor/yellow,
 /area/station/bridge/united_command)
+"Vr" = (
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon12,
+/turf/simulated/floor/orangeblack,
+/area/station/hangar/arrivals)
 "Vt" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -75099,7 +75097,7 @@ HF
 Ie
 IM
 IM
-IM
+Vr
 Kb
 Kp
 Kp

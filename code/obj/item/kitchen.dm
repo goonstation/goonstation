@@ -158,6 +158,7 @@ TRAYS
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 	force = 7.0
 	throwforce = 10
+	w_class = W_CLASS_SMALL
 	desc = "A long bit of metal that is sharpened on one side, used for cutting foods. Also useful for butchering dead animals. And live ones."
 	dir = NORTH
 
@@ -359,7 +360,8 @@ TRAYS
 	item_state = "cleaver"
 	desc = "An extremely sharp cleaver in a rectangular shape. Only for the professionals."
 	force = 12.0
-	throwforce = 3.0
+	throwforce = 12
+	w_class = W_CLASS_NORMAL
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 
@@ -607,7 +609,7 @@ TRAYS
 			src.set_loc(shardturf)
 
 		for (var/i in 1 to 2)
-			var/obj/O = unpool(/obj/item/raw_material/shard/glass)
+			var/obj/O = new /obj/item/raw_material/shard/glass
 			O.set_loc(shardturf)
 			if(src.material)
 				O.setMaterial(copyMaterial(src.material))
