@@ -887,6 +887,8 @@ proc/debug_map_apc_count(delim,zlim)
 				return
 			var/radius = 0
 			for(var/datum/light/light in theTurf.RL_Lights)
+				if(!light.enabled)
+					continue
 				radius = max(radius, light.radius)
 			img.app.icon_state = "circle"
 			img.app.transform = matrix(2 * radius, 2 * radius, MATRIX_SCALE)
