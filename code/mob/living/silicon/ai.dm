@@ -1375,11 +1375,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	set category = "AI Commands"
 	set name = "View Crew Manifest"
 
-	var/crew = ""
-	for(var/datum/data/record/t in data_core.general)
-		crew += "[t.fields["name"]] - [t.fields["rank"]]<br>"
-
-	usr.Browse("<head><title>Crew Manifest</title></head><body><tt><b>Crew Manifest:</b><hr>[crew]</tt></body>", "window=aimanifest")
+	usr.Browse("<head><title>Crew Manifest</title></head><body><tt><b>Crew Manifest:</b><hr>[get_manifest()]</tt></body>", "window=aimanifest")
 
 /mob/living/silicon/ai/proc/show_laws_verb()
 	set category = "AI Commands"

@@ -73,3 +73,9 @@ var/list/page_departments = list(
 				"Chaplain", "Bartender", "Janitor", "Chef", "Roboticist", "Quartermaster",
 				"Chief Engineer","Engineer", "Miner", "Mechanic",
 				"Research Director", "Medical Director", "Botanist", "Clown")
+
+var/list/command_jobs = list("Captain", "Medical Director", "Research Director", "Head of Personnel", "Head of Security", "Chief Engineer", "Communications Officer"/*"Clown"*/)
+var/list/security_jobs = list("Head of Security", "Nanotrasen Security Operative", "Security Officer", "Security Assistant", "Detective")
+var/list/engineering_jobs = list("Chief Engineer", "Engineer", "Mechanic", "Miner", "Quartermaster")
+var/list/medsci_jobs = list("Research Director", "Medical Director", "Medical Doctor", "Scientist", "Roboticist", "Geneticist")
+var/list/civilian_jobs = list("Head of Personnel", "Bartender", "Chef", "Botanist", "Rancher", "Clown", "Chaplain", "Janitor", "Staff Assistant")

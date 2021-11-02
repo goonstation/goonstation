@@ -59,9 +59,7 @@
 
 		dat += "<h4>Crew Manifest</h4>"
 		dat += "Entries cannot be modified from this terminal.<br><br>"
-
-		for (var/datum/data/record/t in data_core.general)
-			dat += "[t.fields["name"]] - [t.fields["rank"]]<br>"
+		dat += get_manifest()
 		dat += "<br>"
 
 		return dat

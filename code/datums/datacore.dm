@@ -234,6 +234,75 @@
 			return
 		return
 
+///Returns the crew manifest, but sorted according to the individual's rank.
+/proc/get_manifest()
+	var/list/sorted_manifest
+	var/list/Command = list()
+	var/list/Security = list()
+	var/list/Engineering = list()
+	var/list/Medsci = list()
+	var/list/Civilian = list()
+	var/list/Unassigned = list()
+	for(var/datum/data/record/staff_record in data_core.general)
+		var/rank = staff_record.fields["rank"]
+		if(rank in command_jobs)
+			if(rank == "Captain")
+				Command.Insert(1, "<b>[staff_record.fields["name"]] - [staff_record.fields["rank"]]</b><br>")
+				continue // Only Continue as Captain, as non-captain command staff appear both in the command section and their departmental section
+			else
+				Command.Add("[staff_record.fields["name"]] - [staff_record.fields["rank"]]<br>")
+
+		if(rank in security_jobs)
+			if(rank == "Head of Security")
+				Security.Insert(1, "<b>[staff_record.fields["name"]] - [staff_record.fields["rank"]]</b><br>")
+			else if(rank == "Nanotrasen Security Operative")
+				Security.Insert(2, "<b>[staff_record.fields["name"]] - [staff_record.fields["rank"]]</b><br>")
+			else
+				Security.Add("[staff_record.fields["name"]] - [staff_record.fields["rank"]]<br>")
+			continue
+
+		if(rank in engineering_jobs)
+			if(rank == "Chief Engineer")
+				Engineering.Insert(1, "<b>[staff_record.fields["name"]] - [staff_record.fields["rank"]]</b><br>")
+			else
+				Engineering.Add("[staff_record.fields["name"]] - [staff_record.fields["rank"]]<br>")
+			continue
+
+		if(rank in medsci_jobs)
+			if(rank == "Medical Director" || rank == "Research Director")
+				Medsci.Insert(1, "<b>[staff_record.fields["name"]] - [staff_record.fields["rank"]]</b><br>")
+			else
+				Medsci.Add("[staff_record.fields["name"]] - [staff_record.fields["rank"]]<br>")
+			continue
+
+		if(rank in civilian_jobs)
+			if(rank == "Head of Personnel")
+				Civilian.Insert(1, "<b>[staff_record.fields["name"]] - [staff_record.fields["rank"]]</b><br>")
+			else
+				Civilian.Add("[staff_record.fields["name"]] - [staff_record.fields["rank"]]<br>")
+			continue
+		Unassigned += "[staff_record.fields["name"]] - [staff_record.fields["rank"]]<br>"
+
+	sorted_manifest += "<b><u>Station Command:</b></u><br>"
+	for(var/crew in Command)
+		sorted_manifest += crew
+	sorted_manifest += "<b><u>Security:</b></u><br>"
+	for(var/crew in Security)
+		sorted_manifest += crew
+	sorted_manifest += "<b><u>Engineering and Supply:</b></u><br>"
+	for(var/crew in Engineering)
+		sorted_manifest += crew
+	sorted_manifest += "<b><u>Medical and Research:</b></u><br>"
+	for(var/crew in Medsci)
+		sorted_manifest += crew
+	sorted_manifest += "<b><u>Civilian:</b></u><br>"
+	for(var/crew in Civilian)
+		sorted_manifest += crew
+	sorted_manifest += "<b><u>Unassigned:</b></u>"
+	for(var/crew in Unassigned)
+		sorted_manifest += crew
+	return sorted_manifest
+
 /datum/ticket
 	var/name = "ticket"
 	var/target = null
