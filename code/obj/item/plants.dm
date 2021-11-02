@@ -340,7 +340,7 @@
 	crop_suffix	= ""
 	desc = "A professor once asked, \"What is the difference, Mr. Potter, between monkshood and wolfsbane?\"\n  \"Aconite\", answered Hermione. And all was well."
 	icon_state = "aconite"
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 	// module_research_type = /obj/item/plant/herb/cannabis
 	attack_hand(var/mob/user as mob)
 		if (iswerewolf(user))
@@ -350,7 +350,7 @@
 			return
 		else ..()
 	//stolen from glass shard
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
 		var/mob/M = AM
 		if(iswerewolf(M))
 			M.changeStatus("weakened", 3 SECONDS)

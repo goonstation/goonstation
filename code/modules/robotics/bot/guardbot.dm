@@ -183,10 +183,8 @@
 	//
 	////////////////////// GUN STUFF -^
 
-	var/datum/radio_frequency/radio_connection
-	var/datum/radio_frequency/beacon_connection
-	var/control_freq = 1219		// bot control frequency
-	var/beacon_freq = 1445
+	var/control_freq = FREQ_BUDDY		// bot control frequency
+	var/beacon_freq = FREQ_NAVBEACON
 	var/net_id = null
 	var/last_comm = 0 //World time of last transmission
 	var/reply_wait = 0
@@ -212,8 +210,6 @@
 			task.dispose()
 		if (model_task)
 			model_task.dispose()
-		radio_controller.remove_object(src, "[control_freq]")
-		radio_controller.remove_object(src, "[beacon_freq]")
 		..()
 
 	ranger
@@ -414,11 +410,11 @@
 				else if(istype(src.budgun, /obj/item/gun/energy/egun))
 					CheckSafety(src.budgun, src.emagged, null)
 
-			if(radio_controller)
-				radio_connection = radio_controller.add_object(src, "[control_freq]")
-				beacon_connection = radio_controller.add_object(src, "[beacon_freq]")
-
 			src.net_id = generate_net_id(src)
+
+			MAKE_DEFAULT_RADIO_PACKET_COMPONENT("control", control_freq)
+			MAKE_DEFAULT_RADIO_PACKET_COMPONENT("beacon", beacon_freq)
+			MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
 			var/obj/machinery/guardbot_dock/dock = null
 			if(setup_spawn_dock)
@@ -1286,7 +1282,7 @@
 		src.updateUsrDialog()
 		return
 
-	receive_signal(datum/signal/signal, receive_method, receive_param)
+	receive_signal(datum/signal/signal, receive_method, receive_param, connection_id)
 		if(!src.on || src.stunned)
 			return
 
@@ -1298,7 +1294,7 @@
 			targaddress = src.net_id
 			last_dock_id = null
 
-		var/is_beacon = (receive_param == "[src.beacon_freq]")
+		var/is_beacon = connection_id == "beacon"
 		if(!is_beacon)
 			if( ((targaddress != src.net_id) && (signal.data["acc_code"] != netpass_heads) ) || !signal.data["sender"])
 				if(signal.data["address_1"] == "ping" && signal.data["sender"])
@@ -1511,8 +1507,9 @@
 			cell.use(to_draw)
 
 			if(cell.charge < GUARDBOT_LOWPOWER_IDLE_LEVEL)
-				speak("Critical battery.")
-				INVOKE_ASYNC(src, /obj/machinery/bot/guardbot.proc/snooze)
+				if(!ON_COOLDOWN(src, "critical_battery_speak", 5 SECONDS))
+					speak("Critical battery.")
+					INVOKE_ASYNC(src, /obj/machinery/bot/guardbot.proc/snooze)
 				return 0
 
 			if(cell.charge < GUARDBOT_LOWPOWER_ALERT_LEVEL && !(locate(/datum/computer/file/guardbot_task/recharge) in src.tasks) )
@@ -1646,12 +1643,8 @@
 			return
 
 		post_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3)
-			if(!radio_connection)
-				return
-
 			var/datum/signal/signal = get_free_signal()
 			signal.source = src
-			signal.transmission_method = TRANSMISSION_RADIO
 			signal.data[key] = value
 			if(key2)
 				signal.data[key2] = value2
@@ -1664,9 +1657,19 @@
 
 			src.last_comm = world.time
 			if(target_id == "!BEACON!")
-				beacon_connection.post_signal(src, signal)//, GUARDBOT_RADIO_RANGE)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, GUARDBOT_RADIO_RANGE, "beacon")
 			else
-				radio_connection.post_signal(src, signal, GUARDBOT_RADIO_RANGE)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, GUARDBOT_RADIO_RANGE, "control")
+
+		post_find_beacon(var/type)
+			var/datum/signal/signal = get_free_signal()
+			signal.source = src
+			signal.data["findbeacon"] = type
+			signal.data["address_tag"] = type
+			signal.data["sender"] = src.net_id
+
+			src.last_comm = world.time
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, GUARDBOT_RADIO_RANGE, "beacon")
 
 		add_task(var/datum/computer/file/guardbot_task/newtask, var/high_priority = 0, var/clear_others = 0)
 			if(clear_others)
@@ -1830,16 +1833,14 @@
 		set_beacon_freq(var/newfreq)
 			if (!newfreq) return
 			newfreq = sanitize_frequency(newfreq)
-			radio_controller.remove_object(src, "[src.beacon_freq]")
 			src.beacon_freq = newfreq
-			src.beacon_connection = radio_controller.add_object(src, "[src.beacon_freq]")
+			get_radio_connection_by_id(src, "beacon").update_frequency(newfreq)
 
 		set_control_freq(var/newfreq)
 			if (!newfreq) return
 			newfreq = sanitize_frequency(newfreq)
-			radio_controller.remove_object(src, "[src.control_freq]")
 			src.control_freq = newfreq
-			src.radio_connection = radio_controller.add_object(src, "[src.control_freq]")
+			get_radio_connection_by_id(src, "control").update_frequency(newfreq)
 
 	process()
 		. = ..()
@@ -1993,7 +1994,6 @@
 		if(!LT_loc)
 			LT_loc = get_turf(master)
 		//////PDA NOTIFY/////
-		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency(FREQ_PDA)
 		var/datum/signal/pdaSignal = get_free_signal()
 		var/message2send
 		if (prob(5))
@@ -2003,9 +2003,7 @@
 		else
 			message2send ="Notification: [last_target] detained by [master] in [bot_location] at coordinates [LT_loc.x], [LT_loc.y]."
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="BUDDY-MAILBOT", "group"=list(MGD_SCIENCE), "sender"="00000000", "message"="[message2send]")
-		pdaSignal.transmission_method = TRANSMISSION_RADIO
-		if(transmit_connection != null)
-			transmit_connection.post_signal(master, pdaSignal)
+		SEND_SIGNAL(master, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 
 	/// Interrupts the action if the bot cant (or shouldnt be able to) continue cuffing
 	proc/failchecks()
@@ -2563,7 +2561,7 @@
 					else
 						if(!master.last_comm || (world.time >= master.last_comm + 100) )
 							src.awaiting_beacon = 10
-							master.post_status("!BEACON!", "findbeacon", "patrol")
+							master.post_find_beacon("patrol")
 							master.reply_wait = 2
 
 				if (2)	//Seeking a seat.
@@ -3116,7 +3114,7 @@
 			find_nearest_beacon()
 				nearest_beacon = null
 				new_destination = "__nearest__"
-				master.post_status("!BEACON!", "findbeacon", "patrol")
+				master.post_find_beacon("patrol")
 				awaiting_beacon = 5
 				SPAWN_DBG(1 SECOND)
 					if(!master || !master.on || master.stunned || master.idle) return
@@ -3131,7 +3129,7 @@
 
 			set_destination(var/new_dest)
 				new_destination = new_dest
-				master.post_status("!BEACON!", "findbeacon", "patrol")
+				master.post_find_beacon(new_dest || "patrol")
 				awaiting_beacon = 5
 
 			assess_perp(mob/living/carbon/human/perp as mob)
@@ -3643,7 +3641,7 @@
 					if (src.distracted)
 						awaiting_beacon += 2
 
-					master.post_status("!BEACON!", "findbeacon", "tour")
+					master.post_find_beacon("[next_beacon_id]" || "tour")
 					return
 
 				if (STATE_PATHING_TO_BEACON)
@@ -4286,14 +4284,13 @@
 	anchored = 1
 	var/panel_open = 0
 	var/autoeject = 0 //1: Eject fully charged robots automatically. 2: Eject robot when living carbon mob is in view.
-	var/frequency = 1219
+	var/frequency = FREQ_BUDDY
 	var/net_id = null //What is our network id???
 	var/net_number = 0
 	var/host_id = null //Who is linked to us?
 	var/timeout = 45
 	var/timeout_alert = 0
 	var/obj/machinery/bot/guardbot/current = null
-	var/datum/radio_frequency/radio_connection
 	var/obj/machinery/power/data_terminal/link = null
 
 	//A reset button is useful for when the system gets all confused.
@@ -4302,10 +4299,9 @@
 	New()
 		..()
 		SPAWN_DBG(0.8 SECONDS)
-			if(radio_controller)
-				radio_connection = radio_controller.add_object(src, "[frequency]")
 			if(!src.net_id)
 				src.net_id = generate_net_id(src)
+			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 			if(!src.link)
 				var/turf/T = get_turf(src)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
@@ -4672,8 +4668,6 @@
 	disposing()
 		src.current?.wakeup()
 		current = null
-		radio_controller?.remove_object(src, "[frequency]")
-		radio_connection = null
 		if (link)
 			link.master = null
 			link = null
@@ -4734,12 +4728,8 @@
 			return 1
 
 		post_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3)
-			if(!radio_connection)
-				return
-
 			var/datum/signal/signal = get_free_signal()
 			signal.source = src
-			signal.transmission_method = TRANSMISSION_RADIO
 			signal.data[key] = value
 			if(key2)
 				signal.data[key2] = value2
@@ -4750,7 +4740,7 @@
 				signal.data["address_1"] = target_id
 			signal.data["sender"] = src.net_id
 
-			radio_connection.post_signal(src, signal, GUARDBOT_RADIO_RANGE)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, GUARDBOT_RADIO_RANGE)
 
 		post_wire_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3)
 			if(!src.link || !target_id)
@@ -5061,13 +5051,13 @@
 	name = "Mary"
 	desc = "A PR-4 Robuddy. These are pretty old, you didn't know there were any still around! This one has a little name tag on the front labeled 'Mary'."
 	access_lookup = "Staff Assistant"
-	beacon_freq = 1443
+	beacon_freq = FREQ_TOUR_NAVBEACON
 
 /obj/machinery/bot/guardbot/old/tourguide/oshan
 	name = "Moby"
 	desc = "A PR-4 Robuddy. These are pretty old, you didn't know there were any still around! This one has a little name tag on the front labeled 'Moby'."
 	access_lookup = "Staff Assistant"
-	beacon_freq = 1443
+	beacon_freq = FREQ_TOUR_NAVBEACON
 	HatToWear = /obj/item/clothing/head/sea_captain
 
 	New()
@@ -5078,7 +5068,7 @@
 	name = "Mabel"
 	desc = "A PR-4 Robuddy. These are pretty old, you didn't know there were any still around! This one has a little name tag on the front labeled 'Mabel'."
 	access_lookup = "Staff Assistant"
-	beacon_freq = 1443
+	beacon_freq = FREQ_TOUR_NAVBEACON
 	HatToWear = /obj/item/clothing/head/NTberet
 
 	New()

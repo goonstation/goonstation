@@ -1016,7 +1016,7 @@
 	item_state = "bullpup"
 	uses_multiple_icon_states = 1
 	force = 5.0
-	cell_type = /obj/item/ammo/power_cell/self_charging/big
+	cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig
 	muzzle_flash = "muzzle_flash_plaser"
 	mats = list("MET-3"=7, "CRY-1"=13, "POW-2"=10)
 

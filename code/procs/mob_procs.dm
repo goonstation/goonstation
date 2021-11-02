@@ -463,76 +463,23 @@
 	return 1
 
 /proc/man_or_woman(var/mob/subject)
-	var/datum/pronouns/pronouns
-
-	if (isabomination(subject))
-		pronouns = get_singleton(/datum/pronouns/abomination)
-	else if (subject && subject?.bioHolder?.mobAppearance?.pronouns)
-		pronouns = subject.bioHolder.mobAppearance.pronouns
-	else
-		pronouns = get_singleton(/datum/pronouns/theyThem)
-
-	return pronouns.preferredGender
+	return subject.get_pronouns().preferredGender
 
 /proc/his_or_her(var/mob/subject)
-	var/datum/pronouns/pronouns
-
-	if (isabomination(subject))
-		pronouns = get_singleton(/datum/pronouns/abomination)
-	else if (subject && subject?.bioHolder?.mobAppearance?.pronouns)
-		pronouns = subject.bioHolder.mobAppearance.pronouns
-	else
-		pronouns = get_singleton(/datum/pronouns/theyThem)
-
-	return pronouns.possessive
+	return subject.get_pronouns().possessive
 
 /proc/him_or_her(var/mob/subject)
-	var/datum/pronouns/pronouns
-
-	if (isabomination(subject))
-		pronouns = get_singleton(/datum/pronouns/abomination)
-	else if (subject && subject?.bioHolder?.mobAppearance?.pronouns)
-		pronouns = subject.bioHolder.mobAppearance.pronouns
-	else
-		pronouns = get_singleton(/datum/pronouns/theyThem)
-
-	return pronouns.objective
+	return subject.get_pronouns().objective
 
 /proc/he_or_she(var/mob/subject)
-	var/datum/pronouns/pronouns
-
-	if (isabomination(subject))
-		pronouns = get_singleton(/datum/pronouns/abomination)
-	else if (subject && subject?.bioHolder?.mobAppearance?.pronouns)
-		pronouns = subject.bioHolder.mobAppearance.pronouns
-	else
-		pronouns = get_singleton(/datum/pronouns/theyThem)
-
-	return pronouns.subjective
+	return subject.get_pronouns().subjective
 
 /proc/hes_or_shes(var/mob/subject)
-	var/datum/pronouns/pronouns
-
-	if (isabomination(subject))
-		pronouns = get_singleton(/datum/pronouns/abomination)
-	else if (subject && subject?.bioHolder?.mobAppearance?.pronouns)
-		pronouns = subject.bioHolder.mobAppearance.pronouns
-	else
-		pronouns = get_singleton(/datum/pronouns/theyThem)
-
+	var/datum/pronouns/pronouns = subject.get_pronouns()
 	return pronouns.subjective + (pronouns.pluralize ? "'re" : "'s")
 
 /proc/himself_or_herself(var/mob/subject)
-	var/datum/pronouns/pronouns
-
-	if (isabomination(subject))
-		pronouns = get_singleton(/datum/pronouns/abomination)
-	else if (subject && subject?.bioHolder?.mobAppearance?.pronouns)
-		pronouns = subject.bioHolder.mobAppearance.pronouns
-	else
-		pronouns = get_singleton(/datum/pronouns/theyThem)
-
-	return pronouns.reflexive
+	return subject.get_pronouns().reflexive
 
 /mob/proc/get_explosion_resistance()
 	return 0

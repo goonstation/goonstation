@@ -24,11 +24,16 @@
 
 	New()
 		..()
+		START_TRACKING
 		arrow = image('icons/obj/items/pinpointers.dmi', icon_state = "")
+
+	disposing()
+		STOP_TRACKING
+		..()
 
 	attack_self(mob/user)
 		if(!active)
-			if (!(src.target_criteria || src.target_ref))
+			if (!(src.target_criteria || src.target_ref || src.target))
 				user.show_text("No target criteria specified, cannot activate the pinpointer.", "red")
 				return
 			active = 1
@@ -70,6 +75,48 @@
 		UpdateOverlays(arrow, "arrow")
 		SPAWN_DBG(0.5 SECONDS) .(user)
 
+/// tracks something using by_type or by_cat, see types.dm for more info
+/obj/item/pinpointer/category
+	var/category = null
+	var/thing_name = "trackable object"
+	var/in_or_on = "in"
+
+	attack_self(mob/user)
+		if(!active)
+			if(isnull(category))
+				user.show_text("No tracking category, cannot activate the pinpointer.", "red")
+				return
+			var/list/trackable
+			if(istext(category))
+				trackable = by_cat[category]
+			else if(ispath(category))
+				trackable = by_type[category]
+			if(!length(trackable))
+				user.show_text("No [thing_name]s available, cannot activate the pinpointer.", "red")
+				return
+			var/list/choices = list()
+			for(var/atom/A in trackable)
+				if(A.disposed || isnull(get_turf(A)))
+					continue
+				var/in_loc = ""
+				if(!isturf(A.loc))
+					in_loc = " [in_or_on] [A.loc]"
+				choices["[A][in_loc] in [get_area(A)]"] = A
+			var/choice = tgui_input_list(user, "Pick a [thing_name] to track.", "[src]", choices)
+			if(isnull(choice))
+				return
+			target = choices[choice]
+		. = ..()
+
+/obj/item/pinpointer/category/spysticker
+	name = "spy sticker pinpointer"
+	category = TR_CAT_SPY_STICKERS_REGULAR
+	thing_name = "spy sticker"
+	in_or_on = "on"
+
+/obj/item/pinpointer/category/spysticker/det
+	category = TR_CAT_SPY_STICKERS_DET
+
 /obj/item/pinpointer/nuke
 	name = "pinpointer (nuclear bomb)"
 	desc = "Points in the direction of the nuclear bomb."
@@ -110,7 +157,7 @@
 		. = ..()
 
 /obj/item/idtracker
-	name = "ID tracker"
+	name = "ID pinpointer"
 	icon = 'icons/obj/items/pinpointers.dmi'
 	icon_state = "id_pinoff"
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
@@ -336,3 +383,171 @@
 			arrow.icon_state = ""
 			UpdateOverlays(arrow, "arrow")
 			boutput(user, "<span class='notice'>You deactivate the pinpointer</span>")
+
+
+// gimmick pinpointers because I feel like adding them now that I made the by_cat pinpointer base version
+
+/obj/item/pinpointer/category/pets
+	name = "pet pinpointer"
+	category = TR_CAT_PETS
+	thing_name = "pet"
+
+/obj/item/pinpointer/category/pwpets // pod wars
+	name = "pet pinpointer"
+	category = TR_CAT_PW_PETS
+	thing_name = "pet"
+
+/obj/item/pinpointer/category/critters
+	name = "critter pinpointer"
+	category = TR_CAT_CRITTERS
+	thing_name = "critter"
+
+/obj/item/pinpointer/category/pods
+	name = "pod pinpointer"
+	category = TR_CAT_PODS_AND_CRUISERS
+	thing_name = "pod"
+
+/obj/item/pinpointer/category/teleport_jammers
+	name = "teleport jammer pinpointer"
+	category = TR_CAT_TELEPORT_JAMMERS
+	thing_name = "teleport jammer"
+
+/obj/item/pinpointer/category/radio_jammers
+	name = "radio jammer pinpointer"
+	category = TR_CAT_RADIO_JAMMERS
+	thing_name = "radio jammer"
+
+/obj/item/pinpointer/category/burning_mobs
+	name = "burning mob pinpointer"
+	category = TR_CAT_BURNING_MOBS
+	thing_name = "burning mob"
+
+/obj/item/pinpointer/category/burning_items
+	name = "burning item pinpointer"
+	category = TR_CAT_BURNING_ITEMS
+	thing_name = "burning item"
+
+/obj/item/pinpointer/category/chaplains
+	name = "chaplain pinpointer"
+	category = TR_CAT_CHAPLAINS
+	thing_name = "chaplain"
+
+/obj/item/pinpointer/category/ids
+	name = "\improper ID pinpointer"
+	category = /obj/item/card/id
+	thing_name = "ID"
+
+/obj/item/pinpointer/category/apcs
+	name = "\improper APC pinpointer"
+	category = /obj/machinery/power/apc
+	thing_name = "APC"
+
+/obj/item/pinpointer/category/comms_dishes
+	name = "comm dish pinpointer"
+	category = /obj/machinery/communications_dish
+	thing_name = "communications dish"
+
+/obj/item/pinpointer/category/beacons
+	name = "tracking beacon pinpointer"
+	category = /obj/item/device/radio/beacon
+	thing_name = "tracking beacon"
+
+/obj/item/pinpointer/category/mobs
+	name = "mob pinpointer"
+	category = /mob
+	thing_name = "mob"
+
+/obj/item/pinpointer/category/ouija_boards
+	name = "ouija board pinpointer"
+	category = /obj/item/ghostboard
+	thing_name = "ouija board"
+
+/obj/item/pinpointer/category/pod_warp_beacons
+	name = "pod warp beacon pinpointer"
+	category = /obj/warp_beacon
+	thing_name = "pod warp beacon"
+
+/obj/item/pinpointer/category/mopbuckets
+	name = "mop bucket pinpointer"
+	category = /obj/mopbucket
+	thing_name = "mop bucket"
+
+/obj/item/pinpointer/category/mops
+	name = "mop pinpointer"
+	category = /obj/item/mop
+	thing_name = "mop"
+
+/obj/item/pinpointer/category/phones
+	name = "phone pinpointer"
+	category = /obj/machinery/phone
+	thing_name = "phone"
+
+/obj/item/pinpointer/category/living_mobs
+	name = "living mob pinpointer"
+	category = /mob/living
+	thing_name = "living mob"
+
+/obj/item/pinpointer/category/humans
+	name = "human pinpointer"
+	category = /mob/living/carbon/human
+	thing_name = "human"
+
+/obj/item/pinpointer/category/fabricators
+	name = "fabricator pinpointer"
+	category = /obj/machinery/manufacturer
+	thing_name = "fabricator"
+
+/obj/item/pinpointer/category/station_vehicles
+	name = "station vehicle pinpointer"
+	category = /obj/vehicle
+	thing_name = "station vehicle"
+
+/obj/item/pinpointer/category/bibles
+	name = "bible pinpointer"
+	category = /obj/item/storage/bible
+	thing_name = "bible"
+
+/obj/item/pinpointer/category/gps
+	name = "\improper GPS unit pinpointer"
+	category = /obj/item/device/gps
+	thing_name = "GPS unit"
+
+/obj/item/pinpointer/category/toilets
+	name = "toilet pinpointer"
+	category = /obj/item/storage/toilet
+	thing_name = "toilet"
+
+/obj/item/pinpointer/category/turrets
+	name = "turret pinpointer"
+	category = /obj/machinery/turret
+	thing_name = "turret"
+
+/obj/item/pinpointer/category/cryotrons
+	name = "cryo storage pinpointer"
+	category = /obj/cryotron
+	thing_name = "cryo storage"
+
+/obj/item/pinpointer/category/securitrons
+	name = "securitron pinpointer"
+	category = /obj/machinery/bot/secbot
+	thing_name = "securitron"
+
+/obj/item/pinpointer/category/gnomes
+	name = "gnome pinpointer"
+	category = /obj/item/gnomechompski
+	thing_name = "gnome"
+
+/obj/item/pinpointer/category/tracking_implants
+	name = "tracking implant pinpointer"
+	category = /obj/item/implant/tracking
+	thing_name = "tracking implant"
+
+/obj/item/pinpointer/category/monkeys
+	name = "monkey pinpointer"
+	category = /mob/living/carbon/human/npc/monkey
+	thing_name = "monkey"
+
+/obj/item/pinpointer/category/pinpointer // lmao
+	name = "pinpointer pinpointer"
+	category = /obj/item/pinpointer
+	thing_name = "pinpointer"

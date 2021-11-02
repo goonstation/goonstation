@@ -57,6 +57,8 @@ proc/filter_is_character_setup_ringtone(type)
 	var/readMessages = 0
 	/// Can this ringtone be selected through character creation?
 	var/canSpawnWith = 1
+	/// Extrarange added to all ringtones here
+	var/extrarange_adjustment = -27
 
 	New(var/obj/item/device/pda2/thisPDA)
 		..()
@@ -71,7 +73,7 @@ proc/filter_is_character_setup_ringtone(type)
 	proc/PlayRingtone(var/use_short = 0)
 		if(!istype(holder))
 			return // we havent been put in a PDA yet!
-		playsound(src.holder, ((use_short && src.has_short) ? src.ringShortList[src.ringListIndex] : src.ringList[src.ringListIndex]), src.volList[src.ringListIndex], src.varyList[src.ringListIndex], src.rangeList[src.ringListIndex], src.pitchList[src.ringListIndex])
+		playsound(src.holder, ((use_short && src.has_short) ? src.ringShortList[src.ringListIndex] : src.ringList[src.ringListIndex]), src.volList[src.ringListIndex], src.varyList[src.ringListIndex], src.rangeList[src.ringListIndex] + extrarange_adjustment, src.pitchList[src.ringListIndex])
 		src.DoSpecialThing(src.ringListIndex)
 		if(src.alertList[ringListIndex])
 			. = src.alertList[ringListIndex]
@@ -117,6 +119,7 @@ proc/filter_is_character_setup_ringtone(type)
 									"ARF")
 	pitchList = list(0.8, 1, 0.7, 1, 1.1, 1, 1, 0.6)
 	rangeList = list(5, 0, 0, 0, 0, 0, 0, 0)
+	extrarange_adjustment = -24
 	listCycleType = RINGLIST_RANDOM
 	succText = "<span class='alert'>*WELCOME THE HECK TO THE PACK*</span>"
 	previewMessage = "GRR RAGH ARGFH AWROO RAFF RARFH THIS IS A PREVIEW OF THE M'F'IN WOLF PACK THRASHTONE TRY BEFORE YOU BUY ARGH WOOF AGRR"
@@ -623,6 +626,7 @@ ringtone.dm,58: Cannot read null.name (/datum/ringtone/retkid/ring8): return_tex
 									"Oh yeah that bus actually exploded down there, raaaad.")
 	pitchList = list(1, 1, 1, 1, 1, 1, 1)
 	rangeList = list(15, 15, 15, 15, 15, 15, 0)
+	extrarange_adjustment = -22
 	listCycleType = RINGLIST_RANDOM
 	succText = "*KABLAMMO installed!*"
 	previewMessage = "SounDreamS Professional Ultrasystems LTD cannot be held liable for any damage done to your device's speakers."
@@ -662,6 +666,7 @@ ringtone.dm,58: Cannot read null.name (/datum/ringtone/retkid/ring8): return_tex
 									"ALCOHOL IS A SIN.")
 	pitchList = list(1, 1, 1, 1, 1, 1, 1)
 	rangeList = list(5, 5, 5, 5, 5, 5, 5)
+	extrarange_adjustment = -22
 	listCycleType = RINGLIST_RANDOM
 	succText = "*Modern Commando installed!*"
 	previewMessage = "Ready to serve up your project a nice hot cup of lead? Or, rather, a set of sound effects that give that impression?"
@@ -716,6 +721,7 @@ ringtone.dm,58: Cannot read null.name (/datum/ringtone/retkid/ring8): return_tex
 									"heyo")
 	pitchList = list(1, 1)
 	rangeList = list(5, 5)
+	extrarange_adjustment = -22
 	listCycleType = RINGLIST_RANDOM
 	succText = "*SPACEBATTLE installed!*"
 	previewMessage = "Do note that some viewers will complain about being able to hear space battles in space."

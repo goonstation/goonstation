@@ -438,7 +438,7 @@
 		START_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
 		src.visible_message("<span class='alert'>[src] catches on fire!</span>")
 		src.burning = 1
-		src.firesource = TRUE
+		src.firesource = FIRESOURCE_OPEN_FLAME
 		if (istype(src, /obj/item/plant))
 			if (!GET_COOLDOWN(global, "hotbox_adminlog"))
 				var/list/hotbox_plants = list()
@@ -1483,8 +1483,39 @@
 	if (!src.inventory_counter)
 		src.inventory_counter = new /obj/overlay/inventory_counter
 		src.vis_contents += src.inventory_counter
+		if(ismob(src.loc))
+			var/mob/M = src.loc
+			if(src in M.equipped_list())
+				src.inventory_counter.show_count()
+
+/obj/item/proc/log_firesource(obj/item/O, datum/thrown_thing/thr, mob/user)
+	UnregisterSignal(O, COMSIG_MOVABLE_THROW_END)
+	if (!O?.firesource == FIRESOURCE_OPEN_FLAME) return
+	var/turf/T = get_turf(O)
+	if (!T) return
+	var/mob/M = usr
+	if (user) // throwing doesn't pass user, only usr
+		M = user
+	if (!istype(M)) return
+	var/turf/simulated/simulated = T
+
+	var/msg = "[key_name(M)] [thr ? "threw" : "dropped"] firesource ([O]) at [log_loc(T)]."
+
+	if (istype(simulated) && simulated.air.toxins)
+		msg += " Turf contains <b>plasma gas</b>."
+	if (T.active_liquid?.group)
+		msg += " Turf contains <b>fluid</b> [log_reagents(T.active_liquid.group)]."
+	if (T.active_airborne_liquid?.group)
+		msg += " Turf contains <b>smoke</b> [log_reagents(T.active_airborne_liquid.group)]."
+	logTheThing("bombing", M, null, "[msg]")
 
 /obj/item/proc/dropped(mob/user)
+	SPAWN_DBG(0) //need to spawn to know if we've been dropped or thrown instead
+		if ((firesource == FIRESOURCE_OPEN_FLAME) && throwing)
+			RegisterSignal(src, COMSIG_MOVABLE_THROW_END, .proc/log_firesource)
+		else if (firesource == FIRESOURCE_OPEN_FLAME)
+			log_firesource(src, null, user)
+
 	if (user)
 		src.set_dir(user.dir)
 		#ifdef COMSIG_MOB_DROPPED

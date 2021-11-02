@@ -119,7 +119,7 @@
 			W.up = !W.up
 			W.icon_state = "welding"
 			boutput(the_mob, "You flip the mask down. The mask is now protecting you from eye damage.")
-			if (!W.nodarken) //Used for The Welder
+			if (!W.nodarken) //Used for The Slasher
 				W.see_face = !W.see_face
 				W.color_r = 0.3 // darken
 				W.color_g = 0.3
