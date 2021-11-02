@@ -483,7 +483,7 @@ var/list/headset_channel_lookup
 		// Secure channel lookup when R.frequency != src.frequency. According to DEBUG calls set up for testing,
 		// this meant the receiving radio would decline the message even though both share a secure channel.
 		else if (src.secure_connections && istype(src.secure_connections) && src.secure_connections.len && freq && istype(freq))
-			if(get_radio_connection_by_id("f[freq.frequency]"))
+			if(get_radio_connection_by_id(src, "f[freq.frequency]"))
 				return TRUE
 
 			// Sender didn't use a secure channel prefix, giving us the 145.9 radio frequency datum.
