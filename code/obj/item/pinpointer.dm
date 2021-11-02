@@ -36,16 +36,14 @@
 	attack_self(mob/user)
 		if(!active)
 			if (!(src.target_criteria || src.target_ref || src.target))
-				user.show_text("No target criteria specified, cannot activate the pinpointer.", "red")
+				user.show_text("No target criteria specified, cannot activate \the [src].", "red")
 				return
 			active = 1
 			work()
-			if(hudarrow)
-				animate(hudarrow, alpha=127, time=1 SECOND)
-			boutput(user, "<span class='notice'>You activate the pinpointer</span>")
+			boutput(user, "<span class='notice'>You activate \the [src]</span>")
 		else
 			src.turn_off()
-			boutput(user, "<span class='notice'>You deactivate the pinpointer</span>")
+			boutput(user, "<span class='notice'>You deactivate \the [src]</span>")
 
 	pickup(mob/user)
 		. = ..()
@@ -74,9 +72,17 @@
 		if(hudarrow)
 			animate(hudarrow, alpha=0, time=1 SECOND)
 
+	proc/work_check()
+		return // override to interrupt work if conditions are met
+
 	proc/work()
 		set waitfor = FALSE
+		if(hudarrow)
+			animate(hudarrow, alpha=127, time=1 SECOND)
 		while(active)
+			work_check()
+			if(!active)
+				break
 			if(!target)
 				if (target_ref)
 					target = locate(target_ref)
@@ -203,36 +209,22 @@
 			target_ref = "\ref[A.find_middle()]"
 		. = ..()
 
-/obj/item/idtracker
+/obj/item/pinpointer/idtracker
 	name = "ID pinpointer"
-	icon = 'icons/obj/items/pinpointers.dmi'
 	icon_state = "id_pinoff"
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
-	w_class = W_CLASS_SMALL
-	item_state = "electronic"
-	throw_speed = 4
-	throw_range = 20
-	m_amt = 500
-	var/active = 0
 	var/mob/owner = null
-	var/list/targets = list()
-	var/target = null
+	hudarrow_color = "#ffffff"
 	is_syndicate = 1
-	mats = 4
 	desc = "This little bad-boy has been pre-programmed to display the general direction of any assassination target you choose."
 	contraband = 3
-	var/image/arrow = null
-
-	New()
-		..()
-		arrow = image('icons/obj/items/pinpointers.dmi', icon_state = "")
 
 	attack_self(mob/user)
 		if(!active)
 			if (!src.owner || !src.owner.mind)
-				boutput(user, "<span class='alert'>The target locator emits a sorrowful ping!</span>")
+				boutput(user, "<span class='alert'>\The [src] emits a sorrowful ping!</span>")
 				return
 			active = 1
+			var/list/targets = list()
 			for_by_tcl(I, /obj/item/card/id)
 				if(!I)
 					continue // the ID can get deleted in the lagcheck
@@ -250,43 +242,15 @@
 			else
 				boutput(user, "<span class='notice'>You activate the target locator. Tracking [target]</span>")
 		else
-			active = 0
-			arrow.icon_state = ""
-			UpdateOverlays(arrow, "arrow")
-			boutput(user, "<span class='notice'>You deactivate the target locator</span>")
-			target = null
+			..()
 
-	proc/work()
-		if(!active) return
-		if(!target)
-			arrow.icon_state = "pinonnull"
-			UpdateOverlays(arrow, "arrow")
-			return
-		src.set_dir(get_dir(src,target))
-		switch(get_dist(src,target))
-			if(0)
-				arrow.icon_state = "pinondirect"
-			if(1 to 8)
-				arrow.icon_state = "pinonclose"
-			if(9 to 16)
-				arrow.icon_state = "pinonmedium"
-			if(16 to INFINITY)
-				arrow.icon_state = "pinonfar"
-		UpdateOverlays(arrow, "arrow")
-		SPAWN_DBG(0.5 SECONDS) .()
-
-/obj/item/idtracker/spy
+/obj/item/pinpointer/idtracker/spy
 	attack_hand(mob/user as mob)
 		..(user)
 		if (!user.mind || user.mind.special_role != ROLE_SPY_THIEF)
 			boutput(user, "<span class='alert'>The target locator emits a sorrowful ping!</span>")
-
-			//B LARGHHHHJHH
-			active = 0
-			arrow.icon_state = ""
-			UpdateOverlays(arrow, "arrow")
+			src.turn_off()
 			target = null
-			return
 
 	attack_self(mob/user)
 		if(!active)
@@ -295,6 +259,7 @@
 				return
 			active = 1
 
+			var/list/targets = list()
 			for_by_tcl(I, /obj/item/card/id)
 				if(I.registered == null) continue
 				for (var/datum/mind/M in ticker.mode.traitors)
@@ -312,80 +277,47 @@
 			else
 				boutput(user, "<span class='notice'>You activate the target locator. Tracking [target]</span>")
 		else
-			active = 0
-			arrow.icon_state = ""
-			UpdateOverlays(arrow, "arrow")
-			boutput(user, "<span class='notice'>You deactivate the target locator</span>")
-			target = null
+			..()
 
-/obj/item/bloodtracker
+/obj/item/pinpointer/bloodtracker
 	name = "BloodTrak"
-	icon = 'icons/obj/items/pinpointers.dmi'
 	icon_state = "blood_pinoff"
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
-	w_class = W_CLASS_SMALL
-	item_state = "electronic"
-	throw_speed = 4
-	throw_range = 20
-	m_amt = 500
-	var/active = 0
-	var/target = null
-	mats = 4
 	desc = "Tracks down people from their blood puddles!"
+	hudarrow_color = "#ff0000"
 	var/blood_timer = 0
-	var/image/arrow = null
-
-	New()
-		..()
-		arrow = image('icons/obj/items/pinpointers.dmi', icon_state = "")
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
-		if(!active && istype(A, /obj/decal/cleanable/blood))
+		if(active)
+			return
+		var/blood_dna = null
+		var/timer = TIME + 4 MINUTES
+		if(istype(A, /obj/decal/cleanable/blood))
 			var/obj/decal/cleanable/blood/B = A
 			if(B.dry > 0) //Fresh blood is -1
 				boutput(user, "<span class='alert'>Targeted blood is too dry to be useful!</span>")
 				return
-			for(var/mob/living/carbon/human/H in mobs)
-				if(B.blood_DNA == H.bioHolder.Uid)
-					target = H
-					blood_timer = TIME + (B.dry==-1?8 MINUTES:4 MINUTES)
-					break
-			active = 1
-			work()
-			user.visible_message("<span class='notice'><b>[user]</b> scans [A] with [src]!</span>",\
+			if(B.dry == -1)
+				timer += 4 MINUTES
+			blood_dna = B.blood_DNA
+		else if(istype(A, /obj/fluid) || istype(A, /obj/item))
+			blood_dna = A.blood_DNA
+		if(!blood_dna)
+			return
+		for(var/mob/living/carbon/human/H in mobs)
+			if(blood_dna == H.bioHolder.Uid)
+				target = H
+				blood_timer = timer
+				break
+		active = 1
+		work()
+		user.visible_message("<span class='notice'><b>[user]</b> scans [A] with [src]!</span>",\
 			"<span class='notice'>You scan [A] with [src]!</span>")
 
-	proc/work(var/turf/T, mob/user)
-		if(!active) return
-		if(!T)
-			T = get_turf(src)
+	work_check()
 		if(TIME > blood_timer)
-			arrow.icon_state = ""
-			UpdateOverlays(arrow, "arrow")
-			active = 0
-			boutput(user, "<span class='alert'>[src] shuts down because the blood in it became too dry!</span>")
-			return
-		if(!target)
-			arrow.icon_state = "pinonnull"
-			UpdateOverlays(arrow, "arrow")
-			active = 0
-			boutput(user, "<span class='alert'>No target found!</span>")
-			return
-		src.set_dir(get_dir(src,target))
-		switch(get_dist(src,target))
-			if(0)
-				arrow.icon_state = "pinondirect"
-			if(1 to 8)
-				arrow.icon_state = "pinonclose"
-			if(9 to 16)
-				arrow.icon_state = "pinonmedium"
-			if(16 to INFINITY)
-				arrow.icon_state = "pinonfar"
-		UpdateOverlays(arrow, "arrow")
-		SPAWN_DBG(0.5 SECONDS)
-			.(T)
-
-
+			src.turn_off()
+			if(ismob(src.loc))
+				boutput(src.loc, "<span class='alert'>[src] shuts down because the blood in it became too dry!</span>")
 
 /obj/item/pinpointer/secweapons
 	name = "security weapon pinpointer"

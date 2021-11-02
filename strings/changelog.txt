@@ -12,6 +12,7 @@
 (u)pali6
 (*)Spy stickers now come with a pinpointer that lets you track a specific sticker!
 (*)Pinpointers now show a fancy arrow on your HUD that's better than the screen of the pinpointer.
+(*)The same is now applied to BloodTrak. Also BloodTrak can now scan puddles of blood and bloody items.
 (t)mon nov 01 21
 (u)pali
 (+)Mechanics teleporter component got some fancier new visuals and also is harder to hide.
