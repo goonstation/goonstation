@@ -117,7 +117,7 @@
 				var/matrix/M = matrix()
 				M = M.Turn(ang)
 				if(dist == 0)
-					hudarrow_dist += 6
+					hudarrow_dist += 12
 					M.Turn(180) // point at yourself :)
 				M = M.Translate(hudarrow_dist * sin(ang), hudarrow_dist * cos(ang))
 				animate(hudarrow, transform=M, time=0.5 SECONDS, flags=ANIMATION_PARALLEL)
