@@ -32,7 +32,7 @@ var/list/ai_move_scheduled = list()
 			ai_mobs.Add(M)
 		else
 			M.skipped_mobs_list |= SKIPPED_AI_MOBS_LIST
-			LAZYLISTADDUNIQUE(AR.mobs_not_in_global_mobs_list, src)
+			LAZYLISTADDUNIQUE(AR.mobs_not_in_global_mobs_list, M)
 
 	disposing()
 		..()
