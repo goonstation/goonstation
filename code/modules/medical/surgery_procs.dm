@@ -329,8 +329,11 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	DEBUG_MESSAGE("<b>[patient]'s surgery (performed by [surgeon]) damage_low is [damage_low], damage_high is [damage_high]</b>")
 
 /* ---------- SCALPEL - HEAD ---------- */
-
 	if (surgeon.zone_sel.selecting == "head")
+		if (patient.hasStatus("sterilized")) // reduce the rand value by 5 up and down, effectivily reducing it by 10
+			damage_low = calc_surgery_damage(surgeon, screw_up_prob, rand(0,10) * surgCheck/*, src.adj1, src.adj2*/)
+			damage_high = calc_surgery_damage(surgeon, screw_up_prob, rand(10,20) * surgCheck/*, src.adj1, src.adj2*/)
+
 		if (!headSurgeryCheck(patient))
 			surgeon.show_text("You're going to need to remove that mask/helmet/glasses first.", "blue")
 			return 1
@@ -496,6 +499,10 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 /* ---------- SCALPEL - BUTT ---------- */
 	if (surgeon.zone_sel.selecting == "chest" && surgeon.a_intent == INTENT_HARM)
+		if (patient.hasStatus("sterilized")) // reduce the rand value by 5 up and down, effectivily reducing it by 10
+			damage_low = calc_surgery_damage(surgeon, screw_up_prob, rand(0,10) * surgCheck/*, src.adj1, src.adj2*/)
+			damage_high = calc_surgery_damage(surgeon, screw_up_prob, rand(10,20) * surgCheck/*, src.adj1, src.adj2*/)
+
 		if (patient.butt_op_stage == 0.0)
 			playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
@@ -583,6 +590,10 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 /* ---------- SCALPEL - IMPLANT ---------- */
 	// else if (surgeon.zone_sel.selecting == "chest" && (surgeon.a_intent == "help" || surgeon.a_intent == "disarm"))
 	else if (surgeon.zone_sel.selecting == "chest")
+		if (patient.hasStatus("sterilized")) // reduce the rand value by 5 up and down, effectivily reducing it by 10
+			damage_low = calc_surgery_damage(surgeon, screw_up_prob, rand(0,10) * surgCheck/*, src.adj1, src.adj2*/)
+			damage_high = calc_surgery_damage(surgeon, screw_up_prob, rand(10,20) * surgCheck/*, src.adj1, src.adj2*/)
+
 		if (patient.ailments.len > 0)
 			var/attempted_parasite_removal = 0
 			for (var/datum/ailment_data/an_ailment in patient.ailments)
@@ -876,6 +887,10 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 	else if (surgeon.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg"))
 		var/obj/item/parts/surgery_limb = patient.limbs.vars[surgeon.zone_sel.selecting]
+		if (patient.hasStatus("sterilized")) // reduce the rand value by 5 up and down, effectivily reducing it by 10
+			damage_low = calc_surgery_damage(surgeon, screw_up_prob, rand(0,10) * surgCheck/*, src.adj1, src.adj2*/)
+			damage_high = calc_surgery_damage(surgeon, screw_up_prob, rand(10,20) * surgCheck/*, src.adj1, src.adj2*/)
+
 		if (istype(surgery_limb))
 			if (surgery_limb.surgery(src))
 				return 1
@@ -927,6 +942,10 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 /* ---------- SAW - HEAD ---------- */
 
 	if (surgeon.zone_sel.selecting == "head")
+		if (patient.hasStatus("sterilized")) // reduce the rand value by 5 up and down, effectivily reducing it by 10
+			damage_low = calc_surgery_damage(surgeon, screw_up_prob, rand(0,10) * surgCheck/*, src.adj1, src.adj2*/)
+			damage_high = calc_surgery_damage(surgeon, screw_up_prob, rand(10,20) * surgCheck/*, src.adj1, src.adj2*/)
+
 		if (!headSurgeryCheck(patient))
 			surgeon.show_text("You're going to need to remove that mask/helmet/glasses first.", "blue")
 			return 1
@@ -1069,6 +1088,10 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 /* ---------- SAW - BUTT ---------- */
 
 	else if (surgeon.zone_sel.selecting == "chest" && surgeon.a_intent == INTENT_HARM)
+		if (patient.hasStatus("sterilized")) // reduce the rand value by 5 up and down, effectivily reducing it by 10
+			damage_low = calc_surgery_damage(surgeon, screw_up_prob, rand(0,10) * surgCheck/*, src.adj1, src.adj2*/)
+			damage_high = calc_surgery_damage(surgeon, screw_up_prob, rand(10,20) * surgCheck/*, src.adj1, src.adj2*/)
+
 		switch (patient.butt_op_stage)
 			if (1.0)
 				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
@@ -1117,6 +1140,10 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 /* ---------- SAW - lungs/heart ---------- */
 
 	else if (surgeon.zone_sel.selecting == "chest")
+		if (patient.hasStatus("sterilized")) // reduce the rand value by 5 up and down, effectivily reducing it by 10
+			damage_low = calc_surgery_damage(surgeon, screw_up_prob, rand(0,10) * surgCheck/*, src.adj1, src.adj2*/)
+			damage_high = calc_surgery_damage(surgeon, screw_up_prob, rand(10,20) * surgCheck/*, src.adj1, src.adj2*/)
+
 		if (patient.organHolder.chest)
 			switch (patient.organHolder.chest.op_stage)
 				if(0.0)	// Tail!
@@ -1241,6 +1268,10 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 	else if (surgeon.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg"))
 		var/obj/item/parts/surgery_limb = patient.limbs.vars[surgeon.zone_sel.selecting]
+		if (patient.hasStatus("sterilized")) // reduce the rand value by 5 up and down, effectivily reducing it by 10
+			damage_low = calc_surgery_damage(surgeon, screw_up_prob, rand(0,10) * surgCheck/*, src.adj1, src.adj2*/)
+			damage_high = calc_surgery_damage(surgeon, screw_up_prob, rand(10,20) * surgCheck/*, src.adj1, src.adj2*/)
+
 		if (istype(surgery_limb))
 			if (surgery_limb.surgery(src))
 				return 1
@@ -1619,6 +1650,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	DEBUG_MESSAGE("<b>[patient]'s surgery (performed by [surgeon]) damage_low is [damage_low], damage_high is [damage_high]</b>")
 
 /* ---------- SPOON - EYES ---------- */
+// Not adding sterilization check to eye surgery cause rubbing alcohol in eyes = bad
 
 	if (surgeon.zone_sel.selecting == "head")
 		if (!headSurgeryCheck(patient))
