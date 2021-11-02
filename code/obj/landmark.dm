@@ -328,3 +328,37 @@ var/global/list/job_start_locations = list()
 		name = LANDMARK_SHUTTLE_DONUT3
 	destiny
 		name = LANDMARK_SHUTTLE_DESTINY
+
+
+//transition landmark pulled out of secret module - terra8.dm
+
+/obj/landmark/transition
+	name = "Transition"
+	invisibility = INVIS_ALWAYS
+	deleted_on_start = FALSE
+	var/dest_tag = null
+	var/atom/dest = null
+
+	New()
+		..()
+		var/atom/A = locate(dest_tag)
+		if (A)
+			dest = A
+
+	Crossed(var/atom/movable/A)
+		..()
+		if (A)
+			if (!dest)
+				dest = locate(dest_tag)
+				if (!dest)
+					return
+			if (istype(dest, /area))
+				return
+			var/turf/T = get_turf(dest)
+			if (!istype(T))
+				return
+			if (isturf(dest) || isobj(dest))
+				var/D = dest:dir
+				T = get_step(T, D)
+			if (T)
+				A.set_loc(T)
