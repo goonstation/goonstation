@@ -78,8 +78,13 @@
 	name = "health scanner"
 	desc = "An in-floor health scanner that sends its data to connected status screens."
 	icon_state = "floorscan1"
+	plane = PLANE_FLOOR
 	var/time_between_scans = 3 SECONDS
 	var/on_cooldown = FALSE
+
+	New()
+		..()
+		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
 	find_partners(var/in_range = 0)
 		if (in_range)
@@ -113,9 +118,6 @@
 		return data
 
 	proc/crit_alert(var/mob/living/carbon/human/H)
-		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/new_signal = get_free_signal()
 		new_signal.data = list("command"="text_message", "sender_name"="HEALTH-MAILBOT", "sender"="00000000", "address_1"="00000000", "group"=list(MGD_MEDBAY, MGA_MEDCRIT), "message"="CRIT ALERT: [H] in [get_area(src)].")
-		new_signal.transmission_method = TRANSMISSION_RADIO
-		if(transmit_connection)
-			transmit_connection.post_signal(src, new_signal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, new_signal, null, "pda")

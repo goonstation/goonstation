@@ -1,5 +1,30 @@
 
+(t)mon nov 01 21
+(u)pali
+(+)Mechanics teleporter component got some fancier new visuals and also is harder to hide.
 (t)sun oct 31 21
+(u)pali
+(+)ID cards now have pronouns on them, HoP console can modify those. Useful if you want to fully impersonate someone
+(+)Hiding in shrubs / bushes now hides your arrest status / health status from people with appropriate goggles
+(u)BatElite
+(p)6433
+(e)|
+(+)You can use the hotkey to drink from glasses now.
+(u)pali
+(p)6342
+(e)🆕|feature
+(*)Holding alt + hovering over people with your cursor shows their names and pronouns
+(*)AI, borgs and ghosts see all mobs' names when holding alt
+(u)pali
+(p)6331
+(e)|
+(+)Hovering over radio icons now shows their name.
+(u)Ikea
+(p)6119
+(e)⚖|balance
+(*)Loot crates contents have undergone some balance changes, check minor changes for more details.
+(*)Predator rifles now come with half the charge and half the self recharge rate, but with half the firing costs.
+(+)Crates will now pull from a pool of handheld arts instead of just telewands. Telegun has been completely removed from loot crates. The atomic cell and disruptor cell have been replaced with better cells. The one million crates from loot crates has been replaced with three hundred thousand credits.
 (u)zjdtmkhzt
 (p)6348
 (e)🆕⚖|feature, balance

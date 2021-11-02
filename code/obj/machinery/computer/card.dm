@@ -228,6 +228,10 @@
 		if (src.authenticated && src.modify)
 			body += "Registered: <a href='?src=\ref[src];reg=1'>[target_owner]</a><br>"
 			body += "Assignment: <a href='?src=\ref[src];assign=Custom Assignment'>[replacetext(target_rank, " ", "&nbsp")]</a><br>"
+			body += "Pronouns: <a href='?src=\ref[src];pronouns=next'>[src.modify.pronouns?.name || "-"]</a>"
+			if(!isnull(src.modify.pronouns))
+				body += " <a href='?src=\ref[src];pronouns=remove'>X</a>"
+			body += "<br>"
 			body += "PIN: <a href='?src=\ref[src];pin=1'>****</a>"
 
 			//Jobs organised into sections
@@ -396,6 +400,16 @@
 				src.modify.access -= access_type
 				if(access_allowed == 1)
 					src.modify.access += access_type
+
+	if (href_list["pronouns"])
+		if (src.authenticated && src.modify)
+			if(href_list["pronouns"] == "next")
+				if(src.modify?.pronouns)
+					src.modify.pronouns = src.modify.pronouns.next_pronouns()
+				else
+					src.modify.pronouns = get_singleton(/datum/pronouns/theyThem)
+			else if(href_list["pronouns"] == "remove")
+				src.modify.pronouns = null
 
 	if (href_list["assign"])
 		if (src.authenticated && src.modify)

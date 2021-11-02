@@ -512,7 +512,7 @@
 						tasteMessage = "<span class='notice'>Tastes kind of [tastes[1]], [tastes[2]], and a little bit [tastes[3]].</span>"
 
 			if (M == user)
-				M.visible_message("<span class='notice'>[M] takes a sip from [src].</span>\n[tasteMessage]", group = "drinkMessages")
+				M.visible_message("<span class='notice'>[M] takes a sip from [src].</span>","<span class='notice'>You take a sip from [src].</span>\n[tasteMessage]", group = "drinkMessages")
 			else
 				user.visible_message("<span class='alert'>[user] attempts to force [M] to drink from [src].</span>")
 				logTheThing("combat", user, M, "attempts to force [constructTarget(M,"combat")] to drink from [src] [log_reagents(src)] at [log_loc(user)].")
@@ -1157,6 +1157,12 @@
 		if (src.wedge)
 			choices += "remove [src.wedge]"
 			choices += "eat [src.wedge]"
+		if (reagents.total_volume > 0)
+			if (!length(choices))
+				if (!ON_COOLDOWN(src, "hotkey_drink", 0.6 SECONDS))
+					attack(user, user) //Most glasses people use won't have fancy cocktail stuff, so just skip the crap and drink for dear life
+				return
+			choices += "drink from it"
 		if (!choices.len)
 			boutput(user, "<span class='notice'>You can't think of anything to do with [src].</span>")
 			return
@@ -1181,6 +1187,10 @@
 			else
 				boutput(H, "<span class='alert'>You don't feel like you need to go.</span>")
 			return
+
+		else if (selection == "drink from it")
+			if (!ON_COOLDOWN(src, "hotkey_drink", 0.6 SECONDS))
+				attack(user, user)
 
 		else if (selection == "remove [src.in_glass]")
 			remove_thing = src.in_glass

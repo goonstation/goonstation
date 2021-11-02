@@ -1985,3 +1985,36 @@
 			M.changeStatus("paralysis", 5 SECONDS)
 			M.force_laydown_standup()
 			M.delStatus("drowsy")
+
+///APC status that locks lighting circuit offline
+/datum/statusEffect/lights_out
+	id = "lightsout"
+	visible = 0
+	var/oldstate
+
+	onAdd(optional)
+		. = ..()
+		var/obj/machinery/power/apc/APC = owner
+		if(istype(APC))
+			oldstate = APC.lighting
+			APC.lighting = 0
+			APC.updateicon()
+			APC.update()
+
+
+	onUpdate(timePassed)
+		. = ..()
+		var/obj/machinery/power/apc/APC = owner
+		if(istype(APC) && APC.lighting != 0)
+			APC.lighting = 0
+			APC.updateicon()
+			APC.update()
+
+
+	onRemove()
+		. = ..()
+		var/obj/machinery/power/apc/APC = owner
+		if(istype(APC))
+			APC.lighting = oldstate
+			APC.updateicon()
+			APC.update()
