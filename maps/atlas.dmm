@@ -884,6 +884,7 @@
 	icon_state = "0-2"
 	},
 /obj/stool/bench/blue,
+/obj/submachine/claw_machine,
 /turf/simulated/floor/white/checker,
 /area/station/hallway/secondary/exit)
 "cf" = (
