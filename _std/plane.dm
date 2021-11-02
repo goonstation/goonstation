@@ -9,6 +9,7 @@
 #define PLANE_HIDDENGAME -95
 #define PLANE_LIGHTING -90
 #define PLANE_SELFILLUM -80
+#define PLANE_ABOVE_LIGHTING -50
 #define PLANE_BLACKNESS 0 // black tiles outisde of your vision render here
 #define PLANE_MASTER_GAME 10
 #define PLANE_FLOCKVISION 22
@@ -90,6 +91,7 @@ client
 		examine_plane.alpha = 0
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_LIGHTING, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_MULTIPLY, mouse_opacity = 0, name = "lighting_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_SELFILLUM, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_ADD, mouse_opacity = 0, name = "selfillum_plane"))
+		add_plane(new /atom/movable/screen/plane_parent(PLANE_ABOVE_LIGHTING, name = "emissive_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_BLACKNESS, appearance_flags = NO_CLIENT_COLOR, mouse_opacity = 0, name = "blackness_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_FLOCKVISION, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_OVERLAY, mouse_opacity = 0, name = "flockvision_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_OVERLAY_EFFECTS, mouse_opacity = 0, name = "overlay_effects_plane", is_screen = 1))

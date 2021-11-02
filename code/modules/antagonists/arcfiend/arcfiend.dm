@@ -267,14 +267,14 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 
 	onAdd(optional)
 		. = ..()
-		if (!(owner in radio_controller.active_jammers))
-			radio_controller.active_jammers.Add(owner)
+		if (!(owner in by_cat[TR_CAT_RADIO_JAMMERS]))
+			OTHER_START_TRACKING_CAT(owner, TR_CAT_RADIO_JAMMERS)
 		owner.UpdateOverlays(aura, "jamming_field_aura")
 
 	onRemove()
 		. = ..()
-		if (owner in radio_controller.active_jammers)
-			radio_controller.active_jammers.Remove(owner)
+		if (owner in by_cat[TR_CAT_RADIO_JAMMERS])
+			OTHER_STOP_TRACKING_CAT(owner, TR_CAT_RADIO_JAMMERS)
 		owner.ClearSpecificOverlays("jamming_field_aura")
 
 /datum/targetable/arcfiend/elecflash

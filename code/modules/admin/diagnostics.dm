@@ -878,6 +878,19 @@ proc/debug_map_apc_count(delim,zlim)
 			else
 				img.app.alpha = 0
 
+	RL_lights_range
+		name = "RL lights range"
+		help = "Displays range of RL lights on each turf"
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			if(!length(theTurf.RL_Lights))
+				img.app.alpha = 0
+				return
+			var/radius = 0
+			for(var/datum/light/light in theTurf.RL_Lights)
+				radius = max(radius, light.radius)
+			img.app.icon_state = "circle"
+			img.app.transform = matrix(2 * radius, 2 * radius, MATRIX_SCALE)
+
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
 	process_cell_operations
 		name = "process cell stats"
@@ -951,6 +964,7 @@ proc/debug_map_apc_count(delim,zlim)
 		src.maptext = initial(src.maptext)
 		src.alpha = initial(src.alpha)
 		src.appearance_flags = initial(src.appearance_flags)
+		src.transform = initial(src.transform)
 
 
 /client/proc/RenderOverlay()

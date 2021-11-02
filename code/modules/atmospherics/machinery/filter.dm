@@ -34,20 +34,6 @@ Filter types:
 4: Other Gases (i.e. Sleeping Agent & Other trace gases)
 */
 
-	var/frequency = 0
-	var/datum/radio_frequency/radio_connection
-
-	proc
-		set_frequency(new_frequency)
-			radio_controller.remove_object(src, "[frequency]")
-			frequency = new_frequency
-			if(frequency)
-				radio_connection = radio_controller.add_object(src, "[frequency]")
-
-	disposing()
-		radio_controller.remove_object(src,"[frequency]")
-		..()
-
 	New()
 		..()
 		switch(dir)
@@ -253,8 +239,6 @@ Filter types:
 				break
 
 		update_icon()
-
-		set_frequency(frequency)
 
 	build_network()
 		if(!network_out1 && node_out1)
