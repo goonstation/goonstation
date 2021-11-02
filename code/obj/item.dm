@@ -1499,7 +1499,7 @@
 	if (!istype(M)) return
 	var/turf/simulated/simulated = T
 
-	var/msg = "[key_name(M)] [thr ? "threw" : "dropped"] firesource ([O]) at [log_loc(T)]."
+	var/msg = "[constructTarget(M)] [thr ? "threw" : "dropped"] firesource ([O]) at [log_loc(T)]."
 
 	if (istype(simulated) && simulated.air.toxins)
 		msg += " Turf contains <b>plasma gas</b>."

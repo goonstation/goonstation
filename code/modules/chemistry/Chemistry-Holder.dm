@@ -95,7 +95,7 @@ datum
 			for(var/reagent_id in reagent_list)
 				var/datum/reagent/current_reagent = reagent_list[reagent_id]
 				if(current_reagent)
-					target.add_reagent(reagent=reagent_id, amount=max(current_reagent.volume * multiplier, 0.001),donotreact=do_not_react, temp_new = newtemp) //mbc : fixed reagent duplication bug by changing max(x,1) to max(x,0.001). Still technically possible to dupe, but not realistically doable.
+					target.add_reagent(reagent=reagent_id, amount=max(current_reagent.volume * multiplier, 0.001),donotreact=do_not_react, temp_new = newtemp, sdata=current_reagent.data) //mbc : fixed reagent duplication bug by changing max(x,1) to max(x,0.001). Still technically possible to dupe, but not realistically doable.
 					current_reagent.on_copy(target.reagent_list[reagent_id])
 				if(!target) return
 
