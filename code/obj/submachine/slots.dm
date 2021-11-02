@@ -12,7 +12,7 @@
 	var/working = 0
 	var/obj/item/card/id/scan = null
 	var/icon_base = "slots"
-	var/datum/data/record/accessed_record = null
+	var/datum/db_record/accessed_record = null
 	var/available_funds = 0
 	var/emagged = 0
 	///break-even point for slots when this is set to 2500. make lower to make slots pay out better, or higher to give the house an edge
@@ -41,7 +41,7 @@
 		"busy" = working,
 		"scannedCard" = src.scan,
 		"money" = available_funds,
-		"account_funds" = src.accessed_record?.fields["current_money"],
+		"account_funds" = src.accessed_record?["current_money"],
 		"plays" = plays,
 		"wager" = wager,
 	)
@@ -86,27 +86,31 @@
 				src.icon_state = "[icon_base]-off"
 
 		if("eject")
-			if(!src.accessed_record)
-				return TRUE // jerks doing that "hide in a chute to glitch auto-update windows out" exploit caused a wall of runtime errors
 			usr.put_in_hand_or_eject(src.scan)
-			src.accessed_record.fields["current_money"] += src.available_funds
-			src.available_funds = 0
 			src.scan = null
-			src.accessed_record = null
 			src.working = FALSE
 			src.icon_state = "[icon_base]-off" // just in case, some fucker broke it earlier
+			if(!src.accessed_record)
+				src.visible_message("<span class='subtle'><b>[src]</b> says, 'Winnings not transferred, thank you for playing!'</span>")
+				return TRUE // jerks doing that "hide in a chute to glitch auto-update windows out" exploit caused a wall of runtime errors
+			src.accessed_record["current_money"] += src.available_funds
+			src.available_funds = 0
+			src.accessed_record = null
 			src.visible_message("<span class='subtle'><b>[src]</b> says, 'Winnings transferred, thank you for playing!'</span>")
 			. = TRUE
 
 		if("cashin")
+			if(!src.accessed_record)
+				boutput(usr, "<span class='alert'>No account connected.</span>")
+				return TRUE
 			var/transfer_amount = input(usr, "Enter how much to transfer from your account.", "Deposit Credits", 0) as null|num
-			transfer_amount = clamp(transfer_amount,0,src.accessed_record.fields["current_money"])
-			src.accessed_record.fields["current_money"] -= transfer_amount
+			transfer_amount = clamp(transfer_amount,0,src.accessed_record["current_money"])
+			src.accessed_record["current_money"] -= transfer_amount
 			src.available_funds += transfer_amount
 			boutput(usr, "<span class='notice'>Funds transferred.</span>")
 
 		if("cashout")
-			src.accessed_record.fields["current_money"] += src.available_funds
+			src.accessed_record["current_money"] += src.available_funds
 			src.available_funds = 0
 			boutput(usr, "<span class='notice'>Funds transferred.</span>")
 
@@ -138,9 +142,14 @@
 				usr.put_in_hand_or_eject(I)
 				ui_interact(user)
 				return TRUE
+			src.accessed_record = FindBankAccountByName(idcard.registered)
+			if(isnull(src.accessed_record))
+				boutput(user, "<span class='alert'>That card has no bank account associated.</span>")
+				usr.put_in_hand_or_eject(I)
+				ui_interact(user)
+				return TRUE
 			boutput(user, "<span class='notice'>Card authorized.</span>")
 			src.scan = I
-			src.accessed_record = FindBankAccountByName(src.scan.registered)
 			ui_interact(user)
 			. = TRUE
 	else
@@ -153,7 +162,7 @@
 	var/amount = 0
 
 	//300x and 100x jackpots fall through to 50x winner if wager <= 250
-	if(wager <= 250)
+	if(wager < 250)
 		roll = max(6, roll)
 	if(src.emagged)
 		roll = min(roll * 2, max_roll)
@@ -164,10 +173,10 @@
 		amount = 300 * wager
 		command_alert("Congratulations to [src.scan.registered] on winning a Jackpot of [amount] credits!", "Jackpot Winner")
 	else if (roll <= 5) //4 - 400
-		command_alert("Congratulations to [src.scan.registered] on winning [amount] credits!", "Big Winner")
 		win_sound =  "sound/misc/klaxon.ogg"
 		exclamation = "Big Winner! "
 		amount = 100 * wager
+		command_alert("Congratulations to [src.scan.registered] on winning [amount] credits!", "Big Winner")
 	else if (roll <= 15) //10 - 500    (Plus additional 5 - 250 if wager <= 250)
 		win_sound =  "sound/musical_instruments/Bell_Huge_1.ogg"
 		exclamation = "Big Winner! "
@@ -181,7 +190,7 @@
 	else if (roll <= 265) //100 - 300
 		exclamation = "Winner! "
 		amount = 3 * wager
-	else if (roll <= 715 && wager <= 250) //450 - 450, if wager <= 250, to make up for not having jackpots
+	else if (roll <= 715 && wager < 250) //450 - 450, if wager <= 250, to make up for not having jackpots
 		exclamation = "Small Winner! "
 		amount = 1 * wager
 	else
@@ -287,7 +296,7 @@
 				src.play_money += I.amount
 
 			I.amount = 0
-			pool(I)
+			qdel(I)
 
 	attack_hand(var/mob/user as mob)
 		src.add_dialog(user)

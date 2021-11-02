@@ -14,48 +14,13 @@
 	var/smoky = FALSE
 
 	New(var/loc, var/forceartiorigin)
-		//src.artifact = new /datum/artifact/powercell(src)
 		var/datum/artifact/powercell/AS = new /datum/artifact/powercell(src)
 		if (forceartiorigin)
 			AS.validtypes = list("[forceartiorigin]")
 		src.artifact = AS
 		SPAWN_DBG(0)
 			src.ArtifactSetup()
-			var/datum/artifact/A = src.artifact
-			src.maxcharge = rand(15,1000)
-			src.maxcharge *= 100
-			src.chargeCap = src.maxcharge
-			A.react_elec[2] = src.maxcharge
-
-			// effects
-			src.effectProbModifier = 1/rand(10,50) 	// probability
-			switch(A.artitype.name)										// noise
-				if ("martian")
-					src.noise = pick("sound/voice/babynoise.ogg", "sound/voice/animal/bugchitter.ogg", "sound/voice/blob/blobdeath.ogg", "sound/voice/farts/frogfart.ogg", "sound/effects/splort.ogg")
-				if ("ancient")
-					src.noise = pick("sound/effects/electric_shock_short.ogg", "sound/effects/creaking_metal2.ogg","sound/machines/weapons-reloading.ogg", "sound/machines/glitch1.ogg","sound/machines/glitch2.ogg", "sound/machines/glitch3.ogg","sound/machines/glitch4.ogg", "sound/machines/glitch5.ogg", "sound/machines/scan.ogg")
-				if ("wizard")
-					src.noise = pick("sound/weapons/airzooka.ogg", "sound/misc/newsting.ogg", "sound/misc/chair/glass/scoot5.ogg", "sound/misc/chair/glass/scoot2.ogg")
-				if ("precursor") // what does precursor stuff even sound like???
-					src.noise = pick("sound/effects/singsuck.ogg", "sound/effects/screech_tone.ogg")
-
-			if(prob(maxcharge/1000)) 									// the more charge the bigger the chance it does dumb stuff
-				switch(A.artitype.name) 								// leakage
-					if ("martian")
-						src.leakChem = pick("space_fungus","blood","vomit","gvomit","urine","meat_slurry","grease","butter","synthflesh","bread","poo","ants","spiders")
-					if ("ancient")
-						src.leakChem = pick("voltagen","ash","cleaner", "oil", "thermite", "acid", "fuel", "nanites", "radium", "mercury")
-					if ("wizard")
-						src.leakChem = pick("glitter","sakuride","grassgro","sparkles","glowing_fliptonium", "mugwort")
-					if ("precursor")
-						src.leakChem = pick(all_functional_reagent_ids) // no way this goes wrong
-				if(prob(10))
-					src.smoky = TRUE
-				src.create_reagents(rand(5,20))
-				src.reagents.add_reagent(leakChem, src.reagents.maximum_volume) // so you can reagent scan the cell!
-
-
-			..()
+		..()
 
 	examine()
 		. = list("You have no idea what this thing is!")
@@ -125,3 +90,38 @@
 	New()
 		..()
 		src.react_heat[2] = "VOLATILE REACTION DETECTED"
+
+	post_setup()
+		..()
+		var/obj/item/cell/artifact/O = src.holder
+		O.maxcharge = rand(15,1000)
+		O.maxcharge *= 100
+		O.chargeCap = O.maxcharge
+		src.react_elec[2] = O.maxcharge
+
+		// effects
+		O.effectProbModifier = 1/rand(10,50) 	// probability
+		switch(src.artitype.name)					// noise
+			if ("martian")
+				O.noise = pick("sound/voice/babynoise.ogg", "sound/voice/animal/bugchitter.ogg", "sound/voice/blob/blobdeath.ogg", "sound/voice/farts/frogfart.ogg", "sound/effects/splort.ogg")
+			if ("ancient")
+				O.noise = pick("sound/effects/electric_shock_short.ogg", "sound/effects/creaking_metal2.ogg","sound/machines/weapons-reloading.ogg", "sound/machines/glitch1.ogg","sound/machines/glitch2.ogg", "sound/machines/glitch3.ogg","sound/machines/glitch4.ogg", "sound/machines/glitch5.ogg", "sound/machines/scan.ogg")
+			if ("wizard")
+				O.noise = pick("sound/weapons/airzooka.ogg", "sound/misc/newsting.ogg", "sound/misc/chair/glass/scoot5.ogg", "sound/misc/chair/glass/scoot2.ogg")
+			if ("precursor") // what does precursor stuff even sound like???
+				O.noise = pick("sound/effects/singsuck.ogg", "sound/effects/screech_tone.ogg")
+
+		if(prob(O.maxcharge/1000)) 			// the more charge the bigger the chance it does dumb stuff
+			switch(src.artitype.name) 		// leakage
+				if ("martian")
+					O.leakChem = pick("space_fungus","blood","vomit","gvomit","urine","meat_slurry","grease","butter","synthflesh","bread","poo","ants","spiders")
+				if ("ancient")
+					O.leakChem = pick("voltagen","ash","cleaner", "oil", "thermite", "acid", "fuel", "nanites", "radium", "mercury")
+				if ("wizard")
+					O.leakChem = pick("glitter","sakuride","grassgro","sparkles","glowing_fliptonium", "mugwort")
+				if ("precursor")
+					O.leakChem = pick(all_functional_reagent_ids) // no way this goes wrong
+			if(prob(10))
+				O.smoky = TRUE
+			O.create_reagents(rand(5,20))
+			O.reagents.add_reagent(O.leakChem, O.reagents.maximum_volume) // so you can reagent scan the cell!

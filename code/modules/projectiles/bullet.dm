@@ -22,6 +22,7 @@ ABSTRACT_TYPE(/datum/projectile/bullet)
 	// 0.308 - rifles
 	// 0.357 - revolver
 	// 0.38 - detective
+	// 0.40 - blowgun darts
 	// 0.41 - derringer
 	// 0.72 - shotgun shell, 12ga
 	// 1.57 - grenade shell, 40mm
@@ -296,6 +297,26 @@ toxic - poisons
 		reagent_payload = "mutadone" // HAH
 
 
+/datum/projectile/bullet/blow_dart
+	name = "poison dart"
+	power = 5
+	icon_state = "blowdart"
+	damage_type = D_TOXIC
+	hit_type = DAMAGE_STAB
+	dissipation_delay = 10
+	caliber = 0.40
+	implanted = "blowdart"
+	shot_sound = 'sound/effects/syringeproj.ogg'
+	silentshot = 1
+	casing = null
+	reagent_payload = "curare"
+
+	madness
+		reagent_payload = "madness_toxin"
+
+	ls_bee
+		reagent_payload = "lsd_bee"
+
 
 
 /datum/projectile/bullet/revolver_38/stunners//energy bullet things so he can actually stun something
@@ -333,11 +354,6 @@ toxic - poisons
 	caliber = 0.41
 	icon_turf_hit = "bhole"
 	casing = /obj/item/casing/derringer
-
-	on_hit(atom/hit)
-		if(ismob(hit) && hasvar(hit, "stunned"))
-			hit:stunned += 5
-		..()
 
 /datum/projectile/bullet/a12
 	name = "buckshot"
@@ -511,6 +527,8 @@ toxic - poisons
 		if(isliving(hit))
 			var/mob/living/L = hit
 			L.bodytemperature = max(50, L.bodytemperature - proj.power * 5)
+			if(L.getStatusDuration("shivering" < power))
+				L.setStatus("shivering", power/2 SECONDS)
 			var/obj/icecube/I = new/obj/icecube(get_turf(L), L)
 			I.health = proj.power / 2
 
@@ -752,8 +770,6 @@ toxic - poisons
 		for(var/mob/M in range(proj.loc, 5))
 			shake_camera(M, 3, 8)
 
-
-
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
 
 		..()
@@ -809,14 +825,37 @@ toxic - poisons
 				T.throw_shrapnel(T, 1, 1)
 				T.ex_act(2)
 
+/datum/projectile/bullet/howitzer
+	name = "howitzer round"
+	brightness = 0.7
+	window_pass = 0
+	icon = 'icons/obj/large/bigprojectiles.dmi'
+	icon_state = "152mm-shot"
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	power = 400
+	dissipation_delay = 300
+	dissipation_rate = 5
+	cost = 1
+	shot_sound = 'sound/effects/explosion_new2.ogg'
+	shot_volume = 90
+	implanted = null
+
+	ks_ratio = 0.5
+	caliber = 6 // six inch gun
+	icon_turf_hit = "bhole-large"
+	casing = /obj/item/casing/cannon
+	shot_sound_extrarange = 1
 
 
+	on_hit(atom/hit)
+		for(var/turf/T in range(get_turf(hit), 4))
+			new /obj/effects/explosion/dangerous(T)
+		explosion_new(null, get_turf(hit), 100)
 
-
-
-
-
-
+	on_launch(obj/projectile/proj)
+		for(var/mob/M in range(proj.loc, 5))
+			shake_camera(M, 3, 6)
 
 
 
@@ -870,11 +909,12 @@ toxic - poisons
 	huge
 		icon_state = "400mm"
 		power = 100
-		caliber = 15.7
+		caliber = 15.7 // ?? what
 		icon_turf_hit = "bhole-large"
 
 		on_hit(atom/hit)
 			explosion_new(null, get_turf(hit), 80)
+
 
 	seeker
 		name = "drone-seeking grenade"
@@ -1469,3 +1509,13 @@ toxic - poisons
 	max_range = 15
 	dissipation_rate = 0
 	ie_type = null
+
+	on_end(var/obj/projectile/O)
+		..()
+		var/turf/T = get_turf(O)
+		if(T)
+			var/obj/item/ammo/bullets/foamdarts/ammo_dropped = new /obj/item/ammo/bullets/foamdarts (T)
+			ammo_dropped.amount_left = 1
+			ammo_dropped.update_icon()
+			ammo_dropped.pixel_x += rand(-12,12)
+			ammo_dropped.pixel_y += rand(-12,12)

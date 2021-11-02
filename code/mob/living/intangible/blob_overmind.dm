@@ -82,9 +82,9 @@
 		src.add_ability(/datum/blob_ability/set_color)
 		src.add_ability(/datum/blob_ability/tutorial)
 		src.add_ability(/datum/blob_ability/help)
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
+		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_SPOOKY)
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-		src.see_invisible = 15
+		src.see_invisible = INVIS_SPOOKY
 		src.see_in_dark = SEE_DARK_FULL
 		my_material = copyMaterial(getMaterial("blob"))
 		my_material.color = "#ffffff"
@@ -147,10 +147,10 @@
 
 			//maybe other debuffs here in the future
 
-			newBioPoints = clamp((src.bio_points + (base_gen_rate + genBonus - gen_rate_used) * mult), 0, src.bio_points_max) //these are rounded in point displays
+			newBioPoints = clamp((src.bio_points + (base_gen_rate + genBonus - gen_rate_used) * mult), 0, src.bio_points_max + (base_gen_rate + gen_rate_bonus - gen_rate_used) * (mult - 1)) //these are rounded in point displays
 
 		else
-			newBioPoints = clamp((src.bio_points + (base_gen_rate + gen_rate_bonus - gen_rate_used) * mult), 0, src.bio_points_max) //ditto above
+			newBioPoints = clamp((src.bio_points + (base_gen_rate + gen_rate_bonus - gen_rate_used) * mult), 0, src.bio_points_max + (base_gen_rate + gen_rate_bonus - gen_rate_used) * (mult - 1)) //ditto above
 
 		src.bio_points = newBioPoints
 
@@ -296,19 +296,20 @@
 			src.update_buttons()
 			return
 		else
-			if (T && (!isghostrestrictedz(T.z) || (isghostrestrictedz(T.z) && restricted_z_allowed(src, T)) || src.tutorial || (src.client && src.client.holder)))
-				if (src.tutorial)
-					if (!tutorial.PerformAction("clickmove", T))
-						return
-				src.set_loc(T)
-				return
+			if(params["right"])
+				if (T && (!isghostrestrictedz(T.z) || (isghostrestrictedz(T.z) && restricted_z_allowed(src, T)) || src.tutorial || (src.client && src.client.holder)))
+					if (src.tutorial)
+						if (!tutorial.PerformAction("clickmove", T))
+							return
+					src.set_loc(T)
+					return
 
-			if (T && isghostrestrictedz(T.z) && !restricted_z_allowed(src, T) && !(src.client && src.client.holder))
-				var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-				if (OS)
-					src.set_loc(OS)
-				else
-					src.z = 1
+				if (T && isghostrestrictedz(T.z) && !restricted_z_allowed(src, T) && !(src.client && src.client.holder))
+					var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
+					if (OS)
+						src.set_loc(OS)
+					else
+						src.z = 1
 
 	say_understands() return 1
 	can_use_hands()	return 0

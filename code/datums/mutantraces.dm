@@ -210,7 +210,7 @@
 		return message
 
 	proc/say_verb()
-		return "says"
+		return null
 
 	proc/emote(var/act)
 		return null
@@ -775,7 +775,7 @@
 	sight_modifier()
 		mob.sight |= SEE_MOBS
 		mob.see_in_dark = SEE_DARK_FULL
-		mob.see_invisible = 3
+		mob.see_invisible = INVIS_CLOAK
 
 	emote(var/act)
 		var/message = null
@@ -837,7 +837,7 @@
 
 	sight_modifier()
 		mob.see_in_dark = SEE_DARK_HUMAN + 1
-		mob.see_invisible = 1
+		mob.see_invisible = INVIS_INFRA
 
 	say_filter(var/message)
 		return replacetext(message, "s", stutter("ss"))
@@ -861,8 +861,10 @@
 /datum/mutantrace/zombie
 	name = "zombie"
 	icon_state = "zombie"
+	human_compatible = FALSE
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON | HEAD_HAS_OWN_COLORS)
 	jerk = 1
+	override_attack = 0
 	needs_oxy = 0
 	movement_modifier = /datum/movement_modifier/zombie
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/zombie
@@ -900,7 +902,17 @@
 
 			M.add_stam_mod_max("zombie", 100)
 			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "zombie", -5)
+			M.full_heal()
+			M.real_name = "Zombie [M.real_name]"
 
+			//give em zombie arms if they don't have em...
+			if (!istype(M.limbs.r_arm, /obj/item/parts/human_parts/arm/right/zombie))
+				M.limbs.replace_with("r-arm", /obj/item/parts/human_parts/arm/right/zombie, M, 0)
+			if (!istype(M.limbs.l_arm, /obj/item/parts/human_parts/arm/left/zombie))
+				M.limbs.replace_with("l-arm", /obj/item/parts/human_parts/arm/left/zombie, M, 0)
+
+			SPAWN_DBG(rand(4, 30))
+				M.emote("scream")
 			SHOW_ZOMBIE_TIPS(M)
 
 	proc/make_bubs(var/mob/living/carbon/human/M)
@@ -940,7 +952,7 @@
 	sight_modifier()
 		mob.sight |= SEE_MOBS
 		mob.see_in_dark = SEE_DARK_FULL
-		mob.see_invisible = 0
+		mob.see_invisible = INVIS_NONE
 
 	say_filter(var/message)
 		return pick("Urgh...", "Brains...", "Hungry...", "Kill...")
@@ -971,7 +983,7 @@
 					//mob.full_heal()
 
 					mob.HealDamage("All", 100000, 100000)
-					mob.drowsyness = 0
+					mob.delStatus("drowsy")
 					mob.stuttering = 0
 					mob.losebreath = 0
 					mob.delStatus("paralysis")
@@ -1196,7 +1208,7 @@
 		//Bringing it more in line with how it was before it got broken (in a hilarious fashion)
 		if (ruff_tuff_and_ultrabuff && !(mob.getStatusDuration("burning") && prob(90))) //Are you a macho abomination or not?
 			mob.delStatus("disorient")
-			mob.drowsyness = 0
+			mob.delStatus("drowsy")
 			mob.change_misstep_chance(-INFINITY)
 			mob.delStatus("slowed")
 			mob.stuttering = 0
@@ -1285,6 +1297,7 @@
 			health_update_queue |= mob
 			src.original_name = mob.real_name
 			mob.real_name = "werewolf"
+			mob.UpdateName()
 
 			mob.bioHolder.AddEffect("protanopia", null, null, 0, 1)
 			mob.bioHolder.AddEffect("accent_scoob_nerf", null, null, 0, 1)
@@ -1307,6 +1320,7 @@
 
 			if (!isnull(src.original_name))
 				mob.real_name = src.original_name
+				mob.UpdateName()
 
 			mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
 		. = ..()
@@ -1315,14 +1329,14 @@
 		if (ishuman(mob))
 			mob.sight |= SEE_MOBS
 			mob.see_in_dark = SEE_DARK_FULL
-			mob.see_invisible = 2
+			mob.see_invisible = INVIS_CLOAK
 		return
 
 	// Werewolves (being a melee-focused role) are quite buff.
 	onLife(var/mult = 1)
 		if (mob && ismob(mob))
-			if (mob.drowsyness)
-				mob.drowsyness = max(0, mob.drowsyness - 2)
+			if (mob.hasStatus("drowsy"))
+				mob.changeStatus("drowsy", -10 SECONDS)
 			if (mob.misstep_chance)
 				mob.change_misstep_chance(-10 * mult)
 			if (mob.getStatusDuration("slowed"))
@@ -1710,7 +1724,7 @@
 
 	sight_modifier()
 		mob.see_in_dark = SEE_DARK_HUMAN + 1
-		mob.see_invisible = 1
+		mob.see_invisible = INVIS_INFRA
 
 	disposing()
 		if(ishuman(mob))
@@ -1746,7 +1760,7 @@
 
 	sight_modifier()
 		mob.see_in_dark = SEE_DARK_HUMAN + 1
-		mob.see_invisible = 1
+		mob.see_invisible = INVIS_INFRA
 
 	disposing()
 		if(ishuman(mob))
@@ -1916,7 +1930,7 @@
 				H.setStatus("maxhealth-", null, -50)
 				H.add_stam_mod_max("kudzu", -100)
 				APPLY_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "kudzu", -5)
-				H.bioHolder.AddEffect("xray", magical=1)
+				H.bioHolder.AddEffect("xray", power = 2, magical=1)
 				H.abilityHolder = new /datum/abilityHolder/kudzu(H)
 				H.abilityHolder.owner = H
 				H.abilityHolder.addAbility(/datum/targetable/kudzu/guide)

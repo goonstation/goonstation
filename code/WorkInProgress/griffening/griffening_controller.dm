@@ -847,7 +847,7 @@ td, th {
 
 /obj/griffening_central
 	name = "Spacemen the Grifening duel arena"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	density = 0
 	opacity = 0
 	anchored = 1

@@ -41,8 +41,8 @@
 	var/tmp/messy = 0 //value corresponds to how many cleanables exist on this turf. Exists for the purpose of making fluid spreads do less checks.
 	var/tmp/checkingexit = 0 //value corresponds to how many objs on this turf implement checkexit(). lets us skip a costly loop later!
 	var/tmp/checkingcanpass = 0 // "" how many implement canpass()
-	var/tmp/checkinghasentered = 0 // "" hasproximity as well as items with a mat that hasproximity
 	var/tmp/checkinghasproximity = 0
+	var/tmp/neighcheckinghasproximity = 0
 	/// directions of this turf being blocked by directional blocking objects. So we don't need to loop through the entire contents
 	var/tmp/blocked_dirs = 0
 	/// this turf is allowing unrestricted hotbox reactions
@@ -56,6 +56,7 @@
 	var/special_volume_override = -1 //if greater than or equal to 0, override
 
 	var/turf_flags = 0
+	var/list/list/datum/disjoint_turf/connections
 
 	disposing() // DOES NOT GET CALLED ON TURFS!!!
 		SHOULD_NOT_OVERRIDE(TRUE)
@@ -153,10 +154,6 @@
 	layer = TILE_EFFECT_OVERLAY_LAYER
 	animate_movement = NO_STEPS // fix for things gliding around all weird
 
-	pooled(var/poolname)
-		overlays.len = 0
-		..()
-
 	Move()
 		return 0
 
@@ -165,10 +162,6 @@
 	anchored = 1
 	density = 0
 	mouse_opacity = 0
-
-	pooled(var/poolname)
-		overlays.len = 0
-		..()
 
 	Move()
 		return 0
@@ -184,9 +177,6 @@
 	name = "\proper space"
 	icon_state = "placeholder"
 	fullbright = 1
-#ifndef HALLOWEEN
-	color = "#898989"
-#endif
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
@@ -197,6 +187,7 @@
 	plane = PLANE_SPACE
 	special_volume_override = 0
 	text = ""
+	var/static/list/space_color = generate_space_color()
 
 	flags = ALWAYS_SOLID_FLUID
 	turf_flags = CAN_BE_SPACE_SAMPLE
@@ -233,6 +224,63 @@
 		src.desc = "There appears to be a spatial disturbance in this area of space."
 		new/obj/item/device/key/random(src)
 
+	if(!isnull(space_color) && !istype(src, /turf/space/fluid))
+		src.color = space_color
+
+proc/repaint_space(regenerate=TRUE)
+	for(var/turf/space/T)
+		if(regenerate)
+			T.space_color = generate_space_color()
+			regenerate = FALSE
+		if(istype(T, /turf/space/fluid))
+			continue
+		T.color = T.space_color
+
+proc/generate_space_color()
+#ifndef HALLOWEEN
+	return "#898989"
+#else
+	var/bg = list(0, 0, 0)
+	bg[1] += rand(0, 35)
+	bg[3] += rand(0, 35)
+	var/main_star = list(255, 255, 255)
+	main_star = list(150 + rand(-40, 40), 100 + rand(-40, 40), 50 + rand(-40, 40))
+	var/hsv_main = rgb2hsv(main_star[1], main_star[2], main_star[3])
+	hsv_main[2] = 100
+	main_star = hsv2rgblist(hsv_main[1], hsv_main[2], hsv_main[3])
+	if(prob(5))
+		main_star = list(230, 0, 0)
+	var/misc_star_1 = main_star
+	var/misc_star_2 = main_star
+	if(prob(33))
+		misc_star_2 = list(main_star[2], main_star[3], main_star[1])
+		misc_star_1 = list(main_star[3], main_star[1], main_star[2])
+	else if(prob(50))
+		misc_star_1 = list(main_star[2], main_star[3], main_star[1])
+		misc_star_2 = list(main_star[3], main_star[1], main_star[2])
+	else
+		misc_star_1 = list(150 + rand(-40, 40), 100 + rand(-40, 40), 50 + rand(-40, 40))
+		misc_star_2 = list(150 + rand(-40, 40), 100 + rand(-40, 40), 50 + rand(-40, 40))
+	if(prob(5))
+		misc_star_1 = list(230, 0, 0)
+	misc_star_1 = list(misc_star_1[1] + rand(-25, 25), misc_star_1[2] + rand(-25, 25), misc_star_1[3] + rand(-25, 25))
+	misc_star_2 = list(misc_star_2[1] + rand(-25, 25), misc_star_2[2] + rand(-25, 25), misc_star_2[3] + rand(-25, 25))
+	if(prob(5))
+		misc_star_2 = list(230, 0, 0)
+	if(prob(1.5))
+		bg = list(200 - bg[1], 200 - bg[2], 200 - bg[3])
+		if(prob(50))
+			main_star = list(180 - main_star[1], 180 - main_star[2], 180 - main_star[3])
+			misc_star_1 = list(255 - misc_star_1[1], 255 - misc_star_1[2], 255 - misc_star_1[3])
+			misc_star_2 = list(255 - misc_star_2[1], 255 - misc_star_2[2], 255 - misc_star_2[3])
+	if(prob(2))
+		bg = list(120 + rand(-30, 30), rand(20, 50), rand(20, 50))
+	return affine_color_mapping_matrix(
+		list("#000000", "#ffffff", "#ff0000", "#0080FF"), // original misc_star_2 = "#64C5D2", but that causes issues for some frames
+		list(bg, main_star, misc_star_1, misc_star_2)
+	)
+#endif
+
 // override for space turfs, since they should never hide anything
 /turf/space/levelupdate()
 	for(var/obj/O in src)
@@ -251,7 +299,7 @@
 	icon = 'icons/effects/mapeditor.dmi'
 	icon_state = "cordonturf"
 	fullbright = 1
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	explosion_resistance = 999999
 	density = 1
 	opacity = 1
@@ -267,8 +315,7 @@
 	if (density)
 		pathable = 0
 	for(var/atom/movable/AM as mob|obj in src)
-		if (AM) // ???? x2
-			src.Entered(AM)
+		src.Entered(AM)
 	if(!RL_Started)
 		RL_Init()
 
@@ -288,9 +335,13 @@
 				continue
 			if((mover != obstacle) && (forget != obstacle))
 				if(obstacle.event_handler_flags & USE_CHECKEXIT)
-					if(!obstacle.CheckExit(mover, src))
-						mover.Bump(obstacle, 1)
-						return 0
+					var/obj/obj_mover = mover
+					if (!istype(obj_mover) || !(HAS_FLAG(obj_mover.object_flags, HAS_DIRECTIONAL_BLOCKING) \
+					  && HAS_FLAG(obstacle.object_flags, HAS_DIRECTIONAL_BLOCKING) \
+					  && obstacle.dir == mover.dir)) //Allow objects that block the same dirs to be pushed past each other
+						if(!obstacle.CheckExit(mover, src))
+							mover.Bump(obstacle, 1)
+							return 0
 
 	//Then, check the turf itself
 	if (!src.CanPass(mover, src))
@@ -339,22 +390,7 @@
 	return 1 //Nothing found to block so return success!
 
 /turf/Exited(atom/movable/Obj, atom/newloc)
-	var/i = 0
-
 	//MBC : nothing in the game even uses PrxoimityLeave meaningfully. I'm disabling the proc call here.
-	//for(var/atom/A as mob|obj|turf|area in range(1, src))
-	if (src.checkinghasentered > 0)  //dont bother checking unless the turf actually contains a checkable :)
-		for(var/thing in src)
-			var/atom/A = thing
-			if(A == Obj)
-				continue
-			// I Said No sanity check
-			if(i >= 50)
-				break
-			i++
-			if(A.loc == src && A.event_handler_flags & USE_HASENTERED)
-				A.HasExited(Obj, newloc)
-			//A.ProximityLeave(Obj)
 
 	if (global_sims_mode)
 		var/area/Ar = loc
@@ -362,7 +398,6 @@
 			if (isitem(Obj))
 				if (!(locate(/obj/table) in src) && !(locate(/obj/rack) in src))
 					Ar.sims_score = min(Ar.sims_score + 4, 100)
-
 
 	return ..(Obj, newloc)
 
@@ -373,7 +408,6 @@
 	///////////////////////////////////////////////////////////////////////////////////
 	..()
 	return_if_overlay_or_effect(M)
-	src.material?.triggerOnEntered(src, M)
 
 	if (global_sims_mode)
 		var/area/Ar = loc
@@ -383,29 +417,17 @@
 					Ar.sims_score = max(Ar.sims_score - 4, 0)
 
 	var/i = 0
-	if (src.checkinghasentered > 0)  //dont bother checking unless the turf actually contains a checkable :)
-		for(var/thing in src)
-			var/atom/A = thing
-			if(A == M)
-				continue
-			// I Said No sanity check
-			if(i++ >= 50)
-				break
-
-			if (A.event_handler_flags & USE_HASENTERED)
-				A.HasEntered(M, OldLoc)
-			if(A.material)
-				A.material.triggerOnEntered(A, M)
 	i = 0
-	for (var/turf/T in range(1,src))
-		if (T.checkinghasproximity > 0)
-			for(var/thing in T)
-				var/atom/A = thing
-				// I Said No sanity check
-				if(i++ >= 50)
-					break
-				if (A.event_handler_flags & USE_PROXIMITY)
-					A.HasProximity(M, 1) //IMPORTANT MBCNOTE : ADD USE_PROXIMITY FLAG TO ANY ATOM USING HASPROX THX BB
+	if (src.neighcheckinghasproximity > 0)
+		for (var/turf/T in range(1,src))
+			if (T.checkinghasproximity > 0)
+				for(var/thing in T)
+					var/atom/A = thing
+					// I Said No sanity check
+					if(i++ >= 50)
+						break
+					if (A.event_handler_flags & USE_PROXIMITY)
+						A.HasProximity(M, 1) //IMPORTANT MBCNOTE : ADD USE_PROXIMITY FLAG TO ANY ATOM USING HASPROX THX BB
 
 	if(!src.throw_unlimited && M?.no_gravity)
 		BeginSpacePush(M)
@@ -428,7 +450,7 @@
 // Ported from unstable r355
 /turf/space/Entered(atom/movable/A as mob|obj)
 	..()
-	if ((!(A) || istype(null, /obj/projectile)))
+	if ((!(A) || istype(A, /obj/projectile)))
 		return
 
 	if (!(A.last_move))
@@ -444,7 +466,7 @@
 	if (src.throw_unlimited)//ignore inertia if we're in the ocean (faster but kind of dumb check)
 		if ((ismob(A) && src.x > 2 && src.x < (world.maxx - 1))) //fuck?
 			var/mob/M = A
-			if( M.client && M.client.flying )
+			if((M.client && M.client.flying) || (ismob(M) && HAS_MOB_PROPERTY(M, PROP_NOCLIP)))
 				return//aaaaa
 			BeginSpacePush(M)
 
@@ -533,9 +555,9 @@
 
 	var/old_checkingexit = src.checkingexit
 	var/old_checkingcanpass = src.checkingcanpass
-	var/old_checkinghasentered = src.checkinghasentered
 	var/old_blocked_dirs = src.blocked_dirs
 	var/old_checkinghasproximity = src.checkinghasproximity
+	var/old_neighcheckinghasproximity = src.neighcheckinghasproximity
 
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
 	var/old_process_cell_operations = src.process_cell_operations
@@ -587,10 +609,6 @@
 
 	new_turf.RL_ApplyGeneration = rlapplygen
 	new_turf.RL_UpdateGeneration = rlupdategen
-	if(new_turf.RL_MulOverlay)
-		pool(new_turf.RL_MulOverlay)
-	if(new_turf.RL_AddOverlay)
-		pool(new_turf.RL_AddOverlay)
 	new_turf.RL_MulOverlay = rlmuloverlay
 	new_turf.RL_AddOverlay = rladdoverlay
 
@@ -608,9 +626,9 @@
 
 	new_turf.checkingexit = old_checkingexit
 	new_turf.checkingcanpass = old_checkingcanpass
-	new_turf.checkinghasentered = old_checkinghasentered
 	new_turf.blocked_dirs = old_blocked_dirs
 	new_turf.checkinghasproximity = old_checkinghasproximity
+	new_turf.neighcheckinghasproximity = old_neighcheckinghasproximity
 
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
 	new_turf.process_cell_operations = old_process_cell_operations
@@ -944,7 +962,7 @@
 		return
 	if ((user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1))
 		return
-	if (isobj(user.pulling.loc))
+	if (!isturf(user.pulling.loc))
 		var/obj/container = user.pulling.loc
 		if (user.pulling in container.contents)
 			return
@@ -953,9 +971,9 @@
 	if (ismob(user.pulling))
 		var/mob/M = user.pulling
 		var/mob/t = M.pulling
-		M.pulling = null
+		M.remove_pulling()
 		step(M, get_dir(fuck_u, src))
-		M.pulling = t
+		M.set_pulling(t)
 	else
 		step(user.pulling, get_dir(fuck_u, src))
 	return
@@ -969,18 +987,16 @@
 		return
 	if ((user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1))
 		return
-	if (isobj(user.pulling.loc))
-		var/obj/container = user.pulling.loc
-		if (user.pulling in container.contents)
-			return
+	if (!isturf(user.pulling.loc))
+		return
 
 	var/turf/fuck_u = user.pulling.loc
 	if (ismob(user.pulling))
 		var/mob/M = user.pulling
 		var/t = M.pulling
-		M.pulling = null
+		M.remove_pulling()
 		step(M, get_dir(fuck_u, src))
-		M.pulling = t
+		M.set_pulling(t)
 	else
 		step(user.pulling, get_dir(fuck_u, src))
 	return
@@ -1186,6 +1202,17 @@
 	New()
 		..()
 		src.set_dir(pick(cardinal))
+
+/turf/simulated/nicegrass
+	name = "grass"
+	icon = 'icons/turf/outdoors.dmi'
+	icon_state = "grass"
+
+/turf/simulated/nicegrass/random
+	New()
+		..()
+		src.set_dir(pick(cardinal))
+
 
 /turf/unsimulated/floor/ballpit
 	name = "ball pit"

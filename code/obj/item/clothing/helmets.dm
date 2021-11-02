@@ -131,6 +131,12 @@
 		item_state = "space-captain-red"
 		desc = "Helps protect against vacuum. Comes in a fasionable red befitting a commander."
 
+/obj/item/clothing/head/helmet/space/neon
+	name = "neon space helmet"
+	icon_state = "space-cute"
+	item_state = "space-cute"
+	desc = "Helps protect against vacuum. Comes in a unique, flashy style."
+
 // Sealab helmets
 
 /obj/item/clothing/head/helmet/space/engineer/diving //hijacking engiehelms for the flashlight
@@ -600,7 +606,6 @@
 		setProperty("meleeprot_head", 4)
 		setProperty("disorient_resist_eye", 0)
 
-
 /obj/item/clothing/head/helmet/welding/abilities = list(/obj/ability_button/mask_toggle)
 
 /obj/item/clothing/head/helmet/EOD
@@ -731,6 +736,8 @@
 		desc = "Ooh, fancy."
 		icon_state = "indusred"
 		item_state = "indusred"
+		is_syndicate = 1
+
 		setupProperties()
 			..()
 			setProperty("meleeprot_head", 7)
@@ -816,7 +823,7 @@
 	icon_state = "gr_helmet"
 	setupProperties()
 		..()
-		setProperty("meleeprot_head", 7)
+		setProperty("meleeprot_head", 2)
 
 /*/obj/item/clothing/head/helmet/escape
 	name = "escape helmet"

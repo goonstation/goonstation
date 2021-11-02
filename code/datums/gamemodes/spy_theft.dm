@@ -18,6 +18,12 @@
 
 	var/const/spies_possible = 7
 
+#ifdef RP_MODE
+	var/const/pop_divisor = 10
+#else
+	var/const/pop_divisor = 6
+#endif
+
 	var/list/station_bounties = list()			// On-station items that can have bounties placed on them, pair list
 	var/list/big_station_bounties = list()	// On-station machines/other big objects that can have bounties placed on them, pair list
 	var/list/personal_bounties = list() 		// Things that belong to people like trinkets, pair list
@@ -153,9 +159,9 @@
 	var/num_spies = 2 //minimum
 
 	if (traitor_scaling)
-		num_spies = max(2, min(round((num_players + randomizer) / 6), spies_possible))
+		num_spies = max(2, min(round((num_players + randomizer) / pop_divisor), spies_possible))
 
-	var/list/possible_spies = get_possible_spies(num_spies)
+	var/list/possible_spies = get_possible_enemies(ROLE_SPY_THIEF, num_spies)
 
 	if (!possible_spies.len)
 		return 0
@@ -200,36 +206,6 @@
 
 	SPAWN_DBG (rand(waittime_l, waittime_h))
 		send_intercept()
-
-/datum/game_mode/spy_theft/proc/get_possible_spies(minimum_traitors=1)
-	var/list/candidates = list()
-
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if (ishellbanned(player)) continue //No treason for you
-		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-			if (player.client.preferences.be_spy)
-				candidates += player.mind
-
-	if (candidates.len < minimum_traitors)
-		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_spy set to yes were ready. We need [minimum_traitors] traitors so including players who don't want to be traitors in the pool.")
-		for(var/client/C)
-			var/mob/new_player/player = C.mob
-			if (!istype(player)) continue
-
-			if (ishellbanned(player)) continue //No treason for you
-			if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-				candidates += player.mind
-
-				if ((minimum_traitors > 1) && (candidates.len >= minimum_traitors))
-					break
-
-	if (candidates.len < 1)
-		return list()
-	else
-		return candidates
 
 /datum/game_mode/spy_theft/process()
 	..()

@@ -9,6 +9,7 @@
 	anchored = 0
 	mats = 50
 	layer = FLOOR_EQUIP_LAYER1
+	deconstruct_flags = DECON_DESTRUCT
 	var/obj/item/cell/PCEL = null
 	var/coveropen = 0
 	var/active = 0
@@ -22,7 +23,7 @@
 	var/image/display_panel = null
 	var/sound/sound_on = "sound/effects/shielddown.ogg"
 	var/sound/sound_off = "sound/effects/shielddown2.ogg"
-	var/sound/sound_shieldhit = "sound/effects/shieldhit2.ogg"
+	var/sound/sound_shieldhit = "sound/impact_sounds/Energy_Hit_1.ogg"
 	var/sound/sound_battwarning = "sound/machines/pod_alarm.ogg"
 	var/list/deployed_shields = list()
 	var/direction = ""	//for building the icon, always north or directional
@@ -148,7 +149,7 @@
 				playsound(src.loc, src.sound_battwarning, 50, 1)
 				src.visible_message("<span class='alert'>The <b>[src.name] emits a low battery alarm!</b></span>")
 
-		if(PCEL.charge < 0)
+		if(PCEL.charge <= 0)
 			src.visible_message("The <b>[src.name]</b> runs out of power and shuts down.")
 			src.shield_off()
 			return
@@ -334,8 +335,44 @@
 	desc = "A force field deployed to stop meteors and other high velocity masses."
 	icon = 'icons/obj/meteor_shield.dmi'
 	icon_state = "shield"
-	var/sound/sound_shieldhit = "sound/effects/shieldhit2.ogg"
+	var/sound/sound_shieldhit = "sound/impact_sounds/Energy_Hit_1.ogg"
 	var/obj/machinery/shieldgenerator/meteorshield/deployer = null
+
+	attackby(obj/item/W, mob/user)
+		. = ..()
+		if(istype(deployer, /obj/machinery/shieldgenerator/meteorshield))
+			var/obj/machinery/shieldgenerator/meteorshield/MS = deployer
+			//blocks solid objects
+			var/force_value = clamp(W.force/4, 1, 10)
+			if(MS.PCEL && !MS.connected && MS.active)
+				MS.PCEL.use(force_value * MS.range * (MS.power_level * MS.power_level))
+			else if(MS.connected)
+				MS.use_power(MS.power_usage + force_value )
+
+			playsound(src, src.sound_shieldhit, 20, 1)
+			return
+
+	bullet_act(var/obj/projectile/P)
+		var/damage = 0
+		damage = round(((P.power/6)*P.proj_data.ks_ratio), 1.0)
+		if (!damage)
+			return
+
+		if(istype(deployer, /obj/machinery/shieldgenerator/meteorshield))
+			var/obj/machinery/shieldgenerator/meteorshield/MS = deployer
+			//blocks solid objects
+			var/force_value
+			if((P.proj_data.damage_type == D_PIERCING) || (P.proj_data.damage_type == D_ENERGY))
+				force_value = damage
+			else if (P.proj_data.damage_type == D_KINETIC)
+				force_value = damage / 1.7
+
+			if(MS.PCEL && !MS.connected && MS.active)
+				MS.PCEL.use(force_value * MS.range * (MS.power_level * MS.power_level))
+			else if(MS.connected)
+				MS.use_power(MS.power_usage + force_value )
+
+			playsound(src, src.sound_shieldhit, 20, 1)
 
 	meteorhit(obj/O as obj)
 		if(istype(deployer, /obj/machinery/shieldgenerator/meteorshield))
@@ -393,7 +430,7 @@
 	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
 	var/powerlevel //Stores the power level of the deployer
 
-	var/sound/sound_shieldhit = "sound/effects/shieldhit2.ogg"
+	var/sound/sound_shieldhit = "sound/impact_sounds/Energy_Hit_1.ogg"
 	var/obj/machinery/shieldgenerator/deployer = null
 	var/update_tiles
 
@@ -434,7 +471,7 @@
 			src.icon_state = "shieldw"
 			src.color = "#FF3333"
 			src.powerlevel = 3
-			flags = ALWAYS_SOLID_FLUID
+			flags = ALWAYS_SOLID_FLUID | USEDELAY
 
 	disposing()
 		if(update_tiles)
@@ -484,6 +521,44 @@
 			if(ismob(A)) return 1
 			if(isobj(A)) return 1
 		else return 0
+
+	attackby(obj/item/W, mob/user)
+		. = ..()
+		if(istype(deployer, /obj/machinery/shieldgenerator/energy_shield))
+			var/obj/machinery/shieldgenerator/energy_shield/ES = deployer
+			//blocks solid objects
+			if(ES.power_level == 3)
+				var/force_value = clamp(W.force/4, 1, 20)
+				if(ES.PCEL && !ES.connected && ES.active)
+					ES.PCEL.use(force_value * ES.range * (ES.power_level * ES.power_level))
+				else if(ES.connected)
+					ES.use_power(ES.power_usage + force_value )
+
+				playsound(src, src.sound_shieldhit, 20, 1)
+			return
+
+	bullet_act(var/obj/projectile/P)
+		var/damage = 0
+		damage = round((P.power/3), 1.0)
+		if (!damage)
+			return
+
+		if(istype(deployer, /obj/machinery/shieldgenerator/energy_shield))
+			var/obj/machinery/shieldgenerator/energy_shield/ES = deployer
+			//blocks solid objects
+			if(ES.power_level == 3)
+				var/force_value
+				if((P.proj_data.damage_type == D_PIERCING) || (P.proj_data.damage_type == D_ENERGY))
+					force_value = damage
+				else if (P.proj_data.damage_type == D_KINETIC)
+					force_value = damage / 1.7
+
+				if(ES.PCEL && !ES.connected && ES.active)
+					ES.PCEL.use(force_value * ES.range * (ES.power_level * ES.power_level))
+				else if(ES.connected)
+					ES.use_power(ES.power_usage * (0.5 * force_value) )
+
+				playsound(src, src.sound_shieldhit, 20, 1)
 
 	meteorhit(obj/O as obj)
 		if(istype(deployer, /obj/machinery/shieldgenerator/energy_shield))
@@ -553,11 +628,11 @@
 		if(a)
 			icon_state = "shieldw"
 			powerlevel = 2
-			invisibility = 0
+			invisibility = INVIS_NONE
 		else
 			icon_state = ""
 			powerlevel = 0
-			invisibility = 100 //ehh whatever this "works"
+			invisibility = INVIS_ALWAYS_ISH //ehh whatever this "works"
 
 	meteorhit(obj/O as obj)
 		return

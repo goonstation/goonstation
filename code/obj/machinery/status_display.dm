@@ -37,7 +37,7 @@
 // 	var/lastdisplayline1 = ""		// the cached last displays
 // 	var/lastdisplayline2 = ""
 
-// 	var/frequency = 1435		// radio frequency
+// 	var/frequency = FREQ_STATUS_DISPLAY		// radio frequency
 
 // 	var/display_type = 0		// bitmask of messages types to display: 0=normal  1=supply shuttle  2=reseach stn destruct
 

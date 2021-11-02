@@ -37,6 +37,7 @@
 	// 0.355 - pistol (9mm)
 	// 0.357 - revolver
 	// 0.38 - detective
+	// 0.40 - blowgun
 	// 0.41 - derringer
 	// 0.72 - shotgun shell, 12ga
 	// 0.787 - 20mm cannon round
@@ -46,7 +47,7 @@
 /obj/item/ammo/bullets
 	name = "Ammo box"
 	sname = "Bullets"
-	desc = "A box of ammo"
+	desc = "A box of ammo!"
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "power_cell"
 	m_amt = 40000
@@ -268,7 +269,7 @@
 	update_icon()
 		if (src.amount_left < 0)
 			src.amount_left = 0
-		inventory_counter.update_number(src.amount_left)
+		inventory_counter?.update_number(src.amount_left)
 		src.tooltip_rebuild = 1
 		if (src.amount_left > 0)
 			if (src.icon_dynamic && src.icon_short)
@@ -578,8 +579,8 @@
 	name = "7.62 NATO magazine"
 	ammo_type = new/datum/projectile/bullet/rifle_762_NATO
 	icon_state = "rifle_box_mag" //todo
-	amount_left = 4
-	max_amount = 4
+	amount_left = 6
+	max_amount = 6
 	caliber = 0.308
 
 /obj/item/ammo/bullets/tranq_darts
@@ -598,7 +599,7 @@
 		pistol
 			sname = ".355 Tranqilizer"
 			name = ".355 tranquilizer pistol darts"
-			amount_left = 15
+			amount_left = 10
 			max_amount = 15
 			caliber = 0.355
 			ammo_type = new/datum/projectile/bullet/tranq_dart/syndicate/pistol
@@ -607,6 +608,37 @@
 		sname = ".308 Mutadone"
 		name = ".308 mutadone darts"
 		ammo_type = new/datum/projectile/bullet/tranq_dart/anti_mutant
+
+
+/obj/item/ammo/bullets/blow_darts
+	sname = "blowdart"
+	name = "poison blowdarts"
+	ammo_type = new/datum/projectile/bullet/blow_dart
+	desc = "These darts are loaded with a dangerous paralytic toxin."
+	icon_state = "tranq_clip"
+	amount_left = 4
+	max_amount = 4
+	caliber = 0.40
+	color = "green"
+
+	single
+		amount_left = 1
+		max_amount = 1
+
+	madness
+		name = "madness blowdarts"
+		desc = "These darts are loaded with a violently behavior-altering toxin."
+		ammo_type = new/datum/projectile/bullet/blow_dart/madness
+		color = "red"
+
+	ls_bee
+		name = "hallucinogenic blowdarts"
+		desc = "These darts are loaded with a potent mind-altering drug. They smell like honey."
+		ammo_type = new/datum/projectile/bullet/blow_dart/ls_bee
+		color = "yellow"
+
+
+
 
 /obj/item/ammo/bullets/vbullet
 	sname = "VR bullets"
@@ -858,6 +890,8 @@
 		amount_left = 24.0
 		max_amount = 24.0
 		ammo_type = new/datum/projectile/bullet/bullet_9mm/smartgun
+		sound_load = 'sound/weapons/gunload_hitek.ogg'
+
 	smg
 		name = "9mm SMG magazine"
 		amount_left = 30.0
@@ -975,6 +1009,16 @@
 	charge = 300.0
 	max_charge = 300.0
 
+/obj/item/ammo/power_cell/higherish_power
+	name = "Power Cell - 400"
+	desc = "A power cell that holds a max of 400PU"
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "power_cell"
+	m_amt = 20000
+	g_amt = 40000
+	charge = 400.0
+	max_charge = 400.0
+
 /obj/item/ammo/power_cell/self_charging
 	name = "Power Cell - Atomic"
 	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 40PU."
@@ -1054,12 +1098,19 @@
 
 /obj/item/ammo/power_cell/self_charging/medium
 	name = "Power Cell - Hicap RTG"
-	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 100PU."
+	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 200PU."
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "recharger_cell"
 	charge = 200
 	max_charge = 200
 	recharge_rate = 7.5
+
+/obj/item/ammo/power_cell/self_charging/mediumbig
+	name = "Power Cell - Fission"
+	desc = "Half the power of a Fusion model power cell with a tenth of the cost. Holds 200PU"
+	max_charge = 200
+	charge = 200
+	recharge_rate = 20
 
 /obj/item/ammo/power_cell/self_charging/big
 	name = "Power Cell - Fusion"
@@ -1160,17 +1211,22 @@
 
 /obj/item/ammo/bullets/foamdarts
 	sname = "foam darts"
-	name = "foam dart box"
-	icon_state = "foamdarts"
+	name = "foam darts"
+	desc = "Reusable foam darts for shooting people in the eyes with."
+	icon_state = "foamdarts-6"
 	icon_empty = "foamdarts-0"
-	amount_left = 20
-	max_amount = 20
+	icon_dynamic = 1
+	icon_short = "foamdarts"
+	amount_left = 6
+	max_amount = 6
 	caliber = 0.393
 	ammo_type = new/datum/projectile/bullet/foamdart
 
-/obj/item/ammo/bullets/foamdarts/ten
-	amount_left = 10
-	max_amount = 10
+	update_icon()
+		if(amount_left == 0)
+			qdel(src)
+		else
+			..()
 
 /datum/action/bar/icon/powercellswap
 	duration = 1 SECOND

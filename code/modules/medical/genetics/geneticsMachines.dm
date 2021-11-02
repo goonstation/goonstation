@@ -389,9 +389,8 @@
 					return
 				if (!(E in selected_record.dna_pool))
 					return
-			else
-				if (bioEffect_sanity_check(E))
-					return
+			else if (bioEffect_sanity_check(E))
+				return
 			genResearch.addResearch(E)
 			on_ui_interacted(ui.user)
 		if("advancepair")
@@ -915,8 +914,8 @@
 		"unlock" = null,
 	)
 
-	for(var/datum/data/record/R as anything in data_core.medical)
-		var/datum/computer/file/genetics_scan/S = R.fields["dnasample"]
+	for(var/datum/db_record/R as anything in data_core.medical.records)
+		var/datum/computer/file/genetics_scan/S = R["dnasample"]
 		if (!istype(S))
 			continue
 		.["samples"] += list(list(

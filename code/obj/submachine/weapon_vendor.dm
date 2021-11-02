@@ -45,6 +45,8 @@
 		. = list("stock" = list())
 
 		for (var/datum/materiel/M as anything in materiel_stock)
+			if(!M.vr_allowed && istype(get_area(src), /area/sim))
+				continue
 			.["stock"] += list(list(
 				"ref" = "\ref[M]",
 				"name" = M.name,
@@ -101,6 +103,7 @@
 	icon_state = "weapon-sec"
 	desc = "An automated quartermaster service for supplying your security team with weapons and gear."
 	token_accepted = /obj/item/requisition_token/security
+	log_purchase = TRUE
 	New()
 		..()
 		materiel_stock += new/datum/materiel/loadout/standard
@@ -178,6 +181,7 @@
 		materiel_stock += new/datum/materiel/utility/sarin_grenade
 		materiel_stock += new/datum/materiel/utility/noslip_boots
 		materiel_stock += new/datum/materiel/utility/bomb_decoy
+		materiel_stock += new/datum/materiel/utility/comtac
 
 	accepted_token()
 		src.credits[WEAPON_VENDOR_CATEGORY_SIDEARM]++
@@ -193,6 +197,7 @@
 	var/category = null
 	var/path = null
 	var/description = "If you see me, gannets is an idiot."
+	var/vr_allowed = TRUE
 
 /datum/materiel/sidearm
 	category = WEAPON_VENDOR_CATEGORY_SIDEARM
@@ -423,6 +428,11 @@
 	path = /obj/bomb_decoy
 	description = "A realistic inflatable nuclear bomb decoy, it'll fool anyone not looking closely but won't take much punishment before it pops."
 
+/datum/materiel/utility/comtac
+	name = "Military Headset"
+	path = /obj/item/device/radio/headset/syndicate/comtac
+	description = "A two-way radio headset designed to protect against any incoming hazardous noise, including flashbangs."
+	vr_allowed = FALSE
 // Requisition tokens
 
 /obj/item/requisition_token

@@ -37,9 +37,12 @@
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
 		var/obj/item/clothing/gloves/G = H.gloves
-		if (G && G.hasProperty("heatprot") && (G.getProperty("heatprot") >= 7))
+		if ((G && G.hasProperty("heatprot") && (G.getProperty("heatprot") >= 7)) || src.is_heat_resistant())
 			M.update_burning(-2.5)
-			boutput(H, "<span class='notice'>Your [G] protect you from the flames!</span>")
+			if (src.is_heat_resistant())
+				boutput(H, "<span class='notice'>Being fire resistant protects you from the flames!</span>")
+			else
+				boutput(H, "<span class='notice'>Your [G] protect you from the flames!</span>")
 		else
 			M.update_burning(-1.2)
 			H.TakeDamage(prob(50) ? "l_arm" : "r_arm", 0, rand(1,2))
@@ -388,7 +391,10 @@
 		var/armor_mod = 0
 		armor_mod = target.get_melee_protection(def_zone)
 		if(target_stamina >= 0)
-			msgs.stamina_target -= max(STAMINA_DISARM_DMG - (armor_mod*0.5), 0) //armor vs barehanded disarm gives flat reduction
+			var/unarmed_mod = 1.5 // if target is unarmed, do 1.5x stamina damage
+			if (length(items))
+				unarmed_mod = 1
+			msgs.stamina_target -= max(unarmed_mod * STAMINA_DISARM_DMG - (armor_mod*0.5), 0) //armor vs barehanded disarm gives flat reduction
 			msgs.force_stamina_target = 1
 
 

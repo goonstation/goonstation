@@ -179,14 +179,13 @@
 /obj/invisible_teleporter
 	name = "invisible teleporter side 1"
 	desc = "Totally not a portal."
-	event_handler_flags = USE_HASENTERED
 	icon = 'icons/effects/letter_overlay.dmi'
 	icon_state = "A"
 	anchored = 1
 	density = 0
 	var/id = null
 	var/which_end = 0
-	invisibility = 0
+	invisibility = INVIS_NONE
 	var/busy = 0
 
 	New()
@@ -200,7 +199,7 @@
 		src.maptext_width = 128
 		*/
 
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
 		if (AM == src)
 			// jesus christ don't teleport OURSELVES
 			return
@@ -326,7 +325,7 @@
 
 	proc/mulch_item(var/obj/I, score)
 		playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 50, 1)
-		pool( I )
+		qdel( I )
 		total_score += score
 		round_score += score
 		update_totals()
@@ -462,7 +461,8 @@
 		alpha = 128
 		boutput(user, "Spawning target dummy, stand by") //no need to be rude
 
-		new /mob/living/carbon/human/tdummy(locate(src.x+1, src.y, src.z))
+		var/mob/living/carbon/human/tdummy/tdu = new /mob/living/carbon/human/tdummy(locate(src.x+1, src.y, src.z))
+		tdu.shutup = TRUE
 		//T.x = src.x + 1 // move it to the right
 
 
@@ -568,10 +568,12 @@
 	name = "Space American Football Stadium"
 	force_fullbright = 1
 	icon_state = "purple"
+	dont_log_combat = TRUE
 
 /area/football/field
 	name = "Space American Football Field"
 	icon_state = "green"
+	dont_log_combat = TRUE
 
 	endzone
 		icon_state = "yellow"
@@ -776,7 +778,7 @@
 			src.monitored_ref = null
 
 		if (monitored)
-			if (monitored.pooled || monitored.qdeled)
+			if (monitored.disposed || monitored.qdeled)
 				// The thing we were watching was deleted/removed! Welp.
 				monitored = null
 				return 0
@@ -1219,18 +1221,12 @@ Read the rules, don't grief, and have fun!</div>"}
 			if (length(landmarks[LANDMARK_LOBBY_LEFTSIDE]))
 				src.set_loc(landmarks[LANDMARK_LOBBY_LEFTSIDE][1])
 
-			// This is gross. I'm sorry.
-			var/list/servers = list()
-			servers["main1"] = "1 Classic: Heisenbee"
-			servers["main2"] = "2 Classic: Bombini"
-			servers["main3"] = "3 Roleplay: Morty"
-			servers["main4"] = "4 Roleplay: Sylvester"
-
 			var/serverList = ""
-			for (var/serverId in servers)
-				if (serverId == config.server_id)
+			for (var/serverId in global.game_servers.servers)
+				var/datum/game_server/server = global.game_servers.servers[serverId]
+				if (server.is_me() || !server.publ)
 					continue
-				serverList += {"\n<a style='color: #88f;' href='byond://winset?command=Change-Server "[serverId]'>Goonstation [servers[serverId]]</a>"}
+				serverList += {"\n<a style='color: #88f;' href='byond://winset?command=Change-Server "[server.id]'>[server.name]</a>"}
 
 			src.maptext_x = 0
 			src.maptext_width = 600
@@ -1248,7 +1244,7 @@ Other Goonstation servers:[serverList]</span>"})
 
 /obj/overlay/inventory_counter
 	name = "inventory amount counter"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	plane = PLANE_HUD
 	layer = HUD_LAYER_3
 	appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
@@ -1283,15 +1279,10 @@ Other Goonstation servers:[serverList]</span>"})
 		if(src.transform) src.transform = null
 
 	proc/hide_count()
-		invisibility = 101
+		invisibility = INVIS_ALWAYS
 
 	proc/show_count()
-		invisibility = 0
-
-	pooled()
-		src.maptext = ""
-		src.invisibility = 101
-		..()
+		invisibility = INVIS_NONE
 
 
 
@@ -1388,3 +1379,76 @@ Other Goonstation servers:[serverList]</span>"})
 	attack_hand(mob/user as mob)
 		..()
 		src.icon_state = "cowbrush[src.on ? "_on" : ""]"
+
+
+
+/obj/maptext_junk/gib_timer
+	mouse_opacity = 0
+	density = 0
+	opacity = 0
+	icon = null
+	plane = PLANE_HUD - 1
+	appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | PIXEL_SCALE
+	maptext = ""
+	var/gib_time = 60
+	// var/gib_time = null
+	var/mob/victim = null
+
+	two
+		gib_time = 120
+	five
+		gib_time = 300
+	ten
+		gib_time = 600
+	fifteen
+		gib_time = 900
+	twenty
+		gib_time = 1200
+	thirty
+		gib_time = 1800
+
+
+
+	New()
+		..()
+		src.pixel_y += 34
+		src.maptext_x = -20
+		src.maptext_width += 40
+		var/mob/home = src.loc
+		// Put it inside something to make it constantly show its location.
+		if (istype(home))
+			home.vis_contents += src
+		else
+			// if we are not home then we are gone, bye
+			qdel(src)
+			return
+		src.victim = home
+		set_loc(null)
+		// gib_time = ticker.round_elapsed_ticks + time_until_gib
+		SPAWN_DBG(0)
+			countdown()
+
+	// These are admin gimmick bombs so a while...sleep() delay isn't going to murder things
+	proc/countdown()
+
+		// var/time_left = INFINITY
+		do
+			sleep(1 SECOND)
+			// time_left = max(0, gib_time - ticker.round_elapsed_ticks)
+			gib_time--
+			switch (gib_time)
+				if (60 to INFINITY)
+					maptext = "<span class='vb c ol ps2p'>[round(gib_time / 60)]:[add_zero(num2text(gib_time % 60), 2)]</span>"
+				if (10 to 60)
+					maptext = "<span class='vb c ol ps2p'>[round(gib_time)]</span>"
+				else
+					maptext = "<span class='vb c ol ps2p' style='color: #ff4444;'>[round(gib_time)]</span>"
+
+		while (gib_time > 0 && !src.qdeled && !victim.qdeled)
+
+		if (victim && !victim.qdeled)
+			victim.vis_contents -= src
+			src.maptext = null
+			victim.gib()
+
+		qdel(src)

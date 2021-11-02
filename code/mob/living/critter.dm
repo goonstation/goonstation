@@ -57,6 +57,7 @@
 
 	// moved up from critter/small_animal
 	var/butcherable = 0
+	var/butcher_time = 1.2 SECONDS
 	var/meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat
 	var/name_the_meat = 0
 	var/skinresult = /obj/item/material_piece/cloth/leather //YEP
@@ -98,8 +99,9 @@
 		count_healths()
 
 		SPAWN_DBG(0)
-			src.zone_sel.change_hud_style('icons/mob/hud_human.dmi')
-			src.attach_hud(zone_sel)
+			if(!src.disposed)
+				src.zone_sel.change_hud_style('icons/mob/hud_human.dmi')
+				src.attach_hud(zone_sel)
 
 		for (var/datum/equipmentHolder/EE in equipment)
 			EE.after_setup(hud)
@@ -298,13 +300,13 @@
 			if (src.skinresult && max_skins)
 				if (istype(I, /obj/item/circular_saw) || istype(I, /obj/item/kitchen/utensil/knife) || istype(I, /obj/item/scalpel) || istype(I, /obj/item/raw_material/shard) || istype(I, /obj/item/sword) || istype(I, /obj/item/saw) || istype(I, /obj/item/wirecutters))
 					for (var/i, i<rand(1, max_skins), i++)
-						var/obj/item/S = unpool(src.skinresult)
+						var/obj/item/S = new src.skinresult
 						S.set_loc(src.loc)
 					src.skinresult = null
 					M.visible_message("<span class='alert'>[M] skins [src].</span>","You skin [src].")
 					return
 			if (src.butcherable && (istype(I, /obj/item/circular_saw) || istype(I, /obj/item/kitchen/utensil/knife) || istype(I, /obj/item/scalpel) || istype(I, /obj/item/raw_material/shard) || istype(I, /obj/item/sword) || istype(I, /obj/item/saw) || istype(I, /obj/item/wirecutters)))
-				actions.start(new/datum/action/bar/icon/butcher_living_critter(src), M)
+				actions.start(new/datum/action/bar/icon/butcher_living_critter(src,src.butcher_time), M)
 				return
 
 		var/rv = 1
@@ -316,19 +318,19 @@
 		else
 			..()
 
-	proc/butcher(var/mob/M)
+	proc/butcher(var/mob/M, drop_brain = TRUE)
 		var/i = rand(2,4)
-		var/transfer = src.reagents.total_volume / i
+		var/transfer = src.reagents ? src.reagents.total_volume / i : 0
 
 		while (i-- > 0)
 			var/obj/item/reagent_containers/food/newmeat = new meat_type
 			newmeat.set_loc(src.loc)
-			src.reagents.trans_to(newmeat, transfer)
+			src.reagents?.trans_to(newmeat, transfer)
 			if (name_the_meat)
 				newmeat.name = "[src.name] meat"
 				newmeat.real_name = newmeat.name
 
-		if (src.organHolder)
+		if (src.organHolder && drop_brain)
 			src.organHolder.drop_organ("brain",src.loc)
 
 		src.ghostize()
@@ -357,6 +359,8 @@
 
 	throw_item(atom/target, list/params)
 		..()
+		if (HAS_MOB_PROPERTY(src, PROP_CANTTHROW))
+			return
 		if (!can_throw)
 			return
 		src.throw_mode_off()
@@ -777,6 +781,7 @@
 		var/datum/healthHolder/Bu = get_health_holder("burn")
 		if (Bu && (burn < 0 || !is_heat_resistant()))
 			Bu.TakeDamage(burn)
+		take_toxin_damage(tox)
 
 	take_brain_damage(var/amount)
 		if (..())
@@ -854,7 +859,7 @@
 
 	HealDamage(zone, brute, burn, tox)
 		..()
-		TakeDamage(zone, -brute, -burn)
+		TakeDamage(zone, -brute, -burn, -tox)
 
 
 	updatehealth()

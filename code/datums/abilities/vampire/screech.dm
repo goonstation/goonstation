@@ -32,14 +32,14 @@
 		//M.emote("scream")
 		playsound(M.loc,"sound/effects/screech_tone.ogg", 90, 1, pitch = 1)
 
-		var/obj/itemspecialeffect/screech/E = unpool(/obj/itemspecialeffect/screech)
+		var/obj/itemspecialeffect/screech/E = new /obj/itemspecialeffect/screech
 		E.color = "#FFFFFF"
 		E.setup(M.loc)
 
 		if (level == 2)
 			//add effect
 			SPAWN_DBG(1 DECI SECOND)
-				var/obj/itemspecialeffect/screech/EE = unpool(/obj/itemspecialeffect/screech)
+				var/obj/itemspecialeffect/screech/EE = new /obj/itemspecialeffect/screech
 				EE.color = "#AAAAFF"
 				EE.setup(M.loc)
 
@@ -54,7 +54,7 @@
 						break
 		else
 			SPAWN_DBG(1 DECI SECOND)
-				var/obj/itemspecialeffect/screech/EE = unpool(/obj/itemspecialeffect/screech)
+				var/obj/itemspecialeffect/screech/EE = new /obj/itemspecialeffect/screech
 				EE.color = "#FFFFFF"
 				EE.setup(M.loc)
 
@@ -62,10 +62,10 @@
 			if (HH == M) continue
 
 			if (level == 2)
-				radio_controller.active_jammers.Add(M)
+				OTHER_START_TRACKING_CAT(M, TR_CAT_RADIO_JAMMERS)
 				SPAWN_DBG (src.duration)
-					if (M && istype(M) && radio_controller && istype(radio_controller) && radio_controller.active_jammers.Find(M))
-						radio_controller.active_jammers.Remove(M)
+					if (M && istype(M) && radio_controller && istype(radio_controller) && (M in by_cat[TR_CAT_RADIO_JAMMERS]))
+						OTHER_STOP_TRACKING_CAT(M, TR_CAT_RADIO_JAMMERS)
 			if (isvampire(HH) && HH.check_vampire_power(3) == 1)
 				boutput(HH, __blue("You are immune to [M]'s screech!"))
 				continue

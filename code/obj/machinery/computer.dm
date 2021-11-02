@@ -8,7 +8,6 @@
 	var/light_r = 1
 	var/light_g = 1
 	var/light_b = 1
-	var/powernet = null
 	var/list/records = null
 	var/id = null
 	var/frequency = null
@@ -47,7 +46,7 @@
 				var/obj/computerframe/A = new /obj/computerframe(src.loc)
 				if (src.status & BROKEN)
 					user.show_text("The broken glass falls out.", "blue")
-					var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+					var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 					G.set_loc(src.loc)
 					A.state = 3
 					A.icon_state = "3"
@@ -91,8 +90,8 @@
 	icon_state = "alert:0"
 	var/list/priority_alarms = list()
 	var/list/minor_alarms = list()
-	var/receive_frequency = "1437"
-	var/respond_frequency = "1149"
+	var/receive_frequency = FREQ_ALARM
+	var/respond_frequency = FREQ_PDA
 
 /obj/machinery/computer/hangar
 	name = "Hangar"

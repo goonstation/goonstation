@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2021
+ * @author Luxizzle (https://github.com/Luxizzle)
+ * @license MIT
+ */
+
 import { useBackend } from '../../backend';
 import { Box, Chart, LabeledList, Stack, Table, Tooltip } from '../../components';
 import { formatPower } from '../../format';
@@ -75,26 +82,29 @@ export const PowerMonitorApcGlobal = (_props, context) => {
   );
 };
 
-export const PowerMonitorApcTableHeader = (_props, context) => {
+export const PowerMonitorApcTableHeader = () => {
   return (
     <>
       <Table.Cell header>Area</Table.Cell>
-      <Table.Cell header collapsing position="relative">
-        Eqp.
-        <Tooltip content="Equipment" />
-      </Table.Cell>
-      <Table.Cell header collapsing position="relative">
-        Lgt.
-        <Tooltip content="Lighting" />
-      </Table.Cell>
-      <Table.Cell header collapsing position="relative">
-        Env.
-        <Tooltip content="Environment" />
-      </Table.Cell>
-      <Table.Cell textAlign="right" header>
+      <Tooltip content="Equipment">
+        <Table.Cell header collapsing>
+          Eqp.
+        </Table.Cell>
+      </Tooltip>
+      <Tooltip content="Lighting">
+        <Table.Cell header collapsing>
+          Lgt.
+        </Table.Cell>
+      </Tooltip>
+      <Tooltip content="Environment">
+        <Table.Cell header collapsing>
+          Env.
+        </Table.Cell>
+      </Tooltip>
+      <Table.Cell header textAlign="right">
         Load
       </Table.Cell>
-      <Table.Cell textAlign="right" header>
+      <Table.Cell header textAlign="right">
         Cell Charge
       </Table.Cell>
       <Table.Cell header>Cell State</Table.Cell>

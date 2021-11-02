@@ -162,7 +162,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "aaz" = (
@@ -6120,7 +6120,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "rozetasolar";
 	name = "Zeta Solar Control";
 	track = 2
@@ -13885,7 +13885,7 @@
 /area/station/crew_quarters/quarters)
 "aCr" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/storage/crate,
 /obj/item/clothing/under/gimmick/princess,
@@ -15462,7 +15462,7 @@
 /turf/simulated/wall/r_wall,
 /area/station/ai_monitored/storage/eva)
 "aFI" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -19531,7 +19531,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aND" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	dir = 4;
 	id = "solar_port";
 	name = "West Solar Control"
@@ -23877,7 +23877,7 @@
 	c_tag = "Head of Research's Office";
 	dir = 4
 	},
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	icon_state = "power";
 	dir = 4
 	},
@@ -25239,7 +25239,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "aYG" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -27619,7 +27619,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -29283,7 +29283,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "bga" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 4;
 	name = "Engine Output Monitoring"
 	},
@@ -38426,7 +38426,7 @@
 /area/station/crew_quarters/juryroom)
 "byI" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/juryroom)
@@ -38981,7 +38981,7 @@
 /area/station/janitor/office)
 "bzI" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/storage/secure/closet/civilian/janitor,
 /turf/simulated/floor/specialroom/arcade,
@@ -39524,7 +39524,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/yellow/corner{
 	dir = 4
 	},
@@ -40917,7 +40917,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	dir = 8;
 	id = "solar_starboard";
 	name = "East Solar Control"
@@ -43332,7 +43332,7 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/south)
 "bIj" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	dir = 4;
 	id = "solar_aft";
 	name = "South Solar Control"
@@ -43494,7 +43494,7 @@
 /obj/table/auto,
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/device/radio/signaler{
 	pixel_x = 2;

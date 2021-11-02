@@ -39,8 +39,7 @@ PIPE BOMBS + CONSTRUCTION
 			if (!isturf(user.loc))
 				src.state = 0
 				return
-			message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
-			logTheThing("combat", user, null, "primes a grenade ([src.type]) at [log_loc(user)].")
+			logGrenade(user)
 			if (user?.bioHolder.HasEffect("clumsy"))
 				boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
 				src.icon_state = src.icon_state_armed
@@ -68,8 +67,7 @@ PIPE BOMBS + CONSTRUCTION
 			if (!src.state)
 				src.state = 1
 				src.icon_state = src.icon_state_armed
-				message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
-				logTheThing("combat", user, null, "primes a grenade ([src.type]) at [log_loc(user)].")
+				logGrenade(user)
 				boutput(user, "<span class='alert'>You prime [src]! [det_time/10] seconds!</span>")
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				SPAWN_DBG(src.det_time)
@@ -99,6 +97,12 @@ PIPE BOMBS + CONSTRUCTION
 			return null
 		else
 			return T
+
+	proc/logGrenade(mob/user)
+		var/area/A = get_area(src)
+		if(!A.dont_log_combat)
+			message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
+			logTheThing("combat", user, null, "primes a grenade ([src.type]) at [log_loc(user)].")
 
 /obj/item/old_grenade/banana
 	desc = "It is set to detonate in 3 seconds."
@@ -190,8 +194,7 @@ PIPE BOMBS + CONSTRUCTION
 			if (!isturf(user.loc))
 				src.state = 0
 				return
-			message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
-			logTheThing("combat", user, null, "primes a grenade ([src.type]) at [log_loc(user)].")
+			logGrenade(user)
 			if (user?.bioHolder.HasEffect("clumsy"))
 				boutput(user, "<span style=\"color:red\">Huh? How does this thing work?!</span>")
 				src.icon_state = src.icon_state_exploding
@@ -256,8 +259,7 @@ PIPE BOMBS + CONSTRUCTION
 			if (!isturf(user.loc))
 				src.state = 0
 				return
-			message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
-			logTheThing("combat", user, null, "primes a grenade ([src.type]) at [log_loc(user)].")
+			logGrenade(user)
 			if (user?.bioHolder.HasEffect("clumsy"))
 				boutput(user, "<span style=\"color:red\">Huh? How does this thing work?!</span>")
 				src.icon_state = src.icon_state_exploding
@@ -564,7 +566,7 @@ PIPE BOMBS + CONSTRUCTION
 
 	prime()
 		var/turf/simulated/T = ..()
-		var/datum/gas_mixture/GM = unpool(/datum/gas_mixture)
+		var/datum/gas_mixture/GM = new /datum/gas_mixture
 		GM.temperature = T20C + 15
 		GM.oxygen = 1500
 		GM.carbon_dioxide = 100
@@ -587,7 +589,7 @@ PIPE BOMBS + CONSTRUCTION
 					if (count)
 						for (var/turf/simulated/MT as() in T.parent.members)
 							if (GM.disposed)
-								GM = unpool(/datum/gas_mixture)
+								GM = new /datum/gas_mixture
 							GM.temperature = T20C + 15
 							GM.oxygen = 1500 / count
 							GM.carbon_dioxide = 100 / count
@@ -605,7 +607,7 @@ PIPE BOMBS + CONSTRUCTION
 
 			animate(E, alpha=0, time=2.5 SECONDS)
 			playsound(T, "sound/weapons/flashbang.ogg", 30, 1)
-			var/datum/effects/system/steam_spread/steam = unpool(/datum/effects/system/steam_spread)
+			var/datum/effects/system/steam_spread/steam = new /datum/effects/system/steam_spread
 			steam.set_up(10, 0, get_turf(src), color="#0ff", plane=PLANE_NOSHADOW_ABOVE)
 			steam.attach(src.loc)
 			steam.start()
@@ -685,7 +687,7 @@ PIPE BOMBS + CONSTRUCTION
 			return
 		if (istype(target, /obj/item/storage)) return ..()
 		if (src.state == 0)
-			message_admins("Grenade ([src]) primed in [get_area(src)] [log_loc(src)] by [key_name(user)].")
+			message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing("combat", user, null, "primes a grenade ([src.type]) at [log_loc(user)].")
 			boutput(user, "<span class='alert'>You pull the pin on [src]. You're not sure what that did, but you throw it anyway.</span>")
 			src.state = 1
@@ -698,7 +700,7 @@ PIPE BOMBS + CONSTRUCTION
 		if (!isturf(user.loc))
 			return
 		if (src.state == 0)
-			message_admins("Grenade ([src]) primed in [get_area(src)] [log_loc(src)] by [key_name(user)].")
+			message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing("combat", user, null, "primes a grenade ([src.type]) at [log_loc(user)].")
 			boutput(user, "<span class='alert'>You pull the pin on [src]. You're not sure what that did. Maybe you should throw it?</span>")
 			src.state = 1
@@ -744,6 +746,7 @@ PIPE BOMBS + CONSTRUCTION
 					user.mind.transfer_to(newmob)
 					qdel(user)
 				else
+					logTheThing("combat", user, null, "was teleported by touching [src] ([src.type]) at [log_loc(src)].")
 					if (destination)
 						user.set_loc(destination)
 					else
@@ -769,7 +772,7 @@ PIPE BOMBS + CONSTRUCTION
 		var/obj/effects/explosion/E = new /obj/effects/explosion(src.loc)
 		E.fingerprintslast = src.fingerprintslast
 
-		invisibility = 100
+		invisibility = INVIS_ALWAYS_ISH
 		SPAWN_DBG(15 SECONDS)
 			qdel (src)
 
@@ -1150,7 +1153,9 @@ PIPE BOMBS + CONSTRUCTION
 					return
 				if (user.bioHolder && user.bioHolder.HasEffect("clumsy"))
 					boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
-					logTheThing("combat", user, null, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
+					var/area/A = get_area(src)
+					if(!A.dont_log_combat)
+						logTheThing("combat", user, null, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
 					SPAWN_DBG(0.5 SECONDS)
 						user.u_equip(src)
 						src.boom()
@@ -1165,7 +1170,9 @@ PIPE BOMBS + CONSTRUCTION
 					src.state = 1
 
 					// Yes, please (Convair880).
-					logTheThing("combat", user, null, "attaches a [src] to [target] at [log_loc(target)].")
+					var/area/A = get_area(src)
+					if(!A.dont_log_combat)
+						logTheThing("combat", user, null, "attaches a [src] to [target] at [log_loc(target)].")
 
 					SPAWN_DBG (src.det_time)
 						if (src)
@@ -1251,7 +1258,9 @@ PIPE BOMBS + CONSTRUCTION
 					return
 				if (user.bioHolder && user.bioHolder.HasEffect("clumsy"))
 					boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
-					logTheThing("combat", user, null, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
+					var/area/A = get_area(src)
+					if(!A.dont_log_combat)
+						logTheThing("combat", user, null, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
 					SPAWN_DBG(0.5 SECONDS)
 						user.u_equip(src)
 						src.boom()
@@ -1266,7 +1275,9 @@ PIPE BOMBS + CONSTRUCTION
 					src.state = 1
 
 					// Yes, please (Convair880).
-					logTheThing("combat", user, null, "attaches a [src] to [target] at [log_loc(target)].")
+					var/area/A = get_area(src)
+					if(!A.dont_log_combat)
+						logTheThing("combat", user, null, "attaches a [src] to [target] at [log_loc(target)].")
 
 					SPAWN_DBG (src.det_time)
 						if (src)
@@ -1286,7 +1297,7 @@ PIPE BOMBS + CONSTRUCTION
 				return
 
 			playsound(location, "sound/effects/bamf.ogg", 100, 0.5)
-			src.invisibility = 101
+			src.invisibility = INVIS_ALWAYS
 
 			for (var/turf/T in range(src.expl_range, location))
 				if( T?.loc:sanctuary ) continue
@@ -1568,8 +1579,10 @@ PIPE BOMBS + CONSTRUCTION
 			return
 		boutput(user, "<span class='alert'>You activate the pipe bomb! 5 seconds!</span>")
 		armed = 1
-		message_admins("[key_name(user)] arms a pipe bomb (power [strength]) in [user.loc.loc], [showCoords(user.x, user.y, user.z)].")
-		logTheThing("combat", user, null, "arms a pipe bomb (power [strength]) in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
+		var/area/A = get_area(src)
+		if(!A.dont_log_combat)
+			message_admins("[key_name(user)] arms a pipe bomb (power [strength]) at [log_loc(src)] by [key_name(user)].")
+			logTheThing("combat", user, null, "arms a pipe bomb (power [strength]) at [log_loc(src)])")
 
 		if (sound_effect)
 			SPAWN_DBG(4 SECONDS) //you can use a sound effect to hold a bomb in hand and throw it at the very last moment!
@@ -1683,7 +1696,7 @@ PIPE BOMBS + CONSTRUCTION
 						if(target.parent?.group_processing)
 							target.parent.suspend_group_processing()
 
-						var/datum/gas_mixture/payload = unpool(/datum/gas_mixture)
+						var/datum/gas_mixture/payload = new /datum/gas_mixture
 						payload.toxins = plasma * 100
 						payload.temperature = T20C
 						payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000

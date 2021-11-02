@@ -174,6 +174,25 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 	harvests = 1
 	endurance = 20
 	assoc_reagents = list("luminol")
+	special_proc = 1
+
+	HYPspecial_proc(obj/machinery/plantpot/POT)
+		. = ..()
+		if (.)
+			return
+		var/datum/plant/P = POT.current
+		var/datum/plantgenes/DNA = POT.plantgenes
+		if (POT.growth < (P.harvtime + DNA.harvtime))
+			return
+
+		for (var/obj/machinery/plantpot/otherPot in oview(1, POT))
+			if(!otherPot.current || otherPot.dead)
+				continue
+			otherPot.growth += 2
+			if(istype(otherPot.plantgenes,/datum/plantgenes/))
+				var/datum/plantgenes/otherDNA = otherPot.plantgenes
+				if(HYPCheckCommut(otherDNA,/datum/plant_gene_strain/photosynthesis))
+					otherPot.growth += 4
 
 /datum/plant/artifact/plasma
 	name = "Plasma"

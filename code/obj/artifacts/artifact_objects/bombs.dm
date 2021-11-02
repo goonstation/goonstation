@@ -158,7 +158,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	deploy_payload(var/obj/O)
 		if (..())
 			return
-		explosion(O, O.loc, src.exp_deva, src.exp_hevy, src.exp_lite, src.exp_lite * 2)
+		explosion(O, get_turf(O), src.exp_deva, src.exp_hevy, src.exp_lite, src.exp_lite * 2)
 
 		O.ArtifactDestroyed()
 
@@ -200,7 +200,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			return
 		var/turf/T = get_turf(O)
 		playsound(T, "sound/machines/satcrash.ogg", 100, 0, 3, 0.8)
-		new /obj/bhole(O.loc,rand(100,300))
+		new /obj/bhole(T,rand(100,300))
 
 		if (O)
 			O.ArtifactDestroyed()
@@ -449,8 +449,8 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		if (..())
 			return
 		var/base_offset = rand(1000)
-		O.filters += filter(type="rays", size=0, density=20, factor=1, offset=base_offset, threshold=0, color=mat.color)
-		animate(O.filters[1], size=16*range, time=0.5 SECONDS, offset=base_offset+50)
+		O.add_filter("rays", 1, rays_filter(size=0, density=20, factor=1, offset=base_offset, threshold=0, color=mat.color))
+		animate(O.get_filter("rays"), size=16*range, time=0.5 SECONDS, offset=base_offset+50)
 		animate(size=32*range, time=0.5 SECONDS, offset=base_offset+50, alpha=0)
 
 		SPAWN_DBG(1 SECOND)

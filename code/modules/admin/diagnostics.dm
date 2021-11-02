@@ -819,12 +819,6 @@ proc/debug_map_apc_count(delim,zlim)
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
 			img.app.color = theTurf.checkingexit ? "#0f0" : "#f00"
 
-	checkinghasentered
-		name = "checkinghasentered"
-		help = "Green = yes."
-		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
-			img.app.color = theTurf.checkinghasentered ? "#0f0" : "#f00"
-
 	blocked_dirs
 		name = "blocked dirs"
 		help = "Displays dir flags of blocked turf exits"
@@ -837,9 +831,9 @@ proc/debug_map_apc_count(delim,zlim)
 
 	checkinghasproximity
 		name = "checkinghasproximity"
-		help = "Green = yes."
+		help = "Green = yes. Red = no. Yellow = next to yes."
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
-			img.app.color = theTurf.checkinghasproximity ? "#0f0" : "#f00"
+			img.app.color = theTurf.checkinghasproximity ? "#0f0" : (theTurf.neighcheckinghasproximity ? "#ff0" : "#f00")
 
 	blood_owner/no_items
 		name = "blood owner - no items"
@@ -869,6 +863,33 @@ proc/debug_map_apc_count(delim,zlim)
 				img.app.color = "#f00"
 			else
 				img.app.alpha = 0
+
+	RL_lights
+		name = "RL lights"
+		help = "Displays number of RL lights on theach turf"
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			var/n_lights = length(theTurf.RL_Lights)
+			if (n_lights)
+				img.app.overlays = list(src.makeText(n_lights))
+				switch(n_lights)
+					if(1) img.app.color = "#00ff00"
+					if(2) img.app.color = "#ffff00"
+					else img.app.color = "#ff0000"
+			else
+				img.app.alpha = 0
+
+	RL_lights_range
+		name = "RL lights range"
+		help = "Displays range of RL lights on each turf"
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			if(!length(theTurf.RL_Lights))
+				img.app.alpha = 0
+				return
+			var/radius = 0
+			for(var/datum/light/light in theTurf.RL_Lights)
+				radius = max(radius, light.radius)
+			img.app.icon_state = "circle"
+			img.app.transform = matrix(2 * radius, 2 * radius, MATRIX_SCALE)
 
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
 	process_cell_operations
@@ -943,6 +964,7 @@ proc/debug_map_apc_count(delim,zlim)
 		src.maptext = initial(src.maptext)
 		src.alpha = initial(src.alpha)
 		src.appearance_flags = initial(src.appearance_flags)
+		src.transform = initial(src.transform)
 
 
 /client/proc/RenderOverlay()

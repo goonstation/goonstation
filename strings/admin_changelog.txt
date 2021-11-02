@@ -1,3 +1,45 @@
+(t)sat oct 31 21
+(u)pali
+(*)Incoming mainframe commands are now logged (usually) in a new <i>computers</i> log cateogry
+(t)sat oct 30 21
+(u)Zonespace
+(*)New admin-spawn antagonist, the Slasher! Make someone a slasher through the player panel, like how you would do it for floor goblins or Macho Men.
+(+)See #6094 for details.
+(t)sat oct 16 21
+(u)pali
+(*)You can now choose an "Until Appeal" ban duration. It's the same thing as "Permanent" but the message will tell the person to appel. The "Permanent" option now tells people to wait 30 days until appealing.
+(t)fri oct 15 21
+(u)Zamujasa
+(*)The "View Player Notes" function now has a "Set Login Notice" option.
+(*)"Login Notices" will pop up on the player's next login, and they cannot join a round until acknowledging it.
+(*)Both the notice itself and the acknowledgement are automatically added as notes to the player's account.
+(*)The future is now.
+(t)mon oct 11 21
+(u)Zamujasa
+(*)"Toggle Emote Cooldowns". Does what it says. Don't be stupid.
+(*)Or do, I don't care.
+(*)Also new shortcuts for command bar losers: iddqd, idclip, iddt. Some familiarity with Doom suggested.
+(t)sun sep 19 21
+(u)pali
+(+)New verb spawn-figurine for when you want to spawn a specific figurine.
+(+)Player Options now have a button to kill people.
+(+)Entering portals is now logged.
+(t)sat sep 18 21
+(u)pali
+(*)Banning people no longer deletes their mobs.
+(t)wed sep 15 21
+(u)Gerhazo
+(*)New buildmode mode - "Paint Matrix" - similar to paint except using color matrices which allows for much cooler results.
+(t)mon sep 13 21
+(u)Gerhazo
+(*)Added a "remove component" button to the view variables panel.
+(t)tue aug 31 21
+(u)Sovexe
+(e)🐛|bug
+(*)Resolved an issue with deep copying certain mob types that could result in a server freeze or crash.
+(t)mon aug 30 21
+(u)Azrun
+(*)Winterify, Trenchify, and Swampify moved under Terrainify
 (t)fri aug 21 21
 (u)Sovexe
 (*)Wide Area Spawn's marked tile now has a visual indicator

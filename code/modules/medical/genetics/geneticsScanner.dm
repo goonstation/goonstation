@@ -15,26 +15,16 @@ var/list/genetek_hair_styles = list()
 	soundproofing = 10
 
 	var/net_id = null
-	var/frequency = 1149
-	var/datum/radio_frequency/radio_connection
+	var/frequency = FREQ_PDA
 
 	New()
 		..()
-		SPAWN_DBG(0.8 SECONDS)
-			if(radio_controller)
-				radio_connection = radio_controller.add_object(src, "[frequency]")
-			if(!src.net_id)
-				src.net_id = generate_net_id(src)
-				genescanner_addresses += src.net_id
+		if(!src.net_id)
+			src.net_id = generate_net_id(src)
+			genescanner_addresses += src.net_id
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
 
 	disposing()
-		radio_controller.remove_object(src, "[frequency]")
-		..()
-
-	disposing()
-		if (radio_controller)
-			radio_controller.remove_object(src, "[frequency]")
-		radio_connection = null
 		if (src.net_id)
 			genescanner_addresses -= src.net_id
 		if(occupant)
@@ -117,7 +107,7 @@ var/list/genetek_hair_styles = list()
 	proc/move_mob_inside(var/mob/M)
 		if (!can_operate(M,M)) return
 
-		M.pulling = null
+		M.remove_pulling()
 		src.go_in(M)
 
 		for(var/obj/O in src)
@@ -153,7 +143,7 @@ var/list/genetek_hair_styles = list()
 
 
 	verb/eject_occupant(var/mob/user)
-		if (!isalive(user))
+		if (!isalive(user) || iswraith(user))
 			return
 		if (src.locked)
 			boutput(user, "<span class='alert'><b>The scanner door is locked!</b></span>")
@@ -185,7 +175,7 @@ var/list/genetek_hair_styles = list()
 
 		var/mob/M = G.affecting
 		if (L.pulling == M)
-			L.pulling = null
+			L.remove_pulling()
 		src.go_in(M)
 
 		for(var/obj/O in src)

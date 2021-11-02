@@ -249,6 +249,7 @@
 				if(2) src.mode = "extraction"
 				if(3) src.mode = "seedlist"
 				else src.mode = "overview"
+			playsound(src.loc, "sound/machines/click.ogg", 50, 1)
 			src.updateUsrDialog()
 
 		else if(href_list["ejectbeaker"])
@@ -281,6 +282,10 @@
 				return
 			if (istype(I,/obj/item/seed)) src.seeds.Remove(I)
 			else src.extractables.Remove(I)
+			if(I == src.splicing1)
+				src.splicing1 = null
+			if(I == src.splicing2)
+				src.splicing2 = null
 			I.set_loc(src.loc)
 			usr.put_in_hand_or_eject(I) // try to eject it into the users hand, if we can
 			src.updateUsrDialog()
@@ -301,6 +306,7 @@
 
 		else if(href_list["analyze"])
 			var/obj/item/I = locate(href_list["analyze"]) in src
+			playsound(src.loc, "sound/machines/click.ogg", 50, 1)
 
 			if (istype(I,/obj/item/seed/))
 				var/obj/item/seed/S = I
@@ -383,6 +389,7 @@
 			src.updateUsrDialog()
 
 		else if(href_list["splice_select"])
+			playsound(src, "sound/machines/keypress.ogg", 50, 1)
 			var/obj/item/I = locate(href_list["splice_select"]) in src
 			if (!istype(I))
 				return
@@ -397,6 +404,7 @@
 			src.updateUsrDialog()
 
 		else if(href_list["splice_cancel"])
+			playsound(src, "sound/machines/keypress.ogg", 50, 1)
 			src.splicing1 = null
 			src.splicing2 = null
 			src.mode = "seedlist"
@@ -428,10 +436,18 @@
 						if (!R || !S)
 							return
 						switch(S.HYPinfusionS(R.id,src))
-							if (1) boutput(usr, "<span class='alert'>ERROR: Seed has been destroyed.</span>")
-							if (2) boutput(usr, "<span class='alert'>ERROR: Reagent lost.</span>")
-							if (3) boutput(usr, "<span class='alert'>ERROR: Unknown error. Please try again.</span>")
-							else boutput(usr, "<span class='notice'>Infusion of [R.name] successful.</span>")
+							if (1)
+								playsound(src, "sound/machines/seed_destroyed.ogg", 50, 1)
+								boutput(usr, "<span class='alert'>ERROR: Seed has been destroyed.</span>")
+							if (2)
+								playsound(src, "sound/machines/buzz-sigh.ogg", 50, 1)
+								boutput(usr, "<span class='alert'>ERROR: Reagent lost.</span>")
+							if (3)
+								playsound(src, "sound/machines/buzz-sigh.ogg", 50, 1)
+								boutput(usr, "<span class='alert'>ERROR: Unknown error. Please try again.</span>")
+							else
+								playsound(src, "sound/effects/zzzt.ogg", 50, 1)
+								boutput(usr, "<span class='notice'>Infusion of [R.name] successful.</span>")
 						src.inserted.reagents.remove_reagent(R.id,10)
 						dialogue_open = 0
 
@@ -479,16 +495,6 @@
 			// Cap probability between 0 and 100
 			splice_chance = max(0,min(splice_chance,100))
 			if (prob(splice_chance)) // We're good, so start splicing!
-				// Create the new seed
-				var/obj/item/seed/S = unpool(/obj/item/seed)
-				S.set_loc(src)
-				var/datum/plant/P = new /datum/plant(S)
-				var/datum/plantgenes/DNA = new /datum/plantgenes(S)
-				S.planttype = P
-				S.plantgenes = DNA
-				P.hybrid = 1
-				S.generation = max(seed1.generation, seed2.generation) + 1
-
 				var/datum/plantgenes/P1DNA = seed1.plantgenes
 				var/datum/plantgenes/P2DNA = seed2.plantgenes
 
@@ -521,6 +527,17 @@
 						submissivespecies = P1
 						dominantDNA = P2DNA
 						submissiveDNA = P1DNA
+
+				// Create the new seed
+				var/obj/item/seed/S = new /obj/item/seed
+				S.set_loc(src)
+				var/dominantType = dominantspecies.type
+				var/datum/plant/P = new dominantType(S)
+				var/datum/plantgenes/DNA = new /datum/plantgenes(S)
+				S.planttype = P
+				S.plantgenes = DNA
+				P.hybrid = 1
+				S.generation = max(seed1.generation, seed2.generation) + 1
 
 				// Set up the base variables first
 				/*
@@ -596,6 +613,7 @@
 				DNA.endurance = SpliceMK2(P1DNA.alleles[7],P2DNA.alleles[7],P1DNA.vars["endurance"],P2DNA.vars["endurance"])
 
 				boutput(usr, "<span class='notice'>Splice successful.</span>")
+				playsound(src, "sound/machines/ping.ogg", 50, 1)
 				//0 xp for a 100% splice, 4 xp for a 10% splice
 				JOB_XP(usr, "Botanist", clamp(round((100 - splice_chance) / 20), 0, 4))
 				if (!src.seedoutput) src.seeds.Add(S)
@@ -604,6 +622,7 @@
 			else
 				// It fucked up - we don't need to do anything else other than tell the user
 				boutput(usr, "<span class='alert'>Splice failed.</span>")
+				playsound(src, "sound/machines/seed_destroyed.ogg", 50, 1)
 
 			// Now get rid of the old seeds and go back to square one
 			src.seeds.Remove(seed1)
@@ -1123,11 +1142,6 @@
 		..()
 		for (var/A in concrete_typesof(/datum/plant)) src.available += new A(src)
 
-		/*for (var/datum/plant/P in src.available)
-			if (!P.vending || P.type == /datum/plant)
-				del(P)
-				continue*/
-
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
 
@@ -1224,10 +1238,10 @@
 				//new getseed(src.loc)
 				var/obj/item/seed/S
 				if (I.unique_seed)
-					S = unpool(I.unique_seed)
+					S = new I.unique_seed
 					S.set_loc(src.loc)
 				else
-					S = unpool(/obj/item/seed)
+					S = new /obj/item/seed
 					S.set_loc(src.loc)
 					S.removecolor()
 				S.generic_seed_setup(I)

@@ -15,13 +15,7 @@
 
 		if (!real_name)
 			real_name = name
-
-	pooled()
-		..()
-
-
-	unpooled()
-		..()
+		src.flags |= UNCRUSHABLE
 
 	proc/setup(var/L,var/list/viral_list)
 		set_loc(L)
@@ -71,7 +65,7 @@
 	blend_mode = 2
 
 	New()
-		src.filters += filter(type="motion_blur", x=0, y=3)
+		add_filter("motion blur", 1, motion_blur_filter(x=0, y=3))
 		..()
 
 /obj/decal/skeleton
@@ -155,7 +149,7 @@
 	plane = PLANE_HUD
 	anchored = 1
 
-proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time=2 SECONDS, invisibility=0)
+proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time=2 SECONDS, invisibility=INVIS_NONE)
 	// note that `target` can also be a turf, but byond sux and I can't declare the var as atom because areas don't have vis_contents
 	var/obj/decal/point/point = new
 	point.pixel_x = pixel_x
@@ -377,7 +371,7 @@ obj/decal/fakeobjects/teleport_pad
 	name = "PCB constructor"
 	desc = "A combination pick and place machine and wave soldering gizmo.  For making boards.  Buddy boards.   Well, it would if the interface wasn't broken."
 	icon = 'icons/obj/manufacturer.dmi'
-	icon_state = "fab"
+	icon_state = "fab-general"
 	anchored = 1
 	density = 1
 
@@ -403,7 +397,7 @@ obj/decal/fakeobjects/teleport_pad
 	desc = "Oh my!!"
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "lum"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	blood_DNA = null
 	blood_type = null
 
@@ -515,12 +509,6 @@ obj/decal/fakeobjects/teleport_pad
 		if (prob(20))
 			new /obj/decal/alienflower(src.loc)
 
-	unpooled()
-		..()
-		src.set_dir(pick(cardinal))
-		if (prob(20))
-			new /obj/decal/alienflower(src.loc)
-
 /obj/decal/icefloor
 	name = "ice"
 	desc = "Slippery!"
@@ -530,9 +518,9 @@ obj/decal/fakeobjects/teleport_pad
 	opacity = 0
 	anchored = 1
 	plane = PLANE_FLOOR
-	event_handler_flags = USE_HASENTERED
 
-/obj/decal/icefloor/HasEntered(var/atom/movable/AM)
+/obj/decal/icefloor/Crossed(atom/movable/AM)
+	..()
 	if (iscarbon(AM))
 		var/mob/M =	AM
 		// drsingh fix for undefined variable mob/living/carbon/monkey/var/shoes
@@ -540,7 +528,7 @@ obj/decal/fakeobjects/teleport_pad
 		if (M.getStatusDuration("weakened") || M.getStatusDuration("stunned") || M.getStatusDuration("frozen"))
 			return
 
-		if (M.slip(0))
+		if (!(M.bioHolder?.HasEffect("cold_resist") > 1) && M.slip(walking_matters = 1))
 			boutput(M, "<span class='alert'>You slipped on [src]!</span>")
 			if (prob(5))
 				M.TakeDamage("head", 5, 0, 0, DAMAGE_BLUNT)

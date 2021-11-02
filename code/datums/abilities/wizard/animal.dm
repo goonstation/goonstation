@@ -23,6 +23,8 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/mous
 /mob/living/critter/spider/ice/baby,
 /mob/living/critter/small_animal/wasp,
 /mob/living/critter/small_animal/raccoon,
+/mob/living/critter/small_animal/seal,
+/mob/living/critter/small_animal/walrus,
 /mob/living/critter/small_animal/slug,
 /mob/living/critter/small_animal/slug/snail,
 /mob/living/critter/small_animal/bee,

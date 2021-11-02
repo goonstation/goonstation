@@ -28,7 +28,7 @@
 	var/move_lag = 4	// The lag at which the movement happens. Lower = faster
 	var/obj/machinery/conveyor/next_conveyor = null
 	var/obj/machinery/conveyor_switch/owner = null
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 
 /obj/machinery/conveyor/north
@@ -43,6 +43,7 @@
 	// create a conveyor
 
 /obj/machinery/conveyor/New()
+	src.flags |= UNCRUSHABLE
 	..()
 	basedir = dir
 	setdir()
@@ -125,7 +126,7 @@
 		walk(A, movedir, move_lag, (32 / move_lag) * world.tick_lag)
 		A.glide_size = (32 / move_lag) * world.tick_lag
 
-/obj/machinery/conveyor/HasEntered(var/atom/movable/AM, atom/oldloc)
+/obj/machinery/conveyor/Crossed(atom/movable/AM)
 	..()
 	if(status & (BROKEN | NOPOWER))
 		return
@@ -135,7 +136,7 @@
 		return
 	move_thing(AM)
 
-/obj/machinery/conveyor/HasExited(var/atom/movable/AM, var/atom/newloc)
+/obj/machinery/conveyor/Uncrossed(var/atom/movable/AM)
 	..()
 	if(status & (BROKEN | NOPOWER))
 		return
@@ -144,7 +145,7 @@
 	if(!loc)
 		return
 
-	if(src.next_conveyor && src.next_conveyor.loc == newloc)
+	if(src.next_conveyor && src.next_conveyor.loc == AM.loc)
 		//Ok, they will soon walk() according to the new conveyor
 		var/mob/M = AM
 		if(istype(M) && M.buckled == src) //Transfer the buckle
@@ -212,12 +213,12 @@
 		return
 	if (ismob(user.pulling))
 		var/mob/M = user.pulling
-		M.pulling = null
+		M.remove_pulling()
 		step(user.pulling, get_dir(user.pulling.loc, src))
-		user.pulling = null
+		user.remove_pulling()
 	else
 		step(user.pulling, get_dir(user.pulling.loc, src))
-		user.pulling = null
+		user.remove_pulling()
 	return
 
 
