@@ -544,3 +544,8 @@
 	name = "pinpointer pinpointer"
 	category = /obj/item/pinpointer
 	thing_name = "pinpointer"
+
+/obj/item/pinpointer/category/artifacts
+	name = "artifact pinpointer"
+	category = TR_CAT_ARTIFACTS
+	thing_name = "artifact"

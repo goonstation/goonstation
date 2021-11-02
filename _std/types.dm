@@ -197,6 +197,7 @@ var/list/list/by_cat = list()
 #define TR_CAT_CLOWN_DISBELIEF_MOBS "clown_disbelief_mobs"
 #define TR_CAT_SPY_STICKERS_REGULAR "spysticker_regular"
 #define TR_CAT_SPY_STICKERS_DET "spysticker_det"
+#define TR_CAT_ARTIFACTS "artifacts"
 // powernets? processing_items?
 // mobs? ai-mobs?
 
