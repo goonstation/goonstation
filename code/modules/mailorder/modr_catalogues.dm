@@ -249,8 +249,6 @@
 				src.cartcost = 0
 				src.cart.Cut()
 				return 0
-			spawn_package_at = pick_landmark(LANDMARK_MAILORDER_SPAWN)
-			fire_package_to = pick_landmark(LANDMARK_MAILORDER_TARGET)
 			success_style = DELIVERED_TO_MAIL
 
 		for(var/P in src.cart)
@@ -265,11 +263,8 @@
 			package.spawn_contents = boxstock
 			if(src.master.ID_card && src.master.ID_card.registered)
 				package.name = "mail-order box ([src.master.ID_card.registered])"
-			package.set_loc(spawn_package_at)
-			package.invisibility = 101
-			package.anchored = 1
 			package.mail_dest = destination
-			package.yeetself(fire_package_to,success_style)
+			package.yeetself()
 		else if(success_style == DELIVERED_TO_QM) //set up for qm delivery
 			var/obj/storage/secure/crate/mailorder/package = new /obj/storage/secure/crate/mailorder()
 			package.spawn_contents = boxstock

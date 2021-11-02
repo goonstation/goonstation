@@ -18,18 +18,17 @@
 	name = "mail-order box"
 	icon_state = "evidence"
 	desc = "A box containing mail-ordered items."
-	var/mail_dest = null //used if mail loop delivery
+	var/mail_dest = null //used in mail loop delivery
 
-	proc/yeetself(gothere) //forbidden techniques
+	proc/yeetself()
 		var/yeetdelay = rand(15 SECONDS,20 SECONDS)
 		SPAWN_DBG(yeetdelay)
-			src.invisibility = 0
-			src.anchored = 0
-		SPAWN_DBG(yeetdelay + 1 DECI SECOND)
-			if(gothere)
-				src.throw_at(gothere, 100, 1)
-			else //how tho
-				message_admins("<span class='alert'>[src] failed to launch at intended destination, tell kubius</span>")
+			var/yeetbegin = pick_landmark(LANDMARK_MAILORDER_SPAWN)
+			var/yeetend = pick_landmark(LANDMARK_MAILORDER_TARGET)
+			if(!yeetbegin || !yeetend)
+				logTheThing("debug",null,null,"[src] failed to launch at intended destination, tell kubius")
+			src.set_loc(get_turf(yeetbegin))
+			src.throw_at(yeetend, 100, 1)
 
 //Box for QM-based delivery
 /obj/storage/secure/crate/mailorder
