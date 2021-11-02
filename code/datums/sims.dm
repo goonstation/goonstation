@@ -756,7 +756,7 @@ var/global/datum/simsControl/simsController = new()
 				attach_plum(owner)
 
 			plumbob.color = rgb((1 - color_t) * 255, color_t * 255, 0)
-			plumbob.light.set_color(1 - color_t, color_t, 0)
+			plumbob.add_simple_light("plumbob", list(1 - color_t, color_t, 0, 100))
 
 /obj/effect/plumbob
 	name = "plumbob"
