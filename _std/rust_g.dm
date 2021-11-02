@@ -20,6 +20,8 @@
 
 /proc/__detect_rust_g()
 	if (world.system_type == UNIX)
+		if (fexists("./librust_g_test.so"))
+			return __rust_g = "./librust_g_test.so"
 		if (fexists("./librust_g.so"))
 			// No need for LD_LIBRARY_PATH badness.
 			return __rust_g = "./librust_g.so"

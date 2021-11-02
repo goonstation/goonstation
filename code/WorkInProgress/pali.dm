@@ -464,3 +464,11 @@
 			if(prob(chance))
 				var/mob/living/carbon/human/normal/H = new(T)
 				H.JobEquipSpawned(job_name)
+
+
+/mob/verb/time_check()
+	boutput(usr, call(RUST_G, "time_microseconds")("test"))
+
+/mob/verb/time_rest()
+	call(RUST_G, "time_reset")("test")
+	boutput(usr, "timer reset")
