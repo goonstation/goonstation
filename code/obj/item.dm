@@ -1489,6 +1489,7 @@
 				src.inventory_counter.show_count()
 
 /obj/item/proc/log_firesource(obj/item/O, datum/thrown_thing/thr, mob/user)
+	UnregisterSignal(O, COMSIG_MOVABLE_THROW_END)
 	if (!O?.firesource) return
 	var/turf/T = get_turf(O)
 	if (!T) return
