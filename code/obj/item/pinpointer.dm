@@ -28,7 +28,7 @@
 
 	attack_self(mob/user)
 		if(!active)
-			if (!(src.target_criteria || src.target_ref))
+			if (!(src.target_criteria || src.target_ref || src.target))
 				user.show_text("No target criteria specified, cannot activate the pinpointer.", "red")
 				return
 			active = 1
@@ -69,6 +69,43 @@
 				arrow.icon_state = "pinonfar"
 		UpdateOverlays(arrow, "arrow")
 		SPAWN_DBG(0.5 SECONDS) .(user)
+
+/obj/item/pinpointer/category
+	var/category = null
+	var/thing_name = "trackable object"
+	var/in_or_on = "in"
+
+	attack_self(mob/user)
+		if(!active)
+			if(isnull(category))
+				user.show_text("No tracking category, cannot activate the pinpointer.", "red")
+				return
+			var/list/trackable = by_cat[category]
+			if(!length(trackable))
+				user.show_text("No [thing_name]s available, cannot activate the pinpointer.", "red")
+				return
+			var/list/choices = list()
+			for(var/atom/A in trackable)
+				if(A.disposed || isnull(get_turf(A)))
+					continue
+				var/in_loc = ""
+				if(!isturf(A.loc))
+					in_loc = " [in_or_on] [A.loc]"
+				choices["[A][in_loc] in [get_area(A)]"] = A
+			var/choice = tgui_input_list(user, "Pick a [thing_name] to track.", "[src]", choices)
+			if(isnull(choice))
+				return
+			target = choices[choice]
+		. = ..()
+
+/obj/item/pinpointer/category/spysticker
+	name = "spy sticker tracker"
+	category = TR_CAT_SPY_STICKERS_REGULAR
+	thing_name = "spy sticker"
+	in_or_on = "on"
+
+/obj/item/pinpointer/category/spysticker/det
+	category = TR_CAT_SPY_STICKERS_DET
 
 /obj/item/pinpointer/nuke
 	name = "pinpointer (nuclear bomb)"

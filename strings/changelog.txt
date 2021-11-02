@@ -5,6 +5,8 @@
 (e)🆕|feature
 (*)Quartermasters now have access to a Requisitions clearinghouse through which they can fulfill a rotating list of off-station orders.
 (+)Requisition contracts have a high chance to disappear each market shift, but one at a time may be pinned to retain it through shifts. Each requisition is slightly to significantly randomized.
+(u)pali6
+(*)Spy stickers now come with a pinpointer that lets you track a specific sticker!
 (t)mon nov 01 21
 (u)pali
 (+)Mechanics teleporter component got some fancier new visuals and also is harder to hide.
