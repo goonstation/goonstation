@@ -1372,8 +1372,8 @@
 		START_TRACKING
 
 	disposing()
-		. = ..()
 		STOP_TRACKING
+		. = ..()
 
 	syndicate
 		name = "\improper Syndicate command armor"

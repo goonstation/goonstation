@@ -141,8 +141,8 @@ ABSTRACT_TYPE(/datum/plant/herb)
 		START_TRACKING_CAT(TR_CAT_CANNABIS_OBJ_ITEMS)
 
 	disposing()
-		. = ..()
 		STOP_TRACKING_CAT(TR_CAT_CANNABIS_OBJ_ITEMS)
+		. = ..()
 
 /datum/plant/herb/catnip
 	name = "Nepeta Cataria"

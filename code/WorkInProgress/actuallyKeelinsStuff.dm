@@ -2832,8 +2832,8 @@ Returns:
 		START_TRACKING
 
 	disposing()
-		. = ..()
 		STOP_TRACKING
+		. = ..()
 
 /obj/dfissure_from
 	name = "dimensional fissure"

@@ -146,8 +146,8 @@
 		START_TRACKING_CAT(TR_CAT_CANNABIS_OBJ_ITEMS)
 
 	disposing()
-		. = ..()
 		STOP_TRACKING_CAT(TR_CAT_CANNABIS_OBJ_ITEMS)
+		. = ..()
 
 // weird alien plants
 

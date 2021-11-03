@@ -97,8 +97,8 @@
 			qdel(src)
 
 	disposing()
-		. = ..()
 		STOP_TRACKING_CAT(TR_CAT_HEAD_SURGEON)
+		. = ..()
 
 	proc/speak(var/message)
 		if (!message)
