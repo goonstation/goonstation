@@ -1082,7 +1082,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		P.info = "<font face='System' size='2'><center>REQUISITION CONTRACT MANIFEST<br>"
 		P.info += "FOR SUPPLIER REFERENCE ONLY<br><br>"
 		P.info += uppertext(contract.requis_desc)
-		P.info += "</center>"
+		P.info += "</center></font>"
 		P.name = "Requisition: [contract.name]"
 		src.printing = 0
 
