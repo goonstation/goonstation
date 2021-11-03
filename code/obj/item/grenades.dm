@@ -29,6 +29,7 @@ PIPE BOMBS + CONSTRUCTION
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 0
+	var/is_dangerous = TRUE
 	var/sound_armed = null
 	var/icon_state_armed = null
 	var/not_in_mousetraps = 0
@@ -101,7 +102,8 @@ PIPE BOMBS + CONSTRUCTION
 	proc/logGrenade(mob/user)
 		var/area/A = get_area(src)
 		if(!A.dont_log_combat)
-			message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
+			if(is_dangerous)
+				message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing("combat", user, null, "primes a grenade ([src.type]) at [log_loc(user)].")
 
 /obj/item/old_grenade/banana
@@ -115,6 +117,7 @@ PIPE BOMBS + CONSTRUCTION
 	is_syndicate = 1
 	sound_armed = "sound/weapons/armbomb.ogg"
 	icon_state_armed = "banana1"
+	is_dangerous = FALSE
 	var/payload = /obj/item/bananapeel
 
 	prime()
@@ -141,6 +144,7 @@ PIPE BOMBS + CONSTRUCTION
 	is_syndicate = 1
 	sound_armed = "sound/weapons/armbomb.ogg"
 	icon_state_armed = "banana1"
+	is_dangerous = FALSE
 	var/payload = /obj/item/reagent_containers/food/snacks/plant/tomato
 	var/count = 7
 
@@ -173,6 +177,7 @@ PIPE BOMBS + CONSTRUCTION
 	icon_state = "wasp"
 	icon_state_armed = "wasp1"
 	payload = /obj/critter/spacebee
+	is_dangerous = TRUE
 
 /obj/item/old_grenade/graviton //ITS SPELT GRAVITON
 	desc = "It is set to detonate in 10 seconds."
@@ -563,6 +568,7 @@ PIPE BOMBS + CONSTRUCTION
 	mats = list("MET-2"=2, "CON-1"=2, "molitz"=10, "char"=1 )
 	sound_armed = "sound/weapons/armbomb.ogg"
 	icon_state_armed = "oxy1"
+	is_dangerous = FALSE
 
 	prime()
 		var/turf/simulated/T = ..()
