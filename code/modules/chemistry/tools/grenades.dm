@@ -242,6 +242,7 @@
 	icon_state = "metalfoam"
 	icon_state_armed = "metalfoam1"
 	stage = 2
+	is_dangerous = FALSE
 
 	New()
 		..()
@@ -262,6 +263,7 @@
 	icon_state = "firefighting"
 	icon_state_armed = "firefighting1"
 	stage = 2
+	is_dangerous = FALSE
 
 	New()
 		..()
