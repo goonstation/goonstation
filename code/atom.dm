@@ -493,13 +493,15 @@
 			if(isturf(last_turf))
 				for(var/turf/T in bounds(last_turf.x*32, last_turf.y*32, bound_width/2, bound_height/2, last_turf.z))
 					T.checkingcanpass = max(T.checkingcanpass-1, 0)
-			for(var/turf/BT in bounds(src))
-				BT.checkingcanpass++
+			if(isturf(src.loc)) // ..() calls Crossed() which can change location to a non-turf for example in floor flushers
+				for(var/turf/BT in bounds(src))
+					BT.checkingcanpass++
 		else
 			if(isturf(last_turf))
 				last_turf.checkingcanpass = max(last_turf.checkingcanpass-1, 0)
-			var/turf/locturf = src.loc
-			locturf.checkingcanpass++
+			if(isturf(src.loc))
+				var/turf/locturf = src.loc
+				locturf.checkingcanpass++
 
 	if (src.event_handler_flags & (USE_CHECKEXIT | USE_PROXIMITY))
 		if (isturf(last_turf))
@@ -509,13 +511,14 @@
 				last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
 				for (var/turf/T2 in range(1, last_turf))
 					T2.neighcheckinghasproximity--
-		var/turf/T = src.loc
-		if (src.event_handler_flags & USE_CHECKEXIT)
-			T.checkingexit++
-		if (src.event_handler_flags & USE_PROXIMITY)
-			T.checkinghasproximity++
-			for (var/turf/T2 in range(1, T))
-				T2.neighcheckinghasproximity++
+		if(isturf(src.loc))
+			var/turf/T = src.loc
+			if (src.event_handler_flags & USE_CHECKEXIT)
+				T.checkingexit++
+			if (src.event_handler_flags & USE_PROXIMITY)
+				T.checkinghasproximity++
+				for (var/turf/T2 in range(1, T))
+					T2.neighcheckinghasproximity++
 
 	last_turf = isturf(src.loc) ? src.loc : null
 
