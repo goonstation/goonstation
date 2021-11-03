@@ -196,7 +196,7 @@ proc/create_fluff(datum/mind/target)
 			if("DetGadget hat")
 				steal_target = /obj/item/clothing/head/det_hat/gadget
 			if("authentication disk")
-				if(!countJob("Head of Security"))
+				if(!countJob("Captain"))
 					return
 				else steal_target = /obj/item/disk/data/floppy/read_only/authentication
 			if("\'freeform\' AI module")
