@@ -115,9 +115,11 @@
 				var/ang = get_angle(get_turf(src), get_turf(target))
 				var/hudarrow_dist = 16 + 32 / (1 + 3 ** (3 - dist / 10))
 				var/matrix/M = matrix()
+				var/hudarrow_scale = 0.6 + 0.4 / (1 + 3 ** (3 - dist / 10))
+				M = M.Scale(hudarrow_scale, hudarrow_scale)
 				M = M.Turn(ang)
 				if(dist == 0)
-					hudarrow_dist += 12
+					hudarrow_dist += 9
 					M.Turn(180) // point at yourself :)
 				M = M.Translate(hudarrow_dist * sin(ang), hudarrow_dist * cos(ang))
 				animate(hudarrow, transform=M, time=0.5 SECONDS, flags=ANIMATION_PARALLEL)
