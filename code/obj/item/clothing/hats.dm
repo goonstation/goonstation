@@ -459,6 +459,13 @@ proc/filter_trait_hats(var/type)
 	icon_state = "chef"
 	item_state = "chefhat"
 
+/obj/item/clothing/head/chefhatpuffy
+	name = "Puffy Chef's Hat"
+	desc = "A chef's toque blanche, pleasantly puffy on top."
+	icon_state = "chef-puffy"
+	item_state = "chefhat"
+	wear_state = "chef-puffy"
+
 /obj/item/clothing/head/souschefhat
 	name = "Sous-Chef's hat"
 	icon_state = "souschef"
