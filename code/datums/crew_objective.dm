@@ -147,7 +147,7 @@ ABSTRACT_TYPE(/datum/objective/crew/chiefengineer)
 		medal_name = "Slow Burn"
 		check_completion()
 			for(var/obj/machinery/power/furnace/F in machine_registry[MACHINES_POWER])
-				if(F.z == 1 && F.active == 0 && istype(F.loc.loc, /area/station))
+				if(F.z == 1 && !F.active && istype(F.loc.loc, /area/station))
 					return FALSE
 			return TRUE
 	ptl
