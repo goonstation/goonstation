@@ -125,6 +125,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	var/hacked = 0
 	var/tradeamt = 1
 	var/in_dialogue_box = 0
+	var/printing = 0
 	var/obj/item/card/id/scan = null
 	var/list/datum/supply_pack
 
@@ -1028,6 +1029,11 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				return
 			src.requisitions_update()
 
+		if ("print_req")
+			if(!src.printing)
+				var/datum/req_contract/RC = locate(href_list["subaction"]) in shippingmarket.req_contracts
+				src.print_requisition(RC)
+
 		if ("mainmenu")
 			src.temp = null
 
@@ -1062,11 +1068,23 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		src.temp += "Requisition Code: [RC.req_code]<br><br>"
 		if(RC.flavor_desc) src.temp += "[RC.flavor_desc]<br><br>"
 		src.temp += "[RC.requis_desc]"
+		src.temp += "<A href='[topicLink("print_req","\ref[RC]")]'>Print List</A><br>"
 		if(RC.req_class == AID_CONTRACT)
 			src.temp += "URGENT - Cannot Be Reserved"
 		else
 			src.temp += "<A href='[topicLink("pin_contract","\ref[RC]")]'>[RC.pinned ? "Unpin Contract" : "Pin Contract"]</A>"
 
+/obj/machinery/computer/supplycomp/proc/print_requisition(var/datum/req_contract/contract)
+	src.printing = 1
+	playsound(src.loc, "sound/machines/printer_thermal.ogg", 60, 0)
+	SPAWN_DBG(2 SECONDS)
+		var/obj/item/paper/thermal/P = new/obj/item/paper/thermal(src.loc)
+		P.info = "<font face='System' size='2'><center>REQUISITION CONTRACT MANIFEST<br>"
+		P.info += "FOR SUPPLIER REFERENCE ONLY<br><br>"
+		P.info += uppertext(contract.requis_desc)
+		P.info += "</center>"
+		P.name = "Requisition: [contract.name]"
+		src.printing = 0
 
 /obj/machinery/computer/supplycomp/proc/trader_dialogue_update(var/dialogue,var/datum/trader/T)
 	if (!dialogue || !T)
