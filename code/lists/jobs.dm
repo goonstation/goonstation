@@ -46,6 +46,7 @@ var/list/job_mailgroup_list = list(
 	"Mechanic" = MGD_STATIONREPAIR,
 	"Engineer" = MGD_STATIONREPAIR,
 	"Janitor" = MGD_STATIONREPAIR,
+	"Miner" = MGD_MINING,
 	"Botanist" = MGD_BOTANY,
 	"Medical Director" = MGD_MEDRESEACH,
 	"Roboticist" = MGD_MEDRESEACH,
@@ -65,7 +66,8 @@ var/list/page_departments = list(
 	"Cargo" = MGD_CARGO,
 	"Botany" = MGD_BOTANY,
 	"Bar / Kitchen" = MGD_KITCHEN,
-	"Spiritual Affairs" = MGD_SPIRITUALAFFAIRS)
+	"Spiritual Affairs" = MGD_SPIRITUALAFFAIRS,
+	"Mining" = MGD_MINING)
 
 /proc/get_all_jobs()
 	return list("Assistant", "Detective", "Medical Doctor", "Captain", "Security Officer",

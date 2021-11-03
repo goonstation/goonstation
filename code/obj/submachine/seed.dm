@@ -360,7 +360,8 @@
 						S.name = stored.name
 						S.plant_seed_color(stored.seedcolor)
 						if (stored.hybrid)
-							var/datum/plant/hybrid = new /datum/plant(S)
+							var/hybrid_type = stored.type
+							var/datum/plant/hybrid = new hybrid_type(S)
 							for(var/V in stored.vars)
 								if (issaved(stored.vars[V]) && V != "holder")
 									hybrid.vars[V] = stored.vars[V]

@@ -301,6 +301,10 @@
 		var/obj/machinery/door/hacked_door = comsig_target
 		if(hacked_door.p_open)
 			return
+	if(istype(comsig_target, /obj/machinery/vending))
+		var/obj/machinery/vending/hacked_vendor = comsig_target
+		if(hacked_vendor.panel_open)
+			return
 	if(!ispulsingtool(W) || !isliving(user) || user.stat)
 		return 0
 	if(length(src.configs))

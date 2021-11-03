@@ -740,7 +740,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	var/database_id = null
 	var/random_color = 1
 	var/drop_type = 0
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
 
 	New()
 		..()
@@ -765,7 +765,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		return ..()
 
 
-/obj/sea_plant_manta/HasExited(atom/movable/A as mob|obj)
+/obj/sea_plant_manta/Uncrossed(atom/movable/A as mob|obj)
 	..()
 	if (ismob(A))
 		if (A.dir & SOUTH) //If mob exiting south, dont break perspective
