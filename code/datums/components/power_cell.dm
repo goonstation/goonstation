@@ -4,14 +4,16 @@
 	var/max_charge
 	var/recharge_rate
 	var/cycle = 0
+	var/can_be_recharged
 
-/datum/component/power_cell/Initialize(max = 200, start_charge = 200, recharge = 0)
+/datum/component/power_cell/Initialize(max = 200, start_charge = 200, recharge = 0, rechargable = TRUE)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	. = ..()
 	src.max_charge = max
 	src.charge = start_charge
 	src.recharge_rate = recharge
+	src.can_be_recharged = rechargable
 	if(charge < max_charge && recharge_rate)
 		processing_items |= parent
 	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/attackby)
@@ -23,7 +25,7 @@
 	RegisterSignal(parent, COMSIG_ITEM_PROCESS, .proc/process)
 
 
-/datum/component/power_cell/InheritComponent(datum/component/power_cell/C, i_am_original, max, start_charge, recharge)
+/datum/component/power_cell/InheritComponent(datum/component/power_cell/C, i_am_original, max, start_charge, recharge, rechargable)
 	if(C)
 		src.max_charge = C.max_charge
 		src.charge = C.charge
@@ -37,13 +39,18 @@
 			src.charge = start_charge
 		if(isnum_safe(recharge))
 			src.recharge_rate = recharge
+		if(isnum_safe(rechargable))
+			src.can_be_recharged = rechargable
 
 
 /datum/component/power_cell/proc/attackby(source, obj/item/I, mob/user)
 	SEND_SIGNAL(I, COMSIG_CELL_TRY_SWAP, parent, user)
 
 /datum/component/power_cell/proc/can_charge()
-	. = CELL_CHARGEABLE
+	if(src.can_be_recharged)
+		. = CELL_CHARGEABLE
+	else
+		. = CELL_UNCHARGEABLE
 
 /datum/component/power_cell/proc/charge(source, amount)
 	if (amount > 0)

@@ -1025,10 +1025,11 @@
 	var/recharge_rate = 0
 	var/sound_load = 'sound/weapons/gunload_click.ogg'
 	var/unusualCell = 0
+	var/rechargable = TRUE
 
 	New()
 		..()
-		AddComponent(/datum/component/power_cell, max_charge, charge, recharge_rate)
+		AddComponent(/datum/component/power_cell, max_charge, charge, recharge_rate, rechargable)
 		RegisterSignal(src, COMSIG_UPDATE_ICON, .proc/update_icon)
 		desc = "A power cell that holds a max of [src.max_charge]PU. Can be inserted into any energy gun, even tasers!"
 		update_icon()
