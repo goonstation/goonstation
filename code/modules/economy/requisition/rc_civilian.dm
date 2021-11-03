@@ -4,7 +4,7 @@ ABSTRACT_TYPE(/datum/req_contract/civilian)
 
 /datum/req_contract/civilian/event_catering
 	name = "Event Catering"
-	payout = 500
+	payout = 6000
 	var/list/desc_event = list("reception","formal event","welcoming party","going-away party","commemorative dinner","dinner")
 	var/list/desc_honorific = list("an esteemed","an infamous","a famous","a renowned")
 	var/list/desc_origin = list(" Nanotrasen"," Martian"," freelancing"," frontier"," - if only barely -"," retired")
@@ -87,7 +87,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 /datum/req_contract/civilian/furnishing
 	//name = "Interior Outfitting"
-	payout = 800
+	payout = 2200
 	var/list/namevary = list("Interior Outfitting","Furnishing Assistance","Interior Decorating","Occupancy Preparations","Last-Minute Furnishing")
 	var/list/desc_whatitdoes = list("A new gaming","An extraction","A medical","A research","A cartographic","A transit")
 	var/list/desc_whatitis = list("vessel","station","platform","outpost")
@@ -160,7 +160,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 /datum/req_contract/civilian/greytide
 	//name = "Crew Embarcation"
-	payout = 700
+	payout = 1500
 	var/list/namevary = list("Crew Embarcation","Crew Onboarding","New Hands on Deck","Expedited Outfitting","Personnel Rotation")
 	var/list/desc_task = list("mining","hydroponics","cargo handling","engineering","medical","research","cartographic")
 	var/list/desc_place = list("vessel","station","platform","outpost")
@@ -171,9 +171,9 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 		src.name = pick(namevary)
 		var/task = pick(desc_task) //subvariation
 		src.flavor_desc = "An affiliated [task] [pick(desc_place)] requires sets of attire for newly [pick(desc_hiring)] [pick(desc_noobs)]."
-		src.payout += rand(0,20) * 10
 
 		var/crewcount = rand(4,12)
+		src.payout += rand(3,4) * 10 * crewcount
 
 		//uniform pickin
 		if(prob(70))
@@ -262,12 +262,12 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/reagent/water
 	name = "water"
 	chemname = "water"
-	feemod = 4
+	feemod = 5
 
 
 /datum/req_contract/civilian/birthdaybash
 	//name = "Birthday Party"
-	payout = 900
+	payout = 3500
 	hide_item_payouts = TRUE
 	var/list/namevary = list("Birthday Party","Birthday Bash","Surprise Party","One Year Older")
 	var/list/desc_event = list("party","celebration","gathering","party","event") //yes party twice
