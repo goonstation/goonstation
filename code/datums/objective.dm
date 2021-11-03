@@ -149,7 +149,7 @@ proc/create_fluff(datum/mind/target)
 			if("Head of Security\'s beret")
 				if(!countJob("Head of Security"))
 					return
-				 else steal_target = /obj/item/clothing/head/hos_hat
+				else steal_target = /obj/item/clothing/head/hos_hat
 			if("prisoner\'s beret")
 				steal_target = /obj/item/clothing/head/beret/prisoner
 			if("DetGadget hat")
