@@ -1,6 +1,6 @@
-(t)mon nov 1 21
+(t)mon nov 3 21
 (u)TTerc
-(*)You can now toggle admin messages for who/adminwho in admin preferences
+(*)You can now toggle admin alerts for Who/Adminwho in Admin Preferences and Self tab.
 (t)sat oct 31 21
 (u)pali
 (*)Incoming mainframe commands are now logged (usually) in a new <i>computers</i> log cateogry
