@@ -771,7 +771,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicalassistant)
 		check_completion()
 			for (var/obj/H in by_cat[TR_CAT_HEAD_SURGEON])
 				if (in_centcom(H))
-					return 1
+					return TRUE
 			return 0
 
 
