@@ -1735,6 +1735,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 
+	shoot_delay = 1 SECOND
+
 	var/datum/movement_controller/snipermove = null
 
 	New()
