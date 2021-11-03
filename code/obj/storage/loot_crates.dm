@@ -320,10 +320,10 @@
 		var/newtrap = null
 		switch(tier)
 			if(2)
-				newlock = pick(/datum/loot_crate_lock/decacode,/datum/loot_crate_lock/hangman/seven, /datum/loot_crate_lock/hangman/nine, /datum/loot_crate_lock/decacode)
+				newlock = pick(/datum/loot_crate_lock/decacode,/datum/loot_crate_lock/hangman/seven, /datum/loot_crate_lock/hangman/nine)
 				newtrap = pick(/datum/loot_crate_trap/crusher,/datum/loot_crate_trap/spikes,/datum/loot_crate_trap/zap)
 			if(3)
-				newlock = pick(/datum/loot_crate_lock/hangman/nine)
+				newlock = pick(/datum/loot_crate_lock/hangman/nine, /datum/loot_crate_lock/hangman/seven)
 				newtrap = pick(/datum/loot_crate_trap/bomb,/datum/loot_crate_trap/zap, /datum/loot_crate_trap/crusher)
 			else
 				trap_prob = 33
