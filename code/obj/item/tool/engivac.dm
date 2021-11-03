@@ -181,7 +181,7 @@ obj/item/engivac/move_callback(mob/M, turf/source, turf/target)
 
 		tile_target.attackby(current_stack,M)
 
-		if (current_stack.pooled) //This stack just ran out
+		if (current_stack.disposed) //This stack just ran out
 			current_stack = null
 
 
@@ -227,9 +227,9 @@ obj/item/engivac/proc/attempt_fill(obj/item/target)
 		thingy.stack_item(target)
 		if (target.amount < prev_amount)
 			succeeded = TRUE
-		if (target.pooled)
+		if (target.disposed)
 			break
-	if (!target.pooled) //If we get to here we've still got some left on the stack
+	if (!target.disposed) //If we get to here we've still got some left on the stack
 		if (held_toolbox.check_can_hold(target) > 0) // target can fit. check_can_hold returns 0 or lower for various errors
 			held_toolbox.add_contents(target)
 			succeeded = TRUE
