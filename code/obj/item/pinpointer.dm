@@ -23,6 +23,7 @@
 	var/image/arrow = null
 	var/atom/movable/hudarrow
 	var/hudarrow_color = "#67cd22"
+	var/max_range = null
 
 	New()
 		..()
@@ -80,7 +81,6 @@
 		if(hudarrow)
 			animate(hudarrow, alpha=127, time=1 SECOND)
 		while(active)
-			work_check()
 			if(!active)
 				break
 			if(!target)
@@ -91,9 +91,10 @@
 				if(!target || target.qdeled)
 					src.turn_off()
 					return
+			work_check()
 			var/turf/ST = get_turf(src)
 			var/turf/T = get_turf(target)
-			if(!ST || !T || ST.z != T.z)
+			if(!ST || !T || ST.z != T.z || !isnull(max_range) && GET_DIST(src,target) > max_range)
 				src.turn_off()
 				if(ismob(src.loc))
 					boutput(src.loc, "<span class='alert'>Pinpointer target out of range.</span>")
@@ -131,6 +132,8 @@
 	var/category = null
 	var/thing_name = "trackable object"
 	var/in_or_on = "in"
+	var/z_locked = null // Z-level number if locked to that Z-level
+	var/include_area_text = TRUE
 
 	attack_self(mob/user)
 		if(!active)
@@ -142,17 +145,24 @@
 				trackable = by_cat[category]
 			else if(ispath(category))
 				trackable = by_type[category]
-			if(!length(trackable))
-				user.show_text("No [thing_name]s available, cannot activate the pinpointer.", "red")
-				return
 			var/list/choices = list()
 			for(var/atom/A in trackable)
-				if(A.disposed || isnull(get_turf(A)))
+				var/turf/T = get_turf(A)
+				if(A.disposed || isnull(T))
+					continue
+				if(!isnull(z_locked) && z_locked != T.z)
+					continue
+				var/dist = GET_DIST(A, src)
+				if(!isnull(max_range) && dist > max_range)
 					continue
 				var/in_loc = ""
 				if(!isturf(A.loc))
 					in_loc = " [in_or_on] [A.loc]"
-				choices["[A][in_loc] in [get_area(A)]"] = A
+				var/area_text = include_area_text ? " in [get_area(A)]" : ""
+				choices["[A][in_loc][area_text]"] = A
+			if(!length(choices))
+				user.show_text("No [thing_name]s available, cannot activate the pinpointer.", "red")
+				return
 			var/choice = tgui_input_list(user, "Pick a [thing_name] to track.", "[src]", choices)
 			if(isnull(choice))
 				return
@@ -161,6 +171,7 @@
 
 /obj/item/pinpointer/category/spysticker
 	name = "spy sticker pinpointer"
+	desc = "Locates spy stickers attached to things."
 	category = TR_CAT_SPY_STICKERS_REGULAR
 	thing_name = "spy sticker"
 	in_or_on = "on"
@@ -435,6 +446,15 @@
 	category = /obj/machinery/power/apc
 	thing_name = "APC"
 
+/obj/item/pinpointer/category/apcs/station
+	name = "\improper APC pinpointer"
+	desc = "Locates APC units on the station."
+	category = /obj/machinery/power/apc
+	thing_name = "APC"
+	hudarrow_color = "#aaaa66"
+	include_area_text = FALSE
+	z_locked = Z_LEVEL_STATION
+
 /obj/item/pinpointer/category/comms_dishes
 	name = "comm dish pinpointer"
 	category = /obj/machinery/communications_dish
@@ -544,3 +564,16 @@
 	name = "pinpointer pinpointer"
 	category = /obj/item/pinpointer
 	thing_name = "pinpointer"
+
+/obj/item/pinpointer/category/artifacts
+	name = "artifact pinpointer"
+	category = TR_CAT_ARTIFACTS
+	thing_name = "artifact"
+
+/obj/item/pinpointer/category/artifacts/safe
+	name = "artifact pinpointer"
+	desc = "Locates nearby artifacts in range of 20 meters."
+	category = TR_CAT_ARTIFACTS
+	thing_name = "artifact"
+	hudarrow_color = "#7755ff"
+	max_range = 20

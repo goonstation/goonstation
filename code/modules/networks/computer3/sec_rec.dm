@@ -285,6 +285,27 @@
 
 						return
 
+					if (FIELDNUM_NEWREC)
+						if (src.active_secure)
+							return
+
+						var/datum/db_record/R = new /datum/db_record(  )
+						R["name"] = src.active_general["name"]
+						R["full_name"] = src.active_general["full_name"]
+						R["id"] = src.active_general["id"]
+						R["criminal"] = "None"
+						R["mi_crim"] = "None"
+						R["mi_crim_d"] = "No minor crime convictions."
+						R["ma_crim"] = "None"
+						R["ma_crim_d"] = "No major crime convictions."
+						R["notes"] = "No notes."
+						data_core.security.add_record(R)
+						src.active_secure = R
+
+						src.print_active_record()
+						src.menu = MENU_IN_RECORD
+						return
+
 				var/field_number = round( max( text2num(command), 0) )
 				if (field_number == 0)
 					src.menu = MENU_INDEX
@@ -311,27 +332,6 @@
 					if (FIELDNUM_CRIMSTAT)
 						src.print_text("Please select: (1) Arrest (2) None (3) Incarcerated<br>(4) Parolled (5) Released (0) Back")
 						src.menu = MENU_FIELD_INPUT
-						return
-
-					if (FIELDNUM_NEWREC)
-						if (src.active_secure)
-							return
-
-						var/datum/db_record/R = new /datum/db_record(  )
-						R["name"] = src.active_general["name"]
-						R["full_name"] = src.active_general["full_name"]
-						R["id"] = src.active_general["id"]
-						R["criminal"] = "None"
-						R["mi_crim"] = "None"
-						R["mi_crim_d"] = "No minor crime convictions."
-						R["ma_crim"] = "None"
-						R["ma_crim_d"] = "No major crime convictions."
-						R["notes"] = "No notes."
-						data_core.security.add_record(R)
-						src.active_secure = R
-
-						src.print_active_record()
-						src.menu = MENU_IN_RECORD
 						return
 
 			if (MENU_FIELD_INPUT)

@@ -573,7 +573,8 @@
 	/obj/item/pen/infrared,
 	/obj/item/clothing/head/helmet/welding,
 	/obj/item/clothing/suit/hi_vis,
-	/obj/item/lamp_manufacturer/organic)
+	/obj/item/lamp_manufacturer/organic,
+	/obj/item/pinpointer/category/apcs/station)
 
 /obj/storage/secure/closet/engineering/mining
 	name = "\improper Miner's locker"
@@ -639,6 +640,7 @@
 	req_access = list(access_kitchen)
 	spawn_contents = list(/obj/item/storage/box/clothing/chef,\
 	/obj/item/storage/box/clothing/souschef,\
+	/obj/item/clothing/head/chefhatpuffy,\
 	/obj/item/storage/box/cutlery,\
 	/obj/item/kitchen/rollingpin,\
 	/obj/item/paper/book/from_file/cookbook,\
