@@ -322,11 +322,9 @@
 			if(2)
 				newlock = pick(/datum/loot_crate_lock/decacode,/datum/loot_crate_lock/hangman/seven, /datum/loot_crate_lock/hangman/nine, /datum/loot_crate_lock/decacode)
 				newtrap = pick(/datum/loot_crate_trap/crusher,/datum/loot_crate_trap/spikes,/datum/loot_crate_trap/zap)
-				name = "fortified " + name
 			if(3)
 				newlock = pick(/datum/loot_crate_lock/hangman/nine)
 				newtrap = pick(/datum/loot_crate_trap/bomb,/datum/loot_crate_trap/zap, /datum/loot_crate_trap/crusher)
-				name = "heavily reinforced " + name
 			else
 				trap_prob = 33
 				newlock = pick(/datum/loot_crate_lock/decacode,/datum/loot_crate_lock/hangman)
