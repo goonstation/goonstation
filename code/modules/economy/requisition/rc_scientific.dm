@@ -114,7 +114,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 /datum/req_contract/scientific/botanical
 	//name = "Feed Me, Seymour (Butz)"
-	payout = 2500
+	payout = 3500
 	var/list/namevary = list("Botanical Prototyping","Hydroponic Acclimation","Cultivar Propagation","Plant Genotype Study")
 	var/list/desc_wherestudy = list(
 		"An affiliated hydroponics lab",
@@ -152,7 +152,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/seed/scientific
 	name = "genetically fussy seed"
 	cropname = "Durian"
-	feemod = 800
+	feemod = 900
 	var/crop_genpath = /datum/plant
 
 	fruit

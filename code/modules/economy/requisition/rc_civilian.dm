@@ -5,6 +5,7 @@ ABSTRACT_TYPE(/datum/req_contract/civilian)
 /datum/req_contract/civilian/event_catering
 	name = "Event Catering"
 	payout = 6000
+	weight = 70
 	var/list/desc_event = list("reception","formal event","welcoming party","going-away party","commemorative dinner","dinner")
 	var/list/desc_honorific = list("an esteemed","an infamous","a famous","a renowned")
 	var/list/desc_origin = list(" Nanotrasen"," Martian"," freelancing"," frontier"," - if only barely -"," retired")
@@ -267,7 +268,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 /datum/req_contract/civilian/birthdaybash
 	//name = "Birthday Party"
-	payout = 3500
+	payout = 2000
 	hide_item_payouts = TRUE
 	var/list/namevary = list("Birthday Party","Birthday Bash","Surprise Party","One Year Older")
 	var/list/desc_event = list("party","celebration","gathering","party","event") //yes party twice
@@ -384,7 +385,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/item/cookie
 	name = "cookie"
 	typepath = /obj/item/reagent_containers/food/snacks/cookie
-	feemod = 160
+	feemod = 240
 
 /datum/rc_entry/stack/pizza
 	name = "slices' worth of pizza"

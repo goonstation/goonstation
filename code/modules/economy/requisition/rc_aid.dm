@@ -327,7 +327,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 /datum/rc_entry/reagent/fuel
 	name = "welding-grade liquid fuel"
 	chemname = "fuel"
-	feemod = 4
+	feemod = 6
 
 /datum/rc_entry/reagent/coffee
 	name = "coffee"
