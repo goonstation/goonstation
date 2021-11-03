@@ -1068,11 +1068,11 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		src.temp += "Requisition Code: [RC.req_code]<br><br>"
 		if(RC.flavor_desc) src.temp += "[RC.flavor_desc]<br><br>"
 		src.temp += "[RC.requis_desc]"
-		src.temp += "<A href='[topicLink("print_req","\ref[RC]")]'>Print List</A><br>"
 		if(RC.req_class == AID_CONTRACT)
-			src.temp += "URGENT - Cannot Be Reserved"
+			src.temp += "URGENT - Cannot Be Reserved<br>"
 		else
-			src.temp += "<A href='[topicLink("pin_contract","\ref[RC]")]'>[RC.pinned ? "Unpin Contract" : "Pin Contract"]</A>"
+			src.temp += "<A href='[topicLink("pin_contract","\ref[RC]")]'>[RC.pinned ? "Unpin Contract" : "Pin Contract"]</A><br>"
+		src.temp += "<A href='[topicLink("print_req","\ref[RC]")]'>Print List</A>"
 
 /obj/machinery/computer/supplycomp/proc/print_requisition(var/datum/req_contract/contract)
 	src.printing = 1
