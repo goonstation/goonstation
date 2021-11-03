@@ -59,6 +59,11 @@
 		else if (src.flavor)
 			reagents.add_reagent(src.flavor, 40)
 			return
+		START_TRACKING_CAT(TR_CAT_CANNABIS_OBJ_ITEMS)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_CANNABIS_OBJ_ITEMS)
+		. = ..()
 
 	afterattack(atom/target , mob/user, flag) // copied from the propuffs
 		if (istype(target, /obj/item/reagent_containers/food/snacks/)) // you dont crush cigs INTO food, you crush them ONTO food!

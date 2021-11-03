@@ -136,6 +136,14 @@ ABSTRACT_TYPE(/datum/plant/herb)
 	/datum/plantmutation/cannabis/white,/datum/plantmutation/cannabis/ultimate)
 	commuts = list(/datum/plant_gene_strain/resistance_drought,/datum/plant_gene_strain/yield/stunted)
 
+	New()
+		. = ..()
+		START_TRACKING_CAT(TR_CAT_CANNABIS_OBJ_ITEMS)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_CANNABIS_OBJ_ITEMS)
+		. = ..()
+
 /datum/plant/herb/catnip
 	name = "Nepeta Cataria"
 	seedcolor = "#00CA70"
