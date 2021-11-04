@@ -197,16 +197,22 @@ var/datum/explosion_controller/explosions
 
 		var/list/nodes = list()
 		var/list/blame = list()
+		var/index_open = 1
 		var/list/open = list(epicenter)
+		var/list/next_open = list()
 		nodes[epicenter] = radius
-		while (open.len)
-			if(length(nodes) % 100 == 0)
+		var/i = 0
+		while (index_open <= length(open) || length(next_open))
+			if(i++ % 500 == 0)
 				LAGCHECK(LAG_HIGH)
-			var/turf/T = open[1]
-			open.Cut(1, 2)
+			if(index_open > length(open))
+				open = next_open
+				next_open = list()
+				index_open = 1
+			var/turf/T = open[index_open++]
 			var/value = nodes[T] - 1 - T.explosion_resistance
 			var/value2 = nodes[T] - 1.4 - T.explosion_resistance
-			for (var/atom/A in T.contents)
+			for (var/atom/A as anything in T)
 				if (A.density/* && !A.CanPass(null, target)*/) // nothing actually used the CanPass check
 					value -= A.explosion_resistance
 					value2 -= A.explosion_resistance
@@ -226,7 +232,7 @@ var/datum/explosion_controller/explosions
 				if ((nodes[target] && nodes[target] >= new_value))
 					continue
 				nodes[target] = new_value
-				open |= target
+				next_open[target] = 1
 
 		radius += 1 // avoid a division by zero
 		for (var/turf/T as anything in nodes) // inverse square law (IMPORTANT) and pre-stun
