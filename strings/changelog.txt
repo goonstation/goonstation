@@ -1,5 +1,9 @@
 
 (t)wed nov 03 21
+(u)Gannets
+(p)6565
+(e)⚖|balance
+(+)Added a one second firing delay to the Betelgeuse sniper rifle.
 (u)tarmunora
 (+)chem dispensers take miraclium to fabricate.
 (u)112358sam
