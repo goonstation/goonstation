@@ -576,8 +576,8 @@
 			playsound(target.loc,"sound/misc/Boxingbell.ogg",30,1)
 			var/mob/living/carbon/human/H = target
 
-			H.changeStatus("stunned", 5 SECONDS)
-			H.changeStatus("weakened", 5 SECONDS)
+			H.changeStatus("stunned", 3 SECONDS)
+			H.changeStatus("weakened", 3 SECONDS)
 			H.force_laydown_standup()
 			SPAWN_DBG(0)
 				var/turf/curr = get_turf(H)
