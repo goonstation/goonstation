@@ -992,6 +992,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/list/paramslist = 0)
 				. = ..()
+				if(issilicon(M)) // borgs shouldn't heal from this
+					return
 				if (!volume_passed)
 					return
 				volume_passed = clamp(volume_passed, 0, 10)
@@ -1216,6 +1218,8 @@ datum
 				if(!volume_passed)
 					return
 				if(!isliving(M)) // fucking human shitfucks
+					return
+				if(issilicon(M)) // Borgs shouldn't heal from this
 					return
 				volume_passed = clamp(volume_passed, 0, 10)
 				if(method == TOUCH)
