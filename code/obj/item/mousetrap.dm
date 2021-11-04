@@ -510,7 +510,7 @@
 
 	armed
 		icon_state = "boxing_trap_armed"
-		armed = 1
+		armed = TRUE
 
 	examine()
 		. = ..()
