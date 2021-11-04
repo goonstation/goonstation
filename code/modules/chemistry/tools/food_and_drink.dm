@@ -318,11 +318,21 @@
 			for(var/id as anything in src.food_effects)
 				var/datum/statusEffect/S = getStatusPrototype(id)
 				if(S == null)
-					.+= "oh oh its null! report to the coders! ID:" + id //This really shouldnt happen except for var editing or other wierdness, but this is here just in case.
-					break
-				. += S.name + "; "
+					logTheThing("debug", null, null, "the foodstuff [src] returned with a statusEffect ID that does not exist in the global prototype list! status_id : [id]") //This really shouldnt happen except for var editing, typos or other wierdness, but this is here just in case.
+					continue
+				var/Sdesc = S.getTooltip()
+				. += "<a href='byond://?src=\ref[src];action=chefhint;name=[url_encode(S.name)];txt=[url_encode(Sdesc)]'>[S.name]</a>" + "; "
 			. += "</span>"
 
+
+	Topic(href, href_list)
+		..()
+		if(!usr)
+			return
+		switch(href_list["action"]) // future proofing incase someone else wants to add something to this Topic(), will remove if it noticeably slows down execution of this proc.
+			if("chefhint")
+				if(href_list["txt"] && href_list["name"])
+					boutput(usr,"<span class='notice'>[href_list["name"]]: [href_list["txt"]]</span>")
 
 
 

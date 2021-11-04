@@ -21,3 +21,6 @@
 
 	getTooltip()
 		. = "Dealing [damage_tox] toxin damage every [tickSpacing/(1 SECOND)] sec."
+
+	getChefHint()
+		. = "Poisons the consumer, Dealing [damage_tox] toxin damage every [tickSpacing/(1 SECOND)] sec."
