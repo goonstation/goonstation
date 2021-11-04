@@ -1,5 +1,3 @@
-#define CAM_RANGE 7
-
 //ISSUES: Cameras inside beepsky and other bots cause issues. They move around and don't update properly. ((FIXED I THINK))
 //		  Doors sometimes for some reason fail to properly update their opacity. Investigate.
 //		  Cutting cameras is not handled. ((FIXED I THINK))
