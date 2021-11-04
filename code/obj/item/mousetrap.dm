@@ -502,7 +502,7 @@
 	w_class = W_CLASS_TINY
 	force = null
 	throwforce = null
-	var/armed = 0
+	var/armed = FALSE
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 5
