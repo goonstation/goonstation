@@ -583,7 +583,8 @@ world/proc/updateCameraVisibility(var/update_location,var/update_radius)
 	return
 #endif
 
-	var/look_range = CAM_RANGE + 2 //radius augmentation to try and ensure cameras will be updated if in line of sight of the update location
+	var/look_range = (update_radius + CAM_RANGE + 2) * (update_radius + CAM_RANGE + 2)
+	// squared euclidean distance for location-based updating
 
 	if(aiDirty == 2)
 		var/mutable_appearance/ma = new(image('icons/misc/static.dmi', icon_state = "static"))
@@ -627,7 +628,7 @@ world/proc/updateCameraVisibility(var/update_location,var/update_radius)
 		game_start_countdown?.update_status("Updating camera vis...\n")
 	for_by_tcl(C, /obj/machinery/camera)
 		if(update_location)
-			if(GET_SQUARED_EUCLIDEAN_DIST(get_turf(C),update_location) > (update_radius + look_range) * (update_radius + look_range))
+			if(GET_SQUARED_EUCLIDEAN_DIST(get_turf(C),update_location) > look_range)
 				continue //skip over cameras too far from an update site
 		for(var/turf/t in view(CAM_RANGE, get_turf(C)))
 			LAGCHECK(LAG_HIGH)
