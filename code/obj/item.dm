@@ -438,7 +438,7 @@
 		START_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
 		src.visible_message("<span class='alert'>[src] catches on fire!</span>")
 		src.burning = 1
-		src.firesource = TRUE
+		src.firesource = FIRESOURCE_OPEN_FLAME
 		if (istype(src, /obj/item/plant))
 			if (!GET_COOLDOWN(global, "hotbox_adminlog"))
 				var/list/hotbox_plants = list()
@@ -1024,14 +1024,27 @@
 					HH.limb.attack_hand(src,M,1)
 				M.next_click = world.time + src.click_delay
 				return
+	else if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		var/obj/item/parts/arm = null
+		if (H.limbs) //Wire: fix for null.r_arm and null.l_arm
+			arm = H.hand ? H.limbs.l_arm : H.limbs.r_arm // I'm so sorry I couldent kill all this shitcode at once
+		if (H.equipped())
+			H.drop_item()
+			SPAWN_DBG(1 DECI SECOND)
+				if (arm)
+					arm.limb_data.attack_hand(src, H, can_reach(H, src))
+		else if (arm)
+			arm.limb_data.attack_hand(src, H, can_reach(H, src))
 
-	//the verb is PICK-UP, not 'smack this object with that object'
-	if (M.equipped())
-		M.drop_item()
-		SPAWN_DBG(1 DECI SECOND)
-			src.Attackhand(M)
 	else
-		src.Attackhand(M)
+		//the verb is PICK-UP, not 'smack this object with that object'
+		if (M.equipped())
+			M.drop_item()
+			SPAWN_DBG(1 DECI SECOND)
+				src.Attackhand(M)
+		else
+			src.Attackhand(M)
 	M.next_click = world.time + src.click_delay
 
 /obj/item/get_desc()
@@ -1490,7 +1503,7 @@
 
 /obj/item/proc/log_firesource(obj/item/O, datum/thrown_thing/thr, mob/user)
 	UnregisterSignal(O, COMSIG_MOVABLE_THROW_END)
-	if (!O?.firesource) return
+	if (!O?.firesource == FIRESOURCE_OPEN_FLAME) return
 	var/turf/T = get_turf(O)
 	if (!T) return
 	var/mob/M = usr
@@ -1499,7 +1512,7 @@
 	if (!istype(M)) return
 	var/turf/simulated/simulated = T
 
-	var/msg = "[key_name(M)] [thr ? "threw" : "dropped"] firesource ([O]) at [log_loc(T)]."
+	var/msg = "[constructTarget(M)] [thr ? "threw" : "dropped"] firesource ([O]) at [log_loc(T)]."
 
 	if (istype(simulated) && simulated.air.toxins)
 		msg += " Turf contains <b>plasma gas</b>."
@@ -1511,9 +1524,9 @@
 
 /obj/item/proc/dropped(mob/user)
 	SPAWN_DBG(0) //need to spawn to know if we've been dropped or thrown instead
-		if (firesource && throwing)
+		if ((firesource == FIRESOURCE_OPEN_FLAME) && throwing)
 			RegisterSignal(src, COMSIG_MOVABLE_THROW_END, .proc/log_firesource)
-		else if (firesource)
+		else if (firesource == FIRESOURCE_OPEN_FLAME)
 			log_firesource(src, null, user)
 
 	if (user)

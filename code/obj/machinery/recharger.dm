@@ -93,7 +93,7 @@ obj/machinery/recharger
 	var/ret = SEND_SIGNAL(G, COMSIG_CELL_CAN_CHARGE)
 
 	if(ret & CELL_UNCHARGEABLE)
-		boutput(user, "<span class='alert'>[G.name] is not compatible with \the [src]!</span>")
+		boutput(user, "<span class='alert'>[G] is not compatible with \the [src]!</span>")
 	else if(ret & CELL_CHARGEABLE)
 		user.drop_item(G)
 		G.set_loc(src)
