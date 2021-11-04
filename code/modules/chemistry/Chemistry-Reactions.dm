@@ -211,3 +211,28 @@
 		var/stam_damage = 26 * min(amount, 5)
 
 		M.apply_flash(anim_dur, stunned, stunned, 0, eye_blurry, eye_damage, stamina_damage = stam_damage)
+
+/proc/remove_sticky(var/atom/target, var/volume) // Meant to make a sticker not sticky and leave a decal, rather than dissolve it
+	var/can_remove_amt = volume / 10
+	var/removed_count = 0
+	if ((istype(target, /turf/simulated/wall) || istype(target, /turf/unsimulated/wall)))
+		target = locate_sticker_wall(target)
+		if (!target)
+			return
+
+	for (var/atom/A as anything in target)
+		if (A.event_handler_flags & HANDLE_STICKER)
+			if (A:active)
+				target.visible_message("<span class='alert'><b>[A]</b> loses all it's stickyness and falls apart!</span>")
+				make_cleanable(/obj/decal/cleanable/paper,A.loc)
+				qdel(A)
+				removed_count++
+		if (removed_count > can_remove_amt)
+			break
+
+/proc/locate_sticker_wall(var/turf/T)
+	for (var/turf/turf in range(1,T))
+		for (var/obj/item/sticker/S in turf)
+			if (S.attached == T || S.attached.loc == T)
+				return T
+	return 0

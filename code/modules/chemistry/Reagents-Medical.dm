@@ -1285,7 +1285,7 @@ datum
 
 				if(method == TOUCH)
 					. = 0
-					remove_stickers(M, volume)
+					remove_sticky(M, volume)
 					if(!ishuman(M)) //Was sterilizing borgs without this, now it won't
 						return
 
@@ -1306,35 +1306,10 @@ datum
 					boutput(M, "<span class='alert'>You feel sickly!</span>")
 
 			reaction_obj(var/obj/O, var/volume)
-				remove_stickers(O, volume)
+				remove_sticky(O, volume)
 
 			reaction_turf(var/turf/T, var/volume)
-				remove_stickers(T, volume)
-
-			proc/remove_stickers(var/atom/target, var/volume)
-				var/can_remove_amt = volume / 10
-				var/removed_count = 0
-				if ((istype(target, /turf/simulated/wall) || istype(target, /turf/unsimulated/wall)))
-					target = locate_sticker_wall(target)
-					if (!target)
-						return
-
-				for (var/atom/A as anything in target)
-					if (A.event_handler_flags & HANDLE_STICKER)
-						if (A:active)
-							target.visible_message("<span class='alert'><b>[A]</b> loses all it's stickyness and falls apart!</span>")
-							make_cleanable(/obj/decal/cleanable/paper,A.loc)
-							qdel(A)
-							removed_count++
-					if (removed_count > can_remove_amt)
-						break
-
-			proc/locate_sticker_wall(var/turf/T)
-				for (var/turf/turf in range(1,T))
-					for (var/obj/item/sticker/S in turf)
-						if (S.attached == T || S.attached.loc == T)
-							return T
-				return 0
+				remove_sticky(T, volume)
 
 
 		medical/cryoxadone // COGWERKS CHEM REVISION PROJECT. magic drug, but isn't working right correctly
