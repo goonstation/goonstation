@@ -17,7 +17,6 @@
 	var/obj/item/parts/arm = null
 	var/obj/item/clothing/head/butt/butt = null
 	var/obj/item/gimmickbomb/butt/buttbomb = null
-	var/obj/item/clothing/gloves/boxing = null
 	var/mob/armer = null
 	stamina_damage = 0
 	stamina_cost = 0
@@ -564,7 +563,6 @@
 				"<span class='alert'><B>You accidentally trigger the springloaded boxing glove!</B></span>")
 				return
 		..()
-		return
 
 	proc/triggered(mob/target as mob, var/type = "feet")
 		if (!src || !src.armed)
