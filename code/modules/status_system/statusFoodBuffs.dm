@@ -97,7 +97,7 @@
 	getTooltip()
 		. = "Healing [heal_brute] brute damage every [tickSpacing/(1 SECOND)] sec."
 	getChefHint()
-		. = "Heals [heal_brute] brute damage every [tickspacing/ (1 SECOND)] sec."
+		. = "Heals [heal_brute] brute damage every [tickSpacing/ (1 SECOND)] sec."
 
 /datum/statusEffect/simplehot/foodTox
 	id = "food_tox"
@@ -113,7 +113,7 @@
 		. = "Healing [heal_tox] toxin damage every [tickSpacing/(1 SECOND)] sec."
 
 	getChefHint()
-		. = "Heals [heal_tox] toxin damage every [tickspacing/ (1 SECOND)] sec."
+		. = "Heals [heal_tox] toxin damage every [tickSpacing/ (1 SECOND)] sec."
 
 /datum/statusEffect/simplehot/foodBurn
 	id = "food_burn"
@@ -129,7 +129,7 @@
 		. = "Healing [heal_burn] burn damage every [tickSpacing/(1 SECOND)] sec."
 
 	getChefHint()
-		. = "Heals [heal_burn] burn damage every [tickspacing/ (1 SECOND)] sec."
+		. = "Heals [heal_burn] burn damage every [tickSpacing/ (1 SECOND)] sec."
 
 /datum/statusEffect/simplehot/foodAll
 	id = "food_all"
@@ -147,7 +147,7 @@
 		. = "Healing 0.26 damage spread across Brute/Burn/Toxin damage every [tickSpacing/(1 SECOND)] sec."
 
 	getChefHint()
-		. = "Heals 0.26 damage spread across Brute/Burn/Toxin damage every [tickspacing/ (1 SECOND)] sec."
+		. = "Heals 0.26 damage spread across Brute/Burn/Toxin damage every [tickSpacing/ (1 SECOND)] sec."
 
 /datum/statusEffect/foodcold
 	id = "food_cold"
