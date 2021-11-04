@@ -266,8 +266,8 @@
 				L.removeOverlayComposition(/datum/overlayComposition/blinded)
 				stored_mobs[L] = null
 				stored_mobs -= L
-				if(isnull(L.loc)) // loc only goes null when you ghost, probably
-					stored_crew_names -= L.real_name // we want to keep people logged as being in cryo even when ghosted after all
+				if(!isnull(L.loc)) // loc only goes null when you ghost, probably
+					stored_crew_names -= L.real_name // you shouldn't be removed from the list when you ghost
 					var/datum/db_record/crew_record = data_core.general.find_record("id", L.datacore_id)
 					if (!isnull(crew_record))
 						crew_record["p_stat"] = "Active"
