@@ -6,6 +6,8 @@ var/datum/explosion_controller/explosions
 	var/list/queued_turfs_blame = list()
 	var/distant_sound = 'sound/effects/explosionfar.ogg'
 	var/exploding = 0
+	var/queued_epicenter = null //used for camera update optimization
+	var/queued_radius = INFINITY //ALSO used for camera update optimization
 
 	proc/explode_at(atom/source, turf/epicenter, power, brisance = 1, angle = 0, width = 360)
 		var/atom/A = epicenter
@@ -123,7 +125,9 @@ var/datum/explosion_controller/explosions
 			makepowernets()
 
 		rebuild_camera_network()
-		world.updateCameraVisibility()
+		world.updateCameraVisibility(queued_epicenter,queued_radius)
+		queued_epicenter = null
+		queued_radius = INFINITY
 
 	proc/process()
 		if (exploding)
@@ -246,3 +250,5 @@ var/datum/explosion_controller/explosions
 
 		explosions.queue_damage(nodes)
 		explosions.queued_turfs_blame += blame
+		explosions.queued_epicenter = epicenter
+		explosions.queued_radius = radius

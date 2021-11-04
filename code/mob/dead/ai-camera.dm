@@ -575,13 +575,15 @@ var/list/camImages = list()
 
 
 var/aiDirty = 2
-world/proc/updateCameraVisibility()
-	if(!aiDirty) return
+world/proc/updateCameraVisibility(var/update_location,var/update_radius)
+	if(!aiDirty && !update_location) return
 
 #if defined(IM_REALLY_IN_A_FUCKING_HURRY_HERE) && !defined(SPACEMAN_DMM)
 	// I don't wanna wait for this camera setup shit just GO
 	return
 #endif
+
+	var/look_range = CAM_RANGE + 2 //radius augmentation to try and ensure cameras will be updated if in line of sight of the update location
 
 	if(aiDirty == 2)
 		var/mutable_appearance/ma = new(image('icons/misc/static.dmi', icon_state = "static"))
@@ -624,6 +626,9 @@ world/proc/updateCameraVisibility()
 		aiDirty = 1
 		game_start_countdown?.update_status("Updating camera vis...\n")
 	for_by_tcl(C, /obj/machinery/camera)
+		if(update_location)
+			if(GET_SQUARED_EUCLIDEAN_DIST(get_turf(C),update_location) > (update_radius + look_range) * (update_radius + look_range))
+				continue //skip over cameras too far from an update site
 		for(var/turf/t in view(CAM_RANGE, get_turf(C)))
 			LAGCHECK(LAG_HIGH)
 			if (!t.aiImage) continue
