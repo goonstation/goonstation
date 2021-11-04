@@ -1,5 +1,7 @@
 
 (t)thu nov 04 21
+(u)pali
+(+)You can now insert prizes into claw machines.
 (u)Gannets
 (p)6564
 (e)⚖|balance
