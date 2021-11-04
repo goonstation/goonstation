@@ -597,11 +597,7 @@ world/proc/updateCameraVisibility(var/update_location,var/update_radius)
 
 		// takes about one second compared to the ~12++ that the actual calculations take
 		game_start_countdown?.update_status("Updating cameras...\n(Calculating...)")
-		var/list/turf/cam_candidates = list()
-		for(var/turf/t in world) //ugh x2
-			if( t.z != 1 ) continue
-			cam_candidates += t
-
+		var/list/turf/cam_candidates = block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION))
 //pod wars has no AI so this is just a waste of time...
 #ifndef MAP_OVERRIDE_POD_WARS
 
