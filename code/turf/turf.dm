@@ -559,6 +559,8 @@ proc/generate_space_color()
 	var/old_checkinghasproximity = src.checkinghasproximity
 	var/old_neighcheckinghasproximity = src.neighcheckinghasproximity
 
+	var/old_aiimage = src.aiImage
+
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
 	var/old_process_cell_operations = src.process_cell_operations
 #endif
@@ -629,6 +631,8 @@ proc/generate_space_color()
 	new_turf.blocked_dirs = old_blocked_dirs
 	new_turf.checkinghasproximity = old_checkinghasproximity
 	new_turf.neighcheckinghasproximity = old_neighcheckinghasproximity
+
+	new_turf.aiImage = old_aiimage
 
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
 	new_turf.process_cell_operations = old_process_cell_operations
