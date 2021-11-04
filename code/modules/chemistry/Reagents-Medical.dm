@@ -1288,9 +1288,8 @@ datum
 				if(method == TOUCH)
 					. = 0
 					remove_stickers(M, volume)
-					if(!ishuman(M)) //Was healing borgs without this, now it won't
+					if(!ishuman(M)) //Was sterilizing borgs without this, now it won't
 						return
-					M.HealDamage("All", volume_passed/2, 0)
 
 					var/silent = FALSE
 					if (length(paramslist))
@@ -1307,8 +1306,6 @@ datum
 
 				else if(method == INGEST)
 					boutput(M, "<span class='alert'>You feel sickly!</span>")
-					if (volume_passed > 0)
-						M.take_toxin_damage(volume/3)
 
 			reaction_obj(var/obj/O, var/volume)
 				remove_stickers(O, volume)
