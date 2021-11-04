@@ -46,9 +46,6 @@
 			src.updateCoverage() //MBC : handles moving cameras!
 			oldx = T.x
 			oldy = T.y
-			//boutput(world,"hewwo there : ) ")
-
-		src.updateCoverage() //MBC : handles moving cameras!
 
 	else if (src.type == /obj/machinery/camera) //we actually don't want this check to affect children, so we compare to exact type
 		unsubscribe_grace_counter++
@@ -129,8 +126,7 @@
 	START_TRACKING
 	SPAWN_DBG(1 SECOND)
 		addToNetwork()
-		updateCoverage() //Make sure coverage is updated. (must happen in spawn!)
-		add_to_turfs()
+		updateCoverage()
 
 
 /obj/machinery/camera/proc/addToNetwork()
@@ -160,12 +156,9 @@
 
 /obj/machinery/camera/disposing()
 	STOP_TRACKING
-	if (coveredTiles) //ZeWaka: Fix for null.Copy()
-		for(var/turf/O in coveredTiles.Copy()) //Remove all coverage
-			O.removeCameraCoverage(src)
-
-	src.remove_from_turfs() //needs to happen BEFORE the actual deletion or else it fuckks up
-
+	if(src.camera_status)
+		src.camera_status = FALSE
+		updateCoverage()
 
 	if(camnets && camnets[network])
 		camnets[network].Remove(src)
@@ -206,6 +199,7 @@
 	if(src.invuln)
 		return
 	else
+		updateCoverage() // explosion happened, probably destroyed nearby turfs, better rebuild
 		..(severity)
 	return
 
@@ -217,25 +211,13 @@
 	src.network = null                   //Not the best way but it will do. I think.
 	camera_status--
 
-	if (coveredTiles) //ZeWaka: Fix for null.Copy()
-		for(var/turf/O in coveredTiles.Copy()) //Remove all coverage
-			O.removeCameraCoverage(src)
-		src.remove_from_turfs()
-
-
 	SPAWN_DBG(90 SECONDS)
 		camera_status++
 		src.network = initial(src.network)
 		if(!istype(src, /obj/machinery/camera/television))
 			src.icon_state = initial(src.icon_state)
 
-		src.add_to_turfs()
-
-		if (coveredTiles)
-			for(var/turf/O in coveredTiles.Copy())
-				O.addCameraCoverage(src)
-
-		updateCoverage() // (must happen in spawn!)
+		updateCoverage()
 
 	src.disconnect_viewers()
 	return
@@ -287,21 +269,13 @@
 			playsound(src.loc, "sound/items/Wirecutter.ogg", 100, 1)
 			src.icon_state = "camera1"
 			add_fingerprint(user)
-			if (coveredTiles) //ZeWaka: Fix for null.Copy()
-				for(var/turf/O in coveredTiles.Copy()) //Remove all coverage
-					O.removeCameraCoverage(src)
-				src.remove_from_turfs()
+			updateCoverage()
 		else
 			user.visible_message("<span class='alert'>[user] has reactivated [src]!</span>", "<span class='alert'>You have reactivated [src].</span>")
 			playsound(src.loc, "sound/items/Wirecutter.ogg", 100, 1)
 			src.icon_state = "camera"
 			add_fingerprint(user)
-			src.add_to_turfs()
-			if (coveredTiles)
-				for(var/turf/O in coveredTiles.Copy())
-					O.addCameraCoverage(src)
-			SPAWN_DBG(0)
-				updateCoverage() //(must happen in spawn!)
+			updateCoverage()
 		// now disconnect anyone using the camera
 		src.disconnect_viewers()
 		return
