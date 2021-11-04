@@ -1024,14 +1024,27 @@
 					HH.limb.attack_hand(src,M,1)
 				M.next_click = world.time + src.click_delay
 				return
+	else if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		var/obj/item/parts/arm = null
+		if (H.limbs) //Wire: fix for null.r_arm and null.l_arm
+			arm = H.hand ? H.limbs.l_arm : H.limbs.r_arm // I'm so sorry I couldent kill all this shitcode at once
+		if (H.equipped())
+			H.drop_item()
+			SPAWN_DBG(1 DECI SECOND)
+				if (arm)
+					arm.limb_data.attack_hand(src, H, can_reach(H, src))
+		else if (arm)
+			arm.limb_data.attack_hand(src, H, can_reach(H, src))
 
-	//the verb is PICK-UP, not 'smack this object with that object'
-	if (M.equipped())
-		M.drop_item()
-		SPAWN_DBG(1 DECI SECOND)
-			src.Attackhand(M)
 	else
-		src.Attackhand(M)
+		//the verb is PICK-UP, not 'smack this object with that object'
+		if (M.equipped())
+			M.drop_item()
+			SPAWN_DBG(1 DECI SECOND)
+				src.Attackhand(M)
+		else
+			src.Attackhand(M)
 	M.next_click = world.time + src.click_delay
 
 /obj/item/get_desc()
