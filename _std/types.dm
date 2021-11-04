@@ -195,8 +195,11 @@ var/list/list/by_cat = list()
 #define TR_CAT_CHAPLAINS "chaplains"
 #define TR_CAT_SOUL_TRACKING_ITEMS "soul_tracking_items"
 #define TR_CAT_CLOWN_DISBELIEF_MOBS "clown_disbelief_mobs"
+#define TR_CAT_CANNABIS_OBJ_ITEMS "cannabis_objective"
+#define TR_CAT_HEAD_SURGEON "head_surgeon"
 #define TR_CAT_SPY_STICKERS_REGULAR "spysticker_regular"
 #define TR_CAT_SPY_STICKERS_DET "spysticker_det"
+#define TR_CAT_ARTIFACTS "artifacts"
 // powernets? processing_items?
 // mobs? ai-mobs?
 

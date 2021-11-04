@@ -4,7 +4,7 @@ ABSTRACT_TYPE(/datum/req_contract/aid)
 
 /datum/req_contract/aid/wrecked
 	//name = "Breach Recovery"
-	payout = 1200
+	payout = 3000
 	var/list/namevary = list("Breach Recovery","Breach Response","Integrity Failure","Crisis Response","Disaster Assistance","Disaster Response")
 	var/list/desc_placejob = list("research","mining","security","cargo transfer")
 	var/list/desc_placetype = list("vessel","ship","station","outpost")
@@ -75,7 +75,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/basictool)
 
 /datum/req_contract/aid/triage
 	//name = "Medical Aid"
-	payout = 1100
+	payout = 3000
 	var/list/namevary = list("Medical Aid","Medical Emergency","Triage Support","Aid Request","Critical Condition")
 	var/list/desc_helpsite = list("A medical facility","An affiliated station's medical bay","A triage center","A medical outpost","Our nearest station")
 	var/list/desc_tense = list("to assist with","after heavy load due to","to restock after")
@@ -118,7 +118,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/basictool)
 
 ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 /datum/rc_entry/item/surgical
-	feemod = 130
+	feemod = 180
 
 	scalpel
 		name = "scalpel"
@@ -126,7 +126,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 
 	saw
 		name = "circular saw"
-		feemod = 140
+		feemod = 190
 		typepath = /obj/item/circular_saw
 
 	scissors
@@ -143,17 +143,17 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 
 	stapler
 		name = "staple gun"
-		feemod = 230
+		feemod = 330
 		typepath = /obj/item/staple_gun
 
 /datum/rc_entry/item/bandage
 	name = "bandage roll"
-	feemod = 150
+	feemod = 210
 	typepath = /obj/item/bandage
 
 /datum/rc_entry/item/lgloves
 	name = "latex glove pair"
-	feemod = 110
+	feemod = 150
 	typepath = /obj/item/clothing/gloves/latex
 
 /datum/rc_entry/item/hypospray
@@ -163,14 +163,14 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 
 /datum/rc_entry/item/med_analyzer
 	name = "health analyzer"
-	feemod = 450
+	feemod = 600
 	typepath = /obj/item/device/analyzer/healthanalyzer
 
 
 
 /datum/req_contract/aid/geeksquad
 	//name = "Computer Failure"
-	payout = 900
+	payout = 2500
 	var/list/namevary = list("Systems Failure","Short Circuit","Computer Overload","Electronics Failure","Systems Breakdown")
 	var/list/desc_wherebork = list("research","mining","security","cargo transfer","communications","deep-space survey")
 	var/list/desc_whobork = list("vessel","ship","station","outpost")
@@ -268,7 +268,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 
 /datum/req_contract/aid/supplyshort
 	//name = "Supply Chain Failure"
-	payout = 900
+	payout = 2400
 	var/list/namevary = list("Urgent Restock","Supply Crisis","Supply Chain Failure","Short Stock","Emergency Resupply")
 	var/list/desc_placejob = list("research","mining","hydroponics","civilian","Nanotrasen")
 	var/list/desc_place = list("vessel","station","outpost","colony")
@@ -327,7 +327,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 /datum/rc_entry/reagent/fuel
 	name = "welding-grade liquid fuel"
 	chemname = "fuel"
-	feemod = 4
+	feemod = 6
 
 /datum/rc_entry/reagent/coffee
 	name = "coffee"
