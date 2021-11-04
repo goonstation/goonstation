@@ -125,7 +125,7 @@ var/datum/explosion_controller/explosions
 			makepowernets()
 
 		rebuild_camera_network()
-		world.updateCameraVisibility(queued_epicenter,queued_radius)
+		world.updateCameraVisibility(queued_epicenter, queued_radius + CAM_RANGE + 2)
 		queued_epicenter = null
 		queued_radius = INFINITY
 

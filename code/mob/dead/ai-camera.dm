@@ -583,7 +583,7 @@ world/proc/updateCameraVisibility(var/update_location,var/update_radius)
 	return
 #endif
 
-	var/look_range = (update_radius + CAM_RANGE + 2) * (update_radius + CAM_RANGE + 2)
+	var/look_range = update_radius * update_radius
 	// squared euclidean distance for location-based updating
 
 	if(aiDirty == 2)
