@@ -233,7 +233,9 @@ var/datum/explosion_controller/explosions
 				open |= target
 
 		radius += 1 // avoid a division by zero
+		var/true_radius_squared = 0
 		for (var/turf/T as anything in nodes) // inverse square law (IMPORTANT) and pre-stun
+			true_radius_squared = max(true_radius_squared, GET_SQUARED_EUCLIDEAN_DIST(epicenter, T))
 			var/p = power / ((radius-nodes[T])**2)
 			nodes[T] = p
 			blame[T] = last_touched
@@ -251,4 +253,4 @@ var/datum/explosion_controller/explosions
 		explosions.queue_damage(nodes)
 		explosions.queued_turfs_blame += blame
 		explosions.queued_epicenter = epicenter
-		explosions.queued_radius = radius
+		explosions.queued_radius = sqrt(true_radius_squared)
