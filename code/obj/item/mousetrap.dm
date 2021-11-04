@@ -589,6 +589,6 @@
 			..()
 
 		src.icon_state = "boxing_trap"
-		src.armed = 0
+		src.armed = FALSE
 
 		clear_armer()
