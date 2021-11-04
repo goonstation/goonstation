@@ -645,10 +645,15 @@ world/proc/updateCameraVisibility(var/update_location,var/update_radius)
 	aiDirty = 1
 
 	if(!global.explosions.exploding)
-		world.updateCameraVisibility()
+		world.updateCameraVisibility(get_turf(src), 0)
 
 /obj/machinery/camera/proc/add_to_turfs() //chck if turf cameras is 1
 	aiDirty = 1
 	if (current_state > GAME_STATE_WORLD_INIT)
-		world.updateCameraVisibility()
+		world.updateCameraVisibility(get_turf(src), 0)
+
+// to be called by admins if everything breaks. TODO move to an admin verb
+/proc/force_full_camera_rebuild()
+	aiDirty = 1
+	world.updateCameraVisibility()
 
