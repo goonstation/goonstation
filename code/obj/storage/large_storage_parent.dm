@@ -598,6 +598,10 @@
 				var/obj/item/mousetrap/our_trap = O
 				if(our_trap.armed && user)
 					INVOKE_ASYNC(our_trap, /obj/item/mousetrap.proc/triggered,user)
+			else if(istype(O,/obj/item/mousepunch))
+				var/obj/item/mousepunch/our_trap = O
+				if(our_trap.armed && user)
+					INVOKE_ASYNC(our_trap, /obj/item/mousepunch.proc/triggered,user)
 
 		for (var/mob/M in src)
 			M.set_loc(newloc)
