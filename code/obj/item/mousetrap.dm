@@ -500,7 +500,7 @@
 	item_state = "boxing_trap"
 	desc = "A boxing glove shoddily tied to a mousetrap, eager to meet some clumsy assistant's face."
 	w_class = W_CLASS_TINY
-	force = null
+	force = 0
 	throwforce = null
 	var/armed = FALSE
 	stamina_damage = 0
