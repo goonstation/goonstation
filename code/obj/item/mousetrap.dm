@@ -592,4 +592,3 @@
 		src.armed = 0
 
 		clear_armer()
-		return
