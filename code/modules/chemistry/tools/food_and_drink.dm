@@ -332,7 +332,7 @@
 		switch(href_list["action"]) // future proofing incase someone else wants to add something to this Topic(), will remove if it noticeably slows down execution of this proc.
 			if("chefhint")
 				if(href_list["txt"] && href_list["name"])
-					boutput(usr,"<span class='notice'>[href_list["name"]]: [href_list["txt"]]</span>")
+					boutput(usr,"<b><span class='notice'>[href_list["name"]]:</b></span> [href_list["txt"]]")
 
 
 
