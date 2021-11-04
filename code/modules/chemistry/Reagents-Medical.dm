@@ -1272,8 +1272,6 @@ datum
 				if(!M) M = holder.my_atom
 				M.reagents.add_reagent("ethanol", alch_strength * mult)
 				M.reagents.remove_reagent(src, 1 * mult)
-				M.take_toxin_damage (0.25 * mult)
-				M.UpdateDamageIcon()
 				..()
 				return
 
