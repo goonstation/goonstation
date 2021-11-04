@@ -40,7 +40,7 @@
   can_disarm = 1
   hand_count = 3
   reagent_capacity = 100
-  add_abilities = list(/datum/targetable/critter/fermid_bite,
+  add_abilities = list(/datum/targetable/critter/bite/fermid_bite,
 	                  	/datum/targetable/critter/sting/fermid,
 											/datum/targetable/critter/slam_polymorph)
   var/unified_health = 25
@@ -115,7 +115,7 @@
   can_disarm = 1
   hand_count = 3
   reagent_capacity = 100
-  add_abilities = list(/datum/targetable/critter/fermid_bite, /datum/targetable/critter/sting/fermid_polymorph, /datum/targetable/critter/slam_polymorph)
+  add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/sting/fermid_polymorph, /datum/targetable/critter/slam_polymorph)
   var/unified_health = 50
   var/firevuln = 0.1
   var/brutevuln = 1

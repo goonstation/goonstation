@@ -95,7 +95,7 @@
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1
-	add_abilities = list(/datum/targetable/critter/slam_polymorph,/datum/targetable/critter/maneater_bite)   //Devour way too abusable, but plant with teeth needs bite =)
+	add_abilities = list(/datum/targetable/critter/slam_polymorph,/datum/targetable/critter/bite/maneater_bite)   //Devour way too abusable, but plant with teeth needs bite =)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
