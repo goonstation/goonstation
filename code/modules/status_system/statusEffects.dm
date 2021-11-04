@@ -2022,6 +2022,5 @@
 /datum/statusEffect/sterilized
 	id = "sterilized"
 	name = "Sterilized"
-	desc = "Surgery is a bit less dangerous with this sterilizing chemical on you!"
-	icon_state = "drowsy" //Placeholder till a unique icon is made
+	visible = 0
 	maxDuration = 20 SECONDS
