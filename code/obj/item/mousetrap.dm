@@ -539,7 +539,6 @@
 
 		src.armed = !src.armed
 		playsound(user.loc, "sound/weapons/handcuffs.ogg", 30, 1, -3)
-		return
 
 	proc/clear_armer()
 		UnregisterSignal(armer, COMSIG_PARENT_PRE_DISPOSING)
