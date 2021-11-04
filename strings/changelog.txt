@@ -1,4 +1,9 @@
 
+(t)thu nov 04 21
+(u)Gannets
+(p)6564
+(e)⚖|balance
+(+)The Firebrand's syndicate napalm thrower now slows more and for longer.
 (t)wed nov 03 21
 (u)Gannets
 (p)6565
