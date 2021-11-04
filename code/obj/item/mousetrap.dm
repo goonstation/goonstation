@@ -204,7 +204,7 @@
 		else if (istype(C, /obj/item/clothing/gloves/boxing) && !src.grenade && !src.grenade_old && !src.pipebomb  && !src.signaler && !src.butt && !src.buttbomb)
 			var/obj/item/clothing/gloves/boxing/G = C
 			user.u_equip(G)
-			user.show_text("You crudely stitch together an improvised trap with some spare metal. This doesnt look like a good idea.", "blue")
+			user.show_text("You crudely stitch together an improvised trap with some spare metal. This doesn't look like a good idea.", "blue")
 			user.u_equip(src)
 			new /obj/item/mousepunch(get_turf(src), src, G)
 
