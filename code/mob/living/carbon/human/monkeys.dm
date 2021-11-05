@@ -273,6 +273,14 @@
 						src.emote("laugh")
 				else if(length(targets))
 					src.point_at(pick(targets))
+			if(src.reagents) // monkeys full of drinks tend to relieve themselves
+				var/total = 0
+				for(var/rid in src.reagents.reagent_list)
+					var/datum/reagent/R = src.reagents.reagent_list[rid]
+					if(istype(R, /datum/reagent/fooddrink) && R.reagent_state == LIQUID || rid == "water" || rid == "ethanol")
+						total += R.volume
+				if(prob(total / 4))
+					src.urinate()
 
 	ai_findtarget_new()
 		if (ai_aggressive || ai_aggression_timeout == 0 || (world.timeofday - ai_threatened) < ai_aggression_timeout)
