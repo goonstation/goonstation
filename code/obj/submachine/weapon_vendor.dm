@@ -157,6 +157,7 @@
 		materiel_stock += new/datum/materiel/sidearm/smartgun
 		materiel_stock += new/datum/materiel/sidearm/pistol
 		materiel_stock += new/datum/materiel/sidearm/revolver
+		materiel_stock += new/datum/materiel/sidearm/longsword
 
 		materiel_stock += new/datum/materiel/loadout/assault
 		materiel_stock += new/datum/materiel/loadout/heavy
@@ -319,6 +320,11 @@
 	name = "Predator Revolver"
 	path = /obj/item/storage/belt/revolver
 	description = "A gun-belt containing a hefty combat revolver and two .357 caliber speedloaders."
+
+/datum/materiel/sidearm/longsword
+	name = "Longsword"
+	path = /obj/item/katana_sheath/longsword
+	description = "A sharp blade that comes in a leather sheath, useful for slicing crew."
 
 /datum/materiel/loadout/assault
 	name = "Assault Trooper"

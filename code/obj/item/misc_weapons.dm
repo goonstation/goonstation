@@ -1185,6 +1185,25 @@
 		user.organHolder.drop_and_throw_organ("head", dist = 5, speed = 1, showtext = 1)
 		playsound(src.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
 
+/obj/item/katana/longsword
+	icon_state = "longsword-syndie"
+	item_state = "longsword-syndie"
+	name = "syndicate longsword"
+	desc = "Massive sword used for medieval recreations and murdering people."
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	force = 30
+	delimb_prob = 5
+	contraband = 4
+
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/swipe)
+
+	setupProperties()
+		..()
+		setProperty("deflection", 35)
+
+
 /obj/item/katana_sheath
 	name = "katana sheath"
 	desc = "It can clean a bloodied katana, and also allows for easier storage of a katana"
@@ -1341,6 +1360,18 @@
 			boutput(user, "<span class='alert'>The [W] can't fit into [src].</span>")
 			return
 		..()
+
+/obj/item/katana_sheath/longsword
+	name = "Longsword Sheath"
+	desc = "A metal sheath for holding a longsword."
+	icon_state = "longsword-sheath-sword"
+	item_state = "longsword-sheath1"
+
+	sheathed_state = "longsword-sheath-sword"
+	sheath_state = "longsword-sheath"
+	ih_sheathed_state = "longsword-sheath1"
+	ih_sheath_state = "longsword-sheath0"
+	sword_path = /obj/item/katana/longsword
 
 /*
  *							--- Non-electronic Swords ---
