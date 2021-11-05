@@ -419,6 +419,7 @@
 			W.mind.ckey = ckey
 			W.mind.key = key
 			W.mind.current = W
+		ticker.mode.Agimmicks += W.mind
 		qdel(src)
 
 /mob/proc/machoize(var/shitty = 0)

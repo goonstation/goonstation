@@ -151,8 +151,8 @@
 	icon_state = "moustache"
 	item_state = "moustache"
 	see_face = 1
-	
-/obj/item/clothing/mask/moustache/Italian 
+
+/obj/item/clothing/mask/moustache/Italian
 	name = "fake Italian moustache"
 	desc = "For those who can't cut the lasagna."
 	icon_state = "moustache-i"
@@ -180,6 +180,14 @@
 			setProperty("disorient_resist_eye", 100)
 			setProperty("movespeed", 0.2)
 			setProperty("exploprot", 40)
+
+		equipped(mob/user, slot)
+			. = ..()
+			APPLY_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
+
+		unequipped(mob/user)
+			. = ..()
+			REMOVE_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
 
 	postpossession
 		name = "worn gas mask"
