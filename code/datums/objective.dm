@@ -144,20 +144,21 @@ proc/create_fluff(datum/mind/target)
 		"\'freeform\' AI module", "gene power module", "mainframe memory board", "yellow cake", "aurora MKII utility belt", "Head of Security\'s war medal", "Research Director\'s Diploma", "Medical Director\'s Medical License", "Head of Personnel\'s First Bill",
 		"much coveted Gooncode")
 
+		if(!countJob("Head of Security"))
+			items.Remove("Head of Security\'s beret")
+		if(!countJob("Captain"))
+			items.Remove("authentication disk")
+
 		target_name = pick(items)
 		switch(target_name)
 			if("Head of Security\'s beret")
-				if(!countJob("Head of Security"))
-					return
-				else steal_target = /obj/item/clothing/head/hos_hat
+				steal_target = /obj/item/clothing/head/hos_hat
 			if("prisoner\'s beret")
 				steal_target = /obj/item/clothing/head/beret/prisoner
 			if("DetGadget hat")
 				steal_target = /obj/item/clothing/head/det_hat/gadget
 			if("authentication disk")
-				if(!countJob("Captain"))
-					return
-				else steal_target = /obj/item/disk/data/floppy/read_only/authentication
+				steal_target = /obj/item/disk/data/floppy/read_only/authentication
 			if("\'freeform\' AI module")
 				steal_target = /obj/item/aiModule/freeform
 			if("gene power module")
@@ -185,20 +186,21 @@ proc/create_fluff(datum/mind/target)
 		var/list/items = list("Head of Security\'s beret", "prisoner\'s beret", "DetGadget hat", "horse mask", "authentication disk",
 		"\'freeform\' AI module", "gene power module", "mainframe memory board", "yellow cake", "aurora MKII utility belt", "much coveted Gooncode", "golden crayon")
 
+		if(!countJob("Head of Security"))
+			items.Remove("Head of Security\'s beret")
+		if(!countJob("Captain"))
+			items.Remove("authentication disk")
+
 		target_name = pick(items)
 		switch(target_name)
 			if("Head of Security\'s beret")
-				if(!countJob("Head of Security"))
-					return
-				else steal_target = /obj/item/clothing/head/hos_hat
+				steal_target = /obj/item/clothing/head/hos_hat
 			if("prisoner\'s beret")
 				steal_target = /obj/item/clothing/head/beret/prisoner
 			if("DetGadget hat")
 				steal_target = /obj/item/clothing/head/det_hat/gadget
 			if("authentication disk")
-				if(!countJob("Captain"))
-					return
-				else steal_target = /obj/item/disk/data/floppy/read_only/authentication
+				steal_target = /obj/item/disk/data/floppy/read_only/authentication
 			if("\'freeform\' AI module")
 				steal_target = /obj/item/aiModule/freeform
 			if("gene power module")
