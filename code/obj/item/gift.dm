@@ -138,8 +138,8 @@
 		if(MT.armed)
 			modify_christmas_cheer(-4)
 			MT.triggered(user, user.hand ? "l_hand" : "r_hand")
-	else if(istype(src.gift, /obj/item/mousepunch))
-		var/obj/item/mousepunch/MT = src.gift
+	else if(istype(src.gift, /obj/item/device/mousepunch))
+		var/obj/item/device/mousepunch/MT = src.gift
 		if(MT.armed)
 			modify_christmas_cheer(-4)
 			MT.triggered(user, user.hand ? "l_hand" : "r_hand")

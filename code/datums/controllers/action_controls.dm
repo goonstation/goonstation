@@ -915,8 +915,8 @@ var/datum/action_controller/actions
 						for (var/mob/O in AIviewers(owner))
 							O.show_message("<span class='alert'><B>...and triggers it accidentally!</B></span>", 1)
 						MT.triggered(source, source.hand ? "l_hand" : "r_hand")
-				else if (istype(I, /obj/item/mousepunch))
-					var/obj/item/mousepunch/MT = I
+				else if (istype(I, /obj/item/device/mousepunch))
+					var/obj/item/device/mousepunch/MT = I
 					if (MT.armed)
 						for (var/mob/O in AIviewers(owner))
 							O.show_message("<span class='alert'><B>...and triggers it accidentally!</B></span>", 1)

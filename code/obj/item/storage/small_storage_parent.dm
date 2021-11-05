@@ -200,7 +200,7 @@
 				MT.triggered(user, user.hand ? "l_hand" : "r_hand")
 				. = 1
 			break
-		for (var/obj/item/mousepunch/MT in src)
+		for (var/obj/item/device/mousepunch/MT in src)
 			if (MT.armed)
 				user.visible_message("<span class='alert'><B>[user] reaches into \the [src] and sets off a punching trap!</B></span>",\
 				"<span class='alert'><B>You reach into \the [src], but there was a live punching trap in there!</B></span>")
