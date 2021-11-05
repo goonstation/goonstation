@@ -389,9 +389,9 @@ ABSTRACT_TYPE(/datum/mail_order/chem)
 	oil
 		name = "Oil, 50u Bottle"
 		desc = "Lubrication-friendly formulation of hydrocarbon oil."
-		order_items = list(/obj/item/reagent_containers/glass/bottle/formaldehyde)
+		order_items = list(/obj/item/reagent_containers/glass/bottle/oil)
 		cost = PAY_DOCTORATE / 3
-		order_perm = list(access_chemistry,access_medical)
+		order_perm = list(access_chemistry,access_engineering,access_medical)
 
 	phenol
 		name = "Phenol, 50u Bottle"
