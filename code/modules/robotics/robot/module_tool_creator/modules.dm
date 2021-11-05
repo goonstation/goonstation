@@ -151,7 +151,7 @@
 		/obj/item/reagent_containers/glass/beaker/large,
 		/obj/item/reagent_containers/glass/beaker/large,
 		/obj/item/reagent_containers/dropper,
-		/obj/item/device/lollipopmaker/,
+		/obj/item/device/lollipopmaker
 	)
 
 // miner.
