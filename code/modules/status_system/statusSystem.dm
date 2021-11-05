@@ -238,7 +238,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 				break
 
 /**
- 	* Returns prototype of status effect with given {statusId}, or null if not found
+ 	* Returns prototype of status effect from the globalStatusPrototypes list with given {statusId}, or null if not found
 	*/
 /atom/proc/getStatusPrototype(statusId)
 	for(var/datum/statusEffect/status as anything in globalStatusPrototypes)

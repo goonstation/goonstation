@@ -313,6 +313,10 @@
 		. = ..()
 		if(!usr.traitHolder?.hasTrait("training_chef"))
 			return
+
+		if(src.quality >= 5)
+			. += "<span class='notice'>This is of great quality! the gained buffs will last longer! </span>"
+
 		if(food_effects.len > 0)
 			. += "<br><span class='notice'> This food has the following effects: "
 			for(var/id as anything in src.food_effects)
@@ -332,7 +336,7 @@
 		switch(href_list["action"]) // future proofing incase someone else wants to add something to this Topic(), will remove if it noticeably slows down execution of this proc.
 			if("chefhint")
 				if(href_list["txt"] && href_list["name"])
-					boutput(usr,"<b><span class='notice'>[href_list["name"]]:</b></span> [href_list["txt"]]")
+					boutput(usr,"<span class='notice'><b>[href_list["name"]]:</b></span> [href_list["txt"]]")
 
 
 
