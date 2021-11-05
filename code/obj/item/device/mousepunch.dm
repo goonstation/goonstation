@@ -13,16 +13,15 @@
 	stamina_cost = 0
 	stamina_crit_chance = 5
 	var/mob/armer = null
-	event_handler_flags = USE_FLUID_ENTER
 
 	armed
 		icon_state = "boxing_trap_armed"
 		armed = 1
 
-	examine()
+	get_desc()
 		. = ..()
 		if (src.armed)
-			. += "<span class='alert'>It looks like it's armed.</span>"
+			. += "<span class='alert'> It looks like it's armed.</span>"
 
 	attack_self(mob/user as mob)
 		if (!src.armed)
