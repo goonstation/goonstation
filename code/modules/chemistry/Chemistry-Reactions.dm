@@ -230,6 +230,7 @@
 		if (removed_count > can_remove_amt)
 			break
 
+//when a sticker is placed on a wall, its loc is actually set to the floor in front of the wall to prevent cameras seeing through walls. use this proc to find it!
 /proc/locate_sticker_wall(var/turf/T)
 	for (var/turf/turf in range(1,T))
 		for (var/obj/item/sticker/S in turf)

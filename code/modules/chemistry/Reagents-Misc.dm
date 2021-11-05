@@ -847,38 +847,14 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
 				if (method == TOUCH)
-					remove_stickers(M, volume)
+					remove_sticky(M, volume)
 
 			reaction_obj(var/obj/O, var/volume)
-				remove_stickers(O, volume)
+				remove_sticky(O, volume)
 
 			reaction_turf(var/turf/T, var/volume)
-				remove_stickers(T, volume)
+				remove_sticky(T, volume)
 
-			proc/remove_stickers(var/atom/target, var/volume)
-				var/can_remove_amt = volume / 10
-				var/removed_count = 0
-				if ((istype(target, /turf/simulated/wall) || istype(target, /turf/unsimulated/wall)))
-					target = locate_sticker_wall(target)
-					if (!target)
-						return
-
-				for (var/atom/A as anything in target)
-					if (A.event_handler_flags & HANDLE_STICKER)
-						if (A:active)
-							target.visible_message("<span class='alert'><b>[A]</b> dissolves completely!</span>")
-							qdel(A)
-							removed_count++
-					if (removed_count > can_remove_amt)
-						break
-
-			//when a sticker is placed on a wall, its loc is actually set to the floor in front of the wall to prevent cameras seeing through walls. use this proc to find it!
-			proc/locate_sticker_wall(var/turf/T)
-				for (var/turf/turf in range(1,T))
-					for (var/obj/item/sticker/S in turf)
-						if (S.attached == T || S.attached.loc == T)
-							return T
-				return 0
 
 		stabiliser
 			name = "stabilising agent"
