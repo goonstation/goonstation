@@ -1640,7 +1640,7 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 /obj/item/paper/reinforcement_info
 	name = "Reinforcement Disclaimer"
 	icon_state = "paper"
-	info = {"<b>Thank you for buying a Syndicate brand reinforcement!</b><br>To deploy the reinforcement, simply activate it somewhere on station, set it down, and wait, if a reinforcement is around, they will arrive within 1 minute. The nearby Listening Post should do you well, but it cannot be activated on the Cairngorm!<br><br><i>Disclaimer: Capability of reinforcement not guaranteed. The beacon may pose a choking hazard to those under 3 years old.<br>If no reinforcement is available, you may simply hit your uplink with the beacon to return it for a full refund.</i>"}
+	info = {"<b>Thank you for buying a Syndicate brand reinforcement!</b><br>To deploy the reinforcement, simply activate it somewhere on station, set it down, and wait. If a reinforcement is found, they'll be deployed within the minute. The nearby Listening Post should do you well, but it cannot be activated on the Cairngorm!<br><br><i>Disclaimer: Capability of reinforcement not guaranteed. The beacon may pose a choking hazard to those under 3 years old.<br>If no reinforcement is available, you may simply hit your uplink with the beacon to return it for a full refund.</i>"}
 
 /obj/item/paper/designator_info
 	name = "Laser Designator Pamphlet"

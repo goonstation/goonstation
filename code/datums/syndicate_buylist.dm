@@ -1057,7 +1057,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/remote/reinforcement_beacon
 	item2 = /obj/item/paper/reinforcement_info
 	cost = 2
-	desc = "Request another teammate, equipped with a sidearm and utility token."
+	desc = "Request a (probably) top-of-the-line Syndicate gunbot to help assist your team."
 
 /datum/syndicate_buylist/commander/ammobag
 	name = "Ammo Bag"

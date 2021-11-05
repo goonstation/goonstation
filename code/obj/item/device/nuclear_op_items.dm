@@ -372,7 +372,7 @@
 		var/area/temp_area = input("Choose Landing Area") as null|anything in filtered_areas
 		src.landing_area = get_telearea(temp_area)
 		if (!src.landing_area)
-			return 0
+			return FALSE
 		var/list/turf/possible_turfs = list()
 		for(var/turf/T in get_area_turfs(src.landing_area, TRUE))
 			possible_turfs += T
@@ -384,7 +384,7 @@
 				if(!L) //fuck
 					return
 				for(var/obj/item/remote/syndicate_teleporter/T in M.get_all_items_on_mob())
-					qdel(T) //Emphasizing that there really is no way back if you go this way
+					qdel(T) //Emphasizing that there really is no easy way back if you go this way
 				playsound(M, "sound/effects/teleport.ogg", 30, 1)
 				var/obj/decal/teleport_swirl/S = new/obj/decal/teleport_swirl(M)
 				M.set_loc(L)
