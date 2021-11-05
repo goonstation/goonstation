@@ -1,5 +1,9 @@
 
 (t)fri nov 05 21
+(u)FlamingLily
+(p)6543
+(e)|
+(*)The crew manifest has been overhauled, now sorted by department.
 (u)Momoberry
 (p)6256
 (e)🆕🎨⚖|feature, sprites, balance
