@@ -1275,7 +1275,6 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.reagents.add_reagent("ethanol", alch_strength * mult)
-				M.reagents.remove_reagent(src, 1 * mult)
 				..()
 				return
 
