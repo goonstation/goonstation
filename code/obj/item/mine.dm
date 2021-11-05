@@ -238,6 +238,8 @@
 		armed = TRUE
 
 	nanotrasen
+		name = "NT stun land mine"
+		desc = "A Nanotrasen-brand land mine used to stun victims nonlethally."
 		icon_state = "mine_stun_nt"
 
 	custom_stuff(var/atom/M)
