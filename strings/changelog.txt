@@ -1,4 +1,10 @@
 
+(t)fri nov 05 21
+(u)Momoberry
+(p)6256
+(e)🆕🎨⚖|feature, sprites, balance
+(+)Changes the Flail ability of spiders to be less obnoxious.
+(+)New critter abilities and ability icons!
 (t)thu nov 04 21
 (u)pali
 (+)You can now insert prizes into claw machines.
