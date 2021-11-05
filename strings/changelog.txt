@@ -1,5 +1,9 @@
 
 (t)fri nov 05 21
+(u)Zonespace
+(p)6576
+(e)⚖|balance
+(+)Powersinks now need tier 2 conductors and tier 2 metals to fabricate.
 (u)tarmunora
 (e)⚖|balance
 (+)Power sinks now kick back ~20% APC charge when disconnected.
