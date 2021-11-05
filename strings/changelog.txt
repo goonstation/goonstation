@@ -1,5 +1,8 @@
 
 (t)fri nov 05 21
+(u)tarmunora
+(e)⚖|balance
+(+)Power sinks now kick back ~20% APC charge when disconnected.
 (u)FlamingLily
 (p)6543
 (e)|
