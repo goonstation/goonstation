@@ -309,8 +309,8 @@
 	afterattack(obj/target, mob/user , flag)
 		return
 
-	get_desc(mob/user)
-		if(!usr.traitHolder?.hasTrait("training_chef"))
+	get_desc(dist, mob/user)
+		if(!user.traitHolder?.hasTrait("training_chef"))
 			return
 
 		if(src.quality >= 5)
@@ -318,10 +318,10 @@
 
 		if(length(food_effects) > 0)
 			. += "<br><span class='notice'> This food has the following effects: "
-			for(var/id as anything in src.food_effects)
+			for(var/id in src.food_effects)
 				var/datum/statusEffect/S = getStatusPrototype(id)
 				if(isnull(S))
-					logTheThing("debug", null, null, "the foodstuff [src] returned with a statusEffect ID that does not exist in the global prototype list! status_id : [id]") //This really shouldnt happen except for var editing, typos or other wierdness, but this is here just in case.
+					stack_trace("the foodstuff [src] returned with a statusEffect ID that does not exist in the global prototype list! status_id : [id]") //This really shouldnt happen except for var editing, typos or other wierdness, but this is here just in case.
 					continue
 				var/Sdesc = S.getChefHint()
 				. += "<a href='byond://?src=\ref[src];action=chefhint;name=[url_encode(S.name)];txt=[url_encode(Sdesc)]'>[S.name]</a>" + "; "
