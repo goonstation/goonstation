@@ -23,4 +23,4 @@
 		. = "Dealing [damage_tox] toxin damage every [tickSpacing/(1 SECOND)] sec."
 
 	getChefHint()
-		. = "Poisons the consumer, Dealing [damage_tox] toxin damage every [tickSpacing/(1 SECOND)] sec."
+		. = "Poisons the consumer, dealing [damage_tox] toxin damage every [tickSpacing/(1 SECOND)] sec."

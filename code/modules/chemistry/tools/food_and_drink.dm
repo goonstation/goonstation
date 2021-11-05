@@ -314,13 +314,13 @@
 			return
 
 		if(src.quality >= 5)
-			. += "<br><span class='notice'>This is of great quality! the gained buffs will last longer! </span>"
+			. += "<br><span class='notice'>This is of great quality! The gained buffs will last longer! </span>"
 
-		if(food_effects.len > 0)
+		if(length(food_effects) > 0)
 			. += "<br><span class='notice'> This food has the following effects: "
 			for(var/id as anything in src.food_effects)
 				var/datum/statusEffect/S = getStatusPrototype(id)
-				if(S == null)
+				if(isnull(S))
 					logTheThing("debug", null, null, "the foodstuff [src] returned with a statusEffect ID that does not exist in the global prototype list! status_id : [id]") //This really shouldnt happen except for var editing, typos or other wierdness, but this is here just in case.
 					continue
 				var/Sdesc = S.getChefHint()
