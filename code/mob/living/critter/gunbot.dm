@@ -149,9 +149,9 @@
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "hand38"
 		HH.limb_name = "7.62 Marksman Rifle Arm"
-		HH.can_hold_items = 0
-		HH.can_attack = 1
-		HH.can_range_attack = 1
+		HH.can_hold_items = FALSE
+		HH.can_attack = TRUE
+		HH.can_range_attack = TRUE
 
 	setup_healths()
 		add_hh_robot(75, 1)

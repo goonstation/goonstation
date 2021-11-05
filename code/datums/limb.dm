@@ -342,7 +342,7 @@
 		proj = new/datum/projectile/bullet/ak47/semiauto
 		shots = 5
 		current_shots = 5
-		cooldown = 2.5 SECONDS
+		cooldown = 1 SECOND
 		reload_time = 20 SECONDS
 
 /datum/limb/mouth
