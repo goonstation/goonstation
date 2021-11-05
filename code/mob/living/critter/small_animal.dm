@@ -2863,6 +2863,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				return 2
 		return ..()
 
+	Life(datum/controller/process/mobs/parent)
+		. = ..()
+		if(src.client && src.client && !src.client.is_mentor())
+			src.make_critter(/mob/living/critter/small_animal/mouse/weak)
+			return
+
 /mob/living/critter/small_animal/mouse/weak/mentor/admin
 	name = "admin mouse"
 	real_name = "admin mouse"
@@ -2890,6 +2896,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		if(language == "animal") // by default admin mice speak english but we want them to understand animal-ese
 			return 1
 		return ..()
+
+	Life(datum/controller/process/mobs/parent)
+		. = ..()
+		if(src.client && !isadmin(src))
+			src.make_critter(/mob/living/critter/small_animal/mouse/weak)
+			return
 
 /mob/living/critter/small_animal/crab
 	name = "crab"
