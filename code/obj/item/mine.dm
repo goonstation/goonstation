@@ -242,6 +242,19 @@
 		desc = "A Nanotrasen-brand land mine used to stun victims nonlethally."
 		icon_state = "mine_stun_nt"
 
+		custom_stuff(var/atom/M)
+			if (!src || !istype(src))
+				return
+
+			var/list/mobs = src.get_mobs_on_turf(1)
+			if (mobs.len)
+				for (var/mob/living/L in mobs)
+					if (istype(L))
+						L.changeStatus("weakened", 10 SECONDS)
+						L.stuttering += 10
+						if (L != M)
+							src.log_me(null, L)
+
 	custom_stuff(var/atom/M)
 		if (!src || !istype(src))
 			return
