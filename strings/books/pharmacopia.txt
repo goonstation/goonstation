@@ -8,7 +8,7 @@
 		<h3>Isopropanol<h3>
 		<div class ="isopropanol">
 		<ul>
-			<li>Isopropanol is an ethanol based sterilizer often used in surgery that is toxic if ingested.
+			<li>Isopropanol is an ethanol based sterilizer often used in surgery.
 			<li>This compund can be created by combining hydrogen and oxygen with ethanol.
 		<br>
 		<h4><i>Advanced:</i><h4>
