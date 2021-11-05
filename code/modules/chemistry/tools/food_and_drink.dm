@@ -310,12 +310,11 @@
 		return
 
 	get_desc(mob/user)
-		. = ..()
 		if(!usr.traitHolder?.hasTrait("training_chef"))
 			return
 
 		if(src.quality >= 5)
-			. += "<span class='notice'>This is of great quality! the gained buffs will last longer! </span>"
+			. += "<br><span class='notice'>This is of great quality! the gained buffs will last longer! </span>"
 
 		if(food_effects.len > 0)
 			. += "<br><span class='notice'> This food has the following effects: "
