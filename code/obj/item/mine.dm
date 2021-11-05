@@ -195,7 +195,7 @@
 	icon_state = "mine_radiation"
 
 	armed
-		armed = 1
+		armed = TRUE
 
 	custom_stuff(var/atom/M)
 		if (!src || !istype(src))
@@ -220,7 +220,7 @@
 	icon_state = "mine_incendiary"
 
 	armed
-		armed = 1
+		armed = TRUE
 
 	custom_stuff(var/atom/M)
 		if (!src || !istype(src))
@@ -228,7 +228,6 @@
 
 		fireflash_sm(get_turf(src), 3, 3000, 500)
 		playsound(src.loc, 'sound/effects/bamf.ogg', 50, 1)
-		return
 
 /obj/item/mine/stun
 	name = "stun land mine"
@@ -236,7 +235,10 @@
 	icon_state = "mine_stun"
 
 	armed
-		armed = 1
+		armed = TRUE
+
+	nanotrasen
+		icon_state = "mine_stun_nt"
 
 	custom_stuff(var/atom/M)
 		if (!src || !istype(src))
@@ -252,21 +254,19 @@
 						src.log_me(null, L)
 
 		playsound(src.loc, 'sound/weapons/flashbang.ogg', 50, 1)
-		return
 
 /obj/item/mine/blast
 	name = "high explosive land mine"
 	desc = "An anti-personnel mine rigged with explosives."
 
 	armed
-		armed = 1
+		armed = TRUE
 
 	custom_stuff(var/atom/M)
 		if (!src || !istype(src))
 			return
 
 		explosion(src, src.loc, 0, 1, 2, 3)
-		return
 
 /obj/item/mine/gibs
 	name = "pustule"
