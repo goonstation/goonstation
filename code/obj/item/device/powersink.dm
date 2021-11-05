@@ -18,7 +18,7 @@
 	var/max_power = 2e8		// maximum power that can be drained before exploding
 	var/mode = 0		// 0 = off, 1=clamped (off), 2=operating
 	is_syndicate = 1
-	mats = 16
+	mats = list("MET-2"=20, "CON-2"=20, "CRY-1"=10)
 	rand_pos = 0
 
 	var/obj/cable/attached		// the attached cable
