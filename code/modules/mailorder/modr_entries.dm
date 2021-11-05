@@ -58,6 +58,12 @@ ABSTRACT_TYPE(/datum/mail_order/audiovideo)
 		order_items = list(/obj/item/item_box/postit)
 		cost = PAY_TRADESMAN / 5
 
+	typewriter
+		name = "Portable Typewriter"
+		desc = "Built to our exacting standards for the finest typography."
+		order_items = list(/obj/item/portable_typewriter)
+		cost = PAY_EXECUTIVE
+
 	writebundle
 		name = "Notetaking Bundle"
 		desc = "Contains a clipboard, a pen, and two sheets of paper."
@@ -98,6 +104,12 @@ ABSTRACT_TYPE(/datum/mail_order/recreation)
 		desc = "A great choice for novice swimmers - water wings and our choice of inner tube."
 		order_items = list(/obj/item/inner_tube/random,/obj/item/clothing/gloves/water_wings)
 		cost = PAY_UNTRAINED / 2
+
+	towel
+		name = "Towel"
+		desc = "Want to be the hoopiest frood in town? You gotta know where your towel is."
+		order_items = list(/obj/item/clothing/under/towel)
+		cost = PAY_TRADESMAN / 3
 
 	bball
 		name = "Basketball"
@@ -170,6 +182,12 @@ ABSTRACT_TYPE(/datum/mail_order/produce)
 		order_items = list(/obj/item/reagent_containers/food/snacks/soup/oatmeal)
 		cost = PAY_TRADESMAN / 5
 
+	carrot
+		name = "Carrot"
+		desc = "Jam-packed with nutritious crunch - great for soup or snacking."
+		order_items = list(/obj/item/reagent_containers/food/snacks/plant/carrot)
+		cost = PAY_TRADESMAN / 4
+
 	coconut
 		name = "Coconut"
 		desc = "Delicious and versatile, bringing you a burst of coco-fun."
@@ -204,6 +222,12 @@ ABSTRACT_TYPE(/datum/mail_order/produce)
 		name = "Mint Sprig"
 		desc = "Effervescent mint, carefully preserved for peak flavor."
 		order_items = list(/obj/item/plant/herb/mint)
+		cost = PAY_TRADESMAN / 5
+
+	sassafras
+		name = "Sassafras Root"
+		desc = "A classic aromatic, popular in gumbo and brewing."
+		order_items = list(/obj/item/plant/herb/sassafras)
 		cost = PAY_TRADESMAN / 5
 
 	cereal_pope
@@ -280,6 +304,12 @@ ABSTRACT_TYPE(/datum/mail_order/survmart)
 		order_items = list(/obj/item/reagent_containers/emergency_injector/charcoal)
 		cost = PAY_DOCTORATE / 3
 
+	auto_diphen
+		name = "Diphenhydramine Auto-Injector"
+		desc = "Fast-acting antihistamine commonly used for allergic reactions."
+		order_items = list(/obj/item/reagent_containers/emergency_injector/antihistamine)
+		cost = PAY_DOCTORATE / 4
+
 	auto_epi
 		name = "Epinephrine Auto-Injector"
 		desc = "Stabilizes critical patients - the gold standard for crisis care."
@@ -291,6 +321,12 @@ ABSTRACT_TYPE(/datum/mail_order/survmart)
 		desc = "Mitigates the effect of hypoxia. Useful in case of hull breach."
 		order_items = list(/obj/item/reagent_containers/emergency_injector/salbutamol)
 		cost = PAY_DOCTORATE / 4
+
+	auto_saline
+		name = "Saline Auto-Injector"
+		desc = "Preformulated saline-glucose mixture to stabilize fluid levels."
+		order_items = list(/obj/item/reagent_containers/emergency_injector/saline)
+		cost = PAY_TRADESMAN / 3
 
 	patch_brute
 		name = "Healing Mini-Patch"
@@ -334,7 +370,7 @@ ABSTRACT_TYPE(/datum/mail_order/chem)
 		desc = "Strong solvent useful as intermediary reagent or sticker remover."
 		order_items = list(/obj/item/reagent_containers/glass/bottle/acetone)
 		cost = PAY_DOCTORATE / 3
-		order_perm = list(access_chemistry,access_medical)
+		order_perm = list(access_chemistry,access_janitor,access_medical)
 
 	ammonia
 		name = "Ammonia, 50u Bottle"
@@ -350,9 +386,16 @@ ABSTRACT_TYPE(/datum/mail_order/chem)
 		cost = PAY_DOCTORATE / 2
 		order_perm = list(access_chemistry,access_medical)
 
+	oil
+		name = "Oil, 50u Bottle"
+		desc = "Lubrication-friendly formulation of hydrocarbon oil."
+		order_items = list(/obj/item/reagent_containers/glass/bottle/formaldehyde)
+		cost = PAY_DOCTORATE / 3
+		order_perm = list(access_chemistry,access_medical)
+
 	phenol
 		name = "Phenol, 50u Bottle"
-		desc = "Acidic reagent  in organic chemistry."
+		desc = "Acidic reagent prevalent in organic chemistry."
 		order_items = list(/obj/item/reagent_containers/glass/bottle/phenol)
 		cost = PAY_DOCTORATE / 3
 		order_perm = list(access_chemistry,access_medical)
