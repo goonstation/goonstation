@@ -113,6 +113,8 @@
 
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
+		if (!in_interact_range(src, user)  || !IN_RANGE(user, O, 1))
+			return
 		var/proceed = 0
 		for(var/check_path in src.allowed)
 			var/obj/item/W = O
