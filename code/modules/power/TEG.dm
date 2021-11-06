@@ -1466,11 +1466,20 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 	var/last_change = 0
 	var/message_delay = 1 MINUTE
 
-	var/datum/radio_frequency/radio_connection
 
 	New()
 		. = ..()
 		pump_infos = new/list()
+		src.AddComponent( \
+			/datum/component/packet_connected/radio, \
+			null, \
+			frequency, \
+			null, \
+			"receive_signal", \
+			FALSE, \
+			"pumpcontrol", \
+			FALSE \
+		)
 
 	attack_hand(mob/user)
 		if(status & (BROKEN | NOPOWER))
@@ -1573,18 +1582,16 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 
 		if(href_list["toggle"])
 			src.add_fingerprint(usr)
-			if(!radio_connection)
-				return 0
 			var/datum/signal/signal = get_free_signal()
 			signal.transmission_method = 1 //radio
 			signal.source = src
 			signal.data["tag"] = href_list["toggle"]
 			signal.data["command"] = "power_toggle"
-			radio_connection.post_signal(src, signal)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 		if(href_list["setoutput"])
 			src.add_fingerprint(usr)
-			if(!radio_connection || !href_list["target"])
+			if(!href_list["target"])
 				return 0
 
 			var/new_target = 0
@@ -1609,26 +1616,15 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 			signal.data["tag"] = href_list["target"]
 			signal.data["command"] = "set_output_pressure"
 			signal.data["parameter"] = new_target
-			radio_connection.post_signal(src, signal)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 		if(href_list["refresh"])
 			src.add_fingerprint(usr)
-			if(!radio_connection)
-				return 0
 			var/datum/signal/signal = get_free_signal()
 			signal.transmission_method = 1 //radio
 			signal.source = src
 			signal.data["command"] = "broadcast_status"
-			radio_connection.post_signal(src, signal)
-	proc
-		set_frequency(new_frequency)
-			radio_controller.remove_object(src, "[frequency]")
-			frequency = new_frequency
-			radio_connection = radio_controller.add_object(src, "[frequency]")
-
-	initialize()
-		..()
-		set_frequency(frequency)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 #undef PUMP_POWERLEVEL_1
 #undef PUMP_POWERLEVEL_2

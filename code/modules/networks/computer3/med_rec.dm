@@ -555,7 +555,7 @@
 						<br><b>Severity:</b> Medium"}
 
 					if ("4")
-						entrydat = {"<b>Name:</b> Chimpfluenza
+						entrydat = {"<b>Name:</b> Monkey Madness
 						<br><b>Number of stages:</b> 1
 						<br><b>Spread:</b> Airborne Transmission
 						<br><b>Possible Cure:</b> None
@@ -657,7 +657,7 @@
 					(01) GBS<br>
 					(02) Common Cold<br>
 					(03) Flu<br>
-					(04) Chimpfluenza<br>
+					(04) Monkey Madness<br>
 					(05) Clowning Around<br>
 					(06) Space Rhinovirus<br>
 					(07) Robot Transformation<br>

@@ -5,6 +5,7 @@ Afterlife bar areas
 Hell area (send people here if they die in a shameful way)
 */
 /area/afterlife
+	dont_log_combat = TRUE
 
 /area/afterlife/bar
 	name = "The Afterlife Bar"

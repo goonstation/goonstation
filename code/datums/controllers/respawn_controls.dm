@@ -186,6 +186,7 @@ var/datum/respawn_controls/respawn_controller
 
 		var/mob/new_player/M = new()
 		M.adminspawned = 1
+		M.is_respawned_player = 1
 		M.key = the_client.key
 		M.Login()
 		master.unsubscribeRespawnee(src.ckey)

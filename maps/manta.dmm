@@ -8837,10 +8837,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/inner)
-"azw" = (
-/obj/reagent_dispensers/fueltank,
-/turf/simulated/floor/yellow,
-/area/station/engine/inner)
 "azx" = (
 /obj/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/blast/pyro{
@@ -9667,6 +9663,7 @@
 	icon_state = "4-8"
 	},
 /obj/item/device/radio/intercom/loudspeaker/speaker/south,
+/obj/reagent_dispensers/fueltank,
 /turf/simulated/floor,
 /area/station/engine/gas)
 "aBF" = (
@@ -10664,10 +10661,10 @@
 	},
 /area/station/security/hos)
 "aEz" = (
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor,
 /area/station/engine/gas)
 "aEA" = (
@@ -10681,10 +10678,6 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/kitchen/freezer)
-"aEC" = (
-/obj/machinery/portable_atmospherics/pump,
-/turf/simulated/floor,
-/area/station/engine/gas)
 "aED" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/bot/secbot/beepsky,
@@ -11084,10 +11077,10 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/quarters)
 "aFJ" = (
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/caution/south,
 /area/station/engine/gas)
 "aFK" = (
@@ -11313,10 +11306,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
-"aGl" = (
-/obj/machinery/portable_atmospherics/pump,
-/turf/simulated/floor/caution/south,
-/area/station/engine/gas)
 "aGm" = (
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
@@ -83558,7 +83547,7 @@ awX
 eNQ
 azs
 azd
-azw
+azd
 avp
 azJ
 fmk
@@ -85683,8 +85672,8 @@ aAh
 aOc
 bqU
 aBf
-aEC
-aGl
+aBa
+aHq
 ftP
 aMe
 aEr
@@ -88994,7 +88983,7 @@ aMn
 eNQ
 azs
 azd
-azw
+azd
 avp
 azJ
 iJu

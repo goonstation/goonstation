@@ -194,7 +194,7 @@ proc/filter_trait_hats(var/type)
 			src.on = !src.on
 
 		if (src.on)
-			src.firesource = TRUE
+			src.firesource = FIRESOURCE_OPEN_FLAME
 			src.force = 10
 			src.hit_type = DAMAGE_BURN
 			src.icon_state = "cakehat1"
@@ -458,6 +458,13 @@ proc/filter_trait_hats(var/type)
 	desc = "Your toque blanche, coloured as such so that your poor sanitation is obvious, and the blood shows up nice and crazy."
 	icon_state = "chef"
 	item_state = "chefhat"
+
+/obj/item/clothing/head/chefhatpuffy
+	name = "Puffy Chef's Hat"
+	desc = "A chef's toque blanche, pleasantly puffy on top."
+	icon_state = "chef-puffy"
+	item_state = "chefhat"
+	wear_state = "chef-puffy"
 
 /obj/item/clothing/head/souschefhat
 	name = "Sous-Chef's hat"

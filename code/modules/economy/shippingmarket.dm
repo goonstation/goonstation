@@ -1,6 +1,18 @@
 #define SUPPLY_OPEN_TIME 1 SECOND //Time it takes to open supply door in seconds.
 #define SUPPLY_CLOSE_TIME 15 SECONDS //Time it takes to close supply door in seconds.
 
+//Codes for requisition post-transaction returns handling
+///Requisition was not used, conduct a standard QM sale
+#define RET_IGNORE 0
+///Requisition was used, but no contract was fulfilled; return crate and do not process income.
+#define RET_INSUFFICIENT 1
+///Requisition was used successfully, and items are to be returned (either item rewards or excess goods shipped)
+#define RET_SALE_SENDBACK 2
+///Requisition was used successfully, and no items are to be returned (either no spare items, or a third party sale without item rewards)
+#define RET_NOSENDBACK 3
+///Requisition sheet was used and cargo was sent to third party requisitioner, but contract was not satisfied; no returns, no payment
+#define RET_VOID 4
+
 /datum/shipping_market
 
 	var/list/commodities = list()
@@ -11,14 +23,24 @@
 	var/max_buy_items_at_once = 99
 	var/last_market_update = 0
 
+	var/list/datum/req_contract/req_contracts = list() // Requisition contracts for export, listed in clearinghouse
+	var/max_req_contracts = 5 // Maximum contracts active in clearinghouse at one time (refills to this at each cycle)
+	var/has_pinned_contract = 0 // One contract at a time may be pinned to prevent it from disappearing in cycle
+	var/civ_contracts_active = 0 // To ensure at least one contract of each type is available
+	var/aid_contracts_active = 0 // after market shift, these keep track of that
+	var/sci_contracts_active = 0
+
+	var/list/datum/req_contract/special_orders = list() // Special orders: contract manually sent by interested party, do not count towards limit
+
 	var/list/supply_requests = list() // Pending requests, of type /datum/supply_order
 	var/list/supply_history = list() // History of all approved requests, of type string
 
 	var/points_per_crate = 10
 
-	var/artifact_resupply_amount = 0 // amount of artifacts in next resupply crate
-
-	var/list/datum/special_order/active_orders
+ 	/// amount of artifacts in next resupply crate
+	var/artifact_resupply_amount = 0
+	/// an artifact crate is already "on the way"
+	var/artifacts_on_the_way = FALSE
 
 	New()
 		..()
@@ -45,11 +67,44 @@
 		src.active_traders += new /datum/trader/generic(src)
 		src.active_traders += new /datum/trader/generic(src)
 
+		while(length(src.req_contracts) < src.max_req_contracts)
+			src.add_req_contract()
+
 		time_between_shifts = 6000 // 10 minutes
 		time_until_shift = time_between_shifts + rand(-900,1200)
 
 	proc/add_commodity(var/datum/commodity/new_c)
 		src.commodities["[new_c.comtype]"] = new_c
+
+	proc/add_req_contract()
+		if(length(req_contracts) >= max_req_contracts)
+			return
+		var/contract2make //picking path from which to generate the newly-added contract
+		if(src.civ_contracts_active == 0)
+			contract2make = pick_req_contract(/datum/req_contract/civilian)
+		else if(src.aid_contracts_active == 0)
+			contract2make = pick_req_contract(/datum/req_contract/aid)
+		else if(src.sci_contracts_active == 0)
+			contract2make = pick_req_contract(/datum/req_contract/scientific)
+		else
+			switch(rand(1,10)) //civ weighted slightly higher
+				if(1 to 4) contract2make = pick_req_contract(/datum/req_contract/civilian)
+				if(5 to 7) contract2make = pick_req_contract(/datum/req_contract/aid)
+				if(8 to 10) contract2make = pick_req_contract(/datum/req_contract/scientific)
+		var/datum/req_contract/contractmade = new contract2make
+		switch(contractmade.req_class)
+			if(CIV_CONTRACT) src.civ_contracts_active++
+			if(AID_CONTRACT) src.aid_contracts_active++
+			if(SCI_CONTRACT) src.sci_contracts_active++
+		src.req_contracts += contractmade
+
+	proc/pick_req_contract(var/contract_path)
+		var/order_weights = list()
+		for(var/type in concrete_typesof(contract_path))
+			var/datum/req_contract/O = type
+			order_weights[type] = initial(O.weight)
+		var/picked_contract = weighted_pick(order_weights)
+		return picked_contract
 
 	proc/timeleft()
 		var/timeleft = src.time_until_shift - ticker.round_elapsed_ticks
@@ -148,6 +203,19 @@
 				if (prob(T.chance_leave))
 					T.hidden = 1
 
+		// Thin out and re-generate unpinned contracts
+		for(var/datum/req_contract/RC in src.req_contracts)
+			if(!RC.pinned && prob(80))
+				switch(RC.req_class)
+					if(CIV_CONTRACT) src.civ_contracts_active--
+					if(AID_CONTRACT) src.aid_contracts_active--
+					if(SCI_CONTRACT) src.sci_contracts_active--
+				src.req_contracts -= RC
+				qdel(RC)
+
+		while(length(src.req_contracts) < src.max_req_contracts)
+			src.add_req_contract()
+
 		SPAWN_DBG(5 SECONDS)
 			// 20% chance to shuffle out generic traders for a new one
 			// Do this after a short delay so QMs can finish any last-second deals
@@ -166,11 +234,11 @@
 		var/modifier = sell_art_datum.get_rarity_modifier()
 
 		// calculate price
-		price = modifier*modifier * 10000
+		price = modifier*modifier * 20000
 		var/obj/item/sticker/postit/artifact_paper/pap = locate(/obj/item/sticker/postit/artifact_paper/) in sell_art.vis_contents
 		if(pap?.lastAnalysis)
 			price *= pap.lastAnalysis
-		price += rand(-50,50)
+		price *= randfloat(0.9, 1.3)
 		price = round(price, 5)
 
 		// track score
@@ -179,32 +247,34 @@
 		if(pap?.lastAnalysis >= 3)
 			score_tracker.artifacts_correctly_analyzed++
 
+		// add to artifact resupply amount
+		src.artifact_resupply_amount += modifier*0.8*pap?.lastAnalysis*randfloat(1,1.2) // t1 artifact: 0.25 artifacts, t4 artifact: 1.53 artifacts
 		// send artifact resupply
-		if(prob(modifier*40*pap?.lastAnalysis)) // range from 0% to ~78% for fully researched t4 artifact
-			if(!src.artifact_resupply_amount)
-				SPAWN_DBG(rand(1,5) MINUTES)
-					// message
-					var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
-					var/datum/signal/pdaSignal = get_free_signal()
-					pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGD_SCIENCE), "sender"="00000000", "message"="Notification: Incoming artifact resupply crate. ([artifact_resupply_amount] objects)")
-					pdaSignal.transmission_method = TRANSMISSION_RADIO
-					if(transmit_connection != null)
-						transmit_connection.post_signal(null, pdaSignal)
-					// actual shipment
-					var/obj/storage/crate/artcrate = new /obj/storage/crate()
-					artcrate.name = "Artifact Resupply Crate"
-					for(var/i = 0 to artifact_resupply_amount)
-						new /obj/artifact_type_spawner/vurdalak(artcrate)
-					artifact_resupply_amount = 0
-					shippingmarket.receive_crate(artcrate)
-			src.artifact_resupply_amount++
+		if(src.artifact_resupply_amount > 1 && !src.artifacts_on_the_way)
+			src.artifacts_on_the_way = TRUE
+			SPAWN_DBG(rand(1,5) MINUTES)
+				// handle the artifact amount
+				var/art_amount = round(artifact_resupply_amount)
+				artifact_resupply_amount -= art_amount
+				// message
+				var/datum/signal/pdaSignal = get_free_signal()
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGD_SCIENCE), "sender"="00000000", "message"="Notification: Incoming artifact resupply crate. ([art_amount] objects)")
+				radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
+				// make crate
+				var/obj/storage/crate/artcrate = new /obj/storage/crate()
+				artcrate.name = "Artifact Resupply Crate"
+				// populate with artifacts
+				for(var/i = 1 to art_amount)
+					new /obj/artifact_type_spawner/vurdalak(artcrate)
+				// ship out!
+				shippingmarket.receive_crate(artcrate)
+				src.artifacts_on_the_way = FALSE
 
 		// sell
 		wagesystem.shipping_budget += price
 		qdel(sell_art)
 
 		// give PDA group messages
-		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
 		var/message = "Notification: [price] credits earned from outgoing artifact \'[sell_art.name]\'. "
 		if(pap)
@@ -212,9 +282,7 @@
 		else
 			message += "Artifact was not analyzed."
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGD_SCIENCE, MGA_SALES), "sender"="00000000", "message"=message)
-		pdaSignal.transmission_method = TRANSMISSION_RADIO
-		if(transmit_connection != null)
-			transmit_connection.post_signal(null, pdaSignal)
+		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 	// Returns value of whatever the list of objects would sell for
 	proc/appraise_value(var/list/obj/items, var/list/commodities_list, var/sell = 1)
@@ -230,11 +298,11 @@
 			for(var/obj/O in items)
 				for (var/C in src.commodities) // Key is type of the commodity
 					var/datum/commodity/CM = commodities[C]
-					if (istype(O, CM.comtype) && CM.item_check(O))
+					if (istype(O, CM.comtype))
 						add = CM.price
 						if (CM.indemand)
 							add *= shippingmarket.demand_multiplier
-						if (istype(O, /obj/item/raw_material) || istype(O, /obj/item/sheet) || istype(O, /obj/item/material_piece) || istype(O, /obj/item/plant) || istype(O, /obj/item/reagent_containers/food/snacks/plant))
+						if (istype(O, /obj/item/raw_material) || istype(O, /obj/item/sheet) || istype(O, /obj/item/material_piece) || istype(O, /obj/item/plant) || istype(O, /obj/item/reagent_containers/food/snacks/plant) || istype(O, /obj/item/reagent_containers/food/snacks/pizza)) //not many wanderers travel to these far reaches. welcome, honored guest.
 							add *= O:amount // TODO: fix for snacks
 							if (sell)
 								qdel(O)
@@ -251,11 +319,11 @@
 		else // Please excuse this duplicate code, I'm gonna change trader commodity lists into associative ones later I swear
 			for(var/obj/O in items)
 				for (var/datum/commodity/C in commodities_list)
-					if (istype(O, C.comtype) && C.item_check(O))
+					if (istype(O, C.comtype))
 						add = C.price
 						if (C.indemand)
 							add *= shippingmarket.demand_multiplier
-						if (istype(O, /obj/item/raw_material) || istype(O, /obj/item/sheet) || istype(O, /obj/item/material_piece) || istype(O, /obj/item/plant) || istype(O, /obj/item/reagent_containers/food/snacks/plant))
+						if (istype(O, /obj/item/raw_material) || istype(O, /obj/item/sheet) || istype(O, /obj/item/material_piece) || istype(O, /obj/item/plant) || istype(O, /obj/item/reagent_containers/food/snacks/plant) || istype(O, /obj/item/reagent_containers/food/snacks/pizza)) //have you come to bring us from this desolate land?
 							add *= O:amount // TODO: fix for snacks
 							if (sell)
 								qdel(O)
@@ -272,40 +340,101 @@
 
 		return duckets
 
+	proc/handle_returns(obj/storage/crate/sold_crate)
+		sold_crate.name = "Returned Requisitions Crate"
+		SPAWN_DBG(rand(18,24) SECONDS)
+			shippingmarket.receive_crate(sold_crate)
+
 	proc/sell_crate(obj/storage/crate/sell_crate, var/list/commodities_list)
 		var/obj/item/card/id/scan = sell_crate.scan
 		var/datum/db_record/account = sell_crate.account
 		var/duckets
 
-		if(length(active_orders) && !commodities_list)
-			for(var/datum/special_order/order in active_orders)
-				if(order.check_order(sell_crate))
-					duckets += order.price
-					order.send_rewards()
-					active_orders -= order
+		var/datum/req_contract/contract_to_clear //track picked contract for later cleanup
 
-		duckets += src.appraise_value(sell_crate, commodities_list, 1) + src.points_per_crate
+		var/return_handling = RET_IGNORE //used for crate return management after requisitions
+
+		var/delivery_code = sell_crate.delivery_destination
+		var/has_requisition_code = !!findtext(delivery_code,"REQ-")
+
+		//requisition contract shipments receive different messages and handling
+		if(has_requisition_code)
+			return_handling = RET_INSUFFICIENT
+			var/datum/req_contract/contract
+
+			if(length(special_orders) && delivery_code == "REQ-THIRDPARTY")
+				for(var/datum/req_contract/special/prospective in special_orders)
+					if(locate(prospective.req_sheet) in sell_crate.contents)
+						return_handling = RET_VOID // once a third party recipient is confirmed, sending your crate is irrevocable
+						contract = prospective
+						break
+
+			else if(length(req_contracts))
+				for(var/datum/req_contract/prospective in req_contracts)
+					if(prospective.req_code == delivery_code)
+						contract = prospective
+						break
+
+			if(contract)
+				var/success = contract.requisify(sell_crate)
+				if(success)
+					return_handling = RET_SALE_SENDBACK
+					contract_to_clear = contract
+					switch(contract.req_class)
+						if(CIV_CONTRACT) src.civ_contracts_active--
+						if(AID_CONTRACT) src.aid_contracts_active--
+						if(SCI_CONTRACT) src.sci_contracts_active--
+					duckets += contract.payout
+					if(length(contract.item_rewarders))
+						for(var/datum/rc_itemreward/giftback in contract.item_rewarders)
+							var/reward = giftback.build_reward()
+							if(reward) sell_crate.contents += reward
+							else logTheThing("debug",null,null,"QM contract [contract.type] failed to build [giftback.type]")
+					else if(success == REQ_RETURN_FULLSALE)
+						return_handling = RET_NOSENDBACK
 
 
 		#ifdef SECRETS_ENABLED
 		send_to_brazil(sell_crate)
 		#endif
 
-		qdel(sell_crate)
+		if(return_handling)
+			if(return_handling >= RET_NOSENDBACK)
+				qdel(sell_crate)
+				if(return_handling == RET_VOID) return
+			else
+				handle_returns(sell_crate)
+				if(return_handling == RET_INSUFFICIENT)
+					var/datum/signal/pdaSignal = get_free_signal()
+					var/returnmsg = "Notification: No contract fulfilled by Requisition crate. Returning as sent."
+					if(delivery_code == "REQ-THIRDPARTY") returnmsg = "Notification: Third-party delivery requires physical requisition sheet. Returning as sent."
+					pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="[returnmsg]")
+					pdaSignal.transmission_method = TRANSMISSION_RADIO
+					radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
+			if(req_contracts.Find(contract_to_clear))
+				req_contracts -= contract_to_clear
+				qdel(contract_to_clear)
+			else if(special_orders.Find(contract_to_clear))
+				special_orders -= contract_to_clear
+				qdel(contract_to_clear)
+		else
+			duckets += src.appraise_value(sell_crate, commodities_list, 1) + src.points_per_crate
+			qdel(sell_crate)
 
-		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
+		var/salesource = "last outgoing shipment"
+		if(return_handling >= RET_SALE_SENDBACK) //modify sale message if requisitions are source of income
+			salesource = "requisition contract fulfillment"
+
 		var/datum/signal/pdaSignal = get_free_signal()
 		if(scan && account)
 			wagesystem.shipping_budget += duckets / 2
 			account["current_money"] += duckets / 2
-			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: [duckets] credits earned from last outgoing shipment. Splitting half of profits with [scan.registered].")
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: [duckets] credits earned from [salesource]. Splitting half of profits with [scan.registered].")
 		else
 			wagesystem.shipping_budget += duckets
-			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: [duckets] credits earned from last outgoing shipment.")
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: [duckets] credits earned from [salesource].")
 
-		pdaSignal.transmission_method = TRANSMISSION_RADIO
-		if(transmit_connection != null)
-			transmit_connection.post_signal(null, pdaSignal)
+		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 	proc/receive_crate(atom/movable/shipped_thing)
 
@@ -329,11 +458,9 @@
 
 		shipped_thing.set_loc(spawnpoint)
 
-		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Shipment arriving to Cargo Bay: [shipped_thing.name].")
-		pdaSignal.transmission_method = TRANSMISSION_RADIO
-		transmit_connection.post_signal(null, pdaSignal)
+		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 
 
