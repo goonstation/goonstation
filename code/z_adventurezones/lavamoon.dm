@@ -1369,6 +1369,11 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			src.visible_message("<span class='alert'><b>[user] is trying to shove [W:affecting] [icon_state == "ladder"?"down":"up"] [src]!</b></span>")
 			return attack_hand(W:affecting)
 
+	// let borgs climb ladders, so they can go to fun places!
+	attack_ai(mob/user)
+		if (can_reach(user, src) <= 1 && (isrobot(user) || isshell(user)))
+			. = src.Attackhand(user)
+
 	proc/climb(mob/user as mob)
 		var/obj/ladder/otherLadder = locate("ladder_[id][src.icon_state == "ladder"]")
 		if (!istype(otherLadder))
