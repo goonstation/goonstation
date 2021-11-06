@@ -485,38 +485,42 @@
 		#endif
 	//note : move is still called when we are steping into a wall. sometimes these are unnecesssary i think
 
-	// sometimes last_turf isnt a turf. ok.
-	if (last_turf && isturf(last_turf))
-		if (src.event_handler_flags & USE_CHECKEXIT)
-			last_turf.checkingexit = max(last_turf.checkingexit-1, 0)
-		if (src.event_handler_flags & USE_CANPASS || src.density)
-			if (bound_width + bound_height > 64)
+	if(last_turf == src.loc)
+		return
+
+	if(src.density || src.event_handler_flags & USE_CANPASS)
+		if (bound_width + bound_height > 64)
+			if(isturf(last_turf))
 				for(var/turf/T in bounds(last_turf.x*32, last_turf.y*32, bound_width/2, bound_height/2, last_turf.z))
 					T.checkingcanpass = max(T.checkingcanpass-1, 0)
-			else
-				last_turf.checkingcanpass = max(last_turf.checkingcanpass-1, 0)
-		if (src.event_handler_flags & USE_PROXIMITY)
-			last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
-			for (var/turf/T2 in range(1, last_turf))
-				T2.neighcheckinghasproximity--
-
-	if (isturf(src.loc))
-		last_turf = src.loc
-		var/turf/T = src.loc
-		if (src.event_handler_flags & USE_CHECKEXIT)
-			T.checkingexit++
-		if (src.event_handler_flags & USE_CANPASS || src.density)
-			if (bound_width + bound_height > 64)
+			if(isturf(src.loc)) // ..() calls Crossed() which can change location to a non-turf for example in floor flushers
 				for(var/turf/BT in bounds(src))
 					BT.checkingcanpass++
-			else
-				T.checkingcanpass++
-		if (src.event_handler_flags & USE_PROXIMITY)
-			T.checkinghasproximity++
-			for (var/turf/T2 in range(1, T))
-				T2.neighcheckinghasproximity++
-	else
-		last_turf = 0
+		else
+			if(isturf(last_turf))
+				last_turf.checkingcanpass = max(last_turf.checkingcanpass-1, 0)
+			if(isturf(src.loc))
+				var/turf/locturf = src.loc
+				locturf.checkingcanpass++
+
+	if (src.event_handler_flags & (USE_CHECKEXIT | USE_PROXIMITY))
+		if (isturf(last_turf))
+			if (src.event_handler_flags & USE_CHECKEXIT)
+				last_turf.checkingexit = max(last_turf.checkingexit-1, 0)
+			if (src.event_handler_flags & USE_PROXIMITY)
+				last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
+				for (var/turf/T2 in range(1, last_turf))
+					T2.neighcheckinghasproximity--
+		if(isturf(src.loc))
+			var/turf/T = src.loc
+			if (src.event_handler_flags & USE_CHECKEXIT)
+				T.checkingexit++
+			if (src.event_handler_flags & USE_PROXIMITY)
+				T.checkinghasproximity++
+				for (var/turf/T2 in range(1, T))
+					T2.neighcheckinghasproximity++
+
+	last_turf = isturf(src.loc) ? src.loc : null
 
 	if (!ignore_simple_light_updates)
 		if(src.medium_lights)

@@ -592,7 +592,7 @@
 						newsignal.data["sender"] = src.net_id
 					newsignal.source = src
 
-					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, src.mode == 1 ? 0 : src.wireless_range, "wireless")
+					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, src.mode == 1 ? null : src.wireless_range, "wireless")
 					return 0
 
 				else

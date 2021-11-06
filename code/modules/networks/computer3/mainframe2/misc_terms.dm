@@ -2517,8 +2517,8 @@
 		switch (src.state)
 			if (0)
 				if (src.scan_beam)
-					//qdel(src.scan_beam)
-					src.scan_beam.dispose()
+					qdel(src.scan_beam)
+					src.scan_beam = null
 			if (1)
 				if (!src.scan_beam)
 					var/turf/beamTurf = get_step(src, src.dir)
@@ -2665,8 +2665,8 @@
 				light.disable()
 				icon_state = "secdetector-p"
 				if (src.scan_beam)
-					//qdel(src.scan_beam)
-					src.scan_beam.dispose()
+					qdel(src.scan_beam)
+					src.scan_beam = null
 				src.state = src.online
 				return
 
@@ -2734,7 +2734,7 @@
 
 	disposing()
 		if (src.next)
-			src.next.dispose()
+			qdel(src.next)
 			src.next = null
 		..()
 

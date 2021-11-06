@@ -857,7 +857,8 @@
 		playsound(user.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		user.visible_message("<B>[user.name]</B> deconstructs [target].")
 
-		var/obj/item/electronics/frame/F = new(get_turf(target))
+		var/obj/item/electronics/frame/F = new
+		var/turf/target_loc = get_turf(target)
 		F.name = "[target.name] frame"
 		if(O.deconstruct_flags & DECON_DESTRUCT)
 			F.store_type = O.type
@@ -865,6 +866,8 @@
 		else
 			F.deconstructed_thing = target
 			O.set_loc(F)
+		// move frame to the location after object is gone, so crushers do not crusher themselves
+		F.set_loc(target_loc)
 		F.viewstat = 2
 		F.secured = 2
 		F.icon_state = "dbox_big"

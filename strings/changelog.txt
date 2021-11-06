@@ -1,4 +1,70 @@
 
+(t)fri nov 05 21
+(u)zjdtmkhzt
+(p)6516
+(e)⚖|balance
+(+)Buffed artifact selling prices.
+(u)Zonespace
+(p)6576
+(e)⚖|balance
+(+)Powersinks now need tier 2 conductors and tier 2 metals to fabricate.
+(u)tarmunora
+(e)⚖|balance
+(+)Tweaked a number of nukeop gun/bullet numbers
+(u)tarmunora
+(e)⚖|balance
+(+)Power sinks now kick back ~20% APC charge when disconnected.
+(u)FlamingLily
+(p)6543
+(e)|
+(*)The crew manifest has been overhauled, now sorted by department.
+(u)Momoberry
+(p)6256
+(e)🆕🎨⚖|feature, sprites, balance
+(+)Changes the Flail ability of spiders to be less obnoxious.
+(+)New critter abilities and ability icons!
+(t)thu nov 04 21
+(u)pali
+(+)You can now insert prizes into claw machines.
+(u)Gannets
+(p)6564
+(e)⚖|balance
+(+)The Firebrand's syndicate napalm thrower now slows more and for longer.
+(t)wed nov 03 21
+(u)Gannets
+(p)6565
+(e)⚖|balance
+(+)Added a one second firing delay to the Betelgeuse sniper rifle.
+(u)tarmunora
+(+)chem dispensers take miraclium to fabricate.
+(u)112358sam
+(p)6532
+(e)|
+(+)Adds the mining PDA group to the list of default message groups
+(u)Jimmyl
+(p)6524
+(e)|
+(+)MechComps can now be returned to the Vending Machine
+(u)Nexusuxen
+(p)6533
+(e)|
+(+)Cargo mass drivers/loaders now operate significantly faster and are generally more reliable now.
+(t)tue nov 02 21
+(u)Wisemonster
+(p)6463
+(e)🗺|mapping
+(+)Adds 3 breaching charges to the Oshan armory
+(u)Kubius
+(p)6379
+(e)🆕|feature
+(*)Quartermasters now have access to a Requisitions clearinghouse through which they can fulfill a rotating list of off-station orders.
+(+)Requisition contracts have a high chance to disappear each market shift, but one at a time may be pinned to retain it through shifts. Each requisition is slightly to significantly randomized.
+(u)pali6
+(*)Spy stickers now come with a pinpointer that lets you track a specific sticker!
+(*)Pinpointers now show a fancy arrow on your HUD that's better than the screen of the pinpointer.
+(*)The same is now applied to BloodTrak. Also BloodTrak can now scan puddles of blood and bloody items.
+(*)Engineer lockers now have an APC pinpointer useful for when you can't find those damn things.
+(*)Research adventure crate now has an artifact pinpointer which points to artifacts in limited range.
 (t)mon nov 01 21
 (u)pali
 (+)Mechanics teleporter component got some fancier new visuals and also is harder to hide.
