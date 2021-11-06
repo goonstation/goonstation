@@ -197,19 +197,19 @@
 
 	mining
 		name = "mining satchel"
-		desc = "A leather satchel for holding various ores."
+		desc = "A leather satchel for holding various raw and refined ores."
 		icon_state = "miningsatchel"
-		allowed = list(/obj/item/raw_material/)
+		allowed = list(/obj/item/raw_material/, /obj/item/material_piece)
 		itemstring = "ores"
 
 		large
 			name = "large mining satchel"
-			desc = "A leather satchel for holding various ores. This one's pretty big."
+			desc = "A leather satchel for holding various raw and refined ores. This one's pretty big."
 			maxitems = 100
 
 		compressed
 			name = "spatially-compressed mining satchel"
-			desc = "A ... uh. Well, whatever it is, it's a <em>really fucking big satchel</em> for holding ores."
+			desc = "A ... uh. Well, whatever it is, it's a <em>really fucking big satchel</em> for holding raw and refined ores."
 			maxitems = 500
 
 
