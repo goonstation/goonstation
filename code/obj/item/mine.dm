@@ -247,7 +247,7 @@
 		if (length(mobs))
 			for (var/mob/living/L in mobs)
 				if (istype(L))
-					L.do_disorient((200), (10 SECONDS * effect_mult))
+					L.do_disorient(200, (10 SECONDS * effect_mult))
 					L.stuttering += (10 * effect_mult)
 					if (L != M)
 						src.log_me(null, L)
