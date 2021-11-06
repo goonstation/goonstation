@@ -107,6 +107,7 @@
 
 	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
 
+		APPLY_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)
 		src.internal_pda = new /obj/item/device/pda2/cyborg(src)
 		src.internal_pda.name = "[src]'s Internal PDA Unit"
 		src.internal_pda.owner = "[src]"
@@ -2438,8 +2439,8 @@
 	proc/borg_death_alert(modifier = ROBOT_DEATH_MOD_NONE)
 		var/message = null
 		var/net_id = generate_net_id(src)
-		var/frequency = 1149
-		var/datum/radio_frequency/radio_connection = radio_controller.add_object(src, "[frequency]")
+		var/frequency = FREQ_PDA
+		var/datum/component/packet_connected/radio/radio_connection = MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
 		var/area/myarea = get_area(src)
 
 		switch(modifier)
@@ -2452,10 +2453,9 @@
 			else	//Someone passed us an unkown modifier
 				message = "UNKNOWN ERROR: [src] in [myarea]"
 
-		if (message && radio_connection)
+		if (message)
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
-			newsignal.transmission_method = TRANSMISSION_RADIO
 			newsignal.data["command"] = "text_message"
 			newsignal.data["sender_name"] = "CYBORG-DAEMON"
 			newsignal.data["message"] = message
@@ -2463,8 +2463,8 @@
 			newsignal.data["group"] = list(MGD_MEDRESEACH, MGO_SILICON, MGA_DEATH)
 			newsignal.data["sender"] = net_id
 
-			radio_connection.post_signal(src, newsignal)
-			radio_controller.remove_object(src, "[frequency]")
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
+			qdel(radio_connection)
 
 	proc/mainframe_check()
 		if (!src.dependent) // shells are available for use, dependent borgs are already in use by an AI. do not kill empty shells!!

@@ -91,9 +91,14 @@
 
 	New()
 		..()
+		START_TRACKING_CAT(TR_CAT_HEAD_SURGEON)
 		if (prob(50))
 			new /obj/machinery/bot/medbot/head_surgeon(src.loc)
 			qdel(src)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_HEAD_SURGEON)
+		. = ..()
 
 	proc/speak(var/message)
 		if (!message)

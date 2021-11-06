@@ -272,7 +272,7 @@ SHARDS
 	qdel(src)
 	return
 
-/obj/item/shard/HasEntered(AM as mob|obj)
+/obj/item/shard/Crossed(atom/movable/AM as mob|obj)
 	if(ismob(AM))
 		var/mob/M = AM
 		if(ishuman(M))
@@ -321,7 +321,7 @@ SHARDS
 		if(src.material) A.setMaterial(src.material)
 		qdel(src)
 		return
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
 		if(ismob(AM))
 			var/mob/M = AM
 			boutput(M, "<span class='alert'><B>You step on the crystal shard!</B></span>")

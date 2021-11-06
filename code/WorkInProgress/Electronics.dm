@@ -448,8 +448,7 @@
 
 	var/processing = 0
 	var/net_id = null
-	var/frequency = 1467
-	var/datum/radio_frequency/radio_connection
+	var/frequency = FREQ_RUCK
 	var/no_print_spam = 1 // In relation to world.time.
 	var/olde = 0
 	var/datum/mechanic_controller/ruck_controls
@@ -459,27 +458,33 @@
 	var/list/known_rucks = null
 	var/boot_time = null
 	var/data_initialized = FALSE
-	var/datum/radio_frequency/pda = null
 
 /obj/machinery/rkit/New()
 	. = ..()
 	known_rucks = new
 	ruck_controls = new
-	pda = radio_controller.return_frequency(FREQ_PDA)
+	MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
 	if(isnull(mechanic_controls)) mechanic_controls = ruck_controls //For objective tracking and admin
-	if(radio_controller)
-		radio_connection = radio_controller.add_object(src, "[frequency]")
 	if(!src.net_id)
 		src.net_id = generate_net_id(src)
 		ruck_controls.rkit_addresses += src.net_id
 		host_ruck = src.net_id
 
+	src.AddComponent( \
+		/datum/component/packet_connected/radio, \
+		"ruck", \
+		src.frequency, \
+		src.net_id, \
+		"receive_signal", \
+		FALSE, \
+		"TRANSRKIT", \
+		FALSE \
+	)
+
 /obj/machinery/rkit/disposing()
 	if (src.net_id == host_ruck) send_sync(1) //Everyone needs to find a new master
 	SPAWN_DBG(0.8 SECONDS) //Wait for the sync to send
-		radio_controller?.remove_object(src, "[frequency]")
-		radio_connection = null
 		if (src.net_id)
 			ruck_controls.rkit_addresses -= src.net_id
 		..()
@@ -503,14 +508,13 @@
 		host_ruck = src.net_id //We're the host until someone else proves they are
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
-		newsignal.transmission_method = TRANSMISSION_RADIO
 		if(!dispose)
 			newsignal.data["command"] = "SYNC"
 		else
 			newsignal.data["command"] = "DROP"
-		newsignal.data["address_1"] = "TRANSRKIT"
+		newsignal.data["address_tag"] = "TRANSRKIT"
 		newsignal.data["sender"] = src.net_id
-		radio_connection.post_signal(src, newsignal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
 
 /obj/machinery/rkit/proc/upload_blueprint(var/datum/electronics/scanned_item/O, var/target, var/internal)
 	SPAWN_DBG(0.5 SECONDS) //This proc sends responses so there must be a delay
@@ -520,28 +524,27 @@
 		scanFile.scannedMats = O.mats
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
-		newsignal.transmission_method = TRANSMISSION_RADIO
 		if(!internal)
 			newsignal.data["command"] = "NEW"
 		else
 			newsignal.data["command"] = "UPLOAD"
+		newsignal.data["address_tag"] = target
 		newsignal.data["address_1"] = target
 		newsignal.data["sender"] = src.net_id
 		newsignal.data_file = scanFile
-		radio_connection.post_signal(src, newsignal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
 
 /obj/machinery/rkit/proc/pda_message(var/target, var/message)
 	SPAWN_DBG(0.5 SECONDS) //response proc
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
-		newsignal.transmission_method = TRANSMISSION_RADIO
 		newsignal.data["command"] = "text_message"
 		newsignal.data["sender_name"] = "RKIT-MAILBOT"
 		newsignal.data["message"] = message
 		if (target) newsignal.data["address_1"] = target
 		newsignal.data["group"] = list(MGO_MECHANIC, MGA_RKIT)
 		newsignal.data["sender"] = src.net_id
-		pda.post_signal(src, newsignal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "pda")
 
 /obj/machinery/rkit/proc/transfer_database(target)
 	//If we have a database of items, and we're the host, and we see a new ruck
@@ -553,12 +556,11 @@
 	SPAWN_DBG(0.5 SECONDS)
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
-		newsignal.transmission_method = TRANSMISSION_RADIO
 		newsignal.data["command"] = "UPLOAD"
 		newsignal.data["address_1"] = target
 		newsignal.data["sender"] = src.net_id
 		newsignal.data_file = rkitFile
-		radio_connection.post_signal(src, newsignal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "ruck")
 	known_rucks |= target
 
 //Run this if there's a file and return
@@ -579,11 +581,10 @@
 		SPAWN_DBG(0.5 SECONDS)
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
-			newsignal.transmission_method = TRANSMISSION_RADIO
 			newsignal.data["command"] = "SYNCREPLY"
-			newsignal.data["address_1"] = "TRANSRKIT"
+			newsignal.data["address_tag"] = "TRANSRKIT"
 			newsignal.data["sender"] = src.net_id
-			radio_connection.post_signal(src, newsignal)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "ruck")
 		if(world.time - boot_time <= 3 SECONDS)
 			for (var/datum/electronics/scanned_item/O in originalData.scanned_items)
 				ruck_controls.scan_in(O.name, O.item_type, O.mats, O.locked) //Copy the database on digest so we never waste the effort
@@ -630,7 +631,7 @@
 	var/command = signal.data["command"]
 
 	//LOCK can come in encrypted
-	if(signal.data["address_1"] == "TRANSRKIT" && signal.data["acc_code"] == netpass_heads && !isnull(signal.data["DATA"]) && !isnull(signal.data["LOCK"]))
+	if(signal.data["address_tag"] == "TRANSRKIT" && signal.data["acc_code"] == netpass_heads && !isnull(signal.data["DATA"]) && !isnull(signal.data["LOCK"]))
 		var/targetitem = signal.data["DATA"]
 		var/targetlock = signal.data["LOCK"]
 		if (istext(targetlock))
@@ -651,18 +652,17 @@
 								//Any replies in receive signal need a delay
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
-			newsignal.transmission_method = TRANSMISSION_RADIO
 			newsignal.data["command"] = "ping_reply"
 			newsignal.data["device"] = "NET_RKANALZYER"
 			newsignal.data["netid"] = src.net_id
 			newsignal.data["address_1"] = target
 			newsignal.data["sender"] = src.net_id
-			radio_connection.post_signal(src, newsignal)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "ruck")
 
 		return
 
 	//Signals that take TRANSRKIT or the net_id
-	if (signal.data["address_1"] == "TRANSRKIT" || signal.data["address_1"] == src.net_id)
+	if (signal.data["address_tag"] == "TRANSRKIT" || signal.data["address_1"] == src.net_id)
 		if (!isnull(signal.data_file))
 			process_upload(signal)
 			return
@@ -671,7 +671,7 @@
 		return
 
 	//Signals that take TRANSRKIT
-	if(signal.data["address_1"] == "TRANSRKIT")
+	if(signal.data["address_tag"] == "TRANSRKIT")
 
 		if(command == "SYNCREPLY" && target)
 			if (target > host_ruck) //pick the highest net_id
@@ -698,11 +698,10 @@
 			SPAWN_DBG(0.5 SECONDS)
 				var/datum/signal/newsignal = get_free_signal()
 				newsignal.source = src
-				newsignal.transmission_method = TRANSMISSION_RADIO
 				newsignal.data["command"] = "SYNCREPLY"
-				newsignal.data["address_1"] = "TRANSRKIT"
+				newsignal.data["address_tag"] = "TRANSRKIT"
 				newsignal.data["sender"] = src.net_id
-				radio_connection.post_signal(src, newsignal)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "ruck")
 
 			return
 	//And anything down here runs if addressed by only net_id
@@ -823,14 +822,13 @@
 					updateDialog()
 					var/datum/signal/newsignal = get_free_signal()
 					newsignal.source = src
-					newsignal.transmission_method = TRANSMISSION_RADIO
-					newsignal.data["address_1"] = "TRANSRKIT"
+					newsignal.data["address_tag"] = "TRANSRKIT"
 					newsignal.data["acc_code"] = netpass_heads
 					newsignal.data["LOCK"] = O.locked
 					newsignal.data["DATA"] = O.name
 					newsignal.data["sender"] = src.net_id
 					newsignal.encryption = "ERR_12845_NT_SECURE_PACKET:"
-					radio_connection.post_signal(src, newsignal)
+					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "ruck")
 
 	else
 		usr.Browse(null, "window=rkit")
@@ -859,7 +857,8 @@
 		playsound(user.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		user.visible_message("<B>[user.name]</B> deconstructs [target].")
 
-		var/obj/item/electronics/frame/F = new(get_turf(target))
+		var/obj/item/electronics/frame/F = new
+		var/turf/target_loc = get_turf(target)
 		F.name = "[target.name] frame"
 		if(O.deconstruct_flags & DECON_DESTRUCT)
 			F.store_type = O.type
@@ -867,6 +866,8 @@
 		else
 			F.deconstructed_thing = target
 			O.set_loc(F)
+		// move frame to the location after object is gone, so crushers do not crusher themselves
+		F.set_loc(target_loc)
 		F.viewstat = 2
 		F.secured = 2
 		F.icon_state = "dbox_big"

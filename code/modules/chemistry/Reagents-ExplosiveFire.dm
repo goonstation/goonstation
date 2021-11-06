@@ -140,7 +140,7 @@ datum
 					if(method == TOUCH)
 						var/mob/living/L = M
 						var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
-						L.changeStatus("slowed", 2 SECONDS, optional = 4)
+						L.changeStatus("slowed", 4 SECONDS, optional = 4)
 						if(istype(L) && burn) //double up on the extra burny, not blockable by biosuits/etc either
 							L.changeStatus("burning", src.volume SECONDS)
 							burn.counter += 5 * src.volume

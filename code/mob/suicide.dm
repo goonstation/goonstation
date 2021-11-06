@@ -49,6 +49,12 @@
 		boutput(src, "You find yourself unable to go through with killing yourself!")
 		return
 
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(HAS_MOB_PROPERTY(H, PROP_NO_SELF_HARM))
+			boutput(H, "Your cannot bring yourself to commit suicide!")
+			return
+
 
 
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")

@@ -297,6 +297,7 @@ var/global
 	farty_party = 0
 	deep_farting = 0
 	no_emote_cooldowns = 0
+	spooky_light_mode = 0
 	// Default ghost invisibility. Set when the game is over
 	ghost_invisibility = INVIS_GHOST
 
@@ -338,6 +339,7 @@ var/global
 		"deleted" = list (  ),
 		"vehicle" = list (  ),
 		"tgui" = list (), //me 2
+		"computers" = list(),
 		"audit" = list()//im a rebel, i refuse to add that gross SPACING
 	)
 	savefile/compid_file 	//The file holding computer ID information

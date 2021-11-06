@@ -50,6 +50,7 @@ var/list/server_toggles_tab_verbs = list(\
 /client/proc/toggle_jobban_announcements,\
 /client/proc/toggle_banlogin_announcements,\
 /client/proc/toggle_literal_disarm,\
+/client/proc/toggle_spooky_light_plane,\
 /datum/admins/proc/toggleooc,\
 /datum/admins/proc/togglelooc,\
 /datum/admins/proc/toggleoocdead,\
@@ -972,3 +973,23 @@ var/global/IP_alerts = 1
 #endif
 	else
 		boutput(src, "You cannot perform this action. You must be of a higher administrative rank!")
+
+/client/proc/toggle_spooky_light_plane()
+	set name = "Toggle Spooky Light Mode"
+	set desc = "toggle thresholded lighting plane"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	admin_only
+
+	var/inp = input(usr, "What lighting threshold to set? 0 - 255", "What lighting threshold to set? 0 - 255. Cancel to disable.", 255 - 24) as num|null
+	if(!isnull(inp))
+		spooky_light_mode = 255 - inp
+	else // turn off
+		spooky_light_mode = 0
+	for(var/client/C in clients)
+		var/atom/plane_parent = C.get_plane(PLANE_LIGHTING)
+		animate(plane_parent, time=4 SECONDS, color=spooky_light_mode ? list(255, 0, 0, 0, 255, 0, 0, 0, 255, -spooky_light_mode, -spooky_light_mode - 1, -spooky_light_mode - 2) : null)
+		animate(C, time=4 SECONDS, color=spooky_light_mode ? "#AAAAAA" : null)
+
+	logTheThing("admin", usr, null, "toggled Spooky Light Mode [spooky_light_mode ? "on at threshold [inp]" : "off"]")
+	logTheThing("diary", usr, null, "toggled Spooky Light Mode [spooky_light_mode ? "on at threshold [inp]" : "off"]")
+	message_admins("[key_name(usr)] toggled Spooky Light Mode [spooky_light_mode ? "on at threshold [inp]" : "off"]")

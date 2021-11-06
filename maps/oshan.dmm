@@ -48373,6 +48373,18 @@
 /obj/item/chem_grenade/pepper,
 /obj/item/chem_grenade/pepper,
 /obj/item/chem_grenade/pepper,
+/obj/item/breaching_charge{
+	pixel_x = -2;
+	pixel_y = -5
+	},
+/obj/item/breaching_charge{
+	pixel_x = -2;
+	pixel_y = -5
+	},
+/obj/item/breaching_charge{
+	pixel_x = -2;
+	pixel_y = -5
+	},
 /turf/simulated/floor/redblack/corner{
 	dir = 1
 	},

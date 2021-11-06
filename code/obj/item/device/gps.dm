@@ -14,9 +14,8 @@
 	m_amt = 50
 	g_amt = 100
 	mats = 2
-	var/frequency = "1453"
+	var/frequency = FREQ_GPS
 	var/net_id
-	var/datum/radio_frequency/radio_control
 
 	proc/get_z_info(var/turf/T)
 		. =  "Landmark: Unknown"
@@ -210,9 +209,8 @@
 		..()
 		serial = rand(4201,7999)
 		START_TRACKING
-		if (radio_controller)
-			src.net_id = generate_net_id(src)
-			radio_control = radio_controller.add_object(src, "[frequency]")
+		src.net_id = generate_net_id(src)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
 	get_desc(dist, mob/user)
 		. = "<br>Its serial code is [src.serial]-[identifier]."
@@ -263,7 +261,7 @@
 		reply.data["coords"] = "[T.x],[T.y]"
 		reply.data["location"] = "[src.get_z_info(T)]"
 		reply.data["distress_alert"] = "[distressAlert]"
-		radio_control.post_signal(src, reply)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply)
 
 	process()
 		if(!active || !tracking_target)
@@ -281,8 +279,6 @@
 
 	disposing()
 		STOP_TRACKING
-		if (radio_controller)
-			radio_controller.remove_object(src, "[src.frequency]")
 		..()
 
 	receive_signal(datum/signal/signal)
@@ -328,7 +324,7 @@
 					reply.data["distress"] = "[src.distress]"
 				else
 					return //COMMAND NOT RECOGNIZED
-			radio_control.post_signal(src, reply)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply)
 
 		else if (lowertext(signal.data["address_1"]) == "ping" && src.allowtrack)
 			var/datum/signal/pingsignal = get_free_signal()
@@ -339,6 +335,5 @@
 			pingsignal.data["command"] = "ping_reply"
 			pingsignal.data["data"] = "[src.serial]-[src.identifier]"
 			pingsignal.data["distress"] = "[src.distress]"
-			pingsignal.transmission_method = TRANSMISSION_RADIO
 
-			radio_control.post_signal(src, pingsignal)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal)

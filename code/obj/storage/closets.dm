@@ -283,14 +283,14 @@
 //A locker that traps folks.  I guess it's haunted.
 /obj/storage/closet/haunted
 	var/throw_strength = 100
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	New()
 		..()
 		src.open()
 		return
 
-	HasEntered(atom/movable/A as mob|obj, atom/OldLoc)
+	Crossed(atom/movable/A as mob|obj)
 		if (!src.open || src.welded || !isliving(A))
 			return ..()
 
@@ -307,8 +307,8 @@
 		if (!istype(M) || M.loc != src)
 			return
 
-		if (M.throwing || istype(OldLoc, /turf/space) || (M.m_intent != "walk"))
-			var/flingdir = turn(get_dir(src.loc, OldLoc), 180)
+		if (M.throwing || istype(A.last_turf, /turf/space) || (M.m_intent != "walk"))
+			var/flingdir = turn(get_dir(src.loc, A.last_turf), 180)
 			src.throw_at(get_edge_target_turf(src, flingdir), throw_strength, 1)
 			return
 
