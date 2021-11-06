@@ -37,6 +37,8 @@
 	var/welded_icon_state = "welded"
 	has_crush = 0
 	cant_emag = 1
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
+	mats = 30 // maybe a bit high??
 
 /obj/machinery/door/firedoor/border_only
 	name = "Firelock"
