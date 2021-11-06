@@ -2,6 +2,9 @@
 (t)fri nov 05 21
 (u)tarmunora
 (e)⚖|balance
+(+)Tweaked a number of nukeop gun/bullet numbers
+(u)tarmunora
+(e)⚖|balance
 (+)Power sinks now kick back ~20% APC charge when disconnected.
 (u)FlamingLily
 (p)6543
