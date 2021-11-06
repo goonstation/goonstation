@@ -1161,7 +1161,7 @@
 			if(ishuman(L))
 				H = L
 			var/obj/item/held = L.equipped()
-			if(istype(held, /obj/item/mining_tool) || istype(held, /obj/item/mining_tools) || (isnull(held) && H && (H.is_hulk() || istype(H.gloves, /obj/item/clothing/gloves/concussive))))
+			if(istype(held, /obj/item/item_holder/mining_tool) || istype(held, /obj/item/mining_tool) || istype(held, /obj/item/mining_tools) || (isnull(held) && H && (H.is_hulk() || istype(H.gloves, /obj/item/clothing/gloves/concussive))))
 				L.click(src, list(), null, null)
 			return
 

@@ -39,7 +39,65 @@
 			else return //no sparks for unintended items
 			elecflash(user)
 
+/// Allows a borg to use this to hold items of the specified type and possibly use them
+/obj/item/item_holder
+	name = "\improper item holder"
+	desc = "Holds some item."
+	icon = 'icons/obj/items/device.dmi'
+	icon_state = "atmosporter"
+	flags = SUPPRESSATTACK
+	/// the valid item types
+	var/item_types = list()
+	/// the held item
+	var/obj/item/held_item
+	/// can the item be used
+	var/use_item = TRUE
 
+	get_desc()
+		. += "HELD ITEM: [held_item ? held_item : "NONE"]"
+
+	afterattack(obj/item/target, mob/user, reach, params)
+		src.item_sanity()
+		// picking up items
+		if (!held_item && isitem(target) && !target.anchored && !target.cant_drop)
+			if(is_valid_item(target))
+				src.overlays += held_item
+				target.set_loc(src)
+				held_item = target
+				boutput(user, "You grip the [target] in your [src].")
+				return
+			else
+				boutput(user, "The [target] won't fit into the [src] properly!")
+				return
+		// using items
+		if (use_item && held_item)
+			target.Attackby(held_item, user)
+
+	attack_self(mob/user)
+		src.item_sanity()
+		// releasing held item
+		if (held_item)
+			boutput(user, "You release the [held_item] from your [src].")
+			held_item.set_loc(get_turf(user))
+			src.overlays -= held_item
+
+	/// in case the held item is used up/deleted/etc, this will reset the held_item
+	proc/item_sanity()
+		if (held_item && (held_item.disposed || held_item.loc != src))
+			src.overlays -= held_item
+			held_item = null
+
+	proc/is_valid_item(obj/item/I)
+		for (var/T in item_types)
+			if (istype(I, T))
+				return TRUE
+		return FALSE
+
+/obj/item/item_holder/mining_tool
+	name = "\improper mining tool holder"
+	desc = "A small device designed to be able to handle a variety of mining tools."
+	// mining_tool is the generic ones, mining_tools are the matsci ones >.>
+	item_types = list(/obj/item/mining_tools, /obj/item/mining_tool)
 
 /obj/item/lamp_manufacturer
 	name = "miniaturized lamp manufacturer"
