@@ -685,7 +685,7 @@
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (!O || !user)
 			return
-		if (get_dist(src, user) > 1 || get_dist(user, O) > 1)
+		if (!in_interact_range(src, user)  || !IN_RANGE(user, O, 1))
 			return
 		if (!isitem(O))
 			return
