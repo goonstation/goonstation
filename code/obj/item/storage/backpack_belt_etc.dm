@@ -744,7 +744,7 @@
 	item_state = "smartgun_belt"
 	slots = 5
 	in_list_or_max = 0
-	can_hold = list(/obj/item/gun/kinetic/pistol/smart/mkII, /obj/item/ammo/bullets/bullet_9mm/smartgun)
+	can_hold = list(/obj/item/gun/kinetic/pistol/smart/mkII, /obj/item/ammo/bullets/bullet_22/smartgun)
 	spawn_contents = list(/obj/item/gun/kinetic/pistol/smart/mkII, /obj/item/ammo/bullets/bullet_22/smartgun = 4)
 
 
