@@ -11,6 +11,7 @@ var/list/observers = list()
 
 	New()
 		..()
+		APPLY_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)
 		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
 		observers += src
 		mobs += src
@@ -152,3 +153,29 @@ var/list/observers = list()
 			qdel(src)
 
 
+/mob/dead/target_observer/slasher_ghost
+	name = "spooky not-quite ghost"
+	var/start_time
+
+	New()
+		..()
+		start_time = world.time
+
+
+	stop_observing()
+		return
+
+	proc/slasher_ghostize()
+		RETURN_TYPE(/mob/dead/observer)
+		if(src.key || src.client)
+			var/mob/dead/observer/O = new/mob/dead/observer(src)
+			O.bioHolder.CopyOther(src.bioHolder, copyActiveEffects = 0)
+			if (client) client.color = null
+			setdead(O)
+
+			src.mind?.transfer_to(O)
+			src.ghost = O
+
+			O.update_item_abilities()
+			return O
+		return null

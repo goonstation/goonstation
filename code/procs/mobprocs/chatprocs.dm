@@ -23,7 +23,7 @@
 		M = src
 
 	var/current_time = TIME
-	if (M)
+	if (M && isalive(M))
 		M.speech_bubble.icon_state = "typing"
 		UpdateOverlays(M.speech_bubble, "speech_bubble")
 		M.last_typing = current_time
@@ -68,6 +68,21 @@
 /mob/verb/say_radio()
 	set name = "say_radio"
 	set hidden = 1
+
+/mob/verb/say_main_radio()
+	set name = "say_main_radio"
+	set hidden = 1
+
+/mob/living/say_main_radio()
+	set name = "say_main_radio"
+	set hidden = 1
+	var/text = input("", "Speaking on the main radio frequency") as null|text
+	if (client.preferences.auto_capitalization)
+		var/i = 1
+		while (copytext(text, i, i+1) == " ")
+			i++
+		text = capitalize(copytext(text, i))
+	src.say_verb(";" +text)
 
 /mob/living/say_radio()
 	set name = "say_radio"

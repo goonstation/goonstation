@@ -36,6 +36,7 @@
 	var/poison_depletion = 1
 	var/heat_divisor = 15
 	var/temp_tolerance = 40
+	var/gas_impermeable = FALSE
 	mat_changename = 0
 	mat_changedesc = 0
 	var/runOnLife = 0 //Should this obj run Life?
@@ -56,10 +57,6 @@
 		healthbar.owner = src
 		healthbar.onStart()
 		healthbar.onUpdate()
-
-		if (istype(src.loc,/turf))
-			if (istype(src.loc.loc,/area))
-				src.loc.loc.Entered(src)
 
 		SPAWN_DBG(0.1 SECONDS)
 			for (var/mob/living/carbon/human/H in src.loc)
@@ -84,6 +81,8 @@
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 		. = ..()
 		var/obj/projectile/P = mover
+		if((!mover || air_group) && src.gas_impermeable)
+			return 0
 		if (istype(P) && P.proj_data) //Wire note: Fix for Cannot read null.type
 			if (P.proj_data.type == /datum/projectile/slime)
 				return 1
@@ -168,9 +167,6 @@
 				gen_rate_value = 0
 			overmind.spread_mitigation -= spread_value
 		var/turf/T = get_turf(src)
-		if (istype(src.loc,/turf))
-			if (istype(src.loc.loc,/area))
-				src.loc.loc.Exited(src)
 		healthbar?.onDelete()
 		qdel(healthbar)
 		healthbar = null
@@ -1061,6 +1057,7 @@
 	opacity = 1
 	health = 85
 	health_max = 85
+	gas_impermeable = TRUE
 
 	bullet_act(var/obj/projectile/P)
 		if (P.proj_data.damage_type == D_ENERGY)
@@ -1224,6 +1221,7 @@
 	health = 75
 	health_max = 75
 	can_absorb = 0
+	gas_impermeable = TRUE
 	flags = ALWAYS_SOLID_FLUID
 
 	take_damage(var/amount,var/damage_mult = 1,var/damtype,var/mob/user)
@@ -1245,6 +1243,7 @@
 	special_icon = 1
 	armor = 1
 	can_absorb = 0
+	gas_impermeable = TRUE
 
 	take_damage(amount, mult, damtype, mob/user)
 		if (damtype == "burn")

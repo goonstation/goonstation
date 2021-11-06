@@ -141,5 +141,3 @@
 
 	proc/get_fields_copy()
 		return fields.Copy()
-
-/mob/var/datum/record_database/rdb = new

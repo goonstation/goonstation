@@ -795,7 +795,7 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "ibeam"
 	anchored = 1
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	var/obj/item/mechanics/triplaser/holder
 
@@ -809,7 +809,8 @@
 		else
 			holder.tripped()
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if (isobserver(AM) || !AM.density) return
 		if (!istype(AM, /obj/mechbeam))
 			SPAWN_DBG(0) tripped()
@@ -928,7 +929,7 @@
 	can_rotate = 1
 	cabinet_banned = true // non-functional
 	var/active = 0
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	New()
 		..()
@@ -970,7 +971,8 @@
 		thr?.user = (owner || usr)
 		return
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if(level == 2) return
 		if(active)
 			throwstuff(AM)
@@ -1742,11 +1744,10 @@
 
 	var/net_id = null //What is our ID on the network?
 	var/last_ping = 0
-	var/range = 0
+	var/range = null
 
 	var/noise_enabled = true
-	var/frequency = 1419
-	var/datum/radio_frequency/radio_connection
+	var/frequency = FREQ_FREE
 
 	get_desc()
 		. += {"<br><span class='notice'>[forward_all ? "Sending full unprocessed Signals.":"Sending only processed sendmsg and pda Message Signals."]<br>
@@ -1762,8 +1763,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle NetID Filtering","toggleAddressFiltering")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Forward All","toggleForwardAll")
 
-		if(radio_controller)
-			set_frequency(frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("main", frequency)
 
 		src.net_id = format_net_id("\ref[src]")
 
@@ -1780,6 +1780,7 @@
 
 	proc/toggleAddressFiltering(obj/item/W as obj, mob/user as mob)
 		only_directed = !only_directed
+		get_radio_connection_by_id(src, "main").update_all_hearing(!only_directed)
 		boutput(user, "[only_directed ? "Now only reacting to Messages directed at this Component":"Now reacting to ALL Messages."]")
 		tooltip_rebuild = 1
 		return 1
@@ -1808,7 +1809,6 @@
 
 		sendsig.source = src
 		sendsig.data["sender"] = src.net_id
-		sendsig.transmission_method = TRANSMISSION_RADIO
 
 		for(var/X in converted)
 			sendsig.data["[X]"] = "[converted[X]]"
@@ -1822,7 +1822,7 @@
 				playsound(src, "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
 				SPAWN_DBG(WIFI_NOISE_COOLDOWN)
 					src.noise_enabled = true
-			src.radio_connection.post_signal(src, sendsig, src.range)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, sendsig, src.range, "main")
 
 		animate_flash_color_fill(src,"#FF0000",2, 2)
 		return
@@ -1841,7 +1841,6 @@
 				pingsignal.data["address_1"] = signal.data["sender"]
 				pingsignal.data["command"] = "ping_reply"
 				pingsignal.data["data"] = "Wifi Component"
-				pingsignal.transmission_method = TRANSMISSION_RADIO
 
 				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
 					if(src.noise_enabled)
@@ -1849,7 +1848,7 @@
 						playsound(src, "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
 						SPAWN_DBG(WIFI_NOISE_COOLDOWN)
 							src.noise_enabled = true
-					src.radio_connection.post_signal(src, pingsignal, src.range)
+					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal, src.range)
 
 			if(signal.data["command"] == "text_message" && signal.data["batt_adjust"] == netpass_syndicate)
 				var/packets = ""
@@ -1892,9 +1891,8 @@
 		if(!radio_controller) return
 		tooltip_rebuild = 1
 		new_frequency = clamp(new_frequency, 1000, 1500)
-		radio_controller.remove_object(src, "[frequency]")
 		frequency = new_frequency
-		radio_connection = radio_controller.add_object(src, "[frequency]")
+		get_radio_connection_by_id(src, "main").update_frequency(frequency)
 
 	updateIcon()
 		icon_state = "[under_floor ? "u":""]comp_radiosig"
@@ -2238,6 +2236,7 @@
 	cabinet_banned = true // potentially abusable. b&
 	var/teleID = "tele1"
 	var/send_only = 0
+	var/image/telelight
 
 	get_desc()
 		. += {"<br><span class='notice'>Current ID: [teleID].<br>
@@ -2250,6 +2249,9 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"setID", "setidmsg")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Teleporter ID","setID")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Send-only Mode","toggleSendOnly")
+		telelight = image('icons/misc/mechanicsExpansion.dmi', icon_state="telelight")
+		telelight.plane = PLANE_SELFILLUM
+		telelight.alpha = 180
 
 	disposing()
 		STOP_TRACKING
@@ -2270,9 +2272,9 @@
 	proc/toggleSendOnly(obj/item/W as obj, mob/user as mob)
 		send_only = !send_only
 		if(send_only)
-			src.overlays += image('icons/misc/mechanicsExpansion.dmi', icon_state = "comp_teleoverlay")
+			src.UpdateOverlays(image('icons/misc/mechanicsExpansion.dmi', icon_state = "comp_teleoverlay"), "sendonly")
 		else
-			src.overlays.Cut()
+			src.UpdateOverlays(null, "sendonly")
 		boutput(user, "Send-only Mode now [send_only ? "on":"off"]")
 		tooltip_rebuild = 1
 		return 1
@@ -2289,7 +2291,7 @@
 		if(level == 2 || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		LIGHT_UP_HOUSING
 		flick("[under_floor ? "u":""]comp_tele1", src)
-		particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(get_turf(src.loc)))
+		particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(get_turf(src.loc))).Run()
 		playsound(src.loc, "sound/mksounds/boost.ogg", 50, 1)
 		var/list/destinations = new/list()
 
@@ -2309,7 +2311,7 @@
 		if(length(destinations))
 			var/atom/picked = pick(destinations)
 			var/count_sent = 0
-			particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(get_turf(picked.loc)))
+			particleMaster.SpawnSystem(new /datum/particleSystem/tpbeamdown(get_turf(picked.loc))).Run()
 			for(var/atom/movable/M in src.loc)
 				if(M == src || M.invisibility || M.anchored) continue
 				logTheThing("combat", M, null, "entered [src] at [log_loc(src)] and teleported to [log_loc(picked)]")
@@ -2323,6 +2325,10 @@
 
 	updateIcon()
 		icon_state = "[under_floor ? "u":""]comp_tele"
+		if(src.level == 1)
+			src.UpdateOverlays(telelight, "telelight")
+		else
+			src.UpdateOverlays(null, "telelight")
 		return
 
 /obj/item/mechanics/ledcomp
@@ -2457,7 +2463,6 @@
 	icon_state = "comp_radioscanner"
 
 	var/frequency = R_FREQ_DEFAULT
-	var/datum/radio_frequency/radio_connection
 
 	get_desc()
 		. += "<br><span style=\"color:blue\">Current Frequency: [frequency]</span>"
@@ -2466,10 +2471,7 @@
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set frequency", "setfreq")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Frequency","setFreqMan")
-
-
-		if(radio_controller)
-			set_frequency(frequency)
+		// TODO: analog registration
 
 	proc/setFreqMan(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user, "New frequency ([R_FREQ_MINIMUM] - [R_FREQ_MAXIMUM]):", "Enter new frequency", frequency) as num
@@ -2487,15 +2489,13 @@
 		var/newfreq = text2num(input.signal)
 		if (!newfreq) return
 		set_frequency(newfreq)
-		return
 
 	proc/set_frequency(new_frequency)
 		if (!radio_controller) return
 		new_frequency = sanitize_frequency(new_frequency)
 		componentSay("New frequency: [new_frequency]")
-		radio_controller.remove_object(src, "[frequency]")
 		frequency = new_frequency
-		radio_connection = radio_controller.add_object(src, "[frequency]")
+		// TODO: analog registration
 		tooltip_rebuild = 1
 	proc/hear_radio(atom/movable/AM, msg, lang_id)
 		if (level == 2) return
@@ -2558,6 +2558,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
 
 	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if (level == 2 || isobserver(AM))
 			return
 		if (limiter && (ticker.round_elapsed_ticks < limiter))

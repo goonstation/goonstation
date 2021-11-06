@@ -2,6 +2,19 @@
 	var/datum/pronouns/pronouns = get_singleton(P)
 	return pronouns.choosable
 
+/proc/choose_pronouns(mob/user, message, title, default="None")
+	RETURN_TYPE(/datum/pronouns)
+	var/list/types = filtered_concrete_typesof(/datum/pronouns, /proc/pronouns_filter_is_choosable)
+	var/list/choices = list()
+	for(var/t in types)
+		var/datum/pronouns/pronouns = get_singleton(t)
+		choices[pronouns.name] = pronouns
+	choices["None"] = null
+	var/choice = input(user, message, title, default) as null|anything in choices
+	if(isnull(choice))
+		return choice
+	return choices[choice]
+
 ABSTRACT_TYPE(/datum/pronouns)
 /datum/pronouns
 	var/name
@@ -13,6 +26,17 @@ ABSTRACT_TYPE(/datum/pronouns)
 	var/reflexive
 	var/pluralize = FALSE
 	var/choosable = TRUE
+
+	proc/next_pronouns()
+		RETURN_TYPE(/datum/pronouns)
+		var/list/types = filtered_concrete_typesof(/datum/pronouns, /proc/pronouns_filter_is_choosable)
+		var/selected
+		for (var/i = 1, i <= length(types), i++)
+			var/datum/pronouns/pronouns = get_singleton(types[i])
+			if (src == pronouns)
+				selected = i
+				break
+		return get_singleton(types[selected < length(types) ? selected + 1 : 1])
 
 /datum/pronouns/theyThem
 	name = "they/them"
@@ -51,4 +75,14 @@ ABSTRACT_TYPE(/datum/pronouns)
 	posessivePronoun = "ours"
 	reflexive = "ourself"
 	pluralize = TRUE
+	choosable = FALSE
+
+/datum/pronouns/itIts
+	name = "it/its"
+	preferredGender = "neuter"
+	subjective = "it"
+	objective = "its"
+	possessive = "its"
+	posessivePronoun = "its"
+	reflexive = "itself"
 	choosable = FALSE

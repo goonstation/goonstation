@@ -8,7 +8,7 @@
 	anchored = 1.0
 	var/portal_lums = 2
 	var/datum/light/light
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 /obj/portal/New()
 	..()
@@ -27,17 +27,14 @@
 		return
 	return
 
-/obj/portal/HasEntered(AM as mob|obj)
+/obj/portal/Crossed(atom/movable/AM as mob|obj)
+	..()
 	SPAWN_DBG(0)
 		src.teleport(AM)
-		return
-	return
 
 /obj/portal/attack_hand(mob/M as mob)
 	SPAWN_DBG(0)
 		src.teleport(M)
-		return
-	return
 
 /obj/portal/disposing()
 	target = null
@@ -109,18 +106,15 @@
 			return
 		return
 
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		SPAWN_DBG(0)
 			if(istype(AM,/mob))
 				var/mob/M = AM
 				M.ghostize()
 			qdel(src)
-			return
-		return
 
 	attack_hand(mob/M as mob)
 		SPAWN_DBG(0)
 			M.ghostize()
 			qdel(src)
-			return
-		return

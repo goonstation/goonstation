@@ -353,7 +353,7 @@
 		if (!src) return
 		if (!src.on)
 			src.on = 1
-			src.firesource = TRUE
+			src.firesource = FIRESOURCE_OPEN_FLAME
 			src.hit_type = DAMAGE_BURN
 			src.force = 3
 			src.icon_state = src.icon_on

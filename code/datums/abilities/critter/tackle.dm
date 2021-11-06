@@ -5,6 +5,7 @@
 	name = "Tackle"
 	desc = "Tackle a mob, making them fall over."
 	cooldown = 150
+	icon_state = "tackle"
 	targeted = 1
 	target_anything = 1
 

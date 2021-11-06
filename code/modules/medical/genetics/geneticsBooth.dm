@@ -96,6 +96,8 @@
 		workingoverlay.pixel_y = 2
 		workingoverlay.layer = src.layer + 0.1
 
+		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+
 	disposing()
 		STOP_TRACKING
 		if(occupant)
@@ -333,7 +335,6 @@
 						M.show_text("No bank account found for [perp_id.registered]!", "blue")
 
 	proc/notify_sale(var/budget_inc, var/split_with = 0)
-		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
 
 		var/string = "Notification: [budget_inc] credits earned from last booth sale."
@@ -341,22 +342,17 @@
 			string += "Splitting half of profits with [split_with]."
 
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT", "group"=list(MGD_MEDRESEACH, MGA_SALES), "sender"="00000000", "message"=string)
-		pdaSignal.transmission_method = TRANSMISSION_RADIO
-		if(transmit_connection != null)
-			transmit_connection.post_signal(src, pdaSignal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal)
 
 		//playsound BEEP BEEEEEEEEEEP
 
 	proc/notify_empty(var/datum/geneboothproduct/GBP)
-		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
 
 		var/string = "Notification: [GBP.name] has sold out!"
 
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT", "group"=list(MGD_MEDRESEACH, MGA_SALES), "sender"="00000000", "message"=string)
-		pdaSignal.transmission_method = TRANSMISSION_RADIO
-		if(transmit_connection != null)
-			transmit_connection.post_signal(src, pdaSignal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal)
 
 	CanPass(var/mob/M, var/atom/oldloc)
 		.= ..()

@@ -102,6 +102,12 @@ ABSTRACT_TYPE(/datum/artifact/)
 	proc/post_setup()
 		SHOULD_CALL_PARENT(TRUE)
 		src.artitype.post_setup(holder)
+		OTHER_START_TRACKING_CAT(holder, TR_CAT_ARTIFACTS)
+
+	disposing()
+		OTHER_STOP_TRACKING_CAT(holder, TR_CAT_ARTIFACTS)
+		holder = null
+		..()
 
 	/// Whether or not the artifact is allowed to activate, usually just a sanity check, but artifact types can add more conditions (like cooldowns).
 	proc/may_activate(var/obj/O)

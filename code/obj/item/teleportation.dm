@@ -9,7 +9,7 @@ HAND_TELE
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "locator"
 	var/temp = null
-	var/frequency = 1451
+	var/frequency = FREQ_TRACKING_IMPLANT
 	var/broadcasting = null
 	var/listening = 1.0
 	flags = FPRINT | TABLEPASS| CONDUCT

@@ -518,9 +518,9 @@ obj/decal/fakeobjects/teleport_pad
 	opacity = 0
 	anchored = 1
 	plane = PLANE_FLOOR
-	event_handler_flags = USE_HASENTERED
 
-/obj/decal/icefloor/HasEntered(var/atom/movable/AM)
+/obj/decal/icefloor/Crossed(atom/movable/AM)
+	..()
 	if (iscarbon(AM))
 		var/mob/M =	AM
 		// drsingh fix for undefined variable mob/living/carbon/monkey/var/shoes
@@ -528,7 +528,7 @@ obj/decal/fakeobjects/teleport_pad
 		if (M.getStatusDuration("weakened") || M.getStatusDuration("stunned") || M.getStatusDuration("frozen"))
 			return
 
-		if (!(M.bioHolder?.HasEffect("cold_resist") > 1) && M.slip(0))
+		if (!(M.bioHolder?.HasEffect("cold_resist") > 1) && M.slip(walking_matters = 1))
 			boutput(M, "<span class='alert'>You slipped on [src]!</span>")
 			if (prob(5))
 				M.TakeDamage("head", 5, 0, 0, DAMAGE_BLUNT)

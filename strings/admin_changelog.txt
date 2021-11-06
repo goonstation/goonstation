@@ -1,3 +1,13 @@
+(t)sat oct 31 21
+(u)pali
+(*)Incoming mainframe commands are now logged (usually) in a new <i>computers</i> log cateogry
+(t)sat oct 30 21
+(u)Zonespace
+(*)New admin-spawn antagonist, the Slasher! Make someone a slasher through the player panel, like how you would do it for floor goblins or Macho Men.
+(+)See #6094 for details.
+(t)sat oct 16 21
+(u)pali
+(*)You can now choose an "Until Appeal" ban duration. It's the same thing as "Permanent" but the message will tell the person to appel. The "Permanent" option now tells people to wait 30 days until appealing.
 (t)fri oct 15 21
 (u)Zamujasa
 (*)The "View Player Notes" function now has a "Set Login Notice" option.

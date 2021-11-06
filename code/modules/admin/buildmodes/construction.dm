@@ -43,7 +43,7 @@ change the direction of created objects.<br>
 			return
 		else if(istype(object,/turf/simulated/floor))
 			var/turf/T = object
-			T.ReplaceWithSpace()
+			T.ReplaceWithSpaceForce()
 			return
 		else if(istype(object,/turf/simulated/wall/r_wall) || istype(object, /turf/simulated/wall/auto/reinforced))
 			var/turf/T = object
