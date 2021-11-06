@@ -30237,6 +30237,7 @@
 /obj/table/wood/round/auto,
 /obj/item/stamp/hop,
 /obj/item/device/gps,
+/obj/item/acesscomputerunfolder,
 /obj/item/storage/secure/ssafe{
 	pixel_x = 26
 	},
