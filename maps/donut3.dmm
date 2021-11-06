@@ -20511,6 +20511,7 @@
 /obj/machinery/light/lamp{
 	switchon = 1
 	},
+/obj/item/paper/CrashedHopShuttle,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "fGh" = (
