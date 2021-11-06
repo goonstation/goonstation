@@ -1,4 +1,3 @@
-var/global/list/hellbans = null
 
 /client
 	var
@@ -8,8 +7,6 @@ var/global/list/hellbans = null
 		spiking = 0
 
 	New()
-		if (!hellbans)
-			hellbans = dd_file2list("strings/hellbans.txt")
 		if (hellbans && (src.ckey in hellbans))
 			hellbanned = 1
 		..()
