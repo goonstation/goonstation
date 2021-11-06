@@ -30607,6 +30607,7 @@
 /obj/item/storage/box/accessimp_kit{
 	pixel_y = 9
 	},
+/obj/item/paper/CrashedHopShuttle,
 /obj/item/pen/crayon/golden,
 /turf/simulated/floor/carpet{
 	icon_state = "green1"
@@ -46940,7 +46941,6 @@
 "ksd" = (
 /obj/table/wood/round/auto,
 /obj/item/item_box/gold_star,
-/obj/item/acesscomputerunfolder,
 /turf/simulated/floor/carpet{
 	icon_state = "green1"
 	},
