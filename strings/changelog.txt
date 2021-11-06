@@ -1,5 +1,13 @@
 
 (t)fri nov 05 21
+(u)zjdtmkhzt
+(p)6516
+(e)⚖|balance
+(+)Buffed artifact selling prices.
+(u)Zonespace
+(p)6576
+(e)⚖|balance
+(+)Powersinks now need tier 2 conductors and tier 2 metals to fabricate.
 (u)tarmunora
 (e)⚖|balance
 (+)Tweaked a number of nukeop gun/bullet numbers

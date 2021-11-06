@@ -37,7 +37,10 @@
 
 	var/points_per_crate = 10
 
-	var/artifact_resupply_amount = 0 // amount of artifacts in next resupply crate
+ 	/// amount of artifacts in next resupply crate
+	var/artifact_resupply_amount = 0
+	/// an artifact crate is already "on the way"
+	var/artifacts_on_the_way = FALSE
 
 	New()
 		..()
@@ -231,11 +234,11 @@
 		var/modifier = sell_art_datum.get_rarity_modifier()
 
 		// calculate price
-		price = modifier*modifier * 10000
+		price = modifier*modifier * 20000
 		var/obj/item/sticker/postit/artifact_paper/pap = locate(/obj/item/sticker/postit/artifact_paper/) in sell_art.vis_contents
 		if(pap?.lastAnalysis)
 			price *= pap.lastAnalysis
-		price += rand(-50,50)
+		price *= randfloat(0.9, 1.3)
 		price = round(price, 5)
 
 		// track score
@@ -244,22 +247,28 @@
 		if(pap?.lastAnalysis >= 3)
 			score_tracker.artifacts_correctly_analyzed++
 
+		// add to artifact resupply amount
+		src.artifact_resupply_amount += modifier*0.8*pap?.lastAnalysis*randfloat(1,1.2) // t1 artifact: 0.25 artifacts, t4 artifact: 1.53 artifacts
 		// send artifact resupply
-		if(prob(modifier*40*pap?.lastAnalysis)) // range from 0% to ~78% for fully researched t4 artifact
-			if(!src.artifact_resupply_amount)
-				SPAWN_DBG(rand(1,5) MINUTES)
-					// message
-					var/datum/signal/pdaSignal = get_free_signal()
-					pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGD_SCIENCE), "sender"="00000000", "message"="Notification: Incoming artifact resupply crate. ([artifact_resupply_amount] objects)")
-					radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
-					// actual shipment
-					var/obj/storage/crate/artcrate = new /obj/storage/crate()
-					artcrate.name = "Artifact Resupply Crate"
-					for(var/i = 0 to artifact_resupply_amount)
-						new /obj/artifact_type_spawner/vurdalak(artcrate)
-					artifact_resupply_amount = 0
-					shippingmarket.receive_crate(artcrate)
-			src.artifact_resupply_amount++
+		if(src.artifact_resupply_amount > 1 && !src.artifacts_on_the_way)
+			src.artifacts_on_the_way = TRUE
+			SPAWN_DBG(rand(1,5) MINUTES)
+				// handle the artifact amount
+				var/art_amount = round(artifact_resupply_amount)
+				artifact_resupply_amount -= art_amount
+				// message
+				var/datum/signal/pdaSignal = get_free_signal()
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGD_SCIENCE), "sender"="00000000", "message"="Notification: Incoming artifact resupply crate. ([art_amount] objects)")
+				radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
+				// make crate
+				var/obj/storage/crate/artcrate = new /obj/storage/crate()
+				artcrate.name = "Artifact Resupply Crate"
+				// populate with artifacts
+				for(var/i = 1 to art_amount)
+					new /obj/artifact_type_spawner/vurdalak(artcrate)
+				// ship out!
+				shippingmarket.receive_crate(artcrate)
+				src.artifacts_on_the_way = FALSE
 
 		// sell
 		wagesystem.shipping_budget += price
