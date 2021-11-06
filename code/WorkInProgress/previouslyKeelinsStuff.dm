@@ -560,7 +560,7 @@ var/reverse_mode = 0
 	opacity = 0
 	var/mob/living/carbon/human/my_target = null
 	var/weapon_name = null
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 /obj/fake_attacker/attackby()
 	step_away(src,my_target,2)
@@ -569,7 +569,8 @@ var/reverse_mode = 0
 	my_target.show_message("<span class='alert'><B>[src] has been attacked by [my_target] </B></span>", 1) //Lazy.
 	return
 
-/obj/fake_attacker/HasEntered(var/mob/M, somenumber)
+/obj/fake_attacker/Crossed(atom/movable/M)
+	..()
 	if (M == my_target)
 		step_away(src,my_target,2)
 		if (prob(30))

@@ -14,6 +14,7 @@
 /mob/living/intangible/flock/flockmind/New()
 	..()
 
+	APPLY_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)
 	src.abilityHolder = new /datum/abilityHolder/flockmind(src)
 	src.last_time = world.timeofday
 

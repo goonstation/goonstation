@@ -37,7 +37,7 @@
 	var/database_id = null
 	var/random_color = 1
 	var/drop_type = 0
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
 
 	New()
 		..()
@@ -92,7 +92,7 @@
 	//	return 1
 	else return 1
 
-/obj/sea_plant/HasExited(atom/movable/A as mob|obj)
+/obj/sea_plant/Uncrossed(atom/movable/A as mob|obj)
 	..()
 	if (ismob(A))
 		if (A.dir & SOUTH) //If mob exiting south, dont break perspective

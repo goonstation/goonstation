@@ -29905,26 +29905,6 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
-"bws" = (
-/obj/storage/secure/closet/command/hop,
-/obj/machinery/firealarm{
-	pixel_x = 1;
-	pixel_y = 26;
-	text = "NF"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/obj/item/clothing/suit/armor/hopcoat,
-/turf/simulated/floor/carpet{
-	dir = 1;
-	icon_state = "fgreen2"
-	},
-/area/station/bridge/hos)
 "bwu" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/market)
@@ -30628,14 +30608,6 @@
 	pixel_y = 9
 	},
 /obj/item/pen/crayon/golden,
-/turf/simulated/floor/carpet{
-	icon_state = "green1"
-	},
-/area/station/bridge/hos)
-"bxX" = (
-/obj/table/wood/round/auto,
-/obj/item/item_box/gold_star,
-/obj/item/acesscomputerunfolder,
 /turf/simulated/floor/carpet{
 	icon_state = "green1"
 	},
@@ -46524,6 +46496,26 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/radio/lab)
+"hKS" = (
+/obj/storage/secure/closet/command/hop,
+/obj/machinery/firealarm{
+	pixel_x = 1;
+	pixel_y = 26;
+	text = "NF"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/obj/item/clothing/suit/armor/hopcoat,
+/turf/simulated/floor/carpet{
+	dir = 1;
+	icon_state = "fgreen2"
+	},
+/area/station/bridge/hos)
 "hNb" = (
 /obj/stool/chair/red{
 	dir = 8
@@ -46818,6 +46810,31 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"jKd" = (
+/obj/rack,
+/obj/item/device/radio/electropack,
+/obj/item/device/radio/electropack,
+/obj/item/device/radio/signaler,
+/obj/item/device/radio/signaler,
+/obj/item/chem_grenade/pepper,
+/obj/item/chem_grenade/pepper,
+/obj/item/chem_grenade/pepper,
+/obj/item/breaching_charge{
+	pixel_x = -2;
+	pixel_y = -5
+	},
+/obj/item/breaching_charge{
+	pixel_x = -2;
+	pixel_y = -5
+	},
+/obj/item/breaching_charge{
+	pixel_x = -2;
+	pixel_y = -5
+	},
+/turf/simulated/floor/redblack/corner{
+	dir = 1
+	},
+/area/station/ai_monitored/armory)
 "jKq" = (
 /obj/landmark/spawner{
 	name = "monkeyspawn_krimpus"
@@ -46920,6 +46937,14 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost)
+"ksd" = (
+/obj/table/wood/round/auto,
+/obj/item/item_box/gold_star,
+/obj/item/acesscomputerunfolder,
+/turf/simulated/floor/carpet{
+	icon_state = "green1"
+	},
+/area/station/bridge/hos)
 "ksg" = (
 /turf/simulated/floor/black,
 /area/research_outpost)
@@ -48366,19 +48391,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/research_outpost)
-"vLB" = (
-/obj/rack,
-/obj/item/device/radio/electropack,
-/obj/item/device/radio/electropack,
-/obj/item/device/radio/signaler,
-/obj/item/device/radio/signaler,
-/obj/item/chem_grenade/pepper,
-/obj/item/chem_grenade/pepper,
-/obj/item/chem_grenade/pepper,
-/turf/simulated/floor/redblack/corner{
-	dir = 1
-	},
-/area/station/ai_monitored/armory)
 "vNf" = (
 /obj/item/storage/wall/emergency{
 	dir = 4;
@@ -93572,7 +93584,7 @@ vex
 bWH
 bwE
 bVb
-vLB
+jKd
 bTR
 bRU
 bLr
@@ -97469,7 +97481,7 @@ cku
 bsI
 bsI
 bvL
-bws
+hKS
 bxb
 bxW
 bvL
@@ -97773,7 +97785,7 @@ cku
 bvL
 bvL
 bxc
-bxX
+ksd
 bvL
 bzL
 bBf

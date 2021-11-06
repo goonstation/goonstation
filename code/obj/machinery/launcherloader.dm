@@ -11,7 +11,6 @@
 	opacity = 0
 	layer = 2.6
 	anchored = 1
-	event_handler_flags = USE_HASENTERED
 	plane = PLANE_NOSHADOW_BELOW
 
 	var/obj/machinery/mass_driver/driver = null
@@ -40,7 +39,7 @@
 				src.set_dir(get_dir(src,driver))
 
 	proc/activate()
-		if(operating || !isturf(src.loc)) return
+		if(operating || !isturf(src.loc) || driver_operating) return
 		operating = 1
 		flick("launcher_loader_1",src)
 		playsound(src, "sound/effects/pump.ogg",50, 1)
@@ -65,11 +64,11 @@
 						SPAWN_DBG(0)
 							if (door)
 								door.open()
-						SPAWN_DBG(10 SECONDS)
+						SPAWN_DBG(3 SECONDS)
 							if (door)
-								door.close() //this may need some adjusting still
+								door.close()
 
-				SPAWN_DBG(door ? 55 : 20) driver_operating = 0
+				SPAWN_DBG(door ? 30 : 20) driver_operating = FALSE
 
 				sleep(door ? 20 : 10)
 				if (driver)
@@ -85,7 +84,8 @@
 				break
 			if(drive) activate()
 
-	HasEntered(atom/A)
+	Crossed(atom/movable/A)
+		..()
 		if (istype(A, /mob/dead) || isintangible(A) || iswraith(A)) return
 		return_if_overlay_or_effect(A)
 		activate()
@@ -111,7 +111,7 @@
 	density = 0
 	opacity = 0
 	anchored = 1
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 	plane = PLANE_NOSHADOW_BELOW
 
 	var/default_direction = NORTH //The direction things get sent into when the router does not have a destination for the given barcode or when there is none attached.
@@ -179,7 +179,8 @@
 				break
 			if(drive) activate()
 
-	HasEntered(atom/A)
+	Crossed(atom/movable/A)
+		..()
 		if (istype(A, /mob/dead) || isintangible(A) || iswraith(A)) return
 
 		if (!trigger_when_no_match)
@@ -332,7 +333,7 @@
 		dat += "<BR><b><A href='?src=\ref[src];add=1'>Add Tag</A></b>"
 
 		src.add_dialog(user)
-		user.Browse(dat, "title=Barcode Computer;window=bc_computer_[src];size=300x400")
+		user.Browse(dat, "title=Barcode Computer;window=bc_computer_[src];size=300x480")
 		onclose(user, "bc_computer_[src]")
 		return
 
@@ -399,6 +400,9 @@
 	desc = "Used to print barcode stickers for the cargo routing system, and to mark crates for sale to traders."
 	icon_state = "qm_barcode_comp"
 
+	New()
+		..()
+
 	attack_hand(var/mob/user as mob)
 		if (..(user))
 			return
@@ -416,13 +420,18 @@
 			if (!T.hidden)
 				dat += "<b><A href='?src=\ref[src];print=[T.crate_tag]'>Sell to [T.name]</A></b><BR>"
 
+		dat += "<BR><b>Requisition Fulfillment:</b><BR>"
+		dat += "<b><A href='?src=\ref[src];print=["REQ-THIRDPARTY"]'>REQ-THIRDPARTY</A></b><BR>"
+		for(var/datum/req_contract/RC in shippingmarket.req_contracts)
+			dat += "<b><A href='?src=\ref[src];print=[RC.req_code]'>[RC.req_code]</A></b><BR>"
+
 		//dat += "<BR><b><A href='?src=\ref[src];add=1'>Add Tag</A></b>"
 
 		src.add_dialog(user)
 		// Attempting to diagnose an infinite window refresh I can't duplicate, reverting the display style back to plain HTML to see what results that gets me.
 		// Hooray for having a playerbase to test shit on
-		//user.Browse(dat, "title=Barcode Computer;window=bc_computer_[src];size=300x400")
-		user.Browse(dat, "title=Barcode Computer;window=bc_computer_[src];size=300x400")
+		//user.Browse(dat, "title=Barcode Computer;window=bc_computer_[src];size=300x480")
+		user.Browse(dat, "title=Barcode Computer;window=bc_computer_[src];size=300x480")
 		onclose(user, "bc_computer_[src]")
 		return
 

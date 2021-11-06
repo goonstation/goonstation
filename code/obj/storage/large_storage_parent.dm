@@ -790,17 +790,15 @@
 	var/icon_redlight = "redlight"
 	var/icon_sparks = "sparks"
 	var/always_display_locks = 0
-	var/datum/radio_frequency/radio_control = 1431
+	var/radio_control = FREQ_SECURE_STORAGE
 	var/net_id
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
-			if (isnum(src.radio_control) && radio_controller)
-				radio_control = max(1000, min(round(radio_control), 1500))
-				src.net_id = generate_net_id(src)
-				radio_controller.add_object(src, "[src.radio_control]")
-				src.radio_control = radio_controller.return_frequency("[src.radio_control]")
+		if (isnum(src.radio_control))
+			radio_control = max(1000, min(round(radio_control), 1500))
+			src.net_id = generate_net_id(src)
+			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, radio_control)
 
 	update_icon()
 		..()
@@ -829,7 +827,6 @@
 		if (signal.data["address_1"] == src.net_id)
 			var/datum/signal/reply = get_free_signal()
 			reply.source = src
-			reply.transmission_method = TRANSMISSION_RADIO
 			reply.data["sender"] = src.net_id
 			reply.data["address_1"] = sender
 			switch (lowertext(signal.data["command"]))
@@ -879,18 +876,17 @@
 				else
 					return //COMMAND NOT RECOGNIZED
 			SPAWN_DBG(0.5 SECONDS)
-				src.radio_control.post_signal(src, reply, 2)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply, 2)
 
 		else if (signal.data["address_1"] == "ping")
 			var/datum/signal/reply = get_free_signal()
 			reply.source = src
-			reply.transmission_method = TRANSMISSION_RADIO
 			reply.data["address_1"] = sender
 			reply.data["command"] = "ping_reply"
 			reply.data["device"] = "WNET_SECLOCKER"
 			reply.data["netid"] = src.net_id
 			SPAWN_DBG(0.5 SECONDS)
-				src.radio_control.post_signal(src, reply, 2)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply, 2)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.emagged) // secure crates checked for being locked/welded but so long as you aren't telling the thing to open I don't see why that was needed
