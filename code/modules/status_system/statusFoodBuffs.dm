@@ -480,10 +480,10 @@
 		id = "food_sweaty_big"
 		desc = "You feel really sweaty!"
 		sweat_prob = 5
-		sweat_adjective = "REALLY"
+		sweat_adjective = "REALLY "
 
 	getChefHint()
-		. = "Makes the consumer [sweat_adjective] sweaty."
+		. = "Makes the consumer [sweat_adjective]sweaty."
 
 	onUpdate(timePassed)
 		tickCount += timePassed
