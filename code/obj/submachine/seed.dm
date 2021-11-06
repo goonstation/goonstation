@@ -685,6 +685,8 @@
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (!O || !user)
 			return
+		if (get_dist(src, user) > 1 || get_dist(user, O) > 1)
+			return
 		if (!isitem(O))
 			return
 		if (istype(O, /obj/item/reagent_containers/glass/) || istype(O, /obj/item/reagent_containers/food/drinks/) || istype(O,/obj/item/satchel/hydro))
@@ -1038,6 +1040,8 @@
 			return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+		if (get_dist(src, user) > 1 || get_dist(user, O) > 1)
+			return
 		if (istype(O, /obj/item/reagent_containers/glass/) || istype(O, /obj/item/reagent_containers/food/drinks/) || istype(O, /obj/item/satchel/hydro))
 			return src.Attackby(O, user)
 		if (!src.canExtract(O)) ..()
