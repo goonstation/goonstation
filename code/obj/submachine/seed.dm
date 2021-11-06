@@ -1040,7 +1040,7 @@
 			return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-		if (get_dist(src, user) > 1 || get_dist(user, O) > 1)
+		if (!in_interact_range(src, user)  || !IN_RANGE(user, O, 1))
 			return
 		if (istype(O, /obj/item/reagent_containers/glass/) || istype(O, /obj/item/reagent_containers/food/drinks/) || istype(O, /obj/item/satchel/hydro))
 			return src.Attackby(O, user)
