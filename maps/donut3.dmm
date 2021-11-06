@@ -60828,7 +60828,6 @@
 	pixel_x = -20;
 	pixel_y = 10
 	},
-/obj/item/paper/CrashedHopShuttle,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "rAR" = (

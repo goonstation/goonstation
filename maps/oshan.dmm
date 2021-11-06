@@ -30607,7 +30607,6 @@
 /obj/item/storage/box/accessimp_kit{
 	pixel_y = 9
 	},
-/obj/item/paper/CrashedHopShuttle,
 /obj/item/pen/crayon/golden,
 /turf/simulated/floor/carpet{
 	icon_state = "green1"
@@ -46511,7 +46510,6 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/obj/item/clothing/suit/armor/hopcoat,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fgreen2"

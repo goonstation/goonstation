@@ -20367,7 +20367,6 @@
 	pixel_x = 4;
 	pixel_y = 11
 	},
-/obj/item/paper/CrashedHopShuttle,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/heads)
 "Zr" = (
