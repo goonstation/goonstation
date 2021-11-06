@@ -166,7 +166,7 @@ obj/item/ammo/bullets/flechette_mag
 	spread_angle = 3
 	default_magazine = /obj/item/ammo/bullets/flechette_mag
 
-New()
+	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/flechette)
 		..()
