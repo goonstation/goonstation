@@ -244,7 +244,7 @@
 						qdel(O2)
 
 				APPLY_MOB_PROPERTY(M, PROP_NO_SELF_HARM, src)
-				playsound(M, 'sound/effects/ghost.ogg', 45, 0)
+				playsound(M, "sound/effects/ghost.ogg", 45, 0)
 				var/mob/dead/observer/O = M.ghostize()
 				if(isnull(O))
 					boutput(src, "<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 101</span>")
@@ -281,7 +281,7 @@
 				sleep(5 DECI SECONDS)
 				WG.mind.dnr = FALSE
 				WG.verbs += list(/mob/verb/setdnr)
-				playsound(M, 'sound/effects/ghost2.ogg', 50, 0)
+				playsound(M, "sound/effects/ghost2.ogg", 50, 0)
 				if(!WG || !M)
 					src.visible_message("<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 105</span>")
 					if(M)
@@ -372,7 +372,7 @@
 			var/image/overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 			overlay_image.color = "#1a1102"
 			src.UpdateOverlays(overlay_image, "slasher_aura")
-			playsound(src, 'sound/effects/ghostlaugh.ogg', 40, 0)
+			playsound(src, "sound/effects/ghostlaugh.ogg", 40, 0)
 			SPAWN_DBG(2 SECONDS)
 				src.UpdateOverlays(null, "slasher_aura")
 				for(var/mob/living/M in oview(4, src))
@@ -414,7 +414,7 @@ ABSTRACT_TYPE(/datum/targetable/slasher)
 	desc = "Become a ghost, capable of moving through walls."
 	icon_state = "incorporealize"
 	targeted = FALSE
-	cooldown = 15 SECONDS
+	cooldown = 20 SECONDS
 
 	cast()
 		if(..())
@@ -437,7 +437,7 @@ ABSTRACT_TYPE(/datum/targetable/slasher)
 	desc = "Manifest your being, allowing you to interact with the world."
 	icon_state = "corporealize"
 	targeted = FALSE
-	cooldown = 30 SECONDS
+	cooldown = 20 SECONDS
 
 	cast()
 		if(..())
