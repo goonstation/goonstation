@@ -341,6 +341,20 @@
 	attackby(var/obj/item/W , mob/user as mob)
 		if(istype(W, /obj/item/deconstructor))
 			return ..()
+
+		if(istype(W, /obj/item/ore_scoop))
+			var/obj/item/ore_scoop/O = W
+			if (O.satchel) W = O.satchel
+
+		if(istype(W, /obj/item/satchel))
+			var/obj/item/satchel/S = W
+			boutput(user, "<span class='notice'>You empty \the [W] into \the [src].</span>")
+			for(var/obj/item/I in S)
+				if(I.material)
+					I.set_loc(src)
+			S.satchel_updateicon()
+			return
+
 		if(issilicon(user)) // fix bug where borgs could put things into the nanofab and then reject them
 			boutput(user, "<span class='alert'>You can't put that in, it's attached to you.</span>")
 			return
