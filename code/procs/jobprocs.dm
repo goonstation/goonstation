@@ -552,7 +552,6 @@
 
 				R.fields["imp"] = null
 				R.fields["mind"] = src.mind
-				R.name = "CloneRecord-[ckey(src.real_name)]"
 				D.root.add_file(R)
 
 				if (JOB.receives_security_disk)
@@ -597,6 +596,11 @@
 
 	if (src.traitHolder && src.traitHolder.hasTrait("pawnstar"))
 		trinket = null //You better stay null, you hear me!
+	else if (src.traitHolder && src.traitHolder.hasTrait("bald"))
+		trinket = src.create_wig()
+		src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
+		src.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
+		src.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
 	else if (src.traitHolder && src.traitHolder.hasTrait("loyalist"))
 		trinket = new/obj/item/clothing/head/NTberet(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("petasusaphilic"))
@@ -642,6 +646,16 @@
 			if (!equipped) // we've tried most available storage solutions here now so uh just put it on the ground
 				trinket.set_loc(get_turf(src))
 
+	if (src.traitHolder && src.traitHolder.hasTrait("onearmed"))
+		if (src.limbs)
+			SPAWN_DBG(6 SECONDS)
+				if (prob(50))
+					if (src.limbs.l_arm)
+						qdel(src.limbs.l_arm.remove(0))
+				else
+					if (src.limbs.r_arm)
+						qdel(src.limbs.r_arm.remove(0))
+				boutput(src, "<b>Your singular arm makes you feel responsible for crimes you couldn't possibly have committed.</b>" )
 	return
 
 /mob/living/carbon/human/proc/spawnId(rank)
@@ -665,14 +679,15 @@
 			if(prob(50)) realName = replacetext(realName, "t", pick("d", "k"))
 			if(prob(50)) realName = replacetext(realName, "p", pick("b", "t"))
 
-			var/datum/data/record/B = FindBankAccountByName(src.real_name)
-			if (B?.fields["name"])
-				B.fields["name"] = realName
+			var/datum/db_record/B = FindBankAccountByName(src.real_name)
+			if (B?["name"])
+				B["name"] = realName
 
 		C.registered = realName
 		C.assignment = JOB.name
 		C.name = "[C.registered]'s ID Card ([C.assignment])"
 		C.access = JOB.access.Copy()
+		C.pronouns = src.get_pronouns()
 
 		if(!src.equip_if_possible(C, slot_wear_id))
 			src.equip_if_possible(C, slot_in_backpack)

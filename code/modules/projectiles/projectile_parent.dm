@@ -7,6 +7,7 @@
 	name = "projectile"
 	flags = TABLEPASS
 	layer = EFFECTS_LAYER_BASE
+	anchored = 1
 
 	var/xo
 	var/yo
@@ -319,6 +320,7 @@
 		src.collide(A)
 
 	Crossed(var/atom/movable/A)
+		..()
 		if (!istype(A))
 			return // can't happen will happen
 		if (!A.CanPass(src, get_step(src, A.dir), 1, 0))

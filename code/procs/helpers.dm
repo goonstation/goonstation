@@ -307,6 +307,7 @@ proc/get_angle(atom/a, atom/b)
 		index = findtext(t, "\t")
 	return t // fuk.
 
+// This function is literally the exact same as sanitize(). ???
 /proc/sanitize_noencode(var/t)
 	var/index = findtext(t, "\n")
 	while(index)
@@ -325,14 +326,19 @@ proc/get_angle(atom/a, atom/b)
 		var/list/bad_characters = list("_", "'", "\"", "<", ">", ";", "[", "]", "{", "}", "|", "\\", "/")
 		for(var/c in bad_characters)
 			t = replacetext(t, c, "")
-	var/index = findtext(t, "<")
-	while(index)
-		t = copytext(t, 1, index) + copytext(t, index+1)
-		index = findtext(t, "<")
-	index = findtext(t, ">")
-	while(index)
-		t = copytext(t, 1, index) + copytext(t, index+1)
-		index = findtext(t, ">")
+
+	// html_encode(t) will convert < and > to &lt; and &gt;
+	// which will allow them to be used (safely) in messages
+	t = html_encode(t)
+
+	// var/index = findtext(t, "<")
+	// while(index)
+	// 	t = copytext(t, 1, index) + "&lt;" + copytext(t, index+1)
+	// 	index = findtext(t, "<")
+	// index = findtext(t, ">")
+	// while(index)
+	// 	t = copytext(t, 1, index) + "&gt;" + copytext(t, index+1)
+	// 	index = findtext(t, ">")
 	. = sanitize(t)
 
 /proc/strip_html_tags(var/t,var/limit=MAX_MESSAGE_LEN)
@@ -342,14 +348,18 @@ proc/get_angle(atom/a, atom/b)
 
 /proc/adminscrub(var/t,var/limit=MAX_MESSAGE_LEN)
 	t = html_decode(copytext(t,1,limit))
-	var/index = findtext(t, "<")
-	while(index)
-		t = copytext(t, 1, index) + copytext(t, index+1)
-		index = findtext(t, "<")
-	index = findtext(t, ">")
-	while(index)
-		t = copytext(t, 1, index) + copytext(t, index+1)
-		index = findtext(t, ">")
+
+	// html_encode(t) will convert < and > to &lt; and &gt;
+	// which will allow them to be used (safely) in messages
+
+	// var/index = findtext(t, "<")
+	// while(index)
+	// 	t = copytext(t, 1, index) + "&lt;" + copytext(t, index+1)
+	// 	index = findtext(t, "<")
+	// index = findtext(t, ">")
+	// while(index)
+	// 	t = copytext(t, 1, index) + "&gt;" + copytext(t, index+1)
+	// 	index = findtext(t, ">")
 	. = html_encode(t)
 
 /proc/map_numbers(var/x, var/in_min, var/in_max, var/out_min, var/out_max)
@@ -734,6 +744,7 @@ proc/get_angle(atom/a, atom/b)
 	var/mob/the_mob = null
 	var/client/the_client = null
 	var/the_key = ""
+	var/last_ckey = null
 
 	if (isnull(whom))
 		return "*null*"
@@ -745,6 +756,7 @@ proc/get_angle(atom/a, atom/b)
 		the_mob = whom
 		the_client = the_mob.client
 		the_key = html_encode(the_mob.key)
+		last_ckey = the_mob.last_ckey
 	else if (istype(whom, /datum))
 		if (ismind(whom))
 			var/datum/mind/the_mind = whom
@@ -776,7 +788,10 @@ proc/get_angle(atom/a, atom/b)
 	var/text = ""
 
 	if (!the_key)
-		text += "*no client*"
+		if(last_ckey)
+			text += "*last ckey: [last_ckey]*"
+		else
+			text += "*no client*"
 	else
 		if (!isnull(the_mob))
 			if(custom_href) text += "<a href=\"[custom_href]\">"
@@ -1017,27 +1032,26 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 // you couldnt have gone for "msg" or something that makes 10 times more sense?!?
 // In summary: aaaaaaaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 // <3 Fire
-/proc/stars(n, pr)
-
-	if (pr == null)
-		pr = 25
-	if (pr <= 0)
+// I'm preserving the above comment block, let it be known this proc used to use the variables "n", "pr", "te", "t", "p." I have fixed them. You're welcome.
+// <3 FlamingLily
+/proc/stars(input_text, probability)
+	if(probability == null)
+		probability = 25
+	if(probability <= 0)
 		return null
 	else
-		if (pr >= 100)
-			return n
-	var/te = n
-	var/t = ""
-	n = length(n)
-	var/p = null
-	p = 1
-	while(p <= n)
-		if ((copytext(te, p, p + 1) == " " || prob(pr)))
-			t = text("[][]", t, copytext(te, p, p + 1))
+		if (probability >= 100)
+			return input_text
+	var/output_text = ""
+	var/input_length = length(input_text)
+	var/cycle = 1
+	while(cycle <= input_length)
+		if ((copytext(input_text, cycle, cycle + 1) == " " || prob(probability)))
+			output_text = text("[][]", output_text, copytext(input_text, cycle, cycle + 1))
 		else
-			t = text("[]*", t)
-		p++
-	return t
+			output_text = text("[]*", output_text)
+		cycle++
+	return output_text
 
 /proc/stutter(n)
 	var/te = html_decode(n)
@@ -1950,7 +1964,7 @@ proc/countJob(rank)
 		return
 
 	// Find our master's mob reference (if any).
-	var/mob/mymaster = whois_ckey_to_mob_reference(M.mind.master)
+	var/mob/mymaster = ckey_to_mob(M.mind.master)
 
 	switch (slave_type)
 		if ("mslave")
@@ -2056,7 +2070,7 @@ proc/countJob(rank)
 /**
   * A universal ckey -> mob reference lookup proc, adapted from whois() (Convair880).
   */
-/proc/whois_ckey_to_mob_reference(target as text, exact=1)
+/proc/ckey_to_mob(target as text, exact=1)
 	if(isnull(target))
 		return
 	target = ckey(target)

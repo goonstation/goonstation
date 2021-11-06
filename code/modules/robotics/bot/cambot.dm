@@ -114,7 +114,7 @@
 		new /obj/item/camera(T)
 		new /obj/item/device/prox_sensor(T)
 		if (prob(50))
-			new /obj/item/parts/robot_parts/arm/left(T)
+			new /obj/item/parts/robot_parts/arm/left/standard(T)
 
 	qdel(src)
 	return

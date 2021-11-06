@@ -336,7 +336,7 @@
 
 			if (desired_mask != current_mask)
 				current_mask = desired_mask
-				src.filters = list(filter(type="alpha", icon=icon('icons/obj/foodNdrink/food.dmi', "eating[desired_mask]")))
+				src.add_filter("bite", 0, alpha_mask_filter(icon=icon('icons/obj/foodNdrink/food.dmi', "eating[desired_mask]")))
 
 		eat_twitch(eater)
 		eater.on_eat(src)
@@ -459,8 +459,13 @@
 				//Make them fall over, they lost their balance.
 				C.changeStatus("weakened", 2 SECONDS)
 		else
+			if (C.restrained()) // Can't chug if your arms are not available
+				if (prob(1)) // Actually you can if you're really lucky
+					C.visible_message("<span class='alert'>Holy shit! [C] grabs the [src] with their teeth and prepares to chug!</span>")
+				else
+					boutput(C, "<span class='alert'>You can't grab the [src] with your arms to chug it.</span>")
+					return
 			actions.start(new /datum/action/bar/icon/chug(C, src), C)
-		return
 
 	//Wow, we copy+pasted the heck out of this... (Source is chemistry-tools dm)
 	attack_self(mob/user as mob)
@@ -483,8 +488,31 @@
 			return 0
 
 		if (iscarbon(M) || ismobcritter(M))
+			var/tasteMessage
+			if (M.mind && M.mind.assigned_role == "Bartender")
+				var/reag_list = ""
+				for (var/current_id in reagents.reagent_list)
+					var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
+					if (reagents.reagent_list.len > 1 && reagents.reagent_list[reagents.reagent_list.len] == current_id)
+						reag_list += " and [current_reagent.name]"
+						continue
+					reag_list += ", [current_reagent.name]"
+				reag_list = copytext(reag_list, 3)
+				tasteMessage = "<span class='notice'>Tastes like there might be some [reag_list] in this.</span>"
+			else
+				var/tastes = src.reagents.get_prevalent_tastes(3)
+				switch (length(tastes))
+					if (0)
+						tasteMessage = "<span class='notice'>Tastes pretty bland.</span>"
+					if (1)
+						tasteMessage = "<span class='notice'>Tastes kind of [tastes[1]].</span>"
+					if (2)
+						tasteMessage = "<span class='notice'>Tastes kind of [tastes[1]] and [tastes[2]].</span>"
+					else
+						tasteMessage = "<span class='notice'>Tastes kind of [tastes[1]], [tastes[2]], and a little bit [tastes[3]].</span>"
+
 			if (M == user)
-				M.visible_message("<span class='notice'>[M] takes a sip from [src].</span>")
+				M.visible_message("<span class='notice'>[M] takes a sip from [src].</span>","<span class='notice'>You take a sip from [src].</span>\n[tasteMessage]", group = "drinkMessages")
 			else
 				user.visible_message("<span class='alert'>[user] attempts to force [M] to drink from [src].</span>")
 				logTheThing("combat", user, M, "attempts to force [constructTarget(M,"combat")] to drink from [src] [log_reagents(src)] at [log_loc(user)].")
@@ -496,27 +524,10 @@
 				if (!src.reagents || !src.reagents.total_volume)
 					boutput(user, "<span class='alert'>Nothing left in [src], oh no!</span>")
 					return
-				user.visible_message("<span class='alert'>[user] makes [M] drink from the [src].</span>")
+				M.visible_message("<span class='alert'>[user] makes [M] drink from the [src].</span>",
+				"<span class='alert'>[user] makes you drink from the [src].</span>\n[tasteMessage]",
+				 group = "drinkMessages")
 
-			if (M.mind && M.mind.assigned_role == "Bartender")
-				var/reag_list = ""
-				for (var/current_id in reagents.reagent_list)
-					var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
-					if (reagents.reagent_list.len > 1 && reagents.reagent_list[reagents.reagent_list.len] == current_id)
-						reag_list += " and [current_reagent.name]"
-						continue
-					reag_list += ", [current_reagent.name]"
-				reag_list = copytext(reag_list, 3)
-				boutput(M, "<span class='notice'>Tastes like there might be some [reag_list] in this.</span>")
-/*			else
-				var/reag_list = ""
-
-				for (var/current_id in reagents.reagent_list)
-					var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
-					reag_list += "[current_reagent.taste], "
-
-				boutput(M, "<span class='notice'>You taste [reag_list]in this.</span>")
-*/
 			if (src.reagents.total_volume)
 				logTheThing("combat", user, M, "[user == M ? "takes a sip from" : "makes [constructTarget(M,"combat")] drink from"] [src] [log_reagents(src)] at [log_loc(user)].")
 				src.reagents.reaction(M, INGEST, max(min(reagents.total_volume, gulp_size, (M.reagents?.maximum_volume-M.reagents?.total_volume)), CHEM_EPSILON))
@@ -946,7 +957,7 @@
 	desc = "Caution - fragile."
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	icon_state = "glass-drink"
-	item_state = "glass-drink"
+	item_state = "drink_glass"
 	var/icon_style = "drink"
 	g_amt = 30
 	var/glass_style = "drink"
@@ -1146,6 +1157,12 @@
 		if (src.wedge)
 			choices += "remove [src.wedge]"
 			choices += "eat [src.wedge]"
+		if (reagents.total_volume > 0)
+			if (!length(choices))
+				if (!ON_COOLDOWN(src, "hotkey_drink", 0.6 SECONDS))
+					attack(user, user) //Most glasses people use won't have fancy cocktail stuff, so just skip the crap and drink for dear life
+				return
+			choices += "drink from it"
 		if (!choices.len)
 			boutput(user, "<span class='notice'>You can't think of anything to do with [src].</span>")
 			return
@@ -1170,6 +1187,10 @@
 			else
 				boutput(H, "<span class='alert'>You don't feel like you need to go.</span>")
 			return
+
+		else if (selection == "drink from it")
+			if (!ON_COOLDOWN(src, "hotkey_drink", 0.6 SECONDS))
+				attack(user, user)
 
 		else if (selection == "remove [src.in_glass]")
 			remove_thing = src.in_glass

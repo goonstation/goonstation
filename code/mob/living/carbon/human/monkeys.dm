@@ -53,6 +53,7 @@
 	real_name = "Mr. Rathen"
 	gender = "male"
 	ai_offhand_pickup_chance = 2 // learned that there's dangerous stuff in engineering!
+	ai_poke_thing_chance = 0.3 // don't mess up the engine too much
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
@@ -63,6 +64,7 @@
 	real_name = "Albert"
 	gender = "male"
 	ai_offhand_pickup_chance = 10 // more curious than most monkeys
+	ai_poke_thing_chance = 3
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
@@ -85,6 +87,7 @@
 	real_name = "Oppenheimer"
 	gender = "male"
 	ai_offhand_pickup_chance = 40 // went through training as a spy thief, skilled at snatch- wait, I'm getting a feeling of deja vu
+	ai_poke_thing_chance = 2
 	ai_aggressive = TRUE
 	ai_calm_down = FALSE
 	ai_default_intent = INTENT_HARM
@@ -141,6 +144,7 @@
 	New()
 		..()
 		ai_offhand_pickup_chance = rand(100) // an absolute wildcard
+		ai_poke_thing_chance = rand(50)
 		SPAWN_DBG(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/mask/horse_mask/cursed/monkey, slot_wear_mask)
 
@@ -170,6 +174,7 @@
 	real_name = "Monsieur Stirstir"
 	gender = "male"
 	ai_offhand_pickup_chance = 4 // a filthy thief but he's trying to play nice for now
+	ai_poke_thing_chance = 5 // maybe finds tools... breaks out of prison...
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
@@ -192,6 +197,7 @@
 	ai_default_intent = INTENT_HELP
 	var/list/shitlist = list()
 	var/ai_aggression_timeout = 600
+	var/ai_poke_thing_chance = 1
 
 	New()
 		..()
@@ -234,6 +240,25 @@
 						break
 			if(prob(1))
 				src.emote(pick("dance", "flip", "laugh"))
+			if(prob(ai_poke_thing_chance))
+				var/list/atom/things_to_pick = list()
+				for(var/obj/O in range(1, get_turf(src)))
+					if(istype(O, /obj/overlay) || istype(O, /obj/effect) || O.invisibility > 0 || !O.mouse_opacity)
+						continue
+					if(istype(O, /obj/machinery/light) && prob(90)) // don't break lights too often pls
+						continue
+					things_to_pick += O
+				if(prob(15))
+					for(var/mob/M in range(1, get_turf(src)))
+						things_to_pick += M
+				if(!length(things_to_pick))
+					src.emote(pick("whimper", "growl", "scowl", "grimace", "sulk", "pout", "shrug", "yawn"))
+				else if(src.equipped())
+					var/atom/thing_to_poke = pick(things_to_pick)
+					src.weapon_attack(thing_to_poke, src.equipped(), TRUE)
+				else
+					var/atom/thing_to_poke = pick(things_to_pick)
+					src.hand_attack(thing_to_poke)
 			if(prob(0.5))
 				var/list/priority_targets = list()
 				var/list/targets = list()

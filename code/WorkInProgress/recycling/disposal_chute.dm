@@ -548,28 +548,20 @@
 	var/mailgroup = null
 
 	var/net_id = null
-	var/frequency = 1149
-	var/datum/radio_frequency/radio_connection
+	var/frequency = FREQ_PDA
 
 	New()
 		..()
-		SPAWN_DBG(0.8 SECONDS)
-			if(radio_controller)
-				radio_connection = radio_controller.add_object(src, "[frequency]")
-			if(!src.net_id)
-				src.net_id = generate_net_id(src)
-
-	disposing()
-		radio_controller.remove_object(src, "[frequency]")
-		..()
+		if(!src.net_id)
+			src.net_id = generate_net_id(src)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
 
 	expel(var/obj/disposalholder/H)
 		..(H)
 
-		if (message && mailgroup && radio_connection)
+		if (message && mailgroup)
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
-			newsignal.transmission_method = TRANSMISSION_RADIO
 			newsignal.data["command"] = "text_message"
 			newsignal.data["sender_name"] = "CHUTE-MAILBOT"
 			newsignal.data["message"] = "[message]"
@@ -577,7 +569,7 @@
 			newsignal.data["group"] = list(mailgroup, MGA_MAIL)
 			newsignal.data["sender"] = src.net_id
 
-			radio_connection.post_signal(src, newsignal)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
 
 /obj/machinery/disposal/cart_port
 	name = "disposal cart port"

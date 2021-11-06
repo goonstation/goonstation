@@ -137,7 +137,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/datum/bioHolder/parentHolder = null
 
 	var/gender = MALE
-	var/pronouns = 0		//1 if using neutral pronouns (they/their);  0 if using gendered pronouns matching their gender var
+	var/datum/pronouns/pronouns
 	var/screamsound = "male"
 	var/fartsound = "default"
 	var/voicetype = 0
@@ -327,6 +327,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 			if (H.mutantrace && H.mutantrace.voice_override)
 				H.voice_type = H.mutantrace.voice_override
+
+			H.update_name_tag()
 		// if the owner's not human I don't think this would do anything anyway so fuck it
 		return
 

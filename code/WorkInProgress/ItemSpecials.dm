@@ -364,7 +364,7 @@
 				user.set_dir(direction)
 				var/obj/itemspecialeffect/bluefade/E = new /obj/itemspecialeffect/bluefade
 				E.setup(user.loc)
-				E.filters = filter(type="motion_blur", x=blurX, y=blurY)
+				E.add_filter("bluefade_motion_blur", 0, motion_blur_filter(x=blurX, y=blurY))
 
 				animate(E, alpha=255,time=0,loop=0)
 				animate(alpha=0,pixel_x=((blurX*(-1))*3),pixel_y=((blurY*(-1))*3), time=(15+(i*3)),loop=0)
@@ -1880,6 +1880,7 @@
 		can_clash = 1
 
 	spark
+		plane = PLANE_ABOVE_LIGHTING
 		icon = 'icons/effects/effects.dmi'
 		icon_state = "sparks_attack"
 		pixel_x = 0
@@ -1997,6 +1998,7 @@
 		can_clash = 0
 
 	flame
+		plane = PLANE_ABOVE_LIGHTING
 		icon = 'icons/effects/effects.dmi'
 		icon_state = "flame"
 		pixel_x = 0

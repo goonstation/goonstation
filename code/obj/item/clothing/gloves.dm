@@ -232,6 +232,19 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		..()
 		setProperty("heatprot", 7)
 
+	slasher
+		name = "Padded Gloves"
+		desc = "These gloves are padded and lined with insulating material."
+		cant_self_remove = 1
+		cant_other_remove = 1
+		material_prints = "black insulative fibers"
+
+		setupProperties()
+			..()
+			setProperty("heatprot", 15)
+			setProperty("conductivity", 0)
+			setProperty("exploprot", 10)
+
 /obj/item/clothing/gloves/black/attackby(obj/item/W, mob/user)
 	if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
 		user.visible_message("<span class='notice'>[user] cuts off the fingertips from [src].</span>")

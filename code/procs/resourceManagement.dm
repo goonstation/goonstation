@@ -156,6 +156,8 @@
 
 //#LongProcNames #yolo
 /client/proc/loadResourcesFromList(list/rscList)
+	set waitfor = FALSE
+	var/i = 1
 	for (var/r in rscList) //r is a file path
 		var/fileRef = file(r)
 		var/parsedFile = parseAssetLinks(fileRef, r)
@@ -169,8 +171,8 @@
 				world.log << "RESOURCE ERROR: Failed to convert text in '[r]' to a temporary file"
 		else //file is binary just throw it at the client as is
 			src << browse(fileRef, "file=[r];display=0")
-
-	return 1
+		if(i++ % 100 == 0)
+			sleep(1)
 
 
 //A thing for coders locally testing to use (as they might be offline = can't reach the CDN)

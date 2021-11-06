@@ -45,7 +45,7 @@
 	"butt-nc","butt-plant","butt-cyber","purplebutt","santa","yellow","blue","red","green","black","white",
 	"psyche","wizard","wizardred","wizardpurple","witch","obcrown","macrown","safari","viking","dolan",
 	"camhat","redcamhat","mailcap","paper","policehelm","bikercap","apprentice","chavcap","flatcap","ntberet",
-	"captain-fancy","rank-fancy","mime_beret","mime_bowler","buckethat", "syndicate_top", "syndicate_top_biggest")
+	"captain-fancy","rank-fancy","mime_beret","mime_bowler","buckethat", "syndicate_top", "syndicate_top_biggest", "lesbeean")
 
 	var/sleep_y_offset = 5 // this amount removed from the hat's pixel_y on sleep or death
 	var/hat_y_offset = 0
@@ -1692,6 +1692,7 @@
 			return
 		user.visible_message("[user] primes [src] and puts it down.", "You twist [src], priming it to hatch, then place it on the ground.")
 		user.u_equip(src)
+		logTheThing("station", user, null, "primes a bee egg for hatching at [log_loc(user)]")
 
 		SPAWN_DBG(0)
 			src.hatch(user,get_turf(user))

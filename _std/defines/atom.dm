@@ -19,7 +19,7 @@
 #define USE_FLUID_ENTER 2 	//Atom implements EnteredFluid() call in some way.
 #define USE_GRAB_CHOKE 4	//Atom can be held as an item and have a grab inside it to choke somebuddy
 #define HANDLE_STICKER 8	//Atom implements var/active = XXX and responds to sticker removal methods (burn-off + acetone). this atom MUST have an 'active' var. im sory.
-#define USE_HASENTERED 16	//Atom implements HasEntered() call in some way.
+// 16 UNUSED
 #define USE_CHECKEXIT 32	//Atom implements CheckExit() call in some way.
 #define USE_CANPASS 64		//Atom implements CanPass() call in some way. (doesnt affect turfs, put this on mobs or objs)
 #define IMMUNE_MANTA_PUSH 128			//cannot be pushed by MANTAwaters

@@ -703,4 +703,4 @@
 
 /mob/living/carbon/human/UpdateDamage()
 	..()
-	src.hud.update_health_indicator()
+	src.hud?.update_health_indicator()

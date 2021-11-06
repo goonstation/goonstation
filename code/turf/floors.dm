@@ -1192,6 +1192,31 @@ DEFINE_FLOORS(techfloor/green,
 
 /////////////////////////////////////////
 
+/* Outdoors tilesets - Walp */
+
+DEFINE_FLOORS(grasslush,
+	name = "lush grass";\
+	desc = "This grass somehow thrives in space.";\
+	icon = 'icons/turf/outdoors.dmi';\
+	icon_state = "grass_lush";\
+	mat_appearances_to_ignore = list("steel","synthrubber");\
+	mat_changename = 0;\
+	mat_changedesc = 0;\
+	step_material = "step_outdoors";\
+	step_priority = STEP_PRIORITY_MED)
+
+DEFINE_FLOORS(grasslush/border,
+	icon_state = "grass_lush_border")
+
+DEFINE_FLOORS(grasslush/corner,
+	icon_state = "grass_lush_corner")
+
+DEFINE_FLOORS(grasslush/thinner,
+	icon_state = "grass_lesslush")
+
+DEFINE_FLOORS(grasslush/thin,
+	icon_state = "grass_thin")
+
 /* ._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._. */
 /*-=-=-=-=-=-=-=-FUCK THAT SHIT MY WRIST HURTS=-=-=-=-=-=-=-=-=*/
 /* '~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~' */
@@ -1381,7 +1406,7 @@ DEFINE_FLOORS(techfloor/green,
 		user.remove_pulling()
 		return
 	//if the object being pulled's loc is another object (being in their contents) return
-	if (isobj(user.pulling.loc))
+	if (!isturf(user.pulling.loc))
 		var/obj/container = user.pulling.loc
 		if (user.pulling in container.contents)
 			return

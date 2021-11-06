@@ -182,6 +182,10 @@
 		name = "pink jumpsuit"
 		icon_state = "pink"
 		item_state = "pink"
+
+	unremovable
+		cant_self_remove = 1
+		cant_other_remove = 1
 //PRIDE
 /obj/item/clothing/under/pride
 	name = "LGBT pride jumpsuit"
@@ -1562,6 +1566,12 @@
     icon_state = "bubble"
     item_state = "bubble"
 
+/obj/item/clothing/under/misc/tricolor
+    name = "Tricolor Jumpsuit"
+    desc = "A jumpsuit that shows your serious about pizza."
+    icon_state = "tricolor"
+    item_state = "tricolor"
+
 // WALPVRGIS fashion
 
 /obj/item/clothing/under/misc/casdressblk
@@ -1803,3 +1813,10 @@
     item_state = "racing_jump_prp"
     icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
     wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+
+//Western Jumpsuit
+/obj/item/clothing/under/misc/western
+    name = "Western Shirt and Pants"
+    desc = "Now comes with a matching belt buckle and leather straps!"
+    icon_state = "western"
+    item_state = "western"

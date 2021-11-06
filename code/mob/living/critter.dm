@@ -99,8 +99,9 @@
 		count_healths()
 
 		SPAWN_DBG(0)
-			src.zone_sel.change_hud_style('icons/mob/hud_human.dmi')
-			src.attach_hud(zone_sel)
+			if(!src.disposed)
+				src.zone_sel.change_hud_style('icons/mob/hud_human.dmi')
+				src.attach_hud(zone_sel)
 
 		for (var/datum/equipmentHolder/EE in equipment)
 			EE.after_setup(hud)

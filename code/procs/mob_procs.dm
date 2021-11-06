@@ -112,18 +112,16 @@
 	return 1
 
 
-/mob/proc/slip(walking_matters = 1, running = 0, ignore_actual_delay = 0)
+/mob/proc/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0)
 	.= 0
 
 	if (!src.can_slip())
 		return
 
-	var/slip_delay = BASE_SPEED_SUSTAINED + (WALK_DELAY_ADD*0.9) //we need to fall under this movedelay value in order to slip :O
-	if (src.m_intent == "walk")
-		slip_delay = BASE_SPEED_SUSTAINED - (WALK_DELAY_ADD*0.5)
+	var/slip_delay = BASE_SPEED_SUSTAINED + (WALK_DELAY_ADD*0.15) //we need to fall under this movedelay value in order to slip :O
 
-	if (!walking_matters)
-		slip_delay = 10
+	if (walking_matters)
+		slip_delay = BASE_SPEED_SUSTAINED + WALK_DELAY_ADD
 	var/movement_delay_real = max(src.movement_delay(get_step(src,src.move_dir), running),world.tick_lag)
 	var/movedelay = max(movement_delay_real, min(world.time - src.next_move,world.time - src.last_pulled_time))
 	if (ignore_actual_delay)
@@ -147,7 +145,7 @@
 		src.throw_at(T, intensity, 2, list("stun"=clamp(1.1 SECONDS * intensity, 1 SECOND, 5 SECONDS)), src.loc, throw_type = THROW_SLIP)
 		.= 1
 
-/mob/living/carbon/human/slip(walking_matters = 1, running = 0, ignore_actual_delay = 0)
+/mob/living/carbon/human/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0)
 	. = ..(walking_matters, (src.client?.check_key(KEY_RUN) && src.get_stamina() > STAMINA_SPRINT), ignore_actual_delay)
 
 
@@ -173,7 +171,7 @@
 	var/class = ""
 	switch (color)
 		if ("red") class = "alert"
-		if ("blue") class = "notify"
+		if ("blue") class = "notice"
 		if ("green") class = "success"
 
 	boutput(src, "<span class='[class]'>[message]</span>", group)
@@ -452,7 +450,7 @@
 		return 0
 
 	if (src.mind.master)
-		var/mob/mymaster = whois_ckey_to_mob_reference(src.mind.master)
+		var/mob/mymaster = ckey_to_mob(src.mind.master)
 		if (mymaster && (mymaster == dominator))
 			return 1
 
@@ -466,94 +464,23 @@
 	return 1
 
 /proc/man_or_woman(var/mob/subject)
-	if(isabomination(subject))
-		return "abomination"
-
-	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
-		return "person"
-
-	switch (subject.gender)
-		if ("male")
-			return "man"
-		if ("female")
-			return "woman"
-		else
-			return "person"
+	return subject.get_pronouns().preferredGender
 
 /proc/his_or_her(var/mob/subject)
-	if(isabomination(subject))
-		return "our"
-
-	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
-		return "their"
-
-	switch (subject.gender)
-		if ("male")
-			return "his"
-		if ("female")
-			return "her"
-		else
-			return "their"
+	return subject.get_pronouns().possessive
 
 /proc/him_or_her(var/mob/subject)
-	if(isabomination(subject))
-		return "us"
-
-	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
-		return "them"
-
-	switch (subject.gender)
-		if ("male")
-			return "him"
-		if ("female")
-			return "her"
-		else
-			return "them"
+	return subject.get_pronouns().objective
 
 /proc/he_or_she(var/mob/subject)
-	if(isabomination(subject))
-		return "we"
-
-	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
-		return "they"
-
-	switch (subject.gender)
-		if ("male")
-			return "he"
-		if ("female")
-			return "she"
-		else
-			return "they"
+	return subject.get_pronouns().subjective
 
 /proc/hes_or_shes(var/mob/subject)
-	if(isabomination(subject))
-		return "we're"
-
-	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
-		return "they're"
-
-	switch (subject.gender)
-		if ("male")
-			return "he's"
-		if ("female")
-			return "she's"
-		else
-			return "they're"
+	var/datum/pronouns/pronouns = subject.get_pronouns()
+	return pronouns.subjective + (pronouns.pluralize ? "'re" : "'s")
 
 /proc/himself_or_herself(var/mob/subject)
-	if(isabomination(subject))
-		return "ourself"
-
-	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
-		return "themselves"
-
-	switch(subject.gender)
-		if ("male")
-			return "himself"
-		if ("female")
-			return "herself"
-		else
-			return "themselves"
+	return subject.get_pronouns().reflexive
 
 /mob/proc/get_explosion_resistance()
 	return 0
@@ -1205,3 +1132,18 @@
 		(src.shoes 		&& src.shoes.permeability_coefficient 		<= 0.10) && \
 		(src.gloves 	&& src.gloves.permeability_coefficient 		<= 0.02 ))
 		.=1
+
+
+/// Changes ghost invisibility for the round.
+// Default value set in global.dm: INVIS_GHOST
+/proc/change_ghost_invisibility(var/new_invis)
+	var/prev_invis = ghost_invisibility
+	ghost_invisibility = new_invis
+	for (var/mob/dead/observer/G in mobs)
+		G.invisibility = new_invis
+		REMOVE_MOB_PROPERTY(G, PROP_INVISIBILITY, G)
+		APPLY_MOB_PROPERTY(G, PROP_INVISIBILITY, G, new_invis)
+		if (new_invis != prev_invis && (new_invis == 0 || prev_invis == 0))
+			boutput(G, "<span class='notice'>You are [new_invis == 0 ? "now" : "no longer"] visible to the living!</span>")
+
+
