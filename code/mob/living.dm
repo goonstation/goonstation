@@ -520,6 +520,7 @@
 				if(ishuman(src))
 					var/mob/living/carbon/human/H = src
 					if ((locate(/obj/item/augmentation/head/wireless_interact) in H.has_augmentation("Head", "brain")) && (get_dist(src, target) > 1) && istype(target, /obj/machinery) && equipped)
+						src.click(get_turf(target), params, location, control)
 						return
 
 				if (equipped)
