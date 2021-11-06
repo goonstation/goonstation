@@ -162,7 +162,7 @@
 		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 	spooky_blt
-		name = "haunted BLT"
+		name = "Boo-LT"
 		desc = "Cursed yet crunchy bacon, lettuce, and tomato between two slices of dread. It whispers false promises of a healthy meal, in spite of the bacon."
 		icon_state = "scarewich_blt"
 		initial_reagents = list("ectoplasm"=15,"juice_tomato"=2,"cholesterol"=3,"porktonium"=3)
