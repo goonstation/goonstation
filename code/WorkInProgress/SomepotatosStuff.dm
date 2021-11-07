@@ -123,7 +123,7 @@
 		if(doText)
 			boutput(usr, "You are on a different z-level!")
 		return
-	client.GPS_Path = AStar(start, dest, heuristic, /turf/proc/Distance, adjacent_param = param, maxtraverse=1000 )
+	client.GPS_Path = get_path_to(src, dest, max_distance = 500, id=src.get_id(), skip_first=FALSE)
 	if(client.GPS_Path)
 		if(doText)
 			boutput( usr, "Path located! Use the GPS verb again to clear the path!" )
@@ -193,8 +193,7 @@
 	if(ON_COOLDOWN(src, "gps", 10 SECONDS))
 		boutput(src, "Verb on cooldown for [time_to_text(ON_COOLDOWN(src, "gps", 0))].")
 		return
-	if(hasvar(src,"wear_id"))
-		DoGPS(src:wear_id)
+	DoGPS(src.get_id())
 /mob/living/silicon/verb/GPS()
 	set name = "GPS"
 	set category = "Commands"
