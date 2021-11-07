@@ -40,12 +40,14 @@ var/global
 
 	var/list/result = list()
 
-	if (!secrets && SECRETS_ENABLED)
+#ifdef SECRETS_ENABLED
+	if (!secrets)
 		// If secrets are enabled, load config options from +secrets as well.
 		// This way you can still have local additions to it.
 		// This can probably be improved, since you can't *remove* entries,
 		// just add new ones...
 		result += load_config_list("[CONFIG_PATH_PREFIX]filename", as_ckey, 1)
+#endif
 
 	try
 		// Get every line in the file as a list of lines
