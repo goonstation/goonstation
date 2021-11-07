@@ -61,9 +61,9 @@
 		// picking up items
 		if (!held_item && isitem(target) && !target.anchored && !target.cant_drop)
 			if(is_valid_item(target))
-				src.overlays += held_item
-				target.set_loc(src)
 				held_item = target
+				src.vis_contents += held_item
+				target.set_loc(src)
 				boutput(user, "You grip the [target] in your [src].")
 				return
 			else
@@ -71,7 +71,9 @@
 				return
 		// using items
 		if (use_item && held_item)
+			// mining_tool uses attackby, mining_tools uses afterattack >.>
 			target.Attackby(held_item, user)
+			held_item.afterattack(target, user)
 
 	attack_self(mob/user)
 		src.item_sanity()
@@ -79,12 +81,13 @@
 		if (held_item)
 			boutput(user, "You release the [held_item] from your [src].")
 			held_item.set_loc(get_turf(user))
-			src.overlays -= held_item
+			src.vis_contents -= held_item
+			held_item = null
 
 	/// in case the held item is used up/deleted/etc, this will reset the held_item
 	proc/item_sanity()
 		if (held_item && (held_item.disposed || held_item.loc != src))
-			src.overlays -= held_item
+			src.vis_contents -= held_item
 			held_item = null
 
 	proc/is_valid_item(obj/item/I)
