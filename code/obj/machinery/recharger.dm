@@ -86,7 +86,7 @@ obj/machinery/recharger
 				T = null
 
 /obj/machinery/recharger/attackby(obj/item/G as obj, mob/user as mob)
-	if (isrobot(user)) return
+	if (G.cant_drop) return
 	if (src.charging)
 		return
 
