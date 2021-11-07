@@ -848,7 +848,7 @@ var/datum/action_controller/actions
 				boutput(source, "<span class='alert'>You can't put [item] on [target] when [(he_or_she(target))] is in [target.loc]!</span>")
 				interrupt(INTERRUPT_ALWAYS)
 				return
-			if(issilicon(source))
+			if(issilicon(source) || item.cant_drop) //Fix for putting item arm objects into others' inventory
 				source.show_text("You can't put \the [item] on [target] when it's attached to you!", "red")
 				interrupt(INTERRUPT_ALWAYS)
 				return
