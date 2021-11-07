@@ -1560,7 +1560,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	force = MELEE_DMG_RIFLE
 	contraband = 8
 	caliber = 0.223
-	max_ammo_capacity = 30
+	max_ammo_capacity = 20
 	auto_eject = 1
 
 	two_handed = 1
