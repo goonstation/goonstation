@@ -74684,7 +74684,7 @@
 	},
 /area/centcom/lounge)
 "ewi" = (
-/turf/unsimulated/floor/airless/carpet/clowncarpet/border{
+/turf/unsimulated/floor/carpet/clowncarpet/border{
 	dir = 10
 	},
 /area/centcom/offices/katzen)
@@ -74937,7 +74937,7 @@
 	pixel_x = 6;
 	pixel_y = 3
 	},
-/turf/unsimulated/floor/airless/carpet/clowncarpet/border{
+/turf/unsimulated/floor/carpet/clowncarpet/border{
 	dir = 5
 	},
 /area/centcom/offices/katzen)
@@ -76207,7 +76207,7 @@
 /obj/stool/chair/office/syndie{
 	dir = 1
 	},
-/turf/unsimulated/floor/airless/carpet/clowncarpet/border,
+/turf/unsimulated/floor/carpet/clowncarpet/border,
 /area/centcom/offices/katzen)
 "jup" = (
 /obj/table/reinforced/bar/auto,
@@ -78453,7 +78453,7 @@
 	pixel_x = -4;
 	pixel_y = 10
 	},
-/turf/unsimulated/floor/airless/carpet/clowncarpet/border{
+/turf/unsimulated/floor/carpet/clowncarpet/border{
 	dir = 9
 	},
 /area/centcom/offices/katzen)
@@ -79954,7 +79954,7 @@
 	},
 /area/shuttle/escape/centcom/destiny)
 "szA" = (
-/turf/unsimulated/floor/airless/carpet/clowncarpet/border{
+/turf/unsimulated/floor/carpet/clowncarpet/border{
 	dir = 6
 	},
 /area/centcom/offices/katzen)
@@ -80749,7 +80749,7 @@
 /obj/machinery/computer3/generic/personal/meatland{
 	pixel_y = 8
 	},
-/turf/unsimulated/floor/airless/carpet/clowncarpet/border{
+/turf/unsimulated/floor/carpet/clowncarpet/border{
 	dir = 1
 	},
 /area/centcom/offices/katzen)
