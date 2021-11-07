@@ -39,6 +39,9 @@
 	proc/RawClick(location,control,params)
 		return
 
+	/// If atmos should be blocked by this - special behaviours handled in gas_cross() overrides
+	var/gas_impermeable = FALSE
+
 /* -------------------- name stuff -------------------- */
 	/*
 	to change names: either add or remove something with the appropriate proc(s) and then call atom.UpdateName()

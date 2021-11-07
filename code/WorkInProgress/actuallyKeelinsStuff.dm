@@ -3266,7 +3266,7 @@ Returns:
 	flags = FPRINT | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	event_handler_flags = USE_CANPASS
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	CanPass(atom/movable/mover, turf/target)
 		if (mover?.throwing)
 			return 1
 		return ..()

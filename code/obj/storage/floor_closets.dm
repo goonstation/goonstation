@@ -34,7 +34,7 @@
 	recalcPClass()
 		p_class = initial(p_class)
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	CanPass(atom/movable/mover, turf/target)
 		return 1
 
 /obj/storage/closet/syndi/hidden

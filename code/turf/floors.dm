@@ -1324,18 +1324,18 @@ DEFINE_FLOORS(grasslush/thin,
 	else
 		boutput(user, "Your attack bounces off the foamed metal floor.")
 
-/turf/simulated/floor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/turf/simulated/floor/CanPass(atom/movable/mover, turf/target)
 	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
 		if (!( locate(/obj/machinery/mass_driver, src) ))
 			return 0
 	return ..()
 
-/turf/simulated/shuttle/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/turf/simulated/shuttle/CanPass(atom/movable/mover, turf/target,)
 	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
 		return 0
 	return ..()
 
-/turf/unsimulated/floor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/turf/unsimulated/floor/CanPass(atom/movable/mover, turf/target)
 	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
 		if (!( locate(/obj/machinery/mass_driver, src) ))
 			return 0

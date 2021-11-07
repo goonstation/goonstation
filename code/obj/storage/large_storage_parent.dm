@@ -425,10 +425,8 @@
 	alter_health()
 		. = get_turf(src)
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	CanPass(atom/movable/mover, turf/target)
 		. = open
-		if (air_group || (height==0))
-			return 1
 		if (src.is_short)
 			return 0
 

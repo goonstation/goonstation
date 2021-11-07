@@ -429,6 +429,7 @@
 	icon_state = "shieldw"
 	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
 	var/powerlevel //Stores the power level of the deployer
+	density = 0
 
 	var/sound/sound_shieldhit = "sound/impact_sounds/Energy_Hit_1.ogg"
 	var/obj/machinery/shieldgenerator/deployer = null
@@ -458,6 +459,7 @@
 			src.color = "#3333FF" //change colour for different power levels
 			src.powerlevel = 1
 			flags = 0
+			gas_impermeable = TRUE
 		else if(deployer != null && deployer.power_level == 2)
 			src.name = "Atmospheric/Liquid Forcefield"
 			src.desc = "A force field that prevents gas and liquids from passing through it."
@@ -465,6 +467,7 @@
 			src.color = "#33FF33"
 			src.powerlevel = 2
 			flags = ALWAYS_SOLID_FLUID
+			gas_impermeable = TRUE
 		else if(deployer != null)
 			src.name = "Energy Forcefield"
 			src.desc = "A force field that prevents matter from passing through it."
@@ -472,6 +475,7 @@
 			src.color = "#FF3333"
 			src.powerlevel = 3
 			flags = ALWAYS_SOLID_FLUID | USEDELAY
+			density = 1
 
 	disposing()
 		if(update_tiles)
@@ -486,41 +490,6 @@
 			return source.update_nearby_tiles(need_rebuild)
 
 		return 1
-
-	CanPass(atom/A, turf/T)
-		var/level = 0
-		if(deployer == null)
-			level = powerlevel
-		else
-			level = deployer.power_level
-
-		switch(level)
-			if(0)
-				return 1
-			//power level one, atmos shield. Only atmos is blocked by this forcefield
-			if(1)
-				if(ismob(A)) return 1
-				if(isobj(A)) return 1
-				//Has a liquid check in IS_SOLID_TO_FLUID
-
-			//power level 2, liquid shield. Only liquids are blocked by this forcefield
-			if(2)
-				if(ismob(A)) return 1
-				if(isobj(A)) return 1
-				//Has a liquid check in IS_SOLID_TO_FLUID
-
-			//power level 3, solid shield. Nothing can pass by this shield
-			if(3)
-				return 0
-
-			// liquid-only shield, allows atmos etc
-			if(4)
-				return 1
-
-		if(level == 1 || level == 2)
-			if(ismob(A)) return 1
-			if(isobj(A)) return 1
-		else return 0
 
 	attackby(obj/item/W, mob/user)
 		. = ..()

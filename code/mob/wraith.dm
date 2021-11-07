@@ -235,7 +235,7 @@
 			for (var/datum/objective/specialist/wraith/WO in src.mind.objectives)
 				WO.onAbsorb(M)
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	CanPass(atom/movable/mover, turf/target)
 		if (istype(mover, /obj/projectile))
 			var/obj/projectile/proj = mover
 			if (proj.proj_data.hits_wraiths)
