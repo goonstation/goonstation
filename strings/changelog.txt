@@ -1,6 +1,6 @@
 
 (t)sun nov 07 21
-(*)pali
+(u)pali
 (+)Glowstick light range increased
 (t)fri nov 05 21
 (u)zjdtmkhzt
