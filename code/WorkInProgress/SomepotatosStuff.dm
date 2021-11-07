@@ -124,7 +124,7 @@
 			boutput(usr, "You are on a different z-level!")
 		return
 	client.GPS_Path = get_path_to(src, dest, max_distance = 500, id=src.get_id(), skip_first=FALSE)
-	if(client.GPS_Path)
+	if(length(client.GPS_Path))
 		if(doText)
 			boutput( usr, "Path located! Use the GPS verb again to clear the path!" )
 	else
