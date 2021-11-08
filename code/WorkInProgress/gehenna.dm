@@ -45,7 +45,7 @@
 	var/datum/light/point/light = null
 	var/light_r = 0.5*(sin(GEHENNA_TIME)+1)
 	var/light_g = 0.3*(sin(GEHENNA_TIME )+1)
-	var/light_b = 0.3*(sin(GEHENNA_TIME + 45 )+1)
+	var/light_b = 0.4*(sin(GEHENNA_TIME - 45 )+1)
 	var/light_brightness = 0.6*(sin(GEHENNA_TIME)+0.8) + 0.3
 	var/light_height = 3
 	var/generateLight = 1
