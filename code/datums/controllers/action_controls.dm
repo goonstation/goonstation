@@ -924,8 +924,7 @@ var/datum/action_controller/actions
 				else if (istype(I, /obj/item/mine))
 					var/obj/item/mine/M = I
 					if (M.armed && M.used_up != 1)
-						for (var/mob/O in AIviewers(owner))
-							O.show_message("<span class='alert'><B>...and triggers it accidentally!</B></span>", 1)
+						source.show_message("<span class='alert'><B>...and triggers it accidentally!</B></span>", 1)
 						M.triggered(source)
 
 				target.u_equip(I)
