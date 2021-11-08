@@ -1,5 +1,9 @@
 
 (t)mon nov 08 21
+(u)Ikea
+(p)6559
+(e)🎨|sprites
+(*)Loot crates no longer have stripes indicating their tier.
 (u)Zonespace
 (p)6577
 (e)🎨⚖|sprites, balance
