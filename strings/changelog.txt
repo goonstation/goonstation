@@ -1,5 +1,9 @@
 
 (t)mon nov 08 21
+(u)Zonespace
+(p)6577
+(e)🎨⚖|sprites, balance
+(*)Armory Special Grenade crates now have a box of NT stun mines in them!
 (u)Walpvrgis
 (p)6603
 (e)🎨⚖|sprites, balance
