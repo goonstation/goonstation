@@ -1,5 +1,9 @@
 
 (t)mon nov 08 21
+(u)Walpvrgis
+(p)6603
+(e)🎨⚖|sprites, balance
+(+)Replaced the spacelubed floor tile effect with new art; should be easier to see on resprited floors now.
 (u)Gousaid67
 (p)6579
 (e)🆕|feature
