@@ -37,10 +37,11 @@
 		src.pixel_y = text2num(params["icon-y"]) - 16
 
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrown_thing/thr=null)
+	if(src.disposed)
+		return
 	var/area/AR = get_area(hit_atom)
 	if(AR?.sanctuary)
 		return
-
 	src.material?.triggerOnAttack(src, src, hit_atom)
 	hit_atom.material?.triggerOnHit(hit_atom, src, null, 2)
 	for(var/atom/A in hit_atom)
