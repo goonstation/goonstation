@@ -2108,7 +2108,7 @@ proc/countJob(rank)
 var/global/nextDectalkDelay = 5 //seconds
 var/global/lastDectalkUse = 0
 /proc/dectalk(msg)
-	if (!msg || !ircbot.apikey) return 0
+	if (!msg || !config.spacebee_api_key) return 0
 	if (world.timeofday > (lastDectalkUse + (nextDectalkDelay * 10)))
 		lastDectalkUse = world.timeofday
 		msg = copytext(msg, 1, 2000)
