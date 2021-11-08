@@ -1,4 +1,9 @@
 
+(t)mon nov 08 21
+(u)Gousaid67
+(p)6579
+(e)🆕|feature
+(*)Chefs are now able to examine food to get additional information!
 (t)sun nov 07 21
 (u)pali
 (+)Glowstick light range increased
