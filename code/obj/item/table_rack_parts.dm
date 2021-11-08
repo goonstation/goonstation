@@ -159,6 +159,12 @@ RACK PARTS
 	furniture_name = "folding table"
 	build_duration = 15
 
+/obj/item/furniture_parts/table/syndicate
+	name = "crimson glass table parts"
+	desc = "A collection of parts that can be used to make a table with a sturdy red glass top."
+	icon = 'icons/obj/furniture/table_syndicate.dmi'
+	furniture_type = /obj/table/syndicate/auto
+
 /* ---------- Glass Table Parts ---------- */
 /obj/item/furniture_parts/table/glass
 	name = "glass table parts"

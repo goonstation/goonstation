@@ -516,6 +516,15 @@
 				actions.start(new /datum/action/bar/icon/fold_folding_table(src, null), user)
 		return
 
+/obj/table/syndicate
+	name = "crimson glass table"
+	desc = "An industrial grade table with a crimson glass panel on the top. The glass looks extremely sturdy."
+	icon = 'icons/obj/furniture/table_syndicate.dmi'
+	auto_type = /obj/table/syndicate
+	parts_type = /obj/item/furniture_parts/table/syndicate
+
+	auto
+		auto = 1
 /* ======================================== */
 /* ---------------------------------------- */
 /* ======================================== */
