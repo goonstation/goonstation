@@ -75234,15 +75234,15 @@
 	icon_state = "gibbl2"
 	},
 /obj/map/light/secretblue,
-/obj/item/gun/kinetic/ak47{
-	pixel_x = 1;
-	pixel_y = 8
-	},
 /obj/decal/skeleton{
 	desc = "The remains of some poor cosmonaut fellow.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body9";
 	name = "corpse"
+	},
+/obj/item/gun/kinetic/knn29{
+	pixel_x = -2;
+	pixel_y = 9
 	},
 /turf/unsimulated/floor/airless/plating{
 	icon = 'icons/turf/shuttle.dmi';
@@ -76821,11 +76821,10 @@
 	pixel_x = 10
 	},
 /obj/map/light/secretblue,
-/obj/item/gun/kinetic/ak47{
-	pixel_x = 1;
-	pixel_y = 8
+/obj/item/gun/kinetic/knn29{
+	pixel_x = -2;
+	pixel_y = 9
 	},
-/obj/item/ammo/bullets/ak47,
 /obj/decal/skeleton{
 	desc = "The remains of some poor cosmonaut fellow.";
 	icon = 'icons/misc/hstation.dmi';
@@ -77284,9 +77283,9 @@
 	},
 /area/centcom)
 "lJH" = (
-/obj/item/gun/kinetic/ak47{
-	pixel_x = -4;
-	pixel_y = 8
+/obj/item/gun/kinetic/knn29{
+	pixel_x = -2;
+	pixel_y = 9
 	},
 /obj/decal/skeleton{
 	desc = "The remains of some poor cosmonaut fellow.";
@@ -78814,9 +78813,9 @@
 	icon_state = "????";
 	name = "????"
 	},
-/obj/item/gun/kinetic/ak47{
-	pixel_x = 1;
-	pixel_y = 8
+/obj/item/gun/kinetic/knn29{
+	pixel_x = 9;
+	pixel_y = 10
 	},
 /turf/unsimulated/floor/airless/plating{
 	icon = 'icons/turf/shuttle.dmi';
@@ -79430,24 +79429,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
-"qze" = (
-/obj/table/folding,
-/obj/item/ammo/bullets/ak47{
-	pixel_x = -7;
-	pixel_y = -1
-	},
-/obj/item/ammo/bullets/ak47{
-	pixel_y = 7
-	},
-/obj/item/ammo/bullets/ak47{
-	pixel_x = -3;
-	pixel_y = 2
-	},
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/space)
 "qzY" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -167675,7 +167656,7 @@ jhk
 fjD
 chk
 dHc
-qze
+dEJ
 rQF
 cki
 cki

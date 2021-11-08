@@ -278,47 +278,6 @@ toxic - poisons
 	anti_mutant
 		reagent_payload = "mutadone" // HAH
 
-/datum/projectile/bullet/lmg
-	name = "bullet"
-	sname = "8-shot burst"
-	shot_sound = 'sound/weapons/minigunshot.ogg'
-	power = 15
-	cost = 8
-	shot_number = 8
-	shot_delay = 1
-	dissipation_delay = 12
-	ks_ratio = 1.0
-	damage_type = D_KINETIC
-	hit_type = DAMAGE_CUT
-	caliber = 0.308
-	icon_turf_hit = "bhole-small"
-	implanted = /obj/item/implant/projectile/bullet_308
-	casing = /obj/item/casing/rifle
-	var/slow = 1
-
-	on_hit(atom/hit, direction, obj/projectile/P)
-		if(slow && ishuman(hit))
-			var/mob/living/carbon/human/M = hit
-			M.setStatus("slowed", 0.3 SECONDS, optional = 4)
-			M.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
-
-	auto
-		fullauto_valid = 1
-		sname = "full auto"
-		shot_volume = 66
-		cost = 1
-		shot_number = 1
-
-/datum/projectile/bullet/lmg/weak
-	power = 1
-	cost = 2
-	shot_number = 16
-	shot_delay = 0.7
-	dissipation_delay = 8
-	silentshot = 1
-	slow = 0
-	implanted = null
-
 //9mm/0.355
 /datum/projectile/bullet/bullet_9mm
 	name = "bullet"

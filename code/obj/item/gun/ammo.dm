@@ -400,10 +400,20 @@
 	caliber = 0.308
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
+/obj/item/ammo/bullets/knn_lethal
+	sname = "Soviet Space Rifle Round"
+	name = "Soviet Space Rifle magazine"
+	ammo_type = new/datum/projectile/bullet/knnlethal
+	icon_state = "knn_lethal"
+	amount_left = 30.0
+	max_amount = 30
+	caliber = 0.762
+	sound_load = 'sound/weapons/gunload_heavy.ogg'
+
 /obj/item/ammo/bullets/knn_paint
 	sname = "Training Round"
 	name = "Soviet Space Rifle magazine"
-	ammo_type new/datum/projectile/bullet/knnpaint
+	ammo_type = new/datum/projectile/bullet/knnpaint
 	icon_state = "knn_training"
 	amount_left = 30.0
 	max_amount = 30

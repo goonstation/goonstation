@@ -24,6 +24,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	// caliber list: update as needed
 	// 0.22 - pistols
 	// 0.308 - rifles
+	// 0.762 - Soviet rifles. needed so people dont go around shoving lethals into non lethal guns unless explictly given the lethal rounds -eagle
 	// 0.357 - revolver
 	// 0.38 - detective
 	// 0.41 - derringer
@@ -514,6 +515,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	can_dual_wield = 0 //as cool as it would be, yass would yell at me if i made that 1
 	two_handed = 1
 	gildable = FALSE
+	fire_animation = TRUE
 
 	New()
 		ammo = new/obj/item/ammo/bullets/knn_paint
