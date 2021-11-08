@@ -9,7 +9,7 @@
 	throw_range = 4
 	p_class = 1.5 // 1.5 while standing, 2.5 while resting (see update_icon.dm for the place where this change happens)
 
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER | USE_CANPASS | IS_FARTABLE
+	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS | IS_FARTABLE
 	mob_flags = IGNORE_SHIFT_CLICK_MODIFIER
 
 	var/dump_contents_chance = 20
@@ -526,7 +526,7 @@
 
 	src.chest_item = null
 
-	src.organs.len = 0
+	src.organs?.len = 0
 	src.organs = null
 
 	if (mutantrace)
@@ -656,11 +656,11 @@
 		else
 		//Changelings' heads pop off and crawl away - but only if they're not gibbed and have some spare DNA points. Oy vey!
 			SPAWN_DBG(0)
-				var/datum/mind/M = src.mind
 				emote("deathgasp")
 				src.visible_message("<span class='alert'><B>[src]</B> head starts to shift around!</span>")
 				src.show_text("<b>We begin to grow a headspider...</b>", "blue")
 				sleep(20 SECONDS)
+				var/datum/mind/M = src.mind
 				if(!M || M.disposed)
 					return
 				if (M?.current)
@@ -1204,23 +1204,30 @@
 		see_face = 0
 	else if (istype(src.wear_suit) && !src.wear_suit.see_face)
 		see_face = 0
+	var/id_name = src.wear_id?:registered
 	if (!see_face)
-		if (istype(src.wear_id) && src.wear_id:registered)
-			src.name = "[src.name_prefix(null, 1)][src.wear_id:registered][src.name_suffix(null, 1)]"
+		if (id_name)
+			src.name = "[src.name_prefix(null, 1)][id_name][src.name_suffix(null, 1)]"
+			src.update_name_tag(id_name)
 		else
 			src.unlock_medal("Suspicious Character", 1)
 			src.name = "[src.name_prefix(null, 1)]Unknown[src.name_suffix(null, 1)]"
+			src.update_name_tag("")
 	else
-		if (istype(src.wear_id) && src.wear_id:registered != src.real_name)
+		if (id_name != src.real_name)
 			if (src.decomp_stage > 2)
-				src.name = "[src.name_prefix(null, 1)]Unknown[src.wear_id:registered ? " (as [src.wear_id:registered])" : ""][src.name_suffix(null, 1)]"
+				src.name = "[src.name_prefix(null, 1)]Unknown[id_name ? " (as [id_name])" : ""][src.name_suffix(null, 1)]"
+				src.update_name_tag(id_name)
 			else
-				src.name = "[src.name_prefix(null, 1)][src.real_name][src.wear_id:registered ? " (as [src.wear_id:registered])" : ""][src.name_suffix(null, 1)]"
+				src.name = "[src.name_prefix(null, 1)][src.real_name][id_name ? " (as [id_name])" : ""][src.name_suffix(null, 1)]"
+				src.update_name_tag(src.real_name)
 		else
 			if (src.decomp_stage > 2)
-				src.name = "[src.name_prefix(null, 1)]Unknown[src.wear_id ? " (as [src.wear_id:registered])" : ""][src.name_suffix(null, 1)]"
+				src.name = "[src.name_prefix(null, 1)]Unknown[src.wear_id ? " (as [id_name])" : ""][src.name_suffix(null, 1)]"
+				src.update_name_tag(id_name)
 			else
 				src.name = "[src.name_prefix(null, 1)][src.real_name][src.name_suffix(null, 1)]"
+				src.update_name_tag(src.real_name)
 
 /mob/living/carbon/human/find_in_equipment(var/eqtype)
 	if (istype(w_uniform, eqtype))
@@ -1297,6 +1304,8 @@
 /mob/living/carbon/human/restrained()
 	if (src.hasStatus("handcuffed"))
 		return 1
+	if (src.hasStatus("incorporeal"))
+		return 1
 	if (src.wear_suit && src.wear_suit.restrain_wearer)
 		return 1
 	if (src.limbs && (src.hand ? !src.limbs.l_arm : !src.limbs.r_arm))
@@ -1361,7 +1370,8 @@
 
 // called when something steps onto a human
 // this could be made more general, but for now just handle mulebot
-/mob/living/carbon/human/HasEntered(var/atom/movable/AM)
+/mob/living/carbon/human/Crossed(atom/movable/AM)
+	..()
 	var/obj/machinery/bot/mulebot/MB = AM
 	if (istype(MB))
 		MB.RunOver(src)
@@ -1714,8 +1724,10 @@
 	//mbc FUCK why doesn't this have any parent to call
 	speech_bubble.icon_state = "speech"
 	UpdateOverlays(speech_bubble, "speech_bubble")
+	var/speech_bubble_time = src.last_typing
 	SPAWN_DBG(1.5 SECONDS)
-		UpdateOverlays(null, "speech_bubble")
+		if(speech_bubble_time == src.last_typing)
+			UpdateOverlays(null, "speech_bubble")
 
 /mob/living/carbon/human/var/const
 	slot_back = 1
@@ -1808,6 +1820,9 @@
 		W.unequipped(src)
 		src.shoes = null
 		src.update_clothing()
+		var/turf/T = get_turf(src)
+		if(T?.active_liquid)
+			T.active_liquid.Crossed(src)
 	else if (W == src.belt)
 		W.unequipped(src)
 		src.belt = null
@@ -2911,6 +2926,11 @@
 	.=..()
 
 /mob/living/carbon/human/attack_hand(mob/M)
+	if(ishuman(M) && M == src && M.a_intent == "harm")
+		var/mob/living/carbon/human/H = M
+		if(HAS_MOB_PROPERTY(H, PROP_NO_SELF_HARM))
+			boutput(H, "You can't bring yourself to attack yourself!")
+			return
 	..()
 	if (!surgeryCheck(src, M))
 		src.activate_chest_item_on_attack(M)
@@ -2919,6 +2939,11 @@
 	if (isghostcritter(M) && src.health < 80) //there's another one of these in attack_hand(). Same file. see, the quality of my code doens't matter as long as i leave a very helpful comment!!!
 		boutput(M, "Your spectral conscience refuses to damage this human any further.")
 		return
+	if(ishuman(M) && M == src && (W.force > 0))
+		var/mob/living/carbon/human/H = M
+		if(HAS_MOB_PROPERTY(H, PROP_NO_SELF_HARM))
+			boutput(H, "You can't bring yourself to attack yourself!")
+			return
 	..()
 	if (!surgeryCheck(src, M))
 		src.activate_chest_item_on_attack(M)
@@ -3449,3 +3474,19 @@
 			var/obj/item/organ/tail/T = H.organHolder.tail
 			T.colorize_tail(H.bioHolder.mobAppearance)
 		H?.bioHolder?.mobAppearance.UpdateMob()
+
+/mob/living/carbon/human/get_pronouns()
+	RETURN_TYPE(/datum/pronouns)
+	if(isabomination(src))
+		return get_singleton(/datum/pronouns/abomination)
+	if(src.wear_id)
+		// not using get_id() because we don't want held IDs
+		var/obj/item/card/id/id = null
+		if(istype(src.wear_id, /obj/item/card/id))
+			id = src.wear_id
+		else if(istype(src.wear_id, /obj/item/device/pda2))
+			var/obj/item/device/pda2/pda = src.wear_id
+			id = pda.ID_card
+		. = id?.pronouns
+	if(isnull(.))
+		return ..()

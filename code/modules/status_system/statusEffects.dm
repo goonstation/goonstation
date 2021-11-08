@@ -227,8 +227,8 @@
 		onAdd(optional=null)
 			. = ..()
 			var/list/statusargs = optional
-			owner.filters += filter(type="displace", icon=icon('icons/effects/distort.dmi', "acid"), size=0)
-			src.filter = owner.filters[length(owner.filters)]
+			owner.add_filter("acid_displace", 0, displacement_map_filter(icon=icon('icons/effects/distort.dmi', "acid"), size=0))
+			src.filter = owner.get_filter("acid_displace")
 			if(length(statusargs))
 				src.leave_cleanable = statusargs["leave_cleanable"]
 				src.mob_owner = statusargs["mob_owner"]
@@ -241,7 +241,7 @@
 
 		onRemove()
 			. = ..()
-			owner.filters -= filter
+			owner.remove_filter("acid_displace")
 			filter = null
 			if(src.leave_cleanable)
 				var/obj/decal/cleanable/molten_item/I = make_cleanable(/obj/decal/cleanable/molten_item,get_turf(owner))
@@ -338,6 +338,8 @@
 		damage_tox = 0
 		damage_type = DAMAGE_BURN
 
+		maxDuration = 4 MINUTES
+
 		var/howMuch = ""
 		var/stage = 1
 
@@ -383,7 +385,7 @@
 			if(ismob(owner))
 				M = owner
 			if(!ismobcritter(M))
-				damage_tox = (sqrt(duration/20 + 5) - 1)
+				damage_tox = (sqrt(min(duration, 2 MINUTES)/20 + 5) - 1)
 			stage = get_stage(duration)
 			switch(stage)
 				if(1)
@@ -406,7 +408,7 @@
 				if (prob(stage - 2 - !!(M.traitHolder?.hasTrait("stablegenes"))) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
 					boutput(M, "<span class='alert'>You mutate!</span>")
 					M.bioHolder.RandomEffect("either")
-				if(prob(stage - 1) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
+				if(!ON_COOLDOWN(M, "radiation_stun_check", 1 SECOND) && prob(stage - 1) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
 					M.changeStatus("weakened", 3 SECONDS)
 					boutput(M, "<span class='alert'>You feel weak.</span>")
 					M.emote("collapse")
@@ -428,6 +430,8 @@
 		damage_tox = 2
 		damage_brute = 2
 		damage_type = DAMAGE_STAB | DAMAGE_BURN
+
+		maxDuration = 4 MINUTES
 
 		var/howMuch = ""
 		var/stage = 1
@@ -491,7 +495,7 @@
 				M = owner
 
 
-			damage_tox = (sqrt(duration/20 + 5) - 0.5)
+			damage_tox = (sqrt(min(duration, 2 MINUTES)/20 + 5) - 0.5)
 			damage_brute = damage_tox/2
 
 			stage = get_stage(duration)
@@ -516,7 +520,7 @@
 				if (prob(stage - !!(M.traitHolder?.hasTrait("stablegenes"))) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
 					boutput(M, "<span class='alert'>You mutate!</span>")
 					M.bioHolder.RandomEffect("either")
-				if(prob(stage-1) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
+				if(!ON_COOLDOWN(M, "n_radiation_stun_check", 1 SECOND) && prob(stage-1) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
 					M.changeStatus("weakened", 5 SECONDS)
 					boutput(M, "<span class='alert'>You feel weak.</span>")
 					M.emote("collapse")
@@ -1051,6 +1055,64 @@
 		clicked(list/params)
 			H.resist()
 
+	incorporeal
+		id = "incorporeal"
+		name = "Incorporeal"
+		desc = "You are incorporeal.<br>You cannot use your hands. Become corporeal again to interact with the world."
+		icon_state = "incorporeal"
+		unique = TRUE
+		duration = INFINITE_STATUS
+		maxDuration = null
+		var/mob/living/carbon/human/H
+
+		onAdd(optional=null)
+			. = ..()
+			if (ishuman(owner))
+				H = owner
+
+	possessing
+		id = "possessing"
+		name = "Possessing"
+		desc = "You are possessing someone.<br>Once the status effect ends, you will be temporarily transferred into their body."
+		icon_state = "possess"
+		unique = TRUE
+		maxDuration = 45 SECONDS
+		var/mob/living/carbon/human/H
+
+		onAdd(optional=null)
+			. = ..()
+			if (ishuman(owner))
+				H = owner
+
+	possessed
+		id = "possessed"
+		name = "Possessed"
+		desc = "You are possessing someone.<br>Once the status effect ends, you will be transferred back into your body."
+		icon_state = "possess"
+		unique = TRUE
+		maxDuration = 45 SECONDS
+		var/mob/living/carbon/human/H
+
+		onAdd(optional=null)
+			. = ..()
+			if (ishuman(owner))
+				H = owner
+
+	soulstolen
+		id = "soulstolen"
+		name = "soulstolen"
+		desc = "The Slasher has stolen your soul!"
+		icon_state = "incorporeal"
+		unique = TRUE
+		visible = FALSE
+		maxDuration = INFINITE_STATUS
+		var/mob/living/carbon/human/H
+
+		onAdd(optional=null)
+			. = ..()
+			if (ishuman(owner))
+				H = owner
+
 	buckled
 		id = "buckled"
 		name = "Buckled"
@@ -1059,31 +1121,31 @@
 		unique = 1
 		duration = INFINITE_STATUS
 		maxDuration = null
-		var/mob/living/carbon/human/H
+		var/mob/living/L
 		var/sleepcount = 5 SECONDS
 
 		onAdd(optional=null)
 			. = ..()
-			if (ishuman(owner))
-				H = owner
+			if (isliving(owner))
+				L = owner
 				sleepcount = 5 SECONDS
 			else
 				owner.delStatus("buckled")
 
 		clicked(list/params)
-			if(H.buckled)
-				H.buckled.Attackhand(H)
+			if(L.buckled)
+				L.buckled.Attackhand(L)
 
 		onUpdate(timePassed)
-			if (H && !H.buckled)
+			if (L && !L.buckled)
 				owner.delStatus("buckled")
 			else
 				if (sleepcount > 0)
 					sleepcount -= timePassed
 					if (sleepcount <= 0)
-						if (H.hasStatus("resting") && istype(H.buckled,/obj/stool/bed))
-							var/obj/stool/bed/B = H.buckled
-							B.sleep_in(H)
+						if (L.hasStatus("resting") && istype(L.buckled,/obj/stool/bed))
+							var/obj/stool/bed/B = L.buckled
+							B.sleep_in(L)
 						else
 							sleepcount = 3 SECONDS
 
@@ -1923,3 +1985,36 @@
 			M.changeStatus("paralysis", 5 SECONDS)
 			M.force_laydown_standup()
 			M.delStatus("drowsy")
+
+///APC status that locks lighting circuit offline
+/datum/statusEffect/lights_out
+	id = "lightsout"
+	visible = 0
+	var/oldstate
+
+	onAdd(optional)
+		. = ..()
+		var/obj/machinery/power/apc/APC = owner
+		if(istype(APC))
+			oldstate = APC.lighting
+			APC.lighting = 0
+			APC.updateicon()
+			APC.update()
+
+
+	onUpdate(timePassed)
+		. = ..()
+		var/obj/machinery/power/apc/APC = owner
+		if(istype(APC) && APC.lighting != 0)
+			APC.lighting = 0
+			APC.updateicon()
+			APC.update()
+
+
+	onRemove()
+		. = ..()
+		var/obj/machinery/power/apc/APC = owner
+		if(istype(APC))
+			APC.lighting = oldstate
+			APC.updateicon()
+			APC.update()

@@ -30,6 +30,8 @@
 	var/static/list/admin_interact_verbs
 	var/static/list/admin_interact_atom_verbs
 
+	var/datum/filter_editor/filteriffic
+
 	var/list/hidden_categories = null
 
 	New()

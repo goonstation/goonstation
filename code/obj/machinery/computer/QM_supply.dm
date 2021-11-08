@@ -106,12 +106,9 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 					src.analysis_by_uid[uid] = D
 					src.ready_to_analyze += D
 			qdel(sell_crate)
-		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Notification: Pathogen sample crate delivered to the CDC.")
-		pdaSignal.transmission_method = TRANSMISSION_RADIO
-		if(transmit_connection != null)
-			transmit_connection.post_signal(null, pdaSignal)
+		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 var/global/datum/cdc_contact_controller/QM_CDC = new()
 
@@ -128,6 +125,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	var/hacked = 0
 	var/tradeamt = 1
 	var/in_dialogue_box = 0
+	var/printing = 0
 	var/obj/item/card/id/scan = null
 	var/list/datum/supply_pack
 
@@ -139,9 +137,9 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	light_g = 0.7
 	light_b = 0.03
 
-	disposing()
-		radio_controller.remove_object(src, "1435")
+	New()
 		..()
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, FREQ_STATUS_DISPLAY)
 
 /obj/machinery/computer/supplycomp/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if(!hacked)
@@ -174,7 +172,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 	var/timer = shippingmarket.get_market_timeleft()
 	src.add_dialog(user)
-	post_signal("supply")
+	// post_signal("supply") // I'm pretty sure this doesn't do anything except create lag every time someone clicks it
 	var/HTML
 
 	var/header_thing_chui_toggle = (user.client && !user.client.use_chui) ? {"
@@ -373,6 +371,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			<br>
 			Contact CDC &middot;
 			Traders
+			Requisitions
 			RockBox Controls
 		</div>
 	</div>
@@ -389,6 +388,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			<br>
 			<a href='[topicLink("contact_cdc")]'>Contact CDC</a> &bull;
 			<a href='[topicLink("trader_list")]'>Traders</a> &bull;
+			<a href='[topicLink("requis_list")]'>Requisitions</a> &bull;
 			<a href='[topicLink("rockbox_controls")]'>Rockbox Controls</a>
 		</div>
 	</div>
@@ -1009,6 +1009,30 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			T.wipe_cart()
 			src.trader_dialogue_update("cart",T)
 
+		if ("pin_contract")
+			var/datum/req_contract/RC = locate(href_list["subaction"]) in shippingmarket.req_contracts
+			if(RC)
+				if(RC.pinned)
+					RC.pinned = FALSE
+					shippingmarket.has_pinned_contract = FALSE
+				else if(!shippingmarket.has_pinned_contract)
+					RC.pinned = TRUE
+					shippingmarket.has_pinned_contract = TRUE
+			src.requisitions_update()
+
+		if ("requis_list")
+			if (!shippingmarket.req_contracts.len)
+				boutput(usr, "<span class='alert'>No requisitions are currently on offer.</span>")
+				return
+			if (signal_loss >= 75)
+				boutput(usr, "<span class='alert'>Severe signal interference is preventing a connection to requisition hub.</span>")
+				return
+			src.requisitions_update()
+
+		if ("print_req")
+			if(!src.printing)
+				var/datum/req_contract/RC = locate(href_list["subaction"]) in shippingmarket.req_contracts
+				src.print_requisition(RC)
 
 		if ("mainmenu")
 			src.temp = null
@@ -1016,6 +1040,51 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
 	return
+
+
+/obj/machinery/computer/supplycomp/proc/requisitions_update()
+	src.temp = "<h2>Open Requisition Contracts</h2><div style='text-align: center;'>"
+	src.temp += "To fulfill these contracts, please send full requested<br>"
+	src.temp += "complement of items with the contract's Requisitions tag.<br>"
+	src.temp += "Insufficient or extra items will be returned to you.<br><br>"
+	src.temp += "One contract at a time may be pinned, which reserves it<br>"
+	src.temp += "for your use, even through market shifts.<br><br>"
+	src.temp += "When fulfilling third-party contracts, you <B>must</B><br>"
+	src.temp += "send the included requisition sheet; please be aware<br>"
+	src.temp += "<B>third-party returns are at clients' discretion</B><br>"
+	src.temp += "and your shipment may not be returned if insufficient."
+	for (var/datum/req_contract/RC in shippingmarket.req_contracts)
+		src.temp += "<h3>[RC.name][RC.pinned ? " (Pinned)" : null]</h3>"
+		src.temp += "Contract Reward:"
+		if(length(RC.item_rewarders) && !RC.hide_item_payouts)
+			src.temp += "<br>"
+			if(RC.payout > 0) src.temp += "[RC.payout] Credits<br>"
+			for(var/datum/rc_itemreward/RI in RC.item_rewarders)
+				if(RI.count) src.temp += "[RI.count]x [RI.name]<br>"
+				else src.temp += "[RI.name]<br>"
+			src.temp += "<br>"
+		else
+			src.temp += " [RC.payout] Credits<br>"
+		src.temp += "Requisition Code: [RC.req_code]<br><br>"
+		if(RC.flavor_desc) src.temp += "[RC.flavor_desc]<br><br>"
+		src.temp += "[RC.requis_desc]"
+		if(RC.req_class == AID_CONTRACT)
+			src.temp += "URGENT - Cannot Be Reserved<br>"
+		else
+			src.temp += "<A href='[topicLink("pin_contract","\ref[RC]")]'>[RC.pinned ? "Unpin Contract" : "Pin Contract"]</A><br>"
+		src.temp += "<A href='[topicLink("print_req","\ref[RC]")]'>Print List</A>"
+
+/obj/machinery/computer/supplycomp/proc/print_requisition(var/datum/req_contract/contract)
+	src.printing = 1
+	playsound(src.loc, "sound/machines/printer_thermal.ogg", 60, 0)
+	SPAWN_DBG(2 SECONDS)
+		var/obj/item/paper/thermal/P = new(src.loc)
+		P.info = "<font face='System' size='2'><center>REQUISITION CONTRACT MANIFEST<br>"
+		P.info += "FOR SUPPLIER REFERENCE ONLY<br><br>"
+		P.info += uppertext(contract.requis_desc)
+		P.info += "</center></font>"
+		P.name = "Requisition: [contract.name]"
+		src.printing = 0
 
 /obj/machinery/computer/supplycomp/proc/trader_dialogue_update(var/dialogue,var/datum/trader/T)
 	if (!dialogue || !T)
@@ -1188,14 +1257,9 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	return 1
 
 /obj/machinery/computer/supplycomp/proc/post_signal(var/command)
-
-	var/datum/radio_frequency/frequency = radio_controller.return_frequency("1435")
-
-	if(!frequency) return
-
 	var/datum/signal/status_signal = get_free_signal()
 	status_signal.source = src
 	status_signal.transmission_method = 1
 	status_signal.data["command"] = command
 
-	frequency.post_signal(src, status_signal)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, status_signal, null, FREQ_STATUS_DISPLAY)

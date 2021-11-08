@@ -1583,6 +1583,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					break
 
 	Crossed(var/atom/crosser as mob|obj)
+		..()
 		if (!activator || !(activator in src.loc))
 			//if (crosser.density && !isshell(crosser))
 			if (!isitem(crosser) && !isshell(crosser))

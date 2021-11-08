@@ -20,6 +20,11 @@
 		light.set_brightness(src.brightness / 5)
 		light.enable()
 
+	disposing()
+		qdel(src.light)
+		src.light = null
+		..()
+
 	// some common presets
 	cyan
 		name = "glow - CYAN";

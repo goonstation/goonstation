@@ -698,7 +698,8 @@
 		/turf/simulated/shuttle/wall, /turf/unsimulated/wall, /turf/simulated/wall/auto/shuttle, /obj/indestructible/shuttle_corner,
 		/obj/machinery/door, /obj/window, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange, /turf/simulated/wall/auto/reinforced/paper,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/jen/red, /turf/simulated/wall/auto/jen/green, /turf/simulated/wall/auto/jen/yellow, /turf/simulated/wall/auto/jen/cyan, /turf/simulated/wall/auto/jen/purple,  /turf/simulated/wall/auto/jen/blue,
-		/turf/simulated/wall/auto/reinforced/jen, /turf/simulated/wall/auto/reinforced/jen/red, /turf/simulated/wall/auto/reinforced/jen/green, /turf/simulated/wall/auto/reinforced/jen/yellow, /turf/simulated/wall/auto/reinforced/jen/cyan, /turf/simulated/wall/auto/reinforced/jen/purple, /turf/simulated/wall/auto/reinforced/jen/blue)
+		/turf/simulated/wall/auto/reinforced/jen, /turf/simulated/wall/auto/reinforced/jen/red, /turf/simulated/wall/auto/reinforced/jen/green, /turf/simulated/wall/auto/reinforced/jen/yellow, /turf/simulated/wall/auto/reinforced/jen/cyan, /turf/simulated/wall/auto/reinforced/jen/purple, /turf/simulated/wall/auto/reinforced/jen/blue,
+		/turf/unsimulated/wall/auto/supernorn/wood)
 	alpha = 160
 	the_tuff_stuff
 		explosion_resistance = 3
@@ -774,13 +775,14 @@
 		if(actuallysmash)
 			return ..()
 
-	attack_hand()
-		src.visible_message("<span class='alert'><b>[usr]</b> knocks on [src].</span>")
-		playsound(src.loc, src.hitsound, 100, 1)
-		sleep(0.3 SECONDS)
-		playsound(src.loc, src.hitsound, 100, 1)
-		sleep(0.3 SECONDS)
-		playsound(src.loc, src.hitsound, 100, 1)
+	attack_hand(mob/user as mob)
+		if(!ON_COOLDOWN(user, "glass_tap", 5 SECONDS))
+			src.visible_message("<span class='alert'><b>[usr]</b> knocks on [src].</span>")
+			playsound(src.loc, src.hitsound, 100, 1)
+			sleep(0.3 SECONDS)
+			playsound(src.loc, src.hitsound, 100, 1)
+			sleep(0.3 SECONDS)
+			playsound(src.loc, src.hitsound, 100, 1)
 		return
 
 	attackby()

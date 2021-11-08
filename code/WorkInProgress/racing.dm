@@ -19,9 +19,9 @@
 	anchored = 1
 	density = 0
 	opacity = 0
-	event_handler_flags = USE_HASENTERED
 
-	HasEntered(atom/A)
+	Crossed(atom/movable/A)
+		..()
 		if(istype(A,/obj/racing_clowncar))
 			playsound(A, "sound/mksounds/boost.ogg",30, 0)
 			step(A,src.dir)
@@ -149,7 +149,6 @@
 	density = 0
 	opacity = 0
 	var/delete = 1
-	event_handler_flags = USE_HASENTERED
 	var/spawn_time = 0
 
 	New()
@@ -167,7 +166,8 @@
 		if (world.time > spawn_time + 4500)
 			qdel(src)
 
-	HasEntered(atom/A)
+	Crossed(atom/movable/A)
+		..()
 		if(istype(A,/obj/racing_clowncar))
 			var/obj/racing_clowncar/R = A
 			R.spin(20)
@@ -182,9 +182,9 @@
 	anchored = 1
 	density = 0
 	opacity = 0
-	event_handler_flags = USE_HASENTERED
 
-	HasEntered(atom/A)
+	Crossed(atom/movable/A)
+		..()
 		if(istype(A,/obj/racing_clowncar))
 			var/obj/racing_clowncar/R = A
 			R.random_powerup()

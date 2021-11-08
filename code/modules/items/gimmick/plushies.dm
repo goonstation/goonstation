@@ -30,14 +30,48 @@
 	/obj/item/toy/plush/small/arthur,\
 	/obj/item/toy/plush/small/deneb,\
 	/obj/item/toy/plush/small/singuloose)
+	var/has_plushies = TRUE
 
 /obj/submachine/claw_machine/attack_hand(var/mob/user as mob)
 	src.add_dialog(user)
 	if(src.busy)
 		boutput(user, "<span class='alert'>Someone else is currently playing [src]. Be patient!</span>")
 	else
+		if(!has_plushies && !length(src.contents))
+			boutput(user, "<span class='alert'>[src] seems to be out of prizes, oh no! You could try adding a prize.</span>")
+			return
 		actions.start(new/datum/action/bar/icon/claw_machine(user,src), user)
 		return
+
+/obj/submachine/claw_machine/get_desc(dist)
+	. = ..()
+	if(length(src.contents))
+		var/list/prizes = list()
+		for(var/obj/item/I in src)
+			prizes += "\a [I]"
+		if(has_plushies)
+			prizes += "a lot of plushies"
+		if(length(prizes) == 1)
+			if(has_plushies)
+				. += "There are [prizes[1]] inside!"
+			else
+				. += "There is [prizes[1]] inside!"
+		else
+			. += "There are "
+			. += jointext(prizes.Copy(1, length(prizes)), ", ")
+			. += " and [prizes[length(prizes)]] inside!"
+	else
+		if(src.has_plushies)
+			. += "There are a lot of plushies inside!"
+		else
+			. += "It is currently empty."
+
+/obj/submachine/claw_machine/attackby(obj/item/I, mob/user)
+	if(I.cant_drop || I.tool_flags)
+		return ..()
+	user.drop_item()
+	I.set_loc(src)
+	boutput(user, "<span class='notice'>You insert \the [I] into \the [src] as a prize.</span>")
 
 /datum/action/bar/icon/claw_machine
 	duration = 100
@@ -89,11 +123,23 @@
 		return
 	CM.busy = 0
 	CM.icon_state = "claw"
+	if(!CM.has_plushies && !length(CM.contents))
+		playsound(CM, 'sound/machines/claw_machine_fail.ogg', 80, 1)
+		M.visible_message("<span class='alert'>[CM] seems to be out of prizes, oh no!</spawn>")
+		return
 	playsound(CM, 'sound/machines/claw_machine_success.ogg', 80, 1)
 	M.visible_message("<span class='notice'>[M] successfully secures their precious goodie, and it drops into the prize chute with a satisfying <i>plop</i>.</span>")
-	var/obj/item/P = pick(prob(20) ? (prob(33) ? CM.prizes_ultra_rare : CM.prizes_rare) : CM.prizes)
-	P = new P(get_turf(src.M))
-	P.desc = "Your new best friend, rescued from a cold and lonely claw machine."
+	var/list/prize_pool = null
+	if(CM.has_plushies)
+		prize_pool = prob(20) ? (prob(33) ? CM.prizes_ultra_rare : CM.prizes_rare) : CM.prizes
+	if(length(CM.contents) && (prob(50) || isnull(prize_pool)))
+		prize_pool = CM.contents
+	var/obj/item/P = pick(prize_pool)
+	if(ispath(P))
+		P = new P(get_turf(src.M))
+		P.desc = "Your new best friend, rescued from a cold and lonely claw machine."
+	else
+		P.set_loc(get_turf(src.M))
 	P.throw_at(M, 16, 3)
 
 /obj/item/toy/plush

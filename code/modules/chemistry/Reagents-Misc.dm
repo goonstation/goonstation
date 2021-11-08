@@ -1015,12 +1015,8 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				if (M.bodytemperature > 0)
+				if (M.bodytemperature > 0 && !M.hasStatus("burning"))
 					M.bodytemperature = max(M.bodytemperature-(10 * mult),0)
-				var/mob/living/L = M //for cryostylane not putting out fires during mob tick -Cirrial
-				var/fireDiff = L.bodytemperature - FIRE_MINIMUM_TEMPERATURE_TO_EXIST
-				if(istype(L) && L.getStatusDuration("burning") && fireDiff < 0)
-					L.changeStatus("burning", fireDiff SECONDS * mult) // by definition fireDiff will be negative
 				..()
 				return
 
@@ -2931,7 +2927,7 @@ datum
 			hygiene_value = -2
 			hunger_value = 0.068
 			viscosity = 0.4
-			depletion_rate = 0
+			depletion_rate = 0.4
 
 /*			var
 				blood_DNA = null

@@ -131,15 +131,15 @@
 	col_r = 0.0
 	col_g = 0.9
 	col_b = 0.1
-	brightness = 0.6
+	brightness = 0.33
 	height = 0.75
 	var/color_name = "green"
 	light_type = null
-	var/datum/component/holdertargeting/simple_light/light_c
+	var/datum/component/holdertargeting/sm_light/light_c
 
 	New()
 		..()
-		light_c = src.AddComponent(/datum/component/holdertargeting/simple_light, col_r*255, col_g*255, col_b*255, 255 * brightness)
+		light_c = src.AddComponent(/datum/component/holdertargeting/sm_light, col_r*255, col_g*255, col_b*255, 255 * brightness)
 		light_c.update(0)
 
 	proc/burst()
@@ -353,7 +353,7 @@
 		if (!src) return
 		if (!src.on)
 			src.on = 1
-			src.firesource = TRUE
+			src.firesource = FIRESOURCE_OPEN_FLAME
 			src.hit_type = DAMAGE_BURN
 			src.force = 3
 			src.icon_state = src.icon_on

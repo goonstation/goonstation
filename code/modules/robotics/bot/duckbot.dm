@@ -44,8 +44,7 @@
 
 /obj/machinery/bot/duckbot/New()
 	. = ..()
-	if(radio_controller)
-		radio_controller.add_object(src, FREQ_PDA)
+	MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
 /// Makes the duckbot mill around aimlessly, or chase people if emagged
 /obj/machinery/bot/duckbot/proc/wakka_wakka()
@@ -204,17 +203,13 @@
 		var/A = pick(stationAreas)
 		src.duck_migration_target = stationAreas[A]
 
-	var/datum/radio_frequency/frequency = radio_controller.return_frequency(FREQ_PDA)
-	if(!frequency) return FALSE
-
 	var/datum/signal/signal = get_free_signal()
 	signal.source = src
 	signal.data["sender"] = src.botnet_id
 	signal.data["sender_name"] = src
 	signal.data["message"] = "BUMP N GO TO [src.duck_migration_target]."
 	signal.data["target"] = src.duck_migration_target
-	signal.transmission_method = TRANSMISSION_RADIO
-	frequency.post_signal(src, signal)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "pda")
 	return TRUE
 
 /obj/machinery/bot/duckbot/receive_signal(datum/signal/signal)
@@ -251,8 +246,6 @@
 
 /obj/machinery/bot/duckbot/proc/send_confirm_signal(var/msg, var/target)
 	if(!ON_COOLDOWN(global, "duckbot_antispam_[target]", 1 SECOND))
-		var/datum/radio_frequency/frequency = radio_controller.return_frequency(FREQ_PDA)
-		if(!frequency) return FALSE
 		var/datum/signal/sigsend = get_free_signal()
 		sigsend.source = src
 		sigsend.data["sender"] = src.botnet_id
@@ -260,8 +253,7 @@
 		sigsend.data["sender_name"] = src
 		sigsend.data["message"] = "[msg]"
 		sigsend.data["address_1"] = target
-		sigsend.transmission_method = TRANSMISSION_RADIO
-		frequency.post_signal(src, sigsend)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, sigsend, null, "pda")
 
 /obj/machinery/bot/duckbot/KillPathAndGiveUp(give_up)
 	. = ..()

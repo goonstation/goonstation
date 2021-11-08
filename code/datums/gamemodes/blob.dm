@@ -28,7 +28,7 @@
 	var/i = rand(-5, 0)
 	var/num_blobs = max(2, min(round((num_players + i) / 20), blobs_possible))
 
-	var/list/possible_blobs = get_possible_blobs(num_blobs)
+	var/list/possible_blobs = get_possible_enemies(ROLE_BLOB, num_blobs)
 
 	if (!possible_blobs || !islist(possible_blobs) || !possible_blobs.len || possible_blobs.len < blobs_minimum)
 		return 0
@@ -142,30 +142,3 @@
 		boutput(world, "<span style='font-size:20px; color:red'><b>Blob victory!</b> - The crew has failed to stop the overmind! The station is lost to the blob!")
 
 	..()
-
-/datum/game_mode/blob/proc/get_possible_blobs(num_blobs=1)
-	var/list/candidates = list()
-
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if (ishellbanned(player)) continue //No treason for you
-		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-			if(player.client.preferences.be_blob)
-				candidates += player.mind
-
-	if(candidates.len < num_blobs)
-		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_blob set to yes were ready. We need [num_blobs], so including players who don't want to be blobstart in the pool.")
-		for(var/client/C)
-			var/mob/new_player/player = C.mob
-			if (!istype(player)) continue
-
-			if (ishellbanned(player)) continue //No treason for you
-			if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-				candidates += player.mind
-
-	if(candidates.len < 1)
-		return list()
-	else
-		return candidates
