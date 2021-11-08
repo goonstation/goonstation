@@ -342,6 +342,13 @@
 	ammo_type = new/datum/projectile/bullet/bullet_22
 	caliber = 0.22
 
+/obj/item/ammo/bullets/bullet_22/smartgun
+	name = ".22 smartgun magazine"
+	amount_left = 20.0
+	max_amount = 20.0
+	ammo_type = new/datum/projectile/bullet/bullet_22/smartgun
+	sound_load = 'sound/weapons/gunload_hitek.ogg'
+
 /obj/item/ammo/bullets/bullet_22/faith
 	amount_left = 4.0
 
@@ -360,8 +367,8 @@
 	name = "STENAG magazine" //heh
 	ammo_type = new/datum/projectile/bullet/assault_rifle
 	icon_state = "stenag_mag"
-	amount_left = 30.0
-	max_amount = 30.0
+	amount_left = 20.0
+	max_amount = 20.0
 	caliber = 0.223
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
@@ -467,13 +474,6 @@
 
 	five_shots
 		amount_left = 5.0
-
-	smartgun
-		name = "9mm smartgun magazine"
-		amount_left = 24.0
-		max_amount = 24.0
-		ammo_type = new/datum/projectile/bullet/bullet_9mm/smartgun
-		sound_load = 'sound/weapons/gunload_hitek.ogg'
 
 	smg
 		name = "9mm SMG magazine"

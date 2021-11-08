@@ -70,8 +70,24 @@ var/list/page_departments = list(
 	"Mining" = MGD_MINING)
 
 /proc/get_all_jobs()
-	return list("Assistant", "Detective", "Medical Doctor", "Captain", "Security Officer",
-				"Geneticist","Pathologist", "Scientist", "Head of Personnel",
-				"Chaplain", "Bartender", "Janitor", "Chef", "Roboticist", "Quartermaster",
-				"Chief Engineer","Engineer", "Miner", "Mechanic",
-				"Research Director", "Medical Director", "Botanist", "Clown")
+	var/all_jobs
+	all_jobs += command_jobs
+	all_jobs += security_jobs
+	all_jobs += engineering_jobs
+	all_jobs += medsci_jobs
+	all_jobs += service_jobs
+	all_jobs += "Staff Assistant"
+	return all_jobs
+
+var/list/command_jobs = list("Captain", "Medical Director", "Research Director", "Head of Personnel", "Head of Security", "Chief Engineer", "Communications Officer"/*"Clown"*/)
+var/list/security_jobs = list("Head of Security", "Nanotrasen Security Operative", "Security Officer", "Security Assistant", "Detective")
+var/list/engineering_jobs = list("Chief Engineer", "Engineer", "Mechanic", "Miner", "Quartermaster")
+var/list/medsci_jobs = list("Research Director", "Medical Director", "Medical Doctor", "Scientist", "Roboticist", "Geneticist")
+var/list/service_jobs = list("Head of Personnel", "Bartender", "Chef", "Botanist", "Rancher", "Clown", "Chaplain", "Janitor")
+
+var/list/command_gimmicks = list("Head Surgeon", "Head of Mining", "Nanotrasen Security Operative" /* NTSO isn't a gimmick role, but for the sake of sorting, it practically is*/)
+var/list/security_gimmicks = list("Vice Officer", "Part-time Vice Officer", "Forensic Technician")
+var/list/engineering_gimmicks = list("Head of Mining", "Station Builder", "Atmospherish Technician", "Technical Assistant")
+var/list/medsci_gimmicks = list("Head Surgeon", "Toxins Researcher", "Chemist", "Research Assistant", "Medical Assistant", "Test Subject", "Pharmacist", "Psychiatrist", "Psychologist", "Psychotherapist", "Therapist", "Counselor")
+var/list/service_gimmicks = list("Lawyer", "Barber", "Mailman", "Mime", "Musician", "Apiculturist", "Apiarist", "Sous-Chef", "Waiter", "Life Coach")
+

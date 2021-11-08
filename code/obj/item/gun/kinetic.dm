@@ -1473,13 +1473,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	name = "\improper Hydra smart pistol"
 	desc = "A pistol capable of locking onto multiple targets and firing on them in rapid sequence. \"Anderson Para-Munitions\" is engraved on the slide."
 	icon_state = "smartgun"
-	max_ammo_capacity = 24
+	max_ammo_capacity = 20
+	caliber = 0.22
 
 	New()
 		..()
-		ammo = new/obj/item/ammo/bullets/bullet_9mm/smartgun
-		set_current_projectile(new/datum/projectile/bullet/bullet_9mm/smartgun)
-		AddComponent(/datum/component/holdertargeting/smartgun/nukeop, 3)
+		ammo = new/obj/item/ammo/bullets/bullet_22/smartgun
+		set_current_projectile(new/datum/projectile/bullet/bullet_22/smartgun)
+		AddComponent(/datum/component/holdertargeting/smartgun/nukeop, 4)
 
 
 /datum/component/holdertargeting/smartgun/nukeop/is_valid_target(mob/user, mob/M)
@@ -1559,7 +1560,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	force = MELEE_DMG_RIFLE
 	contraband = 8
 	caliber = 0.223
-	max_ammo_capacity = 30
+	max_ammo_capacity = 20
 	auto_eject = 1
 
 	two_handed = 1
@@ -1734,6 +1735,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	can_dual_wield = 0
 	two_handed = 1
 	w_class = W_CLASS_BULKY
+
+	shoot_delay = 1 SECOND
 
 	var/datum/movement_controller/snipermove = null
 

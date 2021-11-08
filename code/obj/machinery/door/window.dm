@@ -97,7 +97,7 @@
 		close()
 		return 1
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	CanPass(atom/movable/mover, turf/target)
 		if (istype(mover, /obj/projectile))
 			var/obj/projectile/P = mover
 			if (P.proj_data.window_pass)
@@ -114,6 +114,12 @@
 			return !density
 		else
 			return 1
+
+	gas_cross(turf/target)
+		if(get_dir(loc, target) == dir)
+			return !density
+		else
+			return TRUE
 
 	CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
 		if (istype(mover, /obj/projectile))

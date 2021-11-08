@@ -145,7 +145,7 @@
 		src.connected = null
 		. = ..()
 
-/obj/m_tray/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/m_tray/CanPass(atom/movable/mover, turf/target)
 	if (istype(mover, /obj/item/dummy))
 		return 1
 	else
@@ -389,7 +389,7 @@
 		src.connected = null
 		. = ..()
 
-/obj/c_tray/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/c_tray/CanPass(atom/movable/mover, turf/target)
 	if (istype(mover, /obj/item/dummy))
 		return 1
 	else

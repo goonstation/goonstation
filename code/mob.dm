@@ -1525,9 +1525,7 @@
 	if (!isliving(src))
 		src.sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF | SEE_BLACKNESS
 
-/mob/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if (air_group || (height==0)) return 1
-
+/mob/CanPass(atom/movable/mover, turf/target)
 	if (istype(mover, /obj/projectile))
 		return !projCanHit(mover:proj_data)
 

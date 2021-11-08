@@ -57,11 +57,9 @@
 
 		var/dat = src.return_text_header()
 
-		dat += "<h4>Crew Manifest:</h4>"
-		dat += "<i>Entries cannot be modified from this terminal.</i><hr><br>"
-
-		for (var/datum/db_record/t as anything in data_core.general.records)
-			dat += "[t["name"]] - [t["rank"]]<br>"
+		dat += "<h4>Crew Manifest</h4>"
+		dat += "Entries cannot be modified from this terminal.<br><br>"
+		dat += get_manifest()
 		dat += "<br>"
 
 		var/stored = ""

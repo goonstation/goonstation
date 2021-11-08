@@ -218,6 +218,7 @@
 	name = "Permanent Military-Grade Forcefield"
 	desc = "A permanent force field that prevents non-authorized entities from passing through it."
 	var/team_num = 0		//1 = NT, 2 = SY
+	gas_impermeable = TRUE
 
 	CanPass(atom/A, turf/T)
 		if (ismob(A))
@@ -745,9 +746,7 @@
 
 		return
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-		if(air_group || (height==0)) return 1
-
+	CanPass(atom/movable/mover, turf/target)
 		if (!src.density || (mover.flags & TABLEPASS || istype(mover, /obj/newmeteor)) )
 			return 1
 		else

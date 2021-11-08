@@ -311,9 +311,7 @@
 				actions.start(new /datum/action/bar/icon/railing_jump/table_jump(user, src), user)
 		return
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-		if(air_group || (height==0)) return 1
-
+	CanPass(atom/movable/mover, turf/target)
 		if (!src.density || (mover.flags & TABLEPASS || istype(mover, /obj/newmeteor)) )
 			return 1
 		else

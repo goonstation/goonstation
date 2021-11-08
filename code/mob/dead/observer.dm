@@ -144,7 +144,7 @@
 
 
 //#ifdef HALLOWEEN
-/mob/dead/observer/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/mob/dead/observer/CanPass(atom/movable/mover, turf/target)
 	if (src.icon_state != "doubleghost" && istype(mover, /obj/projectile))
 		var/obj/projectile/proj = mover
 		if (proj.proj_data?.hits_ghosts)

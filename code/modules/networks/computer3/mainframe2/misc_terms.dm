@@ -2517,8 +2517,8 @@
 		switch (src.state)
 			if (0)
 				if (src.scan_beam)
-					//qdel(src.scan_beam)
-					src.scan_beam.dispose()
+					qdel(src.scan_beam)
+					src.scan_beam = null
 			if (1)
 				if (!src.scan_beam)
 					var/turf/beamTurf = get_step(src, src.dir)
@@ -2665,8 +2665,8 @@
 				light.disable()
 				icon_state = "secdetector-p"
 				if (src.scan_beam)
-					//qdel(src.scan_beam)
-					src.scan_beam.dispose()
+					qdel(src.scan_beam)
+					src.scan_beam = null
 				src.state = src.online
 				return
 
@@ -2734,7 +2734,7 @@
 
 	disposing()
 		if (src.next)
-			src.next.dispose()
+			qdel(src.next)
 			src.next = null
 		..()
 
@@ -2744,7 +2744,7 @@
 
 	Crossed(atom/movable/AM as mob|obj)
 		..()
-		if (istype(AM, /obj/beam) || istype(AM, /obj/critter/aberration))
+		if (istype(AM, /obj/beam) || istype(AM, /obj/critter/aberration) || isobserver(AM) || isintangible(AM))
 			return
 		SPAWN_DBG( 0 )
 			src.hit(AM)

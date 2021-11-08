@@ -28,6 +28,7 @@
 	var/reinf = 0 // cant figure out how to remove this without the map crying aaaaa - ISN
 	var/deconstruct_time = 0//20
 	pressure_resistance = 4*ONE_ATMOSPHERE
+	gas_impermeable = TRUE
 	anchored = 1
 	the_tuff_stuff
 		explosion_resistance = 3
@@ -286,7 +287,7 @@
 			the_text += " ...you can't see through it at all. What kind of idiot made this?"
 		return the_text
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	CanPass(atom/movable/mover, turf/target)
 		if(istype(mover, /obj/projectile))
 			var/obj/projectile/P = mover
 			if(P.proj_data.window_pass)
@@ -298,6 +299,11 @@
 			return !density
 		else
 			return 1
+
+	gas_cross(turf/target)
+		. = TRUE
+		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST || get_dir(loc, target) == dir)
+			. = ..()
 
 	CheckExit(atom/movable/O as mob|obj, target as turf)
 		if (!src.density)
@@ -775,13 +781,14 @@
 		if(actuallysmash)
 			return ..()
 
-	attack_hand()
-		src.visible_message("<span class='alert'><b>[usr]</b> knocks on [src].</span>")
-		playsound(src.loc, src.hitsound, 100, 1)
-		sleep(0.3 SECONDS)
-		playsound(src.loc, src.hitsound, 100, 1)
-		sleep(0.3 SECONDS)
-		playsound(src.loc, src.hitsound, 100, 1)
+	attack_hand(mob/user as mob)
+		if(!ON_COOLDOWN(user, "glass_tap", 5 SECONDS))
+			src.visible_message("<span class='alert'><b>[usr]</b> knocks on [src].</span>")
+			playsound(src.loc, src.hitsound, 100, 1)
+			sleep(0.3 SECONDS)
+			playsound(src.loc, src.hitsound, 100, 1)
+			sleep(0.3 SECONDS)
+			playsound(src.loc, src.hitsound, 100, 1)
 		return
 
 	attackby()

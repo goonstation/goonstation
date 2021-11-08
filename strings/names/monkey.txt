@@ -98,7 +98,6 @@ names@=
 	Merlyn
 	Merlin
 	Cap'n Chimpy
-	Mr. Fisting
 	Vortigem
 	Choo Choo McBoogie
 	The Librarian

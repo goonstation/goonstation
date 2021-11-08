@@ -163,7 +163,7 @@
 
 			M.show_text("You slip on the foam!", "red")
 
-/obj/effects/foam/CanPass(atom/movable/mover, turf/target)
-	if (src.metal && !mover)
-		return 0 // completely opaque to air
-	return 1
+
+/obj/effects/foam/gas_cross(turf/target)
+	if(src.metal)
+		return 0 //opaque to air
