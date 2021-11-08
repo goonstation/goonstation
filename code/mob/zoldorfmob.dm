@@ -151,7 +151,7 @@
 		else
 			src.examine_verb(target)
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	CanPass(atom/movable/mover, turf/target)
 		return 1
 
 	say_understands(var/other)

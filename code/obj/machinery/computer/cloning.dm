@@ -562,11 +562,6 @@ proc/find_ghost_by_key(var/find_key)
 			playsound(src, 'sound/machines/click.ogg', 50, 1)
 			bo(occupant, "<span class='notice'>\The [src] unlocks!</span>")
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-		if (air_group || (height==0))
-			return 1
-		..()
-
 	// Meat grinder functionality.
 	proc/find_pods()
 		if (!islist(src.pods))

@@ -32,7 +32,6 @@
 	//Properties for both
 	var/temperature = T20C
 
-	var/blocks_air = 0
 	var/icon_old = null
 	var/name_old = null
 	var/tmp/pathweight = 1
@@ -68,7 +67,7 @@
 			if(initial(src.opacity))
 				src.RL_SetOpacity(src.material.alpha <= MATERIAL_ALPHA_OPACITY ? 0 : 1)
 
-		blocks_air = material.hasProperty("permeable") ? material.getProperty("permeable") >= 33 : blocks_air
+		gas_impermeable = material.hasProperty("permeable") ? material.getProperty("permeable") >= 33 : gas_impermeable
 		return
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
@@ -348,7 +347,7 @@ proc/generate_space_color()
 			if(!mover)	return 0
 			if ((forget != obstacle))
 				if(obstacle.event_handler_flags & USE_CANPASS)
-					if(!obstacle.CanPass(mover, cturf, 1, 0))
+					if(!obstacle.CanPass(mover, cturf))
 
 						mover.Bump(obstacle, 1)
 						return 0
@@ -369,7 +368,7 @@ proc/generate_space_color()
 					if(!mover)	return 0
 					if ((forget != obstacle))
 						if(obstacle.event_handler_flags & USE_CANPASS)
-							if(!obstacle.CanPass(mover, cturf, 1, 0))
+							if(!obstacle.CanPass(mover, cturf))
 
 								mover.Bump(obstacle, 1)
 								return 0

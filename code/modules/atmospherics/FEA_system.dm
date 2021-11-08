@@ -52,32 +52,26 @@ Important Procedures
 
 */
 
-/atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
-	return (!density || !height || air_group)
+/atom/proc/CanPass(atom/movable/mover)
+	return (!density)
 
+/atom/proc/gas_cross(turf/target)
+	return !src.gas_impermeable
 
-/turf/CanPass(atom/movable/mover, turf/target, height=1.5,air_group=0)
+/turf/CanPass(atom/movable/mover, turf/target)
+	. = ..()
 	if(!target) return 0
 
-	if(istype(mover)) // turf/Enter(...) will perform more advanced checks
-		return !density
-
-	else // Now, doing more detailed checks for air movement and air group formation
-		if(target.blocks_air||blocks_air)
+/turf/gas_cross(turf/target)
+	if(target?.gas_impermeable || src.gas_impermeable)
+		return 0
+	for(var/atom/A as anything in src)
+		if(!A.gas_cross(target))
 			return 0
-
-		if (src.checkingcanpass > 0)
-			for(var/obj/obstacle as anything in src)
-				if((obstacle.event_handler_flags & USE_CANPASS) && !obstacle.CanPass(mover, target, height, air_group))
-					return 0
-
-		if (target?.checkingcanpass > 0)
-			for(var/obj/obstacle as anything in target)
-				if((obstacle.event_handler_flags & USE_CANPASS) && !obstacle.CanPass(mover, src, height, air_group))
-					return 0
-
-		return 1
-
+	for(var/atom/A as anything in target)
+		if(!A.gas_cross(src))
+			return 0
+	return 1
 
 var/global/datum/controller/air_system/air_master
 var/global/total_gas_mixtures = 0
@@ -163,7 +157,7 @@ datum/controller/air_system
 		var/start_time = world.timeofday
 
 		for(var/turf/simulated/S in world)
-			if(!S.blocks_air && !S.parent)
+			if(!S.gas_impermeable && !S.parent)
 				assemble_group_turf(S)
 			S.update_air_properties()
 
@@ -183,7 +177,7 @@ datum/controller/air_system
 				test.length_space_border = 0
 				for(var/direction in cardinal)
 					var/turf/T = get_step(test,direction)
-					if(T && !(T in members) && test.CanPass(null, T, null,1))
+					if(T && !(T in members) && test.gas_cross(T))
 						if(istype(T,/turf/simulated))
 							if(!T:parent)
 								possible_members += T

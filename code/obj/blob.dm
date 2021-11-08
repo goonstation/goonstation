@@ -36,7 +36,6 @@
 	var/poison_depletion = 1
 	var/heat_divisor = 15
 	var/temp_tolerance = 40
-	var/gas_impermeable = FALSE
 	mat_changename = 0
 	mat_changedesc = 0
 	var/runOnLife = 0 //Should this obj run Life?
@@ -78,11 +77,9 @@
 		else
 			..()
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	CanPass(atom/movable/mover, turf/target)
 		. = ..()
 		var/obj/projectile/P = mover
-		if((!mover || air_group) && src.gas_impermeable)
-			return 0
 		if (istype(P) && P.proj_data) //Wire note: Fix for Cannot read null.type
 			if (P.proj_data.type == /datum/projectile/slime)
 				return 1

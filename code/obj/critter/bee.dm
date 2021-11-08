@@ -618,7 +618,7 @@
 		else
 			return ..()
 
-	CanPass(atom/mover, turf/target, height=0, air_group=0)
+	CanPass(atom/mover, turf/target)
 		if (istype(mover, /obj/projectile))
 			return prob(50)
 		else
