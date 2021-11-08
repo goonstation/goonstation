@@ -500,6 +500,26 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		set_current_projectile(new/datum/projectile/bullet/ak47)
 		..()
 
+/obj/item/gun/kinetic/knn29
+	name = "Soviet Space Rifle"
+	desc = "From the russian characters on it, this curious design seems to come from the Soviets. How it ended up here is anyone's guess."
+	icon = 'icons/obj/large/48x32.dmi'
+	icon_state = "KNN_29"
+	item_state = "KNN_29"
+	force = MELEE_DMG_RIFLE
+	contraband = 0 //Why? 1. NT doesnt know this gun even exists. 2. This thing literally should only ever fire paintball rounds normally. If someone somehow gets lethals for this gun in some fashion, then that's not my problem.
+	caliber = 0.762
+	max_ammo_capacity = 30
+	auto_eject = 0 //I think this is auto reload. In that case. RELOAD THE DAMN GUN YOURSELF
+	can_dual_wield = 0 //as cool as it would be, yass would yell at me if i made that 1
+	two_handed = 1
+	gildable = FALSE
+
+	New()
+		ammo = new/obj/item/ammo/bullets/knn_paint
+		set_current_projectile(new/datum/projectile/bullet/knnpaint)
+		..()
+
 /obj/item/gun/kinetic/hunting_rifle
 	name = "Old Hunting Rifle"
 	desc = "A powerful antique hunting rifle."

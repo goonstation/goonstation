@@ -810,11 +810,24 @@ toxic - poisons
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
 
-/datum/projectile/bullet/paint //dont question it
-	name = "training magazine"
+/datum/projectile/bullet/knnlethal
+	name = "bullet"
+	shot_sound = 'sound/weapons/ak47shot.ogg'
+	power = 20 //I think that's reasonable. Supposed to be pretty powerful
+	cost = 3
+	ks_ratio = 1.0
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_CUT
+	shot_number = 3
+	caliber = 0.762
+	icon_turf_hit = "bhole-small"
+	implanted = /obj/item/implant/projectile/bullet_308 //I dont think anyone is actually gonna use the lethal rounds even as admins. If that's a worry i'll make a proper item for it.
+	casing = /obj/item/casing/rifle
+
+/datum/projectile/bullet/knnpaint //dont question it
+	name = "paint bullet"
 	window_pass = 0
 	power = 0
-	icon_state = "kss_training"
 	damage_type = D_KINETIC
 	cost = 1
 	shot_number = 1
@@ -824,10 +837,11 @@ toxic - poisons
 	hit_object_sound = "sound/misc/splash_1.ogg"
 	implanted = null
 	ks_ratio = 0.0
+	caliber = 0.762
 
 	on_hit(atom/hit, dirflag, atom/projectile)
 		..()
-		hit.setStatus("marker_painted", 30 SECONDS)
+		hit.setStatus("marker_painted", 5 SECONDS)
 
 /datum/projectile/bullet/assault_rifle
 	name = "bullet"

@@ -400,6 +400,16 @@
 	caliber = 0.308
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
+/obj/item/ammo/bullets/knn_paint
+	sname = "Training Round"
+	name = "Soviet Space Rifle magazine"
+	ammo_type new/datum/projectile/bullet/knnpaint
+	icon_state = "knn_training"
+	amount_left = 30.0
+	max_amount = 30
+	caliber = 0.762
+	sound_load = 'sound/weapons/gunload_heavy.ogg'
+
 /obj/item/ammo/bullets/rifle_3006
 	sname = ".308 AP"
 	name = ".308 rifle magazine"
