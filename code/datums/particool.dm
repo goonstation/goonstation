@@ -1,5 +1,6 @@
 /*
  * Copyright 2021 Gomble (https://github.com/AndrewL97)
+ * Changes: Azrun (https://github.com/Azrun)
  * Licensed under MIT to Goonstation only (https://choosealicense.com/licenses/mit/)
  */
 
@@ -102,6 +103,7 @@ var/list/master_particle_info = list()
 		if("float") return L["value"]
 		if("int") return L["value"]
 		if("color") return L["value"]
+		if("text") return L["value"]
 		if("list") return stringToList(L["value"])
 		if("numList") return stringToList(L["value"],TRUE)
 		if("matrix") return ListToMatrix(L["value"])

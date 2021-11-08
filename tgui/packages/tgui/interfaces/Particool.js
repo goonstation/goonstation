@@ -14,20 +14,22 @@ import { Window } from '../layouts';
 import { logger } from '../logging';
 
 const ParticleIntegerEntry = (props, context) => {
-  const { value, name } = props;
+  const { value, tooltip, name } = props;
   const { act } = useBackend(context);
   return (
-    <NumberInput
-      value={value}
-      stepPixelSize={5}
-      width="39px"
-      onDrag={(e, value) => act('modify_particle_value', {
-        new_data: {
-          name: name,
-          value: value,
-          type: 'int',
-        },
-      })} />
+    <Tooltip position="bottom" content={tooltip}>
+      <NumberInput
+        value={value}
+        stepPixelSize={5}
+        width="39px"
+        onDrag={(e, value) => act('modify_particle_value', {
+          new_data: {
+            name: name,
+            value: value,
+            type: 'int',
+          },
+        })} />
+    </Tooltip>
   );
 };
 
@@ -100,9 +102,6 @@ const ParticleFloatEntry = (props, context) => {
     </>
   );
 };
-
-// array for our working varz
-// let genWorking = [];
 
 const ParticleGeneratorEntry = (props, context) => {
   const { value, name } = props;
@@ -199,48 +198,52 @@ const ParticleGeneratorEntry = (props, context) => {
 };
 
 const ParticleTextEntry = (props, context) => {
-  const { value, name } = props;
+  const { value, tooltip, name } = props;
   const { act } = useBackend(context);
 
   return (
-    <Input
-      value={value}
-      width="250px"
-      onInput={(e, value) => act('modify_particle_value', {
-        new_data: {
-          name: name,
-          value: value,
-          type: 'text',
-        },
-      })} />
+    <Tooltip position="bottom" content={tooltip}>
+      <Input
+        value={value}
+        width="250px"
+        onInput={(e, value) => act('modify_particle_value', {
+          new_data: {
+            name: name,
+            value: value,
+            type: 'text',
+          },
+        })} />
+    </Tooltip>
   );
 };
 
 const ParticleNumListEntry = (props, context) => {
-  const { value, name } = props;
+  const { value, tooltip, name } = props;
   const { act } = useBackend(context);
 
   let valArr = value ? Object.keys(value).map((key) => value[key]) : [];
 
   return (
-    <Input
-      value={valArr.join(',')}
-      width="250px"
-      onInput={(e, val) => act('modify_particle_value', {
-        new_data: {
-          name: name,
-          value: val,
-          type: 'numList',
-        },
-      })} />
+    <Tooltip position="bottom" content={tooltip}>
+      <Input
+        value={valArr.join(',')}
+        width="250px"
+        onInput={(e, val) => act('modify_particle_value', {
+          new_data: {
+            name: name,
+            value: val,
+            type: 'numList',
+          },
+        })} />
+    </Tooltip>
   );
 };
 
 const ParticleColorEntry = (props, context) => {
-  const { value, name } = props;
+  const { value, tooltip, name } = props;
   const { act } = useBackend(context);
   return (
-    <>
+    <Tooltip position="bottom" content={tooltip}>
       <Button
         icon="pencil-alt"
         onClick={() => act('modify_color_value')} />
@@ -257,7 +260,7 @@ const ParticleColorEntry = (props, context) => {
             type: 'color',
           },
         })} />
-    </>
+    </Tooltip>
   );
 };
 
@@ -279,8 +282,8 @@ const ParticleIconEntry = (props, context) => {
 
 const particleEntryMap = {
 
-  width: { type: 'float', tooltip: 'Size of particle image in pixels' },
-  height: { type: 'float', tooltip: 'Size of particle image in pixels' },
+  width: { type: 'float', tooltip: 'Width of particle image in pixels' },
+  height: { type: 'float', tooltip: 'Height of particle image in pixels' },
   count: { type: 'int', tooltip: "Maximum particle count" },
   spawning: { type: 'float', tooltip: "Number of particles to spawn per tick (can be fractional)" },
   bound1: { type: 'numlist', tooltip: "Minimum particle position in x,y,z space" },
@@ -416,7 +419,6 @@ export const Particool = (props, context) => {
   const particles = data.target_particle || {};
   const hasParticles = particles && Object.keys(particles).length > 0;
 
-  const [massApplyPath, setMassApplyPath] = useLocalState(context, 'massApplyPath', '');
   const [hiddenSecret, setHiddenSecret] = useLocalState(context, 'hidden', false);
   return (
     <Window
@@ -424,11 +426,13 @@ export const Particool = (props, context) => {
       width={700}
       height={500}>
       <Window.Content scrollable>
-        <NoticeBox danger> {String(Date.now())} <br />
-          Particles? {hasParticles.toString()} -
-          {(data.target_particle === null).toString()} <br />
-          Json - {JSON.stringify(data.target_particle)}
-        </NoticeBox>
+        {!!hiddenSecret && (
+          <NoticeBox danger> {String(Date.now())} <br />
+            Particles? {hasParticles.toString()} -
+            {(data.target_particle === null).toString()} <br />
+            Json - {JSON.stringify(data.target_particle)}
+          </NoticeBox>
+        )}
         <Section
           title={
             <Box
