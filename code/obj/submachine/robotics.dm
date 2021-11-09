@@ -44,17 +44,27 @@
 	name = "\improper item holder"
 	desc = "Holds some item."
 	icon = 'icons/obj/items/device.dmi'
-	icon_state = "atmosporter"
+	icon_state = "tool_holder-empty"
 	flags = SUPPRESSATTACK
 	/// the valid item types
 	var/item_types = list()
 	/// the held item
 	var/obj/item/held_item
+	/// the flags of the held item, to restore them when released
+	var/old_flags
 	/// can the item be used
 	var/use_item = TRUE
 
 	get_desc()
 		. += "HELD ITEM: [held_item ? held_item : "NONE"]"
+
+	proc/update_icon()
+		var/new_icon = src.icon_state
+		new_icon = splittext(new_icon, "-")[1]
+		if (held_item)
+			src.icon_state = "[new_icon]-full"
+		else
+			src.icon_state = "[new_icon]-empty"
 
 	afterattack(obj/item/target, mob/user, reach, params)
 		src.item_sanity()
@@ -62,8 +72,11 @@
 		if (!held_item && isitem(target) && !target.anchored && !target.cant_drop)
 			if(is_valid_item(target))
 				held_item = target
+				old_flags = target.vis_flags
+				target.vis_flags |= VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
 				src.vis_contents += held_item
 				target.set_loc(src)
+				update_icon()
 				boutput(user, "You grip the [target] in your [src].")
 				return
 			else
@@ -72,8 +85,16 @@
 		// using items
 		if (use_item && held_item)
 			// mining_tool uses attackby, mining_tools uses afterattack >.>
-			target.Attackby(held_item, user)
+			// I use the sanity procs here in case someone puts a thing into a charger or something like that
+			// basically, anything that might make the item disappear from our grasp
+			if (target == held_item)
+				held_item.attack_self(user)
+			else
+				target.Attackby(held_item, user)
+			if(!src.item_sanity())
+				return
 			held_item.afterattack(target, user)
+			src.item_sanity()
 
 	attack_self(mob/user)
 		src.item_sanity()
@@ -82,13 +103,20 @@
 			boutput(user, "You release the [held_item] from your [src].")
 			held_item.set_loc(get_turf(user))
 			src.vis_contents -= held_item
+			held_item.vis_flags = old_flags
 			held_item = null
+			update_icon()
 
 	/// in case the held item is used up/deleted/etc, this will reset the held_item
+	/// returns FALSE if something was wrong
 	proc/item_sanity()
 		if (held_item && (held_item.disposed || held_item.loc != src))
 			src.vis_contents -= held_item
+			held_item.vis_flags = old_flags
 			held_item = null
+			update_icon()
+			return FALSE
+		return TRUE
 
 	proc/is_valid_item(obj/item/I)
 		for (var/T in item_types)
