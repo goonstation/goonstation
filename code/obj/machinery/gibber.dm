@@ -80,7 +80,8 @@
 	if(G?.affecting && IN_RANGE(user, src, 1)) // would be great to have an action here
 		user.visible_message("<span class='alert'>[user] shoves [G.affecting] on top of the gibber!</span>")
 		logTheThing("combat", user, G.affecting, "forced [constructTarget(G.affecting,"combat")] into a gibber at [log_loc(src)].")
-		message_admins("[key_name(user)] forced [key_name(G.affecting, 1)] ([isdead(G.affecting) ? "dead" : "alive"]) into a gibber at [log_loc(src)].")
+		if(G.affecting.last_ckey)
+			message_admins("[key_name(user)] forced [key_name(G.affecting, 1)] ([isdead(G.affecting) ? "dead" : "alive"]) into a gibber at [log_loc(src)].")
 		var/mob/M = G.affecting
 		enter_gibber(M)
 		qdel(G)
@@ -154,7 +155,8 @@
 
 		if(user != src.occupant) //for suiciding with gibber
 			logTheThing("combat", user, src.occupant, "grinds [constructTarget(src.occupant,"combat")] in a gibber at [log_loc(src)].")
-			message_admins("[key_name(src.occupant, 1)] is ground up in a gibber by [key_name(user)] at [log_loc(src)].")
+			if(src.occupant.last_ckey)
+				message_admins("[key_name(src.occupant, 1)] is ground up in a gibber by [key_name(user)] at [log_loc(src)].")
 		src.occupant.death(1)
 
 		if (src.occupant.mind)

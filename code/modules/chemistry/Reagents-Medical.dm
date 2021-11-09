@@ -385,6 +385,8 @@ datum
 
 				if(method == TOUCH)
 					. = 0
+					if(issilicon(M)) //Metal flesh isn't repaired by synthflesh
+						return
 					M.HealDamage("All", volume_passed * 1.5, volume_passed * 1.5)
 					if (isliving(M))
 						var/mob/living/H = M
@@ -992,6 +994,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/list/paramslist = 0)
 				. = ..()
+				if(issilicon(M)) // borgs shouldn't heal from this
+					return
 				if (!volume_passed)
 					return
 				volume_passed = clamp(volume_passed, 0, 10)
@@ -1216,6 +1220,8 @@ datum
 				if(!volume_passed)
 					return
 				if(!isliving(M)) // fucking human shitfucks
+					return
+				if(issilicon(M)) // Borgs shouldn't heal from this
 					return
 				volume_passed = clamp(volume_passed, 0, 10)
 				if(method == TOUCH)

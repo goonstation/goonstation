@@ -180,6 +180,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_rotate_type,
 		/client/proc/cmd_spin_type,
 		/client/proc/cmd_get_type,
+		/client/proc/cmd_lightsout,
 
 		/client/proc/vpn_whitelist_add,
 		/client/proc/vpn_whitelist_remove
@@ -222,6 +223,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_rejuvenate_all,
 		/client/proc/toggle_force_mixed_blob,
 		/client/proc/toggle_force_mixed_wraith,
+		/client/proc/toggle_spooky_light_plane,
 		///proc/possess,
 		/proc/possessmob,
 		/proc/releasemob,
@@ -356,6 +358,7 @@ var/list/admin_verbs = list(
 		/client/proc/dereplace_space,
 		/client/proc/ghostdroneAll,
 		/client/proc/showPregameHTML,
+		/client/proc/dbg_radio_controller,
 
 		/client/proc/call_proc,
 		/client/proc/call_proc_all,
@@ -1650,9 +1653,6 @@ var/list/fun_images = list()
 		if (ignorePlayerVote == "No")
 			return
 
-	if (mapSwitcher.locked)
-		return alert("The server is currently switching to another map. You will need to wait.")
-
 	var/info = "Select a map"
 	info += "\nCurrently on: [mapSwitcher.current]"
 	if (mapSwitcher.next)
@@ -2127,3 +2127,22 @@ var/list/fun_images = list()
 	message_admins("Ckey [vpnckey] removed from the VPN whitelist by [src.key].")
 	logTheThing("admin", src, null, "Ckey [vpnckey] removed from the VPN whitelist.")
 	return 1
+
+/client/proc/cmd_lightsout()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Lights Out"
+	set desc = "Force off all station lighting for a duration"
+	admin_only
+	if(!isadmin(src))
+		boutput(src, "Only administrators may use this command.")
+		return
+
+	var/dur = input(usr, "Input duration (in seconds)", "lightsout duration", 0) as null|num
+
+	if(dur)
+		var i = 0
+		for_by_tcl(apc, /obj/machinery/power/apc)
+			if(apc.z == 1)
+				if((i++ % 5) == 0)
+					sleep(1 SECOND)
+				apc.setStatus("lightsout", dur SECONDS)

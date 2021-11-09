@@ -149,7 +149,7 @@ var/obj/item/dummy/click_dummy = new
 				return 0
 	for (var/atom/A in target)
 		if (A.flags & ON_BORDER)
-			if (!A.CanPass(click_dummy, from, 1, 0))
+			if (!A.CanPass(click_dummy, from))
 				return 0
 	return 1
 

@@ -62,6 +62,8 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/mous
 
 		if (iswizard(H))
 			H.visible_message("<span class='alert'>The spell has no effect on [H]!</span>")
+
+		if(!IN_RANGE(target, holder.owner, max_range))
 			return 1
 
 		if (check_target_immunity( H ))

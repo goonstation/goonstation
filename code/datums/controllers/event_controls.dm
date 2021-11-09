@@ -2,23 +2,23 @@ var/datum/event_controller/random_events
 
 /datum/event_controller
 	var/list/events = list()
-	var/major_events_begin = 18000 // 30m
-	var/time_between_events_lower = 6600  // 11m
-	var/time_between_events_upper = 12000 // 20m
+	var/major_events_begin = 30 MINUTES // 30m
+	var/time_between_events_lower = 11 MINUTES  // 11m
+	var/time_between_events_upper = 20 MINUTES // 20m
 	var/events_enabled = 1
 	var/announce_events = 1
 	var/event_cycle_count = 0
 
 	var/list/minor_events = list()
-	var/minor_events_begin = 6000 // 10m
-	var/time_between_minor_events_lower = 4000 // roughly 8m
-	var/time_between_minor_events_upper = 8000 // roughly 14m
+	var/minor_events_begin = 10 MINUTES // 10m
+	var/time_between_minor_events_lower = 400 SECONDS // roughly 8m
+	var/time_between_minor_events_upper = 800 SECONDS // roughly 14m
 	var/minor_events_enabled = 1
 	var/minor_event_cycle_count = 0
 
 	var/list/antag_spawn_events = list()
 #ifdef RP_MODE
-	var/alive_antags_threshold = 0.06
+	var/alive_antags_threshold = 0.04
 #else
 	var/alive_antags_threshold = 0.1
 #endif

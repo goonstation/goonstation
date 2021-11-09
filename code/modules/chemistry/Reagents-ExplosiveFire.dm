@@ -140,7 +140,7 @@ datum
 					if(method == TOUCH)
 						var/mob/living/L = M
 						var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
-						L.changeStatus("slowed", 2 SECONDS, optional = 4)
+						L.changeStatus("slowed", 4 SECONDS, optional = 4)
 						if(istype(L) && burn) //double up on the extra burny, not blockable by biosuits/etc either
 							L.changeStatus("burning", src.volume SECONDS)
 							burn.counter += 5 * src.volume
@@ -254,7 +254,7 @@ datum
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				var/datum/reagents/myholder = holder
-				if(!holder?.my_atom?.is_open_container())
+				if(!holder?.my_atom?.is_open_container() && !istype(holder, /datum/reagents/fluid_group))
 					if(holder.my_atom)
 						for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
 							boutput(M, "<span class='notice'>With nowhere to go, the smoke settles.</span>")

@@ -18,6 +18,12 @@
 
 	var/const/spies_possible = 7
 
+#ifdef RP_MODE
+	var/const/pop_divisor = 10
+#else
+	var/const/pop_divisor = 6
+#endif
+
 	var/list/station_bounties = list()			// On-station items that can have bounties placed on them, pair list
 	var/list/big_station_bounties = list()	// On-station machines/other big objects that can have bounties placed on them, pair list
 	var/list/personal_bounties = list() 		// Things that belong to people like trinkets, pair list
@@ -153,7 +159,7 @@
 	var/num_spies = 2 //minimum
 
 	if (traitor_scaling)
-		num_spies = max(2, min(round((num_players + randomizer) / 6), spies_possible))
+		num_spies = max(2, min(round((num_players + randomizer) / pop_divisor), spies_possible))
 
 	var/list/possible_spies = get_possible_enemies(ROLE_SPY_THIEF, num_spies)
 

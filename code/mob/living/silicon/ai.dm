@@ -178,6 +178,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	..(loc)
 	START_TRACKING
 
+	APPLY_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)
+
 	light = new /datum/light/point
 	light.set_color(0.4, 0.7, 0.95)
 	light.set_brightness(0.6)
@@ -223,6 +225,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.cell.charge = src.cell.maxcharge
 		src.radio1.name = "Primary Radio"
 		src.radio2.name = "AI Intercom Monitor"
+		src.radio2.device_color = "#7F7FE2"
 		src.radio3.name = "Secure Channels Monitor"
 		src.radio1.broadcasting = 1
 		src.radio2.set_frequency(R_FREQ_INTERCOM_AI)
@@ -261,7 +264,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		return src.eyecam
 	return src
 
-/mob/living/silicon/ai/show_message(msg, type, alt, alt_type, group = 0, var/image/chat_maptext/assoc_maptext = null)
+/mob/living/silicon/ai/show_message(msg, type, alt, alt_type, group = "", var/just_maptext, var/image/chat_maptext/assoc_maptext = null)
 	..()
 	if (deployed_to_eyecam && src.eyecam)
 		src.eyecam.show_message(msg, 1, 0, 0, group)
@@ -1375,11 +1378,14 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	set category = "AI Commands"
 	set name = "View Crew Manifest"
 
-	var/crew = ""
-	for(var/datum/data/record/t in data_core.general)
-		crew += "[t.fields["name"]] - [t.fields["rank"]]<br>"
+	var/stored = ""
+	if(length(by_type[/obj/cryotron]))
+		var/obj/cryotron/cryo_unit = pick(by_type[/obj/cryotron])
+		for(var/L as anything in cryo_unit.stored_crew_names)
+			stored += "<i>- [L]<i><br>"
 
-	usr.Browse("<head><title>Crew Manifest</title></head><body><tt><b>Crew Manifest:</b><hr>[crew]</tt></body>", "window=aimanifest")
+	usr.Browse("<head><title>Crew Manifest</title></head><body><tt><b>Crew Manifest:</b><hr>[get_manifest()]<br><b>In Cryogenic Storage:</b><hr>[stored]</tt></body>", "window=aimanifest")
+
 
 /mob/living/silicon/ai/proc/show_laws_verb()
 	set category = "AI Commands"
@@ -2030,6 +2036,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 //just use this proc to make click-track checking easier (I would use this in the below proc that builds a list, but i think the proc call overhead is not worth it)
 proc/is_mob_trackable_by_AI(var/mob/M)
+	if (HAS_MOB_PROPERTY(M, PROP_AI_UNTRACKABLE))
+		return 0
 	if (istype(M, /mob/new_player))
 		return 0
 	if (ishuman(M) && (istype(M:wear_id, /obj/item/card/id/syndicate) || (istype(M:wear_id, /obj/item/device/pda2) && M:wear_id:ID_card && istype(M:wear_id:ID_card, /obj/item/card/id/syndicate))))
@@ -2061,6 +2069,8 @@ proc/get_mobs_trackable_by_AI()
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
 			continue //cameras can't follow people who haven't started yet DUH OR DIDN'T YOU KNOW THAT
+		if (HAS_MOB_PROPERTY(M, PROP_AI_UNTRACKABLE))
+			continue
 		if (ishuman(M) && (istype(M:wear_id, /obj/item/card/id/syndicate) || (istype(M:wear_id, /obj/item/device/pda2) && M:wear_id:ID_card && istype(M:wear_id:ID_card, /obj/item/card/id/syndicate))))
 			continue
 		if (istype(M,/mob/living/critter/aquatic) || istype(M, /mob/living/critter/small_animal/ranch_base/chicken))

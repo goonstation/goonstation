@@ -736,7 +736,9 @@ datum
 
 				if (istype(T))
 					if (T.wet >= 2) return
-					var/wet = image('icons/effects/water.dmi',"wet_floor")
+					var/image/wet = image('icons/effects/water.dmi',"wet_floor")
+					wet.blend_mode = BLEND_ADD
+					wet.alpha = 60
 					T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 2
 					SPAWN_DBG(800 * volume_mult)
@@ -764,7 +766,9 @@ datum
 				if (istype(T))
 					if (T.wet >= 3) return
 					if (visible)
-						var/wet = image('icons/effects/water.dmi',"wet_floor")
+						var/image/wet = image('icons/effects/water.dmi',"wet_floor")
+						wet.blend_mode = BLEND_ADD
+						wet.alpha = 60
 						T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 3
 					SPAWN_DBG(80 SECONDS)
@@ -1166,7 +1170,9 @@ datum
 				var/turf/simulated/T = target
 				if (istype(T)) //Wire: fix for Undefined variable /turf/space/var/wet (&& T.wet)
 					if (T.wet >= 2) return
-					var/wet = image('icons/effects/water.dmi',"wet_floor")
+					var/image/wet = image('icons/effects/water.dmi',"wet_floor")
+					wet.blend_mode = BLEND_ADD
+					wet.alpha = 60
 					T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 2
 					if (!locate(/obj/decal/cleanable/oil) in T)
@@ -2927,7 +2933,7 @@ datum
 			hygiene_value = -2
 			hunger_value = 0.068
 			viscosity = 0.4
-			depletion_rate = 0
+			depletion_rate = 0.4
 
 /*			var
 				blood_DNA = null
@@ -3316,7 +3322,9 @@ datum
 				var/turf/simulated/T = target
 				if (istype(T))
 					if (T.wet >= 2) return
-					var/wet = image('icons/effects/water.dmi',"wet_floor")
+					var/image/wet = image('icons/effects/water.dmi',"wet_floor")
+					wet.blend_mode = BLEND_ADD
+					wet.alpha = 60
 					T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 2
 					SPAWN_DBG(80 SECONDS)

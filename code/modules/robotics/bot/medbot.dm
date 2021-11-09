@@ -92,6 +92,14 @@
 	access_lookup = "Head Surgeon"
 	text2speech = 1
 
+	New()
+		. = ..()
+		START_TRACKING_CAT(TR_CAT_HEAD_SURGEON)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_HEAD_SURGEON)
+		. = ..()
+
 /obj/machinery/bot/medbot/head_surgeon/no_camera
 	no_camera = 1
 

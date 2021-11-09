@@ -742,6 +742,11 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "flyntloach"
 		ckey = "profomii"
 
+	dennismccreary
+		name = "\improper Dennis McCreary"
+		icon_state = "dennismccreary"
+		ckey = "lordvoxelrot"
+
 /obj/item/item_box/figure_capsule
 	name = "capsule"
 	desc = "A little plastic ball for keeping stuff in. Woah! We're truly in the future with technology like this."

@@ -136,6 +136,12 @@
 
 	return !density
 
+/obj/machinery/door/gas_cross(turf/target)
+	if (density && next_timeofday_opened)
+		return (world.timeofday >= next_timeofday_opened) //Hey this is a really janky fix. Makes it so the door 'opens' on realtime even if the animations and sounds are laggin
+
+	return !density
+
 /obj/machinery/door/proc/update_nearby_tiles(need_rebuild)
 	var/turf/simulated/source = loc
 	if (istype(source))

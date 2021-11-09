@@ -33,7 +33,7 @@ proc/EndSpacePush(var/atom/movable/A)
 
 			if (ismob(M))
 				var/mob/tmob = M
-				if(tmob.client && tmob.client.flying)
+				if(tmob.client && tmob.client.flying || (ismob(tmob) && HAS_MOB_PROPERTY(tmob, PROP_NOCLIP)))
 					EndSpacePush(M)
 					continue
 
@@ -154,7 +154,7 @@ proc/EndSpacePush(var/atom/movable/A)
 
 				if(ismob(M))
 					var/mob/B = M
-					if(B.client && B.client.flying)
+					if(B.client && B.client.flying || (ismob(B) && HAS_MOB_PROPERTY(B, PROP_NOCLIP)))
 						continue
 
 					if (ishuman(B))
