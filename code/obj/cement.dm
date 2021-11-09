@@ -28,7 +28,7 @@
 		processing_items -= src
 		..()
 
-	CanPass(atom/movable/mover, turf/target)
+	Cross(atom/movable/mover, turf/target)
 		if(istype(mover, /mob))
 			var/mob/M = mover
 			M.setStatus(statusId = "slowed", duration = 0.5 SECONDS, optional = 4)

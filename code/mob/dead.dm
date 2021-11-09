@@ -11,7 +11,7 @@
 /mob/dead/ex_act(severity)
 	return
 
-/mob/dead/CanPass(atom/movable/mover, turf/target)
+/mob/dead/Cross(atom/movable/mover, turf/target)
 	return 1
 
 /mob/dead/say_understands()

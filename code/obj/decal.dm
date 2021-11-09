@@ -411,7 +411,7 @@ obj/decal/fakeobjects/teleport_pad
 	layer = OBJ_LAYER
 	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
 
-	CanPass(atom/movable/mover, turf/target) // stolen from window.dm
+	Cross(atom/movable/mover, turf/target) // stolen from window.dm
 		if (mover && mover.throwing & THROW_CHAIRFLIP)
 			return 1
 		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST || src.dir == SOUTH || src.dir == NORTH)
@@ -458,7 +458,7 @@ obj/decal/fakeobjects/teleport_pad
 			user.visible_message("<span class='notice'><b>[M]</b> climbs up on [src]!</span>", "<span class='notice'>You climb up on [src].</span>")
 			buckle_in(M, user, 1)
 
-	CanPass(atom/movable/mover, turf/target) // stolen from window.dm
+	Cross(atom/movable/mover, turf/target) // stolen from window.dm
 		if (mover && mover.throwing & THROW_CHAIRFLIP)
 			return 1
 		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST || src.dir == SOUTH || src.dir == NORTH)

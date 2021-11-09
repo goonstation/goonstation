@@ -220,7 +220,7 @@
 	var/team_num = 0		//1 = NT, 2 = SY
 	gas_impermeable = TRUE
 
-	CanPass(atom/A, turf/T)
+	Cross(atom/A, turf/T)
 		if (ismob(A))
 			var/mob/M = A
 			if (team_num == get_pod_wars_team_num(M))
@@ -750,7 +750,7 @@
 
 		return
 
-	CanPass(atom/movable/mover, turf/target)
+	Cross(atom/movable/mover, turf/target)
 		if (!src.density || (mover.flags & TABLEPASS || istype(mover, /obj/newmeteor)) )
 			return 1
 		else

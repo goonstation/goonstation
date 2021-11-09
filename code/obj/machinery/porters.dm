@@ -554,7 +554,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		..()
 		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
 
-	CanPass(atom/movable/O as mob|obj, target as turf, height=0, air_group=0)
+	Cross(atom/movable/O as mob|obj, target as turf, height=0, air_group=0)
 		if (air_group || (height==0))
 			return 1
 		..()

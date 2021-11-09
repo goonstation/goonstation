@@ -117,7 +117,7 @@
 				return 1
 	return 0
 
-/obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/machinery/door/Cross(atom/movable/mover, turf/target, height=0, air_group=0)
 	//if(air_group) return 0
 	if(istype(mover, /obj/projectile))
 		var/obj/projectile/P = mover

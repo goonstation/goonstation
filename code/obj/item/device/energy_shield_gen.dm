@@ -152,7 +152,7 @@
 	var/broken = 0
 	gas_impermeable = TRUE
 
-	CanPass(atom/A, turf/T)
+	Cross(atom/A, turf/T)
 		if (broken) return 1
 		if (ismob(A)) return 1
 		else return 0

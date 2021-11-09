@@ -287,7 +287,7 @@
 			the_text += " ...you can't see through it at all. What kind of idiot made this?"
 		return the_text
 
-	CanPass(atom/movable/mover, turf/target)
+	Cross(atom/movable/mover, turf/target)
 		if(istype(mover, /obj/projectile))
 			var/obj/projectile/P = mover
 			if(P.proj_data.window_pass)

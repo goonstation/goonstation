@@ -310,6 +310,7 @@ proc/generate_space_color()
 	if(!RL_Started)
 		RL_Init()
 
+
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
 	if (!mover)
 		return 1
@@ -334,51 +335,21 @@ proc/generate_space_color()
 							mover.Bump(obstacle, 1)
 							return 0
 
-	//Then, check the turf itself
-	if (!src.CanPass(mover, src))
-		mover.Bump(src, 1)
-		return 0
-
-	//Finally, check objects/mobs to block entry
-	if (src.checkingcanpass > 0)  //dont bother checking unless the turf actually contains a checkable :)
-		for(var/thing in src)
-			var/atom/movable/obstacle = thing
-			if(obstacle == mover) continue
-			if(!mover)	return 0
-			if ((forget != obstacle))
-				if(obstacle.event_handler_flags & USE_CANPASS)
-					if(!obstacle.CanPass(mover, cturf))
-
-						mover.Bump(obstacle, 1)
-						return 0
-				else //cheaper, skip proc call lol lol
-					if (obstacle.density)
-
-						mover.Bump(obstacle,1)
-						return 0
-
 	if (mirrored_physical_zone_created) //checking visual mirrors for blockers if set
 		if (length(src.vis_contents))
 			var/turf/T = locate(/turf) in src.vis_contents
 			if (T)
 				for(var/thing in T)
-
 					var/atom/movable/obstacle = thing
 					if(obstacle == mover) continue
 					if(!mover)	return 0
 					if ((forget != obstacle))
-						if(obstacle.event_handler_flags & USE_CANPASS)
-							if(!obstacle.CanPass(mover, cturf))
+						if(!obstacle.Cross(mover))
+							mover.Bump(obstacle)
+							return 0
 
-								mover.Bump(obstacle, 1)
-								return 0
-						else //cheaper, skip proc call lol lol
-							if (obstacle.density)
+	return ..() //Nothing found to block so return success!
 
-								mover.Bump(obstacle,1)
-								return 0
-
-	return 1 //Nothing found to block so return success!
 
 /turf/Exited(atom/movable/Obj, atom/newloc)
 	//MBC : nothing in the game even uses PrxoimityLeave meaningfully. I'm disabling the proc call here.

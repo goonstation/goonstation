@@ -477,7 +477,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 
 	src.debug_variables(colosseum_controller)
 
-/turf/unsimulated/floor/setpieces/gauntlet/CanPass(atom/movable/mover, turf/target)
+/turf/unsimulated/floor/setpieces/gauntlet/Cross(atom/movable/mover, turf/target)
 	if (istype(mover, /obj/machinery/colosseum_putt))
 		return 0
 	return ..()
@@ -488,7 +488,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 	icon_state = "gauntfloorPod"
 	event_handler_flags = USE_CANPASS
 
-	CanPass(atom/movable/mover, turf/target)
+	Cross(atom/movable/mover, turf/target)
 		if (istype(mover, /obj/machinery/colosseum_putt))
 			return 1
 		return ..()

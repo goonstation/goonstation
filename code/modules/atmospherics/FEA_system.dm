@@ -29,11 +29,11 @@ Important variables:
 		This stores all data for.
 		If you modify, make sure to update the archived_cycle to prevent race conditions and maintain symmetry
 
-	atom/CanPass(atom/movable/mover, turf/target, height, air_group)
+	atom/Cross(atom/movable/mover, turf/target, height, air_group)
 		returns 1 for allow pass and 0 for deny pass
 		Turfs automatically call this for all objects/mobs in its turf.
-		This is called both as source.CanPass(target, height, air_group)
-			and  target.CanPass(source, height, air_group)
+		This is called both as source.Cross(target, height, air_group)
+			and  target.Cross(source, height, air_group)
 
 		Cases for the parameters
 		1. This is called with args (mover, location, height>0, air_group=0) for normal objects.
@@ -52,15 +52,15 @@ Important Procedures
 
 */
 
-/atom/proc/CanPass(atom/movable/mover)
+/atom/Cross(atom/movable/mover)
 	return (!density)
 
 /atom/proc/gas_cross(turf/target)
 	return !src.gas_impermeable
 
-/turf/CanPass(atom/movable/mover, turf/target)
+/turf/Cross(atom/movable/mover, turf/target)
 	. = ..()
-	if(!target) return 0
+	//if(!target) return 0
 
 /turf/gas_cross(turf/target)
 	if(target?.gas_impermeable || src.gas_impermeable)

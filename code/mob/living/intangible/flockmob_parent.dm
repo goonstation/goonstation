@@ -109,7 +109,7 @@
 /mob/living/intangible/flock/projCanHit(datum/projectile/P)
 	return P.hits_ghosts
 
-/mob/living/intangible/flock/CanPass(atom/movable/mover, turf/target)
+/mob/living/intangible/flock/Cross(atom/movable/mover, turf/target)
 	if (istype(mover, /obj/projectile))
 		var/obj/projectile/proj = mover
 		if (istype(proj.proj_data, /datum/projectile/energy_bolt_antighost))

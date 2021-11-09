@@ -72,7 +72,7 @@
 	power_change()
 		return
 
-	CanPass(atom/movable/mover, turf/target)
+	Cross(atom/movable/mover, turf/target)
 		if (istype(mover, /obj/projectile))
 			return 0
 		return ..()

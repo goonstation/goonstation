@@ -140,7 +140,7 @@
 	dir = NORTH
 	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
 
-	CanPass(atom/movable/mover, turf/target)
+	Cross(atom/movable/mover, turf/target)
 		if (istype(mover, /obj/projectile))
 			return 1
 		if (get_dir(loc, target) == dir)

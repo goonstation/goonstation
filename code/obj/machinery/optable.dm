@@ -45,7 +45,7 @@
 		qdel(src)
 	return
 
-/obj/machinery/optable/CanPass(atom/movable/O as mob|obj, target as turf)
+/obj/machinery/optable/Cross(atom/movable/O as mob|obj, target as turf)
 	if (!O)
 		return 0
 	if ((O.flags & TABLEPASS || istype(O, /obj/newmeteor)))

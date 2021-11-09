@@ -265,7 +265,7 @@
 
 //atom.event_handler_flags & USE_CHECKEXIT MUST EVALUATE AS TRUE OR THIS PROC WONT BE CALLED
 /atom/proc/CheckExit(atom/mover, turf/target)
-	//return !(src.flags & ON_BORDER) || src.CanPass(mover, target, 1, 0)
+	//return !(src.flags & ON_BORDER) || src.Cross(mover, target, 1, 0)
 	return 1 // fuck it
 
 /atom/Crossed(atom/movable/AM)

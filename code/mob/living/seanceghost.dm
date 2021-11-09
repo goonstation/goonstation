@@ -37,7 +37,7 @@
 	click(atom/target)
 		src.examine_verb(target)
 
-	CanPass(atom/movable/mover, turf/target)
+	Cross(atom/movable/mover, turf/target)
 		return 1
 
 	say_understands(var/other)

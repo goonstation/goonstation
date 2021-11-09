@@ -620,7 +620,7 @@
 	name = "Permanent Vehicular Forcefield"
 	desc = "A permanent force field that prevents gas, liquids, and vehicles from passing through it."
 
-	CanPass(atom/A, turf/T)
+	Cross(atom/A, turf/T)
 		return ..() && !istype(A,/obj/machinery/vehicle)
 
 /obj/forcefield/energyshield/perma/doorlink

@@ -377,7 +377,7 @@
 		else
 			..()
 
-	CanPass(atom/movable/mover, turf/target)
+	Cross(atom/movable/mover, turf/target)
 		if (istype(mover, /obj/projectile))
 			var/obj/projectile/proj = mover
 			if (istype(proj.proj_data, /datum/projectile/energy_bolt_antighost))
@@ -1425,7 +1425,7 @@
 			else
 				src.visible_message("[src] slithers around happily!")
 
-	CanPass(atom/mover, turf/target)
+	Cross(atom/mover, turf/target)
 		if (istype(mover, /obj/projectile))
 			return prob(50)
 		else

@@ -517,7 +517,7 @@
 
 		return src.electrocute(user, prb, net, ignore_gloves)
 
-	CanPass(atom/movable/mover, turf/target)
+	Cross(atom/movable/mover, turf/target)
 		if (istype(mover, /obj/projectile))
 			if (density)
 				return prob(50)

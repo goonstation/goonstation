@@ -354,7 +354,7 @@
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT", "group"=list(MGD_MEDRESEACH, MGA_SALES), "sender"="00000000", "message"=string)
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal)
 
-	CanPass(var/mob/M, var/atom/oldloc)
+	Cross(var/mob/M, var/atom/oldloc)
 		.= ..()
 		if (oldloc && oldloc.y == src.y)
 			if (!occupant && selected_product && ishuman(M))
