@@ -451,7 +451,7 @@
 			src.icon_state = "shieldw"
 			src.color = "#FF33FF" //change colour for different power levels
 			src.powerlevel = 4
-			flags = ALWAYS_SOLID_FLUID
+			flags = ALWAYS_SOLID_FLUID | FLUID_DENSE
 		else if(deployer != null && deployer.power_level == 1)
 			src.name = "Atmospheric Forcefield"
 			src.desc = "A force field that prevents gas from passing through it."
@@ -466,7 +466,7 @@
 			src.icon_state = "shieldw"
 			src.color = "#33FF33"
 			src.powerlevel = 2
-			flags = ALWAYS_SOLID_FLUID
+			flags = ALWAYS_SOLID_FLUID | FLUID_DENSE
 			gas_impermeable = TRUE
 		else if(deployer != null)
 			src.name = "Energy Forcefield"
@@ -474,7 +474,7 @@
 			src.icon_state = "shieldw"
 			src.color = "#FF3333"
 			src.powerlevel = 3
-			flags = ALWAYS_SOLID_FLUID | USEDELAY
+			flags = ALWAYS_SOLID_FLUID | USEDELAY | FLUID_DENSE
 			density = 1
 
 	disposing()
@@ -598,10 +598,14 @@
 			icon_state = "shieldw"
 			powerlevel = 2
 			invisibility = INVIS_NONE
+			flags |= FLUID_DENSE
+			gas_impermeable = TRUE
 		else
 			icon_state = ""
 			powerlevel = 0
 			invisibility = INVIS_ALWAYS_ISH //ehh whatever this "works"
+			flags &= ~FLUID_DENSE
+			gas_impermeable = FALSE
 
 	meteorhit(obj/O as obj)
 		return
