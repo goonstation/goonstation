@@ -508,18 +508,21 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "KNN_29"
 	item_state = "KNN_29"
 	force = MELEE_DMG_RIFLE
-	contraband = 0 //Why? 1. NT doesnt know this gun even exists. 2. This thing literally should only ever fire paintball rounds normally. If someone somehow gets lethals for this gun in some fashion, then that's not my problem.
+	contraband = 0 //Why? 1. NT doesnt know this gun even exists. 2. This thing literally should only ever fire paintball rounds normally. If someone somehow gets lethals for this gun in some fashion, then that's not my problem and I hope the admin knows what they are doing.
 	caliber = 0.762
 	max_ammo_capacity = 30
-	auto_eject = 0 //I think this is auto reload. In that case. RELOAD THE DAMN GUN YOURSELF
-	can_dual_wield = 0 //as cool as it would be, yass would yell at me if i made that 1
+	auto_eject = 1
+	can_dual_wield = 0
 	two_handed = 1
+	has_empty_state = 1
 	gildable = FALSE
 	fire_animation = TRUE
 
 	New()
-		ammo = new/obj/item/ammo/bullets/knn_paint
+		ammo = new/obj/item/ammo/bullets/knnpaint
 		set_current_projectile(new/datum/projectile/bullet/knnpaint)
+		projectiles = list(current_projectile, new/datum/projectile/bullet/knnpaint/auto)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1 DECI SECONDS, 1 DECI SECONDS, 1)
 		..()
 
 /obj/item/gun/kinetic/hunting_rifle
