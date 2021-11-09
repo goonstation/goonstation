@@ -38,7 +38,7 @@
  * Note that this can only be used inside the [datum/pathfind][pathfind datum] since it uses variables from said datum.
  * If you really want to optimize things, optimize this, cuz this gets called a lot.
  */
-#define CAN_STEP(cur_turf, next) (next && !next.density && next.pathable && !(simulated_only && !istype(next, /turf/simulated)) && !LinkBlockedWithAccess(cur_turf, next, id) && (next != avoid))
+#define CAN_STEP(cur_turf, next) (next && !next.density && jpsTurfPassable(next, source=cur_turf, passer=caller, id=id) && !(simulated_only && !istype(next, /turf/simulated)) && (next != avoid))
 /// Another helper macro for JPS, for telling when a node has forced neighbors that need expanding
 #define STEP_NOT_HERE_BUT_THERE(cur_turf, dirA, dirB) ((!CAN_STEP(cur_turf, get_step(cur_turf, dirA)) && CAN_STEP(cur_turf, get_step(cur_turf, dirB))))
 
@@ -339,6 +339,99 @@
 				if(possible_child_node.tile == end || (mintargetdist && (get_dist(possible_child_node.tile, end) <= mintargetdist)))
 					unwind_path(possible_child_node)
 			return
+
+/proc/jpsTurfPassable(turf/T, turf/source=null, atom/passer=null, id=null)
+	. = _jpsTurfPassable(T, source, passer, id)
+	if(!usr)
+		return
+	var/obj/ov = new
+	ov.icon = 'icons/misc/air_debug.dmi'
+	ov.icon_state = "space"
+	var/dir = get_dir(source, T)
+	ov.dir = dir
+	ov.plane = 100
+	ov.color = . ? "#00ff00" : "#ff0000"
+	ov.alpha = 80
+	source.vis_contents += ov
+
+/// this is a slight modification of /proc/checkTurfPassable to avoid indirect proc call overhead
+/// Returns false if there is a dense atom on the turf, unless a custom hueristic is passed.
+/proc/_jpsTurfPassable(turf/T, turf/source=null, atom/passer=null, id=null)
+	. = TRUE
+	if(T.density || !T.pathable) // simplest case
+		return FALSE
+	if(isnull(id) && istype(passer, /obj/machinery/bot))
+		var/obj/machinery/bot/bot = passer
+		id = bot.botcard
+	// if a source turf was included check for directional blocks between the two turfs
+	if (source && (T.blocked_dirs || source.blocked_dirs))
+		var/direction = get_dir(source, T)
+
+		// do either of these turfs explicitly block entry or exit to the other?
+		if (HAS_FLAG(T.blocked_dirs, turn(direction, 180)))
+			return FALSE
+		else if (source && HAS_FLAG(source.blocked_dirs, direction))
+			return FALSE
+
+		if (direction in ordinal) // ordinal? That complicates things...
+			if (source.blocked_dirs && T.blocked_dirs)
+				// check for "wall" blocks
+				// ex. trying to move NE source blocking north exit and destination (T) blocking south entry
+				if (HAS_FLAG(source.blocked_dirs, turn(direction, 45)) && HAS_FLAG(T.blocked_dirs, turn(direction, -135)))
+					return FALSE
+				else if (HAS_FLAG(source.blocked_dirs, turn(direction, -45)) && HAS_FLAG(T.blocked_dirs, turn(direction, 135)))
+					return FALSE
+
+			var/turf/corner_1 = get_step(source, turn(direction, 45))
+			var/turf/corner_2 = get_step(source, turn(direction, -45))
+
+			// check for potential blocks form the two corners
+			if (corner_1.blocked_dirs && corner_2.blocked_dirs)
+				if (HAS_FLAG(corner_1.blocked_dirs, turn(direction, -45)))
+					if (HAS_FLAG(corner_2.blocked_dirs, turn(direction, 45)))
+						return FALSE // entry to dest blocked by corners
+					else if (HAS_FLAG(corner_2.blocked_dirs, turn(direction, 135)))
+						// check for "wall" blocks
+						// ex. trying to move NE with C1 blocking south entry and C2 blocking north exit
+						return FALSE
+				if (HAS_FLAG(corner_1.blocked_dirs, turn(direction, -135)))
+					if (HAS_FLAG(corner_2.blocked_dirs, turn(direction, 135)))
+						return FALSE // exit from source blocked by corners
+					else if (HAS_FLAG(corner_2.blocked_dirs, turn(direction, 45)))
+						return FALSE // "wall" block
+
+			// we got past the combinations of the two corners ok, but what about the corners combined with the source and destination?
+			// entry blocked by an object in destination and in one or more of the corners
+			if (T.blocked_dirs && (corner_1.blocked_dirs || corner_2.blocked_dirs))
+				if (HAS_FLAG(corner_1.blocked_dirs, turn(direction, -45)) && HAS_FLAG(T.blocked_dirs, turn(direction, -135)))
+					return FALSE
+				else if (HAS_FLAG(corner_2.blocked_dirs, turn(direction, 45)) && HAS_FLAG(T.blocked_dirs, turn(direction, 135)))
+					return FALSE
+			// entry blocked by an object in source and in one or more of the corners
+			if (source.blocked_dirs && (corner_1.blocked_dirs || corner_2.blocked_dirs))
+				if (HAS_FLAG(corner_1.blocked_dirs, turn(direction, -135)) && HAS_FLAG(source.blocked_dirs, turn(direction, -45)))
+					return FALSE
+				else if (HAS_FLAG(corner_2.blocked_dirs, turn(direction, 135)) && HAS_FLAG(source.blocked_dirs, turn(direction, 45)))
+					return FALSE
+	for(var/atom/A in T.contents)
+		if (isobj(A))
+			var/obj/O = A
+			// only skip if we did the source check, otherwise fall back to normal density checks
+			if (source && HAS_FLAG(O.object_flags, HAS_DIRECTIONAL_BLOCKING))
+				continue // we already handled these above with the blocked_dirs
+			if (istype(A, /obj/overlay) || istype(A, /obj/effects)) continue
+			if ((passer || id) && A.density)
+				if (O.object_flags & BOTS_DIRBLOCK) //NEW - are we a door-like-openable-thing?
+					if (O.has_access_requirements()) //are we a door w/ access?
+						if (ismob(passer) && O.allowed(passer) == 2 || id && O.check_access(id)) // do you have explicit access
+							continue
+						else
+							return FALSE
+					else //we must be a public door
+						continue
+				return FALSE
+		else if (A.density)
+			return FALSE // not a special case, so this is a blocking object
 
 #undef CAN_STEP
 #undef STEP_NOT_HERE_BUT_THERE
