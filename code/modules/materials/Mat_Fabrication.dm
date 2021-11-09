@@ -248,7 +248,7 @@
 		return jointext(html, "")
 
 	Topic(href, href_list)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if((get_dist(usr, src) > 1 || usr.z != src.z) && !issilicon(usr)) return
 
 		if(href_list["tab"])
 			tab = href_list["tab"]
