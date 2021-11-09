@@ -45,9 +45,7 @@
 		qdel(src)
 	return
 
-/obj/machinery/optable/CanPass(atom/movable/O as mob|obj, target as turf, height=0, air_group=0)
-	if (air_group || (height==0))
-		return 1
+/obj/machinery/optable/CanPass(atom/movable/O as mob|obj, target as turf)
 	if (!O)
 		return 0
 	if ((O.flags & TABLEPASS || istype(O, /obj/newmeteor)))

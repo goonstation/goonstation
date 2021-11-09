@@ -297,10 +297,10 @@
 
 			if(valve_open && (tank_one && tank_two) && tank_one.air_contents && tank_two.air_contents)
 				var/turf/bombturf = get_turf(src)
-				var/bombarea = bombturf.loc.name
-
-				logTheThing("bombing", null, null, "Bomb valve opened in [bombarea] ([showCoords(bombturf.x, bombturf.y, bombturf.z)]). Last touched by [src.fingerprintslast]")
-				message_admins("Bomb valve opened in [bombarea] ([showCoords(bombturf.x, bombturf.y, bombturf.z)]). Last touched by [src.fingerprintslast]")
+				var/area/A = get_area(bombturf)
+				if(!A.dont_log_combat)
+					logTheThing("bombing", null, null, "Bomb valve opened in [log_loc(bombturf)]. Last touched by [src.fingerprintslast]")
+					message_admins("Bomb valve opened in [log_loc(bombturf)]. Last touched by [src.fingerprintslast]")
 
 				var/datum/gas_mixture/temp
 

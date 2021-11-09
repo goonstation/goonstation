@@ -606,7 +606,6 @@
 		setProperty("meleeprot_head", 4)
 		setProperty("disorient_resist_eye", 0)
 
-
 /obj/item/clothing/head/helmet/welding/abilities = list(/obj/ability_button/mask_toggle)
 
 /obj/item/clothing/head/helmet/EOD
@@ -824,7 +823,7 @@
 	icon_state = "gr_helmet"
 	setupProperties()
 		..()
-		setProperty("meleeprot_head", 7)
+		setProperty("meleeprot_head", 2)
 
 /*/obj/item/clothing/head/helmet/escape
 	name = "escape helmet"

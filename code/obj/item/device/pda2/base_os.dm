@@ -19,7 +19,7 @@
 
 			if(!(holder in src.master.contents))
 				if(master.active_program == src)
-					master.active_program = null
+					master.set_active_program(null)
 				return 1
 
 			return 0
@@ -404,7 +404,7 @@
 
 			else if(href_list["scanner"])
 				if(src.master.scan_program)
-					src.master.scan_program = null
+					src.master.set_scan_program(null)
 
 			else if(href_list["trenchmap"])
 				if (usr.client && hotspot_controller)
@@ -728,8 +728,32 @@
 			src.master.updateSelfDialog()
 			return
 
+		on_set_host(obj/item/device/pda2/pda)
+			pda.AddComponent(
+				/datum/component/packet_connected/radio, \
+				"pda",\
+				pda.frequency, \
+				pda.net_id, \
+				null, \
+				FALSE, \
+				null, \
+				FALSE \
+			)
+			RegisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET, .proc/receive_signal)
 
-		network_hook(datum/signal/signal)
+		on_unset_host(obj/item/device/pda2/pda)
+			qdel(get_radio_connection_by_id(pda, "pda"))
+			UnregisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET)
+
+		proc/receive_signal(obj/item/device/pda2/pda, datum/signal/signal, transmission_method, range, connection_id)
+			if(!istype(holder) || !istype(master) || !src.master.owner)
+				return
+			if(!(holder in src.master.contents))
+				if(master.active_program == src)
+					master.set_active_program(null)
+				return
+			if(connection_id != "pda")
+				return
 
 			if(signal.data["command"] == "report_pda")
 				if(!message_on || !signal.data["sender"] || signal.data["sender"] == master.net_id)
@@ -742,12 +766,36 @@
 				src.post_signal(newsignal)
 
 				src.master.updateSelfDialog()
-			return
 
+			if(signal.encryption) return
 
-		receive_signal(datum/signal/signal)
-			if(..())
-				return
+			if(signal.data["address_1"] && signal.data["address_1"] != src.master.net_id)
+				if((signal.data["address_1"] == "ping") && signal.data["sender"])
+					var/datum/signal/pingreply = new
+					pingreply.source = src.master
+					pingreply.data["device"] = "NET_PDA_51XX"
+					pingreply.data["netid"] = src.master.net_id
+					pingreply.data["address_1"] = signal.data["sender"]
+					pingreply.data["command"] = "ping_reply"
+					pingreply.data["data"] = src.master.owner
+					SPAWN_DBG(0.5 SECONDS)
+						src.post_signal(pingreply)
+					return
+
+				else if (!signal.data["group"]) // only accept broadcast signals if they are filtered
+					return
+
+			if (islist(signal.data["group"]))
+				var/any_member = FALSE
+				for (var/group in signal.data["group"])
+					if (group in src.master.mailgroups)
+						any_member = TRUE
+						break
+				if (!any_member) // not a member of any specified group; discard
+					return
+			else if (signal.data["group"])
+				if (!(signal.data["group"] in src.master.mailgroups) && !(signal.data["group"] in src.master.alertgroups)) // not a member of the specified group; discard
+					return
 
 			var/filename = signal.data["file_name"]
 			var/sender = signal.data["sender"]
@@ -1057,7 +1105,6 @@
 
 			src.hosted_files[file_passkey] = file
 
-			var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 			var/datum/signal/signal = get_free_signal()
 			signal.data["command"] = "text_message"
 			signal.data["message"] = "[file.name] hosted on [src.master.owner]'s [src.master]. Text [file_passkey] to this PDA to receive a copy of this file!"
@@ -1065,8 +1112,7 @@
 			signal.data["sender_name"] = "FILE-MAN"
 			signal.data["sender"] = "UNKNOWN"
 			signal.data["address_1"] = src.master.net_id
-			signal.transmission_method = TRANSMISSION_RADIO
-			transmit_connection.post_signal(null, signal)
+			radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal)
 
 			if(!group)
 				return

@@ -135,8 +135,12 @@
 		ai_active = active
 
 		if (ai_active)
-			ai_mobs.Add(src)
+			if(src.skipped_mobs_list & SKIPPED_MOBS_LIST)
+				src.skipped_mobs_list |= SKIPPED_AI_MOBS_LIST
+			else
+				ai_mobs.Add(src)
 		else
+			src.skipped_mobs_list &= ~SKIPPED_AI_MOBS_LIST
 			ai_mobs.Remove(src)
 
 /mob/living/carbon/human/proc/ai_init()

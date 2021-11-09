@@ -32,7 +32,6 @@
 	//Properties for both
 	var/temperature = T20C
 
-	var/blocks_air = 0
 	var/icon_old = null
 	var/name_old = null
 	var/tmp/pathweight = 1
@@ -41,7 +40,6 @@
 	var/tmp/messy = 0 //value corresponds to how many cleanables exist on this turf. Exists for the purpose of making fluid spreads do less checks.
 	var/tmp/checkingexit = 0 //value corresponds to how many objs on this turf implement checkexit(). lets us skip a costly loop later!
 	var/tmp/checkingcanpass = 0 // "" how many implement canpass()
-	var/tmp/checkinghasentered = 0 // "" hasproximity as well as items with a mat that hasproximity
 	var/tmp/checkinghasproximity = 0
 	var/tmp/neighcheckinghasproximity = 0
 	/// directions of this turf being blocked by directional blocking objects. So we don't need to loop through the entire contents
@@ -57,17 +55,10 @@
 	var/special_volume_override = -1 //if greater than or equal to 0, override
 
 	var/turf_flags = 0
+	var/list/list/datum/disjoint_turf/connections
 
 	disposing() // DOES NOT GET CALLED ON TURFS!!!
 		SHOULD_NOT_OVERRIDE(TRUE)
-		..()
-
-	Del()
-		if (length(cameras))
-			for (var/obj/machinery/camera/C as anything in by_type[/obj/machinery/camera])
-				if(C.coveredTiles)
-					C.coveredTiles -= src
-		cameras = null
 		..()
 
 	onMaterialChanged()
@@ -76,7 +67,7 @@
 			if(initial(src.opacity))
 				src.RL_SetOpacity(src.material.alpha <= MATERIAL_ALPHA_OPACITY ? 0 : 1)
 
-		blocks_air = material.hasProperty("permeable") ? material.getProperty("permeable") >= 33 : blocks_air
+		gas_impermeable = material.hasProperty("permeable") ? material.getProperty("permeable") >= 33 : gas_impermeable
 		return
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
@@ -315,8 +306,7 @@ proc/generate_space_color()
 	if (density)
 		pathable = 0
 	for(var/atom/movable/AM as mob|obj in src)
-		if (AM) // ???? x2
-			src.Entered(AM)
+		src.Entered(AM)
 	if(!RL_Started)
 		RL_Init()
 
@@ -357,7 +347,7 @@ proc/generate_space_color()
 			if(!mover)	return 0
 			if ((forget != obstacle))
 				if(obstacle.event_handler_flags & USE_CANPASS)
-					if(!obstacle.CanPass(mover, cturf, 1, 0))
+					if(!obstacle.CanPass(mover, cturf))
 
 						mover.Bump(obstacle, 1)
 						return 0
@@ -378,7 +368,7 @@ proc/generate_space_color()
 					if(!mover)	return 0
 					if ((forget != obstacle))
 						if(obstacle.event_handler_flags & USE_CANPASS)
-							if(!obstacle.CanPass(mover, cturf, 1, 0))
+							if(!obstacle.CanPass(mover, cturf))
 
 								mover.Bump(obstacle, 1)
 								return 0
@@ -391,22 +381,7 @@ proc/generate_space_color()
 	return 1 //Nothing found to block so return success!
 
 /turf/Exited(atom/movable/Obj, atom/newloc)
-	var/i = 0
-
 	//MBC : nothing in the game even uses PrxoimityLeave meaningfully. I'm disabling the proc call here.
-	//for(var/atom/A as mob|obj|turf|area in range(1, src))
-	if (src.checkinghasentered > 0)  //dont bother checking unless the turf actually contains a checkable :)
-		for(var/thing in src)
-			var/atom/A = thing
-			if(A == Obj)
-				continue
-			// I Said No sanity check
-			if(i >= 50)
-				break
-			i++
-			if(A.loc == src && A.event_handler_flags & USE_HASENTERED)
-				A.HasExited(Obj, newloc)
-			//A.ProximityLeave(Obj)
 
 	if (global_sims_mode)
 		var/area/Ar = loc
@@ -414,7 +389,6 @@ proc/generate_space_color()
 			if (isitem(Obj))
 				if (!(locate(/obj/table) in src) && !(locate(/obj/rack) in src))
 					Ar.sims_score = min(Ar.sims_score + 4, 100)
-
 
 	return ..(Obj, newloc)
 
@@ -425,8 +399,6 @@ proc/generate_space_color()
 	///////////////////////////////////////////////////////////////////////////////////
 	..()
 	return_if_overlay_or_effect(M)
-	if(length(src.material?.triggersOnEntered))
-		src.material?.triggerOnEntered(src, M)
 
 	if (global_sims_mode)
 		var/area/Ar = loc
@@ -436,19 +408,6 @@ proc/generate_space_color()
 					Ar.sims_score = max(Ar.sims_score - 4, 0)
 
 	var/i = 0
-	if (src.checkinghasentered > 0)  //dont bother checking unless the turf actually contains a checkable :)
-		for(var/thing in src)
-			var/atom/A = thing
-			if(A == M)
-				continue
-			// I Said No sanity check
-			if(i++ >= 50)
-				break
-
-			if (A.event_handler_flags & USE_HASENTERED)
-				A.HasEntered(M, OldLoc)
-			if(A.material)
-				A.material.triggerOnEntered(A, M)
 	i = 0
 	if (src.neighcheckinghasproximity > 0)
 		for (var/turf/T in range(1,src))
@@ -498,7 +457,7 @@ proc/generate_space_color()
 	if (src.throw_unlimited)//ignore inertia if we're in the ocean (faster but kind of dumb check)
 		if ((ismob(A) && src.x > 2 && src.x < (world.maxx - 1))) //fuck?
 			var/mob/M = A
-			if( M.client && M.client.flying )
+			if((M.client && M.client.flying) || (ismob(M) && HAS_MOB_PROPERTY(M, PROP_NOCLIP)))
 				return//aaaaa
 			BeginSpacePush(M)
 
@@ -587,10 +546,12 @@ proc/generate_space_color()
 
 	var/old_checkingexit = src.checkingexit
 	var/old_checkingcanpass = src.checkingcanpass
-	var/old_checkinghasentered = src.checkinghasentered
 	var/old_blocked_dirs = src.blocked_dirs
 	var/old_checkinghasproximity = src.checkinghasproximity
 	var/old_neighcheckinghasproximity = src.neighcheckinghasproximity
+
+	var/old_aiimage = src.aiImage
+	var/old_cameras = src.cameras
 
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
 	var/old_process_cell_operations = src.process_cell_operations
@@ -659,10 +620,12 @@ proc/generate_space_color()
 
 	new_turf.checkingexit = old_checkingexit
 	new_turf.checkingcanpass = old_checkingcanpass
-	new_turf.checkinghasentered = old_checkinghasentered
 	new_turf.blocked_dirs = old_blocked_dirs
 	new_turf.checkinghasproximity = old_checkinghasproximity
 	new_turf.neighcheckinghasproximity = old_neighcheckinghasproximity
+
+	new_turf.aiImage = old_aiimage
+	new_turf.cameras = old_cameras
 
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
 	new_turf.process_cell_operations = old_process_cell_operations

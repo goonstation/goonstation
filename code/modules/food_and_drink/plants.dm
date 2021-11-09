@@ -1238,7 +1238,7 @@
 	edible = 0
 	food_color = "#4D2600"
 	validforhat = 1
-	event_handler_flags = USE_FLUID_ENTER | USE_HASENTERED
+	event_handler_flags = USE_FLUID_ENTER
 
 	make_reagents()
 		..()
@@ -1279,7 +1279,7 @@
 				L.TakeDamage("chest", brute=12)
 			src.split()
 
-	HasEntered(atom/movable/AM, atom/OldLoc)
+	Crossed(atom/movable/AM)
 		. = ..()
 		if(isliving(AM))
 			var/mob/living/L = AM

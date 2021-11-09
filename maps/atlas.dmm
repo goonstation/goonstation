@@ -884,6 +884,7 @@
 	icon_state = "0-2"
 	},
 /obj/stool/bench/blue,
+/obj/submachine/claw_machine,
 /turf/simulated/floor/white/checker,
 /area/station/hallway/secondary/exit)
 "cf" = (
@@ -12644,10 +12645,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/storage/crate{
-	desc = "Only distantly related to the Adventure Closet.";
-	name = "Adventure Crate"
-	},
+/obj/storage/crate/adventure,
 /turf/simulated/floor/purple/checker,
 /area/station/science/teleporter)
 "Fj" = (
@@ -17000,6 +16998,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon10,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "PN" = (
@@ -18965,6 +18964,10 @@
 /obj/item/rcd/construction/chiefEngineer,
 /turf/simulated/floor/yellow,
 /area/station/bridge/united_command)
+"Vr" = (
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon12,
+/turf/simulated/floor/orangeblack,
+/area/station/hangar/arrivals)
 "Vt" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -75091,7 +75094,7 @@ HF
 Ie
 IM
 IM
-IM
+Vr
 Kb
 Kp
 Kp

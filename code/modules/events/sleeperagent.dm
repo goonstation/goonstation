@@ -145,6 +145,7 @@
 			objective.owner = H.mind
 			objective.set_up()
 			H.mind.objectives += objective
+		message_admins("[key_name(H)] awakened as a sleeper agent antagonist. Source: [source ? "[source]" : "random event"]")
 		logTheThing("admin", H, null, "awakened as a sleeper agent antagonist. Source: [source ? "[source]" : "random event"]")
 		H.show_text("<h2><font color=red><B>You have awakened as a syndicate sleeper agent!</B></font></h2>", "red")
 		H.mind.special_role = ROLE_SLEEPER_AGENT
