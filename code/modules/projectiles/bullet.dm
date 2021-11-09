@@ -773,11 +773,11 @@ toxic - poisons
 	name = "bullet"
 	shot_sound = 'sound/weapons/ak47shot.ogg'
 	power = 18 //I think that's reasonable. Supposed to be pretty powerful
-	cost = 3
+	cost = 1
 	ks_ratio = 1.0
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
-	shot_number = 3
+	shot_number = 1
 	dissipation_delay = 12
 	caliber = 0.762
 	icon_turf_hit = "bhole-small"
@@ -794,6 +794,7 @@ toxic - poisons
 /datum/projectile/bullet/knnpaint //dont question it
 	name = "paint bullet"
 	window_pass = 0
+	shot_sound = 'sound/weapons/ak47shot.ogg'
 	power = 0
 	damage_type = D_KINETIC
 	cost = 1

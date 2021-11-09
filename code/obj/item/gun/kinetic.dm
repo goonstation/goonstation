@@ -517,6 +517,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	has_empty_state = 1
 	gildable = FALSE
 	fire_animation = TRUE
+	spread_angle = 0.5
 
 	New()
 		ammo = new/obj/item/ammo/bullets/knnpaint
@@ -524,6 +525,27 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		projectiles = list(current_projectile, new/datum/projectile/bullet/knnpaint/auto)
 		AddComponent(/datum/component/holdertargeting/fullauto, 1 DECI SECONDS, 1 DECI SECONDS, 1)
 		..()
+
+	attackby(obj/item/ammo/bullets/b, mob/user)  // has to account for whether regular or armor-piercing ammo is loaded AND which firing mode it's using. I'm also fucking lazy and tried as I write this so I'm literally just gonna pull a kyle here.
+		var/obj/previous_ammo = ammo
+		var/mode_was_auto = (istype(current_projectile, /datum/projectile/bullet/knnpaint/auto))
+		..()
+		if(previous_ammo.type != ammo.type)
+			if(istype(ammo, /obj/item/ammo/bullets/knnlethal))
+				if(mode_was_auto)
+					set_current_projectile(new/datum/projectile/bullet/knnlethal/auto)
+					projectiles = list(new/datum/projectile/bullet/knnlethal, current_projectile)
+				else // we were in single shot mode
+					set_current_projectile(new/datum/projectile/bullet/knnlethal)
+					projectiles = list(current_projectile, new/datum/projectile/bullet/knnlethal/auto)
+			else // we switched from armor penetrating ammo to normal
+				if(mode_was_auto) // we were in burst shot mode
+					set_current_projectile(new/datum/projectile/bullet/knnpaint/auto)
+					projectiles = list(new/datum/projectile/bullet/knnpaint, current_projectile)
+				else // we were in single shot mode
+					set_current_projectile(new/datum/projectile/bullet/knnpaint)
+					projectiles = list(current_projectile, new/datum/projectile/bullet/knnpaint/auto)
+
 
 /obj/item/gun/kinetic/hunting_rifle
 	name = "Old Hunting Rifle"
