@@ -129,7 +129,7 @@ var/global/datum/game_servers/game_servers = new
 				return src.ip_port
 			var/success = FALSE
 			var/outer_send_attempts = 3
-			while(!reply && outer_send_attempts-- > 0)
+			while(!success && outer_send_attempts-- > 0)
 				src.waiting_for_ip_port_auth = md5("[rand()][rand()][rand()][world.time]")
 				success = src.send_message(list("type"="game_servers", "subtype"="get_ip_port", "reply_to"=config.server_id, "auth"=src.waiting_for_ip_port_auth))
 				if(success)
