@@ -136,7 +136,7 @@ var/global/datum/game_servers/game_servers = new
 					var/wait_count = 20
 					while(isnull(src.ip_port) && wait_count-- > 0)
 						sleep(1)
-					if(!isnull(src.ip_port)
+					if(!isnull(src.ip_port))
 						global.game_servers.by_ip_port[src.ip_port] = src
 					else
 						success = FALSE
