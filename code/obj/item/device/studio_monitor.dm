@@ -48,7 +48,7 @@
 			UpdateOverlays(null, "speech_bubble")
 
 	proc/play_song(notes=TRUE)
-		icon_state = "nukie_speaker_actv"
+		icon_state = "amp_stack_actv"
 		if(notes)
 			effect.play_notes()
 		if(ismob(src.loc))
