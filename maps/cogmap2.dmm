@@ -318,7 +318,9 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "aaM" = (
-/obj/machinery/launcher_loader/south,
+/obj/machinery/launcher_loader/south{
+	door_delay = 4
+	},
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aaN" = (
@@ -28186,7 +28188,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/central)
 "bng" = (
-/obj/machinery/launcher_loader/north,
+/obj/machinery/launcher_loader/north{
+	door_delay = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bnh" = (
@@ -50548,7 +50552,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "cgu" = (
-/obj/machinery/launcher_loader/south,
+/obj/machinery/launcher_loader/south{
+	door_delay = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "cgv" = (
@@ -54557,7 +54563,9 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/elect)
 "cpB" = (
-/obj/machinery/launcher_loader/north,
+/obj/machinery/launcher_loader/north{
+	door_delay = 5
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "cpC" = (
@@ -58419,7 +58427,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/disposal)
 "cyq" = (
-/obj/machinery/launcher_loader/north,
+/obj/machinery/launcher_loader/north{
+	door_delay = 4
+	},
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -58434,7 +58444,9 @@
 	},
 /area/station/maintenance/disposal)
 "cys" = (
-/obj/machinery/launcher_loader/south,
+/obj/machinery/launcher_loader/south{
+	door_delay = 5
+	},
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -78442,6 +78454,12 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/arcade)
+"hyI" = (
+/obj/machinery/launcher_loader/south{
+	door_delay = 5
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "hFn" = (
 /turf/simulated/wall/auto/supernorn{
 	icon_state = "12"
@@ -78562,6 +78580,12 @@
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
+"iae" = (
+/obj/machinery/launcher_loader/north{
+	door_delay = 5
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "iaz" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
 /turf/simulated/floor/carpet{
@@ -79716,6 +79740,12 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/security/checkpoint/podbay)
+"rfY" = (
+/obj/machinery/launcher_loader/west{
+	door_delay = 7
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "rsO" = (
 /obj/table/auto,
 /obj/item/kitchen/rollingpin,
@@ -79760,6 +79790,12 @@
 /obj/railing/orange/reinforced,
 /turf/simulated/floor/grasstodirt,
 /area/station/ranch)
+"rSM" = (
+/obj/machinery/launcher_loader/south{
+	door_delay = 5
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "rVb" = (
 /obj/table/reinforced/auto,
 /obj/machinery/networked/printer{
@@ -80242,6 +80278,12 @@
 /obj/machinery/manufacturer/hangar,
 /turf/simulated/floor/shuttlebay,
 /area/station/security/checkpoint/podbay)
+"vzP" = (
+/obj/machinery/launcher_loader/north{
+	door_delay = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "vDV" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/cable{
@@ -106762,7 +106804,7 @@ aaa
 aaC
 aaC
 aaC
-aaP
+rfY
 aal
 aaI
 aaa
@@ -129984,7 +130026,7 @@ aaa
 aaa
 dgJ
 dgJ
-dgZ
+vzP
 dhd
 aaD
 dhw
@@ -130443,7 +130485,7 @@ aal
 aat
 aaC
 aaR
-aaM
+rSM
 abd
 abd
 aaa
@@ -132378,7 +132420,7 @@ cHx
 cpv
 cpv
 cpv
-cwC
+hyI
 cJk
 cMS
 cOk
@@ -143575,7 +143617,7 @@ aaa
 aaa
 dgX
 dgX
-dgZ
+iae
 aaA
 aaP
 aaI
@@ -144032,7 +144074,7 @@ aaa
 aal
 aaC
 aaC
-aaM
+rSM
 abc
 abc
 aaa

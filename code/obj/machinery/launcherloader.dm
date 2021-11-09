@@ -19,6 +19,7 @@
 	var/operating = 0
 	var/driver_operating = 0
 	var/trash = 0
+	var/door_delay = 3 // how long should we wait before closing our blast door?
 
 	New()
 		..()
@@ -64,11 +65,11 @@
 						SPAWN_DBG(0)
 							if (door)
 								door.open()
-						SPAWN_DBG(3 SECONDS)
+						SPAWN_DBG(door_delay SECONDS)
 							if (door)
 								door.close()
 
-				SPAWN_DBG(door ? 30 : 20) driver_operating = FALSE
+				SPAWN_DBG(door ? door_delay SECONDS : 20) driver_operating = FALSE
 
 				sleep(door ? 20 : 10)
 				if (driver)

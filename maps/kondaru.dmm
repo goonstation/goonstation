@@ -871,7 +871,9 @@
 	name = "Router Cabinet"
 	})
 "acv" = (
-/obj/machinery/launcher_loader/east,
+/obj/machinery/launcher_loader/east{
+	door_delay = 5
+	},
 /turf/simulated/floor/airless/plating,
 /area/station/routing/eva{
 	name = "Router Cabinet"
@@ -56306,7 +56308,9 @@
 	},
 /area/station/engine/storage)
 "sHh" = (
-/obj/machinery/launcher_loader/west,
+/obj/machinery/launcher_loader/west{
+	door_delay = 4
+	},
 /turf/simulated/floor/airless/plating,
 /area/station/maintenance/west)
 "sHo" = (
