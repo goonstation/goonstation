@@ -124,17 +124,23 @@ var/global/datum/game_servers/game_servers = new
 
 	proc/get_ip_port()
 		if(isnull(src.ip_port))
-			var/reply = FALSE
+			if(!isnull(src.waiting_for_ip_port_auth))
+				UNTIL(!isnull(src.waiting_for_ip_port_auth))
+				return src.ip_port
+			var/success = FALSE
 			var/outer_send_attempts = 3
 			while(!reply && outer_send_attempts-- > 0)
 				src.waiting_for_ip_port_auth = md5("[rand()][rand()][rand()][world.time]")
-				reply = src.send_message(list("type"="game_servers", "subtype"="get_ip_port", "reply_to"=config.server_id, "auth"=src.waiting_for_ip_port_auth))
-				if(reply)
+				success = src.send_message(list("type"="game_servers", "subtype"="get_ip_port", "reply_to"=config.server_id, "auth"=src.waiting_for_ip_port_auth))
+				if(success)
 					var/wait_count = 20
 					while(isnull(src.ip_port) && wait_count-- > 0)
 						sleep(1)
-					global.game_servers.by_ip_port[src.ip_port] = src
-				else
+					if(!isnull(src.ip_port)
+						global.game_servers.by_ip_port[src.ip_port] = src
+					else
+						success = FALSE
+				if(!success)
 					src.waiting_for_ip_port_auth = FALSE
 					sleep(5 SECONDS)
 		return src.ip_port
