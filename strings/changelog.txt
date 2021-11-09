@@ -1,4 +1,9 @@
 
+(t)tue nov 09 21
+(u)zjdtmkhzt
+(p)6629
+(e)|
+(+)Artifacts can now also be sold in crates. We apologize for the inconveniences.
 (t)mon nov 08 21
 (u)Ikea
 (p)6559
