@@ -739,7 +739,7 @@ var/mutable_appearance/fluid_ma
 						checks--
 						if (checks <= 0) break
 					if (prob(slippery))
-						if (master_block_slippy == ANT_NO_SLIP)
+						if (master_block_slippy == ANT_NO_SLIP && src.slip(do_slip = FALSE))
 							boutput(src, "<span class='notice'>The high amount of ants in [F] prevents you from slipping, but you crushed [rand(2,1337)] ants in the process!</class>", "wet_ants")
 						else if (src.slip())
 							src.visible_message("<span class='alert'><b>[src]</b> slips on [F]!</span>",\

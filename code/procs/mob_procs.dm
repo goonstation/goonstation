@@ -112,7 +112,7 @@
 	return 1
 
 
-/mob/proc/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0)
+/mob/proc/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0, do_slip = TRUE)
 	.= 0
 
 	if (!src.can_slip())
@@ -128,25 +128,26 @@
 		movedelay = movement_delay_real
 
 	if (movedelay < slip_delay)
-		var/intensity = (-0.33)+(6.033763-(-0.33))/(1+(movement_delay_real/(0.4))-1.975308)  //y=d+(6.033763-d)/(1+(x/c)-1.975308)
-		var/throw_range = min(round(intensity),50)
-		if (intensity < 1 && intensity > 0 && throw_range <= 0)
-			throw_range = max(throw_range,1)
-		else
-			throw_range = max(throw_range,0)
+		if (do_slip)
+			var/intensity = (-0.33)+(6.033763-(-0.33))/(1+(movement_delay_real/(0.4))-1.975308)  //y=d+(6.033763-d)/(1+(x/c)-1.975308)
+			var/throw_range = min(round(intensity),50)
+			if (intensity < 1 && intensity > 0 && throw_range <= 0)
+				throw_range = max(throw_range,1)
+			else
+				throw_range = max(throw_range,0)
 
-		if (intensity <= 2.4)
-			playsound(src.loc, "sound/misc/slip.ogg", 50, 1, -3)
-		else
-			playsound(src.loc, "sound/misc/slip_big.ogg", 50, 1, -3)
-		src.remove_pulling()
+			if (intensity <= 2.4)
+				playsound(src.loc, "sound/misc/slip.ogg", 50, 1, -3)
+			else
+				playsound(src.loc, "sound/misc/slip_big.ogg", 50, 1, -3)
+			src.remove_pulling()
 
-		var/turf/T = get_ranged_target_turf(src, src.last_move_dir, throw_range)
-		src.throw_at(T, intensity, 2, list("stun"=clamp(1.1 SECONDS * intensity, 1 SECOND, 5 SECONDS)), src.loc, throw_type = THROW_SLIP)
+			var/turf/T = get_ranged_target_turf(src, src.last_move_dir, throw_range)
+			src.throw_at(T, intensity, 2, list("stun"=clamp(1.1 SECONDS * intensity, 1 SECOND, 5 SECONDS)), src.loc, throw_type = THROW_SLIP)
 		.= 1
 
-/mob/living/carbon/human/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0)
-	. = ..(walking_matters, (src.client?.check_key(KEY_RUN) && src.get_stamina() > STAMINA_SPRINT), ignore_actual_delay)
+/mob/living/carbon/human/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0, do_slip = TRUE)
+	. = ..(walking_matters, (src.client?.check_key(KEY_RUN) && src.get_stamina() > STAMINA_SPRINT), ignore_actual_delay, do_slip)
 
 
 /mob/living/carbon/human/proc/skeletonize()
