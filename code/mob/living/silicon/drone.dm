@@ -200,9 +200,9 @@
 				src.next_click = world.time + (equipped ? max(equipped.click_delay,src.combat_click_delay) : src.combat_click_delay)
 				src.lastattacked = null
 
-	Bump(atom/movable/AM as mob|obj, yes)
+	Bump(atom/movable/AM as mob|obj)
 		SPAWN_DBG( 0 )
-			if ((!( yes ) || src.now_pushing))
+			if (src.now_pushing)
 				return
 			..()
 			if (!istype(AM, /atom/movable))

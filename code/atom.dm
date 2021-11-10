@@ -784,9 +784,9 @@
 /atom/proc/Bumped(AM as mob|obj)
 	return
 
-/atom/movable/Bump(var/atom/A as mob|obj|turf|area, yes)
+/atom/movable/Bump(var/atom/A as mob|obj|turf|area)
 	SPAWN_DBG( 0 )
-		if ((A && yes)) //wtf
+		if (A)
 			A.last_bumped = world.timeofday
 			A.Bumped(src)
 		return

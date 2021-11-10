@@ -584,8 +584,8 @@
 /mob/proc/onMouseUp(object,location,control,params)
 	return
 
-/mob/Bump(atom/A, yes)
-	if ((!( yes ) || src.now_pushing))
+/mob/Bump(atom/A)
+	if (src.now_pushing)
 		return
 
 	var/atom/movable/AM = A

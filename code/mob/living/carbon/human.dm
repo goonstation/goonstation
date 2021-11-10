@@ -2964,7 +2964,7 @@
 		return 1
 	return .
 
-/mob/living/carbon/human/Bump(atom/movable/AM as mob|obj, yes)
+/mob/living/carbon/human/Bump(atom/movable/AM as mob|obj)
 	if (wearing_football_gear())
 		src.tackle(AM)
 	..()
