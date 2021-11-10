@@ -39,6 +39,8 @@
 			else return //no sparks for unintended items
 			elecflash(user)
 
+
+
 /obj/item/lamp_manufacturer
 	name = "miniaturized lamp manufacturer"
 	desc = "A small manufacturing unit to produce and (re)place lamps in existing fittings."
