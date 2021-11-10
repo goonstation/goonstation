@@ -913,9 +913,9 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		. = ..()
 
 
-	Bump(atom/movable/AM, yes)
+	Bump(atom/movable/AM)
 		if(src.stance == "krampage")
-			if ((!( yes ) || src.now_pushing))
+			if (src.now_pushing)
 				return
 			now_pushing = 1
 			var/attack_strength = 2

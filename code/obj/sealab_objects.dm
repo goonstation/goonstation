@@ -37,7 +37,7 @@
 	var/database_id = null
 	var/random_color = 1
 	var/drop_type = 0
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 
 	New()
 		..()
@@ -59,7 +59,7 @@
 
 
 //mbc : added dumb layer code to keep perspective intact *most of the time*
-/obj/sea_plant/CanPass(atom/A, turf/T)
+/obj/sea_plant/Cross(atom/A)
 	if (ismob(A))
 
 		var/mob/M = A

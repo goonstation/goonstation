@@ -213,7 +213,7 @@ var/datum/explosion_controller/explosions
 			var/value = nodes[T] - 1 - T.explosion_resistance
 			var/value2 = nodes[T] - 1.4 - T.explosion_resistance
 			for (var/atom/A as anything in T)
-				if (A.density/* && !A.CanPass(null, target)*/) // nothing actually used the CanPass check
+				if (A.density/* && !A.Cross(null, target)*/) // nothing actually used the Cross check
 					value -= A.explosion_resistance
 					value2 -= A.explosion_resistance
 			if (value < 0)

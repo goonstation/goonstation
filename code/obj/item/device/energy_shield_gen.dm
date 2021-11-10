@@ -146,13 +146,13 @@
 	opacity = 0
 	anchored = 1
 	layer=12
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 	var/health_max = 10
 	var/health = 10
 	var/broken = 0
 	gas_impermeable = TRUE
 
-	CanPass(atom/A, turf/T)
+	Cross(atom/A)
 		if (broken) return 1
 		if (ismob(A)) return 1
 		else return 0

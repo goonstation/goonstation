@@ -5,7 +5,7 @@
 	anchored = 1
 	density = 0
 	layer = OBJ_LAYER + 0.9
-	event_handler_flags = USE_CANPASS
+
 	var/const/initial_health = 10
 	_health = initial_health
 	_max_health = initial_health
@@ -28,7 +28,7 @@
 		processing_items -= src
 		..()
 
-	CanPass(atom/movable/mover, turf/target)
+	Cross(atom/movable/mover)
 		if(istype(mover, /mob))
 			var/mob/M = mover
 			M.setStatus(statusId = "slowed", duration = 0.5 SECONDS, optional = 4)

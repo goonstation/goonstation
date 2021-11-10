@@ -23,7 +23,7 @@
 #define HANDLE_STICKER 8	//Atom implements var/active = XXX and responds to sticker removal methods (burn-off + acetone). this atom MUST have an 'active' var. im sory.
 // 16 UNUSED
 #define USE_CHECKEXIT 32	//Atom implements CheckExit() call in some way.
-#define USE_CANPASS 64		//Atom implements CanPass() call in some way. (doesnt affect turfs, put this on mobs or objs)
+// 64 UNUSED
 #define IMMUNE_MANTA_PUSH 128			//cannot be pushed by MANTAwaters
 #define IMMUNE_SINGULARITY 256
 #define IMMUNE_SINGULARITY_INACTIVE 512
