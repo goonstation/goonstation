@@ -1,4 +1,10 @@
 
+(t)wed nov 10 21
+(u)Zamujasa
+(e)🆕|feature
+(*)Testing out canvases, little icons you can draw on with crayons, pens, etc.
+(*)You can use a paint can on them to reet the canvas color as well.
+(*)Please report any bugs. I'd like to make a way for these to persist over rounds!
 (t)sun aug 29 21
 (u)Zamujasa
 (e)🆕|feature
