@@ -2149,12 +2149,25 @@
 	var/list/ejectables = list_ejectables()
 
 	for (var/i = 0, i < 16, i++)
+		var/obj/item/clothing/head/butt/the_butt
 		if (organHolder)
-			ejectables.Add(new /obj/item/clothing/head/butt(src.loc, organHolder))
+			the_butt = new /obj/item/clothing/head/butt(src.loc, organHolder)
 		else if (istype(src, /mob/living/silicon))
-			ejectables.Add(new /obj/item/clothing/head/butt/cyberbutt)
+			the_butt = new /obj/item/clothing/head/butt/cyberbutt(src.loc)
+		else if (istype(src, /mob/wraith))
+			the_butt = new /obj/item/clothing/head/butt(src.loc)
+			SPAWN_DBG(0)
+				the_butt.setMaterial(/datum/material/energy/ectoplasm)
+				the_butt.name = "asstoplasm"
+		else if (istype(src, /mob/living/intangible/blob_overmind))
+			the_butt = new /obj/item/clothing/head/butt(src.loc)
+			SPAWN_DBG(0)
+				the_butt.setMaterial(/datum/material/organic/blob)
+				the_butt.name = "blutt"
 		else
-			ejectables.Add(new /obj/item/clothing/head/butt/synth)
+			ejectables = new /obj/item/clothing/head/butt/synth(src.loc)
+
+		ejectables += (the_butt)
 
 	if (bdna && btype)
 		gibs(src.loc, virus, ejectables, bdna, btype)
