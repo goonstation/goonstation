@@ -13389,7 +13389,7 @@
 	foldable = 0;
 	icon_state = "chair_pool"
 	},
-/obj/item/clothing/glasses/sunglasses,
+/obj/item/clothing/glasses/sunglasses/tanning,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "aFV" = (
@@ -13399,6 +13399,7 @@
 	icon_state = "chair_pool"
 	},
 /obj/item/reagent_containers/food/drinks/water,
+/obj/item/clothing/glasses/sunglasses/tanning,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "aFW" = (
@@ -15243,7 +15244,7 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/access_spawn/engineering_power,
 /turf/simulated/floor/plating,
-/area/station/solar/west)
+/area/station/maintenance/solar/west)
 "aJW" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -15419,7 +15420,7 @@
 	foldable = 0;
 	icon_state = "chair_pool"
 	},
-/obj/item/clothing/glasses/sunglasses,
+/obj/item/clothing/glasses/sunglasses/tanning,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -37864,7 +37865,7 @@
 "bHX" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/maintenance/solar/west)
 "bHY" = (
 /obj/table/auto,
 /obj/item/storage/firstaid/regular,
@@ -57395,8 +57396,8 @@ aaa
 aaa
 aaa
 aaa
-adQ
-aJS
+avq
+avq
 avq
 arN
 arN
@@ -57698,8 +57699,8 @@ aaa
 aaa
 aaA
 avq
-avq
-avq
+arN
+arN
 rrM
 arN
 aOZ
@@ -58600,7 +58601,7 @@ iyl
 azI
 hfI
 aHN
-anM
+aJT
 aJT
 aJT
 aJT
@@ -60110,7 +60111,7 @@ iyl
 aAG
 hfI
 aaa
-anM
+aJT
 aJT
 aJT
 aJT
@@ -62220,7 +62221,7 @@ aaa
 aaa
 aaa
 aap
-acK
+avq
 avq
 arN
 arN
@@ -62521,9 +62522,9 @@ aaa
 aaa
 aae
 acK
-acK
-acK
+aGj
 avq
+arN
 arN
 arN
 avq
@@ -62824,9 +62825,9 @@ aas
 avq
 aEx
 avq
-aGj
 avq
 aOp
+arN
 arN
 avq
 aJY
@@ -63127,7 +63128,7 @@ avq
 arN
 avq
 avq
-avq
+aHO
 aHO
 aID
 aID
@@ -63429,7 +63430,7 @@ avq
 aEx
 avq
 aGk
-aGk
+arN
 arN
 aID
 aJk
