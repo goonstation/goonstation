@@ -29,6 +29,7 @@
 	var/numpuffs = 40 //number of times the cig can dispense reagents
 	rand_pos = 1
 	use_bloodoverlay = 0
+	var/datum/light/light
 
 	setupProperties()
 		..()
@@ -39,6 +40,10 @@
 	New()
 		..()
 		src.create_reagents(60)
+		light = new /datum/light/point
+		light.set_brightness(0.5)
+		light.set_color(0.94, 0.69, 0.27)
+		light.attach(src)
 
 		if (src.on) //if we spawned lit, do something about it!
 			src.on = 0
@@ -63,6 +68,8 @@
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_CANNABIS_OBJ_ITEMS)
+		if(light)
+			qdel(light)
 		. = ..()
 
 	afterattack(atom/target , mob/user, flag) // copied from the propuffs
@@ -117,6 +124,7 @@
 			if(src?.reagents)
 				puffrate = src.reagents.total_volume / numpuffs //40 active cycles (200 total, about 10 minutes)
 			processing_items |= src
+			light.enable()
 
 			hit_type = DAMAGE_BURN
 
@@ -136,6 +144,7 @@
 				var/mob/M = src.loc
 				M.set_clothing_icon_dirty()
 			processing_items.Remove(src)
+			light.disable()
 
 			hit_type = DAMAGE_BLUNT
 
@@ -326,6 +335,10 @@
 	dropped(mob/user as mob)
 		if (!isturf(src.loc))
 			return
+		if (light)
+			SPAWN_DBG(0)
+				if (src.loc != user)
+					light.attach(src)
 		if (src.on == 1 && !src.exploding && src.reagents.total_volume <= 20)
 			src.put_out(user, "<span class='alert'><b>[user]</b> calmly drops and treads on the lit [src.name], putting it out instantly.</span>")
 			return ..()
@@ -333,6 +346,9 @@
 			user.visible_message("<span class='alert'><b>[user]</b> drops [src]. Guess they've had enough for the day.</span>", group = "cig_drop")
 			return ..()
 
+	pickup(mob/user)
+		..()
+		light.attach(user)
 
 	proc/trick_explode()
 		var/turf/tlocation = get_turf(src.loc)
