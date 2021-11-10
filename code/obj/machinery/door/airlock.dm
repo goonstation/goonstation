@@ -189,6 +189,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/has_panel = 1
 	var/hackMessage = ""
 	var/net_access_code = null
+	var/nameOverride = TRUE // do we want to just set the door's name to area name instead of a custom one?
 
 	var/no_access = 0
 
@@ -199,7 +200,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 
 	New()
 		..()
-		if(!isrestrictedz(src.z))
+		if(!isrestrictedz(src.z) && nameOverride)
 			var/area/station/A = get_area(src)
 			src.name = A.name
 		src.net_access_code = rand(1, NET_ACCESS_OPTIONS)
