@@ -6,7 +6,7 @@
 	density = 1
 	anchored = 1.0
 	mats = 25
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 	var/mob/living/carbon/human/victim = null
 	var/strapped = 0.0
 

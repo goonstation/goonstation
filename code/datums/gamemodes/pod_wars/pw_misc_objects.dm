@@ -730,7 +730,7 @@
 	density = 1
 	anchored = 1.0
 	flags = NOSPLASH
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 	layer = OBJ_LAYER-0.1
 	stops_space_move = TRUE
 

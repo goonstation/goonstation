@@ -3264,7 +3264,7 @@ Returns:
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pool"
 	flags = FPRINT | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
-	event_handler_flags = USE_CANPASS
+
 
 	Cross(atom/movable/mover)
 		if (mover?.throwing)

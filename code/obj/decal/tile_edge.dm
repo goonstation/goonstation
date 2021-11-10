@@ -138,7 +138,7 @@
 	density = 1
 	anchored = 1
 	dir = NORTH
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT 
 
 	Cross(atom/movable/mover)
 		if (istype(mover, /obj/projectile))

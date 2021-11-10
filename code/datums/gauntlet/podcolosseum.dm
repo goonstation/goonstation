@@ -486,7 +486,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 	name = "Colosseum Hangar Floor"
 	desc = "You wonder if that little flashing white thing is a pod or a butt."
 	icon_state = "gauntfloorPod"
-	event_handler_flags = USE_CANPASS
+
 
 	Cross(atom/movable/mover)
 		if (istype(mover, /obj/machinery/colosseum_putt))

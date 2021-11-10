@@ -39,7 +39,6 @@
 	var/can_write_on = 0
 	var/tmp/messy = 0 //value corresponds to how many cleanables exist on this turf. Exists for the purpose of making fluid spreads do less checks.
 	var/tmp/checkingexit = 0 //value corresponds to how many objs on this turf implement checkexit(). lets us skip a costly loop later!
-	var/tmp/checkingcanpass = 0 // "" how many implement canpass()
 	var/tmp/checkinghasproximity = 0
 	var/tmp/neighcheckinghasproximity = 0
 	/// directions of this turf being blocked by directional blocking objects. So we don't need to loop through the entire contents
@@ -516,7 +515,6 @@ proc/generate_space_color()
 	var/old_opacity = src.opacity
 
 	var/old_checkingexit = src.checkingexit
-	var/old_checkingcanpass = src.checkingcanpass
 	var/old_blocked_dirs = src.blocked_dirs
 	var/old_checkinghasproximity = src.checkinghasproximity
 	var/old_neighcheckinghasproximity = src.neighcheckinghasproximity
@@ -590,7 +588,6 @@ proc/generate_space_color()
 
 
 	new_turf.checkingexit = old_checkingexit
-	new_turf.checkingcanpass = old_checkingcanpass
 	new_turf.blocked_dirs = old_blocked_dirs
 	new_turf.checkinghasproximity = old_checkinghasproximity
 	new_turf.neighcheckinghasproximity = old_neighcheckinghasproximity

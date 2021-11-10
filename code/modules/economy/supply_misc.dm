@@ -51,7 +51,7 @@
 	density = 0
 	anchored = 1
 	layer = EFFECTS_LAYER_UNDER_1
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS
 
 /obj/plasticflaps/Cross(atom/A)

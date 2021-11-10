@@ -6,7 +6,7 @@
 	canmove = 1
 	blinded = 0
 	anchored = 1
-	event_handler_flags = USE_CANPASS | IMMUNE_MANTA_PUSH
+	event_handler_flags =  IMMUNE_MANTA_PUSH
 
 	New()
 		. = ..()

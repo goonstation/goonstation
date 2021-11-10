@@ -554,7 +554,7 @@
 	desc = "All power dumped into this power unit will boost the speed of the station's cargo carousel."
 	density = 1
 	anchored = 1
-	event_handler_flags = USE_CANPASS | USE_FLUID_ENTER
+	event_handler_flags =  USE_FLUID_ENTER
 
 	var/icon_base = "battery-"
 	var/icon_levels = 6 //there are 7 icons of power levels (6 + 1 for unpowered)

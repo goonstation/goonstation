@@ -137,7 +137,7 @@
 	layer = FLOOR_EQUIP_LAYER1
 	var/obj/morgue/connected = null
 	anchored = 1.0
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 
 	disposing()
 		src.connected?.connected = null
@@ -380,7 +380,7 @@
 	var/obj/crematorium/connected = null
 	anchored = 1.0
 	var/datum/light/light //Only used for tanning beds.
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 
 	disposing()
 		src.connected?.connected = null

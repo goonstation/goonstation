@@ -8,7 +8,7 @@
 	soundproofing = 15
 	p_class = 1
 	plane = PLANE_DEFAULT
-	event_handler_flags = USE_CANPASS
+
 
 	close()
 		var/turf/T = get_turf(src)

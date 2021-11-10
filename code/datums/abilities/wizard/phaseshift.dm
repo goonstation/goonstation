@@ -311,11 +311,10 @@
 						vampholder.do_bite(atom, mult = 0.25)
 						playsound(src.loc,"sound/impact_sounds/Flesh_Crush_1.ogg", 35, 1, pitch = 1.3)
 						break
-				if (src.loc:checkingcanpass)
-					if (istype(atom,/obj/machinery/door))
-						var/obj/machinery/door/D = atom
-						//D.bumpopen(owner)
-						D.try_force_open(owner)
+				if (istype(atom,/obj/machinery/door))
+					var/obj/machinery/door/D = atom
+					//D.bumpopen(owner)
+					D.try_force_open(owner)
 				i++
 				if (i > 20)
 					break
