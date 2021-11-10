@@ -191,10 +191,6 @@
 		boutput(src, "Only administrators may use this command.")
 		return
 
-	if (!ishuman(M))
-		boutput(src, "<span class='alert'>Only humans can be buttgibbed.</span>")
-		return
-
 	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
 			logTheThing("admin", usr, M, "has buttgibbed [constructTarget(M,"admin")]")

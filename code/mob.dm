@@ -2148,9 +2148,11 @@
 	var/list/virus = src.ailments
 	var/list/ejectables = list_ejectables()
 
-	for(var/i = 0, i < 16, i++)
-		if(organHolder)
+	for (var/i = 0, i < 16, i++)
+		if (organHolder)
 			ejectables.Add(new /obj/item/clothing/head/butt(src.loc, organHolder))
+		else if (istype(src, /mob/living/silicon))
+			ejectables.Add(new /obj/item/clothing/head/butt/cyberbutt)
 		else
 			ejectables.Add(new /obj/item/clothing/head/butt/synth)
 
