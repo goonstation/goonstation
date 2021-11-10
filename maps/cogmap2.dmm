@@ -72941,7 +72941,7 @@
 /area/station/hangar/science)
 "del" = (
 /obj/machinery/door/airlock/pyro/glass{
-	name = "EMERGENCY EJECTOR";
+	name = "EMERGENCY DISPOSAL";
 	nameOverride = 0
 	},
 /turf/simulated/floor/airless/engine/caution/westeast,
@@ -78142,16 +78142,6 @@
 /obj/machinery/ore_cloud_storage_container,
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
-"dNU" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/decal/tile_edge/stripe/big,
-/turf/space,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/space)
 "dOs" = (
 /obj/cable{
 	d1 = 4;
@@ -78225,6 +78215,10 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/security/checkpoint/podbay)
+"ecJ" = (
+/obj/decal/tile_edge/stripe/big,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/surgery)
 "efy" = (
 /obj/disposalpipe/segment/transport,
 /obj/cable{
@@ -78410,16 +78404,20 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"gvX" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/big,
+/turf/space,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/space)
 "gGV" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/ai_monitored/storage/eva)
-"gHD" = (
-/obj/decal/tile_edge/stripe/big{
-	dir = 8
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hangar/science)
 "gKa" = (
 /obj/landmark/spawner{
 	name = "dolly"
@@ -78871,6 +78869,12 @@
 /obj/window/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"kcr" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hangar/science)
 "kkQ" = (
 /turf/simulated/wall/auto/reinforced/supernorn{
 	explosion_resistance = 15;
@@ -78902,12 +78906,6 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/airless/engine/caution/misc,
-/area/station/hangar/science)
-"ktw" = (
-/obj/machinery/launcher_loader/south{
-	id = "to_outpost"
-	},
-/turf/simulated/floor/plating,
 /area/station/hangar/science)
 "kBU" = (
 /obj/cable{
@@ -79839,6 +79837,12 @@
 	dir = 4
 	},
 /area/station/ranch)
+"sdR" = (
+/obj/machinery/launcher_loader/south{
+	id = "to_outpost"
+	},
+/turf/simulated/floor/plating,
+/area/station/hangar/science)
 "sfG" = (
 /obj/storage/cart/mechcart{
 	desc = "A big rolling supply cart equipped for handling hull breaches.";
@@ -79856,6 +79860,12 @@
 /obj/item/old_grenade/oxygen,
 /turf/simulated/floor/plating,
 /area/research_outpost)
+"shU" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hangar/science)
 "sng" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/tools,
@@ -80271,12 +80281,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/west)
-"voD" = (
-/obj/decal/tile_edge/stripe/big{
-	dir = 4
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hangar/science)
 "vrU" = (
 /obj/table/wood/auto,
 /obj/item/plantanalyzer,
@@ -80617,10 +80621,6 @@
 /obj/disposalpipe/trunk/mail/west,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/pharmacy)
-"yiN" = (
-/obj/decal/tile_edge/stripe/big,
-/turf/simulated/floor/white,
-/area/station/medical/medbay/surgery)
 
 (1,1,1) = {"
 aaa
@@ -105902,8 +105902,8 @@ dbx
 dcm
 ddz
 dek
-voD
-voD
+shU
+shU
 dbw
 aaa
 aaa
@@ -106506,8 +106506,8 @@ dbz
 dco
 ddA
 dbw
-gHD
-gHD
+kcr
+kcr
 hJl
 aaa
 aaa
@@ -106808,7 +106808,7 @@ dbA
 dcp
 ddB
 dem
-ktw
+sdR
 dfv
 dfN
 aaa
@@ -111044,7 +111044,7 @@ aaS
 aaS
 aaF
 aaF
-dNU
+gvX
 aaF
 aaF
 aaF
@@ -114047,7 +114047,7 @@ cQI
 cSt
 dhs
 cVp
-yiN
+ecJ
 cXM
 cVp
 cZN
