@@ -730,7 +730,7 @@ var/mutable_appearance/fluid_ma
 			var/master_block_slippy = F.group.reagents.get_master_reagent_slippy(F.group)
 			switch(master_block_slippy)
 				// NO_SLIP is omitted here, because it just does literally nothing
-				if(REGULAR_SLIP, ANT_NO_SLIP)
+				if(NORMAL_SLIP, ANT_NO_SLIP)
 					var/slippery =  (1 - (F.avg_viscosity/F.max_slip_viscosity)) * 50
 					var/checks = 10
 					for (var/thing in oldloc)

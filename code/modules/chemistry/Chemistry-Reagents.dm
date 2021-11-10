@@ -40,7 +40,7 @@ datum
 		var/energy_value = 0
 		var/blob_damage = 0 // If this is a poison, it may be useful for poisoning the blob.
 		var/viscosity = 0 // determines interactions in fluids. 0 for least viscous, 1 for most viscous. use decimals!
-		var/block_slippy = REGULAR_SLIP //fluid flag for slippage control
+		var/block_slippy = NORMAL_SLIP //fluid flag for slippage control
 		var/list/target_organs
 		var/heat_capacity = 100 /* how much heat a reagent can hold */ // ACTUALLY, THIS IS SPECIFIC HEAT CAPACITY, HOPE THIS HELPS!! - Emily
 		var/blocks_sight_gas = 0 //opacity
