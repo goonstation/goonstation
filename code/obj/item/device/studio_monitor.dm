@@ -1,10 +1,10 @@
 /obj/item/device/radio/nukie_studio_monitor
 	name = "Studio Monitor"
-	desc = "An incredibly high quality studio monitor with an uncomfortable number of high voltage stickers."
+	desc = "An incredibly high quality studio monitor with an uncomfortable number of high voltage stickers. Manufactured by Funk-Tek"
 	icon = 'icons/obj/loudspeakers.dmi'
-	icon_state = "nukie_speaker" // Gannets to make awesome amp stack!
+	icon_state = "amp_stack"
 	//inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi' // Gannets to make sweet inhand
-	wear_image_icon = 'icons/mob/back.dmi' // Gannets to make sweet wearable?
+	wear_image_icon = 'icons/mob/back.dmi'
 
 	anchored = 0
 	speaker_range = 7
@@ -48,7 +48,7 @@
 			UpdateOverlays(null, "speech_bubble")
 
 	proc/play_song(notes=TRUE)
-		icon_state = "nukie_speaker_actv"
+		icon_state = "amp_stack_actv"
 		if(notes)
 			effect.play_notes()
 		if(ismob(src.loc))
@@ -67,11 +67,11 @@
 
 
 /obj/item/breaching_hammer/rock_sledge
-	name = "rock sledgehammer"
-	desc = "A HEAVY METAL hammer designed break down doors with the power of music."
-	icon = 'icons/obj/items/weapons.dmi'
-	icon_state = "rock_sledge"
-	item_state = "breaching_sledgehammer"
+	name = "Orpheus electric guitar"
+	desc = "A bolt-on neck flying V electric guitar, finished in blood red. Manufactured by Bonk-Tek."
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "guitar"
+	item_state = "guitar"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	is_syndicate = 1
 	click_delay = 30 / 2 // TODO
