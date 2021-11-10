@@ -24,7 +24,7 @@
 			src.UpdateOverlays(null, "barcode")
 
 
-	Cross(atom/movable/mover, turf/target)
+	Cross(atom/movable/mover)
 		if(istype(mover, /obj/projectile))
 			return 1
 		return ..()

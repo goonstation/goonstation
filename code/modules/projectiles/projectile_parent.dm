@@ -182,7 +182,7 @@
 			if(sigreturn & PROJ_ATOM_PASSTHROUGH || (pierces_left != 0 && first && !(sigreturn & PROJ_ATOM_CANNOT_PASS))) //try to hit other targets on the tile
 				for (var/mob/X in T.contents)
 					if(!(X in src.hitlist))
-						if (!X.Cross(src, get_step(src, X.dir)))
+						if (!X.Cross(src))
 							src.collide(X, first = 0)
 					if(QDELETED(src))
 						return
@@ -204,7 +204,7 @@
 			if(first && (sigreturn & PROJ_OBJ_HIT_OTHER_OBJS))
 				for (var/obj/X in T.contents)
 					if(!(X in src.hitlist))
-						if (!X.Cross(src, get_step(src, X.dir)))
+						if (!X.Cross(src))
 							src.collide(X, first = 0)
 					if(QDELETED(src))
 						return
@@ -323,7 +323,7 @@
 		..()
 		if (!istype(A))
 			return // can't happen will happen
-		if (!A.Cross(src, get_step(src, A.dir)))
+		if (!A.Cross(src))
 			src.collide(A)
 
 		if (collide_with_other_projectiles && A.type == src.type)
@@ -336,7 +336,7 @@
 		for(var/thing as mob|obj|turf|area in T)
 			var/atom/A = thing
 			if (A == src) continue
-			if (!A.Cross(src, get_step(src, A.dir)))
+			if (!A.Cross(src))
 				src.collide(A)
 
 			if (collide_with_other_projectiles && A.type == src.type)

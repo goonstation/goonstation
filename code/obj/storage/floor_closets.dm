@@ -34,7 +34,7 @@
 	recalcPClass()
 		p_class = initial(p_class)
 
-	Cross(atom/movable/mover, turf/target)
+	Cross(atom/movable/mover)
 		return 1
 
 /obj/storage/closet/syndi/hidden

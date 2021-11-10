@@ -77,7 +77,7 @@
 		else
 			..()
 
-	Cross(atom/movable/mover, turf/target)
+	Cross(atom/movable/mover)
 		. = ..()
 		var/obj/projectile/P = mover
 		if (istype(P) && P.proj_data) //Wire note: Fix for Cannot read null.type

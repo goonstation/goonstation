@@ -24,7 +24,7 @@
 		return 0
 	say_understands(var/other)
 		return 1
-	Cross(atom/movable/mover, turf/target)
+	Cross(atom/movable/mover)
 		return 1
 
 	meteorhit()

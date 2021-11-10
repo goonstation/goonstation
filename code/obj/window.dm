@@ -287,14 +287,14 @@
 			the_text += " ...you can't see through it at all. What kind of idiot made this?"
 		return the_text
 
-	Cross(atom/movable/mover, turf/target)
+	Cross(atom/movable/mover)
 		if(istype(mover, /obj/projectile))
 			var/obj/projectile/P = mover
 			if(P.proj_data.window_pass)
 				return 1
 		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST)
 			return 0 //full tile window, you can't move into it!
-		if(get_dir(loc, target) == dir)
+		if(get_dir(loc, mover) == dir)
 
 			return !density
 		else

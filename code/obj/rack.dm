@@ -49,7 +49,7 @@
 		rackbreak()
 		return
 
-/obj/rack/Cross(atom/movable/mover, turf/target)
+/obj/rack/Cross(atom/movable/mover)
 	if (mover.flags & TABLEPASS)
 		return 1
 	else

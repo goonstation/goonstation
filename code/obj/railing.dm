@@ -92,7 +92,7 @@
 		..()
 		layerify()
 
-	Cross(atom/movable/O as mob|obj, turf/target)
+	Cross(atom/movable/O as mob|obj)
 		if (O == null)
 			return 0
 		if (!src.density || (O.flags & TABLEPASS && !src.is_reinforced) || istype(O, /obj/newmeteor) || istype(O, /obj/lpt_laser) )

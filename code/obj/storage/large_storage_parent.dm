@@ -425,7 +425,7 @@
 	alter_health()
 		. = get_turf(src)
 
-	Cross(atom/movable/mover, turf/target)
+	Cross(atom/movable/mover)
 		. = open
 		if (src.is_short)
 			return 0

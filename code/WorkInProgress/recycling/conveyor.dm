@@ -360,8 +360,8 @@
 	set_divert()
 
 // don't allow movement into the 'backwards' direction if deployed
-/obj/machinery/diverter/Cross(atom/movable/O, var/turf/target)
-	var/direct = get_dir(O, target)
+/obj/machinery/diverter/Cross(atom/movable/O)
+	var/direct = get_dir(O, src)
 	if(direct == divert_to)	// prevent movement through body of diverter
 		return 0
 	if(!deployed)

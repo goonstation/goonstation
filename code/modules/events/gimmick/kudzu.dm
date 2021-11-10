@@ -125,7 +125,7 @@
 			if (21 to INFINITY) flavor = "vivacious"
 		return "[..()] It looks [flavor]."
 
-	Cross(atom/A, turf/T)
+	Cross(atom/A)
 		//kudzumen can pass through dense kudzu
 		if (current_stage == 3)
 			if (ishuman(A) &&  istype(A:mutantrace, /datum/mutantrace/kudzu))

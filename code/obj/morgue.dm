@@ -145,7 +145,7 @@
 		src.connected = null
 		. = ..()
 
-/obj/m_tray/Cross(atom/movable/mover, turf/target)
+/obj/m_tray/Cross(atom/movable/mover)
 	if (istype(mover, /obj/item/dummy))
 		return 1
 	else
@@ -389,7 +389,7 @@
 		src.connected = null
 		. = ..()
 
-/obj/c_tray/Cross(atom/movable/mover, turf/target)
+/obj/c_tray/Cross(atom/movable/mover)
 	if (istype(mover, /obj/item/dummy))
 		return 1
 	else

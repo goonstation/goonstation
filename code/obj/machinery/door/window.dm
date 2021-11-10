@@ -97,13 +97,13 @@
 		close()
 		return 1
 
-	Cross(atom/movable/mover, turf/target)
+	Cross(atom/movable/mover)
 		if (istype(mover, /obj/projectile))
 			var/obj/projectile/P = mover
 			if (P.proj_data.window_pass)
 				return 1
 
-		if (get_dir(loc, target) == dir) // Check for appropriate border.
+		if (get_dir(loc, mover) == dir) // Check for appropriate border.
 			if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
 				if (ismob(mover) && mover:pulling && src.bumpopen(mover))
 					// If they're pulling something and the door would open anyway,

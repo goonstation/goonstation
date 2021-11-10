@@ -58,10 +58,6 @@ Important Procedures
 /atom/proc/gas_cross(turf/target)
 	return !src.gas_impermeable
 
-/turf/Cross(atom/movable/mover, turf/target)
-	. = ..()
-	//if(!target) return 0
-
 /turf/gas_cross(turf/target)
 	if(target?.gas_impermeable || src.gas_impermeable)
 		return 0

@@ -59,7 +59,7 @@
 
 
 //mbc : added dumb layer code to keep perspective intact *most of the time*
-/obj/sea_plant/Cross(atom/A, turf/T)
+/obj/sea_plant/Cross(atom/A)
 	if (ismob(A))
 
 		var/mob/M = A

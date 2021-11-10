@@ -354,13 +354,13 @@
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT", "group"=list(MGD_MEDRESEACH, MGA_SALES), "sender"="00000000", "message"=string)
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal)
 
-	Cross(var/mob/M, var/atom/oldloc)
+	Cross(var/mob/M)
 		.= ..()
-		if (oldloc && oldloc.y == src.y)
+		if (M && M.y == src.y)
 			if (!occupant && selected_product && ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if (H.bioHolder && !H.bioHolder.HasEffect(selected_product.id))
-					eject_dir = get_dir(oldloc,src)
+					eject_dir = get_dir(M,src)
 					M.set_loc(src)
 					occupant = M
 					letgo_hp = initial(letgo_hp)

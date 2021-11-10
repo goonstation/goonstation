@@ -151,7 +151,7 @@
 		else
 			src.examine_verb(target)
 
-	Cross(atom/movable/mover, turf/target)
+	Cross(atom/movable/mover)
 		return 1
 
 	say_understands(var/other)

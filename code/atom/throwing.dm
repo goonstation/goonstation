@@ -21,7 +21,7 @@
 			// **TODO: Better behaviour for windows
 			// which are dense, but shouldn't always stop movement
 			if(isobj(A))
-				if(!A.Cross(src, src.loc))
+				if(!A.Cross(src))
 					src.throw_impact(A, thr)
 					. = TRUE
 
