@@ -19,6 +19,7 @@
 	#endif
 
 	area = /area/space
+	movement_mode = TILE_MOVEMENT_MODE
 
 	view = "15x15"
 
