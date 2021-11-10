@@ -3783,6 +3783,14 @@ datum
 			result_amount = 2
 			mix_phrase = "The ants arachnify. What?"
 
+		wet_ants
+			name = "wet ants"
+			id = "wet_ants"
+			result = "wet_ants"
+			required_reagents = list("ants" = 1, "water" = 1)
+			result_amount = 2
+			mix_phrase = "The ants mix into the water, forming a suspension."
+
 		thalmerite_heat
 			name = "thalmerite heating"
 			id = "thalmerite_heat"

@@ -729,6 +729,8 @@ var/mutable_appearance/fluid_ma
 		if (F.amt > 0 && F.amt <= F.max_slip_volume && F.avg_viscosity <= F.max_slip_viscosity)
 			var/master_block_slippy = F.group.reagents.get_master_reagent_slippy(F.group)
 			switch(master_block_slippy)
+				if(2) // wet ants
+					boutput(src, "<span class='notice'>The high amount of ants in [F] prevents you from slipping, but you crushed [rand(2,1337)] ants in the process!</class>")
 				if(0)
 					var/slippery =  (1 - (F.avg_viscosity/F.max_slip_viscosity)) * 50
 					var/checks = 10

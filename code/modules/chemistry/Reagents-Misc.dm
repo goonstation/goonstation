@@ -1578,6 +1578,15 @@ datum
 				..()
 				return
 
+		ants/wet
+			name = "wet ants"
+			id = "wet_ants"
+			description = "A suspension of Space Ants (formicidae bastardium tyrannus) in regular water (H₂O) at about a 50/50 ratio."
+			viscosity = 0.4
+			value = 1
+			transparency = 127
+			block_slippy = 2
+
 		spiders
 			name = "spiders"
 			id = "spiders"
