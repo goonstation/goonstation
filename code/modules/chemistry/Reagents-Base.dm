@@ -893,7 +893,7 @@ datum
 			name = "seawater"
 			id = "seawater"
 			description = "A little strange. Not like any seawater you've seen. But definitely OSHA approved."
-			block_slippy = 1
+			block_slippy = NO_SLIP
 			reagent_state = LIQUID
 			thirst_value = -0.3 //Sea water actually slowly dehydrates you because you use more liquid to get rid of the salt then you gain.
 			hygiene_value = 0.3

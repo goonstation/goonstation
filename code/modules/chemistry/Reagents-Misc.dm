@@ -723,7 +723,7 @@ datum
 			fluid_g = 255
 			value = 3 // 1 1 1
 			hygiene_value = 0.25
-			block_slippy = -1
+			block_slippy = LUBE_SLIP
 
 			reaction_turf(var/turf/target, var/volume)
 				var/list/covered = holder.covered_turf()
@@ -757,7 +757,7 @@ datum
 			fluid_g = 255
 			value = 4 // 1 1 1
 			hygiene_value = 0.25
-			block_slippy = -2
+			block_slippy = SUPER_LUBE_SLIP
 			var/visible = 1
 
 			reaction_turf(var/turf/target, var/volume)

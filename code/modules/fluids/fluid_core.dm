@@ -729,9 +729,10 @@ var/mutable_appearance/fluid_ma
 		if (F.amt > 0 && F.amt <= F.max_slip_volume && F.avg_viscosity <= F.max_slip_viscosity)
 			var/master_block_slippy = F.group.reagents.get_master_reagent_slippy(F.group)
 			switch(master_block_slippy)
-				if(2) // wet ants
-					boutput(src, "<span class='notice'>The high amount of ants in [F] prevents you from slipping, but you crushed [rand(2,1337)] ants in the process!</class>")
-				if(0)
+				if(ANT_NO_SLIP)
+					boutput(src, "<span class='notice'>The high amount of ants in [F] prevents you from slipping, but you crushed [rand(2,1337)] ants in the process!</class>", "wet_ants")
+				// NO_SLIP is omitted here, because it just does literally nothing
+				if(REGULAR_SLIP)
 					var/slippery =  (1 - (F.avg_viscosity/F.max_slip_viscosity)) * 50
 					var/checks = 10
 					for (var/thing in oldloc)
@@ -742,14 +743,14 @@ var/mutable_appearance/fluid_ma
 					if (prob(slippery) && src.slip())
 						src.visible_message("<span class='alert'><b>[src]</b> slips on [F]!</span>",\
 						"<span class='alert'>You slip on [F]!</span>")
-				if(-1) //space lube. this code bit is shit but i'm too lazy to make it Real right now. the proper implementation should also make exceptions for ice and stuff.
+				if(LUBE_SLIP)
 					src.remove_pulling()
 					src.changeStatus("weakened", 3.5 SECONDS)
 					boutput(src, "<span class='notice'>You slipped on [F]!</span>")
 					playsound(T, "sound/misc/slip.ogg", 50, 1, -3)
 					var/atom/target = get_edge_target_turf(src, src.dir)
 					src.throw_at(target, 12, 1, throw_type = THROW_SLIP)
-				if(-2) //superlibe
+				if(SUPER_LUBE_SLIP)
 					src.remove_pulling()
 					src.changeStatus("weakened", 6 SECONDS)
 					playsound(T, "sound/misc/slip.ogg", 50, 1, -3)
