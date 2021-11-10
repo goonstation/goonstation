@@ -158,7 +158,6 @@
 	definitions = list(
 		// TODO: make versatile satchel (same as civilian module's satchel)
 		/obj/item/mining_tool/drill,
-		/obj/item/item_holder/mining_tool,
 		/obj/item/ore_scoop/borg,
 		/obj/item/cargotele,
 		// TODO: make cargo transporter (i.e. atmosporter, but allow single crate instead of canisters)
