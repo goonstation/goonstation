@@ -1347,6 +1347,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\building_materials.dm"
 #include "code\obj\item\cable_coil.dm"
 #include "code\obj\item\cameras.dm"
+#include "code\obj\item\canvas.dm"
 #include "code\obj\item\card.dm"
 #include "code\obj\item\chem_pill_bottle.dm"
 #include "code\obj\item\cigarette.dm"
