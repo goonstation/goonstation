@@ -645,7 +645,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 /obj/decal/cleanable/pathogen_sweat
 	name = "weirdly colored sweat"
-	desc = "Ew, better not step in this stuff."
+	desc = "Ew, better not let this stuff touch your skin."
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "floor1"
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
@@ -658,8 +658,14 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 	Crossed(atom/movable/AM)
 		. = ..()
-		if(prob(4))
-			src.reagents.reaction(AM, TOUCH)
+		if(!ishuman(AM))
+			return
+		var/mob/living/carbon/human/H = AM
+
+		if((!H.shoes && !iscow(H)) || H.lying) //Checks if they arn't wearing shoes or are crawling through the goo.
+			src.reagents.reaction(H, TOUCH)
+		else
+			return
 
 /obj/decal/cleanable/pathogen_cloud
 	name = "disease particles"
