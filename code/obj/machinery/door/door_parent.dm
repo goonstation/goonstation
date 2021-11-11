@@ -6,7 +6,7 @@
 	opacity = 1
 	density = 1
 	flags = FPRINT | ALWAYS_SOLID_FLUID
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 	object_flags = BOTS_DIRBLOCK
 	text = "<font color=#D2691E>+"
 	var/secondsElectrified = 0
@@ -117,8 +117,7 @@
 				return 1
 	return 0
 
-/obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	//if(air_group) return 0
+/obj/machinery/door/Cross(atom/movable/mover)
 	if(istype(mover, /obj/projectile))
 		var/obj/projectile/P = mover
 		if(P.proj_data.window_pass)
@@ -131,6 +130,12 @@
 		animate_door_squeeze(mover)
 		return 1 // they can pass through a closed door
 
+	if (density && next_timeofday_opened)
+		return (world.timeofday >= next_timeofday_opened) //Hey this is a really janky fix. Makes it so the door 'opens' on realtime even if the animations and sounds are laggin
+
+	return !density
+
+/obj/machinery/door/gas_cross(turf/target)
 	if (density && next_timeofday_opened)
 		return (world.timeofday >= next_timeofday_opened) //Hey this is a really janky fix. Makes it so the door 'opens' on realtime even if the animations and sounds are laggin
 

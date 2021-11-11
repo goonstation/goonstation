@@ -1378,17 +1378,14 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	set category = "AI Commands"
 	set name = "View Crew Manifest"
 
-	var/crew = ""
-	for(var/datum/db_record/t as anything in data_core.general.records)
-		crew += "[t["name"]] - [t["rank"]]<br>"
-
 	var/stored = ""
 	if(length(by_type[/obj/cryotron]))
 		var/obj/cryotron/cryo_unit = pick(by_type[/obj/cryotron])
 		for(var/L as anything in cryo_unit.stored_crew_names)
 			stored += "<i>- [L]<i><br>"
 
-	usr.Browse("<head><title>Crew Manifest</title></head><body><tt><b>Crew Manifest:</b><hr>[crew]<br><b>In Cryogenic Storage:</b><hr>[stored]</tt></body>", "window=aimanifest")
+	usr.Browse("<head><title>Crew Manifest</title></head><body><tt><b>Crew Manifest:</b><hr>[get_manifest()]<br><b>In Cryogenic Storage:</b><hr>[stored]</tt></body>", "window=aimanifest")
+
 
 /mob/living/silicon/ai/proc/show_laws_verb()
 	set category = "AI Commands"

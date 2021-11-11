@@ -1,5 +1,3 @@
-#define CAM_RANGE 7
-
 //ISSUES: Cameras inside beepsky and other bots cause issues. They move around and don't update properly. ((FIXED I THINK))
 //		  Doors sometimes for some reason fail to properly update their opacity. Investigate.
 //		  Cutting cameras is not handled. ((FIXED I THINK))
@@ -443,41 +441,6 @@
 /turf/var/image/aiImage
 /turf/var/list/cameras = null
 
-/turf/proc/addCameraCoverage(var/obj/machinery/camera/C) //copy pasted for use below in updatecoverage to reduce heavy proc calls. dont change one without the other!
-	var/cam_amount = src.cameras ? src.cameras.len : 0
-	if(!src.cameras)
-		src.cameras = list(C)
-		if(!C.coveredTiles)
-			C.coveredTiles = list(src)
-		else
-			C.coveredTiles |= src
-
-	else
-		src.cameras |= C
-		if(!C.coveredTiles)
-			C.coveredTiles = list(src)
-		else
-			C.coveredTiles |= src
-
-	if (cam_amount < src.cameras.len)
-		if (src.aiImage)
-			src.aiImage.loc = null
-
-
-/turf/proc/removeCameraCoverage(var/obj/machinery/camera/C) //copy pasted for use below in updatecoverage to reduce heavy proc calls. dont change one without the other!
-	if(!src.cameras)
-		return
-
-	src.cameras -= C
-	C.coveredTiles -= src
-
-	if(!src.cameras.len)
-		src.cameras = null
-
-		if (src.aiImage)
-			src.aiImage.loc = src
-
-
 /turf/proc/adjustCameraImage()
 	if(!istype(src.aiImage)) return
 
@@ -502,88 +465,21 @@
 /obj/machinery/camera/var/list/turf/coveredTiles = null
 
 /obj/machinery/camera/proc/updateCoverage()
-	//					HEY READ THIS
-	//This proc gets called a lot and it loops through a lot of stuff so I've copy+pasted anything it invokes to cut down on proc calls
-	//					HEY READ THIS
-
-	var/list/prev_tiles = 0
-	var/list/new_tiles = list()
-
-	if (coveredTiles != null && length(coveredTiles))
-		prev_tiles = coveredTiles
-
-	for(var/turf/T in view(CAM_RANGE, get_turf(src)))
-		new_tiles |= T
-
-	if (prev_tiles)
-		for(var/turf/O as anything in (prev_tiles - new_tiles))
-			//copy+paste begin!
-			if(O.cameras == null) continue
-
-			O.cameras -= src
-			src.coveredTiles -= O
-
-			if(!O.cameras.len)
-				O.cameras = null
-
-				if (O.aiImage)
-					O.aiImage.loc = O
-
-			//copy paste end!
-
-	for(var/turf/t as anything in (new_tiles - prev_tiles))
-		//copy+paste begin!
-		var/cam_amount = t.cameras ? t.cameras.len : 0
-		if(t.cameras == null)
-			t.cameras = list(src)
-			if(src.coveredTiles == null)
-				src.coveredTiles = list(t)
-			else
-				src.coveredTiles |= t
-		else
-			t.cameras |= src
-			if(src.coveredTiles == null)
-				src.coveredTiles = list(t)
-			else
-				src.coveredTiles |= t
-
-		if (cam_amount < t.cameras.len)
-			if (t.aiImage)
-				t.aiImage.loc = null
-		//copy paste end!
-
-		//copy+paste begin!
-		if(!istype(t.aiImage)) continue
-
-		if( t.cameras.len >= 1 )
-			t.aiImage.loc = null
-		else if( t.cameras == null )
-			t.aiImage.loc = t
-
-		//copy paste end!
-
-	return
-
-
-//---CAMERA---//
-
-//---MISC---//
-var/list/camImages = list()
-
+	LAZYLISTADDUNIQUE(camerasToRebuild, src)
+	if (current_state > GAME_STATE_WORLD_INIT && !global.explosions.exploding)
+		world.updateCameraVisibility()
 
 //---MISC---//
 
-
-var/aiDirty = 2
-world/proc/updateCameraVisibility()
-	if(!aiDirty) return
-
+var/list/obj/machinery/camera/camerasToRebuild
+world/proc/updateCameraVisibility(generateAiImages=FALSE)
+	set waitfor = FALSE
 #if defined(IM_REALLY_IN_A_FUCKING_HURRY_HERE) && !defined(SPACEMAN_DMM)
 	// I don't wanna wait for this camera setup shit just GO
 	return
 #endif
 
-	if(aiDirty == 2)
+	if(generateAiImages)
 		var/mutable_appearance/ma = new(image('icons/misc/static.dmi', icon_state = "static"))
 		ma.plane = PLANE_HUD
 		ma.layer = 100
@@ -594,11 +490,7 @@ world/proc/updateCameraVisibility()
 
 		// takes about one second compared to the ~12++ that the actual calculations take
 		game_start_countdown?.update_status("Updating cameras...\n(Calculating...)")
-		var/list/turf/cam_candidates = list()
-		for(var/turf/t in world) //ugh x2
-			if( t.z != 1 ) continue
-			cam_candidates += t
-
+		var/list/turf/cam_candidates = block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION))
 //pod wars has no AI so this is just a waste of time...
 #ifndef MAP_OVERRIDE_POD_WARS
 
@@ -621,32 +513,42 @@ world/proc/updateCameraVisibility()
 				game_start_countdown?.update_status("Updating cameras...\n[thispct]%")
 
 			LAGCHECK(100)
-		aiDirty = 1
+
+		for_by_tcl(cam, /obj/machinery/camera)
+			LAZYLISTADDUNIQUE(camerasToRebuild, cam)
 		game_start_countdown?.update_status("Updating camera vis...\n")
-	for_by_tcl(C, /obj/machinery/camera)
-		for(var/turf/t in view(CAM_RANGE, get_turf(C)))
-			LAGCHECK(LAG_HIGH)
-			if (!t.aiImage) continue
-			if (t.cameras && length(t.cameras))
-				t.aiImage.loc = null
-			else
-				t.aiImage.loc = t
-	aiDirty = 0
+
+	var/list/turf/staticUpdateTurfs = list()
+
+	for(var/obj/machinery/camera/cam as anything in camerasToRebuild)
+		var/list/prev_tiles = cam.coveredTiles
+		var/list/new_tiles = list()
+		if(cam.camera_status && !isnull(get_turf(cam)))
+			for(var/turf/T in view(CAM_RANGE, get_turf(cam)))
+				new_tiles += T
+		if (prev_tiles)
+			for(var/turf/T as anything in (prev_tiles - new_tiles))
+				staticUpdateTurfs |= T
+				if(isnull(T.cameras)) continue
+				T.cameras -= cam
+				if(!length(T.cameras))
+					T.cameras = null
+		if (new_tiles)
+			for(var/turf/T as anything in (new_tiles - prev_tiles))
+				LAZYLISTADDUNIQUE(T.cameras, cam)
+				staticUpdateTurfs |= T
+
+		cam.coveredTiles = new_tiles
+
+	for(var/turf/T as anything in staticUpdateTurfs)
+		T.aiImage?.loc = length(T.cameras) ? null : T
+
+	camerasToRebuild = null
 #endif
 
-/obj/machinery/camera/proc/remove_from_turfs() //check if turf cameras is 0 . Maybe loop through each affected turf's cameras, and update static on them here instead of going thru updateCameraVisibility()?
-	//world << "Camera deleted! @ [src.loc]"
-	for(var/turf/t in view(CAM_RANGE,get_turf(src)))
-		LAGCHECK(LAG_HIGH)
-		if(t.aiImage)
-			t.aiImage.loc = t
-	aiDirty = 1
-
-	if(!global.explosions.exploding)
-		world.updateCameraVisibility()
-
-/obj/machinery/camera/proc/add_to_turfs() //chck if turf cameras is 1
-	aiDirty = 1
-	if (current_state > GAME_STATE_WORLD_INIT)
-		world.updateCameraVisibility()
+// to be called by admins if everything breaks. TODO move to an admin verb
+/proc/force_full_camera_rebuild()
+	for_by_tcl(cam, /obj/machinery/camera)
+		LAZYLISTADDUNIQUE(camerasToRebuild, cam)
+	world.updateCameraVisibility()
 

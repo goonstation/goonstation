@@ -96,6 +96,11 @@ toxic - poisons
 	icon_turf_hit = "bhole-small"
 	silentshot = 1 // It's supposed to be a stealth weapon, right (Convair880)?
 
+/datum/projectile/bullet/bullet_22/smartgun
+	shot_sound = 'sound/weapons/smartgun.ogg'
+	shot_volume = 70
+	silentshot = 0
+
 /datum/projectile/bullet/bullet_22/HP
 	power = 35
 	damage_type = D_KINETIC
@@ -116,7 +121,7 @@ toxic - poisons
 /datum/projectile/bullet/assault_rifle
 	name = "bullet"
 	shot_sound = 'sound/weapons/ak47shot.ogg'  // todo: single shot sound?
-	power = 30
+	power = 45
 	cost = 1
 	ks_ratio = 1.0
 	damage_type = D_KINETIC
@@ -134,9 +139,9 @@ toxic - poisons
 /datum/projectile/bullet/assault_rifle/burst
 	sname = "burst fire"
 	shot_sound = 'sound/weapons/ak47shot.ogg'
-	power = 30
-	cost = 3
-	shot_number = 3
+	power = 45
+	cost = 2
+	shot_number = 2
 
 	armor_piercing
 		damage_type = D_PIERCING
@@ -220,14 +225,14 @@ toxic - poisons
 	caliber = 0.308
 	icon_turf_hit = "bhole-small"
 	on_launch(obj/projectile/O)
-		O.AddComponent(/datum/component/sniper_wallpierce, 2) //pierces 2 walls/lockers/doors/etc. Does not function on restriced Z, rwalls and blast doors use both pierces
+		O.AddComponent(/datum/component/sniper_wallpierce, 3) //pierces 3 walls/lockers/doors/etc. Does not function on restriced Z, rwalls and blast doors use 2 pierces
 
 	on_hit(atom/hit, dirflag, obj/projectile/P)
 		if(ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			if(power > 40)
 #ifdef USE_STAMINA_DISORIENT
-				M.do_disorient(75, weakened = 40, stunned = 40, disorient = 60, remove_stamina_below_zero = 0)
+				M.do_disorient(50, weakened = 20, stunned = 20, disorient = 30, remove_stamina_below_zero = 0)
 #else
 				M.changeStatus("stunned", 4 SECONDS)
 				M.changeStatus("weakened", 3 SECONDS)
@@ -276,10 +281,10 @@ toxic - poisons
 	name = "bullet"
 	sname = "8-shot burst"
 	shot_sound = 'sound/weapons/minigunshot.ogg'
-	power = 12
+	power = 15
 	cost = 8
 	shot_number = 8
-	shot_delay = 0.7
+	shot_delay = 1
 	dissipation_delay = 12
 	ks_ratio = 1.0
 	damage_type = D_KINETIC
@@ -293,7 +298,7 @@ toxic - poisons
 	on_hit(atom/hit, direction, obj/projectile/P)
 		if(slow && ishuman(hit))
 			var/mob/living/carbon/human/M = hit
-			M.changeStatus("slowed", 0.5 SECONDS)
+			M.setStatus("slowed", 0.3 SECONDS, optional = 4)
 			M.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
 
 	auto
@@ -316,7 +321,7 @@ toxic - poisons
 //9mm/0.355
 /datum/projectile/bullet/bullet_9mm
 	name = "bullet"
-	power = 25
+	power = 30
 	shot_sound = 'sound/weapons/smg_shot.ogg'
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
@@ -325,15 +330,8 @@ toxic - poisons
 	caliber = 0.355
 	icon_turf_hit = "bhole-small"
 
-	smartgun
-		dissipation_delay = 6
-		dissipation_rate = 3
-		power = 15
-		shot_sound = 'sound/weapons/smartgun.ogg'
-		shot_volume = 70
-
 	smg
-		power = 15
+		power = 20
 		cost = 3
 		shot_number = 3
 

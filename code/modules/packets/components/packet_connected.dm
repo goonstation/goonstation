@@ -102,6 +102,8 @@
 		call(src.parent, src.receive_packet_proc)(signal, transmission_method, params, connection_id)
 
 /datum/component/packet_connected/proc/post_packet(datum/signal/signal, params=null)
+	if(!("sender" in signal.data))
+		signal.data["sender"] = src.address
 	src.network?.post_packet(src, signal, params)
 
 

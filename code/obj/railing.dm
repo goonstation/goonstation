@@ -8,7 +8,7 @@
 	layer = OBJ_LAYER
 	color = "#ffffff"
 	flags = FPRINT | USEDELAY | ON_BORDER
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT 
 	object_flags = HAS_DIRECTIONAL_BLOCKING
 	dir = SOUTH
 	custom_suicide = 1
@@ -92,14 +92,10 @@
 		..()
 		layerify()
 
-	CanPass(atom/movable/O as mob|obj, turf/target, height=0, air_group=0)
-		if(air_group)
-			return 1
+	Cross(atom/movable/O as mob|obj)
 		if (O == null)
 			return 0
 		if (!src.density || (O.flags & TABLEPASS && !src.is_reinforced) || istype(O, /obj/newmeteor) || istype(O, /obj/lpt_laser) )
-			return 1
-		if(height==0)
 			return 1
 		if (dir & get_dir(loc, O))
 			return !density

@@ -477,7 +477,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 
 	src.debug_variables(colosseum_controller)
 
-/turf/unsimulated/floor/setpieces/gauntlet/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/turf/unsimulated/floor/setpieces/gauntlet/Cross(atom/movable/mover)
 	if (istype(mover, /obj/machinery/colosseum_putt))
 		return 0
 	return ..()
@@ -486,9 +486,9 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 	name = "Colosseum Hangar Floor"
 	desc = "You wonder if that little flashing white thing is a pod or a butt."
 	icon_state = "gauntfloorPod"
-	event_handler_flags = USE_CANPASS
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+
+	Cross(atom/movable/mover)
 		if (istype(mover, /obj/machinery/colosseum_putt))
 			return 1
 		return ..()

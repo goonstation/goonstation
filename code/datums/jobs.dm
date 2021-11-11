@@ -551,6 +551,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	slot_suit = list(/obj/item/clothing/suit/det_suit)
 	slot_ears = list(/obj/item/device/radio/headset/detective)
 	items_in_backpack = list(/obj/item/clothing/glasses/vr,/obj/item/storage/box/detectivegun)
+	map_can_autooverride = 0
 
 	New()
 		..()
@@ -874,6 +875,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		..()
 		if (!M)
 			return
+		M.traitHolder.addTrait("training_chef")
 
 /datum/job/civilian/bartender
 	name = "Bartender"

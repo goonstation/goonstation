@@ -12645,10 +12645,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/storage/crate{
-	desc = "Only distantly related to the Adventure Closet.";
-	name = "Adventure Crate"
-	},
+/obj/storage/crate/adventure,
 /turf/simulated/floor/purple/checker,
 /area/station/science/teleporter)
 "Fj" = (

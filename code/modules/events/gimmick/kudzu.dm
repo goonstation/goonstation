@@ -104,7 +104,7 @@
 	icon_state = "vine-light1"
 	anchored = 1
 	density = 0
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 	var/static/ideal_temp = 310		//same as blob, why not? I have no other reference point.
 	var/growth = 0
 	var/waittime = 40
@@ -125,7 +125,7 @@
 			if (21 to INFINITY) flavor = "vivacious"
 		return "[..()] It looks [flavor]."
 
-	CanPass(atom/A, turf/T)
+	Cross(atom/A)
 		//kudzumen can pass through dense kudzu
 		if (current_stage == 3)
 			if (ishuman(A) &&  istype(A:mutantrace, /datum/mutantrace/kudzu))

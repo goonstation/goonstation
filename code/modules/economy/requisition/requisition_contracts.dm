@@ -59,7 +59,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item)
 		. = ..()
 		if(rollcount >= count) return // standard skip-if-complete
 		if(src.exactpath && eval_item.type != typepath) return // more fussy type evaluation
-		else if(!istype(eval_item)) return // if it's not an object, it's definitely not an item
+		else if(!istype(eval_item,typepath)) return // regular type evaluation
 		src.rollcount++
 		. = TRUE
 

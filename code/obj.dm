@@ -135,7 +135,8 @@
 		tag = null
 		mats = null
 		if (artifact && !isnum(artifact))
-			artifact:holder = null
+			qdel(artifact)
+			artifact = null
 		remove_dialogs()
 		..()
 

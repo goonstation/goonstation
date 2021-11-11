@@ -10,7 +10,7 @@
 	desc = "A little fire-fighting robot!  He looks so darn chipper."
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "firebot0"
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER 
 	flags =  FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE | DOORPASS
 	layer = 5.0 //TODO LAYER
 	density = 0
