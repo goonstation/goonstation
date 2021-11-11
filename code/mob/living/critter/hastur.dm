@@ -13,7 +13,7 @@ var/HasturPresent = 0
 	can_grab = 1
 	can_disarm = 1
 	can_help = 1
-	see_invisible = 21
+	see_invisible = INVIS_ADVENTURE
 	stat = 2
 	stepsound = "sound/misc/hastur/tentacle_walk.ogg"
 	speechverb_say = "states"
@@ -238,7 +238,7 @@ var/HasturPresent = 0
 			APPLY_MOB_PROPERTY(H, PROP_INVISIBILITY, src, INVIS_GHOST)
 			H.alpha = 160
 			H.stepsound = null
-			H.see_invisible = 16
+			H.see_invisible = INVIS_GHOST
 			stage = 1
 
 //TENTACLE LONG RANGE WHIP//
@@ -250,26 +250,13 @@ var/HasturPresent = 0
 	density = 0
 	opacity = 0
 
-	unpooled(var/pool)
-		name = initial(name)
-		desc = initial(desc)
-		anchored = initial(anchored)
-		density = initial(density)
-		opacity = initial(opacity)
-		icon = initial(icon)
-		icon_state = initial(icon_state)
-		layer = initial(layer)
-		pixel_x = initial(pixel_x)
-		pixel_y = initial(pixel_y)
-		..()
-
 /obj/tentacle_trg_dummy
 	name = ""
 	desc = ""
 	anchored = 1
 	density = 0
 	opacity = 0
-	invisibility = 99
+	invisibility = INVIS_ALWAYS_ISH
 
 
 /datum/limb/longtentacle
@@ -336,7 +323,7 @@ var/HasturPresent = 0
 
 			sleep(0.7 SECONDS)
 			for (var/obj/O in affected)
-				pool(O)
+				qdel(O)
 
 			if(istype(target_r, /obj/tentacle_trg_dummy)) qdel(target_r)
 
@@ -409,6 +396,6 @@ var/HasturPresent = 0
 
 			sleep(0.7 SECONDS)
 			for (var/obj/O in affected)
-				pool(O)
+				qdel(O)
 
 			if(istype(target_r, /obj/tentacle_trg_dummy)) qdel(target_r)

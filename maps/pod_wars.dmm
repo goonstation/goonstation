@@ -1419,7 +1419,6 @@
 	},
 /area/pod_wars/team1/mining)
 "fr" = (
-/obj/machinery/vending/snack,
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/red/side{
 	dir = 8
@@ -4748,6 +4747,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/reliant)
+"rG" = (
+/obj/table/reinforced/auto,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/uvb67/power)
 "rH" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/yellow/side{
@@ -4991,7 +4994,8 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc/autoname_east,
+/obj/machinery/vending/snack,
+/obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor/red/side{
 	dir = 6
 	},
@@ -10363,8 +10367,11 @@
 	},
 /area/pod_wars/team1/hangar)
 "Nc" = (
+/obj/table/reinforced/auto,
 /obj/control_point_computer{
-	name = "UBV-67 Control Console"
+	name = "UBV-67 Control Console";
+	pixel_x = -16;
+	pixel_y = 10
 	},
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/uvb67/power)
@@ -11843,23 +11850,18 @@
 /obj/storage/secure/closet/fridge,
 /obj/item/reagent_containers/food/snacks/ingredient/cheese,
 /obj/item/reagent_containers/food/snacks/ingredient/cheese,
-/obj/item/reagent_containers/food/snacks/ingredient/cheese,
-/obj/item/reagent_containers/food/snacks/ingredient/cheese,
-/obj/item/reagent_containers/food/snacks/ingredient/cheese,
-/obj/item/reagent_containers/food/snacks/ingredient/cheese,
-/obj/item/reagent_containers/food/snacks/ingredient/cheese,
-/obj/item/reagent_containers/food/snacks/ingredient/cheese,
-/obj/item/reagent_containers/food/snacks/ingredient/cheese,
-/obj/item/reagent_containers/food/snacks/ingredient/cheese,
-/obj/item/reagent_containers/food/snacks/ingredient/cheese,
-/obj/item/reagent_containers/food/snacks/ingredient/cheese,
-/obj/item/reagent_containers/food/snacks/ingredient/cheese,
-/obj/item/reagent_containers/food/snacks/ingredient/cheese,
-/obj/item/reagent_containers/food/snacks/ingredient/cheese,
-/obj/item/reagent_containers/food/snacks/ingredient/cheese,
-/obj/item/reagent_containers/food/snacks/ingredient/cheese,
-/obj/item/reagent_containers/food/snacks/ingredient/cheese,
-/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/burger,
+/obj/item/reagent_containers/food/snacks/burger/baconburger,
+/obj/item/reagent_containers/food/snacks/burger/bigburger,
+/obj/item/reagent_containers/food/snacks/burger/butterburger,
+/obj/item/reagent_containers/food/snacks/burger/cheeseburger,
+/obj/item/reagent_containers/food/snacks/burger/chicken,
+/obj/item/reagent_containers/food/snacks/burger/chicken/spicy,
+/obj/item/reagent_containers/food/snacks/burger/fishburger,
+/obj/item/reagent_containers/food/snacks/burger/luauburger,
+/obj/item/reagent_containers/food/snacks/burger/sloppyjoe,
+/obj/item/reagent_containers/food/snacks/burger/synthburger,
+/obj/item/reagent_containers/food/snacks/burger/tikiburger,
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -12663,6 +12665,17 @@
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/hangar)
+"VU" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/incandescent/netural,
+/obj/storage/crate/wooden,
+/obj/item/storage/toolbox/electrical,
+/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/device/multitool,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/uvb67/power)
 "VV" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -12791,6 +12804,7 @@
 /area/space)
 "Wo" = (
 /obj/stool/chair,
+/obj/item_dispenser/bandage,
 /turf/simulated/floor/red/side{
 	dir = 9
 	},
@@ -12846,7 +12860,9 @@
 /area/pod_wars/spacejunk/uvb67/central)
 "WJ" = (
 /obj/stool/chair,
-/obj/item_dispenser/bandage,
+/obj/mug_rack{
+	pixel_y = 32
+	},
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -13257,6 +13273,8 @@
 /area/pod_wars/team2/mining)
 "Yk" = (
 /obj/table/auto,
+/obj/item/plate,
+/obj/item/reagent_containers/food/snacks/omelette,
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -13323,6 +13341,7 @@
 /area/pod_wars/spacejunk/reliant)
 "Yx" = (
 /obj/table/auto,
+/obj/machinery/coffeemaker/security,
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/uvb67/crew)
 "Yy" = (
@@ -54835,7 +54854,7 @@ pd
 pd
 TF
 pd
-tX
+VU
 hu
 UL
 Tu
@@ -55830,8 +55849,8 @@ Xc
 Xc
 Xc
 fe
-pd
-pd
+rG
+iD
 pd
 pd
 hu

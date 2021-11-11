@@ -458,6 +458,17 @@ var/global/noir = 0
 					ircmsg["msg"] = "Added a note for [player]: [the_note]"
 					ircbot.export("admin", ircmsg)
 
+		if("loginnotice")
+			var/player = null
+			var/mob/M = locate(href_list["target"])
+			if(M)
+				player = M.ckey
+			else
+				player = href_list["target"]
+			if(!player)
+				return
+			src.setLoginNotice(player)
+
 		if("viewcompids")
 			var/player = href_list["targetckey"]
 
@@ -1830,6 +1841,18 @@ var/global/noir = 0
 			if (alert("Make [M] a macho man?", "Make Macho", "Yes", "No") == "Yes")
 				M.machoize()
 
+		if ("makeslasher")
+			if( src.level < LEVEL_PA )
+				alert("You must be at least a Primary Administrator to make someone a Slasher.")
+				return
+			if(!ticker || !ticker.mode)
+				alert("The game hasn't started yet!")
+				return
+			var/mob/M = locate(href_list["target"])
+			if (!M) return
+			if (alert("Make [M] into a Slasher?", "Make Slasher", "Yes", "No") == "Yes")
+				M.slasherize()
+
 		if ("makecritter")
 			if( src.level < LEVEL_PA )
 				alert("You must be at least a Primary Administrator to make someone a Critter.")
@@ -2193,14 +2216,24 @@ var/global/noir = 0
 						switch (href_list["offset_type"])
 							if ("absolute")
 								for (var/path in paths)
-									var/atom/thing = new path(locate(0 + X,0 + Y,0 + Z))
+									var/atom/thing
+									if(ispath(path, /turf))
+										var/turf/T = locate(0 + X,0 + Y,0 + Z)
+										thing = T.ReplaceWith(path, FALSE, TRUE, FALSE, TRUE)
+									else
+										thing = new path(locate(0 + X,0 + Y,0 + Z))
 									thing.set_dir(direction ? direction : SOUTH)
 									LAGCHECK(LAG_LOW)
 
 							if ("relative")
 								if (loc)
 									for (var/path in paths)
-										var/atom/thing = new path(locate(loc.x + X,loc.y + Y,loc.z + Z))
+										var/atom/thing
+										if(ispath(path, /turf))
+											var/turf/T = locate(loc.x + X,loc.y + Y,loc.z + Z)
+											thing = T.ReplaceWith(path, FALSE, TRUE, FALSE, TRUE)
+										else
+											thing = new path(locate(loc.x + X,loc.y + Y,loc.z + Z))
 										thing.set_dir(direction ? direction : SOUTH)
 										LAGCHECK(LAG_LOW)
 								else
@@ -4229,6 +4262,8 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=view_logs_pathology_strain'><small>(Find pathogen)</small></A><BR>
 				<A href='?src=\ref[src];action=view_logs;type=vehicle_log'>Vehicle Log</A>
 				<A href='?src=\ref[src];action=view_logs;type=vehicle_log_string'><small>(Search)</small></A><br>
+				<A href='?src=\ref[src];action=view_logs;type=computers_log'>Computers Log</A>
+				<A href='?src=\ref[src];action=view_logs;type=computers_log_string'><small>(Search)</small></A>
 				<hr>
 				<A href='?src=\ref[src];action=view_runtimes'>View Runtimes</A>
 			"}
@@ -4297,9 +4332,6 @@ var/global/noir = 0
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set name = "Restart"
 	set desc= "Restarts the world"
-
-	if (mapSwitcher.locked)
-		return alert("The map switcher is currently compiling the map for next round. You must wait until it finishes.")
 
 	var/confirm = alert("Restart the game world?", "Restart", "Yes", "Cancel")
 	if(confirm == "Cancel")
@@ -4598,13 +4630,9 @@ var/global/noir = 0
 				SHOW_TRAITOR_HARDMODE_TIPS(M)
 				M.show_text("<h2><font color=red><B>You have become a floor goblin!</B></font></h2>", "red")
 			if(ROLE_ARCFIEND)
-#ifdef SECRETS_ENABLED
 				M.mind.special_role = ROLE_ARCFIEND
 				M.make_arcfiend()
 				M.show_text("<h2><font color=red><B>You feel starved for power!</B></font></h2>", "red")
-#else
-				M.show_text("<h2><font color=red><B>NOTHING TO SEE HERE!</B></font></h2>", "red")
-#endif
 			if(ROLE_GANG_LEADER)
 				// hi so this tried in the past to make someone a gang leader without, uh, giving them a gang
 				// seeing as gang leaders are only allowed during the gang gamemode, this should work
@@ -5169,7 +5197,7 @@ var/global/noir = 0
 	boutput(usr, "You are [usr.client.flying ? "now" : "no longer"] flying through matter.")
 
 /client/Move(NewLoc, direct)
-	if(usr.client.flying)
+	if(usr.client.flying || (ismob(usr) && HAS_MOB_PROPERTY(usr, PROP_NOCLIP)))
 		if(!isturf(usr.loc))
 			usr.set_loc(get_turf(usr))
 
@@ -5205,18 +5233,18 @@ var/global/noir = 0
 		boutput(usr, "Sorry, you have to be alive!")
 		return
 
-	if(!(usr.invisibility == 100))
+	if(!(usr.invisibility == INVIS_ALWAYS_ISH))
 		boutput(usr, "You are now cloaked")
 		usr.set_clothing_icon_dirty()
 
 		usr.overlays += image("icon" = 'icons/mob/mob.dmi', "icon_state" = "shield")
 
-		usr.invisibility = 100
+		usr.invisibility = INVIS_ALWAYS_ISH
 	else
 		boutput(usr, "You are no longer cloaked")
 
 		usr.set_clothing_icon_dirty()
-		usr.invisibility = 0
+		usr.invisibility = INVIS_NONE
 */
 //
 //

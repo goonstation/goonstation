@@ -93,7 +93,7 @@
 	anchored = 0
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "bbasket0"
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 	var/mounted = 0
 	var/active = 0
 	var/probability = 40
@@ -151,7 +151,8 @@
 							src.pixel_x = -20
 		return
 
-	HasEntered(atom/A)
+	Crossed(atom/movable/A)
+		..()
 		if (src.active)
 			return
 		if (istype(A, /obj/item/bballbasket)) // oh for FUCK'S SAKE
@@ -197,10 +198,10 @@
 			return
 		src.active = 1
 		playsound(src, "rustle", 75, 1)
-		A.invisibility = 100
+		A.invisibility = INVIS_ALWAYS_ISH
 		flick("bbasket1", src)
 		SPAWN_DBG(1.5 SECONDS)
-			A.invisibility = 0
+			A.invisibility = INVIS_NONE
 			src.active = 0
 
 /obj/item/bballbasket/testing

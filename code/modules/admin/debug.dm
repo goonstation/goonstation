@@ -584,12 +584,13 @@ var/global/debug_messages = 0
 	var/bris = input("Enter BRISANCE of Explosion\nLeave it on 1 if you have no idea what this is.", "Brisance", 1) as num
 	var/angle = input("Enter ANGLE of Explosion (clockwise from north)\nIf not a multiple of 45, you may encounter issues.", "Angle", 0) as num
 	var/width = input("Enter WIDTH of Explosion\nLeave it on 360 if you have no idea what this does.", "Width", 360) as num
+	var/turf_safe = alert("Do you want to make the explosion safe for turfs?", "Turf safe?", "Yes", "No") == "Yes"
 
 	logTheThing("admin", src, null, "created an explosion (power [esize], brisance [bris]) at [log_loc(T)].")
 	logTheThing("diary", src, null, "created an explosion (power [esize], brisance [bris]) at [log_loc(T)].", "admin")
 	message_admins("[key_name(src)] has created an explosion (power [esize], brisance [bris]) at [log_loc(T)].")
 
-	explosion_new(null, T, esize, bris, angle, width)
+	explosion_new(null, T, esize, bris, angle, width, turf_safe=turf_safe)
 	return
 
 /client/proc/cmd_debug_mutantrace(var/mob/mob in world)
@@ -683,7 +684,7 @@ body
 	switch (selected)
 		if ("Disco Inferno")
 			for (var/turf/T in landmarks[LANDMARK_BLOBSTART])
-				var/datum/gas_mixture/gas = unpool(/datum/gas_mixture)
+				var/datum/gas_mixture/gas = new /datum/gas_mixture
 				gas.toxins = 10000
 				gas.oxygen = 10000
 				gas.temperature = 10000

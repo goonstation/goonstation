@@ -180,6 +180,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_rotate_type,
 		/client/proc/cmd_spin_type,
 		/client/proc/cmd_get_type,
+		/client/proc/cmd_lightsout,
 
 		/client/proc/vpn_whitelist_add,
 		/client/proc/vpn_whitelist_remove
@@ -222,6 +223,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_rejuvenate_all,
 		/client/proc/toggle_force_mixed_blob,
 		/client/proc/toggle_force_mixed_wraith,
+		/client/proc/toggle_spooky_light_plane,
 		///proc/possess,
 		/proc/possessmob,
 		/proc/releasemob,
@@ -248,6 +250,7 @@ var/list/admin_verbs = list(
 		// moved up from admin
 		//client/proc/cmd_admin_delete,
 		/client/proc/noclip,
+		/client/proc/idclip,
 		///client/proc/addpathogens,
 		/client/proc/respawn_as_self,
 		/client/proc/cmd_give_pet,
@@ -304,6 +307,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_debug_del_all,
 		/client/proc/cmd_admin_godmode,
 		/client/proc/cmd_admin_godmode_self,
+		/client/proc/iddqd,
 		/client/proc/cmd_admin_omnipresence,
 		/client/proc/cmd_admin_get_mobject,
 		/client/proc/cmd_admin_get_mobject_loc,
@@ -332,6 +336,7 @@ var/list/admin_verbs = list(
 		/client/proc/show_image_to_all,
 		/client/proc/sharkban,
 		/client/proc/toggle_literal_disarm,
+		/datum/admins/proc/toggle_emote_cooldowns,
 		/client/proc/implant_all,
 		/client/proc/cmd_crusher_walls,
 		/client/proc/cmd_disco_lights,
@@ -353,6 +358,7 @@ var/list/admin_verbs = list(
 		/client/proc/dereplace_space,
 		/client/proc/ghostdroneAll,
 		/client/proc/showPregameHTML,
+		/client/proc/dbg_radio_controller,
 
 		/client/proc/call_proc,
 		/client/proc/call_proc_all,
@@ -895,7 +901,8 @@ var/list/fun_images = list()
 			M << csound("sound/misc/klaxon.ogg")
 			boutput(M, "<span class='alert'><B>WARNING: An admin is likely very cross with you and wants you to read the rules right fucking now!</B></span>")
 
-	M << browse(rules, "window=rules;size=800x1000")
+	// M << browse(rules, "window=rules;size=800x1000")
+	M << link("http://wiki.ss13.co/Rules")
 
 /client/proc/view_fingerprints(obj/O as obj in world)
 	set name = "View Object Fingerprints"
@@ -1646,9 +1653,6 @@ var/list/fun_images = list()
 		if (ignorePlayerVote == "No")
 			return
 
-	if (mapSwitcher.locked)
-		return alert("The server is currently switching to another map. You will need to wait.")
-
 	var/info = "Select a map"
 	info += "\nCurrently on: [mapSwitcher.current]"
 	if (mapSwitcher.next)
@@ -2123,3 +2127,22 @@ var/list/fun_images = list()
 	message_admins("Ckey [vpnckey] removed from the VPN whitelist by [src.key].")
 	logTheThing("admin", src, null, "Ckey [vpnckey] removed from the VPN whitelist.")
 	return 1
+
+/client/proc/cmd_lightsout()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Lights Out"
+	set desc = "Force off all station lighting for a duration"
+	admin_only
+	if(!isadmin(src))
+		boutput(src, "Only administrators may use this command.")
+		return
+
+	var/dur = input(usr, "Input duration (in seconds)", "lightsout duration", 0) as null|num
+
+	if(dur)
+		var i = 0
+		for_by_tcl(apc, /obj/machinery/power/apc)
+			if(apc.z == 1)
+				if((i++ % 5) == 0)
+					sleep(1 SECOND)
+				apc.setStatus("lightsout", dur SECONDS)

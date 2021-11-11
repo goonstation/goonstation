@@ -15,7 +15,7 @@
 	burn_type = 1
 	var/wiggle = 6 // how much we want the sprite to be deviated fron center
 	max_stack = INFINITY
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	New()
 		..()
@@ -24,16 +24,6 @@
 		setup_material()
 		if(src.material?.name)
 			initial_material_name = src.material.name
-
-	unpooled()
-		..()
-		src.pixel_x = rand(0 - wiggle, wiggle)
-		src.pixel_y = rand(0 - wiggle, wiggle)
-		setup_material()
-
-	pooled()
-		..()
-		name = initial(name)
 
 	proc/setup_material()
 		.= 0
@@ -74,7 +64,8 @@
 		else
 			..(user)
 
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if (isobserver(AM))
 			return
 		else if (isliving(AM))
@@ -583,7 +574,7 @@
 	stamina_cost = 5
 	stamina_crit_chance = 35
 	burn_possible = 0
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 	var/sound_stepped = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
 
 	New()
@@ -591,15 +582,11 @@
 		icon_state += "[rand(1,3)]"
 		src.setItemSpecial(/datum/item_special/double)
 
-	unpooled()
-		. = ..()
-		src.setItemSpecial(/datum/item_special/double)
-
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if(!scalpel_surgery(M,user)) return ..()
 		else return
 
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
 			if(H.getStatusDuration("stunned") || H.getStatusDuration("weakened")) // nerf for dragging a person and a shard to damage them absurdly fast - drsingh
@@ -798,11 +785,7 @@
 
 			else if (istype(M, /obj/item/raw_material/shard))
 				if (output_bar_from_item(M, 10))
-					pool(M)
-
-			else if (istype(M, /obj/item/raw_material))
-				output_bar_from_item(M)
-				pool(M)
+					qdel(M)
 
 			else if (istype(M, /obj/item/sheet))
 				if (output_bar_from_item(M, 10))
@@ -824,6 +807,10 @@
 			else if (istype(M, /obj/item/wizard_crystal))
 				if (output_bar_from_item(M))
 					qdel(M)
+
+			else
+				output_bar_from_item(M)
+				qdel(M)
 
 			sleep(smelt_interval)
 
@@ -874,7 +861,7 @@
 		var/output_location = src.get_output_location()
 
 		var/bar_type = getProcessedMaterialForm(MAT)
-		var/obj/item/material_piece/BAR = unpool(bar_type)
+		var/obj/item/material_piece/BAR = new bar_type
 		BAR.quality = quality
 		BAR.name += getQualityName(quality)
 		BAR.setMaterial(MAT)
@@ -890,7 +877,7 @@
 
 	proc/load_reclaim(obj/item/W as obj, mob/user as mob)
 		. = FALSE
-		if (istype(W,/obj/item/raw_material/) || istype(W,/obj/item/sheet/) || istype(W,/obj/item/rods/) || istype(W,/obj/item/tile/) || istype(W,/obj/item/cable_coil) || istype(W,/obj/item/wizard_crystal))
+		if (src.is_valid(W))
 			W.set_loc(src)
 			if (user) user.u_equip(W)
 			W.dropped()
@@ -1009,7 +996,7 @@
 			if (amtload) boutput(user, "<span class='notice'>[amtload] materials loaded from [O]!</span>")
 			else boutput(user, "<span class='alert'>No material loaded!</span>")
 
-		else if (istype(O, /obj/item/raw_material/) || istype(O, /obj/item/sheet/) || istype(O, /obj/item/rods/) || istype(O, /obj/item/tile/) || istype(O, /obj/item/cable_coil))
+		else if (is_valid(O))
 			quickload(user,O)
 		else
 			..()
@@ -1024,12 +1011,8 @@
 				continue
 			if (M.name != O.name)
 				continue
-			if(!istype(M, /obj/item/cable_coil))
-				if (!istype(M.material))
-					continue
-				if (!(M.material.material_flags & MATERIAL_CRYSTAL) && !(M.material.material_flags & MATERIAL_METAL))
-					continue
-
+			if(!src.is_valid(M))
+				continue
 			M.set_loc(src)
 			playsound(src, sound_load, 40, 1)
 			sleep(0.5)
@@ -1058,3 +1041,8 @@
 			return S
 
 		return output_location
+
+	proc/is_valid(var/obj/item/I)
+		if (!istype(I))
+			return
+		return (I.material && !istype(I,/obj/item/material_piece)) || istype(I,/obj/item/wizard_crystal)

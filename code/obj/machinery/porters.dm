@@ -461,7 +461,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		return
 
 /datum/action/bar/portabrig_shove_in
-	duration = 1 SECOND
+	duration = 3 SECONDS
 	var/mob/victim
 	var/obj/item/grab/G
 	var/obj/machinery/port_a_brig/brig
@@ -526,7 +526,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	anchored = 0
 	p_class = 1.2
 	mats = 30
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 	var/mob/occupant = null
 	var/homeloc = null
 
@@ -554,7 +554,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		..()
 		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
 
-	CanPass(atom/movable/O as mob|obj, target as turf, height=0, air_group=0)
+	Cross(atom/movable/O as mob|obj, target as turf, height=0, air_group=0)
 		if (air_group || (height==0))
 			return 1
 		..()
@@ -835,7 +835,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	anchored = 0
 	p_class = 1.2
 	can_fall = 0
-	mats = 30
+	mats = null
 	ai_control_enabled = 1
 	var/homeloc = null
 

@@ -222,6 +222,12 @@
 	icon_state = "flashbang"
 	spawn_contents = list(/obj/item/chem_grenade/pepper = 4)
 
+/obj/item/storage/box/stun_landmines
+	name = "non-lethal landmine box"
+	desc = "A box of non-lethal stunning landmines, perfect for locking down areas."
+	icon_state = "flashbang"
+	spawn_contents = list(/obj/item/mine/stun/nanotrasen = 5)
+
 /* -------------------- Traitor Gear -------------------- */
 
 /obj/item/storage/bowling
@@ -360,6 +366,12 @@
 	icon_state = "briefcase_black"
 	spawn_contents = list(/obj/item/gun/kinetic/blowgun,\
 	/obj/item/storage/pouch/poison_dart = 2)
+
+/obj/item/storage/box/chameleonbomb
+	name = "chameleon bomb case"
+	desc = "A case that contains 2 syndicate chameleon bombs"
+	icon_state = "hard_case"
+	spawn_contents = list(/obj/item/device/chameleon/bomb = 2)
 
 // Starter kit used in the conspiracy/spy game mode.
 /obj/item/storage/box/spykit

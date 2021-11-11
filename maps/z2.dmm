@@ -24448,7 +24448,7 @@
 /obj/item/suture,
 /obj/item/scissors/surgical_scissors,
 /turf/unsimulated/floor/white,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "bvB" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4
@@ -24636,7 +24636,7 @@
 /obj/item/suture,
 /obj/item/scissors/surgical_scissors,
 /turf/unsimulated/floor/white,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "bwb" = (
 /obj/machinery/light{
 	dir = 4;
@@ -29958,7 +29958,7 @@
 "bIM" = (
 /obj/table/reinforced/auto,
 /obj/item/motherboard,
-/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/left/standard,
 /turf/unsimulated/floor/setpieces/oldfloor,
 /area/solarium)
 "bIN" = (
@@ -43834,10 +43834,13 @@
 	},
 /area/afterlife/arena)
 "cwe" = (
-/obj/landmark{
-	name = "Nuclear-Closet"
+/obj/item_dispenser/barricade,
+/obj/item/deployer/barricade,
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "bot2"
 	},
-/turf/unsimulated/floor/darkblue,
+/turf/unsimulated/floor/plating/random,
 /area/syndicate_station/battlecruiser)
 "cwf" = (
 /turf/unsimulated/floor/specialroom/gym,
@@ -43904,10 +43907,11 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/landmark{
-	name = "Syndicate-Gear-Closet"
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "bot2"
 	},
-/turf/unsimulated/floor/darkblue,
+/turf/unsimulated/floor/plating/random,
 /area/syndicate_station/battlecruiser)
 "cwp" = (
 /obj/decal/fakeobjects{
@@ -60340,7 +60344,7 @@
 /turf/unsimulated/floor/redwhite{
 	dir = 9
 	},
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "dhq" = (
 /obj/machinery/light{
 	dir = 1;
@@ -60350,12 +60354,12 @@
 /turf/unsimulated/floor/redwhite{
 	dir = 1
 	},
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "dhr" = (
 /turf/unsimulated/floor/redwhite{
 	dir = 1
 	},
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "dhs" = (
 /obj/storage/crate/medical{
 	name = "Medkits"
@@ -60366,7 +60370,7 @@
 /turf/unsimulated/floor/redwhite{
 	dir = 5
 	},
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "dht" = (
 /obj/machinery/vending/cigarette,
 /obj/decal/tile_edge/stripe{
@@ -60460,7 +60464,7 @@
 /area/iomoon)
 "dhC" = (
 /turf/unsimulated/floor/white,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "dhD" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -60471,17 +60475,17 @@
 	},
 /area/shuttle/merchant_shuttle/left_centcom/donut2)
 "dhE" = (
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
 /obj/storage/crate{
 	name = "Robotic limbs"
 	},
 /obj/item/parts/robot_parts/leg/left/treads,
 /obj/item/parts/robot_parts/leg/right/treads,
+/obj/item/parts/robot_parts/arm/left/standard,
+/obj/item/parts/robot_parts/arm/right/standard,
+/obj/item/parts/robot_parts/leg/left/standard,
+/obj/item/parts/robot_parts/leg/right/standard,
 /turf/unsimulated/floor/red,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "dhF" = (
 /obj/npc/trader/random{
 	trader_area = "/area/shuttle/merchant_shuttle/right_station"
@@ -60503,7 +60507,7 @@
 /turf/unsimulated/floor/redwhite{
 	dir = 4
 	},
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "dhH" = (
 /obj/decal/poster/wallsign/medbay,
 /turf/simulated/shuttle/wall{
@@ -60559,7 +60563,7 @@
 /turf/unsimulated/floor/redwhite{
 	dir = 8
 	},
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "dhP" = (
 /obj/machinery/optable,
 /obj/decal/tile_edge/stripe{
@@ -60567,17 +60571,17 @@
 	icon_state = "delivery2"
 	},
 /turf/unsimulated/floor/red,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "dhQ" = (
 /obj/table/auto,
 /obj/machinery/defib_mount,
 /turf/unsimulated/floor/red,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "dhR" = (
 /turf/unsimulated/floor/redwhite{
 	dir = 4
 	},
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "dhS" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -60659,14 +60663,14 @@
 	icon_state = "bot2"
 	},
 /turf/unsimulated/floor/red,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "did" = (
 /obj/decal/tile_edge/stripe{
 	dir = 6;
 	icon_state = "bot2"
 	},
 /turf/unsimulated/floor/white,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "die" = (
 /obj/shrub{
 	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
@@ -60716,14 +60720,14 @@
 	icon_state = "bot2"
 	},
 /turf/unsimulated/floor/red,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "dil" = (
 /obj/machinery/light,
 /turf/unsimulated/floor/redwhite,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "dim" = (
 /turf/unsimulated/floor/redwhite,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "dio" = (
 /obj/storage/crate{
 	name = "footlocker"
@@ -65542,9 +65546,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/studenterhue)
-"dwZ" = (
-/turf/unsimulated/outdoors/snow,
-/area/centcom/offices/virvatuli)
 "dxa" = (
 /obj/machinery/light{
 	dir = 8
@@ -66451,39 +66452,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/pacra)
-"dzG" = (
-/obj/machinery/light{
-	dir = 1;
-	on = 1
-	},
-/obj/fitness/speedbag/wizard,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
-"dzH" = (
-/obj/machinery/chem_master{
-	pixel_y = 34
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
-"dzI" = (
-/obj/fitness/stacklifter,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
-"dzJ" = (
-/obj/fitness/weightlifter,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
-"dzK" = (
-/obj/admin_plaque{
-	name = "HukHukHuk's Office";
-	pixel_x = -32
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "dzL" = (
 /obj/admin_plaque{
 	name = "Wire's Office";
@@ -66656,29 +66624,6 @@
 /obj/table/auto,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/pacra)
-"dAn" = (
-/obj/table/wood/auto/desk{
-	icon_state = "2"
-	},
-/obj/machinery/computer3/luggable/personal,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
-"dAo" = (
-/obj/stool/chair/comfy{
-	dir = 8
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
-"dAq" = (
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
-"dAr" = (
-/obj/machinery/door/unpowered/wood{
-	icon = 'icons/obj/doors/door_office.dmi';
-	lock_dir = 8
-	},
-/turf/unsimulated/floor/black,
-/area/centcom/offices/hukhukhuk)
 "dAs" = (
 /obj/machinery/door/unpowered/wood{
 	icon = 'icons/obj/doors/door_office.dmi';
@@ -66701,6 +66646,7 @@
 /obj/stool/chair/comfy/purple{
 	dir = 4
 	},
+/obj/item/clothing/head/longbee,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/ines)
 "dAw" = (
@@ -66809,48 +66755,6 @@
 /obj/machinery/light,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/pacra)
-"dAO" = (
-/obj/machinery/light_area_manager,
-/obj/table/wood/auto/desk{
-	icon_state = "5"
-	},
-/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
-	desc = "It's just water.";
-	dir = 8;
-	icon_state = "bottle-clear";
-	name = "Huk's Bottle";
-	pixel_x = -6;
-	pixel_y = 5
-	},
-/obj/item/chem_pill_bottle{
-	average = "#c38ecc";
-	desc = "Contains 20 Huk Brand Max Beff pills.";
-	name = "Huk Brand Max Beff pill bottle";
-	pcount = 20;
-	pixel_x = 2;
-	pixel_y = 5;
-	pname = "Huk Brand Max Beff";
-	pvol = 5
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
-"dAQ" = (
-/obj/storage/crate/wooden{
-	desc = "Lookin cute, feelin cute.";
-	name = "Huk's clothing crate"
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
-"dAR" = (
-/obj/machinery/light{
-	on = 1
-	},
-/obj/machinery/chem_dispenser_admin{
-	desc = "This object has been obsolete for 8 stations.";
-	name = "Ancient Chemical Dispenser"
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
 "dAS" = (
 /obj/shrub{
 	icon = 'icons/obj/stationobjs.dmi';
@@ -75094,14 +74998,6 @@
 	icon_state = "floor6"
 	},
 /area/shuttle/escape/centcom/donut3)
-"fOt" = (
-/obj/table/wood/auto/desk{
-	icon_state = "8"
-	},
-/obj/item/paper/book/from_file/cookbook,
-/obj/item/paper/book/from_file/pharmacopia,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
 "fQJ" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
@@ -76485,7 +76381,7 @@
 /obj/decal/cleanable/blood{
 	icon_state = "floor5"
 	},
-/turf/unsimulated/outdoors/snow,
+/turf/unsimulated/floor/snowrough,
 /area/centcom/offices/virvatuli)
 "kiU" = (
 /obj/indestructible/shuttle_corner{
@@ -76668,7 +76564,7 @@
 "kJE" = (
 /obj/machinery/bot/medbot/no_camera,
 /turf/unsimulated/floor/red,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "kJJ" = (
 /turf/unsimulated/floor/bluewhite{
 	dir = 4
@@ -76875,7 +76771,7 @@
 	info = "<b>Listen, I know it looks weird and smells bad, but you'll like it even less when it's hungry and annoyed. Make sure you bring the kibble!</b>";
 	name = "reminder"
 	},
-/turf/unsimulated/outdoors/snow,
+/turf/unsimulated/floor/snowrough,
 /area/centcom/offices/virvatuli)
 "lqh" = (
 /turf/space,
@@ -77268,7 +77164,7 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "gibbl2"
 	},
-/turf/unsimulated/outdoors/snow,
+/turf/unsimulated/floor/snowrough,
 /area/centcom/offices/virvatuli)
 "mrw" = (
 /turf/unsimulated/floor/dream/beach{
@@ -77427,9 +77323,7 @@
 /turf/unsimulated/floor/engine/caution/north,
 /area/hospital/samostrel)
 "mPW" = (
-/turf/unsimulated/floor/arctic/cliff{
-	dir = 4
-	},
+/turf/unsimulated/floor/snowrough,
 /area/centcom/offices/virvatuli)
 "mSp" = (
 /obj/stool/chair,
@@ -78587,7 +78481,7 @@
 /turf/unsimulated/floor/redwhite{
 	dir = 8
 	},
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "pnm" = (
 /obj/tombstone{
 	dir = 6
@@ -78772,7 +78666,7 @@
 /obj/item/reagent_containers/emergency_injector/atropine,
 /obj/item/reagent_containers/emergency_injector/atropine,
 /turf/unsimulated/floor/redwhite,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "pPX" = (
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/rodney)
@@ -79478,7 +79372,7 @@
 /obj/item/organ/spleen{
 	pixel_y = -4
 	},
-/turf/unsimulated/outdoors/snow,
+/turf/unsimulated/floor/snowrough,
 /area/centcom/offices/virvatuli)
 "rJe" = (
 /obj/storage/crate/bin/lostandfound{
@@ -79629,7 +79523,7 @@
 /obj/item/parts/human_parts/arm/left{
 	dir = 4
 	},
-/turf/unsimulated/outdoors/snow,
+/turf/unsimulated/floor/snowrough,
 /area/centcom/offices/virvatuli)
 "rUf" = (
 /obj/critter/roach{
@@ -79993,7 +79887,7 @@
 /area/centcom/offices/sord)
 "sNO" = (
 /obj/decal/cleanable/blood,
-/turf/unsimulated/outdoors/snow,
+/turf/unsimulated/floor/snowrough,
 /area/centcom/offices/virvatuli)
 "sON" = (
 /obj/cable{
@@ -80613,7 +80507,7 @@
 	pixel_x = -4;
 	pixel_y = -3
 	},
-/turf/unsimulated/outdoors/snow,
+/turf/unsimulated/floor/snowrough,
 /area/centcom/offices/virvatuli)
 "uVv" = (
 /turf/simulated/wall/r_wall,
@@ -81627,7 +81521,7 @@
 	mouse_opacity = 0
 	},
 /obj/decal/cleanable/blood/splatter/extra,
-/turf/unsimulated/outdoors/snow,
+/turf/unsimulated/floor/snowrough,
 /area/centcom/offices/virvatuli)
 "yld" = (
 /turf/space,
@@ -159683,7 +159577,7 @@ hnO
 hnO
 jEZ
 wel
-dwZ
+mPW
 ykp
 rIL
 ePs
@@ -164801,9 +164695,9 @@ dDb
 dDH
 dDZ
 wel
-dzG
-dAn
-dAO
+dvW
+dvW
+dCj
 wel
 dBy
 dBY
@@ -165103,9 +164997,9 @@ dDc
 dDF
 dEa
 wel
-dzH
-dAo
-fOt
+dvW
+dvW
+dvW
 wel
 dBz
 dBZ
@@ -165405,9 +165299,9 @@ dDd
 dDG
 dEb
 wel
-dzI
-dAq
-dAQ
+dvX
+dvW
+dvW
 wel
 dBz
 dCa
@@ -165707,9 +165601,9 @@ dDe
 dDF
 dEc
 wel
-dzJ
-dAq
-dAR
+dvW
+dvW
+dvW
 wel
 dBz
 dBz
@@ -166010,7 +165904,7 @@ dDD
 wel
 wel
 wel
-dAr
+kKw
 wel
 wel
 wel
@@ -166311,7 +166205,7 @@ dDO
 dvy
 dxa
 dvy
-dzK
+rUQ
 dvy
 dvy
 dvy

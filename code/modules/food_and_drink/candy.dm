@@ -38,9 +38,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 			new /obj/item/razor_blade( get_turf(src) )
 		..()
 
-// just a non-abstract version
-/obj/item/reagent_containers/food/snacks/candy/regular
-
 /obj/item/reagent_containers/food/snacks/candy/nougat
 	name = "nougat bar"
 	desc = "Whoa, that totally has nougat. Heck yes."

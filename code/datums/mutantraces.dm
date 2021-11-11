@@ -513,7 +513,7 @@
 				//////////////HEAD//////////////////
 				L.organHolder?.head?.MakeMutantHead(HEAD_HUMAN, 'icons/mob/human_head.dmi', "head")
 
-	proc/organ_mutator(var/mob/living/carbon/human/O, var/mode as text, var/drop_tail)
+	proc/organ_mutator(var/mob/living/carbon/human/O, var/mode as text)
 		if(!ishuman(O) || !(O?.organHolder))
 			return // hard to mess with someone's organs if they can't have any
 
@@ -527,11 +527,7 @@
 					for(var/mutorgan in src.mutant_organs)
 						if (mutorgan == "tail") // Not everyone has a tail. So just force it in
 							if (OHM.tail)
-								var/obj/item/organ/tail/organ_drop = OHM.tail
-								organ_drop.donor = null // Humanizing tail-havers made them clumsy otherwise
-								OHM.drop_organ("tail")
-								if (!drop_tail)
-									qdel(organ_drop)
+								qdel(OHM.tail)
 						else if(mutorgan == "butt") // butts arent organs
 							var/obj/item/clothing/head/butt/org = OHM.get_organ(mutorgan)
 							if(!org || istype(org, /obj/item/clothing/head/butt/cyberbutt)) // No free butts, keep your robutt too
@@ -547,10 +543,7 @@
 				if(!src.mutant_organs.len)
 					return // All done!
 				if (OHM.tail) // mutant to human, drop the tail. Unless you're a changer, then your butt just eats it
-					var/obj/organ_drop = OHM.tail
-					OHM.drop_organ("tail")
-					if (!drop_tail)
-						qdel(organ_drop)
+					qdel(OHM.tail)
 				else
 					for(var/mutorgan in src.mutant_organs)
 						if(mutorgan == "butt") // butts arent organs
@@ -775,7 +768,7 @@
 	sight_modifier()
 		mob.sight |= SEE_MOBS
 		mob.see_in_dark = SEE_DARK_FULL
-		mob.see_invisible = 3
+		mob.see_invisible = INVIS_CLOAK
 
 	emote(var/act)
 		var/message = null
@@ -837,7 +830,7 @@
 
 	sight_modifier()
 		mob.see_in_dark = SEE_DARK_HUMAN + 1
-		mob.see_invisible = 1
+		mob.see_invisible = INVIS_INFRA
 
 	say_filter(var/message)
 		return replacetext(message, "s", stutter("ss"))
@@ -952,7 +945,7 @@
 	sight_modifier()
 		mob.sight |= SEE_MOBS
 		mob.see_in_dark = SEE_DARK_FULL
-		mob.see_invisible = 0
+		mob.see_invisible = INVIS_NONE
 
 	say_filter(var/message)
 		return pick("Urgh...", "Brains...", "Hungry...", "Kill...")
@@ -1297,6 +1290,7 @@
 			health_update_queue |= mob
 			src.original_name = mob.real_name
 			mob.real_name = "werewolf"
+			mob.UpdateName()
 
 			mob.bioHolder.AddEffect("protanopia", null, null, 0, 1)
 			mob.bioHolder.AddEffect("accent_scoob_nerf", null, null, 0, 1)
@@ -1319,6 +1313,7 @@
 
 			if (!isnull(src.original_name))
 				mob.real_name = src.original_name
+				mob.UpdateName()
 
 			mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
 		. = ..()
@@ -1327,7 +1322,7 @@
 		if (ishuman(mob))
 			mob.sight |= SEE_MOBS
 			mob.see_in_dark = SEE_DARK_FULL
-			mob.see_invisible = 2
+			mob.see_invisible = INVIS_CLOAK
 		return
 
 	// Werewolves (being a melee-focused role) are quite buff.
@@ -1722,7 +1717,7 @@
 
 	sight_modifier()
 		mob.see_in_dark = SEE_DARK_HUMAN + 1
-		mob.see_invisible = 1
+		mob.see_invisible = INVIS_INFRA
 
 	disposing()
 		if(ishuman(mob))
@@ -1758,7 +1753,7 @@
 
 	sight_modifier()
 		mob.see_in_dark = SEE_DARK_HUMAN + 1
-		mob.see_invisible = 1
+		mob.see_invisible = INVIS_INFRA
 
 	disposing()
 		if(ishuman(mob))

@@ -33,9 +33,6 @@
 	var/net_id
 	//And the wifi frequency
 	var/frequency
-	//Beacon and control frequencies for bots!
-	var/control
-	var/beacon
 	//turf and data_terminal for powernet check
 	var/turf/T = get_turf(target.loc)
 	var/obj/machinery/power/data_terminal/test_link = locate() in T
@@ -61,34 +58,17 @@
 		net_id = targetimplant.net_id
 		frequency = targetimplant.pda_alert_frequency
 
-	//frequency block
-	if (hasvar(target, "alarm_frequency"))
-		frequency = target:alarm_frequency
-	else if (hasvar(target, "freq"))
-		frequency = target:freq
-	else if (hasvar(target, "control_freq"))
-		control = target:control_freq
-		if (hasvar(target, "beacon_freq"))
-			beacon = target:beacon_freq
-	else if (hasvar(target, "radio_connection.frequency"))
-		var/datum/radio_frequency/radiofreq = target:radio_connection
-		frequency = radiofreq.frequency
-	else if (hasvar(target, "frequency"))
-		if(isnum(target:frequency) || istext(target:frequency))
-			frequency = target:frequency
-	//We'll do lockers safely since nothing else seems to store the frequency exactly like this
-	else if (istype(target, /obj/storage/secure))
-		var/obj/storage/secure/lockerfreq = target
-		frequency = lockerfreq.radio_control.frequency
-
 	if(net_id)
 		boutput(user, "<span class='alert'>NETID#[net_id]</span>")
-	if(frequency)
-		boutput(user, "<span class='alert'>FREQ#[frequency]</span>")
-	if(control)
-		boutput(user, "<span class='alert'>CTRLFREQ#[control]</span>")
-	if(beacon)
-		boutput(user, "<span class='alert'>BCKNFREQ#[beacon]</span>")
+
+	//frequencies
+	var/freq_num = 1
+	for(var/datum/component/packet_connected/radio/comp as anything in target.GetComponents(/datum/component/packet_connected/radio))
+		frequency = comp.get_frequency()
+		var/freq_name = comp.connection_id ? uppertext(comp.connection_id + "_FREQ") : "FREQ[freq_num++]"
+		var/RX = comp.send_only ? "" : " RX"
+		boutput(user, "<span class='alert'>[freq_name]#[frequency] TX[RX]</span>")
+
 	//Powernet Test Block
 	//If we have a net_id but no wireless frequency, we're probably a powernet device
 	if(isturf(T) && net_id && !frequency)

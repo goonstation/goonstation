@@ -108,10 +108,10 @@
 	begin_swap(user, I)
 
 /datum/component/cell_holder/proc/can_charge(parent)
-	if(!src.can_be_recharged)
-		. = CELL_UNCHARGEABLE
-	else
+	if(src.can_be_recharged && (SEND_SIGNAL(cell, COMSIG_CELL_CAN_CHARGE) & CELL_CHARGEABLE))
 		. = CELL_CHARGEABLE
+	else
+		. = CELL_UNCHARGEABLE
 
 /datum/component/cell_holder/proc/do_charge(parent, amount)
 	if(!src.can_be_recharged)

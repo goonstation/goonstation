@@ -355,6 +355,13 @@
 			for (var/i = 0, i < 3, i++)
 				reagents.temperature_reagents(power*500, power*400, 1000, 1000, 1)
 
+	Bumped(AM)
+		. = ..()
+		if (ismob(AM))
+			add_fingerprint(AM, TRUE)
+		else if (ismob(usr))
+			add_fingerprint(usr, TRUE)
+
 /obj/reagent_dispensers/heliumtank
 	name = "heliumtank"
 	desc = "A tank of helium."
@@ -419,7 +426,7 @@
 			playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 30, 1)
 			user.u_equip(W)
 			W.dropped()
-			pool( W )
+			qdel( W )
 			return
 		else ..()
 
@@ -452,7 +459,7 @@
 					amount = 15
 				playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 30, 1)
 				src.reagents.add_reagent("poo", amount)
-				pool( P )
+				qdel( P )
 				sleep(0.3 SECONDS)
 			boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
 		else ..()
@@ -502,7 +509,7 @@
 			if (load)
 				user.u_equip(W)
 				W.dropped()
-				pool(W)
+				qdel(W)
 				return
 			else  ..()
 		else ..()
@@ -528,7 +535,7 @@
 					break
 				if (src.brew(P))
 					amtload++
-					pool(P)
+					qdel(P)
 				else
 					continue
 			if (amtload)
@@ -547,7 +554,7 @@
 					user.show_text("You were interrupted!", "red")
 					break
 				if (src.brew(O))
-					pool(O)
+					qdel(O)
 				else
 					continue
 			user.visible_message("<span class='notice'><b>[user]</b> finishes stuffing items into [src].</span>",\

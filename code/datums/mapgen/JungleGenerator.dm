@@ -90,9 +90,17 @@
 	fullbright = 0
 
 	destroy_asteroid(var/dropOre=0)
+		var/image/weather = GetOverlayImage("weather")
+		var/image/ambient = GetOverlayImage("ambient")
+
 		src.RL_SetOpacity(0)
 		src.ReplaceWith(/turf/unsimulated/floor/setpieces/Azarak/cavefloor/floor3)
 		src.opacity = 0
 		src.levelupdate()
+
+		if(weather)
+			src.UpdateOverlays(weather, "weather")
+		if(ambient)
+			src.UpdateOverlays(ambient, "ambient")
 
 		return src
