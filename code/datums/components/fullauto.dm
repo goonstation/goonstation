@@ -15,6 +15,13 @@
 		. = ..()
 		SEND_SIGNAL(usr, COMSIG_FULLAUTO_MOUSEDOWN, src, location, control, params)
 
+TYPEINFO(/datum/component/holdertargeting/fullauto)
+	initialization_args = list(
+		ARG_INFO_WITH_DEFAULT("delaystart", "num", "Initial delay between shots (in deciseconds)", 1),
+		ARG_INFO_WITH_DEFAULT("delaymin", "num", "Minimum delay between shots (in deciseconds)", 4),
+		ARG_INFO_WITH_DEFAULT("rampfactor", "num", "Multiplicitive decrease in delay after each shot, (0, 1]", 0.9),
+	)
+
 /datum/component/holdertargeting/fullauto
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	mobtype = /mob/living
