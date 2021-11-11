@@ -12,7 +12,7 @@
 	density = 1
 	opacity = 0
 	anchored = 1
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 	var/health = 30         // current health of the blob
 	var/health_max = 30     // health cap
 	var/armor = 1           // how much incoming damage gets divided by unless it bypasses armor
@@ -77,7 +77,7 @@
 		else
 			..()
 
-	CanPass(atom/movable/mover, turf/target)
+	Cross(atom/movable/mover)
 		. = ..()
 		var/obj/projectile/P = mover
 		if (istype(P) && P.proj_data) //Wire note: Fix for Cannot read null.type

@@ -895,7 +895,7 @@
 		if(!W.CheckExit(src,targetturf)) return 0
 
 	for (var/obj/machinery/door/window/W in targetturf)
-		if(!W.CanPass(src,targetturf)) return 0
+		if(!W.Cross(src)) return 0
 
 	return 1
 
