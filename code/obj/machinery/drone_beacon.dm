@@ -1,4 +1,4 @@
-#define PLAYER_SEEK_RANGE 10
+#define PLAYER_SEEK_RANGE 12
 #define DRONE_SEEK_RANGE 25
 
 /obj/machinery/drone_beacon
