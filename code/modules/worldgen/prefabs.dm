@@ -623,13 +623,13 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 22
 		prefabSizeY = 45
 
-	radio_station
+	/*radio_station
 		maxNum = 1
 		required = TRUE
 		probability = 25
 		prefabPath = "assets/maps/debris/radio_station.dmm"
 		prefabSizeX = 19
-		prefabSizeY = 29
+		prefabSizeY = 29*/
 
 	soviet_ship
 		maxNum = 2
