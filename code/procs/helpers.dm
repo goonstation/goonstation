@@ -1637,7 +1637,8 @@ proc/RarityClassRoll(var/scalemax = 100, var/mod = 0, var/list/category_boundari
 	var/the_time = "[final_minutes][get_english_num(final_hour)] o'clock"
 	return the_time
 
-/proc/formattedShiftTime(var/doSeconds) // Returns time in hh:mm format. Call with TRUE to get time in hh:mm:ss format
+/// Returns shift time as a string in hh:mm format. Call with TRUE to get time in hh:mm:ss format.
+/proc/formattedShiftTime(var/doSeconds)
 	var/elapsedSeconds = round(ticker.round_elapsed_ticks/10, 1)
 	var/elapsedMinutes = round(elapsedSeconds / 60)
 	var/elapsedHours = round(elapsedSeconds / 3600)
