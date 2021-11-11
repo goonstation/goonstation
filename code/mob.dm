@@ -2139,8 +2139,7 @@
 		animation.master = src
 		flick("gibbed", animation)
 
-	//don't bother transferring ghosts so they can keep their hair. do ghost hivemind/target observers, so you can buttgib people out of the hivemind etc
-	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc) && !istype(src, /mob/dead/observer))
+	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
 		newmob.corpse = null
 
@@ -2181,8 +2180,7 @@
 	if (animation)
 		animation.delaydispose()
 
-	if (!istype(src, /mob/dead/observer))
-		qdel(src)
+	qdel(src)
 
 // Man, there's a lot of possible inventory spaces to store crap. This should get everything under normal circumstances.
 // Well, it's hard to account for every possible matryoshka scenario (Convair880).
