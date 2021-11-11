@@ -2176,10 +2176,8 @@
 			shake_camera(L, 10, 32)
 
 	src.death(1)
-
 	if (animation)
 		animation.delaydispose()
-
 	qdel(src)
 
 // Man, there's a lot of possible inventory spaces to store crap. This should get everything under normal circumstances.
