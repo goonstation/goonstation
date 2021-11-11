@@ -41,7 +41,7 @@
 		..()
 		src.create_reagents(60)
 		light = new /datum/light/point
-		light.set_brightness(0.5)
+		light.set_brightness(0.3)
 		light.set_color(0.94, 0.69, 0.27)
 		light.attach(src)
 
