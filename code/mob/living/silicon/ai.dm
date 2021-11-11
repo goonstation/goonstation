@@ -278,8 +278,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.eyecam.show_text(message, color, 0, sight_check, allow_corruption, group)
 	return
 
-// For use when you want to send text to the AI player regardless of it's in its mainframe, eye, or shell
-// Calls show_text(), use its syntax
+/// For use when you want to send text to the AI player regardless of it's in its mainframe, eye, or shell
+/// Calls show_text(), use its syntax
 /mob/living/silicon/ai/proc/textToPlayer(var/message, var/color = "#000000", var/hearing_check = 0, var/sight_check = 0, var/allow_corruption = 0, var/group)
 	if (src.deployed_shell)
 		src.deployed_shell.show_text(message, color, hearing_check, sight_check, allow_corruption, group)
