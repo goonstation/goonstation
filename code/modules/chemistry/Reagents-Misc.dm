@@ -531,7 +531,7 @@ datum
 				UnregisterSignal(holder.my_atom, COMSIG_MOB_SHOCKED_DEFIB)
 			proc/revive(source)
 				var/mob/living/M = source
-				var/volume_passed = M.get_reagent_amount("strange_reagent")
+				var/volume_passed = holder.get_reagent_amount("strange_reagent")
 				if (!iscarbon(M) && !ismobcritter(M))
 					return
 				if (!volume_passed)
