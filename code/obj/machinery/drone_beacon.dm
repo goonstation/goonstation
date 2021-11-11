@@ -56,6 +56,7 @@
 	onDestroy()
 		elecflash(src, power = 2)
 		summon_drones(3, TRUE)
+		SEND_SIGNAL(src, COMSIG_DRONE_BEACON_DESTROYED) //UNUSED FOR NOW, PLANNED FEATURE
 		..()
 
 	proc/hitby_proj()
