@@ -189,7 +189,8 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/has_panel = 1
 	var/hackMessage = ""
 	var/net_access_code = null
-	var/nameOverride = TRUE // do we want to just set the door's name to area name instead of a custom one?
+        /// Set nameOverride to FALSE to stop New() from overwriting door name with Area name
+	var/nameOverride = TRUE
 
 	var/no_access = 0
 
