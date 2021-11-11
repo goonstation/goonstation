@@ -1,0 +1,37 @@
+"a" = (/turf/space,/area/noGenerate)
+"c" = (/turf/simulated/floor/specialroom/cafeteria{dir = 1},/area/hollowasteroid)
+"e" = (/obj/decal/cleanable/blood,/obj/decal/skeleton{desc = "The head seems to be gone."; icon = 'icons/misc/hstation.dmi'; icon_state = "body2"; name = "corpse"},/turf/simulated/floor/specialroom/cafeteria{dir = 1},/area/hollowasteroid)
+"m" = (/turf/simulated/wall/asteroid{dir = 8},/area/hollowasteroid)
+"n" = (/turf/simulated/wall/asteroid{dir = 5},/area/hollowasteroid)
+"o" = (/obj/decal/oven,/obj/item/reagent_containers/food/snacks/cake/meat,/obj/item/crowbar,/turf/simulated/floor/specialroom/cafeteria{dir = 1},/area/hollowasteroid)
+"p" = (/obj/decal/fakeobjects/firelock_broken{density = 1; icon = 'icons/obj/doors/Doorclassic.dmi'; icon_state = "door_closed"; opacity = 1},/turf/simulated/floor,/area/hollowasteroid)
+"r" = (/obj/kitchenspike,/turf/simulated/floor/specialroom/cafeteria{dir = 1},/area/hollowasteroid)
+"w" = (/turf/simulated/wall/asteroid{dir = 4},/area/hollowasteroid)
+"x" = (/obj/table/wood/auto,/obj/decal/cleanable/blood,/obj/landmark{name = "evilchef_corpse"},/obj/item/electronics/battery,/turf/simulated/floor/specialroom/cafeteria{dir = 1},/area/hollowasteroid)
+"y" = (/obj/decal/sink,/obj/decal/cleanable/cobweb,/turf/simulated/floor/specialroom/cafeteria{dir = 1},/area/hollowasteroid)
+"C" = (/turf/simulated/wall/r_wall{icon = 'icons/misc/evilreaverstation.dmi'; icon_state = "old_rwall"},/area/hollowasteroid)
+"D" = (/turf/simulated/wall/asteroid{dir = 10},/area/hollowasteroid)
+"G" = (/obj/decal/cleanable/blood,/turf/simulated/floor/specialroom/cafeteria{dir = 1},/area/hollowasteroid)
+"H" = (/obj/decal/cleanable/blood,/obj/spook,/turf/simulated/floor/specialroom/cafeteria{dir = 1},/area/hollowasteroid)
+"L" = (/turf/simulated/wall/asteroid{dir = 1},/area/hollowasteroid)
+"N" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "..How the hell is this even possible?"; icon = 'icons/misc/evilreaverstation.dmi'; icon_state = "meatspike_h"; name = "a meat spike"},/obj/decal/cleanable/blood,/turf/simulated/floor/specialroom/cafeteria{dir = 1},/area/hollowasteroid)
+"O" = (/turf/simulated/wall/asteroid,/area/hollowasteroid)
+"T" = (/turf/simulated/wall/asteroid{dir = 9},/area/hollowasteroid)
+"W" = (/obj/table/wood/auto,/obj/item/plate,/obj/item/skull{pixel_y = 7},/obj/item/paper{info = "W. Anckarstrò­ ¼BR>22 - 10 - 2041<BR> Nanotrasen forced us to start using monkey meat instead of space cow meat today, what the hell? monkey meat tastes awful, I know that Nanotrasen likes to cut corners, but this is going too far, how am I going to feed the crew with ape meat?!"; name = "Diary - IV"},/obj/item/paper{info = "W. Anckarstrò­ ¼BR>23 - 10 - 2041<BR>A stupid assistant tried to hack his way into my kitchen today, the electrocution killed him, if I don't get rid of his body soon,  security will probably arrest me for suspected murder.. "; name = "Diary - V"},/obj/item/paper{info = "<I>Although there are bloodstains covering the words, you seem to be able to understand some of it.</I> W. Anc---strò­ ¼BR>24 - 10 - 2041<BR> I don't know why I d-- this, but it was --dly delicious and makes a nice change from money meat, I'll need to make sure nob--y finds -ut."; name = "Diary - VI"},/obj/item/paper{info = "we need more iCANTLIVEWITHOUTIT"; name = "Diary - 00"},/turf/simulated/floor/specialroom/cafeteria{dir = 1},/area/hollowasteroid)
+"X" = (/turf/simulated/wall/asteroid{dir = 6},/area/hollowasteroid)
+"Y" = (/turf/simulated/floor/plating/airless/asteroid,/area/hollowasteroid)
+
+(1,1,1) = {"
+aaaaaaaaTLTOaaaa
+aaaaaTLLLLLLnaaa
+aaaTTTOOOOOOnnaa
+aaTTmOCCCCCCOwna
+aTTOmOCyoxWCOwnn
+TTOODOCcccHCOwOw
+mOOOYYpcGcNCOwOw
+mOOOYYCeccrCOwXX
+DDOOYOCCCCCCOwXa
+amOOYDOOOOOOXYaa
+aaDOYYOOOOOOYYaa
+aaaDOYYYYYYYYaaa
+"}

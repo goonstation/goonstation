@@ -1,0 +1,1580 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ae" = (
+/obj/machinery/door/airlock/external{
+	name = "Pod Bay"
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"al" = (
+/obj/table/auto,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "old0";
+	name = "broken computer"
+	},
+/turf/simulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/helldrone)
+"aL" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/obj/critter/ancient_repairbot/helldrone_guard,
+/turf/simulated/floor/plating,
+/area/helldrone)
+"aO" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 10
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"aT" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "wall3_space"
+	},
+/area/helldrone)
+"aZ" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"bK" = (
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "Rust has rendered this airlock useless.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "bloodydoor";
+	name = "rusted airlock"
+	},
+/turf/simulated/floor/black,
+/area/helldrone)
+"cI" = (
+/obj/decal/fakeobjects/pipe{
+	desc = "It seems to have been damaged somehow.";
+	dir = 4;
+	icon = 'icons/obj/atmospherics/retro_filter.dmi';
+	icon_state = "intact_off";
+	name = "engine filter"
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"cW" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"ec" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "An engine part.  Probably.  It might just be a snow-cone machine, really.";
+	icon = 'icons/obj/atmospherics/pipes.dmi';
+	icon_state = "circ2-broken";
+	name = "mistreated engine part"
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"eu" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "wall3_space"
+	},
+/area/helldrone)
+"eR" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 9;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"fc" = (
+/obj/machinery/door/airlock/command{
+	aiControlDisabled = 1;
+	name = "Drone Computer Core";
+	req_access_txt = ""
+	},
+/turf/simulated/floor/orangeblack,
+/area/helldrone/core)
+"fy" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 8;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 6;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"fB" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Due to what must be a substantial amount of neglect, this air scrubber seems to be out of working condition.";
+	icon = 'icons/obj/atmospherics/atmos.dmi';
+	icon_state = "scrubber:0";
+	name = "Air Scrubber"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/helldrone)
+"fK" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "An engine part.  Probably.  It might just be a snow-cone machine, really.";
+	icon = 'icons/obj/atmospherics/pipes.dmi';
+	icon_state = "circ1-broken";
+	name = "mistreated engine part"
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"gs" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 6
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"gw" = (
+/obj/item/storage/toilet{
+	dir = 4
+	},
+/turf/unsimulated/floor/specialroom/freezer,
+/area/helldrone)
+"hF" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Part of the sensor system for a really big syndicate drone.";
+	dir = 1;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "eye_array";
+	name = "drone sensor array"
+	},
+/turf/space,
+/area/helldrone)
+"hH" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 8;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"hY" = (
+/obj/storage/crate,
+/obj/item/gun/energy/phaser_gun,
+/obj/item/clothing/under/misc/syndicate,
+/obj/item/clothing/shoes/black,
+/turf/simulated/floor,
+/area/helldrone)
+"hZ" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 8;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects/pipe,
+/turf/simulated/floor/plating,
+/area/helldrone)
+"ih" = (
+/obj/decal/fakeobjects/lightbulb_broken,
+/turf/simulated/floor/plating,
+/area/helldrone)
+"ii" = (
+/turf/simulated/floor/black,
+/area/helldrone/core)
+"iF" = (
+/obj/machinery/door/airlock{
+	name = "Maint Crew Support"
+	},
+/turf/simulated/floor,
+/area/helldrone)
+"iT" = (
+/turf/unsimulated/floor/specialroom/freezer,
+/area/helldrone)
+"jx" = (
+/obj/decal/fakeobjects/pipe{
+	desc = "It won't budge.";
+	dir = 4;
+	icon = 'icons/obj/pipe-item.dmi';
+	icon_state = "valve";
+	name = "rusted valve"
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"lL" = (
+/obj/grille/steel,
+/obj/window/reinforced{
+	dir = 2
+	},
+/obj/window/reinforced{
+	dir = 1
+	},
+/obj/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"lN" = (
+/obj/item/tank/oxygen,
+/turf/simulated/floor/plating,
+/area/helldrone)
+"mP" = (
+/obj/machinery/light/small/iomoon{
+	dir = 8
+	},
+/obj/storage/crate,
+/obj/item/clothing/suit/space/syndicate,
+/obj/item/clothing/mask/medical,
+/turf/simulated/floor/plating,
+/area/helldrone)
+"nw" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 6
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"ot" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "wall3"
+	},
+/area/helldrone)
+"oM" = (
+/turf/simulated/floor/black,
+/area/helldrone)
+"pj" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Part of the sensor system for a really big syndicate drone.";
+	dir = 4;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "eye_array";
+	name = "drone sensor array"
+	},
+/turf/space,
+/area/helldrone)
+"qd" = (
+/obj/machinery/door/airlock/engineering{
+	name = "East Engine Compartment";
+	req_access_txt = ""
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"qC" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 1
+	},
+/turf/unsimulated/floor/specialroom/freezer,
+/area/helldrone)
+"qN" = (
+/turf/space,
+/area/noGenerate)
+"ro" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"ty" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 6;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"uo" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 6;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/critter/ancient_repairbot/helldrone_guard,
+/turf/simulated/floor/plating,
+/area/helldrone)
+"vg" = (
+/obj/decal/fakeobjects/tallsmes,
+/turf/simulated/floor/plating,
+/area/helldrone)
+"vS" = (
+/turf/simulated/floor,
+/area/helldrone)
+"vX" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3_space"
+	},
+/area/helldrone)
+"wT" = (
+/obj/computer3frame{
+	anchored = 1;
+	state = 1
+	},
+/turf/simulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/helldrone)
+"xg" = (
+/obj/decal/fakeobjects/shuttlethruster{
+	dir = 8
+	},
+/turf/space,
+/area/helldrone)
+"xK" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/item/tank/plasma,
+/turf/simulated/floor/plating,
+/area/helldrone)
+"xX" = (
+/obj/decal/fakeobjects/pipe,
+/turf/simulated/floor/plating,
+/area/helldrone)
+"yz" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 9;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"yF" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 9
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"zg" = (
+/obj/machinery/light/small/iomoon{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"At" = (
+/obj/decal/fakeobjects/lightbulb_broken{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/helldrone)
+"Bh" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 8;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"Bu" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 10;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"CQ" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "wall3"
+	},
+/area/helldrone/core)
+"CU" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/helldrone)
+"DB" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A vent. Cool air is gently flowing through it.";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "hvent";
+	name = "air vent"
+	},
+/obj/stool/bed,
+/obj/decal/skeleton,
+/obj/item/reagent_containers/pill/tox{
+	pixel_x = -8;
+	pixel_y = 16
+	},
+/turf/simulated/floor,
+/area/helldrone)
+"Ej" = (
+/obj/grille/steel,
+/obj/window/reinforced{
+	dir = 2
+	},
+/obj/window/reinforced{
+	dir = 1
+	},
+/obj/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"EH" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 8;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 6;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"EX" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 5;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects/lightbulb_broken{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"Gd" = (
+/obj/decal/fakeobjects/lightbulb_broken{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/helldrone)
+"Gg" = (
+/obj/critter/ancient_repairbot/helldrone_guard,
+/turf/simulated/floor/plating,
+/area/helldrone)
+"Gz" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A vent. Cool air is gently flowing through it.";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "hvent";
+	name = "air vent"
+	},
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/helldrone)
+"Hh" = (
+/turf/simulated/floor/circuit/red,
+/area/helldrone/core)
+"Hk" = (
+/obj/table/auto,
+/obj/decal/fakeobjects/lightbulb_broken{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/helldrone)
+"If" = (
+/obj/machinery/door/airlock/command{
+	aiControlDisabled = 1;
+	name = "Drone Computer Core";
+	req_access_txt = ""
+	},
+/turf/simulated/floor/orangeblack,
+/area/helldrone)
+"Ii" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"II" = (
+/turf/simulated/floor/shuttlebay,
+/area/helldrone)
+"JT" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/helldrone/core)
+"Kt" = (
+/obj/machinery/door/airlock/engineering{
+	name = "West Engine Compartment";
+	req_access_txt = ""
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"KR" = (
+/obj/decal/fakeobjects/firelock_broken{
+	density = 1;
+	desc = "Rust has rendered this airlock useless.";
+	icon = 'icons/obj/doors/doorint.dmi';
+	icon_state = "door_closed";
+	name = "rusted airlock";
+	opacity = 1
+	},
+/turf/simulated/floor/black,
+/area/helldrone)
+"Lj" = (
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "wall3_space"
+	},
+/area/helldrone)
+"Ln" = (
+/obj/stool/chair/office,
+/turf/simulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/helldrone)
+"Ms" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A large rack of server modules.  It appears to be in a low-power idle state.";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "server0";
+	name = "idle server"
+	},
+/turf/simulated/floor/circuit/red,
+/area/helldrone/core)
+"MG" = (
+/obj/grille/steel,
+/turf/space,
+/area/helldrone)
+"Nj" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"NS" = (
+/turf/simulated/floor/plating,
+/area/helldrone)
+"NW" = (
+/obj/machinery/door/airlock{
+	name = "Toilet Cubicle";
+	req_access_txt = "0"
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"Og" = (
+/turf/simulated/floor/caution/north,
+/area/helldrone)
+"Om" = (
+/turf/simulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/helldrone)
+"On" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Part of the sensor system for a really big syndicate drone.";
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "eye_array";
+	name = "drone sensor array"
+	},
+/turf/space,
+/area/helldrone)
+"OE" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A vent.  A rather decrepit one, at that.";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "hvent";
+	name = "defunct vent"
+	},
+/turf/simulated/floor/circuit/red,
+/area/helldrone/core)
+"OU" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A large rack of server modules.  It appears to be in a low-power idle state.";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "server0";
+	name = "idle server"
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/circuit/red,
+/area/helldrone/core)
+"RY" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A large rack of server modules.  It doesn't seem to be in service.";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "server0";
+	name = "downed server"
+	},
+/turf/simulated/floor/circuit/red,
+/area/helldrone/core)
+"Tm" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 9;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/machinery/light/small/iomoon,
+/turf/simulated/floor/plating,
+/area/helldrone)
+"To" = (
+/obj/machinery/door_control{
+	id = "zdrone_hangar";
+	name = "Hangar Toggle";
+	pixel_y = 24
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"Tq" = (
+/obj/critter/ancient_repairbot/helldrone_guard,
+/turf/simulated/floor/black,
+/area/helldrone/core)
+"TD" = (
+/obj/machinery/door/airlock{
+	name = "Maint Crew Quarters"
+	},
+/turf/simulated/floor,
+/area/helldrone)
+"TL" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 10;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"Uj" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A vent.  A rather decrepit one, at that.";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "hvent";
+	name = "defunct vent"
+	},
+/turf/simulated/floor/black,
+/area/helldrone/core)
+"Uv" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A vent. Cool air is gently flowing through it.";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "hvent";
+	name = "air vent"
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"UY" = (
+/obj/grille/steel,
+/obj/window/reinforced{
+	dir = 2
+	},
+/obj/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
+"Vt" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/helldrone/core)
+"XD" = (
+/obj/item/storage/toilet,
+/turf/simulated/floor/scorched2,
+/area/helldrone)
+"YR" = (
+/obj/critter/ancient_repairbot/helldrone_guard,
+/turf/simulated/floor/black,
+/area/helldrone)
+"ZL" = (
+/obj/stool/chair/office{
+	dir = 4
+	},
+/turf/simulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/helldrone)
+
+(1,1,1) = {"
+qN
+qN
+qN
+qN
+qN
+qN
+qN
+Lj
+ot
+qN
+qN
+qN
+qN
+qN
+qN
+qN
+qN
+ot
+vX
+qN
+qN
+qN
+qN
+qN
+qN
+qN
+qN
+"}
+(2,1,1) = {"
+qN
+qN
+qN
+qN
+qN
+qN
+Lj
+CU
+CU
+CU
+hF
+hF
+hF
+On
+pj
+On
+CU
+CU
+CU
+vX
+qN
+qN
+qN
+qN
+qN
+qN
+qN
+"}
+(3,1,1) = {"
+qN
+qN
+qN
+Lj
+CU
+CU
+CU
+CU
+YR
+ot
+CU
+CU
+CU
+CU
+CU
+CU
+ot
+oM
+CU
+CU
+CU
+CU
+vX
+qN
+qN
+qN
+qN
+"}
+(4,1,1) = {"
+qN
+qN
+Lj
+CU
+CU
+NS
+ot
+oM
+oM
+ot
+wT
+Ln
+Om
+Om
+ZL
+al
+ot
+oM
+oM
+ot
+NS
+CU
+CU
+vX
+qN
+qN
+qN
+"}
+(5,1,1) = {"
+qN
+Lj
+CU
+CU
+NS
+NS
+ot
+oM
+oM
+ot
+CU
+Om
+Om
+Om
+Om
+CU
+ot
+oM
+oM
+ot
+NS
+NS
+CU
+CU
+vX
+qN
+qN
+"}
+(6,1,1) = {"
+qN
+ot
+CU
+NS
+NS
+NS
+qd
+oM
+oM
+oM
+CU
+bK
+CU
+CU
+KR
+CU
+oM
+oM
+oM
+Kt
+NS
+NS
+NS
+CU
+ot
+qN
+qN
+"}
+(7,1,1) = {"
+qN
+ot
+aZ
+NS
+NS
+NS
+ot
+oM
+oM
+oM
+oM
+oM
+oM
+oM
+oM
+oM
+oM
+oM
+YR
+ot
+NS
+NS
+NS
+NS
+ot
+qN
+qN
+"}
+(8,1,1) = {"
+Lj
+ot
+aZ
+NS
+NS
+NS
+ot
+ot
+oM
+oM
+oM
+oM
+oM
+oM
+oM
+oM
+oM
+oM
+CU
+CU
+zg
+NS
+NS
+NS
+ot
+vX
+qN
+"}
+(9,1,1) = {"
+CU
+CU
+aZ
+NS
+NS
+NS
+aZ
+ot
+oM
+ot
+CU
+CU
+CU
+CU
+CU
+CU
+oM
+oM
+ot
+Gg
+NS
+eR
+cW
+cW
+ot
+CU
+CU
+"}
+(10,1,1) = {"
+Ej
+NS
+nw
+xX
+xX
+xX
+yF
+ot
+oM
+Og
+CU
+oM
+oM
+oM
+oM
+If
+oM
+oM
+ot
+NS
+NS
+hH
+NS
+NS
+NS
+Ej
+MG
+"}
+(11,1,1) = {"
+lL
+NS
+ro
+NS
+NS
+NS
+Tm
+ot
+oM
+Og
+JT
+fc
+JT
+JT
+JT
+JT
+At
+oM
+ot
+NS
+NS
+hH
+NS
+NS
+NS
+lL
+MG
+"}
+(12,1,1) = {"
+ot
+NS
+jx
+NS
+NS
+NS
+yz
+ot
+oM
+JT
+JT
+ii
+ii
+Vt
+Uj
+JT
+JT
+NS
+ot
+Ii
+Ii
+ty
+Bu
+NS
+NS
+ot
+CU
+"}
+(13,1,1) = {"
+ot
+NS
+ro
+eR
+Ii
+Ii
+uo
+ot
+oM
+CQ
+Hh
+Hh
+ii
+ii
+Hh
+Hh
+CQ
+Ii
+ot
+vg
+NS
+NS
+hH
+NS
+NS
+ot
+qN
+"}
+(14,1,1) = {"
+ot
+NS
+ro
+Nj
+gs
+fK
+fK
+ot
+oM
+CQ
+RY
+ii
+ii
+ii
+ii
+Ms
+CQ
+NS
+ot
+vg
+NS
+NS
+hH
+NS
+Gg
+ot
+qN
+"}
+(15,1,1) = {"
+ot
+NS
+ro
+Nj
+aZ
+CU
+CU
+ot
+oM
+CQ
+RY
+ii
+ii
+ii
+Tq
+RY
+CQ
+NS
+ot
+vg
+NS
+NS
+hH
+NS
+ih
+ot
+qN
+"}
+(16,1,1) = {"
+ot
+zg
+ro
+Nj
+cI
+ec
+ec
+ot
+oM
+CQ
+OE
+Hh
+ii
+ii
+Hh
+Hh
+CQ
+NS
+ot
+zg
+NS
+NS
+hH
+NS
+NS
+ot
+qN
+"}
+(17,1,1) = {"
+ot
+NS
+ro
+Nj
+aZ
+CU
+CU
+ot
+oM
+JT
+JT
+Hh
+OU
+RY
+Hh
+JT
+JT
+NS
+ot
+Uv
+NS
+NS
+hH
+NS
+NS
+ot
+CU
+"}
+(18,1,1) = {"
+Ej
+NS
+ro
+Nj
+cI
+fK
+fK
+ot
+oM
+YR
+JT
+JT
+JT
+JT
+JT
+JT
+NS
+NS
+ot
+CU
+CU
+NS
+hH
+NS
+NS
+Ej
+MG
+"}
+(19,1,1) = {"
+lL
+NS
+ro
+Nj
+aZ
+CU
+CU
+ot
+oM
+oM
+oM
+oM
+oM
+oM
+oM
+Nj
+NS
+NS
+ot
+gw
+ot
+NS
+hH
+NS
+NS
+lL
+MG
+"}
+(20,1,1) = {"
+CU
+CU
+ro
+Nj
+aO
+ec
+ec
+ot
+CU
+iF
+CU
+CU
+TD
+CU
+CU
+Nj
+NS
+NS
+NW
+iT
+ot
+Ii
+fy
+NS
+ot
+CU
+CU
+"}
+(21,1,1) = {"
+aT
+ot
+ro
+Nj
+NS
+NS
+NS
+ot
+XD
+vS
+vS
+ot
+vS
+hY
+ot
+Nj
+NS
+NS
+ot
+qC
+ot
+Ii
+EH
+NS
+ot
+eu
+qN
+"}
+(22,1,1) = {"
+qN
+ot
+aL
+Nj
+eR
+cW
+xK
+ot
+Gz
+Hk
+vS
+ot
+Gd
+DB
+ot
+Nj
+NS
+NS
+ot
+ot
+ot
+xX
+hZ
+fK
+ot
+qN
+qN
+"}
+(23,1,1) = {"
+qN
+CU
+CU
+Nj
+Nj
+CU
+CU
+ot
+CU
+CU
+CU
+CU
+CU
+CU
+CU
+EX
+TL
+Ii
+ot
+ot
+ot
+fK
+Bh
+CU
+ot
+qN
+qN
+"}
+(24,1,1) = {"
+qN
+aT
+CU
+CU
+CU
+CU
+CU
+ot
+fB
+II
+II
+II
+UY
+mP
+ot
+ot
+Nj
+NS
+ot
+ot
+ot
+ot
+CU
+CU
+eu
+qN
+qN
+"}
+(25,1,1) = {"
+qN
+qN
+aT
+CU
+CU
+CU
+CU
+ot
+II
+II
+II
+II
+ot
+To
+lN
+ot
+ot
+NS
+ot
+CU
+CU
+CU
+CU
+eu
+qN
+qN
+qN
+"}
+(26,1,1) = {"
+qN
+qN
+qN
+aT
+xg
+xg
+CU
+CU
+II
+II
+II
+II
+ae
+NS
+NS
+NS
+NS
+NS
+ot
+CU
+xg
+xg
+eu
+qN
+qN
+qN
+qN
+"}

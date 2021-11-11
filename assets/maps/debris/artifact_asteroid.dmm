@@ -1,0 +1,27 @@
+"a" = (/turf/space,/area/noGenerate)
+"c" = (/obj/decal/skeleton{desc = "Gross."; icon = 'icons/mob/human.dmi'; icon_state = "husk_l"; name = "dessicated husk"},/turf/simulated/floor/plating/airless/asteroid{stone_color = "#D1E6FF"},/area/space)
+"r" = (/obj/critter/gunbot/drone/cutterdrone,/turf/simulated/floor/plating/airless/asteroid{stone_color = "#D1E6FF"},/area/space)
+"t" = (/obj/landmark/artifact,/turf/simulated/floor/plating/airless/asteroid{stone_color = "#D1E6FF"},/area/space)
+"v" = (/turf/simulated/wall/asteroid/ice,/area/space)
+"W" = (/turf/simulated/floor/plating/airless/asteroid{stone_color = "#D1E6FF"},/area/space)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaavvvvvaaaaa
+aaaaaaavvvaaavvvWvvaaaaa
+aaavvWvvvvvvvvvvWvvvvaaa
+aaavvWWWWvvvWvvWWWvvvaaa
+aavvvWWWvvvWWWWWvvvvvvaa
+avvvvvvWvvvWvvWvvvvvWvva
+avvvWWvWWWWWvWWWvvcvWtva
+vvvWWvvvvWvvvrWvvWWWWvvv
+vvvvWvvWWWvWWWWWWWvvvvvv
+vvtWWvvvvvvWWvvvvWvvvvva
+avvvWvWvWvWWWWvWWWWWvvva
+avvvWWWWWvWvvWvvvvWvvvaa
+aavvvWvWWWWvWWvvvWWWvaaa
+aaavvvvvWvvvWvvvvvvWWaaa
+aaavvvvvWWvvWvWvvvvvvaaa
+aaaaavvWWWvvWWWvvaaaaaaa
+aaaaaavWvvvvvvvvaaaaaaaa
+aaaaaaaaavvvaaaaaaaaaaaa
+"}

@@ -1,0 +1,67 @@
+"ay" = (/obj/decal/fakeobjects/lighttube_broken{dir = 8},/turf/space,/area/prefab/crashed_bee_ship)
+"aK" = (/obj/decal/cleanable/eggsplat,/turf/simulated/floor/airless{icon_state = "hive"},/area/prefab/crashed_bee_ship)
+"bt" = (/obj/decal/cleanable/dirt,/obj/item/paper/bombininote,/turf/simulated/floor/airless{icon_state = "hive"},/area/prefab/crashed_bee_ship)
+"cV" = (/turf/simulated/shuttle/wall{dir = 10; icon_state = "diagonalWall3"},/area/prefab/crashed_bee_ship)
+"cY" = (/obj/grille/catwalk{dir = 5; icon_state = "catwalk_cross"},/turf/simulated/floor/airless/plating/catwalk{dir = 5},/area/prefab/crashed_bee_ship)
+"dk" = (/obj/decal/cleanable/gangtag,/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/prefab/crashed_bee_ship)
+"ed" = (/obj/lattice,/obj/decal/floatingtiles{dir = 8},/turf/space,/area/prefab/crashed_bee_ship)
+"eh" = (/obj/lattice{dir = 8; icon_state = "lattice-dir-b"; tag = "icon-lattice-dir-b (WEST)"},/obj/decal/fakeobjects/pipe,/turf/space,/area/prefab/crashed_bee_ship)
+"eL" = (/obj/decal/tile_edge/stripe/extra_big,/obj/decal/cleanable/dirt,/obj/storage/secure/crate/bee/loaded,/turf/simulated/floor/airless/damaged2,/area/prefab/crashed_bee_ship)
+"hp" = (/obj/storage/crate,/obj/item/paper/book/from_file/deep_blue_sea,/obj/item/paper/bores_part_two,/turf/simulated/floor/plating/airless/asteroid,/area/prefab/crashed_bee_ship)
+"no" = (/obj/storage/crate,/obj/item/paper/torn{pixel_x = 5},/obj/item/paper/hastily,/obj/item/paper/bores{pixel_x = -5},/obj/item/record/poo,/turf/simulated/floor/plating/airless/asteroid,/area/prefab/crashed_bee_ship)
+"oM" = (/obj/decal/fakeobjects/shuttlethruster{dir = 8},/turf/space,/area/prefab/crashed_bee_ship)
+"pa" = (/obj/decal/fakeobjects/lighttube_broken,/obj/decal/tile_edge/stripe/extra_big{dir = 1},/turf/simulated/floor/airless/damaged2,/area/prefab/crashed_bee_ship)
+"pz" = (/obj/decal/cleanable/dirt/dirt4,/turf/simulated/shuttle/wall{dir = 6; icon_state = "diagonalWall3"},/area/prefab/crashed_bee_ship)
+"pH" = (/obj/lattice{dir = 5; icon_state = "lattice-dir"},/turf/space,/area/prefab/crashed_bee_ship)
+"qk" = (/obj/item/material_piece/cloth/beewool,/turf/simulated/floor/airless{icon_state = "hive"},/area/prefab/crashed_bee_ship)
+"re" = (/obj/lattice{dir = 9; icon_state = "lattice-dir"},/turf/simulated/shuttle/wall{icon_state = "wall3_space"},/area/prefab/crashed_bee_ship)
+"rw" = (/obj/grille/catwalk{dir = 6},/turf/simulated/floor/airless/plating/catwalk{icon_state = "catwalk_cross"},/area/prefab/crashed_bee_ship)
+"rC" = (/turf/simulated/wall/asteroid,/area/prefab/crashed_bee_ship)
+"rE" = (/obj/grille/catwalk{dir = 10; icon_state = "catwalk_cross"},/turf/simulated/floor/airless/plating/catwalk{dir = 10},/area/prefab/crashed_bee_ship)
+"tP" = (/obj/lattice,/obj/decal/floatingtiles{dir = 4; icon_state = "floattiles3"},/turf/space,/area/prefab/crashed_bee_ship)
+"ui" = (/obj/stool/chair/comfy{dir = 8},/obj/decal/tile_edge/stripe/extra_big{dir = 1},/obj/decal/cleanable/generic,/turf/simulated/floor/airless,/area/prefab/crashed_bee_ship)
+"vI" = (/obj/decal/cleanable/dirt/dirt5,/obj/item/material_piece/cloth/beewool,/turf/simulated/floor/airless{icon_state = "hive"},/area/prefab/crashed_bee_ship)
+"vM" = (/obj/decal/cleanable/dirt,/turf/simulated/shuttle/wall{dir = 8; icon_state = "diagonalWall3"},/area/prefab/crashed_bee_ship)
+"xU" = (/obj/reagent_dispensers/beerkeg,/obj/decal/tile_edge/stripe/extra_big,/turf/simulated/floor/airless,/area/prefab/crashed_bee_ship)
+"yW" = (/obj/grille/catwalk{dir = 6; icon_state = "catwalk_cross"},/turf/simulated/floor/airless/plating/catwalk{dir = 6},/area/prefab/crashed_bee_ship)
+"AQ" = (/obj/grille/catwalk/dubious{dir = 9; icon_state = "catwalk_cross-melted"},/turf/simulated/floor/airless/plating/catwalk{dir = 9},/area/prefab/crashed_bee_ship)
+"Bg" = (/obj/landmark/interesting{interesting = "Theres a very shallow depression here in the hull plating, as if something unbelievably heavy had a nap here"; name = "Interesting turf - bubs"},/turf/simulated/floor/airless/damaged5,/area/prefab/crashed_bee_ship)
+"Dz" = (/turf/simulated/shuttle/wall{dir = 8; icon_state = "diagonalWall3"},/area/noGenerate)
+"En" = (/obj/grille/catwalk{dir = 5},/turf/simulated/floor/airless/plating/catwalk{dir = 4; icon_state = "catwalk_cross"},/area/prefab/crashed_bee_ship)
+"EE" = (/obj/lattice{icon_state = "lattice-dir"},/turf/space,/area/prefab/crashed_bee_ship)
+"Gj" = (/obj/decal/fakeobjects/pipe{dir = 4},/obj/lattice{dir = 4; icon_state = "lattice-dir"},/turf/space,/area/prefab/crashed_bee_ship)
+"Gp" = (/obj/table/wood/auto,/obj/decal/tile_edge/stripe/extra_big{dir = 1},/obj/item/reagent_containers/food/snacks/beefood,/obj/item/audio_tape/beecrash{pixel_y = 7},/turf/simulated/floor/airless,/area/prefab/crashed_bee_ship)
+"Hq" = (/obj/decal/cleanable/dirt/dirt2,/turf/simulated/floor/airless{icon_state = "hive"},/area/prefab/crashed_bee_ship)
+"Ij" = (/obj/lattice{dir = 8; icon_state = "lattice-dir"},/obj/decal/fakeobjects/pipe{dir = 4},/turf/space,/area/prefab/crashed_bee_ship)
+"Iy" = (/obj/decal/fakeobjects/shuttleengine{dir = 4},/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/prefab/crashed_bee_ship)
+"Lm" = (/obj/lattice,/obj/decal/fakeobjects/pipe{dir = 8; icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi'; icon_state = "manifold"},/turf/space,/area/noGenerate)
+"Ly" = (/obj/decal/cleanable/dirt/dirt5,/turf/simulated/floor/airless{icon_state = "hive"},/area/prefab/crashed_bee_ship)
+"Np" = (/obj/decal/fakeobjects/pipe{desc = "The air from it smells faintly of mildew."; dir = 4; icon = 'icons/obj/atmospherics/pipes.dmi'; icon_state = "vent"; name = "grimy vent"; tag = ""},/turf/simulated/floor/airless/damaged3,/area/prefab/crashed_bee_ship)
+"NO" = (/turf/simulated/shuttle/wall{icon_state = "wall3_space"},/area/prefab/crashed_bee_ship)
+"NS" = (/obj/machinery/light/small{dir = 1},/obj/decal/cleanable/eggsplat,/turf/simulated/floor/shuttle{icon = 'icons/turf/floors.dmi'; icon_state = "delivery"},/area/prefab/crashed_bee_ship)
+"QY" = (/turf/space,/area/noGenerate)
+"Sg" = (/obj/lattice{dir = 5; icon_state = "lattice-dir"},/obj/decal/fakeobjects/pipe{dir = 10},/turf/space,/area/prefab/crashed_bee_ship)
+"SM" = (/obj/lattice{dir = 5; icon_state = "lattice-dir"},/obj/decal/fakeobjects/pipe{dir = 9},/turf/space,/area/prefab/crashed_bee_ship)
+"Tn" = (/turf/simulated/shuttle/wall{dir = 8; icon_state = "diagonalWall3"},/area/prefab/crashed_bee_ship)
+"Ty" = (/obj/lattice{dir = 5; icon_state = "lattice-dir"},/obj/decal/fakeobjects/pipe{desc = "It won't budge."; dir = 4; icon = 'icons/obj/pipe-item.dmi'; icon_state = "valve"; name = "rusted valve"},/turf/space,/area/noGenerate)
+"Uy" = (/obj/grille/catwalk/dubious{dir = 10; icon_state = "catwalk-3"},/turf/simulated/floor/airless/plating/catwalk{dir = 1; icon_state = "catwalk_cross"},/area/prefab/crashed_bee_ship)
+"UO" = (/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/prefab/crashed_bee_ship)
+"VQ" = (/obj/decal/fakeobjects/cargopad,/obj/map/light/screen,/turf/simulated/floor/airless{icon_state = "hive"},/area/prefab/crashed_bee_ship)
+"Wa" = (/obj/machinery/door/unpowered/shuttle,/turf/simulated/floor/shuttle{icon = 'icons/turf/floors.dmi'; icon_state = "delivery"},/area/prefab/crashed_bee_ship)
+"Wo" = (/obj/grille/catwalk/dubious{icon_state = "catwalk_cross-2"},/turf/simulated/floor/airless/plating/catwalk{dir = 5; icon_state = "catwalk_cross"},/area/prefab/crashed_bee_ship)
+"Xc" = (/obj/lattice{dir = 10; icon_state = "lattice-dir"},/obj/decal/fakeobjects/pipe{dir = 4},/turf/space,/area/prefab/crashed_bee_ship)
+"Yy" = (/obj/grille/catwalk/dubious{icon_state = "catwalk_cross-3"},/obj/map/light/dimred,/turf/simulated/floor/airless/plating/catwalk{dir = 5; icon_state = "catwalk_cross"},/area/prefab/crashed_bee_ship)
+
+(1,1,1) = {"
+QYQYQYQYQYQYQYQYQYQYQYQYQYQYQYDzQYQYQYQYQYQYQYQYQYQY
+QYQYQYQYrCrCrCrCQYQYQYrCrCQYQYLmTyQYQYQYQYQYQYQYQYQY
+QYrCrCrCrCrCrCrCrCrCrCrCrCrCQYQYQYQYQYQYQYQYQYQYQYQY
+rCrCrCrCrCrCrCrCrCrCrCrCrCrCQYQYQYQYQYQYQYQYQYQYQYQY
+rCrCrCrCrCrCrCrCrCrCrCrCrCTnUOUOUOIyoMQYQYQYQYQYQYQY
+QYrCrCrCnohprCrCrCrCrCrCrCrCedeLxUUOUOGjGjIjIjIjSgQY
+QYrCrCrCrCrCrCrCrCrCrCrCdkayehBgvIcVUOUOUOAQUycYIyoM
+QYQYQYrCrCrCrCrCrCrCUOpHtPNpbtVQaKHqWaNSWaWoYyEnIyoM
+QYQYQYQYrCrCrCrCrCQYQYQYUOpzaKqkLyvMUOUOUOrErwyWIyoM
+QYQYQYQYQYQYQYQYQYQYTnpHreUOGpuipaUOUOGjGjXcXcXcSMQY
+QYQYQYQYQYQYQYQYQYQYEEQYQYNOUOUOUOIyoMQYQYQYQYQYQYQY
+"}

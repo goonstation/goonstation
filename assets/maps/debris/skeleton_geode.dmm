@@ -1,0 +1,288 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"b" = (
+/turf/space,
+/area/noGenerate)
+"d" = (
+/obj/marker/supplymarker,
+/obj/submachine/ATM{
+	pixel_x = -32
+	},
+/obj/decal/fakeobjects/teleport_pad,
+/turf/simulated/floor/grime,
+/area/skeleton_trader)
+"f" = (
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"i" = (
+/obj/table/auto,
+/obj/item/cable_coil/cut{
+	color = "#DD0000"
+	},
+/obj/item/disk/data/tape,
+/obj/item/disk/data/floppy,
+/obj/item/electronics/capacitor,
+/turf/simulated/floor/grime,
+/area/skeleton_trader)
+"k" = (
+/obj/stool/chair/comfy,
+/obj/npc/trader/skeleton,
+/obj/map/light/green,
+/turf/simulated/floor/grime,
+/area/skeleton_trader)
+"l" = (
+/obj/storage/crate/loot,
+/turf/simulated/floor/damaged2,
+/area/skeleton_trader)
+"r" = (
+/turf/simulated/wall/r_wall{
+	icon = 'icons/misc/evilreaverstation.dmi';
+	icon_state = "old_rwall"
+	},
+/area/skeleton_trader)
+"u" = (
+/turf/simulated/floor/scorched,
+/area/skeleton_trader)
+"z" = (
+/turf/simulated/floor/plating/airless/asteroid{
+	stone_color = "#575A5E"
+	},
+/area/noGenerate)
+"E" = (
+/obj/machinery/door/airlock/classic,
+/turf/simulated/floor/grime,
+/area/skeleton_trader)
+"F" = (
+/obj/storage/crate/loot,
+/turf/simulated/floor/grime,
+/area/skeleton_trader)
+"G" = (
+/obj/table/auto,
+/obj/item/paper,
+/obj/item/pen/infrared,
+/obj/item/c_tube,
+/obj/item/clothing/head/bandana/red,
+/turf/simulated/floor/grime,
+/area/skeleton_trader)
+"L" = (
+/turf/simulated/wall/asteroid{
+	name = "weak compacted stone";
+	stone_color = "#575A5E"
+	},
+/area/noGenerate)
+"N" = (
+/turf/simulated/floor/grime,
+/area/skeleton_trader)
+"V" = (
+/turf/simulated/wall/asteroid/geode,
+/area/noGenerate)
+
+(1,1,1) = {"
+b
+b
+b
+b
+V
+V
+V
+V
+b
+b
+b
+b
+"}
+(2,1,1) = {"
+b
+b
+V
+V
+V
+V
+V
+V
+V
+V
+V
+b
+"}
+(3,1,1) = {"
+b
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+"}
+(4,1,1) = {"
+b
+b
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+"}
+(5,1,1) = {"
+b
+V
+V
+V
+f
+f
+f
+f
+f
+L
+L
+b
+"}
+(6,1,1) = {"
+b
+V
+V
+z
+f
+f
+f
+f
+f
+f
+V
+V
+"}
+(7,1,1) = {"
+V
+V
+V
+f
+r
+r
+E
+r
+r
+f
+V
+V
+"}
+(8,1,1) = {"
+V
+V
+V
+r
+r
+N
+N
+F
+r
+f
+V
+V
+"}
+(9,1,1) = {"
+V
+V
+V
+r
+d
+N
+N
+l
+r
+V
+V
+V
+"}
+(10,1,1) = {"
+b
+V
+V
+r
+k
+N
+N
+G
+r
+V
+V
+V
+"}
+(11,1,1) = {"
+b
+V
+V
+r
+r
+u
+N
+i
+r
+V
+V
+b
+"}
+(12,1,1) = {"
+b
+V
+V
+V
+r
+r
+r
+r
+r
+V
+V
+b
+"}
+(13,1,1) = {"
+b
+b
+V
+V
+V
+V
+V
+V
+V
+V
+V
+b
+"}
+(14,1,1) = {"
+b
+b
+b
+V
+V
+V
+V
+V
+V
+V
+b
+b
+"}
+(15,1,1) = {"
+b
+b
+b
+b
+b
+V
+V
+V
+b
+b
+b
+b
+"}

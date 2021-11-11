@@ -1,0 +1,5369 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ad" = (
+/obj/table/auto,
+/obj/item/paper/hept_qr,
+/obj/item/pen,
+/turf/simulated/floor,
+/area/h7/lab)
+"ak" = (
+/turf/simulated/floor/neutral/side{
+	dir = 4
+	},
+/area/h7/crew)
+"ar" = (
+/obj/machinery/light/worn{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/h7/storage)
+"az" = (
+/turf/simulated/floor/plating,
+/area/h7)
+"aJ" = (
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles6"
+	},
+/turf/simulated/aprilfools{
+	desc = "A strange shifting void ...";
+	icon_state = "void";
+	name = "void"
+	},
+/area/h7/lab)
+"aV" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "Control Room";
+	dir = 4
+	},
+/obj/cable,
+/turf/simulated/floor,
+/area/h7/control)
+"ba" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "fpurple1"
+	},
+/area/h7/crew)
+"bq" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/decal/cleanable/blood/tracks{
+	dir = 10
+	},
+/turf/simulated/floor,
+/area/h7/control)
+"bx" = (
+/obj/item/storage/toolbox/electrical,
+/turf/simulated/floor/plating,
+/area/h7)
+"bB" = (
+/obj/decal/cleanable/generic,
+/turf/simulated/floor/neutral/side{
+	dir = 4
+	},
+/area/h7/crew)
+"bC" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/item/spacecash/fifty,
+/obj/item/storage/backpack,
+/turf/simulated/floor/plating,
+/area/h7)
+"bI" = (
+/obj/machinery/light/worn{
+	dir = 4
+	},
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
+/turf/simulated/floor/purple/corner,
+/area/h7)
+"bM" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/h7/lab)
+"bN" = (
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Lab Access";
+	freq = 1431;
+	location = "Living Quarters"
+	},
+/turf/simulated/floor,
+/area/h7/crew)
+"ck" = (
+/obj/stool/chair{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/h7/control)
+"cr" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/turf/simulated/floor,
+/area/h7/control)
+"cs" = (
+/obj/securearea{
+	desc = "";
+	icon_state = "shock";
+	name = "Danger: High Voltage"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/h7/lab)
+"cw" = (
+/obj/decal/floatingtiles{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/h7)
+"cB" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Control Room";
+	freq = 1431;
+	location = "Lab Access"
+	},
+/turf/simulated/floor,
+/area/h7)
+"cC" = (
+/obj/machinery/deep_fryer,
+/turf/simulated/floor/sanitary,
+/area/h7/crew)
+"cE" = (
+/obj/storage/secure/closet/fridge/kitchen,
+/turf/simulated/floor/sanitary,
+/area/h7/crew)
+"cL" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 6
+	},
+/turf/simulated/floor,
+/area/h7/computer_core)
+"cM" = (
+/obj/machinery/firealarm{
+	dir = 1;
+	layer = 3.5;
+	pixel_y = -24
+	},
+/turf/simulated/floor,
+/area/h7/control)
+"cR" = (
+/obj/stool/bed,
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "fpurple2"
+	},
+/area/h7/crew)
+"dl" = (
+/turf/simulated/floor/airless/grime,
+/area/h7)
+"du" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/purple/corner,
+/area/h7/lab)
+"dF" = (
+/obj/storage/crate/medical,
+/turf/simulated/floor,
+/area/h7/storage)
+"dJ" = (
+/obj/item/stamp,
+/turf/simulated/floor/plating,
+/area/h7)
+"dL" = (
+/obj/decal/floatingtiles{
+	dir = 1
+	},
+/turf/simulated/aprilfools{
+	desc = "A strange shifting void ...";
+	icon_state = "void";
+	name = "void"
+	},
+/area/h7/lab)
+"dP" = (
+/turf/simulated/floor/grime,
+/area/h7)
+"dR" = (
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/decal/fakeobjects/apc_broken{
+	pixel_y = 24
+	},
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/h7/lab)
+"dS" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Central Junction";
+	freq = 1431;
+	location = "Control Room"
+	},
+/turf/simulated/floor,
+/area/h7/control)
+"eu" = (
+/obj/cable,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/airless/plating/scorched,
+/area/noGenerate)
+"eA" = (
+/obj/decal/floatingtiles{
+	dir = 1;
+	icon_state = "floattiles4"
+	},
+/turf/simulated/aprilfools{
+	desc = "A strange shifting void ...";
+	icon_state = "void";
+	name = "void"
+	},
+/area/h7/lab)
+"eB" = (
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/sanitary,
+/area/h7/crew)
+"eW" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor,
+/area/h7/control)
+"eZ" = (
+/obj/stool,
+/turf/simulated/floor/specialroom/bar,
+/area/h7/crew)
+"fc" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet{
+	dir = 1;
+	icon_state = "fpurple2"
+	},
+/area/h7/crew)
+"fd" = (
+/obj/machinery/door/airlock/maintenance,
+/turf/simulated/floor/plating,
+/area/h7/lab)
+"fm" = (
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/h7/lab)
+"fn" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless/damaged5,
+/area/h7)
+"fQ" = (
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/h7)
+"fS" = (
+/turf/simulated/floor,
+/area/h7/control)
+"fV" = (
+/turf/simulated/floor/plating/scorched,
+/area/h7/lab)
+"ga" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/decal/skeleton,
+/turf/simulated/floor/plating,
+/area/h7/lab)
+"gi" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/orangeblack/side,
+/area/h7/lab)
+"gj" = (
+/obj/machinery/light/worn{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/h7/control)
+"gn" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/stool/chair,
+/turf/simulated/floor,
+/area/h7/lab)
+"gu" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/h7)
+"gZ" = (
+/obj/decal/fakeobjects/firelock_broken{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock{
+	name = "Supply Closet"
+	},
+/turf/simulated/floor/plating,
+/area/h7/lab)
+"hD" = (
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/terminal/zeta{
+	name = "Old Terminal";
+	setup_os_string = "H7_MAINFRAME"
+	},
+/turf/simulated/floor/bot,
+/area/h7/lab)
+"hQ" = (
+/obj/machinery/power/smes{
+	charge = 3.5e+006;
+	n_tag = "Solars";
+	name = "old power storage unit";
+	output = 50000
+	},
+/turf/simulated/floor/plating,
+/area/h7/lab)
+"hZ" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/h7/storage)
+"if" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/h7/crew)
+"il" = (
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/light/worn{
+	dir = 8
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	environ = 2;
+	equipment = 0;
+	lighting = 0;
+	name = "Remote W APC";
+	pixel_x = -24
+	},
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "fpurple2"
+	},
+/area/h7/crew)
+"iB" = (
+/obj/machinery/light/worn{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/h7/crew)
+"iL" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/decal/fakeobjects/firelock_broken{
+	dir = 8
+	},
+/obj/overlay{
+	desc = "You could probably squeeze through.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "bloodydoorext";
+	layer = 6;
+	name = "broken airlock"
+	},
+/turf/simulated/floor,
+/area/h7)
+"iO" = (
+/obj/machinery/light/worn{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/h7/lab)
+"iR" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/decal/fakeobjects/firelock_broken,
+/obj/machinery/door/airlock{
+	name = "Storage"
+	},
+/turf/simulated/floor,
+/area/h7/storage)
+"iT" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/purple/side{
+	dir = 4
+	},
+/area/h7/lab)
+"iV" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/h7/crew)
+"iX" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/h7/storage)
+"iZ" = (
+/obj/decal/fakeobjects/firelock_broken{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/command{
+	name = "Computer Core";
+	req_access_txt = "11"
+	},
+/obj/decal/cleanable/blood/tracks,
+/turf/simulated/floor,
+/area/h7/computer_core)
+"ju" = (
+/obj/shieldgen,
+/turf/simulated/floor/orangeblack,
+/area/h7/storage)
+"jF" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/h7/control)
+"jG" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/h7/lab)
+"jJ" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/noticeboard{
+	name = "Complaint Board";
+	pixel_y = 24
+	},
+/turf/simulated/floor,
+/area/h7/crew)
+"jZ" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/h7/crew)
+"kd" = (
+/obj/cable,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/plating,
+/area/h7/lab)
+"ki" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/h7/crew)
+"kk" = (
+/obj/item/weldingtool,
+/turf/simulated/floor/plating,
+/area/h7)
+"kp" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/decal/fakeobjects/firelock_broken{
+	dir = 8
+	},
+/obj/overlay{
+	desc = "You could probably squeeze through.";
+	icon = 'icons/misc/rstation.dmi';
+	icon_state = "maint-gap";
+	layer = 6;
+	name = "broken door"
+	},
+/turf/simulated/floor,
+/area/h7/storage)
+"kx" = (
+/turf/simulated/wall/asteroid{
+	dir = 8
+	},
+/area/h7/asteroid)
+"kC" = (
+/turf/simulated/floor/orangeblack/side{
+	dir = 8
+	},
+/area/h7/storage)
+"kI" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/h7/lab)
+"kM" = (
+/turf/simulated/wall/auto/supernorn,
+/area/h7/storage)
+"kT" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/h7)
+"kW" = (
+/obj/decal/fakeobjects/lighttube_broken{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/h7/lab)
+"kX" = (
+/obj/cable,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"lc" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/h7/lab)
+"lp" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/caution/east,
+/area/h7/lab)
+"lx" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/orangeblack/side,
+/area/h7/computer_core)
+"lM" = (
+/turf/simulated/floor/orangeblack/side{
+	dir = 4
+	},
+/area/h7/computer_core)
+"md" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/h7)
+"mq" = (
+/obj/critter/floateye,
+/turf/simulated/aprilfools{
+	desc = "A strange shifting void ...";
+	icon_state = "void";
+	name = "void"
+	},
+/area/h7/lab)
+"mr" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/h7)
+"mA" = (
+/obj/machinery/light/worn{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/h7)
+"mC" = (
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable,
+/obj/machinery/power/data_terminal,
+/obj/machinery/guardbot_dock{
+	desc = "A recharging and command station for PR-6S Guardbuddies. It looks rather worn.";
+	frequency = 1089;
+	name = "dusty docking station"
+	},
+/obj/item/guardbot_frame,
+/obj/item/guardbot_core,
+/turf/simulated/floor/bot,
+/area/h7/storage)
+"mN" = (
+/turf/simulated/floor/red/side{
+	dir = 8
+	},
+/area/h7)
+"mO" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/burger/moldy,
+/turf/simulated/floor/sanitary,
+/area/h7/crew)
+"mT" = (
+/obj/table/auto,
+/obj/item/plate,
+/turf/simulated/floor/specialroom/bar,
+/area/h7/crew)
+"mX" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/h7/lab)
+"mZ" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor,
+/area/h7)
+"nd" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/h7/crew)
+"ng" = (
+/obj/table/auto,
+/obj/machinery/light/worn{
+	dir = 4
+	},
+/obj/item/raw_material/telecrystal,
+/turf/simulated/floor,
+/area/h7/lab)
+"nq" = (
+/obj/machinery/light/worn{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/h7)
+"nH" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor,
+/area/h7/lab)
+"nQ" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/h7/control)
+"nZ" = (
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	environ = 2;
+	equipment = 0;
+	lighting = 0;
+	name = "Remote W APC";
+	pixel_x = -24
+	},
+/turf/simulated/floor,
+/area/h7/lab)
+"ob" = (
+/obj/cable,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/h7/crew)
+"oe" = (
+/turf/simulated/floor/green/side{
+	dir = 1
+	},
+/area/h7)
+"op" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/guardbot_dock{
+	desc = "A recharging and command station for PR-6S Guardbuddies. It looks rather worn.";
+	frequency = 1089;
+	name = "dusty docking station"
+	},
+/obj/machinery/bot/guardbot/bad,
+/turf/simulated/floor/bot,
+/area/h7/computer_core)
+"os" = (
+/obj/stool/chair,
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor2"
+	},
+/turf/simulated/floor,
+/area/h7/control)
+"ox" = (
+/obj/machinery/light/worn,
+/turf/simulated/floor/sanitary,
+/area/h7/crew)
+"oK" = (
+/obj/decal/cleanable/cobweb2,
+/turf/simulated/floor/red/side{
+	dir = 5
+	},
+/area/h7/lab)
+"oL" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/h7/lab)
+"oM" = (
+/obj/item/disk/data/tape/nuke,
+/turf/simulated/floor/plating,
+/area/h7/lab)
+"oS" = (
+/obj/table/auto,
+/obj/item/kitchen/utensil/spoon,
+/turf/simulated/floor/specialroom/bar,
+/area/h7/crew)
+"pf" = (
+/turf/simulated/floor/plating,
+/area/h7/lab)
+"pm" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/decal/fakeobjects/lighttube_broken,
+/turf/simulated/floor/orangeblack/side,
+/area/h7/lab)
+"po" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/h7/storage)
+"pw" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/cleanable/blood/tracks,
+/turf/simulated/floor,
+/area/h7/control)
+"px" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/h7/control)
+"pP" = (
+/turf/simulated/floor/orangeblack/side{
+	dir = 10
+	},
+/area/h7/storage)
+"pS" = (
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/h7/lab)
+"qd" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/h7/computer_core)
+"qm" = (
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
+/turf/simulated/floor,
+/area/h7/control)
+"qs" = (
+/turf/simulated/floor/airless/damaged3,
+/area/h7)
+"qD" = (
+/turf/simulated/wall/asteroid{
+	dir = 9
+	},
+/area/h7/asteroid)
+"qH" = (
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	environ = 2;
+	equipment = 0;
+	lighting = 0;
+	name = "Remote W APC";
+	pixel_x = -24
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor,
+/area/h7/control)
+"qR" = (
+/obj/item/tile/steel,
+/turf/simulated/aprilfools{
+	desc = "A strange shifting void ...";
+	icon_state = "void";
+	name = "void"
+	},
+/area/h7/lab)
+"qT" = (
+/obj/decal/cleanable/cobweb,
+/turf/simulated/floor,
+/area/h7/lab)
+"rf" = (
+/obj/machinery/power/data_terminal,
+/obj/cable,
+/obj/machinery/networked/h7_emitter,
+/turf/simulated/floor/plating,
+/area/h7/lab)
+"rh" = (
+/turf/simulated/wall/false_wall,
+/area/h7/lab)
+"rz" = (
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/computer/solar_control{
+	id = "h7solar";
+	name = "Hemera Solar Control"
+	},
+/turf/simulated/floor/plating,
+/area/h7/lab)
+"rL" = (
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "Lab Access";
+	dir = 1
+	},
+/turf/simulated/floor/grime,
+/area/h7)
+"rO" = (
+/obj/decal/fakeobjects/firelock_broken{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/command{
+	name = "Control Room";
+	req_access_txt = "0"
+	},
+/turf/simulated/floor,
+/area/h7/control)
+"rU" = (
+/obj/storage/crate/medical,
+/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/toxin,
+/turf/simulated/floor/orangeblack,
+/area/h7/storage)
+"rZ" = (
+/obj/machinery/light/worn{
+	dir = 1
+	},
+/turf/simulated/floor/red/side{
+	dir = 8
+	},
+/area/h7)
+"sh" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/computer3frame/terminal{
+	anchored = 1;
+	state = 1
+	},
+/turf/simulated/floor/red/side{
+	dir = 9
+	},
+/area/h7/lab)
+"sl" = (
+/turf/simulated/floor/orangeblack/corner{
+	dir = 8
+	},
+/area/h7/storage)
+"sm" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/light_switch{
+	name = "N light switch";
+	pixel_y = 24
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/item/paper{
+	info = "Why the HELL is there no bathroom in the crew module? Are we seriously supposed to run all the way over to the MINING COMPLEX to relieve ourselves?";
+	name = "Paper-Complaint #9"
+	},
+/turf/simulated/floor,
+/area/h7/crew)
+"sn" = (
+/obj/securearea{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	icon_state = "space";
+	name = "VACUUM AREA"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/h7/crew)
+"so" = (
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "fpurple3"
+	},
+/area/h7/crew)
+"st" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor,
+/area/h7)
+"sy" = (
+/obj/decal/fakeobjects/firelock_broken{
+	dir = 8
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/external{
+	name = "Compartment Hatch"
+	},
+/turf/simulated/floor,
+/area/h7)
+"sB" = (
+/obj/decal/floatingtiles{
+	dir = 4
+	},
+/turf/simulated/aprilfools{
+	desc = "A strange shifting void ...";
+	icon_state = "void";
+	name = "void"
+	},
+/area/h7/lab)
+"sH" = (
+/obj/rack,
+/obj/item/sheet/steel{
+	amount = 10
+	},
+/obj/item/sheet/steel{
+	amount = 10
+	},
+/turf/simulated/floor/orangeblack,
+/area/h7/storage)
+"sQ" = (
+/obj/item/tile/steel,
+/turf/simulated/floor/plating,
+/area/h7)
+"sT" = (
+/turf/simulated/wall/asteroid{
+	dir = 1
+	},
+/area/h7/asteroid)
+"tf" = (
+/obj/decal/fakeobjects/firelock_broken{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/medical{
+	locked = 1;
+	name = "Anomalous Materials Laboratory";
+	req_access_txt = ""
+	},
+/turf/simulated/floor/purple,
+/area/h7/lab)
+"tj" = (
+/turf/simulated/floor/purple/side{
+	dir = 8
+	},
+/area/h7)
+"tn" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bio_suit,
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "fpurple2"
+	},
+/area/h7/crew)
+"tv" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass,
+/turf/simulated/floor/specialroom/bar,
+/area/h7/crew)
+"tx" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet,
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "fpurple2"
+	},
+/area/h7/crew)
+"tQ" = (
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Living Quarters";
+	freq = 1431;
+	location = "Storage"
+	},
+/turf/simulated/floor,
+/area/h7/storage)
+"tT" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
+	},
+/obj/decal/fakeobjects/firealarm_broken{
+	pixel_y = 24
+	},
+/turf/simulated/floor,
+/area/h7/crew)
+"tX" = (
+/obj/machinery/door/airlock/glass,
+/turf/simulated/floor,
+/area/h7/crew)
+"ue" = (
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "fpurple3"
+	},
+/area/h7/crew)
+"uf" = (
+/obj/item/wrench,
+/turf/simulated/floor,
+/area/h7/storage)
+"uj" = (
+/obj/storage/cart/trash,
+/turf/simulated/floor/plating,
+/area/h7/lab)
+"uk" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/decal/fakeobjects/firelock_broken{
+	dir = 4
+	},
+/obj/machinery/door/airlock/security{
+	name = "Lab Security";
+	req_access_txt = ""
+	},
+/turf/simulated/floor/red,
+/area/h7/lab)
+"ul" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/decal/fakeobjects/firelock_broken,
+/turf/simulated/floor/plating,
+/area/h7/lab)
+"uu" = (
+/turf/simulated/floor,
+/area/h7/computer_core)
+"uv" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/stool/chair{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/h7/control)
+"uO" = (
+/obj/decal/fakeobjects/firealarm_broken{
+	pixel_y = 24
+	},
+/turf/simulated/floor/green/corner{
+	dir = 4
+	},
+/area/h7)
+"uX" = (
+/obj/machinery/light/worn{
+	dir = 8
+	},
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor5"
+	},
+/obj/decal/skeleton,
+/turf/simulated/floor,
+/area/h7/computer_core)
+"vc" = (
+/obj/structure/girder,
+/turf/simulated/floor/plating/airless,
+/area/h7)
+"vL" = (
+/obj/cable,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"vZ" = (
+/obj/stool/bed,
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fpurple2"
+	},
+/area/h7/crew)
+"wf" = (
+/obj/item/storage/secure/ssafe/loot{
+	pixel_x = 6;
+	pixel_y = -28
+	},
+/turf/simulated/floor,
+/area/h7/control)
+"wl" = (
+/obj/machinery/light_switch{
+	name = "W light switch";
+	pixel_x = -24
+	},
+/turf/simulated/floor,
+/area/h7)
+"wo" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/h7/crew)
+"wt" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/red/side,
+/area/h7/lab)
+"wD" = (
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/stool,
+/turf/simulated/floor/specialroom/bar,
+/area/h7/crew)
+"wI" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/networked/radio,
+/turf/simulated/floor/bot,
+/area/h7/computer_core)
+"wO" = (
+/obj/machinery/door/window/northright,
+/turf/simulated/floor/neutral/side{
+	dir = 1
+	},
+/area/h7/crew)
+"xh" = (
+/obj/lattice,
+/turf/space,
+/area/h7/asteroid)
+"xs" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/h7)
+"xH" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/computer3frame/terminal{
+	anchored = 1;
+	state = 1
+	},
+/turf/simulated/floor,
+/area/h7/control)
+"yb" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/h7)
+"ye" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/h7)
+"ym" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/h7)
+"yF" = (
+/obj/machinery/door/airlock/external,
+/turf/simulated/floor,
+/area/h7/crew)
+"yT" = (
+/obj/landmark/artifact,
+/turf/simulated/floor/airless/damaged2,
+/area/h7)
+"zd" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/h7)
+"zh" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/cleanable/blood/tracks,
+/turf/simulated/floor,
+/area/h7/computer_core)
+"zm" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/light/worn,
+/turf/simulated/floor,
+/area/h7/crew)
+"zo" = (
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	environ = 2;
+	equipment = 0;
+	lighting = 0;
+	name = "Remote S APC";
+	pixel_y = -24
+	},
+/turf/simulated/floor/grime,
+/area/h7)
+"zq" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor3"
+	},
+/turf/simulated/floor,
+/area/h7/lab)
+"zr" = (
+/turf/simulated/floor/carpet{
+	icon_state = "fpurple2"
+	},
+/area/h7/crew)
+"zW" = (
+/obj/machinery/light/worn{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/h7)
+"zY" = (
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable,
+/obj/machinery/power/terminal,
+/turf/simulated/floor/plating,
+/area/h7/lab)
+"Ac" = (
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/terminal/zeta{
+	name = "Old Terminal";
+	setup_os_string = "H7_MAINFRAME"
+	},
+/turf/simulated/floor/bot,
+/area/h7/computer_core)
+"Ak" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/h7/crew)
+"Av" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet,
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fpurple2"
+	},
+/area/h7/crew)
+"Aw" = (
+/turf/simulated/floor,
+/area/h7/crew)
+"AA" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/red/side{
+	dir = 8
+	},
+/area/h7)
+"AP" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/h7/crew)
+"AU" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/h7/control)
+"Bd" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/h7)
+"Bu" = (
+/obj/cable,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "Storage";
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/h7/storage)
+"BD" = (
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/solar{
+	id = "h7solar";
+	name = "derelict solar panel"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "solarpanel";
+	name = "solar paneling"
+	},
+/area/noGenerate)
+"BG" = (
+/obj/securearea{
+	desc = "A warning sign telling of the dangers of HEPT emission fields. They are probably not good for you.";
+	name = "Molecular Integrity Hazard"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/h7/lab)
+"BS" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/h7/control)
+"BV" = (
+/turf/simulated/aprilfools{
+	desc = "A strange shifting void ...";
+	icon_state = "void";
+	name = "void"
+	},
+/area/h7/lab)
+"BZ" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/orangeblack/side,
+/area/h7/lab)
+"Cv" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 4
+	},
+/area/h7/computer_core)
+"CC" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/grime,
+/area/h7/lab)
+"CG" = (
+/obj/table/auto,
+/obj/item/device/audio_log/h7,
+/turf/simulated/floor,
+/area/h7/lab)
+"CW" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/table/auto,
+/obj/item/cable_coil,
+/turf/simulated/floor,
+/area/h7/control)
+"Db" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor,
+/area/h7)
+"Dg" = (
+/turf/simulated/wall/asteroid{
+	dir = 6
+	},
+/area/h7/asteroid)
+"Ds" = (
+/obj/decal/fakeobjects/firelock_broken{
+	dir = 4
+	},
+/obj/machinery/door/airlock/maintenance,
+/turf/simulated/floor/plating,
+/area/h7)
+"Dw" = (
+/turf/simulated/floor/neutral/side{
+	dir = 8
+	},
+/area/h7/crew)
+"Dz" = (
+/obj/item/sheet/steel,
+/turf/simulated/floor/plating,
+/area/h7/lab)
+"DF" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/h7/lab)
+"DP" = (
+/obj/machinery/power/data_terminal,
+/obj/cable,
+/obj/machinery/networked/storage/tape_drive{
+	bank_id = "Main";
+	locked = 0;
+	read_only = 1;
+	setup_drive_type = /obj/item/disk/data/tape/h7_logs
+	},
+/turf/simulated/floor/bot,
+/area/h7/computer_core)
+"DQ" = (
+/obj/decal/floatingtiles,
+/turf/simulated/aprilfools{
+	desc = "A strange shifting void ...";
+	icon_state = "void";
+	name = "void"
+	},
+/area/h7/lab)
+"Eh" = (
+/turf/simulated/floor,
+/area/h7/lab)
+"Ej" = (
+/obj/item/paper{
+	info = "Ever since we began tests, the Secbuddies have been acting strangely.  Yesterday, one of them followed me around for an hour while pointing at me excitedly and beeping.  Is this a joke? Do I amuse you? It's not funny!!";
+	name = "Paper-Complaint #11"
+	},
+/turf/simulated/floor,
+/area/h7/crew)
+"El" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor,
+/area/h7/storage)
+"Em" = (
+/obj/machinery/door/airlock{
+	name = "Compact Kitchen"
+	},
+/turf/simulated/floor,
+/area/h7/crew)
+"Ep" = (
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
+/turf/simulated/floor,
+/area/h7)
+"Et" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/h7/storage)
+"EI" = (
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/item/cable_coil/cut,
+/turf/simulated/floor/airless/plating/damaged1,
+/area/h7)
+"EN" = (
+/turf/simulated/wall/auto/supernorn,
+/area/h7/asteroid)
+"EX" = (
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/guardbot_dock{
+	desc = "A recharging and command station for PR-6S Guardbuddies. It looks rather worn.";
+	frequency = 1089;
+	name = "dusty docking station"
+	},
+/turf/simulated/floor/bot,
+/area/h7/lab)
+"Fj" = (
+/obj/cable,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/airless/plating/damaged1,
+/area/noGenerate)
+"Fo" = (
+/obj/storage/crate,
+/obj/item/rcd_ammo,
+/turf/simulated/floor/orangeblack,
+/area/h7/storage)
+"FI" = (
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/h7/lab)
+"FL" = (
+/obj/decal/fakeobjects/firealarm_broken{
+	pixel_y = 24
+	},
+/turf/simulated/floor,
+/area/h7/lab)
+"FM" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/h7/lab)
+"FT" = (
+/turf/simulated/wall/asteroid{
+	dir = 5
+	},
+/area/h7/asteroid)
+"FW" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor,
+/area/h7/storage)
+"Gi" = (
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/h7/lab)
+"Gs" = (
+/turf/simulated/wall/auto/supernorn,
+/area/h7/lab)
+"GJ" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/structure/girder/displaced,
+/turf/simulated/floor,
+/area/h7/storage)
+"GS" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/networked/nuclear_charge,
+/turf/simulated/floor/plating,
+/area/h7)
+"GU" = (
+/obj/map/light/void,
+/obj/item/clothing/head/void_crown,
+/turf/simulated/aprilfools{
+	desc = "A strange shifting void ...";
+	icon_state = "void";
+	name = "void"
+	},
+/area/h7/lab)
+"Hd" = (
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "Living Quarters"
+	},
+/turf/simulated/floor/bot,
+/area/h7/crew)
+"Hk" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/h7)
+"Hn" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/decal/cleanable/blood/tracks,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/h7/computer_core)
+"Hw" = (
+/obj/decal/fakeobjects/firelock_broken,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/external{
+	name = "Compartment Hatch"
+	},
+/turf/simulated/floor,
+/area/h7)
+"Hx" = (
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Storage";
+	freq = 1431;
+	location = "Central Junction"
+	},
+/turf/simulated/floor,
+/area/h7)
+"Hz" = (
+/obj/stool/bed,
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "fpurple2"
+	},
+/area/h7/crew)
+"HK" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles5"
+	},
+/turf/simulated/aprilfools{
+	desc = "A strange shifting void ...";
+	icon_state = "void";
+	name = "void"
+	},
+/area/h7/lab)
+"HS" = (
+/turf/simulated/wall/asteroid{
+	dir = 4
+	},
+/area/h7/asteroid)
+"HV" = (
+/obj/decal/fakeobjects/firelock_broken{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/glass{
+	icon_state = "door_locked";
+	locked = 1;
+	name = "Damaged Glass Airlock";
+	secondsElectrified = -1
+	},
+/turf/simulated/floor,
+/area/h7)
+"HZ" = (
+/obj/item/wirecutters,
+/turf/simulated/floor/plating,
+/area/h7)
+"Ii" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/simulated/floor/neutral/side{
+	dir = 4
+	},
+/area/h7/crew)
+"Io" = (
+/obj/storage/crate,
+/obj/item/extinguisher,
+/obj/item/extinguisher,
+/turf/simulated/floor/orangeblack/side{
+	dir = 9
+	},
+/area/h7/storage)
+"Iq" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
+	},
+/turf/simulated/floor/red/side{
+	dir = 1
+	},
+/area/h7/lab)
+"Is" = (
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"Iu" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/orangeblack,
+/area/h7/computer_core)
+"ID" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/item/c_tube,
+/turf/simulated/floor/carpet{
+	icon_state = "fpurple2"
+	},
+/area/h7/crew)
+"Jh" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/table/auto,
+/obj/machinery/recharger,
+/turf/simulated/floor/red/side{
+	dir = 10
+	},
+/area/h7/lab)
+"JL" = (
+/obj/structure/girder,
+/obj/item/sheet/steel,
+/turf/simulated/floor/airless/plating/damaged1,
+/area/h7/lab)
+"JP" = (
+/obj/decal/floatingtiles{
+	dir = 1;
+	icon_state = "floattiles4"
+	},
+/turf/simulated/floor/plating,
+/area/h7/lab)
+"JV" = (
+/obj/item/wrench,
+/turf/simulated/floor/plating,
+/area/h7)
+"Kc" = (
+/obj/table/auto,
+/turf/simulated/floor/grime,
+/area/h7/crew)
+"Kd" = (
+/turf/simulated/floor/grime,
+/area/h7/storage)
+"Kh" = (
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/h7/lab)
+"Kl" = (
+/obj/machinery/power/smes{
+	charge = 3.5e+006;
+	n_tag = "Mainframe Backup";
+	name = "old power storage unit";
+	output = 50000
+	},
+/turf/simulated/floor/plating,
+/area/h7)
+"Kq" = (
+/obj/structure/girder/displaced,
+/turf/simulated/floor/plating,
+/area/h7/lab)
+"Kr" = (
+/obj/cable,
+/obj/machinery/power/solar{
+	id = "h7solar";
+	name = "derelict solar panel"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "solarpanel";
+	name = "solar paneling"
+	},
+/area/noGenerate)
+"Ky" = (
+/obj/item/cable_coil/cut{
+	icon_state = "coil1"
+	},
+/turf/simulated/floor/airless/plating/damaged2,
+/area/noGenerate)
+"KB" = (
+/turf/simulated/wall/asteroid,
+/area/h7/asteroid)
+"KI" = (
+/obj/lattice,
+/turf/space,
+/area/noGenerate)
+"KL" = (
+/obj/stool/bed,
+/obj/decal/skeleton,
+/obj/item/clothing/suit/bedsheet,
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor3"
+	},
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fpurple2"
+	},
+/area/h7/crew)
+"KZ" = (
+/turf/simulated/floor,
+/area/h7)
+"Lq" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/item/caution{
+	desc = "Caution! Science is present!";
+	name = "research caution sign"
+	},
+/turf/simulated/floor/purple/side{
+	dir = 8
+	},
+/area/h7)
+"LV" = (
+/turf/simulated/wall/auto/supernorn,
+/area/noGenerate)
+"LW" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/decal/fakeobjects/firelock_broken{
+	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	aiControlDisabled = 1;
+	locked = 1;
+	secondsElectrified = -1
+	},
+/turf/simulated/floor,
+/area/h7)
+"LX" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless,
+/area/h7)
+"Ma" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/h7/lab)
+"Mh" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/decal/cleanable/ash,
+/turf/simulated/floor/orangeblack/side,
+/area/h7/lab)
+"Mv" = (
+/turf/simulated/floor/grime,
+/area/h7/lab)
+"Mw" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "fpurple1"
+	},
+/area/h7/crew)
+"MA" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 4
+	},
+/area/h7/computer_core)
+"MK" = (
+/obj/decal/fakeobjects/lighttube_broken{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/h7/lab)
+"ML" = (
+/turf/simulated/wall/asteroid{
+	dir = 10
+	},
+/area/h7/asteroid)
+"MO" = (
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
+/turf/simulated/floor/purple/side{
+	dir = 8
+	},
+/area/h7)
+"MZ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/green/side{
+	dir = 1
+	},
+/area/h7)
+"Na" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/table/auto,
+/obj/item/paper_bin,
+/turf/simulated/floor,
+/area/h7/control)
+"Nh" = (
+/turf/simulated/floor/carpet{
+	icon_state = "fpurple1"
+	},
+/area/h7/crew)
+"Nn" = (
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles3"
+	},
+/turf/simulated/aprilfools{
+	desc = "A strange shifting void ...";
+	icon_state = "void";
+	name = "void"
+	},
+/area/h7/lab)
+"No" = (
+/turf/simulated/floor/plating/scorched,
+/area/h7)
+"Nt" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles4"
+	},
+/turf/simulated/aprilfools{
+	desc = "A strange shifting void ...";
+	icon_state = "void";
+	name = "void"
+	},
+/area/h7/lab)
+"NS" = (
+/obj/storage/crate,
+/obj/item/cable_coil,
+/turf/simulated/floor/orangeblack,
+/area/h7/storage)
+"NT" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/orangeblack/corner{
+	dir = 1
+	},
+/area/h7/storage)
+"Oc" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor,
+/area/h7)
+"Oi" = (
+/turf/simulated/floor/airless/plating/scorched,
+/area/noGenerate)
+"Oj" = (
+/turf/simulated/floor/sanitary,
+/area/h7/crew)
+"Ol" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles3"
+	},
+/turf/simulated/floor/plating,
+/area/h7/lab)
+"Ow" = (
+/obj/submachine/chef_sink,
+/turf/simulated/floor/sanitary,
+/area/h7/crew)
+"Oz" = (
+/turf/simulated/floor/airless/plating/damaged1,
+/area/noGenerate)
+"OC" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/decal/fakeobjects/firelock_broken{
+	dir = 1
+	},
+/obj/machinery/door/airlock/medical{
+	locked = 1;
+	name = "Anomalous Materials Laboratory";
+	req_access_txt = ""
+	},
+/turf/simulated/floor/plating,
+/area/h7/lab)
+"OJ" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/purple/corner{
+	dir = 8
+	},
+/area/h7/lab)
+"ON" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/firealarm{
+	dir = 1;
+	layer = 3.5;
+	pixel_y = -24
+	},
+/turf/simulated/floor,
+/area/h7/storage)
+"OU" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/item/crowbar,
+/turf/simulated/floor/grime,
+/area/h7/crew)
+"Pb" = (
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "E APC";
+	pixel_x = 24
+	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/orangeblack,
+/area/h7/computer_core)
+"Pd" = (
+/turf/simulated/floor/caution/west,
+/area/h7/lab)
+"Ph" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/h7/lab)
+"Pk" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/h7/crew)
+"Pp" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating,
+/area/h7)
+"PI" = (
+/turf/simulated/floor/carpet{
+	dir = 1;
+	icon_state = "fpurple2"
+	},
+/area/h7/crew)
+"PX" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/light/worn,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
+/turf/simulated/floor,
+/area/h7/storage)
+"Qa" = (
+/obj/decal/fakeobjects/lighttube_broken{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/h7/lab)
+"Ql" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor,
+/area/h7)
+"Qm" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/h7)
+"QC" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/h7)
+"QH" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles2"
+	},
+/turf/simulated/aprilfools{
+	desc = "A strange shifting void ...";
+	icon_state = "void";
+	name = "void"
+	},
+/area/h7/lab)
+"QO" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/caution/west,
+/area/h7/lab)
+"QP" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/h7/lab)
+"QQ" = (
+/obj/machinery/light/worn,
+/turf/simulated/floor,
+/area/h7/crew)
+"QT" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/table/auto,
+/obj/item/pen,
+/turf/simulated/floor,
+/area/h7/control)
+"QU" = (
+/obj/table/auto,
+/obj/item/screwdriver,
+/obj/item/electronics/capacitor{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/turf/simulated/floor,
+/area/h7/lab)
+"QZ" = (
+/obj/item/device/guardbot_tool/taser,
+/turf/simulated/floor,
+/area/h7/lab)
+"Rl" = (
+/turf/simulated/floor,
+/area/h7/storage)
+"Rm" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/table/auto,
+/obj/item/scissors,
+/turf/simulated/floor,
+/area/h7/control)
+"Rt" = (
+/obj/table/auto,
+/obj/item/plate,
+/obj/item/kitchen/utensil/fork,
+/turf/simulated/floor/specialroom/bar,
+/area/h7/crew)
+"RH" = (
+/turf/simulated/floor/specialroom/bar,
+/area/h7/crew)
+"Se" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/h7/lab)
+"Sf" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles3"
+	},
+/turf/simulated/floor/plating/airless,
+/area/h7)
+"Sk" = (
+/obj/submachine/chef_oven,
+/turf/simulated/floor/sanitary,
+/area/h7/crew)
+"SB" = (
+/obj/machinery/light/worn{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/h7/crew)
+"SP" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/plasticflaps,
+/turf/simulated/floor/plating,
+/area/h7/computer_core)
+"ST" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/window/northleft,
+/turf/simulated/floor/neutral/side{
+	dir = 1
+	},
+/area/h7/crew)
+"SX" = (
+/obj/item/skull,
+/turf/space,
+/area/h7/asteroid)
+"Td" = (
+/obj/table/auto,
+/obj/item/electronics/board,
+/turf/simulated/floor,
+/area/h7/lab)
+"Tf" = (
+/turf/simulated/wall/auto/supernorn,
+/area/h7/crew)
+"Th" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/guardbot_dock{
+	desc = "A recharging and command station for PR-6S Guardbuddies. It looks rather worn.";
+	frequency = 1089;
+	name = "dusty docking station"
+	},
+/obj/machinery/bot/guardbot/bad,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/bot,
+/area/h7/computer_core)
+"TJ" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/computer3/terminal/zeta{
+	name = "Old Terminal";
+	setup_os_string = "H7_MAINFRAME"
+	},
+/turf/simulated/floor,
+/area/h7/control)
+"TS" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/h7/lab)
+"TY" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor,
+/area/h7)
+"Uq" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/h7/lab)
+"Uv" = (
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/light/worn{
+	dir = 8
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	environ = 2;
+	equipment = 0;
+	lighting = 0;
+	name = "Remote W APC";
+	pixel_x = -24
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 8
+	},
+/area/h7/storage)
+"UD" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor,
+/area/h7/crew)
+"UQ" = (
+/turf/simulated/floor/caution/east,
+/area/h7/lab)
+"UU" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/h7/crew)
+"UW" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"Vi" = (
+/obj/machinery/light/worn{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/h7/control)
+"Vl" = (
+/obj/item/storage/toolbox/mechanical,
+/turf/simulated/floor/plating,
+/area/h7/lab)
+"Vo" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/h7)
+"Vy" = (
+/obj/critter/zombie/h7,
+/turf/simulated/floor,
+/area/h7/lab)
+"VT" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/red/side{
+	dir = 6
+	},
+/area/h7/lab)
+"VV" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/networked/storage/scanner,
+/turf/simulated/floor,
+/area/h7/control)
+"VZ" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/orangeblack/side,
+/area/h7/computer_core)
+"We" = (
+/obj/machinery/light/worn{
+	dir = 4
+	},
+/obj/item/storage/goodybag,
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "fpurple2"
+	},
+/area/h7/crew)
+"Wf" = (
+/obj/storage/crate,
+/obj/item/raw_material/telecrystal,
+/turf/simulated/floor,
+/area/h7/storage)
+"Wx" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/orangeblack/side,
+/area/h7/lab)
+"WC" = (
+/obj/machinery/power/data_terminal,
+/obj/overlay{
+	density = 1;
+	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "tapedrive-p";
+	name = "broken databank"
+	},
+/obj/cable,
+/turf/simulated/floor/bot,
+/area/h7/computer_core)
+"WI" = (
+/obj/table/auto,
+/obj/item/raw_material/telecrystal,
+/obj/item/raw_material/telecrystal{
+	pixel_x = 5;
+	pixel_y = -10
+	},
+/turf/simulated/floor,
+/area/h7/lab)
+"WK" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/turf/simulated/floor/neutral/side{
+	dir = 8
+	},
+/area/h7/crew)
+"Xq" = (
+/obj/machinery/door/airlock/maintenance,
+/turf/simulated/floor/plating,
+/area/h7)
+"XN" = (
+/obj/stool/bed,
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fpurple2"
+	},
+/area/h7/crew)
+"XT" = (
+/obj/decal/cleanable/blood,
+/obj/decal/cleanable/cobweb,
+/turf/simulated/floor/plating,
+/area/h7)
+"XU" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/table/auto,
+/turf/simulated/floor/red/side{
+	dir = 8
+	},
+/area/h7/lab)
+"Ye" = (
+/obj/storage/crate,
+/obj/item/caution{
+	desc = "Caution! Science is present!";
+	name = "research caution sign"
+	},
+/obj/item/caution{
+	desc = "Caution! Science is present!";
+	name = "research caution sign"
+	},
+/obj/item/caution{
+	desc = "Caution! Science is present!";
+	name = "research caution sign"
+	},
+/turf/simulated/floor/orangeblack,
+/area/h7/storage)
+"Yg" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/stool,
+/obj/critter/zombie/h7,
+/turf/simulated/floor,
+/area/h7/lab)
+"Yj" = (
+/obj/decal/cleanable/cobweb2,
+/turf/simulated/floor,
+/area/h7)
+"Yq" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/h7/lab)
+"Yw" = (
+/obj/machinery/door/airlock/external,
+/turf/simulated/floor/caution/west,
+/area/h7/crew)
+"YH" = (
+/turf/space,
+/area/noGenerate)
+"YQ" = (
+/turf/simulated/floor/airless,
+/area/h7)
+"YV" = (
+/turf/space,
+/area/allowGenerate)
+"YY" = (
+/turf/simulated/wall/auto/supernorn,
+/area/h7)
+"Zm" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/orangeblack/side,
+/area/h7/lab)
+"Zv" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 6
+	},
+/area/h7/computer_core)
+"ZH" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/guardbot_dock{
+	desc = "A recharging and command station for PR-6S Guardbuddies. It looks rather worn.";
+	frequency = 1089;
+	name = "dusty docking station"
+	},
+/obj/machinery/bot/guardbot/bad,
+/turf/simulated/floor/bot,
+/area/h7/computer_core)
+"ZL" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/h7/lab)
+"ZQ" = (
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"ZS" = (
+/obj/machinery/power/data_terminal,
+/obj/cable,
+/obj/machinery/networked/mainframe/h7{
+	tag = "H7_MAINFRAME"
+	},
+/turf/simulated/floor/delivery,
+/area/h7/computer_core)
+
+(1,1,1) = {"
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YH
+YH
+LV
+YH
+YH
+YH
+Tf
+Yw
+Tf
+YH
+YH
+YH
+LV
+YH
+YH
+YH
+YH
+YH
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+"}
+(2,1,1) = {"
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YH
+YH
+YH
+KI
+YH
+YH
+YH
+Tf
+Aw
+Tf
+YH
+YH
+YH
+KI
+YH
+YH
+YH
+YH
+YH
+YV
+YV
+YH
+YH
+YH
+YH
+YH
+YH
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+"}
+(3,1,1) = {"
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YH
+YH
+YH
+YH
+KI
+KI
+YH
+Tf
+sn
+yF
+sn
+Tf
+YH
+KI
+KI
+YH
+YH
+YH
+YH
+YH
+YV
+YV
+YH
+YH
+YH
+YH
+YH
+YH
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+"}
+(4,1,1) = {"
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YH
+YH
+YH
+Tf
+Tf
+Tf
+Tf
+Tf
+Tf
+Aw
+Aw
+Aw
+Tf
+Tf
+Tf
+Tf
+Tf
+Tf
+YH
+YH
+YH
+YH
+YH
+YH
+Ky
+kX
+Kr
+YH
+YH
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+"}
+(5,1,1) = {"
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YH
+YH
+Tf
+Tf
+oS
+RH
+eZ
+tv
+wo
+Aw
+Aw
+QQ
+Tf
+Hz
+KL
+vZ
+tx
+Tf
+Tf
+YH
+YH
+YH
+YH
+YH
+BD
+vL
+Kr
+YH
+YH
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+"}
+(6,1,1) = {"
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YH
+YH
+Tf
+tv
+Rt
+RH
+nd
+AP
+ST
+Ak
+Ak
+Pk
+wo
+PI
+Nh
+Nh
+ue
+il
+Tf
+YH
+YH
+YH
+YH
+YH
+BD
+vL
+Kr
+YH
+YH
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+"}
+(7,1,1) = {"
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YH
+YH
+Tf
+RH
+eZ
+RH
+UU
+RH
+wO
+Aw
+Aw
+UD
+ob
+fc
+ba
+Mw
+Mw
+ID
+Tf
+KI
+KI
+Is
+KI
+KI
+BD
+vL
+Kr
+YH
+YH
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+"}
+(8,1,1) = {"
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YH
+YH
+Tf
+RH
+RH
+SB
+wD
+mT
+wo
+Aw
+Aw
+ki
+Tf
+Dw
+Dw
+Dw
+Dw
+WK
+zd
+YH
+YH
+KI
+YH
+YH
+BD
+Fj
+Kr
+YH
+YH
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+"}
+(9,1,1) = {"
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YH
+YH
+Tf
+Em
+Tf
+Tf
+Tf
+wo
+wo
+Aw
+Aw
+ki
+tX
+Aw
+Aw
+Aw
+Aw
+Kc
+zd
+YH
+YH
+KI
+YH
+YH
+YH
+ZQ
+YH
+YH
+YH
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+"}
+(10,1,1) = {"
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YH
+YH
+Tf
+Oj
+cE
+cC
+Tf
+tT
+Aw
+bN
+Aw
+ki
+Tf
+ak
+ak
+bB
+ak
+Ii
+zd
+YH
+YH
+KI
+YH
+YH
+BD
+vL
+Kr
+YH
+YH
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+"}
+(11,1,1) = {"
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YH
+YH
+Tf
+Oj
+Oj
+ox
+Tf
+iB
+Aw
+Aw
+Aw
+ki
+wo
+PI
+Nh
+Nh
+Nh
+zr
+Tf
+KI
+KI
+Is
+KI
+KI
+BD
+vL
+Kr
+YH
+YH
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+"}
+(12,1,1) = {"
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YH
+YH
+Tf
+mO
+Oj
+eB
+jZ
+sm
+Ak
+Ak
+Ak
+if
+wo
+PI
+Nh
+Nh
+so
+We
+Tf
+YH
+YH
+YH
+YH
+YH
+BD
+vL
+Kr
+YH
+YH
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+"}
+(13,1,1) = {"
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YH
+YH
+Tf
+Tf
+Sk
+Ow
+Tf
+jJ
+Aw
+Aw
+Aw
+zm
+Tf
+cR
+XN
+Av
+tn
+Tf
+Tf
+YH
+YH
+YH
+YH
+YH
+BD
+vL
+Kr
+YH
+YH
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+"}
+(14,1,1) = {"
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YH
+YH
+YH
+Tf
+Tf
+Tf
+Tf
+ki
+Aw
+Ej
+Aw
+ki
+Tf
+Tf
+Tf
+Tf
+Tf
+Tf
+YH
+YH
+YH
+YH
+YH
+YH
+BD
+eu
+Kr
+YH
+YH
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+"}
+(15,1,1) = {"
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YH
+YH
+YH
+YH
+YH
+YH
+Tf
+Hd
+Ak
+iV
+Ak
+OU
+Tf
+Is
+Is
+Oi
+KI
+KI
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+UW
+YH
+YH
+YH
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+"}
+(16,1,1) = {"
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YH
+YH
+YH
+YH
+YH
+Tf
+Tf
+Aw
+ki
+Aw
+Tf
+Tf
+YH
+KI
+KI
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+UW
+YH
+YH
+YH
+YH
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+"}
+(17,1,1) = {"
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YH
+YH
+YH
+YH
+YY
+YY
+iL
+YY
+YY
+YH
+YH
+YH
+KI
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+UW
+YH
+YH
+YH
+YH
+YH
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+"}
+(18,1,1) = {"
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YH
+YH
+YH
+YY
+wl
+mr
+KZ
+YY
+YH
+YH
+YH
+KI
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+QP
+QP
+ZL
+QP
+QP
+YH
+YH
+YH
+YH
+YH
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+"}
+(19,1,1) = {"
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YH
+YH
+YH
+YH
+zd
+KZ
+mr
+KZ
+zd
+YH
+YH
+YH
+Oi
+KI
+KI
+QP
+QP
+QP
+QP
+QP
+QP
+rz
+zY
+hQ
+QP
+QP
+YH
+YH
+YH
+YH
+YH
+YV
+YV
+YV
+YV
+YV
+YV
+"}
+(20,1,1) = {"
+YV
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+zd
+KZ
+mr
+KZ
+zd
+YH
+YH
+YH
+KI
+YH
+YH
+QP
+oM
+pf
+pf
+pf
+pf
+pf
+pf
+lc
+pf
+QP
+QP
+QP
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YV
+YV
+"}
+(21,1,1) = {"
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+zd
+KZ
+mr
+KZ
+zd
+Is
+KI
+KI
+Oz
+YH
+YH
+QP
+pf
+pf
+pf
+pf
+pf
+pf
+pf
+lc
+pf
+pf
+pf
+QP
+KI
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YV
+"}
+(22,1,1) = {"
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YY
+zW
+mr
+KZ
+YY
+YH
+YH
+qD
+EN
+kx
+kx
+QP
+QP
+fd
+Gs
+Gs
+Gs
+Gs
+Gs
+TS
+pf
+pf
+pf
+QP
+KI
+YH
+KI
+KI
+YH
+YH
+YH
+YH
+YH
+"}
+(23,1,1) = {"
+YH
+YH
+qD
+kx
+kx
+kx
+kx
+ML
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+zd
+KZ
+mr
+KZ
+zd
+YH
+qD
+qD
+KB
+KB
+QP
+QP
+Eh
+Eh
+kW
+Eh
+Eh
+Eh
+nZ
+TS
+Gs
+Kh
+FI
+QP
+QP
+QP
+QP
+QP
+QP
+QP
+YH
+YH
+YH
+"}
+(24,1,1) = {"
+YH
+qD
+qD
+KB
+KB
+KB
+KB
+KB
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+zd
+KZ
+mr
+KZ
+zd
+qD
+qD
+KB
+KB
+KB
+Gs
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+nH
+BZ
+Gs
+lc
+pf
+Gs
+qT
+Eh
+iO
+Mv
+hD
+QP
+QP
+KI
+YH
+"}
+(25,1,1) = {"
+qD
+qD
+KB
+KB
+KB
+KB
+KB
+KB
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+zd
+KZ
+mr
+KZ
+zd
+qD
+KB
+YY
+YY
+YY
+Gs
+Eh
+Eh
+sB
+BV
+Nn
+aJ
+Eh
+Vy
+gi
+OC
+DF
+Uq
+ul
+bM
+bM
+bM
+Se
+gn
+WI
+QP
+Gs
+KI
+"}
+(26,1,1) = {"
+sT
+KB
+KB
+kM
+kM
+kM
+Et
+Et
+Et
+Et
+Et
+Et
+KI
+KI
+KI
+YY
+Yj
+mr
+KZ
+ye
+KB
+KB
+ye
+XT
+kk
+rh
+Eh
+JP
+BV
+BV
+BV
+BV
+dL
+Eh
+Zm
+Gs
+pf
+lc
+Gs
+Eh
+Eh
+Eh
+mX
+Eh
+QU
+QP
+KI
+YH
+"}
+(27,1,1) = {"
+qD
+KB
+kM
+kM
+ju
+sH
+rU
+Et
+Fo
+Ye
+NS
+Et
+Et
+YH
+YH
+ye
+ye
+sy
+ye
+ye
+KB
+KB
+ye
+az
+az
+Gs
+Qa
+BV
+BV
+mq
+eA
+BV
+BV
+Eh
+pm
+Gs
+pS
+Gi
+Gs
+Gs
+UQ
+UQ
+lp
+UQ
+Gs
+QP
+KI
+YH
+"}
+(28,1,1) = {"
+KB
+KB
+kM
+kC
+kC
+kC
+pP
+kM
+Io
+kC
+kC
+kC
+Et
+YH
+ye
+ye
+KZ
+mr
+KZ
+ye
+ye
+KB
+ye
+az
+az
+Gs
+Eh
+BV
+Nt
+BV
+GU
+BV
+BV
+dL
+Zm
+cs
+lc
+pf
+Gs
+pf
+pf
+pf
+lc
+pf
+pf
+QP
+KI
+YH
+"}
+(29,1,1) = {"
+KB
+KB
+kM
+Rl
+Rl
+Rl
+sl
+Uv
+NT
+po
+po
+iX
+Et
+ye
+ye
+mA
+KZ
+mr
+KZ
+zo
+ye
+ye
+ye
+az
+az
+Gs
+FL
+HK
+BV
+BV
+BV
+qR
+BV
+DQ
+Mh
+kd
+kI
+FM
+kd
+Ph
+Ph
+Ph
+jG
+rf
+pf
+QP
+Gs
+YH
+"}
+(30,1,1) = {"
+KB
+KB
+kM
+Wf
+Rl
+Rl
+Rl
+Rl
+Rl
+Rl
+Rl
+ON
+kM
+No
+dP
+KZ
+st
+TY
+Vo
+kT
+KZ
+KZ
+YY
+az
+az
+Gs
+Eh
+Vy
+Nn
+QH
+BV
+BV
+BV
+QZ
+Zm
+BG
+lc
+pf
+Gs
+pf
+pf
+pf
+lc
+pf
+pf
+QP
+YH
+YH
+"}
+(31,1,1) = {"
+FT
+KB
+kM
+Rl
+Rl
+Rl
+Rl
+tQ
+Rl
+Rl
+Rl
+FW
+iR
+xs
+xs
+xs
+md
+Hx
+mr
+KZ
+KZ
+KZ
+Xq
+az
+az
+Gs
+zq
+Eh
+Eh
+MK
+Ol
+BV
+DQ
+Eh
+pm
+Gs
+Gi
+pS
+Gs
+Gs
+Pd
+Pd
+QO
+Pd
+Gs
+QP
+YH
+YH
+"}
+(32,1,1) = {"
+sT
+KB
+kM
+ar
+Rl
+Rl
+Rl
+Rl
+Rl
+Rl
+Rl
+PX
+kM
+KZ
+KZ
+dP
+Ql
+mZ
+kT
+KZ
+sQ
+No
+YY
+az
+az
+Gs
+Gs
+Yq
+Yq
+Gs
+Eh
+QH
+Eh
+Eh
+Zm
+Gs
+Dz
+ga
+Gs
+Eh
+Eh
+Eh
+mX
+Eh
+CC
+QP
+YH
+YH
+"}
+(33,1,1) = {"
+sT
+KB
+kM
+uf
+Rl
+Rl
+Rl
+Rl
+Rl
+Rl
+Rl
+hZ
+kM
+YY
+YY
+uO
+KZ
+mr
+KZ
+bI
+YY
+YY
+YY
+az
+az
+Gs
+sh
+XU
+Jh
+Yq
+Eh
+Eh
+Eh
+Eh
+gi
+OC
+FM
+DF
+ul
+bM
+bM
+bM
+Yg
+Eh
+Eh
+QP
+JL
+YH
+"}
+(34,1,1) = {"
+FT
+FT
+kM
+Kd
+Rl
+Rl
+Rl
+Wf
+Rl
+Rl
+El
+Bu
+kM
+az
+YY
+YY
+KZ
+mr
+KZ
+YY
+YY
+az
+az
+az
+az
+Gs
+Iq
+Ma
+wt
+Yq
+Eh
+Eh
+Eh
+Eh
+Zm
+Gs
+pf
+Kq
+Gs
+Eh
+Td
+ng
+CG
+ad
+QP
+QP
+YH
+YH
+"}
+(35,1,1) = {"
+YH
+AU
+nQ
+nQ
+nQ
+nQ
+dF
+GJ
+po
+po
+mC
+kM
+kM
+az
+az
+YY
+KZ
+mr
+KZ
+YY
+bx
+az
+az
+az
+dJ
+Gs
+oK
+fm
+VT
+Gs
+EX
+du
+iT
+OJ
+Wx
+Gs
+fV
+Gs
+QP
+QP
+QP
+QP
+QP
+QP
+QP
+KI
+YH
+YH
+"}
+(36,1,1) = {"
+AU
+AU
+qH
+Vi
+aV
+nQ
+ye
+kp
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+HV
+YY
+YY
+YY
+YY
+Ds
+YY
+YY
+Gs
+Gs
+Gs
+uk
+Gs
+Gs
+Gs
+tf
+Gs
+Gs
+Gs
+pf
+uj
+QP
+KB
+KB
+QP
+KB
+KB
+KI
+KI
+YH
+YH
+"}
+(37,1,1) = {"
+AU
+VV
+uv
+fS
+fS
+nQ
+oe
+mr
+KZ
+KZ
+Ep
+KZ
+KZ
+KZ
+KZ
+YY
+KZ
+mr
+KZ
+KZ
+Ep
+KZ
+KZ
+KZ
+KZ
+YY
+rZ
+mN
+AA
+mN
+MO
+tj
+Lq
+tj
+tj
+Gs
+dR
+pf
+QP
+KB
+KB
+KB
+Dg
+Dg
+YH
+YH
+YH
+YH
+"}
+(38,1,1) = {"
+AU
+CW
+fS
+eW
+jF
+rO
+MZ
+Hk
+xs
+Bd
+Bd
+Bd
+Bd
+Bd
+yb
+Hw
+Bd
+Hk
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Hw
+Bd
+Bd
+Db
+Bd
+cB
+Bd
+Hk
+Bd
+yb
+gZ
+oL
+Vl
+QP
+KB
+KB
+KB
+KB
+YH
+YH
+YH
+YH
+YV
+"}
+(39,1,1) = {"
+AU
+TJ
+ck
+BS
+cM
+nQ
+oe
+KZ
+nq
+KZ
+dP
+KZ
+nq
+Oc
+mr
+YY
+KZ
+KZ
+nq
+KZ
+KZ
+KZ
+nq
+KZ
+KZ
+ye
+KZ
+KZ
+mr
+KZ
+KZ
+KZ
+nq
+KZ
+rL
+QP
+QP
+QP
+QP
+KB
+Dg
+HS
+HS
+KB
+YH
+YH
+YV
+YV
+"}
+(40,1,1) = {"
+AU
+QT
+px
+dS
+qm
+nQ
+ye
+ye
+ye
+ye
+ye
+ye
+ye
+ye
+ym
+YY
+YY
+Xq
+YY
+YY
+YY
+ye
+ye
+LW
+ye
+ye
+ye
+ye
+ye
+ye
+ye
+ye
+ye
+ye
+ye
+QP
+KB
+KB
+KB
+KB
+KB
+YH
+YH
+YH
+YH
+YH
+YV
+YV
+"}
+(41,1,1) = {"
+AU
+Na
+os
+bq
+wf
+nQ
+uu
+Th
+uX
+Ac
+lx
+DP
+qd
+GS
+gu
+az
+az
+az
+YY
+KB
+KB
+ye
+YQ
+LX
+YQ
+qs
+yT
+ye
+KB
+KB
+KB
+KB
+KB
+Dg
+HS
+HS
+HS
+HS
+HS
+HS
+Dg
+YH
+YH
+YH
+YH
+YV
+YV
+YV
+"}
+(42,1,1) = {"
+AU
+Rm
+fS
+cr
+pw
+iZ
+zh
+Hn
+cL
+uu
+VZ
+ZS
+qd
+az
+QC
+az
+az
+JV
+YY
+KB
+KB
+ye
+dl
+fn
+vc
+Sf
+vc
+YY
+HS
+HS
+HS
+HS
+HS
+Dg
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YV
+YV
+YV
+YV
+YV
+"}
+(43,1,1) = {"
+AU
+xH
+fS
+fS
+wf
+nQ
+lM
+MA
+Cv
+Cv
+Zv
+WC
+qd
+az
+QC
+YY
+YY
+YY
+YY
+KB
+KB
+ye
+cw
+EI
+ye
+KI
+KI
+YY
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YV
+YV
+YV
+YV
+YV
+YV
+"}
+(44,1,1) = {"
+AU
+AU
+fS
+gj
+fS
+nQ
+ZH
+op
+Pb
+Iu
+wI
+qd
+qd
+az
+QC
+YY
+Dg
+Dg
+xh
+sT
+KB
+ye
+KI
+KI
+KI
+YH
+YH
+KI
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+"}
+(45,1,1) = {"
+YH
+AU
+AU
+nQ
+nQ
+nQ
+qd
+qd
+qd
+SP
+qd
+qd
+HZ
+az
+QC
+YY
+KB
+SX
+qD
+qD
+KB
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+"}
+(46,1,1) = {"
+YH
+YH
+YH
+FT
+KB
+FT
+KB
+KB
+YY
+QC
+Pp
+Qm
+Qm
+Qm
+bC
+YY
+ML
+kx
+qD
+KB
+KB
+YH
+YH
+YH
+YH
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+"}
+(47,1,1) = {"
+YH
+YH
+YH
+YH
+HS
+sT
+KB
+KB
+YY
+Kl
+fQ
+az
+az
+az
+YY
+YY
+KB
+KB
+KB
+Dg
+Dg
+YH
+YH
+YH
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+"}
+(48,1,1) = {"
+YH
+YH
+YH
+YH
+YH
+sT
+KB
+KB
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+KB
+KB
+KB
+KB
+KB
+YH
+YH
+YH
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+YV
+"}

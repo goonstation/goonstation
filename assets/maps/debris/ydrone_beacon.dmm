@@ -1,0 +1,573 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/space,
+/area/noGenerate)
+"b" = (
+/obj/decal/fakeobjects/shuttleengine{
+	desc = "You should probably leave it alone.";
+	dir = 4;
+	name = "sensor array"
+	},
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "wall3_space"
+	},
+/area/noGenerate)
+"c" = (
+/obj/storage/crate/loot,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/noGenerate)
+"d" = (
+/turf/simulated/floor/airless/circuit,
+/area/noGenerate)
+"f" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/noGenerate)
+"h" = (
+/turf/simulated/floor/airless/plating/damaged2,
+/area/noGenerate)
+"j" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/noGenerate)
+"l" = (
+/obj/decal/fakeobjects/shuttleengine{
+	desc = "You should probably leave it alone.";
+	name = "sensor array"
+	},
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "wall3_space"
+	},
+/area/noGenerate)
+"m" = (
+/obj/ydrone_panel,
+/turf/simulated/floor/airless/circuit,
+/area/noGenerate)
+"n" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/noGenerate)
+"o" = (
+/obj/decal/fakeobjects/shuttleengine{
+	desc = "You should probably leave it alone.";
+	dir = 1;
+	name = "sensor array"
+	},
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "wall3_space"
+	},
+/area/noGenerate)
+"q" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/noGenerate)
+"r" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "wall3_space"
+	},
+/area/noGenerate)
+"s" = (
+/obj/item/raw_material/rock{
+	icon_state = "rock2"
+	},
+/turf/space,
+/area/noGenerate)
+"v" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/obj/decal/cleanable/machine_debris,
+/turf/space,
+/area/noGenerate)
+"w" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/noGenerate)
+"x" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/noGenerate)
+"y" = (
+/obj/overlay{
+	density = 1;
+	desc = "A device for scanning deep space.";
+	icon = 'icons/mob/hivebot.dmi';
+	icon_state = "def_radar";
+	name = "relay dish"
+	},
+/obj/lattice,
+/turf/space,
+/area/noGenerate)
+"z" = (
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "wall3_space"
+	},
+/area/noGenerate)
+"A" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"B" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/noGenerate)
+"C" = (
+/obj/decal/cleanable/machine_debris,
+/turf/space,
+/area/noGenerate)
+"D" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "wall3_space"
+	},
+/area/noGenerate)
+"E" = (
+/obj/item/raw_material/shard/glass,
+/turf/space,
+/area/noGenerate)
+"F" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/noGenerate)
+"G" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"H" = (
+/obj/decal/fakeobjects/shuttleengine{
+	desc = "You should probably leave it alone.";
+	dir = 8;
+	name = "sensor array"
+	},
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "wall3_space"
+	},
+/area/noGenerate)
+"I" = (
+/obj/item/paper{
+	info = "IF YOU LIKE THIS HUNK OF JUNK SO MUCH THEN WHY DON'T YOU MARRY IT? - Signed, an employee at Sickly Sam's Space Scrapyard";
+	name = "angry note"
+	},
+/turf/space,
+/area/noGenerate)
+"J" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3_space"
+	},
+/area/noGenerate)
+"K" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/noGenerate)
+"N" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "wall3_space"
+	},
+/area/noGenerate)
+"P" = (
+/obj/critter/gunbot/drone/heavydrone,
+/turf/space,
+/area/noGenerate)
+"Q" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "wall3_space"
+	},
+/area/noGenerate)
+"R" = (
+/obj/item/raw_material/rock,
+/turf/space,
+/area/noGenerate)
+"U" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3_space"
+	},
+/area/noGenerate)
+"W" = (
+/obj/lattice,
+/turf/space,
+/area/noGenerate)
+"X" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/noGenerate)
+"Y" = (
+/obj/decal/floatingtiles{
+	dir = 1;
+	icon_state = "floattiles4"
+	},
+/turf/space,
+/area/noGenerate)
+"Z" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "wall3_space"
+	},
+/area/noGenerate)
+
+(1,1,1) = {"
+a
+a
+z
+U
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+D
+X
+a
+a
+a
+P
+R
+a
+a
+a
+Y
+"}
+(3,1,1) = {"
+a
+a
+a
+G
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+I
+l
+G
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+B
+N
+G
+a
+s
+a
+a
+a
+a
+R
+a
+a
+"}
+(6,1,1) = {"
+b
+Q
+B
+B
+A
+A
+f
+a
+a
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+G
+z
+d
+B
+m
+J
+a
+a
+a
+a
+"}
+(8,1,1) = {"
+a
+s
+a
+G
+d
+q
+W
+n
+d
+a
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+w
+B
+W
+y
+W
+B
+F
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+a
+a
+d
+j
+W
+K
+d
+G
+a
+s
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+D
+d
+B
+d
+N
+G
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+s
+a
+a
+a
+a
+x
+A
+A
+B
+B
+r
+H
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+G
+z
+B
+a
+"}
+(14,1,1) = {"
+a
+a
+a
+a
+a
+R
+a
+a
+a
+G
+o
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+G
+a
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+a
+a
+E
+a
+a
+a
+a
+X
+J
+a
+a
+"}
+(17,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+Z
+N
+a
+a
+"}
+(18,1,1) = {"
+a
+a
+a
+C
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(19,1,1) = {"
+a
+a
+h
+c
+A
+A
+a
+a
+a
+a
+a
+a
+a
+"}
+(20,1,1) = {"
+a
+a
+W
+v
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

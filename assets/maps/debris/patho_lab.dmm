@@ -1,0 +1,1818 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"am" = (
+/obj/stool/chair{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
+"au" = (
+/obj/machinery/centrifuge,
+/turf/simulated/floor/purplewhite,
+/area/abandonedoutpostthing)
+"ba" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/turf/simulated/floor/plating/random,
+/area/abandonedoutpostthing)
+"bg" = (
+/obj/stool/bed,
+/obj/decal/skeleton{
+	desc = "Eugh, the stench is horrible!";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body8";
+	name = "decomposed corpse"
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 6
+	},
+/area/abandonedoutpostthing)
+"bj" = (
+/obj/machinery/door/airlock/glass,
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
+"bl" = (
+/obj/machinery/door/airlock/glass,
+/turf/simulated/floor/sanitary,
+/area/abandonedoutpostthing)
+"cq" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "green";
+	icon_state = "bedsheet-green"
+	},
+/obj/window/cubicle{
+	dir = 2
+	},
+/obj/decal/skeleton,
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
+"cs" = (
+/obj/machinery/synthomatic,
+/obj/machinery/light,
+/turf/simulated/floor/purplewhite,
+/area/abandonedoutpostthing)
+"cv" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
+"cH" = (
+/obj/machinery/camera{
+	network = "Pathopost"
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 9
+	},
+/area/abandonedoutpostthing)
+"cO" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/stairs,
+/area/abandonedoutpostthing)
+"dk" = (
+/obj/machinery/computer/security{
+	network = "Pathopost"
+	},
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
+"dp" = (
+/obj/grille/steel,
+/obj/window/crystal/reinforced/east,
+/obj/window/crystal/reinforced/north,
+/obj/window/crystal/reinforced/south,
+/obj/window/crystal/reinforced/west,
+/turf/simulated/floor/plating/random,
+/area/abandonedoutpostthing)
+"dS" = (
+/obj/machinery/shower,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/white,
+/area/abandonedoutpostthing)
+"en" = (
+/obj/grille/catwalk,
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/plating/catwalk,
+/area/abandonedoutpostthing)
+"eK" = (
+/obj/machinery/light/worn{
+	dir = 4
+	},
+/obj/critter/zombie/scientist,
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
+"fk" = (
+/obj/stool/chair/red{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
+"fM" = (
+/turf/space,
+/area/allowGenerate)
+"gu" = (
+/obj/table/auto,
+/turf/simulated/floor/purplewhite{
+	dir = 4
+	},
+/area/abandonedoutpostthing)
+"gz" = (
+/obj/stool/chair/green{
+	dir = 4
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 1
+	},
+/area/abandonedoutpostthing)
+"hb" = (
+/obj/structure/woodwall{
+	color = "#CCCCCC";
+	icon = 'icons/turf/fake_woodwall.dmi';
+	name = "odd asteroid wall";
+	plane = -105
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"hs" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/engineering{
+	name = "Electrical Substation"
+	},
+/turf/simulated/floor/plating/random,
+/area/abandonedoutpostthing)
+"ia" = (
+/obj/decal/skeleton{
+	desc = "Eugh, the stench is horrible!";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body7";
+	name = "decomposed corpse"
+	},
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
+"je" = (
+/turf/simulated/floor/purplewhite{
+	dir = 8
+	},
+/area/abandonedoutpostthing)
+"jk" = (
+/obj/table/auto,
+/obj/item/synthmodule/radiation,
+/turf/simulated/floor/purplewhite{
+	dir = 8
+	},
+/area/abandonedoutpostthing)
+"jr" = (
+/obj/machinery/telejam/active,
+/turf/simulated/floor/white,
+/area/abandonedoutpostthing)
+"ml" = (
+/obj/item/clothing/under/gimmick/blackstronaut,
+/turf/simulated/floor/sanitary,
+/area/abandonedoutpostthing)
+"ni" = (
+/obj/machinery/camera{
+	network = "Pathopost"
+	},
+/turf/simulated/floor/sanitary,
+/area/abandonedoutpostthing)
+"nv" = (
+/obj/machinery/light/worn{
+	dir = 1
+	},
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8
+	},
+/turf/simulated/floor/sanitary,
+/area/abandonedoutpostthing)
+"nz" = (
+/turf/simulated/floor/plating/random,
+/area/abandonedoutpostthing)
+"on" = (
+/obj/storage/secure/closet/fridge,
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
+"ps" = (
+/obj/grille/catwalk{
+	dir = 5
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	icon_state = "catwalk_cross"
+	},
+/area/abandonedoutpostthing)
+"ql" = (
+/obj/stool/chair/green{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/abandonedoutpostthing)
+"qp" = (
+/obj/machinery/door/airlock/glass/medical{
+	locked = 1
+	},
+/turf/simulated/floor/white,
+/area/abandonedoutpostthing)
+"qS" = (
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "E APC";
+	pixel_x = 24
+	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating/random,
+/area/abandonedoutpostthing)
+"rN" = (
+/obj/table/auto,
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
+"rP" = (
+/obj/machinery/power/solar,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "solarpanel";
+	name = "solar paneling"
+	},
+/area/noGenerate)
+"rW" = (
+/obj/critter/zombie/scientist,
+/turf/simulated/floor/purplewhite{
+	dir = 8
+	},
+/area/abandonedoutpostthing)
+"sF" = (
+/turf/simulated/floor/purplewhite{
+	dir = 4
+	},
+/area/abandonedoutpostthing)
+"ta" = (
+/turf/simulated/floor/purplewhite{
+	dir = 6
+	},
+/area/abandonedoutpostthing)
+"tj" = (
+/turf/simulated/floor/white,
+/area/abandonedoutpostthing)
+"tk" = (
+/obj/machinery/computer/solar_control,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating/random,
+/area/abandonedoutpostthing)
+"tZ" = (
+/obj/critter/zombie/scientist,
+/obj/machinery/telejam/active,
+/turf/simulated/floor/white,
+/area/abandonedoutpostthing)
+"ug" = (
+/obj/machinery/light/worn,
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "green";
+	icon_state = "bedsheet-green"
+	},
+/obj/window/cubicle{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
+"vt" = (
+/obj/machinery/light/worn{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
+"vM" = (
+/obj/critter/zombie/security,
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
+"wx" = (
+/obj/machinery/light/worn{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
+"xk" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating/random,
+/area/abandonedoutpostthing)
+"xn" = (
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/abandonedoutpostthing)
+"xr" = (
+/obj/grille/steel,
+/obj/window/crystal/reinforced/east,
+/obj/window/crystal/reinforced/north,
+/obj/window/crystal/reinforced/south,
+/obj/machinery/door/poddoor{
+	id = "patho_lockdown_z3";
+	name = "Lockdown"
+	},
+/turf/simulated/floor/plating/random,
+/area/abandonedoutpostthing)
+"xP" = (
+/obj/stool/chair/red{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
+"yx" = (
+/obj/machinery/power/smes,
+/obj/cable,
+/turf/simulated/floor/plating/random,
+/area/abandonedoutpostthing)
+"yy" = (
+/turf/simulated/floor/purplewhite{
+	dir = 1
+	},
+/area/abandonedoutpostthing)
+"yE" = (
+/obj/grille/steel,
+/obj/window/crystal/reinforced/north,
+/obj/window/crystal/reinforced/south,
+/obj/window/crystal/reinforced/west,
+/obj/machinery/door/poddoor{
+	id = "patho_lockdown_z3";
+	name = "Lockdown"
+	},
+/turf/simulated/floor/plating/random,
+/area/abandonedoutpostthing)
+"yT" = (
+/obj/machinery/door_control/oneshot{
+	id = "patho_lockdown_z3";
+	pixel_x = 24
+	},
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
+"yV" = (
+/obj/machinery/light/worn{
+	dir = 8
+	},
+/obj/stool/chair{
+	dir = 1
+	},
+/obj/critter/zombie/scientist,
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
+"zd" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/burger/moldy,
+/turf/simulated/floor/purplewhite{
+	dir = 9
+	},
+/area/abandonedoutpostthing)
+"zG" = (
+/obj/machinery/camera{
+	network = "Pathopost"
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 1
+	},
+/area/abandonedoutpostthing)
+"Ad" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	network = "Pathopost";
+	tag = ""
+	},
+/obj/stool/chair,
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
+"Af" = (
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
+"At" = (
+/obj/machinery/door/airlock/security{
+	name = "Security Station"
+	},
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
+"CP" = (
+/obj/machinery/computer/pathology{
+	dir = 4
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 10
+	},
+/area/abandonedoutpostthing)
+"CW" = (
+/obj/table/auto,
+/obj/item/reagent_containers/glass/petridish,
+/obj/item/reagent_containers/glass/petridish,
+/obj/item/reagent_containers/glass/petridish,
+/obj/item/reagent_containers/glass/petridish,
+/obj/item/reagent_containers/glass/petridish,
+/obj/item/reagent_containers/glass/petridish,
+/obj/item/reagent_containers/glass/petridish,
+/obj/item/reagent_containers/glass/petridish,
+/turf/simulated/floor/purplewhite{
+	dir = 9
+	},
+/area/abandonedoutpostthing)
+"Dq" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/burger,
+/turf/simulated/floor/purplewhite{
+	dir = 5
+	},
+/area/abandonedoutpostthing)
+"DT" = (
+/obj/machinery/power/solar,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "solarpanel";
+	name = "solar paneling"
+	},
+/area/noGenerate)
+"Eh" = (
+/obj/table/auto,
+/obj/item/bloodslide,
+/obj/item/bloodslide,
+/obj/item/bloodslide,
+/obj/item/bloodslide,
+/obj/item/bloodslide,
+/obj/item/bloodslide,
+/obj/item/bloodslide,
+/obj/item/bloodslide,
+/obj/item/bloodslide,
+/turf/simulated/floor/purplewhite{
+	dir = 4
+	},
+/area/abandonedoutpostthing)
+"Ev" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/random,
+/area/abandonedoutpostthing)
+"Fa" = (
+/obj/critter/zombie/scientist,
+/turf/simulated/floor/purplewhite{
+	dir = 4
+	},
+/area/abandonedoutpostthing)
+"FU" = (
+/obj/machinery/door/poddoor{
+	id = "patho_lockdown_z3";
+	name = "Lockdown"
+	},
+/turf/simulated/floor/white,
+/area/abandonedoutpostthing)
+"Gw" = (
+/obj/machinery/power/solar,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "solarpanel";
+	name = "solar paneling"
+	},
+/area/noGenerate)
+"GL" = (
+/obj/machinery/light/worn{
+	dir = 8
+	},
+/obj/item/clothing/head/plunger,
+/turf/simulated/floor/sanitary,
+/area/abandonedoutpostthing)
+"IF" = (
+/obj/table/auto,
+/obj/item/reagent_containers/dropper,
+/obj/item/reagent_containers/dropper,
+/turf/simulated/floor/purplewhite{
+	dir = 5
+	},
+/area/abandonedoutpostthing)
+"Kn" = (
+/obj/machinery/door/airlock/glass/medical{
+	locked = 1
+	},
+/obj/machinery/door/poddoor{
+	id = "patho_lockdown_z3";
+	name = "Lockdown"
+	},
+/turf/simulated/floor/white,
+/area/abandonedoutpostthing)
+"KN" = (
+/obj/stool/bed,
+/obj/critter/zombie/scientist,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "yellow";
+	icon_state = "bedsheet-yellow"
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 10
+	},
+/area/abandonedoutpostthing)
+"Nz" = (
+/obj/machinery/camera{
+	network = "Pathopost"
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 5
+	},
+/area/abandonedoutpostthing)
+"ND" = (
+/obj/machinery/shower,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/abandonedoutpostthing)
+"NQ" = (
+/obj/stool/chair,
+/obj/critter/zombie/scientist,
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
+"Pn" = (
+/obj/machinery/light,
+/turf/simulated/floor/purplewhite,
+/area/abandonedoutpostthing)
+"Ps" = (
+/obj/stool/chair/green{
+	dir = 8
+	},
+/turf/simulated/floor/white,
+/area/abandonedoutpostthing)
+"PR" = (
+/obj/machinery/light/small{
+	dir = 1;
+	status = 2
+	},
+/obj/machinery/camera{
+	network = "Pathopost"
+	},
+/turf/simulated/floor/plating/random,
+/area/abandonedoutpostthing)
+"PS" = (
+/obj/machinery/camera{
+	network = "Pathopost"
+	},
+/obj/critter/zombie/scientist,
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
+"Qv" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/abandonedoutpostthing)
+"Qx" = (
+/turf/simulated/wall/r_wall{
+	icon = 'icons/misc/evilreaverstation.dmi';
+	icon_state = "old_rwall"
+	},
+/area/abandonedoutpostthing)
+"Rs" = (
+/turf/simulated/floor/sanitary,
+/area/abandonedoutpostthing)
+"RZ" = (
+/obj/machinery/pathogen_manipulator,
+/turf/simulated/floor/purplewhite{
+	dir = 8
+	},
+/area/abandonedoutpostthing)
+"Sl" = (
+/obj/stool/chair/green{
+	dir = 8
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 1
+	},
+/area/abandonedoutpostthing)
+"Sp" = (
+/obj/machinery/shower{
+	dir = 1
+	},
+/obj/window/cubicle{
+	dir = 10;
+	layer = 29
+	},
+/obj/machinery/door/window/eastleft,
+/obj/decal/skeleton{
+	desc = "Eugh, the stench is horrible!";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body1";
+	name = "decomposed corpse"
+	},
+/turf/simulated/floor/sanitary,
+/area/abandonedoutpostthing)
+"SU" = (
+/obj/machinery/door/airlock/glass/medical{
+	locked = 1
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/random,
+/area/abandonedoutpostthing)
+"Tz" = (
+/obj/grille/catwalk,
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/airless/plating/catwalk,
+/area/abandonedoutpostthing)
+"UH" = (
+/obj/decal/skeleton{
+	desc = "Eugh, the stench is horrible!";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body3";
+	name = "decomposed corpse"
+	},
+/turf/simulated/floor/plating/random,
+/area/abandonedoutpostthing)
+"UU" = (
+/turf/simulated/floor/stairs/medical,
+/area/abandonedoutpostthing)
+"UZ" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
+"Vr" = (
+/turf/space,
+/area/noGenerate)
+"VN" = (
+/obj/grille/catwalk,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/plating/catwalk,
+/area/abandonedoutpostthing)
+"Wc" = (
+/obj/stool/chair/green{
+	dir = 8
+	},
+/turf/simulated/floor/purplewhite,
+/area/abandonedoutpostthing)
+"Wk" = (
+/turf/simulated/floor/purplewhite{
+	dir = 10
+	},
+/area/abandonedoutpostthing)
+"Wo" = (
+/obj/item/storage/toilet,
+/turf/simulated/floor/sanitary,
+/area/abandonedoutpostthing)
+"Wu" = (
+/obj/item/synthmodule/synthesizer,
+/obj/storage/crate,
+/obj/item/grinder_upgrade,
+/turf/simulated/floor/purplewhite{
+	dir = 6
+	},
+/area/abandonedoutpostthing)
+"WN" = (
+/obj/table/auto,
+/obj/item/cloner_blueprints_folder,
+/turf/simulated/floor/purplewhite{
+	dir = 1
+	},
+/area/abandonedoutpostthing)
+"Xb" = (
+/obj/machinery/shower{
+	dir = 1
+	},
+/turf/simulated/floor/white,
+/area/abandonedoutpostthing)
+"Yp" = (
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"YI" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "green";
+	icon_state = "bedsheet-green"
+	},
+/obj/window/cubicle{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
+"Zg" = (
+/turf/simulated/wall/asteroid,
+/area/noGenerate)
+
+(1,1,1) = {"
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Yp
+Yp
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Yp
+Yp
+Yp
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+"}
+(2,1,1) = {"
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Yp
+Zg
+Zg
+Zg
+Yp
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Yp
+Yp
+Zg
+Zg
+Zg
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+"}
+(3,1,1) = {"
+Vr
+Vr
+Vr
+Vr
+Vr
+Zg
+Vr
+Yp
+Zg
+Zg
+Zg
+Zg
+Yp
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Yp
+Zg
+Zg
+Zg
+hb
+Zg
+Zg
+Zg
+Zg
+Zg
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+"}
+(4,1,1) = {"
+Vr
+Vr
+Vr
+Yp
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Vr
+Vr
+Vr
+Yp
+Yp
+Zg
+Zg
+Zg
+Zg
+Zg
+hb
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+fM
+fM
+fM
+fM
+fM
+fM
+"}
+(5,1,1) = {"
+Vr
+Vr
+Vr
+Yp
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Yp
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Qv
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+fM
+fM
+fM
+fM
+fM
+"}
+(6,1,1) = {"
+Vr
+Vr
+Vr
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Vr
+Zg
+Zg
+Qv
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+fM
+fM
+fM
+"}
+(7,1,1) = {"
+Vr
+Vr
+Zg
+Zg
+Qx
+Qx
+Qx
+Qx
+Qx
+Qx
+Qx
+Qx
+Qx
+Qx
+Qx
+Zg
+Zg
+Zg
+Zg
+Vr
+Vr
+Vr
+Zg
+Qv
+Zg
+Vr
+Zg
+Vr
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Vr
+Vr
+Vr
+Vr
+fM
+fM
+"}
+(8,1,1) = {"
+Yp
+Zg
+Zg
+Zg
+Qx
+Wo
+GL
+Qx
+cq
+wx
+Ad
+rN
+yV
+YI
+Qx
+Zg
+Zg
+Zg
+Zg
+Vr
+Vr
+Vr
+Vr
+Qv
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Qx
+Qx
+Qx
+Qx
+Qx
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Vr
+Vr
+Vr
+Vr
+"}
+(9,1,1) = {"
+Yp
+Zg
+Zg
+Zg
+Qx
+Sp
+ml
+Qx
+Af
+Af
+NQ
+rN
+am
+Af
+Qx
+Zg
+Zg
+Zg
+Vr
+Vr
+Vr
+Gw
+Vr
+Qv
+Vr
+Gw
+Vr
+Vr
+Vr
+Vr
+yE
+zd
+je
+KN
+Qx
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Vr
+Vr
+Vr
+"}
+(10,1,1) = {"
+Zg
+Zg
+Zg
+Zg
+Qx
+ni
+Rs
+Qx
+Af
+Af
+Af
+Af
+Af
+Af
+Qx
+Zg
+Zg
+Vr
+Vr
+Vr
+Vr
+DT
+Vr
+Qv
+Vr
+DT
+Vr
+Vr
+Vr
+Vr
+xr
+Sl
+jr
+Pn
+Qx
+Qx
+Qx
+Qx
+Qx
+Qx
+Qx
+Zg
+Vr
+Vr
+Vr
+"}
+(11,1,1) = {"
+Zg
+Zg
+Zg
+Zg
+Qx
+nv
+Rs
+Qx
+cq
+on
+Af
+Af
+on
+ug
+Qx
+Zg
+Zg
+Zg
+Zg
+Vr
+Vr
+DT
+Vr
+Qv
+Vr
+DT
+Vr
+Qx
+Qx
+Qx
+Qx
+Nz
+sF
+ta
+Qx
+CW
+jk
+rW
+RZ
+CP
+Qx
+Zg
+Zg
+Vr
+Vr
+"}
+(12,1,1) = {"
+Zg
+Zg
+Zg
+Zg
+Qx
+Qx
+bl
+Qx
+Qx
+Qx
+bj
+Qx
+Qx
+Qx
+Qx
+Zg
+Zg
+Zg
+Zg
+Zg
+Vr
+DT
+Vr
+Qv
+Vr
+DT
+Vr
+Qx
+Xb
+dS
+Qx
+dp
+qp
+Qx
+Qx
+zG
+Ps
+tj
+tj
+Wc
+Qx
+Zg
+Zg
+Zg
+Vr
+"}
+(13,1,1) = {"
+Yp
+Zg
+Zg
+Zg
+Qx
+Af
+Af
+vM
+Af
+Af
+Af
+Af
+Af
+cv
+SU
+cO
+cO
+cO
+VN
+VN
+VN
+en
+VN
+ps
+VN
+Tz
+xn
+FU
+jr
+tj
+qp
+UU
+tj
+UU
+Kn
+yy
+tj
+tZ
+tj
+cs
+Qx
+Zg
+Zg
+Zg
+Vr
+"}
+(14,1,1) = {"
+Vr
+Zg
+Zg
+Zg
+Qx
+Af
+vt
+Af
+Af
+vt
+vM
+Af
+vt
+UZ
+Qx
+Zg
+Zg
+Zg
+Zg
+Vr
+Vr
+DT
+Vr
+DT
+Vr
+DT
+Vr
+Qx
+Xb
+ND
+Qx
+dp
+qp
+Qx
+Qx
+WN
+ql
+tj
+tj
+au
+Qx
+Zg
+Zg
+Zg
+Zg
+"}
+(15,1,1) = {"
+Vr
+Vr
+Zg
+Zg
+Qx
+Qx
+Qx
+At
+Qx
+Qx
+Qx
+Qx
+Qx
+hs
+Qx
+Zg
+Vr
+Vr
+Vr
+Vr
+Vr
+DT
+Vr
+DT
+Vr
+DT
+Vr
+Qx
+Qx
+Qx
+Qx
+cH
+je
+Wk
+Qx
+IF
+gu
+Eh
+Fa
+Wu
+Qx
+Zg
+Zg
+Zg
+Vr
+"}
+(16,1,1) = {"
+Vr
+Yp
+Zg
+Zg
+Qx
+dk
+xP
+Af
+rN
+rN
+Qx
+UH
+nz
+Ev
+Qx
+Zg
+Zg
+Vr
+Vr
+Vr
+Vr
+DT
+Vr
+DT
+Vr
+DT
+Vr
+Vr
+Vr
+Vr
+yE
+gz
+jr
+Pn
+Qx
+Qx
+Qx
+Qx
+Qx
+Qx
+Qx
+Zg
+Zg
+Vr
+Vr
+"}
+(17,1,1) = {"
+Vr
+Zg
+Zg
+Zg
+Qx
+PS
+Af
+Af
+fk
+fk
+Qx
+PR
+ba
+xk
+Qx
+Zg
+Zg
+Zg
+Vr
+Vr
+Vr
+rP
+Vr
+rP
+Vr
+rP
+Vr
+Vr
+Vr
+Vr
+xr
+Dq
+sF
+bg
+Qx
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Vr
+Vr
+Vr
+"}
+(18,1,1) = {"
+Zg
+Zg
+Zg
+Zg
+Qx
+Af
+vt
+yT
+eK
+ia
+Qx
+qS
+yx
+tk
+Qx
+Zg
+Zg
+Zg
+Zg
+Zg
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Zg
+Qx
+Qx
+Qx
+Qx
+Qx
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Vr
+Vr
+Vr
+fM
+"}
+(19,1,1) = {"
+Vr
+Zg
+Zg
+Zg
+Qx
+Qx
+Qx
+Qx
+Qx
+Qx
+Qx
+Qx
+Qx
+Qx
+Qx
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Vr
+Zg
+Zg
+Vr
+Zg
+Vr
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Vr
+Vr
+Vr
+Vr
+fM
+fM
+"}
+(20,1,1) = {"
+Vr
+Vr
+Vr
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Yp
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Vr
+Vr
+Vr
+fM
+fM
+fM
+fM
+"}
+(21,1,1) = {"
+Vr
+Vr
+Vr
+Vr
+Zg
+Zg
+Yp
+Zg
+Zg
+Zg
+Zg
+Zg
+Yp
+Zg
+Zg
+Yp
+Vr
+Vr
+Vr
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Vr
+Vr
+Zg
+Zg
+Zg
+Zg
+Vr
+Vr
+Vr
+Vr
+fM
+fM
+fM
+fM
+fM
+"}
+(22,1,1) = {"
+Vr
+Vr
+Vr
+Vr
+Vr
+Yp
+Yp
+Yp
+Zg
+Yp
+Yp
+Zg
+Yp
+Yp
+Yp
+Vr
+Vr
+Vr
+Vr
+Yp
+Yp
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Yp
+Yp
+Yp
+Vr
+Vr
+Vr
+Zg
+Zg
+Vr
+Vr
+Vr
+Vr
+fM
+fM
+fM
+fM
+fM
+fM
+"}

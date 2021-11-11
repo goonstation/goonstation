@@ -1,0 +1,70 @@
+"a" = (/turf/space,/area/allowGenerate)
+"c" = (/obj/reagent_dispensers/still,/turf/simulated/floor/longtile/black,/area/prefab/bootlegger_asteroid)
+"d" = (/turf/simulated/wall/asteroid,/area/prefab/bootlegger_asteroid)
+"f" = (/obj/reagent_dispensers/beerkeg,/obj/machinery/light/small/cool{dir = 1; pixel_y = 16},/turf/simulated/floor/longtile/black,/area/prefab/bootlegger_asteroid)
+"g" = (/obj/lattice{dir = 4; icon_state = "lattice-dir"},/obj/decal/tile_edge/stripe/big{dir = 4},/turf/simulated/floor/plating/airless/asteroid,/area/prefab/bootlegger_asteroid)
+"h" = (/obj/stool,/turf/simulated/floor/longtile/black,/area/prefab/bootlegger_asteroid)
+"i" = (/obj/wingrille_spawn/reinforced/full,/turf/simulated/floor/plating,/area/prefab/bootlegger_asteroid)
+"j" = (/obj/machinery/space_heater,/turf/simulated/floor/airless/caution/northsouth,/area/prefab/bootlegger_asteroid)
+"l" = (/turf/simulated/floor/plating/airless/asteroid,/area/prefab/bootlegger_asteroid)
+"m" = (/obj/decal/tile_edge/stripe/big,/obj/decal/tile_edge/stripe/big{dir = 1},/turf/simulated/floor/plating/airless/asteroid,/area/prefab/bootlegger_asteroid)
+"n" = (/obj/item/storage/box/beer,/obj/item/storage/box/beer,/obj/storage/crate/wooden,/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,/obj/machinery/light/small/cool,/turf/simulated/floor/longtile/black,/area/prefab/bootlegger_asteroid)
+"o" = (/obj/lattice{dir = 4; icon_state = "lattice-dir"},/obj/decal/tile_edge/stripe/big{dir = 8},/turf/simulated/floor/plating/airless/asteroid,/area/prefab/bootlegger_asteroid)
+"p" = (/obj/decal/tile_edge/stripe/big{dir = 4},/turf/simulated/floor/plating/airless/asteroid,/area/prefab/bootlegger_asteroid)
+"r" = (/obj/grille/steel,/turf/simulated/floor/plating/airless/asteroid,/area/prefab/bootlegger_asteroid)
+"s" = (/obj/lattice{dir = 4; icon_state = "lattice-dir"},/obj/decal/tile_edge/stripe/big{dir = 8},/obj/decal/tile_edge/stripe/big{dir = 4},/turf/simulated/floor/plating/airless/asteroid,/area/prefab/bootlegger_asteroid)
+"t" = (/obj/table/reinforced/industrial/auto,/obj/machinery/glass_recycler,/turf/simulated/floor/longtile/black,/area/prefab/bootlegger_asteroid)
+"u" = (/obj/table/reinforced/industrial/auto,/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,/turf/simulated/floor/longtile/black,/area/prefab/bootlegger_asteroid)
+"v" = (/turf/unsimulated/floor/stairs/dark{dir = 8},/area/prefab/bootlegger_asteroid)
+"w" = (/obj/decal/cleanable/robot_debris/gib,/turf/simulated/floor/plating/airless/asteroid,/area/prefab/bootlegger_asteroid)
+"x" = (/obj/machinery/door/unpowered/shuttle{autoclose = 1; color = "gray"},/turf/simulated/floor/longtile/black,/area/prefab/bootlegger_asteroid)
+"y" = (/obj/machinery/bathtub,/turf/space,/area/prefab/bootlegger_asteroid)
+"z" = (/obj/machinery/door/unpowered/shuttle{autoclose = 1; color = "gray"},/turf/simulated/floor/plating,/area/prefab/bootlegger_asteroid)
+"B" = (/turf/space,/area/prefab/bootlegger_asteroid)
+"C" = (/turf/space,/area/noGenerate)
+"D" = (/obj/critter/gunbot/drone/cutterdrone,/turf/simulated/floor/plating/airless/asteroid,/area/prefab/bootlegger_asteroid)
+"F" = (/obj/decal/cleanable/robot_debris/limb,/turf/simulated/floor/plating/airless/asteroid,/area/prefab/bootlegger_asteroid)
+"G" = (/obj/lattice{icon_state = "lattice-dir"},/obj/decal/tile_edge/stripe/big{dir = 1},/turf/simulated/floor/plating/airless/asteroid,/area/prefab/bootlegger_asteroid)
+"H" = (/obj/structure/girder/reinforced,/obj/decal/poster/wallsign/warning1,/obj/decal/tile_edge/line/black,/turf/simulated/floor/plating/airless/asteroid,/area/prefab/bootlegger_asteroid)
+"I" = (/obj/storage/crate,/obj/item/pen/crayon/rainbow,/obj/item/clothing/under/misc/clown/blue,/obj/item/clothing/shoes/clown_shoes/blue,/obj/item/clothing/mask/clown_hat/blue,/turf/simulated/floor/plating/airless/asteroid,/area/prefab/bootlegger_asteroid)
+"K" = (/turf/simulated/floor/longtile/black,/area/prefab/bootlegger_asteroid)
+"M" = (/obj/storage/crate/internals,/obj/item/clothing/mask/breath,/obj/item/clothing/mask/breath,/obj/item/tank/emergency_oxygen,/obj/item/tank/emergency_oxygen,/obj/machinery/light/small/cool{dir = 1; pixel_y = 16},/turf/simulated/floor/longtile/black,/area/prefab/bootlegger_asteroid)
+"N" = (/obj/machinery/light/small/cool{dir = 8; pixel_x = -16},/obj/decal/tile_edge/stripe/big{dir = 8},/turf/simulated/floor/plating/airless/asteroid,/area/prefab/bootlegger_asteroid)
+"O" = (/obj/item/raw_material/scrap_metal,/turf/simulated/floor/plating/airless/asteroid,/area/prefab/bootlegger_asteroid)
+"P" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/bootlegger_asteroid)
+"Q" = (/obj/decal/tile_edge/stripe/big{dir = 4},/turf/simulated/wall/asteroid,/area/prefab/bootlegger_asteroid)
+"R" = (/obj/machinery/bathtub,/obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe,/obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe,/obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe,/obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe,/turf/simulated/floor/longtile/black,/area/prefab/bootlegger_asteroid)
+"S" = (/obj/table/reinforced/industrial/auto,/obj/item/device/radio,/turf/simulated/floor/longtile/black,/area/prefab/bootlegger_asteroid)
+"T" = (/obj/structure/girder/reinforced,/obj/decal/tile_edge/line/black,/turf/simulated/floor/plating/airless/asteroid,/area/prefab/bootlegger_asteroid)
+"U" = (/obj/storage/crate,/obj/item/storage/box/record/radio/chronoquest,/turf/simulated/floor/plating/airless/asteroid,/area/prefab/bootlegger_asteroid)
+"V" = (/obj/item/caution{desc = "Caution! No trespassing!"; name = "no trespassing sign"},/obj/decal/tile_edge/stripe/big{dir = 8},/turf/simulated/floor/plating/airless/asteroid,/area/prefab/bootlegger_asteroid)
+"W" = (/obj/reagent_dispensers/beerkeg,/turf/simulated/floor/longtile/black,/area/prefab/bootlegger_asteroid)
+"X" = (/obj/machinery/portable_atmospherics/pump,/turf/simulated/floor/airless/caution/northsouth,/area/prefab/bootlegger_asteroid)
+"Z" = (/obj/machinery/door/unpowered/shuttle{autoclose = 1; color = "gray"},/turf/simulated/floor/plating/airless/asteroid,/area/prefab/bootlegger_asteroid)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaCCCddCCCCCCaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaCCCdddddddCCCaaaaaaa
+aaaaaaaaaaCCCCCaaaaaaCCCCdddddddddCCCaaaaa
+aaaaaaaaaaCCdCCCCCCCCCCCdddddddddddCCCCaaa
+aaaaaaaCCCCCddllCCCCCldddddddlddddddCCCCaa
+aaaaCCCCCCdddddllllllldddddddlIddddddCCCCa
+aaaCCCCClddddddddlllllllddddrllDlldddddCCC
+aaCCCCClllddddddddddllllllllrlllldddddddCC
+aCCCCCdddddddddddddddddlllllrddrrrddddddCC
+CCCCddddddddddddddddddddlldlddddlllllddddC
+CCddddTddTdddddddddldddddllllddddlldlddddd
+CdddddGllGdddQHrrTNlllllllllldlldlddlddddd
+CddddPiiiiPllpZmmZVllddUddldllllllllldddll
+CddToitSufigTsHrrTNlFwdddlldlldllOllldlllC
+ddddliRKhWillldddddddddddddddlddldlllllllC
+ddddliyBBcildddddddddddddddlllddddldddddlC
+dddToinBKcigTddddlllldddddllldddddlddddCCC
+CdddlPPxxPPlddddllCCCCCCddllldddCCCdCCCCCC
+CdddliMKKvzllddlCCCCCCCCdddllldCCCCCCCCCCa
+CddddPPjXPPldddlCCCCCCCCCCdCCCCCCCCaaaaaaa
+CdddddPPPPddddCCCCCaaaCCCCCCCCCCCaaaaaaaaa
+CCdddddddddddCCCCCaaaaaaaCCCCaaaaaaaaaaaaa
+CCCCCddddddCCCCCaaaaaaaaaaaaaaaaaaaaaaaaaa
+CCCCCCCdddCCCCaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}

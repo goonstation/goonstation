@@ -515,6 +515,8 @@
 			message_coders("ZeWaka/CruiserWarp: No engine but warp was called.")
 		var/list/beacons = list()
 		for(var/obj/warp_beacon/W in by_type[/obj/warp_beacon])
+			if(W.needsRepair)
+				continue
 			beacons += W
 		for (var/obj/machinery/tripod/T in machine_registry[MACHINES_MISC])
 			if (istype(T.bulb, /obj/item/tripod_bulb/beacon))

@@ -1,0 +1,582 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/space,
+/area/noGenerate)
+"b" = (
+/obj/item/raw_material/syreline,
+/obj/item/raw_material/syreline,
+/obj/item/raw_material/cobryl,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/fermid_hive)
+"d" = (
+/obj/decal/skeleton,
+/obj/item/raw_material/pharosium,
+/obj/item/raw_material/bohrum,
+/obj/item/raw_material/bohrum,
+/obj/item/raw_material/claretine,
+/obj/item/raw_material/claretine,
+/obj/item/raw_material/claretine,
+/obj/item/raw_material/uqill,
+/obj/critter/fermid,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/fermid_hive)
+"f" = (
+/turf/simulated/wall/asteroid{
+	dir = 4
+	},
+/area/fermid_hive)
+"h" = (
+/obj/item/raw_material/uqill,
+/obj/item/raw_material/uqill,
+/obj/item/raw_material/cobryl,
+/obj/item/raw_material/cobryl,
+/obj/item/raw_material/cobryl,
+/obj/critter/fermid,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/fermid_hive)
+"i" = (
+/obj/item/raw_material/syreline,
+/obj/item/raw_material/syreline,
+/obj/item/raw_material/syreline,
+/obj/item/raw_material/syreline,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/fermid_hive)
+"j" = (
+/turf/simulated/wall/asteroid{
+	dir = 9
+	},
+/area/fermid_hive)
+"l" = (
+/obj/item/raw_material/bohrum,
+/obj/item/raw_material/bohrum,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/fermid_hive)
+"m" = (
+/obj/item/raw_material/bohrum,
+/obj/item/raw_material/bohrum,
+/obj/item/raw_material/bohrum,
+/obj/item/raw_material/bohrum,
+/obj/item/raw_material/bohrum,
+/obj/item/raw_material/bohrum,
+/obj/item/raw_material/bohrum,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/fermid_hive)
+"p" = (
+/turf/simulated/wall/asteroid{
+	dir = 8
+	},
+/area/fermid_hive)
+"q" = (
+/obj/overlay{
+	desc = "Oh.  So THAT'S where he went off to.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "clowncorpse";
+	layer = 4;
+	name = "skeleton"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/fermid_hive)
+"r" = (
+/obj/decal/skeleton,
+/obj/item/raw_material/cobryl,
+/obj/item/raw_material/cobryl,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/fermid_hive)
+"s" = (
+/obj/item/raw_material/uqill,
+/obj/critter/fermid,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/fermid_hive)
+"v" = (
+/obj/item/raw_material/pharosium,
+/obj/item/raw_material/pharosium,
+/obj/item/raw_material/pharosium,
+/obj/item/raw_material/pharosium,
+/obj/item/raw_material/pharosium,
+/obj/item/raw_material/pharosium,
+/obj/item/raw_material/pharosium,
+/obj/item/raw_material/pharosium,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/fermid_hive)
+"w" = (
+/obj/item/raw_material/pharosium,
+/obj/item/raw_material/pharosium,
+/obj/item/raw_material/pharosium,
+/obj/item/raw_material/pharosium,
+/obj/item/raw_material/pharosium,
+/obj/item/raw_material/pharosium,
+/obj/item/raw_material/pharosium,
+/obj/item/raw_material/pharosium,
+/obj/item/raw_material/claretine,
+/obj/item/raw_material/claretine,
+/obj/item/raw_material/claretine,
+/obj/item/raw_material/claretine,
+/obj/item/raw_material/claretine,
+/obj/item/raw_material/uqill,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/fermid_hive)
+"y" = (
+/turf/simulated/wall/asteroid{
+	dir = 5
+	},
+/area/fermid_hive)
+"z" = (
+/obj/item/a_gift/easter{
+	desc = "Easter is over. How old is this?"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/fermid_hive)
+"D" = (
+/obj/item/raw_material/bohrum,
+/obj/item/raw_material/bohrum,
+/obj/item/raw_material/bohrum,
+/obj/item/raw_material/bohrum,
+/obj/item/raw_material/bohrum,
+/obj/item/raw_material/bohrum,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/fermid_hive)
+"G" = (
+/obj/item/clothing/suit/space/engineer,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/fermid_hive)
+"H" = (
+/obj/item/raw_material/bohrum,
+/obj/item/raw_material/bohrum,
+/obj/item/raw_material/bohrum,
+/obj/item/raw_material/bohrum,
+/obj/item/raw_material/bohrum,
+/obj/item/raw_material/bohrum,
+/obj/item/raw_material/bohrum,
+/obj/item/raw_material/bohrum,
+/obj/item/raw_material/claretine,
+/obj/item/raw_material/claretine,
+/obj/item/raw_material/claretine,
+/obj/item/raw_material/uqill,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/fermid_hive)
+"I" = (
+/obj/item/raw_material/syreline,
+/obj/item/raw_material/syreline,
+/obj/item/raw_material/syreline,
+/obj/item/raw_material/syreline,
+/obj/item/raw_material/syreline,
+/obj/item/raw_material/syreline,
+/obj/item/raw_material/syreline,
+/obj/critter/fermid,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/fermid_hive)
+"J" = (
+/obj/item/clothing/head/helmet/space/engineer,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/fermid_hive)
+"K" = (
+/obj/decal/skeleton,
+/obj/item/oreprospector,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/fermid_hive)
+"L" = (
+/obj/item/raw_material/bohrum,
+/obj/item/raw_material/bohrum,
+/obj/critter/fermid,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/fermid_hive)
+"O" = (
+/turf/simulated/wall/asteroid{
+	dir = 6
+	},
+/area/fermid_hive)
+"P" = (
+/obj/item/raw_material/uqill,
+/obj/item/raw_material/cobryl,
+/obj/item/raw_material/cobryl,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/fermid_hive)
+"Q" = (
+/turf/simulated/wall/asteroid{
+	dir = 1
+	},
+/area/fermid_hive)
+"S" = (
+/turf/simulated/wall/asteroid,
+/area/fermid_hive)
+"T" = (
+/turf/simulated/floor/plating/airless/asteroid,
+/area/fermid_hive)
+"V" = (
+/obj/critter/fermid,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/fermid_hive)
+"W" = (
+/turf/simulated/wall/asteroid{
+	dir = 10
+	},
+/area/fermid_hive)
+"X" = (
+/obj/item/mining_tool/drill,
+/obj/item/clothing/suit/space/engineer,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/fermid_hive)
+"Y" = (
+/obj/decal/skeleton,
+/obj/item/mining_tool/powerhammer,
+/obj/critter/fermid,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/fermid_hive)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+j
+p
+W
+a
+a
+a
+a
+a
+a
+j
+W
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+j
+j
+S
+W
+p
+p
+p
+W
+j
+p
+j
+W
+W
+a
+a
+"}
+(3,1,1) = {"
+a
+j
+p
+p
+j
+S
+S
+S
+V
+G
+S
+W
+j
+S
+S
+S
+S
+a
+a
+"}
+(4,1,1) = {"
+j
+j
+D
+m
+S
+S
+S
+T
+Y
+T
+S
+S
+S
+S
+S
+S
+S
+a
+a
+"}
+(5,1,1) = {"
+Q
+S
+d
+H
+S
+S
+S
+S
+S
+T
+T
+T
+V
+S
+S
+S
+S
+a
+a
+"}
+(6,1,1) = {"
+Q
+S
+w
+L
+l
+S
+S
+S
+S
+S
+T
+T
+S
+S
+S
+S
+S
+a
+a
+"}
+(7,1,1) = {"
+Q
+S
+S
+S
+T
+T
+S
+S
+S
+S
+T
+S
+S
+T
+T
+S
+S
+a
+a
+"}
+(8,1,1) = {"
+Q
+S
+S
+S
+S
+T
+S
+S
+S
+S
+T
+S
+V
+T
+S
+S
+W
+W
+a
+"}
+(9,1,1) = {"
+Q
+S
+T
+T
+V
+T
+T
+T
+V
+T
+q
+T
+T
+S
+S
+S
+S
+S
+a
+"}
+(10,1,1) = {"
+Q
+S
+T
+S
+S
+T
+T
+J
+S
+S
+T
+S
+S
+S
+S
+K
+i
+W
+W
+"}
+(11,1,1) = {"
+Q
+S
+z
+S
+S
+v
+S
+S
+S
+S
+T
+T
+T
+T
+V
+X
+I
+i
+S
+"}
+(12,1,1) = {"
+y
+y
+S
+S
+S
+v
+S
+S
+S
+S
+T
+S
+S
+S
+J
+s
+r
+b
+S
+"}
+(13,1,1) = {"
+a
+Q
+S
+S
+S
+T
+T
+T
+V
+S
+T
+S
+S
+S
+S
+P
+h
+S
+W
+"}
+(14,1,1) = {"
+a
+y
+S
+S
+S
+S
+S
+S
+T
+T
+V
+S
+S
+S
+S
+S
+S
+S
+S
+"}
+(15,1,1) = {"
+a
+a
+y
+f
+f
+f
+f
+y
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+O
+"}
+(16,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+y
+f
+f
+y
+S
+S
+S
+S
+S
+S
+O
+O
+"}
+(17,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+y
+f
+f
+f
+f
+f
+f
+O
+a
+"}

@@ -89,10 +89,14 @@
 #if defined(MAP_OVERRIDE_POD_WARS)
 	var/pilot_team = get_pod_wars_team_num(ship?.pilot)
 	for(var/obj/warp_beacon/pod_wars/W in by_type[/obj/warp_beacon])
+		if(W.needsRepair)
+			continue
 		if (W.current_owner == pilot_team)
 			beacons += W
 #else
 	for(var/obj/warp_beacon/W in by_type[/obj/warp_beacon])
+		if(W.needsRepair)
+			continue
 		beacons += W
 #endif
 	for (var/obj/machinery/tripod/T in machine_registry[MACHINES_MISC])
@@ -145,7 +149,7 @@
 	switch(direction)
 		if(NORTH)
 			A.pixel_y = -dist*32
-		if(SOUTH) 
+		if(SOUTH)
 			A.pixel_y = dist*32
 		if(EAST)
 			A.pixel_x = -dist*32

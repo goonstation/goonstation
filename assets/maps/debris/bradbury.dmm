@@ -1,0 +1,4882 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"af" = (
+/turf/simulated/floor/yellow/corner{
+	dir = 1
+	},
+/area/derelict_ai_sat/core)
+"ak" = (
+/obj/machinery/door/airlock/pyro/classic{
+	name = "Development"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/grime,
+/area/derelict_ai_sat/core)
+"an" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/derelict_ai_sat)
+"aM" = (
+/obj/decal/fakeobjects/pipe,
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/derelict_ai_sat)
+"aQ" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 4
+	},
+/turf/simulated/floor/carpet,
+/area/derelict_ai_sat)
+"aR" = (
+/turf/simulated/floor/caution/corner/misc{
+	dir = 5
+	},
+/area/derelict_ai_sat/core)
+"aW" = (
+/obj/item/plank,
+/turf/space,
+/area/noGenerate)
+"bi" = (
+/obj/item/storage/firstaid/oxygen{
+	pixel_y = -4
+	},
+/obj/machinery/light/small{
+	pixel_y = -10
+	},
+/obj/decal/cleanable/oil,
+/turf/simulated/floor/grime,
+/area/derelict_ai_sat)
+"bk" = (
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/grille,
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"bm" = (
+/obj/securearea{
+	desc = "A poster that reads 'CLEAN HANDS SAVE LIVES'.";
+	icon_state = "chsl";
+	name = "CLEAN HANDS SAVE LIVES";
+	pixel_x = -32
+	},
+/turf/simulated/floor/white/grime,
+/area/derelict_ai_sat)
+"bw" = (
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"bx" = (
+/obj/table/wood/auto,
+/obj/item/staple_gun/red,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/wood/two,
+/area/derelict_ai_sat)
+"bA" = (
+/turf/simulated/floor/caution/north{
+	dir = 8
+	},
+/area/derelict_ai_sat/core)
+"bH" = (
+/obj/rack,
+/turf/simulated/floor/caution/east{
+	dir = 8
+	},
+/area/derelict_ai_sat)
+"bI" = (
+/obj/disposalpipe/junction{
+	dir = 4;
+	icon_state = "pipe-j2"
+	},
+/obj/stool/chair/office/blue{
+	dir = 4;
+	tag = "icon-office_chair_blue (EAST)"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/wood/two,
+/area/derelict_ai_sat)
+"bM" = (
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	cell_type = 1;
+	coverlocked = 0;
+	dir = 4;
+	equipment = 0;
+	icon_state = "apc-b";
+	locked = 0;
+	name = "Computer Core APC";
+	opened = 1;
+	pixel_x = 24;
+	req_access_txt = "";
+	start_charge = 0;
+	tag = "icon-apc-b (EAST)"
+	},
+/turf/simulated/floor/plating,
+/area/derelict_ai_sat/core)
+"ck" = (
+/obj/machinery/light{
+	brightness = 1.2;
+	dir = 4;
+	layer = 9.1;
+	name = "worn light fixture";
+	pixel_x = 14
+	},
+/turf/simulated/floor/yellow/corner,
+/area/derelict_ai_sat/core)
+"cr" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/stairs{
+	dir = 0
+	},
+/area/derelict_ai_sat/core)
+"dn" = (
+/obj/item/storage/toilet/random{
+	dir = 8;
+	tag = "icon-toilet (WEST)"
+	},
+/obj/critter/roach,
+/turf/simulated/floor/white/grime,
+/area/derelict_ai_sat)
+"ds" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/item/caution{
+	desc = "Caution! No trespassing!";
+	name = "no trespassing sign"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	tag = "icon-catwalk (WEST)"
+	},
+/area/derelict_ai_sat/solar)
+"dt" = (
+/obj/machinery/power/smes{
+	charge = 0;
+	name = "old power storage unit";
+	online = 0
+	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/grime,
+/area/derelict_ai_sat)
+"eu" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/derelict_ai_sat)
+"eF" = (
+/turf/simulated/floor/grime,
+/area/derelict_ai_sat/core)
+"eG" = (
+/obj/decal{
+	anchored = 1;
+	desc = "There doesn't seem to be anything connected to it.";
+	icon = 'icons/effects/96x96.dmi';
+	icon_state = "oldai_t3";
+	layer = 2;
+	name = "terminal";
+	pixel_x = -32;
+	pixel_y = -32
+	},
+/turf/simulated/floor/plating,
+/area/derelict_ai_sat/core)
+"fe" = (
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/derelict_ai_sat)
+"fk" = (
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/grille,
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"fw" = (
+/obj/item/crowbar,
+/turf/simulated/floor/grime,
+/area/derelict_ai_sat/core)
+"fE" = (
+/obj/storage/secure/closet/fridge{
+	desc = "A staff fridge. This one is filthy.";
+	name = "gross refrigerator"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/gcheese,
+/obj/item/reagent_containers/food/snacks/ingredient/spaghetti,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "gibhead";
+	name = "grody thing"
+	},
+/obj/item/reagent_containers/food/snacks/yuck,
+/obj/item/reagent_containers/food/snacks/mushroom/amanita,
+/obj/item/storage/box/donkpocket_kit,
+/obj/item/reagent_containers/food/drinks/bottle/rum,
+/obj/item/reagent_containers/food/drinks/cola,
+/obj/item/reagent_containers/food/drinks/bottle/bojackson,
+/obj/item/reagent_containers/food/drinks/bottle/champagne,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/turf/simulated/floor/wood/two,
+/area/derelict_ai_sat)
+"fI" = (
+/obj/machinery/power/terminal{
+	dir = 8;
+	tag = "icon-term (WEST)"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/grime,
+/area/derelict_ai_sat)
+"fJ" = (
+/obj/table/round,
+/obj/item/paper_bin{
+	pixel_y = 3
+	},
+/turf/simulated/floor/white/grime,
+/area/derelict_ai_sat)
+"fN" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/derelict_ai_sat)
+"fU" = (
+/obj/disposalpipe/segment,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/derelict_ai_sat/core)
+"gf" = (
+/obj/cable,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/grille,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"gn" = (
+/obj/machinery/power/furnace,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/grime,
+/area/derelict_ai_sat)
+"gp" = (
+/obj/disposalpipe/junction{
+	dir = 4
+	},
+/turf/simulated/floor/wood/two,
+/area/derelict_ai_sat)
+"gz" = (
+/obj/grille/catwalk{
+	dir = 6
+	},
+/obj/cable,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/derelict_ai_sat/solar)
+"gM" = (
+/obj/disposalpipe/trunk{
+	desc = "An underfloor mail pipe.";
+	dir = 1;
+	name = "mail pipe"
+	},
+/obj/machinery/disposal,
+/turf/simulated/floor/wood/two,
+/area/derelict_ai_sat)
+"hk" = (
+/obj/securearea,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/derelict_ai_sat)
+"hn" = (
+/obj/cable,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/grille/catwalk{
+	dir = 1;
+	icon_state = "catwalk_cross"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/derelict_ai_sat/solar)
+"hC" = (
+/turf/simulated/floor/caution/corner/misc{
+	dir = 9
+	},
+/area/derelict_ai_sat)
+"hL" = (
+/obj/cable,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/grille,
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"hW" = (
+/obj/machinery/door/airlock/pyro/classic,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/derelict_ai_sat)
+"hY" = (
+/obj/item/storage/toolbox/mechanical,
+/turf/simulated/floor,
+/area/derelict_ai_sat)
+"ib" = (
+/obj/table/wood/auto,
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/turf/simulated/floor/wood/two,
+/area/derelict_ai_sat)
+"ip" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/derelict_ai_sat)
+"iB" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/derelict_aiboss/ai,
+/obj/decal{
+	anchored = 1;
+	desc = "VOEFS";
+	icon = 'icons/effects/96x96.dmi';
+	icon_state = "oldai_base";
+	name = "floor";
+	pixel_x = -32;
+	pixel_y = -32
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/delivery{
+	dir = 4
+	},
+/area/derelict_ai_sat/core)
+"iL" = (
+/obj/grille/catwalk{
+	dir = 9
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/woodwall,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	tag = "icon-catwalk (WEST)"
+	},
+/area/derelict_ai_sat/solar)
+"jl" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/scorched,
+/area/derelict_ai_sat)
+"jo" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/table/wood/auto,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "The power cord seems to have been completely ripped off.";
+	icon = 'icons/obj/computer_frame_desk.dmi';
+	icon_state = "1";
+	name = "broken computer";
+	pixel_y = 8
+	},
+/turf/simulated/floor/wood/two,
+/area/derelict_ai_sat)
+"jp" = (
+/obj/item/storage/wall/random,
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/red,
+/obj/item/storage/bible/mini,
+/turf/simulated/floor/carpet,
+/area/derelict_ai_sat)
+"js" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/grime,
+/area/derelict_ai_sat)
+"jy" = (
+/obj/decal/cleanable/dirt,
+/obj/storage/crate,
+/obj/item/screwdriver,
+/obj/item/storage/firstaid/old,
+/turf/simulated/floor/scorched2,
+/area/derelict_ai_sat)
+"jC" = (
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/grille,
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"jX" = (
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/cable,
+/obj/machinery/power/apc{
+	cell_type = 1;
+	dir = 8;
+	locked = 0;
+	name = "Satellite Main APC";
+	noalerts = 1;
+	pixel_x = -24;
+	req_access_txt = ""
+	},
+/turf/simulated/floor/caution/corner/misc{
+	dir = 10
+	},
+/area/derelict_ai_sat)
+"jY" = (
+/obj/machinery/derelict_aiboss/tower,
+/turf/simulated/floor/bot,
+/area/derelict_ai_sat/core)
+"kc" = (
+/turf/simulated/floor/engine,
+/area/derelict_ai_sat)
+"kS" = (
+/obj/lattice,
+/turf/space,
+/area/noGenerate)
+"kV" = (
+/obj/window/cubicle{
+	dir = 1
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/white/grime,
+/area/derelict_ai_sat)
+"kZ" = (
+/turf/simulated/floor/caution/corner/misc{
+	dir = 6
+	},
+/area/derelict_ai_sat/core)
+"lt" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/derelict_ai_sat)
+"lD" = (
+/obj/item/caution{
+	desc = "Caution! No trespassing!";
+	name = "no trespassing sign"
+	},
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"mg" = (
+/obj/window/cubicle{
+	dir = 8
+	},
+/turf/simulated/floor/grey/blackgrime/other,
+/area/derelict_ai_sat)
+"mm" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/item/wirecutters,
+/turf/simulated/floor/engine,
+/area/derelict_ai_sat)
+"my" = (
+/obj/disposalpipe/segment,
+/turf/simulated/floor/grime,
+/area/derelict_ai_sat/core)
+"mD" = (
+/turf/simulated/floor/white/grime,
+/area/derelict_ai_sat)
+"mG" = (
+/turf/simulated/floor/grime,
+/area/derelict_ai_sat)
+"mI" = (
+/obj/storage/crate,
+/obj/item/aiboss_tape/first{
+	pixel_y = 6
+	},
+/obj/item/staple_gun,
+/obj/item/furniture_parts/table,
+/turf/simulated/floor/orangeblack/side{
+	dir = 9
+	},
+/area/derelict_ai_sat)
+"mJ" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/wood/two,
+/area/derelict_ai_sat)
+"mL" = (
+/obj/structure/woodwall,
+/turf/simulated/floor/plating/airless,
+/area/derelict_ai_sat)
+"mS" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/caution/corner/misc{
+	dir = 6
+	},
+/area/derelict_ai_sat)
+"na" = (
+/obj/decal/fakeobjects{
+	desc = "";
+	dir = 6;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "shrub-dead";
+	name = "dead plant";
+	tag = "icon-shrub-dead (SOUTHEAST)"
+	},
+/turf/simulated/floor/white/grime,
+/area/derelict_ai_sat)
+"nw" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 8;
+	name = "Research";
+	tag = "icon-old_closed (WEST)"
+	},
+/turf/simulated/floor/grime,
+/area/derelict_ai_sat)
+"nA" = (
+/obj/table/auto,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "The power cord seems to have been completely ripped off.";
+	icon = 'icons/obj/computer_frame_desk.dmi';
+	icon_state = "1";
+	name = "broken computer";
+	pixel_y = 7
+	},
+/turf/simulated/floor/grey/blackgrime/other,
+/area/derelict_ai_sat)
+"nZ" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 6;
+	tag = "icon-intact (SOUTHEAST)"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/derelict_ai_sat)
+"ob" = (
+/obj/item/scissors,
+/turf/simulated/floor/grime,
+/area/derelict_ai_sat)
+"od" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/noGenerate)
+"ol" = (
+/obj/grille/catwalk,
+/obj/cable{
+	icon_state = "1-10"
+	},
+/turf/simulated/floor/airless/plating/catwalk,
+/area/derelict_ai_sat/solar)
+"ot" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/wood/two,
+/area/derelict_ai_sat)
+"oI" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/derelict_ai_sat)
+"pb" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/grille,
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"pk" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/derelict_ai_sat)
+"pr" = (
+/obj/securearea{
+	desc = "";
+	icon_state = "wall_danger";
+	name = "Danger: High Voltage"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/derelict_ai_sat)
+"pt" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/grime,
+/area/derelict_ai_sat/core)
+"pQ" = (
+/obj/table/auto,
+/obj/machinery/microwave,
+/turf/simulated/floor/wood/two,
+/area/derelict_ai_sat)
+"pR" = (
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/derelict_ai_sat/solar)
+"qf" = (
+/turf/simulated/floor/caution/corner/misc{
+	dir = 5
+	},
+/area/derelict_ai_sat)
+"qg" = (
+/obj/machinery/door/supernorn/engineering{
+	name = "Satellite Power Control";
+	req_access_txt = ""
+	},
+/turf/simulated/floor/plating,
+/area/derelict_ai_sat)
+"qE" = (
+/obj/decal/fakeobjects/pipe,
+/turf/simulated/floor/engine/caution/westeast,
+/area/derelict_ai_sat/core)
+"qF" = (
+/obj/grille,
+/obj/window/auto/reinforced,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/derelict_ai_sat)
+"qW" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/computer/solar_control/derelict_ai_sat,
+/turf/simulated/floor/plating,
+/area/derelict_ai_sat)
+"rc" = (
+/obj/table/auto,
+/obj/item/paper_bin,
+/turf/simulated/floor/grey/blackgrime/other,
+/area/derelict_ai_sat)
+"rh" = (
+/obj/grille,
+/obj/grille,
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"rK" = (
+/obj/machinery/manufacturer/mechanic,
+/obj/decal/cleanable/cobweb,
+/turf/simulated/floor/orangeblack,
+/area/derelict_ai_sat)
+"rM" = (
+/obj/grille/catwalk{
+	dir = 6
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/derelict_ai_sat/solar)
+"rY" = (
+/obj/decal/fakeobjects/airmonitor_broken{
+	pixel_y = 24
+	},
+/obj/machinery/rkit,
+/turf/simulated/floor/orangeblack/side{
+	dir = 9
+	},
+/area/derelict_ai_sat)
+"ss" = (
+/obj/disposalpipe/segment{
+	desc = "An underfloor mail pipe.";
+	dir = 1;
+	icon_state = "pipe-c";
+	name = "mail pipe"
+	},
+/obj/machinery/derelict_aiboss/tower,
+/turf/simulated/floor/bot,
+/area/derelict_ai_sat/core)
+"sx" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 9;
+	tag = "icon-intact (NORTHWEST)"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/derelict_ai_sat)
+"sA" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/scorched2,
+/area/derelict_ai_sat)
+"sM" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/derelict_ai_sat/core)
+"sP" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/engine,
+/area/derelict_ai_sat)
+"tt" = (
+/obj/grille/catwalk{
+	dir = 5
+	},
+/obj/structure/woodwall,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	tag = "icon-catwalk (WEST)"
+	},
+/area/derelict_ai_sat/solar)
+"un" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/derelict_ai_sat)
+"uQ" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 5;
+	tag = "icon-intact (NORTHEAST)"
+	},
+/turf/simulated/floor/plating,
+/area/derelict_ai_sat)
+"uY" = (
+/obj/table/auto,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/item/cable_coil,
+/turf/simulated/floor/white/grime,
+/area/derelict_ai_sat)
+"vq" = (
+/turf/simulated/floor/damaged5,
+/area/derelict_ai_sat/core)
+"vx" = (
+/obj/machinery/door/airlock/pyro/classic{
+	name = "sealed airlock";
+	welded = 1
+	},
+/turf/simulated/floor/plating,
+/area/derelict_ai_sat)
+"vy" = (
+/obj/decal{
+	anchored = 1;
+	density = 1;
+	desc = "An old mainframe of some sort. It makes you thankful that the station's AI only takes one whole tile of space.";
+	icon = 'icons/effects/96x96.dmi';
+	icon_state = "oldai_t1";
+	layer = 29;
+	name = "databank";
+	pixel_x = -32;
+	pixel_y = -32
+	},
+/turf/simulated/floor/plating,
+/area/derelict_ai_sat/core)
+"vF" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 8;
+	name = "sealed airlock";
+	tag = "icon-old_closed (WEST)";
+	welded = 1
+	},
+/turf/simulated/floor/plating,
+/area/derelict_ai_sat)
+"wk" = (
+/obj/item/cable_coil{
+	color = "#DD0000"
+	},
+/turf/simulated/floor/plating,
+/area/derelict_ai_sat/core)
+"wr" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 8
+	},
+/area/derelict_ai_sat)
+"wx" = (
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/derelict_ai_sat/core)
+"wz" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 8;
+	name = "Crew Quarters";
+	tag = "icon-old_closed (WEST)"
+	},
+/turf/simulated/floor/grime,
+/area/derelict_ai_sat)
+"wN" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/derelict_ai_sat/solar)
+"wO" = (
+/obj/disposalpipe/segment,
+/obj/machinery/light{
+	brightness = 1.2;
+	dir = 0;
+	layer = 9.1;
+	name = "worn light fixture";
+	pixel_y = -14
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/yellow/side,
+/area/derelict_ai_sat/core)
+"xe" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/derelict_ai_sat)
+"xt" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/caution/north{
+	dir = 8
+	},
+/area/derelict_ai_sat)
+"xH" = (
+/obj/stool/chair/wooden{
+	dir = 4
+	},
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "red2";
+	tag = "icon-red2 (NORTHWEST)"
+	},
+/area/derelict_ai_sat)
+"xJ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine,
+/area/derelict_ai_sat)
+"xO" = (
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/derelict_ai_sat/core)
+"xY" = (
+/obj/item/motherboard,
+/obj/item/device/light/zippo,
+/obj/storage/crate/furnacefuel,
+/turf/simulated/floor/damaged4,
+/area/derelict_ai_sat)
+"yi" = (
+/obj/table/auto,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "The power cord seems to have been completely ripped off.";
+	icon = 'icons/obj/computer_frame_desk.dmi';
+	icon_state = "1";
+	name = "broken computer";
+	pixel_y = 7
+	},
+/turf/simulated/floor/caution/east{
+	dir = 8
+	},
+/area/derelict_ai_sat)
+"ys" = (
+/obj/securearea,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/derelict_ai_sat/core)
+"yt" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/caution/north{
+	dir = 8
+	},
+/area/derelict_ai_sat)
+"yx" = (
+/obj/disposaloutlet{
+	dir = 4
+	},
+/obj/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/noGenerate)
+"yD" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/engine,
+/area/derelict_ai_sat)
+"yL" = (
+/obj/table/auto,
+/obj/item/staple_gun,
+/turf/simulated/floor/white/grime,
+/area/derelict_ai_sat)
+"za" = (
+/obj/decal/fakeobjects{
+	desc = "It's probably broken.";
+	icon = 'icons/obj/power.dmi';
+	icon_state = "solar_panel-b";
+	name = "solar panel"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "solarbase";
+	name = "solar paneling"
+	},
+/area/derelict_ai_sat/solar)
+"zg" = (
+/turf/simulated/floor/plating,
+/area/derelict_ai_sat/core)
+"zj" = (
+/obj/item/extinguisher,
+/turf/simulated/floor/scorched2,
+/area/derelict_ai_sat)
+"zm" = (
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk,
+/turf/simulated/floor/orangeblack,
+/area/derelict_ai_sat)
+"zv" = (
+/obj/table/wood/auto,
+/turf/simulated/floor/wood/two,
+/area/derelict_ai_sat)
+"zH" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4;
+	tag = "icon-intact-f (EAST)"
+	},
+/turf/simulated/floor/engine/caution/northsouth,
+/area/derelict_ai_sat/core)
+"zI" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/stairs{
+	dir = 1
+	},
+/area/derelict_ai_sat)
+"Ac" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 1;
+	tag = "icon-intact (NORTH)"
+	},
+/turf/simulated/floor/plating/scorched,
+/area/derelict_ai_sat)
+"Ap" = (
+/obj/cable,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/grille,
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"AD" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	tag = "icon-catwalk (WEST)"
+	},
+/area/derelict_ai_sat/solar)
+"AL" = (
+/obj/decal/fakeobjects/pipe,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/derelict_ai_sat)
+"AP" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/caution/westeast{
+	dir = 4
+	},
+/area/derelict_ai_sat/core)
+"AR" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/disposalpipe/segment,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/caution/corner/misc{
+	dir = 1
+	},
+/area/derelict_ai_sat/core)
+"AT" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	tag = "icon-catwalk (WEST)"
+	},
+/area/derelict_ai_sat/solar)
+"AV" = (
+/obj/decal/cleanable/dirt,
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/scorched2,
+/area/derelict_ai_sat)
+"Ba" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir-b";
+	tag = "icon-lattice-dir-b (EAST)"
+	},
+/turf/space,
+/area/noGenerate)
+"Bo" = (
+/obj/decal/cleanable/cobweb2,
+/turf/simulated/floor/damaged2,
+/area/derelict_ai_sat/core)
+"Bv" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine,
+/area/derelict_ai_sat)
+"BA" = (
+/turf/simulated/floor/caution/north{
+	dir = 8
+	},
+/area/derelict_ai_sat)
+"BY" = (
+/obj/critter/roach,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine,
+/area/derelict_ai_sat)
+"Ce" = (
+/turf/simulated/floor/grey/blackgrime/other,
+/area/derelict_ai_sat)
+"Ct" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/wood/two,
+/area/derelict_ai_sat)
+"CG" = (
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "A model of a PR-3 robuddy, introduced in the 2030s.  Well, it's probably a real shell, but it looks kinda empty.";
+	icon = 'icons/misc/lunar.dmi';
+	icon_state = "oldbuddy";
+	name = "very old robuddy model"
+	},
+/turf/simulated/floor/damaged2,
+/area/derelict_ai_sat)
+"Dh" = (
+/obj/stool/chair/wooden{
+	dir = 1
+	},
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "red2";
+	tag = "icon-red2 (SOUTHEAST)"
+	},
+/area/derelict_ai_sat)
+"Dk" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"Dp" = (
+/obj/item/cable_coil/cut{
+	color = "#DD0000";
+	icon_state = "coil1"
+	},
+/turf/simulated/floor/engine,
+/area/derelict_ai_sat)
+"DD" = (
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/caution/west,
+/area/derelict_ai_sat)
+"DF" = (
+/obj/machinery/door/unpowered/wood/pyro,
+/turf/simulated/floor/carpet,
+/area/derelict_ai_sat)
+"DM" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 4
+	},
+/turf/simulated/floor/white/grime,
+/area/derelict_ai_sat)
+"DS" = (
+/obj/machinery/portable_reclaimer,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/damaged5,
+/area/derelict_ai_sat)
+"Ei" = (
+/obj/decal/fakeobjects/lighttube_broken{
+	dir = 1;
+	pixel_y = 10
+	},
+/turf/simulated/floor/grime,
+/area/derelict_ai_sat/core)
+"Fy" = (
+/turf/simulated/floor/caution/corner/misc{
+	dir = 10
+	},
+/area/derelict_ai_sat/core)
+"Ga" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/item/plank,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	tag = "icon-catwalk (WEST)"
+	},
+/area/derelict_ai_sat/solar)
+"Gi" = (
+/obj/item/wrapping_paper,
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "red2";
+	tag = "icon-red2 (SOUTHWEST)"
+	},
+/area/derelict_ai_sat)
+"Gq" = (
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "A model of a PR-3 robuddy, introduced in the 2030s.  Well, it's probably a real shell, but it looks kinda empty.";
+	icon = 'icons/misc/lunar.dmi';
+	icon_state = "oldbuddy";
+	name = "very old robuddy model"
+	},
+/turf/simulated/floor/scorched2,
+/area/derelict_ai_sat)
+"Gw" = (
+/turf/simulated/floor/wood/two,
+/area/derelict_ai_sat)
+"GA" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/caution/east{
+	dir = 8
+	},
+/area/derelict_ai_sat)
+"GX" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/stairs{
+	dir = 1
+	},
+/area/derelict_ai_sat)
+"GY" = (
+/obj/stool/chair/office/blue{
+	dir = 1;
+	tag = "icon-office_chair_blue (NORTH)"
+	},
+/turf/simulated/floor/grey/blackgrime/other,
+/area/derelict_ai_sat)
+"Hd" = (
+/obj/decal/fakeobjects/pipe,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/scorched,
+/area/derelict_ai_sat)
+"Hm" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/engine,
+/area/derelict_ai_sat)
+"Hp" = (
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/tracker/east{
+	id = "derelict_ai_sat"
+	},
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"HL" = (
+/obj/item/storage/wall/fire{
+	dir = 8;
+	pixel_x = 32
+	},
+/turf/simulated/floor/white/grime,
+/area/derelict_ai_sat)
+"HU" = (
+/obj/window/cubicle{
+	dir = 1
+	},
+/obj/item/storage/wall/emergency{
+	dir = 8;
+	pixel_x = 32
+	},
+/turf/simulated/floor/white/grime,
+/area/derelict_ai_sat)
+"Ie" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/derelict_ai_sat/core)
+"Ig" = (
+/turf/simulated/floor/caution/corner/misc{
+	dir = 4
+	},
+/area/derelict_ai_sat/core)
+"Iq" = (
+/obj/table/auto,
+/obj/item/motherboard{
+	desc = "A circuitboard of some kind.";
+	icon_state = "id_mod";
+	name = "circuitboard"
+	},
+/turf/simulated/floor/circuit/vintage,
+/area/derelict_ai_sat)
+"IC" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor,
+/area/derelict_ai_sat)
+"ID" = (
+/turf/simulated/floor/plating/scorched,
+/area/derelict_ai_sat)
+"IF" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/noGenerate)
+"IK" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/orangeblack,
+/area/derelict_ai_sat)
+"IQ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/caution/north{
+	dir = 8
+	},
+/area/derelict_ai_sat/core)
+"IS" = (
+/turf/simulated/floor/orangeblack/side{
+	dir = 9
+	},
+/area/derelict_ai_sat)
+"IV" = (
+/turf/simulated/floor/orangeblack/side{
+	dir = 8
+	},
+/area/derelict_ai_sat)
+"Ja" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/simulated/floor/grime,
+/area/derelict_ai_sat)
+"Jw" = (
+/obj/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/grime,
+/area/derelict_ai_sat/core)
+"JG" = (
+/turf/simulated/floor/plating,
+/area/derelict_ai_sat)
+"JN" = (
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable,
+/obj/grille,
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"JQ" = (
+/obj/stool/chair{
+	dir = 1
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/caution/north{
+	dir = 8
+	},
+/area/derelict_ai_sat)
+"JS" = (
+/turf/simulated/floor/scorched,
+/area/derelict_ai_sat/core)
+"JV" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/stairs{
+	dir = 0
+	},
+/area/derelict_ai_sat)
+"Kh" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/structure/woodwall,
+/turf/space,
+/area/noGenerate)
+"Kl" = (
+/obj/machinery/door/airlock/pyro/classic{
+	name = "Bathroom"
+	},
+/turf/simulated/floor/grime,
+/area/derelict_ai_sat)
+"Kr" = (
+/obj/grille,
+/obj/window/auto/reinforced,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/derelict_ai_sat)
+"Kv" = (
+/obj/decal/fakeobjects/pipe,
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/derelict_ai_sat)
+"KZ" = (
+/obj/grille/catwalk{
+	dir = 10
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/space,
+/area/derelict_ai_sat/solar)
+"Lb" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/engine,
+/area/derelict_ai_sat)
+"Ll" = (
+/obj/storage/cart,
+/turf/simulated/floor/white/grime,
+/area/derelict_ai_sat)
+"LE" = (
+/obj/machinery/chem_dispenser,
+/turf/simulated/floor/white/grime,
+/area/derelict_ai_sat)
+"LM" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"LW" = (
+/obj/reagent_dispensers/watertank/fountain,
+/turf/simulated/floor/white/grime,
+/area/derelict_ai_sat)
+"LZ" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/simulated/floor/scorched2,
+/area/derelict_ai_sat)
+"Mq" = (
+/obj/table/auto,
+/obj/item/motherboard{
+	desc = "A circuitboard of some kind.";
+	icon_state = "blank_mod";
+	name = "circuitboard"
+	},
+/turf/simulated/floor/circuit/vintage,
+/area/derelict_ai_sat)
+"Ms" = (
+/obj/item/storage/wall/random,
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/red,
+/obj/decal/cleanable/cobweb2,
+/turf/simulated/floor/carpet,
+/area/derelict_ai_sat)
+"Mv" = (
+/obj/item/storage/wall/random{
+	dir = 8;
+	pixel_x = 32;
+	pixel_y = 0
+	},
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/red,
+/obj/item/seed/cannabis,
+/turf/simulated/floor/carpet,
+/area/derelict_ai_sat)
+"MD" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 8;
+	tag = "icon-old_closed (WEST)"
+	},
+/turf/simulated/floor/grime,
+/area/derelict_ai_sat/core)
+"MG" = (
+/obj/item/electronics/soldering,
+/turf/simulated/floor/damaged2,
+/area/derelict_ai_sat)
+"MV" = (
+/obj/machinery/plantpot{
+	name = "plant pot"
+	},
+/turf/simulated/floor/grime,
+/area/derelict_ai_sat)
+"Na" = (
+/turf/simulated/floor/caution/west,
+/area/derelict_ai_sat/core)
+"Nf" = (
+/obj/machinery/door/airlock/pyro/classic{
+	name = "AI Core";
+	welded = 1
+	},
+/turf/simulated/floor/grime,
+/area/derelict_ai_sat/core)
+"Ng" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/derelict_ai_sat)
+"Ni" = (
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/plating,
+/area/derelict_ai_sat)
+"Nl" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/caution/corner/misc{
+	dir = 9
+	},
+/area/derelict_ai_sat/core)
+"Nm" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"NM" = (
+/obj/stool/chair/office/blue{
+	dir = 4;
+	tag = "icon-office_chair_blue (EAST)"
+	},
+/turf/simulated/floor/grey/blackgrime/other,
+/area/derelict_ai_sat)
+"Oe" = (
+/obj/machinery/light{
+	brightness = 1.2;
+	dir = 8;
+	layer = 9.1;
+	name = "worn light fixture";
+	pixel_x = -14
+	},
+/turf/simulated/floor/yellow/corner{
+	dir = 8
+	},
+/area/derelict_ai_sat/core)
+"Oq" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"OH" = (
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable,
+/obj/grille,
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"OU" = (
+/obj/grille/catwalk{
+	icon_state = "catwalk_cross"
+	},
+/obj/item/cable_coil/cut{
+	color = "#DD0000"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	tag = "icon-catwalk (WEST)"
+	},
+/area/derelict_ai_sat/solar)
+"Pb" = (
+/turf/simulated/floor/stairs{
+	dir = 0
+	},
+/area/derelict_ai_sat)
+"Pd" = (
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/grille,
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"Pt" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 1;
+	tag = "icon-wood1 (NORTH)"
+	},
+/turf/simulated/floor/white/grime,
+/area/derelict_ai_sat)
+"Pw" = (
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/engine,
+/area/derelict_ai_sat)
+"Px" = (
+/turf/simulated/floor/caution/east{
+	dir = 8
+	},
+/area/derelict_ai_sat/core)
+"PF" = (
+/obj/disposalpipe/segment,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/grime,
+/area/derelict_ai_sat)
+"PL" = (
+/turf/simulated/floor/yellow/corner{
+	dir = 4
+	},
+/area/derelict_ai_sat/core)
+"PU" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/white/grime,
+/area/derelict_ai_sat)
+"QM" = (
+/obj/machinery/power/solar/east{
+	id = "derelict_ai_sat"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "solarbase";
+	name = "solar paneling"
+	},
+/area/derelict_ai_sat/solar)
+"Rc" = (
+/obj/securearea{
+	desc = "A warning sign which reads 'NO TRESPASSING'";
+	name = "NO TRESPASSING";
+	pixel_y = 32
+	},
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"Re" = (
+/obj/table/auto,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "The power cord seems to have been completely ripped off.";
+	icon = 'icons/obj/computer_frame_desk.dmi';
+	icon_state = "1";
+	name = "broken computer";
+	pixel_y = 7
+	},
+/obj/decal/cleanable/cobweb2,
+/turf/simulated/floor/grey/blackgrime/other,
+/area/derelict_ai_sat)
+"Rj" = (
+/obj/disposalpipe/segment,
+/obj/machinery/derelict_aiboss/tower,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/bot,
+/area/derelict_ai_sat/core)
+"Rs" = (
+/obj/grille/catwalk,
+/obj/cable{
+	icon_state = "2-5"
+	},
+/turf/simulated/floor/airless/plating/catwalk,
+/area/derelict_ai_sat/solar)
+"Rw" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4;
+	tag = "icon-old_closed (EAST)"
+	},
+/turf/simulated/floor/grime,
+/area/derelict_ai_sat/core)
+"Rx" = (
+/obj/table/auto,
+/obj/item/motherboard{
+	desc = "A circuitboard of some kind.";
+	icon_state = "radio_mod";
+	name = "circuitboard"
+	},
+/turf/simulated/floor/circuit/vintage,
+/area/derelict_ai_sat)
+"RO" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/derelict_ai_sat)
+"Sd" = (
+/obj/disposalpipe/segment,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/derelict_ai_sat/core)
+"Sg" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/obj/grille,
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"Sn" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 10;
+	tag = "icon-intact (SOUTHWEST)"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/derelict_ai_sat)
+"So" = (
+/obj/table/auto,
+/obj/item/camera{
+	pixel_y = 6
+	},
+/turf/simulated/floor/white/grime,
+/area/derelict_ai_sat)
+"Ss" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/structure/woodwall{
+	icon_state = "woodwall2"
+	},
+/turf/space,
+/area/noGenerate)
+"SX" = (
+/obj/decal/fakeobjects/lighttube_broken{
+	desc = "This light might be broken.  It's probably not wired up, though.";
+	dir = 4;
+	icon_state = "tube0";
+	layer = 4;
+	name = "inactive light tube";
+	pixel_x = 10;
+	tag = "icon-tube-broken (NORTH)"
+	},
+/turf/simulated/floor/scorched2,
+/area/derelict_ai_sat)
+"Tb" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"Tq" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"Tu" = (
+/obj/disposalpipe/segment,
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "Something about this robot seems very familiar.";
+	icon = 'icons/misc/evilreaverstation.dmi';
+	icon_state = "pr1_0";
+	name = "PR-1 Automated Checkpoint"
+	},
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 15;
+	tag = "icon-tube1 (NORTH)"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/grime,
+/area/derelict_ai_sat)
+"TI" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/grime,
+/area/derelict_ai_sat)
+"TJ" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/grille,
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"TK" = (
+/turf/simulated/floor/caution/south,
+/area/derelict_ai_sat/core)
+"TT" = (
+/obj/machinery/bathtub{
+	anchored = 1;
+	dir = 4
+	},
+/obj/item/rubberduck,
+/turf/simulated/floor/white/grime,
+/area/derelict_ai_sat)
+"TX" = (
+/obj/table/auto,
+/obj/item/motherboard{
+	desc = "A circuitboard of some kind.";
+	icon_state = "elec_mod";
+	name = "circuitboard"
+	},
+/turf/simulated/floor/circuit/vintage,
+/area/derelict_ai_sat)
+"Ua" = (
+/turf/simulated/floor/yellow/side,
+/area/derelict_ai_sat/core)
+"Ui" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"Us" = (
+/obj/item/electronics/scanner,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/scorched,
+/area/derelict_ai_sat)
+"UA" = (
+/obj/table/auto,
+/obj/window/cubicle{
+	dir = 8
+	},
+/obj/item/paper_bin,
+/turf/simulated/floor/grey/blackgrime/other,
+/area/derelict_ai_sat)
+"UC" = (
+/obj/table/wood/round/auto,
+/obj/item/storage/box/nerd_kit{
+	desc = "It's the famous carmine box starter set for Syndicates & Stations, Second Edition.";
+	name = "old tabletop gaming kit";
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/card_box/plain{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "red2";
+	tag = "icon-red2 (NORTHEAST)"
+	},
+/area/derelict_ai_sat)
+"UD" = (
+/turf/simulated/floor/caution/northsouth,
+/area/derelict_ai_sat/core)
+"UY" = (
+/obj/item/storage/wall/random{
+	dir = 4;
+	pixel_x = -32;
+	pixel_y = 0
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 9
+	},
+/area/derelict_ai_sat)
+"UZ" = (
+/obj/submachine/chef_sink/chem_sink{
+	pixel_y = 15
+	},
+/turf/simulated/floor/white/grime,
+/area/derelict_ai_sat)
+"Va" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/scorched,
+/area/derelict_ai_sat)
+"Vd" = (
+/obj/table/reinforced/auto,
+/obj/machinery/light/lamp{
+	pixel_y = 6
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 9
+	},
+/area/derelict_ai_sat)
+"Vj" = (
+/obj/grille/catwalk,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/cable,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/derelict_ai_sat/solar)
+"Vn" = (
+/obj/table/reinforced/auto,
+/turf/simulated/floor,
+/area/derelict_ai_sat)
+"VG" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "It doesn't seem to be hooked up to anything.";
+	dir = 6;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "satanai_dapedeck1";
+	name = "old databank";
+	tag = "icon-satanai_dapedeck1 (SOUTHEAST)"
+	},
+/turf/simulated/floor,
+/area/derelict_ai_sat)
+"VY" = (
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "Rust has rendered this airlock useless.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "bloodydoor";
+	name = "rusted airlock"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/bot,
+/area/derelict_ai_sat)
+"Wh" = (
+/obj/stool/chair/yellow{
+	dir = 8;
+	tag = "icon-chair-y (WEST)"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/grime,
+/area/derelict_ai_sat)
+"Wi" = (
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/grille,
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"Ws" = (
+/obj/grille,
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"Wu" = (
+/obj/cable,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/grille,
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"Wy" = (
+/obj/table/auto,
+/obj/item/clothing/gloves/yellow,
+/turf/simulated/floor,
+/area/derelict_ai_sat)
+"WA" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/derelict_ai_sat)
+"WM" = (
+/obj/decal{
+	anchored = 1;
+	density = 1;
+	desc = "";
+	icon = 'icons/effects/96x96.dmi';
+	icon_state = "oldai_t2";
+	layer = 29;
+	name = "databank";
+	pixel_x = -32;
+	pixel_y = -32
+	},
+/turf/simulated/floor/plating,
+/area/derelict_ai_sat/core)
+"WT" = (
+/obj/item/sponge,
+/turf/simulated/floor/white/grime,
+/area/derelict_ai_sat)
+"Xn" = (
+/turf/simulated/floor/caution/west,
+/area/derelict_ai_sat)
+"Xs" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/engine,
+/area/derelict_ai_sat)
+"Xu" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/item/caution{
+	desc = "Caution! No trespassing!";
+	name = "no trespassing sign"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	tag = "icon-catwalk (WEST)"
+	},
+/area/derelict_ai_sat/solar)
+"XG" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/grime,
+/area/derelict_ai_sat)
+"XR" = (
+/obj/grille,
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"XW" = (
+/turf/simulated/floor/orangeblack,
+/area/derelict_ai_sat)
+"XX" = (
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/grille,
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"Yg" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/noGenerate)
+"Yh" = (
+/turf/simulated/floor/circuit/vintage,
+/area/derelict_ai_sat/core)
+"Yj" = (
+/obj/cable,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/grille/catwalk{
+	dir = 1;
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/derelict_ai_sat/solar)
+"Yq" = (
+/turf/simulated/floor/scorched2,
+/area/derelict_ai_sat/core)
+"Yx" = (
+/obj/item/storage/firstaid/old,
+/turf/simulated/floor/white/grime,
+/area/derelict_ai_sat)
+"YC" = (
+/obj/decal/fakeobjects/pipe{
+	desc = "It is not working.";
+	dir = 4;
+	icon = 'icons/obj/atmospherics/pump.dmi';
+	icon_state = "intact_off";
+	name = "pump"
+	},
+/turf/simulated/floor/engine/caution/northsouth,
+/area/derelict_ai_sat/core)
+"YF" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 1;
+	tag = "icon-intact (NORTH)"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/derelict_ai_sat)
+"YQ" = (
+/turf/simulated/floor/damaged2,
+/area/derelict_ai_sat/core)
+"YV" = (
+/turf/simulated/floor,
+/area/derelict_ai_sat)
+"YX" = (
+/obj/decal/fakeobjects/pipe,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine/caution/westeast,
+/area/derelict_ai_sat/core)
+"Za" = (
+/turf/simulated/floor/caution/east{
+	dir = 8
+	},
+/area/derelict_ai_sat)
+"Zg" = (
+/obj/item/clothing/mask/breath,
+/turf/simulated/floor/scorched2,
+/area/derelict_ai_sat)
+"Zh" = (
+/obj/item/device/igniter,
+/turf/simulated/floor/grime,
+/area/derelict_ai_sat)
+"Zk" = (
+/turf/space,
+/area/allowGenerate)
+"Zq" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "You haven't seen any of these in a while! Shame that it's broken.";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "printer-blink";
+	name = "broken fax machine"
+	},
+/obj/item/paper/abandonedai/B{
+	pixel_x = 5;
+	pixel_y = 8
+	},
+/obj/item/paper/abandonedai/A,
+/turf/simulated/floor/wood/two,
+/area/derelict_ai_sat)
+"Zw" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir-b";
+	tag = "icon-lattice-dir-b (WEST)"
+	},
+/turf/space,
+/area/noGenerate)
+"Zz" = (
+/obj/machinery/power/solar/east{
+	id = "derelict_ai_sat"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "solarbase";
+	name = "solar paneling"
+	},
+/area/derelict_ai_sat/solar)
+"ZK" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/caution/corner/misc,
+/area/derelict_ai_sat/core)
+"ZN" = (
+/obj/table/auto,
+/obj/item/device/multitool,
+/turf/simulated/floor,
+/area/derelict_ai_sat)
+"ZO" = (
+/turf/simulated/floor/caution/corner/misc{
+	dir = 8
+	},
+/area/derelict_ai_sat/core)
+"ZQ" = (
+/turf/space,
+/area/noGenerate)
+"ZT" = (
+/turf/simulated/floor/circuit/vintage,
+/area/derelict_ai_sat)
+"ZU" = (
+/obj/item/plank,
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"ZW" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/engine,
+/area/derelict_ai_sat)
+
+(1,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+Zw
+Ws
+Ws
+ZQ
+ZQ
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+"}
+(2,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+ZQ
+Ws
+ZQ
+ZQ
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+"}
+(3,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+ZQ
+Ba
+ZQ
+ZQ
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+"}
+(4,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+ZQ
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+ZQ
+ZQ
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+"}
+(5,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+od
+ZQ
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+Ba
+ZQ
+ZQ
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+"}
+(6,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+Ws
+ZQ
+ZQ
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+"}
+(7,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+Ba
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+Ws
+ZQ
+ZQ
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+"}
+(8,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+Ba
+ZQ
+ZQ
+ZQ
+ZQ
+za
+za
+ZQ
+ZQ
+Ui
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+XR
+ZQ
+ZQ
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+"}
+(9,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+Ws
+ZQ
+Zw
+Tq
+pR
+pR
+pR
+Zw
+ZQ
+AT
+ZQ
+za
+za
+za
+za
+za
+za
+ZQ
+Ws
+ZQ
+ZQ
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+"}
+(10,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+Ws
+ZQ
+ZQ
+ZQ
+za
+za
+za
+ZQ
+ZQ
+OU
+Rs
+ol
+pR
+pR
+pR
+pR
+rM
+ZQ
+Ws
+ZQ
+ZQ
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+"}
+(11,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+XR
+ZQ
+ZQ
+ZQ
+ZQ
+Ba
+ZQ
+ZQ
+ZQ
+AD
+ZQ
+za
+za
+za
+za
+za
+ZQ
+ZQ
+Ba
+ZQ
+ZQ
+ZQ
+ZQ
+Dk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+"}
+(12,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+Ws
+ZQ
+ZQ
+ZQ
+ZQ
+Ba
+ZQ
+ZQ
+ZQ
+ds
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+Ba
+ZQ
+ZQ
+Zk
+Zk
+Zk
+Zk
+Zk
+"}
+(13,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+Ws
+ZQ
+ZQ
+ZQ
+ZQ
+Ui
+ZQ
+ZQ
+ZQ
+Ga
+ZQ
+ZQ
+ZQ
+Ba
+ZQ
+ZQ
+ZQ
+fk
+Sg
+JN
+Ss
+Kh
+fk
+Sg
+Ap
+ZQ
+Zk
+Zk
+Zk
+Zk
+Zk
+"}
+(14,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+Ba
+ZQ
+ZQ
+ZQ
+ZQ
+Ui
+fk
+Sg
+Sg
+tt
+Sg
+Sg
+Ap
+Ui
+ZQ
+ZQ
+ZQ
+XX
+Ng
+xe
+Kr
+Kr
+xe
+Ng
+XX
+Ba
+ZQ
+ZQ
+Zk
+Zk
+Zk
+"}
+(15,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+Ba
+ZQ
+fk
+Sg
+Sg
+Sg
+OH
+Ng
+hk
+vF
+Ng
+Ng
+TJ
+Sg
+Sg
+Sg
+Sg
+OH
+Ng
+VG
+RO
+IC
+ip
+Ng
+Pd
+Ap
+ZQ
+ZQ
+ZQ
+Zk
+Zk
+"}
+(16,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+fk
+Sg
+OH
+Ng
+Ng
+Ng
+Ng
+Ng
+un
+jl
+ID
+Ng
+Ng
+Ng
+Ng
+Ng
+Ng
+Ng
+Ng
+yi
+Za
+GA
+Za
+Ng
+Ng
+XX
+ZQ
+ZQ
+ZQ
+Zk
+Zk
+"}
+(17,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+XX
+Ng
+Ng
+Ng
+Hm
+Bv
+GX
+nZ
+YF
+Kv
+Ac
+uQ
+Pb
+kc
+kc
+Ng
+nA
+NM
+kV
+mD
+mD
+PU
+mD
+na
+Ng
+XX
+Zw
+Nm
+ZQ
+ZQ
+ZQ
+"}
+(18,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+Nm
+Zw
+fk
+hL
+Ng
+Hm
+BY
+ZW
+Ie
+Ie
+Ie
+Ie
+Rw
+Ie
+Ie
+Ie
+Ie
+Pw
+Ng
+rc
+Ce
+mD
+mD
+yL
+uY
+mD
+LE
+Ng
+XX
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+"}
+(19,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+XX
+Ng
+Ng
+oI
+Ie
+Ie
+Ie
+eF
+zH
+Oe
+wx
+af
+zH
+JS
+Ie
+Ie
+Ie
+UA
+mg
+Yx
+mD
+So
+PU
+mD
+Ll
+Ng
+XX
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+"}
+(20,1,1) = {"
+Zk
+Zk
+Zk
+ZQ
+ZQ
+fk
+Sg
+Sg
+Sg
+OH
+Ng
+Dp
+ZW
+Ie
+eF
+fw
+eF
+zH
+eF
+jY
+eF
+zH
+eF
+eF
+eF
+Ie
+Re
+GY
+HU
+HL
+mD
+PU
+mD
+LW
+Ng
+XX
+Nm
+Nm
+bw
+bw
+Nm
+"}
+(21,1,1) = {"
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+jC
+Ng
+Ng
+Ng
+Ng
+Ng
+Ng
+Ie
+Ie
+eF
+kZ
+Px
+zH
+Px
+Ig
+Px
+zH
+Px
+aR
+vq
+Ie
+Ie
+Ng
+Ng
+Ng
+Ng
+nw
+Ng
+Ng
+Ng
+bk
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+"}
+(22,1,1) = {"
+Nm
+Nm
+fk
+Sg
+Sg
+OH
+Ng
+rK
+IK
+UY
+XW
+zm
+fU
+my
+ss
+TK
+Yh
+Yh
+Yh
+UD
+Yh
+Yh
+Yh
+bA
+eF
+eF
+Ie
+Mq
+Iq
+ZT
+BA
+XG
+MV
+MV
+Ng
+Ng
+Rc
+ZU
+Yg
+ZQ
+ZQ
+"}
+(23,1,1) = {"
+ZQ
+ZQ
+XX
+Ng
+Ng
+Ng
+Ng
+rY
+IS
+Vd
+IS
+mI
+Ie
+Ei
+pt
+TK
+Yh
+vy
+Yh
+UD
+Yh
+WM
+Yh
+qE
+qE
+qE
+ys
+ZT
+ZT
+ZT
+BA
+XG
+mG
+mG
+mG
+Ng
+Ng
+Ng
+Ng
+Ng
+ZQ
+"}
+(24,1,1) = {"
+ZQ
+ZQ
+XX
+Ng
+dt
+jX
+pr
+wr
+IV
+Vn
+YV
+hY
+Ie
+PL
+pt
+TK
+Yh
+WM
+Yh
+UD
+Yh
+WM
+Yh
+bA
+eF
+Ua
+Nf
+Xn
+Xn
+Xn
+hC
+Zq
+zv
+BA
+mG
+mG
+Ng
+bH
+bH
+Ng
+Ng
+"}
+(25,1,1) = {"
+ZQ
+ZQ
+XX
+Ng
+fI
+mG
+qg
+xt
+TI
+Wh
+TI
+an
+ak
+sM
+Jw
+ZK
+AP
+AP
+AP
+iB
+cr
+AP
+AP
+AR
+Rj
+wO
+Sd
+Tu
+PF
+PF
+PF
+bI
+bx
+JQ
+TI
+TI
+hW
+fN
+JG
+vx
+mL
+"}
+(26,1,1) = {"
+ZQ
+ZQ
+XX
+Ng
+js
+mS
+qF
+yt
+TI
+TI
+TI
+lt
+Ie
+af
+eF
+TK
+Yh
+WM
+Yh
+UD
+Yh
+WM
+Yh
+IQ
+eF
+Ua
+Nf
+Za
+Za
+Za
+qf
+jo
+ib
+BA
+ob
+mG
+Ng
+Ni
+JG
+Ng
+Ng
+"}
+(27,1,1) = {"
+ZQ
+ZQ
+XX
+Ng
+Ng
+Ng
+Ng
+CG
+MG
+mG
+Zh
+Us
+Ie
+Ei
+eF
+TK
+Yh
+WM
+Yh
+UD
+Yh
+eG
+Yh
+YX
+qE
+qE
+Ie
+ZT
+ZT
+ZT
+BA
+DD
+Xn
+hC
+mG
+Ng
+Ng
+fe
+JG
+Ng
+od
+"}
+(28,1,1) = {"
+bw
+Nm
+Pd
+Sg
+Sg
+JN
+Ng
+Gq
+SX
+Wy
+ZN
+DS
+Ie
+YQ
+jY
+TK
+Yh
+Yh
+Yh
+UD
+Yh
+Yh
+Yh
+IQ
+YQ
+eF
+Ie
+Rx
+TX
+ZT
+BA
+sA
+zj
+mG
+Ng
+Ng
+Ng
+Ng
+Ng
+Ng
+ZQ
+"}
+(29,1,1) = {"
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+XX
+Ng
+Ng
+Ng
+Ng
+Ng
+pk
+Ie
+Ie
+Yq
+Fy
+Na
+YC
+Na
+ZO
+Na
+YC
+Na
+Nl
+eF
+Ie
+Ie
+Ng
+Ng
+Ng
+Ng
+wz
+Ng
+Ng
+Ng
+Ng
+Wi
+ZQ
+ZQ
+ZQ
+ZQ
+"}
+(30,1,1) = {"
+Zk
+Zk
+ZQ
+ZQ
+ZQ
+Pd
+Sg
+Sg
+Sg
+JN
+Ng
+Lb
+yD
+Ie
+Bo
+eF
+eF
+zH
+eF
+jY
+eF
+zH
+zg
+bM
+wk
+Ie
+xY
+LZ
+Ng
+fE
+Ct
+mJ
+Gw
+DF
+Mv
+Ng
+Pd
+Sg
+JN
+Nm
+lD
+"}
+(31,1,1) = {"
+Zk
+Zk
+Zk
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+XX
+Ng
+Ng
+eu
+Ie
+Ie
+Ie
+eF
+zH
+ck
+xO
+PL
+zH
+zg
+Ie
+Ie
+Ie
+Zg
+Ja
+Ng
+pQ
+Gw
+gp
+gM
+Ng
+Ng
+Ng
+Ng
+Ng
+JN
+ZQ
+ZQ
+"}
+(32,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+ZQ
+ZQ
+Pd
+JN
+Ng
+Lb
+Bv
+mm
+Ie
+Ie
+Ie
+Ie
+MD
+Ie
+Ie
+Ie
+Ie
+Xs
+VY
+AV
+bi
+Ng
+xH
+Gi
+mJ
+Gw
+Kl
+bm
+Ng
+TT
+Ng
+XX
+ZQ
+ZQ
+"}
+(33,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+ZQ
+ZQ
+XX
+Ng
+Ng
+Ng
+Lb
+Dp
+zI
+Sn
+AL
+aM
+Hd
+sx
+JV
+xJ
+sP
+Ng
+gn
+jy
+Ng
+UC
+Dh
+ot
+Gw
+Ng
+UZ
+Pt
+WT
+Ng
+XX
+ZQ
+ZQ
+"}
+(34,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+Zw
+Zw
+Pd
+Wu
+JN
+Ng
+Ng
+Ng
+Ng
+Ng
+qW
+Va
+ID
+Ng
+Ng
+Ng
+Ng
+Ng
+Ng
+Ng
+Ng
+Ng
+aQ
+WA
+aQ
+Ng
+DM
+Ng
+Ng
+Ng
+XX
+ZQ
+ZQ
+"}
+(35,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+Pd
+Wu
+Wu
+Wu
+JN
+Ng
+hk
+vF
+Ng
+Ng
+pb
+Wu
+Wu
+Wu
+Wu
+Wu
+JN
+Ng
+Ms
+WA
+jp
+Ng
+dn
+fJ
+Ng
+pb
+hL
+ZQ
+ZQ
+"}
+(36,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+Ui
+Pd
+Wu
+Wu
+iL
+Wu
+Wu
+hL
+Ui
+ZQ
+ZQ
+ZQ
+Zw
+XX
+Ng
+Ng
+WA
+Ng
+Ng
+Ng
+Ng
+Ng
+OH
+ZQ
+ZQ
+ZQ
+"}
+(37,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+Ws
+Tb
+ZQ
+ZQ
+ZQ
+Ui
+ZQ
+ZQ
+ZQ
+AD
+ZQ
+ZQ
+ZQ
+Ui
+ZQ
+ZQ
+ZQ
+Tb
+Pd
+Wu
+Wu
+gf
+Wu
+Wu
+OH
+Wu
+OH
+hL
+Zw
+ZQ
+ZQ
+"}
+(38,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+Ws
+Ui
+QM
+QM
+QM
+QM
+QM
+QM
+ZQ
+Xu
+ZQ
+QM
+QM
+QM
+QM
+QM
+QM
+Ui
+ZQ
+ZQ
+ZQ
+LM
+ZQ
+ZQ
+Ui
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+"}
+(39,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+Ws
+kS
+KZ
+Vj
+Vj
+Vj
+Vj
+Vj
+wN
+Yj
+wN
+Vj
+Vj
+Vj
+Vj
+Vj
+gz
+kS
+Ws
+ZQ
+ZQ
+yx
+Nm
+Nm
+od
+ZQ
+ZQ
+ZQ
+ZQ
+Zk
+Zk
+"}
+(40,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+Ws
+Ui
+Zz
+Zz
+Zz
+Zz
+Zz
+Zz
+aW
+AD
+ZQ
+Zz
+Zz
+Zz
+Zz
+Zz
+Zz
+Ui
+Ws
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+Zk
+Zk
+"}
+(41,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+Ws
+Ui
+ZQ
+ZQ
+ZQ
+Ui
+ZQ
+ZQ
+ZQ
+AD
+ZQ
+ZQ
+ZQ
+Ui
+ZQ
+ZQ
+ZQ
+Ui
+Ws
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+"}
+(42,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+Ws
+Ui
+QM
+QM
+QM
+QM
+QM
+QM
+ZQ
+AD
+ZQ
+QM
+QM
+QM
+QM
+QM
+QM
+Ui
+Ws
+ZQ
+ZQ
+ZQ
+ZQ
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+"}
+(43,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+Ws
+kS
+KZ
+Vj
+Vj
+Vj
+Vj
+Vj
+wN
+Yj
+wN
+Vj
+Vj
+Vj
+Vj
+Vj
+gz
+kS
+Ws
+ZQ
+ZQ
+ZQ
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+"}
+(44,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+Ws
+Ui
+Zz
+Zz
+Zz
+Zz
+Zz
+Zz
+ZQ
+AD
+ZQ
+Zz
+Zz
+Zz
+Zz
+Zz
+Zz
+Ui
+Ws
+ZQ
+ZQ
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+"}
+(45,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+Ws
+Ui
+ZQ
+ZQ
+ZQ
+Ui
+ZQ
+ZQ
+ZQ
+AD
+ZQ
+ZQ
+ZQ
+Ui
+ZQ
+ZQ
+ZQ
+Ui
+Ws
+ZQ
+ZQ
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+"}
+(46,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+Ws
+Ui
+QM
+QM
+QM
+QM
+QM
+QM
+ZQ
+AD
+ZQ
+QM
+QM
+QM
+QM
+QM
+QM
+Ui
+Ws
+ZQ
+ZQ
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+"}
+(47,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+Ws
+kS
+KZ
+Vj
+Vj
+Vj
+Vj
+Vj
+wN
+hn
+wN
+Vj
+Vj
+Vj
+Vj
+Vj
+gz
+kS
+Ws
+ZQ
+ZQ
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+"}
+(48,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+Ws
+Ui
+Zz
+Zz
+Zz
+Zz
+Zz
+Zz
+ZQ
+Hp
+ZQ
+Zz
+Zz
+Zz
+Zz
+Zz
+Zz
+Ui
+Ws
+ZQ
+ZQ
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+"}
+(49,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+Ws
+IF
+Nm
+Nm
+Oq
+Nm
+Nm
+Nm
+Nm
+Tq
+Nm
+Nm
+Nm
+Nm
+Oq
+Nm
+Nm
+od
+Ws
+ZQ
+ZQ
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+"}
+(50,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+rh
+Ws
+Ws
+Ws
+Ws
+Ws
+Ws
+Ws
+Ws
+Ws
+Ws
+Ws
+Ws
+Ws
+Ws
+Ws
+Ws
+Ws
+rh
+ZQ
+ZQ
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+"}
+(51,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+"}
+(52,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+"}
+(53,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+"}
+(54,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+"}
+(55,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+"}
+(56,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+"}
+(57,1,1) = {"
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+Zk
+"}

@@ -1,3 +1,9 @@
+#define REPAIR_SCREW 1
+#define REPAIR_WIRE 2
+#define REPAIR_SOLDER 3
+#define REPAIR_SCREW2 4
+#define REPAIR_PLATES 5
+
 ///Warp Beacons and Wormholes
 ///Used by spaceships to travel to other Z-planes
 
@@ -10,6 +16,8 @@
 	density = 1
 	var/packable = 0
 	var/beaconid //created by kits
+	var/needsRepair = FALSE
+	var/repairStage = REPAIR_SCREW
 
 	// Please keep synchronizied with these lists for easy map changes:
 	// /obj/machinery/door_control (door_control.dm)
@@ -44,6 +52,8 @@
 		name = "mining hangar beacon"
 	miningoutpost
 		name = "mining outpost beacon"
+		needsRepair = TRUE
+		icon_state = "beacon_broken"
 	miningasteroidbelt
 #ifdef UNDERWATER_MAP
 		name = "underwater mining beacon"
@@ -52,8 +62,10 @@
 #endif
 	diner
 		name = "space diner beacon"
-	faint //Manta beacon.
+	faint
 		name = "faint signal"
+		needsRepair = TRUE
+		icon_state = "beacon_broken"
 	front //Manta beacon.
 		name = "Fore beacon"
 	back //Manta beacon.
@@ -70,6 +82,19 @@
 		packable = 1
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if (needsRepair)
+			if (isscrewingtool(W) && repairStage == REPAIR_SCREW)
+				SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, .proc/repair_stage, W, W.icon, W.icon_state, "You unscrew the maintenence panel on the beacon.", null)
+			else if (istype(W, /obj/item/cable_coil) && W.amount >= 5 && repairStage == REPAIR_WIRE)
+				SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, .proc/repair_stage, W, W.icon, W.icon_state, "You replace some of the wiring in the beacon.", null)
+			else if (istype(W, /obj/item/electronics/soldering) && repairStage == REPAIR_SOLDER)
+				SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, .proc/repair_stage, W, W.icon, W.icon_state, "You finish soldering the cables to the electronics.", null)
+			else if (isscrewingtool(W) && repairStage == REPAIR_SCREW2)
+				SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, .proc/repair_stage, W, W.icon, W.icon_state, "You screw the maintenence panel closed.", null)
+			else if (istype(W, /obj/item/sheet/steel) && W.amount >= 10 && repairStage == REPAIR_PLATES)
+				W.amount -= 10
+				SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, .proc/repair_stage, W, W.icon, W.icon_state, "You finish plating the beacon with the steel sheets. The beacon seems fully repaired and operational!", null)
+			return
 		if (istype(W, /obj/item/wrench))
 			if (!packable)
 				boutput(user,"This beacon's retraction hardware is locked into place and can't be altered.")
@@ -101,6 +126,29 @@
 /obj/warp_beacon/disposing()
 	..()
 	STOP_TRACKING
+
+/obj/warp_beacon/get_desc()
+	if(needsRepair)
+		switch(repairStage)
+			if(REPAIR_SCREW)
+				. += "Looks like this thing is pretty busted up. A screwdriver will be needed to open up the panel."
+			if(REPAIR_WIRE)
+				. += "Looks like this thing is pretty busted up. Some of the cables on the inside seem fried, replacing them will be needed."
+			if(REPAIR_SOLDER)
+				. += "Looks like this thing is pretty busted up. A soldering iron will need to be used to solder the cables into place."
+			if(REPAIR_SCREW2)
+				. += "Looks like this thing is pretty busted up. Nearly done, but you'll need to screw the panel back in place."
+			if(REPAIR_SOLDER)
+				. += "Looks like this thing is pretty busted up. Last but not least, some metal sheets will be needed to fix up the remaining burns."
+
+/obj/warp_beacon/proc/repair_stage(var/obj/item/W)
+	if(repairStage == REPAIR_PLATES || repairStage == REPAIR_WIRE)
+		W.amount -= 5
+	if(repairStage < REPAIR_PLATES)//why is this a proc? Actionbars need one
+		repairStage += 1
+	else
+		needsRepair = FALSE
+		icon_state = "beacon"
 
 /obj/warp_portal
 	name = "particularly buff portal"
@@ -339,3 +387,9 @@
 			new /obj/beacon_deployer(T)
 			qdel(beacon)
 			return
+
+#undef REPAIR_SCREW
+#undef REPAIR_WIRE
+#undef REPAIR_SOLDER
+#undef REPAIR_SCREW2
+#undef REPAIR_PLATES

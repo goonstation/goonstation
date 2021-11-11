@@ -13,6 +13,27 @@
 /// How many random walks should we do per asteroid.
 #define AST_RNGWALKINST 5
 
+/// Lower bound of amount of drones that can spawn
+#define DEBRIS_DRONE_LOWER 60
+/// Upper bound of amount of drones that can spawn
+#define DEBRIS_DRONE_UPPER 85
+/// Lower bound of amount of garbage that can spawn
+#define DEBRIS_GARBAGE_LOWER 125
+/// Upper bound of amount of garbage that can spawn
+#define DEBRIS_GARBAGE_UPPER 225
+/// Lower bound of amount of small asteroids that can spawn
+#define DEBRIS_ASTEROID_LOWER 80
+/// Upper bound of amount of small asteroids that can spawn
+#define DEBRIS_ASTEROID_UPPER 125
+/// Lower bound of amount of length of asteroids that can spawn
+#define DEBRIS_ASTEROID_LENGTH_LOWER 5
+/// Upper bound of amount of length of asteroids that can spawn
+#define DEBRIS_ASTEROID_LENGTH_UPPER 9
+/// Lower bound of amount of generated loot derelicts that can spawn
+#define DEBRIS_LOOT_LOWER 25
+/// Upper bound of amount of generated loot derelicts that can spawn
+#define DEBRIS_LOOT_UPPER 45
+
 #ifdef UNDERWATER_MAP
 /// How many prefabs to place. It'll try it's hardest to place this many at the very least. You're basically guaranteed this amount of prefabs.
 #define AST_NUMPREFABS 18
@@ -25,9 +46,23 @@
 #define AST_NUMPREFABSEXTRA 5
 #endif
 
+#ifndef UNDERWATER_MAP
+/// How many big prefabs to place. It'll try it's hardest to place this many at the very least. You're basically guaranteed this amount of prefabs.
+#define DEBRIS_NUMBIGPREFABS 5
+/// Up to how many extra big prefabs to place randomly. You might or might not get these extra ones.
+#define DEBRIS_NUMBIGPREFABSEXTRA 3
+/// Same as above but this only counts the small ones that are basically moot
+#define DEBRIS_NUMSMALLPREFABS 4
+/// Up to how many extra big prefabs to place randomly. You might or might not get these extra ones.
+#define DEBRIS_NUMSMALLPREFABSEXTRA 10
+#endif
+
 /// Min distance from map edge for seeds.
 #define AST_MAPSEEDBORDER 10
 /// Absolute map border around generated content
 #define AST_MAPBORDER 3
-/// Zlevel for generation.
+/// Zlevel for asteroid field generation.
 #define AST_ZLEVEL 5
+
+/// Zlevel for debris field generation.
+#define DEBRIS_ZLEVEL 3

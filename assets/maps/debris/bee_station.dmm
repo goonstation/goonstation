@@ -1,0 +1,183 @@
+"aa" = (/turf/unsimulated/floor/white/side{dir = 6},/area/space_hive)
+"aA" = (/obj/item/clothing/shoes/flippers,/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"aU" = (/obj/lattice{dir = 9; icon_state = "lattice-dir"},/turf/space,/area/noGenerate)
+"bb" = (/obj/machinery/light{dir = 1},/turf/unsimulated/floor/white,/area/space_hive)
+"bm" = (/obj/table/auto,/obj/item/plate,/turf/unsimulated/floor/white/side{dir = 5},/area/space_hive)
+"bE" = (/obj/item/clothing/suit/bedsheet,/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"cJ" = (/obj/stool/chair/couch{dir = 4; icon_state = "chair_couch-blue"; name = "ratty blue couch"},/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"eh" = (/turf/space,/area/noGenerate)
+"es" = (/obj/decal/fakeobjects/shuttlethruster{dir = 8},/turf/space,/area/space_hive)
+"ey" = (/obj/decal/fakeobjects/pipe{dir = 4; pixel_y = -6},/obj/decal/fakeobjects/pipe{dir = 4},/obj/decal/fakeobjects/pipe{desc = "It won't budge."; dir = 4; icon = 'icons/obj/pipe-item.dmi'; icon_state = "valve"; name = "rusted valve"},/turf/unsimulated/floor,/area/space_hive)
+"fa" = (/obj/machinery/door/airlock{name = "Bathroom"},/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"fH" = (/obj/submachine/chef_sink,/obj/item/kitchen/utensil/spoon,/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"fM" = (/obj/submachine/chef_sink/chem_sink{dir = 8; pixel_x = 2},/obj/item/device/key{desc = "A bee key.  A...kee, if you will."; icon_state = "key_bee"; name = "bee key"},/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"fT" = (/obj/stool/chair/couch,/obj/critter/domestic_bee,/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"fZ" = (/obj/tombstone{desc = "It looks to be made out of beeswax. There's a little stick figure scientist on it. Huhh"; icon_state = "tombstone-bee"},/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"gJ" = (/obj/decal/fakeobjects/pipe{dir = 4; pixel_y = -6},/obj/decal/fakeobjects/pipe{dir = 4},/turf/unsimulated/floor,/area/space_hive)
+"gM" = (/obj/item/rods/steel,/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"hu" = (/obj/item/clothing/suit/bedsheet{bcolor = "blue"; icon_state = "bedsheet-blue"},/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"hC" = (/obj/item/brick,/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"hO" = (/obj/item/plant/herb/cannabis/spawnable,/turf/unsimulated/floor/plating/scorched,/area/space_hive)
+"hV" = (/obj/table/auto,/obj/decal/fakeobjects{anchored = 1; desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN."; icon = 'icons/obj/computer.dmi'; icon_state = "old0"; name = "broken computer"},/turf/unsimulated/floor/white,/area/space_hive)
+"ij" = (/obj/stool/chair/couch{dir = 8; icon_state = "chair_couch-blue"; name = "ratty blue couch"},/turf/unsimulated/floor,/area/space_hive)
+"iE" = (/turf/unsimulated/floor/white/side{dir = 4},/area/space_hive)
+"iP" = (/turf/unsimulated/floor/caution/north,/area/space_hive)
+"iU" = (/obj/item/clothing/suit/bedsheet{bcolor = "yellow"; icon_state = "bedsheet-yellow"},/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"je" = (/turf/unsimulated/floor/white/side,/area/space_hive)
+"kj" = (/obj/item/crowbar,/turf/unsimulated/floor/plating/scorched,/area/space_hive)
+"kk" = (/obj/lattice{dir = 5; icon_state = "lattice-dir-b"},/turf/space,/area/noGenerate)
+"kT" = (/obj/decal/fakeobjects/lighttube_broken{dir = 8},/turf/unsimulated/floor/white,/area/space_hive)
+"li" = (/obj/item/dice,/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"lq" = (/obj/stool/chair/comfy{dir = 8},/obj/machinery/light/small{dir = 4},/turf/unsimulated/floor{icon_state = "floor"},/area/space_hive)
+"lt" = (/obj/item/plant/herb/cannabis/spawnable,/turf/unsimulated/floor{icon_state = "floor"},/area/space_hive)
+"lx" = (/obj/lattice{dir = 1; icon_state = "lattice-dir-b"},/turf/space,/area/noGenerate)
+"me" = (/turf/space,/area/allowGenerate)
+"mB" = (/obj/decal/fakeobjects/pipe{dir = 9},/obj/machinery/light/small{dir = 1},/turf/unsimulated/floor,/area/space_hive)
+"no" = (/obj/critter/domestic_bee/chef,/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"nH" = (/obj/structure/girder/reinforced,/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"pm" = (/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"pz" = (/obj/lattice{dir = 4; icon_state = "lattice-dir"},/turf/space,/area/noGenerate)
+"qJ" = (/obj/table/wood/auto,/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"rk" = (/obj/structure/girder/displaced,/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"ry" = (/obj/grille/steel,/obj/window{dir = 1; icon_state = "rwindow"; reinf = 1},/obj/window{dir = 4; icon_state = "rwindow"; reinf = 1},/obj/window{dir = 2; icon_state = "rwindow"; reinf = 1},/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/moon,/turf/unsimulated/floor,/area/space_hive)
+"sy" = (/obj/decal/fakeobjects/pipe{dir = 6},/obj/decal/fakeobjects/pipe{dir = 1; pixel_x = -9},/turf/unsimulated/floor,/area/space_hive)
+"sB" = (/obj/decal/fakeobjects/pipe{dir = 6},/turf/unsimulated/floor,/area/space_hive)
+"sO" = (/obj/item/reagent_containers/food/snacks/ingredient/honey,/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"tf" = (/obj/item/clothing/suit/bedsheet{bcolor = "yellow"; icon_state = "bedsheet-yellow"},/obj/critter/domestic_bee,/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"tp" = (/obj/item/clothing/suit/bedsheet{bcolor = "pink"; icon_state = "bedsheet-pink"},/obj/critter/domestic_bee,/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"uj" = (/obj/item/scrap,/turf/unsimulated/floor/plating/scorched,/area/space_hive)
+"um" = (/obj/item/raw_material/shard/glass,/turf/unsimulated/floor,/area/space_hive)
+"uQ" = (/obj/machinery/door/unpowered/shuttle,/turf/unsimulated/floor/white,/area/space_hive)
+"ve" = (/obj/item/scrap,/turf/unsimulated/floor,/area/space_hive)
+"vk" = (/obj/stool/chair/couch{icon_state = "chair_couch-blue"; name = "ratty blue couch"},/turf/unsimulated/floor/plating/scorched,/area/space_hive)
+"vm" = (/obj/table/auto,/obj/item/reagent_containers/food/snacks/ingredient/honey,/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"vE" = (/turf/unsimulated/wall{icon = 'icons/turf/shuttle.dmi'; icon_state = "wall3"},/area/space_hive)
+"wU" = (/turf/simulated/wall/false_wall/hive,/area/space_hive)
+"xo" = (/obj/critter/domestic_bee,/turf/unsimulated/floor/caution/north,/area/space_hive)
+"yb" = (/obj/decal/fakeobjects/pipe,/obj/decal/fakeobjects/pipe{dir = 1; pixel_x = -9},/turf/unsimulated/floor,/area/space_hive)
+"yx" = (/obj/decal/fakeobjects{anchored = 1; desc = "Like conventional cables, but more burly."; icon = 'icons/obj/power_cond.dmi'; icon_state = "conduit"; name = "power conduit"},/turf/unsimulated/floor,/area/space_hive)
+"yA" = (/obj/grille/steel,/obj/machinery/light/small{dir = 8},/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"yC" = (/obj/item/parts/robot_parts/leg/right/standard,/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"yX" = (/obj/decal/fakeobjects{anchored = 1; desc = "Like conventional cables, but more burly."; dir = 5; icon = 'icons/obj/power_cond.dmi'; icon_state = "conduit"; name = "power conduit"},/turf/unsimulated/floor,/area/space_hive)
+"zz" = (/turf/unsimulated/wall/setpieces/hive,/area/space_hive)
+"zP" = (/obj/item/plate,/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"zY" = (/obj/structure/girder,/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"Ai" = (/obj/critter/domestic_bee,/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"An" = (/obj/table/auto,/obj/item/kitchen/utensil/knife,/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"AM" = (/obj/machinery/light/small,/turf/unsimulated/floor,/area/space_hive)
+"AZ" = (/obj/lattice{icon_state = "lattice-dir"},/turf/space,/area/noGenerate)
+"Df" = (/obj/item/reagent_containers/food/drinks/rum_spaced,/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"Do" = (/turf/unsimulated/floor,/area/space_hive)
+"DB" = (/obj/decal/fakeobjects{anchored = 1; desc = "Like conventional cables, but more burly."; dir = 10; icon = 'icons/obj/power_cond.dmi'; icon_state = "conduit"; layer = 2.5; name = "power conduit"},/turf/unsimulated/floor,/area/space_hive)
+"DJ" = (/obj/decal/fakeobjects{anchored = 1; desc = "Like conventional cables, but more burly."; dir = 5; icon = 'icons/obj/power_cond.dmi'; icon_state = "conduit"; name = "power conduit"},/obj/decal/fakeobjects{anchored = 1; desc = "Like conventional cables, but more burly."; dir = 4; icon = 'icons/obj/power_cond.dmi'; icon_state = "conduit"; layer = 2.5; name = "power conduit"},/turf/unsimulated/floor,/area/space_hive)
+"FM" = (/obj/machinery/door/unpowered/shuttle,/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"Gl" = (/turf/unsimulated/wall{icon = 'icons/turf/shuttle.dmi'; icon_state = "diagonalWall"},/area/space)
+"Hg" = (/obj/stool/chair/couch{dir = 4},/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"HH" = (/obj/decal/fakeobjects{anchored = 1; desc = "A vent.  A rather decrepit one, at that."; dir = 1; icon = 'icons/obj/atmospherics/pipe_vent.dmi'; icon_state = "intact"; name = "defunct vent"},/turf/unsimulated/floor,/area/space_hive)
+"Jb" = (/turf/unsimulated/floor/white/side{dir = 9},/area/space_hive)
+"Jo" = (/obj/decal/fakeobjects/pipe{dir = 1; pixel_x = -9},/obj/decal/fakeobjects/pipe{desc = "It won't budge."; icon = 'icons/obj/pipe-item.dmi'; icon_state = "valve"; name = "rusted valve"},/turf/unsimulated/floor,/area/space_hive)
+"JT" = (/obj/decal/fakeobjects/shuttleengine{dir = 4},/turf/unsimulated/wall{icon = 'icons/turf/shuttle.dmi'; icon_state = "wall"},/area/space_hive)
+"JY" = (/obj/window{dir = 8; icon_state = "rwindow"; reinf = 1},/obj/grille/steel/broken,/turf/unsimulated/floor/plating/scorched,/area/space_hive)
+"Kb" = (/obj/machinery/vending/cola/blue{credit = 12},/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"Ke" = (/obj/item/clothing/suit/bedsheet{bcolor = "pink"; icon_state = "bedsheet-pink"},/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"KM" = (/obj/item/storage/toilet{dir = 4},/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"KV" = (/obj/decal/fakeobjects{anchored = 1; desc = "Like conventional cables, but more burly."; icon = 'icons/obj/power_cond.dmi'; icon_state = "conduit"; name = "power conduit"},/obj/machinery/light/small,/turf/unsimulated/floor/plating/scorched,/area/space_hive)
+"LP" = (/turf/unsimulated/floor/grime{carbon_dioxide = 16; name = "warm floor"; temperature = 313.15},/area/space_hive)
+"Ml" = (/obj/decal/fakeobjects/firelock_broken{desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR."; icon = 'icons/turf/shuttle.dmi'; name = "rusted hatch"},/turf/unsimulated/floor/white,/area/space_hive)
+"Mr" = (/obj/table/auto,/turf/unsimulated/floor/white,/area/space_hive)
+"MA" = (/turf/unsimulated/floor/arctic,/area/space_hive)
+"ML" = (/obj/table/wood/auto,/obj/item/pen,/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"Ng" = (/turf/unsimulated/wall{icon = 'icons/turf/shuttle.dmi'; icon_state = "door1"; name = "broken door"},/area/space_hive)
+"Np" = (/obj/critter/domestic_bee/buddy,/turf/unsimulated/floor/white,/area/space_hive)
+"Nv" = (/obj/lattice{dir = 10; icon_state = "lattice-dir"},/turf/space,/area/noGenerate)
+"NA" = (/turf/unsimulated/wall{dir = 9; icon = 'icons/turf/shuttle.dmi'; icon_state = "diagonalWall"},/area/space_hive)
+"NF" = (/turf/unsimulated/floor/plating/scorched,/area/space_hive)
+"NP" = (/obj/grille/steel,/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"On" = (/obj/item/plate,/turf/unsimulated/floor/white,/area/space_hive)
+"Op" = (/obj/stool/chair/couch{dir = 8},/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"OB" = (/obj/submachine/chef_oven,/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"OG" = (/obj/stool/bed,/turf/unsimulated/floor{icon_state = "floor"},/area/space_hive)
+"OL" = (/turf/unsimulated/floor{icon_state = "floor"},/area/space_hive)
+"OO" = (/obj/lattice,/turf/space,/area/noGenerate)
+"OP" = (/obj/machinery/computer/security/wooden_tv{desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?"; name = "Television"; network = "Zeta"},/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"OT" = (/obj/machinery/light/small{dir = 4},/turf/unsimulated/floor,/area/space_hive)
+"Pd" = (/obj/item/clothing/suit/bedsheet{bcolor = "red"; icon_state = "bedsheet-red"},/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"Pl" = (/obj/item/rods/steel,/turf/unsimulated/floor/plating/scorched,/area/space_hive)
+"Pq" = (/obj/item/clothing/suit/labcoat/genetics,/obj/item/clothing/shoes/white,/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"Px" = (/obj/item/clothing/suit/labcoat/genetics,/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"PF" = (/turf/unsimulated/wall{dir = 6; icon = 'icons/turf/shuttle.dmi'; icon_state = "diagonalWall"},/area/space_hive)
+"PZ" = (/obj/lattice{dir = 10; icon_state = "lattice-dir-b"},/turf/space,/area/noGenerate)
+"Qb" = (/obj/machinery/light/small{dir = 1},/turf/unsimulated/floor,/area/space_hive)
+"Qh" = (/obj/item/wirecutters,/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"Qj" = (/obj/stool/chair/office{dir = 8},/obj/machinery/light{dir = 4},/turf/unsimulated/floor/white,/area/space_hive)
+"Qx" = (/turf/unsimulated/wall{dir = 10; icon = 'icons/turf/shuttle.dmi'; icon_state = "diagonalWall"},/area/space_hive)
+"Ra" = (/obj/critter/domestic_bee,/turf/unsimulated/floor,/area/space_hive)
+"Rc" = (/turf/unsimulated/floor/white/side{dir = 1},/area/space_hive)
+"SE" = (/obj/table/auto,/obj/item/game_kit,/turf/unsimulated/floor/white,/area/space_hive)
+"SR" = (/obj/item/reagent_containers/food/snacks/ingredient/honey{desc = "An offering?  A memorial?"; name = "old honey"},/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"Ta" = (/obj/item/reagent_containers/food/snacks/ingredient/honey{desc = "An offering?  A memorial?"; name = "old honey"; pixel_x = 2; pixel_y = -5},/obj/item/reagent_containers/food/snacks/ingredient/honey{desc = "An offering?  A memorial?"; name = "old honey"; pixel_x = -5; pixel_y = 4},/obj/item/reagent_containers/food/snacks/ingredient/honey{desc = "An offering?  A memorial?"; name = "old honey"},/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"TR" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "An older biopod for the creation of space bee eggs."; icon = 'icons/obj/cloning.dmi'; icon_state = "pod_0"; name = "egg generator pod"},/turf/unsimulated/floor/bot,/area/space_hive)
+"UA" = (/obj/lattice{dir = 8; icon_state = "lattice-dir"},/turf/space,/area/noGenerate)
+"UG" = (/turf/unsimulated/wall{icon = 'icons/turf/shuttle.dmi'; icon_state = "diagonalWall"},/area/space_hive)
+"UR" = (/turf/unsimulated/wall{dir = 1; icon = 'icons/turf/shuttle.dmi'; icon_state = "diagonalWall"},/area/space_hive)
+"Vn" = (/turf/unsimulated/floor/caution/east{dir = 1},/area/space_hive)
+"Vy" = (/obj/decal/fakeobjects/pipe{dir = 4},/obj/decal/fakeobjects/pipe{dir = 4; pixel_y = -6},/obj/decal/fakeobjects/pipe{dir = 4},/turf/unsimulated/floor,/area/space_hive)
+"VQ" = (/obj/decal/fakeobjects/firelock_broken{desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR."; icon = 'icons/turf/shuttle.dmi'; name = "rusted hatch"},/turf/unsimulated/floor/arctic,/area/space_hive)
+"Wg" = (/obj/grille/steel,/obj/window{dir = 8},/obj/window{dir = 4},/turf/unsimulated/floor,/area/space_hive)
+"WT" = (/turf/unsimulated/wall{dir = 8; icon = 'icons/turf/shuttle.dmi'; icon_state = "diagonalWall"},/area/space_hive)
+"WU" = (/obj/decal/fakeobjects/firelock_broken{desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR."; icon = 'icons/turf/shuttle.dmi'; name = "rusted hatch"},/turf/unsimulated/floor,/area/space_hive)
+"Xi" = (/obj/machinery/light{dir = 4},/turf/unsimulated/floor/white,/area/space_hive)
+"Xv" = (/obj/lattice{dir = 6; icon_state = "lattice-dir-b"},/turf/space,/area/noGenerate)
+"Xy" = (/obj/lattice{dir = 6; icon_state = "lattice-dir"},/turf/space,/area/noGenerate)
+"XA" = (/turf/unsimulated/wall{icon = 'icons/turf/shuttle.dmi'; icon_state = "wall"},/area/space_hive)
+"XJ" = (/obj/table/auto,/obj/decal/fakeobjects/lighttube_broken{dir = 8},/turf/unsimulated/floor/white,/area/space_hive)
+"XW" = (/obj/critter/gunbot/drone/heavydrone,/turf/space,/area/noGenerate)
+"Yf" = (/obj/grille/steel/broken,/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"Yl" = (/obj/critter/domestic_bee/overbee,/turf/unsimulated/floor{icon_state = "floor"},/area/space_hive)
+"Yw" = (/turf/unsimulated/floor/white,/area/space_hive)
+"YV" = (/turf/unsimulated/floor/white/side{dir = 8},/area/space_hive)
+"YY" = (/obj/item/extinguisher,/turf/unsimulated/floor/arctic,/area/space_hive)
+"Zc" = (/obj/lattice{dir = 1; icon_state = "lattice-dir"},/turf/space,/area/noGenerate)
+"Zz" = (/obj/grille/steel,/obj/window{dir = 2; icon_state = "rwindow"; reinf = 1},/turf/unsimulated/floor,/area/space_hive)
+"ZE" = (/obj/machinery/deep_fryer,/turf/unsimulated/floor/setpieces/hivefloor,/area/space_hive)
+"ZW" = (/turf/unsimulated/floor/caution/south{dir = 1},/area/space_hive)
+
+(1,1,1) = {"
+memememememememememememememememememememememememeehehehehehWTXAXAXAXAURehehehehmemememememememememememe
+memememememememememememememememememememememeehehehehehehWTXAXAXAXAXAJTesehehehmemememememememememememe
+memememememememememememememememememeehehehehehehaUUAzzzzXAXAXAXAzzXAJTzzehehehmemememememememememememe
+mememememememememememememememememeehehehehUAehOOpzzzzzzzzzzzzzzzzzzzzzzzzzehehehmemeeheheheheheheheheh
+memememememememememememememememeehehehehaUOOOOOOzzzzpmpmpmzzzzzzpmpmpmzzzzzzeheheheheheheheheheheheheh
+mememememememememememememeehehehehehzzzzzzzzzzzzzzpmpmzzpmpmpmpmpmzzpmpmzzzzpzUApzPZehehWTXAXAXAXAPFeh
+memememememememememeehehehehehehehehzzzzpmpmyCzzpmpmzzzzzzpmzzzzzzzzzzpmzzzzUANvUANvpzpzXAXAXAXAXAJTes
+mememememememeehehehehehehehehehzzzzzzpmpmpmpmpmpmpmpmzzpmpmzzsOpmzzpmpmXAzzzzehAZehehehXAXAXAXAXAJTes
+memememememeehehehehehehehzzzzzzzzzzzzzzpmpmpmzzzzzzpmpmpmzzzzzzpmpmpmvEXAzzzzzzAZXWehehQxXAXAXAXANAeh
+mememememeehehehehehehzzzzzzzzzzzzzzzzXAXAuQXAzzzzzzzzzzzzzzzzzzzzvENFvEvEvEzzzzzzzzehehehAZeheheheheh
+memememeehehehehzzzzzzzzzzzzpmpmpmzzzzXAVnYwXAYwNFNFOpfTHgzzzzzzvEvENFyxijvkcJpmYfzzzzzzzzAZeheheheheh
+mememeehehehehzzzzMLpmaAwUpmpmzzpmpmzzXAVnYwXAYwzzpmpmpmpmsOzzpmvEDoDoyxDoDoNFpmpmpmzzpmzzzzeheheheheh
+memeehehehehehzzqJqJpmpmzzzzzzzzzzpmzzXAXAMlXAMlXAXAXAOPpmpmzzvEvEDoDoDBDJyXDoNFpmpmpmpmpmzzzzeheheheh
+meehehehehehehzzpmpmpmzYzzKMfMzzpmpmXAXANpYwbbYwMrXAXAXAXAXAvEvEHHDoAMDoyxyxDoAMpmpmvEvEpmpmzzzzeheheh
+ehehehehehehzzzzlipmpmzzzzzzpmfapmzzNgYwJbRcRcRcbmSEXAXAXAXAvEveDoDovEvExoiPvEvEDoNFhOvEvEpmzPzzeheheh
+AZehehehehzzzzzzzzpmzzzzzzzzzzzzzzzzXAOnYVTROLLPiEYwWghVYwXAvEgJgJgJvEOGOLOLOLvEDoDoDovEzzpmzzzzeheheh
+XypzzzzzzzzzzzzzAipmpmzzzzzzpmpmpmXAXAkTYVOLOLOLiEYwWgMrQjXAvEJYZzryvEOLOLYllqvEDoDoOTvEyApmpmzzzzeheh
+OOzzzzrkpmpmzzpmpmpmpmpmzzpmpmpmpmPlXAYwYVOLDoTRiEXiXAXJYwXAvEumDoDovEltOLOLOLvEVyeyVyvEOBpmnovmzzeheh
+GlXApmpmpmpmpmpmpmpmpmpmzzpmpmpmpmDoDoYwDoDoDojeaaYwMlYwYwXAvEDoDoDovEvEZWZWvEvEVyVyVyvEfHpmpmAnzzeheh
+ehXApmpmpmpmzzpmpmpmpmpmzzXApmpmpmDoXAXADoDoDoDoYwXAXAXAXAXAvEzzpmDoQbDoDoyxsymBDoDoDovEvEpmpmNPzzeheh
+ehXAzzpmpmzzzzzzQhpmnHzzzzXAkjNFpmzzzzXANFNFujzzXAXAXAXAXAzzvEvEzzpmDoDoDoyxJoDoDoRavEvEsOpmZEzzzzeheh
+ehXAzzzzzzzzzzzzzzpmzzzzzzXANFMANFzzzzzzNFNFzzzzzzXAXAXAXAzzzzvEvEpmDoDoDoyxybDoDovEvEzzzzpmzzzzeheheh
+XvNvkkehehehzzzzpmpmpmzzzzXAXAVQXAXAzzzzpmpmDfzzzzzzXAXAXAzzzzzzvENFNFDoNFyxybDosBvEzzzzpmpmAizzeheheh
+lxehehehehehzzpmpmpmpmpmzzXANFMANFXAzzKbpmpmpmAizzXAXApmKezzzzpmvEvEpmpmNFKVybvevEvEzzpmpmpmzzzzehehme
+ehehehehehehzzpmpmpmpmpmpmWUDoDoNFXAzzpmpmpmpmpmzzzzKepmzzzzzzpmpmpmpmpmvEvEvEvEvEpmpmpmpmzzzzehehehme
+mememeehehehzzzzpmpmpmpmXAXADoDoYYXAXApmpmpmpmgMzzzzzzpmiUzzzzpmpmpmpmpmzzvEvEpmpmpmzzpmzzzzehehehmeme
+memememeehehehzzzzzzpmzzzzXAXAFMXAXAzzzzpmpmpmzzzzzzpmpmzzzzzzzzXApmpmzzzzvEpmpmpmzzzzzzzzehehehehmeme
+mememememeehehehehzzzzzzzzzzehehehehzzzzpmzzzzzzzzKepmpmpmtfzzzzXAFMXAzzzzzzzzzzzzzzZcehehehehmemememe
+memememememeehehehehehzzehehehehehzzzzpmpmzzhCpmzzzzpmpmzzzzzzzzpmpmpmzzzzzzzzzzehXykkehehmemememememe
+mememememememeehehehehehehehehehehzzpmpmzzzzpmpmpmpmpmpmpmPdzzPqpmTapmpmzzzzzzehXvkkehmemememememememe
+memememememememeehehehehehehehehehzzzzpmpmpmpmzzzzzzpmzzhuzzzzpmpmfZSRPxzzzzpzpzZcehehehmememememememe
+mememememememememeehehehehehehehehehzzzzpmzzzzzzzzbEpmzzzzzzzzzzpmpmpmzzzzzzehehehehehehmememememememe
+mememememememememememememememeehehehehzzzzzzehzzzzzzpmtpzzzzzzzzzzzzzzzzzzzzOOUApzehehehmememememememe
+mememememememememememememememememeehehehehehehehzzzzzzzzzzzzzzXAzzzzXAXAXAXAXAXAXAURehehmememememememe
+memememememememememememememememememeehehehehehehehehehehehehaUOOpzpzXAXAXAXAXAXAXAJTesehmememememememe
+mememememememememememememememememememeehehehehehehehehehehehehlxehehQxXAXAXAXAXAXAJTesehehmemememememe
+mememememememememememememememememememememememememememeehehehehehehehehehUGXAXAXAXANAehehmememememememe
+"}

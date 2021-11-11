@@ -1,0 +1,243 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"c" = (
+/obj/item/raw_material/shard,
+/turf/simulated/floor/plating/airless/random,
+/area/noGenerate)
+"d" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "wall3_space"
+	},
+/area/noGenerate)
+"f" = (
+/obj/decal/skeleton{
+	desc = "honk";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "clowncorpse";
+	name = "Tooty, but dry and dead"
+	},
+/turf/simulated/floor/airless/black/grime,
+/area/noGenerate)
+"g" = (
+/obj/stool/chair/comfy/shuttle,
+/turf/simulated/floor/airless/black/grime,
+/area/noGenerate)
+"h" = (
+/turf/simulated/floor/airless/damaged1,
+/area/noGenerate)
+"k" = (
+/obj/decal/cleanable/molten_item,
+/turf/simulated/floor/plating/airless/random,
+/area/noGenerate)
+"l" = (
+/obj/lattice,
+/obj/item/raw_material/shard,
+/turf/space,
+/area/noGenerate)
+"m" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "wall3_space"
+	},
+/area/noGenerate)
+"n" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "wall3"
+	},
+/area/noGenerate)
+"p" = (
+/turf/simulated/floor/plating/airless/random,
+/area/noGenerate)
+"r" = (
+/turf/space,
+/area/allowGenerate)
+"u" = (
+/obj/stool/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/simulated/floor/airless/damaged3,
+/area/noGenerate)
+"v" = (
+/obj/stool/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless/random,
+/area/noGenerate)
+"y" = (
+/obj/item/clothing/mask/breath,
+/turf/space,
+/area/noGenerate)
+"C" = (
+/turf/simulated/wall/asteroid/lighted,
+/area/noGenerate)
+"H" = (
+/obj/structure/girder/displaced,
+/turf/space,
+/area/noGenerate)
+"I" = (
+/obj/lattice,
+/turf/space,
+/area/noGenerate)
+"L" = (
+/turf/simulated/floor/airless/damaged5,
+/area/noGenerate)
+"M" = (
+/obj/stool/chair/comfy/shuttle,
+/turf/simulated/floor,
+/area/noGenerate)
+"N" = (
+/obj/decal/floatingtiles{
+	dir = 8
+	},
+/obj/lattice,
+/turf/space,
+/area/noGenerate)
+"O" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/noGenerate)
+"Q" = (
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles6"
+	},
+/obj/lattice,
+/turf/space,
+/area/noGenerate)
+"R" = (
+/obj/decal/cleanable/molten_item,
+/obj/stool/chair/comfy/shuttle,
+/turf/simulated/floor/plating/airless/random,
+/area/noGenerate)
+"U" = (
+/obj/item/tank/air,
+/turf/space,
+/area/noGenerate)
+"V" = (
+/turf/simulated/floor/airless/damaged2,
+/area/noGenerate)
+"W" = (
+/turf/simulated/floor/airless/black,
+/area/noGenerate)
+"Y" = (
+/turf/space,
+/area/noGenerate)
+"Z" = (
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles3"
+	},
+/obj/lattice,
+/turf/space,
+/area/noGenerate)
+
+(1,1,1) = {"
+C
+C
+H
+I
+Y
+Y
+I
+Y
+Y
+Y
+"}
+(2,1,1) = {"
+Y
+Y
+I
+p
+c
+I
+I
+Y
+Y
+H
+"}
+(3,1,1) = {"
+Y
+Y
+O
+Z
+p
+c
+Y
+Y
+Y
+Y
+"}
+(4,1,1) = {"
+Y
+Y
+O
+R
+p
+I
+Y
+Y
+Y
+Y
+"}
+(5,1,1) = {"
+y
+Y
+O
+M
+N
+v
+O
+Y
+Y
+Y
+"}
+(6,1,1) = {"
+Y
+U
+l
+L
+h
+Q
+O
+Y
+Y
+Y
+"}
+(7,1,1) = {"
+Y
+Y
+O
+g
+V
+u
+O
+Y
+Y
+Y
+"}
+(8,1,1) = {"
+Y
+Y
+O
+f
+k
+W
+O
+Y
+Y
+r
+"}
+(9,1,1) = {"
+Y
+Y
+m
+n
+n
+n
+d
+Y
+r
+r
+"}

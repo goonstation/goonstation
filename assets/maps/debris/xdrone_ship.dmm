@@ -1,0 +1,887 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aD" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/space,
+/area/noGenerate)
+"cd" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "wall_space"
+	},
+/area/abandonedship)
+"cQ" = (
+/obj/landmark/artifact,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/abandonedship)
+"eR" = (
+/obj/decal/floatingtiles{
+	dir = 4;
+	icon_state = "floattiles4"
+	},
+/turf/space,
+/area/noGenerate)
+"fR" = (
+/obj/structure/girder/displaced,
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"gk" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
+	},
+/turf/simulated/floor/airless/scorched,
+/area/abandonedship)
+"gZ" = (
+/turf/simulated/floor/airless/plating/damaged2,
+/area/abandonedship)
+"hj" = (
+/obj/decal/floatingtiles{
+	dir = 4;
+	icon_state = "floattiles2"
+	},
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedship)
+"hl" = (
+/obj/decal/cleanable/blood/tracks,
+/obj/computerframe{
+	desc = "It is highly unlikely that this still works.";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "datamedb";
+	name = "smashed computer"
+	},
+/obj/item/peripheral/sound_card,
+/turf/simulated/floor/airless/scorched,
+/area/abandonedship)
+"hx" = (
+/obj/computerframe{
+	desc = "It is highly unlikely that this still works.";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "datamedb";
+	name = "smashed computer"
+	},
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedship)
+"ik" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles6"
+	},
+/turf/simulated/floor/airless/plating/damaged2,
+/area/abandonedship)
+"iv" = (
+/obj/critter/gunbot/drone/buzzdrone,
+/turf/space,
+/area/noGenerate)
+"iU" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/abandonedmedicalship)
+"iZ" = (
+/obj/decal/cleanable/blood/tracks,
+/obj/decal/fakeobjects/lighttube_broken{
+	dir = 4
+	},
+/obj/item/clothing/under/misc/turds{
+	desc = "It has an NT logo on it.";
+	name = "NT-S.O. Jumpsuit"
+	},
+/obj/item/clothing/suit/armor/NT_alt{
+	desc = "It has the Nanotrasen logo on it and an unknown rank insignia.";
+	name = "NT-S.O. Armor"
+	},
+/obj/item/clothing/head/helmet/NT{
+	desc = "It looks pretty fancy.";
+	name = "NT-S.O. Helmet"
+	},
+/obj/storage/crate{
+	name = "Dented Crate"
+	},
+/turf/simulated/floor/airless/scorched,
+/area/abandonedship)
+"jm" = (
+/obj/decal/cleanable/machine_debris,
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"jG" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "gibbl2"
+	},
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedship)
+"kO" = (
+/obj/decal/cleanable/oil,
+/obj/decal/cleanable/ash,
+/turf/simulated/floor/airless/damaged4,
+/area/abandonedship)
+"lo" = (
+/turf/simulated/shuttle/wall,
+/area/abandonedship)
+"mH" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall_space"
+	},
+/area/abandonedship)
+"nC" = (
+/obj/critter/gunbot/drone/raildrone,
+/turf/simulated/floor/airless/plating/damaged3,
+/area/abandonedship)
+"oM" = (
+/obj/item/storage/secure/ssafe/loot{
+	pixel_x = 6;
+	pixel_y = -28
+	},
+/turf/simulated/floor/plating/airless,
+/area/abandonedship)
+"oR" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles5"
+	},
+/obj/stool/chair{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedship)
+"pn" = (
+/obj/item/clothing/shoes/mj_shoes,
+/obj/item/clothing/under/gimmick/mj_clothes,
+/obj/item/clothing/suit/mj_suit,
+/obj/item/clothing/head/mj_hat,
+/obj/storage/crate{
+	name = "Dented Crate"
+	},
+/turf/simulated/floor/airless/plating/damaged3,
+/area/abandonedship)
+"qU" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 1
+	},
+/turf/space,
+/area/abandonedmedicalship)
+"rJ" = (
+/obj/item/cable_coil/cut{
+	icon_state = "coil1"
+	},
+/turf/simulated/floor/airless/plating/damaged3,
+/area/abandonedship)
+"se" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
+	},
+/obj/storage/crate{
+	name = "Dented Crate"
+	},
+/obj/item/shieldwallgen,
+/obj/item/shieldwallgen,
+/turf/simulated/floor/airless/scorched,
+/area/abandonedship)
+"sh" = (
+/obj/decal/cleanable/machine_debris,
+/turf/simulated/floor/airless/plating/damaged3,
+/area/abandonedship)
+"sO" = (
+/obj/item/a_gift/easter{
+	desc = "Easter is over. How old is this?"
+	},
+/turf/simulated/floor/airless/scorched,
+/area/abandonedship)
+"td" = (
+/obj/storage/crate/loot,
+/turf/simulated/floor/airless/scorched,
+/area/abandonedship)
+"ur" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"uW" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
+	},
+/turf/simulated/shuttle/wall,
+/area/abandonedship)
+"ws" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space{
+	icon_state = "aplaceholder"
+	},
+/area/noGenerate)
+"wz" = (
+/obj/item/cable_coil/cut,
+/turf/simulated/floor/airless/plating/damaged3,
+/area/abandonedship)
+"xi" = (
+/obj/creepy_sound_trigger,
+/obj/machinery/door/unpowered/shuttle,
+/turf/simulated/floor/plating/airless,
+/area/abandonedship)
+"yh" = (
+/turf/simulated/shuttle/wall{
+	dir = 4
+	},
+/area/abandonedship)
+"zY" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
+	},
+/turf/simulated/shuttle/wall{
+	dir = 4
+	},
+/area/abandonedship)
+"Ai" = (
+/obj/decal/cleanable/blood/splatter,
+/turf/simulated/shuttle/wall,
+/area/abandonedship)
+"Bo" = (
+/obj/lattice,
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles4"
+	},
+/turf/space,
+/area/noGenerate)
+"BB" = (
+/turf/simulated/floor/airless/plating/damaged3,
+/area/abandonedship)
+"Cj" = (
+/turf/simulated/wall,
+/area/noGenerate)
+"CL" = (
+/obj/structure/girder/displaced,
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"Dj" = (
+/obj/decal/cleanable/machine_debris,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/abandonedship)
+"DU" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/space,
+/area/noGenerate)
+"El" = (
+/obj/creepy_sound_trigger,
+/obj/machinery/door/unpowered/shuttle,
+/turf/simulated/floor/airless/plating/damaged3,
+/area/abandonedship)
+"Eo" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"Fo" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"FD" = (
+/obj/decal/floatingtiles{
+	dir = 4;
+	icon_state = "floattiles3"
+	},
+/obj/decal/cleanable/ash,
+/turf/simulated/floor/airless/plating/scorched,
+/area/abandonedship)
+"FH" = (
+/obj/decal/fakeobjects/lighttube_broken{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedship)
+"FM" = (
+/obj/lattice,
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles3"
+	},
+/turf/space,
+/area/noGenerate)
+"FZ" = (
+/turf/simulated/floor/airless/damaged5,
+/area/abandonedship)
+"Gg" = (
+/turf/simulated/floor/airless{
+	icon_state = "solarpanel";
+	name = "solar paneling"
+	},
+/area/noGenerate)
+"GE" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles5"
+	},
+/turf/simulated/floor/airless/plating/scorched,
+/area/abandonedship)
+"Ho" = (
+/turf/space,
+/area/allowGenerate)
+"HV" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/noGenerate)
+"Id" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
+	},
+/turf/simulated/floor/airless/plating/damaged3,
+/area/abandonedship)
+"Ja" = (
+/obj/item/cable_coil/cut,
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedship)
+"KQ" = (
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles3"
+	},
+/turf/space,
+/area/noGenerate)
+"Lq" = (
+/obj/decal/fakeobjects/shuttlethruster,
+/turf/space,
+/area/abandonedship)
+"LN" = (
+/obj/lattice,
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles3"
+	},
+/turf/space,
+/area/abandonedmedicalship)
+"Ma" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall_space"
+	},
+/area/noGenerate)
+"Mh" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "gibbl2"
+	},
+/turf/simulated/shuttle/wall,
+/area/abandonedship)
+"MI" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"NX" = (
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedship)
+"Oz" = (
+/obj/item/raw_material/shard/glass,
+/turf/simulated/floor/airless{
+	icon_state = "solarpanel";
+	name = "solar paneling"
+	},
+/area/noGenerate)
+"Pe" = (
+/obj/decal/floatingtiles{
+	dir = 4;
+	icon_state = "floattiles2"
+	},
+/obj/landmark/artifact,
+/turf/simulated/floor/airless/plating/damaged3,
+/area/abandonedship)
+"Pm" = (
+/turf/simulated/floor/airless/scorched,
+/area/abandonedship)
+"PB" = (
+/turf/space,
+/area/abandonedmedicalship)
+"PN" = (
+/obj/decal/floatingtiles{
+	dir = 4;
+	icon_state = "floattiles2"
+	},
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedship)
+"Qf" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "wall_space"
+	},
+/area/noGenerate)
+"Qm" = (
+/obj/lattice,
+/turf/space,
+/area/abandonedmedicalship)
+"QC" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "wall_space"
+	},
+/area/abandonedship)
+"QJ" = (
+/obj/item/raw_material/uqill,
+/obj/item/raw_material/uqill,
+/obj/item/raw_material/uqill,
+/obj/item/raw_material/uqill,
+/obj/item/raw_material/uqill,
+/obj/item/raw_material/uqill,
+/obj/item/raw_material/uqill,
+/obj/item/raw_material/uqill,
+/obj/storage/crate{
+	name = "Dented Crate"
+	},
+/turf/simulated/floor/airless/damaged5,
+/area/abandonedship)
+"Rq" = (
+/turf/space{
+	icon_state = "aplaceholder"
+	},
+/area/noGenerate)
+"Ru" = (
+/obj/structure/girder/displaced,
+/turf/space,
+/area/noGenerate)
+"Uh" = (
+/obj/decal/cleanable/machine_debris,
+/obj/structure/girder/displaced,
+/turf/space,
+/area/noGenerate)
+"Vs" = (
+/turf/space,
+/area/noGenerate)
+"VQ" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
+	},
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedship)
+"We" = (
+/obj/decal/cleanable/machine_debris,
+/obj/item/c_tube,
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"Wl" = (
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "wall_space"
+	},
+/area/abandonedship)
+"YG" = (
+/obj/decal/floatingtiles{
+	dir = 4;
+	icon_state = "floattiles2"
+	},
+/turf/simulated/floor/airless/plating/damaged3,
+/area/abandonedship)
+
+(1,1,1) = {"
+Ho
+Ho
+Ho
+Ho
+Vs
+Vs
+Vs
+DU
+Vs
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+"}
+(2,1,1) = {"
+Ho
+Ho
+Ho
+Vs
+Vs
+Vs
+Vs
+Oz
+Vs
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+"}
+(3,1,1) = {"
+Ho
+Ho
+Vs
+Vs
+Gg
+Vs
+Eo
+Gg
+Vs
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+"}
+(4,1,1) = {"
+Ho
+Ho
+Vs
+Vs
+Oz
+Vs
+Eo
+Gg
+Vs
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+"}
+(5,1,1) = {"
+Ho
+Vs
+Vs
+Vs
+Gg
+Vs
+Eo
+Gg
+Vs
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+"}
+(6,1,1) = {"
+Vs
+Vs
+Vs
+Vs
+Gg
+KQ
+ur
+Vs
+Vs
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+"}
+(7,1,1) = {"
+Vs
+Vs
+Vs
+Vs
+aD
+Vs
+Vs
+Vs
+Vs
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+"}
+(8,1,1) = {"
+Vs
+Vs
+Vs
+Vs
+DU
+Vs
+Vs
+Vs
+Vs
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+"}
+(9,1,1) = {"
+Vs
+Vs
+Vs
+Vs
+Cj
+iv
+Rq
+ur
+Vs
+Vs
+Ho
+Ho
+Ho
+Ho
+Ho
+"}
+(10,1,1) = {"
+Vs
+Vs
+Vs
+Vs
+MI
+Vs
+Vs
+Cj
+Vs
+Vs
+Vs
+Vs
+Vs
+Vs
+Ho
+"}
+(11,1,1) = {"
+Vs
+jm
+Ma
+Vs
+CL
+Vs
+Vs
+Vs
+Vs
+HV
+Vs
+Cj
+Bo
+Vs
+Vs
+"}
+(12,1,1) = {"
+Vs
+Ru
+Qf
+Ma
+CL
+Vs
+Vs
+Vs
+FM
+Vs
+Ru
+ws
+Vs
+Vs
+Vs
+"}
+(13,1,1) = {"
+Vs
+MI
+Vs
+Uh
+CL
+eR
+Vs
+Vs
+Vs
+Vs
+Ru
+fR
+Vs
+Vs
+Vs
+"}
+(14,1,1) = {"
+Wl
+lo
+uW
+El
+lo
+lo
+lo
+lo
+lo
+uW
+xi
+lo
+lo
+mH
+Vs
+"}
+(15,1,1) = {"
+lo
+Pe
+oR
+sh
+Id
+BB
+YG
+kO
+LN
+td
+gk
+iU
+iU
+yh
+Lq
+"}
+(16,1,1) = {"
+lo
+se
+FD
+rJ
+nC
+Qm
+jG
+pn
+ik
+PB
+Qm
+Qm
+hj
+yh
+Vs
+"}
+(17,1,1) = {"
+yh
+hx
+Ja
+BB
+BB
+YG
+sh
+qU
+qU
+gZ
+FZ
+qU
+oM
+yh
+Vs
+"}
+(18,1,1) = {"
+lo
+Qm
+iU
+GE
+iU
+Qm
+iU
+Dj
+iU
+Qm
+wz
+Pm
+Pm
+zY
+Vs
+"}
+(19,1,1) = {"
+lo
+QJ
+sO
+VQ
+NX
+NX
+NX
+cQ
+FH
+PN
+BB
+iZ
+hl
+yh
+Lq
+"}
+(20,1,1) = {"
+QC
+uW
+lo
+lo
+lo
+Mh
+lo
+lo
+lo
+Ai
+lo
+lo
+lo
+cd
+Vs
+"}
+(21,1,1) = {"
+MI
+Vs
+Vs
+Vs
+We
+Vs
+Vs
+Vs
+Vs
+Vs
+MI
+Vs
+Fo
+Vs
+Vs
+"}
+(22,1,1) = {"
+Vs
+Vs
+Vs
+Vs
+Vs
+Vs
+Vs
+Vs
+Vs
+Vs
+MI
+Vs
+Vs
+Vs
+Vs
+"}

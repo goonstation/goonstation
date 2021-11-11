@@ -333,10 +333,20 @@ var/f_color_selector_handler/F_Color_Selector
 					do_thing
 		*/
 
-		Z_LOG_DEBUG("Preload", "  /datum/generatorPrefab")
-		for(var/A in childrentypesof(/datum/generatorPrefab))
+		Z_LOG_DEBUG("Preload", "  /datum/generatorPrefab/asteroid")
+		for(var/A in childrentypesof(/datum/generatorPrefab/asteroid))
 			var/datum/generatorPrefab/R = new A()
 			miningModifiers.Add(R)
+
+		Z_LOG_DEBUG("Preload", "  /datum/generatorPrefab/debrisbig")
+		for(var/A in childrentypesof(/datum/generatorPrefab/debrisbig))
+			var/datum/generatorPrefab/R = new A()
+			debrisModifiersBig.Add(R)
+
+		Z_LOG_DEBUG("Preload", "  /datum/generatorPrefab/debrissmall")
+		for(var/A in childrentypesof(/datum/generatorPrefab/debrissmall))
+			var/datum/generatorPrefab/R = new A()
+			debrisModifiersSmall.Add(R)
 
 		Z_LOG_DEBUG("Preload", "  /datum/faction")
 		for(var/A in childrentypesof(/datum/faction))
@@ -597,6 +607,12 @@ var/f_color_selector_handler/F_Color_Selector
 	UPDATE_TITLE_STATUS("Building mining level")
 	Z_LOG_DEBUG("World/Init", "Setting up mining level...")
 	makeMiningLevel()
+	#endif
+
+	#if SKIP_Z3_SETUP == 0
+	UPDATE_TITLE_STATUS("Building debris level")
+	Z_LOG_DEBUG("World/Init", "Setting up debris level...")
+	makeDebrisLevel()
 	#endif
 
 	UPDATE_TITLE_STATUS("Initializing biomes")

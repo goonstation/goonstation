@@ -1385,8 +1385,24 @@ ABSTRACT_TYPE(/area/prefab)
 	name = "Bee Sanctuary"
 	icon_state = "purple"
 
-area/prefab/torpedo_deposit
+/area/prefab/torpedo_deposit
 	name = "Torpedo Deposit"
+	icon_state = "purple"
+
+/area/prefab/bootlegger_asteroid
+	name = "Bootlegger Asteroid"
+	icon_state = "purple"
+
+/area/prefab/crashed_bee_ship
+	name = "Crashed Bee Ship"
+	icon_state = "purple"
+
+/area/prefab/smuggler_outpost
+	name = "Smuggler Outpost"
+	icon_state = "purple"
+
+/area/prefab/spider_radio
+	name = "Spider Radio Asteroid"
 	icon_state = "purple"
 
 // zewaka - vspace areas //
@@ -3473,6 +3489,10 @@ ABSTRACT_TYPE(/area/mining)
 	name = "Main Asteroid"
 	icon_state = "green"
 	force_fullbright = 1
+
+/area/mining/catwalks
+	name = "Main Asteroid"
+	icon_state = "green"
 
 /area/prefab/tunnelsnake
 	name = "Tunnel Snake Mining Rig"

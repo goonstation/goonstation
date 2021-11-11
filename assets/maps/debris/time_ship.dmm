@@ -1,0 +1,1216 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bf" = (
+/obj/item/storage/toilet{
+	dir = 4
+	},
+/turf/unsimulated/floor/specialroom/freezer,
+/area/timewarp/ship)
+"bm" = (
+/obj/machinery/door/airlock,
+/turf/unsimulated/floor/black,
+/area/timewarp/ship)
+"bB" = (
+/turf/unsimulated/floor/stairs{
+	dir = 4
+	},
+/area/timewarp/ship)
+"dq" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/unsimulated/floor/white,
+/area/timewarp/ship)
+"fe" = (
+/obj/table/auto,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A very broken microwave, containing a very exploded casserole.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "hmicro";
+	name = "broken microwave oven";
+	pixel_y = 10
+	},
+/turf/unsimulated/floor/black,
+/area/timewarp/ship)
+"fi" = (
+/turf/space,
+/area/noGenerate)
+"fk" = (
+/obj/machinery/bot/guardbot/future,
+/obj/machinery/guardbot_dock{
+	autoeject = 2;
+	desc = "A recharging and command station for PR-7 Robuddies.  You assume.";
+	name = "old-new docking station";
+	pixel_x = -4
+	},
+/turf/unsimulated/floor/specialroom/chapel{
+	dir = 4
+	},
+/area/timewarp/ship)
+"gg" = (
+/obj/decal/timeplug,
+/obj/decal/timeplug{
+	dir = 4
+	},
+/turf/space,
+/area/timewarp)
+"gj" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 8;
+	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
+	icon_state = "manifold"
+	},
+/turf/unsimulated/floor,
+/area/timewarp/ship)
+"gl" = (
+/obj/storage/secure/closet/fridge/kitchen,
+/turf/unsimulated/floor/black,
+/area/timewarp/ship)
+"gB" = (
+/obj/machinery/door/airlock/external,
+/turf/unsimulated/floor,
+/area/timewarp/ship)
+"gJ" = (
+/obj/decal/timeplug{
+	dir = 6
+	},
+/turf/space,
+/area/timewarp)
+"hq" = (
+/obj/decal/timeplug{
+	dir = 10
+	},
+/turf/space,
+/area/timewarp)
+"hR" = (
+/obj/stool/bed,
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "fred2"
+	},
+/area/timewarp/ship)
+"iE" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A large rack of server modules.  It appears to be in a low-power idle state.";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "server0";
+	name = "idle server"
+	},
+/turf/unsimulated/floor{
+	icon_state = "corner_east"
+	},
+/area/timewarp/ship)
+"jf" = (
+/turf/unsimulated/floor/specialroom/chapel,
+/area/timewarp/ship)
+"jn" = (
+/obj/machinery/light/small,
+/turf/simulated/floor/carpet{
+	icon_state = "fred2"
+	},
+/area/timewarp/ship)
+"jJ" = (
+/obj/decal/fakeobjects/lightbulb_broken,
+/turf/unsimulated/floor/specialroom/chapel{
+	dir = 1
+	},
+/area/timewarp/ship)
+"jR" = (
+/obj/decal/timeplug{
+	dir = 1
+	},
+/obj/decal/timeplug{
+	dir = 8
+	},
+/turf/space,
+/area/timewarp)
+"jU" = (
+/turf/simulated/floor/carpet{
+	dir = 1;
+	icon_state = "fred2"
+	},
+/area/timewarp/ship)
+"kZ" = (
+/obj/map/light/cyan,
+/turf/unsimulated/wall/setpieces/leadwindow{
+	icon_state = "leadwindow_2"
+	},
+/area/timewarp/ship)
+"lu" = (
+/obj/item/mousetrap,
+/turf/unsimulated/floor/specialroom/chapel{
+	dir = 8
+	},
+/area/timewarp/ship)
+"lV" = (
+/obj/decal/timeplug{
+	dir = 4
+	},
+/obj/decal/timeplug{
+	dir = 1
+	},
+/turf/space,
+/area/timewarp)
+"qb" = (
+/obj/machinery/door/airlock{
+	name = "Restroom"
+	},
+/turf/unsimulated/floor/specialroom/chapel{
+	dir = 8
+	},
+/area/timewarp/ship)
+"qk" = (
+/obj/decal/fakeobjects{
+	desc = "What was this thing even supposed to do?";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff";
+	name = "broken machine"
+	},
+/turf/unsimulated/floor/caution/corner/ne,
+/area/timewarp/ship)
+"qM" = (
+/obj/decal/fakeobjects/pipe{
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi'
+	},
+/turf/unsimulated/floor/black,
+/area/timewarp/ship)
+"rh" = (
+/obj/decal/timeplug{
+	dir = 1
+	},
+/obj/decal/timeplug{
+	dir = 4
+	},
+/turf/space,
+/area/timewarp)
+"rS" = (
+/obj/machinery/door/airlock/medical{
+	req_access_txt = ""
+	},
+/turf/unsimulated/floor/black,
+/area/timewarp/ship)
+"rT" = (
+/turf/unsimulated/floor/stairs{
+	dir = 8
+	},
+/area/timewarp/ship)
+"sy" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/turf/unsimulated/floor/void/timewarp,
+/area/timewarp)
+"sB" = (
+/obj/table/auto,
+/obj/item/pen,
+/turf/unsimulated/floor/black,
+/area/timewarp/ship)
+"te" = (
+/obj/machinery/sleeper/future/dead_man_sleeping{
+	dir = 8
+	},
+/turf/unsimulated/floor/white/grime,
+/area/timewarp/ship)
+"tm" = (
+/turf/unsimulated/floor/stairs/wide{
+	dir = 4
+	},
+/area/timewarp/ship)
+"tB" = (
+/obj/machinery/sleeper/future{
+	dir = 8
+	},
+/turf/unsimulated/floor/white/grime,
+/area/timewarp/ship)
+"uT" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet,
+/turf/unsimulated/floor/white/grime,
+/area/timewarp/ship)
+"uZ" = (
+/turf/unsimulated/floor/stairs/wide/other{
+	dir = 4
+	},
+/area/timewarp/ship)
+"wa" = (
+/turf/unsimulated/wall/setpieces/leadwindow{
+	dir = 4;
+	icon_state = "leadwindow_2"
+	},
+/area/timewarp/ship)
+"wH" = (
+/obj/decal/timeplug{
+	dir = 8
+	},
+/turf/space,
+/area/timewarp)
+"xa" = (
+/obj/decal/timeplug{
+	dir = 1
+	},
+/turf/space,
+/area/timewarp)
+"xi" = (
+/turf/unsimulated/floor,
+/area/timewarp/ship)
+"xs" = (
+/obj/map/light/cyan,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
+	dir = 8;
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "offbroken";
+	name = "broken computer"
+	},
+/turf/unsimulated/floor/black,
+/area/timewarp/ship)
+"xu" = (
+/obj/storage/closet/wardrobe/black,
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "fred2"
+	},
+/area/timewarp/ship)
+"xL" = (
+/turf/unsimulated/floor/specialroom/chapel{
+	dir = 1
+	},
+/area/timewarp/ship)
+"xN" = (
+/obj/table/auto,
+/obj/item/device/audio_log/timewarp_00,
+/turf/unsimulated/floor/black,
+/area/timewarp/ship)
+"xT" = (
+/obj/decal/timeplug,
+/turf/space,
+/area/timewarp)
+"ys" = (
+/turf/unsimulated/floor/white/grime,
+/area/timewarp/ship)
+"zj" = (
+/obj/stool/chair/office{
+	dir = 1
+	},
+/turf/unsimulated/floor/black,
+/area/timewarp/ship)
+"zr" = (
+/obj/map/light/cyan,
+/obj/table/auto,
+/turf/unsimulated/floor/black,
+/area/timewarp/ship)
+"AI" = (
+/turf/space,
+/area/allowGenerate)
+"BL" = (
+/obj/overlay{
+	density = 1;
+	desc = "You have no idea what this does.";
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "genericmachine1";
+	layer = 3.1;
+	name = "peculiar machine"
+	},
+/obj/map/light/cyan,
+/turf/unsimulated/floor/black,
+/area/timewarp/ship)
+"CJ" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 8;
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi'
+	},
+/turf/unsimulated/floor/specialroom/chapel{
+	dir = 1
+	},
+/area/timewarp/ship)
+"CW" = (
+/obj/machinery/light/small,
+/turf/unsimulated/floor/specialroom/chapel{
+	dir = 4
+	},
+/area/timewarp/ship)
+"Ec" = (
+/turf/unsimulated/wall/auto/lead/blue,
+/area/timewarp/ship)
+"Ee" = (
+/obj/item/screwdriver,
+/obj/decal/skeleton,
+/turf/unsimulated/floor/black,
+/area/timewarp/ship)
+"Hi" = (
+/obj/decal/float/clock,
+/turf/unsimulated/floor/void/timewarp,
+/area/timewarp)
+"HJ" = (
+/obj/table/wood/auto,
+/obj/item/audio_tape/timewarp_02,
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "fred2"
+	},
+/area/timewarp/ship)
+"IN" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8
+	},
+/turf/unsimulated/floor/specialroom/freezer,
+/area/timewarp/ship)
+"IS" = (
+/turf/unsimulated/floor/specialroom/chapel{
+	dir = 8
+	},
+/area/timewarp/ship)
+"Lx" = (
+/turf/unsimulated/floor/caution/corner/nw,
+/area/timewarp/ship)
+"LH" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "offbroken";
+	name = "broken computer"
+	},
+/turf/unsimulated/floor/black,
+/area/timewarp/ship)
+"Mo" = (
+/turf/unsimulated/floor/black,
+/area/timewarp/ship)
+"My" = (
+/obj/decal/fakeobjects/pipe{
+	desc = "It won't budge.";
+	dir = 4;
+	icon = 'icons/obj/pipe-item.dmi';
+	icon_state = "valve";
+	name = "rusted valve"
+	},
+/turf/unsimulated/floor/plating/scorched,
+/area/timewarp/ship)
+"NI" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 6
+	},
+/turf/unsimulated/floor/plating/scorched,
+/area/timewarp/ship)
+"Pn" = (
+/obj/decal/timeplug,
+/obj/decal/timeplug{
+	dir = 8
+	},
+/turf/space,
+/area/timewarp)
+"Pr" = (
+/obj/machinery/light/small,
+/turf/unsimulated/floor/caution/corner/sw{
+	dir = 1
+	},
+/area/timewarp/ship)
+"PQ" = (
+/obj/decal/timeplug{
+	dir = 4
+	},
+/obj/decal/timeplug,
+/turf/space,
+/area/timewarp)
+"PT" = (
+/obj/decal/fakeobjects/pipe{
+	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
+	icon_state = "manifold"
+	},
+/turf/unsimulated/floor,
+/area/timewarp/ship)
+"Qx" = (
+/obj/machinery/door/airlock{
+	name = "Crew Quarters"
+	},
+/turf/unsimulated/floor/black,
+/area/timewarp/ship)
+"QI" = (
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "fred2"
+	},
+/area/timewarp/ship)
+"Rn" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/submachine/chef_sink,
+/turf/unsimulated/floor/black,
+/area/timewarp/ship)
+"Su" = (
+/obj/storage/secure/closet/medical/medicine,
+/turf/unsimulated/floor/white,
+/area/timewarp/ship)
+"SR" = (
+/obj/map/light/cyan,
+/obj/stool/chair/office{
+	dir = 4
+	},
+/turf/unsimulated/floor/black,
+/area/timewarp/ship)
+"TV" = (
+/obj/decal/fakeobjects/shuttlethruster{
+	dir = 4
+	},
+/turf/unsimulated/floor/void/timewarp,
+/area/timewarp)
+"TZ" = (
+/obj/item/gun/energy/phaser_gun,
+/turf/unsimulated/floor/black,
+/area/timewarp/ship)
+"Uc" = (
+/turf/unsimulated/floor/white,
+/area/timewarp/ship)
+"Ug" = (
+/obj/decal/timeplug{
+	dir = 9
+	},
+/turf/space,
+/area/timewarp)
+"Uu" = (
+/obj/rack,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/helmet/space,
+/turf/unsimulated/floor,
+/area/timewarp/ship)
+"UT" = (
+/turf/unsimulated/floor/void/timewarp,
+/area/timewarp)
+"Vd" = (
+/obj/map/light/cyan,
+/obj/table/auto,
+/obj/item/device/audio_log/timewarp_01,
+/turf/unsimulated/floor/black,
+/area/timewarp/ship)
+"Vh" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/unsimulated/floor,
+/area/timewarp/ship)
+"VA" = (
+/obj/decal/timeplug{
+	dir = 4
+	},
+/turf/space,
+/area/timewarp)
+"Yb" = (
+/turf/unsimulated/floor/specialroom/chapel{
+	dir = 4
+	},
+/area/timewarp/ship)
+"Yj" = (
+/obj/overlay{
+	density = 1;
+	desc = "You have no idea what this does.";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "neutinj";
+	name = "peculiar machine"
+	},
+/obj/map/light/cyan,
+/turf/unsimulated/floor/black,
+/area/timewarp/ship)
+"ZE" = (
+/obj/decal/timeplug{
+	dir = 5
+	},
+/turf/space,
+/area/timewarp)
+"ZQ" = (
+/obj/map/light/cyan,
+/turf/unsimulated/floor/black,
+/area/timewarp/ship)
+"ZW" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 9
+	},
+/turf/unsimulated/floor,
+/area/timewarp/ship)
+
+(1,1,1) = {"
+fi
+fi
+fi
+Ug
+wH
+wH
+wH
+wH
+wH
+wH
+hq
+fi
+fi
+fi
+fi
+AI
+AI
+AI
+"}
+(2,1,1) = {"
+fi
+Ug
+wH
+jR
+UT
+UT
+UT
+UT
+UT
+UT
+xT
+fi
+fi
+fi
+fi
+AI
+AI
+AI
+"}
+(3,1,1) = {"
+Ug
+jR
+UT
+UT
+UT
+UT
+UT
+UT
+UT
+UT
+UT
+wH
+wH
+fi
+fi
+fi
+AI
+AI
+"}
+(4,1,1) = {"
+xa
+UT
+UT
+UT
+TV
+TV
+UT
+TV
+TV
+UT
+TV
+TV
+UT
+wH
+fi
+fi
+fi
+AI
+"}
+(5,1,1) = {"
+xa
+Hi
+UT
+UT
+Ec
+Ec
+sy
+Ec
+Ec
+sy
+Ec
+Ec
+UT
+UT
+wH
+fi
+fi
+AI
+"}
+(6,1,1) = {"
+jR
+UT
+UT
+Ec
+Ec
+Ec
+Ec
+Ec
+Ec
+Ec
+Ec
+Ec
+Ec
+UT
+UT
+fi
+fi
+fi
+"}
+(7,1,1) = {"
+UT
+UT
+UT
+Ec
+Ec
+Ec
+NI
+PT
+Vh
+xi
+Ec
+Ec
+Ec
+UT
+UT
+fi
+fi
+fi
+"}
+(8,1,1) = {"
+UT
+UT
+UT
+Ec
+Ec
+gj
+ZW
+Ec
+Ec
+xi
+My
+Ec
+Ec
+UT
+UT
+wH
+hq
+fi
+"}
+(9,1,1) = {"
+UT
+UT
+Ec
+Ec
+Ec
+Ec
+bB
+Ec
+Ec
+bB
+Ec
+Ec
+Ec
+Ec
+UT
+UT
+xT
+fi
+"}
+(10,1,1) = {"
+UT
+UT
+Ec
+fe
+Mo
+bm
+Mo
+Ec
+Ec
+Mo
+bm
+Mo
+Ee
+Ec
+UT
+UT
+xT
+fi
+"}
+(11,1,1) = {"
+UT
+UT
+Ec
+Rn
+Mo
+Ec
+Mo
+Ec
+Ec
+Mo
+Ec
+Lx
+Pr
+Ec
+UT
+UT
+xT
+fi
+"}
+(12,1,1) = {"
+UT
+UT
+Ec
+gl
+qM
+Ec
+rT
+Ec
+Ec
+rT
+Ec
+qk
+iE
+Ec
+UT
+UT
+xT
+fi
+"}
+(13,1,1) = {"
+UT
+UT
+Ec
+Ec
+Ec
+Ec
+Yb
+jf
+Yb
+jf
+Ec
+Ec
+Ec
+Ec
+UT
+UT
+xT
+fi
+"}
+(14,1,1) = {"
+UT
+UT
+UT
+Ec
+Ec
+Ec
+Ec
+IS
+xL
+IS
+CJ
+Ec
+UT
+UT
+UT
+UT
+xT
+fi
+"}
+(15,1,1) = {"
+xa
+UT
+UT
+Ec
+Su
+uT
+wa
+jf
+CW
+Ec
+Ec
+Ec
+Ec
+UT
+UT
+Hi
+xT
+fi
+"}
+(16,1,1) = {"
+ZE
+rh
+UT
+Ec
+dq
+ys
+rS
+IS
+xL
+Ec
+xu
+HJ
+Ec
+UT
+UT
+UT
+xT
+fi
+"}
+(17,1,1) = {"
+fi
+xa
+UT
+Ec
+ys
+Uc
+wa
+jf
+Yb
+Ec
+jU
+jn
+Ec
+UT
+UT
+UT
+xT
+fi
+"}
+(18,1,1) = {"
+fi
+xa
+UT
+Ec
+te
+tB
+wa
+IS
+xL
+Qx
+QI
+hR
+Ec
+UT
+UT
+UT
+xT
+fi
+"}
+(19,1,1) = {"
+fi
+xa
+UT
+Ec
+Ec
+Ec
+Ec
+jf
+fk
+Ec
+Ec
+Ec
+Ec
+UT
+UT
+UT
+Pn
+hq
+"}
+(20,1,1) = {"
+fi
+xa
+UT
+UT
+gB
+xi
+gB
+lu
+xL
+qb
+bf
+Ec
+UT
+UT
+UT
+UT
+UT
+xT
+"}
+(21,1,1) = {"
+xa
+UT
+UT
+UT
+Ec
+Uu
+Ec
+jf
+Yb
+Ec
+IN
+Ec
+UT
+UT
+UT
+UT
+UT
+xT
+"}
+(22,1,1) = {"
+xa
+UT
+UT
+UT
+Ec
+Ec
+Ec
+IS
+jJ
+Ec
+Ec
+Ec
+UT
+UT
+UT
+UT
+UT
+xT
+"}
+(23,1,1) = {"
+fi
+xa
+UT
+UT
+UT
+UT
+Ec
+jf
+Yb
+Ec
+UT
+UT
+UT
+UT
+UT
+UT
+PQ
+gJ
+"}
+(24,1,1) = {"
+fi
+xa
+UT
+UT
+UT
+Ec
+Ec
+tm
+uZ
+Ec
+Ec
+UT
+UT
+UT
+UT
+UT
+Pn
+hq
+"}
+(25,1,1) = {"
+fi
+xa
+UT
+UT
+Ec
+Ec
+Mo
+Mo
+Mo
+Mo
+Ec
+Ec
+UT
+UT
+Hi
+UT
+UT
+xT
+"}
+(26,1,1) = {"
+fi
+xa
+UT
+UT
+Ec
+LH
+zj
+Mo
+Mo
+Mo
+sB
+Ec
+UT
+UT
+UT
+UT
+UT
+xT
+"}
+(27,1,1) = {"
+fi
+fi
+xa
+UT
+Ec
+Mo
+Mo
+Mo
+Mo
+TZ
+xN
+Ec
+UT
+UT
+UT
+UT
+UT
+xT
+"}
+(28,1,1) = {"
+fi
+fi
+xa
+UT
+Ec
+BL
+ZQ
+ZQ
+SR
+ZQ
+Yj
+Ec
+UT
+UT
+UT
+UT
+UT
+xT
+"}
+(29,1,1) = {"
+xa
+UT
+UT
+UT
+Ec
+Ec
+Vd
+zr
+xs
+zr
+Ec
+Ec
+UT
+UT
+UT
+UT
+PQ
+gJ
+"}
+(30,1,1) = {"
+xa
+UT
+UT
+UT
+UT
+Ec
+kZ
+kZ
+kZ
+kZ
+Ec
+UT
+UT
+UT
+UT
+UT
+Pn
+hq
+"}
+(31,1,1) = {"
+ZE
+VA
+lV
+UT
+UT
+UT
+UT
+UT
+UT
+UT
+UT
+UT
+UT
+UT
+UT
+UT
+UT
+xT
+"}
+(32,1,1) = {"
+fi
+fi
+ZE
+lV
+UT
+UT
+UT
+UT
+UT
+UT
+UT
+UT
+UT
+UT
+UT
+UT
+UT
+xT
+"}
+(33,1,1) = {"
+fi
+fi
+fi
+xa
+UT
+UT
+UT
+Hi
+UT
+UT
+UT
+UT
+UT
+UT
+UT
+UT
+VA
+gJ
+"}
+(34,1,1) = {"
+fi
+fi
+fi
+ZE
+VA
+UT
+UT
+UT
+UT
+UT
+UT
+gg
+VA
+UT
+UT
+xT
+fi
+fi
+"}

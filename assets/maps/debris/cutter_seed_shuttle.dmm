@@ -1,0 +1,38 @@
+"a" = (/obj/decal/fakeobjects/shuttlethruster{dir = 4},/turf/space,/area/noGenerate)
+"c" = (/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/noGenerate)
+"g" = (/turf/simulated/shuttle/wall{dir = 4; icon_state = "wall3_space"},/area/noGenerate)
+"h" = (/turf/simulated/shuttle/wall{dir = 1; icon_state = "wall3_space"},/area/noGenerate)
+"j" = (/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/abandonedship)
+"k" = (/turf/simulated/shuttle/wall{dir = 8; icon_state = "wall3_space"},/area/noGenerate)
+"l" = (/obj/lattice{dir = 5; icon_state = "lattice-dir"},/turf/simulated/shuttle/wall{dir = 1; icon_state = "wall3_space"},/area/noGenerate)
+"m" = (/obj/lattice{dir = 5; icon_state = "lattice-dir"},/turf/simulated/shuttle/wall{dir = 4; icon_state = "wall3_space"},/area/noGenerate)
+"o" = (/turf/simulated/shuttle/wall{icon_state = "wall3_space"},/area/noGenerate)
+"p" = (/obj/decal/cleanable/oil,/obj/item/skull,/obj/item/raw_material/miracle,/obj/item/raw_material/miracle,/obj/storage/crate{name = "Dented Crate"},/obj/item/shipcomponent/sensor/ecto,/turf/simulated/floor/airless/plating/scorched,/area/abandonedship)
+"s" = (/obj/decal/floatingtiles{icon_state = "floattiles3"},/obj/decal/cleanable/oil,/obj/critter/gunbot/drone/buzzdrone,/turf/simulated/floor/airless/plating/scorched,/area/abandonedship)
+"y" = (/obj/decal/cleanable/dirt,/obj/storage/crate/loot,/turf/simulated/floor/airless/plating/scorched,/area/abandonedship)
+"A" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/airless/plating/scorched,/area/abandonedship)
+"C" = (/turf/simulated/shuttle/wall{dir = 1; icon_state = "wall3_space"},/area/abandonedship)
+"D" = (/obj/decal/fakeobjects/firelock_broken{desc = "Rust has rendered this airlock useless."; icon = 'icons/misc/hstation.dmi'; icon_state = "bloodydoor"; name = "broken airlock"},/turf/simulated/floor/airless/damaged3,/area/abandonedship)
+"F" = (/obj/decal/cleanable/oil,/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/abandonedship)
+"G" = (/turf/simulated/shuttle/wall{icon_state = "wall3_space"},/area/abandonedship)
+"I" = (/obj/decal/floatingtiles{icon_state = "floattiles5"},/obj/decal/cleanable/dirt,/obj/decal/cleanable/molten_item,/obj/computerframe{anchored = 1; desc = "It is highly unlikely that this still works."; icon = 'icons/obj/computer.dmi'; icon_state = "datamedb"; name = "smashed computer"},/turf/simulated/floor/airless/plating/scorched,/area/abandonedship)
+"L" = (/obj/lattice{dir = 4; icon_state = "lattice-dir"},/obj/item/cable_coil/cut,/obj/decal/fakeobjects/pipe{dir = 4},/obj/decal/fakeobjects/shuttleengine{dir = 8},/turf/space,/area/noGenerate)
+"M" = (/turf/simulated/shuttle/wall{dir = 4; icon_state = "wall3_space"},/area/abandonedship)
+"Q" = (/obj/lattice{icon_state = "lattice-dir"},/obj/decal/fakeobjects/pipe,/turf/space,/area/noGenerate)
+"T" = (/obj/decal/floatingtiles{icon_state = "floattiles2"},/obj/stool/chair{dir = 8},/turf/simulated/floor/airless/plating/scorched,/area/abandonedship)
+"V" = (/turf/simulated/shuttle/wall{dir = 8; icon_state = "wall3_space"},/area/abandonedship)
+"W" = (/turf/space,/area/noGenerate)
+"X" = (/obj/decal/floatingtiles{dir = 4; icon_state = "floattiles2"},/obj/item/seed/alien,/turf/simulated/floor/airless/plating/damaged1,/area/abandonedship)
+
+(1,1,1) = {"
+aLlWWWW
+WochWWW
+WWQWWWW
+WVjFjjC
+WjpsyIF
+WjAAXTj
+WGjDjjM
+WWQWWWW
+WkcgWWW
+aLmWWWW
+"}

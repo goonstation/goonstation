@@ -1,0 +1,204 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/space,
+/area/noGenerate)
+"i" = (
+/obj/mopbucket,
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedship)
+"j" = (
+/obj/item/spraybottle/cleaner/tsunami,
+/turf/simulated/floor/airless/damaged5,
+/area/abandonedship)
+"k" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "wall_space"
+	},
+/area/abandonedship)
+"m" = (
+/obj/item/mop/old,
+/turf/simulated/floor/airless/damaged2,
+/area/abandonedship)
+"n" = (
+/obj/machinery/door/unpowered/shuttle,
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedship)
+"p" = (
+/obj/lattice,
+/turf/space,
+/area/abandonedship)
+"q" = (
+/obj/item/paint_can/rainbow,
+/obj/storage/crate{
+	name = "Dented Crate"
+	},
+/obj/item/paint_can/rainbow/plaid,
+/turf/simulated/floor/airless/damaged2,
+/area/abandonedship)
+"r" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "An old computer that doesn't appear to be plugged in.  Do you see the cord anywhere? No? Dang.";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "old0";
+	name = "inactive computer";
+	pixel_x = -5
+	},
+/turf/simulated/floor/airless/scorched,
+/area/abandonedship)
+"s" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/obj/decal/floatingtiles{
+	icon_state = "floattiles3"
+	},
+/turf/space,
+/area/abandonedship)
+"u" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/space,
+/area/abandonedship)
+"v" = (
+/obj/lattice,
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/space,
+/area/abandonedship)
+"x" = (
+/obj/lattice,
+/obj/decal/floatingtiles{
+	icon_state = "floattiles3"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/abandonedship)
+"y" = (
+/obj/decal/fakeobjects/shuttlethruster{
+	dir = 4
+	},
+/turf/space,
+/area/abandonedship)
+"z" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/abandonedship)
+"B" = (
+/obj/computerframe,
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedship)
+"C" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8
+	},
+/turf/space,
+/area/abandonedship)
+"F" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/turf/simulated/shuttle/wall,
+/area/abandonedship)
+"J" = (
+/obj/decal/floatingtiles{
+	dir = 8
+	},
+/obj/item/cigpacket/propuffs,
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedship)
+"P" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "wall_space"
+	},
+/area/abandonedship)
+"Q" = (
+/turf/simulated/shuttle/wall,
+/area/abandonedship)
+"Y" = (
+/obj/decal/skeleton{
+	desc = "The remains of a human. The skull has a hole in it.  An extra one, I mean.";
+	layer = 2.5;
+	pixel_y = 8
+	},
+/obj/decal/cleanable/oil,
+/obj/decal/cleanable/dirt,
+/obj/item/mop,
+/obj/item/chem_grenade/cleaner,
+/obj/item/chem_grenade/cleaner,
+/obj/item/chem_grenade/cleaner,
+/turf/simulated/floor/airless/damaged2,
+/area/abandonedship)
+"Z" = (
+/obj/item/mousetrap/armed,
+/turf/simulated/floor/airless/damaged2,
+/area/abandonedship)
+
+(1,1,1) = {"
+x
+a
+a
+y
+a
+"}
+(2,1,1) = {"
+F
+Q
+Q
+C
+Q
+"}
+(3,1,1) = {"
+Q
+J
+v
+z
+Q
+"}
+(4,1,1) = {"
+Q
+j
+u
+s
+Q
+"}
+(5,1,1) = {"
+n
+Z
+v
+i
+Q
+"}
+(6,1,1) = {"
+Q
+p
+m
+Y
+Q
+"}
+(7,1,1) = {"
+Q
+r
+v
+q
+Q
+"}
+(8,1,1) = {"
+P
+Q
+B
+Q
+k
+"}

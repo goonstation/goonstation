@@ -1,0 +1,2995 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aF" = (
+/obj/table/auto,
+/obj/item/staple_gun,
+/obj/item/scalpel{
+	pixel_x = -4;
+	pixel_y = 11
+	},
+/obj/item/circular_saw,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/item/weldingtool,
+/obj/item/crowbar,
+/obj/item/hemostat,
+/obj/item/suture,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
+"aM" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 5;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/turf/simulated/floor/plating,
+/area/iss)
+"bB" = (
+/obj/machinery/door/airlock/classic,
+/turf/simulated/floor/plating/airless,
+/area/iss)
+"bK" = (
+/turf/simulated/floor/grime,
+/area/iss)
+"ci" = (
+/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/turf/simulated/floor/white/grime,
+/area/iss)
+"cA" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 10;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 9;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/simulated/floor/plating,
+/area/iss)
+"da" = (
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "wall3_space"
+	},
+/area/iss)
+"dN" = (
+/obj/machinery/light/small,
+/obj/storage/crate/loot,
+/turf/simulated/floor/grime,
+/area/iss)
+"ek" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/noGenerate)
+"es" = (
+/obj/warp_beacon/faint,
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"eu" = (
+/obj/storage/closet/emergency,
+/turf/simulated/floor/grime,
+/area/iss)
+"eG" = (
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister/empty,
+/turf/simulated/floor/grime,
+/area/iss)
+"fi" = (
+/obj/machinery/manufacturer/gas,
+/turf/simulated/floor/plating,
+/area/iss)
+"fC" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 10;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/simulated/floor/plating,
+/area/iss)
+"fT" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/decal/fakeobjects/pipe,
+/turf/space,
+/area/noGenerate)
+"gl" = (
+/obj/machinery/optable{
+	id = "ISS"
+	},
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
+"gy" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/simulated/floor/grime,
+/area/iss)
+"gF" = (
+/turf/simulated/floor/caution/south,
+/area/iss)
+"hc" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"hh" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 5
+	},
+/turf/space,
+/area/noGenerate)
+"ih" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 6;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/obj/table/auto,
+/obj/item/sheet/glass/reinforced{
+	amount = 50
+	},
+/turf/simulated/floor/plating,
+/area/iss)
+"il" = (
+/turf/simulated/floor/plating/airless,
+/area/iss)
+"it" = (
+/obj/item/clothing/head/helmet/space/blackstronaut,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
+"iz" = (
+/turf/simulated/floor/caution/west,
+/area/iss)
+"iP" = (
+/obj/machinery/light/small,
+/obj/landmark/artifact,
+/turf/simulated/floor/white/grime,
+/area/iss)
+"jp" = (
+/obj/machinery/recharge_station{
+	desc = "It looks like some of the safety interlocks are damaged.";
+	name = "Malfunctioning Docking Station"
+	},
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
+"jt" = (
+/obj/computer3frame,
+/turf/simulated/floor/grime,
+/area/iss)
+"jN" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 6
+	},
+/turf/space,
+/area/noGenerate)
+"jQ" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"ke" = (
+/obj/machinery/atmospherics/pipe/tank{
+	dir = 4
+	},
+/turf/simulated/floor/grime,
+/area/iss)
+"kg" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/obj/machinery/door/airlock/classic,
+/turf/simulated/floor,
+/area/iss)
+"kX" = (
+/obj/decal/skeleton{
+	desc = "The head seems to be gone.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body2";
+	name = "corpse"
+	},
+/obj/item/clothing/under/gimmick/snazza,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
+"kY" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"la" = (
+/obj/decal/fakeobjects/teleport_pad,
+/obj/marker/supplymarker,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
+"ls" = (
+/obj/item/clothing/gloves/fingerless,
+/obj/item/clothing/ears/earmuffs,
+/obj/item/dice,
+/obj/storage/crate,
+/obj/item/reagent_containers/glass/bottle/eyedrops,
+/turf/simulated/floor/grime,
+/area/iss)
+"lG" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "wall3_space"
+	},
+/area/iss)
+"lO" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"mw" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "wall3_space"
+	},
+/area/abandonedmedicalship/robot_trader)
+"mR" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/obj/decal/fakeobjects/lightbulb_broken{
+	dir = 4
+	},
+/obj/npc/trader/robot{
+	icon_state = "medibot0";
+	name = "D.O.C.";
+	productset = 4;
+	trader_area = "/area/abandonedmedicalship/robot_trader"
+	},
+/obj/map/light/white,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
+"nH" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It appears to be a part of a very old robotic arm.";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff";
+	name = "motor"
+	},
+/turf/simulated/floor/plating,
+/area/iss)
+"ov" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3_space"
+	},
+/area/abandonedmedicalship/robot_trader)
+"oZ" = (
+/turf/simulated/floor/plating/damaged1,
+/area/noGenerate)
+"pa" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "wall3_space"
+	},
+/area/iss)
+"pu" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/noGenerate)
+"pC" = (
+/obj/machinery/door/airlock/classic,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
+"pU" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It appears to be a part of a very old robotic arm.";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "neutinj";
+	name = "motor"
+	},
+/turf/simulated/floor/plating,
+/area/iss)
+"pV" = (
+/obj/storage/crate/loot,
+/turf/simulated/floor/grime,
+/area/iss)
+"qg" = (
+/obj/decal/fakeobjects/pipe,
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"qh" = (
+/obj/grille/catwalk{
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/noGenerate)
+"qs" = (
+/turf/simulated/floor/caution/corner/ne,
+/area/iss)
+"qE" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It appears to be a part of a very old robotic arm.";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff";
+	name = "motor"
+	},
+/obj/item/wirecutters,
+/turf/simulated/floor/plating,
+/area/iss)
+"rp" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/noGenerate)
+"rJ" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/noGenerate)
+"ss" = (
+/obj/item/clothing/suit/labcoat,
+/obj/item/coin,
+/obj/storage/crate,
+/obj/item/storage/box/donkpocket_kit,
+/turf/simulated/floor/grime,
+/area/iss)
+"su" = (
+/obj/stool/bed,
+/turf/simulated/floor/grime,
+/area/iss)
+"sv" = (
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/noGenerate)
+"sU" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/simulated/floor/plating,
+/area/iss)
+"sZ" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 6;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/obj/item/extinguisher,
+/turf/simulated/floor/plating,
+/area/iss)
+"ta" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 5;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/obj/item/device/light/flashlight,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/iss)
+"tq" = (
+/obj/item/device/radio/beacon,
+/turf/simulated/floor/grime,
+/area/iss)
+"tr" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/turf/simulated/floor/plating,
+/area/iss)
+"un" = (
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 10;
+	level = 2
+	},
+/turf/simulated/floor/grime,
+/area/iss)
+"uC" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"uM" = (
+/obj/machinery/vending/standard,
+/turf/simulated/floor/grime,
+/area/iss)
+"uY" = (
+/obj/storage/secure/closet/medical/anesthetic,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
+"vT" = (
+/obj/item/tile/steel,
+/obj/decal/cleanable/machine_debris,
+/obj/landmark/artifact,
+/turf/simulated/floor/plating,
+/area/iss)
+"wd" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/abandonedmedicalship/robot_trader)
+"wg" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/space,
+/area/noGenerate)
+"xf" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/obj/machinery/door/airlock/classic,
+/turf/simulated/floor/plating,
+/area/iss)
+"xp" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 5;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 9;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/simulated/floor/plating,
+/area/iss)
+"xB" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 9;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/table/auto,
+/obj/item/sheet/steel{
+	amount = 50
+	},
+/obj/item/sheet/steel{
+	amount = 50
+	},
+/turf/simulated/floor/plating,
+/area/iss)
+"xI" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/iss)
+"yS" = (
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 6;
+	level = 2
+	},
+/turf/simulated/floor/grime,
+/area/iss)
+"yV" = (
+/obj/table/auto,
+/obj/item/radio_tape/advertisement/robotics{
+	pixel_x = 8;
+	pixel_y = 7
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "An old computer that doesn't appear to be plugged in.  Do you see the cord anywhere? No? Dang.";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "old0";
+	name = "inactive computer";
+	pixel_x = -5
+	},
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
+"zP" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 6;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 10;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/simulated/floor/plating,
+/area/iss)
+"Ao" = (
+/obj/overlay{
+	density = 1;
+	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "tapedrive-p";
+	name = "broken databank"
+	},
+/turf/simulated/floor/grime,
+/area/iss)
+"At" = (
+/obj/decal/cleanable/machine_debris{
+	icon_state = "gib7";
+	name = "smashed fabricator"
+	},
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
+"Bb" = (
+/turf/simulated/floor/airless/plating/damaged1,
+/area/noGenerate)
+"Bg" = (
+/obj/grille/steel,
+/obj/window/reinforced,
+/turf/simulated/floor/plating,
+/area/iss)
+"CC" = (
+/obj/lattice,
+/turf/space,
+/area/noGenerate)
+"CE" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"CG" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 1
+	},
+/turf/space,
+/area/noGenerate)
+"Di" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/noGenerate)
+"Dx" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/noGenerate)
+"DG" = (
+/obj/machinery/atmospherics/pipe/tank/oxygen{
+	dir = 8
+	},
+/turf/simulated/floor/grime,
+/area/iss)
+"Eo" = (
+/obj/machinery/light/small{
+	dir = 1;
+	status = 2
+	},
+/turf/simulated/floor/grime,
+/area/iss)
+"Ep" = (
+/obj/decal/fakeobjects{
+	desc = "What was this thing even supposed to do?";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff";
+	name = "broken machine"
+	},
+/turf/simulated/floor/plating,
+/area/iss)
+"Eq" = (
+/obj/stool/chair,
+/turf/simulated/floor/grime,
+/area/iss)
+"ES" = (
+/obj/decal/fakeobjects/apc_broken{
+	pixel_y = 32
+	},
+/obj/decal/cleanable/oil,
+/obj/landmark/artifact,
+/turf/simulated/floor/white/grime,
+/area/iss)
+"EU" = (
+/obj/machinery/dispenser{
+	o2tanks = 5;
+	pltanks = 15
+	},
+/turf/simulated/floor/grime,
+/area/iss)
+"Fb" = (
+/obj/grille/steel,
+/obj/window/reinforced,
+/turf/simulated/floor/plating,
+/area/abandonedmedicalship/robot_trader)
+"FG" = (
+/obj/machinery/portable_atmospherics/pump,
+/turf/simulated/floor/grime,
+/area/iss)
+"FU" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 5;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 6;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/turf/simulated/floor/plating,
+/area/iss)
+"FY" = (
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/noGenerate)
+"Gf" = (
+/turf/space,
+/area/noGenerate)
+"Gx" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 10
+	},
+/turf/space,
+/area/noGenerate)
+"GJ" = (
+/turf/simulated/floor/caution/corner/nw{
+	dir = 8
+	},
+/area/iss)
+"Hb" = (
+/turf/simulated/floor/caution/north,
+/area/iss)
+"Hp" = (
+/obj/table/auto,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/device/multitool{
+	pixel_x = -7;
+	pixel_y = 1
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/grime,
+/area/iss)
+"Ia" = (
+/obj/machinery/computer/robot_module_rewriter,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
+"Ir" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/noGenerate)
+"JH" = (
+/obj/decal/fakeobjects/shuttleengine{
+	desc = "A robotic claw, it probably broke decades ago.";
+	name = "robotic claw"
+	},
+/turf/space,
+/area/noGenerate)
+"JJ" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3_space"
+	},
+/area/iss)
+"Kx" = (
+/turf/simulated/floor/airless/plating/damaged3,
+/area/noGenerate)
+"KR" = (
+/obj/machinery/door/airlock/classic,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/simulated/floor/plating/airless,
+/area/iss)
+"Mv" = (
+/obj/storage/crate/internals,
+/obj/item/cable_coil,
+/obj/item/circuitboard/solar_control,
+/obj/item/circuitboard/air_management,
+/obj/item/skull,
+/obj/item/clothing/under/gimmick/sweater,
+/turf/space,
+/area/noGenerate)
+"MB" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 9
+	},
+/turf/space,
+/area/noGenerate)
+"MK" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/simulated/floor/plating/airless,
+/area/iss)
+"Nj" = (
+/obj/table/auto,
+/obj/machinery/cell_charger,
+/obj/item/cell/cerenkite,
+/obj/item/cell/cerenkite,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/securearea{
+	desc = "A warning sign which reads 'Biohazard'";
+	icon_state = "bio";
+	layer = 2.5;
+	name = "BIOHAZARD";
+	pixel_x = -32
+	},
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
+"OH" = (
+/turf/simulated/floor/caution/northsouth,
+/area/iss)
+"OY" = (
+/obj/machinery/atmospherics/valve,
+/turf/simulated/floor/grime,
+/area/iss)
+"Pq" = (
+/obj/stool/bed,
+/obj/decal/cleanable/blood/splatter,
+/obj/item/storage/secure/ssafe/loot{
+	pixel_x = 6;
+	pixel_y = -28
+	},
+/turf/simulated/floor/grime,
+/area/iss)
+"Px" = (
+/obj/storage/crate,
+/obj/item/clothing/suit/rad,
+/obj/item/clothing/head/rad_hood,
+/obj/item/clothing/mask/gas/emergency,
+/turf/simulated/floor/grime,
+/area/iss)
+"Ql" = (
+/obj/machinery/door/airlock/classic,
+/turf/simulated/floor/grime,
+/area/iss)
+"Qn" = (
+/turf/space,
+/area/allowGenerate)
+"QB" = (
+/obj/stool/bed,
+/obj/machinery/light/small,
+/turf/simulated/floor/grime,
+/area/iss)
+"Sg" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "wall3_space"
+	},
+/area/abandonedmedicalship/robot_trader)
+"Sl" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 9;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/simulated/floor/plating,
+/area/iss)
+"Sx" = (
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "wall3_space"
+	},
+/area/abandonedmedicalship/robot_trader)
+"Ts" = (
+/obj/table/auto,
+/obj/securearea{
+	desc = "A warning sign which reads 'Biohazard'";
+	icon_state = "bio";
+	layer = 2.5;
+	name = "BIOHAZARD";
+	pixel_x = -32
+	},
+/obj/item/device/infra,
+/obj/item/device/infra,
+/obj/item/device/infra,
+/obj/item/device/infra,
+/obj/item/reagent_containers/glass/oilcan,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
+"TB" = (
+/obj/machinery/computer/operating{
+	id = "ISS"
+	},
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
+"UA" = (
+/obj/machinery/door/airlock/classic,
+/turf/simulated/floor,
+/area/iss)
+"Vl" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"VA" = (
+/turf/simulated/floor/caution/corner/sw,
+/area/iss)
+"WA" = (
+/turf/simulated/floor/caution/east{
+	dir = 8
+	},
+/area/iss)
+"WH" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/noGenerate)
+"Xe" = (
+/turf/simulated/floor/airless{
+	icon_state = "solarpanel";
+	name = "solar paneling"
+	},
+/area/noGenerate)
+"XQ" = (
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
+"Zc" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It's some sort of electrical machine thing.";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "neutinj";
+	name = "old machine"
+	},
+/obj/map/light/white,
+/turf/simulated/floor/delivery,
+/area/iss)
+"ZW" = (
+/turf/simulated/floor{
+	icon_state = "corner_east"
+	},
+/area/iss)
+
+(1,1,1) = {"
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Gf
+Gf
+Ir
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+qh
+Gf
+qh
+CE
+CE
+CE
+CE
+CE
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+"}
+(2,1,1) = {"
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Gf
+Gf
+kY
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+WH
+Gf
+WH
+Xe
+Xe
+Xe
+Xe
+Kx
+Bb
+Xe
+Bb
+Gf
+Gf
+Gf
+Gf
+Gf
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+"}
+(3,1,1) = {"
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Gf
+Gf
+kY
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+WH
+Gf
+WH
+Xe
+oZ
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Kx
+Bb
+Gf
+Gf
+Gf
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+"}
+(4,1,1) = {"
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Gf
+Gf
+rJ
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+qh
+qh
+qh
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+Di
+Gf
+Gf
+Gf
+Gf
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+"}
+(5,1,1) = {"
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+WH
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+"}
+(6,1,1) = {"
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Gf
+Gf
+Ir
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+qh
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+Gf
+Gf
+Gf
+Gf
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+"}
+(7,1,1) = {"
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Gf
+Gf
+kY
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+WH
+Xe
+Xe
+Xe
+Xe
+Bb
+Kx
+Xe
+Xe
+Xe
+Xe
+Bb
+Kx
+Gf
+Gf
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+"}
+(8,1,1) = {"
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Gf
+Gf
+kY
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+WH
+Xe
+Xe
+Xe
+Xe
+Kx
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Bb
+Kx
+Gf
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+"}
+(9,1,1) = {"
+Qn
+Qn
+Qn
+Qn
+Qn
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+rJ
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+qh
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+ek
+Gf
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+"}
+(10,1,1) = {"
+Qn
+Qn
+Qn
+Qn
+Qn
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+WH
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+"}
+(11,1,1) = {"
+Qn
+Qn
+Qn
+Qn
+Qn
+Gf
+Gf
+uC
+Gf
+uC
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Ir
+WH
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+"}
+(12,1,1) = {"
+Qn
+Qn
+Qn
+Qn
+Qn
+Gf
+Gf
+Xe
+Gf
+Xe
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+rp
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+WH
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+da
+xI
+Bg
+xI
+JJ
+Gf
+Gf
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+"}
+(13,1,1) = {"
+Qn
+Qn
+Qn
+Qn
+Qn
+Gf
+Gf
+Xe
+uC
+Xe
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+rp
+CC
+CC
+CC
+CC
+CC
+CC
+WH
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+xI
+ss
+bK
+su
+xI
+Gf
+Gf
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+"}
+(14,1,1) = {"
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Xe
+CC
+Xe
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+rp
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+WH
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+xI
+su
+bK
+QB
+xI
+Gf
+Gf
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+"}
+(15,1,1) = {"
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Xe
+CC
+Xe
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+rJ
+WH
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+xI
+su
+bK
+Pq
+xI
+Gf
+Gf
+Gf
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+"}
+(16,1,1) = {"
+Xe
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Xe
+CC
+Xe
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+xI
+KR
+xI
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+xI
+su
+bK
+ls
+xI
+Gf
+Gf
+Gf
+Gf
+Qn
+Qn
+Qn
+Qn
+Qn
+"}
+(17,1,1) = {"
+Xe
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Xe
+CC
+Xe
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+xI
+MK
+xI
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+pa
+xI
+UA
+xI
+lG
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+"}
+(18,1,1) = {"
+Xe
+pu
+Gf
+Gf
+Gf
+Gf
+da
+xI
+Bg
+xI
+JJ
+Gf
+Gf
+Gf
+Sx
+wd
+wd
+Fb
+wd
+wd
+ov
+Gf
+Gf
+da
+xI
+KR
+xI
+JJ
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+xI
+sU
+xI
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+"}
+(19,1,1) = {"
+xI
+Bg
+Bg
+xI
+fT
+fT
+xI
+FG
+ke
+xI
+xI
+xI
+xI
+fT
+wd
+uY
+Ts
+yV
+Nj
+jp
+wd
+fT
+xI
+xI
+xB
+FU
+fC
+xI
+xI
+fT
+fT
+fT
+xI
+xI
+xI
+UA
+xI
+xI
+JJ
+Gf
+Gf
+Gf
+Gf
+uC
+Gf
+Gf
+Gf
+"}
+(20,1,1) = {"
+Eq
+bK
+Ao
+xI
+xI
+xI
+xI
+Eo
+un
+OY
+eG
+Px
+xI
+xI
+wd
+XQ
+it
+kX
+XQ
+XQ
+wd
+xI
+xI
+Sl
+GJ
+iz
+VA
+fC
+xI
+xI
+Bg
+xI
+xI
+pV
+pV
+bK
+pV
+dN
+xI
+xI
+xI
+CE
+CE
+CC
+CE
+lO
+Di
+"}
+(21,1,1) = {"
+Eq
+tq
+bK
+Ql
+tr
+UA
+bK
+bK
+bK
+bK
+bK
+bK
+UA
+tr
+pC
+XQ
+XQ
+la
+XQ
+XQ
+pC
+tr
+xf
+zP
+Hb
+Zc
+gF
+xp
+kg
+tr
+tr
+tr
+UA
+bK
+bK
+bK
+bK
+bK
+UA
+il
+bB
+FY
+sv
+es
+jQ
+Gf
+Gf
+"}
+(22,1,1) = {"
+jt
+gy
+Hp
+xI
+xI
+xI
+xI
+bK
+yS
+OY
+eG
+uM
+xI
+xI
+wd
+XQ
+XQ
+gl
+XQ
+XQ
+wd
+xI
+xI
+aM
+qs
+WA
+ZW
+ih
+xI
+xI
+Bg
+xI
+xI
+Ep
+bK
+bK
+eu
+eu
+xI
+xI
+xI
+hc
+hc
+CC
+hc
+lO
+Di
+"}
+(23,1,1) = {"
+xI
+Bg
+Bg
+xI
+fT
+fT
+xI
+EU
+DG
+xI
+xI
+xI
+xI
+fT
+wd
+At
+aF
+TB
+mR
+Ia
+wd
+fT
+xI
+xI
+ta
+cA
+sZ
+xI
+xI
+fT
+fT
+fT
+xI
+xI
+xI
+UA
+xI
+xI
+lG
+Gf
+Gf
+Gf
+Gf
+Vl
+Gf
+Gf
+Gf
+"}
+(24,1,1) = {"
+Xe
+ek
+Gf
+Gf
+Gf
+Gf
+pa
+xI
+Bg
+xI
+lG
+Gf
+Gf
+Gf
+mw
+wd
+wd
+Fb
+wd
+wd
+Sg
+Gf
+Gf
+pa
+xI
+KR
+xI
+lG
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+xI
+sU
+xI
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+"}
+(25,1,1) = {"
+Xe
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Xe
+CC
+Xe
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+xI
+MK
+xI
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+da
+xI
+UA
+xI
+JJ
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+"}
+(26,1,1) = {"
+Xe
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Xe
+CC
+Xe
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+xI
+KR
+xI
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+xI
+ES
+OH
+iP
+xI
+Gf
+Gf
+Gf
+Gf
+Qn
+Qn
+Qn
+Qn
+Qn
+"}
+(27,1,1) = {"
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Xe
+CC
+Xe
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Ir
+Dx
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Ir
+xI
+qE
+OH
+ci
+xI
+Gf
+Gf
+Gf
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+"}
+(28,1,1) = {"
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Xe
+CC
+Xe
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+rp
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+WH
+Gf
+Gf
+Gf
+Gf
+Gf
+jN
+qg
+xI
+nH
+OH
+vT
+xI
+Gf
+Gf
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+"}
+(29,1,1) = {"
+Qn
+Qn
+Qn
+Qn
+Qn
+Gf
+Gf
+Xe
+Vl
+Xe
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+rp
+CC
+CC
+CC
+CC
+CC
+CC
+WH
+Gf
+Gf
+Gf
+Gf
+Gf
+wg
+rJ
+xI
+pU
+OH
+fi
+xI
+Gf
+Gf
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+"}
+(30,1,1) = {"
+Qn
+Qn
+Qn
+Qn
+Qn
+Gf
+Gf
+Xe
+Gf
+Xe
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+rp
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+WH
+Gf
+jN
+hh
+Gf
+Gf
+wg
+Gf
+pa
+xI
+bB
+xI
+lG
+Gf
+Gf
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+"}
+(31,1,1) = {"
+Qn
+Qn
+Qn
+Qn
+Qn
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+rJ
+WH
+Gf
+Mv
+JH
+CG
+CG
+MB
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+"}
+(32,1,1) = {"
+Qn
+Qn
+Qn
+Qn
+Qn
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+WH
+Gf
+Gx
+MB
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+"}
+(33,1,1) = {"
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Gf
+Gf
+Ir
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+qh
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+pu
+Gf
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+"}
+(34,1,1) = {"
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Gf
+Gf
+kY
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+WH
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+jQ
+Gf
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+"}
+(35,1,1) = {"
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Gf
+Gf
+kY
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+WH
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+jQ
+Gf
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+"}
+(36,1,1) = {"
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Gf
+Gf
+rJ
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+qh
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+ek
+Gf
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+"}
+(37,1,1) = {"
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+WH
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Gf
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+"}
+(38,1,1) = {"
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Gf
+Gf
+Ir
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+qh
+qh
+qh
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+CE
+pu
+Gf
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+"}
+(39,1,1) = {"
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Gf
+Gf
+kY
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+WH
+Gf
+WH
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+jQ
+Gf
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+"}
+(40,1,1) = {"
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Gf
+Gf
+kY
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+WH
+Gf
+WH
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+jQ
+Gf
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+"}
+(41,1,1) = {"
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Gf
+Gf
+rJ
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+qh
+Gf
+qh
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+hc
+ek
+Gf
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+Qn
+"}

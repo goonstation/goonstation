@@ -1,0 +1,32 @@
+"a" = (/turf/space,/area/noGenerate)
+"b" = (/obj/decal/floatingtiles{icon_state = "floattiles2"},/obj/decal/fakeobjects/firelock_broken{desc = "Rust has rendered this airlock useless."; icon = 'icons/misc/hstation.dmi'; icon_state = "bloodydoor"; name = "broken airlock"},/turf/simulated/floor/airless/plating/damaged2,/area/abandonedship)
+"e" = (/obj/decal/fakeobjects/pipe{desc = "Part of a system for hauling oversized crates."; dir = 10; name = "actuating frame"},/turf/space,/area/noGenerate)
+"g" = (/turf/simulated/shuttle/wall{dir = 1; icon_state = "wall3_space"},/area/abandonedship)
+"q" = (/obj/item/storage/secure/ssafe/pilot_cargo1{pixel_y = 32},/obj/decal/skeleton{desc = "Rest in peace."; icon = 'icons/misc/hstation.dmi'; icon_state = "body8"; name = "dead pilot"},/turf/simulated/floor/airless/plating/damaged1,/area/abandonedship)
+"r" = (/obj/decal/fakeobjects/pipe{desc = "Part of a system for hauling oversized crates."; dir = 9; name = "actuating frame"},/obj/decal/fakeobjects/shuttleengine{desc = "An electromagnetic clamping mechanism for hauling large cargo containers."; name = "mag-clamps"},/obj/lattice{icon_state = "lattice-dir"},/turf/space,/area/abandonedship)
+"u" = (/obj/decal/fakeobjects/shuttlethruster,/turf/space,/area/abandonedship)
+"x" = (/obj/decal/fakeobjects/pipe{desc = "Part of a system for hauling oversized crates."; dir = 5; name = "actuating frame"},/turf/space,/area/noGenerate)
+"y" = (/obj/decal/cleanable/dirt,/obj/computerframe,/turf/simulated/floor/airless/plating/damaged1,/area/abandonedship)
+"A" = (/obj/decal/fakeobjects/pipe{desc = "Part of a system for hauling oversized crates."; dir = 9; name = "actuating frame"},/turf/space,/area/noGenerate)
+"C" = (/obj/decal/cleanable/oil,/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/abandonedship)
+"E" = (/obj/decal/cleanable/robot_debris,/turf/simulated/floor/airless/damaged5,/area/abandonedship)
+"F" = (/obj/item/clothing/under/gimmick/snazza,/obj/item/reagent_containers/glass/bottle/ammonia/large,/obj/storage/crate{name = "Dented Crate"},/turf/simulated/floor/airless/damaged2,/area/abandonedship)
+"G" = (/obj/decal/fakeobjects/pipe{desc = "Part of a system for hauling oversized crates."; dir = 6; name = "actuating frame"},/turf/space,/area/noGenerate)
+"I" = (/obj/lattice,/obj/structure/girder/displaced,/turf/simulated/floor/airless/damaged5,/area/abandonedship)
+"J" = (/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/abandonedship)
+"K" = (/obj/decal/fakeobjects/pipe{desc = "Part of a system for hauling oversized crates."; dir = 9; name = "actuating frame"},/obj/decal/fakeobjects/pipe{desc = "Part of a system for hauling oversized crates."; dir = 9; name = "actuating frame"},/turf/space,/area/noGenerate)
+"L" = (/obj/item/seed/alien,/turf/simulated/floor/airless/damaged5,/area/abandonedship)
+"N" = (/turf/simulated/shuttle/wall{dir = 8; icon_state = "wall3_space"},/area/abandonedship)
+"Q" = (/turf/simulated/floor/airless/damaged3,/area/abandonedship)
+"T" = (/obj/decal/cleanable/dirt,/obj/item/electronics/capacitor,/obj/item/light/tube/blacklight,/obj/item/card_group/stg,/obj/storage/crate{name = "Dented Crate"},/turf/simulated/floor/airless/plating/damaged2,/area/abandonedship)
+"V" = (/obj/decal/fakeobjects/pipe{desc = "Part of a system for hauling oversized crates."; dir = 5; name = "actuating frame"},/obj/decal/fakeobjects/shuttleengine{desc = "An electromagnetic clamping mechanism for hauling large cargo containers."; name = "mag-clamps"},/obj/lattice{icon_state = "lattice-dir"},/turf/space,/area/abandonedship)
+
+(1,1,1) = {"
+aaNJJgaa
+aNJqyJga
+GVJEQJre
+aAJFIbxa
+aNCTLJga
+GVCJJJre
+aKuuuuxa
+"}

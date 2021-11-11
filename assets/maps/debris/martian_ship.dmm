@@ -1,0 +1,3576 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ah" = (
+/obj/lattice,
+/turf/simulated/martian/floor,
+/area/evilreaver/security)
+"ak" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/machinery/checkpointbot,
+/obj/map/light/screen,
+/turf/simulated/floor/white,
+/area/evilreaver/genetics)
+"az" = (
+/obj/overlay{
+	desc = "Gross.";
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/overlay{
+	desc = "Gross.";
+	dir = 4;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/decal/cleanable/machine_debris,
+/turf/simulated/martian/floor,
+/area/evilreaver/security)
+"aC" = (
+/obj/npc/trader/martian,
+/obj/map/light/dimred,
+/turf/simulated/floor/plating/damaged3,
+/area/martian_trader)
+"aN" = (
+/turf/simulated/martian/wall,
+/area/evilreaver/storage/tools)
+"be" = (
+/turf/simulated/martian/wall{
+	dir = 5;
+	icon_state = "diagonalWall"
+	},
+/area/evilreaver/storage/tools)
+"bw" = (
+/obj/storage/closet/coffin,
+/turf/simulated/floor/carpet/grime,
+/area/evilreaver/chapel)
+"bB" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 1;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/overlay{
+	desc = "Gross.";
+	dir = 4;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/item/card/id/security{
+	assignment = "Security Officer";
+	name = "#1900494 (Security Officer)";
+	registered = "#1900494"
+	},
+/turf/simulated/floor/plating/damaged2,
+/area/evilreaver/atmospherics)
+"bE" = (
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/thousand,
+/obj/item/clothing/suit/cardboard_box/captain,
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/bridge)
+"bN" = (
+/obj/storage/crate,
+/obj/item/clothing/head/genki,
+/obj/item/clothing/head/genki,
+/obj/item/storage/rockit,
+/obj/item/raw_material/miracle,
+/obj/item/clothing/suit/space/suv,
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
+"ci" = (
+/obj/decal/fakeobjects/lighttube_broken{
+	dir = 4
+	},
+/obj/landmark/artifact,
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/bridge)
+"cr" = (
+/turf/simulated/martian/wall{
+	dir = 5;
+	icon_state = "diagonalWall"
+	},
+/area/evilreaver/bridge)
+"ct" = (
+/turf/simulated/martian/wall{
+	dir = 8;
+	icon_state = "diagonalWall"
+	},
+/area/space)
+"cv" = (
+/obj/joeq/spooky,
+/turf/simulated/wall/r_wall{
+	icon = 'icons/misc/evilreaverstation.dmi';
+	icon_state = "old_rwall"
+	},
+/area/evilreaver/bar)
+"cC" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 8;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/overlay{
+	desc = "Gross.";
+	dir = 1;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/simulated/martian/floor,
+/area/martian_trader)
+"cI" = (
+/obj/critter/martian/psychic/dead,
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
+"cK" = (
+/obj/lattice,
+/obj/crevice{
+	pixel_y = 30
+	},
+/obj/overlay{
+	desc = "Gross.";
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/simulated/martian/floor,
+/area/evilreaver/security)
+"cO" = (
+/obj/overlay{
+	desc = "Gross.";
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/machinery/door/airlock/classic{
+	name = "rusty airlock"
+	},
+/turf/simulated/bar,
+/area/evilreaver/bar)
+"cU" = (
+/obj/computerframe{
+	anchored = 1;
+	desc = "It is highly unlikely that this still works.";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "datamedb";
+	name = "smashed computer"
+	},
+/obj/map/light/screen,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/security)
+"da" = (
+/obj/item/cable_coil/cut{
+	icon_state = "coil1"
+	},
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/chapel)
+"dt" = (
+/turf/simulated/martian/wall{
+	dir = 1;
+	icon_state = "diagonalWall"
+	},
+/area/evilreaver/bridge)
+"dz" = (
+/obj/decal/fakeobjects/teleport_pad,
+/obj/map/light/dimred,
+/obj/marker/supplymarker,
+/turf/simulated/floor/plating/damaged3,
+/area/martian_trader)
+"dO" = (
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/genetics)
+"dR" = (
+/obj/lattice,
+/turf/simulated/martian/floor,
+/area/martian_trader)
+"eh" = (
+/turf/simulated/floor/plating/damaged1,
+/area/evilreaver/genetics)
+"ep" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 4;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/overlay{
+	desc = "Gross.";
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/overlay{
+	desc = "Gross.";
+	dir = 1;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/simulated/martian/floor,
+/area/martian_trader)
+"eC" = (
+/obj/machinery/door/unpowered/martian,
+/turf/simulated/martian/floor,
+/area/evilreaver/atmospherics)
+"eE" = (
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gib4"
+	},
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
+"eO" = (
+/turf/simulated/martian/wall,
+/area/evilreaver/chapel)
+"fb" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/red/side,
+/area/evilreaver/security)
+"ft" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 1;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/critter/martian/soldier,
+/turf/simulated/floor/carpet/grime,
+/area/evilreaver/chapel)
+"fv" = (
+/obj/item/clothing/under/misc/atmospheric_technician,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/atmospherics)
+"fA" = (
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibmid3"
+	},
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/atmospherics)
+"fS" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 4;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/item/cigbutt,
+/obj/item/cigpacket,
+/obj/item/cigpacket,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/bar)
+"gf" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Some manner of martian gizmo.  Or possibly a doodad.  You aren't an expert.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "martian-1";
+	name = "martian machine"
+	},
+/turf/simulated/martian/floor,
+/area/evilreaver/security)
+"gm" = (
+/obj/lattice,
+/obj/decal/fakeobjects/pipe,
+/turf/simulated/martian/floor,
+/area/evilreaver/security)
+"gn" = (
+/obj/decal/fakeobjects/lighttube_broken,
+/turf/simulated/floor/white,
+/area/evilreaver/genetics)
+"gq" = (
+/obj/table/auto,
+/obj/item/storage/box/vialbox,
+/obj/item/reagent_containers/dropper,
+/turf/simulated/floor/white,
+/area/evilreaver/genetics)
+"gt" = (
+/obj/critter/martian/warrior/dead,
+/turf/simulated/floor/plating/damaged1,
+/area/evilreaver/atmospherics)
+"gX" = (
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/storage/tools)
+"hk" = (
+/obj/critter/martian/soldier/dead,
+/turf/simulated/martian/floor,
+/area/evilreaver/storage/tools)
+"hp" = (
+/obj/lattice,
+/obj/decal/fakeobjects/pipe,
+/obj/critter/martian/psychic,
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
+"hM" = (
+/turf/simulated/martian/wall{
+	dir = 6;
+	icon_state = "diagonalWall"
+	},
+/area/space)
+"hR" = (
+/turf/simulated/martian/wall,
+/area/evilreaver/atmospherics)
+"hS" = (
+/obj/lattice,
+/obj/overlay{
+	desc = "Gross.";
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/simulated/martian/floor,
+/area/evilreaver/storage/tools)
+"hU" = (
+/obj/critter/martian/warrior,
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
+"il" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/simulated/martian/wall{
+	dir = 4;
+	icon_state = "diagonalWall"
+	},
+/area/evilreaver/storage/tools)
+"im" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 4;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gib4"
+	},
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
+"in" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 1;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/simulated/martian/floor,
+/area/evilreaver/storage/tools)
+"iC" = (
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
+"iE" = (
+/obj/overlay{
+	desc = "Gross.";
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/lattice,
+/obj/decal/fakeobjects/pipe,
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
+"iP" = (
+/obj/decal/cleanable/oil,
+/obj/item/clothing/suit/space/old,
+/obj/item/clothing/head/helmet/space/old,
+/obj/storage/crate,
+/turf/simulated/floor/plating/damaged3,
+/area/martian_trader)
+"iQ" = (
+/obj/decal/fakeobjects/lighttube_broken,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/red/side,
+/area/evilreaver/security)
+"ji" = (
+/obj/lattice,
+/turf/simulated/floor/plating{
+	icon_state = ""
+	},
+/area/evilreaver/genetics)
+"jn" = (
+/obj/machinery/door/airlock/classic{
+	name = "rusty airlock"
+	},
+/turf/simulated/floor/plating/damaged3,
+/area/martian_trader)
+"jo" = (
+/obj/critter/martian/psychic,
+/turf/simulated/martian/floor,
+/area/evilreaver/security)
+"jy" = (
+/obj/decal/aliencomputer{
+	pixel_x = -32
+	},
+/obj/overlay{
+	desc = "Gross.";
+	dir = 4;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/storage/crate/loot,
+/turf/simulated/martian/floor,
+/area/martian_trader)
+"jD" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 4;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/item/raw_material/shard/glass,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/chapel)
+"jL" = (
+/obj/item/rods/steel,
+/obj/decal/fakeobjects/lighttube_broken,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/storage/tools)
+"jN" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/red/side{
+	dir = 9
+	},
+/area/evilreaver/security)
+"jQ" = (
+/turf/simulated/wall/asteroid{
+	dir = 1
+	},
+/area/noGenerate)
+"jS" = (
+/turf/simulated/martian/wall,
+/area/space)
+"kt" = (
+/turf/simulated/martian/wall{
+	dir = 8;
+	icon_state = "diagonalWall"
+	},
+/area/evilreaver/chapel)
+"kv" = (
+/obj/overlay{
+	desc = "Gross.";
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/simulated/martian/floor,
+/area/evilreaver/storage/tools)
+"ld" = (
+/turf/simulated/martian/wall{
+	dir = 5;
+	icon_state = "diagonalWall"
+	},
+/area/martian_trader)
+"lk" = (
+/turf/simulated/martian/wall{
+	dir = 1;
+	icon_state = "diagonalWall"
+	},
+/area/space)
+"lO" = (
+/obj/decal/woodclutter,
+/obj/overlay{
+	icon = 'icons/misc/beach.dmi';
+	icon_state = "crab";
+	name = "crab"
+	},
+/turf/simulated/martian/floor,
+/area/martian_trader)
+"lQ" = (
+/turf/simulated/martian/wall{
+	dir = 4;
+	icon_state = "diagonalWall"
+	},
+/area/evilreaver/storage/tools)
+"lR" = (
+/obj/crevice{
+	pixel_x = -28
+	},
+/obj/overlay{
+	desc = "Gross.";
+	dir = 4;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/lattice,
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
+"ma" = (
+/obj/overlay{
+	desc = "Gross.";
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/overlay{
+	desc = "Gross.";
+	dir = 8;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/item/photo/beepsky1{
+	desc = "You can see a securitron on the photo.  Looks kinda familiar. It appears to be holding a \"#1 Son\" mug.  Is...is that a young Officer Beepsky?"
+	},
+/turf/simulated/bar,
+/area/evilreaver/bar)
+"mk" = (
+/obj/decal/aliencomputer,
+/obj/map/light/dimred,
+/turf/simulated/martian/wall,
+/area/evilreaver/security)
+"mo" = (
+/obj/decal/cleanable/blood/splatter,
+/turf/simulated/floor/white,
+/area/evilreaver/genetics)
+"mq" = (
+/turf/simulated/floor/white,
+/area/evilreaver/genetics)
+"mB" = (
+/obj/decal/cleanable/fungus,
+/turf/simulated/wall/r_wall{
+	icon = 'icons/misc/evilreaverstation.dmi';
+	icon_state = "old_rwall"
+	},
+/area/evilreaver/genetics)
+"mK" = (
+/obj/overlay{
+	desc = "Gross.";
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/martian_trader)
+"mN" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "gibbl2"
+	},
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/genetics)
+"nb" = (
+/obj/critter/martian/warrior/dead,
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/atmospherics)
+"nn" = (
+/obj/critter/martian/soldier,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/storage/tools)
+"nw" = (
+/obj/structure/girder/reinforced,
+/turf/simulated/floor/plating/damaged1,
+/area/evilreaver/atmospherics)
+"nT" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 1;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/chapel)
+"ob" = (
+/obj/crevice{
+	pixel_y = 30
+	},
+/obj/overlay{
+	desc = "Gross.";
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/overlay{
+	desc = "Gross.";
+	dir = 8;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/simulated/martian/floor,
+/area/martian_trader)
+"oj" = (
+/obj/rack,
+/obj/item/storage/firstaid/regular,
+/turf/simulated/floor/white,
+/area/evilreaver/genetics)
+"oC" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/simulated/martian/wall,
+/area/evilreaver/storage/tools)
+"oE" = (
+/obj/decal/fakeobjects/apc_broken,
+/turf/simulated/wall/r_wall{
+	icon = 'icons/misc/evilreaverstation.dmi';
+	icon_state = "old_rwall"
+	},
+/area/evilreaver/genetics)
+"oG" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 8;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/martian_trader)
+"pe" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/simulated/martian/wall{
+	dir = 1;
+	icon_state = "diagonalWall"
+	},
+/area/evilreaver/storage/tools)
+"pj" = (
+/turf/simulated/wall/r_wall{
+	icon = 'icons/misc/evilreaverstation.dmi';
+	icon_state = "old_rwall"
+	},
+/area/evilreaver/atmospherics)
+"pl" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 1;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/overlay{
+	desc = "Gross.";
+	dir = 8;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/critter/martian/warrior,
+/turf/simulated/martian/floor,
+/area/evilreaver/storage/tools)
+"py" = (
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gib3"
+	},
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibup1"
+	},
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/bridge)
+"pH" = (
+/obj/lattice,
+/obj/decal/cleanable/machine_debris,
+/obj/critter/martian/warrior,
+/turf/simulated/martian/floor,
+/area/evilreaver/security)
+"pQ" = (
+/obj/stool/chair/syndicate,
+/obj/decal/cleanable/blood/tracks{
+	dir = 6
+	},
+/turf/simulated/floor/white,
+/area/evilreaver/genetics)
+"pT" = (
+/obj/lattice,
+/obj/decal/fakeobjects/pipe,
+/turf/simulated/floor/plating/damaged2,
+/area/evilreaver/atmospherics)
+"pX" = (
+/obj/landmark/artifact,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/storage/tools)
+"qc" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/obj/critter/martian/warrior,
+/turf/simulated/martian/floor,
+/area/evilreaver/storage/tools)
+"ql" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/obj/overlay{
+	desc = "Gross.";
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/simulated/martian/floor,
+/area/evilreaver/storage/tools)
+"qr" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/obj/lattice,
+/turf/simulated/martian/floor,
+/area/evilreaver/storage/tools)
+"qB" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Some type of martian gewgaw, perhaps a gimcrack or bauble.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "martian-3";
+	name = "martian machine"
+	},
+/obj/overlay{
+	desc = "Gross.";
+	dir = 1;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/simulated/martian/floor,
+/area/evilreaver/chapel)
+"qK" = (
+/obj/decal/cleanable/blood/tracks,
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/genetics)
+"qL" = (
+/obj/lattice,
+/obj/overlay{
+	desc = "Gross.";
+	dir = 8;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/critter/martian/warrior/dead,
+/turf/simulated/martian/floor,
+/area/evilreaver/security)
+"qX" = (
+/obj/overlay{
+	desc = "The corpse of a long dead space thing.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "marscorpse";
+	name = "dead martian"
+	},
+/obj/item/cigbutt,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/bar)
+"rd" = (
+/obj/overlay{
+	desc = "Gross.";
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/lattice,
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/obj/item/furniture_parts/rack,
+/obj/item/wirecutters,
+/turf/simulated/martian/floor,
+/area/evilreaver/storage/tools)
+"rj" = (
+/obj/item/cable_coil/cut{
+	icon_state = "coil1"
+	},
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/security)
+"rs" = (
+/obj/overlay{
+	desc = "Gross.";
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/storage/closet/coffin,
+/obj/item/aiboss_tape/martian,
+/turf/simulated/floor/carpet/grime,
+/area/evilreaver/chapel)
+"rt" = (
+/obj/item/beach_ball,
+/turf/simulated/martian/floor,
+/area/martian_trader)
+"rB" = (
+/obj/item/storage/secure/ssafe{
+	configure_mode = 0;
+	desc = "A tough, airtight safe.";
+	name = "hermetically-sealed safe";
+	pixel_x = -4;
+	pixel_y = 30;
+	random_code = 1;
+	spawn_contents = list(/obj/item/ammo/bullets/rifle_3006,/obj/item/reagent_containers/food/snacks/pizza/mushroom,/obj/item/reagent_containers/food/snacks/pizza/pepperoni)
+	},
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
+"rC" = (
+/obj/machinery/door/unpowered/martian,
+/obj/lattice,
+/turf/simulated/martian/floor,
+/area/evilreaver/chapel)
+"rF" = (
+/turf/simulated/martian/wall{
+	dir = 5;
+	icon_state = "diagonalWall"
+	},
+/area/evilreaver/security)
+"rT" = (
+/obj/machinery/door/airlock/classic{
+	name = "rusty airlock"
+	},
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/genetics)
+"rZ" = (
+/obj/lattice,
+/obj/critter/martian/warrior/dead,
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
+"st" = (
+/obj/decal/cleanable/dirt,
+/obj/computerframe{
+	anchored = 1;
+	desc = "It is highly unlikely that this still works.";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "datamedb";
+	name = "smashed computer"
+	},
+/obj/map/light/screen,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/atmospherics)
+"sJ" = (
+/turf/simulated/martian/wall,
+/area/evilreaver/genetics)
+"sP" = (
+/obj/table/auto,
+/obj/overlay{
+	desc = "Gross.";
+	dir = 4;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/item/storage/box/donkpocket_kit,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/bar)
+"tb" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/simulated/martian/floor,
+/area/evilreaver/storage/tools)
+"te" = (
+/obj/lattice,
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
+"ti" = (
+/obj/item/paper/thermal{
+	info = "Leslie, what the hell were you thinking, leaving the ammo out like that?  Do you actually want the rifle to shoot rather than blow up in your face? Instead of leaving it under a pile of rusted scrap, I put it away where the humidity won't ruin the cartridges. I'll show you where after the next pizza run.";
+	name = "scribbled note"
+	},
+/obj/decal/fakeobjects/robot,
+/obj/decal/cleanable/oil,
+/turf/simulated/floor/plating/damaged3,
+/area/martian_trader)
+"ts" = (
+/obj/decal/fakeobjects/oldcanister,
+/obj/lattice,
+/obj/overlay{
+	desc = "Gross.";
+	dir = 8;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/simulated/martian/floor,
+/area/evilreaver/atmospherics)
+"tF" = (
+/obj/storage/crate,
+/obj/overlay{
+	desc = "Gross.";
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/item/stamp,
+/obj/item/emeter,
+/obj/lattice,
+/obj/item/parts/robot_parts/head/antique,
+/obj/item/parts/robot_parts/head/antique,
+/turf/simulated/martian/floor,
+/area/martian_trader)
+"tI" = (
+/turf/simulated/martian/wall{
+	dir = 8;
+	icon_state = "diagonalWall"
+	},
+/area/evilreaver/security)
+"tK" = (
+/obj/decal/cleanable/blood,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/genetics)
+"tQ" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/evilreaver/genetics)
+"ug" = (
+/obj/decal/fakeobjects/apc_broken,
+/turf/simulated/wall/r_wall{
+	icon = 'icons/misc/evilreaverstation.dmi';
+	icon_state = "old_rwall"
+	},
+/area/evilreaver/bridge)
+"uA" = (
+/turf/simulated/martian/floor,
+/area/evilreaver/storage/tools)
+"uG" = (
+/turf/simulated/martian/floor,
+/area/evilreaver/chapel)
+"uQ" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Okay, you're pretty sure that even the martians didn't know what this thing is.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "martian-4";
+	name = "martian machine"
+	},
+/obj/overlay{
+	desc = "Gross.";
+	dir = 1;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/simulated/martian/floor,
+/area/martian_trader)
+"vg" = (
+/turf/simulated/martian/wall,
+/area/evilreaver/bridge)
+"vk" = (
+/obj/decal/cleanable/blood/splatter,
+/obj/rack,
+/obj/item/storage/firstaid/fire,
+/turf/simulated/floor/white,
+/area/evilreaver/genetics)
+"vn" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/bar,
+/area/evilreaver/bar)
+"vt" = (
+/turf/simulated/wall/r_wall{
+	icon = 'icons/misc/evilreaverstation.dmi';
+	icon_state = "old_rwall"
+	},
+/area/evilreaver/chapel)
+"vD" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/red/side{
+	dir = 10
+	},
+/area/evilreaver/security)
+"vO" = (
+/obj/item/cable_coil/cut,
+/turf/simulated/floor/plating/damaged3,
+/area/martian_trader)
+"vR" = (
+/obj/overlay{
+	density = 1;
+	desc = "";
+	dir = 4;
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "help";
+	layer = 6;
+	name = "blood"
+	},
+/turf/simulated/wall/r_wall{
+	icon = 'icons/misc/evilreaverstation.dmi';
+	icon_state = "old_rwall"
+	},
+/area/evilreaver/genetics)
+"wp" = (
+/turf/simulated/martian/wall{
+	dir = 4;
+	icon_state = "diagonalWall"
+	},
+/area/martian_trader)
+"ww" = (
+/obj/overlay{
+	desc = "Gross.";
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/item/clothing/suit/space/old,
+/obj/item/clothing/head/helmet/space/old,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/storage/tools)
+"wB" = (
+/obj/decal/skeleton,
+/obj/decal/cleanable/blood,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/genetics)
+"wC" = (
+/obj/crevice{
+	pixel_x = -28
+	},
+/obj/overlay{
+	desc = "Gross.";
+	dir = 4;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/simulated/martian/floor,
+/area/evilreaver/security)
+"xa" = (
+/turf/space,
+/area/allowGenerate)
+"xg" = (
+/obj/decal/fakeobjects/airmonitor_broken,
+/turf/simulated/wall/r_wall{
+	icon = 'icons/misc/evilreaverstation.dmi';
+	icon_state = "old_rwall"
+	},
+/area/evilreaver/storage/tools)
+"xh" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 4;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/simulated/martian/floor,
+/area/martian_trader)
+"xw" = (
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/security)
+"xy" = (
+/turf/simulated/martian/wall{
+	dir = 8;
+	icon_state = "diagonalWall"
+	},
+/area/martian_trader)
+"xz" = (
+/turf/simulated/martian/wall{
+	dir = 6;
+	icon_state = "diagonalWall"
+	},
+/area/evilreaver/bar)
+"xL" = (
+/obj/lattice,
+/obj/critter/martian/warrior/dead,
+/turf/simulated/martian/floor,
+/area/evilreaver/storage/tools)
+"xN" = (
+/obj/crevice{
+	pixel_x = -28
+	},
+/obj/overlay{
+	desc = "Gross.";
+	dir = 4;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/decal/fakeobjects/oldcanister/plasma,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/atmospherics)
+"yc" = (
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/atmospherics)
+"ym" = (
+/turf/simulated/martian/wall,
+/area/martian_trader)
+"yu" = (
+/turf/simulated/martian/wall{
+	dir = 8;
+	icon_state = "diagonalWall"
+	},
+/area/evilreaver/storage/tools)
+"yA" = (
+/obj/lattice,
+/obj/overlay{
+	desc = "Gross.";
+	dir = 4;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
+"yJ" = (
+/obj/decal/cleanable/oil,
+/turf/simulated/floor/white,
+/area/evilreaver/genetics)
+"yT" = (
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibmid1"
+	},
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/atmospherics)
+"yW" = (
+/obj/lattice,
+/obj/decal/fakeobjects/pipe,
+/obj/critter/martian/soldier/dead,
+/turf/simulated/floor/plating/damaged2,
+/area/evilreaver/atmospherics)
+"zc" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 1;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/item/storage/toolbox/mechanical,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/storage/tools)
+"zm" = (
+/obj/critter/martian/psychic/dead,
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/bridge)
+"zr" = (
+/obj/item/furniture_parts/table,
+/obj/item/furniture_parts/table,
+/turf/simulated/martian/floor,
+/area/martian_trader)
+"zE" = (
+/obj/lattice,
+/obj/overlay{
+	desc = "Gross.";
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/decal/fakeobjects/pipe,
+/turf/simulated/martian/floor,
+/area/evilreaver/security)
+"zG" = (
+/obj/map/light/white,
+/turf/simulated/martian/wall,
+/area/martian_trader)
+"zR" = (
+/turf/simulated/martian/wall{
+	dir = 1;
+	icon_state = "diagonalWall"
+	},
+/area/martian_trader)
+"zU" = (
+/obj/decal/cleanable/machine_debris,
+/obj/critter/martian/warrior/dead,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/atmospherics)
+"zZ" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/simulated/martian/wall{
+	dir = 8;
+	icon_state = "diagonalWall"
+	},
+/area/evilreaver/atmospherics)
+"An" = (
+/turf/simulated/martian/wall{
+	dir = 4;
+	icon_state = "diagonalWall"
+	},
+/area/space)
+"AA" = (
+/obj/securearea{
+	desc = "A warning sign which reads 'Biohazard'";
+	icon_state = "bio";
+	layer = 2.5;
+	name = "BIOHAZARD"
+	},
+/turf/simulated/wall/r_wall{
+	icon = 'icons/misc/evilreaverstation.dmi';
+	icon_state = "old_rwall"
+	},
+/area/evilreaver/genetics)
+"AC" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 8;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/lattice,
+/obj/decal/fakeobjects/pipe,
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gib6"
+	},
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibarm"
+	},
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
+"AI" = (
+/obj/computerframe{
+	anchored = 1;
+	desc = "It is highly unlikely that this still works.";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "datamedb";
+	name = "smashed computer"
+	},
+/obj/decal/cleanable/dirt,
+/obj/map/light/screen,
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/bridge)
+"Bc" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 8;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/decal/aliencomputer{
+	pixel_x = 32
+	},
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/martian_trader)
+"Bj" = (
+/obj/critter/martian/soldier,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/security)
+"Bl" = (
+/obj/lattice,
+/obj/critter/martian/soldier/dead,
+/turf/simulated/martian/floor,
+/area/evilreaver/chapel)
+"Bp" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/simulated/floor/plating/damaged2,
+/area/evilreaver/atmospherics)
+"Bq" = (
+/obj/decal/cleanable/cobweb2,
+/obj/item/scrap,
+/obj/landmark/artifact,
+/turf/simulated/floor/plating/damaged3,
+/area/martian_trader)
+"Bu" = (
+/obj/lattice,
+/turf/simulated/martian/floor,
+/area/evilreaver/chapel)
+"Bz" = (
+/obj/decal/cleanable/machine_debris,
+/turf/simulated/martian/floor,
+/area/evilreaver/storage/tools)
+"BB" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/simulated/martian/wall,
+/area/evilreaver/atmospherics)
+"BE" = (
+/obj/overlay{
+	desc = "Gross.";
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/lattice,
+/obj/critter/martian/soldier/dead,
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
+"BG" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Some type of martian gewgaw, perhaps a gimcrack or bauble.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "martian-3";
+	name = "martian machine"
+	},
+/obj/overlay{
+	desc = "Gross.";
+	dir = 1;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/lattice,
+/turf/simulated/martian/floor,
+/area/evilreaver/security)
+"BK" = (
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibdown1"
+	},
+/turf/simulated/floor/plating/damaged1,
+/area/evilreaver/atmospherics)
+"BP" = (
+/turf/simulated/wall/r_wall{
+	icon = 'icons/misc/evilreaverstation.dmi';
+	icon_state = "old_rwall"
+	},
+/area/evilreaver/bar)
+"Cl" = (
+/obj/overlay{
+	desc = "Gross.";
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/space,
+/area/noGenerate)
+"Cp" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 1;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/martian_trader)
+"Cy" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 8;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/lattice,
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/simulated/floor/plating/damaged1,
+/area/evilreaver/atmospherics)
+"CJ" = (
+/turf/simulated/martian/wall,
+/area/evilreaver/security)
+"CU" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 1;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/table/auto,
+/obj/overlay{
+	desc = "Gross.";
+	dir = 1;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/simulated/bar,
+/area/evilreaver/bar)
+"CW" = (
+/obj/lattice,
+/obj/decal/fakeobjects/pipe,
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibmid3"
+	},
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/atmospherics)
+"Dk" = (
+/obj/overlay{
+	density = 1;
+	desc = "Looks like a big jet turbine.";
+	icon = 'icons/obj/atmospherics/pipes.dmi';
+	icon_state = "compressor";
+	name = "old busted turbine thingy"
+	},
+/obj/overlay{
+	desc = "Gross.";
+	dir = 8;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/simulated/floor/plating/damaged3,
+/area/martian_trader)
+"Dx" = (
+/obj/crevice{
+	pixel_y = -30
+	},
+/obj/overlay{
+	desc = "Gross.";
+	dir = 4;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/overlay{
+	density = 1;
+	desc = "";
+	dir = 4;
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "clowncar";
+	layer = 6;
+	name = "broken clown car"
+	},
+/obj/overlay{
+	desc = "Gross.";
+	dir = 1;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/simulated/martian/floor,
+/area/evilreaver/storage/tools)
+"Dy" = (
+/obj/item/basketball,
+/obj/item/kitchen/food_box/donut_box,
+/obj/storage/crate{
+	name = "Dented Crate"
+	},
+/obj/crevice{
+	pixel_x = -30
+	},
+/obj/overlay{
+	desc = "Gross.";
+	dir = 4;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/item/coin,
+/obj/item/cigpacket/propuffs,
+/obj/item/cigpacket/propuffs,
+/obj/item/clothing/head/XComHair,
+/turf/simulated/martian/floor,
+/area/martian_trader)
+"DI" = (
+/obj/item/tile/steel,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/genetics)
+"DK" = (
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/martian_trader)
+"DL" = (
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibup1"
+	},
+/obj/critter/martian/soldier/dead,
+/turf/simulated/floor/plating/damaged2,
+/area/evilreaver/atmospherics)
+"DP" = (
+/obj/lattice,
+/obj/decal/cleanable/machine_debris,
+/turf/simulated/martian/floor,
+/area/evilreaver/chapel)
+"DY" = (
+/obj/crevice{
+	pixel_y = 30
+	},
+/obj/overlay{
+	desc = "Gross.";
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/decal/fakeobjects/pipe,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/chapel)
+"Eh" = (
+/obj/lattice,
+/obj/critter/martian/warrior/dead,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/atmospherics)
+"En" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 8;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/security)
+"Ey" = (
+/obj/critter/martian/warrior,
+/turf/simulated/martian/floor,
+/area/evilreaver/storage/tools)
+"EN" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/simulated/martian/wall{
+	dir = 5;
+	icon_state = "diagonalWall"
+	},
+/area/evilreaver/storage/tools)
+"EQ" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 1;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/simulated/martian/floor,
+/area/martian_trader)
+"ER" = (
+/obj/overlay{
+	desc = "Gross.";
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/critter/martian/soldier,
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
+"Fa" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 1;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/space,
+/area/noGenerate)
+"Fb" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 4;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/crevice{
+	pixel_x = -28
+	},
+/obj/item/cigbutt,
+/obj/critter/mouse{
+	name = "Sgt. Pepper"
+	},
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/bar)
+"Fi" = (
+/turf/simulated/wall/asteroid{
+	dir = 6
+	},
+/area/noGenerate)
+"Fq" = (
+/obj/machinery/door/unpowered/martian,
+/obj/lattice,
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
+"Fu" = (
+/obj/lattice,
+/obj/lattice,
+/turf/space,
+/area/noGenerate)
+"FJ" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 8;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/storage/crate/loot,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/storage/tools)
+"FP" = (
+/obj/machinery/door/unpowered/martian,
+/obj/lattice,
+/turf/simulated/martian/floor,
+/area/evilreaver/security)
+"FS" = (
+/obj/lattice,
+/turf/space,
+/area/noGenerate)
+"FV" = (
+/turf/simulated/floor/carpet/grime,
+/area/evilreaver/chapel)
+"FZ" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 4;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gib1"
+	},
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
+"Hc" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/red/side{
+	dir = 8
+	},
+/area/evilreaver/security)
+"HE" = (
+/obj/overlay{
+	desc = "Gross.";
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/critter/martian/soldier/dead,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/security)
+"HK" = (
+/obj/lattice,
+/obj/item/cigbutt,
+/turf/simulated/martian/floor,
+/area/evilreaver/bar)
+"HW" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/obj/overlay{
+	desc = "Gross.";
+	dir = 4;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/computerframe{
+	anchored = 1;
+	desc = "It is highly unlikely that this still works.";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "datamedb";
+	name = "smashed computer"
+	},
+/obj/map/light/screen,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/storage/tools)
+"Ic" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/turf/simulated/floor/plating/damaged1,
+/area/evilreaver/genetics)
+"Ie" = (
+/obj/decal/aliencomputer,
+/obj/map/light/dimred,
+/turf/simulated/martian/wall,
+/area/evilreaver/bridge)
+"Ir" = (
+/turf/simulated/bar,
+/area/evilreaver/bar)
+"IB" = (
+/obj/decal/cleanable/oil,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/red/side{
+	dir = 1
+	},
+/area/evilreaver/security)
+"IF" = (
+/obj/overlay{
+	desc = "Oh.  So THAT'S where he went off to.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "clowncorpse";
+	layer = 4;
+	name = "skeleton"
+	},
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/genetics)
+"IV" = (
+/obj/item/shipcomponent/mainweapon/disruptor_light,
+/turf/space,
+/area/noGenerate)
+"JD" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 9
+	},
+/turf/simulated/floor/white,
+/area/evilreaver/genetics)
+"Kd" = (
+/turf/simulated/martian/wall{
+	dir = 5;
+	icon_state = "diagonalWall"
+	},
+/area/space)
+"Kl" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 1;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/security)
+"KD" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 8;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/critter/martian/psychic/dead,
+/turf/simulated/floor/plating/damaged1,
+/area/evilreaver/atmospherics)
+"KI" = (
+/obj/crevice{
+	pixel_y = 30
+	},
+/obj/table/auto,
+/obj/overlay{
+	desc = "Gross.";
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/item/reagent_containers/glass/bottle/holywater,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/chapel)
+"KN" = (
+/obj/decal/cleanable/oil,
+/turf/simulated/floor/red/side,
+/area/evilreaver/security)
+"KW" = (
+/turf/simulated/wall/r_wall{
+	icon = 'icons/misc/evilreaverstation.dmi';
+	icon_state = "old_rwall"
+	},
+/area/evilreaver/genetics)
+"Lg" = (
+/obj/decal/cleanable/cobweb2,
+/obj/item/storage/box/mousetraps,
+/turf/simulated/floor/white,
+/area/evilreaver/genetics)
+"LP" = (
+/obj/machinery/door/unpowered/martian,
+/turf/simulated/martian/floor,
+/area/martian_trader)
+"Mg" = (
+/turf/space,
+/area/noGenerate)
+"Mo" = (
+/obj/decal/aliencomputer,
+/obj/map/light/dimred,
+/turf/simulated/martian/wall,
+/area/evilreaver/bar)
+"Mw" = (
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibtorso"
+	},
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibleg"
+	},
+/obj/critter/martian/soldier/dead,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/atmospherics)
+"ME" = (
+/turf/simulated/floor/plating/damaged2,
+/area/evilreaver/genetics)
+"MQ" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 4;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/overlay{
+	desc = "Gross.";
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/simulated/martian/floor,
+/area/evilreaver/chapel)
+"MY" = (
+/obj/decal/aliencomputer{
+	pixel_x = 32
+	},
+/obj/overlay{
+	desc = "Gross.";
+	dir = 8;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/lattice,
+/turf/simulated/martian/floor,
+/area/martian_trader)
+"Ng" = (
+/obj/decal/cleanable/cobweb2,
+/obj/storage/crate/loot,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/genetics)
+"Nv" = (
+/turf/simulated/wall/asteroid{
+	dir = 8
+	},
+/area/noGenerate)
+"Nw" = (
+/obj/overlay{
+	desc = "Gross.";
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/lattice,
+/obj/critter/martian/warrior,
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
+"ND" = (
+/obj/overlay{
+	desc = "Gross.";
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/overlay{
+	desc = "Gross.";
+	dir = 1;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/simulated/martian/floor,
+/area/martian_trader)
+"Oe" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 8;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/critter/martian/warrior,
+/turf/simulated/martian/floor,
+/area/evilreaver/security)
+"Ow" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Some manner of martian gizmo.  Or possibly a doodad.  You aren't an expert.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "martian-1";
+	name = "martian machine"
+	},
+/obj/overlay{
+	desc = "Gross.";
+	dir = 1;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/simulated/martian/floor,
+/area/evilreaver/bar)
+"OA" = (
+/obj/table/auto,
+/obj/item/paper/courtroom{
+	name = "paper- 'A Crash Course in Legal SOP"
+	},
+/obj/overlay{
+	desc = "Gross.";
+	dir = 8;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/security)
+"OF" = (
+/turf/simulated/wall/r_wall{
+	icon = 'icons/misc/evilreaverstation.dmi';
+	icon_state = "old_rwall"
+	},
+/area/evilreaver/bridge)
+"OK" = (
+/obj/item/paper/sop,
+/obj/decal/cleanable/dirt,
+/obj/overlay{
+	desc = "Gross.";
+	dir = 4;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/bridge)
+"OQ" = (
+/obj/overlay{
+	desc = "Gross.";
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/lattice,
+/obj/item/device/infra_sensor,
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
+"OR" = (
+/obj/item/old_grenade/banana,
+/obj/item/bananapeel,
+/obj/item/old_grenade/banana,
+/obj/storage/cart/trash,
+/obj/lattice,
+/turf/simulated/martian/floor,
+/area/martian_trader)
+"Pk" = (
+/turf/simulated/martian/wall{
+	dir = 4;
+	icon_state = "diagonalWall"
+	},
+/area/evilreaver/bridge)
+"Pw" = (
+/turf/simulated/martian/floor,
+/area/evilreaver/security)
+"PG" = (
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/chapel)
+"PP" = (
+/obj/storage/crate/loot,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/storage/tools)
+"Qb" = (
+/turf/simulated/martian/wall,
+/area/evilreaver/bar)
+"Qg" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/red/corner{
+	dir = 8
+	},
+/area/evilreaver/security)
+"Qj" = (
+/turf/simulated/martian/wall{
+	dir = 5;
+	icon_state = "diagonalWall"
+	},
+/area/evilreaver/chapel)
+"Qn" = (
+/obj/decal/skeleton,
+/obj/decal/cleanable/blood/splatter,
+/turf/simulated/floor/plating,
+/area/evilreaver/genetics)
+"Qt" = (
+/obj/decal/cleanable/molten_item,
+/obj/decal/cleanable/generic,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/security)
+"QB" = (
+/obj/item/cigbutt,
+/obj/landmark/artifact,
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/security)
+"Rc" = (
+/obj/crevice{
+	pixel_y = 30
+	},
+/obj/overlay{
+	desc = "Gross.";
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/landmark/artifact,
+/obj/lattice,
+/turf/simulated/martian/floor,
+/area/martian_trader)
+"Rl" = (
+/obj/decal/fakeobjects/pipe,
+/obj/critter/martian/psychic,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/chapel)
+"Rv" = (
+/obj/decal/fakeobjects/lighttube_broken{
+	dir = 4
+	},
+/obj/decal/cleanable/molten_item,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/genetics)
+"Rx" = (
+/obj/lattice,
+/obj/decal/fakeobjects/pipe,
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
+"RT" = (
+/obj/overlay{
+	desc = "The corpse of a long dead space thing.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "marscorpse";
+	name = "dead martian"
+	},
+/turf/simulated/bar,
+/area/evilreaver/bar)
+"Sd" = (
+/obj/decal/cleanable/cobweb,
+/obj/decal/cleanable/blood/splatter,
+/obj/storage/crate/loot,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/genetics)
+"Sg" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 4;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/overlay{
+	desc = "Gross.";
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/decal/oven{
+	name = "broken oven"
+	},
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/bar)
+"Sh" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 4;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/space,
+/area/noGenerate)
+"So" = (
+/turf/simulated/wall/r_wall{
+	icon = 'icons/misc/evilreaverstation.dmi';
+	icon_state = "old_rwall"
+	},
+/area/evilreaver/security)
+"SB" = (
+/obj/storage/closet/coffin,
+/obj/item/fish/salmon,
+/obj/item/fish/salmon,
+/obj/item/fish/salmon,
+/obj/item/seed/cannabis,
+/obj/item/seed/cannabis,
+/turf/simulated/martian/floor,
+/area/martian_trader)
+"Tc" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/obj/critter/martian/warrior/dead,
+/turf/simulated/martian/floor,
+/area/evilreaver/storage/tools)
+"Td" = (
+/obj/decal/cleanable/blood/splatter,
+/turf/simulated/wall/r_wall{
+	icon = 'icons/misc/evilreaverstation.dmi';
+	icon_state = "old_rwall"
+	},
+/area/evilreaver/genetics)
+"Te" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 6
+	},
+/turf/simulated/floor/white,
+/area/evilreaver/genetics)
+"Ty" = (
+/obj/lattice,
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/simulated/martian/floor,
+/area/evilreaver/atmospherics)
+"TO" = (
+/obj/decal/cleanable/cobweb,
+/obj/decal/cleanable/machine_debris,
+/turf/simulated/floor/white,
+/area/evilreaver/genetics)
+"TT" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 8;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/space,
+/area/noGenerate)
+"TW" = (
+/turf/simulated/floor/plating/damaged3,
+/area/martian_trader)
+"Uc" = (
+/turf/simulated/martian/floor,
+/area/martian_trader)
+"Uv" = (
+/turf/simulated/martian/wall{
+	dir = 6;
+	icon_state = "diagonalWall"
+	},
+/area/evilreaver/atmospherics)
+"UA" = (
+/obj/critter/martian/soldier/dead,
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/atmospherics)
+"UC" = (
+/obj/critter/martian/soldier/dead,
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
+"UR" = (
+/obj/decal/cleanable/dirt,
+/obj/critter/martian/soldier/dead,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/security)
+"UX" = (
+/obj/decal/cleanable/molten_item,
+/obj/item/tile/steel,
+/obj/item/cigbutt,
+/obj/item/device/light/zippo,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/bar)
+"Vc" = (
+/obj/lattice,
+/obj/decal/fakeobjects/lighttube_broken{
+	dir = 4
+	},
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
+"Vg" = (
+/obj/decal/cleanable/machine_debris,
+/turf/simulated/floor/white,
+/area/evilreaver/genetics)
+"Vp" = (
+/obj/lattice,
+/turf/simulated/martian/floor,
+/area/evilreaver/storage/tools)
+"VP" = (
+/obj/decal/aliencomputer{
+	pixel_y = 32
+	},
+/obj/overlay{
+	desc = "Gross.";
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/lattice,
+/turf/simulated/martian/floor,
+/area/martian_trader)
+"Wa" = (
+/turf/simulated/martian/wall{
+	dir = 8;
+	icon_state = "diagonalWall"
+	},
+/area/evilreaver/bridge)
+"Wm" = (
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/bar)
+"Wo" = (
+/turf/simulated/martian/wall{
+	dir = 4;
+	icon_state = "diagonalWall"
+	},
+/area/evilreaver/security)
+"WG" = (
+/turf/simulated/wall/r_wall{
+	icon = 'icons/misc/evilreaverstation.dmi';
+	icon_state = "old_rwall"
+	},
+/area/evilreaver/storage/tools)
+"WJ" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 1;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/overlay{
+	desc = "Gross.";
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/overlay{
+	desc = "Gross.";
+	dir = 8;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/overlay{
+	desc = "Gross.";
+	dir = 4;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
+"WL" = (
+/turf/simulated/martian/wall{
+	dir = 1;
+	icon_state = "diagonalWall"
+	},
+/area/evilreaver/chapel)
+"WO" = (
+/turf/simulated/wall/r_wall{
+	icon = 'icons/misc/evilreaverstation.dmi';
+	icon_state = "old_rwall"
+	},
+/area/martian_trader)
+"WR" = (
+/obj/critter/martian/psychic/dead,
+/turf/simulated/martian/floor,
+/area/evilreaver/chapel)
+"WS" = (
+/obj/machinery/bot/secbot{
+	control_freq = 1441;
+	desc = "A tattered and rusted security bot,  powered only by nicotine and fury at those who abandoned him here.";
+	emagged = 2;
+	name = "Mr. Beepsky"
+	},
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/bar)
+"Xe" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Some manner of martian experimentation thingamajig.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "martian-2";
+	name = "martian machine"
+	},
+/obj/overlay{
+	desc = "Gross.";
+	dir = 1;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
+"Xg" = (
+/obj/crevice{
+	pixel_x = -28
+	},
+/obj/overlay{
+	desc = "Gross.";
+	dir = 4;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/lattice,
+/obj/item/c_tube,
+/turf/simulated/martian/floor,
+/area/evilreaver/storage/tools)
+"Xn" = (
+/obj/lattice,
+/obj/decal/fakeobjects/pipe,
+/obj/item/raw_material/shard/glass,
+/obj/critter/martian/soldier/dead,
+/turf/simulated/floor/plating/damaged2,
+/area/evilreaver/atmospherics)
+"Xo" = (
+/obj/storage/closet/coffin,
+/turf/simulated/martian/floor,
+/area/evilreaver/chapel)
+"Xq" = (
+/obj/overlay{
+	desc = "Gross.";
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/simulated/martian/floor,
+/area/evilreaver/storage/tools)
+"Xt" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 8;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/item/sheet/glass/reinforced,
+/turf/simulated/floor/plating/damaged3,
+/area/martian_trader)
+"Xu" = (
+/obj/decal/cleanable/oil,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/bar)
+"XR" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 4;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/decal/cleanable/oil,
+/obj/item/cable_coil/cut{
+	icon_state = "coil1"
+	},
+/obj/overlay{
+	desc = "Gross.";
+	dir = 1;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/storage/tools)
+"XS" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 1;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/evilreaver/chapel)
+"XT" = (
+/obj/overlay{
+	desc = "Gross.";
+	dir = 1;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/storage/closet/coffin,
+/obj/item/clothing/head/mario,
+/obj/item/clothing/under/gimmick/mario,
+/turf/simulated/floor/carpet/grime,
+/area/evilreaver/chapel)
+"Yb" = (
+/obj/lattice,
+/turf/space{
+	icon_state = "aplaceholder"
+	},
+/area/noGenerate)
+"Yo" = (
+/obj/machinery/door/airlock/classic{
+	name = "rusty airlock"
+	},
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/chapel)
+"Yu" = (
+/obj/critter/martian/soldier/dead,
+/turf/simulated/martian/floor,
+/area/evilreaver/security)
+"YF" = (
+/obj/decal/fakeobjects/lighttube_broken{
+	dir = 8
+	},
+/obj/decal/cleanable/blood/splatter,
+/turf/simulated/floor/white,
+/area/evilreaver/genetics)
+"YR" = (
+/obj/lattice,
+/obj/critter/martian/soldier,
+/turf/simulated/martian/floor,
+/area/evilreaver/chapel)
+"Za" = (
+/obj/item/cable_coil/cut,
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gib2"
+	},
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibmid2"
+	},
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/bridge)
+"Ze" = (
+/obj/item/tile/steel,
+/turf/simulated/floor/plating/damaged3,
+/area/martian_trader)
+"ZC" = (
+/obj/portrait_sneaky,
+/turf/simulated/wall/r_wall{
+	icon = 'icons/misc/evilreaverstation.dmi';
+	icon_state = "old_rwall"
+	},
+/area/evilreaver/bridge)
+"ZM" = (
+/obj/critter/martian/soldier,
+/turf/simulated/martian/floor,
+/area/evilreaver/chapel)
+"ZV" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/burger/moldy,
+/turf/simulated/floor/red/side{
+	dir = 10
+	},
+/area/evilreaver/security)
+"ZZ" = (
+/obj/decal/fakeobjects/firealarm_broken,
+/turf/simulated/wall/r_wall{
+	icon = 'icons/misc/evilreaverstation.dmi';
+	icon_state = "old_rwall"
+	},
+/area/evilreaver/storage/tools)
+
+(1,1,1) = {"
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+FS
+Mg
+Mg
+Mg
+Mg
+xa
+xa
+xa
+xa
+xa
+xa
+xa
+xa
+"}
+(2,1,1) = {"
+Mg
+Mg
+Mg
+TT
+ct
+Kd
+Mg
+Mg
+Mg
+ct
+Kd
+TT
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+FS
+Mg
+Mg
+Mg
+Mg
+Mg
+xa
+xa
+xa
+xa
+xa
+xa
+xa
+"}
+(3,1,1) = {"
+Mg
+Mg
+Fa
+jS
+jS
+ym
+DK
+DK
+Cp
+ym
+jS
+jS
+Cl
+Mg
+Mg
+Mg
+Mg
+Mg
+Nv
+Mg
+FS
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+xa
+xa
+xa
+"}
+(4,1,1) = {"
+Mg
+Mg
+ct
+jS
+ym
+wp
+DK
+DK
+DK
+zR
+ym
+jS
+Cl
+Mg
+IV
+TT
+Mg
+jQ
+Fi
+FS
+FS
+Yb
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+xa
+xa
+"}
+(5,1,1) = {"
+Mg
+Fa
+jS
+jS
+ym
+mK
+DK
+DK
+DK
+Cp
+ym
+jS
+Kd
+TT
+ct
+jS
+vt
+vt
+vt
+vt
+vt
+BP
+jS
+jS
+jS
+jS
+jS
+jS
+Kd
+TT
+Mg
+Mg
+xa
+"}
+(6,1,1) = {"
+Mg
+Mg
+lk
+jS
+ym
+mK
+DK
+DK
+DK
+uQ
+ym
+jS
+jS
+jS
+jS
+eO
+eO
+rs
+bw
+XT
+eO
+BP
+Qb
+Qb
+Qb
+Qb
+Qb
+Qb
+jS
+jS
+Cl
+Mg
+Mg
+"}
+(7,1,1) = {"
+Mg
+Mg
+Fa
+jS
+ym
+ld
+Bc
+oG
+oG
+xy
+ym
+aN
+aN
+aN
+aN
+eO
+eO
+DY
+Rl
+XS
+eO
+BP
+Mo
+Sg
+Fb
+sP
+xz
+Qb
+Qb
+jS
+Kd
+Mg
+Mg
+"}
+(8,1,1) = {"
+Mg
+Mg
+Fa
+jS
+ym
+ym
+zG
+LP
+ym
+ym
+aN
+aN
+lQ
+Xg
+XR
+rC
+MQ
+uG
+PG
+da
+WL
+BP
+fS
+RT
+Wm
+HK
+UX
+xz
+Qb
+Qb
+jS
+Cl
+Mg
+"}
+(9,1,1) = {"
+Mg
+Mg
+Mg
+lk
+jS
+ym
+ym
+ep
+ym
+ym
+aN
+il
+Bz
+nn
+zc
+eO
+vt
+Bu
+Bl
+YR
+DP
+BP
+WS
+Ir
+Xu
+Wm
+RT
+Ow
+Qb
+Qb
+jS
+Kd
+Mg
+"}
+(10,1,1) = {"
+Mg
+Mg
+Mg
+Mg
+jS
+ym
+wp
+EQ
+ym
+ym
+aN
+rd
+Vp
+jL
+xg
+vt
+vt
+uG
+uG
+uG
+kt
+BP
+ma
+vn
+qX
+Xu
+Ir
+CU
+Qb
+Qb
+Qb
+jS
+Cl
+"}
+(11,1,1) = {"
+Mg
+Mg
+Mg
+ct
+jS
+ym
+ob
+cC
+ym
+ym
+aN
+EN
+hk
+uA
+WG
+vt
+vt
+ZM
+WR
+qB
+eO
+BP
+BP
+BP
+cv
+BP
+cO
+BP
+BP
+Qb
+Qb
+jS
+Cl
+"}
+(12,1,1) = {"
+Mg
+Mg
+Fa
+jS
+ym
+ym
+LP
+ym
+ym
+ym
+WO
+oC
+kv
+Ey
+WG
+vt
+vt
+Xo
+Bu
+DP
+jD
+vt
+vt
+So
+So
+So
+Qt
+ZV
+So
+So
+CJ
+jS
+Cl
+"}
+(13,1,1) = {"
+Mg
+Mg
+ct
+jS
+ym
+wp
+xh
+zR
+zG
+ym
+WO
+HW
+gX
+Vp
+Vp
+pe
+vt
+vt
+Qj
+PG
+PG
+nT
+eO
+CJ
+mk
+Wo
+Pw
+UR
+vD
+So
+CJ
+jS
+Cl
+"}
+(14,1,1) = {"
+Mg
+ct
+jS
+ym
+wp
+lO
+Uc
+Uc
+jy
+Dy
+WO
+WO
+FJ
+Vp
+xL
+tb
+pX
+vt
+eO
+KI
+FV
+ft
+eO
+CJ
+az
+Pw
+Pw
+ah
+Qg
+So
+CJ
+jS
+Cl
+"}
+(15,1,1) = {"
+Fa
+jS
+ym
+ym
+tF
+dR
+dR
+dR
+dR
+dR
+OR
+WO
+aN
+be
+Vp
+Tc
+gX
+vt
+vt
+vt
+Yo
+vt
+eO
+CJ
+zE
+gm
+gm
+cU
+fb
+So
+CJ
+jS
+Cl
+"}
+(16,1,1) = {"
+Fa
+jS
+ym
+zG
+VP
+aC
+TW
+TW
+zr
+Uc
+dz
+WO
+aN
+aN
+ww
+qc
+PP
+WG
+So
+jN
+Hc
+Kl
+CJ
+CJ
+jo
+Pw
+Pw
+Bj
+KN
+So
+CJ
+jS
+Cl
+"}
+(17,1,1) = {"
+Fa
+jS
+ym
+ym
+Rc
+vO
+iP
+Uc
+Uc
+Uc
+rt
+WO
+Dx
+aN
+hS
+qr
+Vp
+WG
+So
+IB
+xw
+BG
+CJ
+Wo
+Pw
+Pw
+Pw
+rj
+iQ
+So
+CJ
+jS
+Cl
+"}
+(18,1,1) = {"
+Mg
+hM
+jS
+WO
+Bq
+Dk
+MY
+SB
+Uc
+Uc
+Ze
+jn
+in
+aN
+be
+tb
+Vp
+ZZ
+So
+OA
+xw
+ah
+wC
+Pw
+Pw
+Bj
+xw
+xw
+QB
+So
+CJ
+jS
+Cl
+"}
+(19,1,1) = {"
+Mg
+Mg
+hM
+WO
+WO
+ym
+zG
+ld
+Uc
+Xt
+ti
+WO
+yu
+aN
+aN
+ql
+in
+aN
+So
+CJ
+HE
+ah
+jo
+Pw
+Yu
+ah
+gf
+So
+So
+So
+CJ
+jS
+Cl
+"}
+(20,1,1) = {"
+Mg
+Mg
+Mg
+KW
+WO
+ym
+ym
+ym
+ND
+ym
+WO
+WO
+aN
+aN
+aN
+Xq
+in
+aN
+So
+CJ
+cK
+ah
+ah
+qL
+En
+Oe
+tI
+So
+CJ
+CJ
+CJ
+jS
+Cl
+"}
+(21,1,1) = {"
+Mg
+Mg
+Mg
+KW
+KW
+KW
+KW
+KW
+rT
+oE
+KW
+KW
+aN
+aN
+aN
+EN
+pl
+aN
+So
+CJ
+rF
+pH
+tI
+mk
+CJ
+FP
+CJ
+So
+CJ
+CJ
+jS
+An
+Mg
+"}
+(22,1,1) = {"
+Mg
+Mg
+Mg
+FS
+KW
+TO
+YF
+dO
+mN
+ME
+mB
+KW
+hR
+hR
+hR
+BB
+eC
+hR
+pj
+OF
+OF
+ug
+OF
+OF
+vg
+WJ
+vg
+OF
+vg
+jS
+An
+Mg
+Mg
+"}
+(23,1,1) = {"
+Mg
+Mg
+Mg
+FS
+KW
+Lg
+DI
+wB
+qK
+IF
+oj
+KW
+xN
+Uv
+UA
+Bp
+bB
+hR
+pj
+vg
+Pk
+iC
+dt
+Ie
+vg
+Fq
+vg
+OF
+vg
+jS
+Cl
+Mg
+Mg
+"}
+(24,1,1) = {"
+Mg
+Mg
+Mg
+FS
+Td
+KW
+dO
+Ic
+Te
+tQ
+vk
+KW
+fv
+Xn
+fA
+BK
+Mw
+nw
+pj
+vg
+BE
+hU
+UC
+im
+FZ
+yA
+OK
+OF
+vg
+jS
+Cl
+Mg
+xa
+"}
+(25,1,1) = {"
+Mg
+Mg
+Mg
+FS
+KW
+KW
+dO
+eh
+ak
+tQ
+gn
+Td
+yc
+Eh
+yT
+DL
+gt
+nw
+pj
+vg
+iE
+Rx
+AC
+py
+Za
+hp
+AI
+OF
+vg
+jS
+Cl
+Mg
+xa
+"}
+(26,1,1) = {"
+Mg
+Mg
+Mg
+FS
+KW
+vR
+tK
+yJ
+mq
+tQ
+Vg
+rT
+zU
+pT
+yW
+st
+CW
+nw
+pj
+vg
+Nw
+Xe
+vg
+ER
+eE
+te
+bE
+OF
+vg
+jS
+Cl
+Mg
+xa
+"}
+(27,1,1) = {"
+Mg
+Mg
+Mg
+FS
+KW
+Sd
+dO
+ji
+JD
+pQ
+mo
+Td
+Ty
+ts
+KD
+Cy
+nb
+pj
+pj
+vg
+OQ
+rZ
+lR
+te
+Vc
+zm
+ci
+OF
+vg
+jS
+Cl
+Mg
+xa
+"}
+(28,1,1) = {"
+Mg
+FS
+FS
+Fu
+KW
+Ng
+Rv
+ME
+Qn
+gq
+AA
+KW
+zZ
+hR
+hR
+hR
+hR
+pj
+pj
+OF
+OF
+rB
+cI
+hU
+OF
+ZC
+OF
+OF
+vg
+jS
+Cl
+Mg
+xa
+"}
+(29,1,1) = {"
+Mg
+Mg
+Mg
+FS
+KW
+mB
+KW
+Td
+KW
+KW
+KW
+sJ
+hR
+jS
+jS
+jS
+jS
+jS
+jS
+vg
+vg
+cr
+bN
+Wa
+vg
+vg
+vg
+vg
+vg
+jS
+Cl
+Mg
+xa
+"}
+(30,1,1) = {"
+Mg
+Mg
+Mg
+FS
+FS
+FS
+lk
+jS
+jS
+jS
+jS
+jS
+jS
+An
+Sh
+Sh
+Sh
+Sh
+hM
+jS
+vg
+vg
+Ie
+vg
+vg
+jS
+jS
+jS
+jS
+An
+Mg
+Mg
+xa
+"}
+(31,1,1) = {"
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Sh
+Sh
+Sh
+Sh
+Sh
+Sh
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+hM
+jS
+jS
+jS
+jS
+jS
+An
+hM
+jS
+An
+Mg
+Mg
+Mg
+xa
+"}
+(32,1,1) = {"
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Sh
+Sh
+Sh
+Sh
+Sh
+Mg
+Mg
+Sh
+Mg
+Mg
+Mg
+xa
+xa
+"}

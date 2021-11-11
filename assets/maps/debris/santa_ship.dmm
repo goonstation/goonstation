@@ -1,0 +1,44 @@
+"a" = (/turf/space,/area/noGenerate)
+"d" = (/obj/decal/cleanable/oil,/turf/simulated/floor/airless/damaged4,/area/abandonedship)
+"e" = (/obj/lattice{dir = 6; icon_state = "lattice-dir"},/turf/space,/area/noGenerate)
+"h" = (/obj/decal/floatingtiles{dir = 8},/obj/decal/fakeobjects/lighttube_broken{dir = 8},/obj/decal/cleanable/machine_debris,/obj/item/raw_material/plasmastone,/obj/item/raw_material/plasmastone,/obj/item/raw_material/plasmastone,/obj/item/raw_material/plasmastone,/obj/item/raw_material/plasmastone,/obj/item/raw_material/plasmastone,/obj/storage/crate{name = "Dented Crate"},/turf/simulated/floor/airless/plating/scorched,/area/abandonedship)
+"i" = (/obj/stocking{pixel_x = -24},/turf/simulated/floor/airless/plating/damaged1,/area/abandonedship)
+"j" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/airless/plating/damaged3,/area/abandonedship)
+"k" = (/obj/decal/cleanable/machine_debris,/obj/item/motherboard,/turf/simulated/floor/airless/plating/damaged3,/area/abandonedship)
+"l" = (/turf/simulated/shuttle/wall,/area/abandonedship)
+"m" = (/turf/simulated/shuttle/wall{dir = 8; icon_state = "wall_space"},/area/abandonedship)
+"o" = (/turf/simulated/shuttle/wall{dir = 1; icon_state = "wall_space"},/area/abandonedship)
+"q" = (/obj/decal/cleanable/dirt,/obj/storage/crate/loot,/turf/simulated/floor/airless/plating/damaged3,/area/abandonedship)
+"r" = (/turf/simulated/shuttle/wall{icon_state = "wall_space"},/area/abandonedship)
+"s" = (/obj/decal/floatingtiles{icon_state = "floattiles3"},/obj/decal{desc = "Gross."; icon = 'icons/misc/hstation.dmi'; icon_state = "body1"; name = "corpse"},/obj/item/clothing/head/helmet/space/santahat,/obj/item/clothing/suit/space/santa,/turf/simulated/floor/airless/plating/damaged3,/area/abandonedship)
+"t" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/machine_debris,/obj/item/raw_material/shard/glass,/obj/item/a_gift/festive,/turf/simulated/floor/airless/plating/scorched,/area/abandonedship)
+"u" = (/obj/lattice{dir = 8; icon_state = "lattice-dir"},/obj/decal/fakeobjects/pipe{dir = 4},/obj/critter/gunbot/drone/buzzdrone,/turf/space,/area/abandonedship)
+"x" = (/obj/lattice{dir = 6; icon_state = "lattice-dir"},/obj/decal/fakeobjects/pipe{dir = 4},/turf/space,/area/abandonedship)
+"y" = (/turf/simulated/shuttle/wall{dir = 4; icon_state = "wall_space"},/area/abandonedship)
+"z" = (/turf/simulated/shuttle/wall{dir = 4},/area/abandonedship)
+"C" = (/obj/decal/cleanable/blood/splatter,/turf/simulated/shuttle/wall{dir = 4},/area/abandonedship)
+"D" = (/turf/simulated/floor/airless/plating/damaged1,/area/abandonedship)
+"F" = (/obj/lattice{dir = 8; icon_state = "lattice-dir"},/turf/space,/area/abandonedship)
+"G" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/airless/plating/damaged1,/area/abandonedship)
+"H" = (/obj/decal/cleanable/machine_debris,/turf/simulated/floor/airless/plating/damaged3,/area/abandonedship)
+"I" = (/obj/decal/cleanable/blood/splatter{icon_state = "gibbl2"},/turf/simulated/shuttle/wall,/area/abandonedship)
+"K" = (/turf/simulated/floor/airless/damaged3,/area/abandonedship)
+"L" = (/obj/decal/fakeobjects/shuttlethruster{dir = 4},/turf/space,/area/abandonedship)
+"N" = (/obj/item/a_gift/festive,/turf/simulated/floor/airless/plating/damaged3,/area/abandonedship)
+"O" = (/turf/simulated/floor/airless/plating/damaged3,/area/abandonedship)
+"P" = (/obj/lattice{dir = 6; icon_state = "lattice-dir"},/obj/decal/floatingtiles{dir = 8; icon_state = "floattiles3"},/turf/space,/area/abandonedship)
+"Q" = (/obj/lattice{dir = 8; icon_state = "lattice-dir"},/obj/decal/fakeobjects/pipe{dir = 4},/turf/space,/area/abandonedship)
+"U" = (/obj/decal/fakeobjects/shuttleengine{dir = 8},/obj/lattice{dir = 10; icon_state = "lattice-dir"},/turf/space,/area/noGenerate)
+"V" = (/obj/decal/cleanable/dirt,/obj/landmark/artifact,/turf/simulated/floor/airless/plating/damaged3,/area/abandonedship)
+"W" = (/obj/lattice{dir = 10; icon_state = "lattice-dir"},/obj/decal/fakeobjects/shuttleengine{dir = 8},/turf/space,/area/noGenerate)
+"X" = (/obj/machinery/door/unpowered/shuttle,/turf/simulated/floor/airless/plating/damaged3,/area/abandonedship)
+"Z" = (/obj/decal/floatingtiles{dir = 4},/obj/decal/cleanable/blood,/obj/decal/fakeobjects/lighttube_broken{dir = 8},/obj/item/cell/cerenkite,/obj/storage/crate{name = "Dented Crate"},/obj/item/peripheral/card_scanner/register,/obj/item/clothing/under/gimmick/jetson,/turf/simulated/floor/airless/plating/scorched,/area/abandonedship)
+
+(1,1,1) = {"
+aamzzzzzCo
+LWIZPFtVql
+aeldxsDukC
+aelixHQQKl
+aUlhNjOGNl
+aarlllXlly
+"}

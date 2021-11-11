@@ -38,6 +38,8 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 			return 1
 		else return 0
 
+/datum/generatorPrefab/asteroid
+
 	clown
 		maxNum = 1
 		probability = 25
@@ -516,3 +518,253 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabPath = "assets/maps/prefabs/prefab_water_crashed.dmm"
 		prefabSizeX = 24
 		prefabSizeY = 32
+
+// Use for prefabs for the debris field (z3), not asteroid field (z5)!
+// Put a prefab in small if less than 225 tiles (which is 15x15), big if larger
+/datum/generatorPrefab/debrissmall
+
+	artifact_asteroid
+		maxNum = 5
+		probability = 25
+		prefabPath = "assets/maps/debris/artifact_asteroid.dmm"
+		prefabSizeX = 24
+		prefabSizeY = 18
+
+	bee_station
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/debris/bee_station.dmm"
+		prefabSizeX = 51
+		prefabSizeY = 37
+
+	bootlegger_asteroid
+		maxNum = 2
+		probability = 25
+		prefabPath = "assets/maps/debris/bootlegger_asteroid.dmm"
+		prefabSizeX = 42
+		prefabSizeY = 24
+
+	bradbury
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/debris/bradbury.dmm"
+		prefabSizeX = 57
+		prefabSizeY = 41
+
+	buddy_factory
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/debris/buddy_factory.dmm"
+		prefabSizeX = 39
+		prefabSizeY = 29
+
+	faint_signal
+		maxNum = 1
+		required = TRUE
+		probability = 25
+		prefabPath = "assets/maps/debris/faint_signal.dmm"
+		prefabSizeX = 41
+		prefabSizeY = 47
+
+	fermids
+		maxNum = 3
+		probability = 25
+		prefabPath = "assets/maps/debris/fermids.dmm"
+		prefabSizeX = 17
+		prefabSizeY = 19
+
+	flock_shuttle
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/debris/flock_shuttle.dmm"
+		prefabSizeX = 30
+		prefabSizeY = 18
+
+	helldrone
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/debris/helldrone.dmm"
+		prefabSizeX = 26
+		prefabSizeY = 27
+
+	hemera
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/debris/hemera.dmm"
+		prefabSizeX = 48
+		prefabSizeY = 48
+
+	martian_ship
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/debris/martian_ship.dmm"
+		prefabSizeX = 32
+		prefabSizeY = 33
+
+	medical_ship
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/debris/medical_ship.dmm"
+		prefabSizeX = 28
+		prefabSizeY = 27
+
+	mining_outpost
+		maxNum = 1
+		required = TRUE
+		probability = 25
+		prefabPath = "assets/maps/debris/mining_outpost.dmm"
+		prefabSizeX = 84
+		prefabSizeY = 83
+
+	patho_lab
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/debris/patho_lab.dmm"
+		prefabSizeX = 22
+		prefabSizeY = 45
+
+	radio_station
+		maxNum = 1
+		required = TRUE
+		probability = 25
+		prefabPath = "assets/maps/debris/radio_station.dmm"
+		prefabSizeX = 19
+		prefabSizeY = 29
+
+	soviet_ship
+		maxNum = 2
+		probability = 25
+		prefabPath = "assets/maps/debris/soviet_ship.dmm"
+		prefabSizeX = 25
+		prefabSizeY = 14
+
+	spider_radio
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/debris/spider_radio.dmm"
+		prefabSizeX = 44
+		prefabSizeY = 31
+
+	thrifty_bob
+		maxNum = 1
+		required = TRUE
+		probability = 25
+		prefabPath = "assets/maps/debris/thrifty_bob.dmm"
+		prefabSizeX = 24
+		prefabSizeY = 14
+
+	time_ship
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/debris/time_ship.dmm"
+		prefabSizeX = 34
+		prefabSizeY = 18
+
+	xdrone_ship
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/debris/xdrone_ship.dmm"
+		prefabSizeX = 22
+		prefabSizeY = 15
+
+	ydrone_beacon
+		maxNum = 1
+		required = TRUE
+		probability = 25
+		prefabPath = "assets/maps/debris/ydrone_beacon.dmm"
+		prefabSizeX = 20
+		prefabSizeY = 13
+
+/datum/generatorPrefab/debrisbig
+
+	cannibal_asteroid
+		maxNum = 3
+		probability = 20
+		prefabPath = "assets/maps/debris/cannibal_asteroid.dmm"
+		prefabSizeX = 16
+		prefabSizeY = 12
+
+	crashed_seed_shuttle
+		maxNum = 3
+		probability = 20
+		prefabPath = "assets/maps/debris/crashed_seed_shuttle.dmm"
+		prefabSizeX = 7
+		prefabSizeY = 10
+
+	fancy_captain_shuttle
+		maxNum = 3
+		probability = 30
+		prefabPath = "assets/maps/debris/fancy_captain_shuttle.dmm"
+		prefabSizeX = 8
+		prefabSizeY = 7
+
+	horseshoe_ship
+		maxNum = 4
+		probability = 25
+		prefabPath = "assets/maps/debris/horseshoe_ship.dmm"
+		prefabSizeX = 6
+		prefabSizeY = 4
+
+	janitor_ship
+		maxNum = 2
+		probability = 20
+		prefabPath = "assets/maps/debris/janitor_ship.dmm"
+		prefabSizeX = 8
+		prefabSizeY = 5
+
+	patho_ship
+		maxNum = 1
+		probability = 20
+		prefabPath = "assets/maps/debris/patho_ship.dmm"
+		prefabSizeX = 11
+		prefabSizeY = 17
+
+	santa_ship
+		maxNum = 3
+		probability = 20
+		prefabPath = "assets/maps/debris/santa_ship.dmm"
+		prefabSizeX = 10
+		prefabSizeY = 6
+
+	security_shuttle
+		maxNum = 2
+		probability = 20
+		prefabPath = "assets/maps/debris/security_shuttle.dmm"
+		prefabSizeX = 10
+		prefabSizeY = 14
+
+	skeleton_geode
+		maxNum = 1
+		required = TRUE
+		probability = 20
+		prefabPath = "assets/maps/debris/skeleton_geode.dmm"
+		prefabSizeX = 15
+		prefabSizeY = 12
+
+	smuggler_outpost
+		maxNum = 3
+		probability = 20
+		prefabPath = "assets/maps/debris/smuggler_outpost.dmm"
+		prefabSizeX = 16
+		prefabSizeY = 12
+
+	stinkeye_wreck
+		maxNum = 4
+		probability = 25
+		prefabPath = "assets/maps/debris/stinkeye_wreck.dmm"
+		prefabSizeX = 9
+		prefabSizeY = 3
+
+	tooty_ship
+		maxNum = 3
+		probability = 25
+		prefabPath = "assets/maps/debris/tooty_ship.dmm"
+		prefabSizeX = 9
+		prefabSizeY = 10
+
+	tourist_ship
+		maxNum = 2
+		probability = 25
+		prefabPath = "assets/maps/debris/tourist_ship.dmm"
+		prefabSizeX = 6
+		prefabSizeY = 5

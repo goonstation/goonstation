@@ -1,0 +1,1761 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aX" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/r_wall,
+/area/noGenerate)
+"bg" = (
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"bp" = (
+/obj/computerframe{
+	desc = "It is highly unlikely that this still works.";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "datamedb";
+	name = "smashed computer"
+	},
+/obj/map/light/white,
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedmedicalship)
+"bC" = (
+/turf/simulated/wall/asteroid{
+	dir = 5
+	},
+/area/noGenerate)
+"bQ" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "gibbl2"
+	},
+/obj/table/auto,
+/obj/item/device/analyzer/healthanalyzer,
+/obj/item/clothing/glasses/healthgoggles,
+/obj/decal/cleanable/dirt,
+/obj/item/reagent_containers/dropper,
+/turf/simulated/floor/airless/damaged2,
+/area/abandonedmedicalship)
+"cU" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless,
+/area/abandonedmedicalship)
+"cV" = (
+/turf/simulated/wall/asteroid{
+	dir = 1
+	},
+/area/abandonedmedicalship)
+"du" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor3"
+	},
+/obj/map/light/white,
+/turf/simulated/shuttle/wall{
+	name = "window";
+	opacity = 0
+	},
+/area/abandonedmedicalship)
+"eg" = (
+/obj/decal/floatingtiles{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless/plating/scorched,
+/area/abandonedmedicalship)
+"fe" = (
+/obj/map/light/white,
+/turf/simulated/shuttle/wall{
+	name = "window";
+	opacity = 0
+	},
+/area/abandonedmedicalship)
+"gn" = (
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"gr" = (
+/obj/lattice,
+/obj/decal/floatingtiles{
+	icon_state = "floattiles3"
+	},
+/turf/space,
+/area/abandonedmedicalship)
+"gY" = (
+/obj/decal/floatingtiles{
+	dir = 1
+	},
+/turf/simulated/floor/airless/plating/damaged3,
+/area/abandonedmedicalship)
+"ht" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "gibbl2"
+	},
+/turf/simulated/shuttle/wall,
+/area/abandonedmedicalship)
+"ic" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "wall_space"
+	},
+/area/abandonedmedicalship)
+"jf" = (
+/turf/simulated/wall/asteroid{
+	dir = 1
+	},
+/area/noGenerate)
+"jX" = (
+/obj/structure/girder/displaced,
+/turf/space,
+/area/noGenerate)
+"kp" = (
+/turf/simulated/wall/r_wall,
+/area/noGenerate)
+"kE" = (
+/turf/space,
+/area/abandonedmedicalship)
+"le" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8
+	},
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "gibbl2"
+	},
+/turf/simulated/shuttle/wall,
+/area/abandonedmedicalship)
+"lw" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
+	},
+/turf/simulated/shuttle/wall,
+/area/abandonedmedicalship)
+"mg" = (
+/obj/machinery/door/unpowered/shuttle,
+/obj/decal/cleanable/blood/tracks,
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedmedicalship)
+"mq" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"mw" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "wall_space"
+	},
+/area/abandonedmedicalship)
+"mU" = (
+/obj/decal/cleanable/machine_debris,
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
+	},
+/turf/simulated/floor/airless/scorched,
+/area/abandonedmedicalship)
+"nQ" = (
+/turf/space,
+/area/allowGenerate)
+"nS" = (
+/turf/simulated/wall,
+/area/noGenerate)
+"og" = (
+/obj/decal/fakeobjects/lightbulb_broken,
+/obj/decal/cleanable/robot_debris/gib,
+/obj/lattice,
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles4"
+	},
+/turf/space,
+/area/abandonedmedicalship)
+"om" = (
+/obj/securearea{
+	desc = "Blue, blue.";
+	icon_state = "med";
+	layer = 9;
+	name = "MEDICAL SHIP"
+	},
+/turf/simulated/shuttle/wall/cockpit{
+	icon_state = "shuttlecock_busted"
+	},
+/area/abandonedmedicalship)
+"pg" = (
+/obj/decal/cleanable/machine_debris,
+/obj/decal/floatingtiles{
+	icon_state = "floattiles5"
+	},
+/obj/decal/cleanable/blood/tracks,
+/obj/item/raw_material/shard/glass,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/abandonedmedicalship)
+"pi" = (
+/obj/decal/cleanable/machine_debris,
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
+	},
+/obj/decal/fakeobjects/lightbulb_broken,
+/obj/item/storage/firstaid/brain,
+/turf/simulated/floor/airless/white,
+/area/abandonedmedicalship)
+"pu" = (
+/obj/decal/cleanable/dirt,
+/obj/table/auto,
+/obj/decal/fakeobjects/lightbulb_broken{
+	dir = 1
+	},
+/obj/item/cloner_upgrade,
+/turf/simulated/floor/airless/damaged2,
+/area/abandonedmedicalship)
+"rf" = (
+/obj/storage/crate/loot,
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedmedicalship)
+"rG" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "door1";
+	name = "broken door"
+	},
+/area/abandonedmedicalship)
+"rH" = (
+/obj/decal/fakeobjects/lightbulb_broken{
+	dir = 4
+	},
+/turf/simulated/floor/airless/damaged4,
+/area/abandonedmedicalship)
+"se" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/wall,
+/area/noGenerate)
+"sp" = (
+/obj/decal/cleanable/cobweb2,
+/obj/item/device/transfer_valve/briefcase,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/abandonedmedicalship)
+"su" = (
+/turf/simulated/floor/airless/grime,
+/area/abandonedmedicalship)
+"sv" = (
+/obj/decal/cleanable/dirt,
+/obj/table/reinforced/auto,
+/turf/simulated/floor/airless/circuit,
+/area/abandonedmedicalship)
+"tb" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall_space"
+	},
+/area/abandonedmedicalship)
+"tm" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedmedicalship)
+"tq" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/wall,
+/area/noGenerate)
+"tx" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/wall/r_wall,
+/area/noGenerate)
+"tF" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "wall_space";
+	name = "window";
+	opacity = 0
+	},
+/area/abandonedmedicalship)
+"tG" = (
+/turf/simulated/wall/asteroid{
+	dir = 10
+	},
+/area/noGenerate)
+"ua" = (
+/obj/lattice,
+/obj/item/cable_coil/cut{
+	icon_state = "coil1"
+	},
+/obj/table/reinforced/auto,
+/turf/space,
+/area/abandonedmedicalship)
+"um" = (
+/turf/simulated/floor/plating/airless,
+/area/abandonedmedicalship)
+"uA" = (
+/obj/overlay{
+	density = 1;
+	desc = "";
+	dir = 4;
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "help";
+	layer = 6;
+	name = "blood"
+	},
+/turf/simulated/shuttle/wall,
+/area/abandonedmedicalship)
+"uJ" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "wall_space";
+	name = "window";
+	opacity = 0
+	},
+/area/abandonedmedicalship)
+"uO" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles3"
+	},
+/turf/simulated/floor/airless/plating/damaged3,
+/area/abandonedmedicalship)
+"ve" = (
+/obj/item/crowbar,
+/obj/decal/cleanable/blood/tracks,
+/turf/simulated/floor/airless/white,
+/area/abandonedmedicalship)
+"vj" = (
+/obj/structure/girder/displaced,
+/turf/simulated/floor/airless/scorched,
+/area/abandonedmedicalship)
+"vk" = (
+/obj/machinery/bot/medbot/terrifying,
+/turf/simulated/floor/airless/white,
+/area/abandonedmedicalship)
+"wh" = (
+/obj/lattice,
+/turf/space,
+/area/abandonedmedicalship)
+"wO" = (
+/turf/simulated/floor/airless/damaged2,
+/area/abandonedmedicalship)
+"xj" = (
+/obj/table/auto,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "old0";
+	name = "broken computer"
+	},
+/turf/simulated/floor/airless/plating/damaged2,
+/area/abandonedmedicalship)
+"xV" = (
+/obj/machinery/field_generator,
+/turf/simulated/floor/airless/plating/damaged1,
+/area/noGenerate)
+"yy" = (
+/obj/decal/fakeobjects/lightbulb_broken{
+	dir = 1
+	},
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedmedicalship)
+"zo" = (
+/turf/simulated/wall/asteroid{
+	dir = 6
+	},
+/area/noGenerate)
+"zU" = (
+/obj/decal/fakeobjects/lightbulb_broken,
+/turf/simulated/floor/airless/grime,
+/area/abandonedmedicalship)
+"zX" = (
+/obj/decal/cleanable/dirt,
+/obj/storage/secure/closet/medical/medicine,
+/turf/simulated/floor/airless/white,
+/area/abandonedmedicalship)
+"Bl" = (
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "wall_space"
+	},
+/area/abandonedmedicalship)
+"Cc" = (
+/turf/simulated/wall/asteroid{
+	dir = 8
+	},
+/area/noGenerate)
+"Cj" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/fakeobjects/lightbulb_broken,
+/obj/table/reinforced/auto,
+/obj/item/implantcase/robust,
+/obj/item/implantcase/robust,
+/obj/item/implanter,
+/obj/machinery/telejam/active,
+/turf/simulated/floor/airless/damaged2,
+/area/abandonedmedicalship)
+"Ck" = (
+/obj/lattice,
+/obj/decal/cleanable/machine_debris,
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/obj/decal/floatingtiles{
+	icon_state = "floattiles4"
+	},
+/turf/space,
+/area/abandonedmedicalship)
+"DC" = (
+/obj/decal/cleanable/machine_debris,
+/obj/decal/cleanable/dirt,
+/obj/decal/fakeobjects{
+	desc = "It appears to be a part of a very old robotic arm.";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff";
+	name = "motor"
+	},
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedmedicalship)
+"DE" = (
+/obj/decal/cleanable/dirt,
+/obj/table/auto,
+/obj/item/disk/data/floppy/monkey,
+/turf/simulated/floor/airless/circuit,
+/area/abandonedmedicalship)
+"Eh" = (
+/obj/decal/fakeobjects/shuttlethruster{
+	dir = 4
+	},
+/turf/space,
+/area/abandonedmedicalship)
+"ED" = (
+/turf/simulated/floor/airless/plating/scorched,
+/area/abandonedmedicalship)
+"EN" = (
+/obj/decal/cleanable/oil,
+/obj/decal/cleanable/dirt,
+/obj/machinery/optable,
+/obj/decal/skeleton{
+	desc = "Gross.";
+	icon = 'icons/mob/human.dmi';
+	icon_state = "husk_l";
+	name = "dessicated husk"
+	},
+/obj/map/light/white,
+/turf/simulated/floor/airless/damaged2,
+/area/abandonedmedicalship)
+"EO" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/r_wall,
+/area/noGenerate)
+"EV" = (
+/obj/item/device/light/flashlight,
+/turf/simulated/floor/airless/plating/scorched,
+/area/abandonedmedicalship)
+"EW" = (
+/obj/storage/crate/loot,
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"Fd" = (
+/obj/table/reinforced/auto,
+/obj/deskclutter,
+/turf/simulated/floor/airless/plating/scorched,
+/area/abandonedmedicalship)
+"Fg" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/cobweb,
+/obj/storage/secure/closet/medical/anesthetic,
+/turf/simulated/floor/airless/white,
+/area/abandonedmedicalship)
+"Fh" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"Fy" = (
+/obj/decal/cleanable/robot_debris,
+/obj/machinery/bot/medbot/terrifying,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/abandonedmedicalship)
+"Fz" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/skeleton{
+	desc = "Gross.";
+	icon = 'icons/mob/human.dmi';
+	icon_state = "husk_l";
+	name = "dessicated husk"
+	},
+/obj/table/reinforced/auto,
+/obj/item/clothing/gloves/latex,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/abandonedmedicalship)
+"Gr" = (
+/obj/decal/cleanable/dirt,
+/obj/storage/crate/medical,
+/obj/item/reagent_containers/glass/beaker/large/antitox,
+/obj/item/reagent_containers/glass/beaker/large/brute,
+/obj/item/reagent_containers/glass/beaker/large/burn,
+/obj/item/reagent_containers/glass/beaker/large/epinephrine,
+/turf/simulated/floor/airless/white,
+/area/abandonedmedicalship)
+"GB" = (
+/obj/lattice,
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/obj/decal/floatingtiles{
+	dir = 1
+	},
+/turf/space,
+/area/abandonedmedicalship)
+"HB" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/fakeobjects{
+	desc = "It appears to be a part of a very old robotic arm.";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff";
+	name = "motor"
+	},
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedmedicalship)
+"Ik" = (
+/turf/space,
+/area/noGenerate)
+"IH" = (
+/turf/simulated/floor/airless/damaged3,
+/area/abandonedmedicalship)
+"Jq" = (
+/obj/item/cable_coil/cut,
+/obj/landmark/artifact,
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedmedicalship)
+"Jy" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/obj/storage/crate/loot,
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedmedicalship)
+"JO" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/wall/r_wall,
+/area/noGenerate)
+"JW" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/r_wall,
+/area/noGenerate)
+"Kv" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8
+	},
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
+	},
+/turf/simulated/shuttle/wall,
+/area/abandonedmedicalship)
+"Ld" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 9
+	},
+/turf/simulated/floor/airless/plating/damaged2,
+/area/abandonedmedicalship)
+"Lp" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/r_wall,
+/area/noGenerate)
+"LV" = (
+/obj/lattice,
+/obj/decal/cleanable/machine_debris,
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/space,
+/area/abandonedmedicalship)
+"Mv" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/bot/medbot/terrifying,
+/turf/simulated/floor/airless/damaged3,
+/area/abandonedmedicalship)
+"My" = (
+/obj/lattice,
+/obj/decal/cleanable/generic,
+/obj/structure/girder/displaced,
+/turf/space,
+/area/abandonedmedicalship)
+"Na" = (
+/obj/securearea{
+	desc = "Blue, blue.";
+	icon_state = "med";
+	layer = 9;
+	name = "MEDICAL SHIP"
+	},
+/turf/simulated/shuttle/wall,
+/area/abandonedmedicalship)
+"Ng" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor2"
+	},
+/obj/decal/cleanable/oil,
+/obj/computerframe{
+	desc = "It is highly unlikely that this still works.";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "datamedb";
+	name = "smashed computer"
+	},
+/obj/map/light/white,
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedmedicalship)
+"Nx" = (
+/obj/decal/cleanable/blood/splatter,
+/obj/decal/fakeobjects/airmonitor_broken,
+/turf/simulated/shuttle/wall,
+/area/abandonedmedicalship)
+"Oe" = (
+/obj/stool/chair,
+/turf/simulated/floor/airless/scorched,
+/area/abandonedmedicalship)
+"Om" = (
+/obj/machinery/door/unpowered/shuttle,
+/turf/simulated/floor/plating/airless,
+/area/abandonedmedicalship)
+"Oq" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless/grime,
+/area/abandonedmedicalship)
+"Oy" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless/damaged5,
+/area/abandonedmedicalship)
+"OI" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/wall/r_wall,
+/area/noGenerate)
+"OU" = (
+/obj/lattice,
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles4"
+	},
+/obj/item/cable_coil/cut,
+/turf/space,
+/area/abandonedmedicalship)
+"Pd" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/blood/splatter,
+/obj/map/light/white,
+/turf/simulated/floor/airless/circuit,
+/area/abandonedmedicalship)
+"Pi" = (
+/obj/decal/cleanable/blood/splatter,
+/turf/simulated/shuttle/wall,
+/area/abandonedmedicalship)
+"Pp" = (
+/obj/table/auto,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/box/grenade_starter_kit,
+/turf/simulated/floor/airless/damaged2,
+/area/abandonedmedicalship)
+"PC" = (
+/obj/decal/cleanable/machine_debris,
+/turf/simulated/floor/airless/plating/scorched,
+/area/abandonedmedicalship)
+"PD" = (
+/obj/decal/cleanable/dirt,
+/obj/map/light/white,
+/obj/table/reinforced/auto,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "An old computer that doesn't appear to be plugged in.  Do you see the cord anywhere? No? Dang.";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "old0";
+	name = "inactive computer";
+	pixel_x = 4
+	},
+/turf/simulated/floor/airless/circuit,
+/area/abandonedmedicalship)
+"PW" = (
+/obj/decal/cleanable/machine_debris,
+/obj/decal/cleanable/dirt,
+/obj/item/raw_material/shard/glass,
+/obj/stool/chair{
+	dir = 4
+	},
+/obj/map/light/white,
+/turf/simulated/floor/airless/circuit,
+/area/abandonedmedicalship)
+"Qb" = (
+/obj/decal/fakeobjects/firealarm_broken{
+	dir = 8;
+	pixel_x = -24
+	},
+/turf/simulated/floor/plating/airless,
+/area/abandonedmedicalship)
+"QN" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/wall/r_wall,
+/area/noGenerate)
+"Rc" = (
+/turf/simulated/shuttle/wall,
+/area/abandonedmedicalship)
+"Rv" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"Sh" = (
+/obj/decal/fakeobjects{
+	desc = "It appears to be a part of a very old robotic arm.";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff";
+	name = "motor"
+	},
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedmedicalship)
+"Sx" = (
+/turf/simulated/floor/airless/white,
+/area/abandonedmedicalship)
+"SF" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/skeleton{
+	desc = "Gross.";
+	icon = 'icons/mob/human.dmi';
+	icon_state = "husk_l";
+	name = "dessicated husk"
+	},
+/obj/storage/crate/medical,
+/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/fire,
+/turf/simulated/floor/airless/plating/damaged3,
+/area/abandonedmedicalship)
+"SM" = (
+/turf/simulated/wall/asteroid{
+	dir = 9
+	},
+/area/noGenerate)
+"ST" = (
+/obj/machinery/bot/medbot/terrifying,
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedmedicalship)
+"SW" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor3"
+	},
+/turf/simulated/floor/airless/damaged2,
+/area/abandonedmedicalship)
+"TK" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8
+	},
+/turf/simulated/shuttle/wall,
+/area/abandonedmedicalship)
+"TL" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"Ue" = (
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedmedicalship)
+"UJ" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/wall/r_wall,
+/area/noGenerate)
+"UN" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/wall/r_wall,
+/area/noGenerate)
+"Vb" = (
+/obj/machinery/field_generator,
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"Vw" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor3"
+	},
+/turf/simulated/floor/airless/scorched,
+/area/abandonedmedicalship)
+"VA" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/decal/cleanable/writing/infrared{
+	words = "WELCOME TO THE NEW DEATH"
+	},
+/turf/simulated/wall/r_wall,
+/area/noGenerate)
+"VN" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/sleep_console{
+	dir = 8
+	},
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedmedicalship)
+"VY" = (
+/obj/machinery/door/unpowered/shuttle,
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedmedicalship)
+"Wb" = (
+/turf/simulated/floor/airless/plating/damaged2,
+/area/abandonedmedicalship)
+"Wj" = (
+/obj/lattice,
+/obj/decal/cleanable/machine_debris,
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/obj/item/raw_material/shard/glass,
+/turf/space,
+/area/abandonedmedicalship)
+"Wl" = (
+/obj/machinery/sleeper{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/abandonedmedicalship)
+"Wp" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/wall/r_wall,
+/area/noGenerate)
+"WD" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"Xf" = (
+/turf/simulated/wall/asteroid{
+	dir = 4
+	},
+/area/noGenerate)
+"Xw" = (
+/obj/decal/cleanable/blood/tracks,
+/turf/simulated/floor/airless/white,
+/area/abandonedmedicalship)
+"XY" = (
+/turf/simulated/wall/asteroid,
+/area/noGenerate)
+"YM" = (
+/obj/decal/fakeobjects/apc_broken,
+/turf/simulated/shuttle/wall,
+/area/abandonedmedicalship)
+"Ze" = (
+/obj/lattice,
+/turf/space,
+/area/noGenerate)
+"Zr" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It is still kinda warm.";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "neutinj";
+	name = "busted machine"
+	},
+/obj/map/light/white,
+/turf/simulated/floor/airless/white,
+/area/abandonedmedicalship)
+"ZS" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+
+(1,1,1) = {"
+Ik
+Ik
+Eh
+Eh
+Eh
+Ik
+Ik
+Ik
+Ik
+Ik
+Eh
+Eh
+Eh
+jf
+Ik
+Ik
+jf
+Ik
+Ik
+Ik
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+"}
+(2,1,1) = {"
+Ik
+Bl
+TK
+TK
+TK
+tb
+Ik
+Ik
+Ik
+Bl
+le
+TK
+Kv
+cV
+jf
+jf
+jf
+jf
+Ik
+Ik
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+"}
+(3,1,1) = {"
+Ik
+Rc
+DC
+Jy
+HB
+Rc
+Rc
+Rc
+Rc
+Rc
+Sh
+rf
+Sh
+cV
+jf
+jf
+jf
+jf
+Ik
+Ik
+Ik
+Ik
+nQ
+Ik
+Ik
+Ik
+Ik
+"}
+(4,1,1) = {"
+Ik
+Rc
+yy
+Ue
+Jq
+Rc
+Fg
+vk
+Gr
+Rc
+EV
+ED
+og
+cV
+jf
+jf
+jf
+SM
+SM
+tG
+tG
+Ik
+Ik
+Ik
+Ik
+Ik
+Fh
+"}
+(5,1,1) = {"
+Bl
+Rc
+YM
+VY
+Rc
+Rc
+zX
+Sx
+pi
+Rc
+Rc
+VY
+Rc
+Rc
+tb
+Ik
+jf
+jf
+XY
+XY
+tG
+Cc
+tG
+Ik
+Ik
+Ik
+Ze
+"}
+(6,1,1) = {"
+Rc
+Wl
+wO
+Ld
+pg
+mg
+Xw
+Xw
+ve
+mg
+uO
+IH
+Rc
+Rc
+Na
+Ik
+Ik
+jf
+XY
+XY
+XY
+gn
+XY
+Ik
+Ik
+Ik
+nS
+"}
+(7,1,1) = {"
+Rc
+VN
+IH
+EN
+wO
+Pi
+Zr
+Sx
+Zr
+Rc
+LV
+Oq
+Om
+um
+Om
+Ik
+Ik
+jf
+XY
+XY
+XY
+gn
+gn
+Ik
+Ik
+Fh
+Ik
+"}
+(8,1,1) = {"
+Rc
+bp
+tm
+Vw
+su
+Rc
+Rc
+Rc
+Rc
+Nx
+Wj
+zU
+Rc
+Rc
+Na
+Ik
+Ik
+bC
+Xf
+XY
+XY
+zo
+zo
+Ik
+Ik
+Rv
+Ik
+"}
+(9,1,1) = {"
+ic
+Rc
+SF
+Fy
+rH
+Wb
+Ue
+Rc
+My
+GB
+gY
+Oe
+xj
+Rc
+mw
+Ik
+Ik
+Ik
+Ik
+bC
+Xf
+zo
+Ik
+Ik
+Ik
+Ik
+Ik
+"}
+(10,1,1) = {"
+Ik
+ic
+Rc
+Rc
+Pi
+sp
+vj
+Rc
+gr
+OU
+Rc
+Rc
+Rc
+mw
+Ik
+Ik
+Ze
+bg
+Ze
+UN
+QN
+Ik
+Ik
+Ik
+jX
+Ik
+Ik
+"}
+(11,1,1) = {"
+Ik
+Ik
+Ik
+ic
+Rc
+uA
+VY
+ht
+rG
+Rc
+Rc
+mw
+Ik
+Ik
+Ik
+XY
+VA
+bg
+UN
+QN
+Ik
+Ik
+Ik
+Ik
+Ze
+Ik
+Ik
+"}
+(12,1,1) = {"
+Ik
+Ik
+Ik
+Ik
+Rc
+Ng
+Ue
+Qb
+mU
+ST
+Rc
+bC
+bC
+Ik
+zo
+zo
+UJ
+ZS
+aX
+Ik
+Ik
+Ik
+Ik
+Ik
+Ze
+Ik
+Ik
+"}
+(13,1,1) = {"
+nQ
+Ik
+Ik
+Ik
+Rc
+bQ
+Oy
+PC
+wh
+Ck
+Rc
+bC
+bC
+bC
+bC
+bC
+JW
+WD
+JW
+Ik
+Ik
+Ik
+Ik
+Ik
+Ze
+Ik
+Ik
+"}
+(14,1,1) = {"
+nQ
+nQ
+Ik
+Ik
+lw
+Pp
+SW
+eg
+ua
+Fd
+Rc
+bC
+gn
+gn
+gn
+gn
+JW
+WD
+JW
+Ik
+Ik
+Ik
+Ik
+Ik
+Ze
+Ik
+Ik
+"}
+(15,1,1) = {"
+nQ
+nQ
+Ik
+Ik
+Rc
+pu
+cU
+Mv
+Fz
+Cj
+ht
+bC
+gn
+gn
+gn
+gn
+JW
+WD
+JW
+Ik
+Ik
+Ik
+Ik
+Ik
+mq
+Ik
+Ik
+"}
+(16,1,1) = {"
+nQ
+nQ
+nQ
+Ik
+ic
+DE
+Pd
+PW
+PD
+sv
+mw
+bC
+gn
+gn
+Ik
+gn
+JW
+WD
+JW
+Ik
+Ik
+Ik
+Ik
+Ik
+jX
+Ik
+Ik
+"}
+(17,1,1) = {"
+nQ
+nQ
+nQ
+Ik
+Ik
+tF
+du
+fe
+fe
+uJ
+Ik
+bC
+bC
+Ik
+Ik
+Ik
+WD
+WD
+JW
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+"}
+(18,1,1) = {"
+nQ
+nQ
+nQ
+Ik
+Ik
+kE
+tF
+om
+uJ
+kE
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+JW
+JW
+JW
+Ik
+Ik
+Ik
+Ik
+nQ
+nQ
+nQ
+nQ
+"}
+(19,1,1) = {"
+nQ
+nQ
+nQ
+Ik
+Ik
+Ik
+kE
+kE
+kE
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+kp
+JW
+se
+JW
+kp
+Ik
+Ik
+nQ
+nQ
+nQ
+nQ
+nQ
+"}
+(20,1,1) = {"
+nQ
+nQ
+nQ
+nQ
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+kp
+Ze
+bg
+Ze
+kp
+Ik
+Ik
+nQ
+nQ
+nQ
+nQ
+nQ
+"}
+(21,1,1) = {"
+nQ
+nQ
+nQ
+nQ
+nQ
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+Ze
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+nQ
+nQ
+nQ
+nQ
+"}
+(22,1,1) = {"
+nQ
+nQ
+nQ
+nQ
+nQ
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+Ze
+Ik
+Ik
+Ik
+Ik
+nQ
+nQ
+nQ
+nQ
+"}
+(23,1,1) = {"
+nQ
+nQ
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+UN
+QN
+Ik
+Ze
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+Vb
+Ze
+Ze
+Ze
+Ik
+nQ
+nQ
+nQ
+nQ
+"}
+(24,1,1) = {"
+nQ
+nQ
+Ik
+Ik
+Ik
+Lp
+Lp
+Wp
+QN
+Ze
+Ik
+Ze
+Ik
+Ik
+Ik
+nQ
+nQ
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+nQ
+nQ
+nQ
+nQ
+"}
+(25,1,1) = {"
+nQ
+nQ
+Ik
+Lp
+Lp
+tq
+Lp
+JO
+nS
+EW
+Ze
+Ze
+Ik
+Ik
+Ik
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+"}
+(26,1,1) = {"
+nQ
+nQ
+Ik
+Lp
+Lp
+Lp
+Lp
+EO
+tx
+Ze
+Ik
+Ze
+Ik
+Ik
+Ik
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+"}
+(27,1,1) = {"
+nQ
+nQ
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+OI
+tx
+Ik
+Ze
+Ze
+Ze
+Ik
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+"}
+(28,1,1) = {"
+nQ
+nQ
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+OI
+Lp
+TL
+Ze
+xV
+Ik
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+"}

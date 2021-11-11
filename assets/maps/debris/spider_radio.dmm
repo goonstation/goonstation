@@ -1,0 +1,95 @@
+"bm" = (/obj/cable{icon_state = "1-2"},/obj/decal/tile_edge/line/purple{dir = 8; icon_state = "line1"},/obj/decal/tile_edge/line/purple{dir = 4; icon_state = "line1"},/obj/machinery/door/airlock/pyro/security/alt,/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"bK" = (/turf/simulated/wall/asteroid/lighted,/area/prefab/spider_radio)
+"bS" = (/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/storage/crate/loot,/obj/decal/fakeobjects/lightbulb_broken{dir = 4},/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"cB" = (/obj/decal/fakeobjects/tallsmes,/obj/cable{d2 = 8; icon_state = "0-8"},/obj/machinery/power/data_terminal,/turf/simulated/floor/darkblue,/area/prefab/spider_radio)
+"cF" = (/turf/simulated/floor/plating/airless/asteroid/lighted,/area/prefab/spider_radio)
+"dk" = (/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/decal/tile_edge/line/purple{dir = 4; icon_state = "line1"},/obj/decal/tile_edge/line/purple{dir = 8; icon_state = "line1"},/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"eV" = (/obj/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/cable{icon_state = "1-2"},/obj/decal/tile_edge/line/purple{dir = 4; icon_state = "line1"},/obj/decal/tile_edge/line/purple{dir = 8; icon_state = "line1"},/turf/simulated/floor/plating/random,/area/prefab/spider_radio)
+"gU" = (/obj/decal/tile_edge/stripe/extra_big{dir = 1; icon_state = "xtra_bigstripe-corner"},/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"hi" = (/obj/storage/crate{desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it."; icon = 'icons/misc/halloween.dmi'; name = "dented crate"},/obj/item/paper/tug/warehouse,/obj/item/reagent_containers/food/snacks/slimjim,/obj/item/device/audio_log/ht_1,/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"hR" = (/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/table/reinforced/auto,/obj/item/reagent_containers/food/snacks/slimjim,/obj/item/device/radio,/obj/placeholder{name = "Fartnasium Recruitment Flyer"; spawn_path = "/obj/item/paper/grillnasium/fartnasium_recruitment/flyer"},/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"jl" = (/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/storage/crate,/obj/decal/tile_edge/stripe/extra_big{dir = 1},/obj/item/paper/tug/warehouse,/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"kf" = (/obj/storage/crate,/obj/decal/tile_edge/stripe/extra_big{dir = 1},/obj/item/paper/tug/warehouse,/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"kA" = (/obj/storage/secure/closet/kitchen,/obj/item/device/radio,/turf/simulated/floor/wood/two,/area/prefab/spider_radio)
+"kK" = (/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/table/reinforced/auto,/obj/decal/fakeobjects{anchored = 1; desc = "A very broken microwave, containing a very exploded casserole."; icon = 'icons/misc/hstation.dmi'; icon_state = "hmicro"; name = "broken microwave oven"; pixel_y = 10},/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"ne" = (/turf/space,/area/noGenerate)
+"nw" = (/obj/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/decal/tile_edge/line/purple{dir = 4; icon_state = "line1"},/obj/decal/tile_edge/line/purple{dir = 8; icon_state = "line1"},/obj/item/paper{icon_state = "paper"; info = "<i>don't come lookin for me, spacers. i ain't takin jobs.</i>"; name = "BRB"; pixel_x = -2},/turf/simulated/floor/plating/random,/area/prefab/spider_radio)
+"nG" = (/obj/decal/tile_edge/stripe/extra_big{dir = 1},/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"oo" = (/obj/machinery/power/data_terminal,/obj/cable{icon_state = "0-2"},/obj/machinery/power/data_terminal,/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"ow" = (/obj/cable{icon_state = "1-4"},/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"pa" = (/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/spider_radio)
+"pX" = (/obj/storage/crate/loot,/obj/decal/tile_edge/stripe/extra_big{dir = 1},/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"qG" = (/obj/storage/crate/loot,/obj/machinery/light/emergency{dir = 8; pixel_x = -16},/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"rf" = (/obj/storage/crate/loot,/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"ry" = (/obj/decal/tile_edge/line/purple{dir = 1; icon_state = "tile1"},/obj/machinery/door/airlock/pyro/external{icon_state = "airlock_locked"; locked = 1},/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"sh" = (/obj/decal/fakeobjects/vacuumtape,/obj/cable{d2 = 8; icon_state = "0-4"},/obj/machinery/power/data_terminal,/turf/simulated/floor/darkblue,/area/prefab/spider_radio)
+"sG" = (/obj/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"sM" = (/obj/cable{icon_state = "4-8"},/obj/decal/tile_edge/stripe/extra_big{icon_state = "xtra_bigstripe-corner"},/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"tw" = (/obj/decal/pole{pixel_x = 12},/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/spider_radio)
+"ue" = (/obj/storage/crate/internals,/obj/decal/tile_edge/stripe/extra_big{dir = 1},/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"ux" = (/obj/cable{icon_state = "4-8"},/obj/machinery/door/airlock/pyro/security/alt{dir = 8},/turf/simulated/floor/longtile/black,/area/prefab/spider_radio)
+"uX" = (/obj/decal/fakeobjects/vacuumtape,/obj/cable{d2 = 8; icon_state = "0-8"},/obj/machinery/power/data_terminal,/obj/machinery/light/small{base_state = "radio"; brightness = 1.1; desc = "Are we live?"; icon_state = "radio0"; name = "sign"; pixel_y = -6; removable_bulb = 0},/turf/simulated/floor/darkblue,/area/prefab/spider_radio)
+"xn" = (/turf/simulated/wall/false_wall/reinforced,/area/prefab/spider_radio)
+"yK" = (/obj/decal/tile_edge/line/purple{icon_state = "tile1"},/turf/simulated/floor/plating/airless/asteroid/lighted,/area/prefab/spider_radio)
+"Ca" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/spider_radio)
+"CE" = (/obj/decal/tile_edge/line/purple{icon_state = "tile1"},/obj/machinery/light/small,/turf/simulated/floor/plating/airless/asteroid/lighted,/area/prefab/spider_radio)
+"CI" = (/obj/decal/tile_edge/stripe/extra_big{dir = 8; icon_state = "xtra_bigstripe-corner"},/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"Dp" = (/obj/machinery/power/data_terminal,/obj/cable{icon_state = "0-2"},/obj/decal/fakeobjects/cpucontroller,/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"Dw" = (/turf/space,/area/allowGenerate)
+"Dz" = (/obj/landmark/artifact,/turf/simulated/floor/plating/airless/asteroid/lighted,/area/prefab/spider_radio)
+"Er" = (/obj/decal/tile_edge/line/purple{dir = 1; icon_state = "line1"},/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"ED" = (/obj/cable{icon_state = "1-4"},/obj/cable{icon_state = "4-8"},/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"FI" = (/obj/landmark/artifact,/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"GY" = (/obj/decal/fakeobjects/tallsmes,/obj/cable{d2 = 8; icon_state = "0-4"},/obj/machinery/power/data_terminal,/turf/simulated/floor/darkblue,/area/prefab/spider_radio)
+"Hg" = (/obj/storage/crate{desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it."; icon = 'icons/misc/halloween.dmi'; name = "dented crate"},/obj/item/paper/tug/warehouse,/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"HH" = (/obj/cable{d2 = 8; icon_state = "0-8"},/obj/machinery/light/small{dir = 4; pixel_x = 12},/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"IZ" = (/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/decal/tile_edge/line/purple{dir = 5; icon_state = "line1"},/obj/decal/tile_edge/line/purple{dir = 9; icon_state = "line1"},/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"Ld" = (/obj/storage/crate/internals,/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"Mm" = (/mob/living/critter/spider,/obj/item/storage/box/record/notaquario,/turf/simulated/floor/wood/two,/area/prefab/spider_radio)
+"Mx" = (/obj/stool/chair/comfy{dir = 4},/obj/machinery/light/emergency{dir = 8; pixel_x = -16},/turf/simulated/floor/wood/two,/area/prefab/spider_radio)
+"NU" = (/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/storage/crate{desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it."; icon = 'icons/misc/halloween.dmi'; name = "dented crate"},/obj/item/paper/tug/warehouse,/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"Ou" = (/obj/decal/tile_edge/stripe/extra_big{dir = 4; icon_state = "xtra_bigstripe-corner"},/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"Pn" = (/obj/decal/tile_edge/line/black{dir = 1; icon_state = "tile1"},/obj/storage/crate{desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it."; icon = 'icons/misc/halloween.dmi'; name = "dented crate"},/obj/item/paper/tug/warehouse,/obj/item/cigpacket/cigarillo/juicer,/obj/item/cigpacket/cigarillo/juicer,/obj/item/cigpacket/cigarillo/juicer,/obj/decal/fakeobjects/lightbulb_broken{dir = 1},/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"Qs" = (/obj/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/cable{icon_state = "4-8"},/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"Rf" = (/obj/cable{icon_state = "1-4"},/obj/decal/fakeobjects/vacuumtape,/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/power/data_terminal,/obj/machinery/light/emergency{dir = 8; pixel_x = -16},/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"RM" = (/obj/storage/crate,/obj/item/paper/tug/warehouse,/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"Tg" = (/obj/cable,/obj/machinery/power/data_terminal,/obj/decal/fakeobjects/vacuumtape,/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"Uf" = (/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"Ul" = (/obj/decal/tile_edge/line/black{dir = 1; icon_state = "tile1"},/obj/decal/fakeobjects/operatorconsole,/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"UI" = (/obj/decal/fakeobjects/vacuumtape,/obj/cable{d2 = 8; icon_state = "0-8"},/obj/machinery/power/data_terminal,/turf/simulated/floor/darkblue,/area/prefab/spider_radio)
+"UM" = (/obj/cable{icon_state = "4-8"},/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+"Wd" = (/obj/decal/fakeobjects/cargopad,/turf/simulated/floor/industrial,/area/prefab/spider_radio)
+
+(1,1,1) = {"
+DwDwDwDwDwDwDwDwnenenenenenenenecFbKbKbKbKnenenenenenenenenebKbKneneneneDwDwDwDwDwDwDwDw
+DwDwDwDwDwDwDwnenenenecFbKbKbKbKbKbKbKbKbKcFcFnenenenenenebKbKbKbKbKneneneDwDwDwDwDwDwDw
+DwDwDwDwDwDwnenenenenecFbKbKbKbKbKbKbKbKbKbKcFnenenenenebKbKbKbKbKbKbKneneDwDwDwDwDwDwDw
+DwDwDwDwnenenenenenecFbKbKbKbKbKbKbKbKbKbKbKbKcFnenecFcFbKbKbKbKbKbKbKneneDwDwDwDwDwDwDw
+DwDwDwDwnenenecFbKbKbKbKbKbKbKbKbKbKbKbKbKbKbKbKcFcFcFcFbKbKbKbKbKbKbKneneDwDwDwDwDwDwDw
+DwDwDwnenenecFbKCaCaCaCaCaCaCabKbKbKbKbKbKbKbKbKbKcFcFcFbKbKbKbKbKbKbKneneDwDwDwDwDwDwDw
+DwDwnenenenecFbKCaCaMxMmkACaCabKbKbKbKbKbKbKbKbKbKbKcFcFcFbKbKbKbKbKbKneneDwDwDwDwDwDwDw
+DwnenenenecFbKbKCaCaCaxnCaCaCabKbKbKbKbKcFcFbKbKbKbKbKcFcFbKbKbKbKbKbKneneDwDwDwDwDwDwDw
+nenenenebKbKbKbKCaCaGYnwcBCaCabKbKbKcFcFcFcFcFcFbKbKbKcFcFcFbKbKbKbKneneDwDwDwDwDwDwDwDw
+nenecFcFbKbKbKbKCaCasheVUICaCabKbKcFcFcFcFcFcFcFcFcFcFcFcFcFneneneneneneDwDwDwDwDwDwDwDw
+necFcFbKbKbKbKbKCaCasheVuXCaCabKcFcFcFbKbKbKbKcFcFcFcFcFcFneneneneDwDwDwDwDwDwDwDwDwDwDw
+cFcFbKbKbKbKbKbKCaCasheVUICaCabKcFcFcFcFbKbKbKbKbKbKbKcFneneneneDwDwDwDwDwDwDwDwDwDwDwDw
+cFbKbKbKbKbKCaCaCaCaCabmCaCaCacFcFcFcFcFcFcFbKbKbKbKbKbKneneneDwDwDwDwDwDwDwDwDwDwDwDwDw
+bKbKbKbKbKbKCaCaCaCaUldkPnCatwCEyKyKbKbKcFcFbKbKbKbKbKbKneneneDwDwDwDwDwDwDwDwDwDwDwDwDw
+bKbKbKbKbKDzCaCaDpooErIZErCaCaCaryCabKbKbKbKbKbKbKbKbKbKbKneneneDwDwDwDwDwDwDwDwDwDwDwDw
+bKbKbKbKcFcFCaCaRfEDsMEDQsuxsGUfUfCabKbKbKbKbKbKbKbKbKbKbKneneneDwDwDwDwDwDwDwDwDwDwDwDw
+nebKbKbKcFcFCaCaTgOuWdCIkKCaowUMHHCabKbKbKbKbKbKbKbKbKbKcFneneneneneneneneneneDwDwDwDwDw
+nebKbKbKcFcFCaCaUfUfgUUfhRCaCaCaCaCabKbKbKbKbKbKbKbKbKbKcFcFnenenenebKbKbKneneneDwDwDwDw
+nebKbKbKbKcFCaCauenGpXkfjlCaCacFbKbKbKbKbKbKbKbKnebKcFcFcFcFcFbKbKbKbKbKbKbKnenenenenene
+nenebKbKbKcFCaCaqGRMHgLdbSCaCabKbKbKbKbKbKbKnenenenecFcFcFcFcFcFbKbKbKbKbKbKbKbKnenenene
+nenebKbKbKbKCaCahiRMFIrfNUCaCabKbKbKbKnenenenenenenenenecFbKcFcFcFcFbKbKbKbKbKbKbKnebKbK
+nenebKbKbKbKCaCaCaCaCaCapaCaCabKbKbKneneneneDwDwDwDwnenecFbKbKcFcFcFcFcFbKbKbKbKbKbKbKbK
+DwnenebKbKbKCaCaCaCaCaCapaCaCabKbKbKneneneDwDwDwDwDwnenebKbKbKbKbKbKcFcFcFbKbKbKbKbKbKne
+DwnenenebKbKbKbKbKbKbKbKbKbKbKbKbKneneneDwDwDwDwDwDwnenebKbKbKbKbKbKbKcFcFbKbKbKbKbKbKne
+DwDwnenenecFbKbKbKbKbKbKbKbKbKneneneneneDwDwDwDwDwDwnenebKbKbKbKbKbKbKbKcFbKbKbKbKbKbKbK
+DwDwDwnenenenecFnebKbKbKbKcFneneneDwDwDwDwDwDwDwDwDwDwnenebKbKbKbKbKbKbKcFcFbKbKbKbKbKbK
+DwDwDwDwneneneneneneneneneneneneDwDwDwDwDwDwDwDwDwDwDwDwnenenebKbKbKbKbKbKcFbKcFbKbKbKne
+DwDwDwDwDwDwDwneneneneneneneDwDwDwDwDwDwDwDwDwDwDwDwDwDwnenenenebKbKbKbKbKbKbKbKbKbKnene
+DwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwnenenenebKbKbKbKbKbKbKnenene
+DwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwnenenenebKbKbKbKbKbKnenene
+DwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwDwnenenenenenenebKnenenenene
+"}

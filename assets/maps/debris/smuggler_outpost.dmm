@@ -1,0 +1,306 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/space,
+/area/noGenerate)
+"e" = (
+/obj/stool,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/smuggler_outpost)
+"i" = (
+/turf/simulated/wall/asteroid{
+	dir = 5
+	},
+/area/prefab/smuggler_outpost)
+"k" = (
+/turf/simulated/wall/asteroid{
+	dir = 8
+	},
+/area/prefab/smuggler_outpost)
+"s" = (
+/turf/simulated/wall/asteroid{
+	dir = 9
+	},
+/area/prefab/smuggler_outpost)
+"w" = (
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/smuggler_outpost)
+"A" = (
+/turf/simulated/wall/asteroid{
+	dir = 10
+	},
+/area/prefab/smuggler_outpost)
+"F" = (
+/turf/simulated/wall/asteroid{
+	dir = 1
+	},
+/area/prefab/smuggler_outpost)
+"G" = (
+/turf/simulated/wall/asteroid,
+/area/prefab/smuggler_outpost)
+"H" = (
+/obj/item/paper/brad_punchcard,
+/obj/storage/crate/loot{
+	desc = "A particularily old crate.";
+	name = "old crate"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/smuggler_outpost)
+"K" = (
+/obj/item/mine/stun/armed,
+/turf/space,
+/area/prefab/smuggler_outpost)
+"L" = (
+/turf/simulated/wall/asteroid{
+	dir = 4
+	},
+/area/prefab/smuggler_outpost)
+"O" = (
+/obj/item/paper{
+	info = "Ok you said nannertracen wont find us out hear and now they'have base just west of hear to do mineing from. Putting crates hear is very stuped and we should move them. - Bores";
+	name = "crumpled note"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/smuggler_outpost)
+"Q" = (
+/obj/table/auto,
+/obj/item/paper{
+	info = "Ok Boris, you know what? Until you can spell your own fucking name right we're not going to let you make tactical decisions regarding the loot. I've put code locks on these things anyway, it'll be fine. Pickup is next week. And for fucks sake, read a book. - Daniel";
+	name = "hastily scribbled note"
+	},
+/obj/item/gun/kinetic/zipgun,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/smuggler_outpost)
+"V" = (
+/obj/storage/crate/loot,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/smuggler_outpost)
+"W" = (
+/turf/simulated/wall/asteroid{
+	dir = 6
+	},
+/area/prefab/smuggler_outpost)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+s
+k
+A
+a
+s
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+s
+G
+G
+a
+F
+A
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+s
+G
+G
+W
+W
+a
+i
+i
+"}
+(4,1,1) = {"
+a
+a
+a
+G
+G
+G
+W
+W
+a
+a
+a
+F
+"}
+(5,1,1) = {"
+a
+a
+G
+G
+W
+L
+W
+a
+a
+a
+a
+F
+"}
+(6,1,1) = {"
+a
+G
+G
+G
+G
+a
+a
+a
+a
+a
+s
+s
+"}
+(7,1,1) = {"
+a
+G
+G
+G
+A
+A
+K
+a
+K
+s
+s
+a
+"}
+(8,1,1) = {"
+a
+G
+G
+G
+G
+A
+k
+w
+k
+s
+G
+a
+"}
+(9,1,1) = {"
+G
+G
+G
+V
+V
+O
+G
+w
+G
+G
+G
+a
+"}
+(10,1,1) = {"
+G
+G
+V
+w
+w
+w
+w
+w
+G
+G
+G
+a
+"}
+(11,1,1) = {"
+G
+G
+V
+e
+Q
+e
+w
+w
+G
+G
+G
+a
+"}
+(12,1,1) = {"
+G
+G
+H
+w
+w
+w
+w
+w
+G
+G
+a
+a
+"}
+(13,1,1) = {"
+a
+G
+G
+V
+V
+w
+w
+G
+G
+G
+a
+a
+"}
+(14,1,1) = {"
+a
+G
+G
+G
+G
+G
+G
+G
+G
+a
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+G
+G
+G
+G
+G
+G
+a
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+a
+a
+a
+G
+a
+a
+a
+a
+a
+a
+"}

@@ -1,0 +1,52 @@
+"a" = (/turf/space,/area/noGenerate)
+"d" = (/turf/simulated/wall/asteroid,/area/noGenerate)
+"f" = (/turf/simulated/floor/airless/scorched,/area/abandonedmedicalship)
+"g" = (/obj/decal/cleanable/robot_debris{icon_state = "gibdown"},/turf/simulated/floor/airless/damaged5,/area/abandonedmedicalship)
+"h" = (/turf/simulated/floor/airless/damaged4,/area/abandonedmedicalship)
+"j" = (/turf/simulated/shuttle/wall,/area/abandonedmedicalship)
+"m" = (/obj/decal/cleanable/robot_debris{icon_state = "gib5"},/obj/critter/zombie/scientist,/turf/space,/area/abandonedmedicalship)
+"o" = (/obj/lattice,/obj/table/auto,/obj/item/bloodslide,/obj/item/bloodslide,/obj/item/bloodslide,/obj/item/bloodslide,/obj/item/bloodslide,/turf/space,/area/abandonedmedicalship)
+"p" = (/obj/lattice,/obj/decal/cleanable/robot_debris,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
+"q" = (/obj/lattice,/obj/decal/cleanable/robot_debris{icon_state = "gibdown"},/obj/table/auto,/turf/space,/area/abandonedmedicalship)
+"s" = (/obj/lattice,/obj/decal/cleanable/robot_debris{icon_state = "gibdown"},/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
+"t" = (/turf/simulated/shuttle/wall{icon_state = "door1"; name = "broken door"},/area/abandonedmedicalship)
+"u" = (/obj/decal/cleanable/robot_debris{icon_state = "gib2"},/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
+"v" = (/turf/simulated/floor/airless/grime,/area/abandonedmedicalship)
+"w" = (/obj/lattice,/turf/space,/area/abandonedmedicalship)
+"x" = (/obj/lattice,/obj/decal/cleanable/robot_debris{icon_state = "gib7"},/turf/space,/area/abandonedmedicalship)
+"z" = (/obj/machinery/vending/pathology,/turf/simulated/floor/airless/scorched,/area/abandonedmedicalship)
+"C" = (/obj/table/auto,/obj/item/synthmodule/assistant,/turf/simulated/floor/airless/damaged4,/area/abandonedmedicalship)
+"D" = (/obj/machinery/bot/medbot/mysterious/emagged,/turf/simulated/floor/airless/damaged4,/area/abandonedmedicalship)
+"E" = (/obj/lattice,/obj/decal/cleanable/robot_debris{icon_state = "gib5"},/obj/machinery/telejam/active,/turf/space,/area/abandonedmedicalship)
+"H" = (/obj/table/auto,/obj/item/reagent_containers/glass/petridish,/obj/item/reagent_containers/glass/petridish,/obj/item/reagent_containers/glass/petridish,/turf/simulated/floor/airless/damaged4,/area/abandonedmedicalship)
+"I" = (/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
+"J" = (/obj/critter/gunbot/drone/buzzdrone,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
+"L" = (/turf/simulated/shuttle/wall{dir = 4; icon_state = "wall_space"},/area/abandonedmedicalship)
+"M" = (/obj/storage/secure/closet/medical,/turf/simulated/floor/airless/grime,/area/abandonedmedicalship)
+"N" = (/obj/machinery/door/unpowered/shuttle,/turf/simulated/floor/airless/grime,/area/abandonedmedicalship)
+"O" = (/obj/decal/cleanable/robot_debris{icon_state = "gib5"},/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
+"Q" = (/turf/simulated/shuttle/wall{icon_state = "wall_space"},/area/abandonedmedicalship)
+"V" = (/obj/machinery/shuttle/engine/propulsion,/turf/space,/area/noGenerate)
+"W" = (/obj/machinery/shuttle/engine/heater,/turf/simulated/shuttle/wall,/area/abandonedmedicalship)
+"X" = (/obj/decal/cleanable/robot_debris,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
+"Y" = (/turf/simulated/floor/airless/damaged3,/area/abandonedmedicalship)
+
+(1,1,1) = {"
+aadddddaaaa
+addddddaaaa
+addddddaaaa
+ddddddddddd
+IIdddddIIdd
+aIddddIIIdd
+dIIIddddIaa
+dduddddddaa
+jpsXJOddaaa
+jjjNjjjaaaa
+jMwvwMjaaaa
+jwgfYxtaaaa
+jfYEwmjaaaa
+jzwhvojaaaa
+jDwHCqjaaaa
+QWWWWWLaaaa
+aVVaVVaaaaa
+"}

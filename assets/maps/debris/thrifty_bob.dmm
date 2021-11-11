@@ -1,0 +1,987 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"as" = (
+/obj/submachine/ATM{
+	pixel_x = 32
+	},
+/obj/item/seed/alien,
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"aJ" = (
+/obj/marker/supplymarker,
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"bu" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"bD" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	name = "salvage belt - east";
+	operating = 1
+	},
+/obj/machinery/mass_driver{
+	dir = 4;
+	drive_range = 5;
+	id = "salvage_in"
+	},
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"bH" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 6
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"dB" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	name = "salvage belt - west";
+	operating = 1
+	},
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"dZ" = (
+/obj/landmark/artifact,
+/turf/simulated/floor/plating/damaged2,
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"es" = (
+/obj/grille/catwalk{
+	dir = 9
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"fR" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 5
+	},
+/turf/space,
+/area/noGenerate)
+"iT" = (
+/obj/landmark/artifact,
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"mw" = (
+/turf/space,
+/area/noGenerate)
+"ng" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	name = "salvage belt - east";
+	operating = 1
+	},
+/obj/machinery/door/poddoor{
+	id = "salvage_in";
+	name = "GLOMAR Salvager"
+	},
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"nF" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/space,
+/area/noGenerate)
+"nJ" = (
+/obj/grille/catwalk{
+	dir = 6;
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 6
+	},
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"nP" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 9
+	},
+/turf/space,
+/area/noGenerate)
+"oT" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	name = "salvage belt - west";
+	operating = 1
+	},
+/obj/machinery/mass_driver{
+	dir = 8;
+	drive_range = 100;
+	id = "salvage_out"
+	},
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"pd" = (
+/obj/machinery/crusher,
+/obj/map/light/white,
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"pD" = (
+/obj/decal/fakeobjects/shuttleengine{
+	desc = "A robotic claw, it might still work.";
+	dir = 4;
+	name = "robotic claw"
+	},
+/turf/space,
+/area/noGenerate)
+"qj" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	name = "salvage belt - east";
+	operating = 1
+	},
+/obj/machinery/mass_driver{
+	dir = 4;
+	drive_range = 5;
+	id = "salvage_in"
+	},
+/turf/simulated/floor/plating/airless,
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"rm" = (
+/obj/grille/catwalk{
+	dir = 1;
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"rD" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	name = "salvage belt - east";
+	operating = 1
+	},
+/obj/machinery/crusher,
+/obj/map/light/white,
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"tg" = (
+/obj/lattice,
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/space,
+/area/noGenerate)
+"uV" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/noGenerate)
+"vb" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "wall3_space"
+	},
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"wp" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3_space"
+	},
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"xq" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3_space"
+	},
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"yn" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b"
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 5
+	},
+/turf/space,
+/area/noGenerate)
+"yN" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 1
+	},
+/turf/space,
+/area/noGenerate)
+"yV" = (
+/obj/grille/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5
+	},
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"zl" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 10
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"zL" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/space,
+/area/noGenerate)
+"zU" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	name = "salvage belt - west";
+	operating = 1
+	},
+/obj/machinery/launcher_loader/west,
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"AH" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	name = "salvage belt - east";
+	operating = 1
+	},
+/obj/machinery/launcher_loader/east,
+/turf/simulated/floor/plating/airless,
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"BC" = (
+/obj/storage/crate/loot,
+/turf/simulated/floor/plating/damaged2,
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"Cc" = (
+/obj/grille/catwalk{
+	dir = 10
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1;
+	icon_state = "catwalk_cross"
+	},
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"Cn" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/space,
+/area/noGenerate)
+"Ct" = (
+/obj/decal/skeleton,
+/obj/item/paper/printout/emerg1,
+/turf/simulated/floor/airless/plating/damaged3,
+/area/noGenerate)
+"DA" = (
+/obj/grille/catwalk{
+	dir = 6
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	icon_state = "catwalk_cross"
+	},
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"EG" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 6
+	},
+/turf/space,
+/area/noGenerate)
+"Gl" = (
+/obj/decal/fakeobjects/shuttlethruster{
+	dir = 8
+	},
+/turf/space,
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"Gy" = (
+/obj/map/light/white,
+/obj/machinery/manufacturer/hangar,
+/turf/simulated/floor/plating/damaged2,
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"He" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 5
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"Hl" = (
+/obj/machinery/mass_driver{
+	dir = 8;
+	drive_range = 100;
+	id = "salvage_out"
+	},
+/obj/machinery/door/poddoor{
+	id = "salvage_out";
+	name = "GLOMAR Salvager"
+	},
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"HM" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "wall3_space"
+	},
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"Il" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 9
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"IK" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"JW" = (
+/obj/storage/crate/loot,
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"Li" = (
+/obj/npc/trader/robot{
+	name = "Thrifty B.O.B.";
+	picture = "loungebuddy.png";
+	trader_area = "/area/evilreaver/storage/engineering"
+	},
+/obj/map/light/white,
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"Lo" = (
+/obj/grille/catwalk{
+	dir = 5
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	icon_state = "catwalk_cross"
+	},
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"Mz" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/space,
+/area/noGenerate)
+"Nc" = (
+/obj/lattice,
+/obj/decal/fakeobjects/pipe,
+/turf/space,
+/area/noGenerate)
+"Oc" = (
+/turf/simulated/floor/plating/damaged2,
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"Ov" = (
+/obj/grille/catwalk{
+	dir = 10;
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 10
+	},
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"OZ" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "wall3_space"
+	},
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"PZ" = (
+/turf/simulated/floor/plating/airless,
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"Qi" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/space,
+/area/noGenerate)
+"Qm" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"RJ" = (
+/obj/grille/catwalk{
+	dir = 9;
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 9
+	},
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"St" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/space,
+/area/noGenerate)
+"Sv" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 6
+	},
+/turf/space,
+/area/noGenerate)
+"SO" = (
+/obj/machinery/door/airlock/classic,
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"SX" = (
+/turf/space,
+/area/allowGenerate)
+"TO" = (
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"UW" = (
+/obj/map/light/white,
+/obj/machinery/manufacturer/mining,
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"VY" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"Wy" = (
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "wall3_space"
+	},
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"WV" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 10
+	},
+/turf/space,
+/area/noGenerate)
+"Xj" = (
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
+"Zi" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	name = "salvage belt - east";
+	operating = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"ZZ" = (
+/obj/decal/fakeobjects/shuttleengine{
+	desc = "A robotic claw, it might still work.";
+	name = "robotic claw"
+	},
+/turf/space,
+/area/noGenerate)
+
+(1,1,1) = {"
+mw
+mw
+mw
+mw
+mw
+mw
+mw
+bu
+mw
+mw
+mw
+mw
+mw
+mw
+"}
+(2,1,1) = {"
+mw
+mw
+mw
+mw
+mw
+mw
+mw
+IK
+mw
+mw
+mw
+mw
+mw
+mw
+"}
+(3,1,1) = {"
+mw
+uV
+mw
+mw
+mw
+mw
+bu
+IK
+bu
+mw
+mw
+mw
+mw
+mw
+"}
+(4,1,1) = {"
+EG
+Ct
+fR
+mw
+mw
+Sv
+Zi
+Nc
+TO
+yn
+mw
+yN
+fR
+mw
+"}
+(5,1,1) = {"
+WV
+pD
+nP
+mw
+mw
+Mz
+Zi
+IK
+TO
+Qi
+mw
+mw
+ZZ
+fR
+"}
+(6,1,1) = {"
+mw
+nF
+mw
+mw
+mw
+zL
+Zi
+IK
+TO
+St
+mw
+yN
+nP
+nF
+"}
+(7,1,1) = {"
+mw
+nF
+mw
+mw
+mw
+OZ
+AH
+VY
+Hl
+wp
+mw
+mw
+mw
+nF
+"}
+(8,1,1) = {"
+mw
+nF
+mw
+mw
+mw
+Qm
+qj
+VY
+oT
+Qm
+mw
+mw
+mw
+nF
+"}
+(9,1,1) = {"
+mw
+VY
+mw
+Wy
+VY
+Qm
+bD
+VY
+oT
+Qm
+VY
+xq
+mw
+VY
+"}
+(10,1,1) = {"
+mw
+HM
+xq
+VY
+bH
+Il
+ng
+VY
+zU
+zl
+He
+VY
+Wy
+vb
+"}
+(11,1,1) = {"
+mw
+mw
+VY
+VY
+Qm
+VY
+rD
+VY
+dB
+VY
+Qm
+VY
+VY
+mw
+"}
+(12,1,1) = {"
+mw
+mw
+Mz
+VY
+pd
+BC
+Xj
+Li
+aJ
+dZ
+pd
+VY
+Qi
+mw
+"}
+(13,1,1) = {"
+mw
+mw
+Mz
+VY
+Qm
+JW
+Xj
+Xj
+Xj
+iT
+Qm
+VY
+Qi
+mw
+"}
+(14,1,1) = {"
+mw
+mw
+VY
+VY
+pd
+BC
+Xj
+Xj
+Xj
+Oc
+pd
+VY
+VY
+mw
+"}
+(15,1,1) = {"
+mw
+mw
+HM
+VY
+Qm
+UW
+as
+Xj
+Oc
+Gy
+Qm
+VY
+vb
+mw
+"}
+(16,1,1) = {"
+mw
+mw
+mw
+VY
+zl
+He
+VY
+SO
+VY
+bH
+Il
+VY
+mw
+mw
+"}
+(17,1,1) = {"
+SX
+mw
+mw
+Gl
+vb
+tg
+VY
+Xj
+VY
+tg
+HM
+Gl
+mw
+mw
+"}
+(18,1,1) = {"
+SX
+SX
+mw
+mw
+mw
+Mz
+VY
+Xj
+VY
+Qi
+mw
+mw
+mw
+SX
+"}
+(19,1,1) = {"
+SX
+SX
+SX
+mw
+Wy
+VY
+VY
+SO
+VY
+VY
+xq
+mw
+mw
+SX
+"}
+(20,1,1) = {"
+SX
+SX
+SX
+mw
+Cn
+RJ
+es
+PZ
+es
+Ov
+Cn
+mw
+SX
+SX
+"}
+(21,1,1) = {"
+SX
+SX
+SX
+mw
+Cn
+Cc
+rm
+PZ
+rm
+DA
+Cn
+mw
+SX
+SX
+"}
+(22,1,1) = {"
+SX
+SX
+SX
+mw
+VY
+yV
+Lo
+PZ
+Lo
+nJ
+VY
+mw
+SX
+SX
+"}
+(23,1,1) = {"
+SX
+SX
+SX
+mw
+HM
+VY
+VY
+VY
+VY
+VY
+vb
+mw
+SX
+SX
+"}
+(24,1,1) = {"
+SX
+SX
+SX
+mw
+mw
+Gl
+Gl
+mw
+Gl
+Gl
+mw
+mw
+SX
+SX
+"}

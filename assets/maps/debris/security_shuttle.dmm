@@ -1,0 +1,73 @@
+"ak" = (/turf/simulated/floor,/area/abandonedship)
+"bj" = (/turf/simulated/floor/red/side{dir = 1},/area/abandonedship)
+"bA" = (/obj/machinery/portable_atmospherics/canister/oxygen,/turf/simulated/floor/airless/damaged5,/area/abandonedship)
+"cl" = (/obj/item/storage/toilet{dir = 4},/turf/simulated/floor/airless/damaged2,/area/abandonedship)
+"cH" = (/obj/decal/floatingtiles{icon_state = "floattiles3"},/turf/simulated/floor/airless/plating/damaged2,/area/abandonedship)
+"da" = (/turf/simulated/floor/red/side{dir = 6},/area/abandonedship)
+"er" = (/obj/item/raw_material/rock{icon_state = "rock2"},/turf/simulated/floor/airless/grime,/area/abandonedship)
+"fo" = (/obj/securearea,/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/abandonedship)
+"fU" = (/turf/simulated/wall/asteroid{dir = 4},/area/noGenerate)
+"ha" = (/turf/simulated/floor/airless/damaged5,/area/abandonedship)
+"it" = (/turf/simulated/floor/red/side{dir = 4},/area/abandonedship)
+"jO" = (/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
+"lG" = (/obj/storage/secure/closet/security/equipment,/turf/simulated/floor/red/side{dir = 10},/area/abandonedship)
+"lZ" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/machine_debris{icon_state = "gib7"},/turf/simulated/floor/airless/grime,/area/abandonedship)
+"ms" = (/turf/simulated/floor/red/side{dir = 5},/area/abandonedship)
+"mX" = (/turf/simulated/floor/plating/airless/asteroid,/area/abandonedship)
+"nb" = (/obj/computerframe{desc = "It is highly unlikely that this still works."; icon = 'icons/obj/computer.dmi'; icon_state = "datamedb"; name = "smashed computer"},/obj/map/light/screen,/turf/simulated/floor/carpet/grime,/area/abandonedship)
+"ob" = (/obj/machinery/computer/security/wooden_tv{network = "Prison"},/turf/simulated/floor/carpet/grime,/area/abandonedship)
+"oZ" = (/obj/structure/girder/displaced,/turf/simulated/floor/plating/airless/asteroid,/area/abandonedship)
+"pV" = (/obj/table/reinforced/auto,/obj/machinery/recharger,/obj/item/clothing/under/color/purple,/obj/item/clothing/head/that/purple,/obj/item/clothing/glasses/thermal/orange,/turf/simulated/floor/carpet/grime,/area/abandonedship)
+"qI" = (/obj/table/auto,/obj/item/plate,/obj/item/reagent_containers/food/snacks/burger/moldy,/turf/simulated/floor/airless/plating/damaged2,/area/abandonedship)
+"rt" = (/obj/decal/floatingtiles{icon_state = "floattiles2"},/turf/simulated/floor/airless/plating/damaged2,/area/abandonedship)
+"rQ" = (/obj/grille/steel,/obj/window/crystal/reinforced,/obj/window/crystal/reinforced/west,/obj/window/crystal/reinforced/north,/obj/window/crystal/reinforced/south,/turf/simulated/floor/plating,/area/abandonedship)
+"sd" = (/turf/simulated/wall/asteroid,/area/abandonedship)
+"tH" = (/obj/stool/chair{dir = 4},/obj/critter/mouse{name = "Sgt. Pepper"},/turf/simulated/floor/carpet/grime,/area/abandonedship)
+"ve" = (/obj/stool/bed,/obj/item/clothing/under/gimmick/dawson{name = "hipster clothes"},/obj/item/clothing/suit/bedsheet{bcolor = "yellow"; icon_state = "bedsheet-yellow"},/turf/simulated/floor/airless/plating/damaged2,/area/abandonedship)
+"vV" = (/obj/stool/bed,/obj/decal/cleanable/cobweb,/obj/item/clothing/glasses/vr{network = "arcadevr"},/turf/simulated/floor/airless/grime,/area/abandonedship)
+"wQ" = (/obj/item/raw_material/shard/glass,/turf/simulated/floor/airless/plating/damaged2,/area/abandonedship)
+"xl" = (/obj/machinery/computer/secure_data/detective_computer,/turf/simulated/floor/carpet/grime,/area/abandonedship)
+"zp" = (/obj/critter/gunbot/drone/heavydrone,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
+"zA" = (/obj/decal/fakeobjects/firelock_broken{density = 1; desc = "This airlock seems to be badly damaged."; icon = 'icons/obj/doors/Doorext.dmi'; icon_state = "door_locked"; name = "broken airlock"},/turf/simulated/floor/airless/scorched,/area/abandonedship)
+"Cj" = (/obj/table/reinforced/auto,/obj/machinery/recharger,/obj/machinery/light/small{dir = 8},/turf/simulated/floor/red/side{dir = 8},/area/abandonedship)
+"DO" = (/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/abandonedship)
+"Ez" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/airless/grime,/area/abandonedship)
+"Fz" = (/turf/space,/area/noGenerate)
+"Gn" = (/obj/grille/steel,/obj/window/crystal/reinforced,/obj/window/crystal/reinforced/east,/obj/window/crystal/reinforced/north,/obj/window/crystal/reinforced/south,/turf/simulated/floor/plating,/area/abandonedship)
+"Hb" = (/obj/stool/bed,/obj/decal/skeleton{desc = "Eugh, the stench is horrible!"; icon = 'icons/misc/hstation.dmi'; icon_state = "body6"; name = "decomposed corpse"},/obj/item/clothing/suit/bedsheet{bcolor = "yellow"; icon_state = "bedsheet-yellow"},/obj/decal/cleanable/gangtag{desc = "A hastily-scrawled sequence of numbers: 1-949-415-6298. What does it mean?"; icon = 'icons/obj/junk.dmi'; icon_state = "shitty_bill"; name = "graffiti"; pixel_y = -32},/obj/decal/cleanable/dirt,/obj/item/device/radio/electropack,/turf/simulated/floor/airless/grime,/area/abandonedship)
+"Ja" = (/obj/stool/bed,/obj/overlay{desc = "Oh.  So THAT'S where he went off to."; icon = 'icons/misc/hstation.dmi'; icon_state = "clowncorpse"; layer = 4; name = "Iji"},/obj/item/clothing/suit/bedsheet{bcolor = "yellow"; icon_state = "bedsheet-yellow"},/obj/decal/cleanable/dirt,/turf/simulated/floor/airless/damaged3,/area/abandonedship)
+"Lh" = (/turf/simulated/floor/carpet/grime,/area/abandonedship)
+"LE" = (/turf/simulated/wall/asteroid{dir = 6},/area/noGenerate)
+"LQ" = (/turf/simulated/shuttle/wall{dir = 1; icon_state = "wall3_space"},/area/abandonedship)
+"MM" = (/obj/storage/secure/closet/security/equipment,/turf/simulated/floor/red/side{dir = 9},/area/abandonedship)
+"MT" = (/obj/decal/cleanable/oil,/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/abandonedship)
+"NN" = (/turf/simulated/wall/asteroid{dir = 1},/area/noGenerate)
+"Ok" = (/turf/simulated/shuttle/wall{dir = 8; icon_state = "wall3_space"},/area/abandonedship)
+"PV" = (/obj/item/raw_material/rock,/obj/critter/gunbot/drone/buzzdrone{wanderer = 0},/turf/simulated/floor/plating/airless/asteroid,/area/abandonedship)
+"QH" = (/turf/simulated/wall/asteroid,/area/noGenerate)
+"Rf" = (/obj/structure/girder/displaced,/turf/simulated/floor/airless/plating/damaged2,/area/abandonedship)
+"Rl" = (/obj/decal/fakeobjects/shuttlethruster,/turf/space,/area/abandonedship)
+"SK" = (/obj/decal/floatingtiles{dir = 4; icon_state = "floattiles4"},/turf/simulated/floor/airless/damaged3,/area/abandonedship)
+"Tf" = (/obj/decal/cleanable/machine_debris,/turf/simulated/floor/airless/damaged3,/area/abandonedship)
+"Wj" = (/turf/simulated/wall/asteroid{dir = 5},/area/noGenerate)
+"WT" = (/obj/machinery/door/airlock/security{name = "Prisoner Transfer Ship"; req_access_txt = "1"},/turf/simulated/floor/delivery,/area/abandonedship)
+"Xe" = (/obj/item/storage/secure/ssafe/loot{pixel_x = 6; pixel_y = -28},/turf/simulated/floor/carpet/grime,/area/abandonedship)
+"Xw" = (/obj/table/reinforced/auto,/obj/item/device/radio/intercom{broadcasting = 0; dir = 4; frequency = 1489; name = "Prison Ship Intercom"},/obj/item/paper_bin,/obj/item/pen,/obj/item/device/light/glowstick,/turf/simulated/floor/carpet/grime,/area/abandonedship)
+"YB" = (/turf/simulated/floor/red/side,/area/abandonedship)
+
+(1,1,1) = {"
+FzOkDOrQGnDOLQfUfUFz
+FzDOXwLhnbobDOfUfUfU
+FzDOpVLhtHLhDOfUfUjO
+FzDOxlLhLhXeDOfUjOzp
+OkDODOWTDODODOLQjOFz
+DOMMbjmsfortbADOjOFz
+DOCjakitWTTfcHzAjOFz
+DOlGYBdafoSKwQDOjOjO
+DODODOWTDODORfMTNNjO
+RlDOvVhaerveoZsdQHWj
+FzDOclTfrtqIoZPVQHQH
+FzMTHbEzlZJaMTmXjOLE
+OkMTDOrQGnDODOLQFzFz
+RlRlRlFzFzRlRlRlFzFz
+"}

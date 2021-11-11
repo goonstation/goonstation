@@ -1,0 +1,20 @@
+"a" = (/turf/space,/area/noGenerate)
+"e" = (/turf/simulated/shuttle/wall{dir = 4; icon_state = "wall3_space"},/area/abandonedship)
+"p" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/airless/plating/damaged2,/area/abandonedship)
+"u" = (/obj/decal/floatingtiles{icon_state = "floattiles2"},/obj/decal/fakeobjects/firelock_broken{desc = "Rust has rendered this airlock useless."; icon = 'icons/misc/hstation.dmi'; icon_state = "bloodydoor"; name = "broken airlock"},/turf/simulated/floor/airless/plating/damaged2,/area/abandonedship)
+"y" = (/obj/decal/fakeobjects/shuttlethruster,/turf/space,/area/abandonedship)
+"B" = (/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/abandonedship)
+"E" = (/turf/simulated/shuttle/wall{dir = 1; icon_state = "wall3_space"},/area/abandonedship)
+"O" = (/turf/simulated/shuttle/wall{dir = 8; icon_state = "wall3_space"},/area/abandonedship)
+"Q" = (/obj/item/seed/alien,/turf/simulated/floor/airless/damaged2,/area/abandonedship)
+"W" = (/obj/item/storage/belt/hunter,/obj/item/clothing/under/misc/tourist,/turf/simulated/floor/airless/plating/damaged2,/area/abandonedship)
+"Y" = (/obj/decal/cleanable/dirt,/obj/computerframe,/obj/item/storage/secure/ssafe/pilot_cargo3{pixel_y = 32},/turf/simulated/floor/airless/plating/damaged1,/area/abandonedship)
+"Z" = (/turf/simulated/shuttle/wall{icon_state = "wall3_space"},/area/abandonedship)
+
+(1,1,1) = {"
+aOuBEa
+aBQYBa
+OBpWBE
+aZBBea
+aayyaa
+"}

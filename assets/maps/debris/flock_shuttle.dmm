@@ -1,0 +1,88 @@
+"ac" = (/obj/decal/fakeobjects/flock/antenna/end{dir = 4},/turf/space,/area/noGenerate)
+"bs" = (/obj/machinery/light/flock,/obj/table/flock/auto,/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"bv" = (/obj/flock_reclaimer,/obj/map/light/cyan,/obj/machinery/light/flock{dir = 8},/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"bO" = (/obj/decal/fakeobjects/flock/wing{dir = 8},/turf/space,/area/noGenerate)
+"cM" = (/turf/space,/area/noGenerate)
+"cR" = (/turf/simulated/shuttle/wall/flock,/area/flock_trader)
+"fC" = (/obj/decal/fakeobjects/flock/antenna{dir = 8},/obj/lattice/flock,/turf/space,/area/noGenerate)
+"fN" = (/obj/machinery/light/flock{dir = 4},/obj/table/flock/auto,/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"gd" = (/obj/item/furniture_parts/table/flock,/obj/table/flock/auto,/obj/machinery/light/flock,/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"hH" = (/obj/machinery/light/flock{dir = 1; pixel_y = 9},/turf/simulated/floor/shuttlebay/flock{dir = 5},/area/flock_trader)
+"ik" = (/obj/machinery/light/flock{dir = 1; pixel_y = 9},/turf/simulated/floor/shuttlebay/flock{dir = 9},/area/flock_trader)
+"lP" = (/obj/machinery/light/flock{dir = 4},/obj/decal/cleanable/flockdrone_debris/fluid,/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"mb" = (/obj/machinery/light/flock{dir = 8},/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"mB" = (/obj/decal/fakeobjects/flock/wing/broken{dir = 5},/turf/space,/area/noGenerate)
+"mS" = (/mob/living/critter/flock/drone{dormant = 1},/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"nC" = (/obj/decal/fakeobjects/flock/telepad,/obj/map/light/cyan,/obj/marker/supplymarker,/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"oG" = (/obj/decal/fakeobjects/flock/antenna{dir = 8},/turf/space,/area/noGenerate)
+"re" = (/obj/lattice/flock,/obj/machinery/light/flock{dir = 1},/turf/space,/area/noGenerate)
+"sQ" = (/turf/space,/area/allowGenerate)
+"tV" = (/obj/stool/chair/comfy/flock{dir = 4},/obj/machinery/light/flock{dir = 8},/mob/living/critter/flock/drone{dir = 4; dormant = 1},/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"uk" = (/obj/machinery/light/flock{dir = 4},/obj/machinery/light/flock{dir = 8},/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"uu" = (/obj/decal/fakeobjects/flock/antenna/broken{dir = 4; icon_state = "antenna-broken-2"},/obj/lattice/flock,/turf/space,/area/noGenerate)
+"uy" = (/obj/machinery/light/flock{dir = 4},/obj/stool/chair/comfy/flock{dir = 8},/mob/living/critter/flock/drone{dir = 8; dormant = 1},/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"uz" = (/obj/machinery/door/feather/trader{dir = 8},/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"vf" = (/obj/decal/fakeobjects/flock/antenna/end{dir = 1},/turf/space,/area/noGenerate)
+"vg" = (/obj/decal/fakeobjects/flock/wing{dir = 6},/turf/space,/area/noGenerate)
+"vV" = (/obj/table/flock/auto,/obj/machinery/light/flock{dir = 1; pixel_y = 9},/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"wE" = (/obj/map/light/cyan,/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"xp" = (/obj/decal/fakeobjects/flock/wing/destroyed{dir = 9},/turf/space,/area/noGenerate)
+"xr" = (/turf/simulated/floor/shuttlebay/flock{dir = 8},/area/flock_trader)
+"xx" = (/turf/simulated/shuttle/wall/cockpit/flock{dir = 8},/area/noGenerate)
+"xL" = (/obj/decal/fakeobjects/flock/antenna/broken{dir = 1; icon_state = "antenna-broken-2"},/turf/space,/area/noGenerate)
+"xQ" = (/obj/table/flock/auto,/obj/machinery/light/flock,/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"zu" = (/obj/decal/fakeobjects/flock/antenna/broken{icon_state = "atenna-broken-1"},/turf/space,/area/noGenerate)
+"zR" = (/turf/simulated/shuttle/wall/flock{dir = 6},/area/flock_trader)
+"BR" = (/turf/simulated/shuttle/wall/flock{dir = 5},/area/noGenerate)
+"BW" = (/obj/machinery/light/flock,/turf/simulated/floor/shuttlebay/flock{dir = 10},/area/flock_trader)
+"Du" = (/obj/machinery/door/feather/friendly,/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"Dv" = (/obj/stool/chair/comfy/flock,/obj/machinery/light/flock{dir = 1; pixel_y = 9},/mob/living/critter/flock/drone{dormant = 1},/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"DI" = (/obj/table/flock/auto,/obj/machinery/light/flock{dir = 1; pixel_y = 9},/obj/item/device/flockblocker,/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"Ej" = (/obj/wingrille_spawn/flock,/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"HB" = (/obj/wingrille_spawn/flock,/obj/machinery/light/flock{dir = 8},/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"HI" = (/turf/simulated/shuttle/wall/flock{dir = 9},/area/flock_trader)
+"Jj" = (/obj/decal/cleanable/flockdrone_debris/fluid,/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"JT" = (/turf/simulated/shuttle/wall/flock{dir = 10},/area/flock_trader)
+"JU" = (/obj/decal/cleanable/flockdrone_debris,/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"Kb" = (/obj/machinery/light/flock,/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"KA" = (/obj/decal/fakeobjects/flock/wing/destroyed{dir = 6},/turf/space,/area/noGenerate)
+"KV" = (/obj/decal/fakeobjects/flock/wing{dir = 5},/turf/space,/area/noGenerate)
+"Mt" = (/obj/flock_screen,/turf/simulated/shuttle/wall/flock,/area/flock_trader)
+"OI" = (/obj/machinery/light/flock{dir = 4},/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"Pc" = (/obj/machinery/light/flock{dir = 8},/obj/wingrille_spawn/flock,/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"PG" = (/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"Qc" = (/obj/table/flock/auto,/obj/map/light/cyan,/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"Qk" = (/obj/machinery/door/feather/friendly{dir = 4},/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"Qm" = (/obj/decal/fakeobjects/flock/antenna/broken{dir = 4; icon_state = "antenna-broken-2"},/turf/space,/area/noGenerate)
+"Sx" = (/turf/simulated/shuttle/wall/flock{dir = 5},/area/flock_trader)
+"SP" = (/obj/lattice/flock,/turf/space,/area/noGenerate)
+"UZ" = (/obj/decal/fakeobjects/flock/antenna/end{dir = 4},/obj/lattice/flock,/turf/space,/area/noGenerate)
+"Vr" = (/obj/item/organ/brain/flockdrone,/obj/table/flock/auto,/obj/machinery/light/flock,/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"VS" = (/obj/item/furniture_parts/flock_chair,/obj/table/flock/auto,/obj/machinery/light/flock{dir = 1; pixel_y = 9},/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"WZ" = (/obj/machinery/light/flock,/turf/simulated/floor/shuttlebay/flock{dir = 6},/area/flock_trader)
+"Xv" = (/turf/simulated/shuttle/wall/flock{dir = 9},/area/noGenerate)
+"XZ" = (/turf/simulated/floor/shuttlebay/flock/middle,/area/flock_trader)
+"Yu" = (/obj/decal/fakeobjects/flock/antenna,/turf/space,/area/noGenerate)
+"Zn" = (/obj/stool/chair/comfy/flock{dir = 8},/obj/machinery/light/flock{dir = 4},/mob/living/critter/flock/drone{dir = 8; dormant = 1},/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"ZG" = (/obj/npc/trader/flock,/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+
+(1,1,1) = {"
+sQsQsQsQsQsQsQsQsQsQsQsQsQcMcMvfcMcMsQsQsQsQsQsQsQsQsQsQsQsQ
+sQsQsQsQsQsQcMcMcMcMcMcMcMcMcMYucMcMcMcMcMcMcMcMcMcMcMsQsQsQ
+sQsQsQcMcMcMcMcMcMcMcMcMcMcMcMYucMvfcMxLcMcMcMHIcMcMcMcMsQsQ
+sQsQcMcMcMcMcMcMcMcMKVcMcMcMcMYucMYuxLYucMcMXvcRxpcMcMcMsQsQ
+sQcMcMcMcMcMcMKVcMcMHIcREjEjEjcRcRcRcRcRcREjcRcRBRcMcMcMcMsQ
+cMcMcMmBcMcMcMHIcRcRcRcREjEjEjcRcRcRcRcRPcEjEjEjcRSxcMcMcMcM
+cMcMcMHIcRcRcRcRcRcRMtcRcREjcRcRcRcRcRcRHBcRcREjuycRoGaccMcM
+cMcMHIcRvVVSDIvVcRvVQcQcvVEjDvDvDvDvDvDvEjfNcRcRcRcRoGQmcMcM
+cMcMcRwEmSZGmSOIcRbvJUPGPGEjEjEjEjEjEjEjEjJjEjikhHcRfCfCfCUZ
+cMxxcRwEPGPGPGPGuzPGPGPGPGPGPGPGPGPGPGEjPGPGQkxrXZXZXZXZXZSP
+cMcMcRwEPGnCPGlPcRmbPGPGJjPGPGPGPGPGPGQkPGPGEjBWWZcRfCuuSPSP
+cMcMJTcRVrxQxQgdcRbsxQxQbsxQxQKbPGKbKbEjJUfNcRcRcRcRoGoGQmcM
+cMcMcMJTcRcRcRcRcRcRcRcRcRcRcRcRDucRcRcRHBcRcREjuycRoGaccMcM
+cMcMcMcMcMcMzuJTcRcRcRcRcRcRtVEjukEjZncRPcEjEjEjcRzRcMcMcMcM
+sQcMcMcMcMcMcMcMcMcMJTcRcRcRcRcRDucRcRcRcREjcRcRzRcMcMcMcMcM
+sQsQcMvgcMcMcMcMcMcMcMcMcMSPSPrePGreSPSPcMcMJTcRcMcMcMcMsQsQ
+sQsQsQcMcMcMcMKAcMcMcMcMcMcMSPSPJjSPSPcMcMcMcMJTcMcMcMcMsQsQ
+sQsQsQsQsQsQsQsQsQsQvgcMcMcMcMSPSPSPcMcMcMcMcMcMbOcMcMcMsQsQ
+"}

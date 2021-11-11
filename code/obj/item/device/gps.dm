@@ -130,6 +130,9 @@
 
 		HTML += "<div class='gps group'><b>Beacons</b></div>"
 		for (var/obj/B in by_type[/obj/warp_beacon])
+			var/obj/warp_beacon/W = B
+			if(W.needsRepair)
+				continue
 			var/turf/T = get_turf(B.loc)
 			HTML += "<div class='buttons gps'><A href='byond://?src=\ref[src];dest_cords=1;x=[T.x];y=[T.y];z=[T.z];name=[B.name]'><span><b>[B.name]</b><br><span>located at: [T.x], [T.y]</span><span style='float: right'>[src.get_z_info(T)]</span></span></A></div>"
 		HTML += "<br></div>"
