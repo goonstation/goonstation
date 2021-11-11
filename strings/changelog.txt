@@ -1,4 +1,35 @@
 
+(t)wed nov 10 21
+(u)Zamujasa
+(e)🆕|feature
+(*)Testing out canvases, little icons you can draw on with crayons, pens, etc.
+(*)You can use a paint can on them to reet the canvas color as well.
+(*)Please report any bugs. I'd like to make a way for these to persist over rounds!
+(t)tue nov 09 21
+(u)zjdtmkhzt
+(p)6629
+(e)|
+(+)Artifacts can now also be sold in crates. We apologize for the inconveniences.
+(t)mon nov 08 21
+(u)Ikea
+(p)6559
+(e)🎨|sprites
+(*)Loot crates no longer have stripes indicating their tier.
+(u)Zonespace
+(p)6577
+(e)🎨⚖|sprites, balance
+(*)Armory Special Grenade crates now have a box of NT stun mines in them!
+(u)Walpvrgis
+(p)6603
+(e)🎨⚖|sprites, balance
+(+)Replaced the spacelubed floor tile effect with new art; should be easier to see on resprited floors now.
+(u)Gousaid67
+(p)6579
+(e)🆕|feature
+(*)Chefs are now able to examine food to get additional information!
+(t)sun nov 07 21
+(u)pali
+(+)Glowstick light range increased
 (t)fri nov 05 21
 (u)zjdtmkhzt
 (p)6516

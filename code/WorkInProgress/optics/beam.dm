@@ -77,19 +77,19 @@
 	//Next, check objects to block entry that are on the border
 	for(var/obj/border_obstacle in src)
 		if(border_obstacle.flags & ON_BORDER)
-			if(!border_obstacle.CanPass(mover, mover.loc, 1, 0) && (forget != border_obstacle))
+			if(!border_obstacle.Cross(mover, mover.loc, 1, 0) && (forget != border_obstacle))
 				mover.Bump(border_obstacle, 1)
 				return 0
 
 	//Then, check the turf itself
-	if (!src.CanPass(mover, src))
+	if (!src.Cross(mover, src))
 		mover.Bump(src, 1)
 		return 0
 
 	//Finally, check objects/mobs to block entry that are not on the border
 	for(var/atom/movable/obstacle in src)
 		if(obstacle.flags & ~ON_BORDER)
-			if(!obstacle.CanPass(mover, mover.loc, 1, 0) && (forget != obstacle))
+			if(!obstacle.Cross(mover, mover.loc, 1, 0) && (forget != obstacle))
 				mover.Bump(obstacle, 1)
 				return 0
 	return 1 //Nothing found to block so return success!

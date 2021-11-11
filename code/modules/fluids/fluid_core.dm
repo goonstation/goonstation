@@ -412,6 +412,7 @@ var/mutable_appearance/fluid_ma
 					for(var/atom/A in F.loc)
 						if (A.event_handler_flags & USE_FLUID_ENTER)
 							A.EnteredFluid(F, F.loc)
+					F.loc.EnteredFluid(F, F.loc)
 
 		if (spawned_any && prob(40))
 			playsound( src.loc, 'sound/misc/waterflow.ogg', 30,0.7,7)

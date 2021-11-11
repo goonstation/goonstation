@@ -32,6 +32,7 @@
 	mats = 3
 
 	var/icon_override = 0
+	var/icon_tooltip = null // null = use name, "" = no tooltip
 
 	var/const
 		WIRE_SIGNAL = 1 //sends a signal, like to set off a bomb or electrocute someone
@@ -228,7 +229,12 @@ var/list/headset_channel_lookup
 	if(.)
 		. = {"<img style=\"position: relative; left: -1px; bottom: -3px;\" class=\"icon misc\" src="[resource("images/radio_icons/[.].png")]">"}
 	else
-		return bicon(src)
+		. = bicon(src)
+	var/tooltip = src.icon_tooltip
+	if(isnull(tooltip))
+		tooltip = src.name
+	if(tooltip)
+		. = {"<div class='tooltip'>[.]<span class="tooltiptext">[tooltip]</span></div>"}
 
 /obj/item/device/radio/talk_into(mob/M as mob, messages, secure, real_name, lang_id)
 	if (length(by_cat[TR_CAT_RADIO_JAMMERS]) && check_for_radio_jammers(src))

@@ -478,6 +478,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	force_fullbright = 0
 	expandable = 0
 	ambient_light = rgb(79, 164, 184)
+	dont_log_combat = TRUE
 	// filler_turf = "/turf/unsimulated/floor/setpieces/gauntlet"
 
 /area/cavetiny
