@@ -1916,7 +1916,7 @@
 		density = 1
 		del_self = 0
 		clash_time = -1
-		event_handler_flags = USE_CANPASS
+	
 
 		//mouse_opacity = 1
 		var/bump_count = 0

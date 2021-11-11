@@ -367,7 +367,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			return
 		for (var/turf/simulated/floor/target in range(1,location))
 			if(ON_COOLDOWN(target, "plasmastone_plasma_generate", 10 SECONDS)) continue
-			if(!target.blocks_air && target.air)
+			if(!target.gas_impermeable && target.air)
 				if(target.parent?.group_processing)
 					target.parent.suspend_group_processing()
 

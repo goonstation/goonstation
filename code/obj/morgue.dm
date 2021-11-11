@@ -137,7 +137,7 @@
 	layer = FLOOR_EQUIP_LAYER1
 	var/obj/morgue/connected = null
 	anchored = 1.0
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 
 	disposing()
 		src.connected?.connected = null
@@ -145,7 +145,7 @@
 		src.connected = null
 		. = ..()
 
-/obj/m_tray/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/m_tray/Cross(atom/movable/mover)
 	if (istype(mover, /obj/item/dummy))
 		return 1
 	else
@@ -380,7 +380,7 @@
 	var/obj/crematorium/connected = null
 	anchored = 1.0
 	var/datum/light/light //Only used for tanning beds.
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 
 	disposing()
 		src.connected?.connected = null
@@ -389,7 +389,7 @@
 		src.connected = null
 		. = ..()
 
-/obj/c_tray/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/c_tray/Cross(atom/movable/mover)
 	if (istype(mover, /obj/item/dummy))
 		return 1
 	else

@@ -222,6 +222,12 @@
 	icon_state = "flashbang"
 	spawn_contents = list(/obj/item/chem_grenade/pepper = 4)
 
+/obj/item/storage/box/stun_landmines
+	name = "non-lethal landmine box"
+	desc = "A box of non-lethal stunning landmines, perfect for locking down areas."
+	icon_state = "flashbang"
+	spawn_contents = list(/obj/item/mine/stun/nanotrasen = 5)
+
 /* -------------------- Traitor Gear -------------------- */
 
 /obj/item/storage/bowling
