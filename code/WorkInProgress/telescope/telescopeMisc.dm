@@ -30,16 +30,12 @@ var/list/magnet_locations = list()
 	proc/mechcompsend(var/datum/mechanicsMessage/input)
 		if(!input)
 			return
-		var/place = special_places[input.signal]
-		if(place)
-			lrtsend(place)
+		lrtsend(input.signal)
 
 	proc/mechcomprecieve(var/datum/mechanicsMessage/input)
 		if(!input)
 			return
-		var/place = special_places[input.signal]
-		if(place)
-			lrtrecieve(place)
+		lrtrecieve(input.signal)
 
 	proc/is_good_location(var/place)
 		if(special_places.len)
