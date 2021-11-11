@@ -19,7 +19,7 @@
 	var/operating = 0
 	var/driver_operating = 0
 	var/trash = 0
-	var/door_delay = 3 // how long should we wait before closing our blast door?
+	var/door_delay = 3 // amount of time *in seconds* before connected blast doors should close
 
 	New()
 		..()
