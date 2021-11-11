@@ -165,7 +165,6 @@ obj/item/engivac/attack_self(mob/user)
 
 
 obj/item/engivac/proc/on_move(mob/M, turf/source, dir)
-	. = ..()
 	var/turf/target = (get_step(source,dir))
 	//I'm here to collect stuff
 	find_crud_on_turf(target)
