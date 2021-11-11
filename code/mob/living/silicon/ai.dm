@@ -287,8 +287,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.show_text(message, color, hearing_check, sight_check, allow_corruption, group)
 	return
 
-// For use when you want to play a sound to the AI player regardless of if it's in mainframe, eye, or shell
-// Calls playsound_local(), use its syntax
+/// For use when you want to play a sound to the AI player regardless of if it's in mainframe, eye, or shell
+/// Calls playsound_local(), use its syntax
 /mob/living/silicon/ai/proc/soundToPlayer(soundin, vol as num, vary, extrarange as num, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
 	if (deployed_to_eyecam && src.eyecam)
 		src.eyecam.playsound_local(src.eyecam, soundin, vol, vary, extrarange, pitch, ignore_flag, channel, flags)
