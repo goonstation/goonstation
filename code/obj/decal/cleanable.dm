@@ -650,7 +650,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	icon_state = "floor1"
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
 	color = "#12b828"
-	slippery = 5
+	slippery = 10
 	can_sample = 1
 	sample_reagent = "pathogen"
 	can_dry = 1
@@ -662,7 +662,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 			return
 		var/mob/living/carbon/human/H = AM
 
-		if((!H.shoes && !iscow(H)) || H.lying) //Checks if they arn't wearing shoes or are crawling through the goo.
+		if((!H.shoes && !iscow(H)) || H.lying || H.slip()) //Checks if they arn't wearing shoes, are crawling through the goo, or slipped on the goo.
 			src.reagents.reaction(H, TOUCH)
 		else
 			return
