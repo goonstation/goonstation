@@ -64,7 +64,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/list/terminals = list() //Stuff connected to us over the powernet
 	var/messageLog = null
 	/// controls whether or not the ai will hear termos message notifications
-	var/termMute = FALSE 
+	var/termMute = FALSE
 	var/hologramdown = 0 //is the hologram downed?
 	var/canvox = 1
 	var/can_announce = 1
@@ -286,7 +286,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.deployed_shell.show_text(message, color, hearing_check, sight_check, allow_corruption, group)
 	else
 		src.show_text(message, color, hearing_check, sight_check, allow_corruption, group)
-	return
 
 /// For use when you want to play a sound to the AI player regardless of if it's in mainframe, eye, or shell
 /// Calls playsound_local(), use its syntax
@@ -297,7 +296,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.deployed_shell.playsound_local(src.deployed_shell, soundin, vol, vary, extrarange, pitch, ignore_flag, channel, flags)
 	else
 		src.playsound_local(src, soundin, vol, vary, extrarange, pitch, ignore_flag, channel, flags)
-	return
 
 ///mob/living/silicon/ai/playsound_local(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME)
 //sound.dm
@@ -693,8 +691,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 	if (href_list["refresh"])
 		src.view_messageLog()
-
-	return
 
 /mob/living/silicon/ai/Stat()
 	..()
@@ -1427,7 +1423,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	set name = "Show Laws"
 
 	src.show_laws(0)
-	return
 
 /mob/living/silicon/ai/proc/view_messageLog()
 	set name = "View Message Log"
