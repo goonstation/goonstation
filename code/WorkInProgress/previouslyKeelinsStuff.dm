@@ -673,8 +673,8 @@ var/reverse_mode = 0
 	while(current != target_turf)
 		if (steps > length) return 0
 		if (!current) return 0
-		if (current.density) return 0 //If we can avoid the more expensive CanPass check, let's
-		if (!current.CanPass(source, target_turf)) return 0
+		if (current.density) return 0 //If we can avoid the more expensive Cross check, let's
+		if (!current.Cross(source)) return 0
 
 		current = get_step_towards(current, target_turf)
 		steps++

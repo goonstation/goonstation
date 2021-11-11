@@ -389,7 +389,7 @@ proc/find_ghost_by_key(var/find_key)
 	var/mob/occupant = null
 	anchored = 1.0
 	soundproofing = 10
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 	var/obj/machinery/computer/cloning/connected = null
 
 	// In case someone wants a perfectly safe device. For some weird reason.
@@ -561,11 +561,6 @@ proc/find_ghost_by_key(var/find_key)
 			locked = 0
 			playsound(src, 'sound/machines/click.ogg', 50, 1)
 			bo(occupant, "<span class='notice'>\The [src] unlocks!</span>")
-
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-		if (air_group || (height==0))
-			return 1
-		..()
 
 	// Meat grinder functionality.
 	proc/find_pods()

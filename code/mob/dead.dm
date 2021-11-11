@@ -1,6 +1,6 @@
 /mob/dead
 	stat = 2
-	event_handler_flags = USE_CANPASS | IMMUNE_MANTA_PUSH
+	event_handler_flags =  IMMUNE_MANTA_PUSH
 
 // dead
 /mob/dead/New()
@@ -11,7 +11,7 @@
 /mob/dead/ex_act(severity)
 	return
 
-/mob/dead/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/mob/dead/Cross(atom/movable/mover)
 	return 1
 
 /mob/dead/say_understands()
