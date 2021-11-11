@@ -31,6 +31,9 @@
   * that makes the object it's attached to cause people to slip over.
   * Useful when you want shared behaviour independent of type inheritance
   */
+TYPEINFO(/datum/component)
+	var/initialization_args
+
 /datum/component
 	/**
 	  * Defines how duplicate existing components are handled when added to a datum

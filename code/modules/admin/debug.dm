@@ -346,27 +346,26 @@ var/global/debug_messages = 0
 	boutput(usr, "<span class='notice'>Proc returned: [pretty_returnval]</span>")
 	return
 
-/proc/get_proccall_arglist()
-	var/argnum = input("Number of arguments:","Number", 0) as null|num
+/proc/get_proccall_arglist(list/arginfo = null)
+	var/argnum = arginfo ? length(arginfo) : input("Number of arguments:","Number", 0) as null|num
 	var/list/listargs = list()
 	if (!argnum)
 		return listargs
-	for (var/i=0, i<argnum, i++)
-		var/class = input("Type of Argument #[i]","Variable Type", null) as null|anything in list("text","num","type","json","ref","reference","mob reference","reference atom at current turf","icon","color","file","the turf of which you are on top of right now")
+	for (var/i = 1 , i <= argnum, i++)
+		var/class = input(arginfo ? arginfo[i]["desc"] + ":" : "Type of Argument #[i]", arginfo ? "Argument #[i]: " + arginfo[i]["name"] : "Variable Type", arginfo ? arginfo[i]["type"] : null)\
+		 as null|anything in list("text","num","type","json","ref","reference","mob reference","reference atom at current turf","icon","color","file","the turf of which you are on top of right now")
 		if(!class)
 			break
 		switch(class)
-			if ("cancel")
-				break
 			if ("text")
-				listargs += input("Enter new text:","Text",null) as null|text
+				listargs += input("Enter new text:","Text", (arginfo?[i]["type"] == class && arginfo[i]["default"]) ? arginfo[i]["default"] : null) as null|text
 
 			if ("num")
-				listargs += input("Enter new number:","Num", 0) as null|num
+				listargs += input("Enter new number:","Num", (arginfo?[i]["type"] == class && arginfo[i]["default"]) ? arginfo[i]["default"] : 0) as null|num
 
 			if ("type")
 				boutput(usr, "<span class='notice'>Type part of the path of the type.</span>")
-				var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
+				var/typename = input("Part of type path.", "Part of type path.", (arginfo?[i]["type"] == class && arginfo[i]["default"]) ? arginfo[i]["default"] : "/obj") as null|text
 				if (typename)
 					var/match = get_one_match(typename, /datum, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 					if (match)
@@ -408,7 +407,7 @@ var/global/debug_messages = 0
 				listargs += input("Pick icon:","Icon", null) as null|icon
 
 			if ("color")
-				listargs += input("Pick color:","Color") as null|color
+				listargs += input("Pick color:","Color",  (arginfo?[i]["type"] == class && arginfo[i]["default"]) ? arginfo[i]["default"] : null) as null|color
 
 			if ("turf by coordinates")
 				var/x = input("X coordinate", "Set to turf at \[_, ?, ?\]", 1) as null|num
@@ -1341,7 +1340,9 @@ var/datum/flock/testflock
 	if(!comptype)
 		return
 
-	var/list/listargs = get_proccall_arglist()
+	var/typeinfo/datum/component/TI = get_type_typeinfo(comptype)
+
+	var/list/listargs = get_proccall_arglist(TI.initialization_args)
 
 	var/returnval = target._AddComponent(list(comptype) + listargs)
 
