@@ -29,7 +29,7 @@
 	var/numpuffs = 40 //number of times the cig can dispense reagents
 	rand_pos = 1
 	use_bloodoverlay = 0
-	var/datum/light/light
+	var/datum/component/holdertargeting/simple_light/light
 
 	setupProperties()
 		..()
@@ -40,10 +40,8 @@
 	New()
 		..()
 		src.create_reagents(60)
-		light = new /datum/light/point
-		light.set_brightness(0.3)
-		light.set_color(0.94, 0.69, 0.27)
-		light.attach(src)
+		light = src.AddComponent(/datum/component/holdertargeting/simple_light, 240, 176, 68, 40)
+		light.update(0)
 
 		if (src.on) //if we spawned lit, do something about it!
 			src.on = 0
@@ -124,7 +122,8 @@
 			if(src?.reagents)
 				puffrate = src.reagents.total_volume / numpuffs //40 active cycles (200 total, about 10 minutes)
 			processing_items |= src
-			light.enable()
+			var/datum/component/holdertargeting/simple_light/light = src.GetComponent(/datum/component/holdertargeting/simple_light)
+			light.update(1)
 
 			hit_type = DAMAGE_BURN
 
@@ -144,7 +143,8 @@
 				var/mob/M = src.loc
 				M.set_clothing_icon_dirty()
 			processing_items.Remove(src)
-			light.disable()
+			var/datum/component/holdertargeting/simple_light/light = src.GetComponent(/datum/component/holdertargeting/simple_light)
+			light.update(0)
 
 			hit_type = DAMAGE_BLUNT
 
@@ -335,20 +335,12 @@
 	dropped(mob/user as mob)
 		if (!isturf(src.loc))
 			return
-		if (light)
-			SPAWN_DBG(0)
-				if (src.loc != user)
-					light.attach(src)
 		if (src.on == 1 && !src.exploding && src.reagents.total_volume <= 20)
 			src.put_out(user, "<span class='alert'><b>[user]</b> calmly drops and treads on the lit [src.name], putting it out instantly.</span>")
 			return ..()
 		else
 			user.visible_message("<span class='alert'><b>[user]</b> drops [src]. Guess they've had enough for the day.</span>", group = "cig_drop")
 			return ..()
-
-	pickup(mob/user)
-		..()
-		light.attach(user)
 
 	proc/trick_explode()
 		var/turf/tlocation = get_turf(src.loc)
