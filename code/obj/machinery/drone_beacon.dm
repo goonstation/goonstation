@@ -26,7 +26,7 @@
 		..()
 
 	disposing()
-		RegisterSignal(src, COMSIG_ATOM_HITBY_PROJ, .proc/hitby_proj)
+		UnregisterSignal(src, COMSIG_ATOM_HITBY_PROJ)
 		..()
 
 	process()
