@@ -44,8 +44,8 @@
 #define TGUI_INTERACTIVE		 (1<<19)
 /// Has a click delay for attack_self()
 #define ATTACK_SELF_DELAY		 (1<<20)
-/// Is currently scaled by bubsium
-#define IS_BUBSIUM_SCALED		 (1<<21)
+/// Counts as dense for purposes of fluids. *scream.
+#define FLUID_DENSE		 (1<<21)
 /// If click delay should be applied even if atom is in user's contents (e.g.: postit notes)
 #define CLICK_DELAY_IN_CONTENTS  (1<<22)
 /// If an item cannot be crushed by the crusher

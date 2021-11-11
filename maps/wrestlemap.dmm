@@ -4877,7 +4877,7 @@
 /turf/simulated/floor/carpet/green/fancy/narrow/west,
 /area/station/crew_quarters/bar)
 "cah" = (
-/obj/structure/puttframe,
+/obj/structure/vehicleframe/puttframe,
 /turf/simulated/floor/airless/blackwhite{
 	dir = 1
 	},
@@ -10033,7 +10033,6 @@
 /area/station/science/storage)
 "ebT" = (
 /turf/simulated/shuttle/wall/corner{
-	blocks_air = 2;
 	dir = 4
 	},
 /area/abandonedship{
