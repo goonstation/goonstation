@@ -2140,7 +2140,7 @@
 		flick("gibbed", animation)
 
 	//don't bother transferring ghosts so they can keep their hair. do ghost hivemind/target observers, so you can buttgib people out of the hivemind etc
-	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc) && !istype(/mob/dead/observer))
+	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc) && !istype(src, /mob/dead/observer))
 		var/mob/dead/observer/newmob = ghostize()
 		newmob.corpse = null
 
