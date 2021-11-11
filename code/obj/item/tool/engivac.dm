@@ -55,6 +55,7 @@ obj/item/engivac/proc/update_icon(mob/M = null)
 ///Change worn sprite depending on slot
 obj/item/engivac/equipped(var/mob/user, var/slot)
 	..()
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_move)
 	if (slot == SLOT_BACK)
 		wear_image = image('icons/mob/back.dmi')
 	if (slot == SLOT_BELT)
@@ -77,12 +78,17 @@ obj/item/engivac/New(var/spawnbox = null)
 
 obj/item/engivac/disposing()
 	if (held_toolbox)
-		held_toolbox = get_turf(src)
+		held_toolbox.set_loc(get_turf(src))
 		held_toolbox = null
 	toolbox_img = null
 	current_stack = null
 	underlays = null
 	..()
+
+obj/item/engivac/dropped(var/mob/user)
+	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+	..()
+
 
 
 //Manually cleaning up turfs (for corners you can't walk into)
@@ -158,8 +164,9 @@ obj/item/engivac/attack_self(mob/user)
 			update_icon(user)
 
 
-obj/item/engivac/move_callback(mob/M, turf/source, turf/target)
+obj/item/engivac/proc/on_move(mob/M, turf/source, dir)
 	. = ..()
+	var/turf/target = (get_step(source,dir))
 	//I'm here to collect stuff
 	find_crud_on_turf(target)
 
