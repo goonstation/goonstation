@@ -19,12 +19,13 @@
 	var/operating = 0
 	var/driver_operating = 0
 	var/trash = 0
-	/// Amount of time before connected blast doors should close
-	var/door_delay = 3 SECONDS
+	/// Amount of time in seconds before connected blast doors should close
+	var/door_delay = 3 // Multiplied by SECONDS on New()
 
 	New()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
+			door_delay = door_delay SECONDS
 			var/list/drivers = new/list()
 			for(var/obj/machinery/mass_driver/D in range(1,src))
 				drivers += D
