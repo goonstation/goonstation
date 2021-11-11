@@ -40,7 +40,7 @@
 		if(!length(target_list))
 			for(var/obj/machinery/vehicle/V in range(PLAYER_SEEK_RANGE, src))
 				if(V.health <= 0)
-					continues
+					continue
 				target_list += V
 		if(!length(target_list))
 			return
