@@ -66,7 +66,7 @@
 						SPAWN_DBG(0)
 							if (door)
 								door.open()
-						SPAWN_DBG(door_delay SECONDS)
+						SPAWN_DBG(door_delay)
 							if (door)
 								door.close()
 
