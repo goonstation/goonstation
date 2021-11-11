@@ -2139,7 +2139,8 @@
 		animation.master = src
 		flick("gibbed", animation)
 
-	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
+	//don't bother transferring ghosts so they can keep their hair. do ghost hivemind/target observers, so you can buttgib people out of the hivemind etc
+	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc) && !istype(/mob/dead/observer))
 		var/mob/dead/observer/newmob = ghostize()
 		newmob.corpse = null
 
@@ -2152,7 +2153,7 @@
 			the_butt = new /obj/item/clothing/head/butt(src.loc, organHolder)
 		else if (istype(src, /mob/living/silicon))
 			the_butt = new /obj/item/clothing/head/butt/cyberbutt
-		else if (istype(src, /mob/wraith))
+		else if (istype(src, /mob/wraith) || istype(src, /mob/dead))
 			the_butt = new /obj/item/clothing/head/butt
 			the_butt.setMaterial(getMaterial("ectoplasm"), appearance = TRUE, setname = TRUE)
 		else if (istype(src, /mob/living/intangible/blob_overmind))
@@ -2179,7 +2180,9 @@
 
 	if (animation)
 		animation.delaydispose()
-	qdel(src)
+
+	if (!istype(src, /mob/dead/observer))
+		qdel(src)
 
 // Man, there's a lot of possible inventory spaces to store crap. This should get everything under normal circumstances.
 // Well, it's hard to account for every possible matryoshka scenario (Convair880).
