@@ -20,6 +20,9 @@
 		*/
 	var/signal_enabled = FALSE
 
+TYPEINFO(/datum/component)
+	var/initialization_args = list() // empty list --no args
+	
 /**
   * # Component
   *

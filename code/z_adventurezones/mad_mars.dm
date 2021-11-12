@@ -244,7 +244,7 @@
 	desc = "Hey, it's not red at all!"
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "mars"
-	blocks_air = 1
+	gas_impermeable = 1
 	opacity = 1
 	density = 1
 	fullbright = 0

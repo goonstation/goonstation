@@ -19,6 +19,7 @@
 	#endif
 
 	area = /area/space
+	movement_mode = TILE_MOVEMENT_MODE
 
 	view = "15x15"
 
@@ -203,6 +204,9 @@ var/f_color_selector_handler/F_Color_Selector
 //Called BEFORE the map loads. Useful for objects that require certain things be set during init
 /datum/preMapLoad
 	New()
+#ifdef LIVE_SERVER
+		world.log = file("data/errors.log")
+#endif
 		enable_auxtools_debugger()
 #ifdef REFERENCE_TRACKING
 		enable_reference_tracking()
@@ -400,11 +404,6 @@ var/f_color_selector_handler/F_Color_Selector
 	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
 	tick_lag = MIN_TICKLAG//0.4//0.25
 //	loop_checks = 0
-
-	// Load in the current commit SHA from TGS if avail, by MCterra10
-	if(TgsAvailable())
-		var/datum/tgs_revision_information/rev = TgsRevision()
-		vcs_revision = rev.commit
 
 	if(world.load_intra_round_value("heisenbee_tier") >= 15 && prob(50) || prob(3))
 		lobby_titlecard = new /datum/titlecard/heisenbee()
@@ -672,20 +671,6 @@ var/f_color_selector_handler/F_Color_Selector
 
 //Crispy fullban
 /proc/Reboot_server(var/retry)
-	//ohno the map switcher is in the midst of compiling a new map, we gotta wait for that to finish
-	if (mapSwitcher.locked)
-		//we're already holding and in the reboot retry loop, do nothing
-		if (mapSwitcher.holdingReboot && !retry) return
-
-		out(world, "<span class='bold notice'>Attempted to reboot but the server is currently switching maps. Please wait. (Attempt [mapSwitcher.currentRebootAttempt + 1]/[mapSwitcher.rebootLimit])</span>")
-		message_admins("Reboot interrupted by a map-switch compile to [mapSwitcher.next]. Retrying in [mapSwitcher.rebootRetryDelay / 10] seconds.")
-
-		mapSwitcher.holdingReboot = 1
-		SPAWN_DBG(mapSwitcher.rebootRetryDelay)
-			mapSwitcher.attemptReboot()
-
-		return
-
 #if defined(SERVER_SIDE_PROFILING) && (defined(SERVER_SIDE_PROFILING_FULL_ROUND) || defined(SERVER_SIDE_PROFILING_INGAME_ONLY))
 #if defined(SERVER_SIDE_PROFILING_INGAME_ONLY) || !defined(SERVER_SIDE_PROFILING_PREGAME)
 	// This is a profiler dump of only the in-game part of the round
@@ -1626,28 +1611,6 @@ var/f_color_selector_handler/F_Color_Selector
 						Reboot_server()
 
 					return ircbot.response(ircmsg)
-
-			if ("mapSwitchDone")
-				if (!plist["data"] || !mapSwitcher.locked) return 0
-
-				var/map = plist["data"]
-				var/ircmsg[] = new()
-				var/msg
-
-				var/attemptedMap = mapSwitcher.next ? mapSwitcher.next : mapSwitcher.current
-				if (map == "FAILED")
-					msg = "Compilation of [attemptedMap] failed! Falling back to previous setting of [mapSwitcher.nextPrior ? mapSwitcher.nextPrior : mapSwitcher.current]"
-				else
-					msg = "Compilation of [attemptedMap] succeeded!"
-
-				logTheThing("admin", null, null, msg)
-				logTheThing("diary", null, null, msg, "admin")
-				message_admins(msg)
-				ircmsg["msg"] = msg
-
-				mapSwitcher.unlock(map)
-
-				return ircbot.response(ircmsg)
 
 			if ("triggerMapSwitch")
 				if (!plist["nick"] || !plist["map"])

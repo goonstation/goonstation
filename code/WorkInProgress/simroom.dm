@@ -397,11 +397,6 @@
 		src.updateUsrDialog()
 	return
 
-/obj/machinery/sim/vr_bed/CanPass(atom/movable/O as mob|obj, target as turf, height=0, air_group=0)
-	if (air_group || (height==0))
-		return 1
-	..()
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/sim/programcomp

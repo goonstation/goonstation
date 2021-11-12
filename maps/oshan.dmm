@@ -30233,19 +30233,6 @@
 	icon_state = "green1"
 	},
 /area/station/bridge/hos)
-"bxd" = (
-/obj/table/wood/round/auto,
-/obj/item/stamp/hop,
-/obj/item/device/gps,
-/obj/item/acesscomputerunfolder,
-/obj/item/storage/secure/ssafe{
-	pixel_x = 26
-	},
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fgreen3"
-	},
-/area/station/bridge/hos)
 "bxe" = (
 /obj/storage/crate,
 /obj/item/clothing/suit/johnny_coat{
@@ -30603,13 +30590,9 @@
 	icon_state = "green1"
 	},
 /area/station/bridge/hos)
-"bxW" = (
+"bxX" = (
 /obj/table/wood/round/auto,
-/obj/item/storage/box/accessimp_kit{
-	pixel_y = 9
-	},
-/obj/item/paper/CrashedHopShuttle,
-/obj/item/pen/crayon/golden,
+/obj/item/item_box/gold_star,
 /turf/simulated/floor/carpet{
 	icon_state = "green1"
 	},
@@ -39677,13 +39660,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
-"bUm" = (
-/obj/table/glass/auto,
-/obj/machinery/light/incandescent/warm,
-/obj/item/storage/toolbox/emergency,
-/obj/item/crowbar,
-/turf/simulated/floor/darkpurple/side,
-/area/station/hallway/secondary/oshan_arrivals)
 "bUn" = (
 /turf/simulated/floor/darkpurple/side,
 /area/station/hallway/secondary/oshan_arrivals)
@@ -46140,6 +46116,13 @@
 	},
 /turf/simulated/floor/black,
 /area/research_outpost)
+"fqM" = (
+/obj/table/auto,
+/obj/machinery/light/incandescent/warm,
+/obj/item/storage/toolbox/emergency,
+/obj/item/crowbar,
+/turf/simulated/floor/darkpurple/side,
+/area/station/hallway/secondary/oshan_arrivals)
 "fsJ" = (
 /obj/machinery/firealarm{
 	pixel_x = 1;
@@ -46498,26 +46481,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/radio/lab)
-"hKS" = (
-/obj/storage/secure/closet/command/hop,
-/obj/machinery/firealarm{
-	pixel_x = 1;
-	pixel_y = 26;
-	text = "NF"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/obj/item/clothing/suit/armor/hopcoat,
-/turf/simulated/floor/carpet{
-	dir = 1;
-	icon_state = "fgreen2"
-	},
-/area/station/bridge/hos)
 "hNb" = (
 /obj/stool/chair/red{
 	dir = 8
@@ -46812,31 +46775,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
-"jKd" = (
-/obj/rack,
-/obj/item/device/radio/electropack,
-/obj/item/device/radio/electropack,
-/obj/item/device/radio/signaler,
-/obj/item/device/radio/signaler,
-/obj/item/chem_grenade/pepper,
-/obj/item/chem_grenade/pepper,
-/obj/item/chem_grenade/pepper,
-/obj/item/breaching_charge{
-	pixel_x = -2;
-	pixel_y = -5
-	},
-/obj/item/breaching_charge{
-	pixel_x = -2;
-	pixel_y = -5
-	},
-/obj/item/breaching_charge{
-	pixel_x = -2;
-	pixel_y = -5
-	},
-/turf/simulated/floor/redblack/corner{
-	dir = 1
-	},
-/area/station/ai_monitored/armory)
 "jKq" = (
 /obj/landmark/spawner{
 	name = "monkeyspawn_krimpus"
@@ -46939,13 +46877,6 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost)
-"ksd" = (
-/obj/table/wood/round/auto,
-/obj/item/item_box/gold_star,
-/turf/simulated/floor/carpet{
-	icon_state = "green1"
-	},
-/area/station/bridge/hos)
 "ksg" = (
 /turf/simulated/floor/black,
 /area/research_outpost)
@@ -47489,6 +47420,19 @@
 /obj/grille/steel,
 /turf/space/fluid,
 /area/station/com_dish/research_outpost)
+"oUE" = (
+/obj/table/wood/round/auto,
+/obj/item/stamp/hop,
+/obj/item/device/gps,
+/obj/item/acesscomputerunfolder,
+/obj/item/storage/secure/ssafe{
+	pixel_x = 26
+	},
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fgreen3"
+	},
+/area/station/bridge/hos)
 "oVm" = (
 /obj/table/round/auto,
 /obj/item/device/audio_log,
@@ -48392,6 +48336,31 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/research_outpost)
+"vLB" = (
+/obj/rack,
+/obj/item/device/radio/electropack,
+/obj/item/device/radio/electropack,
+/obj/item/device/radio/signaler,
+/obj/item/device/radio/signaler,
+/obj/item/chem_grenade/pepper,
+/obj/item/chem_grenade/pepper,
+/obj/item/chem_grenade/pepper,
+/obj/item/breaching_charge{
+	pixel_x = -2;
+	pixel_y = -5
+	},
+/obj/item/breaching_charge{
+	pixel_x = -2;
+	pixel_y = -5
+	},
+/obj/item/breaching_charge{
+	pixel_x = -2;
+	pixel_y = -5
+	},
+/turf/simulated/floor/redblack/corner{
+	dir = 1
+	},
+/area/station/ai_monitored/armory)
 "vNf" = (
 /obj/item/storage/wall/emergency{
 	dir = 4;
@@ -48554,6 +48523,26 @@
 	},
 /turf/space/fluid,
 /area/space)
+"xcr" = (
+/obj/storage/secure/closet/command/hop,
+/obj/machinery/firealarm{
+	pixel_x = 1;
+	pixel_y = 26;
+	text = "NF"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/obj/item/clothing/suit/armor/hopcoat,
+/turf/simulated/floor/carpet{
+	dir = 1;
+	icon_state = "fgreen2"
+	},
+/area/station/bridge/hos)
 "xhN" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -48630,6 +48619,17 @@
 /obj/machinery/phone,
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/psychiatrist)
+"xTT" = (
+/obj/table/wood/round/auto,
+/obj/item/storage/box/accessimp_kit{
+	pixel_y = 9
+	},
+/obj/item/paper/CrashedHopShuttle,
+/obj/item/pen/crayon/golden,
+/turf/simulated/floor/carpet{
+	icon_state = "green1"
+	},
+/area/station/bridge/hos)
 "xVc" = (
 /obj/machinery/vehicle/tank/minisub/secsub,
 /turf/simulated/floor/shuttlebay,
@@ -93585,7 +93585,7 @@ vex
 bWH
 bwE
 bVb
-jKd
+vLB
 bTR
 bRU
 bLr
@@ -97482,9 +97482,9 @@ cku
 bsI
 bsI
 bvL
-hKS
+xcr
 bxb
-bxW
+xTT
 bvL
 aij
 bBe
@@ -97786,7 +97786,7 @@ cku
 bvL
 bvL
 bxc
-ksd
+bxX
 bvL
 bzL
 bBf
@@ -98087,7 +98087,7 @@ aUp
 cks
 cku
 bvL
-bxd
+oUE
 bxY
 bvL
 bzM
@@ -104149,7 +104149,7 @@ bPQ
 bQT
 bLw
 bLw
-bUm
+fqM
 bOS
 bOS
 bOS
@@ -106565,7 +106565,7 @@ bPY
 bLw
 bSc
 bLw
-bUm
+fqM
 bKe
 bKe
 bKe

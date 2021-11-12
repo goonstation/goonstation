@@ -13,7 +13,7 @@
 		var/atom/thing = A
 		if (!A)
 			continue
-		if(IS_SOLID_TO_FLUID(thing) && thing.density)
+		if(IS_SOLID_TO_FLUID(thing) && (thing.density || thing.flags & FLUID_DENSE))
 			return 0 // && !istype(thing,/obj/grille) && !istype(thing,/obj/table) && !istype(thing,/obj/structure/girder)) return 0
 	return 1
 

@@ -1698,7 +1698,7 @@ PIPE BOMBS + CONSTRUCTION
 
 			if (plasma)
 				for (var/turf/simulated/floor/target in range(1,src.loc))
-					if(!target.blocks_air && target.air)
+					if(!target.gas_impermeable && target.air)
 						if(target.parent?.group_processing)
 							target.parent.suspend_group_processing()
 
