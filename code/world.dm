@@ -609,7 +609,7 @@ var/f_color_selector_handler/F_Color_Selector
 	makeMiningLevel()
 	#endif
 
-	#if SKIP_Z3_SETUP == 0
+	#if SKIP_Z3_SETUP == 0 && !defined(UNDERWATER_MAP)
 	UPDATE_TITLE_STATUS("Building debris level")
 	Z_LOG_DEBUG("World/Init", "Setting up debris level...")
 	makeDebrisLevel()

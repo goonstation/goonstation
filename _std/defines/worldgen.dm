@@ -46,7 +46,6 @@
 #define AST_NUMPREFABSEXTRA 5
 #endif
 
-#ifndef UNDERWATER_MAP
 /// How many big prefabs to place. It'll try it's hardest to place this many at the very least. You're basically guaranteed this amount of prefabs.
 #define DEBRIS_NUMBIGPREFABS 5
 /// Up to how many extra big prefabs to place randomly. You might or might not get these extra ones.
@@ -55,7 +54,6 @@
 #define DEBRIS_NUMSMALLPREFABS 4
 /// Up to how many extra big prefabs to place randomly. You might or might not get these extra ones.
 #define DEBRIS_NUMSMALLPREFABSEXTRA 10
-#endif
 
 /// Min distance from map edge for seeds.
 #define AST_MAPSEEDBORDER 10
