@@ -361,7 +361,6 @@
 		if(last_strum != instrument.strums)
 			icon_image.alpha = 90
 			bar.color = src.color_success
-			playsound(M, song.sound_clip, 45, 1, 5)
 
 	onStart()
 		..()
@@ -370,10 +369,14 @@
 		if(get_dist(owner, instrument) > 1 || instrument == null || owner == null) //If the thing is out of range, interrupt the action. Also interrupt if the user or the item disappears.
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		var/mob/M = owner
+		playsound(M, song.sound_clip, 45, 1, 5)
 		instrument.play_notes()
 
 	onRestart()
 		..()
+		var/mob/M = owner
+		playsound(M, song.sound_clip, 45, 1, 5)
 		last_strum = instrument.strums
 		blast_to_speakers()
 		icon_image.alpha = 200
