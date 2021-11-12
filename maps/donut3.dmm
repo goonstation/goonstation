@@ -36072,11 +36072,11 @@
 "kut" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger{
-	pixel_x = -13;
+	pixel_x = -8;
 	pixel_y = 5
 	},
 /obj/machinery/recharger{
-	pixel_x = 6;
+	pixel_x = 10;
 	pixel_y = 5
 	},
 /turf/simulated/floor/black,
@@ -69349,6 +69349,8 @@
 	},
 /obj/disposalpipe/segment/ejection,
 /obj/firedoor_spawn,
+/obj/decal/mule/dropoff,
+/obj/access_spawn/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "ucZ" = (
