@@ -15,7 +15,7 @@ TYPEINFO(/datum/component/holdertargeting/simple_light)
 		ARG_INFO("g", "num", "Value of green component \[0-255\]", 255),
 		ARG_INFO("b", "num", "Value of blue component \[0-255\]", 255),
 		ARG_INFO("a", "num", "Alpha (brightness) component \[0-255\]", 127),
-		ARG_INFO("enabled", "num", "Initial state of the simplelight (bool)", TRUE)
+		ARG_INFO("enabled", "num", "Initial state of the simplelight (bool)", TRUE),
 		ARG_INFO("on_when_equipped", "num", "If the light should stay on if the item is equipped by a mob (bool)", TRUE)
 	)
 /datum/component/holdertargeting/simple_light/Initialize(r = 255, g = 255, b = 255, a = 127, enabled = 1, on_when_equipped = 1)
@@ -93,7 +93,7 @@ TYPEINFO(/datum/component/holdertargeting/sm_light)
 		ARG_INFO("g", "num", "Value of green component \[0-255\]", 255),
 		ARG_INFO("b", "num", "Value of blue component \[0-255\]", 255),
 		ARG_INFO("a", "num", "Alpha (brightness) component \[0-255\]", 127),
-		ARG_INFO("enabled", "num", "Initial state of the simplelight (bool)", TRUE)
+		ARG_INFO("enabled", "num", "Initial state of the simplelight (bool)", TRUE),
 		ARG_INFO("on_when_equipped", "num", "If the light should stay on if the item is equipped by a mob (bool)", TRUE)
 	)
 /datum/component/holdertargeting/sm_light/Initialize(r = 255, g = 255, b = 255, a = 127, enabled = 1, on_when_equipped = 1)
@@ -173,7 +173,7 @@ TYPEINFO(/datum/component/holdertargeting/medium_directional_light)
 		ARG_INFO("g", "num", "Value of green component \[0-255\]", 255),
 		ARG_INFO("b", "num", "Value of blue component \[0-255\]", 255),
 		ARG_INFO("a", "num", "Alpha (brightness) component \[0-255\]", 127),
-		ARG_INFO("enabled", "num", "Initial state of the simplelight (bool)", TRUE)
+		ARG_INFO("enabled", "num", "Initial state of the simplelight (bool)", TRUE),
 		ARG_INFO("on_when_equipped", "num", "If the light should stay on if the item is equipped by a mob (bool)", TRUE)
 	)
 /datum/component/holdertargeting/medium_directional_light/Initialize(r = 255, g = 255, b = 255, a = 127, enabled = 1, on_when_equipped = 1)
