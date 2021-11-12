@@ -200,8 +200,12 @@
 			saved_auto_alias_global_save = FALSE
 		auto_alias_global_save = saved_auto_alias_global_save
 
-		var/saved_auto_stealth = AP["[auto_alias_global_save ? "" : "[config.server_id]_"]auto_stealth"]
-		var/saved_auto_stealth_name = AP["[auto_alias_global_save ? "" : "[config.server_id]_"]auto_stealth_name"]
+		var/list/saved_auto_aliases = AP["auto_aliases"]
+		if (!saved_auto_aliases)
+			saved_auto_aliases = list()
+
+		var/saved_auto_stealth = saved_auto_aliases["[src.auto_alias_global_save ? "" : "[config.server_id]_"]auto_stealth"]
+		var/saved_auto_stealth_name = saved_auto_aliases["[auto_alias_global_save ? "" : "[config.server_id]_"]auto_stealth_name"]
 		if (isnull(saved_auto_stealth) || !isnum(saved_auto_stealth))
 			saved_auto_stealth = 0
 			saved_auto_stealth_name = null
@@ -211,8 +215,8 @@
 		auto_stealth = saved_auto_stealth
 		auto_stealth_name = saved_auto_stealth_name
 
-		var/saved_auto_alt_key = AP["[auto_alias_global_save ? "" : "[config.server_id]_"]auto_alt_key"]
-		var/saved_auto_alt_key_name = AP["[auto_alias_global_save ? "" : "[config.server_id]_"]auto_alt_key_name"]
+		var/saved_auto_alt_key = saved_auto_aliases["[auto_alias_global_save ? "" : "[config.server_id]_"]auto_alt_key"]
+		var/saved_auto_alt_key_name = saved_auto_aliases["[auto_alias_global_save ? "" : "[config.server_id]_"]auto_alt_key_name"]
 		if (isnull(saved_auto_alt_key) || !isnum(saved_auto_alt_key))
 			saved_auto_alt_key = 0
 			saved_auto_alt_key_name = null
@@ -272,8 +276,11 @@
 	proc/save_admin_prefs()
 		if (!src.owner)
 			return
-		var/list/data = json_decode(owner.player.cloud_get("admin_preferences"))
-		var/list/auto_aliases = data["auto_aliases"]
+		var/list/data = owner.player.cloud_get("admin_preferences")
+		var/list/auto_aliases = list()
+		if (data) // decoding null will runtime
+			data = json_decode(owner.player.cloud_get("admin_preferences"))
+			auto_aliases = data["auto_aliases"]
 
 		if (auto_alias_global_save)
 			auto_aliases["auto_stealth"] = auto_stealth
