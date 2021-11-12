@@ -30,11 +30,13 @@
 
 
 /// arginfo handling TODO: document
-#define ARG_INFO(name, type, desc)\
-	list("name" = name, "type" = type, "desc" = desc)
+#define ARG_INFO(name, type, desc, default...)\
+	list(name, type, desc, ##default)
 
-#define ARG_INFO_WITH_DEFAULT(name, type, desc, default)\
-	list("name" = name, "type" = type, "desc" = desc, "default" = default)
+#define ARG_INFO_NAME 1
+#define ARG_INFO_TYPE 2
+#define ARG_INFO_DESC 3
+#define ARG_INFO_DEFAULT 4
 
 // How multiple components of the exact same type are handled in the same datum
 

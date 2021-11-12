@@ -352,20 +352,20 @@ var/global/debug_messages = 0
 	if (!argnum)
 		return listargs
 	for (var/i = 1 , i <= argnum, i++)
-		var/class = input(arginfo ? arginfo[i]["desc"] + ":" : "Type of Argument #[i]", arginfo ? "Argument #[i]: " + arginfo[i]["name"] : "Variable Type", arginfo ? arginfo[i]["type"] : null)\
+		var/class = input(arginfo ? arginfo[i][ARG_INFO_DESC] + ":" : "Type of Argument #[i]", arginfo ? "Argument #[i]: " + arginfo[i][ARG_INFO_NAME] : "Variable Type", arginfo ? arginfo[i][ARG_INFO_TYPE] : null)\
 		 as null|anything in list("text","num","type","json","ref","reference","mob reference","reference atom at current turf","icon","color","file","the turf of which you are on top of right now")
 		if(!class)
 			break
 		switch(class)
 			if ("text")
-				listargs += input("Enter new text:","Text", (arginfo?[i]["type"] == class && arginfo[i]["default"]) ? arginfo[i]["default"] : null) as null|text
+				listargs += input("Enter new text:","Text", (arginfo?[i][ARG_INFO_TYPE] == class && length(arginfo[i])>=ARG_INFO_DEFAULT) ? arginfo[i][ARG_INFO_DEFAULT] : null) as null|text
 
 			if ("num")
-				listargs += input("Enter new number:","Num", (arginfo?[i]["type"] == class && arginfo[i]["default"]) ? arginfo[i]["default"] : 0) as null|num
+				listargs += input("Enter new number:","Num", (arginfo?[i][ARG_INFO_TYPE] == class && length(arginfo[i])>=ARG_INFO_DEFAULT) ? arginfo[i][ARG_INFO_DEFAULT] : 0) as null|num
 
 			if ("type")
 				boutput(usr, "<span class='notice'>Type part of the path of the type.</span>")
-				var/typename = input("Part of type path.", "Part of type path.", (arginfo?[i]["type"] == class && arginfo[i]["default"]) ? arginfo[i]["default"] : "/obj") as null|text
+				var/typename = input("Part of type path.", "Part of type path.", (arginfo?[i][ARG_INFO_TYPE] == class && length(arginfo[i])>=ARG_INFO_DEFAULT) ? arginfo[i][ARG_INFO_DEFAULT] : "/obj") as null|text
 				if (typename)
 					var/match = get_one_match(typename, /datum, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 					if (match)
@@ -407,7 +407,7 @@ var/global/debug_messages = 0
 				listargs += input("Pick icon:","Icon", null) as null|icon
 
 			if ("color")
-				listargs += input("Pick color:","Color",  (arginfo?[i]["type"] == class && arginfo[i]["default"]) ? arginfo[i]["default"] : null) as null|color
+				listargs += input("Pick color:","Color",  (arginfo?[i][ARG_INFO_TYPE] == class && length(arginfo[i])>=ARG_INFO_DEFAULT) ? arginfo[i][ARG_INFO_DEFAULT] : null) as null|color
 
 			if ("turf by coordinates")
 				var/x = input("X coordinate", "Set to turf at \[_, ?, ?\]", 1) as null|num
