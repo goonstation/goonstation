@@ -160,7 +160,7 @@ var/datum/explosion_controller/explosions
 		src.angle = angle
 		src.width = width
 		src.user = user
-		src.turf_safe = TRUE
+		src.turf_safe = turf_safe
 
 	proc/logMe(var/power)
 		if(istype(src.source))
