@@ -27288,7 +27288,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "bkl" = (
-/obj/machinery/vehicle/pod_smooth/heavy,
+/obj/machinery/vehicle/pod_smooth/heavy/security,
 /obj/disposalpipe/segment/mail/bent/west,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
@@ -27310,7 +27310,7 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/hangar/sec)
 "bko" = (
-/obj/machinery/vehicle/miniputt/nanoputt,
+/obj/machinery/vehicle/miniputt/nanoputt/security,
 /turf/simulated/floor/engine,
 /area/station/hangar/sec)
 "bkp" = (
@@ -43747,7 +43747,7 @@
 /area/station/maintenance/east)
 "bOS" = (
 /obj/decal/cleanable/oil,
-/obj/machinery/vehicle/miniputt/nanoputt{
+/obj/machinery/vehicle/miniputt/nanoputt/security{
 	dir = 4
 	},
 /obj/machinery/r_door_control{
@@ -45835,7 +45835,7 @@
 /area/station/maintenance/east)
 "bTe" = (
 /obj/decal/cleanable/oil,
-/obj/machinery/vehicle/miniputt/nanoputt{
+/obj/machinery/vehicle/miniputt/nanoputt/security{
 	dir = 4
 	},
 /obj/machinery/r_door_control{
