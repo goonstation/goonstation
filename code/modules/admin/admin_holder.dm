@@ -13,6 +13,8 @@
 	var/attacktoggle = 1
 	var/rp_word_filtering = 0
 	var/auto_stealth = 0
+	/// toogle that determines whether or not clouddata for auto alt key and stealth is per server or global
+	var/auto_alias_global_save = FALSE
 	var/auto_stealth_name = null
 	var/auto_alt_key = 0
 	var/auto_alt_key_name = null
@@ -121,6 +123,8 @@
 		HTML += "<b>Automatically Set Stealth Mode?: <a href='?src=\ref[src];action=toggle_auto_stealth'>[(src.auto_stealth ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Auto Stealth Name: <a href='?src=\ref[src];action=set_auto_stealth_name'>[(src.auto_stealth_name ? "[src.auto_stealth_name]" : "N/A")]</a></b><br>"
 		HTML += "<i>Note: Auto Stealth will override Auto Alt Key settings on load</i><br>"
+		HTML += "<b>Use this Key / Stealth Name on all servers?: <a href='?src=\ref[src];action=set_auto_alias_global_save'>[(src.auto_alias_global_save ? "Yes" : "No")]</a></b><br>"
+		HTML += "<hr>"
 		//if (src.owner:holder:level >= LEVEL_CODER)
 			//HTML += "<b>Hide Extra Verbs?: <a href='?src=\ref[src];action=toggle_extra_verbs'>[(src.extratoggle ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Hide Popup Verbs?: <a href='?src=\ref[src];action=toggle_popup_verbs'>[(src.popuptoggle ? "Yes" : "No")]</a></b><br>"
@@ -141,7 +145,7 @@
 		HTML += "<hr><b><a href='?src=\ref[src];action=load_admin_prefs'>LOAD</a></b> | <b><a href='?src=\ref[src];action=save_admin_prefs'>SAVE</a></b>"
 		HTML += "</body></html>"
 
-		user.Browse(HTML,"window=aprefs")
+		user.Browse(HTML,"window=aprefs;size=375x520")
 
 	proc/load_admin_prefs()
 		if (!src.owner)
@@ -191,8 +195,13 @@
 			src.owner:toggle_rp_word_filtering()
 		rp_word_filtering = saved_rp_word_filtering
 
-		var/saved_auto_stealth = AP["auto_stealth"]
-		var/saved_auto_stealth_name = AP["auto_stealth_name"]
+		var/saved_auto_alias_global_save = AP["auto_alias_global_save"]
+		if (isnull(saved_auto_alias_global_save))
+			saved_auto_alias_global_save = FALSE
+		auto_alias_global_save = saved_auto_alias_global_save
+
+		var/saved_auto_stealth = AP["[auto_alias_global_save ? "" : "[config.server_id]_"]auto_stealth"]
+		var/saved_auto_stealth_name = AP["[auto_alias_global_save ? "" : "[config.server_id]_"]auto_stealth_name"]
 		if (isnull(saved_auto_stealth) || !isnum(saved_auto_stealth))
 			saved_auto_stealth = 0
 			saved_auto_stealth_name = null
@@ -202,8 +211,8 @@
 		auto_stealth = saved_auto_stealth
 		auto_stealth_name = saved_auto_stealth_name
 
-		var/saved_auto_alt_key = AP["auto_alt_key"]
-		var/saved_auto_alt_key_name = AP["auto_alt_key_name"]
+		var/saved_auto_alt_key = AP["[auto_alias_global_save ? "" : "[config.server_id]_"]auto_alt_key"]
+		var/saved_auto_alt_key_name = AP["[auto_alias_global_save ? "" : "[config.server_id]_"]auto_alt_key_name"]
 		if (isnull(saved_auto_alt_key) || !isnum(saved_auto_alt_key))
 			saved_auto_alt_key = 0
 			saved_auto_alt_key_name = null
@@ -263,17 +272,29 @@
 	proc/save_admin_prefs()
 		if (!src.owner)
 			return
+		var/list/data = json_decode(owner.player.cloud_get("admin_preferences"))
+		var/list/auto_aliases = data["auto_aliases"]
+
+		if (auto_alias_global_save)
+			auto_aliases["auto_stealth"] = auto_stealth
+			auto_aliases["auto_stealth_name"] = auto_stealth_name
+			auto_aliases["auto_alt_key"] = auto_alt_key
+			auto_aliases["auto_alt_key_name"] = auto_alt_key_name
+		else // let's not wipe out their local saves in case they toggle global saving off
+			auto_aliases["[config.server_id]_auto_stealth"] = auto_stealth
+			auto_aliases["[config.server_id]_auto_stealth_name"] = auto_stealth_name
+			auto_aliases["[config.server_id]_auto_alt_key"] = auto_alt_key
+			auto_aliases["[config.server_id]_auto_alt_key_name"] = auto_alt_key_name
+
 		var/list/AP = list()
 
+		AP["auto_aliases"] = auto_aliases
+		AP["auto_alias_global_save"] = auto_alias_global_save
 		AP["popuptoggle"] = popuptoggle
 		AP["servertoggles_toggle"] = servertoggles_toggle
 		AP["animtoggle"] = animtoggle
 		AP["attacktoggle"] = attacktoggle
 		AP["rp_word_filtering"] = rp_word_filtering
-		AP["auto_stealth"] = auto_stealth
-		AP["auto_stealth_name"] = auto_stealth_name
-		AP["auto_alt_key"] = auto_alt_key
-		AP["auto_alt_key_name"] = auto_alt_key_name
 		AP["hear_prayers"] = hear_prayers
 		AP["audible_prayers"] = audible_prayers
 		AP["atags"] = see_atags
