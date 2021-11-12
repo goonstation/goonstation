@@ -592,7 +592,7 @@
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/knight)
 
 	bard
-		name = "Class Crate - Rocker"
+		name = "Class Crate - Bard"
 		desc = "A crate containing a Specialist Operative loadout."
 		spawn_contents = list(/obj/item/breaching_hammer/rock_sledge,
 		/obj/item/device/radio/headset/syndicate/bard,
