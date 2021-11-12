@@ -3997,10 +3997,10 @@
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
 "ang" = (
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/arm/left/standard,
+/obj/item/parts/robot_parts/arm/right/standard,
+/obj/item/parts/robot_parts/leg/left/standard,
+/obj/item/parts/robot_parts/leg/right/standard,
 /obj/storage/crate{
 	name = "Robotic limbs"
 	},
@@ -8837,10 +8837,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/inner)
-"azw" = (
-/obj/reagent_dispensers/fueltank,
-/turf/simulated/floor/yellow,
-/area/station/engine/inner)
 "azx" = (
 /obj/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/blast/pyro{
@@ -9667,6 +9663,7 @@
 	icon_state = "4-8"
 	},
 /obj/item/device/radio/intercom/loudspeaker/speaker/south,
+/obj/reagent_dispensers/fueltank,
 /turf/simulated/floor,
 /area/station/engine/gas)
 "aBF" = (
@@ -10664,10 +10661,10 @@
 	},
 /area/station/security/hos)
 "aEz" = (
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor,
 /area/station/engine/gas)
 "aEA" = (
@@ -10681,10 +10678,6 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/kitchen/freezer)
-"aEC" = (
-/obj/machinery/portable_atmospherics/pump,
-/turf/simulated/floor,
-/area/station/engine/gas)
 "aED" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/bot/secbot/beepsky,
@@ -11084,10 +11077,10 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/quarters)
 "aFJ" = (
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/caution/south,
 /area/station/engine/gas)
 "aFK" = (
@@ -11313,10 +11306,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
-"aGl" = (
-/obj/machinery/portable_atmospherics/pump,
-/turf/simulated/floor/caution/south,
-/area/station/engine/gas)
 "aGm" = (
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
@@ -17681,17 +17670,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/medical/robotics)
 "aYh" = (
-/obj/item/cable_coil/cut,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/obj/storage/crate{
-	name = "robotics crate"
-	},
+/obj/storage/crate/robotparts,
 /turf/simulated/floor/plating/random,
 /area/station/medical/robotics)
 "aYj" = (
@@ -25745,10 +25724,10 @@
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
 "bsc" = (
-/obj/machinery/smelter,
 /obj/decal/tile_edge/stripe/big{
 	dir = 8
 	},
+/obj/machinery/neosmelter,
 /turf/simulated/floor/shuttlebay,
 /area/station/mining/refinery)
 "bsd" = (
@@ -26973,9 +26952,9 @@
 /obj/item/sheet/steel{
 	amount = 50
 	},
-/obj/item/parts/robot_parts/arm/right,
-/obj/item/parts/robot_parts/arm/right,
-/obj/item/parts/robot_parts/arm/right,
+/obj/item/parts/robot_parts/arm/right/standard,
+/obj/item/parts/robot_parts/arm/right/standard,
+/obj/item/parts/robot_parts/arm/right/standard,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -83568,7 +83547,7 @@ awX
 eNQ
 azs
 azd
-azw
+azd
 avp
 azJ
 fmk
@@ -85693,8 +85672,8 @@ aAh
 aOc
 bqU
 aBf
-aEC
-aGl
+aBa
+aHq
 ftP
 aMe
 aEr
@@ -89004,7 +88983,7 @@ aMn
 eNQ
 azs
 azd
-azw
+azd
 avp
 azJ
 iJu

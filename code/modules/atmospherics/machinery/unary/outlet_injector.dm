@@ -14,9 +14,12 @@
 //
 	var/frequency = 0
 	var/id = null
-	var/datum/radio_frequency/radio_connection
 
 	level = 1
+
+	New()
+		..()
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
 	update_icon()
 		if(node)
@@ -67,38 +70,19 @@
 
 		flick("inject", src)
 
-	proc
-		set_frequency(new_frequency)
-			radio_controller.remove_object(src, "[frequency]")
-			frequency = new_frequency
-			if(frequency)
-				radio_connection = radio_controller.add_object(src, "[frequency]")
+	proc/broadcast_status()
+		var/datum/signal/signal = get_free_signal()
+		signal.transmission_method = 1 //radio signal
+		signal.source = src
 
-		broadcast_status()
-			if(!radio_connection)
-				return 0
+		signal.data["tag"] = id
+		signal.data["device"] = "AO"
+		signal.data["power"] = on
+		signal.data["volume_rate"] = volume_rate
 
-			var/datum/signal/signal = get_free_signal()
-			signal.transmission_method = 1 //radio signal
-			signal.source = src
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
-			signal.data["tag"] = id
-			signal.data["device"] = "AO"
-			signal.data["power"] = on
-			signal.data["volume_rate"] = volume_rate
-
-			radio_connection.post_signal(src, signal)
-
-			return 1
-
-	initialize()
-		..()
-
-		set_frequency(frequency)
-
-	disposing()
-		radio_controller.remove_object(src, "[frequency]")
-		..()
+		return 1
 
 	receive_signal(datum/signal/signal)
 		if(signal.data["tag"] && (signal.data["tag"] != id))

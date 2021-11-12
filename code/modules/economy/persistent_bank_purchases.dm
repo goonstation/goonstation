@@ -384,6 +384,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	legless
 		name = "No Legs"
 		cost = 5000
+		path = /obj/item/furniture_parts/wheelchair
 
 		Create(var/mob/living/M)
 			if (ishuman(M))

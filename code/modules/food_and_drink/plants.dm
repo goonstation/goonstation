@@ -118,19 +118,6 @@
 		qdel(src)
 		//..()
 
-/obj/item/reagent_containers/food/snacks/plant/tomato/tomacco
-	name = "tomacco"
-	crop_suffix = " tomacco"
-	desc = "Refreshingly addictive."
-	icon_state = "tomato"
-	amount = 1
-	heal_amt = 1
-	throwforce = 0
-	force = 0
-	make_reagents()
-		..()
-		reagents.add_reagent("nicotine",15)
-
 /obj/item/reagent_containers/food/snacks/plant/corn
 	name = "corn cob"
 	crop_suffix = " cob"
@@ -1251,7 +1238,7 @@
 	edible = 0
 	food_color = "#4D2600"
 	validforhat = 1
-	event_handler_flags = USE_FLUID_ENTER | USE_HASENTERED
+	event_handler_flags = USE_FLUID_ENTER
 
 	make_reagents()
 		..()
@@ -1292,7 +1279,7 @@
 				L.TakeDamage("chest", brute=12)
 			src.split()
 
-	HasEntered(atom/movable/AM, atom/OldLoc)
+	Crossed(atom/movable/AM)
 		. = ..()
 		if(isliving(AM))
 			var/mob/living/L = AM

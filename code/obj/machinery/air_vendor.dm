@@ -90,7 +90,7 @@ obj/machinery/air_vendor
 		if (!card || !user)
 			return
 		boutput(user, "<span class='notice'>You swipe [card].</span>")
-		var/datum/data/record/account = null
+		var/datum/db_record/account = null
 		account = FindBankAccountByName(card.registered)
 		if (account)
 			var/enterpin = input(user, "Please enter your PIN number.", "Enter PIN", 0) as null|num
@@ -111,10 +111,10 @@ obj/machinery/air_vendor
 		html += "<TT><b>Welcome!</b><br>"
 		html += "<b>Current balance: <a href='byond://?src=\ref[src];return_credits=1'>[src.credits] credits</a></b><br>"
 		if (src.scan)
-			var/datum/data/record/account = null
+			var/datum/db_record/account = null
 			account = FindBankAccountByName(src.scan.registered)
 			html += "<b>Current ID:</b> <a href='?src=\ref[src];clearcard=1'>[src.scan]</a><br />"
-			html += "<b>Credits on Account: [account.fields["current_money"]] Credits</b> <br>"
+			html += "<b>Credits on Account: [account["current_money"]] Credits</b> <br>"
 		else
 			html += "<b>Current ID:</b> None<br>"
 		if(src.holding)
@@ -162,9 +162,9 @@ obj/machinery/air_vendor
 						src.updateUsrDialog()
 						return
 					else if(scan)
-						var/datum/data/record/account = FindBankAccountByName(src.scan.registered)
-						if (account && account.fields["current_money"] >= cost)
-							account.fields["current_money"] -= cost
+						var/datum/db_record/account = FindBankAccountByName(src.scan.registered)
+						if (account && account["current_money"] >= cost)
+							account["current_money"] -= cost
 							src.fill()
 							boutput(usr, "<span class='notice'>You fill up the [src.holding].</span>")
 							src.updateUsrDialog()

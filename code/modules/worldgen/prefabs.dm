@@ -215,6 +215,13 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 19
 		prefabSizeY = 22
 
+	lesbeeans // BatElite's bee-shaped farm where the bees are also lesbians
+		maxNum = 1
+		probability = 20
+		prefabPath = "assets/maps/prefabs/prefab_lesbeeans.dmm"
+		prefabSizeX = 24
+		prefabSizeY = 24
+
 	silverglass // Ill-fated entanglement research facility
 		maxNum = 1
 		probability = 25

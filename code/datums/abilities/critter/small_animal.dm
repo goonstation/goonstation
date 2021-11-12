@@ -1,6 +1,5 @@
 
 // a lot of these are probably gunna just be copy/paste jobs because eh.
-
 /datum/targetable/critter/bite/small
 	name = "Bite"
 	desc = "Bite down on a mob, causing a little damage."
@@ -20,7 +19,7 @@
 /datum/targetable/critter/peck
 	name = "Peck"
 	desc = "Peck at a mob."
-	icon_state = "blind"
+	icon_state = "scuffed_peck"
 	cooldown = 100
 	targeted = 1
 	target_anything = 1
@@ -88,12 +87,14 @@
 			return 0
 
 /datum/targetable/critter/peck/crow
+	icon_state = "peck_crow"
 	take_eyes = 1
 
 /datum/targetable/critter/pounce
 	name = "Pounce"
 	desc = "Pounce on a mob, causing a short stun."
 	cooldown = 200
+	icon_state = "pounce_polymorph"
 	targeted = 1
 	target_anything = 1
 
@@ -131,6 +132,7 @@
 /datum/targetable/critter/trip
 	name = "Trip"
 	desc = "Weave around the legs of a mob, causing them to trip."
+	icon_state = "tail_trip"
 	cooldown = 250
 	targeted = 1
 	target_anything = 1
@@ -168,6 +170,7 @@
 	desc = "Sting a mob, injecting them with venom."
 	cooldown = 50
 	targeted = 1
+	icon_state = "waspbee_sting"
 	target_anything = 1
 	var/venom1 = "histamine"
 	var/amt1 = 12

@@ -283,7 +283,7 @@
 
 
 // flockdrones can always move through
-/obj/grille/flock/CanPass(atom/movable/mover, turf/target)
+/obj/grille/flock/Cross(atom/movable/mover)
 	. = ..()
 	var/mob/living/critter/flock/drone/drone = mover
 	if(istype(drone) && !drone.floorrunning)

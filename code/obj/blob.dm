@@ -12,7 +12,7 @@
 	density = 1
 	opacity = 0
 	anchored = 1
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 	var/health = 30         // current health of the blob
 	var/health_max = 30     // health cap
 	var/armor = 1           // how much incoming damage gets divided by unless it bypasses armor
@@ -57,10 +57,6 @@
 		healthbar.onStart()
 		healthbar.onUpdate()
 
-		if (istype(src.loc,/turf))
-			if (istype(src.loc.loc,/area))
-				src.loc.loc.Entered(src)
-
 		SPAWN_DBG(0.1 SECONDS)
 			for (var/mob/living/carbon/human/H in src.loc)
 				if (H.decomp_stage == 4 || check_target_immunity(H))//too decomposed or too cool to be eaten
@@ -81,7 +77,7 @@
 		else
 			..()
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	Cross(atom/movable/mover)
 		. = ..()
 		var/obj/projectile/P = mover
 		if (istype(P) && P.proj_data) //Wire note: Fix for Cannot read null.type
@@ -168,9 +164,6 @@
 				gen_rate_value = 0
 			overmind.spread_mitigation -= spread_value
 		var/turf/T = get_turf(src)
-		if (istype(src.loc,/turf))
-			if (istype(src.loc.loc,/area))
-				src.loc.loc.Exited(src)
 		healthbar?.onDelete()
 		qdel(healthbar)
 		healthbar = null
@@ -1061,6 +1054,7 @@
 	opacity = 1
 	health = 85
 	health_max = 85
+	gas_impermeable = TRUE
 
 	bullet_act(var/obj/projectile/P)
 		if (P.proj_data.damage_type == D_ENERGY)
@@ -1224,6 +1218,7 @@
 	health = 75
 	health_max = 75
 	can_absorb = 0
+	gas_impermeable = TRUE
 	flags = ALWAYS_SOLID_FLUID
 
 	take_damage(var/amount,var/damage_mult = 1,var/damtype,var/mob/user)
@@ -1245,6 +1240,7 @@
 	special_icon = 1
 	armor = 1
 	can_absorb = 0
+	gas_impermeable = TRUE
 
 	take_damage(amount, mult, damtype, mob/user)
 		if (damtype == "burn")

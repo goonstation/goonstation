@@ -398,7 +398,7 @@
 		if (!src)
 			return
 		if (!src.litfam)
-			src.firesource = TRUE
+			src.firesource = FIRESOURCE_OPEN_FLAME
 			src.litfam = TRUE
 			src.hit_type = DAMAGE_BURN
 			src.force = 3

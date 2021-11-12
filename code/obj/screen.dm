@@ -59,6 +59,7 @@
 	icon_state = "stamina_bar"
 	var/last_val = -123123
 	var/tooltipTheme = "stamina"
+	var/last_update = 0
 	layer = HUD_LAYER-1
 
 	New(var/mob/living/carbon/C)
@@ -76,7 +77,8 @@
 		return "[C.stamina] / [C.stamina_max] Stamina. Regeneration rate : [(C.stamina_regen + GET_MOB_PROPERTY(C, PROP_STAMINA_REGEN_BONUS))]"
 
 	proc/update_value(var/mob/living/C)
-		if(C.stamina == last_val) return //No need to change anything
+		last_update = TIME
+		if(abs(C.stamina - last_val) * 32 / C.stamina_max <= 1) return //No need to change anything
 		else last_val = C.stamina
 
 		if(C.stamina < 0)

@@ -68386,59 +68386,8 @@
 /turf/simulated/floor,
 /area/station/security/armory)
 "dcm" = (
-/obj/storage/crate{
-	desc = "Only distantly related to the Adventure Closet.";
-	name = "Adventure Crate"
-	},
-/obj/item/paper/book/from_file/critter_compendium{
-	pixel_x = -10;
-	pixel_y = 5
-	},
-/obj/item/paper{
-	desc = "Aw dang, mooom";
-	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
-	name = "note from mom";
-	pixel_x = -10;
-	pixel_y = 5
-	},
-/obj/item/device/light/flashlight{
-	pixel_x = 7;
-	pixel_y = 9
-	},
-/obj/item/device/light/flashlight{
-	pixel_x = 7;
-	pixel_y = 5
-	},
-/obj/item/device/radio/headset/multifreq{
-	pixel_x = -4;
-	pixel_y = 13
-	},
-/obj/item/device/radio/headset/multifreq{
-	pixel_x = -5;
-	pixel_y = 9
-	},
-/obj/item/device/radio/headset/multifreq{
-	pixel_x = -6;
-	pixel_y = 5
-	},
-/obj/item/device/radio/headset/multifreq{
-	pixel_x = -7;
-	pixel_y = 1
-	},
-/obj/item/camera{
-	pixel_x = 1;
-	pixel_y = 5
-	},
-/obj/item/device/audio_log{
-	pixel_x = 5;
-	pixel_y = -4
-	},
-/obj/item/reagent_containers/food/drinks/milk{
-	pixel_x = -7
-	},
-/obj/item/reagent_containers/food/snacks/sandwich/pb{
-	pixel_y = -3
-	},
+/obj/storage/crate/adventure,
+,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},

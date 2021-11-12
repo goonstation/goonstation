@@ -399,9 +399,9 @@
 		else
 			stat("No Cell Inserted!")
 
-	Bump(atom/movable/AM as mob|obj, yes)
+	Bump(atom/movable/AM as mob|obj)
 		SPAWN_DBG( 0 )
-			if ((!( yes ) || src.now_pushing))
+			if ( src.now_pushing)
 				return
 			//..()
 			if (!istype(AM, /atom/movable))
@@ -1012,8 +1012,10 @@
 			return src.emote(copytext(message, 2),1)
 
 		UpdateOverlays(speech_bubble, "speech_bubble")
+		var/speech_bubble_time = src.last_typing
 		SPAWN_DBG(1.5 SECONDS)
-			UpdateOverlays(null, "speech_bubble")
+			if(speech_bubble_time == src.last_typing)
+				UpdateOverlays(null, "speech_bubble")
 
 		return src.drone_broadcast(message)
 		// Removing normal dronesay stuff and changing :d to just ;

@@ -9,7 +9,8 @@
 //Returns the expiry timestamp in a human readable format
 /proc/getExpiry(minutes)
 	var/CMinutes = (world.realtime / 10) / 60
-	minutes = text2num(minutes)
+	if(istext(minutes))
+		minutes = text2num(minutes)
 	var/exp = minutes - CMinutes
 	if (exp <= 0)
 		return 0
@@ -81,7 +82,9 @@ var/global/list/playersSeen = list()
 	//We only care about the latest match for this (so far)
 	var/list/row = data[data[1]]
 
-	var/expired = text2num(row["timestamp"]) > 0 && !getExpiry(row["timestamp"])
+	var/timestamp = text2num(row["timestamp"])
+
+	var/expired = timestamp > 0 && !getExpiry(timestamp)
 
 	//Are any of the details...different? This is to catch out ban evading jerks who change their ckey but forget to mask their IP or whatever
 	var/timeAdded = 0
@@ -97,7 +100,7 @@ var/global/list/playersSeen = list()
 
 		timeAdded = (row["ckey"] != ckey && newChain > 1 ? 1 : 0) //only add time if a ckey didnt match, and it's a second evasion
 		var/CMinutes = (world.realtime / 10) / 60
-		var/remaining = (text2num(row["timestamp"]) > 0 ? text2num(row["timestamp"]) - CMinutes : 0)
+		var/remaining = (timestamp > 0 ? timestamp - CMinutes : 0)
 		var/addData[] = new()
 		addData["ckey"] = ckey
 		addData["compID"] = compID
@@ -117,7 +120,7 @@ var/global/list/playersSeen = list()
 			logTheThing("diary", null, null, "Bans Error: Add ban in checkBan failed with message [rVal]", "debug")
 
 	var/oakey = (row["oakey"] == "N/A" ? row["akey"] : row["oakey"])
-	if (text2num(row["timestamp"]) > 0) //Temp ban found, determine if it should expire or not
+	if (timestamp > 0) //Temp ban found, determine if it should expire or not
 		if (expired) //It expired! Go you!
 			var/deleteData[] = new()
 			deleteData["id"] = row["id"]
@@ -134,14 +137,17 @@ var/global/list/playersSeen = list()
 			var/details = "[row["reason"]]<br>"
 			details += "Banned By: [oakey]<br>"
 			details += "This ban applies to [row["server"] ? "this server only" : "all servers"].<br>"
-			details += "(This ban will be automatically removed in [getExpiry(row["timestamp"])].)"
+			details += "(This ban will be automatically removed in [getExpiry(timestamp)].)"
 			details += "[timeAdded ? "<br>(5 days have been automatically added to your ban for attempted ban evasion)" : ""]"
 			return details
 	else //Permaban found, the player is DENIED
 		var/details = "[row["reason"]]<br>"
 		details += "Banned By: [oakey]<br>"
 		details += "This ban applies to [row["server"] ? "this server only" : "all servers"].<br>"
-		details += "(This is a permanent ban)"
+		if(timestamp == 0)
+			details += "This is a permanent ban, you can't appeal this ban until 30 days have passed."
+		else if(timestamp == -1)
+			details += "Please make an <a href='https://forum.ss13.co/showthread.php?tid=14863'>appeal on the forums</a> to have it lifted."
 		return details
 
 /proc/addBan(data)
@@ -180,13 +186,21 @@ var/global/list/playersSeen = list()
 		var/expiry = getExpiry(row["timestamp"])
 		var/serverLogSnippet = row["server"] ? "from [row["server"]]" : "from all servers"
 
-		if (text2num(row["timestamp"]) == 0)
-			if (targetC) boutput(targetC, "<span class='alert'>This is a permanent ban.</span>")
-			logTheThing("admin", adminC, targetC, "has banned [targetC ? "[constructTarget(targetC,"admin")]" : replacement_text] [serverLogSnippet]. Reason: [row["reason"]]. This is a permanent ban.")
-			logTheThing("diary", adminC, targetC, "has banned [targetC ? "[constructTarget(targetC,"diary")]" : replacement_text] [serverLogSnippet]. Reason: [row["reason"]]. This is a permanent ban.", "admin")
+		var/duration = expiry == 0 ? (data["text_ban_length"] || (text2num(row["timestamp"]) == 0 ? "Permanent" : "Until Appeal")) : expiry
+
+		if (text2num(row["timestamp"]) <= 0)
+			if (targetC)
+				if(duration == "Permanent")
+					boutput(targetC, "<span class='alert'>You have received a permanent ban, you can't appeal this ban until 30 days have passed.</span>")
+				else if(duration == "Until Appeal")
+					boutput(targetC, "<span class='alert'>You have received a ban. Make an <a href='https://forum.ss13.co/showthread.php?tid=14863'>appeal on the forums</a> to have it lifted.</span>")
+				else
+					boutput(targetC, "<span class='alert'>You have received a ban. Duration: [duration]</span>")
+			logTheThing("admin", adminC, targetC, "has banned [targetC ? "[constructTarget(targetC,"admin")]" : replacement_text] [serverLogSnippet]. duration: [duration] Reason: [row["reason"]].")
+			logTheThing("diary", adminC, targetC, "has banned [targetC ? "[constructTarget(targetC,"diary")]" : replacement_text] [serverLogSnippet]. duration: [duration] Reason: [row["reason"]].", "admin")
 			var/adminMsg = "<span class='notice'>"
 			adminMsg += (isclient(adminC) ? key_name(adminC) : adminC)
-			adminMsg += " has banned [targetC ? targetC : replacement_text] [serverLogSnippet].<br>Reason: [row["reason"]]<br>This is a permanent ban.</span>"
+			adminMsg += " has banned [targetC ? targetC : replacement_text] [serverLogSnippet].<br>Reason: [row["reason"]]</span>"
 			message_admins(adminMsg)
 		else
 			if (targetC) boutput(targetC, "<span class='alert'>This is a temporary ban, it will be removed in [expiry].</span>")
@@ -198,7 +212,7 @@ var/global/list/playersSeen = list()
 			message_admins(adminMsg)
 
 		if (row["ckey"] && row["ckey"] != "N/A")
-			addPlayerNote(row["ckey"], row["akey"], "Banned [serverLogSnippet] by [row["akey"]], reason: [row["reason"]], duration: [(expiry == 0 ? "Permanent": "[expiry]")]")
+			addPlayerNote(row["ckey"], row["akey"], "Banned [serverLogSnippet] by [row["akey"]], reason: [row["reason"]], duration: [duration]")
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = row["akey"]
@@ -223,7 +237,7 @@ var/global/list/playersSeen = list()
 		return 0
 
 	else
-		var/banTimestamp = 0
+		var/banTimestamp = data["mins"]
 		if (data["mins"] > 0) //If a temp ban, calculate expiry
 			var/CMinutes = (world.realtime / 10) / 60
 			banTimestamp = (data["previous"] && data["addTime"] ? CMinutes + data["mins"] + 7200 : CMinutes + data["mins"]) //Add 5 days (7200 mins) onto the ban if it's an evasion attempt
@@ -296,20 +310,13 @@ var/global/list/playersSeen = list()
 			return
 		data["reason"] = reason
 
-		var/server_nice = input(usr, "What server does the ban apply to?", "Ban") as null|anything in list("All", "1 Classic: Heisenbee", "2 Classic: Bombini", "3 Roleplay: Morty", "4 Roleplay: Sylvester")
-		var/server = null
-		switch (server_nice)
-			if ("1 Classic: Heisenbee")
-				server = "main1"
-			if ("2 Classic: Bombini")
-				server = "main2"
-			if ("3 Roleplay: Morty")
-				server = "main3"
-			if ("4 Roleplay: Sylvester")
-				server = "main4"
-		data["server"] = server
+		var/datum/game_server/game_server = global.game_servers.input_server(usr, "What server does the ban apply to?", "Ban", can_pick_all=TRUE)
+		if(isnull(game_server))
+			return null
+		data["server"] = istype(game_server) ? game_server.id : null // null = all servers
 
-		var/ban_time = input(usr,"How long will the ban be?","Ban") as null|anything in list("Half-hour","One Hour","Six Hours","One Day","Half a Week","One Week","One Month","Permanent","Custom")
+		var/ban_time = input(usr,"How long will the ban be?","Ban") as null|anything in \
+			list("Half-hour","One Hour","Six Hours","One Day","Half a Week","One Week","One Month","Until Appeal","Permanent","Custom")
 		var/mins = 0
 		switch(ban_time)
 			if("Half-hour")
@@ -326,8 +333,10 @@ var/global/list/playersSeen = list()
 				mins = 10080
 			if("One Month")
 				mins = 43200
+			if("Until Appeal")
+				mins = -1
 			if("Permanent")
-				mins = "perma"
+				mins = 0
 			else
 				var/cust_mins = input(usr,"How many minutes? (1440 = one day)","BAN HE",1440) as null|num
 				if(!cust_mins)
@@ -338,7 +347,8 @@ var/global/list/playersSeen = list()
 					mins = 525599
 				else
 					mins = cust_mins
-		data["mins"] = (mins == "perma" ? 0 : mins)
+		data["mins"] = mins
+		data["text_ban_length"] = ban_time
 		data["akey"] = usr.ckey
 		return data
 	else
@@ -385,20 +395,22 @@ var/global/list/playersSeen = list()
 
 		var/serverLogSnippet = row["server"] ? "Server: [row["server"]]" : "Server: all"
 
-		logTheThing("admin", adminC, target, "edited [constructTarget(target,"admin")]'s ban. Reason: [row["reason"]] Duration: [(expiry == 0 ? "Permanent": "[expiry]")] [serverLogSnippet]")
-		logTheThing("diary", adminC, target, "edited [constructTarget(target,"diary")]'s ban. Reason: [row["reason"]] Duration: [(expiry == 0 ? "Permanent": "[expiry]")] [serverLogSnippet]", "admin")
-		message_admins("<span class='internal'>[key_name(adminC)] edited [target]'s ban. Reason: [row["reason"]] Duration: [(expiry == 0 ? "Permanent": "[expiry]")] [serverLogSnippet]</span>")
+		var/duration = expiry == 0 ? data["text_ban_length"] : expiry
+
+		logTheThing("admin", adminC, target, "edited [constructTarget(target,"admin")]'s ban. Reason: [row["reason"]] Duration: [duration] [serverLogSnippet]")
+		logTheThing("diary", adminC, target, "edited [constructTarget(target,"diary")]'s ban. Reason: [row["reason"]] Duration: [duration] [serverLogSnippet]", "admin")
+		message_admins("<span class='internal'>[key_name(adminC)] edited [target]'s ban. Reason: [row["reason"]] Duration: [duration] [serverLogSnippet]</span>")
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = (isclient(adminC) && adminC.key ? adminC.key : adminC)
 		ircmsg["name"] = (isclient(adminC) && adminC.mob && adminC.mob.name ? stripTextMacros(adminC.mob.name) : "N/A")
-		ircmsg["msg"] = "edited [target]'s ban. Reason: [row["reason"]]. Duration: [(expiry == 0 ? "Permanent": "[expiry]")]. [serverLogSnippet]."
+		ircmsg["msg"] = "edited [target]'s ban. Reason: [row["reason"]]. Duration: [duration]. [serverLogSnippet]."
 		ircbot.export("admin", ircmsg)
 
 		return 0
 
 	else
-		var/banTimestamp = 0
+		var/banTimestamp = data["mins"]
 		if (data["mins"] > 0) //If a temp ban, calculate expiry
 			var/CMinutes = (world.realtime / 10) / 60
 			banTimestamp = (data["previous"] ? CMinutes + data["mins"] + 7200 : CMinutes + data["mins"]) //Add 5 days (7200 mins) onto the ban if it's an evasion attempt
@@ -437,20 +449,13 @@ var/global/list/playersSeen = list()
 			return
 		data["reason"] = reason
 
-		var/server_nice = input(usr, "What server does the ban apply to?", "Ban") as null|anything in list("All", "1 Classic: Heisenbee", "2 Classic: Bombini", "3 Roleplay: Morty", "4 Roleplay: Sylvester")
-		var/server = null
-		switch (server_nice)
-			if ("1 Classic: Heisenbee")
-				server = "main1"
-			if ("2 Classic: Bombini")
-				server = "main2"
-			if ("3 Roleplay: Morty")
-				server = "main3"
-			if ("4 Roleplay: Sylvester")
-				server = "main4"
-		data["server"] = server
+		var/datum/game_server/game_server = global.game_servers.input_server(usr, "What server does the ban apply to?", "Ban", can_pick_all=TRUE)
+		if(isnull(game_server))
+			return
+		data["server"] = istype(game_server) ? game_server.id : null // null = all servers
 
-		var/ban_time = input(usr,"How long will the ban be? (select Custom to alter existing duration)","Ban") as null|anything in list("Half-hour","One Hour","Six Hours","One Day","Half a Week","One Week","One Month","Permanent","Custom")
+		var/ban_time = input(usr,"How long will the ban be? (select Custom to alter existing duration)","Ban") as null|anything in \
+			list("Half-hour","One Hour","Six Hours","One Day","Half a Week","One Week","One Month","Until Appeal","Permanent","Custom")
 		var/mins = 0
 		switch(ban_time)
 			if("Half-hour")
@@ -467,8 +472,10 @@ var/global/list/playersSeen = list()
 				mins = 10080
 			if("One Month")
 				mins = 43200
+			if("Until Appeal")
+				mins = -1
 			if("Permanent")
-				mins = "perma"
+				mins = 0
 			else
 				var/cust_mins = input(usr,"How many minutes? (1440 = one day)","BAN HE",remaining ? remaining : 1440) as null|num
 				if(!cust_mins)
@@ -482,7 +489,8 @@ var/global/list/playersSeen = list()
 
 		data["id"] = id
 		data["reason"] = reason
-		data["mins"] = (mins == "perma" ? 0 : mins)
+		data["mins"] = mins
+		data["text_ban_length"] = ban_time
 		data["akey"] = usr.ckey
 		editBan(data)
 
@@ -630,6 +638,7 @@ var/global/list/playersSeen = list()
 	bansHtml = replacetext(bansHtml, "null /* ref_src */", "'\ref[src]'")
 	bansHtml = replacetext(bansHtml, "null /* cminutes */", "[CMinutes]")
 	bansHtml = replacetext(bansHtml, "null /* api_data_params */", "'data_server=[serverKey]&data_id=[config.server_id]&data_version=[config.goonhub_api_version]'")
+	bansHtml = replacetext(bansHtml, regex(@"-[0-9]* Minutes"), "until appeal") // gross
 	if (centralConn)
 		bansHtml = replacetext(bansHtml, "null /* api_key */", "'[md5(config.goonhub_api_web_token)]'")
 	usr << browse(bansHtml,"window=[windowName];size=1080x500")

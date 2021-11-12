@@ -140,19 +140,19 @@
 	get_desc()
 		switch (src.d_state)
 			if (0)
-				. += "<br>Looks like disassembling it starts with snipping some of those reinforcing rods."
+				. += "<br>Looks like disassembling it starts with <b>snipping</b> some of those reinforcing rods."
 			if (1)
-				. += "<br>Up next in this long journey is unscrewing the support lines."
+				. += "<br>Up next in this long journey is <b>unscrewing</b> the reinforced rods."
 			if (2)
-				. += "<br>What'd really help at this point is unwelding the metal cover."
+				. += "<br>What'd really help at this point is <b>slicing</b> the metal cover with a welder."
 			if (3)
-				. += "<br>Your prying eyes suggest prying off the metal cover you just unwelded."
+				. += "<br>Your prying eyes suggest <b>prying</b> open the metal cover you just sliced."
 			if (4)
-				. += "<br>The latest wrench in your plans for wall disassembly appear to be some support rods."
+				. += "<br>The latest <b>wrench</b> in your plans for wall disassembly appear to be some support rods."
 			if (5)
-				. += "<br>Is this wall okay? It's looking a little under the welder. Or maybe that's just its support rods."
+				. += "<br>You should really <b>slice</b> the support rods you just loosened."
 			if (6)
-				. += "<br>Almost! Just need to pry off the outer sheath. Which you've somehow been working around this whole time. <em>Somehow</em>."
+				. += "<br>Almost! Just need to <b>pry</b> off the outer sheath. Which you've somehow been working around this whole time. <em>Somehow</em>."
 
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -162,11 +162,11 @@
 
 		/* ----- Deconstruction ----- */
 		if (src.d_state == 0 && issnippingtool(W))
-			actions.start(new /datum/action/bar/icon/wall_tool_interact(src, W, WALL_REMOVERERODS), user)
+			actions.start(new /datum/action/bar/icon/wall_tool_interact(src, W, WALL_CUTRERODS), user)
 			return
 
 		else if (src.d_state == 1 && isscrewingtool(W))
-			actions.start(new /datum/action/bar/icon/wall_tool_interact(src, W, WALL_REMOVESUPPORTLINES), user)
+			actions.start(new /datum/action/bar/icon/wall_tool_interact(src, W, WALL_REMOVERERODS), user)
 			return
 
 		else if (src.d_state == 2 && isweldingtool(W))
@@ -180,7 +180,7 @@
 			return
 
 		else if (src.d_state == 4 && iswrenchingtool(W))
-			actions.start(new /datum/action/bar/icon/wall_tool_interact(src, W, WALL_DETATCHSUPPORTRODS), user)
+			actions.start(new /datum/action/bar/icon/wall_tool_interact(src, W, WALL_LOOSENSUPPORTRODS), user)
 			return
 
 		else if (src.d_state == 5 && isweldingtool(W))
@@ -471,6 +471,7 @@
 /turf/simulated/wall/auto/supernorn/wood
 	icon = 'icons/turf/walls_wood.dmi'
 	connect_diagonal = 0
+	mod = ""
 	connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 	/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
 	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen)
@@ -656,6 +657,16 @@
 	/obj/window)
 	connects_with_overlay = list(/obj/machinery/door, /obj/window)
 
+/turf/unsimulated/wall/auto/supernorn/wood
+	icon = 'icons/turf/walls_wood.dmi'
+	connect_diagonal = 0
+	mod = ""
+	connects_to = list(/turf/unsimulated/wall/auto/supernorn, /turf/unsimulated/wall/auto/reinforced/supernorn,
+	/turf/unsimulated/wall/auto/supernorn/wood, /obj/machinery/door, /obj/window, /obj/wingrille_spawn)
+
+	connects_with_overlay = list(/turf/unsimulated/wall/auto/supernorn, /turf/unsimulated/wall/auto/reinforced/supernorn,
+	/turf/unsimulated/wall/auto/supernorn/wood, /obj/machinery/door, /obj/window, /obj/wingrille_spawn)
+
 /turf/unsimulated/wall/auto/gannets
 	icon = 'icons/turf/walls_destiny.dmi'
 	connects_to = list(/turf/unsimulated/wall/auto/gannets)
@@ -701,6 +712,18 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/lead)
 	icon_state = "mapiconw"
 	mod = "leadw-"
 
+// Some fun walls by Walpvrgis
+ABSTRACT_TYPE(turf/unsimulated/wall/auto/hedge)
+/turf/unsimulated/wall/auto/hedge
+	name = "hedge"
+	desc = "This hedge is sturdy! No light seems to pass through it..."
+	icon = 'icons/turf/walls_hedge.dmi'
+	mod = "hedge-"
+	light_mod = "wall-"
+	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	connect_diagonal = 1
+	connects_to = list(/turf/unsimulated/wall/auto/hedge, /obj/machinery/door, /obj/window, /turf/unsimulated/wall/, /turf/simulated/wall/false_wall/)
+
 /datum/action/bar/icon/wall_tool_interact
 	id = "wall_tool_interact"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
@@ -710,7 +733,7 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/lead)
 
 	var/turf/simulated/wall/auto/the_wall
 	var/obj/item/the_tool
-	var/interaction = WALL_REMOVERERODS
+	var/interaction = WALL_CUTRERODS
 
 	New(var/obj/table/wall, var/obj/item/tool, var/interact, var/duration_i)
 		..()
@@ -744,63 +767,79 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/lead)
 	onStart()
 		..()
 		var/message = ""
+		var/self_message = ""
 		switch (interaction)
-			if (WALL_REMOVERERODS)
-				message = "Removing some reinforcing rods."
+			if (WALL_CUTRERODS)
+				self_message = "You begin to cut the reinforced rods."
+				message = "[owner] begins to cut \the [the_wall]'s reinforced rods."
 				playsound(the_wall, "sound/items/Wirecutter.ogg", 100, 1)
-			if (WALL_REMOVESUPPORTLINES)
-				message = "Removing support lines."
+			if (WALL_REMOVERERODS)
+				self_message = "You begin to remove the reinforced rods."
+				message = "[owner] begins to remove \the [the_wall]'s reinforced rods."
 				playsound(the_wall, "sound/items/Screwdriver.ogg", 100, 1)
 			if (WALL_SLICECOVER)
-				message = "Slicing metal cover."
-			if (WALL_REMOVESUPPORTRODS)
-				message = "Removing support rods."
+				self_message = "You begin to slice the metal cover."
+				message = "[owner] begins to slice \the [the_wall]'s metal cover."
 			if (WALL_PRYCOVER)
-				message = "Prying cover off."
+				self_message = "You begin to pry the metal cover apart."
+				message = "[owner] begins to pry \the [the_wall]'s metal cover apart."
 				playsound(the_wall, "sound/items/Crowbar.ogg", 100, 1)
-			if (WALL_PRYSHEATH)
-				message = "Prying outer sheath off."
-				playsound(the_wall, "sound/items/Crowbar.ogg", 100, 1)
-			if (WALL_DETATCHSUPPORTRODS)
+			if (WALL_LOOSENSUPPORTRODS)
+				self_message = "You begin to loosen the support rods."
+				message = "[owner] begins to loosen \the [the_wall]'s support rods."
 				playsound(the_wall, "sound/items/Ratchet.ogg", 100, 1)
-				message = "Detaching support rods."
-		owner.visible_message("<span class='notice'>[message].</span>")
+			if (WALL_REMOVESUPPORTRODS)
+				self_message = "You begin to remove the support rods."
+				message = "[owner] begins to remove \the [the_wall]'s support rods."
+			if (WALL_PRYSHEATH)
+				self_message = "You begin to pry the outer sheath off."
+				message = "[owner] begins to pry \the [the_wall]'s outer sheath off."
+				playsound(the_wall, "sound/items/Crowbar.ogg", 100, 1)
+		owner.visible_message("<span class='alert'>[message]</span>", "<span class='notice'>[self_message]</span>")
 
 	onEnd()
 		..()
 		var/message = ""
+		var/self_message = ""
 		switch (interaction)
+			if (WALL_CUTRERODS)
+				self_message = "You cut the reinforcing rods."
+				message = "[owner] cuts \the [the_wall]'s reinforcing rods."
+				the_wall.d_state = 1
+				the_wall.update_icon()
 			if (WALL_REMOVERERODS)
-				message = "You remove some reinforcing rods."
 				var/atom/A = new /obj/item/rods( the_wall )
 				if (the_wall.material)
 					A.setMaterial(the_wall.material)
 				else
 					A.setMaterial(getMaterial("steel"))
-				the_wall.d_state = 1
-				the_wall.update_icon()
-			if (WALL_REMOVESUPPORTLINES)
-				message = "You removed the support lines."
+				self_message = "You remove the reinforcing rods."
+				message = "[owner] removes \the [the_wall]'s reinforcing rods."
 				the_wall.d_state = 2
 			if (WALL_SLICECOVER)
-				message = "You removed the metal cover."
+				self_message = "You slice the metal cover."
+				message = "[owner] slices \the [the_wall]'s metal cover."
 				the_wall.d_state = 3
+			if (WALL_PRYCOVER)
+				self_message = "You pry the metal cover apart."
+				message = "[owner] pries \the [the_wall]'s metal cover apart."
+				the_wall.d_state = 4
+			if (WALL_LOOSENSUPPORTRODS)
+				self_message = "You loosen the support rods."
+				message = "[owner] loosens \the [the_wall]'s support rods."
+				the_wall.d_state = 5
 			if (WALL_REMOVESUPPORTRODS)
-				message = "You removed the support rods."
+				self_message = "You remove the support rods."
+				message = "[owner] removes \the [the_wall]'s support rods."
 				the_wall.d_state = 6
 				var/atom/A = new /obj/item/rods( the_wall )
 				if (the_wall.material)
 					A.setMaterial(the_wall.material)
 				else
 					A.setMaterial(getMaterial("steel"))
-			if (WALL_PRYCOVER)
-				message = "You removed the cover."
-				the_wall.d_state = 4
 			if (WALL_PRYSHEATH)
-				message = "You removed the outer sheath."
+				self_message = "You remove the outer sheath."
+				message = "[owner] removes \the [the_wall]'s outer sheath."
 				logTheThing("station", owner, null, "dismantles a Reinforced Wall in [owner.loc.loc] ([showCoords(owner.x, owner.y, owner.z)])")
 				the_wall.dismantle_wall()
-			if (WALL_DETATCHSUPPORTRODS)
-				message = "You detach the support rods."
-				the_wall.d_state = 5
-		owner.visible_message("<span class='notice'>[message].</span>")
+		owner.visible_message("<span class='alert'>[message]</span>", "<span class='notice'>[self_message]</span>")
