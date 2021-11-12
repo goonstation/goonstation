@@ -13,7 +13,6 @@ var/list/magnet_locations = list()
 	flags = FPRINT | CONDUCT | TGUI_INTERACTIVE
 	var/busy = 0
 	layer = 2
-	mats = list("telecrystal"=10, "MET-1"=10, "CON-1"=10)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 
 	New()
