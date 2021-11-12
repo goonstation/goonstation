@@ -1839,7 +1839,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				if (stun > 0)
 					src.do_disorient(clamp(stun*4, P.proj_data.power*(1-P.proj_data.ks_ratio)*2, stun+80), weakened = stun*2, stunned = stun*2, disorient = min(stun,  80), remove_stamina_below_zero = 0)
 					src.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
-
+					if (!src.bioHolder.HasEffect("resist_electric"))
+						SEND_SIGNAL(src, COMSIG_MOB_SHOCKED)
 				if (isalive(src)) lastgasp()
 
 				if (src.stuttering < stun)
@@ -1920,7 +1921,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 /mob/living/shock(var/atom/origin, var/wattage, var/zone = "chest", var/stun_multiplier = 1, var/ignore_gloves = 0)
 	if (!wattage)
 		return 0
-
+	if (!src.bioHolder.HasEffect("resist_electric"))
+		SEND_SIGNAL(src, COMSIG_MOB_SHOCKED)
 	var/prot = 1
 
 	var/mob/living/carbon/human/H = null //ughhh sort this out with proper inheritance later

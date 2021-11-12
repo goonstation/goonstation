@@ -177,6 +177,8 @@
 				playsound(src, "sound/impact_sounds/Energy_Hit_3.ogg", 50, 1, -1)
 				flick(flick_baton_active, src)
 				JOB_XP(victim, "Clown", 3)
+				if (!victim.bioHolder.HasEffect("resist_electric"))
+					SEND_SIGNAL(victim, COMSIG_MOB_SHOCKED)
 
 			else
 				logTheThing("debug", user, null, "<b>Convair880</b>: stun baton ([src.type]) do_stun() was called with an invalid argument ([type]), aborting. Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
@@ -236,7 +238,6 @@
 
 	attack(mob/M as mob, mob/user as mob)
 		src.add_fingerprint(user)
-
 		if(check_target_immunity( M ))
 			user.show_message("<span class='alert'>[M] seems to be warded from attacks!</span>")
 			return

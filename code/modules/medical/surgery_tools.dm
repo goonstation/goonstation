@@ -489,6 +489,7 @@ CONTAINS:
 		else if (isdead(patient))
 			patient.visible_message("<span class='alert'><b>[patient]</b> doesn't respond at all!</span>")
 			speak("ERROR: Patient is deceased.")
+			SEND_SIGNAL(patient, COMSIG_MOB_SHOCKED)
 			return 1
 
 		else
@@ -581,6 +582,8 @@ CONTAINS:
 				patient.changeStatus("weakened", 0.1 SECONDS)
 				patient.force_laydown_standup()
 				patient.remove_stamina(45)
+				if (!patient.bioHolder.HasEffect("resist_electric"))
+					SEND_SIGNAL(patient, COMSIG_MOB_SHOCKED)
 
 		return 0
 

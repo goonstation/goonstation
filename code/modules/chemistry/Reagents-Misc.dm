@@ -522,16 +522,24 @@ datum
 			value = 28 // 3 3 22
 			viscosity = 0.5
 
-			reaction_mob(var/mob/target, var/method=TOUCH, var/volume_passed)
-				. = ..()
+			on_add()
+				..()
+				if(ismob(src.holder?.my_atom))
+					RegisterSignal(holder.my_atom, COMSIG_MOB_SHOCKED, .proc/revive)
+
+			on_remove()
+				..()
+				UnregisterSignal(holder.my_atom, COMSIG_MOB_SHOCKED)
+			proc/revive(source)
+				var/mob/living/M = source
+				var/volume_passed = holder.get_reagent_amount("strange_reagent")
 				if (!volume_passed)
 					return
-				var/mob/living/M = target
 				if (!iscarbon(M) && !ismobcritter(M))
 					return
 				if (volume_passed < 1)
 					return
-				if ((method == INGEST || (method == TOUCH && prob(25))) && (isdead(M) || istype(get_area(M),/area/afterlife/bar)))
+				if (isdead(M) || istype(get_area(M),/area/afterlife/bar))
 					var/came_back_wrong = 0
 					if (M.get_brute_damage() + M.get_burn_damage() >= 150)
 						came_back_wrong = 1
