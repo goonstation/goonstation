@@ -1,6 +1,6 @@
 // A dummy parent type used for easily making components that target an item's wearer rather than the item itself.
 
-TYPEINFO(/datum/component/barber)
+TYPEINFO(/datum/component/wearertargeting)
 	initialization_args = list(
 		ARG_INFO("valid_slots", "list", "List of wear slots that the component should function in \[1-19\]")
 	)
