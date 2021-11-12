@@ -1,8 +1,5 @@
 var/global/list/image/clown_disbelief_images
 
-TYPEINFO(/datum/component/clown_disbelief_item)
-	initialization_args = list() //empty list -- no args
-
 /datum/component/clown_disbelief_item
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	var/image/disbelief_image

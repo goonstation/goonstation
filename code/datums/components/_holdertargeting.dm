@@ -1,7 +1,4 @@
 // A dummy parent type used for easily making components that target an item's holder rather than the item itself.
-TYPEINFO(/datum/component/holdertargeting)
-	initialization_args = list() //empty list -- no args
-
 /datum/component/holdertargeting
 	var/list/signals = list()
 	var/proctype // = .proc/pass

@@ -10,11 +10,6 @@
 #define TOP_DETAIL 3
 #define ALL_HAIR 4
 
-TYPEINFO(/datum/component/toggle_tool_use)
-	initialization_args = list() //empty list -- no args
-
-TYPEINFO(/datum/component/barber)
-	initialization_args = list() //empty list -- no args
 
 /datum/component/toggle_tool_use
 /datum/component/toggle_tool_use/Initialize()
