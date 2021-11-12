@@ -153,13 +153,15 @@
 		boutput(src, "<span class='alert'>Only humans can be spidergibbed.</span>")
 		return
 
+	var/mob/living/carbon/human/spiderman = M
+
 	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
 			logTheThing("admin", usr, M, "has spidergibbed [constructTarget(M,"admin")]")
 			logTheThing("diary", usr, M, "has spidergibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has spidergibbed [key_name(M)]")
 
-		M.spidergib()
+		spiderman.spidergib()
 
 /client/proc/cmd_admin_implodegib(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
