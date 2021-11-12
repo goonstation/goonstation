@@ -160,10 +160,10 @@ ABSTRACT_TYPE(/datum/objective/crew/chiefengineer)
 			return 0
 
 	reserves
-		explanation_text = "Make sure all SMES units on the station are at least half charged at the end of the round."
+		explanation_text = "Make sure all SMES units on the station are at least 20% charged at the end of the round."
 		check_completion()
 			for (var/obj/machinery/power/smes/S in machine_registry[MACHINES_POWER])
-				if(istype(get_area(S),/area/station) && S.charge < S.capacity/2)
+				if(istype(get_area(S),/area/station) && S.charge < S.capacity/5)
 					return 0
 			return 1
 
@@ -452,10 +452,10 @@ ABSTRACT_TYPE(/datum/objective/crew/engineer)
 			return TRUE
 
 	reserves
-		explanation_text = "Make sure all SMES units on the station are at least half charged at the end of the round."
+		explanation_text = "Make sure all SMES units on the station are at least 20% charged at the end of the round."
 		check_completion()
 			for (var/obj/machinery/power/smes/S in machine_registry[MACHINES_POWER])
-				if(istype(get_area(S),/area/station) && S.charge < S.capacity/2)
+				if(istype(get_area(S),/area/station) && S.charge < S.capacity/5)
 					return FALSE
 			return TRUE
 
