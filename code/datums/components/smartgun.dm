@@ -1,4 +1,4 @@
-TYPEINFO(/datum/component/drop_loot_on_death)
+TYPEINFO(/datum/component/holdertargeting/smartgun)
 	initialization_args = list(
 		ARG_INFO("maxlocks", "num", "Maximum number of lock-ons the gun will get on a given target at once", 3)
 	)
