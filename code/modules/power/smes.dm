@@ -64,7 +64,7 @@
 
 /obj/machinery/power/smes/New()
 	..()
-
+	START_TRACKING
 	SPAWN_DBG(0.5 SECONDS)
 		dir_loop:
 			for(var/d in cardinal)
@@ -82,6 +82,9 @@
 
 		updateicon()
 
+/obj/machinery/power/smes/disposing()
+	STOP_TRACKING
+	. = ..()
 
 /obj/machinery/power/smes/proc/updateicon()
 

@@ -147,10 +147,9 @@ ABSTRACT_TYPE(/datum/objective/crew/chiefengineer)
 		medal_name = "Slow Burn"
 		check_completion()
 			for(var/obj/machinery/power/furnace/F in machine_registry[MACHINES_POWER])
-				if(F.z == 1 && !F.active && istype(F.loc.loc, /area/station))
+				if(F.z == 1 && !F.active && istype(get_area(F), /area/station))
 					return FALSE
 			return TRUE
-
 	ptl
 		explanation_text = "Earn at least a million credits via the PTL."
 		medal_name = "1.21 Jiggawatts"
@@ -163,38 +162,19 @@ ABSTRACT_TYPE(/datum/objective/crew/chiefengineer)
 	reserves
 		explanation_text = "Make sure all SMES units on the station are at least half charged at the end of the round."
 		check_completion()
-			//Find the station powernet - largest z1 powernet
-			var/datum/powernet/stationnet = null
-			for (var/datum/powernet/PN as anything in powernets)
-				if(length(PN.nodes))
-					if(PN.nodes[1].z != 1)
-						continue
-					if(!stationnet || length(PN.nodes) > length(stationnet.nodes))
-						stationnet = PN
-
-			for(var/obj/machinery/power/smes/S in stationnet.nodes)
-				if(S.charge < S.capacity/2)
+			for (var/obj/machinery/power/smes/S in by_type[/obj/machinery/power/smes/])
+				if(istype(get_area(S),/area/station) && S.charge < S.capacity/2)
 					return 0
 			return 1
 
 	apc
 		explanation_text = "Ensure all APC units on the station are operating at the end of the round."
 		check_completion()
-			//Find the station powernet - largest z1 powernet
-			var/datum/powernet/stationnet = null
-			for (var/datum/powernet/PN as anything in powernets)
-				if(length(PN.nodes))
-					if(PN.nodes[1].z != 1)
-						continue
-					if(!stationnet || length(PN.nodes) > length(stationnet.nodes))
-						stationnet = PN
-
-			for(var/obj/machinery/power/terminal/term in stationnet.nodes)
-				var/obj/machinery/power/apc/A = term.master
-				if(istype(A) && (!A.area || A.area.requires_power))
+			for(var/obj/machinery/power/apc/A in by_type[/obj/machinery/power/apc])
+				if(istype(get_area(A),/area/station) && A.area.requires_power)
 					if(!A.operating)
-						return 0
-			return 1
+						return FALSE
+			return TRUE
 
 ABSTRACT_TYPE(/datum/objective/crew/securityofficer)
 /datum/objective/crew/securityofficer // grabbed the HoS's two antag-related objectives cause they work just fine for regular sec too, so...?
@@ -462,50 +442,31 @@ ABSTRACT_TYPE(/datum/objective/crew/chef)
 
 ABSTRACT_TYPE(/datum/objective/crew/engineer)
 /datum/objective/crew/engineer
-	furnaces //copied from CE
+	furnaces
 		explanation_text = "Make sure all furnaces on the station are active at the end of the round."
 		medal_name = "Slow Burn"
 		check_completion()
 			for(var/obj/machinery/power/furnace/F in machine_registry[MACHINES_POWER])
-				if(F.z == 1 && F.active == 0 && !istype(F.loc.loc, /area/listeningpost))
-					return 0
-			return 1
+				if(F.z == 1 && !F.active && istype(get_area(F), /area/station))
+					return FALSE
+			return TRUE
 
 	reserves
 		explanation_text = "Make sure all SMES units on the station are at least half charged at the end of the round."
 		check_completion()
-			//Find the station powernet - largest z1 powernet
-			var/datum/powernet/stationnet = null
-			for (var/datum/powernet/PN as anything in powernets)
-				if(length(PN.nodes))
-					if(PN.nodes[1].z != 1)
-						continue
-					if(!stationnet || length(PN.nodes) > length(stationnet.nodes))
-						stationnet = PN
-
-			for(var/obj/machinery/power/smes/S in stationnet.nodes)
-				if(S.charge < S.capacity/2)
-					return 0
-			return 1
+			for (var/obj/machinery/power/smes/S in by_type[/obj/machinery/power/smes/])
+				if(istype(get_area(S),/area/station) && S.charge < S.capacity/2)
+					return FALSE
+			return TRUE
 
 	apc
 		explanation_text = "Ensure all APC units on the station are operating at the end of the round."
 		check_completion()
-			//Find the station powernet - largest z1 powernet
-			var/datum/powernet/stationnet = null
-			for (var/datum/powernet/PN as anything in powernets)
-				if(length(PN.nodes))
-					if(PN.nodes[1].z != 1)
-						continue
-					if(!stationnet || length(PN.nodes) > length(stationnet.nodes))
-						stationnet = PN
-
-			for(var/obj/machinery/power/terminal/term in stationnet.nodes)
-				var/obj/machinery/power/apc/A = term.master
-				if(istype(A) && (!A.area || A.area.requires_power))
+			for(var/obj/machinery/power/apc/A in by_type[/obj/machinery/power/apc])
+				if(istype(get_area(A),/area/station) && A.area.requires_power)
 					if(!A.operating)
-						return 0
-			return 1
+						return FALSE
+			return TRUE
 
 ABSTRACT_TYPE(/datum/objective/crew/miner)
 /datum/objective/crew/miner
