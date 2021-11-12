@@ -225,6 +225,16 @@ obj/machinery/vehicle/miniputt/pilot
 	armor_score_multiplier = 0.7
 	speed = 0.8
 
+	security
+		New()
+			..()
+			src.com_system = new /obj/item/shipcomponent/communications/security(src)
+			src.com_system.ship = src
+			src.components += src.com_system
+			src.com_system.activate()
+			myhud.update_systems()
+			myhud.update_states()
+
 ////////soviet putt
 /obj/machinery/vehicle/miniputt/soviputt
 	name = "Strelka-"
@@ -939,13 +949,15 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	maxhealth = 500
 	speed = 0.9
 
-	/*prearmed // this doesn't seem to work yet, dangit
+	security
 		New()
 			..()
-			src.sec_system = new /obj/item/shipcomponent/pod_weapon/laser( src )
-			src.sec_system.ship = src
-			src.components += src.sec_system
-			return */
+			src.com_system = new /obj/item/shipcomponent/communications/security(src)
+			src.com_system.ship = src
+			src.components += src.com_system
+			src.com_system.activate()
+			myhud.update_systems()
+			myhud.update_states()
 
 /obj/machinery/vehicle/pod_smooth/syndicate
 	name = "Pod S-"
