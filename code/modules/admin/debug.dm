@@ -1,5 +1,10 @@
 var/global/debug_messages = 0
 
+#define ARG_INFO_NAME 1
+#define ARG_INFO_TYPE 2
+#define ARG_INFO_DESC 3
+#define ARG_INFO_DEFAULT 4
+
 /client/proc/debug_messages()
 	set desc = "Toggle debug messages."
 	set name = "HDM" // debug ur haines
@@ -1366,3 +1371,8 @@ var/datum/flock/testflock
 
 	selection.RemoveComponent()
 	boutput(usr, "<span class='notice'>Removed [selection] from [target].</span>")
+
+#undef ARG_INFO_NAME
+#undef ARG_INFO_TYPE
+#undef ARG_INFO_DESC
+#undef ARG_INFO_DEFAULT

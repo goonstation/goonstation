@@ -33,11 +33,6 @@
 #define ARG_INFO(name, type, desc, default...)\
 	list(name, type, desc, ##default)
 
-#define ARG_INFO_NAME 1
-#define ARG_INFO_TYPE 2
-#define ARG_INFO_DESC 3
-#define ARG_INFO_DEFAULT 4
-
 // How multiple components of the exact same type are handled in the same datum
 
 /// old component is deleted (default)
