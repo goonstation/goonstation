@@ -151,8 +151,8 @@
 	icon_state = "moustache"
 	item_state = "moustache"
 	see_face = 1
-	
-/obj/item/clothing/mask/moustache/Italian 
+
+/obj/item/clothing/mask/moustache/Italian
 	name = "fake Italian moustache"
 	desc = "For those who can't cut the lasagna."
 	icon_state = "moustache-i"
@@ -289,9 +289,8 @@
 		..()
 		setProperty("meleeprot_head", 4)
 
-
 /obj/item/clothing/mask/clown_hat
-	name = "clown wig and mask"
+	name = "Clown wig and mask"
 	desc = "Clowns are dumb and so are you for even considering wearing this."
 	icon_state = "clown"
 	item_state = "clown_hat"
@@ -313,6 +312,13 @@
 				spam_flag = 0
 			return 1
 		return 0
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(istype(W,/obj/item/clothing/mask/breath))
+			user.show_message("You carefully attach the breathing mask onto the underside of your mask.")
+			src.desc = "Clowns are dumb and so are you for even considering wearing this. A breathing mask has been clumsily attached to the underside."
+			src.c_flags|= COVERSMOUTH | MASKINTERNALS
+			qdel(W)
 
 /obj/item/clothing/mask/gas/syndie_clown
 	name = "clown wig and mask"

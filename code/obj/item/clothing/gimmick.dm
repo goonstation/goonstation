@@ -1021,6 +1021,13 @@
 	icon_state = "mime"
 	see_face = 0.0
 
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(istype(W,/obj/item/clothing/mask/breath))
+			user.show_message("You carefully attach the breathing mask onto the underside of your mask.")
+			src.desc = "The charming mask of the mime. Very emotive! A breathing mask has been carefully attached to the underside."
+			src.c_flags|= COVERSMOUTH | MASKINTERNALS
+			qdel(W)
+
 /obj/item/clothing/under/misc/mime
 	name = "mime suit"
 	desc = "The signature striped uniform of the mime. Not necessarily French."
