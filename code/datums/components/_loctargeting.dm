@@ -1,3 +1,5 @@
+TYPEINFO(/datum/component/loctargeting)
+	initialization_args = list() //empty list -- no args
 
 /datum/component/loctargeting
 	var/list/signals = list()
