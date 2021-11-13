@@ -170,7 +170,7 @@ ABSTRACT_TYPE(/datum/objective/crew/chiefengineer)
 	apc
 		explanation_text = "Ensure all APC units on the station are operating at the end of the round."
 		check_completion()
-			for(var/obj/machinery/power/apc/A in by_type[/obj/machinery/power/apc])
+			for_by_tcl(A, /obj/machinery/power/apc)
 				if(istype(get_area(A),/area/station) && A.area.requires_power)
 					if(!A.operating)
 						return FALSE
@@ -462,7 +462,7 @@ ABSTRACT_TYPE(/datum/objective/crew/engineer)
 	apc
 		explanation_text = "Ensure all APC units on the station are operating at the end of the round."
 		check_completion()
-			for(var/obj/machinery/power/apc/A in by_type[/obj/machinery/power/apc])
+			for_by_tcl(A, /obj/machinery/power/apc)
 				if(istype(get_area(A),/area/station) && A.area.requires_power)
 					if(!A.operating)
 						return FALSE
@@ -557,7 +557,7 @@ ABSTRACT_TYPE(/datum/objective/crew/researchdirector)
 		explanation_text = "Create a portal to the void using the science teleporter."
 		medal_name = "Where we're going, we won't need eyes to see"
 		check_completion()
-			for(var/obj/dfissure_to/F in by_type[/obj/dfissure_to])
+			for_by_tcl(F, /obj/dfissure_to)
 				if(F.z == 1) return 1
 			return 0
 	onfire
@@ -590,7 +590,7 @@ ABSTRACT_TYPE(/datum/objective/crew/scientist)
 		explanation_text = "Create a portal to the void using the science teleporter."
 		medal_name = "Where we're going, we won't need eyes to see"
 		check_completion()
-			for(var/obj/dfissure_to/F in by_type[/obj/dfissure_to])
+			for_by_tcl(F, /obj/dfissure_to)
 				if(F.z == 1) return 1
 			return 0
 	onfire
@@ -833,7 +833,7 @@ ABSTRACT_TYPE(/datum/objective/crew/staffassistant)
 		explanation_text = "Ensure that Gnome Chompski escapes on the shuttle."
 		medal_name = "Guardin' gnome"
 		check_completion()
-			for(var/obj/item/gnomechompski/G in by_type[/obj/item/gnomechompski])
+			for_by_tcl(G, /obj/item/gnomechompski)
 				if (in_centcom(G)) return 1
 			return 0
 	mailman
