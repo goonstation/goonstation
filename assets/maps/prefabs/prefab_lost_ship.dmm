@@ -3,8 +3,8 @@
 /obj/table/reinforced,
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen/maybe_few,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "aM" = (
@@ -36,8 +36,8 @@
 	dir = 1
 	},
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "fO" = (
@@ -52,8 +52,8 @@
 /obj/item/storage/toilet,
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "hc" = (
@@ -71,16 +71,16 @@
 	},
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen/maybe_few,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "lE" = (
 /obj/decal/cleanable/dirt/dirt3,
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "mS" = (
@@ -89,15 +89,15 @@
 	},
 /obj/decal/cleanable/dirt/dirt3,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "nt" = (
 /obj/decal/cleanable/dirt/dirt3,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "nG" = (
@@ -112,8 +112,8 @@
 /obj/decal/cleanable/dirt/dirt4,
 /obj/decal/cleanable/dirt/dirt3,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "oD" = (
@@ -122,8 +122,8 @@
 /obj/random_item_spawner/hat/one_or_zero,
 /obj/map/light/secretblue,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "qD" = (
@@ -145,16 +145,16 @@
 	},
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "rf" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/map/light/secretblue,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "rg" = (
@@ -176,8 +176,8 @@
 "rJ" = (
 /obj/map/light/secretblue,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "rS" = (
@@ -186,15 +186,15 @@
 	},
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "rT" = (
 /obj/table,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "tJ" = (
@@ -203,15 +203,15 @@
 	},
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "vb" = (
 /obj/table/reinforced,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "xs" = (
@@ -221,16 +221,26 @@
 	icon_state = "sdoor"
 	},
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
+	},
+/area/prefab)
+"xQ" = (
+/obj/machinery/door/unpowered/shuttle{
+	icon = 'icons/Testing/newicons/obj/NEWdoors/door_command.dmi';
+	icon_state = "sdoor"
+	},
+/turf/unsimulated/floor/airless/plating{
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "yh" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/red,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "yB" = (
@@ -247,16 +257,16 @@
 	},
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "zs" = (
 /obj/decal/cleanable/dirt/dirt4,
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "zD" = (
@@ -271,8 +281,8 @@
 /obj/map/light/secretblue,
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "Al" = (
@@ -285,8 +295,8 @@
 	pixel_x = 5
 	},
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "AU" = (
@@ -294,8 +304,8 @@
 /obj/item/clothing/suit/bedsheet/red,
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "Bo" = (
@@ -305,8 +315,8 @@
 	},
 /obj/map/light/secretblue,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "Ed" = (
@@ -314,8 +324,8 @@
 /obj/random_item_spawner/dressup/one_or_zero,
 /obj/random_item_spawner/hat/one_or_zero,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "Eo" = (
@@ -330,8 +340,8 @@
 /obj/stool/bed,
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "FN" = (
@@ -347,16 +357,16 @@
 	},
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "FO" = (
 /obj/surgery_tray,
 /obj/random_item_spawner/med_tool/maybe_few,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "GC" = (
@@ -371,8 +381,8 @@
 	pixel_y = 4
 	},
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "GP" = (
@@ -394,22 +404,22 @@
 	pixel_y = 23
 	},
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "Jo" = (
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "JB" = (
 /obj/table/reinforced,
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "Kr" = (
@@ -436,8 +446,8 @@
 /obj/decal/cleanable/dirt/dirt3,
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "NM" = (
@@ -466,8 +476,8 @@
 	icon_state = "sdoor"
 	},
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "Qe" = (
@@ -481,16 +491,16 @@
 "QA" = (
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "Se" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "SL" = (
@@ -505,8 +515,8 @@
 	},
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "Tf" = (
@@ -529,8 +539,8 @@
 /obj/decal/cleanable/dirt/jen,
 /obj/stool/chair/comfy/shuttle,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "UC" = (
@@ -538,15 +548,15 @@
 	dir = 1
 	},
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "Vo" = (
 /obj/iv_stand,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "Wi" = (
@@ -565,8 +575,8 @@
 	name = "old spray bottle"
 	},
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "Ys" = (
@@ -575,8 +585,8 @@
 	icon_state = "gibbl2"
 	},
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "YV" = (
@@ -595,16 +605,16 @@
 	pixel_y = 3
 	},
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 "Ze" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/dirt/dirt3,
 /turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+	icon = 'icons/turf/floors_tempus.dmi';
+	icon_state = "floor1"
 	},
 /area/prefab)
 
@@ -815,10 +825,10 @@ GP
 MU
 JB
 Jo
-OA
+xQ
 QA
 Jo
-OA
+xQ
 QA
 vb
 MU
@@ -859,10 +869,10 @@ GP
 MU
 yh
 lE
-OA
+xQ
 QA
 lE
-OA
+xQ
 Jo
 AU
 MU
@@ -1169,7 +1179,7 @@ Jo
 Jo
 Jo
 zs
-OA
+xQ
 Jo
 zY
 YV
