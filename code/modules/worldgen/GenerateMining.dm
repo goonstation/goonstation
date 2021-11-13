@@ -399,6 +399,34 @@ var/list/debris_map_colors = list(
 						var/obj/trash = pick(possible_garbage)
 						new trash(T3)
 
+					if(prob(15)) //we're going DEEP
+						var/list/neighbors3 = getneighbours(T3)
+						for(var/turf/T4 in neighbors3)
+							if(istype(T.loc, /area/noGenerate) || !istype(T, /turf/space) || ISDISTEDGE(T, AST_MAPSEEDBORDER) || (T.loc.type != /area/space && !istype(T.loc, /area/allowGenerate)))
+								continue
+
+							var/floor_or_obj = pick("turf", "obj")
+							switch(floor_or_what)
+								if("turf")
+									var/T2 = pick("plating", "burned", "damaged")
+									switch(T2)
+										if("plating")
+											var/turf/simulated/floor/W = T.ReplaceWithFloor()
+											W.to_plating()
+										if("burned")
+											var/turf/simulated/floor/W = T.ReplaceWithFloor()
+											W.burnt = TRUE
+											W.icon_state = pick("floorscorched1", "floorscorched2")
+										if("damaged")
+											var/turf/simulated/floor/W = T.ReplaceWithFloor()
+											W.broken = TRUE
+											W.icon_state = pick("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
+
+								if("obj")
+									var/obj/O = pick(/obj/lattice, /obj/structure/girder/displaced, /obj/grille/steel)
+									new O(T)
+
+
 		for(var/i in 0 to garbage_amount)
 			var/turf/possible_spot = pick(debrisZ)
 

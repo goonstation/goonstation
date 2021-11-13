@@ -575,6 +575,7 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 
 	flock_shuttle
 		maxNum = 1
+		required = TRUE
 		probability = 25
 		prefabPath = "assets/maps/debris/flock_shuttle.dmm"
 		prefabSizeX = 30
