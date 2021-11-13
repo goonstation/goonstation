@@ -227,7 +227,7 @@ ABSTRACT_TYPE(/datum/objective/crew/quartermaster)
 
 	specialorder
 		explanation_text = "Fulfill an off-station order requisition."
-		var/completed = 0
+		var/completed = FALSE
 		check_completion()
 			return length(shippingmarket.complete_orders)
 
