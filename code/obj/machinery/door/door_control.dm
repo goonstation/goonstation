@@ -790,7 +790,7 @@
 					pixel_x = -22
 		t1d1
 			id = "hangar_t1d1"
-			access_type = POD_ACCESS_SYNDICATE
+			access_type = POD_ACCESS_SECURITY
 
 			new_walls
 				north
@@ -804,7 +804,7 @@
 
 		t1d2
 			id = "hangar_t1d2"
-			access_type = POD_ACCESS_SYNDICATE
+			access_type = POD_ACCESS_SECURITY
 
 			new_walls
 				north
@@ -818,7 +818,7 @@
 
 		t1d3
 			id = "hangar_t1d3"
-			access_type = POD_ACCESS_SYNDICATE
+			access_type = POD_ACCESS_SECURITY
 
 			new_walls
 				north
@@ -832,7 +832,7 @@
 
 		t1d4
 			id = "hangar_t1d4"
-			access_type = POD_ACCESS_SYNDICATE
+			access_type = POD_ACCESS_SECURITY
 
 			new_walls
 				north
@@ -846,7 +846,7 @@
 
 		t1condoor
 			id = "hangar_t1condoor"
-			access_type = POD_ACCESS_SYNDICATE
+			access_type = POD_ACCESS_SECURITY
 
 			new_walls
 				north

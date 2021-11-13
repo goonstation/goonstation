@@ -163,18 +163,16 @@ obj/machinery/vehicle/miniputt/pilot
 	icon_state = "putt_wizard" //slick
 	health = 200
 	maxhealth = 200
+	init_comms_type = /obj/item/shipcomponent/communications/wizard
 
 	New()
 		..()
 		//Phaser
 		src.m_w_system = new /obj/item/shipcomponent/mainweapon
 		src.m_w_system.ship = src
-		src.com_system = new /obj/item/shipcomponent/communications/wizard(src)
-		src.com_system.ship = src
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
 		src.lock.ship = src
 		src.components += src.m_w_system
-		src.components += src.com_system
 		src.components += src.lock
 
 		myhud.update_systems()
@@ -189,14 +187,12 @@ obj/machinery/vehicle/miniputt/pilot
 	maxhealth = 250
 	armor_score_multiplier = 0.7
 	speed = 0.8
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	New()
 		..()
-		src.com_system = new /obj/item/shipcomponent/communications/syndicate(src)
-		src.com_system.ship = src
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
 		src.lock.ship = src
-		src.components += src.com_system
 		src.components += src.lock
 		myhud.update_systems()
 		myhud.update_states()
@@ -226,14 +222,7 @@ obj/machinery/vehicle/miniputt/pilot
 	speed = 0.8
 
 	security
-		New()
-			..()
-			src.com_system = new /obj/item/shipcomponent/communications/security(src)
-			src.com_system.ship = src
-			src.components += src.com_system
-			src.com_system.activate()
-			myhud.update_systems()
-			myhud.update_states()
+		init_comms_type = /obj/item/shipcomponent/communications/security
 
 ////////soviet putt
 /obj/machinery/vehicle/miniputt/soviputt
@@ -243,15 +232,13 @@ obj/machinery/vehicle/miniputt/pilot
 	armor_score_multiplier = 1.0
 	health = 225
 	maxhealth = 225
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	New()
 		..()
 		src.m_w_system = new /obj/item/shipcomponent/mainweapon/russian(src)
 		src.m_w_system.ship = src
-		src.com_system = new /obj/item/shipcomponent/communications/syndicate(src)
-		src.com_system.ship = src
 		src.components += src.m_w_system
-		src.components += src.com_system
 		myhud.update_systems()
 		myhud.update_states()
 		return
@@ -312,6 +299,7 @@ obj/machinery/vehicle/miniputt/pilot
 	health = 150
 	maxhealth = 150
 	speed = 0.8
+	init_comms_type = /obj/item/shipcomponent/communications/security
 
 /obj/machinery/vehicle/miniputt/nt_robust
 	name = "Pod NTR-"
@@ -321,6 +309,7 @@ obj/machinery/vehicle/miniputt/pilot
 	health = 350
 	maxhealth = 350
 	speed = 0.6
+	init_comms_type = /obj/item/shipcomponent/communications/security
 
 /obj/machinery/vehicle/miniputt/sy_light
 	name = "Pod SYL-"
@@ -330,6 +319,7 @@ obj/machinery/vehicle/miniputt/pilot
 	health = 150
 	maxhealth = 150
 	speed = 0.8
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 /obj/machinery/vehicle/miniputt/sy_robust
 	name = "Pod SYR-"
@@ -339,6 +329,7 @@ obj/machinery/vehicle/miniputt/pilot
 	health = 350
 	maxhealth = 350
 	speed = 0.6
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 //pod wars end//
 
 /*-----------------------------*/
@@ -950,14 +941,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	speed = 0.9
 
 	security
-		New()
-			..()
-			src.com_system = new /obj/item/shipcomponent/communications/security(src)
-			src.com_system.ship = src
-			src.components += src.com_system
-			src.com_system.activate()
-			myhud.update_systems()
-			myhud.update_states()
+		init_comms_type = /obj/item/shipcomponent/communications/security
 
 /obj/machinery/vehicle/pod_smooth/syndicate
 	name = "Pod S-"
@@ -967,6 +951,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	health = 500
 	maxhealth = 500
 	speed = 0.9
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	/*prearmed
 		New()
@@ -986,10 +971,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		..()
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
 		src.lock.ship = src
-		src.com_system = new /obj/item/shipcomponent/communications/syndicate(src)
-		src.com_system.ship = src
 		src.components += src.lock
-		src.components += src.com_system
 		myhud.update_systems()
 		myhud.update_states()
 
@@ -1029,6 +1011,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	health = 250
 	maxhealth = 250
 	speed = 0.9
+	init_comms_type = /obj/item/shipcomponent/communications/
 
 /obj/machinery/vehicle/pod_smooth/nt_robust
 	name = "Pod NTR-"
@@ -1038,6 +1021,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	health = 500
 	maxhealth = 500
 	speed = 0.8
+	init_comms_type = /obj/item/shipcomponent/communications/
 
 /obj/machinery/vehicle/pod_smooth/sy_light
 	name = "Pod SYL-"
@@ -1047,6 +1031,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	health = 250
 	maxhealth = 250
 	speed = 0.9
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 /obj/machinery/vehicle/pod_smooth/sy_robust
 	name = "Pod SYR-"
@@ -1056,6 +1041,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	health = 500
 	maxhealth = 500
 	speed = 0.8
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 //pod wars end//
 
 /obj/machinery/vehicle/pod_smooth/setup_ion_trail()
