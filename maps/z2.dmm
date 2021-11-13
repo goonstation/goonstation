@@ -80292,7 +80292,7 @@
 	},
 /area/titlescreen)
 "usH" = (
-/obj/machinery/vending/meat,
+/obj/machinery/vending/meat/prefab_grill,
 /turf/unsimulated/floor/setpieces/bloodfloor{
 	icon_state = "bloodfloor_3"
 	},

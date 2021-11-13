@@ -19,7 +19,7 @@
 "I" = (/obj/railing/red/reinforced{dir = 4},/turf/unsimulated/floor/stairs/wide/other,/area/prefab/grillnasium)
 "J" = (/turf/unsimulated/floor/setpieces/bloodfloor{icon_state = "bloodfloor_3"},/area/prefab/grillnasium)
 "K" = (/turf/unsimulated/floor/setpieces/bloodfloor{icon_state = "bloodfloor_2"; name = "Fleshy Floor"},/area/prefab/grillnasium)
-"P" = (/obj/machinery/vending/meat,/turf/unsimulated/floor/setpieces/bloodfloor,/area/prefab/grillnasium)
+"P" = (/obj/machinery/vending/meat/prefab_grill,/turf/unsimulated/floor/setpieces/bloodfloor,/area/prefab/grillnasium)
 "R" = (/obj/railing/red/reinforced{dir = 8},/turf/unsimulated/floor/stairs/wide,/area/prefab/grillnasium)
 "X" = (/obj/ladder{icon_state = "ladder_wall"; id = "fartnasium5"; pixel_y = 20},/turf/unsimulated/floor/setpieces/bloodfloor,/area/prefab/grillnasium)
 "Y" = (/obj/neon_lining{color = "#AA0000"; dir = 1},/obj/machinery/shitty_grill{anchored = 0; name = "unchained shitty grill"},/turf/unsimulated/floor/setpieces/bloodfloor{icon_state = "bloodfloor_2"; name = "Fleshy Floor"},/area/prefab/grillnasium)
