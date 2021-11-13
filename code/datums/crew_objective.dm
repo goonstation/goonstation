@@ -340,9 +340,9 @@ ABSTRACT_TYPE(/datum/objective/crew/bartender)
 		explanation_text = "Don't lose your shotgun!"
 		check_completion()
 			if(owner.current && owner.current.check_contents_for(/obj/item/gun/kinetic/riotgun))
-				return 1
+				return TRUE
 			else
-				return 0
+				return FALSE
 	drinks
 		var/completed = 0
 		var/ids[3]
