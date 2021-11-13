@@ -651,7 +651,7 @@ table#cooktime a#start {
 							for (var/datum/objective/crew/chef/pizza/O in usr.mind.objectives)
 								var/list/matching_toppings = P.topping_types & O.choices
 								if(matching_toppings.len >= 3)
-									O.completed = 1
+									O.completed = TRUE
 
 					if (isnull(output))
 						output = R.output
