@@ -940,7 +940,7 @@
 	New()
 		. = ..()
 		src.layer += src.edge_priority_level / 1000
-		SPAWN_DBG(3 SECONDS) //give neighbors a chance to spawn in
+		SPAWN_DBG(0.5 SECONDS) //give neighbors a chance to spawn in
 			edge_overlays()
 
 	proc/edge_overlays()
@@ -983,6 +983,68 @@
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_DIRT
 	icon_state_edge = "dirtedge"
 
+/turf/unsimulated/floor/auto/sand
+	name = "sand"
+	desc = "finest earth."
+	icon = 'icons/turf/outdoors.dmi'
+	icon_state = "sand_other"
+	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_DIRT
+	icon_state_edge = "sand_edge"
+
+	New()
+		..()
+		switch(rand(1,3))
+			if(1)
+				icon_state = "sand_other_texture"
+				src.set_dir(pick(alldirs))
+			if(2)
+				icon_state = "sand_other_texture2"
+				src.set_dir(pick(alldirs))
+			if(3)
+				icon_state = "sand_other_texture3"
+				src.set_dir(pick(cardinal))
+
+
+/turf/unsimulated/floor/auto/water
+	name = "water"
+	desc = "Who knows what could be hiding in there."
+	icon = 'icons/turf/water.dmi'
+	icon_state = "swamp0"
+	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_WATER
+	icon_state_edge = "swampedge"
+
+	New()
+		. = ..()
+		if (prob(8))
+			src.icon_state = "swamp[rand(1, 4)]"
+
+
+/turf/unsimulated/floor/auto/water/ice
+	name = "ice"
+	desc = "Frozen water."
+	icon = 'icons/turf/water.dmi'
+	icon_state = "ice"
+	icon_state_edge = "ice_edge"
+	mat_appearances_to_ignore = list("ice")
+
+	New()
+		..()
+		setMaterial(getMaterial("ice"))
+		name = initial(name)
+
+/turf/unsimulated/floor/auto/water/ice/rough
+	name = "ice"
+	desc = "Rough frozen water."
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "ice1"
+
+	New()
+		..()
+		src.icon_state = "ice[rand(1, 6)]"
+
+	edge_overlays()
+		return
+
 /turf/unsimulated/floor/auto/swamp
 	name = "swamp"
 	desc = "Who knows what could be hiding in there."
@@ -997,6 +1059,41 @@
 			src.icon_state = "swamp_decor[rand(1, 10)]"
 		else
 			src.icon_state = "swamp0"
+
+/turf/unsimulated/floor/auto/swamp/rain
+	New()
+		. = ..()
+		var/image/R = image('icons/turf/water.dmi', "ripple", dir=pick(alldirs),pixel_x=rand(-10,10),pixel_y=rand(-10,10))
+		R.alpha = 180
+		src.UpdateOverlays(R, "ripple")
+
+/turf/unsimulated/floor/auto/snow
+	name = "snow"
+	desc = "Snow. Soft and fluffy."
+	icon = 'icons/turf/snow.dmi'
+	icon_state = "snow1"
+	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_GRASS + 1
+	icon_state_edge = "snow_edge"
+	step_material = "step_outdoors"
+	step_priority = STEP_PRIORITY_MED
+
+	New()
+		. = ..()
+		if(src.type == /turf/unsimulated/floor/auto/snow && prob(10))
+			src.icon_state = "snow[rand(1,5)]"
+
+/turf/unsimulated/floor/auto/snow/rough
+	name = "snow"
+	desc = "some piled snow."
+	icon =  'icons/turf/snow.dmi'
+	icon_state = "snow_rough1"
+	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_GRASS + 2
+	icon_state_edge = "snow_r_edge"
+
+	New()
+		. = ..()
+		if(prob(10))
+			src.icon_state = "snow_rough[rand(1,3)]"
 
 #undef FLOOR_AUTO_EDGE_PRIORITY_DIRT
 #undef FLOOR_AUTO_EDGE_PRIORITY_GRASS

@@ -412,6 +412,7 @@ ported and crapped up by: haine
 	amount_per_transfer_from_this = 10
 	initial_volume = 200
 	tooltip_flags = REBUILD_DIST
+	can_chug = 0
 
 	afterattack(obj/target, mob/user)
 		if (get_dist(user, src) > 1 || get_dist(user, target) > 1)

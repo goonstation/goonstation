@@ -14,7 +14,7 @@
 	boutput(world, "<B><span class='alert'>A man named Waldo</span> is likely to be somewhere on the station. You must find him (And beware of any of his compatriots!)</B>")
 
 /datum/game_mode/waldo/pre_setup()
-	var/list/possible_waldos = get_possible_waldos()
+	var/list/possible_waldos = get_possible_enemies(ROLE_MISC, 1)
 
 	if(possible_waldos.len < 1)
 		return 0
@@ -50,13 +50,13 @@
 				if(2)
 					waldo.special_role = "odlaw"
 				if(3)
-					waldo.special_role = "wizard"
+					waldo.special_role = ROLE_WIZARD
 			waldo.current.resistances += list(/datum/ailment/disease/dnaspread, /datum/ailment/disease/clowning_around, /datum/ailment/disease/cluwneing_around, /datum/ailment/disease/enobola, /datum/ailment/disease/robotic_transformation)
 			if(!job_start_locations["wizard"])
 				boutput(waldo.current, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
 			else
 				waldo.current.set_loc(pick(job_start_locations["wizard"]))
-			if(waldo.special_role in list("odlaw", "wizard"))
+			if(waldo.special_role in list("odlaw", ROLE_WIZARD))
 				switch(rand(1,100))
 					if(1 to 30)
 						var/datum/objective/assassinate/kill_objective = new
@@ -110,7 +110,7 @@
 				if("odlaw")
 					boutput(waldo.current, "<B><span class='alert'>You are Odlaw!</span></B>")
 					waldo.current.real_name = "Odlaw"
-				if("wizard")
+				if(ROLE_WIZARD)
 					boutput(waldo.current, "<B><span class='alert'>You are Wizard Whitebeard!</span></B>")
 					waldo.current.real_name = "Wizard Whitebeard"
 			equip_waldo(waldo.current)
@@ -131,24 +131,6 @@
 
 	SPAWN_DBG (rand(waittime_l, waittime_h))
 		send_intercept()
-
-/datum/game_mode/waldo/proc/get_possible_waldos()
-	var/list/candidates = list()
-
-	for(var/mob/new_player/player in mobs)
-		if((player.client) &&  (player.ready))
-			if(player.client.preferences.be_syndicate)
-				candidates += player.mind
-
-	if(candidates.len < 1)
-		for(var/mob/new_player/player in mobs)
-			if((player.client) && (player.ready))
-				candidates += player.mind
-
-	if(candidates.len < 1)
-		return null
-	else
-		return candidates
 
 /datum/game_mode/waldo/proc/equip_waldo(mob/living/carbon/human/waldo_mob)
 	if (!istype(waldo_mob))
@@ -179,7 +161,7 @@
 				waldo_mob.head.cant_other_remove = 1
 				equip_traitor(waldo_mob)
 
-			if("wizard")
+			if(ROLE_WIZARD)
 				waldo_mob.verbs += /client/proc/invisibility
 				waldo_mob.verbs += /client/proc/mass_teleport
 

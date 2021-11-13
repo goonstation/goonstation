@@ -2,12 +2,15 @@
 	name = "Haunted TEG"
 	required_elapsed_round_time = 40 MINUTES
 	customization_available = 1
+#ifdef HALLOWEEN
+	weight = 75
+#else
 	weight = 50
+#endif
 	var/obj/machinery/power/generatorTemp/generator
 	var/list/circulators_to_relube
 	var/event_active
 	var/target_grump
-	var/datum/radio_frequency/pda_connection
 
 #ifdef RP_MODE
 	disabled = 1
@@ -58,8 +61,6 @@
 		if (!isnum(grump_to_overcome))
 			grump_to_overcome = 100
 
-		pda_connection = radio_controller.return_frequency("1149")
-
 		var/list/obj/machinery/station_switches = list()
 		for(var/area_key as() in stationAreas)
 			var/obj/machinery/light_switch/S
@@ -88,11 +89,11 @@
 				command_alert("Reports indicate that the engine on-board [station_name()] is behaving unusually. Stationwide power failures may occur or worse.", "Engine Warning")
 				sleep(30 SECONDS)
 			if(event_active)
-				command_alert("Onsite Engineers inform us a sympathetic connection exists between the furances and the engine. Considering burning something it might enjoy: food, people, weed. We're grasping at straws here. ", "Engine Suggestion")
+				command_alert("Onsite Engineers inform us a sympathetic connection exists between the furnaces and the engine. Considering burning something it might enjoy: food, people, weed. We're grasping at straws here. ", "Engine Suggestion")
 				sleep(rand(1 MINUTE, 2.5 MINUTES))
 
 			if(event_active)
-				pda_msg("Unknown substance detected in Themo-Electric Generator Circulators. Please drains and replace lubricants.")
+				pda_msg("Unknown substance detected in Themo-Electric Generator Circulators. Please drain and replace lubricants.")
 
 		// FAILURE EVENT
 		SPAWN_DBG(event_duration)
@@ -101,7 +102,7 @@
 				for (var/obj/machinery/light_switch/L as() in station_switches)
 					if(L.on && prob(50))
 						elecflash(L)
-						L.attack_hand(null)
+						L.Attackhand(null)
 				generator.transformation_mngr.transform_to_type(/datum/teg_transformation/vampire)
 
 		SPAWN_DBG(0)
@@ -111,7 +112,7 @@
 			// Set stage by turning off lights to engine room
 			if(teg_light_switch)
 				elecflash(teg_light_switch)
-				teg_light_switch.attack_hand(null)
+				teg_light_switch.Attackhand(null)
 			else
 				elecflash(A.area_apc)
 				if(!A.area_apc.lighting)
@@ -142,7 +143,7 @@
 							for (var/obj/machinery/light_switch/L as() in station_switches)
 								if(L.on && prob(5))
 									elecflash(L)
-									L.attack_hand(null)
+									L.Attackhand(null)
 						if(4)
 							// Electrify Doors
 							for_by_tcl(D, /obj/machinery/door/airlock)
@@ -182,7 +183,6 @@
 	proc/pda_msg(event_string)
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src.generator
-		signal.transmission_method = TRANSMISSION_RADIO
 		signal.data["command"] = "text_message"
 		signal.data["sender_name"] = "ENGINE-MAILBOT"
 		signal.data["group"] = list(MGO_ENGINEER, MGA_ENGINE)
@@ -190,7 +190,7 @@
 		signal.data["sender"] = "00000000"
 		signal.data["address_1"] = "00000000"
 
-		pda_connection.post_signal(src, signal)
+		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal)
 
 datum/teg_transformation/vampire
 	mat_id = "bone"
@@ -283,10 +283,10 @@ datum/teg_transformation/vampire
 					enthrall(H)
 			else
 				if(isalive(target))
-					if( !ON_COOLDOWN(target,"teg_glare", 30 SECONDS) )
+					if( prob(80) && !ON_COOLDOWN(target,"teg_glare", 30 SECONDS) )
 						glare(target)
 
-					if(!abilities["Blood Steal"].actions.hasAction(src.teg, "vamp_blood_suck_ranged") && !ON_COOLDOWN(src.teg,"vamp_blood_suck_ranged", 10 SECONDS))
+					if(!actions.hasAction(src.teg, "vamp_blood_suck_ranged") && !ON_COOLDOWN(src.teg,"vamp_blood_suck_ranged", 10 SECONDS))
 						actions.start(new/datum/action/bar/private/icon/vamp_ranged_blood_suc(src.teg,abilityHolder, target, abilities["Blood Steal"]), src.teg)
 
 			if(ishuman(target))
@@ -331,7 +331,7 @@ datum/teg_transformation/vampire
 					C.reagents.remove_reagent("water_holy", 8)
 					if (!(locate(/datum/effects/system/steam_spread) in C.loc))
 						playsound(C.loc, "sound/effects/bubbles3.ogg", 80, 1, -3, pitch=0.7)
-						var/datum/effects/system/steam_spread/steam = unpool(/datum/effects/system/steam_spread)
+						var/datum/effects/system/steam_spread/steam = new /datum/effects/system/steam_spread
 						steam.set_up(1, 0, get_turf(C))
 						steam.attach(C)
 						steam.start(clear_holder=1)
@@ -412,13 +412,13 @@ datum/teg_transformation/vampire
 			return 1
 
 		O.visible_message("<span class='alert'><B>[O] emits a blinding flash at [target]!</B></span>")
-		var/obj/itemspecialeffect/glare/E = unpool(/obj/itemspecialeffect/glare)
+		var/obj/itemspecialeffect/glare/E = new /obj/itemspecialeffect/glare
 		E.color = "#FFFFFF"
 		E.setup(O.loc)
 		playsound(O.loc,"sound/effects/glare.ogg", 50, 1, pitch = 1, extrarange = -4)
 
 		SPAWN_DBG(1 DECI SECOND)
-			var/obj/itemspecialeffect/glare/EE = unpool(/obj/itemspecialeffect/glare)
+			var/obj/itemspecialeffect/glare/EE = new /obj/itemspecialeffect/glare
 			EE.color = "#FFFFFF"
 			EE.setup(target.loc)
 			playsound(target.loc,"sound/effects/glare.ogg", 50, 1, pitch = 0.8, extrarange = -4)
@@ -456,7 +456,7 @@ datum/teg_transformation/vampire
 
 				target.real_name = "zombie [target.real_name]"
 				if (target.mind)
-					target.mind.special_role = "vampthrall"
+					target.mind.special_role = ROLE_VAMPTHRALL
 					target.mind.master = src.teg
 					if (!(target.mind in ticker.mode.Agimmicks))
 						ticker.mode.Agimmicks += target.mind

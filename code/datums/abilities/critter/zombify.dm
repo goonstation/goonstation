@@ -38,7 +38,6 @@
 
 		if(isdead(target) || target.health <= -100) //If basically dead, instaconvert.
 			target.set_mutantrace(/datum/mutantrace/zombie/can_infect)
-			target.full_heal()
 			if (target.ghost?.mind && !(target.mind && target.mind.dnr)) // if they have dnr set don't bother shoving them back in their body (Shamelessly ripped from SR code. Fight me.)
 				target.ghost.show_text("<span class='alert'><B>You feel yourself being dragged out of the afterlife!</B></span>")
 				target.ghost.mind.transfer_to(target)
@@ -58,7 +57,7 @@
 
 /datum/targetable/critter/zombify
 	name = "Zombify"
-	desc = "After a short delay, convert a human into a zombie."
+	desc = "After a short delay, instantly convert a human into a zombie."
 	cooldown = 0
 	var/actual_cooldown = 200
 	targeted = 1
@@ -84,6 +83,10 @@
 			return 1
 		if (get_dist(holder.owner, target) > 1)
 			boutput(holder.owner, __red("That is too far away to zombify."))
+			return 1
+		var/mob/living/carbon/human/H = target
+		if (istype(H.mutantrace, /datum/mutantrace/zombie))
+			boutput(holder.owner, __red("You can't infect another zombie!"))
 			return 1
 		actions.start(new/datum/action/bar/icon/zombifyAbility(target, src), holder.owner)
 		return 0

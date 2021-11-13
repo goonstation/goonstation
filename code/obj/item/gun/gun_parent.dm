@@ -197,18 +197,18 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/is_dual_wield = 0
 	if (can_dual_wield && (!charge_up))
 		if(ishuman(user))
-			if(user.hand && istype(user.r_hand, /obj/item/gun) && user.r_hand:can_dual_wield)
-				if (user.r_hand:canshoot())
-					is_dual_wield = 1
-					user.next_click = max(user.next_click, world.time + user.r_hand:shoot_delay)
-				SPAWN_DBG(0.2 SECONDS)
-					user.r_hand:shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2), is_dual_wield)
-			else if(!user.hand && istype(user.l_hand, /obj/item/gun)&& user.l_hand:can_dual_wield)
-				if (user.l_hand:canshoot())
-					is_dual_wield = 1
-					user.next_click = max(user.next_click, world.time + user.l_hand:shoot_delay)
-				SPAWN_DBG(0.2 SECONDS)
-					user.l_hand:shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2), is_dual_wield)
+			var/obj/item/gun/G
+			if(user.hand && istype(user.r_hand, /obj/item/gun))
+				G = user.r_hand
+			else if(!user.hand && istype(user.l_hand, /obj/item/gun))
+				G = user.l_hand
+
+			if (G && G.can_dual_wield && G.canshoot())
+				is_dual_wield = 1
+				if(!ON_COOLDOWN(G, "shoot_delay", G.shoot_delay))
+					SPAWN_DBG(0.2 SECONDS)
+						G.shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2), is_dual_wield)
+
 		else if(ismobcritter(user))
 			var/mob/living/critter/M = user
 			var/list/obj/item/gun/guns = list()
@@ -217,18 +217,17 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 					is_dual_wield = 1
 					if (H.item:canshoot())
 						guns += H.item
-						user.next_click = max(user.next_click, world.time + H.item:shoot_delay)
 			SPAWN_DBG(0)
 				for(var/obj/item/gun/gun in guns)
-					sleep(0.2 SECONDS)
-					gun.shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2), is_dual_wield)
+					if(!ON_COOLDOWN(gun, "shoot_delay", gun.shoot_delay))
+						sleep(0.2 SECONDS)
+						gun.shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2), is_dual_wield)
 
-	if(charge_up && !can_dual_wield && canshoot())
-		actions.start(new/datum/action/bar/icon/guncharge(src, pox, poy, user_turf, target_turf, charge_up, icon, icon_state), user)
-	else
-		if(canshoot())
-			user.next_click = max(user.next_click, world.time + src.shoot_delay)
-		shoot(target_turf, user_turf, user, pox, poy, is_dual_wield)
+	if(!ON_COOLDOWN(src, "shoot_delay", src.shoot_delay))
+		if(charge_up && !can_dual_wield && canshoot())
+			actions.start(new/datum/action/bar/icon/guncharge(src, pox, poy, user_turf, target_turf, charge_up, icon, icon_state), user)
+		else
+			shoot(target_turf, user_turf, user, pox, poy, is_dual_wield)
 
 
 	return 1
@@ -334,7 +333,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				how_drunk = 2
 			if (1 to 110)
 				how_drunk = 1
-		how_drunk = max(0, how_drunk - isalcoholresistant(user) ? 1 : 0)
+		how_drunk = max(0, how_drunk - isalcoholresistant(user))
 		spread += 5 * how_drunk
 	spread = max(spread, spread_angle)
 
@@ -348,8 +347,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 		P.forensic_ID = src.forensic_ID // Was missing (Convair880).
 		if(get_dist(user,M) <= 1)
-			hit_with_existing_projectile(P, M) // Includes log entry.
 			P.was_pointblank = 1
+			hit_with_existing_projectile(P, M) // Includes log entry.
 		else
 			P.launch()
 
@@ -412,7 +411,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				how_drunk = 2
 			if (1 to 110)
 				how_drunk = 1
-		how_drunk = max(0, how_drunk - isalcoholresistant(user) ? 1 : 0)
+		how_drunk = max(0, how_drunk - isalcoholresistant(user))
 		spread += 5 * how_drunk
 	spread = max(spread, spread_angle)
 

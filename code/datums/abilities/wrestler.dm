@@ -95,7 +95,7 @@
 					health_update_queue |= src
 
 
-		if (belt_check != 1 && (src.mind && src.mind.special_role != "omnitraitor" && src.mind.special_role != "Faustian Wrestler"))
+		if (belt_check != 1 && (src.mind && src.mind.special_role != ROLE_OMNITRAITOR && src.mind.special_role != "Faustian Wrestler"))
 			SHOW_WRESTLER_TIPS(src)
 
 	else return
@@ -291,6 +291,3 @@
 		SPAWN_DBG (rand(200, 900))
 			if (src.holder && src.holder.owner && ismob(src.holder.owner))
 				src.holder.owner.emote("flex")
-
-		SPAWN_DBG(calculate_cooldown() + 5)
-			holder.updateButtons()

@@ -90,7 +90,7 @@
 	src.sight |= SEE_OBJS
 
 	src.see_in_dark = SEE_DARK_FULL
-	src.see_invisible = 2
+	src.see_invisible = INVIS_CLOAK
 	src.updateicon()
 /*
 	if(src.client)
@@ -482,9 +482,9 @@
 		health_update_queue |= src
 	return
 
-/mob/living/silicon/hivebot/Bump(atom/movable/AM as mob|obj, yes)
+/mob/living/silicon/hivebot/Bump(atom/movable/AM as mob|obj)
 	SPAWN_DBG( 0 )
-		if ((!( yes ) || src.now_pushing))
+		if (src.now_pushing)
 			return
 		if (!istype(AM, /atom/movable))
 			return

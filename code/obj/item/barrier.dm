@@ -55,6 +55,7 @@
 				setProperty("disorient_resist", 65)
 				setProperty("disorient_resist_eye", 65)
 				setProperty("disorient_resist_ear", 50) //idk how lol ok
+				setProperty("deflection", 20)
 				flick("barrier_a",src)
 				c_flags |= BLOCK_TOOLTIP
 
@@ -68,6 +69,7 @@
 				delProperty("disorient_resist", 0)
 				delProperty("disorient_resist_eye", 0)
 				delProperty("disorient_resist_ear", 0)
+				setProperty("deflection", 0)
 				c_flags &= ~BLOCK_TOOLTIP
 
 				src.setItemSpecial(/datum/item_special/simple)

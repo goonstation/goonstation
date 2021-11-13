@@ -158,6 +158,7 @@ TRAYS
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 	force = 7.0
 	throwforce = 10
+	w_class = W_CLASS_SMALL
 	desc = "A long bit of metal that is sharpened on one side, used for cutting foods. Also useful for butchering dead animals. And live ones."
 	dir = NORTH
 
@@ -359,7 +360,8 @@ TRAYS
 	item_state = "cleaver"
 	desc = "An extremely sharp cleaver in a rectangular shape. Only for the professionals."
 	force = 12.0
-	throwforce = 3.0
+	throwforce = 12
+	w_class = W_CLASS_NORMAL
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 
@@ -425,7 +427,9 @@ TRAYS
 	amount = 6
 	var/max_amount = 6
 	var/box_type = "donutbox"
+	var/has_closed_state = 1
 	var/contained_food = /obj/item/reagent_containers/food/snacks/donut/custom/random
+	var/allowed_food = /obj/item/reagent_containers/food/snacks/donut
 	var/contained_food_name = "donut"
 	tooltip_flags = REBUILD_DIST
 
@@ -441,6 +445,7 @@ TRAYS
 		max_amount = 12
 		box_type = "eggbox"
 		contained_food = /obj/item/reagent_containers/food/snacks/ingredient/egg
+		allowed_food = /obj/item/reagent_containers/food/snacks/ingredient/egg
 		contained_food_name = "egg"
 
 	lollipop
@@ -450,8 +455,11 @@ TRAYS
 		amount = 8
 		max_amount = 8
 		box_type = "lpop"
+		has_closed_state = 0
 		contained_food = /obj/item/reagent_containers/food/snacks/lollipop/random_medical
+		allowed_food = /obj/item/reagent_containers/food/snacks/lollipop
 		contained_food_name = "lollipop"
+		w_class = W_CLASS_SMALL
 
 	New()
 		..()
@@ -467,10 +475,10 @@ TRAYS
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(src.amount >= src.max_amount)
-			boutput(user, "You can't fit anything else in this box!")
+			boutput(user, "You can't fit anything else in [src]!")
 			return
 		else
-			if(istype(W, src.contained_food))
+			if(istype(W, src.allowed_food))
 				user.drop_item()
 				W.set_loc(src)
 				src.amount ++
@@ -486,9 +494,13 @@ TRAYS
 				return ..()
 
 	attack_hand(mob/user as mob)
+		if((!istype(src.loc, /turf) && !user.is_in_hands(src)) || src.amount == 0)
+			..()
+			return
 		src.add_fingerprint(user)
-		var/obj/item/reagent_containers/food/snacks/myFood = locate(src.contained_food) in src
-		if(myFood)
+		var/list/obj/item/reagent_containers/food/snacks/myFoodList = src.contents
+		if(myFoodList.len >= 1)
+			var/obj/item/reagent_containers/food/snacks/myFood = myFoodList[myFoodList.len]
 			if(src.amount >= 1)
 				src.amount--
 				tooltip_rebuild = 1
@@ -502,6 +514,15 @@ TRAYS
 				user.put_in_hand_or_drop(newFood)
 				boutput(user, "You take [newFood] out of [src].")
 		src.update()
+
+	attack_self(mob/user as mob)
+		if(!src.has_closed_state) return
+		if(src.icon_state == "[src.box_type]")
+			src.icon_state = "[src.box_type][src.amount]"
+			boutput(user, "You open [src].")
+		else
+			src.icon_state = "[src.box_type]"
+			boutput(user, "You close [src].")
 
 	proc/update()
 		src.icon_state = "[src.box_type][src.amount]"
@@ -588,7 +609,7 @@ TRAYS
 			src.set_loc(shardturf)
 
 		for (var/i in 1 to 2)
-			var/obj/O = unpool(/obj/item/raw_material/shard/glass)
+			var/obj/O = new /obj/item/raw_material/shard/glass
 			O.set_loc(shardturf)
 			if(src.material)
 				O.setMaterial(copyMaterial(src.material))

@@ -16,7 +16,7 @@
 
 		V.transferOwnership(src)
 
-		if (src.mind && src.mind.special_role != "omnitraitor")
+		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
 			SHOW_VAMPTHRALL_TIPS(src)
 
 	else return

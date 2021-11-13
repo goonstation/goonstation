@@ -1,4 +1,3 @@
-
 /datum/component/loctargeting
 	var/list/signals = list()
 	var/proctype // = .proc/pass
@@ -9,6 +8,9 @@
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_MOVABLE_SET_LOC, .proc/on_change_loc)
+	var/atom/movable/source = parent
+	on_added(source, null)
+	current_loc = source.loc
 
 /datum/component/loctargeting/proc/on_change_loc(atom/movable/source, atom/old_loc)
 	if(old_loc == current_loc)

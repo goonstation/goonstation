@@ -40,14 +40,14 @@
 							src.inertia_dir = 0
 							return
 					if (2) //lube
-						src.pulling = null
+						src.remove_pulling()
 						src.changeStatus("weakened", 3.5 SECONDS)
 						boutput(src, "<span class='notice'>You slipped on the floor!</span>")
 						playsound(T, "sound/misc/slip.ogg", 50, 1, -3)
 						var/atom/target = get_edge_target_turf(src, src.dir)
 						src.throw_at(target, 12, 1, throw_type = THROW_SLIP)
 					if (3) // superlube
-						src.pulling = null
+						src.remove_pulling()
 						src.changeStatus("weakened", 6 SECONDS)
 						playsound(T, "sound/misc/slip.ogg", 50, 1, -3)
 						boutput(src, "<span class='notice'>You slipped on the floor!</span>")
@@ -118,19 +118,11 @@
 			var/perpname = src.name
 			if(src:wear_id && src:wear_id:registered)
 				perpname = src:wear_id:registered
-			// find the matching security record
-			for(var/datum/data/record/R in data_core.general)
-				if(R.fields["name"] == perpname)
-					for (var/datum/data/record/S in data_core.security)
-						if (S.fields["id"] == R.fields["id"])
-							// now add to rap sheet
 
-							S.fields["criminal"] = "*Arrest*"
-							S.fields["mi_crim"] = "Public urination."
-
-							break
-
-
+			var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
+			if(sec_record && sec_record["criminal"] != "*Arrest*")
+				sec_record["criminal"] = "*Arrest*"
+				sec_record["mi_crim"] = "Public urination."
 
 /mob/living/carbon/swap_hand()
 	var/obj/item/grab/block/B = src.check_block(ignoreStuns = 1)
@@ -185,9 +177,14 @@
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
 		amount *= -1
 
-	if (src.bioHolder && src.bioHolder.HasEffect("resist_toxic"))
-		src.toxloss = 0
-		return 1 //prevent organ damage
+	var/resist_toxic = src.bioHolder?.HasEffect("resist_toxic")
+
+	if(resist_toxic)
+		if(resist_toxic > 1)
+			src.toxloss = 0
+			return 1 //prevent organ damage
+		else
+			amount *= 0.33
 
 	src.toxloss = max(0,src.toxloss + amount)
 	return

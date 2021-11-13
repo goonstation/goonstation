@@ -63,7 +63,7 @@
 	return
 
 /obj/machinery/dispenser/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 
 /obj/machinery/dispenser/proc/update_icon()

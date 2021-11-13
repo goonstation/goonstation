@@ -49,6 +49,12 @@
 		boutput(src, "You find yourself unable to go through with killing yourself!")
 		return
 
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(HAS_MOB_PROPERTY(H, PROP_NO_SELF_HARM))
+			boutput(H, "Your cannot bring yourself to commit suicide!")
+			return
+
 
 
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -174,19 +180,6 @@
 	SPAWN_DBG(2 SECONDS)
 		R.emote("scream")
 	SPAWN_DBG(3 SECONDS)
-		//src.visible_message("<span class='alert'><b>[src] has torn out its head!</b></span>")
-		//playsound(R.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
-		/*
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(5, 1, src)
-		s.start()
-		R.part_head.set_loc(src.loc)
-		R.part_head.holder = null
-		R.part_head = null
-		R.update_bodypart("head")
-		R.module_active = null
-		R.update_appearance()
-		*/
 		R.unlock_medal("Damned", 1)
 		R.eject_brain()
 		R.borg_death_alert(ROBOT_DEATH_MOD_SUICIDE)

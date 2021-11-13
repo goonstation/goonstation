@@ -145,7 +145,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	has_feet = 1
 	var/obj/churn = new/obj{icon = 'icons/misc/SomepotatoArt.dmi'; pixel_y = -14; icon_state = "feet"}
 	underlays += churn
-	del(churn)
+	qdel(churn)
 	canmove = 1
 
 /mob/living/silicon/ai/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
@@ -177,6 +177,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 /mob/living/silicon/ai/New(loc, var/empty = 0)
 	..(loc)
 	START_TRACKING
+
+	APPLY_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)
 
 	light = new /datum/light/point
 	light.set_color(0.4, 0.7, 0.95)
@@ -221,6 +223,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.cell.charge = src.cell.maxcharge
 		src.radio1.name = "Primary Radio"
 		src.radio2.name = "AI Intercom Monitor"
+		src.radio2.device_color = "#7F7FE2"
 		src.radio3.name = "Secure Channels Monitor"
 		src.radio1.broadcasting = 1
 		src.radio2.set_frequency(R_FREQ_INTERCOM_AI)
@@ -259,7 +262,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		return src.eyecam
 	return src
 
-/mob/living/silicon/ai/show_message(msg, type, alt, alt_type, group = 0, var/image/chat_maptext/assoc_maptext = null)
+/mob/living/silicon/ai/show_message(msg, type, alt, alt_type, group = "", var/just_maptext, var/image/chat_maptext/assoc_maptext = null)
 	..()
 	if (deployed_to_eyecam && src.eyecam)
 		src.eyecam.show_message(msg, 1, 0, 0, group)
@@ -692,8 +695,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/mob/vamp = src
 	if (relay_laws_for_shell && ismob(relay_laws_for_shell))
 		vamp = relay_laws_for_shell
-	if (vamp.mind && vamp.mind.special_role == "vampthrall" && vamp.mind.master)
-		var/mob/mymaster = whois_ckey_to_mob_reference(vamp.mind.master)
+	if (vamp.mind && vamp.mind.special_role == ROLE_VAMPTHRALL && vamp.mind.master)
+		var/mob/mymaster = ckey_to_mob(vamp.mind.master)
 		if (mymaster)
 			boutput(who, "1. Only your master [mymaster.real_name] is human. Obey and serve them to the best of your ability.")
 			return
@@ -767,6 +770,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (deployed_to_eyecam)
 		eyecam.return_mainframe()
 
+	if (deployed_shell)
+		src.return_to(deployed_shell)
+
 	src.lastgasp() // calling lastgasp() here because we just died
 	setdead(src)
 	src.canmove = 0
@@ -775,7 +781,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	src.sight |= SEE_MOBS
 	src.sight |= SEE_OBJS
 	src.see_in_dark = SEE_DARK_FULL
-	src.see_invisible = 2
+	src.see_invisible = INVIS_CLOAK
 	src.lying = 1
 	src.light.disable()
 	src.update_appearance()
@@ -1140,7 +1146,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (src.blinded) src.blinded = 0
 	if (src.get_ear_damage()) src.take_ear_damage(-INFINITY) // Ear_deaf is handled by src.set_vision().
 	if (src.dizziness) src.dizziness = 0
-	if (src.drowsyness) src.drowsyness = 0
+	if (src.hasStatus("drowsy")) src.delStatus("drowsy")
 	if (src.stuttering) src.stuttering = 0
 	if (src.druggy) src.druggy = 0
 	if (src.jitteriness) src.jitteriness = 0
@@ -1370,11 +1376,14 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	set category = "AI Commands"
 	set name = "View Crew Manifest"
 
-	var/crew = ""
-	for(var/datum/data/record/t in data_core.general)
-		crew += "[t.fields["name"]] - [t.fields["rank"]]<br>"
+	var/stored = ""
+	if(length(by_type[/obj/cryotron]))
+		var/obj/cryotron/cryo_unit = pick(by_type[/obj/cryotron])
+		for(var/L as anything in cryo_unit.stored_crew_names)
+			stored += "<i>- [L]<i><br>"
 
-	usr.Browse("<head><title>Crew Manifest</title></head><body><tt><b>Crew Manifest:</b><hr>[crew]</tt></body>", "window=aimanifest")
+	usr.Browse("<head><title>Crew Manifest</title></head><body><tt><b>Crew Manifest:</b><hr>[get_manifest()]<br><b>In Cryogenic Storage:</b><hr>[stored]</tt></body>", "window=aimanifest")
+
 
 /mob/living/silicon/ai/proc/show_laws_verb()
 	set category = "AI Commands"
@@ -1606,8 +1615,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 					if (istype(R.ai_interface))
 						R.shell = 1
 					R.dependent = 0
-				//else if (isAIeye(user))
-				//	var/mob/dead/aieye/E = user
 				user.name = user.real_name
 		return
 
@@ -2007,13 +2014,13 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			src.sight |= SEE_MOBS
 			src.sight |= SEE_OBJS
 		src.see_in_dark = SEE_DARK_FULL
-		src.see_invisible = 2
+		src.see_invisible = INVIS_CLOAK
 		src.ear_deaf = 0
 	else
 		vision.set_color_mod("#000000")
 		src.sight = src.sight & ~(SEE_TURFS | SEE_MOBS | SEE_OBJS)
 		src.see_in_dark = 0
-		src.see_invisible = 0
+		src.see_invisible = INVIS_NONE
 		src.ear_deaf = 1
 
 /mob/living/silicon/ai/verb/open_nearest_door()
@@ -2027,6 +2034,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 //just use this proc to make click-track checking easier (I would use this in the below proc that builds a list, but i think the proc call overhead is not worth it)
 proc/is_mob_trackable_by_AI(var/mob/M)
+	if (HAS_MOB_PROPERTY(M, PROP_AI_UNTRACKABLE))
+		return 0
 	if (istype(M, /mob/new_player))
 		return 0
 	if (ishuman(M) && (istype(M:wear_id, /obj/item/card/id/syndicate) || (istype(M:wear_id, /obj/item/device/pda2) && M:wear_id:ID_card && istype(M:wear_id:ID_card, /obj/item/card/id/syndicate))))
@@ -2058,9 +2067,11 @@ proc/get_mobs_trackable_by_AI()
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
 			continue //cameras can't follow people who haven't started yet DUH OR DIDN'T YOU KNOW THAT
+		if (HAS_MOB_PROPERTY(M, PROP_AI_UNTRACKABLE))
+			continue
 		if (ishuman(M) && (istype(M:wear_id, /obj/item/card/id/syndicate) || (istype(M:wear_id, /obj/item/device/pda2) && M:wear_id:ID_card && istype(M:wear_id:ID_card, /obj/item/card/id/syndicate))))
 			continue
-		if (istype(M,/mob/living/critter/aquatic) || istype(M, /mob/living/critter/small_animal/chicken))
+		if (istype(M,/mob/living/critter/aquatic) || istype(M, /mob/living/critter/small_animal/ranch_base/chicken))
 			continue
 		if(M.z != 1 && M.z != usr.z)
 			continue

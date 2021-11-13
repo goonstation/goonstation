@@ -30,7 +30,7 @@
 
 	proc/makeAntag(mob/M as mob)
 		M.show_text("<h2><font color=red><B>You have defected and become a traitor!</B></font></h2>", "red")
-		M.mind.special_role = "traitor"
+		M.mind.special_role = ROLE_TRAITOR
 		M.verbs += /client/proc/gearspawn_traitor
 		SHOW_TRAITOR_RADIO_TIPS(M)
 
@@ -42,7 +42,7 @@
 	icon_state = "tombstone"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = "wizard"
+		M.mind.special_role = ROLE_WIZARD
 		M.show_text("<h2><font color=red><B>You have been seduced by magic and become a wizard!</B></font></h2>", "red")
 		SHOW_ADMINWIZARD_TIPS(M)
 		M.verbs += /client/proc/gearspawn_wizard
@@ -55,7 +55,7 @@
 	icon_state = "ganglion0"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = "changeling"
+		M.mind.special_role = ROLE_CHANGELING
 		M.show_text("<h2><font color=red><B>You have mutated into a changeling!</B></font></h2>", "red")
 		M.make_changeling()
 
@@ -68,7 +68,7 @@
 	color = "#FF0000"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = "vampire"
+		M.mind.special_role = ROLE_VAMPIRE
 		M.show_text("<h2><font color=red><B>You have joined the ranks of the undead and are now a vampire!</B></font></h2>", "red")
 		M.make_vampire()
 
@@ -80,7 +80,7 @@
 	icon_state = "machobelt"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = "wrestler"
+		M.mind.special_role = ROLE_WRESTLER
 		M.show_text("<h2><font color=red><B>You feel an urgent need to wrestle!</B></font></h2>", "red")
 		M.make_wrestler(1)
 
@@ -93,7 +93,7 @@
 	color = "#FF0000"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = "hunter"
+		M.mind.special_role = ROLE_HUNTER
 		M.mind.assigned_role = "Hunter"
 		M.show_text("<h2><font color=red><B>You have become a hunter!</B></font></h2>", "red")
 		M.make_hunter()
@@ -107,7 +107,7 @@
 	color = "#000000"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = "werewolf"
+		M.mind.special_role = ROLE_WEREWOLF
 		M.show_text("<h2><font color=red><B>You have become a werewolf!</B></font></h2>", "red")
 		M.make_werewolf()
 
@@ -119,7 +119,7 @@
 	icon_state = "1old"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = "omnitraitor"
+		M.mind.special_role = ROLE_OMNITRAITOR
 		M.verbs += /client/proc/gearspawn_traitor
 		M.verbs += /client/proc/gearspawn_wizard
 		M.make_changeling()

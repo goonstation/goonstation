@@ -22,7 +22,7 @@
 		if(!istype(src))
 			return
 
-		var/obj/particle/par = unpool(/obj/particle)
+		var/obj/particle/par = new /obj/particle
 
 		if(!istype(par))
 			return
@@ -37,7 +37,7 @@
 				par.transform = null
 				par.override_state = null
 				animate(par)
-				pool(par)
+				qdel(par)
 
 		par.set_loc(get_turf(src.loc))
 		par.blend_mode = P.particle_blend_mode
@@ -162,7 +162,7 @@
 			src.current_colors = list()
 			src.current_alphas = list()
 
-		src.attack_hand(usr)
+		src.Attackhand(usr)
 		src.updateUsrDialog()
 		return
 

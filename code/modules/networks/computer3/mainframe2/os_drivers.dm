@@ -654,7 +654,7 @@
 					return ESIG_USR1
 				new_z = round(new_z, 0.01)
 
-				var/datum/computer/file/coords/new_coords = unpool(/datum/computer/file/coords)
+				var/datum/computer/file/coords/new_coords = new /datum/computer/file/coords
 				new_coords.destx = (new_x * XMULTIPLY) - XSUBTRACT
 				new_coords.desty = (new_y * YMULTIPLY) - YSUBTRACT
 				new_coords.destz = new_z - ZSUBTRACT
@@ -700,7 +700,7 @@
 					return ESIG_USR1
 				dest_z = round(dest_z, 0.01)
 
-				var/datum/computer/file/coords/new_coords = unpool(/datum/computer/file/coords)
+				var/datum/computer/file/coords/new_coords = new /datum/computer/file/coords
 				new_coords.destx = (dest_x * XMULTIPLY) - XSUBTRACT
 				new_coords.desty = (dest_y * YMULTIPLY) - YSUBTRACT
 				new_coords.destz = dest_z - ZSUBTRACT
@@ -1566,7 +1566,7 @@
 /datum/computer/file/mainframe_program/guardbot_interface
 	name = "prman"
 	size = 4
-	var/const/buddyFreq = 1219
+	var/const/buddyFreq = FREQ_BUDDY
 
 	initialize(var/initparams)
 		if (..())

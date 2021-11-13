@@ -41,7 +41,7 @@
 
 	for(var/mob/M in viewers(1, src))
 		if ((M.client && M.machine == src))
-			src.attack_hand(M)
+			src.Attackhand(M)
 	return
 
 /obj/machinery/pipedispenser/New()
@@ -51,7 +51,7 @@
 /obj/machinery/disposal_pipedispenser
 	name = "Disposal Pipe Dispenser"
 	icon = 'icons/obj/manufacturer.dmi'
-	icon_state = "fab"
+	icon_state = "fab-general"
 	density = 1
 	anchored = 1.0
 	mats = 16
@@ -230,7 +230,7 @@
 					trunk.set_dir(final_dir)
 					trunk.dpdir = trunk.dir
 					trunk.getlinked()
-			src.attack_hand(usr)
+			src.Attackhand(usr)
 			return
 		else if(href_list["toggle_removing"])
 			src.laying_pipe = 0
@@ -239,7 +239,7 @@
 				src.color = "#ffbbbb"
 			else
 				src.color = "#ffffff"
-			src.attack_hand(usr)
+			src.Attackhand(usr)
 			return
 		else if(href_list["dmake"])
 			var/p_type = text2num(href_list["dmake"])

@@ -116,7 +116,7 @@ proc/is_weak_rollable_contract(type)
 	src.partygib()
 
 /proc/soulcheck(var/mob/M as mob)
-	M.abilityHolder.updateText()
+	M?.abilityHolder?.updateText()
 	if ((ishuman(M)) && (isdiabolical(M)))
 		if (total_souls_value >= 10)
 			if (!M.bioHolder.HasEffect("demon_horns"))
@@ -165,10 +165,8 @@ proc/is_weak_rollable_contract(type)
 	if(C.mind)
 		shake_camera(C, 20, 16)
 		boutput(C, "<font color=red>[screamstring]</font>")
-		boutput(C, "<span style=\"color:purple; font-size:150%\"><i><b><font face = Tempus Sans ITC>You have sold your soul and become an antagonist and an avatar of evil! Spread darkness across the land!</font></b></i></span>")
-		C.mind.special_role = "Faustian Cluwne"
-		logTheThing("admin", src, null, "has transformed into a demonic cluwne at [log_loc(C)]!")
-		ticker.mode.Agimmicks.Add(C)
+		boutput(C, "<span style=\"color:purple; font-size:150%\"><i><b><font face = Tempus Sans ITC>You have sold your soul and become a Faustian cluwne! Oh no!</font></b></i></span>")
+		logTheThing("admin", src, null, "has signed a contract and turned into a Faustian cluwne at [log_loc(C)]!")
 		C.choose_name(3)
 	else
 		return
@@ -661,7 +659,7 @@ obj/item/contract/vampire
 		if(!..())
 			return 0
 		SPAWN_DBG(1 DECI SECOND)
-			user.mind.special_role = "vampire"
+			user.mind.special_role = ROLE_VAMPIRE
 			user.make_vampire(1)
 			ticker.mode.Agimmicks.Add(user)
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
@@ -791,7 +789,7 @@ obj/item/contract/greed
 			return 0
 		SPAWN_DBG(1 DECI SECOND)
 			for(var/i in 1 to number_of_cash_piles)
-				var/obj/item/spacecash/random/tourist/S = unpool(/obj/item/spacecash/random/tourist)
+				var/obj/item/spacecash/random/tourist/S = new /obj/item/spacecash/random/tourist
 				S.setup(user.loc)
 			boutput(user, "<span class='notice'>Some money appears at your feet. What, did you expect some sort of catch or trick?</span>")
 			if (prob(90)) //used to be 50/50, now it's only a 10% chance to get midased

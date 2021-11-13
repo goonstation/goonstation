@@ -17,7 +17,7 @@ change the direction of created objects.<br>
 	var/matrix/mtx = matrix()
 	click_mode_right(var/ctrl, var/alt, var/shift)
 		if(ctrl)
-			cinematic = (input("Cinematic spawn mode") as null|anything in list("Telepad", "Blink", "Supplydrop", "Supplydrop (no lootbox)", "Lethal Supplydrop", "Lethal Supplydrop (no lootbox)", "None")) || cinematic
+			cinematic = (input("Cinematic spawn mode") as null|anything in list("Telepad", "Blink", "Supplydrop", "Supplydrop (no lootbox)", "Lethal Supplydrop", "Lethal Supplydrop (no lootbox)", "Spawn Heavenly", "Spawn Demonically", "None")) || cinematic
 			return
 		objpath = get_one_match(input("Type path", "Type path", "/obj/closet"), /atom)
 		update_button_text(objpath)
@@ -30,8 +30,8 @@ change the direction of created objects.<br>
 		if(!isnull(T) && objpath)
 			switch(cinematic)
 				if("Telepad")
-					var/obj/decal/teleport_swirl/swirl = unpool(/obj/decal/teleport_swirl)
-					var/obj/decal/fakeobjects/teleport_pad/pad = unpool(/obj/decal/fakeobjects/teleport_pad)
+					var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
+					var/obj/decal/fakeobjects/teleport_pad/pad = new /obj/decal/fakeobjects/teleport_pad
 					swirl.mouse_opacity = 0
 					pad.mouse_opacity = 0
 					pad.loc = T
@@ -46,7 +46,7 @@ change the direction of created objects.<br>
 
 						var/atom/A = 0
 						if(ispath(objpath, /turf))
-							A = T.ReplaceWith(objpath, handle_air = 0)
+							A = T.ReplaceWith(objpath, keep_old_material=0, handle_air=0, force=1)
 						else
 							A = new objpath(T)
 
@@ -61,12 +61,12 @@ change the direction of created objects.<br>
 						sleep(0.5 SECONDS)
 						swirl.mouse_opacity = 1
 						pad.mouse_opacity = 1
-						pool(swirl)
-						pool(pad)
+						qdel(swirl)
+						qdel(pad)
 				if("Blink")
 					var/atom/A = 0
 					if(ispath(objpath, /turf))
-						A = T.ReplaceWith(objpath, handle_air = 0)
+						A = T.ReplaceWith(objpath, keep_old_material=0, handle_air=0, force=1)
 					else
 						A = new objpath(T)
 
@@ -78,34 +78,50 @@ change the direction of created objects.<br>
 					if (ispath(objpath, /atom/movable))
 						new/obj/effect/supplymarker/safe(T, 3 SECONDS, objpath)
 					else if(ispath(objpath, /turf))
-						T.ReplaceWith(objpath, handle_air = 0)
+						T.ReplaceWith(objpath, keep_old_material=0, handle_air=0, force=1)
 					else
 						new objpath(T)
 				if("Supplydrop (no lootbox)")
 					if (ispath(objpath, /atom/movable))
 						new/obj/effect/supplymarker/safe(T, 3 SECONDS, objpath, TRUE)
 					else if(ispath(objpath, /turf))
-						T.ReplaceWith(objpath, handle_air = 0)
+						T.ReplaceWith(objpath, keep_old_material=0, handle_air=0, force=1)
 					else
 						new objpath(T)
 				if("Lethal Supplydrop")
 					if (ispath(objpath, /atom/movable))
 						new/obj/effect/supplymarker(T, 3 SECONDS, objpath)
 					else if(ispath(objpath, /turf))
-						T.ReplaceWith(objpath, handle_air = 0)
+						T.ReplaceWith(objpath, keep_old_material=0, handle_air=0, force=1)
 					else
 						new objpath(T)
 				if("Lethal Supplydrop (no lootbox)")
 					if (ispath(objpath, /atom/movable))
 						new/obj/effect/supplymarker(T, 3 SECONDS, objpath, TRUE)
 					else if(ispath(objpath, /turf))
-						T.ReplaceWith(objpath, handle_air = 0)
+						T.ReplaceWith(objpath, keep_old_material=0, handle_air=0, force=1)
+					else
+						new objpath(T)
+				if("Spawn Heavenly")
+					if (ispath(objpath, /atom/movable))
+						var/atom/movable/A = new objpath(T)
+						heavenly_spawn(A)
+					else if(ispath(objpath, /turf))
+						T.ReplaceWith(objpath, keep_old_material=0, handle_air=0, force=1)
+					else
+						new objpath(T)
+				if("Spawn Demonically")
+					if (ispath(objpath, /atom/movable))
+						var/atom/movable/A = new objpath(T)
+						demonic_spawn(A)
+					else if(ispath(objpath, /turf))
+						T.ReplaceWith(objpath, keep_old_material=0, handle_air=0, force=1)
 					else
 						new objpath(T)
 				else
 					var/atom/A = 0
 					if(ispath(objpath, /turf))
-						A = T.ReplaceWith(objpath, handle_air = 0)
+						A = T.ReplaceWith(objpath, keep_old_material=0, handle_air=0, force=1)
 					else
 						A = new objpath(T)
 

@@ -86,7 +86,8 @@
 	/obj/item/pen,
 	/obj/item/staple_gun/red,
 	/obj/item/scissors,
-	/obj/item/stamp)
+	/obj/item/stamp,
+	/obj/item/canvas)
 
 	make_my_stuff()
 		..()

@@ -105,13 +105,13 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 	computertype = "/obj/machinery/computer/turbine_computer"
 /obj/item/circuitboard/solar_control
 	name = "Circuit board (Solar control)"
-	computertype = "/obj/machinery/power/solar_control"
+	computertype = "/obj/machinery/computer/solar_control"
 /obj/item/circuitboard/powermonitor
 	name = "Circuit board (Power Monitoring Computer)"
-	computertype = "/obj/machinery/power/monitor"
+	computertype = "/obj/machinery/computer/power_monitor"
 /obj/item/circuitboard/powermonitor_smes
 	name = "Circuit board (Engine Monitoring Computer)"
-	computertype = "/obj/machinery/power/monitor/smes"
+	computertype = "/obj/machinery/computer/power_monitor/smes"
 /obj/item/circuitboard/olddoor
 	name = "Circuit board (DoorMex)"
 	computertype = "/obj/machinery/computer/pod/old"
@@ -226,8 +226,6 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 				boutput(user, "<span class='notice'>You connect the monitor.</span>")
 				var/obj/machinery/computer/B = new src.circuit.computertype ( src.loc )
 				B.set_dir(src.dir)
-				if (circuit.powernet)
-					B.powernet = circuit.powernet
 				if (circuit.id)
 					B.id = circuit.id
 				if (circuit.records)

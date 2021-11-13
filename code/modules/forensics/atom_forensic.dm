@@ -36,7 +36,7 @@
 		return 0
 	return src.forensic_trace[key]
 
-/atom/proc/add_fingerprint(mob/living/M as mob)
+/atom/proc/add_fingerprint(mob/living/M as mob, hidden_only = FALSE)
 	if (!ismob(M) || isnull(M.key))
 		return
 	if (!(src.flags & FPRINT))
@@ -51,13 +51,14 @@
 			L = list()
 
 		if (H.gloves) // Fixed: now adds distorted prints even if 'fingerprintslast == ckey'. Important for the clean_forensic proc (Convair880).
-			var/gloveprints = H.gloves.distort_prints(H.bioHolder.uid_hash, 1)
-			if (!isnull(gloveprints))
-				L -= gloveprints
-				if (L.len >= 6) //Limit fingerprints in the list to 6
-					L.Cut(1,2)
-				L += gloveprints
-				src.fingerprints = L
+			if (!hidden_only)
+				var/gloveprints = H.gloves.distort_prints(H.bioHolder.uid_hash, 1)
+				if (!isnull(gloveprints))
+					L -= gloveprints
+					if (L.len >= 6) //Limit fingerprints in the list to 6
+						L.Cut(1,2)
+					L += gloveprints
+					src.fingerprints = L
 
 			if(src.fingerprintslast != H.key)
 				src.fingerprintshidden += "(Wearing gloves). Real name: [H.real_name], Key: [H.key], Time: [time2text(world.timeofday, "hh:mm:ss")]"
@@ -66,7 +67,8 @@
 			return 0
 
 		if (!( src.fingerprints ))
-			src.fingerprints = list("[H.bioHolder.uid_hash]")
+			if (!hidden_only)
+				src.fingerprints = list("[H.bioHolder.uid_hash]")
 			if(src.fingerprintslast != H.key)
 				src.fingerprintshidden += "Real name: [H.real_name], Key: [H.key], Time: [time2text(world.timeofday, "hh:mm:ss")]"
 				src.fingerprintslast = H.key
@@ -74,11 +76,12 @@
 			return 1
 
 		else
-			L -= H.bioHolder.uid_hash
-			while(L.len >= 6) // limit the number of fingerprints to 6, previously 3
-				L -= L[1]
-			L += H.bioHolder.uid_hash
-			src.fingerprints = L
+			if (!hidden_only)
+				L -= H.bioHolder.uid_hash
+				while(L.len >= 6) // limit the number of fingerprints to 6, previously 3
+					L -= L[1]
+				L += H.bioHolder.uid_hash
+				src.fingerprints = L
 			if(src.fingerprintslast != H.key)
 				src.fingerprintshidden += "Real name: [H.real_name], Key: [H.key], Time: [time2text(world.timeofday, "hh:mm:ss")]"
 				src.fingerprintslast = H.key
@@ -177,10 +180,8 @@
 /atom/proc/clean_forensic()
 	if (!src)
 		return
-
 	if (!(src.flags & FPRINT))
 		return
-
 	// The first version accidently looped through everything for every atom. Consequently, cleaner grenades caused horrendous lag on my local server. Woops.
 	if (!ismob(src)) // Mobs are a special case.
 		if (isobj(src))
@@ -201,14 +202,17 @@
 				#else
 				CI.UpdateOverlays(null, "blood_splatter")
 				#endif
+		if (istype(src, /obj/item/clothing))
+			var/obj/item/clothing/C = src
+			C.clean_stains()
 
 		else if (istype(src, /obj/decal/cleanable) || istype(src, /obj/reagent_dispensers/cleanable))
-			pool(src)
+			qdel(src)
 
 		else if (isturf(src))
 			var/turf/T = get_turf(src)
 			for (var/obj/decal/cleanable/mess in T)
-				pool(mess)
+				qdel(mess)
 			T.messy = 0
 
 		else // Don't think it should clean doors and the like. Give the detective at least something to work with.
@@ -238,6 +242,9 @@
 						#else
 						check.UpdateOverlays(null, "blood_splatter")
 						#endif
+				if (istype(check, /obj/item/clothing))
+					var/obj/item/clothing/C = check
+					C.clean_stains()
 
 			if (isnull(M.gloves)) // Can't clean your hands when wearing gloves.
 				M.add_forensic_trace("bDNA", M.blood_DNA)

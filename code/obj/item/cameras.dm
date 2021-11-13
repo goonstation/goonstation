@@ -28,6 +28,7 @@
 	var/pictures_max = 30
 	var/can_use = 1
 	var/takes_voodoo_pics = 0
+	var/steals_souls = FALSE
 
 	New()
 		..()
@@ -91,7 +92,7 @@
 	var/wait_cycle = 0
 
 	attack_self(mob/user)
-		if (user.find_in_hand(src))
+		if (user.find_in_hand(src) && user.mind && user.mind.special_role == ROLE_SPY_THIEF) // No metagming this
 			if (!src.flash_mode)
 				user.show_text("You use the secret switch to set the camera to flash mode.", "blue")
 				playsound(user, "sound/items/pickup_defib.ogg", 100, 1)
@@ -130,7 +131,7 @@
 		return
 	if (src.flash_mode)
 		// Use cell charge
-		if (SEND_SIGNAL(src, COMSIG_CELL_USE, 25) & CELL_INSUFFICIENT_CHARGE)
+		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, 25) & CELL_SUFFICIENT_CHARGE))
 			user.show_text("[src] doesn't have enough battery power!", "red")
 			return 0
 		var/turf/T = get_turf(target.loc)
@@ -140,6 +141,7 @@
 		src.update_icon()
 		// Generic flash
 		var/mob/M = target
+		SEND_SIGNAL(src, COMSIG_CELL_USE, 25)
 		var/blind_success = M.apply_flash(30, 8, 0, 0, 0, rand(0, 1), 0, 0, 100, 70, disorient_time = 30)
 		playsound(src, "sound/weapons/flash.ogg", 100, 1)
 		flick("camera_flash-anim", src)
@@ -201,7 +203,7 @@
 		..(location)
 		if (istype(IM))
 			fullImage = IM
-			IM.transform = matrix(0.6875, 0.625, MATRIX_SCALE)
+			IM.transform = matrix(24/32, 22/32, MATRIX_SCALE)
 			IM.pixel_y = 1
 			src.UpdateOverlays(IM, "photo")
 		if (istype(IC))
@@ -333,9 +335,6 @@
 	if (!photo)
 		return
 
-	if (istype(photo_icon))
-		photo_icon.Crop(1,1,32,32) // mehhhh
-
 	//photo.overlays += the_turf
 
 	//turficon.Scale(22,20)
@@ -350,19 +349,19 @@
 
 	var/mobnumber = 0 // above 3 and it'll stop listing what they're holding and if they're hurt
 	var/itemnumber = 0
+	var/list/mob/stolen_souls = list()
 
 	for (var/atom/A in the_turf)
 		if (A.invisibility || istype(A, /obj/overlay/tile_effect))
 			continue
+		var/icon/ic = getFlatIcon(A)
+		if (ic)
+			photo_icon.Blend(ic, ICON_OVERLAY, x=A.pixel_x + world.icon_size * (A.x - the_turf.x), y=A.pixel_y + world.icon_size * (A.y - the_turf.y))
 		if (ismob(A))
 			var/mob/M = A
-			var/image/X = build_composite_icon(A)
-			var/icon/Y = A:build_flat_icon()
-			//X.Scale(22,20)
-			photo.overlays += X
-			photo_icon.Blend(Y, ICON_OVERLAY)
-			qdel(X)
-			qdel(Y)
+
+			if(src.steals_souls)
+				stolen_souls += M
 
 			if (!mob_title)
 				if(src.takes_voodoo_pics)
@@ -403,16 +402,7 @@
 
 		else
 			if (itemnumber < 5)
-				var/image/X = build_composite_icon(A)
-				var/icon/Y = getFlatIcon(A)
-				if (X)
-					//X.Scale(22,20)
-					photo.overlays += X
-				if (Y)
-					photo_icon.Blend(Y, ICON_OVERLAY)
 				itemnumber++
-				qdel(X)
-				qdel(Y)
 
 				if (!item_title)
 					item_title = " \a [A]"
@@ -438,12 +428,21 @@
 			finished_title = "photo of[item_title]"
 			finished_detail = "You can see [item_detail]."
 
+	if (istype(photo_icon))
+		photo_icon.Crop(1,1,32,32)
+	photo.icon = photo_icon
+
 	var/obj/item/photo/P
 	if(src.takes_voodoo_pics)
 		P = new/obj/item/photo/voodoo(get_turf(src), photo, photo_icon, finished_title, finished_detail)
 		P:cursed_dude = deafnote //kubius: using runtime eval because non-voodoo photos don't have a cursed_dude var
 		if(src.takes_voodoo_pics == 2) //unlimited photo uses
 			P:enchant_power = -1
+	else if(src.steals_souls)
+		P = new/obj/item/photo/haunted(get_turf(src), photo, photo_icon, finished_title, finished_detail)
+		var/obj/item/photo/haunted/HP = P
+		for(var/mob/M as anything in stolen_souls)
+			HP.add_soul(M)
 	else
 		P = new/obj/item/photo(get_turf(src), photo, photo_icon, finished_title, finished_detail)
 
