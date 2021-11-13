@@ -193,8 +193,7 @@
 			src.owner:toggle_attack_messages()
 		attacktoggle = saved_attacktoggle
 
-		var/saved_adminwho_alerts
-		AP["[ckey]_adminwho_alerts"] >> saved_adminwho_alerts
+		var/saved_adminwho_alerts = AP["adminwho_alerts"]
 		if (isnull(saved_adminwho_alerts))
 			saved_adminwho_alerts = 1
 		if (saved_adminwho_alerts == 0 && adminwho_alerts != 0)
@@ -292,27 +291,39 @@
 	proc/save_admin_prefs()
 		if (!src.owner)
 			return
-		var/savefile/AP = new /savefile("data/AdminPrefs.sav")
-		var/ckey = src.owner:ckey
-		if (!ckey)
-			return
-		//AP["[ckey]_extratoggle"] << extratoggle
-		AP["[ckey]_popuptoggle"] << popuptoggle
-		AP["[ckey]_servertoggles_toggle"] << servertoggles_toggle
-		AP["[ckey]_animtoggle"] << animtoggle
-		AP["[ckey]_attacktoggle"] << attacktoggle
-		AP["[ckey]_adminwho_alerts"] << adminwho_alerts
-		AP["[ckey]_rp_word_filtering"] << rp_word_filtering
-		AP["[ckey]_auto_stealth"] << auto_stealth
-		AP["[ckey]_auto_stealth_name"] << auto_stealth_name
-		AP["[ckey]_auto_alt_key"] << auto_alt_key
-		AP["[ckey]_auto_alt_key_name"] << auto_alt_key_name
-		AP["[ckey]_hear_prayers"] << hear_prayers
-		AP["[ckey]_audible_prayers"] << audible_prayers
-		AP["[ckey]_atags"] << see_atags
-		AP["[ckey]_audible_ahelps"] << audible_ahelps
-		AP["[ckey]_buildmode_view"] << buildmode_view
-		AP["[ckey]_spawn_in_loc"] << spawn_in_loc
+		var/list/data = owner.player.cloud_get("admin_preferences")
+		var/list/auto_aliases = list()
+		if (data) // decoding null will runtime
+			data = json_decode(owner.player.cloud_get("admin_preferences"))
+			auto_aliases = data["auto_aliases"]
+
+		if (auto_alias_global_save)
+			auto_aliases["auto_stealth"] = auto_stealth
+			auto_aliases["auto_stealth_name"] = auto_stealth_name
+			auto_aliases["auto_alt_key"] = auto_alt_key
+			auto_aliases["auto_alt_key_name"] = auto_alt_key_name
+		else // let's not wipe out their local saves in case they toggle global saving off
+			auto_aliases["[config.server_id]_auto_stealth"] = auto_stealth
+			auto_aliases["[config.server_id]_auto_stealth_name"] = auto_stealth_name
+			auto_aliases["[config.server_id]_auto_alt_key"] = auto_alt_key
+			auto_aliases["[config.server_id]_auto_alt_key_name"] = auto_alt_key_name
+
+		var/list/AP = list()
+
+		AP["auto_aliases"] = auto_aliases
+		AP["auto_alias_global_save"] = auto_alias_global_save
+		AP["popuptoggle"] = popuptoggle
+		AP["servertoggles_toggle"] = servertoggles_toggle
+		AP["animtoggle"] = animtoggle
+		AP["attacktoggle"] = attacktoggle
+		AP["rp_word_filtering"] = rp_word_filtering
+		AP["adminwho_alerts"] = adminwho_alerts
+		AP["hear_prayers"] = hear_prayers
+		AP["audible_prayers"] = audible_prayers
+		AP["atags"] = see_atags
+		AP["audible_ahelps"] = audible_ahelps
+		AP["buildmode_view"] = buildmode_view
+		AP["spawn_in_loc"] = spawn_in_loc
 
 		for(var/cat in toggleable_admin_verb_categories)
 			AP["[ckey]_hidden_[cat]"] << (cat in src.hidden_categories)
