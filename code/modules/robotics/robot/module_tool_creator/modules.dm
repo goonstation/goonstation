@@ -30,6 +30,7 @@
 		/obj/item/device/camera_viewer,
 		/obj/item/hand_labeler,
 		/obj/item/device/ticket_writer,
+		/obj/item/extinguisher, // TODO: make large version
 	)
 
 // scientist.
@@ -151,6 +152,7 @@
 		/obj/item/reagent_containers/glass/beaker/large,
 		/obj/item/reagent_containers/glass/beaker/large,
 		/obj/item/reagent_containers/dropper,
+		/obj/item/extinguisher, // TODO: make large version
 	)
 
 // miner.
