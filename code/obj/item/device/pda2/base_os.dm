@@ -112,6 +112,7 @@
 					. += "<li><a href='byond://?src=\ref[src];trenchmap=1'>Trench Map</a></li>"
 #else
 					. += "<li><a href='byond://?src=\ref[src];trenchmap=1'>Mining Map</a></li>"
+					. += "<li><a href='byond://?src=\ref[src];debrismap=1'>Debris Map</a></li>"
 #endif
 
 					if(src.master.module)
@@ -409,6 +410,10 @@
 			else if(href_list["trenchmap"])
 				if (usr.client && hotspot_controller)
 					hotspot_controller.show_map(usr.client)
+
+			else if(href_list["debrismap"])
+				if (usr.client)
+					show_debris_map(usr.client)
 
 			else if(href_list["change_backlight_color"])
 				var/new_color = input(usr, "Choose a color", "PDA", src.master.bg_color) as color | null

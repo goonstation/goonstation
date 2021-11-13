@@ -10,6 +10,14 @@ var/list/debrisModifiersBigUsed = list()//Assoc list, type:times used
 var/list/debrisModifiersSmall = list()
 var/list/debrisModifiersSmallUsed = list()//Assoc list, type:times used
 
+var/icon/debris_map = 0
+var/icon/debris_map_html = 0
+var/list/debris_map_colors = list(
+	empty = rgb(30, 30, 45),
+	solid = rgb(180,180,180),
+	station = rgb(27, 163, 186),
+	other = rgb(186, 0, 60))
+
 //Notes:
 //Anything not encased in an area inside a prefab may be replaced with asteroids during generation. In other words, everything not inside that area is considered "transparent"
 //Make sure all your actual structures are inside that area.
@@ -442,6 +450,112 @@ var/list/debrisModifiersSmallUsed = list()//Assoc list, type:times used
 
 		return debrisZ
 
+///////// DEBRIS FIELD MAPPING SHIT /////////
+
+/proc/generate_debris_map()
+	if (!debris_map)
+		Z_LOG_DEBUG("Debris Map", "Generating map ...")
+		debris_map = icon('icons/misc/trenchMapEmpty.dmi', "template") //yeah i'm reusing it, sue me
+		var/turf_color = null
+		for (var/x = 1, x <= world.maxx, x++)
+			for (var/y = 1, y <= world.maxy, y++)
+				var/turf/T = locate(x,y,3)
+				if (T.name == "asteroid" || T.name == "cavern wall" || T.type == /turf/simulated/floor/plating/airless/asteroid)
+					turf_color = "solid"
+				else if (T.name == "trench floor" || T.name == "\proper space")
+					turf_color = "empty"
+				else
+					turf_color = "other"
+
+				debris_map.DrawBox(debris_map_colors[turf_color], x * 2, y * 2, x * 2 + 1, y * 2 + 1)
+
+			Z_LOG_DEBUG("Debris Map", "Map generation complete")
+			generate_debris_map_html()
+
+/proc/generate_debris_map_html()
+	if (!debris_map)
+		return
+
+	debris_map_html = {"
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge;">
+	<style type="text/css">
+		body {
+			background: black;
+			color: white;
+			font-family: 'Consolas', 'Ubuntu Mono', monospace;
+		}
+		* {
+			border-sizing: border-box;
+			image-rendering: -moz-crisp-edges;
+			image-rendering: -o-crisp-edges;
+			image-rendering: -webkit-optimize-contrast;
+			image-rendering: crisp-edges;
+			image-rendering: pixelated;
+			-ms-interpolation-mode:nearest-neighbor;
+			}
+		#map {
+			position: relative;
+			height: 600px;
+			width: 600px;
+			overflow: hidden;
+			margin: 0 auto;
+		}
+		#map img {
+			position: absolute;
+			bottom: 0
+			left: 0;
+		}
+		.hotspot {
+			position: absolute;
+			background: rgba(255, 120, 120, 0.6);
+		}
+		.key {
+			text-align: center;
+			margin-top: 0.5em;
+		}
+		.key > span {
+			white-space: nowrap;
+			display: inline-block;
+			margin: 0 0.5em;
+		}
+		.key > span > span {
+			display: inline-block;
+			height: 1em;
+			width: 1em;
+			border: 1px solid white;
+		}
+		.empty { background-color: [debris_map_colors["empty"]]; }
+		.solid { background-color: [debris_map_colors["solid"]]; }
+		.station { background-color: [debris_map_colors["station"]]; }
+		.other { background-color: [debris_map_colors["other"]]; }
+	</style>
+</head>
+<body>
+		<div id='map'>
+			<img src="trenchmap.png" height="600">
+		</div>
+		<div class='key'>
+			<span><span class='solid'></span> Solid Rock</span>
+			<span><span class='station'></span> NT Asset</span>
+			<span><span class='other'></span> Unknown</span>
+			</div>
+</body>
+</html>
+"}
+
+/proc/show_debris_map(var/client/C)
+	if (!C)
+		return
+	if (!debris_map_html || !debris_map)
+		boutput(C, "oh no, map doesnt exist!")
+		return
+	C << browse_rsc(debris_map, "trenchmap.png")
+	C << browse(debris_map_html, "window=trench_map;size=650x700;title=Debris Map")
+
+
 /proc/makeMiningLevel()
 	var/list/miningZ = list()
 	var/startTime = world.timeofday
@@ -545,7 +659,7 @@ var/list/debrisModifiersSmallUsed = list()//Assoc list, type:times used
 		if (M)
 			var/maxX = (world.maxx - M.prefabSizeX - AST_MAPBORDER)
 			var/maxY = (world.maxy - M.prefabSizeY - AST_MAPBORDER)
-			var/stop = 0
+			var/stop = FALSE
 			var/count= 0
 			var/maxTries = (M.required ? 200:33)
 			while (!stop && count < maxTries) //Kinda brute forcing it. Dumb but whatever.
@@ -555,7 +669,7 @@ var/list/debrisModifiersSmallUsed = list()//Assoc list, type:times used
 					logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to blocked area. [target] @ [showCoords(target.x, target.y, target.z)]")
 				else
 					logTheThing("debug", null, null, "Prefab placement #[n] [M.type][M.required?" (REQUIRED)":""] succeeded. [target] @ [showCoords(target.x, target.y, target.z)]")
-					stop = 1
+					stop = TRUE
 				count++
 				if (count >= 33)
 					logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to maximum tries [maxTries][M.required?" WARNING: REQUIRED FAILED":""]. [target] @ [showCoords(target.x, target.y, target.z)]")
@@ -578,7 +692,7 @@ var/list/debrisModifiersSmallUsed = list()//Assoc list, type:times used
 
 	boutput(world, "<span class='alert'>Generated Debris Level in [((world.timeofday - startTime)/10)] seconds!")
 
-	hotspot_controller.generate_map()
+	generate_debris_map()
 
 /proc/pickAstPrefab()
 	var/list/eligible = list()
