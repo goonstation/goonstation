@@ -406,7 +406,7 @@ var/list/debris_map_colors = list(
 								continue
 
 							var/floor_or_obj = pick("turf", "obj")
-							switch(floor_or_what)
+							switch(floor_or_obj)
 								if("turf")
 									var/T2 = pick("plating", "burned", "damaged")
 									switch(T2)
