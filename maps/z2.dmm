@@ -38037,8 +38037,10 @@
 /area/meat_derelict/boss)
 "cgP" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	desc = "The only thing keeping the vaccum out and you alive.";
 	icon = 'icons/turf/walls_tempus-white.dmi';
-	icon_state = "5"
+	icon_state = "5";
+	name = "Ship Armor"
 	},
 /area/space)
 "cgQ" = (
@@ -74559,8 +74561,10 @@
 	})
 "efG" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	desc = "The only thing keeping the vaccum out and you alive.";
 	icon = 'icons/turf/walls_tempus-white.dmi';
-	icon_state = "14"
+	icon_state = "14";
+	name = "Ship Armor"
 	},
 /area/space)
 "ehl" = (
@@ -74987,8 +74991,10 @@
 /area/crypt/sigma/rd)
 "fjD" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	desc = "The only thing keeping the vaccum out and you alive.";
 	icon = 'icons/turf/walls_tempus-white.dmi';
-	icon_state = "12"
+	icon_state = "12";
+	name = "Ship Armor"
 	},
 /area/space)
 "fls" = (
@@ -75241,6 +75247,7 @@
 	name = "corpse"
 	},
 /obj/item/gun/kinetic/knn29{
+	ammo = 0;
 	pixel_x = -2;
 	pixel_y = 9
 	},
@@ -76349,8 +76356,10 @@
 /area/titlescreen)
 "jsn" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	desc = "The only thing keeping the vaccum out and you alive.";
 	icon = 'icons/turf/walls_tempus-white.dmi';
-	icon_state = "13"
+	icon_state = "13";
+	name = "Ship Armor"
 	},
 /area/space)
 "jup" = (
@@ -76639,8 +76648,10 @@
 /area/hospital/samostrel)
 "kcH" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	desc = "The only thing keeping the vaccum out and you alive.";
 	icon = 'icons/turf/walls_tempus-white.dmi';
-	icon_state = "7"
+	icon_state = "7";
+	name = "Ship Armor"
 	},
 /area/space)
 "kcN" = (
@@ -76822,6 +76833,7 @@
 	},
 /obj/map/light/secretblue,
 /obj/item/gun/kinetic/knn29{
+	ammo = 0;
 	pixel_x = -2;
 	pixel_y = 9
 	},
@@ -77284,6 +77296,7 @@
 /area/centcom)
 "lJH" = (
 /obj/item/gun/kinetic/knn29{
+	ammo = 0;
 	pixel_x = -2;
 	pixel_y = 9
 	},
@@ -77587,8 +77600,10 @@
 /area/diner/cow)
 "myA" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	desc = "The only thing keeping the vaccum out and you alive.";
 	icon = 'icons/turf/walls_tempus-white.dmi';
-	icon_state = "2"
+	icon_state = "3";
+	name = "Ship Armor"
 	},
 /area/space)
 "mzt" = (
@@ -77806,8 +77821,10 @@
 /area/shuttle/merchant_shuttle/right_centcom/donut2)
 "naA" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	desc = "The only thing keeping the vaccum out and you alive.";
 	icon = 'icons/turf/walls_tempus-white.dmi';
-	icon_state = "6"
+	icon_state = "6";
+	name = "Ship Armor"
 	},
 /area/space)
 "nbb" = (
@@ -78661,9 +78678,6 @@
 	dir = 5
 	},
 /area/centcom/offices/varshie)
-"oJG" = (
-/turf/unsimulated/wall/setpieces/leadwindow/white/full,
-/area/space)
 "oKo" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 4;
@@ -78814,6 +78828,7 @@
 	name = "????"
 	},
 /obj/item/gun/kinetic/knn29{
+	ammo = 0;
 	pixel_x = 9;
 	pixel_y = 10
 	},
@@ -81287,8 +81302,10 @@
 /area/meat_derelict/guts)
 "vtu" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	desc = "The only thing keeping the vaccum out and you alive.";
 	icon = 'icons/turf/walls_tempus-white.dmi';
-	icon_state = "15"
+	icon_state = "15";
+	name = "Ship Armor"
 	},
 /area/space)
 "vum" = (
@@ -81479,8 +81496,10 @@
 	})
 "wgW" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	desc = "The only thing keeping the vaccum out and you alive.";
 	icon = 'icons/turf/walls_tempus-white.dmi';
-	icon_state = "9"
+	icon_state = "9";
+	name = "Ship Armor"
 	},
 /area/space)
 "wgY" = (
@@ -81650,8 +81669,10 @@
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
 "wGq" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	desc = "The only thing keeping the vaccum out and you alive.";
 	icon = 'icons/turf/walls_tempus-white.dmi';
-	icon_state = "10"
+	icon_state = "10";
+	name = "Ship Armor"
 	},
 /area/space)
 "wHY" = (
@@ -81951,8 +81972,10 @@
 /area/diner/cow)
 "xIR" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	desc = "The only thing keeping the vaccum out and you alive.";
 	icon = 'icons/turf/walls_tempus-white.dmi';
-	icon_state = "11"
+	icon_state = "11";
+	name = "Ship Armor"
 	},
 /area/space)
 "xJg" = (
@@ -160695,7 +160718,7 @@ gGM
 gGM
 gGM
 gGM
-abi
+bAc
 gGM
 gGM
 gGM
@@ -161299,9 +161322,9 @@ kfa
 kfa
 kfa
 kfa
-abl
+brD
 kfa
-abl
+brD
 kfa
 abl
 kfa
@@ -162507,7 +162530,7 @@ kfa
 kfa
 kfa
 kfa
-abl
+brD
 kfa
 kfa
 kfa
@@ -170675,11 +170698,11 @@ kmt
 aaa
 cnw
 efG
-jsn
+vtu
 myA
 myA
-oJG
-oJG
+myA
+myA
 myA
 myA
 vtu
