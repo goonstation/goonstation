@@ -3139,6 +3139,9 @@ ABSTRACT_TYPE(/area/station/catwalk)
 /area/station/routing/airbridge
 		name = "Airbridge Router"
 
+/area/station/routing/sortingRoom
+		name = "Mail Sorting Room"
+
 /// Off-station research outpost. Used for Cog2.
 /area/research_outpost
 	name = "Research Outpost"
