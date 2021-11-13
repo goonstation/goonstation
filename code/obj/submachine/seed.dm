@@ -360,7 +360,8 @@
 						S.name = stored.name
 						S.plant_seed_color(stored.seedcolor)
 						if (stored.hybrid)
-							var/datum/plant/hybrid = new /datum/plant(S)
+							var/hybrid_type = stored.type
+							var/datum/plant/hybrid = new hybrid_type(S)
 							for(var/V in stored.vars)
 								if (issaved(stored.vars[V]) && V != "holder")
 									hybrid.vars[V] = stored.vars[V]
@@ -683,6 +684,8 @@
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (!O || !user)
+			return
+		if (!in_interact_range(src, user)  || !IN_RANGE(user, O, 1))
 			return
 		if (!isitem(O))
 			return
@@ -1037,6 +1040,8 @@
 			return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+		if (!in_interact_range(src, user)  || !IN_RANGE(user, O, 1))
+			return
 		if (istype(O, /obj/item/reagent_containers/glass/) || istype(O, /obj/item/reagent_containers/food/drinks/) || istype(O, /obj/item/satchel/hydro))
 			return src.Attackby(O, user)
 		if (!src.canExtract(O)) ..()

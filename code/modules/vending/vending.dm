@@ -1425,6 +1425,17 @@
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/triplaser, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/wificomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/wifisplit, 30)
+/obj/machinery/vending/mechanics/attackby(obj/item/W as obj, mob/user as mob)
+	if(!istype(W,/obj/item/mechanics))
+		..()
+		return
+	for(var/datum/data/vending_product/product in product_list)
+		if(W.type == product.product_path)
+			boutput(user, "<span class='notice'>You return the [W] to the vending machine.</span>")
+			product.product_amount += 1
+			qdel(W)
+			generate_HTML(1)
+			return
 
 /obj/machinery/vending/computer3
 	name = "CompTech"

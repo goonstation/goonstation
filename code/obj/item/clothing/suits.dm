@@ -433,7 +433,7 @@
 	item_state = "sousapron"
 	body_parts_covered = TORSO
 	permeability_coefficient = 0.70
-	
+
 /obj/item/clothing/suit/apron/tricolor
 	name = "pizza apron"
 	desc = "An apron made specifically to protect from tomato sauce."
@@ -1267,6 +1267,11 @@
 				..()
 				setProperty("exploprot", 60)
 
+		bard
+			name = "road-worn stage uniform"
+			icon_state = "syndie_specialist-bard"
+			item_state = "syndie_specialist-bard"
+
 		unremovable
 			cant_self_remove = 1
 			cant_other_remove = 1
@@ -1366,6 +1371,14 @@
 		setProperty("meleeprot", 2)
 		setProperty("rangedprot", 0.5)
 		setProperty("space_movespeed", 0)
+
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 	syndicate
 		name = "\improper Syndicate command armor"

@@ -83,6 +83,11 @@
 
 			air_contents.volume = 1000
 
+	New()
+		..()
+		if(frequency)
+			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+
 	update_icon()
 		if(on&&node)
 			if(pump_direction)
@@ -143,48 +148,32 @@
 
 		return 1
 
-	//Radio remote control
+	proc/broadcast_status()
+		if(!id)
+			return 0
 
-	proc
-		set_frequency(new_frequency)
-			radio_controller.remove_object(src, "[frequency]")
-			frequency = new_frequency
-			if(frequency)
-				radio_connection = radio_controller.add_object(src, "[frequency]")
+		var/datum/signal/signal = get_free_signal()
+		signal.transmission_method = 1 //radio signal
+		signal.source = src
 
-		broadcast_status()
-			if(!radio_connection || !id)
-				return 0
+		signal.data["tag"] = id
+		signal.data["device"] = "AVP"
+		signal.data["power"] = on?("on"):("off")
+		signal.data["direction"] = pump_direction?("release"):("siphon")
+		signal.data["checks"] = pressure_checks
+		signal.data["internal"] = internal_pressure_bound
+		signal.data["external"] = external_pressure_bound
 
-			var/datum/signal/signal = get_free_signal()
-			signal.transmission_method = 1 //radio signal
-			signal.source = src
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
-			signal.data["tag"] = id
-			signal.data["device"] = "AVP"
-			signal.data["power"] = on?("on"):("off")
-			signal.data["direction"] = pump_direction?("release"):("siphon")
-			signal.data["checks"] = pressure_checks
-			signal.data["internal"] = internal_pressure_bound
-			signal.data["external"] = external_pressure_bound
-
-			radio_connection.post_signal(src, signal)
-
-			return 1
+		return 1
 
 	var/frequency = 0
 	var/id = null
-	var/datum/radio_frequency/radio_connection
 
 	initialize()
 		..()
-		if(frequency)
-			set_frequency(frequency)
 		update_icon()
-
-	disposing()
-		radio_controller.remove_object(src, "[frequency]")
-		..()
 
 	receive_signal(datum/signal/signal)
 		if(signal.data["tag"] && (signal.data["tag"] != id))

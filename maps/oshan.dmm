@@ -39702,7 +39702,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "bUm" = (
-/obj/table/glass/auto,
+/obj/table/auto,
 /obj/machinery/light/incandescent/warm,
 /obj/item/storage/toolbox/emergency,
 /obj/item/crowbar,
@@ -48373,6 +48373,18 @@
 /obj/item/chem_grenade/pepper,
 /obj/item/chem_grenade/pepper,
 /obj/item/chem_grenade/pepper,
+/obj/item/breaching_charge{
+	pixel_x = -2;
+	pixel_y = -5
+	},
+/obj/item/breaching_charge{
+	pixel_x = -2;
+	pixel_y = -5
+	},
+/obj/item/breaching_charge{
+	pixel_x = -2;
+	pixel_y = -5
+	},
 /turf/simulated/floor/redblack/corner{
 	dir = 1
 	},

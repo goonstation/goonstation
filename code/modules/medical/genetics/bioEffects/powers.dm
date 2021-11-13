@@ -30,9 +30,9 @@
 	OnAdd()
 		..()
 		if (ishuman(owner))
+			check_ability_owner()
 			var/mob/living/carbon/human/H = owner
 			H.hud.update_ability_hotbar()
-			check_ability_owner()
 		return
 
 	OnRemove()
@@ -50,8 +50,7 @@
 			AB.linked_power = src
 			icon = AB.icon
 			icon_state = AB.icon_state
-			SPAWN_DBG(0)
-				AB.owner = src.owner
+			AB.owner = src.owner
 
 /datum/targetable/geneticsAbility/cryokinesis
 	name = "Cryokinesis"

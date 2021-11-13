@@ -309,6 +309,38 @@
 	afterattack(obj/target, mob/user , flag)
 		return
 
+	get_desc(dist, mob/user)
+		if(!user.traitHolder?.hasTrait("training_chef"))
+			return
+
+		if(src.quality >= 5)
+			. += "<br><span class='notice'>This is of great quality! The gained buffs will last longer! </span>"
+
+		if(length(food_effects) > 0)
+			. += "<br><span class='notice'> This food has the following effects: "
+			for(var/id in src.food_effects)
+				var/datum/statusEffect/S = getStatusPrototype(id)
+				if(isnull(S))
+					stack_trace("the foodstuff [src] returned with a statusEffect ID that does not exist in the global prototype list! status_id : [id]") //This really shouldnt happen except for var editing, typos or other wierdness, but this is here just in case.
+					continue
+				var/Sdesc = S.getChefHint()
+				. += "<a href='byond://?src=\ref[src];action=chefhint;name=[url_encode(S.name)];txt=[url_encode(Sdesc)]'>[S.name]</a>" + "; "
+			. += "</span>"
+
+
+	Topic(href, href_list)
+		..()
+		if(!usr)
+			return
+		switch(href_list["action"]) // future proofing incase someone else wants to add something to this Topic(), will remove if it noticeably slows down execution of this proc.
+			if("chefhint")
+				if(href_list["txt"] && href_list["name"])
+					boutput(usr,"<span class='notice'><b>[href_list["name"]]:</b></span> [href_list["txt"]]")
+
+
+
+
+
 	proc/on_bite(mob/eater)
 		//if (reagents?.total_volume)
 		//	reagents.reaction(M, INGEST)
@@ -512,7 +544,7 @@
 						tasteMessage = "<span class='notice'>Tastes kind of [tastes[1]], [tastes[2]], and a little bit [tastes[3]].</span>"
 
 			if (M == user)
-				M.visible_message("<span class='notice'>[M] takes a sip from [src].</span>\n[tasteMessage]", group = "drinkMessages")
+				M.visible_message("<span class='notice'>[M] takes a sip from [src].</span>","<span class='notice'>You take a sip from [src].</span>\n[tasteMessage]", group = "drinkMessages")
 			else
 				user.visible_message("<span class='alert'>[user] attempts to force [M] to drink from [src].</span>")
 				logTheThing("combat", user, M, "attempts to force [constructTarget(M,"combat")] to drink from [src] [log_reagents(src)] at [log_loc(user)].")

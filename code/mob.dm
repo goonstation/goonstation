@@ -5,7 +5,7 @@
 	soundproofing = 10
 
 	flags = FPRINT | FLUID_SUBMERGE
-	event_handler_flags = USE_CANPASS
+
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | LONG_GLIDE
 
 	var/datum/mind/mind
@@ -250,12 +250,12 @@
 	attach_hud(render_special)
 
 	var/turf/T = get_turf(src)
-	if(isnull(T) || T.z <= Z_LEVEL_STATION)
+	var/area/AR = get_area(src)
+	if(isnull(T) || T.z <= Z_LEVEL_STATION || AR.active)
 		mobs.Add(src)
 	else if(!(src.mob_flags & LIGHTWEIGHT_AI_MOB) && (!src.ai || !src.ai.exclude_from_mobs_list))
 		skipped_mobs_list |= SKIPPED_MOBS_LIST
-		var/area/AR = get_area(src)
-		LAZYLISTADD(AR.mobs_not_in_global_mobs_list, src)
+		LAZYLISTADDUNIQUE(AR.mobs_not_in_global_mobs_list, src)
 
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
@@ -584,8 +584,8 @@
 /mob/proc/onMouseUp(object,location,control,params)
 	return
 
-/mob/Bump(atom/A, yes)
-	if ((!( yes ) || src.now_pushing))
+/mob/Bump(atom/A)
+	if (src.now_pushing)
 		return
 
 	var/atom/movable/AM = A
@@ -1525,9 +1525,7 @@
 	if (!isliving(src))
 		src.sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF | SEE_BLACKNESS
 
-/mob/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if (air_group || (height==0)) return 1
-
+/mob/Cross(atom/movable/mover)
 	if (istype(mover, /obj/projectile))
 		return !projCanHit(mover:proj_data)
 
@@ -2665,6 +2663,8 @@
 	src.update_name_tag()
 
 /mob/proc/update_name_tag(name=null)
+	if(isnull(src.name_tag))
+		return
 	if(isnull(name))
 		name = src.name
 	if(name == "Unknown")

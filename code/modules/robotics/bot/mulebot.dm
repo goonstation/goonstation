@@ -19,8 +19,8 @@
 	///sanitycheck so we can't try to unload during an unload operation
 	var/unloading = FALSE
 
-	var/beacon_freq = 1445
-	var/control_freq = 1447
+	var/beacon_freq = FREQ_NAVBEACON
+	var/control_freq = FREQ_BOT_CONTROL
 
 	suffix = ""
 
@@ -86,10 +86,8 @@
 			cell.maxcharge = 2000
 		setup_wires()
 
-		SPAWN_DBG(0.5 SECONDS)	// must wait for map loading to finish
-			if(radio_controller)
-				radio_controller.add_object(src, "[control_freq]")
-				radio_controller.add_object(src, "[beacon_freq]")
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("control", control_freq)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("beacon", beacon_freq)
 
 	// set up the wire colours in random order
 	// and the random wire display order
@@ -647,7 +645,7 @@
 	proc/set_destination(var/new_dest)
 		SPAWN_DBG(0)
 			new_destination = new_dest
-			post_signal(beacon_freq, "findbeacon", "delivery")
+			post_signal_multiple("beacon", list("findbeacon" = "delivery", "address_tag" = "delivery"))
 			updateDialog()
 
 	// starts bot moving to current destination
@@ -839,17 +837,12 @@
 		if(freq == control_freq && !(wires & wire_remote_tx))
 			return
 
-		var/datum/radio_frequency/frequency = radio_controller.return_frequency("[freq]")
-
-		if(!frequency) return
-
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src
-		signal.transmission_method = 1
+		signal.data["sender"] = src.botnet_id
 		for(var/key in keyval)
 			signal.data[key] = keyval[key]
-			//boutput(world, "sent [key],[keyval[key]] on [freq]")
-		frequency.post_signal(src, signal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, freq)
 
 	// signals bot status etc. to controller
 	proc/send_status()

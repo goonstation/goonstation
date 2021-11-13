@@ -141,6 +141,14 @@
 	seedcolor = "#00FF00"
 	auxillary_datum = /datum/plant/herb/cannabis
 
+	New()
+		. = ..()
+		START_TRACKING_CAT(TR_CAT_CANNABIS_OBJ_ITEMS)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_CANNABIS_OBJ_ITEMS)
+		. = ..()
+
 // weird alien plants
 
 /obj/item/seed/alien

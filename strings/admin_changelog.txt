@@ -1,6 +1,9 @@
-(t)mon nov 3 21
+(t)mon nov 13 21
 (u)TTerc
 (*)You can now toggle admin alerts for Who/Adminwho in Admin Preferences and Self tab.
+(t)mon nov 08 21
+(u)Sovexe
+(*)Admin preferences have been converted to use clouddata instead of local server saves. You will need to re-set your preferences once and they will then persist.
 (t)sat oct 31 21
 (u)pali
 (*)Incoming mainframe commands are now logged (usually) in a new <i>computers</i> log cateogry

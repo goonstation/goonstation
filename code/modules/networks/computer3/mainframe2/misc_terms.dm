@@ -1033,7 +1033,7 @@
 	var/time = 180
 	power_usage = 120
 
-	var/status_display_freq = "1435"
+	var/status_display_freq = FREQ_STATUS_DISPLAY
 
 
 #define DISARM_CUTOFF 10 //Can't disarm past this point! OH NO!
@@ -1044,20 +1044,15 @@
 
 	New()
 		..()
+		src.net_id = generate_net_id(src)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, status_display_freq)
 		SPAWN_DBG(0.5 SECONDS)
-			src.net_id = generate_net_id(src)
-
 			if(!src.link)
 				var/turf/T = get_turf(src)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
 					src.link.master = src
-
-	disposing()
-		//get freq datunm first
-		//radio_controller.remove_object(src, "[frequency]")
-		..()
 
 	attack_hand(mob/user as mob)
 		if(..() || status & NOPOWER)
@@ -1338,11 +1333,6 @@
 
 
 	proc/post_display_status(var/timeleft)
-
-		var/datum/radio_frequency/frequency = radio_controller.return_frequency(status_display_freq)
-
-		if(!frequency) return
-
 		var/datum/signal/status_signal = get_free_signal()
 		status_signal.source = src
 		status_signal.transmission_method = 1
@@ -1352,7 +1342,7 @@
 			status_signal.data["command"] = "destruct"
 			status_signal.data["time"] = "[timeleft]"
 
-		frequency.post_signal(src, status_signal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, status_signal)
 
 #undef DISARM_CUTOFF
 
@@ -1364,11 +1354,10 @@
 	density = 1
 	icon_state = "net_radio"
 	device_tag = "PNET_PR6_RADIO"
-	//var/freq = 1219
+	//var/freq = FREQ_BUDDY
 	mats = 8
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	var/list/frequencies = list()
-	var/datum/radio_frequency/radio_connection
 	var/transmission_range = 100 //How far does our signal reach?
 	var/take_radio_input = 1 //Do we echo radio signals addresed to us back to our host?
 	var/can_be_host = 0
@@ -1383,8 +1372,8 @@
 		SPAWN_DBG(0.5 SECONDS)
 
 			if (radio_controller)
-				frequencies["1411"] = radio_controller.add_object(src, "1411")
-				frequencies["1419"] = radio_controller.add_object(src, "1419")
+				add_frequency(FREQ_AIRLOCK)
+				add_frequency(FREQ_FREE)
 
 			if(!src.link)
 				var/turf/T = get_turf(src)
@@ -1393,10 +1382,8 @@
 					src.link = test_link
 					src.link.master = src
 
-	disposing()
-		radio_controller.remove_object(src, "1411")
-		radio_controller.remove_object(src, "1419")
-		..()
+	proc/add_frequency(newFreq)
+		frequencies["[newFreq]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f[newFreq]", newFreq)
 
 	attack_hand(mob/user as mob)
 		if(..() || (status & (NOPOWER|BROKEN)))
@@ -1510,11 +1497,12 @@
 
 		return
 
-	receive_signal(datum/signal/signal, transmission_type, theFreq)
+	receive_signal(datum/signal/signal, transmission_type, range, connection_id)
 		if(status & (NOPOWER) || !src.link)
 			return
 		if(!signal || !src.net_id || signal.encryption)
 			return
+		var/theFreq = isnull(connection_id) ? null : text2num(copytext(connection_id, 2))
 
 		var/target = signal.data["sender"] ? signal.data["sender"] : signal.data["netid"]
 		if(!target)
@@ -1525,17 +1513,10 @@
 			if((signal.data["address_1"] == "ping") && ((signal.data["net"] == null) || ("[signal.data["net"]]" == "[src.net_number]")))
 				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
 					if (signal.transmission_method == TRANSMISSION_RADIO)
-						var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("[theFreq]")
-
-						if(!transmit_connection)
-							return
-
 						var/datum/signal/rsignal = get_free_signal()
 						rsignal.source = src
-						rsignal.transmission_method = TRANSMISSION_RADIO
 						rsignal.data = list("address_1"=target, "command"="ping_reply", "device"=src.device_tag, "netid"=src.net_id, "net"="[net_number]", "sender" = src.net_id)
-
-						transmit_connection.post_signal(src, rsignal, transmission_range)
+						SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, rsignal, null, connection_id)
 					else
 						src.post_status(target, "command", "ping_reply", "device", src.device_tag, "netid", src.net_id, "net", "[net_number]")
 				return
@@ -1626,17 +1607,17 @@
 						if ("add")
 							var/newFreq = "[round(max(1000, min(text2num(data["_freq"]), 1500)))]"
 							if (newFreq && !(newFreq in frequencies))
-								frequencies[newFreq] = radio_controller.add_object(src, newFreq)
+								add_frequency(newFreq)
 
 						if ("remove")
 							var/newFreq = "[round(max(1000, min(text2num(data["_freq"]), 1500)))]"
 							if (newFreq && (newFreq in frequencies))
-								radio_controller.remove_object(src, newFreq)
+								qdel(frequencies[newFreq])
 								frequencies -= newFreq
 
 						if ("clear")
 							for (var/x in frequencies)
-								radio_controller.remove_object(src, x)
+								qdel(frequencies[x])
 
 							frequencies.len = 0
 
@@ -1649,21 +1630,19 @@
 				if (!newFreq || !radio_controller || !length(data))
 					src.post_status(target,"command","term_message","data","command=status&status=failure")
 					return
-				var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("[newFreq]")
 
-				if(!transmit_connection)
+				if(!("[newFreq]" in src.frequencies))
 					src.post_status(target,"command","term_message","data","command=status&status=failure")
 					return
 
 				var/datum/signal/rsignal = get_free_signal()
 				rsignal.source = src
-				rsignal.transmission_method = TRANSMISSION_RADIO
 				rsignal.data = data.Copy()
 
 				rsignal.data["sender"] = src.net_id
 
 				SPAWN_DBG(0)
-					transmit_connection.post_signal(src, rsignal, transmission_range)
+					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, rsignal, transmission_range, "f[newFreq]")
 					flick("net_radio-blink", src)
 				src.post_status(target,"command","term_message","data","command=status&status=success")
 
@@ -2538,8 +2517,8 @@
 		switch (src.state)
 			if (0)
 				if (src.scan_beam)
-					//qdel(src.scan_beam)
-					src.scan_beam.dispose()
+					qdel(src.scan_beam)
+					src.scan_beam = null
 			if (1)
 				if (!src.scan_beam)
 					var/turf/beamTurf = get_step(src, src.dir)
@@ -2686,8 +2665,8 @@
 				light.disable()
 				icon_state = "secdetector-p"
 				if (src.scan_beam)
-					//qdel(src.scan_beam)
-					src.scan_beam.dispose()
+					qdel(src.scan_beam)
+					src.scan_beam = null
 				src.state = src.online
 				return
 
@@ -2755,7 +2734,7 @@
 
 	disposing()
 		if (src.next)
-			src.next.dispose()
+			qdel(src.next)
 			src.next = null
 		..()
 
@@ -2765,7 +2744,7 @@
 
 	Crossed(atom/movable/AM as mob|obj)
 		..()
-		if (istype(AM, /obj/beam) || istype(AM, /obj/critter/aberration))
+		if (istype(AM, /obj/beam) || istype(AM, /obj/critter/aberration) || isobserver(AM) || isintangible(AM))
 			return
 		SPAWN_DBG( 0 )
 			src.hit(AM)

@@ -57,8 +57,20 @@ var/global/datum/game_servers/game_servers = new
 		var/list/data = params2list(textdata)
 		if(data["type"] != "game_servers")
 			return null
+		if(data["subtype"] == "set_ip_port")
+			var/datum/game_server/reply_server = src.servers[data["sent_from"]]
+			if(isnull(reply_server))
+				return FALSE
+			if(reply_server.waiting_for_ip_port_auth != data["auth"])
+				return FALSE
+			reply_server.ip_port = addr
+			return TRUE
 		if(data["subtype"] == "get_ip_port")
-			return copytext(world.url, 9) // strip "byond://"
+			var/datum/game_server/reply_server = src.servers[data["reply_to"]]
+			if(isnull(reply_server))
+				return FALSE
+			reply_server.send_message(list("type"="game_servers", "subtype"="set_ip_port", "sent_from"=config.server_id, "auth"=data["auth"]))
+			return TRUE
 		var/datum/game_server/server = src.find_by_ip_port(addr)
 		if(isnull(server))
 			return null
@@ -99,6 +111,7 @@ var/global/datum/game_servers/game_servers = new
 	var/publ = TRUE
 	var/ghost_notif_target = TRUE
 	var/ip_port = null
+	var/waiting_for_ip_port_auth = null
 
 	New(id, name, url, numeric_id, publ=TRUE, ghost_notif_target=TRUE)
 		..()
@@ -108,13 +121,30 @@ var/global/datum/game_servers/game_servers = new
 		src.numeric_id = numeric_id
 		src.publ = publ
 		src.ghost_notif_target = ghost_notif_target
+		SPAWN_DBG(0)
+			get_ip_port()
 
 	proc/get_ip_port()
 		if(isnull(src.ip_port))
-			src.ip_port = src.send_message(list("type"="game_servers", "subtype"="get_ip_port"))
-			if(!src.ip_port)
-				src.ip_port = null
-			global.game_servers.by_ip_port[src.ip_port] = src
+			if(!isnull(src.waiting_for_ip_port_auth))
+				UNTIL(!isnull(src.waiting_for_ip_port_auth))
+				return src.ip_port
+			var/success = FALSE
+			var/outer_send_attempts = 3
+			while(!success && outer_send_attempts-- > 0)
+				src.waiting_for_ip_port_auth = md5("[rand()][rand()][rand()][world.time]")
+				success = src.send_message(list("type"="game_servers", "subtype"="get_ip_port", "reply_to"=config.server_id, "auth"=src.waiting_for_ip_port_auth))
+				if(success)
+					var/wait_count = 20
+					while(isnull(src.ip_port) && wait_count-- > 0)
+						sleep(1)
+					if(!isnull(src.ip_port))
+						global.game_servers.by_ip_port[src.ip_port] = src
+					else
+						success = FALSE
+				if(!success)
+					src.waiting_for_ip_port_auth = FALSE
+					sleep(5 SECONDS)
 		return src.ip_port
 
 	proc/is_me()
