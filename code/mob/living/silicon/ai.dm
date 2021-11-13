@@ -2199,6 +2199,7 @@ proc/get_mobs_trackable_by_AI()
 			src.name = src.real_name
 			src.internal_pda.name = "[src]'s Internal PDA Unit"
 			src.internal_pda.owner = "[src]"
+			src.UpdateName()
 			return
 		else
 			newname = strip_html(newname, MOB_NAME_MAX_LENGTH, 1)
@@ -2214,6 +2215,7 @@ proc/get_mobs_trackable_by_AI()
 					src.name = newname
 					src.internal_pda.name = "[src]'s Internal PDA Unit"
 					src.internal_pda.owner = "[src]"
+					src.UpdateName()
 					return 1
 				else
 					continue

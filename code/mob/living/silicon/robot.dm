@@ -724,6 +724,7 @@
 						src.name = newname
 						src.internal_pda.name = "[src]'s Internal PDA Unit"
 						src.internal_pda.owner = "[src]"
+						src.UpdateName()
 						return 1
 					else
 						continue

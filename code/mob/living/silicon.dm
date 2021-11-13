@@ -517,6 +517,7 @@ var/global/list/module_editors = list()
 				if (alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
 					src.real_name = newname
 					src.name = newname
+					src.UpdateName()
 					return 1
 				else
 					continue
