@@ -197,8 +197,6 @@
 			src.owner:toggle_adminwho_alerts()
 		adminwho_alerts = saved_adminwho_alerts
 
-		var/saved_rp_word_filtering
-		AP["[ckey]_rp_word_filtering"] >> saved_rp_word_filtering
 		var/saved_rp_word_filtering = AP["rp_word_filtering"]
 		if (isnull(saved_rp_word_filtering))
 			saved_rp_word_filtering = 0
