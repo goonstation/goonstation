@@ -103,7 +103,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	else
 		var/fluff = pick("", "gently ", "carefully ", "lightly ", "trepidly ")
 		var/fluff2 = pick("prod", "poke", "jab", "dig")
-		var/fluff3 = pick("", " [he_or_she(surgeon)] looks [pick("confused", "unsure", "uncertain")][pick("", " about what [he_or_she(surgeon)]'s doing")].")
+		var/fluff3 = " [he_or_she(surgeon)] looks [pick("confused", "unsure", "uncertain")][pick("", " about what [he_or_she(surgeon)]'s doing")]."
 		patient.tri_message("<span class='alert'><b>[surgeon]</b> [fluff][fluff2]s at [patient]'s [target_area] with [src].[fluff3]</span>",\
 		patient, "<span class='alert'><b>[surgeon]</b> [fluff][fluff2]s at your [target_area] with [src].[fluff3]</span>",\
 		surgeon, "<span class='alert'>You [fluff][fluff2] at [patient]'s [target_area] with [src].</span>")
