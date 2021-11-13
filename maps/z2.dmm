@@ -9563,11 +9563,11 @@
 	interesting = "The forensic scanner picks up some unknow energy traces. Huh";
 	name = "Soviet Consoles"
 	},
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "aIb" = (
 /obj/lattice{
 	dir = 1;
@@ -38042,7 +38042,7 @@
 	icon_state = "5";
 	name = "Ship Armor"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "cgQ" = (
 /turf/unsimulated/floor/black,
 /area/owlery/staffhall)
@@ -38213,11 +38213,11 @@
 	},
 /obj/decal/fakeobjects/falseladder,
 /obj/decal/cleanable/blood/drip/high,
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "chl" = (
 /turf/unsimulated/floor/carpet{
 	dir = 8;
@@ -38463,11 +38463,11 @@
 /obj/decal/cleanable/blood/gibs/body{
 	icon_state = "gib5"
 	},
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "chR" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -39378,11 +39378,11 @@
 	},
 /area/meat_derelict/guts)
 "cki" = (
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "ckj" = (
 /obj/item/material_piece/soulsteel,
 /turf/unsimulated/floor/cave,
@@ -65107,11 +65107,11 @@
 	icon = 'icons/Testing/newicons/obj/NEWdoors/door_command.dmi';
 	icon_state = "sdoor"
 	},
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "dvx" = (
 /obj/machinery/door/airlock/pyro,
 /obj/disposalpipe/segment/vertical,
@@ -65445,11 +65445,11 @@
 	pixel_y = 14
 	},
 /obj/decal/cleanable/blood/splatter/extra,
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "dwC" = (
 /obj/critter/parrot/kea,
 /turf/unsimulated/floor/wood/two,
@@ -67946,11 +67946,11 @@
 	icon_state = "sovietgraphthing";
 	name = "Plotting Chart Machine"
 	},
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "dDb" = (
 /obj/machinery/light{
 	dir = 1
@@ -68540,11 +68540,11 @@
 	})
 "dEJ" = (
 /obj/table/folding,
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "dEK" = (
 /obj/table/wood/round/auto,
 /obj/item/decoration/ashtray{
@@ -69420,11 +69420,11 @@
 /area/centcom/lounge)
 "dHc" = (
 /obj/decal/cleanable/blood/splatter,
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "dHd" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/snacks/breadloaf/corn/sweet/honey,
@@ -69463,11 +69463,11 @@
 	pixel_x = 14;
 	pixel_y = 25
 	},
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "dHk" = (
 /obj/table/reinforced/auto,
 /obj/submachine/mixer,
@@ -69514,11 +69514,11 @@
 "dHu" = (
 /obj/decal/cleanable/blood/drip/high,
 /obj/decal/cleanable/blood/gibs/body,
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "dHv" = (
 /obj/machinery/light{
 	dir = 8;
@@ -70226,11 +70226,11 @@
 /area/centcom/lounge)
 "dJr" = (
 /obj/decal/cleanable/blood/drip/low,
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "dJs" = (
 /obj/machinery/chem_dispenser/alcohol,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
@@ -71194,11 +71194,11 @@
 	icon_state = "????";
 	name = "????"
 	},
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "dLQ" = (
 /obj/stool/chair/comfy/purple{
 	dir = 4
@@ -74566,7 +74566,7 @@
 	icon_state = "14";
 	name = "Ship Armor"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "ehl" = (
 /obj/window/cubicle{
 	dir = 4
@@ -74663,11 +74663,11 @@
 	icon_state = "????";
 	name = "????"
 	},
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "etj" = (
 /obj/machinery/light{
 	on = 1
@@ -74950,7 +74950,7 @@
 "fbL" = (
 /obj/decal/cleanable/blood/tracks,
 /turf/unsimulated/floor/carpet/office,
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "fen" = (
 /obj/structure/woodwall,
 /turf/unsimulated/floor/plating,
@@ -74996,7 +74996,7 @@
 	icon_state = "12";
 	name = "Ship Armor"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "fls" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -75017,11 +75017,11 @@
 /area/centcom/offices/tarmunora)
 "fnX" = (
 /obj/railing,
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "fob" = (
 /obj/stool/chair/yellow{
 	dir = 8
@@ -75071,11 +75071,11 @@
 	name = "Soviet Consoles"
 	},
 /obj/map/light/secretblue,
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "fwA" = (
 /obj/item/storage/wall/fire{
 	dir = 4;
@@ -75205,7 +75205,7 @@
 	name = "????"
 	},
 /turf/unsimulated/floor/carpet/office,
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "fQJ" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
@@ -75251,11 +75251,11 @@
 	pixel_x = -2;
 	pixel_y = 9
 	},
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "fTe" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-18"
@@ -75495,11 +75495,11 @@
 	icon_state = "????";
 	name = "????"
 	},
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "gQl" = (
 /obj/indestructible/shuttle_corner{
 	icon_state = "wall3_trans"
@@ -75779,11 +75779,6 @@
 	icon_state = "bloodfloor_3"
 	},
 /area/meat_derelict/guts)
-"hJX" = (
-/turf/unsimulated/floor/stairs/medical/wide{
-	dir = 8
-	},
-/area/space)
 "hKB" = (
 /obj/table/auto,
 /obj/machinery/light/small/iomoon{
@@ -75911,11 +75906,11 @@
 	icon_state = "????";
 	name = "????"
 	},
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "iag" = (
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater"
@@ -76106,11 +76101,11 @@
 /obj/railing{
 	dir = 4
 	},
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "iMA" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle{
@@ -76208,11 +76203,11 @@
 	interesting = "The scanner picks up some exotic material inside of the core. It reports it's simular to Kosharmite";
 	name = "Nuclear Core"
 	},
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "iXR" = (
 /obj/spacevine{
 	icon_state = "vine-light2"
@@ -76337,11 +76332,11 @@
 	},
 /obj/railing,
 /obj/lattice/barricade,
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "jqT" = (
 /obj/item/storage/toolbox/mechanical{
 	pixel_x = -4;
@@ -76361,7 +76356,7 @@
 	icon_state = "13";
 	name = "Ship Armor"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "jup" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/cashreg,
@@ -76489,11 +76484,11 @@
 	icon_state = "????";
 	name = "????"
 	},
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "jMC" = (
 /obj/storage/crate,
 /turf/unsimulated/floor{
@@ -76545,11 +76540,11 @@
 	name = "Soviet Consoles";
 	pixel_x = 5
 	},
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "jSc" = (
 /obj/decal/stage_edge{
 	layer = 2.8;
@@ -76653,7 +76648,7 @@
 	icon_state = "7";
 	name = "Ship Armor"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "kcN" = (
 /obj/stool/chair/couch/green{
 	dir = 9;
@@ -76664,6 +76659,9 @@
 	tag = "icon-fpurple1"
 	},
 /area/centcom/lounge)
+"kcV" = (
+/turf/space,
+/area/prefab/threeonefiveone/level_two)
 "kfa" = (
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/flingy)
@@ -76845,7 +76843,7 @@
 	pixel_x = -10
 	},
 /turf/unsimulated/floor/carpet/office,
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "kvr" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "beach-0"
@@ -77083,7 +77081,7 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/carpet/office,
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "ljR" = (
 /turf/simulated/floor/stairs/wide{
 	dir = 8
@@ -77308,7 +77306,7 @@
 	},
 /obj/map/light/secretblue,
 /turf/unsimulated/floor/carpet/office,
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "lLo" = (
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -77376,7 +77374,7 @@
 /turf/unsimulated/floor/stairs/medical{
 	dir = 1
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "lUo" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/book/from_file/cookbook,
@@ -77550,11 +77548,11 @@
 /obj/railing{
 	dir = 1
 	},
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "muz" = (
 /obj/shrub{
 	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
@@ -77588,6 +77586,14 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
+"mvS" = (
+/obj/machinery/door/unpowered/shuttle{
+	dir = 4;
+	icon = 'icons/Testing/newicons/obj/NEWdoors/door_command.dmi';
+	icon_state = "sdoor"
+	},
+/turf/unsimulated/floor/carpet/office,
+/area/prefab/threeonefiveone/level_two)
 "mwi" = (
 /obj/decal/cleanable/dirt,
 /obj/table/reinforced/auto,
@@ -77605,7 +77611,7 @@
 	icon_state = "3";
 	name = "Ship Armor"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "mzt" = (
 /obj/stove,
 /obj/item/soup_pot,
@@ -77826,7 +77832,7 @@
 	icon_state = "6";
 	name = "Ship Armor"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "nbb" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-4"
@@ -77859,11 +77865,11 @@
 /obj/railing{
 	dir = 1
 	},
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "ngg" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -77973,7 +77979,7 @@
 	dir = 1
 	},
 /turf/unsimulated/floor/carpet/office,
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "nsm" = (
 /obj/item/bat,
 /obj/item/ammo/bullets/abg{
@@ -78167,11 +78173,11 @@
 	icon_state = "soveitnuclearconsole";
 	name = "Soviet Consoles"
 	},
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "nJE" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'Biohazard'";
@@ -78356,11 +78362,11 @@
 "nYa" = (
 /obj/decal/cleanable/blood/tracks,
 /obj/map/light/secretblue,
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "nYR" = (
 /obj/map/light/graveyard,
 /obj/tombstone/memorial{
@@ -78476,11 +78482,11 @@
 	pixel_y = 14
 	},
 /obj/map/light/secretblue,
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "oju" = (
 /obj/landmark{
 	name = "lobby_leftside"
@@ -78496,7 +78502,7 @@
 /obj/table/wood/auto,
 /obj/item/bandage/medicated,
 /turf/unsimulated/floor/carpet/office,
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "onw" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -78832,15 +78838,15 @@
 	pixel_x = 9;
 	pixel_y = 10
 	},
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "pey" = (
 /obj/stool/bed,
 /turf/unsimulated/floor/carpet/office,
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "pfF" = (
 /obj/table/reinforced/industrial/auto,
 /obj/machinery/computer3/generic/personal,
@@ -79086,11 +79092,11 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "gibbl2"
 	},
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "pJi" = (
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor6"
@@ -79186,7 +79192,7 @@
 /area/titlescreen)
 "pTX" = (
 /turf/unsimulated/floor/carpet/office,
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "pUF" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -79276,7 +79282,7 @@
 "qfu" = (
 /obj/table/folding,
 /turf/unsimulated/floor/carpet/office,
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "qfx" = (
 /obj/grille/steel,
 /obj/window/north,
@@ -79305,11 +79311,11 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "gibbl2"
 	},
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "qgj" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -79351,7 +79357,7 @@
 /area/marsoutpost/vault)
 "qmd" = (
 /turf/unsimulated/floor/stairs/medical/wide/other,
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "qnn" = (
 /obj/item/extinguisher,
 /turf/space,
@@ -79455,7 +79461,7 @@
 	name = "broken computer"
 	},
 /turf/unsimulated/floor/carpet/office,
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "qAl" = (
 /obj/forcefield/energyshield/perma{
 	dir = 8
@@ -79504,11 +79510,11 @@
 "qFF" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/tableware/one_or_zero,
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "qGG" = (
 /obj/machinery/light,
 /turf/unsimulated/floor/shuttle,
@@ -79884,7 +79890,7 @@
 	pixel_y = 24
 	},
 /turf/unsimulated/floor/carpet/office,
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "rHo" = (
 /obj/storage/crate/wooden{
 	icon_state = "woodencrate6";
@@ -80026,7 +80032,7 @@
 	},
 /obj/stool/chair/comfy,
 /turf/unsimulated/floor/carpet/office,
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "rQC" = (
 /obj/decal/stage_edge/dojo,
 /obj/decal/stone_lamp{
@@ -80038,11 +80044,11 @@
 /area/titlescreen)
 "rQF" = (
 /obj/lattice/barricade,
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "rQO" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -80287,11 +80293,11 @@
 	})
 "sqw" = (
 /obj/stool/chair,
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "srg" = (
 /obj/table/auto,
 /obj/table/auto,
@@ -80339,7 +80345,7 @@
 /obj/table/folding,
 /obj/map/light/secretblue,
 /turf/unsimulated/floor/carpet/office,
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "sxQ" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle{
@@ -80479,11 +80485,11 @@
 	dir = 4
 	},
 /obj/lattice/barricade,
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "teX" = (
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor3"
@@ -80562,11 +80568,11 @@
 /area/hospital/samostrel)
 "tkJ" = (
 /obj/map/light/cyan,
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "tkW" = (
 /obj/decal/fakeobjects/teleport_pad,
 /obj/marker/supplymarker,
@@ -80764,11 +80770,11 @@
 /obj/decal/cleanable/blood/tracks{
 	dir = 4
 	},
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "ubd" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -80862,11 +80868,11 @@
 /area/hospital/samostrel)
 "usz" = (
 /obj/decal/cleanable/blood/tracks,
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "usD" = (
 /obj/item/paper/book/from_file/space_law,
 /turf/unsimulated/floor/redblack{
@@ -80942,11 +80948,11 @@
 	icon_state = "????";
 	name = "????"
 	},
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "uxv" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-39"
@@ -80967,11 +80973,11 @@
 	icon_state = "????";
 	name = "????"
 	},
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "uBi" = (
 /obj/stool/bar,
 /turf/simulated/floor/carpet{
@@ -81017,11 +81023,11 @@
 	icon_state = "????";
 	name = "????"
 	},
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "uJX" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/hall)
@@ -81307,7 +81313,7 @@
 	icon_state = "15";
 	name = "Ship Armor"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "vum" = (
 /obj/machinery/door/airlock/gannets/glass,
 /obj/decal/tile_edge/line/green{
@@ -81376,7 +81382,7 @@
 /area/titlescreen)
 "vCJ" = (
 /turf/unsimulated/floor/stairs/medical/wide,
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "vEe" = (
 /obj/machinery/light{
 	dir = 1
@@ -81419,11 +81425,11 @@
 /obj/railing{
 	dir = 4
 	},
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "vJk" = (
 /obj/decal/skeleton{
 	desc = "The remains of some poor cosmonaut fellow.";
@@ -81436,11 +81442,11 @@
 	dir = 8;
 	icon_state = "smear3"
 	},
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "vNH" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -81477,18 +81483,13 @@
 	name = "plating"
 	},
 /area/hospital/samostrel)
-"vYw" = (
-/turf/unsimulated/floor/stairs/medical/wide/other{
-	dir = 8
-	},
-/area/space)
 "wcC" = (
 /obj/map/light/secretblue,
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "wel" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/offices{
@@ -81501,7 +81502,7 @@
 	icon_state = "9";
 	name = "Ship Armor"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "wgY" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -81571,7 +81572,7 @@
 "wrC" = (
 /obj/stool/chair/comfy,
 /turf/unsimulated/floor/carpet/office,
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "wrG" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=sov3";
@@ -81614,11 +81615,11 @@
 	dir = 4;
 	pixel_y = 11
 	},
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "wAz" = (
 /turf/space,
 /turf/unsimulated/floor/engine/caution/corner2{
@@ -81674,7 +81675,7 @@
 	icon_state = "10";
 	name = "Ship Armor"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "wHY" = (
 /obj/item/clothing/shoes/red{
 	desc = "Aren't these the HoS's? You feel like he can probably live without these.";
@@ -81786,7 +81787,7 @@
 	dir = 9
 	},
 /turf/unsimulated/floor/carpet/office,
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "xcp" = (
 /turf/space,
 /turf/unsimulated/wall{
@@ -81903,7 +81904,7 @@
 "xyV" = (
 /obj/table/wood/auto,
 /turf/unsimulated/floor/carpet/office,
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "xzf" = (
 /obj/machinery/door/unpowered/wood{
 	icon = 'icons/obj/doors/door_office.dmi';
@@ -81977,7 +81978,7 @@
 	icon_state = "11";
 	name = "Ship Armor"
 	},
-/area/space)
+/area/prefab/threeonefiveone/level_two)
 "xJg" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-25"
@@ -163448,18 +163449,18 @@ abn
 abn
 aCb
 aaa
-cnw
-cnw
-cnw
-cnw
+kcV
+kcV
+kcV
+kcV
 naA
 myA
 myA
 cgP
-cnw
-cnw
-cnw
-cnw
+kcV
+kcV
+kcV
+kcV
 aaa
 cnw
 cnw
@@ -163750,18 +163751,18 @@ abn
 abn
 kmt
 aaa
-cnw
-cnw
-cnw
+kcV
+kcV
+kcV
 naA
 wgW
 pTX
 pey
 wGq
 cgP
-cnw
-cnw
-cnw
+kcV
+kcV
+kcV
 aaa
 cnw
 cnw
@@ -164052,18 +164053,18 @@ abr
 abr
 kmt
 aaa
-cnw
-cnw
-cnw
+kcV
+kcV
+kcV
 fjD
 xbV
 fbL
 lJH
 fPx
 fjD
-cnw
-cnw
-cnw
+kcV
+kcV
+kcV
 aaa
 cnw
 cnw
@@ -164354,18 +164355,18 @@ axb
 abr
 kmt
 aaa
-cnw
-cnw
+kcV
+kcV
 naA
 xIR
-dvw
+mvS
 myA
 myA
 myA
 xIR
 cgP
-cnw
-cnw
+kcV
+kcV
 aaa
 cnw
 cnw
@@ -164656,8 +164657,8 @@ axb
 axb
 kmt
 aaa
-cnw
-cnw
+kcV
+kcV
 fjD
 pTX
 pTX
@@ -164666,8 +164667,8 @@ pTX
 omY
 qzY
 fjD
-cnw
-cnw
+kcV
+kcV
 aaa
 cnw
 cnw
@@ -164958,8 +164959,8 @@ aBb
 axa
 kmt
 aaa
-cnw
-cnw
+kcV
+kcV
 fjD
 rQu
 sva
@@ -164968,8 +164969,8 @@ wrC
 ksO
 nrB
 fjD
-cnw
-cnw
+kcV
+kcV
 aaa
 cnw
 cnw
@@ -165260,7 +165261,7 @@ axG
 axa
 kmt
 aaa
-cnw
+kcV
 naA
 jsn
 xyV
@@ -165271,7 +165272,7 @@ pTX
 rHb
 efG
 cgP
-cnw
+kcV
 aaa
 cnw
 cnw
@@ -165562,7 +165563,7 @@ aBc
 axa
 kmt
 aaa
-cnw
+kcV
 efG
 xIR
 myA
@@ -165573,7 +165574,7 @@ myA
 myA
 xIR
 jsn
-cnw
+kcV
 aaa
 cnw
 cnw
@@ -165864,7 +165865,7 @@ axG
 axa
 kmt
 aaa
-cnw
+kcV
 fjD
 dDa
 esO
@@ -165875,7 +165876,7 @@ vCJ
 cki
 cki
 fjD
-cnw
+kcV
 aaa
 cnw
 cnw
@@ -166166,7 +166167,7 @@ aBd
 axa
 kmt
 aaa
-cnw
+kcV
 fjD
 cki
 ftk
@@ -166177,7 +166178,7 @@ qmd
 wcC
 jQH
 fjD
-cnw
+kcV
 aaa
 cnw
 cnw
@@ -166468,7 +166469,7 @@ aBe
 axa
 kmt
 aaa
-cnw
+kcV
 fjD
 cki
 gPB
@@ -166479,7 +166480,7 @@ joy
 uFU
 cki
 fjD
-cnw
+kcV
 aaa
 cnw
 cnw
@@ -166770,7 +166771,7 @@ lhU
 asq
 mnh
 jhk
-cnw
+kcV
 fjD
 cki
 cki
@@ -166781,7 +166782,7 @@ fnX
 cki
 cki
 fjD
-cnw
+kcV
 aaa
 cnw
 cnw
@@ -167072,7 +167073,7 @@ jvI
 asq
 mnh
 jhk
-cnw
+kcV
 efG
 myA
 myA
@@ -167083,7 +167084,7 @@ myA
 myA
 myA
 jsn
-cnw
+kcV
 aaa
 cnw
 cnw
@@ -169186,7 +169187,7 @@ abn
 abn
 kmt
 aaa
-cnw
+kcV
 wGq
 jsn
 uAx
@@ -169197,7 +169198,7 @@ dEJ
 cki
 efG
 wgW
-cnw
+kcV
 aaa
 cnw
 cnw
@@ -169488,8 +169489,8 @@ abn
 abn
 aCb
 aaa
-cnw
-cnw
+kcV
+kcV
 fjD
 vGl
 teA
@@ -169498,8 +169499,8 @@ qfP
 iMu
 iMu
 fjD
-cnw
-cnw
+kcV
+kcV
 aaa
 cnw
 cnw
@@ -169790,18 +169791,18 @@ abr
 abr
 aCb
 aaa
-cnw
-cnw
+kcV
+kcV
 fjD
 cki
 aHz
-vYw
-hJX
+cki
+cki
 cki
 nIy
 fjD
-cnw
-cnw
+kcV
+kcV
 aaa
 cnw
 cnw
@@ -170092,8 +170093,8 @@ lGN
 lGN
 kmt
 aaa
-cnw
-cnw
+kcV
+kcV
 fjD
 cki
 ojb
@@ -170102,8 +170103,8 @@ cki
 fSx
 cki
 fjD
-cnw
-cnw
+kcV
+kcV
 aaa
 cnw
 cnw
@@ -170394,7 +170395,7 @@ kfa
 kfa
 kmt
 aaa
-cnw
+kcV
 naA
 jsn
 cki
@@ -170405,7 +170406,7 @@ cki
 cki
 efG
 cgP
-cnw
+kcV
 aaa
 cnw
 cnw
@@ -170696,18 +170697,18 @@ kfa
 kfa
 kmt
 aaa
-cnw
+kcV
 efG
 vtu
 myA
 myA
-myA
-myA
+cki
+cki
 myA
 myA
 vtu
 jsn
-cnw
+kcV
 aaa
 cnw
 cnw
@@ -170998,7 +170999,7 @@ kfa
 kfa
 kmt
 aaa
-cnw
+kcV
 efG
 jsn
 uxk
@@ -171009,7 +171010,7 @@ cki
 cki
 efG
 jsn
-cnw
+kcV
 aaa
 cnw
 cnw
@@ -171300,7 +171301,7 @@ kfa
 kfa
 kmt
 aaa
-cnw
+kcV
 wGq
 jsn
 cki
@@ -171311,7 +171312,7 @@ iVZ
 cki
 efG
 wgW
-cnw
+kcV
 aaa
 cnw
 cnw
@@ -171602,8 +171603,8 @@ kfa
 kfa
 kmt
 aaa
-cnw
-cnw
+kcV
+kcV
 fjD
 cki
 cki
@@ -171612,8 +171613,8 @@ tkJ
 cki
 cki
 fjD
-cnw
-cnw
+kcV
+kcV
 aaa
 cnw
 cnw
@@ -171904,8 +171905,8 @@ gGM
 gGM
 kmt
 aaa
-cnw
-cnw
+kcV
+kcV
 fjD
 cki
 cki
@@ -171914,8 +171915,8 @@ cki
 cki
 cki
 fjD
-cnw
-cnw
+kcV
+kcV
 aaa
 cnw
 cnw
@@ -172206,8 +172207,8 @@ kmt
 kmt
 kmt
 aaa
-cnw
-cnw
+kcV
+kcV
 wGq
 myA
 myA
@@ -172216,8 +172217,8 @@ myA
 myA
 myA
 wgW
-cnw
-cnw
+kcV
+kcV
 aaa
 cnw
 cnw

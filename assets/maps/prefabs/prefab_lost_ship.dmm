@@ -2,11 +2,12 @@
 "ab" = (
 /obj/table/reinforced,
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen/maybe_few,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/obj/decal/cleanable/dirt/dirt4,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "aM" = (
 /obj/decal/fakeobjects/pipe/heat{
 	desc = "A radiator used to dispose of waste heat from space ships.";
@@ -14,7 +15,18 @@
 	name = "radiator pipe"
 	},
 /turf/variableTurf/clear,
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
+"bv" = (
+/obj/machinery/atmospherics/pipe/vent{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/dirt/dirt4,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_one)
 "bC" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
 	desc = "The only thing keeping the vaccum out and you alive.";
@@ -22,24 +34,33 @@
 	icon_state = "6";
 	name = "Ship Armor"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "cy" = (
 /obj/decal/fakeobjects/pipe/heat{
 	dir = 6;
 	name = "radiator pipe"
 	},
 /turf/variableTurf/clear,
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "dO" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/stool/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
+"fd" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/map/light/secretblue,
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_one)
 "fO" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
 	desc = "The only thing keeping the vaccum out and you alive.";
@@ -47,22 +68,15 @@
 	icon_state = "13";
 	name = "Ship Armor"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "ga" = (
 /obj/item/storage/toilet,
 /obj/decal/cleanable/dirt/jen,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
-"hc" = (
-/obj/machinery/door/unpowered/shuttle{
-	icon = 'icons/Testing/newicons/obj/NEWdoors/door_command.dmi';
-	icon_state = "sdoor"
-	},
-/turf/space,
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "hm" = (
 /obj/table/reinforced,
 /obj/item/device/light/lava_lamp/activated{
@@ -70,36 +84,54 @@
 	pixel_y = 20
 	},
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen/maybe_few,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
+"ik" = (
+/obj/map/light/secretblue,
+/obj/decal/cleanable/dirt/dirt4,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_one)
+"ju" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_one)
 "lE" = (
 /obj/decal/cleanable/dirt/dirt3,
 /obj/decal/cleanable/dirt/jen,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "mS" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/decal/cleanable/dirt/dirt3,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/obj/decal/cleanable/dirt/dirt4,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "nt" = (
 /obj/decal/cleanable/dirt/dirt3,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "nG" = (
 /obj/decal/fakeobjects/pipe/heat{
 	desc = "A radiator used to dispose of waste heat from space ships.";
@@ -107,25 +139,35 @@
 	name = "radiator pipe"
 	},
 /turf/variableTurf/clear,
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
+"nI" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/red,
+/obj/decal/cleanable/dirt/dirt4,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_one)
 "op" = (
 /obj/decal/cleanable/dirt/dirt4,
 /obj/decal/cleanable/dirt/dirt3,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "oD" = (
 /obj/storage/closet/wardrobe,
 /obj/random_item_spawner/dressup/one_or_zero,
 /obj/random_item_spawner/hat/one_or_zero,
 /obj/map/light/secretblue,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "qD" = (
 /obj/decal/fakeobjects/pipe/heat{
 	desc = "A radiator used to dispose of waste heat from space ships.";
@@ -133,7 +175,7 @@
 	name = "radiator pipe"
 	},
 /turf/variableTurf/clear,
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "qY" = (
 /obj/rack,
 /obj/item/clothing/head/helmet/space/soviet{
@@ -144,19 +186,19 @@
 	pixel_x = 5
 	},
 /obj/decal/cleanable/dirt/jen,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "rf" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/map/light/secretblue,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "rg" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
 	desc = "The only thing keeping the vaccum out and you alive.";
@@ -164,7 +206,7 @@
 	icon_state = "10";
 	name = "Ship Armor"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "rx" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
 	desc = "The only thing keeping the vaccum out and you alive.";
@@ -172,77 +214,80 @@
 	icon_state = "9";
 	name = "Ship Armor"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "rJ" = (
 /obj/map/light/secretblue,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/obj/decal/cleanable/dirt/dirt4,
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "rS" = (
 /obj/decal/cleanable/dirt/dirt4{
 	dir = 1
 	},
 /obj/decal/cleanable/dirt/jen,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "rT" = (
 /obj/table,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "tJ" = (
 /obj/machinery/atmospherics/pipe/vent{
 	dir = 1
 	},
 /obj/decal/cleanable/dirt/jen,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "vb" = (
 /obj/table/reinforced,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "xs" = (
 /obj/machinery/door/unpowered/shuttle{
 	dir = 4;
 	icon = 'icons/Testing/newicons/obj/NEWdoors/door_command.dmi';
 	icon_state = "sdoor"
 	},
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
-"xQ" = (
-/obj/machinery/door/unpowered/shuttle{
-	icon = 'icons/Testing/newicons/obj/NEWdoors/door_command.dmi';
-	icon_state = "sdoor"
+/area/prefab/threeonefiveone/level_one)
+"yd" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/map/light/secretblue,
+/obj/decal/cleanable/dirt/dirt4,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
-	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "yh" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/red,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/dirt/dirt4,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "yB" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
 	desc = "The only thing keeping the vaccum out and you alive.";
@@ -250,25 +295,42 @@
 	icon_state = "11";
 	name = "Ship Armor"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "yL" = (
 /obj/decoration/bookcase{
 	pixel_y = 23
 	},
 /obj/decal/cleanable/dirt/jen,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
+"yS" = (
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_one)
+"yW" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/map/light/secretblue,
+/obj/decal/cleanable/dirt/dirt4,
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_one)
 "zs" = (
 /obj/decal/cleanable/dirt/dirt4,
 /obj/decal/cleanable/dirt/jen,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "zD" = (
 /obj/decal/fakeobjects/pipe/heat{
 	desc = "A radiator used to dispose of waste heat from space ships.";
@@ -276,15 +338,15 @@
 	name = "radiator pipe"
 	},
 /turf/variableTurf/clear,
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "zY" = (
 /obj/map/light/secretblue,
 /obj/decal/cleanable/dirt/jen,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "Al" = (
 /obj/rack,
 /obj/item/clothing/head/helmet/space/soviet{
@@ -294,40 +356,59 @@
 /obj/item/clothing/head/helmet/space/soviet{
 	pixel_x = 5
 	},
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
+"AF" = (
+/obj/decal/cleanable/dirt/dirt4,
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_one)
 "AU" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/red,
 /obj/decal/cleanable/dirt/jen,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "Bo" = (
 /obj/stool/bed{
 	interesting = "The scanner displays another unknown chemical. A readout of some of it's basic properites look strangly like a ore...if only you could remember what that ore is.";
 	name = "Operating Bed"
 	},
 /obj/map/light/secretblue,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
+"BL" = (
+/obj/decal/cleanable/dirt/dirt3,
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/dirt/dirt4,
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_one)
 "Ed" = (
 /obj/storage/closet/wardrobe,
 /obj/random_item_spawner/dressup/one_or_zero,
 /obj/random_item_spawner/hat/one_or_zero,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "Eo" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
 	desc = "The only thing keeping the vaccum out and you alive.";
@@ -335,15 +416,16 @@
 	icon_state = "15";
 	name = "Ship Armor"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "Fc" = (
 /obj/stool/bed,
 /obj/decal/cleanable/dirt/jen,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "FN" = (
 /obj/ladder/broken{
 	id = "3151_2";
@@ -356,19 +438,20 @@
 	pixel_y = 23
 	},
 /obj/decal/cleanable/dirt/jen,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "FO" = (
 /obj/surgery_tray,
 /obj/random_item_spawner/med_tool/maybe_few,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "GC" = (
 /obj/table/reinforced/auto,
 /obj/item/medical/bruise_pack,
@@ -380,11 +463,22 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
+"GO" = (
+/obj/decal/cleanable/dirt/dirt4,
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_one)
 "GP" = (
 /obj/decal/fakeobjects/pipe/heat{
 	desc = "A radiator used to dispose of waste heat from space ships.";
@@ -392,7 +486,17 @@
 	name = "radiator pipe"
 	},
 /turf/variableTurf/clear,
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
+"HY" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/dirt/dirt4,
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_one)
 "IA" = (
 /obj/ladder/broken{
 	pixel_y = 14
@@ -403,25 +507,48 @@
 /obj/ladder/broken{
 	pixel_y = 23
 	},
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/obj/decal/cleanable/dirt/dirt4,
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
+"II" = (
+/obj/map/light/secretblue,
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_one)
+"IL" = (
+/obj/storage/closet/wardrobe,
+/obj/random_item_spawner/dressup/one_or_zero,
+/obj/random_item_spawner/hat/one_or_zero,
+/obj/map/light/secretblue,
+/obj/decal/cleanable/dirt/dirt4,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_one)
 "Jo" = (
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/obj/decal/cleanable/dirt/dirt4,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "JB" = (
 /obj/table/reinforced,
 /obj/decal/cleanable/dirt/jen,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "Kr" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
 	desc = "The only thing keeping the vaccum out and you alive.";
@@ -429,10 +556,17 @@
 	icon_state = "14";
 	name = "Ship Armor"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
+"KK" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_one)
 "KY" = (
 /turf/variableTurf/clear,
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "MU" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
 	desc = "The only thing keeping the vaccum out and you alive.";
@@ -440,16 +574,18 @@
 	icon_state = "12";
 	name = "Ship Armor"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "MY" = (
 /obj/decal/cleanable/dirt/dirt4,
 /obj/decal/cleanable/dirt/dirt3,
 /obj/decal/cleanable/dirt/jen,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/obj/decal/cleanable/dirt/dirt4,
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "NM" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
 	desc = "The only thing keeping the vaccum out and you alive.";
@@ -457,17 +593,25 @@
 	icon_state = "5";
 	name = "Ship Armor"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "OA" = (
 /obj/machinery/door/unpowered/shuttle{
 	icon = 'icons/Testing/newicons/obj/NEWdoors/door_command.dmi';
 	icon_state = "sdoor"
 	},
-/turf/unsimulated/floor/airless/plating{
+/turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
+"ON" = (
+/obj/table/reinforced,
+/obj/decal/cleanable/dirt/dirt4,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_one)
 "Pm" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/machinery/door/unpowered/shuttle{
@@ -475,11 +619,12 @@
 	icon = 'icons/Testing/newicons/obj/NEWdoors/door_command.dmi';
 	icon_state = "sdoor"
 	},
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "Qe" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
 	desc = "The only thing keeping the vaccum out and you alive.";
@@ -487,22 +632,24 @@
 	icon_state = "7";
 	name = "Ship Armor"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "QA" = (
 /obj/decal/cleanable/dirt/jen,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/obj/decal/cleanable/dirt/dirt4,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "Se" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/dirt/jen,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "SL" = (
 /obj/rack,
 /obj/item/clothing/mask/breath,
@@ -514,18 +661,29 @@
 	pixel_x = 5
 	},
 /obj/decal/cleanable/dirt/jen,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/obj/decal/cleanable/dirt/dirt4,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
+"SQ" = (
+/obj/decal/cleanable/dirt/dirt4,
+/obj/decal/cleanable/dirt/dirt3,
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_one)
 "Tf" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 4;
 	icon_state = "alt_propulsion"
 	},
 /turf/variableTurf/clear,
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "Ts" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
 	desc = "The only thing keeping the vaccum out and you alive.";
@@ -533,37 +691,45 @@
 	icon_state = "3";
 	name = "Ship Armor"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "Un" = (
 /obj/decal/cleanable/dirt/dirt3,
 /obj/decal/cleanable/dirt/jen,
 /obj/stool/chair/comfy/shuttle,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "UC" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "Vo" = (
 /obj/iv_stand,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
+"Wd" = (
+/obj/decal/cleanable/dirt/dirt3,
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_one)
 "Wi" = (
 /obj/storage/closet,
 /obj/item/reagent_containers/glass/bucket/red,
 /obj/item/reagent_containers/glass/bucket/red,
-/obj/item/reagent_containers/glass/bucket/red,
 /obj/item/mop/orange,
 /obj/item/mop/orange,
 /obj/item/spraybottle{
@@ -574,21 +740,22 @@
 	desc = "A spray bottle labeled Чистящий спрей. Seems what ever was in it is all gone now";
 	name = "old spray bottle"
 	},
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "Ys" = (
 /obj/stool/bed,
+/obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "gibbl2"
 	},
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "YV" = (
 /obj/table/reinforced/auto,
 /obj/item/bloodslide{
@@ -604,19 +771,20 @@
 	pixel_x = -6;
 	pixel_y = 3
 	},
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 "Ze" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/dirt/dirt3,
-/turf/unsimulated/floor/airless/plating{
-	icon = 'icons/turf/floors_tempus.dmi';
-	icon_state = "floor1"
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
-/area/prefab)
+/area/prefab/threeonefiveone/level_one)
 
 (1,1,1) = {"
 KY
@@ -716,7 +884,7 @@ aM
 bC
 fO
 yL
-rf
+yd
 rf
 mS
 Kr
@@ -782,7 +950,7 @@ bC
 rx
 Ed
 MU
-QA
+KK
 QA
 MU
 Ed
@@ -801,10 +969,10 @@ KY
 nG
 qD
 MU
-yh
+AU
 rf
 MU
-Jo
+AF
 Se
 MU
 rf
@@ -824,12 +992,12 @@ zD
 GP
 MU
 JB
-Jo
-xQ
-QA
-Jo
-xQ
-QA
+KK
+OA
+ju
+ju
+OA
+KK
 vb
 MU
 nG
@@ -848,8 +1016,8 @@ Kr
 Ts
 Ts
 fO
-Jo
-rJ
+yS
+II
 Kr
 Ts
 Ts
@@ -867,13 +1035,13 @@ aM
 zD
 GP
 MU
-yh
+nI
+Wd
+OA
+ju
 lE
-xQ
+OA
 QA
-lE
-xQ
-Jo
 AU
 MU
 nG
@@ -889,11 +1057,11 @@ nG
 zD
 zD
 MU
-vb
-oD
+ON
+IL
 MU
-QA
-Jo
+ju
+yS
 MU
 oD
 vb
@@ -937,8 +1105,8 @@ Un
 rT
 dO
 lE
-Jo
-QA
+KK
+ju
 lE
 Kr
 yB
@@ -955,14 +1123,14 @@ KY
 KY
 MU
 IA
-Jo
+AF
 rJ
-Jo
-QA
-lE
-rf
-Jo
-hc
+GO
+HY
+Wd
+yW
+KK
+OA
 tJ
 OA
 KY
@@ -976,14 +1144,14 @@ KY
 KY
 KY
 MU
-QA
+ju
+SQ
+ju
+zs
+KK
 MY
-Se
-Jo
-Jo
-MY
-Jo
-QA
+ju
+ju
 MU
 nt
 MU
@@ -998,12 +1166,12 @@ KY
 KY
 KY
 MU
-Jo
-Jo
-QA
+KK
+AF
+KK
 op
-Jo
-Jo
+ju
+KK
 Jo
 zs
 MU
@@ -1021,15 +1189,15 @@ KY
 KY
 MU
 FN
-Jo
+AF
+zY
+ju
+KK
+Se
 rJ
-QA
-Jo
-Jo
-rJ
-Jo
-hc
-tJ
+KK
+OA
+bv
 OA
 KY
 KY
@@ -1043,12 +1211,12 @@ KY
 KY
 rg
 NM
-lE
-Jo
-Jo
-QA
-Jo
-QA
+Wd
+AF
+KK
+KK
+KK
+KK
 Jo
 Kr
 Qe
@@ -1088,11 +1256,11 @@ KY
 KY
 KY
 MU
-Jo
-Se
+KK
+ju
 OA
-lE
-lE
+Wd
+Wd
 Wi
 MU
 KY
@@ -1110,10 +1278,10 @@ KY
 KY
 KY
 MU
-Jo
-QA
+KK
+KK
 MU
-Jo
+KK
 zY
 QA
 MU
@@ -1132,8 +1300,8 @@ zD
 zD
 zD
 MU
-rf
-Jo
+fd
+KK
 MU
 SL
 Al
@@ -1154,8 +1322,8 @@ zD
 qD
 bC
 rx
-lE
-Jo
+Wd
+AF
 rg
 Qe
 Ts
@@ -1175,12 +1343,12 @@ zD
 zD
 GP
 MU
-Jo
-Jo
-Jo
-zs
-xQ
-Jo
+KK
+ju
+ju
+AF
+OA
+KK
 zY
 YV
 MU
@@ -1198,12 +1366,12 @@ zD
 qD
 MU
 Ze
-Jo
-lE
-Jo
+ju
+BL
+KK
 MU
-QA
-Jo
+KK
+AF
 GC
 MU
 cy
@@ -1242,12 +1410,12 @@ zD
 zD
 zD
 MU
-QA
-Jo
+KK
+KK
 Jo
 MU
 rS
-Jo
+AF
 MU
 zD
 zD
@@ -1266,9 +1434,9 @@ KY
 MU
 FO
 Bo
-QA
+KK
 MU
-rJ
+ik
 Ys
 MU
 KY
@@ -1288,7 +1456,7 @@ KY
 rg
 NM
 Vo
-lE
+Wd
 MU
 Fc
 bC
