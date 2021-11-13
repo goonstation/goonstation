@@ -1034,13 +1034,11 @@ proc/generate_space_color()
 	return
 #else
 /turf/proc/edge_step(var/atom/movable/A, var/newx, var/newy)
-	var/zlevel = 5 //((A.z=3)?5:3)//(3,4)
+	var/zlevel = 3 //((A.z=3)?5:3)//(3,4)
 
-	//if(A.z == 3) zlevel = 5
-	//else zlevel = 3
+	if(A.z == 3) zlevel = 5
+	else zlevel = 3
 
-	if(A.z == 3)
-		return
 
 	if (world.maxz < zlevel) // if there's less levels than the one we want to go to
 		zlevel = 1 // just boot people back to z1 so the server doesn't lag to fucking death trying to place people on maps that don't exist

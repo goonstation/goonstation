@@ -429,7 +429,7 @@
 "Jh" = (/obj/grille/catwalk{dir = 4},/obj/rail{dir = 8; layer = 3},/turf/simulated/floor/airless/plating/catwalk{dir = 4},/area/mining/catwalks)
 "Jm" = (/obj/machinery/vehicle/miniputt/armed,/turf/simulated/floor/shuttlebay,/area/tech_outpost)
 "Jq" = (/obj/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/wall/auto/supernorn,/area/mining/comms)
-"JD" = (/obj/decal/cleanable/dirt,/obj/machinery/computer/shuttle_bus/mining_outpost,/turf/simulated/floor/plating/damaged3,/area/noGenerate)
+"JD" = (/obj/decal/cleanable/dirt,/obj/machinery/computer/shuttle_bus,/turf/simulated/floor/plating/damaged3,/area/noGenerate)
 "JJ" = (/obj/table/auto,/obj/item/storage/toolbox/electrical,/obj/item/storage/toolbox/electrical,/obj/item/paper/book/from_file/minerals,/turf/simulated/floor/grime,/area/mining/manufacturing)
 "JR" = (/obj/machinery/conveyor{id = "MINSouth"},/obj/decal/cleanable/gangtag{icon_state = "gangtag12"; pixel_x = 28},/turf/simulated/floor,/area/mining/manufacturing)
 "JX" = (/obj/machinery/light,/obj/cable,/obj/machinery/power/apc/autoname_east,/turf/simulated/floor/grime,/area/mining/exit_west)

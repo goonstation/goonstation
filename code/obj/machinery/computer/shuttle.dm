@@ -816,29 +816,6 @@ var/bombini_saved = 0
 		pixel_x = -25
 
 
-/obj/machinery/computer/shuttle_bus/mining_outpost //broken by default
-
-	New()
-		..()
-		SPAWN_DBG(1 SECOND)
-			src.status |= BROKEN
-			desc = "This computer can be used to send John's Shuttle to various locations. This one seems a bit busted up, maybe some glass would help?"
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/sheet/glass) && W.amount >= 5)
-			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, .proc/fix_computer, W, W.icon, W.icon_state, "You replace the glass in the computer.", null)
-		else if(istype(W, /obj/item/sheet/glass))
-			boutput(user, "You need at least 5 sheets of glass to fix this!")
-		else
-			..()
-
-	proc/fix_computer(var/obj/item/W)
-		W.amount -= 5
-		src.status &= ~BROKEN
-		desc = initial(desc)
-		icon_state = initial(icon_state)
-
-
 /obj/machinery/computer/shuttle_bus/attack_hand(mob/user as mob)
 	if(..())
 		return
@@ -875,12 +852,7 @@ var/bombini_saved = 0
 		if(johnbill_shuttle_fartnasium_active) // here's how you can set conditional locations
 			dat += "<a href='byond://?src=\ref[src];fart=1'>Set Target: Juicer Schweet's</a><BR>"
 #ifndef UNDERWATER_MAP
-		for(var/obj/machinery/computer/shuttle_bus/mining_outpost/M in machine_registry[MACHINES_SHUTTLECOMPS])
-			if(M.status & BROKEN)
-				dat += "Old Mining Station: Shuttle Computer Broken<BR>"
-			else
-				dat += "<a href='byond://?src=\ref[src];mine=1'>Set Target: Old Mining Station</a><BR>"
-			break
+		dat += "<a href='byond://?src=\ref[src];mine=1'>Set Target: Old Mining Station</a><BR>"
 #endif
 		dat += "<BR>"
 		if (johnbus_location != johnbus_destination)

@@ -276,7 +276,6 @@ var/list/debrisModifiersSmallUsed = list()//Assoc list, type:times used
 
 /datum/mapGenerator/debrisDistance //Generates a bunch of space junk and drones
 	generate(var/list/debrisZ)
-		//var/numAsteroidSeed = AST_SEEDS + rand(1, 5)
 		var/list/possible_garbage = list(/obj/decal/floatingtiles, /obj/decal/cleanable/robot_debris/gib, /obj/item/raw_material/rock, /obj/lattice, /obj/item/raw_material/shard/glass, /obj/item/cable_coil/cut)
 		var/drone_amount = rand(DEBRIS_DRONE_LOWER, DEBRIS_DRONE_UPPER)
 		var/garbage_amount = rand(DEBRIS_GARBAGE_LOWER, DEBRIS_GARBAGE_UPPER)
@@ -287,7 +286,7 @@ var/list/debrisModifiersSmallUsed = list()//Assoc list, type:times used
 			var/ast_length = rand(DEBRIS_ASTEROID_LENGTH_LOWER, DEBRIS_ASTEROID_LENGTH_UPPER)
 			var/turf/X = pick(debrisZ)
 
-			while(!istype(X, /turf/space) || ISDISTEDGE(X, AST_MAPSEEDBORDER) || (X.loc.type != /area/space && !istype(X.loc , /area/allowGenerate)))
+			while(istype(X.loc, /area/noGenerate) || !istype(X, /turf/space) || ISDISTEDGE(X, AST_MAPSEEDBORDER) || (X.loc.type != /area/space && !istype(X.loc , /area/allowGenerate)))
 				X = pick(debrisZ)
 				LAGCHECK(LAG_REALTIME)
 
@@ -317,30 +316,44 @@ var/list/debrisModifiersSmallUsed = list()//Assoc list, type:times used
 
 		for(var/i in 0 to loot_thingies)
 			var/turf/possible_spot = pick(debrisZ)
+			var/xcalc
+			var/ycalc
 
-			while(!istype(possible_spot, /turf/space) || ISDISTEDGE(possible_spot, AST_MAPSEEDBORDER) || (possible_spot.loc.type != /area/space && !istype(possible_spot.loc, /area/allowGenerate)))
+			while(istype(possible_spot.loc, /area/noGenerate) || !istype(possible_spot, /turf/space) || ISDISTEDGE(possible_spot, AST_MAPSEEDBORDER) || (possible_spot.loc.type != /area/space && !istype(possible_spot.loc, /area/allowGenerate)))
 				possible_spot = pick(debrisZ)
 				LAGCHECK(LAG_REALTIME)
 
 			var/turf/simulated/floor/base_floor = possible_spot.ReplaceWithFloor()
 			base_floor.to_plating()
-			var/numberthing = rand(1, 6)
-			switch(numberthing)
-				if(1)
-					new/obj/storage/crate/loot(base_floor)
-				if(2)
-					new/obj/storage/crate/loot(base_floor)
-				if(3)
-					new/obj/artifact_type_spawner/vurdalak(base_floor)
-				if(4)
-					new/obj/artifact_type_spawner/vurdalak(base_floor)
-				if(5) //6 is intentionally blank
-					var/obj/C = pick(childrentypesof(/obj/storage/crate/trench_loot)) //placeholder, probably
+			var/numberthing = rand(1, 10)
+			if(numberthing >= 8)
+				new/obj/storage/crate/loot(base_floor)
+			else if(numberthing >= 5)
+				new/obj/artifact_type_spawner/vurdalak(base_floor)
+			else if(numberthing >= 2) //10% chance to get nada
+				if(possible_spot.x > 150)
+					xcalc = 300 - possible_spot.x
+				else
+					xcalc = possible_spot.x
+
+				if(possible_spot.y > 150)
+					ycalc = 300 - possible_spot.y
+				else
+					ycalc = possible_spot.y
+
+				if((xcalc + ycalc) >= 250)
+					var/obj/C = pick(childrentypesof(/obj/storage/crate/debris_loot/high))
+					new C(base_floor)
+				else if((xcalc + ycalc) >= 150)
+					var/obj/C = pick(childrentypesof(/obj/storage/crate/debris_loot/med))
+					new C(base_floor)
+				else
+					var/obj/C = pick(childrentypesof(/obj/storage/crate/debris_loot/low))
 					new C(base_floor)
 
 			var/list/neighbors = getneighbours(possible_spot)
 			for(var/turf/T in neighbors)
-				if(!istype(T, /turf/space) || ISDISTEDGE(T, AST_MAPSEEDBORDER) || (T.loc.type != /area/space && !istype(T.loc, /area/allowGenerate)))
+				if(istype(T.loc, /area/noGenerate) || !istype(T, /turf/space) || ISDISTEDGE(T, AST_MAPSEEDBORDER) || (T.loc.type != /area/space && !istype(T.loc, /area/allowGenerate)))
 					continue
 
 				var/floor_or_what = pick("turf", "obj", "nothing")
@@ -369,7 +382,7 @@ var/list/debrisModifiersSmallUsed = list()//Assoc list, type:times used
 
 				var/list/neighbors2 = getneighbours(T)
 				for(var/turf/T3 in neighbors2)
-					if(!istype(T3, /turf/space) || ISDISTEDGE(T3, AST_MAPSEEDBORDER) || (T3.loc.type != /area/space && !istype(T3.loc, /area/allowGenerate)))
+					if(istype(T3.loc, /area/noGenerate) || !istype(T3, /turf/space) || ISDISTEDGE(T3, AST_MAPSEEDBORDER) || (T3.loc.type != /area/space && !istype(T3.loc, /area/allowGenerate)))
 						continue
 
 					if(prob(33))
@@ -381,7 +394,7 @@ var/list/debrisModifiersSmallUsed = list()//Assoc list, type:times used
 		for(var/i in 0 to garbage_amount)
 			var/turf/possible_spot = pick(debrisZ)
 
-			while(!istype(possible_spot, /turf/space) || ISDISTEDGE(possible_spot, AST_MAPSEEDBORDER) || (possible_spot.loc.type != /area/space && !istype(possible_spot.loc, /area/allowGenerate)))
+			while(istype(possible_spot.loc, /area/noGenerate) || !istype(possible_spot, /turf/space) || ISDISTEDGE(possible_spot, AST_MAPSEEDBORDER) || (possible_spot.loc.type != /area/space && !istype(possible_spot.loc, /area/allowGenerate)))
 				possible_spot = pick(debrisZ)
 				LAGCHECK(LAG_REALTIME)
 
@@ -390,14 +403,27 @@ var/list/debrisModifiersSmallUsed = list()//Assoc list, type:times used
 
 		for(var/i in 0 to drone_amount)
 			var/turf/possible_spot = pick(debrisZ)
+			var/xcalc
+			var/ycalc
 
-			while(!istype(possible_spot, /turf/space) || ISDISTEDGE(possible_spot, AST_MAPSEEDBORDER) || (possible_spot.loc.type != /area/space && !istype(possible_spot.loc, /area/allowGenerate)))
+			while(istype(possible_spot.loc, /area/noGenerate) || !istype(possible_spot, /turf/space) || ISDISTEDGE(possible_spot, AST_MAPSEEDBORDER) || (possible_spot.loc.type != /area/space && !istype(possible_spot.loc, /area/allowGenerate)))
 				possible_spot = pick(debrisZ)
 				LAGCHECK(LAG_REALTIME)
 
-			//the closer to top right you are, the more dangerous drones that spawn
+			//the closer to center you are, the more dangerous drones that spawn
 
-			var/drone_risk = max(1, ((possible_spot.x + possible_spot.y) / 2) / 10)
+			if(possible_spot.x > 150)
+				xcalc = 300 - possible_spot.x
+			else
+				xcalc = possible_spot.x
+
+			if(possible_spot.y > 150)
+				ycalc = 300 - possible_spot.y
+			else
+				ycalc = possible_spot.y
+
+			var/drone_risk = max(1, ((xcalc + ycalc) / 2) / 10)
+
 			var/list/drones = list()
 			drones[/obj/critter/gunbot/drone/minigundrone] = drone_risk
 			drones[/obj/critter/gunbot/drone/heavydrone] = drone_risk
@@ -414,76 +440,6 @@ var/list/debrisModifiersSmallUsed = list()//Assoc list, type:times used
 			var/obj/drone = pick(drones)
 			new drone(possible_spot)
 
-
-
-		/*for(var/i=0, i<numAsteroidSeed, i++)
-			var/turf/X = pick(debrisZ)
-
-			while(!istype(X, /turf/space) || ISDISTEDGE(X, AST_MAPSEEDBORDER) || (X.loc.type != /area/space && !istype(X.loc , /area/allowGenerate)))
-				X = pick(debrisZ)
-				LAGCHECK(LAG_REALTIME)
-
-			var/list/solidTiles = list()
-			var/list/edgeTiles = list(X)
-			var/list/visited = list()
-
-			//var/sizeMod = rand(-AST_SIZERANGE,AST_SIZERANGE)
-
-			while(edgeTiles.len)
-				var/turf/curr = edgeTiles[1]
-				edgeTiles.Remove(curr)
-
-				if(curr in visited) continue
-				else visited.Add(curr)
-
-				var/turf/north = get_step(curr, NORTH)
-				var/turf/east = get_step(curr, EAST)
-				var/turf/south = get_step(curr, SOUTH)
-				var/turf/west = get_step(curr, WEST)
-				if(decideSolid(north, X, sizeMod))
-					solidTiles.Add(north)
-					edgeTiles.Add(north)
-				if(decideSolid(east, X, sizeMod))
-					solidTiles.Add(east)
-					edgeTiles.Add(east)
-				if(decideSolid(south, X, sizeMod))
-					solidTiles.Add(south)
-					edgeTiles.Add(south)
-				if(decideSolid(west, X, sizeMod))
-					solidTiles.Add(west)
-					edgeTiles.Add(west)
-				LAGCHECK(LAG_REALTIME)
-
-			var/list/placed = list()
-			for(var/turf/T in solidTiles)
-				if((T?.loc?.type == /area/space) || istype(T?.loc , /area/allowGenerate))
-					var/turf/simulated/wall/asteroid/AST = T.ReplaceWith(/turf/simulated/wall/asteroid)
-					placed.Add(AST)
-					AST.quality = quality
-				LAGCHECK(LAG_REALTIME)
-
-			if(prob(15))
-				Turfspawn_Asteroid_SeedOre(placed, rand(2,6), rand(0,40))
-			else
-				Turfspawn_Asteroid_SeedOre(placed)
-
-			Turfspawn_Asteroid_SeedEvents(placed)
-
-			if(placed.len)
-				generated.Add(placed)
-				if(placed.len > 9)
-					seeds.Add(X)
-					seeds[X] = placed
-					var/list/holeList = list()
-					for(var/k=0, k<AST_RNGWALKINST, k++)
-						var/turf/T = pick(placed)
-						for(var/j=0, j<rand(AST_RNGWALKCNT,round(AST_RNGWALKCNT*1.5)), j++)
-							holeList.Add(T)
-							T = get_step(T, pick(NORTH,EAST,SOUTH,WEST))
-							if(!istype(T, /turf/simulated/wall/asteroid)) continue
-							var/turf/simulated/wall/asteroid/ast = T
-							ast.destroy_asteroid(0)
-							*/
 		return debrisZ
 
 /proc/makeMiningLevel()

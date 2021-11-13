@@ -52,7 +52,6 @@
 		name = "mining hangar beacon"
 	miningoutpost
 		name = "mining outpost beacon"
-		needsRepair = TRUE
 		icon_state = "beacon_broken"
 	miningasteroidbelt
 #ifdef UNDERWATER_MAP

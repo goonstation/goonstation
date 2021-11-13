@@ -758,3 +758,45 @@
 	escape
 		spawn_contents = list(/obj/item/sea_ladder,
 		/obj/item/pipebomb/bomb/engineering = 2)
+
+/obj/storage/crate/debris_loot
+	name = "rusted crate"
+	desc = "This crate looks old. The lock has rusted off."
+	icon_state = "rustedcrate"
+	icon_opened = "rustedcrate_open"
+	icon_closed = "rustedcrate"
+
+/obj/storage/crate/debris_loot/low
+	meds
+		spawn_contents = list(/obj/item/storage/firstaid/old,
+		/obj/item/reagent_containers/emergency_injector/epinephrine,
+		/obj/item/reagent_containers/emergency_injector/salicylic_acid)
+
+
+
+/obj/storage/crate/debris_loot/med
+	meds
+		spawn_contents = list(/obj/item/storage/firstaid/regular,
+		/obj/item/storage/pill_bottle/antirad,
+		/obj/item/reagent_containers/emergency_injector/methamphetamine) //medical methamphetamine
+
+	phaser
+		spawn_contents = list(/obj/item/gun/energy/phaser_gun = 2,
+		/obj/item/chem_grenade/flashbang)
+
+	synd
+		spawn_contents = list(/obj/item/clothing/under/misc/syndicate,
+		/obj/item/clothing/shoes/swat,
+		/obj/item/clothing/suit/space/syndicate,
+		/obj/item/clothing/head/helmet/space/syndicate)
+
+/obj/storage/crate/debris_loot/high
+	meds
+		spawn_contents = list(/obj/item/storage/firstaid/crit,
+		/obj/item/reagent_containers/emergency_injector/perf,
+		/obj/item/reagent_containers/emergency_injector/juggernaut,
+		/obj/item/reagent_containers/mender/both)
+
+	laser_gun
+		spawn_contents = list(/obj/item/gun/energy/laser_gun,
+		/obj/item/ammo/power_cell/med_power)

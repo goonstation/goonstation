@@ -608,13 +608,13 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 28
 		prefabSizeY = 27
 
-	mining_outpost
+	/*mining_outpost
 		maxNum = 1
 		required = TRUE
 		probability = 25
 		prefabPath = "assets/maps/debris/mining_outpost.dmm"
 		prefabSizeX = 84
-		prefabSizeY = 83
+		prefabSizeY = 83*/
 
 	patho_lab
 		maxNum = 1

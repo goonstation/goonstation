@@ -187,6 +187,11 @@
 	initial_reagents = "morphine"
 	label = "purple"
 
+/obj/item/reagent_containers/emergency_injector/juggernaut
+	name = "emergency auto-injector (juggernaut)"
+	initial_reagents = "juggernaut"
+	label = "red"
+
 /obj/item/reagent_containers/emergency_injector/random
 	name = "emergency auto-injector (???)"
 	label = "black"
