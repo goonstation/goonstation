@@ -110,23 +110,27 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		return
 
 /proc/calc_screw_up_prob(var/mob/living/carbon/human/patient as mob, var/mob/surgeon as mob, var/screw_up_prob = 25)
+	var/list/problems = list()
 	if (!patient) // did we not get passed a patient?
 		return 0 // uhhh
 	if (!ishuman(patient)) // is the patient not a human?
 		return 0 // welp vOv
-
 	if (surgeon.bioHolder.HasEffect("clumsy")) // is the surgeon clumsy?
 		screw_up_prob += 35
+		problems += "you're clumsy"
 	if (patient == surgeon) // is the patient doing self-surgery?
 		screw_up_prob += 15
+		problems += "performing self-surgery"
 	if (patient.jitteriness) // is the patient all twitchy?
 		screw_up_prob += 15
+		problems += "you're jittery"
 	if (surgeon.reagents)
 		var/drunken_surgeon = surgeon.reagents.get_reagent_amount("ethanol") // has the surgeon had a drink (or two (or three (or four (etc))))?
 		if (drunken_surgeon > 0 && drunken_surgeon < 5) // it steadies the hand a bit
 			screw_up_prob -= 10
 		else if (drunken_surgeon >= 5) // but too much and that might be bad
 			screw_up_prob += 10
+			problems += "you're drunk"
 
 	if (patient.stat) // is the patient dead?
 		screw_up_prob -= 30
@@ -134,6 +138,8 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		screw_up_prob -= 15
 	if (patient.sleeping) // asleep?
 		screw_up_prob -= 10
+	else
+		problems += "patient is awake"
 	if (patient.getStatusDuration("stunned")) // stunned?
 		screw_up_prob -= 5
 	if (patient.hasStatus("drowsy")) // sleepy?
@@ -155,10 +161,11 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		screw_up_prob = max(0, min(100, screw_up_prob)) // if they're a doctor they can have no chance to mess up
 	else
 		screw_up_prob = max(5, min(100, screw_up_prob)) // otherwise there'll always be a slight chance
+		problems += "you lack Medical Training"
 
 	DEBUG_MESSAGE("<b>[patient]'s surgery (performed by [surgeon]) has screw_up_prob set to [screw_up_prob]</b>")
 
-	return screw_up_prob
+	return list(screw_up_prob, problems)
 
 /proc/calc_surgery_damage(var/mob/surgeon as mob, var/screw_up_prob = 25, var/damage = 10, var/adj1 = 0.5, adj2 = 200)
 	damage = damage * (adj1 + (screw_up_prob / adj2))
@@ -317,14 +324,15 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	if (!surgCheck)
 		return 0
 
-	// fluff2 is for things that do more damage: nicking an artery is included in the choices
-	var/fluff = pick(" messes up", "'s hand slips", " fumbles with [src]", " nearly drops [src]", "'s hand twitches", " makes a really messy cut")
-	var/fluff2 = pick(" messes up", "'s hand slips", " fumbles with [src]", " nearly drops [src]", "'s hand twitches", " makes a really messy cut", " nicks an artery")
+	// fluff is for general mess ups
+	var/fluff = pick(" messes up", "'s hand slips", " fumbles with [src]", " nearly drops [src]", "'s hand twitches")
+	// fluff2 is for things that do more damage. No overlap with 'fluff' because otherwise there's no point in the distinction.
+	var/fluff2 = pick(" makes a really messy cut", " nicks an artery")
 
 	var/screw_up_prob = calc_screw_up_prob(patient, surgeon)
 
-	var/damage_low = calc_surgery_damage(surgeon, screw_up_prob, rand(5,15) * surgCheck/*, src.adj1, src.adj2*/)
-	var/damage_high = calc_surgery_damage(surgeon, screw_up_prob, rand(15,25) * surgCheck/*, src.adj1, src.adj2*/)
+	var/damage_low = calc_surgery_damage(surgeon, screw_up_prob[1], rand(5,15) * surgCheck/*, src.adj1, src.adj2*/)
+	var/damage_high = calc_surgery_damage(surgeon, screw_up_prob[1], rand(15,25) * surgCheck/*, src.adj1, src.adj2*/)
 
 	DEBUG_MESSAGE("<b>[patient]'s surgery (performed by [surgeon]) damage_low is [damage_low], damage_high is [damage_high]</b>")
 
@@ -339,8 +347,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			if (patient.organHolder.head.op_stage == 0.0)
 				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
-				if (prob(screw_up_prob))
+				if (prob(screw_up_prob[1]))
 					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+					if (length(screw_up_prob[2]) > 0)
+						surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+					else
+						surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 					patient.TakeDamage("head", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					UNPOOL_BLOOD_SPLOOSH(patient)
@@ -358,8 +370,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			else if (patient.organHolder.head.op_stage == 2.0)
 				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
-				if (prob(screw_up_prob))
+				if (prob(screw_up_prob[1]))
 					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff2]!</b></span>")
+					if (length(screw_up_prob[2]) > 0)
+						surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+					else
+						surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 					patient.TakeDamage("head", damage_high, 0)
 					take_bleeding_damage(patient, surgeon, damage_high, surgery_bleed = 1)
 					UNPOOL_BLOOD_SPLOOSH(patient)
@@ -377,8 +393,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		else if (patient.organHolder.right_eye && patient.organHolder.right_eye.op_stage == 1.0 && surgeon.find_in_hand(src, "right"))
 			playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
-			if (prob(screw_up_prob))
+			if (prob(screw_up_prob[1]))
 				surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+				if (length(screw_up_prob[2]) > 0)
+					surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+				else
+					surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 				patient.TakeDamage("head", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 				UNPOOL_BLOOD_SPLOOSH(patient)
@@ -396,8 +416,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		else if (patient.organHolder.left_eye && patient.organHolder.left_eye.op_stage == 1.0 && surgeon.find_in_hand(src, "left"))
 			playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
-			if (prob(screw_up_prob))
+			if (prob(screw_up_prob[1]))
 				surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+				if (length(screw_up_prob[2]) > 0)
+					surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+				else
+					surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 				patient.TakeDamage("head", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 				UNPOOL_BLOOD_SPLOOSH(patient)
@@ -423,8 +447,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				else if (removing_eye && surgeon.find_in_hand(src, "middle"))
 					surgeon.show_text("Hey, there's no middle eye!")
 
-				if (prob(screw_up_prob))
+				if (prob(screw_up_prob[1]))
 					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+					if (length(screw_up_prob[2]) > 0)
+						surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+					else
+						surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 					patient.TakeDamage("head", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					UNPOOL_BLOOD_SPLOOSH(patient)
@@ -442,8 +470,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			else if (patient.organHolder.head.scalp_op_stage == 2.0)
 				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
-				if (prob(screw_up_prob))
+				if (prob(screw_up_prob[1]))
 					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff2]!</b></span>")
+					if (length(screw_up_prob[2]) > 0)
+						surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+					else
+						surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 					patient.TakeDamage("head", damage_high, 0)
 					take_bleeding_damage(patient, surgeon, damage_high, surgery_bleed = 1)
 					UNPOOL_BLOOD_SPLOOSH(patient)
@@ -466,8 +498,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			else if (patient.organHolder.head.scalp_op_stage == 4.0)
 				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
-				if (prob(screw_up_prob))
+				if (prob(screw_up_prob[1]))
 					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+					if (length(screw_up_prob[2]) > 0)
+						surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+					else
+						surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 					patient.TakeDamage("head", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					UNPOOL_BLOOD_SPLOOSH(patient)
@@ -499,8 +535,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		if (patient.butt_op_stage == 0.0)
 			playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
-			if (prob(screw_up_prob))
+			if (prob(screw_up_prob[1]))
 				surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+				if (length(screw_up_prob[2]) > 0)
+					surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+				else
+					surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 				patient.TakeDamage("chest", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 				UNPOOL_BLOOD_SPLOOSH(patient)
@@ -518,8 +558,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		else if (patient.butt_op_stage == 2.0)
 			playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
-			if (prob(screw_up_prob))
+			if (prob(screw_up_prob[1]))
 				surgeon.visible_message("<span class='alert'><b>[surgeon][fluff2]!</b></span>")
+				if (length(screw_up_prob[2]) > 0)
+					surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+				else
+					surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 				patient.TakeDamage("chest", damage_high, 0)
 				take_bleeding_damage(patient, surgeon, damage_high, surgery_bleed = 1)
 				UNPOOL_BLOOD_SPLOOSH(patient)
@@ -677,8 +721,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			switch (patient.organHolder.chest.op_stage)
 				if (0.0)
 					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
-					if (prob(screw_up_prob))
+					if (prob(screw_up_prob[1]))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+						if (length(screw_up_prob[2]) > 0)
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+						else
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						UNPOOL_BLOOD_SPLOOSH(patient)
@@ -696,8 +744,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				if (1.0)
 					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
-					if (prob(screw_up_prob))
+					if (prob(screw_up_prob[1]))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+						if (length(screw_up_prob[2]) > 0)
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+						else
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						UNPOOL_BLOOD_SPLOOSH(patient)
@@ -720,8 +772,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						src.surgeryConfusion(patient, surgeon, damage_low)
 						return 1
 
-					if (prob(screw_up_prob))
+					if (prob(screw_up_prob[1]))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+						if (length(screw_up_prob[2]) > 0)
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+						else
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						UNPOOL_BLOOD_SPLOOSH(patient)
@@ -746,8 +802,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						src.surgeryConfusion(patient, surgeon, damage_low)
 						return 1
 
-					if (prob(screw_up_prob))
+					if (prob(screw_up_prob[1]))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+						if (length(screw_up_prob[2]) > 0)
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+						else
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						UNPOOL_BLOOD_SPLOOSH(patient)
@@ -768,8 +828,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				if (5.0)
 					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
-					if (prob(screw_up_prob))
+					if (prob(screw_up_prob[1]))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+						if (length(screw_up_prob[2]) > 0)
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+						else
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						UNPOOL_BLOOD_SPLOOSH(patient)
@@ -794,8 +858,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						src.surgeryConfusion(patient, surgeon, damage_low)
 						return 1
 
-					if (prob(screw_up_prob))
+					if (prob(screw_up_prob[1]))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+						if (length(screw_up_prob[2]) > 0)
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+						else
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						UNPOOL_BLOOD_SPLOOSH(patient)
@@ -817,8 +885,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				if (8.0)
 					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
-					if (prob(screw_up_prob))
+					if (prob(screw_up_prob[1]))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff2]!</b></span>")
+						if (length(screw_up_prob[2]) > 0)
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+						else
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 						patient.TakeDamage("chest", damage_high, 0)
 						take_bleeding_damage(patient, surgeon, damage_high, surgery_bleed = 1)
 						UNPOOL_BLOOD_SPLOOSH(patient)
@@ -838,8 +910,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				if(10.0)
 					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
-					if (prob(screw_up_prob))
+					if (prob(screw_up_prob[1]))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+						if (length(screw_up_prob[2]) > 0)
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+						else
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						UNPOOL_BLOOD_SPLOOSH(patient)
@@ -913,14 +989,15 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		return 0
 
 
-	// fluff2 is for things that do more damage: nicking an artery is included in the choices
+	// fluff is for general mess ups
 	var/fluff = pick(" messes up", "'s hand slips", " fumbles with [src]", " nearly drops [src]", "'s hand twitches")
-	var/fluff2 = pick(" messes up", "'s hand slips", " fumbles with [src]", " nearly drops [src]", "'s hand twitches", " nicks an artery")
+	// fluff2 is for things that do more damage. No overlap with 'fluff' because otherwise there's no point in the distinction.
+	var/fluff2 = pick(" saws something else", " nicks an artery")
 
 	var/screw_up_prob = calc_screw_up_prob(patient, surgeon)
 
-	var/damage_low = calc_surgery_damage(surgeon, screw_up_prob, rand(10,20) * surgCheck /*, src.adj1, src.adj2*/)
-	var/damage_high = calc_surgery_damage(surgeon, screw_up_prob, rand(20,30) * surgCheck /*, src.adj1, src.adj2*/)
+	var/damage_low = calc_surgery_damage(surgeon, screw_up_prob[1], rand(10,20) * surgCheck /*, src.adj1, src.adj2*/)
+	var/damage_high = calc_surgery_damage(surgeon, screw_up_prob[1], rand(20,30) * surgCheck /*, src.adj1, src.adj2*/)
 
 	DEBUG_MESSAGE("<b>[patient]'s surgery (performed by [surgeon]) damage_low is [damage_low], damage_high is [damage_high]</b>")
 
@@ -935,8 +1012,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			if (patient.organHolder.head.op_stage == 1.0)
 				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
-				if (prob(screw_up_prob))
+				if (prob(screw_up_prob[1]))
 					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+					if (length(screw_up_prob[2]) > 0)
+						surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+					else
+						surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 					patient.TakeDamage("head", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					return 1
@@ -953,8 +1034,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			else if (patient.organHolder.head.op_stage == 3.0)
 				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
-				if (prob(screw_up_prob))
+				if (prob(screw_up_prob[1]))
 					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+					if (length(screw_up_prob[2]) > 0)
+						surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+					else
+						surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 					patient.TakeDamage("head", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					UNPOOL_BLOOD_SPLOOSH(patient)
@@ -980,8 +1065,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			if (patient.organHolder.head.scalp_op_stage == 1.0)
 				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
-				if (prob(screw_up_prob))
+				if (prob(screw_up_prob[1]))
 					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+					if (length(screw_up_prob[2]) > 0)
+						surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+					else
+						surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 					patient.TakeDamage("head", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					UNPOOL_BLOOD_SPLOOSH(patient)
@@ -1004,8 +1093,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			else if (patient.organHolder.head.scalp_op_stage == 3.0)
 				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
-				if (prob(screw_up_prob))
+				if (prob(screw_up_prob[1]))
 					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+					if (length(screw_up_prob[2]) > 0)
+						surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+					else
+						surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 					patient.TakeDamage("head", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					UNPOOL_BLOOD_SPLOOSH(patient)
@@ -1033,8 +1126,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			else if (patient.organHolder.head.scalp_op_stage == 5.0)
 				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
-				if (prob(screw_up_prob))
+				if (prob(screw_up_prob[1]))
 					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+					if (length(screw_up_prob[2]) > 0)
+						surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+					else
+						surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 					patient.TakeDamage("head", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					UNPOOL_BLOOD_SPLOOSH(patient)
@@ -1073,8 +1170,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			if (1.0)
 				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
-				if (prob(screw_up_prob))
+				if (prob(screw_up_prob[1]))
 					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+					if (length(screw_up_prob[2]) > 0)
+						surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+					else
+						surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 					patient.TakeDamage("chest", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					UNPOOL_BLOOD_SPLOOSH(patient)
@@ -1092,8 +1193,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			if (3.0)
 				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
-				if (prob(screw_up_prob))
+				if (prob(screw_up_prob[1]))
 					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+					if (length(screw_up_prob[2]) > 0)
+						surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+					else
+						surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 					patient.TakeDamage("chest", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					UNPOOL_BLOOD_SPLOOSH(patient)
@@ -1121,8 +1226,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			switch (patient.organHolder.chest.op_stage)
 				if(0.0)	// Tail!
 					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
-					if (prob(screw_up_prob))
+					if (prob(screw_up_prob[1]))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+						if (length(screw_up_prob[2]) > 0)
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+						else
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						UNPOOL_BLOOD_SPLOOSH(patient)
@@ -1145,8 +1254,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				if(11.0)	// Last of tail!
 					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
-					if (prob(screw_up_prob))
+					if (prob(screw_up_prob[1]))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+						if (length(screw_up_prob[2]) > 0)
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+						else
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						UNPOOL_BLOOD_SPLOOSH(patient)
@@ -1171,8 +1284,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				if (1.0)
 					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
-					if (prob(screw_up_prob))
+					if (prob(screw_up_prob[1]))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+						if (length(screw_up_prob[2]) > 0)
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+						else
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						UNPOOL_BLOOD_SPLOOSH(patient)
@@ -1191,8 +1308,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				if (5.0)
 					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
-					if (prob(screw_up_prob))
+					if (prob(screw_up_prob[1]))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+						if (length(screw_up_prob[2]) > 0)
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+						else
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						UNPOOL_BLOOD_SPLOOSH(patient)
@@ -1213,8 +1334,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					if (!patient.organHolder.get_organ("heart"))
 						src.surgeryConfusion(patient, surgeon, damage_low)
 						return 1
-					if (prob(screw_up_prob))
+					if (prob(screw_up_prob[1]))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff2]!</b></span>")
+						if (length(screw_up_prob[2]) > 0)
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+						else
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 						patient.TakeDamage("chest", damage_high, 0)
 						take_bleeding_damage(patient, surgeon, damage_high, surgery_bleed = 1)
 						UNPOOL_BLOOD_SPLOOSH(patient)
@@ -1607,14 +1732,15 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	if (!surgCheck)
 		return 0
 
-	// fluff2 is for things that do more damage: nicking the optic nerve is included in the choices
+	// fluff is for general mess ups
 	var/fluff = pick(" messes up", "'s hand slips", " fumbles with [src]", " nearly drops [src]", "'s hand twitches", " jabs [src] in too far")
-	var/fluff2 = pick(" messes up", "'s hand slips", " fumbles with [src]", " nearly drops [src]", "'s hand twitches", " jabs [src] in too far", " nicks the optic nerve")
+	// fluff2 is for things that do more damage. No overlap with 'fluff' because otherwise there's no point in the distinction.
+	var/fluff2 = pick( " jabs [src] in too far", " nicks the optic nerve")
 
 	var/screw_up_prob = calc_screw_up_prob(patient, surgeon)
 
-	var/damage_low = calc_surgery_damage(surgeon, screw_up_prob, rand(5,15) * surgCheck/*, src.adj1, src.adj2*/)
-	var/damage_high = calc_surgery_damage(surgeon, screw_up_prob, rand(15,25) * surgCheck/*, src.adj1, src.adj2*/)
+	var/damage_low = calc_surgery_damage(surgeon, screw_up_prob[1], rand(5,15) * surgCheck/*, src.adj1, src.adj2*/)
+	var/damage_high = calc_surgery_damage(surgeon, screw_up_prob[1], rand(15,25) * surgCheck/*, src.adj1, src.adj2*/)
 
 	DEBUG_MESSAGE("<b>[patient]'s surgery (performed by [surgeon]) damage_low is [damage_low], damage_high is [damage_high]</b>")
 
@@ -1643,8 +1769,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		if (target_eye.op_stage == 0.0)
 			playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
-			if (prob(screw_up_prob))
+			if (prob(screw_up_prob[1]))
 				surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+				if (length(screw_up_prob[2]) > 0)
+					surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+				else
+					surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 				patient.TakeDamage("head", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 				UNPOOL_BLOOD_SPLOOSH(patient)
@@ -1662,8 +1792,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		else if (target_eye.op_stage == 2.0)
 			playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
-			if (prob(screw_up_prob))
+			if (prob(screw_up_prob[1]))
 				surgeon.visible_message("<span class='alert'><b>[surgeon][fluff2]!</b></span>")
+				if (length(screw_up_prob[2]) > 0)
+					surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+				else
+					surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 				patient.TakeDamage("head", damage_high, 0)
 				take_bleeding_damage(patient, surgeon, damage_high, surgery_bleed = 1)
 				UNPOOL_BLOOD_SPLOOSH(patient)
@@ -1715,15 +1849,16 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	src.add_fingerprint(surgeon)
 
 
-	// fluff2 is for things that do more damage: nicking an artery is included in the choices
-	var/fluff = pick(" messes up", "'s hand slips", " fumbles with [src]", " nearly drops [src]", "'s hand twitches", " makes a really messy cut")
-	var/fluff2 = pick(" messes up", "'s hand slips", " fumbles with [src]", " nearly drops [src]", "'s hand twitches", " makes a really messy cut", " nicks an artery")
+	// fluff is for general mess ups
+	var/fluff = pick(" messes up", "'s hand slips", " fumbles with [src]", " nearly drops [src]", "'s hand twitches")
+	// fluff2 is for things that do more damage. No overlap with 'fluff' because otherwise there's no point in the distinction.
+	var/fluff2 = pick("snips something else", " makes a really messy cut", " nicks an artery")
 
 	var/screw_up_prob = calc_screw_up_prob(patient, surgeon)
 
 	//Snipping is a lot safer than other types of surgery. Is it because snips are the One True Surgery Tool? Maybe, maybe not. Who can say.
-	var/damage_low = calc_surgery_damage(surgeon, screw_up_prob, rand(1,5)/*, src.adj1, src.adj2*/)
-	var/damage_high = calc_surgery_damage(surgeon, screw_up_prob, rand(5,15)/*, src.adj1, src.adj2*/)
+	var/damage_low = calc_surgery_damage(surgeon, screw_up_prob[1], rand(1,5)/*, src.adj1, src.adj2*/)
+	var/damage_high = calc_surgery_damage(surgeon, screw_up_prob[1], rand(5,15)/*, src.adj1, src.adj2*/)
 
 	DEBUG_MESSAGE("<b>[patient]'s surgery (performed by [surgeon]) damage_low is [damage_low], damage_high is [damage_high]</b>")
 
@@ -1734,8 +1869,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				if (0.0)
 					playsound(patient, "sound/items/Scissor.ogg", 50, 1)
 
-					if (prob(screw_up_prob))
+					if (prob(screw_up_prob[1]))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+						if (length(screw_up_prob[2]) > 0)
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+						else
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						UNPOOL_BLOOD_SPLOOSH(patient)
@@ -1754,8 +1893,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				if (1.0)
 					playsound(patient, "sound/items/Scissor.ogg", 50, 1)
 
-					if (prob(screw_up_prob))
+					if (prob(screw_up_prob[1]))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+						if (length(screw_up_prob[2]) > 0)
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+						else
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						UNPOOL_BLOOD_SPLOOSH(patient)
@@ -1787,8 +1930,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						src.surgeryConfusion(patient, surgeon, damage_low)
 						return 1
 
-					if (prob(screw_up_prob))
+					if (prob(screw_up_prob[1]))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff2]!</b></span>")
+						if (length(screw_up_prob[2]) > 0)
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+						else
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 						patient.TakeDamage("chest", damage_high, 0)
 						take_bleeding_damage(patient, surgeon, damage_high, surgery_bleed = 1)
 						UNPOOL_BLOOD_SPLOOSH(patient)
@@ -1818,8 +1965,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						src.surgeryConfusion(patient, surgeon, damage_low)
 						return 1
 
-					if (prob(screw_up_prob))
+					if (prob(screw_up_prob[1]))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+						if (length(screw_up_prob[2]) > 0)
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+						else
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						UNPOOL_BLOOD_SPLOOSH(patient)
@@ -1844,8 +1995,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						src.surgeryConfusion(patient, surgeon, damage_low)
 						return 1
 
-					if (prob(screw_up_prob))
+					if (prob(screw_up_prob[1]))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+						if (length(screw_up_prob[2]) > 0)
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+						else
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						UNPOOL_BLOOD_SPLOOSH(patient)
@@ -1867,8 +2022,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					//path for pancreas
 					playsound(patient, "sound/items/Scissor.ogg", 50, 1)
 
-					if (prob(screw_up_prob))
+					if (prob(screw_up_prob[1]))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+						if (length(screw_up_prob[2]) > 0)
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+						else
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						UNPOOL_BLOOD_SPLOOSH(patient)
@@ -1892,8 +2051,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						src.surgeryConfusion(patient, surgeon, damage_low)
 						return 1
 
-					if (prob(screw_up_prob))
+					if (prob(screw_up_prob[1]))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
+						if (length(screw_up_prob[2]) > 0)
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+						else
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						UNPOOL_BLOOD_SPLOOSH(patient)
@@ -1928,8 +2091,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						src.surgeryConfusion(patient, surgeon, damage_low)
 						return 1
 
-					if (prob(screw_up_prob))
+					if (prob(screw_up_prob[1]))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff2]!</b></span>")
+						if (length(screw_up_prob[2]) > 0)
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting</b> - [english_list(screw_up_prob[2])]!</span>")
+						else
+							surgeon.show_text("<span class='alert'><b>Step needs reattempting!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						UNPOOL_BLOOD_SPLOOSH(patient)
