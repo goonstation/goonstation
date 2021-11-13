@@ -293,7 +293,7 @@
 			src.ignite()
 		src.update_cake_context()
 
-		//Complete pizza crew objectives if possible
+		//Complete cake crew objectives if possible
 		src.cake_types += c.cake_types
 		if (user.mind && user.mind.objectives)
 			for (var/datum/objective/crew/chef/cake/O in user.mind.objectives)
