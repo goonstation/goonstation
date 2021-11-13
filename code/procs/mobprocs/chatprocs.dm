@@ -77,7 +77,11 @@
 	set name = "say_main_radio"
 	set hidden = 1
 	var/text = input("", "Speaking on the main radio frequency") as null|text
-	if (client.preferences.auto_capitalization)
+	var/capitalize = client ? client.preferences.auto_capitalization : FALSE
+	if (!client && istype(src, /mob/living/silicon/ai))
+		var/mob/living/silicon/ai/src_ai = src
+		capitalize = src_ai.eyecam.client.preferences.auto_capitalization
+	if (capitalize)
 		var/i = 1
 		while (copytext(text, i, i+1) == " ")
 			i++
