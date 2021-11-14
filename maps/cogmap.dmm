@@ -43734,6 +43734,13 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "cfJ" = (
+/obj/submachine/ATM/atm_alt{
+	dir = 4
+	},
+/obj/machinery/door/window/eastright,
+/obj/window/cubicle{
+	dir = 1
+	},
 /turf/simulated/floor/blue/side{
 	dir = 10
 	},
