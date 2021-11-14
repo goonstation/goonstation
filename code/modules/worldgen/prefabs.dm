@@ -246,7 +246,7 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 	ship3151 // Eagle's soviet ship with a lot of lore stuff. And blood. Also dust.
 		maxNum = 1
 		prefabPath = "assets/maps/prefabs/prefab_lost_ship.dmm"
-		probability = 100
+		probability = 20
 		prefabSizeX = 34
 		prefabSizeY = 20
 
