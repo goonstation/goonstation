@@ -67942,11 +67942,9 @@
 	icon_state = "blue"
 	})
 "dDa" = (
-/obj/decal/fakeobjects{
-	desc = "One of the dials is labelled <i>Katya<i>. Other than that, it looks like some plotting dodad";
-	icon = "icons/obj/sovietcomp.dmi";
-	icon_state = "sovietgraphthing";
-	name = "Plotting Chart Machine"
+/obj/soviet/setpiece/console/bank1{
+	pixel_x = 10;
+	pixel_y = 1
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
@@ -75064,21 +75062,6 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
-"ftk" = (
-/obj/decal/fakeobjects{
-	desc = "There's alot of buttons and switches on here. Best not to touch it";
-	dir = 10;
-	icon = "icons/obj/sovietcomp.dmi";
-	icon_state = "soveitnuclearconsole";
-	interesting = "The scanner picks up some unknow energy traces. Huh";
-	name = "Soviet Consoles"
-	},
-/obj/map/light/sovietbattle,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "fwA" = (
 /obj/item/storage/wall/fire{
 	dir = 4;
@@ -75497,6 +75480,9 @@
 	icon_state = "????";
 	name = "????"
 	},
+/obj/soviet/setpiece/console/smallcontrol{
+	interesting = ""The scanner picks up some unknow energy traces. Huh""
+	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -75592,6 +75578,18 @@
 /obj/item/luggable_computer/personal/adhara_laptop,
 /turf/unsimulated/floor/carpet/office/other,
 /area/centcom/offices/adhara)
+"hiS" = (
+/obj/critter/zombie/meatmonaut{
+	desc = "What the fuck is this thing. How the fuck did it get in here through a lockdown anyways.";
+	icon = 'icons/misc/soviet.dmi';
+	icon_state = "????";
+	name = "????"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "hjf" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
@@ -75925,6 +75923,27 @@
 /obj/burning_barrel,
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/centcom/offices/marknstein)
+"icM" = (
+/obj/critter/zombie/meatmonaut{
+	desc = "What the fuck is this thing. How the fuck did it get in here through a lockdown anyways.";
+	icon = 'icons/misc/soviet.dmi';
+	icon_state = "????";
+	name = "????"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 6;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit";
+	tag = "icon-conduit (SOUTHEAST)"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "iiP" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "13"
@@ -76199,6 +76218,14 @@
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
 "iVZ" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 9;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
 /obj/decal/fakeobjects{
 	icon = 'icons/obj/machines/nuclear64x32.dmi';
 	icon_state = "reactoroff";
@@ -77082,6 +77109,12 @@
 /obj/decal/cleanable/blood/tracks{
 	dir = 4
 	},
+/obj/critter/zombie/meatmonaut{
+	desc = "What the fuck is this thing";
+	icon = 'icons/misc/soviet.dmi';
+	icon_state = "????";
+	name = "????"
+	},
 /turf/unsimulated/floor/carpet/office,
 /area/prefab/threeonefiveone/level_two)
 "ljR" = (
@@ -77711,6 +77744,28 @@
 	name = "\proper the murderbox"
 	},
 /area/sim/gunsim)
+"mIT" = (
+/obj/decal/fakeobjects{
+	icon = 'icons/obj/machines/nuclear64x32.dmi';
+	icon_state = "reactoroff";
+	interesting = "The scanner picks up some exotic material inside of the core. It reports it's simular to Kosharmite";
+	name = "Nuclear Core"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	tag = "icon-conduit (EAST)"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "mJF" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/pod2)
@@ -77886,6 +77941,10 @@
 /turf/space,
 /turf/unsimulated/floor/carpet/office,
 /area/hospital/samostrel)
+"ndc" = (
+/obj/soviet/setpiece/console/bank2,
+/turf/unsimulated/floor/carpet/office,
+/area/prefab/threeonefiveone/level_two)
 "nfJ" = (
 /obj/railing{
 	dir = 1
@@ -77999,6 +78058,18 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"nry" = (
+/obj/railing{
+	dir = 1
+	},
+/obj/railing{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "nrB" = (
 /obj/stool/chair/comfy{
 	dir = 1
@@ -78589,6 +78660,21 @@
 "osO" = (
 /turf/unsimulated/floor/carpet/office/other,
 /area/centcom/offices/adhara)
+"otZ" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A Soviet tape drive.  It doesn't look like it has been touched in a while";
+	dir = 1;
+	icon = 'icons/misc/hospital.dmi';
+	icon_state = "tapedrive0";
+	name = "broken tape drive"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "oum" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma/rd)
@@ -78652,6 +78738,21 @@
 /turf/space,
 /turf/unsimulated/floor/caution/east,
 /area/hospital/samostrel)
+"oAp" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 8;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "oAZ" = (
 /obj/machinery/door/airlock/external,
 /turf/unsimulated/outdoors/grass,
@@ -78843,6 +78944,22 @@
 /obj/window/south,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"oYJ" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 9;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	tag = "icon-conduit (NORTHWEST)"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "oZS" = (
 /obj/machinery/light,
 /obj/table/wood/auto/desk,
@@ -79064,6 +79181,22 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"pyU" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 10;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	tag = "icon-conduit (SOUTHWEST)"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "pBy" = (
 /obj/item/storage/wall/emergency{
 	pixel_y = 32
@@ -79303,10 +79436,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
-"qfu" = (
-/obj/table/folding,
-/turf/unsimulated/floor/carpet/office,
-/area/prefab/threeonefiveone/level_two)
 "qfx" = (
 /obj/grille/steel,
 /obj/window/north,
@@ -79335,9 +79464,8 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "gibbl2"
 	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+/turf/unsimulated/floor/stairs/medical/wide{
+	dir = 8
 	},
 /area/prefab/threeonefiveone/level_two)
 "qgj" = (
@@ -79360,6 +79488,20 @@
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/engine,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"qiC" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 9;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "qiR" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 1
@@ -80048,13 +80190,10 @@
 	icon_state = "blue"
 	})
 "rQu" = (
-/obj/critter/zombie/meatmonaut{
-	desc = "What the fuck is this thing";
-	icon = 'icons/misc/soviet.dmi';
-	icon_state = "????";
-	name = "????"
+/obj/soviet/setpiece/console/bank1{
+	pixel_x = 17;
+	pixel_y = 1
 	},
-/obj/stool/chair/comfy,
 /turf/unsimulated/floor/carpet/office,
 /area/prefab/threeonefiveone/level_two)
 "rQC" = (
@@ -80285,6 +80424,20 @@
 /obj/table/regal/auto,
 /turf/unsimulated/floor/carpet/red/standard,
 /area/centcom/offices/questx)
+"sjl" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 6;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "slL" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 10;
@@ -80366,7 +80519,6 @@
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/lobby)
 "sva" = (
-/obj/table/folding,
 /obj/map/light/sovietbattle,
 /turf/unsimulated/floor/carpet/office,
 /area/prefab/threeonefiveone/level_two)
@@ -80505,6 +80657,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
 "teA" = (
+/obj/railing,
 /obj/railing{
 	dir = 4
 	},
@@ -80705,6 +80858,22 @@
 "tGB" = (
 /turf/unsimulated/floor/grey/side,
 /area/centcom/offices/cogwerks)
+"tGU" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	tag = "icon-conduit (NORTH)"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "tJi" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -80967,10 +81136,20 @@
 /area/crypt/sigma)
 "uxk" = (
 /obj/critter/zombie/meatmonaut{
-	desc = "What the fuck is this thing. How the fuck did it get in there anyways.";
+	desc = "What the fuck is this thing. How the fuck did it get in here through a lockdown anyways.";
 	icon = 'icons/misc/soviet.dmi';
 	icon_state = "????";
 	name = "????"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	tag = "icon-conduit (NORTH)"
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
@@ -81535,6 +81714,11 @@
 	},
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
+"wjv" = (
+/turf/unsimulated/floor/stairs/medical/wide/other{
+	dir = 8
+	},
+/area/prefab/threeonefiveone/level_two)
 "wky" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -81925,10 +82109,6 @@
 	icon_state = "floor3"
 	},
 /area/shuttle/escape/centcom/donut3)
-"xyV" = (
-/obj/table/wood/auto,
-/turf/unsimulated/floor/carpet/office,
-/area/prefab/threeonefiveone/level_two)
 "xzf" = (
 /obj/machinery/door/unpowered/wood{
 	icon = 'icons/obj/doors/door_office.dmi';
@@ -164684,7 +164864,7 @@ aaa
 kcV
 kcV
 fjD
-pTX
+ndc
 pTX
 pTX
 pTX
@@ -165288,8 +165468,8 @@ aaa
 kcV
 naA
 jsn
-xyV
-qfu
+pTX
+pTX
 pTX
 pTX
 pTX
@@ -165893,7 +166073,7 @@ kcV
 fjD
 dDa
 esO
-cki
+otZ
 nfJ
 wzg
 vCJ
@@ -166194,7 +166374,7 @@ aaa
 kcV
 fjD
 cki
-ftk
+lDg
 lTJ
 dLP
 cki
@@ -169518,9 +169698,9 @@ kcV
 fjD
 vGl
 teA
-cki
+wjv
 qfP
-iMu
+nry
 iMu
 fjD
 kcV
@@ -171027,11 +171207,11 @@ kcV
 efG
 jsn
 uxk
+pyU
 cki
 cki
 cki
-cki
-cki
+hiS
 efG
 jsn
 kcV
@@ -171329,11 +171509,11 @@ kcV
 wGq
 jsn
 cki
-iVZ
+mIT
 cki
-uxk
-iVZ
 cki
+iVZ
+tGU
 efG
 wgW
 kcV
@@ -171630,11 +171810,11 @@ aaa
 kcV
 kcV
 fjD
-cki
-cki
+hiS
+oAp
 tkJ
 tkJ
-cki
+oAp
 cki
 fjD
 kcV
@@ -171932,11 +172112,11 @@ aaa
 kcV
 kcV
 fjD
+oYJ
+icM
 cki
-cki
-cki
-cki
-cki
+qiC
+sjl
 cki
 fjD
 kcV
