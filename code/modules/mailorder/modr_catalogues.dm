@@ -170,9 +170,12 @@
 				else
 					var/creditCheck = src.authCard(usr)
 					if(creditCheck == "SUCCESS")
-						var/destination = "SHIP_TO_QM"
+						var/destination = "Send to QM"
 						if(pick_landmark(LANDMARK_MAILORDER_SPAWN)) //pick a destination if mail insertion is supported by map
-							destination = input(usr, "Enter mail tag without quotes, or SHIP_TO_QM for secure crate-based delivery", src.name, null) as text
+							var/list/possible_mail_dests = list("Send to QM")
+							for_by_tcl(S, /obj/machinery/disposal/mail)
+								possible_mail_dests += S.mail_tag
+							destination = input(usr, "Pick destination chute, or Send to QM for secure crate-based delivery", src.name, null) as null|anything in possible_mail_dests
 						if(destination && isalive(usr))
 							var/final_bill = src.cartcost //da-na-na na, da-na-na na na
 							var/buy_success = src.shipCart(destination)
@@ -226,22 +229,20 @@
 		var/spawn_package_at = null //used for targeting in mail delivery, and just as an integrity check for qm delivery
 		var/fire_package_to = null //ditto
 
-		if(destination == "SHIP_TO_QM")
+		if(destination == "Send to QM")
 			for(var/turf/T in get_area_turfs(/area/supply/spawn_point))
 				spawn_package_at = T
 				break
 			for(var/turf/T in get_area_turfs(/area/supply/delivery_point))
 				fire_package_to = T
 				break
-			if(!spawn_package_at || !fire_package_to)
-			//tried to QM-ship without map support (???), fail gracefully without paying
-				src.voidCart()
+			if(!spawn_package_at || !fire_package_to) //tried to QM-ship without map support... somehow
+				src.voidCart() //therefore can't ship, fail without paying
 				return 0
 			success_style = DELIVERED_TO_QM
 		else
-			if(!pick_landmark(LANDMARK_MAILORDER_SPAWN) || !pick_landmark(LANDMARK_MAILORDER_TARGET))
-			//tried to mail-ship without map support, fail gracefully without paying
-				src.voidCart()
+			if(!pick_landmark(LANDMARK_MAILORDER_SPAWN) || !pick_landmark(LANDMARK_MAILORDER_TARGET)) //tried to mail-ship without map support
+				src.voidCart() //therefore can't ship, fail without paying
 				return 0
 			success_style = DELIVERED_TO_MAIL
 
