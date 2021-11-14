@@ -1,4 +1,7 @@
 
+(t)sun nov 14 21
+(u)tarmunora
+(+)prismatic spray spell now hits targets once/burst, and has full ground-hit-chance
 (t)fri nov 12 21
 (u)Azrun, Gannets & Aquario
 (p)6646
