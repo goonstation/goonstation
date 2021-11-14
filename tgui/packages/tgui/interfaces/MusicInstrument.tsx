@@ -128,7 +128,7 @@ export const MusicInstrument = (_props, context) => {
                     stepPixelSize={6}
                     minValue={-12}
                     maxValue={12}
-                    title={'Transpose'}
+                    title="Transpose"
                     value={transpose}
                     onDrag={(e, v) => setTranspose(v)}
                   />
