@@ -44,6 +44,7 @@
 /area/prefab/threeonefiveone/level_one)
 "cV" = (
 /obj/map/light/sovietbattle,
+/obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -180,6 +181,7 @@
 /obj/random_item_spawner/dressup/one_or_zero,
 /obj/random_item_spawner/hat/one_or_zero,
 /obj/map/light/sovietbattle,
+/obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -314,12 +316,6 @@
 	icon_state = "floor3"
 	},
 /area/prefab/threeonefiveone/level_one)
-"yS" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_one)
 "yW" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/dirt/dirt4,
@@ -346,20 +342,6 @@
 	name = "radiator pipe"
 	},
 /turf/variableTurf/clear,
-/area/prefab/threeonefiveone/level_one)
-"Al" = (
-/obj/rack,
-/obj/item/clothing/head/helmet/space/soviet{
-	pixel_x = -5
-	},
-/obj/item/clothing/head/helmet/space/soviet,
-/obj/item/clothing/head/helmet/space/soviet{
-	pixel_x = 5
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
 /area/prefab/threeonefiveone/level_one)
 "AF" = (
 /obj/decal/cleanable/dirt/dirt4,
@@ -404,6 +386,7 @@
 /obj/storage/closet/wardrobe,
 /obj/random_item_spawner/dressup/one_or_zero,
 /obj/random_item_spawner/hat/one_or_zero,
+/obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -438,6 +421,7 @@
 	pixel_y = 23
 	},
 /obj/decal/cleanable/dirt/jen,
+/obj/map/light/sovietbattle,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -509,6 +493,7 @@
 	},
 /obj/decal/cleanable/dirt/dirt4,
 /obj/decal/cleanable/dirt/jen,
+/obj/map/light/sovietbattle,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -697,6 +682,7 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 1
 	},
+/obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -705,6 +691,15 @@
 "Vo" = (
 /obj/iv_stand,
 /obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_one)
+"VL" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/dirt/dirt4,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -732,6 +727,7 @@
 	desc = "A spray bottle labeled Чистящий спрей. Seems what ever was in it is all gone now";
 	name = "old spray bottle"
 	},
+/obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -984,9 +980,9 @@ zD
 GP
 MU
 JB
-KK
+QA
 OA
-ju
+VL
 ju
 OA
 KK
@@ -1009,7 +1005,7 @@ Ts
 Ts
 fO
 cV
-ju
+VL
 Kr
 Ts
 Ts
@@ -1030,7 +1026,7 @@ MU
 nI
 Wd
 OA
-ju
+VL
 lE
 OA
 QA
@@ -1053,10 +1049,10 @@ ON
 IL
 MU
 ju
-yS
+KK
 MU
 oD
-vb
+JB
 MU
 zD
 zD
@@ -1209,7 +1205,7 @@ KK
 KK
 KK
 KK
-Jo
+AF
 Kr
 Qe
 rx
@@ -1296,7 +1292,7 @@ ju
 KK
 MU
 SL
-Al
+qY
 qY
 MU
 zD
@@ -1340,7 +1336,7 @@ ju
 ju
 AF
 OA
-KK
+QA
 KK
 YV
 MU

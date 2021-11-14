@@ -38213,6 +38213,7 @@
 	},
 /obj/decal/fakeobjects/falseladder,
 /obj/decal/cleanable/blood/drip/high,
+/obj/map/light/sovietbattle,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -65445,6 +65446,7 @@
 	pixel_y = 14
 	},
 /obj/decal/cleanable/blood/splatter/extra,
+/obj/map/light/sovietbattle,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -75071,6 +75073,7 @@
 	interesting = "The scanner picks up some unknow energy traces. Huh";
 	name = "Soviet Consoles"
 	},
+/obj/map/light/sovietbattle,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -77528,6 +77531,22 @@
 	opacity = 1
 	},
 /area/adventure/channel)
+"mnP" = (
+/obj/machinery/door/airlock/soviet{
+	dir = 4;
+	layer = 10;
+	name = "airlock"
+	},
+/obj/machinery/door/poddoor/blast{
+	dir = 4;
+	icon = 'icons/obj/doors/sovblastdoor.dmi';
+	id = "3151reactor"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "moj" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/eggsplat,
@@ -78376,6 +78395,14 @@
 	dir = 1
 	},
 /area/crypt/graveyard)
+"nZQ" = (
+/obj/map/light/sovietbattle,
+/obj/map/light/sovietbattle,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "oad" = (
 /obj/map/light/graveyard,
 /obj/tombstone/memorial{
@@ -81421,6 +81448,13 @@
 	},
 /obj/railing{
 	dir = 4
+	},
+/obj/machinery/door_control{
+	desc = "A remote control switch for the inner blast door.";
+	id = "3151reactor";
+	name = "Blast Door Control";
+	pixel_x = 8;
+	pixel_y = 24
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
@@ -166165,7 +166199,7 @@ lTJ
 dLP
 cki
 qmd
-cki
+nZQ
 jQH
 fjD
 kcV
@@ -170692,8 +170726,8 @@ efG
 vtu
 myA
 myA
-myA
-myA
+mnP
+mnP
 myA
 myA
 vtu
