@@ -109,6 +109,9 @@ obj/item/engivac/attackby(obj/item/I as obj, mob/user as mob)
 		held_toolbox = I
 		I.set_loc(src)
 		update_icon(user)
+		var/obj/item/storage/toolbox/toolbox = I
+		if(user.s_active == toolbox.hud)
+			user.detach_hud(user.s_active)
 		return
 	..()
 
