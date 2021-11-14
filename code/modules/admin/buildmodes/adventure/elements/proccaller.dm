@@ -1,7 +1,7 @@
 /// Adventure puzzle thing - calls set proc on a linked object (via .name or .interesting)
 /obj/adventurepuzzle/triggerable/targetable/proccall
 	name = "proccaller"
-	invisibility = 20
+	invisibility = INVIS_ADVENTURE
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "proc_caller"
 	density = 0

@@ -93,7 +93,7 @@
 					. += "The authenticaion disk has been inserted."
 
 			if (!src.anchored)
-				. += "The floor bolts have been unsecured. The bomb can be moved around."
+				. += "The floor bolts are unsecure. The bomb can be moved around."
 			else
 				. += "It is firmly anchored to the floor by its floor bolts."
 
@@ -307,7 +307,7 @@
 		return timeleft
 
 	proc/take_damage(var/amount)
-		if(!isitspacemas)
+		if(startswith(src.icon_state, "nuclearbomb") && src.icon == initial(src.icon))
 			switch(src._health)
 				if(80 to 125)
 					src.icon_state = "nuclearbomb1"

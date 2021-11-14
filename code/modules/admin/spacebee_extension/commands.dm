@@ -20,7 +20,7 @@
 	help_message = "Locates a given ckey on all servers."
 	argument_types = list(/datum/command_argument/string/ckey="ckey")
 	execute(user, ckey)
-		var/mob/M = whois_ckey_to_mob_reference(ckey, exact=FALSE)
+		var/mob/M = ckey_to_mob(ckey, exact=FALSE)
 		if(!M)
 			return
 		var/list/result = list()
@@ -52,7 +52,7 @@
 /datum/spacebee_extension_command/ban
 	name = "ban"
 	server_targeting = COMMAND_TARGETING_MAIN_SERVER
-	help_message = "Bans a given ckey. Arguments in the order of ckey, length (number of minutes, or put \"hour\", \"day\", \"week\", \"month\",or \"perma\"), and ban reason. Make sure you specify the server that the person is on. Also keep in mind that this bans them from all servers. e.g. ban1 shelterfrog perma Lol rip."
+	help_message = "Bans a given ckey. Arguments in the order of ckey, length (number of minutes, or put \"hour\", \"day\", \"week\", \"month\", \"perma\" or \"untilappeal\"), and ban reason. Make sure you specify the server that the person is on. Also keep in mind that this bans them from all servers. e.g. ban1 shelterfrog perma Lol rip."
 	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/string="length",
 	/datum/command_argument/the_rest="reason")
 	execute(user, ckey, length, reason)
@@ -61,7 +61,7 @@
 			return
 		var/data[] = new()
 		data["ckey"] = ckey
-		var/mob/M = whois_ckey_to_mob_reference(ckey)
+		var/mob/M = ckey_to_mob(ckey)
 		if (M)
 			data["compID"] = M.computer_id
 			data["ip"] = M.lastKnownIP
@@ -77,6 +77,7 @@
 				return
 			data["ip"] = response["last_ip"]
 			data["compID"] = response["last_compID"]
+		data["text_ban_length"] = length
 		data["reason"] = reason
 		if (length == "hour")
 			length = 60
@@ -88,6 +89,10 @@
 			length = 43200
 		else if (length == "perma")
 			length = 0
+			data["text_ban_length"] = "Permanent"
+		else if (ckey(length) == "untilappeal")
+			length = -1
+			data["text_ban_length"] = "Until Appeal"
 		else
 			length = text2num(length)
 		if (!isnum(length))
@@ -151,7 +156,7 @@
 	argument_types = list(/datum/command_argument/string/ckey="ckey")
 
 	execute(user, ckey)
-		var/mob/M = whois_ckey_to_mob_reference(ckey)
+		var/mob/M = ckey_to_mob(ckey)
 		if (!M)
 			system.reply("Could not locate [ckey].", user)
 			return
@@ -333,7 +338,7 @@
 	help_message = "Sends items in a crate to cargo. Separate typepaths by spaces."
 	argument_types = list(/datum/command_argument/the_rest="types")
 	execute(user, types)
-		var/obj/to_send = new /obj/storage/crate/packing
+		var/obj/to_send = new /obj/storage/crate/wooden
 		var/list/type_str_list = splittext(types, " ")
 		for(var/type_str in type_str_list)
 			var/type = text2path(type_str)

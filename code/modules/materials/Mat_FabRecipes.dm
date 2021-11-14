@@ -747,7 +747,7 @@
 			refined.material.triggersOnAttack.Cut()
 			refined.material.addTrigger(refined.material.triggersOnAttack, A)
 
-			var/obj/item/material_piece/wad/W = unpool(/obj/item/material_piece/wad)
+			var/obj/item/material_piece/wad/W = new /obj/item/material_piece/wad
 
 			if(refined?.material)
 				refined.material.canMix = 0

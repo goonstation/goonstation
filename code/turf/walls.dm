@@ -9,7 +9,7 @@
 #endif
 	opacity = 1
 	density = 1
-	blocks_air = 1
+	gas_impermeable = 1
 	pathable = 1
 	flags = ALWAYS_SOLID_FLUID
 	text = "<font color=#aaa>#"
@@ -193,7 +193,7 @@
 					A.setMaterial(M)
 
 				if (prob(50))
-					var/atom/movable/B = unpool(/obj/item/raw_material/scrap_metal)
+					var/atom/movable/B = new /obj/item/raw_material/scrap_metal
 					B.set_loc(src)
 					if (src.material)
 						B.setMaterial(src.material)
@@ -243,7 +243,7 @@
 					B.setMaterial(M)
 
 				if (prob(50))
-					var/atom/movable/C = unpool(/obj/item/raw_material/scrap_metal)
+					var/atom/movable/C = new /obj/item/raw_material/scrap_metal
 					C.set_loc(src)
 					if (src.material)
 						C.setMaterial(src.material)

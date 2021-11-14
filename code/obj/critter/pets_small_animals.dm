@@ -232,7 +232,7 @@
 	var/cattype = 1
 	var/randomize_cat = 1
 	var/catnip = 0
-	event_handler_flags = USE_HASENTERED | USE_PROXIMITY | USE_FLUID_ENTER
+	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 
 	New()
 		if(src.name == "jons the catte")
@@ -287,7 +287,7 @@
 		if (src.alive && istype(W, /obj/item/plant/herb/catnip))
 			user.visible_message("<b>[user]</b> gives [src.name] the [W]!","You give [src.name] the [W].")
 			src.catnip_effect()
-			pool(W)
+			qdel(W)
 		else
 			..()
 
@@ -370,7 +370,7 @@
 		src.catnip = 45
 		src.visible_message("[src.name]'s eyes dilate.")
 
-	HasEntered(mob/living/carbon/M as mob)
+	Crossed(atom/movable/M as mob)
 		..()
 		if (src.sleeping || !src.alive)
 			return
@@ -1311,7 +1311,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			src.say(pick("Ha en bra dag!", "Kom igen!"))
 			if (C.amount <= 0) // no mo monay
 				user.u_equip(C)
-				pool(C)
+				qdel(C)
 			else
 				C.update_stack_appearance()
 

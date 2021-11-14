@@ -77,7 +77,7 @@ var/datum/score_tracker/score_tracker
 		else
 			score_enemy_failure_rate = get_percentage_of_fraction_and_whole(traitor_objectives_failed,traitor_objectives)
 
-		score_crew_survival_rate = get_percentage_of_fraction_and_whole(fatalities,crew_count)
+		score_crew_survival_rate = 100 - get_percentage_of_fraction_and_whole(fatalities,crew_count)
 
 		score_crew_survival_rate = clamp(score_crew_survival_rate,0,100)
 		score_enemy_failure_rate = clamp(score_enemy_failure_rate,0,100)
@@ -214,7 +214,7 @@ var/datum/score_tracker/score_tracker
 			else grade = "Somebody fucked something up."
 
 		score_calculated = 1
-		boutput(world, "<b>Final Rating: <font size='4'>[final_score_all]%</font></b>")
+		boutput(world, "<br><b>Final Rating: <font size='4'>[final_score_all]%</font></b>")
 		boutput(world, "<b>Grade: <font size='4'>[grade]</font></b>")
 
 #ifndef  MAP_OVERRIDE_POD_WARS
@@ -233,6 +233,8 @@ var/datum/score_tracker/score_tracker
 		richest_total = 0
 		//search mobs in centcom
 		for (var/mob/M in mobs)
+			if (!ishuman(M))
+				continue
 			if(in_centcom(M))
 				if (!most_damaged_escapee)
 					most_damaged_escapee = M

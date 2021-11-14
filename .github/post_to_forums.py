@@ -26,7 +26,7 @@ LOGIN = {
 LOGOUT = {
     "url": URL + "/member.php",
     "action": "logout",
-    "logoutkey": os.environ["FORUM_LOGOUT_KEY"]
+    "logoutkey": "let's hope this wasn't necessary",
 }
 
 s = requests.Session()

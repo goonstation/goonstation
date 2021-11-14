@@ -22,7 +22,7 @@
 	src.blend_mode = BLEND_ADD
 	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_FLOCKMIND)
 	src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-	src.see_invisible = 15
+	src.see_invisible = INVIS_GHOST
 	src.see_in_dark = SEE_DARK_FULL
 	/// funk that color matrix up, my friend
 	src.apply_color_matrix(COLOR_MATRIX_FLOCKMIND, COLOR_MATRIX_FLOCKMIND_LABEL)
@@ -109,7 +109,7 @@
 /mob/living/intangible/flock/projCanHit(datum/projectile/P)
 	return P.hits_ghosts
 
-/mob/living/intangible/flock/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/mob/living/intangible/flock/Cross(atom/movable/mover)
 	if (istype(mover, /obj/projectile))
 		var/obj/projectile/proj = mover
 		if (istype(proj.proj_data, /datum/projectile/energy_bolt_antighost))

@@ -275,7 +275,7 @@ toxic - poisons
 	shot_sound = 'sound/weapons/snipershot.ogg'
 	dissipation_delay = 8
 	dissipation_rate = 5
-	cost = 50
+	cost = 25
 	power = 35
 	color_red = 0.4
 	color_green = 0.5

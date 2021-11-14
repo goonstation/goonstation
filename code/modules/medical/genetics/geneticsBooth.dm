@@ -40,7 +40,7 @@
 	pixel_x = -3
 	anchored = 1
 	density = 1
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 	appearance_flags = TILE_BOUND | PIXEL_SCALE | LONG_GLIDE
 	req_access = list(access_captain, access_head_of_personnel, access_maxsec, access_medical_director)
 
@@ -95,6 +95,8 @@
 		workingoverlay.pixel_x = 3
 		workingoverlay.pixel_y = 2
 		workingoverlay.layer = src.layer + 0.1
+
+		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
 	disposing()
 		STOP_TRACKING
@@ -303,17 +305,17 @@
 				if (istype(perp_id))
 
 					//subtract from perp bank account
-					var/datum/data/record/account = null
+					var/datum/db_record/account = null
 					account = FindBankAccountByName(perp_id.registered)
 					if (account)
-						if (account.fields["current_money"] >= selected_product.cost)
-							account.fields["current_money"] -= selected_product.cost
+						if (account["current_money"] >= selected_product.cost)
+							account["current_money"] -= selected_product.cost
 
 							//add to genetecists budget etc
 							if (selected_product.registered_sale_id)
 								account = FindBankAccountByName(selected_product.registered_sale_id)
 								if (account)
-									account.fields["current_money"] += selected_product.cost/2
+									account["current_money"] += selected_product.cost/2
 									wagesystem.research_budget += selected_product.cost/2
 								else
 									wagesystem.research_budget += selected_product.cost
@@ -333,7 +335,6 @@
 						M.show_text("No bank account found for [perp_id.registered]!", "blue")
 
 	proc/notify_sale(var/budget_inc, var/split_with = 0)
-		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
 
 		var/string = "Notification: [budget_inc] credits earned from last booth sale."
@@ -341,30 +342,25 @@
 			string += "Splitting half of profits with [split_with]."
 
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT", "group"=list(MGD_MEDRESEACH, MGA_SALES), "sender"="00000000", "message"=string)
-		pdaSignal.transmission_method = TRANSMISSION_RADIO
-		if(transmit_connection != null)
-			transmit_connection.post_signal(src, pdaSignal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal)
 
 		//playsound BEEP BEEEEEEEEEEP
 
 	proc/notify_empty(var/datum/geneboothproduct/GBP)
-		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
 
 		var/string = "Notification: [GBP.name] has sold out!"
 
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT", "group"=list(MGD_MEDRESEACH, MGA_SALES), "sender"="00000000", "message"=string)
-		pdaSignal.transmission_method = TRANSMISSION_RADIO
-		if(transmit_connection != null)
-			transmit_connection.post_signal(src, pdaSignal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal)
 
-	CanPass(var/mob/M, var/atom/oldloc)
+	Cross(var/mob/M)
 		.= ..()
-		if (oldloc && oldloc.y == src.y)
+		if (M && M.y == src.y)
 			if (!occupant && selected_product && ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if (H.bioHolder && !H.bioHolder.HasEffect(selected_product.id))
-					eject_dir = get_dir(oldloc,src)
+					eject_dir = get_dir(M,src)
 					M.set_loc(src)
 					occupant = M
 					letgo_hp = initial(letgo_hp)

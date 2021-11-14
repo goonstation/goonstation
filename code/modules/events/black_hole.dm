@@ -56,7 +56,7 @@
 			playsound(src,'sound/machines/engine_alert3.ogg',100,0,5,0.5)
 			animate(src, transform = matrix(4, MATRIX_SCALE), time = 300, loop = 0, easing = LINEAR_EASING)
 		if (random_events.announce_events)
-			command_alert("A severe gravitational anomaly has been detected on the [station_or_ship()] in [src.loc.loc]. It may collapse into a black hole if not stabilized. All personnel should feed mass to the anomaly until it stabilizes.", "Gravitational Anomaly")
+			command_alert("A severe gravitational anomaly has been detected on the [station_or_ship()] in [get_area(src)]. It may collapse into a black hole if not stabilized. All personnel should feed mass to the anomaly until it stabilizes.", "Gravitational Anomaly")
 
 		sleep(lifespan)
 		if (!stable)
@@ -142,7 +142,7 @@
 			return
 
 		for (var/atom/X in range(7,src))
-			if (X == src)
+			if (X == src || (X.event_handler_flags & IMMUNE_SINGULARITY))
 				continue
 			var/area/A = get_area(X)
 			if(A?.sanctuary) continue
@@ -226,7 +226,7 @@
 		else if (istype(T,/turf/simulated/wall))
 			var/atom/A = new /obj/structure/girder/reinforced(T)
 
-			var/atom/movable/B = unpool(/obj/item/raw_material/scrap_metal)
+			var/atom/movable/B = new /obj/item/raw_material/scrap_metal
 			B.set_loc(T)
 
 			if(T.material)
