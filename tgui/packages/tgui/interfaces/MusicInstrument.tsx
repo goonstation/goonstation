@@ -7,7 +7,7 @@ type MusicInstrumentData = {
   notes: string[];
 };
 
-export const MusicInstrument = (props, context) => {
+export const MusicInstrument = (_props, context) => {
   const { act, data } = useBackend<MusicInstrumentData>(context);
   const { name, notes } = data;
 
