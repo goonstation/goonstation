@@ -101,12 +101,6 @@
 	proc/post_play_effect(mob/user as mob)
 		return
 
-<<<<<<< HEAD
-	attack_self(mob/user as mob)
-		..()
-		src.add_fingerprint(user)
-		src.play(user)
-=======
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -158,7 +152,6 @@
 		else
 			src.play(user)
 
->>>>>>> 37b1a2846... Cleaned up instrument code, additional UI, etc
 
 
 /* -------------------- Large Instruments -------------------- */
