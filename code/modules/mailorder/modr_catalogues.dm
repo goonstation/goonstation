@@ -187,11 +187,7 @@
 									spender["current_money"] -= final_bill
 								else
 									message_admins("<span class='alert'>[src] tried to charge a card that doesn't exist, yell at kubius</span>")
-								switch(buy_success)
-									if(DELIVERED_TO_MAIL)
-										displayMessage = "[bicon(master)] Thank you for your purchase! Delivery to '[destination]' in progress."
-									if(DELIVERED_TO_QM)
-										displayMessage = "[bicon(master)] Thank you for your purchase! Your items will be sent to the quartermaster's office."
+								displayMessage = "[bicon(master)] Thank you for your purchase! Order will arrive when cleared by local quartermasters."
 								src.mode = MODE_LIST
 							src.master.display_message(displayMessage)
 					else
@@ -222,50 +218,29 @@
 		src.master.updateSelfDialog()
 		return
 
-	// arrange for package construction/shipping, then clear cart
+	// arrange for package assessment by QM, then clear cart
 	proc/shipCart(var/destination)
-		var/list/boxstock = list()
-		var/success_style = null //feeds back via return to let purchase process know what to tell the user
-		var/spawn_package_at = null //used for targeting in mail delivery, and just as an integrity check for qm delivery
-		var/fire_package_to = null //ditto
+		var/datum/mailorder_manifest/manifest = new /datum/mailorder_manifest
+		var/success_style = DELIVERED_TO_QM //tracks type of order placement for reply purposes
 
-		if(destination == "Send to QM")
-			for(var/turf/T in get_area_turfs(/area/supply/spawn_point))
-				spawn_package_at = T
-				break
-			for(var/turf/T in get_area_turfs(/area/supply/delivery_point))
-				fire_package_to = T
-				break
-			if(!spawn_package_at || !fire_package_to) //tried to QM-ship without map support... somehow
-				src.voidCart() //therefore can't ship, fail without paying
-				return 0
-			success_style = DELIVERED_TO_QM
-		else
+		if(destination != "Send to QM")
+			success_style = DELIVERED_TO_MAIL
 			if(!pick_landmark(LANDMARK_MAILORDER_SPAWN) || !pick_landmark(LANDMARK_MAILORDER_TARGET)) //tried to mail-ship without map support
 				src.voidCart() //therefore can't ship, fail without paying
 				return 0
-			success_style = DELIVERED_TO_MAIL
+
+		manifest.orderedby = src.master.ID_card?.registered
+		manifest.order_cost = src.cartcost
+		manifest.order_catalogue = src.name
+		manifest.dest_tag = destination
+		manifest.notify_netid = src.master.net_id
 
 		for(var/datum/mail_order/F in src.cart)
-			boxstock += F.order_items
+			manifest.stock += F.order_items
+			manifest.stock_frontend += "[F.name]<br>"
 
-		if(success_style == DELIVERED_TO_MAIL) //set up for direct yeet
-			var/obj/item/storage/box/mailorder/package = new /obj/item/storage/box/mailorder()
-			package.spawn_contents = boxstock
-			if(src.master.ID_card?.registered)
-				package.name = "mail-order box ([src.master.ID_card.registered])"
-			package.mail_dest = destination
-			package.yeetself()
-		else if(success_style == DELIVERED_TO_QM) //set up for qm delivery
-			var/obj/storage/secure/crate/mailorder/package = new /obj/storage/secure/crate/mailorder()
-			package.spawn_contents = boxstock
-			if(src.master.ID_card?.registered)
-				package.registered = src.master.ID_card.registered
-			package.launch_procedure()
-			shippingmarket.receive_crate(package)
-		else //how did we fail here? not sure, but fail gracefully without paying.
-			src.voidCart()
-			return 0
+		shippingmarket.mailorders += manifest
+
 		//successful purchase, clear out the cart and let purchase proc know
 		src.voidCart()
 		return success_style

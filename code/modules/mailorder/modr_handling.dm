@@ -1,3 +1,47 @@
+//mail order manifest: sent to quartermasters to sign off on the goods being imported
+/datum/mailorder_manifest
+	var/list/stock = list() //things to instantiate in the order
+	var/stock_frontend = "" //list of contents to show in the console
+	var/dest_tag = "Send to QM" //destination to ship to, defaults to QM
+	var/orderedby = null //name of orderer, as printed on card
+	var/orderer_account = null //account associated with orderer, used for refund
+	var/order_cost = null //tracks cost for refund in case of denial
+	var/order_catalogue = "unknown seller" //name of catalogue's fulfiller (same as name of catalogue program)
+	var/notify_netid = null //device address to ping
+
+	proc/approve_order()
+		switch(dest_tag)
+			if("Send to QM") //set up for qm delivery
+				var/obj/storage/secure/crate/mailorder/package = new /obj/storage/secure/crate/mailorder()
+				package.spawn_contents = src.stock
+				if(src.orderedby)
+					package.registered = src.orderedby
+				package.launch_procedure()
+				shippingmarket.receive_crate(package)
+			else //set up for direct yeet
+				var/obj/item/storage/box/mailorder/package = new /obj/item/storage/box/mailorder()
+				package.spawn_contents = src.stock
+				if(src.orderedby)
+					package.name = "mail-order box ([orderedby])"
+				package.mail_dest = src.dest_tag
+				package.yeetself()
+		shippingmarket.supply_history += "Mail-order by [src.orderedby] fulfilled by [src.order_catalogue]. Recipient billed [src.order_cost].<BR>"
+		if(notify_netid)
+			var/datum/signal/pdaSignal = get_free_signal()
+			pdaSignal.data = list("address_1"=notify_netid, "command"="text_message", "sender_name"="CARGO-MAILBOT", "sender"="00000000", "message"="Notification: Your mail order has been approved. Destination: [dest_tag]")
+			radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
+
+	proc/deny_order()
+		if(src.orderedby)
+			var/refund_acc = FindBankAccountByName(src.orderedby)
+			if(refund_acc)
+				refund_acc["current_money"] += src.order_cost
+		if(notify_netid)
+			var/datum/signal/pdaSignal = get_free_signal()
+			pdaSignal.data = list("address_1"=notify_netid, "command"="text_message", "sender_name"="CARGO-MAILBOT", "sender"="00000000", "message"="Notification: Mail order denied by local quartermaster service.")
+			radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
+
+
 //boxes and loaders for transfer of ordered goods to purchaser
 
 /////////////CONFIGURATION NOTES/////////////

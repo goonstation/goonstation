@@ -273,6 +273,12 @@ Code:
 			dat += S
 		dat += "</ol>"
 
+		dat += "Pending mail orders: <BR><ol>"
+		for(var/S in shippingmarket.mailorders)
+			var/datum/mailorder_manifest/MM = S
+			dat += "<li>Order by [MM.orderedby] - [length(MM.stock)] items</li>"
+		dat += "</ol>"
+
 		dat += "Current requests: <BR><ol>"
 		for(var/S in shippingmarket.supply_requests)
 			var/datum/supply_order/SO = S

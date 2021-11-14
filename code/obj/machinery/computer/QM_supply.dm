@@ -379,7 +379,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		</div>
 		Budget: <strong>[wagesystem.shipping_budget]</strong> Credits
 		<div style='clear: both; text-align: center; font-weight: bold; padding: 0.2em;'>
-			<a href='[topicLink("requests")]'>Requests ([shippingmarket.supply_requests.len])</a> &bull;
+			<a href='[topicLink("requests")]'>Requests ([shippingmarket.supply_requests.len + shippingmarket.mailorders.len])</a> &bull;
 			<a href='[topicLink("order")]'>Place Order</a> &bull;
 			<a href='[topicLink("order_history")]'>Order History</a> &bull;
 			<a href='[topicLink("viewmarket")]'>Shipping Market</a>
@@ -585,9 +585,22 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				. = "<h2>Current Requests</h2><br><a href='[topicLink("requests", "clear")]'>Clear all</a><br><ul>"
 				for(var/datum/supply_order/SO in shippingmarket.supply_requests)
 					. += "<li>[SO.object.name], requested by [SO.orderedby] from [SO.console_location]. Price: [SO.object.cost] <a href='[topicLink("order", "buy", list(what = "\ref[SO]"))]'>Approve</a> <a href='[topicLink("requests", "remove", list(what = "\ref[SO]"))]'>Deny</a></li>"
-
+				for(var/datum/mailorder_manifest/MM in shippingmarket.mailorders)
+					. += "<li>Mail order by [MM.orderedby]. Contents: <br>[MM.stock_frontend] <a href='[topicLink("requests", "mail_approve", list(what = "\ref[MM]"))]'>Approve</a> <a href='[topicLink("requests", "mail_remove", list(what = "\ref[MM]"))]'>Deny</a></li>"
 				. += {"</ul>"}
 				return .
+
+			if ("mail_approve")
+				var/datum/mailorder_manifest/order2handle = locate(href_list["what"])
+				order2handle.approve_order()
+				shippingmarket.mailorders -= order2handle
+				. = {"Request approved."}
+
+			if ("mail_remove")
+				var/datum/mailorder_manifest/order2handle = locate(href_list["what"])
+				order2handle.deny_order()
+				shippingmarket.mailorders -= order2handle
+				. = {"Request denied."}
 
 			if ("remove")
 				shippingmarket.supply_requests -= locate(href_list["what"])
@@ -597,6 +610,10 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			if ("clear")
 				shippingmarket.supply_requests = null
 				shippingmarket.supply_requests = new/list()
+				for(var/datum/mailorder_manifest/order2handle in shippingmarket.mailorders)
+					order2handle.deny_order()
+				shippingmarket.mailorders = null
+				shippingmarket.mailorders = new/list()
 				// todo: message people that their stuff's been denied?
 				. = {"All requests have been cleared."}
 

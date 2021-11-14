@@ -12,7 +12,8 @@
 	var/last_market_update = 0
 
 	var/list/supply_requests = list() // Pending requests, of type /datum/supply_order
-	var/list/supply_history = list() // History of all approved requests, of type string
+	var/list/mailorders = list() // Mail orders awaiting clearance, of type /datum/mailorder_manifest
+	var/list/supply_history = list() // History of ALL approved requests, of type string
 
 	var/points_per_crate = 10
 
