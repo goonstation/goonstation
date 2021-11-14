@@ -269,6 +269,7 @@
 "xs" = (
 /obj/machinery/door/airlock/soviet{
 	dir = 4;
+	layer = 10;
 	name = "airlock"
 	},
 /turf/unsimulated/floor{
@@ -586,6 +587,8 @@
 /area/prefab/threeonefiveone/level_one)
 "OA" = (
 /obj/machinery/door/airlock/soviet{
+	dir = 1;
+	layer = 10;
 	name = "airlock"
 	},
 /turf/unsimulated/floor{
@@ -606,6 +609,7 @@
 /obj/decal/cleanable/dirt/jen,
 /obj/machinery/door/airlock/soviet{
 	dir = 4;
+	layer = 10;
 	name = "airlock"
 	},
 /turf/unsimulated/floor{
@@ -1223,7 +1227,7 @@ KY
 rg
 Qe
 Ts
-yS
+xs
 Qe
 Ts
 Ts

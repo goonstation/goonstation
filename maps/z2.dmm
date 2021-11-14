@@ -65104,6 +65104,7 @@
 "dvw" = (
 /obj/machinery/door/airlock/soviet{
 	dir = 4;
+	layer = 10;
 	name = "airlock"
 	},
 /turf/unsimulated/floor{
@@ -77594,6 +77595,7 @@
 "mvS" = (
 /obj/machinery/door/airlock/soviet{
 	dir = 4;
+	layer = 10;
 	name = "airlock"
 	},
 /turf/unsimulated/floor/carpet/office,
