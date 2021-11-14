@@ -41,7 +41,7 @@
 
 	proc/launch_procedure()
 		if(src.registered)
-			src.name = "[src.registered]'s mail-order crate"
+			src.name = "\improper [src.registered]'s mail-order crate"
 			src.desc = "A crate that holds mail-ordered items. It's registered to [src.registered]'s ID card."
 
 //Auto chute that accepts boxes for mail-based delivery, and nothing else

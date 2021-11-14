@@ -1,6 +1,6 @@
 //catalogue cartridges: the main event
 /obj/item/disk/data/cartridge/catalogue
-	name = "\improper unprogrammed mail-order cartridge"
+	name = "unprogrammed mail-order cartridge"
 	desc = "An electronic mail-order cartridge for PDAs with built-in payment handling."
 
 	audiovideo
@@ -112,7 +112,7 @@
 				else
 					for(var/P in src.canbuy)
 						var/datum/mail_order/F = src.canbuy[P]
-						if(!istype(F, /datum/mail_order))
+						if(!istype(F))
 							continue
 						var/itemct = length(F.order_items)
 						. += {"<a href='byond://?src=\ref[src];add_to_cart=[F.cleanname]'>[F.name]</a> - [itemct] Item(s) - $[F.cost]<br>
@@ -251,24 +251,20 @@
 				return 0
 			success_style = DELIVERED_TO_MAIL
 
-		for(var/P in src.cart)
-			var/datum/mail_order/F = P
-			if(!istype(F, /datum/mail_order))
-				continue
-			for(var/loaditem in F.order_items)
-				boxstock += loaditem
+		for(var/datum/mail_order/F in src.cart)
+			boxstick += F.order_items
 
 		if(success_style == DELIVERED_TO_MAIL) //set up for direct yeet
 			var/obj/item/storage/box/mailorder/package = new /obj/item/storage/box/mailorder()
 			package.spawn_contents = boxstock
-			if(src.master.ID_card && src.master.ID_card.registered)
+			if(src.master.ID_card?.registered)
 				package.name = "mail-order box ([src.master.ID_card.registered])"
 			package.mail_dest = destination
 			package.yeetself()
 		else if(success_style == DELIVERED_TO_QM) //set up for qm delivery
 			var/obj/storage/secure/crate/mailorder/package = new /obj/storage/secure/crate/mailorder()
 			package.spawn_contents = boxstock
-			if(src.master.ID_card && src.master.ID_card.registered)
+			if(src.master.ID_card?.registered)
 				package.registered = src.master.ID_card.registered
 			package.launch_procedure()
 			shippingmarket.receive_crate(package)
@@ -289,10 +285,7 @@
 		if(!src.master.ID_card.registered)
 			return "NO CARDHOLDER"
 		var/purchase_authed = 1
-		for(var/P in src.cart)
-			var/datum/mail_order/F = P
-			if(!istype(F, /datum/mail_order))
-				continue
+		for(var/datum/mail_order/F in src.cart)
 			if(!length(F.order_perm))
 				continue
 			purchase_authed = 0
