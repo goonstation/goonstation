@@ -464,7 +464,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 /obj/soviet/setpiece/console/nuclearcontrol //fuck you, its 133 at night and I'm tired cause it wont compile so this goes here. Fuck.
 	name = "Control Consoles"
 	icon = 'icons/obj/large/64x96.dmi'
-	icon_state = "sovietconsolelarge"
+	icon_state = "sovconsolelarge"
 	desc = "A huge console with many buttons and dials and levers, all turned off in a hurry. You feel like you shouldn't mess with any of it."
 
 /obj/soviet/setpiece/console/smallcontrol

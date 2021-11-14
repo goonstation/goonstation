@@ -508,7 +508,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "KNN_29"
 	item_state = "KNN_29"
 	force = MELEE_DMG_RIFLE
-	contraband = 0 //Why? 1. NT doesnt know this gun even exists. 2. This thing literally should only ever fire paintball rounds normally. If someone somehow gets lethals for this gun in some fashion, then that's not my problem and I hope the admin knows what they are doing.
+	contraband = 1 //Why? 1. NT doesnt know this gun even exists. 2. This thing literally should only ever fire paintball rounds normally. If someone somehow gets lethals for this gun in some fashion, then that's not my problem and I hope the admin knows what they are doing.
 	caliber = 0.762
 	max_ammo_capacity = 30
 	auto_eject = 1
@@ -521,7 +521,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	New()
 		ammo = new/obj/item/ammo/bullets/knnpaint
-		set_current_projectile(new/datum/projectile/bullet/knnpaint)
 		projectiles = list(current_projectile, new/datum/projectile/bullet/knnpaint/auto)
 		AddComponent(/datum/component/holdertargeting/fullauto, 1 DECI SECONDS, 1 DECI SECONDS, 1)
 		..()
