@@ -12,8 +12,9 @@
 		return TRUE
 	for(var/A in targetList)
 		var/obj/trait/T = getTraitById(A)
-		if(T.category == C.category)
-			return FALSE
+		for (var/cat in T.category)
+			if (cat in C.category)
+				return FALSE
 
 /datum/traitPreferences
 	var/list/traits_selected = list()
@@ -195,7 +196,7 @@
 	image_name = "robotarmsR.png"
 	points = 0
 	isPositive = 1
-	category = "body"
+	category = list("body")
 
 	onAdd(var/mob/owner)
 		SPAWN_DBG(4 SECONDS) //Fuck this. Fuck the way limbs are added with a delay. FUCK IT
@@ -216,7 +217,7 @@
 	image_name = "robotarmsR.png"
 	points = -2
 	isPositive = 0
-	category = "body"
+	category = list("body")
 
 	onAdd(var/mob/owner)
 		SPAWN_DBG(4 SECONDS)
@@ -234,7 +235,7 @@
 	cleanName = "Adamantium Skeleton"
 	desc = "Halves the chance that an explosion will blow off your limbs."
 	id = "explolimbs"
-	category = "body"
+	category = list("body")
 	points = -2
 	isPositive = 1
 
@@ -269,7 +270,7 @@
 	image_name = "swedenY.png"
 	points = 0
 	isPositive = 1
-	category = "language"
+	category = list("language")
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("accent_swedish", 0, 0, 0, 1)
@@ -282,7 +283,7 @@
 	image_name = "frY.png"
 	points = 0
 	isPositive = 1
-	category = "language"
+	category = list("language")
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("accent_french", 0, 0, 0, 1)
@@ -295,7 +296,7 @@
 	image_name = "scott.png"
 	points = 0
 	isPositive = 1
-	category = "language"
+	category = list("language")
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("accent_scots", 0, 0, 0, 1)
@@ -308,7 +309,7 @@
 	image_name = "ukY.png"
 	points = 0
 	isPositive = 1
-	category = "language"
+	category = list("language")
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("accent_chav", 0, 0, 0, 1)
@@ -321,7 +322,7 @@
 	image_name = "elvis.png"
 	points = 0
 	isPositive = 1
-	category = "language"
+	category = list("language")
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("accent_elvis", 0, 0, 0, 1)
@@ -334,7 +335,7 @@
 	image_name = "whatY.png"
 	points = 0
 //	isPositive = 1
-	category = "language"
+	category = list("language")
 	unselectable = 1 // this was not supposed to be a common thing!!
 /*
 	onAdd(var/mob/owner)
@@ -350,7 +351,7 @@
 	image_name = "finnish.png"
 	points = 0
 	isPositive = 1
-	category = "language"
+	category = list("language")
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("accent_finnish", 0, 0, 0, 1)
@@ -363,7 +364,7 @@
 	image_name = "yorkshire.png"
 	points = 0
 	isPositive = 1
-	category = "language"
+	category = list("language")
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("accent_tyke")
@@ -378,7 +379,7 @@
 	image_name = "catseyeG.png"
 	points = -1
 	isPositive = 1
-	category = "vision"
+	category = list("vision")
 
 /obj/trait/infravision
 	name = "Infravision (-1) \[Vision\]"
@@ -388,7 +389,7 @@
 	image_name = "infravisionG.png"
 	points = -1
 	isPositive = 0
-	category = "vision"
+	category = list("vision")
 
 /obj/trait/shortsighted
 	name = "Short-sighted (+1) \[Vision\]"
@@ -417,7 +418,7 @@
 	desc = "Spawn with permanent blindness and a VISOR."
 	image_name = "blind.png"
 	id = "blind"
-	category = "vision"
+	category = list("vision")
 	points = 2
 	isPositive = 0
 
@@ -442,7 +443,7 @@
 	image_name = "mildly_mutatedB.png"
 	points = 0
 	isPositive = 0
-	category = "genetics"
+	category = list("genetics")
 
 	onAdd(var/mob/owner)
 		var/datum/bioHolder/B = owner.bioHolder
@@ -456,7 +457,7 @@
 	image_name = "dontmutateB.png"
 	points = -2
 	isPositive = 0
-	category = "genetics"
+	category = list("genetics")
 
 // TRINKETS/ITEMS - Purple Border
 
@@ -468,7 +469,7 @@
 	image_name = "beretP.png"
 	points = -1
 	isPositive = 1
-	category = "trinkets"
+	category = list("trinkets")
 
 /obj/trait/petasusaphilic
 	name = "Petasusaphilic (-1) \[Trinkets\]"
@@ -478,7 +479,7 @@
 	image_name = "hatP.png"
 	points = -1
 	isPositive = 1
-	category = "trinkets"
+	category = list("trinkets")
 
 /obj/trait/conspiracytheorist
 	name = "Conspiracy Theorist (-1) \[Trinkets\]"
@@ -488,7 +489,7 @@
 	image_name = "conspP.png"
 	points = -1
 	isPositive = 1
-	category = "trinkets"
+	category = list("trinkets")
 
 /obj/trait/pawnstar
 	name = "Pawn Star (-1) \[Trinkets\]"
@@ -498,7 +499,7 @@
 	image_name = "pawnP.png"
 	points = -1
 	isPositive = 1
-	category = "trinkets"
+	category = list("trinkets")
 
 /obj/trait/beestfriend
 	name = "BEEst friend (-1) \[Trinkets\]"
@@ -508,7 +509,7 @@
 	image_name = "bee.png"
 	points = -1
 	isPositive = 1
-	category = "trinkets"
+	category = list("trinkets")
 
 /obj/trait/lunchbox
 	name = "Lunchbox (-1) \[Trinkets\]"
@@ -518,7 +519,26 @@
 	image_name = "lunchbox.png"
 	points = -1
 	isPositive = 1
-	category = "trinkets"
+	category = list("trinkets")
+
+/obj/trait/bald
+	name = "Bald (0) \[Trinkets, species\]"
+	cleanName = "Bald"
+	desc = "Start your shift with a wig instead of hair. I'm sure no one will be able to tell."
+	id = "bald"
+	icon_state = "placeholder"
+	points = 0
+	isPositive = 1
+	category = list("trinkets")
+
+/obj/trait/one_armed
+	name = "One Armed Spaceman (-2)"	//it's so expensive cause right now, one arm is a benefit in that you can't be handcuffed...
+	cleanName = "One Armed Spaceman"
+	desc = "You only have one arm. But which one? It's a mystery... or is it a thriller?"
+	id = "onearmed"
+	icon_state = "placeholder"
+	points = -2
+	isPositive = 1
 
 // Skill - White Border
 
@@ -527,7 +547,7 @@
 	cleanName = "Smooth talker"
 	desc = "Traders will tolerate 50% more when you are haggling with them."
 	id = "smoothtalker"
-	category = "skill"
+	category = list("skill")
 	points = -1
 	isPositive = 1
 
@@ -536,7 +556,7 @@
 	cleanName = "Matrix Flopout"
 	desc = "Flipping lets you dodge bullets and attacks for a higher stamina cost!"
 	id = "matrixflopout"
-	category = "skill"
+	category = list("skill")
 	points = -2
 	isPositive = 1
 
@@ -545,7 +565,7 @@
 	cleanName = "Happyfeet"
 	desc = "Sometimes people can't help but dance along with you."
 	id = "happyfeet"
-	category = "skill"
+	category = list("skill")
 	points = -1
 	isPositive = 1
 
@@ -568,7 +588,7 @@
 	points = 0
 	isPositive = 1
 	unselectable = 1
-	category = "job"
+	category = list("job")
 
 	onAdd(mob/owner)
 		return
@@ -605,6 +625,12 @@
 	cleanName = "Quartermaster Training"
 	desc = "Subject is proficent at haggling."
 	id = "training_quartermaster"
+
+/obj/trait/job/chef
+	name = "Kitchen Training"
+	cleanName = "Kitchen Training"
+	desc = "Subject is experienced in foodstuffs and their effects."
+	id = "training_chef"
 
 // bartender, detective, HoS
 /obj/trait/job/drinker
@@ -644,7 +670,7 @@
 	cleanName = "Athletic"
 	desc = "Great stamina! Frail body."
 	id = "athletic"
-	category = "stats"
+	category = list("stats")
 	points = -2
 	isPositive = 1
 
@@ -659,7 +685,7 @@
 	cleanName = "Big Bruiser"
 	desc = "Stronger punches but higher stamina cost!"
 	id = "bigbruiser"
-	category = "stats"
+	category = list("stats")
 	points = -2
 	isPositive = 1
 
@@ -896,6 +922,8 @@ obj/trait/pilot
 	id = "puritan"
 	points = 2
 	isPositive = 0
+	category = list("cloner_stuff")
+
 
 /obj/trait/survivalist
 	name = "Survivalist (-1)"
@@ -1025,7 +1053,7 @@ obj/trait/pilot
 	id = "lizard"
 	points = -1
 	isPositive = 1
-	category = "species"
+	category = list("species")
 	mutantRace = /datum/mutantrace/lizard
 
 /obj/trait/cow
@@ -1036,18 +1064,18 @@ obj/trait/pilot
 	id = "cow"
 	points = -1
 	isPositive = 1
-	category = "species"
+	category = list("species")
 	mutantRace = /datum/mutantrace/cow
 
 /obj/trait/skeleton
-	name = "Skeleton (-2) \[Species\]"
+	name = "Skeleton (-1) \[Species\]"
 	cleanName = "Skeleton"
 	image_name = "skeletonT.png"
 	desc = "Compress all of your skin and flesh into your bones, making you resemble a skeleton. Not as uncomfortable as it sounds."
 	id = "skeleton"
-	points = -2
+	points = -1
 	isPositive = 1
-	category = "species"
+	category = list("species", "cloner_stuff")
 	mutantRace = /datum/mutantrace/skeleton
 
 /obj/trait/roach
@@ -1058,7 +1086,7 @@ obj/trait/pilot
 	id = "roach"
 	points = -1
 	isPositive = 1
-	category = "species"
+	category = list("species")
 	mutantRace = /datum/mutantrace/roach
 
 //Infernal Contract Traits

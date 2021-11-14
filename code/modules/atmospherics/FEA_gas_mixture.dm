@@ -280,7 +280,7 @@ What are the archived variables for?
 			var/datum/gas/corresponding = src.get_or_add_trace_gas_by_type(trace_gas.type)
 			corresponding.moles += trace_gas.moles*giver.group_multiplier/group_multiplier
 
-	qdel(giver)
+	giver.dispose() // skip the qdel overhead
 	return 1
 
 //Proportionally removes amount of gas from the gas_mixture

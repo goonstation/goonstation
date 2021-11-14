@@ -51,6 +51,8 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/mous
 		if (!istype(H))
 			boutput(holder.owner, "Your target must be human!")
 			return 1
+		if(!IN_RANGE(target, holder.owner, max_range))
+			return 1
 		holder.owner.visible_message("<span class='alert'><b>[holder.owner] begins to cast a spell on [target]!</b></span>")
 		if (do_mob(holder.owner, target, 20))
 			if(!istype(get_area(holder.owner), /area/sim/gunsim))

@@ -65,7 +65,7 @@
 
 		// AppearanceHolder details
 		if (src.AH)
-			F["[profileNum]_pronouns"] << AH.pronouns.name
+			F["[profileNum]_pronouns"] << (isnull(AH.pronouns) ? "" : AH.pronouns.name)
 			F["[profileNum]_eye_color"] << AH.e_color
 			F["[profileNum]_hair_color"] << AH.customization_first_color
 			F["[profileNum]_facial_color"] << AH.customization_second_color

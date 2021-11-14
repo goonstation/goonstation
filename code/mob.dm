@@ -5,7 +5,7 @@
 	soundproofing = 10
 
 	flags = FPRINT | FLUID_SUBMERGE
-	event_handler_flags = USE_CANPASS
+
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | LONG_GLIDE
 
 	var/datum/mind/mind
@@ -35,6 +35,7 @@
 
 	//var/atom/movable/screen/zone_sel/zone_sel = null
 	var/datum/hud/zone_sel/zone_sel = null
+	var/atom/movable/name_tag/outer/name_tag
 
 	var/obj/item/device/energy_shield/energy_shield = null
 
@@ -186,6 +187,7 @@
 	var/list/datum/hud/huds = null
 
 	var/client/last_client // actually the current client, used by Logout due to BYOND
+	var/last_ckey
 	var/joined_date = null
 	mat_changename = 0
 	mat_changedesc = 0
@@ -206,6 +208,7 @@
 	var/unobservable = 0
 
 	var/mob_flags = 0
+	var/skipped_mobs_list = 0
 	var/click_delay = DEFAULT_CLICK_DELAY
 	var/combat_click_delay = COMBAT_CLICK_DELAY
 
@@ -245,11 +248,23 @@
 		src.bioHolder = new /datum/bioHolder(src)
 		src.initializeBioholder()
 	attach_hud(render_special)
-	mobs.Add(src)
+
+	var/turf/T = get_turf(src)
+	var/area/AR = get_area(src)
+	if(isnull(T) || T.z <= Z_LEVEL_STATION || AR.active)
+		mobs.Add(src)
+	else if(!(src.mob_flags & LIGHTWEIGHT_AI_MOB) && (!src.ai || !src.ai.exclude_from_mobs_list))
+		skipped_mobs_list |= SKIPPED_MOBS_LIST
+		LAZYLISTADDUNIQUE(AR.mobs_not_in_global_mobs_list, src)
+
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
 	mob_properties = list()
 	src.chat_text = new
+
+	src.name_tag = new
+	src.update_name_tag()
+	src.vis_contents += src.name_tag
 	START_TRACKING
 	. = ..()
 
@@ -303,6 +318,15 @@
 
 /mob/disposing()
 	STOP_TRACKING
+
+	src.vis_contents -= src.name_tag
+	qdel(src.name_tag)
+	src.name_tag = null
+
+	if(src.skipped_mobs_list)
+		skipped_mobs_list = 0
+		var/area/AR = get_area(src)
+		AR?.mobs_not_in_global_mobs_list?.Remove(src)
 
 	for(var/mob/dead/target_observer/TO in observers)
 		observers -= TO
@@ -393,13 +417,33 @@
 	lastattacked = null
 	lastattacker = null
 	health_update_queue -= src
+
+	for(var/x in src)
+		qdel(x)
+	if(hasvar(src, "hud")) // ew
+		qdel(src.vars["hud"])
+		src.vars["hud"] = null
+
 	..()
 	src.mob_properties = null
 
 /mob/Login()
-	// drsingh for cannot read null.address (still popping up though)
-	if (!src || !src.client)
-		return
+	if(src.skipped_mobs_list)
+		var/area/AR = get_area(src)
+		AR?.mobs_not_in_global_mobs_list?.Remove(src)
+	if(src.skipped_mobs_list & SKIPPED_MOBS_LIST && !(src.mob_flags & LIGHTWEIGHT_AI_MOB))
+		skipped_mobs_list &= ~SKIPPED_MOBS_LIST
+		global.mobs |= src
+	if(src.skipped_mobs_list & SKIPPED_AI_MOBS_LIST)
+		skipped_mobs_list &= ~SKIPPED_AI_MOBS_LIST
+		global.ai_mobs |= src
+
+	if(!src.last_ckey)
+		SPAWN_DBG(0)
+			var/area/AR = get_area(src)
+			AR?.wake_critters(src)
+
+	src.last_ckey = src.ckey
 
 	if (!src.client.chatOutput)
 		//At least once, some dude has gotten here without a chatOutput datum. Fuck knows how.
@@ -442,7 +486,7 @@
 			if (M && M.client && M.client.computer_id == src.client.computer_id)
 				logTheThing("admin", src, M, "has same computer ID as [constructTarget(M,"admin")]")
 				logTheThing("diary", src, M, "has same computer ID as [constructTarget(M,"diary")]", "access")
-				message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same </span><span class='alert'><B>computer ID</B><font color='blue'> as [key_name(M)]</span>")
+				message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same </span><span class='alert'><B>computer ID</B><font class='internal'> as [key_name(M)]</span>")
 				SPAWN_DBG(0)
 					if(M.lastKnownIP == src.client.address)
 						alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
@@ -513,6 +557,7 @@
 /mob/Logout()
 
 	//logTheThing("diary", src, null, "logged out", "access") <- sometimes shits itself and has been known to out traitors. Disabling for now.
+	src.last_client?.get_plane(PLANE_EXAMINE)?.alpha = 0
 
 	SEND_SIGNAL(src, COMSIG_MOB_LOGOUT)
 
@@ -539,8 +584,8 @@
 /mob/proc/onMouseUp(object,location,control,params)
 	return
 
-/mob/Bump(atom/A, yes)
-	if ((!( yes ) || src.now_pushing))
+/mob/Bump(atom/A)
+	if (src.now_pushing)
 		return
 
 	var/atom/movable/AM = A
@@ -1206,7 +1251,6 @@
 		item.dropped(src)
 		if (item)
 			item.layer = initial(item.layer)
-	T.Entered(item)
 
 /mob/proc/drop_item(obj/item/W)
 	.= 0
@@ -1481,9 +1525,7 @@
 	if (!isliving(src))
 		src.sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF | SEE_BLACKNESS
 
-/mob/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if (air_group || (height==0)) return 1
-
+/mob/Cross(atom/movable/mover)
 	if (istype(mover, /obj/projectile))
 		return !projCanHit(mover:proj_data)
 
@@ -2368,6 +2410,15 @@
 
 	return ..()
 
+/mob/proc/addAbility(var/abilityType)
+	abilityHolder.addAbility(abilityType)
+
+/mob/proc/removeAbility(var/abilityType)
+	abilityHolder.removeAbility(abilityType)
+
+/mob/proc/getAbility(var/abilityType)
+	return abilityHolder?.getAbility(abilityType)
+
 /mob/proc/full_heal()
 	src.HealDamage("All", 100000, 100000)
 	src.delStatus("drowsy")
@@ -2609,6 +2660,23 @@
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 	else
 		src.name = "[name_prefix(null, 1)][initial(src.name)][name_suffix(null, 1)]"
+	src.update_name_tag()
+
+/mob/proc/update_name_tag(name=null)
+	if(isnull(src.name_tag))
+		return
+	if(isnull(name))
+		name = src.name
+	if(name == "Unknown")
+		name = ""
+	var/the_pos = findtext(name, " the")
+	if(the_pos)
+		name = copytext(name, 1, the_pos)
+	if(name)
+		src.name_tag.set_extra(he_or_she(src))
+	else
+		src.name_tag.set_extra("")
+	src.name_tag.set_name(name, strip_parentheses=TRUE)
 
 /mob/proc/protected_from_space()
 	return 0
@@ -2707,13 +2775,12 @@
 			else
 				if (force_instead || alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
 					if(!src.traitHolder.hasTrait("immigrant"))// stowaway entertainers shouldn't be on the manifest
-						for (var/L in list(data_core.bank, data_core.security, data_core.general, data_core.medical))
-							if (L)
-								var/datum/data/record/R = FindRecordByFieldValue(L, "id", src.datacore_id)
-								if (R)
-									R.fields["name"] = newname
-									if (R.fields["full_name"])
-										R.fields["full_name"] = newname
+						for (var/datum/record_database/DB in list(data_core.bank, data_core.security, data_core.general, data_core.medical))
+							var/datum/db_record/R = DB.find_record("id", src.datacore_id)
+							if (R)
+								R["name"] = newname
+								if (R["full_name"])
+									R["full_name"] = newname
 						for (var/obj/item/card/id/ID in src.contents)
 							ID.registered = newname
 							ID.update_name()
@@ -2726,7 +2793,7 @@
 								ID.registered = newname
 								ID.update_name()
 					src.real_name = newname
-					src.name = newname
+					src.UpdateName()
 					return 1
 				else
 					continue
@@ -2737,7 +2804,7 @@
 			src.real_name = src.client.preferences.real_name
 		else
 			src.real_name = random_name(src.gender)
-		src.name = src.real_name
+		src.UpdateName()
 
 /mob/proc/set_mutantrace(var/mutantrace_type)
 	return
@@ -2973,6 +3040,7 @@
 	return 1
 
 /mob/proc/get_id()
+	RETURN_TYPE(/obj/item/card/id)
 	if(istype(src.equipped(), /obj/item/card/id))
 		return src.equipped()
 	if(istype(src.equipped(), /obj/item/device/pda2))
@@ -3052,3 +3120,26 @@
 // to check if someone is abusing cameras with stuff like artifacts, power gloves, etc
 /mob/proc/in_real_view_range(var/turf/T)
 	return src.client && IN_RANGE(T, src, WIDE_TILE_WIDTH)
+
+
+/mob/MouseEntered(location, control, params)
+	if(usr.client.check_key(KEY_EXAMINE))
+		src.name_tag?.show_hover(usr.client)
+
+/mob/MouseExited(location, control, params)
+	src.name_tag?.hide_hover(usr.client)
+
+/mob/proc/get_pronouns()
+	RETURN_TYPE(/datum/pronouns)
+	if(isnull(.))
+		. = src?.bioHolder?.mobAppearance?.pronouns
+	if(isnull(.))
+		switch(src.bioHolder?.mobAppearance?.gender || src.gender)
+			if(MALE)
+				. = get_singleton(/datum/pronouns/heHim)
+			if(FEMALE)
+				. = get_singleton(/datum/pronouns/sheHer)
+			if(NEUTER)
+				. = get_singleton(/datum/pronouns/itIts)
+			else
+				. = get_singleton(/datum/pronouns/theyThem)

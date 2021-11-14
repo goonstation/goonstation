@@ -385,6 +385,8 @@ datum
 
 				if(method == TOUCH)
 					. = 0
+					if(issilicon(M)) //Metal flesh isn't repaired by synthflesh
+						return
 					M.HealDamage("All", volume_passed * 1.5, volume_passed * 1.5)
 					if (isliving(M))
 						var/mob/living/H = M
@@ -670,11 +672,15 @@ datum
 					M = holder.my_atom
 
 				if (M.bioHolder)
-					if (probmult(50) && M.bioHolder.HasEffect("bad_eyesight"))
+					var/datum/bioEffect/BE
+					BE = M.bioHolder.GetEffect("bad_eyesight")
+					if (probmult(50) && BE?.curable_by_mutadone)
 						M.bioHolder.RemoveEffect("bad_eyesight")
-					if (probmult(30) && M.bioHolder.HasEffect("blind"))
+					BE = M.bioHolder.GetEffect("blind")
+					if (probmult(30) && BE?.curable_by_mutadone)
 						M.bioHolder.RemoveEffect("blind")
-					if (probmult(30) && (M.get_ear_damage() && M.get_ear_damage() <= M.get_ear_damage_natural_healing_threshold()) && M.bioHolder.HasEffect("deaf") || M.ear_disability)
+					BE = M.bioHolder.GetEffect("deaf")
+					if (probmult(30) && (M.get_ear_damage() && M.get_ear_damage() <= M.get_ear_damage_natural_healing_threshold()) && BE?.curable_by_mutadone)
 						M.bioHolder.RemoveEffect("deaf")
 
 				if (M.get_eye_blurry())
@@ -988,6 +994,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/list/paramslist = 0)
 				. = ..()
+				if(issilicon(M)) // borgs shouldn't heal from this
+					return
 				if (!volume_passed)
 					return
 				volume_passed = clamp(volume_passed, 0, 10)
@@ -1213,6 +1221,8 @@ datum
 					return
 				if(!isliving(M)) // fucking human shitfucks
 					return
+				if(issilicon(M)) // Borgs shouldn't heal from this
+					return
 				volume_passed = clamp(volume_passed, 0, 10)
 				if(method == TOUCH)
 					. = 0
@@ -1274,7 +1284,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(M.bodytemperature < M.base_body_temp - 100)
+				if(M.bodytemperature < M.base_body_temp - 100 && !M.hasStatus("burning"))
 					var/health_before = M.health
 
 					if(M.get_oxygen_deprivation())

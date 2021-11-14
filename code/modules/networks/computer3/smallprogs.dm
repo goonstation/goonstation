@@ -1352,8 +1352,9 @@ file_save - Save file to local disk."}
 
 		var/dat = "Crew Manifest<br>Entries cannot be modified from this terminal.<br>"
 
-		for (var/datum/data/record/t in data_core.general)
-			dat += "[t.fields["name"]] - [t.fields["rank"]]<br>"
+
+		dat += get_manifest()
+
 
 		src.master.temp = null
 		src.print_text("[dat]Now exiting...")
