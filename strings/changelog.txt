@@ -1,4 +1,13 @@
 
+(t)fri nov 12 21
+(u)Azrun, Gannets & Aquario
+(p)6646
+(e)🆕|feature
+(*)Adds the Bard class crate to Cairngorn Syndicate Weapons Vendors.
+(*)The bard is equipped with: A stylish flying V guitar which does decent damage to humans and considerably more to airlocks.
+(*)Two amplifier stacks, which can be worn on the back slot, which serve as the center of any area of effect skills you play.
+(*)A variety of instant use abilities and extended play support effects to boost your team's performance.
+(*)Tip: strum along to your songs to keep them going longer!
 (t)wed nov 10 21
 (u)Zamujasa
 (e)🆕|feature
