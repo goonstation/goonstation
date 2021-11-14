@@ -42,12 +42,8 @@
 	New()
 		..()
 
-
-		if (!pick_random_note)
-			if(use_new_interface == 0)
-				contextLayout = new /datum/contextLayout/instrumental()
-			else
-				contextLayout = new /datum/contextLayout/newinstrumental(KeyOffset = key_offset)
+		if (!pick_random_note && use_new_interface != 1)
+			contextLayout = new /datum/contextLayout/instrumental()
 
 			//src.contextActions = childrentypesof(/datum/contextAction/vehicle)
 
@@ -60,12 +56,12 @@
 
 				if (special_index && i >= special_index)
 					newcontext = new /datum/contextAction/instrument/special
-				else if (findtext(sounds_instrument[i], "-"))
-					newcontext = new /datum/contextAction/instrument/black
 				else
 					newcontext = new /datum/contextAction/instrument
 				newcontext.note = i
 				contextActions += newcontext
+
+
 
 	proc/play_note(var/note, var/mob/user)
 		if (note != clamp(note,1,sounds_instrument.len))
@@ -105,10 +101,64 @@
 	proc/post_play_effect(mob/user as mob)
 		return
 
+<<<<<<< HEAD
 	attack_self(mob/user as mob)
 		..()
 		src.add_fingerprint(user)
 		src.play(user)
+=======
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui && use_new_interface == 1)
+			ui = new(user, src, "MusicInstrument")
+			ui.open()
+
+	ui_data(mob/user)
+		..()
+		. = list(
+			"name" = src.name,
+			"notes" = src.notes,
+		)
+
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+		if(.)
+			return
+		switch(action)
+			if("play_note")
+				var/note_to_play = params["note"]
+				var/volume = params["volume"]
+				playsound(get_turf(src), sounds_instrument[note_to_play], volume, randomized_pitch, pitch = pitch_set)
+				. = FALSE
+			if("play_keyboard_on")
+				usr.client.apply_keybind("instrument_keyboard")
+				. = FALSE
+			if("play_keyboard_off")
+				usr.client.mob.reset_keymap()
+				. = FALSE
+
+	ui_close(mob/user)
+		user.reset_keymap()
+		. = ..()
+
+	ui_status(mob/user, datum/ui_state/state)
+		if(!IN_RANGE(src, user, 1)){
+			user.reset_keymap()
+			return UI_CLOSE
+		}
+		. = ..()
+
+
+	attack_self(mob/user as mob)
+		..()
+		src.add_fingerprint(user)
+		if(use_new_interface == 1)
+			ui_interact(user)
+		else
+			src.play(user)
+
+>>>>>>> 37b1a2846... Cleaned up instrument code, additional UI, etc
 
 
 /* -------------------- Large Instruments -------------------- */
@@ -129,7 +179,10 @@
 
 	attack_hand(mob/user as mob)
 		src.add_fingerprint(user)
-		src.play(user)
+		if(use_new_interface == 1)
+			ui_interact(user)
+		else
+			src.play(user)
 
 	show_play_message(mob/user as mob)
 		if (user) return src.visible_message("<B>[user]</B> [islist(src.desc_verb) ? pick(src.desc_verb) : src.desc_verb] \a [islist(src.desc_sound) ? pick(src.desc_sound) : src.desc_sound] [islist(src.desc_music) ? pick(src.desc_music) : src.desc_music] on [src]!")
@@ -279,6 +332,7 @@
 		if(ismob(M))
 			playsound(src, pick('sound/musical_instruments/Guitar_bonk1.ogg', 'sound/musical_instruments/Guitar_bonk2.ogg', 'sound/musical_instruments/Guitar_bonk3.ogg'), 50, 1, -1)
 		..()
+
 
 
 /* -------------------- Bike Horn -------------------- */
