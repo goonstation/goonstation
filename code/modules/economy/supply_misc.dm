@@ -51,10 +51,10 @@
 	density = 0
 	anchored = 1
 	layer = EFFECTS_LAYER_UNDER_1
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS
 
-/obj/plasticflaps/CanPass(atom/A, turf/T)
+/obj/plasticflaps/Cross(atom/A)
 	if (isliving(A)) // You Shall Not Pass!
 		var/mob/living/M = A
 		if (isghostdrone(M)) // except for drones

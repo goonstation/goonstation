@@ -389,7 +389,7 @@ proc/find_ghost_by_key(var/find_key)
 	var/mob/occupant = null
 	anchored = 1.0
 	soundproofing = 10
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 	var/obj/machinery/computer/cloning/connected = null
 
 	// In case someone wants a perfectly safe device. For some weird reason.

@@ -427,7 +427,7 @@
 	desc = "A force field that can block various states of matter."
 	icon = 'icons/obj/meteor_shield.dmi'
 	icon_state = "shieldw"
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 	var/powerlevel //Stores the power level of the deployer
 	density = 0
 
@@ -591,7 +591,7 @@
 	powerlevel = 2
 	layer = 2.5 //sits under doors if we want it to
 	flags = ALWAYS_SOLID_FLUID
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 
 	proc/setactive(var/a = 0) //this is called in a bunch of diff. door open procs. because the code was messy when i made this and i dont wanna redo door open code
 		if(a)
@@ -620,7 +620,7 @@
 	name = "Permanent Vehicular Forcefield"
 	desc = "A permanent force field that prevents gas, liquids, and vehicles from passing through it."
 
-	CanPass(atom/A, turf/T)
+	Cross(atom/A)
 		return ..() && !istype(A,/obj/machinery/vehicle)
 
 /obj/forcefield/energyshield/perma/doorlink
