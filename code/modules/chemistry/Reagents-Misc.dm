@@ -736,7 +736,9 @@ datum
 
 				if (istype(T))
 					if (T.wet >= 2) return
-					var/wet = image('icons/effects/water.dmi',"wet_floor")
+					var/image/wet = image('icons/effects/water.dmi',"wet_floor")
+					wet.blend_mode = BLEND_ADD
+					wet.alpha = 60
 					T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 2
 					SPAWN_DBG(800 * volume_mult)
@@ -764,7 +766,9 @@ datum
 				if (istype(T))
 					if (T.wet >= 3) return
 					if (visible)
-						var/wet = image('icons/effects/water.dmi',"wet_floor")
+						var/image/wet = image('icons/effects/water.dmi',"wet_floor")
+						wet.blend_mode = BLEND_ADD
+						wet.alpha = 60
 						T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 3
 					SPAWN_DBG(80 SECONDS)
@@ -1015,12 +1019,8 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				if (M.bodytemperature > 0)
+				if (M.bodytemperature > 0 && !M.hasStatus("burning"))
 					M.bodytemperature = max(M.bodytemperature-(10 * mult),0)
-				var/mob/living/L = M //for cryostylane not putting out fires during mob tick -Cirrial
-				var/fireDiff = L.bodytemperature - FIRE_MINIMUM_TEMPERATURE_TO_EXIST
-				if(istype(L) && L.getStatusDuration("burning") && fireDiff < 0)
-					L.changeStatus("burning", fireDiff SECONDS * mult) // by definition fireDiff will be negative
 				..()
 				return
 
@@ -1170,7 +1170,9 @@ datum
 				var/turf/simulated/T = target
 				if (istype(T)) //Wire: fix for Undefined variable /turf/space/var/wet (&& T.wet)
 					if (T.wet >= 2) return
-					var/wet = image('icons/effects/water.dmi',"wet_floor")
+					var/image/wet = image('icons/effects/water.dmi',"wet_floor")
+					wet.blend_mode = BLEND_ADD
+					wet.alpha = 60
 					T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 2
 					if (!locate(/obj/decal/cleanable/oil) in T)
@@ -2931,7 +2933,7 @@ datum
 			hygiene_value = -2
 			hunger_value = 0.068
 			viscosity = 0.4
-			depletion_rate = 0
+			depletion_rate = 0.4
 
 /*			var
 				blood_DNA = null
@@ -3320,7 +3322,9 @@ datum
 				var/turf/simulated/T = target
 				if (istype(T))
 					if (T.wet >= 2) return
-					var/wet = image('icons/effects/water.dmi',"wet_floor")
+					var/image/wet = image('icons/effects/water.dmi',"wet_floor")
+					wet.blend_mode = BLEND_ADD
+					wet.alpha = 60
 					T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 2
 					SPAWN_DBG(80 SECONDS)
@@ -3633,17 +3637,17 @@ datum
 			value = 4
 
 			on_add()
-				if(!holder || !holder.my_atom || istype(holder.my_atom, /turf) || (holder.my_atom.flags & IS_BUBSIUM_SCALED))
+				if(!holder || !holder.my_atom || istype(holder.my_atom, /turf) || (holder.my_atom.temp_flags & IS_BUBSIUM_SCALED))
 					return
 				holder.my_atom.SafeScale(4,1.5)
-				holder.my_atom.flags |= IS_BUBSIUM_SCALED
+				holder.my_atom.temp_flags |= IS_BUBSIUM_SCALED
 
 
 			on_remove()
-				if(!holder || !holder.my_atom  || istype(holder.my_atom, /turf) || !(holder.my_atom.flags & IS_BUBSIUM_SCALED))
+				if(!holder || !holder.my_atom  || istype(holder.my_atom, /turf) || !(holder.my_atom.temp_flags & IS_BUBSIUM_SCALED))
 					return
 				holder.my_atom.SafeScale(1/4,1/1.5)
-				holder.my_atom.flags &= ~IS_BUBSIUM_SCALED
+				holder.my_atom.temp_flags &= ~IS_BUBSIUM_SCALED
 
 
 			on_mob_life(var/mob/M, var/mult = 1)

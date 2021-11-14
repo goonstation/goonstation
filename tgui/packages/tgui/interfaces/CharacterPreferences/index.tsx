@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2021
+ * @author Luxizzle (https://github.com/Luxizzle)
+ * @license MIT
+ */
+
 import { KEY_LEFT, KEY_RIGHT } from 'common/keycodes';
 import { useBackend, useLocalState } from '../../backend';
 import { Box, Button, ByondUi, LabeledList, Section, Stack, Tabs } from '../../components';

@@ -29,6 +29,10 @@
 #define COMPONENT_NOTRANSFER 2
 
 
+/// arginfo handling TODO: document
+#define ARG_INFO(name, type, desc, default...)\
+	list(name, type, desc, ##default)
+
 // How multiple components of the exact same type are handled in the same datum
 
 /// old component is deleted (default)
@@ -69,6 +73,8 @@
 #define COMSIG_ATOM_EXAMINE "atom_examine"
 /// when something happens that should trigger an icon update. Or something.
 #define COMSIG_UPDATE_ICON "atom_update_icon"
+/// when something triggers Crossed by entering this atom's turf (/atom/movable)
+#define COMSIG_ATOM_CROSSED "atom_crossed"
 
 // ---- atom/movable signals ----
 
@@ -78,6 +84,10 @@
 #define COMSIG_MOVABLE_SET_LOC "mov_set_loc"
 /// when an AM ends throw (thing, /datum/thrown_thing)
 #define COMSIG_MOVABLE_THROW_END "mov_throw_end"
+/// when an AM receives a packet (datum/signal/signal, receive_method, receive_param / range, connection_id)
+#define COMSIG_MOVABLE_RECEIVE_PACKET "mov_receive_packet"
+/// send this signal to send a radio packet (datum/signal/signal, receive_param / range, frequency), if frequency is null all registered frequencies are used
+#define COMSIG_MOVABLE_POST_RADIO_PACKET "mov_post_radio_packet"
 
 // ---- item signals ----
 

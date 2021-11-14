@@ -30,9 +30,9 @@
 	OnAdd()
 		..()
 		if (ishuman(owner))
+			check_ability_owner()
 			var/mob/living/carbon/human/H = owner
 			H.hud.update_ability_hotbar()
-			check_ability_owner()
 		return
 
 	OnRemove()
@@ -50,8 +50,7 @@
 			AB.linked_power = src
 			icon = AB.icon
 			icon_state = AB.icon_state
-			SPAWN_DBG(0)
-				AB.owner = src.owner
+			AB.owner = src.owner
 
 /datum/targetable/geneticsAbility/cryokinesis
 	name = "Cryokinesis"
@@ -414,19 +413,27 @@
 		if (..())
 			return 1
 
-		if (!ishuman(target))
-			boutput(owner, "<span class='alert'>[target] does not seem to be compatible with this ability.</span>")
-			return 1
 		if (target == owner)
 			boutput(owner, "<span class='alert'>While \"be yourself\" is pretty good advice, that would be taking it a bit too literally.</span>")
 			return 1
+		if (get_dist(target,owner) > 1 && !owner.bioHolder.HasEffect("telekinesis"))
+			boutput(owner, "<span class='alert'>You must be within touching distance of [target] for this to work.</span>")
+			return 1
+
+		if (!ishuman(target))
+			boutput(owner, "<span class='alert'>[target] does not seem to be compatible with this ability.</span>")
+			return 1
 		var/mob/living/carbon/human/H = target
-		if (!H.bioHolder)
+		if (!H.bioHolder || H.mutantrace?.dna_mutagen_banned)
 			boutput(owner, "<span class='alert'>[target] does not seem to be compatible with this ability.</span>")
 			return 1
 
-		if (get_dist(H,owner) > 1 && !owner.bioHolder.HasEffect("telekinesis"))
-			boutput(owner, "<span class='alert'>You must be within touching distance of [target] for this to work.</span>")
+		if (!ishuman(owner))
+			boutput(owner, "<span class='alert'>Your body doesn't seem to be compatible with this ability.</span>")
+			return 1
+		var/mob/living/carbon/human/H2= target
+		if (!H2.bioHolder || H2.mutantrace?.dna_mutagen_banned)
+			boutput(owner, "<span class='alert'>Your body doesn't seem to be compatible with this ability.</span>")
 			return 1
 
 		playsound(owner.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 50, 1)

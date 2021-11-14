@@ -26,6 +26,7 @@
 /mob/proc/showContextActions(list/datum/contextAction/applicable, atom/target, datum/contextLayout/customContextLayout)
 	if(length(contextButtons))
 		closeContextActions()
+		return
 
 	var/list/buttons = list()
 	for(var/datum/contextAction/C as anything in applicable)

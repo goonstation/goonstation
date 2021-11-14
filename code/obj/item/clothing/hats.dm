@@ -194,7 +194,7 @@ proc/filter_trait_hats(var/type)
 			src.on = !src.on
 
 		if (src.on)
-			src.firesource = TRUE
+			src.firesource = FIRESOURCE_OPEN_FLAME
 			src.force = 10
 			src.hit_type = DAMAGE_BURN
 			src.icon_state = "cakehat1"
@@ -458,6 +458,13 @@ proc/filter_trait_hats(var/type)
 	desc = "Your toque blanche, coloured as such so that your poor sanitation is obvious, and the blood shows up nice and crazy."
 	icon_state = "chef"
 	item_state = "chefhat"
+
+/obj/item/clothing/head/chefhatpuffy
+	name = "Puffy Chef's Hat"
+	desc = "A chef's toque blanche, pleasantly puffy on top."
+	icon_state = "chef-puffy"
+	item_state = "chefhat"
+	wear_state = "chef-puffy"
 
 /obj/item/clothing/head/souschefhat
 	name = "Sous-Chef's hat"
@@ -975,18 +982,10 @@ proc/filter_trait_hats(var/type)
 			playsound(src.loc, "sound/vox/crime.ogg", 100, 1)
 
 		// Guess what? you wear the hat, you go to jail. Easy Peasy.
-		var/perpname = user.name
-		if(user:wear_id && user:wear_id:registered)
-			perpname = user:wear_id:registered
-		// find the matching security record
-		for(var/datum/data/record/R in data_core.general)
-			if(R.fields["name"] == perpname)
-				for (var/datum/data/record/S in data_core.security)
-					if (S.fields["id"] == R.fields["id"])
-						// now add to rap sheet
-						S.fields["criminal"] = "*Arrest*"
-						S.fields["ma_crim"] = pick("Being unstoppable","Swagging out so hard","Stylin on \'em","Puttin\' in work")
-						S.fields["ma_crim_d"] = pick("Convicted Badass, to the bone.","Certified Turbonerd, home-grown.","Absolute Salad.","King of crimes, Queen of Flexxin\'")
+		var/datum/db_record/S = data_core.security.find_record("id", user.datacore_id)
+		S?["criminal"] = "*Arrest*"
+		S?["ma_crim"] = pick("Being unstoppable","Swagging out so hard","Stylin on \'em","Puttin\' in work")
+		S?["ma_crim_d"] = pick("Convicted Badass, to the bone.","Certified Turbonerd, home-grown.","Absolute Salad.","King of crimes, Queen of Flexxin\'")
 
 	custom_suicide = 1
 	suicide_in_hand = 0
@@ -1830,3 +1829,21 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 	name = "Brown Ten-Gallon hat"
 	icon_state = "westhat_brown"
 	item_state = "westhat_brown"
+
+//Witchy Hats
+
+/obj/item/clothing/head/witchhat_purple
+	name = "purple witch hat"
+	desc = "Magical, but the friendship and imagination kind, not the remove-your-butt kind."
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "witchhat_purple"
+	item_state = "witchhat_purple"
+
+/obj/item/clothing/head/witchhat_mint
+	name = "mint witch hat"
+	desc = "Magical, but the friendship and imagination kind, not the remove-your-butt kind."
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "witchhat_mint"
+	item_state = "witchhat_mint"

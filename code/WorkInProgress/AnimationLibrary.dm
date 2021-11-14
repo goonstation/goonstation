@@ -1277,14 +1277,13 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	icon = 'icons/misc/AzungarAdventure.dmi'
 	icon_state = "lava_floor"
 	anchored = TRUE
-	event_handler_flags = USE_HASENTERED
 
 	New()
 		. = ..()
 		src.plane = PLANE_UNDERFLOOR - 1
 		src.icon_state = pick("lava_floor", "lava_floor_bubbling", "lava_floor_bubbling2")
 
-	HasEntered(atom/movable/AM, atom/OldLoc)
+	Crossed(atom/movable/AM)
 		. = ..()
 		if (isliving(AM))
 			var/mob/living/M = AM
@@ -1449,7 +1448,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 
 //size_max really can't go higher than 0.2 on 32x32 sprites that are sized about the same as humans. Can go higher on larger sprite resolutions or smaller sprites that are in the center, like cigarettes or coins.
 /proc/anim_f_ghost_blur(atom/A, var/size_min = 0.075 as num, var/size_max=0.18 as num)
-	A.add_filter("ghost blur", gauss_blur_filter(size=size_min))
+	A.add_filter("ghost_blur", 0, gauss_blur_filter(size=size_min))
 	animate(A.get_filter("ghost_blur"), time = 10, size=size_max, loop=-1,easing = SINE_EASING, flags=ANIMATION_PARALLEL)
 	animate(time = 10, size=size_min, loop=-1,easing = SINE_EASING)
 

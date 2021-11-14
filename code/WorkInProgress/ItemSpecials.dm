@@ -1880,6 +1880,7 @@
 		can_clash = 1
 
 	spark
+		plane = PLANE_ABOVE_LIGHTING
 		icon = 'icons/effects/effects.dmi'
 		icon_state = "sparks_attack"
 		pixel_x = 0
@@ -1915,7 +1916,7 @@
 		density = 1
 		del_self = 0
 		clash_time = -1
-		event_handler_flags = USE_CANPASS
+	
 
 		//mouse_opacity = 1
 		var/bump_count = 0
@@ -1997,6 +1998,7 @@
 		can_clash = 0
 
 	flame
+		plane = PLANE_ABOVE_LIGHTING
 		icon = 'icons/effects/effects.dmi'
 		icon_state = "flame"
 		pixel_x = 0

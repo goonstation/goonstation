@@ -71316,7 +71316,8 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "daH" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
 	dir = 4
 	},
 /turf/simulated/floor/blue,

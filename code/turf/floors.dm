@@ -1324,18 +1324,18 @@ DEFINE_FLOORS(grasslush/thin,
 	else
 		boutput(user, "Your attack bounces off the foamed metal floor.")
 
-/turf/simulated/floor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/turf/simulated/floor/Cross(atom/movable/mover)
 	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
 		if (!( locate(/obj/machinery/mass_driver, src) ))
 			return 0
 	return ..()
 
-/turf/simulated/shuttle/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/turf/simulated/shuttle/Cross(atom/movable/mover)
 	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
 		return 0
 	return ..()
 
-/turf/unsimulated/floor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/turf/unsimulated/floor/Cross(atom/movable/mover)
 	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
 		if (!( locate(/obj/machinery/mass_driver, src) ))
 			return 0
@@ -1406,7 +1406,7 @@ DEFINE_FLOORS(grasslush/thin,
 		user.remove_pulling()
 		return
 	//if the object being pulled's loc is another object (being in their contents) return
-	if (isobj(user.pulling.loc))
+	if (!isturf(user.pulling.loc))
 		var/obj/container = user.pulling.loc
 		if (user.pulling in container.contents)
 			return

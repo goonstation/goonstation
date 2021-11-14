@@ -6,7 +6,7 @@
 	density = 1
 	anchored = 1.0
 	mats = 25
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 	var/mob/living/carbon/human/victim = null
 	var/strapped = 0.0
 
@@ -45,9 +45,7 @@
 		qdel(src)
 	return
 
-/obj/machinery/optable/CanPass(atom/movable/O as mob|obj, target as turf, height=0, air_group=0)
-	if (air_group || (height==0))
-		return 1
+/obj/machinery/optable/Cross(atom/movable/O as mob|obj)
 	if (!O)
 		return 0
 	if ((O.flags & TABLEPASS || istype(O, /obj/newmeteor)))

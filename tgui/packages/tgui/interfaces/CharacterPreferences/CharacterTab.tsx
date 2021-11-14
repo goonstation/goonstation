@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2021
+ * @author Luxizzle (https://github.com/Luxizzle)
+ * @license MIT
+ */
+
 import { useBackend } from '../../backend';
 import { Button, ColorButton, LabeledList, Section } from '../../components';
 import { CharacterPreferencesData } from './type';

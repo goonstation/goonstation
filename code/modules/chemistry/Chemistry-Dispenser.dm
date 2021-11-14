@@ -7,7 +7,7 @@
 	var/icon_base = "dispenser"
 	flags = NOSPLASH | TGUI_INTERACTIVE
 	var/health = 400
-	mats = 30
+	mats = list("MET-2" = 10, "CON-2" = 10, "miracle" = 20)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/obj/item/beaker = null
 	var/list/dispensable_reagents = list(
@@ -100,7 +100,7 @@
 			return
 		*/
 		var/ejected_beaker = null
-		if (src.beaker)
+		if (src.beaker?.loc == src)
 			ejected_beaker = src.beaker
 			user.put_in_hand_or_drop(ejected_beaker)
 

@@ -6423,7 +6423,9 @@
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "aoS" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0
+	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -37774,7 +37776,7 @@
 	},
 /area/station/hallway/secondary/oshan_arrivals)
 "bPR" = (
-/obj/table/glass/auto,
+/obj/table/auto,
 /obj/shrub{
 	dir = 4;
 	icon = 'icons/obj/stationobjs.dmi';
@@ -37857,7 +37859,7 @@
 	},
 /area/station/hallway/secondary/oshan_arrivals)
 "bPX" = (
-/obj/table/glass/auto,
+/obj/table/auto,
 /obj/shrub{
 	dir = 4;
 	icon = 'icons/obj/stationobjs.dmi';
@@ -38288,7 +38290,7 @@
 	},
 /area/station/hallway/secondary/oshan_arrivals)
 "bQV" = (
-/obj/table/glass/auto,
+/obj/table/auto,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -38786,7 +38788,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/radio/lab)
 "bSa" = (
-/obj/table/glass/auto,
+/obj/table/auto,
 /obj/machinery/computer/tour_console,
 /obj/cable{
 	d1 = 1;
@@ -39700,7 +39702,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "bUm" = (
-/obj/table/glass/auto,
+/obj/table/auto,
 /obj/machinery/light/incandescent/warm,
 /obj/item/storage/toolbox/emergency,
 /obj/item/crowbar,
@@ -48371,6 +48373,18 @@
 /obj/item/chem_grenade/pepper,
 /obj/item/chem_grenade/pepper,
 /obj/item/chem_grenade/pepper,
+/obj/item/breaching_charge{
+	pixel_x = -2;
+	pixel_y = -5
+	},
+/obj/item/breaching_charge{
+	pixel_x = -2;
+	pixel_y = -5
+	},
+/obj/item/breaching_charge{
+	pixel_x = -2;
+	pixel_y = -5
+	},
 /turf/simulated/floor/redblack/corner{
 	dir = 1
 	},
