@@ -493,6 +493,11 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/painauchocolat(src)
 			src.recipes += new /datum/cookingrecipe/croissant(src)
 
+			src.recipes += new /datum/cookingrecipe/pie_cherry(src)
+			src.recipes += new /datum/cookingrecipe/pie_blueberry(src)
+			src.recipes += new /datum/cookingrecipe/pie_blackberry(src)
+			src.recipes += new /datum/cookingrecipe/pie_raspberry(src)
+			src.recipes += new /datum/cookingrecipe/pie_strawberry(src)
 			src.recipes += new /datum/cookingrecipe/pie_apple(src)
 			src.recipes += new /datum/cookingrecipe/pie_lime(src)
 			src.recipes += new /datum/cookingrecipe/pie_lemon(src)
