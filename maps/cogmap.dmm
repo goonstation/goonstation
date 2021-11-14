@@ -53376,8 +53376,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "cGi" = (
-/obj/machinery/gibber/output_south,
-/obj/decal/cleanable/cobweb2,
+/obj/decoration/gibberBroken,
 /turf/simulated/floor/grey/whitegrime/other,
 /area/station/maintenance/northeast)
 "cGn" = (
@@ -63983,6 +63982,7 @@
 /obj/item/furniture_parts/table/folding,
 /obj/item/furniture_parts/table/folding,
 /obj/item/furniture_parts/table/folding,
+/obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/grey/whitegrime/other,
 /area/station/maintenance/northeast)
 "uTe" = (
